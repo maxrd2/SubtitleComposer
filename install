@@ -1,0 +1,12 @@
+#!/bin/sh
+
+CURRENT_DIR=$(echo $0 | sed -e 's/^\(.*\/\)[^\/][^\/]*$/\1/')
+BUILD_TESTS=ON
+
+cd ${CURRENT_DIR} && \
+(rm -R build; \
+mkdir build && \
+cd build && \
+cmake ../ -DCMAKE_INSTALL_PREFIX=$(kde4-config --prefix) -DCMAKE_BUILD_TYPE=debugfull -DKDE4_BUILD_TESTS:BOOL=${BUILD_TESTS} && \
+make && \
+sudo make install)

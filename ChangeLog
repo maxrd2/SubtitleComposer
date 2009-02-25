@@ -1,0 +1,126 @@
+Version 0.5.2:
+- added Polish translation and updated Serbian and Spanish ones (thanks to Tomasz Argasiński and Slobodan Simic)
+- ported lines and errors views to Qt4 Model/View
+  - greatly improves performance
+  - renders lines using the application style
+  - lines' texts display tooltips with errors information on hover
+- improved the current line text edit (mainly by using the KDE version of the control)
+  - supports KDE standard shortcuts and spelling with on the fly highlighting of misspelled words
+  - context menu shows suggestions for misspelled words and actions to ignore or add to dictionary
+  - relevant shorcuts are caught so that don't trigger other application actions
+- improved inline editing behavior
+  - navigation between editable cells is possible with Up/Down arrows and tab/back tab keys
+- added actions to retrocede and advance the current line (Alt+[Up|Down] arrows)
+- added a configuration page for spelling options
+- comply with Shared MIME-info spec for registering file types
+- fixed switching audio and subtitle streams on video player
+- fixed actions shortcuts on full screen mode (sequences using the keypad didn't work)
+- fixed subtitles preview (subtitles disappeared when leaving full screen)
+- fixed compression of actions (undoing actions broke things)
+- fixed crash caused by removing lines in some scenarios
+- fixed crash caused by find/replace/spelling actions when there was no current line
+- fixed Xine CMake checks (correctly enable XCB support when available)
+- many other minor fixes and improvements
+
+Version 0.5.1:
+- added Greek translation and completed Spanish one (thanks to Alexandros Perdikomatis)
+- added automatic tests for important classes
+- fixed many bugs (lots of crashes, configuration saving, recent files history, GUI glitches, etc.)
+- minor and not so minor cosmetic changes (fixed strings to comply with HIG, updated some icons, changed some dialogs' layouts)
+
+Version 0.5.0:
+- ported to KDE4/Qt4
+- Phonon player backend
+
+
+Version 0.4.2:
+- added Spanish and Serbian translations and updated pot file (thanks to Daniel Lambea and Slobodan Simic)
+- improved styles handling:
+  - styles don't have to be applied to whole lines anymore
+  - added "strike through" style support
+- added configurable outline for subtitles in video player
+- use KIO facilities to allow loading and saving subtitles from other than local files
+- other minor fixes
+
+Version 0.4.1:
+- detection of line terminator used in input subtitle and support for changing it (or not) when saving
+- show additional information for current line (characters per line / total characters)
+- added subtitlecomposer.pot file (now the program can be translated)
+- added action to fix overlapping lines
+- added "Select All" and "Select None" buttons to check errors and clear errors dialogs
+- resume playing (if paused) when a line has been double clicked
+- ensure all error items are visible in the errors dialog when changing the current line
+- fixed parsing and writing of SSA/ASS files and parsing of MPL files
+- fixed bug related to setting and clearing the subtitle's dirty state
+- fixed bug which prevented the error icon from being shown in some cases
+- fixed compilation with GCC 4.3 (thanks to David Watzke for the patch)
+
+Version 0.4.0:
+- support for working with translations
+- video player full screen mode
+- Xine player backend
+- non destructive edition of files with unnsupported data (such as SSA or ASS)
+- actions to shift to video position and adjust from video position (anchoring first or last line)
+- actions for increasing and decreasing the volume
+- actions for increasing and decreasing the subtitles font size
+- fix find and replace implementations to support all dialog options and (proper) regex replacements
+- make find actions to jump to video position in full screen mode
+- make consistent use of the grabbed video position compensation in all relevant user actions
+- renamed "Polska" format to its correct name, TMPlayer, and added support TMPlayer+
+- many other fixes, changes and general improvements...
+
+
+Version 0.3.1:
+- fix the opening of files with MPlayer video backend
+- rename "Polska" subtitles format to it's actual name, TMPlayer
+
+Version 0.3:
+- errors checking and reporting
+- actions to join and split subtitles
+- action to sort lines
+- added support for "Polska" subtitles (*)
+- added default shortcuts to common actions
+- open video files dropped into the video widget
+- correctly handle opening of invalid video files
+- rearrange the main menu and the main view context menu
+- rewrite the recent files menus (application should compile in KDE 3.4 now)
+- many other internal changes including a revamp of the actions classes (which now support "compression" of actions)
+- updated features plan: next version will focus on KDE4 porting and subtitle translations support
+
+(*) I don't know the real name of the format, if anyone does (maybe the guys who requested it?), please, drop me a note.
+
+
+Version 0.2.1:
+- fix bug in MPlayer video backend wich prevented sound playback
+- fix a couple of user visible strings
+- enforce the currently set volume when changing audio streams
+
+Version 0.2:
+- open subtitle files dropped into the application window
+- command line option to open a given file on start
+- install mimetypes and update aplication desktop file to handle them
+- rearrange GUI controls and add a (toggable) editable position control
+- highlight currently playing line
+- action to make current line follow video position
+- actions to make video position jump to next/previous line
+- actions to make video position jump forwards/backwards
+- action to set current line show/hide time to video position (+ option to compensate the grabbed time)
+- actions to join and split lines
+- action to change lines text case (lower case, upper case, title case and sentence case)
+- action to fix lines punctuation
+- action to maximize lines duration
+- action to automaticaty set lines duration based on text
+- actions to quick shift selected lines (and option to specify the shift amount)
+- action to synchronize or adjust the current subtitle with a reference one
+
+
+Version 0.1:
+- load and save from most common formats (srt, sub, ssa) with support for multiple encodings
+- full undo/redo support
+- integrated video player with support for multiple video backends (gstreamer/mplayer) and subtitles overlaying
+- insert/remove lines
+- edit text and styles
+- adjust times
+- change frame rate
+- find/replace with regular expressions
+- check spelling

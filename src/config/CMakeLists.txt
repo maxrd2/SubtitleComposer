@@ -1,0 +1,6 @@
+SET( config_SRCS
+	${CMAKE_CURRENT_SOURCE_DIR}/appconfig.cpp
+	${CMAKE_CURRENT_SOURCE_DIR}/appconfiggroup.cpp
+	${CMAKE_CURRENT_SOURCE_DIR}/appconfiggroupwidget.cpp
+	CACHE INTERNAL EXPORTEDVARIABLE
+)

@@ -1,0 +1,13 @@
+SET( common_LIBS
+	${KDE4_KIO_LIBS}
+	CACHE INTERNAL EXPORTEDVARIABLE
+)
+
+SET( common_SRCS
+	${CMAKE_CURRENT_SOURCE_DIR}/commondefs.cpp
+	${CMAKE_CURRENT_SOURCE_DIR}/qxtsignalwaiter.cpp
+	${CMAKE_CURRENT_SOURCE_DIR}/fileloadhelper.cpp
+	${CMAKE_CURRENT_SOURCE_DIR}/filesavehelper.cpp
+	${CMAKE_CURRENT_SOURCE_DIR}/filetrasher.cpp
+	CACHE INTERNAL EXPORTEDVARIABLE
+)

@@ -1,0 +1,8 @@
+[MainWindow]
+Height 768=769
+Width 1024=1025
+LastDir=$HOME
+
+[MainWindow Toolbar mainToolBar]
+Index=0
+NewLine=false

@@ -1,0 +1,180 @@
+<!DOCTYPE kpartgui SYSTEM "kpartgui.dtd">
+<kpartgui name="subtitlecomposer" version="2" >
+	<MenuBar>
+		<Menu name="file" >
+			<text>&amp;File</text>
+			<Action name="new_subtitle" />
+			<Action name="open_subtitle" />
+			<Action name="recent_subtitles" />
+			<Separator />
+			<Action name="save_subtitle" />
+			<Action name="save_subtitle_as" />
+			<Separator />
+			<Action name="close_subtitle" />
+			<Separator />
+			<Menu name="translation" >
+				<text>Translation</text>
+				<Action name="new_tr_subtitle" />
+				<Action name="open_tr_subtitle" />
+				<Action name="recent_tr_subtitles" />
+				<Separator />
+				<Action name="save_tr_subtitle" />
+				<Action name="save_tr_subtitle_as" />
+				<Separator />
+				<Action name="close_tr_subtitle" />
+			</Menu>
+		</Menu>
+		<Menu name="edit" >
+			<text>&amp;Edit</text>
+			<Action name="undo" />
+			<Action name="redo" />
+			<Separator />
+			<Action name="select_all_lines" />
+			<Separator />
+			<Action name="insert_before_current_line" />
+			<Action name="insert_after_current_line" />
+			<Action name="remove_selected_lines" />
+			<Separator />
+			<Action name="join_selected_lines" />
+			<Action name="split_selected_lines" />
+			<Separator />
+			<Action name="join_subtitles" />
+			<Action name="split_subtitle" />
+			<Separator />
+			<Action name="find" />
+			<Action name="find_next" />
+			<Action name="find_previous" />
+			<Action name="replace" />
+			<Action name="goto_line" />
+		</Menu>
+		<Menu name="texts" >
+			<text>&amp;Texts</text>
+			<Action name="adjust_texts" />
+			<Action name="unbreak_texts" />
+			<Action name="simplify_spaces" />
+			<Action name="change_case" />
+			<Action name="fix_punctuation" />
+			<Action name="translate"/>
+			<Separator />
+			<Action name="spell_check" />
+		</Menu>
+		<Menu name="styles" >
+			<text>St&amp;yles</text>
+			<Action name="toggle_selected_lines_bold" />
+			<Action name="toggle_selected_lines_italic" />
+			<Action name="toggle_selected_lines_underline" />
+			<Action name="toggle_selected_lines_strikethrough" />
+		</Menu>
+		<Menu name="times">
+			<text>T&amp;imes</text>
+			<Action name="shift" />
+			<Action name="adjust" />
+			<Action name="sort_lines" />
+			<Action name="change_frame_rate" />
+			<Action name="duration_limits" />
+			<Action name="automatic_durations" />
+			<Action name="maximize_durations" />
+			<Action name="fix_overlapping_lines" />
+			<Action name="sync_with_subtitle" />
+			<Separator />
+			<Action name="shift_selected_lines_backwards" />
+			<Action name="shift_selected_lines_forwards" />
+			<Separator />
+			<Action name="set_current_line_show_time" />
+			<Action name="set_current_line_hide_time" />
+			<Separator />
+			<Action name="shift_to_video_position" />
+			<Action name="adjust_to_video_position_anchor_last" />
+			<Action name="adjust_to_video_position_anchor_first" />
+		</Menu>
+		<Menu name="errors" >
+			<text>E&amp;rrors</text>
+			<Action name="check_errors" />
+			<Action name="clear_errors" />
+			<Separator />
+			<Action name="show_errors" />
+			<Separator />
+			<Action name="find_error" />
+			<Action name="find_next_error" />
+			<Action name="find_previous_error" />
+			<Separator />
+			<Action name="toggle_selected_lines_mark" />
+		</Menu>
+		<Menu name="video" >
+			<text>&amp;Video</text>
+			<Action name="open_video" />
+			<Action name="recent_videos" />
+			<Separator />
+			<Action name="close_video" />
+			<Separator />
+			<Action name="toggle_full_screen" />
+			<Separator />
+			<Action name="play_pause" />
+			<Action name="stop" />
+			<Action name="seek_backwards" />
+			<Action name="seek_forwards" />
+			<Separator />
+			<Action name="seek_to_previous_line" />
+			<Action name="seek_to_next_line" />
+			<Separator />
+			<Action name="current_line_follows_video" />
+			<Separator />
+			<Action name="set_active_audio_stream" />
+			<Action name="increase_volume" />
+			<Action name="decrease_volume" />
+			<Action name="toggle_muted" />
+			<Separator />
+			<Action name="set_active_subtitle_stream" />
+			<Action name="increase_font_size" />
+			<Action name="decrease_font_size" />
+		</Menu>
+		<Menu name="tools" >
+			<text>T&amp;ools</text>
+			<Action name="scripts_manager" />
+		</Menu>
+		<!--
+		<Menu name="audiolevels" >
+			<text>&amp;Audio Levels</text>
+			<Action name="open_audiolevels" />
+			<Action name="recent_audiolevels" />
+			<Separator />
+			<Action name="save_audiolevels_as" />
+			<Separator />
+			<Action name="close_audiolevels" />
+			<Separator />
+			<Action name="increase_audiolevels_v_zoom" />
+			<Action name="decrease_audiolevels_v_zoom" />
+			<Action name="increase_audiolevels_h_zoom" />
+			<Action name="decrease_audiolevels_h_zoom" />
+		</Menu>
+		-->
+	</MenuBar>
+	<ToolBar alreadyVisited="1" noMerge="1" name="mainToolBar" >
+		<text>Main Toolbar</text>
+		<Action name="new_subtitle" />
+		<Action name="open_subtitle" />
+		<Separator name="separator_0" />
+		<Action name="save_subtitle" />
+		<Action name="save_subtitle_as" />
+		<Separator name="separator_1" />
+		<Action name="close_subtitle" />
+		<Separator name="separator_2" />
+		<Action name="change_subtitle_encoding" />
+	</ToolBar>
+	<ToolBar alreadyVisited="1" noMerge="1" name="editToolBar" >
+		<text context="The toolbar name">Edit Toolbar</text>
+		<Action name="undo" />
+		<Action name="redo" />
+		<Separator name="separator_0" />
+		<Action name="toggle_selected_lines_bold" />
+		<Action name="toggle_selected_lines_italic" />
+		<Action name="toggle_selected_lines_underline" />
+		<Action name="toggle_selected_lines_strikethrough" />
+		<Separator name="separator_1" />
+		<Action name="find" />
+		<Action name="find_previous" />
+		<Action name="find_next" />
+		<Separator name="separator_2" />
+		<Action name="spell_check" />
+	</ToolBar>
+</kpartgui>

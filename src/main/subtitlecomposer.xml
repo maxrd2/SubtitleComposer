@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mime-info xmlns="http://www.freedesktop.org/standards/shared-mime-info">
+
+	<mime-type type="text/x-ssa">
+		<comment>SubStation Alpha subtitles</comment>
+		<acronym>SSA</acronym>
+		<expanded-acronym>SubStation Alpha</expanded-acronym>
+		<sub-class-of type="text/plain"/>
+		<magic priority="50">
+			<match type="string" value="[Script Info]" offset="0:256">
+				<match type="string" value="ScriptType: V4.00" offset="0:256"/>
+			</match>
+		</magic>
+		<generic-icon name="text-x-generic"/>
+		<glob pattern="*.ssa"/>
+	</mime-type>
+
+	<mime-type type="text/x-ass">
+		<comment>Advanced SubStation Alpha subtitles</comment>
+		<acronym>ASS</acronym>
+		<expanded-acronym>Advanced SubStation</expanded-acronym>
+		<sub-class-of type="text/plain"/>
+		<magic priority="50">
+			<match type="string" value="[Script Info]" offset="0:256">
+				<match type="string" value="ScriptType: V4.00+" offset="0:256"/>
+			</match>
+		</magic>
+		<generic-icon name="text-x-generic"/>
+		<glob pattern="*.ass"/>
+	</mime-type>
+
+	<!-- Included in freedesktop.org database but misses *.txt glob
+		 and for some reason txt files are not recognized without it
+		 (unlike TMPlayer txt files).
+	-->
+	<mime-type type="text/x-microdvd">
+		<comment>MicroDVD subtitles</comment>
+		<sub-class-of type="text/plain"/>
+		<magic priority="50">
+			<match type="string" value="{1}" offset="0"/>
+			<match type="string" value="{0}" offset="0"/>
+			<match type="string" value="}{" offset="0:6"/>
+		</magic>
+		<generic-icon name="text-x-generic"/>
+		<glob pattern="*.sub"/>
+		<glob pattern="*.txt"/>
+	</mime-type>
+
+
+	<!-- Included in freedesktop.org database but misses *.mpsub glob -->
+	<mime-type type="text/x-mpsub">
+		<comment>MPSub subtitles</comment>
+		<acronym>MPSub</acronym>
+		<expanded-acronym>MPlayer Subtitle</expanded-acronym>
+		<sub-class-of type="text/plain"/>
+		<magic priority="50">
+			<match type="string" value="FORMAT=" offset="0:256"/>
+		</magic>
+		<generic-icon name="text-x-generic"/>
+		<glob pattern="*.mpsub"/>
+		<glob pattern="*.sub"/>
+	</mime-type>
+
+	<!-- Included in freedesktop.org database
+	<mime-type type="application/x-subrip"/>
+	-->
+
+	<!-- Included in freedesktop.org database
+	<mime-type type="text/x-subviewer"/>
+	-->
+
+	<mime-type type="text/x-mplsub">
+		<comment>MPLSub subtitles</comment>
+		<acronym>MPSub</acronym>
+		<expanded-acronym>MPlayer Subtitle</expanded-acronym>
+		<sub-class-of type="text/plain"/>
+		<generic-icon name="text-x-generic"/>
+		<glob pattern="*.mpl"/>
+	</mime-type>
+
+	<mime-type type="text/x-tmplayer">
+		<comment>TMPlayer subtitles</comment>
+		<sub-class-of type="text/plain"/>
+		<generic-icon name="text-x-generic"/>
+		<magic priority="100">
+			<match type="string" value="xx\:xx\:xx\:" mask="0x0000ff0000ff0000ff" offset="0"/>
+			<match type="string" value="xx\:xx\:xx\:" mask="0x0000ff0000ff0000ff" offset="9:256"/>
+		</magic>
+		<glob pattern="*.sub"/>
+	</mime-type>
+
+	<mime-type type="text/x-tmplayer+">
+		<comment>TMPlayer+ subtitles</comment>
+		<sub-class-of type="text/plain"/>
+		<generic-icon name="text-x-generic"/>
+		<magic priority="100">
+			<match type="string" value="xx\:xx\:xx=" mask="0x0000ff0000ff0000ff" offset="0"/>
+			<match type="string" value="xx\:xx\:xx\,1=" mask="0x0000ff0000ff0000ffffff" offset="0">
+				<match type="string" value="xx\:xx\:xx\,2=" mask="0x0000ff0000ff0000ffffff" offset="9:256"/>
+			 </match>
+		</magic>
+		<glob pattern="*.sub"/>
+	</mime-type>
+
+</mime-info>

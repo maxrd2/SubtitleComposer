@@ -1,0 +1,10 @@
+[Desktop Entry]
+Type=Application
+Name=Subtitle Composer
+GenericName= Subtitle Editor
+Comment=KDE subtitle editor
+Icon=subtitlecomposer
+Exec=subtitlecomposer %f -caption "%c"
+MimeType=text/x-ssa;text/x-ass;text/x-microdvd;text/x-mpsub;application/x-subrip;text/x-subviewer;text/x-mplsub;text/x-tmplayer;text/x-tmplayer+;
+Terminal=false
+Categories=Qt;KDE;AudioVideo;
