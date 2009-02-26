@@ -56,10 +56,10 @@ ChangeTextsCaseDialog::ChangeTextsCaseDialog( QWidget* parent ):
 	m_lowerFirstCheckBox->setText( i18n( "Convert to lower case first" ) );
 	m_lowerFirstCheckBox->setEnabled( false );
 
+	connect( caseButtonGroup, SIGNAL( buttonClicked(int) ), this, SLOT( onCaseButtonGroupClicked(int) ) );
 
 	createLineTargetsButtonGroup();
 	createTextTargetsButtonGroup();
-
 
 	QHBoxLayout* lowerFirstLayout = new QHBoxLayout();
 	lowerFirstLayout->addSpacing( 20 );
@@ -71,9 +71,6 @@ ChangeTextsCaseDialog::ChangeTextsCaseDialog( QWidget* parent ):
 	caseLayout->addWidget( m_titleRadioButton, 2, 0 );
 	caseLayout->addWidget( m_sentenceRadioButton, 3, 0 );
 	caseLayout->addLayout( lowerFirstLayout, 4, 0 );
-
-
-	connect( caseButtonGroup, SIGNAL( buttonClicked(int) ), this, SLOT( onCaseButtonGroupClicked(int) ) );
 }
 
 ChangeTextsCaseDialog::CaseOp ChangeTextsCaseDialog::caseOperation() const

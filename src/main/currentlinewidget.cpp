@@ -78,6 +78,8 @@ CurrentLineWidget::CurrentLineWidget( QWidget* parent ):
 
 	QGridLayout* buttonsLayouts[2];
 
+	// TODO conflicting setSizePolicy on m_textEdits
+
 	for ( int index = 0; index < 2; ++index )
 	{
 		m_textLabels[index] = new QLabel( this );
@@ -86,7 +88,6 @@ CurrentLineWidget::CurrentLineWidget( QWidget* parent ):
 		m_textLabels[index]->setWordWrap( true );
 
 		m_textEdits[index] = new SimpleRichTextEdit( this );
-		m_textEdits[index]->setSizePolicy( QSizePolicy::Expanding, QSizePolicy::Maximum );
 		m_textEdits[index]->setTabChangesFocus( true );
 
 		m_boldButtons[index] = createToolButton(

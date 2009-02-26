@@ -53,6 +53,7 @@ int ActionDialog::exec()
 // 	if ( minWidth > minimumWidth() )
 // 		setMinimumWidth( minWidth );
 
+	resize( minimumSizeHint() );
 	return KDialog::exec();
 }
 
@@ -64,6 +65,7 @@ void ActionDialog::show()
 // 	if ( minWidth > minimumWidth() )
 // 		setMinimumWidth( minWidth );
 
+	resize( minimumSizeHint() );
 	KDialog::show();
 }
 

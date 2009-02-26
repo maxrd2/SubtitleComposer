@@ -10,5 +10,4 @@ Planned for v0.5 and beyond
   issue, perhaps the "next" encoding should be tried and the error informed
 * test find text/errors when adding/removing lines
 * finish KROSS scripting interface
-* set label buddies in dialogs
 * test errors actions

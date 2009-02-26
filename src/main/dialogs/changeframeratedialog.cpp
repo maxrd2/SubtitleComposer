@@ -28,7 +28,6 @@
 #include <KMessageBox>
 #include <KComboBox>
 
-
 using namespace SubtitleComposer;
 
 ChangeFrameRateDialog::ChangeFrameRateDialog( double fromFramesPerSecond, QWidget* parent ):
@@ -36,32 +35,33 @@ ChangeFrameRateDialog::ChangeFrameRateDialog( double fromFramesPerSecond, QWidge
 {
 	QGroupBox* settingsGroupBox = createGroupBox( i18nc( "@title:group", "Settings" ) );
 
-	QLabel* fromFramesPerSecondLabel = new QLabel( settingsGroupBox );
-	fromFramesPerSecondLabel->setText( i18n( "Current frame rate:" ) );
-
 	m_fromFramesPerSecondComboBox = new KComboBox( false, settingsGroupBox );
 	m_fromFramesPerSecondComboBox->setEditable( true );
 	m_fromFramesPerSecondComboBox->addItems( QString( "15 20 23.976 24 25 29.970 30" ).split( ' ' ) );
 	m_fromFramesPerSecondComboBox->setCurrentIndex( 2 );
 	setFromFramesPerSecond( fromFramesPerSecond );
 
-	QLabel* toFramesPerSecondLabel = new QLabel( settingsGroupBox );
-	toFramesPerSecondLabel->setText( i18n( "New frame rate:" ) );
+	QLabel* fromFramesPerSecondLabel = new QLabel( settingsGroupBox );
+	fromFramesPerSecondLabel->setText( i18n( "Current frame rate:" ) );
+	fromFramesPerSecondLabel->setBuddy( m_fromFramesPerSecondComboBox );
 
 	m_toFramesPerSecondComboBox = new KComboBox( false, settingsGroupBox );
 	m_toFramesPerSecondComboBox->setEditable( true );
 	m_toFramesPerSecondComboBox->addItems( QString( "15 20 23.976 24 25 29.970 30" ).split( ' ' ) );
 	m_toFramesPerSecondComboBox->setCurrentIndex( 2 );
 
+	QLabel* toFramesPerSecondLabel = new QLabel( settingsGroupBox );
+	toFramesPerSecondLabel->setText( i18n( "New frame rate:" ) );
+	toFramesPerSecondLabel->setBuddy( m_toFramesPerSecondComboBox );
+
+	connect( m_fromFramesPerSecondComboBox, SIGNAL( editTextChanged( const QString& ) ), this, SLOT( onTextChanged() ) );
+	connect( m_toFramesPerSecondComboBox, SIGNAL( editTextChanged( const QString& ) ), this, SLOT( onTextChanged() ) );
 
 	QGridLayout* settingsLayout = createLayout( settingsGroupBox );
 	settingsLayout->addWidget( fromFramesPerSecondLabel, 0, 0, Qt::AlignRight|Qt::AlignVCenter );
 	settingsLayout->addWidget( m_fromFramesPerSecondComboBox, 0, 1 );
 	settingsLayout->addWidget( toFramesPerSecondLabel, 1, 0, Qt::AlignRight|Qt::AlignVCenter );
 	settingsLayout->addWidget( m_toFramesPerSecondComboBox, 1, 1 );
-
-	connect( m_fromFramesPerSecondComboBox, SIGNAL( editTextChanged( const QString& ) ), this, SLOT( onTextChanged() ) );
-	connect( m_toFramesPerSecondComboBox, SIGNAL( editTextChanged( const QString& ) ), this, SLOT( onTextChanged() ) );
 
 	setMinimumWidth( sizeHint().width() + 25 );
 }

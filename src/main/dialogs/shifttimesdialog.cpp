@@ -26,7 +26,6 @@
 #include <KLocale>
 #include <KComboBox>
 
-
 using namespace SubtitleComposer;
 
 ShiftTimesDialog::ShiftTimesDialog( QWidget* parent ):

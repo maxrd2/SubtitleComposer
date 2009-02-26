@@ -45,16 +45,15 @@ JoinSubtitlesDialog::JoinSubtitlesDialog( const QString& defaultEncoding, QWidge
 	int buttonSize = m_shiftTimeFromVideoButton->sizeHint().height();
 	m_shiftTimeFromVideoButton->setFixedSize( buttonSize, buttonSize );
 	m_shiftTimeFromVideoButton->setToolTip( i18n( "Set from video length" ) );
-	connect( m_shiftTimeFromVideoButton, SIGNAL( clicked() ), SLOT( setShiftTimeFromVideo() ) );
 
 	m_shiftTimeEdit = new TimeEdit( m_subtitleGroupBox );
+
+	connect( m_shiftTimeFromVideoButton, SIGNAL( clicked() ), SLOT( setShiftTimeFromVideo() ) );
 	connect( m_shiftSubtitleCheckBox, SIGNAL( toggled(bool) ), m_shiftTimeFromVideoButton, SLOT( setEnabled(bool) ) );
 	connect( m_shiftSubtitleCheckBox, SIGNAL( toggled(bool) ), m_shiftTimeEdit, SLOT( setEnabled(bool) ) );
 
-
 	createTargetsGroupBox();
 	createTextTargetsButtonGroup();
-
 
 	QHBoxLayout* shiftTimeLayout = new QHBoxLayout();
 	shiftTimeLayout->addStretch();

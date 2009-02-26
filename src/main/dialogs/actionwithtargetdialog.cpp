@@ -132,7 +132,7 @@ void ActionWithTargetDialog::setTargetsButtonsHiddenState( QButtonGroup* targetB
 
 		m_mainWidget->updateGeometry();
 		setMinimumSize( minimumSizeHint() );
-		resize( minimumSizeHint() );
+		resize( size().width(), minimumSizeHint().height() );
 	}
 }
 

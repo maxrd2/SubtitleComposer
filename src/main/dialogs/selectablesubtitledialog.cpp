@@ -32,9 +32,7 @@
 #include <KComboBox>
 #include <KLineEdit>
 
-
 using namespace SubtitleComposer;
-
 
 SelectableSubtitleDialog::SelectableSubtitleDialog( const QString& defaultEncoding, const QString& title, QWidget* parent ):
 	ActionWithTargetDialog( title, parent ),
@@ -46,11 +44,12 @@ QGroupBox* SelectableSubtitleDialog::createSubtitleGroupBox( const QString& titl
 {
 	m_subtitleGroupBox = createGroupBox( title, addToLayout );
 
-	QLabel* subtitlePathLabel = new QLabel( m_subtitleGroupBox );
-	subtitlePathLabel->setText( i18n( "Path:" ) );
-
 	m_subtitleUrlLineEdit = new KLineEdit( m_subtitleGroupBox );
 	m_subtitleUrlLineEdit->setCompletionObject( new KUrlCompletion() );
+
+	QLabel* subtitlePathLabel = new QLabel( m_subtitleGroupBox );
+	subtitlePathLabel->setText( i18n( "Path:" ) );
+	subtitlePathLabel->setBuddy( m_subtitleUrlLineEdit );
 
 	KPushButton* subtitleButton = new KPushButton( m_subtitleGroupBox );
 	subtitleButton->setIcon( KIcon( "document-open" ) );
@@ -58,16 +57,15 @@ QGroupBox* SelectableSubtitleDialog::createSubtitleGroupBox( const QString& titl
 	int buttonSize = subtitleButton->sizeHint().height();
 	subtitleButton->setFixedSize( buttonSize, buttonSize );
 
-
 	connect( subtitleButton, SIGNAL( clicked() ), SLOT( selectSubtitle() ) );
-
-	QLabel* subtitleEncodingLabel = new QLabel( m_subtitleGroupBox );
-	subtitleEncodingLabel->setText( i18n( "Encoding:" ) );
 
 	m_subtitleEncodingComboBox = new KComboBox( m_subtitleGroupBox );
 	m_subtitleEncodingComboBox->addItems( app()->availableEncodingNames() );
 	m_subtitleEncodingComboBox->setCurrentItem( m_defaultEncoding );
 
+	QLabel* subtitleEncodingLabel = new QLabel( m_subtitleGroupBox );
+	subtitleEncodingLabel->setText( i18n( "Encoding:" ) );
+	subtitleEncodingLabel->setBuddy( m_subtitleEncodingComboBox );
 
 	QHBoxLayout* subtitlePathLayout = new QHBoxLayout();
 	subtitlePathLayout->addWidget( m_subtitleUrlLineEdit, 2 );
@@ -83,7 +81,6 @@ QGroupBox* SelectableSubtitleDialog::createSubtitleGroupBox( const QString& titl
 	m_subtitleLayout->addLayout( subtitlePathLayout, 0, 1, 1, 2 );
 	m_subtitleLayout->addWidget( subtitleEncodingLabel, 1, 0, Qt::AlignRight|Qt::AlignVCenter );
 	m_subtitleLayout->addLayout( subtitleEncodingLayout, 1, 1 );
-// 	m_subtitleLayout->addItem( new QSpacerItem( 1, 1, QSizePolicy::Expanding, QSizePolicy::Minimum ), 1, 2 );
 
 	return m_subtitleGroupBox;
 }

@@ -25,7 +25,6 @@
 
 #include <KLocale>
 
-
 using namespace SubtitleComposer;
 
 FixPunctuationDialog::FixPunctuationDialog( QWidget* parent ):
@@ -49,10 +48,8 @@ FixPunctuationDialog::FixPunctuationDialog( QWidget* parent ):
 	m_ellipsisCheckBox->setText( i18n( "Add ellipisis indicating non finished lines" ) );
 	m_ellipsisCheckBox->setChecked( true );
 
-
 	createLineTargetsButtonGroup();
 	createTextTargetsButtonGroup();
-
 
 	QGridLayout* settingsLayout = createLayout( settingsGroupBox );
 	settingsLayout->addWidget( m_spacesCheckBox, 0, 0 );

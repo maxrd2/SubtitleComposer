@@ -53,11 +53,6 @@ SaveSubtitleDialog::SaveSubtitleDialog( bool primary, const QString& startDir, c
 	// may not be the one of the file (even when the file's extension is perfectly valid)
 	setSelection( startDir );
 
-	QStringList newLineModes;
-	newLineModes << "UNIX";
-	newLineModes << "Windows";
-	newLineModes << "Macintosh";
-
 	QWidget* customWidget = new QWidget( this );
 
 	m_encodingComboBox = new KComboBox( customWidget );
@@ -65,14 +60,15 @@ SaveSubtitleDialog::SaveSubtitleDialog( bool primary, const QString& startDir, c
 	m_encodingComboBox->setCurrentItem( encoding );
 	m_encodingComboBox->setSizePolicy( QSizePolicy::MinimumExpanding, QSizePolicy::Fixed );
 
+	m_newLineComboBox = new KComboBox( customWidget );
+	m_newLineComboBox->addItems( QStringList() << "UNIX" << "Windows" << "Macintosh" );
+	m_newLineComboBox->setCurrentIndex( newLine );
+	m_newLineComboBox->setSizePolicy( QSizePolicy::Minimum, QSizePolicy::Fixed );
+
 	QLabel* newLineLabel = new QLabel( customWidget );
 	newLineLabel->setText( i18n( "EOL:" ) );
 	newLineLabel->setSizePolicy( QSizePolicy::Fixed, QSizePolicy::Fixed );
-
-	m_newLineComboBox = new KComboBox( customWidget );
-	m_newLineComboBox->addItems( newLineModes );
-	m_newLineComboBox->setCurrentIndex( newLine );
-	m_newLineComboBox->setSizePolicy( QSizePolicy::Minimum, QSizePolicy::Fixed );
+	newLineLabel->setBuddy( m_newLineComboBox );
 
 	QGridLayout* layout = new QGridLayout( customWidget );
 	layout->setContentsMargins( 0, 0, 0, 0 );
@@ -80,6 +76,7 @@ SaveSubtitleDialog::SaveSubtitleDialog( bool primary, const QString& startDir, c
 	layout->addWidget( newLineLabel, 0, 1 );
 	layout->addWidget( m_newLineComboBox, 0, 2 );
 
+	// FIXME set "encoding" label buddy to m_encodingComboBox (how do we get the "encoding" label widget?)
 	fileWidget()->setCustomWidget( i18n( "Encoding:" ), customWidget );
 }
 

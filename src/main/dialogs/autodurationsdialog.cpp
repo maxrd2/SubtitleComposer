@@ -29,7 +29,6 @@
 #include <KLocale>
 #include <KNumInput>
 
-
 using namespace SubtitleComposer;
 
 AutoDurationsDialog::AutoDurationsDialog( unsigned charMillis, unsigned wordMillis, unsigned lineMillis, QWidget* parent ):
@@ -38,41 +37,40 @@ AutoDurationsDialog::AutoDurationsDialog( unsigned charMillis, unsigned wordMill
 {
 	QGroupBox* settingsGroupBox = createGroupBox( i18nc( "@title:group", "Settings" ) );
 
-	QLabel* lineMillisLabel = new QLabel( settingsGroupBox );
-	lineMillisLabel->setText( i18n( "Milliseconds per line:" ) );
-	lineMillisLabel->setSizePolicy( QSizePolicy::Expanding, QSizePolicy::Fixed );
-
 	m_lineMillisSpinBox = new KIntSpinBox( settingsGroupBox );
 	m_lineMillisSpinBox->setMinimum( 0 );
 	m_lineMillisSpinBox->setMaximum( 1000 );
 	m_lineMillisSpinBox->setValue( lineMillis );
 
-	QLabel* wordMillisLabel = new QLabel( settingsGroupBox );
-	wordMillisLabel->setText( i18n( "Milliseconds per word:" ) );
-	wordMillisLabel->setSizePolicy( QSizePolicy::Expanding, QSizePolicy::Fixed );
+	QLabel* lineMillisLabel = new QLabel( settingsGroupBox );
+	lineMillisLabel->setText( i18n( "Milliseconds per line:" ) );
+	lineMillisLabel->setBuddy( m_lineMillisSpinBox );
 
 	m_wordMillisSpinBox = new KIntSpinBox( settingsGroupBox );
 	m_wordMillisSpinBox->setMinimum( 0 );
 	m_wordMillisSpinBox->setMaximum( 1000 );
 	m_wordMillisSpinBox->setValue( wordMillis );
 
-	QLabel* charMillisLabel = new QLabel( settingsGroupBox );
-	charMillisLabel->setText( i18n( "Milliseconds per character:" ) );
-	charMillisLabel->setSizePolicy( QSizePolicy::Expanding, QSizePolicy::Fixed );
+	QLabel* wordMillisLabel = new QLabel( settingsGroupBox );
+	wordMillisLabel->setText( i18n( "Milliseconds per word:" ) );
+	wordMillisLabel->setBuddy( m_wordMillisSpinBox );
 
 	m_charMillisSpinBox = new KIntSpinBox( settingsGroupBox );
 	m_charMillisSpinBox->setMinimum( 0 );
 	m_charMillisSpinBox->setMaximum( 1000 );
 	m_charMillisSpinBox->setValue( charMillis );
 
+	QLabel* charMillisLabel = new QLabel( settingsGroupBox );
+	charMillisLabel->setText( i18n( "Milliseconds per character:" ) );
+	charMillisLabel->setBuddy( m_charMillisSpinBox );
+
 	m_preventOverlapCheckBox = new QCheckBox( settingsGroupBox );
 	m_preventOverlapCheckBox->setText( i18n( "Prevent overlapping" ) );
 	m_preventOverlapCheckBox->setChecked( true );
 
-
 	QGroupBox* calculationGroupBox = createGroupBox( i18nc( "@title:group", "Duration Calculation" ) );
-	m_calculationButtonGroup = new QButtonGroup( this );
 
+	m_calculationButtonGroup = new QButtonGroup( this );
 	for ( int index = 0; index < SubtitleLine::OpModeUNKNOWN; ++index )
 		m_calculationButtonGroup->addButton( new QRadioButton( calculationGroupBox ), index );
 
@@ -80,9 +78,7 @@ AutoDurationsDialog::AutoDurationsDialog( unsigned charMillis, unsigned wordMill
 	m_calculationButtonGroup->button( SubtitleLine::Secondary )->setText( i18n( "Use translation text" ) );
 	m_calculationButtonGroup->button( SubtitleLine::Both )->setText( i18n( "Calculate both and use maximum" ) );
 
-
 	createLineTargetsButtonGroup();
-
 
 	QGridLayout* settingsGroupBoxLayout = createLayout( settingsGroupBox );
 	settingsGroupBoxLayout->addWidget( lineMillisLabel, 0, 0, Qt::AlignRight|Qt::AlignVCenter );

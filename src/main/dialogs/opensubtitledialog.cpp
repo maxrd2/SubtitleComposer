@@ -42,6 +42,7 @@ OpenSubtitleDialog::OpenSubtitleDialog( bool primary, const QString& startDir, c
 	m_encodingComboBox->setCurrentItem( encoding );
 	m_encodingComboBox->setSizePolicy( QSizePolicy::MinimumExpanding, QSizePolicy::Fixed );
 
+	// FIXME set "encoding" label buddy to m_encodingComboBox (how do we get the "encoding" label widget?)
 	fileWidget()->setCustomWidget( i18n( "Encoding:" ), m_encodingComboBox );
 }
 

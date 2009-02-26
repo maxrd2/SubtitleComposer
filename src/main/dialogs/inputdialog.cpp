@@ -51,12 +51,12 @@ void TextInputDialog::init( const QString& caption, const QString& labelText, co
 
 	setMainWidget( new QWidget( this ) );
 
-	QLabel* label = new QLabel( mainWidget() );
-	label->setText( labelText );
-
 	m_lineEdit = new QLineEdit( mainWidget() );
 	m_lineEdit->setText( value );
 	m_lineEdit->setFocus();
+
+	QLabel* label = new QLabel( mainWidget() );
+	label->setText( labelText );
 	label->setBuddy( m_lineEdit );
 
 	QGridLayout* mainLayout = new QGridLayout( mainWidget() );
@@ -119,15 +119,15 @@ void IntInputDialog::init( const QString& caption, const QString& labelText, int
 
 	setMainWidget( new QWidget( this ) );
 
-	QLabel* label = new QLabel( mainWidget() );
-	label->setText( labelText );
-
 	m_intNumInput = new KIntNumInput( mainWidget() );
 	m_intNumInput->setRange( min, max );
 	m_intNumInput->setValue( value );
 	m_intNumInput->setEditFocus( true );
 	m_intNumInput->setSliderEnabled( true );
 	m_intNumInput->setFocus();
+
+	QLabel* label = new QLabel( mainWidget() );
+	label->setText( labelText );
 	label->setBuddy( m_intNumInput );
 
 	QGridLayout* mainLayout = new QGridLayout( mainWidget() );

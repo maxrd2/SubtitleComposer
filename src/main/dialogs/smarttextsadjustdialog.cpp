@@ -26,7 +26,6 @@
 #include <KLocale>
 #include <KNumInput>
 
-
 using namespace SubtitleComposer;
 
 SmartTextsAdjustDialog::SmartTextsAdjustDialog( unsigned minLengthForLineBreak, QWidget* parent ):
@@ -34,21 +33,21 @@ SmartTextsAdjustDialog::SmartTextsAdjustDialog( unsigned minLengthForLineBreak, 
 {
 	QGroupBox* settingsGroupBox = createGroupBox( i18nc( "@title:group", "Settings" ) );
 
-	QLabel* m_minLengthForLineBreakLabel = new QLabel( settingsGroupBox );
-	m_minLengthForLineBreakLabel->setText( i18n( "Minimum length for line break:" ) );
-	m_minLengthForLineBreakLabel->setSizePolicy( QSizePolicy::Expanding, QSizePolicy::Fixed );
-
 	m_minLengthForLineBreakSpinBox = new KIntSpinBox( settingsGroupBox );
 	m_minLengthForLineBreakSpinBox->setMinimum( 0 );
 	m_minLengthForLineBreakSpinBox->setMaximum( 1000 );
 	m_minLengthForLineBreakSpinBox->setValue( minLengthForLineBreak );
 	m_minLengthForLineBreakSpinBox->setSuffix( i18n( " characters" ) );
 
+	QLabel* minLengthForLineBreakLabel = new QLabel( settingsGroupBox );
+	minLengthForLineBreakLabel->setText( i18n( "Minimum length for line break:" ) );
+	minLengthForLineBreakLabel->setBuddy( m_minLengthForLineBreakSpinBox );
+
 	createLineTargetsButtonGroup();
 	createTextTargetsButtonGroup();
 
 	QGridLayout* settingsLayout = createLayout( settingsGroupBox );
-	settingsLayout->addWidget( m_minLengthForLineBreakLabel, 0, 0, Qt::AlignRight|Qt::AlignVCenter );
+	settingsLayout->addWidget( minLengthForLineBreakLabel, 0, 0, Qt::AlignRight|Qt::AlignVCenter );
 	settingsLayout->addWidget( m_minLengthForLineBreakSpinBox, 0, 1 );
 }
 

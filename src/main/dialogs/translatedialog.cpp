@@ -32,9 +32,6 @@ TranslateDialog::TranslateDialog( QWidget* parent ):
 {
 	QGroupBox* settingsGroupBox = createGroupBox( i18nc( "@title:group", "Settings" ) );
 
-	QLabel* inputLanguageLabel = new QLabel( settingsGroupBox );
-	inputLanguageLabel->setText( i18n( "Input language:" ) );
-
 	m_inputLanguageComboBox = new QComboBox( settingsGroupBox );
 	m_inputLanguageComboBox->setEditable( false );
 	m_inputLanguageComboBox->setIconSize( QSize( 21, 13 ) );
@@ -48,9 +45,10 @@ TranslateDialog::TranslateDialog( QWidget* parent ):
 		index++;
 	}
 
-	QLabel* outputLanguageLabel = new QLabel( settingsGroupBox );
-	outputLanguageLabel->setText( i18n( "Output language:" ) );
-	
+	QLabel* inputLanguageLabel = new QLabel( settingsGroupBox );
+	inputLanguageLabel->setText( i18n( "Input language:" ) );
+	inputLanguageLabel->setBuddy( m_inputLanguageComboBox );
+
 	m_outputLanguageComboBox = new QComboBox( settingsGroupBox );
 	m_outputLanguageComboBox->setEditable( false );
 	m_outputLanguageComboBox->setIconSize( QSize( 21, 13 ) );
@@ -63,6 +61,10 @@ TranslateDialog::TranslateDialog( QWidget* parent ):
 			m_outputLanguageComboBox->setItemIcon( index, KIcon( flagPath ) );
 		index++;
 	}
+
+	QLabel* outputLanguageLabel = new QLabel( settingsGroupBox );
+	outputLanguageLabel->setText( i18n( "Output language:" ) );
+	outputLanguageLabel->setBuddy( m_outputLanguageComboBox );
 
 	createLineTargetsButtonGroup();
 	createTextTargetsButtonGroup();

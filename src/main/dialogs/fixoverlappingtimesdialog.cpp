@@ -28,21 +28,20 @@
 
 using namespace SubtitleComposer;
 
-
 FixOverlappingTimesDialog::FixOverlappingTimesDialog( QWidget* parent ):
 	ActionWithTargetDialog( i18n( "Fix Overlapping Times" ), parent )
 {
 	QGroupBox* settingsGroupBox = createGroupBox( i18nc( "@title:group", "Settings" ) );
-
-	QLabel* minIntervalLabel = new QLabel( settingsGroupBox );
-	minIntervalLabel->setText( i18n( "Minimum interval between lines:" ) );
-	minIntervalLabel->setSizePolicy( QSizePolicy::Expanding, QSizePolicy::Fixed );
 
 	m_minIntervalSpinBox = new KIntNumInput( settingsGroupBox );
 	m_minIntervalSpinBox->setSuffix( i18n( " msecs" ) );
 	m_minIntervalSpinBox->setMinimum( 1 );
 	m_minIntervalSpinBox->setMaximum( 1000 );
 	m_minIntervalSpinBox->setValue( 50 );
+
+	QLabel* minIntervalLabel = new QLabel( settingsGroupBox );
+	minIntervalLabel->setText( i18n( "Minimum interval between lines:" ) );
+	minIntervalLabel->setBuddy( m_minIntervalSpinBox );
 
 	createLineTargetsButtonGroup();
 

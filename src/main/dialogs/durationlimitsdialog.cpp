@@ -35,29 +35,26 @@ DurationLimitsDialog::DurationLimitsDialog( const Time& minDuration, const Time&
 	m_minGroupBox = createGroupBox( i18nc( "@title:group", "Minimum Duration" ) );
 	m_minGroupBox->setCheckable( true );
 
+	m_minDurationTimeEdit = new TimeEdit( m_minGroupBox );
+
 	QLabel* minDurationLabel = new QLabel( m_minGroupBox );
 	minDurationLabel->setText( i18n( "Expand duration to:" ) );
-	minDurationLabel->setSizePolicy( QSizePolicy::Expanding, QSizePolicy::Fixed );
+	minDurationLabel->setBuddy( m_minDurationTimeEdit );
 
 	m_preventOverlapCheckBox = new QCheckBox( m_minGroupBox );
 	m_preventOverlapCheckBox->setText( i18n( "Prevent overlapping" ) );
 	m_preventOverlapCheckBox->setChecked( true );
 
-	m_minDurationTimeEdit = new TimeEdit( m_minGroupBox );
-
-
 	m_maxGroupBox = createGroupBox( i18nc( "@title:group", "Maximum Duration" ) );
 	m_maxGroupBox->setCheckable( true );
 
-	QLabel* maxDurationLabel = new QLabel( m_maxGroupBox );
-	maxDurationLabel->setText( i18n( "Shrink duration to:" ) );
-	maxDurationLabel->setSizePolicy( QSizePolicy::Expanding, QSizePolicy::Fixed );
-
 	m_maxDurationTimeEdit = new TimeEdit( m_maxGroupBox );
 
+	QLabel* maxDurationLabel = new QLabel( m_maxGroupBox );
+	maxDurationLabel->setText( i18n( "Shrink duration to:" ) );
+	maxDurationLabel->setBuddy( m_maxDurationTimeEdit );
 
 	createLineTargetsButtonGroup();
-
 
 	QGridLayout* minLayout = createLayout( m_minGroupBox );
 	minLayout->addWidget( minDurationLabel, 0, 0, Qt::AlignRight|Qt::AlignVCenter );
@@ -67,7 +64,6 @@ DurationLimitsDialog::DurationLimitsDialog( const Time& minDuration, const Time&
 	QGridLayout* maxLayout = createLayout( m_maxGroupBox );
 	maxLayout->addWidget( maxDurationLabel, 0, 0, Qt::AlignRight|Qt::AlignVCenter );
 	maxLayout->addWidget( m_maxDurationTimeEdit, 0, 1 );
-
 
 	connect( m_maxGroupBox, SIGNAL( toggled(bool) ), maxDurationLabel, SLOT( setEnabled(bool) ) );
 	connect( m_maxGroupBox, SIGNAL( toggled(bool) ), m_maxDurationTimeEdit, SLOT( setEnabled(bool) ) );
