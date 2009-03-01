@@ -29,7 +29,7 @@
 #include "../core/subtitleline.h"
 #include "../widgets/treeview.h"
 
-#include <QtCore/QAbstractListModel>
+#include <QtCore/QAbstractItemModel>
 #include <QtGui/QStyledItemDelegate>
 #include <QtGui/QStyleOptionViewItemV4>
 #include <QtGui/QPen>
@@ -70,9 +70,7 @@ namespace SubtitleComposer
 
 		private slots:
 
-			//void onLinesAboutToBeInserted( int firstIndex, int lastIndex );
 			void onLinesInserted( int firstIndex, int lastIndex );
-			//void onLinesAboutToBeRemoved( int firstIndex, int lastIndex );
 			void onLinesRemoved( int firstIndex, int lastIndex );
 
 			void onLineChanged( SubtitleLine* line );

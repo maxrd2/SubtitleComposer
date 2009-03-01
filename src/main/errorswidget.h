@@ -47,26 +47,22 @@ namespace SubtitleComposer
 
 			inline const SubtitleLine* line() const { return m_line; }
 
-			inline bool isVisible() const { return m_itemCount; }
-
-			inline int itemCount() const { return m_itemCount; }
-			inline int errorsCount() const { return m_errorsCount; }
+			inline int errorCount() const { return m_errorCount; }
 			inline bool isMarked() const { return m_marked; }
+
+			inline bool isVisible() const { return m_errorCount; }
 
 		private:
 
-			ErrorsModelNode( ErrorsModel* model, const SubtitleLine* line, int index );
+			ErrorsModelNode( ErrorsModel* model, const SubtitleLine* line );
 
-			static int bitsCount( unsigned int bitFlags );
-
-			void update( int lineIndex );
+			void update();
 
 		private:
 
 			ErrorsModel* m_model;
 			const SubtitleLine* m_line;
-			int m_itemCount;
-			int m_errorsCount;
+			int m_errorCount;
 			bool m_marked;
 
 			friend class ErrorsModel;
@@ -99,9 +95,9 @@ namespace SubtitleComposer
 
 			inline const ErrorsModelNode* node( int lineIndex ) const { return m_nodes.at( lineIndex ); }
 
-			inline int linesWithIssuesCount() const { return m_linesWithIssuesCount; };
-			inline int errorsCount() const { return m_errorsCount; };
-			inline int marksCount() const { return m_marksCount; };
+			inline int lineWithErrorsCount() const { return m_lineWithErrorsCount; };
+			inline int errorCount() const { return m_errorCount; };
+			inline int markCount() const { return m_markCount; };
 
 			virtual int rowCount( const QModelIndex& parent=QModelIndex() ) const;
 			virtual int columnCount( const QModelIndex& parent=QModelIndex() ) const;
@@ -156,9 +152,9 @@ namespace SubtitleComposer
 			QList<ErrorsModelNode*> m_nodes;
 
 			QTimer* m_statsChangedTimer;
-			int m_linesWithIssuesCount;
-			int m_errorsCount;
-			int m_marksCount;
+			int m_lineWithErrorsCount;
+			int m_errorCount;
+			int m_markCount;
 
 			QTimer* m_dataChangedTimer;
 			int m_minChangedLineIndex;
@@ -200,6 +196,8 @@ namespace SubtitleComposer
 
 			void setCurrentLine( SubtitleLine* line, bool clearSelection=true );
 
+			void expandAll(); // reimplemented because currently calling QTreeView has many bad side effects
+
 		signals:
 
 			void currentLineChanged( SubtitleLine* line );
@@ -207,13 +205,19 @@ namespace SubtitleComposer
 
 		protected:
 
-			virtual void contextMenuEvent( QContextMenuEvent* e );
-			virtual void mouseDoubleClickEvent( QMouseEvent* e );
-			virtual void keyPressEvent( QKeyEvent* e );
+			virtual void contextMenuEvent( QContextMenuEvent* event );
+			virtual void mouseDoubleClickEvent( QMouseEvent* event );
+			virtual void keyPressEvent( QKeyEvent* event );
+			virtual void showEvent( QShowEvent* event );
+			virtual void hideEvent( QHideEvent* event );
 
 		protected slots:
 
 			void onCurrentRowChanged( const QModelIndex& currentIndex );
+
+		private:
+
+			Subtitle* m_subtitle;
 	};
 }
 

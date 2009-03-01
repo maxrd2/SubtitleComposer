@@ -18,10 +18,8 @@
  ***************************************************************************/
 
 #include "treeview.h"
-#include <profiler.h>
 
 #include <QtCore/QTimer>
-#include <QtGui/QHeaderView>
 #include <QtGui/QScrollBar>
 
 
@@ -36,7 +34,7 @@ TreeView::TreeView( QWidget* parent ):
 	// The culprit is the updateGeometries() method in QHeaderView which takes a lot
 	// of time when there are columns with ResizeToContents mode set.
 	// To workaround this, we reimplement the updateGeometries method to (re)start a
-	// timer that invoques the real work only on timeout.
+	// timer that invoques the real work only on timeout (reported as BUG 234368 at Qt).
 	// To further refine our hack, we only delay the geometries update when the model's
 	// "has rows" (imaginary) property hasn't changed since last geometries update.
 	// This works very well in our case because the columns with ResizeToContents enabled
@@ -57,14 +55,12 @@ void TreeView::setModel( QAbstractItemModel* model )
 	if ( this->model() )
 	{
 		if ( this->model()->metaObject()->indexOfSignal( "dataChanged()" ) != -1 )
-		{
 			disconnect( this->model(), SIGNAL( dataChanged() ), this->viewport(), SLOT( update() ) );
 
-			disconnect( this->model(), SIGNAL( rowsAboutToBeInserted( const QModelIndex&, int, int ) ),
-						this, SLOT( onRowsAboutToBeInserted( const QModelIndex&, int, int ) ) );
-			disconnect( this->model(), SIGNAL( rowsAboutToBeRemoved( const QModelIndex&, int, int ) ),
-						this, SLOT( onRowsAboutToBeRemoved( const QModelIndex&, int, int ) ) );
-		}
+		disconnect( this->model(), SIGNAL( rowsAboutToBeInserted( const QModelIndex&, int, int ) ),
+					this, SLOT( onRowsAboutToBeInserted( const QModelIndex&, int, int ) ) );
+		disconnect( this->model(), SIGNAL( rowsAboutToBeRemoved( const QModelIndex&, int, int ) ),
+					this, SLOT( onRowsAboutToBeRemoved( const QModelIndex&, int, int ) ) );
 	}
 
 	QTreeView::setModel( model );
@@ -85,23 +81,26 @@ void TreeView::setModel( QAbstractItemModel* model )
 		m_currentModelRows = -1;
 }
 
-
-void TreeView::onRowsAboutToBeInserted( const QModelIndex& /*parent*/, int start, int end )
+void TreeView::onRowsAboutToBeInserted( const QModelIndex& parent, int start, int end )
 {
-	m_instantGeometryUpdate = m_currentModelRows == 0 ? 1 : 0;
-	m_currentModelRows += end - start + 1;
+	if ( ! parent.isValid() )
+	{
+		m_instantGeometryUpdate = m_currentModelRows == 0 ? 1 : 0;
+		m_currentModelRows += end - start + 1;
+	}
 }
 
-void TreeView::onRowsAboutToBeRemoved( const QModelIndex& /*parent*/, int start, int end )
+void TreeView::onRowsAboutToBeRemoved( const QModelIndex& parent, int start, int end )
 {
-	m_currentModelRows -= end - start + 1;
-	m_instantGeometryUpdate = m_currentModelRows == 0 ? 1 : 0;
+	if ( ! parent.isValid() )
+	{
+		m_currentModelRows -= end - start + 1;
+		m_instantGeometryUpdate = m_currentModelRows == 0 ? 1 : 0;
+	}
 }
 
 void TreeView::updateGeometries()
 {
-// 	PROFILE();
-
 	if ( m_instantGeometryUpdate-- )
 		QTreeView::updateGeometries();
 	else

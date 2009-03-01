@@ -78,8 +78,6 @@ CurrentLineWidget::CurrentLineWidget( QWidget* parent ):
 
 	QGridLayout* buttonsLayouts[2];
 
-	// TODO conflicting setSizePolicy on m_textEdits
-
 	for ( int index = 0; index < 2; ++index )
 	{
 		m_textLabels[index] = new QLabel( this );

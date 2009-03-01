@@ -25,7 +25,6 @@
 #include <QtCore/QVariant>
 #include <QtCore/QTimer>
 #include <QtCore/QEvent>
-#include <QtGui/QHeaderView>
 #include <QtGui/QScrollBar>
 #include <QtGui/QDragEnterEvent>
 #include <QtGui/QDropEvent>
@@ -33,6 +32,7 @@
 #include <QtGui/QFontMetrics>
 #include <QtGui/QTextDocument>
 #include <QtGui/QAbstractTextDocumentLayout>
+#include <QtGui/QHeaderView>
 
 #include <KDebug>
 #include <KLocale>
@@ -334,11 +334,6 @@ bool LinesModel::setData( const QModelIndex& index, const QVariant& value, int r
 	return false;
 }
 
-// void LinesModel::onLinesAboutToBeInserted( int firstIndex, int lastIndex )
-// {
-// 	PROFILE();
-// }
-
 void LinesModel::onLinesInserted( int firstIndex, int lastIndex )
 {
 	static const QModelIndex rootIndex;
@@ -346,11 +341,6 @@ void LinesModel::onLinesInserted( int firstIndex, int lastIndex )
 	beginInsertRows( rootIndex, firstIndex, lastIndex );
 	endInsertRows(); // ridiculously costly operation
 }
-
-// void LinesModel::onLinesAboutToBeRemoved( int firstIndex, int lastIndex )
-// {
-// 	PROFILE();
-// }
 
 void LinesModel::onLinesRemoved( int firstIndex, int lastIndex )
 {
@@ -737,8 +727,10 @@ LinesWidget::LinesWidget( QWidget* parent ):
 {
 	setModel( new LinesModel( this ) );
 
+	LinesItemDelegate* plainTextDelegate = new LinesItemDelegate( true, true, false, this );
+	LinesItemDelegate* richTextDelegate = new LinesItemDelegate( true, true, true, this );
 	for ( int column = 0, columnCount = model()->columnCount(); column < columnCount; ++column )
-		setItemDelegateForColumn( column, new LinesItemDelegate( true, true, column >= LinesModel::Text, this ) );
+		setItemDelegateForColumn( column, column < LinesModel::Text ? plainTextDelegate : richTextDelegate );
 
 	QHeaderView* header = this->header();
 	header->setClickable( false );

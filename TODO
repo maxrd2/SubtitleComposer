@@ -1,13 +1,11 @@
 Planned for v0.5 and beyond
 ===========================
 	* waveform visuals (check out wave drawing in kdenlive editor)
-	* checkout rendering of subtitles when antialiasing is enabled
-	* automatic of OCR errors
+	* automatic correction of OCR errors
 	* use KDE proxy settings for internet services (i.e., text translation) -- how do we do that?
 
 * undo/redo actions must provide some visual feedback of what's changed
 * it's annoying to have a subtitle fail to load because of an invalid encoding
   issue, perhaps the "next" encoding should be tried and the error informed
-* test find text/errors when adding/removing lines
 * finish KROSS scripting interface
-* test errors actions
+* test find text/errors when adding/removing lines

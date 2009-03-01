@@ -31,7 +31,7 @@
 
 class QAction;
 class QMenu;
-class QTreeWidget;
+class TreeView;
 class KAction;
 class KDialog;
 class KPushButton;
@@ -81,7 +81,7 @@ namespace SubtitleComposer
 
 			Subtitle* m_subtitle;
 			QMap<QString,QString> m_scripts; // name => path
-			QTreeWidget* m_scriptsWidget;
+			TreeView* m_scriptsWidget;
 			KPushButton* m_runScriptButton;
 			KDialog* m_dialog;
 	};

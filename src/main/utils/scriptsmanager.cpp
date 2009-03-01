@@ -26,13 +26,14 @@
 #include "../dialogs/inputdialog.h"
 #include "../../common/fileloadhelper.h"
 #include "../../common/filetrasher.h"
+#include "../../widgets/treeview.h"
+#include <QtGui/QStringListModel>
 
 #include <QtCore/QProcess>
 #include <QtGui/QAction>
 #include <QtGui/QMenu>
 #include <QtGui/QLabel>
 #include <QtGui/QLineEdit>
-#include <QtGui/QTreeWidget>
 #include <QtGui/QGridLayout>
 #include <QtGui/QKeyEvent>
 
@@ -49,6 +50,22 @@
 #include <kross/core/manager.h>
 #include <kross/core/interpreter.h>
 #include <kross/core/action.h>
+
+namespace SubtitleComposer
+{
+	class InstalledScriptsModel : public QStringListModel
+	{
+		public:
+			InstalledScriptsModel( QObject* parent=0 ):QStringListModel( parent ) {}
+			virtual ~InstalledScriptsModel() {}
+			virtual QVariant headerData( int /*section*/, Qt::Orientation orientation, int role ) const
+			{
+				if ( role != Qt::DisplayRole || orientation == Qt::Vertical )
+					return QVariant();
+				return i18n( "Installed Scripts" );
+			}
+	};
+}
 
 using namespace SubtitleComposer;
 
@@ -68,12 +85,10 @@ ScriptsManager::ScriptsManager( QObject* parent ):
 
 	QWidget* mainWidget = m_dialog->mainWidget();
 
-	m_scriptsWidget = new QTreeWidget( mainWidget );
+	m_scriptsWidget = new TreeView( mainWidget );
 	m_scriptsWidget->installEventFilter( this );
+	m_scriptsWidget->setModel( new InstalledScriptsModel );
 
-	QTreeWidgetItem* headerItem = new QTreeWidgetItem();
-	headerItem->setText( 0, i18n( "Installed Scripts" ) );
-	m_scriptsWidget->setHeaderItem( headerItem );
 	m_scriptsWidget->setRootIsDecorated( false );
 	m_scriptsWidget->setSortingEnabled( false );
 
@@ -154,8 +169,8 @@ void ScriptsManager::showDialog()
 
 QString ScriptsManager::currentScriptName() const
 {
-	QTreeWidgetItem* currentItem = m_scriptsWidget->currentItem();
-	return currentItem ? currentItem->text( 0 ) : QString();
+	QModelIndex currentIndex = m_scriptsWidget->currentIndex();
+	return currentIndex.isValid() ? m_scriptsWidget->model()->data( currentIndex, Qt::DisplayRole ).toString() : 0;
 }
 
 QStringList ScriptsManager::scriptNames() const
@@ -345,10 +360,9 @@ void ScriptsManager::runScript( const QString& sN )
 
 	if ( scriptName.isEmpty() )
 	{
-		QTreeWidgetItem* currentItem = m_scriptsWidget->currentItem();
-		if ( ! currentItem )
+		scriptName = currentScriptName();
+		if ( scriptName.isEmpty() )
 			return;
-		scriptName = currentItem->text( 0 );
 	}
 
 	if ( ! m_scripts.contains( scriptName ) )
@@ -380,31 +394,21 @@ void ScriptsManager::runScript( const QString& sN )
 		krossAction.trigger();
 	}
 
-	// TODO check out error messages handling
 	if ( krossAction.hadError() )
 	{
 		if( krossAction.errorTrace().isNull() )
-			KMessageBox::error( app()->mainWindow(), krossAction.errorMessage() );
-		else
-			KMessageBox::detailedError( app()->mainWindow(), krossAction.errorMessage(), krossAction.errorTrace() );
-
-/*		if ( krossAction.errorLineNo() >= 0 )
-			KMessageBox::sorry(
+			KMessageBox::error(
 				app()->mainWindow(),
-				i18n( "<p>There was an error executing %1.</p><p>Message was:<br/> %2 (line %3)</p>",
-					scriptPath,
-					krossAction.errorMessage(),
-					krossAction.errorLineNo()
-				)
+				krossAction.errorMessage(),
+				i18n( "Error Running Script" )
 			);
 		else
-			KMessageBox::sorry(
+			KMessageBox::detailedError(
 				app()->mainWindow(),
-				i18n( "<p>There was an error executing %1.</p><p>Message was:<br/> %2</p>",
-					scriptPath,
-					krossAction.errorMessage()
-				)
-			);*/
+				krossAction.errorMessage(),
+				krossAction.errorTrace(),
+				i18n( "Error Running Script" )
+			);
 	}
 }
 
@@ -432,34 +436,43 @@ void ScriptsManager::reloadScripts()
 	KActionCollection* actionCollection = app()->mainWindow()->actionCollection();
 	UserActionManager* actionManager = UserActionManager::instance();
 
-	QString selectedPath = m_scriptsWidget->topLevelItemCount() ?
-		m_scripts[ m_scriptsWidget->currentItem()->text( 0 ) ] :
+	QString selectedPath = m_scriptsWidget->model()->rowCount() && ! currentScriptName().isEmpty() ?
+		m_scripts[currentScriptName()] :
 		QString();
 
 	m_scripts.clear(); // deletes all actions
-	m_scriptsWidget->clear();
 	toolsMenu->clear();
 	toolsMenu->addAction( app()->action( ACT_SCRIPTS_MANAGER ) );
 	toolsMenu->addSeparator();
 
+	QStringList scriptNames;
 	QStringList scriptPaths = KGlobal::dirs()->findAllResources( "script" );
 	scriptPaths.sort();
+	int index = 0, newCurrentIndex = -1;
 	for ( QStringList::ConstIterator it = scriptPaths.begin(), end = scriptPaths.end(); it != end; ++it )
 	{
 		QString scriptName = QFileInfo( *it ).fileName();
 		if ( ! m_scripts.contains( scriptName ) )
 		{
-			QTreeWidgetItem* scriptItem = new QTreeWidgetItem( m_scriptsWidget, QStringList( scriptName ) );
-			m_scriptsWidget->addTopLevelItem( scriptItem );
-			if ( ! m_scriptsWidget->currentItem() || *it == selectedPath )
-				m_scriptsWidget->setCurrentItem( scriptItem );
+			scriptNames << scriptName;
+			if ( newCurrentIndex < 0 && *it == selectedPath )
+				newCurrentIndex = index;
 			m_scripts[scriptName] = *it;
 
 			QAction* scriptAction = toolsMenu->addAction( scriptName );
 			scriptAction->setObjectName( scriptName );
 			actionCollection->addAction( scriptName, scriptAction );
 			actionManager->addAction( scriptAction, UserAction::SubOpened|UserAction::FullScreenOff );
+
+			index++;
 		}
+	}
+
+	static_cast<InstalledScriptsModel*>( m_scriptsWidget->model() )->setStringList( scriptNames );
+	if ( ! scriptNames.isEmpty() )
+	{
+		QModelIndex currentIndex = m_scriptsWidget->model()->index( newCurrentIndex < 0 ? 0 : newCurrentIndex, 0 );
+		m_scriptsWidget->setCurrentIndex( currentIndex );
 	}
 }
 

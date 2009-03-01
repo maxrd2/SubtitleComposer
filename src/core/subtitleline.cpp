@@ -29,6 +29,14 @@
 
 using namespace SubtitleComposer;
 
+/// "magic" code taken from http://tekpool.wordpress.com/category/bit-count/
+int SubtitleLine::bitsCount( unsigned int u )
+{
+	unsigned int uCount;
+	uCount = u - ((u >> 1) & 033333333333) - ((u >> 2) & 011111111111);
+	return ((uCount + (uCount >> 3)) & 030707070707) % 63;
+}
+
 SubtitleLine::ErrorFlag SubtitleLine::errorFlag( SubtitleLine::ErrorID id )
 {
 	if ( id < 0 || id >= ErrorSIZE )
@@ -707,6 +715,11 @@ void SubtitleLine::adjustTimes( long shiftMseconds, double scaleFactor )
 int SubtitleLine::errorFlags() const
 {
 	return m_errorFlags;
+}
+
+int SubtitleLine::errorCount() const
+{
+	return bitsCount( m_errorFlags );
 }
 
 void SubtitleLine::setErrorFlags( int errorFlags )

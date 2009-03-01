@@ -17,6 +17,8 @@
  *   Boston, MA 02110-1301, USA.                                           *
  ***************************************************************************/
 
+#include "profiler.h"
+
 #include "errorswidget.h"
 #include "application.h"
 #include "configs/errorsconfig.h"
@@ -42,59 +44,47 @@ using namespace SubtitleComposer;
 /// ERRORS MODEL NODE
 /// =================
 
-ErrorsModelNode::ErrorsModelNode( ErrorsModel* model, const SubtitleLine* line, int index ):
+ErrorsModelNode::ErrorsModelNode( ErrorsModel* model, const SubtitleLine* line ):
 	m_model( model ),
 	m_line( line ),
-	m_itemCount( 0 ),
-	m_errorsCount( 0 ),
+	m_errorCount( 0 ),
 	m_marked( false )
 {
-	update( index );
+	update();
 }
 
 ErrorsModelNode::~ErrorsModelNode()
 {
-	m_model->m_errorsCount -= m_errorsCount;
 	if ( m_marked )
-		m_model->m_marksCount--;
-	if ( m_itemCount )
-		m_model->m_linesWithIssuesCount--;
+		m_model->m_markCount--;
+
+	m_model->m_errorCount -= m_errorCount;
+
+	if ( m_errorCount )
+		m_model->m_lineWithErrorsCount--;
 }
 
-/// code taken from http://tekpool.wordpress.com/category/bit-count/
-int ErrorsModelNode::bitsCount( unsigned int u )
-{
-	unsigned int uCount;
-	uCount = u - ((u >> 1) & 033333333333) - ((u >> 2) & 011111111111);
-	return ((uCount + (uCount >> 3)) & 030707070707) % 63;
-}
-
-void ErrorsModelNode::update( int lineIndex )
+void ErrorsModelNode::update()
 {
 	bool newMarked = m_line->errorFlags() & SubtitleLine::UserMark;
-	int newErrorsCount = bitsCount( m_line->errorFlags() );
-	if ( newMarked )
-		newErrorsCount--;
+	int newErrorsCount = m_line->errorCount();
 
-	if ( m_marked != newMarked )
+	if ( newMarked != m_marked )
 	{
-		m_model->incrementMarksCount( newMarked ? 1 : -1 );
+		if ( m_marked )
+			m_model->m_markCount--;
+		else
+			m_model->m_markCount++;
 		m_marked = newMarked;
 	}
 
-	if ( m_errorsCount != newErrorsCount )
+	if ( newErrorsCount > m_errorCount )
 	{
-		m_model->incrementErrorsCount( newErrorsCount - m_errorsCount );
-		m_errorsCount = newErrorsCount;
-	}
+		m_model->incrementErrorsCount( newErrorsCount - m_errorCount );
 
-	int newItemsCount = m_errorsCount + (m_marked ? 1 : 0);
+		int modelL1Row = m_model->mapLineIndexToModelL1Row( m_line->index() ) + 1;
 
-	if ( newItemsCount > m_itemCount )
-	{
-		int modelL1Row = m_model->mapLineIndexToModelL1Row( lineIndex ) + 1;
-
-		if ( ! m_itemCount ) // line was not visible before
+		if ( ! m_errorCount ) // line was not visible before
 		{
 			m_model->beginInsertRows( QModelIndex(), modelL1Row, modelL1Row );
 
@@ -103,30 +93,32 @@ void ErrorsModelNode::update( int lineIndex )
 			m_model->endInsertRows();
 		}
 
-		m_model->beginInsertRows( m_model->index( modelL1Row, 0 ), m_itemCount, newItemsCount - 1 );
+		m_model->beginInsertRows( m_model->index( modelL1Row, 0 ), m_errorCount, newErrorsCount - 1 );
 
-		m_itemCount = newItemsCount;
+		m_errorCount = newErrorsCount;
 
 		m_model->endInsertRows();
 	}
-	else if ( newItemsCount < m_itemCount )
+	else if ( newErrorsCount < m_errorCount )
 	{
-		int modelL1Row = m_model->mapLineIndexToModelL1Row( lineIndex );
+		m_model->incrementErrorsCount( newErrorsCount - m_errorCount );
 
-		if ( ! newItemsCount ) // line is no longer visible
+		int modelL1Row = m_model->mapLineIndexToModelL1Row( m_line->index() );
+
+		if ( ! newErrorsCount ) // line is no longer visible
 		{
 			m_model->beginRemoveRows( QModelIndex(), modelL1Row, modelL1Row );
 
 			m_model->incrementVisibleLinesCount( -1 );
-			m_itemCount = 0;
+			m_errorCount = 0;
 
 			m_model->endRemoveRows();
 		}
 		else
 		{
-			m_model->beginRemoveRows( m_model->index( modelL1Row, 0 ), newItemsCount, m_itemCount - 1 );
+			m_model->beginRemoveRows( m_model->index( modelL1Row, 0 ), newErrorsCount, m_errorCount - 1 );
 
-			m_itemCount = newItemsCount;
+			m_errorCount = newErrorsCount;
 
 			m_model->endRemoveRows();
 		}
@@ -144,9 +136,9 @@ ErrorsModel::ErrorsModel( QObject* parent ):
 	m_subtitle( 0 ),
 	m_nodes(),
 	m_statsChangedTimer( new QTimer( this ) ),
-	m_linesWithIssuesCount( 0 ),
-	m_errorsCount( 0 ),
-	m_marksCount( 0 ),
+	m_lineWithErrorsCount( 0 ),
+	m_errorCount( 0 ),
+	m_markCount( 0 ),
 	m_dataChangedTimer( new QTimer( this ) ),
 	m_minChangedLineIndex( -1 ),
 	m_maxChangedLineIndex( -1 )
@@ -185,6 +177,10 @@ int ErrorsModel::mapModelIndexToLineIndex( const QModelIndex& modelIndex ) const
 int ErrorsModel::mapLineIndexToModelL1Row( int targetLineIndex ) const
 {
 	int modelL1Row = -1;
+
+	if ( targetLineIndex >= m_nodes.count() )
+		targetLineIndex = m_nodes.count() - 1;
+
 	for ( int lineIndex = 0; lineIndex <= targetLineIndex; ++lineIndex )
 		if ( m_nodes.at( lineIndex )->isVisible() )
 			modelL1Row++;
@@ -241,16 +237,14 @@ int ErrorsModel::mapModelL2RowToLineErrorFlag( int targetModelL2Row, int lineErr
 
 void ErrorsModel::onLinesInserted( int firstLineIndex, int lastLineIndex )
 {
-// 	PROFILE();
-
 	int firstVisibleLineIndex = INT_MAX, lastVisibleLineIndex = INT_MIN;
 
-	ErrorsModelNode* lineErrorsData;
+	ErrorsModelNode* node;
 	for ( int lineIndex = firstLineIndex; lineIndex <= lastLineIndex; ++lineIndex )
 	{
-		lineErrorsData = new ErrorsModelNode( this, m_subtitle->line( lineIndex ), lineIndex );
-		m_nodes.insert( lineIndex, lineErrorsData );
-		if ( lineErrorsData->isVisible() )
+		node = new ErrorsModelNode( this, m_subtitle->line( lineIndex ) );
+		m_nodes.insert( lineIndex, node );
+		if ( node->isVisible() )
 		{
 			if ( lineIndex < firstVisibleLineIndex )
 				firstVisibleLineIndex = lineIndex;
@@ -274,8 +268,6 @@ void ErrorsModel::onLinesInserted( int firstLineIndex, int lastLineIndex )
 
 void ErrorsModel::onLinesRemoved( int firstLineIndex, int lastLineIndex )
 {
-// 	PROFILE();
-
 	int firstVisibleLineIndex = INT_MAX, lastVisibleLineIndex = INT_MIN;
 
 	for ( int lineIndex = firstLineIndex; lineIndex <= lastLineIndex; ++lineIndex )
@@ -309,7 +301,7 @@ void ErrorsModel::onLineErrorsChanged( SubtitleLine* line )
 {
 	int lineIndex = line->index();
 
-	m_nodes.at( lineIndex )->update( lineIndex );
+	m_nodes.at( lineIndex )->update();
 
 	markLineChanged( lineIndex );
 }
@@ -408,21 +400,21 @@ void ErrorsModel::incrementVisibleLinesCount( int delta )
 {
 	if ( ! m_statsChangedTimer->isActive() )
 		m_statsChangedTimer->start();
-	m_linesWithIssuesCount += delta;
+	m_lineWithErrorsCount += delta;
 }
 
 void ErrorsModel::incrementErrorsCount( int delta )
 {
 	if ( ! m_statsChangedTimer->isActive() )
 		m_statsChangedTimer->start();
-	m_errorsCount += delta;
+	m_errorCount += delta;
 }
 
 void ErrorsModel::incrementMarksCount( int delta )
 {
 	if ( ! m_statsChangedTimer->isActive() )
 		m_statsChangedTimer->start();
-	m_marksCount += delta;
+	m_markCount += delta;
 }
 
 void ErrorsModel::onErrorsOptionChanged()
@@ -498,14 +490,14 @@ int ErrorsModel::rowCount( const QModelIndex& parent ) const
 		return 0;
 
 	if ( ! parent.isValid() ) // parent is the root item
-		return m_linesWithIssuesCount;
+		return m_lineWithErrorsCount;
 
 	if ( parent.parent().isValid() ) // parent is an error item
 		return 0;
 
 	// parent is a line item
 	int lineIndex = mapModelL1RowToLineIndex( parent.row() );
-	return lineIndex < 0 ? 0 : m_nodes.at( lineIndex )->itemCount();
+	return lineIndex < 0 ? 0 : m_nodes.at( lineIndex )->errorCount();
 }
 
 int ErrorsModel::columnCount( const QModelIndex& /*parent*/ ) const
@@ -519,7 +511,7 @@ QModelIndex ErrorsModel::index( int row, int column, const QModelIndex& parent )
 
 	if ( ! line ) // index is a root level item
 	{
-		if ( row < 0 || row >= m_linesWithIssuesCount )
+		if ( row < 0 || row >= m_lineWithErrorsCount )
 			return QModelIndex();
 
 // 		kDebug() << "retrieved level 1 CHILD index " << row;
@@ -601,7 +593,12 @@ QVariant ErrorsModel::data( const QModelIndex& index, int role ) const
 			if ( index.column() == Number )
 				return i18n( "Line <numid>%1</numid>", lineIndex + 1 );
 			else if ( index.column() == Errors )
-				return QString::number( m_nodes.at( lineIndex )->errorsCount() );
+			{
+				int errorCount = m_nodes.at( lineIndex )->errorCount();
+				if ( m_nodes.at( lineIndex )->isMarked() )
+					errorCount--;
+				return QString::number( errorCount );
+			}
 			else if ( index.column() == Marks )
 				return QString( m_nodes.at( lineIndex )->isMarked() ? "1" : "0" );
 			else
@@ -654,12 +651,12 @@ const QIcon& ErrorsModel::errorIcon()
 
 
 
-
 /// ERRORS WIDGET
 /// =============
 
 ErrorsWidget::ErrorsWidget( QWidget* parent ):
-	TreeView( parent )
+	TreeView( parent ),
+	m_subtitle( 0 )
 {
 	setModel( new ErrorsModel( this ) );
 
@@ -667,14 +664,14 @@ ErrorsWidget::ErrorsWidget( QWidget* parent ):
 	header->setResizeMode( ErrorsModel::Number, QHeaderView::Interactive );
 	header->setResizeMode( ErrorsModel::Errors, QHeaderView::Interactive );
 	header->setResizeMode( ErrorsModel::Marks, QHeaderView::Interactive );
-// 	header->setResizeMode( ErrorsModel::Errors, QHeaderView::ResizeToContents );
-// 	header->setResizeMode( ErrorsModel::Marks, QHeaderView::ResizeToContents );
 
 	setSortingEnabled( false );
 	setRootIsDecorated( true );
 	setAllColumnsShowFocus( true );
 	setIconSize( QSize( 16, 16 ) );
 	setIndentation( 15 );
+
+	setUniformRowHeights( true );
 
 	setSelectionMode( QAbstractItemView::ExtendedSelection );
 	setSelectionBehavior( QAbstractItemView::SelectRows );
@@ -685,6 +682,12 @@ ErrorsWidget::ErrorsWidget( QWidget* parent ):
 
 ErrorsWidget::~ErrorsWidget()
 {
+}
+
+void ErrorsWidget::expandAll()
+{
+	expandToDepth( 0 );
+	return;
 }
 
 void ErrorsWidget::loadConfig()
@@ -711,19 +714,40 @@ void ErrorsWidget::saveConfig()
 
 void ErrorsWidget::setSubtitle( Subtitle* subtitle )
 {
-	model()->setSubtitle( subtitle );
+	m_subtitle = subtitle;
+
+	if ( isVisible() )
+		model()->setSubtitle( subtitle );
 }
 
-void ErrorsWidget::mouseDoubleClickEvent( QMouseEvent* e )
+void ErrorsWidget::showEvent( QShowEvent* event )
 {
-	QModelIndex index = indexAt( viewport()->mapFromGlobal( e->globalPos() ) );
+	if ( model()->subtitle() != m_subtitle )
+		model()->setSubtitle( m_subtitle );
+
+	QWidget::showEvent( event );
+}
+
+void ErrorsWidget::hideEvent( QHideEvent* event )
+{
+	// we disconnect the subtitle from the errors model when
+	// the widget is explicity hidden to improve performance
+	if ( ! event->spontaneous() )
+		model()->setSubtitle( 0 );
+
+	QWidget::hideEvent( event );
+}
+
+void ErrorsWidget::mouseDoubleClickEvent( QMouseEvent* event )
+{
+	QModelIndex index = indexAt( viewport()->mapFromGlobal( event->globalPos() ) );
 	if ( index.isValid() )
 		emit lineDoubleClicked( model()->subtitle()->line( model()->mapModelIndexToLineIndex( index ) ) );
 }
 
-void ErrorsWidget::contextMenuEvent( QContextMenuEvent* e )
+void ErrorsWidget::contextMenuEvent( QContextMenuEvent* event )
 {
-	int linesWithIssuesCount = 0, errorsCount = 0, marksCount = 0;
+	int lineWithErrorsCount = 0, errorCount = 0, markCount = 0;
 
 	QItemSelectionModel* selection = selectionModel();
 	for ( int lineIndex=0, modelL1Row=0, linesCount=model()->subtitle()->linesCount(); lineIndex < linesCount; ++lineIndex )
@@ -735,38 +759,39 @@ void ErrorsWidget::contextMenuEvent( QContextMenuEvent* e )
 			QModelIndex modelL1Index = model()->index( modelL1Row, 0 );
 			if ( selection->isSelected( modelL1Index ) )
 			{
-				linesWithIssuesCount++;
-				errorsCount += node->errorsCount();
+				lineWithErrorsCount++;
+				errorCount += node->errorCount();
 				if ( node->isMarked() )
-					marksCount++;
+					markCount++;
 			}
 			else
 			{
 				bool selected = false;
-				int lineErrorFlags = node->line()->errorFlags();
-				for ( int modelL2Row = 0, modelL2RowCount = node->itemCount(); modelL2Row < modelL2RowCount; ++modelL2Row )
+				const int lineErrorFlags = node->line()->errorFlags();
+				for ( int modelL2Row = 0, modelL2RowCount = node->errorCount(); modelL2Row < modelL2RowCount; ++modelL2Row )
 				{
 					if ( selection->isSelected( model()->index( modelL2Row, 0, modelL1Index ) ) )
 					{
 						selected = true;
+						errorCount++;
 						if ( model()->mapModelL2RowToLineErrorID( modelL2Row, lineErrorFlags ) == SubtitleLine::UserMarkID )
-							marksCount++;
-						else
-							errorsCount++;
+							markCount++;
 					}
 				}
 				if ( selected )
-					linesWithIssuesCount++;
+					lineWithErrorsCount++;
 			}
 
 			modelL1Row++;
 
-			if ( linesWithIssuesCount > 1 && errorsCount > 1 && linesCount > 1 )
+			if ( lineWithErrorsCount > 1 && errorCount > 1 && markCount > 1 )
 				break;
 		}
 	}
 
-	if ( linesWithIssuesCount || errorsCount || marksCount )
+	errorCount -= markCount;
+
+	if ( lineWithErrorsCount || errorCount || markCount )
 	{
 		KMenu menu;
 		Application* app = Application::instance();
@@ -776,21 +801,21 @@ void ErrorsWidget::contextMenuEvent( QContextMenuEvent* e )
 
 		menu.addSeparator();
 
-		menu.addAction( i18n( "Clear Selected Marks" ), app, SLOT( clearSelectedMarks() ) )->setEnabled( marksCount );
-		menu.addAction( i18n( "Clear Selected Errors" ), app, SLOT( clearSelectedErrors() ) )->setEnabled( errorsCount );
+		menu.addAction( i18n( "Clear Selected Marks" ), app, SLOT( clearSelectedMarks() ) )->setEnabled( markCount );
+		menu.addAction( i18n( "Clear Selected Errors" ), app, SLOT( clearSelectedErrors() ) )->setEnabled( errorCount );
 
 		if ( ! app->errorsConfig()->autoClearFixed() )
 		{
 			menu.addSeparator();
 
-			menu.addAction( i18n( "Clear Fixed Selection" ), app, SLOT( recheckSelectedErrors() ) )->setEnabled( errorsCount );
+			menu.addAction( i18n( "Clear Fixed Selection" ), app, SLOT( recheckSelectedErrors() ) )->setEnabled( errorCount );
 		}
 
-		menu.exec( e->globalPos() );
-		e->ignore();
+		menu.exec( event->globalPos() );
+		event->ignore();
 	}
 
-	TreeView::contextMenuEvent( e );
+	TreeView::contextMenuEvent( event );
 }
 
 SubtitleLine* ErrorsWidget::currentLine()
@@ -850,7 +875,7 @@ RangeList ErrorsWidget::selectionRanges() const
 			if ( ! selected )
 			{
  				// is one of modelL1Index children selected?
-				for ( int modelL2Row = 0, modelL2RowCount = node->itemCount(); modelL2Row < modelL2RowCount; ++modelL2Row )
+				for ( int modelL2Row = 0, modelL2RowCount = node->errorCount(); modelL2Row < modelL2RowCount; ++modelL2Row )
 				{
 					if ( selection->isSelected( model()->index( modelL2Row, 0, modelL1Index ) ) )
 					{
@@ -885,7 +910,7 @@ RangeList ErrorsWidget::selectionRanges() const
 
 void ErrorsWidget::setCurrentLine( SubtitleLine* line, bool clearSelection )
 {
-	if ( line )
+	if ( model()->subtitle() && line )
 	{
 		int modelL1Row = model()->mapLineIndexToModelL1Row( line->index() );
 		if ( modelL1Row >= 0 )

@@ -2202,7 +2202,10 @@ void Application::checkErrors()
 		RangeList targetRanges( m_linesWidget->targetRanges( dlg->selectedLinesTarget() ) );
 
 		if ( dlg->clearOtherErrors() )
-			m_subtitle->clearErrors( targetRanges, SubtitleLine::AllErrors & ~dlg->selectedErrorFlags() );
+		{
+			int flagsToClear = SubtitleLine::AllErrors & (~dlg->selectedErrorFlags() & ~SubtitleLine::UserMark);
+			m_subtitle->clearErrors( targetRanges, flagsToClear );
+		}
 
 		if ( dlg->clearMarks() )
 			m_subtitle->setMarked( targetRanges, false );
@@ -2265,12 +2268,7 @@ void Application::clearErrors()
 	}
 }
 
-// void Application::clearAllErrors()
-// {
-// 	m_subtitle->clearErrors( Range::full(), SubtitleLine::AllErrors );
-// }
-
-void Application::clearSelectedErrors()
+void Application::clearSelectedErrors( bool includeMarks )
 {
 	SubtitleCompositeActionExecutor executor( *m_subtitle, i18n( "Clear Lines Errors" ) );
 
@@ -2279,14 +2277,12 @@ void Application::clearSelectedErrors()
 		SubtitleLine* line = it.current();
 		int errorFlags = m_errorsWidget->lineSelectedErrorFlags( line->index() );
 
+		if ( ! includeMarks )
+			errorFlags = errorFlags & ~SubtitleLine::UserMark;
+
 		line->setErrorFlags( errorFlags, false );
 	}
 }
-
-// void Application::clearAllMarks()
-// {
-// 	m_subtitle->setMarked( Range::full(), false );
-// }
 
 void Application::clearSelectedMarks()
 {
@@ -2339,15 +2335,12 @@ void Application::shiftLines()
 
 	if ( dlg->exec() == QDialog::Accepted )
 	{
-		PROFILE();
 		m_subtitle->shiftLines( m_linesWidget->targetRanges( dlg->selectedLinesTarget() ), dlg->shiftTimeMillis() );
 	}
 }
 
 void Application::shiftSelectedLinesForwards()
 {
-	PROFILE();
-
 	m_subtitle->shiftLines(
 		m_linesWidget->selectionRanges(),
 		generalConfig()->linesQuickShiftAmount()
@@ -2356,8 +2349,6 @@ void Application::shiftSelectedLinesForwards()
 
 void Application::shiftSelectedLinesBackwards()
 {
-	PROFILE();
-
 	m_subtitle->shiftLines(
 		m_linesWidget->selectionRanges(),
 		- generalConfig()->linesQuickShiftAmount()

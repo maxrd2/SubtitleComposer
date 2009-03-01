@@ -27,7 +27,6 @@
 
 #include <QtGui/QGridLayout>
 #include <QtGui/QSplitter>
-#include <QtGui/QTreeView>
 
 #include <KMenuBar>
 #include <KToolBar>

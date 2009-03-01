@@ -152,9 +152,7 @@ namespace SubtitleComposer
 			void recheckAllErrors();
 			void recheckSelectedErrors();
 			void clearErrors();
-			//void clearAllErrors();
-			void clearSelectedErrors();
-			//void clearAllMarks();
+			void clearSelectedErrors( bool includeMarks=false );
 			void clearSelectedMarks();
 
 			void showErrors();

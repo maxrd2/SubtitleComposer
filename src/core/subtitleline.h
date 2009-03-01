@@ -136,6 +136,9 @@ namespace SubtitleComposer
 										MaxDurationPerPrimaryChar|MaxDurationPerSecondaryChar|UntranslatedText,
 			} ErrorFlag;
 
+
+			static int bitsCount( unsigned int bitFlags );
+
 			static ErrorFlag errorFlag( ErrorID id );
 			static ErrorID errorID( ErrorFlag flag );
 
@@ -205,6 +208,7 @@ namespace SubtitleComposer
 			void adjustTimes( long shiftMseconds, double scaleFactor );
 
 			int errorFlags() const;
+			int errorCount() const;
 			void setErrorFlags( int errorFlags );
 			void setErrorFlags( int errorFlags, bool value );
 

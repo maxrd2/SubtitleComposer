@@ -85,7 +85,7 @@ void ActionWithErrorTargetsDialog::createErrorsButtons( bool showUserMarks, bool
 	else
 		excludedErrorFlags |= SubtitleLine::UntranslatedText;
 
-	int errorsCount = 0;
+	int errorCount = 0;
 	for ( int errorId = 0; errorId < SubtitleLine::ErrorSIZE; ++errorId )
 	{
 		if ( (0x1 << errorId) & excludedErrorFlags )
@@ -95,7 +95,7 @@ void ActionWithErrorTargetsDialog::createErrorsButtons( bool showUserMarks, bool
 			m_errorsCheckBox[errorId] = new QCheckBox( m_errorsGroupBox );
 			m_errorsCheckBox[errorId]->setText( SubtitleLine::simpleErrorText( (SubtitleLine::ErrorID)errorId ) );
 			m_errorsCheckBox[errorId]->setChecked( true );
-			errorsCount++;
+			errorCount++;
 		}
 	}
 
@@ -114,7 +114,7 @@ void ActionWithErrorTargetsDialog::createErrorsButtons( bool showUserMarks, bool
 		if ( m_errorsCheckBox[errorId] )
 		{
 			m_errorsLayout->addWidget( m_errorsCheckBox[errorId], row++, col );
-			if ( row > (errorsCount-1)/2 )
+			if ( row > (errorCount-1)/2 )
 			{
 				row = 0;
 				col = 1;
@@ -127,7 +127,7 @@ void ActionWithErrorTargetsDialog::createErrorsButtons( bool showUserMarks, bool
 	buttonsLayout->addWidget( selectAllButton );
 	buttonsLayout->addWidget( selectNoneButton );
 
-	m_errorsLayout->addLayout( buttonsLayout, errorsCount / 2 + 1, 0, 1, 2 );
+	m_errorsLayout->addLayout( buttonsLayout, errorCount / 2 + 1, 0, 1, 2 );
 }
 
 void ActionWithErrorTargetsDialog::selectAllErrorFlags()

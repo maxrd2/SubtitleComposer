@@ -24,7 +24,6 @@
 #include "../core/subtitleline.h"
 
 #include <QtGui/QLabel>
-#include <QtGui/QHeaderView>
 #include <QtGui/QGridLayout>
 
 #include <KDebug>
@@ -119,11 +118,11 @@ void ErrorsDialog::onStatsChanged()
 {
 	ErrorsModel* model = m_errorsWidget->model();
 
-	QString lines = i18np( "Showing 1 line with issues", "Showing %1 lines with issues", model->linesWithIssuesCount() );
-	if ( model->linesWithIssuesCount() )
+	QString lines = i18np( "Showing 1 line with issues", "Showing %1 lines with issues", model->lineWithErrorsCount() );
+	if ( model->lineWithErrorsCount() )
 	{
-		QString marks = i18np( "1 mark", "%1 marks", model->marksCount() );
-		QString errors = i18np( "1 error", "%1 errors", model->errorsCount() );
+		QString marks = i18np( "1 mark", "%1 marks", model->markCount() );
+		QString errors = i18np( "1 error", "%1 errors", model->errorCount() - model->markCount() );
 		m_statsLabel->setText( QString( "%1 (%2, %3)" ).arg( lines ).arg( marks ).arg( errors ) );
 	}
 	else
