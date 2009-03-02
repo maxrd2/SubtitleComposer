@@ -2619,6 +2619,7 @@ bool Application::applyTranslation( RangeList ranges, bool primary, int inputLan
 	ProgressDialog progressDialog(
 		i18n( "Translate" ),
 		i18n( "Translating text (%1 to %2)...", inputLanguageName, outputLanguageName ),
+		true,
 		m_mainWindow
 	);
 
@@ -2638,10 +2639,12 @@ bool Application::applyTranslation( RangeList ranges, bool primary, int inputLan
 		QString lineText = it.current()->primaryText().richString();
 		lineText.remove( ellipsisRegExp ).replace( '\n', ' ' ).replace( '-', "- " );
 		inputText += "()()" + lineText + '\n';
-// 		inputText += "()()" + lineText + ' ';
 	}
 
 	translator.syncTranslate( inputText, (Language::Value)inputLanguage, (Language::Value)outputLanguage, &progressDialog );
+
+	if ( translator.isAborted() )
+		return false; // ended with error
 
 	QStringList outputLines;
 	QString errorMessage;
@@ -2650,12 +2653,7 @@ bool Application::applyTranslation( RangeList ranges, bool primary, int inputLan
 		errorMessage = translator.errorMessage();
 	else
 	{
-		// kDebug() << translator.outputText();
 		outputLines = translator.outputText().split( QRegExp( "\n? *\\(\\) *\\(\\) *" ) );
-
-		//kDebug() << outputLines;
-		kDebug() << "SENT LINES COUNT:    " << outputLines.count();
-		kDebug() << "RECEIVED LINES COUNT:" << ranges.indexesCount();
 
 		if ( outputLines.count() != ranges.indexesCount() + 1 )
 		{

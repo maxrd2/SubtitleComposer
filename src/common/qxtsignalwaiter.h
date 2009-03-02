@@ -27,6 +27,7 @@
 #endif
 
 #include <QtCore/QObject>
+#include <QtCore/QEventLoop>
 
 class QTimerEvent;
 
@@ -49,6 +50,9 @@ class QxtSignalWaiter : public QObject
 		QxtSignalWaiter( const QObject* sender, const char* signal1, const char* signal2, const char* signal3, const char* signal4, unsigned count=1 );
 		virtual ~QxtSignalWaiter();
 
+		QEventLoop::ProcessEventsFlags processEventFlags() const;
+		void setProcessEventFlags( QEventLoop::ProcessEventsFlags eventFlags );
+
 		bool wait( int msec=-1 );
 		void reset();
 
@@ -66,6 +70,7 @@ class QxtSignalWaiter : public QObject
 		int m_signalsCaught;
 		int m_timeout;
 		int m_timerID;
+		QEventLoop::ProcessEventsFlags m_eventFlags;
 };
 
 

@@ -117,13 +117,15 @@ void ErrorsDialog::saveConfig()
 void ErrorsDialog::onStatsChanged()
 {
 	ErrorsModel* model = m_errorsWidget->model();
-
-	QString lines = i18np( "Showing 1 line with issues", "Showing %1 lines with issues", model->lineWithErrorsCount() );
+	QString lines = i18np( "Showing 1 line with errors", "Showing %1 lines with errors", model->lineWithErrorsCount() );
 	if ( model->lineWithErrorsCount() )
 	{
-		QString marks = i18np( "1 mark", "%1 marks", model->markCount() );
-		QString errors = i18np( "1 error", "%1 errors", model->errorCount() - model->markCount() );
-		m_statsLabel->setText( QString( "%1 (%2, %3)" ).arg( lines ).arg( marks ).arg( errors ) );
+		QString errors = i18np( "1 total error", "%1 total errors", model->errorCount() );
+		QString marks = i18np( "1 user mark", "%1 user marks", model->markCount() );
+		if ( model->errorCount() == model->markCount() )
+			m_statsLabel->setText( QString( "%1 (%2)" ).arg( lines ).arg( marks ) );
+		else
+			m_statsLabel->setText( QString( "%1 (%2, %3)" ).arg( lines ).arg( errors ).arg( marks ) );
 	}
 	else
 		m_statsLabel->setText( lines );

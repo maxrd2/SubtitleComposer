@@ -39,28 +39,29 @@ using namespace SubtitleComposer;
 Translator::Translator( QObject* parent ):
 	QObject( parent ),
 	m_manager( 0 ),
-	m_inputText(),
-	m_outputText(),
+	m_currentNetworkReply( 0 ),
 	m_inputLanguage( Language::INVALID ),
 	m_outputLanguage( Language::INVALID ),
-	m_chunksCount( 0 ),
 	m_lastReceivedChunk( 0 )
 {
 	m_manager = new QNetworkAccessManager( this );
 
 	connect( m_manager, SIGNAL( finished( QNetworkReply* ) ), this, SLOT( onNetworkReplyFinished( QNetworkReply* ) ) );
+
+	connect( this, SIGNAL( finished( const QString& ) ), this, SIGNAL( finished() ) );
+	connect( this, SIGNAL( finishedWithError( const QString& ) ), this, SIGNAL( finished() ) );
 }
 
 Translator::~Translator()
 {
 }
 
-const QString& Translator::inputText() const
+QString Translator::inputText() const
 {
-	return m_inputText;
+	return m_inputTextChunks.join( QString() );
 }
 
-const QString& Translator::outputText() const
+QString Translator::outputText() const
 {
 	return m_outputText;
 }
@@ -77,7 +78,7 @@ Language::Value Translator::outputLanguage() const
 
 int Translator::chunksCount() const
 {
-	return m_chunksCount;
+	return m_inputTextChunks.count();
 }
 
 int Translator::lastReceivedChunk() const
@@ -87,12 +88,17 @@ int Translator::lastReceivedChunk() const
 
 bool Translator::isFinished() const
 {
-	return isFinishedWithError() || m_lastReceivedChunk == m_chunksCount;
+	return isFinishedWithError() || m_lastReceivedChunk == chunksCount();
 }
 
 bool Translator::isFinishedWithError() const
 {
 	return ! m_errorMessage.isEmpty();
+}
+
+bool Translator::isAborted() const
+{
+	return m_aborted;
 }
 
 QString Translator::errorMessage() const
@@ -106,10 +112,12 @@ bool Translator::syncTranslate( const QString& text, Language::Value inputLang, 
 	{
 		connect( this, SIGNAL( chunksCalculated( int ) ), progressDialog, SLOT( setMaximum( int ) ) );
 		connect( this, SIGNAL( chunkReceived( int, int ) ), progressDialog, SLOT( setValue( int ) ) );
+		connect( progressDialog, SIGNAL( cancelClicked() ), this, SLOT( abort() ) );
 		progressDialog->show();
 	}
 
-	QxtSignalWaiter finishedSignalWaiter( this, SIGNAL( finished( const QString& ) ) );
+	QxtSignalWaiter finishedSignalWaiter( this, SIGNAL( finished() ) );
+	finishedSignalWaiter.setProcessEventFlags( QEventLoop::AllEvents );
 	translate( text, inputLang, outputLang );
 	finishedSignalWaiter.wait();
 
@@ -119,21 +127,51 @@ bool Translator::syncTranslate( const QString& text, Language::Value inputLang, 
 	return ! isFinishedWithError();
 }
 
+static int findOptimalSplitIndex( const QString& text, int fromIndex=0 )
+{
+	int lastTargetIndex = qMin( fromIndex + Translator::MaxChunkSize, text.count() - 1 );
+
+	int index = text.lastIndexOf( '\n', lastTargetIndex );
+	if ( index >= (fromIndex + Translator::MaxChunkSize*(3/4)) )
+		return index;
+
+	index = text.lastIndexOf( ' ', lastTargetIndex );
+	if ( index >= (fromIndex + Translator::MaxChunkSize*(3/4)) )
+		return index;
+
+	// text it's really weird (probably garbage)... we just splitted anywhere
+	return fromIndex + Translator::MaxChunkSize;
+}
+
 void Translator::translate( const QString& text, Language::Value inputLanguage, Language::Value outputLanguage )
 {
-	m_inputText = text;
+	m_inputTextChunks.clear();
+
+	for ( int index = 0, splitIndex; index < text.length(); index = splitIndex + 1 )
+	{
+		splitIndex = findOptimalSplitIndex( text, index );
+		m_inputTextChunks << text.mid( index, splitIndex - index + 1 );
+	}
+	m_lastReceivedChunk = 0;
+
+	Q_ASSERT( text == inputText() );
+
 	m_outputText.clear();
 	m_inputLanguage = inputLanguage;
 	m_outputLanguage = outputLanguage;
-	m_lastReceivedChunk = 0;
-	m_chunksCount = text.length() / MaxChunkSize + ((text.length() % MaxChunkSize) ? 1 : 0);
 	m_errorMessage.clear();
+	m_aborted = false;
 
-	emit chunksCalculated( m_chunksCount );
+	emit chunksCalculated( chunksCount() );
 
 	startChunkDownload( 1 );
 }
 
+void Translator::abort()
+{
+	if ( m_currentNetworkReply )
+		m_currentNetworkReply->abort();
+}
 
 // "Content-type" => "application/x-www-form-urlencoded"
 QByteArray Translator::prepareUrlEncodedData( const QMap<QString,QString>& params )
@@ -173,22 +211,13 @@ QByteArray Translator::prepareMultipartData( const QMap<QString,QString>& params
 
 void Translator::startChunkDownload( int chunkNumber )
 {
-	// TODO can't cut text in any place!!!
-	QString chunkText = m_inputText.mid( MaxChunkSize*(chunkNumber-1), MaxChunkSize );
-
-	// QUrl url(
-	// 	"http://www.google.com/translate_t?hl=en&ie=UTF8&"
-	// 	"text="+inputText+"&langpair="+languageCode( m_inputLang )+"|"+languageCode( m_outputLang )
-	// );
-	// m_manager->get( QNetworkRequest( url ) );
-
 	QNetworkRequest request( QUrl( "http://translate.google.com/translate_t" ) );
 
 	QMap<QString,QString> params;
 	params["prev"] = "_t";
 	params["sl"] = Language::code( m_inputLanguage );
 	params["tl"] = Language::code( m_outputLanguage );
-	params["text"] = chunkText; // "this is just some example text";
+	params["text"] = m_inputTextChunks.at( chunkNumber - 1 ); // "this is just some example text";
 	//QByteArray data = prepareMultipartData( params );
 	QByteArray data = prepareUrlEncodedData( params );
 
@@ -196,24 +225,26 @@ void Translator::startChunkDownload( int chunkNumber )
 	request.setHeader( QNetworkRequest::ContentTypeHeader, "application/x-www-form-urlencoded" );
 	request.setHeader( QNetworkRequest::ContentLengthHeader, data.length() );
 
-	m_manager->post( request, data );
+	m_currentNetworkReply = m_manager->post( request, data );
 }
 
 void Translator::onNetworkReplyFinished( QNetworkReply* networkReply )
 {
+	m_currentNetworkReply = 0;
+
 	if ( networkReply->error() != QNetworkReply::NoError )
 	{
+		m_aborted = networkReply->error() == QNetworkReply::OperationCanceledError;
 		m_errorMessage = networkReply->errorString();
-		emit finished( QString() );
 		emit finishedWithError( m_errorMessage );
-		delete networkReply;
+		networkReply->deleteLater();
 		return;
 	}
 
 	QByteArray data = networkReply->readAll();
 	QTextCodec* codec = QTextCodec::codecForHtml( data, QTextCodec::codecForName( "UTF-8" ) );
 	QString content = codec->toUnicode( data );
-	delete networkReply;
+	networkReply->deleteLater();
 
 	QRegExp resultStartRegExp( "^.*<div id=result_box( [^>]+|)>", Qt::CaseInsensitive );
 	if ( content.contains( resultStartRegExp ) )
@@ -221,9 +252,7 @@ void Translator::onNetworkReplyFinished( QNetworkReply* networkReply )
 	else
 	{
 		m_errorMessage = i18n( "Unexpected contents received from translation service" );
-		emit finished( QString() );
 		emit finishedWithError( m_errorMessage );
-		delete networkReply;
 		return;
 	}
 
@@ -233,9 +262,7 @@ void Translator::onNetworkReplyFinished( QNetworkReply* networkReply )
 	else
 	{
 		m_errorMessage = i18n( "Unexpected contents received from translation service" );
-		emit finished( QString() );
 		emit finishedWithError( m_errorMessage );
-		delete networkReply;
 		return;
 	}
 
@@ -248,9 +275,9 @@ void Translator::onNetworkReplyFinished( QNetworkReply* networkReply )
 	m_outputText += content;
 
 	m_lastReceivedChunk += 1;
-	emit chunkReceived( m_lastReceivedChunk, m_chunksCount );
+	emit chunkReceived( m_lastReceivedChunk, chunksCount() );
 
-	if ( m_lastReceivedChunk >= m_chunksCount )
+	if ( m_lastReceivedChunk >= chunksCount() )
 		emit finished( m_outputText );
 	else
 		startChunkDownload( m_lastReceivedChunk + 1 );

@@ -9,3 +9,4 @@ Planned for v0.5 and beyond
   issue, perhaps the "next" encoding should be tried and the error informed
 * finish KROSS scripting interface
 * test find text/errors when adding/removing lines
+* the player controls won't appear on fullscreen mode if using KDE4.2

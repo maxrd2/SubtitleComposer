@@ -38,12 +38,13 @@ namespace SubtitleComposer
 
 		public:
 
-			ProgressDialog( const QString& caption, const QString& description, QWidget* parent=0 );
+			ProgressDialog( const QString& caption, const QString& description, bool allowCancel, QWidget* parent=0 );
 
 			int value() const;
 			int minimum() const;
 			int maximum() const;
 			QString description() const;
+			bool isCancellable() const;
 
 		protected:
 
@@ -57,6 +58,7 @@ namespace SubtitleComposer
 			void incrementMaximum( int delta );
 			void setValue( int value );
 			void setDescription( const QString& description );
+			void setCancellable( bool cancellable );
 
 		private:
 

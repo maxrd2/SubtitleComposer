@@ -41,6 +41,7 @@ CheckErrorsDialog::CheckErrorsDialog( QWidget* parent ):
 
 	m_clearMarksCheckBox = new QCheckBox( miscGroupBox );
 	m_clearMarksCheckBox->setText( i18n( "Clear user marks" ) );
+	m_clearMarksCheckBox->setChecked( false );
 
 	createLineTargetsButtonGroup();
 	createTextTargetsButtonGroup();

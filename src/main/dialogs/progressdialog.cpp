@@ -28,14 +28,14 @@
 
 using namespace SubtitleComposer;
 
-ProgressDialog::ProgressDialog( const QString& caption, const QString& description, QWidget* parent ):
+ProgressDialog::ProgressDialog( const QString& caption, const QString& description, bool allowCancel, QWidget* parent ):
 // 	KDialog( parent, Qt::FramelessWindowHint )
 	KDialog( parent, Qt::WindowTitleHint )
 {
 	setCaption( caption );
 
 	setModal( true );
-	setButtons( 0 );
+	setButtons( allowCancel ? KDialog::Cancel : (QFlags<KDialog::ButtonCode>)0 );
 
 	QWidget* mainWidget = new QWidget( this );
 	setMainWidget( mainWidget );
@@ -110,6 +110,16 @@ void ProgressDialog::setMaximum( int maximum )
 void ProgressDialog::incrementMaximum( int delta )
 {
 	m_progressBar->setMaximum( m_progressBar->maximum() + delta );
+}
+
+bool ProgressDialog::isCancellable() const
+{
+	return isButtonEnabled( KDialog::Cancel );
+}
+
+void ProgressDialog::setCancellable( bool cancellable )
+{
+	enableButton( KDialog::Cancel, cancellable );
 }
 
 #include "progressdialog.moc"

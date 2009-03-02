@@ -47,8 +47,8 @@ namespace SubtitleComposer
 			Translator( QObject* parent=0 );
 			~Translator();
 
-			const QString& inputText() const;
-			const QString& outputText() const;
+			QString inputText() const;
+			QString outputText() const;
 
 			Language::Value inputLanguage() const;
 			Language::Value outputLanguage() const;
@@ -58,6 +58,7 @@ namespace SubtitleComposer
 
 			bool isFinished() const;
 			bool isFinishedWithError() const;
+			bool isAborted() const;
 
 			QString errorMessage() const;
 
@@ -66,6 +67,8 @@ namespace SubtitleComposer
 			bool syncTranslate( const QString& text, Language::Value inputLang, Language::Value outputLang, ProgressDialog*pd=0 );
 			void translate( const QString& text, Language::Value inputLang, Language::Value outputLang );
 
+			void abort();
+
 		signals:
 
 			void chunksCalculated( int chunksCount );
@@ -73,6 +76,8 @@ namespace SubtitleComposer
 
 			void finished( const QString& translatedText );
 			void finishedWithError( const QString& errorMessage );
+
+			void finished(); // finished with or without error
 
 		private:
 
@@ -90,13 +95,14 @@ namespace SubtitleComposer
 		private:
 
 			QNetworkAccessManager* m_manager;
-			QString m_inputText;
+			QNetworkReply* m_currentNetworkReply;
+			QStringList m_inputTextChunks;
 			QString m_outputText;
 			Language::Value m_inputLanguage;
 			Language::Value m_outputLanguage;
-			int m_chunksCount;
 			int m_lastReceivedChunk;
 			QString m_errorMessage;
+			bool m_aborted;
 	};
 }
 

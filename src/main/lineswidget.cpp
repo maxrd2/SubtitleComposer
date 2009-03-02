@@ -194,13 +194,13 @@ QString LinesModel::buildToolTip( SubtitleLine* line, bool primary )
 
 	const SString& text = primary? line->primaryText() : line->secondaryText();
 
-	if ( ! text.isEmpty() || errorFlags )
+	if ( errorFlags )
 	{
-		QString toolTip = "<p style='white-space:pre'>" + text.richString();
+		QString toolTip = "<p style='white-space:pre;margin-bottom:6px;'>" + text.richString() + "</p><p style='white-space:pre;margin-top:0px;'>";
 
 		if ( errorFlags )
 		{
-			toolTip += "\n\n" + i18n( "<b>Observations:</b>" );
+			toolTip += i18n( "<b>Observations:</b>" );
 
 			for ( int id = 0; id < SubtitleLine::ErrorSIZE; ++id )
 			{
@@ -209,7 +209,7 @@ QString LinesModel::buildToolTip( SubtitleLine* line, bool primary )
 
 				QString errorText = line->fullErrorText( (SubtitleLine::ErrorID)id );
 				if ( ! errorText.isEmpty() )
-					toolTip += "\n  - <i>" + errorText + "</i>";
+					toolTip += "\n  - " + errorText;
 			}
 		}
 
@@ -218,7 +218,7 @@ QString LinesModel::buildToolTip( SubtitleLine* line, bool primary )
 		return toolTip;
 	}
 	else
-		return QString();
+		return text.richString();
 }
 
 QVariant LinesModel::headerData( int section, Qt::Orientation orientation, int role ) const

@@ -28,7 +28,8 @@ QxtSignalWaiter::QxtSignalWaiter( const QObject* sender, const char* signal, uns
 	QObject( 0 ),
 	m_signals( count ),
 	m_signalsCaught( 0 ),
-	m_timeout( false )
+	m_timeout( false ),
+	m_eventFlags( QEventLoop::ExcludeUserInputEvents )
 {
 	if ( signal )
 		connect( sender, signal, this, SLOT(signalCaught()) );
@@ -38,7 +39,8 @@ QxtSignalWaiter::QxtSignalWaiter( const QObject* sender, const char* signal1, co
 	QObject( 0 ),
 	m_signals( count ),
 	m_signalsCaught( 0 ),
-	m_timeout( false )
+	m_timeout( false ),
+	m_eventFlags( QEventLoop::ExcludeUserInputEvents )
 {
 	if ( signal1 )
 		connect( sender, signal1, this, SLOT(signalCaught()) );
@@ -50,7 +52,8 @@ QxtSignalWaiter::QxtSignalWaiter( const QObject* sender, const char* signal1, co
 	QObject( 0 ),
 	m_signals( count ),
 	m_signalsCaught( 0 ),
-	m_timeout( false )
+	m_timeout( false ),
+	m_eventFlags( QEventLoop::ExcludeUserInputEvents )
 {
 	if ( signal1 )
 		connect( sender, signal1, this, SLOT(signalCaught()) );
@@ -64,7 +67,8 @@ QxtSignalWaiter::QxtSignalWaiter( const QObject* sender, const char* signal1, co
 	QObject( 0 ),
 	m_signals( count ),
 	m_signalsCaught( 0 ),
-	m_timeout( false )
+	m_timeout( false ),
+	m_eventFlags( QEventLoop::ExcludeUserInputEvents )
 {
 	if ( signal1 )
 		connect( sender, signal1, this, SLOT(signalCaught()) );
@@ -78,6 +82,16 @@ QxtSignalWaiter::QxtSignalWaiter( const QObject* sender, const char* signal1, co
 
 QxtSignalWaiter::~QxtSignalWaiter()
 {
+}
+
+QEventLoop::ProcessEventsFlags QxtSignalWaiter::processEventFlags() const
+{
+	return m_eventFlags;
+}
+
+void QxtSignalWaiter::setProcessEventFlags( QEventLoop::ProcessEventsFlags eventFlags )
+{
+	m_eventFlags = eventFlags;
 }
 
 // Returns true if the signal was caught, returns false if the wait timed out
@@ -105,7 +119,7 @@ bool QxtSignalWaiter::wait( int msec )
 	while( m_signalsCaught < m_signals && ! m_timeout )
 // 		QApplication::eventLoop()->processEvents( QEventLoop::WaitForMore );
 		// we must dissallow input events to prevent recursive calls to this function
-		QCoreApplication::processEvents( QEventLoop::ExcludeUserInputEvents );
+		QCoreApplication::processEvents( m_eventFlags );
 
 	// Clean up and return status
 	killTimer( m_timerID );

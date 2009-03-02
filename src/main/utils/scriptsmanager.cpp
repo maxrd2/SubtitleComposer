@@ -46,6 +46,7 @@
 #include <KSeparator>
 #include <KMessageBox>
 #include <KStandardDirs>
+#include <KRun>
 
 #include <kross/core/manager.h>
 #include <kross/core/interpreter.h>
@@ -343,9 +344,8 @@ void ScriptsManager::editScript( const QString& sN )
 		return;
 	}
 
-	// TODO how do we get the associated editor for a given file?
-	if ( ! QProcess::startDetached( "kwrite", QStringList() << m_scripts[scriptName] ) )
-		KMessageBox::sorry( app()->mainWindow(), i18n( "Could not launch KWrite editor.\n" ) );
+	if ( ! KRun::runUrl( KUrl( m_scripts[scriptName] ), "text/plain", app()->mainWindow(), false, false ) )
+		KMessageBox::sorry( app()->mainWindow(), i18n( "Could not launch external editor.\n" ) );
 }
 
 void ScriptsManager::runScript( const QString& sN )

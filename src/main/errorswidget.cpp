@@ -566,10 +566,10 @@ QVariant ErrorsModel::headerData( int section, Qt::Orientation orientation, int 
 
 	switch ( section )
 	{
-		case Number:	return i18n( "Line Issues" );
-		case Errors:	return i18n( "Errors" );
-		case Marks:		return i18n( "Marks" );
-		default:		return QVariant();
+		case Number:		return i18n( "Line Errors" );
+		case ErrorCount:	return i18n( "Count" );
+		case UserMark:		return i18n( "Marked" );
+		default:			return QVariant();
 	}
 }
 
@@ -584,7 +584,8 @@ QVariant ErrorsModel::data( const QModelIndex& index, int role ) const
 	{
 		if ( role == Qt::DisplayRole )
 		{
-			static const QString space( ' ' );
+			static const QString yes = i18n( "yes" );
+			static const QString no = i18n( "no" );
 
 			int lineIndex = mapModelL1RowToLineIndex( index.row() );
 			if ( lineIndex < 0 )
@@ -592,15 +593,10 @@ QVariant ErrorsModel::data( const QModelIndex& index, int role ) const
 
 			if ( index.column() == Number )
 				return i18n( "Line <numid>%1</numid>", lineIndex + 1 );
-			else if ( index.column() == Errors )
-			{
-				int errorCount = m_nodes.at( lineIndex )->errorCount();
-				if ( m_nodes.at( lineIndex )->isMarked() )
-					errorCount--;
-				return QString::number( errorCount );
-			}
-			else if ( index.column() == Marks )
-				return QString( m_nodes.at( lineIndex )->isMarked() ? "1" : "0" );
+			else if ( index.column() == ErrorCount )
+				return QString::number( m_nodes.at( lineIndex )->errorCount() );
+			else if ( index.column() == UserMark )
+				return m_nodes.at( lineIndex )->isMarked() ? yes : no;
 			else
 				return QVariant();
 		}
@@ -662,8 +658,8 @@ ErrorsWidget::ErrorsWidget( QWidget* parent ):
 
 	QHeaderView* header = this->header();
 	header->setResizeMode( ErrorsModel::Number, QHeaderView::Interactive );
-	header->setResizeMode( ErrorsModel::Errors, QHeaderView::Interactive );
-	header->setResizeMode( ErrorsModel::Marks, QHeaderView::Interactive );
+	header->setResizeMode( ErrorsModel::ErrorCount, QHeaderView::Interactive );
+	header->setResizeMode( ErrorsModel::UserMark, QHeaderView::Interactive );
 
 	setSortingEnabled( false );
 	setRootIsDecorated( true );

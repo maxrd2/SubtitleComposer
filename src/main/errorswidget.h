@@ -77,7 +77,7 @@ namespace SubtitleComposer
 
 		public:
 
-			enum { Number=0, Errors, Marks, ColumnCount };
+			enum { Number=0, ErrorCount, UserMark, ColumnCount };
 
 			explicit ErrorsModel( QObject* parent=0 );
 			virtual ~ErrorsModel();
