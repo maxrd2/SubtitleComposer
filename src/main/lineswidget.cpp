@@ -21,6 +21,7 @@
 #include "application.h"
 #include "configs/generalconfig.h"
 #include "dialogs/actionwithtargetdialog.h"
+#include "profiler.h"
 
 #include <QtCore/QVariant>
 #include <QtCore/QTimer>
@@ -824,6 +825,38 @@ void LinesWidget::closeEditor( QWidget* editor, QAbstractItemDelegate::EndEditHi
 				editCurrentLineInPlace( editorIndex.column() != LinesModel::Text );
 			break;
 	}
+}
+
+void LinesWidget::rowsAboutToBeRemoved( const QModelIndex& parent, int start, int end )
+{
+	TreeView::rowsAboutToBeRemoved( parent, start, end );
+
+	selectionModel()->select(
+		model()->index( end + 1, 0, parent ),
+		QItemSelectionModel::Rows|QItemSelectionModel::ClearAndSelect|QItemSelectionModel::Current
+	);
+
+	scrollTo( model()->index( end + 1, 0, parent ), QAbstractItemView::EnsureVisible );
+}
+
+void LinesWidget::rowsInserted( const QModelIndex& parent, int start, int end )
+{
+	TreeView::rowsInserted( parent, start, end );
+
+	if ( model()->rowCount() != (end - start + 1) ) // there were other rows previously
+	{
+		selectionModel()->select(
+			QItemSelection( model()->index( start, 0, parent ), model()->index( end, 0, parent ) ),
+			QItemSelectionModel::Rows|QItemSelectionModel::ClearAndSelect
+		);
+
+		scrollTo( model()->index( start, 0, parent ), QAbstractItemView::EnsureVisible );
+	}
+
+	selectionModel()->setCurrentIndex(
+		model()->index( start, 0, parent ),
+		QItemSelectionModel::Rows|QItemSelectionModel::SelectCurrent
+	);
 }
 
 void LinesWidget::editCurrentLineInPlace( bool primaryText )

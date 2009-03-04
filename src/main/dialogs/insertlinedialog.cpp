@@ -30,5 +30,5 @@ InsertLineDialog::InsertLineDialog( bool insertBefore, QWidget* parent ):
 		parent
 	)
 {
-	setNonTranslationModeTarget( SubtitleLine::Both );
+	setNonTranslationModeTarget( Subtitle::Both );
 }

@@ -145,10 +145,7 @@ namespace SubtitleComposer
 			bool m_singleLineMode;
 			QTextDocument* m_textDocument;
 	};
-}
 
-namespace SubtitleComposer
-{
 	class LinesWidget : public TreeView
 	{
 		Q_OBJECT
@@ -195,6 +192,8 @@ namespace SubtitleComposer
 
 			virtual void closeEditor( QWidget* editor, QAbstractItemDelegate::EndEditHint hint );
 
+			virtual void rowsAboutToBeRemoved( const QModelIndex& parent, int start, int end );
+			virtual void rowsInserted( const QModelIndex& parent, int start, int end );
 
 		private:
 

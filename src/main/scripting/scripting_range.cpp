@@ -17,14 +17,45 @@
  *   Boston, MA 02110-1301, USA.                                           *
  ***************************************************************************/
 
-#include "removelinesdialog.h"
-
-#include <KLocale>
+#include "scripting_range.h"
 
 using namespace SubtitleComposer;
 
-RemoveLinesDialog::RemoveLinesDialog( QWidget* parent ):
-	ActionWithTextsTargetDialog( i18n( "Remove Selected Lines" ), i18n( "Remove From" ), parent )
+/// RANGE IMPLEMENTATION
+/// ====================
+
+Scripting::Range::Range( const SubtitleComposer::Range& range, QObject* parent ):
+	QObject( parent ),
+	m_backend( range )
 {
-	setNonTranslationModeTarget( Subtitle::Both );
 }
+
+int Scripting::Range::start() const
+{
+	return m_backend.start();
+}
+
+int Scripting::Range::end() const
+{
+	return m_backend.end();
+}
+
+int Scripting::Range::length() const
+{
+	return m_backend.length();
+}
+
+bool Scripting::Range::contains( int index ) const
+{
+	return m_backend.contains( index );
+}
+
+bool Scripting::Range::contains( const QObject* object ) const
+{
+	if ( const Scripting::Range* range = qobject_cast<const Scripting::Range*>( object ) )
+		return m_backend.contains( range->m_backend );
+	else
+		return false;
+}
+
+#include "scripting_range.moc"

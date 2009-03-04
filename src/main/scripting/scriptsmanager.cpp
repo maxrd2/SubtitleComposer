@@ -19,6 +19,10 @@
 ***************************************************************************/
 
 #include "scriptsmanager.h"
+#include "scripting_rangelist.h"
+#include "scripting_styles.h"
+#include "scripting_subtitle.h"
+#include "scripting_subtitleline.h"
 
 #include "../application.h"
 #include "../actions/useraction.h"
@@ -27,7 +31,6 @@
 #include "../../common/fileloadhelper.h"
 #include "../../common/filetrasher.h"
 #include "../../widgets/treeview.h"
-#include <QtGui/QStringListModel>
 
 #include <QtCore/QProcess>
 #include <QtGui/QAction>
@@ -36,6 +39,7 @@
 #include <QtGui/QLineEdit>
 #include <QtGui/QGridLayout>
 #include <QtGui/QKeyEvent>
+#include <QtGui/QStringListModel>
 
 #include <KAction>
 #include <KActionCollection>
@@ -71,8 +75,7 @@ namespace SubtitleComposer
 using namespace SubtitleComposer;
 
 ScriptsManager::ScriptsManager( QObject* parent ):
-	QObject( parent ),
-	m_subtitle( 0 )
+	QObject( parent )
 {
 	//kDebug() << "KROSS interpreters:" << Kross::Manager::self().interpreters();
 
@@ -159,8 +162,7 @@ ScriptsManager::~ScriptsManager()
 
 void ScriptsManager::setSubtitle( Subtitle* subtitle )
 {
-	m_subtitle = subtitle;
-	m_runScriptButton->setEnabled( m_subtitle != 0 );
+	m_runScriptButton->setEnabled( subtitle != 0 );
 }
 
 void ScriptsManager::showDialog()
@@ -350,7 +352,7 @@ void ScriptsManager::editScript( const QString& sN )
 
 void ScriptsManager::runScript( const QString& sN )
 {
-	if ( ! m_subtitle )
+	if ( ! app()->subtitle() )
 	{
 		kWarning() << "attempt to run script without a working subtitle";
 		return;
@@ -373,26 +375,29 @@ void ScriptsManager::runScript( const QString& sN )
 
 	Kross::Action krossAction( 0, "Kross::Action" );
 
-	// Publish a QObject instance only for the Kross::Action instance.
-	/*krossAction.addObject( subtitle(), "Subtitle" );
-	SubtitleIterator fullSubtitleIterator( *subtitle(), targetRanges( ActionWithTargetDialog::AllLines ) );
-	krossAction.addObject( &fullSubtitleIterator, "FullSubtitleIterator" );
-	SubtitleIterator selectionSubtitleIterator( *subtitle(), targetRanges( ActionWithTargetDialog::Selection ) );
-	krossAction.addObject( &selectionSubtitleIterator, "SelectionSubtitleIterator" );
-	SubtitleIterator fromSelectedSubtitleIterator( *subtitle(), targetRanges( ActionWithTargetDialog::FromSelected ) );
-	krossAction.addObject( &fromSelectedSubtitleIterator, "FromSelectedSubtitleIterator" );
-	SubtitleIterator upToSelectedSubtitleIterator( *subtitle(), targetRanges( ActionWithTargetDialog::UpToSelected ) );
-	krossAction.addObject( &upToSelectedSubtitleIterator, "UpToSelectedSubtitleIterator" );*/
+	Scripting::RangeListModule* rangeListModule = new Scripting::RangeListModule;
+	Scripting::StylesModule* stylesModule = new Scripting::StylesModule;
+	Scripting::SubtitleModule* subtitleModule = new Scripting::SubtitleModule;
+	Scripting::SubtitleLineModule* subtitleLineModule = new Scripting::SubtitleLineModule;
 
-	// Set the script file we like to execute.
+	krossAction.addObject( rangeListModule, "ranges" );
+	krossAction.addObject( stylesModule, "styles" );
+	krossAction.addObject( subtitleModule, "subtitle" );
+	krossAction.addObject( subtitleLineModule, "lines" );
+
 	krossAction.setFile( m_scripts[scriptName] );
 
 	{
 		// everything done by the script will be undoable in a single step
-		SubtitleCompositeActionExecutor executor( *m_subtitle, scriptName );
+		SubtitleCompositeActionExecutor executor( *(app()->subtitle()), scriptName );
 		// execute the script file
 		krossAction.trigger();
 	}
+
+	delete rangeListModule;
+	delete stylesModule;
+	delete subtitleModule;
+	delete subtitleLineModule;
 
 	if ( krossAction.hadError() )
 	{

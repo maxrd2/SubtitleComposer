@@ -62,8 +62,8 @@ namespace SubtitleComposer
 				Primary = 0,
 				Secondary,
 				Both,
-				OpModeUNKNOWN
-			} OpMode;
+				TextTargetSIZE
+			} TextTarget;
 
 			typedef enum {
 				EmptyPrimaryTextID = 0,				// Empty primary text
@@ -136,7 +136,6 @@ namespace SubtitleComposer
 										MaxDurationPerPrimaryChar|MaxDurationPerSecondaryChar|UntranslatedText,
 			} ErrorFlag;
 
-
 			static int bitsCount( unsigned int bitFlags );
 
 			static ErrorFlag errorFlag( ErrorID id );
@@ -172,15 +171,14 @@ namespace SubtitleComposer
 
 			void setTexts( const SString& pText, const SString& sText );
 
-			static SString fixPunctuation( const SString& text, bool spaces, bool quotes, bool engI, bool ellipsis, bool* cont );
-			static SString adjustText( const SString& text, int minLengthForBreak );
-			static QString simplifySpaces( QString text );
-			static SString simplifySpaces( SString text );
+			static SString fixPunctuation(const SString& text, bool spaces, bool quotes, bool englishI, bool ellipsis, bool*cont);
+			static SString breakText( const SString& text, int minLengthForBreak );
+			static QString simplifyTextWhiteSpace( QString text );
+			static SString simplifyTextWhiteSpace( SString text );
 
-			void adjustText( int minLengthForBreak, OpMode mode=Primary );
-			void unbreakText( OpMode mode=Primary );
-
-			void simplifySpaces( OpMode mode=Primary );
+			void breakText( int minLengthForBreak, TextTarget target );
+			void unbreakText( TextTarget target );
+			void simplifyTextWhiteSpace( TextTarget target );
 
 			Time showTime() const;
 			void setShowTime( const Time& showTime );
@@ -201,8 +199,8 @@ namespace SubtitleComposer
 			int secondaryWords() const;
 			int secondaryLines() const;
 
-			static Time autoDuration( const QString& text, int charMsecs, int wordMsecs, int lineMsecs );
-			Time autoDuration( int charMsecs, int wordMsecs, int lineMsecs, OpMode mode=Primary );
+			static Time autoDuration( const QString& text, int msecsPerChar, int msecsPerWord, int msecsPerLine );
+			Time autoDuration( int msecsPerChar, int msecsPerWord, int msecsPerLine, TextTarget calculationTarget );
 
 			void shiftTimes( long mseconds );
 			void adjustTimes( long shiftMseconds, double scaleFactor );
@@ -236,6 +234,7 @@ namespace SubtitleComposer
 			bool checkSecondaryCapitalAfterEllipsis( bool update=true );
 			bool checkPrimaryUnneededDash( bool update=true );
 			bool checkSecondaryUnneededDash( bool update=true );
+
 			int check( int errorFlagsToCheck, int minDurationMsecs, int maxDurationMsecs, int minMsecsPerChar, int maxMsecsPerChar, int maxChars, int maxLines, bool update=true );
 
 		signals:

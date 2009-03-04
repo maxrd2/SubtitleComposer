@@ -39,7 +39,6 @@ class KPushButton;
 namespace SubtitleComposer
 {
 	class Subtitle;
-	class SubtitleIterator;
 
 	class ScriptsManager : public QObject
 	{
@@ -79,7 +78,6 @@ namespace SubtitleComposer
 
 		private:
 
-			Subtitle* m_subtitle;
 			QMap<QString,QString> m_scripts; // name => path
 			TreeView* m_scriptsWidget;
 			KPushButton* m_runScriptButton;

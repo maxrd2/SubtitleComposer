@@ -1,3 +1,6 @@
+#ifndef SCRIPTING_RANGE_H
+#define SCRIPTING_RANGE_H
+
 /***************************************************************************
  *   Copyright (C) 2007-2009 Sergio Pistone (sergio_pistone@yahoo.com.ar)  *
  *                                                                         *
@@ -17,14 +20,48 @@
  *   Boston, MA 02110-1301, USA.                                           *
  ***************************************************************************/
 
-#include "removelinesdialog.h"
+#ifdef HAVE_CONFIG_H
+	#include <config.h>
+#endif
 
-#include <KLocale>
+#include "../../core/range.h"
 
-using namespace SubtitleComposer;
+#include <QtCore/QObject>
 
-RemoveLinesDialog::RemoveLinesDialog( QWidget* parent ):
-	ActionWithTextsTargetDialog( i18n( "Remove Selected Lines" ), i18n( "Remove From" ), parent )
+namespace SubtitleComposer
 {
-	setNonTranslationModeTarget( Subtitle::Both );
+	namespace Scripting
+	{
+		class Range : public QObject
+		{
+			Q_OBJECT
+
+			Q_PROPERTY( int start READ start )
+			Q_PROPERTY( int end READ end )
+			Q_PROPERTY( int length READ length )
+
+			public:
+
+				int start() const;
+				int end() const;
+				int length() const;
+
+			public slots:
+
+				bool contains( int index ) const;
+				bool contains( const QObject* range ) const;
+
+			private:
+
+				friend class RangeListModule;
+				friend class RangeList;
+				friend class Subtitle;
+
+				Range( const SubtitleComposer::Range& range, QObject* parent );
+
+				SubtitleComposer::Range m_backend;
+		};
+	}
 }
+
+#endif

@@ -381,7 +381,7 @@ void SubtitleLine::setTexts( const SString& pText, const SString& sText )
 		processAction( new SetLineTextsAction( *this, pText, sText ) );
 }
 
-SString SubtitleLine::fixPunctuation( const SString& t, bool spaces, bool quotes, bool engI, bool ellipsis, bool* cont )
+SString SubtitleLine::fixPunctuation( const SString& t, bool spaces, bool quotes, bool englishI, bool ellipsis, bool* cont )
 {
 	if ( ! t.length() )
 		return t;
@@ -390,7 +390,7 @@ SString SubtitleLine::fixPunctuation( const SString& t, bool spaces, bool quotes
 
 	if ( spaces )
 	{
-		text = simplifySpaces( text );
+		text = simplifyTextWhiteSpace( text );
 
 		// remove spaces after " or ' at the beginning of line
 		text.replace( QRegExp( "^([\"'])\\s" ), "\\1" );
@@ -420,7 +420,7 @@ SString SubtitleLine::fixPunctuation( const SString& t, bool spaces, bool quotes
 		text.replace( QRegExp( "''|«|»" ), "\"" );
 	}
 
-	if ( engI ) // fix english I pronoun capitalization
+	if ( englishI ) // fix english I pronoun capitalization
 		text.replace( QRegExp( "([\\s\"'\\(\\[])i([\\s'\",;:\\.\\?!\\]\\)]|$)" ), "\\1I\\2" );
 
 	if ( ellipsis ) // fix ellipsis
@@ -453,7 +453,7 @@ SString SubtitleLine::fixPunctuation( const SString& t, bool spaces, bool quotes
 	return text;
 }
 
-SString SubtitleLine::adjustText( const SString& t, int minLengthForBreak )
+SString SubtitleLine::breakText( const SString& t, int minLengthForBreak )
 {
 	Q_ASSERT( minLengthForBreak >= 0 );
 
@@ -490,27 +490,27 @@ SString SubtitleLine::adjustText( const SString& t, int minLengthForBreak )
 	return text;
 }
 
-void SubtitleLine::adjustText( int minLengthForBreak, OpMode mode )
+void SubtitleLine::breakText( int minLengthForBreak, TextTarget target )
 {
-	switch ( mode )
+	switch ( target )
 	{
 		case Primary:
-			setPrimaryText( adjustText( m_primaryText, minLengthForBreak ) );
+			setPrimaryText( breakText( m_primaryText, minLengthForBreak ) );
 			break;
 		case Secondary:
-			setSecondaryText( adjustText( m_secondaryText, minLengthForBreak ) );
+			setSecondaryText( breakText( m_secondaryText, minLengthForBreak ) );
 			break;
 		case Both:
-			setTexts( adjustText( m_primaryText, minLengthForBreak ), adjustText( m_secondaryText, minLengthForBreak ) );
+			setTexts( breakText( m_primaryText, minLengthForBreak ), breakText( m_secondaryText, minLengthForBreak ) );
 			break;
 		default:
 			break;
 	}
 }
 
-void SubtitleLine::unbreakText( OpMode mode )
+void SubtitleLine::unbreakText( TextTarget target )
 {
-	switch ( mode )
+	switch ( target )
 	{
 		case Primary:
 			setPrimaryText( SString( primaryText() ).replace( '\n', ' ' ) );
@@ -526,7 +526,7 @@ void SubtitleLine::unbreakText( OpMode mode )
 	}
 }
 
-QString SubtitleLine::simplifySpaces( QString text )
+QString SubtitleLine::simplifyTextWhiteSpace( QString text )
 {
 	static const QRegExp regExp1( " *\n *" );
 	static const QRegExp regExp2( " +" );
@@ -540,7 +540,7 @@ QString SubtitleLine::simplifySpaces( QString text )
 	return text.trimmed();
 }
 
-SString SubtitleLine::simplifySpaces( SString text )
+SString SubtitleLine::simplifyTextWhiteSpace( SString text )
 {
 	static const QRegExp regExp1( " *\n *" );
 	static const QRegExp regExp2( " +" );
@@ -554,18 +554,18 @@ SString SubtitleLine::simplifySpaces( SString text )
 	return text.trimmed();
 }
 
-void SubtitleLine::simplifySpaces( OpMode mode )
+void SubtitleLine::simplifyTextWhiteSpace( TextTarget target )
 {
-	switch ( mode )
+	switch ( target )
 	{
 		case Primary:
-			setPrimaryText( simplifySpaces( m_primaryText ) );
+			setPrimaryText( simplifyTextWhiteSpace( m_primaryText ) );
 			break;
 		case Secondary:
-			setSecondaryText( simplifySpaces( m_secondaryText ) );
+			setSecondaryText( simplifyTextWhiteSpace( m_secondaryText ) );
 			break;
 		case Both:
-			setTexts( simplifySpaces( m_primaryText ), simplifySpaces( m_secondaryText ) );
+			setTexts( simplifyTextWhiteSpace( m_primaryText ), simplifyTextWhiteSpace( m_secondaryText ) );
 			break;
 		default:
 			break;
@@ -618,7 +618,7 @@ int SubtitleLine::primaryWords() const
 
 int SubtitleLine::primaryLines() const
 {
-	QString text( simplifySpaces( m_primaryText.string() ) );
+	QString text( simplifyTextWhiteSpace( m_primaryText.string() ) );
 	return text.length() ? text.count( '\n' ) + 1 : 0;
 }
 
@@ -635,17 +635,17 @@ int SubtitleLine::secondaryWords() const
 
 int SubtitleLine::secondaryLines() const
 {
-	QString text( simplifySpaces( m_secondaryText.string() ) );
+	QString text( simplifyTextWhiteSpace( m_secondaryText.string() ) );
 	return text.length() ? text.count( '\n' ) + 1 : 0;
 }
 
-Time SubtitleLine::autoDuration( const QString& t, int charMsecs, int wordMsecs, int lineMsecs )
+Time SubtitleLine::autoDuration( const QString& t, int msecsPerChar, int msecsPerWord, int msecsPerLine )
 {
-	Q_ASSERT( charMsecs >= 0 );
-	Q_ASSERT( wordMsecs >= 0 );
-	Q_ASSERT( lineMsecs >= 0 );
+	Q_ASSERT( msecsPerChar >= 0 );
+	Q_ASSERT( msecsPerWord >= 0 );
+	Q_ASSERT( msecsPerLine >= 0 );
 
-	QString text( simplifySpaces( t ) );
+	QString text( simplifyTextWhiteSpace( t ) );
 	if ( ! text.length() )
 		return 0;
 
@@ -653,24 +653,24 @@ Time SubtitleLine::autoDuration( const QString& t, int charMsecs, int wordMsecs,
 	int lines = text.count( '\n' ) + 1;
 	int words = text.count( ' ' ) + lines;
 
-	return chars*charMsecs + words*wordMsecs + lines*lineMsecs;
+	return chars*msecsPerChar + words*msecsPerWord + lines*msecsPerLine;
 }
 
-Time SubtitleLine::autoDuration( int charMsecs, int wordMsecs, int lineMsecs, OpMode mode )
+Time SubtitleLine::autoDuration( int msecsPerChar, int msecsPerWord, int msecsPerLine, TextTarget calculationTarget )
 {
-	switch ( mode )
+	switch ( calculationTarget )
 	{
 		case Secondary:
-			return autoDuration( m_secondaryText.string(), charMsecs, wordMsecs, lineMsecs );
+			return autoDuration( m_secondaryText.string(), msecsPerChar, msecsPerWord, msecsPerLine );
 		case Both:
 		{
-			Time primary = autoDuration( m_primaryText.string(), charMsecs, wordMsecs, lineMsecs );
-			Time secondary = autoDuration( m_secondaryText.string(), charMsecs, wordMsecs, lineMsecs );
+			Time primary = autoDuration( m_primaryText.string(), msecsPerChar, msecsPerWord, msecsPerLine );
+			Time secondary = autoDuration( m_secondaryText.string(), msecsPerChar, msecsPerWord, msecsPerLine );
 			return primary > secondary ? primary : secondary;
 		}
 		case Primary:
 		default:
-			return autoDuration( m_primaryText.string(), charMsecs, wordMsecs, lineMsecs );
+			return autoDuration( m_primaryText.string(), msecsPerChar, msecsPerWord, msecsPerLine );
 	}
 }
 

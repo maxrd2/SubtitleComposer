@@ -71,7 +71,7 @@ AutoDurationsDialog::AutoDurationsDialog( unsigned charMillis, unsigned wordMill
 	QGroupBox* calculationGroupBox = createGroupBox( i18nc( "@title:group", "Duration Calculation" ) );
 
 	m_calculationButtonGroup = new QButtonGroup( this );
-	for ( int index = 0; index < SubtitleLine::OpModeUNKNOWN; ++index )
+	for ( int index = 0; index < SubtitleLine::TextTargetSIZE; ++index )
 		m_calculationButtonGroup->addButton( new QRadioButton( calculationGroupBox ), index );
 
 	m_calculationButtonGroup->button( SubtitleLine::Primary )->setText( i18n( "Use primary text" ) );
@@ -90,7 +90,7 @@ AutoDurationsDialog::AutoDurationsDialog( unsigned charMillis, unsigned wordMill
 	settingsGroupBoxLayout->addWidget( m_preventOverlapCheckBox, 3, 0, 1, 2 );
 
 	QGridLayout* calculationLayout = createLayout( calculationGroupBox );
-	for ( int index = 0; index < SubtitleLine::OpModeUNKNOWN; ++index )
+	for ( int index = 0; index < SubtitleLine::TextTargetSIZE; ++index )
 		calculationLayout->addWidget( m_calculationButtonGroup->button( index ), index, 0 );
 }
 
@@ -145,8 +145,8 @@ void AutoDurationsDialog::setTranslationMode( bool enabled )
 	}
 }
 
-SubtitleLine::OpMode AutoDurationsDialog::calculationMode() const
+Subtitle::TextTarget AutoDurationsDialog::calculationMode() const
 {
 	int checkedId = m_calculationButtonGroup->checkedId();
-	return checkedId == -1 ? SubtitleLine::OpModeUNKNOWN : (SubtitleLine::OpMode)checkedId;
+	return checkedId == -1 ? Subtitle::TextTargetSIZE : (Subtitle::TextTarget)checkedId;
 }

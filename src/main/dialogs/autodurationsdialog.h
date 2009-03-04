@@ -44,7 +44,7 @@ namespace SubtitleComposer
 
 			bool preventOverlap() const;
 
-			SubtitleLine::OpMode calculationMode() const;
+			Subtitle::TextTarget calculationMode() const;
 
 			bool translationMode() const;
 			void setTranslationMode( bool enabled );

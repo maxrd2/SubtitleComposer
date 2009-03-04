@@ -77,7 +77,10 @@ namespace SubtitleComposer
 
 			static Application* instance();
 
-			MainWindow* mainWindow();
+			Subtitle* subtitle() const;
+
+			MainWindow* mainWindow() const;
+			LinesWidget* linesWidget() const;
 
 			bool translationMode() const;
 			bool showingLinesContextMenu() const;

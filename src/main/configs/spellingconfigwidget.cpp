@@ -34,6 +34,7 @@
 #include <KColorCombo>
 #include <KNumInput>
 
+#include <KDebug>
 #include <KLocale>
 #include <KGlobal>
 #include <KConfig>

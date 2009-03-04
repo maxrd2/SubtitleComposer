@@ -17,14 +17,66 @@
  *   Boston, MA 02110-1301, USA.                                           *
  ***************************************************************************/
 
-#include "removelinesdialog.h"
-
-#include <KLocale>
+#include "scripting_styles.h"
 
 using namespace SubtitleComposer;
 
-RemoveLinesDialog::RemoveLinesDialog( QWidget* parent ):
-	ActionWithTextsTargetDialog( i18n( "Remove Selected Lines" ), i18n( "Remove From" ), parent )
+Scripting::StylesModule::StylesModule( QObject* parent ):
+	QObject( parent )
 {
-	setNonTranslationModeTarget( Subtitle::Both );
 }
+
+int Scripting::StylesModule::cummulativeFlags( const QString& text ) const
+{
+	SString sText;
+	sText.setRichString( text );
+	return sText.cummulativeStyleFlags();
+}
+
+QString Scripting::StylesModule::setFlags( const QString& text, int styleFlags ) const
+{
+	SString sText;
+	sText.setRichString( text );
+	sText.setStyleFlags( 0, sText.length(), styleFlags );
+	return sText.richString();
+}
+
+QString Scripting::StylesModule::setFlags( const QString& text, int styleFlags, bool on ) const
+{
+	SString sText;
+	sText.setRichString( text );
+	sText.setStyleFlags( 0, sText.length(), styleFlags, on );
+	return sText.richString();
+}
+
+QString Scripting::StylesModule::setFlags( const QString& text, int index, int len, int styleFlags ) const
+{
+	if ( index < 0 || ! len )
+		return text;
+
+	SString sText;
+	sText.setRichString( text );
+
+	if ( index >= sText.length() )
+		return text;
+
+	sText.setStyleFlags( index, len, styleFlags );
+	return sText.richString();
+}
+
+QString Scripting::StylesModule::setFlags( const QString& text, int index, int len, int styleFlags, bool on ) const
+{
+	if ( index < 0 || ! len )
+		return text;
+
+	SString sText;
+	sText.setRichString( text );
+
+	if ( index >= sText.length() )
+		return text;
+
+	sText.setStyleFlags( index, len, styleFlags, on );
+	return sText.richString();
+}
+
+#include "scripting_styles.moc"

@@ -143,6 +143,56 @@ namespace SubtitleComposer
 
 		private:
 
+			inline void shiftPositively( int fromIndex, int delta )
+			{
+				//Q_ASSERT( delta > 0 );
+
+				if ( fromIndex <= m_start )
+				{
+					m_start += delta;
+					m_end += delta;
+				}
+				else if ( fromIndex <= m_end )
+				{
+					m_end += delta;
+				}
+				/*else // if ( fromIndex > m_end )
+				{
+					// nothing to do in this case
+				}*/
+			}
+
+			inline bool shiftNegatively( int fromIndex, int delta )
+			{
+				//Q_ASSERT( delta > 0 );
+
+				if ( fromIndex <= m_start )
+				{
+					m_start -= delta;
+					m_end -= delta;
+					if ( m_start < fromIndex )
+					{
+						if ( m_end < fromIndex )
+							return false; // range invalidated
+						else
+							m_start = fromIndex;
+					}
+				}
+				else if ( fromIndex <= m_end )
+				{
+					if ( fromIndex + delta > m_end )
+						m_end = fromIndex - 1;
+					else
+						m_end -= delta;
+				}
+				/*else // if ( fromIndex > m_end )
+				{
+					// nothing to do in this case
+				}*/
+
+				return true;
+			}
+
 			friend class RangeList;
 
 			Range() {}

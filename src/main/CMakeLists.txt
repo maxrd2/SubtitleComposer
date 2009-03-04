@@ -3,6 +3,7 @@ ADD_SUBDIRECTORY( dialogs )
 ADD_SUBDIRECTORY( images )
 ADD_SUBDIRECTORY( actions )
 ADD_SUBDIRECTORY( utils )
+ADD_SUBDIRECTORY( scripting )
 
 INCLUDE_DIRECTORIES(
 	${common_INCLUDE_DIR}
@@ -24,6 +25,7 @@ SET( subtitlecomposer_SRCS
 	${main_dialogs_SRCS}
 	${main_useractions_SRCS}
 	${main_utils_SRCS}
+	${main_scripting_SRCS}
 	${CMAKE_CURRENT_SOURCE_DIR}/application.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/audiolevelswidget.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/configdialog.cpp

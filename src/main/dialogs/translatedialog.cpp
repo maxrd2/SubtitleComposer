@@ -69,7 +69,7 @@ TranslateDialog::TranslateDialog( QWidget* parent ):
 	createLineTargetsButtonGroup();
 	createTextTargetsButtonGroup();
 
-	setTextsTargetEnabled( SubtitleLine::Both, false );
+	setTextsTargetEnabled( Subtitle::Both, false );
 
 	QGridLayout* settingsLayout = createLayout( settingsGroupBox );
 	settingsLayout->addWidget( inputLanguageLabel, 0, 0, Qt::AlignRight|Qt::AlignVCenter );

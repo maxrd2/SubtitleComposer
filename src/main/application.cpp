@@ -59,7 +59,7 @@
 #include "utils/errorfinder.h"
 #include "utils/speller.h"
 #include "utils/translator.h"
-#include "utils/scriptsmanager.h"
+#include "scripting/scriptsmanager.h"
 #include "../common/commondefs.h"
 #include "../common/fileloadhelper.h"
 #include "../common/filesavehelper.h"
@@ -274,9 +274,19 @@ Application* Application::instance()
 	return static_cast<Application*>( kapp );
 }
 
-MainWindow* Application::mainWindow()
+Subtitle* Application::subtitle() const
+{
+	return m_subtitle;
+}
+
+MainWindow* Application::mainWindow() const
 {
 	return m_mainWindow;
+}
+
+LinesWidget* Application::linesWidget() const
+{
+	return m_linesWidget;
 }
 
 bool Application::translationMode() const
@@ -1854,10 +1864,10 @@ void Application::joinSubtitles()
 			codec = KGlobal::locale()->codecForEncoding();
 
 		Subtitle secondSubtitle;
-		bool primary = dlg->selectedTextsTarget() != SubtitleLine::Secondary;
+		bool primary = dlg->selectedTextsTarget() != Subtitle::Secondary;
 		if ( FormatManager::instance().readSubtitle( secondSubtitle, primary, dlg->subtitlePath(), codec ) )
 		{
-			if ( dlg->selectedTextsTarget() == SubtitleLine::Both )
+			if ( dlg->selectedTextsTarget() == Subtitle::Both )
 				secondSubtitle.setSecondaryData( secondSubtitle, true );
 
 			m_subtitle->appendSubtitle( secondSubtitle, dlg->shiftTime().toMillis() );
@@ -2005,13 +2015,11 @@ void Application::insertBeforeCurrentLine()
 	if ( dlg->exec() == QDialog::Accepted )
 	{
 		SubtitleLine* currentLine = m_linesWidget->currentLine();
-		SubtitleLine* newLine = m_subtitle->insertNewLine(
+		m_subtitle->insertNewLine(
 			currentLine ? currentLine->index() : 0,
 			false,
 			dlg->selectedTextsTarget()
 		);
-
-		m_linesWidget->setCurrentLine( newLine, true );
 	}
 }
 
@@ -2022,13 +2030,11 @@ void Application::insertAfterCurrentLine()
 	if ( dlg->exec() == QDialog::Accepted )
 	{
 		SubtitleLine* currentLine = m_linesWidget->currentLine();
-		SubtitleLine* newLine = m_subtitle->insertNewLine(
+		m_subtitle->insertNewLine(
 			currentLine ? currentLine->index() + 1 : 0,
 			true,
 			dlg->selectedTextsTarget()
 		);
-
-		m_linesWidget->setCurrentLine( newLine, true );
 	}
 }
 
@@ -2507,7 +2513,7 @@ void Application::syncWithSubtitle()
 					);
 			}
 			else // if ( dlg->synchronizeToReferenceTimes() )
-				m_subtitle->syncToSubtitle( referenceSubtitle );
+				m_subtitle->syncWithSubtitle( referenceSubtitle );
 		}
 		else
 			KMessageBox::sorry( m_mainWindow, i18n( "Could not parse the reference subtitle file." ) );
@@ -2548,7 +2554,7 @@ void Application::simplifySpaces()
 	);
 
 	if ( dlg->exec() == QDialog::Accepted )
-		m_subtitle->simplifySpaces(
+		m_subtitle->simplifyTextWhiteSpace(
 			m_linesWidget->targetRanges( dlg->selectedLinesTarget() ),
 			dlg->selectedTextsTarget()
 		);
@@ -2699,7 +2705,7 @@ void Application::translate()
 
 	if ( dlg->exec() == QDialog::Accepted )
 	{
-		if ( dlg->selectedTextsTarget() == SubtitleLine::Primary || dlg->selectedTextsTarget() == SubtitleLine::Both )
+		if ( dlg->selectedTextsTarget() == Subtitle::Primary || dlg->selectedTextsTarget() == Subtitle::Both )
 		{
 			if ( ! applyTranslation(
 				m_linesWidget->targetRanges( dlg->selectedLinesTarget() ),
@@ -2710,7 +2716,7 @@ void Application::translate()
 			) ) return; // skip secondary translation on previous error (most likely a connection/service issue)
 		}
 
-		if ( dlg->selectedTextsTarget() == SubtitleLine::Secondary || dlg->selectedTextsTarget() == SubtitleLine::Both )
+		if ( dlg->selectedTextsTarget() == Subtitle::Secondary || dlg->selectedTextsTarget() == Subtitle::Both )
 		{
 			applyTranslation(
 				m_linesWidget->targetRanges( dlg->selectedLinesTarget() ),

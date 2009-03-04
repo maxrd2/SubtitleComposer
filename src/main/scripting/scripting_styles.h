@@ -1,3 +1,6 @@
+#ifndef SCRIPTING_STYLES_H
+#define SCRIPTING_STYLES_H
+
 /***************************************************************************
  *   Copyright (C) 2007-2009 Sergio Pistone (sergio_pistone@yahoo.com.ar)  *
  *                                                                         *
@@ -17,14 +20,46 @@
  *   Boston, MA 02110-1301, USA.                                           *
  ***************************************************************************/
 
-#include "removelinesdialog.h"
+#ifdef HAVE_CONFIG_H
+	#include <config.h>
+#endif
 
-#include <KLocale>
+#include "../../core/sstring.h"
 
-using namespace SubtitleComposer;
+#include <QtCore/QObject>
 
-RemoveLinesDialog::RemoveLinesDialog( QWidget* parent ):
-	ActionWithTextsTargetDialog( i18n( "Remove Selected Lines" ), i18n( "Remove From" ), parent )
+namespace SubtitleComposer
 {
-	setNonTranslationModeTarget( Subtitle::Both );
+	namespace Scripting
+	{
+
+		class StylesModule : public QObject
+		{
+			Q_OBJECT
+
+			Q_ENUMS( StyleFlag )
+
+			public:
+
+				typedef enum {
+					Bold =				SubtitleComposer::SString::Bold,
+					Italic =			SubtitleComposer::SString::Italic,
+					Underline = 		SubtitleComposer::SString::Underline,
+					StrikeThrough = 	SubtitleComposer::SString::StrikeThrough,
+				} StyleFlag;
+
+				StylesModule( QObject* parent=0 );
+
+			public slots:
+
+				int cummulativeFlags( const QString& text ) const;
+
+				QString setFlags( const QString& text, int styleFlags ) const;
+				QString setFlags( const QString& text, int styleFlags, bool on ) const;
+				QString setFlags( const QString& text, int index, int len, int styleFlags ) const;
+				QString setFlags( const QString& text, int index, int len, int styleFlags, bool on ) const;
+		};
+	}
 }
+
+#endif

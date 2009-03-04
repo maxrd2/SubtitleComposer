@@ -113,6 +113,14 @@ namespace SubtitleComposer
 				return false;
 			}
 
+			Range range( int rangeIndex ) const
+			{
+				Q_ASSERT( rangeIndex >= 0 );
+				Q_ASSERT( rangeIndex < m_ranges.count() );
+
+				return m_ranges.at( rangeIndex );
+			}
+
 			bool isEmpty() const
 			{
 				return m_ranges.isEmpty();
@@ -360,82 +368,42 @@ namespace SubtitleComposer
 				}
 			}
 
-			void insertAndShift( const Range& insertRange, bool fillGap )
+			void shift( int fromIndex, int delta )
 			{
-				int insertRangeIndex = -1;
-				const int insertRangeLength = insertRange.length();
+				Q_ASSERT( fromIndex >= 0 );
 
-				for ( int rangeIndex = 0, lastRangeIndex = m_ranges.count() - 1; rangeIndex <= lastRangeIndex; ++rangeIndex )
-				{
-					Range& currentRange = m_ranges[rangeIndex];
-					if ( currentRange.m_start >= insertRange.m_start )
-					{
-						currentRange.m_start += insertRangeLength;
-						currentRange.m_end += insertRangeLength;
-					}
-					else if ( currentRange.m_end >= insertRange.m_start )
-					{
-						currentRange.m_end += insertRangeLength;
-						insertRangeIndex = rangeIndex;
-					}
-				}
+				if ( ! delta || m_ranges.isEmpty() )
+					return;
 
-				if ( fillGap )
+				if ( delta > 0 )
 				{
-					if ( insertRangeIndex == -1 )
-						operator<<( insertRange );
+					for ( int index = 0, count = m_ranges.count(); index < count; ++index )
+					{
+						Range& range = m_ranges[index];
+						if ( range.m_start < fromIndex && fromIndex <= range.m_end ) // range must be splitted
+						{
+							Range range0( range.m_start, fromIndex - 1 );
+							range.m_start = fromIndex;
+							range.shiftPositively( fromIndex, delta );
+							m_ranges.insert( m_ranges.begin() + index, range0 );
+						}
+						else
+							range.shiftPositively( fromIndex, delta );
+					}
 				}
 				else
 				{
-					if ( insertRangeIndex != -1 )
+					delta = -delta;
+					for ( int index = 0, count = m_ranges.count(); index < count; ++index )
 					{
-						Range& prevRange = m_ranges[insertRangeIndex];
-						Range newRange( insertRange.m_end, prevRange.m_end );
-						prevRange.m_start = insertRange.m_start;
-						m_ranges.insert( m_ranges.begin() + insertRangeIndex + 1, newRange );
+						if ( ! m_ranges[index].shiftNegatively( fromIndex, delta ) ) // range invalidated by shift
+						{
+							m_ranges.removeAt( index );
+							index--;
+							count--;
+						}
 					}
 				}
-			}
-
-			void removeAndShift( const Range& /*removeRange*/ )
-			{
-/*				const int removeRangeLength = removeRange.length();
-
-				for ( int rangeIndex = 0, lastRangeIndex = m_ranges.count() - 1; rangeIndex <= lastRangeIndex; ++rangeIndex )
-				{
-					Range& currentRange = m_ranges[rangeIndex];
-					if ( currentRange.m_start >= removeRange.m_start )
-					{
-						if ( currentRange.m_start > removeRange.m_end )
-							currentRange.m_start -= removeRangeLength;
-						else
-							currentRange.m_start = removeRange.m_start;
-					}
-
-					if ( currentRange.m_end >= removeRange.m_start )
-					{
-						if ( currentRange.m_end > removeRange.m_end )
-							currentRange.m_end -= removeRangeLength;
-						else
-							currentRange.m_end = removeRange.m_start;
-					}
-				}
-
-				if ( fillGap )
-				{
-					if ( removeRangeIndex == -1 )
-						operator<<( removeRange );
-				}
-				else
-				{
-					if ( removeRangeIndex != -1 )
-					{
-						Range& prevRange = m_ranges[removeRangeIndex];
-						Range newRange( removeRange.m_end, prevRange.m_end );
-						prevRange.m_start = removeRange.m_start;
-						m
-					}
-				}*/
 			}
 
 			inline ConstIterator begin() const { return m_ranges.begin(); }

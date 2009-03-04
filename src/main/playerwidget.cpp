@@ -96,7 +96,6 @@ PlayerWidget::PlayerWidget( QWidget* parent ):
 	m_seekSlider->setFocusPolicy( Qt::NoFocus );
 
 	m_infoControlsGroupBox = new QGroupBox( this );
-// 	m_infoControlsGroupBox->setTitle( i18n( "Information" ) );
 	m_infoControlsGroupBox->setAcceptDrops( true );
 	m_infoControlsGroupBox->installEventFilter( this );
 
@@ -170,8 +169,6 @@ PlayerWidget::PlayerWidget( QWidget* parent ):
 	m_mainLayout->addLayout( audioControlsLayout, 0, 2 );
 	m_mainLayout->addLayout( videoControlsLayout, 1, 1 );
 	m_mainLayout->addWidget( createToolButton( this, ACT_TOGGLE_FULL_SCREEN, 16 ), 1, 2 );
-
-
 
 	m_fullScreenControls = new AttachableWidget( AttachableWidget::Bottom, 4, m_layeredWidget );
 	m_fullScreenControls->setAutoHide( true );

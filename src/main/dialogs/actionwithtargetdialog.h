@@ -25,7 +25,7 @@
 #endif
 
 #include "actiondialog.h"
-#include "../../core/subtitleline.h"
+#include "../../core/subtitle.h"
 
 #include <QtGui/QWidget>
 
@@ -54,14 +54,14 @@ namespace SubtitleComposer
 
 			/// TEXTS TARGET
 			// the active text target when translationMode is false
-			SubtitleLine::OpMode nonTranslationModeTarget() const;
-			void setNonTranslationModeTarget( SubtitleLine::OpMode target );
+			Subtitle::TextTarget nonTranslationModeTarget() const;
+			void setNonTranslationModeTarget( Subtitle::TextTarget target );
 
-			SubtitleLine::OpMode selectedTextsTarget() const;
-			void setSelectedTextsTarget( SubtitleLine::OpMode target );
+			Subtitle::TextTarget selectedTextsTarget() const;
+			void setSelectedTextsTarget( Subtitle::TextTarget target );
 
-			bool isTextsTargetEnabled( SubtitleLine::OpMode target ) const;
-			void setTextsTargetEnabled( SubtitleLine::OpMode target, bool enabled );
+			bool isTextsTargetEnabled( Subtitle::TextTarget target ) const;
+			void setTextsTargetEnabled( Subtitle::TextTarget target, bool enabled );
 
 		public slots:
 
@@ -109,7 +109,7 @@ namespace SubtitleComposer
 			bool m_selectionTargetWasChecked;
 
 			bool m_translationMode;
-			SubtitleLine::OpMode m_nonTranslationModeTarget;
+			Subtitle::TextTarget m_nonTranslationModeTarget;
 	};
 
 

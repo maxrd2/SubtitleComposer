@@ -287,9 +287,11 @@ void SubtitleIterator::onSubtitleLinesInserted( int firstIndex, int lastIndex )
 		return;
 
 	int prevIndex = m_index;
-	int insertedLines = lastIndex - firstIndex + 1;
-
-	m_ranges.insertAndShift( Range( firstIndex, lastIndex ), m_isFullIterator );
+	Range insertedRange( firstIndex, lastIndex );
+	
+	m_ranges.shift( firstIndex, insertedRange.length() );
+	if ( m_isFullIterator )
+		m_ranges << insertedRange;
 
 	m_index = Invalid - 1; // a non Invalid index (needed only for initialization)
 
@@ -315,7 +317,7 @@ void SubtitleIterator::onSubtitleLinesInserted( int firstIndex, int lastIndex )
 	{
 		toFirst(); // restore internal variables to a valid state
 		if ( prevIndex >= firstIndex )
-			toIndex( prevIndex + insertedLines ); // point to the previously pointed line
+			toIndex( prevIndex + insertedRange.length() ); // point to the previously pointed line
 		else
 			toIndex( prevIndex ); // point to the previously pointed line
 	}
@@ -329,9 +331,9 @@ void SubtitleIterator::onSubtitleLinesRemoved( int firstIndex, int lastIndex )
 		return;
 
 	int prevIndex = m_index;
-	int removedLines = lastIndex - firstIndex + 1;
+	Range removedRange( firstIndex, lastIndex );
 
-	m_ranges.removeAndShift( Range( firstIndex, lastIndex ) );
+	m_ranges.shift( firstIndex, -removedRange.length() );
 
 	if ( m_ranges.isEmpty() )
 		m_index = Invalid;
@@ -355,7 +357,7 @@ void SubtitleIterator::onSubtitleLinesRemoved( int firstIndex, int lastIndex )
 			if ( prevIndex < firstIndex )
 				toIndex( prevIndex );
 			else if ( m_index > lastIndex )
-				toIndex( prevIndex - removedLines );
+				toIndex( prevIndex - removedRange.length() );
 			else // prevIndex was one of the removed lines
 				toIndex( firstIndex );
 		}

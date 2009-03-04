@@ -71,6 +71,13 @@ namespace SubtitleComposer
 
 		public:
 
+			typedef enum {
+				Primary =			SubtitleLine::Primary,
+				Secondary =			SubtitleLine::Secondary,
+				Both =				SubtitleLine::Both,
+				TextTargetSIZE =	SubtitleLine::TextTargetSIZE
+			} TextTarget;
+
 			static double defaultFramesPerSecond();
 			static void setDefaultFramesPerSecond( double framesPerSecond );
 
@@ -111,8 +118,8 @@ namespace SubtitleComposer
 
 			void insertLine( SubtitleLine* line, int index=-1 );
 			void insertLines( const QList<SubtitleLine*>& lines, int index=-1 );
-			SubtitleLine* insertNewLine( int index, bool timeAfter, SubtitleLine::OpMode mode=SubtitleLine::Both );
-			void removeLines( const RangeList& ranges, SubtitleLine::OpMode mode=SubtitleLine::Both );
+			SubtitleLine* insertNewLine( int index, bool timeAfter, TextTarget target );
+			void removeLines( const RangeList& ranges, TextTarget target );
 
 			void swapTexts( const RangeList& ranges );
 
@@ -123,24 +130,24 @@ namespace SubtitleComposer
 			void adjustLines( const Range& range, long firstTime, long lastTime );
 			void sortLines( const Range& range );
 
-			void applyDurationLimits( const RangeList& ranges, const Time& minDuration,const Time& maxDuration,bool canOverlap );
+			void applyDurationLimits( const RangeList& ranges, const Time& minDuration, const Time&maxDuration, bool canOverlap );
 			void setMaximumDurations( const RangeList& ranges );
-			void setAutoDurations( const RangeList& ranges, unsigned charMsecs, unsigned wordMsecs, unsigned lineMsecs, bool canOverlap, SubtitleLine::OpMode mode=SubtitleLine::Primary );
+			void setAutoDurations( const RangeList& ranges, int msecsPerChar, int msecsPerWord, int msecsPerLine, bool canOverlap, TextTarget calculationTarget );
 
 			void fixOverlappingLines( const RangeList& ranges, const Time& minInterval=100 );
 
-			void fixPunctuation( const RangeList& ranges, bool spaces, bool quotes, bool engI, bool ellipsis, SubtitleLine::OpMode mode=SubtitleLine::Primary );
+			void fixPunctuation( const RangeList& ranges, bool spaces, bool quotes, bool englishI, bool ellipsis, TextTarget target );
 
-			void lowerCase( const RangeList& ranges, SubtitleLine::OpMode mode=SubtitleLine::Primary );
-			void upperCase( const RangeList& ranges, SubtitleLine::OpMode mode=SubtitleLine::Primary );
-			void titleCase( const RangeList& ranges, bool lowerFirst=false, SubtitleLine::OpMode mode=SubtitleLine::Primary );
-			void sentenceCase( const RangeList& ranges, bool lowerFirst=false, SubtitleLine::OpMode mode=SubtitleLine::Primary );
+			void lowerCase( const RangeList& ranges, TextTarget target );
+			void upperCase( const RangeList& ranges, TextTarget target );
+			void titleCase( const RangeList& ranges, bool lowerFirst, TextTarget target );
+			void sentenceCase( const RangeList& ranges, bool lowerFirst, TextTarget target );
 
-			void breakLines( const RangeList& ranges, unsigned minLengthForLineBreak, SubtitleLine::OpMode mode=SubtitleLine::Primary );
-			void unbreakTexts( const RangeList& ranges, SubtitleLine::OpMode mode=SubtitleLine::Primary );
-			void simplifySpaces( const RangeList& ranges, SubtitleLine::OpMode mode=SubtitleLine::Primary );
+			void breakLines( const RangeList& ranges, unsigned minLengthForLineBreak, TextTarget target );
+			void unbreakTexts( const RangeList& ranges, TextTarget target );
+			void simplifyTextWhiteSpace( const RangeList& ranges, TextTarget target );
 
-			void syncToSubtitle( const Subtitle& refSubtitle );
+			void syncWithSubtitle( const Subtitle& refSubtitle );
 			void appendSubtitle( const Subtitle& srcSubtitle, long shiftMsecsBeforeAppend );
 			void splitSubtitle( Subtitle& dstSubtitle, const Time& splitTime, bool shiftSplittedLines );
 

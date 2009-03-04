@@ -345,7 +345,7 @@ void Subtitle::insertLines( const QList<SubtitleLine*>& lines, int index )
 	processAction( new InsertLinesAction( *this, lines, index ) );
 }
 
-SubtitleLine* Subtitle::insertNewLine( int index, bool timeAfter, SubtitleLine::OpMode mode )
+SubtitleLine* Subtitle::insertNewLine( int index, bool timeAfter, TextTarget target )
 {
 	Q_ASSERT( index <= m_lines.count() );
 
@@ -353,7 +353,7 @@ SubtitleLine* Subtitle::insertNewLine( int index, bool timeAfter, SubtitleLine::
 		index = m_lines.count();
 
 	SubtitleLine* newLine = new SubtitleLine();
-	int newLineIndex = (mode == SubtitleLine::Secondary) ? m_lines.count() : index;
+	int newLineIndex = (target == Secondary) ? m_lines.count() : index;
 
 	if ( timeAfter )
 	{
@@ -386,11 +386,11 @@ SubtitleLine* Subtitle::insertNewLine( int index, bool timeAfter, SubtitleLine::
 			newLine->setHideTime( 1000 );
 	}
 
-	if ( mode == SubtitleLine::Both || index == m_lines.count() )
+	if ( target == Both || index == m_lines.count() )
 	{
 		insertLine( newLine, newLineIndex );
 	}
-	else if ( mode == SubtitleLine::Primary )
+	else if ( target == Primary )
 	{
 		beginCompositeAction( i18n( "Insert Line" ) );
 
@@ -407,7 +407,7 @@ SubtitleLine* Subtitle::insertNewLine( int index, bool timeAfter, SubtitleLine::
 
 		endCompositeAction();
 	}
-	else if ( mode == SubtitleLine::Secondary )
+	else if ( target == Secondary )
 	{
 		beginCompositeAction( i18n( "Insert Line" ) );
 
@@ -430,12 +430,12 @@ SubtitleLine* Subtitle::insertNewLine( int index, bool timeAfter, SubtitleLine::
 	return newLine;
 }
 
-void Subtitle::removeLines( const RangeList& ranges, SubtitleLine::OpMode mode )
+void Subtitle::removeLines( const RangeList& ranges, TextTarget target )
 {
 	if ( m_lines.isEmpty() || ranges.isEmpty() )
 		return;
 
-	if ( mode == SubtitleLine::Both )
+	if ( target == Both )
 	{
 		beginCompositeAction( i18n( "Remove Lines" ) );
 
@@ -449,7 +449,7 @@ void Subtitle::removeLines( const RangeList& ranges, SubtitleLine::OpMode mode )
 
 		endCompositeAction();
 	}
-	else if ( mode == SubtitleLine::Secondary )
+	else if ( target == Secondary )
 	{
 		beginCompositeAction( i18n( "Remove Lines" ) );
 
@@ -468,7 +468,7 @@ void Subtitle::removeLines( const RangeList& ranges, SubtitleLine::OpMode mode )
 
 		endCompositeAction();
 	}
-	else // if mode == SubtitleLine::Primary
+	else // if target == Primary
 	{
 		beginCompositeAction( i18n( "Remove Lines" ), true, false );
 
@@ -531,7 +531,7 @@ void Subtitle::splitLines( const RangeList& ranges )
 		SubtitleLine* line = it.current();
 		if ( line->primaryLines() > 1 )
 		{
-			line->simplifySpaces();
+			line->simplifyTextWhiteSpace( SubtitleLine::Primary );
 
 			long autoDurationsSum = 0;
 			QList<int> autoDurations;
@@ -622,7 +622,7 @@ void Subtitle::joinLines( const RangeList& ranges )
 		obsoletedRanges << Range( rangeStart + 1, rangeEnd );
 	}
 
-	removeLines( obsoletedRanges );
+	removeLines( obsoletedRanges, Both );
 
 	endCompositeAction();
 }
@@ -802,7 +802,7 @@ void Subtitle::setMaximumDurations( const RangeList& ranges )
 }
 
 
-void Subtitle::setAutoDurations( const RangeList& ranges, unsigned charMsecs, unsigned wordMsecs, unsigned lineMsecs, bool canOverlap, SubtitleLine::OpMode mode )
+void Subtitle::setAutoDurations( const RangeList& ranges, int msecsPerChar, int msecsPerWord, int msecsPerLine, bool canOverlap, TextTarget calculationTarget )
 {
 	if ( m_lines.isEmpty() )
 		return;
@@ -820,7 +820,12 @@ void Subtitle::setAutoDurations( const RangeList& ranges, unsigned charMsecs, un
 
 		for ( ; line; ++it, line = nextLine, nextLine = it.current() )
 		{
-			autoDuration = line->autoDuration( charMsecs, wordMsecs, lineMsecs, mode );
+			autoDuration = line->autoDuration(
+				msecsPerChar,
+				msecsPerWord,
+				msecsPerLine,
+				(SubtitleLine::TextTarget)calculationTarget
+			);
 
 			if ( ! nextLine ) // the last line doesn't have risk of overlapping
 				line->setDurationTime( autoDuration );
@@ -871,9 +876,9 @@ void Subtitle::fixOverlappingLines( const RangeList& ranges, const Time& minInte
 }
 
 
-void Subtitle::fixPunctuation( const RangeList& ranges, bool spaces, bool quotes, bool engI, bool ellipsis, SubtitleLine::OpMode mode )
+void Subtitle::fixPunctuation( const RangeList& ranges, bool spaces, bool quotes, bool engI, bool ellipsis, TextTarget target )
 {
-	if ( m_lines.isEmpty() || (! spaces && ! quotes && ! engI && ! ellipsis) || mode >= SubtitleLine::OpModeUNKNOWN )
+	if ( m_lines.isEmpty() || (! spaces && ! quotes && ! engI && ! ellipsis) || target >= TextTargetSIZE )
 		return;
 
 	beginCompositeAction( i18n( "Fix Lines Punctuation" ) );
@@ -887,7 +892,7 @@ void Subtitle::fixPunctuation( const RangeList& ranges, bool spaces, bool quotes
 
 		if ( it.index() > 0 )
 		{
-			if ( mode == SubtitleLine::Primary || mode == SubtitleLine::Both )
+			if ( target == Primary || target == Both )
 				// Initialize the value of primaryContinues
 				SubtitleLine::fixPunctuation(
 					m_lines.at( it.index() - 1 )->primaryText(),
@@ -898,7 +903,7 @@ void Subtitle::fixPunctuation( const RangeList& ranges, bool spaces, bool quotes
 					&primaryContinues
 				);
 
-			if ( mode == SubtitleLine::Secondary || mode == SubtitleLine::Both )
+			if ( target == Secondary || target == Both )
 				// Initialize the value of secondaryContinues
 				SubtitleLine::fixPunctuation(
 					m_lines.at( it.index() - 1 )->secondaryText(),
@@ -912,9 +917,9 @@ void Subtitle::fixPunctuation( const RangeList& ranges, bool spaces, bool quotes
 
 		for ( ; it.current(); ++it )
 		{
-			switch ( mode )
+			switch ( target )
 			{
-				case SubtitleLine::Primary:
+				case Primary:
 					it.current()->setPrimaryText(
 						SubtitleLine::fixPunctuation(
 							it.current()->primaryText(),
@@ -926,7 +931,7 @@ void Subtitle::fixPunctuation( const RangeList& ranges, bool spaces, bool quotes
 						)
 					);
 					break;
-				case SubtitleLine::Secondary:
+				case Secondary:
 					it.current()->setSecondaryText(
 						SubtitleLine::fixPunctuation(
 							it.current()->secondaryText(),
@@ -938,7 +943,7 @@ void Subtitle::fixPunctuation( const RangeList& ranges, bool spaces, bool quotes
 						)
 					);
 					break;
-				case SubtitleLine::Both:
+				case Both:
 					it.current()->setTexts(
 						SubtitleLine::fixPunctuation(
 							it.current()->primaryText(),
@@ -961,35 +966,34 @@ void Subtitle::fixPunctuation( const RangeList& ranges, bool spaces, bool quotes
 				default:
 					break;
 			}
-
 		}
 	}
 
 	endCompositeAction();
 }
 
-void Subtitle::lowerCase( const RangeList& ranges, SubtitleLine::OpMode mode )
+void Subtitle::lowerCase( const RangeList& ranges, TextTarget target )
 {
-	if ( m_lines.isEmpty() || mode >= SubtitleLine::OpModeUNKNOWN )
+	if ( m_lines.isEmpty() || target >= TextTargetSIZE )
 		return;
 
 	beginCompositeAction( i18n( "Lower Case" ) );
 
-	switch ( mode )
+	switch ( target )
 	{
-		case SubtitleLine::Primary:
+		case Primary:
 		{
 			for ( SubtitleIterator it( *this, ranges ); it.current(); ++it )
 				it.current()->setPrimaryText( it.current()->primaryText().toLower() );
 			break;
 		}
-		case SubtitleLine::Secondary:
+		case Secondary:
 		{
 			for ( SubtitleIterator it( *this, ranges ); it.current(); ++it )
 				it.current()->setSecondaryText( it.current()->secondaryText().toLower() );
 			break;
 		}
-		case SubtitleLine::Both:
+		case Both:
 		{
 			for ( SubtitleIterator it( *this, ranges ); it.current(); ++it )
 				it.current()->setTexts( it.current()->primaryText().toLower(), it.current()->secondaryText().toLower() );
@@ -1002,28 +1006,28 @@ void Subtitle::lowerCase( const RangeList& ranges, SubtitleLine::OpMode mode )
 	endCompositeAction();
 }
 
-void Subtitle::upperCase( const RangeList& ranges, SubtitleLine::OpMode mode )
+void Subtitle::upperCase( const RangeList& ranges, TextTarget target )
 {
-	if ( m_lines.isEmpty() || mode >= SubtitleLine::OpModeUNKNOWN )
+	if ( m_lines.isEmpty() || target >= TextTargetSIZE )
 		return;
 
 	beginCompositeAction( i18n( "Upper Case" ) );
 
-	switch ( mode )
+	switch ( target )
 	{
-		case SubtitleLine::Primary:
+		case Primary:
 		{
 			for ( SubtitleIterator it( *this, ranges ); it.current(); ++it )
 				it.current()->setPrimaryText( it.current()->primaryText().toUpper() );
 			break;
 		}
-		case SubtitleLine::Secondary:
+		case Secondary:
 		{
 			for ( SubtitleIterator it( *this, ranges ); it.current(); ++it )
 				it.current()->setSecondaryText( it.current()->secondaryText().toUpper() );
 			break;
 		}
-		case SubtitleLine::Both:
+		case Both:
 		{
 			for ( SubtitleIterator it( *this, ranges ); it.current(); ++it )
 				it.current()->setTexts( it.current()->primaryText().toUpper(), it.current()->secondaryText().toUpper() );
@@ -1036,28 +1040,28 @@ void Subtitle::upperCase( const RangeList& ranges, SubtitleLine::OpMode mode )
 	endCompositeAction();
 }
 
-void Subtitle::titleCase( const RangeList& ranges, bool lowerFirst, SubtitleLine::OpMode mode )
+void Subtitle::titleCase( const RangeList& ranges, bool lowerFirst, TextTarget target )
 {
-	if ( m_lines.isEmpty() || mode >= SubtitleLine::OpModeUNKNOWN )
+	if ( m_lines.isEmpty() || target >= TextTargetSIZE )
 		return;
 
 	beginCompositeAction( i18n( "Title Case" ) );
 
-	switch ( mode )
+	switch ( target )
 	{
-		case SubtitleLine::Primary:
+		case Primary:
 		{
 			for ( SubtitleIterator it( *this, ranges ); it.current(); ++it )
 				it.current()->setPrimaryText( it.current()->primaryText().toTitleCase( lowerFirst ) );
 			break;
 		}
-		case SubtitleLine::Secondary:
+		case Secondary:
 		{
 			for ( SubtitleIterator it( *this, ranges ); it.current(); ++it )
 				it.current()->setSecondaryText( it.current()->secondaryText().toTitleCase( lowerFirst ) );
 			break;
 		}
-		case SubtitleLine::Both:
+		case Both:
 		{
 			for ( SubtitleIterator it( *this, ranges ); it.current(); ++it )
 				it.current()->setTexts(
@@ -1073,9 +1077,9 @@ void Subtitle::titleCase( const RangeList& ranges, bool lowerFirst, SubtitleLine
 	endCompositeAction();
 }
 
-void Subtitle::sentenceCase( const RangeList& ranges, bool lowerFirst, SubtitleLine::OpMode mode )
+void Subtitle::sentenceCase( const RangeList& ranges, bool lowerFirst, TextTarget target )
 {
-	if ( m_lines.isEmpty() || mode >= SubtitleLine::OpModeUNKNOWN )
+	if ( m_lines.isEmpty() || target >= TextTargetSIZE )
 		return;
 
 	beginCompositeAction( i18n( "Sentence Case" ) );
@@ -1089,27 +1093,27 @@ void Subtitle::sentenceCase( const RangeList& ranges, bool lowerFirst, SubtitleL
 
 		if ( it.index() > 0 )
 		{
-			if ( mode == SubtitleLine::Primary || mode == SubtitleLine::Both ) // Initialize pCont
+			if ( target == Primary || target == Both ) // Initialize pCont
 				m_lines.at( it.index() - 1 )->primaryText().toSentenceCase( lowerFirst, &pCont );
-			if ( mode == SubtitleLine::Secondary || mode == SubtitleLine::Both ) // Initialize sCont
+			if ( target == Secondary || target == Both ) // Initialize sCont
 				m_lines.at( it.index() - 1 )->secondaryText().toSentenceCase( lowerFirst, &sCont );
 		}
 
-		switch ( mode )
+		switch ( target )
 		{
-			case SubtitleLine::Primary:
+			case Primary:
 			{
 				for ( ; it.current(); ++it )
 					it.current()->setPrimaryText( it.current()->primaryText().toSentenceCase( lowerFirst, &pCont ) );
 				break;
 			}
-			case SubtitleLine::Secondary:
+			case Secondary:
 			{
 				for ( ; it.current(); ++it )
 					it.current()->setSecondaryText( it.current()->secondaryText().toSentenceCase( lowerFirst, &sCont ) );
 				break;
 			}
-			case SubtitleLine::Both:
+			case Both:
 			{
 				for ( ; it.current(); ++it )
 					it.current()->setTexts(
@@ -1127,32 +1131,32 @@ void Subtitle::sentenceCase( const RangeList& ranges, bool lowerFirst, SubtitleL
 }
 
 
-void Subtitle::breakLines( const RangeList& ranges, unsigned minLengthForLineBreak, SubtitleLine::OpMode mode )
+void Subtitle::breakLines( const RangeList& ranges, unsigned minLengthForLineBreak, TextTarget target )
 {
 	SubtitleCompositeActionExecutor executor( *this, i18n( "Break Lines" ) );
 
 	for ( SubtitleIterator it( *this, ranges ); it.current(); ++it )
-		it.current()->adjustText( minLengthForLineBreak, mode );
+		it.current()->breakText( minLengthForLineBreak, (SubtitleLine::TextTarget)target );
 }
 
-void Subtitle::unbreakTexts( const RangeList& ranges, SubtitleLine::OpMode mode )
+void Subtitle::unbreakTexts( const RangeList& ranges, TextTarget target )
 {
 	SubtitleCompositeActionExecutor executor( *this, i18n( "Unbreak Lines" ) );
 
 	for ( SubtitleIterator it( *this, ranges ); it.current(); ++it )
-		it.current()->unbreakText( mode );
+		it.current()->unbreakText( (SubtitleLine::TextTarget)target );
 }
 
-void Subtitle::simplifySpaces( const RangeList& ranges, SubtitleLine::OpMode mode )
+void Subtitle::simplifyTextWhiteSpace( const RangeList& ranges, TextTarget target )
 {
 	SubtitleCompositeActionExecutor executor( *this, i18n( "Simplify Spaces" ) );
 
 	for ( SubtitleIterator it( *this, ranges ); it.current(); ++it )
-		it.current()->simplifySpaces( mode );
+		it.current()->simplifyTextWhiteSpace( (SubtitleLine::TextTarget)target );
 }
 
 
-void Subtitle::syncToSubtitle( const Subtitle& refSubtitle )
+void Subtitle::syncWithSubtitle( const Subtitle& refSubtitle )
 {
 	beginCompositeAction( i18n( "Synchronize Subtitles" ) );
 

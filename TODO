@@ -4,9 +4,10 @@ Planned for v0.5 and beyond
 	* automatic correction of OCR errors
 	* use KDE proxy settings for internet services (i.e., text translation) -- how do we do that?
 
-* undo/redo actions must provide some visual feedback of what's changed
 * it's annoying to have a subtitle fail to load because of an invalid encoding
   issue, perhaps the "next" encoding should be tried and the error informed
-* finish KROSS scripting interface
+* the player controls won't appear on fullscreen mode with KDE4.2 (disabling KWin desktop effects "fixes" the issue)
+
+* add KROSS scripting examples in ruby and if possible in python
 * test find text/errors when adding/removing lines
-* the player controls won't appear on fullscreen mode if using KDE4.2
+* what happens if someone changes the secondaryText of a line from a script when not in translation mode?

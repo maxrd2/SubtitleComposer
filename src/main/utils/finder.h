@@ -86,7 +86,7 @@ namespace SubtitleComposer
 			KFind* m_find;
 			KFindDialog* m_dialog;
 			QGroupBox* m_targetGroupBox;
-			QRadioButton* m_targetRadioButtons[SubtitleLine::OpModeUNKNOWN];
+			QRadioButton* m_targetRadioButtons[SubtitleLine::TextTargetSIZE];
 			SubtitleIterator* m_iterator;
 			SubtitleLine* m_dataLine;
 			bool m_instancesFound;

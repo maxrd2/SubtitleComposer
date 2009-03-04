@@ -243,11 +243,15 @@ void ConfigDialog::onOptionChanged( const QString& groupName, const QString& opt
 
 	for ( int pageIndex = 0; pageIndex < m_configWidgets.count(); ++pageIndex )
 	{
-		AppConfigGroup* configGroup = m_acceptedConfig.group( m_configWidgets.at( pageIndex )->config()->name() );
-		if ( configGroup )
+		if ( m_configWidgets.at( pageIndex )->config()->name() == groupName )
 		{
-			m_configWidgets.at( pageIndex )->setConfig( configGroup );
-			m_configWidgets.at( pageIndex )->setControlsFromConfig();
+			AppConfigGroup* configGroup = m_acceptedConfig.group( groupName );
+			if ( configGroup )
+			{
+				m_configWidgets.at( pageIndex )->setConfig( configGroup );
+				m_configWidgets.at( pageIndex )->setControlsFromConfig();
+			}
+			break;
 		}
 	}
 
