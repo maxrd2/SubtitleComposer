@@ -1,5 +1,5 @@
-#ifndef REPLACER_H
-#define REPLACER_H
+#ifndef ERRORTRACKER_H
+#define ERRORTRACKER_H
 
 /***************************************************************************
 *   Copyright (C) 2007-2009 Sergio Pistone (sergio_pistone@yahoo.com.ar)  *
@@ -24,70 +24,53 @@
 	#include <config.h>
 #endif
 
-#include "../../core/rangelist.h"
 #include "../../core/subtitle.h"
-#include "../../core/subtitleline.h"
-
-#include <QtCore/QObject>
-
-class QGroupBox;
-class QRadioButton;
-class KDialog;
-class KReplace;
-class KReplaceDialog;
 
 namespace SubtitleComposer
 {
-	class SubtitleIterator;
+	class SubtitleLine;
 
-	class Replacer : public QObject
+	class ErrorTracker : public QObject
 	{
 		Q_OBJECT
 
 		public:
 
-			explicit Replacer( QWidget* parent=0 );
-			virtual ~Replacer();
+			explicit ErrorTracker( QObject* parent=0 );
+			virtual ~ErrorTracker();
 
-			QWidget* parentWidget();
+			bool isTracking() const;
 
 		public slots:
 
 			void setSubtitle( Subtitle* subtitle=0 );
-			void setTranslationMode( bool enabled );
-
-			void replace( const RangeList& selectionRanges, int currentIndex, const QString& text=QString() );
-
-		signals:
-
-			void found( SubtitleLine* line, bool primary, int startIndex, int endIndex );
 
 		private:
 
-			void invalidate();
+			void connectSlots();
+			void disconnectSlots();
 
-			KDialog* replaceNextDialog();
+			void updateLineErrors( SubtitleLine* line, int errorFlags ) const;
 
 		private slots:
 
-			void advance();
+			void onLinePrimaryTextChanged( SubtitleLine* line );
+			void onLineSecondaryTextChanged( SubtitleLine* line );
+			void onLineTimesChanged( SubtitleLine* line );
 
-			void onHighlight( const QString& text, int matchingIndex, int matchedLength );
-			void onReplace( const QString& text, int replacementIndex, int replacedLength, int matchedLength );
+			void onErrorsOptionChanged( const QString& optionName, const QString& value );
 
 		private:
 
 			Subtitle* m_subtitle;
-			bool m_translationMode;
-			bool m_feedingPrimary;
 
-			KReplace* m_replace;
-			KReplaceDialog* m_dialog;
-			QGroupBox* m_targetGroupBox;
-			QRadioButton* m_targetRadioButtons[SubtitleLine::TextTargetSIZE];
-			SubtitleIterator* m_iterator;
-			bool m_instancesFound;
-			int m_firstIndex;
+			bool m_autoClearFixed;
+			int m_minDuration;
+			int m_maxDuration;
+			int m_minDurationPerChar;
+			int m_maxDurationPerChar;
+			int m_maxCharacters;
+			int m_maxLines;
 	};
 }
 

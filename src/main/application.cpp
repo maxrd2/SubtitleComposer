@@ -58,6 +58,7 @@
 #include "utils/replacer.h"
 #include "utils/errorfinder.h"
 #include "utils/speller.h"
+#include "utils/errortracker.h"
 #include "utils/translator.h"
 #include "scripting/scriptsmanager.h"
 #include "../common/commondefs.h"
@@ -154,61 +155,43 @@ Application::Application():
 	m_errorFinder = new ErrorFinder( m_linesWidget );
 	m_speller = new Speller( m_linesWidget );
 
+	m_errorTracker = new ErrorTracker( this );
+
 	m_scriptsManager = new ScriptsManager( this );
 
 	UserActionManager* actionManager = UserActionManager::instance();
 
-	connect( playerConfig(), SIGNAL(optionChanged(const QString&,const QString&)),
-			 this, SLOT(onPlayerOptionChanged(const QString&,const QString&)) );
-	connect( generalConfig(), SIGNAL(optionChanged(const QString&,const QString&)),
-			 this, SLOT(onGeneralOptionChanged(const QString&,const QString&)) );
+	connect( playerConfig(), SIGNAL( optionChanged( const QString&, const QString& ) ),
+			 this, SLOT( onPlayerOptionChanged( const QString&, const QString& ) ) );
+	connect( generalConfig(), SIGNAL( optionChanged( const QString&, const QString& ) ),
+			 this, SLOT( onGeneralOptionChanged( const QString&, const QString& ) ) );
 
-	connect( m_player, SIGNAL(fileOpened(const QString&)), this, SLOT(onPlayerFileOpened(const QString&)) );
-	connect( m_player, SIGNAL(playing()), this, SLOT(onPlayerPlaying()) );
-	connect( m_player, SIGNAL(paused()), this, SLOT(onPlayerPaused()) );
-	connect( m_player, SIGNAL(stopped()), this, SLOT(onPlayerStopped()) );
-	connect( m_player, SIGNAL(audioStreamsChanged(const QStringList&)),
-			 this, SLOT(onPlayerAudioStreamsChanged(const QStringList&)) );
-	connect( m_player, SIGNAL(activeAudioStreamChanged(int)), this, SLOT(onPlayerActiveAudioStreamChanged(int)) );
-	connect( m_player, SIGNAL(muteChanged(bool)), this, SLOT(onPlayerMuteChanged(bool)) );
+	connect( m_player, SIGNAL( fileOpened( const QString& ) ), this, SLOT( onPlayerFileOpened( const QString& ) ) );
+	connect( m_player, SIGNAL( playing() ), this, SLOT(onPlayerPlaying() ) );
+	connect( m_player, SIGNAL( paused() ), this, SLOT(onPlayerPaused() ) );
+	connect( m_player, SIGNAL( stopped() ), this, SLOT(onPlayerStopped() ) );
+	connect( m_player, SIGNAL( audioStreamsChanged( const QStringList&) ), this, SLOT( onPlayerAudioStreamsChanged( const QStringList& ) ) );
+	connect( m_player, SIGNAL( activeAudioStreamChanged( int ) ), this, SLOT( onPlayerActiveAudioStreamChanged( int ) ) );
+	connect( m_player, SIGNAL( muteChanged( bool ) ), this, SLOT( onPlayerMuteChanged( bool ) ) );
 
-	connect( this, SIGNAL( subtitleOpened(Subtitle*) ), actionManager, SLOT( setSubtitle(Subtitle*) ) );
-	connect( this, SIGNAL( subtitleOpened(Subtitle*) ), m_mainWindow, SLOT( setSubtitle(Subtitle*) ) );
-	connect( this, SIGNAL( subtitleOpened(Subtitle*) ), m_audiolevelsWidget, SLOT( setSubtitle(Subtitle*) ) );
-	connect( this, SIGNAL( subtitleOpened(Subtitle*) ), m_playerWidget, SLOT( setSubtitle(Subtitle*) ) );
-	connect( this, SIGNAL( subtitleOpened(Subtitle*) ), m_linesWidget, SLOT( setSubtitle(Subtitle*) ) );
-	connect( this, SIGNAL( subtitleOpened(Subtitle*) ), m_curLineWidget, SLOT( setSubtitle(Subtitle*) ) );
-	connect( this, SIGNAL( subtitleOpened(Subtitle*) ), m_errorsWidget, SLOT( setSubtitle(Subtitle*) ) );
-	connect( this, SIGNAL( subtitleOpened(Subtitle*) ), m_finder, SLOT( setSubtitle(Subtitle*) ) );
-	connect( this, SIGNAL( subtitleOpened(Subtitle*) ), m_replacer, SLOT( setSubtitle(Subtitle*) ) );
-	connect( this, SIGNAL( subtitleOpened(Subtitle*) ), m_errorFinder, SLOT( setSubtitle(Subtitle*) ) );
-	connect( this, SIGNAL( subtitleOpened(Subtitle*) ), m_speller, SLOT( setSubtitle(Subtitle*) ) );
-	connect( this, SIGNAL( subtitleOpened(Subtitle*) ), m_scriptsManager, SLOT( setSubtitle(Subtitle*) ) );
+	QList<QObject*> listeners; listeners
+		<< actionManager
+		<< m_mainWindow << m_audiolevelsWidget << m_playerWidget << m_linesWidget << m_curLineWidget << m_errorsWidget
+		<< m_finder << m_replacer << m_errorFinder << m_speller << m_errorTracker << m_scriptsManager;
+	for ( QList<QObject*>::ConstIterator it = listeners.begin(), end = listeners.end(); it != end; ++it )
+	{
+		connect( this, SIGNAL( subtitleOpened(Subtitle*) ), *it, SLOT( setSubtitle(Subtitle*) ) );
+		connect( this, SIGNAL( subtitleClosed() ), *it, SLOT( setSubtitle() ) );
+	}
 
-	connect( this, SIGNAL( subtitleClosed() ), actionManager, SLOT( setSubtitle() ) );
-	connect( this, SIGNAL( subtitleClosed() ), m_mainWindow, SLOT( setSubtitle() ) );
-	connect( this, SIGNAL( subtitleClosed() ), m_audiolevelsWidget, SLOT( setSubtitle() ) );
-	connect( this, SIGNAL( subtitleClosed() ), m_playerWidget, SLOT( setSubtitle() ) );
-	connect( this, SIGNAL( subtitleClosed() ), m_linesWidget, SLOT( setSubtitle() ) );
-	connect( this, SIGNAL( subtitleClosed() ), m_curLineWidget, SLOT( setSubtitle() ) );
-	connect( this, SIGNAL( subtitleClosed() ), m_errorsWidget, SLOT( setSubtitle() ) );
-	connect( this, SIGNAL( subtitleClosed() ), m_finder, SLOT( setSubtitle() ) );
-	connect( this, SIGNAL( subtitleClosed() ), m_replacer, SLOT( setSubtitle() ) );
-	connect( this, SIGNAL( subtitleClosed() ), m_errorFinder, SLOT( setSubtitle() ) );
-	connect( this, SIGNAL( subtitleClosed() ), m_speller, SLOT( setSubtitle() ) );
-	connect( this, SIGNAL( subtitleClosed() ), m_scriptsManager, SLOT( setSubtitle() ) );
-
-	connect( this, SIGNAL( translationModeChanged(bool) ), actionManager, SLOT( setTranslationMode(bool) ) );
-	connect( this, SIGNAL( translationModeChanged(bool) ), m_playerWidget, SLOT( setTranslationMode(bool) ) );
-	connect( this, SIGNAL( translationModeChanged(bool) ), m_linesWidget, SLOT( setTranslationMode(bool) ) );
-	connect( this, SIGNAL( translationModeChanged(bool) ), m_curLineWidget, SLOT( setTranslationMode(bool) ) );
-	connect( this, SIGNAL( translationModeChanged(bool) ), m_finder, SLOT( setTranslationMode(bool) ) );
-	connect( this, SIGNAL( translationModeChanged(bool) ), m_replacer, SLOT( setTranslationMode(bool) ) );
-	connect( this, SIGNAL( translationModeChanged(bool) ), m_errorFinder, SLOT( setTranslationMode(bool) ) );
-	connect( this, SIGNAL( translationModeChanged(bool) ), m_speller, SLOT( setTranslationMode(bool) ) );
+	listeners.clear(); listeners
+		<< actionManager
+		<< m_playerWidget << m_linesWidget << m_curLineWidget
+		<< m_finder << m_replacer << m_errorFinder << m_speller;
+	for ( QList<QObject*>::ConstIterator it = listeners.begin(), end = listeners.end(); it != end; ++it )
+		connect( this, SIGNAL( translationModeChanged(bool) ), *it, SLOT( setTranslationMode(bool) ) );
 
 	connect( this, SIGNAL( fullScreenModeChanged(bool) ), actionManager, SLOT( setFullScreenMode(bool) ) );
-
 
 	connect( this, SIGNAL( audiolevelsOpened(AudioLevels*) ), actionManager, SLOT( setAudioLevels(AudioLevels*) ) );
 	connect( this, SIGNAL( audiolevelsOpened(AudioLevels*) ), m_audiolevelsWidget, SLOT( setAudioLevels(AudioLevels*) ) );
@@ -1331,6 +1314,7 @@ void Application::setupActions()
 // 	actionManager->addAction( decreaseAudioLevelsHZoomAction, UserAction::AudioLevelsOpened );
 }
 
+
 /// BEGIN ACTION HANDLERS
 
 Time Application::videoPosition( bool compensate )
@@ -2244,6 +2228,10 @@ void Application::recheckAllErrors()
 
 void Application::recheckSelectedErrors()
 {
+	// NOTE we can't just use Subtitle::recheckErrors() with the selected lines ranges
+	// because this slots handles the error dialog action where the user can not only
+	// select lines but can also select (or unselect) specific errors
+
 	SubtitleCompositeActionExecutor executor( *m_subtitle, i18n( "Check Lines Errors" ) );
 
 	for ( SubtitleIterator it( *m_subtitle, m_errorsWidget->selectionRanges() ); it.current(); ++it )

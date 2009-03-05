@@ -61,8 +61,9 @@ namespace SubtitleComposer
 
 	class Finder;
 	class Replacer;
-	class Speller;
 	class ErrorFinder;
+	class Speller;
+	class ErrorTracker;
 
 	class ScriptsManager;
 
@@ -318,6 +319,8 @@ namespace SubtitleComposer
 			Replacer* m_replacer;
 			ErrorFinder* m_errorFinder;
 			Speller* m_speller;
+
+			ErrorTracker* m_errorTracker;
 
 			ScriptsManager* m_scriptsManager;
 

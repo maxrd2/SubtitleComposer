@@ -123,13 +123,7 @@ namespace SubtitleComposer
 
 			void onLineErrorsChanged( SubtitleLine* line );
 
-			void onLinePrimaryTextChanged( SubtitleLine* line );
-			void onLineSecondaryTextChanged( SubtitleLine* line );
-			void onLineTimesChanged( SubtitleLine* line );
-
 			void emitDataChanged();
-
-			void onErrorsOptionChanged();
 
 		private:
 
@@ -159,15 +153,6 @@ namespace SubtitleComposer
 			QTimer* m_dataChangedTimer;
 			int m_minChangedLineIndex;
 			int m_maxChangedLineIndex;
-
-			// we use this to save the errors config for performance reasons
-			bool m_autoClearFixed;
-			int m_minDuration;
-			int m_maxDuration;
-			int m_minDurationPerChar;
-			int m_maxDurationPerChar;
-			int m_maxCharacters;
-			int m_maxLines;
 	};
 
 	class ErrorsWidget : public TreeView

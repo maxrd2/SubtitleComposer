@@ -1,5 +1,5 @@
-#ifndef TRANSLATION_H
-#define TRANSLATION_H
+#ifndef TRANSLATOR_H
+#define TRANSLATOR_H
 
 /***************************************************************************
 *   Copyright (C) 2007-2009 Sergio Pistone (sergio_pistone@yahoo.com.ar)  *

@@ -1,5 +1,5 @@
-#ifndef FIND_H
-#define FIND_H
+#ifndef FINDER_H
+#define FINDER_H
 
 /***************************************************************************
 *   Copyright (C) 2007-2009 Sergio Pistone (sergio_pistone@yahoo.com.ar)  *

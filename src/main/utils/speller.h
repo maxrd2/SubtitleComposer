@@ -1,5 +1,5 @@
-#ifndef SPELLING_H
-#define SPELLING_H
+#ifndef SPELLER_H
+#define SPELLER_H
 
 /***************************************************************************
 *   Copyright (C) 2007-2009 Sergio Pistone (sergio_pistone@yahoo.com.ar)  *

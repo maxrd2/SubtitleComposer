@@ -1,5 +1,5 @@
-#ifndef FINDERROR_H
-#define FINDERROR_H
+#ifndef ERRORFINDER_H
+#define ERRORFINDER_H
 
 /***************************************************************************
 *   Copyright (C) 2007-2009 Sergio Pistone (sergio_pistone@yahoo.com.ar)  *

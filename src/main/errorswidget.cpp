@@ -143,11 +143,6 @@ ErrorsModel::ErrorsModel( QObject* parent ):
 	m_minChangedLineIndex( -1 ),
 	m_maxChangedLineIndex( -1 )
 {
-	onErrorsOptionChanged();
-
-	connect( app()->errorsConfig(), SIGNAL(optionChanged(const QString&,const QString&)),
-			 this, SLOT(onErrorsOptionChanged()) );
-
 	m_statsChangedTimer->setInterval( 0 );
 	m_statsChangedTimer->setSingleShot( true );
 
@@ -306,48 +301,6 @@ void ErrorsModel::onLineErrorsChanged( SubtitleLine* line )
 	markLineChanged( lineIndex );
 }
 
-void ErrorsModel::onLinePrimaryTextChanged( SubtitleLine* line )
-{
-	if ( m_autoClearFixed )
-		updateLineErrors( line, line->errorFlags() & SubtitleLine::PrimaryOnlyErrors );
-
-	markLineChanged( line->index() );
-}
-
-void ErrorsModel::onLineSecondaryTextChanged( SubtitleLine* line )
-{
-	if ( m_autoClearFixed )
-		updateLineErrors( line, line->errorFlags() & SubtitleLine::SecondaryOnlyErrors );
-
-	markLineChanged( line->index() );
-}
-
-void ErrorsModel::onLineTimesChanged( SubtitleLine* line )
-{
-	if ( m_autoClearFixed )
-	{
-		updateLineErrors( line, line->errorFlags() & SubtitleLine::TimesErrors );
-		SubtitleLine* prevLine = line->prevLine();
-		if ( prevLine )
-			updateLineErrors( prevLine, prevLine->errorFlags() & SubtitleLine::OverlapsWithNext );
-	}
-
-	markLineChanged( line->index() );
-}
-
-void ErrorsModel::updateLineErrors( SubtitleLine* line, int errorFlags )
-{
-	line->check(
-		errorFlags,
-		m_minDuration,
-		m_maxDuration,
-		m_minDurationPerChar,
-		m_maxDurationPerChar,
-		m_maxCharacters,
-		m_maxLines
-	);
-}
-
 void ErrorsModel::markLineChanged( int lineIndex )
 {
 	if ( m_minChangedLineIndex < 0 )
@@ -417,19 +370,6 @@ void ErrorsModel::incrementMarksCount( int delta )
 	m_markCount += delta;
 }
 
-void ErrorsModel::onErrorsOptionChanged()
-{
-	ErrorsConfig* errorsConfig = app()->errorsConfig();
-
-	m_autoClearFixed = errorsConfig->autoClearFixed();
-	m_minDuration = errorsConfig->minDuration();
-	m_maxDuration = errorsConfig->maxDuration();
-	m_minDurationPerChar = errorsConfig->minDurationPerChar();
-	m_maxDurationPerChar = errorsConfig->maxDurationPerChar();
-	m_maxCharacters = errorsConfig->maxCharacters();
-	m_maxLines = errorsConfig->maxLines();
-}
-
 void ErrorsModel::setSubtitle( Subtitle* subtitle )
 {
 	if ( m_subtitle != subtitle )
@@ -443,15 +383,6 @@ void ErrorsModel::setSubtitle( Subtitle* subtitle )
 
 			disconnect( m_subtitle, SIGNAL( lineErrorFlagsChanged( SubtitleLine*, int ) ),
 						this, SLOT( onLineErrorsChanged( SubtitleLine* ) ) );
-
-			disconnect( m_subtitle, SIGNAL( linePrimaryTextChanged( SubtitleLine*, const SString& ) ),
-						this, SLOT( onLinePrimaryTextChanged( SubtitleLine* ) ) );
-			disconnect( m_subtitle, SIGNAL( lineSecondaryTextChanged( SubtitleLine*, const SString& ) ),
-						this, SLOT( onLineSecondaryTextChanged( SubtitleLine* ) ) );
-			disconnect( m_subtitle, SIGNAL( lineShowTimeChanged( SubtitleLine*, const Time& ) ),
-						this, SLOT( onLineTimesChanged( SubtitleLine* ) ) );
-			disconnect( m_subtitle, SIGNAL( lineHideTimeChanged( SubtitleLine*, const Time& ) ),
-						this, SLOT( onLineTimesChanged( SubtitleLine* ) ) );
 
 			if ( m_subtitle->linesCount() )
 				onLinesRemoved( 0, m_subtitle->linesCount() - 1 );
@@ -471,15 +402,6 @@ void ErrorsModel::setSubtitle( Subtitle* subtitle )
 
 			connect( m_subtitle, SIGNAL( lineErrorFlagsChanged( SubtitleLine*, int ) ),
 					 this, SLOT( onLineErrorsChanged( SubtitleLine* ) ) );
-
-			connect( m_subtitle, SIGNAL( linePrimaryTextChanged( SubtitleLine*, const SString& ) ),
-					 this, SLOT( onLinePrimaryTextChanged( SubtitleLine* ) ) );
-			connect( m_subtitle, SIGNAL( lineSecondaryTextChanged( SubtitleLine*, const SString& ) ),
-					 this, SLOT( onLineSecondaryTextChanged( SubtitleLine* ) ) );
-			connect( m_subtitle, SIGNAL( lineShowTimeChanged( SubtitleLine*, const Time& ) ),
-					 this, SLOT( onLineTimesChanged( SubtitleLine* ) ) );
-			connect( m_subtitle, SIGNAL( lineHideTimeChanged( SubtitleLine*, const Time& ) ),
-					 this, SLOT( onLineTimesChanged( SubtitleLine* ) ) );
 		}
 	}
 }
