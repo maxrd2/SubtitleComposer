@@ -74,11 +74,10 @@ void ActionManager::execAndStore( Action* action )
 
 void ActionManager::popUndo()
 {
-	Action* action = m_undoStack.takeFirst();
-	if ( action == 0 )
-		return;
+	if ( m_undoStack.isEmpty() )
+		return; // nothing to undo
 
-	delete action;
+	delete m_undoStack.takeFirst();
 	m_redoStack.clear();
 
 	emit actionRemoved();
@@ -94,6 +93,16 @@ bool ActionManager::hasUndo() const
 	return ! m_undoStack.isEmpty();
 }
 
+int ActionManager::redoCount() const
+{
+	return m_redoStack.count();
+}
+
+int ActionManager::undoCount() const
+{
+	return m_undoStack.count();
+}
+
 QString ActionManager::redoDescription() const
 {
 	return m_redoStack.isEmpty() ? QString() : m_redoStack.first()->description();
@@ -106,10 +115,10 @@ QString ActionManager::undoDescription() const
 
 void ActionManager::redo()
 {
-	Action* action = m_redoStack.takeFirst();
-	if ( action == 0 )
-		return;
+	if ( m_redoStack.isEmpty() )
+		return; // nothing to redo
 
+	Action* action = m_redoStack.takeFirst();
 	action->redo();
 	m_undoStack.prepend( action );
 
@@ -118,10 +127,10 @@ void ActionManager::redo()
 
 void ActionManager::undo()
 {
-	Action* action = m_undoStack.takeFirst();
-	if ( action == 0 )
-		return;
+	if ( m_undoStack.isEmpty() )
+		return; // nothing to undo
 
+	Action* action = m_undoStack.takeFirst();
 	action->undo();
 	m_redoStack.prepend( action );
 

@@ -295,10 +295,10 @@ namespace SubtitleComposer
 
 			SubtitleLine* m_lastFoundLine;
 
-			AudioLevels* m_audiolevels;
+			//AudioLevels* m_audiolevels; // FIXME audio levels
 
 			MainWindow* m_mainWindow;
-			AudioLevelsWidget* m_audiolevelsWidget;
+			//AudioLevelsWidget* m_audiolevelsWidget; // FIXME audio levels
 			PlayerWidget* m_playerWidget;
 			LinesWidget* m_linesWidget;
 			CurrentLineWidget* m_curLineWidget;

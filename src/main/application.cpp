@@ -117,7 +117,7 @@ Application::Application():
 	m_subtitleTrFormat(),
 	m_player( Player::instance() ),
 	m_lastFoundLine( 0 ),
-	m_audiolevels( 0 ),
+//	m_audiolevels( 0 ), // FIXME audio levels
 	m_lastSubtitleUrl( QDir::homePath() ),
 	m_lastVideoUrl( QDir::homePath() ),
 	m_linkCurrentLineToPosition( false )
@@ -140,7 +140,7 @@ Application::Application():
 
 	m_mainWindow = new MainWindow();
 
-	m_audiolevelsWidget = m_mainWindow->m_audiolevelsWidget;
+	// m_audiolevelsWidget = m_mainWindow->m_audiolevelsWidget; // FIXME audio levels
 	m_playerWidget = m_mainWindow->m_playerWidget;
 	m_linesWidget = m_mainWindow->m_linesWidget;
 	m_curLineWidget = m_mainWindow->m_curLineWidget;
@@ -176,7 +176,7 @@ Application::Application():
 
 	QList<QObject*> listeners; listeners
 		<< actionManager
-		<< m_mainWindow << m_audiolevelsWidget << m_playerWidget << m_linesWidget << m_curLineWidget << m_errorsWidget
+		<< m_mainWindow << m_playerWidget << m_linesWidget << m_curLineWidget << m_errorsWidget // << m_audiolevelsWidget /*/*// FIXME audio levels*/*/
 		<< m_finder << m_replacer << m_errorFinder << m_speller << m_errorTracker << m_scriptsManager;
 	for ( QList<QObject*>::ConstIterator it = listeners.begin(), end = listeners.end(); it != end; ++it )
 	{
@@ -193,11 +193,12 @@ Application::Application():
 
 	connect( this, SIGNAL( fullScreenModeChanged(bool) ), actionManager, SLOT( setFullScreenMode(bool) ) );
 
-	connect( this, SIGNAL( audiolevelsOpened(AudioLevels*) ), actionManager, SLOT( setAudioLevels(AudioLevels*) ) );
-	connect( this, SIGNAL( audiolevelsOpened(AudioLevels*) ), m_audiolevelsWidget, SLOT( setAudioLevels(AudioLevels*) ) );
-
-	connect( this, SIGNAL( audiolevelsClosed() ), actionManager, SLOT( setAudioLevels() ) );
-	connect( this, SIGNAL( audiolevelsClosed() ), m_audiolevelsWidget, SLOT( setAudioLevels() ) );
+// FIXME audio levels
+// 	connect( this, SIGNAL( audiolevelsOpened(AudioLevels*) ), actionManager, SLOT( setAudioLevels(AudioLevels*) ) );
+// 	connect( this, SIGNAL( audiolevelsOpened(AudioLevels*) ), m_audiolevelsWidget, SLOT( setAudioLevels(AudioLevels*) ) );
+// 
+// 	connect( this, SIGNAL( audiolevelsClosed() ), actionManager, SLOT( setAudioLevels() ) );
+// 	connect( this, SIGNAL( audiolevelsClosed() ), m_audiolevelsWidget, SLOT( setAudioLevels() ) );
 
 
 	connect( m_configDialog, SIGNAL( accepted() ), this, SLOT( updateConfigFromDialog() ) );
@@ -249,7 +250,7 @@ Application::~Application()
 	//delete m_mainWindow; the windows is destroyed when it's closed
 
 	delete m_subtitle;
-	delete m_audiolevels;
+// 	delete m_audiolevels; // FIXME audio levels
 }
 
 Application* Application::instance()
@@ -291,7 +292,7 @@ void Application::loadConfig()
 	m_recentTrSubtitlesAction->loadEntries( KGlobal::config()->group( "Recent Translation Subtitles" ) );
 
 	m_lastAudioLevelsUrl = KUrl( group.readPathEntry( "LastAudioLevelsUrl", QDir::homePath() ) );
-// 	m_recentAudioLevelsAction->loadEntries( group, "Recent Audio Levels" ); FIXME reenable when ready
+// 	m_recentAudioLevelsAction->loadEntries( group, "Recent Audio Levels" ); // FIXME audio levels
 
 	m_lastVideoUrl = KUrl( group.readPathEntry( "LastVideoUrl", QDir::homePath() ) );
 	m_recentVideosAction->loadEntries( KGlobal::config()->group( "Recent Videos" ) );
@@ -302,7 +303,7 @@ void Application::loadConfig()
 	((KToggleAction*)action( ACT_TOGGLE_MUTED ))->setChecked( m_player->isMuted() );
 
 	m_mainWindow->loadConfig();
-	m_audiolevelsWidget->loadConfig();
+// 	m_audiolevelsWidget->loadConfig(); // FIXME audio levels
 	m_playerWidget->loadConfig();
 	m_linesWidget->loadConfig();
 	m_curLineWidget->loadConfig();
@@ -320,7 +321,7 @@ void Application::saveConfig()
 	m_recentTrSubtitlesAction->saveEntries( KGlobal::config()->group( "Recent Translation Subtitles" ) );
 
 	group.writePathEntry( "LastAudioLevelsUrl", m_lastAudioLevelsUrl.prettyUrl() );
-// 	m_recentAudioLevelsAction->saveEntries( KGlobal::config()->group( "Recent Audio Levels" ) ); // FIXME reenable when ready
+// 	m_recentAudioLevelsAction->saveEntries( KGlobal::config()->group( "Recent Audio Levels" ) ); // FIXME audio levels
 
 	group.writePathEntry( "LastVideoUrl", m_lastVideoUrl.prettyUrl() );
 	m_recentVideosAction->saveEntries( KGlobal::config()->group( "Recent Videos" ) );
@@ -329,7 +330,7 @@ void Application::saveConfig()
 	group.writeEntry( "Volume", m_player->volume() );
 
 	m_mainWindow->saveConfig();
-	m_audiolevelsWidget->saveConfig();
+// 	m_audiolevelsWidget->saveConfig(); // FIXME audio levels
 	m_playerWidget->saveConfig();
 	m_linesWidget->saveConfig();
 	m_curLineWidget->saveConfig();
@@ -1782,10 +1783,13 @@ bool Application::closeTrSubtitle()
 
 		m_linesWidget->setUpdatesEnabled( false );
 
+		int oldUndoCount = m_subtitle->actionManager().undoCount();
 		m_subtitle->clearSecondaryTextData();
 
-		// The cleaning of the translations texts shouldn't be an undoable action
-		m_subtitle->actionManager().popUndo();
+		// The cleaning of the translations texts shouldn't be an undoable action so if
+		// such action was stored by m_subtitle->clearSecondaryTextData() we remove it
+		if ( m_subtitle->actionManager().undoCount() != oldUndoCount )
+			m_subtitle->actionManager().popUndo();
 
 		m_linesWidget->setUpdatesEnabled( true );
 	}
@@ -2931,8 +2935,10 @@ void Application::openAudioLevels()
 	}
 }
 
-void Application::openAudioLevels( const KUrl& url )
+void Application::openAudioLevels( const KUrl& /*url*/ )
 {
+// FIXME audio levels
+/*
 	closeAudioLevels();
 
 	m_audiolevels = new AudioLevels();
@@ -2950,10 +2956,13 @@ void Application::openAudioLevels( const KUrl& url )
 
 		KMessageBox::sorry( m_mainWindow, i18n( "There was an error opening the audiolevels." ) );
 	}
+*/
 }
 
 void Application::saveAudioLevelsAs()
 {
+// FIXME audio levels
+/*
 	KFileDialog saveDlg( m_lastAudioLevelsUrl, QString(), m_mainWindow );
 	saveDlg.setModal( true );
 	saveDlg.setCaption( i18n( "Save AudioLevels" ) );
@@ -2981,14 +2990,18 @@ void Application::saveAudioLevelsAs()
 		if ( ! m_audiolevels->save( selectedUrl, true ) )
 			KMessageBox::sorry( m_mainWindow, i18n( "There was an error saving the audiolevels." ) );
 	}
+*/
 }
 
 void Application::closeAudioLevels()
 {
+// FIXME audio levels
+/*
 	delete m_audiolevels;
 	m_audiolevels = 0;
 
 	emit audiolevelsClosed();
+*/
 }
 
 void Application::increaseAudioLevelsVZoom()

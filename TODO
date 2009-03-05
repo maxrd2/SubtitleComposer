@@ -10,4 +10,3 @@ Planned for v0.5 and beyond
 
 * add KROSS scripting examples in ruby and if possible in python
 * test find text/errors when adding/removing lines
-* what happens if someone changes the secondaryText of a line from a script when not in translation mode?

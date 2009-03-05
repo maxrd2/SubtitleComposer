@@ -130,6 +130,7 @@ PlayerWidget::PlayerWidget( QWidget* parent ):
 	m_volumeSlider->setFocusPolicy( Qt::NoFocus );
 
 	QGridLayout* videoControlsLayout = new QGridLayout();
+	videoControlsLayout->setMargin( 0 );
 	videoControlsLayout->setSpacing( 2 );
 	videoControlsLayout->addWidget( createToolButton( this, ACT_PLAY_PAUSE, 16 ), 0, 0 );
 	videoControlsLayout->addWidget( createToolButton( this, ACT_STOP, 16 ), 0, 1 );
@@ -146,12 +147,12 @@ PlayerWidget::PlayerWidget( QWidget* parent ):
 	videoControlsLayout->addWidget( m_seekSlider, 0, 12 );
 
 	QGridLayout* audioControlsLayout = new QGridLayout();
+	audioControlsLayout->setMargin( 0 );
 	audioControlsLayout->addWidget( createToolButton( this, ACT_TOGGLE_MUTED, 16 ), 0, 0, Qt::AlignHCenter );
 	audioControlsLayout->addWidget( m_volumeSlider, 1, 0, Qt::AlignHCenter );
 
 	QGridLayout* infoControlsLayout = new QGridLayout( m_infoControlsGroupBox );
 	infoControlsLayout->setSpacing( 5 );
-	infoControlsLayout->setMargin( 5 );
 	infoControlsLayout->addWidget( fpsTagLabel, 0, 0 );
 	infoControlsLayout->addWidget( m_fpsLabel, 1, 0 );
 	infoControlsLayout->addItem( new QSpacerItem( 1, 1, QSizePolicy::Minimum, QSizePolicy::MinimumExpanding ), 2, 0 );
@@ -163,6 +164,7 @@ PlayerWidget::PlayerWidget( QWidget* parent ):
 	infoControlsLayout->addWidget( m_positionEdit, 8, 0 );
 
 	m_mainLayout = new QGridLayout( this );
+	m_mainLayout->setMargin( 0 );
 	m_mainLayout->setSpacing( 5 );
 	m_mainLayout->addWidget( m_infoControlsGroupBox, 0, 0, 2, 1 );
 	m_mainLayout->addWidget( m_layeredWidget, 0, 1 );

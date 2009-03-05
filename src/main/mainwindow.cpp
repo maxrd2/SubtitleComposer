@@ -38,31 +38,35 @@ using namespace SubtitleComposer;
 MainWindow::MainWindow():
 	KXmlGuiWindow( 0 )
 {
-	QSplitter* splitter = new QSplitter( this );
-	splitter->setOrientation( Qt::Vertical );
-	splitter->setLineWidth( 0 );
+	QWidget* mainWidget = new QWidget( this );
 
-	m_audiolevelsWidget = new AudioLevelsWidget( splitter );
-	m_audiolevelsWidget->hide();
+	QSplitter* splitter = new QSplitter( mainWidget );
+
+// 	m_audiolevelsWidget = new AudioLevelsWidget( splitter );
+// 	m_audiolevelsWidget->hide();
 
 	m_playerWidget = new PlayerWidget( splitter );
+	m_playerWidget->setContentsMargins( 0, 0, 0, 0 );
 
-	QWidget* subtitleWidget = new QWidget( splitter );
-	m_linesWidget = new LinesWidget( subtitleWidget );
+	m_linesWidget = new LinesWidget( splitter );
 	m_linesWidget->setSizePolicy( QSizePolicy::Expanding, QSizePolicy::Expanding );
-	m_curLineWidget = new CurrentLineWidget( subtitleWidget );
+
+	splitter->setOrientation( Qt::Vertical );
+	splitter->setLineWidth( 0 );
+	splitter->setCollapsible( 1, false );
+	splitter->setSizes( QList<int>() << 100 << 200 );
+
+	m_curLineWidget = new CurrentLineWidget( mainWidget );
 	m_curLineWidget->setMaximumHeight( m_curLineWidget->minimumSizeHint().height() );
 
-	QLayout* subtitleWidgetLayout = new QBoxLayout( QBoxLayout::TopToBottom, subtitleWidget );
-	subtitleWidgetLayout->setContentsMargins( 5, 1, 5, 2 );
-	subtitleWidgetLayout->setSpacing( 5 );
-	subtitleWidgetLayout->addWidget( m_linesWidget );
-	subtitleWidgetLayout->addWidget( m_curLineWidget );
+	QLayout* mainWidgetLayout = new QBoxLayout( QBoxLayout::TopToBottom, mainWidget );
+	mainWidgetLayout->setContentsMargins( 5, 1, 5, 2 );
+	mainWidgetLayout->setSpacing( 5 );
+	mainWidgetLayout->addWidget( splitter );
+	mainWidgetLayout->addWidget( m_curLineWidget );
 
-	splitter->setCollapsible( 2, false );
-	splitter->setSizes( QList<int>() << 100 << 200 << 500 );
+	setCentralWidget( mainWidget ); // tell the KMainWindow that this is indeed the main widget
 
-	setCentralWidget( splitter ); // tell the KMainWindow that this is indeed the main widget
 	statusBar()->show(); // a status bar
 	toolBar()->show(); // and a tool bar
 	menuBar()->show();

@@ -59,7 +59,7 @@ namespace SubtitleComposer
 
 		protected:
 
-			AudioLevelsWidget* m_audiolevelsWidget;
+			//AudioLevelsWidget* m_audiolevelsWidget;
 			PlayerWidget* m_playerWidget;
 			LinesWidget* m_linesWidget;
 			CurrentLineWidget* m_curLineWidget;

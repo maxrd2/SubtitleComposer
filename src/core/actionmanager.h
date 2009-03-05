@@ -44,17 +44,19 @@ namespace SubtitleComposer
 			bool hasRedo() const;
 			bool hasUndo() const;
 
+			int redoCount() const;
+			int undoCount() const;
+
 			QString redoDescription() const;
 			QString undoDescription() const;
 
 			void execAndStore( Action* action );
 
-			void popUndo();
-
 		public slots:
 
 			void redo();
 			void undo();
+			void popUndo();
 			void clearHistory();
 
 		signals:
