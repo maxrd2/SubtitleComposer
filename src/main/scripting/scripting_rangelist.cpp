@@ -31,7 +31,7 @@ Scripting::RangeListModule::RangeListModule( QObject* parent ):
 
 QObject* Scripting::RangeListModule::range( int firstIndex, int lastIndex )
 {
-	if ( firstIndex >= lastIndex || firstIndex < 0 || lastIndex < 0 )
+	if ( firstIndex > lastIndex || firstIndex < 0 || lastIndex < 0 )
 		return 0;
 	return new Scripting::Range( SubtitleComposer::Range( firstIndex, lastIndex ), this );
 }
@@ -137,16 +137,28 @@ void Scripting::RangeList::trimToRange( const QObject* object )
 		m_backend.trimToRange( range->m_backend );
 }
 
-void Scripting::RangeList::append( const QObject* object )
+void Scripting::RangeList::addIndex( int index )
+{
+	if ( index >= 0 )
+		m_backend << SubtitleComposer::Range( index );
+}
+
+void Scripting::RangeList::addRange( const QObject* object )
 {
 	if ( const Scripting::Range* range = qobject_cast<const Scripting::Range*>( object ) )
 		m_backend << range->m_backend;
 }
 
-void Scripting::RangeList::shift( int fromIndex, int delta )
+void Scripting::RangeList::shiftIndexesForwards( int fromIndex, int delta, bool fillSplitGap )
 {
-	if ( fromIndex >= 0 && delta != 0 )
-		m_backend.shift( fromIndex, delta );
+	if ( fromIndex >= 0 && delta > 0 )
+		m_backend.shiftIndexesForwards( fromIndex, delta, fillSplitGap );
+}
+
+void Scripting::RangeList::shiftIndexesBackwards( int fromIndex, int delta )
+{
+	if ( fromIndex >= 0 && delta > 0 )
+		m_backend.shiftIndexesBackwards( fromIndex, delta );
 }
 
 #include "scripting_rangelist.moc"

@@ -26,6 +26,7 @@ SubtitleIterator::SubtitleIterator( const Subtitle& subtitle, const RangeList& r
 	QObject( 0 ),
 	m_subtitle( &subtitle ),
 	m_autoSync( false ),
+	m_autoCircle( false ),
 	m_ranges( ranges ),
 	m_linesIterator( m_subtitle->m_lines.begin() ),
 	m_linesIteratorStart( m_subtitle->m_lines.begin() )
@@ -57,6 +58,7 @@ SubtitleIterator::SubtitleIterator( const SubtitleIterator& it ):
 	QObject( 0 ),
 	m_subtitle( it.m_subtitle ),
 	m_autoSync( false ),
+	m_autoCircle( it.m_autoCircle ),
 	m_ranges( it.m_ranges ),
 	m_isFullIterator( it.m_isFullIterator ),
 	m_index( it.m_index ),
@@ -74,6 +76,7 @@ SubtitleIterator& SubtitleIterator::operator=( const SubtitleIterator& it )
 		setAutoSync( false );
 
 		m_subtitle = it.m_subtitle;
+		m_autoCircle = it.m_autoCircle;
 		m_ranges = it.m_ranges;
 		m_isFullIterator = it.m_isFullIterator;
 		m_index = it.m_index;
@@ -117,6 +120,24 @@ void SubtitleIterator::setAutoSync( bool value )
 	}
 }
 
+bool SubtitleIterator::isAutoCircle() const
+{
+	return m_autoCircle;
+}
+
+void SubtitleIterator::setAutoCircle( bool value )
+{
+	if ( m_autoCircle != value )
+	{
+		m_autoCircle = value;
+
+		if ( m_index == AfterLast )
+			toFirst();
+		else if ( m_index == BehindFirst )
+			toLast();
+	}
+}
+
 bool SubtitleIterator::isFullIterator() const
 {
 	return m_isFullIterator;
@@ -134,8 +155,11 @@ void SubtitleIterator::toFirst()
 
 	m_rangesIterator = m_ranges.begin();
 
-	m_index = m_ranges.firstIndex();
+	m_linesIteratorStart = m_subtitle->m_lines.begin();
+
 	m_linesIterator = m_linesIteratorStart;
+
+	m_index = m_ranges.firstIndex();
 	if ( m_index )
 		m_linesIterator += m_index; // safe because indexes within m_ranges are all valid lines
 }
@@ -148,8 +172,11 @@ void SubtitleIterator::toLast()
 	m_rangesIterator = m_ranges.end();
 	m_rangesIterator--; // safe because m_ranges is not empty (otherwise m_index would be INVALID).
 
-	m_index = m_ranges.lastIndex();
+	m_linesIteratorStart = m_subtitle->m_lines.begin();
+
 	m_linesIterator = m_linesIteratorStart;
+
+	m_index = m_ranges.lastIndex();
 	if ( m_index )
 		m_linesIterator += m_index; // safe because indexes within m_ranges are all valid lines
 }
@@ -161,6 +188,10 @@ bool SubtitleIterator::toIndex( const int index )
 
 	if ( m_index == Invalid )
 		return false;
+
+	bool savedAutoCircle = m_autoCircle; // auto circling interferes with what we have to do
+
+	m_autoCircle = false;
 
 	if ( m_index < index )
 	{
@@ -186,6 +217,8 @@ bool SubtitleIterator::toIndex( const int index )
 			}
 		}
 	}
+
+	m_autoCircle = savedAutoCircle;
 
 	return m_index == index;
 }
@@ -216,6 +249,9 @@ SubtitleIterator& SubtitleIterator::operator++()
 		}
 	}
 
+	if ( m_autoCircle && m_index == AfterLast )
+		toFirst();
+
 	return *this;
 }
 
@@ -245,6 +281,9 @@ SubtitleIterator& SubtitleIterator::operator--()
 			}
 		}
 	}
+
+	if ( m_autoCircle && m_index == BehindFirst )
+		toLast();
 
 	return *this;
 }
@@ -288,8 +327,8 @@ void SubtitleIterator::onSubtitleLinesInserted( int firstIndex, int lastIndex )
 
 	int prevIndex = m_index;
 	Range insertedRange( firstIndex, lastIndex );
-	
-	m_ranges.shift( firstIndex, insertedRange.length() );
+
+	m_ranges.shiftIndexesForwards( firstIndex, insertedRange.length(), true );
 	if ( m_isFullIterator )
 		m_ranges << insertedRange;
 
@@ -333,7 +372,9 @@ void SubtitleIterator::onSubtitleLinesRemoved( int firstIndex, int lastIndex )
 	int prevIndex = m_index;
 	Range removedRange( firstIndex, lastIndex );
 
-	m_ranges.shift( firstIndex, -removedRange.length() );
+	kDebug() << "PREV RANGES" << m_ranges.inspect();
+	m_ranges.shiftIndexesBackwards( firstIndex, removedRange.length() );
+	kDebug() << "NEW RANGES" << m_ranges.inspect();
 
 	if ( m_ranges.isEmpty() )
 		m_index = Invalid;

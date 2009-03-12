@@ -91,12 +91,18 @@ namespace SubtitleComposer
 			Q_PROPERTY( int primaryCharacters READ primaryCharacters )
 			Q_PROPERTY( int primaryWords READ primaryWords )
 			Q_PROPERTY( int primaryLines READ primaryLines )
-			Q_PROPERTY( QString primaryText READ primaryText WRITE setPrimaryText )
+
+			Q_PROPERTY( QObject* primaryText READ primaryText WRITE setPrimaryText )
+			Q_PROPERTY( QString plainPrimaryText READ plainPrimaryText WRITE setPlainPrimaryText )
+			Q_PROPERTY( QString richPrimaryText READ richPrimaryText WRITE setRichPrimaryText )
 
 			Q_PROPERTY( int secondaryCharacters READ primaryCharacters )
 			Q_PROPERTY( int secondaryWords READ secondaryWords )
 			Q_PROPERTY( int secondaryLines READ secondaryLines )
-			Q_PROPERTY( QString secondaryText READ secondaryText WRITE setSecondaryText )
+
+			Q_PROPERTY( QObject* secondaryText READ secondaryText WRITE setSecondaryText )
+			Q_PROPERTY( QString plainSecondaryText READ plainSecondaryText WRITE setPlainSecondaryText )
+			Q_PROPERTY( QString richSecondaryText READ richSecondaryText WRITE setRichSecondaryText )
 
 			Q_PROPERTY( int showTime READ showTime WRITE setShowTime )
 			Q_PROPERTY( int hideTime READ hideTime WRITE setHideTime )
@@ -121,15 +127,23 @@ namespace SubtitleComposer
 				int primaryWords() const;
 				int primaryLines() const;
 
-				QString primaryText() const;
-				void setPrimaryText( const QString& pText );
+				QObject* primaryText() const;
+				void setPrimaryText( const QObject* text );
+				QString plainPrimaryText() const;
+				void setPlainPrimaryText( const QString& plainText );
+				QString richPrimaryText() const;
+				void setRichPrimaryText( const QString& richText );
 
 				int secondaryCharacters() const;
 				int secondaryWords() const;
 				int secondaryLines() const;
 
-				QString secondaryText() const;
-				void setSecondaryText( const QString& sText );
+				QObject* secondaryText() const;
+				void setSecondaryText( const QObject* text );
+				QString plainSecondaryText() const;
+				void setPlainSecondaryText( const QString& plainText );
+				QString richSecondaryText() const;
+				void setRichSecondaryText( const QString& richText );
 
 				void breakText( int minLengthForBreak, int target=-1 );
 				void unbreakText( int target=-1 );

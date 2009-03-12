@@ -27,6 +27,7 @@
 #include "range.h"
 
 #include <QtCore/QList>
+#include <QStringList>
 
 #include <KDebug>
 
@@ -368,42 +369,59 @@ namespace SubtitleComposer
 				}
 			}
 
-			void shift( int fromIndex, int delta )
+			void shiftIndexesForwards( int fromIndex, int delta, bool fillSplitGap )
 			{
 				Q_ASSERT( fromIndex >= 0 );
+				Q_ASSERT( delta >= 0 );
 
 				if ( ! delta || m_ranges.isEmpty() )
 					return;
 
-				if ( delta > 0 )
+				for ( int index = 0, count = m_ranges.count(); index < count; ++index )
 				{
-					for ( int index = 0, count = m_ranges.count(); index < count; ++index )
+					Range& range = m_ranges[index];
+					if ( range.m_start < fromIndex && fromIndex <= range.m_end ) // range must be filled or splitted to insert gap
 					{
-						Range& range = m_ranges[index];
-						if ( range.m_start < fromIndex && fromIndex <= range.m_end ) // range must be splitted
+						if ( fillSplitGap )
+							shiftRangeForwards( range, fromIndex, delta );
+						else
 						{
 							Range range0( range.m_start, fromIndex - 1 );
 							range.m_start = fromIndex;
-							range.shiftPositively( fromIndex, delta );
+							shiftRangeForwards( range, fromIndex, delta );
 							m_ranges.insert( m_ranges.begin() + index, range0 );
 						}
-						else
-							range.shiftPositively( fromIndex, delta );
 					}
+					else
+						shiftRangeForwards( range, fromIndex, delta );
 				}
-				else
+			}
+
+			void shiftIndexesBackwards( int fromIndex, int delta )
+			{
+				Q_ASSERT( fromIndex >= 0 );
+				Q_ASSERT( delta >= 0 );
+
+				if ( ! delta || m_ranges.isEmpty() )
+					return;
+
+				for ( int index = 0, count = m_ranges.count(); index < count; ++index )
 				{
-					delta = -delta;
-					for ( int index = 0, count = m_ranges.count(); index < count; ++index )
+					if ( ! shiftRangeBackwards( m_ranges[index], fromIndex, delta ) ) // range invalidated by shift
 					{
-						if ( ! m_ranges[index].shiftNegatively( fromIndex, delta ) ) // range invalidated by shift
-						{
-							m_ranges.removeAt( index );
-							index--;
-							count--;
-						}
+						m_ranges.removeAt( index );
+						index--;
+						count--;
 					}
 				}
+			}
+
+			QString inspect()
+			{
+				QStringList ranges;
+				for ( int index = 0, count = m_ranges.count(); index < count; ++index )
+					ranges += QString().sprintf( "[%d,%d]", m_ranges.at( index ).m_start, m_ranges.at( index ).m_end );
+				return ranges.join( ", " );
 			}
 
 			inline ConstIterator begin() const { return m_ranges.begin(); }
@@ -411,6 +429,57 @@ namespace SubtitleComposer
 
 
 		private:
+
+			inline void shiftRangeForwards( Range& range, int fromIndex, int delta )
+			{
+				//Q_ASSERT( delta > 0 );
+
+				if ( fromIndex <= range.m_start )
+				{
+					range.m_start += delta;
+					range.m_end += delta;
+				}
+				else if ( fromIndex <= range.m_end )
+				{
+					range.m_end += delta;
+				}
+				//else // if ( fromIndex > range.m_end )
+				//{
+				//	// nothing to do in this case
+				//}
+			}
+
+			inline bool shiftRangeBackwards( Range& range, int fromIndex, int delta )
+			{
+				//Q_ASSERT( delta > 0 );
+
+				if ( fromIndex <= range.m_start )
+				{
+					range.m_start -= delta;
+					range.m_end -= delta;
+					if ( range.m_start < fromIndex )
+					{
+						if ( range.m_end < fromIndex )
+							return false; // range invalidated
+						else
+							range.m_start = fromIndex;
+					}
+				}
+				else if ( fromIndex <= range.m_end )
+				{
+					if ( fromIndex + delta > range.m_end )
+						range.m_end = fromIndex - 1;
+					else
+						range.m_end -= delta;
+				}
+				//else // if ( fromIndex > range.m_end )
+				//{
+				//	// nothing to do in this case
+				//}
+
+				return true;
+			}
+
 
 			QList<Range> m_ranges;
 	};

@@ -54,6 +54,9 @@ namespace SubtitleComposer
 			bool isAutoSync() const;
 			void setAutoSync( bool value );
 
+			bool isAutoCircle() const;
+			void setAutoCircle( bool value );
+
 			bool isFullIterator() const;
 			RangeList ranges() const;
 
@@ -86,6 +89,7 @@ namespace SubtitleComposer
 
 			const Subtitle* m_subtitle;
 			bool m_autoSync;
+			bool m_autoCircle;
 			RangeList m_ranges;
 			bool m_isFullIterator;
 			int m_index;

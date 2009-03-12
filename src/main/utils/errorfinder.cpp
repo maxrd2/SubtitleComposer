@@ -91,7 +91,6 @@ ErrorFinder::ErrorFinder( QWidget* parent ):
 	QObject( parent ),
 	m_subtitle( 0 ),
 	m_translationMode( false ),
-	m_feedingPrimary( false ),
 	m_iterator( 0 )
 {
 	m_dialog = new FindErrorsDialog( parent );
@@ -108,8 +107,6 @@ void ErrorFinder::invalidate()
 {
 	delete m_iterator;
 	m_iterator = 0;
-
-	m_feedingPrimary = false;
 }
 
 QWidget* ErrorFinder::parentWidget()
@@ -175,7 +172,19 @@ bool ErrorFinder::findNext()
 	if ( ! m_iterator )
 		return false;
 
-	m_findBackwards = false;
+	if ( m_findBackwards )
+	{
+		m_findBackwards = false;
+		if ( m_iterator->index() == SubtitleIterator::AfterLast )
+			m_iterator->toFirst();
+		else
+			++(*m_iterator);
+		if ( m_iterator->index() == SubtitleIterator::AfterLast )
+			m_iterator->toFirst();
+		else
+			++(*m_iterator);
+		++(*m_iterator);
+	}
 
 	advance();
 	return true;
@@ -186,7 +195,10 @@ bool ErrorFinder::findPrevious()
 	if ( ! m_iterator )
 		return false;
 
-	m_findBackwards = true;
+	if ( ! m_findBackwards )
+	{
+		m_findBackwards = true;
+	}
 
 	advance();
 	return true;
@@ -194,35 +206,13 @@ bool ErrorFinder::findPrevious()
 
 void ErrorFinder::advance()
 {
-	bool foundError;
+	// TODO ErrorFinder::advance() we iterate in advance so we break findPrevious / findNext...
+
+	bool foundError = false;
+	SubtitleLine* line = 0;
 
 	do
 	{
-		if ( m_findBackwards )
-			--(*m_iterator);
-		else
-			++(*m_iterator);
-
-		// special case: we searched all lines and didn't found any matches
-		if ( ! m_instancesFound &&
-			(
-				m_allSearchedIndex == m_iterator->index() ||
-				(m_findBackwards ?
-					(m_allSearchedIndex == m_iterator->lastIndex() && m_iterator->index() == SubtitleIterator::BehindFirst) :
-					(m_allSearchedIndex == m_iterator->firstIndex() && m_iterator->index() == SubtitleIterator::AfterLast))
-			) )
-		{
-			KMessageBox::sorry(
-				parentWidget(),
-				i18n( "No errors matching given criteria found!" ),
-				i18n( "Find Error" )
-			);
-
-			invalidate();
-
-			break;
-		}
-
 		if ( m_iterator->index() < 0 )
 		{
 			if ( m_findBackwards )
@@ -244,20 +234,47 @@ void ErrorFinder::advance()
 				break;
 		}
 
-		foundError = m_iterator->current()->errorFlags() & m_targetErrorFlags;
+		line = m_iterator->current();
+		foundError = line->errorFlags() & m_targetErrorFlags;
+
+		if ( m_findBackwards )
+			--(*m_iterator);
+		else
+			++(*m_iterator);
+
+		if ( ! foundError )
+		{
+			// special case: we searched all lines and didn't found any matches
+			if ( ! m_instancesFound &&
+				(
+					m_allSearchedIndex == m_iterator->index() ||
+					(m_findBackwards ?
+						(m_allSearchedIndex == m_iterator->lastIndex() && m_iterator->index() == SubtitleIterator::BehindFirst) :
+						(m_allSearchedIndex == m_iterator->firstIndex() && m_iterator->index() == SubtitleIterator::AfterLast))
+				) )
+			{
+				KMessageBox::sorry(
+					parentWidget(),
+					i18n( "No errors matching given criteria found!" ),
+					i18n( "Find Error" )
+				);
+				invalidate();
+				break;
+			}
+		}
 	}
 	while ( ! foundError );
 
 	if ( foundError )
 	{
 		m_instancesFound = true;
-		emit found( m_iterator->current() );
+		emit found( line );
 	}
 }
 
 void ErrorFinder::onIteratorSynchronized( int firstIndex, int lastIndex, bool inserted )
 {
-	if ( m_iterator->index() < SubtitleIterator::Invalid )
+	if ( m_iterator->index() == SubtitleIterator::Invalid )
 	{
 		invalidate();
 		return;

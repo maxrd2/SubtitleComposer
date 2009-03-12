@@ -330,7 +330,7 @@ void Finder::onLineSecondaryTextChanged( const SString& text )
 
 void Finder::onIteratorSynchronized( int firstIndex, int lastIndex, bool inserted )
 {
-	if ( m_iterator->index() < SubtitleIterator::Invalid )
+	if ( m_iterator->index() == SubtitleIterator::Invalid )
 	{
 		invalidate();
 		return;
@@ -344,6 +344,18 @@ void Finder::onIteratorSynchronized( int firstIndex, int lastIndex, bool inserte
 	}
 	else
 	{
+		if ( m_dataLine->index() < 0 ) // m_dataLine was removed
+		{
+			// work around missing "invalidateData" method in KFind
+			long options = m_find->options();
+			QString pattern = m_find->pattern();
+			delete m_find;
+			m_find = new KFind( pattern, options, 0 );
+			m_find->closeFindNextDialog();
+			connect( m_find, SIGNAL( highlight(const QString&,int,int) ),
+					this, SLOT( onHighlight(const QString&,int,int) ) );
+		}
+
 		if ( m_allSearchedIndex > lastIndex )
 			m_allSearchedIndex -= linesCount;
 		else if ( m_allSearchedIndex >= firstIndex && m_allSearchedIndex <= lastIndex ) // was one of the removed lines

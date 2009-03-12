@@ -72,7 +72,6 @@ namespace SubtitleComposer
 			Subtitle* m_subtitle;
 			FindErrorsDialog* m_dialog;
 			bool m_translationMode;
-			bool m_feedingPrimary;
 
 			int m_targetErrorFlags;
 			bool m_findBackwards;

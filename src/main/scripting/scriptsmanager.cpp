@@ -20,7 +20,7 @@
 
 #include "scriptsmanager.h"
 #include "scripting_rangelist.h"
-#include "scripting_styles.h"
+#include "scripting_sstring.h"
 #include "scripting_subtitle.h"
 #include "scripting_subtitleline.h"
 
@@ -376,12 +376,12 @@ void ScriptsManager::runScript( const QString& sN )
 	Kross::Action krossAction( 0, "Kross::Action" );
 
 	Scripting::RangeListModule* rangeListModule = new Scripting::RangeListModule;
-	Scripting::StylesModule* stylesModule = new Scripting::StylesModule;
+	Scripting::SStringModule* sstringModule = new Scripting::SStringModule;
 	Scripting::SubtitleModule* subtitleModule = new Scripting::SubtitleModule;
 	Scripting::SubtitleLineModule* subtitleLineModule = new Scripting::SubtitleLineModule;
 
 	krossAction.addObject( rangeListModule, "ranges" );
-	krossAction.addObject( stylesModule, "styles" );
+	krossAction.addObject( sstringModule, "strings" );
 	krossAction.addObject( subtitleModule, "subtitle" );
 	krossAction.addObject( subtitleLineModule, "lines" );
 
@@ -395,7 +395,7 @@ void ScriptsManager::runScript( const QString& sN )
 	}
 
 	delete rangeListModule;
-	delete stylesModule;
+	delete sstringModule;
 	delete subtitleModule;
 	delete subtitleLineModule;
 

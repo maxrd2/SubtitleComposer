@@ -117,10 +117,18 @@ static SubtitleComposer::Subtitle::TextTarget toTextTarget( int value, int opDef
 
 Scripting::SubtitleLine* Scripting::Subtitle::insertNewLine( int index, bool timeAfter, int target )
 {
-	if ( index >= m_backend->linesCount() )
+	if ( index > m_backend->linesCount() )
 		return 0;
 	static const int opDefault = SubtitleComposer::Subtitle::Both;
 	return new Scripting::SubtitleLine( m_backend->insertNewLine( index, timeAfter, toTextTarget( target, opDefault ) ), this );
+}
+
+void Scripting::Subtitle::removeLine( int index, int target )
+{
+	if ( index < 0 || index >= m_backend->linesCount() )
+		return;
+	static const int opDefault = SubtitleComposer::Subtitle::Both;
+	m_backend->removeLines( SubtitleComposer::Range( index ), toTextTarget( target, opDefault ) );
 }
 
 void Scripting::Subtitle::removeLines( const QObject* ranges, int target )

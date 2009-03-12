@@ -390,7 +390,7 @@ SString& SString::replace( int index, int len, const QString& replacement )
 {
 	int oldLength = m_string.length();
 
-	if ( index < 0 || index > oldLength )
+	if ( index < 0 || index >= oldLength )
 		return *this;
 
 	len = length( index, len );
@@ -434,7 +434,7 @@ SString& SString::replace( int index, int len, const SString& replacement )
 {
 	int oldLength = m_string.length();
 
-	if ( index < 0 || index > oldLength )
+	if ( index < 0 || index >= oldLength )
 		return *this;
 
 	len = length( index, len );

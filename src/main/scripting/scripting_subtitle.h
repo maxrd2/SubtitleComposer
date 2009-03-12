@@ -88,6 +88,7 @@ namespace SubtitleComposer
 				void changeFramesPerSecond( double toFramesPerSecond, double fromFramesPerSecond=-1.0 );
 
 				SubtitleLine* insertNewLine( int index, bool timeAfter, int target=-1 );
+				void removeLine( int index, int target=-1 );
 				void removeLines( const QObject* ranges, int target=-1 );
 
 				void swapTexts( const QObject* ranges );

@@ -2160,7 +2160,7 @@ void Application::findNextError()
 
 void Application::findPreviousError()
 {
-	if ( ! m_errorFinder->findNext() )
+	if ( ! m_errorFinder->findPrevious() )
 	{
 		m_lastFoundLine = 0;
 		m_errorFinder->find(

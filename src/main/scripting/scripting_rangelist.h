@@ -90,9 +90,11 @@ namespace SubtitleComposer
 				void trimToIndex( int index );
 				void trimToRange( const QObject* range );
 
-				void append( const QObject* range );
+				void addIndex( int index );
+				void addRange( const QObject* range );
 
-				void shift( int fromIndex, int delta );
+				void shiftIndexesForwards( int fromIndex, int delta, bool fillSplitGap );
+				void shiftIndexesBackwards( int fromIndex, int delta );
 
 			private:
 
