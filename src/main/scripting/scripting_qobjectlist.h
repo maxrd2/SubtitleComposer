@@ -1,5 +1,5 @@
-#ifndef SCRIPTING_STYLES_H
-#define SCRIPTING_STYLES_H
+#ifndef SCRIPTING_QOBJECTLIST_H
+#define SCRIPTING_QOBJECTLIST_H
 
 /***************************************************************************
  *   Copyright (C) 2007-2009 Sergio Pistone (sergio_pistone@yahoo.com.ar)  *
@@ -24,40 +24,49 @@
 	#include <config.h>
 #endif
 
-#include "../../core/sstring.h"
-
 #include <QtCore/QObject>
+#include <QtCore/QList>
 
 namespace SubtitleComposer
 {
 	namespace Scripting
 	{
-
-		class StylesModule : public QObject
+		class QObjectList : public QObject
 		{
 			Q_OBJECT
 
-			Q_ENUMS( StyleFlag )
+			Q_PROPERTY( bool isEmpty READ isEmpty )
+
+			Q_PROPERTY( int length READ length )
+			Q_PROPERTY( int size READ length )
+			Q_PROPERTY( int count READ length )
 
 			public:
 
-				typedef enum {
-					Bold =				SubtitleComposer::SString::Bold,
-					Italic =			SubtitleComposer::SString::Italic,
-					Underline = 		SubtitleComposer::SString::Underline,
-					StrikeThrough = 	SubtitleComposer::SString::StrikeThrough,
-				} StyleFlag;
-
-				StylesModule( QObject* parent=0 );
+				QObjectList( const char* contentClass, QObject* parent );
+				QObjectList( const QList<QObject*>& backend, const char* contentClass, QObject* parent );
 
 			public slots:
 
-				int cummulativeFlags( const QString& text ) const;
+				bool isEmpty() const;
+				int length() const;
 
-				QString setFlags( const QString& text, int styleFlags ) const;
-				QString setFlags( const QString& text, int styleFlags, bool on ) const;
-				QString setFlags( const QString& text, int index, int len, int styleFlags ) const;
-				QString setFlags( const QString& text, int index, int len, int styleFlags, bool on ) const;
+				QObject* at( int index ) const;
+
+				void insert( int index, QObject* object );
+				void append( QObject* object );
+				void prepend( QObject* object );
+
+				void removeFirst();
+				void removeLast();
+				void removeAt( int index );
+
+				void clear();
+
+			private:
+
+				const char* m_contentClass;
+				QList<QObject*> m_backend;
 		};
 	}
 }
