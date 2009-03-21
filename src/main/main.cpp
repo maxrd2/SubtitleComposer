@@ -41,10 +41,10 @@ int main( int argc, char** argv )
 		"subtitlecomposer",							// The program name used internally.
 		"subtitlecomposer",							// The message catalog name.
 		ki18n( "Subtitle Composer" ),				// A displayable program name string.
-		"0.5.3-svn",									// The program version string.
+		"0.5.3-svn",								// The program version string.
 		ki18n( "A KDE subtitle editor." ),			// A short description of what the program does.
 		KAboutData::License_GPL,					// License identifier
-		ki18n( "(C) 2007-2008 Sergio Pistone" )		// Copyright Statement
+		ki18n( "(C) 2007-2009 Sergio Pistone" )		// Copyright Statement
 	);
 
 	aboutData.addAuthor(

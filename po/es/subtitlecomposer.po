@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: subtitlecomposer\n"
 "Report-Msgid-Bugs-To: https://sourceforge.net/tracker/?"
 "atid=1005652&group_id=208427&func=browse\n"
-"POT-Creation-Date: 2009-03-21 17:22-0300\n"
+"POT-Creation-Date: 2009-03-21 17:33-0300\n"
 "PO-Revision-Date: 2008-11-02 18:36-0200\n"
 "Last-Translator: Daniel M. Lambea <dmlambea@gmail.com>\n"
 "Language-Team: Spanish <kde-i18n-es@lists.kde.org>\n"
@@ -2099,7 +2099,8 @@ msgid "A KDE subtitle editor."
 msgstr "Un editor de subtítulos para KDE"
 
 #: main/main.cpp:47
-msgid "(C) 2007-2008 Sergio Pistone"
+#, fuzzy
+msgid "(C) 2007-2009 Sergio Pistone"
 msgstr "(C) 2007-2008 Sergio Pistone"
 
 #: main/main.cpp:51
