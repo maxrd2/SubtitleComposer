@@ -64,17 +64,17 @@ CurrentLineWidget::CurrentLineWidget( QWidget* parent ):
 	QLabel* showTimeLabel = new QLabel( timesControlsGroupBox );
 	showTimeLabel->setText( i18n( "<b>Show</b>" ) );
 	m_showTimeEdit = new TimeEdit( timesControlsGroupBox );
-	m_showTimeEdit->setFocusPolicy( Qt::NoFocus );
+	m_showTimeEdit->setFocusPolicy( Qt::ClickFocus );
 
 	QLabel* hideTimeLabel = new QLabel( timesControlsGroupBox );
 	hideTimeLabel->setText( i18n( "<b>Hide</b>" ) );
 	m_hideTimeEdit = new TimeEdit( timesControlsGroupBox );
-	m_hideTimeEdit->setFocusPolicy( Qt::NoFocus );
+	m_hideTimeEdit->setFocusPolicy( Qt::ClickFocus );
 
 	QLabel* durationTimeLabel = new QLabel( timesControlsGroupBox );
 	durationTimeLabel->setText( i18n( "<b>Duration</b>" ) );
 	m_durationTimeEdit = new TimeEdit( timesControlsGroupBox ) ;
-	m_durationTimeEdit->setFocusPolicy( Qt::NoFocus );
+	m_durationTimeEdit->setFocusPolicy( Qt::ClickFocus );
 
 	QGridLayout* buttonsLayouts[2];
 

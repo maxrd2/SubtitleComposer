@@ -24,16 +24,11 @@
 	#include <config.h>
 #endif
 
-#include <QtCore/QString>
-#include <QtCore/QSize>
-#include <QtGui/QWidget>
+#include <QtGui/QTimeEdit>
 
-#include <KIntSpinBox>
-
-class TimeValidator;
 class QEvent;
 
-class TimeEdit : public KIntSpinBox
+class TimeEdit : public QTimeEdit
 {
 	Q_OBJECT
 
@@ -41,24 +36,32 @@ class TimeEdit : public KIntSpinBox
 
 		TimeEdit( QWidget* parent=0 );
 
-		virtual QSize sizeHint() const;
+		int msecsStep() const;
 
-		virtual QValidator::State validate( QString& input, int& pos ) const;
+		int value() const;
+
+	public slots:
+
+		void setMSecsStep( int msecs );
+
+		void setValue( int value );
 
 	signals:
 
+		void valueChanged( int value );
 		void valueEntered( int value );
+
+	protected slots:
+
+		void onTimeChanged( const QTime& time );
 
 	protected:
 
-		virtual QString textFromValue( int value ) const;
-		virtual int valueFromText( const QString& text ) const;
-
-		virtual bool eventFilter( QObject* object, QEvent* event );
+		virtual void keyPressEvent( QKeyEvent* event );
 
 	private:
 
-		TimeValidator* m_validator;
+		int m_secsStep;
 };
 
 #endif

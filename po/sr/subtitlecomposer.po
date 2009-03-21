@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: subtitlecomposer\n"
 "Report-Msgid-Bugs-To: https://sourceforge.net/tracker/?"
 "atid=1005652&group_id=208427&func=browse\n"
-"POT-Creation-Date: 2009-03-05 03:50-0200\n"
+"POT-Creation-Date: 2009-03-21 17:22-0300\n"
 "PO-Revision-Date: 2008-11-03 12:20+0100\n"
 "Last-Translator: Slobodan Simic <simicsl@verat.net>\n"
 "Language-Team: Serbian <kde-i18n-sr@kde.org>\n"
@@ -2285,8 +2285,8 @@ msgstr ""
 msgid "Tools"
 msgstr ""
 
-#: main/utils/errorfinder.cpp:40 main/utils/errorfinder.cpp:218
-#: main/utils/errorfinder.cpp:242
+#: main/utils/errorfinder.cpp:40 main/utils/errorfinder.cpp:232
+#: main/utils/errorfinder.cpp:259
 msgid "Find Error"
 msgstr "Нађи грешку"
 
@@ -2309,11 +2309,7 @@ msgstr "Нема текуће линије"
 msgid "Find backwards"
 msgstr "- | Уназад"
 
-#: main/utils/errorfinder.cpp:217
-msgid "No errors matching given criteria found!"
-msgstr ""
-
-#: main/utils/errorfinder.cpp:237 main/utils/finder.cpp:298
+#: main/utils/errorfinder.cpp:227 main/utils/finder.cpp:298
 #: main/utils/replacer.cpp:258
 msgid ""
 "Beginning of selection reached.\n"
@@ -2322,7 +2318,7 @@ msgstr ""
 "Дошао сам до почетка избора.\n"
 "Да наставим од краја?"
 
-#: main/utils/errorfinder.cpp:238 main/utils/finder.cpp:299
+#: main/utils/errorfinder.cpp:228 main/utils/finder.cpp:299
 #: main/utils/replacer.cpp:259
 msgid ""
 "Beginning of subtitle reached.\n"
@@ -2331,7 +2327,7 @@ msgstr ""
 "Дошао сам до почетка титла.\n"
 "Да наставим од краја?"
 
-#: main/utils/errorfinder.cpp:240 main/utils/finder.cpp:301
+#: main/utils/errorfinder.cpp:230 main/utils/finder.cpp:301
 #: main/utils/replacer.cpp:261
 msgid ""
 "End of selection reached.\n"
@@ -2340,7 +2336,7 @@ msgstr ""
 "Дошао сам до краја избора.\n"
 "Да наставим од почетка?"
 
-#: main/utils/errorfinder.cpp:241 main/utils/finder.cpp:302
+#: main/utils/errorfinder.cpp:231 main/utils/finder.cpp:302
 #: main/utils/replacer.cpp:262 main/utils/speller.cpp:143
 msgid ""
 "End of subtitle reached.\n"
@@ -2348,6 +2344,10 @@ msgid ""
 msgstr ""
 "Дошао сам до краја титла.\n"
 "Да наставим од почетка?"
+
+#: main/utils/errorfinder.cpp:258
+msgid "No errors matching given criteria found!"
+msgstr ""
 
 #: main/utils/finder.cpp:55
 #, fuzzy

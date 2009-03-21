@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: subtitlecomposer\n"
 "Report-Msgid-Bugs-To: https://sourceforge.net/tracker/?"
 "atid=1005652&group_id=208427&func=browse\n"
-"POT-Creation-Date: 2009-03-05 03:50-0200\n"
+"POT-Creation-Date: 2009-03-21 17:22-0300\n"
 "PO-Revision-Date: 2009-01-24 00:49+0100\n"
 "Last-Translator: Goliash <goliash@goliash.net>\n"
 "Language-Team: Czech <cs@li.org>\n"
@@ -2232,8 +2232,8 @@ msgstr ""
 msgid "Tools"
 msgstr ""
 
-#: main/utils/errorfinder.cpp:40 main/utils/errorfinder.cpp:218
-#: main/utils/errorfinder.cpp:242
+#: main/utils/errorfinder.cpp:40 main/utils/errorfinder.cpp:232
+#: main/utils/errorfinder.cpp:259
 msgid "Find Error"
 msgstr "Najdi chybu"
 
@@ -2256,11 +2256,7 @@ msgstr "Žádný současný řádek"
 msgid "Find backwards"
 msgstr "- | dozadu"
 
-#: main/utils/errorfinder.cpp:217
-msgid "No errors matching given criteria found!"
-msgstr ""
-
-#: main/utils/errorfinder.cpp:237 main/utils/finder.cpp:298
+#: main/utils/errorfinder.cpp:227 main/utils/finder.cpp:298
 #: main/utils/replacer.cpp:258
 msgid ""
 "Beginning of selection reached.\n"
@@ -2269,7 +2265,7 @@ msgstr ""
 "Bylo dosaženo začátku výběru.\n"
 "Pokračovat od konce?"
 
-#: main/utils/errorfinder.cpp:238 main/utils/finder.cpp:299
+#: main/utils/errorfinder.cpp:228 main/utils/finder.cpp:299
 #: main/utils/replacer.cpp:259
 msgid ""
 "Beginning of subtitle reached.\n"
@@ -2278,7 +2274,7 @@ msgstr ""
 "Bylo dosaženo začátku titulků.\n"
 "Pokračovat od konce?"
 
-#: main/utils/errorfinder.cpp:240 main/utils/finder.cpp:301
+#: main/utils/errorfinder.cpp:230 main/utils/finder.cpp:301
 #: main/utils/replacer.cpp:261
 msgid ""
 "End of selection reached.\n"
@@ -2287,7 +2283,7 @@ msgstr ""
 "Bylo dosaženo konce výběru.\n"
 "Pokračovat od začátku?"
 
-#: main/utils/errorfinder.cpp:241 main/utils/finder.cpp:302
+#: main/utils/errorfinder.cpp:231 main/utils/finder.cpp:302
 #: main/utils/replacer.cpp:262 main/utils/speller.cpp:143
 msgid ""
 "End of subtitle reached.\n"
@@ -2295,6 +2291,10 @@ msgid ""
 msgstr ""
 "Bylo dosaženo konce titulků.\n"
 "Pokračovat od začátku?"
+
+#: main/utils/errorfinder.cpp:258
+msgid "No errors matching given criteria found!"
+msgstr ""
 
 #: main/utils/finder.cpp:55
 #, fuzzy
