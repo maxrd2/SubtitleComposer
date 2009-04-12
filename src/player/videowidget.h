@@ -78,7 +78,6 @@ namespace SubtitleComposer
 
 			void init( bool setVideoLayerAttributes );
 
-			virtual void paintEvent( QPaintEvent* e );
 			virtual void resizeEvent( QResizeEvent* e);
 
 			virtual void mouseReleaseEvent( QMouseEvent* e );

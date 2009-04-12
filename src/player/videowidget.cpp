@@ -63,16 +63,19 @@ void VideoWidget::init( bool setVideoLayerAttributes )
 	{
 		m_videoLayer->setFocusPolicy( Qt::NoFocus );
 		m_videoLayer->setAttribute( Qt::WA_StaticContents, true );
+		m_videoLayer->setAttribute( Qt::WA_PaintOnScreen, true );
 		m_videoLayer->setAttribute( Qt::WA_OpaquePaintEvent, true );
 		m_videoLayer->setAttribute( Qt::WA_NoSystemBackground, true );
-		m_videoLayer->setAttribute( Qt::WA_PaintOnScreen, true );
 	}
 
 	setFocusPolicy( Qt::NoFocus );
 	setAttribute( Qt::WA_StaticContents, true );
 	setAttribute( Qt::WA_OpaquePaintEvent, true );
-	setAttribute( Qt::WA_NoSystemBackground, true );
 	setAttribute( Qt::WA_PaintOnScreen, true );
+	setAttribute( Qt::WA_NoSystemBackground, false );
+	QPalette palette = this->palette();
+	palette.setColor( QPalette::Background, Qt::black );
+	setPalette( palette );
 }
 
 VideoWidget::~VideoWidget()
@@ -107,11 +110,6 @@ void VideoWidget::setMouseTracking( bool enable )
 {
 	QWidget::setMouseTracking( enable );
 	m_videoLayer->setMouseTracking( enable );
-}
-
-void VideoWidget::paintEvent( QPaintEvent* e )
-{
-	QPainter( this ).fillRect( e->rect(), Qt::black );
 }
 
 void VideoWidget::resizeEvent( QResizeEvent* )
@@ -149,7 +147,6 @@ void VideoWidget::wheelEvent( QWheelEvent * e )
 	else
 		emit wheelDown();
 }
-
 
 QSize VideoWidget::desktopSize()
 {

@@ -63,7 +63,11 @@ TextOverlayWidget::TextOverlayWidget( QWidget* parent ):
 
 	m_textDocument->setTextWidth( width() );
 
+	m_noTextMask = QBitmap( 1, 1 );
+	m_noTextMask.fill( Qt::color1 );
+
 	updateColors();
+	updateContents();
 }
 
 TextOverlayWidget::~TextOverlayWidget()
@@ -83,8 +87,8 @@ void TextOverlayWidget::setDirty( bool updateRichText, bool updateColors )
 	{
 		m_dirty = true;
 		clearMask();
-		update();
 	}
+	update();
 }
 
 QString TextOverlayWidget::text() const
@@ -250,27 +254,23 @@ QSize TextOverlayWidget::minimumSizeHint() const
 
 void TextOverlayWidget::paintEvent( QPaintEvent* /*event*/ )
 {
-// 	static QTime time;
-// 	time.start();
-
 	if ( m_dirty )
+	{
+		// static QTime time;
+		// time.start();
 		updateContents();
+		//kDebug() << "updateContents took" << time.elapsed();
+	}
 
-	if ( ! m_text.isEmpty() )
-		QPainter( this ).drawPixmap( 0, 0, m_bgPixmap );
-
-// 	kDebug() << "paintEvent" << time.elapsed();
+	QPainter painter( this );
+	if ( m_text.isEmpty() )
+		painter.drawPoint( 0, 0 );
+	else
+		painter.drawPixmap( 0, 0, m_bgPixmap );
 }
 
 void TextOverlayWidget::resizeEvent( QResizeEvent* e )
 {
-	if ( m_richTextMode )
-		m_textDocument->setTextWidth( e->size().width() );
-
-	m_noTextMask = QBitmap( e->size().width(), e->size().height() );
-	m_noTextMask.clear();
-	m_bgPixmap = QPixmap( e->size() );
-
 	m_dirty = true;
 }
 
@@ -298,12 +298,17 @@ void TextOverlayWidget::updateColors()
 
 void TextOverlayWidget::updateContents()
 {
+	if ( m_richTextMode )
+		m_textDocument->setTextWidth( width() );
+
 	if ( m_text.isEmpty() )
 	{
 		setMask( m_noTextMask );
 	}
 	else
 	{
+		m_bgPixmap = QPixmap( size() );
+
 		QPainter painter( &m_bgPixmap );
 		painter.setRenderHints(
 			QPainter::Antialiasing|QPainter::TextAntialiasing|QPainter::SmoothPixmapTransform|
@@ -459,4 +464,4 @@ void TextOverlayWidget::setMaskAndOutline( QRect& textRect, unsigned outlineWidt
 	setMask( QBitmap::fromImage( maskImage, Qt::MonoOnly ) );
 }
 
-//#include "textoverlaywidget.moc"
+#include "textoverlaywidget.moc"

@@ -33,20 +33,19 @@
 class KRecentFilesActionExt : public KSelectAction
 {
 	Q_OBJECT
-	Q_PROPERTY( int maxCount READ maxCount WRITE setMaxCount )
+	Q_PROPERTY( int maxItems READ maxItems WRITE setMaxItems )
 
 	public:
 
 		KRecentFilesActionExt( QObject* parent=0 );
 		virtual ~KRecentFilesActionExt();
 
-		bool ignoreUrlQueryItems() const;
+		int maxItems() const;
 
 		bool isEmpty() const;
 		int count() const;
-		int maxCount() const;
 
-		const KUrl::List urls() const;
+		KUrl::List urls() const;
 
 		QString encodingForUrl( const KUrl& url ) const;
 
@@ -54,9 +53,7 @@ class KRecentFilesActionExt : public KSelectAction
 
 	public slots:
 
-		void setIgnoreUrlQueryItems( bool value );
-
-		void setMaxCount( int maxCount );
+		void setMaxItems( int maxItems );
 
 		void setUrls( const KUrl::List& urls );
 
@@ -75,18 +72,19 @@ class KRecentFilesActionExt : public KSelectAction
 
 		void setUrls( const KUrl::List& urls, bool ignoreCollisions );
 
-		int indexOfUrl( const KUrl& url ) const;
+		virtual QAction* actionForUrl( const KUrl& url ) const;
 
 	protected slots:
 
-		void onItemActivated( int id );
+		void onActionTriggered( QAction* action );
 
 	protected:
 
-		int m_maxCount;
-		bool m_ignoreUrlQueryItems;
+		int m_maxItems;
 
-		QList<QAction*> m_urlActions;
+		QMap<QAction*,KUrl> m_urls;
+		QMap<KUrl,QAction*> m_actions;
+
 		QAction* m_separatorAction;
 		QAction* m_clearHistoryAction;
 };

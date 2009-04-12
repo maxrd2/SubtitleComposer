@@ -27,83 +27,67 @@
 
 KRecentFilesActionExt::KRecentFilesActionExt( QObject* parent ):
 	KSelectAction( parent ),
-	m_maxCount( 10 ),
-	m_ignoreUrlQueryItems( false ),
-	m_separatorAction( new QAction( QString(), this ) ),
-	m_clearHistoryAction( new QAction( i18n( "Clear History" ), this ) )
+	m_maxItems( 10 )
 {
 	setMenuAccelsEnabled( false );
 
+	m_separatorAction = new QAction( QString(), 0 );
 	m_separatorAction->setSeparator( true );
 
-	connect( this, SIGNAL(triggered(int)), this, SLOT(onItemActivated(int)) );
-	connect( m_clearHistoryAction, SIGNAL(triggered()), this, SLOT(clearUrls()) );
+	m_clearHistoryAction = new QAction( i18n( "Clear History" ), 0 );
+
+	connect( this, SIGNAL(triggered(QAction*)), this, SLOT(onActionTriggered(QAction*)) );
 }
 
 
 KRecentFilesActionExt::~KRecentFilesActionExt()
 {
+	selectableActionGroup()->removeAction( m_separatorAction );
+	delete m_separatorAction;
+	selectableActionGroup()->removeAction( m_clearHistoryAction );
+	delete m_clearHistoryAction;
 }
 
-bool KRecentFilesActionExt::ignoreUrlQueryItems() const
+int KRecentFilesActionExt::maxItems() const
 {
-	return m_ignoreUrlQueryItems;
+	return m_maxItems;
 }
 
-void KRecentFilesActionExt::setIgnoreUrlQueryItems( bool value )
+void KRecentFilesActionExt::setMaxItems( int maxItems )
 {
-	if ( m_ignoreUrlQueryItems != value )
+	if ( m_maxItems != maxItems && maxItems > 0 )
 	{
-		m_ignoreUrlQueryItems = value;
+		m_maxItems = maxItems;
 
-		if ( m_ignoreUrlQueryItems ) // to remove possible collitions
-			setUrls( urls(), false );
+		while ( count() > maxItems )
+			removeAction( selectableActionGroup()->actions().last() )->deleteLater();
 	}
 }
 
 bool KRecentFilesActionExt::isEmpty() const
 {
-	return m_urlActions.isEmpty();
+	return m_urls.isEmpty();
 }
 
 int KRecentFilesActionExt::count() const
 {
-	return m_urlActions.count();
-}
-
-int KRecentFilesActionExt::maxCount() const
-{
-	return m_maxCount;
-}
-
-void KRecentFilesActionExt::setMaxCount( int maxCount )
-{
-	if ( m_maxCount != maxCount && maxCount > 0 )
-	{
-		m_maxCount = maxCount;
-
-		while ( count() > maxCount )
-			removeAction( m_urlActions.last() );
-	}
+	return m_urls.count();
 }
 
 QString KRecentFilesActionExt::encodingForUrl( const KUrl& url ) const
 {
-	int index = indexOfUrl( url );
-	return index < 0 ? QString() : m_urlActions.at( index )->data().toUrl().queryItemValue( "encoding" );
+	QAction* action = actionForUrl( url );
+	return action ? m_urls[action].fileEncoding() : QString();
 }
 
-const KUrl::List KRecentFilesActionExt::urls() const
+KUrl::List KRecentFilesActionExt::urls() const
 {
-	KUrl::List urls;
-	for ( QList<QAction*>::ConstIterator it = m_urlActions.begin(), end = m_urlActions.end(); it != end; ++it )
-		urls << (*it)->data().toUrl();
-	return urls;
+	return m_actions.keys();
 }
 
 void KRecentFilesActionExt::setUrls( const KUrl::List& urls, bool ignoreCollisions )
 {
-	removeAllActions();
+	clearUrls();
 
 	QString entryText( "%1 [%2]" );
 
@@ -112,23 +96,26 @@ void KRecentFilesActionExt::setUrls( const KUrl::List& urls, bool ignoreCollisio
 		if ( (*it).isLocalFile() && ! KGlobal::dirs()->relativeLocation( "tmp", (*it).path() ).startsWith( '/' ) )
 			continue; // don't store temporary paths
 
-		if ( ! ignoreCollisions && m_ignoreUrlQueryItems && indexOfUrl( *it ) >= 0 )
+		if ( ! ignoreCollisions && actionForUrl( *it ) )
 			continue;
 
 		QAction* action = new QAction(
 			entryText.
 				arg( (*it).fileName() ).
 				arg(
-					m_ignoreUrlQueryItems && (*it).isLocalFile() ?
+					(*it).isLocalFile() ?
 						(*it).path() :
 						(*it).pathOrUrl()
 				),
-			this
+			selectableActionGroup()
 		);
-		action->setData( QUrl( (*it).prettyUrl() ) );
-		m_urlActions.append( action );
+
+		m_urls[action] = *it;
+		m_actions[*it] = action;
+
 		addAction( action );
 	}
+
 	addAction( m_separatorAction );
 	addAction( m_clearHistoryAction );
 
@@ -144,26 +131,57 @@ void KRecentFilesActionExt::addUrl( const KUrl& url )
 {
 	removeUrl( url ); // avoid duplicates
 
-	KUrl::List urls = this->urls();
-	urls.prepend( url );
+	KUrl::List newUrls = urls();
+	newUrls.prepend( url );
 
-	setUrls( urls, true );
+	setUrls( newUrls, true );
+}
+
+
+QAction* KRecentFilesActionExt::removeAction( QAction* action )
+{
+	action = KSelectAction::removeAction( action );
+	if ( m_urls.contains( action ) )
+	{
+		m_actions.remove( m_urls[action] );
+		m_urls.remove( action );
+	}
+	return action;
 }
 
 void KRecentFilesActionExt::removeUrl( const KUrl& url )
 {
-	int prevIndex;
-	while ( (prevIndex = indexOfUrl( url )) != -1 )
-		removeAction( m_urlActions.at( prevIndex ) );
+	if ( QAction* action = actionForUrl( url ) )
+		removeAction( action )->deleteLater();
 
 	setEnabled( ! isEmpty() );
 }
 
 void KRecentFilesActionExt::clearUrls()
 {
-	removeAllActions();
+	for ( QMap<KUrl,QAction*>::ConstIterator it = m_actions.begin(), end = m_actions.end(); it != end; ++it )
+		removeAction( it.value() )->deleteLater();
+
+	removeAction( m_clearHistoryAction );
+	removeAction( m_separatorAction );
 
 	setEnabled( false );
+}
+
+QAction* KRecentFilesActionExt::actionForUrl( const KUrl& url ) const
+{
+	KUrl refUrl( url );
+	refUrl.setFileEncoding( QString() );
+
+	for ( QMap<KUrl,QAction*>::ConstIterator it = m_actions.begin(), end = m_actions.end(); it != end; ++it )
+	{
+		KUrl curUrl( it.key() );
+		curUrl.setFileEncoding( QString() );
+		if ( curUrl == refUrl )
+			return it.value();
+	}
+
+	return 0;
 }
 
 void KRecentFilesActionExt::loadEntries( const KConfigGroup& group )
@@ -171,7 +189,7 @@ void KRecentFilesActionExt::loadEntries( const KConfigGroup& group )
 	KUrl::List urls;
 
 	QString key( "File%1" );
-	for ( int index = 0, size = qMin( group.readEntry<int>( "Files", m_maxCount ), m_maxCount ); index < size; ++index )
+	for ( int index = 0, size = qMin( group.readEntry<int>( "Files", m_maxItems ), m_maxItems ); index < size; ++index )
 	{
 		QString value = group.readPathEntry( key.arg( index ), QString() );
 		if ( ! value.isEmpty() )
@@ -194,54 +212,18 @@ void KRecentFilesActionExt::saveEntries( const KConfigGroup& g )
 
 	int index = 0;
 	QString key( "File%1" );
-	for ( QList<QAction*>::ConstIterator it = m_urlActions.begin(), end = m_urlActions.end(); it != end; ++it )
-		group.writePathEntry( key.arg( index++ ), KUrl( (*it)->data().toUrl() ).pathOrUrl() );
+	for ( QMap<KUrl,QAction*>::ConstIterator it = m_actions.begin(), end = m_actions.end(); it != end; ++it )
+		group.writePathEntry( key.arg( index++ ), it.key().pathOrUrl() );
 
-	group.writeEntry( "Files", m_urlActions.count() );
+	group.writeEntry( "Files", m_urls.count() );
 }
 
-void KRecentFilesActionExt::onItemActivated( int index )
+void KRecentFilesActionExt::onActionTriggered( QAction* action )
 {
-	// NOTE: emit a copy of the Url since the slot where it is connected might call add(),
-	// remove() or clear() methods (potentially destroying the relevant m_urls item).
-
-	if ( index >= 0 && index < m_urlActions.count() )
-	{
-		emit urlSelected( KUrl( m_urlActions.at( index )->data().toUrl() ) );
-	}
-}
-
-QAction* KRecentFilesActionExt::removeAction( QAction* action )
-{
-	KSelectAction::removeAction( action );
-	if ( m_urlActions.removeOne( action ) )
-	{
-		delete action;
-		return 0;
-	}
+	if ( action == m_clearHistoryAction )
+		clearUrls();
 	else
-		return action;
-}
-
-int KRecentFilesActionExt::indexOfUrl( const KUrl& url ) const
-{
-	if ( isEmpty() )
-		return -1;
-
-	KUrl refUrl( url );
-	if ( m_ignoreUrlQueryItems )
-		refUrl.setQuery( "" );
-
-	for ( int index = 0, size = m_urlActions.count(); index < size; ++index )
-	{
-		KUrl curUrl( m_urlActions.at( index )->data().toUrl() );
-		if ( m_ignoreUrlQueryItems )
-			curUrl.setQuery( "" );
-		if ( curUrl == refUrl )
-			return index;
-	}
-
-	return -1;
+		emit urlSelected( m_urls[action] );
 }
 
 #include "krecentfilesactionext.moc"

@@ -198,7 +198,6 @@ PlayerWidget::PlayerWidget( QWidget* parent ):
 	m_fsPositionLabel->setPalette( fsPositionPalette );
 	m_fsPositionLabel->setAutoFillBackground( true );
     m_fsPositionLabel->setFrameShape( QFrame::Panel );
-//     m_fsPositionLabel->setFrameShadow( QFrame::Sunken );
 	m_fsPositionLabel->setText( Time().toString( false ) + " /  " + Time().toString( false ) );
 	m_fsPositionLabel->setAlignment( Qt::AlignRight|Qt::AlignVCenter );
 	m_fsPositionLabel->adjustSize();

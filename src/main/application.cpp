@@ -481,8 +481,6 @@ void Application::setupActions()
 
 
 	m_recentSubtitlesAction = new KRecentFilesActionExt( actionCollection );
-	m_recentSubtitlesAction->setIgnoreUrlQueryItems( true );
-	m_recentSubtitlesAction->setMaxCount( 10 );
 	m_recentSubtitlesAction->setIcon( KIcon( "document-open" ) );
 	m_recentSubtitlesAction->setText( i18nc( "@action:inmenu Open rencently used subtitle file", "Open &Recent" ) );
 	m_recentSubtitlesAction->setStatusTip( i18n( "Open subtitle file" ) );
@@ -540,8 +538,6 @@ void Application::setupActions()
 
 
 	m_recentTrSubtitlesAction = new KRecentFilesActionExt( actionCollection );
-	m_recentTrSubtitlesAction->setIgnoreUrlQueryItems( true );
-	m_recentTrSubtitlesAction->setMaxCount( 10 );
 	m_recentTrSubtitlesAction->setIcon( KIcon( "document-open" ) );
 	m_recentTrSubtitlesAction->setText( i18n( "Open &Recent Translation" ) );
 	m_recentTrSubtitlesAction->setStatusTip( i18n( "Open translation subtitle file" ) );
@@ -1029,7 +1025,6 @@ void Application::setupActions()
 
 
 	m_recentVideosAction = new KRecentFilesActionExt( actionCollection );
-	m_recentVideosAction->setMaxCount( 5 );
 	m_recentVideosAction->setIcon( KIcon( "document-open" ) );
 	m_recentVideosAction->setText( i18n( "Open &Recent Video" ) );
 	m_recentVideosAction->setStatusTip( i18n( "Open video file" ) );
@@ -1253,7 +1248,6 @@ void Application::setupActions()
 //
 //
 // 	m_recentAudioLevelsAction = new KRecentFilesActionExt( actionCollection );
-// 	m_recentAudioLevelsAction->setMaxItems( 5 );
 // 	m_recentAudioLevelsAction->setIcon( "fileopen" );
 // 	m_recentAudioLevelsAction->setText( i18n( "Open &Recent Levels" ) );
 // 	m_recentAudioLevelsAction->setStatusTip( i18n( "Open audio levels file" ) );
@@ -1353,9 +1347,9 @@ QString Application::encodingForUrl( const KUrl& url )
 bool Application::acceptClashingUrls( const KUrl& subtitleUrl, const KUrl& subtitleTrUrl )
 {
 	KUrl url( subtitleUrl );
-	url.removeQueryItem( "encoding" );
+	url.setFileEncoding( QString() );
 	KUrl trUrl( subtitleTrUrl );
-	trUrl.removeQueryItem( "encoding" );
+	trUrl.setFileEncoding( QString() );
 
 	if ( url != trUrl || url.isEmpty() || trUrl.isEmpty() )
 		return true;
@@ -1398,7 +1392,7 @@ void Application::openSubtitle()
 		m_lastSubtitleUrl = openDlg.selectedUrl();
 
 		KUrl fileUrl = m_lastSubtitleUrl;
-		fileUrl.addQueryItem( "encoding", openDlg.selectedEncoding() );
+		fileUrl.setFileEncoding( openDlg.selectedEncoding() );
 		openSubtitle( fileUrl );
 	}
 }
@@ -1411,12 +1405,12 @@ void Application::openSubtitle( const KUrl& url, bool warnClashingUrls )
 	if ( ! closeSubtitle() )
 		return;
 
-	QString fileEncoding = url.queryItem( "encoding" );
+	QString fileEncoding = url.fileEncoding();
 	if ( fileEncoding.isEmpty() )
 		fileEncoding = encodingForUrl( url );
 
 	KUrl fileUrl = url;
-	fileUrl.removeQueryItem( "encoding" );
+	fileUrl.setFileEncoding( QString() );
 
 	bool codecFound = true;
 	QTextCodec* codec = KGlobal::charsets()->codecForName( fileEncoding, codecFound );
@@ -1438,7 +1432,7 @@ void Application::openSubtitle( const KUrl& url, bool warnClashingUrls )
 		m_subtitleFileName = QFileInfo( m_subtitleUrl.path() ).fileName();
 		m_subtitleEncoding = codec->name();
 
-		fileUrl.addQueryItem( "encoding", codec->name() );
+		fileUrl.setFileEncoding( codec->name() );
 		m_recentSubtitlesAction->addUrl( fileUrl );
 
 		m_reloadSubtitleAsAction->setCurrentCodec( codec );
@@ -1504,7 +1498,7 @@ bool Application::saveSubtitle()
 		m_subtitle->clearPrimaryDirty();
 
 		KUrl recentUrl = m_subtitleUrl;
-		recentUrl.addQueryItem( "encoding", codec->name() );
+		recentUrl.setFileEncoding( codec->name() );
 		m_recentSubtitlesAction->addUrl( recentUrl );
 
 		m_reloadSubtitleAsAction->setCurrentCodec( codec );
@@ -1637,7 +1631,7 @@ void Application::openTrSubtitle()
 		m_lastSubtitleUrl = openDlg.selectedUrl();
 
 		KUrl fileUrl = m_lastSubtitleUrl;
-		fileUrl.addQueryItem( "encoding", openDlg.selectedEncoding() );
+		fileUrl.setFileEncoding( openDlg.selectedEncoding() );
 		openTrSubtitle( fileUrl );
 	}
 }
@@ -1653,12 +1647,12 @@ void Application::openTrSubtitle( const KUrl& url, bool warnClashingUrls )
 	if ( ! closeTrSubtitle() )
 		return;
 
-	QString fileEncoding = url.queryItem( "encoding" );
+	QString fileEncoding = url.fileEncoding();
 	if ( fileEncoding.isEmpty() )
 		fileEncoding = encodingForUrl( url );
 
 	KUrl fileUrl = url;
-	fileUrl.removeQueryItem( "encoding" );
+	fileUrl.setFileEncoding( QString() );
 
 	bool codecFound = true;
 	QTextCodec* codec = KGlobal::charsets()->codecForName( fileEncoding, codecFound );
@@ -1671,7 +1665,7 @@ void Application::openTrSubtitle( const KUrl& url, bool warnClashingUrls )
 		m_subtitleTrFileName = QFileInfo( m_subtitleTrUrl.path() ).fileName();
 		m_subtitleTrEncoding = codec->name();
 
-		fileUrl.addQueryItem( "encoding", codec->name() );
+		fileUrl.setFileEncoding( codec->name() );
 		m_recentTrSubtitlesAction->addUrl( fileUrl );
 
 		QStringList subtitleStreams;
@@ -1716,7 +1710,7 @@ bool Application::saveTrSubtitle()
 		m_subtitle->clearSecondaryDirty();
 
 		KUrl recentUrl = m_subtitleTrUrl;
-		recentUrl.addQueryItem( "encoding", codec->name() );
+		recentUrl.setFileEncoding( codec->name() );
 		m_recentTrSubtitlesAction->addUrl( recentUrl );
 
 		updateTitle();
@@ -1814,7 +1808,7 @@ void Application::changeSubtitlesEncoding( const QString& encoding )
 		if ( m_subtitleEncoding != encoding )
 		{
 			KUrl fileUrl = m_subtitleUrl;
-			fileUrl.addQueryItem( "encoding", encoding );
+			fileUrl.setFileEncoding( encoding );
 			openSubtitle( fileUrl );
 		}
 	}
@@ -1829,7 +1823,7 @@ void Application::changeSubtitlesEncoding( const QString& encoding )
 		else
 		{
 			KUrl fileUrl = wasSubtitleTrUrl;
-			fileUrl.addQueryItem( "encoding", encoding );
+			fileUrl.setFileEncoding( encoding );
 			openTrSubtitle( fileUrl );
 		}
 	}
@@ -1903,7 +1897,7 @@ KUrl Application::saveSplittedSubtitle( const Subtitle& subtitle, const KUrl& sr
 		);
 
 		if ( success )
-			dstUrl.addQueryItem( "encoding", codec->name() );
+			dstUrl.setFileEncoding( codec->name() );
 		else
 			dstUrl = KUrl();
 	}
