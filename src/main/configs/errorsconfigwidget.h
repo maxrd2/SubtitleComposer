@@ -51,12 +51,12 @@ namespace SubtitleComposer
 
 			ErrorsConfig* config() { return static_cast<ErrorsConfig*>( m_config ); };
 
-			KIntNumInput* m_minDurationTimeEdit;
-			KIntNumInput* m_maxDurationTimeEdit;
+			KIntNumInput* m_minDurationSpinBox;
+			KIntNumInput* m_maxDurationSpinBox;
 			KIntNumInput* m_maxCharactersSpinBox;
 			KIntNumInput* m_maxLinesSpinBox;
-			KIntNumInput* m_minDurationPerCharTimeEdit;
-			KIntNumInput* m_maxDurationPerCharTimeEdit;
+			KIntNumInput* m_minDurationPerCharSpinBox;
+			KIntNumInput* m_maxDurationPerCharSpinBox;
 			QCheckBox* m_autoClearFixedCheckBox;
 	};
 }

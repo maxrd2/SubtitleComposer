@@ -40,6 +40,8 @@ class TimeEdit : public QTimeEdit
 
 		int value() const;
 
+		virtual void stepBy( int steps );
+
 	public slots:
 
 		void setMSecsStep( int msecs );
@@ -57,6 +59,7 @@ class TimeEdit : public QTimeEdit
 
 	protected:
 
+		virtual StepEnabled stepEnabled() const;
 		virtual void keyPressEvent( QKeyEvent* event );
 
 	private:

@@ -35,8 +35,8 @@ TimeEdit::TimeEdit( QWidget* parent ):
 	setMaximumTime( QTime( 23, 59, 59, 999 ) );
 	setWrapping( false );
 	setAlignment( Qt::AlignHCenter );
-
 	setCorrectionMode( QAbstractSpinBox::CorrectToNearestValue );
+	setCurrentSection( QDateTimeEdit::MSecSection );
 
 	connect( this, SIGNAL( timeChanged( const QTime& ) ), this, SLOT( onTimeChanged( const QTime& ) ) );
 }
@@ -53,110 +53,101 @@ void TimeEdit::setMSecsStep( int msecs )
 
 int TimeEdit::value() const
 {
-	return time().msecsTo( QTime() );
+	return QTime().msecsTo( time() );
 }
 
 void TimeEdit::setValue( int value )
 {
-	QTime newTime = QTime().addMSecs( value );
-	if ( time() != newTime )
-		setTime( newTime );
+	if ( wrapping() )
+		setTime( QTime().addMSecs( value ) );
+	else
+	{
+		if ( value < QTime().msecsTo( minimumTime() ) )
+			setTime( minimumTime() );
+		else if ( value >= QTime().msecsTo( maximumTime() ) )
+			setTime( maximumTime() );
+		else
+			setTime( QTime().addMSecs( value ) );
+	}
 }
 
 void TimeEdit::onTimeChanged( const QTime& time )
 {
-// 	emit valueChanged( time.msecsTo( QTime() ) );
+	emit valueChanged( QTime().msecsTo( time ) );
+}
+
+void TimeEdit::stepBy( int steps )
+{
+	int oldValue = value();
+	int newValue;
+
+	setSelectedSection( currentSection() );
+
+	switch ( currentSection() )
+	{
+		case QDateTimeEdit::MSecSection:
+			newValue = oldValue + m_secsStep * steps;
+			break;
+		case QDateTimeEdit::SecondSection:
+			newValue = oldValue + 1000 * steps;
+			break;
+		case QDateTimeEdit::MinuteSection:
+			newValue = oldValue + 60000 * steps;
+			break;
+		case QDateTimeEdit::HourSection:
+			newValue = oldValue + 3600000 * steps;
+			break;
+		default:
+			return;
+	}
+
+	if ( oldValue != newValue )
+		setValue( newValue );
+}
+
+TimeEdit::StepEnabled TimeEdit::stepEnabled() const
+{
+	if ( wrapping() )
+		return QAbstractSpinBox::StepUpEnabled|QAbstractSpinBox::StepDownEnabled;
+	else
+	{
+		QTime time = this->time();
+		if ( time == minimumTime() )
+			return QAbstractSpinBox::StepUpEnabled;
+		else if ( time == maximumTime() )
+			return QAbstractSpinBox::StepDownEnabled;
+		else
+			return QAbstractSpinBox::StepUpEnabled|QAbstractSpinBox::StepDownEnabled;
+	}
 }
 
 void TimeEdit::keyPressEvent( QKeyEvent* event )
 {
-	static const QTime minTime( 0, 0, 0, 0 );
-	static const QTime maxTime( 23, 59, 59, 999 );
-
-	QTime time = this->time();
 	int key = event->key();
-
 	if ( key == Qt::Key_Return )
 	{
-		emit valueEntered( time.msecsTo( QTime() ) );
-		return;
+		emit valueEntered( QTime().msecsTo( time() ) );
 	}
 	else if ( key == Qt::Key_Up )
 	{
-		QTime newTime = time;
-
-		switch ( currentSection() )
-		{
-			case QDateTimeEdit::MSecSection:
-				//if ( time.msec() == 999 )
-				//	newTime = time.addMSecs( 1 );
-				newTime = time.addMSecs( 100 );
-				break;
-			case QDateTimeEdit::SecondSection:
-				if ( time.second() == 59 )
-					newTime = time.addMSecs( 1000 );
-				break;
-			case QDateTimeEdit::MinuteSection:
-				if ( time.minute() == 59 )
-					newTime = time.addMSecs( 60000 );
-				break;
-			default:
-				break;
-		}
-
-		if ( time != newTime )
-		{
-			setTime( wrapping() || newTime > time ? newTime : maxTime );
-			setSelectedSection( currentSection() );
-			return;
-		}
+		stepUp();
 	}
 	else if ( key == Qt::Key_Down )
 	{
-		QTime newTime = time;
-
-		switch ( currentSection() )
-		{
-			case QDateTimeEdit::MSecSection:
-				//if ( time.msec() == 0 )
-				//	newTime = time.addMSecs( -1 );
-				newTime = time.addMSecs( -100 );
-				break;
-			case QDateTimeEdit::SecondSection:
-				if ( time.second() == 0 )
-					newTime = time.addMSecs( -1000 );
-				break;
-			case QDateTimeEdit::MinuteSection:
-				if ( time.minute() == 0 )
-					newTime = time.addMSecs( -60000 );
-				break;
-			default:
-				break;
-		}
-
-		if ( time != newTime )
-		{
-			setTime( wrapping() || newTime < time ? newTime : minTime );
-			setSelectedSection( currentSection() );
-			return;
-		}
+		stepDown();
 	}
 	else if ( key == Qt::Key_PageUp )
 	{
-		QTime newTime = time.addMSecs( m_secsStep );
-		setTime( wrapping() || newTime > time ? newTime : maxTime );
-		setSelectedSection( QDateTimeEdit::MSecSection );
-		return;
+		setCurrentSection( QDateTimeEdit::MSecSection );
+		stepUp();
 	}
 	else if ( key == Qt::Key_PageDown )
 	{
-		QTime newTime = time.addMSecs( -m_secsStep );
-		setTime( wrapping() || newTime < time ? newTime : minTime );
-		setSelectedSection( QDateTimeEdit::MSecSection );
-		return;
+		setCurrentSection( QDateTimeEdit::MSecSection );
+		stepDown();
 	}
-
-	QTimeEdit::keyPressEvent( event );
+	else
+		QTimeEdit::keyPressEvent( event );
 }
 
 #include "timeedit.moc"
