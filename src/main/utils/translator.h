@@ -31,8 +31,12 @@
 #include <QtCore/QMap>
 #include <QtCore/QByteArray>
 
-class QNetworkReply;
-class QNetworkAccessManager;
+class KJob;
+namespace KIO
+{
+	class Job;
+	class TransferJob;
+}
 
 namespace SubtitleComposer
 {
@@ -53,8 +57,7 @@ namespace SubtitleComposer
 			Language::Value inputLanguage() const;
 			Language::Value outputLanguage() const;
 
-			int chunksCount() const;
-			int lastReceivedChunk() const;
+			int chunksCount() const; // upon how many chunks will the imput text be splitted?
 
 			bool isFinished() const;
 			bool isFinishedWithError() const;
@@ -71,8 +74,7 @@ namespace SubtitleComposer
 
 		signals:
 
-			void chunksCalculated( int chunksCount );
-			void chunkReceived( int chunkNumber, int chunksCount );
+			void progress( int percentage );
 
 			void finished( const QString& translatedText );
 			void finishedWithError( const QString& errorMessage );
@@ -90,12 +92,14 @@ namespace SubtitleComposer
 
 		private slots:
 
-			void onNetworkReplyFinished( QNetworkReply* networkReply );
+			void onTransferJobProgress( KJob* job, unsigned long percent );
+			void onTransferJobData( KIO::Job* job, const QByteArray& data );
+			void onTransferJobResult( KJob* job );
 
 		private:
 
-			QNetworkAccessManager* m_manager;
-			QNetworkReply* m_currentNetworkReply;
+			KIO::TransferJob* m_currentTransferJob;
+			QByteArray m_currentTransferData;
 			QStringList m_inputTextChunks;
 			QString m_outputText;
 			Language::Value m_inputLanguage;

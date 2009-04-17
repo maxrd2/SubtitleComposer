@@ -1,14 +1,10 @@
+FILE( GLOB png_images *.png )
+FILE( GLOB sgvz_images *.svgz )
+
 INSTALL(
 	FILES
-		current-line-follows-video.png
-		logo-gstreamer.png
-		logo-mplayer.png
-		logo-xine.png
-		flags.png
-		set-show-time.png
-		set-hide-time.png
-		player.png
-		time-from-video.png
+		${png_images}
+		${sgvz_images}
 	DESTINATION
 		${DATA_INSTALL_DIR}/subtitlecomposer/pics
 )

@@ -68,7 +68,7 @@ ConfigDialog::ConfigDialog( const AppConfig& config, QWidget* parent ):
 	m_configWidgets.insert( Player, new PlayerConfigWidget() );
 	m_pageWidgets.insert( Player, addPage( m_configWidgets.at( Player ), i18nc( "@title Player settings", "Player" ) ) );
 	m_pageWidgets.at( Player )->setHeader( i18n( "Player Settings" ) );
-	m_pageWidgets.at( Player )->setIcon( KIcon( UserIcon( "player" ) ) );
+	m_pageWidgets.at( Player )->setIcon( KIcon( KIcon( "mediaplayer" ) ) );
 
 	unsigned idx = FirstBackend;
 	QStringList backendNames( Player::instance()->backendNames() );
@@ -80,7 +80,7 @@ ConfigDialog::ConfigDialog( const AppConfig& config, QWidget* parent ):
 			m_configWidgets.append( configWidget );
 			m_pageWidgets.insert( idx, addPage( configWidget, *it ) );
 			m_pageWidgets.at( idx )->setHeader( i18nc( "@title Player backend settings", "%1 Backend Settings", *it ) );
-			m_pageWidgets.at( idx )->setIcon( KIcon( UserIcon( QString( "logo-" ) + (*it).toLower() ) ) );
+			m_pageWidgets.at( idx )->setIcon( KIcon( (*it).toLower() + "-logo" ) );
 		}
 		else
 			--idx;

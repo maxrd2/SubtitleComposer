@@ -196,7 +196,7 @@ Application::Application():
 // FIXME audio levels
 // 	connect( this, SIGNAL( audiolevelsOpened(AudioLevels*) ), actionManager, SLOT( setAudioLevels(AudioLevels*) ) );
 // 	connect( this, SIGNAL( audiolevelsOpened(AudioLevels*) ), m_audiolevelsWidget, SLOT( setAudioLevels(AudioLevels*) ) );
-// 
+//
 // 	connect( this, SIGNAL( audiolevelsClosed() ), actionManager, SLOT( setAudioLevels() ) );
 // 	connect( this, SIGNAL( audiolevelsClosed() ), m_audiolevelsWidget, SLOT( setAudioLevels() ) );
 
@@ -407,7 +407,7 @@ const QString& Application::buildMediaFilesFilter()
 		QString mediaExtensions;
 
 		QString videoExtensions;
-		QStringList videoExts( QString( "avi flv mkv mov mpg mpeg mp4 wmv ogm rmvb ts vob" ).split( ' ' ) );
+		QStringList videoExts( QString( "avi flv mkv mov mpg mpeg mp4 wmv ogm ogv rmvb ts vob" ).split( ' ' ) );
 		for ( QStringList::ConstIterator it = videoExts.begin(), end = videoExts.end(); it != end; ++it )
 // 			videoExtensions += " *." + *it /*+ " *." + (*it).toUpper()*/;
 			videoExtensions += " *." + *it + " *." + (*it).toUpper();
@@ -415,7 +415,7 @@ const QString& Application::buildMediaFilesFilter()
 		filter += '\n' + videoExtensions.trimmed() + '|' + i18n( "Video Files" );
 
 		QString audioExtensions;
-		QStringList audioExts( QString( "aac ac3 ape flac la m4a mac mp2 mp3 mp4 mp+ mpc mpp ofr ogg pac ra spx tta wav wma wv" ).split( ' ' ) );
+		QStringList audioExts( QString( "aac ac3 ape flac la m4a mac mp2 mp3 mp4 mp+ mpc mpp ofr oga ogg pac ra spx tta wav wma wv" ).split( ' ' ) );
 		for ( QStringList::ConstIterator it = audioExts.begin(), end = audioExts.end(); it != end; ++it )
 // 			audioExtensions += " *." + *it /*+ " *." + (*it).toUpper()*/;
 			audioExtensions += " *." + *it + " *." + (*it).toUpper();
@@ -703,7 +703,8 @@ void Application::setupActions()
 
 
 	KAction* findNextAction = new KAction( actionCollection );
-	findNextAction->setIcon( KIcon( "go-down" ) );
+// 	findNextAction->setIcon( KIcon( "go-down" ) );
+	findNextAction->setIcon( KIcon( "go-down-search" ) );
 	findNextAction->setText( i18n( "Find Next" ) );
 	findNextAction->setStatusTip( i18n( "Find next occurrence of string or regular expression" ) );
 	findNextAction->setShortcut( KStandardShortcut::findNext(), KAction::DefaultShortcut|KAction::ActiveShortcut );
@@ -713,7 +714,8 @@ void Application::setupActions()
 
 
 	KAction* findPreviousAction = new KAction( actionCollection );
-	findPreviousAction->setIcon( KIcon( "go-up" ) );
+// 	findPreviousAction->setIcon( KIcon( "go-up" ) );
+	findPreviousAction->setIcon( KIcon( "go-up-search" ) );
 	findPreviousAction->setText( i18n( "Find Previous" ) );
 	findPreviousAction->setStatusTip( i18n( "Find previous occurrence of string or regular expression" ) );
 	findPreviousAction->setShortcut( KStandardShortcut::findPrev(), KAction::DefaultShortcut|KAction::ActiveShortcut );
@@ -788,7 +790,8 @@ void Application::setupActions()
 
 
 	KAction* findNextErrorAction = new KAction( actionCollection );
-	findNextErrorAction->setIcon( KIcon( "go-down" ) );
+// 	findNextErrorAction->setIcon( KIcon( "go-down" ) );
+	findNextErrorAction->setIcon( KIcon( "go-down-search" ) );
 	findNextErrorAction->setText( i18n( "Find Next Error" ) );
 	findNextErrorAction->setStatusTip( i18n( "Find next line with specified errors" ) );
 	findNextErrorAction->setShortcut( KShortcut( "F4" ), KAction::DefaultShortcut|KAction::ActiveShortcut );
@@ -798,7 +801,8 @@ void Application::setupActions()
 
 
 	KAction* findPreviousErrorAction = new KAction( actionCollection );
-	findPreviousErrorAction->setIcon( KIcon( "go-up" ) );
+// 	findPreviousErrorAction->setIcon( KIcon( "go-up" ) );
+	findPreviousErrorAction->setIcon( KIcon( "go-up-search" ) );
 	findPreviousErrorAction->setText( i18n( "Find Previous Error" ) );
 	findPreviousErrorAction->setStatusTip( i18n( "Find previous line with specified errors" ) );
 	findPreviousErrorAction->setShortcut( KShortcut( "Shift+F4" ), KAction::DefaultShortcut|KAction::ActiveShortcut );
@@ -1111,7 +1115,8 @@ void Application::setupActions()
 
 
 	KAction* setCurrentLineShowTimeFromVideoAction = new KAction( actionCollection );
-	setCurrentLineShowTimeFromVideoAction->setIcon( UserIcon( "set-show-time" ) );
+// 	setCurrentLineShowTimeFromVideoAction->setIcon( KIcon( "set-show-time" ) );
+	setCurrentLineShowTimeFromVideoAction->setIcon( KIcon( "zone-start" ) );
 	setCurrentLineShowTimeFromVideoAction->setText( i18n( "Set Current Line Show Time" ) );
 	setCurrentLineShowTimeFromVideoAction->setStatusTip( i18n( "Set current line show time to video position" ) );
 	setCurrentLineShowTimeFromVideoAction->setShortcut( KShortcut( "Shift+Z" ), KAction::DefaultShortcut|KAction::ActiveShortcut );
@@ -1121,7 +1126,8 @@ void Application::setupActions()
 
 
 	KAction* setCurrentLineHideTimeFromVideoAction = new KAction( actionCollection );
-	setCurrentLineHideTimeFromVideoAction->setIcon( UserIcon( "set-hide-time" ) );
+// 	setCurrentLineHideTimeFromVideoAction->setIcon( KIcon( "set-hide-time" ) );
+	setCurrentLineHideTimeFromVideoAction->setIcon( KIcon( "zone-end" ) );
 	setCurrentLineHideTimeFromVideoAction->setText( i18n( "Set Current Line Hide Time" ) );
 	setCurrentLineHideTimeFromVideoAction->setStatusTip( i18n( "Set current line hide time to video position" ) );
 	setCurrentLineHideTimeFromVideoAction->setShortcut( KShortcut( "Shift+X" ), KAction::DefaultShortcut|KAction::ActiveShortcut );
@@ -1131,7 +1137,7 @@ void Application::setupActions()
 
 
 	KToggleAction* currentLineFollowsVideoAction = new KToggleAction( actionCollection );
-	currentLineFollowsVideoAction->setIcon( UserIcon( "current-line-follows-video" ) );
+	currentLineFollowsVideoAction->setIcon( KIcon( "current-line-follows-video" ) );
 	currentLineFollowsVideoAction->setText( i18n( "Current Line Follows Video" ) );
 	currentLineFollowsVideoAction->setStatusTip( i18n( "Make current line follow the playing video position" ) );
 	connect( currentLineFollowsVideoAction, SIGNAL( toggled(bool) ), this, SLOT( onLinkCurrentLineToVideoToggled(bool) ) );
@@ -1167,7 +1173,7 @@ void Application::setupActions()
 
 
 	KSelectAction* setActiveAudioStreamAction = new KSelectAction( actionCollection );
-	setActiveAudioStreamAction->setIcon( UserIcon( "flags" ) );
+	setActiveAudioStreamAction->setIcon( KIcon( "select-stream" ) );
 	setActiveAudioStreamAction->setText( i18n( "Audio Streams" ) );
 	setActiveAudioStreamAction->setStatusTip( i18n( "Select active audio stream" ) );
 	connect( setActiveAudioStreamAction, SIGNAL(triggered(int)), m_player, SLOT(setActiveAudioStream(int)) );
@@ -1194,7 +1200,7 @@ void Application::setupActions()
 
 
 	KSelectAction* setActiveSubtitleStreamAction = new KSelectAction( actionCollection );
-	setActiveSubtitleStreamAction->setIcon( UserIcon( "flags" ) );
+	setActiveSubtitleStreamAction->setIcon( KIcon( "select-stream" ) );
 	setActiveSubtitleStreamAction->setText( i18n( "Subtitle Streams" ) );
 	setActiveSubtitleStreamAction->setStatusTip( i18n( "Select active subtitle stream" ) );
 	connect( setActiveSubtitleStreamAction, SIGNAL(triggered(int)), this, SLOT(setActiveSubtitleStream(int)) );
@@ -2604,7 +2610,7 @@ void Application::fixPunctuation()
 bool Application::applyTranslation( RangeList ranges, bool primary, int inputLanguage, int outputLanguage, int textTargets )
 {
 	Translator translator;
-	
+
 	QString inputLanguageName = Language::name( (Language::Value)inputLanguage );
 	QString outputLanguageName = Language::name( (Language::Value)outputLanguage );
 

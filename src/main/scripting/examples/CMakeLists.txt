@@ -1,4 +1,4 @@
-FILE( GLOB ruby_examples. *.rb )
+FILE( GLOB ruby_examples *.rb )
 FILE( GLOB python_examples *.rb )
 FILE( GLOB javascript_examples *.py )
 

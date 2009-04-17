@@ -2,19 +2,20 @@
 # This file is put in the public domain.
 #
 # Daniel M. Lambea <dmlambea@gmail.com>, 2008.
+# Sergio Pistone, 2009.
 msgid ""
 msgstr ""
 "Project-Id-Version: subtitlecomposer\n"
-"Report-Msgid-Bugs-To: https://sourceforge.net/tracker/?"
-"atid=1005652&group_id=208427&func=browse\n"
+"Report-Msgid-Bugs-To: https://sourceforge."
+"net/tracker/?atid=1005652&group_id=208427&func=browse\n"
 "POT-Creation-Date: 2009-04-12 02:37-0300\n"
-"PO-Revision-Date: 2008-11-02 18:36-0200\n"
-"Last-Translator: Daniel M. Lambea <dmlambea@gmail.com>\n"
+"PO-Revision-Date: 2009-04-14 22:50-0300\n"
+"Last-Translator: Sergio Pistone\n"
 "Language-Team: Spanish <kde-i18n-es@lists.kde.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Lokalize 0.2\n"
+"X-Generator: Lokalize 0.3\n"
 "Plural-Forms:  nplurals=2; plural=(n != 1);\n"
 
 #: core/subtitleactions.cpp:62
@@ -210,7 +211,6 @@ msgid "Too many lines"
 msgstr "Demasiadas líneas"
 
 #: core/subtitleline.cpp:78
-#, fuzzy
 msgid "Unnecessary white space"
 msgstr "Espacios innecesarios"
 
@@ -219,7 +219,6 @@ msgid "Unnecessary dash"
 msgstr "Guión innecesario"
 
 #: core/subtitleline.cpp:82
-#, fuzzy
 msgid "Capital letter after continuation ellipsis"
 msgstr "Mayúscula después de elipsis de continuación de línea"
 
@@ -244,14 +243,12 @@ msgid "Overlapping times"
 msgstr "Tiempos solapados"
 
 #: core/subtitleline.cpp:91
-#, fuzzy
 msgid "Untranslated text"
-msgstr "Usar texto traducido"
+msgstr "Texto no traducido"
 
 #: core/subtitleline.cpp:92
-#, fuzzy
 msgid "User mark"
-msgstr "Marcas de usuario"
+msgstr "Marca de usuario"
 
 #: core/subtitleline.cpp:112
 msgid "Has no primary text."
@@ -375,7 +372,6 @@ msgid "Overlaps with next line."
 msgstr "Se solapa con la línea siguiente."
 
 #: core/subtitleline.cpp:208
-#, fuzzy
 msgid "Has untranslated text."
 msgstr "No tiene traducción."
 
@@ -401,19 +397,19 @@ msgstr "Limpiar histórico"
 
 #: main/application.cpp:415
 msgid "Video Files"
-msgstr "Ficheros de vídeo"
+msgstr "Archivos de vídeo"
 
 #: main/application.cpp:423
 msgid "Audio Files"
-msgstr "Ficheros de audio"
+msgstr "Archivos de audio"
 
 #: main/application.cpp:425
 msgid "Media Files"
-msgstr "Ficheros de audio o vídeo"
+msgstr "Archivos de audio o vídeo"
 
 #: main/application.cpp:426
 msgid "All Files"
-msgstr "Todos los ficheros"
+msgstr "Todos los archivos"
 
 #: main/application.cpp:442
 msgid "Audio Levels Files"
@@ -443,7 +439,7 @@ msgstr "Abrir..."
 
 #: main/application.cpp:476 main/application.cpp:486
 msgid "Open subtitle file"
-msgstr "Abrir fichero de subtítulo"
+msgstr "Abrir archivo de subtítulo"
 
 #: main/application.cpp:485
 msgctxt "@action:inmenu Open rencently used subtitle file"
@@ -488,7 +484,7 @@ msgstr "Abrir traducción..."
 
 #: main/application.cpp:533 main/application.cpp:543
 msgid "Open translation subtitle file"
-msgstr "Abrir fichero de traducción de subtítulo"
+msgstr "Abrir archivo de traducción de subtítulo"
 
 #: main/application.cpp:542
 msgid "Open &Recent Translation"
@@ -524,7 +520,7 @@ msgstr "Recargar como..."
 
 #: main/application.cpp:581 main/application.cpp:592
 msgid "Reload opened file with a different encoding"
-msgstr "Recargar fichero de subtítulo con una codificación diferente"
+msgstr "Recargar archivo de subtítulo con una codificación diferente"
 
 #: main/application.cpp:591
 msgid "Quick Reload As..."
@@ -679,32 +675,28 @@ msgid "Show errors information for the current subtitle"
 msgstr "Mostrar información de errores del subtítulo actual"
 
 #: main/application.cpp:782
-#, fuzzy
 msgid "Find Error..."
-msgstr "Buscar error"
+msgstr "Buscar error..."
 
 #: main/application.cpp:783
-#, fuzzy
 msgid "Find lines with specified errors"
-msgstr "Buscar siguiente línea con errores"
+msgstr "Buscar líneas con errores especificados"
 
 #: main/application.cpp:792
 msgid "Find Next Error"
 msgstr "Buscar siguiente error"
 
 #: main/application.cpp:793
-#, fuzzy
 msgid "Find next line with specified errors"
-msgstr "Buscar siguiente línea con errores"
+msgstr "Buscar línea siguiente con errores especificados"
 
 #: main/application.cpp:802
 msgid "Find Previous Error"
 msgstr "Buscar error anterior"
 
 #: main/application.cpp:803
-#, fuzzy
 msgid "Find previous line with specified errors"
-msgstr "Buscar línea con errores anterior"
+msgstr "Buscar línea previa con errores especificados"
 
 #: main/application.cpp:812 main/lineswidget.cpp:1159
 msgid "Spelling..."
@@ -872,9 +864,8 @@ msgid "Fix punctuation errors in lines"
 msgstr "Corregir errores de puntuación en líneas"
 
 #: main/application.cpp:1003 main/lineswidget.cpp:1157
-#, fuzzy
 msgid "Translate..."
-msgstr "Abrir traducción..."
+msgstr "Traducir..."
 
 #: main/application.cpp:1004
 msgid "Translate lines texts using Google services"
@@ -894,7 +885,7 @@ msgstr "Abrir vídeo..."
 
 #: main/application.cpp:1022 main/application.cpp:1030
 msgid "Open video file"
-msgstr "Abrir fichero de vídeo"
+msgstr "Abrir archivo de vídeo"
 
 #: main/application.cpp:1029
 msgid "Open &Recent Video"
@@ -906,7 +897,7 @@ msgstr "Cerrar vídeo"
 
 #: main/application.cpp:1038
 msgid "Close video file"
-msgstr "Cerrar fichero de vídeo"
+msgstr "Cerrar archivo de vídeo"
 
 #: main/application.cpp:1047
 msgid "Full Screen Mode"
@@ -1094,12 +1085,12 @@ msgid ""
 "Are you sure you want to continue?"
 msgstr ""
 "La acción solicitada hará que el subtítulo y su traducción compartan el "
-"mismo fichero, posiblemente ocasionando pérdidas de información al guardar.\n"
+"mismo archivo, posiblemente ocasionando pérdidas de información al guardar.\n"
 "¿Está seguro de que desea continuar?"
 
 #: main/application.cpp:1360
 msgid "Conflicting Subtitle Files"
-msgstr "Conflicto de ficheros de subtítulos"
+msgstr "Archivos de subtítulos en conflicto"
 
 #: main/application.cpp:1482
 msgid ""
@@ -1149,7 +1140,7 @@ msgstr "Traducción"
 
 #: main/application.cpp:1683
 msgid "Could not parse the subtitle file."
-msgstr "No se pudo leer el fichero de subtítulos."
+msgstr "No se pudo leer el archivo de subtítulos."
 
 #: main/application.cpp:1722
 msgid "There was an error saving the translation subtitle."
@@ -1157,15 +1148,15 @@ msgstr "Ocurrió un error al guardar la traducción."
 
 #: main/application.cpp:1858
 msgid "Could not read the subtitle file to append."
-msgstr "No se pudo leer el fichero de subtítulos a añadir."
+msgstr "No se pudo leer el archivo de subtítulos a añadir."
 
 #: main/application.cpp:1910
 msgid "Could not write the splitted subtitle file."
-msgstr "No se pudo escribir el fichero de subtítulo dividido."
+msgstr "No se pudo escribir el archivo de subtítulo dividido."
 
 #: main/application.cpp:1911
 msgid "Could not write the splitted subtitle translation file."
-msgstr "No se pudo escribir el fichero de traducción dividido."
+msgstr "No se pudo escribir el archivo de traducción dividido."
 
 #: main/application.cpp:1929
 msgid "The specified time does not split the subtitles."
@@ -1205,12 +1196,11 @@ msgstr "El subtítulo de referencia debe tener más de una línea para proceder.
 
 #: main/application.cpp:2505
 msgid "Could not parse the reference subtitle file."
-msgstr "No pudo leerse el fichero de subtítulo de referencia."
+msgstr "No se pudo interpretar el archivo de subtítulo de referencia."
 
 #: main/application.cpp:2612 main/dialogs/translatedialog.cpp:31
-#, fuzzy
 msgid "Translate"
-msgstr "Traducción"
+msgstr "Traducir"
 
 #: main/application.cpp:2613
 msgid "Translating text (%1 to %2)..."
@@ -1231,22 +1221,21 @@ msgid ""
 msgstr ""
 
 #: main/application.cpp:2664
-#, fuzzy
 msgid "Translate Primary Text"
-msgstr "Usar texto primario"
+msgstr "Traducir text primario"
 
 #: main/application.cpp:2665
-#, fuzzy
 msgid "Translate Secondary Text"
-msgstr "Asignar texto de línea secundario"
+msgstr "Traducir texto secundario"
 
 #: main/application.cpp:2681
-#, fuzzy
 msgid ""
 "There was an error performing the translation:\n"
 "\n"
 "%1"
-msgstr "Ocurrió un error al guardar la traducción."
+msgstr ""
+"Ocurrió un error al realizar la traducción: "
+"%1"
 
 #: main/application.cpp:2734
 msgid "Open Video"
@@ -1373,7 +1362,6 @@ msgid " lines"
 msgstr " líneas"
 
 #: main/configs/errorsconfigwidget.cpp:56
-#, fuzzy
 msgctxt "@title:group"
 msgid "Absolute Durations"
 msgstr "Duraciones absolutas"
@@ -1398,7 +1386,6 @@ msgid "Maximum duration:"
 msgstr "Duración máxima:"
 
 #: main/configs/errorsconfigwidget.cpp:75
-#, fuzzy
 msgctxt "@title:group"
 msgid "Relative Durations"
 msgstr "Duraciones relativas"
@@ -1438,7 +1425,6 @@ msgid "Automatically load video file when opening subtitle"
 msgstr "Cargar vídeo automáticamente al abrir subtítulos"
 
 #: main/configs/generalconfigwidget.cpp:58
-#, fuzzy
 msgctxt "@title:group"
 msgid "Quick Actions"
 msgstr "Acciones rápidas"
@@ -1448,18 +1434,16 @@ msgid "Time shift for selected lines:"
 msgstr "Desplazamiento para líneas seleccionadas:"
 
 #: main/configs/generalconfigwidget.cpp:69
-#, fuzzy
 msgid "Compensation for captured video times:"
-msgstr "Compensación para tiempo de vídeo capturados"
+msgstr "Compensación para tiempos de vídeo capturados"
 
 #: main/configs/playerconfigwidget.cpp:47
 msgid "Player backend:"
 msgstr "Backend de reproducción:"
 
 #: main/configs/playerconfigwidget.cpp:53
-#, fuzzy
 msgid "Jump length on seek:"
-msgstr "Tamaño del salto al avanzar o retroceder:"
+msgstr "Longitud del salto al avanzar o retroceder:"
 
 #: main/configs/playerconfigwidget.cpp:58
 msgid " secs"
@@ -1470,13 +1454,11 @@ msgid "Show editable position control"
 msgstr "Mostrar control para edición de posición"
 
 #: main/configs/playerconfigwidget.cpp:64
-#, fuzzy
 msgctxt "@title:group"
 msgid "Subtitles"
 msgstr "Subtítulo"
 
 #: main/configs/playerconfigwidget.cpp:67
-#, fuzzy
 msgctxt "@label:chooser The font family name"
 msgid "Font family:"
 msgstr "Familia:"
@@ -1506,7 +1488,6 @@ msgid " pixels"
 msgstr " pixels"
 
 #: main/configs/playerconfigwidget.cpp:99
-#, fuzzy
 msgctxt "@title:group"
 msgid "Subtitles Preview"
 msgstr "Vista previa de subtítulos"
@@ -1591,7 +1572,6 @@ msgid "Translation subtitle"
 msgstr "Subtítulo de traducción"
 
 #: main/dialogs/actionwithtargetdialog.h:78
-#, fuzzy
 msgid "Apply To"
 msgstr "Aplicar a"
 
@@ -1600,7 +1580,6 @@ msgid "Adjust"
 msgstr "Ajustar"
 
 #: main/dialogs/adjusttimesdialog.cpp:34
-#, fuzzy
 msgctxt "@title:group"
 msgid "New Times"
 msgstr "Tiempos nuevos"
@@ -1641,7 +1620,6 @@ msgid "Prevent overlapping"
 msgstr "Prevenir solapamiento"
 
 #: main/dialogs/autodurationsdialog.cpp:71
-#, fuzzy
 msgctxt "@title:group"
 msgid "Duration Calculation"
 msgstr "Cálculo de duración"
@@ -1671,7 +1649,6 @@ msgid "Change Case"
 msgstr "Modificar mayúsculas/minúsculas"
 
 #: main/dialogs/changetextscasedialog.cpp:35
-#, fuzzy
 msgctxt "@title:group"
 msgid "Change To"
 msgstr "Cambiar a"
@@ -1701,7 +1678,6 @@ msgid "Check Errors"
 msgstr "Comprobar errores"
 
 #: main/dialogs/checkerrorsdialog.cpp:33
-#, fuzzy
 msgctxt "@title:group"
 msgid "Errors to Check"
 msgstr "Errores a comprobar"
@@ -1724,26 +1700,23 @@ msgid "Clear Errors"
 msgstr "Limpiar errores"
 
 #: main/dialogs/clearerrorsdialog.cpp:34
-#, fuzzy
 msgctxt "@title:group"
 msgid "Errors to Clear"
 msgstr "Errores a limpiar"
 
 #: main/dialogs/durationlimitsdialog.cpp:35
-#, fuzzy
 msgctxt "@title:group"
 msgid "Minimum Duration"
-msgstr "Duración mínima:"
+msgstr "Duración mínima"
 
 #: main/dialogs/durationlimitsdialog.cpp:41
 msgid "Expand duration to:"
 msgstr "Expandir duración a:"
 
 #: main/dialogs/durationlimitsdialog.cpp:48
-#, fuzzy
 msgctxt "@title:group"
 msgid "Maximum Duration"
-msgstr "Duración máxima:"
+msgstr "Duración máxima"
 
 #: main/dialogs/durationlimitsdialog.cpp:54
 msgid "Shrink duration to:"
@@ -1782,7 +1755,6 @@ msgid "Insert Line After Current"
 msgstr "Insertar línea después de la activa"
 
 #: main/dialogs/insertlinedialog.cpp:29
-#, fuzzy
 msgid "Insert Into"
 msgstr "Insertar en"
 
@@ -1811,14 +1783,13 @@ msgstr "Codificación:"
 
 #: main/dialogs/opensubtitledialog.cpp:73
 msgid "All Supported"
-msgstr "Todos los ficheros soportados"
+msgstr "Todos los archivos soportados"
 
 #: main/dialogs/removelinesdialog.cpp:27
 msgid "Remove Selected Lines"
 msgstr "Eliminar líneas seleccionadas"
 
 #: main/dialogs/removelinesdialog.cpp:27
-#, fuzzy
 msgid "Remove From"
 msgstr "Eliminar de"
 
@@ -1838,12 +1809,12 @@ msgstr "Fin de Línea:"
 msgid ""
 "A file named \"%1\" already exists. Are you sure you want to overwrite it?"
 msgstr ""
-"Ya existe un fichero con el nombre \"%1\". ¿Está seguro de que desea "
+"Ya existe un archivo con el nombre \"%1\". ¿Está seguro de que desea "
 "sobreescribirlo? "
 
 #: main/dialogs/savesubtitledialog.cpp:148
 msgid "Overwrite File?"
-msgstr "¿Sobreescribir fichero?"
+msgstr "¿Sobreescribir archivo?"
 
 #: main/dialogs/savesubtitledialog.cpp:149
 msgid "Overwrite"
@@ -1871,14 +1842,12 @@ msgid "Shifting"
 msgstr "Desplazamiento"
 
 #: main/dialogs/shifttimesdialog.cpp:38
-#, fuzzy
 msgid "Forwards (+)"
-msgstr "+ | Hacia adelante"
+msgstr "Hacia adelante (+)"
 
 #: main/dialogs/shifttimesdialog.cpp:39
-#, fuzzy
 msgid "Backwards (–)"
-msgstr "- | Hacia atrás"
+msgstr "Hacia atrás (-)"
 
 #: main/dialogs/smarttextsadjustdialog.cpp:43
 msgid "Minimum length for line break:"
@@ -1889,9 +1858,8 @@ msgid "Split Subtitle"
 msgstr "Dividir subtítulo"
 
 #: main/dialogs/splitsubtitledialog.cpp:49
-#, fuzzy
 msgid "Split time:"
-msgstr "Dividir tiempo"
+msgstr "Tiempo de división:"
 
 #: main/dialogs/splitsubtitledialog.cpp:53
 msgid "Shift new part backwards after split"
@@ -1902,26 +1870,23 @@ msgid "Synchronize with Subtitle"
 msgstr "Sincronizar con subtítulo"
 
 #: main/dialogs/syncsubtitlesdialog.cpp:34
-#, fuzzy
 msgid "Reference Subtitle"
 msgstr "Subtítulo de referencia"
 
 #: main/dialogs/syncsubtitlesdialog.cpp:36
-#, fuzzy
 msgctxt "@title:group"
 msgid "Synchronization Mode"
 msgstr "Modo de sincronización"
 
 #: main/dialogs/syncsubtitlesdialog.cpp:39
-#, fuzzy
 msgid "Adjust to reference's first and last lines"
-msgstr "Adjustar al primer y último tiempo del subtítulo de referencia"
+msgstr "Adjustar a la primer y última línea del subtítulo de referencia"
 
 #: main/dialogs/syncsubtitlesdialog.cpp:43
-#, fuzzy
 msgid "Copy timing information from reference line by line"
 msgstr ""
-"Copiar información de tiempo desde el subtítulo de referencia línea a línea"
+"Copiar línea a línea la información de tiempo desde el subtítulo de "
+"referencia"
 
 #: main/dialogs/translatedialog.cpp:49
 msgid "Input language:"
@@ -1944,50 +1909,42 @@ msgid "Settings..."
 msgstr "Configuración..."
 
 #: main/errorsdialog.cpp:120
-#, fuzzy
 msgid "Showing 1 line with errors"
 msgid_plural "Showing %1 lines with errors"
-msgstr[0] "Mostrando 1 línea"
+msgstr[0] "Mostrando 1 línea con errores"
 msgstr[1] "Mostrando %1 líneas"
 
 #: main/errorsdialog.cpp:123
-#, fuzzy
 msgid "1 total error"
 msgid_plural "%1 total errors"
-msgstr[0] "1 error"
+msgstr[0] "1 error en total"
 msgstr[1] "%1 errores"
 
 #: main/errorsdialog.cpp:124
-#, fuzzy
 msgid "1 user mark"
 msgid_plural "%1 user marks"
-msgstr[0] "Tiene marca de usuario."
+msgstr[0] "1 marca de usuario"
 msgstr[1] "Tiene marca de usuario."
 
 #: main/errorswidget.cpp:491
-#, fuzzy
 msgid "Line Errors"
-msgstr "Asignar errores de línea"
+msgstr "Descripción de errores"
 
 #: main/errorswidget.cpp:492
-#, fuzzy
 msgid "Count"
-msgstr "Cortar"
+msgstr "Cantidad"
 
 #: main/errorswidget.cpp:493
-#, fuzzy
 msgid "Marked"
-msgstr "Marcar"
+msgstr "Marcada"
 
 #: main/errorswidget.cpp:509
-#, fuzzy
 msgid "yes"
-msgstr "Estilos"
+msgstr "sí"
 
 #: main/errorswidget.cpp:510
-#, fuzzy
 msgid "no"
-msgstr "Deshacer"
+msgstr "no"
 
 #: main/errorswidget.cpp:517
 msgid "Line <numid>%1</numid>"
@@ -2099,9 +2056,8 @@ msgid "A KDE subtitle editor."
 msgstr "Un editor de subtítulos para KDE"
 
 #: main/main.cpp:47
-#, fuzzy
 msgid "(C) 2007-2009 Sergio Pistone"
-msgstr "(C) 2007-2008 Sergio Pistone"
+msgstr "(C) 2007-2009 Sergio Pistone"
 
 #: main/main.cpp:51
 msgid "Sergio Pistone"
@@ -2139,11 +2095,11 @@ msgstr "<i>Desconocido</i>"
 
 #: main/playerwidget.cpp:715
 msgid "<qt>There was an error opening file<br/>%1</qt>"
-msgstr "<qt>Ocurrió un error al abrir el fichero <br/>%1</qt>"
+msgstr "<qt>Ocurrió un error al abrir el archivo <br/>%1</qt>"
 
 #: main/playerwidget.cpp:741
 msgid "Unexpected error while playing file."
-msgstr "Error inesperado al reproducir el fichero."
+msgstr "Error inesperado al reproducir el archivo."
 
 #: main/scripting/scriptsmanager.cpp:70
 msgid "Installed Scripts"
@@ -2154,19 +2110,16 @@ msgid "Scripts Manager"
 msgstr ""
 
 #: main/scripting/scriptsmanager.cpp:102
-#, fuzzy
 msgid "Create..."
-msgstr "Reemplazar..."
+msgstr "Crear..."
 
 #: main/scripting/scriptsmanager.cpp:103
-#, fuzzy
 msgid "Creates a new script file."
-msgstr "Crear un subtítulo vacío"
+msgstr "Crea un nuevo script."
 
 #: main/scripting/scriptsmanager.cpp:108
-#, fuzzy
 msgid "Add..."
-msgstr "Ajustar..."
+msgstr "Agregar..."
 
 #: main/scripting/scriptsmanager.cpp:109
 msgid "Copies an existing script from a specified location."
@@ -2177,9 +2130,8 @@ msgid "Sends the selected script to the trash."
 msgstr ""
 
 #: main/scripting/scriptsmanager.cpp:120
-#, fuzzy
 msgid "Edit"
-msgstr "&Edición"
+msgstr "Editar"
 
 #: main/scripting/scriptsmanager.cpp:121
 msgid "Opens the selected script with an external editor."
@@ -2220,9 +2172,8 @@ msgid "Script name:"
 msgstr ""
 
 #: main/scripting/scriptsmanager.cpp:212
-#, fuzzy
 msgid "There was an error creating the file <b>%1</b>."
-msgstr "<qt>Ocurrió un error al abrir el fichero <br/>%1</qt>"
+msgstr "Ocurrió un error al crear el archivo <b>%1</b>."
 
 #: main/scripting/scriptsmanager.cpp:256
 msgid "Select Existing Script"
@@ -2233,14 +2184,12 @@ msgid "Rename Script"
 msgstr ""
 
 #: main/scripting/scriptsmanager.cpp:295
-#, fuzzy
 msgid "There was an error opening the file <b>%1</b>."
-msgstr "<qt>Ocurrió un error al abrir el fichero <br/>%1</qt>"
+msgstr "Ocurrió un error al abrir el archivo <br/>%1</qt>"
 
 #: main/scripting/scriptsmanager.cpp:304
-#, fuzzy
 msgid "There was an error copying the file to <b>%1</b>."
-msgstr "<qt>Ocurrió un error al abrir el fichero <br/>%1</qt>"
+msgstr "Ocurrió un error al copiar el archivo <br/>%1</qt>"
 
 #: main/scripting/scriptsmanager.cpp:323
 msgid "Do you really want to send file <b>%1</b> to the trash?"
@@ -2251,9 +2200,8 @@ msgid "Move to Trash"
 msgstr ""
 
 #: main/scripting/scriptsmanager.cpp:332
-#, fuzzy
 msgid "There was an error removing the file <b>%1</b>."
-msgstr "<qt>Ocurrió un error al abrir el fichero <br/>%1</qt>"
+msgstr "Ocurrió un error al eliminar el archivo <br/>%1</qt>"
 
 #: main/scripting/scriptsmanager.cpp:350
 msgid "Could not launch external editor.\n"
@@ -2273,7 +2221,6 @@ msgid "Find Error"
 msgstr "Buscar error"
 
 #: main/utils/errorfinder.cpp:42
-#, fuzzy
 msgid "Errors to Find"
 msgstr "Errores a comprobar"
 
@@ -2282,14 +2229,12 @@ msgid "Options"
 msgstr ""
 
 #: main/utils/errorfinder.cpp:51
-#, fuzzy
 msgid "From current line"
-msgstr "Línea no seleccionada"
+msgstr "Desde línea activa"
 
 #: main/utils/errorfinder.cpp:55
-#, fuzzy
 msgid "Find backwards"
-msgstr "- | Hacia atrás"
+msgstr "Buscar hacia atrás"
 
 #: main/utils/errorfinder.cpp:227 main/utils/finder.cpp:298
 #: main/utils/replacer.cpp:258
@@ -2332,9 +2277,8 @@ msgid "No errors matching given criteria found!"
 msgstr ""
 
 #: main/utils/finder.cpp:55
-#, fuzzy
 msgid "Find In"
-msgstr "Buscar"
+msgstr "Buscar en"
 
 #: main/utils/finder.cpp:278 main/utils/replacer.cpp:234
 msgid "No instances of '%1' found!"
@@ -2403,9 +2347,8 @@ msgid "Tagalog"
 msgstr ""
 
 #: main/utils/replacer.cpp:53
-#, fuzzy
 msgid "Find/Replace In"
-msgstr "Reemplazar"
+msgstr "Buscar/Reemplazar en"
 
 #: main/utils/speller.cpp:144
 msgid "Spell Checking"
@@ -2421,10 +2364,9 @@ msgid "Audio Stream #%1"
 msgstr "Flujo de audio #%1"
 
 #: player/gstreamer/gstreamerconfigwidget.cpp:34
-#, fuzzy
 msgctxt "@title:group GStreamer sinks settings"
 msgid "Sinks"
-msgstr "Configuración"
+msgstr "Sumideros"
 
 #: player/gstreamer/gstreamerconfigwidget.cpp:37
 msgid "Audio sink:"

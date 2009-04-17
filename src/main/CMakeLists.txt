@@ -21,9 +21,9 @@ SET( subtitlecomposer_SRCS
 	${formats_SRCS}
 	${players_SRCS}
 	${widgets_SRCS}
-	${main_configdefs_SRCS}
+	${main_configs_SRCS}
 	${main_dialogs_SRCS}
-	${main_useractions_SRCS}
+	${main_actions_SRCS}
 	${main_utils_SRCS}
 	${main_scripting_SRCS}
 	${CMAKE_CURRENT_SOURCE_DIR}/application.cpp

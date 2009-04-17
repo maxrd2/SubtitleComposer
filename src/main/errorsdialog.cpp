@@ -50,15 +50,16 @@ ErrorsDialog::ErrorsDialog( QWidget* parent ):
 	mainLayout->setAlignment( Qt::AlignTop );
 	mainLayout->setSpacing( 5 );
 
+	m_autoClearFixed = app()->errorsConfig()->autoClearFixed();
 	m_clearFixedButton = new KPushButton( mainWidget );
 	m_clearFixedButton->setText( i18n( "Clear Fixed Errors" ) );
-	m_clearFixedButton->setEnabled( ! app()->errorsConfig()->autoClearFixed() );
+	m_clearFixedButton->setEnabled( ! m_autoClearFixed );
 
 	KPushButton* checkErrorsButton = new KPushButton( mainWidget );
 	checkErrorsButton->setText( i18n( "Check Errors..." ) );
 
-	KPushButton* clearErrorsButton = new KPushButton( mainWidget );
-	clearErrorsButton->setText( i18n( "Clear Errors..." ) );
+	m_clearErrorsButton = new KPushButton( mainWidget );
+	m_clearErrorsButton->setText( i18n( "Clear Errors..." ) );
 
 	KPushButton* settingsButton = new KPushButton( mainWidget );
 	settingsButton->setText( i18n( "Settings..." ) );
@@ -72,7 +73,7 @@ ErrorsDialog::ErrorsDialog( QWidget* parent ):
 	mainLayout->addWidget( m_clearFixedButton, 2, 0 );
 	mainLayout->addItem( new QSpacerItem( 20, 20, QSizePolicy::Expanding, QSizePolicy::Minimum ), 2, 1 );
 	mainLayout->addWidget( checkErrorsButton, 2, 2 );
-	mainLayout->addWidget( clearErrorsButton, 2, 3 );
+	mainLayout->addWidget( m_clearErrorsButton, 2, 3 );
 	mainLayout->addWidget( settingsButton, 2, 4 );
 
 	resize( 500, height() + 50 );
@@ -81,7 +82,7 @@ ErrorsDialog::ErrorsDialog( QWidget* parent ):
 
 	connect( m_clearFixedButton, SIGNAL( clicked() ), app(), SLOT( recheckAllErrors() ) );
 	connect( checkErrorsButton, SIGNAL( clicked() ), app(), SLOT( checkErrors() ) );
-	connect( clearErrorsButton, SIGNAL( clicked() ), app(), SLOT( clearErrors() ) );
+	connect( m_clearErrorsButton, SIGNAL( clicked() ), app(), SLOT( clearErrors() ) );
 	connect( settingsButton, SIGNAL( clicked() ), app(), SLOT( showErrorsConfig() ) );
 
 	connect( m_errorsWidget->model(), SIGNAL( statsChanged() ), this, SLOT( onStatsChanged() ) );
@@ -126,15 +127,24 @@ void ErrorsDialog::onStatsChanged()
 			m_statsLabel->setText( QString( "%1 (%2)" ).arg( lines ).arg( marks ) );
 		else
 			m_statsLabel->setText( QString( "%1 (%2, %3)" ).arg( lines ).arg( errors ).arg( marks ) );
+		m_clearErrorsButton->setEnabled( true );
+		m_clearFixedButton->setEnabled( ! m_autoClearFixed );
 	}
 	else
+	{
 		m_statsLabel->setText( lines );
+		m_clearErrorsButton->setEnabled( false );
+		m_clearFixedButton->setEnabled( false );
+	}
 }
 
 void ErrorsDialog::onOptionChanged( const QString& option, const QString& value )
 {
 	if ( option == ErrorsConfig::keyAutoClearFixed() )
-		m_clearFixedButton->setEnabled( value != "true" );
+	{
+		m_autoClearFixed = value == "true";
+		m_clearFixedButton->setEnabled( m_clearErrorsButton->isEnabled() && ! m_autoClearFixed );
+	}
 }
 
 #include "errorsdialog.moc"

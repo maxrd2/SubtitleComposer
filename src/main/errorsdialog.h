@@ -55,9 +55,10 @@ namespace SubtitleComposer
 		private:
 
 			ErrorsWidget* m_errorsWidget;
-
-			KPushButton* m_clearFixedButton;
 			QLabel* m_statsLabel;
+			KPushButton* m_clearFixedButton;
+			KPushButton* m_clearErrorsButton;
+			bool m_autoClearFixed;
 	};
 
 }

@@ -22,8 +22,6 @@
 
 #include <QtCore/QRegExp>
 #include <QtCore/QTextCodec>
-#include <QtNetwork/QNetworkReply>
-#include <QtNetwork/QNetworkAccessManager>
 #include <QtGui/QLabel>
 #include <QtGui/QProgressBar>
 #include <QtGui/QBoxLayout>
@@ -32,22 +30,20 @@
 #include <KLocale>
 #include <KDialog>
 
+#include <kjob.h>
+#include <KIO/Job>
+
 using namespace SubtitleComposer;
 
 #define MULTIPART_DATA_BOUNDARY "----------nOtA5FcjrNZuZ3TMioysxHGGCO69vA5iYysdBTL2osuNwOjcCfU7uiN"
 
 Translator::Translator( QObject* parent ):
 	QObject( parent ),
-	m_manager( 0 ),
-	m_currentNetworkReply( 0 ),
+	m_currentTransferJob( 0 ),
 	m_inputLanguage( Language::INVALID ),
 	m_outputLanguage( Language::INVALID ),
 	m_lastReceivedChunk( 0 )
 {
-	m_manager = new QNetworkAccessManager( this );
-
-	connect( m_manager, SIGNAL( finished( QNetworkReply* ) ), this, SLOT( onNetworkReplyFinished( QNetworkReply* ) ) );
-
 	connect( this, SIGNAL( finished( const QString& ) ), this, SIGNAL( finished() ) );
 	connect( this, SIGNAL( finishedWithError( const QString& ) ), this, SIGNAL( finished() ) );
 }
@@ -81,11 +77,6 @@ int Translator::chunksCount() const
 	return m_inputTextChunks.count();
 }
 
-int Translator::lastReceivedChunk() const
-{
-	return m_lastReceivedChunk;
-}
-
 bool Translator::isFinished() const
 {
 	return isFinishedWithError() || m_lastReceivedChunk == chunksCount();
@@ -110,9 +101,11 @@ bool Translator::syncTranslate( const QString& text, Language::Value inputLang, 
 {
 	if ( progressDialog )
 	{
-		connect( this, SIGNAL( chunksCalculated( int ) ), progressDialog, SLOT( setMaximum( int ) ) );
-		connect( this, SIGNAL( chunkReceived( int, int ) ), progressDialog, SLOT( setValue( int ) ) );
+		connect( this, SIGNAL( progress( int ) ), progressDialog, SLOT( setValue( int ) ) );
 		connect( progressDialog, SIGNAL( cancelClicked() ), this, SLOT( abort() ) );
+
+		progressDialog->setMinimum( 0 );
+		progressDialog->setMaximum( 100 );
 		progressDialog->show();
 	}
 
@@ -162,15 +155,18 @@ void Translator::translate( const QString& text, Language::Value inputLanguage, 
 	m_errorMessage.clear();
 	m_aborted = false;
 
-	emit chunksCalculated( chunksCount() );
-
 	startChunkDownload( 1 );
 }
 
 void Translator::abort()
 {
-	if ( m_currentNetworkReply )
-		m_currentNetworkReply->abort();
+	if ( m_currentTransferJob )
+	{
+		m_currentTransferJob->kill(); // deletes the job
+		m_aborted = true;
+		m_errorMessage = i18n( "Operation cancelled by user" );
+		emit finishedWithError( m_errorMessage );
+	}
 }
 
 // "Content-type" => "application/x-www-form-urlencoded"
@@ -211,40 +207,60 @@ QByteArray Translator::prepareMultipartData( const QMap<QString,QString>& params
 
 void Translator::startChunkDownload( int chunkNumber )
 {
-	QNetworkRequest request( QUrl( "http://translate.google.com/translate_t" ) );
-
 	QMap<QString,QString> params;
 	params["prev"] = "_t";
 	params["sl"] = Language::code( m_inputLanguage );
 	params["tl"] = Language::code( m_outputLanguage );
-	params["text"] = m_inputTextChunks.at( chunkNumber - 1 ); // "this is just some example text";
-	//QByteArray data = prepareMultipartData( params );
-	QByteArray data = prepareUrlEncodedData( params );
+	params["text"] = m_inputTextChunks.at( chunkNumber - 1 );
 
-	//request.setHeader( QNetworkRequest::ContentTypeHeader, "multipart/form-data; boundary=" MULTIPART_DATA_BOUNDARY );
-	request.setHeader( QNetworkRequest::ContentTypeHeader, "application/x-www-form-urlencoded" );
-	request.setHeader( QNetworkRequest::ContentLengthHeader, data.length() );
+	//QByteArray postData = prepareMultipartData( params );
+	QByteArray postData = prepareUrlEncodedData( params );
 
-	m_currentNetworkReply = m_manager->post( request, data );
+	m_currentTransferJob = KIO::http_post( KUrl( "http://translate.google.com/translate_t" ), postData, KIO::HideProgressInfo );
+
+// 	m_currentTransferJob->addMetaData( "content-type", "Content-Type: multipart/form-data; boundary=" MULTIPART_DATA_BOUNDARY );
+	m_currentTransferJob->addMetaData( "content-type", "Content-Type: application/x-www-form-urlencoded" );
+	m_currentTransferJob->setTotalSize( postData.length() );
+
+	connect( m_currentTransferJob, SIGNAL( percent( KJob*, unsigned long ) ),
+			 this, SLOT( onTransferJobProgress( KJob*, unsigned long ) ) );
+	connect( m_currentTransferJob, SIGNAL( result( KJob* ) ),
+			 this, SLOT( onTransferJobResult( KJob* ) ) );
+	connect( m_currentTransferJob, SIGNAL( data( KIO::Job*, const QByteArray& ) ),
+			 this, SLOT( onTransferJobData( KIO::Job*, const QByteArray& ) ) );
+
+	m_currentTransferData.clear();
+
+	m_currentTransferJob->start();
 }
 
-void Translator::onNetworkReplyFinished( QNetworkReply* networkReply )
+void Translator::onTransferJobProgress( KJob* /*job*/, unsigned long percent )
 {
-	m_currentNetworkReply = 0;
+	const double r = 1.0/chunksCount();
+	int percentage = (int)(m_lastReceivedChunk * 100.0 * r + percent * r);
+	emit progress( percentage );
+}
 
-	if ( networkReply->error() != QNetworkReply::NoError )
+void Translator::onTransferJobData( KIO::Job* /*job*/, const QByteArray& data )
+{
+	m_currentTransferData.append( data );
+}
+
+void Translator::onTransferJobResult( KJob* job )
+{
+	m_currentTransferJob = 0;
+
+	if ( job->error() )
 	{
-		m_aborted = networkReply->error() == QNetworkReply::OperationCanceledError;
-		m_errorMessage = networkReply->errorString();
+		m_aborted = false;
+		m_errorMessage = job->errorString();
+		kDebug() << m_errorMessage;
 		emit finishedWithError( m_errorMessage );
-		networkReply->deleteLater();
 		return;
 	}
 
-	QByteArray data = networkReply->readAll();
-	QTextCodec* codec = QTextCodec::codecForHtml( data, QTextCodec::codecForName( "UTF-8" ) );
-	QString content = codec->toUnicode( data );
-	networkReply->deleteLater();
+	QTextCodec* codec = QTextCodec::codecForHtml( m_currentTransferData, QTextCodec::codecForName( "UTF-8" ) );
+	QString content = codec->toUnicode( m_currentTransferData );
 
 	QRegExp resultStartRegExp( "^.*<div id=result_box( [^>]+|)>", Qt::CaseInsensitive );
 	if ( content.contains( resultStartRegExp ) )
@@ -275,7 +291,6 @@ void Translator::onNetworkReplyFinished( QNetworkReply* networkReply )
 	m_outputText += content;
 
 	m_lastReceivedChunk += 1;
-	emit chunkReceived( m_lastReceivedChunk, chunksCount() );
 
 	if ( m_lastReceivedChunk >= chunksCount() )
 		emit finished( m_outputText );
