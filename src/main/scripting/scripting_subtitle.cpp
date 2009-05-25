@@ -25,21 +25,6 @@
 
 using namespace SubtitleComposer;
 
-Scripting::SubtitleModule::SubtitleModule( QObject* parent ):
-	QObject( parent )
-{
-}
-
-QObject* Scripting::SubtitleModule::instance()
-{
-	return app()->subtitle() ? new Scripting::Subtitle( app()->subtitle(), this ) : 0;
-}
-
-bool Scripting::SubtitleModule::translationMode()
-{
-	return app()->translationMode();
-}
-
 Scripting::Subtitle::Subtitle( SubtitleComposer::Subtitle* backend, QObject* parent ):
 	QObject( parent ),
 	m_backend( backend )

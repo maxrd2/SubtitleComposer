@@ -81,6 +81,8 @@ namespace SubtitleComposer
 
 			RangeList complement() const
 			{
+				kDebug() << this->inspect();
+
 				if ( m_ranges.empty() )
 					return Range( 0, Range::MaxIndex );
 
@@ -101,6 +103,8 @@ namespace SubtitleComposer
 
 				if ( lastEnd < Range::MaxIndex )
 					ret << Range( lastEnd + 1, Range::MaxIndex );
+
+				kDebug() << ret.inspect();
 
 				return ret;
 			}
@@ -416,7 +420,7 @@ namespace SubtitleComposer
 				}
 			}
 
-			QString inspect()
+			QString inspect() const
 			{
 				QStringList ranges;
 				for ( int index = 0, count = m_ranges.count(); index < count; ++index )

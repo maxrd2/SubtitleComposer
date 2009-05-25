@@ -23,16 +23,6 @@
 
 using namespace SubtitleComposer;
 
-Scripting::SStringModule::SStringModule( QObject* parent ):
-	QObject( parent )
-{
-}
-
-QObject* Scripting::SStringModule::string( const QString& text )
-{
-	return new SString( SubtitleComposer::SString( text ), this );
-}
-
 Scripting::SString::SString( const SubtitleComposer::SString& backend, QObject* parent ):
 	QObject( parent ),
 	m_backend( backend )
@@ -45,6 +35,16 @@ bool Scripting::SString::isEmpty() const
 }
 
 int Scripting::SString::length() const
+{
+	return m_backend.length();
+}
+
+int Scripting::SString::count() const
+{
+	return m_backend.length();
+}
+
+int Scripting::SString::size() const
 {
 	return m_backend.length();
 }
@@ -130,20 +130,44 @@ void Scripting::SString::truncate( int size )
 		m_backend.truncate( size );
 }
 
-QObject* Scripting::SString::insert( int index, const QString& str )
+QObject* Scripting::SString::insert( int index, QObject* object )
+{
+	if ( index >= 0 && index <= m_backend.count() )
+	{
+		if ( const Scripting::SString* str = qobject_cast<const Scripting::SString*>( object ) )
+			m_backend.insert( index, str->m_backend );
+	}
+	return this;
+}
+
+QObject* Scripting::SString::insertPlain( int index, const QString& str )
 {
 	if ( index >= 0 && index <= m_backend.count() )
 		m_backend.insert( index, str );
 	return this;
 }
 
-QObject* Scripting::SString::append( const QString& str )
+QObject* Scripting::SString::append( QObject* object )
+{
+	if ( const Scripting::SString* str = qobject_cast<const Scripting::SString*>( object ) )
+		m_backend.append( str->m_backend );
+	return this;
+}
+
+QObject* Scripting::SString::appendPlain( const QString& str )
 {
 	m_backend.append( str );
 	return this;
 }
 
-QObject* Scripting::SString::prepend( const QString& str )
+QObject* Scripting::SString::prepend( QObject* object )
+{
+	if ( const Scripting::SString* str = qobject_cast<const Scripting::SString*>( object ) )
+		m_backend.prepend( str->m_backend );
+	return this;
+}
+
+QObject* Scripting::SString::prependPlain( const QString& str )
 {
 	m_backend.prepend( str );
 	return this;
@@ -165,14 +189,36 @@ QObject* Scripting::SString::removeAll( const QString& str, bool regExp, bool ca
 	return this;
 }
 
-QObject* Scripting::SString::replace( int index, int len, const QString& replacement )
+QObject* Scripting::SString::replace( int index, int len, QObject* object )
+{
+	if ( const Scripting::SString* replacement = qobject_cast<const Scripting::SString*>( object ) )
+	{
+		if ( index >= 0 && index < m_backend.count() )
+			m_backend.replace( index, len, replacement->m_backend );
+	}
+	return this;
+}
+
+QObject* Scripting::SString::replacePlain( int index, int len, const QString& replacement )
 {
 	if ( index >= 0 && index < m_backend.count() )
 		m_backend.replace( index, len, replacement );
 	return this;
 }
 
-QObject* Scripting::SString::replaceAll( const QString& before, const QString& after, bool regExp, bool caseSensitive )
+QObject* Scripting::SString::replaceAll( const QString& before, QObject* object, bool regExp, bool caseSensitive )
+{
+	if ( const Scripting::SString* after = qobject_cast<const Scripting::SString*>( object ) )
+	{
+		if ( regExp )
+			m_backend.replace( QRegExp( before, caseSensitive ? Qt::CaseSensitive : Qt::CaseInsensitive ), after->m_backend );
+		else
+			m_backend.replace( before, after->m_backend, caseSensitive ? Qt::CaseSensitive : Qt::CaseInsensitive );
+	}
+	return this;
+}
+
+QObject* Scripting::SString::replaceAllPlain( const QString& before, const QString& after, bool regExp, bool caseSensitive )
 {
 	if ( regExp )
 		m_backend.replace( QRegExp( before, caseSensitive ? Qt::CaseSensitive : Qt::CaseInsensitive ), after );
@@ -181,7 +227,7 @@ QObject* Scripting::SString::replaceAll( const QString& before, const QString& a
 	return this;
 }
 
-Scripting::QObjectList* Scripting::SString::split( const QString& sep, bool regExp, bool caseSensitive ) const
+Scripting::List* Scripting::SString::split( const QString& sep, bool regExp, bool caseSensitive ) const
 {
 	SStringList tokens;
 	if ( regExp )
@@ -202,7 +248,7 @@ Scripting::QObjectList* Scripting::SString::split( const QString& sep, bool regE
 	for ( SStringList::ConstIterator it = tokens.begin(), end = tokens.end(); it != end; ++it )
 		list.append( new Scripting::SString( *it, parent ) );
 
-	return new Scripting::QObjectList( list, Scripting::SString::staticMetaObject.className(), parent );
+	return new Scripting::List( list, Scripting::SString::staticMetaObject.className(), parent );
 }
 
 QObject* Scripting::SString::left( int len ) const
@@ -242,16 +288,6 @@ QObject* Scripting::SString::trimmed() const
 	return new SString( m_backend.trimmed(), const_cast<Scripting::SString*>( this ) );
 }
 
-int Scripting::SString::compareTo( const QString& string ) const
-{
-	if ( m_backend < string )
-		return -1;
-	else if ( m_backend == string )
-		return 0;
-	else
-		return 1;
-}
-
 int Scripting::SString::compareTo( QObject* object ) const
 {
 	const Scripting::SString* string = qobject_cast<const Scripting::SString*>( object );
@@ -261,6 +297,16 @@ int Scripting::SString::compareTo( QObject* object ) const
 	if ( m_backend < string->m_backend )
 		return -1;
 	else if ( m_backend == string->m_backend )
+		return 0;
+	else
+		return 1;
+}
+
+int Scripting::SString::compareToPlain( const QString& string ) const
+{
+	if ( m_backend < string )
+		return -1;
+	else if ( m_backend == string )
 		return 0;
 	else
 		return 1;

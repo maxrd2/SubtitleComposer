@@ -25,7 +25,7 @@
 #endif
 
 #include "../../core/sstring.h"
-#include "scripting_qobjectlist.h"
+#include "scripting_list.h"
 
 #include <QtCore/QObject>
 #include <QtCore/QString>
@@ -34,46 +34,16 @@ namespace SubtitleComposer
 {
 	namespace Scripting
 	{
-		class SStringModule : public QObject
-		{
-			Q_OBJECT
-
-			Q_ENUMS( StyleFlag )
-
-			public:
-
-				typedef enum {
-					Bold =				SubtitleComposer::SString::Bold,
-					Italic =			SubtitleComposer::SString::Italic,
-					Underline = 		SubtitleComposer::SString::Underline,
-					StrikeThrough = 	SubtitleComposer::SString::StrikeThrough,
-				} StyleFlag;
-
-				SStringModule( QObject* parent=0 );
-
-			public slots:
-
-				QObject* string( const QString& text=QString() );
-		};
-
 		class SString : public QObject
 		{
 			Q_OBJECT
 
-			Q_PROPERTY( bool isEmpty READ length )
-
-			Q_PROPERTY( int count READ length )
-			Q_PROPERTY( int size READ length )
-			Q_PROPERTY( int length READ length )
-
-			Q_PROPERTY( int cummulativeStyleFlags READ cummulativeStyleFlags )
-
-			Q_PROPERTY( QString plainText READ plainText WRITE setPlainText )
-			Q_PROPERTY( QString richText READ richText WRITE setRichText )
-
 			public slots:
 
 				bool isEmpty() const;
+
+				int count() const;
+				int size() const;
 				int length() const;
 
 				QString plainText() const;
@@ -97,17 +67,22 @@ namespace SubtitleComposer
 				void clear();
 				void truncate( int size );
 
-				QObject* insert( int index, const QString& str );
-				QObject* append( const QString& str );
-				QObject* prepend( const QString& str );
+				QObject* insert( int index, QObject* str );
+				QObject* insertPlain( int index, const QString& str );
+				QObject* append( QObject* str );
+				QObject* appendPlain( const QString& str );
+				QObject* prepend( QObject* str );
+				QObject* prependPlain( const QString& str );
 
 				QObject* remove( int index, int len );
 				QObject* removeAll( const QString& str, bool regExp=false, bool caseSensitive=true );
 
-				QObject* replace( int index, int len, const QString& replacement );
-				QObject* replaceAll( const QString& before, const QString& after, bool regExp=false, bool caseSensitive=true );
+				QObject* replace( int index, int len, QObject* replacement );
+				QObject* replacePlain( int index, int len, const QString& replacement );
+				QObject* replaceAll( const QString& before, QObject* after, bool regExp=false, bool caseSensitive=true );
+				QObject* replaceAllPlain( const QString& before, const QString& after, bool regExp=false, bool caseSensitive=true );
 
-				QObjectList* split( const QString& sep, bool regExp, bool caseSensitive=true ) const;
+				List* split( const QString& sep, bool regExp, bool caseSensitive=true ) const;
 
 				QObject* left( int len ) const;
 				QObject* right( int len ) const;
@@ -119,12 +94,12 @@ namespace SubtitleComposer
 				QObject* simplified() const;
 				QObject* trimmed() const;
 
-				int compareTo( const QString& string ) const;
 				int compareTo( QObject* string ) const;
+				int compareToPlain( const QString& string ) const;
 
 			private:
 
-				friend class SStringModule;
+				friend class StringsModule;
 				friend class SubtitleLine;
 
 				SString( const SubtitleComposer::SString& backend, QObject* parent );

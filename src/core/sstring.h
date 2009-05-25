@@ -127,6 +127,7 @@ namespace SubtitleComposer
 			SString& replace( QChar ch, const QString& after, Qt::CaseSensitivity cs=Qt::CaseSensitive );
 			SString& replace( QChar ch, const SString& after, Qt::CaseSensitivity cs=Qt::CaseSensitive );
 			SString& replace( const QRegExp& rx, const QString& after );
+			SString& replace( const QRegExp& rx, const SString& after );
 
 			int indexOf( QChar c, int index=0, Qt::CaseSensitivity cs=Qt::CaseSensitive ) const;
 			int indexOf( char c, int index=0, Qt::CaseSensitivity cs=Qt::CaseSensitive ) const;

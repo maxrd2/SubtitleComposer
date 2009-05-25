@@ -1,0 +1,38 @@
+SUBTITLE COMPOSER SCRIPTING README
+==================================
+
+There's currently no real documentation but the examples and the included API
+(see 'api' directory) should give you enough information to get started.
+
+Besides the corresponding interpreter framework and Kross defined modules (i18n,
+forms, etc.), scripts can access some modules specific to Subtitle Composer that
+provide methods to access global objects, enum values and/or create other objects:
+
+ranges:
+	contains methods to create ranges and ranges lists, including a range list
+	describing the current selection ranges.
+
+strings:
+	contains only one method for creating styled string objects and provides
+	access to the StyleFlag enum values, used to get/set styling information
+	(see SString class *StyleFlag* methods).
+
+subtitle:
+	contains methods to access the subtitle instance and query the translation
+	mode state (true when there's an open translation, false otherwise). It also
+	provides access to TextTarget enum values, used to specify the target (primary
+	text, secondary text/translation, or both) in subtitle operations that modify
+	text (i.e., lowerCase(...) or breakLines(...) methods).
+
+subtitleline:
+	provides access to the ErrorFlag enum values, used to specify errors bits in
+	error manipulation methods on both Subtitle and SubtitleLine classes.
+
+debug:
+	contains three functions (information, warning and error) that can be used
+	while debuging scripts
+
+Using these modules you can access objects to do pretty much anything the main
+application can do. Included are some basic examples showcasing some of the
+things you can do. If you have other scripts you consider worth sharing then send
+them to me and I'll consider them for inclusion with the program.

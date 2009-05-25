@@ -25,11 +25,6 @@
 
 using namespace SubtitleComposer;
 
-Scripting::SubtitleLineModule::SubtitleLineModule( QObject* parent ):
-	QObject( parent )
-{
-}
-
 static SubtitleComposer::SubtitleLine::TextTarget toTextTarget( int value, int opDefault )
 {
 	if ( value < SubtitleComposer::SubtitleLine::Primary || value >= SubtitleComposer::SubtitleLine::TextTargetSIZE )

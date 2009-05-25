@@ -59,7 +59,7 @@ namespace SubtitleComposer
 
 		private:
 
-			void advance();
+			void advance( bool advanceIteratorOnFirstStep );
 
 		private slots:
 

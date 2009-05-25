@@ -790,6 +790,53 @@ SString& SString::replace( const QRegExp& rx, const QString& a )
 	return *this;
 }
 
+SString& SString::replace( const QRegExp& rx, const SString& a )
+{
+	QRegExp regExp( rx );
+
+	QRegExp::CaretMode caretMode = QRegExp::CaretAtZero;
+	for ( int offsetIndex = 0, matchedIndex; (matchedIndex = regExp.indexIn( m_string, offsetIndex, caretMode )) != -1; )
+	{
+		SString after( a );
+
+		bool escaping = false;
+		for ( int afterIndex = 0, afterSize = after.length(); afterIndex < afterSize; ++afterIndex )
+		{
+			QChar chr = after.at( afterIndex );
+			if ( escaping ) // perform replace
+			{
+				escaping = false;
+				if ( chr.isNumber() )
+				{
+					int capNumber = chr.digitValue();
+					if ( capNumber <= regExp.numCaptures() )
+					{
+						QString cap( regExp.cap( capNumber ) );
+						after.replace( afterIndex - 1, 2, cap );
+						afterIndex = afterIndex - 1 + cap.length();
+						afterSize = after.length();
+					}
+				}
+			}
+			else if ( chr == '\\' )
+				escaping = ! escaping;
+		}
+
+		if ( regExp.matchedLength() == 0 && after.length() == 0 )
+			continue;
+
+		replace( matchedIndex, regExp.matchedLength(), after );
+
+		if ( ! regExp.matchedLength() )
+			matchedIndex++;
+
+		offsetIndex = matchedIndex + after.length();
+		caretMode = QRegExp::CaretWontMatch; // caret should only be matched the first time
+	}
+
+	return *this;
+}
+
 SStringList SString::split( const QString& sep, QString::SplitBehavior behavior, Qt::CaseSensitivity cs ) const
 {
 	SStringList ret;

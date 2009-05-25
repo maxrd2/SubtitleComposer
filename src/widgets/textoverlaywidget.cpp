@@ -269,7 +269,7 @@ void TextOverlayWidget::paintEvent( QPaintEvent* /*event*/ )
 		painter.drawPixmap( 0, 0, m_bgPixmap );
 }
 
-void TextOverlayWidget::resizeEvent( QResizeEvent* e )
+void TextOverlayWidget::resizeEvent( QResizeEvent* /*e*/ )
 {
 	m_dirty = true;
 }

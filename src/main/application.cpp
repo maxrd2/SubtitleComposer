@@ -1237,7 +1237,7 @@ void Application::setupActions()
 
 	KAction* scriptsManagerAction = new KAction( actionCollection );
 	scriptsManagerAction->setIcon( KIcon( "folder-development" ) );
-	scriptsManagerAction->setText( i18nc( "@action:inmenu Manage user scripts", "Scripts Manager" ) );
+	scriptsManagerAction->setText( i18nc( "@action:inmenu Manage user scripts", "Scripts Manager..." ) );
 	scriptsManagerAction->setStatusTip( i18n( "Manage user scripts" ) );
 	connect( scriptsManagerAction, SIGNAL( triggered() ), m_scriptsManager, SLOT( showDialog() ) );
 	actionCollection->addAction( ACT_SCRIPTS_MANAGER, scriptsManagerAction );

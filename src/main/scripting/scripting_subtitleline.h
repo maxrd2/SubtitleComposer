@@ -33,89 +33,15 @@ namespace SubtitleComposer
 {
 	namespace Scripting
 	{
-		class SubtitleLineModule : public QObject
-		{
-			Q_OBJECT
-
-			Q_ENUMS( TextTarget )
-			Q_ENUMS( ErrorFlag )
-
-			public:
-
-				typedef enum {
-					Primary =		SubtitleComposer::SubtitleLine::Primary,
-					Secondary =		SubtitleComposer::SubtitleLine::Secondary,
-					Both =			SubtitleComposer::SubtitleLine::Both
-				} TextTarget;
-
-				typedef enum {
-					EmptyPrimaryText =					SubtitleComposer::SubtitleLine::EmptyPrimaryText,
-					EmptySecondaryText =				SubtitleComposer::SubtitleLine::EmptySecondaryText,
-					MaxPrimaryChars =					SubtitleComposer::SubtitleLine::MaxPrimaryChars,
-					MaxSecondaryChars =					SubtitleComposer::SubtitleLine::MaxSecondaryChars,
-					MaxPrimaryLines =					SubtitleComposer::SubtitleLine::MaxPrimaryLines,
-					MaxSecondaryLines =					SubtitleComposer::SubtitleLine::MaxSecondaryLines,
-					PrimaryUnneededSpaces =				SubtitleComposer::SubtitleLine::PrimaryUnneededSpaces,
-					SecondaryUnneededSpaces =			SubtitleComposer::SubtitleLine::SecondaryUnneededSpaces,
-					PrimaryUnneededDash =				SubtitleComposer::SubtitleLine::PrimaryUnneededDash,
-					SecondaryUnneededDash =				SubtitleComposer::SubtitleLine::SecondaryUnneededDash,
-					PrimaryCapitalAfterEllipsis =		SubtitleComposer::SubtitleLine::PrimaryCapitalAfterEllipsis,
-					SecondaryCapitalAfterEllipsis =		SubtitleComposer::SubtitleLine::SecondaryCapitalAfterEllipsis,
-					MinDurationPerPrimaryChar =			SubtitleComposer::SubtitleLine::MinDurationPerPrimaryChar,
-					MinDurationPerSecondaryChar =		SubtitleComposer::SubtitleLine::MinDurationPerSecondaryChar,
-					MaxDurationPerPrimaryChar =			SubtitleComposer::SubtitleLine::MaxDurationPerPrimaryChar,
-					MaxDurationPerSecondaryChar =		SubtitleComposer::SubtitleLine::MaxDurationPerSecondaryChar,
-					MinDuration =						SubtitleComposer::SubtitleLine::MinDuration,
-					MaxDuration =						SubtitleComposer::SubtitleLine::MaxDuration,
-					OverlapsWithNext =					SubtitleComposer::SubtitleLine::OverlapsWithNext,
-					UntranslatedText = 					SubtitleComposer::SubtitleLine::UntranslatedText,
-					UserMark = 							SubtitleComposer::SubtitleLine::UserMark,
-					PrimaryOnlyErrors =					SubtitleComposer::SubtitleLine::PrimaryOnlyErrors,
-					SecondaryOnlyErrors =				SubtitleComposer::SubtitleLine::SecondaryOnlyErrors,
-					SharedErrors =						SubtitleComposer::SubtitleLine::SharedErrors,
-					AllErrors =							SubtitleComposer::SubtitleLine::AllErrors,
-					TimesErrors =						SubtitleComposer::SubtitleLine::TimesErrors,
-					TextErrors =						SubtitleComposer::SubtitleLine::TextErrors,
-				} ErrorFlag;
-
-				SubtitleLineModule( QObject* parent=0 );
-		};
-
 		class SubtitleLine : public QObject
 		{
 			Q_OBJECT
-
-			Q_PROPERTY( int number READ number )
-			Q_PROPERTY( int index READ index )
-
-			Q_PROPERTY( int primaryCharacters READ primaryCharacters )
-			Q_PROPERTY( int primaryWords READ primaryWords )
-			Q_PROPERTY( int primaryLines READ primaryLines )
-
-			Q_PROPERTY( QObject* primaryText READ primaryText WRITE setPrimaryText )
-			Q_PROPERTY( QString plainPrimaryText READ plainPrimaryText WRITE setPlainPrimaryText )
-			Q_PROPERTY( QString richPrimaryText READ richPrimaryText WRITE setRichPrimaryText )
-
-			Q_PROPERTY( int secondaryCharacters READ primaryCharacters )
-			Q_PROPERTY( int secondaryWords READ secondaryWords )
-			Q_PROPERTY( int secondaryLines READ secondaryLines )
-
-			Q_PROPERTY( QObject* secondaryText READ secondaryText WRITE setSecondaryText )
-			Q_PROPERTY( QString plainSecondaryText READ plainSecondaryText WRITE setPlainSecondaryText )
-			Q_PROPERTY( QString richSecondaryText READ richSecondaryText WRITE setRichSecondaryText )
-
-			Q_PROPERTY( int showTime READ showTime WRITE setShowTime )
-			Q_PROPERTY( int hideTime READ hideTime WRITE setHideTime )
-			Q_PROPERTY( int durationTime READ durationTime WRITE setDurationTime )
-
-			Q_PROPERTY( int errorCount READ errorCount )
-			Q_PROPERTY( int errorFlags READ errorFlags WRITE setErrorFlags )
 
 			public slots:
 
 				/// NOTE: target defaults to an invalid value, which means using and operation
 				/// defined default value, generaly dependant on translationMode value.
-				/// Also, setSecondaryText is a nop is ! translationMode
+				/// Also, setSecondaryText is a noop is ! translationMode
 
 				int number() const;
 				int index() const;

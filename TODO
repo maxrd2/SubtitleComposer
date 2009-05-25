@@ -1,13 +1,8 @@
-Planned for v0.5 and beyond
-===========================
-	* waveform visuals (check out wave drawing in kdenlive editor)
-	* automatic correction of OCR errors
-	* rename "current line" to "active line"
+Planned features / known issues
 
-* it's annoying to have a subtitle fail to load because of an invalid encoding
-  issue, perhaps the "next" encoding should be tried and the error informed
+* integrate waveform visuals (check out wave drawing in kdenlive editor)
+* automatic correction of OCR errors
+* rename "current line" to "active line"
+* it's annoying to have a subtitle fail to load because of an invalid encoding issue, perhaps the "next" encoding should be tried and the error informed.
 * the player controls won't appear on fullscreen mode with KDE4.2 (disabling KWin desktop effects "fixes" the issue)
 * translation service could improve syncronization issues if it cooperated more closely with the subtitle
-
-* add KROSS scripting examples in ruby and if possible in python
-* test find text/errors when adding/removing lines

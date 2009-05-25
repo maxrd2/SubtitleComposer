@@ -164,7 +164,7 @@ void ErrorFinder::find( const RangeList& selectionRanges, int currentIndex, bool
 
 	m_instancesFound = false;
 
-	advance();
+	advance( false );
 }
 
 bool ErrorFinder::findNext()
@@ -172,21 +172,9 @@ bool ErrorFinder::findNext()
 	if ( ! m_iterator )
 		return false;
 
-	if ( m_findBackwards )
-	{
-		m_findBackwards = false;
-		if ( m_iterator->index() == SubtitleIterator::AfterLast )
-			m_iterator->toFirst();
-		else
-			++(*m_iterator);
-		if ( m_iterator->index() == SubtitleIterator::AfterLast )
-			m_iterator->toFirst();
-		else
-			++(*m_iterator);
-		++(*m_iterator);
-	}
+	m_findBackwards = false;
 
-	advance();
+	advance( true );
 	return true;
 }
 
@@ -195,52 +183,49 @@ bool ErrorFinder::findPrevious()
 	if ( ! m_iterator )
 		return false;
 
-	if ( ! m_findBackwards )
-	{
-		m_findBackwards = true;
-	}
+	m_findBackwards = true;
 
-	advance();
+	advance( true );
 	return true;
 }
 
-void ErrorFinder::advance()
+void ErrorFinder::advance( bool advanceIteratorOnFirstStep )
 {
-	// TODO ErrorFinder::advance() we iterate in advance so we break findPrevious / findNext...
-
 	bool foundError = false;
-	SubtitleLine* line = 0;
 
 	do
 	{
-		if ( m_iterator->index() < 0 )
+		if ( advanceIteratorOnFirstStep )
 		{
 			if ( m_findBackwards )
-				m_iterator->toLast();
+				--(*m_iterator);
 			else
-				m_iterator->toFirst();
+				++(*m_iterator);
 
-			if ( KMessageBox::warningContinueCancel(
-					parentWidget(),
-					m_findBackwards ?
-						(m_selection ?
-							i18n( "Beginning of selection reached.\nContinue from the end?" ) :
-							i18n( "Beginning of subtitle reached.\nContinue from the end?" )) :
-						(m_selection ?
-							i18n( "End of selection reached.\nContinue from the beginning?" ) :
-							i18n( "End of subtitle reached.\nContinue from the beginning?" )),
-					i18n( "Find Error" )
-					) != KMessageBox::Continue )
-				break;
+			if ( m_iterator->index() < 0 )
+			{
+				if ( m_findBackwards )
+					m_iterator->toLast();
+				else
+					m_iterator->toFirst();
+
+				if ( KMessageBox::warningContinueCancel(
+						parentWidget(),
+						m_findBackwards ?
+							(m_selection ?
+								i18n( "Beginning of selection reached.\nContinue from the end?" ) :
+								i18n( "Beginning of subtitle reached.\nContinue from the end?" )) :
+							(m_selection ?
+								i18n( "End of selection reached.\nContinue from the beginning?" ) :
+								i18n( "End of subtitle reached.\nContinue from the beginning?" )),
+						i18n( "Find Error" )
+						) != KMessageBox::Continue )
+					break;
+			}
 		}
 
-		line = m_iterator->current();
-		foundError = line->errorFlags() & m_targetErrorFlags;
-
-		if ( m_findBackwards )
-			--(*m_iterator);
-		else
-			++(*m_iterator);
+		advanceIteratorOnFirstStep = true;
+		foundError = m_iterator->current()->errorFlags() & m_targetErrorFlags;
 
 		if ( ! foundError )
 		{
@@ -268,7 +253,7 @@ void ErrorFinder::advance()
 	if ( foundError )
 	{
 		m_instancesFound = true;
-		emit found( line );
+		emit found( m_iterator->current() );
 	}
 }
 

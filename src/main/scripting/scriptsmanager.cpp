@@ -19,10 +19,10 @@
 ***************************************************************************/
 
 #include "scriptsmanager.h"
-#include "scripting_rangelist.h"
-#include "scripting_sstring.h"
-#include "scripting_subtitle.h"
-#include "scripting_subtitleline.h"
+#include "scripting_rangesmodule.h"
+#include "scripting_stringsmodule.h"
+#include "scripting_subtitlemodule.h"
+#include "scripting_subtitlelinemodule.h"
 
 #include "../application.h"
 #include "../actions/useraction.h"
@@ -69,10 +69,37 @@ namespace SubtitleComposer
 					return QVariant();
 				return i18n( "Installed Scripts" );
 			}
+
+			virtual Qt::ItemFlags flags( const QModelIndex& index ) const
+			{
+				return QAbstractItemModel::flags( index );
+			}
 	};
 }
 
 using namespace SubtitleComposer;
+
+
+Debug::Debug() {}
+Debug::~Debug() {}
+
+void Debug::information( const QString& message )
+{
+	KMessageBox::information( app()->mainWindow(), message, i18n( "Information" ) );
+	kDebug() << message;
+}
+
+void Debug::warning( const QString& message )
+{
+	KMessageBox::sorry( app()->mainWindow(), message, i18n( "Warning" ) );
+	kWarning() << message;
+}
+
+void Debug::error( const QString& message )
+{
+	KMessageBox::error( app()->mainWindow(), message, i18n( "Error" ) );
+	kWarning() << message;
+}
 
 ScriptsManager::ScriptsManager( QObject* parent ):
 	QObject( parent )
@@ -375,17 +402,22 @@ void ScriptsManager::runScript( const QString& sN )
 
 	Kross::Action krossAction( 0, "Kross::Action" );
 
-	Scripting::RangeListModule* rangeListModule = new Scripting::RangeListModule;
-	Scripting::SStringModule* sstringModule = new Scripting::SStringModule;
+	Scripting::RangesModule* rangesModule = new Scripting::RangesModule;
+	Scripting::StringsModule* stringsModule = new Scripting::StringsModule;
 	Scripting::SubtitleModule* subtitleModule = new Scripting::SubtitleModule;
 	Scripting::SubtitleLineModule* subtitleLineModule = new Scripting::SubtitleLineModule;
+	Debug* debug = new Debug();
 
-	krossAction.addObject( rangeListModule, "ranges" );
-	krossAction.addObject( sstringModule, "strings" );
+	krossAction.addObject( rangesModule, "ranges" );
+	krossAction.addObject( stringsModule, "strings" );
 	krossAction.addObject( subtitleModule, "subtitle" );
-	krossAction.addObject( subtitleLineModule, "lines" );
+	krossAction.addObject( subtitleLineModule, "subtitleline" );
+	krossAction.addObject( debug, "debug" );
 
 	krossAction.setFile( m_scripts[scriptName] );
+	// default javascript interpreter has weird (crash inducing) bugs
+	if ( krossAction.interpreter() == "javascript" )
+		krossAction.setInterpreter( "qtscript" );
 
 	{
 		// everything done by the script will be undoable in a single step
@@ -394,10 +426,11 @@ void ScriptsManager::runScript( const QString& sN )
 		krossAction.trigger();
 	}
 
-	delete rangeListModule;
-	delete sstringModule;
+	delete rangesModule;
+	delete stringsModule;
 	delete subtitleModule;
 	delete subtitleLineModule;
+	delete debug;
 
 	if ( krossAction.hadError() )
 	{

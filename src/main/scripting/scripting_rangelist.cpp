@@ -24,55 +24,6 @@
 
 using namespace SubtitleComposer;
 
-Scripting::RangeListModule::RangeListModule( QObject* parent ):
-	QObject( parent )
-{
-}
-
-QObject* Scripting::RangeListModule::range( int firstIndex, int lastIndex )
-{
-	if ( firstIndex > lastIndex || firstIndex < 0 || lastIndex < 0 )
-		return 0;
-	return new Scripting::Range( SubtitleComposer::Range( firstIndex, lastIndex ), this );
-}
-
-QObject* Scripting::RangeListModule::full()
-{
-	return new Scripting::Range( SubtitleComposer::Range::full(), this );
-}
-
-QObject* Scripting::RangeListModule::lower( int index )
-{
-	return new Scripting::Range( SubtitleComposer::Range::lower( index ), this );
-}
-
-QObject* Scripting::RangeListModule::upper( int index )
-{
-	return new Scripting::Range( SubtitleComposer::Range::upper( index ), this );
-}
-
-QObject* Scripting::RangeListModule::uptoLastSelected()
-{
-	int index = app()->linesWidget()->lastSelectedIndex();
-	return index < 0 ? 0 : new Scripting::Range( SubtitleComposer::Range::lower( index ), this );
-}
-
-QObject* Scripting::RangeListModule::fromFirstSelected()
-{
-	int index = app()->linesWidget()->firstSelectedIndex();
-	return index < 0 ? 0 : new Scripting::Range( SubtitleComposer::Range::upper( index ), this );
-}
-
-QObject* Scripting::RangeListModule::emptyList()
-{
-	return new Scripting::RangeList( SubtitleComposer::RangeList(), this );
-}
-
-QObject* Scripting::RangeListModule::selectionList()
-{
-	return new Scripting::RangeList( app()->linesWidget()->selectionRanges(), this );
-}
-
 Scripting::RangeList::RangeList( const SubtitleComposer::RangeList& backend, QObject* parent ):
 	QObject( parent ),
 	m_backend( backend )
@@ -137,16 +88,18 @@ void Scripting::RangeList::trimToRange( const QObject* object )
 		m_backend.trimToRange( range->m_backend );
 }
 
-void Scripting::RangeList::addIndex( int index )
+QObject* Scripting::RangeList::addIndex( int index )
 {
 	if ( index >= 0 )
 		m_backend << SubtitleComposer::Range( index );
+	return this;
 }
 
-void Scripting::RangeList::addRange( const QObject* object )
+QObject* Scripting::RangeList::addRange( const QObject* object )
 {
 	if ( const Scripting::Range* range = qobject_cast<const Scripting::Range*>( object ) )
 		m_backend << range->m_backend;
+	return this;
 }
 
 void Scripting::RangeList::shiftIndexesForwards( int fromIndex, int delta, bool fillSplitGap )

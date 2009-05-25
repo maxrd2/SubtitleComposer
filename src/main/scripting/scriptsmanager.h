@@ -83,6 +83,22 @@ namespace SubtitleComposer
 			KPushButton* m_runScriptButton;
 			KDialog* m_dialog;
 	};
+
+	class Debug : public QObject
+	{
+		Q_OBJECT
+
+		public:
+
+			Debug();
+			~Debug();
+
+		public slots:
+
+			void information( const QString& message );
+			void warning( const QString& message );
+			void error( const QString& message );
+	};
 }
 
 #endif

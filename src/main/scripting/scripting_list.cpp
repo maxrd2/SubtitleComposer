@@ -17,81 +17,91 @@
  *   Boston, MA 02110-1301, USA.                                           *
  ***************************************************************************/
 
-#include "scripting_qobjectlist.h"
+#include "scripting_list.h"
 
 using namespace SubtitleComposer;
 
-Scripting::QObjectList::QObjectList( const char* contentClass, QObject* parent ):
+Scripting::List::List( const char* contentClass, QObject* parent ):
 	QObject( parent ),
 	m_contentClass( contentClass )
 {
 }
 
-Scripting::QObjectList::QObjectList( const QList<QObject*>& backend, const char* contentClass, QObject* parent ):
+Scripting::List::List( const QList<QObject*>& backend, const char* contentClass, QObject* parent ):
 	QObject( parent ),
 	m_contentClass( contentClass ),
 	m_backend( backend )
 {
 }
 
-bool Scripting::QObjectList::isEmpty() const
+bool Scripting::List::isEmpty() const
 {
 	return m_backend.isEmpty();
 }
 
-int Scripting::QObjectList::length() const
+int Scripting::List::length() const
 {
 	return m_backend.count();
 }
 
-QObject* Scripting::QObjectList::at( int index ) const
+int Scripting::List::count() const
+{
+	return m_backend.count();
+}
+
+int Scripting::List::size() const
+{
+	return m_backend.size();
+}
+
+QObject* Scripting::List::at( int index ) const
 {
 	if ( index < 0 || index >= m_backend.count() )
 		return 0;
 	return m_backend.at( index );
 }
 
-void Scripting::QObjectList::insert( int index, QObject* object )
+void Scripting::List::insert( int index, QObject* object )
 {
 	if ( ! object || index < 0 || index > m_backend.count() || strcmp( object->metaObject()->className(), m_contentClass ) )
 		return;
 	m_backend.insert( index, object );
 }
 
-void Scripting::QObjectList::append( QObject* object )
+void Scripting::List::append( QObject* object )
 {
 	if ( ! object || strcmp( object->metaObject()->className(), m_contentClass ) )
 		return;
 	m_backend.append( object );
 }
 
-void Scripting::QObjectList::prepend( QObject* object )
+void Scripting::List::prepend( QObject* object )
 {
 	if ( object && ! strcmp( object->metaObject()->className(), m_contentClass ) )
 		m_backend.prepend( object );
 }
 
-void Scripting::QObjectList::removeFirst()
+void Scripting::List::removeFirst()
 {
 	if ( ! m_backend.isEmpty() )
 		return m_backend.removeFirst();
 }
 
-void Scripting::QObjectList::removeLast()
+void Scripting::List::removeLast()
 {
 	if ( ! m_backend.isEmpty() )
 		m_backend.removeLast();
 }
 
-void Scripting::QObjectList::removeAt( int index )
+void Scripting::List::removeAt( int index )
 {
 	if ( index >= 0 && index < m_backend.count() )
 		m_backend.removeAt( index );
 }
 
-void Scripting::QObjectList::clear()
+void Scripting::List::clear()
 {
 	m_backend.clear();
 }
 
-#include "scripting_qobjectlist.moc"
+#include "scripting_list.moc"

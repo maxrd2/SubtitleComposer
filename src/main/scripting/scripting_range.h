@@ -36,24 +36,18 @@ namespace SubtitleComposer
 		{
 			Q_OBJECT
 
-			Q_PROPERTY( int start READ start )
-			Q_PROPERTY( int end READ end )
-			Q_PROPERTY( int length READ length )
-
-			public:
+			public slots:
 
 				int start() const;
 				int end() const;
 				int length() const;
-
-			public slots:
 
 				bool contains( int index ) const;
 				bool contains( const QObject* range ) const;
 
 			private:
 
-				friend class RangeListModule;
+				friend class RangesModule;
 				friend class RangeList;
 				friend class Subtitle;
 

@@ -1,21 +1,23 @@
 # translation of subtitlecomposer.po to Czech
-# Petr Gadula <goliash@goliash.net>, 2009.
-# Goliash <goliash@goliash.net>, 2009.
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
+# Petr Gadula <goliash@goliash.net>, 2009.
+# Goliash <goliash@goliash.net>, 2009.
+# Sergio Pistone <sergio_pistone@yahoo,com.ar>, 2009.
 msgid ""
 msgstr ""
 "Project-Id-Version: subtitlecomposer\n"
-"Report-Msgid-Bugs-To: https://sourceforge.net/tracker/?atid=1005652&group_id=208427&func=browse\n"
-"POT-Creation-Date: 2009-03-21 17:33-0300\n"
-"PO-Revision-Date: 2009-04-10 09:20+0200\n"
-"Last-Translator: Goliash <goliash@goliash.net>\n"
-"Language-Team: Czech <cs@li.org>\n"
+"Report-Msgid-Bugs-To: https://sourceforge.net/tracker/?"
+"atid=1005652&group_id=208427&func=browse\n"
+"POT-Creation-Date: 2009-05-25 00:41-0300\n"
+"PO-Revision-Date: 2009-05-24 17:01-0300\n"
+"Last-Translator: Sergio Pistone <sergio_pistone@yahoo,com.ar>\n"
+"Language-Team: American English <kde-i18n-doc@kde.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms:  nplurals=2; plural=(n != 1);\n"
-"X-Generator: KBabel 1.11.4\n"
+"X-Generator: Lokalize 0.3\n"
 
 #: core/subtitleactions.cpp:62
 msgid "Set Frame Rate"
@@ -25,8 +27,8 @@ msgstr "Nastav snímky za sekundu"
 msgid "Insert Lines"
 msgstr "Vlož řádky"
 
-#: core/subtitleactions.cpp:177 core/subtitle.cpp:440 core/subtitle.cpp:454
-#: core/subtitle.cpp:473
+#: core/subtitleactions.cpp:177 core/subtitle.cpp:446 core/subtitle.cpp:460
+#: core/subtitle.cpp:479
 msgid "Remove Lines"
 msgstr "Odstraň řádky"
 
@@ -62,113 +64,113 @@ msgstr "Změň snímky za sekundu"
 msgid "Insert Line"
 msgstr "Vlož řádek"
 
-#: core/subtitle.cpp:527 main/application.cpp:666 main/lineswidget.cpp:1226
+#: core/subtitle.cpp:533 main/application.cpp:662 main/lineswidget.cpp:1226
 msgid "Split Lines"
 msgstr "Rozděl řádky"
 
-#: core/subtitle.cpp:584 main/application.cpp:674 main/lineswidget.cpp:1225
+#: core/subtitle.cpp:590 main/application.cpp:670 main/lineswidget.cpp:1225
 msgid "Join Lines"
 msgstr "Spoj řádky"
 
-#: core/subtitle.cpp:636
+#: core/subtitle.cpp:642
 msgid "Shift Lines"
 msgstr "Posuň řádky"
 
-#: core/subtitle.cpp:684
+#: core/subtitle.cpp:690
 msgid "Adjust Lines"
 msgstr "Přizpůsob řádky"
 
-#: core/subtitle.cpp:694 main/application.cpp:2377 main/lineswidget.cpp:1200
+#: core/subtitle.cpp:700 main/application.cpp:2377 main/lineswidget.cpp:1200
 msgid "Sort"
 msgstr "Třídit"
 
-#: core/subtitle.cpp:740 main/dialogs/durationlimitsdialog.cpp:33
+#: core/subtitle.cpp:746 main/dialogs/durationlimitsdialog.cpp:33
 msgid "Enforce Duration Limits"
 msgstr "Vnutit limity trvání"
 
-#: core/subtitle.cpp:785 main/application.cpp:2462 main/lineswidget.cpp:1203
+#: core/subtitle.cpp:791 main/application.cpp:2462 main/lineswidget.cpp:1203
 msgid "Maximize Durations"
 msgstr "Maximalizuj trvání"
 
-#: core/subtitle.cpp:810 main/dialogs/autodurationsdialog.cpp:35
+#: core/subtitle.cpp:816 main/dialogs/autodurationsdialog.cpp:35
 msgid "Set Automatic Durations"
 msgstr "Nastav automatické trvání"
 
-#: core/subtitle.cpp:850 main/dialogs/fixoverlappingtimesdialog.cpp:32
+#: core/subtitle.cpp:856 main/dialogs/fixoverlappingtimesdialog.cpp:32
 #: main/lineswidget.cpp:1204
 msgid "Fix Overlapping Times"
 msgstr "Oprav překrývající se časy"
 
-#: core/subtitle.cpp:884
+#: core/subtitle.cpp:890
 msgid "Fix Lines Punctuation"
 msgstr "Oprav interpunkci řádků"
 
-#: core/subtitle.cpp:980
+#: core/subtitle.cpp:986
 msgid "Lower Case"
 msgstr "Malá písmena"
 
-#: core/subtitle.cpp:1014
+#: core/subtitle.cpp:1020
 msgid "Upper Case"
 msgstr "Velká písmena"
 
-#: core/subtitle.cpp:1048
+#: core/subtitle.cpp:1054
 msgid "Title Case"
 msgstr "Nadpis"
 
-#: core/subtitle.cpp:1085
+#: core/subtitle.cpp:1091
 msgid "Sentence Case"
 msgstr "Věty"
 
-#: core/subtitle.cpp:1136 main/dialogs/smarttextsadjustdialog.cpp:32
+#: core/subtitle.cpp:1142 main/dialogs/smarttextsadjustdialog.cpp:32
 msgid "Break Lines"
 msgstr "Zalom řádky"
 
-#: core/subtitle.cpp:1144 main/application.cpp:2530 main/lineswidget.cpp:1146
+#: core/subtitle.cpp:1150 main/application.cpp:2530 main/lineswidget.cpp:1146
 msgid "Unbreak Lines"
 msgstr "Spoj řádky"
 
-#: core/subtitle.cpp:1152 main/application.cpp:2544 main/lineswidget.cpp:1152
+#: core/subtitle.cpp:1158 main/application.cpp:2544 main/lineswidget.cpp:1152
 msgid "Simplify Spaces"
 msgstr "Zjednoduš mezery"
 
-#: core/subtitle.cpp:1161
+#: core/subtitle.cpp:1167
 msgid "Synchronize Subtitles"
 msgstr "Synchronizuj titulky"
 
-#: core/subtitle.cpp:1184 main/dialogs/joinsubtitlesdialog.cpp:35
+#: core/subtitle.cpp:1190 main/dialogs/joinsubtitlesdialog.cpp:35
 msgid "Join Subtitles"
 msgstr "Spoj titulky"
 
-#: core/subtitle.cpp:1230 core/subtitle.cpp:1236
+#: core/subtitle.cpp:1236 core/subtitle.cpp:1242
 msgid "Split Subtitles"
 msgstr "Rozděl titulky"
 
-#: core/subtitle.cpp:1253 core/subtitle.cpp:1268
+#: core/subtitle.cpp:1259 core/subtitle.cpp:1274
 msgid "Set Lines Style"
 msgstr "Nastav styl řádků"
 
-#: core/subtitle.cpp:1285
+#: core/subtitle.cpp:1291
 msgid "Toggle Lines Style"
 msgstr "Přepni styl řádků"
 
-#: core/subtitle.cpp:1298
+#: core/subtitle.cpp:1304
 msgid "Set Lines Mark"
 msgstr "Nastav značku"
 
-#: core/subtitle.cpp:1298
+#: core/subtitle.cpp:1304
 msgid "Clear Lines Mark"
 msgstr "Smaž značku"
 
-#: core/subtitle.cpp:1312
+#: core/subtitle.cpp:1318
 msgid "Toggle Lines Mark"
 msgstr "Přepni značku"
 
-#: core/subtitle.cpp:1322 main/application.cpp:2261 main/application.cpp:2271
+#: core/subtitle.cpp:1328 main/application.cpp:2261 main/application.cpp:2271
 #: main/errorswidget.cpp:854
 msgid "Clear Lines Errors"
 msgstr "Vymaž chyby řádků"
 
-#: core/subtitle.cpp:1332 core/subtitle.cpp:1352 main/application.cpp:2194
+#: core/subtitle.cpp:1338 core/subtitle.cpp:1358 main/application.cpp:2194
 #: main/application.cpp:2239
 msgid "Check Lines Errors"
 msgstr "Zkontroluj chyby na řádcích"
@@ -302,30 +304,38 @@ msgid "Has capital letter after line continuation ellipsis in primary text."
 msgstr "Has capital letter after line continuation ellipsis in primary text."
 
 #: core/subtitleline.cpp:164
-msgid "Has capital letter after line continuation ellipsis in translation text."
-msgstr "Has capital letter after line continuation ellipsis in translation text."
+msgid ""
+"Has capital letter after line continuation ellipsis in translation text."
+msgstr ""
+"Has capital letter after line continuation ellipsis in translation text."
 
 #: core/subtitleline.cpp:168
 msgid "Has too long duration per character in primary text (1 msec/char)."
-msgid_plural "Has too long duration per character in primary text (%1 msecs/char)."
+msgid_plural ""
+"Has too long duration per character in primary text (%1 msecs/char)."
 msgstr[0] "Trvá příliš dlouho na počet znaků v primárním textu (1 ms/znak)."
 msgstr[1] "Trvá příliš dlouho na počet znaků v primárním textu (%1 ms/znak)."
 
 #: core/subtitleline.cpp:174
 msgid "Has too long duration per character in translation text (1 msec/char)."
-msgid_plural "Has too long duration per character in translation text (%1 msecs/char)."
+msgid_plural ""
+"Has too long duration per character in translation text (%1 msecs/char)."
 msgstr[0] "Trvá příliš dlouho na počet znaků v překladu (1 ms/znak)."
 msgstr[1] "Trvá příliš dlouho na počet znaků v překladu (%1 ms/znak)."
 
 #: core/subtitleline.cpp:180
 msgid "Has too short duration per character in primary text (1 msec/char)."
-msgid_plural "Has too short duration per character in primary text (%1 msecs/char)."
-msgstr[0] "Zobrazuje se příliš krátce na počet znaků v primárním textu (1 ms/znak)."
-msgstr[1] "Zobrazuje se příliš krátce na počet znaků v primárním textu (%1 ms/znak)."
+msgid_plural ""
+"Has too short duration per character in primary text (%1 msecs/char)."
+msgstr[0] ""
+"Zobrazuje se příliš krátce na počet znaků v primárním textu (1 ms/znak)."
+msgstr[1] ""
+"Zobrazuje se příliš krátce na počet znaků v primárním textu (%1 ms/znak)."
 
 #: core/subtitleline.cpp:186
 msgid "Has too short duration per character in translation text (1 msec/char)."
-msgid_plural "Has too short duration per character in translation text (%1 msecs/char)."
+msgid_plural ""
+"Has too short duration per character in translation text (%1 msecs/char)."
 msgstr[0] "Zobrazuje se příliš krátce na počet znaků v překladu (1 ms/znak)."
 msgstr[1] "Zobrazuje se příliš krátce na počet znaků v překladu (%1 ms/znak)."
 
@@ -365,7 +375,7 @@ msgstr "Posuň časování řádku"
 msgid "Adjust Line Times"
 msgstr "Přizpůsob časování řádku"
 
-#: main/actions/krecentfilesactionext.cpp:33
+#: main/actions/krecentfilesactionext.cpp:37
 msgid "Clear History"
 msgstr "Vymaž historii"
 
@@ -411,256 +421,256 @@ msgctxt "@action:inmenu Open subtitle file"
 msgid "Open..."
 msgstr "Otevři..."
 
-#: main/application.cpp:476 main/application.cpp:488
+#: main/application.cpp:476 main/application.cpp:486
 msgid "Open subtitle file"
 msgstr "Otevři soubor s titulky"
 
-#: main/application.cpp:487
+#: main/application.cpp:485
 msgctxt "@action:inmenu Open rencently used subtitle file"
 msgid "Open &Recent"
 msgstr "Otevři &nedávný"
 
-#: main/application.cpp:495
+#: main/application.cpp:493
 msgid "Save"
 msgstr "Ulož"
 
-#: main/application.cpp:496
+#: main/application.cpp:494
 msgid "Save opened subtitle"
 msgstr "Ulož otevřené titulky"
 
-#: main/application.cpp:505
+#: main/application.cpp:503
 msgid "Save As..."
 msgstr "Ulož jako..."
 
-#: main/application.cpp:506
+#: main/application.cpp:504
 msgid "Save opened subtitle with different settings"
 msgstr "Ulož otevřené titulky s jiným nastavením"
 
-#: main/application.cpp:514
+#: main/application.cpp:512
 msgid "Close"
 msgstr "Zavři"
 
-#: main/application.cpp:515
+#: main/application.cpp:513
 msgid "Close opened subtitle"
 msgstr "Zavři otevřené titulky"
 
-#: main/application.cpp:524
+#: main/application.cpp:522
 msgid "New Translation"
 msgstr "Nový překlad"
 
-#: main/application.cpp:525
+#: main/application.cpp:523
 msgid "Create an empty translation subtitle"
 msgstr "Vytvoř prázdný překlad"
 
-#: main/application.cpp:534
+#: main/application.cpp:532
 msgid "Open Translation..."
 msgstr "Otevři překlad..."
 
-#: main/application.cpp:535 main/application.cpp:547
+#: main/application.cpp:533 main/application.cpp:543
 msgid "Open translation subtitle file"
 msgstr "Otevři soubor s překladem"
 
-#: main/application.cpp:546
+#: main/application.cpp:542
 msgid "Open &Recent Translation"
 msgstr "Otevři &nedávný překlad"
 
-#: main/application.cpp:555
+#: main/application.cpp:551
 msgid "Save Translation"
 msgstr "Ulož překlad"
 
-#: main/application.cpp:556
+#: main/application.cpp:552
 msgid "Save opened translation subtitle"
 msgstr "Ulož otevřený překlad"
 
-#: main/application.cpp:565
+#: main/application.cpp:561
 msgid "Save Translation As..."
 msgstr "Ulož překlad jako..."
 
-#: main/application.cpp:566
+#: main/application.cpp:562
 msgid "Save opened translation subtitle with different settings"
 msgstr "Ulož otevřený překlad s jiným nastavením"
 
-#: main/application.cpp:574
+#: main/application.cpp:570
 msgid "Close Translation"
 msgstr "Zavři překlad"
 
-#: main/application.cpp:575
+#: main/application.cpp:571
 msgid "Close opened translation subtitle"
 msgstr "Zavři otevřený překlad"
 
-#: main/application.cpp:584
+#: main/application.cpp:580
 msgid "Reload As..."
 msgstr "Znovu otevři jako..."
 
-#: main/application.cpp:585 main/application.cpp:596
+#: main/application.cpp:581 main/application.cpp:592
 msgid "Reload opened file with a different encoding"
 msgstr "Znovu otevři s jiným kódováním"
 
-#: main/application.cpp:595
+#: main/application.cpp:591
 msgid "Quick Reload As..."
 msgstr "Rychle znovuotevři jako..."
 
-#: main/application.cpp:604 main/application.cpp:605
+#: main/application.cpp:600 main/application.cpp:601
 #: widgets/simplerichtextedit.cpp:72
 msgid "Undo"
 msgstr "Zpět"
 
-#: main/application.cpp:614 main/application.cpp:615
+#: main/application.cpp:610 main/application.cpp:611
 #: widgets/simplerichtextedit.cpp:78
 msgid "Redo"
 msgstr "Vpřed"
 
-#: main/application.cpp:623
+#: main/application.cpp:619
 msgid "Split Subtitle..."
 msgstr "Rozděl titulky..."
 
-#: main/application.cpp:624
+#: main/application.cpp:620
 msgid "Split the opened subtitle in two parts"
 msgstr "Rozděl otevřené titulky na dvě části"
 
-#: main/application.cpp:631
+#: main/application.cpp:627
 msgid "Join Subtitles..."
 msgstr "Spoj titulky..."
 
-#: main/application.cpp:632
+#: main/application.cpp:628
 msgid "Append to the opened subtitle another one"
 msgstr "Připoj k otevřeným další"
 
-#: main/application.cpp:639 main/lineswidget.cpp:1222
+#: main/application.cpp:635 main/lineswidget.cpp:1222
 msgid "Insert Before"
 msgstr "Vlož před"
 
-#: main/application.cpp:640
+#: main/application.cpp:636
 msgid "Insert empty line before current one"
 msgstr "Vlož prázdný řádek před současný"
 
-#: main/application.cpp:648 main/lineswidget.cpp:1223
+#: main/application.cpp:644 main/lineswidget.cpp:1223
 msgid "Insert After"
 msgstr "Vlož za"
 
-#: main/application.cpp:649
+#: main/application.cpp:645
 msgid "Insert empty line after current one"
 msgstr "Vlož prázdný řádek za současný"
 
-#: main/application.cpp:657 main/lineswidget.cpp:1221
-#: main/scripting/scriptsmanager.cpp:114
+#: main/application.cpp:653 main/lineswidget.cpp:1221
+#: main/scripting/scriptsmanager.cpp:141
 msgid "Remove"
 msgstr "Odstraň"
 
-#: main/application.cpp:658
+#: main/application.cpp:654
 msgid "Remove selected lines"
 msgstr "Odstraň označené řádky"
 
-#: main/application.cpp:667
+#: main/application.cpp:663
 msgid "Split selected lines"
 msgstr "Rozděl označené řádky"
 
-#: main/application.cpp:675
+#: main/application.cpp:671
 msgid "Join selected lines"
 msgstr "Spoj označené řádky"
 
-#: main/application.cpp:682 main/dialogs/actionwitherrortargetsdialog.cpp:103
+#: main/application.cpp:678 main/dialogs/actionwitherrortargetsdialog.cpp:103
 #: main/lineswidget.cpp:1219 widgets/simplerichtextedit.cpp:113
 msgid "Select All"
 msgstr "Označ všechno"
 
-#: main/application.cpp:683
+#: main/application.cpp:679
 msgid "Select all lines"
 msgstr "Označ všechny řádky"
 
-#: main/application.cpp:691
+#: main/application.cpp:687
 msgid "Go to Line..."
 msgstr "Jdi na řádek..."
 
-#: main/application.cpp:692
+#: main/application.cpp:688
 msgid "Go to specified line"
 msgstr "Jdi na vybraný řádek"
 
-#: main/application.cpp:701
+#: main/application.cpp:697
 msgid "Find..."
 msgstr "Najdi..."
 
-#: main/application.cpp:702
+#: main/application.cpp:698
 msgid "Find occurrences of strings or regular expressions"
 msgstr "Najdi výskyt řetězce nebo regulárního výrazu"
 
-#: main/application.cpp:711
+#: main/application.cpp:708
 msgid "Find Next"
 msgstr "Najdi další"
 
-#: main/application.cpp:712
+#: main/application.cpp:709
 msgid "Find next occurrence of string or regular expression"
 msgstr "Najdi další výskyt řetězce nebo reg. výrazu"
 
-#: main/application.cpp:721
+#: main/application.cpp:719
 msgid "Find Previous"
 msgstr "Najdi předchozí"
 
-#: main/application.cpp:722
+#: main/application.cpp:720
 msgid "Find previous occurrence of string or regular expression"
 msgstr "Najdi předchozí výskyt řetězce nebo reg. výrazu"
 
-#: main/application.cpp:730
+#: main/application.cpp:728
 msgid "Replace..."
 msgstr "Nahraď"
 
-#: main/application.cpp:731
+#: main/application.cpp:729
 msgid "Replace occurrences of strings or regular expressions"
 msgstr "Nahraď výskyty řetězců nebo reg. výrazů"
 
-#: main/application.cpp:740
+#: main/application.cpp:738
 msgid "Retrocede current line"
 msgstr "Posuň zpět současný řádek"
 
-#: main/application.cpp:741
+#: main/application.cpp:739
 msgid "Makes the line before the current one active"
 msgstr "Označ předchozí řádek jako aktivní"
 
-#: main/application.cpp:750
+#: main/application.cpp:748
 msgid "Advance current line"
 msgstr "Posuň vpřed současný řádek"
 
-#: main/application.cpp:751
+#: main/application.cpp:749
 msgid "Makes the line after the current one active"
 msgstr "Označ následující řádek jako aktivní"
 
-#: main/application.cpp:759 main/errorsdialog.cpp:58 main/lineswidget.cpp:1212
+#: main/application.cpp:757 main/errorsdialog.cpp:59 main/lineswidget.cpp:1212
 msgid "Check Errors..."
 msgstr "Zkontroluj chyby..."
 
-#: main/application.cpp:760
+#: main/application.cpp:758
 msgid "Check for errors in the current subtitle"
 msgstr "Zkontroluj chyby v současných titulkách"
 
-#: main/application.cpp:768 main/errorsdialog.cpp:61 main/lineswidget.cpp:1213
+#: main/application.cpp:766 main/errorsdialog.cpp:62 main/lineswidget.cpp:1213
 msgid "Clear Errors..."
 msgstr "Vymaž chyby..."
 
-#: main/application.cpp:769
+#: main/application.cpp:767
 msgid "Clear errors from selected lines"
 msgstr "Vymaž chyby v označených řádcích"
 
-#: main/application.cpp:776 main/lineswidget.cpp:1215
+#: main/application.cpp:774 main/lineswidget.cpp:1215
 msgid "Show Errors..."
 msgstr "Ukaž chyby..."
 
-#: main/application.cpp:777
+#: main/application.cpp:775
 msgid "Show errors information for the current subtitle"
 msgstr "Ukaž informace o chybách v současných titulkách"
 
-#: main/application.cpp:786
+#: main/application.cpp:784
 msgid "Find Error..."
 msgstr "Najdi chybu"
 
-#: main/application.cpp:787
+#: main/application.cpp:785
 msgid "Find lines with specified errors"
 msgstr "Najdi další řádek s chybami"
 
-#: main/application.cpp:796
+#: main/application.cpp:795
 msgid "Find Next Error"
 msgstr "Najdi další chybu"
 
-#: main/application.cpp:797
+#: main/application.cpp:796
 msgid "Find next line with specified errors"
 msgstr "Najdi další řádek s chybami"
 
@@ -852,68 +862,68 @@ msgstr "Uprav současný řádek"
 msgid "Open Video..."
 msgstr "Otevři video..."
 
-#: main/application.cpp:1026 main/application.cpp:1035
+#: main/application.cpp:1026 main/application.cpp:1034
 msgid "Open video file"
 msgstr "Otevři video soubor"
 
-#: main/application.cpp:1034
+#: main/application.cpp:1033
 msgid "Open &Recent Video"
 msgstr "Otevři nedavné video"
 
-#: main/application.cpp:1042
+#: main/application.cpp:1041
 msgid "Close Video"
 msgstr "Zavři video"
 
-#: main/application.cpp:1043
+#: main/application.cpp:1042
 msgid "Close video file"
 msgstr "Zavři video soubor"
 
-#: main/application.cpp:1052
+#: main/application.cpp:1051
 msgid "Full Screen Mode"
 msgstr "Celá obrazovka"
 
-#: main/application.cpp:1053
+#: main/application.cpp:1052
 msgid "Toggle full screen mode"
 msgstr "Přepni na celou obrazovku"
 
-#: main/application.cpp:1061 main/utils/kreplace.cpp:425
+#: main/application.cpp:1060 main/utils/kreplace.cpp:425
 msgid "Stop"
 msgstr "Zastav"
 
-#: main/application.cpp:1062
+#: main/application.cpp:1061
 msgid "Stop video playback"
 msgstr "Zastav přehrávání videa"
 
-#: main/application.cpp:1070 main/application.cpp:3156
+#: main/application.cpp:1069 main/application.cpp:3156
 #: main/application.cpp:3163
 msgid "Play"
 msgstr "Přehraj"
 
-#: main/application.cpp:1071
+#: main/application.cpp:1070
 msgid "Toggle video playing/paused"
 msgstr "Přehrávání/pauza videa"
 
-#: main/application.cpp:1079
+#: main/application.cpp:1078
 msgid "Seek Backwards"
 msgstr "Hledej nazpět"
 
-#: main/application.cpp:1088
+#: main/application.cpp:1087
 msgid "Seek Forwards"
 msgstr "Hledej dopředu"
 
-#: main/application.cpp:1100
+#: main/application.cpp:1099
 msgid "Jump to Previous Line"
 msgstr "Skoč na předchozí řádek"
 
-#: main/application.cpp:1101
+#: main/application.cpp:1100
 msgid "Seek to previous subtitle line show time"
 msgstr "Hledej do zobrazení předchozícho titulku"
 
-#: main/application.cpp:1110
+#: main/application.cpp:1109
 msgid "Jump to Next Line"
 msgstr "Skoč na další řádek"
 
-#: main/application.cpp:1111
+#: main/application.cpp:1110
 msgid "Seek to next subtitle line show time"
 msgstr "Hledej do zobrazení následujícího titulku"
 
@@ -925,92 +935,93 @@ msgstr "Nastav na řádek současný čas zobrazení z videa"
 msgid "Set current line show time to video position"
 msgstr "Nastav na řádek současný čas zobrazení z videa"
 
-#: main/application.cpp:1130
+#: main/application.cpp:1131
 msgid "Set Current Line Hide Time"
 msgstr "Nastav na řádek současný čas skrytí titulku"
 
-#: main/application.cpp:1131
+#: main/application.cpp:1132
 msgid "Set current line hide time to video position"
 msgstr "Nastav na řádek současný čas skrytí z videa"
 
-#: main/application.cpp:1140
+#: main/application.cpp:1141
 msgid "Current Line Follows Video"
 msgstr "Současný řádek následuje video"
 
-#: main/application.cpp:1141
+#: main/application.cpp:1142
 msgid "Make current line follow the playing video position"
 msgstr "Současný řádek bude následovat pozici přehrávaného videa"
 
-#: main/application.cpp:1148
+#: main/application.cpp:1149
 msgctxt "@action:inmenu Toggle audio muted"
 msgid "Mute"
 msgstr "Umlčet"
 
-#: main/application.cpp:1150
+#: main/application.cpp:1151
 msgid "Enable/disable playback sound"
 msgstr "Zapnout/vypnout zvuk"
 
-#: main/application.cpp:1158
+#: main/application.cpp:1159
 msgid "Increase Volume"
 msgstr "Zvýšit hlasitost"
 
-#: main/application.cpp:1159
+#: main/application.cpp:1160
 msgid "Increase volume by 5%"
 msgstr "Snížit hlasitost o 5%"
 
-#: main/application.cpp:1167
+#: main/application.cpp:1168
 msgid "Decrease Volume"
 msgstr "Snížit hlasitost"
 
-#: main/application.cpp:1168
+#: main/application.cpp:1169
 msgid "Decrease volume by 5%"
 msgstr "Snížit hlasitost o 5%"
 
-#: main/application.cpp:1176
+#: main/application.cpp:1177
 msgid "Audio Streams"
 msgstr "Zvukové stopy"
 
-#: main/application.cpp:1177
+#: main/application.cpp:1178
 msgid "Select active audio stream"
 msgstr "Vyber aktivní zvukovou stopu"
 
-#: main/application.cpp:1185
+#: main/application.cpp:1186
 msgid "Increase Font Size"
 msgstr "Zvětšit velikost písma"
 
-#: main/application.cpp:1186
+#: main/application.cpp:1187
 msgid "Increase subtitles font size by 1 point"
 msgstr "Zvětšit velikost písma o 1 bod"
 
-#: main/application.cpp:1194
+#: main/application.cpp:1195
 msgid "Decrease Font Size"
 msgstr "Snížit velikost písma"
 
-#: main/application.cpp:1195
+#: main/application.cpp:1196
 msgid "Decrease subtitles font size by 1 point"
 msgstr "Snížit velikost písma o 1 bod"
 
-#: main/application.cpp:1203
+#: main/application.cpp:1204
 msgid "Subtitle Streams"
 msgstr "Titulkové stopy"
 
-#: main/application.cpp:1204
+#: main/application.cpp:1205
 msgid "Select active subtitle stream"
 msgstr "Vyber aktivní titulky"
 
-#: main/application.cpp:1211
+#: main/application.cpp:1212
 msgid "Shift to Video Position"
 msgstr "Posuň na video pozici"
 
-#: main/application.cpp:1212
-msgid "Set current line show time to video position by equally shifting all lines"
+#: main/application.cpp:1213
+msgid ""
+"Set current line show time to video position by equally shifting all lines"
 msgstr "Nastav zobrazení řádku na současnou video pozici posunutím všech řádků"
 
-#: main/application.cpp:1220
+#: main/application.cpp:1221
 msgid "Adjust to Video Position (Anchor Last Line)"
 msgstr "Přiřaď k pozici videa (ukotvi poslední řádek)"
 
-#: main/application.cpp:1221
+#: main/application.cpp:1222
 msgid ""
 "Set current line to video position by fixing the last line and linearly "
 "adjusting the other ones"
@@ -1018,11 +1029,11 @@ msgstr ""
 "Přiřaď současný řádek k video pozici upevněním posledního řádku a lineárním "
 "seřízením ostatních"
 
-#: main/application.cpp:1229
+#: main/application.cpp:1230
 msgid "Adjust to Video Position (Anchor First Line)"
 msgstr "Přiřaď k pozici videa (ukotvi první řádek)"
 
-#: main/application.cpp:1230
+#: main/application.cpp:1231
 msgid ""
 "Set current line to video position by fixing the first line and linearly "
 "adjusting the other ones"
@@ -1030,12 +1041,12 @@ msgstr ""
 "Přiřaď současný řádek k video pozici upevněním prvního řádku a lineárním "
 "seřízením ostatních"
 
-#: main/application.cpp:1239
-msgctxt "@action:inmenu Manage user scripts"
-msgid "Scripts Manager"
-msgstr "Správce skriptů"
-
 #: main/application.cpp:1240
+msgctxt "@action:inmenu Manage user scripts"
+msgid "Scripts Manager..."
+msgstr "Správce skriptů..."
+
+#: main/application.cpp:1241
 msgid "Manage user scripts"
 msgstr "Spravuj uživatelské skripty"
 
@@ -1179,7 +1190,9 @@ msgstr "Překládám sekundární text (%1 do %2)..."
 msgid ""
 "Unable to perform texts synchronization (sent and received lines count do "
 "not match)."
-msgstr "Není možné provést synchronizaci textu (neshodují se počty poslaných a přijatých řádků)."
+msgstr ""
+"Není možné provést synchronizaci textu (neshodují se počty poslaných a "
+"přijatých řádků)."
 
 #: main/application.cpp:2670
 msgid "Translate Primary Text"
@@ -1194,7 +1207,8 @@ msgid ""
 "There was an error performing the translation:\n"
 "\n"
 "%1"
-msgstr "Vyskytla se chyba při ukládání překladu:\n"
+msgstr ""
+"Vyskytla se chyba při ukládání překladu:\n"
 "%1"
 
 #: main/application.cpp:2740
@@ -1407,7 +1421,7 @@ msgstr "Skoč o čas při hledání:"
 msgid " secs"
 msgstr "s"
 
-#: main/configs/playerconfigwidget.cpp:61 main/playerwidget.cpp:453
+#: main/configs/playerconfigwidget.cpp:61 main/playerwidget.cpp:452
 msgid "Show editable position control"
 msgstr "Zobraz prvek pro nastavení pozice"
 
@@ -1764,7 +1778,8 @@ msgid "EOL:"
 msgstr "Konec řádku:"
 
 #: main/dialogs/savesubtitledialog.cpp:145
-msgid "A file named \"%1\" already exists. Are you sure you want to overwrite it?"
+msgid ""
+"A file named \"%1\" already exists. Are you sure you want to overwrite it?"
 msgstr "Již existuje soubor se jménem \"%1\". Opravdu si ho přejete přepsat?"
 
 #: main/dialogs/savesubtitledialog.cpp:148
@@ -1853,27 +1868,27 @@ msgstr "Výstupní jazyk:"
 msgid "Subtitle Errors"
 msgstr "Chyby v titulkách"
 
-#: main/errorsdialog.cpp:54
+#: main/errorsdialog.cpp:55
 msgid "Clear Fixed Errors"
 msgstr "Vymaž opravené chyby"
 
-#: main/errorsdialog.cpp:64
+#: main/errorsdialog.cpp:65
 msgid "Settings..."
 msgstr "Nastavení..."
 
-#: main/errorsdialog.cpp:120
+#: main/errorsdialog.cpp:121
 msgid "Showing 1 line with errors"
 msgid_plural "Showing %1 lines with errors"
 msgstr[0] "Zobrazuji 1 řádek s problémy"
 msgstr[1] "Zobrazuji %1 řádků s problémy"
 
-#: main/errorsdialog.cpp:123
+#: main/errorsdialog.cpp:124
 msgid "1 total error"
 msgid_plural "%1 total errors"
 msgstr[0] "1 chyba"
 msgstr[1] "%1 chyb"
 
-#: main/errorsdialog.cpp:124
+#: main/errorsdialog.cpp:125
 msgid "1 user mark"
 msgid_plural "%1 user marks"
 msgstr[0] "1 uživatelská značka"
@@ -2040,17 +2055,17 @@ msgstr "<b>Délka</b>"
 msgid "<b>FPS</b>"
 msgstr "<b>FPS</b>"
 
-#: main/playerwidget.cpp:705 main/playerwidget.cpp:706
-#: main/playerwidget.cpp:707 main/playerwidget.cpp:779
-#: main/playerwidget.cpp:796 main/playerwidget.cpp:803
+#: main/playerwidget.cpp:704 main/playerwidget.cpp:705
+#: main/playerwidget.cpp:706 main/playerwidget.cpp:778
+#: main/playerwidget.cpp:795 main/playerwidget.cpp:802
 msgid "<i>Unknown</i>"
 msgstr "<i>Neznámý</i>"
 
-#: main/playerwidget.cpp:716
+#: main/playerwidget.cpp:715
 msgid "<qt>There was an error opening file<br/>%1</qt>"
 msgstr "<qt>Vyskytla se chyba při otevírání souboru<br/>%1</qt>"
 
-#: main/playerwidget.cpp:742
+#: main/playerwidget.cpp:741
 msgid "Unexpected error while playing file."
 msgstr "Nečekaná chyba při přehrávání souboru."
 
@@ -2058,55 +2073,68 @@ msgstr "Nečekaná chyba při přehrávání souboru."
 msgid "Installed Scripts"
 msgstr "Instalované skripty"
 
-#: main/scripting/scriptsmanager.cpp:86
+#: main/scripting/scriptsmanager.cpp:88
+msgid "Information"
+msgstr ""
+
+#: main/scripting/scriptsmanager.cpp:94
+msgid "Warning"
+msgstr ""
+
+#: main/scripting/scriptsmanager.cpp:100
+#, fuzzy
+msgid "Error"
+msgstr "Chyby"
+
+#: main/scripting/scriptsmanager.cpp:113
 msgid "Scripts Manager"
 msgstr "Správce skriptů"
 
-#: main/scripting/scriptsmanager.cpp:102
+#: main/scripting/scriptsmanager.cpp:129
 msgid "Create..."
 msgstr "Vytvoř..."
 
-#: main/scripting/scriptsmanager.cpp:103
+#: main/scripting/scriptsmanager.cpp:130
 msgid "Creates a new script file."
 msgstr "Vytvoř prázdný skript."
 
-#: main/scripting/scriptsmanager.cpp:108
+#: main/scripting/scriptsmanager.cpp:135
 msgid "Add..."
 msgstr "Přidej..."
 
-#: main/scripting/scriptsmanager.cpp:109
+#: main/scripting/scriptsmanager.cpp:136
 msgid "Copies an existing script from a specified location."
 msgstr "Zkopíruje existující skript z určeného umístění."
 
-#: main/scripting/scriptsmanager.cpp:115
+#: main/scripting/scriptsmanager.cpp:142
 msgid "Sends the selected script to the trash."
 msgstr "Pošle označený skript do koše."
 
-#: main/scripting/scriptsmanager.cpp:120
+#: main/scripting/scriptsmanager.cpp:147
 msgid "Edit"
 msgstr "&Uprav"
 
-#: main/scripting/scriptsmanager.cpp:121
+#: main/scripting/scriptsmanager.cpp:148
 msgid "Opens the selected script with an external editor."
 msgstr "Otevře označený skript externím editorem."
 
-#: main/scripting/scriptsmanager.cpp:127
+#: main/scripting/scriptsmanager.cpp:154
 msgid "Run"
 msgstr "Spusť"
 
-#: main/scripting/scriptsmanager.cpp:128
+#: main/scripting/scriptsmanager.cpp:155
 msgid "Executes the selected script."
 msgstr "Spusť označený skript."
 
-#: main/scripting/scriptsmanager.cpp:133
+#: main/scripting/scriptsmanager.cpp:160
 msgid "Refresh"
 msgstr "Obnov"
 
-#: main/scripting/scriptsmanager.cpp:134
+#: main/scripting/scriptsmanager.cpp:161
 msgid "Reloads the installed scripts list."
 msgstr "Obnov seznam nainstalovaných skriptů."
 
-#: main/scripting/scriptsmanager.cpp:192 main/scripting/scriptsmanager.cpp:274
+#: main/scripting/scriptsmanager.cpp:219 main/scripting/scriptsmanager.cpp:301
 msgid ""
 "You must enter an unused name to continue.\n"
 "Would you like to enter another name?"
@@ -2114,64 +2142,64 @@ msgstr ""
 "Musíš vložit nepoužité jméno, abys mohl pokračovat.\n"
 "Chtěl bys vložit jiné jméno?"
 
-#: main/scripting/scriptsmanager.cpp:193 main/scripting/scriptsmanager.cpp:275
+#: main/scripting/scriptsmanager.cpp:220 main/scripting/scriptsmanager.cpp:302
 msgid "Name Already Used"
 msgstr "Jméno již použito"
 
-#: main/scripting/scriptsmanager.cpp:199
+#: main/scripting/scriptsmanager.cpp:226
 msgid "Create New Script"
 msgstr "Vytvoř nový skript"
 
-#: main/scripting/scriptsmanager.cpp:199 main/scripting/scriptsmanager.cpp:281
+#: main/scripting/scriptsmanager.cpp:226 main/scripting/scriptsmanager.cpp:308
 msgid "Script name:"
 msgstr "Jméno skriptu:"
 
-#: main/scripting/scriptsmanager.cpp:212
+#: main/scripting/scriptsmanager.cpp:239
 msgid "There was an error creating the file <b>%1</b>."
 msgstr "<qt>Vyskytla se chyba při vytváření souboru<br/>%1</qt>"
 
-#: main/scripting/scriptsmanager.cpp:256
+#: main/scripting/scriptsmanager.cpp:283
 msgid "Select Existing Script"
 msgstr "Vyber existující skript"
 
-#: main/scripting/scriptsmanager.cpp:281
+#: main/scripting/scriptsmanager.cpp:308
 msgid "Rename Script"
 msgstr "Přejmenuj skript"
 
-#: main/scripting/scriptsmanager.cpp:295
+#: main/scripting/scriptsmanager.cpp:322
 msgid "There was an error opening the file <b>%1</b>."
 msgstr "<qt>Vyskytla se chyba při otevírání souboru<br/>%1</qt>"
 
-#: main/scripting/scriptsmanager.cpp:304
+#: main/scripting/scriptsmanager.cpp:331
 msgid "There was an error copying the file to <b>%1</b>."
 msgstr "<qt>Vyskytla se chyba při kopírování souboru<br/>%1</qt>"
 
-#: main/scripting/scriptsmanager.cpp:323
+#: main/scripting/scriptsmanager.cpp:350
 msgid "Do you really want to send file <b>%1</b> to the trash?"
 msgstr "Opravdu chcete přesunout soubor <b>%1</b> do koše?"
 
-#: main/scripting/scriptsmanager.cpp:324
+#: main/scripting/scriptsmanager.cpp:351
 msgid "Move to Trash"
 msgstr "Přesuň do koše"
 
-#: main/scripting/scriptsmanager.cpp:332
+#: main/scripting/scriptsmanager.cpp:359
 msgid "There was an error removing the file <b>%1</b>."
 msgstr "<qt>Vyskytla se chyba při odstranění souboru<br/>%1</qt>"
 
-#: main/scripting/scriptsmanager.cpp:350
+#: main/scripting/scriptsmanager.cpp:377
 msgid "Could not launch external editor.\n"
 msgstr "Nebylo možno spustit externí editor.\n"
 
-#: main/scripting/scriptsmanager.cpp:408 main/scripting/scriptsmanager.cpp:415
+#: main/scripting/scriptsmanager.cpp:441 main/scripting/scriptsmanager.cpp:448
 msgid "Error Running Script"
 msgstr "Chyba při běhu skriptu"
 
-#: main/scripting/scriptsmanager.cpp:429
+#: main/scripting/scriptsmanager.cpp:462
 msgid "Tools"
 msgstr "Nástroje"
 
-#: main/utils/errorfinder.cpp:40 main/utils/errorfinder.cpp:232
-#: main/utils/errorfinder.cpp:259
+#: main/utils/errorfinder.cpp:40 main/utils/errorfinder.cpp:221
+#: main/utils/errorfinder.cpp:244
 msgid "Find Error"
 msgstr "Najdi chybu"
 
@@ -2191,7 +2219,7 @@ msgstr "Ze současného řádku"
 msgid "Find backwards"
 msgstr "Hledej dozadu"
 
-#: main/utils/errorfinder.cpp:227 main/utils/finder.cpp:298
+#: main/utils/errorfinder.cpp:216 main/utils/finder.cpp:298
 #: main/utils/replacer.cpp:258
 msgid ""
 "Beginning of selection reached.\n"
@@ -2200,7 +2228,7 @@ msgstr ""
 "Bylo dosaženo začátku výběru.\n"
 "Pokračovat od konce?"
 
-#: main/utils/errorfinder.cpp:228 main/utils/finder.cpp:299
+#: main/utils/errorfinder.cpp:217 main/utils/finder.cpp:299
 #: main/utils/replacer.cpp:259
 msgid ""
 "Beginning of subtitle reached.\n"
@@ -2209,7 +2237,7 @@ msgstr ""
 "Bylo dosaženo začátku titulků.\n"
 "Pokračovat od konce?"
 
-#: main/utils/errorfinder.cpp:230 main/utils/finder.cpp:301
+#: main/utils/errorfinder.cpp:219 main/utils/finder.cpp:301
 #: main/utils/replacer.cpp:261
 msgid ""
 "End of selection reached.\n"
@@ -2218,7 +2246,7 @@ msgstr ""
 "Bylo dosaženo konce výběru.\n"
 "Pokračovat od začátku?"
 
-#: main/utils/errorfinder.cpp:231 main/utils/finder.cpp:302
+#: main/utils/errorfinder.cpp:220 main/utils/finder.cpp:302
 #: main/utils/replacer.cpp:262 main/utils/speller.cpp:143
 msgid ""
 "End of subtitle reached.\n"
@@ -2227,7 +2255,7 @@ msgstr ""
 "Bylo dosaženo konce titulků.\n"
 "Pokračovat od začátku?"
 
-#: main/utils/errorfinder.cpp:258
+#: main/utils/errorfinder.cpp:243
 msgid "No errors matching given criteria found!"
 msgstr "Žádné chyby shodující se s kritérii nebyly nalezeny!"
 
@@ -2309,7 +2337,11 @@ msgstr "Najdi/Nahraď v"
 msgid "Spell Checking"
 msgstr "Oprava pravopisu"
 
-#: main/utils/translator.cpp:254 main/utils/translator.cpp:264
+#: main/utils/translator.cpp:167
+msgid "Operation cancelled by user"
+msgstr ""
+
+#: main/utils/translator.cpp:270 main/utils/translator.cpp:280
 msgid "Unexpected contents received from translation service"
 msgstr "Nečekaný obsah obdržený překládací službou"
 
@@ -2517,4 +2549,3 @@ msgstr "Goliash"
 msgctxt "EMAIL OF TRANSLATORS"
 msgid "Your emails"
 msgstr "goliash@goliash.net"
-

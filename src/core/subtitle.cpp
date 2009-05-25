@@ -430,9 +430,15 @@ SubtitleLine* Subtitle::insertNewLine( int index, bool timeAfter, TextTarget tar
 	return newLine;
 }
 
-void Subtitle::removeLines( const RangeList& ranges, TextTarget target )
+void Subtitle::removeLines( const RangeList& r, TextTarget target )
 {
-	if ( m_lines.isEmpty() || ranges.isEmpty() )
+	if ( m_lines.isEmpty() )
+		return;
+
+	RangeList ranges = r;
+	ranges.trimToIndex( m_lines.count() - 1 );
+
+	if ( ranges.isEmpty() )
 		return;
 
 	if ( target == Both )

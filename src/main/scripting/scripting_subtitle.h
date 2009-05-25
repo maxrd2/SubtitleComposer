@@ -36,38 +36,9 @@ namespace SubtitleComposer
 
 	namespace Scripting
 	{
-		class SubtitleModule : public QObject
-		{
-			Q_OBJECT
-
-			Q_ENUMS( TextTarget )
-			Q_PROPERTY( bool translationMode READ translationMode )
-
-			public:
-
-				typedef enum {
-					Primary =		SubtitleComposer::Subtitle::Primary,
-					Secondary =		SubtitleComposer::Subtitle::Secondary,
-					Both =			SubtitleComposer::Subtitle::Both,
-				} TextTarget;
-
-				SubtitleModule( QObject* parent=0 );
-
-			public slots:
-
-				QObject* instance();
-
-				bool translationMode();
-		};
-
 		class Subtitle : public QObject
 		{
 			Q_OBJECT
-
-			Q_PROPERTY( double framesPerSecond READ framesPerSecond WRITE setFramesPerSecond )
-			Q_PROPERTY( bool isEmpty READ isEmpty )
-			Q_PROPERTY( int linesCount READ linesCount )
-			Q_PROPERTY( int lastIndex READ lastIndex )
 
 			public slots:
 
