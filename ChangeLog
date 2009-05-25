@@ -1,15 +1,28 @@
+Version 0.5.3:
+- added Czech, Brazilian Portuguese, Bulgarian, French and German translations contributed by Petr
+  Gadula, Marcio P. Moraes, Petar Toushkov, Thomas Gastine and Panagiotis Papadopoulos respectively
+  and updated Spanish translation
+- added Kross powered scripting interface with some basic examples in Ruby, Python and JavaScript
+- added action to translate subtitles using Google translation services
+- fixed many bugs including some that would crash the application
+  * selecting a file from the recently opened list could crash the application when using Qt 4.5
+  * video playback was completely broken with Qt 4.5
+  * bugs related to searching text and errors
+  * bugs related to undo/redo that could result in a crash
+- other minor fixes, user interface changes and improvements
+
 Version 0.5.2:
 - added Polish translation and updated Serbian and Spanish ones (thanks to Tomasz Argasiński and Slobodan Simic)
 - ported lines and errors views to Qt4 Model/View
-  - greatly improves performance
-  - renders lines using the application style
-  - lines' texts display tooltips with errors information on hover
+  * greatly improves performance
+  * renders lines using the application style
+  * lines' texts display tooltips with errors information on hover
 - improved the current line text edit (mainly by using the KDE version of the control)
-  - supports KDE standard shortcuts and spelling with on the fly highlighting of misspelled words
-  - context menu shows suggestions for misspelled words and actions to ignore or add to dictionary
-  - relevant shorcuts are caught so that don't trigger other application actions
+  * supports KDE standard shortcuts and spelling with on the fly highlighting of misspelled words
+  * context menu shows suggestions for misspelled words and actions to ignore or add to dictionary
+  * relevant shorcuts are caught so that don't trigger other application actions
 - improved inline editing behavior
-  - navigation between editable cells is possible with Up/Down arrows and tab/back tab keys
+  * navigation between editable cells is possible with Up/Down arrows and tab/back tab keys
 - added actions to retrocede and advance the current line (Alt+[Up|Down] arrows)
 - added a configuration page for spelling options
 - comply with Shared MIME-info spec for registering file types
@@ -30,14 +43,14 @@ Version 0.5.1:
 
 Version 0.5.0:
 - ported to KDE4/Qt4
-- Phonon player backend
+- added Phonon player backend
 
 
 Version 0.4.2:
 - added Spanish and Serbian translations and updated pot file (thanks to Daniel Lambea and Slobodan Simic)
 - improved styles handling:
-  - styles don't have to be applied to whole lines anymore
-  - added "strike through" style support
+  * styles don't have to be applied to whole lines anymore
+  * added "strike through" style support
 - added configurable outline for subtitles in video player
 - use KIO facilities to allow loading and saving subtitles from other than local files
 - other minor fixes
