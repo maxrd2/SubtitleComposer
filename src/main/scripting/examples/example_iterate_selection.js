@@ -56,9 +56,9 @@ function LinesIterator( rangeList, forward )
 	};
 
 	this.hasNext = function() {
-		return this.rangesIt.hasNext() || (this.forward ?
+		return this.rangesIt.hasNext() || (this.rangesIt.current() && (this.forward ?
 			this.lineIndex < this.rangesIt.current().end() :
-			this.lineIndex > this.rangesIt.current().start());
+			this.lineIndex > this.rangesIt.current().start()));
 	};
 
 	this.next = function() {
