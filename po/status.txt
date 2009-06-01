@@ -6,3 +6,4 @@ Greek:					currently unmaintained (contributed by Alexandros Perdikomatis <atana
 Polish:					currently maintained by Tomasz Argasiński <targasinski@o2.pl>
 Brazilian Portuguese:	currently maintained by Marcio P. Moraes <marciopanto@gmail.com>
 Serbian:				currently maintained by Slobodan Simic <simicsl@verat.net>
+Ukrainian:				currently maintained by Yuri Chornoivan <yurchor@ukr.net>
