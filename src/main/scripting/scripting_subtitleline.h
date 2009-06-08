@@ -33,6 +33,8 @@ namespace SubtitleComposer
 {
 	namespace Scripting
 	{
+		class Subtitle;
+
 		class SubtitleLine : public QObject
 		{
 			Q_OBJECT
