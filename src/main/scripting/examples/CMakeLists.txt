@@ -1,5 +1,3 @@
-ADD_SUBDIRECTORY( api )
-
 FILE( GLOB ruby_examples *.rb )
 FILE( GLOB python_examples *.py )
 FILE( GLOB javascript_examples *.js )
