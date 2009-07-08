@@ -1,1 +1,0 @@
-../../scripting_sstring.h

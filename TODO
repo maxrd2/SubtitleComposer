@@ -6,3 +6,5 @@ Planned features / known issues
 * it's annoying to have a subtitle fail to load because of an invalid encoding issue, perhaps the "next" encoding should be tried and the error informed.
 * the player controls won't appear on fullscreen mode with KDE4.2 (disabling KWin desktop effects "fixes" the issue)
 * translation service could improve syncronization issues if it cooperated more closely with the subtitle
+
+mala performance del código que genera la máscara debido a la alta resolución de la pantalla?
