@@ -1201,7 +1201,7 @@ void Subtitle::splitSubtitle( Subtitle& dstSubtitle, const Time& splitTime, bool
 		return;
 
 	int splitIndex = -1; // the index of the first line to move (or copy) to dstSub
-	bool splitsLine; // splitTime falls in within a line's time
+	bool splitsLine = false; // splitTime falls in within a line's time
 
 	QList<SubtitleLine*> lines;
 	for ( SubtitleIterator it( *this, Range::full() ); it.current(); ++it )

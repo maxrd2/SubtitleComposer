@@ -34,15 +34,13 @@ class AttachableWidget : public QWidget
 
 		typedef enum { Top, Bottom } Place;
 
-		explicit AttachableWidget( Place place=Bottom, unsigned animStepDuration=4, QWidget* parent=0 );
+		explicit AttachableWidget( Place place=Bottom, unsigned animStepDuration=4 );
 		virtual ~AttachableWidget();
 
+		bool isAttached() const;
+
 		bool isAnimated() const;
-		unsigned animStepDuration() const;
-
-		bool autoHide() const;
-
-		int greyZoneSize() const;
+		int animStepDuration() const;
 
 		virtual bool eventFilter( QObject* object, QEvent* event );
 
@@ -52,8 +50,8 @@ class AttachableWidget : public QWidget
 		void dettach();
 
 		void setAnimStepDuration( int stepDuration );
-		void setAutoHide( bool autoHide );
-		void setGreyZoneSize( int size );
+
+		void toggleVisible( bool visible );
 
 	protected:
 
@@ -61,15 +59,13 @@ class AttachableWidget : public QWidget
 
 	private:
 
-		void toggleVisible( bool visible, bool force=false );
+		void toggleVisible( bool visible, bool force );
 
 	private:
 
 		QWidget* m_targetWidget;
 		Place m_place;
-		unsigned m_animStepDuration;
-		bool m_autoHide;
-		int m_greyZoneSize;
+		int m_animStepDuration;
 
 		typedef enum { Upward, Downward } Direction;
 

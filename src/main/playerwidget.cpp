@@ -54,9 +54,8 @@ using namespace SubtitleComposer;
 
 // FIXME WTF is this!??
 #define MAGIC_NUMBER -1
-
-#define HIDE_MOUSE_MSECS 2000
-#define UNKNOWN_LENGTH_STRING	(" / " + Time().toString() + ' ')
+#define HIDE_MOUSE_MSECS 1000
+#define UNKNOWN_LENGTH_STRING (" / " + Time().toString() + ' ')
 
 PlayerWidget::PlayerWidget( QWidget* parent ):
 	QWidget( parent ),
@@ -65,6 +64,7 @@ PlayerWidget::PlayerWidget( QWidget* parent ):
 	m_showTranslation( false ),
 	m_overlayLine( 0 ),
 	m_playingLine( 0 ),
+	m_fullScreenTID( 0 ),
 	m_fullScreenMode( false ),
 	m_player( Player::instance() ),
 	m_lengthString( UNKNOWN_LENGTH_STRING ),
@@ -81,10 +81,9 @@ PlayerWidget::PlayerWidget( QWidget* parent ):
 
 	m_player->initialize( m_layeredWidget, app()->playerConfig()->backend() );
 
-	connect( m_player, SIGNAL(backendInitialized(PlayerBackend*)), this, SLOT( onPlayerBackendInitialized() ) );
+	connect( m_player, SIGNAL( backendInitialized(PlayerBackend*) ), this, SLOT( onPlayerBackendInitialized() ) );
 
 	m_textOverlay = new TextOverlayWidget( m_layeredWidget );
-	m_textOverlay->setRichTextMode( true );
 	m_textOverlay->setAlignment( Qt::AlignHCenter|Qt::AlignBottom );
 
 	m_seekSlider = new PointingSlider( Qt::Horizontal, this );
@@ -172,8 +171,9 @@ PlayerWidget::PlayerWidget( QWidget* parent ):
 	m_mainLayout->addLayout( videoControlsLayout, 1, 1 );
 	m_mainLayout->addWidget( createToolButton( this, ACT_TOGGLE_FULL_SCREEN, 16 ), 1, 2 );
 
-	m_fullScreenControls = new AttachableWidget( AttachableWidget::Bottom, 4, m_layeredWidget );
-	m_fullScreenControls->setAutoHide( true );
+	m_fullScreenControls = new AttachableWidget( AttachableWidget::Bottom, 4 );
+	m_fullScreenControls->setAutoFillBackground( true );
+	m_fullScreenControls->setMouseTracking( true );
 	m_layeredWidget->setWidgetMode( m_fullScreenControls, LayeredWidget::IgnoreResize );
 
 	m_fsSeekSlider = new PointingSlider( Qt::Horizontal, m_fullScreenControls );
@@ -197,7 +197,7 @@ PlayerWidget::PlayerWidget( QWidget* parent ):
 	fsPositionPalette.setColor( m_fsPositionLabel->foregroundRole(), Qt::white );
 	m_fsPositionLabel->setPalette( fsPositionPalette );
 	m_fsPositionLabel->setAutoFillBackground( true );
-    m_fsPositionLabel->setFrameShape( QFrame::Panel );
+	m_fsPositionLabel->setFrameShape( QFrame::Panel );
 	m_fsPositionLabel->setText( Time().toString( false ) + " /  " + Time().toString( false ) );
 	m_fsPositionLabel->setAlignment( Qt::AlignRight|Qt::AlignVCenter );
 	m_fsPositionLabel->adjustSize();
@@ -223,39 +223,45 @@ PlayerWidget::PlayerWidget( QWidget* parent ):
 	fullScreenControlsLayout->addWidget( createToolButton( m_fullScreenControls, ACT_TOGGLE_FULL_SCREEN, 32 ) );
 	m_fullScreenControls->adjustSize();
 
+	setMouseTracking( true );
+	m_fullScreenControls->setMouseTracking( true );
+	QList<QWidget*> children = this->findChildren<QWidget*>();
+	for ( QList<QWidget*>::ConstIterator it = children.begin(), end = children.end(); it != end; ++it )
+		(*it)->setMouseTracking( true );
+
 	connect( m_volumeSlider, SIGNAL( valueChanged(int) ), this, SLOT(onVolumeSliderValueChanged(int)) );
 	connect( m_fsVolumeSlider, SIGNAL( valueChanged(int) ), this, SLOT(onVolumeSliderValueChanged(int)) );
 
-	connect( m_seekSlider, SIGNAL( valueChanged(int) ), this, SLOT(onSeekSliderValueChanged(int)) );
-	connect( m_seekSlider, SIGNAL( sliderMoved(int) ), this, SLOT(onSeekSliderMoved(int)) );
-	connect( m_seekSlider, SIGNAL( sliderPressed() ), this, SLOT(onSeekSliderPressed()) );
-	connect( m_seekSlider, SIGNAL( sliderReleased() ), this, SLOT(onSeekSliderReleased()) );
-	connect( m_fsSeekSlider, SIGNAL( valueChanged(int) ), this, SLOT(onSeekSliderValueChanged(int)) );
-	connect( m_fsSeekSlider, SIGNAL( sliderMoved(int) ), this, SLOT(onSeekSliderMoved(int)) );
-	connect( m_fsSeekSlider, SIGNAL( sliderPressed() ), this, SLOT(onSeekSliderPressed()) );
-	connect( m_fsSeekSlider, SIGNAL( sliderReleased() ), this, SLOT(onSeekSliderReleased()) );
+	connect( m_seekSlider, SIGNAL( valueChanged(int) ), this, SLOT( onSeekSliderValueChanged(int) ) );
+	connect( m_seekSlider, SIGNAL( sliderMoved(int) ), this, SLOT( onSeekSliderMoved(int) ) );
+	connect( m_seekSlider, SIGNAL( sliderPressed() ), this, SLOT( onSeekSliderPressed() ) );
+	connect( m_seekSlider, SIGNAL( sliderReleased() ), this, SLOT( onSeekSliderReleased() ) );
+	connect( m_fsSeekSlider, SIGNAL( valueChanged(int) ), this, SLOT( onSeekSliderValueChanged(int) ) );
+	connect( m_fsSeekSlider, SIGNAL( sliderMoved(int) ), this, SLOT( onSeekSliderMoved(int) ) );
+	connect( m_fsSeekSlider, SIGNAL( sliderPressed() ), this, SLOT( onSeekSliderPressed() ) );
+	connect( m_fsSeekSlider, SIGNAL( sliderReleased() ), this, SLOT( onSeekSliderReleased() ) );
 
-	connect( m_positionEdit, SIGNAL( valueChanged(int) ), this, SLOT(onPositionEditValueChanged(int)) );
-	connect( m_positionEdit, SIGNAL( valueEntered(int) ), this, SLOT(onPositionEditValueChanged(int)) );
+	connect( m_positionEdit, SIGNAL( valueChanged(int) ), this, SLOT( onPositionEditValueChanged(int)) );
+	connect( m_positionEdit, SIGNAL( valueEntered(int) ), this, SLOT( onPositionEditValueChanged(int)) );
 
-	connect( app()->playerConfig(), SIGNAL(optionChanged(const QString&,const QString&)),
-			 this, SLOT(onPlayerOptionChanged(const QString&,const QString&)) );
+	connect( app()->playerConfig(), SIGNAL( optionChanged(const QString&,const QString&) ),
+			 this, SLOT( onPlayerOptionChanged(const QString&,const QString&) ) );
 
-	// Connect PlayerWidget observer slots to Player signals
-	connect( m_player, SIGNAL(fileOpened(const QString&)), this, SLOT(onPlayerFileOpened(const QString&)) );
-	connect( m_player, SIGNAL(fileOpenError(const QString&)), this, SLOT(onPlayerFileOpenError(const QString&)) );
-	connect( m_player, SIGNAL(fileClosed()), this, SLOT(onPlayerFileClosed()) );
-	connect( m_player, SIGNAL(playbackError()), this, SLOT(onPlayerPlaybackError()) );
-	connect( m_player, SIGNAL(playing()), this, SLOT(onPlayerPlaying()) );
-	connect( m_player, SIGNAL(stopped()), this, SLOT(onPlayerStopped()) );
-	connect( m_player, SIGNAL(positionChanged(double)), this, SLOT(onPlayerPositionChanged(double)) );
-	connect( m_player, SIGNAL(lengthChanged(double)), this, SLOT(onPlayerLengthChanged(double)) );
-	connect( m_player, SIGNAL(framesPerSecondChanged(double)), this, SLOT(onPlayerFramesPerSecondChanged(double)) );
-	connect( m_player, SIGNAL(volumeChanged(double)), this, SLOT(onPlayerVolumeChanged(double)) );
+	// connect PlayerWidget observer slots to Player signals
+	connect( m_player, SIGNAL( fileOpened(const QString&) ), this, SLOT( onPlayerFileOpened(const QString&) ) );
+	connect( m_player, SIGNAL( fileOpenError(const QString&) ), this, SLOT( onPlayerFileOpenError(const QString&) ) );
+	connect( m_player, SIGNAL( fileClosed() ), this, SLOT( onPlayerFileClosed() ) );
+	connect( m_player, SIGNAL( playbackError() ), this, SLOT( onPlayerPlaybackError() ) );
+	connect( m_player, SIGNAL( playing() ), this, SLOT( onPlayerPlaying() ) );
+	connect( m_player, SIGNAL( stopped() ), this, SLOT( onPlayerStopped() ) );
+	connect( m_player, SIGNAL( positionChanged(double) ), this, SLOT( onPlayerPositionChanged(double) ) );
+	connect( m_player, SIGNAL( lengthChanged(double) ), this, SLOT( onPlayerLengthChanged(double) ) );
+	connect( m_player, SIGNAL( framesPerSecondChanged(double) ), this, SLOT( onPlayerFramesPerSecondChanged(double) ) );
+	connect( m_player, SIGNAL( volumeChanged(double) ), this, SLOT( onPlayerVolumeChanged(double) ) );
 
-	connect( m_player, SIGNAL(leftClicked(const QPoint&)), this, SLOT(onPlayerLeftClicked(const QPoint&)) );
-	connect( m_player, SIGNAL(rightClicked(const QPoint&)), this, SLOT(onPlayerRightClicked(const QPoint&)) );
-	connect( m_player, SIGNAL(doubleClicked(const QPoint&)), this, SLOT(onPlayerDoubleClicked(const QPoint&)) );
+	connect( m_player, SIGNAL( leftClicked(const QPoint&) ), this, SLOT( onPlayerLeftClicked(const QPoint&) ) );
+	connect( m_player, SIGNAL( rightClicked(const QPoint&) ), this, SLOT( onPlayerRightClicked(const QPoint&) ) );
+	connect( m_player, SIGNAL( doubleClicked(const QPoint&) ), this, SLOT( onPlayerDoubleClicked(const QPoint&) ) );
 
 	setOverlayLine( 0 );
 	onPlayerFileClosed();
@@ -265,6 +271,8 @@ PlayerWidget::PlayerWidget( QWidget* parent ):
 PlayerWidget::~PlayerWidget()
 {
 	m_player->finalize();
+
+	m_fullScreenControls->deleteLater();
 }
 
 QToolButton* PlayerWidget::toolButton( QWidget* parent, const char* name )
@@ -287,7 +295,6 @@ void PlayerWidget::loadConfig()
 	onPlayerVolumeChanged( m_player->volume() );
 }
 
-
 void PlayerWidget::saveConfig()
 {
 }
@@ -299,8 +306,6 @@ bool PlayerWidget::fullScreenMode() const
 
 void PlayerWidget::setFullScreenMode( bool fullScreenMode )
 {
-	static int timerID = 0;
-
 	if ( m_fullScreenMode != fullScreenMode )
 	{
 		m_fullScreenMode = fullScreenMode;
@@ -315,14 +320,14 @@ void PlayerWidget::setFullScreenMode( bool fullScreenMode )
 
 			m_fullScreenControls->attach( m_layeredWidget );
 
-			timerID = startTimer( HIDE_MOUSE_MSECS );
+			m_fullScreenTID = startTimer( HIDE_MOUSE_MSECS );
 		}
 		else
 		{
-			if ( timerID )
+			if ( m_fullScreenTID )
 			{
-				killTimer( timerID );
-				timerID = 0;
+				killTimer( m_fullScreenTID );
+				m_fullScreenTID = 0;
 			}
 
 			decreaseFontSize( 13 );
@@ -374,10 +379,17 @@ void PlayerWidget::plugActions()
 
 void PlayerWidget::timerEvent( QTimerEvent* /*event*/ )
 {
-	if ( m_cursorPos != m_lastCursorPos )
-		m_lastCursorPos = m_cursorPos;
-	else if ( m_layeredWidget->cursor().shape() != Qt::BlankCursor )
-		m_layeredWidget->setCursor( QCursor( Qt::BlankCursor ) );
+	if ( m_currentCursorPos != m_savedCursorPos )
+	{
+		m_savedCursorPos = m_currentCursorPos;
+	}
+	else if ( ! m_fullScreenControls->underMouse() )
+	{
+		if ( m_layeredWidget->cursor().shape() != Qt::BlankCursor )
+			m_layeredWidget->setCursor( QCursor( Qt::BlankCursor ) );
+		if ( m_fullScreenControls->isAttached() )
+			m_fullScreenControls->toggleVisible( false );
+	}
 }
 
 bool PlayerWidget::eventFilter( QObject* object, QEvent* event )
@@ -432,10 +444,14 @@ bool PlayerWidget::eventFilter( QObject* object, QEvent* event )
 		else if ( event->type() == QEvent::MouseMove )
 		{
 			QMouseEvent* mouseEvent = static_cast<QMouseEvent*>( event );
-			m_cursorPos = mouseEvent->pos();
-
-			if ( m_layeredWidget->cursor().shape() == Qt::BlankCursor )
-				m_layeredWidget->setCursor( Qt::ArrowCursor );
+			if ( mouseEvent->globalPos() != m_currentCursorPos )
+			{
+				m_currentCursorPos = mouseEvent->globalPos();
+				if ( m_layeredWidget->cursor().shape() == Qt::BlankCursor )
+					m_layeredWidget->setCursor( Qt::ArrowCursor );
+				if ( m_fullScreenControls->isAttached() )
+					m_fullScreenControls->toggleVisible( true );
+			}
 		}
 	}
 	else if ( object == m_infoControlsGroupBox || object->parent() == m_infoControlsGroupBox )
@@ -466,8 +482,8 @@ void PlayerWidget::setSubtitle( Subtitle* subtitle )
 {
 	if ( m_subtitle )
 	{
-		disconnect( m_subtitle, SIGNAL(linesInserted(int,int)), this, SLOT(invalidateOverlayLine()) );
-		disconnect( m_subtitle, SIGNAL(linesRemoved(int,int)), this, SLOT(invalidateOverlayLine()) );
+		disconnect( m_subtitle, SIGNAL( linesInserted(int,int) ), this, SLOT( invalidateOverlayLine() ) );
+		disconnect( m_subtitle, SIGNAL( linesRemoved(int,int) ), this, SLOT( invalidateOverlayLine() ) );
 
 		m_subtitle = 0;	// has to be set to 0 for invalidateOverlayLine
 
@@ -479,11 +495,10 @@ void PlayerWidget::setSubtitle( Subtitle* subtitle )
 
 	if ( m_subtitle )
 	{
-		connect( m_subtitle, SIGNAL(linesInserted(int,int)), this, SLOT(invalidateOverlayLine()) );
-		connect( m_subtitle, SIGNAL(linesRemoved(int,int)), this, SLOT(invalidateOverlayLine()) );
+		connect( m_subtitle, SIGNAL( linesInserted(int,int) ), this, SLOT( invalidateOverlayLine() ) );
+		connect( m_subtitle, SIGNAL( linesRemoved(int,int) ), this, SLOT( invalidateOverlayLine() ) );
 	}
 }
-
 
 void PlayerWidget::setTranslationMode( bool enabled )
 {
@@ -582,16 +597,16 @@ void PlayerWidget::setOverlayLine( SubtitleLine* line )
 {
 	if ( m_overlayLine )
 	{
-		disconnect( m_overlayLine, SIGNAL(showTimeChanged(const Time&)), this, SLOT(invalidateOverlayLine()) );
-		disconnect( m_overlayLine, SIGNAL(hideTimeChanged(const Time&)), this, SLOT(invalidateOverlayLine()) );
+		disconnect( m_overlayLine, SIGNAL( showTimeChanged(const Time&) ), this, SLOT( invalidateOverlayLine() ) );
+		disconnect( m_overlayLine, SIGNAL( hideTimeChanged(const Time&) ), this, SLOT( invalidateOverlayLine() ) );
 	}
 
 	m_overlayLine = line;
 
 	if ( m_overlayLine )
 	{
-		connect( m_overlayLine, SIGNAL(showTimeChanged(const Time&)), this, SLOT(invalidateOverlayLine()) );
-		connect( m_overlayLine, SIGNAL(hideTimeChanged(const Time&)), this, SLOT(invalidateOverlayLine()) );
+		connect( m_overlayLine, SIGNAL( showTimeChanged(const Time&) ), this, SLOT( invalidateOverlayLine() ) );
+		connect( m_overlayLine, SIGNAL( hideTimeChanged(const Time&) ), this, SLOT( invalidateOverlayLine() ) );
 	}
 	else
 		m_lastSearchedLineToShowTime = Time::MaxMseconds;
@@ -724,7 +739,7 @@ void PlayerWidget::onPlayerFileClosed()
 	updatePositionEditVisibility();
 	m_positionEdit->setValue( 0 );
 
- 	m_positionLabel->setText( QString() );
+	m_positionLabel->setText( QString() );
 	m_lengthLabel->setText( QString() );
 	m_fpsLabel->setText( QString() );
 
@@ -779,7 +794,7 @@ void PlayerWidget::onPlayerPositionChanged( double seconds )
 			m_fsPositionLabel->setText( Time().toString( false ) + m_lengthString );
 		}
 	}
- 	else if ( m_updatePositionControls < 0 )
+	else if ( m_updatePositionControls < 0 )
 		m_updatePositionControls += 2;
 }
 

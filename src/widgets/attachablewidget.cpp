@@ -29,20 +29,32 @@
 
 #include <KDebug>
 
-AttachableWidget::AttachableWidget( AttachableWidget::Place place, unsigned animStepDuration, QWidget* parent ):
-	QWidget( parent, Qt::Window|Qt::FramelessWindowHint/*|Qt::WindowStaysOnTopHint*/|Qt::X11BypassWindowManagerHint ),
+AttachableWidget::AttachableWidget( AttachableWidget::Place place, unsigned animStepDuration ):
+	//QWidget( 0, Qt::Window|Qt::FramelessWindowHint|Qt::X11BypassWindowManagerHint ),
+	QWidget( 0 ),
 	m_targetWidget( 0 ),
 	m_place( place ),
 	m_animStepDuration( animStepDuration ),
-	m_autoHide( true ),
-	m_greyZoneSize( 15 ),
 	m_animHiding( true )
 {
+	//m_animStepDuration = 0;
+
 	hide();
+
+//	QPalette palette;
+//	palette.setColor( backgroundRole(), Qt::red );
+//	setPalette( palette );
+//
+//	setAttribute( Qt::WA_TranslucentBackground, false );
 }
 
 AttachableWidget::~AttachableWidget()
 {
+}
+
+bool AttachableWidget::isAttached() const
+{
+	return m_targetWidget != 0;
 }
 
 bool AttachableWidget::isAnimated() const
@@ -50,7 +62,7 @@ bool AttachableWidget::isAnimated() const
 	return m_animStepDuration > 0;
 }
 
-unsigned AttachableWidget::animStepDuration() const
+int AttachableWidget::animStepDuration() const
 {
 	return m_animStepDuration;
 }
@@ -59,38 +71,6 @@ void AttachableWidget::setAnimStepDuration( int duration )
 {
 	m_animStepDuration = duration;
 }
-
-bool AttachableWidget::autoHide() const
-{
-	return m_autoHide;
-}
-
-void AttachableWidget::setAutoHide( bool autoHide )
-{
-	if ( m_autoHide != autoHide )
-	{
-		m_autoHide = autoHide;
-
-		if ( m_autoHide && m_targetWidget )
-		{
-			m_targetWidget->setMouseTracking( true );
-			QList<QWidget*> children = m_targetWidget->findChildren<QWidget*>();
-			for ( QList<QWidget*>::ConstIterator it = children.begin(), end = children.end(); it != end; ++it )
-				(*it)->setMouseTracking( true );
-		}
-	}
-}
-
-int AttachableWidget::greyZoneSize() const
-{
-	return m_greyZoneSize;
-}
-
-void AttachableWidget::setGreyZoneSize( int size )
-{
-	m_greyZoneSize = size;
-}
-
 
 void AttachableWidget::attach( QWidget* targetWidget )
 {
@@ -102,20 +82,13 @@ void AttachableWidget::attach( QWidget* targetWidget )
 			return;
 		}
 
-		m_targetWidget = targetWidget;
+		setParent( targetWidget );
 
-		if ( m_autoHide )
-		{
-			m_targetWidget->setMouseTracking( true );
-			QList<QWidget*> children = m_targetWidget->findChildren<QWidget*>();
-			for ( QList<QWidget*>::ConstIterator it = children.begin(), end = children.end(); it != end; ++it )
-				(*it)->setMouseTracking( true );
-		}
+		m_targetWidget = targetWidget;
 
 		m_targetWidget->installEventFilter( this );
 
-		if ( ! m_autoHide )
-			toggleVisible( true, true );
+		show();
 	}
 }
 
@@ -129,6 +102,8 @@ void AttachableWidget::dettach()
 		m_animHiding = true; // reset the flag
 
 		hide();
+
+		setParent( 0 );
 	}
 	else
 		kWarning() << "dettach attempted but not attached to any widget";
@@ -141,6 +116,7 @@ void AttachableWidget::timerEvent( QTimerEvent* event )
 		if ( m_animCurrentY == m_animFinalY )
 		{
 			killTimer( m_animTID );
+			m_animTID = 0;
 			if ( m_animHiding )
 				hide();
 		}
@@ -150,10 +126,14 @@ void AttachableWidget::timerEvent( QTimerEvent* event )
 				m_animCurrentY--;
 			else
 				m_animCurrentY++;
-
 			move( x(), m_animCurrentY );
 		}
 	}
+}
+
+void AttachableWidget::toggleVisible( bool visible )
+{
+	toggleVisible( visible, false );
 }
 
 void AttachableWidget::toggleVisible( bool visible, bool force )
@@ -161,7 +141,11 @@ void AttachableWidget::toggleVisible( bool visible, bool force )
 	if ( ! force && visible != m_animHiding )
 		return;
 
-	killTimer( m_animTID );
+	if ( m_animTID )
+	{
+		killTimer( m_animTID );
+		m_animTID = 0;
+	}
 
 	m_animHiding = ! visible;
 
@@ -186,6 +170,7 @@ void AttachableWidget::toggleVisible( bool visible, bool force )
 	{
 		move( targetPos.x(), m_animCurrentY );
 		show();
+		raise();
 
 		m_animTID = startTimer( m_animStepDuration ); // start the animation
 	}
@@ -193,44 +178,22 @@ void AttachableWidget::toggleVisible( bool visible, bool force )
 	{
 		move( targetPos.x(), m_animFinalY );
 		show();
+		raise();
 	}
 }
 
 bool AttachableWidget::eventFilter( QObject* object, QEvent* event )
 {
-	if ( event->type() == QEvent::MouseMove )
+	if ( object == m_targetWidget )
 	{
-		if ( m_autoHide )
+		if ( event->type() == QEvent::Resize || event->type() == QEvent::Move )
 		{
-			QMouseEvent* e = (QMouseEvent*)event;
-
-			const int margin = height() + m_greyZoneSize;
-
-			QPoint pos = e->pos();
-
-			if ( m_place == Bottom )
+			if ( isVisible() )
 			{
-				if ( pos.y() > m_targetWidget->height() - margin )
-					toggleVisible( true );
-				else
-					toggleVisible( false );
+				// hide, and show with recalculated sizes and positions
+				hide();
+				toggleVisible( true, true );
 			}
-			else
-			{
-				if ( pos.y() < margin )
-					toggleVisible( true );
-				else
-					toggleVisible( false );
-			}
-		}
-	}
-	else if ( event->type() == QEvent::Resize || event->type() == QEvent::Move )
-	{
-		if ( isVisible() )
-		{
-			// hide, and show with recalculated sizes and positions
-			hide();
-			toggleVisible( true, true );
 		}
 	}
 

@@ -107,13 +107,13 @@ Application::Application():
 	m_subtitleUrl(),
 	m_subtitleFileName(),
 	m_subtitleEncoding(),
-	m_subtitleEOL( -1 ),
+	m_subtitleEOL( Format::CurrentOS ),
 	m_subtitleFormat(),
 	m_translationMode( false ),
 	m_subtitleTrUrl(),
 	m_subtitleTrFileName(),
 	m_subtitleTrEncoding(),
-	m_subtitleTrEOL( -1 ),
+	m_subtitleTrEOL( Format::CurrentOS ),
 	m_subtitleTrFormat(),
 	m_player( Player::instance() ),
 	m_lastFoundLine( 0 ),
@@ -582,7 +582,7 @@ void Application::setupActions()
 	connect( m_reloadSubtitleAsAction, SIGNAL( triggered(const QString&) ), this, SLOT( changeSubtitlesEncoding(const QString&) ) );
 	connect( m_reloadSubtitleAsAction, SIGNAL( defaultItemTriggered() ), this, SLOT( openSubtitleWithDefaultEncoding() ) );
 	actionCollection->addAction( ACT_CHANGE_SUBTITLE_ENCODING, m_reloadSubtitleAsAction );
- 	actionManager->addAction( m_reloadSubtitleAsAction, UserAction::SubPClean|UserAction::SubSClean|UserAction::FullScreenOff );
+	actionManager->addAction( m_reloadSubtitleAsAction, UserAction::SubPClean|UserAction::SubSClean|UserAction::FullScreenOff );
 
 	m_quickReloadSubtitleAsAction = new KSelectAction( actionCollection );
 	m_quickReloadSubtitleAsAction->setItems( availableEncodingNames() );
@@ -592,7 +592,7 @@ void Application::setupActions()
 	m_quickReloadSubtitleAsAction->setStatusTip( i18n( "Reload opened file with a different encoding" ) );
 	connect( m_quickReloadSubtitleAsAction, SIGNAL( triggered(const QString&) ), this, SLOT( changeSubtitlesEncoding(const QString&) ) );
 	actionCollection->addAction( ACT_QUICK_CHANGE_SUBTITLE_ENCODING, m_quickReloadSubtitleAsAction );
- 	actionManager->addAction( m_quickReloadSubtitleAsAction, UserAction::SubPClean|UserAction::SubSClean|UserAction::FullScreenOff );
+	actionManager->addAction( m_quickReloadSubtitleAsAction, UserAction::SubPClean|UserAction::SubSClean|UserAction::FullScreenOff );
 
 
 	KAction* undoAction = new KAction( actionCollection );
@@ -602,7 +602,7 @@ void Application::setupActions()
 	undoAction->setShortcut( KStandardShortcut::undo(), KAction::DefaultShortcut|KAction::ActiveShortcut );
 	connect( undoAction, SIGNAL( triggered() ), this, SLOT( undo() ) );
 	actionCollection->addAction( ACT_UNDO, undoAction );
- 	actionManager->addAction( undoAction, UserAction::SubHasUndo );
+	actionManager->addAction( undoAction, UserAction::SubHasUndo );
 
 
 	KAction* redoAction = new KAction( actionCollection );
@@ -612,7 +612,7 @@ void Application::setupActions()
 	redoAction->setShortcut( KStandardShortcut::redo(), KAction::DefaultShortcut|KAction::ActiveShortcut );
 	connect( redoAction, SIGNAL( triggered() ), this, SLOT( redo() ) );
 	actionCollection->addAction( ACT_REDO, redoAction );
- 	actionManager->addAction( redoAction, UserAction::SubHasRedo );
+	actionManager->addAction( redoAction, UserAction::SubHasRedo );
 
 
 	KAction* splitSubtitleAction = new KAction( actionCollection );
@@ -1425,7 +1425,7 @@ void Application::openSubtitle( const KUrl& url, bool warnClashingUrls )
 
 	m_subtitle = new Subtitle();
 
-	if ( FormatManager::instance().readSubtitle( *m_subtitle, true, fileUrl, codec, (Format::NewLine*)&m_subtitleEOL, &m_subtitleFormat ) )
+	if ( FormatManager::instance().readSubtitle( *m_subtitle, true, fileUrl, codec, &m_subtitleEOL, &m_subtitleFormat ) )
 	{
 		// The loading of the subtitle shouldn't be an undoable action as there's no state before it
 		m_subtitle->actionManager().clearHistory();
@@ -1499,7 +1499,7 @@ bool Application::saveSubtitle()
 	if ( ! codecFound )
 		codec = KGlobal::locale()->codecForEncoding();
 
-	if ( FormatManager::instance().writeSubtitle( *m_subtitle, true, m_subtitleUrl, codec, (Format::NewLine)m_subtitleEOL, m_subtitleFormat, true ) )
+	if ( FormatManager::instance().writeSubtitle( *m_subtitle, true, m_subtitleUrl, codec, m_subtitleEOL, m_subtitleFormat, true ) )
 	{
 		m_subtitle->clearPrimaryDirty();
 
@@ -1665,7 +1665,7 @@ void Application::openTrSubtitle( const KUrl& url, bool warnClashingUrls )
 	if ( ! codecFound )
 		codec = KGlobal::locale()->codecForEncoding();
 
-	if ( FormatManager::instance().readSubtitle( *m_subtitle, false, fileUrl, codec, (Format::NewLine*)&m_subtitleTrEOL, &m_subtitleTrFormat ) )
+	if ( FormatManager::instance().readSubtitle( *m_subtitle, false, fileUrl, codec, &m_subtitleTrEOL, &m_subtitleTrFormat ) )
 	{
 		m_subtitleTrUrl = fileUrl;
 		m_subtitleTrFileName = QFileInfo( m_subtitleTrUrl.path() ).fileName();
@@ -1711,7 +1711,7 @@ bool Application::saveTrSubtitle()
 	if ( ! codecFound )
 		codec = KGlobal::locale()->codecForEncoding();
 
-	if ( FormatManager::instance().writeSubtitle( *m_subtitle, false, m_subtitleTrUrl, codec, (Format::NewLine)m_subtitleTrEOL, m_subtitleTrFormat, true ) )
+	if ( FormatManager::instance().writeSubtitle( *m_subtitle, false, m_subtitleTrUrl, codec, m_subtitleTrEOL, m_subtitleTrFormat, true ) )
 	{
 		m_subtitle->clearSecondaryDirty();
 
@@ -1871,7 +1871,7 @@ KUrl Application::saveSplittedSubtitle( const Subtitle& subtitle, const KUrl& sr
 	KUrl dstUrl;
 
 	if ( subtitle.linesCount() )
- 	{
+	{
 		QFileInfo dstFileInfo =
 			srcUrl.isEmpty() ?
 				QFileInfo( QDir( System::tempDir() ), primary ? "untitled.srt" : "untitled-translation.srt" ) :
@@ -1897,7 +1897,7 @@ KUrl Application::saveSplittedSubtitle( const Subtitle& subtitle, const KUrl& sr
 			primary,
 			dstUrl,
 			codec,
-			(Format::NewLine)(primary ? m_subtitleEOL : m_subtitleTrEOL),
+			(primary ? m_subtitleEOL : m_subtitleTrEOL),
 			format,
 			false
 		);
@@ -2828,7 +2828,7 @@ void Application::setCurrentLineHideTimeFromVideo()
 void Application::setActiveSubtitleStream( int subtitleStream )
 {
 	KSelectAction* activeSubtitleStreamAction = (KSelectAction*)action( ACT_SET_ACTIVE_SUBTITLE_STREAM );
- 	activeSubtitleStreamAction->setCurrentItem( subtitleStream );
+	activeSubtitleStreamAction->setCurrentItem( subtitleStream );
 
 	m_playerWidget->setShowTranslation( subtitleStream ? true : false );
 }

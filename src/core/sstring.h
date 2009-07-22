@@ -451,7 +451,7 @@ namespace SubtitleComposer
 
 	inline int SString::length( int index, int len ) const
 	{
-		return (len < 0 || (index + len) > (int)m_string.length()) ? m_string.length() - index : len;
+		return (len < 0) || ((index + len) > (int)m_string.length()) ? m_string.length() - index : len;
 	}
 }
 

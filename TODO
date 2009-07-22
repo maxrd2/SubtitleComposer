@@ -1,10 +1,8 @@
 Planned features / known issues
 
-* integrate waveform visuals (check out wave drawing in kdenlive editor)
+* integrate waveform visuals (delayed until audio decoding is supported by phonon)
 * automatic correction of OCR errors
 * rename "current line" to "active line"
-* it's annoying to have a subtitle fail to load because of an invalid encoding issue, perhaps the "next" encoding should be tried and the error informed.
-* the player controls won't appear on fullscreen mode with KDE4.2 (disabling KWin desktop effects "fixes" the issue)
-* translation service could improve syncronization issues if it cooperated more closely with the subtitle
-
-mala performance del código que genera la máscara debido a la alta resolución de la pantalla?
+* failing to load a subtitle fail because of an invalid encoding issue is annoying, perhaps the "next" encoding should be tried and the error informed.
+* translation service could improve synchronization issues if it cooperated more closely with the subtitle
+* subtitles drawing performance might be improved by cropping the text overlay widget

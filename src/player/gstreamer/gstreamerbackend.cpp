@@ -302,7 +302,7 @@ bool GStreamerBackend::changeState( int state, unsigned timeout )
 	if ( ! timeout )
 		return true;
 
- 	// wait for state change or timeout
+	// wait for state change or timeout
 	return gst_element_get_state( m_play, NULL, NULL, timeout*GST_MSECOND ) == GST_STATE_CHANGE_SUCCESS;
 }
 
@@ -596,7 +596,7 @@ void GStreamerBackend::inspect( void* object )
 	params = g_object_class_list_properties( G_OBJECT_GET_CLASS( GST_ELEMENT( object ) ), &length );
 	for ( guint index = 0; index < length; ++index )
 	{
-		gchar* strValue;
+		gchar* strValue = 0;
 
 		if ( params[index]->flags & G_PARAM_READABLE )
 		{
@@ -609,8 +609,6 @@ void GStreamerBackend::inspect( void* object )
 				g_value_unset( value );
 				g_free( value );
 			}
-			else
-				strValue = 0;
 		}
 
 		stream << '\n'

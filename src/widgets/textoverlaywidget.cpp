@@ -19,12 +19,12 @@
 
 #include "textoverlaywidget.h"
 
-#include <QtGui/QImage>
 #include <QtGui/QPainter>
 #include <QtGui/QTextDocument>
 #include <QtGui/QAbstractTextDocumentLayout>
 #include <QtGui/QResizeEvent>
 
+#include "../profiler.h"
 #include <KDebug>
 
 TextOverlayWidget::TextOverlayWidget( QWidget* parent ):
@@ -39,7 +39,6 @@ TextOverlayWidget::TextOverlayWidget( QWidget* parent ):
 	m_outlineRGB( m_outlineColor.rgb() ),
 	m_transColor( 0, 0, 0 ),
 	m_transRGB( m_transColor.rgb() ),
-	m_richTextMode( true ),
 	m_textDocument( new QTextDocument() ),
 	m_dirty( true )
 {
@@ -52,6 +51,7 @@ TextOverlayWidget::TextOverlayWidget( QWidget* parent ):
 	setAttribute( Qt::WA_NoSystemBackground, true );
 
 	m_font.setPointSize( 15 );
+	m_font.setStyleStrategy( QFont::NoAntialias );
 	m_textDocument->setDefaultFont( m_font );
 
 	QTextOption textOption;
@@ -77,7 +77,7 @@ TextOverlayWidget::~TextOverlayWidget()
 
 void TextOverlayWidget::setDirty( bool updateRichText, bool updateColors )
 {
-	if ( updateRichText && m_richTextMode )
+	if ( updateRichText )
 		m_textDocument->setHtml( "<p>" + m_text + "</p>" );
 
 	if ( updateColors )
@@ -88,6 +88,7 @@ void TextOverlayWidget::setDirty( bool updateRichText, bool updateColors )
 		m_dirty = true;
 		clearMask();
 	}
+
 	update();
 }
 
@@ -102,24 +103,6 @@ void TextOverlayWidget::setText( const QString& text )
 	{
 		m_text = text;
 		setDirty( true, false );
-	}
-}
-
-bool TextOverlayWidget::richTextMode() const
-{
-	return m_richTextMode;
-}
-
-void TextOverlayWidget::setRichTextMode( bool value )
-{
-	if ( m_richTextMode != value )
-	{
-		m_richTextMode = value;
-		if ( m_richTextMode )
-		{
-			m_textDocument->setHtml( "<p>" + m_text + "</p>" );
-			m_textDocument->setTextWidth( width() );
-		}
 	}
 }
 
@@ -246,27 +229,22 @@ void TextOverlayWidget::setOutlineColor( const QColor& color )
 
 QSize TextOverlayWidget::minimumSizeHint() const
 {
-	if ( m_richTextMode )
-		return QSize( (int)m_textDocument->idealWidth(), (int)m_textDocument->size().height() );
-	else
-		return QFontMetrics( m_font ).boundingRect( 0, 0, 10000, 10000, m_alignment, m_text ).size();
+	return QSize( (int)m_textDocument->idealWidth(), (int)m_textDocument->size().height() );
 }
 
 void TextOverlayWidget::paintEvent( QPaintEvent* /*event*/ )
 {
 	if ( m_dirty )
 	{
-		// static QTime time;
-		// time.start();
+//		PROFILE();
 		updateContents();
-		//kDebug() << "updateContents took" << time.elapsed();
 	}
 
 	QPainter painter( this );
 	if ( m_text.isEmpty() )
 		painter.drawPoint( 0, 0 );
 	else
-		painter.drawPixmap( 0, 0, m_bgPixmap );
+		painter.drawImage( 0, 0, m_bgImage );
 }
 
 void TextOverlayWidget::resizeEvent( QResizeEvent* /*e*/ )
@@ -298,8 +276,7 @@ void TextOverlayWidget::updateColors()
 
 void TextOverlayWidget::updateContents()
 {
-	if ( m_richTextMode )
-		m_textDocument->setTextWidth( width() );
+	m_textDocument->setTextWidth( width() );
 
 	if ( m_text.isEmpty() )
 	{
@@ -307,9 +284,11 @@ void TextOverlayWidget::updateContents()
 	}
 	else
 	{
-		m_bgPixmap = QPixmap( size() );
+		m_bgImage = QImage( size(), QImage::Format_RGB32 );
 
-		QPainter painter( &m_bgPixmap );
+		QPainter painter( &m_bgImage );
+
+		// Disable rendering hints to (hopefully) improve performance
 		painter.setRenderHints(
 			QPainter::Antialiasing|QPainter::TextAntialiasing|QPainter::SmoothPixmapTransform|
 			QPainter::HighQualityAntialiasing|QPainter::NonCosmeticDefaultPen,
@@ -321,61 +300,47 @@ void TextOverlayWidget::updateContents()
 		painter.fillRect( rect, m_transColor );
 		painter.setFont( m_font );
 
-		if ( m_richTextMode )
+		const QRect nullRect;
+
+		int textHeight = (int)m_textDocument->size().height(), yoffset;
+		if ( m_alignment & Qt::AlignBottom )
+			yoffset = rect.height() - textHeight;
+		else if ( m_alignment & Qt::AlignTop )
+			yoffset = 0;
+		else // if ( m_alignment & AlignVCenter || m_alignment & AlignCenter )
+			yoffset = (rect.height() - textHeight) / 2;
+
+		painter.translate( 0, yoffset );
+		QAbstractTextDocumentLayout::PaintContext context;
+		context.palette = palette();
+		context.palette.setColor( QPalette::Text, m_primaryColor );
+		m_textDocument->documentLayout()->draw( &painter, context );
+		painter.end();
+
+		if ( textHeight > rect.height() )
 		{
-			const QRect nullRect;
+			yoffset = 0;
+			textHeight = rect.height();
+		}
 
-			int textHeight = (int)m_textDocument->size().height(), yoffset;
-			if ( m_alignment & Qt::AlignBottom )
-				yoffset = rect.height() - textHeight;
-			else if ( m_alignment & Qt::AlignTop )
-				yoffset = 0;
-			else // if ( m_alignment & AlignVCenter || m_alignment & AlignCenter )
-				yoffset = (rect.height() - textHeight) / 2;
-
-			painter.translate( 0, yoffset );
-			QAbstractTextDocumentLayout::PaintContext context;
-			context.palette = palette();
-			context.palette.setColor( QPalette::Text, m_primaryColor );
-			m_textDocument->documentLayout()->draw( &painter, context );
-			painter.end();
-
-			if ( textHeight > rect.height() )
-			{
-				yoffset = 0;
-				textHeight = rect.height();
-			}
-
-			int textWidth = (int)m_textDocument->idealWidth(), xoffset;
-			if ( textWidth > rect.width() )
-			{
-				xoffset = 0;
-				textWidth = rect.width();
-			}
-			else
-			{
-				if ( m_alignment & Qt::AlignLeft )
-					xoffset = 0;
-				else if ( m_alignment & Qt::AlignRight )
-					xoffset = rect.width() - textWidth;
-				else // if ( m_alignment & Qt::AlignHCenter || m_alignment & Qt::AlignCenter )
-					xoffset = (rect.width() - textWidth) / 2;
-			}
-
-
-			QRect textRect( xoffset, yoffset, textWidth, textHeight );
-			setMaskAndOutline( textRect, m_outlineWidth );
+		int textWidth = (int)m_textDocument->idealWidth(), xoffset;
+		if ( textWidth > rect.width() )
+		{
+			xoffset = 0;
+			textWidth = rect.width();
 		}
 		else
 		{
-			painter.setPen( m_primaryColor );
-			painter.drawText( rect, m_alignment, m_text );
-			painter.end();
-
-			QRect textRect( painter.boundingRect( rect, m_alignment, m_text ) );
-			textRect |= rect;
-			setMaskAndOutline( textRect, m_outlineWidth );
+			if ( m_alignment & Qt::AlignLeft )
+				xoffset = 0;
+			else if ( m_alignment & Qt::AlignRight )
+				xoffset = rect.width() - textWidth;
+			else // if ( m_alignment & Qt::AlignHCenter || m_alignment & Qt::AlignCenter )
+				xoffset = (rect.width() - textWidth) / 2;
 		}
+
+		QRect textRect( xoffset, yoffset, textWidth, textHeight );
+		setMaskAndOutline( textRect, m_outlineWidth );
 	}
 
 	m_dirty = false;
@@ -386,7 +351,8 @@ void TextOverlayWidget::setMaskAndOutline( QRect& textRect, unsigned outlineWidt
 	static const QRgb color0 = QColor( Qt::color0 ).rgb(); // mask transparent
 	static const QRgb color1 = QColor( Qt::color1 ).rgb(); // mask non transparent
 
-	QImage bgImage = m_bgPixmap.toImage();
+//	move( textRect.topLeft() );
+//	resize( textRect.size() );
 
 	// NOTE: we use a 32 bits image for the mask creation for performance reasons
 	QImage maskImage( size(), QImage::Format_RGB32 );
@@ -408,15 +374,12 @@ void TextOverlayWidget::setMaskAndOutline( QRect& textRect, unsigned outlineWidt
 		if ( outlineMaxY > maxImageY )
 			outlineMaxY = maxImageY;
 
-// 		static QTime time;
-// 		time.start();
-// 		// we don't need all the values initialized, only the ones we will actually use
+		// we don't need all the values initialized, only the ones we will actually use
 		for ( int y = outlineMinY; y <= outlineMaxY; ++y )
 		{
-			bgImageScanLines[y] = (QRgb*)bgImage.scanLine( y );
+			bgImageScanLines[y] = (QRgb*)m_bgImage.scanLine( y );
 			maskImageScanLines[y] = (QRgb*)maskImage.scanLine( y );
 		}
-// 		kDebug() << time.elapsed();
 
 		int lminX, lmaxX, lminY, lmaxY;
 		for ( int y = textRect.top(), maxY = textRect.bottom(); y <= maxY; ++y )
@@ -446,12 +409,10 @@ void TextOverlayWidget::setMaskAndOutline( QRect& textRect, unsigned outlineWidt
 				}
 			}
 		}
-
-		m_bgPixmap = m_bgPixmap.fromImage( bgImage );
 	}
 	else
 	{
-		QRgb* bgImageBits = (QRgb*)bgImage.bits();
+		QRgb* bgImageBits = (QRgb*)m_bgImage.bits();
 		QRgb* maskImageBits = (QRgb*)maskImage.bits();
 
 		for ( int index = 0, size = width()*height(); index < size; ++index )

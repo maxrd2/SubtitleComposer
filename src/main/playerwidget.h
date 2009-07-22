@@ -133,6 +133,7 @@ namespace SubtitleComposer
 			SubtitleLine* m_overlayLine;	// the line being shown or to be shown next
 			SubtitleLine* m_playingLine;	// the line being shown or the last one shown
 
+			int m_fullScreenTID;
 			bool m_fullScreenMode;
 			Player* m_player;
 
@@ -164,8 +165,8 @@ namespace SubtitleComposer
 			QLabel* m_lengthLabel;
 			QLabel* m_fpsLabel;
 
-			QPoint m_lastCursorPos; // for hidding the mouse on full screen mode
-			QPoint m_cursorPos;
+			QPoint m_savedCursorPos; // for hidding the mouse on full screen mode
+			QPoint m_currentCursorPos;
 	};
 }
 

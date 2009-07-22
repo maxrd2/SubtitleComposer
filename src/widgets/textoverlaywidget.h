@@ -28,49 +28,44 @@
 #include <QtGui/QFont>
 #include <QtGui/QPen>
 #include <QtGui/QColor>
-#include <QtGui/QPixmap>
+#include <QtGui/QImage>
 #include <QtGui/QBitmap>
 
 class QTextDocument;
 
 class TextOverlayWidget : public QWidget
 {
+	Q_OBJECT
+
 	public:
 
 		TextOverlayWidget( QWidget *parent=0 );
 		virtual ~TextOverlayWidget();
 
 		QString text() const;
-		void setText( const QString& text );
-
-		bool richTextMode() const;
-		void setRichTextMode( bool value );
 
 		int alignment() const;
-		void setAlignment( int alignment );
-
 		int pointSize() const;
-		void setPointSize( int pointSize );
-
 		qreal pointSizeF() const;
-		void setPointSizeF( qreal pointSizeF );
-
 		int pixelSize() const;
-		void setPixelSize( int pixelSize );
-
 		QString family() const;
-		void setFamily( const QString& family );
-
 		QColor primaryColor() const;
-		void setPrimaryColor( const QColor& color );
-
 		unsigned outlineWidth() const;
-		void setOutlineWidth( unsigned with );
-
 		QColor outlineColor() const;
-		void setOutlineColor( const QColor& color );
 
 		virtual QSize minimumSizeHint() const;
+
+	public slots:
+
+		void setText( const QString& text );
+		void setAlignment( int alignment );
+		void setPointSize( int pointSize );
+		void setPointSizeF( qreal pointSizeF );
+		void setPixelSize( int pixelSize );
+		void setFamily( const QString& family );
+		void setPrimaryColor( const QColor& color );
+		void setOutlineWidth( unsigned with );
+		void setOutlineColor( const QColor& color );
 
 	protected:
 
@@ -100,11 +95,10 @@ class TextOverlayWidget : public QWidget
 		QColor m_transColor;
 		QRgb m_transRGB;
 
-		bool m_richTextMode;
 		QTextDocument* m_textDocument;
 
 		QBitmap m_noTextMask;
-		QPixmap m_bgPixmap;
+		QImage m_bgImage;
 
 		bool m_dirty;
 };

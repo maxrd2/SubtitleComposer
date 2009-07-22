@@ -114,14 +114,14 @@ bool InsertLinesAction::mergeWithPrevious( Action* pa )
 
 	if ( m_insertIndex == prevAction->m_insertIndex )
 	{
- 		// this inserted lines immediately above those inserted by prevAction
+		// this inserted lines immediately above those inserted by prevAction
 		m_lastIndex += (prevAction->m_lastIndex - prevAction->m_insertIndex + 1);
 		prevAction->_preUndo();
 		return true;
 	}
 	else if ( m_insertIndex == prevAction->m_lastIndex + 1 )
 	{
- 		// this inserted lines immediately below those inserted by prevAction
+		// this inserted lines immediately below those inserted by prevAction
 		m_insertIndex -= (prevAction->m_lastIndex - prevAction->m_insertIndex + 1);
 		prevAction->_preUndo();
 		return true;
@@ -136,7 +136,8 @@ void InsertLinesAction::_redo()
 
 	SubtitleLine* line;
 	int insertOffset = 0;
-	int lineIndex;
+	int lineIndex = -1;
+
 	while ( ! m_lines.isEmpty() )
 	{
 		line = m_lines.takeFirst();
@@ -242,7 +243,8 @@ void RemoveLinesAction::_undo()
 	emit m_subtitle.linesAboutToBeInserted( m_firstIndex, m_lastIndex );
 
 	int insertOffset = 0;
-	int lineIndex;
+	int lineIndex = -1;
+
 	while ( ! m_lines.isEmpty() )
 	{
 		SubtitleLine* line = m_lines.takeFirst();

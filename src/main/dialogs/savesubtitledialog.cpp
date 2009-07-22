@@ -33,7 +33,7 @@
 
 using namespace SubtitleComposer;
 
-SaveSubtitleDialog::SaveSubtitleDialog( bool primary, const QString& startDir, const QString& encoding, int newLine, const QString& format, QWidget* parent ):
+SaveSubtitleDialog::SaveSubtitleDialog( bool primary, const QString& startDir, const QString& encoding, Format::NewLine newLine, const QString& format, QWidget* parent ):
 	KFileDialog( startDir, outputFormatsFilter(), parent )
 {
 	setCaption( primary ? i18n( "Save Subtitle" ) : i18n( "Save Translation Subtitle" ) );

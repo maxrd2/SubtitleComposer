@@ -32,6 +32,7 @@
 #include "../core/subtitle.h"
 #include "../core/audiolevels.h"
 #include "../config/appconfig.h"
+#include "../formats/format.h"
 
 #include <QtCore/QMap>
 #include <QtGui/QKeySequence>
@@ -281,14 +282,14 @@ namespace SubtitleComposer
 			KUrl m_subtitleUrl;
 			QString m_subtitleFileName;
 			QString m_subtitleEncoding;
-			int m_subtitleEOL;
+			Format::NewLine m_subtitleEOL;
 			QString m_subtitleFormat;
 
 			bool m_translationMode;
 			KUrl m_subtitleTrUrl;
 			QString m_subtitleTrFileName;
 			QString m_subtitleTrEncoding;
-			int m_subtitleTrEOL;
+			Format::NewLine m_subtitleTrEOL;
 			QString m_subtitleTrFormat;
 
 			Player* m_player;

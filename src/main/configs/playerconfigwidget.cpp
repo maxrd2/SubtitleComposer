@@ -108,7 +108,6 @@ PlayerConfigWidget::PlayerConfigWidget( QWidget* parent ):
 		"Text for previewing the subtitles font settings",
 		"<p>The Quick Brown Fox<br/>Jumps Over The Lazy Dog</p>"
 	) );
-	m_textOverlayWidget->setRichTextMode( true );
 	m_textOverlayWidget->setOutlineWidth( 1 );
 	m_textOverlayWidget->setAlignment( Qt::AlignHCenter|Qt::AlignVCenter );
 
