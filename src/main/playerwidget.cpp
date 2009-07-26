@@ -312,7 +312,7 @@ void PlayerWidget::setFullScreenMode( bool fullScreenMode )
 
 		if ( m_fullScreenMode )
 		{
-			increaseFontSize( 13 );
+			increaseFontSize( 18 );
 
 			window()->hide();
 			m_layeredWidget->setParent( 0 ); // removes the widget from this window (and this m_mainLayout)
@@ -330,7 +330,7 @@ void PlayerWidget::setFullScreenMode( bool fullScreenMode )
 				m_fullScreenTID = 0;
 			}
 
-			decreaseFontSize( 13 );
+			decreaseFontSize( 18 );
 
 			m_fullScreenControls->dettach();
 

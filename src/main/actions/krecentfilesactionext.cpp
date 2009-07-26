@@ -82,7 +82,16 @@ QString KRecentFilesActionExt::encodingForUrl( const KUrl& url ) const
 
 KUrl::List KRecentFilesActionExt::urls() const
 {
-	return m_actions.keys();
+	KUrl::List urls;
+	QList<QAction*> actions = this->actions();
+	QAction* action;
+	for ( QList<QAction*>::ConstIterator it = actions.constBegin(), end = actions.constEnd(); it != end; ++it )
+	{
+		action = *it;
+		if ( action != m_separatorAction && action != m_clearHistoryAction )
+			urls.append( m_urls[action] );
+	}
+	return urls;
 }
 
 void KRecentFilesActionExt::setUrls( const KUrl::List& urls, bool ignoreCollisions )
@@ -129,7 +138,7 @@ void KRecentFilesActionExt::setUrls( const KUrl::List& urls )
 
 void KRecentFilesActionExt::addUrl( const KUrl& url )
 {
-	removeUrl( url ); // avoid duplicates
+	removeUrl( url ); // avoid duplicates entries (without taking encoding into account)
 
 	KUrl::List newUrls = urls();
 	newUrls.prepend( url );

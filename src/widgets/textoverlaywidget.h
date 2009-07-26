@@ -50,10 +50,12 @@ class TextOverlayWidget : public QWidget
 		int pixelSize() const;
 		QString family() const;
 		QColor primaryColor() const;
-		unsigned outlineWidth() const;
+		int outlineWidth() const;
 		QColor outlineColor() const;
 
 		virtual QSize minimumSizeHint() const;
+
+		virtual bool eventFilter( QObject* object, QEvent* event );
 
 	public slots:
 
@@ -64,20 +66,21 @@ class TextOverlayWidget : public QWidget
 		void setPixelSize( int pixelSize );
 		void setFamily( const QString& family );
 		void setPrimaryColor( const QColor& color );
-		void setOutlineWidth( unsigned with );
+		void setOutlineWidth( int with );
 		void setOutlineColor( const QColor& color );
 
 	protected:
 
-		virtual void paintEvent( QPaintEvent* );
-		virtual void resizeEvent( QResizeEvent* e );
+		virtual void customEvent( QEvent* event );
+		virtual void paintEvent( QPaintEvent* event );
 
-		void setDirty( bool updateRichText, bool updateTransColor );
+		void setDirty( bool updateRichText, bool updateTransColor, bool flickerless=false );
 
 		void updateColors();
 		void updateContents();
 
-		void setMaskAndOutline( QRect& textRect, unsigned width );
+		QRect calculateTextRect() const;
+		void setMaskAndOutline( int width );
 
 	private:
 
@@ -88,7 +91,7 @@ class TextOverlayWidget : public QWidget
 		QColor m_primaryColor;
 		QRgb m_primaryRGB;
 
-		unsigned m_outlineWidth;
+		int m_outlineWidth;
 		QColor m_outlineColor;
 		QRgb m_outlineRGB;
 
