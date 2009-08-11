@@ -23,7 +23,9 @@
 #include "playerwidget.h"
 #include "lineswidget.h"
 #include "currentlinewidget.h"
-#include "../player/player.h"
+#include "statusbar.h"
+#include "../services/player.h"
+#include "../services/decoder.h"
 
 #include <QtGui/QGridLayout>
 #include <QtGui/QSplitter>
@@ -42,9 +44,6 @@ MainWindow::MainWindow():
 
 	QSplitter* splitter = new QSplitter( mainWidget );
 
-// 	m_audiolevelsWidget = new AudioLevelsWidget( splitter );
-// 	m_audiolevelsWidget->hide();
-
 	m_playerWidget = new PlayerWidget( splitter );
 	m_playerWidget->setContentsMargins( 0, 0, 0, 0 );
 
@@ -59,31 +58,33 @@ MainWindow::MainWindow():
 	m_curLineWidget = new CurrentLineWidget( mainWidget );
 	m_curLineWidget->setMaximumHeight( m_curLineWidget->minimumSizeHint().height() );
 
+	m_statusBar = new StatusBar2( this );
+
 	QLayout* mainWidgetLayout = new QBoxLayout( QBoxLayout::TopToBottom, mainWidget );
 	mainWidgetLayout->setContentsMargins( 5, 1, 5, 2 );
 	mainWidgetLayout->setSpacing( 5 );
 	mainWidgetLayout->addWidget( splitter );
 	mainWidgetLayout->addWidget( m_curLineWidget );
 
-	setCentralWidget( mainWidget ); // tell the KMainWindow that this is indeed the main widget
+	setStatusBar( m_statusBar );
+	setCentralWidget( mainWidget );
 
-	statusBar()->show(); // a status bar
-	toolBar()->show(); // and a tool bar
+	statusBar()->show();
+	toolBar()->show();
 	menuBar()->show();
 }
-
 
 MainWindow::~MainWindow()
 {
 	app()->saveConfig();
 
-	Player* player = Player::instance();
+	// We must disconnect the player and the decoder when closing down, otherwise signal
+	// handlers could be called with the some object destroyed, crashing the application
+	disconnect( Player::instance(), 0, 0, 0 );
+	disconnect( Decoder::instance(), 0, 0, 0 );
 
-	// We must disconnect the player when closing down, otherwise signal handlers
-	// could be called with the some object destroyed, crashing the application
-	disconnect( player, 0, 0, 0 );
-
-	player->setApplicationClosingDown();
+	Player::instance()->setApplicationClosingDown();
+	Decoder::instance()->setApplicationClosingDown();
 }
 
 void MainWindow::loadConfig()

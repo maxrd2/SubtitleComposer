@@ -39,7 +39,7 @@ Speller::Speller( QWidget* parent ):
 	m_iterator( 0 )
 {
 	connect( app()->spellingConfig(), SIGNAL(optionChanged(const QString&,const QString&)),
-			 this, SLOT(onSpellingOptionChanged(const QString&,const QString&)) );
+			this, SLOT(onSpellingOptionChanged(const QString&,const QString&)) );
 }
 
 Speller::~Speller()
@@ -130,8 +130,8 @@ bool Speller::advance()
 	{
 		++(*m_iterator);
 
-		if ( m_firstIndex == m_iterator->index() ||
-			m_firstIndex == m_iterator->firstIndex() && m_iterator->index() == SubtitleIterator::AfterLast )
+		if ( (m_firstIndex == m_iterator->index()) ||
+			(m_firstIndex == m_iterator->firstIndex() && m_iterator->index() == SubtitleIterator::AfterLast) )
 			return false;
 
 		if ( m_iterator->index() < 0 )

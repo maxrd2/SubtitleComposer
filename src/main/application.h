@@ -30,15 +30,16 @@
 #include "configs/errorsconfig.h"
 #include "configs/playerconfig.h"
 #include "../core/subtitle.h"
-#include "../core/audiolevels.h"
 #include "../config/appconfig.h"
 #include "../formats/format.h"
 
 #include <QtCore/QMap>
+#include <QtCore/QString>
 #include <QtGui/QKeySequence>
 
 #include <KApplication>
 #include <KAction>
+#include <KUrl>
 
 class KComboBox;
 class KAction;
@@ -50,12 +51,13 @@ class KSelectAction;
 namespace SubtitleComposer
 {
 	class Player;
-	class AudioLevels;
+	class Decoder;
 
-	class AudioLevelsWidget;
 	class PlayerWidget;
 	class LinesWidget;
 	class CurrentLineWidget;
+	class StatusBar2;
+
 	class ConfigDialog;
 	class ErrorsDialog;
 	class ErrorsWidget;
@@ -208,6 +210,8 @@ namespace SubtitleComposer
 			void adjustToVideoPositionAnchorLast();
 			void adjustToVideoPositionAnchorFirst();
 
+			void extractVideoAudio();
+
 			void openAudioLevels();
 			void openAudioLevels( const KUrl& url );
 			void saveAudioLevelsAs();
@@ -224,9 +228,6 @@ namespace SubtitleComposer
 
 			void subtitleOpened( Subtitle* subtitle );
 			void subtitleClosed();
-
-			void audiolevelsOpened( AudioLevels* audiolevels );
-			void audiolevelsClosed();
 
 			void translationModeChanged( bool value );
 			void fullScreenModeChanged( bool value );
@@ -266,6 +267,9 @@ namespace SubtitleComposer
 			void onPlayerActiveAudioStreamChanged( int audioStream );
 			void onPlayerMuteChanged( bool muted );
 			void onPlayerOptionChanged( const QString& option, const QString& value );
+
+			void onDecoderError();
+
 			void onGeneralOptionChanged( const QString& option, const QString& value );
 
 			void setActiveSubtitleStream( int subtitleStream );
@@ -293,16 +297,15 @@ namespace SubtitleComposer
 			QString m_subtitleTrFormat;
 
 			Player* m_player;
+			Decoder* m_decoder;
 
 			SubtitleLine* m_lastFoundLine;
 
-			//AudioLevels* m_audiolevels; // FIXME audio levels
-
 			MainWindow* m_mainWindow;
-			//AudioLevelsWidget* m_audiolevelsWidget; // FIXME audio levels
 			PlayerWidget* m_playerWidget;
 			LinesWidget* m_linesWidget;
 			CurrentLineWidget* m_curLineWidget;
+			StatusBar2* m_statusBar;
 
 			ConfigDialog* m_configDialog;
 			ErrorsDialog* m_errorsDialog;

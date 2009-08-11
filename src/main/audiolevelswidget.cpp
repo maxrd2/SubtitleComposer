@@ -19,7 +19,7 @@
 
 #include "audiolevelswidget.h"
 #include "../core/subtitleline.h"
-#include "../player/player.h"
+#include "../services/player.h"
 
 #include <QtCore/QRect>
 #include <QtGui/QPainter>

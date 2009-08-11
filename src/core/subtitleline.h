@@ -21,7 +21,7 @@
  ***************************************************************************/
 
 #ifdef HAVE_CONFIG_H
-	#include <config.h>
+    #include <config.h>
 #endif
 
 #include "action.h"
@@ -247,7 +247,7 @@ namespace SubtitleComposer
 
 		private:
 
-			FormatData* const formatData() const;
+			FormatData* formatData() const;
 			void setFormatData( const FormatData* formatData );
 
 			void processAction( Action* action );

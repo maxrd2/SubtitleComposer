@@ -219,12 +219,14 @@ void KRecentFilesActionExt::saveEntries( const KConfigGroup& g )
 
 	group.deleteGroup();
 
+	KUrl::List urls = this->urls();
+
 	int index = 0;
 	QString key( "File%1" );
-	for ( QMap<KUrl,QAction*>::ConstIterator it = m_actions.begin(), end = m_actions.end(); it != end; ++it )
-		group.writePathEntry( key.arg( index++ ), it.key().pathOrUrl() );
+	for ( KUrl::List::ConstIterator it = urls.constBegin(), end = urls.constEnd(); it != end; ++it )
+		group.writePathEntry( key.arg( index++ ), (*it).pathOrUrl() );
 
-	group.writeEntry( "Files", m_urls.count() );
+	group.writeEntry( "Files", urls.count() );
 }
 
 void KRecentFilesActionExt::onActionTriggered( QAction* action )

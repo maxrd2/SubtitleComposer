@@ -56,7 +56,7 @@ void PointingSlider::mousePressEvent( QMouseEvent* e )
 		pixelsPerUnit = (double)width / range;
 		clickedValue = (e->x() * range) / width;
 
-		if ( qApp->isRightToLeft() && ! invertedAppearance() || ! qApp->isRightToLeft() && invertedAppearance())
+		if ( (qApp->isRightToLeft() && ! invertedAppearance()) || (! qApp->isRightToLeft() && invertedAppearance()) )
 			clickedValue = maximum() - clickedValue;
 	}
 	else

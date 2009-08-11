@@ -21,7 +21,7 @@
  ***************************************************************************/
 
 #ifdef HAVE_CONFIG_H
-	#include <config.h>
+    #include <config.h>
 #endif
 
 #include "appconfiggroup.h"
@@ -58,7 +58,7 @@ namespace SubtitleComposer
 			void writeTo( KSharedConfig* config ) const;
 
 			AppConfigGroup* group( const QString& name );
-			const AppConfigGroup* const group( const QString& name ) const;
+			const AppConfigGroup* group( const QString& name ) const;
 
 			void setGroup( AppConfigGroup* group ); /// ownership is transferred to this object
 			AppConfigGroup* removeGroup( const QString& name ); /// ownership is transferred to the caller

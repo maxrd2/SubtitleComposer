@@ -65,7 +65,8 @@ namespace SubtitleComposer
 
 		private:
 
-			KComboBox* m_backendComboBox;
+			KComboBox* m_playerBackendComboBox;
+			KComboBox* m_decoderBackendComboBox;
 			KIntNumInput* m_seekJumpSecsSpinBox;
 			QCheckBox* m_showPositionTimeEditCheckBox;
 

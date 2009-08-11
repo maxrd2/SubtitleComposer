@@ -59,10 +59,14 @@ namespace SubtitleComposer
 				VideoOpened =			0x4000,
 				VideoStopped =			0x8000,
 				VideoPlaying =			0x10000,
-				AudioLevelsClosed =		0x20000,
-				AudioLevelsOpened =		0x40000,
-				FullScreenOn =			0x80000,
-				FullScreenOff =			0x100000,
+				AudioClosed =			0x20000,
+				AudioOpened =			0x40000,
+				AudioStopped =			0x80000,
+				AudioDecoding =			0x100000,
+				AudioLevelsClosed =		0x200000,
+				AudioLevelsOpened =		0x400000,
+				FullScreenOn =			0x800000,
+				FullScreenOff =			0x1000000,
 
 				SubtitleMask =  		SubClosed|SubOpened|SubTrClosed|SubTrOpened|
 										SubPDirty|SubPClean|SubSDirty|SubSClean|
@@ -70,6 +74,7 @@ namespace SubtitleComposer
 										SubHasUndo|SubHasRedo,
 				SelectionMask =			HasSelection,
 				VideoMask =				VideoClosed|VideoOpened|VideoStopped|VideoPlaying,
+				AudioMask =				AudioClosed|AudioOpened|AudioStopped|AudioDecoding,
 				AudioLevelsMask = 		AudioLevelsClosed|AudioLevelsOpened,
 				FullScreenMask =		FullScreenOn|FullScreenOff,
 				AllMask =				SubtitleMask|SelectionMask|VideoMask|AudioLevelsMask|FullScreenMask
@@ -105,6 +110,7 @@ namespace SubtitleComposer
 	};
 
 	class Player;
+	class Decoder;
 
 	class UserActionManager : public QObject
 	{
@@ -124,6 +130,7 @@ namespace SubtitleComposer
 			void setLinesWidget( LinesWidget* linesWidget=0 );
 			void setAudioLevels( AudioLevels* audiolevels=0 );
 			void setPlayer( Player* player=0 );
+			void setDecoder( Decoder* decoder=0 );
 			void setTranslationMode( bool translationMode );
 			void setFullScreenMode( bool fullScreenMode );
 
@@ -141,6 +148,7 @@ namespace SubtitleComposer
 			void onUndoRedoStateChanged();
 			void onLinesWidgetSelectionChanged();
 			void onPlayerStateChanged();
+			void onDecoderStateChanged();
 
 		private:
 
@@ -149,6 +157,7 @@ namespace SubtitleComposer
 			const Subtitle* m_subtitle;
 			const LinesWidget* m_linesWidget;
 			const Player* m_player;
+			const Decoder* m_decoder;
 			bool m_translationMode;
 
 			int m_contextFlags;

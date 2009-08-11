@@ -176,7 +176,7 @@ SimpleRichTextEdit::~SimpleRichTextEdit()
 		delete m_insertUnicodeControlCharMenu->parent();
 }
 
-KAction* const SimpleRichTextEdit::action( int action ) const
+KAction* SimpleRichTextEdit::action( int action ) const
 {
 	return action >= 0 && action < ActionCount ? m_actions[action] : 0;
 }
@@ -399,9 +399,9 @@ QMenu* SimpleRichTextEdit::createContextMenu( const QPoint& mouseGlobalPos )
 	QTextCursor cursor = textCursor();
 
 	const bool showTextSelectionActions = (Qt::TextEditable|
-										   Qt::TextSelectableByKeyboard|
-										   Qt::TextSelectableByMouse)
-										   & interactionFlags;
+										Qt::TextSelectableByKeyboard|
+										Qt::TextSelectableByMouse)
+										& interactionFlags;
 
 	KMenu* menu = new KMenu( this );
 

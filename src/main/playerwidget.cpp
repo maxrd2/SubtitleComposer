@@ -23,8 +23,7 @@
 #include "actions/useractionnames.h"
 #include "../common/commondefs.h"
 #include "../core/subtitleiterator.h"
-#include "../player/player.h"
-#include "../player/playerbackend.h"
+#include "../services/player.h"
 #include "../widgets/layeredwidget.h"
 #include "../widgets/textoverlaywidget.h"
 #include "../widgets/attachablewidget.h"
@@ -49,13 +48,12 @@
 #include <KMenu>
 #include <KPushButton>
 
-
 using namespace SubtitleComposer;
 
 // FIXME WTF is this!??
 #define MAGIC_NUMBER -1
 #define HIDE_MOUSE_MSECS 1000
-#define UNKNOWN_LENGTH_STRING (" / " + Time().toString() + ' ')
+#define UNKNOWN_LENGTH_STRING (" / " + Time().toString( false ) + ' ')
 
 PlayerWidget::PlayerWidget( QWidget* parent ):
 	QWidget( parent ),
@@ -79,9 +77,9 @@ PlayerWidget::PlayerWidget( QWidget* parent ):
 	m_layeredWidget->installEventFilter( this );
 	m_layeredWidget->setSizePolicy( QSizePolicy::Expanding, QSizePolicy::Expanding );
 
-	m_player->initialize( m_layeredWidget, app()->playerConfig()->backend() );
+	m_player->initialize( m_layeredWidget, app()->playerConfig()->playerBackend() );
 
-	connect( m_player, SIGNAL( backendInitialized(PlayerBackend*) ), this, SLOT( onPlayerBackendInitialized() ) );
+	connect( m_player, SIGNAL( backendInitialized(ServiceBackend*) ), this, SLOT( onPlayerBackendInitialized() ) );
 
 	m_textOverlay = new TextOverlayWidget( m_layeredWidget );
 	m_textOverlay->setAlignment( Qt::AlignHCenter|Qt::AlignBottom );
@@ -207,20 +205,21 @@ PlayerWidget::PlayerWidget( QWidget* parent ):
 	fullScreenControlsLayout->setMargin( 0 );
 	fullScreenControlsLayout->setSpacing( 0 );
 
-	fullScreenControlsLayout->addWidget( createToolButton( m_fullScreenControls, ACT_PLAY_PAUSE, 32 ) );
-	fullScreenControlsLayout->addWidget( createToolButton( m_fullScreenControls, ACT_STOP, 32 ) );
-	fullScreenControlsLayout->addWidget( createToolButton( m_fullScreenControls, ACT_SEEK_BACKWARDS, 32 ) );
-	fullScreenControlsLayout->addWidget( createToolButton( m_fullScreenControls, ACT_SEEK_FORWARDS, 32 ) );
+	const int FS_BUTTON_SIZE = 32;
+	fullScreenControlsLayout->addWidget( createToolButton( m_fullScreenControls, ACT_PLAY_PAUSE, FS_BUTTON_SIZE ) );
+	fullScreenControlsLayout->addWidget( createToolButton( m_fullScreenControls, ACT_STOP, FS_BUTTON_SIZE ) );
+	fullScreenControlsLayout->addWidget( createToolButton( m_fullScreenControls, ACT_SEEK_BACKWARDS, FS_BUTTON_SIZE ) );
+	fullScreenControlsLayout->addWidget( createToolButton( m_fullScreenControls, ACT_SEEK_FORWARDS, FS_BUTTON_SIZE ) );
 	fullScreenControlsLayout->addSpacing( 3 );
-	fullScreenControlsLayout->addWidget( createToolButton( m_fullScreenControls, ACT_SEEK_TO_PREVIOUS_LINE, 32 ) );
-	fullScreenControlsLayout->addWidget( createToolButton( m_fullScreenControls, ACT_SEEK_TO_NEXT_LINE, 32 ) );
+	fullScreenControlsLayout->addWidget( createToolButton( m_fullScreenControls, ACT_SEEK_TO_PREVIOUS_LINE, FS_BUTTON_SIZE ) );
+	fullScreenControlsLayout->addWidget( createToolButton( m_fullScreenControls, ACT_SEEK_TO_NEXT_LINE, FS_BUTTON_SIZE ) );
 	fullScreenControlsLayout->addSpacing( 3 );
 	fullScreenControlsLayout->addWidget( m_fsSeekSlider, 9 );
 // 	fullScreenControlsLayout->addSpacing( 1 );
 	fullScreenControlsLayout->addWidget( m_fsPositionLabel );
 	fullScreenControlsLayout->addWidget( m_fsVolumeSlider, 2 );
-	fullScreenControlsLayout->addWidget( createToolButton( m_fullScreenControls, ACT_TOGGLE_MUTED, 32 ) );
-	fullScreenControlsLayout->addWidget( createToolButton( m_fullScreenControls, ACT_TOGGLE_FULL_SCREEN, 32 ) );
+	fullScreenControlsLayout->addWidget( createToolButton( m_fullScreenControls, ACT_TOGGLE_MUTED, FS_BUTTON_SIZE ) );
+	fullScreenControlsLayout->addWidget( createToolButton( m_fullScreenControls, ACT_TOGGLE_FULL_SCREEN, FS_BUTTON_SIZE ) );
 	m_fullScreenControls->adjustSize();
 
 	setMouseTracking( true );
@@ -251,7 +250,7 @@ PlayerWidget::PlayerWidget( QWidget* parent ):
 	connect( m_player, SIGNAL( fileOpened(const QString&) ), this, SLOT( onPlayerFileOpened(const QString&) ) );
 	connect( m_player, SIGNAL( fileOpenError(const QString&) ), this, SLOT( onPlayerFileOpenError(const QString&) ) );
 	connect( m_player, SIGNAL( fileClosed() ), this, SLOT( onPlayerFileClosed() ) );
-	connect( m_player, SIGNAL( playbackError() ), this, SLOT( onPlayerPlaybackError() ) );
+	connect( m_player, SIGNAL( error() ), this, SLOT( onPlayerPlaybackError() ) );
 	connect( m_player, SIGNAL( playing() ), this, SLOT( onPlayerPlaying() ) );
 	connect( m_player, SIGNAL( stopped() ), this, SLOT( onPlayerStopped() ) );
 	connect( m_player, SIGNAL( positionChanged(double) ), this, SLOT( onPlayerPositionChanged(double) ) );
@@ -285,6 +284,7 @@ QToolButton* PlayerWidget::createToolButton( QWidget* parent, const char* name, 
 	QToolButton* toolButton = new QToolButton( parent );
 	toolButton->setObjectName( name );
 	toolButton->setMinimumSize( size, size );
+	toolButton->setIconSize( size >= 32 ? QSize( size - 6, size - 6 ) : QSize( size, size ) );
 	toolButton->setAutoRaise( true );
 	toolButton->setFocusPolicy( Qt::NoFocus );
 	return toolButton;
@@ -691,9 +691,9 @@ void PlayerWidget::onPositionEditValueChanged( int position )
 
 void PlayerWidget::onPlayerOptionChanged( const QString& option, const QString& value )
 {
-	if ( option == PlayerConfig::keyBackend() )
+	if ( option == PlayerConfig::keyPlayerBackend() )
 	{
-		m_player->setActiveBackend( value );
+		m_player->reinitialize( value );
 	}
 	else if ( option == PlayerConfig::keyShowPositionTimeEdit() )
 	{
@@ -903,6 +903,20 @@ void PlayerWidget::onPlayerBackendInitialized()
 	// is created in front of the text overlay, so we have to raise
 	// it to make it visible again
 	m_textOverlay->raise();
+
+	m_layeredWidget->setCursor( Qt::ArrowCursor );
+
+	/*if ( m_currentCursorPos != m_savedCursorPos )
+	{
+		m_savedCursorPos = m_currentCursorPos;
+	}
+	else if ( ! m_fullScreenControls->underMouse() )
+	{
+		if ( m_layeredWidget->cursor().shape() != Qt::BlankCursor )
+			m_layeredWidget->setCursor( QCursor( Qt::BlankCursor ) );
+		if ( m_fullScreenControls->isAttached() )
+			m_fullScreenControls->toggleVisible( false );
+	}*/
 }
 
 #include "playerwidget.moc"

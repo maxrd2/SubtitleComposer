@@ -4,3 +4,6 @@ Planned features / known issues
 * automatic correction of OCR errors
 * failing to load a subtitle fail because of an invalid encoding issue is annoying, perhaps the "next" encoding should be tried and the error informed.
 * translation service could improve synchronization issues if it cooperated more closely with the subtitle
+
+* fix mouse bug in player widget when changing backend
+* test and fix remaining bugs in decoder and decoder backends

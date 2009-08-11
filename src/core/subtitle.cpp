@@ -79,8 +79,8 @@ void Subtitle::setPrimaryData( const Subtitle& from, bool usePrimaryData )
 	const int thisErrors =	SubtitleLine::SecondaryOnlyErrors;
 
 	for ( SubtitleLine *fromLine = fromIt.current(), *thisLine = thisIt.current();
-		  fromLine && thisLine;
-		  ++fromIt, ++thisIt, fromLine = fromIt.current(), thisLine = thisIt.current() )
+		fromLine && thisLine;
+		++fromIt, ++thisIt, fromLine = fromIt.current(), thisLine = thisIt.current() )
 	{
 		thisLine->setPrimaryText( usePrimaryData ? fromLine->primaryText() : fromLine->secondaryText() );
 		thisLine->setTimes( fromLine->showTime(), fromLine->hideTime() );
@@ -142,8 +142,8 @@ void Subtitle::setSecondaryData( const Subtitle& from, bool fromPrimaryData )
 	const int thisErrors = SubtitleLine::PrimaryOnlyErrors|SubtitleLine::SharedErrors;
 
 	for ( SubtitleLine *fromLine = fromIt.current(), *thisLine = thisIt.current();
-		  fromLine && thisLine;
-		  ++fromIt, ++thisIt, fromLine = fromIt.current(), thisLine = thisIt.current() )
+		fromLine && thisLine;
+		++fromIt, ++thisIt, fromLine = fromIt.current(), thisLine = thisIt.current() )
 	{
 		thisLine->setSecondaryText( fromPrimaryData ? fromLine->primaryText() : fromLine->secondaryText() );
 		thisLine->setErrorFlags( (thisLine->errorFlags() & thisErrors) | (fromLine->errorFlags() & fromErrors) );
@@ -216,7 +216,7 @@ void Subtitle::clearSecondaryDirty()
 	}
 }
 
-FormatData* const Subtitle::formatData() const
+FormatData* Subtitle::formatData() const
 {
 	return m_formatData;
 }
@@ -564,9 +564,9 @@ void Subtitle::splitLines( const RangeList& ranges )
 
 			int subLineIndex = it.index(), splitLineIndex = 0;
 			for ( SStringList::ConstIterator ptIt = primaryLines.begin(), ptEnd = secondaryLines.end(),
-				  stIt = secondaryLines.begin(), stEnd = secondaryLines.end();
-				  ptIt != ptEnd && stIt != stEnd;
-				  ++ptIt, ++stIt, ++subLineIndex, ++splitLineIndex )
+				stIt = secondaryLines.begin(), stEnd = secondaryLines.end();
+				ptIt != ptEnd && stIt != stEnd;
+				++ptIt, ++stIt, ++subLineIndex, ++splitLineIndex )
 			{
 				if ( splitLineIndex )
 				{
@@ -1167,8 +1167,8 @@ void Subtitle::syncWithSubtitle( const Subtitle& refSubtitle )
 	beginCompositeAction( i18n( "Synchronize Subtitles" ) );
 
 	for ( SubtitleIterator it( *this, Range::full() ), refIt( refSubtitle, Range::full() );
-		  it.current() && refIt.current();
-		  ++it, ++refIt )
+		it.current() && refIt.current();
+		++it, ++refIt )
 		it.current()->setTimes( refIt.current()->showTime(), refIt.current()->hideTime() );
 
 	endCompositeAction();

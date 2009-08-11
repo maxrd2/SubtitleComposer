@@ -33,7 +33,7 @@ namespace SubtitleComposer
 	class PlayerWidget;
 	class LinesWidget;
 	class CurrentLineWidget;
-	class AudioLevelsWidget;
+	class StatusBar2;
 
 	class MainWindow : public KXmlGuiWindow
 	{
@@ -59,10 +59,10 @@ namespace SubtitleComposer
 
 		protected:
 
-			//AudioLevelsWidget* m_audiolevelsWidget;
 			PlayerWidget* m_playerWidget;
 			LinesWidget* m_linesWidget;
 			CurrentLineWidget* m_curLineWidget;
+			StatusBar2* m_statusBar;
 	};
 }
 

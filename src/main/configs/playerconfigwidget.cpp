@@ -18,7 +18,8 @@
  ***************************************************************************/
 
 #include "playerconfigwidget.h"
-#include "../../player/player.h"
+#include "../../services/player.h"
+#include "../../services/decoder.h"
 #include "../../widgets/layeredwidget.h"
 #include "../../widgets/textoverlaywidget.h"
 
@@ -43,11 +44,17 @@ PlayerConfigWidget::PlayerConfigWidget( QWidget* parent ):
 {
 	QGroupBox* generalGroupBox = createGroupBox( i18nc( "@title:group General settings", "General" ) );
 
-	QLabel* backendLabel = new QLabel( generalGroupBox );
-	backendLabel->setText( i18n( "Player backend:" ) );
+	QLabel* playerBackendLabel = new QLabel( generalGroupBox );
+	playerBackendLabel->setText( i18n( "Player backend:" ) );
 
-	m_backendComboBox = new KComboBox( generalGroupBox );
-	m_backendComboBox->addItems( Player::instance()->backendNames() );
+	m_playerBackendComboBox = new KComboBox( generalGroupBox );
+	m_playerBackendComboBox->addItems( Player::instance()->backendNames() );
+
+	QLabel* decoderBackendLabel = new QLabel( generalGroupBox );
+	decoderBackendLabel->setText( i18n( "Decoder backend:" ) );
+
+	m_decoderBackendComboBox = new KComboBox( generalGroupBox );
+	m_decoderBackendComboBox->addItems( Decoder::instance()->backendNames() );
 
 	QLabel* seekJumpLabel = new QLabel( generalGroupBox );
 	seekJumpLabel->setText( i18n( "Jump length on seek:" ) );
@@ -113,11 +120,13 @@ PlayerConfigWidget::PlayerConfigWidget( QWidget* parent ):
 
 
 	QGridLayout* generalLayout = createGridLayout( generalGroupBox );
-	generalLayout->addWidget( backendLabel, 0, 0, Qt::AlignRight|Qt::AlignVCenter );
-	generalLayout->addWidget( m_backendComboBox, 0, 1 );
-	generalLayout->addWidget( seekJumpLabel, 1, 0, Qt::AlignRight|Qt::AlignVCenter );
-	generalLayout->addWidget( m_seekJumpSecsSpinBox, 1, 1 );
-	generalLayout->addWidget( m_showPositionTimeEditCheckBox, 2, 0, 1, 2 );
+	generalLayout->addWidget( decoderBackendLabel, 0, 0, Qt::AlignRight|Qt::AlignVCenter );
+	generalLayout->addWidget( m_decoderBackendComboBox, 0, 1 );
+	generalLayout->addWidget( playerBackendLabel, 1, 0, Qt::AlignRight|Qt::AlignVCenter );
+	generalLayout->addWidget( m_playerBackendComboBox, 1, 1 );
+	generalLayout->addWidget( seekJumpLabel, 2, 0, Qt::AlignRight|Qt::AlignVCenter );
+	generalLayout->addWidget( m_seekJumpSecsSpinBox, 2, 1 );
+	generalLayout->addWidget( m_showPositionTimeEditCheckBox, 3, 0, 1, 2 );
 
 	QGridLayout* fontLayout = createGridLayout( fontGroupBox );
 	fontLayout->addWidget( fontLabel, 0, 0, Qt::AlignRight|Qt::AlignVCenter );
@@ -135,7 +144,8 @@ PlayerConfigWidget::PlayerConfigWidget( QWidget* parent ):
 	previewLayout->addWidget( previewWidget, 0, 0 );
 
 
-	connect( m_backendComboBox, SIGNAL(activated(int)), this, SIGNAL(settingsChanged()) );
+	connect( m_playerBackendComboBox, SIGNAL(activated(int)), this, SIGNAL(settingsChanged()) );
+	connect( m_decoderBackendComboBox, SIGNAL(activated(int)), this, SIGNAL(settingsChanged()) );
 	connect( m_seekJumpSecsSpinBox, SIGNAL(valueChanged(int)), this, SIGNAL(settingsChanged()) );
 	connect( m_showPositionTimeEditCheckBox, SIGNAL(toggled(bool)), this, SIGNAL(settingsChanged()) );
 
@@ -162,7 +172,8 @@ PlayerConfigWidget::~PlayerConfigWidget()
 
 void PlayerConfigWidget::setControlsFromConfig()
 {
-	m_backendComboBox->setCurrentItem( config()->backend() );
+	m_playerBackendComboBox->setCurrentItem( config()->playerBackend() );
+	m_decoderBackendComboBox->setCurrentItem( config()->decoderBackend() );
 	m_seekJumpSecsSpinBox->setValue( config()->seekJumpLength() );
 	m_showPositionTimeEditCheckBox->setChecked( config()->showPositionTimeEdit() );
 
@@ -184,7 +195,8 @@ void PlayerConfigWidget::setControlsFromConfig()
 
 void PlayerConfigWidget::setConfigFromControls()
 {
-	config()->setBackend( m_backendComboBox->currentText() );
+	config()->setPlayerBackend( m_playerBackendComboBox->currentText() );
+	config()->setDecoderBackend( m_decoderBackendComboBox->currentText() );
 	config()->setSeekJumpLength( m_seekJumpSecsSpinBox->value() );
 	config()->setShowPositionTimeEdit( m_showPositionTimeEditCheckBox->isChecked() );
 

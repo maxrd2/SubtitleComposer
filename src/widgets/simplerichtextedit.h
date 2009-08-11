@@ -21,7 +21,7 @@
 ***************************************************************************/
 
 #ifdef HAVE_CONFIG_H
-	#include <config.h>
+    #include <config.h>
 #endif
 
 #include "../core/sstring.h"
@@ -60,7 +60,7 @@ class SimpleRichTextEdit : public KTextEdit
 		bool fontBold();
 		bool fontStrikeOut();
 
-		virtual KAction* const action( int action ) const;
+		virtual KAction* action( int action ) const;
 
 		virtual bool event( QEvent* event );
 

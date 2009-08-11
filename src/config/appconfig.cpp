@@ -38,7 +38,7 @@ AppConfig::AppConfig( const AppConfig& config ):
 	m_groups()
 {
 	for ( QMap<QString,AppConfigGroup*>::ConstIterator it = config.m_groups.begin(), end = config.m_groups.end();
-		  it != end; ++it )
+		it != end; ++it )
 		setGroup( it.value()->clone() );
 }
 
@@ -76,7 +76,7 @@ bool AppConfig::isCompatibleWith( const AppConfig& config )
 	}
 
 	for ( QMap<QString,AppConfigGroup*>::ConstIterator it = config.m_groups.begin(), end = config.m_groups.end();
-		  it != end; ++it )
+		it != end; ++it )
 	{
 		if ( ! m_groups.contains( it.key() ) )
 			return false;
@@ -117,10 +117,10 @@ void AppConfig::writeTo( KSharedConfig* config ) const
 
 AppConfigGroup* AppConfig::group( const QString& name )
 {
- 	return m_groups.contains( name ) ? m_groups[name] : 0;
+	return m_groups.contains( name ) ? m_groups[name] : 0;
 }
 
-const AppConfigGroup* const AppConfig::group( const QString& name ) const
+const AppConfigGroup* AppConfig::group( const QString& name ) const
 {
 	return m_groups.contains( name ) ? m_groups[name] : 0;
 }

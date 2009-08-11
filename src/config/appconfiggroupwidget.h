@@ -21,7 +21,7 @@
  ***************************************************************************/
 
 #ifdef HAVE_CONFIG_H
-	#include <config.h>
+    #include <config.h>
 #endif
 
 #include "appconfiggroup.h"
@@ -43,7 +43,7 @@ namespace SubtitleComposer
 			explicit AppConfigGroupWidget( AppConfigGroup* configGroup, QWidget* parent=0 );
 			virtual ~AppConfigGroupWidget();
 
-			const AppConfigGroup* const config();
+			const AppConfigGroup* config();
 
 		signals:
 

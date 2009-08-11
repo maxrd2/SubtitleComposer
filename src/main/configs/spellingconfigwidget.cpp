@@ -18,24 +18,9 @@
  ***************************************************************************/
 
 #include "spellingconfigwidget.h"
-#include "../../player/player.h"
-#include "../../widgets/layeredwidget.h"
-#include "../../widgets/textoverlaywidget.h"
 
-#include <QtGui/QGridLayout>
-#include <QtGui/QPalette>
-#include <QtGui/QGroupBox>
-#include <QtGui/QLabel>
-#include <QtGui/QCheckBox>
-#include <QtGui/QFontComboBox>
+#include <QtGui/QLayout>
 
-#include <KPushButton>
-#include <KComboBox>
-#include <KColorCombo>
-#include <KNumInput>
-
-#include <KDebug>
-#include <KLocale>
 #include <KGlobal>
 #include <KConfig>
 #include <KConfigGroup>

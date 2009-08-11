@@ -23,8 +23,8 @@
 #include "configs/errorsconfigwidget.h"
 #include "configs/playerconfigwidget.h"
 #include "../common/commondefs.h"
-#include "../player/player.h"
-#include "../player/playerbackend.h"
+#include "../services/player.h"
+#include "../services/playerbackend.h"
 
 #include <QtGui/QCheckBox>
 #include <KPushButton>

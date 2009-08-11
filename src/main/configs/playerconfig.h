@@ -39,8 +39,11 @@ namespace SubtitleComposer
 
 			virtual AppConfigGroup* clone() const { return new PlayerConfig( *this ); }
 
-			QString backend() const { return option( keyBackend() ); }
-			void setBackend( const QString& backend ) { setOption( keyBackend(), backend ); }
+			QString playerBackend() const { return option( keyPlayerBackend() ); }
+			void setPlayerBackend( const QString& backend ) { setOption( keyPlayerBackend(), backend ); }
+
+			QString decoderBackend() const { return option( keyDecoderBackend() ); }
+			void setDecoderBackend( const QString& backend ) { setOption( keyDecoderBackend(), backend ); }
 
 			int seekJumpLength() const { return optionAsInt( keySeekJumpLength() ); } /// in seconds
 			void setSeekJumpLength( int seconds ) { setOption( keySeekJumpLength(), seconds ); }
@@ -66,7 +69,8 @@ namespace SubtitleComposer
 			void setOutlineWidth( int width ) { setOption( keyOutlineWidth(), width ); }
 
 
-			static const QString& keyBackend() { static const QString key( "Backend" ); return key; }
+			static const QString& keyPlayerBackend() { static const QString key( "PlayerBackend" ); return key; }
+			static const QString& keyDecoderBackend() { static const QString key( "DecoderBackend" ); return key; }
 			static const QString& keySeekJumpLength() { static const QString key( "SeekJumpLength" ); return key; }
 			static const QString& keyShowPositionTimeEdit() { static const QString key( "ShowPositionTimeEdit" ); return key; }
 			static const QString& keyFontFamily() { static const QString key( "FontFamily" ); return key; }
@@ -84,11 +88,20 @@ namespace SubtitleComposer
 			{
 				QMap<QString,QString> defaults;
 
-#ifdef HAVE_GSTREAMER
-				defaults[keyBackend()] = "GStreamer";
+#if defined( HAVE_GSTREAMER )
+				defaults[keyPlayerBackend()] = "GStreamer";
 #else
-				defaults[keyBackend()] = "MPlayer";
+				defaults[keyPlayerBackend()] = "MPlayer";
 #endif
+
+#if defined( HAVE_GSTREAMER )
+				defaults[keyDecoderBackend()] = "GStreamer";
+#elif defined( HAVE_XINE )
+				defaults[keyDecoderBackend()] = "Xine";
+#else
+				defaults[keyDecoderBackend()] = "Dummy";
+#endif
+
 				defaults[keySeekJumpLength()] = "15"; // in seconds
 				defaults[keyShowPositionTimeEdit()] = "false";
 

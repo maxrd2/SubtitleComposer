@@ -289,7 +289,7 @@ SubtitleLine::~SubtitleLine()
 }
 
 
-FormatData* const SubtitleLine::formatData() const
+FormatData* SubtitleLine::formatData() const
 {
 	return m_formatData;
 }

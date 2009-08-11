@@ -17,7 +17,7 @@ ADD_SUBDIRECTORY( core )
 ADD_SUBDIRECTORY( formats )
 ADD_SUBDIRECTORY( config ) # depends on common
 ADD_SUBDIRECTORY( widgets )
-ADD_SUBDIRECTORY( player )
+ADD_SUBDIRECTORY( services )
 ADD_SUBDIRECTORY( main )
 
 # do the configuration of config.h at the end, so all the necessary variables have been set

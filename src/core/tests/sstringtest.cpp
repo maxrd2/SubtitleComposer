@@ -36,11 +36,11 @@ void SStringTest::testStyleFlags()
 	QVERIFY( sstring.richString() == QString( "<b>0</b>123456789" ) );
 	sstring.setStyleFlagsAt( 2, SString::Italic );
 	QVERIFY( sstring.styleFlagsAt( 2 ) == SString::Italic );
-	QVERIFY( sstring.cummulativeStyleFlags() == SString::Bold|SString::Italic );
+	QVERIFY( sstring.cummulativeStyleFlags() == (SString::Bold|SString::Italic) );
 	QVERIFY( sstring.richString() == QString( "<b>0</b>1<i>2</i>3456789" ) );
 	sstring.setStyleFlagsAt( 1, SString::Italic );
 	QVERIFY( sstring.styleFlagsAt( 1 ) == SString::Italic );
-	QVERIFY( sstring.cummulativeStyleFlags() == SString::Bold|SString::Italic );
+	QVERIFY( sstring.cummulativeStyleFlags() == (SString::Bold|SString::Italic) );
 	QVERIFY( sstring.richString() == QString( "<b>0</b><i>12</i>3456789" ) );
 	sstring.setStyleFlagsAt( 0, SString::Italic );
 	QVERIFY( sstring.styleFlagsAt( 0 ) == SString::Italic );
@@ -48,7 +48,7 @@ void SStringTest::testStyleFlags()
 	QVERIFY( sstring.richString() == QString( "<i>012</i>3456789" ) );
 	sstring.setStyleFlagsAt( 9, SString::Underline );
 	QVERIFY( sstring.styleFlagsAt( 9 ) == SString::Underline );
-	QVERIFY( sstring.cummulativeStyleFlags() == SString::Italic|SString::Underline );
+	QVERIFY( sstring.cummulativeStyleFlags() == (SString::Italic|SString::Underline) );
 	QVERIFY( sstring.richString() == QString( "<i>012</i>345678<u>9</u>" ) );
 
 	sstring.setStyleFlags( 0, 15, 0 );

@@ -23,6 +23,7 @@
 #include "playerwidget.h"
 #include "lineswidget.h"
 #include "currentlinewidget.h"
+#include "statusbar.h"
 #include "configdialog.h"
 #include "errorswidget.h"
 #include "errorsdialog.h"
@@ -64,10 +65,13 @@
 #include "../common/commondefs.h"
 #include "../common/fileloadhelper.h"
 #include "../common/filesavehelper.h"
+#include "../common/qxtsignalwaiter.h"
 #include "../core/subtitleiterator.h"
 #include "../formats/formatmanager.h"
-#include "../player/player.h"
-#include "../player/playerbackend.h"
+#include "../services/player.h"
+#include "../services/playerbackend.h"
+#include "../services/decoder.h"
+#include "../services/decoderbackend.h"
 #include "../profiler.h"
 
 #include <QtCore/QDir>
@@ -116,34 +120,42 @@ Application::Application():
 	m_subtitleTrEOL( Format::CurrentOS ),
 	m_subtitleTrFormat(),
 	m_player( Player::instance() ),
+	m_decoder( Decoder::instance() ),
 	m_lastFoundLine( 0 ),
 //	m_audiolevels( 0 ), // FIXME audio levels
 	m_lastSubtitleUrl( QDir::homePath() ),
 	m_lastVideoUrl( QDir::homePath() ),
 	m_linkCurrentLineToPosition( false )
 {
+	QStringList playerBackendNames( m_player->backendNames() );
+	QStringList decoderBackendNames( m_decoder->backendNames() );
+
 	// The config object has to be filled first with all the groups and default data...
 	m_config.setGroup( new GeneralConfig() );
 	m_config.setGroup( new SpellingConfig() );
 	m_config.setGroup( new ErrorsConfig() );
 	m_config.setGroup( new PlayerConfig() );
-	QStringList backendNames( m_player->backendNames() );
-	for ( QStringList::ConstIterator it = backendNames.begin(), end = backendNames.end(); it != end; ++it )
+	for ( QStringList::ConstIterator it = playerBackendNames.begin(), end = playerBackendNames.end(); it != end; ++it )
 		m_config.setGroup( m_player->backend( *it )->config()->clone() );
 
 	// ...only then can be loaded
 	m_config.readFrom( KGlobal::config().constData() );
 
-	// and feed to the player backends
-	for ( QStringList::ConstIterator it = backendNames.begin(), end = backendNames.end(); it != end; ++it )
+	// and feed to the player and decoder backends
+	for ( QStringList::ConstIterator it = playerBackendNames.begin(), end = playerBackendNames.end(); it != end; ++it )
 		m_player->backend( *it )->setConfig( m_config.group( *it ) );
+	for ( QStringList::ConstIterator it = decoderBackendNames.begin(), end = decoderBackendNames.end(); it != end; ++it )
+		m_decoder->backend( *it )->setConfig( m_config.group( *it ) );
+
+	// NOTE the player is initialized by PlayerWidget because it requires the parent widget
+	m_decoder->initialize( 0, app()->playerConfig()->decoderBackend() );
 
 	m_mainWindow = new MainWindow();
 
-	// m_audiolevelsWidget = m_mainWindow->m_audiolevelsWidget; // FIXME audio levels
 	m_playerWidget = m_mainWindow->m_playerWidget;
 	m_linesWidget = m_mainWindow->m_linesWidget;
 	m_curLineWidget = m_mainWindow->m_curLineWidget;
+	m_statusBar = m_mainWindow->m_statusBar;
 
 	m_configDialog = new ConfigDialog( m_config, m_mainWindow );
 	m_errorsDialog = new ErrorsDialog( m_mainWindow );
@@ -167,16 +179,22 @@ Application::Application():
 			 this, SLOT( onGeneralOptionChanged( const QString&, const QString& ) ) );
 
 	connect( m_player, SIGNAL( fileOpened( const QString& ) ), this, SLOT( onPlayerFileOpened( const QString& ) ) );
-	connect( m_player, SIGNAL( playing() ), this, SLOT(onPlayerPlaying() ) );
-	connect( m_player, SIGNAL( paused() ), this, SLOT(onPlayerPaused() ) );
-	connect( m_player, SIGNAL( stopped() ), this, SLOT(onPlayerStopped() ) );
+	connect( m_player, SIGNAL( playing() ), this, SLOT( onPlayerPlaying() ) );
+	connect( m_player, SIGNAL( paused() ), this, SLOT( onPlayerPaused() ) );
+	connect( m_player, SIGNAL( stopped() ), this, SLOT( onPlayerStopped() ) );
 	connect( m_player, SIGNAL( audioStreamsChanged( const QStringList&) ), this, SLOT( onPlayerAudioStreamsChanged( const QStringList& ) ) );
 	connect( m_player, SIGNAL( activeAudioStreamChanged( int ) ), this, SLOT( onPlayerActiveAudioStreamChanged( int ) ) );
 	connect( m_player, SIGNAL( muteChanged( bool ) ), this, SLOT( onPlayerMuteChanged( bool ) ) );
 
+	connect( m_decoder, SIGNAL( decoding() ), m_statusBar, SLOT( initDecoding() ) );
+	connect( m_decoder, SIGNAL( positionChanged(double) ), m_statusBar, SLOT( setDecodingPosition(double) ) );
+	connect( m_decoder, SIGNAL( lengthChanged(double) ), m_statusBar, SLOT( setDecodingLength(double) ) );
+	connect( m_decoder, SIGNAL( stopped() ), m_statusBar, SLOT( endDecoding() ) );
+	connect( m_decoder, SIGNAL( error() ), this, SLOT( onDecoderError() ) );
+
 	QList<QObject*> listeners; listeners
 		<< actionManager
-		<< m_mainWindow << m_playerWidget << m_linesWidget << m_curLineWidget << m_errorsWidget // << m_audiolevelsWidget /*/*// FIXME audio levels*/*/
+		<< m_mainWindow << m_playerWidget << m_linesWidget << m_curLineWidget << m_statusBar << m_errorsWidget
 		<< m_finder << m_replacer << m_errorFinder << m_speller << m_errorTracker << m_scriptsManager;
 	for ( QList<QObject*>::ConstIterator it = listeners.begin(), end = listeners.end(); it != end; ++it )
 	{
@@ -192,13 +210,6 @@ Application::Application():
 		connect( this, SIGNAL( translationModeChanged(bool) ), *it, SLOT( setTranslationMode(bool) ) );
 
 	connect( this, SIGNAL( fullScreenModeChanged(bool) ), actionManager, SLOT( setFullScreenMode(bool) ) );
-
-// FIXME audio levels
-// 	connect( this, SIGNAL( audiolevelsOpened(AudioLevels*) ), actionManager, SLOT( setAudioLevels(AudioLevels*) ) );
-// 	connect( this, SIGNAL( audiolevelsOpened(AudioLevels*) ), m_audiolevelsWidget, SLOT( setAudioLevels(AudioLevels*) ) );
-//
-// 	connect( this, SIGNAL( audiolevelsClosed() ), actionManager, SLOT( setAudioLevels() ) );
-// 	connect( this, SIGNAL( audiolevelsClosed() ), m_audiolevelsWidget, SLOT( setAudioLevels() ) );
 
 
 	connect( m_configDialog, SIGNAL( accepted() ), this, SLOT( updateConfigFromDialog() ) );
@@ -227,11 +238,13 @@ Application::Application():
 
 	actionManager->setLinesWidget( m_linesWidget );
 	actionManager->setPlayer( m_player );
+	actionManager->setDecoder( m_decoder );
 	actionManager->setFullScreenMode( false );
 
 	setupActions();
 
 	m_playerWidget->plugActions();
+	m_statusBar->plugActions();
 	m_curLineWidget->setupActions();
 
 	m_mainWindow->setupGUI();
@@ -1043,6 +1056,23 @@ void Application::setupActions()
 	connect( closeVideoAction, SIGNAL( triggered() ), m_player, SLOT( closeFile() ) );
 	actionCollection->addAction( ACT_CLOSE_VIDEO, closeVideoAction );
 	actionManager->addAction( closeVideoAction, UserAction::VideoOpened );
+
+
+	KAction* extractVideoAudioAction = new KAction( actionCollection );
+	extractVideoAudioAction->setIcon( KIcon( "audio-extract" ) );
+	extractVideoAudioAction->setText( i18n( "Extract Audio" ) );
+	extractVideoAudioAction->setStatusTip( i18n( "Extract video's active audio stream" ) );
+	connect( extractVideoAudioAction, SIGNAL( triggered() ), this, SLOT( extractVideoAudio() ) );
+	actionCollection->addAction( ACT_EXTRACT_VIDEO_AUDIO, extractVideoAudioAction );
+	actionManager->addAction( extractVideoAudioAction, UserAction::VideoOpened );
+
+	KAction* cancelAudioExtractionAction = new KAction( actionCollection );
+	cancelAudioExtractionAction->setIcon( KIcon( "dialog-cancel" ) );
+	cancelAudioExtractionAction->setText( i18n( "Cancel Audio Extraction" ) );
+	cancelAudioExtractionAction->setStatusTip( i18n( "Cancel video's audio stream extraction" ) );
+	connect( cancelAudioExtractionAction, SIGNAL( triggered() ), Decoder::instance(), SLOT( stop() ) );
+	actionCollection->addAction( ACT_CANCEL_AUDIO_EXTRACTION, cancelAudioExtractionAction );
+	actionManager->addAction( cancelAudioExtractionAction, UserAction::AudioDecoding );
 
 
 	KToggleAction* fullScreenAction = new KToggleAction( actionCollection );
@@ -2883,6 +2913,46 @@ void Application::adjustToVideoPositionAnchorLast()
 	}
 }
 
+void Application::extractVideoAudio()
+{
+	if ( m_decoder->filePath() != m_player->filePath() )
+	{
+		m_decoder->closeFile();
+
+		QxtSignalWaiter openedWaiter( Decoder::instance(), SIGNAL( fileOpened( const QString& ) ), SIGNAL( fileOpenError( const QString& ) ) );
+		m_decoder->openFile( m_player->filePath() );
+		openedWaiter.wait( 10000 );
+
+		if ( m_decoder->filePath().isEmpty() )
+		{
+			KMessageBox::sorry( m_mainWindow, i18n( "<qt>There was an error opening file %1 for audio extraction<br/></qt>", m_player->filePath() ) );
+			return;
+		}
+	}
+
+	WaveFormat outputFormat = m_decoder->audioStreamFormat( m_player->activeAudioStream() );
+	outputFormat.setBitsPerSample( 8 );
+	outputFormat.setChannels( 1 );
+	outputFormat.setInteger( true );
+	while ( outputFormat.sampleRate() >= 5000 && outputFormat.sampleRate() % 2 == 0 )
+		outputFormat.setSampleRate( outputFormat.sampleRate() / 2 );
+
+	QFileInfo fileInfo( m_player->filePath() );
+	QString fileBaseName = fileInfo.path() + "/" + fileInfo.completeBaseName();
+	fileInfo.setFile( fileBaseName + ".wav" );
+	int count = 1;
+	while ( fileInfo.exists() )
+		fileInfo.setFile( fileBaseName + "." + QString::number( ++count ) + ".wav" );
+
+	m_decoder->decode( m_player->activeAudioStream(), fileInfo.filePath(), outputFormat );
+}
+
+void Application::onDecoderError()
+{
+	KMessageBox::sorry( m_mainWindow, i18n( "<qt>There was an error extracting the audio from file<br/>%1</qt>", m_decoder->filePath() ) );
+	m_decoder->closeFile();
+}
+
 void Application::adjustToVideoPositionAnchorFirst()
 {
 	SubtitleLine* currentLine = m_linesWidget->currentLine();
@@ -3019,8 +3089,6 @@ void Application::increaseAudioLevelsHZoom()
 void Application::decreaseAudioLevelsHZoom()
 {
 }
-
-
 
 /// END ACTION HANDLERS
 
@@ -3167,6 +3235,7 @@ void Application::onPlayerAudioStreamsChanged( const QStringList& audioStreams )
 {
 	KSelectAction* activeAudioStreamAction = (KSelectAction*)action( ACT_SET_ACTIVE_AUDIO_STREAM );
 	activeAudioStreamAction->setItems( audioStreams );
+	action( ACT_EXTRACT_VIDEO_AUDIO )->setEnabled( ! audioStreams.isEmpty() );
 }
 
 void Application::onPlayerActiveAudioStreamChanged( int audioStream )
@@ -3184,7 +3253,11 @@ void Application::onPlayerMuteChanged( bool muted )
 
 void Application::onPlayerOptionChanged( const QString& option, const QString& value )
 {
-	if ( option == PlayerConfig::keySeekJumpLength() )
+	if ( option == PlayerConfig::keyDecoderBackend() )
+	{
+		m_decoder->reinitialize( value );
+	}
+	else if ( option == PlayerConfig::keySeekJumpLength() )
 	{
 		action( ACT_SEEK_BACKWARDS )->setStatusTip( i18np(
 			"Seek backwards 1 second",
@@ -3229,7 +3302,6 @@ void Application::onGeneralOptionChanged( const QString& option, const QString& 
 			"Shift selected lines -%2%1 milliseconds",
 			shiftTimeMillis, "-"
 		) );
-
 	}
 }
 
@@ -3237,7 +3309,7 @@ void Application::updateConfigFromDialog()
 {
 	m_config = m_configDialog->config();
 
-	// We have to manually update the player backends configurations because the have their own copies
+	// We have to manually update the player backends configurations because they have their own copies
 	QStringList backendNames( m_player->backendNames() );
 	for ( QStringList::ConstIterator it = backendNames.begin(), end = backendNames.end(); it != end; ++it )
 		m_player->backend( *it )->setConfig( m_config.group( *it ) );

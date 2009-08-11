@@ -39,7 +39,7 @@ AppConfigGroupWidget::~AppConfigGroupWidget()
 	delete m_config;
 }
 
-const AppConfigGroup* const AppConfigGroupWidget::config()
+const AppConfigGroup* AppConfigGroupWidget::config()
 {
 	return m_config;
 }

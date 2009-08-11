@@ -19,7 +19,7 @@
 
 #include "splitsubtitledialog.h"
 #include "../../common/commondefs.h"
-#include "../../player/player.h"
+#include "../../services/player.h"
 #include "../../widgets/timeedit.h"
 
 #include <QtGui/QLabel>
