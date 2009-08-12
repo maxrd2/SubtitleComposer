@@ -57,7 +57,7 @@ namespace SubtitleComposer
 			virtual QWidget* initialize( QWidget* videoWidgetParent );
 			virtual void finalize();
 
-			virtual bool openFile( const QString& filePath, bool& playingAfterCall );
+			virtual bool openFile( const QString& filePath );
 			virtual void closeFile();
 
 			virtual bool decode( int audioStream, const QString& outputPath, const WaveFormat& outputFormat );

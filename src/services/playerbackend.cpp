@@ -24,8 +24,8 @@
 
 using namespace SubtitleComposer;
 
-PlayerBackend::PlayerBackend( Player* player, AppConfigGroup* config ):
-	ServiceBackend( player, config )
+PlayerBackend::PlayerBackend( Player* player, const QString& name, AppConfigGroup* config ):
+	ServiceBackend( player, name, config )
 {
 }
 

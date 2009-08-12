@@ -44,7 +44,7 @@ using namespace SubtitleComposer;
 #define UPDATE_INTERVAL 50
 
 XinePlayerBackend::XinePlayerBackend( Player* player ):
-	PlayerBackend( player, new XineConfig() ),
+	PlayerBackend( player, "Xine", new XineConfig() ),
 	m_connection( 0 ),
 	m_xineEngine( 0 ),
 	m_audioDriver( 0 ),

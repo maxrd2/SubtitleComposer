@@ -23,8 +23,6 @@
 #ifdef HAVE_GSTREAMER
 #include "gstreamer/gstreamerdecoderbackend.h"
 #endif
-//#include "mplayer/mplayerdecoderbackend.h"
-//#include "phonon/phonondecoderbackend.h"
 #ifdef HAVE_XINE
 #include "xine/xinedecoderbackend.h"
 #endif
@@ -42,7 +40,7 @@ namespace SubtitleComposer
 	{
 		public:
 
-			DummyDecoderBackend( Decoder* decoder ):DecoderBackend( decoder, new AppConfigGroup( "Dummy", QMap<QString,QString>() ) ) {}
+			DummyDecoderBackend( Decoder* decoder ):DecoderBackend( decoder, "Dummy", new AppConfigGroup( "Dummy", QMap<QString,QString>() ) ) {}
 			virtual ~DummyDecoderBackend() {}
 
 			virtual AppConfigGroupWidget* newAppConfigGroupWidget( QWidget* /*parent*/ ) { return 0; }
@@ -52,7 +50,7 @@ namespace SubtitleComposer
 			virtual QWidget* initialize( QWidget* /*widgetParent*/ ) { return (QWidget*)1; }
 			virtual void finalize() {}
 
-			virtual bool openFile( const QString& /*filePath*/, bool& /*playingAfterCall*/ ) { return false; }
+			virtual bool openFile( const QString& /*filePath*/ ) { return false; }
 			virtual void closeFile() {}
 
 			virtual bool decode( int /*audioStream*/, const QString& /*outputPath*/, const WaveFormat& /*outputFormat*/ ) { return false; }
@@ -70,15 +68,15 @@ Decoder::Decoder():
 	m_audioStreamFormats(),
 	m_openFileTimer( new QTimer( this ) )
 {
+	addBackend( new DummyDecoderBackend( this ) );
+
 #ifdef HAVE_GSTREAMER
-	m_backendsMap["GStreamer"] = new GStreamerDecoderBackend( this );
+	addBackend( new GStreamerDecoderBackend( this ) );
 #endif
 
 #ifdef HAVE_XINE
-	m_backendsMap["Xine"] = new XineDecoderBackend( this );
+	addBackend( new XineDecoderBackend( this ) );
 #endif
-
-	m_backendsMap["Dummy"] = new DummyDecoderBackend( this );
 
 	// the timeout might seem too much, but it only matters when the file couldn't be
 	// opened, and it's better to have the user wait a bit in that case than showing
@@ -219,7 +217,7 @@ void Decoder::setState( Decoder::State newState )
 	}
 }
 
-void Decoder::setErrorState()
+void Decoder::setErrorState( const QString& errorMessage )
 {
 	if ( ! isInitialized() )
 		return;
@@ -234,7 +232,7 @@ void Decoder::setErrorState()
 	{
 		activeBackend()->stop();
 		m_state = Decoder::Ready;
-		emit error();
+		emit decodingError( errorMessage );
 		emit stopped();
 	}
 }
@@ -272,19 +270,14 @@ bool Decoder::openFile( const QString& filePath )
 
 	m_openFileTimer->start( 6000 );
 
-	bool playingAfterCall = true;
-	if ( ! activeBackend()->openFile( fileInfo.absoluteFilePath(), playingAfterCall ) )
+	if ( ! activeBackend()->openFile( fileInfo.absoluteFilePath() ) )
 	{
 		resetState();
 		emit fileOpenError( filePath );
 		return true;
 	}
 
-	if ( playingAfterCall )
-		activeBackend()->stop();
-
 	return true;
-
 }
 
 void Decoder::onOpenFileTimeout()
@@ -328,7 +321,7 @@ bool Decoder::decode( int audioStream, const QString& outputPath, const WaveForm
 	if ( ! activeBackend()->decode( audioStream, outputPath, outputFormat ) )
 	{
 		resetState();
-		emit error();
+		emit decodingError();
 	}
 
 	return true;
@@ -342,7 +335,7 @@ bool Decoder::stop()
 	if ( ! activeBackend()->stop() )
 	{
 		resetState();
-		emit error();
+		emit decodingError();
 		return true;
 	}
 

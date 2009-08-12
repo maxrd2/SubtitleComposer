@@ -49,6 +49,8 @@ namespace SubtitleComposer
 				Ready // same as Stopped or Finished
 			} State;
 
+			virtual QString dummyBackendName() const { return "Dummy"; }
+
 			inline DecoderBackend* backend( const QString& name ) const { return (DecoderBackend*)Service::backend( name ); }
 			inline DecoderBackend* activeBackend() const { return (DecoderBackend*)Service::activeBackend(); }
 
@@ -85,6 +87,7 @@ namespace SubtitleComposer
 			void fileOpened( const QString& filePath );
 			void fileClosed();
 
+			void decodingError( const QString& errorMessage=QString() );
 			void decoding();
 			void positionChanged( double seconds );
 			void lengthChanged( double seconds );
@@ -117,7 +120,7 @@ namespace SubtitleComposer
 			void setLength( double length ); // in seconds
 
 			void setState( Decoder::State state );
-			void setErrorState();
+			void setErrorState( const QString& errorMessage=QString() );
 
 			void appendAudioStream( const QString& name, const WaveFormat& format );
 			void insertAudioStream( int index, const QString& name, const WaveFormat& format );

@@ -18,6 +18,7 @@
  ***************************************************************************/
 
 #include "service.h"
+#include "servicebackend.h"
 
 #include <KDebug>
 
@@ -45,16 +46,16 @@ bool Service::initialize( QWidget* widgetParent, const QString& prefBackendName 
 
 	m_widgetParent = widgetParent;
 
-	if ( m_backendsMap.contains( prefBackendName ) )
+	if ( m_backends.contains( prefBackendName ) )
 	{
 		// we first try to set the requested backend as active
-		initializeBackendPrivate( m_backendsMap[prefBackendName] );
+		initializeBackendPrivate( m_backends[prefBackendName] );
 	}
 
 	// if that fails, we set the first available backend as active
 	if ( ! m_activeBackend )
 	{
-		for ( QMap<QString,ServiceBackend*>::ConstIterator it = m_backendsMap.begin(), end = m_backendsMap.end(); it != end; ++it )
+		for ( QMap<QString,ServiceBackend*>::ConstIterator it = m_backends.begin(), end = m_backends.end(); it != end; ++it )
 			if ( initializeBackendPrivate( it.value() ) )
 				break;
 	}
@@ -70,13 +71,13 @@ bool Service::reinitialize( const QString& prefBackendName )
 	if ( ! isInitialized() )
 		return false;
 
-	ServiceBackend* targetBackend = m_backendsMap.contains( prefBackendName ) ? m_backendsMap[prefBackendName] : m_activeBackend;
+	ServiceBackend* targetBackend = m_backends.contains( prefBackendName ) ? m_backends[prefBackendName] : m_activeBackend;
 
 	finalize();
 
 	if ( ! initializeBackendPrivate( targetBackend ) )
 	{
-		for ( QMap<QString,ServiceBackend*>::ConstIterator it = m_backendsMap.begin(), end = m_backendsMap.end(); it != end; ++it )
+		for ( QMap<QString,ServiceBackend*>::ConstIterator it = m_backends.begin(), end = m_backends.end(); it != end; ++it )
 			if ( initializeBackendPrivate( it.value() ) )
 				break;
 	}
@@ -133,7 +134,7 @@ void Service::setApplicationClosingDown()
 
 QString Service::activeBackendName() const
 {
-	for ( QMap<QString,ServiceBackend*>::ConstIterator it = m_backendsMap.begin(), end = m_backendsMap.end(); it != end; ++it )
+	for ( QMap<QString,ServiceBackend*>::ConstIterator it = m_backends.begin(), end = m_backends.end(); it != end; ++it )
 		if ( it.value() == m_activeBackend )
 			return it.key();
 	return QString();
@@ -141,27 +142,18 @@ QString Service::activeBackendName() const
 
 QStringList Service::backendNames() const
 {
-	return m_backendsMap.keys();
+	return m_backends.keys();
 }
 
-// bool Service::initializeBackend( ServiceBackend* backend, QWidget* widgetParent )
-// {
-// 	if ( (m_videoWidget = backend->initialize( widgetParent )) )
-// 	{
-// 		connect( m_videoWidget, SIGNAL( destroyed() ), this, SLOT( onVideoWidgetDestroyed() ) );
-// 		connect( m_videoWidget, SIGNAL( doubleClicked( const QPoint& ) ), this, SIGNAL( doubleClicked( const QPoint& ) ) );
-// 		connect( m_videoWidget, SIGNAL( leftClicked( const QPoint& ) ), this, SIGNAL( leftClicked( const QPoint& ) ) );
-// 		connect( m_videoWidget, SIGNAL( rightClicked( const QPoint& ) ), this, SIGNAL( rightClicked( const QPoint& ) ) );
-// 		connect( m_videoWidget, SIGNAL( wheelUp() ), this, SIGNAL( wheelUp() ) );
-// 		connect( m_videoWidget, SIGNAL( wheelDown() ), this, SIGNAL( wheelDown() ) );
-//
-// 		m_videoWidget->show();
-//
-// 		// NOTE: next is used to make videoWidgetParent update it's geometry
-// 		QRect geometry = m_widgetParent->geometry();
-// 		geometry.setHeight( geometry.height() + 1 );
-// 		videoWidgetParent->setGeometry( geometry );
-// 	}
-// }
+void Service::addBackend( ServiceBackend* backend )
+{
+	if ( m_backends.contains( backend->name() ) )
+	{
+		kError() << "attempted to insert duplicated service backend" << backend->name();
+		return;
+	}
+
+	m_backends[backend->name()] = backend;
+}
 
 #include "service.moc"

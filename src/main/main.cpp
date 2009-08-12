@@ -41,7 +41,7 @@ int main( int argc, char** argv )
 		"subtitlecomposer",							// The program name used internally.
 		"subtitlecomposer",							// The message catalog name.
 		ki18n( "Subtitle Composer" ),				// A displayable program name string.
-		"0.5.3",									// The program version string.
+		"0.5.3svn",									// The program version string.
 		ki18n( "A KDE subtitle editor." ),			// A short description of what the program does.
 		KAboutData::License_GPL,					// License identifier
 		ki18n( "(C) 2007-2009 Sergio Pistone" )		// Copyright Statement
@@ -54,7 +54,7 @@ int main( int argc, char** argv )
 	);
 
 	// Initialize command line args
-    KCmdLineArgs::init( argc, argv, &aboutData );
+	KCmdLineArgs::init( argc, argv, &aboutData );
 
 	// Define the command line options using KCmdLineOptions
 	KCmdLineOptions options;
@@ -65,7 +65,7 @@ int main( int argc, char** argv )
 	KCmdLineArgs::addCmdLineOptions( options );
 
 	// Create application object
-    SubtitleComposer::Application app;
+	SubtitleComposer::Application app;
 	app.mainWindow()->show();
 
 	// Handle our own options/arguments

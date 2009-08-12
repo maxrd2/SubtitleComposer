@@ -31,7 +31,7 @@
 using namespace SubtitleComposer;
 
 MPlayerPlayerBackend::MPlayerPlayerBackend( Player* player ):
-	PlayerBackend( player, new MPlayerConfig() ),
+	PlayerBackend( player, "MPlayer", new MPlayerConfig() ),
 	m_process( new MPlayerPlayerProcess( config(), this ) ),
 	m_position( 0.0 ),
 	m_reportUpdates( true )

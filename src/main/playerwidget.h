@@ -111,7 +111,7 @@ namespace SubtitleComposer
 			void onPlayerFileOpened( const QString& filePath );
 			void onPlayerFileOpenError( const QString& filePath );
 			void onPlayerFileClosed();
-			void onPlayerPlaybackError();
+			void onPlayerPlaybackError( const QString& errorMessage );
 			void onPlayerPlaying();
 			void onPlayerStopped();
 			void onPlayerPositionChanged( double seconds );

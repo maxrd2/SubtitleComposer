@@ -43,7 +43,7 @@ namespace SubtitleComposer
 		public:
 
 			/// ownership of the config object is transferred to this object
-			DecoderBackend( Decoder* decoder, AppConfigGroup* config );
+			DecoderBackend( Decoder* decoder, const QString& name, AppConfigGroup* config );
 			virtual ~DecoderBackend();
 
 		protected:
@@ -56,7 +56,7 @@ namespace SubtitleComposer
 			content must be set to true.
 			The function doesn't need to block until playback is actually started
 			*/
-			virtual bool openFile( const QString& filePath, bool& playingAfterCall ) = 0;
+			virtual bool openFile( const QString& filePath ) = 0;
 
 			/**
 			Cleanup any internal structures associated with the opened file. This function

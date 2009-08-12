@@ -36,59 +36,65 @@ ErrorsConfigWidget::ErrorsConfigWidget( QWidget* parent ):
 {
 	QGroupBox* textsGroupBox = createGroupBox( i18nc( "@title:group", "Texts" ) );
 
-	QLabel* maxCharactersLabel = new QLabel( textsGroupBox );
-	maxCharactersLabel->setText( i18n( "Maximum number of characters:" ) );
-
 	m_maxCharactersSpinBox = new KIntNumInput( textsGroupBox );
 	m_maxCharactersSpinBox->setMinimum( 0 );
 	m_maxCharactersSpinBox->setMaximum( 200 );
 	m_maxCharactersSpinBox->setSuffix( i18n( " characters" ) );
 
-	QLabel* maxLinesLabel = new QLabel( textsGroupBox );
-	maxLinesLabel->setText( i18n( "Maximum number of lines:" ) );
+	QLabel* maxCharactersLabel = new QLabel( textsGroupBox );
+	maxCharactersLabel->setText( i18n( "Maximum number of characters:" ) );
+	maxCharactersLabel->setBuddy( m_maxCharactersSpinBox );
 
 	m_maxLinesSpinBox = new KIntNumInput( textsGroupBox );
 	m_maxLinesSpinBox->setMinimum( 1 );
 	m_maxLinesSpinBox->setMaximum( 20 );
 	m_maxLinesSpinBox->setSuffix( i18n( " lines" ) );
 
+	QLabel* maxLinesLabel = new QLabel( textsGroupBox );
+	maxLinesLabel->setText( i18n( "Maximum number of lines:" ) );
+	maxLinesLabel->setBuddy( m_maxLinesSpinBox );
 
 	QGroupBox* absoluteDurationsGroupBox = createGroupBox( i18nc( "@title:group", "Absolute Durations" ) );
-
-	QLabel* minDurationLabel = new QLabel( absoluteDurationsGroupBox );
-	minDurationLabel->setText( i18n( "Minimum duration:" ) );
 
 	m_minDurationSpinBox = new KIntNumInput( absoluteDurationsGroupBox );
 	m_minDurationSpinBox->setMinimum( 0 );
 	m_minDurationSpinBox->setMaximum( 2000 );
 	m_minDurationSpinBox->setSuffix( i18n( " msecs" ) );
 
-	QLabel* maxDurationLabel = new QLabel( absoluteDurationsGroupBox );
-	maxDurationLabel->setText( i18n( "Maximum duration:" ) );
+	QLabel* minDurationLabel = new QLabel( absoluteDurationsGroupBox );
+	minDurationLabel->setText( i18n( "Minimum duration:" ) );
+	minDurationLabel->setBuddy( m_minDurationSpinBox );
 
 	m_maxDurationSpinBox = new KIntNumInput( absoluteDurationsGroupBox );
 	m_maxDurationSpinBox->setMinimum( 2000 );
 	m_maxDurationSpinBox->setMaximum( 8000 );
 	m_maxDurationSpinBox->setSuffix( i18n( " msecs" ) );
 
+	QLabel* maxDurationLabel = new QLabel( absoluteDurationsGroupBox );
+	maxDurationLabel->setText( i18n( "Maximum duration:" ) );
+	maxDurationLabel->setBuddy( m_maxDurationSpinBox );
+
 
 	QGroupBox* relativeDurationsGroupBox = createGroupBox( i18nc( "@title:group", "Relative Durations" ) );
-
-	QLabel* minDurationPerCharLabel = new QLabel( relativeDurationsGroupBox );
-	minDurationPerCharLabel->setText( i18n( "Minimum duration:" ) );
 
 	m_minDurationPerCharSpinBox = new KIntNumInput( relativeDurationsGroupBox );
 	m_minDurationPerCharSpinBox->setMinimum( 0 );
 	m_minDurationPerCharSpinBox->setMaximum( 100 );
 	m_minDurationPerCharSpinBox->setSuffix( i18n( " msecs/character" ) );
 
-	QLabel* maxDurationPerCharLabel = new QLabel( relativeDurationsGroupBox );
-	maxDurationPerCharLabel->setText( i18n( "Maximum duration:" ) );
+	QLabel* minDurationPerCharLabel = new QLabel( relativeDurationsGroupBox );
+	minDurationPerCharLabel->setText( i18n( "Minimum duration:" ) );
+	minDurationPerCharLabel->setBuddy( m_minDurationPerCharSpinBox );
 
 	m_maxDurationPerCharSpinBox = new KIntNumInput( relativeDurationsGroupBox );
 	m_maxDurationPerCharSpinBox->setMinimum( 0 );
 	m_maxDurationPerCharSpinBox->setMaximum( 500 );
 	m_maxDurationPerCharSpinBox->setSuffix( i18n( " msecs/character" ) );
+
+	QLabel* maxDurationPerCharLabel = new QLabel( relativeDurationsGroupBox );
+	maxDurationPerCharLabel->setText( i18n( "Maximum duration:" ) );
+	maxDurationPerCharLabel->setBuddy( m_maxDurationPerCharSpinBox );
+
 
 	QGroupBox* behaviorGroupBox = createGroupBox( i18nc( "@title:group", "Behavior" ) );
 

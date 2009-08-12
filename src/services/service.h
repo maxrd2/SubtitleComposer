@@ -58,8 +58,14 @@ namespace SubtitleComposer
 			/** finalizes the active backend. */
 			void finalize();
 
+			/** services should provide a dummy backend (one that implements its operations as noops) so
+				that the application can act reasonably even in absence of (real) supported backends. */
+			virtual QString dummyBackendName() const = 0;
+
 			QString activeBackendName() const;
 			QStringList backendNames() const;
+
+			inline bool isActiveBackendDummy() const;
 
 			inline ServiceBackend* backend( const QString& name ) const;
 			inline ServiceBackend* activeBackend() const;
@@ -85,8 +91,6 @@ namespace SubtitleComposer
 			void backendInitialized( ServiceBackend* serviceBackend );
 			void backendFinalized( ServiceBackend* serviceBackend );
 
-			void error(); // unexpected error
-
 		protected:
 
 			Service();
@@ -102,10 +106,13 @@ namespace SubtitleComposer
 				returns the previously initialized backend (or 0 if there was none). */
 			virtual void finalizeBackend( ServiceBackend* backend ) = 0;
 
+			void addBackend( ServiceBackend* backend );
+
 		private:
 
 			bool initializeBackendPrivate( ServiceBackend* backend );
 
+			QMap<QString,ServiceBackend*> m_backends;
 			ServiceBackend* m_activeBackend;
 			QWidget* m_widgetParent;
 
@@ -113,8 +120,9 @@ namespace SubtitleComposer
 
 		protected:
 
-			QMap<QString,ServiceBackend*> m_backendsMap;
 			int m_state;
+
+			friend class ServiceBackend;
 	};
 
 
@@ -135,7 +143,12 @@ namespace SubtitleComposer
 
 	ServiceBackend* Service::backend( const QString& backendName ) const
 	{
-		return m_backendsMap.contains( backendName ) ? m_backendsMap[backendName] : 0;
+		return m_backends.contains( backendName ) ? m_backends[backendName] : 0;
+	}
+
+	bool Service::isActiveBackendDummy() const
+ 	{
+	 	return activeBackendName() == dummyBackendName();
 	}
 }
 

@@ -171,7 +171,6 @@ PlayerWidget::PlayerWidget( QWidget* parent ):
 
 	m_fullScreenControls = new AttachableWidget( AttachableWidget::Bottom, 4 );
 	m_fullScreenControls->setAutoFillBackground( true );
-	m_fullScreenControls->setMouseTracking( true );
 	m_layeredWidget->setWidgetMode( m_fullScreenControls, LayeredWidget::IgnoreResize );
 
 	m_fsSeekSlider = new PointingSlider( Qt::Horizontal, m_fullScreenControls );
@@ -222,12 +221,6 @@ PlayerWidget::PlayerWidget( QWidget* parent ):
 	fullScreenControlsLayout->addWidget( createToolButton( m_fullScreenControls, ACT_TOGGLE_FULL_SCREEN, FS_BUTTON_SIZE ) );
 	m_fullScreenControls->adjustSize();
 
-	setMouseTracking( true );
-	m_fullScreenControls->setMouseTracking( true );
-	QList<QWidget*> children = this->findChildren<QWidget*>();
-	for ( QList<QWidget*>::ConstIterator it = children.begin(), end = children.end(); it != end; ++it )
-		(*it)->setMouseTracking( true );
-
 	connect( m_volumeSlider, SIGNAL( valueChanged(int) ), this, SLOT(onVolumeSliderValueChanged(int)) );
 	connect( m_fsVolumeSlider, SIGNAL( valueChanged(int) ), this, SLOT(onVolumeSliderValueChanged(int)) );
 
@@ -246,11 +239,10 @@ PlayerWidget::PlayerWidget( QWidget* parent ):
 	connect( app()->playerConfig(), SIGNAL( optionChanged(const QString&,const QString&) ),
 			 this, SLOT( onPlayerOptionChanged(const QString&,const QString&) ) );
 
-	// connect PlayerWidget observer slots to Player signals
 	connect( m_player, SIGNAL( fileOpened(const QString&) ), this, SLOT( onPlayerFileOpened(const QString&) ) );
 	connect( m_player, SIGNAL( fileOpenError(const QString&) ), this, SLOT( onPlayerFileOpenError(const QString&) ) );
 	connect( m_player, SIGNAL( fileClosed() ), this, SLOT( onPlayerFileClosed() ) );
-	connect( m_player, SIGNAL( error() ), this, SLOT( onPlayerPlaybackError() ) );
+	connect( m_player, SIGNAL( playbackError(const QString&) ), this, SLOT( onPlayerPlaybackError(const QString&) ) );
 	connect( m_player, SIGNAL( playing() ), this, SLOT( onPlayerPlaying() ) );
 	connect( m_player, SIGNAL( stopped() ), this, SLOT( onPlayerStopped() ) );
 	connect( m_player, SIGNAL( positionChanged(double) ), this, SLOT( onPlayerPositionChanged(double) ) );
@@ -318,6 +310,8 @@ void PlayerWidget::setFullScreenMode( bool fullScreenMode )
 			m_layeredWidget->setParent( 0 ); // removes the widget from this window (and this m_mainLayout)
 			m_layeredWidget->showFullScreen(); // krazy:exclude=c++/qmethods
 
+			m_layeredWidget->unsetCursor();
+			m_layeredWidget->setMouseTracking( true );
 			m_fullScreenControls->attach( m_layeredWidget );
 
 			m_fullScreenTID = startTimer( HIDE_MOUSE_MSECS );
@@ -333,6 +327,8 @@ void PlayerWidget::setFullScreenMode( bool fullScreenMode )
 			decreaseFontSize( 18 );
 
 			m_fullScreenControls->dettach();
+			m_layeredWidget->setMouseTracking( false );
+			m_layeredWidget->unsetCursor();
 
 			window()->show();
 			m_layeredWidget->setParent( this );
@@ -448,7 +444,7 @@ bool PlayerWidget::eventFilter( QObject* object, QEvent* event )
 			{
 				m_currentCursorPos = mouseEvent->globalPos();
 				if ( m_layeredWidget->cursor().shape() == Qt::BlankCursor )
-					m_layeredWidget->setCursor( Qt::ArrowCursor );
+					m_layeredWidget->unsetCursor();
 				if ( m_fullScreenControls->isAttached() )
 					m_fullScreenControls->toggleVisible( true );
 			}
@@ -727,7 +723,7 @@ void PlayerWidget::onPlayerFileOpened( const QString& /*filePath*/ )
 
 void PlayerWidget::onPlayerFileOpenError( const QString& filePath )
 {
-	KMessageBox::sorry( this, i18n( "<qt>There was an error opening file<br/>%1</qt>", filePath ) );
+	KMessageBox::sorry( this, i18n( "<qt>There was an error opening media file %1.</qt>", filePath ) );
 }
 
 void PlayerWidget::onPlayerFileClosed()
@@ -751,9 +747,21 @@ void PlayerWidget::onPlayerFileClosed()
 	m_fsSeekSlider->setEnabled( false );
 }
 
-void PlayerWidget::onPlayerPlaybackError()
+void PlayerWidget::onPlayerPlaybackError( const QString& errorMessage )
 {
-	KMessageBox::sorry( this, i18n( "Unexpected error while playing file." ) );
+	if ( errorMessage.isEmpty() )
+		KMessageBox::error(
+			this,
+			i18n( "Unexpected error when playing file." ),
+			i18n( "Error Playing File" )
+		);
+	else
+		KMessageBox::detailedError(
+			this,
+			i18n( "Unexpected error when playing file." ),
+			errorMessage,
+			i18n( "Error Playing File" )
+		);
 	//onPlayerFileClosed();
 }
 
@@ -903,20 +911,6 @@ void PlayerWidget::onPlayerBackendInitialized()
 	// is created in front of the text overlay, so we have to raise
 	// it to make it visible again
 	m_textOverlay->raise();
-
-	m_layeredWidget->setCursor( Qt::ArrowCursor );
-
-	/*if ( m_currentCursorPos != m_savedCursorPos )
-	{
-		m_savedCursorPos = m_currentCursorPos;
-	}
-	else if ( ! m_fullScreenControls->underMouse() )
-	{
-		if ( m_layeredWidget->cursor().shape() != Qt::BlankCursor )
-			m_layeredWidget->setCursor( QCursor( Qt::BlankCursor ) );
-		if ( m_fullScreenControls->isAttached() )
-			m_fullScreenControls->toggleVisible( false );
-	}*/
 }
 
 #include "playerwidget.moc"

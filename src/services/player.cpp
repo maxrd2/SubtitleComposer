@@ -38,6 +38,35 @@
 
 #define DEFAULT_MIN_POSITION_DELTA 0.02
 
+namespace SubtitleComposer
+{
+	class DummyPlayerBackend : public PlayerBackend
+	{
+		public:
+
+			DummyPlayerBackend( Player* player ):PlayerBackend( player, "Dummy", new AppConfigGroup( "Dummy", QMap<QString,QString>() ) ) {}
+			virtual ~DummyPlayerBackend() {}
+
+			virtual AppConfigGroupWidget* newAppConfigGroupWidget( QWidget* /*parent*/ ) { return 0; }
+
+		protected:
+
+			virtual QWidget* initialize( QWidget* widgetParent ) { return new VideoWidget( widgetParent ); }
+			virtual void finalize() {}
+
+			virtual bool openFile( const QString& /*filePath*/, bool& /*playingAfterCall*/ ) { return false; }
+			virtual void closeFile() {}
+
+			virtual bool play() { return false; };
+			virtual bool pause() { return false; };
+			virtual bool seek( double /*seconds*/, bool /*accurate*/ ) { return false; };
+			virtual bool stop() { return false; };
+
+			virtual bool setActiveAudioStream( int /*audioStream*/ ) { return false; };
+			virtual bool setVolume( double /*volume*/ ) { return false; };
+	};
+}
+
 using namespace SubtitleComposer;
 
 Player::Player():
@@ -55,15 +84,17 @@ Player::Player():
 	m_backendVolume( 100.0 ),
 	m_openFileTimer( new QTimer( this ) )
 {
+	addBackend( new DummyPlayerBackend( this ) );
+
 #ifdef HAVE_GSTREAMER
-	m_backendsMap["GStreamer"] = new GStreamerPlayerBackend( this );
+	addBackend( new GStreamerPlayerBackend( this ) );
 #endif
 
-	m_backendsMap["MPlayer"] = new MPlayerPlayerBackend( this );
-	m_backendsMap["Phonon"] = new PhononPlayerBackend( this );
+	addBackend( new MPlayerPlayerBackend( this ) );
+	addBackend( new PhononPlayerBackend( this ) );
 
 #ifdef HAVE_XINE
-	m_backendsMap["Xine"] = new XinePlayerBackend( this );
+	addBackend( new XinePlayerBackend( this ) );
 #endif
 
 	// the timeout might seem too much, but it only matters when the file couldn't be
@@ -370,7 +401,7 @@ bool Player::play()
 	if ( ! activeBackend()->play() )
 	{
 		resetState();
-		emit error();
+		emit playbackError();
 	}
 
 	return true;
@@ -384,7 +415,7 @@ bool Player::pause()
 	if ( ! activeBackend()->pause() )
 	{
 		resetState();
-		emit error();
+		emit playbackError();
 	}
 
 	return true;
@@ -404,7 +435,7 @@ bool Player::togglePlayPaused()
 	if ( hadError )
 	{
 		resetState();
-		emit error();
+		emit playbackError();
 	}
 
 	return true;
@@ -422,7 +453,7 @@ bool Player::seek( double seconds, bool accurate )
 	if ( ! activeBackend()->seek( seconds, accurate ) )
 	{
 		resetState();
-		emit error();
+		emit playbackError();
 	}
 
 	return true;
@@ -445,7 +476,7 @@ bool Player::stop()
 	if ( ! activeBackend()->stop() )
 	{
 		resetState();
-		emit error();
+		emit playbackError();
 		return true;
 	}
 
@@ -473,7 +504,7 @@ bool Player::setActiveAudioStream( int audioStreamIndex )
 		if ( ! activeBackend()->setActiveAudioStream( audioStreamIndex ) )
 		{
 			resetState();
-			emit error();
+			emit playbackError();
 			return true;
 		}
 
@@ -482,7 +513,7 @@ bool Player::setActiveAudioStream( int audioStreamIndex )
 			if ( ! activeBackend()->stop() )
 			{
 				resetState();
-				emit error();
+				emit playbackError();
 				return true;
 			}
 
@@ -491,7 +522,7 @@ bool Player::setActiveAudioStream( int audioStreamIndex )
 				if ( ! activeBackend()->play() )
 				{
 					resetState();
-					emit error();
+					emit playbackError();
 					return true;
 				}
 
@@ -534,7 +565,7 @@ void Player::setVolume( double volume )
 			if ( ! activeBackend()->setVolume( m_backendVolume ) )
 			{
 				resetState();
-				emit error();
+				emit playbackError();
 				return;
 			}
 		}
@@ -556,7 +587,7 @@ void Player::setMuted( bool muted )
 			if ( ! activeBackend()->setVolume( m_backendVolume ) )
 			{
 				resetState();
-				emit error();
+				emit playbackError();
 				return;
 			}
 		}

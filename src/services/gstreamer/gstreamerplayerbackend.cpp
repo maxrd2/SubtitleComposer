@@ -33,7 +33,7 @@
 using namespace SubtitleComposer;
 
 GStreamerPlayerBackend::GStreamerPlayerBackend( Player* player ):
-	PlayerBackend( player, new GStreamerConfig() ),
+	PlayerBackend( player, "GStreamer", new GStreamerConfig() ),
 	m_play( NULL ),
 	m_videoSink( NULL ),
 	m_audioSink( NULL ),
@@ -415,7 +415,6 @@ void GStreamerPlayerBackend::onBusTimerTimeout()
 			{
 				gchar* debug = NULL;
 				GError* error = NULL;
-
 				gst_message_parse_error( msg, &error, &debug );
 				kDebug() << "GST_MESSAGE_ERROR:" << QString( error->message ) << QString( debug );
 				g_error_free( error );

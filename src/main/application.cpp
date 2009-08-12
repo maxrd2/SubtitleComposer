@@ -190,7 +190,7 @@ Application::Application():
 	connect( m_decoder, SIGNAL( positionChanged(double) ), m_statusBar, SLOT( setDecodingPosition(double) ) );
 	connect( m_decoder, SIGNAL( lengthChanged(double) ), m_statusBar, SLOT( setDecodingLength(double) ) );
 	connect( m_decoder, SIGNAL( stopped() ), m_statusBar, SLOT( endDecoding() ) );
-	connect( m_decoder, SIGNAL( error() ), this, SLOT( onDecoderError() ) );
+	connect( m_decoder, SIGNAL( decodingError(const QString&) ), this, SLOT( onDecodingError(const QString&) ) );
 
 	QList<QObject*> listeners; listeners
 		<< actionManager
@@ -2925,7 +2925,7 @@ void Application::extractVideoAudio()
 
 		if ( m_decoder->filePath().isEmpty() )
 		{
-			KMessageBox::sorry( m_mainWindow, i18n( "<qt>There was an error opening file %1 for audio extraction<br/></qt>", m_player->filePath() ) );
+			KMessageBox::sorry( m_mainWindow, i18n( "<qt>There was an error opening file %1 for audio extraction.</qt>", m_player->filePath() ) );
 			return;
 		}
 	}
@@ -2939,17 +2939,29 @@ void Application::extractVideoAudio()
 
 	QFileInfo fileInfo( m_player->filePath() );
 	QString fileBaseName = fileInfo.path() + "/" + fileInfo.completeBaseName();
-	fileInfo.setFile( fileBaseName + ".wav" );
+	fileInfo.setFile( fileBaseName + QString( "-stream%1.wav" ).arg( m_player->activeAudioStream() + 1 ) );
 	int count = 1;
 	while ( fileInfo.exists() )
-		fileInfo.setFile( fileBaseName + "." + QString::number( ++count ) + ".wav" );
+		fileInfo.setFile( fileBaseName + QString( "-stream%1(%2).wav" ).arg( m_player->activeAudioStream() + 1 ).arg( ++count ) );
 
 	m_decoder->decode( m_player->activeAudioStream(), fileInfo.filePath(), outputFormat );
 }
 
-void Application::onDecoderError()
+void Application::onDecodingError( const QString& errorMessage )
 {
-	KMessageBox::sorry( m_mainWindow, i18n( "<qt>There was an error extracting the audio from file<br/>%1</qt>", m_decoder->filePath() ) );
+	if ( errorMessage.isEmpty() )
+		KMessageBox::error(
+			m_mainWindow,
+			i18n( "Unexpected error when extracting audio." ),
+			i18n( "Error Extracting Audio" )
+		);
+	else
+		KMessageBox::detailedError(
+			m_mainWindow,
+			i18n( "Unexpected error when extracting audio." ),
+			errorMessage,
+			i18n( "Error Extracting Audio" )
+		);
 	m_decoder->closeFile();
 }
 
@@ -3235,7 +3247,7 @@ void Application::onPlayerAudioStreamsChanged( const QStringList& audioStreams )
 {
 	KSelectAction* activeAudioStreamAction = (KSelectAction*)action( ACT_SET_ACTIVE_AUDIO_STREAM );
 	activeAudioStreamAction->setItems( audioStreams );
-	action( ACT_EXTRACT_VIDEO_AUDIO )->setEnabled( ! audioStreams.isEmpty() );
+	action( ACT_EXTRACT_VIDEO_AUDIO )->setEnabled( ! audioStreams.isEmpty() && ! m_decoder->isActiveBackendDummy() );
 }
 
 void Application::onPlayerActiveAudioStreamChanged( int audioStream )

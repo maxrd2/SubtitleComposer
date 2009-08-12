@@ -28,7 +28,7 @@
 
 class WaveFormat
 {
-	// possible bits per sample a 8, 16, 24 & 32 (all signed, except 8)
+	// valid bits per sample a 8, 16, 24 & 32 (all signed, except 8)
 
 	public:
 

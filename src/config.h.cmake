@@ -4,9 +4,6 @@
 /* Whether GStreamer was found */
 #cmakedefine HAVE_GSTREAMER
 
-/* Whether GStreamer was found */
-#cmakedefine HAVE_GSTREAMER
-
 /* Whether Xine was found */
 #cmakedefine HAVE_XINE
 

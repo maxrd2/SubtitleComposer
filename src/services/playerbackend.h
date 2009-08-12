@@ -44,7 +44,7 @@ namespace SubtitleComposer
 			// FIXME there should be a way for backends to abort on error
 
 			/// ownership of the config object is transferred to this object
-			PlayerBackend( Player* player, AppConfigGroup* config );
+			PlayerBackend( Player* player, const QString& name, AppConfigGroup* config );
 			virtual ~PlayerBackend();
 
 		protected:

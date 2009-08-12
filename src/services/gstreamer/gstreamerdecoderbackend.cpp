@@ -31,7 +31,7 @@ using namespace SubtitleComposer;
 #define MESSAGE_INFO_INIT_DISPOSE 1
 
 GStreamerDecoderBackend::GStreamerDecoderBackend( Decoder* decoder ):
-	DecoderBackend( decoder, new GStreamerConfig() ),
+	DecoderBackend( decoder, "GStreamer", new GStreamerConfig() ),
 	m_infoPipeline( 0 ),
 	m_infoBus( 0 ),
 	m_infoTimer( new QTimer( this ) ),
@@ -64,10 +64,8 @@ SubtitleComposer::AppConfigGroupWidget* GStreamerDecoderBackend::newAppConfigGro
 	return new GStreamerConfigWidget( parent );
 }
 
-bool GStreamerDecoderBackend::openFile( const QString& filePath, bool& playingAfterCall )
+bool GStreamerDecoderBackend::openFile( const QString& filePath )
 {
-	playingAfterCall = false;
-
 	m_lengthInformed = false;
 
 	m_infoPipeline = GST_PIPELINE( gst_pipeline_new( "information_pipeline" ) );
@@ -193,7 +191,7 @@ bool GStreamerDecoderBackend::stop()
 
 	if ( m_decodingPipeline )
 	{
-// 		m_decodingTimer->stop();
+		m_decodingTimer->stop();
 		GStreamer::setElementState( GST_ELEMENT( m_decodingPipeline ), GST_STATE_NULL, 60000 /*"infinity" wait*/ );
 		GStreamer::freePipeline( &m_decodingPipeline, &m_decodingBus );
 	}
@@ -239,7 +237,7 @@ void GStreamerDecoderBackend::decodebinPadAdded( GstElement* decodebin, GstPad* 
 		if ( decoder->audioStreamNames().contains( srcPadName ) )
 			return;
 
-		GStreamer::inspectPad( srcpad, compatible ? "ADDED COMPATIBLE " : "ADDED NON COMPATIBLE " );
+		//GStreamer::inspectPad( srcpad, compatible ? "ADDED COMPATIBLE " : "ADDED NON COMPATIBLE " );
 
 		if ( ! compatible )
 			return;
@@ -265,11 +263,11 @@ void GStreamerDecoderBackend::decodebinPadAdded( GstElement* decodebin, GstPad* 
 
 		if ( backend->m_decodingStreamName == srcPadName )
 		{
-			GstCaps* sourceFilter = GStreamer::audioCapsFromFormat( backend->m_decodingStreamFormat, false );
+// 			GstCaps* sourceFilter = GStreamer::audioCapsFromFormat( backend->m_decodingStreamFormat, false );
 			GstCaps* outputFilter = GStreamer::audioCapsFromFormat( backend->m_waveWriter.outputFormat() );
 
 			gboolean success = TRUE;
-			success = success && GST_PAD_LINK_SUCCESSFUL( GStreamer::link( bin, "decodebin", srcPadName.toAscii(), "audioresample", "sink", sourceFilter ) );
+			success = success && GST_PAD_LINK_SUCCESSFUL( GStreamer::link( bin, "decodebin", srcPadName.toAscii(), "audioresample", "sink"/*, sourceFilter*/ ) );
 			success = success && GST_PAD_LINK_SUCCESSFUL( GStreamer::link( bin, "audioresample", "audioconvert" ) );
 			success = success && GST_PAD_LINK_SUCCESSFUL( GStreamer::link( bin, "audioconvert", "fakesink", outputFilter ) );
 
@@ -307,7 +305,8 @@ void GStreamerDecoderBackend::onInfoTimerTimeout()
 	{
 		GstObject* src = GST_MESSAGE_SRC( msg );
 
-		if ( src != GST_OBJECT( m_infoPipeline ) )
+		// we are only interested in error messages or messages directed to the info pipeline
+		if ( GST_MESSAGE_TYPE( msg ) != GST_MESSAGE_ERROR && src != GST_OBJECT( m_infoPipeline ) )
 		{
 			gst_message_unref( msg );
 			continue;
@@ -387,7 +386,8 @@ void GStreamerDecoderBackend::onDecodingTimerTimeout()
 	{
 		GstObject* src = GST_MESSAGE_SRC( msg );
 
-		if ( src != GST_OBJECT( m_decodingPipeline ) )
+		// we are only interested in error messages or messages directed to the decoding pipeline
+		if ( GST_MESSAGE_TYPE( msg ) != GST_MESSAGE_ERROR && src != GST_OBJECT( m_decodingPipeline ) )
 		{
 			gst_message_unref( msg );
 			continue;
@@ -402,7 +402,10 @@ void GStreamerDecoderBackend::onDecodingTimerTimeout()
 				GstState old, current, target;
 				gst_message_parse_state_changed( msg, &old, &current, &target );
 				if ( target == GST_STATE_PLAYING )
+				{
 					decoder()->setState( Decoder::Decoding );
+					GStreamer::setElementState( GST_ELEMENT( m_decodingPipeline ), GST_STATE_PLAYING, 0 );
+				}
 				else if ( current == GST_STATE_READY || current == GST_STATE_NULL )
 				{
 					m_waveWriter.close();
@@ -426,7 +429,13 @@ void GStreamerDecoderBackend::onDecodingTimerTimeout()
 			}
 			case GST_MESSAGE_ERROR:
 			{
-				decoder()->setErrorState();
+				gchar* debug = NULL;
+				GError* error = NULL;
+				gst_message_parse_error( msg, &error, &debug );
+				//decoder()->setErrorState( QString( error->message ) );
+				decoder()->setErrorState( QString( debug ) );
+				g_error_free( error );
+				g_free( debug );
 				break;
 			}
 			default:

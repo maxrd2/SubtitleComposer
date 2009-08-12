@@ -31,7 +31,7 @@
 using namespace SubtitleComposer;
 
 PhononPlayerBackend::PhononPlayerBackend( Player* player ):
-	PlayerBackend( player, new PhononConfig() ),
+	PlayerBackend( player, "Phonon", new PhononConfig() ),
 	m_mediaObject( 0 ),
 	m_mediaController( 0 ),
 	m_audioOutput( 0 ),

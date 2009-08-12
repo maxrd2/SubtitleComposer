@@ -37,19 +37,21 @@ GeneralConfigWidget::GeneralConfigWidget( QWidget* parent ):
 {
 	QGroupBox* generalGroupBox = createGroupBox( i18nc( "@title:group General settings", "General" ) );
 
-	QLabel* defaultEncodingLabel = new QLabel( generalGroupBox );
-	defaultEncodingLabel->setText( i18n( "Default encoding for opening subtitles:" ) );
-
 	m_defaultEncodingComboBox = new KComboBox( generalGroupBox );
 	m_defaultEncodingComboBox->addItems( app()->availableEncodingNames() );
 
-	QLabel* relativeSeekPositionLabel = new QLabel( generalGroupBox );
-	relativeSeekPositionLabel->setText( i18n( "On line double click, jump to show time minus:" ) );
+	QLabel* defaultEncodingLabel = new QLabel( generalGroupBox );
+	defaultEncodingLabel->setText( i18n( "Default encoding for opening subtitles:" ) );
+	defaultEncodingLabel->setBuddy( m_defaultEncodingComboBox );
 
 	m_relativeSeekPositionSpinBox = new KIntNumInput( generalGroupBox );
 	m_relativeSeekPositionSpinBox->setMinimum( 0 );
 	m_relativeSeekPositionSpinBox->setMaximum( 10000 );
 	m_relativeSeekPositionSpinBox->setSuffix( i18n( " msecs" ) );
+
+	QLabel* relativeSeekPositionLabel = new QLabel( generalGroupBox );
+	relativeSeekPositionLabel->setText( i18n( "On line double click, jump to show time minus:" ) );
+	relativeSeekPositionLabel->setBuddy( m_relativeSeekPositionSpinBox );
 
 	m_autoLoadVideoCheckBox = new QCheckBox( generalGroupBox );
 	m_autoLoadVideoCheckBox->setText( i18n( "Automatically load video file when opening subtitle" ) );
@@ -57,21 +59,23 @@ GeneralConfigWidget::GeneralConfigWidget( QWidget* parent ):
 
 	QGroupBox* quickActionsGroupBox = createGroupBox( i18nc( "@title:group", "Quick Actions" ) );
 
-	QLabel* shiftMillisecondsLabel = new QLabel( quickActionsGroupBox );
-	shiftMillisecondsLabel->setText( i18n( "Time shift for selected lines:" ) );
-
 	m_shiftMsecsSpinBox = new KIntNumInput( quickActionsGroupBox );
 	m_shiftMsecsSpinBox->setMinimum( 1 );
 	m_shiftMsecsSpinBox->setMaximum( 1000 );
 	m_shiftMsecsSpinBox->setSuffix( i18n( " msecs" ) );
 
-	QLabel* setTimeCompMsecsLabel = new QLabel( quickActionsGroupBox );
-	setTimeCompMsecsLabel->setText( i18n( "Compensation for captured video times:" ) );
+	QLabel* shiftMsecsLabel = new QLabel( quickActionsGroupBox );
+	shiftMsecsLabel->setText( i18n( "Time shift for selected lines:" ) );
+	shiftMsecsLabel->setBuddy( m_shiftMsecsSpinBox );
 
 	m_videoPosCompMsecsSpinBox = new KIntNumInput( quickActionsGroupBox );
 	m_videoPosCompMsecsSpinBox->setMinimum( 1 );
 	m_videoPosCompMsecsSpinBox->setMaximum( 1000 );
 	m_videoPosCompMsecsSpinBox->setSuffix( i18n( " msecs" ) );
+
+	QLabel* videoPosCompMsecsLabel = new QLabel( quickActionsGroupBox );
+	videoPosCompMsecsLabel->setText( i18n( "Compensation for captured video times:" ) );
+	videoPosCompMsecsLabel->setBuddy( m_videoPosCompMsecsSpinBox );
 
 
 	QGridLayout* generalLayout = createGridLayout( generalGroupBox );
@@ -82,9 +86,9 @@ GeneralConfigWidget::GeneralConfigWidget( QWidget* parent ):
 	generalLayout->addWidget( m_autoLoadVideoCheckBox, 3, 0, 1, 2 );
 
 	QGridLayout* quickActionsLayout = createGridLayout( quickActionsGroupBox );
-	quickActionsLayout->addWidget( shiftMillisecondsLabel, 0, 0, Qt::AlignRight|Qt::AlignVCenter );
+	quickActionsLayout->addWidget( shiftMsecsLabel, 0, 0, Qt::AlignRight|Qt::AlignVCenter );
 	quickActionsLayout->addWidget( m_shiftMsecsSpinBox, 0, 1 );
-	quickActionsLayout->addWidget( setTimeCompMsecsLabel, 1, 0, Qt::AlignRight|Qt::AlignVCenter );
+	quickActionsLayout->addWidget( videoPosCompMsecsLabel, 1, 0, Qt::AlignRight|Qt::AlignVCenter );
 	quickActionsLayout->addWidget( m_videoPosCompMsecsSpinBox, 1, 1 );
 
 	connect( m_defaultEncodingComboBox, SIGNAL(activated(int)), this, SIGNAL(settingsChanged()) );

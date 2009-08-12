@@ -45,8 +45,10 @@ namespace SubtitleComposer
 		public:
 
 			/// ownership of the config object is transferred to this object
-			ServiceBackend( Service* service, AppConfigGroup* config );
+			ServiceBackend( Service* service, const QString& name, AppConfigGroup* config );
 			virtual ~ServiceBackend();
+
+			inline const QString& name() const { return m_name; }
 
 			inline const AppConfigGroup* config() const { return m_config; }
 
@@ -55,6 +57,8 @@ namespace SubtitleComposer
 			void setConfig( const AppConfigGroup* const config );
 
 			virtual AppConfigGroupWidget* newAppConfigGroupWidget( QWidget* parent ) = 0;
+
+			bool isDummy() const;
 
 		protected:
 
@@ -84,6 +88,7 @@ namespace SubtitleComposer
 		private:
 
 			Service* m_service;
+			QString m_name;
 			AppConfigGroup* m_config;
 	};
 }

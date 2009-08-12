@@ -53,6 +53,8 @@ namespace SubtitleComposer
 				Ready // same as Stopped or Finished
 			} State;
 
+			virtual QString dummyBackendName() const { return "Dummy"; }
+
 			inline PlayerBackend* backend( const QString& name ) const { return (PlayerBackend*)Service::backend( name ); }
 			inline PlayerBackend* activeBackend() const { return (PlayerBackend*)Service::activeBackend(); }
 
@@ -101,6 +103,7 @@ namespace SubtitleComposer
 			void fileOpened( const QString& filePath );
 			void fileClosed();
 
+			void playbackError( const QString& errorMessage=QString() );
 			void playing();
 			void positionChanged( double seconds );
 			void lengthChanged( double seconds );

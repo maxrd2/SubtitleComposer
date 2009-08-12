@@ -44,25 +44,40 @@ PlayerConfigWidget::PlayerConfigWidget( QWidget* parent ):
 {
 	QGroupBox* generalGroupBox = createGroupBox( i18nc( "@title:group General settings", "General" ) );
 
-	QLabel* playerBackendLabel = new QLabel( generalGroupBox );
-	playerBackendLabel->setText( i18n( "Player backend:" ) );
-
 	m_playerBackendComboBox = new KComboBox( generalGroupBox );
 	m_playerBackendComboBox->addItems( Player::instance()->backendNames() );
+	if ( m_playerBackendComboBox->count() > 1 )
+	{
+		int dummyBackendIndex = m_playerBackendComboBox->findText( Player::instance()->dummyBackendName() );
+		if ( dummyBackendIndex >= 0 )
+			m_playerBackendComboBox->removeItem( dummyBackendIndex );
+	}
 
-	QLabel* decoderBackendLabel = new QLabel( generalGroupBox );
-	decoderBackendLabel->setText( i18n( "Decoder backend:" ) );
+	QLabel* playerBackendLabel = new QLabel( generalGroupBox );
+	playerBackendLabel->setText( i18n( "Player backend:" ) );
+	playerBackendLabel->setBuddy( m_playerBackendComboBox );
 
 	m_decoderBackendComboBox = new KComboBox( generalGroupBox );
 	m_decoderBackendComboBox->addItems( Decoder::instance()->backendNames() );
+	if ( m_decoderBackendComboBox->count() > 1 )
+	{
+		int dummyBackendIndex = m_decoderBackendComboBox->findText( Decoder::instance()->dummyBackendName() );
+		if ( dummyBackendIndex >= 0 )
+			m_decoderBackendComboBox->removeItem( dummyBackendIndex );
+	}
 
-	QLabel* seekJumpLabel = new QLabel( generalGroupBox );
-	seekJumpLabel->setText( i18n( "Jump length on seek:" ) );
+	QLabel* decoderBackendLabel = new QLabel( generalGroupBox );
+	decoderBackendLabel->setText( i18n( "Decoder backend:" ) );
+	decoderBackendLabel->setBuddy( m_decoderBackendComboBox );
 
 	m_seekJumpSecsSpinBox = new KIntNumInput( generalGroupBox );
 	m_seekJumpSecsSpinBox->setMinimum( 1 );
 	m_seekJumpSecsSpinBox->setMaximum( 600 );
 	m_seekJumpSecsSpinBox->setSuffix( i18n( " secs" ) );
+
+	QLabel* seekJumpLabel = new QLabel( generalGroupBox );
+	seekJumpLabel->setText( i18n( "Jump length on seek:" ) );
+	seekJumpLabel->setBuddy( m_seekJumpSecsSpinBox );
 
 	m_showPositionTimeEditCheckBox = new QCheckBox( generalGroupBox );
 	m_showPositionTimeEditCheckBox->setText( i18n( "Show editable position control" ) );
@@ -70,37 +85,41 @@ PlayerConfigWidget::PlayerConfigWidget( QWidget* parent ):
 
 	QGroupBox* fontGroupBox = createGroupBox( i18nc( "@title:group", "Subtitles" ) );
 
-	QLabel* fontLabel = new QLabel( fontGroupBox );
-	fontLabel->setText( i18nc( "@label:chooser The font family name", "Font family:" ) );
-
 	m_fontComboBox = new QFontComboBox( fontGroupBox );
 
-	QLabel* sizeLabel = new QLabel( fontGroupBox );
-	sizeLabel->setText( i18n( "Font size:" ) );
+	QLabel* fontLabel = new QLabel( fontGroupBox );
+	fontLabel->setText( i18nc( "@label:chooser The font family name", "Font family:" ) );
+	fontLabel->setBuddy( m_fontComboBox );
 
 	m_sizeSpinBox = new KIntNumInput( fontGroupBox );
 	m_sizeSpinBox->setMinimum( 4 );
 	m_sizeSpinBox->setMaximum( 100 );
 	m_sizeSpinBox->setSuffix( i18n( " points" ) );
 
-	QLabel* primaryColorLabel = new QLabel( fontGroupBox );
-	primaryColorLabel->setText( i18n( "Primary color:" ) );
+	QLabel* sizeLabel = new QLabel( fontGroupBox );
+	sizeLabel->setText( i18n( "Font size:" ) );
+	sizeLabel->setBuddy( m_sizeSpinBox );
 
 	m_primaryColorComboBox = new KColorCombo( fontGroupBox );
 
-	QLabel* outlineColorLabel = new QLabel( fontGroupBox );
-	outlineColorLabel->setText( i18n( "Outline color:" ) );
+	QLabel* primaryColorLabel = new QLabel( fontGroupBox );
+	primaryColorLabel->setText( i18n( "Primary color:" ) );
+	primaryColorLabel->setBuddy( m_primaryColorComboBox );
 
 	m_outlineColorComboBox = new KColorCombo( fontGroupBox );
 
-
-	QLabel* outlineWidthLabel = new QLabel( fontGroupBox );
-	outlineWidthLabel->setText( i18n( "Outline width:" ) );
+	QLabel* outlineColorLabel = new QLabel( fontGroupBox );
+	outlineColorLabel->setText( i18n( "Outline color:" ) );
+	outlineColorLabel->setBuddy( m_outlineColorComboBox );
 
 	m_outlineWidthSpinBox = new KIntNumInput( fontGroupBox );
 	m_outlineWidthSpinBox->setMinimum( 0 );
 	m_outlineWidthSpinBox->setMaximum( 5 );
 	m_outlineWidthSpinBox->setSuffix( i18n( " pixels" ) );
+
+	QLabel* outlineWidthLabel = new QLabel( fontGroupBox );
+	outlineWidthLabel->setText( i18n( "Outline width:" ) );
+	outlineWidthLabel->setBuddy( m_outlineWidthSpinBox );
 
 
 	QGroupBox* previewGroupBox = createGroupBox( i18nc( "@title:group", "Subtitles Preview" ) );

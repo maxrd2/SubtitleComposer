@@ -268,7 +268,7 @@ namespace SubtitleComposer
 			void onPlayerMuteChanged( bool muted );
 			void onPlayerOptionChanged( const QString& option, const QString& value );
 
-			void onDecoderError();
+			void onDecodingError( const QString& errorMessage );
 
 			void onGeneralOptionChanged( const QString& option, const QString& value );
 

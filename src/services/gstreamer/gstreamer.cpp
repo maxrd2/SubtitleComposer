@@ -23,15 +23,15 @@
 
 #include <KDebug>
 
-// #define INSPECT
+// #define VERBOSE
 
 using namespace SubtitleComposer;
 
-int GStreamer::s_inited = 0;
+int GStreamer::s_inited( 0 );
 
 bool GStreamer::init()
 {
-	if ( s_inited )
+	if ( ! s_inited )
 	{
 		if ( ! gst_init_check( NULL, NULL, NULL ) )
 		{
@@ -64,8 +64,10 @@ GstStateChangeReturn GStreamer::setElementState( GstElement* element, int state,
 
 	if ( ret != GST_STATE_CHANGE_ASYNC )
 	{
+#ifdef VERBOSE
 		if ( ret == GST_STATE_CHANGE_FAILURE )
 			qDebug() << "error setting element" << gst_element_get_name( element ) << "state to" << state;
+#endif
 		return ret;
 	}
 
@@ -75,7 +77,9 @@ GstStateChangeReturn GStreamer::setElementState( GstElement* element, int state,
 	// wait for state change or timeout
 	if ( ! gst_element_get_state( element, NULL, NULL, timeout*GST_MSECOND ) == GST_STATE_CHANGE_SUCCESS )
 	{
+#ifdef VERBOSE
 		qDebug() << "error setting element" << gst_element_get_name( element ) << "state to" << state;
+#endif
 		return GST_STATE_CHANGE_FAILURE;
 	}
 	else
@@ -203,8 +207,10 @@ GstPadLinkReturn GStreamer::link( GstBin* bin, const char* srcElement, const cha
 	else
 		result = gst_pad_link( srcpad, sinkpad );
 
+#ifdef VERBOSE
 	inspectPad( srcpad, srcElement );
 	inspectPad( sinkpad, sinkElement );
+
 	if ( filter )
 		inspectCaps( filter, "FILTER " );
 
@@ -212,6 +218,7 @@ GstPadLinkReturn GStreamer::link( GstBin* bin, const char* srcElement, const cha
 		qDebug() << "successfully linked" << srcElement << srcPad << "to" << sinkElement << sinkPad;
 	else
 		qDebug() << "error" << result << "linking" << srcElement << srcPad << "to" << sinkElement << sinkPad;
+#endif
 
 	return result;
 }
@@ -226,7 +233,9 @@ void GStreamer::freePipeline( GstPipeline** pipeline, GstBus** bus )
 
 	if ( *pipeline )
 	{
+#ifdef VERBOSE
 		qDebug() << "disposing pipeline" << gst_element_get_name( GST_ELEMENT( *pipeline ) );
+#endif
 
 		gst_object_unref( GST_OBJECT( *pipeline ) );
 		*pipeline = NULL;
@@ -235,7 +244,6 @@ void GStreamer::freePipeline( GstPipeline** pipeline, GstBus** bus )
 
 void GStreamer::inspectPad( GstPad* pad, const QString& prefix )
 {
-#ifdef INSPECT
 	gchar* padname = gst_pad_get_name( pad );
 
 	QString message = prefix + QString( "PAD %1 (%2)" )
@@ -265,12 +273,10 @@ void GStreamer::inspectPad( GstPad* pad, const QString& prefix )
 		inspectCaps( caps, "ALLOWED " );
 		gst_caps_unref( caps );
 	}
-#endif
 }
 
 void GStreamer::inspectCaps( GstCaps* caps, const QString& prefix )
 {
-#ifdef INSPECT
 	QString message = prefix + QString( "CAPS (%1)" )
 		.arg( gst_caps_is_fixed( caps ) ? "FIXED" : "NON FIXED" );
 
@@ -281,7 +287,6 @@ void GStreamer::inspectCaps( GstCaps* caps, const QString& prefix )
 	g_free( debug );
 
 	qDebug() << message.trimmed();
-#endif
 }
 
 static QString state( GstState state )
@@ -299,7 +304,6 @@ static QString state( GstState state )
 
 void GStreamer::inspectMessage( GstMessage* msg )
 {
-#ifdef INSPECT
 	QString data;
 	switch( GST_MESSAGE_TYPE( msg ) )
 	{
@@ -307,7 +311,7 @@ void GStreamer::inspectMessage( GstMessage* msg )
 		{
 			GstState old, cur, pending;
 			gst_message_parse_state_changed( msg, &old, &cur, &pending );
-			data = state( old ) + " / " + state( cur ) + " / " + state( pending );
+			data = "old:" + state( old ) + " | current:" + state( cur ) + " | target:" + state( pending );
 			break;
 		}
 		case GST_MESSAGE_ERROR:
@@ -329,12 +333,10 @@ void GStreamer::inspectMessage( GstMessage* msg )
 		message += ": " + data;
 
 	qDebug() << message;
-#endif
 }
 
 void GStreamer::inspectObject( GObject* object )
 {
-#ifdef INSPECT
 	QString string;
 	QTextStream stream( &string );
 
@@ -384,5 +386,4 @@ void GStreamer::inspectObject( GObject* object )
 	qDebug() << string << '\n';
 
 	g_free( params );
-#endif
 }

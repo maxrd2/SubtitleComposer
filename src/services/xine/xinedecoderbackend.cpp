@@ -23,7 +23,6 @@
 #include "xineconfigwidget.h"
 #include "../wavewriter.h"
 
-#include <QtCore/QEventLoop>
 #include <QtCore/QEvent>
 #include <QtCore/QDir>
 #include <QtCore/QFile>
@@ -36,10 +35,11 @@
 
 using namespace SubtitleComposer;
 
-#define EVENT_DECODING_STARTED		(QEvent::User + 1)
-#define EVENT_POSITION_UPDATED		(QEvent::User + 2)
-#define EVENT_WRITE_DATA_ERROR		(QEvent::User + 3)
-#define EVENT_DECODING_FINISHED		(QEvent::User + 4)
+#define EVENT_DECODING_STARTED			(QEvent::User + 1)
+#define EVENT_POSITION_UPDATED			(QEvent::User + 2)
+#define EVENT_ERROR_INCOMPATIBLE_DATA	(QEvent::User + 3)
+#define EVENT_ERROR_FILE_CLOSED			(QEvent::User + 4)
+#define EVENT_DECODING_FINISHED			(QEvent::User + 5)
 
 namespace SubtitleComposer
 {
@@ -81,7 +81,10 @@ namespace SubtitleComposer
 					else
 					{
 						m_cancelled = true;
-						QCoreApplication::postEvent( m_backend, new QEvent( (QEvent::Type)EVENT_WRITE_DATA_ERROR ) );
+						if ( m_waveWriter.isOpened() )
+							QCoreApplication::postEvent( m_backend, new QEvent( (QEvent::Type)EVENT_ERROR_INCOMPATIBLE_DATA ) );
+						else
+							QCoreApplication::postEvent( m_backend, new QEvent( (QEvent::Type)EVENT_ERROR_FILE_CLOSED ) );
 					}
 				}
 
@@ -103,7 +106,7 @@ namespace SubtitleComposer
 }
 
 XineDecoderBackend::XineDecoderBackend( Decoder* decoder ):
-	DecoderBackend( decoder, new XineConfig() ),
+	DecoderBackend( decoder, "Xine", new XineConfig() ),
 	m_xineEngine( 0 ),
 	m_audioPort( 0 ),
 	m_xineStream( 0 ),
@@ -168,9 +171,15 @@ bool XineDecoderBackend::readNextFrame( bool first )
 	return m_isValidFrame;
 }
 
-bool XineDecoderBackend::openFile( const QString& filePath, bool& playingAfterCall )
+bool XineDecoderBackend::openFile( const QString& filePath )
 {
-	playingAfterCall = false;
+	// Lame attempt at preventing opening of files with formats known to
+	// "be problematic" (their Xine drivers in are buggy).
+	// - Matroska files make xine_open() call hang
+	// - Ogg Vorbis files make  xine_get_next_audio_frame() call hang for the last frame
+	QString fileExtension = QFileInfo( filePath ).suffix().toLower();
+	if ( fileExtension == "mkv" || fileExtension == "ogg" )
+		return false;
 
 	KUrl fileUrl;
 	fileUrl.setProtocol( "file" );
@@ -298,18 +307,13 @@ void XineDecoderBackend::customEvent( QEvent* event )
 				decoder()->setPosition( m_decodingThread->position() );
 			break;
 
-		case EVENT_WRITE_DATA_ERROR:
+		case EVENT_ERROR_INCOMPATIBLE_DATA:
+			decoder()->setErrorState( i18n( "Error converting audio data to output format" ) );
+			break;
+
+		case EVENT_ERROR_FILE_CLOSED:
 		case EVENT_DECODING_FINISHED:
-			xine_play( m_xineStream, 0, 0 );
-			if ( (m_isValidFrame = xine_get_next_audio_frame( m_audioPort, m_frame ) > 0) )
-			{
-				m_framePos = 0;
-				m_frameSize = m_frame->num_samples*WaveFormat::blockAlign( m_frame->num_channels, m_frame->bits_per_sample );
-			}
-			if ( event->type() == EVENT_WRITE_DATA_ERROR )
-				decoder()->setErrorState();
-			else
-				decoder()->setState( Decoder::Ready );
+			decoder()->setState( Decoder::Ready );
 			break;
 
 		default:
