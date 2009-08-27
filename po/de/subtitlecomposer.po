@@ -9,7 +9,7 @@ msgstr ""
 "Report-Msgid-Bugs-To: https://sourceforge."
 "net/tracker/?atid=1005652&group_id=208427&func=browse\n"
 "POT-Creation-Date: 2009-08-14 19:00+0200\n"
-"PO-Revision-Date: 2009-08-27 03:10+0200\n"
+"PO-Revision-Date: 2009-08-27 18:48+0200\n"
 "Last-Translator: Panagiotis Papadopoulos <pano_90@gmx.net>\n"
 "Language-Team: German <kde-i18n-de@kde.org>\n"
 "MIME-Version: 1.0\n"
@@ -53,7 +53,7 @@ msgstr "Zeilen trennen"
 
 #: core/subtitle.cpp:590 main/application.cpp:683 main/lineswidget.cpp:1225
 msgid "Join Lines"
-msgstr "Zeilen zusammenführen"
+msgstr "Zeilen verbinden"
 
 #: core/subtitle.cpp:642
 msgid "Shift Lines"
@@ -130,7 +130,7 @@ msgstr "Untertitel synchronisieren"
 
 #: core/subtitle.cpp:1190 main/dialogs/joinsubtitlesdialog.cpp:35
 msgid "Join Subtitles"
-msgstr "Untertitel zusammenführen"
+msgstr "Untertitel verbinden"
 
 #: core/subtitle.cpp:1236 core/subtitle.cpp:1242
 msgid "Split Subtitles"
@@ -549,7 +549,7 @@ msgstr "Den Untertitel in zwei Teile trennen"
 
 #: main/application.cpp:640
 msgid "Join Subtitles..."
-msgstr "Untertitel zusammenführen ..."
+msgstr "Untertitel verbinden ..."
 
 #: main/application.cpp:641
 msgid "Append to the opened subtitle another one"
@@ -586,7 +586,7 @@ msgstr "Ausgewählte Zeilen trennen"
 
 #: main/application.cpp:684
 msgid "Join selected lines"
-msgstr "Ausgewählte Zeilen zusammenführen"
+msgstr "Ausgewählte Zeilen verbinden"
 
 #: main/application.cpp:691 main/dialogs/actionwitherrortargetsdialog.cpp:103
 #: main/lineswidget.cpp:1219 widgets/simplerichtextedit.cpp:113
@@ -639,7 +639,7 @@ msgstr "Ersetzen ..."
 #: main/application.cpp:742
 #, fuzzy
 msgid "Replace occurrences of strings or regular expressions"
-msgstr "Vorkommnisse von Strings oder Regulären Ausrdrücken ersetzen"
+msgstr "Vorkommnisse von Strings oder Regulären Ausdrücken ersetzen"
 
 #: main/application.cpp:751
 #, fuzzy
@@ -836,8 +836,9 @@ msgid "Synchronize with Subtitle..."
 msgstr "Mit Untertitel synchronisieren ..."
 
 #: main/application.cpp:973
+#, fuzzy
 msgid "Copy timing information from another subtitle"
-msgstr ""
+msgstr "Zeitinformationen aus anderem Untertitel kopieren"
 
 #: main/application.cpp:980 main/lineswidget.cpp:1142
 msgid "Break Lines..."
@@ -1069,7 +1070,6 @@ msgid "Select active subtitle stream"
 msgstr "Untertitelspur wählen"
 
 #: main/application.cpp:1242
-#, fuzzy
 msgid "Shift to Video Position"
 msgstr "Zur Video-Position verschieben"
 
@@ -1185,12 +1185,14 @@ msgid "Could not read the subtitle file to append."
 msgstr "Die anzuhängende Untertiteldatei kann nicht gelesen werden."
 
 #: main/application.cpp:1946
+#, fuzzy
 msgid "Could not write the splitted subtitle file."
-msgstr ""
+msgstr "Der getrennte Untertitel kann nicht gespeichert werden."
 
 #: main/application.cpp:1947
+#, fuzzy
 msgid "Could not write the splitted subtitle translation file."
-msgstr ""
+msgstr "Der getrennte Übersetzungsuntertitel kann nicht gespeichert werden."
 
 #: main/application.cpp:1965
 msgid "The specified time does not split the subtitles."
@@ -1227,13 +1229,14 @@ msgid "Can not perform sort on selection with multiple ranges."
 msgstr ""
 
 #: main/application.cpp:2529
+#, fuzzy
 msgid "The reference subtitle must have more than one line to proceed."
 msgstr ""
+"Der Referenz-Untertitel muss mehr als eine Zeile haben um fortzufahren."
 
 #: main/application.cpp:2541
-#, fuzzy
 msgid "Could not parse the reference subtitle file."
-msgstr "Das Verarbeiten des Referenzuntertitels ist fehlgeschlagen."
+msgstr "Der Referenz-Untertitel kann nicht verarbeitet werden."
 
 #: main/application.cpp:2648 main/dialogs/translatedialog.cpp:31
 msgid "Translate"
@@ -1266,7 +1269,7 @@ msgstr "Haupttext übersetzen"
 
 #: main/application.cpp:2701
 msgid "Translate Secondary Text"
-msgstr ""
+msgstr "Nebentext übersetzen"
 
 #: main/application.cpp:2717
 msgid ""
@@ -1488,9 +1491,8 @@ msgid "Quick Actions"
 msgstr "Kurzaktionen"
 
 #: main/configs/generalconfigwidget.cpp:68
-#, fuzzy
 msgid "Time shift for selected lines:"
-msgstr "Zeitverschieben von ausgewählten Zeilen"
+msgstr "Zeitverschiebung für ausgewählte Zeilen:"
 
 #: main/configs/generalconfigwidget.cpp:77
 msgid "Compensation for captured video times:"
@@ -1670,7 +1672,7 @@ msgstr "Letzte gesprochene Zeile:"
 #: main/dialogs/splitsubtitledialog.cpp:38 main/dialogs/translatedialog.cpp:33
 msgctxt "@title:group"
 msgid "Settings"
-msgstr "Einstellungen:"
+msgstr "Einstellungen"
 
 #: main/dialogs/autodurationsdialog.cpp:46
 msgid "Milliseconds per line:"
@@ -1696,12 +1698,10 @@ msgid "Duration Calculation"
 msgstr "Laufzeit-Berechnung"
 
 #: main/dialogs/autodurationsdialog.cpp:77
-#, fuzzy
 msgid "Use primary text"
 msgstr "Haupttext verwenden"
 
 #: main/dialogs/autodurationsdialog.cpp:78
-#, fuzzy
 msgid "Use translation text"
 msgstr "Übersetzungstext verwenden"
 
@@ -1846,7 +1846,6 @@ msgid "Shift subtitle forwards before append"
 msgstr "Untertitel vor dem anhängen nach vorne verschieben"
 
 #: main/dialogs/joinsubtitlesdialog.cpp:47
-#, fuzzy
 #: main/dialogs/splitsubtitledialog.cpp:44
 msgid "Set from video length"
 msgstr "Von der Videolänge übernehmen"
@@ -1942,9 +1941,8 @@ msgid "Split Subtitle"
 msgstr "Untertitel trennen"
 
 #: main/dialogs/splitsubtitledialog.cpp:49
-#, fuzzy
 msgid "Split time:"
-msgstr "Zeilen trennen"
+msgstr "Trennzeit:"
 
 #: main/dialogs/splitsubtitledialog.cpp:53
 #, fuzzy
@@ -1957,9 +1955,8 @@ msgid "Synchronize with Subtitle"
 msgstr "Mit Untertitel synchronisieren"
 
 #: main/dialogs/syncsubtitlesdialog.cpp:34
-#, fuzzy
 msgid "Reference Subtitle"
-msgstr "Untertitel öffnen"
+msgstr "Referenz-Untertitel"
 
 #: main/dialogs/syncsubtitlesdialog.cpp:36
 msgctxt "@title:group"
@@ -1967,12 +1964,14 @@ msgid "Synchronization Mode"
 msgstr "Synchronisationsmodus"
 
 #: main/dialogs/syncsubtitlesdialog.cpp:39
+#, fuzzy
 msgid "Adjust to reference's first and last lines"
-msgstr ""
+msgstr "Die erste und letzte Zeilen der Referenz anpassen"
 
 #: main/dialogs/syncsubtitlesdialog.cpp:43
+#, fuzzy
 msgid "Copy timing information from reference line by line"
-msgstr ""
+msgstr "Zeitinformationen Zeile für Zeile von der Referenz kopieren"
 
 #: main/dialogs/translatedialog.cpp:49
 msgid "Input language:"
@@ -2158,7 +2157,7 @@ msgstr "Sergio Pistone"
 
 #: main/main.cpp:52
 msgid "Author & maintainer"
-msgstr "Autor & Betreuer"
+msgstr "Autor und Betreuer"
 
 #: main/main.cpp:61
 msgid "Open location as primary subtitle"
@@ -2208,7 +2207,6 @@ msgid "Information"
 msgstr "Information"
 
 #: main/scripting/scriptsmanager.cpp:94
-#, fuzzy
 msgid "Warning"
 msgstr "Warnung"
 
@@ -2274,7 +2272,6 @@ msgstr ""
 "Möchten Sie einen anderen Namen eingeben?"
 
 #: main/scripting/scriptsmanager.cpp:220 main/scripting/scriptsmanager.cpp:302
-#, fuzzy
 msgid "Name Already Used"
 msgstr "Name bereits verwendet"
 
@@ -2403,7 +2400,7 @@ msgstr "Suchen"
 
 #: main/utils/finder.cpp:278 main/utils/replacer.cpp:234
 msgid "No instances of '%1' found!"
-msgstr "„%1“ ist nicht gefunden worden."
+msgstr "„%1“ kann nicht gefunden werden."
 
 #: main/utils/finder.cpp:279 main/utils/finder.cpp:303
 #, fuzzy
@@ -2480,7 +2477,6 @@ msgid "Spell Checking"
 msgstr "Rechtschreibung überprüfen"
 
 #: main/utils/translator.cpp:167
-#, fuzzy
 msgid "Operation cancelled by user"
 msgstr "Aktion vom Benutzer abgebrochen"
 
