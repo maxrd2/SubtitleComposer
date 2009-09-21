@@ -207,17 +207,17 @@ void PhononPlayerBackend::onHasVideoChanged( bool /*hasVideo*/ )
 
 void PhononPlayerBackend::onFinished()
 {
-	player()->updateState( Player::Ready );
+	setPlayerState( Player::Ready );
 }
 
 void PhononPlayerBackend::onTick( qint64 currentTime )
 {
-	player()->updatePosition( currentTime / 1000.0 );
+	setPlayerPosition( currentTime / 1000.0 );
 }
 
 void PhononPlayerBackend::onTotalTimeChanged( qint64 newTotalTime )
 {
-	player()->updateLength( newTotalTime / 1000.0 );
+	setPlayerLength( newTotalTime / 1000.0 );
 	// FIXME update frame rate and set tick interval to frame rate
 	// can't be done with what Phonon provides ATM
 }
@@ -231,7 +231,7 @@ void PhononPlayerBackend::onAvailableAudioChannelsChanged()
 		  it != end; ++it )
 		audioStreams << (*it).name();
 
-	player()->updateAudioStreams( audioStreams, m_mediaController->currentAudioChannel().index() );
+	setPlayerAudioStreams( audioStreams, m_mediaController->currentAudioChannel().index() );
 }
 
 void PhononPlayerBackend::onAvailableSubtitlesChanged()
@@ -249,26 +249,20 @@ void PhononPlayerBackend::onStateChanged( Phonon::State newState, Phonon::State 
 	switch( newState )
 	{
 		case Phonon::StoppedState:
-			//kDebug() << "changing state to Ready";
-			player()->updateState( Player::Ready );
+			setPlayerState( Player::Ready );
 			break;
 		case Phonon::LoadingState:
-		//case Phonon::BufferingState:
 		case Phonon::PlayingState:
-			//kDebug() << "changing state to Playing";
-			player()->updateState( Player::Playing );
+			setPlayerState( Player::Playing );
 			break;
 		case Phonon::PausedState:
-			//kDebug() << "changing state to Paused";
-			player()->updateState( Player::Paused );
+			setPlayerState( Player::Paused );
 			break;
 		case Phonon::ErrorState:
-		{
-			// TODO what should we do in this case??
-			return;
-		}
+			setPlayerErrorState();
+			break;
 		default:
-			return;
+			break;
 	}
 }
 

@@ -121,7 +121,7 @@ bool XinePlayerBackend::openFile( const QString& filePath, bool& playingAfterCal
 	if ( ! xine_play( m_xineStream, 0, 0 ) )
 		return false;
 
-	player()->updateState( Player::Playing );
+	setPlayerState( Player::Playing );
 
 	// this methods do nothing if the information is not available
 	updateVideoData();
@@ -144,7 +144,7 @@ bool XinePlayerBackend::play()
 	else
 		xine_set_param( m_xineStream, XINE_PARAM_SPEED, XINE_SPEED_NORMAL ); // was paused
 
-	player()->updateState( Player::Playing );
+	setPlayerState( Player::Playing );
 
 	m_timesTimer.start( UPDATE_INTERVAL );
 
@@ -156,7 +156,7 @@ bool XinePlayerBackend::pause()
 	m_timesTimer.stop();
 
 	xine_set_param( m_xineStream, XINE_PARAM_SPEED, XINE_SPEED_PAUSE );
-	player()->updateState( Player::Paused );
+	setPlayerState( Player::Paused );
 
 	return true;
 }
@@ -212,7 +212,7 @@ bool XinePlayerBackend::stop()
 	m_timesTimer.stop();
 
 	xine_stop( m_xineStream );
-	player()->updateState( Player::Ready );
+	setPlayerState( Player::Ready );
 
 	return true;
 }
@@ -242,7 +242,7 @@ void XinePlayerBackend::updateVideoData()
 		int fps = xine_get_stream_info( m_xineStream, XINE_STREAM_INFO_FRAME_DURATION );
 		if ( fps > 0 )
 		{
-			player()->updateFramesPerSecond( 90000.0 / fps );
+			setPlayerFramesPerSecond( 90000.0 / fps );
 
 			// tweak prebuffer so we can be sure to show only a single frame
 			// kDebug() << "PREBUFFER " << xine_get_param( m_xineStream, XINE_PARAM_METRONOM_PREBUFFER );
@@ -282,7 +282,7 @@ void XinePlayerBackend::updateAudioData()
 		audioStreams << audioStreamName;
 	}
 
-	player()->updateAudioStreams( audioStreams, audioStreams.isEmpty() ? -1 : 0 );
+	setPlayerAudioStreams( audioStreams, audioStreams.isEmpty() ? -1 : 0 );
 }
 
 void XinePlayerBackend::updateLengthData()
@@ -292,9 +292,7 @@ void XinePlayerBackend::updateLengthData()
 
 	int time, length;
 	if ( xine_get_pos_length( m_xineStream, 0, &time, &length ) )
-	{
-		player()->updateLength( length / 1000.0 );
-	}
+		setPlayerLength( length / 1000.0 );
 }
 
 void XinePlayerBackend::updatePosition()
@@ -312,7 +310,7 @@ void XinePlayerBackend::updatePosition()
 	if ( xine_get_pos_length( m_xineStream, 0, &time, &length ) )
 	{
 		if ( time < prevTime + 200 || time < prevTime )
-			player()->updatePosition( time / 1000.0 );
+			setPlayerPosition( time / 1000.0 );
 
 		prevTime = time;
 	}

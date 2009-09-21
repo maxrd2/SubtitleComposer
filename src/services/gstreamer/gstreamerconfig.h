@@ -46,8 +46,12 @@ namespace SubtitleComposer
 			QString videoSink() const { return option( keyVideoSink() ); }
 			void setVideoSink( const QString& videoSink ) { setOption( keyVideoSink(), videoSink ); }
 
+			bool experimentalFeatures() const { return optionAsBool( keyExperimentalFeatures() ); }
+			void setExperimentalFeatures( bool value ) { setOption( keyExperimentalFeatures(), value ); }
+
 			static const QString& keyAudioSink() { static const QString key( "AudioSink" ); return key; }
 			static const QString& keyVideoSink() { static const QString key( "VideoSink" ); return key; }
+			static const QString& keyExperimentalFeatures() { static const QString key( "ExperimentalFeatures" ); return key; }
 
 		private:
 
@@ -60,6 +64,7 @@ namespace SubtitleComposer
 
 				defaults[keyAudioSink()] = "";
 				defaults[keyVideoSink()] = "";
+				defaults[keyExperimentalFeatures()] = "true";
 
 				return defaults;
 			}

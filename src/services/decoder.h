@@ -72,7 +72,7 @@ namespace SubtitleComposer
 
 		public slots:
 
-			// return values of this functions don't imply that the operation was performed OK
+			// return values of this functions don't imply that the operation was completed OK
 			// but that it was allowed (a false return value means that nothing was attempted).
 
 			bool openFile( const QString& filePath );
@@ -116,8 +116,8 @@ namespace SubtitleComposer
 
 			// functions used by the backends to inform changes in state:
 
-			void setPosition( double position ); // in seconds
-			void setLength( double length ); // in seconds
+			void setPosition( double position ); // value in seconds
+			void setLength( double length ); // value in seconds
 
 			void setState( Decoder::State state );
 			void setErrorState( const QString& errorMessage=QString() );
@@ -143,10 +143,6 @@ namespace SubtitleComposer
 			QTimer* m_openFileTimer;
 
 			friend class DecoderBackend;
-			friend class GStreamerDecoderBackend;
-			friend class MDecoderDecoderBackend;
-			friend class XineDecoderBackend;
-			friend class PhononDecoderBackend;
 	};
 
 	const QString& Decoder::filePath() const

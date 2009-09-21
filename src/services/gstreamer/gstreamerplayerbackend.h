@@ -1,9 +1,8 @@
-#ifndef GSTREAMERPLAYERBACKEND_H
-#define GSTREAMERPLAYERBACKEND_H
+#ifndef GSTREAMERPLAYERBACKEND2_H
+#define GSTREAMERPLAYERBACKEND2_H
 
 /***************************************************************************
  *   Copyright (C) 2007-2009 Sergio Pistone (sergio_pistone@yahoo.com.ar)  *
- *   based on Kaffeine by Jürgen Kofler                                    *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
@@ -31,10 +30,9 @@
 #include <QtGui/QWidget>
 #include <QtCore/QString>
 
+#include <gst/gst.h>
+
 class QTimer;
-struct _GList;
-struct _GstElement;
-struct _GstBus;
 
 namespace SubtitleComposer
 {
@@ -55,10 +53,8 @@ namespace SubtitleComposer
 
 			virtual VideoWidget* initialize( QWidget* videoWidgetParent );
 			virtual void finalize();
-			void _finalize();
 
 			virtual bool openFile( const QString& filePath, bool& playingAfterCall );
-			bool _openFile( const QString& filePath, bool play );
 			virtual void closeFile();
 
 			virtual bool play();
@@ -70,40 +66,29 @@ namespace SubtitleComposer
 
 			virtual bool setVolume( double volume );
 
-		protected:
-
-			static void inspect( void* object );
-
-			bool initializeGStreamer();
-			bool createPlaybin();
-			void deletePlaybin();
-
-			bool changeState( int state, unsigned timeout=0 );
-
-			_GList* streamInfoForType( const char* typestr );
-			void updateVideoData();
-			void updateAudioData();
-			void hideSubtitles();
-
-			void updatePosition();
-
 		protected slots:
 
-			void onBusTimerTimeout();
+			void onPlaybinTimerTimeout();
 
-		protected:
+		private:
 
-			_GstElement* m_play;
-			_GstElement* m_videoSink;
-			_GstElement* m_audioSink;
+			void setupVideoSink( bool finalizing );
 
-			_GstBus* m_bus;
-			QTimer* m_busTimer;
+// 			static void audioChanged( GstElement* playbin2, gpointer userData );
+// 			static void videoChanged( GstElement* playbin2, gpointer userData );
 
-			bool m_updatePosition;
-			quint64 m_length;
+			GList* streamInfoForType( const char* typestr );
 
-			bool m_firstPlayback;
+			void updateAudioData();
+			void updateVideoData();
+
+		private:
+
+			GstPipeline* m_playbin;
+			GstBus* m_playbinBus;
+			QTimer* m_playbinTimer;
+			bool m_lengthInformed;
+			bool m_usingPlaybin2;
 	};
 }
 

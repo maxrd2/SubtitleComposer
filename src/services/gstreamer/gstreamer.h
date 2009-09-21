@@ -26,6 +26,9 @@
 
 #include "../waveformat.h"
 
+#include <QtCore/QString>
+#include <QtCore/QStringList>
+
 #include <gst/gst.h>
 
 namespace SubtitleComposer
@@ -40,6 +43,9 @@ namespace SubtitleComposer
 			static bool init();
 			static void deinit();
 
+			static GstElement* createElement( const QString& types, const char* name );
+			static GstElement* createElement( const QStringList& types, const char* name );
+
 			static GstStateChangeReturn setElementState( GstElement* element, int state, unsigned timeout=0 );
 
 			static WaveFormat formatFromAudioCaps( GstCaps* caps );
@@ -50,6 +56,7 @@ namespace SubtitleComposer
 
 			static void freePipeline( GstPipeline** pipeline, GstBus** bus );
 
+			static void inspectTags( GstTagList* tags, const QString& prefix=QString() );
 			static void inspectPad( GstPad* pad, const QString& prefix=QString() );
 			static void inspectCaps( GstCaps* caps, const QString& prefix=QString() );
 			static void inspectMessage( GstMessage* message );

@@ -106,6 +106,37 @@ namespace SubtitleComposer
 			virtual bool setVolume( double volume ) = 0;
 
 			inline Player* player() const { return static_cast<Player*>( service() ); }
+
+
+			inline void setPlayerPosition( double position ) // value in seconds
+			{
+				player()->setPosition( position );
+			}
+
+			inline void setPlayerLength( double length ) // value in seconds
+			{
+				player()->setLength( length );
+			}
+
+			inline void setPlayerState( Player::State state )
+			{
+				player()->setState( state );
+			}
+
+			inline void setPlayerErrorState( const QString& errorMessage=QString() )
+			{
+				player()->setErrorState( errorMessage );
+			}
+
+			inline void setPlayerFramesPerSecond( double framesPerSecond )
+			{
+				player()->setFramesPerSecond( framesPerSecond );
+			}
+
+			inline void setPlayerAudioStreams( const QStringList& audioStreams, int activeAudioStream )
+			{
+				player()->setAudioStreams( audioStreams, activeAudioStream );
+			}
 	};
 }
 

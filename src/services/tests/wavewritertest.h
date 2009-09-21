@@ -1,5 +1,5 @@
-#ifndef GSTREAMERCONFIGWIDGET_H
-#define GSTREAMERCONFIGWIDGET_H
+#ifndef WAVEWRITERTEST_H
+#define WAVEWRITERTEST_H
 
 /***************************************************************************
  *   Copyright (C) 2007-2009 Sergio Pistone (sergio_pistone@yahoo.com.ar)  *
@@ -24,44 +24,23 @@
 	#include <config.h>
 #endif
 
-#include "gstreamerconfig.h"
-#include "../../config/appconfiggroupwidget.h"
+#include <QtCore/QObject>
 
-#include <QtGui/QWidget>
-
-class QCheckBox;
-class KComboBox;
-
-namespace SubtitleComposer
+class WaveWriterTest: public QObject
 {
-	class GStreamerConfigWidget : public AppConfigGroupWidget
-	{
-		Q_OBJECT
+	Q_OBJECT
 
-		friend class GStreamerPlayerBackend;
-		friend class GStreamerDecoderBackend;
+	private slots:
 
-		public:
+		void testWriteMono8bps();
+		void testWriteMono16bps();
+		void testWriteMono24bps();
+		void testWriteMono32bps();
 
-			virtual ~GStreamerConfigWidget();
-
-			virtual void setControlsFromConfig();
-			virtual void setConfigFromControls();
-
-		private:
-
-			explicit GStreamerConfigWidget( QWidget* parent=0 );
-
-			GStreamerConfig* config() { return static_cast<GStreamerConfig*>( m_config ); };
-
-		private:
-
-			KComboBox* m_audioSinkComboBox;
-			QCheckBox* m_audioSinkCheckBox;
-			KComboBox* m_videoSinkComboBox;
-			QCheckBox* m_videoSinkCheckBox;
-			QCheckBox* m_experimentalFeaturesCheckBox;
-	};
-}
+		void testWriteStereo8bps();
+		void testWriteStereo16bps();
+		void testWriteStereo24bps();
+		void testWriteStereo32bps();
+};
 
 #endif

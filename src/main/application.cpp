@@ -355,7 +355,7 @@ QAction* Application::action( const char* actionName )
 	return m_mainWindow->actionCollection()->action( actionName );
 }
 
-void Application::triggerAction( const QKeySequence& keySequence )
+bool Application::triggerAction( const QKeySequence& keySequence )
 {
 	QList<QAction*> actions = m_mainWindow->actionCollection()->actions();
 
@@ -363,26 +363,27 @@ void Application::triggerAction( const QKeySequence& keySequence )
 	{
 		if ( (*it)->isEnabled() )
 		{
-			try
+			if ( KAction* action = qobject_cast<KAction*>( *it ) )
 			{
-				KAction* action = dynamic_cast<KAction*>( *it );
 				KShortcut shortcut = action->shortcut();
 				if ( shortcut.primary() == keySequence || shortcut.alternate() == keySequence )
 				{
 					action->trigger();
-					return;
+					return true;
 				}
 			}
-			catch( const std::bad_cast& )
+			else
 			{
 				if ( (*it)->shortcut() == keySequence )
 				{
 					(*it)->trigger();
-					return;
+					return true;
 				}
 			}
 		}
 	}
+
+	return false;
 }
 
 const QStringList& Application::availableEncodingNames() const

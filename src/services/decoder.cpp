@@ -224,6 +224,7 @@ void Decoder::setErrorState( const QString& errorMessage )
 
 	if ( m_state <= Decoder::Opening )
 	{
+		m_openFileTimer->stop();
 		QString filePath( m_filePath );
 		resetState();
 		emit fileOpenError( filePath );

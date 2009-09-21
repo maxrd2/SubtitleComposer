@@ -928,9 +928,9 @@ bool SubtitleLine::checkSecondaryUnneededSpaces( bool update )
 
 bool SubtitleLine::checkPrimaryCapitalAfterEllipsis( bool update )
 {
-	static const QRegExp capitalAfterEllipsisRegExp( "^\\s*\\.\\.\\.[¡¿\\.,;\\(\\[\\{\"'\\s]*" );
+	QRegExp capitalAfterEllipsisRegExp( "^\\s*\\.\\.\\.[¡¿\\.,;\\(\\[\\{\"'\\s]*" );
 
-	bool error = m_primaryText.indexOf( capitalAfterEllipsisRegExp ) != -1;
+	bool error = capitalAfterEllipsisRegExp.indexIn( m_primaryText.string(), QRegExp::CaretAtZero ) != -1;
 	if ( error )
 	{
 		QChar chr = m_primaryText.at( capitalAfterEllipsisRegExp.matchedLength() );
@@ -945,9 +945,9 @@ bool SubtitleLine::checkPrimaryCapitalAfterEllipsis( bool update )
 
 bool SubtitleLine::checkSecondaryCapitalAfterEllipsis( bool update )
 {
-	static const QRegExp capitalAfterEllipsisRegExp( "^\\s*\\.\\.\\.[¡¿\\.,;\\(\\[\\{\"'\\s]*" );
+	QRegExp capitalAfterEllipsisRegExp( "^\\s*\\.\\.\\.[¡¿\\.,;\\(\\[\\{\"'\\s]*" );
 
-	bool error = m_secondaryText.indexOf( capitalAfterEllipsisRegExp ) != -1;
+	bool error = capitalAfterEllipsisRegExp.indexIn( m_secondaryText.string(), QRegExp::CaretAtZero ) != -1;
 	if ( error )
 	{
 		QChar chr = m_secondaryText.at( capitalAfterEllipsisRegExp.matchedLength() );

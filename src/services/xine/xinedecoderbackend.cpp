@@ -220,14 +220,14 @@ bool XineDecoderBackend::openFile( const QString& filePath )
 		return false;
 	}
 
-	decoder()->setState( Decoder::Ready );
+	setDecoderState( Decoder::Ready );
 
 	for ( int index = 0, size = audioStreamNames.size(); index < size; ++index )
-		decoder()->appendAudioStream( audioStreamNames.at( index ), audioStreamFormats.at( index ) );
+		appendDecoderAudioStream( audioStreamNames.at( index ), audioStreamFormats.at( index ) );
 
 	int time, length;
 	if ( xine_get_pos_length( m_xineStream, 0, &time, &length ) )
-		decoder()->setLength( length / 1000.0 );
+		setDecoderLength( length / 1000.0 );
 
 	return true;
 }
@@ -299,21 +299,21 @@ void XineDecoderBackend::customEvent( QEvent* event )
 	switch ( event->type() )
 	{
 		case EVENT_DECODING_STARTED:
-			decoder()->setState( Decoder::Decoding );
+			setDecoderState( Decoder::Decoding );
 			break;
 
 		case EVENT_POSITION_UPDATED:
 			if ( m_decodingThread )
-				decoder()->setPosition( m_decodingThread->position() );
+				setDecoderPosition( m_decodingThread->position() );
 			break;
 
 		case EVENT_ERROR_INCOMPATIBLE_DATA:
-			decoder()->setErrorState( i18n( "Error converting audio data to output format" ) );
+			setDecoderErrorState( i18n( "Error converting audio data to output format" ) );
 			break;
 
 		case EVENT_ERROR_FILE_CLOSED:
 		case EVENT_DECODING_FINISHED:
-			decoder()->setState( Decoder::Ready );
+			setDecoderState( Decoder::Ready );
 			break;
 
 		default:

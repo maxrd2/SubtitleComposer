@@ -53,6 +53,25 @@ void GStreamer::deinit()
 	}
 }
 
+GstElement* GStreamer::createElement( const QString& typess, const char* name )
+{
+	QStringList types = typess.split( " " );
+	GstElement* element = 0;
+	for ( QStringList::ConstIterator it = types.begin(), end = types.end(); it != end; ++it )
+		if ( ! (*it).isEmpty() && (element = gst_element_factory_make( (*it).toAscii(), name )) )
+			break;
+	return element;
+}
+
+GstElement* GStreamer::createElement( const QStringList& types, const char* name )
+{
+	GstElement* element = 0;
+	for ( QStringList::ConstIterator it = types.begin(), end = types.end(); it != end; ++it )
+		if ( ! (*it).isEmpty() && (element = gst_element_factory_make( (*it).toAscii(), name )) )
+			break;
+	return element;
+}
+
 GstStateChangeReturn GStreamer::setElementState( GstElement* element, int state, unsigned timeout )
 {
 // 	if ( GST_STATE( element ) == state )
@@ -198,8 +217,8 @@ GstPadLinkReturn GStreamer::link( GstBin* bin, const char* srcElement, const cha
 	GstElement* source = gst_bin_get_by_name( GST_BIN( bin ), srcElement );
 	GstElement* sink = gst_bin_get_by_name( GST_BIN( bin ), sinkElement );
 
-	GstPad* srcpad = gst_element_get_pad( GST_ELEMENT( source ), srcPad );
-	GstPad* sinkpad = gst_element_get_pad( GST_ELEMENT( sink ), sinkPad );
+	GstPad* srcpad = gst_element_get_static_pad( GST_ELEMENT( source ), srcPad );
+	GstPad* sinkpad = gst_element_get_static_pad( GST_ELEMENT( sink ), sinkPad );
 
 	GstPadLinkReturn result;
 	if ( filter )
@@ -219,6 +238,9 @@ GstPadLinkReturn GStreamer::link( GstBin* bin, const char* srcElement, const cha
 	else
 		qDebug() << "error" << result << "linking" << srcElement << srcPad << "to" << sinkElement << sinkPad;
 #endif
+
+	gst_object_unref( srcpad );
+	gst_object_unref( sinkpad );
 
 	return result;
 }
@@ -240,6 +262,32 @@ void GStreamer::freePipeline( GstPipeline** pipeline, GstBus** bus )
 		gst_object_unref( GST_OBJECT( *pipeline ) );
 		*pipeline = NULL;
 	}
+}
+
+static void writeTag( const GstTagList* list, const gchar* tag, gpointer userData )
+{
+	QString& string = *(QString*)userData;
+
+	string += "\n - " + QString( tag ) + ": ";
+	for ( int index = 0, size = /*gst_tag_list_get_tag_size( list, tag )*/10; index < size; ++index )
+	{
+		const GValue* value = gst_tag_list_get_value_index( list, tag, index );
+		if ( value )
+		{
+			char* strValue = g_strdup_value_contents( value );
+			string += strValue;
+			string += "; ";
+		}
+	}
+}
+
+void GStreamer::inspectTags( GstTagList* tags, const QString& prefix )
+{
+	QString debugString = QString( prefix + "TAGS (%1empty)" ).arg( gst_tag_list_is_empty( tags ) ? "" : "not " );
+
+	gst_tag_list_foreach( tags, writeTag, &debugString );
+
+	qDebug() << debugString;
 }
 
 void GStreamer::inspectPad( GstPad* pad, const QString& prefix )

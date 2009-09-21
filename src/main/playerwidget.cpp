@@ -434,8 +434,7 @@ bool PlayerWidget::eventFilter( QObject* object, QEvent* event )
 			// so we process the event and handle the issue ourselves.
 
 			QKeyEvent* keyEvent = static_cast<QKeyEvent*>( event );
-			app()->triggerAction( QKeySequence( (keyEvent->modifiers() & ~Qt::KeypadModifier) + keyEvent->key() ) );
-			return true; // eat event
+			return app()->triggerAction( QKeySequence( (keyEvent->modifiers() & ~Qt::KeypadModifier) + keyEvent->key() ) );
 		}
 		else if ( event->type() == QEvent::MouseMove )
 		{

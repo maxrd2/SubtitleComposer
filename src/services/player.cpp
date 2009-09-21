@@ -208,13 +208,13 @@ void Player::resetState()
 		m_videoWidget->videoLayer()->hide();
 }
 
-void Player::updatePosition( double position )
+void Player::setPosition( double position )
 {
 	if ( m_state <= Player::Closed )
 		return;
 
 	if ( position > m_length && m_length > 0 )
-		updateLength( position );
+		setLength( position );
 
 	if ( m_position != position )
 	{
@@ -235,7 +235,7 @@ void Player::updatePosition( double position )
 	}
 }
 
-void Player::updateLength( double length )
+void Player::setLength( double length )
 {
 	if ( m_state <= Player::Closed )
 		return;
@@ -247,7 +247,7 @@ void Player::updateLength( double length )
 	}
 }
 
-void Player::updateFramesPerSecond( double framesPerSecond )
+void Player::setFramesPerSecond( double framesPerSecond )
 {
 	if ( m_state <= Player::Closed )
 		return;
@@ -260,7 +260,7 @@ void Player::updateFramesPerSecond( double framesPerSecond )
 	}
 }
 
-void Player::updateAudioStreams( const QStringList& audioStreams, int activeAudioStream )
+void Player::setAudioStreams( const QStringList& audioStreams, int activeAudioStream )
 {
 	if ( m_state <= Player::Closed )
 		return;
@@ -277,7 +277,7 @@ void Player::updateAudioStreams( const QStringList& audioStreams, int activeAudi
 	emit activeAudioStreamChanged( m_activeAudioStream );
 }
 
-void Player::updateState( Player::State newState )
+void Player::setState( Player::State newState )
 {
 	if ( m_state == Player::Opening )
 	{
@@ -326,6 +326,27 @@ void Player::updateState( Player::State newState )
 	}
 }
 
+
+void Player::setErrorState( const QString& errorMessage )
+{
+	if ( ! isInitialized() )
+		return;
+
+	if ( m_state <= Player::Opening )
+	{
+		m_openFileTimer->stop();
+		QString filePath( m_filePath );
+		resetState();
+		emit fileOpenError( filePath );
+	}
+	else
+	{
+		activeBackend()->stop();
+		m_state = Player::Ready;
+		emit playbackError( errorMessage );
+		emit stopped();
+	}
+}
 
 bool Player::openFile( const QString& filePath )
 {

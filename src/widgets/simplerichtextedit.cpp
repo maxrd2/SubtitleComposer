@@ -181,6 +181,14 @@ KAction* SimpleRichTextEdit::action( int action ) const
 	return action >= 0 && action < ActionCount ? m_actions[action] : 0;
 }
 
+QList<KAction*> SimpleRichTextEdit::actions() const
+{
+	QList<KAction*> actions;
+	for ( int index = 0; index < ActionCount; ++index )
+		actions.append( m_actions[index] );
+	return actions;
+}
+
 SubtitleComposer::SString SimpleRichTextEdit::richText()
 {
 	SubtitleComposer::SString richText( toPlainText() );

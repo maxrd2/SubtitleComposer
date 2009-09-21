@@ -1,5 +1,5 @@
-#ifndef GSTREAMERCONFIGWIDGET_H
-#define GSTREAMERCONFIGWIDGET_H
+#ifndef LANGCODES_H
+#define LANGCODES_H
 
 /***************************************************************************
  *   Copyright (C) 2007-2009 Sergio Pistone (sergio_pistone@yahoo.com.ar)  *
@@ -24,44 +24,17 @@
 	#include <config.h>
 #endif
 
-#include "gstreamerconfig.h"
-#include "../../config/appconfiggroupwidget.h"
+#include <QtCore/QString>
 
-#include <QtGui/QWidget>
-
-class QCheckBox;
-class KComboBox;
-
-namespace SubtitleComposer
+class LanguageCode
 {
-	class GStreamerConfigWidget : public AppConfigGroupWidget
-	{
-		Q_OBJECT
+	public:
 
-		friend class GStreamerPlayerBackend;
-		friend class GStreamerDecoderBackend;
+		static QString toTwoLetters( const QString& twoLettersCode );
+		static QString toThreeLetters( const QString& threeLettersCode );
 
-		public:
-
-			virtual ~GStreamerConfigWidget();
-
-			virtual void setControlsFromConfig();
-			virtual void setConfigFromControls();
-
-		private:
-
-			explicit GStreamerConfigWidget( QWidget* parent=0 );
-
-			GStreamerConfig* config() { return static_cast<GStreamerConfig*>( m_config ); };
-
-		private:
-
-			KComboBox* m_audioSinkComboBox;
-			QCheckBox* m_audioSinkCheckBox;
-			KComboBox* m_videoSinkComboBox;
-			QCheckBox* m_videoSinkCheckBox;
-			QCheckBox* m_experimentalFeaturesCheckBox;
-	};
-}
+		static QString nameFromTwoLetters( const QString& twoLettersCode );
+		static QString nameFromThreeLetters( const QString& threeLettersCode );
+};
 
 #endif

@@ -31,7 +31,7 @@ using namespace SubtitleComposer;
 XineConfigWidget::XineConfigWidget( QWidget* parent ):
 	AppConfigGroupWidget( new XineConfig(), parent )
 {
-	QGroupBox* driversGroupBox = createGroupBox( i18nc( "@title:group Xine drivers settings", "Drivers" ) );
+	QGroupBox* driversGroupBox = createGroupBox( i18nc( "@title:group Xine settings", "Options" ) );
 
 	m_audioDriverCheckBox = new QCheckBox( driversGroupBox );
 	m_audioDriverCheckBox->setText( i18n( "Audio driver:" ) );

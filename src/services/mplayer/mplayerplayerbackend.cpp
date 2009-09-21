@@ -208,7 +208,7 @@ bool MPlayerPlayerBackend::seek( double seconds, bool accurate )
 
 		m_reportUpdates = true;
 
-		player()->updatePosition( m_position );
+		setPlayerPosition( m_position );
 	}
 	else
 		m_process->sendFastSeek( seconds );
@@ -270,13 +270,13 @@ void MPlayerPlayerBackend::onMediaDataLoaded()
 		);
 	}
 
-	player()->updateAudioStreams( audioStreams, audioStreams.isEmpty() ? -1 : 0 );
+	setPlayerAudioStreams( audioStreams, audioStreams.isEmpty() ? -1 : 0 );
 
 	if ( mediaData.duration )
-		player()->updateLength( mediaData.duration );
+		setPlayerLength( mediaData.duration );
 
 	if ( mediaData.videoFPS )
-		player()->updateFramesPerSecond( mediaData.videoFPS );
+		setPlayerFramesPerSecond( mediaData.videoFPS );
 }
 
 void MPlayerPlayerBackend::onPlayingReceived()
@@ -284,7 +284,7 @@ void MPlayerPlayerBackend::onPlayingReceived()
 	if ( ! m_reportUpdates )
 		return;
 
-	player()->updateState( Player::Playing );
+	setPlayerState( Player::Playing );
 }
 
 void MPlayerPlayerBackend::onPausedReceived()
@@ -292,7 +292,7 @@ void MPlayerPlayerBackend::onPausedReceived()
 	if ( ! m_reportUpdates )
 		return;
 
-	player()->updateState( Player::Paused );
+	setPlayerState( Player::Paused );
 }
 
 void MPlayerPlayerBackend::onPositionReceived( double seconds )
@@ -303,14 +303,14 @@ void MPlayerPlayerBackend::onPositionReceived( double seconds )
 		return;
 
 	if ( ! player()->isPlaying() )
-		player()->updateState( Player::Playing );
+		setPlayerState( Player::Playing );
 
-	player()->updatePosition( seconds );
+	setPlayerPosition( seconds );
 }
 
 void MPlayerPlayerBackend::onProcessExited()
 {
-	player()->updateState( Player::Ready );
+	setPlayerState( Player::Ready );
 }
 
 #include "mplayerplayerbackend.moc"

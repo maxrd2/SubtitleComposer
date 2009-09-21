@@ -29,6 +29,7 @@
 #include <QtGui/QToolButton>
 #include <QtGui/QGroupBox>
 #include <QtGui/QGridLayout>
+#include <QtGui/QKeyEvent>
 
 #include <KDebug>
 #include <KLocale>
@@ -87,6 +88,7 @@ CurrentLineWidget::CurrentLineWidget( QWidget* parent ):
 
 		m_textEdits[index] = new SimpleRichTextEdit( this );
 		m_textEdits[index]->setTabChangesFocus( true );
+		m_textEdits[index]->installEventFilter( this );
 
 		m_boldButtons[index] = createToolButton(
 			i18n( "Toggle Bold" ), "format-text-bold",
@@ -515,18 +517,73 @@ void CurrentLineWidget::onSpellingOptionChanged( const QString& option, const QS
 	}
 }
 
+#include <KStandardShortcut>
+
 void CurrentLineWidget::updateShortcuts()
 {
 	for ( int index = 0; index < 2; ++index )
 	{
 		mapShortcuts( m_textEdits[index], SimpleRichTextEdit::Undo, ACT_UNDO );
 		mapShortcuts( m_textEdits[index], SimpleRichTextEdit::Redo, ACT_REDO );
-// 		mapShortcuts( m_textEdits[index], SimpleRichTextEdit::SelectAll, ACT_SELECT_ALL_LINES );
+		mapShortcuts( m_textEdits[index], SimpleRichTextEdit::SelectAll, ACT_SELECT_ALL_LINES );
+// 		m_textEdits[index]->action( SimpleRichTextEdit::SelectAll )->setShortcut( KStandardShortcut::selectAll() );
 		mapShortcuts( m_textEdits[index], SimpleRichTextEdit::ToggleBold, ACT_TOGGLE_SELECTED_LINES_BOLD );
 		mapShortcuts( m_textEdits[index], SimpleRichTextEdit::ToggleItalic, ACT_TOGGLE_SELECTED_LINES_ITALIC );
 		mapShortcuts( m_textEdits[index], SimpleRichTextEdit::ToggleUnderline, ACT_TOGGLE_SELECTED_LINES_UNDERLINE );
 		mapShortcuts( m_textEdits[index], SimpleRichTextEdit::ToggleStrikeOut, ACT_TOGGLE_SELECTED_LINES_STRIKETHROUGH );
 	}
+}
+
+bool CurrentLineWidget::eventFilter( QObject* object, QEvent* event )
+{
+	if ( object == m_textEdits[0] || object == m_textEdits[1] )
+	{
+		if ( event->type() == QEvent::KeyPress )
+		{
+			// NOTE: for some reason, application actions are not triggered when the text edits
+			// have the focus so we have to intercept the event and handle issue ourselves.
+			// When doing so, we must take care of not triggering application actions for key
+			// sequences that have a special meaning in the text edit context.
+
+			QKeyEvent* keyEvent = static_cast<QKeyEvent*>( event );
+
+			if ( ! keyEvent->modifiers() || keyEvent->modifiers() & (Qt::ShiftModifier|Qt::KeypadModifier) )
+			{
+				if ( ! keyEvent->text().isEmpty() )
+					return QWidget::eventFilter( object, event );
+
+				switch ( keyEvent->key() )
+				{
+					case Qt::Key_Left:
+					case Qt::Key_Right:
+					case Qt::Key_Up:
+					case Qt::Key_Down:
+
+					case Qt::Key_Home:
+					case Qt::Key_End:
+					case Qt::Key_PageUp:
+					case Qt::Key_PageDown:
+					case Qt::Key_Insert:
+					case Qt::Key_Delete:
+
+					return QWidget::eventFilter( object, event );
+				}
+			}
+
+			QKeySequence keySequence( (keyEvent->modifiers() & ~Qt::KeypadModifier) + keyEvent->key() );
+
+			KAction* action;
+			foreach ( action, m_textEdits[0]->actions() )
+			{
+				if ( action->shortcut().primary() == keySequence || action->shortcut().alternate() == keySequence )
+					return QWidget::eventFilter( object, event );
+			}
+
+			return app()->triggerAction( keySequence );
+		}
+	}
+
+	return QWidget::eventFilter( object, event );
 }
 
 #include "currentlinewidget.moc"

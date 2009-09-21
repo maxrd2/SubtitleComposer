@@ -54,6 +54,8 @@ namespace SubtitleComposer
 
 			void setupActions();
 
+			virtual bool eventFilter( QObject* object, QEvent* event );
+
 		public slots:
 
 			void setSubtitle( Subtitle* subtitle=0 );

@@ -61,6 +61,7 @@ class SimpleRichTextEdit : public KTextEdit
 		bool fontStrikeOut();
 
 		virtual KAction* action( int action ) const;
+		virtual QList<KAction*> actions() const;
 
 		virtual bool event( QEvent* event );
 

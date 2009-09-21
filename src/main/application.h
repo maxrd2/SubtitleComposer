@@ -98,7 +98,8 @@ namespace SubtitleComposer
 			PlayerConfig* playerConfig() { return static_cast<PlayerConfig*>( m_config.group( "Player" ) ); }
 
 			QAction* action( const char* actionName );
-			void triggerAction( const QKeySequence& keySequence );
+			// returns true if an action was triggered
+			bool triggerAction( const QKeySequence& keySequence );
 
 			const QStringList& availableEncodingNames() const;
 

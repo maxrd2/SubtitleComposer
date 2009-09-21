@@ -78,6 +78,36 @@ namespace SubtitleComposer
 			virtual bool stop() = 0;
 
 			inline Decoder* decoder() const { return static_cast<Decoder*>( service() ); }
+
+			inline void setDecoderPosition( double position ) // value in seconds
+			{
+				decoder()->setPosition( position );
+			}
+
+			inline void setDecoderLength( double length ) // value in seconds
+			{
+				decoder()->setLength( length );
+			}
+
+			inline void setDecoderState( Decoder::State state )
+			{
+				decoder()->setState( state );
+			}
+
+			inline void setDecoderErrorState( const QString& errorMessage=QString() )
+			{
+				decoder()->setErrorState( errorMessage );
+			}
+
+			inline void appendDecoderAudioStream( const QString& name, const WaveFormat& format )
+			{
+				decoder()->appendAudioStream( name, format );
+			}
+
+			inline void insertDecoderAudioStream( int index, const QString& name, const WaveFormat& format )
+			{
+				decoder()->insertAudioStream( index, name, format );
+			}
 	};
 }
 

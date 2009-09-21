@@ -76,11 +76,11 @@ bool GStreamerDecoderBackend::openFile( const QString& filePath )
 
 	if ( ! m_infoPipeline || ! filesrc || ! decodebin || ! audioconvert || ! fakesink )
 	{
-		gst_object_unref( GST_OBJECT( filesrc ) );
-		gst_object_unref( GST_OBJECT( decodebin ) );
-		gst_object_unref( GST_OBJECT( audioconvert ) );
-		gst_object_unref( GST_OBJECT( fakesink ) );
-		gst_object_unref( GST_OBJECT( m_infoPipeline ) );
+		if ( filesrc )			gst_object_unref( GST_OBJECT( filesrc ) );
+		if ( decodebin )		gst_object_unref( GST_OBJECT( decodebin ) );
+		if ( audioconvert )		gst_object_unref( GST_OBJECT( audioconvert ) );
+		if ( fakesink )			gst_object_unref( GST_OBJECT( fakesink ) );
+		if ( m_infoPipeline )	gst_object_unref( GST_OBJECT( m_infoPipeline ) );
 		m_infoPipeline = 0;
 		return false;
 	}
@@ -132,12 +132,12 @@ bool GStreamerDecoderBackend::decode( int audioStream, const QString& outputPath
 
 	if ( ! m_decodingPipeline || ! filesrc || ! decodebin || ! audioresample || ! audioconvert || ! fakesink )
 	{
-		gst_object_unref( GST_OBJECT( filesrc ) );
-		gst_object_unref( GST_OBJECT( decodebin ) );
-		gst_object_unref( GST_OBJECT( audioresample ) );
-		gst_object_unref( GST_OBJECT( audioconvert ) );
-		gst_object_unref( GST_OBJECT( fakesink ) );
-		gst_object_unref( GST_OBJECT( m_decodingPipeline ) );
+		if ( filesrc )				gst_object_unref( GST_OBJECT( filesrc ) );
+		if ( decodebin )			gst_object_unref( GST_OBJECT( decodebin ) );
+		if ( audioresample )		gst_object_unref( GST_OBJECT( audioresample ) );
+		if ( audioconvert )			gst_object_unref( GST_OBJECT( audioconvert ) );
+		if ( fakesink )				gst_object_unref( GST_OBJECT( fakesink ) );
+		if ( m_decodingPipeline )	gst_object_unref( GST_OBJECT( m_decodingPipeline ) );
 		m_decodingPipeline = 0;
 		return false;
 	}
@@ -223,7 +223,7 @@ void GStreamerDecoderBackend::decodebinPadAdded( GstElement* decodebin, GstPad* 
 		// we are gathering information about the stream
 
 		GstElement* audioconvert = gst_bin_get_by_name( GST_BIN( backend->m_infoPipeline ), "audioconvert" );
-		GstPad* sinkpad = gst_element_get_pad( GST_ELEMENT( audioconvert ), "sink" );
+		GstPad* sinkpad = gst_element_get_static_pad( GST_ELEMENT( audioconvert ), "sink" );
 		if ( gst_pad_is_linked( sinkpad ) )
 		{
 			GstPad* peer = gst_pad_get_peer( sinkpad );
@@ -247,7 +247,7 @@ void GStreamerDecoderBackend::decodebinPadAdded( GstElement* decodebin, GstPad* 
 		{
 			WaveFormat filterFormat = GStreamer::formatFromAudioCaps( srccaps );
 
-			decoder->appendAudioStream( srcPadName, filterFormat );
+			backend->appendDecoderAudioStream( srcPadName, filterFormat );
 
 			if ( ! gst_pad_is_linked( sinkpad ) )
 				gst_pad_link( srcpad, sinkpad );
@@ -263,7 +263,7 @@ void GStreamerDecoderBackend::decodebinPadAdded( GstElement* decodebin, GstPad* 
 
 		if ( backend->m_decodingStreamName == srcPadName )
 		{
-// 			GstCaps* sourceFilter = GStreamer::audioCapsFromFormat( backend->m_decodingStreamFormat, false );
+			//GstCaps* sourceFilter = GStreamer::audioCapsFromFormat( backend->m_decodingStreamFormat, false );
 			GstCaps* outputFilter = GStreamer::audioCapsFromFormat( backend->m_waveWriter.outputFormat() );
 
 			gboolean success = TRUE;
@@ -324,10 +324,11 @@ void GStreamerDecoderBackend::onInfoTimerTimeout()
 					GstStateChangeReturn ret = GStreamer::setElementState( GST_ELEMENT( m_infoPipeline ), GST_STATE_NULL );
 					if ( ret != GST_STATE_CHANGE_FAILURE && ret != GST_STATE_CHANGE_ASYNC )
 						GStreamer::freePipeline( &m_infoPipeline, &m_infoBus );
-					decoder()->setState( Decoder::Ready );
+					setDecoderState( Decoder::Ready );
 				}
 				break;
 			}
+
 			case GST_MESSAGE_STATE_CHANGED:
 			{
 				GstState old, cur, pending;
@@ -336,21 +337,24 @@ void GStreamerDecoderBackend::onInfoTimerTimeout()
 					GStreamer::freePipeline( &m_infoPipeline, &m_infoBus );
 				break;
 			}
+
 			case GST_MESSAGE_DURATION:
 			{
 				GstFormat format;
 				gint64 duration;
 				gst_message_parse_duration( msg, &format, &duration );
-				decoder()->setLength( (double)duration / GST_SECOND );
+				setDecoderLength( (double)duration / GST_SECOND );
 				break;
 			}
+
 			case GST_MESSAGE_ERROR:
 			{
 				GStreamer::setElementState( GST_ELEMENT( m_infoPipeline ), GST_STATE_NULL, 60000 );
 				GStreamer::freePipeline( &m_infoPipeline, &m_infoBus );
-				decoder()->setErrorState();
+				setDecoderErrorState();
 				break;
 			}
+
 			default:
 				break;
 		}
@@ -367,19 +371,13 @@ void GStreamerDecoderBackend::onDecodingTimerTimeout()
 	// first we update the decoding position and file length (if it hasn't been informed yet)
 	gint64 time;
 	GstFormat fmt = GST_FORMAT_TIME;
-	if ( ! m_lengthInformed )
+	if ( ! m_lengthInformed && gst_element_query_duration( GST_ELEMENT( m_decodingPipeline ), &fmt, &time ) && GST_CLOCK_TIME_IS_VALID( time ) )
 	{
-		if ( gst_element_query_duration( GST_ELEMENT( m_decodingPipeline ), &fmt, &time ) )
-		{
-			if ( GST_CLOCK_TIME_IS_VALID ( time ) )
-			{
-				decoder()->setLength( (double)time / GST_SECOND );
-				m_lengthInformed = true;
-			}
-		}
+		setDecoderLength( (double)time / GST_SECOND );
+		m_lengthInformed = true;
 	}
 	if ( gst_element_query_position( GST_ELEMENT( m_decodingPipeline ), &fmt, &time ) )
-		decoder()->setPosition( ((double)time / GST_SECOND) );
+		setDecoderPosition( ((double)time / GST_SECOND) );
 
 	GstMessage* msg;
 	while ( m_decodingBus && m_decodingPipeline && (msg = gst_bus_pop( m_decodingBus )) )
@@ -393,7 +391,7 @@ void GStreamerDecoderBackend::onDecodingTimerTimeout()
 			continue;
 		}
 
-		GStreamer::inspectMessage( msg );
+		//GStreamer::inspectMessage( msg );
 
 		switch( GST_MESSAGE_TYPE( msg ) )
 		{
@@ -403,41 +401,45 @@ void GStreamerDecoderBackend::onDecodingTimerTimeout()
 				gst_message_parse_state_changed( msg, &old, &current, &target );
 				if ( target == GST_STATE_PLAYING )
 				{
-					decoder()->setState( Decoder::Decoding );
+					setDecoderState( Decoder::Decoding );
 					GStreamer::setElementState( GST_ELEMENT( m_decodingPipeline ), GST_STATE_PLAYING, 0 );
 				}
 				else if ( current == GST_STATE_READY || current == GST_STATE_NULL )
 				{
 					m_waveWriter.close();
-					decoder()->setState( Decoder::Ready );
+					setDecoderState( Decoder::Ready );
 				}
 				break;
 			}
+
 			case GST_MESSAGE_DURATION:
 			{
 				GstFormat format;
 				gint64 duration;
 				gst_message_parse_duration( msg, &format, &duration );
-				decoder()->setLength( (double)duration / GST_SECOND );
+				setDecoderLength( (double)duration / GST_SECOND );
 				break;
 			}
+
 			case GST_MESSAGE_EOS:
 			{
 				m_waveWriter.close();
-				decoder()->setState( Decoder::Ready );
+				setDecoderState( Decoder::Ready );
 				break;
 			}
+
 			case GST_MESSAGE_ERROR:
 			{
 				gchar* debug = NULL;
 				GError* error = NULL;
 				gst_message_parse_error( msg, &error, &debug );
-				//decoder()->setErrorState( QString( error->message ) );
-				decoder()->setErrorState( QString( debug ) );
+				//setDecoderErrorState( QString( error->message ) );
+				setDecoderErrorState( QString( debug ) );
 				g_error_free( error );
 				g_free( debug );
 				break;
 			}
+
 			default:
 				break;
 		}

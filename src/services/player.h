@@ -143,11 +143,16 @@ namespace SubtitleComposer
 
 			void resetState();
 
-			void updatePosition( double position ); // seconds
-			void updateLength( double length ); // seconds
-			void updateFramesPerSecond( double framesPerSecond );
-			void updateAudioStreams( const QStringList& audioStreams, int activeAudioStream );
-			void updateState( Player::State state );
+			// functions used by the backends to inform changes in state:
+
+			void setPosition( double position ); // value in seconds
+			void setLength( double length ); // value in seconds
+
+			void setState( Player::State state );
+			void setErrorState( const QString& errorMessage=QString() );
+
+			void setFramesPerSecond( double framesPerSecond );
+			void setAudioStreams( const QStringList& audioStreams, int activeAudioStream );
 
 		private slots:
 
@@ -179,11 +184,8 @@ namespace SubtitleComposer
 
 			QTimer* m_openFileTimer;
 
+
 			friend class PlayerBackend;
-			friend class GStreamerPlayerBackend;
-			friend class MPlayerPlayerBackend;
-			friend class XinePlayerBackend;
-			friend class PhononPlayerBackend;
 	};
 
 	VideoWidget* Player::videoWidget()
