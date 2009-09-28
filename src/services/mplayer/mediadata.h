@@ -61,6 +61,29 @@ namespace SubtitleComposer
 				audioTracks.clear();
 			}
 
+			int indexForId( int id ) const
+			{
+				int index = -1;
+				for ( QMap<int,TrackData>::ConstIterator it = audioTracks.constBegin(), end = audioTracks.constEnd(); it != end; ++it )
+				{
+					index++;
+					if ( it.key() == id )
+						break;
+				}
+				return index;
+			}
+
+			int idForIndex( int index ) const
+			{
+				int i = 0;
+				for ( QMap<int,TrackData>::ConstIterator it = audioTracks.constBegin(), end = audioTracks.constEnd(); it != end; ++it )
+				{
+					if ( i++ == index )
+						return it.key();
+				}
+				return -1;
+			}
+
 			double duration;
 
 			int videoWidth;

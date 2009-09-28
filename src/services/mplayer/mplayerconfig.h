@@ -57,10 +57,6 @@ namespace SubtitleComposer
 			bool volumeNormalizationEnabled() const { return optionAsBool( keyVolumeNormalizationEnabled() ); }
 			void setVolumeNormalizationEnabled( bool enabled ) { setOption( keyVolumeNormalizationEnabled(), enabled ); }
 
-			bool hasInputConfigPath() const { return ! option( keyInputConfigPath() ).isEmpty(); }
-			QString inputConfigPath() const { return option( keyInputConfigPath() ); }
-			void setInputConfigPath( const QString& inputConfigPath ) { setOption( keyInputConfigPath(), inputConfigPath ); }
-
 			bool frameDropping() const { return optionAsBool( keyFrameDropping() ); }
 			void setFrameDropping( bool frameDropping ) { setOption( keyFrameDropping(), frameDropping ); }
 
@@ -77,7 +73,6 @@ namespace SubtitleComposer
 			static const QString& keyVideoOutput() { static const QString key( "VideoOutput" ); return key; }
 			static const QString& keyCacheSize() { static const QString key( "CacheSize" ); return key; }
 			static const QString& keyVolumeNormalizationEnabled() { static const QString key( "VolumeNormalizationEnabled" ); return key; }
-			static const QString& keyInputConfigPath() { static const QString key( "InputConfigPath" ); return key; }
 			static const QString& keyFrameDropping() { static const QString key( "FrameDropping" ); return key; }
 			static const QString& keyHardFrameDropping() { static const QString key( "HardFrameDropping" ); return key; }
 			static const QString& keyAutoSyncFactor() { static const QString key( "AutoSyncFactor" ); return key; }
@@ -98,8 +93,6 @@ namespace SubtitleComposer
 				defaults[keyCacheSize()] = "5120"; // in kbytes
 
 				defaults[keyVolumeNormalizationEnabled()] = "false";
-
-				defaults[keyInputConfigPath()] = KGlobal::dirs()->locate( "appdata", "input.conf" );
 
 				defaults[keyFrameDropping()] = "false";
 				defaults[keyHardFrameDropping()] = "false";

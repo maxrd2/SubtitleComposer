@@ -75,9 +75,10 @@ bool MPlayerPlayerProcess::start( const QString& filePath, int winId, int audioS
 		args << "-aid" << QString::number( audioStream );
 
 	args << "-noquiet";
-	args << "-nofs"; // No mplayer fullscreen mode
+	args << "-nofs"; // no mplayer fullscreen mode
 	args << "-identify"; // makes mplayer emit all kinds of additional information
 	args << "-slave"; // enable slave mode so we can sent commands to mplayer process
+	args << "-input" << "nodefault-bindings:conf=/dev/null"; // disable mplayer input handling
 
 	if ( m_config->hasVideoOutput() )
 		args << "-vo" << m_config->videoOutput();
@@ -96,9 +97,6 @@ bool MPlayerPlayerProcess::start( const QString& filePath, int winId, int audioS
 
 	if ( m_config->hasAutoSyncFactor() )
 		args << "-autosync" << QString::number( m_config->autoSyncFactor() );
-
-	if ( m_config->hasInputConfigPath() )
-		args << "-input" << "conf=" + m_config->inputConfigPath();
 
 	args << "-wid" << QString::number( winId ); // set window id so that it gets embedded in our window
 	args << "-noautosub"; // turn off automatic subtitle file loading

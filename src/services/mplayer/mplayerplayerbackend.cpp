@@ -221,7 +221,7 @@ bool MPlayerPlayerBackend::setActiveAudioStream( int audioStream )
 	if ( m_process->state() != QProcess::NotRunning )
 	{
 		bool wasMuted = player()->isMuted();
-		m_process->sendAudioStream( audioStream );
+		m_process->sendAudioStream( m_process->mediaData().idForIndex( audioStream ) );
 		m_process->sendVolume( player()->volume() );
 		if ( wasMuted )
 			m_process->sendToggleMute();
@@ -243,9 +243,11 @@ void MPlayerPlayerBackend::onMediaDataLoaded()
 
 	QStringList audioStreams;
 
+	int index = 0;
 	for ( QMap<int,TrackData>::ConstIterator it = mediaData.audioTracks.begin(), end = mediaData.audioTracks.end();
 		  it != end; ++it)
 	{
+		index++;
 		QString audioStreamName;
 		if ( ! it.value().language.isEmpty() )
 			audioStreamName = it.value().language;
@@ -256,8 +258,7 @@ void MPlayerPlayerBackend::onMediaDataLoaded()
 			audioStreamName += it.value().name;
 		}
 		if ( audioStreamName.isEmpty() )
-			audioStreamName = i18n( "Audio Stream #%1", it.key() );
-
+			audioStreamName = i18n( "Audio Stream #%1", index );
 		audioStreams << audioStreamName;
 	}
 
