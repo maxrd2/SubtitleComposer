@@ -464,7 +464,6 @@ bool Player::togglePlayPaused()
 
 bool Player::seek( double seconds, bool accurate )
 {
-
 	if ( (m_state != Player::Playing && m_state != Player::Paused) || seconds < 0 || seconds > m_length )
 		return false;
 
