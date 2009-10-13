@@ -28,6 +28,8 @@
 
 #include <KXmlGuiWindow>
 
+class QSplitter;
+
 namespace SubtitleComposer
 {
 	class PlayerWidget;
@@ -59,6 +61,7 @@ namespace SubtitleComposer
 
 		protected:
 
+			QSplitter* m_splitter;
 			PlayerWidget* m_playerWidget;
 			LinesWidget* m_linesWidget;
 			CurrentLineWidget* m_curLineWidget;

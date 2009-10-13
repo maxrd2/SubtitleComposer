@@ -34,6 +34,7 @@
 #include <KToolBar>
 #include <KStatusBar>
 #include <KActionCollection>
+#include <KConfigGroup>
 
 using namespace SubtitleComposer;
 
@@ -42,18 +43,18 @@ MainWindow::MainWindow():
 {
 	QWidget* mainWidget = new QWidget( this );
 
-	QSplitter* splitter = new QSplitter( mainWidget );
+	m_splitter = new QSplitter( mainWidget );
 
-	m_playerWidget = new PlayerWidget( splitter );
+	m_playerWidget = new PlayerWidget( m_splitter );
 	m_playerWidget->setContentsMargins( 0, 0, 0, 0 );
 
-	m_linesWidget = new LinesWidget( splitter );
+	m_linesWidget = new LinesWidget( m_splitter );
 	m_linesWidget->setSizePolicy( QSizePolicy::Expanding, QSizePolicy::Expanding );
 
-	splitter->setOrientation( Qt::Vertical );
-	splitter->setLineWidth( 0 );
-	splitter->setCollapsible( 1, false );
-	splitter->setSizes( QList<int>() << 100 << 200 );
+	m_splitter->setOrientation( Qt::Vertical );
+	m_splitter->setLineWidth( 0 );
+	m_splitter->setCollapsible( 1, false );
+	m_splitter->setSizes( QList<int>() << 100 << 200 );
 
 	m_curLineWidget = new CurrentLineWidget( mainWidget );
 	m_curLineWidget->setMaximumHeight( m_curLineWidget->minimumSizeHint().height() );
@@ -63,7 +64,7 @@ MainWindow::MainWindow():
 	QLayout* mainWidgetLayout = new QBoxLayout( QBoxLayout::TopToBottom, mainWidget );
 	mainWidgetLayout->setContentsMargins( 5, 1, 5, 2 );
 	mainWidgetLayout->setSpacing( 5 );
-	mainWidgetLayout->addWidget( splitter );
+	mainWidgetLayout->addWidget( m_splitter );
 	mainWidgetLayout->addWidget( m_curLineWidget );
 
 	setStatusBar( m_statusBar );
@@ -89,10 +90,16 @@ MainWindow::~MainWindow()
 
 void MainWindow::loadConfig()
 {
+	KConfigGroup group( KGlobal::config()->group( "MainWindow Settings" ) );
+
+	m_splitter->setSizes( group.readEntry( "Splitter Sizes", m_splitter->sizes() ) );
 }
 
 void MainWindow::saveConfig()
 {
+	KConfigGroup group( KGlobal::config()->group( "MainWindow Settings" ) );
+
+	group.writeEntry( "Splitter Sizes", m_splitter->sizes() );
 }
 
 void MainWindow::setSubtitle( Subtitle* /*subtitle*/ )
