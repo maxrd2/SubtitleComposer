@@ -38,7 +38,7 @@ namespace SubtitleComposer
 				INVALID = -1,
 				Auto = 0, Arabic, Bulgarian, Catalan, ChineseS, ChineseT, Croatian,
 				Czech, Danish, Dutch, English, Filipino, Finnish, French, German,
-				Greek, Hebrew, Hindi, Indonesian, Italian, Japanese, Korean, Latvian,
+				Greek, Hebrew, Hindi, Hungarian, Indonesian, Italian, Japanese, Korean, Latvian,
 				Lithuanian, Norwegian, Polish, Portuguese, Romanian, Russian, Serbian,
 				Slovak, Slovenian, Spanish, Swedish, Ukrainian, Vietnamese,
 				SIZE

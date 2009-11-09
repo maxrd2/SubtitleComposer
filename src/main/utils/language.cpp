@@ -92,6 +92,7 @@ const QString& Language::code( Language::Value language )
 		codes[Finnish] = "fi";
 		codes[French] = "fr";
 		codes[Hindi] = "hi";
+		codes[Hungarian] = "hu";
 		codes[Croatian] = "hr";
 		codes[Indonesian] = "id";
 		codes[Italian] = "it";
@@ -159,6 +160,7 @@ QString Language::flagPath( Value language )
 		case Finnish:		localeCode = "fi";	break;
 		case French:		localeCode = "fr";	break;
 		case Hindi:			localeCode = "in";	break;
+		case Hungarian:		localeCode = "hu";	break;
 		case Croatian:		localeCode = "hr";	break;
 		case Indonesian:	localeCode = "id";	break;
 		case Italian:		localeCode = "it";	break;
