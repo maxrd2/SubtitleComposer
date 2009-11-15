@@ -2442,6 +2442,8 @@ void Application::changeFrameRate()
 {
 	static ChangeFrameRateDialog* dlg = new ChangeFrameRateDialog( m_subtitle->framesPerSecond(), m_mainWindow );
 
+	dlg->setFromFramesPerSecond( m_subtitle->framesPerSecond() );
+
 	if ( dlg->exec() == QDialog::Accepted )
 	{
 		m_subtitle->changeFramesPerSecond(

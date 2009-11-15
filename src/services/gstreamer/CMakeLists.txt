@@ -1,5 +1,6 @@
-# TODO WHY AREN'T THESE TWO INCLUDED BY MACRO_OPTIONAL_FIND_PACKAGE( GStreamer )?
+# TODO why aren't these packages find by MACRO_OPTIONAL_FIND_PACKAGE( Gstreamer )? aren't they required by Gstreamer?
 FIND_PACKAGE( GLIB2 REQUIRED )
+FIND_PACKAGE( GObject REQUIRED )
 FIND_PACKAGE( LibXml2 REQUIRED )
 
 SET( services_gstreamer_INCLUDE_DIR

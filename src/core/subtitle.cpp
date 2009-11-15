@@ -257,24 +257,24 @@ void Subtitle::changeFramesPerSecond( double toFramesPerSecond, double fromFrame
 	if ( fromFramesPerSecond <= 0 )
 		fromFramesPerSecond = m_framesPerSecond;
 
-	double scaleFactor = fromFramesPerSecond/toFramesPerSecond;
-
-	if ( scaleFactor == 1.0 )
-		return;
-
 	beginCompositeAction( i18n( "Change Frame Rate" ) );
 
 	setFramesPerSecond( toFramesPerSecond );
 
-	for ( SubtitleIterator it( *this, Range::full() ); it.current(); ++it )
+	double scaleFactor = fromFramesPerSecond/toFramesPerSecond;
+
+	if ( scaleFactor != 1.0 )
 	{
-		Time showTime = it.current()->showTime();
-		showTime.adjust( 0, scaleFactor );
+		for ( SubtitleIterator it( *this, Range::full() ); it.current(); ++it )
+		{
+			Time showTime = it.current()->showTime();
+			showTime.adjust( 0, scaleFactor );
 
-		Time hideTime = it.current()->hideTime();
-		hideTime.adjust( 0, scaleFactor );
+			Time hideTime = it.current()->hideTime();
+			hideTime.adjust( 0, scaleFactor );
 
-		it.current()->setTimes( showTime, hideTime );
+			it.current()->setTimes( showTime, hideTime );
+		}
 	}
 
 	endCompositeAction();
