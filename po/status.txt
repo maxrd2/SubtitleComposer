@@ -3,6 +3,7 @@ Czech:					currently maintained by Petr Gadula (Goliash) <goliash@goliash.net>
 French					currently maintained by Thomas Gastine <thomas.gastine@wanadoo.fr>
 German:					currently maintained by Panagiotis Papadopoulos <pano_90@gmx.net>
 Greek:					currently unmaintained (contributed by Alexandros Perdikomatis <atanasia.kalampaka@ontelecoms.gr>, unreachable)
+Hungarian:				currently unmaintained (contributed by Barcza Károly <kbarcza@blackpanther.hu>)
 Polish:					currently maintained by Tomasz Argasiński <targasinski@o2.pl>
 Brazilian Portuguese:	currently maintained by Marcio P. Moraes <marciopanto@gmail.com>
 Serbian:				currently maintained by Slobodan Simic <simicsl@verat.net>
