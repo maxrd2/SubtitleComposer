@@ -66,7 +66,7 @@ namespace SubtitleComposer
 			virtual QVariant headerData( int section, Qt::Orientation orientation, int role=Qt::DisplayRole ) const;
 
 			virtual QVariant data( const QModelIndex& index, int role ) const;
-     		virtual bool setData( const QModelIndex& index, const QVariant& value, int role=Qt::EditRole );
+			virtual bool setData( const QModelIndex& index, const QVariant& value, int role=Qt::EditRole );
 
 		private slots:
 
@@ -211,11 +211,27 @@ namespace SubtitleComposer
 
 		private:
 
+			bool m_scrollFollowsModel;
+
 			bool m_translationMode;
 
 			bool m_showingContextMenu;
 
 			QPen m_gridPen;
+
+			friend class LinesWidgetScrollToModelDetacher;
+	};
+
+	class LinesWidgetScrollToModelDetacher
+	{
+		public:
+
+			LinesWidgetScrollToModelDetacher( LinesWidget& linesWidget );
+			~LinesWidgetScrollToModelDetacher();
+
+		private:
+
+			LinesWidget& m_linesWidget;
 	};
 }
 

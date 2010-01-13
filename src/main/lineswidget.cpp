@@ -634,7 +634,7 @@ void LinesItemDelegate::paint( QPainter* painter, const QStyleOptionViewItem& op
 
 		if ( showErrorIcon )
 		{
- 			//painter->drawPixmap( iconRect, errorPixmap() );
+			//painter->drawPixmap( iconRect, errorPixmap() );
 			errorIcon().paint( painter, iconRect, option.decorationAlignment, mode, state );
 			textRect.setX( textRect.x() + iconSize + 2 );
 		}
@@ -676,7 +676,7 @@ QString LinesItemDelegate::displayText( const QVariant& value, const QLocale& lo
 	static const QChar pipeChar( '|' );
 	static const QChar newLineChar( QChar::LineSeparator );
 
-    if ( value.type() == QVariant::String )
+	if ( value.type() == QVariant::String )
 		return value.toString().replace( '\n', m_singleLineMode ? pipeChar : newLineChar );
 	else
 		return QStyledItemDelegate::displayText( value, locale );
@@ -723,6 +723,7 @@ const QPixmap& LinesItemDelegate::errorPixmap()
 
 LinesWidget::LinesWidget( QWidget* parent ):
 	TreeView( parent ),
+	m_scrollFollowsModel( true ),
 	m_translationMode( false ),
 	m_showingContextMenu( false )
 {
@@ -836,7 +837,10 @@ void LinesWidget::rowsAboutToBeRemoved( const QModelIndex& parent, int start, in
 		QItemSelectionModel::Rows|QItemSelectionModel::ClearAndSelect|QItemSelectionModel::Current
 	);
 
-	scrollTo( model()->index( end + 1, 0, parent ), QAbstractItemView::EnsureVisible );
+	if ( m_scrollFollowsModel )
+	{
+		scrollTo( model()->index( end + 1, 0, parent ), QAbstractItemView::EnsureVisible );
+	}
 }
 
 void LinesWidget::rowsInserted( const QModelIndex& parent, int start, int end )
@@ -850,13 +854,19 @@ void LinesWidget::rowsInserted( const QModelIndex& parent, int start, int end )
 			QItemSelectionModel::Rows|QItemSelectionModel::ClearAndSelect
 		);
 
-		scrollTo( model()->index( start, 0, parent ), QAbstractItemView::EnsureVisible );
+		if ( m_scrollFollowsModel )
+		{
+			scrollTo( model()->index( start, 0, parent ), QAbstractItemView::EnsureVisible );
+		}
 	}
 
-	selectionModel()->setCurrentIndex(
-		model()->index( start, 0, parent ),
-		QItemSelectionModel::Rows|QItemSelectionModel::SelectCurrent
-	);
+	if ( m_scrollFollowsModel )
+	{
+		selectionModel()->setCurrentIndex(
+			model()->index( start, 0, parent ),
+			QItemSelectionModel::Rows|QItemSelectionModel::SelectCurrent
+		);
+	}
 }
 
 void LinesWidget::editCurrentLineInPlace( bool primaryText )
@@ -1140,7 +1150,7 @@ void LinesWidget::contextMenuEvent( QContextMenuEvent* e )
 
 	KMenu textsMenu( i18n( "Texts" ) );
 	textsMenu.addAction( i18n( "Break Lines..." ), app, SLOT( breakLines() ) );
-	textsMenu.addAction( 
+	textsMenu.addAction(
 		m_translationMode ?
 			i18n( "Unbreak Lines..." ) :
 			i18n( "Unbreak Lines" ),
@@ -1311,5 +1321,18 @@ void LinesWidget::drawRow( QPainter* painter, const QStyleOptionViewItem& option
 		drawVerticalDotLine( painter, rowRect.right(), rowRect.top(), rowRect.bottom() );
 	}
 }
+
+LinesWidgetScrollToModelDetacher::LinesWidgetScrollToModelDetacher( LinesWidget& linesWidget ):
+	m_linesWidget( linesWidget )
+{
+	m_linesWidget.m_scrollFollowsModel = false;
+}
+
+LinesWidgetScrollToModelDetacher::~LinesWidgetScrollToModelDetacher()
+{
+	m_linesWidget.m_scrollFollowsModel = true;
+}
+
+
 
 #include "lineswidget.moc"

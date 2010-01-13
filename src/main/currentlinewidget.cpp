@@ -92,22 +92,22 @@ CurrentLineWidget::CurrentLineWidget( QWidget* parent ):
 
 		m_boldButtons[index] = createToolButton(
 			i18n( "Toggle Bold" ), "format-text-bold",
-			m_textEdits[0], SLOT( toggleFontBold() )
+			m_textEdits[index], SLOT( toggleFontBold() )
 		);
 
 		m_italicButtons[index] = createToolButton(
 			i18n( "Toggle Italic" ), "format-text-italic",
-			m_textEdits[0], SLOT( toggleFontItalic() )
+			m_textEdits[index], SLOT( toggleFontItalic() )
 		);
 
 		m_underlineButtons[index] = createToolButton(
 			i18n( "Toggle Underline" ), "format-text-underline",
-			m_textEdits[0], SLOT( toggleFontUnderline() )
+			m_textEdits[index], SLOT( toggleFontUnderline() )
 		);
 
 		m_strikeThroughButtons[index] = createToolButton(
 			i18n( "Toggle Strike Through" ), "format-text-strikethrough",
-			m_textEdits[0], SLOT( toggleFontStrikeOut() )
+			m_textEdits[index], SLOT( toggleFontStrikeOut() )
 		);
 
 		buttonsLayouts[index] = new QGridLayout();

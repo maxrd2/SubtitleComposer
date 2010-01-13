@@ -2033,12 +2033,17 @@ void Application::insertBeforeCurrentLine()
 
 	if ( dlg->exec() == QDialog::Accepted )
 	{
-		SubtitleLine* currentLine = m_linesWidget->currentLine();
-		m_subtitle->insertNewLine(
-			currentLine ? currentLine->index() : 0,
-			false,
-			dlg->selectedTextsTarget()
-		);
+		SubtitleLine* newLine;
+		{
+			LinesWidgetScrollToModelDetacher detacher( *m_linesWidget );
+			SubtitleLine* currentLine = m_linesWidget->currentLine();
+			newLine = m_subtitle->insertNewLine(
+				currentLine ? currentLine->index() : 0,
+				false,
+				dlg->selectedTextsTarget()
+			);
+		}
+		m_linesWidget->setCurrentLine( newLine, true );
 	}
 }
 
@@ -2048,12 +2053,18 @@ void Application::insertAfterCurrentLine()
 
 	if ( dlg->exec() == QDialog::Accepted )
 	{
-		SubtitleLine* currentLine = m_linesWidget->currentLine();
-		m_subtitle->insertNewLine(
-			currentLine ? currentLine->index() + 1 : 0,
-			true,
-			dlg->selectedTextsTarget()
-		);
+		SubtitleLine* newLine;
+		{
+			LinesWidgetScrollToModelDetacher detacher( *m_linesWidget );
+
+			SubtitleLine* currentLine = m_linesWidget->currentLine();
+			newLine = m_subtitle->insertNewLine(
+				currentLine ? currentLine->index() + 1 : 0,
+				true,
+				dlg->selectedTextsTarget()
+			);
+		}
+		m_linesWidget->setCurrentLine( newLine, true );
 	}
 }
 
@@ -2068,7 +2079,10 @@ void Application::removeSelectedLines()
 		if ( selectionRanges.isEmpty() )
 			return;
 
-		m_subtitle->removeLines( selectionRanges, dlg->selectedTextsTarget() );
+		{
+			LinesWidgetScrollToModelDetacher detacher( *m_linesWidget );
+			m_subtitle->removeLines( selectionRanges, dlg->selectedTextsTarget() );
+		}
 
 		int firstIndex = selectionRanges.firstIndex();
 		if ( firstIndex < m_subtitle->linesCount() )
