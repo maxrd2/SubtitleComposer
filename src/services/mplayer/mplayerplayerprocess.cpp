@@ -29,6 +29,8 @@
 
 using namespace SubtitleComposer;
 
+#define MAX_VOLUME 1000
+
 MPlayerPlayerProcess::MPlayerPlayerProcess( const MPlayerConfig* const config, QObject* parent ):
 	QProcess( parent ),
 	m_config( config ),
@@ -86,6 +88,9 @@ bool MPlayerPlayerProcess::start( const QString& filePath, int winId, int audioS
 	if ( m_config->hasAudioOutput() )
 		args << "-ao" << m_config->audioOutput();
 
+	if ( m_config->hasAudioChannels() )
+		args << "-channels" << QString::number( m_config->audioChannels() );
+
 	args << "-zoom"; // allow software scaling where hardware scaling is unavaliable
 	args << "-nokeepaspect"; // do not keep window aspect ratio when resizing windows
 
@@ -110,10 +115,13 @@ bool MPlayerPlayerProcess::start( const QString& filePath, int winId, int audioS
 
 	args << "-osdlevel" << QString::number( 0 ); // no OSD
 
-	if ( m_config->volumeNormalizationEnabled() )
+	if ( m_config->volumeNormalization() )
 		args << "-af" << "volnorm=2"; // set volume normalization
 
-	args << "-softvol" << "-softvol-max" << QString::number( 100 ); // maximum software volume level
+	args << "-softvol";
+
+	if ( m_config->hasVolumeAmplification() )
+		args << "-softvol-max" << QString::number( m_config->volumeAmplification() );
 
 	args << filePath;
 
@@ -157,7 +165,7 @@ void MPlayerPlayerProcess::sendToggleMute()
 
 void MPlayerPlayerProcess::sendVolume( double volume )
 {
-	sendCommand( QByteArray( "volume % 1" ).replace( '%', QByteArray::number( volume ) ), PausingKeep, false );
+	sendCommand( QByteArray( "volume % 1" ).replace( '%', QByteArray::number( volume * (m_config->volumeAmplification()/100.0) ) ), PausingKeep, false );
 }
 
 

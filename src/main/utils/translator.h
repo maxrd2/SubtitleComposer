@@ -57,7 +57,7 @@ namespace SubtitleComposer
 			Language::Value inputLanguage() const;
 			Language::Value outputLanguage() const;
 
-			int chunksCount() const; // upon how many chunks will the imput text be splitted?
+			int chunksCount() const; // upon how many chunks will the imput text be split on?
 
 			bool isFinished() const;
 			bool isFinishedWithError() const;

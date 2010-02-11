@@ -1195,7 +1195,7 @@ void Subtitle::appendSubtitle( const Subtitle& srcSubtitle, long shiftMsecsBefor
 }
 
 
-void Subtitle::splitSubtitle( Subtitle& dstSubtitle, const Time& splitTime, bool shiftSplittedLines )
+void Subtitle::splitSubtitle( Subtitle& dstSubtitle, const Time& splitTime, bool shiftSplitLines )
 {
 	if ( ! m_lines.count() )
 		return;
@@ -1222,7 +1222,7 @@ void Subtitle::splitSubtitle( Subtitle& dstSubtitle, const Time& splitTime, bool
 			if ( it.current()->m_formatData )
 				newLine->m_formatData = new FormatData( *(it.current()->m_formatData) );
 
-			if ( shiftSplittedLines )
+			if ( shiftSplitLines )
 				newLine->shiftTimes( - splitTime.toMillis() );
 
 			lines.append( newLine );

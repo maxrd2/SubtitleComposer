@@ -1897,31 +1897,37 @@ void Application::joinSubtitles()
 }
 
 
-KUrl Application::saveSplittedSubtitle( const Subtitle& subtitle, const KUrl& srcUrl, QString encoding, QString format, bool primary )
+KUrl Application::saveSplitSubtitle( const Subtitle& subtitle, const KUrl& srcUrl, QString encoding, QString format, bool primary )
 {
 	KUrl dstUrl;
 
 	if ( subtitle.linesCount() )
 	{
-		QFileInfo dstFileInfo =
-			srcUrl.isEmpty() ?
-				QFileInfo( QDir( System::tempDir() ), primary ? "untitled.srt" : "untitled-translation.srt" ) :
-				srcUrl.path();
+		if ( encoding.isEmpty() )
+			encoding = "UTF-8";
+
+		if ( format.isEmpty() )
+			format = "SubRip";
+
+		QFileInfo dstFileInfo( srcUrl.path() );
+		if ( srcUrl.isEmpty() )
+		{
+			QString baseName = primary ? i18n( "Untitled" ) : i18n( "Untitled Translation" );
+			QFileInfo(
+				QDir( System::tempDir() ),
+				baseName + FormatManager::instance().defaultOutput()->extensions().first()
+			);
+		}
 
 		dstUrl = srcUrl;
 		dstUrl.setPath( dstFileInfo.path() );
-		dstUrl = System::newUrl( dstUrl, dstFileInfo.completeBaseName() + " - splitted", dstFileInfo.suffix() );
-
-		if ( encoding.isEmpty() )
-			encoding = "UTF-8";
+		dstUrl = System::newUrl( dstUrl, dstFileInfo.completeBaseName() + " - " + i18nc( "Suffix added to split subtitles", "split" ), dstFileInfo.suffix() );
 
 		bool codecFound;
 		QTextCodec* codec = KGlobal::charsets()->codecForName( encoding, codecFound );
 		if ( ! codecFound )
 			codec = KGlobal::locale()->codecForEncoding();
 
-		if ( format.isEmpty() )
-			format = "SubRip";
 
 		bool success = FormatManager::instance().writeSubtitle(
 			subtitle,
@@ -1944,8 +1950,8 @@ KUrl Application::saveSplittedSubtitle( const Subtitle& subtitle, const KUrl& sr
 		KMessageBox::sorry(
 			m_mainWindow,
 			primary ?
-				i18n( "Could not write the splitted subtitle file." ) :
-				i18n( "Could not write the splitted subtitle translation file." )
+				i18n( "Could not write the split subtitle file." ) :
+				i18n( "Could not write the split subtitle translation file." )
 		);
 	}
 
@@ -1967,7 +1973,7 @@ void Application::splitSubtitle()
 		return;
 	}
 
-	KUrl splittedUrl = saveSplittedSubtitle(
+	KUrl splitUrl = saveSplitSubtitle(
 		newSubtitle,
 		m_subtitleUrl.prettyUrl(),
 		m_subtitleEncoding,
@@ -1975,17 +1981,17 @@ void Application::splitSubtitle()
 		true
 	);
 
-	if ( splittedUrl.path().isEmpty() )
+	if ( splitUrl.path().isEmpty() )
 	{
-		// there was an error saving the splitted part, undo the splitting of m_subtitle
+		// there was an error saving the split part, undo the splitting of m_subtitle
 		m_subtitle->actionManager().undo();
 		return;
 	}
 
-	KUrl splittedTrUrl;
+	KUrl splitTrUrl;
 	if ( m_translationMode )
 	{
-		splittedTrUrl = saveSplittedSubtitle(
+		splitTrUrl = saveSplitSubtitle(
 			newSubtitle,
 			m_subtitleTrUrl,
 			m_subtitleTrEncoding,
@@ -1993,18 +1999,18 @@ void Application::splitSubtitle()
 			false
 		);
 
-		if ( splittedTrUrl.path().isEmpty() )
+		if ( splitTrUrl.path().isEmpty() )
 		{
-			// there was an error saving the splitted part, undo the splitting of m_subtitle
+			// there was an error saving the split part, undo the splitting of m_subtitle
 			m_subtitle->actionManager().undo();
 			return;
 		}
 	}
 
 	QStringList args;
-	args << splittedUrl.prettyUrl();
+	args << splitUrl.prettyUrl();
 	if ( m_translationMode )
-		args << splittedTrUrl.prettyUrl();
+		args << splitTrUrl.prettyUrl();
 
 	if ( ! QProcess::startDetached( KCmdLineArgs::aboutData()->appName(), args ) )
 	{
@@ -2013,14 +2019,14 @@ void Application::splitSubtitle()
 			m_translationMode ?
 				i18n(
 					"Could not open a new Subtitle Composer window.\n"
-					"The splitted part was saved as %1.",
-					splittedUrl.path()
+					"The split part was saved as %1.",
+					splitUrl.path()
 				) :
 				i18n(
 					"Could not open a new Subtitle Composer window.\n"
-					"The splitted parts were saved as %1 and %2.",
-					splittedUrl.path(),
-					splittedTrUrl.path()
+					"The split parts were saved as %1 and %2.",
+					splitUrl.path(),
+					splitTrUrl.path()
 				)
 		);
 	}

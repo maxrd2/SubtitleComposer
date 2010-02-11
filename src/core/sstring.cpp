@@ -445,8 +445,8 @@ SString& SString::replace( int index, int len, const SString& replacement )
 	m_string.replace( index, len, replacement.m_string );
 
 	// simple path for when there's no need to change the styles (char substitution)
-	if ( len == 1 && replacement.m_string.length() == 1 )
-		return *this;
+	//if ( len == 1 && replacement.m_string.length() == 1 )
+	//	return *this;
 
 	char* oldStyleFlags = detachFlags();
 	setMinFlagsCapacity( m_string.length() );
@@ -1112,7 +1112,7 @@ SStringList::SStringList( const SString& str )
 	append( str );
 }
 
-SStringList::SStringList( const SStringList::SStringList& list ):
+SStringList::SStringList( const SStringList& list ):
 	QList<SString>( list )
 {
 }

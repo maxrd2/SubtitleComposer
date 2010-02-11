@@ -239,7 +239,7 @@ namespace SubtitleComposer
 
 			bool acceptClashingUrls( const KUrl& subtitleUrl, const KUrl& subtitleTrUrl );
 
-			KUrl saveSplittedSubtitle( const Subtitle& subtitle, const KUrl& srcUrl, QString encoding, QString format, bool primary );
+			KUrl saveSplitSubtitle( const Subtitle& subtitle, const KUrl& srcUrl, QString encoding, QString format, bool primary );
 
 			void setupActions();
 

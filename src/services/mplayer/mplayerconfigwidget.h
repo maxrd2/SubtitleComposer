@@ -61,6 +61,10 @@ namespace SubtitleComposer
 			QCheckBox* m_videoOutputCheckBox;
 			KComboBox* m_audioOutputComboBox;
 			KIntSpinBox* m_avsyncSpinBox;
+			QCheckBox* m_audioChannelsCheckBox;
+			KIntSpinBox* m_audioChannelsSpinBox;
+			QCheckBox* m_volumeAmplificationCheckBox;
+			KIntSpinBox* m_volumeAmplificationSpinBox;
 			QCheckBox* m_volumeNormalizationCheckBox;
 			QCheckBox* m_avsyncCheckBox;
 			QCheckBox* m_audioOutputCheckBox;

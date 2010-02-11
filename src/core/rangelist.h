@@ -384,7 +384,7 @@ namespace SubtitleComposer
 				for ( int index = 0, count = m_ranges.count(); index < count; ++index )
 				{
 					Range& range = m_ranges[index];
-					if ( range.m_start < fromIndex && fromIndex <= range.m_end ) // range must be filled or splitted to insert gap
+					if ( range.m_start < fromIndex && fromIndex <= range.m_end ) // range must be filled or split to insert gap
 					{
 						if ( fillSplitGap )
 							shiftRangeForwards( range, fromIndex, delta );

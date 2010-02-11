@@ -54,8 +54,16 @@ namespace SubtitleComposer
 			int cacheSize() const { return optionAsInt( keyCacheSize() ); } /// in kbytes
 			void setCacheSize( int kbytes ) { setOption( keyCacheSize(), kbytes < 0 ? "" : QString::number( kbytes ) ); }
 
-			bool volumeNormalizationEnabled() const { return optionAsBool( keyVolumeNormalizationEnabled() ); }
-			void setVolumeNormalizationEnabled( bool enabled ) { setOption( keyVolumeNormalizationEnabled(), enabled ); }
+			bool hasAudioChannels() const { return ! option( keyAudioChannels() ).isEmpty(); }
+			int audioChannels() const { return qMax( 1, optionAsInt( keyAudioChannels() ) ); }
+			void setAudioChannels( int channels ) { setOption( keyAudioChannels(), channels < 1 ? "" : QString::number( channels ) ); }
+
+			bool hasVolumeAmplification() const { return ! option( keyVolumeAmplification() ).isEmpty(); }
+			int volumeAmplification() const { const int value = optionAsInt( keyVolumeAmplification() ); return value <= 0 ? 100 : value; }
+			void setVolumeAplification( int amplification ) { setOption( keyVolumeAmplification(), amplification < 1 ? "" : QString::number( amplification ) ); }
+
+			bool volumeNormalization() const { return optionAsBool( keyVolumeNormalization() ); }
+			void setVolumeNormalization( bool enabled ) { setOption( keyVolumeNormalization(), enabled ); }
 
 			bool frameDropping() const { return optionAsBool( keyFrameDropping() ); }
 			void setFrameDropping( bool frameDropping ) { setOption( keyFrameDropping(), frameDropping ); }
@@ -69,13 +77,15 @@ namespace SubtitleComposer
 
 
 			static const QString& keyExecutablePath() { static const QString key( "ExecutablePath" ); return key; }
-			static const QString& keyAudioOutput() { static const QString key( "AudioOutput" ); return key; }
-			static const QString& keyVideoOutput() { static const QString key( "VideoOutput" ); return key; }
 			static const QString& keyCacheSize() { static const QString key( "CacheSize" ); return key; }
-			static const QString& keyVolumeNormalizationEnabled() { static const QString key( "VolumeNormalizationEnabled" ); return key; }
+			static const QString& keyAutoSyncFactor() { static const QString key( "AutoSyncFactor" ); return key; }
+			static const QString& keyVideoOutput() { static const QString key( "VideoOutput" ); return key; }
 			static const QString& keyFrameDropping() { static const QString key( "FrameDropping" ); return key; }
 			static const QString& keyHardFrameDropping() { static const QString key( "HardFrameDropping" ); return key; }
-			static const QString& keyAutoSyncFactor() { static const QString key( "AutoSyncFactor" ); return key; }
+			static const QString& keyAudioOutput() { static const QString key( "AudioOutput" ); return key; }
+			static const QString& keyAudioChannels() { static const QString key( "AudioChannels" ); return key; }
+			static const QString& keyVolumeAmplification() { static const QString key( "VolumeAmplification" ); return key; }
+			static const QString& keyVolumeNormalization() { static const QString key( "VolumeNormalization" ); return key; }
 
 		private:
 
@@ -87,16 +97,17 @@ namespace SubtitleComposer
 				QMap<QString,QString> defaults;
 
 				defaults[keyExecutablePath()] = "mplayer";
-				defaults[keyAudioOutput()] = "";
-				defaults[keyVideoOutput()] = "";
-
 				defaults[keyCacheSize()] = "5120"; // in kbytes
+				defaults[keyAutoSyncFactor()] = "";
 
-				defaults[keyVolumeNormalizationEnabled()] = "false";
-
+				defaults[keyVideoOutput()] = "";
 				defaults[keyFrameDropping()] = "false";
 				defaults[keyHardFrameDropping()] = "false";
-				defaults[keyAutoSyncFactor()] = "";
+
+				defaults[keyAudioOutput()] = "";
+				defaults[keyAudioChannels()] = "";
+				defaults[keyVolumeAmplification()] = "110";
+				defaults[keyVolumeNormalization()] = "false";
 
 				return defaults;
 			}

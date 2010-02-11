@@ -132,7 +132,7 @@ static int findOptimalSplitIndex( const QString& text, int fromIndex=0 )
 	if ( index >= (fromIndex + Translator::MaxChunkSize*(3/4)) )
 		return index;
 
-	// text it's really weird (probably garbage)... we just splitted anywhere
+	// text it's really weird (probably garbage)... we just split it anywhere
 	return fromIndex + Translator::MaxChunkSize;
 }
 

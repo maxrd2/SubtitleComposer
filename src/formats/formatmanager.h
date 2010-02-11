@@ -41,17 +41,18 @@ namespace SubtitleComposer
 
 			static FormatManager& instance();
 
-			bool hasInput( const QString& name );
-			const InputFormat* input( const QString& name );
-			QStringList inputNames();
+			bool hasInput( const QString& name ) const;
+			const InputFormat* input( const QString& name ) const;
+			QStringList inputNames() const;
 
-			bool readSubtitle( Subtitle& subtitle, bool primary, const KUrl& url, QTextCodec* codec, Format::NewLine* newLine=0, QString* format=0 );
+			bool readSubtitle( Subtitle& subtitle, bool primary, const KUrl& url, QTextCodec* codec, Format::NewLine* newLine=0, QString* format=0 ) const;
 
-			bool hasOutput( const QString& name );
-			const OutputFormat* output( const QString& name );
-			QStringList outputNames();
+			bool hasOutput( const QString& name ) const;
+			const OutputFormat* output( const QString& name ) const;
+			const OutputFormat* defaultOutput() const;
+			QStringList outputNames() const;
 
-			bool writeSubtitle( const Subtitle& subtitle, bool primary, const KUrl& url, QTextCodec* codec, Format::NewLine newLine, const QString& format, bool overwrite );
+			bool writeSubtitle( const Subtitle& subtitle, bool primary, const KUrl& url, QTextCodec* codec, Format::NewLine newLine, const QString& format, bool overwrite ) const;
 
 		protected:
 

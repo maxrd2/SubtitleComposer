@@ -4,3 +4,6 @@ Planned features / known issues
 * automatic correction of OCR errors
 * failing to load a subtitle fail because of an invalid encoding issue is annoying, perhaps the "next" encoding should be tried and the error informed.
 * translation service could improve synchronization issues if it cooperated more closely with the subtitle
+
+* When the find/replace dialog is opened the current line text should be focused and any selected text be autofilled in the dialog
+* Adjusting times seems to miss the given targets by 1 milliseconds most times (there's probably a rounding issue)

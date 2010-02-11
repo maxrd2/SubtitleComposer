@@ -99,22 +99,22 @@ FormatManager::~FormatManager()
 		delete it.value();
 }
 
-bool FormatManager::hasInput( const QString& name )
+bool FormatManager::hasInput( const QString& name ) const
 {
 	return m_inputFormats.contains( name );
 }
 
-const InputFormat* FormatManager::input( const QString& name )
+const InputFormat* FormatManager::input( const QString& name ) const
 {
 	return m_inputFormats.contains( name ) ? m_inputFormats[name] : 0;
 }
 
-QStringList FormatManager::inputNames()
+QStringList FormatManager::inputNames() const
 {
 	return m_inputFormats.keys();
 }
 
-bool FormatManager::readSubtitle( Subtitle& subtitle, bool primary, const KUrl& url, QTextCodec* codec, Format::NewLine* newLine, QString* formatName )
+bool FormatManager::readSubtitle( Subtitle& subtitle, bool primary, const KUrl& url, QTextCodec* codec, Format::NewLine* newLine, QString* formatName ) const
 {
 	QString extension = QFileInfo( url.path() ).suffix();
 
@@ -149,22 +149,27 @@ bool FormatManager::readSubtitle( Subtitle& subtitle, bool primary, const KUrl& 
 	return false;
 }
 
-bool FormatManager::hasOutput( const QString& name )
+bool FormatManager::hasOutput( const QString& name ) const
 {
 	return m_outputFormats.contains( name );
 }
 
-const OutputFormat* FormatManager::output( const QString& name )
+const OutputFormat* FormatManager::output( const QString& name ) const
 {
 	return m_outputFormats.contains( name ) ? m_outputFormats[name] : 0;
 }
 
-QStringList FormatManager::outputNames()
+const OutputFormat* FormatManager::defaultOutput() const
+{
+	return output( "SubRip" );
+}
+
+QStringList FormatManager::outputNames() const
 {
 	return m_outputFormats.keys();
 }
 
-bool FormatManager::writeSubtitle( const Subtitle& subtitle, bool primary, const KUrl& url, QTextCodec* codec, Format::NewLine newLine, const QString& formatName, bool overwrite )
+bool FormatManager::writeSubtitle( const Subtitle& subtitle, bool primary, const KUrl& url, QTextCodec* codec, Format::NewLine newLine, const QString& formatName, bool overwrite ) const
 {
 	const OutputFormat* format = output( formatName );
 	if ( format == 0 )

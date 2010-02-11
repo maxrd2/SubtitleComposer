@@ -149,7 +149,7 @@ namespace SubtitleComposer
 
 			void syncWithSubtitle( const Subtitle& refSubtitle );
 			void appendSubtitle( const Subtitle& srcSubtitle, long shiftMsecsBeforeAppend );
-			void splitSubtitle( Subtitle& dstSubtitle, const Time& splitTime, bool shiftSplittedLines );
+			void splitSubtitle( Subtitle& dstSubtitle, const Time& splitTime, bool shiftSplitLines );
 
 			void setStyleFlags( const RangeList& ranges, int styleFlags );
 			void setStyleFlags( const RangeList& ranges, int styleFlags, bool on );
