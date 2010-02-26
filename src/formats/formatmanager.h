@@ -45,7 +45,7 @@ namespace SubtitleComposer
 			const InputFormat* input( const QString& name ) const;
 			QStringList inputNames() const;
 
-			bool readSubtitle( Subtitle& subtitle, bool primary, const KUrl& url, QTextCodec* codec, Format::NewLine* newLine=0, QString* format=0 ) const;
+			bool readSubtitle( Subtitle& subtitle, bool primary, const KUrl& url, QTextCodec** codec, Format::NewLine* newLine=0, QString* format=0 ) const;
 
 			bool hasOutput( const QString& name ) const;
 			const OutputFormat* output( const QString& name ) const;

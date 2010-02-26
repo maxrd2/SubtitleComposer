@@ -7,6 +7,7 @@ ADD_SUBDIRECTORY( substationalpha )
 ADD_SUBDIRECTORY( subviewer1 )
 ADD_SUBDIRECTORY( subviewer2 )
 ADD_SUBDIRECTORY( tmplayer )
+ADD_SUBDIRECTORY( youtubecaptions )
 
 SET( formats_DEFS
 	${formats_microdvd_DEFS}
@@ -17,6 +18,7 @@ SET( formats_DEFS
 	${formats_subviewer1_DEFS}
 	${formats_subviewer2_DEFS}
 	${formats_tmplayer_DEFS}
+	${formats_youtubecaptions_DEFS}
 	CACHE INTERNAL EXPORTEDVARIABLE
 )
 
@@ -29,6 +31,7 @@ SET( formats_LIBS
 	${formats_subviewer1_LIBS}
 	${formats_subviewer2_LIBS}
 	${formats_tmplayer_LIBS}
+	${formats_youtubecaptions_LIBS}
 	CACHE INTERNAL EXPORTEDVARIABLE
 )
 
@@ -48,3 +51,26 @@ SET( formats_SRCS
 	${formats_tmplayer_SRCS}
 	CACHE INTERNAL EXPORTEDVARIABLE
 )
+
+SET( CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} ${CMAKE_CURRENT_SOURCE_DIR} )
+MACRO_OPTIONAL_FIND_PACKAGE( ICU )
+
+IF( ICU_FOUND )
+	MESSAGE( STATUS "FOUND FOUND" )
+
+	SET( HAVE_ICU 1 CACHE INTERNAL EXPORTEDVARIABLE )
+
+	INCLUDE_DIRECTORIES( ${ICU_INCLUDE_DIRS} )
+
+	SET( formats_DEFS
+		${ICU_DEFINITIONS}
+		${formats_DEFS}
+		CACHE INTERNAL EXPORTEDVARIABLE
+	)
+	SET( formats_LIBS
+		${ICU_LIBRARIES}
+		${formats_LIBS}
+		CACHE INTERNAL EXPORTEDVARIABLE
+	)
+
+ENDIF( ICU_FOUND )

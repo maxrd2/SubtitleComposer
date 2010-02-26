@@ -669,12 +669,12 @@ void Subtitle::adjustLines( const Range& range, long newFirstTime, long newLastT
 	if ( ! oldDeltaTime && newDeltaTime )
 		return;
 
-	long shiftMseconds;
+	double shiftMseconds;
 	double scaleFactor;
 
 	if ( oldDeltaTime )
 	{
-		shiftMseconds = (long)(newFirstTime-((double)newDeltaTime/oldDeltaTime)*oldFirstTime + 0.5);
+		shiftMseconds = newFirstTime - ((double)newDeltaTime/oldDeltaTime)*oldFirstTime;
 		scaleFactor = (double)newDeltaTime/oldDeltaTime;
 	}
 	else // oldDeltaTime == 0 && newDeltaTime == 0

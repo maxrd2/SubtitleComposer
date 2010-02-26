@@ -235,7 +235,7 @@ namespace SubtitleComposer
 
 		private:
 
-			QString encodingForUrl( const KUrl& url );
+			QTextCodec* codecForUrl( const KUrl& url );
 
 			bool acceptClashingUrls( const KUrl& subtitleUrl, const KUrl& subtitleTrUrl );
 

@@ -38,6 +38,8 @@ namespace SubtitleComposer
 
 			virtual ~SubViewer1InputFormat() {}
 
+		protected:
+
 			virtual bool parseSubtitles( Subtitle& subtitle, const QString& data ) const
 			{
 				if ( m_regExp.indexIn( data, 0 ) == -1 )
@@ -70,8 +72,6 @@ namespace SubtitleComposer
 
 				return readLines > 0;
 			}
-
-		protected:
 
 			SubViewer1InputFormat():
 				InputFormat( "SubViewer 1.0", QStringList( "sub" ) ),

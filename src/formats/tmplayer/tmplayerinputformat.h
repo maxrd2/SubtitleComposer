@@ -40,6 +40,8 @@ namespace SubtitleComposer
 
 			virtual ~TMPlayerInputFormat() {}
 
+		protected:
+
 			virtual bool parseSubtitles( Subtitle& subtitle, const QString& data ) const
 			{
 				unsigned readLines = 0;
@@ -78,8 +80,6 @@ namespace SubtitleComposer
 
 				return true;
 			}
-
-		protected:
 
 			TMPlayerInputFormat():
 				InputFormat( "TMPlayer", QString( "sub:txt" ).split( ":" ) ),

@@ -1,5 +1,5 @@
-#ifndef MPLAYERINPUTFORMAT_H
-#define MPLAYERINPUTFORMAT_H
+#ifndef YOUTUBECAPTIONSOUTPUTFORMAT_H
+#define YOUTUBECAPTIONSOUTPUTFORMAT_H
 
 /***************************************************************************
  *   Copyright (C) 2007-2009 Sergio Pistone (sergio_pistone@yahoo.com.ar)  *
@@ -20,55 +20,64 @@
  *   Boston, MA 02110-1301, USA.                                           *
  ***************************************************************************/
 
+
 #ifdef HAVE_CONFIG_H
 	#include <config.h>
 #endif
 
-#include "../inputformat.h"
-
-#include <QtCore/QRegExp>
+#include "../outputformat.h"
+#include "../../core/subtitleiterator.h"
 
 namespace SubtitleComposer
 {
-	class MPlayerInputFormat : public InputFormat
+	class YouTubeCaptionsOutputFormat : public OutputFormat
 	{
 		friend class FormatManager;
 
 		public:
 
-			virtual ~MPlayerInputFormat() {}
+			virtual ~YouTubeCaptionsOutputFormat() {}
 
 		protected:
 
-			virtual bool parseSubtitles( Subtitle& subtitle, const QString& data ) const
+			virtual QString dumpSubtitles( const Subtitle& subtitle, bool primary ) const
 			{
-				double framesPerSecond = subtitle.framesPerSecond();
+				QString ret;
 
-				unsigned readLines = 0;
-
-				for ( int offset = 0; m_lineRegExp.indexIn( data, offset ) != -1; offset += m_lineRegExp.matchedLength() )
+				for ( SubtitleIterator it( subtitle ); it.current(); ++it )
 				{
-					Time showTime( (long)((m_lineRegExp.cap( 1 ).toLong() / framesPerSecond)*1000) );
-					Time hideTime( (long)((m_lineRegExp.cap( 2 ).toLong() / framesPerSecond)*1000) );
-					QString text( m_lineRegExp.cap( 3 ).replace( "|", "\n" ) );
+					const SubtitleLine* line = it.current();
 
-					subtitle.insertLine( new SubtitleLine( text, showTime, hideTime ) );
+					Time showTime = line->showTime();
+					Time hideTime = line->hideTime();
+					ret += m_timeBuilder.sprintf(
+						"%d\n%02d:%02d:%02d,%03d,%02d:%02d:%02d,%03d\n",
+						it.index() + 1,
+						showTime.hours(), showTime.minutes(), showTime.seconds(), showTime.mseconds(),
+						hideTime.hours(), hideTime.minutes(), hideTime.seconds(), hideTime.mseconds()
+					);
 
-					readLines++;
+					const SString& text = primary ? line->primaryText() : line->secondaryText();
+
+					// TODO does the format actually supports styled text?
+					// if so, does it use standard HTML style tags?
+					ret += text.richString();
+
+					ret += "\n\n";
 				}
 
-				return readLines > 0;
+				return ret;
 			}
 
-			MPlayerInputFormat():
-				InputFormat( "MPlayer", QStringList( "mpl" ) ),
-				m_lineRegExp( "(^|\n)(\\d+),(\\d+),0,([^\n]+)[^\n]" )
+			YouTubeCaptionsOutputFormat():
+				OutputFormat( "YouTube Captions", QStringList( "sbv" ) ),
+				m_dialogueBuilder( "%1%2%3%4%5%6%7\n\n" )
 			{
 			}
 
-			mutable QRegExp m_lineRegExp;
+			const QString m_dialogueBuilder;
+			mutable QString m_timeBuilder;
 	};
 }
 
 #endif
-

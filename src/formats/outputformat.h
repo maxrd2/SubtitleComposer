@@ -25,12 +25,6 @@
 #endif
 
 #include "format.h"
-#include "../common/filesavehelper.h"
-
-#include <QtCore/QFile>
-#include <QtCore/QTextCodec>
-#include <QtCore/QTextStream>
-
 namespace SubtitleComposer
 {
 	class OutputFormat : public Format
@@ -39,29 +33,14 @@ namespace SubtitleComposer
 
 			virtual ~OutputFormat() {}
 
-			bool writeSubtitle( const Subtitle& subtitle, NewLine newLine, bool primary, const KUrl& url, QTextCodec* codec, bool overwrite ) const
+			QString writeSubtitle( const Subtitle& subtitle, bool primary ) const
 			{
-				FileSaveHelper fileSaveHelper( url, overwrite );
-
-				if ( ! fileSaveHelper.open() )
-					return false;
-
-				QString data = dumpSubtitles( subtitle, primary );
-				if ( newLine == Windows )
-					data.replace( "\n", "\r\n" );
-				else if ( newLine == Macintosh )
-					data.replace( "\n", "\r" );
-
-				QTextStream stream( fileSaveHelper.file() );
-				stream.setCodec( codec );
-				stream << data;
-
-				return fileSaveHelper.close();
+				return dumpSubtitles( subtitle, primary );
 			}
 
-			virtual QString dumpSubtitles( const Subtitle& subtitle, bool secondary ) const = 0;
-
 		protected:
+
+			virtual QString dumpSubtitles( const Subtitle& subtitle, bool primary ) const = 0;
 
 			OutputFormat( const QString& name, const QStringList& extensions ):
 				Format( name, extensions ) {}

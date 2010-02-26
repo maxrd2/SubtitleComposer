@@ -136,12 +136,12 @@ Time Time::shifted( long mseconds ) const
 	return Time( m_mseconds + mseconds );
 }
 
-void Time::adjust( long shiftMseconds, double scaleFactor )
+void Time::adjust( double shiftMseconds, double scaleFactor )
 {
 	operator=( (long)(shiftMseconds + m_mseconds*scaleFactor + 0.5) );
 }
 
-Time Time::adjusted( long shiftMseconds, double scaleFactor ) const
+Time Time::adjusted( double shiftMseconds, double scaleFactor ) const
 {
 	return Time( (long)(shiftMseconds + m_mseconds*scaleFactor + 0.5) );
 }

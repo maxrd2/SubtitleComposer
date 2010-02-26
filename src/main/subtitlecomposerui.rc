@@ -1,5 +1,5 @@
 <!DOCTYPE kpartgui SYSTEM "kpartgui.dtd">
-<kpartgui name="subtitlecomposer" version="3" >
+<kpartgui name="subtitlecomposer" version="4" >
 	<MenuBar>
 		<Menu name="file" >
 			<text>&amp;File</text>
@@ -154,13 +154,12 @@
 		<text>Main Toolbar</text>
 		<Action name="new_subtitle" />
 		<Action name="open_subtitle" />
+		<Action name="change_subtitle_encoding" />
 		<Separator name="separator_0" />
 		<Action name="save_subtitle" />
 		<Action name="save_subtitle_as" />
 		<Separator name="separator_1" />
 		<Action name="close_subtitle" />
-		<Separator name="separator_2" />
-		<Action name="change_subtitle_encoding" />
 	</ToolBar>
 	<ToolBar alreadyVisited="1" noMerge="1" name="editToolBar" >
 		<text context="The toolbar name">Edit Toolbar</text>

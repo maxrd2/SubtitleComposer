@@ -38,6 +38,8 @@ namespace SubtitleComposer
 
 			virtual ~SubRipInputFormat() {}
 
+		protected:
+
 			virtual bool parseSubtitles( Subtitle& subtitle, const QString& data ) const
 			{
 				if ( m_regExp.indexIn( data, 0 ) == -1 )
@@ -79,8 +81,6 @@ namespace SubtitleComposer
 
 				return readLines > 0;
 			}
-
-		protected:
 
 			SubRipInputFormat():
 				InputFormat( "SubRip", QStringList( "srt" ) ),

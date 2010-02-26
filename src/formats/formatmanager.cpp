@@ -18,6 +18,9 @@
  ***************************************************************************/
 
 #include "formatmanager.h"
+#include "../common/fileloadhelper.h"
+#include "../common/filesavehelper.h"
+#include "../main/application.h"
 
 #include "microdvd/microdvdinputformat.h"
 #include "microdvd/microdvdoutputformat.h"
@@ -35,9 +38,23 @@
 #include "subviewer2/subviewer2outputformat.h"
 #include "tmplayer/tmplayerinputformat.h"
 #include "tmplayer/tmplayeroutputformat.h"
+#include "youtubecaptions/youtubecaptionsinputformat.h"
+#include "youtubecaptions/youtubecaptionsoutputformat.h"
+
+#include <QtCore/QFile>
+#include <QtCore/QFileInfo>
+#include <QtCore/QTextCodec>
+#include <QtCore/QTextStream>
+
+#include <KDE/KGlobal>
+#include <KDE/KLocale>
+#include <KDE/KCharsets>
+#include <KDE/KUrl>
+#include <kencodingdetector.h>
+
+#include <unicode/ucsdet.h>
 
 using namespace SubtitleComposer;
-
 
 FormatManager& FormatManager::instance()
 {
@@ -47,47 +64,41 @@ FormatManager& FormatManager::instance()
 
 FormatManager::FormatManager()
 {
-	InputFormat* inputFormat = new SubRipInputFormat();
-	m_inputFormats[inputFormat->name()] = inputFormat;
-	inputFormat = new MicroDVDInputFormat();
-	m_inputFormats[inputFormat->name()] = inputFormat;
-	inputFormat = new MPlayerInputFormat();
-	m_inputFormats[inputFormat->name()] = inputFormat;
-	inputFormat = new MPlayer2InputFormat();
-	m_inputFormats[inputFormat->name()] = inputFormat;
-	inputFormat = new SubStationAlphaInputFormat();
-	m_inputFormats[inputFormat->name()] = inputFormat;
-	inputFormat = new AdvancedSubStationAlphaInputFormat();
-	m_inputFormats[inputFormat->name()] = inputFormat;
-	inputFormat = new SubViewer1InputFormat();
-	m_inputFormats[inputFormat->name()] = inputFormat;
-	inputFormat = new SubViewer2InputFormat();
-	m_inputFormats[inputFormat->name()] = inputFormat;
-	inputFormat = new TMPlayerInputFormat();
-	m_inputFormats[inputFormat->name()] = inputFormat;
-	inputFormat = new TMPlayerPlusInputFormat();
-	m_inputFormats[inputFormat->name()] = inputFormat;
+	InputFormat* inputFormats[] = {
+		new SubRipInputFormat(),
+		new MicroDVDInputFormat(),
+		new MPlayerInputFormat(),
+		new MPlayer2InputFormat(),
+		new SubStationAlphaInputFormat(),
+		new AdvancedSubStationAlphaInputFormat(),
+		new SubViewer1InputFormat(),
+		new SubViewer2InputFormat(),
+		new TMPlayerInputFormat(),
+		new TMPlayerPlusInputFormat(),
+		new YouTubeCaptionsInputFormat(),
+	};
 
-	OutputFormat* outputFormat = new SubRipOutputFormat();
-	m_outputFormats[outputFormat->name()] = outputFormat;
-	outputFormat = new MicroDVDOutputFormat();
-	m_outputFormats[outputFormat->name()] = outputFormat;
-	outputFormat = new MPlayerOutputFormat();
-	m_outputFormats[outputFormat->name()] = outputFormat;
-	outputFormat = new MPlayer2OutputFormat();
-	m_outputFormats[outputFormat->name()] = outputFormat;
-	outputFormat = new SubStationAlphaOutputFormat();
-	m_outputFormats[outputFormat->name()] = outputFormat;
-	outputFormat = new AdvancedSubStationAlphaOutputFormat();
-	m_outputFormats[outputFormat->name()] = outputFormat;
-	outputFormat = new SubViewer1OutputFormat();
-	m_outputFormats[outputFormat->name()] = outputFormat;
-	outputFormat = new SubViewer2OutputFormat();
-	m_outputFormats[outputFormat->name()] = outputFormat;
-	outputFormat = new TMPlayerOutputFormat();
-	m_outputFormats[outputFormat->name()] = outputFormat;
-	outputFormat = new TMPlayerPlusOutputFormat();
-	m_outputFormats[outputFormat->name()] = outputFormat;
+	for ( int index = 0, count = sizeof(inputFormats)/sizeof(*(inputFormats)); index < count; ++index ) {
+		m_inputFormats[inputFormats[index]->name()] = inputFormats[index];
+	}
+
+	OutputFormat* outputFormats[] = {
+		new SubRipOutputFormat(),
+		new MicroDVDOutputFormat(),
+		new MPlayerOutputFormat(),
+		new MPlayer2OutputFormat(),
+		new SubStationAlphaOutputFormat(),
+		new AdvancedSubStationAlphaOutputFormat(),
+		new SubViewer1OutputFormat(),
+		new SubViewer2OutputFormat(),
+		new TMPlayerOutputFormat(),
+		new TMPlayerPlusOutputFormat(),
+		new YouTubeCaptionsOutputFormat(),
+	};
+
+	for ( int index = 0, count = sizeof(outputFormats)/sizeof(*(outputFormats)); index < count; ++index ) {
+		m_outputFormats[outputFormats[index]->name()] = outputFormats[index];
+	}
 }
 
 FormatManager::~FormatManager()
@@ -114,16 +125,81 @@ QStringList FormatManager::inputNames() const
 	return m_inputFormats.keys();
 }
 
-bool FormatManager::readSubtitle( Subtitle& subtitle, bool primary, const KUrl& url, QTextCodec* codec, Format::NewLine* newLine, QString* formatName ) const
+bool FormatManager::readSubtitle( Subtitle& subtitle, bool primary, const KUrl& url, QTextCodec** codec, Format::NewLine* newLine, QString* formatName ) const
 {
+	FileLoadHelper fileLoadHelper( url );
+	if ( ! fileLoadHelper.open() )
+		return false;
+	QByteArray byteData = fileLoadHelper.file()->readAll();
+	fileLoadHelper.close();
+
+	QString stringData;
+
+
+#ifdef HAVE_ICU
+	if ( ! *codec )
+	{
+		UErrorCode status = U_ZERO_ERROR;
+		UCharsetDetector* csd = ucsdet_open( &status );
+		ucsdet_setText( csd, byteData.data(), byteData.length(), &status );
+		int32_t matchesFound = 0;
+		const UCharsetMatch **ucms = ucsdet_detectAll( csd, &matchesFound, &status );
+		for ( int index = 0; index < matchesFound; ++index )
+		{
+			int32_t confidence = ucsdet_getConfidence( ucms[index], &status );
+			const char *name = ucsdet_getName( ucms[index], &status );
+			qDebug() << "encoding" << name << "confidence" << confidence;
+			bool encodingFound;
+			*codec = KGlobal::charsets()->codecForName( name, encodingFound );
+			if ( encodingFound )
+				break;
+			else
+				*codec = 0;
+		}
+	}
+#endif
+
+	if ( *codec )
+	{
+		QTextStream textStream( byteData );
+		textStream.setCodec( *codec );
+		stringData = textStream.readAll();
+	}
+	else
+	{
+		bool encodingFound;
+		*codec = KGlobal::charsets()->codecForName( app()->generalConfig()->defaultSubtitlesEncoding(), encodingFound );
+		if ( ! encodingFound )
+			*codec = KGlobal::locale()->codecForEncoding();
+		KEncodingDetector detector( *codec, KEncodingDetector::AutoDetectedEncoding, KEncodingDetector::SemiautomaticDetection );
+		//KEncodingDetector detector( *codec, KEncodingDetector::AutoDetectedEncoding, KEncodingDetector::Cyrillic );
+		stringData = detector.decode( byteData );
+		*codec = KGlobal::charsets()->codecForName( detector.encoding(), encodingFound );
+	}
+
+	if ( newLine )
+	{
+		if ( stringData.indexOf( "\r\n" ) != -1 )
+			*newLine = Format::Windows;
+		else if ( stringData.indexOf( "\r" ) != -1 )
+			*newLine = Format::Macintosh;
+		else if ( stringData.indexOf( "\n" ) != -1 )
+			*newLine = Format::UNIX;
+		else
+			*newLine = Format::CurrentOS;
+	}
+
+	stringData.replace( "\r\n", "\n" );
+	stringData.replace( "\r", "\n" );
+
 	QString extension = QFileInfo( url.path() ).suffix();
 
-	// attempt to parse subtitles based on extension information
+	// attempt to parse subtitles based on extension information first
 	for ( QMap<QString,InputFormat*>::ConstIterator it = m_inputFormats.begin(), end = m_inputFormats.end(); it != end; ++it )
 	{
 		if ( it.value()->knowsExtension( extension ) )
 		{
-			if ( it.value()->readSubtitle( subtitle, newLine, primary, url, codec, true ) )
+			if ( it.value()->readSubtitle( subtitle, primary, stringData ) )
 			{
 				if ( formatName )
 					*formatName = it.value()->name();
@@ -137,7 +213,7 @@ bool FormatManager::readSubtitle( Subtitle& subtitle, bool primary, const KUrl& 
 	{
 		if ( ! it.value()->knowsExtension( extension ) )
 		{
-			if ( it.value()->readSubtitle( subtitle, newLine, primary, url, codec, true ) )
+			if ( it.value()->readSubtitle( subtitle, primary, stringData ) )
 			{
 				if ( formatName )
 					*formatName = it.value()->name();
@@ -187,5 +263,19 @@ bool FormatManager::writeSubtitle( const Subtitle& subtitle, bool primary, const
 	if ( format == 0 )
 		return false;
 
-	return format->writeSubtitle( subtitle, newLine, primary, url, codec, overwrite );
+	FileSaveHelper fileSaveHelper( url, overwrite );
+	if ( ! fileSaveHelper.open() )
+		return false;
+
+	QString data = format->writeSubtitle( subtitle, primary );
+	if ( newLine == Format::Windows )
+		data.replace( "\n", "\r\n" );
+	else if ( newLine == Format::Macintosh )
+		data.replace( "\n", "\r" );
+
+	QTextStream stream( fileSaveHelper.file() );
+	stream.setCodec( codec );
+	stream << data;
+
+	return fileSaveHelper.close();
 }

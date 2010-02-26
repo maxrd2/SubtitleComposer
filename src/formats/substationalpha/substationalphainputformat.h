@@ -39,6 +39,8 @@ namespace SubtitleComposer
 
 			virtual ~SubStationAlphaInputFormat() {}
 
+		protected:
+
 			SString toSString( QString string ) const
 			{
 				static QRegExp cmdRegExp( "\\{([^\\}]+)\\}" );
@@ -73,7 +75,7 @@ namespace SubtitleComposer
 						else if ( *it == "\\u0" )
 							newStyleFlags &= ~SString::Underline;
 					}
-	
+
 					commands.replace( tagCmdRegExp, "" );
 
 					QString token( string.mid( offsetPos, matchedPos - offsetPos ) );
@@ -157,8 +159,6 @@ namespace SubtitleComposer
 
 				return readLines > 0;
 			}
-
-		protected:
 
 			SubStationAlphaInputFormat():
 				InputFormat( "SubStation Alpha", QStringList( "ssa" ) ),

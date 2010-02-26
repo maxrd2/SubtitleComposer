@@ -56,12 +56,14 @@ namespace SubtitleComposer
 				return ret;
 			}
 
+		protected:
+
 			virtual QString dumpSubtitles( const Subtitle& subtitle, bool primary ) const
 			{
 				FormatData* formatData = this->formatData( subtitle );
 
 				QString builder( "%1\n%2\n%3" );
-	
+
 				QString ret = builder
 					.arg( formatData ? formatData->value( "ScriptInfo" ) : m_defaultScriptInfo )
 					.arg( formatData ? formatData->value( "Styles" ) : m_defaultStyles )
@@ -99,8 +101,6 @@ namespace SubtitleComposer
 
 				return ret;
 			}
-
-		protected:
 
 			SubStationAlphaOutputFormat():
 				OutputFormat( "SubStation Alpha", QStringList( "ssa" ) ),

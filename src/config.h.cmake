@@ -10,4 +10,7 @@
 /* Whether XCB was found */
 #cmakedefine HAVE_XCB
 
+/* Whether ICU was found */
+#cmakedefine HAVE_ICU
+
 #endif

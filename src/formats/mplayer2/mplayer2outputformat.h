@@ -38,6 +38,8 @@ namespace SubtitleComposer
 
 			virtual ~MPlayer2OutputFormat() {}
 
+		protected:
+
 			virtual QString dumpSubtitles( const Subtitle& subtitle, bool primary ) const
 			{
 				QString ret;
@@ -56,8 +58,6 @@ namespace SubtitleComposer
 
 				return ret;
 			}
-
-		protected:
 
 			MPlayer2OutputFormat():
 				OutputFormat( "MPlayer2", QStringList( "mpl" ) ),

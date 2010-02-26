@@ -38,6 +38,8 @@ namespace SubtitleComposer
 
 			virtual ~MicroDVDInputFormat() {}
 
+		protected:
+
 			virtual bool parseSubtitles( Subtitle& subtitle, const QString& data ) const
 			{
 				if ( m_lineRegExp.indexIn( data, 0 ) == -1 )
@@ -94,8 +96,6 @@ namespace SubtitleComposer
 
 				return readLines > 0;
 			}
-
-		protected:
 
 			MicroDVDInputFormat():
 				InputFormat( "MicroDVD", QString( "sub:txt" ).split( ":" ) ),

@@ -38,6 +38,8 @@ namespace SubtitleComposer
 
 			virtual ~TMPlayerOutputFormat() {}
 
+		protected:
+
 			virtual QString dumpSubtitles( const Subtitle& subtitle, bool primary ) const
 			{
 				QString builder;
@@ -74,8 +76,6 @@ namespace SubtitleComposer
 
 				return ret;
 			}
-
-		protected:
 
 			TMPlayerOutputFormat():
 				OutputFormat( "TMPlayer", QString( "sub:txt" ).split( ":" ) ),

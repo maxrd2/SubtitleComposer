@@ -1,5 +1,5 @@
-#ifndef MPLAYERINPUTFORMAT_H
-#define MPLAYERINPUTFORMAT_H
+#ifndef YOUTUBECAPTIONSINPUTFORMAT_H
+#define YOUTUBECAPTIONSINPUTFORMAT_H
 
 /***************************************************************************
  *   Copyright (C) 2007-2009 Sergio Pistone (sergio_pistone@yahoo.com.ar)  *
@@ -30,43 +30,67 @@
 
 namespace SubtitleComposer
 {
-	class MPlayerInputFormat : public InputFormat
+	class YouTubeCaptionsInputFormat : public InputFormat
 	{
 		friend class FormatManager;
 
 		public:
 
-			virtual ~MPlayerInputFormat() {}
+			virtual ~YouTubeCaptionsInputFormat() {}
 
 		protected:
 
 			virtual bool parseSubtitles( Subtitle& subtitle, const QString& data ) const
 			{
-				double framesPerSecond = subtitle.framesPerSecond();
+				if ( m_regExp.indexIn( data, 0 ) == -1 )
+					return false; // couldn't find first line
 
 				unsigned readLines = 0;
 
-				for ( int offset = 0; m_lineRegExp.indexIn( data, offset ) != -1; offset += m_lineRegExp.matchedLength() )
+				int offset = 0;
+				do
 				{
-					Time showTime( (long)((m_lineRegExp.cap( 1 ).toLong() / framesPerSecond)*1000) );
-					Time hideTime( (long)((m_lineRegExp.cap( 2 ).toLong() / framesPerSecond)*1000) );
-					QString text( m_lineRegExp.cap( 3 ).replace( "|", "\n" ) );
+					Time showTime(
+						m_regExp.cap( 1 ).toInt(),
+						m_regExp.cap( 2 ).toInt(),
+						m_regExp.cap( 3 ).toInt(),
+						m_regExp.cap( 4 ).toInt()
+					);
 
-					subtitle.insertLine( new SubtitleLine( text, showTime, hideTime ) );
+					Time hideTime(
+						m_regExp.cap( 5 ).toInt(),
+						m_regExp.cap( 6 ).toInt(),
+						m_regExp.cap( 7 ).toInt(),
+						m_regExp.cap( 8 ).toInt()
+					);
+
+					offset += m_regExp.matchedLength();
+
+					QString text( data.mid( offset, (unsigned)m_regExp.indexIn( data, offset ) - offset ) );
+
+					offset += text.length();
+
+					// TODO does the format actually supports styled text?
+					// if so, does it use standard HTML style tags?
+					SString stext;
+					stext.setRichString( text.trimmed() );
+
+					subtitle.insertLine( new SubtitleLine( stext, showTime, hideTime ) );
 
 					readLines++;
 				}
+				while ( m_regExp.matchedLength() != -1 );
 
 				return readLines > 0;
 			}
 
-			MPlayerInputFormat():
-				InputFormat( "MPlayer", QStringList( "mpl" ) ),
-				m_lineRegExp( "(^|\n)(\\d+),(\\d+),0,([^\n]+)[^\n]" )
+			YouTubeCaptionsInputFormat():
+				InputFormat( "YouTube Captions", QStringList( "sbv" ) ),
+				m_regExp( "[\\d]+\n([0-2][0-9]):([0-5][0-9]):([0-5][0-9])[,\\.]([0-9][0-9][0-9]),([0-2][0-9]):([0-5][0-9]):([0-5][0-9])[,\\.]([0-9][0-9][0-9])\n" )
 			{
 			}
 
-			mutable QRegExp m_lineRegExp;
+			mutable QRegExp m_regExp;
 	};
 }
 

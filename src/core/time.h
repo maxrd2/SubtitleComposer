@@ -56,8 +56,8 @@ namespace SubtitleComposer
 
 			void shift( long mseconds );
 			Time shifted( long m_seconds ) const;
-			void adjust( long shiftMseconds, double scaleFactor );
-			Time adjusted( long shiftMseconds, double scaleFactor ) const;
+			void adjust( double shiftMseconds, double scaleFactor );
+			Time adjusted( double shiftMseconds, double scaleFactor ) const;
 
 			Time& operator=( const Time& time );
 			Time& operator=( long mseconds );

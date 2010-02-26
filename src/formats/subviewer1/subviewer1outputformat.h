@@ -38,6 +38,8 @@ namespace SubtitleComposer
 
 			virtual ~SubViewer1OutputFormat() {}
 
+		protected:
+
 			virtual QString dumpSubtitles( const Subtitle& subtitle, bool primary ) const
 			{
 				QString ret;
@@ -64,8 +66,6 @@ namespace SubtitleComposer
 
 				return ret;
 			}
-
-		protected:
 
 			SubViewer1OutputFormat():
 				OutputFormat( "SubViewer 1.0", QStringList( "sub" ) )

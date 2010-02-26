@@ -693,7 +693,7 @@ void SubtitleLine::shiftTimes( long mseconds )
 		);
 }
 
-void SubtitleLine::adjustTimes( long shiftMseconds, double scaleFactor )
+void SubtitleLine::adjustTimes( double shiftMseconds, double scaleFactor )
 {
 	if ( shiftMseconds || scaleFactor != 1.0 )
 	{

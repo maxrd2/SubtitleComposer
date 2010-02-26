@@ -203,7 +203,7 @@ namespace SubtitleComposer
 			Time autoDuration( int msecsPerChar, int msecsPerWord, int msecsPerLine, TextTarget calculationTarget );
 
 			void shiftTimes( long mseconds );
-			void adjustTimes( long shiftMseconds, double scaleFactor );
+			void adjustTimes( double shiftMseconds, double scaleFactor );
 
 			int errorFlags() const;
 			int errorCount() const;

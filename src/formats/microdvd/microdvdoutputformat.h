@@ -38,6 +38,8 @@ namespace SubtitleComposer
 
 			virtual ~MicroDVDOutputFormat() {}
 
+		protected:
+
 			virtual QString dumpSubtitles( const Subtitle& subtitle, bool primary ) const
 			{
 				QString ret;
@@ -60,8 +62,6 @@ namespace SubtitleComposer
 
 				return ret;
 			}
-
-		protected:
 
 			MicroDVDOutputFormat():
 				OutputFormat( "MicroDVD", QString( "sub:txt" ).split( ":" ) ),

@@ -262,7 +262,7 @@ void Translator::onTransferJobResult( KJob* job )
 	QTextCodec* codec = QTextCodec::codecForHtml( m_currentTransferData, QTextCodec::codecForName( "UTF-8" ) );
 	QString content = codec->toUnicode( m_currentTransferData );
 
-	QRegExp resultStartRegExp( "^.*<div id=result_box( [^>]+|)>", Qt::CaseInsensitive );
+	QRegExp resultStartRegExp( "^.*<textarea name=utrans [^>]+>", Qt::CaseInsensitive );
 	if ( content.contains( resultStartRegExp ) )
 		content.remove( resultStartRegExp );
 	else
@@ -272,7 +272,7 @@ void Translator::onTransferJobResult( KJob* job )
 		return;
 	}
 
-	QRegExp resultEndRegExp( "</div>.*$", Qt::CaseInsensitive );
+	QRegExp resultEndRegExp( "</textarea>.*$", Qt::CaseInsensitive );
 	if ( content.contains( resultEndRegExp ) )
 		content.remove( resultEndRegExp );
 	else
@@ -282,9 +282,14 @@ void Translator::onTransferJobResult( KJob* job )
 		return;
 	}
 
+	replaceHTMLEntities( content );
+	content.replace( "&quot;", "\"" );
+	content.replace( "&lt;", "<" );
+	content.replace( "&gt;", ">" );
+
+	content.replace( QRegExp( "< *(/?) *([a-z]+) *(/?) *>", Qt::CaseInsensitive ), "<\\1\\2\\3>" );
 	content.replace( QRegExp( " ?<br ?/?> ?", Qt::CaseInsensitive ), "\n" );
 	content.replace( QRegExp( "\n{2,}", Qt::CaseInsensitive ), "\n" );
-	replaceHTMLEntities( content );
 
 	if ( ! m_outputText.isEmpty() )
 		m_outputText += "\n";

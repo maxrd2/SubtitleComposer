@@ -1369,16 +1369,24 @@ void Application::redo()
 		m_subtitle->actionManager().redo();
 }
 
-QString Application::encodingForUrl( const KUrl& url )
+QTextCodec* Application::codecForUrl( const KUrl& url )
 {
-	QString encoding = m_recentSubtitlesAction->encodingForUrl( url );
+	QString encoding = url.fileEncoding();
+	if ( encoding.isEmpty() )
+		m_recentSubtitlesAction->encodingForUrl( url );
+	if ( encoding.isEmpty() )
+		encoding = m_recentTrSubtitlesAction->encodingForUrl( url );
+
 	if ( encoding.isEmpty() )
 	{
-		encoding = m_recentTrSubtitlesAction->encodingForUrl( url );
-		if ( encoding.isEmpty() )
-			encoding = generalConfig()->defaultSubtitlesEncoding();
+		return 0;
 	}
-	return encoding;
+	else
+	{
+		bool codecFound = true;
+		QTextCodec* codec = KGlobal::charsets()->codecForName( encoding, codecFound );
+		return codecFound ? codec : 0;
+	}
 }
 
 bool Application::acceptClashingUrls( const KUrl& subtitleUrl, const KUrl& subtitleTrUrl )
@@ -1416,7 +1424,7 @@ void Application::newSubtitle()
 
 void Application::openSubtitle()
 {
-	OpenSubtitleDialog openDlg( true, m_lastSubtitleUrl.prettyUrl(), generalConfig()->defaultSubtitlesEncoding() );
+	OpenSubtitleDialog openDlg( true, m_lastSubtitleUrl.prettyUrl(), QString() );
 
 	if ( openDlg.exec() == QDialog::Accepted )
 	{
@@ -1442,21 +1450,14 @@ void Application::openSubtitle( const KUrl& url, bool warnClashingUrls )
 	if ( ! closeSubtitle() )
 		return;
 
-	QString fileEncoding = url.fileEncoding();
-	if ( fileEncoding.isEmpty() )
-		fileEncoding = encodingForUrl( url );
+	QTextCodec* codec = codecForUrl( url );
 
 	KUrl fileUrl = url;
 	fileUrl.setFileEncoding( QString() );
 
-	bool codecFound = true;
-	QTextCodec* codec = KGlobal::charsets()->codecForName( fileEncoding, codecFound );
-	if ( ! codecFound )
-		codec = KGlobal::locale()->codecForEncoding();
-
 	m_subtitle = new Subtitle();
 
-	if ( FormatManager::instance().readSubtitle( *m_subtitle, true, fileUrl, codec, &m_subtitleEOL, &m_subtitleFormat ) )
+	if ( FormatManager::instance().readSubtitle( *m_subtitle, true, fileUrl, &codec, &m_subtitleEOL, &m_subtitleFormat ) )
 	{
 		// The loading of the subtitle shouldn't be an undoable action as there's no state before it
 		m_subtitle->actionManager().clearHistory();
@@ -1473,7 +1474,7 @@ void Application::openSubtitle( const KUrl& url, bool warnClashingUrls )
 		m_recentSubtitlesAction->addUrl( fileUrl );
 
 		m_reloadSubtitleAsAction->setCurrentCodec( codec );
-		m_quickReloadSubtitleAsAction->setCurrentAction( fileEncoding.toUpper() );
+		m_quickReloadSubtitleAsAction->setCurrentAction( codec->name().toUpper() );
 
 		connect( m_subtitle, SIGNAL( primaryDirtyStateChanged(bool) ), this, SLOT( updateTitle() ) );
 		connect( m_subtitle, SIGNAL( secondaryDirtyStateChanged(bool) ), this, SLOT( updateTitle() ) );
@@ -1655,7 +1656,7 @@ void Application::openTrSubtitle()
 	if ( ! m_subtitle )
 		return;
 
-	OpenSubtitleDialog openDlg( false, m_lastSubtitleUrl.prettyUrl(), generalConfig()->defaultSubtitlesEncoding() );
+	OpenSubtitleDialog openDlg( false, m_lastSubtitleUrl.prettyUrl(), QString() );
 
 	if ( openDlg.exec() == QDialog::Accepted )
 	{
@@ -1684,19 +1685,12 @@ void Application::openTrSubtitle( const KUrl& url, bool warnClashingUrls )
 	if ( ! closeTrSubtitle() )
 		return;
 
-	QString fileEncoding = url.fileEncoding();
-	if ( fileEncoding.isEmpty() )
-		fileEncoding = encodingForUrl( url );
+	QTextCodec* codec = codecForUrl( url );
 
 	KUrl fileUrl = url;
 	fileUrl.setFileEncoding( QString() );
 
-	bool codecFound = true;
-	QTextCodec* codec = KGlobal::charsets()->codecForName( fileEncoding, codecFound );
-	if ( ! codecFound )
-		codec = KGlobal::locale()->codecForEncoding();
-
-	if ( FormatManager::instance().readSubtitle( *m_subtitle, false, fileUrl, codec, &m_subtitleTrEOL, &m_subtitleTrFormat ) )
+	if ( FormatManager::instance().readSubtitle( *m_subtitle, false, fileUrl, &codec, &m_subtitleTrEOL, &m_subtitleTrFormat ) )
 	{
 		m_subtitleTrUrl = fileUrl;
 		m_subtitleTrFileName = QFileInfo( m_subtitleTrUrl.path() ).fileName();
@@ -1835,6 +1829,8 @@ void Application::openSubtitleWithDefaultEncoding()
 
 void Application::changeSubtitlesEncoding( const QString& encoding )
 {
+	// TODO this doesn't seem right... why is the translation subtitle encoding changed in synch the encoding of the main subtitle??
+
 	bool wasTranslationMode = m_translationMode;
 	KUrl wasSubtitleTrUrl = m_subtitleTrUrl;
 
@@ -1845,7 +1841,7 @@ void Application::changeSubtitlesEncoding( const QString& encoding )
 		if ( m_subtitleEncoding != encoding )
 		{
 			KUrl fileUrl = m_subtitleUrl;
-			fileUrl.setFileEncoding( encoding );
+			fileUrl.setFileEncoding( QString( encoding ).remove( "&" ) );
 			openSubtitle( fileUrl );
 		}
 	}
@@ -1860,7 +1856,7 @@ void Application::changeSubtitlesEncoding( const QString& encoding )
 		else
 		{
 			KUrl fileUrl = wasSubtitleTrUrl;
-			fileUrl.setFileEncoding( encoding );
+			fileUrl.setFileEncoding( QString( encoding ).remove( "&" ) );
 			openTrSubtitle( fileUrl );
 		}
 	}
@@ -1868,6 +1864,8 @@ void Application::changeSubtitlesEncoding( const QString& encoding )
 
 void Application::joinSubtitles()
 {
+	// TODO reemplazar encoding default por autodeteccion y permitir en forma generica
+
 	static JoinSubtitlesDialog* dlg = new JoinSubtitlesDialog(
 		generalConfig()->defaultSubtitlesEncoding(),
 		m_mainWindow
@@ -1877,14 +1875,14 @@ void Application::joinSubtitles()
 
 	if ( dlg->exec() == QDialog::Accepted )
 	{
-		bool codecFound;
+		bool codecFound = true;
 		QTextCodec* codec = KGlobal::charsets()->codecForName( dlg->subtitleEncoding(), codecFound );
 		if ( ! codecFound )
-			codec = KGlobal::locale()->codecForEncoding();
+			codec = 0;
 
 		Subtitle secondSubtitle;
 		bool primary = dlg->selectedTextsTarget() != Subtitle::Secondary;
-		if ( FormatManager::instance().readSubtitle( secondSubtitle, primary, dlg->subtitlePath(), codec ) )
+		if ( FormatManager::instance().readSubtitle( secondSubtitle, primary, dlg->subtitlePath(), &codec ) )
 		{
 			if ( dlg->selectedTextsTarget() == Subtitle::Both )
 				secondSubtitle.setSecondaryData( secondSubtitle, true );
@@ -2544,7 +2542,7 @@ void Application::syncWithSubtitle()
 			codec = KGlobal::locale()->codecForEncoding();
 
 		Subtitle referenceSubtitle;
-		if ( FormatManager::instance().readSubtitle( referenceSubtitle, true, dlg->subtitlePath(), codec ) )
+		if ( FormatManager::instance().readSubtitle( referenceSubtitle, true, dlg->subtitlePath(), &codec ) )
 		{
 			if ( dlg->adjustToReferenceSubtitle() )
 			{
@@ -2684,12 +2682,12 @@ bool Application::applyTranslation( RangeList ranges, bool primary, int inputLan
 	}
 
 	QString inputText;
-	QRegExp ellipsisRegExp( "(^ *\\.\\.\\.|\\.\\.\\. *$)" );
+	QRegExp dialogCueRegExp2( "-([^-])" );
 	for ( SubtitleIterator it( *m_subtitle, ranges ); it.current(); ++it )
 	{
 		QString lineText = it.current()->primaryText().richString();
-		lineText.remove( ellipsisRegExp ).replace( '\n', ' ' ).replace( '-', "- " );
-		inputText += "()()" + lineText + '\n';
+		lineText.replace( '\n', ' ' ).replace( "--", "---" ).replace( dialogCueRegExp2, "- \\1" );
+		inputText += lineText + "\n()() ";
 	}
 
 	translator.syncTranslate( inputText, (Language::Value)inputLanguage, (Language::Value)outputLanguage, &progressDialog );
@@ -2704,14 +2702,14 @@ bool Application::applyTranslation( RangeList ranges, bool primary, int inputLan
 		errorMessage = translator.errorMessage();
 	else
 	{
-		outputLines = translator.outputText().split( QRegExp( "\n? *\\(\\) *\\(\\) *" ) );
+		outputLines = translator.outputText().split( QRegExp( "\\s*\n\\(\\) ?\\(\\)\\s*" ) );
+
+		/*qDebug() << translator.inputText();
+		qDebug() << translator.outputText();*/
 
 		if ( outputLines.count() != ranges.indexesCount() + 1 )
 		{
-			if ( outputLines.count() == ranges.indexesCount() )
-				outputLines << "";
-			else
-				errorMessage = i18n( "Unable to perform texts synchronization (sent and received lines count do not match)." );
+			errorMessage = i18n( "Unable to perform texts synchronization (sent and received lines count do not match)." );
 		}
 	}
 
@@ -2724,12 +2722,17 @@ bool Application::applyTranslation( RangeList ranges, bool primary, int inputLan
 				i18n( "Translate Secondary Text" )
 		);
 
-		int index = 0;
-		QRegExp tagsRegExp( "(</?) +([a-z]+>)" );
+		int index = -1;
+		QRegExp ellipsisRegExp( "\\s+\\.\\.\\." );
+		QRegExp dialogCueRegExp( "(^| )- " );
 		for ( SubtitleIterator it( *m_subtitle, ranges ); it.current(); ++it )
 		{
+			QString line = outputLines.at( ++index );
+			line.replace( " ---", "--" );
+			line.replace( ellipsisRegExp, "..." );
+			line.replace( dialogCueRegExp, "\n-" );
 			SString text;
-			text.setRichString( QString( outputLines.at( ++index ) ).replace( tagsRegExp, "\\1\\2" ) );
+			text.setRichString( line );
 			it.current()->setPrimaryText( text.trimmed() );
 		}
 	}

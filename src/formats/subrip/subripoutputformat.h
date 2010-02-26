@@ -38,6 +38,8 @@ namespace SubtitleComposer
 
 			virtual ~SubRipOutputFormat() {}
 
+		protected:
+
 			virtual QString dumpSubtitles( const Subtitle& subtitle, bool primary ) const
 			{
 				QString ret;
@@ -64,8 +66,6 @@ namespace SubtitleComposer
 
 				return ret;
 			}
-
-		protected:
 
 			SubRipOutputFormat():
 				OutputFormat( "SubRip", QStringList( "srt" ) ),
