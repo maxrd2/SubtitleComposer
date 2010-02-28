@@ -31,8 +31,8 @@
 
 using namespace SubtitleComposer;
 
-JoinSubtitlesDialog::JoinSubtitlesDialog( const QString& defaultEncoding, QWidget* parent ):
-	SelectableSubtitleDialog( defaultEncoding, i18n( "Join Subtitles" ), parent )
+JoinSubtitlesDialog::JoinSubtitlesDialog( QWidget* parent ):
+	SelectableSubtitleDialog( i18n( "Join Subtitles" ), parent )
 {
 	createSubtitleGroupBox();
 

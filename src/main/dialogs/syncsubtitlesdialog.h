@@ -36,7 +36,7 @@ namespace SubtitleComposer
 
 		public:
 
-			explicit SyncSubtitlesDialog( const QString& defaultEncoding, QWidget* parent=0 );
+			explicit SyncSubtitlesDialog( QWidget* parent=0 );
 
 			bool adjustToReferenceSubtitle() const;
 			bool synchronizeToReferenceTimes() const;

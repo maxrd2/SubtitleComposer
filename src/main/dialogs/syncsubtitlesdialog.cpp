@@ -28,8 +28,8 @@
 
 using namespace SubtitleComposer;
 
-SyncSubtitlesDialog::SyncSubtitlesDialog( const QString& defaultEncoding, QWidget* parent ):
-	SelectableSubtitleDialog( defaultEncoding, i18n( "Synchronize with Subtitle" ), parent )
+SyncSubtitlesDialog::SyncSubtitlesDialog( QWidget* parent ):
+	SelectableSubtitleDialog( i18n( "Synchronize with Subtitle" ), parent )
 {
 	createSubtitleGroupBox( i18n( "Reference Subtitle" ) );
 

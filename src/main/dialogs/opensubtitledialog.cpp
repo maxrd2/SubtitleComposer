@@ -38,9 +38,9 @@ OpenSubtitleDialog::OpenSubtitleDialog( bool primary, const QString& startDir, c
 	setMode( KFile::File|KFile::ExistingOnly );
 
 	m_encodingComboBox = new KComboBox( this );
-	m_encodingComboBox->addItem( i18n( "Auto detect" ) );
+	m_encodingComboBox->addItem( i18n( "Autodetect" ) );
 	m_encodingComboBox->addItems( app()->availableEncodingNames() );
-	m_encodingComboBox->setCurrentItem( encoding.isEmpty() ? i18n( "Auto detect" ) : encoding );
+	m_encodingComboBox->setCurrentItem( encoding.isEmpty() ? i18n( "Autodetect" ) : encoding );
 	m_encodingComboBox->setSizePolicy( QSizePolicy::MinimumExpanding, QSizePolicy::Fixed );
 
 	// FIXME set "encoding" label buddy to m_encodingComboBox (how do we get the "encoding" label widget?)
@@ -49,7 +49,7 @@ OpenSubtitleDialog::OpenSubtitleDialog( bool primary, const QString& startDir, c
 
 QString OpenSubtitleDialog::selectedEncoding() const
 {
-	return m_encodingComboBox->currentIndex() == 0 ? "" : m_encodingComboBox->currentText();
+	return m_encodingComboBox->currentIndex() == 0 ? QString() : m_encodingComboBox->currentText();
 }
 
 QString OpenSubtitleDialog::inputFormatsFilter()

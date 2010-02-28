@@ -79,7 +79,7 @@ int main( int argc, char** argv )
 		app.openSubtitle( KUrl( args->arg( 0 ) ) );
 
 	if ( args->count() > 1 )
-		app.openTrSubtitle( KUrl( args->arg( 1 ) ) );
+		app.openSubtitleTr( KUrl( args->arg( 1 ) ) );
 
 	args->clear();
 

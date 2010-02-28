@@ -3,7 +3,7 @@
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
- *   the Free Software Foundation; either version 2 of the License, or     *
+ *   the Free Sn; either version 2 of the License, or     *
  *   (at your option) any later version.                                   *
  *                                                                         *
  *   This program is distributed in the hope that it will be useful,       *
@@ -29,6 +29,7 @@
 #include "errorsdialog.h"
 #include "actions/useraction.h"
 #include "actions/useractionnames.h"
+#include "actions/kcodecactionext.h"
 #include "actions/krecentfilesactionext.h"
 #include "configs/generalconfig.h"
 #include "configs/spellingconfig.h"
@@ -79,6 +80,7 @@
 #include <QtCore/QTextCodec>
 #include <QtCore/QProcess>
 #include <QtGui/QGridLayout>
+#include <QtGui/QMenu>
 
 #include <KAboutData>
 #include <KCmdLineArgs>
@@ -96,6 +98,7 @@
 #include <KActionCollection>
 #include <KMessageBox>
 #include <KComboBox>
+
 
 using namespace SubtitleComposer;
 
@@ -302,7 +305,7 @@ void Application::loadConfig()
 
 	m_lastSubtitleUrl = KUrl( group.readPathEntry( "LastSubtitleUrl", QDir::homePath() ) );
 	m_recentSubtitlesAction->loadEntries( KGlobal::config()->group( "Recent Subtitles" ) );
-	m_recentTrSubtitlesAction->loadEntries( KGlobal::config()->group( "Recent Translation Subtitles" ) );
+	m_recentSubtitlesTrAction->loadEntries( KGlobal::config()->group( "Recent Translation Subtitles" ) );
 
 	m_lastAudioLevelsUrl = KUrl( group.readPathEntry( "LastAudioLevelsUrl", QDir::homePath() ) );
 // 	m_recentAudioLevelsAction->loadEntries( group, "Recent Audio Levels" ); // FIXME audio levels
@@ -331,7 +334,7 @@ void Application::saveConfig()
 
 	group.writePathEntry( "LastSubtitleUrl", m_lastSubtitleUrl.prettyUrl() );
 	m_recentSubtitlesAction->saveEntries( KGlobal::config()->group( "Recent Subtitles" ) );
-	m_recentTrSubtitlesAction->saveEntries( KGlobal::config()->group( "Recent Translation Subtitles" ) );
+	m_recentSubtitlesTrAction->saveEntries( KGlobal::config()->group( "Recent Translation Subtitles" ) );
 
 	group.writePathEntry( "LastAudioLevelsUrl", m_lastAudioLevelsUrl.prettyUrl() );
 // 	m_recentAudioLevelsAction->saveEntries( KGlobal::config()->group( "Recent Audio Levels" ) ); // FIXME audio levels
@@ -494,6 +497,16 @@ void Application::setupActions()
 	actionManager->addAction( openSubtitleAction, 0 );
 
 
+	m_reopenSubtitleAsAction = new KCodecActionExt( actionCollection, true );
+	m_reopenSubtitleAsAction->setIcon( KIcon( "view-refresh" ) );
+	m_reopenSubtitleAsAction->setText( i18n( "Reload As..." ) );
+	m_reopenSubtitleAsAction->setStatusTip( i18n( "Reload opened file with a different encoding" ) );
+	connect( m_reopenSubtitleAsAction, SIGNAL( triggered(QTextCodec*) ), this, SLOT( reopenSubtitleWithCodec(QTextCodec*) ) );
+	connect( m_reopenSubtitleAsAction, SIGNAL( triggered(KEncodingDetector::AutoDetectScript) ), this, SLOT( reopenSubtitleWithDetectScript(KEncodingDetector::AutoDetectScript) ) );
+	actionCollection->addAction( ACT_REOPEN_SUBTITLE_AS, m_reopenSubtitleAsAction );
+	actionManager->addAction( m_reopenSubtitleAsAction, UserAction::SubOpened|UserAction::SubPClean|UserAction::FullScreenOff );
+
+
 	m_recentSubtitlesAction = new KRecentFilesActionExt( actionCollection );
 	m_recentSubtitlesAction->setIcon( KIcon( "document-open" ) );
 	m_recentSubtitlesAction->setText( i18nc( "@action:inmenu Open rencently used subtitle file", "Open &Recent" ) );
@@ -531,82 +544,72 @@ void Application::setupActions()
 	actionManager->addAction( closeSubtitleAction, UserAction::SubOpened|UserAction::FullScreenOff );
 
 
-	KAction* newTrSubtitleAction = new KAction( actionCollection );
-	newTrSubtitleAction->setIcon( KIcon( "document-new" ) );
-	newTrSubtitleAction->setText( i18n( "New Translation" ) );
-	newTrSubtitleAction->setStatusTip( i18n( "Create an empty translation subtitle" ) );
-	newTrSubtitleAction->setShortcut( KShortcut( "Ctrl+Shift+N" ), KAction::DefaultShortcut|KAction::ActiveShortcut );
-	connect( newTrSubtitleAction, SIGNAL( triggered() ), this, SLOT( newTrSubtitle() ) );
-	actionCollection->addAction( ACT_NEW_TR_SUBTITLE, newTrSubtitleAction );
-	actionManager->addAction( newTrSubtitleAction, UserAction::SubOpened|UserAction::FullScreenOff );
+	KAction* newSubtitleTrAction = new KAction( actionCollection );
+	newSubtitleTrAction->setIcon( KIcon( "document-new" ) );
+	newSubtitleTrAction->setText( i18n( "New Translation" ) );
+	newSubtitleTrAction->setStatusTip( i18n( "Create an empty translation subtitle" ) );
+	newSubtitleTrAction->setShortcut( KShortcut( "Ctrl+Shift+N" ), KAction::DefaultShortcut|KAction::ActiveShortcut );
+	connect( newSubtitleTrAction, SIGNAL( triggered() ), this, SLOT( newSubtitleTr() ) );
+	actionCollection->addAction( ACT_NEW_SUBTITLE_TR, newSubtitleTrAction );
+	actionManager->addAction( newSubtitleTrAction, UserAction::SubOpened|UserAction::FullScreenOff );
 
 
-	KAction* openTrSubtitleAction = new KAction( actionCollection );
-	openTrSubtitleAction->setIcon( KIcon( "document-open" ) );
-	openTrSubtitleAction->setText( i18n( "Open Translation..." ) );
-	openTrSubtitleAction->setStatusTip( i18n( "Open translation subtitle file" ) );
-	openTrSubtitleAction->setShortcut( KShortcut( "Ctrl+Shift+O" ), KAction::DefaultShortcut|KAction::ActiveShortcut );
-	connect( openTrSubtitleAction, SIGNAL( triggered() ), this, SLOT( openTrSubtitle() ) );
-	actionCollection->addAction( ACT_OPEN_TR_SUBTITLE, openTrSubtitleAction );
-	actionManager->addAction( openTrSubtitleAction, UserAction::SubOpened );
+	KAction* openSubtitleTrAction = new KAction( actionCollection );
+	openSubtitleTrAction->setIcon( KIcon( "document-open" ) );
+	openSubtitleTrAction->setText( i18n( "Open Translation..." ) );
+	openSubtitleTrAction->setStatusTip( i18n( "Open translation subtitle file" ) );
+	openSubtitleTrAction->setShortcut( KShortcut( "Ctrl+Shift+O" ), KAction::DefaultShortcut|KAction::ActiveShortcut );
+	connect( openSubtitleTrAction, SIGNAL( triggered() ), this, SLOT( openSubtitleTr() ) );
+	actionCollection->addAction( ACT_OPEN_SUBTITLE_TR, openSubtitleTrAction );
+	actionManager->addAction( openSubtitleTrAction, UserAction::SubOpened );
 
 
-	m_recentTrSubtitlesAction = new KRecentFilesActionExt( actionCollection );
-	m_recentTrSubtitlesAction->setIcon( KIcon( "document-open" ) );
-	m_recentTrSubtitlesAction->setText( i18n( "Open &Recent Translation" ) );
-	m_recentTrSubtitlesAction->setStatusTip( i18n( "Open translation subtitle file" ) );
-	connect( m_recentTrSubtitlesAction, SIGNAL(urlSelected(const KUrl&)), this, SLOT(openTrSubtitle(const KUrl&)) );
-	actionCollection->addAction( ACT_RECENT_TR_SUBTITLES, m_recentTrSubtitlesAction );
-	actionManager->addAction( m_recentTrSubtitlesAction, UserAction::SubOpened|UserAction::FullScreenOff );
+	m_reopenSubtitleTrAsAction = new KCodecActionExt( actionCollection, true );
+	m_reopenSubtitleTrAsAction->setIcon( KIcon( "view-refresh" ) );
+	m_reopenSubtitleTrAsAction->setText( i18n( "Reload Translation As..." ) );
+	m_reopenSubtitleTrAsAction->setStatusTip( i18n( "Reload opened translation file with a different encoding" ) );
+	connect( m_reopenSubtitleTrAsAction, SIGNAL( triggered(QTextCodec*) ), this, SLOT( reopenSubtitleTrWithCodec(QTextCodec*) ) );
+	connect( m_reopenSubtitleTrAsAction, SIGNAL( triggered(KEncodingDetector::AutoDetectScript) ), this, SLOT( reopenSubtitleTrWithDetectScript(KEncodingDetector::AutoDetectScript) ) );
+	actionCollection->addAction( ACT_REOPEN_SUBTITLE_TR_AS, m_reopenSubtitleTrAsAction );
+	actionManager->addAction( m_reopenSubtitleTrAsAction, UserAction::SubTrOpened|UserAction::SubSClean|UserAction::FullScreenOff );
 
 
-	KAction* saveTrSubtitleAction = new KAction( actionCollection );
-	saveTrSubtitleAction->setIcon( KIcon( "document-save" ) );
-	saveTrSubtitleAction->setText( i18n( "Save Translation" ) );
-	saveTrSubtitleAction->setStatusTip( i18n( "Save opened translation subtitle" ) );
-	saveTrSubtitleAction->setShortcut( KShortcut( "Ctrl+Shift+S" ), KAction::DefaultShortcut|KAction::ActiveShortcut );
-	connect( saveTrSubtitleAction, SIGNAL( triggered() ), this, SLOT( saveTrSubtitle() ) );
-	actionCollection->addAction( ACT_SAVE_TR_SUBTITLE, saveTrSubtitleAction );
-	actionManager->addAction( saveTrSubtitleAction, UserAction::SubSDirty|UserAction::FullScreenOff );
+	m_recentSubtitlesTrAction = new KRecentFilesActionExt( actionCollection );
+	m_recentSubtitlesTrAction->setIcon( KIcon( "document-open" ) );
+	m_recentSubtitlesTrAction->setText( i18n( "Open &Recent Translation" ) );
+	m_recentSubtitlesTrAction->setStatusTip( i18n( "Open translation subtitle file" ) );
+	connect( m_recentSubtitlesTrAction, SIGNAL(urlSelected(const KUrl&)), this, SLOT(openSubtitleTr(const KUrl&)) );
+	actionCollection->addAction( ACT_RECENT_SUBTITLES_TR, m_recentSubtitlesTrAction );
+	actionManager->addAction( m_recentSubtitlesTrAction, UserAction::SubOpened|UserAction::FullScreenOff );
 
 
-	KAction* saveTrSubtitleAsAction = new KAction( actionCollection );
-	saveTrSubtitleAsAction->setIcon( KIcon( "document-save-as" ) );
-	saveTrSubtitleAsAction->setText( i18n( "Save Translation As..." ) );
-	saveTrSubtitleAsAction->setStatusTip( i18n( "Save opened translation subtitle with different settings" ) );
-	connect( saveTrSubtitleAsAction, SIGNAL( triggered() ), this, SLOT( saveTrSubtitleAs() ) );
-	actionCollection->addAction( ACT_SAVE_TR_SUBTITLE_AS, saveTrSubtitleAsAction );
-	actionManager->addAction( saveTrSubtitleAsAction, UserAction::SubTrOpened|UserAction::FullScreenOff );
+	KAction* saveSubtitleTrAction = new KAction( actionCollection );
+	saveSubtitleTrAction->setIcon( KIcon( "document-save" ) );
+	saveSubtitleTrAction->setText( i18n( "Save Translation" ) );
+	saveSubtitleTrAction->setStatusTip( i18n( "Save opened translation subtitle" ) );
+	saveSubtitleTrAction->setShortcut( KShortcut( "Ctrl+Shift+S" ), KAction::DefaultShortcut|KAction::ActiveShortcut );
+	connect( saveSubtitleTrAction, SIGNAL( triggered() ), this, SLOT( saveSubtitleTr() ) );
+	actionCollection->addAction( ACT_SAVE_SUBTITLE_TR, saveSubtitleTrAction );
+	actionManager->addAction( saveSubtitleTrAction, UserAction::SubSDirty|UserAction::FullScreenOff );
 
 
-	KAction* closeTrSubtitleAction = new KAction( actionCollection );
-	closeTrSubtitleAction->setIcon( KIcon( "window-close" ) );
-	closeTrSubtitleAction->setText( i18n( "Close Translation" ) );
-	closeTrSubtitleAction->setStatusTip( i18n( "Close opened translation subtitle" ) );
-	closeTrSubtitleAction->setShortcut( KShortcut( "Ctrl+Shift+F4; Ctrl+Shift+W" ), KAction::DefaultShortcut|KAction::ActiveShortcut );
-	connect( closeTrSubtitleAction, SIGNAL( triggered() ), this, SLOT( closeTrSubtitle() ) );
-	actionCollection->addAction( ACT_CLOSE_TR_SUBTITLE, closeTrSubtitleAction );
-	actionManager->addAction( closeTrSubtitleAction, UserAction::SubTrOpened|UserAction::FullScreenOff );
+	KAction* saveSubtitleTrAsAction = new KAction( actionCollection );
+	saveSubtitleTrAsAction->setIcon( KIcon( "document-save-as" ) );
+	saveSubtitleTrAsAction->setText( i18n( "Save Translation As..." ) );
+	saveSubtitleTrAsAction->setStatusTip( i18n( "Save opened translation subtitle with different settings" ) );
+	connect( saveSubtitleTrAsAction, SIGNAL( triggered() ), this, SLOT( saveSubtitleTrAs() ) );
+	actionCollection->addAction( ACT_SAVE_SUBTITLE_TR_AS, saveSubtitleTrAsAction );
+	actionManager->addAction( saveSubtitleTrAsAction, UserAction::SubTrOpened|UserAction::FullScreenOff );
 
 
-	m_reloadSubtitleAsAction = new KCodecAction( actionCollection );
-	m_reloadSubtitleAsAction->setIcon( KIcon( "view-refresh" ) );
-	m_reloadSubtitleAsAction->setText( i18n( "Reload As..." ) );
-	m_reloadSubtitleAsAction->setStatusTip( i18n( "Reload opened file with a different encoding" ) );
-	connect( m_reloadSubtitleAsAction, SIGNAL( triggered(const QString&) ), this, SLOT( changeSubtitlesEncoding(const QString&) ) );
-	connect( m_reloadSubtitleAsAction, SIGNAL( defaultItemTriggered() ), this, SLOT( openSubtitleWithDefaultEncoding() ) );
-	actionCollection->addAction( ACT_CHANGE_SUBTITLE_ENCODING, m_reloadSubtitleAsAction );
-	actionManager->addAction( m_reloadSubtitleAsAction, UserAction::SubPClean|UserAction::SubSClean|UserAction::FullScreenOff );
-
-	m_quickReloadSubtitleAsAction = new KSelectAction( actionCollection );
-	m_quickReloadSubtitleAsAction->setItems( availableEncodingNames() );
-	m_quickReloadSubtitleAsAction->setCurrentAction( generalConfig()->defaultSubtitlesEncoding() );
-	m_quickReloadSubtitleAsAction->setIcon( KIcon( "view-refresh" ) );
-	m_quickReloadSubtitleAsAction->setText( i18n( "Quick Reload As..." ) );
-	m_quickReloadSubtitleAsAction->setStatusTip( i18n( "Reload opened file with a different encoding" ) );
-	connect( m_quickReloadSubtitleAsAction, SIGNAL( triggered(const QString&) ), this, SLOT( changeSubtitlesEncoding(const QString&) ) );
-	actionCollection->addAction( ACT_QUICK_CHANGE_SUBTITLE_ENCODING, m_quickReloadSubtitleAsAction );
-	actionManager->addAction( m_quickReloadSubtitleAsAction, UserAction::SubPClean|UserAction::SubSClean|UserAction::FullScreenOff );
+	KAction* closeSubtitleTrAction = new KAction( actionCollection );
+	closeSubtitleTrAction->setIcon( KIcon( "window-close" ) );
+	closeSubtitleTrAction->setText( i18n( "Close Translation" ) );
+	closeSubtitleTrAction->setStatusTip( i18n( "Close opened translation subtitle" ) );
+	closeSubtitleTrAction->setShortcut( KShortcut( "Ctrl+Shift+F4; Ctrl+Shift+W" ), KAction::DefaultShortcut|KAction::ActiveShortcut );
+	connect( closeSubtitleTrAction, SIGNAL( triggered() ), this, SLOT( closeSubtitleTr() ) );
+	actionCollection->addAction( ACT_CLOSE_SUBTITLE_TR, closeSubtitleTrAction );
+	actionManager->addAction( closeSubtitleTrAction, UserAction::SubTrOpened|UserAction::FullScreenOff );
 
 
 	KAction* undoAction = new KAction( actionCollection );
@@ -1369,24 +1372,47 @@ void Application::redo()
 		m_subtitle->actionManager().redo();
 }
 
-QTextCodec* Application::codecForUrl( const KUrl& url )
+QTextCodec* Application::codecForUrl( const KUrl& url, bool useRecentFiles, bool useDefault )
 {
 	QString encoding = url.fileEncoding();
-	if ( encoding.isEmpty() )
-		m_recentSubtitlesAction->encodingForUrl( url );
-	if ( encoding.isEmpty() )
-		encoding = m_recentTrSubtitlesAction->encodingForUrl( url );
 
-	if ( encoding.isEmpty() )
-	{
-		return 0;
+	if ( useRecentFiles ) {
+		if ( encoding.isEmpty() )
+			m_recentSubtitlesAction->encodingForUrl( url );
+		if ( encoding.isEmpty() )
+			encoding = m_recentSubtitlesTrAction->encodingForUrl( url );
 	}
-	else
-	{
-		bool codecFound = true;
-		QTextCodec* codec = KGlobal::charsets()->codecForName( encoding, codecFound );
-		return codecFound ? codec : 0;
+
+	QTextCodec* codec = 0;
+
+	if ( ! encoding.isEmpty() ) {
+		bool codecFound = false;
+		codec = KGlobal::charsets()->codecForName( encoding, codecFound );
+		if ( ! codecFound )
+			codec = 0;
 	}
+
+	if ( ! codec && useDefault )
+		codec = generalConfig()->defaultSubtitlesCodec();
+
+	return codec;
+}
+
+QTextCodec* Application::codecForEncoding( const QString& encoding, bool useDefault )
+{
+	QTextCodec* codec = 0;
+
+	if ( ! encoding.isEmpty() ) {
+		bool codecFound = false;
+		codec = KGlobal::charsets()->codecForName( encoding, codecFound );
+		if ( ! codecFound )
+			codec = 0;
+	}
+
+	if ( ! codec && useDefault )
+		codec = generalConfig()->defaultSubtitlesCodec();
+
+	return codec;
 }
 
 bool Application::acceptClashingUrls( const KUrl& subtitleUrl, const KUrl& subtitleTrUrl )
@@ -1450,14 +1476,14 @@ void Application::openSubtitle( const KUrl& url, bool warnClashingUrls )
 	if ( ! closeSubtitle() )
 		return;
 
-	QTextCodec* codec = codecForUrl( url );
+	QTextCodec* codec = codecForUrl( url, true, false );
 
 	KUrl fileUrl = url;
 	fileUrl.setFileEncoding( QString() );
 
 	m_subtitle = new Subtitle();
 
-	if ( FormatManager::instance().readSubtitle( *m_subtitle, true, fileUrl, &codec, &m_subtitleEOL, &m_subtitleFormat ) )
+	if ( FormatManager::instance().readSubtitle( *m_subtitle, true, fileUrl, KEncodingDetector::SemiautomaticDetection, &codec, &m_subtitleEOL, &m_subtitleFormat ) )
 	{
 		// The loading of the subtitle shouldn't be an undoable action as there's no state before it
 		m_subtitle->actionManager().clearHistory();
@@ -1473,8 +1499,7 @@ void Application::openSubtitle( const KUrl& url, bool warnClashingUrls )
 		fileUrl.setFileEncoding( codec->name() );
 		m_recentSubtitlesAction->addUrl( fileUrl );
 
-		m_reloadSubtitleAsAction->setCurrentCodec( codec );
-		m_quickReloadSubtitleAsAction->setCurrentAction( codec->name().toUpper() );
+		m_reopenSubtitleAsAction->setCurrentCodec( codec );
 
 		connect( m_subtitle, SIGNAL( primaryDirtyStateChanged(bool) ), this, SLOT( updateTitle() ) );
 		connect( m_subtitle, SIGNAL( secondaryDirtyStateChanged(bool) ), this, SLOT( updateTitle() ) );
@@ -1521,6 +1546,63 @@ void Application::openSubtitle( const KUrl& url, bool warnClashingUrls )
 	}
 }
 
+void Application::reopenSubtitleWithDetectScript( KEncodingDetector::AutoDetectScript autodetectScript )
+{
+	reopenSubtitleWithCodecOrDetectScript( (QTextCodec*)0, autodetectScript );
+}
+
+void Application::reopenSubtitleWithCodec( QTextCodec* codec )
+{
+	reopenSubtitleWithCodecOrDetectScript( codec, KEncodingDetector::SemiautomaticDetection );
+}
+
+void Application::reopenSubtitleWithCodecOrDetectScript( QTextCodec* codec, KEncodingDetector::AutoDetectScript autodetectScript )
+{
+	Subtitle* subtitle = new Subtitle();
+	Format::NewLine subtitleEOL;
+	QString subtitleFormat;
+
+	//if ( codec == 0 && autodetectScript == KEncodingDetector::None )
+	//	codec = generalConfig()->defaultSubtitlesCodec();
+
+	if ( ! FormatManager::instance().readSubtitle( *subtitle, true, m_subtitleUrl, autodetectScript, &codec, &subtitleEOL, &subtitleFormat ) )
+	{
+		delete subtitle;
+		KMessageBox::sorry( m_mainWindow, i18n( "<qt>Could not parse the subtitle file.<br/>This may have been caused by usage of the wrong encoding.</qt>" ) );
+		return;
+	}
+
+	emit subtitleClosed();
+
+	if ( m_translationMode ) {
+		subtitle->setSecondaryData( *m_subtitle, false );
+	}
+
+	delete m_subtitle;
+	m_subtitle = subtitle;
+
+	// The loading of the subtitle shouldn't be an undoable action as there's no state before it
+	m_subtitle->actionManager().clearHistory();
+	m_subtitle->clearPrimaryDirty();
+	m_subtitle->clearSecondaryDirty();
+
+	emit subtitleOpened( m_subtitle );
+
+	m_subtitleEncoding = codec->name();
+	m_subtitleEOL = subtitleEOL;
+	m_subtitleFormat = subtitleFormat;
+
+	m_reopenSubtitleAsAction->setCurrentCodec( codec );
+
+	KUrl fileUrl = m_subtitleUrl;
+	fileUrl.setFileEncoding( codec->name() );
+	m_recentSubtitlesAction->addUrl( fileUrl );
+
+	connect( m_subtitle, SIGNAL( primaryDirtyStateChanged(bool) ), this, SLOT( updateTitle() ) );
+	connect( m_subtitle, SIGNAL( secondaryDirtyStateChanged(bool) ), this, SLOT( updateTitle() ) );
+	connect( &m_subtitle->actionManager(), SIGNAL( stateChanged() ), this, SLOT( updateUndoRedoToolTips() ) );
+}
+
 bool Application::saveSubtitle()
 {
 	if ( m_subtitleUrl.isEmpty() || m_subtitleEncoding.isEmpty() || ! FormatManager::instance().hasOutput( m_subtitleFormat ) )
@@ -1539,8 +1621,7 @@ bool Application::saveSubtitle()
 		recentUrl.setFileEncoding( codec->name() );
 		m_recentSubtitlesAction->addUrl( recentUrl );
 
-		m_reloadSubtitleAsAction->setCurrentCodec( codec );
-		m_quickReloadSubtitleAsAction->setCurrentAction( codec->name().toUpper() );
+		m_reopenSubtitleAsAction->setCurrentCodec( codec );
 
 		updateTitle();
 
@@ -1595,7 +1676,7 @@ bool Application::closeSubtitle()
 			if ( result == KMessageBox::Cancel )
 				return false;
 			else if ( result == KMessageBox::Yes )
-				if ( ! saveTrSubtitle() )
+				if ( ! saveSubtitleTr() )
 					return false;
 		}
 
@@ -1640,9 +1721,9 @@ bool Application::closeSubtitle()
 }
 
 
-void Application::newTrSubtitle()
+void Application::newSubtitleTr()
 {
-	if ( ! closeTrSubtitle() )
+	if ( ! closeSubtitleTr() )
 		return;
 
 	m_translationMode = true;
@@ -1651,7 +1732,7 @@ void Application::newTrSubtitle()
 	updateTitle();
 }
 
-void Application::openTrSubtitle()
+void Application::openSubtitleTr()
 {
 	if ( ! m_subtitle )
 		return;
@@ -1663,18 +1744,18 @@ void Application::openTrSubtitle()
 		if ( ! acceptClashingUrls( m_subtitleUrl, openDlg.selectedUrl() ) )
 			return;
 
-		if ( ! closeTrSubtitle() )
+		if ( ! closeSubtitleTr() )
 			return;
 
 		m_lastSubtitleUrl = openDlg.selectedUrl();
 
 		KUrl fileUrl = m_lastSubtitleUrl;
 		fileUrl.setFileEncoding( openDlg.selectedEncoding() );
-		openTrSubtitle( fileUrl );
+		openSubtitleTr( fileUrl );
 	}
 }
 
-void Application::openTrSubtitle( const KUrl& url, bool warnClashingUrls )
+void Application::openSubtitleTr( const KUrl& url, bool warnClashingUrls )
 {
 	if ( ! m_subtitle )
 		return;
@@ -1682,22 +1763,22 @@ void Application::openTrSubtitle( const KUrl& url, bool warnClashingUrls )
 	if ( warnClashingUrls && ! acceptClashingUrls( m_subtitleUrl, url ) )
 		return;
 
-	if ( ! closeTrSubtitle() )
+	if ( ! closeSubtitleTr() )
 		return;
 
-	QTextCodec* codec = codecForUrl( url );
+	QTextCodec* codec = codecForUrl( url, true, false );
 
 	KUrl fileUrl = url;
 	fileUrl.setFileEncoding( QString() );
 
-	if ( FormatManager::instance().readSubtitle( *m_subtitle, false, fileUrl, &codec, &m_subtitleTrEOL, &m_subtitleTrFormat ) )
+	if ( FormatManager::instance().readSubtitle( *m_subtitle, false, fileUrl, KEncodingDetector::SemiautomaticDetection, &codec, &m_subtitleTrEOL, &m_subtitleTrFormat ) )
 	{
 		m_subtitleTrUrl = fileUrl;
 		m_subtitleTrFileName = QFileInfo( m_subtitleTrUrl.path() ).fileName();
 		m_subtitleTrEncoding = codec->name();
 
 		fileUrl.setFileEncoding( codec->name() );
-		m_recentTrSubtitlesAction->addUrl( fileUrl );
+		m_recentSubtitlesTrAction->addUrl( fileUrl );
 
 		QStringList subtitleStreams;
 		subtitleStreams.append( i18nc( "@item:inmenu Display primary text in video player", "Primary" ) );
@@ -1711,13 +1792,12 @@ void Application::openTrSubtitle( const KUrl& url, bool warnClashingUrls )
 		updateTitle();
 	}
 	else
-		KMessageBox::sorry( m_mainWindow, i18n( "Could not parse the subtitle file." ) );
+		KMessageBox::sorry( m_mainWindow, i18n( "<qt>Could not parse the subtitle file.<br/>This may have been caused by usage of the wrong encoding.</qt>" ) );
 
 	// After the loading of the translation subtitle we must clear the history or (from
 	// a user POV) it would be possible to execute (undo) actions which would result in an
 	// unexpected state.
 	m_subtitle->actionManager().clearHistory();
-
 	// We don't clear the primary dirty state because the loading of the translation
 	// only changes it when actually needed (i.e., when the translation had more lines)
 	m_subtitle->clearSecondaryDirty();
@@ -1726,10 +1806,73 @@ void Application::openTrSubtitle( const KUrl& url, bool warnClashingUrls )
 		emit translationModeChanged( true );
 }
 
-bool Application::saveTrSubtitle()
+
+void Application::reopenSubtitleTrWithDetectScript( KEncodingDetector::AutoDetectScript autodetectScript )
+{
+	reopenSubtitleTrWithCodecOrDetectScript( (QTextCodec*)0, autodetectScript );
+}
+
+void Application::reopenSubtitleTrWithCodec( QTextCodec* codec )
+{
+	reopenSubtitleTrWithCodecOrDetectScript( codec, KEncodingDetector::SemiautomaticDetection );
+}
+
+void Application::reopenSubtitleTrWithCodecOrDetectScript( QTextCodec* codec, KEncodingDetector::AutoDetectScript autodetectScript )
+{
+	Subtitle* subtitleTr = new Subtitle();
+	Format::NewLine subtitleTrEOL;
+	QString subtitleTrFormat;
+
+	//if ( codec == 0 && autodetectScript == KEncodingDetector::None )
+	//	codec = generalConfig()->defaultSubtitlesCodec();
+
+	if ( ! FormatManager::instance().readSubtitle( *subtitleTr, false, m_subtitleTrUrl, autodetectScript, &codec, &subtitleTrEOL, &subtitleTrFormat ) )
+	{
+		delete subtitleTr;
+		KMessageBox::sorry( m_mainWindow, i18n( "<qt>Could not parse the subtitle file.<br/>This may have been caused by usage of the wrong encoding.</qt>" ) );
+		return;
+	}
+
+	emit subtitleClosed();
+
+	subtitleTr->setPrimaryData( *m_subtitle, true );
+
+	delete m_subtitle;
+	m_subtitle = subtitleTr;
+
+	// After the loading of the translation subtitle we must clear the history or (from
+	// a user POV) it would be possible to execute (undo) actions which would result in an
+	// unexpected state.
+	m_subtitle->actionManager().clearHistory();
+	// We don't clear the primary dirty state because the loading of the translation
+	// only changes it when actually needed (i.e., when the translation had more lines)
+	m_subtitle->clearPrimaryDirty(); // TODO is this needed?
+	m_subtitle->clearSecondaryDirty();
+
+	emit subtitleOpened( m_subtitle );
+
+	m_subtitleTrEncoding = codec->name();
+	m_subtitleTrEOL = subtitleTrEOL;
+	m_subtitleTrFormat = subtitleTrFormat;
+
+	m_reopenSubtitleTrAsAction->setCurrentCodec( codec );
+
+	KUrl fileUrl = m_subtitleTrUrl;
+	fileUrl.setFileEncoding( codec->name() );
+	m_recentSubtitlesTrAction->addUrl( fileUrl );
+
+	connect( m_subtitle, SIGNAL( primaryDirtyStateChanged(bool) ), this, SLOT( updateTitle() ) );
+	connect( m_subtitle, SIGNAL( secondaryDirtyStateChanged(bool) ), this, SLOT( updateTitle() ) );
+	connect( &m_subtitle->actionManager(), SIGNAL( stateChanged() ), this, SLOT( updateUndoRedoToolTips() ) );
+}
+
+
+
+
+bool Application::saveSubtitleTr()
 {
 	if ( m_subtitleTrUrl.isEmpty() || m_subtitleTrEncoding.isEmpty() || ! FormatManager::instance().hasOutput( m_subtitleTrFormat ) )
-		return saveTrSubtitleAs();
+		return saveSubtitleTrAs();
 
 	bool codecFound = true;
 	QTextCodec* codec = KGlobal::charsets()->codecForName( m_subtitleTrEncoding, codecFound );
@@ -1742,7 +1885,7 @@ bool Application::saveTrSubtitle()
 
 		KUrl recentUrl = m_subtitleTrUrl;
 		recentUrl.setFileEncoding( codec->name() );
-		m_recentTrSubtitlesAction->addUrl( recentUrl );
+		m_recentSubtitlesTrAction->addUrl( recentUrl );
 
 		updateTitle();
 
@@ -1755,7 +1898,7 @@ bool Application::saveTrSubtitle()
 	}
 }
 
-bool Application::saveTrSubtitleAs()
+bool Application::saveSubtitleTrAs()
 {
 	SaveSubtitleDialog saveDlg(
 		false,
@@ -1778,13 +1921,13 @@ bool Application::saveTrSubtitleAs()
 		m_subtitleTrFormat = saveDlg.selectedFormat();
 		m_subtitleTrEOL = saveDlg.selectedNewLine();
 
-		return saveTrSubtitle();
+		return saveSubtitleTr();
 	}
 
 	return false;
 }
 
-bool Application::closeTrSubtitle()
+bool Application::closeSubtitleTr()
 {
 	if ( m_subtitle && m_translationMode )
 	{
@@ -1797,7 +1940,7 @@ bool Application::closeTrSubtitle()
 			if ( result == KMessageBox::Cancel )
 				return false;
 			else if ( result == KMessageBox::Yes )
-				if ( ! saveTrSubtitle() )
+				if ( ! saveSubtitleTr() )
 					return false;
 		}
 
@@ -1822,67 +1965,17 @@ bool Application::closeTrSubtitle()
 	return true;
 }
 
-void Application::openSubtitleWithDefaultEncoding()
-{
-	changeSubtitlesEncoding( generalConfig()->defaultSubtitlesEncoding() );
-}
-
-void Application::changeSubtitlesEncoding( const QString& encoding )
-{
-	// TODO this doesn't seem right... why is the translation subtitle encoding changed in synch the encoding of the main subtitle??
-
-	bool wasTranslationMode = m_translationMode;
-	KUrl wasSubtitleTrUrl = m_subtitleTrUrl;
-
-	if ( m_subtitleUrl.isEmpty() )
-		m_subtitleEncoding = encoding;
-	else
-	{
-		if ( m_subtitleEncoding != encoding )
-		{
-			KUrl fileUrl = m_subtitleUrl;
-			fileUrl.setFileEncoding( QString( encoding ).remove( "&" ) );
-			openSubtitle( fileUrl );
-		}
-	}
-
-	if ( wasTranslationMode && m_subtitle /*openSubtitle can fail, so we check that there is indeed a subtitle loaded*/ )
-	{
-		if ( wasSubtitleTrUrl.isEmpty() )
-		{
-			newTrSubtitle();
-			m_subtitleTrEncoding = encoding;
-		}
-		else
-		{
-			KUrl fileUrl = wasSubtitleTrUrl;
-			fileUrl.setFileEncoding( QString( encoding ).remove( "&" ) );
-			openTrSubtitle( fileUrl );
-		}
-	}
-}
-
 void Application::joinSubtitles()
 {
-	// TODO reemplazar encoding default por autodeteccion y permitir en forma generica
-
-	static JoinSubtitlesDialog* dlg = new JoinSubtitlesDialog(
-		generalConfig()->defaultSubtitlesEncoding(),
-		m_mainWindow
-	);
-
-	dlg->setDefaultEncoding( generalConfig()->defaultSubtitlesEncoding() );
+	static JoinSubtitlesDialog* dlg = new JoinSubtitlesDialog( m_mainWindow );
 
 	if ( dlg->exec() == QDialog::Accepted )
 	{
-		bool codecFound = true;
-		QTextCodec* codec = KGlobal::charsets()->codecForName( dlg->subtitleEncoding(), codecFound );
-		if ( ! codecFound )
-			codec = 0;
+		QTextCodec* codec = codecForEncoding( dlg->subtitleEncoding(), false );
 
 		Subtitle secondSubtitle;
 		bool primary = dlg->selectedTextsTarget() != Subtitle::Secondary;
-		if ( FormatManager::instance().readSubtitle( secondSubtitle, primary, dlg->subtitlePath(), &codec ) )
+		if ( FormatManager::instance().readSubtitle( secondSubtitle, primary, dlg->subtitleUrl(), KEncodingDetector::SemiautomaticDetection, &codec ) )
 		{
 			if ( dlg->selectedTextsTarget() == Subtitle::Both )
 				secondSubtitle.setSecondaryData( secondSubtitle, true );
@@ -2528,21 +2621,14 @@ void Application::fixOverlappingLines()
 
 void Application::syncWithSubtitle()
 {
-	static SyncSubtitlesDialog* dlg = new SyncSubtitlesDialog(
-		generalConfig()->defaultSubtitlesEncoding(),
-		m_mainWindow
-	);
+	static SyncSubtitlesDialog* dlg = new SyncSubtitlesDialog( m_mainWindow );
 
 	if ( dlg->exec() == QDialog::Accepted )
 	{
-
-		bool codecFound = true;
-		QTextCodec* codec = KGlobal::charsets()->codecForName( dlg->subtitleEncoding(), codecFound );
-		if ( ! codecFound )
-			codec = KGlobal::locale()->codecForEncoding();
+		QTextCodec* codec = codecForEncoding( dlg->subtitleEncoding(), false );
 
 		Subtitle referenceSubtitle;
-		if ( FormatManager::instance().readSubtitle( referenceSubtitle, true, dlg->subtitlePath(), &codec ) )
+		if ( FormatManager::instance().readSubtitle( referenceSubtitle, true, dlg->subtitleUrl(), KEncodingDetector::SemiautomaticDetection, &codec ) )
 		{
 			if ( dlg->adjustToReferenceSubtitle() )
 			{

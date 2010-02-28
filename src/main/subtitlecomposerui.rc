@@ -9,6 +9,7 @@
 			<Separator />
 			<Action name="save_subtitle" />
 			<Action name="save_subtitle_as" />
+			<Action name="reopen_subtitle_as" />
 			<Separator />
 			<Action name="close_subtitle" />
 			<Separator />
@@ -20,6 +21,7 @@
 				<Separator />
 				<Action name="save_tr_subtitle" />
 				<Action name="save_tr_subtitle_as" />
+				<Action name="reopen_tr_subtitle_as" />
 				<Separator />
 				<Action name="close_tr_subtitle" />
 			</Menu>
@@ -154,10 +156,10 @@
 		<text>Main Toolbar</text>
 		<Action name="new_subtitle" />
 		<Action name="open_subtitle" />
-		<Action name="change_subtitle_encoding" />
 		<Separator name="separator_0" />
 		<Action name="save_subtitle" />
 		<Action name="save_subtitle_as" />
+		<Action name="reopen_subtitle_as" />
 		<Separator name="separator_1" />
 		<Action name="close_subtitle" />
 	</ToolBar>

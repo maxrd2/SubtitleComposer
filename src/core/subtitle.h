@@ -85,7 +85,7 @@ namespace SubtitleComposer
 			virtual ~Subtitle();
 
 			/// primary data includes primary text, timing information, format data and all errors except secondary only errors
-			void setPrimaryData( const Subtitle& from, bool usePrimaryTexts );
+			void setPrimaryData( const Subtitle& from, bool usePrimaryData );
 			void clearPrimaryTextData();
 
 			/// secondary data includes secondary text and secondary only errors

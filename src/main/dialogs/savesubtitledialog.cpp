@@ -33,7 +33,7 @@
 
 using namespace SubtitleComposer;
 
-SaveSubtitleDialog::SaveSubtitleDialog( bool primary, const QString& startDir, const QString& encoding, Format::NewLine newLine, const QString& format, QWidget* parent ):
+SaveSubtitleDialog::SaveSubtitleDialog( bool primary, const KUrl& startDir, const QString& encoding, Format::NewLine newLine, const QString& format, QWidget* parent ):
 	KFileDialog( startDir, outputFormatsFilter(), parent )
 {
 	setCaption( primary ? i18n( "Save Subtitle" ) : i18n( "Save Translation Subtitle" ) );
@@ -41,6 +41,7 @@ SaveSubtitleDialog::SaveSubtitleDialog( bool primary, const QString& startDir, c
 
 	setModal( true );
 	setMode( KFile::File );
+	setConfirmOverwrite( true );
 
 	filterWidget()->setEditable( false );
 
@@ -51,13 +52,13 @@ SaveSubtitleDialog::SaveSubtitleDialog( bool primary, const QString& startDir, c
 
 	// setting the current filter will force the first valid extension for the format which
 	// may not be the one of the file (even when the file's extension is perfectly valid)
-	setSelection( startDir );
+	setSelection( startDir.prettyUrl() );
 
 	QWidget* customWidget = new QWidget( this );
 
 	m_encodingComboBox = new KComboBox( customWidget );
 	m_encodingComboBox->addItems( app()->availableEncodingNames() );
-	m_encodingComboBox->setCurrentItem( encoding );
+	m_encodingComboBox->setCurrentItem( encoding.toUpper() );
 	m_encodingComboBox->setSizePolicy( QSizePolicy::MinimumExpanding, QSizePolicy::Fixed );
 
 	m_newLineComboBox = new KComboBox( customWidget );
@@ -132,25 +133,3 @@ QString SaveSubtitleDialog::outputFormatsFilter()
 
 	return filter;
 }
-
-int SaveSubtitleDialog::exec()
-{
-	int retCode = KFileDialog::exec();
-
-	if ( retCode == QDialog::Accepted )
-	{
-		if ( FileSaveHelper::exists( selectedUrl() ) && KMessageBox::warningContinueCancel(
-				parentWidget(),
-				i18n(
-					"A file named \"%1\" already exists. Are you sure you want to overwrite it?",
-					QFileInfo( selectedUrl().path() ).fileName()
-				),
-				i18n( "Overwrite File?" ),
-				KGuiItem( i18n( "Overwrite" ) )
-			) != KMessageBox::Continue )
-			return QDialog::Rejected;
-	}
-
-	return retCode;
-}
-

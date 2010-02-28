@@ -34,9 +34,8 @@
 
 using namespace SubtitleComposer;
 
-SelectableSubtitleDialog::SelectableSubtitleDialog( const QString& defaultEncoding, const QString& title, QWidget* parent ):
-	ActionWithTargetDialog( title, parent ),
-	m_defaultEncoding( defaultEncoding )
+SelectableSubtitleDialog::SelectableSubtitleDialog( const QString& title, QWidget* parent ):
+	ActionWithTargetDialog( title, parent )
 {
 }
 
@@ -60,6 +59,7 @@ QGroupBox* SelectableSubtitleDialog::createSubtitleGroupBox( const QString& titl
 	connect( subtitleButton, SIGNAL( clicked() ), SLOT( selectSubtitle() ) );
 
 	m_subtitleEncodingComboBox = new KComboBox( m_subtitleGroupBox );
+	m_subtitleEncodingComboBox->addItem( i18n( "Autodetect" ) );
 	m_subtitleEncodingComboBox->addItems( app()->availableEncodingNames() );
 	m_subtitleEncodingComboBox->setCurrentItem( m_defaultEncoding );
 
@@ -89,41 +89,33 @@ void SelectableSubtitleDialog::selectSubtitle()
 {
 	OpenSubtitleDialog openDlg(
 		true,
-		subtitlePath().isEmpty() ?
+		subtitleUrl().isEmpty() ?
 			app()->lastSubtitleDirectory().prettyUrl() :
-			subtitlePath(),
+			subtitleUrl().prettyUrl(),
 		subtitleEncoding()
 	);
 
 	if ( openDlg.exec() == QDialog::Accepted )
 	{
 		m_subtitleUrlLineEdit->setText( openDlg.selectedFile() );
-		m_subtitleEncodingComboBox->setCurrentItem( openDlg.selectedEncoding().toUpper() );
+		if ( openDlg.selectedEncoding().isEmpty() )
+			m_subtitleEncodingComboBox->setCurrentItem( i18n( "Autodetect" ) );
+		else
+			m_subtitleEncodingComboBox->setCurrentItem( openDlg.selectedEncoding().toUpper() );
 	}
 }
 
-QString SelectableSubtitleDialog::defaultEncoding() const
+KUrl SelectableSubtitleDialog::subtitleUrl() const
 {
-	return m_defaultEncoding;
-}
-
-void SelectableSubtitleDialog::setDefaultEncoding( const QString& defaultEncoding )
-{
-	if ( m_defaultEncoding != defaultEncoding )
-	{
-		m_defaultEncoding = defaultEncoding;
-		m_subtitleEncodingComboBox->setCurrentItem( m_defaultEncoding );
-	}
-}
-
-QString SelectableSubtitleDialog::subtitlePath() const
-{
-	return m_subtitleUrlLineEdit->text();
+	return KUrl( m_subtitleUrlLineEdit->text() );
 }
 
 QString SelectableSubtitleDialog::subtitleEncoding() const
 {
-	return m_subtitleEncodingComboBox->currentText();
+	if ( m_subtitleEncodingComboBox->currentIndex() == 0 )
+		return QString();
+	else
+		return m_subtitleEncodingComboBox->currentText();
 }
 
 #include "selectablesubtitledialog.moc"

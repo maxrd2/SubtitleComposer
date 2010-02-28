@@ -129,7 +129,7 @@ void Subtitle::clearPrimaryTextData()
 	endCompositeAction();
 }
 
-void Subtitle::setSecondaryData( const Subtitle& from, bool fromPrimaryData )
+void Subtitle::setSecondaryData( const Subtitle& from, bool usePrimaryData )
 {
 	beginCompositeAction( i18n( "Set Secondary Data" ) );
 
@@ -137,7 +137,7 @@ void Subtitle::setSecondaryData( const Subtitle& from, bool fromPrimaryData )
 	SubtitleIterator thisIt( *this, Range::full() );
 
 	// the errors that we are going to take from 'from':
-	const int fromErrors = fromPrimaryData ? SubtitleLine::PrimaryOnlyErrors : SubtitleLine::SecondaryOnlyErrors;
+	const int fromErrors = usePrimaryData ? SubtitleLine::PrimaryOnlyErrors : SubtitleLine::SecondaryOnlyErrors;
 	// the errors that we are going to keep:
 	const int thisErrors = SubtitleLine::PrimaryOnlyErrors|SubtitleLine::SharedErrors;
 
@@ -145,17 +145,17 @@ void Subtitle::setSecondaryData( const Subtitle& from, bool fromPrimaryData )
 		fromLine && thisLine;
 		++fromIt, ++thisIt, fromLine = fromIt.current(), thisLine = thisIt.current() )
 	{
-		thisLine->setSecondaryText( fromPrimaryData ? fromLine->primaryText() : fromLine->secondaryText() );
+		thisLine->setSecondaryText( usePrimaryData ? fromLine->primaryText() : fromLine->secondaryText() );
 		thisLine->setErrorFlags( (thisLine->errorFlags() & thisErrors) | (fromLine->errorFlags() & fromErrors) );
 	}
 
-	if ( fromIt.current() ) // subtitle had more lines than *this
+	if ( fromIt.current() ) // from subtitle had more lines than *this
 	{
 		QList<SubtitleLine*> lines;
 		for ( ; fromIt.current(); ++fromIt )
 		{
 			SubtitleLine* thisLine = new SubtitleLine( *fromIt.current() );
-			if ( fromPrimaryData )
+			if ( usePrimaryData )
 				thisLine->setSecondaryText( thisLine->primaryText() );
 			thisLine->setPrimaryText( SString() );
 			thisLine->setErrorFlags( SubtitleLine::PrimaryOnlyErrors, false );
@@ -163,7 +163,7 @@ void Subtitle::setSecondaryData( const Subtitle& from, bool fromPrimaryData )
 		}
 		processAction( new InsertLinesAction( *this, lines ) );
 	}
-	else if ( thisIt.current() ) // *this had more lines than subtitle
+	else if ( thisIt.current() ) // *this had more lines than from subtitle
 	{
 		for ( SubtitleLine* thisLine = thisIt.current(); thisLine; ++thisIt, thisLine = thisIt.current() )
 		{

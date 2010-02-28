@@ -3,4 +3,4 @@ Planned features / known issues
 * integrate waveform visuals
 * automatic correction of OCR errors
 
-break encoding coupling of main subtitle and translation (see changeSubtitleEncoding method in Application class)
+add a way to synchronize video and subtitle fps values for formats that neede it like MicroDVD

@@ -40,13 +40,13 @@
 #include <KApplication>
 #include <KAction>
 #include <KUrl>
+#include <kencodingdetector.h>
 
 class KComboBox;
 class KAction;
 class KToggleAction;
 class KRecentFilesActionExt;
-class KCodecAction;
-class KSelectAction;
+class KCodecActionExt;
 
 namespace SubtitleComposer
 {
@@ -114,20 +114,24 @@ namespace SubtitleComposer
 
 			void newSubtitle();
 			void openSubtitle();
+			void reopenSubtitleWithCodec( QTextCodec* codec );
+			void reopenSubtitleWithDetectScript( KEncodingDetector::AutoDetectScript autodetectScript );
+			void reopenSubtitleWithCodecOrDetectScript( QTextCodec* codec, KEncodingDetector::AutoDetectScript autodetectScript );
 			void openSubtitle( const KUrl& url, bool warnClashingUrls=true );
 			bool saveSubtitle();
 			bool saveSubtitleAs();
 			bool closeSubtitle();
 
-			void newTrSubtitle();
-			void openTrSubtitle();
-			void openTrSubtitle( const KUrl& url, bool warnClashingUrls=true );
-			bool saveTrSubtitle();
-			bool saveTrSubtitleAs();
-			bool closeTrSubtitle();
+			void newSubtitleTr();
+			void openSubtitleTr();
+			void reopenSubtitleTrWithCodec( QTextCodec* codec );
+			void reopenSubtitleTrWithDetectScript( KEncodingDetector::AutoDetectScript autodetectScript );
+			void reopenSubtitleTrWithCodecOrDetectScript( QTextCodec* codec, KEncodingDetector::AutoDetectScript autodetectScript );
 
-			void openSubtitleWithDefaultEncoding();
-			void changeSubtitlesEncoding( const QString& encoding );
+			void openSubtitleTr( const KUrl& url, bool warnClashingUrls=true );
+			bool saveSubtitleTr();
+			bool saveSubtitleTrAs();
+			bool closeSubtitleTr();
 
 			void joinSubtitles();
 			void splitSubtitle();
@@ -235,7 +239,8 @@ namespace SubtitleComposer
 
 		private:
 
-			QTextCodec* codecForUrl( const KUrl& url );
+			QTextCodec* codecForUrl( const KUrl& url, bool useRecentFiles, bool useDefault );
+			QTextCodec* codecForEncoding( const QString& encoding, bool useDefault );
 
 			bool acceptClashingUrls( const KUrl& subtitleUrl, const KUrl& subtitleTrUrl );
 
@@ -315,10 +320,10 @@ namespace SubtitleComposer
 
 			KUrl m_lastSubtitleUrl;
 			KRecentFilesActionExt* m_recentSubtitlesAction;
-			KRecentFilesActionExt* m_recentTrSubtitlesAction;
+			KRecentFilesActionExt* m_recentSubtitlesTrAction;
 
-			KCodecAction* m_reloadSubtitleAsAction;
-			KSelectAction* m_quickReloadSubtitleAsAction;
+			KCodecActionExt* m_reopenSubtitleAsAction;
+			KCodecActionExt* m_reopenSubtitleTrAsAction;
 
 			Finder* m_finder;
 			Replacer* m_replacer;

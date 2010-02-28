@@ -36,7 +36,7 @@ namespace SubtitleComposer
 	{
 		public:
 
-			explicit SaveSubtitleDialog( bool primary, const QString& startDir=QString(), const QString& encoding=QString(), Format::NewLine newLine=Format::CurrentOS, const QString& format=QString(), QWidget* parent=0 );
+			explicit SaveSubtitleDialog( bool primary, const KUrl& startDir=QString(), const QString& encoding=QString(), Format::NewLine newLine=Format::CurrentOS, const QString& format=QString(), QWidget* parent=0 );
 
 			QString selectedEncoding() const;
 			QString selectedFormat() const;
@@ -44,10 +44,6 @@ namespace SubtitleComposer
 			Format::NewLine selectedNewLine() const;
 
 			static QString outputFormatsFilter();
-
-		public slots:
-
-			int exec();
 
 		private:
 

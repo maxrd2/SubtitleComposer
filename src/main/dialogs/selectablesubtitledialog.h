@@ -27,6 +27,7 @@
 #include "actionwithtargetdialog.h"
 
 #include <KLocale>
+#include <KUrl>
 
 class QGridLayout;
 class QGroupBox;
@@ -41,12 +42,9 @@ namespace SubtitleComposer
 
 		public:
 
-			SelectableSubtitleDialog( const QString& defaultEncoding, const QString& title, QWidget* parent=0 );
+			SelectableSubtitleDialog( const QString& title, QWidget* parent=0 );
 
-			QString defaultEncoding() const;
-			void setDefaultEncoding( const QString& defaultEncoding );
-
-			QString subtitlePath() const;
+			KUrl subtitleUrl() const;
 			QString subtitleEncoding() const;
 
 		protected:

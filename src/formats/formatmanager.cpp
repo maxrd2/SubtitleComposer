@@ -50,7 +50,6 @@
 #include <KDE/KLocale>
 #include <KDE/KCharsets>
 #include <KDE/KUrl>
-#include <kencodingdetector.h>
 
 #include <unicode/ucsdet.h>
 
@@ -64,6 +63,17 @@ FormatManager& FormatManager::instance()
 
 FormatManager::FormatManager()
 {
+	/*foreach( const QStringList &encodingsForScript, KGlobal::charsets()->encodingsByScript() )
+	{
+		KEncodingDetector::AutoDetectScript scri = KEncodingDetector::scriptForName( encodingsForScript.at( 0 ) );
+		if ( KEncodingDetector::hasAutoDetectionForScript( scri ) )
+			kDebug() << encodingsForScript.at( 0 ) << "[autodetect available]";
+		else
+			kDebug() << encodingsForScript.at( 0 );
+		for ( int i=1; i < encodingsForScript.size(); ++i )
+			kDebug() << "-" << encodingsForScript.at( i );
+	}*/
+
 	InputFormat* inputFormats[] = {
 		new SubRipInputFormat(),
 		new MicroDVDInputFormat(),
@@ -125,8 +135,13 @@ QStringList FormatManager::inputNames() const
 	return m_inputFormats.keys();
 }
 
-bool FormatManager::readSubtitle( Subtitle& subtitle, bool primary, const KUrl& url, QTextCodec** codec, Format::NewLine* newLine, QString* formatName ) const
+bool FormatManager::readSubtitle( Subtitle& subtitle, bool primary, const KUrl& url, KEncodingDetector::AutoDetectScript autodetectScript, QTextCodec** codec, Format::NewLine* newLine, QString* formatName ) const
 {
+// 	if ( *codec )
+// 		kDebug() << "loading" << url << "script" << autodetectScript << "codec" << (*codec)->name();
+// 	else
+// 		kDebug() << "loading" << url << "script" << autodetectScript;
+
 	FileLoadHelper fileLoadHelper( url );
 	if ( ! fileLoadHelper.open() )
 		return false;
@@ -134,7 +149,6 @@ bool FormatManager::readSubtitle( Subtitle& subtitle, bool primary, const KUrl& 
 	fileLoadHelper.close();
 
 	QString stringData;
-
 
 #ifdef HAVE_ICU
 	if ( ! *codec )
@@ -167,13 +181,12 @@ bool FormatManager::readSubtitle( Subtitle& subtitle, bool primary, const KUrl& 
 	}
 	else
 	{
-		bool encodingFound;
-		*codec = KGlobal::charsets()->codecForName( app()->generalConfig()->defaultSubtitlesEncoding(), encodingFound );
-		if ( ! encodingFound )
-			*codec = KGlobal::locale()->codecForEncoding();
-		KEncodingDetector detector( *codec, KEncodingDetector::AutoDetectedEncoding, KEncodingDetector::SemiautomaticDetection );
-		//KEncodingDetector detector( *codec, KEncodingDetector::AutoDetectedEncoding, KEncodingDetector::Cyrillic );
+		if ( autodetectScript == KEncodingDetector::None )
+			autodetectScript = KEncodingDetector::SemiautomaticDetection;
+		// TODO is the value of KEncodingDetector::AutoDetectedEncoding correct??
+		KEncodingDetector detector( app()->generalConfig()->defaultSubtitlesCodec(), KEncodingDetector::AutoDetectedEncoding, autodetectScript );
 		stringData = detector.decode( byteData );
+		bool encodingFound;
 		*codec = KGlobal::charsets()->codecForName( detector.encoding(), encodingFound );
 	}
 

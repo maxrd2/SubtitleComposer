@@ -30,6 +30,7 @@
 
 #include <KGlobal>
 #include <KLocale>
+#include <KCharsets>
 
 namespace SubtitleComposer
 {
@@ -43,6 +44,13 @@ namespace SubtitleComposer
 			virtual AppConfigGroup* clone() const { return new GeneralConfig( *this ); }
 
 			QString defaultSubtitlesEncoding() const { return option( keyDefaultSubtitlesEncoding() ); }
+			QTextCodec* defaultSubtitlesCodec() const {
+				bool encodingFound;
+				QTextCodec *codec = KGlobal::charsets()->codecForName( defaultSubtitlesEncoding(), encodingFound );
+				if ( ! encodingFound )
+					codec = KGlobal::locale()->codecForEncoding();
+				return codec;
+			}
 			void setDefaultSubtitlesEncoding( const QString& encoding ) { setOption( keyDefaultSubtitlesEncoding(), encoding ); }
 
 			int seekOffsetOnDoubleClick() const { return optionAsInt( keySeekOffsetOnDoubleClick() ); } /// in milliseconds

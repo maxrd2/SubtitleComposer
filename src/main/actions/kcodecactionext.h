@@ -1,8 +1,8 @@
-#ifndef JOINSUBTITLESDIALOG_H
-#define JOINSUBTITLESDIALOG_H
+#ifndef KCODECACTIONEXT_H
+#define KCODECACTIONEXT_H
 
 /***************************************************************************
- *   Copyright (C) 2007-2009 Sergio Pistone (sergio_pistone@yahoo.com.ar)  *
+ *   Copyright (C) 2007-2010 Sergio Pistone (sergio_pistone@yahoo.com.ar)  *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
@@ -20,41 +20,34 @@
  *   Boston, MA 02110-1301, USA.                                           *
  ***************************************************************************/
 
-#ifdef HAVE_CONFIG_H
-	#include <config.h>
-#endif
+#include <kcodecaction.h>
 
-#include "selectablesubtitledialog.h"
-#include "../../core/time.h"
-
-class QCheckBox;
-class TimeEdit;
-class KPushButton;
-
-namespace SubtitleComposer
+class KCodecActionExt : public KCodecAction
 {
-	class JoinSubtitlesDialog : public SelectableSubtitleDialog
-	{
-		Q_OBJECT
+	Q_OBJECT
 
-		public:
+	public:
 
-			explicit JoinSubtitlesDialog( QWidget* parent=0 );
+		explicit KCodecActionExt( QObject *parent, bool showAutoOptions=false, bool showDefault=false );
+		KCodecActionExt( const QString &text, QObject *parent,bool showAutoOptions=false, bool showDefault=false );
+		KCodecActionExt( const KIcon &icon, const QString &text, QObject *parent,bool showAutoOptions=false, bool showDefault=false );
 
-			Time shiftTime() const;
+	public:
 
-			virtual void show();
+		KEncodingDetector::AutoDetectScript currentAutoDetectScript() const;
+		bool setCurrentAutoDetectScript(KEncodingDetector::AutoDetectScript);
 
-		private slots:
 
-			void setShiftTimeFromVideo();
+	protected Q_SLOTS:
 
-		private:
+		virtual void actionTriggered( QAction* );
 
-			TimeEdit* m_shiftTimeEdit;
-			KPushButton* m_shiftTimeFromVideoButton;
-			QCheckBox* m_shiftSubtitleCheckBox;
-	};
-}
+	private:
+
+		void init( bool showDefault );
+
+		bool m_showDefault;
+		KAction *m_autodetectAction;
+};
 
 #endif

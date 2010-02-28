@@ -41,7 +41,8 @@ GeneralConfigWidget::GeneralConfigWidget( QWidget* parent ):
 	m_defaultEncodingComboBox->addItems( app()->availableEncodingNames() );
 
 	QLabel* defaultEncodingLabel = new QLabel( generalGroupBox );
-	defaultEncodingLabel->setText( i18n( "Default encoding for opening subtitles:" ) );
+	defaultEncodingLabel->setText( i18n( "Default subtitles encoding:" ) );
+	defaultEncodingLabel->setWhatsThis( i18n( "The encoding specified here will be used to load subtitles when autodetection fails and will also be suggested when saving new subtitles." ) );
 	defaultEncodingLabel->setBuddy( m_defaultEncodingComboBox );
 
 	m_relativeSeekPositionSpinBox = new KIntNumInput( generalGroupBox );
