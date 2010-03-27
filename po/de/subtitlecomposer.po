@@ -2,16 +2,16 @@
 # This file is distributed under the same license as the PACKAGE package.
 #
 # Panagiotis Papadopoulos <pano_90@gmx.de>, 2008.
-# Panagiotis Papadopoulos <pano_90@gmx.net>, 2009.
+# Panagiotis Papadopoulos <pano_90@gmx.net>, 2009, 2010.
 msgid ""
 msgstr ""
 "Project-Id-Version: subtitlecomposer\n"
-"Report-Msgid-Bugs-To: https://sourceforge.net/tracker/?"
-"atid=1005652&group_id=208427&func=browse\n"
+"Report-Msgid-Bugs-To: https://sourceforge."
+"net/tracker/?atid=1005652&group_id=208427&func=browse\n"
 "POT-Creation-Date: 2010-02-28 03:02-0300\n"
-"PO-Revision-Date: 2009-08-27 18:48+0200\n"
+"PO-Revision-Date: 2010-03-27 09:51+0100\n"
 "Last-Translator: Panagiotis Papadopoulos <pano_90@gmx.net>\n"
-"Language-Team: German <kde-i18n-de@kde.org>\n"
+"Language-Team: de <kde-i18n-de@kde.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -19,9 +19,8 @@ msgstr ""
 "X-Generator: Lokalize 1.0\n"
 
 #: common/languagecode.cpp:418 common/languagecode.cpp:424
-#, fuzzy
 msgid "Unknown"
-msgstr "<i>Unbekannt</i>"
+msgstr "Unbekannt"
 
 #: core/subtitleactions.cpp:62
 msgid "Set Frame Rate"
@@ -400,9 +399,8 @@ msgstr "Zeilenzeiten anpassen"
 #: main/dialogs/opensubtitledialog.cpp:43
 #: main/dialogs/selectablesubtitledialog.cpp:62
 #: main/dialogs/selectablesubtitledialog.cpp:102
-#, fuzzy
 msgid "Autodetect"
-msgstr "Automatisch"
+msgstr "Automatisch erkennen"
 
 #: main/actions/krecentfilesactionext.cpp:37
 msgid "Clear History"
@@ -425,9 +423,8 @@ msgid "All Files"
 msgstr "Alle Dateien"
 
 #: main/application.cpp:459
-#, fuzzy
 msgid "Audio Levels Files"
-msgstr "Lautstärke-Dateien"
+msgstr "Audio-Lautstärke-Dateien"
 
 #: main/application.cpp:473
 msgid "Exit the application"
@@ -630,7 +627,7 @@ msgstr "Suchen ..."
 #: main/application.cpp:715
 #, fuzzy
 msgid "Find occurrences of strings or regular expressions"
-msgstr "Vorkommende Strings oder reguläre Ausdrücke suchen"
+msgstr "Vorkommende Zeichenketten oder reguläre Ausdrücke suchen"
 
 #: main/application.cpp:725
 msgid "Find Next"
@@ -639,7 +636,7 @@ msgstr "Nächstes suchen"
 #: main/application.cpp:726
 #, fuzzy
 msgid "Find next occurrence of string or regular expression"
-msgstr "Nächsten vorkommende Strings oder regulären Ausdruck suchen"
+msgstr "Nächsten vorkommende Zeichenketten oder regulären Ausdruck suchen"
 
 #: main/application.cpp:736
 msgid "Find Previous"
@@ -648,7 +645,7 @@ msgstr "Vorheriges Suchen"
 #: main/application.cpp:737
 #, fuzzy
 msgid "Find previous occurrence of string or regular expression"
-msgstr "Vorherigen vorkommenden String oder regulären Ausdruck suchen"
+msgstr "Vorherigen vorkommende Zeichenkette oder regulären Ausdruck suchen"
 
 #: main/application.cpp:745
 msgid "Replace..."
@@ -657,7 +654,7 @@ msgstr "Ersetzen ..."
 #: main/application.cpp:746
 #, fuzzy
 msgid "Replace occurrences of strings or regular expressions"
-msgstr "Vorkommnisse von Strings oder Regulären Ausdrücken ersetzen"
+msgstr "Vorkommnisse von Zeichenketten oder Regulären Ausdrücken ersetzen"
 
 #: main/application.cpp:755
 #, fuzzy
@@ -786,7 +783,6 @@ msgid "Shift lines an specified amount of time"
 msgstr "Zeilen um eine bestimmte Zeit verschieben"
 
 #: main/application.cpp:918
-#, fuzzy
 msgid "Adjust..."
 msgstr "Anpassen ..."
 
@@ -1292,7 +1288,6 @@ msgstr ""
 "gesendeten und empfangenen Zeilen stimmt nicht überein."
 
 #: main/application.cpp:2807
-#, fuzzy
 msgid "Translate Primary Text"
 msgstr "Haupttext übersetzen"
 
@@ -1325,7 +1320,6 @@ msgstr ""
 "Möchten Sie wirklich fortfahren?"
 
 #: main/application.cpp:3040
-#, fuzzy
 msgid "<qt>There was an error opening file %1 for audio extraction.</qt>"
 msgstr ""
 "<qt>Es ist ein Fehler beim Öffnen der Datei %1 für das Auslesen der "
@@ -1671,7 +1665,6 @@ msgid "Apply To"
 msgstr "Anwenden auf"
 
 #: main/dialogs/adjusttimesdialog.cpp:32
-#, fuzzy
 msgid "Adjust"
 msgstr "Anpassen"
 
@@ -1839,12 +1832,10 @@ msgid "Fix and cleanup spaces"
 msgstr "Leerzeichen korrigieren und säubern"
 
 #: main/dialogs/fixpunctuationdialog.cpp:40
-#, fuzzy
 msgid "Fix quotes and double quotes"
 msgstr "Anführungszeichen und doppelte Anführungszeichen korrigieren"
 
 #: main/dialogs/fixpunctuationdialog.cpp:44
-#, fuzzy
 msgid "Fix English 'I' pronoun"
 msgstr "Englisches Pronomen „I“ korrigieren"
 
@@ -1863,7 +1854,6 @@ msgid "Insert Line After Current"
 msgstr "Zeile nach aktuellem einfügen"
 
 #: main/dialogs/insertlinedialog.cpp:29
-#, fuzzy
 msgid "Insert Into"
 msgstr "Einfügen in"
 
@@ -1942,7 +1932,7 @@ msgstr "Nach vorne (+)"
 
 #: main/dialogs/shifttimesdialog.cpp:39
 msgid "Backwards (–)"
-msgstr "Nach hinten (–)"
+msgstr "Nach hinten (−)"
 
 #: main/dialogs/smarttextsadjustdialog.cpp:43
 msgid "Minimum length for line break:"
@@ -2039,12 +2029,10 @@ msgid "Marked"
 msgstr "Markiert"
 
 #: main/errorswidget.cpp:509
-#, fuzzy
 msgid "yes"
 msgstr "ja"
 
 #: main/errorswidget.cpp:510
-#, fuzzy
 msgid "no"
 msgstr "nein"
 
@@ -2141,7 +2129,7 @@ msgstr "Um +%1 Millisekunden verschieben"
 
 #: main/lineswidget.cpp:1207
 msgid "Shift -%1 Milliseconds"
-msgstr "Um -%1 Millisekunden verschieben"
+msgstr "Um −%1 Millisekunden verschieben"
 
 #: main/lineswidget.cpp:1217
 msgid "Errors"
@@ -2161,7 +2149,7 @@ msgstr "Ein Untertitel-Editor für KDE"
 
 #: main/main.cpp:47
 msgid "(C) 2007-2009 Sergio Pistone"
-msgstr "(C) 2007-2009 Sergio Pistone"
+msgstr "© 2007–2009 Sergio Pistone"
 
 #: main/main.cpp:55
 msgid "Sergio Pistone"
@@ -2353,9 +2341,8 @@ msgid "Errors to Find"
 msgstr "Zu suchende Fehler"
 
 #: main/utils/errorfinder.cpp:45
-#, fuzzy
 msgid "Options"
-msgstr "Optionen"
+msgstr "Einstellungen"
 
 #: main/utils/errorfinder.cpp:51
 msgid "From current line"
@@ -2498,10 +2485,9 @@ msgid "Unexpected contents received from translation service"
 msgstr "Es sind unerwartete Inhalte vom Übersetzungsdienst empfangen worden."
 
 #: services/gstreamer/gstreamerconfigwidget.cpp:34
-#, fuzzy
 msgctxt "@title:group GStreamer settings"
 msgid "Options"
-msgstr "Optionen"
+msgstr "Einstellungen"
 
 #: services/gstreamer/gstreamerconfigwidget.cpp:37
 msgid "Audio sink:"
@@ -2562,9 +2548,8 @@ msgid "Audio output driver:"
 msgstr "Audioausgabe-Modul:"
 
 #: services/mplayer/mplayerconfigwidget.cpp:84
-#, fuzzy
 msgid "Audio channels:"
-msgstr "Audio-Dateien"
+msgstr "Audiokanäle:"
 
 #: services/mplayer/mplayerconfigwidget.cpp:92
 #, fuzzy
@@ -2576,10 +2561,9 @@ msgid "Volume normalization"
 msgstr "Normalisierung der Lautstärke"
 
 #: services/xine/xineconfigwidget.cpp:34
-#, fuzzy
 msgctxt "@title:group Xine settings"
 msgid "Options"
-msgstr "Optionen"
+msgstr "Einstellungen"
 
 #: services/xine/xineconfigwidget.cpp:37
 msgid "Audio driver:"
@@ -2590,7 +2574,6 @@ msgid "Video driver:"
 msgstr "Video-Modul:"
 
 #: services/xine/xinedecoderbackend.cpp:311
-#, fuzzy
 msgid "Error converting audio data to output format"
 msgstr "Fehler beim Konvertieren der Audio-Daten in das Ausgabeformat"
 
@@ -2633,7 +2616,6 @@ msgid "Suggestions"
 msgstr "Vorschläge"
 
 #: widgets/simplerichtextedit.cpp:500
-#, fuzzy
 msgid "Ignore"
 msgstr "Ignorieren"
 
@@ -2702,8 +2684,9 @@ msgstr "Wer&kzeuge"
 #. i18n: file: main/subtitlecomposerui.rc:140
 #. i18n: ectx: Menu (audiolevels)
 #: rc.cpp:30
+#, fuzzy
 msgid "&Audio Levels"
-msgstr ""
+msgstr "&Audio-Laustärken"
 
 #. i18n: file: main/subtitlecomposerui.rc:156
 #. i18n: ectx: ToolBar (mainToolBar)
