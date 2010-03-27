@@ -1204,7 +1204,7 @@ void LinesWidget::contextMenuEvent( QContextMenuEvent* e )
 	KMenu timesMenu( i18n( "Times" ) );
 	QString shiftMillis( app->generalConfig()->linesQuickShiftAmount() );
 	timesMenu.addAction( i18n( "Shift +%1 Milliseconds", shiftMillis ), app, SLOT( shiftSelectedLinesForwards() ) );
-	timesMenu.addAction( i18n( "Shift -%1 Milliseconds", shiftMillis ), app, SLOT( shiftSelectedLinesBackwards() ) );
+	timesMenu.addAction( i18n( "Shift −%1 Milliseconds", shiftMillis ), app, SLOT( shiftSelectedLinesBackwards() ) );
 	timesMenu.addSeparator();
 	timesMenu.addAction( i18n( "Shift..." ), app, SLOT( shiftLines() ) );
 	timesMenu.addAction( i18n( "Sort" ), app, SLOT( sortLines() ) );
