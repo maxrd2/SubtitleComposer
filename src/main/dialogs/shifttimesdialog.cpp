@@ -36,7 +36,7 @@ ShiftTimesDialog::ShiftTimesDialog( QWidget* parent ):
 	m_directionComboBox = new KComboBox( false, settingsGroupBox );
 	m_directionComboBox->clear();
 	m_directionComboBox->addItem( i18n( "Forwards (+)" ) );
-	m_directionComboBox->addItem( i18n( "Backwards (–)" ) );
+	m_directionComboBox->addItem( i18n( "Backwards (−)" ) );
 	m_directionComboBox->setSizePolicy( QSizePolicy::MinimumExpanding, QSizePolicy::Fixed );
 
 	m_shiftTimeEdit = new TimeEdit( settingsGroupBox );
