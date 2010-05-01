@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: subtitlecomposer\n"
 "Report-Msgid-Bugs-To: https://sourceforge.net/tracker/?"
 "atid=1005652&group_id=208427&func=browse\n"
-"POT-Creation-Date: 2010-02-28 03:02-0300\n"
+"POT-Creation-Date: 2010-02-28 16:47-0300\n"
 "PO-Revision-Date: 2009-05-24 17:02-0300\n"
 "Last-Translator: Sergio Pistone <sergio_pistone@yahoo,com.ar>\n"
 "Language-Team: American English <kde-i18n-doc@kde.org>\n"
@@ -403,7 +403,8 @@ msgid "Autodetect"
 msgstr "Automatique"
 
 #: main/actions/krecentfilesactionext.cpp:37
-msgid "Clear History"
+#, fuzzy
+msgid "Clear List"
 msgstr "Effacer l'historique"
 
 #: main/application.cpp:432
@@ -1312,10 +1313,6 @@ msgstr "Problème lors de la lecture du fichier."
 #: main/application.cpp:3068 main/application.cpp:3075
 msgid "Error Extracting Audio"
 msgstr ""
-
-#: main/application.cpp:3123
-msgid "Open AudioLevels"
-msgstr "Ouvrir AudioLevels"
 
 #: main/application.cpp:3227
 msgid "modified"
@@ -2530,8 +2527,9 @@ msgid "Video driver:"
 msgstr "Pilote vidéo :"
 
 #: services/xine/xinedecoderbackend.cpp:311
-msgid "Error converting audio data to output format"
-msgstr ""
+#, fuzzy
+msgid "There was an error converting audio data to output format."
+msgstr "Problème lors de l'enregistrement de la traduction de sous-titrage."
 
 #: widgets/simplerichtextedit.cpp:84
 msgid "Cut"
@@ -2664,6 +2662,9 @@ msgstr "Thomas Gastine"
 msgctxt "EMAIL OF TRANSLATORS"
 msgid "Your emails"
 msgstr "thomas.gastine@wanadoo.fr"
+
+#~ msgid "Open AudioLevels"
+#~ msgstr "Ouvrir AudioLevels"
 
 #~ msgid "Quick Reload As..."
 #~ msgstr "Recharger rapidement sous..."

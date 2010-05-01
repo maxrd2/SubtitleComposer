@@ -1558,12 +1558,12 @@ void Application::reopenSubtitleWithCodec( QTextCodec* codec )
 
 void Application::reopenSubtitleWithCodecOrDetectScript( QTextCodec* codec, KEncodingDetector::AutoDetectScript autodetectScript )
 {
+	if ( m_subtitleUrl.isEmpty() )
+		return;
+
 	Subtitle* subtitle = new Subtitle();
 	Format::NewLine subtitleEOL;
 	QString subtitleFormat;
-
-	//if ( codec == 0 && autodetectScript == KEncodingDetector::None )
-	//	codec = generalConfig()->defaultSubtitlesCodec();
 
 	if ( ! FormatManager::instance().readSubtitle( *subtitle, true, m_subtitleUrl, autodetectScript, &codec, &subtitleEOL, &subtitleFormat ) )
 	{
@@ -1819,12 +1819,12 @@ void Application::reopenSubtitleTrWithCodec( QTextCodec* codec )
 
 void Application::reopenSubtitleTrWithCodecOrDetectScript( QTextCodec* codec, KEncodingDetector::AutoDetectScript autodetectScript )
 {
+	if ( m_subtitleTrUrl.isEmpty() )
+		return;
+
 	Subtitle* subtitleTr = new Subtitle();
 	Format::NewLine subtitleTrEOL;
 	QString subtitleTrFormat;
-
-	//if ( codec == 0 && autodetectScript == KEncodingDetector::None )
-	//	codec = generalConfig()->defaultSubtitlesCodec();
 
 	if ( ! FormatManager::instance().readSubtitle( *subtitleTr, false, m_subtitleTrUrl, autodetectScript, &codec, &subtitleTrEOL, &subtitleTrFormat ) )
 	{
@@ -3117,16 +3117,16 @@ void Application::adjustToVideoPositionAnchorFirst()
 
 void Application::openAudioLevels()
 {
-	KFileDialog openDlg( m_lastAudioLevelsUrl, buildLevelsFilesFilter(), m_mainWindow );
-
-	openDlg.setModal( true );
-	openDlg.setCaption( i18n( "Open AudioLevels" ) );
-
-	if ( openDlg.exec() == QDialog::Accepted )
-	{
-		m_lastAudioLevelsUrl = openDlg.selectedUrl();
-		openAudioLevels( openDlg.selectedUrl() );
-	}
+// 	KFileDialog openDlg( m_lastAudioLevelsUrl, buildLevelsFilesFilter(), m_mainWindow );
+//
+// 	openDlg.setModal( true );
+// 	openDlg.setCaption( i18n( "Open AudioLevels" ) );
+//
+// 	if ( openDlg.exec() == QDialog::Accepted )
+// 	{
+// 		m_lastAudioLevelsUrl = openDlg.selectedUrl();
+// 		openAudioLevels( openDlg.selectedUrl() );
+// 	}
 }
 
 void Application::openAudioLevels( const KUrl& /*url*/ )

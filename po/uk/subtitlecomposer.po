@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: subtitlecomposer\n"
 "Report-Msgid-Bugs-To: https://sourceforge.net/tracker/?"
 "atid=1005652&group_id=208427&func=browse\n"
-"POT-Creation-Date: 2010-02-28 03:02-0300\n"
+"POT-Creation-Date: 2010-02-28 16:47-0300\n"
 "PO-Revision-Date: 2009-05-28 20:25+0300\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian <translation@linux.org.ua>\n"
@@ -412,7 +412,8 @@ msgid "Autodetect"
 msgstr "Автоматично"
 
 #: main/actions/krecentfilesactionext.cpp:37
-msgid "Clear History"
+#, fuzzy
+msgid "Clear List"
 msgstr "Спорожнити журнал"
 
 #: main/application.cpp:432
@@ -1323,10 +1324,6 @@ msgstr "Неочікувана помилка під час спроби від�
 #: main/application.cpp:3068 main/application.cpp:3075
 msgid "Error Extracting Audio"
 msgstr ""
-
-#: main/application.cpp:3123
-msgid "Open AudioLevels"
-msgstr "Відкрити рівні звуку"
 
 #: main/application.cpp:3227
 msgid "modified"
@@ -2547,8 +2544,9 @@ msgid "Video driver:"
 msgstr "Драйвер відео:"
 
 #: services/xine/xinedecoderbackend.cpp:311
-msgid "Error converting audio data to output format"
-msgstr ""
+#, fuzzy
+msgid "There was an error converting audio data to output format."
+msgstr "Під час спроби зберегти переклад субтитрів сталася помилка."
 
 #: widgets/simplerichtextedit.cpp:84
 msgid "Cut"
@@ -2681,6 +2679,9 @@ msgstr "Юрій Чорноіван"
 msgctxt "EMAIL OF TRANSLATORS"
 msgid "Your emails"
 msgstr "yurchor@ukr.net"
+
+#~ msgid "Open AudioLevels"
+#~ msgstr "Відкрити рівні звуку"
 
 #~ msgid "Quick Reload As..."
 #~ msgstr "Швидке перезавантаження як..."

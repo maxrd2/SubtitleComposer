@@ -61,7 +61,7 @@ QGroupBox* SelectableSubtitleDialog::createSubtitleGroupBox( const QString& titl
 	m_subtitleEncodingComboBox = new KComboBox( m_subtitleGroupBox );
 	m_subtitleEncodingComboBox->addItem( i18n( "Autodetect" ) );
 	m_subtitleEncodingComboBox->addItems( app()->availableEncodingNames() );
-	m_subtitleEncodingComboBox->setCurrentItem( m_defaultEncoding );
+	m_subtitleEncodingComboBox->setCurrentIndex( 0 );
 
 	QLabel* subtitleEncodingLabel = new QLabel( m_subtitleGroupBox );
 	subtitleEncodingLabel->setText( i18n( "Encoding:" ) );

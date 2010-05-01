@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: subtitlecomposer\n"
 "Report-Msgid-Bugs-To: https://sourceforge.net/tracker/?"
 "atid=1005652&group_id=208427&func=browse\n"
-"POT-Creation-Date: 2010-02-28 03:02-0300\n"
+"POT-Creation-Date: 2010-02-28 16:47-0300\n"
 "PO-Revision-Date: 2009-05-24 17:03-0300\n"
 "Last-Translator: Sergio Pistone <sergio_pistone@yahoo,com.ar>\n"
 "Language-Team: American English <kde-i18n-doc@kde.org>\n"
@@ -406,7 +406,8 @@ msgid "Autodetect"
 msgstr "Automatski"
 
 #: main/actions/krecentfilesactionext.cpp:37
-msgid "Clear History"
+#, fuzzy
+msgid "Clear List"
 msgstr "Očisti istorijat"
 
 #: main/application.cpp:432
@@ -1307,10 +1308,6 @@ msgstr "Neočekivana greška pri puštanju fajla."
 #: main/application.cpp:3068 main/application.cpp:3075
 msgid "Error Extracting Audio"
 msgstr ""
-
-#: main/application.cpp:3123
-msgid "Open AudioLevels"
-msgstr "Otvori audio nivoe"
 
 #: main/application.cpp:3227
 msgid "modified"
@@ -2541,8 +2538,9 @@ msgid "Video driver:"
 msgstr "Video drajver:"
 
 #: services/xine/xinedecoderbackend.cpp:311
-msgid "Error converting audio data to output format"
-msgstr ""
+#, fuzzy
+msgid "There was an error converting audio data to output format."
+msgstr "Došlo je do greške pri snimanju prevedenog titla."
 
 #: widgets/simplerichtextedit.cpp:84
 msgid "Cut"
@@ -2675,6 +2673,9 @@ msgstr "Slobodan Simić"
 msgctxt "EMAIL OF TRANSLATORS"
 msgid "Your emails"
 msgstr "simicsl@verat.net"
+
+#~ msgid "Open AudioLevels"
+#~ msgstr "Otvori audio nivoe"
 
 #~ msgid "Quick Reload As..."
 #~ msgstr "Brzo učitaj kao..."

@@ -62,8 +62,6 @@ namespace SubtitleComposer
 
 			KLineEdit* m_subtitleUrlLineEdit;
 			KComboBox* m_subtitleEncodingComboBox;
-
-			QString m_defaultEncoding;
 	};
 }
 

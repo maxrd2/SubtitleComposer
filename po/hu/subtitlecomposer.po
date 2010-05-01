@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: subtitlecomposer\n"
 "Report-Msgid-Bugs-To: https://sourceforge.net/tracker/?"
 "atid=1005652&group_id=208427&func=browse\n"
-"POT-Creation-Date: 2010-02-28 03:02-0300\n"
+"POT-Creation-Date: 2010-02-28 16:47-0300\n"
 "PO-Revision-Date: 2009-11-06 17:37+0100\n"
 "Last-Translator: Barcza Károly <kbarcza@blackpanther.hu>\n"
 "Language-Team: blackPanther Europe <info@blackpanther.hu>\n"
@@ -407,7 +407,8 @@ msgid "Autodetect"
 msgstr "automatikus"
 
 #: main/actions/krecentfilesactionext.cpp:37
-msgid "Clear History"
+#, fuzzy
+msgid "Clear List"
 msgstr "Előzmények törlése"
 
 #: main/application.cpp:432
@@ -1293,11 +1294,6 @@ msgstr "Ismeretlen hiba történt a fájl lejátszása közben"
 #: main/application.cpp:3068 main/application.cpp:3075
 msgid "Error Extracting Audio"
 msgstr ""
-
-#: main/application.cpp:3123
-#, fuzzy
-msgid "Open AudioLevels"
-msgstr "Megnyitás e&zzel"
 
 #: main/application.cpp:3227
 msgid "modified"
@@ -2528,8 +2524,11 @@ msgid "Video driver:"
 msgstr "Videó meghajtó:"
 
 #: services/xine/xinedecoderbackend.cpp:311
-msgid "Error converting audio data to output format"
+#, fuzzy
+msgid "There was an error converting audio data to output format."
 msgstr ""
+"Hiba történt a kép elmentése közben:\n"
+"%1"
 
 #: widgets/simplerichtextedit.cpp:84
 msgid "Cut"
@@ -2662,6 +2661,10 @@ msgstr "Barcza Károly (blackPanther OS - www.blackpanther.hu)"
 msgctxt "EMAIL OF TRANSLATORS"
 msgid "Your emails"
 msgstr "kbarcza@blackpanther.hu"
+
+#, fuzzy
+#~ msgid "Open AudioLevels"
+#~ msgstr "Megnyitás e&zzel"
 
 #~ msgid "Quick Reload As..."
 #~ msgstr "Gyors újratöltés mint..."

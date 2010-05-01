@@ -4,8 +4,10 @@ French					currently maintained by Thomas Gastine <thomas.gastine@wanadoo.fr>
 German:					currently maintained by Panagiotis Papadopoulos <pano_90@gmx.net>
 Greek:					currently unmaintained (contributed by Alexandros Perdikomatis <atanasia.kalampaka@ontelecoms.gr>, unreachable)
 Hungarian:				currently unmaintained (contributed by Barcza Károly <kbarcza@blackpanther.hu>)
+Italian:				currently maintained by Alessandro Polverini <alex@nibbles.it>
 Polish:					currently maintained by Tomasz Argasiński <targasinski@o2.pl>
 Portuguese (Brazilian):	currently maintained by Marcio P. Moraes <marciopanto@gmail.com>
 Russian:				currently maintained by Alexander Antsev <kagami@crossplatform.ru>
 Serbian:				currently maintained by Slobodan Simic <simicsl@verat.net>
+Spanish:				currently maintained by Sergio Pistone <sergio_pistone@yahoo.com.ar>
 Ukrainian:				currently maintained by Yuri Chornoivan <yurchor@ukr.net>

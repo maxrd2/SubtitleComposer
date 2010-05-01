@@ -33,6 +33,7 @@
 
 #include <QtCore/QTimer>
 #include <QtCore/QFileInfo>
+#include <QApplication>
 
 #include <KDebug>
 
@@ -99,7 +100,7 @@ Player::Player():
 
 	// the timeout might seem too much, but it only matters when the file couldn't be
 	// opened, and it's better to have the user wait a bit in that case than showing
-	// an error we there's nothing wrong with the file (a longer time might be needed
+	// an error when there's nothing wrong with the file (a longer time might be needed
 	// for example if the computer is under heavy load or is just slow)
 
 	m_openFileTimer->setSingleShot( true );
@@ -152,7 +153,7 @@ void Player::finalizeBackend( ServiceBackend* backend )
 	{
 		m_videoWidget->disconnect();
 		m_videoWidget->hide();
-		delete m_videoWidget;
+		m_videoWidget->deleteLater();
 		m_videoWidget = 0;
 	}
 }

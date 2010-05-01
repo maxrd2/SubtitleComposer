@@ -77,6 +77,7 @@ class KRecentFilesActionExt : public KSelectAction
 	protected slots:
 
 		void onActionTriggered( QAction* action );
+		void onActionChanged();
 
 	protected:
 

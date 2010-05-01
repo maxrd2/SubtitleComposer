@@ -308,7 +308,7 @@ void XineDecoderBackend::customEvent( QEvent* event )
 			break;
 
 		case EVENT_ERROR_INCOMPATIBLE_DATA:
-			setDecoderErrorState( i18n( "Error converting audio data to output format" ) );
+			setDecoderErrorState( i18n( "There was an error converting audio data to output format." ) );
 			break;
 
 		case EVENT_ERROR_FILE_CLOSED:

@@ -102,13 +102,24 @@ void PhononPlayerBackend::finalize()
 
 void PhononPlayerBackend::_finalize()
 {
-	delete m_mediaController;
+// 	delete m_mediaController;
+// 	m_mediaController = 0;
+//
+// 	delete m_mediaObject;
+// 	m_mediaObject = 0;
+//
+// 	delete m_audioOutput;
+// 	m_audioOutput = 0;
+	m_mediaController->disconnect();
+	m_mediaController->deleteLater();
 	m_mediaController = 0;
 
-	delete m_mediaObject;
+	m_mediaObject->disconnect();
+	m_mediaObject->deleteLater();
 	m_mediaObject = 0;
 
-	delete m_audioOutput;
+	m_audioOutput->disconnect();
+	m_audioOutput->deleteLater();
 	m_audioOutput = 0;
 
 	// no need to delete the m_videoOutput as is deleted with the player's videoWidget()

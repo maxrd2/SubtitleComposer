@@ -34,9 +34,10 @@ KRecentFilesActionExt::KRecentFilesActionExt( QObject* parent ):
 	m_separatorAction = new QAction( QString(), 0 );
 	m_separatorAction->setSeparator( true );
 
-	m_clearHistoryAction = new QAction( i18n( "Clear History" ), 0 );
+	m_clearHistoryAction = new QAction( i18n( "Clear List" ), 0 );
 
 	connect( this, SIGNAL(triggered(QAction*)), this, SLOT(onActionTriggered(QAction*)) );
+	connect( this, SIGNAL(changed()), this, SLOT(onActionChanged()) );
 }
 
 
@@ -127,8 +128,6 @@ void KRecentFilesActionExt::setUrls( const KUrl::List& urls, bool ignoreCollisio
 
 	addAction( m_separatorAction );
 	addAction( m_clearHistoryAction );
-
-	setEnabled( ! isEmpty() );
 }
 
 void KRecentFilesActionExt::setUrls( const KUrl::List& urls )
@@ -162,8 +161,6 @@ void KRecentFilesActionExt::removeUrl( const KUrl& url )
 {
 	if ( QAction* action = actionForUrl( url ) )
 		removeAction( action )->deleteLater();
-
-	setEnabled( ! isEmpty() );
 }
 
 void KRecentFilesActionExt::clearUrls()
@@ -173,8 +170,6 @@ void KRecentFilesActionExt::clearUrls()
 
 	removeAction( m_clearHistoryAction );
 	removeAction( m_separatorAction );
-
-	setEnabled( false );
 }
 
 QAction* KRecentFilesActionExt::actionForUrl( const KUrl& url ) const
@@ -235,6 +230,12 @@ void KRecentFilesActionExt::onActionTriggered( QAction* action )
 		clearUrls();
 	else
 		emit urlSelected( m_urls[action] );
+}
+
+void KRecentFilesActionExt::onActionChanged()
+{
+	if ( isEmpty() )
+		setEnabled( false );
 }
 
 #include "krecentfilesactionext.moc"

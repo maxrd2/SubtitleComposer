@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://sourceforge.net/tracker/?"
 "atid=1005652&group_id=208427&func=browse\n"
-"POT-Creation-Date: 2010-02-28 03:02-0300\n"
+"POT-Creation-Date: 2010-02-28 16:47-0300\n"
 "PO-Revision-Date: 2010-02-17 23:10+0300\n"
 "Last-Translator: Alexander Antsev <kagami@crossplatform.ru>\n"
 "Language-Team: Russian <>\n"
@@ -413,7 +413,8 @@ msgid "Autodetect"
 msgstr "Автоматически"
 
 #: main/actions/krecentfilesactionext.cpp:37
-msgid "Clear History"
+#, fuzzy
+msgid "Clear List"
 msgstr "Очистить историю"
 
 #: main/application.cpp:432
@@ -1320,10 +1321,6 @@ msgstr "Неожиданная ошибка при воспроизведени�
 #: main/application.cpp:3068 main/application.cpp:3075
 msgid "Error Extracting Audio"
 msgstr ""
-
-#: main/application.cpp:3123
-msgid "Open AudioLevels"
-msgstr "Открыть уровни звука"
 
 #: main/application.cpp:3227
 msgid "modified"
@@ -2544,8 +2541,9 @@ msgid "Video driver:"
 msgstr "Драйвер видео:"
 
 #: services/xine/xinedecoderbackend.cpp:311
-msgid "Error converting audio data to output format"
-msgstr ""
+#, fuzzy
+msgid "There was an error converting audio data to output format."
+msgstr "Ошибка при сохранении перевода субтитров."
 
 #: widgets/simplerichtextedit.cpp:84
 msgid "Cut"
@@ -2678,6 +2676,9 @@ msgstr "Александр Анцев"
 msgctxt "EMAIL OF TRANSLATORS"
 msgid "Your emails"
 msgstr "kagami@crossplatform.ru"
+
+#~ msgid "Open AudioLevels"
+#~ msgstr "Открыть уровни звука"
 
 #~ msgid "Quick Reload As..."
 #~ msgstr "Быстро перезагрузить как..."

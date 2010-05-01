@@ -1,5 +1,5 @@
 <!DOCTYPE kpartgui SYSTEM "kpartgui.dtd">
-<kpartgui name="subtitlecomposer" version="4" >
+<kpartgui name="subtitlecomposer" version="5" >
 	<MenuBar>
 		<Menu name="file" >
 			<text>&amp;File</text>
@@ -15,15 +15,15 @@
 			<Separator />
 			<Menu name="translation" >
 				<text>Translation</text>
-				<Action name="new_tr_subtitle" />
-				<Action name="open_tr_subtitle" />
-				<Action name="recent_tr_subtitles" />
+				<Action name="new_subtitle_tr" />
+				<Action name="open_subtitle_tr" />
+				<Action name="recent_subtitles_tr" />
 				<Separator />
-				<Action name="save_tr_subtitle" />
-				<Action name="save_tr_subtitle_as" />
-				<Action name="reopen_tr_subtitle_as" />
+				<Action name="save_subtitle_tr" />
+				<Action name="save_subtitle_tr_as" />
+				<Action name="reopen_subtitle_tr_as" />
 				<Separator />
-				<Action name="close_tr_subtitle" />
+				<Action name="close_subtitle_tr" />
 			</Menu>
 		</Menu>
 		<Menu name="edit" >
