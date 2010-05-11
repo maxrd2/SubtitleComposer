@@ -359,13 +359,13 @@ msgstr[1] "Zu kurze Laufzeit pro Zeichen im Übersetzungstext (%1 ms/Zeichen)"
 msgid "Has too long duration (1 msec)."
 msgid_plural "Has too long duration (%1 msecs)."
 msgstr[0] "Zu lange Laufzeit (Eine ms)"
-msgstr[1] "Zu lange Laufzeit (%2 ms)"
+msgstr[1] "Zu lange Laufzeit (%1 ms)"
 
 #: core/subtitleline.cpp:198
 msgid "Has too short duration (1 msec)."
 msgid_plural "Has too short duration (%1 msecs)."
 msgstr[0] "Zu kurze Laufzeit (Eine ms)"
-msgstr[1] "Zu kurze Laufzeit (%2 ms)"
+msgstr[1] "Zu kurze Laufzeit (%1 ms)"
 
 #: core/subtitleline.cpp:204
 #, fuzzy
