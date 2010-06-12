@@ -9,9 +9,9 @@ msgstr ""
 "Report-Msgid-Bugs-To: https://sourceforge."
 "net/tracker/?atid=1005652&group_id=208427&func=browse\n"
 "POT-Creation-Date: 2010-02-28 03:02-0300\n"
-"PO-Revision-Date: 2010-03-27 09:51+0100\n"
+"PO-Revision-Date: 2010-06-13 01:48+0200\n"
 "Last-Translator: Panagiotis Papadopoulos <pano_90@gmx.net>\n"
-"Language-Team: de <kde-i18n-de@kde.org>\n"
+"Language-Team: German <kde-i18n-de@kde.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -41,7 +41,6 @@ msgid "Move Line"
 msgstr "Zeile verschieben"
 
 #: core/subtitleactions.cpp:383
-#, fuzzy
 msgid "Swap Texts"
 msgstr "Texte tauschen"
 
@@ -123,12 +122,10 @@ msgid "Upper Case"
 msgstr "Großbuchstaben"
 
 #: core/subtitle.cpp:1054
-#, fuzzy
 msgid "Title Case"
 msgstr "Wortanfänge groß"
 
 #: core/subtitle.cpp:1091
-#, fuzzy
 msgid "Sentence Case"
 msgstr "Satzanfänge groß"
 
@@ -146,7 +143,6 @@ msgid "Simplify Spaces"
 msgstr "Leerzeichen vereinfachen"
 
 #: core/subtitle.cpp:1167
-#, fuzzy
 msgid "Synchronize Subtitles"
 msgstr "Untertitel synchronisieren"
 
@@ -453,7 +449,6 @@ msgid "Open subtitle file"
 msgstr "Eine Untertiteldatei öffnen"
 
 #: main/application.cpp:502
-#, fuzzy
 msgid "Reload As..."
 msgstr "Erneut laden als ..."
 
@@ -1224,7 +1219,6 @@ msgid "The specified time does not split the subtitles."
 msgstr "Die eingegebene Zeit trennt die Untertitel nicht."
 
 #: main/application.cpp:2112
-#, fuzzy
 msgid ""
 "Could not open a new Subtitle Composer window.\n"
 "The split part was saved as %1."
@@ -1233,13 +1227,12 @@ msgstr ""
 "Der getrennte Teil ist als %1 gespeichert worden."
 
 #: main/application.cpp:2117
-#, fuzzy
 msgid ""
 "Could not open a new Subtitle Composer window.\n"
 "The split parts were saved as %1 and %2."
 msgstr ""
 "Das Öffnen eines neuen Subtitle-Composer-Fensters ist fehlgeschlagen.\n"
-"Der getrennte Teil ist als %1 und %2 gespeichert worden."
+"Die getrennten Teile sind als %1 und %2 gespeichert worden."
 
 #: main/application.cpp:2219
 msgid "Go to Line"
@@ -1315,7 +1308,7 @@ msgid ""
 "Continuing would result in loss of timing information for some lines.\n"
 "Are you sure you want to continue?"
 msgstr ""
-"Das Fortfahren, könnte in einem Verlust von Informationen für manche Zeilen "
+"Das Fortfahren, könnte zum Verlust von Zeitinformationen für manche Zeilen "
 "sorgen.\n"
 "Möchten Sie wirklich fortfahren?"
 
@@ -2393,9 +2386,8 @@ msgid "No errors matching given criteria found!"
 msgstr "Es sind keine Fehler mit den angegeben Optionen gefunden worden."
 
 #: main/utils/finder.cpp:55
-#, fuzzy
 msgid "Find In"
-msgstr "Suchen"
+msgstr "Suchen in"
 
 #: main/utils/finder.cpp:278 main/utils/replacer.cpp:234
 msgid "No instances of '%1' found!"
@@ -2454,7 +2446,6 @@ msgid "Do you want to restart search at the beginning?"
 msgstr "Möchten Sie die Suche nocheinmal vom Anfang aus beginnen?"
 
 #: main/utils/kreplace.cpp:425
-#, fuzzy
 msgid "Restart"
 msgstr "Neustarten"
 
@@ -2552,9 +2543,8 @@ msgid "Audio channels:"
 msgstr "Audiokanäle:"
 
 #: services/mplayer/mplayerconfigwidget.cpp:92
-#, fuzzy
 msgid "Volume amplification:"
-msgstr "Normalisierung der Lautstärke"
+msgstr "Verstärkung der Lautstärke:"
 
 #: services/mplayer/mplayerconfigwidget.cpp:101
 msgid "Volume normalization"
