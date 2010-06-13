@@ -1139,7 +1139,7 @@ msgid ""
 "<qt>Could not parse the subtitle file.<br/>This may have been caused by "
 "usage of the wrong encoding.</qt>"
 msgstr ""
-"<qt>Die Untertiteldatei kann nicht verarbeitet werden.</br>Dies kann durch "
+"<qt>Die Untertiteldatei kann nicht verarbeitet werden.<br/>Dies kann durch "
 "eine falsch ausgewählte Kodierung ausgelöst worden sein.</qt>"
 
 #: main/application.cpp:1632
