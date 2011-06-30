@@ -1,6 +1,6 @@
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
-#
+# 
 # Panagiotis Papadopoulos <pano_90@gmx.de>, 2008.
 # Panagiotis Papadopoulos <pano_90@gmx.net>, 2009, 2010.
 msgid ""
