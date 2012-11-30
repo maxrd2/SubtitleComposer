@@ -86,7 +86,21 @@ bool MPlayerPlayerProcess::start( const QString& filePath, int winId, int audioS
 	args << "-input" << "nodefault-bindings:conf=/dev/null"; // disable mplayer input handling
 
 	if ( m_config->hasVideoOutput() )
+	{	
 		args << "-vo" << m_config->videoOutput();
+		if ( m_config->videoOutput() == "vdpau" )
+		{
+			args << "-vc";
+			if ( m_config->vdpauDivx() )
+			{
+				args << "ffh264vdpau,ffmpeg12vdpau,ffwmv3vdpau,ffvc1vdpau,ffodivxvdpau,";
+			}
+			else
+			{
+				args << "ffh264vdpau,ffmpeg12vdpau,ffwmv3vdpau,ffvc1vdpau,";
+			}
+		}
+	}
 
 	if ( m_config->hasAudioOutput() )
 		args << "-ao" << m_config->audioOutput();

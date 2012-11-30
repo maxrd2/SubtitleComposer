@@ -65,6 +65,9 @@ namespace SubtitleComposer
 			bool volumeNormalization() const { return optionAsBool( keyVolumeNormalization() ); }
 			void setVolumeNormalization( bool enabled ) { setOption( keyVolumeNormalization(), enabled ); }
 
+			bool vdpauDivx() const { return optionAsBool( keyVdpauDivx() ); }
+			void setVdpauDivx( bool vdpauDivx ) { setOption( keyVdpauDivx(), vdpauDivx ); }
+
 			bool frameDropping() const { return optionAsBool( keyFrameDropping() ); }
 			void setFrameDropping( bool frameDropping ) { setOption( keyFrameDropping(), frameDropping ); }
 
@@ -86,6 +89,7 @@ namespace SubtitleComposer
 			static const QString& keyAudioChannels() { static const QString key( "AudioChannels" ); return key; }
 			static const QString& keyVolumeAmplification() { static const QString key( "VolumeAmplification" ); return key; }
 			static const QString& keyVolumeNormalization() { static const QString key( "VolumeNormalization" ); return key; }
+			static const QString& keyVdpauDivx() { static const QString key( "VdpauDivx" ); return key; }
 
 		private:
 
@@ -108,6 +112,7 @@ namespace SubtitleComposer
 				defaults[keyAudioChannels()] = "";
 				defaults[keyVolumeAmplification()] = "110";
 				defaults[keyVolumeNormalization()] = "false";
+				defaults[keyVdpauDivx()] = "false";
 
 				return defaults;
 			}

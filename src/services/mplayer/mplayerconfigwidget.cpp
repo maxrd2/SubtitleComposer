@@ -40,7 +40,7 @@ MPlayerConfigWidget::MPlayerConfigWidget( QWidget* parent ):
 	pathLabel->setText( i18n( "Executable path:" ) );
 
 	m_pathUrlRequester = new KUrlRequester( generalGroupBox );
- 	m_pathUrlRequester->setWindowTitle( i18n( "Select the MPlayer executable" ) );
+	m_pathUrlRequester->setWindowTitle( i18n( "Select the MPlayer executable" ) );
 	m_pathUrlRequester->setMode( KFile::File|KFile::ExistingOnly|KFile::LocalOnly );
 	m_pathUrlRequester->setUrl( KUrl( "mplayer" ) );
 
@@ -61,7 +61,10 @@ MPlayerConfigWidget::MPlayerConfigWidget( QWidget* parent ):
 	m_videoOutputComboBox = new KComboBox( false, videoGroupBox );
 	m_videoOutputComboBox->setEnabled( false );
 	m_videoOutputComboBox->setEditable( true );
-	m_videoOutputComboBox->addItems( QString( "xv xvmc x11 gl gl2 sdl tdfxfb s3fb xover dga ggi fbdev fbdev2 v4l2 bl directfb dfbmga null" ).split( ' ' ) );
+	m_videoOutputComboBox->addItems( QString( "vdpau xv xvmc x11 gl gl2 sdl tdfxfb s3fb xover dga ggi fbdev fbdev2 v4l2 bl directfb dfbmga null" ).split( ' ' ) );
+
+	m_vdpauDivxCheckBox = new QCheckBox( videoGroupBox );
+	m_vdpauDivxCheckBox->setText( i18n( "Enable vdpau for DivX/XviD" ) );
 
 	m_frameDropCheckBox = new QCheckBox( videoGroupBox );
 	m_frameDropCheckBox->setText( i18n( "Allow frame dropping" ) );
@@ -110,8 +113,9 @@ MPlayerConfigWidget::MPlayerConfigWidget( QWidget* parent ):
 	QGridLayout* videoLayout = createGridLayout( videoGroupBox );
 	videoLayout->addWidget( m_videoOutputCheckBox, 0, 0, Qt::AlignRight|Qt::AlignVCenter );
 	videoLayout->addWidget( m_videoOutputComboBox, 0, 1 );
-	videoLayout->addWidget( m_frameDropCheckBox, 1, 0, 1, 2 );
-	videoLayout->addWidget( m_hardFrameDropCheckBox, 2, 0, 1, 2 );
+	videoLayout->addWidget( m_vdpauDivxCheckBox, 1, 0, 1, 2 );
+	videoLayout->addWidget( m_frameDropCheckBox, 2, 0, 1, 2 );
+	videoLayout->addWidget( m_hardFrameDropCheckBox, 3, 0, 1, 2 );
 
 	QGridLayout* audioLayout = createGridLayout( audioGroupBox );
 	audioLayout->addWidget( m_audioOutputCheckBox, 0, 0, Qt::AlignRight|Qt::AlignVCenter );
@@ -134,6 +138,7 @@ MPlayerConfigWidget::MPlayerConfigWidget( QWidget* parent ):
 	connect( m_avsyncSpinBox, SIGNAL( valueChanged(int) ), this, SIGNAL( settingsChanged() ) );
 
 	connect( m_videoOutputCheckBox, SIGNAL( toggled(bool) ), this, SIGNAL( settingsChanged() ) );
+	connect( m_vdpauDivxCheckBox, SIGNAL( toggled(bool) ), this, SIGNAL( settingsChanged() ) );
 	connect( m_videoOutputComboBox, SIGNAL( textChanged(const QString&) ), this, SIGNAL( settingsChanged() ) );
 	connect( m_frameDropCheckBox, SIGNAL( toggled(bool) ), this, SIGNAL( settingsChanged() ) );
 	connect( m_hardFrameDropCheckBox, SIGNAL( toggled(bool) ), this, SIGNAL( settingsChanged() ) );
@@ -159,6 +164,7 @@ void MPlayerConfigWidget::setConfigFromControls()
 	config()->setAutoSyncFactor( m_avsyncCheckBox->isChecked() ? m_avsyncSpinBox->value() : -1 );
 
 	config()->setVideoOutput( m_videoOutputCheckBox->isChecked() ? m_videoOutputComboBox->currentText() : QString() );
+	config()->setVdpauDivx( m_vdpauDivxCheckBox->isChecked() );
 	config()->setFrameDropping( m_frameDropCheckBox->isChecked() );
 	config()->setHardFrameDropping( m_hardFrameDropCheckBox->isChecked() );
 
@@ -180,6 +186,7 @@ void MPlayerConfigWidget::setControlsFromConfig()
 	m_videoOutputCheckBox->setChecked( config()->hasVideoOutput() );
 	if ( m_videoOutputCheckBox->isChecked() )
 		m_videoOutputComboBox->setEditText( config()->videoOutput() );
+	m_vdpauDivxCheckBox->setChecked( config()->vdpauDivx() );
 	m_frameDropCheckBox->setChecked( config()->frameDropping() );
 	m_hardFrameDropCheckBox->setChecked( config()->hardFrameDropping() );
 

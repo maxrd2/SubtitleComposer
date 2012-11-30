@@ -55,6 +55,7 @@ namespace SubtitleComposer
 
 		private:
 
+			QCheckBox* m_vdpauDivxCheckBox;
 			QCheckBox* m_frameDropCheckBox;
 			QCheckBox* m_hardFrameDropCheckBox;
 			KComboBox* m_videoOutputComboBox;
