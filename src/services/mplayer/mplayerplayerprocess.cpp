@@ -39,11 +39,14 @@ MPlayerPlayerProcess::MPlayerPlayerProcess( const MPlayerConfig* const config, Q
 	m_isMediaDataLoaded( false ),
 	m_isPaused( false ),
 	m_emitPlaying( false ),
+	m_version ( 0 ),
+	m_revision ( "" ),
 	m_positionRegExp( "^[AV]: *([0-9,:.-]+)" ),
 	m_videoFrameRegExp( "^[AV]:.* (\\d+)\\/.\\d+" ),
 	m_generalTagRegExp( "^(ID_.*)=(.*)" ),
 	m_audioTagRegExp( "^ID_AID_(\\d+)_(LANG|NAME)=(.*)" ),
-	m_pausedTagRegExp( "^ID_PAUSED" )
+	m_pausedTagRegExp( "^ID_PAUSED" ),
+	m_versionTagRegExp( "^MPlayer(\\d?) (\\S+) " )
 {
 	connect( this, SIGNAL(readyReadStandardOutput()), this, SLOT(onReadyReadStandardOutput()) );
 	connect( this, SIGNAL(bytesWritten(qint64)), this, SLOT(onWroteToStdin()) );
@@ -79,7 +82,7 @@ bool MPlayerPlayerProcess::start( const QString& filePath, int winId, int audioS
 	args << "-noquiet";
 	args << "-nofs"; // no mplayer fullscreen mode
 	args << "-identify"; // makes mplayer emit all kinds of additional information
-	args << "-slave"; // enable slave mode so we can sent commands to mplayer process
+	args << "-slave"; // enable slave mode so we can send commands to mplayer process
 	args << "-input" << "nodefault-bindings:conf=/dev/null"; // disable mplayer input handling
 
 	if ( m_config->hasVideoOutput() )
@@ -430,6 +433,14 @@ void MPlayerPlayerProcess::parseLine( const QString& line )
 				if ( ! ok )
 					m_mediaData.videoFPS = 0.0;
 			}
+		} else if( m_version == 0 && m_versionTagRegExp.indexIn( line ) > -1 ) {
+			// parse version string
+			bool ok;
+			m_version = m_versionTagRegExp.cap(1).toInt(&ok);
+			if(!ok)
+				m_version = 1;
+
+			m_revision = m_versionTagRegExp.cap(2);
 		}
 	}
 }

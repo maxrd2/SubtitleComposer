@@ -62,6 +62,9 @@ namespace SubtitleComposer
 
 			void sendQuit();
 
+			inline quint8 version() const { return m_version; };
+			inline const QString & revision() const { return m_revision; };
+
 		signals:
 
 			void mediaDataLoaded();
@@ -104,11 +107,15 @@ namespace SubtitleComposer
 			bool m_isPaused;
 			bool m_emitPlaying;
 
+			quint8 m_version;
+			QString m_revision;
+
 			QRegExp m_positionRegExp;
 			QRegExp m_videoFrameRegExp;
 			QRegExp m_generalTagRegExp;
 			QRegExp m_audioTagRegExp;
 			QRegExp m_pausedTagRegExp;
+			QRegExp m_versionTagRegExp;
 	};
 }
 

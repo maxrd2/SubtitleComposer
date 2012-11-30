@@ -178,11 +178,13 @@ bool MPlayerPlayerBackend::seek( double seconds, bool accurate )
 
 		m_reportUpdates = false;
 
-		if ( ! wasPaused )
-			m_process->sendTogglePause();
+		if(m_process->version() == 1) {
+			if ( ! wasPaused )
+				m_process->sendTogglePause();
 
-		if ( ! wasMuted )
-			m_process->sendToggleMute();
+			if ( ! wasMuted )
+				m_process->sendToggleMute();
+		}
 
 		double seekPosition = seconds;
 		do
@@ -200,11 +202,13 @@ bool MPlayerPlayerBackend::seek( double seconds, bool accurate )
 		}
 		while ( m_position > seconds );
 
-		if ( ! wasMuted )
-			m_process->sendToggleMute();
+		if(m_process->version() == 1) {
+			if ( ! wasMuted )
+				m_process->sendToggleMute();
 
-		if ( ! wasPaused )
-			m_process->sendTogglePause();
+			if ( ! wasPaused )
+				m_process->sendTogglePause();
+		}
 
 		m_reportUpdates = true;
 
