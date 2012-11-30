@@ -10,6 +10,7 @@ SET( services_xine_DEFS
 
 SET( services_xine_LIBS
 	${XINE_LIBRARY}
+	-lX11
 	CACHE INTERNAL EXPORTEDVARIABLE
 )
 
