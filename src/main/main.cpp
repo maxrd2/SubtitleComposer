@@ -40,20 +40,20 @@ int main( int argc, char** argv )
 	KAboutData aboutData(
 		"subtitlecomposer",								// The program name used internally.
 		"subtitlecomposer",								// The message catalog name.
-		ki18n( "Subtitle Composer" ),					// A displayable program name string.
-		"0.5.3svn",										// The program version string.
-		ki18n( "A KDE subtitle editor." ),				// A short description of what the program does.
+		ki18n("Subtitle Composer"),					// A displayable program name string.
+		"0.5.4",										// The program version string.
+		ki18n("A KDE subtitle editor."),				// A short description of what the program does.
 		KAboutData::License_GPL,						// License identifier
-		ki18n( "(C) 2007-2009 Sergio Pistone" ),		// Copyright Statement
+		ki18n("(C) 2007-2009 Sergio Pistone"),		// Copyright Statement
 		KLocalizedString(),								// Additional text
 		// We are not a project under the KDE umbrella (hopefully, we will be someday)
-		"http://sourceforge.net/projects/subcomposer",	// Project Homepage
+		"https://github.com/maxrd2/subtitlecomposer",	// Project Homepage
 		"sergio_pistone@yahoo.com.ar"					// Address for bugs
 	);
 
 	aboutData.addAuthor(
-		ki18n( "Sergio Pistone" ),						// name
-		ki18n( "Author & maintainer" ),					// task
+		ki18n("Sergio Pistone"),						// name
+		ki18n("Author & Maintainer"),					// task
 		"sergio_pistone@yahoo.com.ar"					// email
 	);
 

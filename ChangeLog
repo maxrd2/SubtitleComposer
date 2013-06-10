@@ -1,3 +1,8 @@
+Version 0.5.4:
+- mplayer2 support
+- mplayer VDPAU decoding support
+- minor cmake build fixes
+
 Version 0.5.3:
 - added Czech, Brazilian Portuguese, Bulgarian, French and German translations contributed by Petr
   Gadula, Marcio P. Moraes, Petar Toushkov, Thomas Gastine and Panagiotis Papadopoulos respectively
