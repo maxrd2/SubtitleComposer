@@ -2,7 +2,7 @@ INCLUDE_DIRECTORIES(
 	${CMAKE_CURRENT_BINARY_DIR} # so files can find config.h
 	${CMAKE_CURRENT_SOURCE_DIR} # so that we can refer to our files starting at src dir
 	${KDE4_INCLUDES} # so we don't need to include it in other files
-	${QT_INCLUDES} # same as previous
+	${QT4_INCLUDES} # same as previous
 )
 
 ADD_DEFINITIONS( ${QT_DEFINITIONS} ${KDE4_DEFINITIONS} -fexceptions -DHAVE_CONFIG_H )
