@@ -48,10 +48,10 @@ MPlayerPlayerProcess::MPlayerPlayerProcess( const MPlayerConfig* const config, Q
 	m_pausedTagRegExp( "^ID_PAUSED" ),
 	m_versionTagRegExp( "^MPlayer(\\d?) (\\S+) " )
 {
-	connect( this, SIGNAL(readyReadStandardOutput()), this, SLOT(onReadyReadStandardOutput()) );
-	connect( this, SIGNAL(bytesWritten(qint64)), this, SLOT(onWroteToStdin()) );
-	connect( &m_commandsQueueTimer, SIGNAL(timeout()), this, SLOT(onTimeout()) );
-	connect( this, SIGNAL(stateChanged(QProcess::ProcessState)), this, SLOT(onStateChanged(QProcess::ProcessState)) );
+	connect(this, SIGNAL(readyReadStandardOutput()), this, SLOT(onReadyReadStandardOutput()));
+	connect(this, SIGNAL(bytesWritten(qint64)), this, SLOT(onWroteToStdin()));
+	connect(&m_commandsQueueTimer, SIGNAL(timeout()), this, SLOT(onTimeout()));
+	connect(this, SIGNAL(stateChanged(QProcess::ProcessState)), this, SLOT(onStateChanged(QProcess::ProcessState)));
 }
 
 MPlayerPlayerProcess::~MPlayerPlayerProcess()
@@ -86,7 +86,7 @@ bool MPlayerPlayerProcess::start( const QString& filePath, int winId, int audioS
 	args << "-input" << "nodefault-bindings:conf=/dev/null"; // disable mplayer input handling
 
 	if ( m_config->hasVideoOutput() )
-	{	
+	{
 		args << "-vo" << m_config->videoOutput();
 		if ( m_config->videoOutput() == "vdpau" )
 		{
@@ -142,8 +142,11 @@ bool MPlayerPlayerProcess::start( const QString& filePath, int winId, int audioS
 
 	args << filePath;
 
-	QProcess::start( KStandardDirs::findExe( m_config->executablePath() ), args );
-	return waitForStarted( -1 );
+//	kDebug() << KStandardDirs::findExe( m_config->executablePath() ) << " " << args.join(" ");
+
+	setProcessChannelMode(QProcess::MergedChannels);
+	QProcess::start(KStandardDirs::findExe(m_config->executablePath()), args);
+	return waitForStarted(-1);
 }
 
 
@@ -218,16 +221,16 @@ void MPlayerPlayerProcess::sendCommand( const QByteArray& cmd, MPlayerPlayerProc
 
 	if ( mode == Pausing || (mode == PausingKeep && m_isPaused) )
 	{
-// 		kDebug() << "sending pausing" << cmd;
+//		kDebug() << "sending pausing" << cmd;
 
 		if ( block )
 		{
 			QxtSignalWaiter pauseWaiter( this, SIGNAL(pausedReceived()) );
 			write( "pausing " + cmd + '\n' );
-// 			kDebug() << "WAITING";
+//			kDebug() << "WAITING";
 			if ( ! pauseWaiter.wait( 5000 ) )
 				kDebug() << ">>>>>>>TIMEDOUT<<<<<<<";
-// 			kDebug() << "WAITED";
+//			kDebug() << "WAITED";
 		}
 		else
 		{
@@ -236,17 +239,17 @@ void MPlayerPlayerProcess::sendCommand( const QByteArray& cmd, MPlayerPlayerProc
 	}
 	else // if ( mode == Playing || (mode == PausingKeep && ! m_isPaused) )
 	{
-// 		kDebug() << "sending" << cmd;
+//		kDebug() << "sending" << cmd;
 
 		if ( block )
 		{
 			QxtSignalWaiter playingWaiter( this, SIGNAL(playingReceived()) );
 			m_emitPlaying = true; // to make the playingReceived() signal be emmited again
 			write( cmd + '\n' );
-// 			kDebug() << "WAITING";
+//			kDebug() << "WAITING";
 			if ( ! playingWaiter.wait( 5000 ) )
 				kDebug() << ">>>>>>TIMEDOUT<<<<<<<";
-// 			kDebug() << "WAITED";
+//			kDebug() << "WAITED";
 		}
 		else
 		{
@@ -284,16 +287,15 @@ void MPlayerPlayerProcess::queueCommand( const QByteArray& cmd, MPlayerPlayerPro
 void MPlayerPlayerProcess::onReadyReadStandardOutput()
 {
 	QByteArray newData = readAllStandardOutput();
-	if ( ! newData.size() )
+	if(!newData.size())
 		return;
 
-	m_incompleteLine.append( newData );
-	m_incompleteLine.replace( 0x0D, '\n' );
+	m_incompleteLine.append(newData);
+	m_incompleteLine.replace(0x0D, '\n');
 
-	for ( int idx = m_incompleteLine.indexOf( '\n' ); idx > -1; idx = m_incompleteLine.indexOf( '\n' ) )
-	{
-		parseLine( QString::fromLocal8Bit( m_incompleteLine.left( idx ).constData() ) );
-		m_incompleteLine = m_incompleteLine.mid( idx + 1 );
+	for(int idx = m_incompleteLine.indexOf('\n'); idx > -1; idx = m_incompleteLine.indexOf('\n')) {
+		parseLine(QString::fromLocal8Bit(m_incompleteLine.left(idx).constData()));
+		m_incompleteLine = m_incompleteLine.mid(idx + 1);
 	}
 }
 
@@ -324,7 +326,7 @@ void MPlayerPlayerProcess::parseLine( const QString& line )
 	if ( line.isEmpty() )
 		return;
 
-// 	kDebug() << line;
+//	kDebug() << line;
 
 	if ( m_mediaData.videoFPS != 0.0 && m_videoFrameRegExp.indexIn( line ) > -1 )
 	{
