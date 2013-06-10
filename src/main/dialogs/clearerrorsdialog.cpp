@@ -28,20 +28,20 @@
 
 using namespace SubtitleComposer;
 
-ClearErrorsDialog::ClearErrorsDialog( QWidget* parent ):
-	ActionWithErrorTargetsDialog( i18n( "Clear Errors" ), parent )
+ClearErrorsDialog::ClearErrorsDialog(QWidget * parent):
+ActionWithErrorTargetsDialog(i18n("Clear Errors"), parent)
 {
-	createErrorsGroupBox( i18nc( "@title:group", "Errors to Clear" ) );
-	createErrorsButtons( true, translationMode() );
+	createErrorsGroupBox(i18nc("@title:group", "Errors to Clear"));
+	createErrorsButtons(true, translationMode());
 
 	createLineTargetsButtonGroup();
 	createTextTargetsButtonGroup();
 }
 
-void ClearErrorsDialog::setTranslationMode( bool value )
+void ClearErrorsDialog::setTranslationMode(bool value)
 {
-	ActionWithErrorTargetsDialog::setTranslationMode( value );
-	createErrorsButtons( true, value );
+	ActionWithErrorTargetsDialog::setTranslationMode(value);
+	createErrorsButtons(true, value);
 }
 
 

@@ -33,97 +33,87 @@
 
 using namespace SubtitleComposer;
 
-SaveSubtitleDialog::SaveSubtitleDialog( bool primary, const KUrl& startDir, const QString& encoding, Format::NewLine newLine, const QString& format, QWidget* parent ):
-	KFileDialog( startDir, outputFormatsFilter(), parent )
+SaveSubtitleDialog::SaveSubtitleDialog(bool primary, const KUrl & startDir, const QString & encoding, Format::NewLine newLine, const QString & format, QWidget * parent):KFileDialog(startDir, outputFormatsFilter(), parent)
 {
-	setCaption( primary ? i18n( "Save Subtitle" ) : i18n( "Save Translation Subtitle" ) );
-	setOperationMode( KFileDialog::Saving );
+	setCaption(primary ? i18n("Save Subtitle") : i18n("Save Translation Subtitle"));
+	setOperationMode(KFileDialog::Saving);
 
-	setModal( true );
-	setMode( KFile::File );
-	setConfirmOverwrite( true );
+	setModal(true);
+	setMode(KFile::File);
+	setConfirmOverwrite(true);
 
-	filterWidget()->setEditable( false );
+	filterWidget()->setEditable(false);
 
-	if ( FormatManager::instance().output( format ) )
-		setCurrentFilter( format );
+	if(FormatManager::instance().output(format))
+		setCurrentFilter(format);
 	else
-		setCurrentFilter( FormatManager::instance().outputNames().first() );
+		setCurrentFilter(FormatManager::instance().outputNames().first());
 
 	// setting the current filter will force the first valid extension for the format which
 	// may not be the one of the file (even when the file's extension is perfectly valid)
-	setSelection( startDir.prettyUrl() );
+	setSelection(startDir.prettyUrl());
 
-	QWidget* customWidget = new QWidget( this );
+	QWidget *customWidget = new QWidget(this);
 
-	m_encodingComboBox = new KComboBox( customWidget );
-	m_encodingComboBox->addItems( app()->availableEncodingNames() );
-	m_encodingComboBox->setCurrentItem( encoding.toUpper() );
-	m_encodingComboBox->setSizePolicy( QSizePolicy::MinimumExpanding, QSizePolicy::Fixed );
+	m_encodingComboBox = new KComboBox(customWidget);
+	m_encodingComboBox->addItems(app()->availableEncodingNames());
+	m_encodingComboBox->setCurrentItem(encoding.toUpper());
+	m_encodingComboBox->setSizePolicy(QSizePolicy::MinimumExpanding, QSizePolicy::Fixed);
 
-	m_newLineComboBox = new KComboBox( customWidget );
-	m_newLineComboBox->addItems( QStringList() << "UNIX" << "Windows" << "Macintosh" );
-	m_newLineComboBox->setCurrentIndex( newLine );
-	m_newLineComboBox->setSizePolicy( QSizePolicy::Minimum, QSizePolicy::Fixed );
+	m_newLineComboBox = new KComboBox(customWidget);
+	m_newLineComboBox->addItems(QStringList() << "UNIX" << "Windows" << "Macintosh");
+	m_newLineComboBox->setCurrentIndex(newLine);
+	m_newLineComboBox->setSizePolicy(QSizePolicy::Minimum, QSizePolicy::Fixed);
 
-	QLabel* newLineLabel = new QLabel( customWidget );
-	newLineLabel->setText( i18n( "EOL:" ) );
-	newLineLabel->setSizePolicy( QSizePolicy::Fixed, QSizePolicy::Fixed );
-	newLineLabel->setBuddy( m_newLineComboBox );
+	QLabel *newLineLabel = new QLabel(customWidget);
+	newLineLabel->setText(i18n("EOL:"));
+	newLineLabel->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
+	newLineLabel->setBuddy(m_newLineComboBox);
 
-	QGridLayout* layout = new QGridLayout( customWidget );
-	layout->setContentsMargins( 0, 0, 0, 0 );
-	layout->addWidget( m_encodingComboBox, 0, 0 );
-	layout->addWidget( newLineLabel, 0, 1 );
-	layout->addWidget( m_newLineComboBox, 0, 2 );
+	QGridLayout *layout = new QGridLayout(customWidget);
+	layout->setContentsMargins(0, 0, 0, 0);
+	layout->addWidget(m_encodingComboBox, 0, 0);
+	layout->addWidget(newLineLabel, 0, 1);
+	layout->addWidget(m_newLineComboBox, 0, 2);
 
 	// FIXME set "encoding" label buddy to m_encodingComboBox (how do we get the "encoding" label widget?)
-	fileWidget()->setCustomWidget( i18n( "Encoding:" ), customWidget );
+	fileWidget()->setCustomWidget(i18n("Encoding:"), customWidget);
 }
 
-QString SaveSubtitleDialog::selectedEncoding() const
-{
+QString SaveSubtitleDialog::selectedEncoding() const {
 	return m_encodingComboBox->currentText();
-}
-
-void SaveSubtitleDialog::setCurrentFilter( const QString& formatName )
+} void SaveSubtitleDialog::setCurrentFilter(const QString & formatName)
 {
-	const OutputFormat* format = FormatManager::instance().output( formatName );
-	if ( format )
-	{
-		QStringList extensions( format->extensions() );
+	const OutputFormat *format = FormatManager::instance().output(formatName);
+	if(format) {
+		QStringList extensions(format->extensions());
 		QString filter;
-		for ( QStringList::ConstIterator it = extensions.begin(), end = extensions.end(); it != end; ++it )
+		for(QStringList::ConstIterator it = extensions.begin(), end = extensions.end(); it != end; ++it)
 			filter += "*." + *it + " *." + (*it).toUpper();
 		filter += '|' + formatName;
 
-		filterWidget()->setCurrentFilter( filter );
+		filterWidget()->setCurrentFilter(filter);
 	}
 }
 
-QString SaveSubtitleDialog::selectedFormat() const
-{
+QString SaveSubtitleDialog::selectedFormat() const {
 	return filterWidget()->currentText();
-}
-
-Format::NewLine SaveSubtitleDialog::selectedNewLine() const
+} Format::NewLine SaveSubtitleDialog::selectedNewLine() const
 {
-	return m_newLineComboBox ? (Format::NewLine)m_newLineComboBox->currentIndex() : Format::CurrentOS;
+	return m_newLineComboBox ? (Format::NewLine) m_newLineComboBox->currentIndex() : Format::CurrentOS;
 }
 
 QString SaveSubtitleDialog::outputFormatsFilter()
 {
 	static QString filter;
 
-	if ( filter.isEmpty() )
-	{
+	if(filter.isEmpty()) {
 		QStringList formats = FormatManager::instance().outputNames();
-		for ( QStringList::ConstIterator it = formats.begin(), end = formats.end(); it != end; ++it )
-		{
-			const OutputFormat* format = FormatManager::instance().output( *it );
-			const QStringList& formatExtensions = format->extensions();
+		for(QStringList::ConstIterator it = formats.begin(), end = formats.end(); it != end; ++it) {
+			const OutputFormat *format = FormatManager::instance().output(*it);
+			const QStringList & formatExtensions = format->extensions();
 			QString extensions;
-			for ( QStringList::ConstIterator extIt = formatExtensions.begin(), extEnd = formatExtensions.end(); extIt != extEnd; ++extIt )
+			for(QStringList::ConstIterator extIt = formatExtensions.begin(), extEnd = formatExtensions.end(); extIt != extEnd; ++extIt)
 				extensions += "*." + *extIt + " *." + (*extIt).toUpper();
 			filter += '\n' + extensions + '|' + format->name();
 		}

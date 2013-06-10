@@ -31,53 +31,50 @@
 
 using namespace SubtitleComposer;
 
-JoinSubtitlesDialog::JoinSubtitlesDialog( QWidget* parent ):
-	SelectableSubtitleDialog( i18n( "Join Subtitles" ), parent )
+JoinSubtitlesDialog::JoinSubtitlesDialog(QWidget * parent):
+SelectableSubtitleDialog(i18n("Join Subtitles"), parent)
 {
 	createSubtitleGroupBox();
 
-	m_shiftSubtitleCheckBox = new QCheckBox( m_subtitleGroupBox );
-	m_shiftSubtitleCheckBox->setText( i18n( "Shift subtitle forwards before append" ) );
-	m_shiftSubtitleCheckBox->setChecked( true );
+	m_shiftSubtitleCheckBox = new QCheckBox(m_subtitleGroupBox);
+	m_shiftSubtitleCheckBox->setText(i18n("Shift subtitle forwards before append"));
+	m_shiftSubtitleCheckBox->setChecked(true);
 
-	m_shiftTimeFromVideoButton = new KPushButton( m_subtitleGroupBox );
-	m_shiftTimeFromVideoButton->setIcon( KIcon( "time-from-video" ) );
+	m_shiftTimeFromVideoButton = new KPushButton(m_subtitleGroupBox);
+	m_shiftTimeFromVideoButton->setIcon(KIcon("time-from-video"));
 	int buttonSize = m_shiftTimeFromVideoButton->sizeHint().height();
-	m_shiftTimeFromVideoButton->setFixedSize( buttonSize, buttonSize );
-	m_shiftTimeFromVideoButton->setToolTip( i18n( "Set from video length" ) );
+	m_shiftTimeFromVideoButton->setFixedSize(buttonSize, buttonSize);
+	m_shiftTimeFromVideoButton->setToolTip(i18n("Set from video length"));
 
-	m_shiftTimeEdit = new TimeEdit( m_subtitleGroupBox );
+	m_shiftTimeEdit = new TimeEdit(m_subtitleGroupBox);
 
-	connect( m_shiftTimeFromVideoButton, SIGNAL( clicked() ), SLOT( setShiftTimeFromVideo() ) );
-	connect( m_shiftSubtitleCheckBox, SIGNAL( toggled(bool) ), m_shiftTimeFromVideoButton, SLOT( setEnabled(bool) ) );
-	connect( m_shiftSubtitleCheckBox, SIGNAL( toggled(bool) ), m_shiftTimeEdit, SLOT( setEnabled(bool) ) );
+	connect(m_shiftTimeFromVideoButton, SIGNAL(clicked()), SLOT(setShiftTimeFromVideo()));
+	connect(m_shiftSubtitleCheckBox, SIGNAL(toggled(bool)), m_shiftTimeFromVideoButton, SLOT(setEnabled(bool)));
+	connect(m_shiftSubtitleCheckBox, SIGNAL(toggled(bool)), m_shiftTimeEdit, SLOT(setEnabled(bool)));
 
 	createTargetsGroupBox();
 	createTextTargetsButtonGroup();
 
-	QHBoxLayout* shiftTimeLayout = new QHBoxLayout();
+	QHBoxLayout *shiftTimeLayout = new QHBoxLayout();
 	shiftTimeLayout->addStretch();
-	shiftTimeLayout->addWidget( m_shiftTimeFromVideoButton );
-	shiftTimeLayout->addWidget( m_shiftTimeEdit );
+	shiftTimeLayout->addWidget(m_shiftTimeFromVideoButton);
+	shiftTimeLayout->addWidget(m_shiftTimeEdit);
 
-	m_subtitleLayout->addWidget( m_shiftSubtitleCheckBox, 2, 0, 1, 2 );
-	m_subtitleLayout->addLayout( shiftTimeLayout, 2, 2 );
+	m_subtitleLayout->addWidget(m_shiftSubtitleCheckBox, 2, 0, 1, 2);
+	m_subtitleLayout->addLayout(shiftTimeLayout, 2, 2);
 }
 
 void JoinSubtitlesDialog::setShiftTimeFromVideo()
 {
-	m_shiftTimeEdit->setValue( (int)(Player::instance()->length()*1000 + 0.5) );
+	m_shiftTimeEdit->setValue((int)(Player::instance()->length() * 1000 + 0.5));
 }
 
-Time JoinSubtitlesDialog::shiftTime() const
-{
+Time JoinSubtitlesDialog::shiftTime() const {
 	return m_shiftSubtitleCheckBox->isChecked() ? m_shiftTimeEdit->value() : 0;
-}
-
-void JoinSubtitlesDialog::show()
+} void JoinSubtitlesDialog::show()
 {
-	m_shiftTimeFromVideoButton->setEnabled( Player::instance()->state() > Player::Opening );
-	if ( m_shiftTimeFromVideoButton->isEnabled() )
+	m_shiftTimeFromVideoButton->setEnabled(Player::instance()->state() > Player::Opening);
+	if(m_shiftTimeFromVideoButton->isEnabled())
 		setShiftTimeFromVideo();
 
 	SelectableSubtitleDialog::show();

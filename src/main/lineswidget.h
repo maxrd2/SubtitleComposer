@@ -21,7 +21,7 @@
 ***************************************************************************/
 
 #ifdef HAVE_CONFIG_H
-	#include <config.h>
+#include <config.h>
 #endif
 
 #include "../core/rangelist.h"
@@ -39,200 +39,180 @@
 class QTextDocument;
 class QTimer;
 
-namespace SubtitleComposer
-{
-	class LinesModel : public QAbstractListModel
-	{
-		Q_OBJECT
+namespace SubtitleComposer {
+	class LinesModel:public QAbstractListModel {
+	Q_OBJECT public:
 
-		public:
+		enum { Number = 0, ShowTime, HideTime, Text, Translation, ColumnCount };
+		enum { PlayingLineRole = Qt::UserRole, MarkedRole, ErrorRole };
 
-			enum { Number=0, ShowTime, HideTime, Text, Translation, ColumnCount };
-			enum { PlayingLineRole=Qt::UserRole, MarkedRole, ErrorRole };
+		explicit LinesModel(QObject * parent = 0);
 
-			explicit LinesModel( QObject* parent=0 );
+		Subtitle *subtitle() const;
+		void setSubtitle(Subtitle * subtitle);
 
-			Subtitle* subtitle() const;
-			void setSubtitle( Subtitle* subtitle );
+		SubtitleLine *playingLine() const;
+		void setPlayingLine(SubtitleLine * line);
 
-			SubtitleLine* playingLine() const;
-			void setPlayingLine( SubtitleLine* line );
+		virtual int rowCount(const QModelIndex & parent = QModelIndex())const;
+		virtual int columnCount(const QModelIndex & parent = QModelIndex())const;
 
-			virtual int rowCount( const QModelIndex& parent=QModelIndex() ) const;
-			virtual int columnCount( const QModelIndex& parent=QModelIndex() ) const;
+		virtual Qt::ItemFlags flags(const QModelIndex & index) const;
 
-			virtual Qt::ItemFlags flags( const QModelIndex& index ) const;
+		virtual QVariant headerData(int section, Qt::Orientation orientation, int role = Qt::DisplayRole) const;
 
-			virtual QVariant headerData( int section, Qt::Orientation orientation, int role=Qt::DisplayRole ) const;
+		virtual QVariant data(const QModelIndex & index, int role) const;
+		virtual bool setData(const QModelIndex & index, const QVariant & value, int role = Qt::EditRole);
 
-			virtual QVariant data( const QModelIndex& index, int role ) const;
-			virtual bool setData( const QModelIndex& index, const QVariant& value, int role=Qt::EditRole );
+		private slots:void onLinesInserted(int firstIndex, int lastIndex);
+		void onLinesRemoved(int firstIndex, int lastIndex);
 
-		private slots:
+		void onLineChanged(SubtitleLine * line);
+		void emitDataChanged();
 
-			void onLinesInserted( int firstIndex, int lastIndex );
-			void onLinesRemoved( int firstIndex, int lastIndex );
+	private:
 
-			void onLineChanged( SubtitleLine* line );
-			void emitDataChanged();
+		static QString buildToolTip(SubtitleLine * line, bool primary);
 
-		private:
+	private:
 
-			static QString buildToolTip( SubtitleLine* line, bool primary );
-
-		private:
-
-			Subtitle* m_subtitle;
-			SubtitleLine* m_playingLine;
-			QTimer* m_dataChangedTimer;
-			int m_minChangedLineIndex;
-			int m_maxChangedLineIndex;
+		Subtitle * m_subtitle;
+		SubtitleLine *m_playingLine;
+		QTimer *m_dataChangedTimer;
+		int m_minChangedLineIndex;
+		int m_maxChangedLineIndex;
 	};
 
 	class LinesWidget;
 
-	class LinesItemDelegate : public QStyledItemDelegate
-	{
-		public:
+	class LinesItemDelegate:public QStyledItemDelegate {
+	public:
 
-			typedef enum {
-				NoHint = QAbstractItemDelegate::NoHint,
-				EditNextItem = QAbstractItemDelegate::EditNextItem,
-				EditPreviousItem = QAbstractItemDelegate::EditPreviousItem,
-				SubmitModelCache = QAbstractItemDelegate::SubmitModelCache,
-				RevertModelCache = QAbstractItemDelegate::RevertModelCache,
-				EditUpperItem,
-				EditLowerItem,
-			} ExtendedEditHint;
+		typedef enum {
+			NoHint = QAbstractItemDelegate::NoHint,
+			EditNextItem = QAbstractItemDelegate::EditNextItem,
+			EditPreviousItem = QAbstractItemDelegate::EditPreviousItem,
+			SubmitModelCache = QAbstractItemDelegate::SubmitModelCache,
+			RevertModelCache = QAbstractItemDelegate::RevertModelCache,
+			EditUpperItem,
+			EditLowerItem,
+		} ExtendedEditHint;
 
-			LinesItemDelegate( bool useStyle, bool singleLineMode, bool richTextMode, LinesWidget* parent );
-			virtual ~LinesItemDelegate();
+		LinesItemDelegate(bool useStyle, bool singleLineMode, bool richTextMode, LinesWidget * parent);
+		virtual ~ LinesItemDelegate();
 
-			inline LinesWidget* linesWidget() const { return qobject_cast<LinesWidget*>( parent() ); }
+		inline LinesWidget *linesWidget() const {
+			return qobject_cast < LinesWidget * >(parent());
+		}
+		bool useStyle() const;
+		void setUseStyle(bool useStyle);
 
-			bool useStyle() const;
-			void setUseStyle( bool useStyle );
+		bool singleLineMode() const;
+		void setSingleLineMode(bool singleLineMode);
 
-			bool singleLineMode() const;
-			void setSingleLineMode( bool singleLineMode );
+		bool richTextMode() const;
+		void setRichTextMode(bool richTextMode);
 
-			bool richTextMode() const;
-			void setRichTextMode( bool richTextMode );
+		virtual QString displayText(const QVariant & value, const QLocale & locale) const;
 
-			virtual QString displayText( const QVariant& value, const QLocale& locale ) const;
+		static const QIcon & markIcon();
+		static const QIcon & errorIcon();
 
-			static const QIcon& markIcon();
-			static const QIcon& errorIcon();
+		static const QPixmap & markPixmap();
+		static const QPixmap & errorPixmap();
 
-			static const QPixmap& markPixmap();
-			static const QPixmap& errorPixmap();
+	protected:
 
-		protected:
+		virtual bool eventFilter(QObject * object, QEvent * event);
 
-			virtual bool eventFilter( QObject* object, QEvent* event );
+		virtual void paint(QPainter * painter, const QStyleOptionViewItem & option, const QModelIndex & index) const;
 
-			virtual void paint( QPainter* painter, const QStyleOptionViewItem& option, const QModelIndex& index ) const;
+		void drawBackgroundPrimitive(QPainter * painter, const QStyle * style, const QStyleOptionViewItemV4 & option) const;
 
-			void drawBackgroundPrimitive( QPainter* painter, const QStyle* style,
-										  const QStyleOptionViewItemV4& option ) const;
+		void drawTextPrimitive(QPainter * painter, const QStyle * style, const QStyleOptionViewItemV4 & option, const QRect & rect, QPalette::ColorGroup cg) const;
 
-			void drawTextPrimitive( QPainter* painter, const QStyle* style,
-									const QStyleOptionViewItemV4& option, const QRect& rect, QPalette::ColorGroup cg ) const;
+	private:
 
-		private:
-
-			bool m_useStyle;
-			bool m_singleLineMode;
-			QTextDocument* m_textDocument;
+		bool m_useStyle;
+		bool m_singleLineMode;
+		QTextDocument *m_textDocument;
 	};
 
-	class LinesWidget : public TreeView
-	{
-		Q_OBJECT
+	class LinesWidget:public TreeView {
+	Q_OBJECT public:
 
-		public:
+		explicit LinesWidget(QWidget * parent);
+		virtual ~ LinesWidget();
 
-			explicit LinesWidget( QWidget* parent );
-			virtual ~LinesWidget();
+		bool showingContextMenu();
 
-			bool showingContextMenu();
+		SubtitleLine *currentLine() const;
+		int currentLineIndex() const;
 
-			SubtitleLine* currentLine() const;
-			int currentLineIndex() const;
+		int firstSelectedIndex() const;
+		int lastSelectedIndex() const;
+		bool selectionHasMultipleRanges() const;
+		RangeList selectionRanges() const;
+		RangeList targetRanges(int target) const;
 
-			int firstSelectedIndex() const;
-			int lastSelectedIndex() const;
-			bool selectionHasMultipleRanges() const;
-			RangeList selectionRanges() const;
-			RangeList targetRanges( int target ) const;
+		inline LinesModel *model() const {
+			return static_cast < LinesModel * >(TreeView::model());
+		}
+		void loadConfig();
+		void saveConfig();
 
-			inline LinesModel* model() const { return static_cast<LinesModel*>( TreeView::model() ); }
+		virtual bool eventFilter(QObject * object, QEvent * event);
 
-			void loadConfig();
-			void saveConfig();
+		public slots:void setSubtitle(Subtitle * subtitle = 0);
+		void setTranslationMode(bool enabled);
 
-			virtual bool eventFilter( QObject* object, QEvent* event );
+		void setCurrentLine(SubtitleLine * line, bool clearSelection = true);
+		void setPlayingLine(SubtitleLine * line);
 
-		public slots:
+		void editCurrentLineInPlace(bool primaryText = true);
 
-			void setSubtitle( Subtitle* subtitle=0 );
-			void setTranslationMode( bool enabled );
+		signals:void currentLineChanged(SubtitleLine * line);
+		void lineDoubleClicked(SubtitleLine * line);
 
-			void setCurrentLine( SubtitleLine* line, bool clearSelection=true );
-			void setPlayingLine( SubtitleLine* line );
+		protected slots:virtual void closeEditor(QWidget * editor, QAbstractItemDelegate::EndEditHint hint);
 
-			void editCurrentLineInPlace( bool primaryText=true );
+		virtual void rowsAboutToBeRemoved(const QModelIndex & parent, int start, int end);
+		virtual void rowsInserted(const QModelIndex & parent, int start, int end);
 
-		signals:
+	private:
 
-			void currentLineChanged( SubtitleLine* line );
-			void lineDoubleClicked( SubtitleLine* line );
+		virtual void contextMenuEvent(QContextMenuEvent * e);
+		virtual void mouseDoubleClickEvent(QMouseEvent * e);
 
-		protected slots:
+		static void drawHorizontalDotLine(QPainter * painter, int x1, int x2, int y);
+		static void drawVerticalDotLine(QPainter * painter, int x, int y1, int y2);
 
-			virtual void closeEditor( QWidget* editor, QAbstractItemDelegate::EndEditHint hint );
+		virtual void drawRow(QPainter * painter, const QStyleOptionViewItem & option, const QModelIndex & index) const;
 
-			virtual void rowsAboutToBeRemoved( const QModelIndex& parent, int start, int end );
-			virtual void rowsInserted( const QModelIndex& parent, int start, int end );
+		private slots:void onCurrentRowChanged();
 
-		private:
+	private:
 
-			virtual void contextMenuEvent( QContextMenuEvent* e );
-			virtual void mouseDoubleClickEvent( QMouseEvent* e );
+		bool m_scrollFollowsModel;
 
-			static void drawHorizontalDotLine( QPainter* painter, int x1, int x2, int y );
-			static void drawVerticalDotLine( QPainter* painter, int x, int y1, int y2 );
+		bool m_translationMode;
 
-			virtual void drawRow( QPainter* painter, const QStyleOptionViewItem& option, const QModelIndex& index ) const;
+		bool m_showingContextMenu;
 
-		private slots:
+		QPen m_gridPen;
 
-			void onCurrentRowChanged();
-
-		private:
-
-			bool m_scrollFollowsModel;
-
-			bool m_translationMode;
-
-			bool m_showingContextMenu;
-
-			QPen m_gridPen;
-
-			friend class LinesWidgetScrollToModelDetacher;
+		friend class LinesWidgetScrollToModelDetacher;
 	};
 
-	class LinesWidgetScrollToModelDetacher
-	{
-		public:
+	class LinesWidgetScrollToModelDetacher {
+	public:
 
-			LinesWidgetScrollToModelDetacher( LinesWidget& linesWidget );
-			~LinesWidgetScrollToModelDetacher();
+		LinesWidgetScrollToModelDetacher(LinesWidget & linesWidget);
+		~LinesWidgetScrollToModelDetacher();
 
-		private:
+	private:
 
-			LinesWidget& m_linesWidget;
+		LinesWidget & m_linesWidget;
 	};
 }
-
 #endif

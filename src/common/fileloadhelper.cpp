@@ -24,60 +24,52 @@
 #include <KTemporaryFile>
 #include <KIO/NetAccess>
 
-FileLoadHelper::FileLoadHelper( const KUrl& url ):
-	m_url( url ),
-	m_file( 0 )
+FileLoadHelper::FileLoadHelper(const KUrl & url):m_url(url), m_file(0)
 {
 }
 
 FileLoadHelper::~FileLoadHelper()
 {
-	if ( m_file )
+	if(m_file)
 		close();
 }
 
-const KUrl& FileLoadHelper::url()
+const KUrl & FileLoadHelper::url()
 {
 	return m_url;
 }
 
-QFile* FileLoadHelper::file()
+QFile *FileLoadHelper::file()
 {
 	return m_file;
 }
 
 bool FileLoadHelper::open()
 {
-	if ( m_file )
+	if(m_file)
 		return false;
 
-	if ( ! KIO::NetAccess::exists( m_url, KIO::NetAccess::SourceSide, 0 ) )
+	if(!KIO::NetAccess::exists(m_url, KIO::NetAccess::SourceSide, 0))
 		return false;
 
-	if ( m_url.isLocalFile() )
-	{
-		m_file = new QFile( m_url.path() );
-		if ( ! m_file->open( QIODevice::ReadOnly ) )
-		{
+	if(m_url.isLocalFile()) {
+		m_file = new QFile(m_url.path());
+		if(!m_file->open(QIODevice::ReadOnly)) {
 			kDebug() << "couldn't open input file" << m_file->fileName();
 			delete m_file;
 			m_file = 0;
 			return false;
 		}
-	}
-	else
-	{
+	} else {
 		QString tmpFile;
-		if ( ! KIO::NetAccess::download( m_url, tmpFile, 0 ) )
-		{
+		if(!KIO::NetAccess::download(m_url, tmpFile, 0)) {
 			kDebug() << "couldn't get input url:" << m_url.prettyUrl();
 			kDebug() << KIO::NetAccess::lastErrorString();
 			return false;
 		}
 
-		m_file = new QFile( tmpFile );
-		if ( ! m_file->open( QIODevice::ReadOnly ) )
-		{
+		m_file = new QFile(tmpFile);
+		if(!m_file->open(QIODevice::ReadOnly)) {
 			kDebug() << "couldn't open input file" << m_file->fileName();
 			delete m_file;
 			m_file = 0;
@@ -89,21 +81,21 @@ bool FileLoadHelper::open()
 
 bool FileLoadHelper::close()
 {
-	if ( ! m_file )
+	if(!m_file)
 		return false;
 
 	QString tmpFilePath = m_file->fileName();
 
-	delete m_file; // closes the file
+	delete m_file;				// closes the file
 	m_file = 0;
 
-	if ( ! m_url.isLocalFile() )
-		KIO::NetAccess::removeTempFile( tmpFilePath );
+	if(!m_url.isLocalFile())
+		KIO::NetAccess::removeTempFile(tmpFilePath);
 
 	return true;
 }
 
-bool FileLoadHelper::exists( const KUrl& url )
+bool FileLoadHelper::exists(const KUrl & url)
 {
-	return KIO::NetAccess::exists( url, KIO::NetAccess::SourceSide, 0 );
+	return KIO::NetAccess::exists(url, KIO::NetAccess::SourceSide, 0);
 }

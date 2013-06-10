@@ -21,37 +21,28 @@
  ***************************************************************************/
 
 #ifdef HAVE_CONFIG_H
-	#include <config.h>
+#include <config.h>
 #endif
 
 #include <QtCore/QObject>
 
-namespace SubtitleComposer
-{
-	namespace Scripting
-	{
-		class RangesModule : public QObject
-		{
-			Q_OBJECT
+namespace SubtitleComposer {
+	namespace Scripting {
+		class RangesModule:public QObject {
+		Q_OBJECT public:
 
-			public:
+			RangesModule(QObject * parent = 0);
 
-				RangesModule( QObject* parent=0 );
+			public slots:QObject * newRange(int firstIndex, int lastIndex);
 
-			public slots:
+			QObject *newLowerRange(int index);
+			QObject *newUpperRange(int index);
 
-				QObject* newRange( int firstIndex, int lastIndex );
+			QObject *newUptoLastSelectedRange();
+			QObject *newFromFirstSelectedRange();
 
-				QObject* newLowerRange( int index );
-				QObject* newUpperRange( int index );
-
-				QObject* newUptoLastSelectedRange();
-				QObject* newFromFirstSelectedRange();
-
-				QObject* newEmptyRangeList();
-				QObject* newSelectionRangeList();
+			QObject *newEmptyRangeList();
+			QObject *newSelectionRangeList();
 		};
-	}
-}
-
+}}
 #endif

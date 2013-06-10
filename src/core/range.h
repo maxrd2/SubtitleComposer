@@ -21,7 +21,7 @@
  ***************************************************************************/
 
 #ifdef HAVE_CONFIG_H
-	#include <config.h>
+#include <config.h>
 #endif
 
 #include <climits>
@@ -30,125 +30,94 @@
 
 #include <KDebug>
 
-namespace SubtitleComposer
-{
-	class Range
-	{
-		public:
+namespace SubtitleComposer {
+	class Range {
+	public:
 
-			static const int MaxIndex = INT_MAX;
+		static const int MaxIndex = INT_MAX;
 
-			Range( int index ):
-				m_start( index ),
-				m_end( index )
-			{
-				Q_ASSERT( index >= 0 );
-				Q_ASSERT( index <= MaxIndex );
-			}
+		Range(int index):m_start(index), m_end(index) {
+			Q_ASSERT(index >= 0);
+			Q_ASSERT(index <= MaxIndex);
+		} Range(int startIndex, int endIndex):m_start(startIndex), m_end(endIndex) {
+			Q_ASSERT(m_start >= 0);
+			Q_ASSERT(m_end >= 0);
+			Q_ASSERT(m_start <= m_end);
+			Q_ASSERT(m_start <= MaxIndex);
+		} Range(const Range & range):m_start(range.m_start), m_end(range.m_end) {
+		}
 
-			Range( int startIndex, int endIndex ):
-				m_start( startIndex ),
-				m_end( endIndex )
-			{
-				Q_ASSERT( m_start >= 0 );
-				Q_ASSERT( m_end >= 0 );
-				Q_ASSERT( m_start <= m_end );
-				Q_ASSERT( m_start <= MaxIndex );
-			}
-
-			Range( const Range& range ):
-				m_start( range.m_start ),
-				m_end( range.m_end )
-			{
-			}
-
-			Range& operator=( const Range& range )
-			{
-				if ( this == &range )
-					return *this;
-
-				m_start = range.m_start;
-				m_end = range.m_end;
-
+		Range & operator=(const Range & range) {
+			if(this == &range)
 				return *this;
-			}
 
-			inline static Range full()
-			{
-				return Range( 0, MaxIndex );
-			}
+			m_start = range.m_start;
+			m_end = range.m_end;
 
-			inline static Range lower( int index )
-			{
-				Q_ASSERT( index >= 0 );
-				Q_ASSERT( index <= MaxIndex );
-				return Range( 0, index );
-			}
+			return *this;
+		}
 
-			inline static Range upper( int index )
-			{
-				Q_ASSERT( index >= 0 );
-				Q_ASSERT( index <= MaxIndex );
-				return Range( index, MaxIndex );
-			}
+		inline static Range full() {
+			return Range(0, MaxIndex);
+		}
 
-			inline bool isFullRange( int maxIndex=MaxIndex ) const
-			{
-				return m_start == 0 && m_end == maxIndex;
-			}
+		inline static Range lower(int index) {
+			Q_ASSERT(index >= 0);
+			Q_ASSERT(index <= MaxIndex);
+			return Range(0, index);
+		}
 
-			inline int start() const { return m_start; }
-			inline int end() const { return m_end; }
-			inline int length() const { return m_end - m_start + 1; }
+		inline static Range upper(int index) {
+			Q_ASSERT(index >= 0);
+			Q_ASSERT(index <= MaxIndex);
+			return Range(index, MaxIndex);
+		}
 
-			inline bool contains( int index ) const
-			{
-				return index >= m_start && index <= m_end;
-			}
+		inline bool isFullRange(int maxIndex = MaxIndex)const {
+			return m_start == 0 && m_end == maxIndex;
+		}
+		inline int start() const {
+			return m_start;
+		}
+		inline int end() const {
+			return m_end;
+		}
+		inline int length() const {
+			return m_end - m_start + 1;
+		}
+		inline bool contains(int index)const {
+			return index >= m_start && index <= m_end;
+		}
+		inline bool contains(const Range & range)const {
+			return m_end <= range.m_end && m_start >= range.m_start;
+		}
+		inline bool operator==(const Range & range)const {
+			return m_start == range.m_start && m_end == range.m_end;
+		}
+		inline bool operator!=(const Range & range)const {
+			return m_start != range.m_start || m_end != range.m_end;
+		}
+		inline bool operator<(const Range & range)const {
+			return m_end < range.m_start;
+		}
+		inline bool operator<=(const Range & range)const {
+			return m_end <= range.m_end && m_start <= range.m_start;
+		}
+		inline bool operator>(const Range & range)const {
+			return m_start > range.m_end;
+		}
+		inline bool operator>=(const Range & range)const {
+			return m_start >= range.m_start && m_end >= range.m_end;
+		}
+	private:
 
-			inline bool contains( const Range& range ) const
-			{
-				return m_end <= range.m_end && m_start >= range.m_start;
-			}
+		friend class RangeList;
 
-			inline bool operator==( const Range& range ) const
-			{
-				return m_start == range.m_start && m_end == range.m_end;
-			}
+		Range() {
+		}
 
-			inline bool operator!=( const Range& range ) const
-			{
-				return m_start != range.m_start || m_end != range.m_end;
-			}
-
-			inline bool operator<( const Range& range ) const
-			{
-				return m_end < range.m_start;
-			}
-
-			inline bool operator<=( const Range& range ) const
-			{
-				return m_end <= range.m_end && m_start <= range.m_start;
-			}
-
-			inline bool operator>( const Range& range ) const
-			{
-				return m_start > range.m_end;
-			}
-
-			inline bool operator>=( const Range& range ) const
-			{
-				return m_start >= range.m_start && m_end >= range.m_end;
-			}
-
-		private:
-
-			friend class RangeList;
-
-			Range() {}
-
-			int m_start;
-			int m_end;
+		int m_start;
+		int m_end;
 	};
 }
 

@@ -21,65 +21,54 @@
 ***************************************************************************/
 
 #ifdef HAVE_CONFIG_H
-	#include <config.h>
+#include <config.h>
 #endif
 
 #include "../../core/subtitle.h"
 
 #include <QtCore/QObject>
 
-namespace SubtitleComposer
-{
+namespace SubtitleComposer {
 	class FindErrorsDialog;
 	class SubtitleIterator;
 
-	class ErrorFinder : public QObject
-	{
-		Q_OBJECT
+	class ErrorFinder:public QObject {
+	Q_OBJECT public:
 
-		public:
+		explicit ErrorFinder(QWidget * parent = 0);
+		virtual ~ ErrorFinder();
 
-			explicit ErrorFinder( QWidget* parent=0 );
-			virtual ~ErrorFinder();
+		QWidget *parentWidget();
 
-			QWidget* parentWidget();
+		public slots:void setSubtitle(Subtitle * subtitle = 0);
+		void setTranslationMode(bool enabled);
 
-		public slots:
+		void find(const RangeList & selectionRanges, int currentIndex, bool findBackwards = false);
+		bool findNext();
+		bool findPrevious();
 
-			void setSubtitle( Subtitle* subtitle=0 );
-			void setTranslationMode( bool enabled );
+		signals:void found(SubtitleLine * line);
 
-			void find( const RangeList& selectionRanges, int currentIndex, bool findBackwards=false );
-			bool findNext();
-			bool findPrevious();
+	private:
 
-		signals:
+		void advance(bool advanceIteratorOnFirstStep);
 
-			void found( SubtitleLine* line );
+		private slots:void invalidate();
 
-		private:
+		void onIteratorSynchronized(int firstIndex, int lastIndex, bool inserted);
 
-			void advance( bool advanceIteratorOnFirstStep );
+	private:
 
-		private slots:
+		Subtitle * m_subtitle;
+		FindErrorsDialog *m_dialog;
+		bool m_translationMode;
 
-			void invalidate();
-
-			void onIteratorSynchronized( int firstIndex, int lastIndex, bool inserted );
-
-		private:
-
-			Subtitle* m_subtitle;
-			FindErrorsDialog* m_dialog;
-			bool m_translationMode;
-
-			int m_targetErrorFlags;
-			bool m_findBackwards;
-			bool m_selection;
-			SubtitleIterator* m_iterator;
-			bool m_instancesFound;
-			int m_allSearchedIndex;
+		int m_targetErrorFlags;
+		bool m_findBackwards;
+		bool m_selection;
+		SubtitleIterator *m_iterator;
+		bool m_instancesFound;
+		int m_allSearchedIndex;
 	};
 }
-
 #endif

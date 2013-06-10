@@ -21,7 +21,7 @@
  ***************************************************************************/
 
 #ifdef HAVE_CONFIG_H
-	#include <config.h>
+#include <config.h>
 #endif
 
 #include "service.h"
@@ -31,159 +31,138 @@
 
 class QTimer;
 
-namespace SubtitleComposer
-{
+namespace SubtitleComposer {
 	class DecoderBackend;
 
-	class Decoder : public Service
-	{
-		Q_OBJECT
+	class Decoder:public Service {
+	Q_OBJECT public:
 
-		public:
+		typedef enum {
+			Closed = Service::Initialized,	// same as Initialized
+			Opening,
+			// Opened, same as >Opening
+			Decoding,
+			Ready				// same as Stopped or Finished
+		} State;
 
-			typedef enum {
-				Closed = Service::Initialized, // same as Initialized
-				Opening,
-				// Opened, same as >Opening
-				Decoding,
-				Ready // same as Stopped or Finished
-			} State;
+		virtual QString dummyBackendName() const {
+			return "Dummy";
+		}
+		inline DecoderBackend *backend(const QString & name)const {
+			return (DecoderBackend *) Service::backend(name);
+		}
+		inline DecoderBackend *activeBackend() const {
+			return (DecoderBackend *) Service::activeBackend();
+		}
+		static Decoder *instance();
 
-			virtual QString dummyBackendName() const { return "Dummy"; }
+		inline const QString & filePath() const;
 
-			inline DecoderBackend* backend( const QString& name ) const { return (DecoderBackend*)Service::backend( name ); }
-			inline DecoderBackend* activeBackend() const { return (DecoderBackend*)Service::activeBackend(); }
+		inline bool isDecoding() const;
+		inline double position() const;
+		inline double length() const;
+		inline bool isStopped() const;
 
-			static Decoder* instance();
+		inline QString audioStreamName(int index) const;
+		inline WaveFormat audioStreamFormat(int index) const;
 
-			inline const QString& filePath() const;
-
-			inline bool isDecoding() const;
-			inline double position() const;
-			inline double length() const;
-			inline bool isStopped() const;
-
-			inline QString audioStreamName( int index ) const;
-			inline WaveFormat audioStreamFormat( int index ) const;
-
-			inline bool hasAudioStreams() const;
-			const QStringList& audioStreamNames() const;
-			const QList<WaveFormat>& audioStreamFormats() const;
+		inline bool hasAudioStreams() const;
+		const QStringList & audioStreamNames() const;
+		const QList < WaveFormat > &audioStreamFormats() const;
 
 		public slots:
-
 			// return values of this functions don't imply that the operation was completed OK
 			// but that it was allowed (a false return value means that nothing was attempted).
+		bool openFile(const QString & filePath);
+		bool closeFile();
 
-			bool openFile( const QString& filePath );
-			bool closeFile();
+		bool decode(int audioStream, const QString & outputPath, const WaveFormat & outputFormat);
+		bool stop();
 
-			bool decode( int audioStream, const QString& outputPath, const WaveFormat& outputFormat );
-			bool stop();
+		signals:void fileOpenError(const QString & filePath);
+		void fileOpened(const QString & filePath);
+		void fileClosed();
 
-		signals:
+		void decodingError(const QString & errorMessage = QString());
+		void decoding();
+		void positionChanged(double seconds);
+		void lengthChanged(double seconds);
+		void stopped();
 
-			void fileOpenError( const QString& filePath );
-			void fileOpened( const QString& filePath );
-			void fileClosed();
+		void audioStreamsChanged(const QStringList & names, const QList < WaveFormat > &formats);
 
-			void decodingError( const QString& errorMessage=QString() );
-			void decoding();
-			void positionChanged( double seconds );
-			void lengthChanged( double seconds );
-			void stopped();
-
-			void audioStreamsChanged( const QStringList& names, const QList<WaveFormat>& formats );
-
-		protected:
+	protected:
 
 			/** attempts to initialize the backend, making it the active backend.
 				returns true if backend is the active backend after the call.
 				if there was already another backend initialized returns false immediately.
 			*/
-			virtual bool initializeBackend( ServiceBackend* backend, QWidget* widgetParent );
+		virtual bool initializeBackend(ServiceBackend * backend, QWidget * widgetParent);
 
 			/** finalizes the active backend, leaving no active backend.
 				returns the previously initialized backend (or 0 if there was none). */
-			virtual void finalizeBackend( ServiceBackend* backend );
+		virtual void finalizeBackend(ServiceBackend * backend);
 
-		private:
+	private:
 
-			Decoder();
-			virtual ~Decoder();
+		Decoder();
+		virtual ~ Decoder();
 
-			void resetState();
+		void resetState();
 
-			// functions used by the backends to inform changes in state:
+		// functions used by the backends to inform changes in state:
 
-			void setPosition( double position ); // value in seconds
-			void setLength( double length ); // value in seconds
+		void setPosition(double position);	// value in seconds
+		void setLength(double length);	// value in seconds
 
-			void setState( Decoder::State state );
-			void setErrorState( const QString& errorMessage=QString() );
+		void setState(Decoder::State state);
+		void setErrorState(const QString & errorMessage = QString());
 
-			void appendAudioStream( const QString& name, const WaveFormat& format );
-			void insertAudioStream( int index, const QString& name, const WaveFormat& format );
+		void appendAudioStream(const QString & name, const WaveFormat & format);
+		void insertAudioStream(int index, const QString & name, const WaveFormat & format);
 
 		private slots:
-
 			/** called if the Decoder fails to set the state to Playing after opening the file */
-			void onOpenFileTimeout();
+		void onOpenFileTimeout();
 
-		private:
+	private:
 
-			QString m_filePath;
+		QString m_filePath;
 
-			double m_position;
-			double m_length;
+		double m_position;
+		double m_length;
 
-			QStringList m_audioStreamNames;
-			QList<WaveFormat> m_audioStreamFormats;
+		QStringList m_audioStreamNames;
+		QList < WaveFormat > m_audioStreamFormats;
 
-			QTimer* m_openFileTimer;
+		QTimer *m_openFileTimer;
 
-			friend class DecoderBackend;
+		friend class DecoderBackend;
 	};
 
-	const QString& Decoder::filePath() const
-	{
+	const QString & Decoder::filePath() const {
 		return m_filePath;
 	}
-
-	bool Decoder::isDecoding() const
-	{
+	bool Decoder::isDecoding() const {
 		return m_state == Decoder::Decoding;
 	}
-
-	double Decoder::position() const
-	{
+	double Decoder::position() const {
 		return m_state <= Decoder::Opening ? -1.0 : (m_state == Decoder::Ready ? 0.0 : m_position);
 	}
-
-	double Decoder::length() const
-	{
+	double Decoder::length() const {
 		return m_state <= Decoder::Opening ? -1.0 : m_length;
 	}
-
-	bool Decoder::isStopped() const
-	{
+	bool Decoder::isStopped() const {
 		return m_state == Decoder::Ready;
 	}
-
-	QString Decoder::audioStreamName( int index ) const
-	{
-		return (m_state <= Decoder::Opening || index < 0 || index >= m_audioStreamNames.size()) ? QString() : m_audioStreamNames.at( index );
+	QString Decoder::audioStreamName(int index)const {
+		return (m_state <= Decoder::Opening || index < 0 || index >= m_audioStreamNames.size()) ? QString() : m_audioStreamNames.at(index);
 	}
-
-	WaveFormat Decoder::audioStreamFormat( int index ) const
-	{
-		return (m_state <= Decoder::Opening || index < 0 || index >= m_audioStreamFormats.size()) ? WaveFormat() : m_audioStreamFormats.at( index );
+	WaveFormat Decoder::audioStreamFormat(int index)const {
+		return (m_state <= Decoder::Opening || index < 0 || index >= m_audioStreamFormats.size()) ? WaveFormat() : m_audioStreamFormats.at(index);
 	}
-
-	bool Decoder::hasAudioStreams() const
-	{
+	bool Decoder::hasAudioStreams() const {
 		return m_state <= Decoder::Opening ? false : m_audioStreamNames.count();
 	}
 }
-
 #endif

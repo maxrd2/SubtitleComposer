@@ -28,44 +28,44 @@
 
 using namespace SubtitleComposer;
 
-GStreamerConfigWidget::GStreamerConfigWidget( QWidget* parent ):
-	AppConfigGroupWidget( new GStreamerConfig(), parent )
+GStreamerConfigWidget::GStreamerConfigWidget(QWidget * parent):
+AppConfigGroupWidget(new GStreamerConfig(), parent)
 {
-	QGroupBox* sinksGroupBox = createGroupBox( i18nc( "@title:group GStreamer settings", "Options" ) );
+	QGroupBox *sinksGroupBox = createGroupBox(i18nc("@title:group GStreamer settings", "Options"));
 
-	m_audioSinkCheckBox = new QCheckBox( sinksGroupBox );
-	m_audioSinkCheckBox->setText( i18n( "Audio sink:" ) );
+	m_audioSinkCheckBox = new QCheckBox(sinksGroupBox);
+	m_audioSinkCheckBox->setText(i18n("Audio sink:"));
 
-	m_audioSinkComboBox = new KComboBox( false, sinksGroupBox );
-	m_audioSinkComboBox->setEnabled( false );
-	m_audioSinkComboBox->setEditable( true );
-	m_audioSinkComboBox->addItems( QString( "autoaudiosink alsasink osssink esdsink gconfaudiosink pulsesink fakesink" ).split( ' ' ) );
+	m_audioSinkComboBox = new KComboBox(false, sinksGroupBox);
+	m_audioSinkComboBox->setEnabled(false);
+	m_audioSinkComboBox->setEditable(true);
+	m_audioSinkComboBox->addItems(QString("autoaudiosink alsasink osssink esdsink gconfaudiosink pulsesink fakesink").split(' '));
 
-	m_videoSinkCheckBox = new QCheckBox( sinksGroupBox );
-	m_videoSinkCheckBox->setText( i18n( "Video sink:" ) );
+	m_videoSinkCheckBox = new QCheckBox(sinksGroupBox);
+	m_videoSinkCheckBox->setText(i18n("Video sink:"));
 
-	m_videoSinkComboBox = new KComboBox( false, sinksGroupBox );
-	m_videoSinkComboBox->setEnabled( false );
-	m_videoSinkComboBox->setEditable( true );
-	m_videoSinkComboBox->addItems( QString( "autovideosink ximagesink xvimagesink gconfvideosink fakesink" ).split( ' ' ) );
+	m_videoSinkComboBox = new KComboBox(false, sinksGroupBox);
+	m_videoSinkComboBox->setEnabled(false);
+	m_videoSinkComboBox->setEditable(true);
+	m_videoSinkComboBox->addItems(QString("autovideosink ximagesink xvimagesink gconfvideosink fakesink").split(' '));
 
-	m_experimentalFeaturesCheckBox = new QCheckBox( sinksGroupBox );
-	m_experimentalFeaturesCheckBox->setText( i18n( "Use experimental features" ) );
+	m_experimentalFeaturesCheckBox = new QCheckBox(sinksGroupBox);
+	m_experimentalFeaturesCheckBox->setText(i18n("Use experimental features"));
 
 
-	QGridLayout* sinksLayout = createGridLayout( sinksGroupBox );
-	sinksLayout->addWidget( m_audioSinkCheckBox, 0, 0, Qt::AlignRight|Qt::AlignVCenter );
-	sinksLayout->addWidget( m_audioSinkComboBox, 0, 1 );
-	sinksLayout->addWidget( m_videoSinkCheckBox, 1, 0, Qt::AlignRight|Qt::AlignVCenter );
-	sinksLayout->addWidget( m_videoSinkComboBox, 1, 1 );
-	sinksLayout->addWidget( m_experimentalFeaturesCheckBox, 2, 0, 1, 2 );
+	QGridLayout *sinksLayout = createGridLayout(sinksGroupBox);
+	sinksLayout->addWidget(m_audioSinkCheckBox, 0, 0, Qt::AlignRight | Qt::AlignVCenter);
+	sinksLayout->addWidget(m_audioSinkComboBox, 0, 1);
+	sinksLayout->addWidget(m_videoSinkCheckBox, 1, 0, Qt::AlignRight | Qt::AlignVCenter);
+	sinksLayout->addWidget(m_videoSinkComboBox, 1, 1);
+	sinksLayout->addWidget(m_experimentalFeaturesCheckBox, 2, 0, 1, 2);
 
-	connect( m_audioSinkCheckBox, SIGNAL( toggled(bool) ), m_audioSinkComboBox, SLOT( setEnabled(bool) ) );
-	connect( m_videoSinkCheckBox, SIGNAL( toggled(bool) ), m_videoSinkComboBox, SLOT( setEnabled(bool) ) );
-	connect( m_audioSinkCheckBox, SIGNAL( toggled(bool) ), this, SIGNAL( settingsChanged() ) );
-	connect( m_videoSinkCheckBox, SIGNAL( toggled(bool) ), this, SIGNAL( settingsChanged() ) );
-	connect( m_audioSinkComboBox, SIGNAL( textChanged(const QString&) ), this, SIGNAL( settingsChanged() ) );
-	connect( m_videoSinkComboBox, SIGNAL( textChanged(const QString&) ), this, SIGNAL( settingsChanged() ) );
+	connect(m_audioSinkCheckBox, SIGNAL(toggled(bool)), m_audioSinkComboBox, SLOT(setEnabled(bool)));
+	connect(m_videoSinkCheckBox, SIGNAL(toggled(bool)), m_videoSinkComboBox, SLOT(setEnabled(bool)));
+	connect(m_audioSinkCheckBox, SIGNAL(toggled(bool)), this, SIGNAL(settingsChanged()));
+	connect(m_videoSinkCheckBox, SIGNAL(toggled(bool)), this, SIGNAL(settingsChanged()));
+	connect(m_audioSinkComboBox, SIGNAL(textChanged(const QString &)), this, SIGNAL(settingsChanged()));
+	connect(m_videoSinkComboBox, SIGNAL(textChanged(const QString &)), this, SIGNAL(settingsChanged()));
 
 	setControlsFromConfig();
 }
@@ -76,22 +76,22 @@ GStreamerConfigWidget::~GStreamerConfigWidget()
 
 void GStreamerConfigWidget::setConfigFromControls()
 {
-	config()->setAudioSink( m_audioSinkCheckBox->isChecked() ? m_audioSinkComboBox->currentText() : QString() );
-	config()->setVideoSink( m_videoSinkCheckBox->isChecked() ? m_videoSinkComboBox->currentText() : QString() );
-	config()->setExperimentalFeatures( m_experimentalFeaturesCheckBox->isChecked() );
+	config()->setAudioSink(m_audioSinkCheckBox->isChecked()? m_audioSinkComboBox->currentText() : QString());
+	config()->setVideoSink(m_videoSinkCheckBox->isChecked()? m_videoSinkComboBox->currentText() : QString());
+	config()->setExperimentalFeatures(m_experimentalFeaturesCheckBox->isChecked());
 }
 
 void GStreamerConfigWidget::setControlsFromConfig()
 {
-	m_audioSinkCheckBox->setChecked( config()->hasAudioSink() );
-	if ( m_audioSinkCheckBox->isChecked() )
-		m_audioSinkComboBox->setEditText( config()->audioSink() );
+	m_audioSinkCheckBox->setChecked(config()->hasAudioSink());
+	if(m_audioSinkCheckBox->isChecked())
+		m_audioSinkComboBox->setEditText(config()->audioSink());
 
-	m_videoSinkCheckBox->setChecked( config()->hasVideoSink() );
-	if ( m_videoSinkCheckBox->isChecked() )
-		m_videoSinkComboBox->setEditText( config()->videoSink() );
+	m_videoSinkCheckBox->setChecked(config()->hasVideoSink());
+	if(m_videoSinkCheckBox->isChecked())
+		m_videoSinkComboBox->setEditText(config()->videoSink());
 
-	m_experimentalFeaturesCheckBox->setChecked( config()->experimentalFeatures() );
+	m_experimentalFeaturesCheckBox->setChecked(config()->experimentalFeatures());
 }
 
 #include "gstreamerconfigwidget.moc"

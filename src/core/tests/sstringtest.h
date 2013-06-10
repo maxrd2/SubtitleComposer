@@ -21,21 +21,16 @@
  ***************************************************************************/
 
 #ifdef HAVE_CONFIG_H
-	#include <config.h>
+#include <config.h>
 #endif
 
 #include <QtCore/QObject>
 
-class SStringTest: public QObject
-{
-	Q_OBJECT
-
-	private slots:
-
-		void testStyleFlags();
-		void testLeftMidRight();
-		void testInsert();
-		void testReplace();
+class SStringTest:public QObject {
+	Q_OBJECT private slots:void testStyleFlags();
+	void testLeftMidRight();
+	void testInsert();
+	void testReplace();
 };
 
 #endif

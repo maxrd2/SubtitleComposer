@@ -21,19 +21,16 @@
  ***************************************************************************/
 
 #ifdef HAVE_CONFIG_H
-	#include <config.h>
+#include <config.h>
 #endif
 
 #include "actionwithtargetdialog.h"
 
-namespace SubtitleComposer
-{
-	class InsertLineDialog : public ActionWithTextsTargetDialog
-	{
-		public:
+namespace SubtitleComposer {
+	class InsertLineDialog:public ActionWithTextsTargetDialog {
+	public:
 
-			explicit InsertLineDialog( bool insertAfter, QWidget* parent=0 );
+		explicit InsertLineDialog(bool insertAfter, QWidget * parent = 0);
 	};
 }
-
 #endif

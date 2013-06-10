@@ -21,7 +21,7 @@
 ***************************************************************************/
 
 #ifdef HAVE_CONFIG_H
-	#include <config.h>
+#include <config.h>
 #endif
 
 #include "language.h"
@@ -32,82 +32,69 @@
 #include <QtCore/QByteArray>
 
 class KJob;
-namespace KIO
-{
+namespace KIO {
 	class Job;
 	class TransferJob;
 }
+namespace SubtitleComposer {
+	class Translator:public QObject {
+	Q_OBJECT public:
 
-namespace SubtitleComposer
-{
-	class Translator : public QObject
-	{
-		Q_OBJECT
+		static const int MaxChunkSize = 25000;	// in characters
 
-		public:
+		Translator(QObject * parent = 0);
+		~Translator();
 
-			static const int MaxChunkSize = 25000; // in characters
+		QString inputText() const;
+		QString outputText() const;
 
-			Translator( QObject* parent=0 );
-			~Translator();
+		Language::Value inputLanguage() const;
+		Language::Value outputLanguage() const;
 
-			QString inputText() const;
-			QString outputText() const;
+		int chunksCount() const;	// upon how many chunks will the imput text be split on?
 
-			Language::Value inputLanguage() const;
-			Language::Value outputLanguage() const;
+		bool isFinished() const;
+		bool isFinishedWithError() const;
+		bool isAborted() const;
 
-			int chunksCount() const; // upon how many chunks will the imput text be split on?
+		QString errorMessage() const;
 
-			bool isFinished() const;
-			bool isFinishedWithError() const;
-			bool isAborted() const;
+		public slots:bool syncTranslate(const QString & text, Language::Value inputLang, Language::Value outputLang, ProgressDialog * pd = 0);
+		void translate(const QString & text, Language::Value inputLang, Language::Value outputLang);
 
-			QString errorMessage() const;
+		void abort();
 
-		public slots:
+		signals:void progress(int percentage);
 
-			bool syncTranslate( const QString& text, Language::Value inputLang, Language::Value outputLang, ProgressDialog*pd=0 );
-			void translate( const QString& text, Language::Value inputLang, Language::Value outputLang );
+		void finished(const QString & translatedText);
+		void finishedWithError(const QString & errorMessage);
 
-			void abort();
+		void finished();		// finished with or without error
 
-		signals:
+	private:
 
-			void progress( int percentage );
+		static QByteArray prepareUrlEncodedData(const QMap < QString, QString > &params);
+		static QByteArray prepareMultipartData(const QMap < QString, QString > &params);
+		static QString & replaceHTMLEntities(QString & text);
+		static const QMap < QString, QChar > &namedEntities();
 
-			void finished( const QString& translatedText );
-			void finishedWithError( const QString& errorMessage );
+		void startChunkDownload(int chunkNumber);	// first chunk is number 1
 
-			void finished(); // finished with or without error
+		private slots:void onTransferJobProgress(KJob * job, unsigned long percent);
+		void onTransferJobData(KIO::Job * job, const QByteArray & data);
+		void onTransferJobResult(KJob * job);
 
-		private:
+	private:
 
-			static QByteArray prepareUrlEncodedData( const QMap<QString,QString>& params );
-			static QByteArray prepareMultipartData( const QMap<QString,QString>& params );
-			static QString& replaceHTMLEntities( QString& text );
-			static const QMap<QString, QChar>& namedEntities();
-
-			void startChunkDownload( int chunkNumber ); // first chunk is number 1
-
-		private slots:
-
-			void onTransferJobProgress( KJob* job, unsigned long percent );
-			void onTransferJobData( KIO::Job* job, const QByteArray& data );
-			void onTransferJobResult( KJob* job );
-
-		private:
-
-			KIO::TransferJob* m_currentTransferJob;
-			QByteArray m_currentTransferData;
-			QStringList m_inputTextChunks;
-			QString m_outputText;
-			Language::Value m_inputLanguage;
-			Language::Value m_outputLanguage;
-			int m_lastReceivedChunk;
-			QString m_errorMessage;
-			bool m_aborted;
+		KIO::TransferJob * m_currentTransferJob;
+		QByteArray m_currentTransferData;
+		QStringList m_inputTextChunks;
+		QString m_outputText;
+		Language::Value m_inputLanguage;
+		Language::Value m_outputLanguage;
+		int m_lastReceivedChunk;
+		QString m_errorMessage;
+		bool m_aborted;
 	};
 }
-
 #endif

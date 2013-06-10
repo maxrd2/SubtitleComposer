@@ -21,27 +21,24 @@
  ***************************************************************************/
 
 #ifdef HAVE_CONFIG_H
-	#include <config.h>
+#include <config.h>
 #endif
 
 #include "actionwithtargetdialog.h"
 
 class KIntSpinBox;
 
-namespace SubtitleComposer
-{
-	class SmartTextsAdjustDialog : public ActionWithTargetDialog
-	{
-		public:
+namespace SubtitleComposer {
+	class SmartTextsAdjustDialog:public ActionWithTargetDialog {
+	public:
 
-			explicit SmartTextsAdjustDialog( unsigned minLengthForLineBreak, QWidget* parent=0 );
+		explicit SmartTextsAdjustDialog(unsigned minLengthForLineBreak, QWidget * parent = 0);
 
-			unsigned minLengthForLineBreak() const;
+		unsigned minLengthForLineBreak() const;
 
-		private:
+	private:
 
-			KIntSpinBox* m_minLengthForLineBreakSpinBox;
+		KIntSpinBox * m_minLengthForLineBreakSpinBox;
 	};
 }
-
 #endif

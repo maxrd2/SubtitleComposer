@@ -22,61 +22,47 @@
 
 
 #ifdef HAVE_CONFIG_H
-	#include <config.h>
+#include <config.h>
 #endif
 
 #include "../outputformat.h"
 #include "../../core/subtitleiterator.h"
 
-namespace SubtitleComposer
-{
-	class YouTubeCaptionsOutputFormat : public OutputFormat
-	{
+namespace SubtitleComposer {
+	class YouTubeCaptionsOutputFormat:public OutputFormat {
 		friend class FormatManager;
 
-		public:
+	public:
 
-			virtual ~YouTubeCaptionsOutputFormat() {}
+		virtual ~ YouTubeCaptionsOutputFormat() {
+		}
+	protected:
 
-		protected:
+		virtual QString dumpSubtitles(const Subtitle & subtitle, bool primary) const {
+			QString ret;
 
-			virtual QString dumpSubtitles( const Subtitle& subtitle, bool primary ) const
-			{
-				QString ret;
+			for(SubtitleIterator it(subtitle); it.current(); ++it) {
+				const SubtitleLine *line = it.current();
 
-				for ( SubtitleIterator it( subtitle ); it.current(); ++it )
-				{
-					const SubtitleLine* line = it.current();
-
-					Time showTime = line->showTime();
-					Time hideTime = line->hideTime();
-					ret += m_timeBuilder.sprintf(
-						"%d\n%02d:%02d:%02d,%03d,%02d:%02d:%02d,%03d\n",
-						it.index() + 1,
-						showTime.hours(), showTime.minutes(), showTime.seconds(), showTime.mseconds(),
-						hideTime.hours(), hideTime.minutes(), hideTime.seconds(), hideTime.mseconds()
+				Time showTime = line->showTime();
+				Time hideTime = line->hideTime();
+				ret += m_timeBuilder.sprintf("%d\n%02d:%02d:%02d,%03d,%02d:%02d:%02d,%03d\n", it.index() + 1, showTime.hours(), showTime.minutes(), showTime.seconds(), showTime.mseconds(), hideTime.hours(), hideTime.minutes(), hideTime.seconds(), hideTime.mseconds()
 					);
 
-					const SString& text = primary ? line->primaryText() : line->secondaryText();
+				const SString & text = primary ? line->primaryText() : line->secondaryText();
 
-					// TODO does the format actually supports styled text?
-					// if so, does it use standard HTML style tags?
-					ret += text.richString();
+				// TODO does the format actually supports styled text?
+				// if so, does it use standard HTML style tags?
+				ret += text.richString();
 
-					ret += "\n\n";
-				}
+				ret += "\n\n";
+			} return ret;
+		}
+		YouTubeCaptionsOutputFormat():OutputFormat("YouTube Captions", QStringList("sbv")), m_dialogueBuilder("%1%2%3%4%5%6%7\n\n") {
+		}
 
-				return ret;
-			}
-
-			YouTubeCaptionsOutputFormat():
-				OutputFormat( "YouTube Captions", QStringList( "sbv" ) ),
-				m_dialogueBuilder( "%1%2%3%4%5%6%7\n\n" )
-			{
-			}
-
-			const QString m_dialogueBuilder;
-			mutable QString m_timeBuilder;
+		const QString m_dialogueBuilder;
+		mutable QString m_timeBuilder;
 	};
 }
 

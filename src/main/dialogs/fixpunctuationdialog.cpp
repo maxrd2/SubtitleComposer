@@ -27,53 +27,43 @@
 
 using namespace SubtitleComposer;
 
-FixPunctuationDialog::FixPunctuationDialog( QWidget* parent ):
-	ActionWithTargetDialog( i18n( "Fix Punctuation" ), parent )
+FixPunctuationDialog::FixPunctuationDialog(QWidget * parent):
+ActionWithTargetDialog(i18n("Fix Punctuation"), parent)
 {
-	QGroupBox* settingsGroupBox = createGroupBox( i18nc( "@title:group", "Settings" ) );
+	QGroupBox *settingsGroupBox = createGroupBox(i18nc("@title:group", "Settings"));
 
-	m_spacesCheckBox = new QCheckBox( settingsGroupBox );
-	m_spacesCheckBox->setText( i18n( "Fix and cleanup spaces" ) );
-	m_spacesCheckBox->setChecked( true );
+	m_spacesCheckBox = new QCheckBox(settingsGroupBox);
+	m_spacesCheckBox->setText(i18n("Fix and cleanup spaces"));
+	m_spacesCheckBox->setChecked(true);
 
-	m_quotesCheckBox = new QCheckBox( settingsGroupBox );
-	m_quotesCheckBox->setText( i18n( "Fix quotes and double quotes" ) );
-	m_quotesCheckBox->setChecked( true );
+	m_quotesCheckBox = new QCheckBox(settingsGroupBox);
+	m_quotesCheckBox->setText(i18n("Fix quotes and double quotes"));
+	m_quotesCheckBox->setChecked(true);
 
-	m_englishICheckBox = new QCheckBox( settingsGroupBox );
-	m_englishICheckBox->setText( i18n( "Fix English 'I' pronoun" ) );
-	m_englishICheckBox->setChecked( true );
+	m_englishICheckBox = new QCheckBox(settingsGroupBox);
+	m_englishICheckBox->setText(i18n("Fix English 'I' pronoun"));
+	m_englishICheckBox->setChecked(true);
 
-	m_ellipsisCheckBox = new QCheckBox( settingsGroupBox );
-	m_ellipsisCheckBox->setText( i18n( "Add ellipisis indicating non finished lines" ) );
-	m_ellipsisCheckBox->setChecked( true );
+	m_ellipsisCheckBox = new QCheckBox(settingsGroupBox);
+	m_ellipsisCheckBox->setText(i18n("Add ellipisis indicating non finished lines"));
+	m_ellipsisCheckBox->setChecked(true);
 
 	createLineTargetsButtonGroup();
 	createTextTargetsButtonGroup();
 
-	QGridLayout* settingsLayout = createLayout( settingsGroupBox );
-	settingsLayout->addWidget( m_spacesCheckBox, 0, 0 );
-	settingsLayout->addWidget( m_quotesCheckBox, 1, 0 );
-	settingsLayout->addWidget( m_englishICheckBox, 2, 0 );
-	settingsLayout->addWidget( m_ellipsisCheckBox, 3, 0 );
+	QGridLayout *settingsLayout = createLayout(settingsGroupBox);
+	settingsLayout->addWidget(m_spacesCheckBox, 0, 0);
+	settingsLayout->addWidget(m_quotesCheckBox, 1, 0);
+	settingsLayout->addWidget(m_englishICheckBox, 2, 0);
+	settingsLayout->addWidget(m_ellipsisCheckBox, 3, 0);
 }
 
-bool FixPunctuationDialog::spaces() const
-{
+bool FixPunctuationDialog::spaces() const {
 	return m_spacesCheckBox->isChecked();
-}
-
-bool FixPunctuationDialog::quotes() const
-{
+} bool FixPunctuationDialog::quotes() const {
 	return m_quotesCheckBox->isChecked();
-}
-
-bool FixPunctuationDialog::englishI() const
-{
+} bool FixPunctuationDialog::englishI() const {
 	return m_englishICheckBox->isChecked();
-}
-
-bool FixPunctuationDialog::ellipisis() const
-{
+} bool FixPunctuationDialog::ellipisis() const {
 	return m_ellipsisCheckBox->isChecked();
 }

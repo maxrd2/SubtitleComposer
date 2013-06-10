@@ -21,26 +21,25 @@
  ***************************************************************************/
 
 #ifdef HAVE_CONFIG_H
-	#include <config.h>
+#include <config.h>
 #endif
 
 #include <KUrl>
 
-class FileTrasher
-{
-	public:
+class FileTrasher {
+  public:
 
-		FileTrasher( const KUrl& url );
-		FileTrasher( const QString& path );
-		~FileTrasher();
+	FileTrasher(const KUrl & url);
+	FileTrasher(const QString & path);
+	~FileTrasher();
 
-		const KUrl& url();
+	const KUrl & url();
 
-		bool exec();
+	bool exec();
 
-	private:
+  private:
 
-		KUrl m_url;
+	KUrl m_url;
 };
 
 

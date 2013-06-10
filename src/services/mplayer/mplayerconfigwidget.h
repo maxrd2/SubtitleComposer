@@ -21,7 +21,7 @@
  ***************************************************************************/
 
 #ifdef HAVE_CONFIG_H
-	#include <config.h>
+#include <config.h>
 #endif
 
 #include "mplayerconfig.h"
@@ -32,44 +32,42 @@ class KComboBox;
 class KIntSpinBox;
 class KUrlRequester;
 
-namespace SubtitleComposer
-{
-	class MPlayerConfigWidget : public AppConfigGroupWidget
-	{
-		Q_OBJECT
+namespace SubtitleComposer {
+	class MPlayerConfigWidget:public AppConfigGroupWidget {
+		Q_OBJECT friend class MPlayerPlayerBackend;
 
-		friend class MPlayerPlayerBackend;
+	public:
 
-		public:
+		virtual ~ MPlayerConfigWidget();
 
-			virtual ~MPlayerConfigWidget();
+		virtual void setControlsFromConfig();
+		virtual void setConfigFromControls();
 
-			virtual void setControlsFromConfig();
-			virtual void setConfigFromControls();
+	private:
 
-		private:
+		explicit MPlayerConfigWidget(QWidget * parent = 0);
 
-			explicit MPlayerConfigWidget( QWidget* parent=0 );
+		MPlayerConfig *config() {
+			return static_cast < MPlayerConfig * >(m_config);
+		};
 
-			MPlayerConfig* config() { return static_cast<MPlayerConfig*>( m_config ); };
+	private:
 
-		private:
-
-			QCheckBox* m_vdpauDivxCheckBox;
-			QCheckBox* m_frameDropCheckBox;
-			QCheckBox* m_hardFrameDropCheckBox;
-			KComboBox* m_videoOutputComboBox;
-			QCheckBox* m_videoOutputCheckBox;
-			KComboBox* m_audioOutputComboBox;
-			KIntSpinBox* m_avsyncSpinBox;
-			QCheckBox* m_audioChannelsCheckBox;
-			KIntSpinBox* m_audioChannelsSpinBox;
-			QCheckBox* m_volumeAmplificationCheckBox;
-			KIntSpinBox* m_volumeAmplificationSpinBox;
-			QCheckBox* m_volumeNormalizationCheckBox;
-			QCheckBox* m_avsyncCheckBox;
-			QCheckBox* m_audioOutputCheckBox;
-			KUrlRequester* m_pathUrlRequester;
+		QCheckBox * m_vdpauDivxCheckBox;
+		QCheckBox *m_frameDropCheckBox;
+		QCheckBox *m_hardFrameDropCheckBox;
+		KComboBox *m_videoOutputComboBox;
+		QCheckBox *m_videoOutputCheckBox;
+		KComboBox *m_audioOutputComboBox;
+		KIntSpinBox *m_avsyncSpinBox;
+		QCheckBox *m_audioChannelsCheckBox;
+		KIntSpinBox *m_audioChannelsSpinBox;
+		QCheckBox *m_volumeAmplificationCheckBox;
+		KIntSpinBox *m_volumeAmplificationSpinBox;
+		QCheckBox *m_volumeNormalizationCheckBox;
+		QCheckBox *m_avsyncCheckBox;
+		QCheckBox *m_audioOutputCheckBox;
+		KUrlRequester *m_pathUrlRequester;
 	};
 }
 

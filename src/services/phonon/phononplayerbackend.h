@@ -21,85 +21,76 @@
  ***************************************************************************/
 
 #ifdef HAVE_CONFIG_H
-    #include <config.h>
+#include <config.h>
 #endif
 
 #include "phononconfig.h"
 #include "../playerbackend.h"
 
 #include <QtCore/QString>
-#include <QtCore/QTextStream> // NOTE this is only here because Qt complains otherwise when including Phonon/Global...
+#include <QtCore/QTextStream>	// NOTE this is only here because Qt complains otherwise when including Phonon/Global...
 #include <QtGui/QWidget>
 #include <Phonon/Global>
 
 class QTimer;
 
-namespace Phonon
-{
-    class MediaObject;
-    class MediaController;
-    class AudioOutput;
-    class VideoWidget;
+namespace Phonon {
+	class MediaObject;
+	class MediaController;
+	class AudioOutput;
+	class VideoWidget;
 }
+namespace SubtitleComposer {
+	class PhononPlayerBackend:public PlayerBackend {
+	Q_OBJECT public:
 
-namespace SubtitleComposer
-{
-    class PhononPlayerBackend : public PlayerBackend
-    {
-        Q_OBJECT
+		PhononPlayerBackend(Player * player);
+		virtual ~ PhononPlayerBackend();
 
-        public:
+		const PhononConfig *config() {
+			return static_cast < const PhononConfig *const >(PlayerBackend::config());
+		} virtual AppConfigGroupWidget *newAppConfigGroupWidget(QWidget * parent);
 
-            PhononPlayerBackend( Player* player );
-            virtual ~PhononPlayerBackend();
+	protected:
 
-            const PhononConfig* config() { return static_cast<const PhononConfig* const>( PlayerBackend::config() ); }
+		virtual bool doesVolumeCorrection() const;
+		virtual bool supportsChangingAudioStream(bool * onTheFly) const;
 
-            virtual AppConfigGroupWidget* newAppConfigGroupWidget( QWidget* parent );
+		virtual VideoWidget *initialize(QWidget * videoWidgetParent);
+		virtual void finalize();
+		void _finalize();
 
-        protected:
+		virtual bool openFile(const QString & filePath, bool & playingAfterCall);
+		virtual void closeFile();
 
-            virtual bool doesVolumeCorrection() const;
-            virtual bool supportsChangingAudioStream( bool* onTheFly ) const;
+		virtual bool play();
+		virtual bool pause();
+		virtual bool seek(double seconds, bool accurate);
+		virtual bool stop();
 
-            virtual VideoWidget* initialize( QWidget* videoWidgetParent );
-            virtual void finalize();
-            void _finalize();
+		virtual bool setActiveAudioStream(int audioStream);
 
-            virtual bool openFile( const QString& filePath, bool& playingAfterCall );
-            virtual void closeFile();
+		virtual bool setVolume(double volume);
 
-            virtual bool play();
-            virtual bool pause();
-            virtual bool seek( double seconds, bool accurate );
-            virtual bool stop();
+	protected:
 
-            virtual bool setActiveAudioStream( int audioStream );
+		void initMediaObject();
 
-            virtual bool setVolume( double volume );
+		protected slots:void onHasVideoChanged(bool hasVideo);
+		void onFinished();
+		void onTick(qint64 currentTime);
+		void onTotalTimeChanged(qint64 newTotalTime);
+		void onAvailableAudioChannelsChanged();
+		void onAvailableSubtitlesChanged();
+		void onStateChanged(Phonon::State newState, Phonon::State oldState);
 
-        protected:
+	protected:
 
-            void initMediaObject();
-
-        protected slots:
-
-            void onHasVideoChanged( bool hasVideo );
-            void onFinished();
-            void onTick( qint64 currentTime );
-            void onTotalTimeChanged( qint64 newTotalTime );
-            void onAvailableAudioChannelsChanged();
-            void onAvailableSubtitlesChanged();
-            void onStateChanged( Phonon::State newState, Phonon::State oldState );
-
-        protected:
-
-            Phonon::MediaObject* m_mediaObject;
-            Phonon::MediaController* m_mediaController;
-            Phonon::AudioOutput* m_audioOutput;
-            Phonon::VideoWidget* m_videoOutput;
-    };
+		Phonon::MediaObject * m_mediaObject;
+		Phonon::MediaController * m_mediaController;
+		Phonon::AudioOutput * m_audioOutput;
+		Phonon::VideoWidget * m_videoOutput;
+	};
 }
 
 #endif
-

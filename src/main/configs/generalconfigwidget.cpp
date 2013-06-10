@@ -32,71 +32,71 @@
 
 using namespace SubtitleComposer;
 
-GeneralConfigWidget::GeneralConfigWidget( QWidget* parent ):
-	AppConfigGroupWidget( new GeneralConfig(), parent )
+GeneralConfigWidget::GeneralConfigWidget(QWidget * parent):
+AppConfigGroupWidget(new GeneralConfig(), parent)
 {
-	QGroupBox* generalGroupBox = createGroupBox( i18nc( "@title:group General settings", "General" ) );
+	QGroupBox *generalGroupBox = createGroupBox(i18nc("@title:group General settings", "General"));
 
-	m_defaultEncodingComboBox = new KComboBox( generalGroupBox );
-	m_defaultEncodingComboBox->addItems( app()->availableEncodingNames() );
+	m_defaultEncodingComboBox = new KComboBox(generalGroupBox);
+	m_defaultEncodingComboBox->addItems(app()->availableEncodingNames());
 
-	QLabel* defaultEncodingLabel = new QLabel( generalGroupBox );
-	defaultEncodingLabel->setText( i18n( "Default subtitles encoding:" ) );
-	defaultEncodingLabel->setWhatsThis( i18n( "The encoding specified here will be used to load subtitles when autodetection fails and will also be suggested when saving new subtitles." ) );
-	defaultEncodingLabel->setBuddy( m_defaultEncodingComboBox );
+	QLabel *defaultEncodingLabel = new QLabel(generalGroupBox);
+	defaultEncodingLabel->setText(i18n("Default subtitles encoding:"));
+	defaultEncodingLabel->setWhatsThis(i18n("The encoding specified here will be used to load subtitles when autodetection fails and will also be suggested when saving new subtitles."));
+	defaultEncodingLabel->setBuddy(m_defaultEncodingComboBox);
 
-	m_relativeSeekPositionSpinBox = new KIntNumInput( generalGroupBox );
-	m_relativeSeekPositionSpinBox->setMinimum( 0 );
-	m_relativeSeekPositionSpinBox->setMaximum( 10000 );
-	m_relativeSeekPositionSpinBox->setSuffix( i18n( " msecs" ) );
+	m_relativeSeekPositionSpinBox = new KIntNumInput(generalGroupBox);
+	m_relativeSeekPositionSpinBox->setMinimum(0);
+	m_relativeSeekPositionSpinBox->setMaximum(10000);
+	m_relativeSeekPositionSpinBox->setSuffix(i18n(" msecs"));
 
-	QLabel* relativeSeekPositionLabel = new QLabel( generalGroupBox );
-	relativeSeekPositionLabel->setText( i18n( "On line double click, jump to show time minus:" ) );
-	relativeSeekPositionLabel->setBuddy( m_relativeSeekPositionSpinBox );
+	QLabel *relativeSeekPositionLabel = new QLabel(generalGroupBox);
+	relativeSeekPositionLabel->setText(i18n("On line double click, jump to show time minus:"));
+	relativeSeekPositionLabel->setBuddy(m_relativeSeekPositionSpinBox);
 
-	m_autoLoadVideoCheckBox = new QCheckBox( generalGroupBox );
-	m_autoLoadVideoCheckBox->setText( i18n( "Automatically load video file when opening subtitle" ) );
-
-
-	QGroupBox* quickActionsGroupBox = createGroupBox( i18nc( "@title:group", "Quick Actions" ) );
-
-	m_shiftMsecsSpinBox = new KIntNumInput( quickActionsGroupBox );
-	m_shiftMsecsSpinBox->setMinimum( 1 );
-	m_shiftMsecsSpinBox->setMaximum( 1000 );
-	m_shiftMsecsSpinBox->setSuffix( i18n( " msecs" ) );
-
-	QLabel* shiftMsecsLabel = new QLabel( quickActionsGroupBox );
-	shiftMsecsLabel->setText( i18n( "Time shift for selected lines:" ) );
-	shiftMsecsLabel->setBuddy( m_shiftMsecsSpinBox );
-
-	m_videoPosCompMsecsSpinBox = new KIntNumInput( quickActionsGroupBox );
-	m_videoPosCompMsecsSpinBox->setMinimum( 1 );
-	m_videoPosCompMsecsSpinBox->setMaximum( 1000 );
-	m_videoPosCompMsecsSpinBox->setSuffix( i18n( " msecs" ) );
-
-	QLabel* videoPosCompMsecsLabel = new QLabel( quickActionsGroupBox );
-	videoPosCompMsecsLabel->setText( i18n( "Compensation for captured video times:" ) );
-	videoPosCompMsecsLabel->setBuddy( m_videoPosCompMsecsSpinBox );
+	m_autoLoadVideoCheckBox = new QCheckBox(generalGroupBox);
+	m_autoLoadVideoCheckBox->setText(i18n("Automatically load video file when opening subtitle"));
 
 
-	QGridLayout* generalLayout = createGridLayout( generalGroupBox );
-	generalLayout->addWidget( defaultEncodingLabel, 1, 0, Qt::AlignRight|Qt::AlignVCenter );
-	generalLayout->addWidget( m_defaultEncodingComboBox, 1, 1 );
-	generalLayout->addWidget( relativeSeekPositionLabel, 2, 0, Qt::AlignRight|Qt::AlignVCenter );
-	generalLayout->addWidget( m_relativeSeekPositionSpinBox, 2, 1 );
-	generalLayout->addWidget( m_autoLoadVideoCheckBox, 3, 0, 1, 2 );
+	QGroupBox *quickActionsGroupBox = createGroupBox(i18nc("@title:group", "Quick Actions"));
 
-	QGridLayout* quickActionsLayout = createGridLayout( quickActionsGroupBox );
-	quickActionsLayout->addWidget( shiftMsecsLabel, 0, 0, Qt::AlignRight|Qt::AlignVCenter );
-	quickActionsLayout->addWidget( m_shiftMsecsSpinBox, 0, 1 );
-	quickActionsLayout->addWidget( videoPosCompMsecsLabel, 1, 0, Qt::AlignRight|Qt::AlignVCenter );
-	quickActionsLayout->addWidget( m_videoPosCompMsecsSpinBox, 1, 1 );
+	m_shiftMsecsSpinBox = new KIntNumInput(quickActionsGroupBox);
+	m_shiftMsecsSpinBox->setMinimum(1);
+	m_shiftMsecsSpinBox->setMaximum(1000);
+	m_shiftMsecsSpinBox->setSuffix(i18n(" msecs"));
 
-	connect( m_defaultEncodingComboBox, SIGNAL(activated(int)), this, SIGNAL(settingsChanged()) );
-	connect( m_relativeSeekPositionSpinBox, SIGNAL(valueChanged(int)), this, SIGNAL(settingsChanged()) );
-	connect( m_autoLoadVideoCheckBox, SIGNAL(toggled(bool)), this, SIGNAL(settingsChanged()) );
-	connect( m_shiftMsecsSpinBox, SIGNAL(valueChanged(int)), this, SIGNAL(settingsChanged()) );
-	connect( m_videoPosCompMsecsSpinBox, SIGNAL(valueChanged(int)), this, SIGNAL(settingsChanged()) );
+	QLabel *shiftMsecsLabel = new QLabel(quickActionsGroupBox);
+	shiftMsecsLabel->setText(i18n("Time shift for selected lines:"));
+	shiftMsecsLabel->setBuddy(m_shiftMsecsSpinBox);
+
+	m_videoPosCompMsecsSpinBox = new KIntNumInput(quickActionsGroupBox);
+	m_videoPosCompMsecsSpinBox->setMinimum(1);
+	m_videoPosCompMsecsSpinBox->setMaximum(1000);
+	m_videoPosCompMsecsSpinBox->setSuffix(i18n(" msecs"));
+
+	QLabel *videoPosCompMsecsLabel = new QLabel(quickActionsGroupBox);
+	videoPosCompMsecsLabel->setText(i18n("Compensation for captured video times:"));
+	videoPosCompMsecsLabel->setBuddy(m_videoPosCompMsecsSpinBox);
+
+
+	QGridLayout *generalLayout = createGridLayout(generalGroupBox);
+	generalLayout->addWidget(defaultEncodingLabel, 1, 0, Qt::AlignRight | Qt::AlignVCenter);
+	generalLayout->addWidget(m_defaultEncodingComboBox, 1, 1);
+	generalLayout->addWidget(relativeSeekPositionLabel, 2, 0, Qt::AlignRight | Qt::AlignVCenter);
+	generalLayout->addWidget(m_relativeSeekPositionSpinBox, 2, 1);
+	generalLayout->addWidget(m_autoLoadVideoCheckBox, 3, 0, 1, 2);
+
+	QGridLayout *quickActionsLayout = createGridLayout(quickActionsGroupBox);
+	quickActionsLayout->addWidget(shiftMsecsLabel, 0, 0, Qt::AlignRight | Qt::AlignVCenter);
+	quickActionsLayout->addWidget(m_shiftMsecsSpinBox, 0, 1);
+	quickActionsLayout->addWidget(videoPosCompMsecsLabel, 1, 0, Qt::AlignRight | Qt::AlignVCenter);
+	quickActionsLayout->addWidget(m_videoPosCompMsecsSpinBox, 1, 1);
+
+	connect(m_defaultEncodingComboBox, SIGNAL(activated(int)), this, SIGNAL(settingsChanged()));
+	connect(m_relativeSeekPositionSpinBox, SIGNAL(valueChanged(int)), this, SIGNAL(settingsChanged()));
+	connect(m_autoLoadVideoCheckBox, SIGNAL(toggled(bool)), this, SIGNAL(settingsChanged()));
+	connect(m_shiftMsecsSpinBox, SIGNAL(valueChanged(int)), this, SIGNAL(settingsChanged()));
+	connect(m_videoPosCompMsecsSpinBox, SIGNAL(valueChanged(int)), this, SIGNAL(settingsChanged()));
 
 	setControlsFromConfig();
 }
@@ -107,20 +107,20 @@ GeneralConfigWidget::~GeneralConfigWidget()
 
 void GeneralConfigWidget::setConfigFromControls()
 {
-	config()->setDefaultSubtitlesEncoding( m_defaultEncodingComboBox->currentText() );
-	config()->setSeekOffsetOnDoubleClick( m_relativeSeekPositionSpinBox->value() );
-	config()->setAutomaticVideoLoad( m_autoLoadVideoCheckBox->isChecked() );
-	config()->setLinesQuickShiftAmount( m_shiftMsecsSpinBox->value() );
-	config()->setGrabbedPositionCompensation( m_videoPosCompMsecsSpinBox->value() );
+	config()->setDefaultSubtitlesEncoding(m_defaultEncodingComboBox->currentText());
+	config()->setSeekOffsetOnDoubleClick(m_relativeSeekPositionSpinBox->value());
+	config()->setAutomaticVideoLoad(m_autoLoadVideoCheckBox->isChecked());
+	config()->setLinesQuickShiftAmount(m_shiftMsecsSpinBox->value());
+	config()->setGrabbedPositionCompensation(m_videoPosCompMsecsSpinBox->value());
 }
 
 void GeneralConfigWidget::setControlsFromConfig()
 {
-	m_defaultEncodingComboBox->setCurrentItem( config()->defaultSubtitlesEncoding() );
-	m_relativeSeekPositionSpinBox->setValue( config()->seekOffsetOnDoubleClick() );
-	m_autoLoadVideoCheckBox->setChecked( config()->automaticVideoLoad() );
-	m_shiftMsecsSpinBox->setValue( config()->linesQuickShiftAmount() );
-	m_videoPosCompMsecsSpinBox->setValue( config()->grabbedPositionCompensation() );
+	m_defaultEncodingComboBox->setCurrentItem(config()->defaultSubtitlesEncoding());
+	m_relativeSeekPositionSpinBox->setValue(config()->seekOffsetOnDoubleClick());
+	m_autoLoadVideoCheckBox->setChecked(config()->automaticVideoLoad());
+	m_shiftMsecsSpinBox->setValue(config()->linesQuickShiftAmount());
+	m_videoPosCompMsecsSpinBox->setValue(config()->grabbedPositionCompensation());
 }
 
 #include "generalconfigwidget.moc"

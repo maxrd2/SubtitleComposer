@@ -22,50 +22,39 @@
 
 
 #ifdef HAVE_CONFIG_H
-	#include <config.h>
+#include <config.h>
 #endif
 
 #include "../outputformat.h"
 #include "../../core/subtitleiterator.h"
 
-namespace SubtitleComposer
-{
-	class MPlayer2OutputFormat : public OutputFormat
-	{
+namespace SubtitleComposer {
+	class MPlayer2OutputFormat:public OutputFormat {
 		friend class FormatManager;
 
-		public:
+	public:
 
-			virtual ~MPlayer2OutputFormat() {}
+		virtual ~ MPlayer2OutputFormat() {
+		}
+	protected:
 
-		protected:
+		virtual QString dumpSubtitles(const Subtitle & subtitle, bool primary) const {
+			QString ret;
 
-			virtual QString dumpSubtitles( const Subtitle& subtitle, bool primary ) const
-			{
-				QString ret;
+			for(SubtitleIterator it(subtitle); it.current(); ++it) {
+				const SubtitleLine *line = it.current();
 
-				for ( SubtitleIterator it( subtitle ); it.current(); ++it )
-				{
-					const SubtitleLine* line = it.current();
+				const SString & text = primary ? line->primaryText() : line->secondaryText();
 
-					const SString& text = primary ? line->primaryText() : line->secondaryText();
+				ret += m_lineBuilder.arg((long)((line->showTime().toMillis() / 100.0) + 0.5))
+				.arg((long)((line->hideTime().toMillis() / 100.0) + 0.5))
+				.arg(text.string().replace('\n', '|'));
+			} return ret;
+		}
+		MPlayer2OutputFormat():OutputFormat("MPlayer2", QStringList("mpl")), m_lineBuilder("[%1][%2]%3\n") {
+		}
 
-					ret += m_lineBuilder
-						.arg( (long)((line->showTime().toMillis()/100.0) + 0.5) )
-						.arg( (long)((line->hideTime().toMillis()/100.0) + 0.5) )
-						.arg( text.string().replace( '\n', '|' ) );
-				}
-
-				return ret;
-			}
-
-			MPlayer2OutputFormat():
-				OutputFormat( "MPlayer2", QStringList( "mpl" ) ),
-				m_lineBuilder( "[%1][%2]%3\n" )
-			{
-			}
-
-			const QString m_lineBuilder;
+		const QString m_lineBuilder;
 	};
 }
 

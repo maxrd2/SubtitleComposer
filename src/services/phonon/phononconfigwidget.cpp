@@ -21,8 +21,8 @@
 
 using namespace SubtitleComposer;
 
-PhononConfigWidget::PhononConfigWidget( QWidget* parent ):
-	AppConfigGroupWidget( new PhononConfig(), parent )
+PhononConfigWidget::PhononConfigWidget(QWidget * parent):
+AppConfigGroupWidget(new PhononConfig(), parent)
 {
 }
 

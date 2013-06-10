@@ -21,7 +21,7 @@
  ***************************************************************************/
 
 #ifdef HAVE_CONFIG_H
-	#include <config.h>
+#include <config.h>
 #endif
 
 #include "inputformat.h"
@@ -34,35 +34,32 @@
 #include <KUrl>
 #include <kencodingdetector.h>
 
-namespace SubtitleComposer
-{
-	class FormatManager
-	{
-		public:
+namespace SubtitleComposer {
+	class FormatManager {
+	public:
 
-			static FormatManager& instance();
+		static FormatManager & instance();
 
-			bool hasInput( const QString& name ) const;
-			const InputFormat* input( const QString& name ) const;
-			QStringList inputNames() const;
+		bool hasInput(const QString & name) const;
+		const InputFormat *input(const QString & name) const;
+		QStringList inputNames() const;
 
-			bool readSubtitle( Subtitle& subtitle, bool primary, const KUrl& url, KEncodingDetector::AutoDetectScript autodetectScript, QTextCodec** codec, Format::NewLine* newLine=0, QString* format=0 ) const;
+		bool readSubtitle(Subtitle & subtitle, bool primary, const KUrl & url, KEncodingDetector::AutoDetectScript autodetectScript, QTextCodec ** codec, Format::NewLine * newLine = 0, QString * format = 0) const;
 
-			bool hasOutput( const QString& name ) const;
-			const OutputFormat* output( const QString& name ) const;
-			const OutputFormat* defaultOutput() const;
-			QStringList outputNames() const;
+		bool hasOutput(const QString & name) const;
+		const OutputFormat *output(const QString & name) const;
+		const OutputFormat *defaultOutput() const;
+		QStringList outputNames() const;
 
-			bool writeSubtitle( const Subtitle& subtitle, bool primary, const KUrl& url, QTextCodec* codec, Format::NewLine newLine, const QString& format, bool overwrite ) const;
+		bool writeSubtitle(const Subtitle & subtitle, bool primary, const KUrl & url, QTextCodec * codec, Format::NewLine newLine, const QString & format, bool overwrite) const;
 
-		protected:
+	protected:
 
-			FormatManager();
-			~FormatManager();
+		FormatManager();
+		~FormatManager();
 
-			QMap<QString,InputFormat*> m_inputFormats;
-			QMap<QString,OutputFormat*> m_outputFormats;
+		QMap < QString, InputFormat * >m_inputFormats;
+		QMap < QString, OutputFormat * >m_outputFormats;
 	};
 }
-
 #endif

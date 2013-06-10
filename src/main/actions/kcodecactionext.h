@@ -22,32 +22,27 @@
 
 #include <kcodecaction.h>
 
-class KCodecActionExt : public KCodecAction
-{
-	Q_OBJECT
+class KCodecActionExt:public KCodecAction {
+  Q_OBJECT public:
 
-	public:
+	explicit KCodecActionExt(QObject * parent, bool showAutoOptions = false, bool showDefault = false);
+	KCodecActionExt(const QString & text, QObject * parent, bool showAutoOptions = false, bool showDefault = false);
+	KCodecActionExt(const KIcon & icon, const QString & text, QObject * parent, bool showAutoOptions = false, bool showDefault = false);
 
-		explicit KCodecActionExt( QObject *parent, bool showAutoOptions=false, bool showDefault=false );
-		KCodecActionExt( const QString &text, QObject *parent,bool showAutoOptions=false, bool showDefault=false );
-		KCodecActionExt( const KIcon &icon, const QString &text, QObject *parent,bool showAutoOptions=false, bool showDefault=false );
+  public:
 
-	public:
-
-		KEncodingDetector::AutoDetectScript currentAutoDetectScript() const;
-		bool setCurrentAutoDetectScript(KEncodingDetector::AutoDetectScript);
+	KEncodingDetector::AutoDetectScript currentAutoDetectScript() const;
+	bool setCurrentAutoDetectScript(KEncodingDetector::AutoDetectScript);
 
 
-	protected Q_SLOTS:
+	protected Q_SLOTS:virtual void actionTriggered(QAction *);
 
-		virtual void actionTriggered( QAction* );
+  private:
 
-	private:
+	void init(bool showDefault);
 
-		void init( bool showDefault );
-
-		bool m_showDefault;
-		KAction *m_autodetectAction;
+	bool m_showDefault;
+	KAction *m_autodetectAction;
 };
 
 #endif

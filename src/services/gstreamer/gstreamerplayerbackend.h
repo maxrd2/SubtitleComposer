@@ -21,7 +21,7 @@
  ***************************************************************************/
 
 #ifdef HAVE_CONFIG_H
-	#include <config.h>
+#include <config.h>
 #endif
 
 #include "gstreamerconfig.h"
@@ -34,61 +34,55 @@
 
 class QTimer;
 
-namespace SubtitleComposer
-{
-	class GStreamerPlayerBackend : public PlayerBackend
-	{
-		Q_OBJECT
+namespace SubtitleComposer {
+	class GStreamerPlayerBackend:public PlayerBackend {
+	Q_OBJECT public:
 
-		public:
+		GStreamerPlayerBackend(Player * player);
+		virtual ~ GStreamerPlayerBackend();
 
-			GStreamerPlayerBackend( Player* player );
-			virtual ~GStreamerPlayerBackend();
+		const GStreamerConfig *config() {
+			return static_cast < const GStreamerConfig *const >(PlayerBackend::config());
+		} virtual AppConfigGroupWidget *newAppConfigGroupWidget(QWidget * parent);
 
-			const GStreamerConfig* config() { return static_cast<const GStreamerConfig* const>( PlayerBackend::config() ); }
+	protected:
 
-			virtual AppConfigGroupWidget* newAppConfigGroupWidget( QWidget* parent );
+		virtual VideoWidget * initialize(QWidget * videoWidgetParent);
+		virtual void finalize();
 
-		protected:
+		virtual bool openFile(const QString & filePath, bool & playingAfterCall);
+		virtual void closeFile();
 
-			virtual VideoWidget* initialize( QWidget* videoWidgetParent );
-			virtual void finalize();
+		virtual bool play();
+		virtual bool pause();
+		virtual bool seek(double seconds, bool accurate);
+		virtual bool stop();
 
-			virtual bool openFile( const QString& filePath, bool& playingAfterCall );
-			virtual void closeFile();
+		virtual bool setActiveAudioStream(int audioStream);
 
-			virtual bool play();
-			virtual bool pause();
-			virtual bool seek( double seconds, bool accurate );
-			virtual bool stop();
+		virtual bool setVolume(double volume);
 
-			virtual bool setActiveAudioStream( int audioStream );
+		protected slots:void onPlaybinTimerTimeout();
 
-			virtual bool setVolume( double volume );
+	private:
 
-		protected slots:
+		void setupVideoSink(bool finalizing);
 
-			void onPlaybinTimerTimeout();
+//          static void audioChanged( GstElement* playbin2, gpointer userData );
+//          static void videoChanged( GstElement* playbin2, gpointer userData );
 
-		private:
+		GList *streamInfoForType(const char *typestr);
 
-			void setupVideoSink( bool finalizing );
+		void updateAudioData();
+		void updateVideoData();
 
-// 			static void audioChanged( GstElement* playbin2, gpointer userData );
-// 			static void videoChanged( GstElement* playbin2, gpointer userData );
+	private:
 
-			GList* streamInfoForType( const char* typestr );
-
-			void updateAudioData();
-			void updateVideoData();
-
-		private:
-
-			GstPipeline* m_playbin;
-			GstBus* m_playbinBus;
-			QTimer* m_playbinTimer;
-			bool m_lengthInformed;
-			bool m_usingPlaybin2;
+		GstPipeline * m_playbin;
+		GstBus *m_playbinBus;
+		QTimer *m_playbinTimer;
+		bool m_lengthInformed;
+		bool m_usingPlaybin2;
 	};
 }
 

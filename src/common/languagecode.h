@@ -21,20 +21,19 @@
  ***************************************************************************/
 
 #ifdef HAVE_CONFIG_H
-	#include <config.h>
+#include <config.h>
 #endif
 
 #include <QtCore/QString>
 
-class LanguageCode
-{
-	public:
+class LanguageCode {
+  public:
 
-		static QString toTwoLetters( const QString& twoLettersCode );
-		static QString toThreeLetters( const QString& threeLettersCode );
+	static QString toTwoLetters(const QString & twoLettersCode);
+	static QString toThreeLetters(const QString & threeLettersCode);
 
-		static QString nameFromTwoLetters( const QString& twoLettersCode );
-		static QString nameFromThreeLetters( const QString& threeLettersCode );
+	static QString nameFromTwoLetters(const QString & twoLettersCode);
+	static QString nameFromThreeLetters(const QString & threeLettersCode);
 };
 
 #endif

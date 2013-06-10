@@ -26,24 +26,17 @@
 
 using namespace SubtitleComposer;
 
-UserAction::UserAction( QAction* action, int enableFlags ):
-	m_action( action ),
-	m_enableFlags( enableFlags ),
-	m_actionEnabled( action->isEnabled() ),
-	m_contextEnabled( false ),
-	m_ignoreActionEnabledSignal( false )
+UserAction::UserAction(QAction * action, int enableFlags):m_action(action), m_enableFlags(enableFlags), m_actionEnabled(action->isEnabled()), m_contextEnabled(false), m_ignoreActionEnabledSignal(false)
 {
 	updateEnabledState();
 
-	connect( action, SIGNAL( changed() ), this, SLOT( onActionChanged() ) );
+	connect(action, SIGNAL(changed()), this, SLOT(onActionChanged()));
 }
 
 void UserAction::onActionChanged()
 {
-	if ( ! m_ignoreActionEnabledSignal )
-	{
-		if ( m_action->isEnabled() != isEnabled() )
-		{
+	if(!m_ignoreActionEnabledSignal) {
+		if(m_action->isEnabled() != isEnabled()) {
 			// kDebug() << "enabled state externaly changed for" << m_action->objectName();
 
 			m_actionEnabled = m_action->isEnabled();
@@ -57,7 +50,7 @@ int UserAction::enableFlags()
 	return m_enableFlags;
 }
 
-QAction* UserAction::action()
+QAction *UserAction::action()
 {
 	return m_action;
 }
@@ -67,20 +60,18 @@ bool UserAction::isEnabled()
 	return m_actionEnabled && m_contextEnabled;
 }
 
-void UserAction::setActionEnabled( bool enabled )
+void UserAction::setActionEnabled(bool enabled)
 {
-	if ( m_actionEnabled != enabled )
-	{
+	if(m_actionEnabled != enabled) {
 		m_actionEnabled = enabled;
 		updateEnabledState();
 	}
 }
 
-void UserAction::setContextFlags( int contextFlags )
+void UserAction::setContextFlags(int contextFlags)
 {
 	bool contextEnabled = (contextFlags & m_enableFlags) == m_enableFlags;
-	if ( m_contextEnabled != contextEnabled )
-	{
+	if(m_contextEnabled != contextEnabled) {
 		m_contextEnabled = contextEnabled;
 		updateEnabledState();
 	}
@@ -90,11 +81,10 @@ void UserAction::updateEnabledState()
 {
 	bool enabled = m_actionEnabled && m_contextEnabled;
 
-	if ( m_action->isEnabled() != enabled )
-	{
+	if(m_action->isEnabled() != enabled) {
 		m_ignoreActionEnabledSignal = true;
 
-		m_action->setEnabled( enabled );
+		m_action->setEnabled(enabled);
 
 		// QCoreApplication::processEvents( QEventLoop::ExcludeUserInputEvents );
 
@@ -108,259 +98,215 @@ void UserAction::updateEnabledState()
 /// USER ACTION MANAGER
 
 UserActionManager::UserActionManager():
-	m_actionSpecs(),
-	m_subtitle( 0 ),
-	m_linesWidget( 0 ),
-	m_player( 0 ),
-	m_translationMode( false ),
-	m_contextFlags(
-		UserAction::SubClosed|UserAction::SubTrClosed|
-		UserAction::VideoClosed|
-		UserAction::AudioLevelsClosed|
-		UserAction::FullScreenOff
-	)
+m_actionSpecs(), m_subtitle(0), m_linesWidget(0), m_player(0), m_translationMode(false), m_contextFlags(UserAction::SubClosed | UserAction::SubTrClosed | UserAction::VideoClosed | UserAction::AudioLevelsClosed | UserAction::FullScreenOff)
 {
 }
 
-UserActionManager* UserActionManager::instance()
+UserActionManager *UserActionManager::instance()
 {
 	static UserActionManager actionManager;
 
 	return &actionManager;
 }
 
-void UserActionManager::addAction( QAction* action, int enableFlags )
+void UserActionManager::addAction(QAction * action, int enableFlags)
 {
-	addAction( new UserAction( action, enableFlags ) );
+	addAction(new UserAction(action, enableFlags));
 }
 
-void UserActionManager::addAction( UserAction* actionSpec )
+void UserActionManager::addAction(UserAction * actionSpec)
 {
-	m_actionSpecs.append( actionSpec );
+	m_actionSpecs.append(actionSpec);
 
-	actionSpec->setContextFlags( m_contextFlags );
+	actionSpec->setContextFlags(m_contextFlags);
 }
 
 
-void UserActionManager::setSubtitle( Subtitle* subtitle )
+void UserActionManager::setSubtitle(Subtitle * subtitle)
 {
-	if ( m_subtitle )
-	{
-		disconnect( m_subtitle, SIGNAL( linesRemoved(int,int) ),
-					this, SLOT( onSubtitleLinesChanged() ) );
-		disconnect( m_subtitle, SIGNAL( linesInserted(int,int) ),
-					this, SLOT( onSubtitleLinesChanged() ) );
+	if(m_subtitle) {
+		disconnect(m_subtitle, SIGNAL(linesRemoved(int, int)), this, SLOT(onSubtitleLinesChanged()));
+		disconnect(m_subtitle, SIGNAL(linesInserted(int, int)), this, SLOT(onSubtitleLinesChanged()));
 
-		disconnect( m_subtitle, SIGNAL( primaryDirtyStateChanged(bool) ),
-					this, SLOT( onPrimaryDirtyStateChanged(bool) ) );
-		disconnect( m_subtitle, SIGNAL( secondaryDirtyStateChanged(bool) ),
-					this, SLOT( onSecondaryDirtyStateChanged(bool) ) );
+		disconnect(m_subtitle, SIGNAL(primaryDirtyStateChanged(bool)), this, SLOT(onPrimaryDirtyStateChanged(bool)));
+		disconnect(m_subtitle, SIGNAL(secondaryDirtyStateChanged(bool)), this, SLOT(onSecondaryDirtyStateChanged(bool)));
 
-		disconnect( &(m_subtitle->actionManager()), SIGNAL( stateChanged() ),
-					this, SLOT( onUndoRedoStateChanged() ) );
+		disconnect(&(m_subtitle->actionManager()), SIGNAL(stateChanged()), this, SLOT(onUndoRedoStateChanged()));
 	}
 
 	m_subtitle = subtitle;
 
 	int newContextFlags = m_contextFlags & ~UserAction::SubtitleMask;
 
-	if ( m_subtitle )
-	{
-		const ActionManager* actionManager = &(m_subtitle->actionManager());
+	if(m_subtitle) {
+		const ActionManager *actionManager = &(m_subtitle->actionManager());
 
-		connect( m_subtitle, SIGNAL( linesRemoved(int,int) ),
-				 this, SLOT( onSubtitleLinesChanged() ) );
-		connect( m_subtitle, SIGNAL( linesInserted(int,int) ),
-				 this, SLOT( onSubtitleLinesChanged() ) );
+		connect(m_subtitle, SIGNAL(linesRemoved(int, int)), this, SLOT(onSubtitleLinesChanged()));
+		connect(m_subtitle, SIGNAL(linesInserted(int, int)), this, SLOT(onSubtitleLinesChanged()));
 
-		connect( m_subtitle, SIGNAL( primaryDirtyStateChanged(bool) ),
-				 this, SLOT( onPrimaryDirtyStateChanged(bool) ) );
-		connect( m_subtitle, SIGNAL( secondaryDirtyStateChanged(bool) ),
-				 this, SLOT( onSecondaryDirtyStateChanged(bool) ) );
+		connect(m_subtitle, SIGNAL(primaryDirtyStateChanged(bool)), this, SLOT(onPrimaryDirtyStateChanged(bool)));
+		connect(m_subtitle, SIGNAL(secondaryDirtyStateChanged(bool)), this, SLOT(onSecondaryDirtyStateChanged(bool)));
 
-		connect( actionManager, SIGNAL( stateChanged() ),
-				 this, SLOT( onUndoRedoStateChanged() ) );
+		connect(actionManager, SIGNAL(stateChanged()), this, SLOT(onUndoRedoStateChanged()));
 
 		newContextFlags |= UserAction::SubOpened;
 
-		if ( m_subtitle->isPrimaryDirty() )
+		if(m_subtitle->isPrimaryDirty())
 			newContextFlags |= UserAction::SubPDirty;
 		else
 			newContextFlags |= UserAction::SubPClean;
 
-		if ( m_translationMode )
-		{
+		if(m_translationMode) {
 			newContextFlags |= UserAction::SubTrOpened;
 
-			if ( m_subtitle->isSecondaryDirty() )
+			if(m_subtitle->isSecondaryDirty())
 				newContextFlags |= UserAction::SubSDirty;
 			else
 				newContextFlags |= UserAction::SubSClean;
-		}
-		else
-			newContextFlags |= (UserAction::SubTrClosed|UserAction::SubSClean);
+		} else
+			newContextFlags |= (UserAction::SubTrClosed | UserAction::SubSClean);
 
-		if ( m_subtitle->linesCount() > 0 )
+		if(m_subtitle->linesCount() > 0)
 			newContextFlags |= UserAction::SubHasLine;
-		if ( m_subtitle->linesCount() > 1 )
+		if(m_subtitle->linesCount() > 1)
 			newContextFlags |= UserAction::SubHasLines;
 
-		if ( actionManager->hasUndo() )
+		if(actionManager->hasUndo())
 			newContextFlags |= UserAction::SubHasUndo;
-		if ( actionManager->hasRedo() )
+		if(actionManager->hasRedo())
 			newContextFlags |= UserAction::SubHasRedo;
-	}
-	else
-		newContextFlags |= (UserAction::SubClosed|UserAction::SubPClean|UserAction::SubTrClosed|UserAction::SubSClean);
+	} else
+		newContextFlags |= (UserAction::SubClosed | UserAction::SubPClean | UserAction::SubTrClosed | UserAction::SubSClean);
 
-	updateActionsContext( newContextFlags );
+	updateActionsContext(newContextFlags);
 }
 
 
 void UserActionManager::onSubtitleLinesChanged()
 {
-	int newContextFlags = m_contextFlags & ~(UserAction::SubHasLine|UserAction::SubHasLines);
+	int newContextFlags = m_contextFlags & ~(UserAction::SubHasLine | UserAction::SubHasLines);
 
-	if ( m_subtitle->linesCount() > 0 )
+	if(m_subtitle->linesCount() > 0)
 		newContextFlags |= UserAction::SubHasLine;
-	if ( m_subtitle->linesCount() > 1 )
+	if(m_subtitle->linesCount() > 1)
 		newContextFlags |= UserAction::SubHasLines;
 
-	updateActionsContext( newContextFlags );
+	updateActionsContext(newContextFlags);
 }
 
-void UserActionManager::onPrimaryDirtyStateChanged( bool dirty )
+void UserActionManager::onPrimaryDirtyStateChanged(bool dirty)
 {
-	int newContextFlags = m_contextFlags & ~(UserAction::SubPDirty|UserAction::SubPClean);
+	int newContextFlags = m_contextFlags & ~(UserAction::SubPDirty | UserAction::SubPClean);
 
-	if ( dirty )
+	if(dirty)
 		newContextFlags |= UserAction::SubPDirty;
 	else
 		newContextFlags |= UserAction::SubPClean;
 
-	updateActionsContext( newContextFlags );
+	updateActionsContext(newContextFlags);
 }
 
-void UserActionManager::onSecondaryDirtyStateChanged( bool dirty )
+void UserActionManager::onSecondaryDirtyStateChanged(bool dirty)
 {
-	int newContextFlags = m_contextFlags & ~(UserAction::SubSDirty|UserAction::SubSClean);
+	int newContextFlags = m_contextFlags & ~(UserAction::SubSDirty | UserAction::SubSClean);
 
-	if ( m_translationMode )
-	{
-		if ( dirty )
+	if(m_translationMode) {
+		if(dirty)
 			newContextFlags |= UserAction::SubSDirty;
 		else
 			newContextFlags |= UserAction::SubSClean;
-	}
-	else
+	} else
 		newContextFlags |= UserAction::SubSClean;
 
-	updateActionsContext( newContextFlags );
+	updateActionsContext(newContextFlags);
 }
 
 void UserActionManager::onUndoRedoStateChanged()
 {
-	int newContextFlags = m_contextFlags & ~(UserAction::SubHasUndo|UserAction::SubHasRedo);
+	int newContextFlags = m_contextFlags & ~(UserAction::SubHasUndo | UserAction::SubHasRedo);
 
-	if ( m_subtitle->actionManager().hasUndo() )
+	if(m_subtitle->actionManager().hasUndo())
 		newContextFlags |= UserAction::SubHasUndo;
-	if ( m_subtitle->actionManager().hasRedo() )
+	if(m_subtitle->actionManager().hasRedo())
 		newContextFlags |= UserAction::SubHasRedo;
 
-	updateActionsContext( newContextFlags );
+	updateActionsContext(newContextFlags);
 }
 
-void UserActionManager::setLinesWidget( LinesWidget* linesWidget )
+void UserActionManager::setLinesWidget(LinesWidget * linesWidget)
 {
-	if ( m_linesWidget )
-		disconnect( m_linesWidget->selectionModel(), SIGNAL( selectionChanged(const QItemSelection&, const QItemSelection&) ),
-					this, SLOT( onLinesWidgetSelectionChanged() ) );
+	if(m_linesWidget)
+		disconnect(m_linesWidget->selectionModel(), SIGNAL(selectionChanged(const QItemSelection &, const QItemSelection &)), this, SLOT(onLinesWidgetSelectionChanged()));
 
 	m_linesWidget = linesWidget;
 
 	int newContextFlags = m_contextFlags & ~UserAction::SelectionMask;
 
-	if ( m_linesWidget )
-	{
-		connect( m_linesWidget->selectionModel(), SIGNAL( selectionChanged(const QItemSelection&, const QItemSelection&) ),
-				 this, SLOT( onLinesWidgetSelectionChanged() ) );
+	if(m_linesWidget) {
+		connect(m_linesWidget->selectionModel(), SIGNAL(selectionChanged(const QItemSelection &, const QItemSelection &)), this, SLOT(onLinesWidgetSelectionChanged()));
 
-		if ( m_linesWidget->firstSelectedIndex() >= 0 )
+		if(m_linesWidget->firstSelectedIndex() >= 0)
 			newContextFlags |= UserAction::HasSelection;
 	}
 
-	updateActionsContext( newContextFlags );
+	updateActionsContext(newContextFlags);
 }
 
 void UserActionManager::onLinesWidgetSelectionChanged()
 {
 	int newContextFlags = m_contextFlags & ~UserAction::SelectionMask;
 
-	if ( m_linesWidget->firstSelectedIndex() >= 0 )
+	if(m_linesWidget->firstSelectedIndex() >= 0)
 		newContextFlags |= UserAction::HasSelection;
 
-	updateActionsContext( newContextFlags );
+	updateActionsContext(newContextFlags);
 }
 
-void UserActionManager::setAudioLevels( AudioLevels* audiolevels )
+void UserActionManager::setAudioLevels(AudioLevels * audiolevels)
 {
 	int newContextFlags = m_contextFlags & ~UserAction::AudioLevelsMask;
 
-	if ( audiolevels )
+	if(audiolevels)
 		newContextFlags |= UserAction::AudioLevelsOpened;
 	else
 		newContextFlags |= UserAction::AudioLevelsClosed;
 
-	updateActionsContext( newContextFlags );
+	updateActionsContext(newContextFlags);
 }
 
-void UserActionManager::setPlayer( Player* player )
+void UserActionManager::setPlayer(Player * player)
 {
-	if ( m_player )
-	{
-		disconnect( m_player, SIGNAL( fileOpened(const QString&) ),
-					this, SLOT( onPlayerStateChanged() ) );
-		disconnect( m_player, SIGNAL( fileClosed() ),
-					this, SLOT( onPlayerStateChanged() ) );
-		disconnect( m_player, SIGNAL( playing() ),
-					this, SLOT( onPlayerStateChanged() ) );
-		disconnect( m_player, SIGNAL( paused() ),
-					this, SLOT( onPlayerStateChanged() ) );
-		disconnect( m_player, SIGNAL( stopped() ),
-					this, SLOT( onPlayerStateChanged() ) );
+	if(m_player) {
+		disconnect(m_player, SIGNAL(fileOpened(const QString &)), this, SLOT(onPlayerStateChanged()));
+		disconnect(m_player, SIGNAL(fileClosed()), this, SLOT(onPlayerStateChanged()));
+		disconnect(m_player, SIGNAL(playing()), this, SLOT(onPlayerStateChanged()));
+		disconnect(m_player, SIGNAL(paused()), this, SLOT(onPlayerStateChanged()));
+		disconnect(m_player, SIGNAL(stopped()), this, SLOT(onPlayerStateChanged()));
 	}
 
 	m_player = player;
 
 	int newContextFlags = m_contextFlags & ~UserAction::VideoMask;
 
-	if ( m_player )
-	{
-		connect( m_player, SIGNAL( fileOpened(const QString&) ),
-				 this, SLOT( onPlayerStateChanged() ) );
-		connect( m_player, SIGNAL( fileClosed() ),
-				 this, SLOT( onPlayerStateChanged() ) );
-		connect( m_player, SIGNAL( playing() ),
-				 this, SLOT( onPlayerStateChanged() ) );
-		connect( m_player, SIGNAL( paused() ),
-				 this, SLOT( onPlayerStateChanged() ) );
-		connect( m_player, SIGNAL( stopped() ),
-				 this, SLOT( onPlayerStateChanged() ) );
+	if(m_player) {
+		connect(m_player, SIGNAL(fileOpened(const QString &)), this, SLOT(onPlayerStateChanged()));
+		connect(m_player, SIGNAL(fileClosed()), this, SLOT(onPlayerStateChanged()));
+		connect(m_player, SIGNAL(playing()), this, SLOT(onPlayerStateChanged()));
+		connect(m_player, SIGNAL(paused()), this, SLOT(onPlayerStateChanged()));
+		connect(m_player, SIGNAL(stopped()), this, SLOT(onPlayerStateChanged()));
 
 		int state = m_player->state();
-		if ( state > Player::Opening )
-		{
+		if(state > Player::Opening) {
 			newContextFlags |= UserAction::VideoOpened;
-			if ( state > Player::Paused )
+			if(state > Player::Paused)
 				newContextFlags |= UserAction::VideoStopped;
 			else
 				newContextFlags |= UserAction::VideoPlaying;
-		}
-		else
+		} else
 			newContextFlags |= UserAction::VideoClosed;
 	}
 
-	updateActionsContext( newContextFlags );
+	updateActionsContext(newContextFlags);
 }
 
 void UserActionManager::onPlayerStateChanged()
@@ -368,63 +314,49 @@ void UserActionManager::onPlayerStateChanged()
 	int newContextFlags = m_contextFlags & ~UserAction::VideoMask;
 
 	int state = m_player->state();
-	if ( state > Player::Opening )
-	{
+	if(state > Player::Opening) {
 		newContextFlags |= UserAction::VideoOpened;
-		if ( state > Player::Paused )
+		if(state > Player::Paused)
 			newContextFlags |= UserAction::VideoStopped;
 		else
 			newContextFlags |= UserAction::VideoPlaying;
-	}
-	else
+	} else
 		newContextFlags |= UserAction::VideoClosed;
 
-	updateActionsContext( newContextFlags );
+	updateActionsContext(newContextFlags);
 }
 
-void UserActionManager::setDecoder( Decoder* decoder )
+void UserActionManager::setDecoder(Decoder * decoder)
 {
-	if ( m_decoder )
-	{
-		disconnect( m_decoder, SIGNAL( fileOpened(const QString&) ),
-					this, SLOT( onDecoderStateChanged() ) );
-		disconnect( m_decoder, SIGNAL( fileClosed() ),
-					this, SLOT( onDecoderStateChanged() ) );
-		disconnect( m_decoder, SIGNAL( decoding() ),
-					this, SLOT( onDecoderStateChanged() ) );
-		disconnect( m_decoder, SIGNAL( stopped() ),
-					this, SLOT( onDecoderStateChanged() ) );
+	if(m_decoder) {
+		disconnect(m_decoder, SIGNAL(fileOpened(const QString &)), this, SLOT(onDecoderStateChanged()));
+		disconnect(m_decoder, SIGNAL(fileClosed()), this, SLOT(onDecoderStateChanged()));
+		disconnect(m_decoder, SIGNAL(decoding()), this, SLOT(onDecoderStateChanged()));
+		disconnect(m_decoder, SIGNAL(stopped()), this, SLOT(onDecoderStateChanged()));
 	}
 
 	m_decoder = decoder;
 
 	int newContextFlags = m_contextFlags & ~UserAction::AudioMask;
 
-	if ( m_decoder )
-	{
-		connect( m_decoder, SIGNAL( fileOpened(const QString&) ),
-				 this, SLOT( onDecoderStateChanged() ) );
-		connect( m_decoder, SIGNAL( fileClosed() ),
-				 this, SLOT( onDecoderStateChanged() ) );
-		connect( m_decoder, SIGNAL( decoding() ),
-				 this, SLOT( onDecoderStateChanged() ) );
-		connect( m_decoder, SIGNAL( stopped() ),
-				 this, SLOT( onDecoderStateChanged() ) );
+	if(m_decoder) {
+		connect(m_decoder, SIGNAL(fileOpened(const QString &)), this, SLOT(onDecoderStateChanged()));
+		connect(m_decoder, SIGNAL(fileClosed()), this, SLOT(onDecoderStateChanged()));
+		connect(m_decoder, SIGNAL(decoding()), this, SLOT(onDecoderStateChanged()));
+		connect(m_decoder, SIGNAL(stopped()), this, SLOT(onDecoderStateChanged()));
 
 		int state = m_decoder->state();
-		if ( state > Decoder::Opening )
-		{
+		if(state > Decoder::Opening) {
 			newContextFlags |= UserAction::AudioOpened;
-			if ( state == Decoder::Decoding )
+			if(state == Decoder::Decoding)
 				newContextFlags |= UserAction::AudioDecoding;
 			else
 				newContextFlags |= UserAction::AudioStopped;
-		}
-		else
+		} else
 			newContextFlags |= UserAction::AudioClosed;
 	}
 
-	updateActionsContext( newContextFlags );
+	updateActionsContext(newContextFlags);
 }
 
 void UserActionManager::onDecoderStateChanged()
@@ -432,70 +364,64 @@ void UserActionManager::onDecoderStateChanged()
 	int newContextFlags = m_contextFlags & ~UserAction::AudioMask;
 
 	int state = m_decoder->state();
-	if ( state > Decoder::Opening )
-	{
+	if(state > Decoder::Opening) {
 		newContextFlags |= UserAction::AudioOpened;
-		if ( state == Decoder::Decoding )
+		if(state == Decoder::Decoding)
 			newContextFlags |= UserAction::AudioDecoding;
 		else
 			newContextFlags |= UserAction::AudioStopped;
-	}
-	else
+	} else
 		newContextFlags |= UserAction::AudioClosed;
 
-	updateActionsContext( newContextFlags );
+	updateActionsContext(newContextFlags);
 }
 
-void UserActionManager::setTranslationMode( bool translationMode )
+void UserActionManager::setTranslationMode(bool translationMode)
 {
 	m_translationMode = translationMode;
 
-	int newContextFlags = m_contextFlags & ~(UserAction::SubTrClosed|UserAction::SubTrOpened|
-											 UserAction::SubSDirty|UserAction::SubSClean);
+	int newContextFlags = m_contextFlags & ~(UserAction::SubTrClosed | UserAction::SubTrOpened | UserAction::SubSDirty | UserAction::SubSClean);
 
-	if ( m_subtitle && m_translationMode )
-	{
+	if(m_subtitle && m_translationMode) {
 		newContextFlags |= UserAction::SubTrOpened;
 
-		if ( m_subtitle->isSecondaryDirty() )
+		if(m_subtitle->isSecondaryDirty())
 			newContextFlags |= UserAction::SubSDirty;
 		else
 			newContextFlags |= UserAction::SubSClean;
-	}
-	else
-		newContextFlags |= (UserAction::SubTrClosed|UserAction::SubSClean);
+	} else
+		newContextFlags |= (UserAction::SubTrClosed | UserAction::SubSClean);
 
-	updateActionsContext( newContextFlags );
+	updateActionsContext(newContextFlags);
 }
 
 
-void UserActionManager::setFullScreenMode( bool fullScreenMode )
+void UserActionManager::setFullScreenMode(bool fullScreenMode)
 {
 	int newContextFlags = m_contextFlags & ~UserAction::FullScreenMask;
 
-	if ( fullScreenMode )
+	if(fullScreenMode)
 		newContextFlags |= UserAction::FullScreenOn;
 	else
 		newContextFlags |= UserAction::FullScreenOff;
 
-	updateActionsContext( newContextFlags );
+	updateActionsContext(newContextFlags);
 }
 
-void UserActionManager::updateActionsContext( int contextFlags )
+void UserActionManager::updateActionsContext(int contextFlags)
 {
-// 	if ( (m_contextFlags & UserAction::SubHasLine) != (contextFlags & UserAction::SubHasLine)  )
-// 		kDebug() << "has line:" << ((contextFlags & UserAction::SubHasLine) != 0);
-// 	if ( (m_contextFlags & UserAction::SubHasLines) != (contextFlags & UserAction::SubHasLines)  )
-// 		kDebug() << "has lines:" << ((contextFlags & UserAction::SubHasLines) != 0);
-// 	if ( (m_contextFlags & UserAction::HasSelection) != (contextFlags & UserAction::HasSelection)  )
-// 		kDebug() << "has selection:" << ((contextFlags & UserAction::HasSelection) != 0);
+//  if ( (m_contextFlags & UserAction::SubHasLine) != (contextFlags & UserAction::SubHasLine)  )
+//      kDebug() << "has line:" << ((contextFlags & UserAction::SubHasLine) != 0);
+//  if ( (m_contextFlags & UserAction::SubHasLines) != (contextFlags & UserAction::SubHasLines)  )
+//      kDebug() << "has lines:" << ((contextFlags & UserAction::SubHasLines) != 0);
+//  if ( (m_contextFlags & UserAction::HasSelection) != (contextFlags & UserAction::HasSelection)  )
+//      kDebug() << "has selection:" << ((contextFlags & UserAction::HasSelection) != 0);
 
-	if ( m_contextFlags != contextFlags )
-	{
+	if(m_contextFlags != contextFlags) {
 
 		m_contextFlags = contextFlags;
-		for ( QList<UserAction*>::ConstIterator it = m_actionSpecs.begin(), end = m_actionSpecs.end(); it != end; ++it )
-			(*it)->setContextFlags( m_contextFlags );
+		for(QList < UserAction * >::ConstIterator it = m_actionSpecs.begin(), end = m_actionSpecs.end(); it != end; ++it)
+			(*it)->setContextFlags(m_contextFlags);
 	}
 }
 

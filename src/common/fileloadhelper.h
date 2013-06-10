@@ -21,32 +21,31 @@
  ***************************************************************************/
 
 #ifdef HAVE_CONFIG_H
-	#include <config.h>
+#include <config.h>
 #endif
 
 #include <QtCore/QFile>
 
 #include <KUrl>
 
-class FileLoadHelper
-{
-	public:
+class FileLoadHelper {
+  public:
 
-		FileLoadHelper( const KUrl& url );
-		~FileLoadHelper();
+	FileLoadHelper(const KUrl & url);
+	~FileLoadHelper();
 
-		const KUrl& url();
-		QFile* file();
+	const KUrl & url();
+	QFile *file();
 
-		bool open();
-		bool close();
+	bool open();
+	bool close();
 
-		static bool exists( const KUrl& url );
+	static bool exists(const KUrl & url);
 
-	private:
+  private:
 
-		KUrl m_url;
-		QFile* m_file;
+	KUrl m_url;
+	QFile *m_file;
 };
 
 

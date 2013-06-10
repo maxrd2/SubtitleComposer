@@ -24,11 +24,10 @@
 #include <KGlobal>
 #include <KLocale>
 
-QString LanguageCode::toTwoLetters( const QString& threeLettersCode )
+QString LanguageCode::toTwoLetters(const QString & threeLettersCode)
 {
-	static QMap<QString,QString> map;
-	if ( map.isEmpty() )
-	{
+	static QMap < QString, QString > map;
+	if(map.isEmpty()) {
 		map["aar"] = "aa";
 		map["abk"] = "ab";
 		map["afr"] = "af";
@@ -215,14 +214,13 @@ QString LanguageCode::toTwoLetters( const QString& threeLettersCode )
 		map["zul"] = "zu";
 	}
 
-	return map.contains( threeLettersCode ) ? map[threeLettersCode] : QString();
+	return map.contains(threeLettersCode) ? map[threeLettersCode] : QString();
 }
 
-QString LanguageCode::toThreeLetters( const QString& twoLettersCode )
+QString LanguageCode::toThreeLetters(const QString & twoLettersCode)
 {
-	static QMap<QString,QString> map;
-	if ( map.isEmpty() )
-	{
+	static QMap < QString, QString > map;
+	if(map.isEmpty()) {
 		map["aa"] = "aar";
 		map["ab"] = "abk";
 		map["ae"] = "ave";
@@ -409,17 +407,17 @@ QString LanguageCode::toThreeLetters( const QString& twoLettersCode )
 		map["zu"] = "zul";
 	}
 
-	return map.contains( twoLettersCode ) ? map[twoLettersCode] : QString();
+	return map.contains(twoLettersCode) ? map[twoLettersCode] : QString();
 }
 
-QString LanguageCode::nameFromTwoLetters( const QString& twoLettersCode )
+QString LanguageCode::nameFromTwoLetters(const QString & twoLettersCode)
 {
-	QString name = KGlobal::locale()->languageCodeToName( twoLettersCode );
-	return name.isEmpty() ? i18n( "Unknown" ) : name;
+	QString name = KGlobal::locale()->languageCodeToName(twoLettersCode);
+	return name.isEmpty()? i18n("Unknown") : name;
 }
 
-QString LanguageCode::nameFromThreeLetters( const QString& threeLettersCode )
+QString LanguageCode::nameFromThreeLetters(const QString & threeLettersCode)
 {
-	QString name = KGlobal::locale()->languageCodeToName( toTwoLetters( threeLettersCode ) );
-	return name.isEmpty() ? i18n( "Unknown" ) : name;
+	QString name = KGlobal::locale()->languageCodeToName(toTwoLetters(threeLettersCode));
+	return name.isEmpty()? i18n("Unknown") : name;
 }

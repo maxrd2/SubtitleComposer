@@ -26,54 +26,49 @@
 
 #include <QtGui/QWidget>
 
-class AttachableWidget : public QWidget
-{
-	Q_OBJECT
+class AttachableWidget:public QWidget {
+  Q_OBJECT public:
 
-	public:
+	typedef enum { Top, Bottom } Place;
 
-		typedef enum { Top, Bottom } Place;
+	explicit AttachableWidget(Place place = Bottom, unsigned animStepDuration = 4);
+	virtual ~ AttachableWidget();
 
-		explicit AttachableWidget( Place place=Bottom, unsigned animStepDuration=4 );
-		virtual ~AttachableWidget();
+	bool isAttached() const;
 
-		bool isAttached() const;
+	bool isAnimated() const;
+	int animStepDuration() const;
 
-		bool isAnimated() const;
-		int animStepDuration() const;
+	virtual bool eventFilter(QObject * object, QEvent * event);
 
-		virtual bool eventFilter( QObject* object, QEvent* event );
+	public slots:void attach(QWidget * target);
+	void dettach();
 
-	public slots:
+	void setAnimStepDuration(int stepDuration);
 
-		void attach( QWidget* target );
-		void dettach();
+	void toggleVisible(bool visible);
 
-		void setAnimStepDuration( int stepDuration );
+  protected:
 
-		void toggleVisible( bool visible );
+	virtual void timerEvent(QTimerEvent * event);
 
-	protected:
+  private:
 
-		virtual void timerEvent( QTimerEvent* event );
+	void toggleVisible(bool visible, bool force);
 
-	private:
+  private:
 
-		void toggleVisible( bool visible, bool force );
+	QWidget * m_targetWidget;
+	Place m_place;
+	int m_animStepDuration;
 
-	private:
+	typedef enum { Upward, Downward } Direction;
 
-		QWidget* m_targetWidget;
-		Place m_place;
-		int m_animStepDuration;
-
-		typedef enum { Upward, Downward } Direction;
-
-		int m_animTID;
-		bool m_animHiding;
-		int m_animFinalY;
-		int m_animCurrentY;
-		Direction m_animDirection;
+	int m_animTID;
+	bool m_animHiding;
+	int m_animFinalY;
+	int m_animCurrentY;
+	Direction m_animDirection;
 };
 
 #endif

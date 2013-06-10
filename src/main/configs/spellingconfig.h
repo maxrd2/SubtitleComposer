@@ -21,7 +21,7 @@
  ***************************************************************************/
 
 #ifdef HAVE_CONFIG_H
-	#include <config.h>
+#include <config.h>
 #endif
 
 #include "../../config/appconfiggroup.h"
@@ -29,50 +29,74 @@
 #include <KGlobal>
 #include <KLocale>
 
-namespace SubtitleComposer
-{
-	class SpellingConfig : public AppConfigGroup
-	{
+namespace SubtitleComposer {
+	class SpellingConfig:public AppConfigGroup {
 		friend class Application;
 		friend class SpellingConfigWidget;
 
-		public:
+	public:
 
-			virtual AppConfigGroup* clone() const { return new SpellingConfig( *this ); }
+		virtual AppConfigGroup * clone() const {
+			return new SpellingConfig(*this);
+		}
+		QString defaultLanguage() const {
+			return option(keyDefaultLanguage());
+		}
+		void setDefaultLanguage(const QString & defaultLanguage) {
+			setOption(keyDefaultLanguage(), defaultLanguage);
+		} QString defaultClient() const {
+			return option(keyDefaultClient());
+		}
+		void setDefaultClient(const QString & defaultClient) {
+			setOption(keyDefaultClient(), defaultClient);
+		} bool checkUppercase() const {
+			return optionAsBool(keyCheckUppercase());
+		}
+		void setCheckUppercase(bool checkUppercase) {
+			setOption(keyCheckUppercase(), checkUppercase);
+		}
 
-			QString defaultLanguage() const { return option( keyDefaultLanguage() ); }
-			void setDefaultLanguage( const QString& defaultLanguage ) { setOption( keyDefaultLanguage(), defaultLanguage ); }
+		bool skipRunTogether() const {
+			return optionAsBool(keySkipRunTogether());
+		}
+		void setSkipRunTogether(bool skipRunTogether) {
+			setOption(keySkipRunTogether(), skipRunTogether);
+		}
 
-			QString defaultClient() const { return option( keyDefaultClient() ); }
-			void setDefaultClient( const QString& defaultClient ) { setOption( keyDefaultClient(), defaultClient ); }
+		static const QString & keyDefaultLanguage() {
+			static const QString key("defaultLanguage");
+			return key;
+		}
+		static const QString & keyDefaultClient() {
+			static const QString key("defaultClient");
+			return key;
+		}
+		static const QString & keyCheckUppercase() {
+			static const QString key("checkUppercase");
+			return key;
+		}
+		static const QString & keySkipRunTogether() {
+			static const QString key("skipRunTogether");
+			return key;
+		}
 
-			bool checkUppercase() const { return optionAsBool( keyCheckUppercase() ); }
-			void setCheckUppercase( bool checkUppercase ) { setOption( keyCheckUppercase(), checkUppercase ); }
+	private:
 
-			bool skipRunTogether() const { return optionAsBool( keySkipRunTogether() ); }
-			void setSkipRunTogether( bool skipRunTogether ) { setOption( keySkipRunTogether(), skipRunTogether ); }
+	SpellingConfig():AppConfigGroup("Spelling", defaults()) {
+		}
+	SpellingConfig(const SpellingConfig & config):AppConfigGroup(config) {
+		}
 
-			static const QString& keyDefaultLanguage() { static const QString key( "defaultLanguage" ); return key; }
-			static const QString& keyDefaultClient() { static const QString key( "defaultClient" ); return key; }
-			static const QString& keyCheckUppercase() { static const QString key( "checkUppercase" ); return key; }
-			static const QString& keySkipRunTogether() { static const QString key( "skipRunTogether" ); return key; }
+		static QMap < QString, QString > defaults() {
+			QMap < QString, QString > defaults;
 
-		private:
+			defaults[keyDefaultLanguage()] = KGlobal::locale()->language();
+			defaults[keyDefaultClient()] = "";
+			defaults[keyCheckUppercase()] = "true";
+			defaults[keySkipRunTogether()] = "true";
 
-			SpellingConfig():AppConfigGroup( "Spelling", defaults() ) {}
-			SpellingConfig( const SpellingConfig& config ):AppConfigGroup( config ) {}
-
-			static QMap<QString,QString> defaults()
-			{
-				QMap<QString,QString> defaults;
-
-				defaults[keyDefaultLanguage()] = KGlobal::locale()->language();
-				defaults[keyDefaultClient()] = "";
-				defaults[keyCheckUppercase()] = "true";
-				defaults[keySkipRunTogether()] = "true";
-
-				return defaults;
-			}
+			return defaults;
+		}
 	};
 }
 

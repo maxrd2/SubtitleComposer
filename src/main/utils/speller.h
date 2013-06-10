@@ -21,7 +21,7 @@
 ***************************************************************************/
 
 #ifdef HAVE_CONFIG_H
-	#include <config.h>
+#include <config.h>
 #endif
 
 #include "../../core/subtitle.h"
@@ -29,60 +29,47 @@
 
 #include <QtCore/QObject>
 
-namespace Sonnet
-{
+namespace Sonnet {
 	class Dialog;
 }
-
-namespace SubtitleComposer
-{
+namespace SubtitleComposer {
 	class SubtitleIterator;
 
-	class Speller : public QObject
-	{
-		Q_OBJECT
+	class Speller:public QObject {
+	Q_OBJECT public:
 
-		public:
+		explicit Speller(QWidget * parent = 0);
+		virtual ~ Speller();
 
-			explicit Speller( QWidget* parent=0 );
-			virtual ~Speller();
+		QWidget *parentWidget();
 
-			QWidget* parentWidget();
+		public slots:void setSubtitle(Subtitle * subtitle = 0);
+		void setTranslationMode(bool enabled);
 
-		public slots:
+		void spellCheck(int currentIndex);
 
-			void setSubtitle( Subtitle* subtitle=0 );
-			void setTranslationMode( bool enabled );
+		signals:void misspelled(SubtitleLine * line, bool primary, int startIndex, int endIndex);
 
-			void spellCheck( int currentIndex );
+	private:
 
-		signals:
+		void invalidate();
+		bool advance();
 
-			void misspelled( SubtitleLine* line, bool primary, int startIndex, int endIndex );
+		private slots:void onBufferDone();
+		void onMisspelling(const QString & before, int pos);
+		void onCorrected(const QString & before, int pos, const QString & after);
 
-		private:
+		void onSpellingOptionChanged(const QString & option, const QString & value);
 
-			void invalidate();
-			bool advance();
+	private:
 
-		private slots:
+		Subtitle * m_subtitle;
+		bool m_translationMode;
+		bool m_feedPrimaryNext;
 
-			void onBufferDone();
-			void onMisspelling( const QString& before, int pos );
-			void onCorrected( const QString& before, int pos, const QString& after );
-
-			void onSpellingOptionChanged( const QString& option, const QString& value );
-
-		private:
-
-			Subtitle* m_subtitle;
-			bool m_translationMode;
-			bool m_feedPrimaryNext;
-
-			Sonnet::Dialog* m_sonnetDialog;
-			SubtitleIterator* m_iterator;
-			int m_firstIndex;
+		Sonnet::Dialog * m_sonnetDialog;
+		SubtitleIterator *m_iterator;
+		int m_firstIndex;
 	};
 }
-
 #endif

@@ -21,7 +21,7 @@
  ***************************************************************************/
 
 #ifdef HAVE_CONFIG_H
-    #include <config.h>
+#include <config.h>
 #endif
 
 #include "appconfiggroup.h"
@@ -33,44 +33,37 @@
 class KConfig;
 class KSharedConfig;
 
-namespace SubtitleComposer
-{
-	class AppConfig : public QObject
-	{
-		Q_OBJECT
+namespace SubtitleComposer {
+	class AppConfig:public QObject {
+	Q_OBJECT public:
 
-		public:
+		AppConfig();
+		AppConfig(const AppConfig & config);
+		AppConfig & operator=(const AppConfig & config);
+		~AppConfig();
 
-			AppConfig();
-			AppConfig( const AppConfig& config );
-			AppConfig& operator=( const AppConfig& config );
-			~AppConfig();
+		/// returns true if config object has the same groups as this object
+		/// and all corresponding groups are compatible between them
+		bool isCompatibleWith(const AppConfig & config);
 
-			/// returns true if config object has the same groups as this object
-			/// and all corresponding groups are compatible between them
-			bool isCompatibleWith( const AppConfig& config );
+		void loadDefaults();
 
-			void loadDefaults();
+		void readFrom(const KConfig * config);
+		void readFrom(const KSharedConfig * config);
+		void writeTo(KConfig * config) const;
+		void writeTo(KSharedConfig * config) const;
 
-			void readFrom( const KConfig* config );
-			void readFrom( const KSharedConfig* config );
-			void writeTo( KConfig* config ) const;
-			void writeTo( KSharedConfig* config ) const;
+		AppConfigGroup *group(const QString & name);
+		const AppConfigGroup *group(const QString & name) const;
 
-			AppConfigGroup* group( const QString& name );
-			const AppConfigGroup* group( const QString& name ) const;
+		void setGroup(AppConfigGroup * group);	/// ownership is transferred to this object
+		AppConfigGroup *removeGroup(const QString & name);	/// ownership is transferred to the caller
 
-			void setGroup( AppConfigGroup* group ); /// ownership is transferred to this object
-			AppConfigGroup* removeGroup( const QString& name ); /// ownership is transferred to the caller
+		signals:void optionChanged(const QString & groupName, const QString & optionName, const QString & value);
 
-		signals:
+	protected:
 
-			void optionChanged( const QString& groupName, const QString& optionName, const QString& value );
-
-		protected:
-
-			QMap<QString,AppConfigGroup*> m_groups;
+		QMap < QString, AppConfigGroup * >m_groups;
 	};
 }
-
 #endif

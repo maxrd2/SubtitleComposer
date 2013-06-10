@@ -21,7 +21,7 @@
  ***************************************************************************/
 
 #ifdef HAVE_CONFIG_H
-	#include <config.h>
+#include <config.h>
 #endif
 
 #include "playerconfig.h"
@@ -34,48 +34,44 @@ class KColorCombo;
 class KIntNumInput;
 class TextOverlayWidget;
 
-namespace SubtitleComposer
-{
-	class PlayerConfigWidget : public AppConfigGroupWidget
-	{
-		Q_OBJECT
+namespace SubtitleComposer {
+	class PlayerConfigWidget:public AppConfigGroupWidget {
+		Q_OBJECT friend class ConfigDialog;
 
-		friend class ConfigDialog;
+	public:
 
-		public:
+		virtual ~ PlayerConfigWidget();
 
-			virtual ~PlayerConfigWidget();
+		virtual void setControlsFromConfig();
+		virtual void setConfigFromControls();
 
-			virtual void setControlsFromConfig();
-			virtual void setConfigFromControls();
+		private slots:void onFamilyChanged(const QString & family);
+		void onSizeChanged(int size);
+		void onPrimaryColorChanged(const QColor & color);
+		void onOutlineColorChanged(const QColor & color);
+		void onOutlineWidthChanged(int width);
 
-		private slots:
+	private:
 
-			void onFamilyChanged( const QString& family );
-			void onSizeChanged( int size );
-			void onPrimaryColorChanged( const QColor& color );
-			void onOutlineColorChanged( const QColor& color );
-			void onOutlineWidthChanged( int width );
+		explicit PlayerConfigWidget(QWidget * parent = 0);
 
-		private:
+		PlayerConfig *config() {
+			return static_cast < PlayerConfig * >(m_config);
+		};
 
-			explicit PlayerConfigWidget( QWidget* parent=0 );
+	private:
 
-			PlayerConfig* config() { return static_cast<PlayerConfig*>( m_config ); };
+		KComboBox * m_playerBackendComboBox;
+		KComboBox *m_decoderBackendComboBox;
+		KIntNumInput *m_seekJumpSecsSpinBox;
+		QCheckBox *m_showPositionTimeEditCheckBox;
 
-		private:
-
-			KComboBox* m_playerBackendComboBox;
-			KComboBox* m_decoderBackendComboBox;
-			KIntNumInput* m_seekJumpSecsSpinBox;
-			QCheckBox* m_showPositionTimeEditCheckBox;
-
-			QFontComboBox* m_fontComboBox;
-			KIntNumInput* m_sizeSpinBox;
-			KColorCombo* m_primaryColorComboBox;
-			KColorCombo* m_outlineColorComboBox;
-			KIntNumInput* m_outlineWidthSpinBox;
-			TextOverlayWidget* m_textOverlayWidget;
+		QFontComboBox *m_fontComboBox;
+		KIntNumInput *m_sizeSpinBox;
+		KColorCombo *m_primaryColorComboBox;
+		KColorCombo *m_outlineColorComboBox;
+		KIntNumInput *m_outlineWidthSpinBox;
+		TextOverlayWidget *m_textOverlayWidget;
 	};
 }
 

@@ -21,7 +21,7 @@
  ***************************************************************************/
 
 #ifdef HAVE_CONFIG_H
-	#include <config.h>
+#include <config.h>
 #endif
 
 #include "../../core/sstring.h"
@@ -30,32 +30,23 @@
 #include <QtCore/QObject>
 #include <QtCore/QString>
 
-namespace SubtitleComposer
-{
-	namespace Scripting
-	{
-		class StringsModule : public QObject
-		{
-			Q_OBJECT
+namespace SubtitleComposer {
+	namespace Scripting {
+		class StringsModule:public QObject {
+			Q_OBJECT Q_ENUMS(StyleFlag)
 
-			Q_ENUMS( StyleFlag )
+		public:
 
-			public:
+			typedef enum {
+				Bold = SubtitleComposer::SString::Bold,
+				Italic = SubtitleComposer::SString::Italic,
+				Underline = SubtitleComposer::SString::Underline,
+				StrikeThrough = SubtitleComposer::SString::StrikeThrough,
+			} StyleFlag;
 
-				typedef enum {
-					Bold =				SubtitleComposer::SString::Bold,
-					Italic =			SubtitleComposer::SString::Italic,
-					Underline = 		SubtitleComposer::SString::Underline,
-					StrikeThrough = 	SubtitleComposer::SString::StrikeThrough,
-				} StyleFlag;
+			StringsModule(QObject * parent = 0);
 
-				StringsModule( QObject* parent=0 );
-
-			public slots:
-
-				QObject* newString( const QString& text=QString() );
+			public slots:QObject * newString(const QString & text = QString());
 		};
-	}
-}
-
+}}
 #endif

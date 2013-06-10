@@ -21,7 +21,7 @@
 ***************************************************************************/
 
 #ifdef HAVE_CONFIG_H
-	#include <config.h>
+#include <config.h>
 #endif
 
 #include "errorswidget.h"
@@ -31,36 +31,29 @@
 class QLabel;
 class KPushButton;
 
-namespace SubtitleComposer
-{
-	class ErrorsDialog : public KDialog
-	{
-		Q_OBJECT
+namespace SubtitleComposer {
+	class ErrorsDialog:public KDialog {
+	Q_OBJECT public:
 
-		public:
+		ErrorsDialog(QWidget * parent = 0);
 
-			ErrorsDialog( QWidget* parent=0 );
+		ErrorsWidget *errorsWidget();
 
-			ErrorsWidget* errorsWidget();
+		void loadConfig();
+		void saveConfig();
 
-			void loadConfig();
-			void saveConfig();
+		private slots:void onStatsChanged();
 
-		private slots:
+		void onOptionChanged(const QString & option, const QString & value);
 
-			void onStatsChanged();
+	private:
 
-			void onOptionChanged( const QString& option, const QString& value );
-
-		private:
-
-			ErrorsWidget* m_errorsWidget;
-			QLabel* m_statsLabel;
-			KPushButton* m_clearFixedButton;
-			KPushButton* m_clearErrorsButton;
-			bool m_autoClearFixed;
+		ErrorsWidget * m_errorsWidget;
+		QLabel *m_statsLabel;
+		KPushButton *m_clearFixedButton;
+		KPushButton *m_clearErrorsButton;
+		bool m_autoClearFixed;
 	};
 
 }
-
 #endif

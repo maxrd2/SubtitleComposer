@@ -21,7 +21,7 @@
  ***************************************************************************/
 
 #ifdef HAVE_CONFIG_H
-	#include <config.h>
+#include <config.h>
 #endif
 
 #include <QtGui/QWidget>
@@ -33,77 +33,72 @@
 
 class QTextDocument;
 
-class TextOverlayWidget : public QWidget
-{
-	Q_OBJECT
+class TextOverlayWidget:public QWidget {
+  Q_OBJECT public:
 
-	public:
+	TextOverlayWidget(QWidget * parent = 0);
+	virtual ~ TextOverlayWidget();
 
-		TextOverlayWidget( QWidget *parent=0 );
-		virtual ~TextOverlayWidget();
+	QString text() const;
 
-		QString text() const;
+	int alignment() const;
+	int pointSize() const;
+	qreal pointSizeF() const;
+	int pixelSize() const;
+	QString family() const;
+	QColor primaryColor() const;
+	int outlineWidth() const;
+	QColor outlineColor() const;
 
-		int alignment() const;
-		int pointSize() const;
-		qreal pointSizeF() const;
-		int pixelSize() const;
-		QString family() const;
-		QColor primaryColor() const;
-		int outlineWidth() const;
-		QColor outlineColor() const;
+	virtual QSize minimumSizeHint() const;
 
-		virtual QSize minimumSizeHint() const;
+	virtual bool eventFilter(QObject * object, QEvent * event);
 
-		virtual bool eventFilter( QObject* object, QEvent* event );
+	public slots:void setText(const QString & text);
+	void setAlignment(int alignment);
+	void setPointSize(int pointSize);
+	void setPointSizeF(qreal pointSizeF);
+	void setPixelSize(int pixelSize);
+	void setFamily(const QString & family);
+	void setPrimaryColor(const QColor & color);
+	void setOutlineWidth(int with);
+	void setOutlineColor(const QColor & color);
 
-	public slots:
+  protected:
 
-		void setText( const QString& text );
-		void setAlignment( int alignment );
-		void setPointSize( int pointSize );
-		void setPointSizeF( qreal pointSizeF );
-		void setPixelSize( int pixelSize );
-		void setFamily( const QString& family );
-		void setPrimaryColor( const QColor& color );
-		void setOutlineWidth( int with );
-		void setOutlineColor( const QColor& color );
+	virtual void customEvent(QEvent * event);
+	virtual void paintEvent(QPaintEvent * event);
 
-	protected:
+	void setDirty(bool updateRichText, bool updateTransColor, bool flickerless = false);
 
-		virtual void customEvent( QEvent* event );
-		virtual void paintEvent( QPaintEvent* event );
+	void updateColors();
+	void updateContents();
 
-		void setDirty( bool updateRichText, bool updateTransColor, bool flickerless=false );
+	QRect calculateTextRect() const;
+	void setMaskAndOutline(int width);
 
-		void updateColors();
-		void updateContents();
+  private:
 
-		QRect calculateTextRect() const;
-		void setMaskAndOutline( int width );
+	QString m_text;
 
-	private:
+	int m_alignment;
+	QFont m_font;				// font family and size are stored here
+	QColor m_primaryColor;
+	QRgb m_primaryRGB;
 
-		QString m_text;
+	int m_outlineWidth;
+	QColor m_outlineColor;
+	QRgb m_outlineRGB;
 
-		int m_alignment;
-		QFont m_font; // font family and size are stored here
-		QColor m_primaryColor;
-		QRgb m_primaryRGB;
+	QColor m_transColor;
+	QRgb m_transRGB;
 
-		int m_outlineWidth;
-		QColor m_outlineColor;
-		QRgb m_outlineRGB;
+	QTextDocument *m_textDocument;
 
-		QColor m_transColor;
-		QRgb m_transRGB;
+	QBitmap m_noTextMask;
+	QImage m_bgImage;
 
-		QTextDocument* m_textDocument;
-
-		QBitmap m_noTextMask;
-		QImage m_bgImage;
-
-		bool m_dirty;
+	bool m_dirty;
 };
 
 #endif

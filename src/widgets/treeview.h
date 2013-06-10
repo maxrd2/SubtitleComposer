@@ -24,33 +24,26 @@
 
 class QTimer;
 
-class TreeView : public QTreeView
-{
-	Q_OBJECT
+class TreeView:public QTreeView {
+  Q_OBJECT public:
 
-	public:
+	explicit TreeView(QWidget * parent);
+	virtual ~ TreeView();
 
-		explicit TreeView( QWidget* parent );
-		virtual ~TreeView();
+	public slots:virtual void setModel(QAbstractItemModel * model);
 
-	public slots:
+	protected slots:void onRowsAboutToBeInserted(const QModelIndex & parent, int start, int end);
+	void onRowsAboutToBeRemoved(const QModelIndex & parent, int start, int end);
 
-		virtual void setModel( QAbstractItemModel* model );
+	virtual void updateGeometries();
 
-	protected slots:
+	void onUpdateGeometriesTimeout();
 
-		void onRowsAboutToBeInserted( const QModelIndex& parent, int start, int end );
-		void onRowsAboutToBeRemoved( const QModelIndex& parent, int start, int end );
+  protected:
 
-		virtual void updateGeometries();
-
-		void onUpdateGeometriesTimeout();
-
-	protected:
-
-		QTimer* m_updateGeometriesTimer;
-		int m_currentModelRows;
-		int m_instantGeometryUpdate;
+	QTimer * m_updateGeometriesTimer;
+	int m_currentModelRows;
+	int m_instantGeometryUpdate;
 };
 
 

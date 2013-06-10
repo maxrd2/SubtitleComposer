@@ -21,100 +21,97 @@
 #include "../decoder.h"
 #include "../../common/qxtsignalwaiter.h"
 
-#include <QtTest> // krazy:exclude=c++/includes
-#include <QtCore> // krazy:exclude=c++/includes
+#include <QtTest>				// krazy:exclude=c++/includes
+#include <QtCore>				// krazy:exclude=c++/includes
 
 #include <KDebug>
 
 using namespace SubtitleComposer;
 
-static void convertoToFormat( int bitsPerSample, int channels )
+static void convertoToFormat(int bitsPerSample, int channels)
 {
-	static Decoder* decoder = Decoder::instance();
-	if ( ! decoder->isInitialized() )
-		decoder->initialize( 0, "Xine" );
+	static Decoder *decoder = Decoder::instance();
+	if(!decoder->isInitialized())
+		decoder->initialize(0, "Xine");
 
-	static const char* filesDir = "/home/sergio/Desktop/Desarrollo/subtitlecomposer/src/services/tests/";
+	static const char *filesDir = "/home/sergio/Desktop/Desarrollo/subtitlecomposer/src/services/tests/";
 
 	QString inputFile;
-	foreach ( inputFile, QDir( filesDir ).entryList( QStringList( "*.wav" ) ) )
-	{
+	foreach(inputFile, QDir(filesDir).entryList(QStringList("*.wav"))) {
 		QString inputPath = filesDir + inputFile;
 
-		QxtSignalWaiter openedWaiter( decoder, SIGNAL( fileOpened( const QString& ) ), SIGNAL( fileOpenError( const QString& ) ) );
+		QxtSignalWaiter openedWaiter(decoder, SIGNAL(fileOpened(const QString &)), SIGNAL(fileOpenError(const QString &)));
 		kDebug() << "opening" << inputPath;
-		decoder->openFile( inputPath );
+		decoder->openFile(inputPath);
 		kDebug() << "waiting opened signal";
-		openedWaiter.wait( 20000 );
+		openedWaiter.wait(20000);
 
-		if ( decoder->filePath().isEmpty() )
-		{
+		if(decoder->filePath().isEmpty()) {
 			kDebug() << "failed to open file";
 			return;
 		}
 
-		if ( decoder->audioStreamNames().isEmpty() )
-		{
+		if(decoder->audioStreamNames().isEmpty()) {
 			kDebug() << "no audio streams found in file";
 			return;
 		}
 
 		const int audioStream = 0;
 
-		QxtSignalWaiter decodingWaiter( decoder, SIGNAL( stopped() ) );
-		WaveFormat outputFormat( decoder->audioStreamFormats().at( audioStream ).sampleRate(), channels, bitsPerSample );
-		QString outputPath = filesDir + QString( "converted/" ) + inputFile.left( inputFile.length() - 4 ) + "_" + outputFormat.toString() + ".wav";
+		QxtSignalWaiter decodingWaiter(decoder, SIGNAL(stopped()));
+		WaveFormat outputFormat(decoder->audioStreamFormats().at(audioStream).sampleRate(), channels, bitsPerSample);
+		QString outputPath = filesDir + QString("converted/") + inputFile.left(inputFile.length() - 4) + "_" + outputFormat.toString() + ".wav";
 		kDebug() << "decoding as" << outputFormat.toString() << "to" << outputPath;
-		decoder->decode( audioStream, outputPath, outputFormat );
+		decoder->decode(audioStream, outputPath, outputFormat);
 		kDebug() << "waiting coversion end signal";
-		decodingWaiter.wait( 200000 );
+		decodingWaiter.wait(200000);
 
-		QxtSignalWaiter closedWaiter( decoder, SIGNAL( fileClosed() ) );
+		QxtSignalWaiter closedWaiter(decoder, SIGNAL(fileClosed()));
 		kDebug() << "closing" << inputFile;
 		decoder->closeFile();
 		kDebug() << "waiting closed signal";
-		closedWaiter.wait( 20000 );
+		closedWaiter.wait(20000);
 	}
 }
 
 void WaveWriterTest::testWriteMono8bps()
 {
-	convertoToFormat( 8, 1 );
+	convertoToFormat(8, 1);
 }
 
 void WaveWriterTest::testWriteMono16bps()
 {
-	convertoToFormat( 16, 1 );
+	convertoToFormat(16, 1);
 }
 
 void WaveWriterTest::testWriteMono24bps()
 {
-	convertoToFormat( 24, 1 );
+	convertoToFormat(24, 1);
 }
 
 void WaveWriterTest::testWriteMono32bps()
 {
-	convertoToFormat( 32, 1 );
+	convertoToFormat(32, 1);
 }
 
 void WaveWriterTest::testWriteStereo8bps()
 {
-	convertoToFormat( 8, 2 );
+	convertoToFormat(8, 2);
 }
 
 void WaveWriterTest::testWriteStereo16bps()
 {
-	convertoToFormat( 16, 2 );
+	convertoToFormat(16, 2);
 }
 
 void WaveWriterTest::testWriteStereo24bps()
 {
-	convertoToFormat( 24, 2 );
+	convertoToFormat(24, 2);
 }
 
 void WaveWriterTest::testWriteStereo32bps()
 {
-	convertoToFormat( 32, 2 );
+	convertoToFormat(32, 2);
 }
 
 /*
@@ -184,6 +181,6 @@ void WaveWriterTest::testJoinAndTrim()
 }
 */
 
-QTEST_MAIN( WaveWriterTest );
+QTEST_MAIN(WaveWriterTest);
 
 #include "wavewritertest.moc"

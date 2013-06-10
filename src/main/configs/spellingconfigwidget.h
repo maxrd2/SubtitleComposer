@@ -21,40 +21,39 @@
  ***************************************************************************/
 
 #ifdef HAVE_CONFIG_H
-	#include <config.h>
+#include <config.h>
 #endif
 
 #include "spellingconfig.h"
 #include "../../config/appconfiggroupwidget.h"
 
 class KConfig;
-namespace Sonnet { class ConfigWidget; }
+namespace Sonnet {
+	class ConfigWidget;
+}
+namespace SubtitleComposer {
+	class SpellingConfigWidget:public AppConfigGroupWidget {
+		Q_OBJECT friend class ConfigDialog;
 
-namespace SubtitleComposer
-{
-	class SpellingConfigWidget : public AppConfigGroupWidget
-	{
-		Q_OBJECT
+	public:
 
-		friend class ConfigDialog;
+		virtual ~ SpellingConfigWidget();
 
-		public:
+		virtual void setControlsFromConfig();
+		virtual void setConfigFromControls();
 
-			virtual ~SpellingConfigWidget();
+	private:
 
-			virtual void setControlsFromConfig();
-			virtual void setConfigFromControls();
+		explicit SpellingConfigWidget(QWidget * parent = 0);
 
-		private:
+		SpellingConfig *config() {
+			return static_cast < SpellingConfig * >(m_config);
+		};
 
-			explicit SpellingConfigWidget( QWidget* parent=0 );
+	private:
 
-			SpellingConfig* config() { return static_cast<SpellingConfig*>( m_config ); };
-
-		private:
-
-			Sonnet::ConfigWidget* m_sonnetConfigWidget;
-			KConfig* m_globalConfig;
+		Sonnet::ConfigWidget * m_sonnetConfigWidget;
+		KConfig *m_globalConfig;
 	};
 }
 

@@ -21,7 +21,7 @@
  ***************************************************************************/
 
 #ifdef HAVE_CONFIG_H
-	#include <config.h>
+#include <config.h>
 #endif
 
 #include "waveformat.h"
@@ -32,11 +32,10 @@
 class WaveWriter
 {
 	public:
-
 		WaveWriter();
 		~WaveWriter();
 
-		bool open( const QString& outputPath, const WaveFormat& outputFormat );
+		bool open(const QString& outputPath, const WaveFormat& outputFormat);
 		void close();
 
 		bool isOpened() const;
@@ -46,18 +45,16 @@ class WaveWriter
 		double writtenSeconds() const;
 
 		// if necessary, data is converted to outputFormat
-		bool writeSamplesData( void* data, unsigned long dataSize, const WaveFormat& dataFormat );
+		bool writeSamplesData(void* data, unsigned long dataSize, const WaveFormat& dataFormat);
 
 	private:
-
-		void* convertData( void* srcData, unsigned long srcDataSize, const WaveFormat& srcFormat, const WaveFormat& dstFormat, unsigned long& convertedDataSize );
-		static void convertSample( void* srcData, unsigned long srcDataOffset, const WaveFormat& srcFormat, void* dstData, unsigned long dstDataOffset, const WaveFormat& dstFormat );
+		void* convertData(void* srcData, unsigned long srcDataSize, const WaveFormat& srcFormat, const WaveFormat& dstFormat, unsigned long& convertedDataSize);
+		static void convertSample(void* srcData, unsigned long srcDataOffset, const WaveFormat& srcFormat, void* dstData, unsigned long dstDataOffset, const WaveFormat& dstFormat);
 
 		void writeHeader();
-		void writeNumber( unsigned long number, unsigned long writeSize, bool littleEndian=true );
+		void writeNumber(unsigned long number, unsigned long writeSize, bool littleEndian=true);
 
 	private:
-
 		QString m_outputPath;
 		WaveFormat m_outputFormat;
 

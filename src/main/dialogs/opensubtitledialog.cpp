@@ -28,50 +28,44 @@
 
 using namespace SubtitleComposer;
 
-OpenSubtitleDialog::OpenSubtitleDialog( bool primary, const QString& startDir, const QString& encoding, QWidget* parent ):
-	KFileDialog( startDir, inputFormatsFilter(), parent )
+OpenSubtitleDialog::OpenSubtitleDialog(bool primary, const QString & startDir, const QString & encoding, QWidget * parent):KFileDialog(startDir, inputFormatsFilter(), parent)
 {
-	setCaption( primary ? i18n( "Open Subtitle" ) : i18n( "Open Translation Subtitle" ) );
-	setOperationMode( KFileDialog::Opening );
+	setCaption(primary ? i18n("Open Subtitle") : i18n("Open Translation Subtitle"));
+	setOperationMode(KFileDialog::Opening);
 
-	setModal( true );
-	setMode( KFile::File|KFile::ExistingOnly );
+	setModal(true);
+	setMode(KFile::File | KFile::ExistingOnly);
 
-	m_encodingComboBox = new KComboBox( this );
-	m_encodingComboBox->addItem( i18n( "Autodetect" ) );
-	m_encodingComboBox->addItems( app()->availableEncodingNames() );
-	m_encodingComboBox->setCurrentItem( encoding.isEmpty() ? i18n( "Autodetect" ) : encoding );
-	m_encodingComboBox->setSizePolicy( QSizePolicy::MinimumExpanding, QSizePolicy::Fixed );
+	m_encodingComboBox = new KComboBox(this);
+	m_encodingComboBox->addItem(i18n("Autodetect"));
+	m_encodingComboBox->addItems(app()->availableEncodingNames());
+	m_encodingComboBox->setCurrentItem(encoding.isEmpty()? i18n("Autodetect") : encoding);
+	m_encodingComboBox->setSizePolicy(QSizePolicy::MinimumExpanding, QSizePolicy::Fixed);
 
 	// FIXME set "encoding" label buddy to m_encodingComboBox (how do we get the "encoding" label widget?)
-	fileWidget()->setCustomWidget( i18n( "Encoding:" ), m_encodingComboBox );
+	fileWidget()->setCustomWidget(i18n("Encoding:"), m_encodingComboBox);
 }
 
-QString OpenSubtitleDialog::selectedEncoding() const
-{
+QString OpenSubtitleDialog::selectedEncoding() const {
 	return m_encodingComboBox->currentIndex() == 0 ? QString() : m_encodingComboBox->currentText();
-}
-
-QString OpenSubtitleDialog::inputFormatsFilter()
+} QString OpenSubtitleDialog::inputFormatsFilter()
 {
 	static QString filter;
 
-	if ( filter.isEmpty() )
-	{
+	if(filter.isEmpty()) {
 		QString allSupported;
 		QStringList formats = FormatManager::instance().inputNames();
-		for ( QStringList::ConstIterator it = formats.begin(), end = formats.end(); it != end; ++it )
-		{
-			const InputFormat* format = FormatManager::instance().input( *it );
-			const QStringList& formatExtensions = format->extensions();
+		for(QStringList::ConstIterator it = formats.begin(), end = formats.end(); it != end; ++it) {
+			const InputFormat *format = FormatManager::instance().input(*it);
+			const QStringList & formatExtensions = format->extensions();
 			QString extensions;
-			for ( QStringList::ConstIterator extIt = formatExtensions.begin(), extEnd = formatExtensions.end(); extIt != extEnd; ++extIt )
+			for(QStringList::ConstIterator extIt = formatExtensions.begin(), extEnd = formatExtensions.end(); extIt != extEnd; ++extIt)
 				extensions += "*." + *extIt + " *." + (*extIt).toUpper();
 			allSupported += ' ' + extensions;
 			filter += '\n' + extensions + '|' + format->name();
 		}
 
-		filter = allSupported + '|' + i18n( "All Supported" ) + filter;
+		filter = allSupported + '|' + i18n("All Supported") + filter;
 		filter = filter.trimmed();
 	}
 

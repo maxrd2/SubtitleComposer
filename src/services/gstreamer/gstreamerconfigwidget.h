@@ -21,7 +21,7 @@
  ***************************************************************************/
 
 #ifdef HAVE_CONFIG_H
-	#include <config.h>
+#include <config.h>
 #endif
 
 #include "gstreamerconfig.h"
@@ -32,35 +32,33 @@
 class QCheckBox;
 class KComboBox;
 
-namespace SubtitleComposer
-{
-	class GStreamerConfigWidget : public AppConfigGroupWidget
-	{
-		Q_OBJECT
-
-		friend class GStreamerPlayerBackend;
+namespace SubtitleComposer {
+	class GStreamerConfigWidget:public AppConfigGroupWidget {
+		Q_OBJECT friend class GStreamerPlayerBackend;
 		friend class GStreamerDecoderBackend;
 
-		public:
+	public:
 
-			virtual ~GStreamerConfigWidget();
+		virtual ~ GStreamerConfigWidget();
 
-			virtual void setControlsFromConfig();
-			virtual void setConfigFromControls();
+		virtual void setControlsFromConfig();
+		virtual void setConfigFromControls();
 
-		private:
+	private:
 
-			explicit GStreamerConfigWidget( QWidget* parent=0 );
+		explicit GStreamerConfigWidget(QWidget * parent = 0);
 
-			GStreamerConfig* config() { return static_cast<GStreamerConfig*>( m_config ); };
+		GStreamerConfig *config() {
+			return static_cast < GStreamerConfig * >(m_config);
+		};
 
-		private:
+	private:
 
-			KComboBox* m_audioSinkComboBox;
-			QCheckBox* m_audioSinkCheckBox;
-			KComboBox* m_videoSinkComboBox;
-			QCheckBox* m_videoSinkCheckBox;
-			QCheckBox* m_experimentalFeaturesCheckBox;
+		KComboBox * m_audioSinkComboBox;
+		QCheckBox *m_audioSinkCheckBox;
+		KComboBox *m_videoSinkComboBox;
+		QCheckBox *m_videoSinkCheckBox;
+		QCheckBox *m_experimentalFeaturesCheckBox;
 	};
 }
 

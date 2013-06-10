@@ -27,44 +27,39 @@
 
 using namespace SubtitleComposer;
 
-CheckErrorsDialog::CheckErrorsDialog( QWidget* parent ):
-	ActionWithErrorTargetsDialog( i18n( "Check Errors" ), parent )
+CheckErrorsDialog::CheckErrorsDialog(QWidget * parent):
+ActionWithErrorTargetsDialog(i18n("Check Errors"), parent)
 {
-	createErrorsGroupBox( i18nc( "@title:group", "Errors to Check" ) );
-	createErrorsButtons( false, translationMode() );
+	createErrorsGroupBox(i18nc("@title:group", "Errors to Check"));
+	createErrorsButtons(false, translationMode());
 
-	QGroupBox* miscGroupBox = createGroupBox( i18nc( "@title:group Miscellaneous settings", "Miscellaneous" ) );
+	QGroupBox *miscGroupBox = createGroupBox(i18nc("@title:group Miscellaneous settings", "Miscellaneous"));
 
-	m_clearOtherErrorsCheckBox = new QCheckBox( miscGroupBox );
-	m_clearOtherErrorsCheckBox->setText( i18n( "Clear other errors" ) );
-	m_clearOtherErrorsCheckBox->setChecked( true );
+	m_clearOtherErrorsCheckBox = new QCheckBox(miscGroupBox);
+	m_clearOtherErrorsCheckBox->setText(i18n("Clear other errors"));
+	m_clearOtherErrorsCheckBox->setChecked(true);
 
-	m_clearMarksCheckBox = new QCheckBox( miscGroupBox );
-	m_clearMarksCheckBox->setText( i18n( "Clear user marks" ) );
-	m_clearMarksCheckBox->setChecked( false );
+	m_clearMarksCheckBox = new QCheckBox(miscGroupBox);
+	m_clearMarksCheckBox->setText(i18n("Clear user marks"));
+	m_clearMarksCheckBox->setChecked(false);
 
 	createLineTargetsButtonGroup();
 	createTextTargetsButtonGroup();
 
-	QGridLayout* miscLayout = createLayout( miscGroupBox );
-	miscLayout->addWidget( m_clearOtherErrorsCheckBox, 0, 0 );
-	miscLayout->addWidget( m_clearMarksCheckBox, 1, 0 );
+	QGridLayout *miscLayout = createLayout(miscGroupBox);
+	miscLayout->addWidget(m_clearOtherErrorsCheckBox, 0, 0);
+	miscLayout->addWidget(m_clearMarksCheckBox, 1, 0);
 }
 
-void CheckErrorsDialog::setTranslationMode( bool value )
+void CheckErrorsDialog::setTranslationMode(bool value)
 {
-	ActionWithErrorTargetsDialog::setTranslationMode( value );
-	createErrorsButtons( false, value );
+	ActionWithErrorTargetsDialog::setTranslationMode(value);
+	createErrorsButtons(false, value);
 }
 
-bool CheckErrorsDialog::clearOtherErrors() const
-{
+bool CheckErrorsDialog::clearOtherErrors() const {
 	return m_clearOtherErrorsCheckBox->isChecked();
-}
-
-bool CheckErrorsDialog::clearMarks() const
-{
+} bool CheckErrorsDialog::clearMarks() const {
 	return m_clearMarksCheckBox->isChecked();
 }
-
 #include "checkerrorsdialog.moc"

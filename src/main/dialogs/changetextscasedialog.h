@@ -21,7 +21,7 @@
  ***************************************************************************/
 
 #ifdef HAVE_CONFIG_H
-	#include <config.h>
+#include <config.h>
 #endif
 
 #include "actionwithtargetdialog.h"
@@ -29,34 +29,27 @@
 class QCheckBox;
 class QRadioButton;
 
-namespace SubtitleComposer
-{
-	class ChangeTextsCaseDialog : public ActionWithTargetDialog
-	{
-		Q_OBJECT
+namespace SubtitleComposer {
+	class ChangeTextsCaseDialog:public ActionWithTargetDialog {
+	Q_OBJECT public:
 
-		public:
+		typedef enum { Upper = 0, Lower, Title, Sentence } CaseOp;
 
-			typedef enum { Upper=0, Lower, Title, Sentence } CaseOp;
+		ChangeTextsCaseDialog(QWidget * parent = 0);
 
-			ChangeTextsCaseDialog( QWidget* parent=0 );
+		CaseOp caseOperation() const;
+		bool lowerFirst() const;
 
-			CaseOp caseOperation() const;
-			bool lowerFirst() const;
+		private slots:void onCaseButtonGroupClicked(int id);
 
-		private slots:
+	private:
 
-			void onCaseButtonGroupClicked( int id );
+		QCheckBox * m_lowerFirstCheckBox;
 
-		private:
-
-			QCheckBox* m_lowerFirstCheckBox;
-
-			QRadioButton* m_lowerRadioButton;
-			QRadioButton* m_upperRadioButton;
-			QRadioButton* m_titleRadioButton;
-			QRadioButton* m_sentenceRadioButton;
+		QRadioButton *m_lowerRadioButton;
+		QRadioButton *m_upperRadioButton;
+		QRadioButton *m_titleRadioButton;
+		QRadioButton *m_sentenceRadioButton;
 	};
 }
-
 #endif

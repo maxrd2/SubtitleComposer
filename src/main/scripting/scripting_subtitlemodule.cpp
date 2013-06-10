@@ -23,14 +23,14 @@
 
 using namespace SubtitleComposer;
 
-Scripting::SubtitleModule::SubtitleModule( QObject* parent ):
-	QObject( parent )
+Scripting::SubtitleModule::SubtitleModule(QObject * parent):
+QObject(parent)
 {
 }
 
-QObject* Scripting::SubtitleModule::instance()
+QObject *Scripting::SubtitleModule::instance()
 {
-	return app()->subtitle() ? new Scripting::Subtitle( app()->subtitle(), this ) : 0;
+	return app()->subtitle()? new Scripting::Subtitle(app()->subtitle(), this) : 0;
 }
 
 bool Scripting::SubtitleModule::translationMode()

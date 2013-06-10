@@ -34,48 +34,54 @@
 
 #define DEFAULT_MIN_POSITION_DELTA 0.02
 
-namespace SubtitleComposer
-{
-	class DummyDecoderBackend : public DecoderBackend
-	{
-		public:
+namespace SubtitleComposer {
+	class DummyDecoderBackend:public DecoderBackend {
+	public:
 
-			DummyDecoderBackend( Decoder* decoder ):DecoderBackend( decoder, "Dummy", new AppConfigGroup( "Dummy", QMap<QString,QString>() ) ) {}
-			virtual ~DummyDecoderBackend() {}
+		DummyDecoderBackend(Decoder * decoder):DecoderBackend(decoder, "Dummy", new AppConfigGroup("Dummy", QMap < QString, QString > ())) {
+		}
+		virtual ~ DummyDecoderBackend() {
+		}
+		virtual AppConfigGroupWidget *newAppConfigGroupWidget(QWidget * /*parent */ ) {
+			return 0;
+		}
 
-			virtual AppConfigGroupWidget* newAppConfigGroupWidget( QWidget* /*parent*/ ) { return 0; }
+	protected:
 
-		protected:
+		virtual QWidget * initialize(QWidget * /*widgetParent */ ) {
+			return (QWidget *) 1;
+		}
+		virtual void finalize() {
+		}
 
-			virtual QWidget* initialize( QWidget* /*widgetParent*/ ) { return (QWidget*)1; }
-			virtual void finalize() {}
+		virtual bool openFile(const QString & /*filePath */ ) {
+			return false;
+		}
+		virtual void closeFile() {
+		}
 
-			virtual bool openFile( const QString& /*filePath*/ ) { return false; }
-			virtual void closeFile() {}
-
-			virtual bool decode( int /*audioStream*/, const QString& /*outputPath*/, const WaveFormat& /*outputFormat*/ ) { return false; }
-			virtual bool stop() { return false; }
+		virtual bool decode(int /*audioStream */ , const QString & /*outputPath */ , const WaveFormat & /*outputFormat */ ) {
+			return false;
+		}
+		virtual bool stop() {
+			return false;
+		}
 	};
 }
 
 using namespace SubtitleComposer;
 
 Decoder::Decoder():
-	m_filePath(),
-	m_position( -1.0 ),
-	m_length( -1.0 ),
-	m_audioStreamNames(),
-	m_audioStreamFormats(),
-	m_openFileTimer( new QTimer( this ) )
+m_filePath(), m_position(-1.0), m_length(-1.0), m_audioStreamNames(), m_audioStreamFormats(), m_openFileTimer(new QTimer(this))
 {
-	addBackend( new DummyDecoderBackend( this ) );
+	addBackend(new DummyDecoderBackend(this));
 
 #ifdef HAVE_GSTREAMER
-	addBackend( new GStreamerDecoderBackend( this ) );
+	addBackend(new GStreamerDecoderBackend(this));
 #endif
 
 #ifdef HAVE_XINE
-	addBackend( new XineDecoderBackend( this ) );
+	addBackend(new XineDecoderBackend(this));
 #endif
 
 	// the timeout might seem too much, but it only matters when the file couldn't be
@@ -83,51 +89,45 @@ Decoder::Decoder():
 	// an error we there's nothing wrong with the file (a longer time might be needed
 	// for example if the computer is under heavy load or is just slow)
 
-	m_openFileTimer->setSingleShot( true );
+	m_openFileTimer->setSingleShot(true);
 
-	connect( m_openFileTimer, SIGNAL( timeout() ), this, SLOT( onOpenFileTimeout() ) );
+	connect(m_openFileTimer, SIGNAL(timeout()), this, SLOT(onOpenFileTimeout()));
 }
 
 Decoder::~Decoder()
 {
 }
 
-Decoder* Decoder::instance()
+Decoder *Decoder::instance()
 {
 	static Decoder Decoder;
 
 	return &Decoder;
 }
 
-bool Decoder::initializeBackend( ServiceBackend* backend, QWidget* /*widgetParent*/ )
+bool Decoder::initializeBackend(ServiceBackend * backend, QWidget * /*widgetParent */ )
 {
-	return backend->initialize( 0 ) == 0;
+	return backend->initialize(0) == 0;
 }
 
-void Decoder::finalizeBackend( ServiceBackend* backend )
+void Decoder::finalizeBackend(ServiceBackend * backend)
 {
 	closeFile();
 
 	backend->finalize();
 }
 
-const QStringList& Decoder::audioStreamNames() const
-{
+const QStringList & Decoder::audioStreamNames() const {
 	static const QStringList emptyList;
 
 	return m_state <= Decoder::Opening ? emptyList : m_audioStreamNames;
-}
-
-const QList<WaveFormat>& Decoder::audioStreamFormats() const
-{
-	static const QList<WaveFormat> emptyList;
+} const QList < WaveFormat > &Decoder::audioStreamFormats() const {
+	static const QList < WaveFormat > emptyList;
 
 	return m_state <= Decoder::Opening ? emptyList : m_audioStreamFormats;
-}
-
-void Decoder::resetState()
+} void Decoder::resetState()
 {
-	if ( m_openFileTimer->isActive() )
+	if(m_openFileTimer->isActive())
 		m_openFileTimer->stop();
 
 	m_filePath.clear();
@@ -141,140 +141,123 @@ void Decoder::resetState()
 	m_state = Decoder::Closed;
 }
 
-void Decoder::setPosition( double position )
+void Decoder::setPosition(double position)
 {
-	if ( m_state <= Decoder::Closed || m_state == Decoder::Ready )
+	if(m_state <= Decoder::Closed || m_state == Decoder::Ready)
 		return;
 
-	if ( position > m_length && m_length > 0 )
-		setLength( position );
+	if(position > m_length && m_length > 0)
+		setLength(position);
 
-	if ( m_position != position )
-	{
-		if ( m_position <= 0 || DEFAULT_MIN_POSITION_DELTA <= 0.0 )
-		{
+	if(m_position != position) {
+		if(m_position <= 0 || DEFAULT_MIN_POSITION_DELTA <= 0.0) {
 			m_position = position;
-			emit positionChanged( position );
-		}
-		else
-		{
+			emit positionChanged(position);
+		} else {
 			double positionDelta = m_position - position;
-			if ( positionDelta >= DEFAULT_MIN_POSITION_DELTA || -positionDelta >= DEFAULT_MIN_POSITION_DELTA )
-			{
+			if(positionDelta >= DEFAULT_MIN_POSITION_DELTA || -positionDelta >= DEFAULT_MIN_POSITION_DELTA) {
 				m_position = position;
-				emit positionChanged( position );
+				emit positionChanged(position);
 			}
 		}
 	}
 }
 
-void Decoder::setLength( double length )
+void Decoder::setLength(double length)
 {
-	if ( m_state <= Decoder::Closed )
+	if(m_state <= Decoder::Closed)
 		return;
 
-	if ( length >= 0 && m_length != length )
-	{
+	if(length >= 0 && m_length != length) {
 		m_length = length;
-		emit lengthChanged( length );
+		emit lengthChanged(length);
 	}
 }
 
-void Decoder::setState( Decoder::State newState )
+void Decoder::setState(Decoder::State newState)
 {
-	if ( m_state == Decoder::Opening || m_openFileTimer->isActive() )
-	{
-		if ( newState == Decoder::Ready )
-		{
+	if(m_state == Decoder::Opening || m_openFileTimer->isActive()) {
+		if(newState == Decoder::Ready) {
 			m_openFileTimer->stop();
 
 			m_state = Decoder::Ready;
 
-			emit fileOpened( m_filePath );
+			emit fileOpened(m_filePath);
 
 			// we emit this signals in case their values were already set
-			emit lengthChanged( m_length );
-			emit audioStreamsChanged( m_audioStreamNames, m_audioStreamFormats );
+			emit lengthChanged(m_length);
+			emit audioStreamsChanged(m_audioStreamNames, m_audioStreamFormats);
 		}
-	}
-	else if ( m_state > Decoder::Opening )
-	{
-		if ( m_state != newState )
-		{
+	} else if(m_state > Decoder::Opening) {
+		if(m_state != newState) {
 			m_state = newState;
-			switch ( m_state )
-			{
-				case Decoder::Decoding:
-					emit decoding();
-					break;
-				case Decoder::Ready:
-					emit stopped();
-					break;
-				default:
-					break;
+			switch(m_state) {
+			case Decoder::Decoding:
+				emit decoding();
+				break;
+			case Decoder::Ready:
+				emit stopped();
+				break;
+			default:
+				break;
 			}
 		}
 	}
 }
 
-void Decoder::setErrorState( const QString& errorMessage )
+void Decoder::setErrorState(const QString & errorMessage)
 {
-	if ( ! isInitialized() )
+	if(!isInitialized())
 		return;
 
-	if ( m_state <= Decoder::Opening )
-	{
+	if(m_state <= Decoder::Opening) {
 		m_openFileTimer->stop();
-		QString filePath( m_filePath );
+		QString filePath(m_filePath);
 		resetState();
-		emit fileOpenError( filePath );
-	}
-	else
-	{
+		emit fileOpenError(filePath);
+	} else {
 		activeBackend()->stop();
 		m_state = Decoder::Ready;
-		emit decodingError( errorMessage );
+		emit decodingError(errorMessage);
 		emit stopped();
 	}
 }
 
-void Decoder::appendAudioStream( const QString& name, const WaveFormat& format )
+void Decoder::appendAudioStream(const QString & name, const WaveFormat & format)
 {
-	insertAudioStream( m_audioStreamNames.size(), name, format );
+	insertAudioStream(m_audioStreamNames.size(), name, format);
 }
 
-void Decoder::insertAudioStream( int index, const QString& name, const WaveFormat& format )
+void Decoder::insertAudioStream(int index, const QString & name, const WaveFormat & format)
 {
-	if ( m_state <= Decoder::Closed || index < 0 || index > m_audioStreamNames.count() )
+	if(m_state <= Decoder::Closed || index < 0 || index > m_audioStreamNames.count())
 		return;
 
-	m_audioStreamNames.insert( index, name );
-	m_audioStreamFormats.insert( index, format );
+	m_audioStreamNames.insert(index, name);
+	m_audioStreamFormats.insert(index, format);
 
-	emit audioStreamsChanged( m_audioStreamNames, m_audioStreamFormats );
+	emit audioStreamsChanged(m_audioStreamNames, m_audioStreamFormats);
 }
 
-bool Decoder::openFile( const QString& filePath )
+bool Decoder::openFile(const QString & filePath)
 {
-	if ( m_state != Decoder::Closed )
+	if(m_state != Decoder::Closed)
 		return false;
 
-	QFileInfo fileInfo( filePath );
-	if ( ! fileInfo.exists() || ! fileInfo.isFile() || ! fileInfo.isReadable() )
-	{
-		emit fileOpenError( filePath ); // operation will never succed
+	QFileInfo fileInfo(filePath);
+	if(!fileInfo.exists() || !fileInfo.isFile() || !fileInfo.isReadable()) {
+		emit fileOpenError(filePath);	// operation will never succed
 		return true;
 	}
 
 	m_filePath = filePath;
 	m_state = Decoder::Opening;
 
-	m_openFileTimer->start( 6000 );
+	m_openFileTimer->start(6000);
 
-	if ( ! activeBackend()->openFile( fileInfo.absoluteFilePath() ) )
-	{
+	if(!activeBackend()->openFile(fileInfo.absoluteFilePath())) {
 		resetState();
-		emit fileOpenError( filePath );
+		emit fileOpenError(filePath);
 		return true;
 	}
 
@@ -283,30 +266,30 @@ bool Decoder::openFile( const QString& filePath )
 
 void Decoder::onOpenFileTimeout()
 {
-	QString filePath( m_filePath );
+	QString filePath(m_filePath);
 
 	activeBackend()->stop();
 	activeBackend()->closeFile();
 
 	resetState();
 
-	emit fileOpenError( filePath );
+	emit fileOpenError(filePath);
 }
 
 bool Decoder::closeFile()
 {
-	if ( m_state <= Decoder::Closed )
+	if(m_state <= Decoder::Closed)
 		return false;
 
 	bool stop = m_state != Decoder::Ready;
-	if ( stop )
-		activeBackend()->stop(); // we can safely ignore the stop() return value here as we're about to close the file
+	if(stop)
+		activeBackend()->stop();	// we can safely ignore the stop() return value here as we're about to close the file
 
 	activeBackend()->closeFile();
 
 	resetState();
 
-	if ( stop )
+	if(stop)
 		emit stopped();
 
 	emit fileClosed();
@@ -314,13 +297,12 @@ bool Decoder::closeFile()
 	return true;
 }
 
-bool Decoder::decode( int audioStream, const QString& outputPath, const WaveFormat& outputFormat )
+bool Decoder::decode(int audioStream, const QString & outputPath, const WaveFormat & outputFormat)
 {
-	if ( m_state <= Decoder::Opening || m_state == Decoder::Decoding || audioStream < 0 || audioStream >= m_audioStreamNames.size() )
+	if(m_state <= Decoder::Opening || m_state == Decoder::Decoding || audioStream < 0 || audioStream >= m_audioStreamNames.size())
 		return false;
 
-	if ( ! activeBackend()->decode( audioStream, outputPath, outputFormat ) )
-	{
+	if(!activeBackend()->decode(audioStream, outputPath, outputFormat)) {
 		resetState();
 		emit decodingError();
 	}
@@ -330,11 +312,10 @@ bool Decoder::decode( int audioStream, const QString& outputPath, const WaveForm
 
 bool Decoder::stop()
 {
-	if ( m_state <= Decoder::Opening || m_state == Decoder::Ready )
+	if(m_state <= Decoder::Opening || m_state == Decoder::Ready)
 		return false;
 
-	if ( ! activeBackend()->stop() )
-	{
+	if(!activeBackend()->stop()) {
 		resetState();
 		emit decodingError();
 		return true;

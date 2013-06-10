@@ -25,25 +25,22 @@
  ***************************************************************************/
 
 #ifdef HAVE_CONFIG_H
-	#include <config.h>
+#include <config.h>
 #endif
 
 #include <QtGui/QSlider>
 
-class PointingSlider : public QSlider
-{
-	Q_OBJECT
+class PointingSlider:public QSlider {
+  Q_OBJECT public:
 
-	public:
+	explicit PointingSlider(QWidget * parent = 0);
+	explicit PointingSlider(Qt::Orientation orientation, QWidget * parent = 0);
 
-		explicit PointingSlider( QWidget* parent=0 );
-		explicit PointingSlider( Qt::Orientation orientation, QWidget* parent=0 );
+	virtual ~ PointingSlider();
 
-		virtual ~PointingSlider();
+  protected:
 
-	protected:
-
-		virtual void mousePressEvent( QMouseEvent* e );
+	virtual void mousePressEvent(QMouseEvent * e);
 };
 
 #endif

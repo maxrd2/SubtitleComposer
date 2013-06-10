@@ -24,60 +24,40 @@
 #include <QtCore/QCoreApplication>
 #include <QtCore/QTimerEvent>
 
-QxtSignalWaiter::QxtSignalWaiter( const QObject* sender, const char* signal, unsigned count ):
-	QObject( 0 ),
-	m_signals( count ),
-	m_signalsCaught( 0 ),
-	m_timeout( false ),
-	m_eventFlags( QEventLoop::ExcludeUserInputEvents )
+QxtSignalWaiter::QxtSignalWaiter(const QObject *sender, const char *signal, unsigned count):QObject(0), m_signals(count), m_signalsCaught(0), m_timeout(false), m_eventFlags(QEventLoop::ExcludeUserInputEvents)
 {
-	if ( signal )
-		connect( sender, signal, this, SLOT(signalCaught()) );
+	if(signal)
+		connect(sender, signal, this, SLOT(signalCaught()));
 }
 
-QxtSignalWaiter::QxtSignalWaiter( const QObject* sender, const char* signal1, const char* signal2, unsigned count ):
-	QObject( 0 ),
-	m_signals( count ),
-	m_signalsCaught( 0 ),
-	m_timeout( false ),
-	m_eventFlags( QEventLoop::ExcludeUserInputEvents )
+QxtSignalWaiter::QxtSignalWaiter(const QObject *sender, const char *signal1, const char *signal2, unsigned count):QObject(0), m_signals(count), m_signalsCaught(0), m_timeout(false), m_eventFlags(QEventLoop::ExcludeUserInputEvents)
 {
-	if ( signal1 )
-		connect( sender, signal1, this, SLOT(signalCaught()) );
-	if ( signal2 )
-		connect( sender, signal2, this, SLOT(signalCaught()) );
+	if(signal1)
+		connect(sender, signal1, this, SLOT(signalCaught()));
+	if(signal2)
+		connect(sender, signal2, this, SLOT(signalCaught()));
 }
 
-QxtSignalWaiter::QxtSignalWaiter( const QObject* sender, const char* signal1, const char* signal2, const char* signal3, unsigned count ):
-	QObject( 0 ),
-	m_signals( count ),
-	m_signalsCaught( 0 ),
-	m_timeout( false ),
-	m_eventFlags( QEventLoop::ExcludeUserInputEvents )
+QxtSignalWaiter::QxtSignalWaiter(const QObject *sender, const char *signal1, const char *signal2, const char *signal3, unsigned count):QObject(0), m_signals(count), m_signalsCaught(0), m_timeout(false), m_eventFlags(QEventLoop::ExcludeUserInputEvents)
 {
-	if ( signal1 )
-		connect( sender, signal1, this, SLOT(signalCaught()) );
-	if ( signal2 )
-		connect( sender, signal2, this, SLOT(signalCaught()) );
-	if ( signal3 )
-		connect( sender, signal3, this, SLOT(signalCaught()) );
+	if(signal1)
+		connect(sender, signal1, this, SLOT(signalCaught()));
+	if(signal2)
+		connect(sender, signal2, this, SLOT(signalCaught()));
+	if(signal3)
+		connect(sender, signal3, this, SLOT(signalCaught()));
 }
 
-QxtSignalWaiter::QxtSignalWaiter( const QObject* sender, const char* signal1, const char* signal2, const char* signal3, const char* signal4, unsigned count ):
-	QObject( 0 ),
-	m_signals( count ),
-	m_signalsCaught( 0 ),
-	m_timeout( false ),
-	m_eventFlags( QEventLoop::ExcludeUserInputEvents )
+QxtSignalWaiter::QxtSignalWaiter(const QObject *sender, const char *signal1, const char *signal2, const char *signal3, const char *signal4, unsigned count):QObject(0), m_signals(count), m_signalsCaught(0), m_timeout(false), m_eventFlags(QEventLoop::ExcludeUserInputEvents)
 {
-	if ( signal1 )
-		connect( sender, signal1, this, SLOT(signalCaught()) );
-	if ( signal2 )
-		connect( sender, signal2, this, SLOT(signalCaught()) );
-	if ( signal3 )
-		connect( sender, signal3, this, SLOT(signalCaught()) );
-	if ( signal4 )
-		connect( sender, signal4, this, SLOT(signalCaught()) );
+	if(signal1)
+		connect(sender, signal1, this, SLOT(signalCaught()));
+	if(signal2)
+		connect(sender, signal2, this, SLOT(signalCaught()));
+	if(signal3)
+		connect(sender, signal3, this, SLOT(signalCaught()));
+	if(signal4)
+		connect(sender, signal4, this, SLOT(signalCaught()));
 }
 
 QxtSignalWaiter::~QxtSignalWaiter()
@@ -89,44 +69,42 @@ QEventLoop::ProcessEventsFlags QxtSignalWaiter::processEventFlags() const
 	return m_eventFlags;
 }
 
-void QxtSignalWaiter::setProcessEventFlags( QEventLoop::ProcessEventsFlags eventFlags )
+void QxtSignalWaiter::setProcessEventFlags(QEventLoop::ProcessEventsFlags eventFlags)
 {
 	m_eventFlags = eventFlags;
 }
 
 // Returns true if the signal was caught, returns false if the wait timed out
-bool QxtSignalWaiter::wait( int msec )
+bool QxtSignalWaiter::wait(int msec)
 {
-// 	static int waitcount = 0;
-// 	int waitID = waitcount++;
-// 	qDebug( "starting wait %d", waitID );
+//  static int waitcount = 0;
+//  int waitID = waitcount++;
+//  qDebug( "starting wait %d", waitID );
 
 	// Check input parameters
-	if ( msec < -1 || m_signalsCaught >= m_signals )
+	if(msec < -1 || m_signalsCaught >= m_signals)
 		return m_signalsCaught >= m_signals;
 
 	// activate the timeout
-	if ( msec != -1 )
-	{
-		m_timerID = startTimer( msec );
-		if ( m_timerID == 0 )
-		{
-			qDebug( "failed to initialize timer" );
+	if(msec != -1) {
+		m_timerID = startTimer(msec);
+		if(m_timerID == 0) {
+			qDebug("failed to initialize timer");
 			return false;
 		}
 	}
 	// Begin waiting
-	while( m_signalsCaught < m_signals && ! m_timeout )
-// 		QApplication::eventLoop()->processEvents( QEventLoop::WaitForMore );
+	while(m_signalsCaught < m_signals && !m_timeout)
+//      QApplication::eventLoop()->processEvents( QEventLoop::WaitForMore );
 		// we must dissallow input events to prevent recursive calls to this function
-		QCoreApplication::processEvents( m_eventFlags );
+		QCoreApplication::processEvents(m_eventFlags);
 
 	// Clean up and return status
-	killTimer( m_timerID );
+	killTimer(m_timerID);
 
-// 	qDebug( "finishing wait %d", waitID );
+//  qDebug( "finishing wait %d", waitID );
 
-	return m_signalsCaught >= m_signals || ! m_timeout;
+	return m_signalsCaught >= m_signals || !m_timeout;
 }
 
 void QxtSignalWaiter::reset()
@@ -139,9 +117,9 @@ void QxtSignalWaiter::signalCaught()
 	m_signalsCaught++;
 }
 
-void QxtSignalWaiter::timerEvent( QTimerEvent* )
+void QxtSignalWaiter::timerEvent(QTimerEvent *)
 {
-	killTimer( m_timerID );
+	killTimer(m_timerID);
 	m_timeout = true;
 }
 

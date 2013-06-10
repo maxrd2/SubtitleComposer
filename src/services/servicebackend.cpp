@@ -23,11 +23,7 @@
 
 using namespace SubtitleComposer;
 
-ServiceBackend::ServiceBackend( Service* service, const QString& name, AppConfigGroup* config ):
-	QObject( 0 ),
-	m_service( service ),
-	m_name( name ),
-	m_config( config )
+ServiceBackend::ServiceBackend(Service * service, const QString & name, AppConfigGroup * config):QObject(0), m_service(service), m_name(name), m_config(config)
 {
 }
 
@@ -46,22 +42,18 @@ bool ServiceBackend::isActiveBackend() const
 	return m_service->activeBackend() == this;
 }
 
-void ServiceBackend::setConfig( const AppConfigGroup* const config )
+void ServiceBackend::setConfig(const AppConfigGroup * const config)
 {
-	if ( config && m_config->isCompatibleWith( *config ) )
-	{
-		if ( *m_config != *config )
-		{
+	if(config && m_config->isCompatibleWith(*config)) {
+		if(*m_config != *config) {
 			*m_config = *config;
-			if ( isActiveBackend() )
+			if(isActiveBackend())
 				m_service->reinitialize();
 		}
 	}
 }
 
-bool ServiceBackend::isDummy() const
-{
+bool ServiceBackend::isDummy() const {
 	return m_name == m_service->dummyBackendName();
 }
-
 #include "servicebackend.moc"

@@ -21,34 +21,33 @@
  ***************************************************************************/
 
 #ifdef HAVE_CONFIG_H
-	#include <config.h>
+#include <config.h>
 #endif
 
 #include <QtCore/QFile>
 
 #include <KUrl>
 
-class FileSaveHelper
-{
-	public:
+class FileSaveHelper {
+  public:
 
-		FileSaveHelper( const KUrl& url, bool overwrite );
-		~FileSaveHelper();
+	FileSaveHelper(const KUrl & url, bool overwrite);
+	~FileSaveHelper();
 
-		const KUrl& url();
-		bool overwrite();
-		QFile* file();
+	const KUrl & url();
+	bool overwrite();
+	QFile *file();
 
-		bool open();
-		bool close();
+	bool open();
+	bool close();
 
-		static bool exists( const KUrl& url );
+	static bool exists(const KUrl & url);
 
-	private:
+  private:
 
-		KUrl m_url;
-		bool m_overwrite;
-		QFile* m_file;
+	KUrl m_url;
+	bool m_overwrite;
+	QFile *m_file;
 };
 
 

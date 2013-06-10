@@ -22,52 +22,41 @@
 
 
 #ifdef HAVE_CONFIG_H
-	#include <config.h>
+#include <config.h>
 #endif
 
 #include "../outputformat.h"
 #include "../../core/subtitleiterator.h"
 
-namespace SubtitleComposer
-{
-	class MPlayerOutputFormat : public OutputFormat
-	{
+namespace SubtitleComposer {
+	class MPlayerOutputFormat:public OutputFormat {
 		friend class FormatManager;
 
-		public:
+	public:
 
-			virtual ~MPlayerOutputFormat() {}
+		virtual ~ MPlayerOutputFormat() {
+		}
+	protected:
 
-		protected:
+		virtual QString dumpSubtitles(const Subtitle & subtitle, bool primary) const {
+			QString ret;
 
-			virtual QString dumpSubtitles( const Subtitle& subtitle, bool primary ) const
-			{
-				QString ret;
+			double framesPerSecond = subtitle.framesPerSecond();
 
-				double framesPerSecond = subtitle.framesPerSecond();
+			for(SubtitleIterator it(subtitle); it.current(); ++it) {
+				const SubtitleLine *line = it.current();
 
-				for ( SubtitleIterator it( subtitle ); it.current(); ++it )
-				{
-					const SubtitleLine* line = it.current();
+				const SString & text = primary ? line->primaryText() : line->secondaryText();
 
-					const SString& text = primary ? line->primaryText() : line->secondaryText();
+				ret += m_lineBuilder.arg((long)((line->showTime().toMillis() / 1000.0) * framesPerSecond + 0.5))
+				.arg((long)((line->hideTime().toMillis() / 1000.0) * framesPerSecond + 0.5))
+				.arg(text.string().replace('\n', '|'));
+			} return ret;
+		}
+		MPlayerOutputFormat():OutputFormat("MPlayer", QStringList("mpl")), m_lineBuilder("%1,%2,0,%3\n") {
+		}
 
-					ret += m_lineBuilder
-						.arg( (long)((line->showTime().toMillis()/1000.0)*framesPerSecond + 0.5) )
-						.arg( (long)((line->hideTime().toMillis()/1000.0)*framesPerSecond + 0.5) )
-						.arg( text.string().replace( '\n', '|' ) );
-				}
-
-				return ret;
-			}
-
-			MPlayerOutputFormat():
-				OutputFormat( "MPlayer", QStringList( "mpl" ) ),
-				m_lineBuilder( "%1,%2,0,%3\n" )
-			{
-			}
-
-			const QString m_lineBuilder;
+		const QString m_lineBuilder;
 	};
 }
 

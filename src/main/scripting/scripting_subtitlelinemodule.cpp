@@ -23,8 +23,8 @@
 
 using namespace SubtitleComposer;
 
-Scripting::SubtitleLineModule::SubtitleLineModule( QObject* parent ):
-	QObject( parent )
+Scripting::SubtitleLineModule::SubtitleLineModule(QObject * parent):
+QObject(parent)
 {
 }
 

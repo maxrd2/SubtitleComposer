@@ -23,7 +23,7 @@
  ****************************************************************************/
 
 #ifdef HAVE_CONFIG_H
-	#include <config.h>
+#include <config.h>
 #endif
 
 #include <QtCore/QObject>
@@ -38,39 +38,35 @@ class QTimerEvent;
 // this problem. Until then, be careful not to rely on two QxtSignalWaiter objects
 // at the same time.
 
-class QxtSignalWaiter : public QObject
-{
+class QxtSignalWaiter:public QObject {
 	Q_OBJECT
+public:
 
-	public:
+	QxtSignalWaiter(const QObject *sender, const char *signal, unsigned count = 1);
+	QxtSignalWaiter(const QObject *sender, const char *signal1, const char *signal2, unsigned count = 1);
+	QxtSignalWaiter(const QObject *sender, const char *signal1, const char *signal2, const char *signal3, unsigned count = 1);
+	QxtSignalWaiter(const QObject *sender, const char *signal1, const char *signal2, const char *signal3, const char *signal4, unsigned count = 1);
+	virtual ~ QxtSignalWaiter();
 
-		QxtSignalWaiter( const QObject* sender, const char* signal, unsigned count=1 );
-		QxtSignalWaiter( const QObject* sender, const char* signal1, const char* signal2, unsigned count=1 );
-		QxtSignalWaiter( const QObject* sender, const char* signal1, const char* signal2, const char* signal3, unsigned count=1 );
-		QxtSignalWaiter( const QObject* sender, const char* signal1, const char* signal2, const char* signal3, const char* signal4, unsigned count=1 );
-		virtual ~QxtSignalWaiter();
+	QEventLoop::ProcessEventsFlags processEventFlags() const;
+	void setProcessEventFlags(QEventLoop::ProcessEventsFlags eventFlags);
 
-		QEventLoop::ProcessEventsFlags processEventFlags() const;
-		void setProcessEventFlags( QEventLoop::ProcessEventsFlags eventFlags );
+	bool wait(int msec = -1);
+	void reset();
 
-		bool wait( int msec=-1 );
-		void reset();
+protected:
 
-	protected:
+	void timerEvent(QTimerEvent * event);
 
-		void timerEvent( QTimerEvent* event );
+private slots:void signalCaught();
 
-	private slots:
+private:
 
-		void signalCaught();
-
-	private:
-
-		const int m_signals;
-		int m_signalsCaught;
-		int m_timeout;
-		int m_timerID;
-		QEventLoop::ProcessEventsFlags m_eventFlags;
+	const int m_signals;
+	int m_signalsCaught;
+	int m_timeout;
+	int m_timerID;
+	QEventLoop::ProcessEventsFlags m_eventFlags;
 };
 
 

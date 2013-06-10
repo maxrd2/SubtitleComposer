@@ -22,50 +22,45 @@
 using namespace SubtitleComposer;
 
 ActionManager::ActionManager():
-	m_undoStack(),
-	m_redoStack(),
-	m_compressionThreshold( 350 )
+m_undoStack(), m_redoStack(), m_compressionThreshold(350)
 {
 	m_timeBetweenActions.start();
 
-	connect( this, SIGNAL( actionStored() ), this, SIGNAL( stateChanged() ) );
-	connect( this, SIGNAL( actionRemoved() ), this, SIGNAL( stateChanged() ) );
-	connect( this, SIGNAL( actionRedone() ), this, SIGNAL( stateChanged() ) );
-	connect( this, SIGNAL( actionUndone() ), this, SIGNAL( stateChanged() ) );
-	connect( this, SIGNAL( historyCleared() ), this, SIGNAL( stateChanged() ) );
+	connect(this, SIGNAL(actionStored()), this, SIGNAL(stateChanged()));
+	connect(this, SIGNAL(actionRemoved()), this, SIGNAL(stateChanged()));
+	connect(this, SIGNAL(actionRedone()), this, SIGNAL(stateChanged()));
+	connect(this, SIGNAL(actionUndone()), this, SIGNAL(stateChanged()));
+	connect(this, SIGNAL(historyCleared()), this, SIGNAL(stateChanged()));
 }
 
 ActionManager::~ActionManager()
 {
 	disconnect();
 
-	qDeleteAll( m_undoStack );
-	qDeleteAll( m_redoStack );
+	qDeleteAll(m_undoStack);
+	qDeleteAll(m_redoStack);
 }
 
-void ActionManager::execAndStore( Action* action )
+void ActionManager::execAndStore(Action * action)
 {
-	if ( action != 0 )
-	{
+	if(action != 0) {
 		action->redo();
 
 		bool compressed = false;
-		if ( m_timeBetweenActions.restart() < m_compressionThreshold && m_redoStack.isEmpty() )
-		{
-			Action* previousAction = m_undoStack.isEmpty() ? 0 : m_undoStack.first();
-			if ( previousAction && action->mergeWithPrevious( previousAction ) )
-			{
+		if(m_timeBetweenActions.restart() < m_compressionThreshold && m_redoStack.isEmpty()) {
+			Action *previousAction = m_undoStack.isEmpty()? 0 : m_undoStack.first();
+			if(previousAction && action->mergeWithPrevious(previousAction)) {
 				delete m_undoStack.takeFirst();
 				compressed = true;
 			}
 		}
 
-		qDeleteAll( m_redoStack );
+		qDeleteAll(m_redoStack);
 		m_redoStack.clear();
 
-		m_undoStack.prepend( action );
+		m_undoStack.prepend(action);
 
-		if ( ! compressed )
+		if(!compressed)
 			emit actionStored();
 
 		emit actionRedone();
@@ -74,8 +69,8 @@ void ActionManager::execAndStore( Action* action )
 
 void ActionManager::popUndo()
 {
-	if ( m_undoStack.isEmpty() )
-		return; // nothing to undo
+	if(m_undoStack.isEmpty())
+		return;					// nothing to undo
 
 	delete m_undoStack.takeFirst();
 	m_redoStack.clear();
@@ -83,56 +78,38 @@ void ActionManager::popUndo()
 	emit actionRemoved();
 }
 
-bool ActionManager::hasRedo() const
-{
-	return ! m_redoStack.isEmpty();
-}
-
-bool ActionManager::hasUndo() const
-{
-	return ! m_undoStack.isEmpty();
-}
-
-int ActionManager::redoCount() const
-{
+bool ActionManager::hasRedo() const {
+	return !m_redoStack.isEmpty();
+} bool ActionManager::hasUndo() const {
+	return !m_undoStack.isEmpty();
+} int ActionManager::redoCount() const {
 	return m_redoStack.count();
-}
-
-int ActionManager::undoCount() const
-{
+} int ActionManager::undoCount() const {
 	return m_undoStack.count();
-}
-
-QString ActionManager::redoDescription() const
-{
+} QString ActionManager::redoDescription() const {
 	return m_redoStack.isEmpty() ? QString() : m_redoStack.first()->description();
-}
-
-QString ActionManager::undoDescription() const
-{
+} QString ActionManager::undoDescription() const {
 	return m_undoStack.isEmpty() ? QString() : m_undoStack.first()->description();
-}
-
-void ActionManager::redo()
+} void ActionManager::redo()
 {
-	if ( m_redoStack.isEmpty() )
-		return; // nothing to redo
+	if(m_redoStack.isEmpty())
+		return;					// nothing to redo
 
-	Action* action = m_redoStack.takeFirst();
+	Action *action = m_redoStack.takeFirst();
 	action->redo();
-	m_undoStack.prepend( action );
+	m_undoStack.prepend(action);
 
 	emit actionRedone();
 }
 
 void ActionManager::undo()
 {
-	if ( m_undoStack.isEmpty() )
-		return; // nothing to undo
+	if(m_undoStack.isEmpty())
+		return;					// nothing to undo
 
-	Action* action = m_undoStack.takeFirst();
+	Action *action = m_undoStack.takeFirst();
 	action->undo();
-	m_redoStack.prepend( action );
+	m_redoStack.prepend(action);
 
 	emit actionUndone();
 }
@@ -141,7 +118,7 @@ void ActionManager::clearHistory()
 {
 	m_undoStack.clear();
 
-	qDeleteAll( m_redoStack );
+	qDeleteAll(m_redoStack);
 	m_redoStack.clear();
 
 	emit historyCleared();

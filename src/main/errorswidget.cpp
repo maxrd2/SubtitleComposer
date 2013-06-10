@@ -44,23 +44,19 @@ using namespace SubtitleComposer;
 /// ERRORS MODEL NODE
 /// =================
 
-ErrorsModelNode::ErrorsModelNode( ErrorsModel* model, const SubtitleLine* line ):
-	m_model( model ),
-	m_line( line ),
-	m_errorCount( 0 ),
-	m_marked( false )
+ErrorsModelNode::ErrorsModelNode(ErrorsModel * model, const SubtitleLine * line):m_model(model), m_line(line), m_errorCount(0), m_marked(false)
 {
 	update();
 }
 
 ErrorsModelNode::~ErrorsModelNode()
 {
-	if ( m_marked )
+	if(m_marked)
 		m_model->m_markCount--;
 
 	m_model->m_errorCount -= m_errorCount;
 
-	if ( m_errorCount )
+	if(m_errorCount)
 		m_model->m_lineWithErrorsCount--;
 }
 
@@ -69,54 +65,48 @@ void ErrorsModelNode::update()
 	bool newMarked = m_line->errorFlags() & SubtitleLine::UserMark;
 	int newErrorsCount = m_line->errorCount();
 
-	if ( newMarked != m_marked )
-	{
-		if ( m_marked )
+	if(newMarked != m_marked) {
+		if(m_marked)
 			m_model->m_markCount--;
 		else
 			m_model->m_markCount++;
 		m_marked = newMarked;
 	}
 
-	if ( newErrorsCount > m_errorCount )
-	{
-		m_model->incrementErrorsCount( newErrorsCount - m_errorCount );
+	if(newErrorsCount > m_errorCount) {
+		m_model->incrementErrorsCount(newErrorsCount - m_errorCount);
 
-		int modelL1Row = m_model->mapLineIndexToModelL1Row( m_line->index() ) + 1;
+		int modelL1Row = m_model->mapLineIndexToModelL1Row(m_line->index()) + 1;
 
-		if ( ! m_errorCount ) // line was not visible before
+		if(!m_errorCount)		// line was not visible before
 		{
-			m_model->beginInsertRows( QModelIndex(), modelL1Row, modelL1Row );
+			m_model->beginInsertRows(QModelIndex(), modelL1Row, modelL1Row);
 
-			m_model->incrementVisibleLinesCount( 1 );
+			m_model->incrementVisibleLinesCount(1);
 
 			m_model->endInsertRows();
 		}
 
-		m_model->beginInsertRows( m_model->index( modelL1Row, 0 ), m_errorCount, newErrorsCount - 1 );
+		m_model->beginInsertRows(m_model->index(modelL1Row, 0), m_errorCount, newErrorsCount - 1);
 
 		m_errorCount = newErrorsCount;
 
 		m_model->endInsertRows();
-	}
-	else if ( newErrorsCount < m_errorCount )
-	{
-		m_model->incrementErrorsCount( newErrorsCount - m_errorCount );
+	} else if(newErrorsCount < m_errorCount) {
+		m_model->incrementErrorsCount(newErrorsCount - m_errorCount);
 
-		int modelL1Row = m_model->mapLineIndexToModelL1Row( m_line->index() );
+		int modelL1Row = m_model->mapLineIndexToModelL1Row(m_line->index());
 
-		if ( ! newErrorsCount ) // line is no longer visible
+		if(!newErrorsCount)		// line is no longer visible
 		{
-			m_model->beginRemoveRows( QModelIndex(), modelL1Row, modelL1Row );
+			m_model->beginRemoveRows(QModelIndex(), modelL1Row, modelL1Row);
 
-			m_model->incrementVisibleLinesCount( -1 );
+			m_model->incrementVisibleLinesCount(-1);
 			m_errorCount = 0;
 
 			m_model->endRemoveRows();
-		}
-		else
-		{
-			m_model->beginRemoveRows( m_model->index( modelL1Row, 0 ), newErrorsCount, m_errorCount - 1 );
+		} else {
+			m_model->beginRemoveRows(m_model->index(modelL1Row, 0), newErrorsCount, m_errorCount - 1);
 
 			m_errorCount = newErrorsCount;
 
@@ -131,438 +121,367 @@ void ErrorsModelNode::update()
 /// ERRORS MODEL
 /// ============
 
-ErrorsModel::ErrorsModel( QObject* parent ):
-	QAbstractItemModel( parent ),
-	m_subtitle( 0 ),
-	m_nodes(),
-	m_statsChangedTimer( new QTimer( this ) ),
-	m_lineWithErrorsCount( 0 ),
-	m_errorCount( 0 ),
-	m_markCount( 0 ),
-	m_dataChangedTimer( new QTimer( this ) ),
-	m_minChangedLineIndex( -1 ),
-	m_maxChangedLineIndex( -1 )
+ErrorsModel::ErrorsModel(QObject * parent):
+QAbstractItemModel(parent), m_subtitle(0), m_nodes(), m_statsChangedTimer(new QTimer(this)), m_lineWithErrorsCount(0), m_errorCount(0), m_markCount(0), m_dataChangedTimer(new QTimer(this)), m_minChangedLineIndex(-1), m_maxChangedLineIndex(-1)
 {
-	m_statsChangedTimer->setInterval( 0 );
-	m_statsChangedTimer->setSingleShot( true );
+	m_statsChangedTimer->setInterval(0);
+	m_statsChangedTimer->setSingleShot(true);
 
-	connect( m_statsChangedTimer, SIGNAL( timeout() ), this, SIGNAL( statsChanged() ) );
+	connect(m_statsChangedTimer, SIGNAL(timeout()), this, SIGNAL(statsChanged()));
 
-	m_dataChangedTimer->setInterval( 0 );
-	m_dataChangedTimer->setSingleShot( true );
+	m_dataChangedTimer->setInterval(0);
+	m_dataChangedTimer->setSingleShot(true);
 
-	connect( m_dataChangedTimer, SIGNAL( timeout() ), this, SLOT( emitDataChanged() ) );
+	connect(m_dataChangedTimer, SIGNAL(timeout()), this, SLOT(emitDataChanged()));
 }
 
 ErrorsModel::~ErrorsModel()
 {
-	qDeleteAll( m_nodes );
+	qDeleteAll(m_nodes);
 }
 
-int ErrorsModel::mapModelIndexToLineIndex( const QModelIndex& modelIndex ) const
-{
-	if ( ! modelIndex.isValid() ) // modelIndex is the root item
+int ErrorsModel::mapModelIndexToLineIndex(const QModelIndex & modelIndex) const {
+	if(!modelIndex.isValid())	// modelIndex is the root item
 		return -1;
-	else if ( modelIndex.parent().isValid() ) // modelIndex is an error item
-		return mapModelL1RowToLineIndex( modelIndex.parent().row() );
-	else // modelIndex is a line item
-		return mapModelL1RowToLineIndex( modelIndex.row() );
-}
-
-int ErrorsModel::mapLineIndexToModelL1Row( int targetLineIndex ) const
-{
+	else if(modelIndex.parent().isValid())	// modelIndex is an error item
+		return mapModelL1RowToLineIndex(modelIndex.parent().row());
+	else						// modelIndex is a line item
+		return mapModelL1RowToLineIndex(modelIndex.row());
+} int ErrorsModel::mapLineIndexToModelL1Row(int targetLineIndex) const {
 	int modelL1Row = -1;
 
-	if ( targetLineIndex >= m_nodes.count() )
+	if(targetLineIndex >= m_nodes.count())
 		targetLineIndex = m_nodes.count() - 1;
 
-	for ( int lineIndex = 0; lineIndex <= targetLineIndex; ++lineIndex )
-		if ( m_nodes.at( lineIndex )->isVisible() )
+	for(int lineIndex = 0; lineIndex <= targetLineIndex; ++lineIndex)
+		if(m_nodes.at(lineIndex)->isVisible())
 			modelL1Row++;
 
 	return modelL1Row;
-}
-
-int ErrorsModel::mapModelL1RowToLineIndex( int targetModelL1Row ) const
-{
+} int ErrorsModel::mapModelL1RowToLineIndex(int targetModelL1Row) const {
 	int modelL1Row = -1;
-	for ( int lineIndex = 0, linesCount = m_nodes.count(); lineIndex < linesCount; ++lineIndex )
-	{
-		if ( m_nodes.at( lineIndex )->isVisible() )
-		{
-			modelL1Row++;
-			if ( modelL1Row == targetModelL1Row )
-				return lineIndex;
-		}
-	}
-
-	return -1;
-}
-
-int ErrorsModel::mapModelL2RowToLineErrorID( int targetModelL2Row, int lineErrorFlags ) const
+	for(int lineIndex = 0, linesCount = m_nodes.count(); lineIndex < linesCount; ++lineIndex)
 {
-	for ( int errorID = 0, modelL2Row = -1; errorID < SubtitleLine::ErrorSIZE; ++errorID )
-	{
-		if ( ((0x1 << errorID) & lineErrorFlags) )
-		{
-			modelL2Row++;
-			if ( modelL2Row == targetModelL2Row )
-				return errorID;
-		}
-	}
-
-	return SubtitleLine::ErrorUNKNOWN;
+if(m_nodes.at(lineIndex)->isVisible()) {
+	modelL1Row++;
+	if(modelL1Row == targetModelL1Row)
+		return lineIndex;
+}
+} return -1;
 }
 
-int ErrorsModel::mapModelL2RowToLineErrorFlag( int targetModelL2Row, int lineErrorFlags ) const
+int ErrorsModel::mapModelL2RowToLineErrorID(int targetModelL2Row, int lineErrorFlags) const {
+	for(int errorID = 0, modelL2Row = -1; errorID < SubtitleLine::ErrorSIZE; ++errorID)
 {
-	for ( int errorID = 0, modelL2Row = -1; errorID < SubtitleLine::ErrorSIZE; ++errorID )
-	{
-		if ( ((0x1 << errorID) & lineErrorFlags) )
-		{
-			modelL2Row++;
-			if ( modelL2Row == targetModelL2Row )
-				return 0x1 << errorID;
-		}
-	}
+if(((0x1 << errorID) & lineErrorFlags)) {
+	modelL2Row++;
+	if(modelL2Row == targetModelL2Row)
+		return errorID;
+}
+} return SubtitleLine::ErrorUNKNOWN;
+}
 
-	return 0;
+int ErrorsModel::mapModelL2RowToLineErrorFlag(int targetModelL2Row, int lineErrorFlags) const {
+	for(int errorID = 0, modelL2Row = -1; errorID < SubtitleLine::ErrorSIZE; ++errorID)
+{
+if(((0x1 << errorID) & lineErrorFlags)) {
+	modelL2Row++;
+	if(modelL2Row == targetModelL2Row)
+		return 0x1 << errorID;
+}
+} return 0;
 }
 
 
-void ErrorsModel::onLinesInserted( int firstLineIndex, int lastLineIndex )
+void ErrorsModel::onLinesInserted(int firstLineIndex, int lastLineIndex)
 {
 	int firstVisibleLineIndex = INT_MAX, lastVisibleLineIndex = INT_MIN;
 
-	ErrorsModelNode* node;
-	for ( int lineIndex = firstLineIndex; lineIndex <= lastLineIndex; ++lineIndex )
-	{
-		node = new ErrorsModelNode( this, m_subtitle->line( lineIndex ) );
-		m_nodes.insert( lineIndex, node );
-		if ( node->isVisible() )
-		{
-			if ( lineIndex < firstVisibleLineIndex )
+	ErrorsModelNode *node;
+	for(int lineIndex = firstLineIndex; lineIndex <= lastLineIndex; ++lineIndex) {
+		node = new ErrorsModelNode(this, m_subtitle->line(lineIndex));
+		m_nodes.insert(lineIndex, node);
+		if(node->isVisible()) {
+			if(lineIndex < firstVisibleLineIndex)
 				firstVisibleLineIndex = lineIndex;
-			if ( lineIndex > lastVisibleLineIndex )
+			if(lineIndex > lastVisibleLineIndex)
 				lastVisibleLineIndex = lineIndex;
 		}
 	}
 
-	if ( firstVisibleLineIndex != INT_MAX && lastVisibleLineIndex != INT_MIN ) // at least one visible line was inserted
+	if(firstVisibleLineIndex != INT_MAX && lastVisibleLineIndex != INT_MIN)	// at least one visible line was inserted
 	{
-		beginInsertRows(
-			QModelIndex(),
-			mapLineIndexToModelL1Row( firstVisibleLineIndex ),
-			mapLineIndexToModelL1Row( lastVisibleLineIndex )
-		);
+		beginInsertRows(QModelIndex(), mapLineIndexToModelL1Row(firstVisibleLineIndex), mapLineIndexToModelL1Row(lastVisibleLineIndex)
+			);
 		endInsertRows();
 	}
 
 	emit dataChanged();
 }
 
-void ErrorsModel::onLinesRemoved( int firstLineIndex, int lastLineIndex )
+void ErrorsModel::onLinesRemoved(int firstLineIndex, int lastLineIndex)
 {
 	int firstVisibleLineIndex = INT_MAX, lastVisibleLineIndex = INT_MIN;
 
-	for ( int lineIndex = firstLineIndex; lineIndex <= lastLineIndex; ++lineIndex )
-	{
-		if ( m_nodes.at( lineIndex )->isVisible() )
-		{
-			if ( lineIndex < firstVisibleLineIndex )
+	for(int lineIndex = firstLineIndex; lineIndex <= lastLineIndex; ++lineIndex) {
+		if(m_nodes.at(lineIndex)->isVisible()) {
+			if(lineIndex < firstVisibleLineIndex)
 				firstVisibleLineIndex = lineIndex;
-			if ( lineIndex > lastVisibleLineIndex )
+			if(lineIndex > lastVisibleLineIndex)
 				lastVisibleLineIndex = lineIndex;
 		}
 	}
 
-	int lastErrorRow = mapLineIndexToModelL1Row( lastVisibleLineIndex );
+	int lastErrorRow = mapLineIndexToModelL1Row(lastVisibleLineIndex);
 
-	if ( firstVisibleLineIndex != INT_MAX && lastVisibleLineIndex != INT_MIN ) // at least one visible line was removed
+	if(firstVisibleLineIndex != INT_MAX && lastVisibleLineIndex != INT_MIN)	// at least one visible line was removed
 	{
-		int firstErrorRow = mapLineIndexToModelL1Row( firstVisibleLineIndex );
+		int firstErrorRow = mapLineIndexToModelL1Row(firstVisibleLineIndex);
 
-		beginRemoveRows( QModelIndex(), firstErrorRow, lastErrorRow );
+		beginRemoveRows(QModelIndex(), firstErrorRow, lastErrorRow);
 		endRemoveRows();
 	}
 
-	for ( int lineIndex = firstLineIndex; lineIndex <= lastLineIndex; ++lineIndex )
-		delete m_nodes.takeAt( firstLineIndex );
+	for(int lineIndex = firstLineIndex; lineIndex <= lastLineIndex; ++lineIndex)
+		delete m_nodes.takeAt(firstLineIndex);
 
 	emit dataChanged();
 }
 
-void ErrorsModel::onLineErrorsChanged( SubtitleLine* line )
+void ErrorsModel::onLineErrorsChanged(SubtitleLine * line)
 {
 	int lineIndex = line->index();
 
-	m_nodes.at( lineIndex )->update();
+	m_nodes.at(lineIndex)->update();
 
-	markLineChanged( lineIndex );
+	markLineChanged(lineIndex);
 }
 
-void ErrorsModel::markLineChanged( int lineIndex )
+void ErrorsModel::markLineChanged(int lineIndex)
 {
-	if ( m_minChangedLineIndex < 0 )
-	{
+	if(m_minChangedLineIndex < 0) {
 		m_minChangedLineIndex = lineIndex;
 		m_maxChangedLineIndex = lineIndex;
 		m_dataChangedTimer->start();
-	}
-	else if ( lineIndex < m_minChangedLineIndex )
+	} else if(lineIndex < m_minChangedLineIndex)
 		m_minChangedLineIndex = lineIndex;
-	else if ( lineIndex > m_maxChangedLineIndex )
+	else if(lineIndex > m_maxChangedLineIndex)
 		m_maxChangedLineIndex = lineIndex;
 }
 
 void ErrorsModel::emitDataChanged()
 {
-	if ( m_minChangedLineIndex < 0 )
+	if(m_minChangedLineIndex < 0)
 		m_minChangedLineIndex = m_maxChangedLineIndex;
-	else if ( m_maxChangedLineIndex < 0 )
+	else if(m_maxChangedLineIndex < 0)
 		m_maxChangedLineIndex = m_minChangedLineIndex;
 
 	// at this point m_minChangedLineIndex and m_maxChangedLineIndex contain
 	// indexes for lines that may not be visible
 	int firstVisibleLineIndex = INT_MAX, lastVisibleLineIndex = INT_MIN;
-	for ( int lineIndex = m_minChangedLineIndex; lineIndex <= m_maxChangedLineIndex; ++lineIndex )
-	{
-		if ( m_nodes.at( lineIndex )->isVisible() )
-		{
-			if ( lineIndex < firstVisibleLineIndex )
+	for(int lineIndex = m_minChangedLineIndex; lineIndex <= m_maxChangedLineIndex; ++lineIndex) {
+		if(m_nodes.at(lineIndex)->isVisible()) {
+			if(lineIndex < firstVisibleLineIndex)
 				firstVisibleLineIndex = lineIndex;
-			if ( lineIndex > lastVisibleLineIndex )
+			if(lineIndex > lastVisibleLineIndex)
 				lastVisibleLineIndex = lineIndex;
 		}
 	}
 
-	if ( firstVisibleLineIndex != INT_MAX && lastVisibleLineIndex != INT_MIN ) // at least one visible line was removed
+	if(firstVisibleLineIndex != INT_MAX && lastVisibleLineIndex != INT_MIN)	// at least one visible line was removed
 	{
 		// now we can map the lines indexes to error indexes
-		emit dataChanged(
-			index( mapLineIndexToModelL1Row( firstVisibleLineIndex ), 0 ),
-			index( mapLineIndexToModelL1Row( lastVisibleLineIndex ), 0 )
-		);
+		emit dataChanged(index(mapLineIndexToModelL1Row(firstVisibleLineIndex), 0), index(mapLineIndexToModelL1Row(lastVisibleLineIndex), 0)
+			);
 	}
 
 	m_minChangedLineIndex = -1;
 	m_maxChangedLineIndex = -1;
 }
 
-void ErrorsModel::incrementVisibleLinesCount( int delta )
+void ErrorsModel::incrementVisibleLinesCount(int delta)
 {
-	if ( ! m_statsChangedTimer->isActive() )
+	if(!m_statsChangedTimer->isActive())
 		m_statsChangedTimer->start();
 	m_lineWithErrorsCount += delta;
 }
 
-void ErrorsModel::incrementErrorsCount( int delta )
+void ErrorsModel::incrementErrorsCount(int delta)
 {
-	if ( ! m_statsChangedTimer->isActive() )
+	if(!m_statsChangedTimer->isActive())
 		m_statsChangedTimer->start();
 	m_errorCount += delta;
 }
 
-void ErrorsModel::incrementMarksCount( int delta )
+void ErrorsModel::incrementMarksCount(int delta)
 {
-	if ( ! m_statsChangedTimer->isActive() )
+	if(!m_statsChangedTimer->isActive())
 		m_statsChangedTimer->start();
 	m_markCount += delta;
 }
 
-void ErrorsModel::setSubtitle( Subtitle* subtitle )
+void ErrorsModel::setSubtitle(Subtitle * subtitle)
 {
-	if ( m_subtitle != subtitle )
-	{
-		if ( m_subtitle )
-		{
-			disconnect( m_subtitle, SIGNAL( linesInserted( int, int ) ),
-						this, SLOT( onLinesInserted( int, int ) ) );
-			disconnect( m_subtitle, SIGNAL( linesRemoved( int, int ) ),
-						this, SLOT( onLinesRemoved( int, int ) ) );
+	if(m_subtitle != subtitle) {
+		if(m_subtitle) {
+			disconnect(m_subtitle, SIGNAL(linesInserted(int, int)), this, SLOT(onLinesInserted(int, int)));
+			disconnect(m_subtitle, SIGNAL(linesRemoved(int, int)), this, SLOT(onLinesRemoved(int, int)));
 
-			disconnect( m_subtitle, SIGNAL( lineErrorFlagsChanged( SubtitleLine*, int ) ),
-						this, SLOT( onLineErrorsChanged( SubtitleLine* ) ) );
+			disconnect(m_subtitle, SIGNAL(lineErrorFlagsChanged(SubtitleLine *, int)), this, SLOT(onLineErrorsChanged(SubtitleLine *)));
 
-			if ( m_subtitle->linesCount() )
-				onLinesRemoved( 0, m_subtitle->linesCount() - 1 );
+			if(m_subtitle->linesCount())
+				onLinesRemoved(0, m_subtitle->linesCount() - 1);
 		}
 
 		m_subtitle = subtitle;
 
-		if ( m_subtitle )
-		{
-			if ( m_subtitle->linesCount() )
-				onLinesInserted( 0, m_subtitle->linesCount() - 1 );
+		if(m_subtitle) {
+			if(m_subtitle->linesCount())
+				onLinesInserted(0, m_subtitle->linesCount() - 1);
 
-			connect( m_subtitle, SIGNAL( linesInserted( int, int ) ),
-					 this, SLOT( onLinesInserted( int, int ) ) );
-			connect( m_subtitle, SIGNAL( linesRemoved( int, int ) ),
-					 this, SLOT( onLinesRemoved( int, int ) ) );
+			connect(m_subtitle, SIGNAL(linesInserted(int, int)), this, SLOT(onLinesInserted(int, int)));
+			connect(m_subtitle, SIGNAL(linesRemoved(int, int)), this, SLOT(onLinesRemoved(int, int)));
 
-			connect( m_subtitle, SIGNAL( lineErrorFlagsChanged( SubtitleLine*, int ) ),
-					 this, SLOT( onLineErrorsChanged( SubtitleLine* ) ) );
+			connect(m_subtitle, SIGNAL(lineErrorFlagsChanged(SubtitleLine *, int)), this, SLOT(onLineErrorsChanged(SubtitleLine *)));
 		}
 	}
 }
 
-int ErrorsModel::rowCount( const QModelIndex& parent ) const
-{
-	if ( ! m_subtitle )
+int ErrorsModel::rowCount(const QModelIndex & parent) const {
+	if(!m_subtitle)
 		return 0;
 
-	if ( ! parent.isValid() ) // parent is the root item
+	if(!parent.isValid())		// parent is the root item
 		return m_lineWithErrorsCount;
 
-	if ( parent.parent().isValid() ) // parent is an error item
+	if(parent.parent().isValid())	// parent is an error item
 		return 0;
 
 	// parent is a line item
-	int lineIndex = mapModelL1RowToLineIndex( parent.row() );
-	return lineIndex < 0 ? 0 : m_nodes.at( lineIndex )->errorCount();
-}
-
-int ErrorsModel::columnCount( const QModelIndex& /*parent*/ ) const
-{
+	int lineIndex = mapModelL1RowToLineIndex(parent.row());
+	return lineIndex < 0 ? 0 : m_nodes.at(lineIndex)->errorCount();
+} int ErrorsModel::columnCount(const QModelIndex & /*parent */ ) const {
 	return ColumnCount;
-}
+} QModelIndex ErrorsModel::index(int row, int column, const QModelIndex & parent) const {
+	SubtitleLine *line = static_cast < SubtitleLine * >(parent.internalPointer());
 
-QModelIndex ErrorsModel::index( int row, int column, const QModelIndex& parent ) const
-{
-	SubtitleLine* line = static_cast<SubtitleLine*>( parent.internalPointer() );
-
-	if ( ! line ) // index is a root level item
+	if(!line)					// index is a root level item
 	{
-		if ( row < 0 || row >= m_lineWithErrorsCount )
+		if(row < 0 || row >= m_lineWithErrorsCount)
 			return QModelIndex();
 
-// 		kDebug() << "retrieved level 1 CHILD index " << row;
+//      kDebug() << "retrieved level 1 CHILD index " << row;
 
-		return createIndex( row, column, (void*)&LEVEL1_LINE );
+		return createIndex(row, column, (void *)&LEVEL1_LINE);
 	}
-	if ( line == &LEVEL1_LINE ) // index is a first level item (line item)
+	if(line == &LEVEL1_LINE)	// index is a first level item (line item)
 	{
-		if ( row >= rowCount( parent ) || row < 0 /*|| column != Number*/ )
+		if(row >= rowCount(parent) || row < 0 /*|| column != Number */ )
 			return QModelIndex();
 
-// 		kDebug() << "retrieved level 2 CHILD index " << row;
+//      kDebug() << "retrieved level 2 CHILD index " << row;
 
-		return createIndex( row, column, m_subtitle->line( mapModelL1RowToLineIndex( parent.row() ) ) );
-	}
-	else // if ( line ) // index is a second level item (error item)
+		return createIndex(row, column, m_subtitle->line(mapModelL1RowToLineIndex(parent.row())));
+	} else						// if ( line ) // index is a second level item (error item)
 	{
-// 		kDebug() << "attempted to retrieve level 3 CHILD index " << row;
+//      kDebug() << "attempted to retrieve level 3 CHILD index " << row;
 
 		return QModelIndex();
 	}
 }
 
-QModelIndex ErrorsModel::parent( const QModelIndex& index ) const
-{
-	SubtitleLine* line = static_cast<SubtitleLine*>( index.internalPointer() );
+QModelIndex ErrorsModel::parent(const QModelIndex & index) const {
+	SubtitleLine *line = static_cast < SubtitleLine * >(index.internalPointer());
 
-	if ( ! line ) // index is a root level item
+	if(!line)					// index is a root level item
 	{
-// 		kDebug() << "attempted to retrieve level -1 PARENT index" << -2;
+//      kDebug() << "attempted to retrieve level -1 PARENT index" << -2;
 
 		return QModelIndex();
 	}
-	if ( line == &LEVEL1_LINE ) // index is a first level item (line item)
+	if(line == &LEVEL1_LINE)	// index is a first level item (line item)
 	{
-// 		kDebug() << "retrieved level 0 PARENT index" << -1;
+//      kDebug() << "retrieved level 0 PARENT index" << -1;
 
 		return QModelIndex();
-	}
-	else // if ( line ) // index is a second level item (error item)
+	} else						// if ( line ) // index is a second level item (error item)
 	{
-// 		kDebug() << "retrieved level 1 PARENT index" << line->index();
+//      kDebug() << "retrieved level 1 PARENT index" << line->index();
 
-		return createIndex( mapLineIndexToModelL1Row( line->index() ), 0, (void*)&LEVEL1_LINE );
+		return createIndex(mapLineIndexToModelL1Row(line->index()), 0, (void *)&LEVEL1_LINE);
 	}
 }
 
-QVariant ErrorsModel::headerData( int section, Qt::Orientation orientation, int role ) const
-{
-	if ( orientation == Qt::Vertical || role != Qt::DisplayRole )
+QVariant ErrorsModel::headerData(int section, Qt::Orientation orientation, int role) const {
+	if(orientation == Qt::Vertical || role != Qt::DisplayRole)
 		return QVariant();
 
-	switch ( section )
-	{
-		case Number:		return i18n( "Line Errors" );
-		case ErrorCount:	return i18n( "Count" );
-		case UserMark:		return i18n( "Marked" );
-		default:			return QVariant();
-	}
-}
-
-QVariant ErrorsModel::data( const QModelIndex& index, int role ) const
+	switch(section)
 {
-	if ( ! m_subtitle || ! index.isValid() )
+	case Number:
+return i18n("Line Errors");
+case ErrorCount:return i18n("Count");
+case UserMark:return i18n("Marked");
+default:return QVariant();
+}} QVariant ErrorsModel::data(const QModelIndex & index, int role) const {
+	if(!m_subtitle || !index.isValid())
 		return QVariant();
 
-	SubtitleLine* line = static_cast<SubtitleLine*>( index.internalPointer() );
+	SubtitleLine *line = static_cast < SubtitleLine * >(index.internalPointer());
 
-	if ( line == &LEVEL1_LINE )
-	{
-		if ( role == Qt::DisplayRole )
-		{
-			static const QString yes = i18n( "yes" );
-			static const QString no = i18n( "no" );
+	if(line == &LEVEL1_LINE)
+{
+if(role == Qt::DisplayRole) {
+	static const QString yes = i18n("yes");
+	static const QString no = i18n("no");
 
-			int lineIndex = mapModelL1RowToLineIndex( index.row() );
-			if ( lineIndex < 0 )
-				return QVariant();
+	int lineIndex = mapModelL1RowToLineIndex(index.row());
+	if(lineIndex < 0)
+		return QVariant();
 
-			if ( index.column() == Number )
-				return i18n( "Line <numid>%1</numid>", lineIndex + 1 );
-			else if ( index.column() == ErrorCount )
-				return QString::number( m_nodes.at( lineIndex )->errorCount() );
-			else if ( index.column() == UserMark )
-				return m_nodes.at( lineIndex )->isMarked() ? yes : no;
-			else
-				return QVariant();
-		}
-		else
-			return QVariant();
-	}
+	if(index.column() == Number)
+		return i18n("Line <numid>%1</numid>", lineIndex + 1);
+	else if(index.column() == ErrorCount)
+		return QString::number(m_nodes.at(lineIndex)->errorCount());
+	else if(index.column() == UserMark)
+		return m_nodes.at(lineIndex)->isMarked()? yes : no;
 	else
-	{
-		if ( index.column() != Number )
+		return QVariant();
+} else
+	return QVariant();
+	} else {
+		if(index.column() != Number)
 			return QVariant();
 
-		if ( role == Qt::DisplayRole )
-		{
-			int errorID = mapModelL2RowToLineErrorID( index.row(), line->errorFlags() );
-			return line->fullErrorText( (SubtitleLine::ErrorID)errorID );
-		}
-		else if ( role == Qt::DecorationRole )
-		{
-			int errorID = mapModelL2RowToLineErrorID( index.row(), line->errorFlags() );
-			if ( ((0x1 << errorID) & line->errorFlags()) == 0 )
+		if(role == Qt::DisplayRole) {
+			int errorID = mapModelL2RowToLineErrorID(index.row(), line->errorFlags());
+			return line->fullErrorText((SubtitleLine::ErrorID) errorID);
+		} else if(role == Qt::DecorationRole) {
+			int errorID = mapModelL2RowToLineErrorID(index.row(), line->errorFlags());
+			if(((0x1 << errorID) & line->errorFlags()) == 0)
 				return QVariant();
 			return errorID == SubtitleLine::UserMarkID ? markIcon() : errorIcon();
-		}
-		else
+		} else
 			return QVariant();
 	}
 }
 
-const QIcon& ErrorsModel::markIcon()
+const QIcon & ErrorsModel::markIcon()
 {
 	static QIcon markIcon;
 
-	if ( markIcon.isNull() )
-		markIcon = KIcon( "dialog-warning" );
+	if(markIcon.isNull())
+		markIcon = KIcon("dialog-warning");
 
 	return markIcon;
 }
 
-const QIcon& ErrorsModel::errorIcon()
+const QIcon & ErrorsModel::errorIcon()
 {
 	static QIcon errorIcon;
 
-	if ( errorIcon.isNull() )
-		errorIcon = KIcon( "dialog-error" );
+	if(errorIcon.isNull())
+		errorIcon = KIcon("dialog-error");
 
 	return errorIcon;
 }
@@ -572,30 +491,28 @@ const QIcon& ErrorsModel::errorIcon()
 /// ERRORS WIDGET
 /// =============
 
-ErrorsWidget::ErrorsWidget( QWidget* parent ):
-	TreeView( parent ),
-	m_subtitle( 0 )
+ErrorsWidget::ErrorsWidget(QWidget * parent):
+TreeView(parent), m_subtitle(0)
 {
-	setModel( new ErrorsModel( this ) );
+	setModel(new ErrorsModel(this));
 
-	QHeaderView* header = this->header();
-	header->setResizeMode( ErrorsModel::Number, QHeaderView::Interactive );
-	header->setResizeMode( ErrorsModel::ErrorCount, QHeaderView::Interactive );
-	header->setResizeMode( ErrorsModel::UserMark, QHeaderView::Interactive );
+	QHeaderView *header = this->header();
+	header->setResizeMode(ErrorsModel::Number, QHeaderView::Interactive);
+	header->setResizeMode(ErrorsModel::ErrorCount, QHeaderView::Interactive);
+	header->setResizeMode(ErrorsModel::UserMark, QHeaderView::Interactive);
 
-	setSortingEnabled( false );
-	setRootIsDecorated( true );
-	setAllColumnsShowFocus( true );
-	setIconSize( QSize( 16, 16 ) );
-	setIndentation( 15 );
+	setSortingEnabled(false);
+	setRootIsDecorated(true);
+	setAllColumnsShowFocus(true);
+	setIconSize(QSize(16, 16));
+	setIndentation(15);
 
-	setUniformRowHeights( true );
+	setUniformRowHeights(true);
 
-	setSelectionMode( QAbstractItemView::ExtendedSelection );
-	setSelectionBehavior( QAbstractItemView::SelectRows );
+	setSelectionMode(QAbstractItemView::ExtendedSelection);
+	setSelectionBehavior(QAbstractItemView::SelectRows);
 
-	connect( selectionModel(), SIGNAL( currentRowChanged( const QModelIndex&, const QModelIndex& ) ),
-			 this, SLOT( onCurrentRowChanged( const QModelIndex& ) ) );
+	connect(selectionModel(), SIGNAL(currentRowChanged(const QModelIndex &, const QModelIndex &)), this, SLOT(onCurrentRowChanged(const QModelIndex &)));
 }
 
 ErrorsWidget::~ErrorsWidget()
@@ -604,262 +521,234 @@ ErrorsWidget::~ErrorsWidget()
 
 void ErrorsWidget::expandAll()
 {
-	expandToDepth( 0 );
+	expandToDepth(0);
 	return;
 }
 
 void ErrorsWidget::loadConfig()
 {
-	KConfigGroup group( KGlobal::config()->group( "ErrorsWidget Settings" ) );
+	KConfigGroup group(KGlobal::config()->group("ErrorsWidget Settings"));
 
 	QByteArray state;
-	QStringList strState = group.readXdgListEntry( "Columns State", QString( "" ).split( ' ' ) );
-	for ( QStringList::ConstIterator it = strState.begin(), end = strState.end(); it != end; ++it )
-		state.append( (char)(*it).toInt() );
-	header()->restoreState( state );
+	QStringList strState = group.readXdgListEntry("Columns State", QString("").split(' '));
+	for(QStringList::ConstIterator it = strState.begin(), end = strState.end(); it != end; ++it)
+		state.append((char)(*it).toInt());
+	header()->restoreState(state);
 }
 
 void ErrorsWidget::saveConfig()
 {
-	KConfigGroup group( KGlobal::config()->group( "ErrorsWidget Settings" ) );
+	KConfigGroup group(KGlobal::config()->group("ErrorsWidget Settings"));
 
 	QStringList strState;
 	QByteArray state = header()->saveState();
-	for ( int index = 0, size = state.size(); index < size; ++index )
-		strState.append( QString::number( state[index] ) );
-	group.writeXdgListEntry( "Columns State", strState );
+	for(int index = 0, size = state.size(); index < size; ++index)
+		strState.append(QString::number(state[index]));
+	group.writeXdgListEntry("Columns State", strState);
 }
 
-void ErrorsWidget::setSubtitle( Subtitle* subtitle )
+void ErrorsWidget::setSubtitle(Subtitle * subtitle)
 {
 	m_subtitle = subtitle;
 
-	if ( isVisible() )
-		model()->setSubtitle( subtitle );
+	if(isVisible())
+		model()->setSubtitle(subtitle);
 }
 
-void ErrorsWidget::showEvent( QShowEvent* event )
+void ErrorsWidget::showEvent(QShowEvent * event)
 {
-	if ( model()->subtitle() != m_subtitle )
-		model()->setSubtitle( m_subtitle );
+	if(model()->subtitle() != m_subtitle)
+		model()->setSubtitle(m_subtitle);
 
-	QWidget::showEvent( event );
+	QWidget::showEvent(event);
 }
 
-void ErrorsWidget::hideEvent( QHideEvent* event )
+void ErrorsWidget::hideEvent(QHideEvent * event)
 {
 	// we disconnect the subtitle from the errors model when
 	// the widget is explicity hidden to improve performance
-	if ( ! event->spontaneous() )
-		model()->setSubtitle( 0 );
+	if(!event->spontaneous())
+		model()->setSubtitle(0);
 
-	QWidget::hideEvent( event );
+	QWidget::hideEvent(event);
 }
 
-void ErrorsWidget::mouseDoubleClickEvent( QMouseEvent* event )
+void ErrorsWidget::mouseDoubleClickEvent(QMouseEvent * event)
 {
-	QModelIndex index = indexAt( viewport()->mapFromGlobal( event->globalPos() ) );
-	if ( index.isValid() )
-		emit lineDoubleClicked( model()->subtitle()->line( model()->mapModelIndexToLineIndex( index ) ) );
+	QModelIndex index = indexAt(viewport()->mapFromGlobal(event->globalPos()));
+	if(index.isValid())
+		emit lineDoubleClicked(model()->subtitle()->line(model()->mapModelIndexToLineIndex(index)));
 }
 
-void ErrorsWidget::contextMenuEvent( QContextMenuEvent* event )
+void ErrorsWidget::contextMenuEvent(QContextMenuEvent * event)
 {
 	int lineWithErrorsCount = 0, errorCount = 0, markCount = 0;
 
-	QItemSelectionModel* selection = selectionModel();
-	for ( int lineIndex=0, modelL1Row=0, linesCount=model()->subtitle()->linesCount(); lineIndex < linesCount; ++lineIndex )
-	{
-		const ErrorsModelNode* node = model()->node( lineIndex );
+	QItemSelectionModel *selection = selectionModel();
+	for(int lineIndex = 0, modelL1Row = 0, linesCount = model()->subtitle()->linesCount(); lineIndex < linesCount; ++lineIndex) {
+		const ErrorsModelNode *node = model()->node(lineIndex);
 
-		if ( node->isVisible() )
-		{
-			QModelIndex modelL1Index = model()->index( modelL1Row, 0 );
-			if ( selection->isSelected( modelL1Index ) )
-			{
+		if(node->isVisible()) {
+			QModelIndex modelL1Index = model()->index(modelL1Row, 0);
+			if(selection->isSelected(modelL1Index)) {
 				lineWithErrorsCount++;
 				errorCount += node->errorCount();
-				if ( node->isMarked() )
+				if(node->isMarked())
 					markCount++;
-			}
-			else
-			{
+			} else {
 				bool selected = false;
 				const int lineErrorFlags = node->line()->errorFlags();
-				for ( int modelL2Row = 0, modelL2RowCount = node->errorCount(); modelL2Row < modelL2RowCount; ++modelL2Row )
-				{
-					if ( selection->isSelected( model()->index( modelL2Row, 0, modelL1Index ) ) )
-					{
+				for(int modelL2Row = 0, modelL2RowCount = node->errorCount(); modelL2Row < modelL2RowCount; ++modelL2Row) {
+					if(selection->isSelected(model()->index(modelL2Row, 0, modelL1Index))) {
 						selected = true;
 						errorCount++;
-						if ( model()->mapModelL2RowToLineErrorID( modelL2Row, lineErrorFlags ) == SubtitleLine::UserMarkID )
+						if(model()->mapModelL2RowToLineErrorID(modelL2Row, lineErrorFlags) == SubtitleLine::UserMarkID)
 							markCount++;
 					}
 				}
-				if ( selected )
+				if(selected)
 					lineWithErrorsCount++;
 			}
 
 			modelL1Row++;
 
-			if ( lineWithErrorsCount > 1 && errorCount > 1 && markCount > 1 )
+			if(lineWithErrorsCount > 1 && errorCount > 1 && markCount > 1)
 				break;
 		}
 	}
 
 	errorCount -= markCount;
 
-	if ( lineWithErrorsCount || errorCount || markCount )
-	{
+	if(lineWithErrorsCount || errorCount || markCount) {
 		KMenu menu;
-		Application* app = Application::instance();
+		Application *app = Application::instance();
 
-		menu.addAction( i18n( "Expand All" ), this, SLOT( expandAll() ) );
-		menu.addAction( i18n( "Collapse All" ), this, SLOT( collapseAll() ) );
+		menu.addAction(i18n("Expand All"), this, SLOT(expandAll()));
+		menu.addAction(i18n("Collapse All"), this, SLOT(collapseAll()));
 
 		menu.addSeparator();
 
-		menu.addAction( i18n( "Clear Selected Marks" ), app, SLOT( clearSelectedMarks() ) )->setEnabled( markCount );
-		menu.addAction( i18n( "Clear Selected Errors" ), app, SLOT( clearSelectedErrors() ) )->setEnabled( errorCount );
+		menu.addAction(i18n("Clear Selected Marks"), app, SLOT(clearSelectedMarks()))->setEnabled(markCount);
+		menu.addAction(i18n("Clear Selected Errors"), app, SLOT(clearSelectedErrors()))->setEnabled(errorCount);
 
-		if ( ! app->errorsConfig()->autoClearFixed() )
-		{
+		if(!app->errorsConfig()->autoClearFixed()) {
 			menu.addSeparator();
 
-			menu.addAction( i18n( "Clear Fixed Selection" ), app, SLOT( recheckSelectedErrors() ) )->setEnabled( errorCount );
+			menu.addAction(i18n("Clear Fixed Selection"), app, SLOT(recheckSelectedErrors()))->setEnabled(errorCount);
 		}
 
-		menu.exec( event->globalPos() );
+		menu.exec(event->globalPos());
 		event->ignore();
 	}
 
-	TreeView::contextMenuEvent( event );
+	TreeView::contextMenuEvent(event);
 }
 
-SubtitleLine* ErrorsWidget::currentLine()
+SubtitleLine *ErrorsWidget::currentLine()
 {
 	QModelIndex currentIndex = this->currentIndex();
 
-	if ( ! currentIndex.isValid() )
+	if(!currentIndex.isValid())
 		return 0;
 
-	if ( currentIndex.parent().isValid() )
+	if(currentIndex.parent().isValid())
 		currentIndex = currentIndex.parent();
 
-	return model()->subtitle()->line( currentIndex.row() );
+	return model()->subtitle()->line(currentIndex.row());
 }
 
-int ErrorsWidget::lineSelectedErrorFlags( int lineIndex )
+int ErrorsWidget::lineSelectedErrorFlags(int lineIndex)
 {
-	QItemSelectionModel* selection = selectionModel();
-	int modelL1Row = model()->mapLineIndexToModelL1Row( lineIndex );
+	QItemSelectionModel *selection = selectionModel();
+	int modelL1Row = model()->mapLineIndexToModelL1Row(lineIndex);
 
-	if ( modelL1Row < 0 )
+	if(modelL1Row < 0)
 		return 0;
 
-	int lineErrorFlags = model()->subtitle()->line( lineIndex )->errorFlags();
+	int lineErrorFlags = model()->subtitle()->line(lineIndex)->errorFlags();
 
-	QModelIndex modelL1Index = model()->index( modelL1Row, 0 );
-	if ( selection->isSelected( modelL1Index ) )
+	QModelIndex modelL1Index = model()->index(modelL1Row, 0);
+	if(selection->isSelected(modelL1Index))
 		return lineErrorFlags;
 
 	int selectedErrorFlags = 0;
 
-	for ( int modelL2row = 0, modelL2RowCount = model()->rowCount( modelL1Index ); modelL2row < modelL2RowCount; ++modelL2row )
-	{
-		if ( selection->isSelected( model()->index( modelL2row, 0, modelL1Index ) ) )
-			selectedErrorFlags |= model()->mapModelL2RowToLineErrorFlag( modelL2row, lineErrorFlags );
+	for(int modelL2row = 0, modelL2RowCount = model()->rowCount(modelL1Index); modelL2row < modelL2RowCount; ++modelL2row) {
+		if(selection->isSelected(model()->index(modelL2row, 0, modelL1Index)))
+			selectedErrorFlags |= model()->mapModelL2RowToLineErrorFlag(modelL2row, lineErrorFlags);
 	}
 
 	return selectedErrorFlags;
 }
 
-RangeList ErrorsWidget::selectionRanges() const
-{
+RangeList ErrorsWidget::selectionRanges() const {
 	RangeList ranges;
 
-	QItemSelectionModel* selection = selectionModel();
+	QItemSelectionModel *selection = selectionModel();
 
 	int rangeFirstIndex = -1, modelL1Row = 0;
 	int lineIndex = 0;
-	for ( int linesCount = model()->subtitle()->linesCount(); lineIndex < linesCount; ++lineIndex )
-	{
-		const ErrorsModelNode* node = model()->node( lineIndex );
-		if ( node->isVisible() )
-		{
-			QModelIndex modelL1Index = model()->index( modelL1Row, 0 );
-			bool selected = selection->isSelected( modelL1Index );
+	for(int linesCount = model()->subtitle()->linesCount(); lineIndex < linesCount; ++lineIndex)
+{
+const ErrorsModelNode *node = model()->node(lineIndex);
+if(node->isVisible()) {
+	QModelIndex modelL1Index = model()->index(modelL1Row, 0);
+	bool selected = selection->isSelected(modelL1Index);
 
-			if ( ! selected )
-			{
- 				// is one of modelL1Index children selected?
-				for ( int modelL2Row = 0, modelL2RowCount = node->errorCount(); modelL2Row < modelL2RowCount; ++modelL2Row )
-				{
-					if ( selection->isSelected( model()->index( modelL2Row, 0, modelL1Index ) ) )
-					{
-						selected = true;
-						break;
-					}
-				}
+	if(!selected) {
+		// is one of modelL1Index children selected?
+		for(int modelL2Row = 0, modelL2RowCount = node->errorCount(); modelL2Row < modelL2RowCount; ++modelL2Row) {
+			if(selection->isSelected(model()->index(modelL2Row, 0, modelL1Index))) {
+				selected = true;
+				break;
 			}
+	}}
 
-			if ( selected )
-			{
-				if ( rangeFirstIndex == -1 ) // mark start of selected range
-					rangeFirstIndex = lineIndex;
-			}
-			else
-			{
-				if ( rangeFirstIndex != -1 )
-				{
-					ranges << Range( rangeFirstIndex, lineIndex - 1 );
-					rangeFirstIndex = -1;
-				}
-			}
-			modelL1Row++;
+	if(selected) {
+		if(rangeFirstIndex == -1)	// mark start of selected range
+			rangeFirstIndex = lineIndex;
+	} else {
+		if(rangeFirstIndex != -1) {
+			ranges << Range(rangeFirstIndex, lineIndex - 1);
+			rangeFirstIndex = -1;
 		}
 	}
+	modelL1Row++;
+}
+}
 
-	if ( rangeFirstIndex != -1 )
-		ranges << Range( rangeFirstIndex, lineIndex - 1 );
+	if(rangeFirstIndex != -1)
+		ranges << Range(rangeFirstIndex, lineIndex - 1);
 
 	return ranges;
 }
 
-void ErrorsWidget::setCurrentLine( SubtitleLine* line, bool clearSelection )
+void ErrorsWidget::setCurrentLine(SubtitleLine * line, bool clearSelection)
 {
-	if ( model()->subtitle() && line )
-	{
-		int modelL1Row = model()->mapLineIndexToModelL1Row( line->index() );
-		if ( modelL1Row >= 0 )
-			selectionModel()->setCurrentIndex(
-				model()->index( modelL1Row, 0 ),
-				clearSelection ?
-					QItemSelectionModel::Select | QItemSelectionModel::Rows | QItemSelectionModel::Clear :
-					QItemSelectionModel::Select | QItemSelectionModel::Rows
-			);
+	if(model()->subtitle() && line) {
+		int modelL1Row = model()->mapLineIndexToModelL1Row(line->index());
+		if(modelL1Row >= 0)
+			selectionModel()->setCurrentIndex(model()->index(modelL1Row, 0), clearSelection ? QItemSelectionModel::Select | QItemSelectionModel::Rows | QItemSelectionModel::Clear : QItemSelectionModel::Select | QItemSelectionModel::Rows);
 	}
 }
 
-void ErrorsWidget::onCurrentRowChanged( const QModelIndex& currentIndex )
+void ErrorsWidget::onCurrentRowChanged(const QModelIndex & currentIndex)
 {
-	int currentLineIndex = model()->mapModelIndexToLineIndex( currentIndex );
-	emit currentLineChanged( currentLineIndex < 0 ? 0 : model()->subtitle()->line( currentLineIndex ) );
+	int currentLineIndex = model()->mapModelIndexToLineIndex(currentIndex);
+	emit currentLineChanged(currentLineIndex < 0 ? 0 : model()->subtitle()->line(currentLineIndex));
 }
 
-void ErrorsWidget::keyPressEvent( QKeyEvent* event )
+void ErrorsWidget::keyPressEvent(QKeyEvent * event)
 {
-	if ( event->matches( QKeySequence::Delete ))
-	{
-		SubtitleCompositeActionExecutor executor( *model()->subtitle(), i18n( "Clear Lines Errors" ) );
+	if(event->matches(QKeySequence::Delete)) {
+		SubtitleCompositeActionExecutor executor(*model()->subtitle(), i18n("Clear Lines Errors"));
 
 		app()->clearSelectedErrors();
 		app()->clearSelectedMarks();
 
 		event->accept();
-	}
-	else
-		TreeView::keyPressEvent( event );
+	} else
+		TreeView::keyPressEvent(event);
 }
 
 #include "errorswidget.moc"

@@ -22,57 +22,46 @@
 
 
 #ifdef HAVE_CONFIG_H
-	#include <config.h>
+#include <config.h>
 #endif
 
 #include "../outputformat.h"
 #include "../../core/subtitleiterator.h"
 
-namespace SubtitleComposer
-{
-	class SubViewer1OutputFormat : public OutputFormat
-	{
+namespace SubtitleComposer {
+	class SubViewer1OutputFormat:public OutputFormat {
 		friend class FormatManager;
 
-		public:
+	public:
 
-			virtual ~SubViewer1OutputFormat() {}
+		virtual ~ SubViewer1OutputFormat() {
+		}
+	protected:
 
-		protected:
+		virtual QString dumpSubtitles(const Subtitle & subtitle, bool primary) const {
+			QString ret;
 
-			virtual QString dumpSubtitles( const Subtitle& subtitle, bool primary ) const
-			{
-				QString ret;
+			ret += "[TITLE]\n\n[AUTHOR]\n\n[SOURCE]\n\n[PRG]\n\n[FILEPATH]\n\n[DELAY]\n0\n[CD TRACK]\n0\n[BEGIN]\n" "******** START SCRIPT ********\n";
 
-				ret +=	"[TITLE]\n\n[AUTHOR]\n\n[SOURCE]\n\n[PRG]\n\n[FILEPATH]\n\n[DELAY]\n0\n[CD TRACK]\n0\n[BEGIN]\n"
-						"******** START SCRIPT ********\n";
+			for(SubtitleIterator it(subtitle); it.current(); ++it) {
+				const SubtitleLine *line = it.current();
 
-				for ( SubtitleIterator it( subtitle ); it.current(); ++it )
-				{
-					const SubtitleLine* line = it.current();
+				Time showTime = line->showTime();
+				ret += m_builder.sprintf("[%02d:%02d:%02d]\n", showTime.hours(), showTime.minutes(), showTime.seconds());
 
-					Time showTime = line->showTime();
-					ret += m_builder.sprintf( "[%02d:%02d:%02d]\n", showTime.hours(), showTime.minutes(), showTime.seconds() );
+				const SString & text = primary ? line->primaryText() : line->secondaryText();
+				ret += text.string().replace('\n', '|');
 
-					const SString& text = primary ? line->primaryText() : line->secondaryText();
-					ret += text.string().replace( '\n', '|' );
+				Time hideTime = line->hideTime();
+				ret += m_builder.sprintf("\n[%02d:%02d:%02d]\n\n", hideTime.hours(), hideTime.minutes(), hideTime.seconds());
+			} ret += "[END]\n" "******** END SCRIPT ********\n";
 
-					Time hideTime = line->hideTime();
-					ret += m_builder.sprintf( "\n[%02d:%02d:%02d]\n\n", hideTime.hours(), hideTime.minutes(), hideTime.seconds() );
-				}
+			return ret;
+		}
+		SubViewer1OutputFormat():OutputFormat("SubViewer 1.0", QStringList("sub")) {
+		}
 
-				ret +=	"[END]\n"
-						"******** END SCRIPT ********\n";
-
-				return ret;
-			}
-
-			SubViewer1OutputFormat():
-				OutputFormat( "SubViewer 1.0", QStringList( "sub" ) )
-			{
-			}
-
-			mutable QString m_builder;
+		mutable QString m_builder;
 	};
 }
 

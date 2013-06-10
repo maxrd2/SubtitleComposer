@@ -25,75 +25,67 @@
  ***************************************************************************/
 
 #ifdef HAVE_CONFIG_H
-	#include <config.h>
+#include <config.h>
 #endif
 
 #include <QtCore/QString>
 #include <QtCore/QMap>
 
-namespace SubtitleComposer
-{
-	class TrackData
-	{
-		public:
+namespace SubtitleComposer {
+	class TrackData {
+	public:
 
-			QString name;
-			QString language;
+		QString name;
+		QString language;
 	};
 
-	class MediaData
-	{
-		public:
+	class MediaData {
+	public:
 
-			MediaData() { reset(); };
+		MediaData() {
+			reset();
+		};
 
-			void reset()
-			{
-				duration = 0;
+		void reset() {
+			duration = 0;
 
-				hasVideo = false;
+			hasVideo = false;
 
-				videoWidth = 0;
-				videoHeight = 0;
-				videoDAR = 4.0/3.0;
-				videoFPS = 0.0;
+			videoWidth = 0;
+			videoHeight = 0;
+			videoDAR = 4.0 / 3.0;
+			videoFPS = 0.0;
 
-				audioTracks.clear();
+			audioTracks.clear();
+		} int indexForId(int id) const {
+			int index = -1;
+			for(QMap < int, TrackData >::ConstIterator it = audioTracks.constBegin(), end = audioTracks.constEnd(); it != end; ++it) {
+				index++;
+				if(it.key() == id)
+					break;
 			}
+			return index;
+		}
 
-			int indexForId( int id ) const
-			{
-				int index = -1;
-				for ( QMap<int,TrackData>::ConstIterator it = audioTracks.constBegin(), end = audioTracks.constEnd(); it != end; ++it )
-				{
-					index++;
-					if ( it.key() == id )
-						break;
-				}
-				return index;
+		int idForIndex(int index) const {
+			int i = 0;
+			for(QMap < int, TrackData >::ConstIterator it = audioTracks.constBegin(), end = audioTracks.constEnd(); it != end; ++it) {
+				if(i++ == index)
+					return it.key();
 			}
+			return -1;
+		}
 
-			int idForIndex( int index ) const
-			{
-				int i = 0;
-				for ( QMap<int,TrackData>::ConstIterator it = audioTracks.constBegin(), end = audioTracks.constEnd(); it != end; ++it )
-				{
-					if ( i++ == index )
-						return it.key();
-				}
-				return -1;
-			}
+		double duration;
 
-			double duration;
+		int videoWidth;
+		int videoHeight;
+		double videoDAR;
+		double videoFPS;
 
-			int videoWidth;
-			int videoHeight;
-			double videoDAR;
-			double videoFPS;
+		bool hasVideo;
 
-			bool hasVideo;
-
-			QMap<int,TrackData> audioTracks;
+		QMap < int, TrackData > audioTracks;
 	};
 }
 

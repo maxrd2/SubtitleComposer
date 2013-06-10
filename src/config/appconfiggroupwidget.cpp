@@ -24,14 +24,13 @@
 
 using namespace SubtitleComposer;
 
-AppConfigGroupWidget::AppConfigGroupWidget( AppConfigGroup* configGroup, QWidget* parent ):
-	QWidget( parent, 0 ),
-	m_config( configGroup )
+AppConfigGroupWidget::AppConfigGroupWidget(AppConfigGroup * configGroup, QWidget * parent):
+QWidget(parent, 0), m_config(configGroup)
 {
-	m_mainLayout = new QGridLayout( this );
-	m_mainLayout->setAlignment( Qt::AlignTop );
-	m_mainLayout->setMargin( 0 );
-	m_mainLayout->setSpacing( 5 );
+	m_mainLayout = new QGridLayout(this);
+	m_mainLayout->setAlignment(Qt::AlignTop);
+	m_mainLayout->setMargin(0);
+	m_mainLayout->setSpacing(5);
 }
 
 AppConfigGroupWidget::~AppConfigGroupWidget()
@@ -39,15 +38,14 @@ AppConfigGroupWidget::~AppConfigGroupWidget()
 	delete m_config;
 }
 
-const AppConfigGroup* AppConfigGroupWidget::config()
+const AppConfigGroup *AppConfigGroupWidget::config()
 {
 	return m_config;
 }
 
-void AppConfigGroupWidget::setConfig( const AppConfigGroup* const config )
+void AppConfigGroupWidget::setConfig(const AppConfigGroup * const config)
 {
-	if ( config && m_config->isCompatibleWith( *config ) )
-	{
+	if(config && m_config->isCompatibleWith(*config)) {
 		*m_config = *config;
 		setControlsFromConfig();
 	}
@@ -59,21 +57,21 @@ void AppConfigGroupWidget::setControlsFromDefaults()
 	setControlsFromConfig();
 }
 
-QGroupBox* AppConfigGroupWidget::createGroupBox( const QString& title, bool addToLayout )
+QGroupBox *AppConfigGroupWidget::createGroupBox(const QString & title, bool addToLayout)
 {
-	QGroupBox* groupBox = new QGroupBox( this );
-	groupBox->setTitle( title );
+	QGroupBox *groupBox = new QGroupBox(this);
+	groupBox->setTitle(title);
 
-	if ( addToLayout )
-		m_mainLayout->addWidget( groupBox, m_mainLayout->rowCount(), 0 );
+	if(addToLayout)
+		m_mainLayout->addWidget(groupBox, m_mainLayout->rowCount(), 0);
 
 	return groupBox;
 }
 
-QGridLayout* AppConfigGroupWidget::createGridLayout( QGroupBox* groupBox )
+QGridLayout *AppConfigGroupWidget::createGridLayout(QGroupBox * groupBox)
 {
-	QGridLayout* gridLayout = new QGridLayout( groupBox );
-	gridLayout->setAlignment( Qt::AlignTop );
+	QGridLayout *gridLayout = new QGridLayout(groupBox);
+	gridLayout->setAlignment(Qt::AlignTop);
 
 	return gridLayout;
 }

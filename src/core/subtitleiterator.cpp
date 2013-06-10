@@ -22,58 +22,37 @@
 
 using namespace SubtitleComposer;
 
-SubtitleIterator::SubtitleIterator( const Subtitle& subtitle, const RangeList& ranges, bool gotoLast ):
-	QObject( 0 ),
-	m_subtitle( &subtitle ),
-	m_autoSync( false ),
-	m_autoCircle( false ),
-	m_ranges( ranges ),
-	m_linesIterator( m_subtitle->m_lines.begin() ),
-	m_linesIteratorStart( m_subtitle->m_lines.begin() )
+SubtitleIterator::SubtitleIterator(const Subtitle & subtitle, const RangeList & ranges, bool gotoLast):QObject(0), m_subtitle(&subtitle), m_autoSync(false), m_autoCircle(false), m_ranges(ranges), m_linesIterator(m_subtitle->m_lines.begin()), m_linesIteratorStart(m_subtitle->m_lines.begin())
 {
-	if ( m_subtitle->isEmpty() )
+	if(m_subtitle->isEmpty())
 		m_ranges.clear();
 	else
-		m_ranges.trimToIndex( m_subtitle->lastIndex() );
+		m_ranges.trimToIndex(m_subtitle->lastIndex());
 
-	m_isFullIterator = m_ranges.isFullRange( m_subtitle->lastIndex() );
+	m_isFullIterator = m_ranges.isFullRange(m_subtitle->lastIndex());
 
-	if ( m_ranges.isEmpty() )
-	{
-		m_index = Invalid; // no operations allowed
-		if ( m_subtitle->linesCount() )
+	if(m_ranges.isEmpty()) {
+		m_index = Invalid;		// no operations allowed
+		if(m_subtitle->linesCount())
 			kDebug() << "SubtitleIterator requested with empty ranges list";
-	}
-	else
-	{
-		m_index = Invalid - 1; // a non INVALID index (needed only for initialization)
-		if ( gotoLast )
+	} else {
+		m_index = Invalid - 1;	// a non INVALID index (needed only for initialization)
+		if(gotoLast)
 			toLast();
 		else
 			toFirst();
 	}
 }
 
-SubtitleIterator::SubtitleIterator( const SubtitleIterator& it ):
-	QObject( 0 ),
-	m_subtitle( it.m_subtitle ),
-	m_autoSync( false ),
-	m_autoCircle( it.m_autoCircle ),
-	m_ranges( it.m_ranges ),
-	m_isFullIterator( it.m_isFullIterator ),
-	m_index( it.m_index ),
-	m_rangesIterator( it.m_rangesIterator ),
-	m_linesIterator( it.m_linesIterator ),
-	m_linesIteratorStart( it.m_linesIteratorStart )
+SubtitleIterator::SubtitleIterator(const SubtitleIterator & it):QObject(0), m_subtitle(it.m_subtitle), m_autoSync(false), m_autoCircle(it.m_autoCircle), m_ranges(it.m_ranges), m_isFullIterator(it.m_isFullIterator), m_index(it.m_index), m_rangesIterator(it.m_rangesIterator), m_linesIterator(it.m_linesIterator), m_linesIteratorStart(it.m_linesIteratorStart)
 {
-	setAutoSync( it.m_autoSync );
+	setAutoSync(it.m_autoSync);
 }
 
-SubtitleIterator& SubtitleIterator::operator=( const SubtitleIterator& it )
+SubtitleIterator & SubtitleIterator::operator=(const SubtitleIterator & it)
 {
-	if ( &it != this )
-	{
-		setAutoSync( false );
+	if(&it != this) {
+		setAutoSync(false);
 
 		m_subtitle = it.m_subtitle;
 		m_autoCircle = it.m_autoCircle;
@@ -84,7 +63,7 @@ SubtitleIterator& SubtitleIterator::operator=( const SubtitleIterator& it )
 		m_linesIterator = it.m_linesIterator;
 		m_linesIteratorStart = it.m_linesIteratorStart;
 
-		setAutoSync( it.m_autoSync );
+		setAutoSync(it.m_autoSync);
 	}
 
 	return *this;
@@ -92,65 +71,49 @@ SubtitleIterator& SubtitleIterator::operator=( const SubtitleIterator& it )
 
 SubtitleIterator::~SubtitleIterator()
 {
-	setAutoSync( false );
+	setAutoSync(false);
 }
 
-bool SubtitleIterator::isAutoSync() const
-{
+bool SubtitleIterator::isAutoSync() const {
 	return m_autoSync;
-}
-
-void SubtitleIterator::setAutoSync( bool value )
+} void SubtitleIterator::setAutoSync(bool value)
 {
-	if ( m_autoSync != value )
-	{
-		if ( m_autoSync )
-		{
-			disconnect( m_subtitle, SIGNAL( linesInserted(int,int) ), this, SLOT( onSubtitleLinesInserted(int,int) ) );
-			disconnect( m_subtitle, SIGNAL( linesRemoved(int,int) ), this, SLOT( onSubtitleLinesRemoved(int,int) ) );
+	if(m_autoSync != value) {
+		if(m_autoSync) {
+			disconnect(m_subtitle, SIGNAL(linesInserted(int, int)), this, SLOT(onSubtitleLinesInserted(int, int)));
+			disconnect(m_subtitle, SIGNAL(linesRemoved(int, int)), this, SLOT(onSubtitleLinesRemoved(int, int)));
 		}
 
 		m_autoSync = value;
 
-		if ( m_autoSync )
-		{
-			connect( m_subtitle, SIGNAL( linesInserted(int,int) ), this, SLOT( onSubtitleLinesInserted(int,int) ) );
-			connect( m_subtitle, SIGNAL( linesRemoved(int,int) ), this, SLOT( onSubtitleLinesRemoved(int,int) ) );
+		if(m_autoSync) {
+			connect(m_subtitle, SIGNAL(linesInserted(int, int)), this, SLOT(onSubtitleLinesInserted(int, int)));
+			connect(m_subtitle, SIGNAL(linesRemoved(int, int)), this, SLOT(onSubtitleLinesRemoved(int, int)));
 		}
 	}
 }
 
-bool SubtitleIterator::isAutoCircle() const
-{
+bool SubtitleIterator::isAutoCircle() const {
 	return m_autoCircle;
-}
-
-void SubtitleIterator::setAutoCircle( bool value )
+} void SubtitleIterator::setAutoCircle(bool value)
 {
-	if ( m_autoCircle != value )
-	{
+	if(m_autoCircle != value) {
 		m_autoCircle = value;
 
-		if ( m_index == AfterLast )
+		if(m_index == AfterLast)
 			toFirst();
-		else if ( m_index == BehindFirst )
+		else if(m_index == BehindFirst)
 			toLast();
 	}
 }
 
-bool SubtitleIterator::isFullIterator() const
-{
+bool SubtitleIterator::isFullIterator() const {
 	return m_isFullIterator;
-}
-
-RangeList SubtitleIterator::ranges() const
-{
+} RangeList SubtitleIterator::ranges() const {
 	return m_ranges;
-}
-
-void SubtitleIterator::toFirst()
+} void SubtitleIterator::toFirst()
 {
-	if ( m_index == Invalid )
+	if(m_index == Invalid)
 		return;
 
 	m_rangesIterator = m_ranges.begin();
@@ -160,59 +123,52 @@ void SubtitleIterator::toFirst()
 	m_linesIterator = m_linesIteratorStart;
 
 	m_index = m_ranges.firstIndex();
-	if ( m_index )
-		m_linesIterator += m_index; // safe because indexes within m_ranges are all valid lines
+	if(m_index)
+		m_linesIterator += m_index;	// safe because indexes within m_ranges are all valid lines
 }
 
 void SubtitleIterator::toLast()
 {
-	if ( m_index == Invalid )
+	if(m_index == Invalid)
 		return;
 
 	m_rangesIterator = m_ranges.end();
-	m_rangesIterator--; // safe because m_ranges is not empty (otherwise m_index would be INVALID).
+	m_rangesIterator--;			// safe because m_ranges is not empty (otherwise m_index would be INVALID).
 
 	m_linesIteratorStart = m_subtitle->m_lines.begin();
 
 	m_linesIterator = m_linesIteratorStart;
 
 	m_index = m_ranges.lastIndex();
-	if ( m_index )
-		m_linesIterator += m_index; // safe because indexes within m_ranges are all valid lines
+	if(m_index)
+		m_linesIterator += m_index;	// safe because indexes within m_ranges are all valid lines
 }
 
-bool SubtitleIterator::toIndex( const int index )
+bool SubtitleIterator::toIndex(const int index)
 {
-	Q_ASSERT( index >= 0 );
-	Q_ASSERT( index <= Range::MaxIndex );
+	Q_ASSERT(index >= 0);
+	Q_ASSERT(index <= Range::MaxIndex);
 
-	if ( m_index == Invalid )
+	if(m_index == Invalid)
 		return false;
 
-	bool savedAutoCircle = m_autoCircle; // auto circling interferes with what we have to do
+	bool savedAutoCircle = m_autoCircle;	// auto circling interferes with what we have to do
 
 	m_autoCircle = false;
 
-	if ( m_index < index )
-	{
-		while ( m_index < index )
-		{
+	if(m_index < index) {
+		while(m_index < index) {
 			operator++();
-			if ( m_index == AfterLast )
-			{
-				toLast(); // equivalent to operator--() in this case
+			if(m_index == AfterLast) {
+				toLast();		// equivalent to operator--() in this case
 				break;
 			}
 		}
-	}
-	else if ( m_index > index )
-	{
-		while ( m_index > index )
-		{
+	} else if(m_index > index) {
+		while(m_index > index) {
 			operator--();
-			if ( m_index == BehindFirst )
-			{
-				toFirst(); // equivalent to operator++() in this case
+			if(m_index == BehindFirst) {
+				toFirst();		// equivalent to operator++() in this case
 				break;
 			}
 		}
@@ -223,58 +179,52 @@ bool SubtitleIterator::toIndex( const int index )
 	return m_index == index;
 }
 
-SubtitleIterator& SubtitleIterator::operator++()
+SubtitleIterator & SubtitleIterator::operator++()
 {
-	if ( m_index == Invalid || m_index == AfterLast )
+	if(m_index == Invalid || m_index == AfterLast)
 		return *this;
 
-	if ( m_index == BehindFirst )
+	if(m_index == BehindFirst)
 		toFirst();
-	else
-	{
+	else {
 		m_index++;
 		++m_linesIterator;
 
 		int currentRangeEnd = (*m_rangesIterator).end();
-		if ( m_index > currentRangeEnd )
-		{
+		if(m_index > currentRangeEnd) {
 			m_rangesIterator++;
-			if ( m_rangesIterator == m_ranges.end() )
+			if(m_rangesIterator == m_ranges.end())
 				m_index = AfterLast;
-			else
-			{
+			else {
 				m_index = (*m_rangesIterator).start();
 				m_linesIterator += (m_index - (currentRangeEnd + 1));
 			}
 		}
 	}
 
-	if ( m_autoCircle && m_index == AfterLast )
+	if(m_autoCircle && m_index == AfterLast)
 		toFirst();
 
 	return *this;
 }
 
 
-SubtitleIterator& SubtitleIterator::operator--()
+SubtitleIterator & SubtitleIterator::operator--()
 {
-	if (  m_index == Invalid || m_index == BehindFirst )
+	if(m_index == Invalid || m_index == BehindFirst)
 		return *this;
 
-	if ( m_index == AfterLast )
+	if(m_index == AfterLast)
 		toLast();
-	else
-	{
+	else {
 		m_index--;
 		--m_linesIterator;
 
 		int currentRangeStart = (*m_rangesIterator).start();
-		if ( m_index < currentRangeStart )
-		{
-			if ( m_rangesIterator == m_ranges.begin() )
+		if(m_index < currentRangeStart) {
+			if(m_rangesIterator == m_ranges.begin())
 				m_index = BehindFirst;
-			else
-			{
+			else {
 				m_rangesIterator--;
 				m_index = (*m_rangesIterator).end();
 				m_linesIterator -= (currentRangeStart - (m_index + 1));
@@ -282,129 +232,110 @@ SubtitleIterator& SubtitleIterator::operator--()
 		}
 	}
 
-	if ( m_autoCircle && m_index == BehindFirst )
+	if(m_autoCircle && m_index == BehindFirst)
 		toLast();
 
 	return *this;
 }
 
-SubtitleIterator& SubtitleIterator::operator+=( int steps )
+SubtitleIterator & SubtitleIterator::operator+=(int steps)
 {
-	if ( steps > 0 )
-	{
-		for ( int i = 0; i < steps; ++i )
+	if(steps > 0) {
+		for(int i = 0; i < steps; ++i)
 			operator++();
-	}
-	else if ( steps < 0 )
-	{
-		for ( int i = 0; i > steps; --i )
+	} else if(steps < 0) {
+		for(int i = 0; i > steps; --i)
 			operator--();
 	}
 
 	return *this;
 }
 
-SubtitleIterator& SubtitleIterator::operator-=( int steps )
+SubtitleIterator & SubtitleIterator::operator-=(int steps)
 {
-	if ( steps > 0 )
-	{
-		for ( int i = 0; i < steps; ++i )
+	if(steps > 0) {
+		for(int i = 0; i < steps; ++i)
 			operator--();
-	}
-	else if ( steps < 0 )
-	{
-		for ( int i = 0; i > steps; --i )
+	} else if(steps < 0) {
+		for(int i = 0; i > steps; --i)
 			operator++();
 	}
 
 	return *this;
 }
 
-void SubtitleIterator::onSubtitleLinesInserted( int firstIndex, int lastIndex )
+void SubtitleIterator::onSubtitleLinesInserted(int firstIndex, int lastIndex)
 {
-	if ( m_index == Invalid )
+	if(m_index == Invalid)
 		return;
 
 	int prevIndex = m_index;
-	Range insertedRange( firstIndex, lastIndex );
+	Range insertedRange(firstIndex, lastIndex);
 
-	m_ranges.shiftIndexesForwards( firstIndex, insertedRange.length(), true );
-	if ( m_isFullIterator )
+	m_ranges.shiftIndexesForwards(firstIndex, insertedRange.length(), true);
+	if(m_isFullIterator)
 		m_ranges << insertedRange;
 
-	m_index = Invalid - 1; // a non Invalid index (needed only for initialization)
+	m_index = Invalid - 1;		// a non Invalid index (needed only for initialization)
 
-	if ( prevIndex == AfterLast )
-	{
-		if ( lastIndex == m_ranges.lastIndex() ) // lines were inserted at the end
+	if(prevIndex == AfterLast) {
+		if(lastIndex == m_ranges.lastIndex())	// lines were inserted at the end
 		{
-			toFirst(); // restore internal variables to a valid state
-			toIndex( firstIndex ); // point to the first newly inserted item
+			toFirst();			// restore internal variables to a valid state
+			toIndex(firstIndex);	// point to the first newly inserted item
+		} else {
+			toLast();			// restore internal variables to a valid state
+			operator++();		// point again to AfterLast
 		}
+	} else if(prevIndex == BehindFirst) {
+		toFirst();				// restore internal variables to a valid state
+		operator--();			// point again to BehindFirst
+	} else {
+		toFirst();				// restore internal variables to a valid state
+		if(prevIndex >= firstIndex)
+			toIndex(prevIndex + insertedRange.length());	// point to the previously pointed line
 		else
-		{
-			toLast(); // restore internal variables to a valid state
-			operator++(); // point again to AfterLast
-		}
-	}
-	else if ( prevIndex == BehindFirst )
-	{
-		toFirst(); // restore internal variables to a valid state
-		operator--(); // point again to BehindFirst
-	}
-	else
-	{
-		toFirst(); // restore internal variables to a valid state
-		if ( prevIndex >= firstIndex )
-			toIndex( prevIndex + insertedRange.length() ); // point to the previously pointed line
-		else
-			toIndex( prevIndex ); // point to the previously pointed line
+			toIndex(prevIndex);	// point to the previously pointed line
 	}
 
-	emit syncronized( firstIndex, lastIndex, true );
+	emit syncronized(firstIndex, lastIndex, true);
 }
 
-void SubtitleIterator::onSubtitleLinesRemoved( int firstIndex, int lastIndex )
+void SubtitleIterator::onSubtitleLinesRemoved(int firstIndex, int lastIndex)
 {
-	if ( m_index == Invalid )
+	if(m_index == Invalid)
 		return;
 
 	int prevIndex = m_index;
-	Range removedRange( firstIndex, lastIndex );
+	Range removedRange(firstIndex, lastIndex);
 
 	kDebug() << "PREV RANGES" << m_ranges.inspect();
-	m_ranges.shiftIndexesBackwards( firstIndex, removedRange.length() );
+	m_ranges.shiftIndexesBackwards(firstIndex, removedRange.length());
 	kDebug() << "NEW RANGES" << m_ranges.inspect();
 
-	if ( m_ranges.isEmpty() )
+	if(m_ranges.isEmpty())
 		m_index = Invalid;
-	else
-	{
-		m_index = Invalid - 1; // a non Invalid index (needed only for initialization)
+	else {
+		m_index = Invalid - 1;	// a non Invalid index (needed only for initialization)
 
-		if ( prevIndex == AfterLast )
-		{
-			toLast(); // restore internal variables to a valid state
-			operator++(); // point again to AfterLast
-		}
-		else if ( prevIndex == BehindFirst )
-		{
-			toFirst(); // restore internal variables to a valid state
-			operator--(); // point again to BehindFirst
-		}
-		else
-		{
-			toFirst(); // restore internal variables to a valid state
-			if ( prevIndex < firstIndex )
-				toIndex( prevIndex );
-			else if ( m_index > lastIndex )
-				toIndex( prevIndex - removedRange.length() );
-			else // prevIndex was one of the removed lines
-				toIndex( firstIndex );
+		if(prevIndex == AfterLast) {
+			toLast();			// restore internal variables to a valid state
+			operator++();		// point again to AfterLast
+		} else if(prevIndex == BehindFirst) {
+			toFirst();			// restore internal variables to a valid state
+			operator--();		// point again to BehindFirst
+		} else {
+			toFirst();			// restore internal variables to a valid state
+			if(prevIndex < firstIndex)
+				toIndex(prevIndex);
+			else if(m_index > lastIndex)
+				toIndex(prevIndex - removedRange.length());
+			else				// prevIndex was one of the removed lines
+				toIndex(firstIndex);
 		}
 	}
 
-	emit syncronized( firstIndex, lastIndex, false );
+	emit syncronized(firstIndex, lastIndex, false);
 }
 
 #include "subtitleiterator.moc"

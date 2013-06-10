@@ -28,32 +28,31 @@
 
 using namespace SubtitleComposer;
 
-ShiftTimesDialog::ShiftTimesDialog( QWidget* parent ):
-	ActionWithTargetDialog( i18n( "Shift" ), parent )
+ShiftTimesDialog::ShiftTimesDialog(QWidget * parent):
+ActionWithTargetDialog(i18n("Shift"), parent)
 {
-	QGroupBox* settingsGroupBox = createGroupBox( i18nc( "@title:group", "Shifting" ) );
+	QGroupBox *settingsGroupBox = createGroupBox(i18nc("@title:group", "Shifting"));
 
-	m_directionComboBox = new KComboBox( false, settingsGroupBox );
+	m_directionComboBox = new KComboBox(false, settingsGroupBox);
 	m_directionComboBox->clear();
-	m_directionComboBox->addItem( i18n( "Forwards (+)" ) );
-	m_directionComboBox->addItem( i18n( "Backwards (−)" ) );
-	m_directionComboBox->setSizePolicy( QSizePolicy::MinimumExpanding, QSizePolicy::Fixed );
+	m_directionComboBox->addItem(i18n("Forwards (+)"));
+	m_directionComboBox->addItem(i18n("Backwards (−)"));
+	m_directionComboBox->setSizePolicy(QSizePolicy::MinimumExpanding, QSizePolicy::Fixed);
 
-	m_shiftTimeEdit = new TimeEdit( settingsGroupBox );
+	m_shiftTimeEdit = new TimeEdit(settingsGroupBox);
 
 	createLineTargetsButtonGroup();
 
-	QGridLayout* settingsLayout = createLayout( settingsGroupBox );
-	settingsLayout->addWidget( m_directionComboBox, 0, 0 );
-	settingsLayout->addWidget( m_shiftTimeEdit, 0, 1 );
+	QGridLayout *settingsLayout = createLayout(settingsGroupBox);
+	settingsLayout->addWidget(m_directionComboBox, 0, 0);
+	settingsLayout->addWidget(m_shiftTimeEdit, 0, 1);
 }
 
 void ShiftTimesDialog::resetShiftTime()
 {
-	m_shiftTimeEdit->setValue( 0 );
+	m_shiftTimeEdit->setValue(0);
 }
 
-int ShiftTimesDialog::shiftTimeMillis() const
-{
-	return m_directionComboBox->currentIndex() == 0 ? m_shiftTimeEdit->value() : - m_shiftTimeEdit->value();
+int ShiftTimesDialog::shiftTimeMillis() const {
+	return m_directionComboBox->currentIndex() == 0 ? m_shiftTimeEdit->value() : -m_shiftTimeEdit->value();
 }

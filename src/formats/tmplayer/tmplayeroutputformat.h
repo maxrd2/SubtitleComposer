@@ -22,87 +22,63 @@
 
 
 #ifdef HAVE_CONFIG_H
-	#include <config.h>
+#include <config.h>
 #endif
 
 #include "../outputformat.h"
 #include "../../core/subtitleiterator.h"
 
-namespace SubtitleComposer
-{
-	class TMPlayerOutputFormat : public OutputFormat
-	{
+namespace SubtitleComposer {
+	class TMPlayerOutputFormat:public OutputFormat {
 		friend class FormatManager;
 
-		public:
+	public:
 
-			virtual ~TMPlayerOutputFormat() {}
+		virtual ~ TMPlayerOutputFormat() {
+		}
+	protected:
 
-		protected:
+		virtual QString dumpSubtitles(const Subtitle & subtitle, bool primary) const {
+			QString builder;
+			QString ret;
 
-			virtual QString dumpSubtitles( const Subtitle& subtitle, bool primary ) const
-			{
-				QString builder;
-				QString ret;
+			for(SubtitleIterator it(subtitle); it.current(); ++it) {
+				const SubtitleLine *line = it.current();
 
-				for ( SubtitleIterator it( subtitle ); it.current(); ++it )
-				{
-					const SubtitleLine* line = it.current();
-
-					Time showTime = line->showTime();
-					ret += builder.sprintf(
-						m_timeFormat,
-						showTime.hours(),
-						showTime.minutes(),
-						showTime.seconds()
+				Time showTime = line->showTime();
+				ret += builder.sprintf(m_timeFormat, showTime.hours(), showTime.minutes(), showTime.seconds()
 					);
 
-					const SString& text = primary ? line->primaryText() : line->secondaryText();
-					ret += text.string().replace( '\n', '|' );
-					ret += '\n';
+				const SString & text = primary ? line->primaryText() : line->secondaryText();
+				ret += text.string().replace('\n', '|');
+				ret += '\n';
 
-					// We behave like Subtitle Workshop here: to compensate for the lack of hide time
-					// indication provisions in the format we add an empty line with the hide time.
-					Time hideTime = line->hideTime();
-					ret += builder.sprintf(
-						m_timeFormat,
-						hideTime.hours(),
-						hideTime.minutes(),
-						hideTime.seconds()
+				// We behave like Subtitle Workshop here: to compensate for the lack of hide time
+				// indication provisions in the format we add an empty line with the hide time.
+				Time hideTime = line->hideTime();
+				ret += builder.sprintf(m_timeFormat, hideTime.hours(), hideTime.minutes(), hideTime.seconds()
 					);
 
-					ret += "\n";
-				}
+				ret += "\n";
+			} return ret;
+		}
+		TMPlayerOutputFormat():OutputFormat("TMPlayer", QString("sub:txt").split(":")), m_timeFormat("%02d:%02d:%02d:") {
+		}
 
-				return ret;
-			}
+	TMPlayerOutputFormat(const QString & name, const QStringList & extensions, const char *timeFormat):
+		OutputFormat(name, extensions), m_timeFormat(timeFormat) {
+		}
 
-			TMPlayerOutputFormat():
-				OutputFormat( "TMPlayer", QString( "sub:txt" ).split( ":" ) ),
-				m_timeFormat( "%02d:%02d:%02d:" )
-			{
-			}
-
-			TMPlayerOutputFormat( const QString& name, const QStringList& extensions, const char* timeFormat ):
-				OutputFormat( name, extensions ),
-				m_timeFormat( timeFormat )
-			{
-			}
-
-			const char* m_timeFormat;
+		const char *m_timeFormat;
 	};
 
-	class TMPlayerPlusOutputFormat : public TMPlayerOutputFormat
-	{
+	class TMPlayerPlusOutputFormat:public TMPlayerOutputFormat {
 		friend class FormatManager;
 
-		protected:
+	protected:
 
-			TMPlayerPlusOutputFormat():
-				TMPlayerOutputFormat( "TMPlayer+", QString( "sub:txt" ).split( ":" ), "%02d:%02d:%02d=" )
-			{
-			}
-	};
+		TMPlayerPlusOutputFormat():TMPlayerOutputFormat("TMPlayer+", QString("sub:txt").split(":"), "%02d:%02d:%02d=") {
+	}};
 }
 
 #endif

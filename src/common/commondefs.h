@@ -21,7 +21,7 @@
  ***************************************************************************/
 
 #ifdef HAVE_CONFIG_H
-	#include <config.h>
+#include <config.h>
 #endif
 
 #include <QtCore/QString>
@@ -29,37 +29,35 @@
 
 #include <KUrl>
 
-class String
-{
-	public:
+class String {
+  public:
 
-		static QString title( const QString& text );
-		static QString capitalize( const QString& text );
-		static QString sentence( const QString& text );
+	static QString title(const QString & text);
+	static QString capitalize(const QString & text);
+	static QString sentence(const QString & text);
 
-	protected:
+  protected:
 
-		static int rfindFunctionStart( const QString& text );
-		static int rfindFunctionEnd( const QString& text, int startPos );
+	static int rfindFunctionStart(const QString & text);
+	static int rfindFunctionEnd(const QString & text, int startPos);
 };
 
-class System
-{
-	public:
+class System {
+  public:
 
-		// FALSE ON ERROR
-		static bool copy( const QString& srcPath, const QString& dstPath );
-		static bool move( const QString& srcPath, const QString& dstPath );
-		static bool remove( const QString& path );
-		static bool recursiveMakeDir( const QString& path, QStringList* createdDirsList=0 );
+	// FALSE ON ERROR
+	static bool copy(const QString & srcPath, const QString & dstPath);
+	static bool move(const QString & srcPath, const QString & dstPath);
+	static bool remove(const QString & path);
+	static bool recursiveMakeDir(const QString & path, QStringList * createdDirsList = 0);
 
-		static bool isReadable( const QString& path );
-		static bool isWritable( const QString& path );
+	static bool isReadable(const QString & path);
+	static bool isWritable(const QString & path);
 
-		static QString homeDir();
-		static QString tempDir();
+	static QString homeDir();
+	static QString tempDir();
 
-		static KUrl newUrl( const KUrl& baseUrl, const QString& fileName="tempfile", const QString& extension="", int retries=10 );
+	static KUrl newUrl(const KUrl & baseUrl, const QString & fileName = "tempfile", const QString & extension = "", int retries = 10);
 };
 
 #endif

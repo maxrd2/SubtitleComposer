@@ -21,29 +21,26 @@
 ***************************************************************************/
 
 #ifdef HAVE_CONFIG_H
-	#include <config.h>
+#include <config.h>
 #endif
 
 #include <KFileDialog>
 
 class KComboBox;
 
-namespace SubtitleComposer
-{
-	class OpenSubtitleDialog : public KFileDialog
-	{
-		public:
+namespace SubtitleComposer {
+	class OpenSubtitleDialog:public KFileDialog {
+	public:
 
-			explicit OpenSubtitleDialog( bool primary, const QString& startDir=QString(), const QString& encoding=QString(), QWidget* parent=0 );
+		explicit OpenSubtitleDialog(bool primary, const QString & startDir = QString(), const QString & encoding = QString(), QWidget * parent = 0);
 
-			QString selectedEncoding() const;
+		QString selectedEncoding() const;
 
-			static QString inputFormatsFilter();
+		static QString inputFormatsFilter();
 
-		private:
+	private:
 
-			KComboBox* m_encodingComboBox;
+		KComboBox * m_encodingComboBox;
 	};
 }
-
 #endif

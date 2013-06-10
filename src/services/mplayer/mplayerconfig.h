@@ -21,102 +21,188 @@
  ***************************************************************************/
 
 #ifdef HAVE_CONFIG_H
-	#include <config.h>
+#include <config.h>
 #endif
 
 #include "../../config/appconfiggroup.h"
 
 #include <KStandardDirs>
 
-namespace SubtitleComposer
-{
-	class MPlayerConfig : public AppConfigGroup
-	{
-		friend class MPlayerPlayerBackend;
-		friend class MPlayerConfigWidget;
+namespace SubtitleComposer {
+class MPlayerConfig:public AppConfigGroup {
+	friend class MPlayerPlayerBackend;
+	friend class MPlayerConfigWidget;
 
-		public:
+public:
 
-			virtual AppConfigGroup* clone() const { return new MPlayerConfig( *this ); }
+	virtual AppConfigGroup * clone() const {
+		return new MPlayerConfig(*this);
+	}
+	QString executablePath() const {
+		return option(keyExecutablePath());
+	}
+	void setExecutablePath(const QString & execPath) {
+		setOption(keyExecutablePath(), execPath);
+	}
+	bool hasAudioOutput() const {
+		return !option(keyAudioOutput()).isEmpty();
+	}
+	QString audioOutput() const {
+		return option(keyAudioOutput());
+	}
+	void setAudioOutput(const QString & audioOutput) {
+		setOption(keyAudioOutput(), audioOutput);
+	}
+	bool hasVideoOutput() const {
+		return !option(keyVideoOutput()).isEmpty();
+	}
+	QString videoOutput() const {
+		return option(keyVideoOutput());
+	}
+	void setVideoOutput(const QString & videoOutput) {
+		setOption(keyVideoOutput(), videoOutput);
+	}
 
-			QString executablePath() const { return option( keyExecutablePath() ); }
-			void setExecutablePath( const QString& execPath ) { setOption( keyExecutablePath(), execPath ); }
+	bool hasCacheSize() const {
+		return !option(keyCacheSize()).isEmpty();
+	}
+	int cacheSize() const {
+		return optionAsInt(keyCacheSize());
+	} // in kbytes
+	void setCacheSize(int kbytes) { setOption(keyCacheSize(), kbytes < 0 ? "" : QString::number(kbytes)); }
 
-			bool hasAudioOutput() const { return ! option( keyAudioOutput() ).isEmpty(); }
-			QString audioOutput() const { return option( keyAudioOutput() ); }
-			void setAudioOutput( const QString& audioOutput ) { setOption( keyAudioOutput(), audioOutput ); }
+	bool hasAudioChannels() const {
+		return !option(keyAudioChannels()).isEmpty();
+	}
+	int audioChannels() const {
+		return qMax(1, optionAsInt(keyAudioChannels()));
+	}
+	void setAudioChannels(int channels) {
+		setOption(keyAudioChannels(), channels < 1 ? "" : QString::number(channels));
+	}
 
-			bool hasVideoOutput() const { return ! option( keyVideoOutput() ).isEmpty(); }
-			QString videoOutput() const { return option( keyVideoOutput() ); }
-			void setVideoOutput( const QString& videoOutput ) { setOption( keyVideoOutput(), videoOutput ); }
+	bool hasVolumeAmplification() const {
+		return !option(keyVolumeAmplification()).isEmpty();
+	}
+	int volumeAmplification() const {
+		const int value = optionAsInt(keyVolumeAmplification());
+		return value <= 0 ? 100 : value;
+	}
+	void setVolumeAplification(int amplification) {
+		setOption(keyVolumeAmplification(), amplification < 1 ? "" : QString::number(amplification));
+	}
 
-			bool hasCacheSize() const { return ! option( keyCacheSize() ).isEmpty(); }
-			int cacheSize() const { return optionAsInt( keyCacheSize() ); } /// in kbytes
-			void setCacheSize( int kbytes ) { setOption( keyCacheSize(), kbytes < 0 ? "" : QString::number( kbytes ) ); }
+	bool volumeNormalization() const {
+		return optionAsBool(keyVolumeNormalization());
+	}
+	void setVolumeNormalization(bool enabled) {
+		setOption(keyVolumeNormalization(), enabled);
+	}
 
-			bool hasAudioChannels() const { return ! option( keyAudioChannels() ).isEmpty(); }
-			int audioChannels() const { return qMax( 1, optionAsInt( keyAudioChannels() ) ); }
-			void setAudioChannels( int channels ) { setOption( keyAudioChannels(), channels < 1 ? "" : QString::number( channels ) ); }
+	bool vdpauDivx() const {
+		return optionAsBool(keyVdpauDivx());
+	}
+	void setVdpauDivx(bool vdpauDivx) {
+		setOption(keyVdpauDivx(), vdpauDivx);
+	}
 
-			bool hasVolumeAmplification() const { return ! option( keyVolumeAmplification() ).isEmpty(); }
-			int volumeAmplification() const { const int value = optionAsInt( keyVolumeAmplification() ); return value <= 0 ? 100 : value; }
-			void setVolumeAplification( int amplification ) { setOption( keyVolumeAmplification(), amplification < 1 ? "" : QString::number( amplification ) ); }
+	bool frameDropping() const {
+		return optionAsBool(keyFrameDropping());
+	}
+	void setFrameDropping(bool frameDropping) {
+		setOption(keyFrameDropping(), frameDropping);
+	}
 
-			bool volumeNormalization() const { return optionAsBool( keyVolumeNormalization() ); }
-			void setVolumeNormalization( bool enabled ) { setOption( keyVolumeNormalization(), enabled ); }
+	bool hardFrameDropping() const {
+		return optionAsBool(keyHardFrameDropping());
+	}
+	void setHardFrameDropping(bool hardFrameDropping) {
+		setOption(keyHardFrameDropping(), hardFrameDropping);
+	}
 
-			bool vdpauDivx() const { return optionAsBool( keyVdpauDivx() ); }
-			void setVdpauDivx( bool vdpauDivx ) { setOption( keyVdpauDivx(), vdpauDivx ); }
-
-			bool frameDropping() const { return optionAsBool( keyFrameDropping() ); }
-			void setFrameDropping( bool frameDropping ) { setOption( keyFrameDropping(), frameDropping ); }
-
-			bool hardFrameDropping() const { return optionAsBool( keyHardFrameDropping() ); }
-			void setHardFrameDropping( bool hardFrameDropping ) { setOption( keyHardFrameDropping(), hardFrameDropping ); }
-
-			bool hasAutoSyncFactor() const { return ! option( keyAutoSyncFactor() ).isEmpty(); }
-			int autoSyncFactor() const { return optionAsInt( keyAutoSyncFactor() ); }
-			void setAutoSyncFactor( int factor ) { setOption( keyAutoSyncFactor(), factor < 0 ? "" : QString::number( factor ) );}
+	bool hasAutoSyncFactor() const {
+		return !option(keyAutoSyncFactor()).isEmpty();
+	}
+	int autoSyncFactor() const {
+		return optionAsInt(keyAutoSyncFactor());
+	}
+	void setAutoSyncFactor(int factor) {
+		setOption(keyAutoSyncFactor(), factor < 0 ? "" : QString::number(factor));
+	}
 
 
-			static const QString& keyExecutablePath() { static const QString key( "ExecutablePath" ); return key; }
-			static const QString& keyCacheSize() { static const QString key( "CacheSize" ); return key; }
-			static const QString& keyAutoSyncFactor() { static const QString key( "AutoSyncFactor" ); return key; }
-			static const QString& keyVideoOutput() { static const QString key( "VideoOutput" ); return key; }
-			static const QString& keyFrameDropping() { static const QString key( "FrameDropping" ); return key; }
-			static const QString& keyHardFrameDropping() { static const QString key( "HardFrameDropping" ); return key; }
-			static const QString& keyAudioOutput() { static const QString key( "AudioOutput" ); return key; }
-			static const QString& keyAudioChannels() { static const QString key( "AudioChannels" ); return key; }
-			static const QString& keyVolumeAmplification() { static const QString key( "VolumeAmplification" ); return key; }
-			static const QString& keyVolumeNormalization() { static const QString key( "VolumeNormalization" ); return key; }
-			static const QString& keyVdpauDivx() { static const QString key( "VdpauDivx" ); return key; }
+	static const QString & keyExecutablePath() {
+		static const QString key("ExecutablePath");
+		return key;
+	}
+	static const QString & keyCacheSize() {
+		static const QString key("CacheSize");
+		return key;
+	}
+	static const QString & keyAutoSyncFactor() {
+		static const QString key("AutoSyncFactor");
+		return key;
+	}
+	static const QString & keyVideoOutput() {
+		static const QString key("VideoOutput");
+		return key;
+	}
+	static const QString & keyFrameDropping() {
+		static const QString key("FrameDropping");
+		return key;
+	}
+	static const QString & keyHardFrameDropping() {
+		static const QString key("HardFrameDropping");
+		return key;
+	}
+	static const QString & keyAudioOutput() {
+		static const QString key("AudioOutput");
+		return key;
+	}
+	static const QString & keyAudioChannels() {
+		static const QString key("AudioChannels");
+		return key;
+	}
+	static const QString & keyVolumeAmplification() {
+		static const QString key("VolumeAmplification");
+		return key;
+	}
+	static const QString & keyVolumeNormalization() {
+		static const QString key("VolumeNormalization");
+		return key;
+	}
+	static const QString & keyVdpauDivx() {
+		static const QString key("VdpauDivx");
+		return key;
+	}
 
-		private:
+private:
 
-			MPlayerConfig():AppConfigGroup( "MPlayer", defaults() ) {}
-			MPlayerConfig( const MPlayerConfig& config ):AppConfigGroup( config ) {}
+	MPlayerConfig():AppConfigGroup("MPlayer", defaults()) {
+	}
+	MPlayerConfig(const MPlayerConfig & config):AppConfigGroup(config) {
+	}
 
-			static QMap<QString,QString> defaults()
-			{
-				QMap<QString,QString> defaults;
+	static QMap < QString, QString > defaults() {
+		QMap < QString, QString > defaults;
 
-				defaults[keyExecutablePath()] = "mplayer";
-				defaults[keyCacheSize()] = "5120"; // in kbytes
-				defaults[keyAutoSyncFactor()] = "";
+		defaults[keyExecutablePath()] = "mplayer";
+		defaults[keyCacheSize()] = "5120";	// in kbytes
+		defaults[keyAutoSyncFactor()] = "";
 
-				defaults[keyVideoOutput()] = "";
-				defaults[keyFrameDropping()] = "false";
-				defaults[keyHardFrameDropping()] = "false";
+		defaults[keyVideoOutput()] = "";
+		defaults[keyFrameDropping()] = "false";
+		defaults[keyHardFrameDropping()] = "false";
 
-				defaults[keyAudioOutput()] = "";
-				defaults[keyAudioChannels()] = "";
-				defaults[keyVolumeAmplification()] = "110";
-				defaults[keyVolumeNormalization()] = "false";
-				defaults[keyVdpauDivx()] = "false";
+		defaults[keyAudioOutput()] = "";
+		defaults[keyAudioChannels()] = "";
+		defaults[keyVolumeAmplification()] = "110";
+		defaults[keyVolumeNormalization()] = "false";
+		defaults[keyVdpauDivx()] = "false";
 
-				return defaults;
-			}
-	};
+		return defaults;
+	}
+};
 }
 
 #endif

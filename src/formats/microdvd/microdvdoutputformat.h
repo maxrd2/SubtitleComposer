@@ -22,63 +22,51 @@
 
 
 #ifdef HAVE_CONFIG_H
-	#include <config.h>
+#include <config.h>
 #endif
 
 #include "../outputformat.h"
 #include "../../core/subtitleiterator.h"
 
-namespace SubtitleComposer
-{
-	class MicroDVDOutputFormat : public OutputFormat
-	{
+namespace SubtitleComposer {
+	class MicroDVDOutputFormat:public OutputFormat {
 		friend class FormatManager;
 
-		public:
+	public:
 
-			virtual ~MicroDVDOutputFormat() {}
+		virtual ~ MicroDVDOutputFormat() {
+		}
+	protected:
 
-		protected:
+		virtual QString dumpSubtitles(const Subtitle & subtitle, bool primary) const {
+			QString ret;
 
-			virtual QString dumpSubtitles( const Subtitle& subtitle, bool primary ) const
-			{
-				QString ret;
+			double framesPerSecond = subtitle.framesPerSecond();
+			ret += m_lineBuilder.arg(1).arg(1).arg("").arg(QString::number(framesPerSecond, 'f', 3));
 
-				double framesPerSecond = subtitle.framesPerSecond();
-				ret += m_lineBuilder.arg( 1 ).arg( 1 ).arg( "" ).arg( QString::number( framesPerSecond, 'f', 3 ) );
+			for(SubtitleIterator it(subtitle); it.current(); ++it) {
+				const SubtitleLine *line = it.current();
 
-				for ( SubtitleIterator it( subtitle ); it.current(); ++it )
-				{
-					const SubtitleLine* line = it.current();
+				const SString & text = primary ? line->primaryText() : line->secondaryText();
 
-					const SString& text = primary ? line->primaryText() : line->secondaryText();
+				ret += m_lineBuilder.arg((long)((line->showTime().toMillis() / 1000.0) * framesPerSecond + 0.5))
+				.arg((long)((line->hideTime().toMillis() / 1000.0) * framesPerSecond + 0.5))
+				.arg(m_stylesMap[text.cummulativeStyleFlags()])
+				.arg(text.string().replace('\n', '|'));
+			} return ret;
+		}
+		MicroDVDOutputFormat():OutputFormat("MicroDVD", QString("sub:txt").split(":")), m_lineBuilder("{%1}{%2}%3%4\n"), m_stylesMap() {
+			m_stylesMap[SString::Bold] = "{Y:b}";
+			m_stylesMap[SString::Italic] = "{Y:i}";
+			m_stylesMap[SString::Underline] = "{Y:u}";
+			m_stylesMap[SString::Bold | SString::Italic] = "{Y:bi}";
+			m_stylesMap[SString::Bold | SString::Underline] = "{Y:ub}";
+			m_stylesMap[SString::Italic | SString::Underline] = "{Y:ui}";
+			m_stylesMap[SString::Bold | SString::Italic | SString::Underline] = "{Y:ubi}";
+		}
 
-					ret += m_lineBuilder
-						.arg( (long)((line->showTime().toMillis()/1000.0)*framesPerSecond + 0.5) )
-						.arg( (long)((line->hideTime().toMillis()/1000.0)*framesPerSecond + 0.5) )
-						.arg( m_stylesMap[text.cummulativeStyleFlags()] )
-						.arg( text.string().replace( '\n', '|' ) );
-				}
-
-				return ret;
-			}
-
-			MicroDVDOutputFormat():
-				OutputFormat( "MicroDVD", QString( "sub:txt" ).split( ":" ) ),
-				m_lineBuilder( "{%1}{%2}%3%4\n" ),
-				m_stylesMap()
-			{
-				m_stylesMap[SString::Bold] = "{Y:b}";
-				m_stylesMap[SString::Italic] = "{Y:i}";
-				m_stylesMap[SString::Underline] = "{Y:u}";
-				m_stylesMap[SString::Bold|SString::Italic] = "{Y:bi}";
-				m_stylesMap[SString::Bold|SString::Underline] = "{Y:ub}";
-				m_stylesMap[SString::Italic|SString::Underline] = "{Y:ui}";
-				m_stylesMap[SString::Bold|SString::Italic|SString::Underline] = "{Y:ubi}";
-			}
-
-			const QString m_lineBuilder;
-			mutable QMap<int,QString> m_stylesMap;
+		const QString m_lineBuilder;
+		mutable QMap < int, QString > m_stylesMap;
 	};
 }
 

@@ -21,7 +21,7 @@
  ***************************************************************************/
 
 #ifdef HAVE_CONFIG_H
-	#include <config.h>
+#include <config.h>
 #endif
 
 #include "subtitleline.h"
@@ -32,70 +32,73 @@
 #include <QtCore/QObject>
 #include <QtCore/QList>
 
-namespace SubtitleComposer
-{
-	class SubtitleIterator : public QObject
-	{
-		Q_OBJECT
+namespace SubtitleComposer {
+	class SubtitleIterator:public QObject {
+		Q_OBJECT Q_PROPERTY(int index READ index WRITE toIndex);
 
-		Q_PROPERTY( int index READ index WRITE toIndex );
+	public:
 
-		public:
+		static const int AfterLast = -1;
+		static const int BehindFirst = -2;
+		static const int Invalid = -3;
 
-			static const int AfterLast = -1;
-			static const int BehindFirst = -2;
-			static const int Invalid = -3;
+		explicit SubtitleIterator(const Subtitle & subtitle, const RangeList & ranges = Range::full(), bool toLast = false);
+		SubtitleIterator(const SubtitleIterator & it);
+		SubtitleIterator & operator=(const SubtitleIterator & it);
+		virtual ~ SubtitleIterator();
 
-			explicit SubtitleIterator( const Subtitle& subtitle, const RangeList& ranges=Range::full(), bool toLast=false );
-			SubtitleIterator( const SubtitleIterator& it );
-			SubtitleIterator& operator=( const SubtitleIterator& it );
-			virtual ~SubtitleIterator();
+		bool isAutoSync() const;
+		void setAutoSync(bool value);
 
-			bool isAutoSync() const;
-			void setAutoSync( bool value );
+		bool isAutoCircle() const;
+		void setAutoCircle(bool value);
 
-			bool isAutoCircle() const;
-			void setAutoCircle( bool value );
+		bool isFullIterator() const;
+		RangeList ranges() const;
 
-			bool isFullIterator() const;
-			RangeList ranges() const;
+		void toFirst();
+		void toLast();
+		bool toIndex(int index);
 
-			void toFirst();
-			void toLast();
-			bool toIndex( int index );
+		inline int index() {
+			return m_index;
+		}
+		inline int firstIndex() {
+			return m_index == Invalid ? -1 : m_ranges.firstIndex();
+		}
+		inline int lastIndex() {
+			return m_index == Invalid ? -1 : m_ranges.lastIndex();
+		}
 
-			inline int index() { return m_index; }
-			inline int firstIndex() { return m_index == Invalid ? -1 : m_ranges.firstIndex(); }
-			inline int lastIndex() { return m_index == Invalid ? -1 : m_ranges.lastIndex(); }
+		inline SubtitleLine *current() const {
+			return m_index < 0 ? 0 : *m_linesIterator;
+		}
+		inline operator   SubtitleLine *() const {
+			return m_index < 0 ? 0 : *m_linesIterator;
+		}
+		SubtitleIterator & operator++();
+		SubtitleIterator & operator+=(int steps);
+		SubtitleIterator & operator--();
+		SubtitleIterator & operator-=(int steps);
 
-			inline SubtitleLine* current() const { return m_index < 0 ? 0 : *m_linesIterator; }
-			inline operator SubtitleLine*() const { return m_index < 0 ? 0 : *m_linesIterator; }
+	signals:
 
-			SubtitleIterator& operator++();
-			SubtitleIterator& operator+=( int steps );
-			SubtitleIterator& operator--();
-			SubtitleIterator& operator-=( int steps );
+		void syncronized(int firstIndex, int lastIndex, bool inserted);
 
-		signals:
+		private slots:void onSubtitleLinesInserted(int firstIndex, int lastIndex);
+		void onSubtitleLinesRemoved(int firstIndex, int lastIndex);
 
-			void syncronized( int firstIndex, int lastIndex, bool inserted );
+	private:
 
-		private slots:
-
-			void onSubtitleLinesInserted( int firstIndex, int lastIndex );
-			void onSubtitleLinesRemoved( int firstIndex, int lastIndex );
-
-		private:
-
-			const Subtitle* m_subtitle;
-			bool m_autoSync;
-			bool m_autoCircle;
-			RangeList m_ranges;
-			bool m_isFullIterator;
-			int m_index;
-			RangeList::ConstIterator m_rangesIterator;
-			QList<SubtitleLine*>::Iterator m_linesIterator;
-			QList<SubtitleLine*>::Iterator m_linesIteratorStart;
+		const Subtitle *m_subtitle;
+		bool m_autoSync;
+		bool m_autoCircle;
+		RangeList m_ranges;
+		bool m_isFullIterator;
+		int m_index;
+		RangeList::ConstIterator m_rangesIterator;
+		QList < SubtitleLine * >::Iterator m_linesIterator;
+		QList < SubtitleLine * >::Iterator m_linesIteratorStart;
 	};
 }
 

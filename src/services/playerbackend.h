@@ -21,7 +21,7 @@
  ***************************************************************************/
 
 #ifdef HAVE_CONFIG_H
-	#include <config.h>
+#include <config.h>
 #endif
 
 #include "servicebackend.h"
@@ -31,26 +31,22 @@
 #include <QtCore/QString>
 #include <QtGui/QWidget>
 
-namespace SubtitleComposer
-{
-	class PlayerBackend : public ServiceBackend
-	{
-		Q_OBJECT
+namespace SubtitleComposer {
+	class PlayerBackend:public ServiceBackend {
+		Q_OBJECT friend class Player;
 
-		friend class Player;
+	public:
 
-		public:
+		// FIXME there should be a way for backends to abort on error
 
-			// FIXME there should be a way for backends to abort on error
+		/// ownership of the config object is transferred to this object
+		PlayerBackend(Player * player, const QString & name, AppConfigGroup * config);
+		virtual ~ PlayerBackend();
 
-			/// ownership of the config object is transferred to this object
-			PlayerBackend( Player* player, const QString& name, AppConfigGroup* config );
-			virtual ~PlayerBackend();
+	protected:
 
-		protected:
-
-			virtual bool doesVolumeCorrection() const;
-			virtual bool supportsChangingAudioStream( bool* onTheFly ) const;
+		virtual bool doesVolumeCorrection() const;
+		virtual bool supportsChangingAudioStream(bool * onTheFly) const;
 
 			/**
 			Return false if there is an error and the opening of the file must be aborted,
@@ -60,83 +56,75 @@ namespace SubtitleComposer
 			content must be set to true.
 			The function doesn't need to block until playback is actually started
 			*/
-			virtual bool openFile( const QString& filePath, bool& playingAfterCall ) = 0;
+		virtual bool openFile(const QString & filePath, bool & playingAfterCall) = 0;
 
 			/**
 			Cleanup any internal structures associated with the opened file. This function
 			is called with the player already stopped.
 			videoWidget() might be NULL when this function is called.
 			*/
-			virtual void closeFile() = 0;
+		virtual void closeFile() = 0;
 
 			/**
 			Return false if there is an error and playback must be aborted;	otherwise return
 			true (all internal cleanup must be done before returning).
 			*/
-			virtual bool play() = 0;
+		virtual bool play() = 0;
 
 			/**
 			Return false if there is an error and playback must be aborted;	otherwise return
 			true (all internal cleanup must be done before returning).
 			*/
-			virtual bool pause() = 0;
+		virtual bool pause() = 0;
 
 			/**
 			Return false if there is an error and playback must be aborted;	otherwise return
 			true (all internal cleanup must be done before returning).
 			*/
-			virtual bool seek( double seconds, bool accurate ) = 0;
+		virtual bool seek(double seconds, bool accurate) = 0;
 
 			/**
 			Return false if there is an error and playback must be aborted;	otherwise return
 			true (all internal cleanup must be done before returning).
 			*/
-			virtual bool stop() = 0;
+		virtual bool stop() = 0;
 
 			/**
 			Return false if there is an error and playback must be aborted;	otherwise return
 			true (all internal cleanup must be done before returning).
 			*/
-			virtual bool setActiveAudioStream( int audioStream ) = 0;
+		virtual bool setActiveAudioStream(int audioStream) = 0;
 
 			/**
 			Return false if there is an error and playback must be aborted;	otherwise return
 			true (all internal cleanup must be done before returning).
 			*/
-			virtual bool setVolume( double volume ) = 0;
+		virtual bool setVolume(double volume) = 0;
 
-			inline Player* player() const { return static_cast<Player*>( service() ); }
+		inline Player *player() const {
+			return static_cast < Player * >(service());
+		}
+		inline void setPlayerPosition(double position)	// value in seconds
+		{
+			player()->setPosition(position);
+		} inline void setPlayerLength(double length)	// value in seconds
+		{
+			player()->setLength(length);
+		} inline void setPlayerState(Player::State state) {
+			player()->setState(state);
+		}
 
+		inline void setPlayerErrorState(const QString & errorMessage = QString()) {
+			player()->setErrorState(errorMessage);
+		}
 
-			inline void setPlayerPosition( double position ) // value in seconds
-			{
-				player()->setPosition( position );
-			}
+		inline void setPlayerFramesPerSecond(double framesPerSecond) {
+			player()->setFramesPerSecond(framesPerSecond);
+		}
 
-			inline void setPlayerLength( double length ) // value in seconds
-			{
-				player()->setLength( length );
-			}
-
-			inline void setPlayerState( Player::State state )
-			{
-				player()->setState( state );
-			}
-
-			inline void setPlayerErrorState( const QString& errorMessage=QString() )
-			{
-				player()->setErrorState( errorMessage );
-			}
-
-			inline void setPlayerFramesPerSecond( double framesPerSecond )
-			{
-				player()->setFramesPerSecond( framesPerSecond );
-			}
-
-			inline void setPlayerAudioStreams( const QStringList& audioStreams, int activeAudioStream )
-			{
-				player()->setAudioStreams( audioStreams, activeAudioStream );
-			}
+		inline void setPlayerAudioStreams(const QStringList & audioStreams, int activeAudioStream) {
+			player()->setAudioStreams(audioStreams, activeAudioStream);
+		}
 	};
 }
 

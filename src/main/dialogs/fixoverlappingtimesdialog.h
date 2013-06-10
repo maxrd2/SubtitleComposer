@@ -21,7 +21,7 @@
  ***************************************************************************/
 
 #ifdef HAVE_CONFIG_H
-	#include <config.h>
+#include <config.h>
 #endif
 
 #include "actionwithtargetdialog.h"
@@ -29,21 +29,18 @@
 
 class KIntNumInput;
 
-namespace SubtitleComposer
-{
-	class FixOverlappingTimesDialog : public ActionWithTargetDialog
-	{
-		public:
+namespace SubtitleComposer {
+	class FixOverlappingTimesDialog:public ActionWithTargetDialog {
+	public:
 
-			FixOverlappingTimesDialog( QWidget* parent=0 );
+		FixOverlappingTimesDialog(QWidget * parent = 0);
 
-			Time minimumInterval() const;
-			void setMinimumInterval( const Time& time );
+		Time minimumInterval() const;
+		void setMinimumInterval(const Time & time);
 
-		private:
+	private:
 
-			KIntNumInput* m_minIntervalSpinBox;
+		KIntNumInput * m_minIntervalSpinBox;
 	};
 }
-
 #endif

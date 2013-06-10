@@ -21,20 +21,15 @@
  ***************************************************************************/
 
 #ifdef HAVE_CONFIG_H
-	#include <config.h>
+#include <config.h>
 #endif
 
 #include <QtCore/QObject>
 
-class TimeTest: public QObject
-{
-	Q_OBJECT
-
-	private slots:
-
-		void testConstructors();
-		void testSetters();
-		void testOperators();
+class TimeTest:public QObject {
+	Q_OBJECT private slots:void testConstructors();
+	void testSetters();
+	void testOperators();
 };
 
 #endif

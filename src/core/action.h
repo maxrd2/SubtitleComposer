@@ -21,124 +21,92 @@
  ***************************************************************************/
 
 #ifdef HAVE_CONFIG_H
-	#include <config.h>
+#include <config.h>
 #endif
 
 #include <typeinfo>
 
 #include <QtCore/QString>
 
-namespace SubtitleComposer
-{
-	class Action
-	{
-		typedef enum {
-			Executed = 0x1,		// Action executed at least once
-			Done = 0x2,			// Action executed an odd number of times (it can be undone)
-		} State;
+namespace SubtitleComposer {
+class Action {
+	typedef enum {
+		Executed = 0x1,		// Action executed at least once
+		Done = 0x2,			// Action executed an odd number of times (it can be undone)
+	} State;
 
-		friend class ActionManager;
-		friend class CompositeAction;
+	friend class ActionManager;
+	friend class CompositeAction;
 
-		public:
+public:
 
-			Action( const QString& description=QString() ):
-				m_description( description ),
-				m_state( 0 ) {}
-			virtual ~Action() {}
+	Action(const QString & description = QString()) : m_description(description), m_state(0) {}
+	virtual ~ Action() { }
+	inline const QString & description() const { return m_description; }
+	// true if action has been executed at least once
+	inline bool executed() { return m_state & Executed; }
 
-			inline const QString& description() const
-			{
-				return m_description;
-			}
+	// true if action can be undone
+	inline bool done() { return m_state & Done; }
 
-			/// true if action has been executed at least once
-			inline bool executed()
-			{
-				return m_state & Executed;
-			}
+	void redo() { _redo(true); }
 
-			/// true if action can be undone
-			inline bool done()
-			{
-				return m_state & Done;
-			}
+	void undo() { _undo(true); }
 
-			void redo()
-			{
-				_redo( true );
-			}
+protected:
 
-			void undo()
-			{
-				_undo( true );
-			}
+	template < class T > T * tryCastTo(Action * action) {
+		try {
+			return dynamic_cast < T * >(action);
+		}
+		catch(const std::bad_cast &) {
+			return 0;
+		}
+	}
 
-		protected:
+	/// when this method is called both the callee and the action parameter have been executed
+	/// so, if the callee can be merged with the previous action, it must recover the state
+	/// previous to execution of both actions and return true (if the actions can't be merged,
+	/// just return false).
+	inline virtual bool mergeWithPrevious(Action */*action*/) { return false; }
 
-			template <class T>
-			T* tryCastTo( Action* action )
-			{
-				try
-				{
-					return dynamic_cast<T*>( action );
-				}
-				catch( const std::bad_cast& )
-				{
-					return 0;
-				}
-			}
+	void _redo(bool emitSignals) {
+		if(!(m_state & Done)) {
+			_preRedo();
+			_redo();
+			if(emitSignals)
+				_emitRedoSignals();
+			m_state |= Executed | Done;
+		}
+	}
 
-			/// when this method is called both the callee and the action parameter have been executed
-			/// so, if the callee can be merged with the previous action, it must recover the state
-			/// previous to execution of both actions and return true (if the actions can't be merged,
-			/// just return false).
-			inline virtual bool mergeWithPrevious( Action* /*action*/ )
-			{
-				return false;
-			}
+	void _undo(bool emitSignals) {
+		if(m_state & Done) {
+			_preUndo();
+			_undo();
+			if(emitSignals)
+				_emitUndoSignals();
+			m_state &= ~Done;
+		}
+	}
 
-			void _redo( bool emitSignals )
-			{
-				if ( ! (m_state & Done) )
-				{
-					_preRedo();
-					_redo();
-					if ( emitSignals )
-						_emitRedoSignals();
-					m_state |= Executed|Done;
-				}
-			}
+	virtual void _redo() = 0;
+	virtual void _undo() = 0;
 
-			void _undo( bool emitSignals )
-			{
-				if ( m_state & Done )
-				{
-					_preUndo();
-					_undo();
-					if ( emitSignals )
-						_emitUndoSignals();
-					m_state &= ~Done;
-				}
-			}
+	virtual void _preRedo() {};
+	virtual void _preUndo() {};
 
-			virtual void _redo() = 0;
-			virtual void _undo() = 0;
+	virtual void _emitRedoSignals() {};
+	virtual void _emitUndoSignals() {};
 
-			virtual void _preRedo() {};
-			virtual void _preUndo() {};
+protected:
 
-			virtual void _emitRedoSignals() {};
-			virtual void _emitUndoSignals() {};
+	QString m_description;
 
-		protected:
+private:
 
-			QString m_description;
-
-		private:
-
-			int m_state;
-	};
+	int m_state;
+};
 }
 
 #endif

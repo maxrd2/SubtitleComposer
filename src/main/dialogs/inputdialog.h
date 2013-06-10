@@ -21,7 +21,7 @@
  ***************************************************************************/
 
 #ifdef HAVE_CONFIG_H
-	#include <config.h>
+#include <config.h>
 #endif
 
 #include <KDialog>
@@ -29,65 +29,51 @@
 class QLineEdit;
 class KIntNumInput;
 
-namespace SubtitleComposer
-{
-	class TextInputDialog : public KDialog
-	{
-		Q_OBJECT
+namespace SubtitleComposer {
+	class TextInputDialog:public KDialog {
+	Q_OBJECT public:
 
-		public:
+		TextInputDialog(const QString & caption, const QString & label, QWidget * parent = 0);
+		TextInputDialog(const QString & caption, const QString & label, const QString & value, QWidget * parent = 0);
 
-			TextInputDialog( const QString& caption, const QString& label, QWidget* parent=0 );
-			TextInputDialog( const QString& caption, const QString& label, const QString& value, QWidget* parent=0 );
+		const QString value() const;
 
-			const QString value() const;
+		public slots:void setValue(const QString & value);
 
-		public slots:
+	private:
 
-			void setValue( const QString& value );
+		void init(const QString & caption, const QString & label, const QString & value);
 
-		private:
+		private slots:void onLineEditTextChanged(const QString & text);
 
-			void init( const QString& caption, const QString& label, const QString& value );
+	private:
 
-		private slots:
-
-			void onLineEditTextChanged( const QString& text );
-
-		private:
-
-			QLineEdit* m_lineEdit;
+		QLineEdit * m_lineEdit;
 	};
 
-	class IntInputDialog : public KDialog
-	{
-		Q_OBJECT
+	class IntInputDialog:public KDialog {
+	Q_OBJECT public:
 
-		public:
+		IntInputDialog(const QString & caption, const QString & label, QWidget * parent = 0);
+		IntInputDialog(const QString & caption, const QString & label, int min, int max, QWidget * parent = 0);
+		IntInputDialog(const QString & caption, const QString & label, int min, int max, int value, QWidget * parent = 0);
 
-			IntInputDialog( const QString& caption, const QString& label, QWidget* parent=0 );
-			IntInputDialog( const QString& caption, const QString& label, int min, int max, QWidget* parent=0 );
-			IntInputDialog( const QString& caption, const QString& label, int min, int max, int value, QWidget* parent=0 );
+		int minimum() const;
+		int maximum() const;
+		int value() const;
 
-			int minimum() const;
-			int maximum() const;
-			int value() const;
+		public slots:void setMinimum(int minimum);
+		void setMaximum(int maximum);
+		void setValue(int value);
 
-		public slots:
+	private:
 
-			void setMinimum( int minimum );
-			void setMaximum( int maximum );
-			void setValue( int value );
+		void init(const QString & caption, const QString & label, int min, int max, int value);
 
-		private:
+	private:
 
-			void init( const QString& caption, const QString& label, int min, int max, int value );
-
-		private:
-
-			KIntNumInput* m_intNumInput;
+		KIntNumInput * m_intNumInput;
 	};
 
 }
-
 #endif

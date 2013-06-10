@@ -21,45 +21,38 @@
  ***************************************************************************/
 
 #ifdef HAVE_CONFIG_H
-	#include <config.h>
+#include <config.h>
 #endif
 
 #include <QtGui/QWidget>
 
 #include <xine.h>
 
-namespace SubtitleComposer
-{
-	class XineVideoLayerWidget : public QWidget
-	{
-		Q_OBJECT
+namespace SubtitleComposer {
+	class XineVideoLayerWidget:public QWidget {
+	Q_OBJECT public:
 
-		public:
+		explicit XineVideoLayerWidget(QWidget * parent = 0);
+		virtual ~ XineVideoLayerWidget();
 
-			explicit XineVideoLayerWidget( QWidget* parent=0 );
-			virtual ~XineVideoLayerWidget();
+		xine_video_port_t *videoDriver() const;
+		void setVideoDriver(xine_video_port_t * videoDriver);
 
-			xine_video_port_t* videoDriver() const;
-			void setVideoDriver( xine_video_port_t* videoDriver );
+		signals:void geometryChanged();
 
-		signals:
-
-			void geometryChanged();
-
-		protected:
+	protected:
 
 #ifdef HAVE_XCB
-			virtual void paintEvent( QPaintEvent* event );
+		virtual void paintEvent(QPaintEvent * event);
 #else
-			virtual bool x11Event( XEvent* event );
+		virtual bool x11Event(XEvent * event);
 #endif
-			virtual void resizeEvent( QResizeEvent* event );
-			virtual void moveEvent( QMoveEvent* event );
+		virtual void resizeEvent(QResizeEvent * event);
+		virtual void moveEvent(QMoveEvent * event);
 
-		protected:
+	protected:
 
-			xine_video_port_t* m_videoDriver;
+		xine_video_port_t * m_videoDriver;
 	};
 }
-
 #endif

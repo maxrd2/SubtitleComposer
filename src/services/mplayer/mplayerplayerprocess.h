@@ -22,7 +22,7 @@
  ***************************************************************************/
 
 #ifdef HAVE_CONFIG_H
-	#include <config.h>
+#include <config.h>
 #endif
 
 #include "mediadata.h"
@@ -36,87 +36,82 @@
 #include <QtCore/QTimer>
 #include <QtCore/QProcess>
 
-namespace SubtitleComposer
-{
-	class MPlayerPlayerProcess : public QProcess
-	{
-		Q_OBJECT
+namespace SubtitleComposer {
+	class MPlayerPlayerProcess:public QProcess {
+	Q_OBJECT public:
 
-		public:
+		explicit MPlayerPlayerProcess(const MPlayerConfig * const, QObject * parent = 0);
+		virtual ~ MPlayerPlayerProcess();
 
-			explicit MPlayerPlayerProcess( const MPlayerConfig* const, QObject* parent=0 );
-			virtual ~MPlayerPlayerProcess();
-
-			const MediaData& mediaData();
+		const MediaData & mediaData();
 
 			/** returns false only if the executable couldn't be found (in which case the process could not be started) */
-			bool start( const QString& filePath, int winId, int audioStream=-1, int audioStreamCount=1 );
+		bool start(const QString & filePath, int winId, int audioStream = -1, int audioStreamCount = 1);
 
-			void sendTogglePause();
-			void sendSeek( double seconds );
-			void sendFastSeek( double seconds );
+		void sendTogglePause();
+		void sendSeek(double seconds);
+		void sendFastSeek(double seconds);
 
-			void sendToggleMute();
-			void sendVolume( double volume );
-			void sendAudioStream( int audioStream );
+		void sendToggleMute();
+		void sendVolume(double volume);
+		void sendAudioStream(int audioStream);
 
-			void sendQuit();
+		void sendQuit();
 
-			inline quint8 version() const { return m_version; };
-			inline const QString & revision() const { return m_revision; };
+		inline quint8 version() const {
+			return m_version;
+		};
+		inline const QString & revision() const {
+			return m_revision;
+		};
 
-		signals:
+		signals:void mediaDataLoaded();
+		void playingReceived();
+		void pausedReceived();
+		void positionReceived(double seconds);
+		void processExited();
 
-			void mediaDataLoaded();
-			void playingReceived();
-			void pausedReceived();
-			void positionReceived( double seconds );
-			void processExited();
+		private slots:void onReadyReadStandardOutput();
+		void onWroteToStdin();
+		void onTimeout();
+		void onStateChanged(QProcess::ProcessState newState);
 
-		private slots:
+	private:
 
-			void onReadyReadStandardOutput();
-			void onWroteToStdin();
-			void onTimeout();
-			void onStateChanged( QProcess::ProcessState newState );
+		/// indicates in which state the player is left after the execution
+		/// of a command: playing, paused or the same as before.
+		typedef enum { Playing, Pausing, PausingKeep } CommandMode;
 
-		private:
+		void sendCommand(const char *cmd, CommandMode mode, bool block);
+		void sendCommand(const QByteArray & cmd, CommandMode mode, bool block);
+		void queueCommand(const char *cmd, CommandMode mode);
+		void queueCommand(const QByteArray & cmd, CommandMode mode);
 
-			/// indicates in which state the player is left after the execution
-			/// of a command: playing, paused or the same as before.
-			typedef enum { Playing, Pausing, PausingKeep } CommandMode;
+		void parseLine(const QString & line);
 
-			void sendCommand( const char* cmd, CommandMode mode, bool block );
-			void sendCommand( const QByteArray& cmd, CommandMode mode, bool block );
-			void queueCommand( const char* cmd, CommandMode mode );
-			void queueCommand( const QByteArray& cmd, CommandMode mode );
+	private:
 
-			void parseLine( const QString& line );
+		const MPlayerConfig *const m_config;
+		MediaData m_mediaData;
 
-		private:
+		QList < QByteArray > m_commandsQueue;
+		QTimer m_commandsQueueTimer;
 
-			const MPlayerConfig* const m_config;
-			MediaData m_mediaData;
+		QByteArray m_incompleteLine;
 
-			QList<QByteArray> m_commandsQueue;
-			QTimer m_commandsQueueTimer;
+		bool m_isMediaDataLoaded;
+		bool m_isPaused;
+		bool m_emitPlaying;
 
-			QByteArray m_incompleteLine;
+		quint8 m_version;
+		QString m_revision;
 
-			bool m_isMediaDataLoaded;
-			bool m_isPaused;
-			bool m_emitPlaying;
-
-			quint8 m_version;
-			QString m_revision;
-
-			QRegExp m_positionRegExp;
-			QRegExp m_videoFrameRegExp;
-			QRegExp m_generalTagRegExp;
-			QRegExp m_audioTagRegExp;
-			QRegExp m_pausedTagRegExp;
-			QRegExp m_versionTagRegExp;
+		QRegExp m_positionRegExp;
+		QRegExp m_videoFrameRegExp;
+		QRegExp m_generalTagRegExp;
+		QRegExp m_audioTagRegExp;
+		QRegExp m_pausedTagRegExp;
+		QRegExp m_versionTagRegExp;
 	};
 }
-
 #endif

@@ -21,7 +21,7 @@
  ***************************************************************************/
 
 #ifdef HAVE_CONFIG_H
-	#include <config.h>
+#include <config.h>
 #endif
 
 #include "service.h"
@@ -32,65 +32,62 @@
 #include <QtCore/QString>
 #include <QtGui/QWidget>
 
-namespace SubtitleComposer
-{
-	class ServiceBackend : public QObject
-	{
-		Q_OBJECT
+namespace SubtitleComposer {
+class ServiceBackend:public QObject {
+	Q_OBJECT friend class Service;
+	friend class Player;
+	friend class Decoder;
 
-		friend class Service;
-		friend class Player;
-		friend class Decoder;
+public:
 
-		public:
+	/// ownership of the config object is transferred to this object
+	ServiceBackend(Service * service, const QString & name, AppConfigGroup * config);
+	virtual ~ ServiceBackend();
 
-			/// ownership of the config object is transferred to this object
-			ServiceBackend( Service* service, const QString& name, AppConfigGroup* config );
-			virtual ~ServiceBackend();
+	inline const QString & name() const {
+		return m_name;
+	}
+	inline const AppConfigGroup *config() const {
+		return m_config;
+	}
+	// If possible (i.e., configs are compatible), copies the config object into
+	// the service backend config. Ownership of config object it's not transferred.
+	void setConfig(const AppConfigGroup * const config);
+	virtual AppConfigGroupWidget *newAppConfigGroupWidget(QWidget * parent) = 0;
 
-			inline const QString& name() const { return m_name; }
+	bool isDummy() const;
 
-			inline const AppConfigGroup* config() const { return m_config; }
+protected:
 
-			/// If possible (i.e., configs are compatible), copies the config object into
-			/// the service backend config. Ownership of config object it's not transferred.
-			void setConfig( const AppConfigGroup* const config );
-
-			virtual AppConfigGroupWidget* newAppConfigGroupWidget( QWidget* parent ) = 0;
-
-			bool isDummy() const;
-
-		protected:
-
-			/**
+	/**
 			Returns true if initialize() has been successfully on this backend and false
 			otherwise. There can only be one initialized backend at the time (the active
 			backend). Since the active backend is also guaranteed to be initialized, this
 			return the same as isActiveBackend() method.
 			*/
-			bool isInitialized() const;
-			bool isActiveBackend() const;
+	bool isInitialized() const;
+	bool isActiveBackend() const;
 
-			/**
+	/**
 			Perform any required initialization
 			*/
-			virtual QWidget* initialize( QWidget* widgetParent ) = 0;
+	virtual QWidget *initialize(QWidget * widgetParent) = 0;
 
-			/**
+	/**
 			Cleanup anything that has been initialized by initialize(), excluding the
 			videoWidget() which is destroyed after calling fninalize() (all references
 			to it must be cleaned up, however)
 			*/
-			virtual void finalize() = 0;
+	virtual void finalize() = 0;
 
-			inline Service* service() const { return m_service; }
+	inline Service *service() const {
+		return m_service;
+	}
+private:
 
-		private:
-
-			Service* m_service;
-			QString m_name;
-			AppConfigGroup* m_config;
-	};
+	Service * m_service;
+	QString m_name;
+	AppConfigGroup *m_config;
+};
 }
-
 #endif

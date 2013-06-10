@@ -21,35 +21,30 @@
  ***************************************************************************/
 
 #ifdef HAVE_CONFIG_H
-	#include <config.h>
+#include <config.h>
 #endif
 
 #include "actionwitherrortargetsdialog.h"
 
 class QCheckBox;
 
-namespace SubtitleComposer
-{
-	class CheckErrorsDialog : public ActionWithErrorTargetsDialog
-	{
-		Q_OBJECT
+namespace SubtitleComposer {
+	class CheckErrorsDialog:public ActionWithErrorTargetsDialog {
+	Q_OBJECT public:
 
-		public:
+		CheckErrorsDialog(QWidget * parent = 0);
 
-			CheckErrorsDialog( QWidget* parent=0 );
+		bool clearOtherErrors() const;
+		bool clearMarks() const;
 
-			bool clearOtherErrors() const;
-			bool clearMarks() const;
+	protected:
 
-		protected:
+		virtual void setTranslationMode(bool value);
 
-			virtual void setTranslationMode( bool value );
+	private:
 
-		private:
-
-			QCheckBox* m_clearOtherErrorsCheckBox;
-			QCheckBox* m_clearMarksCheckBox;
+		QCheckBox * m_clearOtherErrorsCheckBox;
+		QCheckBox *m_clearMarksCheckBox;
 	};
 }
-
 #endif

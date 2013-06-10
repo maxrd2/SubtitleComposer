@@ -21,7 +21,7 @@
  ***************************************************************************/
 
 #ifdef HAVE_CONFIG_H
-	#include <config.h>
+#include <config.h>
 #endif
 
 #include "../config/appconfig.h"
@@ -30,64 +30,53 @@
 
 #include <KPageDialog>
 
-namespace SubtitleComposer
-{
+namespace SubtitleComposer {
 	class AppConfigGroupWidget;
 
-	class ConfigDialog : public KPageDialog
-	{
-		Q_OBJECT
+	class ConfigDialog:public KPageDialog {
+	Q_OBJECT public:
 
-		public:
-
-			typedef enum { General=0, Errors, Spelling, Player, FirstBackend } Pages;
+		typedef enum { General = 0, Errors, Spelling, Player, FirstBackend } Pages;
 
 
-			explicit ConfigDialog( const AppConfig& config, QWidget* parent=0 );
-			virtual ~ConfigDialog();
+		explicit ConfigDialog(const AppConfig & config, QWidget * parent = 0);
+		virtual ~ ConfigDialog();
 
-			void setConfig( const AppConfig& config );
-			const AppConfig& config() const;
+		void setConfig(const AppConfig & config);
+		const AppConfig & config() const;
 
-			void setCurrentPage( unsigned pageIndex );
+		void setCurrentPage(unsigned pageIndex);
 
-		public slots:
+		public slots:void show();
+		void hide();
 
-			void show();
-			void hide();
+		signals:void accepted();
 
-		signals:
+		protected slots:void acceptConfig();
+		void acceptConfigAndClose();
+		void rejectConfig();
+		void rejectConfigAndClose();
 
-			void accepted();
+		void setControlsFromConfig();
+		void setControlsFromConfig(unsigned pageIndex);
 
-		protected slots:
+		void setConfigFromControls();
+		void setConfigFromControls(unsigned pageIndex);
 
-			void acceptConfig();
-			void acceptConfigAndClose();
-			void rejectConfig();
-			void rejectConfigAndClose();
+		void setActivePageControlsFromDefaults();
+		void setControlsFromDefaults(unsigned pageIndex);
 
-			void setControlsFromConfig();
-			void setControlsFromConfig( unsigned pageIndex );
+		void enableApply();
 
-			void setConfigFromControls();
-			void setConfigFromControls( unsigned pageIndex );
+		void onOptionChanged(const QString & groupName, const QString & optionName, const QString & value);
 
-			void setActivePageControlsFromDefaults();
-			void setControlsFromDefaults( unsigned pageIndex );
+	protected:
 
-			void enableApply();
+		AppConfig m_acceptedConfig;
+		AppConfig m_config;
 
-			void onOptionChanged( const QString& groupName, const QString& optionName, const QString& value );
-
-		protected:
-
-			AppConfig m_acceptedConfig;
-			AppConfig m_config;
-
-			QList<AppConfigGroupWidget*> m_configWidgets;
-			QList<KPageWidgetItem*> m_pageWidgets;
+		QList < AppConfigGroupWidget * >m_configWidgets;
+		QList < KPageWidgetItem * >m_pageWidgets;
 	};
 }
-
 #endif

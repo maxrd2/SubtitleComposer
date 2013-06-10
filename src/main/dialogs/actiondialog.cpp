@@ -28,32 +28,31 @@
 
 using namespace SubtitleComposer;
 
-ActionDialog::ActionDialog( const QString& title, QWidget* parent ):
-	KDialog( parent )
+ActionDialog::ActionDialog(const QString & title, QWidget * parent):KDialog(parent)
 {
-	setCaption( title );
+	setCaption(title);
 
-	setButtons( KDialog::Ok | KDialog::Cancel );
-	setDefaultButton( KDialog::Ok );
+	setButtons(KDialog::Ok | KDialog::Cancel);
+	setDefaultButton(KDialog::Ok);
 
-	m_mainWidget = new QWidget( this );
-	m_mainLayout = new QVBoxLayout( m_mainWidget );
-	m_mainLayout->setAlignment( Qt::AlignTop );
-	m_mainLayout->setContentsMargins( 0, 0, 0, 0 );
-	m_mainLayout->setSpacing( 5 );
+	m_mainWidget = new QWidget(this);
+	m_mainLayout = new QVBoxLayout(m_mainWidget);
+	m_mainLayout->setAlignment(Qt::AlignTop);
+	m_mainLayout->setContentsMargins(0, 0, 0, 0);
+	m_mainLayout->setSpacing(5);
 
-	setMainWidget( m_mainWidget );
+	setMainWidget(m_mainWidget);
 }
 
 int ActionDialog::exec()
 {
 	// attempt at showing the full action name on the title...
 	// it would work better if we could get the fontMetrics used by kwin
-// 	int minWidth = fontMetrics().width( windowTitle() ) + 120;
-// 	if ( minWidth > minimumWidth() )
-// 		setMinimumWidth( minWidth );
+//  int minWidth = fontMetrics().width( windowTitle() ) + 120;
+//  if ( minWidth > minimumWidth() )
+//      setMinimumWidth( minWidth );
 
-	resize( minimumSizeHint() );
+	resize(minimumSizeHint());
 	return KDialog::exec();
 }
 
@@ -61,32 +60,32 @@ void ActionDialog::show()
 {
 	// attempt at showing the full action name on the title...
 	// it would work better if we could get the fontMetrics used by kwin
-// 	int minWidth = fontMetrics().width( windowTitle() ) + 120;
-// 	if ( minWidth > minimumWidth() )
-// 		setMinimumWidth( minWidth );
+//  int minWidth = fontMetrics().width( windowTitle() ) + 120;
+//  if ( minWidth > minimumWidth() )
+//      setMinimumWidth( minWidth );
 
-	resize( minimumSizeHint() );
+	resize(minimumSizeHint());
 	KDialog::show();
 }
 
 
-QGroupBox* ActionDialog::createGroupBox( const QString& title, bool addToLayout )
+QGroupBox *ActionDialog::createGroupBox(const QString & title, bool addToLayout)
 {
-	QGroupBox* groupBox = new QGroupBox( m_mainWidget );
-	groupBox->setTitle( title );
+	QGroupBox *groupBox = new QGroupBox(m_mainWidget);
+	groupBox->setTitle(title);
 
-	if ( addToLayout )
-// 		m_mainLayout->addWidget( groupBox, m_mainLayout->rowCount(), 0 );
-		m_mainLayout->addWidget( groupBox );
+	if(addToLayout)
+//      m_mainLayout->addWidget( groupBox, m_mainLayout->rowCount(), 0 );
+		m_mainLayout->addWidget(groupBox);
 
 	return groupBox;
 }
 
-QGridLayout* ActionDialog::createLayout( QGroupBox* groupBox )
+QGridLayout *ActionDialog::createLayout(QGroupBox * groupBox)
 {
-	QGridLayout* gridLayout = new QGridLayout( groupBox );
-	gridLayout->setAlignment( Qt::AlignTop );
-	gridLayout->setSpacing( 5 );
+	QGridLayout *gridLayout = new QGridLayout(groupBox);
+	gridLayout->setAlignment(Qt::AlignTop);
+	gridLayout->setSpacing(5);
 	return gridLayout;
 }
 

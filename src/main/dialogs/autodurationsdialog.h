@@ -21,7 +21,7 @@
  ***************************************************************************/
 
 #ifdef HAVE_CONFIG_H
-	#include <config.h>
+#include <config.h>
 #endif
 
 #include "actionwithtargetdialog.h"
@@ -30,36 +30,33 @@ class QCheckBox;
 class KIntSpinBox;
 class QButtonGroup;
 
-namespace SubtitleComposer
-{
-	class AutoDurationsDialog : public ActionWithTargetDialog
-	{
-		public:
+namespace SubtitleComposer {
+	class AutoDurationsDialog:public ActionWithTargetDialog {
+	public:
 
-			AutoDurationsDialog( unsigned charMillis, unsigned wordMillis, unsigned lineMillis, QWidget* parent=0 );
+		AutoDurationsDialog(unsigned charMillis, unsigned wordMillis, unsigned lineMillis, QWidget * parent = 0);
 
-			unsigned charMillis() const;
-			unsigned wordMillis() const;
-			unsigned lineMillis() const;
+		unsigned charMillis() const;
+		unsigned wordMillis() const;
+		unsigned lineMillis() const;
 
-			bool preventOverlap() const;
+		bool preventOverlap() const;
 
-			Subtitle::TextTarget calculationMode() const;
+		Subtitle::TextTarget calculationMode() const;
 
-			bool translationMode() const;
-			void setTranslationMode( bool enabled );
+		bool translationMode() const;
+		void setTranslationMode(bool enabled);
 
-		private:
+	private:
 
-			KIntSpinBox* m_charMillisSpinBox;
-			KIntSpinBox* m_wordMillisSpinBox;
-			KIntSpinBox* m_lineMillisSpinBox;
+		KIntSpinBox * m_charMillisSpinBox;
+		KIntSpinBox *m_wordMillisSpinBox;
+		KIntSpinBox *m_lineMillisSpinBox;
 
-			QCheckBox* m_preventOverlapCheckBox;
+		QCheckBox *m_preventOverlapCheckBox;
 
-			bool m_translationMode;
-			QButtonGroup* m_calculationButtonGroup;
+		bool m_translationMode;
+		QButtonGroup *m_calculationButtonGroup;
 	};
 }
-
 #endif

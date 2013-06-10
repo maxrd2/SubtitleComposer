@@ -21,7 +21,7 @@
  ***************************************************************************/
 
 #ifdef HAVE_CONFIG_H
-	#include <config.h>
+#include <config.h>
 #endif
 
 #include "actiondialog.h"
@@ -31,31 +31,24 @@ class QCheckBox;
 class TimeEdit;
 class KPushButton;
 
-namespace SubtitleComposer
-{
-	class SplitSubtitleDialog : public ActionDialog
-	{
-		Q_OBJECT
+namespace SubtitleComposer {
+	class SplitSubtitleDialog:public ActionDialog {
+	Q_OBJECT public:
 
-		public:
+		SplitSubtitleDialog(QWidget * parent = 0);
 
-			SplitSubtitleDialog( QWidget* parent=0 );
+		Time splitTime() const;
+		bool shiftNewSubtitle() const;
 
-			Time splitTime() const;
-			bool shiftNewSubtitle() const;
+		virtual void show();
 
-			virtual void show();
+		private slots:void setSplitTimeFromVideo();
 
-		private slots:
+	private:
 
-			void setSplitTimeFromVideo();
-
-		private:
-
-			TimeEdit* m_splitTimeEdit;
-			KPushButton* m_splitTimeFromVideoButton;
-			QCheckBox* m_shiftNewSubtitleCheckBox;
+		TimeEdit * m_splitTimeEdit;
+		KPushButton *m_splitTimeFromVideoButton;
+		QCheckBox *m_shiftNewSubtitleCheckBox;
 	};
 }
-
 #endif

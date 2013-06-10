@@ -21,51 +21,42 @@
  ***************************************************************************/
 
 #ifdef HAVE_CONFIG_H
-	#include <config.h>
+#include <config.h>
 #endif
 
 #include <QtCore/QObject>
 #include <QtCore/QList>
 
-namespace SubtitleComposer
-{
-	namespace Scripting
-	{
-		class List : public QObject
-		{
-			Q_OBJECT
+namespace SubtitleComposer {
+	namespace Scripting {
+		class List:public QObject {
+		Q_OBJECT public:
 
-			public:
+			List(const char *contentClass, QObject * parent);
+			List(const QList < QObject * >&backend, const char *contentClass, QObject * parent);
 
-				List( const char* contentClass, QObject* parent );
-				List( const QList<QObject*>& backend, const char* contentClass, QObject* parent );
+			public slots:bool isEmpty() const;
 
-			public slots:
+			int length() const;
+			int size() const;
+			int count() const;
 
-				bool isEmpty() const;
+			QObject *at(int index) const;
 
-				int length() const;
-				int size() const;
-				int count() const;
+			void insert(int index, QObject * object);
+			void append(QObject * object);
+			void prepend(QObject * object);
 
-				QObject* at( int index ) const;
+			void removeFirst();
+			void removeLast();
+			void removeAt(int index);
 
-				void insert( int index, QObject* object );
-				void append( QObject* object );
-				void prepend( QObject* object );
+			void clear();
 
-				void removeFirst();
-				void removeLast();
-				void removeAt( int index );
+		private:
 
-				void clear();
-
-			private:
-
-				const char* m_contentClass;
-				QList<QObject*> m_backend;
+			const char *m_contentClass;
+			QList < QObject * >m_backend;
 		};
-	}
-}
-
+}}
 #endif

@@ -21,7 +21,7 @@
  ***************************************************************************/
 
 #ifdef HAVE_CONFIG_H
-	#include <config.h>
+#include <config.h>
 #endif
 
 #include "../waveformat.h"
@@ -31,41 +31,38 @@
 
 #include <gst/gst.h>
 
-namespace SubtitleComposer
-{
-	class GStreamer
-	{
+namespace SubtitleComposer {
+	class GStreamer {
 		friend class GStreamerPlayerBackend;
 		friend class GStreamerDecoderBackend;
 
-		private:
+	private:
 
-			static bool init();
-			static void deinit();
+		static bool init();
+		static void deinit();
 
-			static GstElement* createElement( const QString& types, const char* name );
-			static GstElement* createElement( const QStringList& types, const char* name );
+		static GstElement *createElement(const QString & types, const char *name);
+		static GstElement *createElement(const QStringList & types, const char *name);
 
-			static GstStateChangeReturn setElementState( GstElement* element, int state, unsigned timeout=0 );
+		static GstStateChangeReturn setElementState(GstElement * element, int state, unsigned timeout = 0);
 
-			static WaveFormat formatFromAudioCaps( GstCaps* caps );
-			static GstCaps* audioCapsFromFormat( const WaveFormat& format, bool addSampleRate=true );
+		static WaveFormat formatFromAudioCaps(GstCaps * caps);
+		static GstCaps *audioCapsFromFormat(const WaveFormat & format, bool addSampleRate = true);
 
-			static GstPadLinkReturn link( GstBin* bin, const char* srcElement, const char* dstElement, GstCaps* filter=0 );
-			static GstPadLinkReturn link( GstBin* bin, const char* srcElement, const char* srcPad, const char* dstElement, const char* dstPad, GstCaps* filter=0 );
+		static GstPadLinkReturn link(GstBin * bin, const char *srcElement, const char *dstElement, GstCaps * filter = 0);
+		static GstPadLinkReturn link(GstBin * bin, const char *srcElement, const char *srcPad, const char *dstElement, const char *dstPad, GstCaps * filter = 0);
 
-			static void freePipeline( GstPipeline** pipeline, GstBus** bus );
+		static void freePipeline(GstPipeline ** pipeline, GstBus ** bus);
 
-			static void inspectTags( GstTagList* tags, const QString& prefix=QString() );
-			static void inspectPad( GstPad* pad, const QString& prefix=QString() );
-			static void inspectCaps( GstCaps* caps, const QString& prefix=QString() );
-			static void inspectMessage( GstMessage* message );
-			static void inspectObject( GObject* object );
+		static void inspectTags(GstTagList * tags, const QString & prefix = QString());
+		static void inspectPad(GstPad * pad, const QString & prefix = QString());
+		static void inspectCaps(GstCaps * caps, const QString & prefix = QString());
+		static void inspectMessage(GstMessage * message);
+		static void inspectObject(GObject * object);
 
-		private:
+	private:
 
-			static int s_inited;
+		static int s_inited;
 	};
 }
-
 #endif

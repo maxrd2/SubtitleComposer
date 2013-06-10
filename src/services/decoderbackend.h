@@ -21,7 +21,7 @@
  ***************************************************************************/
 
 #ifdef HAVE_CONFIG_H
-	#include <config.h>
+#include <config.h>
 #endif
 
 #include "servicebackend.h"
@@ -32,21 +32,17 @@
 #include <QtCore/QString>
 #include <QtGui/QWidget>
 
-namespace SubtitleComposer
-{
-	class DecoderBackend : public ServiceBackend
-	{
-		Q_OBJECT
+namespace SubtitleComposer {
+	class DecoderBackend:public ServiceBackend {
+		Q_OBJECT friend class Decoder;
 
-		friend class Decoder;
+	public:
 
-		public:
+		/// ownership of the config object is transferred to this object
+		DecoderBackend(Decoder * decoder, const QString & name, AppConfigGroup * config);
+		virtual ~ DecoderBackend();
 
-			/// ownership of the config object is transferred to this object
-			DecoderBackend( Decoder* decoder, const QString& name, AppConfigGroup* config );
-			virtual ~DecoderBackend();
-
-		protected:
+	protected:
 
 			/**
 			Return false if there is an error and the opening of the file must be aborted,
@@ -56,58 +52,51 @@ namespace SubtitleComposer
 			content must be set to true.
 			The function doesn't need to block until playback is actually started
 			*/
-			virtual bool openFile( const QString& filePath ) = 0;
+		virtual bool openFile(const QString & filePath) = 0;
 
 			/**
 			Cleanup any internal structures associated with the opened file. This function
 			is called with the Decoder already stopped.
 			videoWidget() might be NULL when this function is called.
 			*/
-			virtual void closeFile() = 0;
+		virtual void closeFile() = 0;
 
 			/**
 			Return false if there is an error and playback must be aborted;	otherwise return
 			true (all internal cleanup must be done before returning).
 			*/
-			virtual bool decode( int audioStream, const QString& outputPath, const WaveFormat& outputFormat ) = 0;
+		virtual bool decode(int audioStream, const QString & outputPath, const WaveFormat & outputFormat) = 0;
 
 			/**
 			Return false if there is an error and playback must be aborted;	otherwise return
 			true (all internal cleanup must be done before returning).
 			*/
-			virtual bool stop() = 0;
+		virtual bool stop() = 0;
 
-			inline Decoder* decoder() const { return static_cast<Decoder*>( service() ); }
+		inline Decoder *decoder() const {
+			return static_cast < Decoder * >(service());
+		}
+		inline void setDecoderPosition(double position)	// value in seconds
+		{
+			decoder()->setPosition(position);
+		} inline void setDecoderLength(double length)	// value in seconds
+		{
+			decoder()->setLength(length);
+		} inline void setDecoderState(Decoder::State state) {
+			decoder()->setState(state);
+		}
 
-			inline void setDecoderPosition( double position ) // value in seconds
-			{
-				decoder()->setPosition( position );
-			}
+		inline void setDecoderErrorState(const QString & errorMessage = QString()) {
+			decoder()->setErrorState(errorMessage);
+		}
 
-			inline void setDecoderLength( double length ) // value in seconds
-			{
-				decoder()->setLength( length );
-			}
+		inline void appendDecoderAudioStream(const QString & name, const WaveFormat & format) {
+			decoder()->appendAudioStream(name, format);
+		}
 
-			inline void setDecoderState( Decoder::State state )
-			{
-				decoder()->setState( state );
-			}
-
-			inline void setDecoderErrorState( const QString& errorMessage=QString() )
-			{
-				decoder()->setErrorState( errorMessage );
-			}
-
-			inline void appendDecoderAudioStream( const QString& name, const WaveFormat& format )
-			{
-				decoder()->appendAudioStream( name, format );
-			}
-
-			inline void insertDecoderAudioStream( int index, const QString& name, const WaveFormat& format )
-			{
-				decoder()->insertAudioStream( index, name, format );
-			}
+		inline void insertDecoderAudioStream(int index, const QString & name, const WaveFormat & format) {
+			decoder()->insertAudioStream(index, name, format);
+		}
 	};
 }
 

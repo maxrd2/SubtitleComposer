@@ -21,7 +21,7 @@
  ***************************************************************************/
 
 #ifdef HAVE_CONFIG_H
-	#include <config.h>
+#include <config.h>
 #endif
 
 #include "generalconfig.h"
@@ -31,32 +31,30 @@ class KComboBox;
 class KIntNumInput;
 class QCheckBox;
 
-namespace SubtitleComposer
-{
-	class GeneralConfigWidget : public AppConfigGroupWidget
-	{
-		Q_OBJECT
+namespace SubtitleComposer {
+	class GeneralConfigWidget:public AppConfigGroupWidget {
+		Q_OBJECT friend class ConfigDialog;
 
-		friend class ConfigDialog;
+	public:
 
-		public:
+		virtual ~ GeneralConfigWidget();
 
-			virtual ~GeneralConfigWidget();
+		virtual void setControlsFromConfig();
+		virtual void setConfigFromControls();
 
-			virtual void setControlsFromConfig();
-			virtual void setConfigFromControls();
+	private:
 
-		private:
+		explicit GeneralConfigWidget(QWidget * parent = 0);
 
-			explicit GeneralConfigWidget( QWidget* parent=0 );
+		GeneralConfig *config() {
+			return static_cast < GeneralConfig * >(m_config);
+		};
 
-			GeneralConfig* config() { return static_cast<GeneralConfig*>( m_config ); };
-
-			KComboBox* m_defaultEncodingComboBox;
-			KIntNumInput* m_relativeSeekPositionSpinBox;
-			QCheckBox* m_autoLoadVideoCheckBox;
-			KIntNumInput* m_shiftMsecsSpinBox;
-			KIntNumInput* m_videoPosCompMsecsSpinBox;
+		KComboBox *m_defaultEncodingComboBox;
+		KIntNumInput *m_relativeSeekPositionSpinBox;
+		QCheckBox *m_autoLoadVideoCheckBox;
+		KIntNumInput *m_shiftMsecsSpinBox;
+		KIntNumInput *m_videoPosCompMsecsSpinBox;
 	};
 }
 

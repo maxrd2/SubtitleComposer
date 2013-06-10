@@ -21,40 +21,31 @@
  ***************************************************************************/
 
 #ifdef HAVE_CONFIG_H
-	#include <config.h>
+#include <config.h>
 #endif
 
 #include <QtCore/QObject>
 
 #include "../../core/subtitle.h"
 
-namespace SubtitleComposer
-{
-	namespace Scripting
-	{
-		class SubtitleModule : public QObject
-		{
-			Q_OBJECT
+namespace SubtitleComposer {
+	namespace Scripting {
+		class SubtitleModule:public QObject {
+			Q_OBJECT Q_ENUMS(TextTarget)
 
-			Q_ENUMS( TextTarget )
+		public:
 
-			public:
+			typedef enum {
+				Primary = SubtitleComposer::Subtitle::Primary,
+				Secondary = SubtitleComposer::Subtitle::Secondary,
+				Both = SubtitleComposer::Subtitle::Both,
+			} TextTarget;
 
-				typedef enum {
-					Primary =		SubtitleComposer::Subtitle::Primary,
-					Secondary =		SubtitleComposer::Subtitle::Secondary,
-					Both =			SubtitleComposer::Subtitle::Both,
-				} TextTarget;
+			SubtitleModule(QObject * parent = 0);
 
-				SubtitleModule( QObject* parent=0 );
+			public slots:QObject * instance();
 
-			public slots:
-
-				QObject* instance();
-
-				bool translationMode();
+			bool translationMode();
 		};
-	}
-}
-
+}}
 #endif

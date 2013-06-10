@@ -21,7 +21,7 @@
  ***************************************************************************/
 
 #ifdef HAVE_CONFIG_H
-	#include <config.h>
+#include <config.h>
 #endif
 
 #include <KUrl>
@@ -30,64 +30,56 @@
 
 /// Taken from KDELibs and rewritten almost entirely because the
 /// KDE implementations is buggy and limited for our needs.
-class KRecentFilesActionExt : public KSelectAction
-{
-	Q_OBJECT
-	Q_PROPERTY( int maxItems READ maxItems WRITE setMaxItems )
+class KRecentFilesActionExt:public KSelectAction {
+	Q_OBJECT Q_PROPERTY(int maxItems READ maxItems WRITE setMaxItems)
 
-	public:
+  public:
 
-		KRecentFilesActionExt( QObject* parent=0 );
-		virtual ~KRecentFilesActionExt();
+	KRecentFilesActionExt(QObject * parent = 0);
+	virtual ~ KRecentFilesActionExt();
 
-		int maxItems() const;
+	int maxItems() const;
 
-		bool isEmpty() const;
-		int count() const;
+	bool isEmpty() const;
+	int count() const;
 
-		KUrl::List urls() const;
+	KUrl::List urls() const;
 
-		QString encodingForUrl( const KUrl& url ) const;
+	QString encodingForUrl(const KUrl & url) const;
 
-		virtual QAction* removeAction( QAction* action );
+	virtual QAction *removeAction(QAction * action);
 
-	public slots:
+	public slots:void setMaxItems(int maxItems);
 
-		void setMaxItems( int maxItems );
+	void setUrls(const KUrl::List & urls);
 
-		void setUrls( const KUrl::List& urls );
+	void addUrl(const KUrl & url);
+	void removeUrl(const KUrl & url);
+	void clearUrls();
 
-		void addUrl( const KUrl& url );
-		void removeUrl( const KUrl& url );
-		void clearUrls();
+	void loadEntries(const KConfigGroup & group);
+	void saveEntries(const KConfigGroup & group);
 
-		void loadEntries( const KConfigGroup& group );
-		void saveEntries( const KConfigGroup& group );
+	signals:void urlSelected(const KUrl & url);
 
-	signals:
+  protected:
 
-		void urlSelected( const KUrl& url );
+	void setUrls(const KUrl::List & urls, bool ignoreCollisions);
 
-	protected:
+	virtual QAction *actionForUrl(const KUrl & url) const;
 
-		void setUrls( const KUrl::List& urls, bool ignoreCollisions );
+	protected slots:void onActionTriggered(QAction * action);
+	void onActionChanged();
 
-		virtual QAction* actionForUrl( const KUrl& url ) const;
+  protected:
 
-	protected slots:
+	int m_maxItems;
 
-		void onActionTriggered( QAction* action );
-		void onActionChanged();
+	QMap < QAction *, KUrl > m_urls;
+	QMap < KUrl, QAction * >m_actions;
 
-	protected:
-
-		int m_maxItems;
-
-		QMap<QAction*,KUrl> m_urls;
-		QMap<KUrl,QAction*> m_actions;
-
-		QAction* m_separatorAction;
-		QAction* m_clearHistoryAction;
+	QAction *m_separatorAction;
+	QAction *m_clearHistoryAction;
 };
 
 #endif

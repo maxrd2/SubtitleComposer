@@ -21,7 +21,7 @@
  ***************************************************************************/
 
 #ifdef HAVE_CONFIG_H
-	#include <config.h>
+#include <config.h>
 #endif
 
 #include "gstreamerconfig.h"
@@ -35,57 +35,51 @@
 
 class QTimer;
 
-namespace SubtitleComposer
-{
-	class GStreamerDecoderBackend : public DecoderBackend
-	{
-		Q_OBJECT
+namespace SubtitleComposer {
+	class GStreamerDecoderBackend:public DecoderBackend {
+	Q_OBJECT public:
 
-		public:
+		GStreamerDecoderBackend(Decoder * decoder);
+		virtual ~ GStreamerDecoderBackend();
 
-			GStreamerDecoderBackend( Decoder* decoder );
-			virtual ~GStreamerDecoderBackend();
+		const GStreamerConfig *config() {
+			return static_cast < const GStreamerConfig *const >(DecoderBackend::config());
+		} virtual AppConfigGroupWidget *newAppConfigGroupWidget(QWidget * parent);
 
-			const GStreamerConfig* config() { return static_cast<const GStreamerConfig* const>( DecoderBackend::config() ); }
+	protected:
 
-			virtual AppConfigGroupWidget* newAppConfigGroupWidget( QWidget* parent );
+		virtual QWidget * initialize(QWidget * videoWidgetParent);
+		virtual void finalize();
 
-		protected:
+		virtual bool openFile(const QString & filePath);
+		virtual void closeFile();
 
-			virtual QWidget* initialize( QWidget* videoWidgetParent );
-			virtual void finalize();
+		virtual bool decode(int audioStream, const QString & outputPath, const WaveFormat & outputFormat);
+		virtual bool stop();
 
-			virtual bool openFile( const QString& filePath );
-			virtual void closeFile();
+	private:
 
-			virtual bool decode( int audioStream, const QString& outputPath, const WaveFormat& outputFormat );
-			virtual bool stop();
+		static void dataHandoff(GstElement * fakesrc, GstBuffer * buffer, GstPad * pad, gpointer userData);
+		static void decodebinPadAdded(GstElement * decodebin, GstPad * pad, gpointer userData);
+		static void decodebinNoMorePads(GstElement * decodebin, gpointer userData);
 
-		private:
+		private slots:void onInfoTimerTimeout();
+		void onDecodingTimerTimeout();
 
-			static void dataHandoff( GstElement* fakesrc, GstBuffer* buffer, GstPad* pad, gpointer userData );
-			static void decodebinPadAdded( GstElement* decodebin, GstPad* pad, gpointer userData );
-			static void decodebinNoMorePads( GstElement* decodebin, gpointer userData );
+	private:
 
-		private slots:
+		GstPipeline * m_infoPipeline;
+		GstBus *m_infoBus;
+		QTimer *m_infoTimer;
 
-			void onInfoTimerTimeout();
-			void onDecodingTimerTimeout();
+		GstPipeline *m_decodingPipeline;
+		GstBus *m_decodingBus;
+		QTimer *m_decodingTimer;
 
-		private:
-
-			GstPipeline* m_infoPipeline;
-			GstBus* m_infoBus;
-			QTimer* m_infoTimer;
-
-			GstPipeline* m_decodingPipeline;
-			GstBus* m_decodingBus;
-			QTimer* m_decodingTimer;
-
-			QString m_decodingStreamName;
-			WaveFormat m_decodingStreamFormat;
-			bool m_lengthInformed;
-			WaveWriter m_waveWriter;
+		QString m_decodingStreamName;
+		WaveFormat m_decodingStreamFormat;
+		bool m_lengthInformed;
+		WaveWriter m_waveWriter;
 	};
 }
 

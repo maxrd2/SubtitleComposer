@@ -21,7 +21,7 @@
  ***************************************************************************/
 
 #ifdef HAVE_CONFIG_H
-	#include <config.h>
+#include <config.h>
 #endif
 
 #include "mainwindow.h"
@@ -48,8 +48,7 @@ class KToggleAction;
 class KRecentFilesActionExt;
 class KCodecActionExt;
 
-namespace SubtitleComposer
-{
+namespace SubtitleComposer {
 	class Player;
 	class Decoder;
 
@@ -70,279 +69,280 @@ namespace SubtitleComposer
 
 	class ScriptsManager;
 
-	class Application : public KApplication
-	{
-		Q_OBJECT
+	class Application:public KApplication {
+	Q_OBJECT public:
 
-		public:
+		Application();
+		virtual ~ Application();
 
-			Application();
-			virtual ~Application();
+		static Application *instance();
 
-			static Application* instance();
+		Subtitle *subtitle() const;
 
-			Subtitle* subtitle() const;
+		MainWindow *mainWindow() const;
+		LinesWidget *linesWidget() const;
 
-			MainWindow* mainWindow() const;
-			LinesWidget* linesWidget() const;
+		bool translationMode() const;
+		bool showingLinesContextMenu() const;
 
-			bool translationMode() const;
-			bool showingLinesContextMenu() const;
+		void loadConfig();
+		void saveConfig();
 
-			void loadConfig();
-			void saveConfig();
+		GeneralConfig *generalConfig() {
+			return static_cast < GeneralConfig * >(m_config.group("General"));
+		}
+		SpellingConfig *spellingConfig() {
+			return static_cast < SpellingConfig * >(m_config.group("Spelling"));
+		}
+		ErrorsConfig *errorsConfig() {
+			return static_cast < ErrorsConfig * >(m_config.group("Errors"));
+		}
+		PlayerConfig *playerConfig() {
+			return static_cast < PlayerConfig * >(m_config.group("Player"));
+		}
 
-			GeneralConfig* generalConfig() { return static_cast<GeneralConfig*>( m_config.group( "General" ) ); }
-			SpellingConfig* spellingConfig() { return static_cast<SpellingConfig*>( m_config.group( "Spelling" ) ); }
-			ErrorsConfig* errorsConfig() { return static_cast<ErrorsConfig*>( m_config.group( "Errors" ) ); }
-			PlayerConfig* playerConfig() { return static_cast<PlayerConfig*>( m_config.group( "Player" ) ); }
+		QAction *action(const char *actionName);
+		// returns true if an action was triggered
+		bool triggerAction(const QKeySequence & keySequence);
 
-			QAction* action( const char* actionName );
-			// returns true if an action was triggered
-			bool triggerAction( const QKeySequence& keySequence );
+		const QStringList & availableEncodingNames() const;
 
-			const QStringList& availableEncodingNames() const;
-
-			const KUrl& lastSubtitleDirectory() const;
+		const KUrl & lastSubtitleDirectory() const;
 
 		public slots:
-
 			/// BEGIN ACTIONS HANDLERS
+		void undo();
+		void redo();
+
+		void newSubtitle();
+		void openSubtitle();
+		void reopenSubtitleWithCodec(QTextCodec * codec);
+		void reopenSubtitleWithDetectScript(KEncodingDetector::AutoDetectScript autodetectScript);
+		void reopenSubtitleWithCodecOrDetectScript(QTextCodec * codec, KEncodingDetector::AutoDetectScript autodetectScript);
+		void openSubtitle(const KUrl & url, bool warnClashingUrls = true);
+		bool saveSubtitle();
+		bool saveSubtitleAs();
+		bool closeSubtitle();
+
+		void newSubtitleTr();
+		void openSubtitleTr();
+		void reopenSubtitleTrWithCodec(QTextCodec * codec);
+		void reopenSubtitleTrWithDetectScript(KEncodingDetector::AutoDetectScript autodetectScript);
+		void reopenSubtitleTrWithCodecOrDetectScript(QTextCodec * codec, KEncodingDetector::AutoDetectScript autodetectScript);
+
+		void openSubtitleTr(const KUrl & url, bool warnClashingUrls = true);
+		bool saveSubtitleTr();
+		bool saveSubtitleTrAs();
+		bool closeSubtitleTr();
+
+		void joinSubtitles();
+		void splitSubtitle();
+
+		void insertBeforeCurrentLine();
+		void insertAfterCurrentLine();
+		void removeSelectedLines();
+
+		void joinSelectedLines();
+		void splitSelectedLines();
+
+		void selectAllLines();
+		void gotoLine();
 
-			void undo();
-			void redo();
-
-			void newSubtitle();
-			void openSubtitle();
-			void reopenSubtitleWithCodec( QTextCodec* codec );
-			void reopenSubtitleWithDetectScript( KEncodingDetector::AutoDetectScript autodetectScript );
-			void reopenSubtitleWithCodecOrDetectScript( QTextCodec* codec, KEncodingDetector::AutoDetectScript autodetectScript );
-			void openSubtitle( const KUrl& url, bool warnClashingUrls=true );
-			bool saveSubtitle();
-			bool saveSubtitleAs();
-			bool closeSubtitle();
-
-			void newSubtitleTr();
-			void openSubtitleTr();
-			void reopenSubtitleTrWithCodec( QTextCodec* codec );
-			void reopenSubtitleTrWithDetectScript( KEncodingDetector::AutoDetectScript autodetectScript );
-			void reopenSubtitleTrWithCodecOrDetectScript( QTextCodec* codec, KEncodingDetector::AutoDetectScript autodetectScript );
-
-			void openSubtitleTr( const KUrl& url, bool warnClashingUrls=true );
-			bool saveSubtitleTr();
-			bool saveSubtitleTrAs();
-			bool closeSubtitleTr();
-
-			void joinSubtitles();
-			void splitSubtitle();
-
-			void insertBeforeCurrentLine();
-			void insertAfterCurrentLine();
-			void removeSelectedLines();
+		void find();
+		void findNext();
+		void findPrevious();
+		void replace();
 
-			void joinSelectedLines();
-			void splitSelectedLines();
+		void spellCheck();
 
-			void selectAllLines();
-			void gotoLine();
+		void findError();
+		void findNextError();
+		void findPreviousError();
 
-			void find();
-			void findNext();
-			void findPrevious();
-			void replace();
+		void retrocedeCurrentLine();
+		void advanceCurrentLine();
 
-			void spellCheck();
+		void checkErrors();
+		void recheckAllErrors();
+		void recheckSelectedErrors();
+		void clearErrors();
+		void clearSelectedErrors(bool includeMarks = false);
+		void clearSelectedMarks();
 
-			void findError();
-			void findNextError();
-			void findPreviousError();
+		void showErrors();
+		void showErrorsConfig();
 
-			void retrocedeCurrentLine();
-			void advanceCurrentLine();
+		void toggleSelectedLinesMark();
+		void toggleSelectedLinesBold();
+		void toggleSelectedLinesItalic();
+		void toggleSelectedLinesUnderline();
+		void toggleSelectedLinesStrikeThrough();
 
-			void checkErrors();
-			void recheckAllErrors();
-			void recheckSelectedErrors();
-			void clearErrors();
-			void clearSelectedErrors( bool includeMarks=false );
-			void clearSelectedMarks();
+		void shiftLines();
+		void shiftSelectedLinesForwards();
+		void shiftSelectedLinesBackwards();
+		void adjustLines();
 
-			void showErrors();
-			void showErrorsConfig();
+		void sortLines();
 
-			void toggleSelectedLinesMark();
-			void toggleSelectedLinesBold();
-			void toggleSelectedLinesItalic();
-			void toggleSelectedLinesUnderline();
-			void toggleSelectedLinesStrikeThrough();
+		void changeFrameRate();
+		void enforceDurationLimits();
+		void setAutoDurations();
+		void maximizeDurations();
+		void fixOverlappingLines();
+		void syncWithSubtitle();
 
-			void shiftLines();
-			void shiftSelectedLinesForwards();
-			void shiftSelectedLinesBackwards();
-			void adjustLines();
+		void breakLines();
+		void unbreakTexts();
+		void simplifySpaces();
+		void changeCase();
+		void fixPunctuation();
+		void translate();
 
-			void sortLines();
+		void openVideo();
+		void openVideo(const KUrl & url);
 
-			void changeFrameRate();
-			void enforceDurationLimits();
-			void setAutoDurations();
-			void maximizeDurations();
-			void fixOverlappingLines();
-			void syncWithSubtitle();
+		void toggleFullScreenMode();
+		void setFullScreenMode(bool enabled);
 
-			void breakLines();
-			void unbreakTexts();
-			void simplifySpaces();
-			void changeCase();
-			void fixPunctuation();
-			void translate();
+		void seekBackwards();
+		void seekForwards();
+		void seekToPrevLine();
+		void seekToNextLine();
 
-			void openVideo();
-			void openVideo( const KUrl& url );
+		void setCurrentLineShowTimeFromVideo();
+		void setCurrentLineHideTimeFromVideo();
 
-			void toggleFullScreenMode();
-			void setFullScreenMode( bool enabled );
+		void shiftToVideoPosition();
+		void adjustToVideoPositionAnchorLast();
+		void adjustToVideoPositionAnchorFirst();
 
-			void seekBackwards();
-			void seekForwards();
-			void seekToPrevLine();
-			void seekToNextLine();
+		void extractVideoAudio();
 
-			void setCurrentLineShowTimeFromVideo();
-			void setCurrentLineHideTimeFromVideo();
+		void openAudioLevels();
+		void openAudioLevels(const KUrl & url);
+		void saveAudioLevelsAs();
+		void closeAudioLevels();
 
-			void shiftToVideoPosition();
-			void adjustToVideoPositionAnchorLast();
-			void adjustToVideoPositionAnchorFirst();
+		void increaseAudioLevelsVZoom();
+		void decreaseAudioLevelsVZoom();
+		void increaseAudioLevelsHZoom();
+		void decreaseAudioLevelsHZoom();
 
-			void extractVideoAudio();
+		/// END ACTIONS HANDLERS
 
-			void openAudioLevels();
-			void openAudioLevels( const KUrl& url );
-			void saveAudioLevelsAs();
-			void closeAudioLevels();
+	signals:
 
-			void increaseAudioLevelsVZoom();
-			void decreaseAudioLevelsVZoom();
-			void increaseAudioLevelsHZoom();
-			void decreaseAudioLevelsHZoom();
+		void subtitleOpened(Subtitle * subtitle);
+		void subtitleClosed();
 
-			/// END ACTIONS HANDLERS
+		void translationModeChanged(bool value);
+		void fullScreenModeChanged(bool value);
 
-		signals:
+	private:
 
-			void subtitleOpened( Subtitle* subtitle );
-			void subtitleClosed();
+		QTextCodec * codecForUrl(const KUrl & url, bool useRecentFiles, bool useDefault);
+		QTextCodec *codecForEncoding(const QString & encoding, bool useDefault);
 
-			void translationModeChanged( bool value );
-			void fullScreenModeChanged( bool value );
+		bool acceptClashingUrls(const KUrl & subtitleUrl, const KUrl & subtitleTrUrl);
 
-		private:
+		KUrl saveSplitSubtitle(const Subtitle & subtitle, const KUrl & srcUrl, QString encoding, QString format, bool primary);
 
-			QTextCodec* codecForUrl( const KUrl& url, bool useRecentFiles, bool useDefault );
-			QTextCodec* codecForEncoding( const QString& encoding, bool useDefault );
+		void setupActions();
 
-			bool acceptClashingUrls( const KUrl& subtitleUrl, const KUrl& subtitleTrUrl );
+		Time videoPosition(bool compensate = false);
 
-			KUrl saveSplitSubtitle( const Subtitle& subtitle, const KUrl& srcUrl, QString encoding, QString format, bool primary );
+		static const QString & buildMediaFilesFilter();
+		static const QString & buildLevelsFilesFilter();
 
-			void setupActions();
+		bool applyTranslation(RangeList ranges, bool primary, int inputLanguage, int outputLanguage, int textTargets);
 
-			Time videoPosition( bool compensate=false );
+		private slots:void updateTitle();
+		void updateUndoRedoToolTips();
 
-			static const QString& buildMediaFilesFilter();
-			static const QString& buildLevelsFilesFilter();
+		void onLineDoubleClicked(SubtitleLine * line);
+		void onHighlightLine(SubtitleLine * line, bool primary = true, int firstIndex = -1, int lastIndex = -1);
+		void onPlayingLineChanged(SubtitleLine * line);
+		void onLinkCurrentLineToVideoToggled(bool value);
 
-			bool applyTranslation( RangeList ranges, bool primary, int inputLanguage, int outputLanguage, int textTargets );
+		void onPlayerFileOpened(const QString & filePath);
+		void onPlayerPlaying();
+		void onPlayerPaused();
+		void onPlayerStopped();
+		void onPlayerAudioStreamsChanged(const QStringList & audioStreams);
+		void onPlayerActiveAudioStreamChanged(int audioStream);
+		void onPlayerMuteChanged(bool muted);
+		void onPlayerOptionChanged(const QString & option, const QString & value);
 
-		private slots:
+		void onDecodingError(const QString & errorMessage);
 
-			void updateTitle();
-			void updateUndoRedoToolTips();
+		void onGeneralOptionChanged(const QString & option, const QString & value);
 
-			void onLineDoubleClicked( SubtitleLine* line );
-			void onHighlightLine( SubtitleLine* line, bool primary=true, int firstIndex=-1, int lastIndex=-1 );
-			void onPlayingLineChanged( SubtitleLine* line );
-			void onLinkCurrentLineToVideoToggled( bool value );
+		void setActiveSubtitleStream(int subtitleStream);
 
-			void onPlayerFileOpened( const QString& filePath );
-			void onPlayerPlaying();
-			void onPlayerPaused();
-			void onPlayerStopped();
-			void onPlayerAudioStreamsChanged( const QStringList& audioStreams );
-			void onPlayerActiveAudioStreamChanged( int audioStream );
-			void onPlayerMuteChanged( bool muted );
-			void onPlayerOptionChanged( const QString& option, const QString& value );
+		void updateConfigFromDialog();
 
-			void onDecodingError( const QString& errorMessage );
+	private:
 
-			void onGeneralOptionChanged( const QString& option, const QString& value );
+		void toggleFullScreen(bool on);
 
-			void setActiveSubtitleStream( int subtitleStream );
+		AppConfig m_config;
 
-			void updateConfigFromDialog();
+		Subtitle *m_subtitle;
+		KUrl m_subtitleUrl;
+		QString m_subtitleFileName;
+		QString m_subtitleEncoding;
+		Format::NewLine m_subtitleEOL;
+		QString m_subtitleFormat;
 
-		private:
+		bool m_translationMode;
+		KUrl m_subtitleTrUrl;
+		QString m_subtitleTrFileName;
+		QString m_subtitleTrEncoding;
+		Format::NewLine m_subtitleTrEOL;
+		QString m_subtitleTrFormat;
 
-			void toggleFullScreen( bool on );
+		Player *m_player;
+		Decoder *m_decoder;
 
-			AppConfig m_config;
+		SubtitleLine *m_lastFoundLine;
 
-			Subtitle* m_subtitle;
-			KUrl m_subtitleUrl;
-			QString m_subtitleFileName;
-			QString m_subtitleEncoding;
-			Format::NewLine m_subtitleEOL;
-			QString m_subtitleFormat;
+		MainWindow *m_mainWindow;
+		PlayerWidget *m_playerWidget;
+		LinesWidget *m_linesWidget;
+		CurrentLineWidget *m_curLineWidget;
+		StatusBar2 *m_statusBar;
 
-			bool m_translationMode;
-			KUrl m_subtitleTrUrl;
-			QString m_subtitleTrFileName;
-			QString m_subtitleTrEncoding;
-			Format::NewLine m_subtitleTrEOL;
-			QString m_subtitleTrFormat;
+		ConfigDialog *m_configDialog;
+		ErrorsDialog *m_errorsDialog;
 
-			Player* m_player;
-			Decoder* m_decoder;
+		ErrorsWidget *m_errorsWidget;
 
-			SubtitleLine* m_lastFoundLine;
+		KUrl m_lastSubtitleUrl;
+		KRecentFilesActionExt *m_recentSubtitlesAction;
+		KRecentFilesActionExt *m_recentSubtitlesTrAction;
 
-			MainWindow* m_mainWindow;
-			PlayerWidget* m_playerWidget;
-			LinesWidget* m_linesWidget;
-			CurrentLineWidget* m_curLineWidget;
-			StatusBar2* m_statusBar;
+		KCodecActionExt *m_reopenSubtitleAsAction;
+		KCodecActionExt *m_reopenSubtitleTrAsAction;
 
-			ConfigDialog* m_configDialog;
-			ErrorsDialog* m_errorsDialog;
+		Finder *m_finder;
+		Replacer *m_replacer;
+		ErrorFinder *m_errorFinder;
+		Speller *m_speller;
 
-			ErrorsWidget* m_errorsWidget;
+		ErrorTracker *m_errorTracker;
 
-			KUrl m_lastSubtitleUrl;
-			KRecentFilesActionExt* m_recentSubtitlesAction;
-			KRecentFilesActionExt* m_recentSubtitlesTrAction;
+		ScriptsManager *m_scriptsManager;
 
-			KCodecActionExt* m_reopenSubtitleAsAction;
-			KCodecActionExt* m_reopenSubtitleTrAsAction;
+		KUrl m_lastVideoUrl;
+		bool m_linkCurrentLineToPosition;
+		KRecentFilesActionExt *m_recentVideosAction;
 
-			Finder* m_finder;
-			Replacer* m_replacer;
-			ErrorFinder* m_errorFinder;
-			Speller* m_speller;
-
-			ErrorTracker* m_errorTracker;
-
-			ScriptsManager* m_scriptsManager;
-
-			KUrl m_lastVideoUrl;
-			bool m_linkCurrentLineToPosition;
-			KRecentFilesActionExt* m_recentVideosAction;
-
-			KUrl m_lastAudioLevelsUrl;
-			KRecentFilesActionExt* m_recentAudioLevelsAction;
+		KUrl m_lastAudioLevelsUrl;
+		KRecentFilesActionExt *m_recentAudioLevelsAction;
 	};
 
-	Application* app();
+	Application *app();
 }
 
 #endif

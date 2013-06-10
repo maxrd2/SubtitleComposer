@@ -21,7 +21,7 @@
  ***************************************************************************/
 
 #ifdef HAVE_CONFIG_H
-	#include <config.h>
+#include <config.h>
 #endif
 
 #include "selectablesubtitledialog.h"
@@ -31,30 +31,23 @@ class QCheckBox;
 class TimeEdit;
 class KPushButton;
 
-namespace SubtitleComposer
-{
-	class JoinSubtitlesDialog : public SelectableSubtitleDialog
-	{
-		Q_OBJECT
+namespace SubtitleComposer {
+	class JoinSubtitlesDialog:public SelectableSubtitleDialog {
+	Q_OBJECT public:
 
-		public:
+		explicit JoinSubtitlesDialog(QWidget * parent = 0);
 
-			explicit JoinSubtitlesDialog( QWidget* parent=0 );
+		Time shiftTime() const;
 
-			Time shiftTime() const;
+		virtual void show();
 
-			virtual void show();
+		private slots:void setShiftTimeFromVideo();
 
-		private slots:
+	private:
 
-			void setShiftTimeFromVideo();
-
-		private:
-
-			TimeEdit* m_shiftTimeEdit;
-			KPushButton* m_shiftTimeFromVideoButton;
-			QCheckBox* m_shiftSubtitleCheckBox;
+		TimeEdit * m_shiftTimeEdit;
+		KPushButton *m_shiftTimeFromVideoButton;
+		QCheckBox *m_shiftSubtitleCheckBox;
 	};
 }
-
 #endif

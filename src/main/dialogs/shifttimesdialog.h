@@ -21,7 +21,7 @@
  ***************************************************************************/
 
 #ifdef HAVE_CONFIG_H
-	#include <config.h>
+#include <config.h>
 #endif
 
 #include "actionwithtargetdialog.h"
@@ -29,23 +29,20 @@
 class TimeEdit;
 class KComboBox;
 
-namespace SubtitleComposer
-{
-	class ShiftTimesDialog : public ActionWithTargetDialog
-	{
-		public:
+namespace SubtitleComposer {
+	class ShiftTimesDialog:public ActionWithTargetDialog {
+	public:
 
-			ShiftTimesDialog( QWidget* parent=0 );
+		ShiftTimesDialog(QWidget * parent = 0);
 
-			void resetShiftTime();
+		void resetShiftTime();
 
-			int shiftTimeMillis() const;
+		int shiftTimeMillis() const;
 
-		private:
+	private:
 
-			KComboBox* m_directionComboBox;
-			TimeEdit* m_shiftTimeEdit;
+		KComboBox * m_directionComboBox;
+		TimeEdit *m_shiftTimeEdit;
 	};
 }
-
 #endif

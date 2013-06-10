@@ -37,117 +37,97 @@ using namespace SubtitleComposer;
 
 #define MULTIPART_DATA_BOUNDARY "----------nOtA5FcjrNZuZ3TMioysxHGGCO69vA5iYysdBTL2osuNwOjcCfU7uiN"
 
-Translator::Translator( QObject* parent ):
-	QObject( parent ),
-	m_currentTransferJob( 0 ),
-	m_inputLanguage( Language::INVALID ),
-	m_outputLanguage( Language::INVALID ),
-	m_lastReceivedChunk( 0 )
+Translator::Translator(QObject * parent):
+QObject(parent), m_currentTransferJob(0), m_inputLanguage(Language::INVALID), m_outputLanguage(Language::INVALID), m_lastReceivedChunk(0)
 {
-	connect( this, SIGNAL( finished( const QString& ) ), this, SIGNAL( finished() ) );
-	connect( this, SIGNAL( finishedWithError( const QString& ) ), this, SIGNAL( finished() ) );
+	connect(this, SIGNAL(finished(const QString &)), this, SIGNAL(finished()));
+	connect(this, SIGNAL(finishedWithError(const QString &)), this, SIGNAL(finished()));
 }
 
 Translator::~Translator()
 {
 }
 
-QString Translator::inputText() const
-{
-	return m_inputTextChunks.join( QString() );
+QString Translator::inputText() const {
+	return m_inputTextChunks.join(QString());
 }
-
-QString Translator::outputText() const
-{
+QString Translator::outputText() const {
 	return m_outputText;
 }
-
 Language::Value Translator::inputLanguage() const
 {
 	return m_inputLanguage;
 }
 
-Language::Value Translator::outputLanguage() const
+Language::Value Translator::outputLanguage()const
 {
 	return m_outputLanguage;
 }
 
-int Translator::chunksCount() const
-{
+int Translator::chunksCount() const {
 	return m_inputTextChunks.count();
 }
-
-bool Translator::isFinished() const
-{
+bool Translator::isFinished() const {
 	return isFinishedWithError() || m_lastReceivedChunk == chunksCount();
 }
-
-bool Translator::isFinishedWithError() const
-{
-	return ! m_errorMessage.isEmpty();
+bool Translator::isFinishedWithError() const {
+	return !m_errorMessage.isEmpty();
 }
-
-bool Translator::isAborted() const
-{
+bool Translator::isAborted() const {
 	return m_aborted;
 }
-
-QString Translator::errorMessage() const
-{
+QString Translator::errorMessage() const {
 	return m_errorMessage;
 }
-
-bool Translator::syncTranslate( const QString& text, Language::Value inputLang, Language::Value outputLang, ProgressDialog* progressDialog )
+bool Translator::syncTranslate(const QString & text, Language::Value inputLang, Language::Value outputLang, ProgressDialog * progressDialog)
 {
-	if ( progressDialog )
-	{
-		connect( this, SIGNAL( progress( int ) ), progressDialog, SLOT( setValue( int ) ) );
-		connect( progressDialog, SIGNAL( cancelClicked() ), this, SLOT( abort() ) );
+	if(progressDialog) {
+		connect(this, SIGNAL(progress(int)), progressDialog, SLOT(setValue(int)));
+		connect(progressDialog, SIGNAL(cancelClicked()), this, SLOT(abort()));
 
-		progressDialog->setMinimum( 0 );
-		progressDialog->setMaximum( 100 );
+		progressDialog->setMinimum(0);
+		progressDialog->setMaximum(100);
 		progressDialog->show();
 	}
 
-	QxtSignalWaiter finishedSignalWaiter( this, SIGNAL( finished() ) );
-	finishedSignalWaiter.setProcessEventFlags( QEventLoop::AllEvents );
-	translate( text, inputLang, outputLang );
+	QxtSignalWaiter finishedSignalWaiter(this, SIGNAL(finished()));
+	finishedSignalWaiter.setProcessEventFlags(QEventLoop::AllEvents);
+	translate(text, inputLang, outputLang);
 	finishedSignalWaiter.wait();
 
-	if ( progressDialog )
+	if(progressDialog)
 		progressDialog->hide();
 
-	return ! isFinishedWithError();
+	return !isFinishedWithError();
 }
 
-static int findOptimalSplitIndex( const QString& text, int fromIndex=0 )
+static int findOptimalSplitIndex(const QString & text, int fromIndex = 0)
 {
-	int lastTargetIndex = qMin( fromIndex + Translator::MaxChunkSize, text.count() - 1 );
+	int lastTargetIndex = qMin(fromIndex + Translator::MaxChunkSize, text.count() - 1);
 
-	int index = text.lastIndexOf( '\n', lastTargetIndex );
-	if ( index >= (fromIndex + Translator::MaxChunkSize*(3/4)) )
+	int index = text.lastIndexOf('\n', lastTargetIndex);
+	if(index >= (fromIndex + Translator::MaxChunkSize * (3 / 4)))
 		return index;
 
-	index = text.lastIndexOf( ' ', lastTargetIndex );
-	if ( index >= (fromIndex + Translator::MaxChunkSize*(3/4)) )
+	index = text.lastIndexOf(' ', lastTargetIndex);
+	if(index >= (fromIndex + Translator::MaxChunkSize * (3 / 4)))
 		return index;
 
 	// text it's really weird (probably garbage)... we just split it anywhere
 	return fromIndex + Translator::MaxChunkSize;
 }
 
-void Translator::translate( const QString& text, Language::Value inputLanguage, Language::Value outputLanguage )
+void Translator::translate(const QString & text, Language::Value inputLanguage, Language::Value outputLanguage)
 {
 	m_inputTextChunks.clear();
 
-	for ( int index = 0, splitIndex; index < text.length(); index = splitIndex + 1 )
-	{
-		splitIndex = findOptimalSplitIndex( text, index );
-		m_inputTextChunks << text.mid( index, splitIndex - index + 1 );
+	for(int index = 0, splitIndex; index < text.length(); index = splitIndex + 1) {
+		splitIndex = findOptimalSplitIndex(text, index);
+		m_inputTextChunks << text.mid(index, splitIndex - index + 1);
 	}
 	m_lastReceivedChunk = 0;
 
-	Q_ASSERT( text == inputText() );
+	Q_ASSERT(text == inputText());
 
 	m_outputText.clear();
 	m_inputLanguage = inputLanguage;
@@ -155,198 +135,179 @@ void Translator::translate( const QString& text, Language::Value inputLanguage, 
 	m_errorMessage.clear();
 	m_aborted = false;
 
-	startChunkDownload( 1 );
+	startChunkDownload(1);
 }
 
 void Translator::abort()
 {
-	if ( m_currentTransferJob )
-	{
-		m_currentTransferJob->kill(); // deletes the job
+	if(m_currentTransferJob) {
+		m_currentTransferJob->kill();	// deletes the job
 		m_aborted = true;
-		m_errorMessage = i18n( "Operation cancelled by user" );
-		emit finishedWithError( m_errorMessage );
+		m_errorMessage = i18n("Operation cancelled by user");
+		emit finishedWithError(m_errorMessage);
 	}
 }
 
 // "Content-type" => "application/x-www-form-urlencoded"
-QByteArray Translator::prepareUrlEncodedData( const QMap<QString,QString>& params )
+QByteArray Translator::prepareUrlEncodedData(const QMap < QString, QString > &params)
 {
 	QByteArray data;
 
 	QUrl url;
-	for ( QMap<QString,QString>::ConstIterator it = params.begin(), end = params.end(); it != end; ++it )
-		url.addQueryItem( it.key(), it.value() );
+	for(QMap < QString, QString >::ConstIterator it = params.begin(), end = params.end(); it != end; ++it)
+		url.addQueryItem(it.key(), it.value());
 
-	return url.toEncoded( QUrl::RemoveScheme|QUrl::RemoveAuthority|QUrl::RemovePath ).remove( 0, 1 );
+	return url.toEncoded(QUrl::RemoveScheme | QUrl::RemoveAuthority | QUrl::RemovePath).remove(0, 1);
 }
 
 // "Content-type" => "multipart/form-data; boundary=" MULTIPART_DATA_BOUNDARY
-QByteArray Translator::prepareMultipartData( const QMap<QString,QString>& params )
+QByteArray Translator::prepareMultipartData(const QMap < QString, QString > &params)
 {
 	QByteArray data;
 
-	for ( QMap<QString,QString>::ConstIterator it = params.begin(), end = params.end(); it != end; ++it )
-	{
-		data.append( "--" );
-		data.append( MULTIPART_DATA_BOUNDARY );
-		data.append( "\r\n" );
-		data.append( "Content-Disposition: form-data; name=\"" );
-		data.append( it.key().toUtf8() );
-		data.append( "\"\r\n\r\n" );
-		data.append( it.value().toUtf8() );
-		data.append( "\r\n" );
+	for(QMap < QString, QString >::ConstIterator it = params.begin(), end = params.end(); it != end; ++it) {
+		data.append("--");
+		data.append(MULTIPART_DATA_BOUNDARY);
+		data.append("\r\n");
+		data.append("Content-Disposition: form-data; name=\"");
+		data.append(it.key().toUtf8());
+		data.append("\"\r\n\r\n");
+		data.append(it.value().toUtf8());
+		data.append("\r\n");
 	}
 
-	data.append( "--" );
-	data.append( MULTIPART_DATA_BOUNDARY );
-	data.append( "--" );
+	data.append("--");
+	data.append(MULTIPART_DATA_BOUNDARY);
+	data.append("--");
 
 	return data;
 }
 
-void Translator::startChunkDownload( int chunkNumber )
+void Translator::startChunkDownload(int chunkNumber)
 {
-	QMap<QString,QString> params;
+	QMap < QString, QString > params;
 	params["prev"] = "_t";
-	params["sl"] = Language::code( m_inputLanguage );
-	params["tl"] = Language::code( m_outputLanguage );
-	params["text"] = m_inputTextChunks.at( chunkNumber - 1 );
+	params["sl"] = Language::code(m_inputLanguage);
+	params["tl"] = Language::code(m_outputLanguage);
+	params["text"] = m_inputTextChunks.at(chunkNumber - 1);
 
 	//QByteArray postData = prepareMultipartData( params );
-	QByteArray postData = prepareUrlEncodedData( params );
+	QByteArray postData = prepareUrlEncodedData(params);
 
-	m_currentTransferJob = KIO::http_post( KUrl( "http://translate.google.com/translate_t" ), postData, KIO::HideProgressInfo );
+	m_currentTransferJob = KIO::http_post(KUrl("http://translate.google.com/translate_t"), postData, KIO::HideProgressInfo);
 
-// 	m_currentTransferJob->addMetaData( "content-type", "Content-Type: multipart/form-data; boundary=" MULTIPART_DATA_BOUNDARY );
-	m_currentTransferJob->addMetaData( "content-type", "Content-Type: application/x-www-form-urlencoded" );
-	m_currentTransferJob->setTotalSize( postData.length() );
+//  m_currentTransferJob->addMetaData( "content-type", "Content-Type: multipart/form-data; boundary=" MULTIPART_DATA_BOUNDARY );
+	m_currentTransferJob->addMetaData("content-type", "Content-Type: application/x-www-form-urlencoded");
+	m_currentTransferJob->setTotalSize(postData.length());
 
-	connect( m_currentTransferJob, SIGNAL( percent( KJob*, unsigned long ) ),
-			 this, SLOT( onTransferJobProgress( KJob*, unsigned long ) ) );
-	connect( m_currentTransferJob, SIGNAL( result( KJob* ) ),
-			 this, SLOT( onTransferJobResult( KJob* ) ) );
-	connect( m_currentTransferJob, SIGNAL( data( KIO::Job*, const QByteArray& ) ),
-			 this, SLOT( onTransferJobData( KIO::Job*, const QByteArray& ) ) );
+	connect(m_currentTransferJob, SIGNAL(percent(KJob *, unsigned long)), this, SLOT(onTransferJobProgress(KJob *, unsigned long)));
+	connect(m_currentTransferJob, SIGNAL(result(KJob *)), this, SLOT(onTransferJobResult(KJob *)));
+	connect(m_currentTransferJob, SIGNAL(data(KIO::Job *, const QByteArray &)), this, SLOT(onTransferJobData(KIO::Job *, const QByteArray &)));
 
 	m_currentTransferData.clear();
 
 	m_currentTransferJob->start();
 }
 
-void Translator::onTransferJobProgress( KJob* /*job*/, unsigned long percent )
+void Translator::onTransferJobProgress(KJob * /*job */ , unsigned long percent)
 {
-	const double r = 1.0/chunksCount();
+	const double r = 1.0 / chunksCount();
 	int percentage = (int)(m_lastReceivedChunk * 100.0 * r + percent * r);
-	emit progress( percentage );
+	emit progress(percentage);
 }
 
-void Translator::onTransferJobData( KIO::Job* /*job*/, const QByteArray& data )
+void Translator::onTransferJobData(KIO::Job * /*job */ , const QByteArray & data)
 {
-	m_currentTransferData.append( data );
+	m_currentTransferData.append(data);
 }
 
-void Translator::onTransferJobResult( KJob* job )
+void Translator::onTransferJobResult(KJob * job)
 {
 	m_currentTransferJob = 0;
 
-	if ( job->error() )
-	{
+	if(job->error()) {
 		m_aborted = false;
 		m_errorMessage = job->errorString();
 		kDebug() << m_errorMessage;
-		emit finishedWithError( m_errorMessage );
+		emit finishedWithError(m_errorMessage);
 		return;
 	}
 
-	QTextCodec* codec = QTextCodec::codecForHtml( m_currentTransferData, QTextCodec::codecForName( "UTF-8" ) );
-	QString content = codec->toUnicode( m_currentTransferData );
+	QTextCodec *codec = QTextCodec::codecForHtml(m_currentTransferData, QTextCodec::codecForName("UTF-8"));
+	QString content = codec->toUnicode(m_currentTransferData);
 
-	QRegExp resultStartRegExp( "^.*<textarea name=utrans [^>]+>", Qt::CaseInsensitive );
-	if ( content.contains( resultStartRegExp ) )
-		content.remove( resultStartRegExp );
-	else
-	{
-		m_errorMessage = i18n( "Unexpected contents received from translation service" );
-		emit finishedWithError( m_errorMessage );
+	QRegExp resultStartRegExp("^.*<textarea name=utrans [^>]+>", Qt::CaseInsensitive);
+	if(content.contains(resultStartRegExp)) {
+		content.remove(resultStartRegExp);
+	} else {
+		m_errorMessage = i18n("Unexpected contents received from translation service");
+		emit finishedWithError(m_errorMessage);
 		return;
 	}
 
-	QRegExp resultEndRegExp( "</textarea>.*$", Qt::CaseInsensitive );
-	if ( content.contains( resultEndRegExp ) )
-		content.remove( resultEndRegExp );
-	else
-	{
-		m_errorMessage = i18n( "Unexpected contents received from translation service" );
-		emit finishedWithError( m_errorMessage );
+	QRegExp resultEndRegExp("</textarea>.*$", Qt::CaseInsensitive);
+	if(content.contains(resultEndRegExp)) {
+		content.remove(resultEndRegExp);
+	} else {
+		m_errorMessage = i18n("Unexpected contents received from translation service");
+		emit finishedWithError(m_errorMessage);
 		return;
 	}
 
-	replaceHTMLEntities( content );
-	content.replace( "&quot;", "\"" );
-	content.replace( "&lt;", "<" );
-	content.replace( "&gt;", ">" );
+	replaceHTMLEntities(content);
+	content.replace("&quot;", "\"");
+	content.replace("&lt;", "<");
+	content.replace("&gt;", ">");
 
-	content.replace( QRegExp( "< *(/?) *([a-z]+) *(/?) *>", Qt::CaseInsensitive ), "<\\1\\2\\3>" );
-	content.replace( QRegExp( " ?<br ?/?> ?", Qt::CaseInsensitive ), "\n" );
-	content.replace( QRegExp( "\n{2,}", Qt::CaseInsensitive ), "\n" );
+	content.replace(QRegExp("< *(/?) *([a-z]+) *(/?) *>", Qt::CaseInsensitive), "<\\1\\2\\3>");
+	content.replace(QRegExp(" ?<br ?/?> ?", Qt::CaseInsensitive), "\n");
+	content.replace(QRegExp("\n{2,}", Qt::CaseInsensitive), "\n");
 
-	if ( ! m_outputText.isEmpty() )
+	if(!m_outputText.isEmpty())
 		m_outputText += "\n";
 	m_outputText += content;
 
 	m_lastReceivedChunk += 1;
 
-	if ( m_lastReceivedChunk >= chunksCount() )
-		emit finished( m_outputText );
+	if(m_lastReceivedChunk >= chunksCount())
+		emit finished(m_outputText);
 	else
-		startChunkDownload( m_lastReceivedChunk + 1 );
+	startChunkDownload(m_lastReceivedChunk + 1);
 }
 
-QString& Translator::replaceHTMLEntities( QString& text )
+QString & Translator::replaceHTMLEntities(QString & text)
 {
-	const QMap<QString, QChar>& namedEntities = Translator::namedEntities();
-	static QRegExp namedEntitiesRegExp( "&([a-zA-Z]+);" );
-	for ( int offsetIndex = 0, matchedIndex;
-		 (matchedIndex = namedEntitiesRegExp.indexIn( text, offsetIndex )) != -1;
-		)
-	{
-		QString entityName = namedEntitiesRegExp.cap( 1 ).toLower();
-		if ( namedEntities.contains( entityName ) )
-		{
-			text.replace( matchedIndex, namedEntitiesRegExp.matchedLength(), namedEntities[entityName] );
+	const QMap < QString, QChar > &namedEntities = Translator::namedEntities();
+	static QRegExp namedEntitiesRegExp("&([a-zA-Z]+);");
+	for(int offsetIndex = 0, matchedIndex; (matchedIndex = namedEntitiesRegExp.indexIn(text, offsetIndex)) != -1;) {
+		QString entityName = namedEntitiesRegExp.cap(1).toLower();
+		if(namedEntities.contains(entityName)) {
+			text.replace(matchedIndex, namedEntitiesRegExp.matchedLength(), namedEntities[entityName]);
 			offsetIndex = matchedIndex + 1;
-		}
-		else
+		} else {
 			offsetIndex = matchedIndex + namedEntitiesRegExp.matchedLength();
+		}
 	}
 
-	static QRegExp unnamedB10EntitiesRegExp( "&#(\\d{2,4});" );
-	for ( int offsetIndex = 0, matchedIndex;
-		 (matchedIndex = unnamedB10EntitiesRegExp.indexIn( text, offsetIndex )) != -1;
-		 offsetIndex = matchedIndex + 1 )
-	{
-		QChar entityValue( unnamedB10EntitiesRegExp.cap( 1 ).toUInt( 0, 10 ) );
-		text.replace( matchedIndex, unnamedB10EntitiesRegExp.matchedLength(), entityValue );
+	static QRegExp unnamedB10EntitiesRegExp("&#(\\d{2,4});");
+	for(int offsetIndex = 0, matchedIndex; (matchedIndex = unnamedB10EntitiesRegExp.indexIn(text, offsetIndex)) != -1; offsetIndex = matchedIndex + 1) {
+		QChar entityValue(unnamedB10EntitiesRegExp.cap(1).toUInt(0, 10));
+		text.replace(matchedIndex, unnamedB10EntitiesRegExp.matchedLength(), entityValue);
 	}
 
-	static QRegExp unnamedB16EntitiesRegExp( "&#x([\\da-fA-F]{2,4});" );
-	for ( int offsetIndex = 0, matchedIndex;
-		 (matchedIndex = unnamedB16EntitiesRegExp.indexIn( text, offsetIndex )) != -1;
-		 offsetIndex = matchedIndex + 1 )
-	{
-		QChar entityValue( unnamedB16EntitiesRegExp.cap( 1 ).toUInt( 0, 16 ) );
-		text.replace( matchedIndex, unnamedB16EntitiesRegExp.matchedLength(), entityValue );
+	static QRegExp unnamedB16EntitiesRegExp("&#x([\\da-fA-F]{2,4});");
+	for(int offsetIndex = 0, matchedIndex; (matchedIndex = unnamedB16EntitiesRegExp.indexIn(text, offsetIndex)) != -1; offsetIndex = matchedIndex + 1) {
+		QChar entityValue(unnamedB16EntitiesRegExp.cap(1).toUInt(0, 16));
+		text.replace(matchedIndex, unnamedB16EntitiesRegExp.matchedLength(), entityValue);
 	}
 
 	return text;
 }
 
-const QMap<QString, QChar>& Translator::namedEntities()
+const QMap < QString, QChar > &Translator::namedEntities()
 {
-	static QMap<QString, QChar> entities;
-	if ( entities.empty() )
-	{
+	static QMap < QString, QChar > entities;
+	if(entities.empty()) {
 		entities["quot"] = 34;
 		entities["amp"] = 38;
 		entities["lt"] = 60;

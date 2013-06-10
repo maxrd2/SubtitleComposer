@@ -22,7 +22,7 @@
  ***************************************************************************/
 
 #ifdef HAVE_CONFIG_H
-    #include <config.h>
+#include <config.h>
 #endif
 
 #include "mplayerconfig.h"
@@ -31,60 +31,54 @@
 #include <QtGui/QWidget>
 #include <QtCore/QString>
 
-namespace SubtitleComposer
-{
-    class MPlayerPlayerProcess;
+namespace SubtitleComposer {
+	class MPlayerPlayerProcess;
 
-    class MPlayerPlayerBackend : public PlayerBackend
-    {
-        Q_OBJECT
+	class MPlayerPlayerBackend:public PlayerBackend {
+	Q_OBJECT public:
 
-        public:
+		MPlayerPlayerBackend(Player * player);
+		virtual ~ MPlayerPlayerBackend();
 
-            MPlayerPlayerBackend( Player* player );
-            virtual ~MPlayerPlayerBackend();
+		const MPlayerConfig *config() {
+			return static_cast < const MPlayerConfig *const >(PlayerBackend::config());
+		} virtual AppConfigGroupWidget *newAppConfigGroupWidget(QWidget * parent);
 
-            const MPlayerConfig* config() { return static_cast<const MPlayerConfig* const>( PlayerBackend::config() ); }
+	protected:
 
-            virtual AppConfigGroupWidget* newAppConfigGroupWidget( QWidget* parent );
+		virtual VideoWidget * initialize(QWidget * videoWidgetParent);
+		virtual void finalize();
+		void _finalize();
 
-        protected:
+		virtual bool openFile(const QString & filePath, bool & playingAfterCall);
+		virtual void closeFile();
 
-            virtual VideoWidget* initialize( QWidget* videoWidgetParent );
-            virtual void finalize();
-            void _finalize();
+		virtual bool play();
+		virtual bool pause();
+		virtual bool seek(double seconds, bool accurate);
+		virtual bool stop();
 
-            virtual bool openFile( const QString& filePath, bool& playingAfterCall );
-            virtual void closeFile();
+		virtual bool setActiveAudioStream(int audioStream);
 
-            virtual bool play();
-            virtual bool pause();
-            virtual bool seek( double seconds, bool accurate );
-            virtual bool stop();
+		virtual bool setVolume(double volume);
 
-            virtual bool setActiveAudioStream( int audioStream );
+		protected slots:void onMediaDataLoaded();
+		void onPlayingReceived();
+		void onPausedReceived();
+		void onProcessExited();
+		void onPositionReceived(double seconds);
 
-            virtual bool setVolume( double volume );
+	protected:
 
-        protected slots:
+		void setupProcessArgs(const QString & filePath);
 
-            void onMediaDataLoaded();
-            void onPlayingReceived();
-            void onPausedReceived();
-            void onProcessExited();
-            void onPositionReceived( double seconds );
+	protected:
 
-        protected:
+		MPlayerPlayerProcess * m_process;
 
-            void setupProcessArgs( const QString& filePath );
-
-        protected:
-
-            MPlayerPlayerProcess* m_process;
-
-            double m_position;
-            bool m_reportUpdates;
-    };
+		double m_position;
+		bool m_reportUpdates;
+	};
 }
 
 #endif

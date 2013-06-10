@@ -35,36 +35,36 @@
 
 using namespace SubtitleComposer;
 
-void showRanges( const RangeList& ranges )
+void showRanges(const RangeList & ranges)
 {
 	QString aux;
-	for ( RangeList::ConstIterator it = ranges.begin(), end = ranges.end(); it != end; ++it )
-		aux += QString( " [%1,%2]" ).arg( (*it).start() ).arg( (*it).end() );
+	for(RangeList::ConstIterator it = ranges.begin(), end = ranges.end(); it != end; ++it)
+		aux += QString(" [%1,%2]").arg((*it).start()).arg((*it).end());
 
-	kDebug() << QString( "Showing ranges: %1" ).arg( aux.trimmed() );
+	kDebug() << QString("Showing ranges: %1").arg(aux.trimmed());
 }
 
-void showSubtitle( const Subtitle& subtitle )
+void showSubtitle(const Subtitle & subtitle)
 {
 	kDebug() << "Showing subtitle";
-	for ( int index = 0, size = subtitle.linesCount(); index < size; ++index )
-		kDebug() << QString( "Line: %1" ).arg( subtitle.line( index )->primaryText().richString() );
+	for(int index = 0, size = subtitle.linesCount(); index < size; ++index)
+		kDebug() << QString("Line: %1").arg(subtitle.line(index)->primaryText().richString());
 	kDebug() << "--------------------------";
 }
 
-void iterateSubtitle( const Subtitle& subtitle, const RangeList& ranges )
+void iterateSubtitle(const Subtitle & subtitle, const RangeList & ranges)
 {
-	showRanges( ranges );
+	showRanges(ranges);
 
-// 	for ( int idx=0; idx < 3; ++idx )
+//  for ( int idx=0; idx < 3; ++idx )
 	{
 		kDebug() << "Iterating subtitle forwards from ranges";
-		for ( SubtitleIterator it( subtitle, ranges ); it.current(); ++it )
-			kDebug() << QString( "Line: %1" ).arg( it.current()->primaryText().richString() );
+		for(SubtitleIterator it(subtitle, ranges); it.current(); ++it)
+			kDebug() << QString("Line: %1").arg(it.current()->primaryText().richString());
 
 		kDebug() << "Iterating subtitle backwards from ranges";
-		for ( SubtitleIterator it( subtitle, ranges, true ); it.current(); --it )
-			kDebug() << QString( "Line: %1" ).arg( it.current()->primaryText().richString() );
+		for(SubtitleIterator it(subtitle, ranges, true); it.current(); --it)
+			kDebug() << QString("Line: %1").arg(it.current()->primaryText().richString());
 	}
 
 	kDebug() << "--------------------------";
@@ -74,46 +74,46 @@ void testSubtitleIterator()
 {
 	Subtitle subtitle;
 
-	for ( int index = 0; index < 20; ++index )
-		subtitle.insertLine( new SubtitleLine( QString( "Line %1" ).arg( index ) ) );
+	for(int index = 0; index < 20; ++index)
+		subtitle.insertLine(new SubtitleLine(QString("Line %1").arg(index)));
 
-	showSubtitle( subtitle );
+	showSubtitle(subtitle);
 
-	iterateSubtitle( subtitle, Range::full() );
-	iterateSubtitle( subtitle, Range::lower( 10 ) );
-	iterateSubtitle( subtitle, Range::upper( 10 ) );
-	iterateSubtitle( subtitle, Range::lower( 50 ) );
-	iterateSubtitle( subtitle, Range::upper( 50 ) );
+	iterateSubtitle(subtitle, Range::full());
+	iterateSubtitle(subtitle, Range::lower(10));
+	iterateSubtitle(subtitle, Range::upper(10));
+	iterateSubtitle(subtitle, Range::lower(50));
+	iterateSubtitle(subtitle, Range::upper(50));
 	RangeList ranges;
-	ranges << Range( 1, 3 );
-	ranges << Range( 5, 5 );
-	ranges << Range( 11, 17 );
-	iterateSubtitle( subtitle, ranges );
+	ranges << Range(1, 3);
+	ranges << Range(5, 5);
+	ranges << Range(11, 17);
+	iterateSubtitle(subtitle, ranges);
 
-// 	SubtitleIterator it( subtitle, ranges, true );
-// 	for ( int idx = 0; idx < 100; ++idx )
-// 		++it;
-// 	for ( int idx = 0; idx < 200; ++idx )
-// 		--it;
+//  SubtitleIterator it( subtitle, ranges, true );
+//  for ( int idx = 0; idx < 100; ++idx )
+//      ++it;
+//  for ( int idx = 0; idx < 200; ++idx )
+//      --it;
 
-// 	SubtitleIterator it( subtitle, Range( 1, 50 ), true );
-// 	for ( int idx = 0; idx < 100; ++idx )
-// 		++it;
-// 	for ( int idx = 0; idx < 200; ++idx )
-// 		--it;
+//  SubtitleIterator it( subtitle, Range( 1, 50 ), true );
+//  for ( int idx = 0; idx < 100; ++idx )
+//      ++it;
+//  for ( int idx = 0; idx < 200; ++idx )
+//      --it;
 
 	/*QTime time;
 	time.start();
 
 	for ( SubtitleIterator it( subtitle, Range::full(), true ); it.current(); --it )
-		it.current()->text();
+	it.current()->text();
 
 	kDebug() << time.elapsed();
 
 	for ( SubtitleIterator it( subtitle, Range::full(), true ); it.current(); --it )
-		it.current()->text();
+	it.current()->text();
 
-	kDebug() << time.elapsed();*/
+	kDebug() << time.elapsed(); */
 }
 
 void testAudioLevels()
@@ -123,7 +123,7 @@ void testAudioLevels()
 	audiolevels.save( "/home/sergio/Desktop/scomp-trunk/SAMPLES/chasing.amy.cd1.2.wf", true );*/
 }
 
-int main( int, char** )
+int main(int, char **)
 {
 	// testSubtitleIterator();
 	// testAudioLevels();

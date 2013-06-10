@@ -25,10 +25,7 @@
 using namespace SubtitleComposer;
 
 Service::Service():
-	m_activeBackend( 0 ),
-	m_widgetParent( 0 ),
-	m_applicationClosingDown( false ),
-	m_state( Service::Uninitialized )
+m_activeBackend(0), m_widgetParent(0), m_applicationClosingDown(false), m_state(Service::Uninitialized)
 {
 }
 
@@ -36,53 +33,48 @@ Service::~Service()
 {
 }
 
-bool Service::initialize( QWidget* widgetParent, const QString& prefBackendName )
+bool Service::initialize(QWidget * widgetParent, const QString & prefBackendName)
 {
-	if ( isInitialized() )
-	{
+	if(isInitialized()) {
 		kError() << "Service has already been initialized";
 		return false;
 	}
 
 	m_widgetParent = widgetParent;
 
-	if ( m_backends.contains( prefBackendName ) )
-	{
+	if(m_backends.contains(prefBackendName)) {
 		// we first try to set the requested backend as active
-		initializeBackendPrivate( m_backends[prefBackendName] );
+		initializeBackendPrivate(m_backends[prefBackendName]);
 	}
-
 	// if that fails, we set the first available backend as active
-	if ( ! m_activeBackend )
-	{
-		for ( QMap<QString,ServiceBackend*>::ConstIterator it = m_backends.begin(), end = m_backends.end(); it != end; ++it )
-			if ( initializeBackendPrivate( it.value() ) )
+	if(!m_activeBackend) {
+		for(QMap < QString, ServiceBackend * >::ConstIterator it = m_backends.begin(), end = m_backends.end(); it != end; ++it)
+			if(initializeBackendPrivate(it.value()))
 				break;
 	}
 
-	if ( ! m_activeBackend )
+	if(!m_activeBackend)
 		kError() << "Failed to initialize a player backend";
 
 	return m_activeBackend;
 }
 
-bool Service::reinitialize( const QString& prefBackendName )
+bool Service::reinitialize(const QString & prefBackendName)
 {
-	if ( ! isInitialized() )
+	if(!isInitialized())
 		return false;
 
-	ServiceBackend* targetBackend = m_backends.contains( prefBackendName ) ? m_backends[prefBackendName] : m_activeBackend;
+	ServiceBackend *targetBackend = m_backends.contains(prefBackendName) ? m_backends[prefBackendName] : m_activeBackend;
 
 	finalize();
 
-	if ( ! initializeBackendPrivate( targetBackend ) )
-	{
-		for ( QMap<QString,ServiceBackend*>::ConstIterator it = m_backends.begin(), end = m_backends.end(); it != end; ++it )
-			if ( initializeBackendPrivate( it.value() ) )
+	if(!initializeBackendPrivate(targetBackend)) {
+		for(QMap < QString, ServiceBackend * >::ConstIterator it = m_backends.begin(), end = m_backends.end(); it != end; ++it)
+			if(initializeBackendPrivate(it.value()))
 				break;
 	}
 
-	if ( ! m_activeBackend )
+	if(!m_activeBackend)
 		kError() << "Failed to initialize a player backend";
 
 	return m_activeBackend;
@@ -90,65 +82,54 @@ bool Service::reinitialize( const QString& prefBackendName )
 
 void Service::finalize()
 {
-	if ( ! isInitialized() )
+	if(!isInitialized())
 		return;
 
-	ServiceBackend* wasActiveBackend = m_activeBackend;
+	ServiceBackend *wasActiveBackend = m_activeBackend;
 
-	finalizeBackend( m_activeBackend );
+	finalizeBackend(m_activeBackend);
 
 	m_state = Service::Uninitialized;
 	m_activeBackend = 0;
 
-	emit backendFinalized( wasActiveBackend );
+	emit backendFinalized(wasActiveBackend);
 }
 
-bool Service::initializeBackendPrivate( ServiceBackend* backend )
+bool Service::initializeBackendPrivate(ServiceBackend * backend)
 {
-	if ( m_activeBackend == backend )
+	if(m_activeBackend == backend)
 		return true;
 
-	if ( m_activeBackend )
+	if(m_activeBackend)
 		return false;
 
-	if ( initializeBackend( backend, m_widgetParent ) )
-	{
+	if(initializeBackend(backend, m_widgetParent)) {
 		m_state = Service::Initialized;
 		m_activeBackend = backend;
-		emit backendInitialized( backend );
+		emit backendInitialized(backend);
 	}
 
 	return m_activeBackend == backend;
 }
 
 
-bool Service::isApplicationClosingDown() const
-{
+bool Service::isApplicationClosingDown() const {
 	return m_applicationClosingDown;
-}
-
-void Service::setApplicationClosingDown()
+} void Service::setApplicationClosingDown()
 {
 	m_applicationClosingDown = true;
 }
 
-QString Service::activeBackendName() const
-{
-	for ( QMap<QString,ServiceBackend*>::ConstIterator it = m_backends.begin(), end = m_backends.end(); it != end; ++it )
-		if ( it.value() == m_activeBackend )
+QString Service::activeBackendName() const {
+	for(QMap < QString, ServiceBackend * >::ConstIterator it = m_backends.begin(), end = m_backends.end(); it != end; ++it)
+		if(it.value() == m_activeBackend)
 			return it.key();
 	return QString();
-}
-
-QStringList Service::backendNames() const
-{
+} QStringList Service::backendNames() const {
 	return m_backends.keys();
-}
-
-void Service::addBackend( ServiceBackend* backend )
+} void Service::addBackend(ServiceBackend * backend)
 {
-	if ( m_backends.contains( backend->name() ) )
-	{
+	if(m_backends.contains(backend->name())) {
 		kError() << "attempted to insert duplicated service backend" << backend->name();
 		return;
 	}

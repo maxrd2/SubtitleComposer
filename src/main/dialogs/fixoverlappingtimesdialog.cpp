@@ -28,34 +28,31 @@
 
 using namespace SubtitleComposer;
 
-FixOverlappingTimesDialog::FixOverlappingTimesDialog( QWidget* parent ):
-	ActionWithTargetDialog( i18n( "Fix Overlapping Times" ), parent )
+FixOverlappingTimesDialog::FixOverlappingTimesDialog(QWidget * parent):
+ActionWithTargetDialog(i18n("Fix Overlapping Times"), parent)
 {
-	QGroupBox* settingsGroupBox = createGroupBox( i18nc( "@title:group", "Settings" ) );
+	QGroupBox *settingsGroupBox = createGroupBox(i18nc("@title:group", "Settings"));
 
-	m_minIntervalSpinBox = new KIntNumInput( settingsGroupBox );
-	m_minIntervalSpinBox->setSuffix( i18n( " msecs" ) );
-	m_minIntervalSpinBox->setMinimum( 1 );
-	m_minIntervalSpinBox->setMaximum( 1000 );
-	m_minIntervalSpinBox->setValue( 50 );
+	m_minIntervalSpinBox = new KIntNumInput(settingsGroupBox);
+	m_minIntervalSpinBox->setSuffix(i18n(" msecs"));
+	m_minIntervalSpinBox->setMinimum(1);
+	m_minIntervalSpinBox->setMaximum(1000);
+	m_minIntervalSpinBox->setValue(50);
 
-	QLabel* minIntervalLabel = new QLabel( settingsGroupBox );
-	minIntervalLabel->setText( i18n( "Minimum interval between lines:" ) );
-	minIntervalLabel->setBuddy( m_minIntervalSpinBox );
+	QLabel *minIntervalLabel = new QLabel(settingsGroupBox);
+	minIntervalLabel->setText(i18n("Minimum interval between lines:"));
+	minIntervalLabel->setBuddy(m_minIntervalSpinBox);
 
 	createLineTargetsButtonGroup();
 
-	QGridLayout* settingsLayout = createLayout( settingsGroupBox );
-	settingsLayout->addWidget( minIntervalLabel, 0, 0, Qt::AlignRight|Qt::AlignVCenter );
-	settingsLayout->addWidget( m_minIntervalSpinBox, 0, 1 );
+	QGridLayout *settingsLayout = createLayout(settingsGroupBox);
+	settingsLayout->addWidget(minIntervalLabel, 0, 0, Qt::AlignRight | Qt::AlignVCenter);
+	settingsLayout->addWidget(m_minIntervalSpinBox, 0, 1);
 }
 
-Time FixOverlappingTimesDialog::minimumInterval() const
+Time FixOverlappingTimesDialog::minimumInterval() const {
+	return Time(m_minIntervalSpinBox->value());
+} void FixOverlappingTimesDialog::setMinimumInterval(const Time & time)
 {
-	return Time( m_minIntervalSpinBox->value() );
-}
-
-void FixOverlappingTimesDialog::setMinimumInterval( const Time& time )
-{
-	m_minIntervalSpinBox->setValue( time.toMillis() );
+	m_minIntervalSpinBox->setValue(time.toMillis());
 }

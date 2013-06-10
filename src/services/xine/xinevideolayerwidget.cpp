@@ -24,14 +24,13 @@
 
 #include <X11/Xlib.h>
 #ifdef HAVE_XCB
-	#include <xcb/xcb.h>
+#include <xcb/xcb.h>
 #endif
 
 using namespace SubtitleComposer;
 
-XineVideoLayerWidget::XineVideoLayerWidget( QWidget* parent ):
-	QWidget( parent ),
-	m_videoDriver( 0 )
+XineVideoLayerWidget::XineVideoLayerWidget(QWidget * parent):
+QWidget(parent), m_videoDriver(0)
 {
 }
 
@@ -39,48 +38,44 @@ XineVideoLayerWidget::~XineVideoLayerWidget()
 {
 }
 
-xine_video_port_t* XineVideoLayerWidget::videoDriver() const
-{
+xine_video_port_t *XineVideoLayerWidget::videoDriver() const {
 	return m_videoDriver;
-}
-
-void XineVideoLayerWidget::setVideoDriver( xine_video_port_t* videoDriver )
+} void XineVideoLayerWidget::setVideoDriver(xine_video_port_t * videoDriver)
 {
 	m_videoDriver = videoDriver;
 }
 
 #ifdef HAVE_XCB
-void XineVideoLayerWidget::paintEvent( QPaintEvent* event )
+void XineVideoLayerWidget::paintEvent(QPaintEvent * event)
 {
-	if ( m_videoDriver )
-	{
-		const QRect &rect = event->rect();
+	if(m_videoDriver) {
+		const QRect & rect = event->rect();
 		xcb_expose_event_t xcb_event;
-		memset( &xcb_event, 0, sizeof( xcb_event ) );
+		memset(&xcb_event, 0, sizeof(xcb_event));
 		xcb_event.window = winId();
 		xcb_event.x = rect.x();
 		xcb_event.y = rect.y();
 		xcb_event.width = rect.width();
 		xcb_event.height = rect.height();
 		xcb_event.count = 0;
-		xine_port_send_gui_data( m_videoDriver, XINE_GUI_SEND_EXPOSE_EVENT, &xcb_event );
+		xine_port_send_gui_data(m_videoDriver, XINE_GUI_SEND_EXPOSE_EVENT, &xcb_event);
 	}
 
-	QWidget::paintEvent( event );
+	QWidget::paintEvent(event);
 }
 #else
-bool XineVideoLayerWidget::x11Event( XEvent* event )
+bool XineVideoLayerWidget::x11Event(XEvent * event)
 {
-	if ( m_videoDriver && event->type == Expose && event->xexpose.count == 0 )
-		xine_port_send_gui_data( m_videoDriver, XINE_GUI_SEND_EXPOSE_EVENT, event );
+	if(m_videoDriver && event->type == Expose && event->xexpose.count == 0)
+		xine_port_send_gui_data(m_videoDriver, XINE_GUI_SEND_EXPOSE_EVENT, event);
 
 	return false;
 }
 #endif
 
-void XineVideoLayerWidget::resizeEvent( QResizeEvent* event )
+void XineVideoLayerWidget::resizeEvent(QResizeEvent * event)
 {
-	QWidget::resizeEvent( event );
+	QWidget::resizeEvent(event);
 	emit geometryChanged();
 
 /*	QSize size = videoWidget()->videoLayer()->size();
@@ -89,9 +84,9 @@ void XineVideoLayerWidget::resizeEvent( QResizeEvent* event )
 */
 }
 
-void XineVideoLayerWidget::moveEvent( QMoveEvent* event )
+void XineVideoLayerWidget::moveEvent(QMoveEvent * event)
 {
-	QWidget::moveEvent( event );
+	QWidget::moveEvent(event);
 	emit geometryChanged();
 }
 

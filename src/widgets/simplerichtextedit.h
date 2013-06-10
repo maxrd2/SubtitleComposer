@@ -21,7 +21,7 @@
 ***************************************************************************/
 
 #ifdef HAVE_CONFIG_H
-    #include <config.h>
+#include <config.h>
 #endif
 
 #include "../core/sstring.h"
@@ -36,80 +36,73 @@ class QFocusEvent;
 class KAction;
 class QMenu;
 
-class SimpleRichTextEdit : public KTextEdit
-{
-	Q_OBJECT
+class SimpleRichTextEdit:public KTextEdit {
+  Q_OBJECT public:
 
-	public:
+	typedef enum {
+		Undo = 0, Redo,
+		Cut, Copy, Paste, Delete, Clear, SelectAll,
+		ToggleBold, ToggleItalic, ToggleUnderline, ToggleStrikeOut,
+		CheckSpelling, ToggleAutoSpellChecking,
+		AllowTabulations,
+		ActionCount
+	} Action;
 
-		typedef enum {
-			Undo = 0, Redo,
-			Cut, Copy, Paste, Delete, Clear, SelectAll,
-			ToggleBold, ToggleItalic, ToggleUnderline, ToggleStrikeOut,
-			CheckSpelling, ToggleAutoSpellChecking,
-			AllowTabulations,
-			ActionCount
-		} Action;
+	explicit SimpleRichTextEdit(QWidget * parent = 0);
+	virtual ~ SimpleRichTextEdit();
 
-		explicit SimpleRichTextEdit( QWidget* parent=0 );
-		virtual ~SimpleRichTextEdit();
+	bool hasSelection() const;
+	QString selectedText() const;
 
-		bool hasSelection() const;
-		QString selectedText() const;
+	bool fontBold();
+	bool fontStrikeOut();
 
-		bool fontBold();
-		bool fontStrikeOut();
+	virtual KAction *action(int action) const;
+	virtual QList < KAction * >actions() const;
 
-		virtual KAction* action( int action ) const;
-		virtual QList<KAction*> actions() const;
+	virtual bool event(QEvent * event);
 
-		virtual bool event( QEvent* event );
+	public slots:SubtitleComposer::SString richText();
+	void setRichText(const SubtitleComposer::SString & richText);
 
-	public slots:
+	void setSelection(int startIndex, int endIndex);
+	void clearSelection();
 
-		SubtitleComposer::SString richText();
-		void setRichText( const SubtitleComposer::SString& richText );
+	void setFontBold(bool enabled);
+	void setFontStrikeOut(bool enabled);
 
-		void setSelection( int startIndex, int endIndex );
-		void clearSelection();
+	void toggleFontBold();
+	void toggleFontItalic();
+	void toggleFontUnderline();
+	void toggleFontStrikeOut();
 
-		void setFontBold( bool enabled );
-		void setFontStrikeOut( bool enabled );
+	void deleteText();
+	void undoableClear();
 
-		void toggleFontBold();
-		void toggleFontItalic();
-		void toggleFontUnderline();
-		void toggleFontStrikeOut();
+	void clearUndoRedoHistory();
 
-		void deleteText();
-		void undoableClear();
+	void toggleTabChangesFocus();
+	void toggleAutoSpellChecking();
 
-		void clearUndoRedoHistory();
+  protected:
 
-		void toggleTabChangesFocus();
-		void toggleAutoSpellChecking();
+	QMenu * createContextMenu(const QPoint & mousePos);
 
-	protected:
+	virtual void contextMenuEvent(QContextMenuEvent * event);
 
-		QMenu* createContextMenu( const QPoint& mousePos );
+	virtual void keyPressEvent(QKeyEvent * event);
 
-		virtual void contextMenuEvent( QContextMenuEvent *event );
+	void setupWordUnderPositionCursor(const QPoint & globalPos);
 
-		virtual void keyPressEvent( QKeyEvent* event );
+	protected slots:void addToIgnoreList();
+	void addToDictionary();
+	void replaceWithSuggestion();
 
-		void setupWordUnderPositionCursor( const QPoint& globalPos );
+  protected:
 
-	protected slots:
-
-		void addToIgnoreList();
-		void addToDictionary();
-		void replaceWithSuggestion();
-
-	protected:
-
-		KAction* m_actions[ActionCount];
-		QMenu* m_insertUnicodeControlCharMenu;
-		QTextCursor m_selectedWordCursor;
+	KAction * m_actions[ActionCount];
+	QMenu *m_insertUnicodeControlCharMenu;
+	QTextCursor m_selectedWordCursor;
 };
 
 #endif

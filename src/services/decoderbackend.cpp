@@ -23,8 +23,7 @@
 
 using namespace SubtitleComposer;
 
-DecoderBackend::DecoderBackend( Decoder* decoder, const QString& name, AppConfigGroup* config ):
-	ServiceBackend( decoder, name, config )
+DecoderBackend::DecoderBackend(Decoder * decoder, const QString & name, AppConfigGroup * config):ServiceBackend(decoder, name, config)
 {
 }
 

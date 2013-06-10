@@ -21,58 +21,49 @@
 ***************************************************************************/
 
 #ifdef HAVE_CONFIG_H
-	#include <config.h>
+#include <config.h>
 #endif
 
 #include "../../core/rangelist.h"
 
 #include <QtCore/QObject>
 
-namespace SubtitleComposer
-{
-	namespace Scripting
-	{
-		class RangeList : public QObject
-		{
-			Q_OBJECT
+namespace SubtitleComposer {
+	namespace Scripting {
+		class RangeList:public QObject {
+			Q_OBJECT public slots:QObject * complement() const;
 
-			public slots:
+			bool isEmpty() const;
 
-				QObject* complement() const;
+			int rangesCount() const;
+			int indexesCount() const;
 
-				bool isEmpty() const;
+			int firstIndex() const;
+			int lastIndex() const;
 
-				int rangesCount() const;
-				int indexesCount() const;
+			QObject *range(int rangeIndex) const;
 
-				int firstIndex() const;
-				int lastIndex() const;
+			bool contains(int index) const;
 
-				QObject* range( int rangeIndex ) const;
+			void clear();
 
-				bool contains( int index ) const;
+			void trimToIndex(int index);
+			void trimToRange(const QObject * range);
 
-				void clear();
+			QObject *addIndex(int index);
+			QObject *addRange(const QObject * range);
 
-				void trimToIndex( int index );
-				void trimToRange( const QObject* range );
+			void shiftIndexesForwards(int fromIndex, int delta, bool fillSplitGap);
+			void shiftIndexesBackwards(int fromIndex, int delta);
 
-				QObject* addIndex( int index );
-				QObject* addRange( const QObject* range );
+		private:
 
-				void shiftIndexesForwards( int fromIndex, int delta, bool fillSplitGap );
-				void shiftIndexesBackwards( int fromIndex, int delta );
+			friend class RangesModule;
+			friend class Subtitle;
 
-			private:
+			RangeList(const SubtitleComposer::RangeList & backend, QObject * parent);
 
-				friend class RangesModule;
-				friend class Subtitle;
-
-				RangeList( const SubtitleComposer::RangeList& backend, QObject* parent );
-
-				SubtitleComposer::RangeList m_backend;
+			SubtitleComposer::RangeList m_backend;
 		};
-	}
-}
-
+}}
 #endif

@@ -21,7 +21,7 @@
  ***************************************************************************/
 
 #ifdef HAVE_CONFIG_H
-	#include <config.h>
+#include <config.h>
 #endif
 
 #include "../core/time.h"
@@ -33,53 +33,44 @@
 class QRegion;
 class QPolygon;
 
-namespace SubtitleComposer
-{
-	class AudioLevelsWidget : public QWidget
-	{
-		Q_OBJECT
+namespace SubtitleComposer {
+	class AudioLevelsWidget:public QWidget {
+	Q_OBJECT public:
 
-		public:
+		AudioLevelsWidget(QWidget * parent);
+		virtual ~ AudioLevelsWidget();
 
-			AudioLevelsWidget( QWidget* parent );
-			virtual ~AudioLevelsWidget();
+		void loadConfig();
+		void saveConfig();
 
-			void loadConfig();
-			void saveConfig();
+		Time windowSize() const;
+		void setWindowSize(const Time & size);
 
-			Time windowSize() const;
-			void setWindowSize( const Time& size );
+		public slots:void setSubtitle(Subtitle * subtitle = 0);
+		void setAudioLevels(AudioLevels * audiolevels = 0);
 
-		public slots:
+	protected:
 
-			void setSubtitle( Subtitle* subtitle=0 );
-			void setAudioLevels( AudioLevels* audiolevels=0 );
+		virtual void paintEvent(QPaintEvent *);
+		virtual void resizeEvent(QResizeEvent * e);
 
-		protected:
+		void rebuildRegions();
 
-			virtual void paintEvent( QPaintEvent* );
-			virtual void resizeEvent( QResizeEvent* e );
+		private slots:void onPlayerPositionChanged(double seconds);
 
-			void rebuildRegions();
+	private:
 
-		private slots:
+		Subtitle * m_subtitle;
+		AudioLevels *m_audiolevels;
 
-			void onPlayerPositionChanged( double seconds );
+		Time m_lowerPosition;
+		Time m_playingPosition;
+		Time m_upperPosition;
 
-		private:
-
-			Subtitle* m_subtitle;
-			AudioLevels* m_audiolevels;
-
-			Time m_lowerPosition;
-			Time m_playingPosition;
-			Time m_upperPosition;
-
-			QRegion* m_regions;
-			QPolygon* m_points;
-			int m_playingX;
+		QRegion *m_regions;
+		QPolygon *m_points;
+		int m_playingX;
 	};
 
 }
-
 #endif

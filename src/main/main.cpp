@@ -18,7 +18,7 @@
  ***************************************************************************/
 
 #ifdef HAVE_CONFIG_H
-	#include <config.h>
+#include <config.h>
 #endif
 
 // #define BUILD_MAIN_TESTS
@@ -35,56 +35,55 @@
 #include <KLocale>
 #include <KStandardDirs>
 
-int main( int argc, char** argv )
+int main(int argc, char **argv)
 {
 	KAboutData aboutData(
-		"subtitlecomposer",								// The program name used internally.
-		"subtitlecomposer",								// The message catalog name.
-		ki18n("Subtitle Composer"),					// A displayable program name string.
-		"0.5.4",										// The program version string.
-		ki18n("A KDE subtitle editor."),				// A short description of what the program does.
-		KAboutData::License_GPL,						// License identifier
-		ki18n("(C) 2007-2009 Sergio Pistone"),		// Copyright Statement
-		KLocalizedString(),								// Additional text
+		"subtitlecomposer",	// The program name used internally.
+		"subtitlecomposer",	// The message catalog name.
+		ki18n("Subtitle Composer"),	// A displayable program name string.
+		"0.5.4",	// The program version string.
+		ki18n("A KDE subtitle editor."),	// A short description of what the program does.
+		KAboutData::License_GPL,	// License identifier
+		ki18n("(C) 2007-2009 Sergio Pistone"),	// Copyright Statement
+		KLocalizedString(),	// Additional text
 		// We are not a project under the KDE umbrella (hopefully, we will be someday)
 		"https://github.com/maxrd2/subtitlecomposer",	// Project Homepage
-		"sergio_pistone@yahoo.com.ar"					// Address for bugs
+		"sergio_pistone@yahoo.com.ar"	// Address for bugs
 	);
 
 	aboutData.addAuthor(
-		ki18n("Sergio Pistone"),						// name
-		ki18n("Author & Maintainer"),					// task
-		"sergio_pistone@yahoo.com.ar"					// email
+		ki18n("Sergio Pistone"),	// name
+		ki18n("Author & Maintainer"),	// task
+		"sergio_pistone@yahoo.com.ar"	// email
 	);
 
 	// Initialize command line args
-	KCmdLineArgs::init( argc, argv, &aboutData );
+	KCmdLineArgs::init(argc, argv, &aboutData);
 
 	// Define the command line options using KCmdLineOptions
 	KCmdLineOptions options;
-	options.add( "+[Primary URL]", ki18n( "Open location as primary subtitle") );
-	options.add( "+[Translation URL]", ki18n( "Open location as translation subtitle") );
+	options.add("+[Primary URL]", ki18n("Open location as primary subtitle"));
+	options.add("+[Translation URL]", ki18n("Open location as translation subtitle"));
 
 	// Register the supported options
-	KCmdLineArgs::addCmdLineOptions( options );
+	KCmdLineArgs::addCmdLineOptions(options);
 
 	// Create application object
 	SubtitleComposer::Application app;
 	app.mainWindow()->show();
 
 	// Handle our own options/arguments
-	KCmdLineArgs* args = KCmdLineArgs::parsedArgs();
+	KCmdLineArgs *args = KCmdLineArgs::parsedArgs();
 
-	if ( args->count() )
-		app.openSubtitle( KUrl( args->arg( 0 ) ) );
+	if(args->count())
+		app.openSubtitle(KUrl(args->arg(0)));
 
-	if ( args->count() > 1 )
-		app.openSubtitleTr( KUrl( args->arg( 1 ) ) );
+	if(args->count() > 1)
+		app.openSubtitleTr(KUrl(args->arg(1)));
 
 	args->clear();
 
 	return app.exec();
 }
 
-#endif // BUILD_MAIN_TESTS
-
+#endif							// BUILD_MAIN_TESTS

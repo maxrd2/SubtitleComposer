@@ -21,7 +21,7 @@
  ***************************************************************************/
 
 #ifdef HAVE_CONFIG_H
-	#include <config.h>
+#include <config.h>
 #endif
 
 #include <QtCore/QList>
@@ -30,29 +30,24 @@
 /// a class used to show varios widgets simultaneously one in top
 /// of the another (unlike QStackWidget which shows one at a time)
 
-class LayeredWidget : public QWidget
-{
-	Q_OBJECT
+class LayeredWidget:public QWidget {
+  Q_OBJECT public:
 
-	public:
+	typedef enum { HandleResize, IgnoreResize } Mode;
 
-		typedef enum { HandleResize, IgnoreResize } Mode;
+	explicit LayeredWidget(QWidget * parent = 0, Qt::WFlags f = 0);
 
-		explicit LayeredWidget( QWidget* parent=0, Qt::WFlags f=0 );
+	void setWidgetMode(QWidget * widget, Mode mode);
 
-		void setWidgetMode( QWidget* widget, Mode mode );
+	public slots:virtual void setMouseTracking(bool enable);
 
-	public slots:
+  protected:
 
-		virtual void setMouseTracking( bool enable );
+	virtual void resizeEvent(QResizeEvent * e);
 
-	protected:
+  private:
 
-		virtual void resizeEvent( QResizeEvent* e );
-
-	private:
-
-		QList<QObject*> m_ignoredWidgets;
+	QList < QObject * >m_ignoredWidgets;
 };
 
 #endif

@@ -22,7 +22,7 @@
  ***************************************************************************/
 
 #ifdef HAVE_CONFIG_H
-    #include <config.h>
+#include <config.h>
 #endif
 
 #include "xineconfig.h"
@@ -35,92 +35,83 @@
 
 #include <xine.h>
 #ifdef HAVE_XCB
-    #include <xcb/xcb.h>
+#include <xcb/xcb.h>
 #endif
 
 class QEvent;
 
-namespace SubtitleComposer
-{
-    class XinePlayerBackend : public PlayerBackend
-    {
-        Q_OBJECT
+namespace SubtitleComposer {
+	class XinePlayerBackend:public PlayerBackend {
+	Q_OBJECT public:
 
-        public:
+		XinePlayerBackend(Player * player);
+		virtual ~ XinePlayerBackend();
 
-            XinePlayerBackend( Player* player );
-            virtual ~XinePlayerBackend();
+		const XineConfig *config() {
+			return static_cast < const XineConfig *const >(PlayerBackend::config());
+		} virtual AppConfigGroupWidget *newAppConfigGroupWidget(QWidget * parent);
 
-            const XineConfig* config() { return static_cast<const XineConfig* const>( PlayerBackend::config() ); }
+	protected:
 
-            virtual AppConfigGroupWidget* newAppConfigGroupWidget( QWidget* parent );
+		virtual VideoWidget * initialize(QWidget * videoWidgetParent);
+		virtual void finalize();
+		void _finalize();
 
-        protected:
+		virtual bool openFile(const QString & filePath, bool & playingAfterCall);
+		virtual void closeFile();
 
-            virtual VideoWidget* initialize( QWidget* videoWidgetParent );
-            virtual void finalize();
-            void _finalize();
+		virtual bool play();
+		virtual bool pause();
+		virtual bool seek(double seconds, bool accurate);
+		virtual bool stop();
 
-            virtual bool openFile( const QString& filePath, bool& playingAfterCall );
-            virtual void closeFile();
+		virtual bool setActiveAudioStream(int audioStream);
 
-            virtual bool play();
-            virtual bool pause();
-            virtual bool seek( double seconds, bool accurate );
-            virtual bool stop();
+		virtual bool setVolume(double volume);
 
-            virtual bool setActiveAudioStream( int audioStream );
+	protected:
 
-            virtual bool setVolume( double volume );
+		bool initializeXine(WId winId);
+		void finalizeXine();
 
-        protected:
+		void updateVideoData();
+		void updateAudioData();
+		void updateLengthData();
 
-            bool initializeXine( WId winId );
-            void finalizeXine();
+		static void xineEventListener(void *p, const xine_event_t *);
+		virtual void customEvent(QEvent * event);
 
-            void updateVideoData();
-            void updateAudioData();
-            void updateLengthData();
+		static void destSizeCallback(void *p, int video_width, int video_height, double video_aspect, int *dest_width, int *dest_height, double *dest_aspect);
+		static void frameOutputCallback(void *p, int video_width, int video_height, double video_aspect, int *dest_x, int *dest_y, int *dest_width, int *dest_height, double *dest_aspect, int *win_x, int *win_y);
+		static void audioMixerMethodChangedCallback(void *p, xine_cfg_entry_t * entry);
 
-            static void xineEventListener( void* p, const xine_event_t* );
-            virtual void customEvent( QEvent* event );
+		protected slots:void updatePosition();
+		void onVideoLayerGeometryChanged();
 
-            static void destSizeCallback(	void* p, int video_width, int video_height, double video_aspect,
-                                            int* dest_width, int* dest_height, double* dest_aspect );
-            static void frameOutputCallback(	void* p, int video_width, int video_height, double video_aspect,
-                                                int* dest_x, int* dest_y, int* dest_width, int* dest_height,
-                                                double* dest_aspect, int* win_x, int* win_y );
-            static void audioMixerMethodChangedCallback( void* p, xine_cfg_entry_t* entry );
+	private:
 
-        protected slots:
+#ifndef HAVE_XCB
+		Display * m_connection;
+		x11_visual_t m_x11Visual;
+#else
+		xcb_connection_t * m_connection;
+		xcb_visual_t m_x11Visual;
+#endif
 
-            void updatePosition();
-            void onVideoLayerGeometryChanged();
+		xine_t *m_xineEngine;
+		xine_audio_port_t *m_audioDriver;
+		xine_video_port_t *m_videoDriver;
+		xine_stream_t *m_xineStream;
+		xine_event_queue_t *m_eventQueue;
 
-        private:
+		bool m_updatePosition;
+		bool m_softwareMixer;
 
-        #ifndef HAVE_XCB
-            Display* m_connection;
-            x11_visual_t m_x11Visual;
-        #else
-            xcb_connection_t* m_connection;
-            xcb_visual_t m_x11Visual;
-        #endif
+		QRect m_videoLayerGeometry;
+		QTimer m_timesTimer;
 
-            xine_t* m_xineEngine;
-            xine_audio_port_t* m_audioDriver;
-            xine_video_port_t* m_videoDriver;
-            xine_stream_t* m_xineStream;
-            xine_event_queue_t* m_eventQueue;
-
-            bool m_updatePosition;
-            bool m_softwareMixer;
-
-            QRect m_videoLayerGeometry;
-            QTimer m_timesTimer;
-
-            bool m_streamIsSeekable;
-    };
+		bool m_streamIsSeekable;
+	};
 }
 
 #endif

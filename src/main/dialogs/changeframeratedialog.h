@@ -21,38 +21,31 @@
  ***************************************************************************/
 
 #ifdef HAVE_CONFIG_H
-	#include <config.h>
+#include <config.h>
 #endif
 
 #include "actiondialog.h"
 
 class KComboBox;
 
-namespace SubtitleComposer
-{
-	class ChangeFrameRateDialog : public ActionDialog
-	{
-		Q_OBJECT
+namespace SubtitleComposer {
+	class ChangeFrameRateDialog:public ActionDialog {
+	Q_OBJECT public:
 
-		public:
+		explicit ChangeFrameRateDialog(double fromFramesPerSecond, QWidget * parent = 0);
 
-			explicit ChangeFrameRateDialog( double fromFramesPerSecond, QWidget* parent=0 );
+		double fromFramesPerSecond() const;
+		void setFromFramesPerSecond(double framesPerSecond);
 
-			double fromFramesPerSecond() const;
-			void setFromFramesPerSecond( double framesPerSecond );
+		double toFramesPerSecond() const;
+		void setNewFramesPerSecond(double framesPerSecond);
 
-			double toFramesPerSecond() const;
-			void setNewFramesPerSecond( double framesPerSecond );
+		private slots:void onTextChanged();
 
-		private slots:
+	private:
 
-			void onTextChanged();
-
-		private:
-
-			KComboBox* m_fromFramesPerSecondComboBox;
-			KComboBox* m_toFramesPerSecondComboBox;
+		KComboBox * m_fromFramesPerSecondComboBox;
+		KComboBox *m_toFramesPerSecondComboBox;
 	};
 }
-
 #endif

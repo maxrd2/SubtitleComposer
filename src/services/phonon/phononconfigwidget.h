@@ -21,7 +21,7 @@
  ***************************************************************************/
 
 #ifdef HAVE_CONFIG_H
-	#include <config.h>
+#include <config.h>
 #endif
 
 #include "phononconfig.h"
@@ -29,26 +29,24 @@
 
 #include <QtGui/QWidget>
 
-namespace SubtitleComposer
-{
-	class PhononConfigWidget : public AppConfigGroupWidget
-	{
-		Q_OBJECT
+namespace SubtitleComposer {
+	class PhononConfigWidget:public AppConfigGroupWidget {
+		Q_OBJECT friend class PhononPlayerBackend;
 
-		friend class PhononPlayerBackend;
+	public:
 
-		public:
+		virtual ~ PhononConfigWidget();
 
-			virtual ~PhononConfigWidget();
+		virtual void setControlsFromConfig();
+		virtual void setConfigFromControls();
 
-			virtual void setControlsFromConfig();
-			virtual void setConfigFromControls();
+	private:
 
-		private:
+		explicit PhononConfigWidget(QWidget * parent = 0);
 
-			explicit PhononConfigWidget( QWidget* parent=0 );
-
-			PhononConfig* config() { return static_cast<PhononConfig*>( m_config ); };
+		PhononConfig *config() {
+			return static_cast < PhononConfig * >(m_config);
+		};
 	};
 }
 

@@ -21,7 +21,7 @@
  ***************************************************************************/
 
 #ifdef HAVE_CONFIG_H
-	#include <config.h>
+#include <config.h>
 #endif
 
 #include "../../core/sstring.h"
@@ -30,83 +30,74 @@
 #include <QtCore/QObject>
 #include <QtCore/QString>
 
-namespace SubtitleComposer
-{
-	namespace Scripting
-	{
-		class SString : public QObject
-		{
-			Q_OBJECT
+namespace SubtitleComposer {
+	namespace Scripting {
+		class SString:public QObject {
+			Q_OBJECT public slots:bool isEmpty() const;
 
-			public slots:
+			int count() const;
+			int size() const;
+			int length() const;
 
-				bool isEmpty() const;
+			QString plainText() const;
+			void setPlainText(const QString & string, int styleFlags = 0);
 
-				int count() const;
-				int size() const;
-				int length() const;
+			QString richText() const;
+			void setRichText(const QString & string);
 
-				QString plainText() const;
-				void setPlainText( const QString& string, int styleFlags=0 );
+			const QChar charAt(int index);
+			void setCharAt(int index, const QChar & chr);
 
-				QString richText() const;
-				void setRichText( const QString& string );
+			int styleFlagsAt(int index) const;
+			void setStyleFlagsAt(int index, int styleFlags) const;
 
-				const QChar charAt( int index );
-				void setCharAt( int index, const QChar& chr );
+			int cummulativeStyleFlags() const;
+			bool hasStyleFlags(int styleFlags) const;
 
-				int styleFlagsAt( int index ) const;
-				void setStyleFlagsAt( int index, int styleFlags ) const;
+			void setStyleFlags(int index, int len, int styleFlags);
+			void setStyleFlags(int index, int len, int styleFlags, bool on);
 
-				int cummulativeStyleFlags() const;
-				bool hasStyleFlags( int styleFlags ) const;
+			void clear();
+			void truncate(int size);
 
-				void setStyleFlags( int index, int len, int styleFlags );
-				void setStyleFlags( int index, int len, int styleFlags, bool on );
+			QObject *insert(int index, QObject * str);
+			QObject *insertPlain(int index, const QString & str);
+			QObject *append(QObject * str);
+			QObject *appendPlain(const QString & str);
+			QObject *prepend(QObject * str);
+			QObject *prependPlain(const QString & str);
 
-				void clear();
-				void truncate( int size );
+			QObject *remove(int index, int len);
+			QObject *removeAll(const QString & str, bool regExp = false, bool caseSensitive = true);
 
-				QObject* insert( int index, QObject* str );
-				QObject* insertPlain( int index, const QString& str );
-				QObject* append( QObject* str );
-				QObject* appendPlain( const QString& str );
-				QObject* prepend( QObject* str );
-				QObject* prependPlain( const QString& str );
+			QObject *replace(int index, int len, QObject * replacement);
+			QObject *replacePlain(int index, int len, const QString & replacement);
+			QObject *replaceAll(const QString & before, QObject * after, bool regExp = false, bool caseSensitive = true);
+			QObject *replaceAllPlain(const QString & before, const QString & after, bool regExp = false, bool caseSensitive = true);
 
-				QObject* remove( int index, int len );
-				QObject* removeAll( const QString& str, bool regExp=false, bool caseSensitive=true );
+			List *split(const QString & sep, bool regExp, bool caseSensitive = true) const;
 
-				QObject* replace( int index, int len, QObject* replacement );
-				QObject* replacePlain( int index, int len, const QString& replacement );
-				QObject* replaceAll( const QString& before, QObject* after, bool regExp=false, bool caseSensitive=true );
-				QObject* replaceAllPlain( const QString& before, const QString& after, bool regExp=false, bool caseSensitive=true );
+			QObject *left(int len) const;
+			QObject *right(int len) const;
+			QObject *mid(int index, int len = -1) const;
 
-				List* split( const QString& sep, bool regExp, bool caseSensitive=true ) const;
+			QObject *toLower() const;
+			QObject *toUpper() const;
 
-				QObject* left( int len ) const;
-				QObject* right( int len ) const;
-				QObject* mid( int index, int len=-1 ) const;
+			QObject *simplified() const;
+			QObject *trimmed() const;
 
-				QObject* toLower() const;
-				QObject* toUpper() const;
+			int compareTo(QObject * string) const;
+			int compareToPlain(const QString & string) const;
 
-				QObject* simplified() const;
-				QObject* trimmed() const;
+		private:
 
-				int compareTo( QObject* string ) const;
-				int compareToPlain( const QString& string ) const;
+			friend class StringsModule;
+			friend class SubtitleLine;
 
-			private:
+			SString(const SubtitleComposer::SString & backend, QObject * parent);
 
-				friend class StringsModule;
-				friend class SubtitleLine;
-
-				SString( const SubtitleComposer::SString& backend, QObject* parent );
-
-				SubtitleComposer::SString m_backend;
+			SubtitleComposer::SString m_backend;
 		};
-	}
-}
-
+}}
 #endif

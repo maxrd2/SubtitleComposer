@@ -21,7 +21,7 @@
 ***************************************************************************/
 
 #ifdef HAVE_CONFIG_H
-	#include <config.h>
+#include <config.h>
 #endif
 
 #include "../../core/rangelist.h"
@@ -36,59 +36,48 @@ class KDialog;
 class KReplace;
 class KReplaceDialog;
 
-namespace SubtitleComposer
-{
+namespace SubtitleComposer {
 	class SubtitleIterator;
 
-	class Replacer : public QObject
-	{
-		Q_OBJECT
+	class Replacer:public QObject {
+	Q_OBJECT public:
 
-		public:
+		explicit Replacer(QWidget * parent = 0);
+		virtual ~ Replacer();
 
-			explicit Replacer( QWidget* parent=0 );
-			virtual ~Replacer();
+		QWidget *parentWidget();
 
-			QWidget* parentWidget();
+		public slots:void setSubtitle(Subtitle * subtitle = 0);
+		void setTranslationMode(bool enabled);
 
-		public slots:
+		void replace(const RangeList & selectionRanges, int currentIndex, const QString & text = QString());
 
-			void setSubtitle( Subtitle* subtitle=0 );
-			void setTranslationMode( bool enabled );
+		signals:void found(SubtitleLine * line, bool primary, int startIndex, int endIndex);
 
-			void replace( const RangeList& selectionRanges, int currentIndex, const QString& text=QString() );
+	private:
 
-		signals:
+		void invalidate();
 
-			void found( SubtitleLine* line, bool primary, int startIndex, int endIndex );
+		KDialog *replaceNextDialog();
 
-		private:
+		private slots:void advance();
 
-			void invalidate();
+		void onHighlight(const QString & text, int matchingIndex, int matchedLength);
+		void onReplace(const QString & text, int replacementIndex, int replacedLength, int matchedLength);
 
-			KDialog* replaceNextDialog();
+	private:
 
-		private slots:
+		Subtitle * m_subtitle;
+		bool m_translationMode;
+		bool m_feedingPrimary;
 
-			void advance();
-
-			void onHighlight( const QString& text, int matchingIndex, int matchedLength );
-			void onReplace( const QString& text, int replacementIndex, int replacedLength, int matchedLength );
-
-		private:
-
-			Subtitle* m_subtitle;
-			bool m_translationMode;
-			bool m_feedingPrimary;
-
-			KReplace* m_replace;
-			KReplaceDialog* m_dialog;
-			QGroupBox* m_targetGroupBox;
-			QRadioButton* m_targetRadioButtons[SubtitleLine::TextTargetSIZE];
-			SubtitleIterator* m_iterator;
-			bool m_instancesFound;
-			int m_firstIndex;
+		KReplace *m_replace;
+		KReplaceDialog *m_dialog;
+		QGroupBox *m_targetGroupBox;
+		QRadioButton *m_targetRadioButtons[SubtitleLine::TextTargetSIZE];
+		SubtitleIterator *m_iterator;
+		bool m_instancesFound;
+		int m_firstIndex;
 	};
 }
-
 #endif

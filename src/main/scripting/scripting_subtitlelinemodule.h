@@ -21,65 +21,58 @@
  ***************************************************************************/
 
 #ifdef HAVE_CONFIG_H
-	#include <config.h>
+#include <config.h>
 #endif
 
 #include "../../core/subtitleline.h"
 
 #include <QtCore/QObject>
 
-namespace SubtitleComposer
-{
-	namespace Scripting
-	{
-		class SubtitleLineModule : public QObject
-		{
-			Q_OBJECT
+namespace SubtitleComposer {
+	namespace Scripting {
+		class SubtitleLineModule:public QObject {
+			Q_OBJECT Q_ENUMS(TextTarget)
+			Q_ENUMS(ErrorFlag)
 
-			Q_ENUMS( TextTarget )
-			Q_ENUMS( ErrorFlag )
+		public:
 
-			public:
+			typedef enum {
+				Primary = SubtitleComposer::SubtitleLine::Primary,
+				Secondary = SubtitleComposer::SubtitleLine::Secondary,
+				Both = SubtitleComposer::SubtitleLine::Both
+			} TextTarget;
 
-				typedef enum {
-					Primary =		SubtitleComposer::SubtitleLine::Primary,
-					Secondary =		SubtitleComposer::SubtitleLine::Secondary,
-					Both =			SubtitleComposer::SubtitleLine::Both
-				} TextTarget;
+			typedef enum {
+				EmptyPrimaryText = SubtitleComposer::SubtitleLine::EmptyPrimaryText,
+				EmptySecondaryText = SubtitleComposer::SubtitleLine::EmptySecondaryText,
+				MaxPrimaryChars = SubtitleComposer::SubtitleLine::MaxPrimaryChars,
+				MaxSecondaryChars = SubtitleComposer::SubtitleLine::MaxSecondaryChars,
+				MaxPrimaryLines = SubtitleComposer::SubtitleLine::MaxPrimaryLines,
+				MaxSecondaryLines = SubtitleComposer::SubtitleLine::MaxSecondaryLines,
+				PrimaryUnneededSpaces = SubtitleComposer::SubtitleLine::PrimaryUnneededSpaces,
+				SecondaryUnneededSpaces = SubtitleComposer::SubtitleLine::SecondaryUnneededSpaces,
+				PrimaryUnneededDash = SubtitleComposer::SubtitleLine::PrimaryUnneededDash,
+				SecondaryUnneededDash = SubtitleComposer::SubtitleLine::SecondaryUnneededDash,
+				PrimaryCapitalAfterEllipsis = SubtitleComposer::SubtitleLine::PrimaryCapitalAfterEllipsis,
+				SecondaryCapitalAfterEllipsis = SubtitleComposer::SubtitleLine::SecondaryCapitalAfterEllipsis,
+				MinDurationPerPrimaryChar = SubtitleComposer::SubtitleLine::MinDurationPerPrimaryChar,
+				MinDurationPerSecondaryChar = SubtitleComposer::SubtitleLine::MinDurationPerSecondaryChar,
+				MaxDurationPerPrimaryChar = SubtitleComposer::SubtitleLine::MaxDurationPerPrimaryChar,
+				MaxDurationPerSecondaryChar = SubtitleComposer::SubtitleLine::MaxDurationPerSecondaryChar,
+				MinDuration = SubtitleComposer::SubtitleLine::MinDuration,
+				MaxDuration = SubtitleComposer::SubtitleLine::MaxDuration,
+				OverlapsWithNext = SubtitleComposer::SubtitleLine::OverlapsWithNext,
+				UntranslatedText = SubtitleComposer::SubtitleLine::UntranslatedText,
+				UserMark = SubtitleComposer::SubtitleLine::UserMark,
+				PrimaryOnlyErrors = SubtitleComposer::SubtitleLine::PrimaryOnlyErrors,
+				SecondaryOnlyErrors = SubtitleComposer::SubtitleLine::SecondaryOnlyErrors,
+				SharedErrors = SubtitleComposer::SubtitleLine::SharedErrors,
+				AllErrors = SubtitleComposer::SubtitleLine::AllErrors,
+				TimesErrors = SubtitleComposer::SubtitleLine::TimesErrors,
+				TextErrors = SubtitleComposer::SubtitleLine::TextErrors,
+			} ErrorFlag;
 
-				typedef enum {
-					EmptyPrimaryText =					SubtitleComposer::SubtitleLine::EmptyPrimaryText,
-					EmptySecondaryText =				SubtitleComposer::SubtitleLine::EmptySecondaryText,
-					MaxPrimaryChars =					SubtitleComposer::SubtitleLine::MaxPrimaryChars,
-					MaxSecondaryChars =					SubtitleComposer::SubtitleLine::MaxSecondaryChars,
-					MaxPrimaryLines =					SubtitleComposer::SubtitleLine::MaxPrimaryLines,
-					MaxSecondaryLines =					SubtitleComposer::SubtitleLine::MaxSecondaryLines,
-					PrimaryUnneededSpaces =				SubtitleComposer::SubtitleLine::PrimaryUnneededSpaces,
-					SecondaryUnneededSpaces =			SubtitleComposer::SubtitleLine::SecondaryUnneededSpaces,
-					PrimaryUnneededDash =				SubtitleComposer::SubtitleLine::PrimaryUnneededDash,
-					SecondaryUnneededDash =				SubtitleComposer::SubtitleLine::SecondaryUnneededDash,
-					PrimaryCapitalAfterEllipsis =		SubtitleComposer::SubtitleLine::PrimaryCapitalAfterEllipsis,
-					SecondaryCapitalAfterEllipsis =		SubtitleComposer::SubtitleLine::SecondaryCapitalAfterEllipsis,
-					MinDurationPerPrimaryChar =			SubtitleComposer::SubtitleLine::MinDurationPerPrimaryChar,
-					MinDurationPerSecondaryChar =		SubtitleComposer::SubtitleLine::MinDurationPerSecondaryChar,
-					MaxDurationPerPrimaryChar =			SubtitleComposer::SubtitleLine::MaxDurationPerPrimaryChar,
-					MaxDurationPerSecondaryChar =		SubtitleComposer::SubtitleLine::MaxDurationPerSecondaryChar,
-					MinDuration =						SubtitleComposer::SubtitleLine::MinDuration,
-					MaxDuration =						SubtitleComposer::SubtitleLine::MaxDuration,
-					OverlapsWithNext =					SubtitleComposer::SubtitleLine::OverlapsWithNext,
-					UntranslatedText = 					SubtitleComposer::SubtitleLine::UntranslatedText,
-					UserMark = 							SubtitleComposer::SubtitleLine::UserMark,
-					PrimaryOnlyErrors =					SubtitleComposer::SubtitleLine::PrimaryOnlyErrors,
-					SecondaryOnlyErrors =				SubtitleComposer::SubtitleLine::SecondaryOnlyErrors,
-					SharedErrors =						SubtitleComposer::SubtitleLine::SharedErrors,
-					AllErrors =							SubtitleComposer::SubtitleLine::AllErrors,
-					TimesErrors =						SubtitleComposer::SubtitleLine::TimesErrors,
-					TextErrors =						SubtitleComposer::SubtitleLine::TextErrors,
-				} ErrorFlag;
-
-				SubtitleLineModule( QObject* parent=0 );
+			SubtitleLineModule(QObject * parent = 0);
 		};
-	}
-}
-
+}}
 #endif

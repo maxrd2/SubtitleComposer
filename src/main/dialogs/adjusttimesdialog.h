@@ -21,7 +21,7 @@
  ***************************************************************************/
 
 #ifdef HAVE_CONFIG_H
-	#include <config.h>
+#include <config.h>
 #endif
 
 #include "actiondialog.h"
@@ -29,25 +29,22 @@
 
 class TimeEdit;
 
-namespace SubtitleComposer
-{
-	class AdjustTimesDialog : public ActionDialog
-	{
-		public:
+namespace SubtitleComposer {
+	class AdjustTimesDialog:public ActionDialog {
+	public:
 
-			AdjustTimesDialog( QWidget* parent=0 );
+		AdjustTimesDialog(QWidget * parent = 0);
 
-			Time firstLineTime() const;
-			void setFirstLineTime( const Time& time );
+		Time firstLineTime() const;
+		void setFirstLineTime(const Time & time);
 
-			Time lastLineTime() const;
-			void setLastLineTime( const Time& time );
+		Time lastLineTime() const;
+		void setLastLineTime(const Time & time);
 
-		private:
+	private:
 
-			TimeEdit* m_firstLineTimeEdit;
-			TimeEdit* m_lastLineTimeEdit;
+		TimeEdit * m_firstLineTimeEdit;
+		TimeEdit *m_lastLineTimeEdit;
 	};
 }
-
 #endif

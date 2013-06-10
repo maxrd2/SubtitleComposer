@@ -21,31 +21,26 @@
  ***************************************************************************/
 
 #ifdef HAVE_CONFIG_H
-	#include <config.h>
+#include <config.h>
 #endif
 
 #include "selectablesubtitledialog.h"
 
 class QRadioButton;
 
-namespace SubtitleComposer
-{
-	class SyncSubtitlesDialog : public SelectableSubtitleDialog
-	{
-		Q_OBJECT
+namespace SubtitleComposer {
+	class SyncSubtitlesDialog:public SelectableSubtitleDialog {
+	Q_OBJECT public:
 
-		public:
+		explicit SyncSubtitlesDialog(QWidget * parent = 0);
 
-			explicit SyncSubtitlesDialog( QWidget* parent=0 );
+		bool adjustToReferenceSubtitle() const;
+		bool synchronizeToReferenceTimes() const;
 
-			bool adjustToReferenceSubtitle() const;
-			bool synchronizeToReferenceTimes() const;
+	private:
 
-		private:
-
-			QRadioButton* m_adjustRadioButton;
-			QRadioButton* m_synchronizeRadioButton;
+		QRadioButton * m_adjustRadioButton;
+		QRadioButton *m_synchronizeRadioButton;
 	};
 }
-
 #endif

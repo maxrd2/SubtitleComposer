@@ -26,10 +26,10 @@
 WaveWriter::WaveWriter():
 	m_outputPath(),
 	m_outputFormat(),
-	m_file( 0 ),
-	m_bytesWritten( 0 ),
-	m_convertedData( 0 ),
-	m_convertedDataSize( 0 )
+	m_file(0),
+	m_bytesWritten(0),
+	m_convertedData(0),
+	m_convertedDataSize(0)
 {
 }
 
@@ -45,7 +45,7 @@ WaveWriter::~WaveWriter()
 	}
 }
 
-bool WaveWriter::open( const QString& outputPath, const WaveFormat& outputFormat )
+bool WaveWriter::open(const QString & outputPath, const WaveFormat & outputFormat)
 {
 	if ( isOpened() && ! outputFormat.isValid() )
 		return false;
@@ -78,27 +78,15 @@ void WaveWriter::close()
 	}
 }
 
-bool WaveWriter::isOpened() const
-{
+bool WaveWriter::isOpened() const {
 	return m_file;
-}
-
-const QString& WaveWriter::outputPath() const
-{
+} const QString & WaveWriter::outputPath() const {
 	return m_outputPath;
-}
-
-const WaveFormat& WaveWriter::outputFormat() const
-{
+} const WaveFormat & WaveWriter::outputFormat() const {
 	return m_outputFormat;
-}
-
-double WaveWriter::writtenSeconds() const
-{
+} double WaveWriter::writtenSeconds() const {
 	return (m_bytesWritten / m_outputFormat.bytesPerFrame()) / (double)m_outputFormat.sampleRate();
-}
-
-bool WaveWriter::writeSamplesData( void* data, unsigned long dataSize, const WaveFormat& dataFormat )
+} bool WaveWriter::writeSamplesData(void *data, unsigned long dataSize, const WaveFormat & dataFormat)
 {
 	if ( ! isOpened()  )
 		return false;
@@ -113,10 +101,9 @@ bool WaveWriter::writeSamplesData( void* data, unsigned long dataSize, const Wav
 		if ( dataSize % dataFormat.bytesPerFrame() )
 			return false;
 
-		void* convertedData = convertData( data, dataSize, dataFormat, m_outputFormat, dataSize );
-		if ( convertedData )
-		{
-			fwrite( convertedData, dataSize, 1, m_file );
+		void *convertedData = convertData(data, dataSize, dataFormat, m_outputFormat, dataSize);
+		if(convertedData) {
+			fwrite(convertedData, dataSize, 1, m_file);
 			m_bytesWritten += dataSize;
 		}
 	}

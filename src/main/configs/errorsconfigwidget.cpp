@@ -31,105 +31,105 @@
 
 using namespace SubtitleComposer;
 
-ErrorsConfigWidget::ErrorsConfigWidget( QWidget* parent ):
-	AppConfigGroupWidget( new ErrorsConfig(), parent )
+ErrorsConfigWidget::ErrorsConfigWidget(QWidget * parent):
+AppConfigGroupWidget(new ErrorsConfig(), parent)
 {
-	QGroupBox* textsGroupBox = createGroupBox( i18nc( "@title:group", "Texts" ) );
+	QGroupBox *textsGroupBox = createGroupBox(i18nc("@title:group", "Texts"));
 
-	m_maxCharactersSpinBox = new KIntNumInput( textsGroupBox );
-	m_maxCharactersSpinBox->setMinimum( 0 );
-	m_maxCharactersSpinBox->setMaximum( 200 );
-	m_maxCharactersSpinBox->setSuffix( i18n( " characters" ) );
+	m_maxCharactersSpinBox = new KIntNumInput(textsGroupBox);
+	m_maxCharactersSpinBox->setMinimum(0);
+	m_maxCharactersSpinBox->setMaximum(200);
+	m_maxCharactersSpinBox->setSuffix(i18n(" characters"));
 
-	QLabel* maxCharactersLabel = new QLabel( textsGroupBox );
-	maxCharactersLabel->setText( i18n( "Maximum number of characters:" ) );
-	maxCharactersLabel->setBuddy( m_maxCharactersSpinBox );
+	QLabel *maxCharactersLabel = new QLabel(textsGroupBox);
+	maxCharactersLabel->setText(i18n("Maximum number of characters:"));
+	maxCharactersLabel->setBuddy(m_maxCharactersSpinBox);
 
-	m_maxLinesSpinBox = new KIntNumInput( textsGroupBox );
-	m_maxLinesSpinBox->setMinimum( 1 );
-	m_maxLinesSpinBox->setMaximum( 20 );
-	m_maxLinesSpinBox->setSuffix( i18n( " lines" ) );
+	m_maxLinesSpinBox = new KIntNumInput(textsGroupBox);
+	m_maxLinesSpinBox->setMinimum(1);
+	m_maxLinesSpinBox->setMaximum(20);
+	m_maxLinesSpinBox->setSuffix(i18n(" lines"));
 
-	QLabel* maxLinesLabel = new QLabel( textsGroupBox );
-	maxLinesLabel->setText( i18n( "Maximum number of lines:" ) );
-	maxLinesLabel->setBuddy( m_maxLinesSpinBox );
+	QLabel *maxLinesLabel = new QLabel(textsGroupBox);
+	maxLinesLabel->setText(i18n("Maximum number of lines:"));
+	maxLinesLabel->setBuddy(m_maxLinesSpinBox);
 
-	QGroupBox* absoluteDurationsGroupBox = createGroupBox( i18nc( "@title:group", "Absolute Durations" ) );
+	QGroupBox *absoluteDurationsGroupBox = createGroupBox(i18nc("@title:group", "Absolute Durations"));
 
-	m_minDurationSpinBox = new KIntNumInput( absoluteDurationsGroupBox );
-	m_minDurationSpinBox->setMinimum( 0 );
-	m_minDurationSpinBox->setMaximum( 2000 );
-	m_minDurationSpinBox->setSuffix( i18n( " msecs" ) );
+	m_minDurationSpinBox = new KIntNumInput(absoluteDurationsGroupBox);
+	m_minDurationSpinBox->setMinimum(0);
+	m_minDurationSpinBox->setMaximum(2000);
+	m_minDurationSpinBox->setSuffix(i18n(" msecs"));
 
-	QLabel* minDurationLabel = new QLabel( absoluteDurationsGroupBox );
-	minDurationLabel->setText( i18n( "Minimum duration:" ) );
-	minDurationLabel->setBuddy( m_minDurationSpinBox );
+	QLabel *minDurationLabel = new QLabel(absoluteDurationsGroupBox);
+	minDurationLabel->setText(i18n("Minimum duration:"));
+	minDurationLabel->setBuddy(m_minDurationSpinBox);
 
-	m_maxDurationSpinBox = new KIntNumInput( absoluteDurationsGroupBox );
-	m_maxDurationSpinBox->setMinimum( 2000 );
-	m_maxDurationSpinBox->setMaximum( 8000 );
-	m_maxDurationSpinBox->setSuffix( i18n( " msecs" ) );
+	m_maxDurationSpinBox = new KIntNumInput(absoluteDurationsGroupBox);
+	m_maxDurationSpinBox->setMinimum(2000);
+	m_maxDurationSpinBox->setMaximum(8000);
+	m_maxDurationSpinBox->setSuffix(i18n(" msecs"));
 
-	QLabel* maxDurationLabel = new QLabel( absoluteDurationsGroupBox );
-	maxDurationLabel->setText( i18n( "Maximum duration:" ) );
-	maxDurationLabel->setBuddy( m_maxDurationSpinBox );
-
-
-	QGroupBox* relativeDurationsGroupBox = createGroupBox( i18nc( "@title:group", "Relative Durations" ) );
-
-	m_minDurationPerCharSpinBox = new KIntNumInput( relativeDurationsGroupBox );
-	m_minDurationPerCharSpinBox->setMinimum( 0 );
-	m_minDurationPerCharSpinBox->setMaximum( 100 );
-	m_minDurationPerCharSpinBox->setSuffix( i18n( " msecs/character" ) );
-
-	QLabel* minDurationPerCharLabel = new QLabel( relativeDurationsGroupBox );
-	minDurationPerCharLabel->setText( i18n( "Minimum duration:" ) );
-	minDurationPerCharLabel->setBuddy( m_minDurationPerCharSpinBox );
-
-	m_maxDurationPerCharSpinBox = new KIntNumInput( relativeDurationsGroupBox );
-	m_maxDurationPerCharSpinBox->setMinimum( 0 );
-	m_maxDurationPerCharSpinBox->setMaximum( 500 );
-	m_maxDurationPerCharSpinBox->setSuffix( i18n( " msecs/character" ) );
-
-	QLabel* maxDurationPerCharLabel = new QLabel( relativeDurationsGroupBox );
-	maxDurationPerCharLabel->setText( i18n( "Maximum duration:" ) );
-	maxDurationPerCharLabel->setBuddy( m_maxDurationPerCharSpinBox );
+	QLabel *maxDurationLabel = new QLabel(absoluteDurationsGroupBox);
+	maxDurationLabel->setText(i18n("Maximum duration:"));
+	maxDurationLabel->setBuddy(m_maxDurationSpinBox);
 
 
-	QGroupBox* behaviorGroupBox = createGroupBox( i18nc( "@title:group", "Behavior" ) );
+	QGroupBox *relativeDurationsGroupBox = createGroupBox(i18nc("@title:group", "Relative Durations"));
 
-	m_autoClearFixedCheckBox = new QCheckBox( behaviorGroupBox );
-	m_autoClearFixedCheckBox->setText( i18n( "Automatically clear fixed errors" ) );
+	m_minDurationPerCharSpinBox = new KIntNumInput(relativeDurationsGroupBox);
+	m_minDurationPerCharSpinBox->setMinimum(0);
+	m_minDurationPerCharSpinBox->setMaximum(100);
+	m_minDurationPerCharSpinBox->setSuffix(i18n(" msecs/character"));
+
+	QLabel *minDurationPerCharLabel = new QLabel(relativeDurationsGroupBox);
+	minDurationPerCharLabel->setText(i18n("Minimum duration:"));
+	minDurationPerCharLabel->setBuddy(m_minDurationPerCharSpinBox);
+
+	m_maxDurationPerCharSpinBox = new KIntNumInput(relativeDurationsGroupBox);
+	m_maxDurationPerCharSpinBox->setMinimum(0);
+	m_maxDurationPerCharSpinBox->setMaximum(500);
+	m_maxDurationPerCharSpinBox->setSuffix(i18n(" msecs/character"));
+
+	QLabel *maxDurationPerCharLabel = new QLabel(relativeDurationsGroupBox);
+	maxDurationPerCharLabel->setText(i18n("Maximum duration:"));
+	maxDurationPerCharLabel->setBuddy(m_maxDurationPerCharSpinBox);
 
 
-	QGridLayout* textsLayout = createGridLayout( textsGroupBox );
-	textsLayout->addWidget( maxCharactersLabel, 0, 0, Qt::AlignRight|Qt::AlignVCenter );
-	textsLayout->addWidget( m_maxCharactersSpinBox, 0, 1 );
-	textsLayout->addWidget( maxLinesLabel, 1, 0, Qt::AlignRight|Qt::AlignVCenter );
-	textsLayout->addWidget( m_maxLinesSpinBox, 1, 1 );
+	QGroupBox *behaviorGroupBox = createGroupBox(i18nc("@title:group", "Behavior"));
 
-	QGridLayout* absoluteDurationsLayout = createGridLayout( absoluteDurationsGroupBox );
-	absoluteDurationsLayout->addWidget( minDurationLabel, 0, 0, Qt::AlignRight|Qt::AlignVCenter );
-	absoluteDurationsLayout->addWidget( m_minDurationSpinBox, 0, 1 );
-	absoluteDurationsLayout->addWidget( maxDurationLabel, 1, 0, Qt::AlignRight|Qt::AlignVCenter );
-	absoluteDurationsLayout->addWidget( m_maxDurationSpinBox, 1, 1 );
+	m_autoClearFixedCheckBox = new QCheckBox(behaviorGroupBox);
+	m_autoClearFixedCheckBox->setText(i18n("Automatically clear fixed errors"));
 
-	QGridLayout* relativeDurationsLayout = createGridLayout( relativeDurationsGroupBox );
-	relativeDurationsLayout->addWidget( minDurationPerCharLabel, 0, 0, Qt::AlignRight|Qt::AlignVCenter );
-	relativeDurationsLayout->addWidget( m_minDurationPerCharSpinBox, 0, 1 );
-	relativeDurationsLayout->addWidget( maxDurationPerCharLabel, 1, 0, Qt::AlignRight|Qt::AlignVCenter );
-	relativeDurationsLayout->addWidget( m_maxDurationPerCharSpinBox, 1, 1 );
 
-	QGridLayout* behaviorLayout = createGridLayout( behaviorGroupBox );
-	behaviorLayout->addWidget( m_autoClearFixedCheckBox, 0, 0 );
+	QGridLayout *textsLayout = createGridLayout(textsGroupBox);
+	textsLayout->addWidget(maxCharactersLabel, 0, 0, Qt::AlignRight | Qt::AlignVCenter);
+	textsLayout->addWidget(m_maxCharactersSpinBox, 0, 1);
+	textsLayout->addWidget(maxLinesLabel, 1, 0, Qt::AlignRight | Qt::AlignVCenter);
+	textsLayout->addWidget(m_maxLinesSpinBox, 1, 1);
 
-	connect( m_maxCharactersSpinBox, SIGNAL(valueChanged(int)), this, SIGNAL(settingsChanged()) );
-	connect( m_maxLinesSpinBox, SIGNAL(valueChanged(int)), this, SIGNAL(settingsChanged()) );
-	connect( m_minDurationSpinBox, SIGNAL(valueChanged(int)), this, SIGNAL(settingsChanged()) );
-	connect( m_maxDurationSpinBox, SIGNAL(valueChanged(int)), this, SIGNAL(settingsChanged()) );
-	connect( m_minDurationPerCharSpinBox, SIGNAL(valueChanged(int)), this, SIGNAL(settingsChanged()) );
-	connect( m_maxDurationPerCharSpinBox, SIGNAL(valueChanged(int)), this, SIGNAL(settingsChanged()) );
-	connect( m_autoClearFixedCheckBox, SIGNAL(toggled(bool)), this, SIGNAL(settingsChanged()) );
+	QGridLayout *absoluteDurationsLayout = createGridLayout(absoluteDurationsGroupBox);
+	absoluteDurationsLayout->addWidget(minDurationLabel, 0, 0, Qt::AlignRight | Qt::AlignVCenter);
+	absoluteDurationsLayout->addWidget(m_minDurationSpinBox, 0, 1);
+	absoluteDurationsLayout->addWidget(maxDurationLabel, 1, 0, Qt::AlignRight | Qt::AlignVCenter);
+	absoluteDurationsLayout->addWidget(m_maxDurationSpinBox, 1, 1);
+
+	QGridLayout *relativeDurationsLayout = createGridLayout(relativeDurationsGroupBox);
+	relativeDurationsLayout->addWidget(minDurationPerCharLabel, 0, 0, Qt::AlignRight | Qt::AlignVCenter);
+	relativeDurationsLayout->addWidget(m_minDurationPerCharSpinBox, 0, 1);
+	relativeDurationsLayout->addWidget(maxDurationPerCharLabel, 1, 0, Qt::AlignRight | Qt::AlignVCenter);
+	relativeDurationsLayout->addWidget(m_maxDurationPerCharSpinBox, 1, 1);
+
+	QGridLayout *behaviorLayout = createGridLayout(behaviorGroupBox);
+	behaviorLayout->addWidget(m_autoClearFixedCheckBox, 0, 0);
+
+	connect(m_maxCharactersSpinBox, SIGNAL(valueChanged(int)), this, SIGNAL(settingsChanged()));
+	connect(m_maxLinesSpinBox, SIGNAL(valueChanged(int)), this, SIGNAL(settingsChanged()));
+	connect(m_minDurationSpinBox, SIGNAL(valueChanged(int)), this, SIGNAL(settingsChanged()));
+	connect(m_maxDurationSpinBox, SIGNAL(valueChanged(int)), this, SIGNAL(settingsChanged()));
+	connect(m_minDurationPerCharSpinBox, SIGNAL(valueChanged(int)), this, SIGNAL(settingsChanged()));
+	connect(m_maxDurationPerCharSpinBox, SIGNAL(valueChanged(int)), this, SIGNAL(settingsChanged()));
+	connect(m_autoClearFixedCheckBox, SIGNAL(toggled(bool)), this, SIGNAL(settingsChanged()));
 
 	setControlsFromConfig();
 }
@@ -140,24 +140,24 @@ ErrorsConfigWidget::~ErrorsConfigWidget()
 
 void ErrorsConfigWidget::setConfigFromControls()
 {
-	config()->setMaxCharacters( m_maxCharactersSpinBox->value() );
-	config()->setMaxLines( m_maxLinesSpinBox->value() );
-	config()->setMinDuration( m_minDurationSpinBox->value() );
-	config()->setMaxDuration( m_maxDurationSpinBox->value() );
-	config()->setMinDurationPerChar( m_minDurationPerCharSpinBox->value() );
-	config()->setMaxDurationPerChar( m_maxDurationPerCharSpinBox->value() );
-	config()->setAutoClearFixed( m_autoClearFixedCheckBox->isChecked() );
+	config()->setMaxCharacters(m_maxCharactersSpinBox->value());
+	config()->setMaxLines(m_maxLinesSpinBox->value());
+	config()->setMinDuration(m_minDurationSpinBox->value());
+	config()->setMaxDuration(m_maxDurationSpinBox->value());
+	config()->setMinDurationPerChar(m_minDurationPerCharSpinBox->value());
+	config()->setMaxDurationPerChar(m_maxDurationPerCharSpinBox->value());
+	config()->setAutoClearFixed(m_autoClearFixedCheckBox->isChecked());
 }
 
 void ErrorsConfigWidget::setControlsFromConfig()
 {
-	m_maxCharactersSpinBox->setValue( config()->maxCharacters() );
-	m_maxLinesSpinBox->setValue( config()->maxLines() );
-	m_minDurationSpinBox->setValue( config()->minDuration() );
-	m_maxDurationSpinBox->setValue( config()->maxDuration() );
-	m_minDurationPerCharSpinBox->setValue( config()->minDurationPerChar() );
-	m_maxDurationPerCharSpinBox->setValue( config()->maxDurationPerChar() );
-	m_autoClearFixedCheckBox->setChecked( config()->autoClearFixed() );
+	m_maxCharactersSpinBox->setValue(config()->maxCharacters());
+	m_maxLinesSpinBox->setValue(config()->maxLines());
+	m_minDurationSpinBox->setValue(config()->minDuration());
+	m_maxDurationSpinBox->setValue(config()->maxDuration());
+	m_minDurationPerCharSpinBox->setValue(config()->minDurationPerChar());
+	m_maxDurationPerCharSpinBox->setValue(config()->maxDurationPerChar());
+	m_autoClearFixedCheckBox->setChecked(config()->autoClearFixed());
 }
 
 #include "errorsconfigwidget.moc"

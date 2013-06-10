@@ -30,10 +30,8 @@ using namespace SubtitleComposer;
 
 #define SONNET_CONFIG_GROUP "Spelling"
 
-SpellingConfigWidget::SpellingConfigWidget( QWidget* parent ):
-	AppConfigGroupWidget( new SpellingConfig(), parent ),
-	m_sonnetConfigWidget( 0 ),
-	m_globalConfig( KGlobal::config().data() )
+SpellingConfigWidget::SpellingConfigWidget(QWidget * parent):
+AppConfigGroupWidget(new SpellingConfig(), parent), m_sonnetConfigWidget(0), m_globalConfig(KGlobal::config().data())
 {
 	setControlsFromConfig();
 }
@@ -51,27 +49,27 @@ void SpellingConfigWidget::setControlsFromConfig()
 	// config state in this method so, after the Sonnet::ConfigWidget is (re)created, we restore
 	// the KConfig state to how it was before.
 
-	KConfigGroup group( m_globalConfig->group( SONNET_CONFIG_GROUP ) );
-	QMap<QString,QString> previousSettings = group.entryMap();
-	group.writeEntry( SpellingConfig::keyDefaultLanguage(), config()->defaultLanguage() );
-	group.writeEntry( SpellingConfig::keyDefaultClient(), config()->defaultClient() );
-	group.writeEntry( SpellingConfig::keyCheckUppercase(), config()->checkUppercase() );
-	group.writeEntry( SpellingConfig::keySkipRunTogether(), config()->skipRunTogether() );
+	KConfigGroup group(m_globalConfig->group(SONNET_CONFIG_GROUP));
+	QMap < QString, QString > previousSettings = group.entryMap();
+	group.writeEntry(SpellingConfig::keyDefaultLanguage(), config()->defaultLanguage());
+	group.writeEntry(SpellingConfig::keyDefaultClient(), config()->defaultClient());
+	group.writeEntry(SpellingConfig::keyCheckUppercase(), config()->checkUppercase());
+	group.writeEntry(SpellingConfig::keySkipRunTogether(), config()->skipRunTogether());
 
-	setUpdatesEnabled( false );
+	setUpdatesEnabled(false);
 
 	delete m_sonnetConfigWidget;
-	m_sonnetConfigWidget = new Sonnet::ConfigWidget( m_globalConfig, this );
-	layout()->addWidget( m_sonnetConfigWidget );
+	m_sonnetConfigWidget = new Sonnet::ConfigWidget(m_globalConfig, this);
+	layout()->addWidget(m_sonnetConfigWidget);
 
-	setUpdatesEnabled( true );
+	setUpdatesEnabled(true);
 
-	group.writeEntry( SpellingConfig::keyDefaultLanguage(), previousSettings[SpellingConfig::keyDefaultLanguage()] );
-	group.writeEntry( SpellingConfig::keyDefaultClient(), previousSettings[SpellingConfig::keyDefaultClient()] );
-	group.writeEntry( SpellingConfig::keyCheckUppercase(), previousSettings[SpellingConfig::keyCheckUppercase()] );
-	group.writeEntry( SpellingConfig::keySkipRunTogether(), previousSettings[SpellingConfig::keySkipRunTogether()] );
+	group.writeEntry(SpellingConfig::keyDefaultLanguage(), previousSettings[SpellingConfig::keyDefaultLanguage()]);
+	group.writeEntry(SpellingConfig::keyDefaultClient(), previousSettings[SpellingConfig::keyDefaultClient()]);
+	group.writeEntry(SpellingConfig::keyCheckUppercase(), previousSettings[SpellingConfig::keyCheckUppercase()]);
+	group.writeEntry(SpellingConfig::keySkipRunTogether(), previousSettings[SpellingConfig::keySkipRunTogether()]);
 
-	connect( m_sonnetConfigWidget, SIGNAL( configChanged() ), this, SIGNAL( settingsChanged() ) );
+	connect(m_sonnetConfigWidget, SIGNAL(configChanged()), this, SIGNAL(settingsChanged()));
 }
 
 void SpellingConfigWidget::setConfigFromControls()
@@ -81,11 +79,11 @@ void SpellingConfigWidget::setConfigFromControls()
 
 	m_sonnetConfigWidget->save();
 
-	KConfigGroup group( m_globalConfig->group( SONNET_CONFIG_GROUP ) );
-	config()->setOption( SpellingConfig::keyDefaultLanguage(), group.readEntry( SpellingConfig::keyDefaultLanguage() ) );
-	config()->setOption( SpellingConfig::keyDefaultClient(), group.readEntry( SpellingConfig::keyDefaultClient() ) );
-	config()->setOption( SpellingConfig::keyCheckUppercase(), group.readEntry( SpellingConfig::keyCheckUppercase() ) );
-	config()->setOption( SpellingConfig::keySkipRunTogether(), group.readEntry( SpellingConfig::keySkipRunTogether() ) );
+	KConfigGroup group(m_globalConfig->group(SONNET_CONFIG_GROUP));
+	config()->setOption(SpellingConfig::keyDefaultLanguage(), group.readEntry(SpellingConfig::keyDefaultLanguage()));
+	config()->setOption(SpellingConfig::keyDefaultClient(), group.readEntry(SpellingConfig::keyDefaultClient()));
+	config()->setOption(SpellingConfig::keyCheckUppercase(), group.readEntry(SpellingConfig::keyCheckUppercase()));
+	config()->setOption(SpellingConfig::keySkipRunTogether(), group.readEntry(SpellingConfig::keySkipRunTogether()));
 }
 
 #include "spellingconfigwidget.moc"

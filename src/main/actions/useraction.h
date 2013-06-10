@@ -21,147 +21,129 @@
  ***************************************************************************/
 
 #ifdef HAVE_CONFIG_H
-	#include <config.h>
+#include <config.h>
 #endif
 
 #include <QtCore/QList>
 
 #include <KAction>
 
-namespace SubtitleComposer
-{
+namespace SubtitleComposer {
 	class Subtitle;
 	class AudioLevels;
 	class LinesWidget;
 	class CurrentLineWidget;
 
-	class UserAction : public QObject
-	{
-		Q_OBJECT
+	class UserAction:public QObject {
+	Q_OBJECT public:
 
-		public:
+		typedef enum {
+			SubClosed = 0x1,	// Subtitle is not opened
+			SubOpened = 0x2,	// Subtitle is opened
+			SubTrClosed = 0x4,	// Subtitle is not opened
+			SubTrOpened = 0x8,	// Subtitle is opened
+			SubHasLine = 0x10,	// Subtitle opened with, at least, one line
+			SubHasLines = 0x20,	// Subtitle opened with, at least, two lines
+			SubPDirty = 0x40,	// Subtitle opened and has unsaved changes
+			SubPClean = 0x80,	// Subtitle opened or closed without unsaved changes
+			SubSDirty = 0x100,	// Subtitle opened and has unsaved changes
+			SubSClean = 0x200,	// Subtitle opened or closed without unsaved changes
+			SubHasUndo = 0x400,	// An action can be undone
+			SubHasRedo = 0x800,	// An action can be redone
+			HasSelection = 0x1000,	// Subtitle opened with, at least, one line selected
+			VideoClosed = 0x2000,
+			VideoOpened = 0x4000,
+			VideoStopped = 0x8000,
+			VideoPlaying = 0x10000,
+			AudioClosed = 0x20000,
+			AudioOpened = 0x40000,
+			AudioStopped = 0x80000,
+			AudioDecoding = 0x100000,
+			AudioLevelsClosed = 0x200000,
+			AudioLevelsOpened = 0x400000,
+			FullScreenOn = 0x800000,
+			FullScreenOff = 0x1000000,
 
-			typedef enum {
-				SubClosed =				0x1,		// Subtitle is not opened
-				SubOpened =				0x2,		// Subtitle is opened
-				SubTrClosed =			0x4,		// Subtitle is not opened
-				SubTrOpened =			0x8,		// Subtitle is opened
-				SubHasLine =			0x10,		// Subtitle opened with, at least, one line
-				SubHasLines =			0x20,		// Subtitle opened with, at least, two lines
-				SubPDirty =				0x40,		// Subtitle opened and has unsaved changes
-				SubPClean =				0x80,		// Subtitle opened or closed without unsaved changes
-				SubSDirty =				0x100,		// Subtitle opened and has unsaved changes
-				SubSClean =				0x200,		// Subtitle opened or closed without unsaved changes
-				SubHasUndo =			0x400,		// An action can be undone
-				SubHasRedo =			0x800,		// An action can be redone
-				HasSelection =			0x1000,		// Subtitle opened with, at least, one line selected
-				VideoClosed =			0x2000,
-				VideoOpened =			0x4000,
-				VideoStopped =			0x8000,
-				VideoPlaying =			0x10000,
-				AudioClosed =			0x20000,
-				AudioOpened =			0x40000,
-				AudioStopped =			0x80000,
-				AudioDecoding =			0x100000,
-				AudioLevelsClosed =		0x200000,
-				AudioLevelsOpened =		0x400000,
-				FullScreenOn =			0x800000,
-				FullScreenOff =			0x1000000,
+			SubtitleMask = SubClosed | SubOpened | SubTrClosed | SubTrOpened | SubPDirty | SubPClean | SubSDirty | SubSClean | SubHasLine | SubHasLines | SubHasUndo | SubHasRedo,
+			SelectionMask = HasSelection,
+			VideoMask = VideoClosed | VideoOpened | VideoStopped | VideoPlaying,
+			AudioMask = AudioClosed | AudioOpened | AudioStopped | AudioDecoding,
+			AudioLevelsMask = AudioLevelsClosed | AudioLevelsOpened,
+			FullScreenMask = FullScreenOn | FullScreenOff,
+			AllMask = SubtitleMask | SelectionMask | VideoMask | AudioLevelsMask | FullScreenMask
+		} EnableFlag;
 
-				SubtitleMask =  		SubClosed|SubOpened|SubTrClosed|SubTrOpened|
-										SubPDirty|SubPClean|SubSDirty|SubSClean|
-										SubHasLine|SubHasLines|
-										SubHasUndo|SubHasRedo,
-				SelectionMask =			HasSelection,
-				VideoMask =				VideoClosed|VideoOpened|VideoStopped|VideoPlaying,
-				AudioMask =				AudioClosed|AudioOpened|AudioStopped|AudioDecoding,
-				AudioLevelsMask = 		AudioLevelsClosed|AudioLevelsOpened,
-				FullScreenMask =		FullScreenOn|FullScreenOff,
-				AllMask =				SubtitleMask|SelectionMask|VideoMask|AudioLevelsMask|FullScreenMask
+		explicit UserAction(QAction * action, int enableFlags = SubOpened);
 
-			} EnableFlag;
+		QAction *action();
+		int enableFlags();
 
-			explicit UserAction( QAction* action, int enableFlags=SubOpened );
+		bool isEnabled();
+		void setActionEnabled(bool enabled);
+		void setContextFlags(int contextFlags);
 
-			QAction* action();
-			int enableFlags();
+	private:
 
-			bool isEnabled();
-			void setActionEnabled( bool enabled );
-			void setContextFlags( int contextFlags );
+		void updateEnabledState();
 
-		private:
+		private slots:void onActionChanged();
 
-			void updateEnabledState();
+	private:
 
-		private slots:
+		QAction * m_action;
+		int m_enableFlags;
 
-			void onActionChanged();
+		bool m_actionEnabled;
+		bool m_contextEnabled;
 
-		private:
-
-			QAction* m_action;
-			int m_enableFlags;
-
-			bool m_actionEnabled;
-			bool m_contextEnabled;
-
-			bool m_ignoreActionEnabledSignal;
+		bool m_ignoreActionEnabledSignal;
 	};
 
 	class Player;
 	class Decoder;
 
-	class UserActionManager : public QObject
-	{
-		Q_OBJECT
+	class UserActionManager:public QObject {
+	Q_OBJECT public:
 
-		public:
+		static UserActionManager *instance();
 
-			static UserActionManager* instance();
+		void addAction(QAction * action, int enableFlags = UserAction::SubOpened);
+		void addAction(UserAction * actionSpec);
+		void removeAction(UserAction * actionSpec);
 
-			void addAction( QAction* action, int enableFlags=UserAction::SubOpened );
-			void addAction( UserAction* actionSpec );
-			void removeAction( UserAction* actionSpec );
+		public slots:void setSubtitle(Subtitle * subtitle = 0);
+		void setLinesWidget(LinesWidget * linesWidget = 0);
+		void setAudioLevels(AudioLevels * audiolevels = 0);
+		void setPlayer(Player * player = 0);
+		void setDecoder(Decoder * decoder = 0);
+		void setTranslationMode(bool translationMode);
+		void setFullScreenMode(bool fullScreenMode);
 
-		public slots:
+	private:
 
-			void setSubtitle( Subtitle* subtitle=0 );
-			void setLinesWidget( LinesWidget* linesWidget=0 );
-			void setAudioLevels( AudioLevels* audiolevels=0 );
-			void setPlayer( Player* player=0 );
-			void setDecoder( Decoder* decoder=0 );
-			void setTranslationMode( bool translationMode );
-			void setFullScreenMode( bool fullScreenMode );
+		UserActionManager();
 
-		private:
+		void updateActionsContext(int contextFlags);
 
-			UserActionManager();
+		private slots:void onSubtitleLinesChanged();
+		void onPrimaryDirtyStateChanged(bool dirty);
+		void onSecondaryDirtyStateChanged(bool dirty);
+		void onUndoRedoStateChanged();
+		void onLinesWidgetSelectionChanged();
+		void onPlayerStateChanged();
+		void onDecoderStateChanged();
 
-			void updateActionsContext( int contextFlags );
+	private:
 
-		private slots:
+		QList < UserAction * >m_actionSpecs;
 
-			void onSubtitleLinesChanged();
-			void onPrimaryDirtyStateChanged( bool dirty );
-			void onSecondaryDirtyStateChanged( bool dirty );
-			void onUndoRedoStateChanged();
-			void onLinesWidgetSelectionChanged();
-			void onPlayerStateChanged();
-			void onDecoderStateChanged();
+		const Subtitle *m_subtitle;
+		const LinesWidget *m_linesWidget;
+		const Player *m_player;
+		const Decoder *m_decoder;
+		bool m_translationMode;
 
-		private:
-
-			QList<UserAction*> m_actionSpecs;
-
-			const Subtitle* m_subtitle;
-			const LinesWidget* m_linesWidget;
-			const Player* m_player;
-			const Decoder* m_decoder;
-			bool m_translationMode;
-
-			int m_contextFlags;
+		int m_contextFlags;
 	};
 }
-
 #endif

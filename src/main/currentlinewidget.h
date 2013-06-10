@@ -21,7 +21,7 @@
 ***************************************************************************/
 
 #ifdef HAVE_CONFIG_H
-	#include <config.h>
+#include <config.h>
 #endif
 
 #include "../core/subtitle.h"
@@ -36,86 +36,77 @@ class QToolButton;
 class TimeEdit;
 class SimpleRichTextEdit;
 
-namespace SubtitleComposer
-{
-	class CurrentLineWidget : public QWidget
-	{
-		Q_OBJECT
+namespace SubtitleComposer {
+	class CurrentLineWidget:public QWidget {
+	Q_OBJECT public:
 
-		public:
+		CurrentLineWidget(QWidget * parent);
+		virtual ~ CurrentLineWidget();
 
-			CurrentLineWidget( QWidget* parent );
-			virtual ~CurrentLineWidget();
+		QString focusedText() const;
 
-			QString focusedText() const;
+		void loadConfig();
+		void saveConfig();
 
-			void loadConfig();
-			void saveConfig();
+		void setupActions();
 
-			void setupActions();
+		virtual bool eventFilter(QObject * object, QEvent * event);
 
-			virtual bool eventFilter( QObject* object, QEvent* event );
+		public slots:void setSubtitle(Subtitle * subtitle = 0);
+		void setCurrentLine(SubtitleLine * line);
 
-		public slots:
+		void setTranslationMode(bool enabled);
 
-			void setSubtitle( Subtitle* subtitle=0 );
-			void setCurrentLine( SubtitleLine* line );
+		void highlightPrimary(int startIndex, int endIndex);
+		void highlightSecondary(int startIndex, int endIndex);
 
-			void setTranslationMode( bool enabled );
+		protected slots:void onPrimaryTextEditSelectionChanged();
+		void onSecondaryTextEditSelectionChanged();
 
-			void highlightPrimary( int startIndex, int endIndex );
-			void highlightSecondary( int startIndex, int endIndex );
+		void onPrimaryTextEditChanged();
+		void onSecondaryTextEditChanged();
+		void onShowTimeEditChanged(int showTime);
+		void onHideTimeEditChanged(int hideTime);
+		void onDurationTimeEditChanged(int durationTime);
 
-		protected slots:
+		void onLinePrimaryTextChanged(const SString & primaryText);
+		void onLineSecondaryTextChanged(const SString & secondaryText);
+		void onLineShowTimeChanged(const Time & showTime);
+		void onLineHideTimeChanged(const Time & hideTime);
 
-			void onPrimaryTextEditSelectionChanged();
-			void onSecondaryTextEditSelectionChanged();
+		void onSpellingOptionChanged(const QString & option, const QString & value);
 
-			void onPrimaryTextEditChanged();
-			void onSecondaryTextEditChanged();
-			void onShowTimeEditChanged( int showTime );
-			void onHideTimeEditChanged( int hideTime );
-			void onDurationTimeEditChanged( int durationTime );
+		void markUpdateShortcuts();
+		void updateShortcuts();
 
-			void onLinePrimaryTextChanged( const SString& primaryText );
-			void onLineSecondaryTextChanged( const SString& secondaryText );
-			void onLineShowTimeChanged( const Time& showTime );
-			void onLineHideTimeChanged( const Time& hideTime );
+	private:
 
-			void onSpellingOptionChanged( const QString& option, const QString& value );
+		QToolButton * createToolButton(const QString & text, const char *icon, QObject * receiver, const char *slot);
 
-			void markUpdateShortcuts();
-			void updateShortcuts();
+		QString buildTextDescription(const QString & text);
 
-		private:
+	protected:
 
-			QToolButton* createToolButton( const QString& text, const char* icon, QObject* receiver, const char* slot );
+		SubtitleLine * m_currentLine;
+		bool m_translationMode;
 
-			QString buildTextDescription( const QString& text );
+		bool m_updateCurrentLine;
+		bool m_updateControls;
 
-		protected:
+		TimeEdit *m_showTimeEdit;
+		TimeEdit *m_hideTimeEdit;
+		TimeEdit *m_durationTimeEdit;
 
-			SubtitleLine* m_currentLine;
-			bool m_translationMode;
+		QLabel *m_textLabels[2];
+		SimpleRichTextEdit *m_textEdits[2];
+		QToolButton *m_italicButtons[2];
+		QToolButton *m_boldButtons[2];
+		QToolButton *m_underlineButtons[2];
+		QToolButton *m_strikeThroughButtons[2];
 
-			bool m_updateCurrentLine;
-			bool m_updateControls;
+		QGridLayout *m_mainLayout;
 
-			TimeEdit* m_showTimeEdit;
-			TimeEdit* m_hideTimeEdit;
-			TimeEdit* m_durationTimeEdit;
-
-			QLabel* m_textLabels[2];
-			SimpleRichTextEdit* m_textEdits[2];
-			QToolButton* m_italicButtons[2];
-			QToolButton* m_boldButtons[2];
-			QToolButton* m_underlineButtons[2];
-			QToolButton* m_strikeThroughButtons[2];
-
-			QGridLayout* m_mainLayout;
-
-			QTimer* m_updateShorcutsTimer;
+		QTimer *m_updateShorcutsTimer;
 	};
 }
-
 #endif

@@ -93,67 +93,63 @@ class KReplacePrivate;
  *  unless you gave it a parent widget on construction.
  *
  */
-class KDEUI_EXPORT KReplace :
-    public KFind
-{
-    Q_OBJECT
+class KDEUI_EXPORT KReplace:public KFind {
+  Q_OBJECT public:
 
-public:
-
-    /**
+	/**
      * Only use this constructor if you don't use KFindDialog, or if
      * you use it as a modal dialog.
      */
-    KReplace(const QString &pattern, const QString &replacement, long options, QWidget *parent = 0);
-    /**
+	KReplace(const QString & pattern, const QString & replacement, long options, QWidget * parent = 0);
+	/**
      * This is the recommended constructor if you also use KReplaceDialog (non-modal).
      * You should pass the pointer to it here, so that when a message box
      * appears it has the right parent. Don't worry about deletion, KReplace
      * will notice if the find dialog is closed.
      */
-    KReplace(const QString &pattern, const QString &replacement, long options, QWidget *parent, QWidget* replaceDialog);
+	KReplace(const QString & pattern, const QString & replacement, long options, QWidget * parent, QWidget * replaceDialog);
 
-    virtual ~KReplace();
+	virtual ~ KReplace();
 
-    /**
+	/**
      * Return the number of replacements made (i.e. the number of times
      * the replace signal was emitted).
      * Can be used in a dialog box to tell the user how many replacements were made.
      * The final dialog does so already, unless you used setDisplayFinalDialog(false).
      */
-    int numReplacements() const;
+	int numReplacements() const;
 
-    /**
+	/**
      * Call this to reset the numMatches & numReplacements counts.
      * Can be useful if reusing the same KReplace for different operations,
      * or when restarting from the beginning of the document.
      */
-    virtual void resetCounts();
+	virtual void resetCounts();
 
-    /**
+	/**
      * Walk the text fragment (e.g. kwrite line, kspread cell) looking for matches.
      * For each match, if prompt-on-replace is specified, emits the highlight() signal
      * and displays the prompt-for-replace dialog before doing the replace.
      */
-    Result replace();
+	Result replace();
 
-    /**
+	/**
      * Return (or create) the dialog that shows the "find next?" prompt.
      * Usually you don't need to call this.
      * One case where it can be useful, is when the user selects the "Find"
      * menu item while a find operation is under way. In that case, the
      * program may want to call setActiveWindow() on that dialog.
      */
-    KDialog* replaceNextDialog( bool create = false );
+	KDialog *replaceNextDialog(bool create = false);
 
-    /**
+	/**
      * Close the "replace next?" dialog. The application should do this when
      * the last match was hit. If the application deletes the KReplace, then
      * "find previous" won't be possible anymore.
      */
-    void closeReplaceNextDialog();
+	void closeReplaceNextDialog();
 
-    /**
+	/**
      * Search the given string, replaces with the given replacement string,
      * and returns whether a match was found. If one is,
      * the replacement string length is also returned.
@@ -170,10 +166,10 @@ public:
      * Not always the same as replacement.length(), when backreferences are used.
      * @return The index at which a match was found, or -1 if no match was found.
      */
-    static int replace( QString &text, const QString &pattern, const QString &replacement, int index, long options, int *replacedLength );
-    static int replace( QString &text, const QRegExp &pattern, const QString &replacement, int index, long options, int *replacedLength );
+	static int replace(QString & text, const QString & pattern, const QString & replacement, int index, long options, int *replacedLength);
+	static int replace(QString & text, const QRegExp & pattern, const QString & replacement, int index, long options, int *replacedLength);
 
-    /**
+	/**
      * Returns true if we should restart the search from scratch.
      * Can ask the user, or return false (if we already searched/replaced the
      * whole document without the PromptOnReplace option).
@@ -187,17 +183,16 @@ public:
      * and we could even be hitting the beginning of the document (so not all
      * matches have even been seen).
      */
-    virtual bool shouldRestart( bool forceAsking = false, bool showNumMatches = true ) const;
+	virtual bool shouldRestart(bool forceAsking = false, bool showNumMatches = true) const;
 
-    /**
+	/**
      * Displays the final dialog telling the user how many replacements were made.
      * Call either this or shouldRestart().
      */
-    virtual void displayFinalDialog() const;
+	virtual void displayFinalDialog() const;
 
-Q_SIGNALS:
-
-    /**
+	Q_SIGNALS:
+	/**
      * Connect to this slot to implement updating of replaced text during the replace
      * operation.
      *
@@ -211,14 +206,14 @@ Q_SIGNALS:
      * @param replacedLength Length of the replacement string
      * @param matchedLength Length of the matched string
      */
-    void replace(const QString &text, int replacementIndex, int replacedLength, int matchedLength);
+	void replace(const QString & text, int replacementIndex, int replacedLength, int matchedLength);
 
-private:
-    friend class KReplacePrivate;
-    KReplacePrivate * const d;
+  private:
+	friend class KReplacePrivate;
+	KReplacePrivate *const d;
 
-    Q_PRIVATE_SLOT( d, void _k_slotSkip() );
-    Q_PRIVATE_SLOT( d, void _k_slotReplace() );
-    Q_PRIVATE_SLOT( d, void _k_slotReplaceAll() );
+	Q_PRIVATE_SLOT(d, void _k_slotSkip());
+	Q_PRIVATE_SLOT(d, void _k_slotReplace());
+	Q_PRIVATE_SLOT(d, void _k_slotReplaceAll());
 };
 #endif

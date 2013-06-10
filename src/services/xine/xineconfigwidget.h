@@ -21,7 +21,7 @@
  ***************************************************************************/
 
 #ifdef HAVE_CONFIG_H
-	#include <config.h>
+#include <config.h>
 #endif
 
 #include "xineconfig.h"
@@ -30,34 +30,32 @@
 class QCheckBox;
 class KComboBox;
 
-namespace SubtitleComposer
-{
-	class XineConfigWidget : public AppConfigGroupWidget
-	{
-		Q_OBJECT
-
-		friend class XinePlayerBackend;
+namespace SubtitleComposer {
+	class XineConfigWidget:public AppConfigGroupWidget {
+		Q_OBJECT friend class XinePlayerBackend;
 		friend class XineDecoderBackend;
 
-		public:
+	public:
 
-			virtual ~XineConfigWidget();
+		virtual ~ XineConfigWidget();
 
-			virtual void setControlsFromConfig();
-			virtual void setConfigFromControls();
+		virtual void setControlsFromConfig();
+		virtual void setConfigFromControls();
 
-		private:
+	private:
 
-			explicit XineConfigWidget( QWidget* parent=0 );
+		explicit XineConfigWidget(QWidget * parent = 0);
 
-			XineConfig* config() { return static_cast<XineConfig*>( m_config ); };
+		XineConfig *config() {
+			return static_cast < XineConfig * >(m_config);
+		};
 
-		private:
+	private:
 
-			KComboBox* m_audioDriverComboBox;
-			QCheckBox* m_audioDriverCheckBox;
-			KComboBox* m_videoDriverComboBox;
-			QCheckBox* m_videoDriverCheckBox;
+		KComboBox * m_audioDriverComboBox;
+		QCheckBox *m_audioDriverCheckBox;
+		KComboBox *m_videoDriverComboBox;
+		QCheckBox *m_videoDriverCheckBox;
 	};
 }
 

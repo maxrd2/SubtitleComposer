@@ -21,7 +21,7 @@
  ***************************************************************************/
 
 #ifdef HAVE_CONFIG_H
-	#include <config.h>
+#include <config.h>
 #endif
 
 #include "../core/subtitle.h"
@@ -31,41 +31,34 @@
 class QProgressBar;
 class QToolButton;
 
-namespace SubtitleComposer
-{
+namespace SubtitleComposer {
 	// NOTE "StatusBar" seems to be conflicting with something so we have to use another class name
-	class StatusBar2 : public KStatusBar
-	{
-		Q_OBJECT
+	class StatusBar2:public KStatusBar {
+	Q_OBJECT public:
 
-		public:
+		StatusBar2(QWidget * parent = 0);
+		virtual ~ StatusBar2();
 
-			StatusBar2( QWidget* parent=0 );
-			virtual ~StatusBar2();
+		void loadConfig();
+		void saveConfig();
 
-			void loadConfig();
-			void saveConfig();
+		void plugActions();
 
-			void plugActions();
+		public slots:void setSubtitle(Subtitle * subtitle = 0);
 
-		public slots:
+		void initDecoding();
+		void setDecodingPosition(double position);
+		void setDecodingLength(double length);
+		void endDecoding();
 
-			void setSubtitle( Subtitle* subtitle=0 );
+	protected:
 
-			void initDecoding();
-			void setDecodingPosition( double position );
-			void setDecodingLength( double length );
-			void endDecoding();
+		virtual void showEvent(QShowEvent * event);
 
-		protected:
+	private:
 
-			virtual void showEvent( QShowEvent* event );
-
-		private:
-
-			QProgressBar* m_decodingProgressBar;
-			QToolButton* m_cancelDecodingButton;
+		QProgressBar * m_decodingProgressBar;
+		QToolButton *m_cancelDecodingButton;
 	};
 }
-
 #endif

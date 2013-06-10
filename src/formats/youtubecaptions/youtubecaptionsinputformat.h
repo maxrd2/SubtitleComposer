@@ -21,78 +21,60 @@
  ***************************************************************************/
 
 #ifdef HAVE_CONFIG_H
-	#include <config.h>
+#include <config.h>
 #endif
 
 #include "../inputformat.h"
 
 #include <QtCore/QRegExp>
 
-namespace SubtitleComposer
-{
-	class YouTubeCaptionsInputFormat : public InputFormat
-	{
+namespace SubtitleComposer {
+	class YouTubeCaptionsInputFormat:public InputFormat {
 		friend class FormatManager;
 
-		public:
+	public:
 
-			virtual ~YouTubeCaptionsInputFormat() {}
+		virtual ~ YouTubeCaptionsInputFormat() {
+		}
+	protected:
 
-		protected:
+		virtual bool parseSubtitles(Subtitle & subtitle, const QString & data) const {
+			if(m_regExp.indexIn(data, 0) == -1)
+				return false;	// couldn't find first line
 
-			virtual bool parseSubtitles( Subtitle& subtitle, const QString& data ) const
-			{
-				if ( m_regExp.indexIn( data, 0 ) == -1 )
-					return false; // couldn't find first line
+			unsigned readLines = 0;
 
-				unsigned readLines = 0;
-
-				int offset = 0;
-				do
-				{
-					Time showTime(
-						m_regExp.cap( 1 ).toInt(),
-						m_regExp.cap( 2 ).toInt(),
-						m_regExp.cap( 3 ).toInt(),
-						m_regExp.cap( 4 ).toInt()
+			int offset = 0;
+			do {
+				Time showTime(m_regExp.cap(1).toInt(), m_regExp.cap(2).toInt(), m_regExp.cap(3).toInt(), m_regExp.cap(4).toInt()
 					);
 
-					Time hideTime(
-						m_regExp.cap( 5 ).toInt(),
-						m_regExp.cap( 6 ).toInt(),
-						m_regExp.cap( 7 ).toInt(),
-						m_regExp.cap( 8 ).toInt()
+				Time hideTime(m_regExp.cap(5).toInt(), m_regExp.cap(6).toInt(), m_regExp.cap(7).toInt(), m_regExp.cap(8).toInt()
 					);
 
-					offset += m_regExp.matchedLength();
+				offset += m_regExp.matchedLength();
 
-					QString text( data.mid( offset, (unsigned)m_regExp.indexIn( data, offset ) - offset ) );
+				QString text(data.mid(offset, (unsigned)m_regExp.indexIn(data, offset) - offset));
 
-					offset += text.length();
+				offset += text.length();
 
-					// TODO does the format actually supports styled text?
-					// if so, does it use standard HTML style tags?
-					SString stext;
-					stext.setRichString( text.trimmed() );
+				// TODO does the format actually supports styled text?
+				// if so, does it use standard HTML style tags?
+				SString stext;
+				stext.setRichString(text.trimmed());
 
-					subtitle.insertLine( new SubtitleLine( stext, showTime, hideTime ) );
+				subtitle.insertLine(new SubtitleLine(stext, showTime, hideTime));
 
-					readLines++;
-				}
-				while ( m_regExp.matchedLength() != -1 );
+				readLines++;
+			} while(m_regExp.matchedLength() != -1);
 
-				return readLines > 0;
-			}
+			return readLines > 0;
+		}
+		YouTubeCaptionsInputFormat():InputFormat("YouTube Captions", QStringList("sbv")), m_regExp("[\\d]+\n([0-2][0-9]):([0-5][0-9]):([0-5][0-9])[,\\.]([0-9][0-9][0-9]),([0-2][0-9]):([0-5][0-9]):([0-5][0-9])[,\\.]([0-9][0-9][0-9])\n") {
+		}
 
-			YouTubeCaptionsInputFormat():
-				InputFormat( "YouTube Captions", QStringList( "sbv" ) ),
-				m_regExp( "[\\d]+\n([0-2][0-9]):([0-5][0-9]):([0-5][0-9])[,\\.]([0-9][0-9][0-9]),([0-2][0-9]):([0-5][0-9]):([0-5][0-9])[,\\.]([0-9][0-9][0-9])\n" )
-			{
-			}
-
-			mutable QRegExp m_regExp;
+		mutable QRegExp m_regExp;
 	};
 }
 
 #endif
-

@@ -21,41 +21,32 @@
  ***************************************************************************/
 
 #ifdef HAVE_CONFIG_H
-	#include <config.h>
+#include <config.h>
 #endif
 
 #include "../../core/range.h"
 
 #include <QtCore/QObject>
 
-namespace SubtitleComposer
-{
-	namespace Scripting
-	{
-		class Range : public QObject
-		{
-			Q_OBJECT
+namespace SubtitleComposer {
+	namespace Scripting {
+		class Range:public QObject {
+			Q_OBJECT public slots:int start() const;
+			int end() const;
+			int length() const;
 
-			public slots:
+			bool contains(int index) const;
+			bool contains(const QObject * range) const;
 
-				int start() const;
-				int end() const;
-				int length() const;
+		private:
 
-				bool contains( int index ) const;
-				bool contains( const QObject* range ) const;
+			friend class RangesModule;
+			friend class RangeList;
+			friend class Subtitle;
 
-			private:
+			Range(const SubtitleComposer::Range & range, QObject * parent);
 
-				friend class RangesModule;
-				friend class RangeList;
-				friend class Subtitle;
-
-				Range( const SubtitleComposer::Range& range, QObject* parent );
-
-				SubtitleComposer::Range m_backend;
+			SubtitleComposer::Range m_backend;
 		};
-	}
-}
-
+}}
 #endif

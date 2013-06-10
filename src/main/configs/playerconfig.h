@@ -21,99 +21,161 @@
  ***************************************************************************/
 
 #ifdef HAVE_CONFIG_H
-	#include <config.h>
+#include <config.h>
 #endif
 
 #include "../../config/appconfiggroup.h"
 
 #include <QtGui/QColor>
 
-namespace SubtitleComposer
-{
-	class PlayerConfig : public AppConfigGroup
-	{
-		friend class Application;
-		friend class PlayerConfigWidget;
+namespace SubtitleComposer {
+class PlayerConfig:public AppConfigGroup {
+	friend class Application;
+	friend class PlayerConfigWidget;
 
-		public:
+public:
 
-			virtual AppConfigGroup* clone() const { return new PlayerConfig( *this ); }
+	virtual AppConfigGroup * clone() const {
+		return new PlayerConfig(*this);
+	}
+	QString playerBackend() const {
+		return option(keyPlayerBackend());
+	}
+	void setPlayerBackend(const QString & backend) {
+		setOption(keyPlayerBackend(), backend);
+	} QString decoderBackend() const {
+		return option(keyDecoderBackend());
+	}
+	void setDecoderBackend(const QString & backend) {
+		setOption(keyDecoderBackend(), backend);
+	} int seekJumpLength() const {
+		return optionAsInt(keySeekJumpLength());
+	} /// in seconds
+	void setSeekJumpLength(int seconds) { setOption(keySeekJumpLength(), seconds);
+										}
 
-			QString playerBackend() const { return option( keyPlayerBackend() ); }
-			void setPlayerBackend( const QString& backend ) { setOption( keyPlayerBackend(), backend ); }
+	bool showPositionTimeEdit() const {
+		return optionAsBool(keyShowPositionTimeEdit());
+	}
+	void setShowPositionTimeEdit(bool show) {
+		setOption(keyShowPositionTimeEdit(), show);
+	}
+	void toggleShowPositionTimeEdit() {
+		setShowPositionTimeEdit(!showPositionTimeEdit());
+	}
 
-			QString decoderBackend() const { return option( keyDecoderBackend() ); }
-			void setDecoderBackend( const QString& backend ) { setOption( keyDecoderBackend(), backend ); }
+	QString fontFamily() const {
+		return option(keyFontFamily());
+	}
+	void setFontFamily(const QString & family) {
+		setOption(keyFontFamily(), family);
+	}
 
-			int seekJumpLength() const { return optionAsInt( keySeekJumpLength() ); } /// in seconds
-			void setSeekJumpLength( int seconds ) { setOption( keySeekJumpLength(), seconds ); }
+	int fontPointSize() const {
+		return optionAsInt(keyFontPointSize());
+	}
+	void setFontPointSize(int pointSize) {
+		setOption(keyFontPointSize(), pointSize);
+	}
+	void incFontPointSize(int delta) {
+		setFontPointSize(fontPointSize() + delta);
+	}
 
-			bool showPositionTimeEdit() const { return optionAsBool( keyShowPositionTimeEdit() ); }
-			void setShowPositionTimeEdit( bool show ) { setOption( keyShowPositionTimeEdit(), show ); }
-			void toggleShowPositionTimeEdit() { setShowPositionTimeEdit( ! showPositionTimeEdit() ); }
+	QColor fontColor() const {
+		return optionAsColor(keyFontColor());
+	}
+	void setFontColor(const QColor & color) {
+		setOption(keyFontColor(), color);
+	}
 
-			QString fontFamily() const { return option( keyFontFamily() ); }
-			void setFontFamily( const QString& family ) { setOption( keyFontFamily(), family ); }
+	QColor outlineColor() const {
+		return optionAsColor(keyOutlineColor());
+	}
+	void setOutlineColor(const QColor & color) {
+		setOption(keyOutlineColor(), color);
+	}
 
-			int fontPointSize() const { return optionAsInt( keyFontPointSize() ); }
-			void setFontPointSize( int pointSize ) { setOption( keyFontPointSize(), pointSize ); }
-			void incFontPointSize( int delta ) { setFontPointSize( fontPointSize() + delta ); }
-
-			QColor fontColor() const { return optionAsColor( keyFontColor() ); }
-			void setFontColor( const QColor& color ) { setOption( keyFontColor(), color ); }
-
-			QColor outlineColor() const { return optionAsColor( keyOutlineColor() ); }
-			void setOutlineColor( const QColor& color ) { setOption( keyOutlineColor(), color ); }
-
-			int outlineWidth() const { return optionAsInt( keyOutlineWidth() ); }
-			void setOutlineWidth( int width ) { setOption( keyOutlineWidth(), width ); }
+	int outlineWidth() const {
+		return optionAsInt(keyOutlineWidth());
+	}
+	void setOutlineWidth(int width) {
+		setOption(keyOutlineWidth(), width);
+	}
 
 
-			static const QString& keyPlayerBackend() { static const QString key( "PlayerBackend" ); return key; }
-			static const QString& keyDecoderBackend() { static const QString key( "DecoderBackend" ); return key; }
-			static const QString& keySeekJumpLength() { static const QString key( "SeekJumpLength" ); return key; }
-			static const QString& keyShowPositionTimeEdit() { static const QString key( "ShowPositionTimeEdit" ); return key; }
-			static const QString& keyFontFamily() { static const QString key( "FontFamily" ); return key; }
-			static const QString& keyFontPointSize() { static const QString key( "FontPointSize" ); return key; }
-			static const QString& keyFontColor() { static const QString key( "FontColor" ); return key; }
-			static const QString& keyOutlineColor() { static const QString key( "OutlineColor" ); return key; }
-			static const QString& keyOutlineWidth() { static const QString key( "OutlineWidth" ); return key; }
+	static const QString & keyPlayerBackend() {
+		static const QString key("PlayerBackend");
+		return key;
+	}
+	static const QString & keyDecoderBackend() {
+		static const QString key("DecoderBackend");
+		return key;
+	}
+	static const QString & keySeekJumpLength() {
+		static const QString key("SeekJumpLength");
+		return key;
+	}
+	static const QString & keyShowPositionTimeEdit() {
+		static const QString key("ShowPositionTimeEdit");
+		return key;
+	}
+	static const QString & keyFontFamily() {
+		static const QString key("FontFamily");
+		return key;
+	}
+	static const QString & keyFontPointSize() {
+		static const QString key("FontPointSize");
+		return key;
+	}
+	static const QString & keyFontColor() {
+		static const QString key("FontColor");
+		return key;
+	}
+	static const QString & keyOutlineColor() {
+		static const QString key("OutlineColor");
+		return key;
+	}
+	static const QString & keyOutlineWidth() {
+		static const QString key("OutlineWidth");
+		return key;
+	}
 
-		private:
+private:
 
-			PlayerConfig():AppConfigGroup( "Player", defaults() ) {}
-			PlayerConfig( const PlayerConfig& config ):AppConfigGroup( config ) {}
+	PlayerConfig():AppConfigGroup("Player", defaults()) {
+	}
+	PlayerConfig(const PlayerConfig & config):AppConfigGroup(config) {
+	}
 
-			static QMap<QString,QString> defaults()
-			{
-				QMap<QString,QString> defaults;
+	static QMap < QString, QString > defaults() {
+		QMap < QString, QString > defaults;
 
 #if defined( HAVE_GSTREAMER )
-				defaults[keyPlayerBackend()] = "GStreamer";
+		defaults[keyPlayerBackend()] = "GStreamer";
 #else
-				defaults[keyPlayerBackend()] = "MPlayer";
+		defaults[keyPlayerBackend()] = "MPlayer";
 #endif
 
 #if defined( HAVE_GSTREAMER )
-				defaults[keyDecoderBackend()] = "GStreamer";
+		defaults[keyDecoderBackend()] = "GStreamer";
 #elif defined( HAVE_XINE )
-				defaults[keyDecoderBackend()] = "Xine";
+		defaults[keyDecoderBackend()] = "Xine";
 #else
-				defaults[keyDecoderBackend()] = "Dummy";
+		defaults[keyDecoderBackend()] = "Dummy";
 #endif
 
-				defaults[keySeekJumpLength()] = "15"; // in seconds
-				defaults[keyShowPositionTimeEdit()] = "false";
+		defaults[keySeekJumpLength()] = "15";	// in seconds
+		defaults[keyShowPositionTimeEdit()] = "false";
 
-				defaults[keyFontFamily()] = "Sans Serif";
-				defaults[keyFontPointSize()] = "15";
-				defaults[keyFontColor()] = QColor( Qt::yellow ).name();
-				defaults[keyOutlineColor()] = QColor( Qt::black ).name();
-				defaults[keyOutlineWidth()] = "1";
+		defaults[keyFontFamily()] = "Sans Serif";
+		defaults[keyFontPointSize()] = "15";
+		defaults[keyFontColor()] = QColor(Qt::yellow).name();
+		defaults[keyOutlineColor()] = QColor(Qt::black).name();
+		defaults[keyOutlineWidth()] = "1";
 
-				return defaults;
-			}
-	};
+		return defaults;
+	}
+};
 }
 
 #endif

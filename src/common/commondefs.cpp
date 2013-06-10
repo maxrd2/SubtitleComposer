@@ -34,63 +34,61 @@
 #include <KIO/NetAccess>
 
 #ifndef Q_WS_WIN
-	#include <unistd.h>
+#include <unistd.h>
 #endif
 
 /**
  * String
  */
 
-QString String::title( const QString& text )
+QString String::title(const QString & text)
 {
 	QString auxText = text.toLower();
-	const QString separators( " -_([:,;./\\\t\n\"" );
+	const QString separators(" -_([:,;./\\\t\n\"");
 	int len = separators.length(), sepIdx = 0;
-	while ( sepIdx < len )
-	{
+	while(sepIdx < len) {
 		QStringList auxWordsList;
-		QStringList wordsList = auxText.split( separators[sepIdx] );
-		for ( QStringList::ConstIterator it = wordsList.begin(), end = wordsList.end(); it != end; ++it )
-			if ( ! (*it).isEmpty() )
-				auxWordsList.append( (*it)[0].toUpper()+(*it).mid( 1 ) );
+		QStringList wordsList = auxText.split(separators[sepIdx]);
+		for(QStringList::ConstIterator it = wordsList.begin(), end = wordsList.end(); it != end; ++it)
+			if(!(*it).isEmpty())
+				auxWordsList.append((*it)[0].toUpper() + (*it).mid(1));
 			else
-				auxWordsList.append( "" );
-		auxText = auxWordsList.join( separators[sepIdx] );
+				auxWordsList.append("");
+		auxText = auxWordsList.join(separators[sepIdx]);
 		sepIdx++;
 	}
 	return auxText;
 }
 
-QString String::capitalize( const QString& text )
+QString String::capitalize(const QString & text)
 {
-	return text.isEmpty() ? "" : text[0].toUpper() + text.mid(1).toLower();
+	return text.isEmpty()? "" : text[0].toUpper() + text.mid(1).toLower();
 }
 
-QString String::sentence( const QString& text )
+QString String::sentence(const QString & text)
 {
-	return text.isEmpty() ? "" : text[0].toUpper() + text.mid(1).toLower();
+	return text.isEmpty()? "" : text[0].toUpper() + text.mid(1).toLower();
 }
 
-int String::rfindFunctionStart( const QString& text )
+int String::rfindFunctionStart(const QString & text)
 {
 	int pos[5] = {
-		text.lastIndexOf( "capitalize{" ),
-		text.lastIndexOf( "titlecase{" ),
-		text.lastIndexOf( "uppercase{" ),
-		text.lastIndexOf( "lowercase{" ),
-		text.lastIndexOf( "ascii{" ),
+		text.lastIndexOf("capitalize{"),
+		text.lastIndexOf("titlecase{"),
+		text.lastIndexOf("uppercase{"),
+		text.lastIndexOf("lowercase{"),
+		text.lastIndexOf("ascii{"),
 	};
 
-	return qMax( qMax( qMax( qMax( pos[0], pos[1] ), pos[2] ), pos[3] ), pos[4] );
+	return qMax(qMax(qMax(qMax(pos[0], pos[1]), pos[2]), pos[3]), pos[4]);
 }
 
-int String::rfindFunctionEnd( const QString& text, int startPos )
+int String::rfindFunctionEnd(const QString & text, int startPos)
 {
 	int pos = startPos, len = text.length();
-	while ( pos < len )
-	{
+	while(pos < len) {
 		// next is safe because idx will always be greater than 0
-		if ( text[pos] == '}' && text[pos-1] != '\\' )
+		if(text[pos] == '}' && text[pos - 1] != '\\')
 			return pos;
 		pos++;
 	}
@@ -101,48 +99,44 @@ int String::rfindFunctionEnd( const QString& text, int startPos )
  * System:
  */
 
-bool System::recursiveMakeDir( const QString& path, QStringList* createdDirsList )
+bool System::recursiveMakeDir(const QString & path, QStringList * createdDirsList)
 {
-	if ( createdDirsList )
+	if(createdDirsList)
 		createdDirsList->clear();
 
-	QDir parcialPath( "/" );
-	QStringList tokens = path.split( '/', QString::SkipEmptyParts );
-	for ( QStringList::ConstIterator it = tokens.begin(), end = tokens.end(); it != end; ++it )
-	{
-		parcialPath.setPath( parcialPath.path() + '/' + *it );
-		if ( ! QFileInfo( parcialPath.path() ).exists() )
-		{
-			if ( ! QDir().mkdir( parcialPath.path() ) )
+	QDir parcialPath("/");
+	QStringList tokens = path.split('/', QString::SkipEmptyParts);
+	for(QStringList::ConstIterator it = tokens.begin(), end = tokens.end(); it != end; ++it) {
+		parcialPath.setPath(parcialPath.path() + '/' + *it);
+		if(!QFileInfo(parcialPath.path()).exists()) {
+			if(!QDir().mkdir(parcialPath.path()))
 				return false;
-			if ( createdDirsList )
-				createdDirsList->prepend( parcialPath.path() );
+			if(createdDirsList)
+				createdDirsList->prepend(parcialPath.path());
 		}
 	}
 
 	return true;
 }
 
-bool System::copy( const QString& srcPath, const QString& dstPath )
+bool System::copy(const QString & srcPath, const QString & dstPath)
 {
-	if ( QFile::exists( dstPath ) )
-		if ( ! System::remove( dstPath ) )
+	if(QFile::exists(dstPath))
+		if(!System::remove(dstPath))
 			return false;
 
-	return QFile::copy( srcPath, dstPath );
+	return QFile::copy(srcPath, dstPath);
 }
 
-bool System::move( const QString& srcPath, const QString& dstPath )
+bool System::move(const QString & srcPath, const QString & dstPath)
 {
-	if ( ! System::copy( srcPath, dstPath ) )
-	{
+	if(!System::copy(srcPath, dstPath)) {
 		kDebug() << "move: error copying" << srcPath << "to" << dstPath;
 
 		return false;
 	}
 
-	if ( ! QFile::remove( srcPath ) )
-	{
+	if(!QFile::remove(srcPath)) {
 		kDebug() << "move: error removing" << srcPath;
 
 		return false;
@@ -151,20 +145,20 @@ bool System::move( const QString& srcPath, const QString& dstPath )
 	return true;
 }
 
-bool System::remove( const QString& path )
+bool System::remove(const QString & path)
 {
-	return QFile::remove( path );
+	return QFile::remove(path);
 }
 
-bool System::isReadable( const QString& path )
+bool System::isReadable(const QString & path)
 {
-	QFileInfo fileInfo( path );
+	QFileInfo fileInfo(path);
 	return fileInfo.isFile() && fileInfo.isReadable();
 }
 
-bool System::isWritable( const QString& path )
+bool System::isWritable(const QString & path)
 {
-	QFileInfo fileInfo( path );
+	QFileInfo fileInfo(path);
 	return fileInfo.isFile() && fileInfo.isWritable();
 }
 
@@ -175,57 +169,50 @@ QString System::homeDir()
 
 QString System::tempDir()
 {
-	QString tempDir = KGlobal::dirs()->saveLocation( "tmp" );
-	tempDir.remove( QRegExp( "[\\/]+$" ) );
+	QString tempDir = KGlobal::dirs()->saveLocation("tmp");
+	tempDir.remove(QRegExp("[\\/]+$"));
 	return tempDir;
 }
 
-KUrl System::newUrl( const KUrl& baseUrl, const QString& fileName, const QString& extension, int retries )
+KUrl System::newUrl(const KUrl & baseUrl, const QString & fileName, const QString & extension, int retries)
 {
-	if ( retries < 0 )
+	if(retries < 0)
 		retries = INT_MAX;
 
-	QString newFileName( fileName );
-	QString newFileNameBuilder( fileName + "-%1" );
-	if ( ! extension.isEmpty() )
-	{
+	QString newFileName(fileName);
+	QString newFileNameBuilder(fileName + "-%1");
+	if(!extension.isEmpty()) {
 		newFileName += '.' + extension;
 		newFileNameBuilder += '.' + extension;
 	}
 
 	QString newFileDir = baseUrl.path();
-	newFileDir.remove( QRegExp( "[\\/]+$" ) );
+	newFileDir.remove(QRegExp("[\\/]+$"));
 	newFileDir += '/';
 
-	if ( baseUrl.isLocalFile() )
-	{
-		QFileInfo dirInfo( newFileDir );
-		if ( dirInfo.isDir() && dirInfo.isWritable() )
-		{
+	if(baseUrl.isLocalFile()) {
+		QFileInfo dirInfo(newFileDir);
+		if(dirInfo.isDir() && dirInfo.isWritable()) {
 			QString newFilePath = newFileDir + newFileName;
-			if ( ! QFile::exists( newFilePath ) )
-				return KUrl( newFilePath );
+			if(!QFile::exists(newFilePath))
+				return KUrl(newFilePath);
 
-			for ( int i = 2, limit = retries + i; i < limit; ++i )
-			{
-				newFilePath = newFileDir + newFileNameBuilder.arg( i );
-				if ( ! QFile::exists( newFilePath ) )
-					return KUrl( newFilePath );
+			for(int i = 2, limit = retries + i; i < limit; ++i) {
+				newFilePath = newFileDir + newFileNameBuilder.arg(i);
+				if(!QFile::exists(newFilePath))
+					return KUrl(newFilePath);
 			}
 		}
-	}
-	else
-	{
+	} else {
 		KUrl newUrl = baseUrl;
 
-		newUrl.setPath( newFileDir + newFileName );
-		if ( ! KIO::NetAccess::exists( newUrl, KIO::NetAccess::DestinationSide, 0 ) )
+		newUrl.setPath(newFileDir + newFileName);
+		if(!KIO::NetAccess::exists(newUrl, KIO::NetAccess::DestinationSide, 0))
 			return newUrl;
 
-		for ( int i = 2, limit = retries + i; i < limit; ++i )
-		{
-			newUrl.setPath( newFileDir + newFileNameBuilder.arg( i ) );
-			if ( ! KIO::NetAccess::exists( newUrl, KIO::NetAccess::DestinationSide, 0 ) )
+		for(int i = 2, limit = retries + i; i < limit; ++i) {
+			newUrl.setPath(newFileDir + newFileNameBuilder.arg(i));
+			if(!KIO::NetAccess::exists(newUrl, KIO::NetAccess::DestinationSide, 0))
 				return newUrl;
 		}
 	}
@@ -234,14 +221,13 @@ KUrl System::newUrl( const KUrl& baseUrl, const QString& fileName, const QString
 	newFileDir = tempDir() + '/';
 
 	QString newFilePath = newFileDir + newFileName;
-	if ( ! QFile::exists( newFilePath ) )
-		return KUrl( newFilePath );
+	if(!QFile::exists(newFilePath))
+		return KUrl(newFilePath);
 
 	int i = 2;
 	do
-		newFilePath = newFileDir + newFileNameBuilder.arg( i++ );
-	while ( QFile::exists( newFilePath ) );
+		newFilePath = newFileDir + newFileNameBuilder.arg(i++);
+	while(QFile::exists(newFilePath));
 
-	return KUrl( newFilePath );
+	return KUrl(newFilePath);
 }
-

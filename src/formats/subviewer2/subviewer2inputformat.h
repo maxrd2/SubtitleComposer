@@ -21,82 +21,59 @@
  ***************************************************************************/
 
 #ifdef HAVE_CONFIG_H
-	#include <config.h>
+#include <config.h>
 #endif
 
 #include "../inputformat.h"
 
 #include <QtCore/QRegExp>
 
-namespace SubtitleComposer
-{
-	class SubViewer2InputFormat : public InputFormat
-	{
+namespace SubtitleComposer {
+	class SubViewer2InputFormat:public InputFormat {
 		friend class FormatManager;
 
-		public:
+	public:
 
-			virtual ~SubViewer2InputFormat() {}
+		virtual ~ SubViewer2InputFormat() {
+		}
+	protected:
 
-		protected:
+		virtual bool parseSubtitles(Subtitle & subtitle, const QString & data) const {
+			unsigned readLines = 0;
 
-			virtual bool parseSubtitles( Subtitle& subtitle, const QString& data ) const
-			{
-				unsigned readLines = 0;
+			for(int offset = 0; m_lineRegExp.indexIn(data, offset) != -1; offset = m_lineRegExp.pos() + m_lineRegExp.matchedLength()) {
+				Time showTime(m_lineRegExp.cap(1).toInt(), m_lineRegExp.cap(2).toInt(), m_lineRegExp.cap(3).toInt(), m_lineRegExp.cap(4).toInt() * 10);
 
-				for ( int offset = 0; m_lineRegExp.indexIn( data, offset ) != -1;
-					  offset = m_lineRegExp.pos() + m_lineRegExp.matchedLength() )
-				{
-					Time showTime(
-						m_lineRegExp.cap( 1 ).toInt(),
-						m_lineRegExp.cap( 2 ).toInt(),
-						m_lineRegExp.cap( 3 ).toInt(),
-						m_lineRegExp.cap( 4 ).toInt() * 10
-					);
+				Time hideTime(m_lineRegExp.cap(5).toInt(), m_lineRegExp.cap(6).toInt(), m_lineRegExp.cap(7).toInt(), m_lineRegExp.cap(8).toInt() * 10);
 
-					Time hideTime(
-						m_lineRegExp.cap( 5 ).toInt(),
-						m_lineRegExp.cap( 6 ).toInt(),
-						m_lineRegExp.cap( 7 ).toInt(),
-						m_lineRegExp.cap( 8 ).toInt() * 10
-					);
+				int styleFlags = 0;
+				QString text = m_lineRegExp.cap(9).replace("[br]", "\n").trimmed();
+				if(m_styleRegExp.indexIn(text) != -1) {
+					QString styleText(m_styleRegExp.cap(1));
+					if(styleText.contains('b', Qt::CaseInsensitive))
+						styleFlags |= SString::Bold;
+					if(styleText.contains('i', Qt::CaseInsensitive))
+						styleFlags |= SString::Italic;
+					if(styleText.contains('u', Qt::CaseInsensitive))
+						styleFlags |= SString::Underline;
 
-					int styleFlags = 0;
-					QString text = m_lineRegExp.cap( 9 ).replace( "[br]", "\n" ).trimmed();
-					if ( m_styleRegExp.indexIn( text ) != -1 )
-					{
-						QString styleText( m_styleRegExp.cap( 1 ) );
-						if ( styleText.contains( 'b', Qt::CaseInsensitive ) )
-							styleFlags |= SString::Bold;
-						if ( styleText.contains( 'i', Qt::CaseInsensitive ) )
-							styleFlags |= SString::Italic;
-						if ( styleText.contains( 'u', Qt::CaseInsensitive ) )
-							styleFlags |= SString::Underline;
-
-						text.remove( m_styleRegExp );
-					}
-
-					subtitle.insertLine( new SubtitleLine( SString( text, styleFlags ), showTime, hideTime ) );
-
-					readLines++;
+					text.remove(m_styleRegExp);
 				}
 
-				return readLines > 0;
-			}
+				subtitle.insertLine(new SubtitleLine(SString(text, styleFlags), showTime, hideTime));
 
-			SubViewer2InputFormat():
-				InputFormat( "SubViewer 2.0", QStringList( "sub" ) ),
-				m_lineRegExp( "([0-2][0-9]):([0-5][0-9]):([0-5][0-9])\\.([0-9][0-9]),"
-						  "([0-2][0-9]):([0-5][0-9]):([0-5][0-9])\\.([0-9][0-9])\n"
-						  "([^\n]*)\n\n", Qt::CaseInsensitive ),
-				m_styleRegExp( "(\\{y:[ubi]+\\})", Qt::CaseInsensitive )
-			{
+				readLines++;
 			}
+			return readLines > 0;
+		}
 
-			mutable QRegExp m_lineRegExp;
-			mutable QRegExp m_styleRegExp;
+	SubViewer2InputFormat():
+		InputFormat("SubViewer 2.0", QStringList("sub")), m_lineRegExp("([0-2][0-9]):([0-5][0-9]):([0-5][0-9])\\.([0-9][0-9])," "([0-2][0-9]):([0-5][0-9]):([0-5][0-9])\\.([0-9][0-9])\n" "([^\n]*)\n\n", Qt::CaseInsensitive), m_styleRegExp("(\\{y:[ubi]+\\})", Qt::CaseInsensitive) {
+		}
+
+		mutable QRegExp m_lineRegExp;
+		mutable QRegExp m_styleRegExp;
 	};
 }
 
 #endif
-

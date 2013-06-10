@@ -32,58 +32,52 @@
 
 using namespace SubtitleComposer;
 
-SplitSubtitleDialog::SplitSubtitleDialog( QWidget* parent ):
-	ActionDialog( i18n( "Split Subtitle" ), parent )
+SplitSubtitleDialog::SplitSubtitleDialog(QWidget * parent):
+ActionDialog(i18n("Split Subtitle"), parent)
 {
-	QGroupBox* settingsGroupBox = createGroupBox( i18nc( "@title:group", "Settings" ) );
+	QGroupBox *settingsGroupBox = createGroupBox(i18nc("@title:group", "Settings"));
 
-	m_splitTimeFromVideoButton = new KPushButton( settingsGroupBox );
-	m_splitTimeFromVideoButton->setIcon( KIcon( "time-from-video" ) );
+	m_splitTimeFromVideoButton = new KPushButton(settingsGroupBox);
+	m_splitTimeFromVideoButton->setIcon(KIcon("time-from-video"));
 	int buttonSize = m_splitTimeFromVideoButton->sizeHint().height();
-	m_splitTimeFromVideoButton->setFixedSize( buttonSize, buttonSize );
-	m_splitTimeFromVideoButton->setToolTip( i18n( "Set from video length" ) );
+	m_splitTimeFromVideoButton->setFixedSize(buttonSize, buttonSize);
+	m_splitTimeFromVideoButton->setToolTip(i18n("Set from video length"));
 
-	m_splitTimeEdit = new TimeEdit( settingsGroupBox );
+	m_splitTimeEdit = new TimeEdit(settingsGroupBox);
 
-	QLabel* splitTimeLabel = new QLabel( settingsGroupBox );
-	splitTimeLabel->setText( i18n( "Split time:" ) );
-	splitTimeLabel->setBuddy( m_splitTimeEdit );
+	QLabel *splitTimeLabel = new QLabel(settingsGroupBox);
+	splitTimeLabel->setText(i18n("Split time:"));
+	splitTimeLabel->setBuddy(m_splitTimeEdit);
 
-	m_shiftNewSubtitleCheckBox = new QCheckBox( settingsGroupBox );
-	m_shiftNewSubtitleCheckBox->setText( i18n( "Shift new part backwards after split" ) );
-	m_shiftNewSubtitleCheckBox->setChecked( true );
+	m_shiftNewSubtitleCheckBox = new QCheckBox(settingsGroupBox);
+	m_shiftNewSubtitleCheckBox->setText(i18n("Shift new part backwards after split"));
+	m_shiftNewSubtitleCheckBox->setChecked(true);
 
-	QHBoxLayout* splitTimeLayout = new QHBoxLayout();
-	splitTimeLayout->addWidget( m_splitTimeFromVideoButton );
-	splitTimeLayout->addWidget( m_splitTimeEdit );
+	QHBoxLayout *splitTimeLayout = new QHBoxLayout();
+	splitTimeLayout->addWidget(m_splitTimeFromVideoButton);
+	splitTimeLayout->addWidget(m_splitTimeEdit);
 
-	QGridLayout* settingsLayout = createLayout( settingsGroupBox );
-	settingsLayout->addWidget( splitTimeLabel, 0, 0, Qt::AlignRight|Qt::AlignVCenter );
-	settingsLayout->addLayout( splitTimeLayout, 0, 1 );
-	settingsLayout->addWidget( m_shiftNewSubtitleCheckBox, 1, 0, 1, 2 );
+	QGridLayout *settingsLayout = createLayout(settingsGroupBox);
+	settingsLayout->addWidget(splitTimeLabel, 0, 0, Qt::AlignRight | Qt::AlignVCenter);
+	settingsLayout->addLayout(splitTimeLayout, 0, 1);
+	settingsLayout->addWidget(m_shiftNewSubtitleCheckBox, 1, 0, 1, 2);
 
-	connect( m_splitTimeFromVideoButton, SIGNAL( clicked() ), SLOT( setSplitTimeFromVideo() ) );
+	connect(m_splitTimeFromVideoButton, SIGNAL(clicked()), SLOT(setSplitTimeFromVideo()));
 }
 
 void SplitSubtitleDialog::setSplitTimeFromVideo()
 {
-	m_splitTimeEdit->setValue( (int)(Player::instance()->length()*1000 + 0.5) );
+	m_splitTimeEdit->setValue((int)(Player::instance()->length() * 1000 + 0.5));
 }
 
-Time SplitSubtitleDialog::splitTime() const
-{
+Time SplitSubtitleDialog::splitTime() const {
 	return m_splitTimeEdit->value();
-}
-
-bool SplitSubtitleDialog::shiftNewSubtitle() const
-{
+} bool SplitSubtitleDialog::shiftNewSubtitle() const {
 	return m_shiftNewSubtitleCheckBox->isChecked();
-}
-
-void SplitSubtitleDialog::show()
+} void SplitSubtitleDialog::show()
 {
-	m_splitTimeFromVideoButton->setEnabled( Player::instance()->state() > Player::Opening );
-	if ( m_splitTimeFromVideoButton->isEnabled() )
+	m_splitTimeFromVideoButton->setEnabled(Player::instance()->state() > Player::Opening);
+	if(m_splitTimeFromVideoButton->isEnabled())
 		setSplitTimeFromVideo();
 
 	ActionDialog::show();

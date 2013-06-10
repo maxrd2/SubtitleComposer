@@ -21,7 +21,7 @@
 ***************************************************************************/
 
 #ifdef HAVE_CONFIG_H
-	#include <config.h>
+#include <config.h>
 #endif
 
 #include <QtCore/QObject>
@@ -36,69 +36,55 @@ class KAction;
 class KDialog;
 class KPushButton;
 
-namespace SubtitleComposer
-{
+namespace SubtitleComposer {
 	class Subtitle;
 
-	class ScriptsManager : public QObject
-	{
-		Q_OBJECT
+	class ScriptsManager:public QObject {
+	Q_OBJECT public:
 
-		public:
+		explicit ScriptsManager(QObject * parent = 0);
+		virtual ~ ScriptsManager();
 
-			explicit ScriptsManager( QObject* parent=0 );
-			virtual ~ScriptsManager();
+		QString currentScriptName() const;
+		QStringList scriptNames() const;
 
-			QString currentScriptName() const;
-			QStringList scriptNames() const;
+		virtual bool eventFilter(QObject * object, QEvent * event);
 
-			virtual bool eventFilter( QObject* object, QEvent* event );
+		public slots:void setSubtitle(Subtitle * subtitle = 0);
 
-		public slots:
+		void showDialog();
 
-			void setSubtitle( Subtitle* subtitle=0 );
+		void createScript(const QString & scriptName = QString());
+		void addScript(const KUrl & srcScriptUrl = KUrl());
+		void removeScript(const QString & scriptName = QString());
+		void editScript(const QString & scriptName = QString());
+		void runScript(const QString & scriptName = QString());
+		void reloadScripts();
 
-			void showDialog();
+	private:
 
-			void createScript( const QString& scriptName=QString() );
-			void addScript( const KUrl& srcScriptUrl=KUrl() );
-			void removeScript( const QString& scriptName=QString() );
-			void editScript( const QString& scriptName=QString() );
-			void runScript( const QString& scriptName=QString() );
-			void reloadScripts();
+		static const QStringList & mimeTypes();
+		QMenu *toolsMenu();
 
-		private:
+		private slots:void onToolsMenuActionTriggered(QAction * action);
 
-			static const QStringList& mimeTypes();
-			QMenu* toolsMenu();
+	private:
 
-		private slots:
-
-			void onToolsMenuActionTriggered( QAction* action );
-
-		private:
-
-			QMap<QString,QString> m_scripts; // name => path
-			TreeView* m_scriptsWidget;
-			KPushButton* m_runScriptButton;
-			KDialog* m_dialog;
+		QMap < QString, QString > m_scripts;	// name => path
+		TreeView *m_scriptsWidget;
+		KPushButton *m_runScriptButton;
+		KDialog *m_dialog;
 	};
 
-	class Debug : public QObject
-	{
-		Q_OBJECT
+	class Debug:public QObject {
+	Q_OBJECT public:
 
-		public:
+		Debug();
+		~Debug();
 
-			Debug();
-			~Debug();
-
-		public slots:
-
-			void information( const QString& message );
-			void warning( const QString& message );
-			void error( const QString& message );
+		public slots:void information(const QString & message);
+		void warning(const QString & message);
+		void error(const QString & message);
 	};
 }
-
 #endif

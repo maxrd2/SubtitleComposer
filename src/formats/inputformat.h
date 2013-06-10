@@ -21,41 +21,36 @@
  ***************************************************************************/
 
 #ifdef HAVE_CONFIG_H
-	#include <config.h>
+#include <config.h>
 #endif
 
 #include "format.h"
 
-namespace SubtitleComposer
-{
-	class InputFormat : public Format
-	{
-		public:
+namespace SubtitleComposer {
+	class InputFormat:public Format {
+	public:
 
-			virtual ~InputFormat() {}
+		virtual ~ InputFormat() {
+		}
+		bool readSubtitle(Subtitle & subtitle, bool primary, const QString & data) const {
+			Subtitle newSubtitle;
 
-			bool readSubtitle( Subtitle& subtitle, bool primary, const QString& data ) const
-			{
-				Subtitle newSubtitle;
+			if(!parseSubtitles(newSubtitle, data))
+				return false;
 
-				if ( ! parseSubtitles( newSubtitle, data ) )
-					return false;
+			if(primary)
+				subtitle.setPrimaryData(newSubtitle, true);
+			else
+				subtitle.setSecondaryData(newSubtitle, true);
 
-				if ( primary )
-					subtitle.setPrimaryData( newSubtitle, true );
-				else
-					subtitle.setSecondaryData( newSubtitle, true );
+			return true;
+		}
+	protected:
 
-				return true;
-			}
+		virtual bool parseSubtitles(Subtitle & subtitle, const QString & data)const = 0;
 
-		protected:
-
-			virtual bool parseSubtitles( Subtitle& subtitle, const QString& data ) const = 0;
-
-			InputFormat( const QString& name, const QStringList& extensions ):
-				Format( name, extensions ) {}
-	};
+		InputFormat(const QString & name, const QStringList & extensions):Format(name, extensions) {
+	}};
 }
 
 #endif

@@ -21,26 +21,21 @@
  ***************************************************************************/
 
 #ifdef HAVE_CONFIG_H
-	#include <config.h>
+#include <config.h>
 #endif
 
 #include <QtCore/QObject>
 
-class WaveWriterTest: public QObject
-{
-	Q_OBJECT
+class WaveWriterTest:public QObject {
+	Q_OBJECT private slots:void testWriteMono8bps();
+	void testWriteMono16bps();
+	void testWriteMono24bps();
+	void testWriteMono32bps();
 
-	private slots:
-
-		void testWriteMono8bps();
-		void testWriteMono16bps();
-		void testWriteMono24bps();
-		void testWriteMono32bps();
-
-		void testWriteStereo8bps();
-		void testWriteStereo16bps();
-		void testWriteStereo24bps();
-		void testWriteStereo32bps();
+	void testWriteStereo8bps();
+	void testWriteStereo16bps();
+	void testWriteStereo24bps();
+	void testWriteStereo32bps();
 };
 
 #endif

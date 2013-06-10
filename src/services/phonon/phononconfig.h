@@ -21,33 +21,31 @@
  ***************************************************************************/
 
 #ifdef HAVE_CONFIG_H
-	#include <config.h>
+#include <config.h>
 #endif
 
 #include "../../config/appconfiggroup.h"
 
-namespace SubtitleComposer
-{
-	class PhononConfig : public AppConfigGroup
-	{
+namespace SubtitleComposer {
+	class PhononConfig:public AppConfigGroup {
 		friend class PhononPlayerBackend;
 		friend class PhononConfigWidget;
 
-		public:
+	public:
 
-			virtual AppConfigGroup* clone() const { return new PhononConfig( *this ); }
+		virtual AppConfigGroup * clone() const {
+			return new PhononConfig(*this);
+		}
+	private:
 
-		private:
+		PhononConfig():AppConfigGroup("Phonon", defaults()) {
+		}
+		PhononConfig(const PhononConfig & config):AppConfigGroup(config) {
+		} static QMap < QString, QString > defaults() {
+			QMap < QString, QString > defaults;
 
-			PhononConfig():AppConfigGroup( "Phonon", defaults() ) {}
-			PhononConfig( const PhononConfig& config ):AppConfigGroup( config ) {}
-
-			static QMap<QString,QString> defaults()
-			{
-				QMap<QString,QString> defaults;
-
-				return defaults;
-			}
+			return defaults;
+		}
 
 	};
 }

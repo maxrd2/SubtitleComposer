@@ -21,57 +21,48 @@
 ***************************************************************************/
 
 #ifdef HAVE_CONFIG_H
-	#include <config.h>
+#include <config.h>
 #endif
 
 #include "../../core/subtitle.h"
 
-namespace SubtitleComposer
-{
+namespace SubtitleComposer {
 	class SubtitleLine;
 
-	class ErrorTracker : public QObject
-	{
-		Q_OBJECT
+	class ErrorTracker:public QObject {
+	Q_OBJECT public:
 
-		public:
+		explicit ErrorTracker(QObject * parent = 0);
+		virtual ~ ErrorTracker();
 
-			explicit ErrorTracker( QObject* parent=0 );
-			virtual ~ErrorTracker();
+		bool isTracking() const;
 
-			bool isTracking() const;
+		public slots:void setSubtitle(Subtitle * subtitle = 0);
 
-		public slots:
+	private:
 
-			void setSubtitle( Subtitle* subtitle=0 );
+		void connectSlots();
+		void disconnectSlots();
 
-		private:
+		void updateLineErrors(SubtitleLine * line, int errorFlags) const;
 
-			void connectSlots();
-			void disconnectSlots();
+		private slots:void onLinePrimaryTextChanged(SubtitleLine * line);
+		void onLineSecondaryTextChanged(SubtitleLine * line);
+		void onLineTimesChanged(SubtitleLine * line);
 
-			void updateLineErrors( SubtitleLine* line, int errorFlags ) const;
+		void onErrorsOptionChanged(const QString & optionName, const QString & value);
 
-		private slots:
+	private:
 
-			void onLinePrimaryTextChanged( SubtitleLine* line );
-			void onLineSecondaryTextChanged( SubtitleLine* line );
-			void onLineTimesChanged( SubtitleLine* line );
+		Subtitle * m_subtitle;
 
-			void onErrorsOptionChanged( const QString& optionName, const QString& value );
-
-		private:
-
-			Subtitle* m_subtitle;
-
-			bool m_autoClearFixed;
-			int m_minDuration;
-			int m_maxDuration;
-			int m_minDurationPerChar;
-			int m_maxDurationPerChar;
-			int m_maxCharacters;
-			int m_maxLines;
+		bool m_autoClearFixed;
+		int m_minDuration;
+		int m_maxDuration;
+		int m_minDurationPerChar;
+		int m_maxDurationPerChar;
+		int m_maxCharacters;
+		int m_maxLines;
 	};
 }
-
 #endif

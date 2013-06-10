@@ -21,7 +21,7 @@
 ***************************************************************************/
 
 #ifdef HAVE_CONFIG_H
-	#include <config.h>
+#include <config.h>
 #endif
 
 #include "../core/rangelist.h"
@@ -33,177 +33,174 @@
 
 class QTimer;
 
-namespace SubtitleComposer
-{
+namespace SubtitleComposer {
 	class ErrorsModel;
 
-	class ErrorsModelNode
-	{
-		public:
+	class ErrorsModelNode {
+	public:
 
-			~ErrorsModelNode();
+		~ErrorsModelNode();
 
-			inline const ErrorsModel* model() const { return m_model; }
+		inline const ErrorsModel *model() const {
+			return m_model;
+		}
+		inline const SubtitleLine *line() const {
+			return m_line;
+		}
+		inline int errorCount() const {
+			return m_errorCount;
+		}
+		inline bool isMarked() const {
+			return m_marked;
+		}
+		inline bool isVisible() const {
+			return m_errorCount;
+		}
+	private:
 
-			inline const SubtitleLine* line() const { return m_line; }
+		ErrorsModelNode(ErrorsModel * model, const SubtitleLine * line);
 
-			inline int errorCount() const { return m_errorCount; }
-			inline bool isMarked() const { return m_marked; }
+		void update();
 
-			inline bool isVisible() const { return m_errorCount; }
+	private:
 
-		private:
+		ErrorsModel * m_model;
+		const SubtitleLine *m_line;
+		int m_errorCount;
+		bool m_marked;
 
-			ErrorsModelNode( ErrorsModel* model, const SubtitleLine* line );
-
-			void update();
-
-		private:
-
-			ErrorsModel* m_model;
-			const SubtitleLine* m_line;
-			int m_errorCount;
-			bool m_marked;
-
-			friend class ErrorsModel;
+		friend class ErrorsModel;
 	};
 
 
-	class ErrorsModel : public QAbstractItemModel
-	{
-		Q_OBJECT
+	class ErrorsModel:public QAbstractItemModel {
+		Q_OBJECT friend class ErrorsModelNode;
 
-		friend class ErrorsModelNode;
+	public:
 
-		public:
+		enum { Number = 0, ErrorCount, UserMark, ColumnCount };
 
-			enum { Number=0, ErrorCount, UserMark, ColumnCount };
+		explicit ErrorsModel(QObject * parent = 0);
+		virtual ~ ErrorsModel();
 
-			explicit ErrorsModel( QObject* parent=0 );
-			virtual ~ErrorsModel();
+		int mapModelIndexToLineIndex(const QModelIndex & modelIndex) const;
 
-			int mapModelIndexToLineIndex( const QModelIndex& modelIndex ) const;
+		int mapLineIndexToModelL1Row(int lineIndex) const;
+		int mapModelL1RowToLineIndex(int modelL1Row) const;
 
-			int mapLineIndexToModelL1Row( int lineIndex ) const;
-			int mapModelL1RowToLineIndex( int modelL1Row ) const;
+		int mapModelL2RowToLineErrorID(int modelL2Row, int lineErrorFlags) const;
+		int mapModelL2RowToLineErrorFlag(int modelL2Row, int lineErrorFlags) const;
 
-			int mapModelL2RowToLineErrorID( int modelL2Row, int lineErrorFlags ) const;
-			int mapModelL2RowToLineErrorFlag( int modelL2Row, int lineErrorFlags ) const;
+		inline Subtitle *subtitle() const {
+			return m_subtitle;
+		};
+		void setSubtitle(Subtitle * subtitle);
 
-			inline Subtitle* subtitle() const { return m_subtitle; };
-			void setSubtitle( Subtitle* subtitle );
+		inline const ErrorsModelNode *node(int lineIndex) const {
+			return m_nodes.at(lineIndex);
+		}
+		inline int lineWithErrorsCount() const {
+			return m_lineWithErrorsCount;
+		};
+		inline int errorCount() const {
+			return m_errorCount;
+		};
+		inline int markCount() const {
+			return m_markCount;
+		};
 
-			inline const ErrorsModelNode* node( int lineIndex ) const { return m_nodes.at( lineIndex ); }
+		virtual int rowCount(const QModelIndex & parent = QModelIndex())const;
+		virtual int columnCount(const QModelIndex & parent = QModelIndex())const;
 
-			inline int lineWithErrorsCount() const { return m_lineWithErrorsCount; };
-			inline int errorCount() const { return m_errorCount; };
-			inline int markCount() const { return m_markCount; };
+		virtual QModelIndex index(int row, int column, const QModelIndex & index = QModelIndex())const;
+		virtual QModelIndex parent(const QModelIndex & index) const;
 
-			virtual int rowCount( const QModelIndex& parent=QModelIndex() ) const;
-			virtual int columnCount( const QModelIndex& parent=QModelIndex() ) const;
+		virtual QVariant headerData(int section, Qt::Orientation orientation, int role = Qt::DisplayRole) const;
 
-			virtual QModelIndex index( int row, int column, const QModelIndex& index=QModelIndex() ) const;
-			virtual QModelIndex parent( const QModelIndex& index ) const;
+		virtual QVariant data(const QModelIndex & index, int role) const;
 
-			virtual QVariant headerData( int section, Qt::Orientation orientation, int role=Qt::DisplayRole ) const;
+		signals:void dataChanged();
+		void dataChanged(const QModelIndex & topLeft, const QModelIndex & bottomRight);
 
-			virtual QVariant data( const QModelIndex& index, int role ) const;
+		void statsChanged();
 
-		signals:
+		private slots:void onLinesInserted(int firstIndex, int lastIndex);
+		void onLinesRemoved(int firstIndex, int lastIndex);
 
-			void dataChanged();
-			void dataChanged( const QModelIndex& topLeft, const QModelIndex& bottomRight );
+		void onLineErrorsChanged(SubtitleLine * line);
 
-			void statsChanged();
+		void emitDataChanged();
 
-		private slots:
+	private:
 
-			void onLinesInserted( int firstIndex, int lastIndex );
-			void onLinesRemoved( int firstIndex, int lastIndex );
+		static const QIcon & markIcon();
+		static const QIcon & errorIcon();
 
-			void onLineErrorsChanged( SubtitleLine* line );
+		void markLineChanged(int lineIndex);
+		void updateLineErrors(SubtitleLine * line, int errorFlags);
 
-			void emitDataChanged();
+		void incrementVisibleLinesCount(int delta);
+		void incrementErrorsCount(int delta);
+		void incrementMarksCount(int delta);
 
-		private:
+	private:
 
-			static const QIcon& markIcon();
-			static const QIcon& errorIcon();
+		Subtitle * m_subtitle;
 
-			void markLineChanged( int lineIndex );
-			void updateLineErrors( SubtitleLine* line, int errorFlags );
+		const SubtitleLine LEVEL1_LINE;
 
-			void incrementVisibleLinesCount( int delta );
-			void incrementErrorsCount( int delta );
-			void incrementMarksCount( int delta );
+		QList < ErrorsModelNode * >m_nodes;
 
-		private:
+		QTimer *m_statsChangedTimer;
+		int m_lineWithErrorsCount;
+		int m_errorCount;
+		int m_markCount;
 
-			Subtitle* m_subtitle;
-
-			const SubtitleLine LEVEL1_LINE;
-
-			QList<ErrorsModelNode*> m_nodes;
-
-			QTimer* m_statsChangedTimer;
-			int m_lineWithErrorsCount;
-			int m_errorCount;
-			int m_markCount;
-
-			QTimer* m_dataChangedTimer;
-			int m_minChangedLineIndex;
-			int m_maxChangedLineIndex;
+		QTimer *m_dataChangedTimer;
+		int m_minChangedLineIndex;
+		int m_maxChangedLineIndex;
 	};
 
-	class ErrorsWidget : public TreeView
-	{
-		Q_OBJECT
+	class ErrorsWidget:public TreeView {
+	Q_OBJECT public:
 
-		public:
+		ErrorsWidget(QWidget * parent);
+		virtual ~ ErrorsWidget();
 
-			ErrorsWidget( QWidget* parent );
-			virtual ~ErrorsWidget();
+		void loadConfig();
+		void saveConfig();
 
-			void loadConfig();
-			void saveConfig();
+		SubtitleLine *currentLine();
 
-			SubtitleLine* currentLine();
+		int lineSelectedErrorFlags(int lineIndex);
 
-			int lineSelectedErrorFlags( int lineIndex );
+		RangeList selectionRanges() const;
 
-			RangeList selectionRanges() const;
+		inline ErrorsModel *model() const {
+			return static_cast < ErrorsModel * >(TreeView::model());
+		}
+		public slots:void setSubtitle(Subtitle * subtitle = 0);
 
-			inline ErrorsModel* model() const { return static_cast<ErrorsModel*>( TreeView::model() ); }
+		void setCurrentLine(SubtitleLine * line, bool clearSelection = true);
 
-		public slots:
+		void expandAll();		// reimplemented because currently calling QTreeView has many bad side effects
 
-			void setSubtitle( Subtitle* subtitle=0 );
+		signals:void currentLineChanged(SubtitleLine * line);
+		void lineDoubleClicked(SubtitleLine * line);
 
-			void setCurrentLine( SubtitleLine* line, bool clearSelection=true );
+	protected:
 
-			void expandAll(); // reimplemented because currently calling QTreeView has many bad side effects
+		virtual void contextMenuEvent(QContextMenuEvent * event);
+		virtual void mouseDoubleClickEvent(QMouseEvent * event);
+		virtual void keyPressEvent(QKeyEvent * event);
+		virtual void showEvent(QShowEvent * event);
+		virtual void hideEvent(QHideEvent * event);
 
-		signals:
+		protected slots:void onCurrentRowChanged(const QModelIndex & currentIndex);
 
-			void currentLineChanged( SubtitleLine* line );
-			void lineDoubleClicked( SubtitleLine* line );
+	private:
 
-		protected:
-
-			virtual void contextMenuEvent( QContextMenuEvent* event );
-			virtual void mouseDoubleClickEvent( QMouseEvent* event );
-			virtual void keyPressEvent( QKeyEvent* event );
-			virtual void showEvent( QShowEvent* event );
-			virtual void hideEvent( QHideEvent* event );
-
-		protected slots:
-
-			void onCurrentRowChanged( const QModelIndex& currentIndex );
-
-		private:
-
-			Subtitle* m_subtitle;
+		Subtitle * m_subtitle;
 	};
 }
-
 #endif
