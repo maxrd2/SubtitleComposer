@@ -29,6 +29,7 @@
 #include "application.h"
 
 #include <QtCore/QFile>
+#include <QtCore/QDir>
 
 #include <KAboutData>
 #include <KCmdLineArgs>
@@ -75,11 +76,15 @@ int main(int argc, char **argv)
 	// Handle our own options/arguments
 	KCmdLineArgs *args = KCmdLineArgs::parsedArgs();
 
+	// current working directory url
+	KUrl cwd(QDir::currentPath());
+	cwd.adjustPath(KUrl::AddTrailingSlash);
+
 	if(args->count())
-		app.openSubtitle(KUrl(args->arg(0)));
+		app.openSubtitle(KUrl(cwd, args->arg(0)));
 
 	if(args->count() > 1)
-		app.openSubtitleTr(KUrl(args->arg(1)));
+		app.openSubtitleTr(KUrl(cwd, args->arg(1)));
 
 	args->clear();
 
