@@ -213,7 +213,7 @@ namespace SubtitleComposer {
 		return m_string[index];
 	}
 
-	inline const QChar SString::operator[] (int index)const {
+	inline const QChar SString::operator[] (int index) const {
 		return m_string[index];
 	}
 	inline int SString::styleFlagsAt(int index) const {
@@ -221,7 +221,9 @@ namespace SubtitleComposer {
 	}
 	inline void SString::setStyleFlagsAt(int index, int styleFlags) const {
 		m_styleFlags[index] = styleFlags;
-	} inline SString & SString::append(QChar ch) {
+	}
+
+	inline SString & SString::append(QChar ch) {
 		return insert(m_string.length(), ch);
 	}
 

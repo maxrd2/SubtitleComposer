@@ -75,62 +75,61 @@ QString SString::richString(RichOutputMode mode) const {
 
 	QString ret;
 
-	if(mode == Compact)
-{
-char prevStyleFlags = m_styleFlags[0];
-int prevIndex = 0;
+	if(mode == Compact) {
+		char prevStyleFlags = m_styleFlags[0];
+		int prevIndex = 0;
 
-if(prevStyleFlags & Italic)
-	ret += "<i>";
-if(prevStyleFlags & Bold)
-	ret += "<b>";
-if(prevStyleFlags & Underline)
-	ret += "<u>";
-if(prevStyleFlags & StrikeThrough)
-	ret += "<s>";
-
-const int size = m_string.length();
-for(int index = 1; index < size; ++index) {
-	if(m_styleFlags[index] != prevStyleFlags) {
-		QString token(m_string.mid(prevIndex, index - prevIndex));
-		ret += token.replace('<', "&lt;").replace('>', "&gt;");
-
-		if((prevStyleFlags & StrikeThrough) && !(m_styleFlags[index] & StrikeThrough))
-			ret += "</s>";
-		if((prevStyleFlags & Underline) && !(m_styleFlags[index] & Underline))
-			ret += "</u>";
-		if((prevStyleFlags & Bold) && !(m_styleFlags[index] & Bold))
-			ret += "</b>";
-		if((prevStyleFlags & Italic) && !(m_styleFlags[index] & Italic))
-			ret += "</i>";
-
-		if(!(prevStyleFlags & Italic) && (m_styleFlags[index] & Italic))
+		if(prevStyleFlags & Italic)
 			ret += "<i>";
-		if(!(prevStyleFlags & Bold) && (m_styleFlags[index] & Bold))
+		if(prevStyleFlags & Bold)
 			ret += "<b>";
-		if(!(prevStyleFlags & Underline) && (m_styleFlags[index] & Underline))
+		if(prevStyleFlags & Underline)
 			ret += "<u>";
-		if(!(prevStyleFlags & StrikeThrough) && (m_styleFlags[index] & StrikeThrough))
+		if(prevStyleFlags & StrikeThrough)
 			ret += "<s>";
 
-		prevIndex = index;
-		prevStyleFlags = m_styleFlags[index];
-	}
-} QString token(m_string.mid(prevIndex, m_string.length() - prevIndex));
-if(token.length()) {
-	ret += token.replace('<', "&lt;").replace('>', "&gt;");
+		const int size = m_string.length();
+		for(int index = 1; index < size; ++index) {
+			if(m_styleFlags[index] != prevStyleFlags) {
+				QString token(m_string.mid(prevIndex, index - prevIndex));
+				ret += token/*.replace('<', "&lt;").replace('>', "&gt;")*/;
 
-	if(prevStyleFlags & StrikeThrough)
-		ret += "</s>";
-	if(prevStyleFlags & Underline)
-		ret += "</u>";
-	if(prevStyleFlags & Bold)
-		ret += "</b>";
-	if(prevStyleFlags & Italic)
-		ret += "</i>";
-}
-	} else						// outputMode == Verbose
-	{
+				if((prevStyleFlags & StrikeThrough) && !(m_styleFlags[index] & StrikeThrough))
+					ret += "</s>";
+				if((prevStyleFlags & Underline) && !(m_styleFlags[index] & Underline))
+					ret += "</u>";
+				if((prevStyleFlags & Bold) && !(m_styleFlags[index] & Bold))
+					ret += "</b>";
+				if((prevStyleFlags & Italic) && !(m_styleFlags[index] & Italic))
+					ret += "</i>";
+
+				if(!(prevStyleFlags & Italic) && (m_styleFlags[index] & Italic))
+					ret += "<i>";
+				if(!(prevStyleFlags & Bold) && (m_styleFlags[index] & Bold))
+					ret += "<b>";
+				if(!(prevStyleFlags & Underline) && (m_styleFlags[index] & Underline))
+					ret += "<u>";
+				if(!(prevStyleFlags & StrikeThrough) && (m_styleFlags[index] & StrikeThrough))
+					ret += "<s>";
+
+				prevIndex = index;
+				prevStyleFlags = m_styleFlags[index];
+			}
+		}
+		QString token(m_string.mid(prevIndex, m_string.length() - prevIndex));
+		if(token.length()) {
+			ret += token/*.replace('<', "&lt;").replace('>', "&gt;")*/;
+
+			if(prevStyleFlags & StrikeThrough)
+				ret += "</s>";
+			if(prevStyleFlags & Underline)
+				ret += "</u>";
+			if(prevStyleFlags & Bold)
+				ret += "</b>";
+			if(prevStyleFlags & Italic)
+				ret += "</i>";
+		}
+	} else {						// outputMode == Verbose
 		int currentStyleFlags = m_styleFlags[0];
 		int prevIndex = 0;
 		for(uint index = 1, size = m_string.length(); index < size; ++index) {
@@ -219,7 +218,7 @@ SString & SString::setRichString(const QString & string)
 
 		if(newStyle != currentStyle) {
 			QString token(string.mid(offsetPos, matchedPos - offsetPos));
-			append(SString(token.replace("&lt;", "<").replace("&gt;", ">"), currentStyle));
+			append(SString(token/*.replace("&lt;", "<").replace("&gt;", ">")*/, currentStyle));
 			currentStyle = newStyle;
 		}
 
@@ -227,29 +226,31 @@ SString & SString::setRichString(const QString & string)
 	}
 
 	QString token(string.mid(offsetPos, matchedPos - offsetPos));
-	append(SString(token.replace("&lt;", "<").replace("&gt;", ">"), currentStyle));
+	append(SString(token/*.replace("&lt;", "<").replace("&gt;", ">")*/, currentStyle));
 
 	return *this;
 }
 
-int SString::cummulativeStyleFlags() const {
-	int cummulativeStyleFlags = 0;
-	for(int index = 0, size = m_string.length(); index < size; ++index)
+int SString::cummulativeStyleFlags() const
 {
-cummulativeStyleFlags |= m_styleFlags[index];
-if(cummulativeStyleFlags == AllStyles)
-	break;
-} return cummulativeStyleFlags;
+	int cummulativeStyleFlags = 0;
+	for(int index = 0, size = m_string.length(); index < size; ++index) {
+		cummulativeStyleFlags |= m_styleFlags[index];
+		if(cummulativeStyleFlags == AllStyles)
+			break;
+	}
+	return cummulativeStyleFlags;
 }
 
-bool SString::hasStyleFlags(int styleFlags) const {
-	int cummulativeStyleFlags = 0;
-	for(int index = 0, size = m_string.length(); index < size; ++index)
+bool SString::hasStyleFlags(int styleFlags) const
 {
-cummulativeStyleFlags |= m_styleFlags[index];
-if((cummulativeStyleFlags & styleFlags) == styleFlags)
-	return true;
-} return false;
+	int cummulativeStyleFlags = 0;
+	for(int index = 0, size = m_string.length(); index < size; ++index) {
+		cummulativeStyleFlags |= m_styleFlags[index];
+		if((cummulativeStyleFlags & styleFlags) == styleFlags)
+			return true;
+	}
+	return false;
 }
 
 SString & SString::setStyleFlags(int index, int len, int styleFlags)
@@ -782,83 +783,93 @@ SString & SString::replace(const QRegExp & rx, const SString & a)
 	return *this;
 }
 
-SStringList SString::split(const QString & sep, QString::SplitBehavior behavior, Qt::CaseSensitivity cs) const {
+SStringList SString::split(const QString & sep, QString::SplitBehavior behavior, Qt::CaseSensitivity cs) const
+{
 	SStringList ret;
 
-	if(sep.length())
-{
-int offsetIndex = 0;
+	if(sep.length()) {
+		int offsetIndex = 0;
 
-for(int matchedIndex; (matchedIndex = m_string.indexOf(sep, offsetIndex, cs)) != -1; offsetIndex = matchedIndex + sep.length()) {
-	SString token(m_string.mid(offsetIndex, matchedIndex - offsetIndex));
-	if(behavior == QString::KeepEmptyParts || token.length())
-		ret << token;
-} SString token(m_string.mid(offsetIndex));
-if(behavior == QString::KeepEmptyParts || token.length())
-	ret << token;
-	} else if(behavior == QString::KeepEmptyParts || length())
+		for(int matchedIndex; (matchedIndex = m_string.indexOf(sep, offsetIndex, cs)) != -1; offsetIndex = matchedIndex + sep.length()) {
+			SString token(m_string.mid(offsetIndex, matchedIndex - offsetIndex));
+			if(behavior == QString::KeepEmptyParts || token.length())
+				ret << token;
+		}
+		SString token(m_string.mid(offsetIndex));
+		if(behavior == QString::KeepEmptyParts || token.length())
+			ret << token;
+	} else if(behavior == QString::KeepEmptyParts || length()) {
 		ret << *this;
+	}
 
 	return ret;
 }
 
-SStringList SString::split(const QChar & sep, QString::SplitBehavior behavior, Qt::CaseSensitivity cs) const {
+SStringList SString::split(const QChar & sep, QString::SplitBehavior behavior, Qt::CaseSensitivity cs) const
+{
 	SStringList ret;
 
 	int offsetIndex = 0;
 
-	for(int matchedIndex; (matchedIndex = m_string.indexOf(sep, offsetIndex, cs)) != -1; offsetIndex = matchedIndex + 1)
-{
-SString token(m_string.mid(offsetIndex, matchedIndex - offsetIndex));
-if(behavior == QString::KeepEmptyParts || token.length())
-	ret << token;
-} SString token(m_string.mid(offsetIndex));
+	for(int matchedIndex; (matchedIndex = m_string.indexOf(sep, offsetIndex, cs)) != -1; offsetIndex = matchedIndex + 1) {
+		SString token(m_string.mid(offsetIndex, matchedIndex - offsetIndex));
+		if(behavior == QString::KeepEmptyParts || token.length())
+			ret << token;
+	}
+	SString token(m_string.mid(offsetIndex));
 	if(behavior == QString::KeepEmptyParts || token.length())
 		ret << token;
 
 	return ret;
 }
 
-SStringList SString::split(const QRegExp & sep, QString::SplitBehavior behavior) const {
+SStringList SString::split(const QRegExp & sep, QString::SplitBehavior behavior) const
+{
 	SStringList ret;
 
 	QRegExp sepAux(sep);
 
 	int offsetIndex = 0;
 
-	for(int matchedIndex; (matchedIndex = sepAux.indexIn(m_string, offsetIndex)) != -1; offsetIndex = matchedIndex + sepAux.matchedLength())
-{
-SString token(m_string.mid(offsetIndex, matchedIndex - offsetIndex));
-if(behavior == QString::KeepEmptyParts || token.length())
-	ret << token;
-} SString token(m_string.mid(offsetIndex));
+	for(int matchedIndex; (matchedIndex = sepAux.indexIn(m_string, offsetIndex)) != -1; offsetIndex = matchedIndex + sepAux.matchedLength()) {
+		SString token(m_string.mid(offsetIndex, matchedIndex - offsetIndex));
+		if(behavior == QString::KeepEmptyParts || token.length())
+			ret << token;
+	}
+	SString token(m_string.mid(offsetIndex));
 	if(behavior == QString::KeepEmptyParts || token.length())
 		ret << token;
 
 	return ret;
 }
 
-SString SString::left(int len) const {
+SString SString::left(int len) const
+{
 	len = length(0, len);
 	SString ret;
 	ret.m_string = m_string.left(len);
 	ret.setMinFlagsCapacity(len);
 	memcpy(ret.m_styleFlags, m_styleFlags, len);
 	return ret;
-} SString SString::right(int len) const {
+}
+
+SString SString::right(int len) const
+{
 	len = length(0, len);
 	SString ret;
 	ret.m_string = m_string.right(len);
 	ret.setMinFlagsCapacity(len);
 	memcpy(ret.m_styleFlags, m_styleFlags + m_string.length() - len, len);
 	return ret;
-} SString SString::mid(int index, int len) const {
-	if(index < 0)
-{
-if(len >= 0)
-	len += index;
-index = 0;
 }
+
+SString SString::mid(int index, int len) const
+{
+	if(index < 0) {
+		if(len >= 0)
+			len += index;
+		index = 0;
+	}
 
 	if(index >= (int)m_string.length())
 		return SString();
@@ -871,15 +882,22 @@ index = 0;
 	return ret;
 }
 
-SString SString::toLower() const {
+SString SString::toLower() const
+{
 	SString ret(*this);
 	ret.m_string = m_string.toLower();
 	return ret;
-} SString SString::toUpper() const {
+}
+
+SString SString::toUpper() const
+{
 	SString ret(*this);
 	ret.m_string = m_string.toUpper();
 	return ret;
-} SString SString::toTitleCase(bool lowerFirst) const {
+}
+
+SString SString::toTitleCase(bool lowerFirst) const
+{
 	const QString wordSeparators(" -_([:,;./\\\t\n\"");
 
 	SString ret(*this);
@@ -888,22 +906,23 @@ SString SString::toLower() const {
 		ret.m_string = m_string.toLower();
 
 	bool wordStart = true;
-	for(uint idx = 0, size = m_string.length(); idx < size; ++idx)
-{
-QCharRef chr = ret.m_string[idx];
-if(wordStart) {
-	if(!wordSeparators.contains(chr)) {
-		wordStart = false;
-		chr = chr.toUpper();
+	for(uint idx = 0, size = m_string.length(); idx < size; ++idx) {
+		QCharRef chr = ret.m_string[idx];
+		if(wordStart) {
+			if(!wordSeparators.contains(chr)) {
+				wordStart = false;
+				chr = chr.toUpper();
+			}
+		} else if(wordSeparators.contains(chr)) {
+			wordStart = true;
+		}
 	}
-} else if(wordSeparators.contains(chr))
-	wordStart = true;
-}
 
 	return ret;
 }
 
-SString SString::toSentenceCase(bool lowerFirst, bool * cont) const {
+SString SString::toSentenceCase(bool lowerFirst, bool * cont) const
+{
 	const QString sentenceEndChars(".?!");
 
 	SString ret(*this);
@@ -917,28 +936,27 @@ SString SString::toSentenceCase(bool lowerFirst, bool * cont) const {
 	uint prevDots = 0;
 	bool startSentence = cont ? !*cont : true;
 
-	for(uint index = 0, size = m_string.length(); index < size; ++index)
-{
-QCharRef chr = ret.m_string[index];
+	for(uint index = 0, size = m_string.length(); index < size; ++index) {
+		QCharRef chr = ret.m_string[index];
 
-if(sentenceEndChars.contains(chr)) {
-	if(chr == '.') {
-		prevDots++;
-		startSentence = prevDots < 3;
-	} else {
-		prevDots = 0;
-		startSentence = true;
-	}
-} else {
-	if(startSentence && chr.isLetterOrNumber()) {
-		chr = chr.toUpper();
-		startSentence = false;
-	}
+		if(sentenceEndChars.contains(chr)) {
+			if(chr == '.') {
+				prevDots++;
+				startSentence = prevDots < 3;
+			} else {
+				prevDots = 0;
+				startSentence = true;
+			}
+		} else {
+			if(startSentence && chr.isLetterOrNumber()) {
+				chr = chr.toUpper();
+				startSentence = false;
+			}
 
-	if(!chr.isSpace())
-		prevDots = 0;
-}
-}
+			if(!chr.isSpace())
+				prevDots = 0;
+		}
+	}
 
 	if(cont)
 		*cont = prevDots != 1 && !startSentence;
@@ -946,16 +964,23 @@ if(sentenceEndChars.contains(chr)) {
 	return ret;
 }
 
-SString SString::simplified() const {
+SString SString::simplified() const
+{
 	const QRegExp simplifySpaceRegExp("\\s{2,MAXINT}");
 
 	return trimmed().replace(simplifySpaceRegExp, " ");
-} SString SString::trimmed() const {
+}
+
+SString SString::trimmed() const
+{
 	const QRegExp trimRegExp("(^\\s+|\\s+$)");
 
 	SString ret(*this);
 	return ret.remove(trimRegExp);
-} bool SString::operator!=(const SString & sstring) const {
+}
+
+bool SString::operator!=(const SString & sstring) const
+{
 	if(m_string != sstring.m_string)
 		return true;
 
@@ -964,7 +989,9 @@ SString SString::simplified() const {
 			return true;
 
 	return false;
-} char *SString::detachFlags()
+}
+
+char *SString::detachFlags()
 {
 	char *ret = m_styleFlags;
 	m_styleFlags = 0;
@@ -1020,20 +1047,20 @@ SStringList::SStringList(const QList < QString > &list)
 		append(*it);
 }
 
-SString SStringList::join(const SString & sep) const {
+SString SStringList::join(const SString & sep) const
+{
 	SString ret;
 
 	bool skipSeparator = true;
-	for(SStringList::ConstIterator it = begin(), end = this->end(); it != end; ++it)
-{
-if(skipSeparator) {
-	ret += *it;
-	skipSeparator = false;
-	continue;
-}
-ret += sep;
-ret += *it;
-}
+	for(SStringList::ConstIterator it = begin(), end = this->end(); it != end; ++it) {
+		if(skipSeparator) {
+			ret += *it;
+			skipSeparator = false;
+			continue;
+		}
+		ret += sep;
+		ret += *it;
+	}
 
 	return ret;
 }
