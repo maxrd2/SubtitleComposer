@@ -1,3 +1,8 @@
+Version 0.5.5:
+- text color support
+- SubRip text color support
+- reworked MicroDVD open/save
+
 Version 0.5.4:
 - mplayer2 support
 - mplayer VDPAU decoding support
