@@ -3,10 +3,14 @@ subtitlecomposer
 
 Subtitle Composer
 Copyright (C) 2007-2012 Sergio Pistone
+Copyright (C) 2013 Mladen Milinkovic
 
-This is a fork of Subtitle Composer - https://sourceforge.net/projects/subcomposer/
-After failed attempts in contacting the original project owner I've decided to make a fork here in order to submit some fixes and add some more features in free time.
+This is a continuation of Subtitle Composer - https://sourceforge.net/projects/subcomposer/
+Since original authot didn't have time anymore to continue development of this great app, I've took over in order to submit fixes and add more features in free time.
 
-First planned feature to add is Speech Recognition (through PocketSphinx http://cmusphinx.sourceforge.net/2010/03/pocketsphinx-0-6-release/) which would automate subtitle synchronization in english, and would help new subtitle creation.
+TODO:
+ - code cleanup and bugfixes before releasing v1.0
+ - add Speech Recognition (through PocketSphinx http://cmusphinx.sourceforge.net/2010/03/pocketsphinx-0-6-release/) to automate original language subtitle synhronization
+ - add Speech Recognition to create new subtitles in original language
 
 Help and ideas are welcome.
