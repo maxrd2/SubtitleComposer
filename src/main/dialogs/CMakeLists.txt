@@ -16,6 +16,7 @@ SET( main_dialogs_SRCS
 	${CMAKE_CURRENT_SOURCE_DIR}/changeframeratedialog.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/joinsubtitlesdialog.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/splitsubtitledialog.cpp
+	${CMAKE_CURRENT_SOURCE_DIR}/subtitlecolordialog.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/syncsubtitlesdialog.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/actionwitherrortargetsdialog.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/checkerrorsdialog.cpp

@@ -69,11 +69,12 @@ namespace SubtitleComposer {
 
 	class ScriptsManager;
 
-	class Application:public KApplication {
-	Q_OBJECT public:
+	class Application : public KApplication {
+		Q_OBJECT
+	public:
 
 		Application();
-		virtual ~ Application();
+		virtual ~Application();
 
 		static Application *instance();
 
@@ -177,6 +178,7 @@ namespace SubtitleComposer {
 		void toggleSelectedLinesItalic();
 		void toggleSelectedLinesUnderline();
 		void toggleSelectedLinesStrikeThrough();
+		void changeSelectedLinesColor();
 
 		void shiftLines();
 		void shiftSelectedLinesForwards();
@@ -257,7 +259,8 @@ namespace SubtitleComposer {
 
 		bool applyTranslation(RangeList ranges, bool primary, int inputLanguage, int outputLanguage, int textTargets);
 
-		private slots:void updateTitle();
+	private slots:
+		void updateTitle();
 		void updateUndoRedoToolTips();
 
 		void onLineDoubleClicked(SubtitleLine * line);
@@ -283,7 +286,6 @@ namespace SubtitleComposer {
 		void updateConfigFromDialog();
 
 	private:
-
 		void toggleFullScreen(bool on);
 
 		AppConfig m_config;

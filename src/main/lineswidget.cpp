@@ -143,7 +143,9 @@ int LinesModel::rowCount(const QModelIndex & /*parent */ ) const {
 		return QAbstractItemModel::flags(index);
 
 	return QAbstractItemModel::flags(index) | Qt::ItemIsEditable;
-} QString LinesModel::buildToolTip(SubtitleLine * line, bool primary)
+}
+
+QString LinesModel::buildToolTip(SubtitleLine * line, bool primary)
 {
 	int errorFlags = line->errorFlags();
 	if(primary)
@@ -950,10 +952,8 @@ void LinesWidget::contextMenuEvent(QContextMenuEvent * e)
 
 	KMenu textsMenu(i18n("Texts"));
 	textsMenu.addAction(i18n("Break Lines..."), app, SLOT(breakLines()));
-	textsMenu.addAction(m_translationMode ? i18n("Unbreak Lines...") : i18n("Unbreak Lines"), app, SLOT(unbreakTexts())
-		);
-	textsMenu.addAction(m_translationMode ? i18n("Simplify Spaces...") : i18n("Simplify Spaces"), app, SLOT(simplifySpaces())
-		);
+	textsMenu.addAction(m_translationMode ? i18n("Unbreak Lines...") : i18n("Unbreak Lines"), app, SLOT(unbreakTexts()));
+	textsMenu.addAction(m_translationMode ? i18n("Simplify Spaces...") : i18n("Simplify Spaces"), app, SLOT(simplifySpaces()));
 	textsMenu.addAction(i18n("Change Case..."), app, SLOT(changeCase()));
 	textsMenu.addAction(i18n("Fix Punctuation..."), app, SLOT(fixPunctuation()));
 	textsMenu.addAction(i18n("Translate..."), app, SLOT(translate()));
@@ -963,22 +963,19 @@ void LinesWidget::contextMenuEvent(QContextMenuEvent * e)
 
 	KMenu stylesMenu(i18n("Styles"));
 	int styleFlags = referenceLine->primaryText().cummulativeStyleFlags() | referenceLine->secondaryText().cummulativeStyleFlags();
-	action = stylesMenu.addAction(KIcon("format-text-bold"), i18nc("@action:inmenu Toggle bold style", "Bold"), app, SLOT(toggleSelectedLinesBold())
-		);
+	action = stylesMenu.addAction(KIcon("format-text-bold"), i18nc("@action:inmenu Toggle bold style", "Bold"), app, SLOT(toggleSelectedLinesBold()));
 	action->setCheckable(true);
 	action->setChecked(styleFlags & SString::Bold);
-	action = stylesMenu.addAction(KIcon("format-text-italic"), i18nc("@action:inmenu Toggle italic style", "Italic"), app, SLOT(toggleSelectedLinesItalic())
-		);
+	action = stylesMenu.addAction(KIcon("format-text-italic"), i18nc("@action:inmenu Toggle italic style", "Italic"), app, SLOT(toggleSelectedLinesItalic()));
 	action->setCheckable(true);
 	action->setChecked(styleFlags & SString::Italic);
-	action = stylesMenu.addAction(KIcon("format-text-underline"), i18nc("@action:inmenu Toggle underline style", "Underline"), app, SLOT(toggleSelectedLinesUnderline())
-		);
+	action = stylesMenu.addAction(KIcon("format-text-underline"), i18nc("@action:inmenu Toggle underline style", "Underline"), app, SLOT(toggleSelectedLinesUnderline()));
 	action->setCheckable(true);
 	action->setChecked(styleFlags & SString::Underline);
-	action = stylesMenu.addAction(KIcon("format-text-strikethrough"), i18nc("@action:inmenu Toggle strike through style", "Strike Through"), app, SLOT(toggleSelectedLinesStrikeThrough())
-		);
+	action = stylesMenu.addAction(KIcon("format-text-strikethrough"), i18nc("@action:inmenu Toggle strike through style", "Strike Through"), app, SLOT(toggleSelectedLinesStrikeThrough()));
 	action->setCheckable(true);
 	action->setChecked(styleFlags & SString::StrikeThrough);
+	action = stylesMenu.addAction(KIcon("format-text-color"), i18nc("@action:inmenu Change Text Color", "Text Color"), app, SLOT(changeSelectedLinesColor()));
 
 
 	KMenu timesMenu(i18n("Times"));

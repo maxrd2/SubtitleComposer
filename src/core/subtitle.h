@@ -115,48 +115,49 @@ namespace SubtitleComposer {
 		void insertLine(SubtitleLine * line, int index = -1);
 		void insertLines(const QList < SubtitleLine * >&lines, int index = -1);
 		SubtitleLine *insertNewLine(int index, bool timeAfter, TextTarget target);
-		void removeLines(const RangeList & ranges, TextTarget target);
+		void removeLines(const RangeList &ranges, TextTarget target);
 
-		void swapTexts(const RangeList & ranges);
+		void swapTexts(const RangeList &ranges);
 
-		void splitLines(const RangeList & ranges);
-		void joinLines(const RangeList & ranges);
+		void splitLines(const RangeList &ranges);
+		void joinLines(const RangeList &ranges);
 
-		void shiftLines(const RangeList & ranges, long msecs);
+		void shiftLines(const RangeList &ranges, long msecs);
 		void adjustLines(const Range & range, long firstTime, long lastTime);
 		void sortLines(const Range & range);
 
-		void applyDurationLimits(const RangeList & ranges, const Time & minDuration, const Time & maxDuration, bool canOverlap);
-		void setMaximumDurations(const RangeList & ranges);
-		void setAutoDurations(const RangeList & ranges, int msecsPerChar, int msecsPerWord, int msecsPerLine, bool canOverlap, TextTarget calculationTarget);
+		void applyDurationLimits(const RangeList &ranges, const Time & minDuration, const Time & maxDuration, bool canOverlap);
+		void setMaximumDurations(const RangeList &ranges);
+		void setAutoDurations(const RangeList &ranges, int msecsPerChar, int msecsPerWord, int msecsPerLine, bool canOverlap, TextTarget calculationTarget);
 
-		void fixOverlappingLines(const RangeList & ranges, const Time & minInterval = 100);
+		void fixOverlappingLines(const RangeList &ranges, const Time & minInterval = 100);
 
-		void fixPunctuation(const RangeList & ranges, bool spaces, bool quotes, bool englishI, bool ellipsis, TextTarget target);
+		void fixPunctuation(const RangeList &ranges, bool spaces, bool quotes, bool englishI, bool ellipsis, TextTarget target);
 
-		void lowerCase(const RangeList & ranges, TextTarget target);
-		void upperCase(const RangeList & ranges, TextTarget target);
-		void titleCase(const RangeList & ranges, bool lowerFirst, TextTarget target);
-		void sentenceCase(const RangeList & ranges, bool lowerFirst, TextTarget target);
+		void lowerCase(const RangeList &ranges, TextTarget target);
+		void upperCase(const RangeList &ranges, TextTarget target);
+		void titleCase(const RangeList &ranges, bool lowerFirst, TextTarget target);
+		void sentenceCase(const RangeList &ranges, bool lowerFirst, TextTarget target);
 
-		void breakLines(const RangeList & ranges, unsigned minLengthForLineBreak, TextTarget target);
-		void unbreakTexts(const RangeList & ranges, TextTarget target);
-		void simplifyTextWhiteSpace(const RangeList & ranges, TextTarget target);
+		void breakLines(const RangeList &ranges, unsigned minLengthForLineBreak, TextTarget target);
+		void unbreakTexts(const RangeList &ranges, TextTarget target);
+		void simplifyTextWhiteSpace(const RangeList &ranges, TextTarget target);
 
 		void syncWithSubtitle(const Subtitle & refSubtitle);
 		void appendSubtitle(const Subtitle & srcSubtitle, long shiftMsecsBeforeAppend);
 		void splitSubtitle(Subtitle & dstSubtitle, const Time & splitTime, bool shiftSplitLines);
 
-		void setStyleFlags(const RangeList & ranges, int styleFlags);
-		void setStyleFlags(const RangeList & ranges, int styleFlags, bool on);
-		void toggleStyleFlag(const RangeList & ranges, SString::StyleFlag styleFlag);
+		void setStyleFlags(const RangeList &ranges, int styleFlags);
+		void setStyleFlags(const RangeList &ranges, int styleFlags, bool on);
+		void toggleStyleFlag(const RangeList &ranges, SString::StyleFlag styleFlag);
+		void changeTextColor(const RangeList &ranges, QRgb color);
 
-		void setMarked(const RangeList & ranges, bool value);
-		void toggleMarked(const RangeList & ranges);
+		void setMarked(const RangeList &ranges, bool value);
+		void toggleMarked(const RangeList &ranges);
 
-		void clearErrors(const RangeList & ranges, int errorFlags);
-		void checkErrors(const RangeList & ranges, int errorFlags, int minDurationMsecs, int maxDurationMsecs, int minMsecsPerChar, int maxMsecsPerChar, int maxChars, int maxLines);
-		void recheckErrors(const RangeList & ranges, int minDurationMsecs, int maxDurationMsecs, int minMsecsPerChar, int maxMsecsPerChar, int maxChars, int maxLines);
+		void clearErrors(const RangeList &ranges, int errorFlags);
+		void checkErrors(const RangeList &ranges, int errorFlags, int minDurationMsecs, int maxDurationMsecs, int minMsecsPerChar, int maxMsecsPerChar, int maxChars, int maxLines);
+		void recheckErrors(const RangeList &ranges, int minDurationMsecs, int maxDurationMsecs, int minMsecsPerChar, int maxMsecsPerChar, int maxChars, int maxLines);
 
 		signals:void primaryDirtyStateChanged(bool dirty);
 		void secondaryDirtyStateChanged(bool dirty);

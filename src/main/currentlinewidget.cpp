@@ -38,14 +38,14 @@
 
 using namespace SubtitleComposer;
 
-QToolButton *CurrentLineWidget::createToolButton(const QString & text, const char *icon, QObject * receiver, const char *slot)
+QToolButton *CurrentLineWidget::createToolButton(const QString &text, const char *icon, QObject *receiver, const char *slot, bool checkable/* = true*/)
 {
 	QToolButton *toolButton = new QToolButton(this);
 	toolButton->setToolTip(text);
 	toolButton->setIcon(KIcon(icon));
 	toolButton->setMinimumSize(20, 20);
 	toolButton->setMaximumSize(20, 20);
-	toolButton->setCheckable(true);
+	toolButton->setCheckable(checkable);
 	toolButton->setAutoRaise(true);
 	toolButton->setFocusPolicy(Qt::NoFocus);
 	connect(toolButton, SIGNAL(clicked()), receiver, slot);
@@ -84,24 +84,19 @@ QWidget(parent), m_currentLine(0), m_translationMode(false), m_updateCurrentLine
 		m_textEdits[index]->setTabChangesFocus(true);
 		m_textEdits[index]->installEventFilter(this);
 
-		m_boldButtons[index] = createToolButton(i18n("Toggle Bold"), "format-text-bold", m_textEdits[index], SLOT(toggleFontBold())
-			);
-
-		m_italicButtons[index] = createToolButton(i18n("Toggle Italic"), "format-text-italic", m_textEdits[index], SLOT(toggleFontItalic())
-			);
-
-		m_underlineButtons[index] = createToolButton(i18n("Toggle Underline"), "format-text-underline", m_textEdits[index], SLOT(toggleFontUnderline())
-			);
-
-		m_strikeThroughButtons[index] = createToolButton(i18n("Toggle Strike Through"), "format-text-strikethrough", m_textEdits[index], SLOT(toggleFontStrikeOut())
-			);
+		m_boldButtons[index] = createToolButton(i18n("Toggle Bold"), "format-text-bold", m_textEdits[index], SLOT(toggleFontBold()));
+		m_italicButtons[index] = createToolButton(i18n("Toggle Italic"), "format-text-italic", m_textEdits[index], SLOT(toggleFontItalic()));
+		m_underlineButtons[index] = createToolButton(i18n("Toggle Underline"), "format-text-underline", m_textEdits[index], SLOT(toggleFontUnderline()));
+		m_strikeThroughButtons[index] = createToolButton(i18n("Toggle Strike Through"), "format-text-strikethrough", m_textEdits[index], SLOT(toggleFontStrikeOut()));
+		m_textColorButtons[index] = createToolButton(i18n("Change Text Color"), "format-text-color", m_textEdits[index], SLOT(changeTextColor()), false);
 
 		buttonsLayouts[index] = new QGridLayout();
-		//buttonsLayouts[index]->setMargin( 0 );
+		buttonsLayouts[index]->setContentsMargins(0, 0, 5, 0);
 		buttonsLayouts[index]->addWidget(m_boldButtons[index], 0, 0, Qt::AlignBottom);
 		buttonsLayouts[index]->addWidget(m_italicButtons[index], 0, 1, Qt::AlignBottom);
 		buttonsLayouts[index]->addWidget(m_underlineButtons[index], 0, 2, Qt::AlignBottom);
 		buttonsLayouts[index]->addWidget(m_strikeThroughButtons[index], 0, 3, Qt::AlignBottom);
+		buttonsLayouts[index]->addWidget(m_textColorButtons[index], 0, 4, Qt::AlignBottom);
 	}
 
 	QFont font = m_textLabels[0]->font();
@@ -153,7 +148,6 @@ QWidget(parent), m_currentLine(0), m_translationMode(false), m_updateCurrentLine
 	connect(m_durationTimeEdit, SIGNAL(valueChanged(int)), this, SLOT(onDurationTimeEditChanged(int)));
 
 	setTranslationMode(m_translationMode);
-
 
 	m_updateShorcutsTimer->setInterval(1000);
 	m_updateShorcutsTimer->setSingleShot(true);
@@ -249,6 +243,7 @@ void CurrentLineWidget::setTranslationMode(bool enabled)
 		m_italicButtons[1]->show();
 		m_underlineButtons[1]->show();
 		m_strikeThroughButtons[1]->show();
+		m_textColorButtons[1]->show();
 
 		m_mainLayout->setColumnMinimumWidth(4, 5);
 		m_mainLayout->setColumnStretch(5, 1);
@@ -260,6 +255,7 @@ void CurrentLineWidget::setTranslationMode(bool enabled)
 		m_italicButtons[1]->hide();
 		m_underlineButtons[1]->hide();
 		m_strikeThroughButtons[1]->hide();
+		m_textColorButtons[1]->hide();
 
 		m_mainLayout->setColumnMinimumWidth(4, 0);
 		m_mainLayout->setColumnStretch(5, 0);
@@ -444,6 +440,7 @@ void CurrentLineWidget::setupActions()
 	connect(app()->action(ACT_TOGGLE_SELECTED_LINES_ITALIC), SIGNAL(changed()), this, SLOT(markUpdateShortcuts()));
 	connect(app()->action(ACT_TOGGLE_SELECTED_LINES_UNDERLINE), SIGNAL(changed()), this, SLOT(markUpdateShortcuts()));
 	connect(app()->action(ACT_TOGGLE_SELECTED_LINES_STRIKETHROUGH), SIGNAL(changed()), this, SLOT(markUpdateShortcuts()));
+	connect(app()->action(ACT_CHANGE_SELECTED_LINES_TEXT_COLOR), SIGNAL(changed()), this, SLOT(markUpdateShortcuts()));
 }
 
 void CurrentLineWidget::markUpdateShortcuts()
@@ -481,6 +478,7 @@ void CurrentLineWidget::updateShortcuts()
 		mapShortcuts(m_textEdits[index], SimpleRichTextEdit::ToggleItalic, ACT_TOGGLE_SELECTED_LINES_ITALIC);
 		mapShortcuts(m_textEdits[index], SimpleRichTextEdit::ToggleUnderline, ACT_TOGGLE_SELECTED_LINES_UNDERLINE);
 		mapShortcuts(m_textEdits[index], SimpleRichTextEdit::ToggleStrikeOut, ACT_TOGGLE_SELECTED_LINES_STRIKETHROUGH);
+		mapShortcuts(m_textEdits[index], SimpleRichTextEdit::ChangeTextColor, ACT_CHANGE_SELECTED_LINES_TEXT_COLOR);
 	}
 }
 

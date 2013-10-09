@@ -56,6 +56,7 @@
 #include "dialogs/insertlinedialog.h"
 #include "dialogs/removelinesdialog.h"
 #include "dialogs/inputdialog.h"
+#include "dialogs/subtitlecolordialog.h"
 #include "utils/finder.h"
 #include "utils/replacer.h"
 #include "utils/errorfinder.h"
@@ -819,6 +820,16 @@ void Application::setupActions()
 	connect(toggleSelectedLinesStrikeThroughAction, SIGNAL(triggered()), this, SLOT(toggleSelectedLinesStrikeThrough()));
 	actionCollection->addAction(ACT_TOGGLE_SELECTED_LINES_STRIKETHROUGH, toggleSelectedLinesStrikeThroughAction);
 	actionManager->addAction(toggleSelectedLinesStrikeThroughAction, UserAction::HasSelection | UserAction::FullScreenOff);
+
+
+	KAction *changeSelectedLinesColorAction = new KAction(actionCollection);
+	changeSelectedLinesColorAction->setIcon(KIcon("format-text-color"));
+	changeSelectedLinesColorAction->setText(i18n("Change Text Color"));
+	changeSelectedLinesColorAction->setStatusTip(i18n("Change text color of selected lines"));
+	changeSelectedLinesColorAction->setShortcut(KShortcut("Ctrl+Shift+C"), KAction::DefaultShortcut | KAction::ActiveShortcut);
+	connect(changeSelectedLinesColorAction, SIGNAL(triggered()), this, SLOT(changeSelectedLinesColor()));
+	actionCollection->addAction(ACT_CHANGE_SELECTED_LINES_TEXT_COLOR, changeSelectedLinesColorAction);
+	actionManager->addAction(changeSelectedLinesColorAction, UserAction::HasSelection | UserAction::FullScreenOff);
 
 
 	KAction *shiftAction = new KAction(actionCollection);
@@ -2241,6 +2252,18 @@ void Application::toggleSelectedLinesStrikeThrough()
 	m_subtitle->toggleStyleFlag(m_linesWidget->selectionRanges(), SString::StrikeThrough);
 }
 
+void Application::changeSelectedLinesColor()
+{
+	const RangeList range = m_linesWidget->selectionRanges();
+	SubtitleIterator it(*m_subtitle, range);
+	if(!it.current())
+		return;
+
+	QColor color = SubtitleColorDialog::getColor(QColor(it.current()->primaryText().styleColorAt(0)), m_mainWindow);
+	if(color.isValid())
+		m_subtitle->changeTextColor(range, color.rgba());
+}
+
 void Application::shiftLines()
 {
 	static ShiftTimesDialog *dlg = new ShiftTimesDialog(m_mainWindow);
@@ -2254,14 +2277,12 @@ void Application::shiftLines()
 
 void Application::shiftSelectedLinesForwards()
 {
-	m_subtitle->shiftLines(m_linesWidget->selectionRanges(), generalConfig()->linesQuickShiftAmount()
-		);
+	m_subtitle->shiftLines(m_linesWidget->selectionRanges(), generalConfig()->linesQuickShiftAmount());
 }
 
 void Application::shiftSelectedLinesBackwards()
 {
-	m_subtitle->shiftLines(m_linesWidget->selectionRanges(), -generalConfig()->linesQuickShiftAmount()
-		);
+	m_subtitle->shiftLines(m_linesWidget->selectionRanges(), -generalConfig()->linesQuickShiftAmount());
 }
 
 
@@ -2273,15 +2294,13 @@ void Application::adjustLines()
 	dlg->setLastLineTime(m_subtitle->lastLine()->showTime());
 
 	if(dlg->exec() == QDialog::Accepted) {
-		m_subtitle->adjustLines(Range::full(), dlg->firstLineTime().toMillis(), dlg->lastLineTime().toMillis()
-			);
+		m_subtitle->adjustLines(Range::full(), dlg->firstLineTime().toMillis(), dlg->lastLineTime().toMillis());
 	}
 }
 
 void Application::sortLines()
 {
-	static ActionWithLinesTargetDialog *dlg = new ActionWithLinesTargetDialog(i18n("Sort"),
-																			m_mainWindow);
+	static ActionWithLinesTargetDialog *dlg = new ActionWithLinesTargetDialog(i18n("Sort"), m_mainWindow);
 
 	PROFILE();
 
@@ -2313,8 +2332,7 @@ void Application::changeFrameRate()
 	dlg->setFromFramesPerSecond(m_subtitle->framesPerSecond());
 
 	if(dlg->exec() == QDialog::Accepted) {
-		m_subtitle->changeFramesPerSecond(dlg->toFramesPerSecond(), dlg->fromFramesPerSecond()
-			);
+		m_subtitle->changeFramesPerSecond(dlg->toFramesPerSecond(), dlg->fromFramesPerSecond());
 	}
 }
 
@@ -2325,8 +2343,7 @@ void Application::enforceDurationLimits()
 																m_mainWindow);
 
 	if(dlg->exec() == QDialog::Accepted) {
-		m_subtitle->applyDurationLimits(m_linesWidget->targetRanges(dlg->selectedLinesTarget()), dlg->enforceMinDuration()? dlg->minDuration() : 0, dlg->enforceMaxDuration()? dlg->maxDuration() : Time::MaxMseconds, !dlg->preventOverlap()
-			);
+		m_subtitle->applyDurationLimits(m_linesWidget->targetRanges(dlg->selectedLinesTarget()), dlg->enforceMinDuration()? dlg->minDuration() : 0, dlg->enforceMaxDuration()? dlg->maxDuration() : Time::MaxMseconds, !dlg->preventOverlap());
 	}
 }
 

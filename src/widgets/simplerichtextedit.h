@@ -37,19 +37,20 @@ class KAction;
 class QMenu;
 
 class SimpleRichTextEdit:public KTextEdit {
-  Q_OBJECT public:
+	Q_OBJECT
+public:
 
 	typedef enum {
 		Undo = 0, Redo,
 		Cut, Copy, Paste, Delete, Clear, SelectAll,
 		ToggleBold, ToggleItalic, ToggleUnderline, ToggleStrikeOut,
 		CheckSpelling, ToggleAutoSpellChecking,
-		AllowTabulations,
+		AllowTabulations, ChangeTextColor,
 		ActionCount
 	} Action;
 
 	explicit SimpleRichTextEdit(QWidget * parent = 0);
-	virtual ~ SimpleRichTextEdit();
+	virtual ~SimpleRichTextEdit();
 
 	bool hasSelection() const;
 	QString selectedText() const;
@@ -57,12 +58,13 @@ class SimpleRichTextEdit:public KTextEdit {
 	bool fontBold();
 	bool fontStrikeOut();
 
-	virtual KAction *action(int action) const;
-	virtual QList < KAction * >actions() const;
+	virtual KAction * action(int action) const;
+	virtual QList<KAction *> actions() const;
 
 	virtual bool event(QEvent * event);
 
-	public slots:SubtitleComposer::SString richText();
+public slots:
+	SubtitleComposer::SString richText();
 	void setRichText(const SubtitleComposer::SString & richText);
 
 	void setSelection(int startIndex, int endIndex);
@@ -75,6 +77,7 @@ class SimpleRichTextEdit:public KTextEdit {
 	void toggleFontItalic();
 	void toggleFontUnderline();
 	void toggleFontStrikeOut();
+	void changeTextColor();
 
 	void deleteText();
 	void undoableClear();
@@ -84,8 +87,7 @@ class SimpleRichTextEdit:public KTextEdit {
 	void toggleTabChangesFocus();
 	void toggleAutoSpellChecking();
 
-  protected:
-
+protected:
 	QMenu * createContextMenu(const QPoint & mousePos);
 
 	virtual void contextMenuEvent(QContextMenuEvent * event);
@@ -98,8 +100,7 @@ class SimpleRichTextEdit:public KTextEdit {
 	void addToDictionary();
 	void replaceWithSuggestion();
 
-  protected:
-
+protected:
 	KAction * m_actions[ActionCount];
 	QMenu *m_insertUnicodeControlCharMenu;
 	QTextCursor m_selectedWordCursor;

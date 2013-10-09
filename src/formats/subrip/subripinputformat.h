@@ -46,11 +46,9 @@ namespace SubtitleComposer {
 
 			int offset = 0;
 			do {
-				Time showTime(m_regExp.cap(1).toInt(), m_regExp.cap(2).toInt(), m_regExp.cap(3).toInt(), m_regExp.cap(4).toInt()
-					);
+				Time showTime(m_regExp.cap(1).toInt(), m_regExp.cap(2).toInt(), m_regExp.cap(3).toInt(), m_regExp.cap(4).toInt());
 
-				Time hideTime(m_regExp.cap(5).toInt(), m_regExp.cap(6).toInt(), m_regExp.cap(7).toInt(), m_regExp.cap(8).toInt()
-					);
+				Time hideTime(m_regExp.cap(5).toInt(), m_regExp.cap(6).toInt(), m_regExp.cap(7).toInt(), m_regExp.cap(8).toInt());
 
 				offset += m_regExp.matchedLength();
 
@@ -68,7 +66,9 @@ namespace SubtitleComposer {
 
 			return readLines > 0;
 		}
-		SubRipInputFormat():InputFormat("SubRip", QStringList("srt")), m_regExp("[\\d]+\n([0-2][0-9]):([0-5][0-9]):([0-5][0-9])[,\\.]([0-9][0-9][0-9]) --> ([0-2][0-9]):([0-5][0-9]):([0-5][0-9])[,\\.]([0-9][0-9][0-9])\n") {
+		SubRipInputFormat()
+			: InputFormat("SubRip", QStringList("srt")),
+			  m_regExp("[\\d]+\n([0-2][0-9]):([0-5][0-9]):([0-5][0-9])[,\\.]([0-9][0-9][0-9]) --> ([0-2][0-9]):([0-5][0-9]):([0-5][0-9])[,\\.]([0-9][0-9][0-9])\n") {
 		}
 
 		mutable QRegExp m_regExp;

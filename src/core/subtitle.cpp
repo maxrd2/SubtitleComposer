@@ -358,7 +358,7 @@ SubtitleLine *Subtitle::insertNewLine(int index, bool timeAfter, TextTarget targ
 	return newLine;
 }
 
-void Subtitle::removeLines(const RangeList & r, TextTarget target)
+void Subtitle::removeLines(const RangeList &r, TextTarget target)
 {
 	if(m_lines.isEmpty())
 		return;
@@ -441,12 +441,12 @@ void Subtitle::removeLines(const RangeList & r, TextTarget target)
 	}
 }
 
-void Subtitle::swapTexts(const RangeList & ranges)
+void Subtitle::swapTexts(const RangeList &ranges)
 {
 	processAction(new SwapLinesTextsAction(*this, ranges));
 }
 
-void Subtitle::splitLines(const RangeList & ranges)
+void Subtitle::splitLines(const RangeList &ranges)
 {
 	beginCompositeAction(i18n("Split Lines"));
 
@@ -496,7 +496,7 @@ void Subtitle::splitLines(const RangeList & ranges)
 	endCompositeAction();
 }
 
-void Subtitle::joinLines(const RangeList & ranges)
+void Subtitle::joinLines(const RangeList &ranges)
 {
 	beginCompositeAction(i18n("Join Lines"));
 
@@ -541,7 +541,7 @@ void Subtitle::joinLines(const RangeList & ranges)
 }
 
 
-void Subtitle::shiftLines(const RangeList & ranges, long msecs)
+void Subtitle::shiftLines(const RangeList &ranges, long msecs)
 {
 	if(msecs == 0)
 		return;
@@ -638,7 +638,7 @@ void Subtitle::sortLines(const Range & range)
 }
 
 
-void Subtitle::applyDurationLimits(const RangeList & ranges, const Time & minDuration, const Time & maxDuration, bool canOverlap)
+void Subtitle::applyDurationLimits(const RangeList &ranges, const Time & minDuration, const Time & maxDuration, bool canOverlap)
 {
 	if(m_lines.isEmpty() || minDuration > maxDuration)
 		return;
@@ -678,7 +678,7 @@ void Subtitle::applyDurationLimits(const RangeList & ranges, const Time & minDur
 
 
 
-void Subtitle::setMaximumDurations(const RangeList & ranges)
+void Subtitle::setMaximumDurations(const RangeList &ranges)
 {
 	if(m_lines.isEmpty())
 		return;
@@ -701,7 +701,7 @@ void Subtitle::setMaximumDurations(const RangeList & ranges)
 }
 
 
-void Subtitle::setAutoDurations(const RangeList & ranges, int msecsPerChar, int msecsPerWord, int msecsPerLine, bool canOverlap, TextTarget calculationTarget)
+void Subtitle::setAutoDurations(const RangeList &ranges, int msecsPerChar, int msecsPerWord, int msecsPerLine, bool canOverlap, TextTarget calculationTarget)
 {
 	if(m_lines.isEmpty())
 		return;
@@ -734,7 +734,7 @@ void Subtitle::setAutoDurations(const RangeList & ranges, int msecsPerChar, int 
 	endCompositeAction();
 }
 
-void Subtitle::fixOverlappingLines(const RangeList & ranges, const Time & minInterval)
+void Subtitle::fixOverlappingLines(const RangeList &ranges, const Time & minInterval)
 {
 	if(m_lines.isEmpty())
 		return;
@@ -765,7 +765,7 @@ void Subtitle::fixOverlappingLines(const RangeList & ranges, const Time & minInt
 }
 
 
-void Subtitle::fixPunctuation(const RangeList & ranges, bool spaces, bool quotes, bool engI, bool ellipsis, TextTarget target)
+void Subtitle::fixPunctuation(const RangeList &ranges, bool spaces, bool quotes, bool engI, bool ellipsis, TextTarget target)
 {
 	if(m_lines.isEmpty() || (!spaces && !quotes && !engI && !ellipsis)
 	|| target >= TextTargetSIZE)
@@ -812,7 +812,7 @@ void Subtitle::fixPunctuation(const RangeList & ranges, bool spaces, bool quotes
 	endCompositeAction();
 }
 
-void Subtitle::lowerCase(const RangeList & ranges, TextTarget target)
+void Subtitle::lowerCase(const RangeList &ranges, TextTarget target)
 {
 	if(m_lines.isEmpty() || target >= TextTargetSIZE)
 		return;
@@ -842,7 +842,7 @@ void Subtitle::lowerCase(const RangeList & ranges, TextTarget target)
 	endCompositeAction();
 }
 
-void Subtitle::upperCase(const RangeList & ranges, TextTarget target)
+void Subtitle::upperCase(const RangeList &ranges, TextTarget target)
 {
 	if(m_lines.isEmpty() || target >= TextTargetSIZE)
 		return;
@@ -872,7 +872,7 @@ void Subtitle::upperCase(const RangeList & ranges, TextTarget target)
 	endCompositeAction();
 }
 
-void Subtitle::titleCase(const RangeList & ranges, bool lowerFirst, TextTarget target)
+void Subtitle::titleCase(const RangeList &ranges, bool lowerFirst, TextTarget target)
 {
 	if(m_lines.isEmpty() || target >= TextTargetSIZE)
 		return;
@@ -903,7 +903,7 @@ void Subtitle::titleCase(const RangeList & ranges, bool lowerFirst, TextTarget t
 	endCompositeAction();
 }
 
-void Subtitle::sentenceCase(const RangeList & ranges, bool lowerFirst, TextTarget target)
+void Subtitle::sentenceCase(const RangeList &ranges, bool lowerFirst, TextTarget target)
 {
 	if(m_lines.isEmpty() || target >= TextTargetSIZE)
 		return;
@@ -949,7 +949,7 @@ void Subtitle::sentenceCase(const RangeList & ranges, bool lowerFirst, TextTarge
 }
 
 
-void Subtitle::breakLines(const RangeList & ranges, unsigned minLengthForLineBreak, TextTarget target)
+void Subtitle::breakLines(const RangeList &ranges, unsigned minLengthForLineBreak, TextTarget target)
 {
 	SubtitleCompositeActionExecutor executor(*this, i18n("Break Lines"));
 
@@ -957,7 +957,7 @@ void Subtitle::breakLines(const RangeList & ranges, unsigned minLengthForLineBre
 		it.current()->breakText(minLengthForLineBreak, (SubtitleLine::TextTarget) target);
 }
 
-void Subtitle::unbreakTexts(const RangeList & ranges, TextTarget target)
+void Subtitle::unbreakTexts(const RangeList &ranges, TextTarget target)
 {
 	SubtitleCompositeActionExecutor executor(*this, i18n("Unbreak Lines"));
 
@@ -965,7 +965,7 @@ void Subtitle::unbreakTexts(const RangeList & ranges, TextTarget target)
 		it.current()->unbreakText((SubtitleLine::TextTarget) target);
 }
 
-void Subtitle::simplifyTextWhiteSpace(const RangeList & ranges, TextTarget target)
+void Subtitle::simplifyTextWhiteSpace(const RangeList &ranges, TextTarget target)
 {
 	SubtitleCompositeActionExecutor executor(*this, i18n("Simplify Spaces"));
 
@@ -1057,7 +1057,7 @@ void Subtitle::splitSubtitle(Subtitle & dstSubtitle, const Time & splitTime, boo
 }
 
 
-void Subtitle::setStyleFlags(const RangeList & ranges, int styleFlags)
+void Subtitle::setStyleFlags(const RangeList &ranges, int styleFlags)
 {
 	beginCompositeAction(i18n("Set Lines Style"));
 
@@ -1071,7 +1071,7 @@ void Subtitle::setStyleFlags(const RangeList & ranges, int styleFlags)
 	endCompositeAction();
 }
 
-void Subtitle::setStyleFlags(const RangeList & ranges, int styleFlags, bool on)
+void Subtitle::setStyleFlags(const RangeList &ranges, int styleFlags, bool on)
 {
 	beginCompositeAction(i18n("Set Lines Style"));
 
@@ -1083,7 +1083,7 @@ void Subtitle::setStyleFlags(const RangeList & ranges, int styleFlags, bool on)
 	endCompositeAction();
 }
 
-void Subtitle::toggleStyleFlag(const RangeList & ranges, SString::StyleFlag styleFlag)
+void Subtitle::toggleStyleFlag(const RangeList &ranges, SString::StyleFlag styleFlag)
 {
 	SubtitleIterator it(*this, ranges);
 	if(!it.current())
@@ -1098,8 +1098,21 @@ void Subtitle::toggleStyleFlag(const RangeList & ranges, SString::StyleFlag styl
 	endCompositeAction();
 }
 
+void
+Subtitle::changeTextColor(const RangeList &ranges, QRgb color)
+{
+	beginCompositeAction(i18n("Change Lines Text Color"));
 
-void Subtitle::setMarked(const RangeList & ranges, bool value)
+	for(SubtitleIterator it(*this, ranges); it.current(); ++it) {
+		it.current()->setPrimaryText(SString(it.current()->primaryText()).setStyleColor(0, -1, color));
+		it.current()->setSecondaryText(SString(it.current()->secondaryText()).setStyleColor(0, -1, color));
+	}
+
+	endCompositeAction();
+}
+
+
+void Subtitle::setMarked(const RangeList &ranges, bool value)
 {
 	beginCompositeAction(value ? i18n("Set Lines Mark") : i18n("Clear Lines Mark"));
 
@@ -1109,7 +1122,7 @@ void Subtitle::setMarked(const RangeList & ranges, bool value)
 	endCompositeAction();
 }
 
-void Subtitle::toggleMarked(const RangeList & ranges)
+void Subtitle::toggleMarked(const RangeList &ranges)
 {
 	SubtitleIterator it(*this, ranges);
 	if(!it.current())
@@ -1123,7 +1136,7 @@ void Subtitle::toggleMarked(const RangeList & ranges)
 }
 
 
-void Subtitle::clearErrors(const RangeList & ranges, int errorFlags)
+void Subtitle::clearErrors(const RangeList &ranges, int errorFlags)
 {
 	beginCompositeAction(i18n("Clear Lines Errors"));
 
@@ -1133,7 +1146,7 @@ void Subtitle::clearErrors(const RangeList & ranges, int errorFlags)
 	endCompositeAction();
 }
 
-void Subtitle::checkErrors(const RangeList & ranges, int errorFlags, int minDurationMsecs, int maxDurationMsecs, int minMsecsPerChar, int maxMsecsPerChar, int maxChars, int maxLines)
+void Subtitle::checkErrors(const RangeList &ranges, int errorFlags, int minDurationMsecs, int maxDurationMsecs, int minMsecsPerChar, int maxMsecsPerChar, int maxChars, int maxLines)
 {
 	beginCompositeAction(i18n("Check Lines Errors"));
 
@@ -1144,7 +1157,7 @@ void Subtitle::checkErrors(const RangeList & ranges, int errorFlags, int minDura
 	endCompositeAction();
 }
 
-void Subtitle::recheckErrors(const RangeList & ranges, int minDurationMsecs, int maxDurationMsecs, int minMsecsPerChar, int maxMsecsPerChar, int maxChars, int maxLines)
+void Subtitle::recheckErrors(const RangeList &ranges, int minDurationMsecs, int maxDurationMsecs, int minMsecsPerChar, int maxMsecsPerChar, int maxChars, int maxLines)
 {
 	beginCompositeAction(i18n("Check Lines Errors"));
 

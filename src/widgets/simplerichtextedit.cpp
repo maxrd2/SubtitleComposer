@@ -19,6 +19,8 @@
 
 #include "simplerichtextedit.h"
 
+#include "../main/dialogs/subtitlecolordialog.h"
+
 #include <QtCore/QRegExp>
 #include <QtCore/QEvent>
 #include <QtGui/QMenu>
@@ -131,6 +133,12 @@ KTextEdit(parent)
 	m_actions[ToggleStrikeOut]->setShortcut(KShortcut("Ctrl+T"), KAction::DefaultShortcut | KAction::ActiveShortcut);
 	connect(m_actions[ToggleStrikeOut], SIGNAL(triggered()), this, SLOT(toggleFontStrikeOut()));
 
+	m_actions[ChangeTextColor] = new KAction(this);
+	m_actions[ChangeTextColor]->setIcon(KIcon("format-text-color"));
+	m_actions[ChangeTextColor]->setText(i18nc("@action:inmenu Change Text Color", "Text Color"));
+	m_actions[ChangeTextColor]->setShortcut(KShortcut("Ctrl+Shift+C"), KAction::DefaultShortcut | KAction::ActiveShortcut);
+	connect(m_actions[ChangeTextColor], SIGNAL(triggered()), this, SLOT(changeTextColor()));
+
 	m_actions[CheckSpelling] = new KAction(this);
 	m_actions[CheckSpelling]->setIcon(KIcon("tools-check-spelling"));
 	m_actions[CheckSpelling]->setText(i18n("Check Spelling..."));
@@ -146,7 +154,7 @@ KTextEdit(parent)
 	connect(m_actions[AllowTabulations], SIGNAL(triggered()), this, SLOT(toggleTabChangesFocus()));
 
 	QMenu *menu = QTextEdit::createStandardContextMenu();	// krazy:exclude=c++/qclasses
-	QList < QAction * >actions = menu->actions();
+	QList<QAction *> actions = menu->actions();
 	m_insertUnicodeControlCharMenu = 0;
 	for(QList < QAction * >::ConstIterator it = actions.constBegin(), end = actions.constEnd(); it != end; ++it) {
 		if((*it)->menu()) {
@@ -166,9 +174,11 @@ SimpleRichTextEdit::~SimpleRichTextEdit()
 		delete m_insertUnicodeControlCharMenu->parent();
 }
 
-KAction *SimpleRichTextEdit::action(int action) const {
+KAction *SimpleRichTextEdit::action(int action) const
+{
 	return action >= 0 && action < ActionCount ? m_actions[action] : 0;
-} QList < KAction * >SimpleRichTextEdit::actions() const
+}
+QList<KAction *> SimpleRichTextEdit::actions() const
 {
 	QList < KAction * >actions;
 	for(int index = 0; index < ActionCount; ++index)
@@ -184,6 +194,7 @@ SubtitleComposer::SString SimpleRichTextEdit::richText()
 		QTextCursor cursor = textCursor();
 		QTextCharFormat format;
 		int styleFlags;
+		QRgb styleColor;
 		for(int position = 1, size = richText.length(); position <= size; ++position) {
 			cursor.setPosition(position);
 			format = cursor.charFormat();
@@ -197,8 +208,15 @@ SubtitleComposer::SString SimpleRichTextEdit::richText()
 				styleFlags |= SubtitleComposer::SString::Underline;
 			if(format.fontStrikeOut())
 				styleFlags |= SubtitleComposer::SString::StrikeThrough;
+			if(format.foreground().style() != Qt::NoBrush) {
+				styleFlags |= SubtitleComposer::SString::Color;
+				styleColor = format.foreground().color().toRgb().rgb();
+			} else {
+				styleColor = 0;
+			}
 
 			richText.setStyleFlagsAt(position - 1, styleFlags);
+			richText.setStyleColorAt(position - 1, styleColor);
 		}
 	}
 
@@ -214,14 +232,20 @@ void SimpleRichTextEdit::setRichText(const SubtitleComposer::SString & richText)
 	cursor.setPosition(0);
 
 	int currentStyleFlags = -1;
+	QRgb currentStyleColor = 0;
 	QTextCharFormat format;
 	for(int position = 0, size = richText.length(); position < size; ++position) {
-		if(currentStyleFlags != richText.styleFlagsAt(position)) {
+		if(currentStyleFlags != richText.styleFlagsAt(position) || ((richText.styleFlagsAt(position) & SubtitleComposer::SString::Color) && currentStyleColor != richText.styleColorAt(position))) {
 			currentStyleFlags = richText.styleFlagsAt(position);
+			currentStyleColor = richText.styleColorAt(position);
 			format.setFontWeight(currentStyleFlags & SubtitleComposer::SString::Bold ? QFont::Bold : QFont::Normal);
 			format.setFontItalic(currentStyleFlags & SubtitleComposer::SString::Italic);
 			format.setFontUnderline(currentStyleFlags & SubtitleComposer::SString::Underline);
 			format.setFontStrikeOut(currentStyleFlags & SubtitleComposer::SString::StrikeThrough);
+			if((currentStyleFlags & SubtitleComposer::SString::Color) == 0)
+				format.setForeground(QBrush());
+			else
+				format.setForeground(QBrush(QColor(currentStyleColor)));
 		}
 
 		cursor.movePosition(QTextCursor::NextCharacter, QTextCursor::KeepAnchor, 1);
@@ -232,11 +256,17 @@ void SimpleRichTextEdit::setRichText(const SubtitleComposer::SString & richText)
 	clearUndoRedoHistory();
 }
 
-bool SimpleRichTextEdit::hasSelection() const {
+bool SimpleRichTextEdit::hasSelection() const
+{
 	return textCursor().hasSelection();
-} QString SimpleRichTextEdit::selectedText() const {
+}
+
+QString SimpleRichTextEdit::selectedText() const
+{
 	return textCursor().selectedText();
-} void SimpleRichTextEdit::toggleFontItalic()
+}
+
+void SimpleRichTextEdit::toggleFontItalic()
 {
 	setFontItalic(!fontItalic());
 }
@@ -277,6 +307,22 @@ void SimpleRichTextEdit::setFontStrikeOut(bool enabled)
 void SimpleRichTextEdit::toggleFontStrikeOut()
 {
 	setFontStrikeOut(!fontStrikeOut());
+}
+
+void SimpleRichTextEdit::changeTextColor()
+{
+	QColor color = SubtitleComposer::SubtitleColorDialog::getColor(textColor(), this);
+	if(color.isValid()) {
+		if(color.rgba() == 0) {
+			QTextCursor cursor(textCursor());
+			QTextCharFormat format;
+			format.setForeground(QBrush(Qt::NoBrush));
+			cursor.mergeCharFormat(format);
+			setTextCursor(cursor);
+		} else {
+			setTextColor(color);
+		}
+	}
 }
 
 void SimpleRichTextEdit::deleteText()
@@ -450,6 +496,7 @@ QMenu *SimpleRichTextEdit::createContextMenu(const QPoint & mouseGlobalPos)
 		m_actions[ToggleStrikeOut]->setChecked(fontStrikeOut());
 		menu->addAction(m_actions[ToggleStrikeOut]);
 
+		menu->addAction(m_actions[ChangeTextColor]);
 
 		menu->addSeparator();
 

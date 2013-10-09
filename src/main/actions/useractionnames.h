@@ -63,6 +63,7 @@
 #define ACT_TOGGLE_SELECTED_LINES_ITALIC		"toggle_selected_lines_italic"
 #define ACT_TOGGLE_SELECTED_LINES_UNDERLINE		"toggle_selected_lines_underline"
 #define ACT_TOGGLE_SELECTED_LINES_STRIKETHROUGH	"toggle_selected_lines_strikethrough"
+#define ACT_CHANGE_SELECTED_LINES_TEXT_COLOR	"change_selected_lines_text_color"
 #define ACT_SHIFT								"shift"
 #define ACT_SHIFT_SELECTED_LINES_FORWARDS		"shift_selected_lines_forwards"
 #define ACT_SHIFT_SELECTED_LINES_BACKWARDS		"shift_selected_lines_backwards"

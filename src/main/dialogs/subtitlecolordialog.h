@@ -1,8 +1,8 @@
-#ifndef DURATIONLIMITSDIALOG_H
-#define DURATIONLIMITSDIALOG_H
-
+#ifndef SUBTITLECOLORDIALOG_H
+#define SUBTITLECOLORDIALOG_H
 /***************************************************************************
- *   Copyright (C) 2007-2009 Sergio Pistone (sergio_pistone@yahoo.com.ar)  *
+ *   Copyright (C) 2007-2012 Sergio Pistone (sergio_pistone@yahoo.com.ar)  *
+ *   Copyright (C) 2013 Mladen Milinkovic (max@smoothware.net)             *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
@@ -24,39 +24,29 @@
 #include <config.h>
 #endif
 
-#include "actionwithtargetdialog.h"
-#include "../../core/time.h"
-
-class QGroupBox;
-class QCheckBox;
-class TimeEdit;
+#include <QColorDialog>
 
 namespace SubtitleComposer {
-	class DurationLimitsDialog:public ActionWithTargetDialog {
+	class SubtitleColorDialog : public QColorDialog {
 		Q_OBJECT
 	public:
+		explicit SubtitleColorDialog(QWidget *parent = 0);
+		explicit SubtitleColorDialog(const QColor &initial, QWidget *parent = 0);
+		~SubtitleColorDialog();
 
-		DurationLimitsDialog(const Time & minDuration, const Time & maxDuration, QWidget * parent = 0);
+		static QColor getColor(const QColor &initial, QWidget *parent, const QString &title, ColorDialogOptions options = 0);
+		static QColor getColor(const QColor &initial = Qt::white, QWidget *parent = 0);
 
-		Time minDuration() const;
-		Time maxDuration() const;
+	protected:
+		bool defaultColorSelected;
 
-		bool enforceMaxDuration() const;
-		bool enforceMinDuration() const;
-		bool preventOverlap() const;
+	public slots:
+		void acceptDefaultColor();
 
-	private slots:
-		void onMinDurationValueChanged(int value);
-		void onMaxDurationValueChanged(int value);
-
-	private:
-
-		QGroupBox * m_maxGroupBox;
-		TimeEdit *m_maxDurationTimeEdit;
-
-		QGroupBox *m_minGroupBox;
-		QCheckBox *m_preventOverlapCheckBox;
-		TimeEdit *m_minDurationTimeEdit;
+		//	    virtual void done(int);
+		//	    virtual void accept();
+		//	    virtual void reject();
 	};
 }
-#endif
+
+#endif /* SUBTITLECOLORDIALOG_H */

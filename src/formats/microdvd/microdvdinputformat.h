@@ -33,12 +33,11 @@ namespace SubtitleComposer {
 		friend class FormatManager;
 
 	public:
-
-		virtual ~ MicroDVDInputFormat() {
+		virtual ~MicroDVDInputFormat() {
 		}
-	protected:
 
-		virtual bool parseSubtitles(Subtitle & subtitle, const QString & data) const {
+	protected:
+		virtual bool parseSubtitles(Subtitle &subtitle, const QString &data) const {
 			if(m_lineRegExp.indexIn(data, 0) == -1)
 				return false;	// couldn't find first line (content or FPS)
 
@@ -54,9 +53,10 @@ namespace SubtitleComposer {
 				offset += m_lineRegExp.matchedLength();
 				if(m_lineRegExp.indexIn(data, offset) == -1)
 					return false;	// couldn't find first line with content
-			} else				// first line doesn't contain the FPS, use the value loaded by default
+			} else {
+				// first line doesn't contain the FPS, use the value loaded by default
 				framesPerSecond = subtitle.framesPerSecond();
-
+			}
 
 			unsigned readLines = 0;
 
@@ -66,38 +66,82 @@ namespace SubtitleComposer {
 				Time showTime((long)((m_lineRegExp.cap(1).toLong() / framesPerSecond) * 1000));
 				Time hideTime((long)((m_lineRegExp.cap(2).toLong() / framesPerSecond) * 1000));
 
-				int styleFlags = 0;
-				QString text = m_lineRegExp.cap(3).replace("|", "\n");
-				if(m_styleRegExp.indexIn(text) != -1) {
-					QString styleText(m_styleRegExp.cap(1));
-					if(styleText.contains('b', Qt::CaseInsensitive))
-						styleFlags |= SString::Bold;
-					if(styleText.contains('i', Qt::CaseInsensitive))
-						styleFlags |= SString::Italic;
-					if(styleText.contains('u', Qt::CaseInsensitive))
-						styleFlags |= SString::Underline;
+				SString richText;
 
-					text.remove(m_styleRegExp);
+				QString text = m_lineRegExp.cap(3);
+
+				int globalStyle = 0, currentStyle = 0;
+				QRgb globalColor = 0, currentColor = 0;
+				int offsetPos = 0, matchedPos;
+				while((matchedPos = m_styleRegExp.indexIn(text, offsetPos)) != -1) {
+					QString tag(m_styleRegExp.cap(1)), val(m_styleRegExp.cap(2).toLower());
+
+					int newStyle = currentStyle;
+					QRgb newColor = currentColor;
+
+					if(tag == "Y") {
+						globalStyle = 0;
+						if(val.contains('b'))
+							globalStyle |= SString::Bold;
+						if(val.contains('i'))
+							globalStyle |= SString::Italic;
+						if(val.contains('u'))
+							globalStyle |= SString::Underline;
+					} else if(tag == "C") {
+						globalColor = val.length() != 7 ? 0 : QColor("#" + val.mid(5, 2) + val.mid(3, 2) + val.mid(1, 2)).rgb();
+					} else if(tag == "y") {
+						newStyle = 0;
+						if(val.contains('b'))
+							newStyle |= SString::Bold;
+						if(val.contains('i'))
+							newStyle |= SString::Italic;
+						if(val.contains('u'))
+							newStyle |= SString::Underline;
+					} else if(tag == "c") {
+						newColor = val.length() != 7 ? 0 : QColor("#" + val.mid(5, 2) + val.mid(3, 2) + val.mid(1, 2)).rgb();
+					}
+
+					if(newStyle != currentStyle || currentColor != newColor) {
+						QString token(text.mid(offsetPos, matchedPos - offsetPos));
+						richText += SString(token, currentStyle | (currentColor == 0 ? 0 : SString::Color), currentColor);
+						currentStyle = newStyle;
+						currentColor = newColor;
+					}
+
+					offsetPos = matchedPos + m_styleRegExp.cap(0).length();
 				}
-				text.replace(m_unsupportedFormatRegExp, "");
 
-				subtitle.insertLine(new SubtitleLine(SString(text, styleFlags), showTime, hideTime));
+				QString token(text.mid(offsetPos, matchedPos - offsetPos));
+				richText += SString(token, currentStyle | (currentColor == 0 ? 0 : SString::Color), currentColor);
+
+				if(globalColor != 0)
+					globalStyle |= SString::Color;
+				if(globalStyle != 0) {
+					for(int i = 0, sz = richText.length(); i < sz; i++) {
+						if(richText.styleFlagsAt(i) == 0) {
+							richText.setStyleFlagsAt(i, globalStyle);
+							richText.setStyleColorAt(i, globalColor);
+						}
+					}
+				}
+
+				subtitle.insertLine(new SubtitleLine(richText.replace('|', '\n'), showTime, hideTime));
 
 				readLines++;
-			}
-			while(m_lineRegExp.indexIn(data, offset) != -1);
+			} while(m_lineRegExp.indexIn(data, offset) != -1);
 
 			return readLines > 0;
 		}
 
-	MicroDVDInputFormat():
-		InputFormat("MicroDVD", QString("sub:txt").split(":")), m_lineRegExp("\\{(\\d+)\\}\\{(\\d+)\\}([^\n]+)\n", Qt::CaseInsensitive), m_styleRegExp("(\\{y:[ubi]+\\})", Qt::CaseInsensitive), m_unsupportedFormatRegExp("\\{C:\\$[0-9a-f]{6,6}\\}", Qt::CaseInsensitive) {
-		}
+		MicroDVDInputFormat()
+			: InputFormat("MicroDVD", QString("sub:txt").split(":")),
+			  m_lineRegExp("\\{(\\d+)\\}\\{(\\d+)\\}([^\n]+)\n", Qt::CaseInsensitive),
+			  m_styleRegExp("\\{([yc]):([^}]*)\\}", Qt::CaseInsensitive) {
+			}
 
-		mutable QRegExp m_lineRegExp;
-		mutable QRegExp m_styleRegExp;
-		mutable QRegExp m_unsupportedFormatRegExp;
-	};
+			mutable QRegExp m_lineRegExp;
+			mutable QRegExp m_styleRegExp;
+		};
 }
 
 #endif

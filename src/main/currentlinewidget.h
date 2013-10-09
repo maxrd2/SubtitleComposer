@@ -38,9 +38,10 @@ class SimpleRichTextEdit;
 
 namespace SubtitleComposer {
 	class CurrentLineWidget:public QWidget {
-	Q_OBJECT public:
+		Q_OBJECT
 
-		CurrentLineWidget(QWidget * parent);
+	public:
+		CurrentLineWidget(QWidget *parent);
 		virtual ~ CurrentLineWidget();
 
 		QString focusedText() const;
@@ -50,17 +51,19 @@ namespace SubtitleComposer {
 
 		void setupActions();
 
-		virtual bool eventFilter(QObject * object, QEvent * event);
+		virtual bool eventFilter(QObject *object, QEvent *event);
 
-		public slots:void setSubtitle(Subtitle * subtitle = 0);
-		void setCurrentLine(SubtitleLine * line);
+	public slots:
+		void setSubtitle(Subtitle *subtitle = 0);
+		void setCurrentLine(SubtitleLine *line);
 
 		void setTranslationMode(bool enabled);
 
 		void highlightPrimary(int startIndex, int endIndex);
 		void highlightSecondary(int startIndex, int endIndex);
 
-		protected slots:void onPrimaryTextEditSelectionChanged();
+	protected slots:
+		void onPrimaryTextEditSelectionChanged();
 		void onSecondaryTextEditSelectionChanged();
 
 		void onPrimaryTextEditChanged();
@@ -69,25 +72,23 @@ namespace SubtitleComposer {
 		void onHideTimeEditChanged(int hideTime);
 		void onDurationTimeEditChanged(int durationTime);
 
-		void onLinePrimaryTextChanged(const SString & primaryText);
-		void onLineSecondaryTextChanged(const SString & secondaryText);
-		void onLineShowTimeChanged(const Time & showTime);
-		void onLineHideTimeChanged(const Time & hideTime);
+		void onLinePrimaryTextChanged(const SString &primaryText);
+		void onLineSecondaryTextChanged(const SString &secondaryText);
+		void onLineShowTimeChanged(const Time &showTime);
+		void onLineHideTimeChanged(const Time &hideTime);
 
-		void onSpellingOptionChanged(const QString & option, const QString & value);
+		void onSpellingOptionChanged(const QString &option, const QString &value);
 
 		void markUpdateShortcuts();
 		void updateShortcuts();
 
 	private:
+		QToolButton * createToolButton(const QString &text, const char *icon, QObject *receiver, const char *slot, bool checkable = true);
 
-		QToolButton * createToolButton(const QString & text, const char *icon, QObject * receiver, const char *slot);
-
-		QString buildTextDescription(const QString & text);
+		QString buildTextDescription(const QString &text);
 
 	protected:
-
-		SubtitleLine * m_currentLine;
+		SubtitleLine *m_currentLine;
 		bool m_translationMode;
 
 		bool m_updateCurrentLine;
@@ -103,6 +104,7 @@ namespace SubtitleComposer {
 		QToolButton *m_boldButtons[2];
 		QToolButton *m_underlineButtons[2];
 		QToolButton *m_strikeThroughButtons[2];
+		QToolButton *m_textColorButtons[2];
 
 		QGridLayout *m_mainLayout;
 

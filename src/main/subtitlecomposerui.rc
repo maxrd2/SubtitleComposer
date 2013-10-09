@@ -66,6 +66,7 @@
 			<Action name="toggle_selected_lines_italic" />
 			<Action name="toggle_selected_lines_underline" />
 			<Action name="toggle_selected_lines_strikethrough" />
+			<Action name="change_selected_lines_text_color" />
 		</Menu>
 		<Menu name="times">
 			<text>T&amp;imes</text>
@@ -152,7 +153,7 @@
 		</Menu>
 		-->
 	</MenuBar>
-	<ToolBar alreadyVisited="1" noMerge="1" name="mainToolBar" >
+	<ToolBar alreadyVisited="1" noMerge="1" name="mainToolBar">
 		<text>Main Toolbar</text>
 		<Action name="new_subtitle" />
 		<Action name="open_subtitle" />
@@ -163,8 +164,8 @@
 		<Separator name="separator_1" />
 		<Action name="close_subtitle" />
 	</ToolBar>
-	<ToolBar alreadyVisited="1" noMerge="1" name="editToolBar" >
-		<text context="The toolbar name">Edit Toolbar</text>
+	<ToolBar alreadyVisited="1" noMerge="1" name="editToolBar">
+		<text>Edit Toolbar</text>
 		<Action name="undo" />
 		<Action name="redo" />
 		<Separator name="separator_0" />
@@ -172,6 +173,7 @@
 		<Action name="toggle_selected_lines_italic" />
 		<Action name="toggle_selected_lines_underline" />
 		<Action name="toggle_selected_lines_strikethrough" />
+		<Action name="change_selected_lines_text_color" />
 		<Separator name="separator_1" />
 		<Action name="find" />
 		<Action name="find_previous" />
