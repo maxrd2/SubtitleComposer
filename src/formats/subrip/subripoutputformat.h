@@ -50,13 +50,15 @@ namespace SubtitleComposer {
 
 				const SString & text = primary ? line->primaryText() : line->secondaryText();
 
-				ret += text.richString();
+				ret += text.richString().replace("&amp;", ">").replace("&lt;", "<").replace("&gt;", ">");
 
 				ret += "\n\n";
 			} return ret;
 		}
-		SubRipOutputFormat():OutputFormat("SubRip", QStringList("srt")), m_dialogueBuilder("%1%2%3%4%5%6%7\n\n") {
-		}
+
+		SubRipOutputFormat()
+			: OutputFormat("SubRip", QStringList("srt")),
+			  m_dialogueBuilder("%1%2%3%4%5%6%7\n\n") {}
 
 		const QString m_dialogueBuilder;
 		mutable QString m_timeBuilder;
