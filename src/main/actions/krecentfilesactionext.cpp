@@ -142,8 +142,8 @@ void KRecentFilesActionExt::removeUrl(const KUrl & url)
 
 void KRecentFilesActionExt::clearUrls()
 {
-	for(QMap < KUrl, QAction * >::ConstIterator it = m_actions.begin(), end = m_actions.end(); it != end; ++it)
-		removeAction(it.value())->deleteLater();
+	while(!m_actions.empty())
+		removeAction(m_actions.begin().value())->deleteLater();
 
 	removeAction(m_clearHistoryAction);
 	removeAction(m_separatorAction);
