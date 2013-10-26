@@ -21,18 +21,19 @@ If you do not have a GitHub account and feel uncomfortable creating one then fee
 e-mail to &lt;max at smoothware dot net&gt; instead.
 
 ### TODO
- - code cleanup and bugfixes before releasing v1.0
- - add VobSub import
- - add Speech Recognition (through PocketSphinx http://cmusphinx.sourceforge.net/2010/03/pocketsphinx-0-6-release/) to automate original language subtitle synhronization
- - add Speech Recognition to create new subtitles in original language
+Please look at [Milestone list][milestones] and [issue tracker on GitHub][bugs] for todo list.
 
-Help and ideas are welcome.
+Help and ideas are welcome.   
+If you would like to submit some patch, or do code changes, please check the new [coding style][coding style] or [wiki][coding style wiki].   
 
 ### AUTHORS / CONTRIBUTORS
  - Sergio Pistone - original author and maintainer
  - Mladen Milinkovic - maintainer
  - wantilles - support for VDPAU decoding on the mplayer backend
- and many others
+ - and many others
 
 
 [bugs]: https://github.com/maxrd2/subtitlecomposer/issues "Issue Tracker"
+[milestones]: https://github.com/maxrd2/subtitlecomposer/issues/milestones "Milestones"
+[coding style]: https://github.com/maxrd2/subtitlecomposer/blob/master/README.CodingStyle.md "Coding Style"
+[coding style wiki]: https://github.com/maxrd2/subtitlecomposer/wiki/Coding-Style "Coding Style - Wiki"
