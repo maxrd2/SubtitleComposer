@@ -7,32 +7,38 @@
 # SigLevel = PackageRequired
 # Server = http://smoothware.net/$repo/$arch
 
-pkgname=subtitlecomposer
-pkgver=0.5.5
+pkgname=subtitlecomposer-git
+pkgver=v0.5.5.6.gadace48
 pkgrel=1
-pkgdesc="A KDE subtitle editor"
+pkgdesc="A KDE subtitle editor - nightly build"
 arch=('i686' 'x86_64')
 url="https://github.com/maxrd2/subtitlecomposer"
 license=('GPL')
 depends=('kdelibs' 'gettext')
 makedepends=('cmake' 'automoc4' 'git')
-conflicts=('subtitlecomposer-git')
+conflicts=('subtitlecomposer')
 optdepends=(
 	'mplayer: for MPlayer backend'
 	'mplayer2: for MPlayer backend'
 	'gstreamer: for GStreamer backend'
 	'xine-lib: for Xine backend'
 	)
-source=("https://github.com/maxrd2/subtitlecomposer/archive/v${pkgver}.tar.gz")
-md5sums=('12c4a3083300f7b9ec7bb9d5ad4f4bda')
+source=('git+file:///home/max/projects/SubtitleComposer')
+md5sums=('SKIP')
+
+pkgver() {
+	export APP_VER=${pkgver}
+	cd ${srcdir}/SubtitleComposer
+	git describe --always | sed 's|-|.|g'
+}
 
 build() {
-	cd ${srcdir}/subtitlecomposer-${pkgver}
+	cd ${srcdir}/SubtitleComposer
 	cmake -DCMAKE_INSTALL_PREFIX=/usr
 	make
 }
 
 package() {
-	cd ${srcdir}/subtitlecomposer-${pkgver}
+	cd ${srcdir}/SubtitleComposer
 	make DESTDIR=${pkgdir} install
 }
