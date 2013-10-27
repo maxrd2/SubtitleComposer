@@ -7,13 +7,13 @@ Since original author didn't have time anymore to continue development of this g
 
 ### FEATURES
  - Support for multiple formats, including SubRip, MicroDVD, SSA/ASS (without advanced styles), MPlayer, TMPlayer and YouTube captions.
- - Live preview of subtitles and video with support for multiple backends (GStreamer, MPlayer, Xine, Phonon), audio channel selection and full screen mode.
+ - Live preview of subtitles and video with support for multiple backends (GStreamer, MPlayer/2, Xine, Phonon), audio channel selection and full screen mode.
  - Time shifting and adjusting, lines duration calculation, synchronization with video, etc.
  - Working with original subtitle and translation.
- - Texts styles (italic, bold, underline, stroke), font color, spell checking, automatic translation (using Google services), etc.
- - Joinning and splitting of files.
+ - Texts styles (italic, bold, underline, stroke, color), spell checking, automatic translation (using Google services), etc.
+ - Joining and splitting of files.
  - Automatic detection of errors.
- - Editing of subtitles through scripting (Ruby, Python, JavaScript and other languages supported by Kross).
+ - Editing of subtitles through scripting (Ruby, Python, JavaScript and other languages supported by [Kross](http://techbase.kde.org/Development/Tutorials/Kross-Tutorial)).
 
 ### BUGS
 Please submit bug reports or feature requests to the [issue tracker on GitHub][bugs]. 
@@ -24,12 +24,13 @@ e-mail to &lt;max at smoothware dot net&gt; instead.
 Please look at [Milestone list][milestones] and [issue tracker on GitHub][bugs] for todo list.
 
 Help and ideas are welcome.   
-If you would like to submit some patch, or do code changes, please check the new [coding style][coding style] or [wiki][coding style wiki].   
+If you would like to do some code changes, please check the new [coding style][coding style] or [wiki][coding style wiki].   
 
 ### AUTHORS / CONTRIBUTORS
  - Sergio Pistone - original author and maintainer
  - Mladen Milinkovic - maintainer
  - wantilles - support for VDPAU decoding on the mplayer backend
+ - Martin Steghöfer
  - and many others
 
 

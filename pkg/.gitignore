@@ -1,4 +1,8 @@
 src/
 pkg/
+repo/
+.build
+.build-nightly
+.updaterepo
 subtitlecomposer-*.src.tar.gz
 subtitlecomposer-*.pkg.tar.xz
