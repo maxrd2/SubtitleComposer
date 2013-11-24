@@ -33,8 +33,13 @@
 
 using namespace SubtitleComposer;
 
-Replacer::Replacer(QWidget * parent):
-QObject(parent), m_subtitle(0), m_translationMode(false), m_feedingPrimary(false), m_replace(0), m_iterator(0)
+Replacer::Replacer(QWidget *parent) :
+	QObject(parent),
+	m_subtitle(0),
+	m_translationMode(false),
+	m_feedingPrimary(false),
+	m_replace(0),
+	m_iterator(0)
 {
 	m_dialog = new KReplaceDialog(parent);
 	m_dialog->setHasSelection(true);
@@ -74,7 +79,8 @@ Replacer::~Replacer()
 	setSubtitle(0);
 }
 
-void Replacer::invalidate()
+void
+Replacer::invalidate()
 {
 	delete m_replace;
 	m_replace = 0;
@@ -85,19 +91,22 @@ void Replacer::invalidate()
 	m_feedingPrimary = false;
 }
 
-QWidget *Replacer::parentWidget()
+QWidget *
+Replacer::parentWidget()
 {
-	return static_cast < QWidget * >(parent());
+	return static_cast<QWidget *>(parent());
 }
 
-void Replacer::setSubtitle(Subtitle * subtitle)
+void
+Replacer::setSubtitle(Subtitle *subtitle)
 {
 	m_subtitle = subtitle;
 
 	invalidate();
 }
 
-void Replacer::setTranslationMode(bool enabled)
+void
+Replacer::setTranslationMode(bool enabled)
 {
 	if(m_translationMode != enabled) {
 		m_translationMode = enabled;
@@ -111,7 +120,8 @@ void Replacer::setTranslationMode(bool enabled)
 	}
 }
 
-void Replacer::replace(const RangeList & selectionRanges, int currentIndex, const QString & text)
+void
+Replacer::replace(const RangeList &selectionRanges, int currentIndex, const QString &text)
 {
 	invalidate();
 
@@ -141,7 +151,7 @@ void Replacer::replace(const RangeList & selectionRanges, int currentIndex, cons
 
 	if(m_dialog->options() & KFind::SelectedText) {
 		m_iterator = new SubtitleIterator(*m_subtitle, selectionRanges);
-		if(m_iterator->index() < 0)	// Invalid index means no lines in selectionRanges
+		if(m_iterator->index() < 0) // Invalid index means no lines in selectionRanges
 			return;
 	} else
 		m_iterator = new SubtitleIterator(*m_subtitle);
@@ -155,7 +165,8 @@ void Replacer::replace(const RangeList & selectionRanges, int currentIndex, cons
 	advance();
 }
 
-void Replacer::advance()
+void
+Replacer::advance()
 {
 	SubtitleCompositeActionExecutor executor(*m_subtitle, i18n("Replace"));
 
@@ -164,7 +175,7 @@ void Replacer::advance()
 	bool selection = m_replace->options() & KFind::SelectedText;
 	bool backwards = m_replace->options() & KFind::FindBackwards;
 
-	KDialog *replaceNextDialog = this->replaceNextDialog();	// creates the dialog if it didn't existed before
+	KDialog *replaceNextDialog = this->replaceNextDialog(); // creates the dialog if it didn't existed before
 
 	do {
 		if(m_replace->needData()) {
@@ -177,9 +188,8 @@ void Replacer::advance()
 				} else if(m_targetRadioButtons[SubtitleLine::Secondary]->isChecked()) {
 					m_feedingPrimary = false;
 					m_replace->setData(dataLine->secondaryText().string());
-				} else			// m_translationMode && m_targetRadioButtons[SubtitleLine::Both]->isChecked()
-				{
-					m_feedingPrimary = !m_feedingPrimary;	// we alternate the source of data
+				} else {                // m_translationMode && m_targetRadioButtons[SubtitleLine::Both]->isChecked()
+					m_feedingPrimary = !m_feedingPrimary;   // we alternate the source of data
 					m_replace->setData((m_feedingPrimary ? dataLine->primaryText() : dataLine->secondaryText()).string());
 				}
 			}
@@ -199,10 +209,10 @@ void Replacer::advance()
 
 				if(m_instancesFound && m_replace->numReplacements())
 					KMessageBox::information(parentWidget(), i18np("1 replacement done.", "%1 replacements done.", m_replace->numReplacements()), i18n("Replace")
-						);
-				else			// special case
+					                         );
+				else // special case
 					KMessageBox::sorry(parentWidget(), i18n("No instances of '%1' found!", m_replace->pattern()), i18n("Replace")
-						);
+					                   );
 
 				m_replace->resetCounts();
 				break;
@@ -219,18 +229,19 @@ void Replacer::advance()
 				m_replace->resetCounts();
 
 				if(KMessageBox::warningContinueCancel(parentWidget(), i18np("1 replacement done.", "%1 replacements done.", numReplacements) + "\n\n" + (backwards ? (selection ? i18n("Beginning of selection reached.\nContinue from the end?") : i18n("Beginning of subtitle reached.\nContinue from the end?")) : (selection ? i18n("End of selection reached.\nContinue from the beginning?") : i18n("End of subtitle reached.\nContinue from the beginning?"))), i18n("Replace")
-				) != KMessageBox::Continue) {
+				                                      ) != KMessageBox::Continue)
+				{
 					if(replaceNextDialog)
 						replaceNextDialog->hide();
 					break;
 				}
 			}
 		}
-	}
-	while(res != KFind::Match);
+	} while(res != KFind::Match);
 }
 
-KDialog *Replacer::replaceNextDialog()
+KDialog *
+Replacer::replaceNextDialog()
 {
 	if(!m_replace)
 		return 0;
@@ -245,14 +256,16 @@ KDialog *Replacer::replaceNextDialog()
 	return replaceNextDialog;
 }
 
-void Replacer::onHighlight(const QString &, int matchingIndex, int matchedLength)
+void
+Replacer::onHighlight(const QString &, int matchingIndex, int matchedLength)
 {
 	m_instancesFound = true;
 
 	emit found(m_iterator->current(), m_feedingPrimary, matchingIndex, matchingIndex + matchedLength - 1);
 }
 
-void Replacer::onReplace(const QString & text, int replacementIndex, int replacedLength, int matchedLength)
+void
+Replacer::onReplace(const QString &text, int replacementIndex, int replacedLength, int matchedLength)
 {
 	m_instancesFound = true;
 

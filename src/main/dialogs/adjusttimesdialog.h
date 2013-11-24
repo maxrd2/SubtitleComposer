@@ -30,21 +30,20 @@
 class TimeEdit;
 
 namespace SubtitleComposer {
-	class AdjustTimesDialog:public ActionDialog {
-	public:
+class AdjustTimesDialog : public ActionDialog
+{
+public:
+	AdjustTimesDialog(QWidget *parent = 0);
 
-		AdjustTimesDialog(QWidget * parent = 0);
+	Time firstLineTime() const;
+	void setFirstLineTime(const Time &time);
 
-		Time firstLineTime() const;
-		void setFirstLineTime(const Time & time);
+	Time lastLineTime() const;
+	void setLastLineTime(const Time &time);
 
-		Time lastLineTime() const;
-		void setLastLineTime(const Time & time);
-
-	private:
-
-		TimeEdit * m_firstLineTimeEdit;
-		TimeEdit *m_lastLineTimeEdit;
-	};
+private:
+	TimeEdit *m_firstLineTimeEdit;
+	TimeEdit *m_lastLineTimeEdit;
+};
 }
 #endif

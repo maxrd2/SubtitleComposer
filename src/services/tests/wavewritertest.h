@@ -26,8 +26,12 @@
 
 #include <QtCore/QObject>
 
-class WaveWriterTest:public QObject {
-	Q_OBJECT private slots:void testWriteMono8bps();
+class WaveWriterTest : public QObject
+{
+	Q_OBJECT
+
+private slots:
+	void testWriteMono8bps();
 	void testWriteMono16bps();
 	void testWriteMono24bps();
 	void testWriteMono32bps();

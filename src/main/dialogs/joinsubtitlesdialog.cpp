@@ -31,8 +31,8 @@
 
 using namespace SubtitleComposer;
 
-JoinSubtitlesDialog::JoinSubtitlesDialog(QWidget * parent):
-SelectableSubtitleDialog(i18n("Join Subtitles"), parent)
+JoinSubtitlesDialog::JoinSubtitlesDialog(QWidget *parent) :
+	SelectableSubtitleDialog(i18n("Join Subtitles"), parent)
 {
 	createSubtitleGroupBox();
 
@@ -64,14 +64,20 @@ SelectableSubtitleDialog(i18n("Join Subtitles"), parent)
 	m_subtitleLayout->addLayout(shiftTimeLayout, 2, 2);
 }
 
-void JoinSubtitlesDialog::setShiftTimeFromVideo()
+void
+JoinSubtitlesDialog::setShiftTimeFromVideo()
 {
 	m_shiftTimeEdit->setValue((int)(Player::instance()->length() * 1000 + 0.5));
 }
 
-Time JoinSubtitlesDialog::shiftTime() const {
+Time
+JoinSubtitlesDialog::shiftTime() const
+{
 	return m_shiftSubtitleCheckBox->isChecked() ? m_shiftTimeEdit->value() : 0;
-} void JoinSubtitlesDialog::show()
+}
+
+void
+JoinSubtitlesDialog::show()
 {
 	m_shiftTimeFromVideoButton->setEnabled(Player::instance()->state() > Player::Opening);
 	if(m_shiftTimeFromVideoButton->isEnabled())

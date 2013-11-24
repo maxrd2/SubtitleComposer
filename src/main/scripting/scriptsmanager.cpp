@@ -1,22 +1,22 @@
 
 /***************************************************************************
-*   Copyright (C) 2007-2009 Sergio Pistone (sergio_pistone@yahoo.com.ar)  *
-*                                                                         *
-*   This program is free software; you can redistribute it and/or modify  *
-*   it under the terms of the GNU General Public License as published by  *
-*   the Free Software Foundation; either version 2 of the License, or     *
-*   (at your option) any later version.                                   *
-*                                                                         *
-*   This program is distributed in the hope that it will be useful,       *
-*   but WITHOUT ANY WARRANTY; without even the implied warranty of        *
-*   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the         *
-*   GNU General Public License for more details.                          *
-*                                                                         *
-*   You should have received a copy of the GNU General Public License     *
-*   along with this program; if not, write to the                         *
-*   Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor,      *
-*   Boston, MA 02110-1301, USA.                                           *
-***************************************************************************/
+ *   Copyright (C) 2007-2009 Sergio Pistone (sergio_pistone@yahoo.com.ar)  *
+ *                                                                         *
+ *   This program is free software; you can redistribute it and/or modify  *
+ *   it under the terms of the GNU General Public License as published by  *
+ *   the Free Software Foundation; either version 2 of the License, or     *
+ *   (at your option) any later version.                                   *
+ *                                                                         *
+ *   This program is distributed in the hope that it will be useful,       *
+ *   but WITHOUT ANY WARRANTY; without even the implied warranty of        *
+ *   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the         *
+ *   GNU General Public License for more details.                          *
+ *                                                                         *
+ *   You should have received a copy of the GNU General Public License     *
+ *   along with this program; if not, write to the                         *
+ *   Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor,      *
+ *   Boston, MA 02110-1301, USA.                                           *
+ ***************************************************************************/
 
 #include "scriptsmanager.h"
 #include "scripting_rangesmodule.h"
@@ -57,56 +57,60 @@
 #include <kross/core/action.h>
 
 namespace SubtitleComposer {
-	class InstalledScriptsModel:public QStringListModel {
-	public:
-	InstalledScriptsModel(QObject * parent = 0):QStringListModel(parent) {
-		}
-		virtual ~ InstalledScriptsModel() {
-		}
-		virtual QVariant headerData(int /*section */ , Qt::Orientation orientation, int role) const {
-			if(role != Qt::DisplayRole || orientation == Qt::Vertical)
-				return QVariant();
-			return i18n("Installed Scripts");
-		}
-		virtual Qt::ItemFlags flags(const QModelIndex & index)const {
-			return QAbstractItemModel::flags(index);
-		}
-	};
+class InstalledScriptsModel : public QStringListModel
+{
+public:
+	InstalledScriptsModel(QObject *parent = 0) : QStringListModel(parent) {}
+
+	virtual ~InstalledScriptsModel() {}
+
+	virtual QVariant headerData(int /*section */, Qt::Orientation orientation, int role) const
+	{
+		if(role != Qt::DisplayRole || orientation == Qt::Vertical)
+			return QVariant();
+		return i18n("Installed Scripts");
+	}
+
+	virtual Qt::ItemFlags flags(const QModelIndex &index) const
+	{
+		return QAbstractItemModel::flags(index);
+	}
+};
 }
 
 using namespace SubtitleComposer;
 
-
 Debug::Debug()
-{
-}
+{}
 
 Debug::~Debug()
-{
-}
+{}
 
-void Debug::information(const QString & message)
+void
+Debug::information(const QString &message)
 {
 	KMessageBox::information(app()->mainWindow(), message, i18n("Information"));
 	kDebug() << message;
 }
 
-void Debug::warning(const QString & message)
+void
+Debug::warning(const QString &message)
 {
 	KMessageBox::sorry(app()->mainWindow(), message, i18n("Warning"));
 	kWarning() << message;
 }
 
-void Debug::error(const QString & message)
+void
+Debug::error(const QString &message)
 {
 	KMessageBox::error(app()->mainWindow(), message, i18n("Error"));
 	kWarning() << message;
 }
 
-ScriptsManager::ScriptsManager(QObject * parent):
-QObject(parent)
+ScriptsManager::ScriptsManager(QObject *parent) :
+	QObject(parent)
 {
-	//kDebug() << "KROSS interpreters:" << Kross::Manager::self().interpreters();
+	// kDebug() << "KROSS interpreters:" << Kross::Manager::self().interpreters();
 
 	KGlobal::dirs()->addResourceType("script", "appdata", "scripts");
 
@@ -186,31 +190,41 @@ QObject(parent)
 }
 
 ScriptsManager::~ScriptsManager()
-{
-}
+{}
 
-void ScriptsManager::setSubtitle(Subtitle * subtitle)
+void
+ScriptsManager::setSubtitle(Subtitle *subtitle)
 {
 	m_runScriptButton->setEnabled(subtitle != 0);
 }
 
-void ScriptsManager::showDialog()
+void
+ScriptsManager::showDialog()
 {
 	m_dialog->show();
 }
 
-QString ScriptsManager::currentScriptName() const {
+QString
+ScriptsManager::currentScriptName() const
+{
 	QModelIndex currentIndex = m_scriptsWidget->currentIndex();
 	return currentIndex.isValid() ? m_scriptsWidget->model()->data(currentIndex, Qt::DisplayRole).toString() : 0;
-} QStringList ScriptsManager::scriptNames() const {
+}
+
+QStringList
+ScriptsManager::scriptNames() const
+{
 	return m_scripts.keys();
-} void ScriptsManager::createScript(const QString & sN)
+}
+
+void
+ScriptsManager::createScript(const QString &sN)
 {
 	QString scriptName = sN;
 
 	while(scriptName.isEmpty() || m_scripts.contains(scriptName)) {
 		if(m_scripts.contains(scriptName) && KMessageBox::questionYesNo(app()->mainWindow(), i18n("You must enter an unused name to continue.\nWould you like to enter another name?"), i18n("Name Already Used"), KStandardGuiItem::cont(), KStandardGuiItem::cancel()
-		) != KMessageBox::Yes)
+																		) != KMessageBox::Yes)
 			return;
 
 		TextInputDialog nameDlg(i18n("Create New Script"), i18n("Script name:"));
@@ -224,7 +238,7 @@ QString ScriptsManager::currentScriptName() const {
 	QFile scriptFile(scriptPath);
 	if(!scriptFile.open(QIODevice::WriteOnly | QIODevice::Text)) {
 		KMessageBox::sorry(app()->mainWindow(), i18n("There was an error creating the file <b>%1</b>.", scriptPath)
-			);
+						   );
 		return;
 	}
 
@@ -242,13 +256,14 @@ QString ScriptsManager::currentScriptName() const {
 	editScript(scriptName);
 }
 
-const QStringList & ScriptsManager::mimeTypes()
+const QStringList &
+ScriptsManager::mimeTypes()
 {
 	static QStringList mimeTypes;
 
 	if(mimeTypes.isEmpty()) {
-		QHash < QString, Kross::InterpreterInfo * >infos = Kross::Manager::self().interpreterInfos();
-		for(QHash < QString, Kross::InterpreterInfo * >::ConstIterator it = infos.begin(), end = infos.end(); it != end; ++it) {
+		QHash<QString, Kross::InterpreterInfo *> infos = Kross::Manager::self().interpreterInfos();
+		for(QHash<QString, Kross::InterpreterInfo *>::ConstIterator it = infos.begin(), end = infos.end(); it != end; ++it) {
 			QStringList intMimeTypes = it.value()->mimeTypes();
 			for(QStringList::ConstIterator it = intMimeTypes.begin(), end = intMimeTypes.end(); it != end; ++it)
 				mimeTypes << *it;
@@ -258,7 +273,8 @@ const QStringList & ScriptsManager::mimeTypes()
 	return mimeTypes;
 }
 
-void ScriptsManager::addScript(const KUrl & sSU)
+void
+ScriptsManager::addScript(const KUrl &sSU)
 {
 	KUrl srcScriptUrl = sSU;
 
@@ -280,7 +296,7 @@ void ScriptsManager::addScript(const KUrl & sSU)
 
 	while(m_scripts.contains(scriptName)) {
 		if(m_scripts.contains(scriptName) && KMessageBox::questionYesNo(app()->mainWindow(), i18n("You must enter an unused name to continue.\nWould you like to enter another name?"), i18n("Name Already Used"), KStandardGuiItem::cont(), KStandardGuiItem::cancel()
-		) != KMessageBox::Yes)
+																		) != KMessageBox::Yes)
 			return;
 
 		TextInputDialog nameDlg(i18n("Rename Script"), i18n("Script name:"));
@@ -295,43 +311,45 @@ void ScriptsManager::addScript(const KUrl & sSU)
 
 	if(!fileLoadHelper.open()) {
 		KMessageBox::sorry(app()->mainWindow(), i18n("There was an error opening the file <b>%1</b>.", srcScriptUrl.prettyUrl())
-			);
+						   );
 		return;
 	}
 
 	if(!fileLoadHelper.file()->copy(scriptPath)) {
 		KMessageBox::sorry(app()->mainWindow(), i18n("There was an error copying the file to <b>%1</b>.", scriptPath)
-			);
+						   );
 		return;
 	}
 
 	reloadScripts();
 }
 
-void ScriptsManager::removeScript(const QString & sN)
+void
+ScriptsManager::removeScript(const QString &sN)
 {
-	QString scriptName = sN.isEmpty()? currentScriptName() : sN;
+	QString scriptName = sN.isEmpty() ? currentScriptName() : sN;
 	if(scriptName.isEmpty() || !m_scripts.contains(scriptName)) {
 		kWarning() << "unknow script specified";
 		return;
 	}
 
 	if(KMessageBox::warningContinueCancel(app()->mainWindow(), i18n("Do you really want to send file <b>%1</b> to the trash?", scriptName), i18n("Move to Trash")
-	) != KMessageBox::Continue)
+										  ) != KMessageBox::Continue)
 		return;
 
 	if(!FileTrasher(m_scripts[scriptName]).exec()) {
 		KMessageBox::sorry(app()->mainWindow(), i18n("There was an error removing the file <b>%1</b>.", m_scripts[scriptName])
-			);
+						   );
 		return;
 	}
 
 	reloadScripts();
 }
 
-void ScriptsManager::editScript(const QString & sN)
+void
+ScriptsManager::editScript(const QString &sN)
 {
-	QString scriptName = sN.isEmpty()? currentScriptName() : sN;
+	QString scriptName = sN.isEmpty() ? currentScriptName() : sN;
 	if(scriptName.isEmpty() || !m_scripts.contains(scriptName)) {
 		kWarning() << "unknow script specified";
 		return;
@@ -341,7 +359,8 @@ void ScriptsManager::editScript(const QString & sN)
 		KMessageBox::sorry(app()->mainWindow(), i18n("Could not launch external editor.\n"));
 }
 
-void ScriptsManager::runScript(const QString & sN)
+void
+ScriptsManager::runScript(const QString &sN)
 {
 	if(!app()->subtitle()) {
 		kWarning() << "attempt to run script without a working subtitle";
@@ -363,10 +382,10 @@ void ScriptsManager::runScript(const QString & sN)
 
 	Kross::Action krossAction(0, "Kross::Action");
 
-	Scripting::RangesModule * rangesModule = new Scripting::RangesModule;
-	Scripting::StringsModule * stringsModule = new Scripting::StringsModule;
-	Scripting::SubtitleModule * subtitleModule = new Scripting::SubtitleModule;
-	Scripting::SubtitleLineModule * subtitleLineModule = new Scripting::SubtitleLineModule;
+	Scripting::RangesModule *rangesModule = new Scripting::RangesModule;
+	Scripting::StringsModule *stringsModule = new Scripting::StringsModule;
+	Scripting::SubtitleModule *subtitleModule = new Scripting::SubtitleModule;
+	Scripting::SubtitleLineModule *subtitleLineModule = new Scripting::SubtitleLineModule;
 	Debug *debug = new Debug();
 
 	krossAction.addObject(rangesModule, "ranges");
@@ -395,20 +414,19 @@ void ScriptsManager::runScript(const QString & sN)
 
 	if(krossAction.hadError()) {
 		if(krossAction.errorTrace().isNull())
-			KMessageBox::error(app()->mainWindow(), krossAction.errorMessage(), i18n("Error Running Script")
-				);
+			KMessageBox::error(app()->mainWindow(), krossAction.errorMessage(), i18n("Error Running Script"));
 		else
-			KMessageBox::detailedError(app()->mainWindow(), krossAction.errorMessage(), krossAction.errorTrace(), i18n("Error Running Script")
-				);
+			KMessageBox::detailedError(app()->mainWindow(), krossAction.errorMessage(), krossAction.errorTrace(), i18n("Error Running Script"));
 	}
 }
 
-QMenu *ScriptsManager::toolsMenu()
+QMenu *
+ScriptsManager::toolsMenu()
 {
 	static QMenu *toolsMenu = 0;
 
 	if(!toolsMenu) {
-		toolsMenu = app()->mainWindow()->findChild < QMenu * >("tools");
+		toolsMenu = app()->mainWindow()->findChild<QMenu *>("tools");
 		if(!toolsMenu) {
 			toolsMenu = app()->mainWindow()->menuBar()->addMenu(i18n("Tools"));
 			toolsMenu->setObjectName("tools");
@@ -419,15 +437,16 @@ QMenu *ScriptsManager::toolsMenu()
 	return toolsMenu;
 }
 
-void ScriptsManager::reloadScripts()
+void
+ScriptsManager::reloadScripts()
 {
 	QMenu *toolsMenu = ScriptsManager::toolsMenu();
 	KActionCollection *actionCollection = app()->mainWindow()->actionCollection();
 	UserActionManager *actionManager = UserActionManager::instance();
 
-	QString selectedPath = m_scriptsWidget->model()->rowCount() && !currentScriptName().isEmpty()? m_scripts[currentScriptName()] : QString();
+	QString selectedPath = m_scriptsWidget->model()->rowCount() && !currentScriptName().isEmpty() ? m_scripts[currentScriptName()] : QString();
 
-	m_scripts.clear();			// deletes all actions
+	m_scripts.clear();                      // deletes all actions
 	toolsMenu->clear();
 	toolsMenu->addAction(app()->action(ACT_SCRIPTS_MANAGER));
 	toolsMenu->addSeparator();
@@ -453,14 +472,15 @@ void ScriptsManager::reloadScripts()
 		}
 	}
 
-	static_cast < InstalledScriptsModel * >(m_scriptsWidget->model())->setStringList(scriptNames);
+	static_cast<InstalledScriptsModel *>(m_scriptsWidget->model())->setStringList(scriptNames);
 	if(!scriptNames.isEmpty()) {
 		QModelIndex currentIndex = m_scriptsWidget->model()->index(newCurrentIndex < 0 ? 0 : newCurrentIndex, 0);
 		m_scriptsWidget->setCurrentIndex(currentIndex);
 	}
 }
 
-void ScriptsManager::onToolsMenuActionTriggered(QAction * triggeredAction)
+void
+ScriptsManager::onToolsMenuActionTriggered(QAction *triggeredAction)
 {
 	if(triggeredAction == app()->action(ACT_SCRIPTS_MANAGER))
 		return;
@@ -468,20 +488,20 @@ void ScriptsManager::onToolsMenuActionTriggered(QAction * triggeredAction)
 	runScript(triggeredAction->objectName());
 }
 
-bool ScriptsManager::eventFilter(QObject * object, QEvent * event)
+bool
+ScriptsManager::eventFilter(QObject *object, QEvent *event)
 {
 	if(object == m_scriptsWidget) {
 		if(event->type() == QEvent::KeyPress) {
-			QKeyEvent *keyEvent = static_cast < QKeyEvent * >(event);
+			QKeyEvent *keyEvent = static_cast<QKeyEvent *>(event);
 			if(keyEvent->matches(QKeySequence::Delete)) {
 				removeScript();
-				return true;	// eat event
+				return true;    // eat event
 			}
 		}
 	}
 
 	return QObject::eventFilter(object, event);
 }
-
 
 #include "scriptsmanager.moc"

@@ -21,21 +21,19 @@
 
 using namespace SubtitleComposer;
 
-PhononConfigWidget::PhononConfigWidget(QWidget * parent):
-AppConfigGroupWidget(new PhononConfig(), parent)
-{
-}
+PhononConfigWidget::PhononConfigWidget(QWidget *parent) :
+	AppConfigGroupWidget(new PhononConfig(), parent)
+{}
 
 PhononConfigWidget::~PhononConfigWidget()
-{
-}
+{}
 
-void PhononConfigWidget::setConfigFromControls()
-{
-}
+void
+PhononConfigWidget::setConfigFromControls()
+{}
 
-void PhononConfigWidget::setControlsFromConfig()
-{
-}
+void
+PhononConfigWidget::setControlsFromConfig()
+{}
 
 #include "phononconfigwidget.moc"

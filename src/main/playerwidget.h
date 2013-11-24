@@ -42,121 +42,123 @@ class QToolButton;
 class QSlider;
 
 namespace SubtitleComposer {
-	class Player;
+class Player;
 
-	class PlayerWidget:public QWidget {
-	Q_OBJECT public:
+class PlayerWidget : public QWidget
+{
+	Q_OBJECT
 
-		PlayerWidget(QWidget * parent);
-		virtual ~ PlayerWidget();
+public:
+	PlayerWidget(QWidget *parent);
+	virtual ~PlayerWidget();
 
-		void loadConfig();
-		void saveConfig();
+	void loadConfig();
+	void saveConfig();
 
-		bool fullScreenMode() const;
-		void setFullScreenMode(bool fullScreenMode);
+	bool fullScreenMode() const;
+	void setFullScreenMode(bool fullScreenMode);
 
-		SubtitleLine *playingLine();
-		SubtitleLine *overlayLine();
+	SubtitleLine * playingLine();
+	SubtitleLine * overlayLine();
 
-		void plugActions();
+	void plugActions();
 
-		virtual bool eventFilter(QObject * object, QEvent * event);
+	virtual bool eventFilter(QObject *object, QEvent *event);
 
-		public slots:void setSubtitle(Subtitle * subtitle = 0);
-		void setTranslationMode(bool enabled);
-		void setShowTranslation(bool showTranslation);
+public slots:
+	void setSubtitle(Subtitle *subtitle = 0);
+	void setTranslationMode(bool enabled);
+	void setShowTranslation(bool showTranslation);
 
-		void increaseFontSize(int points = 1);
-		void decreaseFontSize(int points = 1);
+	void increaseFontSize(int points = 1);
+	void decreaseFontSize(int points = 1);
 
-		signals:void playingLineChanged(SubtitleLine * line);
+signals:
+	void playingLineChanged(SubtitleLine *line);
 
-	protected:
+protected:
+	virtual void timerEvent(QTimerEvent *event);
 
-		virtual void timerEvent(QTimerEvent * event);
+private:
+	static QToolButton * toolButton(QWidget *parent, const char *name);
+	static QToolButton * createToolButton(QWidget *parent, const char *name, int size);
 
-	private:
+	void updateOverlayLine(const Time &videoPosition);
+	void setOverlayLine(SubtitleLine *line);
+	void setPlayingLine(SubtitleLine *line);
 
-		static QToolButton *toolButton(QWidget * parent, const char *name);
-		static QToolButton *createToolButton(QWidget * parent, const char *name, int size);
+	void updatePositionEditVisibility();
 
-		void updateOverlayLine(const Time & videoPosition);
-		void setOverlayLine(SubtitleLine * line);
-		void setPlayingLine(SubtitleLine * line);
+private slots:
+	void invalidateOverlayLine();
 
-		void updatePositionEditVisibility();
+	void onVolumeSliderValueChanged(int value);
+	void onSeekSliderValueChanged(int value);
+	void onSeekSliderMoved(int value);
+	void onSeekSliderPressed();
+	void onSeekSliderReleased();
+	void onPositionEditValueChanged(int position);
 
-		private slots:void invalidateOverlayLine();
+	void onPlayerOptionChanged(const QString &option, const QString &value);
 
-		void onVolumeSliderValueChanged(int value);
-		void onSeekSliderValueChanged(int value);
-		void onSeekSliderMoved(int value);
-		void onSeekSliderPressed();
-		void onSeekSliderReleased();
-		void onPositionEditValueChanged(int position);
+	void onPlayerFileOpened(const QString &filePath);
+	void onPlayerFileOpenError(const QString &filePath);
+	void onPlayerFileClosed();
+	void onPlayerPlaybackError(const QString &errorMessage);
+	void onPlayerPlaying();
+	void onPlayerStopped();
+	void onPlayerPositionChanged(double seconds);
+	void onPlayerLengthChanged(double seconds);
+	void onPlayerFramesPerSecondChanged(double fps);
+	void onPlayerVolumeChanged(double volume);
 
-		void onPlayerOptionChanged(const QString & option, const QString & value);
+	void onPlayerLeftClicked(const QPoint &point);
+	void onPlayerRightClicked(const QPoint &point);
+	void onPlayerDoubleClicked(const QPoint &point);
 
-		void onPlayerFileOpened(const QString & filePath);
-		void onPlayerFileOpenError(const QString & filePath);
-		void onPlayerFileClosed();
-		void onPlayerPlaybackError(const QString & errorMessage);
-		void onPlayerPlaying();
-		void onPlayerStopped();
-		void onPlayerPositionChanged(double seconds);
-		void onPlayerLengthChanged(double seconds);
-		void onPlayerFramesPerSecondChanged(double fps);
-		void onPlayerVolumeChanged(double volume);
+	void onPlayerBackendInitialized();
 
-		void onPlayerLeftClicked(const QPoint & point);
-		void onPlayerRightClicked(const QPoint & point);
-		void onPlayerDoubleClicked(const QPoint & point);
+private:
+	Subtitle *m_subtitle;
+	bool m_translationMode;
+	bool m_showTranslation;
+	SubtitleLine *m_overlayLine;            // the line being shown or to be shown next
+	SubtitleLine *m_playingLine;            // the line being shown or the last one shown
 
-		void onPlayerBackendInitialized();
+	int m_fullScreenTID;
+	bool m_fullScreenMode;
+	Player *m_player;
 
-	private:
+	Time m_lastSearchedLineToShowTime;
+	Time m_lastCheckedTime;
 
-		Subtitle * m_subtitle;
-		bool m_translationMode;
-		bool m_showTranslation;
-		SubtitleLine *m_overlayLine;	// the line being shown or to be shown next
-		SubtitleLine *m_playingLine;	// the line being shown or the last one shown
+	QGridLayout *m_mainLayout;
 
-		int m_fullScreenTID;
-		bool m_fullScreenMode;
-		Player *m_player;
+	LayeredWidget *m_layeredWidget;
+	TextOverlayWidget *m_textOverlay;
+	AttachableWidget *m_fullScreenControls;
 
-		Time m_lastSearchedLineToShowTime;
-		Time m_lastCheckedTime;
+	QSlider *m_seekSlider;
+	QSlider *m_fsSeekSlider;
+	QLabel *m_fsPositionLabel;
+	QString m_lengthString;
+	int m_updatePositionControls;           // "true" when >0
+	bool m_updateVideoPosition;
 
-		QGridLayout *m_mainLayout;
+	QSlider *m_volumeSlider;
+	QSlider *m_fsVolumeSlider;
+	bool m_updateVolumeControls;
+	bool m_updatePlayerVolume;
 
-		LayeredWidget *m_layeredWidget;
-		TextOverlayWidget *m_textOverlay;
-		AttachableWidget *m_fullScreenControls;
+	QGroupBox *m_infoControlsGroupBox;
+	QLabel *m_positionLabel;
+	TimeEdit *m_positionEdit;
+	bool m_showPositionTimeEdit;
+	QLabel *m_lengthLabel;
+	QLabel *m_fpsLabel;
 
-		QSlider *m_seekSlider;
-		QSlider *m_fsSeekSlider;
-		QLabel *m_fsPositionLabel;
-		QString m_lengthString;
-		int m_updatePositionControls;	// "true" when >0
-		bool m_updateVideoPosition;
-
-		QSlider *m_volumeSlider;
-		QSlider *m_fsVolumeSlider;
-		bool m_updateVolumeControls;
-		bool m_updatePlayerVolume;
-
-		QGroupBox *m_infoControlsGroupBox;
-		QLabel *m_positionLabel;
-		TimeEdit *m_positionEdit;
-		bool m_showPositionTimeEdit;
-		QLabel *m_lengthLabel;
-		QLabel *m_fpsLabel;
-
-		QPoint m_savedCursorPos;	// for hidding the mouse on full screen mode
-		QPoint m_currentCursorPos;
-	};
+	QPoint m_savedCursorPos;                // for hidding the mouse on full screen mode
+	QPoint m_currentCursorPos;
+};
 }
 #endif

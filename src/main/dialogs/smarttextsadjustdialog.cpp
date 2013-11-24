@@ -28,7 +28,8 @@
 
 using namespace SubtitleComposer;
 
-SmartTextsAdjustDialog::SmartTextsAdjustDialog(unsigned minLengthForLineBreak, QWidget * parent):ActionWithTargetDialog(i18n("Break Lines"), parent)
+SmartTextsAdjustDialog::SmartTextsAdjustDialog(unsigned minLengthForLineBreak, QWidget *parent) :
+	ActionWithTargetDialog(i18n("Break Lines"), parent)
 {
 	QGroupBox *settingsGroupBox = createGroupBox(i18nc("@title:group", "Settings"));
 
@@ -50,6 +51,8 @@ SmartTextsAdjustDialog::SmartTextsAdjustDialog(unsigned minLengthForLineBreak, Q
 	settingsLayout->addWidget(m_minLengthForLineBreakSpinBox, 0, 1);
 }
 
-unsigned SmartTextsAdjustDialog::minLengthForLineBreak() const {
+unsigned
+SmartTextsAdjustDialog::minLengthForLineBreak() const
+{
 	return m_minLengthForLineBreakSpinBox->value();
 }

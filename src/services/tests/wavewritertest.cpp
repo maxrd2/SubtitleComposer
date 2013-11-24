@@ -21,14 +21,15 @@
 #include "../decoder.h"
 #include "../../common/qxtsignalwaiter.h"
 
-#include <QtTest>				// krazy:exclude=c++/includes
-#include <QtCore>				// krazy:exclude=c++/includes
+#include <QtTest>                               // krazy:exclude=c++/includes
+#include <QtCore>                               // krazy:exclude=c++/includes
 
 #include <KDebug>
 
 using namespace SubtitleComposer;
 
-static void convertoToFormat(int bitsPerSample, int channels)
+static void
+convertoToFormat(int bitsPerSample, int channels)
 {
 	static Decoder *decoder = Decoder::instance();
 	if(!decoder->isInitialized())
@@ -74,42 +75,50 @@ static void convertoToFormat(int bitsPerSample, int channels)
 	}
 }
 
-void WaveWriterTest::testWriteMono8bps()
+void
+WaveWriterTest::testWriteMono8bps()
 {
 	convertoToFormat(8, 1);
 }
 
-void WaveWriterTest::testWriteMono16bps()
+void
+WaveWriterTest::testWriteMono16bps()
 {
 	convertoToFormat(16, 1);
 }
 
-void WaveWriterTest::testWriteMono24bps()
+void
+WaveWriterTest::testWriteMono24bps()
 {
 	convertoToFormat(24, 1);
 }
 
-void WaveWriterTest::testWriteMono32bps()
+void
+WaveWriterTest::testWriteMono32bps()
 {
 	convertoToFormat(32, 1);
 }
 
-void WaveWriterTest::testWriteStereo8bps()
+void
+WaveWriterTest::testWriteStereo8bps()
 {
 	convertoToFormat(8, 2);
 }
 
-void WaveWriterTest::testWriteStereo16bps()
+void
+WaveWriterTest::testWriteStereo16bps()
 {
 	convertoToFormat(16, 2);
 }
 
-void WaveWriterTest::testWriteStereo24bps()
+void
+WaveWriterTest::testWriteStereo24bps()
 {
 	convertoToFormat(24, 2);
 }
 
-void WaveWriterTest::testWriteStereo32bps()
+void
+WaveWriterTest::testWriteStereo32bps()
 {
 	convertoToFormat(32, 2);
 }
@@ -179,7 +188,7 @@ void WaveWriterTest::testJoinAndTrim()
 	ranges.trimToRange( Range( 0, 5 ) );
 	QVERIFY( ranges.rangesCount() == 1 && ranges.indexesCount() == 5 );
 }
-*/
+ */
 
 QTEST_MAIN(WaveWriterTest);
 

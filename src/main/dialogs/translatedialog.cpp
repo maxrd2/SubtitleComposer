@@ -27,8 +27,8 @@
 
 using namespace SubtitleComposer;
 
-TranslateDialog::TranslateDialog(QWidget * parent):
-ActionWithTargetDialog(i18n("Translate"), parent)
+TranslateDialog::TranslateDialog(QWidget *parent) :
+	ActionWithTargetDialog(i18n("Translate"), parent)
 {
 	QGroupBox *settingsGroupBox = createGroupBox(i18nc("@title:group", "Settings"));
 
@@ -36,7 +36,7 @@ ActionWithTargetDialog(i18n("Translate"), parent)
 	m_inputLanguageComboBox->setEditable(false);
 	m_inputLanguageComboBox->setIconSize(QSize(21, 13));
 	int index = 0;
-	for(QList < Language::Value >::ConstIterator it = Language::input().begin(), end = Language::input().end(); it != end; ++it) {
+	for(QList<Language::Value>::ConstIterator it = Language::input().begin(), end = Language::input().end(); it != end; ++it) {
 		m_inputLanguageComboBox->addItem(Language::name(*it));
 		QString flagPath = Language::flagPath(*it);
 		if(!flagPath.isEmpty())
@@ -52,7 +52,7 @@ ActionWithTargetDialog(i18n("Translate"), parent)
 	m_outputLanguageComboBox->setEditable(false);
 	m_outputLanguageComboBox->setIconSize(QSize(21, 13));
 	index = 0;
-	for(QList < Language::Value >::ConstIterator it = Language::output().begin(), end = Language::output().end(); it != end; ++it) {
+	for(QList<Language::Value>::ConstIterator it = Language::output().begin(), end = Language::output().end(); it != end; ++it) {
 		m_outputLanguageComboBox->addItem(Language::name(*it));
 		QString flagPath = Language::flagPath(*it);
 		if(!flagPath.isEmpty())
@@ -76,12 +76,14 @@ ActionWithTargetDialog(i18n("Translate"), parent)
 	settingsLayout->addWidget(m_outputLanguageComboBox, 1, 1);
 }
 
-Language::Value TranslateDialog::inputLanguage()const
+Language::Value
+TranslateDialog::inputLanguage() const
 {
 	return Language::input().at(m_inputLanguageComboBox->currentIndex());
 }
 
-Language::Value TranslateDialog::outputLanguage()const
+Language::Value
+TranslateDialog::outputLanguage() const
 {
 	return Language::output().at(m_outputLanguageComboBox->currentIndex());
 }

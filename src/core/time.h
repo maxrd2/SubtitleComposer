@@ -27,66 +27,63 @@
 #include <QtCore/QString>
 
 namespace SubtitleComposer {
-	class Time {
-	public:
+class Time
+{
+public:
+	static const int MaxMseconds = 86399999;
+	static const double MaxSeconds = MaxMseconds / 1000.0;
 
-		static const int MaxMseconds = 86399999;
-		static const double MaxSeconds = MaxMseconds / 1000.0;
+	/*explicit*/ Time(long mseconds = 0);
+	Time(int hours, int minutes, int seconds, int mseconds);
+	Time(const Time &time);
 
-		/*explicit */ Time(long mseconds = 0);
-		Time(int hours, int minutes, int seconds, int mseconds);
-		Time(const Time & time);
+	void setSecondsTime(double seconds);
+	void setMsecondsTime(long mseconds);
 
-		void setSecondsTime(double seconds);
-		void setMsecondsTime(long mseconds);
+	inline int toMillis() const { return m_mseconds; }
+	QString toString(bool showMillis = true) const;
 
-		inline int toMillis() const {
-			return m_mseconds;
-		}
-		QString toString(bool showMillis = true) const;
+	int hours() const;
+	bool setHours(int hours);
+	int minutes() const;
+	bool setMinutes(int hours);
+	int seconds() const;
+	bool setSeconds(int seconds);
+	int mseconds() const;
+	bool setMseconds(int mseconds);
 
-		int hours() const;
-		bool setHours(int hours);
-		int minutes() const;
-		bool setMinutes(int hours);
-		int seconds() const;
-		bool setSeconds(int seconds);
-		int mseconds() const;
-		bool setMseconds(int mseconds);
+	void shift(long mseconds);
+	Time shifted(long m_seconds) const;
+	void adjust(double shiftMseconds, double scaleFactor);
+	Time adjusted(double shiftMseconds, double scaleFactor) const;
 
-		void shift(long mseconds);
-		Time shifted(long m_seconds) const;
-		void adjust(double shiftMseconds, double scaleFactor);
-		Time adjusted(double shiftMseconds, double scaleFactor) const;
+	Time & operator=(const Time &time);
+	Time & operator=(long mseconds);
+	Time & operator+=(const Time &time);
+	Time & operator+=(long mseconds);
+	Time & operator-=(const Time &time);
+	Time & operator-=(long mseconds);
 
-		Time & operator=(const Time & time);
-		Time & operator=(long mseconds);
-		Time & operator+=(const Time & time);
-		Time & operator+=(long mseconds);
-		Time & operator-=(const Time & time);
-		Time & operator-=(long mseconds);
+	Time operator+(const Time &time) const;
+	Time operator+(long mseconds) const;
+	Time operator-(const Time &time) const;
+	Time operator-(long mseconds) const;
 
-		Time operator+(const Time & time) const;
-		Time operator+(long mseconds) const;
-		Time operator-(const Time & time) const;
-		Time operator-(long mseconds) const;
+	bool operator==(const Time &time) const;
+	bool operator==(long mseconds) const;
+	bool operator!=(const Time &time) const;
+	bool operator!=(long mseconds) const;
+	bool operator<(const Time &time) const;
+	bool operator<(long mseconds) const;
+	bool operator<=(const Time &time) const;
+	bool operator<=(long mseconds) const;
+	bool operator>(const Time &time) const;
+	bool operator>(long mseconds) const;
+	bool operator>=(const Time &time) const;
+	bool operator>=(long mseconds) const;
 
-		bool operator==(const Time & time) const;
-		bool operator==(long mseconds) const;
-		bool operator!=(const Time & time) const;
-		bool operator!=(long mseconds) const;
-		bool operator<(const Time & time) const;
-		bool operator<(long mseconds) const;
-		bool operator<=(const Time & time) const;
-		bool operator<=(long mseconds) const;
-		bool operator>(const Time & time) const;
-		bool operator>(long mseconds) const;
-		bool operator>=(const Time & time) const;
-		bool operator>=(long mseconds) const;
-
-	private:
-
-		int m_mseconds;
-	};
+private:
+	int m_mseconds;
+};
 }
 #endif

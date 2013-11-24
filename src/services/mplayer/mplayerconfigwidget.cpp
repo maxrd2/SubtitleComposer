@@ -31,8 +31,8 @@
 
 using namespace SubtitleComposer;
 
-MPlayerConfigWidget::MPlayerConfigWidget(QWidget * parent):
-AppConfigGroupWidget(new MPlayerConfig(), parent)
+MPlayerConfigWidget::MPlayerConfigWidget(QWidget *parent) :
+	AppConfigGroupWidget(new MPlayerConfig(), parent)
 {
 	QGroupBox *generalGroupBox = createGroupBox(i18nc("@title:group General settings", "General"));
 
@@ -52,7 +52,6 @@ AppConfigGroupWidget(new MPlayerConfig(), parent)
 	m_avsyncSpinBox->setMinimum(0);
 	m_avsyncSpinBox->setMaximum(50);
 
-
 	QGroupBox *videoGroupBox = createGroupBox(i18nc("@title:group Video settings", "Video"));
 
 	m_videoOutputCheckBox = new QCheckBox(videoGroupBox);
@@ -71,7 +70,6 @@ AppConfigGroupWidget(new MPlayerConfig(), parent)
 
 	m_hardFrameDropCheckBox = new QCheckBox(videoGroupBox);
 	m_hardFrameDropCheckBox->setText(i18n("Allow hard frame dropping"));
-
 
 	QGroupBox *audioGroupBox = createGroupBox(i18nc("@title:group Audio settings", "Audio"));
 
@@ -103,7 +101,6 @@ AppConfigGroupWidget(new MPlayerConfig(), parent)
 	m_volumeNormalizationCheckBox = new QCheckBox(audioGroupBox);
 	m_volumeNormalizationCheckBox->setText(i18n("Volume normalization"));
 
-
 	QGridLayout *generalLayout = createGridLayout(generalGroupBox);
 	generalLayout->addWidget(pathLabel, 0, 0, Qt::AlignRight | Qt::AlignVCenter);
 	generalLayout->addWidget(m_pathUrlRequester, 0, 1);
@@ -125,7 +122,6 @@ AppConfigGroupWidget(new MPlayerConfig(), parent)
 	audioLayout->addWidget(m_volumeAmplificationCheckBox, 2, 0, Qt::AlignRight | Qt::AlignVCenter);
 	audioLayout->addWidget(m_volumeAmplificationSpinBox, 2, 1);
 	audioLayout->addWidget(m_volumeNormalizationCheckBox, 3, 0, 1, 2);
-
 
 	connect(m_avsyncCheckBox, SIGNAL(toggled(bool)), m_avsyncSpinBox, SLOT(setEnabled(bool)));
 	connect(m_videoOutputCheckBox, SIGNAL(toggled(bool)), m_videoOutputComboBox, SLOT(setEnabled(bool)));
@@ -155,33 +151,32 @@ AppConfigGroupWidget(new MPlayerConfig(), parent)
 }
 
 MPlayerConfigWidget::~MPlayerConfigWidget()
-{
-}
+{}
 
-void MPlayerConfigWidget::setConfigFromControls()
+void
+MPlayerConfigWidget::setConfigFromControls()
 {
 	config()->setExecutablePath(m_pathUrlRequester->url().path());
-	config()->setAutoSyncFactor(m_avsyncCheckBox->isChecked()? m_avsyncSpinBox->value() : -1);
+	config()->setAutoSyncFactor(m_avsyncCheckBox->isChecked() ? m_avsyncSpinBox->value() : -1);
 
-	config()->setVideoOutput(m_videoOutputCheckBox->isChecked()? m_videoOutputComboBox->currentText() : QString());
+	config()->setVideoOutput(m_videoOutputCheckBox->isChecked() ? m_videoOutputComboBox->currentText() : QString());
 	config()->setVdpauDivx(m_vdpauDivxCheckBox->isChecked());
 	config()->setFrameDropping(m_frameDropCheckBox->isChecked());
 	config()->setHardFrameDropping(m_hardFrameDropCheckBox->isChecked());
 
-	config()->setAudioOutput(m_audioOutputCheckBox->isChecked()? m_audioOutputComboBox->currentText() : QString());
-	config()->setAudioChannels(m_audioChannelsCheckBox->isChecked()? m_audioChannelsSpinBox->value() : 0);
-	config()->setVolumeAplification(m_volumeAmplificationCheckBox->isChecked()? m_volumeAmplificationSpinBox->value() : 0);
+	config()->setAudioOutput(m_audioOutputCheckBox->isChecked() ? m_audioOutputComboBox->currentText() : QString());
+	config()->setAudioChannels(m_audioChannelsCheckBox->isChecked() ? m_audioChannelsSpinBox->value() : 0);
+	config()->setVolumeAplification(m_volumeAmplificationCheckBox->isChecked() ? m_volumeAmplificationSpinBox->value() : 0);
 	config()->setVolumeNormalization(m_volumeNormalizationCheckBox->isChecked());
-
 }
 
-void MPlayerConfigWidget::setControlsFromConfig()
+void
+MPlayerConfigWidget::setControlsFromConfig()
 {
 	m_pathUrlRequester->setUrl(config()->executablePath());
 	m_avsyncCheckBox->setChecked(config()->hasAutoSyncFactor());
 	if(m_avsyncCheckBox->isChecked())
 		m_avsyncSpinBox->setValue(config()->autoSyncFactor());
-
 
 	m_videoOutputCheckBox->setChecked(config()->hasVideoOutput());
 	if(m_videoOutputCheckBox->isChecked())
@@ -202,7 +197,6 @@ void MPlayerConfigWidget::setControlsFromConfig()
 		m_volumeAmplificationSpinBox->setValue(config()->volumeAmplification());
 
 	m_volumeNormalizationCheckBox->setChecked(config()->volumeNormalization());
-
 }
 
 #include "mplayerconfigwidget.moc"

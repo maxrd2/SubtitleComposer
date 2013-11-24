@@ -31,38 +31,38 @@
 
 class WaveWriter
 {
-	public:
-		WaveWriter();
-		~WaveWriter();
+public:
+	WaveWriter();
+	~WaveWriter();
 
-		bool open(const QString& outputPath, const WaveFormat& outputFormat);
-		void close();
+	bool open(const QString &outputPath, const WaveFormat &outputFormat);
+	void close();
 
-		bool isOpened() const;
-		const QString& outputPath() const;
-		const WaveFormat& outputFormat() const;
+	bool isOpened() const;
+	const QString & outputPath() const;
+	const WaveFormat & outputFormat() const;
 
-		double writtenSeconds() const;
+	double writtenSeconds() const;
 
-		// if necessary, data is converted to outputFormat
-		bool writeSamplesData(void* data, unsigned long dataSize, const WaveFormat& dataFormat);
+// if necessary, data is converted to outputFormat
+	bool writeSamplesData(void *data, unsigned long dataSize, const WaveFormat &dataFormat);
 
-	private:
-		void* convertData(void* srcData, unsigned long srcDataSize, const WaveFormat& srcFormat, const WaveFormat& dstFormat, unsigned long& convertedDataSize);
-		static void convertSample(void* srcData, unsigned long srcDataOffset, const WaveFormat& srcFormat, void* dstData, unsigned long dstDataOffset, const WaveFormat& dstFormat);
+private:
+	void * convertData(void *srcData, unsigned long srcDataSize, const WaveFormat &srcFormat, const WaveFormat &dstFormat, unsigned long &convertedDataSize);
+	static void convertSample(void *srcData, unsigned long srcDataOffset, const WaveFormat &srcFormat, void *dstData, unsigned long dstDataOffset, const WaveFormat &dstFormat);
 
-		void writeHeader();
-		void writeNumber(unsigned long number, unsigned long writeSize, bool littleEndian=true);
+	void writeHeader();
+	void writeNumber(unsigned long number, unsigned long writeSize, bool littleEndian = true);
 
-	private:
-		QString m_outputPath;
-		WaveFormat m_outputFormat;
+private:
+	QString m_outputPath;
+	WaveFormat m_outputFormat;
 
-		FILE* m_file;
-		long m_bytesWritten;
+	FILE *m_file;
+	long m_bytesWritten;
 
-		char* m_convertedData;
-		unsigned long m_convertedDataSize;
+	char *m_convertedData;
+	unsigned long m_convertedDataSize;
 };
 
 #endif

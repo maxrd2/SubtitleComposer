@@ -32,67 +32,87 @@
 #include <QtCore/QStringList>
 
 namespace SubtitleComposer {
-	class Format {
-	public:
+class Format
+{
+public:
+	friend class FormatManager;
 
-		friend class FormatManager;
-
-		typedef enum {
-			UNIX = 0,
-			Windows,
-			Macintosh,
-#ifdef Q_OS_UNIX				// krazy:exclude=c++/cpp
-			CurrentOS = UNIX
+	typedef enum {
+		UNIX = 0,
+		Windows,
+		Macintosh,
+#ifdef Q_OS_UNIX                                // krazy:exclude=c++/cpp
+		CurrentOS = UNIX
 #else
-#ifdef Q_OS_WIN					// krazy:exclude=c++/cpp
-			CurrentOS = Windows
+#ifdef Q_OS_WIN                                 // krazy:exclude=c++/cpp
+		CurrentOS = Windows
 #else
-			CurrentOS = Macintosh
+		CurrentOS = Macintosh
 #endif
 #endif
-		} NewLine;
+	} NewLine;
 
-		Format(const QString & name, const QStringList & extensions):m_name(name), m_extensions(extensions) {
-		} virtual ~ Format() {
-		} const QString & name() const {
-			return m_name;
-		}
-		const QStringList & extensions() const {
-			return m_extensions;
-		}
-		bool knowsExtension(const QString & extension)const {
-			QString ext = extension.toLower();
-			for(QStringList::ConstIterator it = m_extensions.begin(), end = m_extensions.end(); it != end; ++it) {
-				if(*it == ext && *it != "*")
-					return true;
-			}
-			return false;
-		}
+	Format(const QString &name, const QStringList &extensions) :
+		m_name(name),
+		m_extensions(extensions)
+	{}
 
-	protected:
+	virtual ~Format() {}
 
-		FormatData createFormatData()const {
-			return FormatData(m_name);
+	const QString & name() const { return m_name; }
+	const QStringList & extensions() const { return m_extensions; }
+
+	bool knowsExtension(const QString &extension) const
+	{
+		QString ext = extension.toLower();
+		for(QStringList::ConstIterator it = m_extensions.begin(), end = m_extensions.end(); it != end; ++it) {
+			if(*it == ext && *it != "*")
+				return true;
 		}
-		FormatData *formatData(const Subtitle & subtitle)const {
-			FormatData *formatData = subtitle.formatData();
-			return formatData && formatData->formatName() == m_name ? formatData : 0;
-		}
-		void setFormatData(Subtitle & subtitle, FormatData * formatData) const {
-			subtitle.setFormatData(formatData);
-		} void setFormatData(Subtitle & subtitle, FormatData & formatData) const {
-			subtitle.setFormatData(&formatData);
-		} FormatData *formatData(const SubtitleLine * line) const {
-			FormatData *formatData = line->formatData();
-			return formatData && formatData->formatName() == m_name ? formatData : 0;
-		}
-		void setFormatData(SubtitleLine * line, FormatData * formatData) const {
-			line->setFormatData(formatData);
-		} void setFormatData(SubtitleLine * line, FormatData & formatData) const {
-			line->setFormatData(&formatData);
-		} QString m_name;
-		QStringList m_extensions;
-	};
+		return false;
+	}
+
+protected:
+	FormatData createFormatData() const
+	{
+		return FormatData(m_name);
+	}
+
+	FormatData * formatData(const Subtitle &subtitle) const
+	{
+		FormatData *formatData = subtitle.formatData();
+		return formatData && formatData->formatName() == m_name ? formatData : 0;
+	}
+
+	void setFormatData(Subtitle &subtitle, FormatData *formatData) const
+	{
+		subtitle.setFormatData(formatData);
+	}
+
+	void setFormatData(Subtitle &subtitle, FormatData &formatData) const
+	{
+		subtitle.setFormatData(&formatData);
+	}
+
+	FormatData * formatData(const SubtitleLine *line) const
+	{
+		FormatData *formatData = line->formatData();
+		return formatData && formatData->formatName() == m_name ? formatData : 0;
+	}
+
+	void setFormatData(SubtitleLine *line, FormatData *formatData) const
+	{
+		line->setFormatData(formatData);
+	}
+
+	void setFormatData(SubtitleLine *line, FormatData &formatData) const
+	{
+		line->setFormatData(&formatData);
+	}
+
+	QString m_name;
+	QStringList m_extensions;
+};
 }
 
 #endif

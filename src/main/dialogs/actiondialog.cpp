@@ -28,7 +28,8 @@
 
 using namespace SubtitleComposer;
 
-ActionDialog::ActionDialog(const QString & title, QWidget * parent):KDialog(parent)
+ActionDialog::ActionDialog(const QString &title, QWidget *parent) :
+	KDialog(parent)
 {
 	setCaption(title);
 
@@ -44,7 +45,8 @@ ActionDialog::ActionDialog(const QString & title, QWidget * parent):KDialog(pare
 	setMainWidget(m_mainWidget);
 }
 
-int ActionDialog::exec()
+int
+ActionDialog::exec()
 {
 	// attempt at showing the full action name on the title...
 	// it would work better if we could get the fontMetrics used by kwin
@@ -56,7 +58,8 @@ int ActionDialog::exec()
 	return KDialog::exec();
 }
 
-void ActionDialog::show()
+void
+ActionDialog::show()
 {
 	// attempt at showing the full action name on the title...
 	// it would work better if we could get the fontMetrics used by kwin
@@ -68,8 +71,8 @@ void ActionDialog::show()
 	KDialog::show();
 }
 
-
-QGroupBox *ActionDialog::createGroupBox(const QString & title, bool addToLayout)
+QGroupBox *
+ActionDialog::createGroupBox(const QString &title, bool addToLayout)
 {
 	QGroupBox *groupBox = new QGroupBox(m_mainWidget);
 	groupBox->setTitle(title);
@@ -81,7 +84,8 @@ QGroupBox *ActionDialog::createGroupBox(const QString & title, bool addToLayout)
 	return groupBox;
 }
 
-QGridLayout *ActionDialog::createLayout(QGroupBox * groupBox)
+QGridLayout *
+ActionDialog::createLayout(QGroupBox *groupBox)
 {
 	QGridLayout *gridLayout = new QGridLayout(groupBox);
 	gridLayout->setAlignment(Qt::AlignTop);

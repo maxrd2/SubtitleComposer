@@ -32,30 +32,29 @@ class KIntNumInput;
 class QCheckBox;
 
 namespace SubtitleComposer {
-	class GeneralConfigWidget:public AppConfigGroupWidget {
-		Q_OBJECT friend class ConfigDialog;
+class GeneralConfigWidget : public AppConfigGroupWidget
+{
+	Q_OBJECT
 
-	public:
+	friend class ConfigDialog;
 
-		virtual ~ GeneralConfigWidget();
+public:
+	virtual ~GeneralConfigWidget();
 
-		virtual void setControlsFromConfig();
-		virtual void setConfigFromControls();
+	virtual void setControlsFromConfig();
+	virtual void setConfigFromControls();
 
-	private:
+private:
+	explicit GeneralConfigWidget(QWidget *parent = 0);
 
-		explicit GeneralConfigWidget(QWidget * parent = 0);
+	GeneralConfig * config() { return static_cast<GeneralConfig *>(m_config); }
 
-		GeneralConfig *config() {
-			return static_cast < GeneralConfig * >(m_config);
-		};
-
-		KComboBox *m_defaultEncodingComboBox;
-		KIntNumInput *m_relativeSeekPositionSpinBox;
-		QCheckBox *m_autoLoadVideoCheckBox;
-		KIntNumInput *m_shiftMsecsSpinBox;
-		KIntNumInput *m_videoPosCompMsecsSpinBox;
-	};
+	KComboBox *m_defaultEncodingComboBox;
+	KIntNumInput *m_relativeSeekPositionSpinBox;
+	QCheckBox *m_autoLoadVideoCheckBox;
+	KIntNumInput *m_shiftMsecsSpinBox;
+	KIntNumInput *m_videoPosCompMsecsSpinBox;
+};
 }
 
 #endif

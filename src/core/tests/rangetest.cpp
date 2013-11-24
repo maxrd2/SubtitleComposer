@@ -20,12 +20,13 @@
 #include "rangetest.h"
 #include "../range.h"
 
-#include <QtTest>				// krazy:exclude=c++/includes
-#include <QtCore>				// krazy:exclude=c++/includes
+#include <QtTest>                               // krazy:exclude=c++/includes
+#include <QtCore>                               // krazy:exclude=c++/includes
 
 using namespace SubtitleComposer;
 
-void RangeTest::testConstructors()
+void
+RangeTest::testConstructors()
 {
 	QVERIFY(Range::MaxIndex > 0);
 
@@ -46,7 +47,8 @@ void RangeTest::testConstructors()
 	QVERIFY(range.end() == 32);
 }
 
-void RangeTest::testLimits()
+void
+RangeTest::testLimits()
 {
 	QVERIFY(Range::MaxIndex > 0);
 
@@ -57,7 +59,8 @@ void RangeTest::testLimits()
 	QVERIFY(!range.contains(100));
 }
 
-void RangeTest::testOperators()
+void
+RangeTest::testOperators()
 {
 	QVERIFY(Range::MaxIndex > 0);
 

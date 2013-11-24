@@ -35,185 +35,219 @@
 class QTimer;
 
 namespace SubtitleComposer {
-	class PlayerBackend;
+class PlayerBackend;
 
-	class Player:public Service {
-	Q_OBJECT public:
+class Player : public Service
+{
+	Q_OBJECT
 
-		typedef enum {
-			Closed = Service::Initialized,	// same as Initialized
-			Opening,
-			// Opened, same as >Opening
-			Playing,
-			Paused,
-			Ready				// same as Stopped or Finished
-		} State;
+public:
+	typedef enum {
+		Closed = Service::Initialized,          // same as Initialized
+		Opening,
+		// Opened, same as >Opening
+		Playing,
+		Paused,
+		Ready                                   // same as Stopped or Finished
+	} State;
 
-		virtual QString dummyBackendName() const {
-			return "Dummy";
-		}
-		inline PlayerBackend *backend(const QString & name)const {
-			return (PlayerBackend *) Service::backend(name);
-		}
-		inline PlayerBackend *activeBackend() const {
-			return (PlayerBackend *) Service::activeBackend();
-		}
-		static Player *instance();
+	virtual QString dummyBackendName() const { return "Dummy"; }
 
-		inline VideoWidget *videoWidget();
+	inline PlayerBackend * backend(const QString &name) const { return (PlayerBackend *)Service::backend(name); }
 
-		inline const QString & filePath() const;
+	inline PlayerBackend * activeBackend() const { return (PlayerBackend *)Service::activeBackend(); }
 
-		inline bool isPlaying() const;
-		inline bool isPaused() const;
-		inline double position() const;
-		inline double length() const;
-		inline double framesPerSecond() const;
-		inline bool isStopped() const;
+	static Player * instance();
 
-		inline double volume() const;
-		inline bool isMuted() const;
-		inline int activeAudioStream() const;
-		const QStringList & audioStreams() const;
+	inline VideoWidget * videoWidget();
 
-		public slots:
-			// return values of this functions don't imply that the operation was performed OK
-			// but that it was allowed (a false return value means that nothing was attempted).
-		bool openFile(const QString & filePath);
-		bool closeFile();
+	inline const QString & filePath() const;
 
-		bool play();
-		bool pause();
-		bool togglePlayPaused();
-		bool seek(double seconds, bool accurate);
-		bool stop();
-		bool setActiveAudioStream(int audioStreamIndex);
+	inline bool isPlaying() const;
+	inline bool isPaused() const;
+	inline double position() const;
+	inline double length() const;
+	inline double framesPerSecond() const;
+	inline bool isStopped() const;
 
-		void increaseVolume(double amount = 3.0);
-		void decreaseVolume(double amount = 3.0);
-		void setVolume(double volume);	// value from 0.0 to 100.0 (inclusive)
+	inline double volume() const;
+	inline bool isMuted() const;
+	inline int activeAudioStream() const;
+	const QStringList & audioStreams() const;
 
-		void setMuted(bool mute);
+public slots:
+	// return values of these functions don't imply that the operation was performed OK
+	// but that it was allowed (a false return value means that nothing was attempted).
+	bool openFile(const QString &filePath);
+	bool closeFile();
 
-		signals:void fileOpenError(const QString & filePath);
-		void fileOpened(const QString & filePath);
-		void fileClosed();
+	bool play();
+	bool pause();
+	bool togglePlayPaused();
+	bool seek(double seconds, bool accurate);
+	bool stop();
+	bool setActiveAudioStream(int audioStreamIndex);
 
-		void playbackError(const QString & errorMessage = QString());
-		void playing();
-		void positionChanged(double seconds);
-		void lengthChanged(double seconds);
-		void framesPerSecondChanged(double fps);
-		void paused();
-		void stopped();
-		void activeAudioStreamChanged(int audioStreamIndex);
-		void audioStreamsChanged(const QStringList & audioStreams);
+	void increaseVolume(double amount = 3.0);
+	void decreaseVolume(double amount = 3.0);
+	void setVolume(double volume);          // value from 0.0 to 100.0 (inclusive)
 
-		void volumeChanged(double volume);
-		void muteChanged(bool muted);
+	void setMuted(bool mute);
 
-		void doubleClicked(const QPoint & point);
-		void rightClicked(const QPoint & point);
-		void leftClicked(const QPoint & point);
-		void wheelUp();
-		void wheelDown();
+signals:
+	void fileOpenError(const QString &filePath);
+	void fileOpened(const QString &filePath);
+	void fileClosed();
 
-	protected:
+	void playbackError(const QString &errorMessage = QString());
+	void playing();
+	void positionChanged(double seconds);
+	void lengthChanged(double seconds);
+	void framesPerSecondChanged(double fps);
+	void paused();
+	void stopped();
+	void activeAudioStreamChanged(int audioStreamIndex);
+	void audioStreamsChanged(const QStringList &audioStreams);
 
-			/** attempts to initialize the backend, making it the active backend.
-				returns true if backend is the active backend after the call.
-				if there was already another backend initialized returns false immediately.
-			*/
-		virtual bool initializeBackend(ServiceBackend * backend, QWidget * widgetParent);
+	void volumeChanged(double volume);
+	void muteChanged(bool muted);
 
-			/** finalizes the active backend, leaving no active backend.
-				returns the previously initialized backend (or 0 if there was none). */
-		virtual void finalizeBackend(ServiceBackend * backend);
+	void doubleClicked(const QPoint &point);
+	void rightClicked(const QPoint &point);
+	void leftClicked(const QPoint &point);
+	void wheelUp();
+	void wheelDown();
 
-	private:
+protected:
+	/**
+	 * @brief initializeBackend - attempts to initialize the backend, making it the active backend.
+	 * @param backend
+	 * @param widgetParent
+	 * @return true if backend is the active backend after the call; false if there was already another backend initialized
+	 */
+	virtual bool initializeBackend(ServiceBackend *backend, QWidget *widgetParent);
 
-		Player();
-		virtual ~ Player();
+	/**
+	 * @brief finalizeBackend - finalizes the active backend, leaving no active backend.
+	 * @param backend
+	 * returns??? the previously initialized backend (or 0 if there was none).
+	 */
+	virtual void finalizeBackend(ServiceBackend *backend);
 
-		static double logarithmicVolume(double percentage);
+private:
+	Player();
+	virtual ~Player();
 
-		void resetState();
+	static double logarithmicVolume(double percentage);
 
-		// functions used by the backends to inform changes in state:
+	void resetState();
 
-		void setPosition(double position);	// value in seconds
-		void setLength(double length);	// value in seconds
+	// functions used by the backends to inform changes in state:
 
-		void setState(Player::State state);
-		void setErrorState(const QString & errorMessage = QString());
+	void setPosition(double position);              // value in seconds
+	void setLength(double length);          // value in seconds
 
-		void setFramesPerSecond(double framesPerSecond);
-		void setAudioStreams(const QStringList & audioStreams, int activeAudioStream);
+	void setState(Player::State state);
+	void setErrorState(const QString &errorMessage = QString());
 
-		private slots:void seekToSavedPosition();
+	void setFramesPerSecond(double framesPerSecond);
+	void setAudioStreams(const QStringList &audioStreams, int activeAudioStream);
 
-			/** is the videoWidget() gets destroyed before the player, we finalize the player */
-		void onVideoWidgetDestroyed();
+private slots:
+	void seekToSavedPosition();
 
-			/** called if the player fails to set the state to Playing after opening the file */
-		void onOpenFileTimeout();
+	/** is the videoWidget() gets destroyed before the player, we finalize the player */
+	void onVideoWidgetDestroyed();
 
-	private:
+	/** called if the player fails to set the state to Playing after opening the file */
+	void onOpenFileTimeout();
 
-		VideoWidget * m_videoWidget;
+private:
+	VideoWidget *m_videoWidget;
 
-		QString m_filePath;
+	QString m_filePath;
 
-		double m_position;
-		double m_savedPosition;
-		double m_length;
-		double m_framesPerSecond;
-		double m_minPositionDelta;
-		int m_activeAudioStream;
-		QStringList m_audioStreams;
+	double m_position;
+	double m_savedPosition;
+	double m_length;
+	double m_framesPerSecond;
+	double m_minPositionDelta;
+	int m_activeAudioStream;
+	QStringList m_audioStreams;
 
-		bool m_muted;
-		double m_volume;
-		double m_backendVolume;
+	bool m_muted;
+	double m_volume;
+	double m_backendVolume;
 
-		QTimer *m_openFileTimer;
+	QTimer *m_openFileTimer;
 
+	friend class PlayerBackend;
+};
 
-		friend class PlayerBackend;
-	};
+VideoWidget *
+Player::videoWidget()
+{
+	return m_videoWidget;
+}
 
-	VideoWidget *Player::videoWidget() {
-		return m_videoWidget;
-	}
-	const QString & Player::filePath() const {
-		return m_filePath;
-	}
-	bool Player::isPlaying() const {
-		return m_state == Player::Playing;
-	}
-	bool Player::isPaused() const {
-		return m_state == Player::Paused;
-	}
-	double Player::position() const {
-		return m_state <= Player::Opening ? -1.0 : (m_state == Player::Ready ? 0.0 : m_position);
-	}
-	double Player::length() const {
-		return m_state <= Player::Opening ? -1.0 : m_length;
-	}
-	double Player::framesPerSecond() const {
-		return m_state <= Player::Opening ? -1.0 : m_framesPerSecond;
-	}
-	bool Player::isStopped() const {
-		return m_state == Player::Ready;
-	}
-	double Player::volume() const {
-		return m_volume;
-	}
-	bool Player::isMuted() const {
-		return m_muted;
-	}
-	int Player::activeAudioStream() const {
-		return m_state <= Player::Opening ? -1 : m_activeAudioStream;
-	}
+const QString &
+Player::filePath() const
+{
+	return m_filePath;
+}
+
+bool
+Player::isPlaying() const
+{
+	return m_state == Player::Playing;
+}
+
+bool
+Player::isPaused() const
+{
+	return m_state == Player::Paused;
+}
+
+double
+Player::position() const
+{
+	return m_state <= Player::Opening ? -1.0 : (m_state == Player::Ready ? 0.0 : m_position);
+}
+
+double
+Player::length() const
+{
+	return m_state <= Player::Opening ? -1.0 : m_length;
+}
+
+double
+Player::framesPerSecond() const
+{
+	return m_state <= Player::Opening ? -1.0 : m_framesPerSecond;
+}
+
+bool
+Player::isStopped() const
+{
+	return m_state == Player::Ready;
+}
+
+double
+Player::volume() const
+{
+	return m_volume;
+}
+
+bool
+Player::isMuted() const
+{
+	return m_muted;
+}
+
+int
+Player::activeAudioStream() const
+{
+	return m_state <= Player::Opening ? -1 : m_activeAudioStream;
+}
 }
 #endif

@@ -55,7 +55,8 @@
 
 using namespace SubtitleComposer;
 
-FormatManager & FormatManager::instance()
+FormatManager &
+FormatManager::instance()
 {
 	static FormatManager instance;
 	return instance;
@@ -64,15 +65,15 @@ FormatManager & FormatManager::instance()
 FormatManager::FormatManager()
 {
 	/*foreach( const QStringList &encodingsForScript, KGlobal::charsets()->encodingsByScript() )
-	{
-	KEncodingDetector::AutoDetectScript scri = KEncodingDetector::scriptForName( encodingsForScript.at( 0 ) );
-	if ( KEncodingDetector::hasAutoDetectionForScript( scri ) )
-	kDebug() << encodingsForScript.at( 0 ) << "[autodetect available]";
-	else
-	kDebug() << encodingsForScript.at( 0 );
-	for ( int i=1; i < encodingsForScript.size(); ++i )
-	kDebug() << "-" << encodingsForScript.at( i );
-	} */
+	   {
+	   KEncodingDetector::AutoDetectScript scri = KEncodingDetector::scriptForName( encodingsForScript.at( 0 ) );
+	   if ( KEncodingDetector::hasAutoDetectionForScript( scri ) )
+	   kDebug() << encodingsForScript.at( 0 ) << "[autodetect available]";
+	   else
+	   kDebug() << encodingsForScript.at( 0 );
+	   for ( int i=1; i < encodingsForScript.size(); ++i )
+	   kDebug() << "-" << encodingsForScript.at( i );
+	   } */
 
 	InputFormat *inputFormats[] = {
 		new SubRipInputFormat(),
@@ -113,20 +114,34 @@ FormatManager::FormatManager()
 
 FormatManager::~FormatManager()
 {
-	for(QMap < QString, InputFormat * >::ConstIterator it = m_inputFormats.begin(), end = m_inputFormats.end(); it != end; ++it)
+	for(QMap<QString, InputFormat *>::ConstIterator it = m_inputFormats.begin(), end = m_inputFormats.end(); it != end; ++it)
 		delete it.value();
 
-	for(QMap < QString, OutputFormat * >::ConstIterator it = m_outputFormats.begin(), end = m_outputFormats.end(); it != end; ++it)
+	for(QMap<QString, OutputFormat *>::ConstIterator it = m_outputFormats.begin(), end = m_outputFormats.end(); it != end; ++it)
 		delete it.value();
 }
 
-bool FormatManager::hasInput(const QString & name) const {
+bool
+FormatManager::hasInput(const QString &name) const
+{
 	return m_inputFormats.contains(name);
-} const InputFormat *FormatManager::input(const QString & name) const {
+}
+
+const InputFormat *
+FormatManager::input(const QString &name) const
+{
 	return m_inputFormats.contains(name) ? m_inputFormats[name] : 0;
-} QStringList FormatManager::inputNames() const {
+}
+
+QStringList
+FormatManager::inputNames() const
+{
 	return m_inputFormats.keys();
-} bool FormatManager::readSubtitle(Subtitle & subtitle, bool primary, const KUrl & url, KEncodingDetector::AutoDetectScript autodetectScript, QTextCodec ** codec, Format::NewLine * newLine, QString * formatName) const {
+}
+
+bool
+FormatManager::readSubtitle(Subtitle &subtitle, bool primary, const KUrl &url, KEncodingDetector::AutoDetectScript autodetectScript, QTextCodec **codec, Format::NewLine *newLine, QString *formatName) const
+{
 //  if ( *codec )
 //      kDebug() << "loading" << url << "script" << autodetectScript << "codec" << (*codec)->name();
 //  else
@@ -141,24 +156,24 @@ bool FormatManager::hasInput(const QString & name) const {
 	QString stringData;
 
 #ifdef HAVE_ICU
-	if(!*codec)
-{
-UErrorCode status = U_ZERO_ERROR;
-UCharsetDetector *csd = ucsdet_open(&status);
-ucsdet_setText(csd, byteData.data(), byteData.length(), &status);
-int32_t matchesFound = 0;
-const UCharsetMatch **ucms = ucsdet_detectAll(csd, &matchesFound, &status);
-for(int index = 0; index < matchesFound; ++index) {
-	int32_t confidence = ucsdet_getConfidence(ucms[index], &status);
-	const char *name = ucsdet_getName(ucms[index], &status);
-	qDebug() << "encoding" << name << "confidence" << confidence;
-	bool encodingFound;
-	*codec = KGlobal::charsets()->codecForName(name, encodingFound);
-	if(encodingFound)
-		break;
-	else
-		*codec = 0;
-}}
+	if(!*codec) {
+		UErrorCode status = U_ZERO_ERROR;
+		UCharsetDetector *csd = ucsdet_open(&status);
+		ucsdet_setText(csd, byteData.data(), byteData.length(), &status);
+		int32_t matchesFound = 0;
+		const UCharsetMatch **ucms = ucsdet_detectAll(csd, &matchesFound, &status);
+		for(int index = 0; index < matchesFound; ++index) {
+			int32_t confidence = ucsdet_getConfidence(ucms[index], &status);
+			const char *name = ucsdet_getName(ucms[index], &status);
+			qDebug() << "encoding" << name << "confidence" << confidence;
+			bool encodingFound;
+			*codec = KGlobal::charsets()->codecForName(name, encodingFound);
+			if(encodingFound)
+				break;
+			else
+				*codec = 0;
+		}
+	}
 #endif
 	if(*codec) {
 		QTextStream textStream(byteData);
@@ -191,7 +206,7 @@ for(int index = 0; index < matchesFound; ++index) {
 	QString extension = QFileInfo(url.path()).suffix();
 
 	// attempt to parse subtitles based on extension information first
-	for(QMap < QString, InputFormat * >::ConstIterator it = m_inputFormats.begin(), end = m_inputFormats.end(); it != end; ++it) {
+	for(QMap<QString, InputFormat *>::ConstIterator it = m_inputFormats.begin(), end = m_inputFormats.end(); it != end; ++it) {
 		if(it.value()->knowsExtension(extension)) {
 			if(it.value()->readSubtitle(subtitle, primary, stringData)) {
 				if(formatName)
@@ -202,7 +217,7 @@ for(int index = 0; index < matchesFound; ++index) {
 	}
 
 	// that didn't worked, attempt to parse subtitles based on content
-	for(QMap < QString, InputFormat * >::ConstIterator it = m_inputFormats.begin(), end = m_inputFormats.end(); it != end; ++it) {
+	for(QMap<QString, InputFormat *>::ConstIterator it = m_inputFormats.begin(), end = m_inputFormats.end(); it != end; ++it) {
 		if(!it.value()->knowsExtension(extension)) {
 			if(it.value()->readSubtitle(subtitle, primary, stringData)) {
 				if(formatName)
@@ -215,26 +230,43 @@ for(int index = 0; index < matchesFound; ++index) {
 	return false;
 }
 
-bool FormatManager::hasOutput(const QString & name) const {
-	return m_outputFormats.contains(name);
-} const OutputFormat *FormatManager::output(const QString & name) const {
-	return m_outputFormats.contains(name) ? m_outputFormats[name] : 0;
-} const OutputFormat *FormatManager::defaultOutput() const {
-	return output("SubRip");
-} QStringList FormatManager::outputNames() const {
-	return m_outputFormats.keys();
-} bool FormatManager::writeSubtitle(const Subtitle & subtitle, bool primary, const KUrl & url, QTextCodec * codec, Format::NewLine newLine, const QString & formatName, bool overwrite) const {
-	const OutputFormat *format = output(formatName);
-	if(format == 0)
+bool
+FormatManager::hasOutput(const QString &name) const
 {
-QString extension = QFileInfo(url.path()).suffix();
-		// attempt find format based on extension information
-for(QMap < QString, OutputFormat * >::ConstIterator it = m_outputFormats.begin(), end = m_outputFormats.end(); it != end; ++it)
-	if(it.value()->knowsExtension(extension)) {
-		format = *it;
-		break;
-	}
+	return m_outputFormats.contains(name);
 }
+
+const OutputFormat *
+FormatManager::output(const QString &name) const
+{
+	return m_outputFormats.contains(name) ? m_outputFormats[name] : 0;
+}
+
+const OutputFormat *
+FormatManager::defaultOutput() const
+{
+	return output("SubRip");
+}
+
+QStringList
+FormatManager::outputNames() const
+{
+	return m_outputFormats.keys();
+}
+
+bool
+FormatManager::writeSubtitle(const Subtitle &subtitle, bool primary, const KUrl &url, QTextCodec *codec, Format::NewLine newLine, const QString &formatName, bool overwrite) const
+{
+	const OutputFormat *format = output(formatName);
+	if(format == 0) {
+		QString extension = QFileInfo(url.path()).suffix();
+		// attempt find format based on extension information
+		for(QMap<QString, OutputFormat *>::ConstIterator it = m_outputFormats.begin(), end = m_outputFormats.end(); it != end; ++it)
+			if(it.value()->knowsExtension(extension)) {
+				format = *it;
+				break;
+			}
+	}
 
 	if(format == 0)
 		return false;

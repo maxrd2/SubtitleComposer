@@ -27,26 +27,24 @@
 #include <QColorDialog>
 
 namespace SubtitleComposer {
-	class SubtitleColorDialog : public QColorDialog {
-		Q_OBJECT
-	public:
-		explicit SubtitleColorDialog(QWidget *parent = 0);
-		explicit SubtitleColorDialog(const QColor &initial, QWidget *parent = 0);
-		~SubtitleColorDialog();
+class SubtitleColorDialog : public QColorDialog
+{
+	Q_OBJECT
 
-		static QColor getColor(const QColor &initial, QWidget *parent, const QString &title, ColorDialogOptions options = 0);
-		static QColor getColor(const QColor &initial = Qt::white, QWidget *parent = 0);
+public:
+	explicit SubtitleColorDialog(QWidget *parent = 0);
+	explicit SubtitleColorDialog(const QColor &initial, QWidget *parent = 0);
+	~SubtitleColorDialog();
 
-	protected:
-		bool defaultColorSelected;
+	static QColor getColor(const QColor &initial, QWidget *parent, const QString &title, ColorDialogOptions options = 0);
+	static QColor getColor(const QColor &initial = Qt::white, QWidget *parent = 0);
 
-	public slots:
-		void acceptDefaultColor();
+protected:
+	bool defaultColorSelected;
 
-		//	    virtual void done(int);
-		//	    virtual void accept();
-		//	    virtual void reject();
-	};
+public slots:
+	void acceptDefaultColor();
+};
 }
 
 #endif /* SUBTITLECOLORDIALOG_H */

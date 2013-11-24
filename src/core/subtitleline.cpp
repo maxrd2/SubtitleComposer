@@ -30,39 +30,44 @@
 using namespace SubtitleComposer;
 
 /// "magic" code taken from http://tekpool.wordpress.com/category/bit-count/
-int SubtitleLine::bitsCount(unsigned int u)
+int
+SubtitleLine::bitsCount(unsigned int u)
 {
 	unsigned int uCount;
 	uCount = u - ((u >> 1) & 033333333333) - ((u >> 2) & 011111111111);
 	return ((uCount + (uCount >> 3)) & 030707070707) % 63;
 }
 
-SubtitleLine::ErrorFlag SubtitleLine::errorFlag(SubtitleLine::ErrorID id)
+SubtitleLine::ErrorFlag
+SubtitleLine::errorFlag(SubtitleLine::ErrorID id)
 {
 	if(id < 0 || id >= ErrorSIZE)
-		return (ErrorFlag) 0;
+		return (ErrorFlag)0;
 
-	return (ErrorFlag) (0x1 << id);
+	return (ErrorFlag)(0x1 << id);
 }
 
-SubtitleLine::ErrorID SubtitleLine::errorID(SubtitleLine::ErrorFlag flag)
+SubtitleLine::ErrorID
+SubtitleLine::errorID(SubtitleLine::ErrorFlag flag)
 {
 	if(flag < 1)
 		return ErrorUNKNOWN;
 
 	int id = (int)log2(flag);
-	return id < ErrorSIZE ? (ErrorID) id : ErrorUNKNOWN;
+	return id < ErrorSIZE ? (ErrorID)id : ErrorUNKNOWN;
 }
 
 /// ERRORS DESCRIPTIONS
 /// ===================
 
-const QString & SubtitleLine::simpleErrorText(SubtitleLine::ErrorFlag errorFlag)
+const QString &
+SubtitleLine::simpleErrorText(SubtitleLine::ErrorFlag errorFlag)
 {
 	return simpleErrorText(errorID(errorFlag));
 }
 
-const QString & SubtitleLine::simpleErrorText(SubtitleLine::ErrorID errorID)
+const QString &
+SubtitleLine::simpleErrorText(SubtitleLine::ErrorID errorID)
 {
 	static const QString empty;
 	static QString texts[ErrorSIZE];
@@ -94,57 +99,94 @@ const QString & SubtitleLine::simpleErrorText(SubtitleLine::ErrorID errorID)
 	return (errorID < 0 || errorID >= ErrorSIZE) ? empty : texts[errorID];
 }
 
-QString SubtitleLine::fullErrorText(SubtitleLine::ErrorFlag errorFlag) const {
+QString
+SubtitleLine::fullErrorText(SubtitleLine::ErrorFlag errorFlag) const
+{
 	return fullErrorText(errorID(errorFlag));
 }
 
-QString SubtitleLine::fullErrorText(SubtitleLine::ErrorID errorID) const {
+QString
+SubtitleLine::fullErrorText(SubtitleLine::ErrorID errorID) const
+{
 	if(!(m_errorFlags & (0x1 << errorID)))
 		return QString();
 
 	switch(errorID) {
 	case EmptyPrimaryTextID: return i18n("Has no primary text.");
 	case EmptySecondaryTextID: return i18n("Has no translation text.");
-	case MaxPrimaryCharsID:return i18np("Has too many characters in primary text (1 char).", "Has too many characters in primary text (%1 chars).", primaryCharacters());
-	case MaxSecondaryCharsID:return i18np("Has too many characters in translation text (1 char).", "Has too many characters in translation text (%1 chars).", secondaryCharacters());
-	case MaxPrimaryLinesID:return i18np("Has too many lines in primary text (1 line).", "Has too many lines in primary text (%1 lines).", primaryLines());
-	case MaxSecondaryLinesID:return i18np("Has too many lines in translation text (1 line).", "Has too many lines in translation text (%1 lines).", secondaryLines());
-	case PrimaryUnneededSpacesID:return i18n("Has unnecessary spaces in primary text.");
-	case SecondaryUnneededSpacesID:return i18n("Has unnecessary spaces in translation text.");
-	case PrimaryUnneededDashID:return i18n("Has unnecessary dash in primary text.");
-	case SecondaryUnneededDashID:return i18n("Has unnecessary dash in translation text.");
-	case PrimaryCapitalAfterEllipsisID:return i18n("Has capital letter after line continuation ellipsis in primary text.");
-	case SecondaryCapitalAfterEllipsisID:return i18n("Has capital letter after line continuation ellipsis in translation text.");
-	case MaxDurationPerPrimaryCharID:return i18np("Has too long duration per character in primary text (1 msec/char).", "Has too long duration per character in primary text (%1 msecs/char).", durationTime().toMillis() / primaryCharacters());
-	case MaxDurationPerSecondaryCharID:return i18np("Has too long duration per character in translation text (1 msec/char).", "Has too long duration per character in translation text (%1 msecs/char).", durationTime().toMillis() / secondaryCharacters());
-	case MinDurationPerPrimaryCharID:return i18np("Has too short duration per character in primary text (1 msec/char).", "Has too short duration per character in primary text (%1 msecs/char).", durationTime().toMillis() / primaryCharacters());
-	case MinDurationPerSecondaryCharID:return i18np("Has too short duration per character in translation text (1 msec/char).", "Has too short duration per character in translation text (%1 msecs/char).", durationTime().toMillis() / secondaryCharacters());
-	case MaxDurationID:return i18np("Has too long duration (1 msec).", "Has too long duration (%1 msecs).", durationTime().toMillis());
-	case MinDurationID:return i18np("Has too short duration (1 msec).", "Has too short duration (%1 msecs).", durationTime().toMillis());
-	case OverlapsWithNextID:return i18n("Overlaps with next line.");
-	case UntranslatedTextID:return i18n("Has untranslated text.");
-	case UserMarkID:return i18n("Has user mark.");
-	default:return QString();
+	case MaxPrimaryCharsID: return i18np("Has too many characters in primary text (1 char).", "Has too many characters in primary text (%1 chars).", primaryCharacters());
+	case MaxSecondaryCharsID: return i18np("Has too many characters in translation text (1 char).", "Has too many characters in translation text (%1 chars).", secondaryCharacters());
+	case MaxPrimaryLinesID: return i18np("Has too many lines in primary text (1 line).", "Has too many lines in primary text (%1 lines).", primaryLines());
+	case MaxSecondaryLinesID: return i18np("Has too many lines in translation text (1 line).", "Has too many lines in translation text (%1 lines).", secondaryLines());
+	case PrimaryUnneededSpacesID: return i18n("Has unnecessary spaces in primary text.");
+	case SecondaryUnneededSpacesID: return i18n("Has unnecessary spaces in translation text.");
+	case PrimaryUnneededDashID: return i18n("Has unnecessary dash in primary text.");
+	case SecondaryUnneededDashID: return i18n("Has unnecessary dash in translation text.");
+	case PrimaryCapitalAfterEllipsisID: return i18n("Has capital letter after line continuation ellipsis in primary text.");
+	case SecondaryCapitalAfterEllipsisID: return i18n("Has capital letter after line continuation ellipsis in translation text.");
+	case MaxDurationPerPrimaryCharID: return i18np("Has too long duration per character in primary text (1 msec/char).", "Has too long duration per character in primary text (%1 msecs/char).", durationTime().toMillis() / primaryCharacters());
+	case MaxDurationPerSecondaryCharID: return i18np("Has too long duration per character in translation text (1 msec/char).", "Has too long duration per character in translation text (%1 msecs/char).", durationTime().toMillis() / secondaryCharacters());
+	case MinDurationPerPrimaryCharID: return i18np("Has too short duration per character in primary text (1 msec/char).", "Has too short duration per character in primary text (%1 msecs/char).", durationTime().toMillis() / primaryCharacters());
+	case MinDurationPerSecondaryCharID: return i18np("Has too short duration per character in translation text (1 msec/char).", "Has too short duration per character in translation text (%1 msecs/char).", durationTime().toMillis() / secondaryCharacters());
+	case MaxDurationID: return i18np("Has too long duration (1 msec).", "Has too long duration (%1 msecs).", durationTime().toMillis());
+	case MinDurationID: return i18np("Has too short duration (1 msec).", "Has too short duration (%1 msecs).", durationTime().toMillis());
+	case OverlapsWithNextID: return i18n("Overlaps with next line.");
+	case UntranslatedTextID: return i18n("Has untranslated text.");
+	case UserMarkID: return i18n("Has user mark.");
+	default: return QString();
 	}
 }
 
-SubtitleLine::SubtitleLine(const SString & pText, const SString & sText):QObject(), m_subtitle(0), m_primaryText(pText), m_secondaryText(sText), m_showTime(), m_hideTime(), m_errorFlags(0), m_cachedIndex(-1), m_formatData(0)
-{
-}
+SubtitleLine::SubtitleLine(const SString &pText, const SString &sText) :
+	QObject(),
+	m_subtitle(0),
+	m_primaryText(pText),
+	m_secondaryText(sText),
+	m_showTime(),
+	m_hideTime(),
+	m_errorFlags(0),
+	m_cachedIndex(-1),
+	m_formatData(0)
+{}
 
-SubtitleLine::SubtitleLine(const SString & pText, const Time & showTime, const Time & hideTime):QObject(), m_subtitle(0), m_primaryText(pText), m_secondaryText(QString()), m_showTime(showTime), m_hideTime(hideTime), m_errorFlags(0), m_cachedIndex(-1), m_formatData(0)
-{
-}
+SubtitleLine::SubtitleLine(const SString &pText, const Time &showTime, const Time &hideTime) :
+	QObject(),
+	m_subtitle(0),
+	m_primaryText(pText),
+	m_secondaryText(QString()),
+	m_showTime(showTime),
+	m_hideTime(hideTime),
+	m_errorFlags(0),
+	m_cachedIndex(-1),
+	m_formatData(0)
+{}
 
-SubtitleLine::SubtitleLine(const SString & pText, const SString & sText, const Time & showTime, const Time & hideTime):QObject(), m_subtitle(0), m_primaryText(pText), m_secondaryText(sText), m_showTime(showTime), m_hideTime(hideTime), m_errorFlags(0), m_cachedIndex(-1), m_formatData(0)
-{
-}
+SubtitleLine::SubtitleLine(const SString &pText, const SString &sText, const Time &showTime, const Time &hideTime) :
+	QObject(),
+	m_subtitle(0),
+	m_primaryText(pText),
+	m_secondaryText(sText),
+	m_showTime(showTime),
+	m_hideTime(hideTime),
+	m_errorFlags(0),
+	m_cachedIndex(-1),
+	m_formatData(0)
+{}
 
-SubtitleLine::SubtitleLine(const SubtitleLine & line):QObject(), m_subtitle(0), m_primaryText(line.m_primaryText), m_secondaryText(line.m_secondaryText), m_showTime(line.m_showTime), m_hideTime(line.m_hideTime), m_errorFlags(line.m_errorFlags), m_cachedIndex(-1), m_formatData(0)
-{
-}
+SubtitleLine::SubtitleLine(const SubtitleLine &line) :
+	QObject(),
+	m_subtitle(0),
+	m_primaryText(line.m_primaryText),
+	m_secondaryText(line.m_secondaryText),
+	m_showTime(line.m_showTime),
+	m_hideTime(line.m_hideTime),
+	m_errorFlags(line.m_errorFlags),
+	m_cachedIndex(-1),
+	m_formatData(0)
+{}
 
-SubtitleLine & SubtitleLine::operator=(const SubtitleLine & line)
+SubtitleLine &
+SubtitleLine::operator=(const SubtitleLine &line)
 {
 	if(this == &line)
 		return *this;
@@ -163,23 +205,29 @@ SubtitleLine::~SubtitleLine()
 	delete m_formatData;
 }
 
-
-FormatData *SubtitleLine::formatData() const {
+FormatData *
+SubtitleLine::formatData() const
+{
 	return m_formatData;
 }
 
-void SubtitleLine::setFormatData(const FormatData * formatData)
+void
+SubtitleLine::setFormatData(const FormatData *formatData)
 {
 	delete m_formatData;
 
-	m_formatData = formatData ? new FormatData(*formatData) : 0;
+	m_formatData = formatData ? new FormatData(*formatData) : NULL;
 }
 
-int SubtitleLine::number() const {
+int
+SubtitleLine::number() const
+{
 	return index() + 1;
 }
 
-int SubtitleLine::index() const {
+int
+SubtitleLine::index() const
+{
 	if(!m_subtitle)
 		return -1;
 
@@ -199,52 +247,65 @@ int SubtitleLine::index() const {
 	return m_cachedIndex;
 }
 
-Subtitle *SubtitleLine::subtitle()
+Subtitle *
+SubtitleLine::subtitle()
 {
 	return m_subtitle;
 }
 
-const Subtitle *SubtitleLine::subtitle() const {
+const Subtitle *
+SubtitleLine::subtitle() const
+{
 	return m_subtitle;
 }
 
-SubtitleLine *SubtitleLine::prevLine()
+SubtitleLine *
+SubtitleLine::prevLine()
 {
-	return m_subtitle ? m_subtitle->line(index() - 1) : 0;
+	return m_subtitle ? m_subtitle->line(index() - 1) : NULL;
 }
 
-SubtitleLine *SubtitleLine::nextLine()
+SubtitleLine *
+SubtitleLine::nextLine()
 {
-	return m_subtitle ? m_subtitle->line(index() + 1) : 0;
+	return m_subtitle ? m_subtitle->line(index() + 1) : NULL;
 }
 
-const SString & SubtitleLine::primaryText() const {
+const SString &
+SubtitleLine::primaryText() const
+{
 	return m_primaryText;
 }
 
-void SubtitleLine::setPrimaryText(const SString & pText)
+void
+SubtitleLine::setPrimaryText(const SString &pText)
 {
 	if(m_primaryText != pText)
 		processAction(new SetLinePrimaryTextAction(*this, pText));
 }
 
-const SString & SubtitleLine::secondaryText() const {
+const SString &
+SubtitleLine::secondaryText() const
+{
 	return m_secondaryText;
 }
 
-void SubtitleLine::setSecondaryText(const SString & sText)
+void
+SubtitleLine::setSecondaryText(const SString &sText)
 {
 	if(m_secondaryText != sText)
 		processAction(new SetLineSecondaryTextAction(*this, sText));
 }
 
-void SubtitleLine::setTexts(const SString & pText, const SString & sText)
+void
+SubtitleLine::setTexts(const SString &pText, const SString &sText)
 {
 	if(m_primaryText != pText || m_secondaryText != sText)
 		processAction(new SetLineTextsAction(*this, pText, sText));
 }
 
-SString SubtitleLine::fixPunctuation(const SString & t, bool spaces, bool quotes, bool englishI, bool ellipsis, bool * cont)
+SString
+SubtitleLine::fixPunctuation(const SString &t, bool spaces, bool quotes, bool englishI, bool ellipsis, bool *cont)
 {
 	if(!t.length())
 		return t;
@@ -281,10 +342,10 @@ SString SubtitleLine::fixPunctuation(const SString & t, bool spaces, bool quotes
 		text.replace(QRegExp("''|«|»"), "\"");
 	}
 
-	if(englishI)				// fix english I pronoun capitalization
+	if(englishI) // fix english I pronoun capitalization
 		text.replace(QRegExp("([\\s\"'\\(\\[])i([\\s'\",;:\\.\\?!\\]\\)]|$)"), "\\1I\\2");
 
-	if(ellipsis) {				// fix ellipsis
+	if(ellipsis) {                          // fix ellipsis
 		text.replace(QRegExp("[,;]?\\.{2,}"), "...");
 		text.replace(QRegExp("[,;]\\s*$"), "...");
 
@@ -309,7 +370,8 @@ SString SubtitleLine::fixPunctuation(const SString & t, bool spaces, bool quotes
 	return text;
 }
 
-SString SubtitleLine::breakText(const SString & t, int minLengthForBreak)
+SString
+SubtitleLine::breakText(const SString &t, int minLengthForBreak)
 {
 	Q_ASSERT(minLengthForBreak >= 0);
 
@@ -346,7 +408,8 @@ SString SubtitleLine::breakText(const SString & t, int minLengthForBreak)
 	return text;
 }
 
-void SubtitleLine::breakText(int minLengthForBreak, TextTarget target)
+void
+SubtitleLine::breakText(int minLengthForBreak, TextTarget target)
 {
 	switch(target) {
 	case Primary:
@@ -363,7 +426,8 @@ void SubtitleLine::breakText(int minLengthForBreak, TextTarget target)
 	}
 }
 
-void SubtitleLine::unbreakText(TextTarget target)
+void
+SubtitleLine::unbreakText(TextTarget target)
 {
 	switch(target) {
 	case Primary:
@@ -380,7 +444,8 @@ void SubtitleLine::unbreakText(TextTarget target)
 	}
 }
 
-QString SubtitleLine::simplifyTextWhiteSpace(QString text)
+QString
+SubtitleLine::simplifyTextWhiteSpace(QString text)
 {
 	static const QRegExp regExp1(" *\n *");
 	static const QRegExp regExp2(" +");
@@ -394,7 +459,8 @@ QString SubtitleLine::simplifyTextWhiteSpace(QString text)
 	return text.trimmed();
 }
 
-SString SubtitleLine::simplifyTextWhiteSpace(SString text)
+SString
+SubtitleLine::simplifyTextWhiteSpace(SString text)
 {
 	static const QRegExp regExp1(" *\n *");
 	static const QRegExp regExp2(" +");
@@ -408,7 +474,8 @@ SString SubtitleLine::simplifyTextWhiteSpace(SString text)
 	return text.trimmed();
 }
 
-void SubtitleLine::simplifyTextWhiteSpace(TextTarget target)
+void
+SubtitleLine::simplifyTextWhiteSpace(TextTarget target)
 {
 	switch(target) {
 	case Primary:
@@ -425,65 +492,86 @@ void SubtitleLine::simplifyTextWhiteSpace(TextTarget target)
 	}
 }
 
-Time SubtitleLine::showTime() const {
+Time
+SubtitleLine::showTime() const
+{
 	return m_showTime;
 }
 
-void SubtitleLine::setShowTime(const Time & showTime)
+void
+SubtitleLine::setShowTime(const Time &showTime)
 {
 	if(m_showTime != showTime)
 		processAction(new SetLineShowTimeAction(*this, showTime));
 }
 
-
-Time SubtitleLine::hideTime() const {
+Time
+SubtitleLine::hideTime() const
+{
 	return m_hideTime;
 }
 
-void SubtitleLine::setHideTime(const Time & hideTime)
+void
+SubtitleLine::setHideTime(const Time &hideTime)
 {
 	if(m_hideTime != hideTime)
 		processAction(new SetLineHideTimeAction(*this, hideTime));
 }
 
-Time SubtitleLine::durationTime() const {
+Time
+SubtitleLine::durationTime() const
+{
 	return Time(m_hideTime.toMillis() - m_showTime.toMillis());
 }
 
-void SubtitleLine::setDurationTime(const Time & durationTime)
+void
+SubtitleLine::setDurationTime(const Time &durationTime)
 {
 	setHideTime(m_showTime + durationTime);
 }
 
-int SubtitleLine::primaryCharacters() const {
+int
+SubtitleLine::primaryCharacters() const
+{
 	return m_primaryText.string().simplified().length();
 }
 
-int SubtitleLine::primaryWords() const {
+int
+SubtitleLine::primaryWords() const
+{
 	QString text(m_primaryText.string().simplified());
 	return text.length() ? text.count(' ') + 1 : 0;
 }
 
-int SubtitleLine::primaryLines() const {
+int
+SubtitleLine::primaryLines() const
+{
 	QString text(simplifyTextWhiteSpace(m_primaryText.string()));
 	return text.length() ? text.count('\n') + 1 : 0;
 }
 
-int SubtitleLine::secondaryCharacters() const {
+int
+SubtitleLine::secondaryCharacters() const
+{
 	return m_secondaryText.string().simplified().length();
 }
 
-int SubtitleLine::secondaryWords() const {
+int
+SubtitleLine::secondaryWords() const
+{
 	QString text(m_secondaryText.string().simplified());
 	return text.length() ? text.count(' ') + 1 : 0;
 }
 
-int SubtitleLine::secondaryLines() const {
+int
+SubtitleLine::secondaryLines() const
+{
 	QString text(simplifyTextWhiteSpace(m_secondaryText.string()));
 	return text.length() ? text.count('\n') + 1 : 0;
 }
 
-Time SubtitleLine::autoDuration(const QString & t, int msecsPerChar, int msecsPerWord, int msecsPerLine)
+Time
+SubtitleLine::autoDuration(const QString &t, int msecsPerChar, int msecsPerWord, int msecsPerLine)
 {
 	Q_ASSERT(msecsPerChar >= 0);
 	Q_ASSERT(msecsPerWord >= 0);
@@ -500,13 +588,13 @@ Time SubtitleLine::autoDuration(const QString & t, int msecsPerChar, int msecsPe
 	return chars * msecsPerChar + words * msecsPerWord + lines * msecsPerLine;
 }
 
-Time SubtitleLine::autoDuration(int msecsPerChar, int msecsPerWord, int msecsPerLine, TextTarget calculationTarget)
+Time
+SubtitleLine::autoDuration(int msecsPerChar, int msecsPerWord, int msecsPerLine, TextTarget calculationTarget)
 {
 	switch(calculationTarget) {
 	case Secondary:
 		return autoDuration(m_secondaryText.string(), msecsPerChar, msecsPerWord, msecsPerLine);
-	case Both:
-	{
+	case Both: {
 		Time primary = autoDuration(m_primaryText.string(), msecsPerChar, msecsPerWord, msecsPerLine);
 		Time secondary = autoDuration(m_secondaryText.string(), msecsPerChar, msecsPerWord, msecsPerLine);
 		return primary > secondary ? primary : secondary;
@@ -517,13 +605,15 @@ Time SubtitleLine::autoDuration(int msecsPerChar, int msecsPerWord, int msecsPer
 	}
 }
 
-void SubtitleLine::setTimes(const Time & showTime, const Time & hideTime)
+void
+SubtitleLine::setTimes(const Time &showTime, const Time &hideTime)
 {
 	if(m_showTime != showTime || m_hideTime != hideTime)
 		processAction(new SetLineTimesAction(*this, showTime, hideTime, i18n("Set Line Times")));
 }
 
-void SubtitleLine::shiftTimes(long mseconds)
+void
+SubtitleLine::shiftTimes(long mseconds)
 {
 	if(mseconds)
 		processAction(new SetLineTimesAction(*this, Time(m_showTime.toMillis() + mseconds), Time(m_hideTime.toMillis() + mseconds), i18n("Shift Line Times")
@@ -531,7 +621,8 @@ void SubtitleLine::shiftTimes(long mseconds)
 					  );
 }
 
-void SubtitleLine::adjustTimes(double shiftMseconds, double scaleFactor)
+void
+SubtitleLine::adjustTimes(double shiftMseconds, double scaleFactor)
 {
 	if(shiftMseconds || scaleFactor != 1.0) {
 		processAction(new SetLineTimesAction(*this, m_showTime.adjusted(shiftMseconds, scaleFactor), m_hideTime.adjusted(shiftMseconds, scaleFactor), i18n("Adjust Line Times")
@@ -540,30 +631,35 @@ void SubtitleLine::adjustTimes(double shiftMseconds, double scaleFactor)
 	}
 }
 
-
-
 /// ERRORS
 
-int SubtitleLine::errorFlags() const {
+int
+SubtitleLine::errorFlags() const
+{
 	return m_errorFlags;
 }
 
-int SubtitleLine::errorCount() const {
+int
+SubtitleLine::errorCount() const
+{
 	return bitsCount(m_errorFlags);
 }
 
-void SubtitleLine::setErrorFlags(int errorFlags)
+void
+SubtitleLine::setErrorFlags(int errorFlags)
 {
 	if(m_errorFlags != errorFlags)
 		processAction(new SetLineErrorsAction(*this, errorFlags));
 }
 
-void SubtitleLine::setErrorFlags(int errorFlags, bool value)
+void
+SubtitleLine::setErrorFlags(int errorFlags, bool value)
 {
 	setErrorFlags(value ? (m_errorFlags | errorFlags) : (m_errorFlags & ~errorFlags));
 }
 
-bool SubtitleLine::checkEmptyPrimaryText(bool update)
+bool
+SubtitleLine::checkEmptyPrimaryText(bool update)
 {
 	static const QRegExp emptyTextRegExp("^\\s*$");
 
@@ -575,7 +671,8 @@ bool SubtitleLine::checkEmptyPrimaryText(bool update)
 	return error;
 }
 
-bool SubtitleLine::checkEmptySecondaryText(bool update)
+bool
+SubtitleLine::checkEmptySecondaryText(bool update)
 {
 	static const QRegExp emptyTextRegExp("^\\s*$");
 
@@ -587,7 +684,8 @@ bool SubtitleLine::checkEmptySecondaryText(bool update)
 	return error;
 }
 
-bool SubtitleLine::checkUntranslatedText(bool update)
+bool
+SubtitleLine::checkUntranslatedText(bool update)
 {
 	bool error = m_primaryText.string() == m_secondaryText.string();
 
@@ -597,7 +695,8 @@ bool SubtitleLine::checkUntranslatedText(bool update)
 	return error;
 }
 
-bool SubtitleLine::checkOverlapsWithNext(bool update)
+bool
+SubtitleLine::checkOverlapsWithNext(bool update)
 {
 	SubtitleLine *nextLine = this->nextLine();
 	bool error = nextLine && nextLine->m_showTime <= m_hideTime;
@@ -608,7 +707,8 @@ bool SubtitleLine::checkOverlapsWithNext(bool update)
 	return error;
 }
 
-bool SubtitleLine::checkMinDuration(int minMsecs, bool update)
+bool
+SubtitleLine::checkMinDuration(int minMsecs, bool update)
 {
 	Q_ASSERT(minMsecs >= 0);
 
@@ -620,7 +720,8 @@ bool SubtitleLine::checkMinDuration(int minMsecs, bool update)
 	return error;
 }
 
-bool SubtitleLine::checkMaxDuration(int maxMsecs, bool update)
+bool
+SubtitleLine::checkMaxDuration(int maxMsecs, bool update)
 {
 	Q_ASSERT(maxMsecs >= 0);
 
@@ -632,7 +733,8 @@ bool SubtitleLine::checkMaxDuration(int maxMsecs, bool update)
 	return error;
 }
 
-bool SubtitleLine::checkMinDurationPerPrimaryChar(int minMsecsPerChar, bool update)
+bool
+SubtitleLine::checkMinDurationPerPrimaryChar(int minMsecsPerChar, bool update)
 {
 	Q_ASSERT(minMsecsPerChar >= 0);
 
@@ -645,7 +747,8 @@ bool SubtitleLine::checkMinDurationPerPrimaryChar(int minMsecsPerChar, bool upda
 	return error;
 }
 
-bool SubtitleLine::checkMinDurationPerSecondaryChar(int minMsecsPerChar, bool update)
+bool
+SubtitleLine::checkMinDurationPerSecondaryChar(int minMsecsPerChar, bool update)
 {
 	Q_ASSERT(minMsecsPerChar >= 0);
 
@@ -658,7 +761,8 @@ bool SubtitleLine::checkMinDurationPerSecondaryChar(int minMsecsPerChar, bool up
 	return error;
 }
 
-bool SubtitleLine::checkMaxDurationPerPrimaryChar(int maxMsecsPerChar, bool update)
+bool
+SubtitleLine::checkMaxDurationPerPrimaryChar(int maxMsecsPerChar, bool update)
 {
 	Q_ASSERT(maxMsecsPerChar >= 0);
 
@@ -671,7 +775,8 @@ bool SubtitleLine::checkMaxDurationPerPrimaryChar(int maxMsecsPerChar, bool upda
 	return error;
 }
 
-bool SubtitleLine::checkMaxDurationPerSecondaryChar(int maxMsecsPerChar, bool update)
+bool
+SubtitleLine::checkMaxDurationPerSecondaryChar(int maxMsecsPerChar, bool update)
 {
 	Q_ASSERT(maxMsecsPerChar >= 0);
 
@@ -684,7 +789,8 @@ bool SubtitleLine::checkMaxDurationPerSecondaryChar(int maxMsecsPerChar, bool up
 	return error;
 }
 
-bool SubtitleLine::checkMaxPrimaryChars(int maxCharacters, bool update)
+bool
+SubtitleLine::checkMaxPrimaryChars(int maxCharacters, bool update)
 {
 	Q_ASSERT(maxCharacters >= 0);
 
@@ -696,7 +802,8 @@ bool SubtitleLine::checkMaxPrimaryChars(int maxCharacters, bool update)
 	return error;
 }
 
-bool SubtitleLine::checkMaxSecondaryChars(int maxCharacters, bool update)
+bool
+SubtitleLine::checkMaxSecondaryChars(int maxCharacters, bool update)
 {
 	Q_ASSERT(maxCharacters >= 0);
 
@@ -708,7 +815,8 @@ bool SubtitleLine::checkMaxSecondaryChars(int maxCharacters, bool update)
 	return error;
 }
 
-bool SubtitleLine::checkMaxPrimaryLines(int maxLines, bool update)
+bool
+SubtitleLine::checkMaxPrimaryLines(int maxLines, bool update)
 {
 	Q_ASSERT(maxLines >= 0);
 
@@ -720,7 +828,8 @@ bool SubtitleLine::checkMaxPrimaryLines(int maxLines, bool update)
 	return error;
 }
 
-bool SubtitleLine::checkMaxSecondaryLines(int maxLines, bool update)
+bool
+SubtitleLine::checkMaxSecondaryLines(int maxLines, bool update)
 {
 	Q_ASSERT(maxLines >= 0);
 
@@ -732,7 +841,8 @@ bool SubtitleLine::checkMaxSecondaryLines(int maxLines, bool update)
 	return error;
 }
 
-bool SubtitleLine::checkPrimaryUnneededSpaces(bool update)
+bool
+SubtitleLine::checkPrimaryUnneededSpaces(bool update)
 {
 	static const QRegExp unneededSpaceRegExp("(^\\s|\\s$|¿\\s|¡\\s|\\s\\s|\\s!|\\s\\?|\\s:|\\s;|\\s,|\\s\\.)");
 
@@ -744,7 +854,8 @@ bool SubtitleLine::checkPrimaryUnneededSpaces(bool update)
 	return error;
 }
 
-bool SubtitleLine::checkSecondaryUnneededSpaces(bool update)
+bool
+SubtitleLine::checkSecondaryUnneededSpaces(bool update)
 {
 	static const QRegExp unneededSpaceRegExp("(^\\s|\\s$|¿\\s|¡\\s|\\s\\s|\\s!|\\s\\?|\\s:|\\s;|\\s,|\\s\\.)");
 
@@ -756,7 +867,8 @@ bool SubtitleLine::checkSecondaryUnneededSpaces(bool update)
 	return error;
 }
 
-bool SubtitleLine::checkPrimaryCapitalAfterEllipsis(bool update)
+bool
+SubtitleLine::checkPrimaryCapitalAfterEllipsis(bool update)
 {
 	QRegExp capitalAfterEllipsisRegExp("^\\s*\\.\\.\\.[¡¿\\.,;\\(\\[\\{\"'\\s]*");
 
@@ -772,7 +884,8 @@ bool SubtitleLine::checkPrimaryCapitalAfterEllipsis(bool update)
 	return error;
 }
 
-bool SubtitleLine::checkSecondaryCapitalAfterEllipsis(bool update)
+bool
+SubtitleLine::checkSecondaryCapitalAfterEllipsis(bool update)
 {
 	QRegExp capitalAfterEllipsisRegExp("^\\s*\\.\\.\\.[¡¿\\.,;\\(\\[\\{\"'\\s]*");
 
@@ -788,7 +901,8 @@ bool SubtitleLine::checkSecondaryCapitalAfterEllipsis(bool update)
 	return error;
 }
 
-bool SubtitleLine::checkPrimaryUnneededDash(bool update)
+bool
+SubtitleLine::checkPrimaryUnneededDash(bool update)
 {
 	static const QRegExp unneededDashRegExp("(^|\n)\\s*-[^-]");
 
@@ -800,7 +914,8 @@ bool SubtitleLine::checkPrimaryUnneededDash(bool update)
 	return error;
 }
 
-bool SubtitleLine::checkSecondaryUnneededDash(bool update)
+bool
+SubtitleLine::checkSecondaryUnneededDash(bool update)
 {
 	static const QRegExp unneededDashRegExp("(^|\n)\\s*-[^-]");
 
@@ -812,9 +927,10 @@ bool SubtitleLine::checkSecondaryUnneededDash(bool update)
 	return error;
 }
 
-int SubtitleLine::check(int errorFlagsToCheck, int minDurationMsecs, int maxDurationMsecs, int minMsecsPerChar, int maxMsecsPerChar, int maxChars, int maxLines, bool update)
+int
+SubtitleLine::check(int errorFlagsToCheck, int minDurationMsecs, int maxDurationMsecs, int minMsecsPerChar, int maxMsecsPerChar, int maxChars, int maxLines, bool update)
 {
-	int lineErrorFlags = m_errorFlags & ~errorFlagsToCheck;	// clear the flags we're going to (re)check
+	int lineErrorFlags = m_errorFlags & ~errorFlagsToCheck; // clear the flags we're going to (re)check
 
 	if(errorFlagsToCheck & EmptyPrimaryText)
 		if(checkEmptyPrimaryText(false))
@@ -906,7 +1022,8 @@ int SubtitleLine::check(int errorFlagsToCheck, int minDurationMsecs, int maxDura
 	return lineErrorFlags;
 }
 
-void SubtitleLine::processAction(Action * action)
+void
+SubtitleLine::processAction(Action *action)
 {
 	if(m_subtitle) {
 		m_subtitle->processAction(action);

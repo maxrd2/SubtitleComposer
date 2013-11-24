@@ -32,61 +32,67 @@
 #include <QtCore/QMap>
 
 namespace SubtitleComposer {
-	class TrackData {
-	public:
+class TrackData
+{
+public:
+	QString name;
+	QString language;
+};
 
-		QString name;
-		QString language;
-	};
+class MediaData
+{
+public:
+	MediaData()
+	{
+		reset();
+	}
 
-	class MediaData {
-	public:
+	void reset()
+	{
+		duration = 0;
 
-		MediaData() {
-			reset();
-		};
+		hasVideo = false;
 
-		void reset() {
-			duration = 0;
+		videoWidth = 0;
+		videoHeight = 0;
+		videoDAR = 4.0 / 3.0;
+		videoFPS = 0.0;
 
-			hasVideo = false;
+		audioTracks.clear();
+	}
 
-			videoWidth = 0;
-			videoHeight = 0;
-			videoDAR = 4.0 / 3.0;
-			videoFPS = 0.0;
-
-			audioTracks.clear();
-		} int indexForId(int id) const {
-			int index = -1;
-			for(QMap < int, TrackData >::ConstIterator it = audioTracks.constBegin(), end = audioTracks.constEnd(); it != end; ++it) {
-				index++;
-				if(it.key() == id)
-					break;
-			}
-			return index;
+	int indexForId(int id) const
+	{
+		int index = -1;
+		for(QMap<int, TrackData>::ConstIterator it = audioTracks.constBegin(), end = audioTracks.constEnd(); it != end; ++it) {
+			index++;
+			if(it.key() == id)
+				break;
 		}
+		return index;
+	}
 
-		int idForIndex(int index) const {
-			int i = 0;
-			for(QMap < int, TrackData >::ConstIterator it = audioTracks.constBegin(), end = audioTracks.constEnd(); it != end; ++it) {
-				if(i++ == index)
-					return it.key();
-			}
-			return -1;
+	int idForIndex(int index) const
+	{
+		int i = 0;
+		for(QMap<int, TrackData>::ConstIterator it = audioTracks.constBegin(), end = audioTracks.constEnd(); it != end; ++it) {
+			if(i++ == index)
+				return it.key();
 		}
+		return -1;
+	}
 
-		double duration;
+	double duration;
 
-		int videoWidth;
-		int videoHeight;
-		double videoDAR;
-		double videoFPS;
+	int videoWidth;
+	int videoHeight;
+	double videoDAR;
+	double videoFPS;
 
-		bool hasVideo;
+	bool hasVideo;
 
-		QMap < int, TrackData > audioTracks;
-	};
+	QMap<int, TrackData> audioTracks;
+};
 }
 
 #endif

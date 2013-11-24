@@ -26,14 +26,14 @@
 
 #include <QtCore/QString>
 
-class LanguageCode {
-  public:
+class LanguageCode
+{
+public:
+	static QString toIso2(const QString &iso3Code);
+	static QString toIso3(const QString &iso2Code);
 
-	static QString toTwoLetters(const QString & twoLettersCode);
-	static QString toThreeLetters(const QString & threeLettersCode);
-
-	static QString nameFromTwoLetters(const QString & twoLettersCode);
-	static QString nameFromThreeLetters(const QString & threeLettersCode);
+	static QString nameFromIso2(const QString &iso2Code);
+	static QString nameFromIso3(const QString &iso3Code);
 };
 
 #endif

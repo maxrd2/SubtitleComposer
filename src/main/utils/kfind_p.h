@@ -17,7 +17,7 @@
     along with this library; see the file COPYING.LIB.  If not, write to
     the Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor,
     Boston, MA 02110-1301, USA.
-*/
+ */
 
 #ifndef KFIND_P_H
 #define KFIND_P_H
@@ -31,17 +31,18 @@
 #include <QtCore/QPointer>
 #include <QtCore/QString>
 
-
 struct KFind::Private {
-	Private(KFind * q)
-	:q(q)
-	, findDialog(0)
-	, currentId(0)
-	, customIds(false)
-	, patternChanged(false)
-	, matchedPattern("")
-	, emptyMatch(0) {
-	} ~Private() {
+	Private(KFind *q) :
+		q(q),
+		findDialog(0),
+		currentId(0),
+		customIds(false),
+		patternChanged(false),
+		matchedPattern(""),
+		emptyMatch(0) {}
+
+	~Private()
+	{
 		delete dialog;
 		data.clear();
 		delete emptyMatch;
@@ -49,11 +50,19 @@ struct KFind::Private {
 	}
 
 	struct Match {
-		Match():dataId(-1), index(-1), matchedLength(-1) {
-		} bool isNull() const {
+		Match() : dataId(-1),
+			index(-1),
+			matchedLength(-1) {}
+
+		bool isNull() const
+		{
 			return index == -1;
 		}
-		Match(int _dataId, int _index, int _matchedLength):dataId(_dataId), index(_index), matchedLength(_matchedLength) {
+
+		Match(int _dataId, int _index, int _matchedLength) : dataId(_dataId),
+			index(_index),
+			matchedLength(_matchedLength)
+		{
 			Q_ASSERT(index != -1);
 		}
 
@@ -63,34 +72,37 @@ struct KFind::Private {
 	};
 
 	struct Data {
-		Data():id(-1), dirty(false) {
-	} Data(int id, const QString & text, bool dirty = false):
-		id(id), text(text), dirty(dirty) {
-		}
+		Data() : id(-1),
+			dirty(false) {}
+
+		Data(int id, const QString &text, bool dirty = false) :
+			id(id),
+			text(text),
+			dirty(dirty) {}
 
 		int id;
 		QString text;
 		bool dirty;
 	};
 
-	void init(const QString & pattern);
+	void init(const QString &pattern);
 	void startNewIncrementalSearch();
 
 	static bool isInWord(QChar ch);
-	static bool isWholeWords(const QString & text, int starts, int matchedLength);
+	static bool isWholeWords(const QString &text, int starts, int matchedLength);
 
 	void _k_slotFindNext();
 	void _k_slotDialogClosed();
 
 	KFind *q;
-	QPointer < QWidget > findDialog;
+	QPointer<QWidget> findDialog;
 	int currentId;
-	bool customIds:1;
-	bool patternChanged:1;
+	bool customIds : 1;
+	bool patternChanged : 1;
 	QString matchedPattern;
-	QHash < QString, Match > incrementalPath;
+	QHash<QString, Match> incrementalPath;
 	Match *emptyMatch;
-	QList < Data > data;		// used like a vector, not like a linked-list
+	QList<Data> data;            // used like a vector, not like a linked-list
 
 	QString pattern;
 	QRegExp *regExp;
@@ -98,11 +110,11 @@ struct KFind::Private {
 	long options;
 	unsigned matches;
 
-	QString text;				// the text set by setData
+	QString text;                           // the text set by setData
 	int index;
 	int matchedLength;
-	bool dialogClosed:1;
-	bool lastResult:1;
+	bool dialogClosed : 1;
+	bool lastResult : 1;
 };
 
-#endif							// KFIND_P_H
+#endif                                                  // KFIND_P_H

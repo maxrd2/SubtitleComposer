@@ -30,8 +30,13 @@
 
 using namespace SubtitleComposer;
 
-Speller::Speller(QWidget * parent):
-QObject(parent), m_subtitle(0), m_translationMode(false), m_feedPrimaryNext(true), m_sonnetDialog(0), m_iterator(0)
+Speller::Speller(QWidget *parent) :
+	QObject(parent),
+	m_subtitle(0),
+	m_translationMode(false),
+	m_feedPrimaryNext(true),
+	m_sonnetDialog(0),
+	m_iterator(0)
 {
 	connect(app()->spellingConfig(), SIGNAL(optionChanged(const QString &, const QString &)), this, SLOT(onSpellingOptionChanged(const QString &, const QString &)));
 }
@@ -41,7 +46,8 @@ Speller::~Speller()
 	setSubtitle(0);
 }
 
-void Speller::invalidate()
+void
+Speller::invalidate()
 {
 	delete m_iterator;
 	m_iterator = 0;
@@ -49,26 +55,30 @@ void Speller::invalidate()
 	m_feedPrimaryNext = true;
 }
 
-QWidget *Speller::parentWidget()
+QWidget *
+Speller::parentWidget()
 {
-	return static_cast < QWidget * >(parent());
+	return static_cast<QWidget *>(parent());
 }
 
-void Speller::setSubtitle(Subtitle * subtitle)
+void
+Speller::setSubtitle(Subtitle *subtitle)
 {
 	m_subtitle = subtitle;
 
 	invalidate();
 }
 
-void Speller::setTranslationMode(bool enabled)
+void
+Speller::setTranslationMode(bool enabled)
 {
 	m_translationMode = enabled;
 
 	invalidate();
 }
 
-void Speller::spellCheck(int currentIndex)
+void
+Speller::spellCheck(int currentIndex)
 {
 	invalidate();
 
@@ -95,7 +105,8 @@ void Speller::spellCheck(int currentIndex)
 	m_feedPrimaryNext = !m_feedPrimaryNext;
 }
 
-void Speller::onBufferDone()
+void
+Speller::onBufferDone()
 {
 	// NOTE: not setting the buffer in this slots closes the dialog
 
@@ -103,13 +114,14 @@ void Speller::onBufferDone()
 		if(m_translationMode) {
 			m_feedPrimaryNext = !m_feedPrimaryNext;
 			m_sonnetDialog->setBuffer(m_feedPrimaryNext ? m_iterator->current()->secondaryText().string() : m_iterator->current()->primaryText().string()
-				);
+			                          );
 		} else
 			m_sonnetDialog->setBuffer(m_iterator->current()->primaryText().string());
 	}
 }
 
-bool Speller::advance()
+bool
+Speller::advance()
 {
 	if(!m_translationMode || m_feedPrimaryNext) {
 		++(*m_iterator);
@@ -121,7 +133,7 @@ bool Speller::advance()
 			m_iterator->toFirst();
 
 			if(KMessageBox::warningContinueCancel(parentWidget(), i18n("End of subtitle reached.\nContinue from the beginning?"), i18n("Spell Checking")
-			) != KMessageBox::Continue)
+			                                      ) != KMessageBox::Continue)
 				return false;
 		}
 	}
@@ -129,24 +141,27 @@ bool Speller::advance()
 	return true;
 }
 
-void Speller::onMisspelling(const QString & before, int pos)
+void
+Speller::onMisspelling(const QString &before, int pos)
 {
 	bool primary = !m_translationMode || !m_feedPrimaryNext;
 
 	emit misspelled(m_iterator->current(), primary, pos, pos + before.length() - 1);
 }
 
-void Speller::onCorrected(const QString & before, int pos, const QString & after)
+void
+Speller::onCorrected(const QString &before, int pos, const QString &after)
 {
 	if(m_translationMode && m_feedPrimaryNext)
 		m_iterator->current()->setSecondaryText(SString(m_iterator->current()->secondaryText()).replace(pos, before.length(), after)
-			);
+		                                        );
 	else
 		m_iterator->current()->setPrimaryText(SString(m_iterator->current()->primaryText()).replace(pos, before.length(), after)
-			);
+		                                      );
 }
 
-void Speller::onSpellingOptionChanged(const QString & option, const QString & /*value */ )
+void
+Speller::onSpellingOptionChanged(const QString &option, const QString & /*value */)
 {
 	if(option == SpellingConfig::keyDefaultLanguage()) {
 		if(m_sonnetDialog) {

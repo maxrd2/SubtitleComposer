@@ -33,7 +33,8 @@
 #include <KCharsets>
 
 namespace SubtitleComposer {
-class GeneralConfig:public AppConfigGroup {
+class GeneralConfig : public AppConfigGroup
+{
 	friend class Application;
 	friend class GeneralConfigWidget;
 
@@ -41,14 +42,16 @@ public:
 
 	virtual AppConfigGroup * clone() const { return new GeneralConfig(*this); }
 	QString defaultSubtitlesEncoding() const { return option(keyDefaultSubtitlesEncoding()); }
-	QTextCodec *defaultSubtitlesCodec() const {
+	QTextCodec * defaultSubtitlesCodec() const
+	{
 		bool encodingFound;
 		QTextCodec *codec = KGlobal::charsets()->codecForName(defaultSubtitlesEncoding(), encodingFound);
 		if(!encodingFound)
 			codec = KGlobal::locale()->codecForEncoding();
 		return codec;
 	}
-	void setDefaultSubtitlesEncoding(const QString & encoding) { setOption(keyDefaultSubtitlesEncoding(), encoding); }
+
+	void setDefaultSubtitlesEncoding(const QString &encoding) { setOption(keyDefaultSubtitlesEncoding(), encoding); }
 
 	int seekOffsetOnDoubleClick() const { return optionAsInt(keySeekOffsetOnDoubleClick()); } // in milliseconds
 
@@ -56,12 +59,11 @@ public:
 	bool automaticVideoLoad() const { return optionAsBool(keyAutomaticVideoLoad()); }
 	void setAutomaticVideoLoad(bool automaticLoad) { setOption(keyAutomaticVideoLoad(), automaticLoad); }
 
-	int linesQuickShiftAmount() const  { return optionAsInt(keyLinesQuickShiftAmount()); } // in milliseconds
+	int linesQuickShiftAmount() const { return optionAsInt(keyLinesQuickShiftAmount()); }  // in milliseconds
 	void setLinesQuickShiftAmount(int mseconds) { setOption(keyLinesQuickShiftAmount(), mseconds); }
 
 	int grabbedPositionCompensation() const { return optionAsInt(keyGrabbedPositionCompensation()); } // in milliseconds
 	void setGrabbedPositionCompensation(int mseconds) { setOption(keyGrabbedPositionCompensation(), mseconds); }
-
 
 	static const QString & keyDefaultSubtitlesEncoding() { static const QString key("DefaultSubtitlesEncoding"); return key; }
 
@@ -75,18 +77,19 @@ public:
 
 private:
 
-	GeneralConfig():AppConfigGroup("General", defaults()) { }
+	GeneralConfig() : AppConfigGroup("General", defaults()) {}
 
-	GeneralConfig(const GeneralConfig & config):AppConfigGroup(config) { }
+	GeneralConfig(const GeneralConfig &config) : AppConfigGroup(config) {}
 
-	static QMap<QString, QString> defaults() {
+	static QMap<QString, QString> defaults()
+	{
 		QMap<QString, QString> defaults;
 
 		defaults[keyDefaultSubtitlesEncoding()] = KGlobal::locale()->codecForEncoding()->name();
-		defaults[keySeekOffsetOnDoubleClick()] = "1500";	// in milliseconds
+		defaults[keySeekOffsetOnDoubleClick()] = "1500";        // in milliseconds
 		defaults[keyAutomaticVideoLoad()] = "true";
-		defaults[keyLinesQuickShiftAmount()] = "100";	// in milliseconds
-		defaults[keyGrabbedPositionCompensation()] = "250";	// in milliseconds
+		defaults[keyLinesQuickShiftAmount()] = "100";   // in milliseconds
+		defaults[keyGrabbedPositionCompensation()] = "250";     // in milliseconds
 
 		return defaults;
 	}

@@ -31,45 +31,48 @@
 #include <QtCore/QLinkedList>
 
 namespace SubtitleComposer {
-	class ActionManager:public QObject {
-	Q_OBJECT public:
+class ActionManager : public QObject
+{
+	Q_OBJECT
 
-		ActionManager();
-		~ActionManager();
+public:
+	ActionManager();
+	~ActionManager();
 
-		bool hasRedo() const;
-		bool hasUndo() const;
+	bool hasRedo() const;
+	bool hasUndo() const;
 
-		int redoCount() const;
-		int undoCount() const;
+	int redoCount() const;
+	int undoCount() const;
 
-		QString redoDescription() const;
-		QString undoDescription() const;
+	QString redoDescription() const;
+	QString undoDescription() const;
 
-		void execAndStore(Action * action);
+	void execAndStore(Action *action);
 
-		public slots:void redo();
-		void undo();
-		void popUndo();
-		void clearHistory();
+public slots:
+	void redo();
+	void undo();
+	void popUndo();
+	void clearHistory();
 
-		signals:void actionStored();
-		void actionRemoved();
-		void actionRedone();
-		void actionUndone();
-		void historyCleared();
-		void stateChanged();
+signals:
+	void actionStored();
+	void actionRemoved();
+	void actionRedone();
+	void actionUndone();
+	void historyCleared();
+	void stateChanged();
 
-	private:
+private:
+	ActionManager(const ActionManager &undoManager);
+	ActionManager & operator=(const ActionManager &undoManager);
 
-		ActionManager(const ActionManager & undoManager);
-		ActionManager & operator=(const ActionManager & undoManager);
+	mutable QLinkedList<Action *> m_undoStack;
+	mutable QLinkedList<Action *> m_redoStack;
 
-		mutable QLinkedList < Action * >m_undoStack;
-		mutable QLinkedList < Action * >m_redoStack;
-
-		int m_compressionThreshold;
-		QTime m_timeBetweenActions;
-	};
+	int m_compressionThreshold;
+	QTime m_timeBetweenActions;
+};
 }
 #endif

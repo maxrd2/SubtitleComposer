@@ -32,135 +32,128 @@
 #include <QtCore/QList>
 
 namespace SubtitleComposer {
-	class CompositeAction;
+class CompositeAction;
 
-	class SubtitleAction:public Action {
-	public:
+class SubtitleAction : public Action
+{
+public:
+	typedef enum {
+		None,
+		Primary,
+		Secondary,
+		Both
+	} DirtyMode;
 
-		typedef enum {
-			None,
-			Primary,
-			Secondary,
-			Both
-		} DirtyMode;
+	SubtitleAction(Subtitle &subtitle, DirtyMode dirtyMode, const QString &description = QString());
+	virtual ~SubtitleAction();
 
-		SubtitleAction(Subtitle & subtitle, DirtyMode dirtyMode, const QString & description = QString());
-		virtual ~ SubtitleAction();
+	inline void setLineSubtitle(SubtitleLine *line, int index)
+	{
+		line->m_subtitle = &m_subtitle;
+		line->m_cachedIndex = index;
+	}
 
-		inline void setLineSubtitle(SubtitleLine * line, int index) {
-			line->m_subtitle = &m_subtitle;
-			line->m_cachedIndex = index;
-		} inline void clearLineSubtitle(SubtitleLine * line) {
-			line->m_subtitle = 0;
-			line->m_cachedIndex = -1;
-	} protected:
+	inline void clearLineSubtitle(SubtitleLine *line)
+	{
+		line->m_subtitle = 0;
+		line->m_cachedIndex = -1;
+	}
 
-		virtual void _preRedo();
-		virtual void _preUndo();
+protected:
+	virtual void _preRedo();
+	virtual void _preUndo();
 
-	protected:
+protected:
+	Subtitle &m_subtitle;
+	const DirtyMode m_dirtyMode;
+};
 
-		Subtitle & m_subtitle;
-		const DirtyMode m_dirtyMode;
-	};
+class SetFramesPerSecondAction : public SubtitleAction
+{
+public:
+	SetFramesPerSecondAction(Subtitle &subtitle, double framesPerSecond);
+	virtual ~SetFramesPerSecondAction();
 
-	class SetFramesPerSecondAction:public SubtitleAction {
-	public:
+protected:
+	virtual void _redo();
+	virtual void _undo();
 
-		SetFramesPerSecondAction(Subtitle & subtitle, double framesPerSecond);
-		virtual ~ SetFramesPerSecondAction();
+	virtual void _emitRedoSignals();
+	virtual void _emitUndoSignals();
 
-	protected:
+private:
+	double m_framesPerSecond;
+};
 
-		virtual void _redo();
-		virtual void _undo();
+class InsertLinesAction : public SubtitleAction
+{
+public:
+	InsertLinesAction(Subtitle &subtitle, const QList<SubtitleLine *> &lines, int insertIndex = -1);
+	virtual ~InsertLinesAction();
 
-		virtual void _emitRedoSignals();
-		virtual void _emitUndoSignals();
+protected:
+	virtual bool mergeWithPrevious(Action *prevAction);
 
-	private:
+	virtual void _redo();
+	virtual void _undo();
 
-		double m_framesPerSecond;
-	};
+private:
+	int m_insertIndex;
+	int m_lastIndex;
+	QList<SubtitleLine *> m_lines;
+};
 
-	class InsertLinesAction:public SubtitleAction {
-	public:
+class RemoveLinesAction : public SubtitleAction
+{
+public:
+	RemoveLinesAction(Subtitle &subtitle, int firstIndex, int lastIndex = -1);
+	virtual ~RemoveLinesAction();
 
-		InsertLinesAction(Subtitle & subtitle, const QList < SubtitleLine * >&lines, int insertIndex = -1);
-		virtual ~ InsertLinesAction();
+protected:
+	virtual bool mergeWithPrevious(Action *prevAction);
 
-	protected:
+	virtual void _redo();
+	virtual void _undo();
 
-		virtual bool mergeWithPrevious(Action * prevAction);
+private:
+	const int m_firstIndex;
+	/*const*/ int m_lastIndex;
+	QList<SubtitleLine *> m_lines;
+};
 
-		virtual void _redo();
-		virtual void _undo();
+class MoveLineAction : public SubtitleAction
+{
+public:
+	MoveLineAction(Subtitle &subtitle, int fromIndex, int toIndex = -1);
+	virtual ~MoveLineAction();
 
-	private:
+protected:
+	virtual bool mergeWithPrevious(Action *prevAction);
 
-		int m_insertIndex;
-		int m_lastIndex;
-		QList < SubtitleLine * >m_lines;
-	};
+	virtual void _redo();
+	virtual void _undo();
 
-	class RemoveLinesAction:public SubtitleAction {
-	public:
+private:
+	int m_fromIndex;
+	int m_toIndex;
+};
 
-		RemoveLinesAction(Subtitle & subtitle, int firstIndex, int lastIndex = -1);
-		virtual ~ RemoveLinesAction();
+class SwapLinesTextsAction : public SubtitleAction
+{
+public:
+	SwapLinesTextsAction(Subtitle &subtitle, const RangeList &ranges);
+	virtual ~SwapLinesTextsAction();
 
-	protected:
+protected:
+	virtual void _redo();
+	virtual void _undo();
 
-		virtual bool mergeWithPrevious(Action * prevAction);
+	virtual void _emitRedoSignals();
+	virtual void _emitUndoSignals();
 
-		virtual void _redo();
-		virtual void _undo();
-
-	private:
-
-		const int m_firstIndex;
-		/*const */ int m_lastIndex;
-		QList < SubtitleLine * >m_lines;
-	};
-
-
-	class MoveLineAction:public SubtitleAction {
-	public:
-
-		MoveLineAction(Subtitle & subtitle, int fromIndex, int toIndex = -1);
-		virtual ~ MoveLineAction();
-
-	protected:
-
-		virtual bool mergeWithPrevious(Action * prevAction);
-
-		virtual void _redo();
-		virtual void _undo();
-
-	private:
-
-		int m_fromIndex;
-		int m_toIndex;
-	};
-
-	class SwapLinesTextsAction:public SubtitleAction {
-	public:
-
-		SwapLinesTextsAction(Subtitle & subtitle, const RangeList & ranges);
-		virtual ~ SwapLinesTextsAction();
-
-	protected:
-
-		virtual void _redo();
-		virtual void _undo();
-
-		virtual void _emitRedoSignals();
-		virtual void _emitUndoSignals();
-
-	private:
-
-		const RangeList m_ranges;
-	};
+private:
+	const RangeList m_ranges;
+};
 }
 
 #endif

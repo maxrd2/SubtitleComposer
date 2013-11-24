@@ -30,24 +30,23 @@
 #include <QtGui/QWidget>
 
 namespace SubtitleComposer {
-	class PhononConfigWidget:public AppConfigGroupWidget {
-		Q_OBJECT friend class PhononPlayerBackend;
+class PhononConfigWidget : public AppConfigGroupWidget
+{
+	Q_OBJECT
 
-	public:
+	friend class PhononPlayerBackend;
 
-		virtual ~ PhononConfigWidget();
+public:
+	virtual ~PhononConfigWidget();
 
-		virtual void setControlsFromConfig();
-		virtual void setConfigFromControls();
+	virtual void setControlsFromConfig();
+	virtual void setConfigFromControls();
 
-	private:
+private:
+	explicit PhononConfigWidget(QWidget *parent = 0);
 
-		explicit PhononConfigWidget(QWidget * parent = 0);
-
-		PhononConfig *config() {
-			return static_cast < PhononConfig * >(m_config);
-		};
-	};
+	PhononConfig * config() { return static_cast<PhononConfig *>(m_config); }
+};
 }
 
 #endif

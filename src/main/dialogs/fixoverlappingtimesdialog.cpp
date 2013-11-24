@@ -28,8 +28,8 @@
 
 using namespace SubtitleComposer;
 
-FixOverlappingTimesDialog::FixOverlappingTimesDialog(QWidget * parent):
-ActionWithTargetDialog(i18n("Fix Overlapping Times"), parent)
+FixOverlappingTimesDialog::FixOverlappingTimesDialog(QWidget *parent) :
+	ActionWithTargetDialog(i18n("Fix Overlapping Times"), parent)
 {
 	QGroupBox *settingsGroupBox = createGroupBox(i18nc("@title:group", "Settings"));
 
@@ -50,9 +50,14 @@ ActionWithTargetDialog(i18n("Fix Overlapping Times"), parent)
 	settingsLayout->addWidget(m_minIntervalSpinBox, 0, 1);
 }
 
-Time FixOverlappingTimesDialog::minimumInterval() const {
+Time
+FixOverlappingTimesDialog::minimumInterval() const
+{
 	return Time(m_minIntervalSpinBox->value());
-} void FixOverlappingTimesDialog::setMinimumInterval(const Time & time)
+}
+
+void
+FixOverlappingTimesDialog::setMinimumInterval(const Time &time)
 {
 	m_minIntervalSpinBox->setValue(time.toMillis());
 }

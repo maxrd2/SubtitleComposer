@@ -22,24 +22,29 @@
 #include "../common/filesavehelper.h"
 
 #include <vector>
-#include <cmath>				// FIXME remove when unneeded
+#include <cmath>                                // FIXME remove when unneeded
 
 #include <QtCore/QFile>
 #include <QtCore/QTextStream>
 
 using namespace SubtitleComposer;
 
-AudioLevels::AudioLevels():
-m_channelsCount(0), m_samplesInterval(50), m_samplesCount(0), m_samplesData(0), m_lastDataIndex(-1), m_mediaUrl()
-{
-}
+AudioLevels::AudioLevels() :
+	m_channelsCount(0),
+	m_samplesInterval(50),
+	m_samplesCount(0),
+	m_samplesData(0),
+	m_lastDataIndex(-1),
+	m_mediaUrl()
+{}
 
 AudioLevels::~AudioLevels()
 {
-	delete[]m_samplesData;
+	delete[] m_samplesData;
 }
 
-bool AudioLevels::load(const KUrl & fileUrl)
+bool
+AudioLevels::load(const KUrl &fileUrl)
 {
 	if(m_samplesData)
 		return false;
@@ -65,7 +70,7 @@ bool AudioLevels::load(const KUrl & fileUrl)
 
 	m_samplesCount = 0;
 	for(unsigned channel = 0; channel < m_channelsCount; ++channel) {
-		std::vector < double >::size_type samplesCount;
+		std::vector<double>::size_type samplesCount;
 		file->read((char *)&samplesCount, sizeof(samplesCount));
 
 		if(!m_samplesCount) {
@@ -91,7 +96,8 @@ bool AudioLevels::load(const KUrl & fileUrl)
 	return true;
 }
 
-bool AudioLevels::loadFromMedia(const QString & /*mediaPath */ , unsigned /*streamIndex */ )
+bool
+AudioLevels::loadFromMedia(const QString & /*mediaPath */, unsigned /*streamIndex */)
 {
 	// STUB IMPLEMENTATION just to get something we can use
 
@@ -109,10 +115,12 @@ bool AudioLevels::loadFromMedia(const QString & /*mediaPath */ , unsigned /*stre
 
 	return true;
 
-	return false;				// FIXME stub implementation
+	return false; // FIXME: stub implementation
 }
 
-bool AudioLevels::save(const KUrl & fileUrl, bool overwrite) const {
+bool
+AudioLevels::save(const KUrl &fileUrl, bool overwrite) const
+{
 	FileSaveHelper fileSaveHelper(fileUrl, overwrite);
 
 	if(!fileSaveHelper.open())
@@ -128,24 +136,25 @@ bool AudioLevels::save(const KUrl & fileUrl, bool overwrite) const {
 
 	file->write((const char *)&m_channelsCount, sizeof(m_channelsCount));
 
-	qint64 duration = (qint64) m_samplesInterval * (qint64) m_samplesCount * 1000000;
+	qint64 duration = (qint64)m_samplesInterval * (qint64)m_samplesCount * 1000000;
 	file->write((const char *)&duration, sizeof(duration));
 
-	for(unsigned channel = 0; channel < m_channelsCount; ++channel)
-{
-std::vector < double >::size_type samplesCount = m_samplesCount;
-file->write((const char *)&samplesCount, sizeof(samplesCount));
+	for(unsigned channel = 0; channel < m_channelsCount; ++channel) {
+		std::vector<double>::size_type samplesCount = m_samplesCount;
+		file->write((const char *)&samplesCount, sizeof(samplesCount));
 
-file->write((const char *)&m_samplesData[m_samplesCount * channel], sizeof(double) * m_samplesCount);
-} return fileSaveHelper.close();
+		file->write((const char *)&m_samplesData[m_samplesCount * channel], sizeof(double) * m_samplesCount);
+	}
+	return fileSaveHelper.close();
 }
 
-void AudioLevels::reset()
+void
+AudioLevels::reset()
 {
 	m_channelsCount = 0;
 	m_samplesInterval = 50;
 	m_samplesCount = 0;
-	delete[]m_samplesData;
+	delete[] m_samplesData;
 	m_samplesData = 0;
 	m_lastDataIndex = -1;
 	m_mediaUrl = KUrl();

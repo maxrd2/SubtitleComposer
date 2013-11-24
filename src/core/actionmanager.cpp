@@ -21,8 +21,10 @@
 
 using namespace SubtitleComposer;
 
-ActionManager::ActionManager():
-m_undoStack(), m_redoStack(), m_compressionThreshold(350)
+ActionManager::ActionManager() :
+	m_undoStack(),
+	m_redoStack(),
+	m_compressionThreshold(350)
 {
 	m_timeBetweenActions.start();
 
@@ -41,14 +43,15 @@ ActionManager::~ActionManager()
 	qDeleteAll(m_redoStack);
 }
 
-void ActionManager::execAndStore(Action * action)
+void
+ActionManager::execAndStore(Action *action)
 {
 	if(action != 0) {
 		action->redo();
 
 		bool compressed = false;
 		if(m_timeBetweenActions.restart() < m_compressionThreshold && m_redoStack.isEmpty()) {
-			Action *previousAction = m_undoStack.isEmpty()? 0 : m_undoStack.first();
+			Action *previousAction = m_undoStack.isEmpty() ? 0 : m_undoStack.first();
 			if(previousAction && action->mergeWithPrevious(previousAction)) {
 				delete m_undoStack.takeFirst();
 				compressed = true;
@@ -67,10 +70,11 @@ void ActionManager::execAndStore(Action * action)
 	}
 }
 
-void ActionManager::popUndo()
+void
+ActionManager::popUndo()
 {
 	if(m_undoStack.isEmpty())
-		return;					// nothing to undo
+		return; // nothing to undo
 
 	delete m_undoStack.takeFirst();
 	m_redoStack.clear();
@@ -78,22 +82,47 @@ void ActionManager::popUndo()
 	emit actionRemoved();
 }
 
-bool ActionManager::hasRedo() const {
+bool
+ActionManager::hasRedo() const
+{
 	return !m_redoStack.isEmpty();
-} bool ActionManager::hasUndo() const {
+}
+
+bool
+ActionManager::hasUndo() const
+{
 	return !m_undoStack.isEmpty();
-} int ActionManager::redoCount() const {
+}
+
+int
+ActionManager::redoCount() const
+{
 	return m_redoStack.count();
-} int ActionManager::undoCount() const {
+}
+
+int
+ActionManager::undoCount() const
+{
 	return m_undoStack.count();
-} QString ActionManager::redoDescription() const {
+}
+
+QString
+ActionManager::redoDescription() const
+{
 	return m_redoStack.isEmpty() ? QString() : m_redoStack.first()->description();
-} QString ActionManager::undoDescription() const {
+}
+
+QString
+ActionManager::undoDescription() const
+{
 	return m_undoStack.isEmpty() ? QString() : m_undoStack.first()->description();
-} void ActionManager::redo()
+}
+
+void
+ActionManager::redo()
 {
 	if(m_redoStack.isEmpty())
-		return;					// nothing to redo
+		return; // nothing to redo
 
 	Action *action = m_redoStack.takeFirst();
 	action->redo();
@@ -102,10 +131,11 @@ bool ActionManager::hasRedo() const {
 	emit actionRedone();
 }
 
-void ActionManager::undo()
+void
+ActionManager::undo()
 {
 	if(m_undoStack.isEmpty())
-		return;					// nothing to undo
+		return; // nothing to undo
 
 	Action *action = m_undoStack.takeFirst();
 	action->undo();
@@ -114,7 +144,8 @@ void ActionManager::undo()
 	emit actionUndone();
 }
 
-void ActionManager::clearHistory()
+void
+ActionManager::clearHistory()
 {
 	m_undoStack.clear();
 

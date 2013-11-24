@@ -31,52 +31,55 @@
 #include <KPageDialog>
 
 namespace SubtitleComposer {
-	class AppConfigGroupWidget;
+class AppConfigGroupWidget;
 
-	class ConfigDialog:public KPageDialog {
-	Q_OBJECT public:
+class ConfigDialog : public KPageDialog
+{
+	Q_OBJECT
 
-		typedef enum { General = 0, Errors, Spelling, Player, FirstBackend } Pages;
+public:
+	typedef enum { General = 0, Errors, Spelling, Player, FirstBackend } Pages;
 
+	explicit ConfigDialog(const AppConfig &config, QWidget *parent = 0);
+	virtual ~ConfigDialog();
 
-		explicit ConfigDialog(const AppConfig & config, QWidget * parent = 0);
-		virtual ~ ConfigDialog();
+	void setConfig(const AppConfig &config);
+	const AppConfig & config() const;
 
-		void setConfig(const AppConfig & config);
-		const AppConfig & config() const;
+	void setCurrentPage(unsigned pageIndex);
 
-		void setCurrentPage(unsigned pageIndex);
+public slots:
+	void show();
+	void hide();
 
-		public slots:void show();
-		void hide();
+signals:
+	void accepted();
 
-		signals:void accepted();
+protected slots:
+	void acceptConfig();
+	void acceptConfigAndClose();
+	void rejectConfig();
+	void rejectConfigAndClose();
 
-		protected slots:void acceptConfig();
-		void acceptConfigAndClose();
-		void rejectConfig();
-		void rejectConfigAndClose();
+	void setControlsFromConfig();
+	void setControlsFromConfig(unsigned pageIndex);
 
-		void setControlsFromConfig();
-		void setControlsFromConfig(unsigned pageIndex);
+	void setConfigFromControls();
+	void setConfigFromControls(unsigned pageIndex);
 
-		void setConfigFromControls();
-		void setConfigFromControls(unsigned pageIndex);
+	void setActivePageControlsFromDefaults();
+	void setControlsFromDefaults(unsigned pageIndex);
 
-		void setActivePageControlsFromDefaults();
-		void setControlsFromDefaults(unsigned pageIndex);
+	void enableApply();
 
-		void enableApply();
+	void onOptionChanged(const QString &groupName, const QString &optionName, const QString &value);
 
-		void onOptionChanged(const QString & groupName, const QString & optionName, const QString & value);
+protected:
+	AppConfig m_acceptedConfig;
+	AppConfig m_config;
 
-	protected:
-
-		AppConfig m_acceptedConfig;
-		AppConfig m_config;
-
-		QList < AppConfigGroupWidget * >m_configWidgets;
-		QList < KPageWidgetItem * >m_pageWidgets;
-	};
+	QList<AppConfigGroupWidget *> m_configWidgets;
+	QList<KPageWidgetItem *> m_pageWidgets;
+};
 }
 #endif

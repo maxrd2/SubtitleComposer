@@ -29,7 +29,8 @@ using namespace SubtitleComposer;
 
 int GStreamer::s_inited(0);
 
-bool GStreamer::init()
+bool
+GStreamer::init()
 {
 	if(!s_inited) {
 		if(!gst_init_check(NULL, NULL, NULL)) {
@@ -41,7 +42,8 @@ bool GStreamer::init()
 	return true;
 }
 
-void GStreamer::deinit()
+void
+GStreamer::deinit()
 {
 	if(s_inited) {
 		s_inited--;
@@ -50,7 +52,8 @@ void GStreamer::deinit()
 	}
 }
 
-GstElement *GStreamer::createElement(const QString & typess, const char *name)
+GstElement *
+GStreamer::createElement(const QString &typess, const char *name)
 {
 	QStringList types = typess.split(" ");
 	GstElement *element = 0;
@@ -60,7 +63,8 @@ GstElement *GStreamer::createElement(const QString & typess, const char *name)
 	return element;
 }
 
-GstElement *GStreamer::createElement(const QStringList & types, const char *name)
+GstElement *
+GStreamer::createElement(const QStringList &types, const char *name)
 {
 	GstElement *element = 0;
 	for(QStringList::ConstIterator it = types.begin(), end = types.end(); it != end; ++it)
@@ -69,12 +73,13 @@ GstElement *GStreamer::createElement(const QStringList & types, const char *name
 	return element;
 }
 
-GstStateChangeReturn GStreamer::setElementState(GstElement * element, int state, unsigned timeout)
+GstStateChangeReturn
+GStreamer::setElementState(GstElement *element, int state, unsigned timeout)
 {
 //  if ( GST_STATE( element ) == state )
 //      return GST_STATE_CHANGE_SUCCESS;
 
-	GstStateChangeReturn ret = gst_element_set_state(element, (GstState) state);
+	GstStateChangeReturn ret = gst_element_set_state(element, (GstState)state);
 	if(ret == GST_STATE_CHANGE_SUCCESS)
 		return ret;
 
@@ -99,7 +104,8 @@ GstStateChangeReturn GStreamer::setElementState(GstElement * element, int state,
 		return GST_STATE_CHANGE_SUCCESS;
 }
 
-static int intValue(const GValue * gvalue, bool maximum, const QList < int >suggested)
+static int
+intValue(const GValue *gvalue, bool maximum, const QList<int> suggested)
 {
 	if(G_VALUE_HOLDS(gvalue, G_TYPE_INT)) {
 		return g_value_get_int(gvalue);
@@ -143,8 +149,8 @@ static int intValue(const GValue * gvalue, bool maximum, const QList < int >sugg
 	return 0;
 }
 
-
-WaveFormat GStreamer::formatFromAudioCaps(GstCaps * caps)
+WaveFormat
+GStreamer::formatFromAudioCaps(GstCaps *caps)
 {
 	WaveFormat format(0, 0, 0);
 
@@ -153,7 +159,7 @@ WaveFormat GStreamer::formatFromAudioCaps(GstCaps * caps)
 		const gchar *name = gst_structure_get_name(capsStruct);
 		format.setInteger(strcmp(name, "audio/x-raw-int") == 0);
 
-		QList < int >suggestedValues;
+		QList<int> suggestedValues;
 
 		if(gst_structure_has_field(capsStruct, "channels"))
 			format.setChannels(intValue(gst_structure_get_value(capsStruct, "channels"), true, suggestedValues));
@@ -169,28 +175,31 @@ WaveFormat GStreamer::formatFromAudioCaps(GstCaps * caps)
 	return format;
 }
 
-GstCaps *GStreamer::audioCapsFromFormat(const WaveFormat & format, bool addSampleRate)
+GstCaps *
+GStreamer::audioCapsFromFormat(const WaveFormat &format, bool addSampleRate)
 {
-	GstCaps *caps = gst_caps_new_simple(format.isInteger()? "audio/x-raw-int" : "audio/x-raw-float",
-										"endianness", G_TYPE_INT, (gint) 1234,
-										"channels", G_TYPE_INT, (gint) format.channels(),
-										"width", G_TYPE_INT, (gint) format.bitsPerSample(),
-										"depth", G_TYPE_INT, (gint) format.bitsPerSample(),
-										NULL);
+	GstCaps *caps = gst_caps_new_simple(format.isInteger() ? "audio/x-raw-int" : "audio/x-raw-float",
+	                                    "endianness", G_TYPE_INT, (gint)1234,
+	                                    "channels", G_TYPE_INT, (gint)format.channels(),
+	                                    "width", G_TYPE_INT, (gint)format.bitsPerSample(),
+	                                    "depth", G_TYPE_INT, (gint)format.bitsPerSample(),
+	                                    NULL);
 	GstStructure *structure = gst_caps_get_structure(caps, 0);
 	if(format.isInteger())
-		gst_structure_set(structure, "signed", G_TYPE_BOOLEAN, (gboolean) format.isSigned(), NULL);
+		gst_structure_set(structure, "signed", G_TYPE_BOOLEAN, (gboolean)format.isSigned(), NULL);
 	if(addSampleRate)
-		gst_structure_set(structure, "rate", G_TYPE_INT, (gint) format.sampleRate(), NULL);
+		gst_structure_set(structure, "rate", G_TYPE_INT, (gint)format.sampleRate(), NULL);
 	return caps;
 }
 
-GstPadLinkReturn GStreamer::link(GstBin * bin, const char *srcElement, const char *dstElement, GstCaps * filter)
+GstPadLinkReturn
+GStreamer::link(GstBin *bin, const char *srcElement, const char *dstElement, GstCaps *filter)
 {
 	return link(bin, srcElement, "src", dstElement, "sink", filter);
 }
 
-GstPadLinkReturn GStreamer::link(GstBin * bin, const char *srcElement, const char *srcPad, const char *sinkElement, const char *sinkPad, GstCaps * filter)
+GstPadLinkReturn
+GStreamer::link(GstBin *bin, const char *srcElement, const char *srcPad, const char *sinkElement, const char *sinkPad, GstCaps *filter)
 {
 	GstElement *source = gst_bin_get_by_name(GST_BIN(bin), srcElement);
 	GstElement *sink = gst_bin_get_by_name(GST_BIN(bin), sinkElement);
@@ -223,7 +232,8 @@ GstPadLinkReturn GStreamer::link(GstBin * bin, const char *srcElement, const cha
 	return result;
 }
 
-void GStreamer::freePipeline(GstPipeline ** pipeline, GstBus ** bus)
+void
+GStreamer::freePipeline(GstPipeline **pipeline, GstBus **bus)
 {
 	if(*bus) {
 		gst_object_unref(GST_OBJECT(*bus));
@@ -240,9 +250,10 @@ void GStreamer::freePipeline(GstPipeline ** pipeline, GstBus ** bus)
 	}
 }
 
-static void writeTag(const GstTagList * list, const gchar * tag, gpointer userData)
+static void
+writeTag(const GstTagList *list, const gchar *tag, gpointer userData)
 {
-	QString & string = *(QString *) userData;
+	QString &string = *(QString *)userData;
 
 	string += "\n - " + QString(tag) + ": ";
 	for(int index = 0, size = /*gst_tag_list_get_tag_size( list, tag ) */ 10; index < size; ++index) {
@@ -255,7 +266,8 @@ static void writeTag(const GstTagList * list, const gchar * tag, gpointer userDa
 	}
 }
 
-void GStreamer::inspectTags(GstTagList * tags, const QString & prefix)
+void
+GStreamer::inspectTags(GstTagList *tags, const QString &prefix)
 {
 	QString debugString = QString(prefix + "TAGS (%1empty)").arg(gst_tag_list_is_empty(tags) ? "" : "not ");
 
@@ -264,13 +276,14 @@ void GStreamer::inspectTags(GstTagList * tags, const QString & prefix)
 	qDebug() << debugString;
 }
 
-void GStreamer::inspectPad(GstPad * pad, const QString & prefix)
+void
+GStreamer::inspectPad(GstPad *pad, const QString &prefix)
 {
 	gchar *padname = gst_pad_get_name(pad);
 
 	QString message = prefix + QString("PAD %1 (%2)")
-		.arg(padname)
-		.arg(gst_pad_get_direction(pad) == GST_PAD_SRC ? "SOURCE" : "SINK");
+	                   .arg(padname)
+	                   .arg(gst_pad_get_direction(pad) == GST_PAD_SRC ? "SOURCE" : "SINK");
 
 	qDebug() << message;
 
@@ -294,21 +307,23 @@ void GStreamer::inspectPad(GstPad * pad, const QString & prefix)
 	}
 }
 
-void GStreamer::inspectCaps(GstCaps * caps, const QString & prefix)
+void
+GStreamer::inspectCaps(GstCaps *caps, const QString &prefix)
 {
 	QString message = prefix + QString("CAPS (%1)")
-		.arg(gst_caps_is_fixed(caps) ? "FIXED" : "NON FIXED");
+	                   .arg(gst_caps_is_fixed(caps) ? "FIXED" : "NON FIXED");
 
 	gchar *debug = gst_caps_to_string(caps);
 	QString token;
 	foreach(token, QString(debug).split(';'))
-		message += "\n - " + token.trimmed();
+	message += "\n - " + token.trimmed();
 	g_free(debug);
 
 	qDebug() << message.trimmed();
 }
 
-static QString state(GstState state)
+static QString
+state(GstState state)
 {
 	switch(state) {
 	case GST_STATE_VOID_PENDING:
@@ -326,27 +341,26 @@ static QString state(GstState state)
 	}
 }
 
-void GStreamer::inspectMessage(GstMessage * msg)
+void
+GStreamer::inspectMessage(GstMessage *msg)
 {
 	QString data;
 	switch(GST_MESSAGE_TYPE(msg)) {
-	case GST_MESSAGE_STATE_CHANGED:
-		{
-			GstState old, cur, pending;
-			gst_message_parse_state_changed(msg, &old, &cur, &pending);
-			data = "old:" + state(old) + " | current:" + state(cur) + " | target:" + state(pending);
-			break;
-		}
-	case GST_MESSAGE_ERROR:
-		{
-			gchar *debug = NULL;
-			GError *error = NULL;
-			gst_message_parse_error(msg, &error, &debug);
-			data = QString(error ? error->message : "") + " " + QString(debug);
-			g_error_free(error);
-			g_free(debug);
-			break;
-		}
+	case GST_MESSAGE_STATE_CHANGED: {
+		GstState old, cur, pending;
+		gst_message_parse_state_changed(msg, &old, &cur, &pending);
+		data = "old:" + state(old) + " | current:" + state(cur) + " | target:" + state(pending);
+		break;
+	}
+	case GST_MESSAGE_ERROR: {
+		gchar *debug = NULL;
+		GError *error = NULL;
+		gst_message_parse_error(msg, &error, &debug);
+		data = QString(error ? error->message : "") + " " + QString(debug);
+		g_error_free(error);
+		g_free(debug);
+		break;
+	}
 	default:
 		break;
 	}
@@ -358,7 +372,8 @@ void GStreamer::inspectMessage(GstMessage * msg)
 	qDebug() << message;
 }
 
-void GStreamer::inspectObject(GObject * object)
+void
+GStreamer::inspectObject(GObject *object)
 {
 	QString string;
 	QTextStream stream(&string);
@@ -385,11 +400,11 @@ void GStreamer::inspectObject(GObject * object)
 		}
 
 		stream << '\n' << "NAME " << params[index]->name << " | NICK " << g_param_spec_get_nick(params[index])
-			<< " | BLURB " << g_param_spec_get_blurb(params[index])
-			<< " | TYPE " << g_type_name(params[index]->value_type)
-			<< " | FLAGS " << ((params[index]->flags & (G_PARAM_READABLE | G_PARAM_WRITABLE)) == (G_PARAM_READABLE | G_PARAM_WRITABLE) ? "RW" : (params[index]->flags & G_PARAM_READABLE ? "R" : params[index]->flags & G_PARAM_WRITABLE ? "W" : "U")
-			)
-			<< " | VALUE " << strValue;
+		       << " | BLURB " << g_param_spec_get_blurb(params[index])
+		       << " | TYPE " << g_type_name(params[index]->value_type)
+		       << " | FLAGS " << ((params[index]->flags & (G_PARAM_READABLE | G_PARAM_WRITABLE)) == (G_PARAM_READABLE | G_PARAM_WRITABLE) ? "RW" : (params[index]->flags & G_PARAM_READABLE ? "R" : params[index]->flags & G_PARAM_WRITABLE ? "W" : "U")
+		                   )
+		       << " | VALUE " << strValue;
 
 		if(params[index]->flags & G_PARAM_READABLE && strValue)
 			g_free(strValue);

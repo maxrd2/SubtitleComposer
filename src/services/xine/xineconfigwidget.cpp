@@ -28,8 +28,8 @@
 
 using namespace SubtitleComposer;
 
-XineConfigWidget::XineConfigWidget(QWidget * parent):
-AppConfigGroupWidget(new XineConfig(), parent)
+XineConfigWidget::XineConfigWidget(QWidget *parent) :
+	AppConfigGroupWidget(new XineConfig(), parent)
 {
 	QGroupBox *driversGroupBox = createGroupBox(i18nc("@title:group Xine settings", "Options"));
 
@@ -49,7 +49,6 @@ AppConfigGroupWidget(new XineConfig(), parent)
 	m_videoDriverComboBox->setEditable(true);
 	m_videoDriverComboBox->addItems(QString("auto xv xvmc opengl xxmc sdl xshm fb XDirectFB DirectFB").split(' '));
 
-
 	QGridLayout *driverLayout = createGridLayout(driversGroupBox);
 	driverLayout->addWidget(m_audioDriverCheckBox, 0, 0, Qt::AlignRight | Qt::AlignVCenter);
 	driverLayout->addWidget(m_audioDriverComboBox, 0, 1);
@@ -67,16 +66,17 @@ AppConfigGroupWidget(new XineConfig(), parent)
 }
 
 XineConfigWidget::~XineConfigWidget()
+{}
+
+void
+XineConfigWidget::setConfigFromControls()
 {
+	config()->setAudioDriver(m_audioDriverCheckBox->isChecked() ? m_audioDriverComboBox->currentText() : QString());
+	config()->setVideoDriver(m_videoDriverCheckBox->isChecked() ? m_videoDriverComboBox->currentText() : QString());
 }
 
-void XineConfigWidget::setConfigFromControls()
-{
-	config()->setAudioDriver(m_audioDriverCheckBox->isChecked()? m_audioDriverComboBox->currentText() : QString());
-	config()->setVideoDriver(m_videoDriverCheckBox->isChecked()? m_videoDriverComboBox->currentText() : QString());
-}
-
-void XineConfigWidget::setControlsFromConfig()
+void
+XineConfigWidget::setControlsFromConfig()
 {
 	m_audioDriverCheckBox->setChecked(config()->hasAudioDriver());
 	if(m_audioDriverCheckBox->isChecked())

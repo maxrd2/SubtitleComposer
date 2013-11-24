@@ -28,8 +28,20 @@
 #include "../profiler.h"
 #include <KDebug>
 
-TextOverlayWidget::TextOverlayWidget(QWidget * parent):
-QWidget(parent, 0), m_text(), m_alignment(Qt::AlignVCenter | Qt::AlignHCenter), m_font(), m_primaryColor(Qt::yellow), m_primaryRGB(m_primaryColor.rgb()), m_outlineWidth(1), m_outlineColor(Qt::black), m_outlineRGB(m_outlineColor.rgb()), m_transColor(0, 0, 0), m_transRGB(m_transColor.rgb()), m_textDocument(new QTextDocument()), m_dirty(true)
+TextOverlayWidget::TextOverlayWidget(QWidget *parent) :
+	QWidget(parent, 0),
+	m_text(),
+	m_alignment(Qt::AlignVCenter | Qt::AlignHCenter),
+	m_font(),
+	m_primaryColor(Qt::yellow),
+	m_primaryRGB(m_primaryColor.rgb()),
+	m_outlineWidth(1),
+	m_outlineColor(Qt::black),
+	m_outlineRGB(m_outlineColor.rgb()),
+	m_transColor(0, 0, 0),
+	m_transRGB(m_transColor.rgb()),
+	m_textDocument(new QTextDocument()),
+	m_dirty(true)
 {
 	// NOTE: this is only supported in X11 but if we don't enable it,
 	// setting the widget mask causes a very disgusting flicker.
@@ -44,7 +56,7 @@ QWidget(parent, 0), m_text(), m_alignment(Qt::AlignVCenter | Qt::AlignHCenter), 
 	m_textDocument->setDefaultFont(m_font);
 
 	QTextOption textOption;
-	textOption.setAlignment((Qt::Alignment) m_alignment);
+	textOption.setAlignment((Qt::Alignment)m_alignment);
 	textOption.setWrapMode(QTextOption::NoWrap);
 	m_textDocument->setDefaultTextOption(textOption);
 
@@ -66,9 +78,14 @@ TextOverlayWidget::~TextOverlayWidget()
 	delete m_textDocument;
 }
 
-QString TextOverlayWidget::text() const {
+QString
+TextOverlayWidget::text() const
+{
 	return m_text;
-} void TextOverlayWidget::setText(const QString & text)
+}
+
+void
+TextOverlayWidget::setText(const QString &text)
 {
 	if(m_text != text) {
 		m_text = text;
@@ -76,24 +93,34 @@ QString TextOverlayWidget::text() const {
 	}
 }
 
-int TextOverlayWidget::alignment() const {
+int
+TextOverlayWidget::alignment() const
+{
 	return m_alignment;
-} void TextOverlayWidget::setAlignment(int alignment)
+}
+
+void
+TextOverlayWidget::setAlignment(int alignment)
 {
 	if(m_alignment != alignment) {
 		m_alignment = alignment;
 
 		QTextOption textOption = m_textDocument->defaultTextOption();
-		textOption.setAlignment((Qt::Alignment) m_alignment);
+		textOption.setAlignment((Qt::Alignment)m_alignment);
 		m_textDocument->setDefaultTextOption(textOption);
 
 		setDirty(false, false);
 	}
 }
 
-int TextOverlayWidget::pointSize() const {
+int
+TextOverlayWidget::pointSize() const
+{
 	return m_font.pointSize();
-} void TextOverlayWidget::setPointSize(int pointSize)
+}
+
+void
+TextOverlayWidget::setPointSize(int pointSize)
 {
 	if(m_font.pointSize() != pointSize) {
 		m_font.setPointSize(pointSize);
@@ -102,9 +129,14 @@ int TextOverlayWidget::pointSize() const {
 	}
 }
 
-qreal TextOverlayWidget::pointSizeF() const {
+qreal
+TextOverlayWidget::pointSizeF() const
+{
 	return m_font.pointSizeF();
-} void TextOverlayWidget::setPointSizeF(qreal pointSizeF)
+}
+
+void
+TextOverlayWidget::setPointSizeF(qreal pointSizeF)
 {
 	if(m_font.pointSizeF() != pointSizeF) {
 		m_font.setPointSizeF(pointSizeF);
@@ -113,9 +145,14 @@ qreal TextOverlayWidget::pointSizeF() const {
 	}
 }
 
-int TextOverlayWidget::pixelSize() const {
+int
+TextOverlayWidget::pixelSize() const
+{
 	return m_font.pixelSize();
-} void TextOverlayWidget::setPixelSize(int pixelSize)
+}
+
+void
+TextOverlayWidget::setPixelSize(int pixelSize)
 {
 	if(m_font.pixelSize() != pixelSize) {
 		m_font.setPixelSize(pixelSize);
@@ -124,9 +161,14 @@ int TextOverlayWidget::pixelSize() const {
 	}
 }
 
-QString TextOverlayWidget::family() const {
+QString
+TextOverlayWidget::family() const
+{
 	return m_font.family();
-} void TextOverlayWidget::setFamily(const QString & family)
+}
+
+void
+TextOverlayWidget::setFamily(const QString &family)
 {
 	if(m_font.family() != family) {
 		m_font.setFamily(family);
@@ -135,9 +177,14 @@ QString TextOverlayWidget::family() const {
 	}
 }
 
-QColor TextOverlayWidget::primaryColor() const {
+QColor
+TextOverlayWidget::primaryColor() const
+{
 	return m_primaryColor;
-} void TextOverlayWidget::setPrimaryColor(const QColor & color)
+}
+
+void
+TextOverlayWidget::setPrimaryColor(const QColor &color)
 {
 	if(m_primaryColor != color) {
 		m_primaryColor = color;
@@ -145,9 +192,14 @@ QColor TextOverlayWidget::primaryColor() const {
 	}
 }
 
-int TextOverlayWidget::outlineWidth() const {
+int
+TextOverlayWidget::outlineWidth() const
+{
 	return m_outlineWidth;
-} void TextOverlayWidget::setOutlineWidth(int width)
+}
+
+void
+TextOverlayWidget::setOutlineWidth(int width)
 {
 	if(m_outlineWidth != width) {
 		m_outlineWidth = width;
@@ -155,9 +207,14 @@ int TextOverlayWidget::outlineWidth() const {
 	}
 }
 
-QColor TextOverlayWidget::outlineColor() const {
+QColor
+TextOverlayWidget::outlineColor() const
+{
 	return m_outlineColor;
-} void TextOverlayWidget::setOutlineColor(const QColor & color)
+}
+
+void
+TextOverlayWidget::setOutlineColor(const QColor &color)
 {
 	if(m_outlineColor != color) {
 		m_outlineColor = color;
@@ -165,9 +222,15 @@ QColor TextOverlayWidget::outlineColor() const {
 	}
 }
 
-QSize TextOverlayWidget::minimumSizeHint() const {
+QSize
+TextOverlayWidget::minimumSizeHint() const
+{
 	return QSize((int)m_textDocument->idealWidth(), (int)m_textDocument->size().height());
-} QRect TextOverlayWidget::calculateTextRect() const {
+}
+
+QRect
+TextOverlayWidget::calculateTextRect() const
+{
 	QRect parentRect(parentWidget()->rect());
 
 	int textHeight = (int)m_textDocument->size().height(), yoffset;
@@ -175,14 +238,13 @@ QSize TextOverlayWidget::minimumSizeHint() const {
 		yoffset = parentRect.height() - textHeight;
 	else if(m_alignment & Qt::AlignTop)
 		yoffset = 0;
-	else						// if ( m_alignment & AlignVCenter || m_alignment & AlignCenter )
+	else // if ( m_alignment & AlignVCenter || m_alignment & AlignCenter )
 		yoffset = (parentRect.height() - textHeight) / 2;
 
-	if(textHeight > parentRect.height())
-{
-yoffset = 0;
-textHeight = parentRect.height();
-}
+	if(textHeight > parentRect.height()) {
+		yoffset = 0;
+		textHeight = parentRect.height();
+	}
 
 	int textWidth = (int)m_textDocument->idealWidth(), xoffset;
 	if(textWidth > parentRect.width()) {
@@ -193,14 +255,15 @@ textHeight = parentRect.height();
 			xoffset = 0;
 		else if(m_alignment & Qt::AlignRight)
 			xoffset = parentRect.width() - textWidth;
-		else					// if ( m_alignment & Qt::AlignHCenter || m_alignment & Qt::AlignCenter )
+		else // if ( m_alignment & Qt::AlignHCenter || m_alignment & Qt::AlignCenter )
 			xoffset = (parentRect.width() - textWidth) / 2;
 	}
 
 	return QRect(xoffset, yoffset, textWidth, textHeight);
 }
 
-void TextOverlayWidget::setDirty(bool updateRichText, bool updateColors, bool flickerless)
+void
+TextOverlayWidget::setDirty(bool updateRichText, bool updateColors, bool flickerless)
 {
 	if(updateRichText)
 		m_textDocument->setHtml("<p>" + m_text + "</p>");
@@ -226,7 +289,8 @@ void TextOverlayWidget::setDirty(bool updateRichText, bool updateColors, bool fl
 	update();
 }
 
-bool TextOverlayWidget::eventFilter(QObject * object, QEvent * event)
+bool
+TextOverlayWidget::eventFilter(QObject *object, QEvent *event)
 {
 	if(object == parentWidget() && event->type() == QEvent::Resize) {
 		QCoreApplication::postEvent(this, new QEvent(QEvent::User));
@@ -235,17 +299,19 @@ bool TextOverlayWidget::eventFilter(QObject * object, QEvent * event)
 	return QWidget::eventFilter(object, event);
 }
 
-void TextOverlayWidget::customEvent(QEvent * event)
+void
+TextOverlayWidget::customEvent(QEvent *event)
 {
 	if(event->type() == QEvent::User) {
 		setDirty(false, false, true);
 	}
 }
 
-void TextOverlayWidget::paintEvent(QPaintEvent * /*event */ )
+void
+TextOverlayWidget::paintEvent(QPaintEvent * /*event */)
 {
 	if(m_dirty) {
-		//PROFILE();
+		// PROFILE();
 		updateContents();
 	}
 
@@ -256,7 +322,8 @@ void TextOverlayWidget::paintEvent(QPaintEvent * /*event */ )
 		painter.drawImage(0, 0, m_bgImage);
 }
 
-void TextOverlayWidget::updateColors()
+void
+TextOverlayWidget::updateColors()
 {
 	// the outline drawing algorithm expect different primary and outline colors
 	// so we have to change one if they are the same
@@ -276,7 +343,8 @@ void TextOverlayWidget::updateColors()
 	m_transRGB = m_transColor.rgb();
 }
 
-void TextOverlayWidget::updateContents()
+void
+TextOverlayWidget::updateContents()
 {
 	m_textDocument->setTextWidth(width());
 
@@ -310,10 +378,11 @@ void TextOverlayWidget::updateContents()
 	m_dirty = false;
 }
 
-void TextOverlayWidget::setMaskAndOutline(int outlineWidth)
+void
+TextOverlayWidget::setMaskAndOutline(int outlineWidth)
 {
-	static const QRgb color0 = QColor(Qt::color0).rgb();	// mask transparent
-	static const QRgb color1 = QColor(Qt::color1).rgb();	// mask non transparent
+	static const QRgb color0 = QColor(Qt::color0).rgb();    // mask transparent
+	static const QRgb color1 = QColor(Qt::color1).rgb();    // mask non transparent
 
 	const QSize size = this->size();
 
@@ -330,15 +399,14 @@ void TextOverlayWidget::setMaskAndOutline(int outlineWidth)
 
 		// we don't need all the values initialized, only the ones we will actually use
 		for(int y = 0; y <= maxY; ++y) {
-			bgImageScanLines[y] = (QRgb *) m_bgImage.scanLine(y);
-			maskImageScanLines[y] = (QRgb *) maskImage.scanLine(y);
+			bgImageScanLines[y] = (QRgb *)m_bgImage.scanLine(y);
+			maskImageScanLines[y] = (QRgb *)maskImage.scanLine(y);
 		}
 
 		int lminX, lmaxX, lminY, lmaxY;
 		for(int y = 0; y <= maxY; ++y) {
 			for(int x = 0; x <= maxX; ++x) {
-				if(bgImageScanLines[y][x] == m_primaryRGB)	// draw the outline
-				{
+				if(bgImageScanLines[y][x] == m_primaryRGB) {    // draw the outline
 					lminY = y - outlineWidth;
 					if(lminY < 0)
 						lminY = 0;
@@ -364,8 +432,8 @@ void TextOverlayWidget::setMaskAndOutline(int outlineWidth)
 			}
 		}
 	} else {
-		QRgb *bgImageBits = (QRgb *) m_bgImage.bits();
-		QRgb *maskImageBits = (QRgb *) maskImage.bits();
+		QRgb *bgImageBits = (QRgb *)m_bgImage.bits();
+		QRgb *maskImageBits = (QRgb *)maskImage.bits();
 
 		for(int index = 0, count = size.width() * size.height(); index < count; ++index) {
 			if(bgImageBits[index] != m_transRGB)

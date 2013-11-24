@@ -29,49 +29,52 @@
 #include <QtCore/QRegExp>
 
 namespace SubtitleComposer {
-	class SubViewer1InputFormat:public InputFormat {
-		friend class FormatManager;
+class SubViewer1InputFormat : public InputFormat
+{
+	friend class FormatManager;
 
-	public:
+public:
+	virtual ~SubViewer1InputFormat() {}
 
-		virtual ~ SubViewer1InputFormat() {
-		}
-	protected:
+protected:
+	virtual bool parseSubtitles(Subtitle &subtitle, const QString &data) const
+	{
+		if(m_regExp.indexIn(data, 0) == -1)
+			return false; // couldn't find first line
 
-		virtual bool parseSubtitles(Subtitle & subtitle, const QString & data) const {
-			if(m_regExp.indexIn(data, 0) == -1)
-				return false;	// couldn't find first line
+		unsigned readLines = 0;
 
-			unsigned readLines = 0;
+		int offset = m_regExp.pos();
+		do {
+			offset += m_regExp.matchedLength();
 
-			int offset = m_regExp.pos();
-			do {
-				offset += m_regExp.matchedLength();
+			Time showTime(m_regExp.cap(1).toInt(), m_regExp.cap(2).toInt(), m_regExp.cap(3).toInt(), 0);
 
-				Time showTime(m_regExp.cap(1).toInt(), m_regExp.cap(2).toInt(), m_regExp.cap(3).toInt(), 0);
+			QString text(m_regExp.cap(4).replace("|", "\n").trimmed());
 
-				QString text(m_regExp.cap(4).replace("|", "\n").trimmed());
+			// search hideTime
+			if(m_regExp.indexIn(data, offset) == -1)
+				break;
 
-				// search hideTime
-				if(m_regExp.indexIn(data, offset) == -1)
-					break;
+			Time hideTime(m_regExp.cap(1).toInt(), m_regExp.cap(2).toInt(), m_regExp.cap(3).toInt(), 0);
 
-				Time hideTime(m_regExp.cap(1).toInt(), m_regExp.cap(2).toInt(), m_regExp.cap(3).toInt(), 0);
+			subtitle.insertLine(new SubtitleLine(text, showTime, hideTime));
 
-				subtitle.insertLine(new SubtitleLine(text, showTime, hideTime));
+			offset += m_regExp.matchedLength();
 
-				offset += m_regExp.matchedLength();
+			readLines++;
+		} while(m_regExp.indexIn(data, offset) != -1);          // search next line's showTime
 
-				readLines++;
-			} while(m_regExp.indexIn(data, offset) != -1);	// search next line's showTime
+		return readLines > 0;
+	}
 
-			return readLines > 0;
-		}
-		SubViewer1InputFormat():InputFormat("SubViewer 1.0", QStringList("sub")), m_regExp("\\[([0-2][0-9]):([0-5][0-9]):([0-5][0-9])\\]\n([^\n]*)\n") {
-		}
+	SubViewer1InputFormat() :
+		InputFormat("SubViewer 1.0", QStringList("sub")),
+		m_regExp("\\[([0-2][0-9]):([0-5][0-9]):([0-5][0-9])\\]\n([^\n]*)\n")
+	{}
 
-		mutable QRegExp m_regExp;
-	};
+	mutable QRegExp m_regExp;
+};
 }
 
 #endif

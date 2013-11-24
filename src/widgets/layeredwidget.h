@@ -30,24 +30,25 @@
 /// a class used to show varios widgets simultaneously one in top
 /// of the another (unlike QStackWidget which shows one at a time)
 
-class LayeredWidget:public QWidget {
-  Q_OBJECT public:
+class LayeredWidget : public QWidget
+{
+	Q_OBJECT
 
+public:
 	typedef enum { HandleResize, IgnoreResize } Mode;
 
-	explicit LayeredWidget(QWidget * parent = 0, Qt::WFlags f = 0);
+	explicit LayeredWidget(QWidget *parent = 0, Qt::WFlags f = 0);
 
-	void setWidgetMode(QWidget * widget, Mode mode);
+	void setWidgetMode(QWidget *widget, Mode mode);
 
-	public slots:virtual void setMouseTracking(bool enable);
+public slots:
+	virtual void setMouseTracking(bool enable);
 
-  protected:
+protected:
+	virtual void resizeEvent(QResizeEvent *e);
 
-	virtual void resizeEvent(QResizeEvent * e);
-
-  private:
-
-	QList < QObject * >m_ignoredWidgets;
+private:
+	QList<QObject *> m_ignoredWidgets;
 };
 
 #endif

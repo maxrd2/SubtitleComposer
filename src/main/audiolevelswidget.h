@@ -34,43 +34,44 @@ class QRegion;
 class QPolygon;
 
 namespace SubtitleComposer {
-	class AudioLevelsWidget:public QWidget {
-	Q_OBJECT public:
+class AudioLevelsWidget : public QWidget
+{
+	Q_OBJECT
 
-		AudioLevelsWidget(QWidget * parent);
-		virtual ~ AudioLevelsWidget();
+public:
+	AudioLevelsWidget(QWidget *parent);
+	virtual ~AudioLevelsWidget();
 
-		void loadConfig();
-		void saveConfig();
+	void loadConfig();
+	void saveConfig();
 
-		Time windowSize() const;
-		void setWindowSize(const Time & size);
+	Time windowSize() const;
+	void setWindowSize(const Time &size);
 
-		public slots:void setSubtitle(Subtitle * subtitle = 0);
-		void setAudioLevels(AudioLevels * audiolevels = 0);
+public slots:
+	void setSubtitle(Subtitle *subtitle = 0);
+	void setAudioLevels(AudioLevels *audiolevels = 0);
 
-	protected:
+protected:
+	virtual void paintEvent(QPaintEvent *);
+	virtual void resizeEvent(QResizeEvent *e);
 
-		virtual void paintEvent(QPaintEvent *);
-		virtual void resizeEvent(QResizeEvent * e);
+	void rebuildRegions();
 
-		void rebuildRegions();
+private slots:
+	void onPlayerPositionChanged(double seconds);
 
-		private slots:void onPlayerPositionChanged(double seconds);
+private:
+	Subtitle *m_subtitle;
+	AudioLevels *m_audiolevels;
 
-	private:
+	Time m_lowerPosition;
+	Time m_playingPosition;
+	Time m_upperPosition;
 
-		Subtitle * m_subtitle;
-		AudioLevels *m_audiolevels;
-
-		Time m_lowerPosition;
-		Time m_playingPosition;
-		Time m_upperPosition;
-
-		QRegion *m_regions;
-		QPolygon *m_points;
-		int m_playingX;
-	};
-
+	QRegion *m_regions;
+	QPolygon *m_points;
+	int m_playingX;
+};
 }
 #endif

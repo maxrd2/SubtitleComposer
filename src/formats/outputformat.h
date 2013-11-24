@@ -26,21 +26,21 @@
 
 #include "format.h"
 namespace SubtitleComposer {
-	class OutputFormat:public Format {
-	public:
+class OutputFormat : public Format
+{
+public:
+	virtual ~OutputFormat() {}
 
-		virtual ~ OutputFormat() {
-		}
-		QString writeSubtitle(const Subtitle & subtitle, bool primary) const {
-			return dumpSubtitles(subtitle, primary);
-		}
-	protected:
+	QString writeSubtitle(const Subtitle &subtitle, bool primary) const
+	{
+		return dumpSubtitles(subtitle, primary);
+	}
 
-		virtual QString dumpSubtitles(const Subtitle & subtitle, bool primary)const = 0;
+protected:
+	virtual QString dumpSubtitles(const Subtitle &subtitle, bool primary) const = 0;
 
-		OutputFormat(const QString & name, const QStringList & extensions):Format(name, extensions) {
-	}};
-
+	OutputFormat(const QString &name, const QStringList &extensions) : Format(name, extensions) {}
+};
 }
 
 #endif

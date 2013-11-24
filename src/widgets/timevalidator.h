@@ -28,17 +28,16 @@
 #include <QtGui/QValidator>
 
 // class TimeValidator : public QRegExpValidator
-class TimeValidator:public QValidator {
-  public:
+class TimeValidator : public QValidator
+{
+public:
+	TimeValidator(QObject *parent = 0);
 
-	TimeValidator(QObject * parent = 0);
+	bool parse(const QString &input, int &timeMillis);
 
-	bool parse(const QString & input, int &timeMillis);
+	QValidator::State validate(QString &input, int &pos) const;
 
-	QValidator::State validate(QString & input, int &pos) const;
-
-  private:
-
+private:
 	mutable QRegExp m_parserRegExp;
 };
 

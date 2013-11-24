@@ -30,8 +30,11 @@
 
 using namespace SubtitleComposer;
 
-MPlayerPlayerBackend::MPlayerPlayerBackend(Player * player):
-PlayerBackend(player, "MPlayer", new MPlayerConfig()), m_process(new MPlayerPlayerProcess(config(), this)), m_position(0.0), m_reportUpdates(true)
+MPlayerPlayerBackend::MPlayerPlayerBackend(Player *player) :
+	PlayerBackend(player, "MPlayer", new MPlayerConfig()),
+	m_process(new MPlayerPlayerProcess(config(), this)),
+	m_position(0.0),
+	m_reportUpdates(true)
 {
 	connect(m_process, SIGNAL(mediaDataLoaded()), this, SLOT(onMediaDataLoaded()));
 	connect(m_process, SIGNAL(playingReceived()), this, SLOT(onPlayingReceived()));
@@ -46,44 +49,48 @@ MPlayerPlayerBackend::~MPlayerPlayerBackend()
 		_finalize();
 }
 
-VideoWidget *MPlayerPlayerBackend::initialize(QWidget * videoWidgetParent)
+VideoWidget *
+MPlayerPlayerBackend::initialize(QWidget *videoWidgetParent)
 {
 	return new VideoWidget(videoWidgetParent);
 }
 
-void MPlayerPlayerBackend::finalize()
+void
+MPlayerPlayerBackend::finalize()
 {
 	_finalize();
 }
 
-void MPlayerPlayerBackend::_finalize()
-{
-}
+void
+MPlayerPlayerBackend::_finalize()
+{}
 
-SubtitleComposer::AppConfigGroupWidget * MPlayerPlayerBackend::newAppConfigGroupWidget(QWidget * parent)
+SubtitleComposer::AppConfigGroupWidget *
+MPlayerPlayerBackend::newAppConfigGroupWidget(QWidget *parent)
 {
 	return new MPlayerConfigWidget(parent);
 }
 
-
-bool MPlayerPlayerBackend::openFile(const QString & filePath, bool & playingAfterCall)
+bool
+MPlayerPlayerBackend::openFile(const QString &filePath, bool &playingAfterCall)
 {
 	m_position = 0.0;
 
 	playingAfterCall = true;
 
 	if(!m_process->start(filePath, (int)player()->videoWidget()->videoLayer()->winId(), player()->activeAudioStream(), player()->audioStreams().count()
-	))
+	                     ))
 		return false;
 
 	return true;
 }
 
-void MPlayerPlayerBackend::closeFile()
-{
-}
+void
+MPlayerPlayerBackend::closeFile()
+{}
 
-bool MPlayerPlayerBackend::stop()
+bool
+MPlayerPlayerBackend::stop()
 {
 	if(m_process->state() == QProcess::NotRunning)
 		return true;
@@ -105,50 +112,50 @@ bool MPlayerPlayerBackend::stop()
 		m_process->kill();
 		m_process->waitForFinished(3000);
 	}
-	//return m_process->state() == QProcess::NotRunning;
+	// return m_process->state() == QProcess::NotRunning;
 	return true;
 }
 
-bool MPlayerPlayerBackend::play()
+bool
+MPlayerPlayerBackend::play()
 {
-	if(m_process->state() == QProcess::NotRunning)	// player state was Ready
-	{
+	if(m_process->state() == QProcess::NotRunning) { // player state was Ready
 		m_position = 0.0;
 
 		if(!m_process->start(player()->filePath(), (int)player()->videoWidget()->videoLayer()->winId(), player()->activeAudioStream(), player()->audioStreams().count()
-		))
+		                     ))
 			return false;
 
 		if(m_process->state() == QProcess::NotRunning)
-			return false;		// process ended prematurely
-	} else						// player state was Playing or Paused
+			return false; // process ended prematurely
+	} else // player state was Playing or Paused
 		m_process->sendTogglePause();
 
 	return true;
 }
 
-bool MPlayerPlayerBackend::pause()
+bool
+MPlayerPlayerBackend::pause()
 {
-	if(m_process->state() == QProcess::NotRunning)	// player state was Ready
-	{
+	if(m_process->state() == QProcess::NotRunning) { // player state was Ready
 		m_position = 0.0;
 
 		if(!m_process->start(player()->filePath(), (int)player()->videoWidget()->videoLayer()->winId(), player()->activeAudioStream(), player()->audioStreams().count()
-		))
+		                     ))
 			return false;
 
 		if(m_process->state() == QProcess::NotRunning)
-			return false;		// process ended prematurely
+			return false; // process ended prematurely
 
 		m_process->sendTogglePause();
-	} else						// player state was Playing or Paused
+	} else // player state was Playing or Paused
 		m_process->sendTogglePause();
 
 	return true;
 }
 
-
-bool MPlayerPlayerBackend::seek(double seconds, bool accurate)
+bool
+MPlayerPlayerBackend::seek(double seconds, bool accurate)
 {
 	if(accurate) {
 		bool wasPaused = player()->isPaused();
@@ -174,8 +181,7 @@ bool MPlayerPlayerBackend::seek(double seconds, bool accurate)
 					seekPosition = 0.0;
 			} else
 				break;
-		}
-		while(m_position > seconds);
+		} while(m_position > seconds);
 
 		if(m_process->version() == 1) {
 			if(!wasMuted)
@@ -194,7 +200,8 @@ bool MPlayerPlayerBackend::seek(double seconds, bool accurate)
 	return true;
 }
 
-bool MPlayerPlayerBackend::setActiveAudioStream(int audioStream)
+bool
+MPlayerPlayerBackend::setActiveAudioStream(int audioStream)
 {
 	if(m_process->state() != QProcess::NotRunning) {
 		bool wasMuted = player()->isMuted();
@@ -207,21 +214,22 @@ bool MPlayerPlayerBackend::setActiveAudioStream(int audioStream)
 	return true;
 }
 
-bool MPlayerPlayerBackend::setVolume(double volume)
+bool
+MPlayerPlayerBackend::setVolume(double volume)
 {
 	m_process->sendVolume(volume);
 	return true;
 }
 
-
-void MPlayerPlayerBackend::onMediaDataLoaded()
+void
+MPlayerPlayerBackend::onMediaDataLoaded()
 {
-	const MediaData & mediaData = m_process->mediaData();
+	const MediaData &mediaData = m_process->mediaData();
 
 	QStringList audioStreams;
 
 	int index = 0;
-	for(QMap < int, TrackData >::ConstIterator it = mediaData.audioTracks.begin(), end = mediaData.audioTracks.end(); it != end; ++it) {
+	for(QMap<int, TrackData>::ConstIterator it = mediaData.audioTracks.begin(), end = mediaData.audioTracks.end(); it != end; ++it) {
 		index++;
 		QString audioStreamName;
 		if(!it.value().language.isEmpty())
@@ -240,7 +248,7 @@ void MPlayerPlayerBackend::onMediaDataLoaded()
 		player()->videoWidget()->setVideoResolution(mediaData.videoWidth, mediaData.videoHeight, mediaData.videoDAR);
 	}
 
-	setPlayerAudioStreams(audioStreams, audioStreams.isEmpty()? -1 : 0);
+	setPlayerAudioStreams(audioStreams, audioStreams.isEmpty() ? -1 : 0);
 
 	if(mediaData.duration)
 		setPlayerLength(mediaData.duration);
@@ -249,7 +257,8 @@ void MPlayerPlayerBackend::onMediaDataLoaded()
 		setPlayerFramesPerSecond(mediaData.videoFPS);
 }
 
-void MPlayerPlayerBackend::onPlayingReceived()
+void
+MPlayerPlayerBackend::onPlayingReceived()
 {
 	if(!m_reportUpdates)
 		return;
@@ -257,7 +266,8 @@ void MPlayerPlayerBackend::onPlayingReceived()
 	setPlayerState(Player::Playing);
 }
 
-void MPlayerPlayerBackend::onPausedReceived()
+void
+MPlayerPlayerBackend::onPausedReceived()
 {
 	if(!m_reportUpdates)
 		return;
@@ -265,7 +275,8 @@ void MPlayerPlayerBackend::onPausedReceived()
 	setPlayerState(Player::Paused);
 }
 
-void MPlayerPlayerBackend::onPositionReceived(double seconds)
+void
+MPlayerPlayerBackend::onPositionReceived(double seconds)
 {
 	m_position = seconds;
 
@@ -278,7 +289,8 @@ void MPlayerPlayerBackend::onPositionReceived(double seconds)
 	setPlayerPosition(seconds);
 }
 
-void MPlayerPlayerBackend::onProcessExited()
+void
+MPlayerPlayerBackend::onProcessExited()
 {
 	setPlayerState(Player::Ready);
 }

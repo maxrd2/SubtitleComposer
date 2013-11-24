@@ -26,39 +26,39 @@
 
 #include <QtGui/QWidget>
 
-class AttachableWidget:public QWidget {
-  Q_OBJECT public:
+class AttachableWidget : public QWidget
+{
+	Q_OBJECT
 
+public:
 	typedef enum { Top, Bottom } Place;
 
 	explicit AttachableWidget(Place place = Bottom, unsigned animStepDuration = 4);
-	virtual ~ AttachableWidget();
+	virtual ~AttachableWidget();
 
 	bool isAttached() const;
 
 	bool isAnimated() const;
 	int animStepDuration() const;
 
-	virtual bool eventFilter(QObject * object, QEvent * event);
+	virtual bool eventFilter(QObject *object, QEvent *event);
 
-	public slots:void attach(QWidget * target);
+public slots:
+	void attach(QWidget *target);
 	void dettach();
 
 	void setAnimStepDuration(int stepDuration);
 
 	void toggleVisible(bool visible);
 
-  protected:
+protected:
+	virtual void timerEvent(QTimerEvent *event);
 
-	virtual void timerEvent(QTimerEvent * event);
-
-  private:
-
+private:
 	void toggleVisible(bool visible, bool force);
 
-  private:
-
-	QWidget * m_targetWidget;
+private:
+	QWidget *m_targetWidget;
 	Place m_place;
 	int m_animStepDuration;
 

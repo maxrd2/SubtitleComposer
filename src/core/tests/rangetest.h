@@ -26,8 +26,12 @@
 
 #include <QtCore/QObject>
 
-class RangeTest:public QObject {
-	Q_OBJECT private slots:void testConstructors();
+class RangeTest : public QObject
+{
+	Q_OBJECT
+
+private slots:
+	void testConstructors();
 	void testLimits();
 	void testOperators();
 };

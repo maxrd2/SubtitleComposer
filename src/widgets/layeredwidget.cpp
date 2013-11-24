@@ -23,36 +23,38 @@
 
 #include <QtGui/QResizeEvent>
 
-LayeredWidget::LayeredWidget(QWidget * parent, Qt::WFlags f):
-QWidget(parent, f)
-{
-}
+LayeredWidget::LayeredWidget(QWidget *parent, Qt::WFlags f) :
+	QWidget(parent, f)
+{}
 
-void LayeredWidget::setWidgetMode(QWidget * widget, LayeredWidget::Mode mode)
+void
+LayeredWidget::setWidgetMode(QWidget *widget, LayeredWidget::Mode mode)
 {
 	m_ignoredWidgets.removeAll(widget);
 	if(mode == IgnoreResize)
 		m_ignoredWidgets.append(widget);
 }
 
-void LayeredWidget::setMouseTracking(bool enable)
+void
+LayeredWidget::setMouseTracking(bool enable)
 {
 	// propagates to our children and our children children's
 	QWidget::setMouseTracking(enable);
-	QList < QWidget * >children = findChildren < QWidget * >();
-	for(QList < QWidget * >::ConstIterator it = children.begin(), end = children.end(); it != end; ++it)
+	QList<QWidget *> children = findChildren<QWidget *>();
+	for(QList<QWidget *>::ConstIterator it = children.begin(), end = children.end(); it != end; ++it)
 		(*it)->setMouseTracking(enable);
 }
 
-void LayeredWidget::resizeEvent(QResizeEvent *)
+void
+LayeredWidget::resizeEvent(QResizeEvent *)
 {
 	// propagated to our children but not our children children's
 	QSize size = this->size();
-	const QObjectList & children = this->children();
+	const QObjectList &children = this->children();
 	for(QObjectList::ConstIterator it = children.begin(), end = children.end(); it != end; ++it) {
 		if(!(*it)->isWidgetType() || m_ignoredWidgets.contains(*it))
 			continue;
-		(static_cast < QWidget * >(*it))->resize(size);
+		(static_cast<QWidget *>(*it))->resize(size);
 	}
 }
 

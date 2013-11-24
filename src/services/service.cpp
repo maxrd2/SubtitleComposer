@@ -24,16 +24,18 @@
 
 using namespace SubtitleComposer;
 
-Service::Service():
-m_activeBackend(0), m_widgetParent(0), m_applicationClosingDown(false), m_state(Service::Uninitialized)
-{
-}
+Service::Service() :
+	m_activeBackend(0),
+	m_widgetParent(0),
+	m_applicationClosingDown(false),
+	m_state(Service::Uninitialized)
+{}
 
 Service::~Service()
-{
-}
+{}
 
-bool Service::initialize(QWidget * widgetParent, const QString & prefBackendName)
+bool
+Service::initialize(QWidget *widgetParent, const QString &prefBackendName)
 {
 	if(isInitialized()) {
 		kError() << "Service has already been initialized";
@@ -48,7 +50,7 @@ bool Service::initialize(QWidget * widgetParent, const QString & prefBackendName
 	}
 	// if that fails, we set the first available backend as active
 	if(!m_activeBackend) {
-		for(QMap < QString, ServiceBackend * >::ConstIterator it = m_backends.begin(), end = m_backends.end(); it != end; ++it)
+		for(QMap<QString, ServiceBackend *>::ConstIterator it = m_backends.begin(), end = m_backends.end(); it != end; ++it)
 			if(initializeBackendPrivate(it.value()))
 				break;
 	}
@@ -59,7 +61,8 @@ bool Service::initialize(QWidget * widgetParent, const QString & prefBackendName
 	return m_activeBackend;
 }
 
-bool Service::reinitialize(const QString & prefBackendName)
+bool
+Service::reinitialize(const QString &prefBackendName)
 {
 	if(!isInitialized())
 		return false;
@@ -69,7 +72,7 @@ bool Service::reinitialize(const QString & prefBackendName)
 	finalize();
 
 	if(!initializeBackendPrivate(targetBackend)) {
-		for(QMap < QString, ServiceBackend * >::ConstIterator it = m_backends.begin(), end = m_backends.end(); it != end; ++it)
+		for(QMap<QString, ServiceBackend *>::ConstIterator it = m_backends.begin(), end = m_backends.end(); it != end; ++it)
 			if(initializeBackendPrivate(it.value()))
 				break;
 	}
@@ -80,7 +83,8 @@ bool Service::reinitialize(const QString & prefBackendName)
 	return m_activeBackend;
 }
 
-void Service::finalize()
+void
+Service::finalize()
 {
 	if(!isInitialized())
 		return;
@@ -95,7 +99,8 @@ void Service::finalize()
 	emit backendFinalized(wasActiveBackend);
 }
 
-bool Service::initializeBackendPrivate(ServiceBackend * backend)
+bool
+Service::initializeBackendPrivate(ServiceBackend *backend)
 {
 	if(m_activeBackend == backend)
 		return true;
@@ -112,22 +117,35 @@ bool Service::initializeBackendPrivate(ServiceBackend * backend)
 	return m_activeBackend == backend;
 }
 
-
-bool Service::isApplicationClosingDown() const {
+bool
+Service::isApplicationClosingDown() const
+{
 	return m_applicationClosingDown;
-} void Service::setApplicationClosingDown()
+}
+
+void
+Service::setApplicationClosingDown()
 {
 	m_applicationClosingDown = true;
 }
 
-QString Service::activeBackendName() const {
-	for(QMap < QString, ServiceBackend * >::ConstIterator it = m_backends.begin(), end = m_backends.end(); it != end; ++it)
+QString
+Service::activeBackendName() const
+{
+	for(QMap<QString, ServiceBackend *>::ConstIterator it = m_backends.begin(), end = m_backends.end(); it != end; ++it)
 		if(it.value() == m_activeBackend)
 			return it.key();
 	return QString();
-} QStringList Service::backendNames() const {
+}
+
+QStringList
+Service::backendNames() const
+{
 	return m_backends.keys();
-} void Service::addBackend(ServiceBackend * backend)
+}
+
+void
+Service::addBackend(ServiceBackend *backend)
 {
 	if(m_backends.contains(backend->name())) {
 		kError() << "attempted to insert duplicated service backend" << backend->name();

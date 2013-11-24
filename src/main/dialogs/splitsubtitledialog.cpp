@@ -32,8 +32,8 @@
 
 using namespace SubtitleComposer;
 
-SplitSubtitleDialog::SplitSubtitleDialog(QWidget * parent):
-ActionDialog(i18n("Split Subtitle"), parent)
+SplitSubtitleDialog::SplitSubtitleDialog(QWidget *parent) :
+	ActionDialog(i18n("Split Subtitle"), parent)
 {
 	QGroupBox *settingsGroupBox = createGroupBox(i18nc("@title:group", "Settings"));
 
@@ -65,16 +65,26 @@ ActionDialog(i18n("Split Subtitle"), parent)
 	connect(m_splitTimeFromVideoButton, SIGNAL(clicked()), SLOT(setSplitTimeFromVideo()));
 }
 
-void SplitSubtitleDialog::setSplitTimeFromVideo()
+void
+SplitSubtitleDialog::setSplitTimeFromVideo()
 {
 	m_splitTimeEdit->setValue((int)(Player::instance()->length() * 1000 + 0.5));
 }
 
-Time SplitSubtitleDialog::splitTime() const {
+Time
+SplitSubtitleDialog::splitTime() const
+{
 	return m_splitTimeEdit->value();
-} bool SplitSubtitleDialog::shiftNewSubtitle() const {
+}
+
+bool
+SplitSubtitleDialog::shiftNewSubtitle() const
+{
 	return m_shiftNewSubtitleCheckBox->isChecked();
-} void SplitSubtitleDialog::show()
+}
+
+void
+SplitSubtitleDialog::show()
 {
 	m_splitTimeFromVideoButton->setEnabled(Player::instance()->state() > Player::Opening);
 	if(m_splitTimeFromVideoButton->isEnabled())

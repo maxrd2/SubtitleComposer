@@ -30,17 +30,19 @@ using namespace SubtitleComposer;
 
 #define SONNET_CONFIG_GROUP "Spelling"
 
-SpellingConfigWidget::SpellingConfigWidget(QWidget * parent):
-AppConfigGroupWidget(new SpellingConfig(), parent), m_sonnetConfigWidget(0), m_globalConfig(KGlobal::config().data())
+SpellingConfigWidget::SpellingConfigWidget(QWidget *parent) :
+	AppConfigGroupWidget(new SpellingConfig(), parent),
+	m_sonnetConfigWidget(0),
+	m_globalConfig(KGlobal::config().data())
 {
 	setControlsFromConfig();
 }
 
 SpellingConfigWidget::~SpellingConfigWidget()
-{
-}
+{}
 
-void SpellingConfigWidget::setControlsFromConfig()
+void
+SpellingConfigWidget::setControlsFromConfig()
 {
 	// NOTE: Sonnet::ConfigWidget doesn't provide a way to change the controls state to reflect
 	// a new settings state, as it is only evaluated at initialization. We work around that by
@@ -50,7 +52,7 @@ void SpellingConfigWidget::setControlsFromConfig()
 	// the KConfig state to how it was before.
 
 	KConfigGroup group(m_globalConfig->group(SONNET_CONFIG_GROUP));
-	QMap < QString, QString > previousSettings = group.entryMap();
+	QMap<QString, QString> previousSettings = group.entryMap();
 	group.writeEntry(SpellingConfig::keyDefaultLanguage(), config()->defaultLanguage());
 	group.writeEntry(SpellingConfig::keyDefaultClient(), config()->defaultClient());
 	group.writeEntry(SpellingConfig::keyCheckUppercase(), config()->checkUppercase());
@@ -72,7 +74,8 @@ void SpellingConfigWidget::setControlsFromConfig()
 	connect(m_sonnetConfigWidget, SIGNAL(configChanged()), this, SIGNAL(settingsChanged()));
 }
 
-void SpellingConfigWidget::setConfigFromControls()
+void
+SpellingConfigWidget::setConfigFromControls()
 {
 	// NOTE: we make sure the Sonnet::ConfigWidget dumps it's settings to the KConfig object.
 	// Only then we can load our config object from it.

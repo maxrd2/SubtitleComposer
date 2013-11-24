@@ -29,7 +29,16 @@
 
 using namespace SubtitleComposer;
 
-ActionWithTargetDialog::ActionWithTargetDialog(const QString & title, QWidget * parent):ActionDialog(title, parent), m_targetGroupBox(0), m_targetLayout(0), m_lineTargetsButtonGroup(0), m_textTargetsButtonGroup(0), m_selectionTargetOnlyMode(false), m_selectionTargetWasChecked(false), m_translationMode(false), m_nonTranslationModeTarget(Subtitle::Primary)
+ActionWithTargetDialog::ActionWithTargetDialog(const QString &title, QWidget *parent) :
+	ActionDialog(title, parent),
+	m_targetGroupBox(0),
+	m_targetLayout(0),
+	m_lineTargetsButtonGroup(0),
+	m_textTargetsButtonGroup(0),
+	m_selectionTargetOnlyMode(false),
+	m_selectionTargetWasChecked(false),
+	m_translationMode(false),
+	m_nonTranslationModeTarget(Subtitle::Primary)
 {
 //  setButtons( KDialog::Ok | KDialog::Cancel | KDialog::Default );
 //  setDefaultButton( KDialog::Ok );
@@ -39,7 +48,8 @@ ActionWithTargetDialog::ActionWithTargetDialog(const QString & title, QWidget * 
 //  connect( this, SIGNAL( defaultClicked() ), this, SLOT( onDefaultButtonClicked() ) );
 }
 
-int ActionWithTargetDialog::exec()
+int
+ActionWithTargetDialog::exec()
 {
 	setTranslationMode(app()->translationMode());
 	setSelectionTargetOnlyMode(app()->showingLinesContextMenu());
@@ -47,7 +57,8 @@ int ActionWithTargetDialog::exec()
 	return ActionDialog::exec();
 }
 
-void ActionWithTargetDialog::show()
+void
+ActionWithTargetDialog::show()
 {
 	setTranslationMode(app()->translationMode());
 	setSelectionTargetOnlyMode(app()->showingLinesContextMenu());
@@ -55,7 +66,8 @@ void ActionWithTargetDialog::show()
 	ActionDialog::show();
 }
 
-QGroupBox *ActionWithTargetDialog::createTargetsGroupBox(const QString & title, bool addToLayout)
+QGroupBox *
+ActionWithTargetDialog::createTargetsGroupBox(const QString &title, bool addToLayout)
 {
 	if(!m_targetGroupBox) {
 		m_targetGroupBox = createGroupBox(title, addToLayout);
@@ -65,10 +77,11 @@ QGroupBox *ActionWithTargetDialog::createTargetsGroupBox(const QString & title, 
 	return m_targetGroupBox;
 }
 
-void ActionWithTargetDialog::updateTargetsGroupBoxHiddenState()
+void
+ActionWithTargetDialog::updateTargetsGroupBoxHiddenState()
 {
 	bool hidden = true;
-	QList < QWidget * >children = m_targetGroupBox->findChildren < QWidget * >();
+	QList<QWidget *> children = m_targetGroupBox->findChildren<QWidget *>();
 	for(int index = 0, size = children.size(); index < size; ++index) {
 		if(!children.at(index)->isHidden()) {
 			hidden = false;
@@ -84,21 +97,23 @@ void ActionWithTargetDialog::updateTargetsGroupBoxHiddenState()
 	}
 }
 
-void ActionWithTargetDialog::onDefaultButtonClicked()
+void
+ActionWithTargetDialog::onDefaultButtonClicked()
 {
 	if(m_lineTargetsButtonGroup) {
 		LinesTarget prevTarget = selectedLinesTarget();
 		setSelectionTargetOnlyMode(!m_lineTargetsButtonGroup->button(0)->isHidden());
-		setSelectedLinesTarget(prevTarget);	// setSelectionTargetOnlyMode resets the target so we restore it
+		setSelectedLinesTarget(prevTarget);     // setSelectionTargetOnlyMode resets the target so we restore it
 	}
 }
 
-void ActionWithTargetDialog::setTargetsButtonsHiddenState(QButtonGroup * targetButtonGroup, bool hidden)
+void
+ActionWithTargetDialog::setTargetsButtonsHiddenState(QButtonGroup *targetButtonGroup, bool hidden)
 {
 	if(!targetButtonGroup || hidden == targetButtonGroup->button(0)->isHidden())
 		return;
 
-	QList < QAbstractButton * >buttons = targetButtonGroup->buttons();
+	QList<QAbstractButton *> buttons = targetButtonGroup->buttons();
 	if(hidden) {
 		for(int index = 0, size = buttons.size(); index < size; ++index)
 			buttons.at(index)->hide();
@@ -118,12 +133,11 @@ void ActionWithTargetDialog::setTargetsButtonsHiddenState(QButtonGroup * targetB
 	}
 }
 
-
-
 /// LINE TARGETS
 /// ============
 
-void ActionWithTargetDialog::createLineTargetsButtonGroup()
+void
+ActionWithTargetDialog::createLineTargetsButtonGroup()
 {
 	setButtons(KDialog::Ok | KDialog::Cancel | KDialog::Default);
 	setDefaultButton(KDialog::Ok);
@@ -152,37 +166,50 @@ void ActionWithTargetDialog::createLineTargetsButtonGroup()
 	_setSelectionTargetOnlyMode(m_selectionTargetOnlyMode, true);
 }
 
-ActionWithTargetDialog::LinesTarget ActionWithTargetDialog::selectedLinesTarget()const
+ActionWithTargetDialog::LinesTarget
+ActionWithTargetDialog::selectedLinesTarget() const
 {
-	if(!m_lineTargetsButtonGroup)	// lines target was not created
+	if(!m_lineTargetsButtonGroup) // lines target was not created
 		return AllLines;
 
 	int checkedId = m_lineTargetsButtonGroup->checkedId();
-	return checkedId == -1 ? None : (LinesTarget) checkedId;
+	return checkedId == -1 ? None : (LinesTarget)checkedId;
 }
 
-void ActionWithTargetDialog::setSelectedLinesTarget(ActionWithTargetDialog::LinesTarget target)
+void
+ActionWithTargetDialog::setSelectedLinesTarget(ActionWithTargetDialog::LinesTarget target)
 {
 	if(m_lineTargetsButtonGroup && m_lineTargetsButtonGroup->button(target))
 		m_lineTargetsButtonGroup->button(target)->setChecked(true);
 }
 
-bool ActionWithTargetDialog::isLinesTargetEnabled(LinesTarget target) const {
+bool
+ActionWithTargetDialog::isLinesTargetEnabled(LinesTarget target) const
+{
 	return m_lineTargetsButtonGroup && m_lineTargetsButtonGroup->button(target) && m_lineTargetsButtonGroup->button(target)->isEnabled();
-} void ActionWithTargetDialog::setLinesTargetEnabled(LinesTarget target, bool enabled)
+}
+
+void
+ActionWithTargetDialog::setLinesTargetEnabled(LinesTarget target, bool enabled)
 {
 	if(m_lineTargetsButtonGroup && m_lineTargetsButtonGroup->button(target))
 		m_lineTargetsButtonGroup->button(target)->setEnabled(enabled);
 }
 
-bool ActionWithTargetDialog::selectionTargetOnlyMode() const {
+bool
+ActionWithTargetDialog::selectionTargetOnlyMode() const
+{
 	return m_selectionTargetOnlyMode;
-} void ActionWithTargetDialog::setSelectionTargetOnlyMode(bool value)
+}
+
+void
+ActionWithTargetDialog::setSelectionTargetOnlyMode(bool value)
 {
 	_setSelectionTargetOnlyMode(value, false);
 }
 
-void ActionWithTargetDialog::_setSelectionTargetOnlyMode(bool value, bool force)
+void
+ActionWithTargetDialog::_setSelectionTargetOnlyMode(bool value, bool force)
 {
 	if(force || m_selectionTargetOnlyMode != value) {
 		m_selectionTargetOnlyMode = value;
@@ -205,12 +232,11 @@ void ActionWithTargetDialog::_setSelectionTargetOnlyMode(bool value, bool force)
 	}
 }
 
-
-
 /// TEXT TARGETS
 /// ============
 
-void ActionWithTargetDialog::createTextTargetsButtonGroup()
+void
+ActionWithTargetDialog::createTextTargetsButtonGroup()
 {
 	createTargetsGroupBox();
 
@@ -233,12 +259,14 @@ void ActionWithTargetDialog::createTextTargetsButtonGroup()
 	_setTranslationMode(m_translationMode, true);
 }
 
-Subtitle::TextTarget ActionWithTargetDialog::nonTranslationModeTarget()const
+Subtitle::TextTarget
+ActionWithTargetDialog::nonTranslationModeTarget() const
 {
 	return m_nonTranslationModeTarget;
 }
 
-void ActionWithTargetDialog::setNonTranslationModeTarget(Subtitle::TextTarget target)
+void
+ActionWithTargetDialog::setNonTranslationModeTarget(Subtitle::TextTarget target)
 {
 	if(m_nonTranslationModeTarget != target) {
 		if(!m_translationMode && m_textTargetsButtonGroup) {
@@ -250,37 +278,50 @@ void ActionWithTargetDialog::setNonTranslationModeTarget(Subtitle::TextTarget ta
 	}
 }
 
-Subtitle::TextTarget ActionWithTargetDialog::selectedTextsTarget()const
+Subtitle::TextTarget
+ActionWithTargetDialog::selectedTextsTarget() const
 {
-	if(!m_textTargetsButtonGroup)	// texts target was not created
+	if(!m_textTargetsButtonGroup) // texts target was not created
 		return Subtitle::TextTargetSIZE;
 
 	int checkedId = m_textTargetsButtonGroup->checkedId();
-	return checkedId == -1 ? Subtitle::TextTargetSIZE : (Subtitle::TextTarget) checkedId;
+	return checkedId == -1 ? Subtitle::TextTargetSIZE : (Subtitle::TextTarget)checkedId;
 }
 
-void ActionWithTargetDialog::setSelectedTextsTarget(Subtitle::TextTarget target)
+void
+ActionWithTargetDialog::setSelectedTextsTarget(Subtitle::TextTarget target)
 {
 	if(m_textTargetsButtonGroup && m_textTargetsButtonGroup->button(target))
 		m_textTargetsButtonGroup->button(target)->setChecked(true);
 }
 
-bool ActionWithTargetDialog::isTextsTargetEnabled(Subtitle::TextTarget target) const {
+bool
+ActionWithTargetDialog::isTextsTargetEnabled(Subtitle::TextTarget target) const
+{
 	return m_textTargetsButtonGroup && m_textTargetsButtonGroup->button(target) && m_textTargetsButtonGroup->button(target)->isEnabled();
-} void ActionWithTargetDialog::setTextsTargetEnabled(Subtitle::TextTarget target, bool enabled)
+}
+
+void
+ActionWithTargetDialog::setTextsTargetEnabled(Subtitle::TextTarget target, bool enabled)
 {
 	if(m_textTargetsButtonGroup && m_textTargetsButtonGroup->button(target))
 		m_textTargetsButtonGroup->button(target)->setEnabled(enabled);
 }
 
-bool ActionWithTargetDialog::translationMode() const {
+bool
+ActionWithTargetDialog::translationMode() const
+{
 	return m_translationMode;
-} void ActionWithTargetDialog::setTranslationMode(bool enabled)
+}
+
+void
+ActionWithTargetDialog::setTranslationMode(bool enabled)
 {
 	_setTranslationMode(enabled, false);
 }
 
-void ActionWithTargetDialog::_setTranslationMode(bool enabled, bool force)
+void
+ActionWithTargetDialog::_setTranslationMode(bool enabled, bool force)
 {
 	if(force || m_translationMode != enabled) {
 		m_translationMode = enabled;
@@ -295,80 +336,77 @@ void ActionWithTargetDialog::_setTranslationMode(bool enabled, bool force)
 	}
 }
 
-
-
 /// ACTION WITH LINES TARGET DIALOG
 /// ===============================
 
-ActionWithLinesTargetDialog::ActionWithLinesTargetDialog(const QString & title, QWidget * parent):ActionWithTargetDialog(title, parent)
+ActionWithLinesTargetDialog::ActionWithLinesTargetDialog(const QString &title, QWidget *parent) : ActionWithTargetDialog(title, parent)
 {
 	createLineTargetsButtonGroup();
 }
 
-ActionWithLinesTargetDialog::ActionWithLinesTargetDialog(const QString & title, const QString & desc, QWidget * parent):ActionWithTargetDialog(title, parent)
+ActionWithLinesTargetDialog::ActionWithLinesTargetDialog(const QString &title, const QString &desc, QWidget *parent) : ActionWithTargetDialog(title, parent)
 {
 	createTargetsGroupBox(desc);
 	createLineTargetsButtonGroup();
 }
 
-int ActionWithLinesTargetDialog::exec()
+int
+ActionWithLinesTargetDialog::exec()
 {
 	setTranslationMode(app()->translationMode());
 	setSelectionTargetOnlyMode(app()->showingLinesContextMenu());
 
-	return m_targetGroupBox->isHidden()? QDialog::Accepted : ActionDialog::exec();
+	return m_targetGroupBox->isHidden() ? QDialog::Accepted : ActionDialog::exec();
 }
-
-
 
 /// ACTION WITH TEXTS TARGET DIALOG
 /// ===============================
 
-ActionWithTextsTargetDialog::ActionWithTextsTargetDialog(const QString & title, QWidget * parent):
-ActionWithTargetDialog(title, parent)
+ActionWithTextsTargetDialog::ActionWithTextsTargetDialog(const QString &title, QWidget *parent) :
+	ActionWithTargetDialog(title, parent)
 {
 	createTextTargetsButtonGroup();
 }
 
-ActionWithTextsTargetDialog::ActionWithTextsTargetDialog(const QString & title, const QString & desc, QWidget * parent):ActionWithTargetDialog(title, parent)
+ActionWithTextsTargetDialog::ActionWithTextsTargetDialog(const QString &title, const QString &desc, QWidget *parent) : ActionWithTargetDialog(title, parent)
 {
 	createTargetsGroupBox(desc);
 	createTextTargetsButtonGroup();
 }
 
-int ActionWithTextsTargetDialog::exec()
+int
+ActionWithTextsTargetDialog::exec()
 {
 	setTranslationMode(app()->translationMode());
 	setSelectionTargetOnlyMode(app()->showingLinesContextMenu());
 
-	return m_targetGroupBox->isHidden()? QDialog::Accepted : ActionDialog::exec();
+	return m_targetGroupBox->isHidden() ? QDialog::Accepted : ActionDialog::exec();
 }
-
-
 
 /// ACTION WITH LINES AND TEXTS TARGET DIALOG
 /// =========================================
 
-ActionWithLinesAndTextsTargetDialog::ActionWithLinesAndTextsTargetDialog(const QString & title, QWidget * parent):
-ActionWithTargetDialog(title, parent)
+ActionWithLinesAndTextsTargetDialog::ActionWithLinesAndTextsTargetDialog(const QString &title, QWidget *parent) :
+	ActionWithTargetDialog(title, parent)
 {
 	createLineTargetsButtonGroup();
 	createTextTargetsButtonGroup();
 }
 
-ActionWithLinesAndTextsTargetDialog::ActionWithLinesAndTextsTargetDialog(const QString & title, const QString & desc, QWidget * parent):ActionWithTargetDialog(title, parent)
+ActionWithLinesAndTextsTargetDialog::ActionWithLinesAndTextsTargetDialog(const QString &title, const QString &desc, QWidget *parent) : ActionWithTargetDialog(title, parent)
 {
 	createTargetsGroupBox(desc);
 	createLineTargetsButtonGroup();
 	createTextTargetsButtonGroup();
 }
 
-int ActionWithLinesAndTextsTargetDialog::exec()
+int
+ActionWithLinesAndTextsTargetDialog::exec()
 {
 	setTranslationMode(app()->translationMode());
 	setSelectionTargetOnlyMode(app()->showingLinesContextMenu());
 
-	return m_targetGroupBox->isHidden()? QDialog::Accepted : ActionDialog::exec();
+	return m_targetGroupBox->isHidden() ? QDialog::Accepted : ActionDialog::exec();
 }
 
 #include "actionwithtargetdialog.moc"

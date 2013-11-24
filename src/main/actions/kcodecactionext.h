@@ -22,23 +22,23 @@
 
 #include <kcodecaction.h>
 
-class KCodecActionExt:public KCodecAction {
-  Q_OBJECT public:
+class KCodecActionExt : public KCodecAction
+{
+	Q_OBJECT
 
-	explicit KCodecActionExt(QObject * parent, bool showAutoOptions = false, bool showDefault = false);
-	KCodecActionExt(const QString & text, QObject * parent, bool showAutoOptions = false, bool showDefault = false);
-	KCodecActionExt(const KIcon & icon, const QString & text, QObject * parent, bool showAutoOptions = false, bool showDefault = false);
+public:
+	explicit KCodecActionExt(QObject *parent, bool showAutoOptions = false, bool showDefault = false);
+	KCodecActionExt(const QString &text, QObject *parent, bool showAutoOptions = false, bool showDefault = false);
+	KCodecActionExt(const KIcon &icon, const QString &text, QObject *parent, bool showAutoOptions = false, bool showDefault = false);
 
-  public:
-
+public:
 	KEncodingDetector::AutoDetectScript currentAutoDetectScript() const;
 	bool setCurrentAutoDetectScript(KEncodingDetector::AutoDetectScript);
 
+protected Q_SLOTS:
+	virtual void actionTriggered(QAction *);
 
-	protected Q_SLOTS:virtual void actionTriggered(QAction *);
-
-  private:
-
+private:
 	void init(bool showDefault);
 
 	bool m_showDefault;

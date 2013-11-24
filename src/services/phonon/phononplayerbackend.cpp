@@ -30,10 +30,13 @@
 
 using namespace SubtitleComposer;
 
-PhononPlayerBackend::PhononPlayerBackend(Player * player):
-PlayerBackend(player, "Phonon", new PhononConfig()), m_mediaObject(0), m_mediaController(0), m_audioOutput(0), m_videoOutput(0)
-{
-}
+PhononPlayerBackend::PhononPlayerBackend(Player *player) :
+	PlayerBackend(player, "Phonon", new PhononConfig()),
+	m_mediaObject(0),
+	m_mediaController(0),
+	m_audioOutput(0),
+	m_videoOutput(0)
+{}
 
 PhononPlayerBackend::~PhononPlayerBackend()
 {
@@ -41,11 +44,20 @@ PhononPlayerBackend::~PhononPlayerBackend()
 		_finalize();
 }
 
-bool PhononPlayerBackend::doesVolumeCorrection() const {
+bool
+PhononPlayerBackend::doesVolumeCorrection() const
+{
 	return true;
-} bool PhononPlayerBackend::supportsChangingAudioStream(bool * /*onTheFly */ ) const {
+}
+
+bool
+PhononPlayerBackend::supportsChangingAudioStream(bool * /*onTheFly */) const
+{
 	return false;
-} void PhononPlayerBackend::initMediaObject()
+}
+
+void
+PhononPlayerBackend::initMediaObject()
 {
 	m_mediaObject = new Phonon::MediaObject();
 	m_mediaObject->setTickInterval(40);
@@ -66,7 +78,8 @@ bool PhononPlayerBackend::doesVolumeCorrection() const {
 	connect(m_mediaController, SIGNAL(availableSubtitlesChanged()), this, SLOT(onAvailableSubtitlesChanged()));
 }
 
-VideoWidget *PhononPlayerBackend::initialize(QWidget * videoWidgetParent)
+VideoWidget *
+PhononPlayerBackend::initialize(QWidget *videoWidgetParent)
 {
 	m_videoOutput = new Phonon::VideoWidget(0);
 	m_audioOutput = new Phonon::AudioOutput(Phonon::VideoCategory);
@@ -78,21 +91,24 @@ VideoWidget *PhononPlayerBackend::initialize(QWidget * videoWidgetParent)
 	return videoWidget;
 }
 
-void PhononPlayerBackend::finalize()
+void
+PhononPlayerBackend::finalize()
 {
 	return _finalize();
 }
 
-void PhononPlayerBackend::_finalize()
+void
+PhononPlayerBackend::_finalize()
 {
-//  delete m_mediaController;
-//  m_mediaController = 0;
-//
-//  delete m_mediaObject;
-//  m_mediaObject = 0;
-//
-//  delete m_audioOutput;
-//  m_audioOutput = 0;
+//	delete m_mediaController;
+//	m_mediaController = 0;
+
+//	delete m_mediaObject;
+//	m_mediaObject = 0;
+
+//	delete m_audioOutput;
+//	m_audioOutput = 0;
+
 	m_mediaController->disconnect();
 	m_mediaController->deleteLater();
 	m_mediaController = 0;
@@ -109,13 +125,15 @@ void PhononPlayerBackend::_finalize()
 	m_videoOutput = 0;
 }
 
-SubtitleComposer::AppConfigGroupWidget * PhononPlayerBackend::newAppConfigGroupWidget(QWidget * /*parent */ )
+SubtitleComposer::AppConfigGroupWidget *
+PhononPlayerBackend::newAppConfigGroupWidget(QWidget * /*parent */)
 {
-	return 0;					// no settings ATM
-//  return new PhononConfigWidget( parent );
+	return 0;                                       // no settings ATM
+//	return new PhononConfigWidget( parent );
 }
 
-bool PhononPlayerBackend::openFile(const QString & filePath, bool & playingAfterCall)
+bool
+PhononPlayerBackend::openFile(const QString &filePath, bool &playingAfterCall)
 {
 	playingAfterCall = true;
 
@@ -138,7 +156,8 @@ bool PhononPlayerBackend::openFile(const QString & filePath, bool & playingAfter
 	return true;
 }
 
-void PhononPlayerBackend::closeFile()
+void
+PhononPlayerBackend::closeFile()
 {
 	// when can't open a file, the m_mediaObject stops working correctly
 	// so it's best to just destroy the old one and create a new one.
@@ -151,89 +170,101 @@ void PhononPlayerBackend::closeFile()
 		player()->videoWidget()->videoLayer()->hide();
 }
 
-bool PhononPlayerBackend::play()
+bool
+PhononPlayerBackend::play()
 {
 	m_mediaObject->play();
 	return true;
 }
 
-bool PhononPlayerBackend::pause()
+bool
+PhononPlayerBackend::pause()
 {
 	m_mediaObject->pause();
 	return true;
 }
 
-bool PhononPlayerBackend::seek(double seconds, bool /*accurate */ )
+bool
+PhononPlayerBackend::seek(double seconds, bool /*accurate */)
 {
 	if(m_mediaObject->isSeekable())
-		m_mediaObject->seek((qint64) (seconds * 1000));
+		m_mediaObject->seek((qint64)(seconds * 1000));
 	return true;
 }
 
-bool PhononPlayerBackend::stop()
+bool
+PhononPlayerBackend::stop()
 {
 	m_mediaObject->stop();
 
 	return true;
 }
 
-bool PhononPlayerBackend::setActiveAudioStream(int audioStream)
+bool
+PhononPlayerBackend::setActiveAudioStream(int audioStream)
 {
 	m_mediaController->setCurrentAudioChannel(Phonon::AudioChannelDescription::fromIndex(audioStream));
 	return true;
 }
 
-bool PhononPlayerBackend::setVolume(double volume)
+bool
+PhononPlayerBackend::setVolume(double volume)
 {
 	m_audioOutput->setVolume(volume / 100);
 	return true;
 }
 
-
-void PhononPlayerBackend::onHasVideoChanged(bool /*hasVideo */ )
+void
+PhononPlayerBackend::onHasVideoChanged(bool /*hasVideo */)
 {
-	/*if ( ! hasVideo )
-	player()->videoWidget()->setVideoResolution( 0, 0 );
-	else // TODO how can we get the video resolution
-	player()->videoWidget()->setVideoResolution( 640, 480 ); */
+//	if(!hasVideo)
+//		player()->videoWidget()->setVideoResolution(0, 0);
+//	else // TODO: how can we get the video resolution
+//		player()->videoWidget()->setVideoResolution(640, 480);
 }
 
-void PhononPlayerBackend::onFinished()
+void
+PhononPlayerBackend::onFinished()
 {
 	setPlayerState(Player::Ready);
 }
 
-void PhononPlayerBackend::onTick(qint64 currentTime)
+void
+PhononPlayerBackend::onTick(qint64 currentTime)
 {
 	setPlayerPosition(currentTime / 1000.0);
 }
 
-void PhononPlayerBackend::onTotalTimeChanged(qint64 newTotalTime)
+void
+PhononPlayerBackend::onTotalTimeChanged(qint64 newTotalTime)
 {
 	setPlayerLength(newTotalTime / 1000.0);
-	// FIXME update frame rate and set tick interval to frame rate
+	// FIXME: update frame rate and set tick interval to frame rate
 	// can't be done with what Phonon provides ATM
 }
 
-void PhononPlayerBackend::onAvailableAudioChannelsChanged()
+void
+PhononPlayerBackend::onAvailableAudioChannelsChanged()
 {
 	QStringList audioStreams;
 
-	QList < Phonon::AudioChannelDescription > audioChannels = m_mediaController->availableAudioChannels();
-	for(QList < Phonon::AudioChannelDescription >::ConstIterator it = audioChannels.begin(), end = audioChannels.end(); it != end; ++it)
+	QList<Phonon::AudioChannelDescription> audioChannels = m_mediaController->availableAudioChannels();
+	for(QList<Phonon::AudioChannelDescription>::ConstIterator it = audioChannels.begin(), end = audioChannels.end(); it != end; ++it)
 		audioStreams << (*it).name();
 
 	setPlayerAudioStreams(audioStreams, m_mediaController->currentAudioChannel().index());
 }
 
-void PhononPlayerBackend::onAvailableSubtitlesChanged()
+void
+PhononPlayerBackend::onAvailableSubtitlesChanged()
 {
 	// Subtitles display is not handled by the video backends
 	// If there are subtitles, the backend must hide them.
 	m_mediaController->setCurrentSubtitle(Phonon::SubtitleDescription::fromIndex(-1));
 }
 
-void PhononPlayerBackend::onStateChanged(Phonon::State newState, Phonon::State /*oldState */ )
+void
+PhononPlayerBackend::onStateChanged(Phonon::State newState, Phonon::State /*oldState */)
 {
 	if(!isInitialized())
 		return;

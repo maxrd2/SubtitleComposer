@@ -28,20 +28,21 @@
 #include <QtCore/QTextCodec>
 #include <QtGui/QMenu>
 
-void KCodecActionExt::init(bool showDefault)
+void
+KCodecActionExt::init(bool showDefault)
 {
 	m_autodetectAction = new KAction(parent());
 	m_autodetectAction->setText(i18n("Autodetect"));
 	m_autodetectAction->setCheckable(true);
 	m_autodetectAction->setShortcutConfigurable(false);
-	m_autodetectAction->setData(QVariant((uint) KEncodingDetector::SemiautomaticDetection));
+	m_autodetectAction->setData(QVariant((uint)KEncodingDetector::SemiautomaticDetection));
 	m_autodetectAction->setActionGroup(selectableActionGroup());
 	menu()->insertAction(action(0), m_autodetectAction);
 	menu()->insertSeparator(action(1));
 
 	bool encodingFound;
 	foreach(QAction * action, actions()) {
-		KSelectAction *groupAction = qobject_cast < KSelectAction * >(action);
+		KSelectAction *groupAction = qobject_cast<KSelectAction *>(action);
 		if(groupAction) {
 			foreach(QAction * subAction, groupAction->actions()) {
 				if(subAction->data().isNull()) {
@@ -57,28 +58,29 @@ void KCodecActionExt::init(bool showDefault)
 		menu()->removeAction(this->action(0));
 }
 
-KCodecActionExt::KCodecActionExt(QObject * parent, bool showAutoOptions, bool showDefault)
-:	KCodecAction(parent, showAutoOptions)
+KCodecActionExt::KCodecActionExt(QObject *parent, bool showAutoOptions, bool showDefault) :
+	KCodecAction(parent, showAutoOptions)
 {
 	init(showDefault);
 }
 
-KCodecActionExt::KCodecActionExt(const QString & text, QObject * parent, bool showAutoOptions, bool showDefault)
-:KCodecAction(text, parent, showAutoOptions)
+KCodecActionExt::KCodecActionExt(const QString &text, QObject *parent, bool showAutoOptions, bool showDefault) :
+	KCodecAction(text, parent, showAutoOptions)
 {
 	init(showDefault);
 }
 
-KCodecActionExt::KCodecActionExt(const KIcon & icon, const QString & text, QObject * parent, bool showAutoOptions, bool showDefault)
-:KCodecAction(icon, text, parent, showAutoOptions)
+KCodecActionExt::KCodecActionExt(const KIcon &icon, const QString &text, QObject *parent, bool showAutoOptions, bool showDefault) :
+	KCodecAction(icon, text, parent, showAutoOptions)
 {
 	init(showDefault);
 }
 
-void KCodecActionExt::actionTriggered(QAction * action)
+void
+KCodecActionExt::actionTriggered(QAction *action)
 {
-	//we don't want to emit any signals from top-level items
-	//except for the default and autodetect ones
+	// we don't want to emit any signals from top-level items
+	// except for the default and autodetect ones
 	if(action == m_autodetectAction) {
 		emit triggered(KEncodingDetector::SemiautomaticDetection);
 	} else if(m_showDefault && action == this->action(0)) {

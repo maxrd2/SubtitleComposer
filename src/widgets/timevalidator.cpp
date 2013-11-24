@@ -21,30 +21,31 @@
 
 #include <math.h>
 
-// TimeValidator::TimeValidator( QObject* parent ):
-//  QRegExpValidator(
-//      QRegExp(
-//          "^([0-2]?[0-9]?:[0-5]?[0-9]?:[0-5]?[0-9]?\\.?[0-9]{0,3}|"
-//          "[0-5]?[0-9]?:[0-5]?[0-9]?\\.?[0-9]{0,3}|"
-//          "[0-5]?[0-9]?\\.?[0-9]{0,3})$"
-//      ),
-//      parent
-//  ),
-//  m_parserRegExp( "^([0-2]?[0-9]:|)([0-5]?[0-9]:|)([0-5]?[0-9]?|)(\\.[0-9]{1,3}|)$" )
-// {
-// }
+//TimeValidator::TimeValidator(QObject *parent) :
+//	QRegExpValidator(
+//		QRegExp(
+//			"^([0-2]?[0-9]?:[0-5]?[0-9]?:[0-5]?[0-9]?\\.?[0-9]{0,3}|"
+//			"[0-5]?[0-9]?:[0-5]?[0-9]?\\.?[0-9]{0,3}|"
+//			"[0-5]?[0-9]?\\.?[0-9]{0,3})$"
+//			),
+//		parent
+//		),
+//	m_parserRegExp( "^([0-2]?[0-9]:|)([0-5]?[0-9]:|)([0-5]?[0-9]?|)(\\.[0-9]{1,3}|)$" )
+//{}
 
-TimeValidator::TimeValidator(QObject * parent):
-QValidator(parent), m_parserRegExp("^([0-2]?[0-9]:|)([0-5]?[0-9]:|)([0-5]?[0-9]?|)(\\.[0-9]{1,3}|)$")
+TimeValidator::TimeValidator(QObject *parent) :
+	QValidator(parent),
+	m_parserRegExp("^([0-2]?[0-9]:|)([0-5]?[0-9]:|)([0-5]?[0-9]?|)(\\.[0-9]{1,3}|)$")
+{}
+
+//QValidator::State TimeValidator::validate(QString &input, int &pos) const
+//{
+//	return input.isEmpty() ? QValidator::Intermediate : QRegExpValidator::validate(input, pos);
+//}
+
+QValidator::State
+TimeValidator::validate(QString &input, int &/*pos*/) const
 {
-}
-
-// QValidator::State TimeValidator::validate( QString& input, int& pos ) const
-// {
-//  return input.isEmpty() ? QValidator::Intermediate : QRegExpValidator::validate( input, pos );
-// }
-
-QValidator::State TimeValidator::validate(QString & input, int & /*pos */ ) const {
 	if(input.isEmpty())
 		return QValidator::Intermediate;
 
@@ -52,7 +53,10 @@ QValidator::State TimeValidator::validate(QString & input, int & /*pos */ ) cons
 		return QValidator::Invalid;
 
 	return m_parserRegExp.indexIn(input) == -1 ? QValidator::Intermediate : QValidator::Acceptable;
-} bool TimeValidator::parse(const QString & input, int &timeMillis)
+}
+
+bool
+TimeValidator::parse(const QString &input, int &timeMillis)
 {
 	if(input.isEmpty() || m_parserRegExp.indexIn(input) == -1)
 		return false;

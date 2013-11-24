@@ -30,13 +30,15 @@
 
 /// Taken from KDELibs and rewritten almost entirely because the
 /// KDE implementations is buggy and limited for our needs.
-class KRecentFilesActionExt:public KSelectAction {
-	Q_OBJECT Q_PROPERTY(int maxItems READ maxItems WRITE setMaxItems)
+class KRecentFilesActionExt : public KSelectAction
+{
+	Q_OBJECT
 
-  public:
+	Q_PROPERTY(int maxItems READ maxItems WRITE setMaxItems)
 
-	KRecentFilesActionExt(QObject * parent = 0);
-	virtual ~ KRecentFilesActionExt();
+public:
+	KRecentFilesActionExt(QObject *parent = 0);
+	virtual ~KRecentFilesActionExt();
 
 	int maxItems() const;
 
@@ -45,38 +47,39 @@ class KRecentFilesActionExt:public KSelectAction {
 
 	KUrl::List urls() const;
 
-	QString encodingForUrl(const KUrl & url) const;
+	QString encodingForUrl(const KUrl &url) const;
 
-	virtual QAction *removeAction(QAction * action);
+	virtual QAction * removeAction(QAction *action);
 
-	public slots:void setMaxItems(int maxItems);
+public slots:
+	void setMaxItems(int maxItems);
 
-	void setUrls(const KUrl::List & urls);
+	void setUrls(const KUrl::List &urls);
 
-	void addUrl(const KUrl & url);
-	void removeUrl(const KUrl & url);
+	void addUrl(const KUrl &url);
+	void removeUrl(const KUrl &url);
 	void clearUrls();
 
-	void loadEntries(const KConfigGroup & group);
-	void saveEntries(const KConfigGroup & group);
+	void loadEntries(const KConfigGroup &group);
+	void saveEntries(const KConfigGroup &group);
 
-	signals:void urlSelected(const KUrl & url);
+signals:
+	void urlSelected(const KUrl &url);
 
-  protected:
+protected:
+	void setUrls(const KUrl::List &urls, bool ignoreCollisions);
 
-	void setUrls(const KUrl::List & urls, bool ignoreCollisions);
+	virtual QAction * actionForUrl(const KUrl &url) const;
 
-	virtual QAction *actionForUrl(const KUrl & url) const;
-
-	protected slots:void onActionTriggered(QAction * action);
+protected slots:
+	void onActionTriggered(QAction *action);
 	void onActionChanged();
 
-  protected:
-
+protected:
 	int m_maxItems;
 
-	QMap < QAction *, KUrl > m_urls;
-	QMap < KUrl, QAction * >m_actions;
+	QMap<QAction *, KUrl> m_urls;
+	QMap<KUrl, QAction *> m_actions;
 
 	QAction *m_separatorAction;
 	QAction *m_clearHistoryAction;

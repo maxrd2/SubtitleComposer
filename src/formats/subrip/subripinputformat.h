@@ -29,50 +29,50 @@
 #include <QtCore/QRegExp>
 
 namespace SubtitleComposer {
-	class SubRipInputFormat:public InputFormat {
-		friend class FormatManager;
+class SubRipInputFormat : public InputFormat
+{
+	friend class FormatManager;
 
-	public:
+public:
+	virtual ~SubRipInputFormat() {}
 
-		virtual ~ SubRipInputFormat() {
-		}
-	protected:
+protected:
+	virtual bool parseSubtitles(Subtitle &subtitle, const QString &data) const
+	{
+		if(m_regExp.indexIn(data, 0) == -1)
+			return false; // couldn't find first line
 
-		virtual bool parseSubtitles(Subtitle & subtitle, const QString & data) const {
-			if(m_regExp.indexIn(data, 0) == -1)
-				return false;	// couldn't find first line
+		unsigned readLines = 0;
 
-			unsigned readLines = 0;
+		int offset = 0;
+		do {
+			Time showTime(m_regExp.cap(1).toInt(), m_regExp.cap(2).toInt(), m_regExp.cap(3).toInt(), m_regExp.cap(4).toInt());
+			Time hideTime(m_regExp.cap(5).toInt(), m_regExp.cap(6).toInt(), m_regExp.cap(7).toInt(), m_regExp.cap(8).toInt());
 
-			int offset = 0;
-			do {
-				Time showTime(m_regExp.cap(1).toInt(), m_regExp.cap(2).toInt(), m_regExp.cap(3).toInt(), m_regExp.cap(4).toInt());
+			offset += m_regExp.matchedLength();
 
-				Time hideTime(m_regExp.cap(5).toInt(), m_regExp.cap(6).toInt(), m_regExp.cap(7).toInt(), m_regExp.cap(8).toInt());
+			QString text(data.mid(offset, (unsigned)m_regExp.indexIn(data, offset) - offset));
 
-				offset += m_regExp.matchedLength();
+			offset += text.length();
 
-				QString text(data.mid(offset, (unsigned)m_regExp.indexIn(data, offset) - offset));
+			SString stext;
+			stext.setRichString(text.trimmed());
 
-				offset += text.length();
+			subtitle.insertLine(new SubtitleLine(stext, showTime, hideTime));
 
-				SString stext;
-				stext.setRichString(text.trimmed());
+			readLines++;
+		} while(m_regExp.matchedLength() != -1);
 
-				subtitle.insertLine(new SubtitleLine(stext, showTime, hideTime));
+		return readLines > 0;
+	}
 
-				readLines++;
-			} while(m_regExp.matchedLength() != -1);
+	SubRipInputFormat() :
+		InputFormat("SubRip", QStringList("srt")),
+		m_regExp("[\\d]+\n([0-2][0-9]):([0-5][0-9]):([0-5][0-9])[,\\.]([0-9][0-9][0-9]) --> ([0-2][0-9]):([0-5][0-9]):([0-5][0-9])[,\\.]([0-9][0-9][0-9])\n")
+	{}
 
-			return readLines > 0;
-		}
-
-		SubRipInputFormat()
-			: InputFormat("SubRip", QStringList("srt")),
-			  m_regExp("[\\d]+\n([0-2][0-9]):([0-5][0-9]):([0-5][0-9])[,\\.]([0-9][0-9][0-9]) --> ([0-2][0-9]):([0-5][0-9]):([0-5][0-9])[,\\.]([0-9][0-9][0-9])\n") {}
-
-		mutable QRegExp m_regExp;
-	};
+	mutable QRegExp m_regExp;
+};
 }
 
 #endif

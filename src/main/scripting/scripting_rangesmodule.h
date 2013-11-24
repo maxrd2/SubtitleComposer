@@ -27,22 +27,26 @@
 #include <QtCore/QObject>
 
 namespace SubtitleComposer {
-	namespace Scripting {
-		class RangesModule:public QObject {
-		Q_OBJECT public:
+namespace Scripting {
+class RangesModule : public QObject
+{
+	Q_OBJECT
 
-			RangesModule(QObject * parent = 0);
+public:
+	RangesModule(QObject *parent = 0);
 
-			public slots:QObject * newRange(int firstIndex, int lastIndex);
+public slots:
+	QObject * newRange(int firstIndex, int lastIndex);
 
-			QObject *newLowerRange(int index);
-			QObject *newUpperRange(int index);
+	QObject * newLowerRange(int index);
+	QObject * newUpperRange(int index);
 
-			QObject *newUptoLastSelectedRange();
-			QObject *newFromFirstSelectedRange();
+	QObject * newUptoLastSelectedRange();
+	QObject * newFromFirstSelectedRange();
 
-			QObject *newEmptyRangeList();
-			QObject *newSelectionRangeList();
-		};
-}}
+	QObject * newEmptyRangeList();
+	QObject * newSelectionRangeList();
+};
+}
+}
 #endif

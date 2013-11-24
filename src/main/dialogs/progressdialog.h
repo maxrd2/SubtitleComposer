@@ -31,33 +31,34 @@ class QProgressBar;
 class QCloseEvent;
 
 namespace SubtitleComposer {
-	class ProgressDialog:public KDialog {
-	Q_OBJECT public:
+class ProgressDialog : public KDialog
+{
+	Q_OBJECT
 
-		ProgressDialog(const QString & caption, const QString & description, bool allowCancel, QWidget * parent = 0);
+public:
+	ProgressDialog(const QString &caption, const QString &description, bool allowCancel, QWidget *parent = 0);
 
-		int value() const;
-		int minimum() const;
-		int maximum() const;
-		QString description() const;
-		bool isCancellable() const;
+	int value() const;
+	int minimum() const;
+	int maximum() const;
+	QString description() const;
+	bool isCancellable() const;
 
-	protected:
+protected:
+	virtual void closeEvent(QCloseEvent *event);
 
-		virtual void closeEvent(QCloseEvent * event);
+public slots:
+	void setMinimum(int minimum);
+	void incrementMinimum(int delta);
+	void setMaximum(int maximum);
+	void incrementMaximum(int delta);
+	void setValue(int value);
+	void setDescription(const QString &description);
+	void setCancellable(bool cancellable);
 
-		public slots:void setMinimum(int minimum);
-		void incrementMinimum(int delta);
-		void setMaximum(int maximum);
-		void incrementMaximum(int delta);
-		void setValue(int value);
-		void setDescription(const QString & description);
-		void setCancellable(bool cancellable);
-
-	private:
-
-		QLabel * m_label;
-		QProgressBar *m_progressBar;
-	};
+private:
+	QLabel *m_label;
+	QProgressBar *m_progressBar;
+};
 }
 #endif

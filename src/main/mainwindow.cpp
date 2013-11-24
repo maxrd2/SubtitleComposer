@@ -38,8 +38,8 @@
 
 using namespace SubtitleComposer;
 
-MainWindow::MainWindow():
-KXmlGuiWindow(0)
+MainWindow::MainWindow() :
+	KXmlGuiWindow(0)
 {
 	QWidget *mainWidget = new QWidget(this);
 
@@ -54,7 +54,7 @@ KXmlGuiWindow(0)
 	m_splitter->setOrientation(Qt::Vertical);
 	m_splitter->setLineWidth(0);
 	m_splitter->setCollapsible(1, false);
-	m_splitter->setSizes(QList < int >() << 100 << 200);
+	m_splitter->setSizes(QList<int>() << 100 << 200);
 
 	m_curLineWidget = new CurrentLineWidget(mainWidget);
 	m_curLineWidget->setMaximumHeight(m_curLineWidget->minimumSizeHint().height());
@@ -88,25 +88,28 @@ MainWindow::~MainWindow()
 	Decoder::instance()->setApplicationClosingDown();
 }
 
-void MainWindow::loadConfig()
+void
+MainWindow::loadConfig()
 {
 	KConfigGroup group(KGlobal::config()->group("MainWindow Settings"));
 
 	m_splitter->setSizes(group.readEntry("Splitter Sizes", m_splitter->sizes()));
 }
 
-void MainWindow::saveConfig()
+void
+MainWindow::saveConfig()
 {
 	KConfigGroup group(KGlobal::config()->group("MainWindow Settings"));
 
 	group.writeEntry("Splitter Sizes", m_splitter->sizes());
 }
 
-void MainWindow::setSubtitle(Subtitle * /*subtitle */ )
-{
-}
+void
+MainWindow::setSubtitle(Subtitle * /*subtitle */)
+{}
 
-bool MainWindow::queryClose()
+bool
+MainWindow::queryClose()
 {
 	return app()->closeSubtitle();
 }

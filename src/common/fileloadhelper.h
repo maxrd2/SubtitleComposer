@@ -28,25 +28,23 @@
 
 #include <KUrl>
 
-class FileLoadHelper {
-  public:
-
-	FileLoadHelper(const KUrl & url);
+class FileLoadHelper
+{
+public:
+	FileLoadHelper(const KUrl &url);
 	~FileLoadHelper();
 
 	const KUrl & url();
-	QFile *file();
+	QFile * file();
 
 	bool open();
 	bool close();
 
-	static bool exists(const KUrl & url);
+	static bool exists(const KUrl &url);
 
-  private:
-
+private:
 	KUrl m_url;
 	QFile *m_file;
 };
-
 
 #endif

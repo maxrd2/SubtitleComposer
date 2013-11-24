@@ -29,32 +29,30 @@
 
 class KConfig;
 namespace Sonnet {
-	class ConfigWidget;
+class ConfigWidget;
 }
 namespace SubtitleComposer {
-	class SpellingConfigWidget:public AppConfigGroupWidget {
-		Q_OBJECT friend class ConfigDialog;
+class SpellingConfigWidget : public AppConfigGroupWidget
+{
+	Q_OBJECT
 
-	public:
+	friend class ConfigDialog;
 
-		virtual ~ SpellingConfigWidget();
+public:
+	virtual ~SpellingConfigWidget();
 
-		virtual void setControlsFromConfig();
-		virtual void setConfigFromControls();
+	virtual void setControlsFromConfig();
+	virtual void setConfigFromControls();
 
-	private:
+private:
+	explicit SpellingConfigWidget(QWidget *parent = 0);
 
-		explicit SpellingConfigWidget(QWidget * parent = 0);
+	SpellingConfig * config() { return static_cast<SpellingConfig *>(m_config); }
 
-		SpellingConfig *config() {
-			return static_cast < SpellingConfig * >(m_config);
-		};
-
-	private:
-
-		Sonnet::ConfigWidget * m_sonnetConfigWidget;
-		KConfig *m_globalConfig;
-	};
+private:
+	Sonnet::ConfigWidget *m_sonnetConfigWidget;
+	KConfig *m_globalConfig;
+};
 }
 
 #endif

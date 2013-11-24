@@ -41,7 +41,8 @@
  * String
  */
 
-QString String::title(const QString & text)
+QString
+String::title(const QString &text)
 {
 	QString auxText = text.toLower();
 	const QString separators(" -_([:,;./\\\t\n\"");
@@ -60,17 +61,20 @@ QString String::title(const QString & text)
 	return auxText;
 }
 
-QString String::capitalize(const QString & text)
+QString
+String::capitalize(const QString &text)
 {
-	return text.isEmpty()? "" : text[0].toUpper() + text.mid(1).toLower();
+	return text.isEmpty() ? "" : text[0].toUpper() + text.mid(1).toLower();
 }
 
-QString String::sentence(const QString & text)
+QString
+String::sentence(const QString &text)
 {
-	return text.isEmpty()? "" : text[0].toUpper() + text.mid(1).toLower();
+	return text.isEmpty() ? "" : text[0].toUpper() + text.mid(1).toLower();
 }
 
-int String::rfindFunctionStart(const QString & text)
+int
+String::rfindFunctionStart(const QString &text)
 {
 	int pos[5] = {
 		text.lastIndexOf("capitalize{"),
@@ -83,7 +87,8 @@ int String::rfindFunctionStart(const QString & text)
 	return qMax(qMax(qMax(qMax(pos[0], pos[1]), pos[2]), pos[3]), pos[4]);
 }
 
-int String::rfindFunctionEnd(const QString & text, int startPos)
+int
+String::rfindFunctionEnd(const QString &text, int startPos)
 {
 	int pos = startPos, len = text.length();
 	while(pos < len) {
@@ -99,7 +104,8 @@ int String::rfindFunctionEnd(const QString & text, int startPos)
  * System:
  */
 
-bool System::recursiveMakeDir(const QString & path, QStringList * createdDirsList)
+bool
+System::recursiveMakeDir(const QString &path, QStringList *createdDirsList)
 {
 	if(createdDirsList)
 		createdDirsList->clear();
@@ -119,7 +125,8 @@ bool System::recursiveMakeDir(const QString & path, QStringList * createdDirsLis
 	return true;
 }
 
-bool System::copy(const QString & srcPath, const QString & dstPath)
+bool
+System::copy(const QString &srcPath, const QString &dstPath)
 {
 	if(QFile::exists(dstPath))
 		if(!System::remove(dstPath))
@@ -128,7 +135,8 @@ bool System::copy(const QString & srcPath, const QString & dstPath)
 	return QFile::copy(srcPath, dstPath);
 }
 
-bool System::move(const QString & srcPath, const QString & dstPath)
+bool
+System::move(const QString &srcPath, const QString &dstPath)
 {
 	if(!System::copy(srcPath, dstPath)) {
 		kDebug() << "move: error copying" << srcPath << "to" << dstPath;
@@ -145,36 +153,42 @@ bool System::move(const QString & srcPath, const QString & dstPath)
 	return true;
 }
 
-bool System::remove(const QString & path)
+bool
+System::remove(const QString &path)
 {
 	return QFile::remove(path);
 }
 
-bool System::isReadable(const QString & path)
+bool
+System::isReadable(const QString &path)
 {
 	QFileInfo fileInfo(path);
 	return fileInfo.isFile() && fileInfo.isReadable();
 }
 
-bool System::isWritable(const QString & path)
+bool
+System::isWritable(const QString &path)
 {
 	QFileInfo fileInfo(path);
 	return fileInfo.isFile() && fileInfo.isWritable();
 }
 
-QString System::homeDir()
+QString
+System::homeDir()
 {
 	return QDir::homePath();
 }
 
-QString System::tempDir()
+QString
+System::tempDir()
 {
 	QString tempDir = KGlobal::dirs()->saveLocation("tmp");
 	tempDir.remove(QRegExp("[\\/]+$"));
 	return tempDir;
 }
 
-KUrl System::newUrl(const KUrl & baseUrl, const QString & fileName, const QString & extension, int retries)
+KUrl
+System::newUrl(const KUrl &baseUrl, const QString &fileName, const QString &extension, int retries)
 {
 	if(retries < 0)
 		retries = INT_MAX;
@@ -225,9 +239,9 @@ KUrl System::newUrl(const KUrl & baseUrl, const QString & fileName, const QStrin
 		return KUrl(newFilePath);
 
 	int i = 2;
-	do
+	do {
 		newFilePath = newFileDir + newFileNameBuilder.arg(i++);
-	while(QFile::exists(newFilePath));
+	} while(QFile::exists(newFilePath));
 
 	return KUrl(newFilePath);
 }

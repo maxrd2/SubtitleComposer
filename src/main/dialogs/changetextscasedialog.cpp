@@ -29,8 +29,8 @@
 
 using namespace SubtitleComposer;
 
-ChangeTextsCaseDialog::ChangeTextsCaseDialog(QWidget * parent):
-ActionWithTargetDialog(i18n("Change Case"), parent)
+ChangeTextsCaseDialog::ChangeTextsCaseDialog(QWidget *parent) :
+	ActionWithTargetDialog(i18n("Change Case"), parent)
 {
 	QGroupBox *caseGroupBox = createGroupBox(i18nc("@title:group", "Change To"));
 	QButtonGroup *caseButtonGroup = new QButtonGroup(this);
@@ -73,7 +73,8 @@ ActionWithTargetDialog(i18n("Change Case"), parent)
 	caseLayout->addLayout(lowerFirstLayout, 4, 0);
 }
 
-ChangeTextsCaseDialog::CaseOp ChangeTextsCaseDialog::caseOperation()const
+ChangeTextsCaseDialog::CaseOp
+ChangeTextsCaseDialog::caseOperation() const
 {
 	if(m_lowerRadioButton->isChecked())
 		return ChangeTextsCaseDialog::Lower;
@@ -81,13 +82,18 @@ ChangeTextsCaseDialog::CaseOp ChangeTextsCaseDialog::caseOperation()const
 		return ChangeTextsCaseDialog::Upper;
 	else if(m_titleRadioButton->isChecked())
 		return ChangeTextsCaseDialog::Title;
-	else						// if ( m_sentenceRadioButton->isChecked() )
+	else // if ( m_sentenceRadioButton->isChecked() )
 		return ChangeTextsCaseDialog::Sentence;
 }
 
-bool ChangeTextsCaseDialog::lowerFirst() const {
+bool
+ChangeTextsCaseDialog::lowerFirst() const
+{
 	return m_lowerFirstCheckBox->isChecked();
-} void ChangeTextsCaseDialog::onCaseButtonGroupClicked(int id)
+}
+
+void
+ChangeTextsCaseDialog::onCaseButtonGroupClicked(int id)
 {
 	if(id < 2)
 		m_lowerFirstCheckBox->setChecked(false);

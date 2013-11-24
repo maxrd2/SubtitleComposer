@@ -35,74 +35,83 @@
 
 using namespace SubtitleComposer;
 
-#define EVENT_DECODING_STARTED			(QEvent::User + 1)
-#define EVENT_POSITION_UPDATED			(QEvent::User + 2)
-#define EVENT_ERROR_INCOMPATIBLE_DATA	(QEvent::User + 3)
-#define EVENT_ERROR_FILE_CLOSED			(QEvent::User + 4)
-#define EVENT_DECODING_FINISHED			(QEvent::User + 5)
+#define EVENT_DECODING_STARTED (QEvent::User + 1)
+#define EVENT_POSITION_UPDATED (QEvent::User + 2)
+#define EVENT_ERROR_INCOMPATIBLE_DATA (QEvent::User + 3)
+#define EVENT_ERROR_FILE_CLOSED (QEvent::User + 4)
+#define EVENT_DECODING_FINISHED (QEvent::User + 5)
 
 namespace SubtitleComposer {
-	class DecodingThread:public QThread {
-	public:
-
-		DecodingThread(XineDecoderBackend * backend, int audioStream, const QString & outputPath, const WaveFormat & outputFormat):QThread(backend), m_backend(backend), m_audioStream(audioStream), m_waveWriter(), m_cancelled(false), m_finished(false) {
-			m_cancelled = !m_waveWriter.open(outputPath, outputFormat);
-		} bool isCancelled() const {
-			return m_cancelled;
-		}
-		void setCancelled() {
-			m_cancelled = true;
-		} bool isFinished() const {
-			return m_finished;
-		}
-		bool isWorking() const {
-			return isRunning() && !m_finished && !m_cancelled;
-		}
-		double position() const {
-			return m_waveWriter.writtenSeconds();
-		}
-		void run() {
-			const unsigned long bufferSize = 0x100000;	// 1MB
-			char buffer[bufferSize];	//
-			const WaveFormat inputFormat = m_backend->decoder()->audioStreamFormat(m_audioStream);
-
-			if(!m_cancelled)
-				QCoreApplication::postEvent(m_backend, new QEvent((QEvent::Type) EVENT_DECODING_STARTED));
-
-			unsigned long pcmChunkSize;
-			while(!m_cancelled && (pcmChunkSize = m_backend->readUncompressedData(buffer, bufferSize)) > 0) {
-				if(m_waveWriter.writeSamplesData(buffer, pcmChunkSize, inputFormat))
-					QCoreApplication::postEvent(m_backend, new QEvent((QEvent::Type) EVENT_POSITION_UPDATED));
-				else {
-					m_cancelled = true;
-					if(m_waveWriter.isOpened())
-						QCoreApplication::postEvent(m_backend, new QEvent((QEvent::Type) EVENT_ERROR_INCOMPATIBLE_DATA));
-					else
-						QCoreApplication::postEvent(m_backend, new QEvent((QEvent::Type) EVENT_ERROR_FILE_CLOSED));
-				}
-			}
-
-			m_waveWriter.close();
-
-			m_finished = true;
-
-			QCoreApplication::postEvent(m_backend, new QEvent((QEvent::Type) EVENT_DECODING_FINISHED));
-		}
-
-	private:
-
-		XineDecoderBackend * m_backend;
-		int m_audioStream;
-		WaveWriter m_waveWriter;
-		bool m_cancelled;
-		bool m_finished;
-	};
-}
-
-XineDecoderBackend::XineDecoderBackend(Decoder * decoder):
-DecoderBackend(decoder, "Xine", new XineConfig()), m_xineEngine(0), m_audioPort(0), m_xineStream(0), m_eventQueue(0), m_frame(0), m_isValidFrame(false), m_framePos(0), m_frameSize(0), m_decodingThread(0)
+class DecodingThread : public QThread
 {
+public:
+	DecodingThread(XineDecoderBackend *backend, int audioStream, const QString &outputPath, const WaveFormat &outputFormat) :
+		QThread(backend),
+		m_backend(backend),
+		m_audioStream(audioStream),
+		m_waveWriter(),
+		m_cancelled(false),
+		m_finished(false)
+	{
+		m_cancelled = !m_waveWriter.open(outputPath, outputFormat);
+	}
+
+	bool isCancelled() const { return m_cancelled; }
+	void setCancelled() { m_cancelled = true; }
+	bool isFinished() const { return m_finished; }
+	bool isWorking() const { return isRunning() && !m_finished && !m_cancelled; }
+	double position() const { return m_waveWriter.writtenSeconds(); }
+
+	void run()
+	{
+		const unsigned long bufferSize = 0x100000;              // 1MB
+		char buffer[bufferSize];                //
+		const WaveFormat inputFormat = m_backend->decoder()->audioStreamFormat(m_audioStream);
+
+		if(!m_cancelled)
+			QCoreApplication::postEvent(m_backend, new QEvent((QEvent::Type)EVENT_DECODING_STARTED));
+
+		unsigned long pcmChunkSize;
+		while(!m_cancelled && (pcmChunkSize = m_backend->readUncompressedData(buffer, bufferSize)) > 0) {
+			if(m_waveWriter.writeSamplesData(buffer, pcmChunkSize, inputFormat))
+				QCoreApplication::postEvent(m_backend, new QEvent((QEvent::Type)EVENT_POSITION_UPDATED));
+			else {
+				m_cancelled = true;
+				if(m_waveWriter.isOpened())
+					QCoreApplication::postEvent(m_backend, new QEvent((QEvent::Type)EVENT_ERROR_INCOMPATIBLE_DATA));
+				else
+					QCoreApplication::postEvent(m_backend, new QEvent((QEvent::Type)EVENT_ERROR_FILE_CLOSED));
+			}
+		}
+
+		m_waveWriter.close();
+
+		m_finished = true;
+
+		QCoreApplication::postEvent(m_backend, new QEvent((QEvent::Type)EVENT_DECODING_FINISHED));
+	}
+
+private:
+	XineDecoderBackend *m_backend;
+	int m_audioStream;
+	WaveWriter m_waveWriter;
+	bool m_cancelled;
+	bool m_finished;
+};
 }
+
+XineDecoderBackend::XineDecoderBackend(Decoder *decoder) :
+	DecoderBackend(decoder, "Xine", new XineConfig()),
+	m_xineEngine(0),
+	m_audioPort(0),
+	m_xineStream(0),
+	m_eventQueue(0),
+	m_frame(0),
+	m_isValidFrame(false),
+	m_framePos(0),
+	m_frameSize(0),
+	m_decodingThread(0)
+{}
 
 XineDecoderBackend::~XineDecoderBackend()
 {
@@ -113,28 +122,32 @@ XineDecoderBackend::~XineDecoderBackend()
 		finalizeXine();
 }
 
-QWidget *XineDecoderBackend::initialize(QWidget * /*videoWidgetParent */ )
+QWidget *
+XineDecoderBackend::initialize(QWidget * /*videoWidgetParent */)
 {
 	if(!initializeXine()) {
 		finalizeXine();
 		kError() << "xine initialization failed!";
-		return (QWidget *) 1;
+		return (QWidget *)1;
 	}
 
-	return (QWidget *) 0;
+	return (QWidget *)0;
 }
 
-void XineDecoderBackend::finalize()
+void
+XineDecoderBackend::finalize()
 {
 	return finalizeXine();
 }
 
-SubtitleComposer::AppConfigGroupWidget * XineDecoderBackend::newAppConfigGroupWidget(QWidget * parent)
+SubtitleComposer::AppConfigGroupWidget *
+XineDecoderBackend::newAppConfigGroupWidget(QWidget *parent)
 {
 	return new XineConfigWidget(parent);
 }
 
-bool XineDecoderBackend::readNextFrame(bool first)
+bool
+XineDecoderBackend::readNextFrame(bool first)
 {
 	if(m_isValidFrame)
 		xine_free_audio_frame(m_audioPort, m_frame);
@@ -154,7 +167,8 @@ bool XineDecoderBackend::readNextFrame(bool first)
 	return m_isValidFrame;
 }
 
-bool XineDecoderBackend::openFile(const QString & filePath)
+bool
+XineDecoderBackend::openFile(const QString &filePath)
 {
 	// Lame attempt at preventing opening of files with formats known to
 	// "be problematic" (their Xine drivers in are buggy).
@@ -172,7 +186,7 @@ bool XineDecoderBackend::openFile(const QString & filePath)
 		return false;
 
 	QStringList audioStreamNames;
-	QList < WaveFormat > audioStreamFormats;
+	QList<WaveFormat> audioStreamFormats;
 
 	int channels = xine_get_stream_info(m_xineStream, XINE_STREAM_INFO_MAX_AUDIO_CHANNEL);
 
@@ -211,13 +225,15 @@ bool XineDecoderBackend::openFile(const QString & filePath)
 	return true;
 }
 
-void XineDecoderBackend::closeFile()
+void
+XineDecoderBackend::closeFile()
 {
 	if(m_xineStream)
 		xine_close(m_xineStream);
 }
 
-bool XineDecoderBackend::decode(int audioStream, const QString & outputPath, const WaveFormat & outputFormat)
+bool
+XineDecoderBackend::decode(int audioStream, const QString &outputPath, const WaveFormat &outputFormat)
 {
 	if(m_decodingThread && m_decodingThread->isWorking())
 		return false;
@@ -236,7 +252,8 @@ bool XineDecoderBackend::decode(int audioStream, const QString & outputPath, con
 	return m_decodingThread;
 }
 
-bool XineDecoderBackend::stop()
+bool
+XineDecoderBackend::stop()
 {
 	if(!m_decodingThread || !m_decodingThread->isWorking())
 		return false;
@@ -246,7 +263,8 @@ bool XineDecoderBackend::stop()
 	return true;
 }
 
-unsigned long XineDecoderBackend::readUncompressedData(void *buffer, unsigned long bufferSize)
+unsigned long
+XineDecoderBackend::readUncompressedData(void *buffer, unsigned long bufferSize)
 {
 	unsigned long dataSize = 0, frameRemainingSize = 0;
 
@@ -271,7 +289,8 @@ unsigned long XineDecoderBackend::readUncompressedData(void *buffer, unsigned lo
 	return dataSize;
 }
 
-void XineDecoderBackend::customEvent(QEvent * event)
+void
+XineDecoderBackend::customEvent(QEvent *event)
 {
 	switch((int)event->type()) {
 	case EVENT_DECODING_STARTED:
@@ -298,7 +317,8 @@ void XineDecoderBackend::customEvent(QEvent * event)
 	}
 }
 
-bool XineDecoderBackend::initializeXine()
+bool
+XineDecoderBackend::initializeXine()
 {
 	if(!(m_xineEngine = xine_new())) {
 		kDebug() << "Could not init Xine engine!";
@@ -317,7 +337,6 @@ bool XineDecoderBackend::initializeXine()
 		return false;
 	}
 
-
 	m_xineStream = xine_stream_new(m_xineEngine, m_audioPort, NULL);
 	if(!m_xineStream) {
 		kDebug() << "Could not create Xine stream!";
@@ -327,14 +346,15 @@ bool XineDecoderBackend::initializeXine()
 	xine_set_param(m_xineStream, XINE_PARAM_IGNORE_VIDEO, 1);
 
 	m_eventQueue = xine_event_new_queue(m_xineStream);
-	//xine_event_create_listener_thread( m_eventQueue, &XineDecoderBackend::xineEventListener, (void*)this );
+	// xine_event_create_listener_thread(m_eventQueue, &XineDecoderBackend::xineEventListener, (void*)this);
 
 	m_frame = new xine_audio_frame_t;
 
 	return true;
 }
 
-void XineDecoderBackend::finalizeXine()
+void
+XineDecoderBackend::finalizeXine()
 {
 	if(m_audioPort) {
 		xine_close_audio_driver(m_xineEngine, m_audioPort);
@@ -352,7 +372,7 @@ void XineDecoderBackend::finalizeXine()
 	}
 
 	if(m_xineStream) {
-		//xine_dispose( m_xineStream );
+		// xine_dispose(m_xineStream);
 		m_xineStream = 0;
 	}
 

@@ -1,21 +1,21 @@
 /***************************************************************************
-*   Copyright (C) 2007-2009 Sergio Pistone (sergio_pistone@yahoo.com.ar)  *
-*                                                                         *
-*   This program is free software; you can redistribute it and/or modify  *
-*   it under the terms of the GNU General Public License as published by  *
-*   the Free Software Foundation; either version 2 of the License, or     *
-*   (at your option) any later version.                                   *
-*                                                                         *
-*   This program is distributed in the hope that it will be useful,       *
-*   but WITHOUT ANY WARRANTY; without even the implied warranty of        *
-*   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the         *
-*   GNU General Public License for more details.                          *
-*                                                                         *
-*   You should have received a copy of the GNU General Public License     *
-*   along with this program; if not, write to the                         *
-*   Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor,      *
-*   Boston, MA 02110-1301, USA.                                           *
-***************************************************************************/
+ *   Copyright (C) 2007-2009 Sergio Pistone (sergio_pistone@yahoo.com.ar)  *
+ *                                                                         *
+ *   This program is free software; you can redistribute it and/or modify  *
+ *   it under the terms of the GNU General Public License as published by  *
+ *   the Free Software Foundation; either version 2 of the License, or     *
+ *   (at your option) any later version.                                   *
+ *                                                                         *
+ *   This program is distributed in the hope that it will be useful,       *
+ *   but WITHOUT ANY WARRANTY; without even the implied warranty of        *
+ *   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the         *
+ *   GNU General Public License for more details.                          *
+ *                                                                         *
+ *   You should have received a copy of the GNU General Public License     *
+ *   along with this program; if not, write to the                         *
+ *   Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor,      *
+ *   Boston, MA 02110-1301, USA.                                           *
+ ***************************************************************************/
 
 #include "savesubtitledialog.h"
 #include "../application.h"
@@ -33,7 +33,8 @@
 
 using namespace SubtitleComposer;
 
-SaveSubtitleDialog::SaveSubtitleDialog(bool primary, const KUrl & startDir, const QString & encoding, Format::NewLine newLine, const QString & format, QWidget * parent):KFileDialog(startDir, outputFormatsFilter(), parent)
+SaveSubtitleDialog::SaveSubtitleDialog(bool primary, const KUrl &startDir, const QString &encoding, Format::NewLine newLine, const QString &format, QWidget *parent) :
+	KFileDialog(startDir, outputFormatsFilter(), parent)
 {
 	setCaption(primary ? i18n("Save Subtitle") : i18n("Save Translation Subtitle"));
 	setOperationMode(KFileDialog::Saving);
@@ -80,9 +81,14 @@ SaveSubtitleDialog::SaveSubtitleDialog(bool primary, const KUrl & startDir, cons
 	fileWidget()->setCustomWidget(i18n("Encoding:"), customWidget);
 }
 
-QString SaveSubtitleDialog::selectedEncoding() const {
+QString
+SaveSubtitleDialog::selectedEncoding() const
+{
 	return m_encodingComboBox->currentText();
-} void SaveSubtitleDialog::setCurrentFilter(const QString & formatName)
+}
+
+void
+SaveSubtitleDialog::setCurrentFilter(const QString &formatName)
 {
 	const OutputFormat *format = FormatManager::instance().output(formatName);
 	if(format) {
@@ -96,14 +102,20 @@ QString SaveSubtitleDialog::selectedEncoding() const {
 	}
 }
 
-QString SaveSubtitleDialog::selectedFormat() const {
-	return filterWidget()->currentText();
-} Format::NewLine SaveSubtitleDialog::selectedNewLine() const
+QString
+SaveSubtitleDialog::selectedFormat() const
 {
-	return m_newLineComboBox ? (Format::NewLine) m_newLineComboBox->currentIndex() : Format::CurrentOS;
+	return filterWidget()->currentText();
 }
 
-QString SaveSubtitleDialog::outputFormatsFilter()
+Format::NewLine
+SaveSubtitleDialog::selectedNewLine() const
+{
+	return m_newLineComboBox ? (Format::NewLine)m_newLineComboBox->currentIndex() : Format::CurrentOS;
+}
+
+QString
+SaveSubtitleDialog::outputFormatsFilter()
 {
 	static QString filter;
 
@@ -111,7 +123,7 @@ QString SaveSubtitleDialog::outputFormatsFilter()
 		QStringList formats = FormatManager::instance().outputNames();
 		for(QStringList::ConstIterator it = formats.begin(), end = formats.end(); it != end; ++it) {
 			const OutputFormat *format = FormatManager::instance().output(*it);
-			const QStringList & formatExtensions = format->extensions();
+			const QStringList &formatExtensions = format->extensions();
 			QString extensions;
 			for(QStringList::ConstIterator extIt = formatExtensions.begin(), extEnd = formatExtensions.end(); extIt != extEnd; ++extIt)
 				extensions += "*." + *extIt + " *." + (*extIt).toUpper();

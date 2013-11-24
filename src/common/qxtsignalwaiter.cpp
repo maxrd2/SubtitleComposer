@@ -24,13 +24,23 @@
 #include <QtCore/QCoreApplication>
 #include <QtCore/QTimerEvent>
 
-QxtSignalWaiter::QxtSignalWaiter(const QObject *sender, const char *signal, unsigned count):QObject(0), m_signals(count), m_signalsCaught(0), m_timeout(false), m_eventFlags(QEventLoop::ExcludeUserInputEvents)
+QxtSignalWaiter::QxtSignalWaiter(const QObject *sender, const char *signal, unsigned count) :
+	QObject(0),
+	m_signals(count),
+	m_signalsCaught(0),
+	m_timeout(false),
+	m_eventFlags(QEventLoop::ExcludeUserInputEvents)
 {
 	if(signal)
 		connect(sender, signal, this, SLOT(signalCaught()));
 }
 
-QxtSignalWaiter::QxtSignalWaiter(const QObject *sender, const char *signal1, const char *signal2, unsigned count):QObject(0), m_signals(count), m_signalsCaught(0), m_timeout(false), m_eventFlags(QEventLoop::ExcludeUserInputEvents)
+QxtSignalWaiter::QxtSignalWaiter(const QObject *sender, const char *signal1, const char *signal2, unsigned count) :
+	QObject(0),
+	m_signals(count),
+	m_signalsCaught(0),
+	m_timeout(false),
+	m_eventFlags(QEventLoop::ExcludeUserInputEvents)
 {
 	if(signal1)
 		connect(sender, signal1, this, SLOT(signalCaught()));
@@ -38,7 +48,12 @@ QxtSignalWaiter::QxtSignalWaiter(const QObject *sender, const char *signal1, con
 		connect(sender, signal2, this, SLOT(signalCaught()));
 }
 
-QxtSignalWaiter::QxtSignalWaiter(const QObject *sender, const char *signal1, const char *signal2, const char *signal3, unsigned count):QObject(0), m_signals(count), m_signalsCaught(0), m_timeout(false), m_eventFlags(QEventLoop::ExcludeUserInputEvents)
+QxtSignalWaiter::QxtSignalWaiter(const QObject *sender, const char *signal1, const char *signal2, const char *signal3, unsigned count) :
+	QObject(0),
+	m_signals(count),
+	m_signalsCaught(0),
+	m_timeout(false),
+	m_eventFlags(QEventLoop::ExcludeUserInputEvents)
 {
 	if(signal1)
 		connect(sender, signal1, this, SLOT(signalCaught()));
@@ -48,7 +63,12 @@ QxtSignalWaiter::QxtSignalWaiter(const QObject *sender, const char *signal1, con
 		connect(sender, signal3, this, SLOT(signalCaught()));
 }
 
-QxtSignalWaiter::QxtSignalWaiter(const QObject *sender, const char *signal1, const char *signal2, const char *signal3, const char *signal4, unsigned count):QObject(0), m_signals(count), m_signalsCaught(0), m_timeout(false), m_eventFlags(QEventLoop::ExcludeUserInputEvents)
+QxtSignalWaiter::QxtSignalWaiter(const QObject *sender, const char *signal1, const char *signal2, const char *signal3, const char *signal4, unsigned count) :
+	QObject(0),
+	m_signals(count),
+	m_signalsCaught(0),
+	m_timeout(false),
+	m_eventFlags(QEventLoop::ExcludeUserInputEvents)
 {
 	if(signal1)
 		connect(sender, signal1, this, SLOT(signalCaught()));
@@ -61,21 +81,23 @@ QxtSignalWaiter::QxtSignalWaiter(const QObject *sender, const char *signal1, con
 }
 
 QxtSignalWaiter::~QxtSignalWaiter()
-{
-}
+{}
 
-QEventLoop::ProcessEventsFlags QxtSignalWaiter::processEventFlags() const
+QEventLoop::ProcessEventsFlags
+QxtSignalWaiter::processEventFlags() const
 {
 	return m_eventFlags;
 }
 
-void QxtSignalWaiter::setProcessEventFlags(QEventLoop::ProcessEventsFlags eventFlags)
+void
+QxtSignalWaiter::setProcessEventFlags(QEventLoop::ProcessEventsFlags eventFlags)
 {
 	m_eventFlags = eventFlags;
 }
 
 // Returns true if the signal was caught, returns false if the wait timed out
-bool QxtSignalWaiter::wait(int msec)
+bool
+QxtSignalWaiter::wait(int msec)
 {
 //  static int waitcount = 0;
 //  int waitID = waitcount++;
@@ -107,17 +129,20 @@ bool QxtSignalWaiter::wait(int msec)
 	return m_signalsCaught >= m_signals || !m_timeout;
 }
 
-void QxtSignalWaiter::reset()
+void
+QxtSignalWaiter::reset()
 {
 	m_signalsCaught = 0;
 }
 
-void QxtSignalWaiter::signalCaught()
+void
+QxtSignalWaiter::signalCaught()
 {
 	m_signalsCaught++;
 }
 
-void QxtSignalWaiter::timerEvent(QTimerEvent *)
+void
+QxtSignalWaiter::timerEvent(QTimerEvent *)
 {
 	killTimer(m_timerID);
 	m_timeout = true;

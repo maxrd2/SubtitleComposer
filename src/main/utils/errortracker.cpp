@@ -24,19 +24,31 @@
 
 using namespace SubtitleComposer;
 
-ErrorTracker::ErrorTracker(QObject * parent):
-QObject(parent), m_subtitle(0), m_autoClearFixed(app()->errorsConfig()->autoClearFixed()), m_minDuration(app()->errorsConfig()->minDuration()), m_maxDuration(app()->errorsConfig()->maxDuration()), m_minDurationPerChar(app()->errorsConfig()->minDurationPerChar()), m_maxDurationPerChar(app()->errorsConfig()->maxDurationPerChar()), m_maxCharacters(app()->errorsConfig()->maxCharacters()), m_maxLines(app()->errorsConfig()->maxLines())
+ErrorTracker::ErrorTracker(QObject *parent) :
+	QObject(parent),
+	m_subtitle(0),
+	m_autoClearFixed(app()->errorsConfig()->autoClearFixed()),
+	m_minDuration(app()->errorsConfig()->minDuration()),
+	m_maxDuration(app()->errorsConfig()->maxDuration()),
+	m_minDurationPerChar(app()->errorsConfig()->minDurationPerChar()),
+	m_maxDurationPerChar(app()->errorsConfig()->maxDurationPerChar()),
+	m_maxCharacters(app()->errorsConfig()->maxCharacters()),
+	m_maxLines(app()->errorsConfig()->maxLines())
 {
 	connect(app()->errorsConfig(), SIGNAL(optionChanged(const QString &, const QString &)), this, SLOT(onErrorsOptionChanged(const QString &, const QString &)));
 }
 
 ErrorTracker::~ErrorTracker()
+{}
+
+bool
+ErrorTracker::isTracking() const
 {
+	return m_autoClearFixed && m_subtitle;
 }
 
-bool ErrorTracker::isTracking() const {
-	return m_autoClearFixed && m_subtitle;
-} void ErrorTracker::setSubtitle(Subtitle * subtitle)
+void
+ErrorTracker::setSubtitle(Subtitle *subtitle)
 {
 	if(isTracking())
 		disconnectSlots();
@@ -45,7 +57,8 @@ bool ErrorTracker::isTracking() const {
 		connectSlots();
 }
 
-void ErrorTracker::connectSlots()
+void
+ErrorTracker::connectSlots()
 {
 	connect(m_subtitle, SIGNAL(linePrimaryTextChanged(SubtitleLine *, const SString &)), this, SLOT(onLinePrimaryTextChanged(SubtitleLine *)));
 	connect(m_subtitle, SIGNAL(lineSecondaryTextChanged(SubtitleLine *, const SString &)), this, SLOT(onLineSecondaryTextChanged(SubtitleLine *)));
@@ -53,7 +66,8 @@ void ErrorTracker::connectSlots()
 	connect(m_subtitle, SIGNAL(lineHideTimeChanged(SubtitleLine *, const Time &)), this, SLOT(onLineTimesChanged(SubtitleLine *)));
 }
 
-void ErrorTracker::disconnectSlots()
+void
+ErrorTracker::disconnectSlots()
 {
 	disconnect(m_subtitle, SIGNAL(linePrimaryTextChanged(SubtitleLine *, const SString &)), this, SLOT(onLinePrimaryTextChanged(SubtitleLine *)));
 	disconnect(m_subtitle, SIGNAL(lineSecondaryTextChanged(SubtitleLine *, const SString &)), this, SLOT(onLineSecondaryTextChanged(SubtitleLine *)));
@@ -61,19 +75,26 @@ void ErrorTracker::disconnectSlots()
 	disconnect(m_subtitle, SIGNAL(lineHideTimeChanged(SubtitleLine *, const Time &)), this, SLOT(onLineTimesChanged(SubtitleLine *)));
 }
 
-void ErrorTracker::updateLineErrors(SubtitleLine * line, int errorFlags) const {
+void
+ErrorTracker::updateLineErrors(SubtitleLine *line, int errorFlags) const
+{
 	line->check(errorFlags, m_minDuration, m_maxDuration, m_minDurationPerChar, m_maxDurationPerChar, m_maxCharacters, m_maxLines);
-} void ErrorTracker::onLinePrimaryTextChanged(SubtitleLine * line)
+}
+
+void
+ErrorTracker::onLinePrimaryTextChanged(SubtitleLine *line)
 {
 	updateLineErrors(line, line->errorFlags() & SubtitleLine::PrimaryOnlyErrors);
 }
 
-void ErrorTracker::onLineSecondaryTextChanged(SubtitleLine * line)
+void
+ErrorTracker::onLineSecondaryTextChanged(SubtitleLine *line)
 {
 	updateLineErrors(line, line->errorFlags() & SubtitleLine::SecondaryOnlyErrors);
 }
 
-void ErrorTracker::onLineTimesChanged(SubtitleLine * line)
+void
+ErrorTracker::onLineTimesChanged(SubtitleLine *line)
 {
 	updateLineErrors(line, line->errorFlags() & SubtitleLine::TimesErrors);
 
@@ -82,12 +103,12 @@ void ErrorTracker::onLineTimesChanged(SubtitleLine * line)
 		updateLineErrors(prevLine, prevLine->errorFlags() & SubtitleLine::OverlapsWithNext);
 }
 
-void ErrorTracker::onErrorsOptionChanged(const QString & /*optionName */ , const QString & /*value */ )
+void
+ErrorTracker::onErrorsOptionChanged(const QString & /*optionName */, const QString & /*value */)
 {
 	ErrorsConfig *errorsConfig = app()->errorsConfig();
 
-	if(m_autoClearFixed != errorsConfig->autoClearFixed())	// is this option that has been toggled
-	{
+	if(m_autoClearFixed != errorsConfig->autoClearFixed()) { // is this option that has been toggled
 		if(isTracking())
 			disconnectSlots();
 		m_autoClearFixed = !m_autoClearFixed;

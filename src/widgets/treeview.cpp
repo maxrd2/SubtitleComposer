@@ -22,9 +22,11 @@
 #include <QtCore/QTimer>
 #include <QtGui/QScrollBar>
 
-
-TreeView::TreeView(QWidget * parent):
-QTreeView(parent), m_updateGeometriesTimer(new QTimer(this)), m_currentModelRows(-1), m_instantGeometryUpdate(0)
+TreeView::TreeView(QWidget *parent) :
+	QTreeView(parent),
+	m_updateGeometriesTimer(new QTimer(this)),
+	m_currentModelRows(-1),
+	m_instantGeometryUpdate(0)
 {
 	// NOTE: The updateGeometries() methods takes forever to execute (around 100ms
 	// for a view with more that 1 thousand items, and more as more items are added).
@@ -44,10 +46,10 @@ QTreeView(parent), m_updateGeometriesTimer(new QTimer(this)), m_currentModelRows
 }
 
 TreeView::~TreeView()
-{
-}
+{}
 
-void TreeView::setModel(QAbstractItemModel * model)
+void
+TreeView::setModel(QAbstractItemModel *model)
 {
 	if(this->model()) {
 		if(this->model()->metaObject()->indexOfSignal("dataChanged()") != -1)
@@ -71,7 +73,8 @@ void TreeView::setModel(QAbstractItemModel * model)
 		m_currentModelRows = -1;
 }
 
-void TreeView::onRowsAboutToBeInserted(const QModelIndex & parent, int start, int end)
+void
+TreeView::onRowsAboutToBeInserted(const QModelIndex &parent, int start, int end)
 {
 	if(!parent.isValid()) {
 		m_instantGeometryUpdate = m_currentModelRows == 0 ? 1 : 0;
@@ -79,7 +82,8 @@ void TreeView::onRowsAboutToBeInserted(const QModelIndex & parent, int start, in
 	}
 }
 
-void TreeView::onRowsAboutToBeRemoved(const QModelIndex & parent, int start, int end)
+void
+TreeView::onRowsAboutToBeRemoved(const QModelIndex &parent, int start, int end)
 {
 	if(!parent.isValid()) {
 		m_currentModelRows -= end - start + 1;
@@ -87,7 +91,8 @@ void TreeView::onRowsAboutToBeRemoved(const QModelIndex & parent, int start, int
 	}
 }
 
-void TreeView::updateGeometries()
+void
+TreeView::updateGeometries()
 {
 	if(m_instantGeometryUpdate--)
 		QTreeView::updateGeometries();
@@ -95,7 +100,8 @@ void TreeView::updateGeometries()
 		m_updateGeometriesTimer->start();
 }
 
-void TreeView::onUpdateGeometriesTimeout()
+void
+TreeView::onUpdateGeometriesTimeout()
 {
 	QTreeView::updateGeometries();
 }

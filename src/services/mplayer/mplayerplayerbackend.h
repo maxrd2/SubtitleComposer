@@ -32,53 +32,53 @@
 #include <QtCore/QString>
 
 namespace SubtitleComposer {
-	class MPlayerPlayerProcess;
+class MPlayerPlayerProcess;
 
-	class MPlayerPlayerBackend:public PlayerBackend {
-	Q_OBJECT public:
+class MPlayerPlayerBackend : public PlayerBackend
+{
+	Q_OBJECT
 
-		MPlayerPlayerBackend(Player * player);
-		virtual ~ MPlayerPlayerBackend();
+public:
+	MPlayerPlayerBackend(Player *player);
+	virtual ~MPlayerPlayerBackend();
 
-		const MPlayerConfig *config() {
-			return static_cast < const MPlayerConfig *const >(PlayerBackend::config());
-		} virtual AppConfigGroupWidget *newAppConfigGroupWidget(QWidget * parent);
+	const MPlayerConfig * config() { return static_cast<const MPlayerConfig *const>(PlayerBackend::config()); }
 
-	protected:
+	virtual AppConfigGroupWidget * newAppConfigGroupWidget(QWidget *parent);
 
-		virtual VideoWidget * initialize(QWidget * videoWidgetParent);
-		virtual void finalize();
-		void _finalize();
+protected:
+	virtual VideoWidget * initialize(QWidget *videoWidgetParent);
+	virtual void finalize();
+	void _finalize();
 
-		virtual bool openFile(const QString & filePath, bool & playingAfterCall);
-		virtual void closeFile();
+	virtual bool openFile(const QString &filePath, bool &playingAfterCall);
+	virtual void closeFile();
 
-		virtual bool play();
-		virtual bool pause();
-		virtual bool seek(double seconds, bool accurate);
-		virtual bool stop();
+	virtual bool play();
+	virtual bool pause();
+	virtual bool seek(double seconds, bool accurate);
+	virtual bool stop();
 
-		virtual bool setActiveAudioStream(int audioStream);
+	virtual bool setActiveAudioStream(int audioStream);
 
-		virtual bool setVolume(double volume);
+	virtual bool setVolume(double volume);
 
-		protected slots:void onMediaDataLoaded();
-		void onPlayingReceived();
-		void onPausedReceived();
-		void onProcessExited();
-		void onPositionReceived(double seconds);
+protected slots:
+	void onMediaDataLoaded();
+	void onPlayingReceived();
+	void onPausedReceived();
+	void onProcessExited();
+	void onPositionReceived(double seconds);
 
-	protected:
+protected:
+	void setupProcessArgs(const QString &filePath);
 
-		void setupProcessArgs(const QString & filePath);
+protected:
+	MPlayerPlayerProcess *m_process;
 
-	protected:
-
-		MPlayerPlayerProcess * m_process;
-
-		double m_position;
-		bool m_reportUpdates;
-	};
+	double m_position;
+	bool m_reportUpdates;
+};
 }
 
 #endif

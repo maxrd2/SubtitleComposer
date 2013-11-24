@@ -27,8 +27,8 @@
 
 using namespace SubtitleComposer;
 
-CheckErrorsDialog::CheckErrorsDialog(QWidget * parent):
-ActionWithErrorTargetsDialog(i18n("Check Errors"), parent)
+CheckErrorsDialog::CheckErrorsDialog(QWidget *parent) :
+	ActionWithErrorTargetsDialog(i18n("Check Errors"), parent)
 {
 	createErrorsGroupBox(i18nc("@title:group", "Errors to Check"));
 	createErrorsButtons(false, translationMode());
@@ -51,15 +51,23 @@ ActionWithErrorTargetsDialog(i18n("Check Errors"), parent)
 	miscLayout->addWidget(m_clearMarksCheckBox, 1, 0);
 }
 
-void CheckErrorsDialog::setTranslationMode(bool value)
+void
+CheckErrorsDialog::setTranslationMode(bool value)
 {
 	ActionWithErrorTargetsDialog::setTranslationMode(value);
 	createErrorsButtons(false, value);
 }
 
-bool CheckErrorsDialog::clearOtherErrors() const {
+bool
+CheckErrorsDialog::clearOtherErrors() const
+{
 	return m_clearOtherErrorsCheckBox->isChecked();
-} bool CheckErrorsDialog::clearMarks() const {
+}
+
+bool
+CheckErrorsDialog::clearMarks() const
+{
 	return m_clearMarksCheckBox->isChecked();
 }
+
 #include "checkerrorsdialog.moc"

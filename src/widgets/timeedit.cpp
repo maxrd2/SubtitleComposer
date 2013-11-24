@@ -26,8 +26,9 @@
 
 #include <KDebug>
 
-TimeEdit::TimeEdit(QWidget * parent):
-QTimeEdit(parent), m_secsStep(100)
+TimeEdit::TimeEdit(QWidget *parent) :
+	QTimeEdit(parent),
+	m_secsStep(100)
 {
 	setDisplayFormat("hh:mm:ss.zzz");
 	setMinimumTime(QTime(0, 0, 0, 0));
@@ -40,16 +41,26 @@ QTimeEdit(parent), m_secsStep(100)
 	connect(this, SIGNAL(timeChanged(const QTime &)), this, SLOT(onTimeChanged(const QTime &)));
 }
 
-int TimeEdit::msecsStep() const {
+int
+TimeEdit::msecsStep() const
+{
 	return m_secsStep;
-} void TimeEdit::setMSecsStep(int msecs)
+}
+
+void
+TimeEdit::setMSecsStep(int msecs)
 {
 	m_secsStep = msecs;
 }
 
-int TimeEdit::value() const {
+int
+TimeEdit::value() const
+{
 	return QTime().msecsTo(time());
-} void TimeEdit::setValue(int value)
+}
+
+void
+TimeEdit::setValue(int value)
 {
 	if(wrapping())
 		setTime(QTime().addMSecs(value));
@@ -63,12 +74,14 @@ int TimeEdit::value() const {
 	}
 }
 
-void TimeEdit::onTimeChanged(const QTime & time)
+void
+TimeEdit::onTimeChanged(const QTime &time)
 {
 	emit valueChanged(QTime().msecsTo(time));
 }
 
-void TimeEdit::stepBy(int steps)
+void
+TimeEdit::stepBy(int steps)
 {
 	int oldValue = value();
 	int newValue;
@@ -96,7 +109,8 @@ void TimeEdit::stepBy(int steps)
 		setValue(newValue);
 }
 
-TimeEdit::StepEnabled TimeEdit::stepEnabled()const
+TimeEdit::StepEnabled
+TimeEdit::stepEnabled() const
 {
 	if(wrapping())
 		return QAbstractSpinBox::StepUpEnabled | QAbstractSpinBox::StepDownEnabled;
@@ -111,7 +125,8 @@ TimeEdit::StepEnabled TimeEdit::stepEnabled()const
 	}
 }
 
-void TimeEdit::keyPressEvent(QKeyEvent * event)
+void
+TimeEdit::keyPressEvent(QKeyEvent *event)
 {
 	int key = event->key();
 	if(key == Qt::Key_Return) {

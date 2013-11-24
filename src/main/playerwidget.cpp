@@ -53,10 +53,24 @@ using namespace SubtitleComposer;
 // FIXME WTF is this!??
 #define MAGIC_NUMBER -1
 #define HIDE_MOUSE_MSECS 1000
-#define UNKNOWN_LENGTH_STRING (" / " + Time().toString( false ) + ' ')
+#define UNKNOWN_LENGTH_STRING (" / " + Time().toString(false) + ' ')
 
-PlayerWidget::PlayerWidget(QWidget * parent):
-QWidget(parent), m_subtitle(0), m_translationMode(false), m_showTranslation(false), m_overlayLine(0), m_playingLine(0), m_fullScreenTID(0), m_fullScreenMode(false), m_player(Player::instance()), m_lengthString(UNKNOWN_LENGTH_STRING), m_updatePositionControls(1), m_updateVideoPosition(false), m_updateVolumeControls(true), m_updatePlayerVolume(false), m_showPositionTimeEdit(app()->playerConfig()->showPositionTimeEdit())
+PlayerWidget::PlayerWidget(QWidget *parent) :
+	QWidget(parent),
+	m_subtitle(0),
+	m_translationMode(false),
+	m_showTranslation(false),
+	m_overlayLine(0),
+	m_playingLine(0),
+	m_fullScreenTID(0),
+	m_fullScreenMode(false),
+	m_player(Player::instance()),
+	m_lengthString(UNKNOWN_LENGTH_STRING),
+	m_updatePositionControls(1),
+	m_updateVideoPosition(false),
+	m_updateVolumeControls(true),
+	m_updatePlayerVolume(false),
+	m_showPositionTimeEdit(app()->playerConfig()->showPositionTimeEdit())
 {
 	m_layeredWidget = new LayeredWidget(this);
 	m_layeredWidget->setAcceptDrops(true);
@@ -100,7 +114,7 @@ QWidget(parent), m_subtitle(0), m_translationMode(false), m_showTranslation(fals
 	fpsTagLabel->installEventFilter(this);
 	m_fpsLabel = new QLabel(m_infoControlsGroupBox);
 
-	m_fpsLabel->setMinimumWidth(m_positionEdit->sizeHint().width());	// sets the minimum width for the whole group
+	m_fpsLabel->setMinimumWidth(m_positionEdit->sizeHint().width());        // sets the minimum width for the whole group
 
 	m_volumeSlider = new PointingSlider(Qt::Vertical, this);
 	m_volumeSlider->setFocusPolicy(Qt::NoFocus);
@@ -241,7 +255,7 @@ QWidget(parent), m_subtitle(0), m_translationMode(false), m_showTranslation(fals
 
 	setOverlayLine(0);
 	onPlayerFileClosed();
-	onPlayerOptionChanged(QString(), QString());	// initializes the font
+	onPlayerOptionChanged(QString(), QString());    // initializes the font
 }
 
 PlayerWidget::~PlayerWidget()
@@ -251,12 +265,14 @@ PlayerWidget::~PlayerWidget()
 	m_fullScreenControls->deleteLater();
 }
 
-QToolButton *PlayerWidget::toolButton(QWidget * parent, const char *name)
+QToolButton *
+PlayerWidget::toolButton(QWidget *parent, const char *name)
 {
-	return parent->findChild < QToolButton * >(name);
+	return parent->findChild<QToolButton *>(name);
 }
 
-QToolButton *PlayerWidget::createToolButton(QWidget * parent, const char *name, int size)
+QToolButton *
+PlayerWidget::createToolButton(QWidget *parent, const char *name, int size)
 {
 	QToolButton *toolButton = new QToolButton(parent);
 	toolButton->setObjectName(name);
@@ -267,18 +283,24 @@ QToolButton *PlayerWidget::createToolButton(QWidget * parent, const char *name, 
 	return toolButton;
 }
 
-void PlayerWidget::loadConfig()
+void
+PlayerWidget::loadConfig()
 {
 	onPlayerVolumeChanged(m_player->volume());
 }
 
-void PlayerWidget::saveConfig()
+void
+PlayerWidget::saveConfig()
+{}
+
+bool
+PlayerWidget::fullScreenMode() const
 {
+	return m_fullScreenMode;
 }
 
-bool PlayerWidget::fullScreenMode() const {
-	return m_fullScreenMode;
-} void PlayerWidget::setFullScreenMode(bool fullScreenMode)
+void
+PlayerWidget::setFullScreenMode(bool fullScreenMode)
 {
 	if(m_fullScreenMode != fullScreenMode) {
 		m_fullScreenMode = fullScreenMode;
@@ -287,8 +309,8 @@ bool PlayerWidget::fullScreenMode() const {
 			increaseFontSize(18);
 
 			window()->hide();
-			m_layeredWidget->setParent(0);	// removes the widget from this window (and this m_mainLayout)
-			m_layeredWidget->showFullScreen();	// krazy:exclude=c++/qmethods
+			m_layeredWidget->setParent(0);  // removes the widget from this window (and this m_mainLayout)
+			m_layeredWidget->showFullScreen();      // krazy:exclude=c++/qmethods
 
 			m_layeredWidget->unsetCursor();
 			m_layeredWidget->setMouseTracking(true);
@@ -309,24 +331,27 @@ bool PlayerWidget::fullScreenMode() const {
 
 			window()->show();
 			m_layeredWidget->setParent(this);
-			m_layeredWidget->showNormal();	// krazy:exclude=c++/qmethods
+			m_layeredWidget->showNormal();  // krazy:exclude=c++/qmethods
 
 			m_mainLayout->addWidget(m_layeredWidget, 0, 1);
 		}
 	}
 }
 
-SubtitleLine *PlayerWidget::playingLine()
+SubtitleLine *
+PlayerWidget::playingLine()
 {
 	return m_playingLine;
 }
 
-SubtitleLine *PlayerWidget::overlayLine()
+SubtitleLine *
+PlayerWidget::overlayLine()
 {
 	return m_overlayLine;
 }
 
-void PlayerWidget::plugActions()
+void
+PlayerWidget::plugActions()
 {
 	toolButton(this, ACT_STOP)->setDefaultAction(app()->action(ACT_STOP));
 	toolButton(this, ACT_PLAY_PAUSE)->setDefaultAction(app()->action(ACT_PLAY_PAUSE));
@@ -350,7 +375,8 @@ void PlayerWidget::plugActions()
 	toolButton(m_fullScreenControls, ACT_TOGGLE_FULL_SCREEN)->setDefaultAction(app()->action(ACT_TOGGLE_FULL_SCREEN));
 }
 
-void PlayerWidget::timerEvent(QTimerEvent * /*event */ )
+void
+PlayerWidget::timerEvent(QTimerEvent * /*event */)
 {
 	if(m_currentCursorPos != m_savedCursorPos) {
 		m_savedCursorPos = m_currentCursorPos;
@@ -362,11 +388,12 @@ void PlayerWidget::timerEvent(QTimerEvent * /*event */ )
 	}
 }
 
-bool PlayerWidget::eventFilter(QObject * object, QEvent * event)
+bool
+PlayerWidget::eventFilter(QObject *object, QEvent *event)
 {
 	if(object == m_layeredWidget) {
 		if(event->type() == QEvent::DragEnter) {
-			QDragEnterEvent *dragEnterEvent = static_cast < QDragEnterEvent * >(event);
+			QDragEnterEvent *dragEnterEvent = static_cast<QDragEnterEvent *>(event);
 			KUrl::List urls = KUrl::List::fromMimeData(dragEnterEvent->mimeData());
 			if(!urls.isEmpty())
 				dragEnterEvent->accept();
@@ -374,14 +401,14 @@ bool PlayerWidget::eventFilter(QObject * object, QEvent * event)
 				dragEnterEvent->ignore();
 			return true;
 		} else if(event->type() == QEvent::DragMove) {
-			return true;		// eat event
+			return true;            // eat event
 		} else if(event->type() == QEvent::Drop) {
-			QDropEvent *dropEvent = static_cast < QDropEvent * >(event);
+			QDropEvent *dropEvent = static_cast<QDropEvent *>(event);
 
 			KUrl::List urls = KUrl::List::fromMimeData(dropEvent->mimeData());
 			if(!urls.isEmpty()) {
 				for(KUrl::List::ConstIterator it = urls.begin(), end = urls.end(); it != end; ++it) {
-					const KUrl & url = *it;
+					const KUrl &url = *it;
 
 					if(url.protocol() != "file")
 						continue;
@@ -391,16 +418,16 @@ bool PlayerWidget::eventFilter(QObject * object, QEvent * event)
 				}
 			}
 
-			return true;		// eat event
+			return true;            // eat event
 		} else if(event->type() == QEvent::KeyPress) {
 			// NOTE: when on full screen mode, the keyboard input is received but
 			// for some reason it doesn't trigger the correct actions automatically
 			// so we process the event and handle the issue ourselves.
 
-			QKeyEvent *keyEvent = static_cast < QKeyEvent * >(event);
+			QKeyEvent *keyEvent = static_cast<QKeyEvent *>(event);
 			return app()->triggerAction(QKeySequence((keyEvent->modifiers() & ~Qt::KeypadModifier) + keyEvent->key()));
 		} else if(event->type() == QEvent::MouseMove) {
-			QMouseEvent *mouseEvent = static_cast < QMouseEvent * >(event);
+			QMouseEvent *mouseEvent = static_cast<QMouseEvent *>(event);
 			if(mouseEvent->globalPos() != m_currentCursorPos) {
 				m_currentCursorPos = mouseEvent->globalPos();
 				if(m_layeredWidget->cursor().shape() == Qt::BlankCursor)
@@ -413,7 +440,7 @@ bool PlayerWidget::eventFilter(QObject * object, QEvent * event)
 		if(event->type() != QEvent::MouseButtonRelease)
 			return QWidget::eventFilter(object, event);
 
-		QMouseEvent *mouseEvent = static_cast < QMouseEvent * >(event);
+		QMouseEvent *mouseEvent = static_cast<QMouseEvent *>(event);
 
 		if(mouseEvent->button() != Qt::RightButton)
 			return QWidget::eventFilter(object, event);
@@ -426,19 +453,20 @@ bool PlayerWidget::eventFilter(QObject * object, QEvent * event)
 		if(menu.exec(mouseEvent->globalPos()) == action)
 			app()->playerConfig()->toggleShowPositionTimeEdit();
 
-		return true;			// eat event
+		return true;                    // eat event
 	}
 
 	return QWidget::eventFilter(object, event);
 }
 
-void PlayerWidget::setSubtitle(Subtitle * subtitle)
+void
+PlayerWidget::setSubtitle(Subtitle *subtitle)
 {
 	if(m_subtitle) {
 		disconnect(m_subtitle, SIGNAL(linesInserted(int, int)), this, SLOT(invalidateOverlayLine()));
 		disconnect(m_subtitle, SIGNAL(linesRemoved(int, int)), this, SLOT(invalidateOverlayLine()));
 
-		m_subtitle = 0;			// has to be set to 0 for invalidateOverlayLine
+		m_subtitle = 0;                 // has to be set to 0 for invalidateOverlayLine
 
 		invalidateOverlayLine();
 		setPlayingLine(0);
@@ -452,7 +480,8 @@ void PlayerWidget::setSubtitle(Subtitle * subtitle)
 	}
 }
 
-void PlayerWidget::setTranslationMode(bool enabled)
+void
+PlayerWidget::setTranslationMode(bool enabled)
 {
 	m_translationMode = enabled;
 
@@ -460,7 +489,8 @@ void PlayerWidget::setTranslationMode(bool enabled)
 		setShowTranslation(false);
 }
 
-void PlayerWidget::setShowTranslation(bool showTranslation)
+void
+PlayerWidget::setShowTranslation(bool showTranslation)
 {
 	if(m_showTranslation != showTranslation) {
 		m_showTranslation = showTranslation;
@@ -470,17 +500,20 @@ void PlayerWidget::setShowTranslation(bool showTranslation)
 	}
 }
 
-void PlayerWidget::increaseFontSize(int points)
+void
+PlayerWidget::increaseFontSize(int points)
 {
 	app()->playerConfig()->incFontPointSize(points);
 }
 
-void PlayerWidget::decreaseFontSize(int points)
+void
+PlayerWidget::decreaseFontSize(int points)
 {
 	app()->playerConfig()->incFontPointSize(-points);
 }
 
-void PlayerWidget::updateOverlayLine(const Time & videoPosition)
+void
+PlayerWidget::updateOverlayLine(const Time &videoPosition)
 {
 	if(!m_subtitle)
 		return;
@@ -491,9 +524,8 @@ void PlayerWidget::updateOverlayLine(const Time & videoPosition)
 	if(m_overlayLine) {
 		if(!seekedBackwards && videoPosition <= m_overlayLine->hideTime()) {
 			// m_overlayLine is the line to show or the next line to show
-			if(videoPosition >= m_overlayLine->showTime())	// m_overlayLine is the line to show
-			{
-				const SString & text = m_showTranslation ? m_overlayLine->secondaryText() : m_overlayLine->primaryText();
+			if(videoPosition >= m_overlayLine->showTime()) { // m_overlayLine is the line to show
+				const SString &text = m_showTranslation ? m_overlayLine->secondaryText() : m_overlayLine->primaryText();
 				m_textOverlay->setText(text.richString(SString::Verbose));
 				setPlayingLine(m_overlayLine);
 			}
@@ -515,7 +547,7 @@ void PlayerWidget::updateOverlayLine(const Time & videoPosition)
 				setOverlayLine(it.current());
 
 				if(m_overlayLine->showTime() <= videoPosition && videoPosition <= m_overlayLine->hideTime()) {
-					const SString & text = m_showTranslation ? m_overlayLine->secondaryText() : m_overlayLine->primaryText();
+					const SString &text = m_showTranslation ? m_overlayLine->secondaryText() : m_overlayLine->primaryText();
 					m_textOverlay->setText(text.richString(SString::Verbose));
 					setPlayingLine(m_overlayLine);
 				}
@@ -526,7 +558,8 @@ void PlayerWidget::updateOverlayLine(const Time & videoPosition)
 	}
 }
 
-void PlayerWidget::invalidateOverlayLine()
+void
+PlayerWidget::invalidateOverlayLine()
 {
 	m_textOverlay->setText(QString());
 
@@ -536,7 +569,8 @@ void PlayerWidget::invalidateOverlayLine()
 		updateOverlayLine((long)(m_player->position() * 1000));
 }
 
-void PlayerWidget::setOverlayLine(SubtitleLine * line)
+void
+PlayerWidget::setOverlayLine(SubtitleLine *line)
 {
 	if(m_overlayLine) {
 		disconnect(m_overlayLine, SIGNAL(showTimeChanged(const Time &)), this, SLOT(invalidateOverlayLine()));
@@ -552,7 +586,8 @@ void PlayerWidget::setOverlayLine(SubtitleLine * line)
 		m_lastSearchedLineToShowTime = Time::MaxMseconds;
 }
 
-void PlayerWidget::setPlayingLine(SubtitleLine * line)
+void
+PlayerWidget::setPlayingLine(SubtitleLine *line)
 {
 	if(!line || m_playingLine != line) {
 		m_playingLine = line;
@@ -560,7 +595,8 @@ void PlayerWidget::setPlayingLine(SubtitleLine * line)
 	}
 }
 
-void PlayerWidget::updatePositionEditVisibility()
+void
+PlayerWidget::updatePositionEditVisibility()
 {
 	if(m_showPositionTimeEdit && (m_player->state() == Player::Playing || m_player->state() == Player::Paused))
 		m_positionEdit->show();
@@ -568,7 +604,8 @@ void PlayerWidget::updatePositionEditVisibility()
 		m_positionEdit->hide();
 }
 
-void PlayerWidget::onVolumeSliderValueChanged(int value)
+void
+PlayerWidget::onVolumeSliderValueChanged(int value)
 {
 	if(m_updatePlayerVolume) {
 		m_updatePlayerVolume = false;
@@ -586,17 +623,20 @@ void PlayerWidget::onVolumeSliderValueChanged(int value)
 	}
 }
 
-void PlayerWidget::onSeekSliderPressed()
+void
+PlayerWidget::onSeekSliderPressed()
 {
 	m_updatePositionControls = 0;
 }
 
-void PlayerWidget::onSeekSliderReleased()
+void
+PlayerWidget::onSeekSliderReleased()
 {
 	m_updatePositionControls = MAGIC_NUMBER;
 }
 
-void PlayerWidget::onSeekSliderValueChanged(int value)
+void
+PlayerWidget::onSeekSliderValueChanged(int value)
 {
 	if(m_updateVideoPosition) {
 		m_updatePositionControls = MAGIC_NUMBER;
@@ -604,7 +644,8 @@ void PlayerWidget::onSeekSliderValueChanged(int value)
 	}
 }
 
-void PlayerWidget::onSeekSliderMoved(int value)
+void
+PlayerWidget::onSeekSliderMoved(int value)
 {
 	m_player->seek(m_player->length() * value / 1000.0, false);
 
@@ -617,7 +658,8 @@ void PlayerWidget::onSeekSliderMoved(int value)
 		m_positionEdit->setValue(time.toMillis());
 }
 
-void PlayerWidget::onPositionEditValueChanged(int position)
+void
+PlayerWidget::onPositionEditValueChanged(int position)
 {
 	if(m_positionEdit->hasFocus()) {
 		m_updatePositionControls = MAGIC_NUMBER;
@@ -625,7 +667,8 @@ void PlayerWidget::onPositionEditValueChanged(int position)
 	}
 }
 
-void PlayerWidget::onPlayerOptionChanged(const QString & option, const QString & value)
+void
+PlayerWidget::onPlayerOptionChanged(const QString &option, const QString &value)
 {
 	if(option == PlayerConfig::keyPlayerBackend()) {
 		m_player->reinitialize(value);
@@ -641,7 +684,8 @@ void PlayerWidget::onPlayerOptionChanged(const QString & option, const QString &
 	}
 }
 
-void PlayerWidget::onPlayerFileOpened(const QString & /*filePath */ )
+void
+PlayerWidget::onPlayerFileOpened(const QString & /*filePath */)
 {
 	m_infoControlsGroupBox->setEnabled(true);
 
@@ -656,12 +700,14 @@ void PlayerWidget::onPlayerFileOpened(const QString & /*filePath */ )
 	m_fsPositionLabel->setText(Time().toString(false) + m_lengthString);
 }
 
-void PlayerWidget::onPlayerFileOpenError(const QString & filePath)
+void
+PlayerWidget::onPlayerFileOpenError(const QString &filePath)
 {
 	KMessageBox::sorry(this, i18n("<qt>There was an error opening media file %1.</qt>", filePath));
 }
 
-void PlayerWidget::onPlayerFileClosed()
+void
+PlayerWidget::onPlayerFileClosed()
 {
 	m_lastCheckedTime = 0;
 
@@ -682,18 +728,20 @@ void PlayerWidget::onPlayerFileClosed()
 	m_fsSeekSlider->setEnabled(false);
 }
 
-void PlayerWidget::onPlayerPlaybackError(const QString & errorMessage)
+void
+PlayerWidget::onPlayerPlaybackError(const QString &errorMessage)
 {
 	if(errorMessage.isEmpty())
 		KMessageBox::error(this, i18n("Unexpected error when playing file."), i18n("Error Playing File")
-			);
+		                   );
 	else
 		KMessageBox::detailedError(this, i18n("Unexpected error when playing file."), errorMessage, i18n("Error Playing File")
-			);
-	//onPlayerFileClosed();
+		                           );
+	// onPlayerFileClosed();
 }
 
-void PlayerWidget::onPlayerPlaying()
+void
+PlayerWidget::onPlayerPlaying()
 {
 	m_seekSlider->setEnabled(true);
 	m_fsSeekSlider->setEnabled(true);
@@ -701,7 +749,8 @@ void PlayerWidget::onPlayerPlaying()
 	updatePositionEditVisibility();
 }
 
-void PlayerWidget::onPlayerPositionChanged(double seconds)
+void
+PlayerWidget::onPlayerPositionChanged(double seconds)
 {
 	if(m_updatePositionControls > 0) {
 		if(seconds >= 0) {
@@ -729,7 +778,8 @@ void PlayerWidget::onPlayerPositionChanged(double seconds)
 		m_updatePositionControls += 2;
 }
 
-void PlayerWidget::onPlayerLengthChanged(double seconds)
+void
+PlayerWidget::onPlayerLengthChanged(double seconds)
 {
 	if(seconds > 0) {
 		m_lengthLabel->setText(Time((long)(seconds * 1000)).toString());
@@ -740,12 +790,14 @@ void PlayerWidget::onPlayerLengthChanged(double seconds)
 	}
 }
 
-void PlayerWidget::onPlayerFramesPerSecondChanged(double fps)
+void
+PlayerWidget::onPlayerFramesPerSecondChanged(double fps)
 {
 	m_fpsLabel->setText(fps > 0 ? QString::number(fps, 'f', 3) : i18n("<i>Unknown</i>"));
 }
 
-void PlayerWidget::onPlayerStopped()
+void
+PlayerWidget::onPlayerStopped()
 {
 	onPlayerPositionChanged(0);
 
@@ -757,7 +809,8 @@ void PlayerWidget::onPlayerStopped()
 	updatePositionEditVisibility();
 }
 
-void PlayerWidget::onPlayerVolumeChanged(double volume)
+void
+PlayerWidget::onPlayerVolumeChanged(double volume)
 {
 	if(m_updateVolumeControls) {
 		m_updatePlayerVolume = false;
@@ -767,12 +820,14 @@ void PlayerWidget::onPlayerVolumeChanged(double volume)
 	}
 }
 
-void PlayerWidget::onPlayerLeftClicked(const QPoint & /*point */ )
+void
+PlayerWidget::onPlayerLeftClicked(const QPoint & /*point */)
 {
 	m_player->togglePlayPaused();
 }
 
-void PlayerWidget::onPlayerRightClicked(const QPoint & point)
+void
+PlayerWidget::onPlayerRightClicked(const QPoint &point)
 {
 	static KMenu *menu = new KMenu(this);
 
@@ -819,12 +874,14 @@ void PlayerWidget::onPlayerRightClicked(const QPoint & point)
 	menu->popup(point);
 }
 
-void PlayerWidget::onPlayerDoubleClicked(const QPoint & /*point */ )
+void
+PlayerWidget::onPlayerDoubleClicked(const QPoint & /*point */)
 {
 	app()->toggleFullScreenMode();
 }
 
-void PlayerWidget::onPlayerBackendInitialized()
+void
+PlayerWidget::onPlayerBackendInitialized()
 {
 	// NOTE when the player backend is initialized the video widget
 	// is created in front of the text overlay, so we have to raise

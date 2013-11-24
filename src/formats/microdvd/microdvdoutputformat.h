@@ -20,7 +20,6 @@
  *   Boston, MA 02110-1301, USA.                                           *
  ***************************************************************************/
 
-
 #ifdef HAVE_CONFIG_H
 #include <config.h>
 #endif
@@ -29,73 +28,77 @@
 #include "../../core/subtitleiterator.h"
 
 namespace SubtitleComposer {
-	class MicroDVDOutputFormat:public OutputFormat {
-		friend class FormatManager;
+class MicroDVDOutputFormat : public OutputFormat
+{
+	friend class FormatManager;
 
-	public:
+public:
+	virtual ~MicroDVDOutputFormat() {}
 
-		virtual ~MicroDVDOutputFormat() {}
-	protected:
+protected:
 
-		virtual QString dumpSubtitles(const Subtitle & subtitle, bool primary) const {
-			QString ret;
+	virtual QString dumpSubtitles(const Subtitle &subtitle, bool primary) const
+	{
+		QString ret;
 
-			double framesPerSecond = subtitle.framesPerSecond();
+		double framesPerSecond = subtitle.framesPerSecond();
+		ret += m_lineBuilder
+				.arg(1)
+				.arg(1)
+				.arg(QString::number(framesPerSecond, 'f', 3));
+
+		for(SubtitleIterator it(subtitle); it.current(); ++it) {
+			const SubtitleLine *line = it.current();
+
+			const SString &text = primary ? line->primaryText() : line->secondaryText();
+			QString subtitle = "";
+
+			int prevStyle = 0;
+			QRgb prevColor = 0;
+			for(int i = 0, sz = text.length(); i < sz; i++) {
+				int curStyle = text.styleFlagsAt(i);
+				QRgb curColor = (curStyle &SString::Color) != 0 ? text.styleColorAt(i) : 0;
+				curStyle &= SString::Bold | SString::Italic | SString::Underline;
+				if(prevStyle != curStyle)
+					subtitle += m_stylesMap[curStyle];
+				if(prevColor != curColor)
+					subtitle += "{c:" + (curColor != 0 ? "$" + QColor(qBlue(curColor), qGreen(curColor), qRed(curColor)).name().mid(1).toLower() : "") + "}";
+
+				const QChar ch = text.at(i);
+				if(ch == '\n' || ch == '\r')
+					subtitle += '|';
+				else
+					subtitle += ch;
+
+				prevStyle = curStyle;
+				prevColor = curColor;
+			}
+
 			ret += m_lineBuilder
-					.arg(1)
-					.arg(1)
-					.arg(QString::number(framesPerSecond, 'f', 3));
-
-			for(SubtitleIterator it(subtitle); it.current(); ++it) {
-				const SubtitleLine *line = it.current();
-
-				const SString &text = primary ? line->primaryText() : line->secondaryText();
-				QString subtitle = "";
-
-				int prevStyle = 0;
-				QRgb prevColor = 0;
-				for(int i = 0, sz = text.length(); i < sz; i++) {
-					int curStyle = text.styleFlagsAt(i);
-					QRgb curColor = (curStyle & SString::Color) != 0 ? text.styleColorAt(i) : 0;
-					curStyle &= SString::Bold | SString::Italic | SString::Underline;
-					if(prevStyle != curStyle)
-						subtitle += m_stylesMap[curStyle];
-					if(prevColor != curColor)
-						subtitle += "{c:" + (curColor != 0 ? "$" + QColor(qBlue(curColor), qGreen(curColor), qRed(curColor)).name().mid(1).toLower() : "") + "}";
-
-					const QChar ch = text.at(i);
-					if(ch == '\n' || ch == '\r')
-						subtitle += '|';
-					else
-						subtitle += ch;
-
-					prevStyle = curStyle;
-					prevColor = curColor;
-				}
-
-				ret += m_lineBuilder
-						.arg((long)((line->showTime().toMillis() / 1000.0) * framesPerSecond + 0.5))
-						.arg((long)((line->hideTime().toMillis() / 1000.0) * framesPerSecond + 0.5))
-						.arg(subtitle);
-			} return ret;
+					.arg((long)((line->showTime().toMillis() / 1000.0) * framesPerSecond + 0.5))
+					.arg((long)((line->hideTime().toMillis() / 1000.0) * framesPerSecond + 0.5))
+					.arg(subtitle);
 		}
+		return ret;
+	}
 
-		MicroDVDOutputFormat()
-			: OutputFormat("MicroDVD", QString("sub:txt").split(":")),
-			  m_lineBuilder("{%1}{%2}%3\n") {
-			m_stylesMap[0] = "{y:}";
-			m_stylesMap[SString::Bold] = "{y:b}";
-			m_stylesMap[SString::Italic] = "{y:i}";
-			m_stylesMap[SString::Underline] = "{y:u}";
-			m_stylesMap[SString::Bold | SString::Italic] = "{y:b,i}";
-			m_stylesMap[SString::Bold | SString::Underline] = "{y:u,b}";
-			m_stylesMap[SString::Italic | SString::Underline] = "{y:u,i}";
-			m_stylesMap[SString::Bold | SString::Italic | SString::Underline] = "{y:u,b,i}";
-		}
+	MicroDVDOutputFormat() :
+		OutputFormat("MicroDVD", QString("sub:txt").split(":")),
+		m_lineBuilder("{%1}{%2}%3\n")
+	{
+		m_stylesMap[0] = "{y:}";
+		m_stylesMap[SString::Bold] = "{y:b}";
+		m_stylesMap[SString::Italic] = "{y:i}";
+		m_stylesMap[SString::Underline] = "{y:u}";
+		m_stylesMap[SString::Bold | SString::Italic] = "{y:b,i}";
+		m_stylesMap[SString::Bold | SString::Underline] = "{y:u,b}";
+		m_stylesMap[SString::Italic | SString::Underline] = "{y:u,i}";
+		m_stylesMap[SString::Bold | SString::Italic | SString::Underline] = "{y:u,b,i}";
+	}
 
-		const QString m_lineBuilder;
-		mutable QMap<int,QString> m_stylesMap;
-	};
+	const QString m_lineBuilder;
+	mutable QMap<int, QString> m_stylesMap;
+};
 }
 
 #endif

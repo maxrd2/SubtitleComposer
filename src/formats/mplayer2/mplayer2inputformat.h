@@ -29,33 +29,37 @@
 #include <QtCore/QRegExp>
 
 namespace SubtitleComposer {
-	class MPlayer2InputFormat:public InputFormat {
-		friend class FormatManager;
+class MPlayer2InputFormat : public InputFormat
+{
+	friend class FormatManager;
 
-	public:
+public:
+	virtual ~MPlayer2InputFormat() {}
 
-		virtual ~ MPlayer2InputFormat() {
+protected:
+	virtual bool parseSubtitles(Subtitle &subtitle, const QString &data) const
+	{
+		unsigned readLines = 0;
+
+		for(int offset = 0; m_lineRegExp.indexIn(data, offset) != -1; offset += m_lineRegExp.matchedLength()) {
+			Time showTime(m_lineRegExp.cap(1).toInt() * 100);
+			Time hideTime(m_lineRegExp.cap(2).toInt() * 100);
+			QString text(m_lineRegExp.cap(3).replace("|", "\n"));
+
+			subtitle.insertLine(new SubtitleLine(text, showTime, hideTime));
+
+			readLines++;
 		}
-	protected:
+		return readLines > 0;
+	}
 
-		virtual bool parseSubtitles(Subtitle & subtitle, const QString & data) const {
-			unsigned readLines = 0;
+	MPlayer2InputFormat() :
+		InputFormat("MPlayer2", QStringList("mpl")),
+		m_lineRegExp("\\[(\\d+)\\]\\[(\\d+)\\]([^\n]+)\n")
+	{}
 
-			for(int offset = 0; m_lineRegExp.indexIn(data, offset) != -1; offset += m_lineRegExp.matchedLength()) {
-				Time showTime(m_lineRegExp.cap(1).toInt() * 100);
-				Time hideTime(m_lineRegExp.cap(2).toInt() * 100);
-				QString text(m_lineRegExp.cap(3).replace("|", "\n"));
-
-				subtitle.insertLine(new SubtitleLine(text, showTime, hideTime));
-
-				readLines++;
-			} return readLines > 0;
-		}
-		MPlayer2InputFormat():InputFormat("MPlayer2", QStringList("mpl")), m_lineRegExp("\\[(\\d+)\\]\\[(\\d+)\\]([^\n]+)\n") {
-		}
-
-		mutable QRegExp m_lineRegExp;
-	};
+	mutable QRegExp m_lineRegExp;
+};
 }
 
 #endif

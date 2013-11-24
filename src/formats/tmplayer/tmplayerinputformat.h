@@ -29,69 +29,71 @@
 #include <QtCore/QRegExp>
 
 namespace SubtitleComposer {
-	// FIXME TMPlayer Multiline variant
+// FIXME TMPlayer Multiline variant
 
-	class TMPlayerInputFormat:public InputFormat {
-		friend class FormatManager;
+class TMPlayerInputFormat : public InputFormat
+{
+	friend class FormatManager;
 
-	public:
+public:
+	virtual ~TMPlayerInputFormat() {}
 
-		virtual ~ TMPlayerInputFormat() {
-		}
-	protected:
+protected:
+	virtual bool parseSubtitles(Subtitle &subtitle, const QString &data) const
+	{
+		unsigned readLines = 0;
 
-		virtual bool parseSubtitles(Subtitle & subtitle, const QString & data) const {
-			unsigned readLines = 0;
+		if(m_regExp.indexIn(data, 0) == -1)
+			return false;
 
-			if(m_regExp.indexIn(data, 0) == -1)
-				return false;
+		Time previousShowTime(m_regExp.cap(1).toInt(), m_regExp.cap(2).toInt(), m_regExp.cap(3).toInt(), 0);
+		QString previousText(m_regExp.cap(4).replace("|", "\n").trimmed());
 
-			Time previousShowTime(m_regExp.cap(1).toInt(), m_regExp.cap(2).toInt(), m_regExp.cap(3).toInt(), 0);
-			QString previousText(m_regExp.cap(4).replace("|", "\n").trimmed());
+		int offset = m_regExp.matchedLength();
+		for(; m_regExp.indexIn(data, offset) != -1; offset += m_regExp.matchedLength()) {
+			Time showTime(m_regExp.cap(1).toInt(), m_regExp.cap(2).toInt(), m_regExp.cap(3).toInt(), 0);
+			QString text(m_regExp.cap(4).replace("|", "\n").trimmed());
 
-			int offset = m_regExp.matchedLength();
-			for(; m_regExp.indexIn(data, offset) != -1; offset += m_regExp.matchedLength()) {
-				Time showTime(m_regExp.cap(1).toInt(), m_regExp.cap(2).toInt(), m_regExp.cap(3).toInt(), 0);
-				QString text(m_regExp.cap(4).replace("|", "\n").trimmed());
-
-				// To compensate for the format deficiencies, Subtitle Composer writes empty lines
-				// indicating that way the line hide time. We do the same.
-				if(!previousText.isEmpty()) {
-					subtitle.insertLine(new SubtitleLine(previousText, previousShowTime, showTime));
-
-					readLines++;
-				}
-
-				previousText = text;
-				previousShowTime = showTime;
-			}
+			// To compensate for the format deficiencies, Subtitle Composer writes empty lines
+			// indicating that way the line hide time. We do the same.
 			if(!previousText.isEmpty()) {
-				subtitle.insertLine(new SubtitleLine(previousText, previousShowTime, previousShowTime + 2000));
+				subtitle.insertLine(new SubtitleLine(previousText, previousShowTime, showTime));
 
 				readLines++;
 			}
 
-			return true;
+			previousText = text;
+			previousShowTime = showTime;
+		}
+		if(!previousText.isEmpty()) {
+			subtitle.insertLine(new SubtitleLine(previousText, previousShowTime, previousShowTime + 2000));
+
+			readLines++;
 		}
 
-	TMPlayerInputFormat():
-		InputFormat("TMPlayer", QString("sub:txt").split(":")), m_regExp("([0-2]?[0-9]):([0-5][0-9]):([0-5][0-9]):([^\n]*)\n?") {
-		}
+		return true;
+	}
 
-	TMPlayerInputFormat(const QString & name, const QStringList & extensions, const QString & regExp):
-		InputFormat(name, extensions), m_regExp(regExp) {
-		}
+	TMPlayerInputFormat() :
+		InputFormat("TMPlayer", QString("sub:txt").split(":")),
+		m_regExp("([0-2]?[0-9]):([0-5][0-9]):([0-5][0-9]):([^\n]*)\n?") {}
 
-		mutable QRegExp m_regExp;
-	};
+	TMPlayerInputFormat(const QString &name, const QStringList &extensions, const QString &regExp) :
+		InputFormat(name, extensions),
+		m_regExp(regExp) {}
 
-	class TMPlayerPlusInputFormat:public TMPlayerInputFormat {
-		friend class FormatManager;
+	mutable QRegExp m_regExp;
+};
 
-	protected:
+class TMPlayerPlusInputFormat : public TMPlayerInputFormat
+{
+	friend class FormatManager;
 
-		TMPlayerPlusInputFormat():TMPlayerInputFormat("TMPlayer+", QString("sub:txt").split(":"), "([0-2]?[0-9]):([0-5][0-9]):([0-5][0-9])=([^\n]*)\n?") {
-	}};
+protected:
+	TMPlayerPlusInputFormat() :
+		TMPlayerInputFormat("TMPlayer+", QString("sub:txt").split(":"), "([0-2]?[0-9]):([0-5][0-9]):([0-5][0-9])=([^\n]*)\n?")
+	{}
+};
 }
 
 #endif

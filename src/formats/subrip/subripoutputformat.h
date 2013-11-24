@@ -20,7 +20,6 @@
  *   Boston, MA 02110-1301, USA.                                           *
  ***************************************************************************/
 
-
 #ifdef HAVE_CONFIG_H
 #include <config.h>
 #endif
@@ -29,40 +28,42 @@
 #include "../../core/subtitleiterator.h"
 
 namespace SubtitleComposer {
-	class SubRipOutputFormat:public OutputFormat {
-		friend class FormatManager;
+class SubRipOutputFormat : public OutputFormat
+{
+	friend class FormatManager;
 
-	public:
+public:
+	virtual ~SubRipOutputFormat() {}
 
-		virtual ~ SubRipOutputFormat() {
+protected:
+	virtual QString dumpSubtitles(const Subtitle &subtitle, bool primary) const
+	{
+		QString ret;
+
+		for(SubtitleIterator it(subtitle); it.current(); ++it) {
+			const SubtitleLine *line = it.current();
+
+			Time showTime = line->showTime();
+			Time hideTime = line->hideTime();
+			ret += m_timeBuilder.sprintf("%d\n%02d:%02d:%02d,%03d --> %02d:%02d:%02d,%03d\n", it.index() + 1, showTime.hours(), showTime.minutes(), showTime.seconds(), showTime.mseconds(), hideTime.hours(), hideTime.minutes(), hideTime.seconds(), hideTime.mseconds());
+
+			const SString &text = primary ? line->primaryText() : line->secondaryText();
+
+			ret += text.richString().replace("&amp;", ">").replace("&lt;", "<").replace("&gt;", ">");
+
+			ret += "\n\n";
 		}
-	protected:
+		return ret;
+	}
 
-		virtual QString dumpSubtitles(const Subtitle & subtitle, bool primary) const {
-			QString ret;
+	SubRipOutputFormat() :
+		OutputFormat("SubRip", QStringList("srt")),
+		m_dialogueBuilder("%1%2%3%4%5%6%7\n\n")
+	{}
 
-			for(SubtitleIterator it(subtitle); it.current(); ++it) {
-				const SubtitleLine *line = it.current();
-
-				Time showTime = line->showTime();
-				Time hideTime = line->hideTime();
-				ret += m_timeBuilder.sprintf("%d\n%02d:%02d:%02d,%03d --> %02d:%02d:%02d,%03d\n", it.index() + 1, showTime.hours(), showTime.minutes(), showTime.seconds(), showTime.mseconds(), hideTime.hours(), hideTime.minutes(), hideTime.seconds(), hideTime.mseconds());
-
-				const SString & text = primary ? line->primaryText() : line->secondaryText();
-
-				ret += text.richString().replace("&amp;", ">").replace("&lt;", "<").replace("&gt;", ">");
-
-				ret += "\n\n";
-			} return ret;
-		}
-
-		SubRipOutputFormat()
-			: OutputFormat("SubRip", QStringList("srt")),
-			  m_dialogueBuilder("%1%2%3%4%5%6%7\n\n") {}
-
-		const QString m_dialogueBuilder;
-		mutable QString m_timeBuilder;
-	};
+	const QString m_dialogueBuilder;
+	mutable QString m_timeBuilder;
+};
 }
 
 #endif

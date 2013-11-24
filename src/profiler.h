@@ -31,13 +31,17 @@
 #include <QtCore/QTime>
 #include <KDebug>
 
-class Profiler {
-  public:
-
-  Profiler(const char *description = 0):
-	m_description(description) {
+class Profiler
+{
+public:
+	Profiler(const char *description = 0) :
+		m_description(description)
+	{
 		m_time.start();
-	} ~Profiler() {
+	}
+
+	~Profiler()
+	{
 		int elapsed = m_time.elapsed();
 		if(m_description)
 			qDebug() << m_description << " took" << elapsed << "msecs";
@@ -45,19 +49,18 @@ class Profiler {
 			qDebug() << "took" << elapsed << "msecs";
 	}
 
-  private:
-
+private:
 	const char *m_description;
 	QTime m_time;
 };
 
-#define PROFILE() Profiler _p_r_o_f_i_l_e_r_( Q_FUNC_INFO )
-#define PROFILE2( x ) Profiler _p_r_o_f_i_l_e_r_( x )
+#define PROFILE() Profiler _p_r_o_f_i_l_e_r_(Q_FUNC_INFO)
+#define PROFILE2(x) Profiler _p_r_o_f_i_l_e_r_(x)
 
 #else
 
 #define PROFILE() ;
-#define PROFILE2( x ) ;
+#define PROFILE2(x) ;
 
 #endif
 

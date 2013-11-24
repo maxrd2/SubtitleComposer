@@ -32,36 +32,36 @@ class QGroupBox;
 class QGridLayout;
 
 namespace SubtitleComposer {
-	class AppConfigGroupWidget:public QWidget {
-	Q_OBJECT public:
+class AppConfigGroupWidget : public QWidget
+{
+	Q_OBJECT
 
-		/// ownership of the config object is transferred to this object
-		explicit AppConfigGroupWidget(AppConfigGroup * configGroup, QWidget * parent = 0);
-		virtual ~ AppConfigGroupWidget();
+public:
+/// ownership of the config object is transferred to this object
+	explicit AppConfigGroupWidget(AppConfigGroup *configGroup, QWidget *parent = 0);
+	virtual ~AppConfigGroupWidget();
 
-		const AppConfigGroup *config();
+	const AppConfigGroup * config();
 
-		signals:void settingsChanged();
+signals:
+	void settingsChanged();
 
-		public slots:
-			/// If possible (i.e., configs are compatible), copies the config object into
-			/// the widget config. Ownership of config object it's not transferred.
-		void setConfig(const AppConfigGroup * const config);
+public slots:
+/// If possible (i.e., configs are compatible), copies the config object into
+/// the widget config. Ownership of config object it's not transferred.
+	void setConfig(const AppConfigGroup *const config);
 
-		void setControlsFromDefaults();
-		virtual void setControlsFromConfig() = 0;
-		virtual void setConfigFromControls() = 0;
+	void setControlsFromDefaults();
+	virtual void setControlsFromConfig() = 0;
+	virtual void setConfigFromControls() = 0;
 
-	protected:
+protected:
+	QGroupBox * createGroupBox(const QString &title = QString(), bool addToLayout = true);
+	QGridLayout * createGridLayout(QGroupBox *groupBox);
 
-		QGroupBox * createGroupBox(const QString & title = QString(), bool addToLayout = true);
-		QGridLayout *createGridLayout(QGroupBox * groupBox);
-
-	protected:
-
-		AppConfigGroup * m_config;
-
-		QGridLayout *m_mainLayout;
-	};
+protected:
+	AppConfigGroup *m_config;
+	QGridLayout *m_mainLayout;
+};
 }
 #endif

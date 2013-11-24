@@ -24,12 +24,12 @@
 
 using namespace SubtitleComposer;
 
-Scripting::StringsModule::StringsModule(QObject * parent):
-QObject(parent)
-{
-}
+Scripting::StringsModule::StringsModule(QObject *parent) :
+	QObject(parent)
+{}
 
-QObject *Scripting::StringsModule::newString(const QString & text)
+QObject *
+Scripting::StringsModule::newString(const QString &text)
 {
 	return new SString(SubtitleComposer::SString(text), this);
 }

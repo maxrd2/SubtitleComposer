@@ -37,49 +37,76 @@ using namespace SubtitleComposer;
 
 #define MULTIPART_DATA_BOUNDARY "----------nOtA5FcjrNZuZ3TMioysxHGGCO69vA5iYysdBTL2osuNwOjcCfU7uiN"
 
-Translator::Translator(QObject * parent):
-QObject(parent), m_currentTransferJob(0), m_inputLanguage(Language::INVALID), m_outputLanguage(Language::INVALID), m_lastReceivedChunk(0)
+Translator::Translator(QObject *parent) :
+	QObject(parent),
+	m_currentTransferJob(0),
+	m_inputLanguage(Language::INVALID),
+	m_outputLanguage(Language::INVALID),
+	m_lastReceivedChunk(0)
 {
 	connect(this, SIGNAL(finished(const QString &)), this, SIGNAL(finished()));
 	connect(this, SIGNAL(finishedWithError(const QString &)), this, SIGNAL(finished()));
 }
 
 Translator::~Translator()
-{
-}
+{}
 
-QString Translator::inputText() const {
+QString
+Translator::inputText() const
+{
 	return m_inputTextChunks.join(QString());
 }
-QString Translator::outputText() const {
+
+QString
+Translator::outputText() const
+{
 	return m_outputText;
 }
-Language::Value Translator::inputLanguage() const
+
+Language::Value
+Translator::inputLanguage() const
 {
 	return m_inputLanguage;
 }
 
-Language::Value Translator::outputLanguage()const
+Language::Value
+Translator::outputLanguage() const
 {
 	return m_outputLanguage;
 }
 
-int Translator::chunksCount() const {
+int
+Translator::chunksCount() const
+{
 	return m_inputTextChunks.count();
 }
-bool Translator::isFinished() const {
+
+bool
+Translator::isFinished() const
+{
 	return isFinishedWithError() || m_lastReceivedChunk == chunksCount();
 }
-bool Translator::isFinishedWithError() const {
+
+bool
+Translator::isFinishedWithError() const
+{
 	return !m_errorMessage.isEmpty();
 }
-bool Translator::isAborted() const {
+
+bool
+Translator::isAborted() const
+{
 	return m_aborted;
 }
-QString Translator::errorMessage() const {
+
+QString
+Translator::errorMessage() const
+{
 	return m_errorMessage;
 }
-bool Translator::syncTranslate(const QString & text, Language::Value inputLang, Language::Value outputLang, ProgressDialog * progressDialog)
+
+bool
+Translator::syncTranslate(const QString &text, Language::Value inputLang, Language::Value outputLang, ProgressDialog *progressDialog)
 {
 	if(progressDialog) {
 		connect(this, SIGNAL(progress(int)), progressDialog, SLOT(setValue(int)));
@@ -101,7 +128,8 @@ bool Translator::syncTranslate(const QString & text, Language::Value inputLang, 
 	return !isFinishedWithError();
 }
 
-static int findOptimalSplitIndex(const QString & text, int fromIndex = 0)
+static int
+findOptimalSplitIndex(const QString &text, int fromIndex = 0)
 {
 	int lastTargetIndex = qMin(fromIndex + Translator::MaxChunkSize, text.count() - 1);
 
@@ -117,7 +145,8 @@ static int findOptimalSplitIndex(const QString & text, int fromIndex = 0)
 	return fromIndex + Translator::MaxChunkSize;
 }
 
-void Translator::translate(const QString & text, Language::Value inputLanguage, Language::Value outputLanguage)
+void
+Translator::translate(const QString &text, Language::Value inputLanguage, Language::Value outputLanguage)
 {
 	m_inputTextChunks.clear();
 
@@ -138,10 +167,11 @@ void Translator::translate(const QString & text, Language::Value inputLanguage, 
 	startChunkDownload(1);
 }
 
-void Translator::abort()
+void
+Translator::abort()
 {
 	if(m_currentTransferJob) {
-		m_currentTransferJob->kill();	// deletes the job
+		m_currentTransferJob->kill();   // deletes the job
 		m_aborted = true;
 		m_errorMessage = i18n("Operation cancelled by user");
 		emit finishedWithError(m_errorMessage);
@@ -149,23 +179,25 @@ void Translator::abort()
 }
 
 // "Content-type" => "application/x-www-form-urlencoded"
-QByteArray Translator::prepareUrlEncodedData(const QMap < QString, QString > &params)
+QByteArray
+Translator::prepareUrlEncodedData(const QMap<QString, QString> &params)
 {
 	QByteArray data;
 
 	QUrl url;
-	for(QMap < QString, QString >::ConstIterator it = params.begin(), end = params.end(); it != end; ++it)
+	for(QMap<QString, QString>::ConstIterator it = params.begin(), end = params.end(); it != end; ++it)
 		url.addQueryItem(it.key(), it.value());
 
 	return url.toEncoded(QUrl::RemoveScheme | QUrl::RemoveAuthority | QUrl::RemovePath).remove(0, 1);
 }
 
 // "Content-type" => "multipart/form-data; boundary=" MULTIPART_DATA_BOUNDARY
-QByteArray Translator::prepareMultipartData(const QMap < QString, QString > &params)
+QByteArray
+Translator::prepareMultipartData(const QMap<QString, QString> &params)
 {
 	QByteArray data;
 
-	for(QMap < QString, QString >::ConstIterator it = params.begin(), end = params.end(); it != end; ++it) {
+	for(QMap<QString, QString>::ConstIterator it = params.begin(), end = params.end(); it != end; ++it) {
 		data.append("--");
 		data.append(MULTIPART_DATA_BOUNDARY);
 		data.append("\r\n");
@@ -183,15 +215,16 @@ QByteArray Translator::prepareMultipartData(const QMap < QString, QString > &par
 	return data;
 }
 
-void Translator::startChunkDownload(int chunkNumber)
+void
+Translator::startChunkDownload(int chunkNumber)
 {
-	QMap < QString, QString > params;
+	QMap<QString, QString> params;
 	params["prev"] = "_t";
 	params["sl"] = Language::code(m_inputLanguage);
 	params["tl"] = Language::code(m_outputLanguage);
 	params["text"] = m_inputTextChunks.at(chunkNumber - 1);
 
-	//QByteArray postData = prepareMultipartData( params );
+	// QByteArray postData = prepareMultipartData( params );
 	QByteArray postData = prepareUrlEncodedData(params);
 
 	m_currentTransferJob = KIO::http_post(KUrl("http://translate.google.com/translate_t"), postData, KIO::HideProgressInfo);
@@ -209,19 +242,22 @@ void Translator::startChunkDownload(int chunkNumber)
 	m_currentTransferJob->start();
 }
 
-void Translator::onTransferJobProgress(KJob * /*job */ , unsigned long percent)
+void
+Translator::onTransferJobProgress(KJob * /*job */, unsigned long percent)
 {
 	const double r = 1.0 / chunksCount();
 	int percentage = (int)(m_lastReceivedChunk * 100.0 * r + percent * r);
 	emit progress(percentage);
 }
 
-void Translator::onTransferJobData(KIO::Job * /*job */ , const QByteArray & data)
+void
+Translator::onTransferJobData(KIO::Job * /*job */, const QByteArray &data)
 {
 	m_currentTransferData.append(data);
 }
 
-void Translator::onTransferJobResult(KJob * job)
+void
+Translator::onTransferJobResult(KJob *job)
 {
 	m_currentTransferJob = 0;
 
@@ -272,12 +308,13 @@ void Translator::onTransferJobResult(KJob * job)
 	if(m_lastReceivedChunk >= chunksCount())
 		emit finished(m_outputText);
 	else
-	startChunkDownload(m_lastReceivedChunk + 1);
+		startChunkDownload(m_lastReceivedChunk + 1);
 }
 
-QString & Translator::replaceHTMLEntities(QString & text)
+QString &
+Translator::replaceHTMLEntities(QString &text)
 {
-	const QMap < QString, QChar > &namedEntities = Translator::namedEntities();
+	const QMap<QString, QChar> &namedEntities = Translator::namedEntities();
 	static QRegExp namedEntitiesRegExp("&([a-zA-Z]+);");
 	for(int offsetIndex = 0, matchedIndex; (matchedIndex = namedEntitiesRegExp.indexIn(text, offsetIndex)) != -1;) {
 		QString entityName = namedEntitiesRegExp.cap(1).toLower();
@@ -304,9 +341,10 @@ QString & Translator::replaceHTMLEntities(QString & text)
 	return text;
 }
 
-const QMap < QString, QChar > &Translator::namedEntities()
+const QMap<QString, QChar> &
+Translator::namedEntities()
 {
-	static QMap < QString, QChar > entities;
+	static QMap<QString, QChar> entities;
 	if(entities.empty()) {
 		entities["quot"] = 34;
 		entities["amp"] = 38;

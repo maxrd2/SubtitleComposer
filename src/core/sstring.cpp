@@ -38,11 +38,11 @@ memset_n(void *ptr, int value, size_t length, size_t size)
 	return ptr;
 }
 
-SString::SString(const QString &string, int styleFlags/* = 0*/, QRgb styleColor/* = 0*/)
-	: m_string(string),
-	  m_styleFlags(NULL),
-	  m_styleColors(NULL),
-	  m_capacity(0)
+SString::SString(const QString &string, int styleFlags /* = 0*/, QRgb styleColor /* = 0*/) :
+	m_string(string),
+	m_styleFlags(NULL),
+	m_styleColors(NULL),
+	m_capacity(0)
 {
 	if(m_string.length()) {
 		setMinFlagsCapacity(m_string.length());
@@ -51,11 +51,11 @@ SString::SString(const QString &string, int styleFlags/* = 0*/, QRgb styleColor/
 	}
 }
 
-SString::SString(const SString &sstring)
-	: m_string(sstring.m_string),
-	  m_styleFlags(NULL),
-	  m_styleColors(NULL),
-	  m_capacity(0)
+SString::SString(const SString &sstring) :
+	m_string(sstring.m_string),
+	m_styleFlags(NULL),
+	m_styleColors(NULL),
+	m_capacity(0)
 {
 	if(m_string.length()) {
 		setMinFlagsCapacity(m_string.length());
@@ -64,7 +64,8 @@ SString::SString(const SString &sstring)
 	}
 }
 
-SString & SString::operator=(const SString & sstring)
+SString &
+SString::operator=(const SString &sstring)
 {
 	if(this == &sstring)
 		return *this;
@@ -86,7 +87,8 @@ SString::~SString()
 	delete[] m_styleColors;
 }
 
-void SString::setString(const QString &string, int styleFlags/* = 0*/, QRgb styleColor/* = 0*/)
+void
+SString::setString(const QString &string, int styleFlags /* = 0*/, QRgb styleColor /* = 0*/)
 {
 	m_string = string;
 	setMinFlagsCapacity(m_string.length());
@@ -96,7 +98,9 @@ void SString::setString(const QString &string, int styleFlags/* = 0*/, QRgb styl
 	}
 }
 
-QString SString::richString(RichOutputMode mode) const {
+QString
+SString::richString(RichOutputMode mode) const
+{
 	if(m_string.isEmpty())
 		return m_string;
 
@@ -243,7 +247,8 @@ QString SString::richString(RichOutputMode mode) const {
 	return ret;
 }
 
-SString & SString::setRichString(const QString & string)
+SString &
+SString::setRichString(const QString &string)
 {
 	QRegExp tagRegExp("<(/?([bBiIuUsS]|font))(\\s+color=\"?([\\w#]+)\"?)?>");
 
@@ -284,7 +289,7 @@ SString & SString::setRichString(const QString & string)
 
 		if(newStyle != currentStyle || currentColor != newColor) {
 			QString token(string.mid(offsetPos, matchedPos - offsetPos));
-			append(SString(token/*.replace("&lt;", "<").replace("&gt;", ">")*/, currentStyle, currentColor.isValid() ? currentColor.rgb() : 0));
+			append(SString(token /*.replace("&lt;", "<").replace("&gt;", ">")*/, currentStyle, currentColor.isValid() ? currentColor.rgb() : 0));
 			currentStyle = newStyle;
 			currentColor = newColor;
 		}
@@ -293,12 +298,13 @@ SString & SString::setRichString(const QString & string)
 	}
 
 	QString token(string.mid(offsetPos, matchedPos - offsetPos));
-	append(SString(token/*.replace("&lt;", "<").replace("&gt;", ">")*/, currentStyle, currentColor.isValid() ? currentColor.rgb() : 0));
+	append(SString(token /*.replace("&lt;", "<").replace("&gt;", ">")*/, currentStyle, currentColor.isValid() ? currentColor.rgb() : 0));
 
 	return *this;
 }
 
-int SString::cummulativeStyleFlags() const
+int
+SString::cummulativeStyleFlags() const
 {
 	int cummulativeStyleFlags = 0;
 	for(int index = 0, size = m_string.length(); index < size; ++index) {
@@ -309,7 +315,8 @@ int SString::cummulativeStyleFlags() const
 	return cummulativeStyleFlags;
 }
 
-bool SString::hasStyleFlags(int styleFlags) const
+bool
+SString::hasStyleFlags(int styleFlags) const
 {
 	int cummulativeStyleFlags = 0;
 	for(int index = 0, size = m_string.length(); index < size; ++index) {
@@ -320,7 +327,8 @@ bool SString::hasStyleFlags(int styleFlags) const
 	return false;
 }
 
-SString & SString::setStyleFlags(int index, int len, int styleFlags)
+SString &
+SString::setStyleFlags(int index, int len, int styleFlags)
 {
 	if(index < 0 || index >= (int)m_string.length())
 		return *this;
@@ -331,7 +339,8 @@ SString & SString::setStyleFlags(int index, int len, int styleFlags)
 	return *this;
 }
 
-SString & SString::setStyleFlags(int index, int len, int styleFlags, bool on)
+SString &
+SString::setStyleFlags(int index, int len, int styleFlags, bool on)
 {
 	if(index < 0 || index >= (int)m_string.length())
 		return *this;
@@ -365,19 +374,22 @@ SString::setStyleColor(int index, int len, QRgb color)
 	return *this;
 }
 
-void SString::clear()
+void
+SString::clear()
 {
 	m_string.clear();
 	setMinFlagsCapacity(0);
 }
 
-void SString::truncate(int size)
+void
+SString::truncate(int size)
 {
 	// no need to change m_styleFlags
 	m_string.truncate(size);
 }
 
-SString & SString::insert(int index, QChar ch)
+SString &
+SString::insert(int index, QChar ch)
 {
 	int oldLength = m_string.length();
 
@@ -415,7 +427,8 @@ SString & SString::insert(int index, QChar ch)
 	return *this;
 }
 
-SString & SString::insert(int index, const QString & str)
+SString &
+SString::insert(int index, const QString &str)
 {
 	int oldLength = m_string.length();
 
@@ -455,7 +468,8 @@ SString & SString::insert(int index, const QString & str)
 	return *this;
 }
 
-SString & SString::insert(int index, const SString & str)
+SString &
+SString::insert(int index, const SString &str)
 {
 	int oldLength = m_string.length();
 
@@ -483,7 +497,8 @@ SString & SString::insert(int index, const SString & str)
 	return *this;
 }
 
-SString & SString::replace(int index, int len, const QString &replacement)
+SString &
+SString::replace(int index, int len, const QString &replacement)
 {
 	int oldLength = m_string.length();
 
@@ -492,7 +507,7 @@ SString & SString::replace(int index, int len, const QString &replacement)
 
 	len = length(index, len);
 
-	if(len == 0 && replacement.length() == 0)	// nothing to do (replace nothing with nothing)
+	if(len == 0 && replacement.length() == 0) // nothing to do (replace nothing with nothing)
 		return *this;
 
 	m_string.replace(index, len, replacement);
@@ -533,7 +548,8 @@ SString & SString::replace(int index, int len, const QString &replacement)
 	return *this;
 }
 
-SString & SString::replace(int index, int len, const SString &replacement)
+SString &
+SString::replace(int index, int len, const SString &replacement)
 {
 	int oldLength = m_string.length();
 
@@ -542,13 +558,13 @@ SString & SString::replace(int index, int len, const SString &replacement)
 
 	len = length(index, len);
 
-	if(len == 0 && replacement.m_string.length() == 0)	// nothing to do (replace nothing with nothing)
+	if(len == 0 && replacement.m_string.length() == 0) // nothing to do (replace nothing with nothing)
 		return *this;
 
 	m_string.replace(index, len, replacement.m_string);
 
 	// simple path for when there's no need to change the styles (char substitution)
-	//if ( len == 1 && replacement.m_string.length() == 1 )
+	// if ( len == 1 && replacement.m_string.length() == 1 )
 	//  return *this;
 
 	char *oldStyleFlags = detachFlags();
@@ -569,7 +585,8 @@ SString & SString::replace(int index, int len, const SString &replacement)
 	return *this;
 }
 
-SString & SString::replace(const QString &before, const QString &after, Qt::CaseSensitivity cs)
+SString &
+SString::replace(const QString &before, const QString &after, Qt::CaseSensitivity cs)
 {
 	if(before.length() == 0 && after.length() == 0)
 		return *this;
@@ -584,7 +601,7 @@ SString & SString::replace(const QString &before, const QString &after, Qt::Case
 	int beforeLength = before.length();
 	int afterLength = after.length();
 
-	QList < int >changedData;	// each entry contains the start index of a replaced substring
+	QList<int> changedData;       // each entry contains the start index of a replaced substring
 
 	for(int offsetIndex = 0, matchedIndex; (matchedIndex = m_string.indexOf(before, offsetIndex, cs)) != -1; offsetIndex = matchedIndex + afterLength) {
 		m_string.replace(matchedIndex, beforeLength, after);
@@ -595,7 +612,7 @@ SString & SString::replace(const QString &before, const QString &after, Qt::Case
 			matchedIndex++;
 	}
 
-	if(changedData.empty())		// nothing was replaced
+	if(changedData.empty()) // nothing was replaced
 		return *this;
 
 	if(m_string.length()) {
@@ -633,7 +650,8 @@ SString & SString::replace(const QString &before, const QString &after, Qt::Case
 	return *this;
 }
 
-SString & SString::replace(const QString &before, const SString &after, Qt::CaseSensitivity cs)
+SString &
+SString::replace(const QString &before, const SString &after, Qt::CaseSensitivity cs)
 {
 	if(before.length() == 0 && after.m_string.length() == 0)
 		return *this;
@@ -642,7 +660,7 @@ SString & SString::replace(const QString &before, const SString &after, Qt::Case
 	int beforeLength = before.length();
 	int afterLength = after.length();
 
-	QList < int >changedData;	// each entry contains the start index of a replaced substring
+	QList<int> changedData;       // each entry contains the start index of a replaced substring
 
 	for(int offsetIndex = 0, matchedIndex; (matchedIndex = m_string.indexOf(before, offsetIndex, cs)) != -1; offsetIndex = matchedIndex + afterLength) {
 		m_string.replace(matchedIndex, beforeLength, after.m_string);
@@ -653,7 +671,7 @@ SString & SString::replace(const QString &before, const SString &after, Qt::Case
 			matchedIndex++;
 	}
 
-	if(changedData.empty())		// nothing was replaced
+	if(changedData.empty()) // nothing was replaced
 		return *this;
 
 	if(m_string.length()) {
@@ -691,13 +709,15 @@ SString & SString::replace(const QString &before, const SString &after, Qt::Case
 	return *this;
 }
 
-SString & SString::replace(QChar before, QChar after, Qt::CaseSensitivity cs)
+SString &
+SString::replace(QChar before, QChar after, Qt::CaseSensitivity cs)
 {
 	m_string.replace(before, after, cs);
 	return *this;
 }
 
-SString & SString::replace(QChar ch, const QString &after, Qt::CaseSensitivity cs)
+SString &
+SString::replace(QChar ch, const QString &after, Qt::CaseSensitivity cs)
 {
 	if(after.length() == 1) {
 		// simple path for when there's no need to change the styles flags
@@ -708,7 +728,7 @@ SString & SString::replace(QChar ch, const QString &after, Qt::CaseSensitivity c
 	int oldLength = m_string.length();
 	int afterLength = after.length();
 
-	QList < int >changedData;	// each entry contains the start index of a replaced substring
+	QList<int> changedData;       // each entry contains the start index of a replaced substring
 
 	for(int offsetIndex = 0, matchedIndex; (matchedIndex = m_string.indexOf(ch, offsetIndex, cs)) != -1; offsetIndex = matchedIndex + afterLength) {
 		m_string.replace(matchedIndex, 1, after);
@@ -716,7 +736,7 @@ SString & SString::replace(QChar ch, const QString &after, Qt::CaseSensitivity c
 		changedData.append(matchedIndex);
 	}
 
-	if(changedData.empty())		// nothing was replaced
+	if(changedData.empty()) // nothing was replaced
 		return *this;
 
 	if(m_string.length()) {
@@ -754,12 +774,13 @@ SString & SString::replace(QChar ch, const QString &after, Qt::CaseSensitivity c
 	return *this;
 }
 
-SString & SString::replace(QChar ch, const SString & after, Qt::CaseSensitivity cs)
+SString &
+SString::replace(QChar ch, const SString &after, Qt::CaseSensitivity cs)
 {
 	int oldLength = m_string.length();
 	int afterLength = after.length();
 
-	QList < int >changedData;	// each entry contains the start index of a replaced substring
+	QList<int> changedData;       // each entry contains the start index of a replaced substring
 
 	for(int offsetIndex = 0, matchedIndex; (matchedIndex = m_string.indexOf(ch, offsetIndex, cs)) != -1; offsetIndex = matchedIndex + afterLength) {
 		m_string.replace(matchedIndex, 1, after.m_string);
@@ -767,7 +788,7 @@ SString & SString::replace(QChar ch, const SString & after, Qt::CaseSensitivity 
 		changedData.append(matchedIndex);
 	}
 
-	if(changedData.empty())		// nothing was replaced
+	if(changedData.empty()) // nothing was replaced
 		return *this;
 
 	if(m_string.length()) {
@@ -805,14 +826,14 @@ SString & SString::replace(QChar ch, const SString & after, Qt::CaseSensitivity 
 	return *this;
 }
 
-
-SString & SString::replace(const QRegExp &rx, const QString &a)
+SString &
+SString::replace(const QRegExp &rx, const QString &a)
 {
 	QRegExp regExp(rx);
 
 	int oldLength = m_string.length();
 
-	QList<int> changedData;	// each entry contains the start index of a replaced substring
+	QList<int> changedData; // each entry contains the start index of a replaced substring
 
 	QRegExp::CaretMode caretMode = QRegExp::CaretAtZero;
 	for(int offsetIndex = 0, matchedIndex; (matchedIndex = regExp.indexIn(m_string, offsetIndex, caretMode)) != -1;) {
@@ -821,8 +842,7 @@ SString & SString::replace(const QRegExp &rx, const QString &a)
 		bool escaping = false;
 		for(int afterIndex = 0, afterSize = after.length(); afterIndex < afterSize; ++afterIndex) {
 			QChar chr = after.at(afterIndex);
-			if(escaping)		// perform replace
-			{
+			if(escaping) {          // perform replace
 				escaping = false;
 				if(chr.isNumber()) {
 					int capNumber = chr.digitValue();
@@ -844,18 +864,18 @@ SString & SString::replace(const QRegExp &rx, const QString &a)
 
 		if(regExp.matchedLength() != 1 || after.length() != 1) {
 			changedData.append(matchedIndex);
-			changedData.append(regExp.matchedLength());	// before length
-			changedData.append(after.length());	// after length
+			changedData.append(regExp.matchedLength());     // before length
+			changedData.append(after.length());     // after length
 
 			if(!regExp.matchedLength())
 				matchedIndex++;
 		}
 
 		offsetIndex = matchedIndex + after.length();
-		caretMode = QRegExp::CaretWontMatch;	// caret should only be matched the first time
+		caretMode = QRegExp::CaretWontMatch;    // caret should only be matched the first time
 	}
 
-	if(changedData.empty())		// nothing was replaced
+	if(changedData.empty()) // nothing was replaced
 		return *this;
 
 	if(m_string.length()) {
@@ -897,7 +917,8 @@ SString & SString::replace(const QRegExp &rx, const QString &a)
 	return *this;
 }
 
-SString & SString::replace(const QRegExp &rx, const SString &a)
+SString &
+SString::replace(const QRegExp &rx, const SString &a)
 {
 	QRegExp regExp(rx);
 
@@ -908,8 +929,7 @@ SString & SString::replace(const QRegExp &rx, const SString &a)
 		bool escaping = false;
 		for(int afterIndex = 0, afterSize = after.length(); afterIndex < afterSize; ++afterIndex) {
 			QChar chr = after.at(afterIndex);
-			if(escaping)		// perform replace
-			{
+			if(escaping) {          // perform replace
 				escaping = false;
 				if(chr.isNumber()) {
 					int capNumber = chr.digitValue();
@@ -933,13 +953,14 @@ SString & SString::replace(const QRegExp &rx, const SString &a)
 			matchedIndex++;
 
 		offsetIndex = matchedIndex + after.length();
-		caretMode = QRegExp::CaretWontMatch;	// caret should only be matched the first time
+		caretMode = QRegExp::CaretWontMatch;    // caret should only be matched the first time
 	}
 
 	return *this;
 }
 
-SStringList SString::split(const QString &sep, QString::SplitBehavior behavior, Qt::CaseSensitivity cs) const
+SStringList
+SString::split(const QString &sep, QString::SplitBehavior behavior, Qt::CaseSensitivity cs) const
 {
 	SStringList ret;
 
@@ -961,7 +982,8 @@ SStringList SString::split(const QString &sep, QString::SplitBehavior behavior, 
 	return ret;
 }
 
-SStringList SString::split(const QChar & sep, QString::SplitBehavior behavior, Qt::CaseSensitivity cs) const
+SStringList
+SString::split(const QChar &sep, QString::SplitBehavior behavior, Qt::CaseSensitivity cs) const
 {
 	SStringList ret;
 
@@ -979,7 +1001,8 @@ SStringList SString::split(const QChar & sep, QString::SplitBehavior behavior, Q
 	return ret;
 }
 
-SStringList SString::split(const QRegExp & sep, QString::SplitBehavior behavior) const
+SStringList
+SString::split(const QRegExp &sep, QString::SplitBehavior behavior) const
 {
 	SStringList ret;
 
@@ -999,7 +1022,8 @@ SStringList SString::split(const QRegExp & sep, QString::SplitBehavior behavior)
 	return ret;
 }
 
-SString SString::left(int len) const
+SString
+SString::left(int len) const
 {
 	len = length(0, len);
 	SString ret;
@@ -1010,7 +1034,8 @@ SString SString::left(int len) const
 	return ret;
 }
 
-SString SString::right(int len) const
+SString
+SString::right(int len) const
 {
 	len = length(0, len);
 	SString ret;
@@ -1021,7 +1046,8 @@ SString SString::right(int len) const
 	return ret;
 }
 
-SString SString::mid(int index, int len) const
+SString
+SString::mid(int index, int len) const
 {
 	if(index < 0) {
 		if(len >= 0)
@@ -1041,21 +1067,24 @@ SString SString::mid(int index, int len) const
 	return ret;
 }
 
-SString SString::toLower() const
+SString
+SString::toLower() const
 {
 	SString ret(*this);
 	ret.m_string = m_string.toLower();
 	return ret;
 }
 
-SString SString::toUpper() const
+SString
+SString::toUpper() const
 {
 	SString ret(*this);
 	ret.m_string = m_string.toUpper();
 	return ret;
 }
 
-SString SString::toTitleCase(bool lowerFirst) const
+SString
+SString::toTitleCase(bool lowerFirst) const
 {
 	const QString wordSeparators(" -_([:,;./\\\t\n\"");
 
@@ -1080,7 +1109,8 @@ SString SString::toTitleCase(bool lowerFirst) const
 	return ret;
 }
 
-SString SString::toSentenceCase(bool lowerFirst, bool * cont) const
+SString
+SString::toSentenceCase(bool lowerFirst, bool *cont) const
 {
 	const QString sentenceEndChars(".?!");
 
@@ -1123,14 +1153,16 @@ SString SString::toSentenceCase(bool lowerFirst, bool * cont) const
 	return ret;
 }
 
-SString SString::simplified() const
+SString
+SString::simplified() const
 {
 	const QRegExp simplifySpaceRegExp("\\s{2,MAXINT}");
 
 	return trimmed().replace(simplifySpaceRegExp, " ");
 }
 
-SString SString::trimmed() const
+SString
+SString::trimmed() const
 {
 	const QRegExp trimRegExp("(^\\s+|\\s+$)");
 
@@ -1138,7 +1170,8 @@ SString SString::trimmed() const
 	return ret.remove(trimRegExp);
 }
 
-bool SString::operator!=(const SString & sstring) const
+bool
+SString::operator!=(const SString &sstring) const
 {
 	if(m_string != sstring.m_string)
 		return true;
@@ -1153,7 +1186,8 @@ bool SString::operator!=(const SString & sstring) const
 	return false;
 }
 
-char *SString::detachFlags()
+char *
+SString::detachFlags()
 {
 	char *ret = m_styleFlags;
 	m_styleFlags = NULL;
@@ -1161,7 +1195,8 @@ char *SString::detachFlags()
 	return ret;
 }
 
-QRgb *SString::detachColors()
+QRgb *
+SString::detachColors()
 {
 	QRgb *ret = m_styleColors;
 	m_styleColors = NULL;
@@ -1169,7 +1204,8 @@ QRgb *SString::detachColors()
 	return ret;
 }
 
-void SString::setMinFlagsCapacity(int capacity)
+void
+SString::setMinFlagsCapacity(int capacity)
 {
 	if(capacity > m_capacity) {
 		m_capacity = capacity * 2;
@@ -1192,26 +1228,21 @@ void SString::setMinFlagsCapacity(int capacity)
 	}
 }
 
-
-
 SStringList::SStringList()
-{
-}
+{}
 
-SStringList::SStringList(const SString & str)
+SStringList::SStringList(const SString &str)
 {
 	append(str);
 }
 
-SStringList::SStringList(const SStringList &list)
-	: QList<SString>(list)
-{
-}
+SStringList::SStringList(const SStringList &list) :
+	QList<SString>(list)
+{}
 
-SStringList::SStringList(const QList<SString> &list)
-	: QList<SString>(list)
-{
-}
+SStringList::SStringList(const QList<SString> &list) :
+	QList<SString>(list)
+{}
 
 SStringList::SStringList(const QStringList &list)
 {
@@ -1225,7 +1256,8 @@ SStringList::SStringList(const QList<QString> &list)
 		append(*it);
 }
 
-SString SStringList::join(const SString &sep) const
+SString
+SStringList::join(const SString &sep) const
 {
 	SString ret;
 

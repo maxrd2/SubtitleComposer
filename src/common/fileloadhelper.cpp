@@ -24,9 +24,10 @@
 #include <KTemporaryFile>
 #include <KIO/NetAccess>
 
-FileLoadHelper::FileLoadHelper(const KUrl & url):m_url(url), m_file(0)
-{
-}
+FileLoadHelper::FileLoadHelper(const KUrl &url) :
+	m_url(url),
+	m_file(0)
+{}
 
 FileLoadHelper::~FileLoadHelper()
 {
@@ -34,17 +35,20 @@ FileLoadHelper::~FileLoadHelper()
 		close();
 }
 
-const KUrl & FileLoadHelper::url()
+const KUrl &
+FileLoadHelper::url()
 {
 	return m_url;
 }
 
-QFile *FileLoadHelper::file()
+QFile *
+FileLoadHelper::file()
 {
 	return m_file;
 }
 
-bool FileLoadHelper::open()
+bool
+FileLoadHelper::open()
 {
 	if(m_file)
 		return false;
@@ -79,14 +83,15 @@ bool FileLoadHelper::open()
 	return true;
 }
 
-bool FileLoadHelper::close()
+bool
+FileLoadHelper::close()
 {
 	if(!m_file)
 		return false;
 
 	QString tmpFilePath = m_file->fileName();
 
-	delete m_file;				// closes the file
+	delete m_file;                          // closes the file
 	m_file = 0;
 
 	if(!m_url.isLocalFile())
@@ -95,7 +100,8 @@ bool FileLoadHelper::close()
 	return true;
 }
 
-bool FileLoadHelper::exists(const KUrl & url)
+bool
+FileLoadHelper::exists(const KUrl &url)
 {
 	return KIO::NetAccess::exists(url, KIO::NetAccess::SourceSide, 0);
 }

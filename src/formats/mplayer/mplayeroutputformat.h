@@ -20,7 +20,6 @@
  *   Boston, MA 02110-1301, USA.                                           *
  ***************************************************************************/
 
-
 #ifdef HAVE_CONFIG_H
 #include <config.h>
 #endif
@@ -29,35 +28,39 @@
 #include "../../core/subtitleiterator.h"
 
 namespace SubtitleComposer {
-	class MPlayerOutputFormat:public OutputFormat {
-		friend class FormatManager;
+class MPlayerOutputFormat : public OutputFormat
+{
+	friend class FormatManager;
 
-	public:
+public:
+	virtual ~MPlayerOutputFormat() {}
 
-		virtual ~ MPlayerOutputFormat() {
+protected:
+	virtual QString dumpSubtitles(const Subtitle &subtitle, bool primary) const
+	{
+		QString ret;
+
+		double framesPerSecond = subtitle.framesPerSecond();
+
+		for(SubtitleIterator it(subtitle); it.current(); ++it) {
+			const SubtitleLine *line = it.current();
+
+			const SString &text = primary ? line->primaryText() : line->secondaryText();
+
+			ret += m_lineBuilder.arg((long)((line->showTime().toMillis() / 1000.0) * framesPerSecond + 0.5))
+					.arg((long)((line->hideTime().toMillis() / 1000.0) * framesPerSecond + 0.5))
+					.arg(text.string().replace('\n', '|'));
 		}
-	protected:
+		return ret;
+	}
 
-		virtual QString dumpSubtitles(const Subtitle & subtitle, bool primary) const {
-			QString ret;
+	MPlayerOutputFormat() :
+		OutputFormat("MPlayer", QStringList("mpl")),
+		m_lineBuilder("%1,%2,0,%3\n")
+	{}
 
-			double framesPerSecond = subtitle.framesPerSecond();
-
-			for(SubtitleIterator it(subtitle); it.current(); ++it) {
-				const SubtitleLine *line = it.current();
-
-				const SString & text = primary ? line->primaryText() : line->secondaryText();
-
-				ret += m_lineBuilder.arg((long)((line->showTime().toMillis() / 1000.0) * framesPerSecond + 0.5))
-				.arg((long)((line->hideTime().toMillis() / 1000.0) * framesPerSecond + 0.5))
-				.arg(text.string().replace('\n', '|'));
-			} return ret;
-		}
-		MPlayerOutputFormat():OutputFormat("MPlayer", QStringList("mpl")), m_lineBuilder("%1,%2,0,%3\n") {
-		}
-
-		const QString m_lineBuilder;
-	};
+	const QString m_lineBuilder;
+};
 }
 
 #endif

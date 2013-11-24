@@ -36,8 +36,8 @@
 
 using namespace SubtitleComposer;
 
-ErrorsDialog::ErrorsDialog(QWidget * parent):
-KDialog(parent)
+ErrorsDialog::ErrorsDialog(QWidget *parent) :
+	KDialog(parent)
 {
 	setCaption(i18n("Subtitle Errors"));
 
@@ -90,21 +90,24 @@ KDialog(parent)
 	connect(app()->errorsConfig(), SIGNAL(optionChanged(const QString &, const QString &)), this, SLOT(onOptionChanged(const QString &, const QString &)));
 }
 
-ErrorsWidget *ErrorsDialog::errorsWidget()
+ErrorsWidget *
+ErrorsDialog::errorsWidget()
 {
 	return m_errorsWidget;
 }
 
-void ErrorsDialog::loadConfig()
+void
+ErrorsDialog::loadConfig()
 {
 	KConfigGroup group(KGlobal::config()->group("ErrorsDialog Settings"));
 
-	resize(group.readEntry < int >("Width", width()), group.readEntry < int >("Height", height()));
+	resize(group.readEntry<int>("Width", width()), group.readEntry<int>("Height", height()));
 
 	m_errorsWidget->loadConfig();
 }
 
-void ErrorsDialog::saveConfig()
+void
+ErrorsDialog::saveConfig()
 {
 	KConfigGroup group(KGlobal::config()->group("ErrorsDialog Settings"));
 
@@ -114,7 +117,8 @@ void ErrorsDialog::saveConfig()
 	m_errorsWidget->saveConfig();
 }
 
-void ErrorsDialog::onStatsChanged()
+void
+ErrorsDialog::onStatsChanged()
 {
 	ErrorsModel *model = m_errorsWidget->model();
 	QString lines = i18np("Showing 1 line with errors", "Showing %1 lines with errors", model->lineWithErrorsCount());
@@ -134,7 +138,8 @@ void ErrorsDialog::onStatsChanged()
 	}
 }
 
-void ErrorsDialog::onOptionChanged(const QString & option, const QString & value)
+void
+ErrorsDialog::onOptionChanged(const QString &option, const QString &value)
 {
 	if(option == ErrorsConfig::keyAutoClearFixed()) {
 		m_autoClearFixed = value == "true";

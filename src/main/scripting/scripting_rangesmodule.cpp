@@ -25,47 +25,52 @@
 
 using namespace SubtitleComposer;
 
-Scripting::RangesModule::RangesModule(QObject * parent):
-QObject(parent)
-{
-}
+Scripting::RangesModule::RangesModule(QObject *parent) :
+	QObject(parent)
+{}
 
-QObject *Scripting::RangesModule::newRange(int firstIndex, int lastIndex)
+QObject *
+Scripting::RangesModule::newRange(int firstIndex, int lastIndex)
 {
 	if(firstIndex > lastIndex || firstIndex < 0 || lastIndex < 0)
 		return 0;
 	return new Scripting::Range(SubtitleComposer::Range(firstIndex, lastIndex), this);
 }
 
-QObject *Scripting::RangesModule::newLowerRange(int index)
+QObject *
+Scripting::RangesModule::newLowerRange(int index)
 {
 	return new Scripting::Range(SubtitleComposer::Range::lower(index), this);
 }
 
-QObject *Scripting::RangesModule::newUpperRange(int index)
+QObject *
+Scripting::RangesModule::newUpperRange(int index)
 {
 	return new Scripting::Range(SubtitleComposer::Range::upper(index), this);
 }
 
-QObject *Scripting::RangesModule::newUptoLastSelectedRange()
+QObject *
+Scripting::RangesModule::newUptoLastSelectedRange()
 {
 	int index = app()->linesWidget()->lastSelectedIndex();
 	return index < 0 ? 0 : new Scripting::Range(SubtitleComposer::Range::lower(index), this);
 }
 
-QObject *Scripting::RangesModule::newFromFirstSelectedRange()
+QObject *
+Scripting::RangesModule::newFromFirstSelectedRange()
 {
 	int index = app()->linesWidget()->firstSelectedIndex();
 	return index < 0 ? 0 : new Scripting::Range(SubtitleComposer::Range::upper(index), this);
 }
 
-
-QObject *Scripting::RangesModule::newEmptyRangeList()
+QObject *
+Scripting::RangesModule::newEmptyRangeList()
 {
 	return new Scripting::RangeList(SubtitleComposer::RangeList(), this);
 }
 
-QObject *Scripting::RangesModule::newSelectionRangeList()
+QObject *
+Scripting::RangesModule::newSelectionRangeList()
 {
 	return new Scripting::RangeList(app()->linesWidget()->selectionRanges(), this);
 }

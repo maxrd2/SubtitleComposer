@@ -36,51 +36,51 @@
 class QTimer;
 
 namespace SubtitleComposer {
-	class GStreamerDecoderBackend:public DecoderBackend {
-	Q_OBJECT public:
+class GStreamerDecoderBackend : public DecoderBackend
+{
+	Q_OBJECT
 
-		GStreamerDecoderBackend(Decoder * decoder);
-		virtual ~ GStreamerDecoderBackend();
+public:
+	GStreamerDecoderBackend(Decoder *decoder);
+	virtual ~GStreamerDecoderBackend();
 
-		const GStreamerConfig *config() {
-			return static_cast < const GStreamerConfig *const >(DecoderBackend::config());
-		} virtual AppConfigGroupWidget *newAppConfigGroupWidget(QWidget * parent);
+	const GStreamerConfig * config() { return static_cast<const GStreamerConfig *const>(DecoderBackend::config()); }
 
-	protected:
+	virtual AppConfigGroupWidget * newAppConfigGroupWidget(QWidget *parent);
 
-		virtual QWidget * initialize(QWidget * videoWidgetParent);
-		virtual void finalize();
+protected:
+	virtual QWidget * initialize(QWidget *videoWidgetParent);
+	virtual void finalize();
 
-		virtual bool openFile(const QString & filePath);
-		virtual void closeFile();
+	virtual bool openFile(const QString &filePath);
+	virtual void closeFile();
 
-		virtual bool decode(int audioStream, const QString & outputPath, const WaveFormat & outputFormat);
-		virtual bool stop();
+	virtual bool decode(int audioStream, const QString &outputPath, const WaveFormat &outputFormat);
+	virtual bool stop();
 
-	private:
+private:
+	static void dataHandoff(GstElement *fakesrc, GstBuffer *buffer, GstPad *pad, gpointer userData);
+	static void decodebinPadAdded(GstElement *decodebin, GstPad *pad, gpointer userData);
+	static void decodebinNoMorePads(GstElement *decodebin, gpointer userData);
 
-		static void dataHandoff(GstElement * fakesrc, GstBuffer * buffer, GstPad * pad, gpointer userData);
-		static void decodebinPadAdded(GstElement * decodebin, GstPad * pad, gpointer userData);
-		static void decodebinNoMorePads(GstElement * decodebin, gpointer userData);
+private slots:
+	void onInfoTimerTimeout();
+	void onDecodingTimerTimeout();
 
-		private slots:void onInfoTimerTimeout();
-		void onDecodingTimerTimeout();
+private:
+	GstPipeline *m_infoPipeline;
+	GstBus *m_infoBus;
+	QTimer *m_infoTimer;
 
-	private:
+	GstPipeline *m_decodingPipeline;
+	GstBus *m_decodingBus;
+	QTimer *m_decodingTimer;
 
-		GstPipeline * m_infoPipeline;
-		GstBus *m_infoBus;
-		QTimer *m_infoTimer;
-
-		GstPipeline *m_decodingPipeline;
-		GstBus *m_decodingBus;
-		QTimer *m_decodingTimer;
-
-		QString m_decodingStreamName;
-		WaveFormat m_decodingStreamFormat;
-		bool m_lengthInformed;
-		WaveWriter m_waveWriter;
-	};
+	QString m_decodingStreamName;
+	WaveFormat m_decodingStreamFormat;
+	bool m_lengthInformed;
+	WaveWriter m_waveWriter;
+};
 }
 
 #endif

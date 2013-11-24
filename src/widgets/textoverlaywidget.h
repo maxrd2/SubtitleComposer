@@ -33,11 +33,13 @@
 
 class QTextDocument;
 
-class TextOverlayWidget:public QWidget {
-  Q_OBJECT public:
+class TextOverlayWidget : public QWidget
+{
+	Q_OBJECT
 
-	TextOverlayWidget(QWidget * parent = 0);
-	virtual ~ TextOverlayWidget();
+public:
+	TextOverlayWidget(QWidget *parent = 0);
+	virtual ~TextOverlayWidget();
 
 	QString text() const;
 
@@ -52,22 +54,22 @@ class TextOverlayWidget:public QWidget {
 
 	virtual QSize minimumSizeHint() const;
 
-	virtual bool eventFilter(QObject * object, QEvent * event);
+	virtual bool eventFilter(QObject *object, QEvent *event);
 
-	public slots:void setText(const QString & text);
+public slots:
+	void setText(const QString &text);
 	void setAlignment(int alignment);
 	void setPointSize(int pointSize);
 	void setPointSizeF(qreal pointSizeF);
 	void setPixelSize(int pixelSize);
-	void setFamily(const QString & family);
-	void setPrimaryColor(const QColor & color);
+	void setFamily(const QString &family);
+	void setPrimaryColor(const QColor &color);
 	void setOutlineWidth(int with);
-	void setOutlineColor(const QColor & color);
+	void setOutlineColor(const QColor &color);
 
-  protected:
-
-	virtual void customEvent(QEvent * event);
-	virtual void paintEvent(QPaintEvent * event);
+protected:
+	virtual void customEvent(QEvent *event);
+	virtual void paintEvent(QPaintEvent *event);
 
 	void setDirty(bool updateRichText, bool updateTransColor, bool flickerless = false);
 
@@ -77,12 +79,11 @@ class TextOverlayWidget:public QWidget {
 	QRect calculateTextRect() const;
 	void setMaskAndOutline(int width);
 
-  private:
-
+private:
 	QString m_text;
 
 	int m_alignment;
-	QFont m_font;				// font family and size are stored here
+	QFont m_font;                           // font family and size are stored here
 	QColor m_primaryColor;
 	QRgb m_primaryRGB;
 

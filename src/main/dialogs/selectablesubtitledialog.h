@@ -35,27 +35,28 @@ class KLineEdit;
 class KComboBox;
 
 namespace SubtitleComposer {
-	class SelectableSubtitleDialog:public ActionWithTargetDialog {
-	Q_OBJECT public:
+class SelectableSubtitleDialog : public ActionWithTargetDialog
+{
+	Q_OBJECT
 
-		SelectableSubtitleDialog(const QString & title, QWidget * parent = 0);
+public:
+	SelectableSubtitleDialog(const QString &title, QWidget *parent = 0);
 
-		KUrl subtitleUrl() const;
-		QString subtitleEncoding() const;
+	KUrl subtitleUrl() const;
+	QString subtitleEncoding() const;
 
-	protected:
+protected:
+	QGroupBox * createSubtitleGroupBox(const QString &title = i18n("Subtitle"), bool addToLayout = true);
 
-		QGroupBox * createSubtitleGroupBox(const QString & title = i18n("Subtitle"), bool addToLayout = true);
+private slots:
+	void selectSubtitle();
 
-		private slots:void selectSubtitle();
+protected:
+	QGroupBox *m_subtitleGroupBox;
+	QGridLayout *m_subtitleLayout;
 
-	protected:
-
-		QGroupBox * m_subtitleGroupBox;
-		QGridLayout *m_subtitleLayout;
-
-		KLineEdit *m_subtitleUrlLineEdit;
-		KComboBox *m_subtitleEncodingComboBox;
-	};
+	KLineEdit *m_subtitleUrlLineEdit;
+	KComboBox *m_subtitleEncodingComboBox;
+};
 }
 #endif

@@ -38,7 +38,8 @@
 
 using namespace SubtitleComposer;
 
-QToolButton *CurrentLineWidget::createToolButton(const QString &text, const char *icon, QObject *receiver, const char *slot, bool checkable/* = true*/)
+QToolButton *
+CurrentLineWidget::createToolButton(const QString &text, const char *icon, QObject *receiver, const char *slot, bool checkable /* = true*/)
 {
 	QToolButton *toolButton = new QToolButton(this);
 	toolButton->setToolTip(text);
@@ -52,8 +53,13 @@ QToolButton *CurrentLineWidget::createToolButton(const QString &text, const char
 	return toolButton;
 }
 
-CurrentLineWidget::CurrentLineWidget(QWidget * parent):
-QWidget(parent), m_currentLine(0), m_translationMode(false), m_updateCurrentLine(true), m_updateControls(true), m_updateShorcutsTimer(new QTimer(this))
+CurrentLineWidget::CurrentLineWidget(QWidget *parent) :
+	QWidget(parent),
+	m_currentLine(0),
+	m_translationMode(false),
+	m_updateCurrentLine(true),
+	m_updateControls(true),
+	m_updateShorcutsTimer(new QTimer(this))
 {
 	QGroupBox *timesControlsGroupBox = new QGroupBox(this);
 
@@ -158,23 +164,28 @@ QWidget(parent), m_currentLine(0), m_translationMode(false), m_updateCurrentLine
 }
 
 CurrentLineWidget::~CurrentLineWidget()
-{
-}
+{}
 
-QString CurrentLineWidget::focusedText() const {
+QString
+CurrentLineWidget::focusedText() const
+{
 	for(int index = 0; index < 2; ++index)
 		if(m_textEdits[index]->hasFocus() && m_textEdits[index]->hasSelection())
 			return m_textEdits[index]->selectedText();
 	return QString();
-} void CurrentLineWidget::loadConfig()
+}
+
+void
+CurrentLineWidget::loadConfig()
 {
 	KConfigGroup group(KGlobal::config()->group("Current Line Settings"));
 
-	m_textEdits[0]->setCheckSpellingEnabled(group.readEntry < bool > ("PrimaryCheckSpelling", false));
-	m_textEdits[1]->setCheckSpellingEnabled(group.readEntry < bool > ("TranslationCheckSpelling", false));
+	m_textEdits[0]->setCheckSpellingEnabled(group.readEntry<bool>("PrimaryCheckSpelling", false));
+	m_textEdits[1]->setCheckSpellingEnabled(group.readEntry<bool>("TranslationCheckSpelling", false));
 }
 
-void CurrentLineWidget::saveConfig()
+void
+CurrentLineWidget::saveConfig()
 {
 	KConfigGroup group(KGlobal::config()->group("Current Line Settings"));
 
@@ -182,13 +193,15 @@ void CurrentLineWidget::saveConfig()
 	group.writeEntry("TranslationCheckSpelling", m_textEdits[1]->checkSpellingEnabled());
 }
 
-void CurrentLineWidget::setSubtitle(Subtitle * subtitle)
+void
+CurrentLineWidget::setSubtitle(Subtitle *subtitle)
 {
 	if(!subtitle)
 		setCurrentLine(0);
 }
 
-void CurrentLineWidget::setCurrentLine(SubtitleLine * line)
+void
+CurrentLineWidget::setCurrentLine(SubtitleLine *line)
 {
 	if(m_currentLine) {
 		disconnect(m_currentLine, SIGNAL(primaryTextChanged(const SString &)), this, SLOT(onLinePrimaryTextChanged(const SString &)));
@@ -231,7 +244,8 @@ void CurrentLineWidget::setCurrentLine(SubtitleLine * line)
 	setEnabled(m_currentLine != 0);
 }
 
-void CurrentLineWidget::setTranslationMode(bool enabled)
+void
+CurrentLineWidget::setTranslationMode(bool enabled)
 {
 	m_translationMode = enabled;
 
@@ -264,7 +278,8 @@ void CurrentLineWidget::setTranslationMode(bool enabled)
 	setCurrentLine(m_currentLine);
 }
 
-void CurrentLineWidget::onPrimaryTextEditSelectionChanged()
+void
+CurrentLineWidget::onPrimaryTextEditSelectionChanged()
 {
 	m_boldButtons[0]->setChecked(m_textEdits[0]->fontBold());
 	m_italicButtons[0]->setChecked(m_textEdits[0]->fontItalic());
@@ -272,7 +287,8 @@ void CurrentLineWidget::onPrimaryTextEditSelectionChanged()
 	m_strikeThroughButtons[0]->setChecked(m_textEdits[0]->fontStrikeOut());
 }
 
-void CurrentLineWidget::onSecondaryTextEditSelectionChanged()
+void
+CurrentLineWidget::onSecondaryTextEditSelectionChanged()
 {
 	m_boldButtons[1]->setChecked(m_textEdits[1]->fontBold());
 	m_italicButtons[1]->setChecked(m_textEdits[1]->fontItalic());
@@ -280,7 +296,8 @@ void CurrentLineWidget::onSecondaryTextEditSelectionChanged()
 	m_strikeThroughButtons[1]->setChecked(m_textEdits[1]->fontStrikeOut());
 }
 
-void CurrentLineWidget::onPrimaryTextEditChanged()
+void
+CurrentLineWidget::onPrimaryTextEditChanged()
 {
 	if(m_updateCurrentLine) {
 		m_updateControls = false;
@@ -293,7 +310,8 @@ void CurrentLineWidget::onPrimaryTextEditChanged()
 	}
 }
 
-void CurrentLineWidget::onSecondaryTextEditChanged()
+void
+CurrentLineWidget::onSecondaryTextEditChanged()
 {
 	if(m_updateCurrentLine) {
 		m_updateControls = false;
@@ -306,7 +324,8 @@ void CurrentLineWidget::onSecondaryTextEditChanged()
 	}
 }
 
-void CurrentLineWidget::onShowTimeEditChanged(int showTime)
+void
+CurrentLineWidget::onShowTimeEditChanged(int showTime)
 {
 	if(m_updateCurrentLine) {
 		m_updateControls = false;
@@ -316,7 +335,8 @@ void CurrentLineWidget::onShowTimeEditChanged(int showTime)
 	}
 }
 
-void CurrentLineWidget::onHideTimeEditChanged(int hideTime)
+void
+CurrentLineWidget::onHideTimeEditChanged(int hideTime)
 {
 	if(m_updateCurrentLine) {
 		m_updateControls = false;
@@ -326,7 +346,8 @@ void CurrentLineWidget::onHideTimeEditChanged(int hideTime)
 	}
 }
 
-void CurrentLineWidget::onDurationTimeEditChanged(int durationTime)
+void
+CurrentLineWidget::onDurationTimeEditChanged(int durationTime)
 {
 	if(m_updateCurrentLine) {
 		m_updateControls = false;
@@ -336,7 +357,8 @@ void CurrentLineWidget::onDurationTimeEditChanged(int durationTime)
 	}
 }
 
-QString CurrentLineWidget::buildTextDescription(const QString & text)
+QString
+CurrentLineWidget::buildTextDescription(const QString &text)
 {
 	static const QString currentLineText(i18n("Current line:"));
 	QString expressionText(' ');
@@ -363,8 +385,8 @@ QString CurrentLineWidget::buildTextDescription(const QString & text)
 	return currentLineText + expressionText + i18np("1 character", "%1 characters", characters);
 }
 
-
-void CurrentLineWidget::onLinePrimaryTextChanged(const SString & primaryText)
+void
+CurrentLineWidget::onLinePrimaryTextChanged(const SString &primaryText)
 {
 	if(m_updateControls) {
 		m_updateCurrentLine = false;
@@ -378,7 +400,8 @@ void CurrentLineWidget::onLinePrimaryTextChanged(const SString & primaryText)
 	}
 }
 
-void CurrentLineWidget::onLineSecondaryTextChanged(const SString & secondaryText)
+void
+CurrentLineWidget::onLineSecondaryTextChanged(const SString &secondaryText)
 {
 	if(m_updateControls && m_translationMode) {
 		m_updateCurrentLine = false;
@@ -392,7 +415,8 @@ void CurrentLineWidget::onLineSecondaryTextChanged(const SString & secondaryText
 	}
 }
 
-void CurrentLineWidget::onLineShowTimeChanged(const Time & showTime)
+void
+CurrentLineWidget::onLineShowTimeChanged(const Time &showTime)
 {
 	if(m_updateControls) {
 		m_updateCurrentLine = false;
@@ -401,7 +425,8 @@ void CurrentLineWidget::onLineShowTimeChanged(const Time & showTime)
 	}
 }
 
-void CurrentLineWidget::onLineHideTimeChanged(const Time & hideTime)
+void
+CurrentLineWidget::onLineHideTimeChanged(const Time &hideTime)
 {
 	if(m_updateControls) {
 		m_updateCurrentLine = false;
@@ -411,21 +436,24 @@ void CurrentLineWidget::onLineHideTimeChanged(const Time & hideTime)
 	}
 }
 
-void CurrentLineWidget::highlightPrimary(int startIndex, int endIndex)
+void
+CurrentLineWidget::highlightPrimary(int startIndex, int endIndex)
 {
 	m_textEdits[1]->clearSelection();
 	m_textEdits[0]->setSelection(startIndex, endIndex);
 	m_textEdits[0]->setFocus();
 }
 
-void CurrentLineWidget::highlightSecondary(int startIndex, int endIndex)
+void
+CurrentLineWidget::highlightSecondary(int startIndex, int endIndex)
 {
 	m_textEdits[0]->clearSelection();
 	m_textEdits[1]->setSelection(startIndex, endIndex);
 	m_textEdits[1]->setFocus();
 }
 
-void CurrentLineWidget::setupActions()
+void
+CurrentLineWidget::setupActions()
 {
 	for(int index = 0; index < 2; ++index) {
 		KAction *spellingAction = m_textEdits[index]->action(SimpleRichTextEdit::CheckSpelling);
@@ -443,21 +471,24 @@ void CurrentLineWidget::setupActions()
 	connect(app()->action(ACT_CHANGE_SELECTED_LINES_TEXT_COLOR), SIGNAL(changed()), this, SLOT(markUpdateShortcuts()));
 }
 
-void CurrentLineWidget::markUpdateShortcuts()
+void
+CurrentLineWidget::markUpdateShortcuts()
 {
 	if(!m_updateShorcutsTimer->isActive())
 		m_updateShorcutsTimer->start();
 }
 
-static void mapShortcuts(SimpleRichTextEdit * textEdit, int textEditActionID, const char *appActionID)
+static void
+mapShortcuts(SimpleRichTextEdit *textEdit, int textEditActionID, const char *appActionID)
 {
 	KAction *textEditAction = textEdit->action(textEditActionID);
-	KAction *appAction = static_cast < KAction * >(app()->action(appActionID));
+	KAction *appAction = static_cast<KAction *>(app()->action(appActionID));
 	if(textEditAction && appAction)
 		textEditAction->setShortcut(appAction->shortcut());
 }
 
-void CurrentLineWidget::onSpellingOptionChanged(const QString & option, const QString & value)
+void
+CurrentLineWidget::onSpellingOptionChanged(const QString &option, const QString &value)
 {
 	if(option == SpellingConfig::keyDefaultLanguage()) {
 		m_textEdits[0]->setSpellCheckingLanguage(value);
@@ -467,7 +498,8 @@ void CurrentLineWidget::onSpellingOptionChanged(const QString & option, const QS
 
 #include <KStandardShortcut>
 
-void CurrentLineWidget::updateShortcuts()
+void
+CurrentLineWidget::updateShortcuts()
 {
 	for(int index = 0; index < 2; ++index) {
 		mapShortcuts(m_textEdits[index], SimpleRichTextEdit::Undo, ACT_UNDO);
@@ -482,7 +514,8 @@ void CurrentLineWidget::updateShortcuts()
 	}
 }
 
-bool CurrentLineWidget::eventFilter(QObject * object, QEvent * event)
+bool
+CurrentLineWidget::eventFilter(QObject *object, QEvent *event)
 {
 	if(object == m_textEdits[0] || object == m_textEdits[1]) {
 		if(event->type() == QEvent::KeyPress) {
@@ -491,7 +524,7 @@ bool CurrentLineWidget::eventFilter(QObject * object, QEvent * event)
 			// When doing so, we must take care of not triggering application actions for key
 			// sequences that have a special meaning in the text edit context.
 
-			QKeyEvent *keyEvent = static_cast < QKeyEvent * >(event);
+			QKeyEvent *keyEvent = static_cast<QKeyEvent *>(event);
 
 			if(!keyEvent->modifiers() || keyEvent->modifiers() & (Qt::ShiftModifier | Qt::KeypadModifier)) {
 				if(!keyEvent->text().isEmpty())

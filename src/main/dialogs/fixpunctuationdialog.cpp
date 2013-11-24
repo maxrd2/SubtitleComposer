@@ -27,8 +27,8 @@
 
 using namespace SubtitleComposer;
 
-FixPunctuationDialog::FixPunctuationDialog(QWidget * parent):
-ActionWithTargetDialog(i18n("Fix Punctuation"), parent)
+FixPunctuationDialog::FixPunctuationDialog(QWidget *parent) :
+	ActionWithTargetDialog(i18n("Fix Punctuation"), parent)
 {
 	QGroupBox *settingsGroupBox = createGroupBox(i18nc("@title:group", "Settings"));
 
@@ -58,12 +58,26 @@ ActionWithTargetDialog(i18n("Fix Punctuation"), parent)
 	settingsLayout->addWidget(m_ellipsisCheckBox, 3, 0);
 }
 
-bool FixPunctuationDialog::spaces() const {
+bool
+FixPunctuationDialog::spaces() const
+{
 	return m_spacesCheckBox->isChecked();
-} bool FixPunctuationDialog::quotes() const {
+}
+
+bool
+FixPunctuationDialog::quotes() const
+{
 	return m_quotesCheckBox->isChecked();
-} bool FixPunctuationDialog::englishI() const {
+}
+
+bool
+FixPunctuationDialog::englishI() const
+{
 	return m_englishICheckBox->isChecked();
-} bool FixPunctuationDialog::ellipisis() const {
+}
+
+bool
+FixPunctuationDialog::ellipisis() const
+{
 	return m_ellipsisCheckBox->isChecked();
 }

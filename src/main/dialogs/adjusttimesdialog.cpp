@@ -28,8 +28,8 @@
 
 using namespace SubtitleComposer;
 
-AdjustTimesDialog::AdjustTimesDialog(QWidget * parent):
-ActionDialog(i18n("Adjust"), parent)
+AdjustTimesDialog::AdjustTimesDialog(QWidget *parent) :
+	ActionDialog(i18n("Adjust"), parent)
 {
 	QGroupBox *settingsGroupBox = createGroupBox(i18nc("@title:group", "New Times"));
 
@@ -52,16 +52,26 @@ ActionDialog(i18n("Adjust"), parent)
 	settingsLayout->addWidget(m_lastLineTimeEdit, 1, 1);
 }
 
-Time AdjustTimesDialog::firstLineTime() const {
+Time
+AdjustTimesDialog::firstLineTime() const
+{
 	return Time(m_firstLineTimeEdit->value());
-} void AdjustTimesDialog::setFirstLineTime(const Time & time)
+}
+
+void
+AdjustTimesDialog::setFirstLineTime(const Time &time)
 {
 	m_firstLineTimeEdit->setValue(time.toMillis());
 }
 
-Time AdjustTimesDialog::lastLineTime() const {
+Time
+AdjustTimesDialog::lastLineTime() const
+{
 	return Time(m_lastLineTimeEdit->value());
-} void AdjustTimesDialog::setLastLineTime(const Time & time)
+}
+
+void
+AdjustTimesDialog::setLastLineTime(const Time &time)
 {
 	m_lastLineTimeEdit->setValue(time.toMillis());
 }

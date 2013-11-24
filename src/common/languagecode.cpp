@@ -24,9 +24,10 @@
 #include <KGlobal>
 #include <KLocale>
 
-QString LanguageCode::toTwoLetters(const QString & threeLettersCode)
+QString
+LanguageCode::toIso2(const QString &iso3Code)
 {
-	static QMap < QString, QString > map;
+	static QMap<QString, QString> map;
 	if(map.isEmpty()) {
 		map["aar"] = "aa";
 		map["abk"] = "ab";
@@ -214,12 +215,13 @@ QString LanguageCode::toTwoLetters(const QString & threeLettersCode)
 		map["zul"] = "zu";
 	}
 
-	return map.contains(threeLettersCode) ? map[threeLettersCode] : QString();
+	return map.contains(iso3Code) ? map[iso3Code] : QString();
 }
 
-QString LanguageCode::toThreeLetters(const QString & twoLettersCode)
+QString
+LanguageCode::toIso3(const QString &iso2Code)
 {
-	static QMap < QString, QString > map;
+	static QMap<QString, QString> map;
 	if(map.isEmpty()) {
 		map["aa"] = "aar";
 		map["ab"] = "abk";
@@ -407,17 +409,19 @@ QString LanguageCode::toThreeLetters(const QString & twoLettersCode)
 		map["zu"] = "zul";
 	}
 
-	return map.contains(twoLettersCode) ? map[twoLettersCode] : QString();
+	return map.contains(iso2Code) ? map[iso2Code] : QString();
 }
 
-QString LanguageCode::nameFromTwoLetters(const QString & twoLettersCode)
+QString
+LanguageCode::nameFromIso2(const QString &iso2Code)
 {
-	QString name = KGlobal::locale()->languageCodeToName(twoLettersCode);
-	return name.isEmpty()? i18n("Unknown") : name;
+	QString name = KGlobal::locale()->languageCodeToName(iso2Code);
+	return name.isEmpty() ? i18n("Unknown") : name;
 }
 
-QString LanguageCode::nameFromThreeLetters(const QString & threeLettersCode)
+QString
+LanguageCode::nameFromIso3(const QString &iso3Code)
 {
-	QString name = KGlobal::locale()->languageCodeToName(toTwoLetters(threeLettersCode));
-	return name.isEmpty()? i18n("Unknown") : name;
+	QString name = KGlobal::locale()->languageCodeToName(toIso2(iso3Code));
+	return name.isEmpty() ? i18n("Unknown") : name;
 }

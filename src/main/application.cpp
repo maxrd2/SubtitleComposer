@@ -100,18 +100,36 @@
 #include <KMessageBox>
 #include <KComboBox>
 
-
 using namespace SubtitleComposer;
 
-Application *SubtitleComposer::app()
+Application *
+SubtitleComposer::app()
 {
 	return Application::instance();
 }
 
-Application::Application():
-KApplication(), m_config(), m_subtitle(0), m_subtitleUrl(), m_subtitleFileName(), m_subtitleEncoding(), m_subtitleEOL(Format::CurrentOS), m_subtitleFormat(), m_translationMode(false), m_subtitleTrUrl(), m_subtitleTrFileName(), m_subtitleTrEncoding(), m_subtitleTrEOL(Format::CurrentOS), m_subtitleTrFormat(), m_player(Player::instance()), m_decoder(Decoder::instance()), m_lastFoundLine(0),
+Application::Application() :
+	KApplication(),
+	m_config(),
+	m_subtitle(0),
+	m_subtitleUrl(),
+	m_subtitleFileName(),
+	m_subtitleEncoding(),
+	m_subtitleEOL(Format::CurrentOS),
+	m_subtitleFormat(),
+	m_translationMode(false),
+	m_subtitleTrUrl(),
+	m_subtitleTrFileName(),
+	m_subtitleTrEncoding(),
+	m_subtitleTrEOL(Format::CurrentOS),
+	m_subtitleTrFormat(),
+	m_player(Player::instance()),
+	m_decoder(Decoder::instance()),
+	m_lastFoundLine(0),
 //  m_audiolevels( 0 ), // FIXME audio levels
-	m_lastSubtitleUrl(QDir::homePath()), m_lastVideoUrl(QDir::homePath()), m_linkCurrentLineToPosition(false)
+	m_lastSubtitleUrl(QDir::homePath()),
+	m_lastVideoUrl(QDir::homePath()),
+	m_linkCurrentLineToPosition(false)
 {
 	QStringList playerBackendNames(m_player->backendNames());
 	QStringList decoderBackendNames(m_decoder->backendNames());
@@ -176,20 +194,19 @@ KApplication(), m_config(), m_subtitle(0), m_subtitleUrl(), m_subtitleFileName()
 	connect(m_decoder, SIGNAL(stopped()), m_statusBar, SLOT(endDecoding()));
 	connect(m_decoder, SIGNAL(decodingError(const QString &)), this, SLOT(onDecodingError(const QString &)));
 
-	QList < QObject * >listeners;
+	QList<QObject *> listeners;
 	listeners << actionManager << m_mainWindow << m_playerWidget << m_linesWidget << m_curLineWidget << m_statusBar << m_errorsWidget << m_finder << m_replacer << m_errorFinder << m_speller << m_errorTracker << m_scriptsManager;
-	for(QList < QObject * >::ConstIterator it = listeners.begin(), end = listeners.end(); it != end; ++it) {
+	for(QList<QObject *>::ConstIterator it = listeners.begin(), end = listeners.end(); it != end; ++it) {
 		connect(this, SIGNAL(subtitleOpened(Subtitle *)), *it, SLOT(setSubtitle(Subtitle *)));
 		connect(this, SIGNAL(subtitleClosed()), *it, SLOT(setSubtitle()));
 	}
 
 	listeners.clear();
 	listeners << actionManager << m_playerWidget << m_linesWidget << m_curLineWidget << m_finder << m_replacer << m_errorFinder << m_speller;
-	for(QList < QObject * >::ConstIterator it = listeners.begin(), end = listeners.end(); it != end; ++it)
+	for(QList<QObject *>::ConstIterator it = listeners.begin(), end = listeners.end(); it != end; ++it)
 		connect(this, SIGNAL(translationModeChanged(bool)), *it, SLOT(setTranslationMode(bool)));
 
 	connect(this, SIGNAL(fullScreenModeChanged(bool)), actionManager, SLOT(setFullScreenMode(bool)));
-
 
 	connect(m_configDialog, SIGNAL(accepted()), this, SLOT(updateConfigFromDialog()));
 
@@ -230,28 +247,50 @@ Application::~Application()
 	// (NOT BEFORE). Therefore is not possible to save the program settings (nor do
 	// pretty much anything) at this point.
 
-	//delete m_mainWindow; the windows is destroyed when it's closed
+	// delete m_mainWindow; the windows is destroyed when it's closed
 
 	delete m_subtitle;
 //  delete m_audiolevels; // FIXME audio levels
 }
 
-Application *Application::instance()
+Application *
+Application::instance()
 {
-	return static_cast < Application * >(kapp);
+	return static_cast<Application *>(kapp);
 }
 
-Subtitle *Application::subtitle() const {
+Subtitle *
+Application::subtitle() const
+{
 	return m_subtitle;
-} MainWindow *Application::mainWindow() const {
+}
+
+MainWindow *
+Application::mainWindow() const
+{
 	return m_mainWindow;
-} LinesWidget *Application::linesWidget() const {
+}
+
+LinesWidget *
+Application::linesWidget() const
+{
 	return m_linesWidget;
-} bool Application::translationMode() const {
+}
+
+bool
+Application::translationMode() const
+{
 	return m_translationMode;
-} bool Application::showingLinesContextMenu() const {
+}
+
+bool
+Application::showingLinesContextMenu() const
+{
 	return m_linesWidget->showingContextMenu();
-} void Application::loadConfig()
+}
+
+void
+Application::loadConfig()
 {
 	KConfigGroup group(KGlobal::config()->group("Application Settings"));
 
@@ -265,10 +304,10 @@ Subtitle *Application::subtitle() const {
 	m_lastVideoUrl = KUrl(group.readPathEntry("LastVideoUrl", QDir::homePath()));
 	m_recentVideosAction->loadEntries(KGlobal::config()->group("Recent Videos"));
 
-	m_player->setMuted(group.readEntry < bool > ("Muted", false));
-	m_player->setVolume(group.readEntry < double >("Volume", 100.0));
+	m_player->setMuted(group.readEntry<bool>("Muted", false));
+	m_player->setVolume(group.readEntry<double>("Volume", 100.0));
 
-	((KToggleAction *) action(ACT_TOGGLE_MUTED))->setChecked(m_player->isMuted());
+	((KToggleAction *)action(ACT_TOGGLE_MUTED))->setChecked(m_player->isMuted());
 
 	m_mainWindow->loadConfig();
 //  m_audiolevelsWidget->loadConfig(); // FIXME audio levels
@@ -278,7 +317,8 @@ Subtitle *Application::subtitle() const {
 	m_errorsDialog->loadConfig();
 }
 
-void Application::saveConfig()
+void
+Application::saveConfig()
 {
 	m_config.writeTo(KGlobal::config().data());
 
@@ -305,18 +345,20 @@ void Application::saveConfig()
 	m_errorsDialog->saveConfig();
 }
 
-QAction *Application::action(const char *actionName)
+QAction *
+Application::action(const char *actionName)
 {
 	return m_mainWindow->actionCollection()->action(actionName);
 }
 
-bool Application::triggerAction(const QKeySequence & keySequence)
+bool
+Application::triggerAction(const QKeySequence &keySequence)
 {
-	QList < QAction * >actions = m_mainWindow->actionCollection()->actions();
+	QList<QAction *> actions = m_mainWindow->actionCollection()->actions();
 
-	for(QList < QAction * >::ConstIterator it = actions.begin(), end = actions.end(); it != end; ++it) {
+	for(QList<QAction *>::ConstIterator it = actions.begin(), end = actions.end(); it != end; ++it) {
 		if((*it)->isEnabled()) {
-			if(KAction * action = qobject_cast < KAction * >(*it)) {
+			if(KAction * action = qobject_cast<KAction *>(*it)) {
 				KShortcut shortcut = action->shortcut();
 				if(shortcut.primary() == keySequence || shortcut.alternate() == keySequence) {
 					action->trigger();
@@ -334,26 +376,33 @@ bool Application::triggerAction(const QKeySequence & keySequence)
 	return false;
 }
 
-const QStringList & Application::availableEncodingNames() const {
+const QStringList &
+Application::availableEncodingNames() const
+{
 	static QStringList encodingNames;
 
-	if(encodingNames.empty())
-{
-QStringList encodings(KGlobal::charsets()->availableEncodingNames());
-for(QStringList::Iterator it = encodings.begin(); it != encodings.end(); ++it) {
-	bool found = false;
-	QTextCodec *codec = KGlobal::charsets()->codecForName(*it, found);
-	if(found)
-		encodingNames.append(codec->name().toUpper());
-} encodingNames.sort();
-}
+	if(encodingNames.empty()) {
+		QStringList encodings(KGlobal::charsets()->availableEncodingNames());
+		for(QStringList::Iterator it = encodings.begin(); it != encodings.end(); ++it) {
+			bool found = false;
+			QTextCodec *codec = KGlobal::charsets()->codecForName(*it, found);
+			if(found)
+				encodingNames.append(codec->name().toUpper());
+		}
+		encodingNames.sort();
+	}
 
 	return encodingNames;
 }
 
-const KUrl & Application::lastSubtitleDirectory() const {
+const KUrl &
+Application::lastSubtitleDirectory() const
+{
 	return m_lastSubtitleUrl;
-} const QString & Application::buildMediaFilesFilter()
+}
+
+const QString &
+Application::buildMediaFilesFilter()
 {
 	static QString filter;
 
@@ -383,7 +432,8 @@ const KUrl & Application::lastSubtitleDirectory() const {
 	return filter;
 }
 
-const QString & Application::buildLevelsFilesFilter()
+const QString &
+Application::buildLevelsFilesFilter()
 {
 	static QString filter;
 
@@ -400,7 +450,8 @@ const QString & Application::buildLevelsFilesFilter()
 	return filter;
 }
 
-void Application::setupActions()
+void
+Application::setupActions()
 {
 	KActionCollection *actionCollection = m_mainWindow->actionCollection();
 	UserActionManager *actionManager = UserActionManager::instance();
@@ -408,10 +459,8 @@ void Application::setupActions()
 	KAction *quitAction = KStandardAction::quit(m_mainWindow, SLOT(close()), actionCollection);
 	quitAction->setStatusTip(i18n("Exit the application"));
 
-
 	KAction *prefsAction = KStandardAction::preferences(m_configDialog, SLOT(show()), actionCollection);
 	prefsAction->setStatusTip(i18n("Configure Subtitle Composer"));
-
 
 	KAction *newSubtitleAction = new KAction(actionCollection);
 	newSubtitleAction->setIcon(KIcon("document-new"));
@@ -422,7 +471,6 @@ void Application::setupActions()
 	actionCollection->addAction(ACT_NEW_SUBTITLE, newSubtitleAction);
 	actionManager->addAction(newSubtitleAction, UserAction::FullScreenOff);
 
-
 	KAction *openSubtitleAction = new KAction(actionCollection);
 	openSubtitleAction->setIcon(KIcon("document-open"));
 	openSubtitleAction->setText(i18nc("@action:inmenu Open subtitle file", "Open..."));
@@ -431,7 +479,6 @@ void Application::setupActions()
 	connect(openSubtitleAction, SIGNAL(triggered()), this, SLOT(openSubtitle()));
 	actionCollection->addAction(ACT_OPEN_SUBTITLE, openSubtitleAction);
 	actionManager->addAction(openSubtitleAction, 0);
-
 
 	m_reopenSubtitleAsAction = new KCodecActionExt(actionCollection, true);
 	m_reopenSubtitleAsAction->setIcon(KIcon("view-refresh"));
@@ -442,14 +489,12 @@ void Application::setupActions()
 	actionCollection->addAction(ACT_REOPEN_SUBTITLE_AS, m_reopenSubtitleAsAction);
 	actionManager->addAction(m_reopenSubtitleAsAction, UserAction::SubOpened | UserAction::SubPClean | UserAction::FullScreenOff);
 
-
 	m_recentSubtitlesAction = new KRecentFilesActionExt(actionCollection);
 	m_recentSubtitlesAction->setIcon(KIcon("document-open"));
 	m_recentSubtitlesAction->setText(i18nc("@action:inmenu Open rencently used subtitle file", "Open &Recent"));
 	m_recentSubtitlesAction->setStatusTip(i18n("Open subtitle file"));
 	connect(m_recentSubtitlesAction, SIGNAL(urlSelected(const KUrl &)), this, SLOT(openSubtitle(const KUrl &)));
 	actionCollection->addAction(ACT_RECENT_SUBTITLES, m_recentSubtitlesAction);
-
 
 	KAction *saveSubtitleAction = new KAction(actionCollection);
 	saveSubtitleAction->setIcon(KIcon("document-save"));
@@ -460,7 +505,6 @@ void Application::setupActions()
 	actionCollection->addAction(ACT_SAVE_SUBTITLE, saveSubtitleAction);
 	actionManager->addAction(saveSubtitleAction, UserAction::SubPDirty | UserAction::FullScreenOff);
 
-
 	KAction *saveSubtitleAsAction = new KAction(actionCollection);
 	saveSubtitleAsAction->setIcon(KIcon("document-save-as"));
 	saveSubtitleAsAction->setText(i18n("Save As..."));
@@ -468,7 +512,6 @@ void Application::setupActions()
 	connect(saveSubtitleAsAction, SIGNAL(triggered()), this, SLOT(saveSubtitleAs()));
 	actionCollection->addAction(ACT_SAVE_SUBTITLE_AS, saveSubtitleAsAction);
 	actionManager->addAction(saveSubtitleAsAction, UserAction::SubOpened | UserAction::FullScreenOff);
-
 
 	KAction *closeSubtitleAction = new KAction(actionCollection);
 	closeSubtitleAction->setIcon(KIcon("window-close"));
@@ -479,7 +522,6 @@ void Application::setupActions()
 	actionCollection->addAction(ACT_CLOSE_SUBTITLE, closeSubtitleAction);
 	actionManager->addAction(closeSubtitleAction, UserAction::SubOpened | UserAction::FullScreenOff);
 
-
 	KAction *newSubtitleTrAction = new KAction(actionCollection);
 	newSubtitleTrAction->setIcon(KIcon("document-new"));
 	newSubtitleTrAction->setText(i18n("New Translation"));
@@ -488,7 +530,6 @@ void Application::setupActions()
 	connect(newSubtitleTrAction, SIGNAL(triggered()), this, SLOT(newSubtitleTr()));
 	actionCollection->addAction(ACT_NEW_SUBTITLE_TR, newSubtitleTrAction);
 	actionManager->addAction(newSubtitleTrAction, UserAction::SubOpened | UserAction::FullScreenOff);
-
 
 	KAction *openSubtitleTrAction = new KAction(actionCollection);
 	openSubtitleTrAction->setIcon(KIcon("document-open"));
@@ -499,7 +540,6 @@ void Application::setupActions()
 	actionCollection->addAction(ACT_OPEN_SUBTITLE_TR, openSubtitleTrAction);
 	actionManager->addAction(openSubtitleTrAction, UserAction::SubOpened);
 
-
 	m_reopenSubtitleTrAsAction = new KCodecActionExt(actionCollection, true);
 	m_reopenSubtitleTrAsAction->setIcon(KIcon("view-refresh"));
 	m_reopenSubtitleTrAsAction->setText(i18n("Reload Translation As..."));
@@ -509,7 +549,6 @@ void Application::setupActions()
 	actionCollection->addAction(ACT_REOPEN_SUBTITLE_TR_AS, m_reopenSubtitleTrAsAction);
 	actionManager->addAction(m_reopenSubtitleTrAsAction, UserAction::SubTrOpened | UserAction::SubSClean | UserAction::FullScreenOff);
 
-
 	m_recentSubtitlesTrAction = new KRecentFilesActionExt(actionCollection);
 	m_recentSubtitlesTrAction->setIcon(KIcon("document-open"));
 	m_recentSubtitlesTrAction->setText(i18n("Open &Recent Translation"));
@@ -517,7 +556,6 @@ void Application::setupActions()
 	connect(m_recentSubtitlesTrAction, SIGNAL(urlSelected(const KUrl &)), this, SLOT(openSubtitleTr(const KUrl &)));
 	actionCollection->addAction(ACT_RECENT_SUBTITLES_TR, m_recentSubtitlesTrAction);
 	actionManager->addAction(m_recentSubtitlesTrAction, UserAction::SubOpened | UserAction::FullScreenOff);
-
 
 	KAction *saveSubtitleTrAction = new KAction(actionCollection);
 	saveSubtitleTrAction->setIcon(KIcon("document-save"));
@@ -528,7 +566,6 @@ void Application::setupActions()
 	actionCollection->addAction(ACT_SAVE_SUBTITLE_TR, saveSubtitleTrAction);
 	actionManager->addAction(saveSubtitleTrAction, UserAction::SubSDirty | UserAction::FullScreenOff);
 
-
 	KAction *saveSubtitleTrAsAction = new KAction(actionCollection);
 	saveSubtitleTrAsAction->setIcon(KIcon("document-save-as"));
 	saveSubtitleTrAsAction->setText(i18n("Save Translation As..."));
@@ -536,7 +573,6 @@ void Application::setupActions()
 	connect(saveSubtitleTrAsAction, SIGNAL(triggered()), this, SLOT(saveSubtitleTrAs()));
 	actionCollection->addAction(ACT_SAVE_SUBTITLE_TR_AS, saveSubtitleTrAsAction);
 	actionManager->addAction(saveSubtitleTrAsAction, UserAction::SubTrOpened | UserAction::FullScreenOff);
-
 
 	KAction *closeSubtitleTrAction = new KAction(actionCollection);
 	closeSubtitleTrAction->setIcon(KIcon("window-close"));
@@ -547,7 +583,6 @@ void Application::setupActions()
 	actionCollection->addAction(ACT_CLOSE_SUBTITLE_TR, closeSubtitleTrAction);
 	actionManager->addAction(closeSubtitleTrAction, UserAction::SubTrOpened | UserAction::FullScreenOff);
 
-
 	KAction *undoAction = new KAction(actionCollection);
 	undoAction->setIcon(KIcon("edit-undo"));
 	undoAction->setText(i18n("Undo"));
@@ -556,7 +591,6 @@ void Application::setupActions()
 	connect(undoAction, SIGNAL(triggered()), this, SLOT(undo()));
 	actionCollection->addAction(ACT_UNDO, undoAction);
 	actionManager->addAction(undoAction, UserAction::SubHasUndo);
-
 
 	KAction *redoAction = new KAction(actionCollection);
 	redoAction->setIcon(KIcon("edit-redo"));
@@ -567,7 +601,6 @@ void Application::setupActions()
 	actionCollection->addAction(ACT_REDO, redoAction);
 	actionManager->addAction(redoAction, UserAction::SubHasRedo);
 
-
 	KAction *splitSubtitleAction = new KAction(actionCollection);
 	splitSubtitleAction->setText(i18n("Split Subtitle..."));
 	splitSubtitleAction->setStatusTip(i18n("Split the opened subtitle in two parts"));
@@ -575,14 +608,12 @@ void Application::setupActions()
 	actionCollection->addAction(ACT_SPLIT_SUBTITLE, splitSubtitleAction);
 	actionManager->addAction(splitSubtitleAction, UserAction::SubHasLine | UserAction::FullScreenOff);
 
-
 	KAction *joinSubtitlesAction = new KAction(actionCollection);
 	joinSubtitlesAction->setText(i18n("Join Subtitles..."));
 	joinSubtitlesAction->setStatusTip(i18n("Append to the opened subtitle another one"));
 	connect(joinSubtitlesAction, SIGNAL(triggered()), this, SLOT(joinSubtitles()));
 	actionCollection->addAction(ACT_JOIN_SUBTITLES, joinSubtitlesAction);
 	actionManager->addAction(joinSubtitlesAction, UserAction::SubOpened | UserAction::FullScreenOff);
-
 
 	KAction *insertBeforeCurrentLineAction = new KAction(actionCollection);
 	insertBeforeCurrentLineAction->setText(i18n("Insert Before"));
@@ -592,7 +623,6 @@ void Application::setupActions()
 	actionCollection->addAction(ACT_INSERT_BEFORE_CURRENT_LINE, insertBeforeCurrentLineAction);
 	actionManager->addAction(insertBeforeCurrentLineAction, UserAction::SubOpened | UserAction::FullScreenOff);
 
-
 	KAction *insertAfterCurrentLineAction = new KAction(actionCollection);
 	insertAfterCurrentLineAction->setText(i18n("Insert After"));
 	insertAfterCurrentLineAction->setStatusTip(i18n("Insert empty line after current one"));
@@ -600,7 +630,6 @@ void Application::setupActions()
 	connect(insertAfterCurrentLineAction, SIGNAL(triggered()), this, SLOT(insertAfterCurrentLine()));
 	actionCollection->addAction(ACT_INSERT_AFTER_CURRENT_LINE, insertAfterCurrentLineAction);
 	actionManager->addAction(insertAfterCurrentLineAction, UserAction::SubOpened | UserAction::FullScreenOff);
-
 
 	KAction *removeSelectedLinesAction = new KAction(actionCollection);
 	removeSelectedLinesAction->setText(i18n("Remove"));
@@ -610,7 +639,6 @@ void Application::setupActions()
 	actionCollection->addAction(ACT_REMOVE_SELECTED_LINES, removeSelectedLinesAction);
 	actionManager->addAction(removeSelectedLinesAction, UserAction::HasSelection | UserAction::FullScreenOff);
 
-
 	KAction *splitSelectedLinesAction = new KAction(actionCollection);
 	splitSelectedLinesAction->setText(i18n("Split Lines"));
 	splitSelectedLinesAction->setStatusTip(i18n("Split selected lines"));
@@ -618,14 +646,12 @@ void Application::setupActions()
 	actionCollection->addAction(ACT_SPLIT_SELECTED_LINES, splitSelectedLinesAction);
 	actionManager->addAction(splitSelectedLinesAction, UserAction::HasSelection | UserAction::FullScreenOff);
 
-
 	KAction *joinSelectedLinesAction = new KAction(actionCollection);
 	joinSelectedLinesAction->setText(i18n("Join Lines"));
 	joinSelectedLinesAction->setStatusTip(i18n("Join selected lines"));
 	connect(joinSelectedLinesAction, SIGNAL(triggered()), this, SLOT(joinSelectedLines()));
 	actionCollection->addAction(ACT_JOIN_SELECTED_LINES, joinSelectedLinesAction);
 	actionManager->addAction(joinSelectedLinesAction, UserAction::HasSelection | UserAction::FullScreenOff);
-
 
 	KAction *selectAllLinesAction = new KAction(actionCollection);
 	selectAllLinesAction->setText(i18n("Select All"));
@@ -635,7 +661,6 @@ void Application::setupActions()
 	actionCollection->addAction(ACT_SELECT_ALL_LINES, selectAllLinesAction);
 	actionManager->addAction(selectAllLinesAction, UserAction::SubHasLine | UserAction::FullScreenOff);
 
-
 	KAction *gotoLineAction = new KAction(actionCollection);
 	gotoLineAction->setText(i18n("Go to Line..."));
 	gotoLineAction->setStatusTip(i18n("Go to specified line"));
@@ -643,7 +668,6 @@ void Application::setupActions()
 	connect(gotoLineAction, SIGNAL(triggered()), this, SLOT(gotoLine()));
 	actionCollection->addAction(ACT_GOTO_LINE, gotoLineAction);
 	actionManager->addAction(gotoLineAction, UserAction::SubHasLines);
-
 
 	KAction *findAction = new KAction(actionCollection);
 	findAction->setIcon(KIcon("edit-find"));
@@ -653,7 +677,6 @@ void Application::setupActions()
 	connect(findAction, SIGNAL(triggered()), this, SLOT(find()));
 	actionCollection->addAction(ACT_FIND, findAction);
 	actionManager->addAction(findAction, UserAction::SubHasLine);
-
 
 	KAction *findNextAction = new KAction(actionCollection);
 //  findNextAction->setIcon( KIcon( "go-down" ) );
@@ -665,7 +688,6 @@ void Application::setupActions()
 	actionCollection->addAction(ACT_FIND_NEXT, findNextAction);
 	actionManager->addAction(findNextAction, UserAction::SubHasLine);
 
-
 	KAction *findPreviousAction = new KAction(actionCollection);
 //  findPreviousAction->setIcon( KIcon( "go-up" ) );
 	findPreviousAction->setIcon(KIcon("go-up-search"));
@@ -676,7 +698,6 @@ void Application::setupActions()
 	actionCollection->addAction(ACT_FIND_PREVIOUS, findPreviousAction);
 	actionManager->addAction(findPreviousAction, UserAction::SubHasLine);
 
-
 	KAction *replaceAction = new KAction(actionCollection);
 	replaceAction->setText(i18n("Replace..."));
 	replaceAction->setStatusTip(i18n("Replace occurrences of strings or regular expressions"));
@@ -684,7 +705,6 @@ void Application::setupActions()
 	connect(replaceAction, SIGNAL(triggered()), this, SLOT(replace()));
 	actionCollection->addAction(ACT_REPLACE, replaceAction);
 	actionManager->addAction(replaceAction, UserAction::SubHasLine | UserAction::FullScreenOff);
-
 
 	KAction *retrocedeCurrentLineAction = new KAction(actionCollection);
 	retrocedeCurrentLineAction->setIcon(KIcon("go-down"));
@@ -695,7 +715,6 @@ void Application::setupActions()
 	actionCollection->addAction(ACT_RETROCEDE_CURRENT_LINE, retrocedeCurrentLineAction);
 	actionManager->addAction(retrocedeCurrentLineAction, UserAction::SubHasLines | UserAction::HasSelection);
 
-
 	KAction *advanceCurrentLineAction = new KAction(actionCollection);
 	advanceCurrentLineAction->setIcon(KIcon("go-down"));
 	advanceCurrentLineAction->setText(i18n("Advance current line"));
@@ -705,7 +724,6 @@ void Application::setupActions()
 	actionCollection->addAction(ACT_ADVANCE_CURRENT_LINE, advanceCurrentLineAction);
 	actionManager->addAction(advanceCurrentLineAction, UserAction::SubHasLines | UserAction::HasSelection);
 
-
 	KAction *checkErrorsAction = new KAction(actionCollection);
 	checkErrorsAction->setText(i18n("Check Errors..."));
 	checkErrorsAction->setStatusTip(i18n("Check for errors in the current subtitle"));
@@ -714,14 +732,12 @@ void Application::setupActions()
 	actionCollection->addAction(ACT_CHECK_ERRORS, checkErrorsAction);
 	actionManager->addAction(checkErrorsAction, UserAction::HasSelection | UserAction::FullScreenOff);
 
-
 	KAction *clearErrorsAction = new KAction(actionCollection);
 	clearErrorsAction->setText(i18n("Clear Errors..."));
 	clearErrorsAction->setStatusTip(i18n("Clear errors from selected lines"));
 	connect(clearErrorsAction, SIGNAL(triggered()), this, SLOT(clearErrors()));
 	actionCollection->addAction(ACT_CLEAR_ERRORS, clearErrorsAction);
 	actionManager->addAction(clearErrorsAction, UserAction::HasSelection | UserAction::FullScreenOff);
-
 
 	KAction *showErrorsAction = new KAction(actionCollection);
 	showErrorsAction->setText(i18n("Show Errors..."));
@@ -731,7 +747,6 @@ void Application::setupActions()
 	actionCollection->addAction(ACT_SHOW_ERRORS, showErrorsAction);
 	actionManager->addAction(showErrorsAction, UserAction::SubHasLine | UserAction::FullScreenOff);
 
-
 	KAction *findErrorAction = new KAction(actionCollection);
 	findErrorAction->setIcon(KIcon("edit-find"));
 	findErrorAction->setText(i18n("Find Error..."));
@@ -740,7 +755,6 @@ void Application::setupActions()
 	connect(findErrorAction, SIGNAL(triggered()), this, SLOT(findError()));
 	actionCollection->addAction(ACT_FIND_ERROR, findErrorAction);
 	actionManager->addAction(findErrorAction, UserAction::SubHasLine);
-
 
 	KAction *findNextErrorAction = new KAction(actionCollection);
 //  findNextErrorAction->setIcon( KIcon( "go-down" ) );
@@ -752,7 +766,6 @@ void Application::setupActions()
 	actionCollection->addAction(ACT_FIND_NEXT_ERROR, findNextErrorAction);
 	actionManager->addAction(findNextErrorAction, UserAction::SubHasLine);
 
-
 	KAction *findPreviousErrorAction = new KAction(actionCollection);
 //  findPreviousErrorAction->setIcon( KIcon( "go-up" ) );
 	findPreviousErrorAction->setIcon(KIcon("go-up-search"));
@@ -763,7 +776,6 @@ void Application::setupActions()
 	actionCollection->addAction(ACT_FIND_PREVIOUS_ERROR, findPreviousErrorAction);
 	actionManager->addAction(findPreviousErrorAction, UserAction::SubHasLine);
 
-
 	KAction *spellCheckAction = new KAction(actionCollection);
 	spellCheckAction->setIcon(KIcon("tools-check-spelling"));
 	spellCheckAction->setText(i18n("Spelling..."));
@@ -772,7 +784,6 @@ void Application::setupActions()
 	actionCollection->addAction(ACT_SPELL_CHECK, spellCheckAction);
 	actionManager->addAction(spellCheckAction, UserAction::SubHasLine | UserAction::FullScreenOff);
 
-
 	KAction *toggleSelectedLinesMarkAction = new KAction(actionCollection);
 	toggleSelectedLinesMarkAction->setText(i18n("Toggle Mark"));
 	toggleSelectedLinesMarkAction->setStatusTip(i18n("Toggle selected lines mark"));
@@ -780,7 +791,6 @@ void Application::setupActions()
 	connect(toggleSelectedLinesMarkAction, SIGNAL(triggered()), this, SLOT(toggleSelectedLinesMark()));
 	actionCollection->addAction(ACT_TOGGLE_SELECTED_LINES_MARK, toggleSelectedLinesMarkAction);
 	actionManager->addAction(toggleSelectedLinesMarkAction, UserAction::HasSelection | UserAction::FullScreenOff);
-
 
 	KAction *toggleSelectedLinesBoldAction = new KAction(actionCollection);
 	toggleSelectedLinesBoldAction->setIcon(KIcon("format-text-bold"));
@@ -791,7 +801,6 @@ void Application::setupActions()
 	actionCollection->addAction(ACT_TOGGLE_SELECTED_LINES_BOLD, toggleSelectedLinesBoldAction);
 	actionManager->addAction(toggleSelectedLinesBoldAction, UserAction::HasSelection | UserAction::FullScreenOff);
 
-
 	KAction *toggleSelectedLinesItalicAction = new KAction(actionCollection);
 	toggleSelectedLinesItalicAction->setIcon(KIcon("format-text-italic"));
 	toggleSelectedLinesItalicAction->setText(i18n("Toggle Italic"));
@@ -800,7 +809,6 @@ void Application::setupActions()
 	connect(toggleSelectedLinesItalicAction, SIGNAL(triggered()), this, SLOT(toggleSelectedLinesItalic()));
 	actionCollection->addAction(ACT_TOGGLE_SELECTED_LINES_ITALIC, toggleSelectedLinesItalicAction);
 	actionManager->addAction(toggleSelectedLinesItalicAction, UserAction::HasSelection | UserAction::FullScreenOff);
-
 
 	KAction *toggleSelectedLinesUnderlineAction = new KAction(actionCollection);
 	toggleSelectedLinesUnderlineAction->setIcon(KIcon("format-text-underline"));
@@ -811,7 +819,6 @@ void Application::setupActions()
 	actionCollection->addAction(ACT_TOGGLE_SELECTED_LINES_UNDERLINE, toggleSelectedLinesUnderlineAction);
 	actionManager->addAction(toggleSelectedLinesUnderlineAction, UserAction::HasSelection | UserAction::FullScreenOff);
 
-
 	KAction *toggleSelectedLinesStrikeThroughAction = new KAction(actionCollection);
 	toggleSelectedLinesStrikeThroughAction->setIcon(KIcon("format-text-strikethrough"));
 	toggleSelectedLinesStrikeThroughAction->setText(i18n("Toggle Strike Through"));
@@ -820,7 +827,6 @@ void Application::setupActions()
 	connect(toggleSelectedLinesStrikeThroughAction, SIGNAL(triggered()), this, SLOT(toggleSelectedLinesStrikeThrough()));
 	actionCollection->addAction(ACT_TOGGLE_SELECTED_LINES_STRIKETHROUGH, toggleSelectedLinesStrikeThroughAction);
 	actionManager->addAction(toggleSelectedLinesStrikeThroughAction, UserAction::HasSelection | UserAction::FullScreenOff);
-
 
 	KAction *changeSelectedLinesColorAction = new KAction(actionCollection);
 	changeSelectedLinesColorAction->setIcon(KIcon("format-text-color"));
@@ -831,7 +837,6 @@ void Application::setupActions()
 	actionCollection->addAction(ACT_CHANGE_SELECTED_LINES_TEXT_COLOR, changeSelectedLinesColorAction);
 	actionManager->addAction(changeSelectedLinesColorAction, UserAction::HasSelection | UserAction::FullScreenOff);
 
-
 	KAction *shiftAction = new KAction(actionCollection);
 	shiftAction->setText(i18n("Shift..."));
 	shiftAction->setStatusTip(i18n("Shift lines an specified amount of time"));
@@ -840,7 +845,6 @@ void Application::setupActions()
 	actionCollection->addAction(ACT_SHIFT, shiftAction);
 	actionManager->addAction(shiftAction, UserAction::SubHasLine | UserAction::FullScreenOff);
 
-
 	QString shiftTimeMillis(generalConfig()->linesQuickShiftAmount());
 
 	KAction *shiftSelectedLinesFwdAction = new KAction(actionCollection);
@@ -848,7 +852,6 @@ void Application::setupActions()
 	connect(shiftSelectedLinesFwdAction, SIGNAL(triggered()), this, SLOT(shiftSelectedLinesForwards()));
 	actionCollection->addAction(ACT_SHIFT_SELECTED_LINES_FORWARDS, shiftSelectedLinesFwdAction);
 	actionManager->addAction(shiftSelectedLinesFwdAction, UserAction::HasSelection | UserAction::FullScreenOff);
-
 
 	KAction *shiftSelectedLinesBwdAction = new KAction(actionCollection);
 	shiftSelectedLinesBwdAction->setShortcut(KShortcut("Shift+-"), KAction::DefaultShortcut | KAction::ActiveShortcut);
@@ -859,7 +862,6 @@ void Application::setupActions()
 	// update shiftSelectedLinesFwdAction and shiftSelectedLinesBwdAction texts and status tips
 	onGeneralOptionChanged(GeneralConfig::keyLinesQuickShiftAmount(), QString::number(generalConfig()->linesQuickShiftAmount()));
 
-
 	KAction *adjustAction = new KAction(actionCollection);
 	adjustAction->setText(i18n("Adjust..."));
 	adjustAction->setStatusTip(i18n("Linearly adjust all lines to a specified interval"));
@@ -868,7 +870,6 @@ void Application::setupActions()
 	actionCollection->addAction(ACT_ADJUST, adjustAction);
 	actionManager->addAction(adjustAction, UserAction::SubHasLines | UserAction::FullScreenOff);
 
-
 	KAction *sortLinesAction = new KAction(actionCollection);
 	sortLinesAction->setText(i18n("Sort..."));
 	sortLinesAction->setStatusTip(i18n("Sort lines based on their show time"));
@@ -876,14 +877,12 @@ void Application::setupActions()
 	actionCollection->addAction(ACT_SORT_LINES, sortLinesAction);
 	actionManager->addAction(sortLinesAction, UserAction::SubHasLines | UserAction::FullScreenOff);
 
-
 	KAction *changeFrameRateAction = new KAction(actionCollection);
 	changeFrameRateAction->setText(i18n("Change Frame Rate..."));
 	changeFrameRateAction->setStatusTip(i18n("Retime subtitle lines by reinterpreting its frame rate"));
 	connect(changeFrameRateAction, SIGNAL(triggered()), this, SLOT(changeFrameRate()));
 	actionCollection->addAction(ACT_CHANGE_FRAME_RATE, changeFrameRateAction);
 	actionManager->addAction(changeFrameRateAction, UserAction::SubOpened | UserAction::FullScreenOff);
-
 
 	KAction *durationLimitsAction = new KAction(actionCollection);
 	durationLimitsAction->setText(i18n("Enforce Duration Limits..."));
@@ -893,14 +892,12 @@ void Application::setupActions()
 	actionCollection->addAction(ACT_DURATION_LIMITS, durationLimitsAction);
 	actionManager->addAction(durationLimitsAction, UserAction::SubHasLine | UserAction::FullScreenOff);
 
-
 	KAction *autoDurationsAction = new KAction(actionCollection);
 	autoDurationsAction->setText(i18n("Set Automatic Durations..."));
 	autoDurationsAction->setStatusTip(i18n("Set lines durations based on amount of letters, words and line breaks"));
 	connect(autoDurationsAction, SIGNAL(triggered()), this, SLOT(setAutoDurations()));
 	actionCollection->addAction(ACT_AUTOMATIC_DURATIONS, autoDurationsAction);
 	actionManager->addAction(autoDurationsAction, UserAction::SubHasLine | UserAction::FullScreenOff);
-
 
 	KAction *maximizeDurationsAction = new KAction(actionCollection);
 	maximizeDurationsAction->setText(i18n("Maximize Durations..."));
@@ -909,14 +906,12 @@ void Application::setupActions()
 	actionCollection->addAction(ACT_MAXIMIZE_DURATIONS, maximizeDurationsAction);
 	actionManager->addAction(maximizeDurationsAction, UserAction::SubHasLine | UserAction::FullScreenOff);
 
-
 	KAction *fixOverlappingLinesAction = new KAction(actionCollection);
 	fixOverlappingLinesAction->setText(i18n("Fix Overlapping Times..."));
 	fixOverlappingLinesAction->setStatusTip(i18n("Fix lines overlapping times"));
 	connect(fixOverlappingLinesAction, SIGNAL(triggered()), this, SLOT(fixOverlappingLines()));
 	actionCollection->addAction(ACT_FIX_OVERLAPPING_LINES, fixOverlappingLinesAction);
 	actionManager->addAction(fixOverlappingLinesAction, UserAction::SubHasLine | UserAction::FullScreenOff);
-
 
 	KAction *syncWithSubtitleAction = new KAction(actionCollection);
 	syncWithSubtitleAction->setText(i18n("Synchronize with Subtitle..."));
@@ -925,14 +920,12 @@ void Application::setupActions()
 	actionCollection->addAction(ACT_SYNC_WITH_SUBTITLE, syncWithSubtitleAction);
 	actionManager->addAction(syncWithSubtitleAction, UserAction::SubHasLine | UserAction::FullScreenOff);
 
-
 	KAction *breakLinesAction = new KAction(actionCollection);
 	breakLinesAction->setText(i18n("Break Lines..."));
 	breakLinesAction->setStatusTip(i18n("Automatically set line breaks"));
 	connect(breakLinesAction, SIGNAL(triggered()), this, SLOT(breakLines()));
 	actionCollection->addAction(ACT_ADJUST_TEXTS, breakLinesAction);
 	actionManager->addAction(breakLinesAction, UserAction::SubHasLine | UserAction::FullScreenOff);
-
 
 	KAction *unbreakTextsAction = new KAction(actionCollection);
 	unbreakTextsAction->setText(i18n("Unbreak Lines..."));
@@ -941,14 +934,12 @@ void Application::setupActions()
 	actionCollection->addAction(ACT_UNBREAK_TEXTS, unbreakTextsAction);
 	actionManager->addAction(unbreakTextsAction, UserAction::SubHasLine | UserAction::FullScreenOff);
 
-
 	KAction *simplifySpacesAction = new KAction(actionCollection);
 	simplifySpacesAction->setText(i18n("Simplify Spaces..."));
 	simplifySpacesAction->setStatusTip(i18n("Remove unneeded spaces from lines"));
 	connect(simplifySpacesAction, SIGNAL(triggered()), this, SLOT(simplifySpaces()));
 	actionCollection->addAction(ACT_SIMPLIFY_SPACES, simplifySpacesAction);
 	actionManager->addAction(simplifySpacesAction, UserAction::SubHasLine | UserAction::FullScreenOff);
-
 
 	KAction *changeCaseAction = new KAction(actionCollection);
 	changeCaseAction->setText(i18n("Change Case..."));
@@ -957,7 +948,6 @@ void Application::setupActions()
 	actionCollection->addAction(ACT_CHANGE_CASE, changeCaseAction);
 	actionManager->addAction(changeCaseAction, UserAction::SubHasLine | UserAction::FullScreenOff);
 
-
 	KAction *fixPunctuationAction = new KAction(actionCollection);
 	fixPunctuationAction->setText(i18n("Fix Punctuation..."));
 	fixPunctuationAction->setStatusTip(i18n("Fix punctuation errors in lines"));
@@ -965,14 +955,12 @@ void Application::setupActions()
 	actionCollection->addAction(ACT_FIX_PUNCTUATION, fixPunctuationAction);
 	actionManager->addAction(fixPunctuationAction, UserAction::SubHasLine | UserAction::FullScreenOff);
 
-
 	KAction *translateAction = new KAction(actionCollection);
 	translateAction->setText(i18n("Translate..."));
 	translateAction->setStatusTip(i18n("Translate lines texts using Google services"));
 	connect(translateAction, SIGNAL(triggered()), this, SLOT(translate()));
 	actionCollection->addAction(ACT_TRANSLATE, translateAction);
 	actionManager->addAction(translateAction, UserAction::SubHasLine | UserAction::FullScreenOff);
-
 
 	KAction *editCurrentLineInPlaceAction = new KAction(actionCollection);
 	editCurrentLineInPlaceAction->setText(i18n("Edit Line in Place"));
@@ -982,14 +970,12 @@ void Application::setupActions()
 	actionCollection->addAction(ACT_EDIT_CURRENT_LINE_IN_PLACE, editCurrentLineInPlaceAction);
 	actionManager->addAction(editCurrentLineInPlaceAction, UserAction::HasSelection | UserAction::FullScreenOff);
 
-
 	KAction *openVideoAction = new KAction(actionCollection);
 	openVideoAction->setIcon(KIcon("document-open"));
 	openVideoAction->setText(i18n("Open Video..."));
 	openVideoAction->setStatusTip(i18n("Open video file"));
 	connect(openVideoAction, SIGNAL(triggered()), this, SLOT(openVideo()));
 	actionCollection->addAction(ACT_OPEN_VIDEO, openVideoAction);
-
 
 	m_recentVideosAction = new KRecentFilesActionExt(actionCollection);
 	m_recentVideosAction->setIcon(KIcon("document-open"));
@@ -998,7 +984,6 @@ void Application::setupActions()
 	connect(m_recentVideosAction, SIGNAL(urlSelected(const KUrl &)), this, SLOT(openVideo(const KUrl &)));
 	actionCollection->addAction(ACT_RECENT_VIDEOS, m_recentVideosAction);
 
-
 	KAction *closeVideoAction = new KAction(actionCollection);
 	closeVideoAction->setIcon(KIcon("window-close"));
 	closeVideoAction->setText(i18n("Close Video"));
@@ -1006,7 +991,6 @@ void Application::setupActions()
 	connect(closeVideoAction, SIGNAL(triggered()), m_player, SLOT(closeFile()));
 	actionCollection->addAction(ACT_CLOSE_VIDEO, closeVideoAction);
 	actionManager->addAction(closeVideoAction, UserAction::VideoOpened);
-
 
 	KAction *extractVideoAudioAction = new KAction(actionCollection);
 	extractVideoAudioAction->setIcon(KIcon("audio-extract"));
@@ -1024,7 +1008,6 @@ void Application::setupActions()
 	actionCollection->addAction(ACT_CANCEL_AUDIO_EXTRACTION, cancelAudioExtractionAction);
 	actionManager->addAction(cancelAudioExtractionAction, UserAction::AudioDecoding);
 
-
 	KToggleAction *fullScreenAction = new KToggleAction(actionCollection);
 //  fullScreenAction->setChecked( false )
 	fullScreenAction->setIcon(KIcon("view-fullscreen"));
@@ -1034,7 +1017,6 @@ void Application::setupActions()
 	connect(fullScreenAction, SIGNAL(toggled(bool)), this, SLOT(setFullScreenMode(bool)));
 	actionCollection->addAction(ACT_TOGGLE_FULL_SCREEN, fullScreenAction);
 
-
 	KAction *stopAction = new KAction(actionCollection);
 	stopAction->setIcon(KIcon("media-playback-stop"));
 	stopAction->setText(i18n("Stop"));
@@ -1042,7 +1024,6 @@ void Application::setupActions()
 	connect(stopAction, SIGNAL(triggered()), m_player, SLOT(stop()));
 	actionCollection->addAction(ACT_STOP, stopAction);
 	actionManager->addAction(stopAction, UserAction::VideoPlaying);
-
 
 	KAction *playPauseAction = new KAction(actionCollection);
 	playPauseAction->setIcon(KIcon("media-playback-start"));
@@ -1052,7 +1033,6 @@ void Application::setupActions()
 	actionCollection->addAction(ACT_PLAY_PAUSE, playPauseAction);
 	actionManager->addAction(playPauseAction, UserAction::VideoOpened);
 
-
 	KAction *seekBackwardsAction = new KAction(actionCollection);
 	seekBackwardsAction->setIcon(KIcon("media-seek-backward"));
 	seekBackwardsAction->setText(i18n("Seek Backwards"));
@@ -1060,7 +1040,6 @@ void Application::setupActions()
 	connect(seekBackwardsAction, SIGNAL(triggered()), this, SLOT(seekBackwards()));
 	actionCollection->addAction(ACT_SEEK_BACKWARDS, seekBackwardsAction);
 	actionManager->addAction(seekBackwardsAction, UserAction::VideoPlaying);
-
 
 	KAction *seekForwardsAction = new KAction(actionCollection);
 	seekForwardsAction->setIcon(KIcon("media-seek-forward"));
@@ -1073,7 +1052,6 @@ void Application::setupActions()
 	// update seekBackwardsAction and seekForwardsAction status tip
 	onPlayerOptionChanged(PlayerConfig::keySeekJumpLength(), QString::number(playerConfig()->seekJumpLength()));
 
-
 	KAction *seekToPrevLineAction = new KAction(actionCollection);
 	seekToPrevLineAction->setIcon(KIcon("media-skip-backward"));
 	seekToPrevLineAction->setText(i18n("Jump to Previous Line"));
@@ -1083,7 +1061,6 @@ void Application::setupActions()
 	actionCollection->addAction(ACT_SEEK_TO_PREVIOUS_LINE, seekToPrevLineAction);
 	actionManager->addAction(seekToPrevLineAction, UserAction::SubHasLine | UserAction::VideoPlaying);
 
-
 	KAction *seekToNextLineAction = new KAction(actionCollection);
 	seekToNextLineAction->setIcon(KIcon("media-skip-forward"));
 	seekToNextLineAction->setText(i18n("Jump to Next Line"));
@@ -1092,7 +1069,6 @@ void Application::setupActions()
 	connect(seekToNextLineAction, SIGNAL(triggered()), this, SLOT(seekToNextLine()));
 	actionCollection->addAction(ACT_SEEK_TO_NEXT_LINE, seekToNextLineAction);
 	actionManager->addAction(seekToNextLineAction, UserAction::SubHasLine | UserAction::VideoPlaying);
-
 
 	KAction *setCurrentLineShowTimeFromVideoAction = new KAction(actionCollection);
 //  setCurrentLineShowTimeFromVideoAction->setIcon( KIcon( "set-show-time" ) );
@@ -1104,7 +1080,6 @@ void Application::setupActions()
 	actionCollection->addAction(ACT_SET_CURRENT_LINE_SHOW_TIME, setCurrentLineShowTimeFromVideoAction);
 	actionManager->addAction(setCurrentLineShowTimeFromVideoAction, UserAction::HasSelection | UserAction::VideoPlaying);
 
-
 	KAction *setCurrentLineHideTimeFromVideoAction = new KAction(actionCollection);
 //  setCurrentLineHideTimeFromVideoAction->setIcon( KIcon( "set-hide-time" ) );
 	setCurrentLineHideTimeFromVideoAction->setIcon(KIcon("zone-end"));
@@ -1115,14 +1090,12 @@ void Application::setupActions()
 	actionCollection->addAction(ACT_SET_CURRENT_LINE_HIDE_TIME, setCurrentLineHideTimeFromVideoAction);
 	actionManager->addAction(setCurrentLineHideTimeFromVideoAction, UserAction::HasSelection | UserAction::VideoPlaying);
 
-
 	KToggleAction *currentLineFollowsVideoAction = new KToggleAction(actionCollection);
 	currentLineFollowsVideoAction->setIcon(KIcon("current-line-follows-video"));
 	currentLineFollowsVideoAction->setText(i18n("Current Line Follows Video"));
 	currentLineFollowsVideoAction->setStatusTip(i18n("Make current line follow the playing video position"));
 	connect(currentLineFollowsVideoAction, SIGNAL(toggled(bool)), this, SLOT(onLinkCurrentLineToVideoToggled(bool)));
 	actionCollection->addAction(ACT_CURRENT_LINE_FOLLOWS_VIDEO, currentLineFollowsVideoAction);
-
 
 	KToggleAction *toggleMuteAction = new KToggleAction(actionCollection);
 	toggleMuteAction->setIcon(KIcon("audio-volume-muted"));
@@ -1133,7 +1106,6 @@ void Application::setupActions()
 	connect(toggleMuteAction, SIGNAL(toggled(bool)), m_player, SLOT(setMuted(bool)));
 	actionCollection->addAction(ACT_TOGGLE_MUTED, toggleMuteAction);
 
-
 	KAction *increaseVolumeAction = new KAction(actionCollection);
 	increaseVolumeAction->setIcon(KIcon("audio-volume-high"));
 	increaseVolumeAction->setText(i18n("Increase Volume"));
@@ -1141,7 +1113,6 @@ void Application::setupActions()
 	increaseVolumeAction->setShortcut(Qt::Key_Plus, KAction::DefaultShortcut | KAction::ActiveShortcut);
 	connect(increaseVolumeAction, SIGNAL(triggered()), m_player, SLOT(increaseVolume()));
 	actionCollection->addAction(ACT_INCREASE_VOLUME, increaseVolumeAction);
-
 
 	KAction *decreaseVolumeAction = new KAction(actionCollection);
 	decreaseVolumeAction->setIcon(KIcon("audio-volume-low"));
@@ -1151,7 +1122,6 @@ void Application::setupActions()
 	connect(decreaseVolumeAction, SIGNAL(triggered()), m_player, SLOT(decreaseVolume()));
 	actionCollection->addAction(ACT_DECREASE_VOLUME, decreaseVolumeAction);
 
-
 	KSelectAction *setActiveAudioStreamAction = new KSelectAction(actionCollection);
 	setActiveAudioStreamAction->setIcon(KIcon("select-stream"));
 	setActiveAudioStreamAction->setText(i18n("Audio Streams"));
@@ -1159,7 +1129,6 @@ void Application::setupActions()
 	connect(setActiveAudioStreamAction, SIGNAL(triggered(int)), m_player, SLOT(setActiveAudioStream(int)));
 	actionCollection->addAction(ACT_SET_ACTIVE_AUDIO_STREAM, setActiveAudioStreamAction);
 	actionManager->addAction(setActiveAudioStreamAction, UserAction::VideoOpened);
-
 
 	KAction *increaseSubtitleFontAction = new KAction(actionCollection);
 	increaseSubtitleFontAction->setIcon(KIcon("format-font-size-more"));
@@ -1169,7 +1138,6 @@ void Application::setupActions()
 	connect(increaseSubtitleFontAction, SIGNAL(triggered()), m_playerWidget, SLOT(increaseFontSize()));
 	actionCollection->addAction(ACT_INCREASE_SUBTITLE_FONT, increaseSubtitleFontAction);
 
-
 	KAction *decreaseSubtitleFontAction = new KAction(actionCollection);
 	decreaseSubtitleFontAction->setIcon(KIcon("format-font-size-less"));
 	decreaseSubtitleFontAction->setText(i18n("Decrease Font Size"));
@@ -1177,7 +1145,6 @@ void Application::setupActions()
 	decreaseSubtitleFontAction->setShortcut(KShortcut("Alt+-"), KAction::DefaultShortcut | KAction::ActiveShortcut);
 	connect(decreaseSubtitleFontAction, SIGNAL(triggered()), m_playerWidget, SLOT(decreaseFontSize()));
 	actionCollection->addAction(ACT_DECREASE_SUBTITLE_FONT, decreaseSubtitleFontAction);
-
 
 	KSelectAction *setActiveSubtitleStreamAction = new KSelectAction(actionCollection);
 	setActiveSubtitleStreamAction->setIcon(KIcon("select-stream"));
@@ -1187,7 +1154,6 @@ void Application::setupActions()
 	actionCollection->addAction(ACT_SET_ACTIVE_SUBTITLE_STREAM, setActiveSubtitleStreamAction);
 	actionManager->addAction(setActiveSubtitleStreamAction, UserAction::SubTrOpened);
 
-
 	KAction *shiftToVideoPositionAction = new KAction(actionCollection);
 	shiftToVideoPositionAction->setText(i18n("Shift to Video Position"));
 	shiftToVideoPositionAction->setStatusTip(i18n("Set current line show time to video position by equally shifting all lines"));
@@ -1195,7 +1161,6 @@ void Application::setupActions()
 	connect(shiftToVideoPositionAction, SIGNAL(triggered()), this, SLOT(shiftToVideoPosition()));
 	actionCollection->addAction(ACT_SHIFT_TO_VIDEO_POSITION, shiftToVideoPositionAction);
 	actionManager->addAction(shiftToVideoPositionAction, UserAction::HasSelection | UserAction::VideoPlaying | UserAction::FullScreenOff);
-
 
 	KAction *adjustToVideoPositionAnchorLastAction = new KAction(actionCollection);
 	adjustToVideoPositionAnchorLastAction->setText(i18n("Adjust to Video Position (Anchor Last Line)"));
@@ -1205,7 +1170,6 @@ void Application::setupActions()
 	actionCollection->addAction(ACT_ADJUST_TO_VIDEO_POSITION_A_L, adjustToVideoPositionAnchorLastAction);
 	actionManager->addAction(adjustToVideoPositionAnchorLastAction, UserAction::HasSelection | UserAction::VideoPlaying | UserAction::FullScreenOff);
 
-
 	KAction *adjustToVideoPositionAnchorFirstAction = new KAction(actionCollection);
 	adjustToVideoPositionAnchorFirstAction->setText(i18n("Adjust to Video Position (Anchor First Line)"));
 	adjustToVideoPositionAnchorFirstAction->setStatusTip(i18n("Set current line to video position by fixing the first line and linearly adjusting the other ones"));
@@ -1214,7 +1178,6 @@ void Application::setupActions()
 	actionCollection->addAction(ACT_ADJUST_TO_VIDEO_POSITION_A_F, adjustToVideoPositionAnchorFirstAction);
 	actionManager->addAction(adjustToVideoPositionAnchorFirstAction, UserAction::HasSelection | UserAction::VideoPlaying | UserAction::FullScreenOff);
 
-
 	KAction *scriptsManagerAction = new KAction(actionCollection);
 	scriptsManagerAction->setIcon(KIcon("folder-development"));
 	scriptsManagerAction->setText(i18nc("@action:inmenu Manage user scripts", "Scripts Manager..."));
@@ -1222,8 +1185,6 @@ void Application::setupActions()
 	connect(scriptsManagerAction, SIGNAL(triggered()), m_scriptsManager, SLOT(showDialog()));
 	actionCollection->addAction(ACT_SCRIPTS_MANAGER, scriptsManagerAction);
 	actionManager->addAction(scriptsManagerAction, UserAction::FullScreenOff);
-
-
 
 //  KAction* openAudioLevelsAction = new KAction( actionCollection );
 //  openAudioLevelsAction->setIcon( "fileopen" );
@@ -1295,10 +1256,10 @@ void Application::setupActions()
 //  actionManager->addAction( decreaseAudioLevelsHZoomAction, UserAction::AudioLevelsOpened );
 }
 
-
 /// BEGIN ACTION HANDLERS
 
-Time Application::videoPosition(bool compensate)
+Time
+Application::videoPosition(bool compensate)
 {
 	if(compensate && !m_player->isPaused())
 		return Time((long)(m_player->position() * 1000) - generalConfig()->grabbedPositionCompensation());
@@ -1306,19 +1267,22 @@ Time Application::videoPosition(bool compensate)
 		return Time((long)(m_player->position() * 1000));
 }
 
-void Application::undo()
+void
+Application::undo()
 {
 	if(m_subtitle)
 		m_subtitle->actionManager().undo();
 }
 
-void Application::redo()
+void
+Application::redo()
 {
 	if(m_subtitle)
 		m_subtitle->actionManager().redo();
 }
 
-QTextCodec *Application::codecForUrl(const KUrl & url, bool useRecentFiles, bool useDefault)
+QTextCodec *
+Application::codecForUrl(const KUrl &url, bool useRecentFiles, bool useDefault)
 {
 	QString encoding = url.fileEncoding();
 
@@ -1344,7 +1308,8 @@ QTextCodec *Application::codecForUrl(const KUrl & url, bool useRecentFiles, bool
 	return codec;
 }
 
-QTextCodec *Application::codecForEncoding(const QString & encoding, bool useDefault)
+QTextCodec *
+Application::codecForEncoding(const QString &encoding, bool useDefault)
 {
 	QTextCodec *codec = 0;
 
@@ -1361,7 +1326,8 @@ QTextCodec *Application::codecForEncoding(const QString & encoding, bool useDefa
 	return codec;
 }
 
-bool Application::acceptClashingUrls(const KUrl & subtitleUrl, const KUrl & subtitleTrUrl)
+bool
+Application::acceptClashingUrls(const KUrl &subtitleUrl, const KUrl &subtitleTrUrl)
 {
 	KUrl url(subtitleUrl);
 	url.setFileEncoding(QString());
@@ -1372,10 +1338,11 @@ bool Application::acceptClashingUrls(const KUrl & subtitleUrl, const KUrl & subt
 		return true;
 
 	return KMessageBox::Continue == KMessageBox::warningContinueCancel(m_mainWindow, i18n("The requested action would make the subtitle and its translation share the same file, possibly resulting in loss of information when saving.\nAre you sure you want to continue?"), i18n("Conflicting Subtitle Files")
-		);
+																	   );
 }
 
-void Application::newSubtitle()
+void
+Application::newSubtitle()
 {
 	if(!closeSubtitle())
 		return;
@@ -1391,7 +1358,8 @@ void Application::newSubtitle()
 	updateTitle();
 }
 
-void Application::openSubtitle()
+void
+Application::openSubtitle()
 {
 	OpenSubtitleDialog openDlg(true, m_lastSubtitleUrl.prettyUrl(), QString());
 
@@ -1410,7 +1378,8 @@ void Application::openSubtitle()
 	}
 }
 
-void Application::openSubtitle(const KUrl & url, bool warnClashingUrls)
+void
+Application::openSubtitle(const KUrl &url, bool warnClashingUrls)
 {
 	if(warnClashingUrls && !acceptClashingUrls(url, m_subtitleTrUrl))
 		return;
@@ -1480,17 +1449,20 @@ void Application::openSubtitle(const KUrl & url, bool warnClashingUrls)
 	}
 }
 
-void Application::reopenSubtitleWithDetectScript(KEncodingDetector::AutoDetectScript autodetectScript)
+void
+Application::reopenSubtitleWithDetectScript(KEncodingDetector::AutoDetectScript autodetectScript)
 {
-	reopenSubtitleWithCodecOrDetectScript((QTextCodec *) 0, autodetectScript);
+	reopenSubtitleWithCodecOrDetectScript((QTextCodec *)0, autodetectScript);
 }
 
-void Application::reopenSubtitleWithCodec(QTextCodec * codec)
+void
+Application::reopenSubtitleWithCodec(QTextCodec *codec)
 {
 	reopenSubtitleWithCodecOrDetectScript(codec, KEncodingDetector::SemiautomaticDetection);
 }
 
-void Application::reopenSubtitleWithCodecOrDetectScript(QTextCodec * codec, KEncodingDetector::AutoDetectScript autodetectScript)
+void
+Application::reopenSubtitleWithCodecOrDetectScript(QTextCodec *codec, KEncodingDetector::AutoDetectScript autodetectScript)
 {
 	if(m_subtitleUrl.isEmpty())
 		return;
@@ -1536,7 +1508,8 @@ void Application::reopenSubtitleWithCodecOrDetectScript(QTextCodec * codec, KEnc
 	connect(&m_subtitle->actionManager(), SIGNAL(stateChanged()), this, SLOT(updateUndoRedoToolTips()));
 }
 
-bool Application::saveSubtitle()
+bool
+Application::saveSubtitle()
 {
 	if(m_subtitleUrl.isEmpty() || m_subtitleEncoding.isEmpty() || !FormatManager::instance().hasOutput(m_subtitleFormat))
 		return saveSubtitleAs();
@@ -1564,9 +1537,10 @@ bool Application::saveSubtitle()
 	}
 }
 
-bool Application::saveSubtitleAs()
+bool
+Application::saveSubtitleAs()
 {
-	SaveSubtitleDialog saveDlg(true, m_subtitleUrl.prettyUrl(), m_subtitleEncoding.isEmpty()? generalConfig()->defaultSubtitlesEncoding() : m_subtitleEncoding, m_subtitleEOL, m_subtitleFormat);
+	SaveSubtitleDialog saveDlg(true, m_subtitleUrl.prettyUrl(), m_subtitleEncoding.isEmpty() ? generalConfig()->defaultSubtitlesEncoding() : m_subtitleEncoding, m_subtitleEOL, m_subtitleFormat);
 
 	if(saveDlg.exec() == QDialog::Accepted) {
 		if(!acceptClashingUrls(saveDlg.selectedUrl(), m_subtitleTrUrl))
@@ -1584,13 +1558,14 @@ bool Application::saveSubtitleAs()
 	return false;
 }
 
-bool Application::closeSubtitle()
+bool
+Application::closeSubtitle()
 {
 	if(m_subtitle) {
 		if(m_translationMode && m_subtitle->isSecondaryDirty()) {
 			int result = KMessageBox::warningYesNoCancel(0,
-														i18n("Currently opened translation subtitle has unsaved changes.\nDo you want to save them?"),
-														i18n("Close Translation Subtitle") + " - SubtitleComposer");
+														 i18n("Currently opened translation subtitle has unsaved changes.\nDo you want to save them?"),
+														 i18n("Close Translation Subtitle") + " - SubtitleComposer");
 			if(result == KMessageBox::Cancel)
 				return false;
 			else if(result == KMessageBox::Yes)
@@ -1600,8 +1575,8 @@ bool Application::closeSubtitle()
 
 		if(m_subtitle->isPrimaryDirty()) {
 			int result = KMessageBox::warningYesNoCancel(0,
-														i18n("Currently opened subtitle has unsaved changes.\nDo you want to save them?"),
-														i18n("Close Subtitle") + " - SubtitleComposer");
+														 i18n("Currently opened subtitle has unsaved changes.\nDo you want to save them?"),
+														 i18n("Close Subtitle") + " - SubtitleComposer");
 			if(result == KMessageBox::Cancel)
 				return false;
 			else if(result == KMessageBox::Yes)
@@ -1635,8 +1610,8 @@ bool Application::closeSubtitle()
 	return true;
 }
 
-
-void Application::newSubtitleTr()
+void
+Application::newSubtitleTr()
 {
 	if(!closeSubtitleTr())
 		return;
@@ -1647,7 +1622,8 @@ void Application::newSubtitleTr()
 	updateTitle();
 }
 
-void Application::openSubtitleTr()
+void
+Application::openSubtitleTr()
 {
 	if(!m_subtitle)
 		return;
@@ -1669,7 +1645,8 @@ void Application::openSubtitleTr()
 	}
 }
 
-void Application::openSubtitleTr(const KUrl & url, bool warnClashingUrls)
+void
+Application::openSubtitleTr(const KUrl &url, bool warnClashingUrls)
 {
 	if(!m_subtitle)
 		return;
@@ -1696,7 +1673,7 @@ void Application::openSubtitleTr(const KUrl & url, bool warnClashingUrls)
 		QStringList subtitleStreams;
 		subtitleStreams.append(i18nc("@item:inmenu Display primary text in video player", "Primary"));
 		subtitleStreams.append(i18nc("@item:inmenu Display translation text in video player", "Translation"));
-		KSelectAction *activeSubtitleStreamAction = (KSelectAction *) action(ACT_SET_ACTIVE_SUBTITLE_STREAM);
+		KSelectAction *activeSubtitleStreamAction = (KSelectAction *)action(ACT_SET_ACTIVE_SUBTITLE_STREAM);
 		activeSubtitleStreamAction->setItems(subtitleStreams);
 		activeSubtitleStreamAction->setCurrentItem(0);
 
@@ -1718,18 +1695,20 @@ void Application::openSubtitleTr(const KUrl & url, bool warnClashingUrls)
 		emit translationModeChanged(true);
 }
 
-
-void Application::reopenSubtitleTrWithDetectScript(KEncodingDetector::AutoDetectScript autodetectScript)
+void
+Application::reopenSubtitleTrWithDetectScript(KEncodingDetector::AutoDetectScript autodetectScript)
 {
-	reopenSubtitleTrWithCodecOrDetectScript((QTextCodec *) 0, autodetectScript);
+	reopenSubtitleTrWithCodecOrDetectScript((QTextCodec *)0, autodetectScript);
 }
 
-void Application::reopenSubtitleTrWithCodec(QTextCodec * codec)
+void
+Application::reopenSubtitleTrWithCodec(QTextCodec *codec)
 {
 	reopenSubtitleTrWithCodecOrDetectScript(codec, KEncodingDetector::SemiautomaticDetection);
 }
 
-void Application::reopenSubtitleTrWithCodecOrDetectScript(QTextCodec * codec, KEncodingDetector::AutoDetectScript autodetectScript)
+void
+Application::reopenSubtitleTrWithCodecOrDetectScript(QTextCodec *codec, KEncodingDetector::AutoDetectScript autodetectScript)
 {
 	if(m_subtitleTrUrl.isEmpty())
 		return;
@@ -1757,7 +1736,7 @@ void Application::reopenSubtitleTrWithCodecOrDetectScript(QTextCodec * codec, KE
 	m_subtitle->actionManager().clearHistory();
 	// We don't clear the primary dirty state because the loading of the translation
 	// only changes it when actually needed (i.e., when the translation had more lines)
-	m_subtitle->clearPrimaryDirty();	// TODO is this needed?
+	m_subtitle->clearPrimaryDirty();        // TODO is this needed?
 	m_subtitle->clearSecondaryDirty();
 
 	emit subtitleOpened(m_subtitle);
@@ -1777,10 +1756,8 @@ void Application::reopenSubtitleTrWithCodecOrDetectScript(QTextCodec * codec, KE
 	connect(&m_subtitle->actionManager(), SIGNAL(stateChanged()), this, SLOT(updateUndoRedoToolTips()));
 }
 
-
-
-
-bool Application::saveSubtitleTr()
+bool
+Application::saveSubtitleTr()
 {
 	if(m_subtitleTrUrl.isEmpty() || m_subtitleTrEncoding.isEmpty() || !FormatManager::instance().hasOutput(m_subtitleTrFormat))
 		return saveSubtitleTrAs();
@@ -1806,9 +1783,10 @@ bool Application::saveSubtitleTr()
 	}
 }
 
-bool Application::saveSubtitleTrAs()
+bool
+Application::saveSubtitleTrAs()
 {
-	SaveSubtitleDialog saveDlg(false, m_subtitleTrUrl.prettyUrl(), m_subtitleTrEncoding.isEmpty()? generalConfig()->defaultSubtitlesEncoding() : m_subtitleTrEncoding, m_subtitleTrEOL, m_subtitleTrFormat);
+	SaveSubtitleDialog saveDlg(false, m_subtitleTrUrl.prettyUrl(), m_subtitleTrEncoding.isEmpty() ? generalConfig()->defaultSubtitlesEncoding() : m_subtitleTrEncoding, m_subtitleTrEOL, m_subtitleTrFormat);
 
 	if(saveDlg.exec() == QDialog::Accepted) {
 		if(!acceptClashingUrls(m_subtitleUrl, saveDlg.selectedUrl()))
@@ -1826,13 +1804,14 @@ bool Application::saveSubtitleTrAs()
 	return false;
 }
 
-bool Application::closeSubtitleTr()
+bool
+Application::closeSubtitleTr()
 {
 	if(m_subtitle && m_translationMode) {
 		if(m_translationMode && m_subtitle->isSecondaryDirty()) {
 			int result = KMessageBox::warningYesNoCancel(0,
-														i18n("Currently opened translation subtitle has unsaved changes.\nDo you want to save them?"),
-														i18n("Close Translation Subtitle") + " - SubtitleComposer");
+														 i18n("Currently opened translation subtitle has unsaved changes.\nDo you want to save them?"),
+														 i18n("Close Translation Subtitle") + " - SubtitleComposer");
 			if(result == KMessageBox::Cancel)
 				return false;
 			else if(result == KMessageBox::Yes)
@@ -1861,7 +1840,8 @@ bool Application::closeSubtitleTr()
 	return true;
 }
 
-void Application::joinSubtitles()
+void
+Application::joinSubtitles()
 {
 	static JoinSubtitlesDialog *dlg = new JoinSubtitlesDialog(m_mainWindow);
 
@@ -1880,8 +1860,8 @@ void Application::joinSubtitles()
 	}
 }
 
-
-KUrl Application::saveSplitSubtitle(const Subtitle & subtitle, const KUrl & srcUrl, QString encoding, QString format, bool primary)
+KUrl
+Application::saveSplitSubtitle(const Subtitle &subtitle, const KUrl &srcUrl, QString encoding, QString format, bool primary)
 {
 	KUrl dstUrl;
 
@@ -1896,7 +1876,7 @@ KUrl Application::saveSplitSubtitle(const Subtitle & subtitle, const KUrl & srcU
 		if(srcUrl.isEmpty()) {
 			QString baseName = primary ? i18n("Untitled") : i18n("Untitled Translation");
 			QFileInfo(QDir(System::tempDir()), baseName + FormatManager::instance().defaultOutput()->extensions().first()
-				);
+					  );
 		}
 
 		dstUrl = srcUrl;
@@ -1908,14 +1888,13 @@ KUrl Application::saveSplitSubtitle(const Subtitle & subtitle, const KUrl & srcU
 		if(!codecFound)
 			codec = KGlobal::locale()->codecForEncoding();
 
-
 		bool success = FormatManager::instance().writeSubtitle(subtitle,
-															primary,
-															dstUrl,
-															codec,
-															(primary ? m_subtitleEOL : m_subtitleTrEOL),
-															format,
-															false);
+															   primary,
+															   dstUrl,
+															   codec,
+															   (primary ? m_subtitleEOL : m_subtitleTrEOL),
+															   format,
+															   false);
 
 		if(success)
 			dstUrl.setFileEncoding(codec->name());
@@ -1925,13 +1904,14 @@ KUrl Application::saveSplitSubtitle(const Subtitle & subtitle, const KUrl & srcU
 
 	if(dstUrl.path().isEmpty()) {
 		KMessageBox::sorry(m_mainWindow, primary ? i18n("Could not write the split subtitle file.") : i18n("Could not write the split subtitle translation file.")
-			);
+						   );
 	}
 
 	return dstUrl;
 }
 
-void Application::splitSubtitle()
+void
+Application::splitSubtitle()
 {
 	static SplitSubtitleDialog *dlg = new SplitSubtitleDialog(m_mainWindow);
 
@@ -1946,10 +1926,10 @@ void Application::splitSubtitle()
 	}
 
 	KUrl splitUrl = saveSplitSubtitle(newSubtitle,
-									m_subtitleUrl.prettyUrl(),
-									m_subtitleEncoding,
-									m_subtitleFormat,
-									true);
+									  m_subtitleUrl.prettyUrl(),
+									  m_subtitleEncoding,
+									  m_subtitleFormat,
+									  true);
 
 	if(splitUrl.path().isEmpty()) {
 		// there was an error saving the split part, undo the splitting of m_subtitle
@@ -1975,14 +1955,14 @@ void Application::splitSubtitle()
 
 	if(!QProcess::startDetached(KCmdLineArgs::aboutData()->appName(), args)) {
 		KMessageBox::sorry(m_mainWindow, m_translationMode ? i18n("Could not open a new Subtitle Composer window.\n" "The split part was saved as %1.", splitUrl.path()
-						) : i18n("Could not open a new Subtitle Composer window.\n" "The split parts were saved as %1 and %2.", splitUrl.path(), splitTrUrl.path()
-						)
-			);
+																  ) : i18n("Could not open a new Subtitle Composer window.\n" "The split parts were saved as %1 and %2.", splitUrl.path(), splitTrUrl.path()
+																		   )
+						   );
 	}
 }
 
-
-void Application::insertBeforeCurrentLine()
+void
+Application::insertBeforeCurrentLine()
 {
 	static InsertLineDialog *dlg = new InsertLineDialog(true, m_mainWindow);
 
@@ -1992,13 +1972,14 @@ void Application::insertBeforeCurrentLine()
 			LinesWidgetScrollToModelDetacher detacher(*m_linesWidget);
 			SubtitleLine *currentLine = m_linesWidget->currentLine();
 			newLine = m_subtitle->insertNewLine(currentLine ? currentLine->index() : 0, false, dlg->selectedTextsTarget()
-				);
+												);
 		}
 		m_linesWidget->setCurrentLine(newLine, true);
 	}
 }
 
-void Application::insertAfterCurrentLine()
+void
+Application::insertAfterCurrentLine()
 {
 	static InsertLineDialog *dlg = new InsertLineDialog(false, m_mainWindow);
 
@@ -2009,13 +1990,14 @@ void Application::insertAfterCurrentLine()
 
 			SubtitleLine *currentLine = m_linesWidget->currentLine();
 			newLine = m_subtitle->insertNewLine(currentLine ? currentLine->index() + 1 : 0, true, dlg->selectedTextsTarget()
-				);
+												);
 		}
 		m_linesWidget->setCurrentLine(newLine, true);
 	}
 }
 
-void Application::removeSelectedLines()
+void
+Application::removeSelectedLines()
 {
 	static RemoveLinesDialog *dlg = new RemoveLinesDialog(m_mainWindow);
 
@@ -2038,9 +2020,10 @@ void Application::removeSelectedLines()
 	}
 }
 
-void Application::joinSelectedLines()
+void
+Application::joinSelectedLines()
 {
-	const RangeList & ranges = m_linesWidget->selectionRanges();
+	const RangeList &ranges = m_linesWidget->selectionRanges();
 
 //  if ( ranges.count() > 1 && KMessageBox::Continue != KMessageBox::warningContinueCancel(
 //      m_mainWindow,
@@ -2051,18 +2034,20 @@ void Application::joinSelectedLines()
 	m_subtitle->joinLines(ranges);
 }
 
-void Application::splitSelectedLines()
+void
+Application::splitSelectedLines()
 {
 	m_subtitle->splitLines(m_linesWidget->selectionRanges());
 }
 
-
-void Application::selectAllLines()
+void
+Application::selectAllLines()
 {
 	m_linesWidget->selectAll();
 }
 
-void Application::gotoLine()
+void
+Application::gotoLine()
 {
 	IntInputDialog gotoLineDlg(i18n("Go to Line"), i18n("&Go to line:"), 1, m_subtitle->linesCount(), m_linesWidget->currentLineIndex() + 1);
 
@@ -2070,13 +2055,15 @@ void Application::gotoLine()
 		m_linesWidget->setCurrentLine(m_subtitle->line(gotoLineDlg.value() - 1), true);
 }
 
-void Application::find()
+void
+Application::find()
 {
 	m_lastFoundLine = 0;
 	m_finder->find(m_linesWidget->selectionRanges(), m_linesWidget->currentLineIndex(), m_curLineWidget->focusedText(), false);
 }
 
-void Application::findNext()
+void
+Application::findNext()
 {
 	if(!m_finder->findNext()) {
 		m_lastFoundLine = 0;
@@ -2084,7 +2071,8 @@ void Application::findNext()
 	}
 }
 
-void Application::findPrevious()
+void
+Application::findPrevious()
 {
 	if(!m_finder->findPrevious()) {
 		m_lastFoundLine = 0;
@@ -2092,24 +2080,28 @@ void Application::findPrevious()
 	}
 }
 
-void Application::replace()
+void
+Application::replace()
 {
 	m_replacer->replace(m_linesWidget->selectionRanges(), m_linesWidget->currentLineIndex(), m_curLineWidget->focusedText()
-		);
+						);
 }
 
-void Application::spellCheck()
+void
+Application::spellCheck()
 {
 	m_speller->spellCheck(m_linesWidget->currentLineIndex());
 }
 
-void Application::findError()
+void
+Application::findError()
 {
 	m_lastFoundLine = 0;
 	m_errorFinder->find(m_linesWidget->selectionRanges(), m_linesWidget->currentLineIndex(), false);
 }
 
-void Application::findNextError()
+void
+Application::findNextError()
 {
 	if(!m_errorFinder->findNext()) {
 		m_lastFoundLine = 0;
@@ -2117,7 +2109,8 @@ void Application::findNextError()
 	}
 }
 
-void Application::findPreviousError()
+void
+Application::findPreviousError()
 {
 	if(!m_errorFinder->findPrevious()) {
 		m_lastFoundLine = 0;
@@ -2125,21 +2118,24 @@ void Application::findPreviousError()
 	}
 }
 
-void Application::retrocedeCurrentLine()
+void
+Application::retrocedeCurrentLine()
 {
 	SubtitleLine *currentLine = m_linesWidget->currentLine();
 	if(currentLine && currentLine->prevLine())
 		m_linesWidget->setCurrentLine(currentLine->prevLine(), true);
 }
 
-void Application::advanceCurrentLine()
+void
+Application::advanceCurrentLine()
 {
 	SubtitleLine *currentLine = m_linesWidget->currentLine();
 	if(currentLine && currentLine->nextLine())
 		m_linesWidget->setCurrentLine(currentLine->nextLine(), true);
 }
 
-void Application::checkErrors()
+void
+Application::checkErrors()
 {
 	static CheckErrorsDialog *dlg = new CheckErrorsDialog(m_mainWindow);
 
@@ -2157,17 +2153,19 @@ void Application::checkErrors()
 			m_subtitle->setMarked(targetRanges, false);
 
 		m_subtitle->checkErrors(targetRanges, dlg->selectedErrorFlags(), errorsConfig()->minDuration(), errorsConfig()->maxDuration(), errorsConfig()->minDurationPerChar(), errorsConfig()->maxDurationPerChar(), errorsConfig()->maxCharacters(), errorsConfig()->maxLines()
-			);
+								);
 	}
 }
 
-void Application::recheckAllErrors()
+void
+Application::recheckAllErrors()
 {
 	m_subtitle->recheckErrors(Range::full(), errorsConfig()->minDuration(), errorsConfig()->maxDuration(), errorsConfig()->minDurationPerChar(), errorsConfig()->maxDurationPerChar(), errorsConfig()->maxCharacters(), errorsConfig()->maxLines()
-		);
+							  );
 }
 
-void Application::recheckSelectedErrors()
+void
+Application::recheckSelectedErrors()
 {
 	// NOTE we can't just use Subtitle::recheckErrors() with the selected lines ranges
 	// because this slots handles the error dialog action where the user can not only
@@ -2177,11 +2175,12 @@ void Application::recheckSelectedErrors()
 
 	for(SubtitleIterator it(*m_subtitle, m_errorsWidget->selectionRanges()); it.current(); ++it) {
 		it.current()->check(m_errorsWidget->lineSelectedErrorFlags(it.current()->index()), errorsConfig()->minDuration(), errorsConfig()->maxDuration(), errorsConfig()->minDurationPerChar(), errorsConfig()->maxDurationPerChar(), errorsConfig()->maxCharacters(), errorsConfig()->maxLines()
-			);
+							);
 	}
 }
 
-void Application::clearErrors()
+void
+Application::clearErrors()
 {
 	static ClearErrorsDialog *dlg = new ClearErrorsDialog(m_mainWindow);
 
@@ -2194,7 +2193,8 @@ void Application::clearErrors()
 	}
 }
 
-void Application::clearSelectedErrors(bool includeMarks)
+void
+Application::clearSelectedErrors(bool includeMarks)
 {
 	SubtitleCompositeActionExecutor executor(*m_subtitle, i18n("Clear Lines Errors"));
 
@@ -2209,50 +2209,58 @@ void Application::clearSelectedErrors(bool includeMarks)
 	}
 }
 
-void Application::clearSelectedMarks()
+void
+Application::clearSelectedMarks()
 {
 	m_subtitle->setMarked(m_errorsWidget->selectionRanges(), false);
 }
 
-
-void Application::showErrors()
+void
+Application::showErrors()
 {
 	if(m_errorsDialog->isHidden())
 		m_errorsDialog->show();
 }
 
-void Application::showErrorsConfig()
+void
+Application::showErrorsConfig()
 {
 	m_configDialog->setCurrentPage(ConfigDialog::Errors);
 	m_configDialog->show();
 }
 
-void Application::toggleSelectedLinesMark()
+void
+Application::toggleSelectedLinesMark()
 {
 	m_subtitle->toggleMarked(m_linesWidget->selectionRanges());
 }
 
-void Application::toggleSelectedLinesBold()
+void
+Application::toggleSelectedLinesBold()
 {
 	m_subtitle->toggleStyleFlag(m_linesWidget->selectionRanges(), SString::Bold);
 }
 
-void Application::toggleSelectedLinesItalic()
+void
+Application::toggleSelectedLinesItalic()
 {
 	m_subtitle->toggleStyleFlag(m_linesWidget->selectionRanges(), SString::Italic);
 }
 
-void Application::toggleSelectedLinesUnderline()
+void
+Application::toggleSelectedLinesUnderline()
 {
 	m_subtitle->toggleStyleFlag(m_linesWidget->selectionRanges(), SString::Underline);
 }
 
-void Application::toggleSelectedLinesStrikeThrough()
+void
+Application::toggleSelectedLinesStrikeThrough()
 {
 	m_subtitle->toggleStyleFlag(m_linesWidget->selectionRanges(), SString::StrikeThrough);
 }
 
-void Application::changeSelectedLinesColor()
+void
+Application::changeSelectedLinesColor()
 {
 	const RangeList range = m_linesWidget->selectionRanges();
 	SubtitleIterator it(*m_subtitle, range);
@@ -2264,7 +2272,8 @@ void Application::changeSelectedLinesColor()
 		m_subtitle->changeTextColor(range, color.rgba());
 }
 
-void Application::shiftLines()
+void
+Application::shiftLines()
 {
 	static ShiftTimesDialog *dlg = new ShiftTimesDialog(m_mainWindow);
 
@@ -2275,18 +2284,20 @@ void Application::shiftLines()
 	}
 }
 
-void Application::shiftSelectedLinesForwards()
+void
+Application::shiftSelectedLinesForwards()
 {
 	m_subtitle->shiftLines(m_linesWidget->selectionRanges(), generalConfig()->linesQuickShiftAmount());
 }
 
-void Application::shiftSelectedLinesBackwards()
+void
+Application::shiftSelectedLinesBackwards()
 {
 	m_subtitle->shiftLines(m_linesWidget->selectionRanges(), -generalConfig()->linesQuickShiftAmount());
 }
 
-
-void Application::adjustLines()
+void
+Application::adjustLines()
 {
 	static AdjustTimesDialog *dlg = new AdjustTimesDialog(m_mainWindow);
 
@@ -2298,7 +2309,8 @@ void Application::adjustLines()
 	}
 }
 
-void Application::sortLines()
+void
+Application::sortLines()
 {
 	static ActionWithLinesTargetDialog *dlg = new ActionWithLinesTargetDialog(i18n("Sort"), m_mainWindow);
 
@@ -2324,8 +2336,8 @@ void Application::sortLines()
 	}
 }
 
-
-void Application::changeFrameRate()
+void
+Application::changeFrameRate()
 {
 	static ChangeFrameRateDialog *dlg = new ChangeFrameRateDialog(m_subtitle->framesPerSecond(), m_mainWindow);
 
@@ -2336,37 +2348,41 @@ void Application::changeFrameRate()
 	}
 }
 
-void Application::enforceDurationLimits()
+void
+Application::enforceDurationLimits()
 {
 	static DurationLimitsDialog *dlg = new DurationLimitsDialog(errorsConfig()->minDuration(),
 																errorsConfig()->maxDuration(),
 																m_mainWindow);
 
 	if(dlg->exec() == QDialog::Accepted) {
-		m_subtitle->applyDurationLimits(m_linesWidget->targetRanges(dlg->selectedLinesTarget()), dlg->enforceMinDuration()? dlg->minDuration() : 0, dlg->enforceMaxDuration()? dlg->maxDuration() : Time::MaxMseconds, !dlg->preventOverlap());
+		m_subtitle->applyDurationLimits(m_linesWidget->targetRanges(dlg->selectedLinesTarget()), dlg->enforceMinDuration() ? dlg->minDuration() : 0, dlg->enforceMaxDuration() ? dlg->maxDuration() : Time::MaxMseconds, !dlg->preventOverlap());
 	}
 }
 
-void Application::setAutoDurations()
+void
+Application::setAutoDurations()
 {
 	static AutoDurationsDialog *dlg = new AutoDurationsDialog(60, 50, 50, m_mainWindow);
 
 	if(dlg->exec() == QDialog::Accepted) {
 		m_subtitle->setAutoDurations(m_linesWidget->targetRanges(dlg->selectedLinesTarget()), dlg->charMillis(), dlg->wordMillis(), dlg->lineMillis(), !dlg->preventOverlap(), dlg->calculationMode()
-			);
+									 );
 	}
 }
 
-void Application::maximizeDurations()
+void
+Application::maximizeDurations()
 {
 	static ActionWithLinesTargetDialog *dlg = new ActionWithLinesTargetDialog(i18n("Maximize Durations"),
-																			m_mainWindow);
+																			  m_mainWindow);
 
 	if(dlg->exec() == QDialog::Accepted)
 		m_subtitle->setMaximumDurations(m_linesWidget->targetRanges(dlg->selectedLinesTarget()));
 }
 
-void Application::fixOverlappingLines()
+void
+Application::fixOverlappingLines()
 {
 	static FixOverlappingTimesDialog *dlg = new FixOverlappingTimesDialog(m_mainWindow);
 
@@ -2374,7 +2390,8 @@ void Application::fixOverlappingLines()
 		m_subtitle->fixOverlappingLines(m_linesWidget->targetRanges(dlg->selectedLinesTarget()), dlg->minimumInterval());
 }
 
-void Application::syncWithSubtitle()
+void
+Application::syncWithSubtitle()
 {
 	static SyncSubtitlesDialog *dlg = new SyncSubtitlesDialog(m_mainWindow);
 
@@ -2388,44 +2405,48 @@ void Application::syncWithSubtitle()
 					KMessageBox::sorry(m_mainWindow, i18n("The reference subtitle must have more than one line to proceed."));
 				else
 					m_subtitle->adjustLines(Range::full(), referenceSubtitle.firstLine()->showTime().toMillis(), referenceSubtitle.lastLine()->showTime().toMillis()
-						);
-			} else				// if ( dlg->synchronizeToReferenceTimes() )
+											);
+			} else // if ( dlg->synchronizeToReferenceTimes() )
 				m_subtitle->syncWithSubtitle(referenceSubtitle);
 		} else
 			KMessageBox::sorry(m_mainWindow, i18n("Could not parse the reference subtitle file."));
 	}
 }
 
-void Application::breakLines()
+void
+Application::breakLines()
 {
 	static SmartTextsAdjustDialog *dlg = new SmartTextsAdjustDialog(30, m_mainWindow);
 
 	if(dlg->exec() == QDialog::Accepted)
 		m_subtitle->breakLines(m_linesWidget->targetRanges(dlg->selectedLinesTarget()), dlg->minLengthForLineBreak(), dlg->selectedTextsTarget()
-			);
+							   );
 }
 
-void Application::unbreakTexts()
+void
+Application::unbreakTexts()
 {
 	static ActionWithLinesAndTextsTargetDialog *dlg = new ActionWithLinesAndTextsTargetDialog(i18n("Unbreak Lines"),
-																							m_mainWindow);
+																							  m_mainWindow);
 
 	if(dlg->exec() == QDialog::Accepted)
 		m_subtitle->unbreakTexts(m_linesWidget->targetRanges(dlg->selectedLinesTarget()), dlg->selectedTextsTarget()
-			);
+								 );
 }
 
-void Application::simplifySpaces()
+void
+Application::simplifySpaces()
 {
 	static ActionWithLinesAndTextsTargetDialog *dlg = new ActionWithLinesAndTextsTargetDialog(i18n("Simplify Spaces"),
-																							m_mainWindow);
+																							  m_mainWindow);
 
 	if(dlg->exec() == QDialog::Accepted)
 		m_subtitle->simplifyTextWhiteSpace(m_linesWidget->targetRanges(dlg->selectedLinesTarget()), dlg->selectedTextsTarget()
-			);
+										   );
 }
 
-void Application::changeCase()
+void
+Application::changeCase()
 {
 	static ChangeTextsCaseDialog *dlg = new ChangeTextsCaseDialog(m_mainWindow);
 
@@ -2433,46 +2454,49 @@ void Application::changeCase()
 		switch(dlg->caseOperation()) {
 		case ChangeTextsCaseDialog::Upper:
 			m_subtitle->upperCase(m_linesWidget->targetRanges(dlg->selectedLinesTarget()), dlg->selectedTextsTarget()
-				);
+								  );
 			break;
 		case ChangeTextsCaseDialog::Lower:
 			m_subtitle->lowerCase(m_linesWidget->targetRanges(dlg->selectedLinesTarget()), dlg->selectedTextsTarget()
-				);
+								  );
 			break;
 		case ChangeTextsCaseDialog::Title:
 			m_subtitle->titleCase(m_linesWidget->targetRanges(dlg->selectedLinesTarget()), dlg->lowerFirst(), dlg->selectedTextsTarget()
-				);
+								  );
 			break;
 		case ChangeTextsCaseDialog::Sentence:
 			m_subtitle->sentenceCase(m_linesWidget->targetRanges(dlg->selectedLinesTarget()), dlg->lowerFirst(), dlg->selectedTextsTarget()
-				);
+									 );
 			break;
 		}
 	}
 }
 
-void Application::fixPunctuation()
+void
+Application::fixPunctuation()
 {
 	static FixPunctuationDialog *dlg = new FixPunctuationDialog(m_mainWindow);
 
 	if(dlg->exec() == QDialog::Accepted) {
 		m_subtitle->fixPunctuation(m_linesWidget->targetRanges(dlg->selectedLinesTarget()), dlg->spaces(), dlg->quotes(), dlg->englishI(), dlg->ellipisis(), dlg->selectedTextsTarget()
-			);
+								   );
 	}
 }
 
-bool Application::applyTranslation(RangeList ranges, bool primary, int inputLanguage, int outputLanguage, int textTargets)
+bool
+Application::applyTranslation(RangeList ranges, bool primary, int inputLanguage, int outputLanguage, int textTargets)
 {
 	Translator translator;
 
-	QString inputLanguageName = Language::name((Language::Value) inputLanguage);
-	QString outputLanguageName = Language::name((Language::Value) outputLanguage);
+	QString inputLanguageName = Language::name((Language::Value)inputLanguage);
+	QString outputLanguageName = Language::name((Language::Value)outputLanguage);
 
 	ProgressDialog progressDialog(i18n("Translate"), i18n("Translating text (%1 to %2)...", inputLanguageName, outputLanguageName), true, m_mainWindow);
 
 	if(textTargets == SubtitleLine::Both) {
-		progressDialog.setDescription(primary ? i18n("Translating primary text (%1 to %2)...", inputLanguageName, outputLanguageName) : i18n("Translating secondary text (%1 to %2)...", inputLanguageName, outputLanguageName)
-			);
+		progressDialog.setDescription(primary
+									  ? i18n("Translating primary text (%1 to %2)...", inputLanguageName, outputLanguageName)
+									  : i18n("Translating secondary text (%1 to %2)...", inputLanguageName, outputLanguageName));
 	}
 
 	QString inputText;
@@ -2483,30 +2507,28 @@ bool Application::applyTranslation(RangeList ranges, bool primary, int inputLang
 		inputText += lineText + "\n()() ";
 	}
 
-	translator.syncTranslate(inputText, (Language::Value) inputLanguage, (Language::Value) outputLanguage, &progressDialog);
+	translator.syncTranslate(inputText, (Language::Value)inputLanguage, (Language::Value)outputLanguage, &progressDialog);
 
 	if(translator.isAborted())
-		return false;			// ended with error
+		return false; // ended with error
 
 	QStringList outputLines;
 	QString errorMessage;
 
-	if(translator.isFinishedWithError())
+	if(translator.isFinishedWithError()) {
 		errorMessage = translator.errorMessage();
-	else {
+	} else {
 		outputLines = translator.outputText().split(QRegExp("\\s*\n\\(\\) ?\\(\\)\\s*"));
 
-		/*qDebug() << translator.inputText();
-		qDebug() << translator.outputText(); */
+//		qDebug() << translator.inputText();
+//		qDebug() << translator.outputText();
 
-		if(outputLines.count() != ranges.indexesCount() + 1) {
+		if(outputLines.count() != ranges.indexesCount() + 1)
 			errorMessage = i18n("Unable to perform texts synchronization (sent and received lines count do not match).");
-		}
 	}
 
 	if(errorMessage.isEmpty()) {
-		SubtitleCompositeActionExecutor executor(*m_subtitle, primary ? i18n("Translate Primary Text") : i18n("Translate Secondary Text")
-			);
+		SubtitleCompositeActionExecutor executor(*m_subtitle, primary ? i18n("Translate Primary Text") : i18n("Translate Secondary Text"));
 
 		int index = -1;
 		QRegExp ellipsisRegExp("\\s+\\.\\.\\.");
@@ -2521,33 +2543,32 @@ bool Application::applyTranslation(RangeList ranges, bool primary, int inputLang
 			it.current()->setPrimaryText(text.trimmed());
 		}
 	} else {
-		KMessageBox::sorry(m_mainWindow, i18n("There was an error performing the translation:\n\n%1", errorMessage)
-			);
+		KMessageBox::sorry(m_mainWindow, i18n("There was an error performing the translation:\n\n%1", errorMessage));
 	}
 
 	return errorMessage.isEmpty();
 }
 
-void Application::translate()
+void
+Application::translate()
 {
 	static TranslateDialog *dlg = new TranslateDialog(m_mainWindow);
 
 	if(dlg->exec() == QDialog::Accepted) {
 		if(dlg->selectedTextsTarget() == Subtitle::Primary || dlg->selectedTextsTarget() == Subtitle::Both) {
-			if(!applyTranslation(m_linesWidget->targetRanges(dlg->selectedLinesTarget()), true, dlg->inputLanguage(), dlg->outputLanguage(), dlg->selectedTextsTarget()
-			))
-				return;			// skip secondary translation on previous error (most likely a connection/service issue)
+			if(!applyTranslation(m_linesWidget->targetRanges(dlg->selectedLinesTarget()), true, dlg->inputLanguage(), dlg->outputLanguage(), dlg->selectedTextsTarget()))
+				return;
 		}
 
 		if(dlg->selectedTextsTarget() == Subtitle::Secondary || dlg->selectedTextsTarget() == Subtitle::Both) {
-			applyTranslation(m_linesWidget->targetRanges(dlg->selectedLinesTarget()), false, dlg->inputLanguage(), dlg->outputLanguage(), dlg->selectedTextsTarget()
-				);
+			if(!applyTranslation(m_linesWidget->targetRanges(dlg->selectedLinesTarget()), false, dlg->inputLanguage(), dlg->outputLanguage(), dlg->selectedTextsTarget()))
+				return;
 		}
 	}
 }
 
-
-void Application::openVideo(const KUrl & url)
+void
+Application::openVideo(const KUrl &url)
 {
 	if(url.protocol() != "file")
 		return;
@@ -2557,7 +2578,8 @@ void Application::openVideo(const KUrl & url)
 	m_player->openFile(url.path());
 }
 
-void Application::openVideo()
+void
+Application::openVideo()
 {
 	KFileDialog openDlg(m_lastVideoUrl, buildMediaFilesFilter(), m_mainWindow);
 
@@ -2570,36 +2592,41 @@ void Application::openVideo()
 	}
 }
 
-void Application::toggleFullScreenMode()
+void
+Application::toggleFullScreenMode()
 {
 	setFullScreenMode(!m_playerWidget->fullScreenMode());
 }
 
-void Application::setFullScreenMode(bool enabled)
+void
+Application::setFullScreenMode(bool enabled)
 {
 	if(enabled != m_playerWidget->fullScreenMode()) {
 		m_playerWidget->setFullScreenMode(enabled);
 
-		KToggleAction *toggleFullScreenAction = (KToggleAction *) action(ACT_TOGGLE_FULL_SCREEN);
+		KToggleAction *toggleFullScreenAction = (KToggleAction *)action(ACT_TOGGLE_FULL_SCREEN);
 		toggleFullScreenAction->setChecked(enabled);
 
 		emit fullScreenModeChanged(enabled);
 	}
 }
 
-void Application::seekBackwards()
+void
+Application::seekBackwards()
 {
 	double position = m_player->position() - playerConfig()->seekJumpLength();
 	m_player->seek(position > 0.0 ? position : 0.0, false);
 }
 
-void Application::seekForwards()
+void
+Application::seekForwards()
 {
 	double position = m_player->position() + playerConfig()->seekJumpLength();
-	m_player->seek(position <= m_player->length()? position : m_player->length(), false);
+	m_player->seek(position <= m_player->length() ? position : m_player->length(), false);
 }
 
-void Application::seekToPrevLine()
+void
+Application::seekToPrevLine()
 {
 	SubtitleLine *overlayLine = m_playerWidget->overlayLine();
 	if(overlayLine) {
@@ -2612,7 +2639,8 @@ void Application::seekToPrevLine()
 	}
 }
 
-void Application::seekToNextLine()
+void
+Application::seekToNextLine()
 {
 	SubtitleLine *overlayLine = m_playerWidget->overlayLine();
 	if(overlayLine) {
@@ -2625,14 +2653,16 @@ void Application::seekToNextLine()
 	}
 }
 
-void Application::setCurrentLineShowTimeFromVideo()
+void
+Application::setCurrentLineShowTimeFromVideo()
 {
 	SubtitleLine *currentLine = m_linesWidget->currentLine();
 	if(currentLine)
 		currentLine->setShowTime(videoPosition(true));
 }
 
-void Application::setCurrentLineHideTimeFromVideo()
+void
+Application::setCurrentLineHideTimeFromVideo()
 {
 	SubtitleLine *currentLine = m_linesWidget->currentLine();
 	if(currentLine) {
@@ -2643,24 +2673,27 @@ void Application::setCurrentLineHideTimeFromVideo()
 	}
 }
 
-void Application::setActiveSubtitleStream(int subtitleStream)
+void
+Application::setActiveSubtitleStream(int subtitleStream)
 {
-	KSelectAction *activeSubtitleStreamAction = (KSelectAction *) action(ACT_SET_ACTIVE_SUBTITLE_STREAM);
+	KSelectAction *activeSubtitleStreamAction = (KSelectAction *)action(ACT_SET_ACTIVE_SUBTITLE_STREAM);
 	activeSubtitleStreamAction->setCurrentItem(subtitleStream);
 
 	m_playerWidget->setShowTranslation(subtitleStream ? true : false);
 }
 
-void Application::shiftToVideoPosition()
+void
+Application::shiftToVideoPosition()
 {
 	SubtitleLine *currentLine = m_linesWidget->currentLine();
 	if(currentLine) {
 		m_subtitle->shiftLines(Range::full(), videoPosition(true).toMillis() - currentLine->showTime().toMillis()
-			);
+							   );
 	}
 }
 
-void Application::adjustToVideoPositionAnchorLast()
+void
+Application::adjustToVideoPositionAnchorLast()
 {
 	SubtitleLine *currentLine = m_linesWidget->currentLine();
 	if(currentLine) {
@@ -2682,7 +2715,7 @@ void Application::adjustToVideoPositionAnchorLast()
 
 		if(newFirstLineTime < 0) {
 			if(KMessageBox::warningContinueCancel(m_mainWindow, i18n("Continuing would result in loss of timing information for some lines.\nAre you sure you want to continue?")
-			) != KMessageBox::Continue)
+												  ) != KMessageBox::Continue)
 				return;
 		}
 
@@ -2690,7 +2723,8 @@ void Application::adjustToVideoPositionAnchorLast()
 	}
 }
 
-void Application::extractVideoAudio()
+void
+Application::extractVideoAudio()
 {
 	if(m_decoder->filePath() != m_player->filePath()) {
 		m_decoder->closeFile();
@@ -2722,18 +2756,20 @@ void Application::extractVideoAudio()
 	m_decoder->decode(m_player->activeAudioStream(), fileInfo.filePath(), outputFormat);
 }
 
-void Application::onDecodingError(const QString & errorMessage)
+void
+Application::onDecodingError(const QString &errorMessage)
 {
 	if(errorMessage.isEmpty())
 		KMessageBox::error(m_mainWindow, i18n("Unexpected error when extracting audio."), i18n("Error Extracting Audio")
-			);
+						   );
 	else
 		KMessageBox::detailedError(m_mainWindow, i18n("Unexpected error when extracting audio."), errorMessage, i18n("Error Extracting Audio")
-			);
+								   );
 	m_decoder->closeFile();
 }
 
-void Application::adjustToVideoPositionAnchorFirst()
+void
+Application::adjustToVideoPositionAnchorFirst()
 {
 	SubtitleLine *currentLine = m_linesWidget->currentLine();
 	if(currentLine) {
@@ -2755,7 +2791,7 @@ void Application::adjustToVideoPositionAnchorFirst()
 
 		if(newLastLineTime > Time::MaxMseconds) {
 			if(KMessageBox::warningContinueCancel(m_mainWindow, i18n("Continuing would result in loss of timing information for some lines.\nAre you sure you want to continue?")
-			) != KMessageBox::Continue)
+												  ) != KMessageBox::Continue)
 				return;
 		}
 
@@ -2763,7 +2799,8 @@ void Application::adjustToVideoPositionAnchorFirst()
 	}
 }
 
-void Application::openAudioLevels()
+void
+Application::openAudioLevels()
 {
 //  KFileDialog openDlg( m_lastAudioLevelsUrl, buildLevelsFilesFilter(), m_mainWindow );
 //
@@ -2777,114 +2814,118 @@ void Application::openAudioLevels()
 //  }
 }
 
-void Application::openAudioLevels(const KUrl & /*url */ )
+void
+Application::openAudioLevels(const KUrl & /*url */)
 {
 // FIXME audio levels
 /*
-	closeAudioLevels();
+		closeAudioLevels();
 
-	m_audiolevels = new AudioLevels();
-// 	if ( m_audiolevels->loadFromMedia( url.path(), true ) )
-	if ( m_audiolevels->load( url ) )
-	{
-		m_recentAudioLevelsAction->addUrl( url );
+		m_audiolevels = new AudioLevels();
+   //   if ( m_audiolevels->loadFromMedia( url.path(), true ) )
+		if ( m_audiolevels->load( url ) )
+		{
+				m_recentAudioLevelsAction->addUrl( url );
 
-		emit audiolevelsOpened( m_audiolevels );
-	}
-	else
-	{
+				emit audiolevelsOpened( m_audiolevels );
+		}
+		else
+		{
+				delete m_audiolevels;
+				m_audiolevels = 0;
+
+				KMessageBox::sorry( m_mainWindow, i18n( "There was an error opening the audiolevels." ) );
+		}
+ */
+}
+
+void
+Application::saveAudioLevelsAs()
+{
+// FIXME audio levels
+/*
+		KFileDialog saveDlg( m_lastAudioLevelsUrl, QString(), m_mainWindow );
+		saveDlg.setModal( true );
+		saveDlg.setCaption( i18n( "Save AudioLevels" ) );
+		saveDlg.setOperationMode( KFileDialog::Saving );
+		saveDlg.setMode( KFile::File );
+
+		if ( saveDlg.exec() == QDialog::Accepted )
+		{
+				KUrl selectedUrl = saveDlg.selectedUrl();
+
+				if ( FileSaveHelper::exists( selectedUrl ) )
+				{
+						if ( KMessageBox::warningContinueCancel(
+										m_mainWindow,
+										i18n(
+												"A file named \"%1\" already exists. Are you sure you want to overwrite it?",
+												QFileInfo( selectedUrl.path() ).fileName()
+										),
+										i18n( "Overwrite File?" ),
+										KGuiItem( i18n( "Overwrite" ) )
+								) != KMessageBox::Continue )
+								return;
+				}
+
+				if ( ! m_audiolevels->save( selectedUrl, true ) )
+						KMessageBox::sorry( m_mainWindow, i18n( "There was an error saving the audiolevels." ) );
+		}
+ */
+}
+
+void
+Application::closeAudioLevels()
+{
+// FIXME audio levels
+/*
 		delete m_audiolevels;
 		m_audiolevels = 0;
 
-		KMessageBox::sorry( m_mainWindow, i18n( "There was an error opening the audiolevels." ) );
-	}
-*/
+		emit audiolevelsClosed();
+ */
 }
 
-void Application::saveAudioLevelsAs()
-{
-// FIXME audio levels
-/*
-	KFileDialog saveDlg( m_lastAudioLevelsUrl, QString(), m_mainWindow );
-	saveDlg.setModal( true );
-	saveDlg.setCaption( i18n( "Save AudioLevels" ) );
-	saveDlg.setOperationMode( KFileDialog::Saving );
-	saveDlg.setMode( KFile::File );
+void
+Application::increaseAudioLevelsVZoom()
+{}
 
-	if ( saveDlg.exec() == QDialog::Accepted )
-	{
-		KUrl selectedUrl = saveDlg.selectedUrl();
+void
+Application::decreaseAudioLevelsVZoom()
+{}
 
-		if ( FileSaveHelper::exists( selectedUrl ) )
-		{
-			if ( KMessageBox::warningContinueCancel(
-					m_mainWindow,
-					i18n(
-						"A file named \"%1\" already exists. Are you sure you want to overwrite it?",
-						QFileInfo( selectedUrl.path() ).fileName()
-					),
-					i18n( "Overwrite File?" ),
-					KGuiItem( i18n( "Overwrite" ) )
-				) != KMessageBox::Continue )
-				return;
-		}
+void
+Application::increaseAudioLevelsHZoom()
+{}
 
-		if ( ! m_audiolevels->save( selectedUrl, true ) )
-			KMessageBox::sorry( m_mainWindow, i18n( "There was an error saving the audiolevels." ) );
-	}
-*/
-}
-
-void Application::closeAudioLevels()
-{
-// FIXME audio levels
-/*
-	delete m_audiolevels;
-	m_audiolevels = 0;
-
-	emit audiolevelsClosed();
-*/
-}
-
-void Application::increaseAudioLevelsVZoom()
-{
-}
-
-void Application::decreaseAudioLevelsVZoom()
-{
-}
-
-void Application::increaseAudioLevelsHZoom()
-{
-}
-
-void Application::decreaseAudioLevelsHZoom()
-{
-}
+void
+Application::decreaseAudioLevelsHZoom()
+{}
 
 /// END ACTION HANDLERS
 
-
-void Application::updateTitle()
+void
+Application::updateTitle()
 {
 	if(m_subtitle) {
 		if(m_translationMode) {
 			static const QString titleBuilder("%1%2 | %3%4");
 			static const QString modified = QString::fromUtf8(" [") + i18n("modified") + QString::fromUtf8("]");
 
-			m_mainWindow->setCaption(titleBuilder.arg(m_subtitleUrl.isEmpty()? i18n("Untitled") : m_subtitleFileName)
-									.arg(m_subtitle->isPrimaryDirty()? modified : QString())
-									.arg(m_subtitleTrUrl.isEmpty()? i18n("Untitled Translation") : m_subtitleTrFileName)
-									.arg(m_subtitle->isSecondaryDirty()? modified : QString()), false);
+			m_mainWindow->setCaption(titleBuilder.arg(m_subtitleUrl.isEmpty() ? i18n("Untitled") : m_subtitleFileName)
+									  .arg(m_subtitle->isPrimaryDirty() ? modified : QString())
+									  .arg(m_subtitleTrUrl.isEmpty() ? i18n("Untitled Translation") : m_subtitleTrFileName)
+									  .arg(m_subtitle->isSecondaryDirty() ? modified : QString()), false);
 		} else {
-			m_mainWindow->setCaption(m_subtitleUrl.isEmpty()? i18n("Untitled") : (m_subtitleUrl.isLocalFile()? m_subtitleUrl.path() : m_subtitleUrl.prettyUrl()), m_subtitle->isPrimaryDirty()
-				);
+			m_mainWindow->setCaption(m_subtitleUrl.isEmpty() ? i18n("Untitled") : (m_subtitleUrl.isLocalFile() ? m_subtitleUrl.path() : m_subtitleUrl.prettyUrl()), m_subtitle->isPrimaryDirty()
+									 );
 		}
 	} else
 		m_mainWindow->setCaption(QString());
 }
 
-void Application::updateUndoRedoToolTips()
+void
+Application::updateUndoRedoToolTips()
 {
 	static QAction *undoAction = action(ACT_UNDO);
 	static QAction *redoAction = action(ACT_REDO);
@@ -2905,7 +2946,8 @@ void Application::updateUndoRedoToolTips()
 	}
 }
 
-void Application::onLineDoubleClicked(SubtitleLine * line)
+void
+Application::onLineDoubleClicked(SubtitleLine *line)
 {
 	if(m_player->state() == Player::Ready)
 		m_player->play();
@@ -2917,7 +2959,8 @@ void Application::onLineDoubleClicked(SubtitleLine * line)
 		m_player->play();
 }
 
-void Application::onHighlightLine(SubtitleLine * line, bool primary, int firstIndex, int lastIndex)
+void
+Application::onHighlightLine(SubtitleLine *line, bool primary, int firstIndex, int lastIndex)
 {
 	if(m_playerWidget->fullScreenMode()) {
 		if(m_lastFoundLine != line) {
@@ -2937,7 +2980,8 @@ void Application::onHighlightLine(SubtitleLine * line, bool primary, int firstIn
 	}
 }
 
-void Application::onPlayingLineChanged(SubtitleLine * line)
+void
+Application::onPlayingLineChanged(SubtitleLine *line)
 {
 	m_linesWidget->setPlayingLine(line);
 
@@ -2945,7 +2989,8 @@ void Application::onPlayingLineChanged(SubtitleLine * line)
 		m_linesWidget->setCurrentLine(line, true);
 }
 
-void Application::onLinkCurrentLineToVideoToggled(bool value)
+void
+Application::onLinkCurrentLineToVideoToggled(bool value)
 {
 	if(m_linkCurrentLineToPosition != value) {
 		m_linkCurrentLineToPosition = value;
@@ -2955,66 +3000,75 @@ void Application::onLinkCurrentLineToVideoToggled(bool value)
 	}
 }
 
-void Application::onPlayerFileOpened(const QString & filePath)
+void
+Application::onPlayerFileOpened(const QString &filePath)
 {
 	m_recentVideosAction->addUrl(KUrl(filePath));
 }
 
-void Application::onPlayerPlaying()
+void
+Application::onPlayerPlaying()
 {
 	QAction *playPauseAction = action(ACT_PLAY_PAUSE);
 	playPauseAction->setIcon(KIcon("media-playback-pause"));
 	playPauseAction->setText(i18n("Pause"));
 }
 
-void Application::onPlayerPaused()
+void
+Application::onPlayerPaused()
 {
 	QAction *playPauseAction = action(ACT_PLAY_PAUSE);
 	playPauseAction->setIcon(KIcon("media-playback-start"));
 	playPauseAction->setText(i18n("Play"));
 }
 
-void Application::onPlayerStopped()
+void
+Application::onPlayerStopped()
 {
 	QAction *playPauseAction = action(ACT_PLAY_PAUSE);
 	playPauseAction->setIcon(KIcon("media-playback-start"));
 	playPauseAction->setText(i18n("Play"));
 }
 
-void Application::onPlayerAudioStreamsChanged(const QStringList & audioStreams)
+void
+Application::onPlayerAudioStreamsChanged(const QStringList &audioStreams)
 {
-	KSelectAction *activeAudioStreamAction = (KSelectAction *) action(ACT_SET_ACTIVE_AUDIO_STREAM);
+	KSelectAction *activeAudioStreamAction = (KSelectAction *)action(ACT_SET_ACTIVE_AUDIO_STREAM);
 	activeAudioStreamAction->setItems(audioStreams);
 	action(ACT_EXTRACT_VIDEO_AUDIO)->setEnabled(!audioStreams.isEmpty() && !m_decoder->isActiveBackendDummy());
 }
 
-void Application::onPlayerActiveAudioStreamChanged(int audioStream)
+void
+Application::onPlayerActiveAudioStreamChanged(int audioStream)
 {
-	KSelectAction *activeAudioStreamAction = (KSelectAction *) action(ACT_SET_ACTIVE_AUDIO_STREAM);
+	KSelectAction *activeAudioStreamAction = (KSelectAction *)action(ACT_SET_ACTIVE_AUDIO_STREAM);
 	if(audioStream >= 0)
 		activeAudioStreamAction->setCurrentItem(audioStream);
 }
 
-void Application::onPlayerMuteChanged(bool muted)
+void
+Application::onPlayerMuteChanged(bool muted)
 {
-	KToggleAction *toggleMutedAction = (KToggleAction *) action(ACT_TOGGLE_MUTED);
+	KToggleAction *toggleMutedAction = (KToggleAction *)action(ACT_TOGGLE_MUTED);
 	toggleMutedAction->setChecked(muted);
 }
 
-void Application::onPlayerOptionChanged(const QString & option, const QString & value)
+void
+Application::onPlayerOptionChanged(const QString &option, const QString &value)
 {
 	if(option == PlayerConfig::keyDecoderBackend()) {
 		m_decoder->reinitialize(value);
 	} else if(option == PlayerConfig::keySeekJumpLength()) {
 		action(ACT_SEEK_BACKWARDS)->setStatusTip(i18np("Seek backwards 1 second", "Seek backwards %1 seconds", value.toInt()
-												));
+													   ));
 
 		action(ACT_SEEK_FORWARDS)->setStatusTip(i18np("Seek forwards 1 second", "Seek forwards %1 seconds", value.toInt()
-												));
+													  ));
 	}
 }
 
-void Application::onGeneralOptionChanged(const QString & option, const QString & value)
+void
+Application::onGeneralOptionChanged(const QString &option, const QString &value)
 {
 	if(option == GeneralConfig::keyLinesQuickShiftAmount()) {
 		int shiftTimeMillis = value.toInt();
@@ -3029,7 +3083,8 @@ void Application::onGeneralOptionChanged(const QString & option, const QString &
 	}
 }
 
-void Application::updateConfigFromDialog()
+void
+Application::updateConfigFromDialog()
 {
 	m_config = m_configDialog->config();
 

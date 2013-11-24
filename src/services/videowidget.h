@@ -34,55 +34,62 @@ class QMouseEvent;
 class QWheelEvent;
 
 namespace SubtitleComposer {
-	class VideoWidget:public QWidget {
-	Q_OBJECT public:
+class VideoWidget : public QWidget
+{
+	Q_OBJECT
 
-		explicit VideoWidget(QWidget * parent);
-		VideoWidget(QWidget * videoLayer, QWidget * parent);
-		virtual ~ VideoWidget();
+public:
+	explicit VideoWidget(QWidget *parent);
+	VideoWidget(QWidget *videoLayer, QWidget *parent);
+	virtual ~VideoWidget();
 
-		QWidget *videoLayer();
+	QWidget * videoLayer();
 
-		int videoWidth() const;
-		int videoHeight() const;
-		double videoDAR() const;
+	int videoWidth() const;
+	int videoHeight() const;
+	double videoDAR() const;
 
-		/// if dar is <= 0, it's ignored (the dar becomes width/height)
-		void setVideoResolution(int width, int height, double dar = 0.0);
+	/**
+	 * @brief setVideoResolution
+	 * @param width
+	 * @param height
+	 * @param dar if <= 0, it's ignored (the dar becomes width/height)
+	 */
+	void setVideoResolution(int width, int height, double dar = 0.0);
 
-		virtual QSize sizeHint() const;
-		virtual QSize minimumSizeHint() const;
+	virtual QSize sizeHint() const;
+	virtual QSize minimumSizeHint() const;
 
-		double desktopAspectRatio();
-		QSize desktopSize();
+	double desktopAspectRatio();
+	QSize desktopSize();
 
-		void updateVideoLayerGeometry();
+	void updateVideoLayerGeometry();
 
-		public slots:virtual void setMouseTracking(bool enable);
+public slots:
+	virtual void setMouseTracking(bool enable);
 
-		signals:void doubleClicked(const QPoint & point);
-		void rightClicked(const QPoint & point);
-		void leftClicked(const QPoint & point);
-		void wheelUp();
-		void wheelDown();
+signals:
+	void doubleClicked(const QPoint &point);
+	void rightClicked(const QPoint &point);
+	void leftClicked(const QPoint &point);
+	void wheelUp();
+	void wheelDown();
 
-	protected:
+protected:
+	void init(bool setVideoLayerAttributes);
 
-		void init(bool setVideoLayerAttributes);
+	virtual void resizeEvent(QResizeEvent *e);
 
-		virtual void resizeEvent(QResizeEvent * e);
+	virtual void mouseReleaseEvent(QMouseEvent *e);
+	virtual void mouseDoubleClickEvent(QMouseEvent *e);
+	virtual void wheelEvent(QWheelEvent *e);
 
-		virtual void mouseReleaseEvent(QMouseEvent * e);
-		virtual void mouseDoubleClickEvent(QMouseEvent * e);
-		virtual void wheelEvent(QWheelEvent * e);
+protected:
+	QWidget *m_videoLayer;
 
-	protected:
-
-		QWidget * m_videoLayer;
-
-		int m_videoWidth;
-		int m_videoHeight;
-		double m_videoDAR;
-	};
+	int m_videoWidth;
+	int m_videoHeight;
+	double m_videoDAR;
+};
 }
 #endif

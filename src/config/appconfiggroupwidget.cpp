@@ -24,8 +24,9 @@
 
 using namespace SubtitleComposer;
 
-AppConfigGroupWidget::AppConfigGroupWidget(AppConfigGroup * configGroup, QWidget * parent):
-QWidget(parent, 0), m_config(configGroup)
+AppConfigGroupWidget::AppConfigGroupWidget(AppConfigGroup *configGroup, QWidget *parent) :
+	QWidget(parent, 0),
+	m_config(configGroup)
 {
 	m_mainLayout = new QGridLayout(this);
 	m_mainLayout->setAlignment(Qt::AlignTop);
@@ -38,12 +39,14 @@ AppConfigGroupWidget::~AppConfigGroupWidget()
 	delete m_config;
 }
 
-const AppConfigGroup *AppConfigGroupWidget::config()
+const AppConfigGroup *
+AppConfigGroupWidget::config()
 {
 	return m_config;
 }
 
-void AppConfigGroupWidget::setConfig(const AppConfigGroup * const config)
+void
+AppConfigGroupWidget::setConfig(const AppConfigGroup *const config)
 {
 	if(config && m_config->isCompatibleWith(*config)) {
 		*m_config = *config;
@@ -51,13 +54,15 @@ void AppConfigGroupWidget::setConfig(const AppConfigGroup * const config)
 	}
 }
 
-void AppConfigGroupWidget::setControlsFromDefaults()
+void
+AppConfigGroupWidget::setControlsFromDefaults()
 {
 	m_config->loadDefaults();
 	setControlsFromConfig();
 }
 
-QGroupBox *AppConfigGroupWidget::createGroupBox(const QString & title, bool addToLayout)
+QGroupBox *
+AppConfigGroupWidget::createGroupBox(const QString &title, bool addToLayout)
 {
 	QGroupBox *groupBox = new QGroupBox(this);
 	groupBox->setTitle(title);
@@ -68,7 +73,8 @@ QGroupBox *AppConfigGroupWidget::createGroupBox(const QString & title, bool addT
 	return groupBox;
 }
 
-QGridLayout *AppConfigGroupWidget::createGridLayout(QGroupBox * groupBox)
+QGridLayout *
+AppConfigGroupWidget::createGridLayout(QGroupBox *groupBox)
 {
 	QGridLayout *gridLayout = new QGridLayout(groupBox);
 	gridLayout->setAlignment(Qt::AlignTop);

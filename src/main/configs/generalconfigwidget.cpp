@@ -32,8 +32,8 @@
 
 using namespace SubtitleComposer;
 
-GeneralConfigWidget::GeneralConfigWidget(QWidget * parent):
-AppConfigGroupWidget(new GeneralConfig(), parent)
+GeneralConfigWidget::GeneralConfigWidget(QWidget *parent) :
+	AppConfigGroupWidget(new GeneralConfig(), parent)
 {
 	QGroupBox *generalGroupBox = createGroupBox(i18nc("@title:group General settings", "General"));
 
@@ -57,7 +57,6 @@ AppConfigGroupWidget(new GeneralConfig(), parent)
 	m_autoLoadVideoCheckBox = new QCheckBox(generalGroupBox);
 	m_autoLoadVideoCheckBox->setText(i18n("Automatically load video file when opening subtitle"));
 
-
 	QGroupBox *quickActionsGroupBox = createGroupBox(i18nc("@title:group", "Quick Actions"));
 
 	m_shiftMsecsSpinBox = new KIntNumInput(quickActionsGroupBox);
@@ -77,7 +76,6 @@ AppConfigGroupWidget(new GeneralConfig(), parent)
 	QLabel *videoPosCompMsecsLabel = new QLabel(quickActionsGroupBox);
 	videoPosCompMsecsLabel->setText(i18n("Compensation for captured video times:"));
 	videoPosCompMsecsLabel->setBuddy(m_videoPosCompMsecsSpinBox);
-
 
 	QGridLayout *generalLayout = createGridLayout(generalGroupBox);
 	generalLayout->addWidget(defaultEncodingLabel, 1, 0, Qt::AlignRight | Qt::AlignVCenter);
@@ -102,10 +100,10 @@ AppConfigGroupWidget(new GeneralConfig(), parent)
 }
 
 GeneralConfigWidget::~GeneralConfigWidget()
-{
-}
+{}
 
-void GeneralConfigWidget::setConfigFromControls()
+void
+GeneralConfigWidget::setConfigFromControls()
 {
 	config()->setDefaultSubtitlesEncoding(m_defaultEncodingComboBox->currentText());
 	config()->setSeekOffsetOnDoubleClick(m_relativeSeekPositionSpinBox->value());
@@ -114,7 +112,8 @@ void GeneralConfigWidget::setConfigFromControls()
 	config()->setGrabbedPositionCompensation(m_videoPosCompMsecsSpinBox->value());
 }
 
-void GeneralConfigWidget::setControlsFromConfig()
+void
+GeneralConfigWidget::setControlsFromConfig()
 {
 	m_defaultEncodingComboBox->setCurrentItem(config()->defaultSubtitlesEncoding());
 	m_relativeSeekPositionSpinBox->setValue(config()->seekOffsetOnDoubleClick());

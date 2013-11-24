@@ -20,12 +20,13 @@
 #include "timetest.h"
 #include "../time.h"
 
-#include <QtTest>				// krazy:exclude=c++/includes
-#include <QtCore>				// krazy:exclude=c++/includes
+#include <QtTest>                               // krazy:exclude=c++/includes
+#include <QtCore>                               // krazy:exclude=c++/includes
 
 using namespace SubtitleComposer;
 
-void TimeTest::testConstructors()
+void
+TimeTest::testConstructors()
 {
 	Time time;
 	QVERIFY(time.toMillis() == 0);
@@ -46,7 +47,8 @@ void TimeTest::testConstructors()
 	QVERIFY(time4.toMillis() == 999);
 }
 
-void TimeTest::testSetters()
+void
+TimeTest::testSetters()
 {
 	Time time;
 
@@ -96,7 +98,8 @@ void TimeTest::testSetters()
 	QVERIFY(time.toMillis() == 0);
 }
 
-void TimeTest::testOperators()
+void
+TimeTest::testOperators()
 {
 	QVERIFY(Time(3600) == Time(3600));
 	QVERIFY(Time(3600) == 3600);

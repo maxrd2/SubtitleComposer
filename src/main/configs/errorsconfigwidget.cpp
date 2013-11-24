@@ -31,8 +31,8 @@
 
 using namespace SubtitleComposer;
 
-ErrorsConfigWidget::ErrorsConfigWidget(QWidget * parent):
-AppConfigGroupWidget(new ErrorsConfig(), parent)
+ErrorsConfigWidget::ErrorsConfigWidget(QWidget *parent) :
+	AppConfigGroupWidget(new ErrorsConfig(), parent)
 {
 	QGroupBox *textsGroupBox = createGroupBox(i18nc("@title:group", "Texts"));
 
@@ -74,7 +74,6 @@ AppConfigGroupWidget(new ErrorsConfig(), parent)
 	maxDurationLabel->setText(i18n("Maximum duration:"));
 	maxDurationLabel->setBuddy(m_maxDurationSpinBox);
 
-
 	QGroupBox *relativeDurationsGroupBox = createGroupBox(i18nc("@title:group", "Relative Durations"));
 
 	m_minDurationPerCharSpinBox = new KIntNumInput(relativeDurationsGroupBox);
@@ -95,12 +94,10 @@ AppConfigGroupWidget(new ErrorsConfig(), parent)
 	maxDurationPerCharLabel->setText(i18n("Maximum duration:"));
 	maxDurationPerCharLabel->setBuddy(m_maxDurationPerCharSpinBox);
 
-
 	QGroupBox *behaviorGroupBox = createGroupBox(i18nc("@title:group", "Behavior"));
 
 	m_autoClearFixedCheckBox = new QCheckBox(behaviorGroupBox);
 	m_autoClearFixedCheckBox->setText(i18n("Automatically clear fixed errors"));
-
 
 	QGridLayout *textsLayout = createGridLayout(textsGroupBox);
 	textsLayout->addWidget(maxCharactersLabel, 0, 0, Qt::AlignRight | Qt::AlignVCenter);
@@ -135,10 +132,10 @@ AppConfigGroupWidget(new ErrorsConfig(), parent)
 }
 
 ErrorsConfigWidget::~ErrorsConfigWidget()
-{
-}
+{}
 
-void ErrorsConfigWidget::setConfigFromControls()
+void
+ErrorsConfigWidget::setConfigFromControls()
 {
 	config()->setMaxCharacters(m_maxCharactersSpinBox->value());
 	config()->setMaxLines(m_maxLinesSpinBox->value());
@@ -149,7 +146,8 @@ void ErrorsConfigWidget::setConfigFromControls()
 	config()->setAutoClearFixed(m_autoClearFixedCheckBox->isChecked());
 }
 
-void ErrorsConfigWidget::setControlsFromConfig()
+void
+ErrorsConfigWidget::setControlsFromConfig()
 {
 	m_maxCharactersSpinBox->setValue(config()->maxCharacters());
 	m_maxLinesSpinBox->setValue(config()->maxLines());

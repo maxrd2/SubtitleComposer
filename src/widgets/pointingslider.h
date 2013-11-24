@@ -30,17 +30,18 @@
 
 #include <QtGui/QSlider>
 
-class PointingSlider:public QSlider {
-  Q_OBJECT public:
+class PointingSlider : public QSlider
+{
+	Q_OBJECT
 
-	explicit PointingSlider(QWidget * parent = 0);
-	explicit PointingSlider(Qt::Orientation orientation, QWidget * parent = 0);
+public:
+	explicit PointingSlider(QWidget *parent = 0);
+	explicit PointingSlider(Qt::Orientation orientation, QWidget *parent = 0);
 
-	virtual ~ PointingSlider();
+	virtual ~PointingSlider();
 
-  protected:
-
-	virtual void mousePressEvent(QMouseEvent * e);
+protected:
+	virtual void mousePressEvent(QMouseEvent *e);
 };
 
 #endif

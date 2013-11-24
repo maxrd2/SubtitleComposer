@@ -32,22 +32,24 @@ class TimeEdit;
 class KPushButton;
 
 namespace SubtitleComposer {
-	class JoinSubtitlesDialog:public SelectableSubtitleDialog {
-	Q_OBJECT public:
+class JoinSubtitlesDialog : public SelectableSubtitleDialog
+{
+	Q_OBJECT
 
-		explicit JoinSubtitlesDialog(QWidget * parent = 0);
+public:
+	explicit JoinSubtitlesDialog(QWidget *parent = 0);
 
-		Time shiftTime() const;
+	Time shiftTime() const;
 
-		virtual void show();
+	virtual void show();
 
-		private slots:void setShiftTimeFromVideo();
+private slots:
+	void setShiftTimeFromVideo();
 
-	private:
-
-		TimeEdit * m_shiftTimeEdit;
-		KPushButton *m_shiftTimeFromVideoButton;
-		QCheckBox *m_shiftSubtitleCheckBox;
-	};
+private:
+	TimeEdit *m_shiftTimeEdit;
+	KPushButton *m_shiftTimeFromVideoButton;
+	QCheckBox *m_shiftSubtitleCheckBox;
+};
 }
 #endif

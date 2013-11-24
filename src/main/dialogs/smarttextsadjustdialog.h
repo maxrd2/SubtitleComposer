@@ -29,16 +29,15 @@
 class KIntSpinBox;
 
 namespace SubtitleComposer {
-	class SmartTextsAdjustDialog:public ActionWithTargetDialog {
-	public:
+class SmartTextsAdjustDialog : public ActionWithTargetDialog
+{
+public:
+	explicit SmartTextsAdjustDialog(unsigned minLengthForLineBreak, QWidget *parent = 0);
 
-		explicit SmartTextsAdjustDialog(unsigned minLengthForLineBreak, QWidget * parent = 0);
+	unsigned minLengthForLineBreak() const;
 
-		unsigned minLengthForLineBreak() const;
-
-	private:
-
-		KIntSpinBox * m_minLengthForLineBreakSpinBox;
-	};
+private:
+	KIntSpinBox *m_minLengthForLineBreakSpinBox;
+};
 }
 #endif

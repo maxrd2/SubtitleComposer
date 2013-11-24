@@ -32,23 +32,24 @@ class QVBoxLayout;
 class QGroupBox;
 
 namespace SubtitleComposer {
-	class ActionDialog:public KDialog {
-	Q_OBJECT public:
+class ActionDialog : public KDialog
+{
+	Q_OBJECT
 
-		explicit ActionDialog(const QString & title, QWidget * parent = 0);
+public:
+	explicit ActionDialog(const QString &title, QWidget *parent = 0);
 
-		public slots:virtual int exec();
-		virtual void show();
+public slots:
+	virtual int exec();
+	virtual void show();
 
-	protected:
+protected:
+	QGroupBox * createGroupBox(const QString &title = QString(), bool addToLayout = true);
+	QGridLayout * createLayout(QGroupBox *groupBox);
 
-		QGroupBox * createGroupBox(const QString & title = QString(), bool addToLayout = true);
-		QGridLayout *createLayout(QGroupBox * groupBox);
-
-	protected:
-
-		QWidget * m_mainWidget;
-		QVBoxLayout *m_mainLayout;
-	};
+protected:
+	QWidget *m_mainWidget;
+	QVBoxLayout *m_mainLayout;
+};
 }
 #endif

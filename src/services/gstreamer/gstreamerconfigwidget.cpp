@@ -28,8 +28,8 @@
 
 using namespace SubtitleComposer;
 
-GStreamerConfigWidget::GStreamerConfigWidget(QWidget * parent):
-AppConfigGroupWidget(new GStreamerConfig(), parent)
+GStreamerConfigWidget::GStreamerConfigWidget(QWidget *parent) :
+	AppConfigGroupWidget(new GStreamerConfig(), parent)
 {
 	QGroupBox *sinksGroupBox = createGroupBox(i18nc("@title:group GStreamer settings", "Options"));
 
@@ -52,7 +52,6 @@ AppConfigGroupWidget(new GStreamerConfig(), parent)
 	m_experimentalFeaturesCheckBox = new QCheckBox(sinksGroupBox);
 	m_experimentalFeaturesCheckBox->setText(i18n("Use experimental features"));
 
-
 	QGridLayout *sinksLayout = createGridLayout(sinksGroupBox);
 	sinksLayout->addWidget(m_audioSinkCheckBox, 0, 0, Qt::AlignRight | Qt::AlignVCenter);
 	sinksLayout->addWidget(m_audioSinkComboBox, 0, 1);
@@ -71,17 +70,18 @@ AppConfigGroupWidget(new GStreamerConfig(), parent)
 }
 
 GStreamerConfigWidget::~GStreamerConfigWidget()
-{
-}
+{}
 
-void GStreamerConfigWidget::setConfigFromControls()
+void
+GStreamerConfigWidget::setConfigFromControls()
 {
-	config()->setAudioSink(m_audioSinkCheckBox->isChecked()? m_audioSinkComboBox->currentText() : QString());
-	config()->setVideoSink(m_videoSinkCheckBox->isChecked()? m_videoSinkComboBox->currentText() : QString());
+	config()->setAudioSink(m_audioSinkCheckBox->isChecked() ? m_audioSinkComboBox->currentText() : QString());
+	config()->setVideoSink(m_videoSinkCheckBox->isChecked() ? m_videoSinkComboBox->currentText() : QString());
 	config()->setExperimentalFeatures(m_experimentalFeaturesCheckBox->isChecked());
 }
 
-void GStreamerConfigWidget::setControlsFromConfig()
+void
+GStreamerConfigWidget::setControlsFromConfig()
 {
 	m_audioSinkCheckBox->setChecked(config()->hasAudioSink());
 	if(m_audioSinkCheckBox->isChecked())

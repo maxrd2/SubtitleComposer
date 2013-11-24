@@ -40,57 +40,54 @@
 #define DEFAULT_MIN_POSITION_DELTA 0.02
 
 namespace SubtitleComposer {
-	class DummyPlayerBackend:public PlayerBackend {
-	public:
+class DummyPlayerBackend : public PlayerBackend
+{
+public:
+	DummyPlayerBackend(Player *player) : PlayerBackend(player, "Dummy", new AppConfigGroup("Dummy", QMap<QString, QString>())) {}
 
-		DummyPlayerBackend(Player * player):PlayerBackend(player, "Dummy", new AppConfigGroup("Dummy", QMap < QString, QString > ())) {
-		}
-		virtual ~ DummyPlayerBackend() {
-		}
-		virtual AppConfigGroupWidget *newAppConfigGroupWidget(QWidget * /*parent */ ) {
-			return 0;
-		}
+	virtual ~DummyPlayerBackend() {}
 
-	protected:
+	virtual AppConfigGroupWidget * newAppConfigGroupWidget(QWidget * /*parent */) { return 0; }
 
-		virtual QWidget * initialize(QWidget * widgetParent) {
-			return new VideoWidget(widgetParent);
-		}
-		virtual void finalize() {
-		}
+protected:
+	virtual QWidget * initialize(QWidget *widgetParent) { return new VideoWidget(widgetParent); }
 
-		virtual bool openFile(const QString & /*filePath */ , bool & /*playingAfterCall */ ) {
-			return false;
-		}
-		virtual void closeFile() {
-		}
+	virtual void finalize() {}
 
-		virtual bool play() {
-			return false;
-		};
-		virtual bool pause() {
-			return false;
-		};
-		virtual bool seek(double /*seconds */ , bool /*accurate */ ) {
-			return false;
-		};
-		virtual bool stop() {
-			return false;
-		};
+	virtual bool openFile(const QString &/*filePath*/, bool &/*playingAfterCall*/) { return false; }
 
-		virtual bool setActiveAudioStream(int /*audioStream */ ) {
-			return false;
-		};
-		virtual bool setVolume(double /*volume */ ) {
-			return false;
-		};
-	};
+	virtual void closeFile() {}
+
+	virtual bool play() { return false; }
+
+	virtual bool pause() { return false; }
+
+	virtual bool seek(double /*seconds*/, bool /*accurate*/) { return false; }
+
+	virtual bool stop() { return false; }
+
+	virtual bool setActiveAudioStream(int /*audioStream*/) { return false; }
+
+	virtual bool setVolume(double /*volume*/) { return false; }
+};
 }
 
 using namespace SubtitleComposer;
 
-Player::Player():
-m_videoWidget(0), m_filePath(), m_position(-1.0), m_savedPosition(-1.0), m_length(-1.0), m_framesPerSecond(-1.0), m_minPositionDelta(DEFAULT_MIN_POSITION_DELTA), m_activeAudioStream(-1), m_audioStreams(), m_muted(false), m_volume(100.0), m_backendVolume(100.0), m_openFileTimer(new QTimer(this))
+Player::Player() :
+	m_videoWidget(0),
+	m_filePath(),
+	m_position(-1.0),
+	m_savedPosition(-1.0),
+	m_length(-1.0),
+	m_framesPerSecond(-1.0),
+	m_minPositionDelta(DEFAULT_MIN_POSITION_DELTA),
+	m_activeAudioStream(-1),
+	m_audioStreams(),
+	m_muted(false),
+	m_volume(100.0),
+	m_backendVolume(100.0),
+	m_openFileTimer(new QTimer(this))
 {
 	addBackend(new DummyPlayerBackend(this));
 
@@ -116,19 +113,20 @@ m_videoWidget(0), m_filePath(), m_position(-1.0), m_savedPosition(-1.0), m_lengt
 }
 
 Player::~Player()
-{
-}
+{}
 
-Player *Player::instance()
+Player *
+Player::instance()
 {
 	static Player player;
 
 	return &player;
 }
 
-bool Player::initializeBackend(ServiceBackend * backend, QWidget * widgetParent)
+bool
+Player::initializeBackend(ServiceBackend *backend, QWidget *widgetParent)
 {
-	if((m_videoWidget = static_cast < VideoWidget * >(backend->initialize(widgetParent)))) {
+	if((m_videoWidget = static_cast<VideoWidget *>(backend->initialize(widgetParent)))) {
 		connect(m_videoWidget, SIGNAL(destroyed()), this, SLOT(onVideoWidgetDestroyed()));
 		connect(m_videoWidget, SIGNAL(doubleClicked(const QPoint &)), this, SIGNAL(doubleClicked(const QPoint &)));
 		connect(m_videoWidget, SIGNAL(leftClicked(const QPoint &)), this, SIGNAL(leftClicked(const QPoint &)));
@@ -149,7 +147,8 @@ bool Player::initializeBackend(ServiceBackend * backend, QWidget * widgetParent)
 	return false;
 }
 
-void Player::finalizeBackend(ServiceBackend * backend)
+void
+Player::finalizeBackend(ServiceBackend *backend)
 {
 	closeFile();
 
@@ -163,7 +162,8 @@ void Player::finalizeBackend(ServiceBackend * backend)
 	}
 }
 
-void Player::onVideoWidgetDestroyed()
+void
+Player::onVideoWidgetDestroyed()
 {
 	Q_ASSERT(m_state == Player::Uninitialized);
 
@@ -172,8 +172,8 @@ void Player::onVideoWidgetDestroyed()
 	finalize();
 }
 
-
-double Player::logarithmicVolume(double volume)
+double
+Player::logarithmicVolume(double volume)
 {
 	static const double base = 4.0;
 	static const double power = 1.0;
@@ -185,11 +185,16 @@ double Player::logarithmicVolume(double volume)
 	return (scaledVol * factor / divisor) * (100.0 / (power * power));
 }
 
-const QStringList & Player::audioStreams() const {
+const QStringList &
+Player::audioStreams() const
+{
 	static const QStringList emptyList;
 
 	return m_state <= Player::Opening ? emptyList : m_audioStreams;
-} void Player::resetState()
+}
+
+void
+Player::resetState()
 {
 	if(m_openFileTimer->isActive())
 		m_openFileTimer->stop();
@@ -211,7 +216,8 @@ const QStringList & Player::audioStreams() const {
 		m_videoWidget->videoLayer()->hide();
 }
 
-void Player::setPosition(double position)
+void
+Player::setPosition(double position)
 {
 	if(m_state <= Player::Closed)
 		return;
@@ -233,7 +239,8 @@ void Player::setPosition(double position)
 	}
 }
 
-void Player::setLength(double length)
+void
+Player::setLength(double length)
 {
 	if(m_state <= Player::Closed)
 		return;
@@ -244,7 +251,8 @@ void Player::setLength(double length)
 	}
 }
 
-void Player::setFramesPerSecond(double framesPerSecond)
+void
+Player::setFramesPerSecond(double framesPerSecond)
 {
 	if(m_state <= Player::Closed)
 		return;
@@ -256,7 +264,8 @@ void Player::setFramesPerSecond(double framesPerSecond)
 	}
 }
 
-void Player::setAudioStreams(const QStringList & audioStreams, int activeAudioStream)
+void
+Player::setAudioStreams(const QStringList &audioStreams, int activeAudioStream)
 {
 	if(m_state <= Player::Closed)
 		return;
@@ -268,12 +277,13 @@ void Player::setAudioStreams(const QStringList & audioStreams, int activeAudioSt
 	if(audioStreams.isEmpty())
 		m_activeAudioStream = -1;
 	else
-		m_activeAudioStream = (activeAudioStream >= 0 && activeAudioStream < audioStreams.count())? activeAudioStream : 0;
+		m_activeAudioStream = (activeAudioStream >= 0 && activeAudioStream < audioStreams.count()) ? activeAudioStream : 0;
 
 	emit activeAudioStreamChanged(m_activeAudioStream);
 }
 
-void Player::setState(Player::State newState)
+void
+Player::setState(Player::State newState)
 {
 	if(m_state == Player::Opening) {
 		if(newState == Player::Playing) {
@@ -316,8 +326,8 @@ void Player::setState(Player::State newState)
 	}
 }
 
-
-void Player::setErrorState(const QString & errorMessage)
+void
+Player::setErrorState(const QString &errorMessage)
 {
 	if(!isInitialized())
 		return;
@@ -335,14 +345,15 @@ void Player::setErrorState(const QString & errorMessage)
 	}
 }
 
-bool Player::openFile(const QString & filePath)
+bool
+Player::openFile(const QString &filePath)
 {
 	if(m_state != Player::Closed)
 		return false;
 
 	QFileInfo fileInfo(filePath);
 	if(!fileInfo.exists() || !fileInfo.isFile() || !fileInfo.isReadable()) {
-		emit fileOpenError(filePath);	// operation will never succed
+		emit fileOpenError(filePath);   // operation will never succed
 		return true;
 	}
 
@@ -363,10 +374,10 @@ bool Player::openFile(const QString & filePath)
 		activeBackend()->play();
 
 	return true;
-
 }
 
-void Player::onOpenFileTimeout()
+void
+Player::onOpenFileTimeout()
 {
 	QString filePath(m_filePath);
 
@@ -378,14 +389,15 @@ void Player::onOpenFileTimeout()
 	emit fileOpenError(filePath);
 }
 
-bool Player::closeFile()
+bool
+Player::closeFile()
 {
 	if(m_state <= Player::Closed)
 		return false;
 
 	bool stop = m_state != Player::Ready;
 	if(stop)
-		activeBackend()->stop();	// we can safely ignore the stop() return value here as we're about to close the file
+		activeBackend()->stop(); // we can safely ignore the stop() return value here as we're about to close the file
 
 	activeBackend()->closeFile();
 
@@ -399,7 +411,8 @@ bool Player::closeFile()
 	return true;
 }
 
-bool Player::play()
+bool
+Player::play()
 {
 	if(m_state <= Player::Opening || m_state == Player::Playing)
 		return false;
@@ -412,7 +425,8 @@ bool Player::play()
 	return true;
 }
 
-bool Player::pause()
+bool
+Player::pause()
 {
 	if(m_state <= Player::Opening || m_state == Player::Paused)
 		return false;
@@ -425,7 +439,8 @@ bool Player::pause()
 	return true;
 }
 
-bool Player::togglePlayPaused()
+bool
+Player::togglePlayPaused()
 {
 	if(m_state <= Player::Opening)
 		return false;
@@ -444,7 +459,8 @@ bool Player::togglePlayPaused()
 	return true;
 }
 
-bool Player::seek(double seconds, bool accurate)
+bool
+Player::seek(double seconds, bool accurate)
 {
 	if((m_state != Player::Playing && m_state != Player::Paused) || seconds < 0 || seconds > m_length)
 		return false;
@@ -460,7 +476,8 @@ bool Player::seek(double seconds, bool accurate)
 	return true;
 }
 
-void Player::seekToSavedPosition()
+void
+Player::seekToSavedPosition()
 {
 	if(m_savedPosition >= 0.0) {
 		seek(m_savedPosition, true);
@@ -468,7 +485,8 @@ void Player::seekToSavedPosition()
 	}
 }
 
-bool Player::stop()
+bool
+Player::stop()
 {
 	if(m_state <= Player::Opening || m_state == Player::Ready)
 		return false;
@@ -482,7 +500,8 @@ bool Player::stop()
 	return true;
 }
 
-bool Player::setActiveAudioStream(int audioStreamIndex)
+bool
+Player::setActiveAudioStream(int audioStreamIndex)
 {
 	if(m_state <= Player::Opening || m_audioStreams.size() <= 1)
 		return false;
@@ -529,18 +548,21 @@ bool Player::setActiveAudioStream(int audioStreamIndex)
 	return true;
 }
 
-void Player::increaseVolume(double amount)
+void
+Player::increaseVolume(double amount)
 {
 	setVolume(m_volume + amount);
 	setMuted(false);
 }
 
-void Player::decreaseVolume(double amount)
+void
+Player::decreaseVolume(double amount)
 {
 	setVolume(m_volume - amount);
 }
 
-void Player::setVolume(double volume)
+void
+Player::setVolume(double volume)
 {
 	if(volume < 0.0)
 		volume = 0.0;
@@ -550,7 +572,7 @@ void Player::setVolume(double volume)
 	if(m_volume != volume) {
 		m_volume = volume;
 
-		m_backendVolume = m_muted ? 0 : (activeBackend()->doesVolumeCorrection()? m_volume : logarithmicVolume(m_volume));
+		m_backendVolume = m_muted ? 0 : (activeBackend()->doesVolumeCorrection() ? m_volume : logarithmicVolume(m_volume));
 
 		if(!m_muted && m_state == Player::Playing) {
 			if(!activeBackend()->setVolume(m_backendVolume)) {
@@ -564,12 +586,13 @@ void Player::setVolume(double volume)
 	}
 }
 
-void Player::setMuted(bool muted)
+void
+Player::setMuted(bool muted)
 {
 	if(m_muted != muted) {
 		m_muted = muted;
 
-		m_backendVolume = m_muted ? 0 : (activeBackend()->doesVolumeCorrection()? m_volume : logarithmicVolume(m_volume));
+		m_backendVolume = m_muted ? 0 : (activeBackend()->doesVolumeCorrection() ? m_volume : logarithmicVolume(m_volume));
 
 		if(m_state == Player::Playing) {
 			if(!activeBackend()->setVolume(m_backendVolume)) {

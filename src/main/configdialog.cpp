@@ -38,7 +38,10 @@
 
 using namespace SubtitleComposer;
 
-ConfigDialog::ConfigDialog(const AppConfig & config, QWidget * parent):KPageDialog(parent), m_acceptedConfig(config), m_config(config)
+ConfigDialog::ConfigDialog(const AppConfig &config, QWidget *parent) :
+	KPageDialog(parent),
+	m_acceptedConfig(config),
+	m_config(config)
 {
 	setCaption(i18n("Configure"));
 
@@ -94,7 +97,7 @@ ConfigDialog::ConfigDialog(const AppConfig & config, QWidget * parent):KPageDial
 
 	// Apply button connections/setup
 	connect(this, SIGNAL(defaultClicked(void)), this, SLOT(enableApply(void)));
-	for(QList < AppConfigGroupWidget * >::ConstIterator it = m_configWidgets.begin(), end = m_configWidgets.end(); it != end; ++it)
+	for(QList<AppConfigGroupWidget *>::ConstIterator it = m_configWidgets.begin(), end = m_configWidgets.end(); it != end; ++it)
 		connect(*it, SIGNAL(settingsChanged()), this, SLOT(enableApply(void)));
 
 	QSize size = minimumSizeHint();
@@ -102,12 +105,16 @@ ConfigDialog::ConfigDialog(const AppConfig & config, QWidget * parent):KPageDial
 }
 
 ConfigDialog::~ConfigDialog()
+{}
+
+const AppConfig &
+ConfigDialog::config() const
 {
+	return m_acceptedConfig;
 }
 
-const AppConfig & ConfigDialog::config() const {
-	return m_acceptedConfig;
-} void ConfigDialog::setConfig(const AppConfig & config)
+void
+ConfigDialog::setConfig(const AppConfig &config)
 {
 	bool visible = isVisible();
 
@@ -123,29 +130,34 @@ const AppConfig & ConfigDialog::config() const {
 		show();
 }
 
-void ConfigDialog::setCurrentPage(unsigned pageIndex)
+void
+ConfigDialog::setCurrentPage(unsigned pageIndex)
 {
 	if(pageIndex < (unsigned)m_pageWidgets.count())
 		KPageDialog::setCurrentPage(m_pageWidgets.at(pageIndex));
 }
 
-void ConfigDialog::show()
+void
+ConfigDialog::show()
 {
 	KPageDialog::show();
 }
 
-void ConfigDialog::hide()
+void
+ConfigDialog::hide()
 {
 	KPageDialog::hide();
 }
 
-void ConfigDialog::setControlsFromConfig()
+void
+ConfigDialog::setControlsFromConfig()
 {
 	for(int pageIndex = 0; pageIndex < m_configWidgets.count(); ++pageIndex)
 		setControlsFromConfig(pageIndex);
 }
 
-void ConfigDialog::setControlsFromConfig(unsigned pageIndex)
+void
+ConfigDialog::setControlsFromConfig(unsigned pageIndex)
 {
 	if(pageIndex < (unsigned)m_configWidgets.count()) {
 		AppConfigGroup *configGroup = m_config.group(m_configWidgets.at(pageIndex)->config()->name());
@@ -156,35 +168,39 @@ void ConfigDialog::setControlsFromConfig(unsigned pageIndex)
 	}
 }
 
-void ConfigDialog::setActivePageControlsFromDefaults()
+void
+ConfigDialog::setActivePageControlsFromDefaults()
 {
 	int activePageIndex = m_pageWidgets.indexOf(currentPage());
 	if(activePageIndex >= 0)
 		setControlsFromDefaults(activePageIndex);
 }
 
-void ConfigDialog::setControlsFromDefaults(unsigned pageIndex)
+void
+ConfigDialog::setControlsFromDefaults(unsigned pageIndex)
 {
 	if(pageIndex < (unsigned)m_configWidgets.count())
 		m_configWidgets.at(pageIndex)->setControlsFromDefaults();
 }
 
-
-void ConfigDialog::setConfigFromControls()
+void
+ConfigDialog::setConfigFromControls()
 {
 	for(int pageIndex = 0; pageIndex < m_configWidgets.count(); ++pageIndex)
 		setConfigFromControls(pageIndex);
 }
 
-void ConfigDialog::setConfigFromControls(unsigned pageIndex)
+void
+ConfigDialog::setConfigFromControls(unsigned pageIndex)
 {
 	if(pageIndex < (unsigned)m_configWidgets.count()) {
 		m_configWidgets.at(pageIndex)->setConfigFromControls();
-		m_config.setGroup(m_configWidgets.at(pageIndex)->config()->clone());	// replace the group
+		m_config.setGroup(m_configWidgets.at(pageIndex)->config()->clone());    // replace the group
 	}
 }
 
-void ConfigDialog::acceptConfig()
+void
+ConfigDialog::acceptConfig()
 {
 	setConfigFromControls();
 	m_acceptedConfig = m_config;
@@ -194,31 +210,36 @@ void ConfigDialog::acceptConfig()
 	emit accepted();
 }
 
-void ConfigDialog::acceptConfigAndClose()
+void
+ConfigDialog::acceptConfigAndClose()
 {
 	acceptConfig();
 	hide();
 }
 
-void ConfigDialog::rejectConfig()
+void
+ConfigDialog::rejectConfig()
 {
 	m_config = m_acceptedConfig;
 	setControlsFromConfig();
 	enableButtonApply(false);
 }
 
-void ConfigDialog::rejectConfigAndClose()
+void
+ConfigDialog::rejectConfigAndClose()
 {
 	hide();
 	rejectConfig();
 }
 
-void ConfigDialog::enableApply()
+void
+ConfigDialog::enableApply()
 {
 	enableButtonApply(true);
 }
 
-void ConfigDialog::onOptionChanged(const QString & groupName, const QString & optionName, const QString & value)
+void
+ConfigDialog::onOptionChanged(const QString &groupName, const QString &optionName, const QString &value)
 {
 	if(!m_config.group(groupName))
 		return;

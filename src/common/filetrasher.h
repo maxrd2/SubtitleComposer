@@ -26,21 +26,19 @@
 
 #include <KUrl>
 
-class FileTrasher {
-  public:
-
-	FileTrasher(const KUrl & url);
-	FileTrasher(const QString & path);
+class FileTrasher
+{
+public:
+	FileTrasher(const KUrl &url);
+	FileTrasher(const QString &path);
 	~FileTrasher();
 
 	const KUrl & url();
 
 	bool exec();
 
-  private:
-
+private:
 	KUrl m_url;
 };
-
 
 #endif

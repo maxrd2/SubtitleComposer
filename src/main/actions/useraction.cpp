@@ -26,14 +26,20 @@
 
 using namespace SubtitleComposer;
 
-UserAction::UserAction(QAction * action, int enableFlags):m_action(action), m_enableFlags(enableFlags), m_actionEnabled(action->isEnabled()), m_contextEnabled(false), m_ignoreActionEnabledSignal(false)
+UserAction::UserAction(QAction *action, int enableFlags) :
+	m_action(action),
+	m_enableFlags(enableFlags),
+	m_actionEnabled(action->isEnabled()),
+	m_contextEnabled(false),
+	m_ignoreActionEnabledSignal(false)
 {
 	updateEnabledState();
 
 	connect(action, SIGNAL(changed()), this, SLOT(onActionChanged()));
 }
 
-void UserAction::onActionChanged()
+void
+UserAction::onActionChanged()
 {
 	if(!m_ignoreActionEnabledSignal) {
 		if(m_action->isEnabled() != isEnabled()) {
@@ -45,22 +51,26 @@ void UserAction::onActionChanged()
 	}
 }
 
-int UserAction::enableFlags()
+int
+UserAction::enableFlags()
 {
 	return m_enableFlags;
 }
 
-QAction *UserAction::action()
+QAction *
+UserAction::action()
 {
 	return m_action;
 }
 
-bool UserAction::isEnabled()
+bool
+UserAction::isEnabled()
 {
 	return m_actionEnabled && m_contextEnabled;
 }
 
-void UserAction::setActionEnabled(bool enabled)
+void
+UserAction::setActionEnabled(bool enabled)
 {
 	if(m_actionEnabled != enabled) {
 		m_actionEnabled = enabled;
@@ -68,7 +78,8 @@ void UserAction::setActionEnabled(bool enabled)
 	}
 }
 
-void UserAction::setContextFlags(int contextFlags)
+void
+UserAction::setContextFlags(int contextFlags)
 {
 	bool contextEnabled = (contextFlags & m_enableFlags) == m_enableFlags;
 	if(m_contextEnabled != contextEnabled) {
@@ -77,7 +88,8 @@ void UserAction::setContextFlags(int contextFlags)
 	}
 }
 
-void UserAction::updateEnabledState()
+void
+UserAction::updateEnabledState()
 {
 	bool enabled = m_actionEnabled && m_contextEnabled;
 
@@ -94,35 +106,41 @@ void UserAction::updateEnabledState()
 	}
 }
 
-
 /// USER ACTION MANAGER
 
-UserActionManager::UserActionManager():
-m_actionSpecs(), m_subtitle(0), m_linesWidget(0), m_player(0), m_translationMode(false), m_contextFlags(UserAction::SubClosed | UserAction::SubTrClosed | UserAction::VideoClosed | UserAction::AudioLevelsClosed | UserAction::FullScreenOff)
-{
-}
+UserActionManager::UserActionManager() :
+	m_actionSpecs(),
+	m_subtitle(0),
+	m_linesWidget(0),
+	m_player(0),
+	m_translationMode(false),
+	m_contextFlags(UserAction::SubClosed | UserAction::SubTrClosed | UserAction::VideoClosed | UserAction::AudioLevelsClosed | UserAction::FullScreenOff)
+{}
 
-UserActionManager *UserActionManager::instance()
+UserActionManager *
+UserActionManager::instance()
 {
 	static UserActionManager actionManager;
 
 	return &actionManager;
 }
 
-void UserActionManager::addAction(QAction * action, int enableFlags)
+void
+UserActionManager::addAction(QAction *action, int enableFlags)
 {
 	addAction(new UserAction(action, enableFlags));
 }
 
-void UserActionManager::addAction(UserAction * actionSpec)
+void
+UserActionManager::addAction(UserAction *actionSpec)
 {
 	m_actionSpecs.append(actionSpec);
 
 	actionSpec->setContextFlags(m_contextFlags);
 }
 
-
-void UserActionManager::setSubtitle(Subtitle * subtitle)
+void
+UserActionManager::setSubtitle(Subtitle *subtitle)
 {
 	if(m_subtitle) {
 		disconnect(m_subtitle, SIGNAL(linesRemoved(int, int)), this, SLOT(onSubtitleLinesChanged()));
@@ -163,8 +181,9 @@ void UserActionManager::setSubtitle(Subtitle * subtitle)
 				newContextFlags |= UserAction::SubSDirty;
 			else
 				newContextFlags |= UserAction::SubSClean;
-		} else
+		} else {
 			newContextFlags |= (UserAction::SubTrClosed | UserAction::SubSClean);
+		}
 
 		if(m_subtitle->linesCount() > 0)
 			newContextFlags |= UserAction::SubHasLine;
@@ -175,14 +194,15 @@ void UserActionManager::setSubtitle(Subtitle * subtitle)
 			newContextFlags |= UserAction::SubHasUndo;
 		if(actionManager->hasRedo())
 			newContextFlags |= UserAction::SubHasRedo;
-	} else
+	} else {
 		newContextFlags |= (UserAction::SubClosed | UserAction::SubPClean | UserAction::SubTrClosed | UserAction::SubSClean);
+	}
 
 	updateActionsContext(newContextFlags);
 }
 
-
-void UserActionManager::onSubtitleLinesChanged()
+void
+UserActionManager::onSubtitleLinesChanged()
 {
 	int newContextFlags = m_contextFlags & ~(UserAction::SubHasLine | UserAction::SubHasLines);
 
@@ -194,7 +214,8 @@ void UserActionManager::onSubtitleLinesChanged()
 	updateActionsContext(newContextFlags);
 }
 
-void UserActionManager::onPrimaryDirtyStateChanged(bool dirty)
+void
+UserActionManager::onPrimaryDirtyStateChanged(bool dirty)
 {
 	int newContextFlags = m_contextFlags & ~(UserAction::SubPDirty | UserAction::SubPClean);
 
@@ -206,7 +227,8 @@ void UserActionManager::onPrimaryDirtyStateChanged(bool dirty)
 	updateActionsContext(newContextFlags);
 }
 
-void UserActionManager::onSecondaryDirtyStateChanged(bool dirty)
+void
+UserActionManager::onSecondaryDirtyStateChanged(bool dirty)
 {
 	int newContextFlags = m_contextFlags & ~(UserAction::SubSDirty | UserAction::SubSClean);
 
@@ -215,13 +237,15 @@ void UserActionManager::onSecondaryDirtyStateChanged(bool dirty)
 			newContextFlags |= UserAction::SubSDirty;
 		else
 			newContextFlags |= UserAction::SubSClean;
-	} else
+	} else {
 		newContextFlags |= UserAction::SubSClean;
+	}
 
 	updateActionsContext(newContextFlags);
 }
 
-void UserActionManager::onUndoRedoStateChanged()
+void
+UserActionManager::onUndoRedoStateChanged()
 {
 	int newContextFlags = m_contextFlags & ~(UserAction::SubHasUndo | UserAction::SubHasRedo);
 
@@ -233,7 +257,8 @@ void UserActionManager::onUndoRedoStateChanged()
 	updateActionsContext(newContextFlags);
 }
 
-void UserActionManager::setLinesWidget(LinesWidget * linesWidget)
+void
+UserActionManager::setLinesWidget(LinesWidget *linesWidget)
 {
 	if(m_linesWidget)
 		disconnect(m_linesWidget->selectionModel(), SIGNAL(selectionChanged(const QItemSelection &, const QItemSelection &)), this, SLOT(onLinesWidgetSelectionChanged()));
@@ -252,7 +277,8 @@ void UserActionManager::setLinesWidget(LinesWidget * linesWidget)
 	updateActionsContext(newContextFlags);
 }
 
-void UserActionManager::onLinesWidgetSelectionChanged()
+void
+UserActionManager::onLinesWidgetSelectionChanged()
 {
 	int newContextFlags = m_contextFlags & ~UserAction::SelectionMask;
 
@@ -262,7 +288,8 @@ void UserActionManager::onLinesWidgetSelectionChanged()
 	updateActionsContext(newContextFlags);
 }
 
-void UserActionManager::setAudioLevels(AudioLevels * audiolevels)
+void
+UserActionManager::setAudioLevels(AudioLevels *audiolevels)
 {
 	int newContextFlags = m_contextFlags & ~UserAction::AudioLevelsMask;
 
@@ -274,7 +301,8 @@ void UserActionManager::setAudioLevels(AudioLevels * audiolevels)
 	updateActionsContext(newContextFlags);
 }
 
-void UserActionManager::setPlayer(Player * player)
+void
+UserActionManager::setPlayer(Player *player)
 {
 	if(m_player) {
 		disconnect(m_player, SIGNAL(fileOpened(const QString &)), this, SLOT(onPlayerStateChanged()));
@@ -302,14 +330,16 @@ void UserActionManager::setPlayer(Player * player)
 				newContextFlags |= UserAction::VideoStopped;
 			else
 				newContextFlags |= UserAction::VideoPlaying;
-		} else
+		} else {
 			newContextFlags |= UserAction::VideoClosed;
+		}
 	}
 
 	updateActionsContext(newContextFlags);
 }
 
-void UserActionManager::onPlayerStateChanged()
+void
+UserActionManager::onPlayerStateChanged()
 {
 	int newContextFlags = m_contextFlags & ~UserAction::VideoMask;
 
@@ -320,13 +350,15 @@ void UserActionManager::onPlayerStateChanged()
 			newContextFlags |= UserAction::VideoStopped;
 		else
 			newContextFlags |= UserAction::VideoPlaying;
-	} else
+	} else {
 		newContextFlags |= UserAction::VideoClosed;
+	}
 
 	updateActionsContext(newContextFlags);
 }
 
-void UserActionManager::setDecoder(Decoder * decoder)
+void
+UserActionManager::setDecoder(Decoder *decoder)
 {
 	if(m_decoder) {
 		disconnect(m_decoder, SIGNAL(fileOpened(const QString &)), this, SLOT(onDecoderStateChanged()));
@@ -359,7 +391,8 @@ void UserActionManager::setDecoder(Decoder * decoder)
 	updateActionsContext(newContextFlags);
 }
 
-void UserActionManager::onDecoderStateChanged()
+void
+UserActionManager::onDecoderStateChanged()
 {
 	int newContextFlags = m_contextFlags & ~UserAction::AudioMask;
 
@@ -370,13 +403,15 @@ void UserActionManager::onDecoderStateChanged()
 			newContextFlags |= UserAction::AudioDecoding;
 		else
 			newContextFlags |= UserAction::AudioStopped;
-	} else
+	} else {
 		newContextFlags |= UserAction::AudioClosed;
+	}
 
 	updateActionsContext(newContextFlags);
 }
 
-void UserActionManager::setTranslationMode(bool translationMode)
+void
+UserActionManager::setTranslationMode(bool translationMode)
 {
 	m_translationMode = translationMode;
 
@@ -389,14 +424,15 @@ void UserActionManager::setTranslationMode(bool translationMode)
 			newContextFlags |= UserAction::SubSDirty;
 		else
 			newContextFlags |= UserAction::SubSClean;
-	} else
+	} else {
 		newContextFlags |= (UserAction::SubTrClosed | UserAction::SubSClean);
+	}
 
 	updateActionsContext(newContextFlags);
 }
 
-
-void UserActionManager::setFullScreenMode(bool fullScreenMode)
+void
+UserActionManager::setFullScreenMode(bool fullScreenMode)
 {
 	int newContextFlags = m_contextFlags & ~UserAction::FullScreenMask;
 
@@ -408,7 +444,8 @@ void UserActionManager::setFullScreenMode(bool fullScreenMode)
 	updateActionsContext(newContextFlags);
 }
 
-void UserActionManager::updateActionsContext(int contextFlags)
+void
+UserActionManager::updateActionsContext(int contextFlags)
 {
 //  if ( (m_contextFlags & UserAction::SubHasLine) != (contextFlags & UserAction::SubHasLine)  )
 //      kDebug() << "has line:" << ((contextFlags & UserAction::SubHasLine) != 0);
@@ -418,9 +455,8 @@ void UserActionManager::updateActionsContext(int contextFlags)
 //      kDebug() << "has selection:" << ((contextFlags & UserAction::HasSelection) != 0);
 
 	if(m_contextFlags != contextFlags) {
-
 		m_contextFlags = contextFlags;
-		for(QList < UserAction * >::ConstIterator it = m_actionSpecs.begin(), end = m_actionSpecs.end(); it != end; ++it)
+		for(QList<UserAction *>::ConstIterator it = m_actionSpecs.begin(), end = m_actionSpecs.end(); it != end; ++it)
 			(*it)->setContextFlags(m_contextFlags);
 	}
 }

@@ -31,63 +31,61 @@
 #include <KMessageBox>
 
 namespace SubtitleComposer {
-	class FindErrorsDialog:public ActionWithErrorTargetsDialog {
-	public:
+class FindErrorsDialog : public ActionWithErrorTargetsDialog
+{
+public:
+	FindErrorsDialog(QWidget *parent) : ActionWithErrorTargetsDialog(i18n("Find Error"), parent)
+	{
+		createErrorsGroupBox(i18n("Errors to Find"));
+		createErrorsButtons(true, translationMode());
 
-		FindErrorsDialog(QWidget * parent):ActionWithErrorTargetsDialog(i18n("Find Error"), parent) {
-			createErrorsGroupBox(i18n("Errors to Find"));
-			createErrorsButtons(true, translationMode());
+		QGroupBox *optionsGroupBox = createGroupBox(i18n("Options"));
 
-			QGroupBox *optionsGroupBox = createGroupBox(i18n("Options"));
+		m_selectionCheckBox = new QCheckBox(optionsGroupBox);
+		m_selectionCheckBox->setText(i18n("Selected lines"));
 
-			m_selectionCheckBox = new QCheckBox(optionsGroupBox);
-			m_selectionCheckBox->setText(i18n("Selected lines"));
+		m_fromCurrentCheckBox = new QCheckBox(optionsGroupBox);
+		m_fromCurrentCheckBox->setText(i18n("From current line"));
+		m_fromCurrentCheckBox->setChecked(true);
 
-			m_fromCurrentCheckBox = new QCheckBox(optionsGroupBox);
-			m_fromCurrentCheckBox->setText(i18n("From current line"));
-			m_fromCurrentCheckBox->setChecked(true);
+		m_findBackwards = new QCheckBox(optionsGroupBox);
+		m_findBackwards->setText(i18n("Find backwards"));
 
-			m_findBackwards = new QCheckBox(optionsGroupBox);
-			m_findBackwards->setText(i18n("Find backwards"));
+		createTargetsGroupBox("Find In");
+		createTextTargetsButtonGroup();
 
-			createTargetsGroupBox("Find In");
-			createTextTargetsButtonGroup();
+		QGridLayout *optionsLayout = createLayout(optionsGroupBox);
+		optionsLayout->addWidget(m_selectionCheckBox, 0, 0);
+		optionsLayout->addWidget(m_fromCurrentCheckBox, 1, 0);
+		optionsLayout->addWidget(m_findBackwards, 0, 1);
+	}
 
-			QGridLayout *optionsLayout = createLayout(optionsGroupBox);
-			optionsLayout->addWidget(m_selectionCheckBox, 0, 0);
-			optionsLayout->addWidget(m_fromCurrentCheckBox, 1, 0);
-			optionsLayout->addWidget(m_findBackwards, 0, 1);
-		}
-		bool findInSelection() const {
-			return m_selectionCheckBox->isChecked();
-		}
-		bool findFromCurrent() const {
-			return m_fromCurrentCheckBox->isChecked();
-		}
-		bool findBackwards() const {
-			return m_findBackwards->isChecked();
-		}
-		void setFindBackwards(bool value) {
-			m_findBackwards->setChecked(value);
-	} protected:
+	bool findInSelection() const { return m_selectionCheckBox->isChecked(); }
+	bool findFromCurrent() const { return m_fromCurrentCheckBox->isChecked(); }
+	bool findBackwards() const { return m_findBackwards->isChecked(); }
+	void setFindBackwards(bool value) { m_findBackwards->setChecked(value); }
 
-		virtual void setTranslationMode(bool value) {
-			ActionWithErrorTargetsDialog::setTranslationMode(value);
-			createErrorsButtons(true, value);
-		}
+protected:
+	virtual void setTranslationMode(bool value)
+	{
+		ActionWithErrorTargetsDialog::setTranslationMode(value);
+		createErrorsButtons(true, value);
+	}
 
-	private:
-
-		QCheckBox * m_selectionCheckBox;
-		QCheckBox *m_fromCurrentCheckBox;
-		QCheckBox *m_findBackwards;
-	};
+private:
+	QCheckBox *m_selectionCheckBox;
+	QCheckBox *m_fromCurrentCheckBox;
+	QCheckBox *m_findBackwards;
+};
 }
 
 using namespace SubtitleComposer;
 
-ErrorFinder::ErrorFinder(QWidget * parent):
-QObject(parent), m_subtitle(0), m_translationMode(false), m_iterator(0)
+ErrorFinder::ErrorFinder(QWidget *parent) :
+	QObject(parent),
+	m_subtitle(0),
+	m_translationMode(false),
+	m_iterator(0)
 {
 	m_dialog = new FindErrorsDialog(parent);
 }
@@ -99,25 +97,29 @@ ErrorFinder::~ErrorFinder()
 	invalidate();
 }
 
-void ErrorFinder::invalidate()
+void
+ErrorFinder::invalidate()
 {
 	delete m_iterator;
 	m_iterator = 0;
 }
 
-QWidget *ErrorFinder::parentWidget()
+QWidget *
+ErrorFinder::parentWidget()
 {
-	return static_cast < QWidget * >(parent());
+	return static_cast<QWidget *>(parent());
 }
 
-void ErrorFinder::setSubtitle(Subtitle * subtitle)
+void
+ErrorFinder::setSubtitle(Subtitle *subtitle)
 {
 	m_subtitle = subtitle;
 
 	invalidate();
 }
 
-void ErrorFinder::setTranslationMode(bool enabled)
+void
+ErrorFinder::setTranslationMode(bool enabled)
 {
 	if(m_translationMode != enabled) {
 		m_translationMode = enabled;
@@ -126,7 +128,8 @@ void ErrorFinder::setTranslationMode(bool enabled)
 	}
 }
 
-void ErrorFinder::find(const RangeList & selectionRanges, int currentIndex, bool findBackwards)
+void
+ErrorFinder::find(const RangeList &selectionRanges, int currentIndex, bool findBackwards)
 {
 	if(!m_subtitle || !m_subtitle->linesCount())
 		return;
@@ -161,7 +164,8 @@ void ErrorFinder::find(const RangeList & selectionRanges, int currentIndex, bool
 	advance(false);
 }
 
-bool ErrorFinder::findNext()
+bool
+ErrorFinder::findNext()
 {
 	if(!m_iterator)
 		return false;
@@ -172,7 +176,8 @@ bool ErrorFinder::findNext()
 	return true;
 }
 
-bool ErrorFinder::findPrevious()
+bool
+ErrorFinder::findPrevious()
 {
 	if(!m_iterator)
 		return false;
@@ -183,7 +188,8 @@ bool ErrorFinder::findPrevious()
 	return true;
 }
 
-void ErrorFinder::advance(bool advanceIteratorOnFirstStep)
+void
+ErrorFinder::advance(bool advanceIteratorOnFirstStep)
 {
 	bool foundError = false;
 
@@ -201,7 +207,7 @@ void ErrorFinder::advance(bool advanceIteratorOnFirstStep)
 					m_iterator->toFirst();
 
 				if(KMessageBox::warningContinueCancel(parentWidget(), m_findBackwards ? (m_selection ? i18n("Beginning of selection reached.\nContinue from the end?") : i18n("Beginning of subtitle reached.\nContinue from the end?")) : (m_selection ? i18n("End of selection reached.\nContinue from the beginning?") : i18n("End of subtitle reached.\nContinue from the beginning?")), i18n("Find Error")
-				) != KMessageBox::Continue)
+													  ) != KMessageBox::Continue)
 					break;
 			}
 		}
@@ -212,15 +218,15 @@ void ErrorFinder::advance(bool advanceIteratorOnFirstStep)
 		if(!foundError) {
 			// special case: we searched all lines and didn't found any matches
 			if(!m_instancesFound && (m_allSearchedIndex == m_iterator->index() || (m_findBackwards ? (m_allSearchedIndex == m_iterator->lastIndex() && m_iterator->index() == SubtitleIterator::BehindFirst) : (m_allSearchedIndex == m_iterator->firstIndex() && m_iterator->index() == SubtitleIterator::AfterLast))
-			)) {
+									 ))
+			{
 				KMessageBox::sorry(parentWidget(), i18n("No errors matching given criteria found!"), i18n("Find Error")
-					);
+								   );
 				invalidate();
 				break;
 			}
 		}
-	}
-	while(!foundError);
+	} while(!foundError);
 
 	if(foundError) {
 		m_instancesFound = true;
@@ -228,7 +234,8 @@ void ErrorFinder::advance(bool advanceIteratorOnFirstStep)
 	}
 }
 
-void ErrorFinder::onIteratorSynchronized(int firstIndex, int lastIndex, bool inserted)
+void
+ErrorFinder::onIteratorSynchronized(int firstIndex, int lastIndex, bool inserted)
 {
 	if(m_iterator->index() == SubtitleIterator::Invalid) {
 		invalidate();
@@ -242,7 +249,7 @@ void ErrorFinder::onIteratorSynchronized(int firstIndex, int lastIndex, bool ins
 	} else {
 		if(m_allSearchedIndex > lastIndex)
 			m_allSearchedIndex -= linesCount;
-		else if(m_allSearchedIndex >= firstIndex && m_allSearchedIndex <= lastIndex)	// was one of the removed lines
+		else if(m_allSearchedIndex >= firstIndex && m_allSearchedIndex <= lastIndex) // was one of the removed lines
 			m_allSearchedIndex = m_iterator->index();
 	}
 }

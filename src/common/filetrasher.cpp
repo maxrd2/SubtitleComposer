@@ -23,27 +23,28 @@
 #include <KIO/NetAccess>
 #include <KIO/CopyJob>
 
-FileTrasher::FileTrasher(const KUrl & url):m_url(url)
-{
-}
+FileTrasher::FileTrasher(const KUrl &url) :
+	m_url(url)
+{}
 
 FileTrasher::~FileTrasher()
-{
-}
+{}
 
-FileTrasher::FileTrasher(const QString & path):m_url()
+FileTrasher::FileTrasher(const QString &path) : m_url()
 {
 	m_url.setPath(path);
 }
 
-const KUrl & FileTrasher::url()
+const KUrl &
+FileTrasher::url()
 {
 	return m_url;
 }
 
-bool FileTrasher::exec()
+bool
+FileTrasher::exec()
 {
-	KIO::CopyJob * job = KIO::trash(m_url);
+	KIO::CopyJob *job = KIO::trash(m_url);
 	// NOTE: the call deletes job!
 	return KIO::NetAccess::synchronousRun(job, 0);
 }

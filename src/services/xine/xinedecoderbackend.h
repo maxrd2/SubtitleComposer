@@ -36,54 +36,53 @@
 class QEvent;
 
 namespace SubtitleComposer {
-	class DecodingThread;
+class DecodingThread;
 
-	class XineDecoderBackend:public DecoderBackend {
-	Q_OBJECT public:
+class XineDecoderBackend : public DecoderBackend
+{
+	Q_OBJECT
 
-		XineDecoderBackend(Decoder * decoder);
-		virtual ~ XineDecoderBackend();
+public:
+	XineDecoderBackend(Decoder *decoder);
+	virtual ~XineDecoderBackend();
 
-		const XineConfig *config() {
-			return static_cast < const XineConfig *const >(DecoderBackend::config());
-		} virtual AppConfigGroupWidget *newAppConfigGroupWidget(QWidget * parent);
+	const XineConfig * config() { return static_cast<const XineConfig *const>(DecoderBackend::config()); }
 
-	protected:
+	virtual AppConfigGroupWidget * newAppConfigGroupWidget(QWidget *parent);
 
-		virtual QWidget * initialize(QWidget * videoWidgetParent);
-		virtual void finalize();
+protected:
+	virtual QWidget * initialize(QWidget *videoWidgetParent);
+	virtual void finalize();
 
-		virtual bool openFile(const QString & filePath);
-		virtual void closeFile();
+	virtual bool openFile(const QString &filePath);
+	virtual void closeFile();
 
-		virtual bool decode(int audioStream, const QString & outputPath, const WaveFormat & outputFormat);
-		virtual bool stop();
+	virtual bool decode(int audioStream, const QString &outputPath, const WaveFormat &outputFormat);
+	virtual bool stop();
 
-		virtual void customEvent(QEvent * event);
+	virtual void customEvent(QEvent *event);
 
-	private:
+private:
+	bool initializeXine();
+	void finalizeXine();
 
-		bool initializeXine();
-		void finalizeXine();
+	unsigned long readUncompressedData(void *buffer, unsigned long bufferSize);
+	bool readNextFrame(bool first);
 
-		unsigned long readUncompressedData(void *buffer, unsigned long bufferSize);
-		bool readNextFrame(bool first);
+private:
+	xine_t *m_xineEngine;
+	xine_audio_port_t *m_audioPort;
+	xine_stream_t *m_xineStream;
+	xine_event_queue_t *m_eventQueue;
+	xine_audio_frame_t *m_frame;
 
-	private:
+	bool m_isValidFrame;
+	unsigned long m_framePos;
+	unsigned long m_frameSize;
 
-		xine_t * m_xineEngine;
-		xine_audio_port_t *m_audioPort;
-		xine_stream_t *m_xineStream;
-		xine_event_queue_t *m_eventQueue;
-		xine_audio_frame_t *m_frame;
-
-		bool m_isValidFrame;
-		unsigned long m_framePos;
-		unsigned long m_frameSize;
-
-		DecodingThread *m_decodingThread;
-		friend class DecodingThread;
-	};
+	DecodingThread *m_decodingThread;
+	friend class DecodingThread;
+};
 }
 
 #endif

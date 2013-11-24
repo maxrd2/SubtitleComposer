@@ -31,17 +31,18 @@ using namespace SubtitleComposer;
 /// TEXTINPUTDIALOG
 /// ===============
 
-TextInputDialog::TextInputDialog(const QString & caption, const QString & label, QWidget * parent):KDialog(parent)
+TextInputDialog::TextInputDialog(const QString &caption, const QString &label, QWidget *parent) : KDialog(parent)
 {
 	init(caption, label, QString());
 }
 
-TextInputDialog::TextInputDialog(const QString & caption, const QString & label, const QString & value, QWidget * parent):KDialog(parent)
+TextInputDialog::TextInputDialog(const QString &caption, const QString &label, const QString &value, QWidget *parent) : KDialog(parent)
 {
 	init(caption, label, value);
 }
 
-void TextInputDialog::init(const QString & caption, const QString & labelText, const QString & value)
+void
+TextInputDialog::init(const QString &caption, const QString &labelText, const QString &value)
 {
 	setCaption(caption);
 	setModal(true);
@@ -71,39 +72,44 @@ void TextInputDialog::init(const QString & caption, const QString & labelText, c
 	connect(m_lineEdit, SIGNAL(textChanged(const QString &)), this, SLOT(onLineEditTextChanged(const QString &)));
 }
 
-const QString TextInputDialog::value() const {
+const QString
+TextInputDialog::value() const
+{
 	return m_lineEdit->text();
-} void TextInputDialog::setValue(const QString & value)
+}
+
+void
+TextInputDialog::setValue(const QString &value)
 {
 	m_lineEdit->setText(value);
 }
 
-void TextInputDialog::onLineEditTextChanged(const QString & text)
+void
+TextInputDialog::onLineEditTextChanged(const QString &text)
 {
 	button(KDialog::Ok)->setEnabled(!text.isEmpty());
 }
 
-
-
 /// INTINPUTDIALOG
 /// ==============
 
-IntInputDialog::IntInputDialog(const QString & caption, const QString & label, QWidget * parent):KDialog(parent)
+IntInputDialog::IntInputDialog(const QString &caption, const QString &label, QWidget *parent) : KDialog(parent)
 {
 	init(caption, label, 0, 100, 0);
 }
 
-IntInputDialog::IntInputDialog(const QString & caption, const QString & label, int min, int max, QWidget * parent):KDialog(parent)
+IntInputDialog::IntInputDialog(const QString &caption, const QString &label, int min, int max, QWidget *parent) : KDialog(parent)
 {
 	init(caption, label, min, max, min);
 }
 
-IntInputDialog::IntInputDialog(const QString & caption, const QString & label, int min, int max, int value, QWidget * parent):KDialog(parent)
+IntInputDialog::IntInputDialog(const QString &caption, const QString &label, int min, int max, int value, QWidget *parent) : KDialog(parent)
 {
 	init(caption, label, min, max, value);
 }
 
-void IntInputDialog::init(const QString & caption, const QString & labelText, int min, int max, int value)
+void
+IntInputDialog::init(const QString &caption, const QString &labelText, int min, int max, int value)
 {
 	setCaption(caption);
 	setModal(true);
@@ -133,23 +139,38 @@ void IntInputDialog::init(const QString & caption, const QString & labelText, in
 	resize(300, 10);
 }
 
-int IntInputDialog::minimum() const {
+int
+IntInputDialog::minimum() const
+{
 	return m_intNumInput->minimum();
-} void IntInputDialog::setMinimum(int minimum)
+}
+
+void
+IntInputDialog::setMinimum(int minimum)
 {
 	m_intNumInput->setMinimum(minimum);
 }
 
-int IntInputDialog::maximum() const {
+int
+IntInputDialog::maximum() const
+{
 	return m_intNumInput->maximum();
-} void IntInputDialog::setMaximum(int maximum)
+}
+
+void
+IntInputDialog::setMaximum(int maximum)
 {
 	m_intNumInput->setMaximum(maximum);
 }
 
-int IntInputDialog::value() const {
+int
+IntInputDialog::value() const
+{
 	return m_intNumInput->value();
-} void IntInputDialog::setValue(int value)
+}
+
+void
+IntInputDialog::setValue(int value)
 {
 	m_intNumInput->setValue(value);
 }

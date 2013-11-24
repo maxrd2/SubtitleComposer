@@ -20,14 +20,15 @@
 #include "sstringtest.h"
 #include "../sstring.h"
 
-#include <QtTest>				// krazy:exclude=c++/includes
-#include <QtCore>				// krazy:exclude=c++/includes
+#include <QtTest>                               // krazy:exclude=c++/includes
+#include <QtCore>                               // krazy:exclude=c++/includes
 
 #include <KDebug>
 
 using namespace SubtitleComposer;
 
-void SStringTest::testStyleFlags()
+void
+SStringTest::testStyleFlags()
 {
 	SString sstring("0123456789");
 	sstring.setStyleFlagsAt(0, SString::Bold);
@@ -70,7 +71,8 @@ void SStringTest::testStyleFlags()
 	QVERIFY(sstring.richString() == QString("<s>012<i>3</i>4<i>5</i>6789</s>"));
 }
 
-void SStringTest::testLeftMidRight()
+void
+SStringTest::testLeftMidRight()
 {
 	SString sstring;
 	sstring.setRichString("<b>012</b><i>345</i><u>678</u><s>9</s>");
@@ -101,7 +103,8 @@ void SStringTest::testLeftMidRight()
 	QVERIFY(sstring.right(0).richString() == QString(""));
 }
 
-void SStringTest::testInsert()
+void
+SStringTest::testInsert()
 {
 	SString sstring;
 
@@ -133,7 +136,8 @@ void SStringTest::testInsert()
 	QVERIFY(sstring == SString());
 }
 
-void SStringTest::testReplace()
+void
+SStringTest::testReplace()
 {
 	SString sstring;
 
@@ -215,14 +219,14 @@ void SStringTest::testReplace()
 	sstring.replace(QRegExp("([\\w]*)"), "[\\1]");
 	QVERIFY(sstring.richString() == QString("[this][] [is][] [a][] [pretty][] [test][]"));
 
-	//SString& SString::replace( QChar before, QChar after, Qt::CaseSensitivity cs=Qt::CaseSensitive )
+	// SString& SString::replace( QChar before, QChar after, Qt::CaseSensitivity cs=Qt::CaseSensitive )
 	sstring.setRichString("<b>This </b>Is <i>a preTtI</i> testi");
 	sstring.replace('I', 'X', Qt::CaseSensitive);
 	QVERIFY(sstring.richString() == QString("<b>This </b>Xs <i>a preTtX</i> testi"));
 	sstring.replace('T', 'w', Qt::CaseInsensitive);
 	QVERIFY(sstring.richString() == QString("<b>whis </b>Xs <i>a prewwX</i> weswi"));
 
-	//SString& SString::replace( QChar ch, const QString& after, Qt::CaseSensitivity cs=Qt::CaseSensitive )
+	// SString& SString::replace( QChar ch, const QString& after, Qt::CaseSensitivity cs=Qt::CaseSensitive )
 	sstring.setRichString("<b>This </b>Is <i>a preTtI</i> testi");
 	sstring.replace('i', QString("AA"), Qt::CaseInsensitive);
 	QVERIFY(sstring.richString() == QString("<b>ThAAs </b>AAs <i>a preTtAA</i> testAA"));
@@ -235,7 +239,6 @@ void SStringTest::testReplace()
 	QVERIFY(sstring.richString() == QString("<b>ThAs </b>Is <i>a preTtI</i> test<b>A</b>"));
 	sstring.replace('T', SString("X", SString::Underline), Qt::CaseInsensitive);
 	QVERIFY(sstring == SString().setRichString("<u>X</u><b>hAs </b>Is <i>a pre</i><u>XX</u><i>I</i> <u>X</u>es<u>X</u><b>A</b>"));
-
 
 	// SString& remove( int index, int len );
 	sstring.setRichString("<b>012</b><i>345</i><u>678</u><s>9</s>");
@@ -286,7 +289,7 @@ void SStringTest::testReplace()
 	QVERIFY(sstring.richString() == QString("<b>b</b>"));
 
 	sstring.setRichString("c<b>a</b>c");
-	sstring.replace("c", "b");	// krazy:exclude=c++/doublequote_chars
+	sstring.replace("c", "b");      // krazy:exclude=c++/doublequote_chars
 	QVERIFY(sstring.richString() == QString("b<b>a</b>b"));
 
 	sstring.setRichString("c<b>a</b>c");

@@ -32,28 +32,29 @@ class QCheckBox;
 class QGridLayout;
 
 namespace SubtitleComposer {
-	class ActionWithErrorTargetsDialog:public ActionWithTargetDialog {
-	Q_OBJECT public:
+class ActionWithErrorTargetsDialog : public ActionWithTargetDialog
+{
+	Q_OBJECT
 
-		~ActionWithErrorTargetsDialog();
+public:
+	~ActionWithErrorTargetsDialog();
 
-		int selectedErrorFlags() const;
+	int selectedErrorFlags() const;
 
-	protected:
+protected:
+	explicit ActionWithErrorTargetsDialog(const QString &title, QWidget *parent = 0);
 
-		explicit ActionWithErrorTargetsDialog(const QString & title, QWidget * parent = 0);
+	QGroupBox * createErrorsGroupBox(const QString &title);
+	void createErrorsButtons(bool showUserMarks, bool showMissingTranslation);
 
-		QGroupBox *createErrorsGroupBox(const QString & title);
-		void createErrorsButtons(bool showUserMarks, bool showMissingTranslation);
+private slots:
+	void selectAllErrorFlags();
+	void deselectAllErrorFlags();
 
-		private slots:void selectAllErrorFlags();
-		void deselectAllErrorFlags();
-
-	private:
-
-		QGroupBox * m_errorsGroupBox;
-		QCheckBox **m_errorsCheckBox;
-		QGridLayout *m_errorsLayout;
-	};
+private:
+	QGroupBox *m_errorsGroupBox;
+	QCheckBox **m_errorsCheckBox;
+	QGridLayout *m_errorsLayout;
+};
 }
 #endif

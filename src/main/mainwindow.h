@@ -31,35 +31,36 @@
 class QSplitter;
 
 namespace SubtitleComposer {
-	class PlayerWidget;
-	class LinesWidget;
-	class CurrentLineWidget;
-	class StatusBar2;
+class PlayerWidget;
+class LinesWidget;
+class CurrentLineWidget;
+class StatusBar2;
 
-	class MainWindow:public KXmlGuiWindow {
-		Q_OBJECT friend class Application;
+class MainWindow : public KXmlGuiWindow
+{
+	Q_OBJECT
 
-	public:
+	friend class Application;
 
-		MainWindow();
-		virtual ~ MainWindow();
+public:
+	MainWindow();
+	virtual ~MainWindow();
 
-		void loadConfig();
-		void saveConfig();
+	void loadConfig();
+	void saveConfig();
 
-		public slots:void setSubtitle(Subtitle * subtitle = 0);
+public slots:
+	void setSubtitle(Subtitle *subtitle = 0);
 
-	protected:
+protected:
+	virtual bool queryClose();
 
-		virtual bool queryClose();
-
-	protected:
-
-		QSplitter * m_splitter;
-		PlayerWidget *m_playerWidget;
-		LinesWidget *m_linesWidget;
-		CurrentLineWidget *m_curLineWidget;
-		StatusBar2 *m_statusBar;
-	};
+protected:
+	QSplitter *m_splitter;
+	PlayerWidget *m_playerWidget;
+	LinesWidget *m_linesWidget;
+	CurrentLineWidget *m_curLineWidget;
+	StatusBar2 *m_statusBar;
+};
 }
 #endif

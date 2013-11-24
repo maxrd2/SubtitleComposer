@@ -49,6 +49,7 @@ SET( formats_SRCS
 	${formats_subviewer1_SRCS}
 	${formats_subviewer2_SRCS}
 	${formats_tmplayer_SRCS}
+	${formats_youtubecaptions_SRCS}
 	CACHE INTERNAL EXPORTEDVARIABLE
 )
 

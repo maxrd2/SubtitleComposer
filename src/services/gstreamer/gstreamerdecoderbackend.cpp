@@ -30,8 +30,14 @@ using namespace SubtitleComposer;
 
 #define MESSAGE_INFO_INIT_DISPOSE 1
 
-GStreamerDecoderBackend::GStreamerDecoderBackend(Decoder * decoder):
-DecoderBackend(decoder, "GStreamer", new GStreamerConfig()), m_infoPipeline(0), m_infoBus(0), m_infoTimer(new QTimer(this)), m_decodingPipeline(0), m_decodingBus(0), m_decodingTimer(new QTimer(this))
+GStreamerDecoderBackend::GStreamerDecoderBackend(Decoder *decoder) :
+	DecoderBackend(decoder, "GStreamer", new GStreamerConfig()),
+	m_infoPipeline(0),
+	m_infoBus(0),
+	m_infoTimer(new QTimer(this)),
+	m_decodingPipeline(0),
+	m_decodingBus(0),
+	m_decodingTimer(new QTimer(this))
 {
 	connect(m_infoTimer, SIGNAL(timeout()), this, SLOT(onInfoTimerTimeout()));
 	connect(m_decodingTimer, SIGNAL(timeout()), this, SLOT(onDecodingTimerTimeout()));
@@ -43,22 +49,26 @@ GStreamerDecoderBackend::~GStreamerDecoderBackend()
 		GStreamer::deinit();
 }
 
-QWidget *GStreamerDecoderBackend::initialize(QWidget * /*videoWidgetParent */ )
+QWidget *
+GStreamerDecoderBackend::initialize(QWidget * /*videoWidgetParent */)
 {
-	return GStreamer::init()? (QWidget *) 0 : (QWidget *) 1;
+	return GStreamer::init() ? (QWidget *)0 : (QWidget *)1;
 }
 
-void GStreamerDecoderBackend::finalize()
+void
+GStreamerDecoderBackend::finalize()
 {
 	GStreamer::deinit();
 }
 
-SubtitleComposer::AppConfigGroupWidget * GStreamerDecoderBackend::newAppConfigGroupWidget(QWidget * parent)
+SubtitleComposer::AppConfigGroupWidget *
+GStreamerDecoderBackend::newAppConfigGroupWidget(QWidget *parent)
 {
 	return new GStreamerConfigWidget(parent);
 }
 
-bool GStreamerDecoderBackend::openFile(const QString & filePath)
+bool
+GStreamerDecoderBackend::openFile(const QString &filePath)
 {
 	m_lengthInformed = false;
 
@@ -102,7 +112,7 @@ bool GStreamerDecoderBackend::openFile(const QString & filePath)
 	if(success) {
 		m_infoBus = gst_pipeline_get_bus(GST_PIPELINE(m_infoPipeline));
 		m_infoTimer->start(20);
-		GStreamer::setElementState(GST_ELEMENT(m_infoPipeline), GST_STATE_PAUSED, 0 /*don't block waiting */ );
+		GStreamer::setElementState(GST_ELEMENT(m_infoPipeline), GST_STATE_PAUSED, 0 /*don't block waiting */);
 	} else {
 		gst_object_unref(GST_OBJECT(m_infoPipeline));
 		m_infoPipeline = 0;
@@ -111,12 +121,14 @@ bool GStreamerDecoderBackend::openFile(const QString & filePath)
 	return success;
 }
 
-void GStreamerDecoderBackend::closeFile()
+void
+GStreamerDecoderBackend::closeFile()
 {
 	stop();
 }
 
-bool GStreamerDecoderBackend::decode(int audioStream, const QString & outputPath, const WaveFormat & outputFormat)
+bool
+GStreamerDecoderBackend::decode(int audioStream, const QString &outputPath, const WaveFormat &outputFormat)
 {
 	m_decodingPipeline = GST_PIPELINE(gst_pipeline_new("decoding_pipeline"));
 	GstElement *filesrc = gst_element_factory_make("filesrc", "filesrc");
@@ -158,7 +170,7 @@ bool GStreamerDecoderBackend::decode(int audioStream, const QString & outputPath
 
 	gboolean success = TRUE;
 	success = success && GST_PAD_LINK_SUCCESSFUL(GStreamer::link(bin, "filesrc", "decodebin"));
-	//success = success && GST_PAD_LINK_SUCCESSFUL( GStreamer::link( bin, "decodebin", "audioresample" ) );
+	// success = success && GST_PAD_LINK_SUCCESSFUL( GStreamer::link( bin, "decodebin", "audioresample" ) );
 
 	if(success) {
 		m_waveWriter.open(outputPath, outputFormat);
@@ -166,7 +178,7 @@ bool GStreamerDecoderBackend::decode(int audioStream, const QString & outputPath
 		m_decodingStreamFormat = decoder()->audioStreamFormat(audioStream);
 		m_decodingBus = gst_pipeline_get_bus(GST_PIPELINE(m_decodingPipeline));
 		m_decodingTimer->start(20);
-		GStreamer::setElementState(GST_ELEMENT(m_decodingPipeline), GST_STATE_PLAYING, 0 /*don't block waiting */ );
+		GStreamer::setElementState(GST_ELEMENT(m_decodingPipeline), GST_STATE_PLAYING, 0 /*don't block waiting */);
 	} else {
 		gst_object_unref(GST_OBJECT(m_decodingPipeline));
 		m_decodingPipeline = 0;
@@ -175,39 +187,42 @@ bool GStreamerDecoderBackend::decode(int audioStream, const QString & outputPath
 	return success;
 }
 
-bool GStreamerDecoderBackend::stop()
+bool
+GStreamerDecoderBackend::stop()
 {
 	m_waveWriter.close();
 
 	if(m_infoPipeline) {
 		m_infoTimer->stop();
-		GStreamer::setElementState(GST_ELEMENT(m_infoPipeline), GST_STATE_NULL, 60000 /*"infinity" wait */ );
+		GStreamer::setElementState(GST_ELEMENT(m_infoPipeline), GST_STATE_NULL, 60000 /*"infinity" wait */);
 		GStreamer::freePipeline(&m_infoPipeline, &m_infoBus);
 	}
 
 	if(m_decodingPipeline) {
 		m_decodingTimer->stop();
-		GStreamer::setElementState(GST_ELEMENT(m_decodingPipeline), GST_STATE_NULL, 60000 /*"infinity" wait */ );
+		GStreamer::setElementState(GST_ELEMENT(m_decodingPipeline), GST_STATE_NULL, 60000 /*"infinity" wait */);
 		GStreamer::freePipeline(&m_decodingPipeline, &m_decodingBus);
 	}
 
 	return true;
 }
 
-void GStreamerDecoderBackend::dataHandoff(GstElement * /*fakesink */ , GstBuffer * buffer, GstPad * /*pad */ , gpointer userData)
+void
+GStreamerDecoderBackend::dataHandoff(GstElement * /*fakesink */, GstBuffer *buffer, GstPad * /*pad */, gpointer userData)
 {
-	GStreamerDecoderBackend *backend = (GStreamerDecoderBackend *) userData;
+	GStreamerDecoderBackend *backend = (GStreamerDecoderBackend *)userData;
 
 	backend->m_waveWriter.writeSamplesData(GST_BUFFER_DATA(buffer), GST_BUFFER_SIZE(buffer), backend->m_waveWriter.outputFormat());
 }
 
-void GStreamerDecoderBackend::decodebinPadAdded(GstElement * decodebin, GstPad * srcpad, gpointer userData)
+void
+GStreamerDecoderBackend::decodebinPadAdded(GstElement *decodebin, GstPad *srcpad, gpointer userData)
 {
 	if(gst_pad_get_direction(srcpad) != GST_PAD_SRC)
 		return;
 
-	GStreamerDecoderBackend *backend = (GStreamerDecoderBackend *) userData;
-	SubtitleComposer::Decoder * decoder = backend->decoder();
+	GStreamerDecoderBackend *backend = (GStreamerDecoderBackend *)userData;
+	SubtitleComposer::Decoder *decoder = backend->decoder();
 
 	gchar *name = gst_pad_get_name(srcpad);
 	QString srcPadName = name;
@@ -230,7 +245,7 @@ void GStreamerDecoderBackend::decodebinPadAdded(GstElement * decodebin, GstPad *
 		if(decoder->audioStreamNames().contains(srcPadName))
 			return;
 
-		//GStreamer::inspectPad( srcpad, compatible ? "ADDED COMPATIBLE " : "ADDED NON COMPATIBLE " );
+		// GStreamer::inspectPad( srcpad, compatible ? "ADDED COMPATIBLE " : "ADDED NON COMPATIBLE " );
 
 		if(!compatible)
 			return;
@@ -252,11 +267,11 @@ void GStreamerDecoderBackend::decodebinPadAdded(GstElement * decodebin, GstPad *
 		GstBin *bin = GST_BIN(backend->m_decodingPipeline);
 
 		if(backend->m_decodingStreamName == srcPadName) {
-			//GstCaps* sourceFilter = GStreamer::audioCapsFromFormat( backend->m_decodingStreamFormat, false );
+			// GstCaps* sourceFilter = GStreamer::audioCapsFromFormat( backend->m_decodingStreamFormat, false );
 			GstCaps *outputFilter = GStreamer::audioCapsFromFormat(backend->m_waveWriter.outputFormat());
 
 			gboolean success = TRUE;
-			success = success && GST_PAD_LINK_SUCCESSFUL(GStreamer::link(bin, "decodebin", srcPadName.toAscii(), "audioresample", "sink" /*, sourceFilter */ ));
+			success = success && GST_PAD_LINK_SUCCESSFUL(GStreamer::link(bin, "decodebin", srcPadName.toAscii(), "audioresample", "sink" /*, sourceFilter */));
 			success = success && GST_PAD_LINK_SUCCESSFUL(GStreamer::link(bin, "audioresample", "audioconvert"));
 			success = success && GST_PAD_LINK_SUCCESSFUL(GStreamer::link(bin, "audioconvert", "fakesink", outputFilter));
 
@@ -271,9 +286,10 @@ void GStreamerDecoderBackend::decodebinPadAdded(GstElement * decodebin, GstPad *
 	}
 }
 
-void GStreamerDecoderBackend::decodebinNoMorePads(GstElement * /*decodebin */ , gpointer userData)
+void
+GStreamerDecoderBackend::decodebinNoMorePads(GstElement * /*decodebin */, gpointer userData)
 {
-	GStreamerDecoderBackend *backend = (GStreamerDecoderBackend *) userData;
+	GStreamerDecoderBackend *backend = (GStreamerDecoderBackend *)userData;
 
 	GstStructure *structure = gst_structure_new("app_message", "type", G_TYPE_INT, MESSAGE_INFO_INIT_DISPOSE, 0);
 	GstMessage *msg = gst_message_new_application(GST_OBJECT(backend->m_infoPipeline), structure);
@@ -281,7 +297,8 @@ void GStreamerDecoderBackend::decodebinNoMorePads(GstElement * /*decodebin */ , 
 	gst_element_post_message(GST_ELEMENT(backend->m_infoPipeline), msg);
 }
 
-void GStreamerDecoderBackend::onInfoTimerTimeout()
+void
+GStreamerDecoderBackend::onInfoTimerTimeout()
 {
 	if(!isInitialized())
 		return;
@@ -299,43 +316,39 @@ void GStreamerDecoderBackend::onInfoTimerTimeout()
 		GStreamer::inspectMessage(msg);
 
 		switch(GST_MESSAGE_TYPE(msg)) {
-		case GST_MESSAGE_APPLICATION:
-			{
-				gint type = g_value_get_int(gst_structure_get_value(gst_message_get_structure(msg), "type"));
-				if(type == MESSAGE_INFO_INIT_DISPOSE) {
-					GstStateChangeReturn ret = GStreamer::setElementState(GST_ELEMENT(m_infoPipeline), GST_STATE_NULL);
-					if(ret != GST_STATE_CHANGE_FAILURE && ret != GST_STATE_CHANGE_ASYNC)
-						GStreamer::freePipeline(&m_infoPipeline, &m_infoBus);
-					setDecoderState(Decoder::Ready);
-				}
-				break;
-			}
-
-		case GST_MESSAGE_STATE_CHANGED:
-			{
-				GstState old, cur, pending;
-				gst_message_parse_state_changed(msg, &old, &cur, &pending);
-				if(cur == GST_STATE_NULL)
+		case GST_MESSAGE_APPLICATION: {
+			gint type = g_value_get_int(gst_structure_get_value(gst_message_get_structure(msg), "type"));
+			if(type == MESSAGE_INFO_INIT_DISPOSE) {
+				GstStateChangeReturn ret = GStreamer::setElementState(GST_ELEMENT(m_infoPipeline), GST_STATE_NULL);
+				if(ret != GST_STATE_CHANGE_FAILURE && ret != GST_STATE_CHANGE_ASYNC)
 					GStreamer::freePipeline(&m_infoPipeline, &m_infoBus);
-				break;
+				setDecoderState(Decoder::Ready);
 			}
+			break;
+		}
 
-		case GST_MESSAGE_DURATION:
-			{
-				GstFormat format;
-				gint64 duration;
-				gst_message_parse_duration(msg, &format, &duration);
-				setDecoderLength((double)duration / GST_SECOND);
-				break;
-			}
-
-		case GST_MESSAGE_ERROR:
-			{
-				GStreamer::setElementState(GST_ELEMENT(m_infoPipeline), GST_STATE_NULL, 60000);
+		case GST_MESSAGE_STATE_CHANGED: {
+			GstState old, cur, pending;
+			gst_message_parse_state_changed(msg, &old, &cur, &pending);
+			if(cur == GST_STATE_NULL)
 				GStreamer::freePipeline(&m_infoPipeline, &m_infoBus);
-				setDecoderErrorState();
-				break;
-			}
+			break;
+		}
+
+		case GST_MESSAGE_DURATION: {
+			GstFormat format;
+			gint64 duration;
+			gst_message_parse_duration(msg, &format, &duration);
+			setDecoderLength((double)duration / GST_SECOND);
+			break;
+		}
+
+		case GST_MESSAGE_ERROR: {
+			GStreamer::setElementState(GST_ELEMENT(m_infoPipeline), GST_STATE_NULL, 60000);
+			GStreamer::freePipeline(&m_infoPipeline, &m_infoBus);
+			setDecoderErrorState();
+			break;
+		}
 
 		default:
 			break;
@@ -345,7 +358,8 @@ void GStreamerDecoderBackend::onInfoTimerTimeout()
 	}
 }
 
-void GStreamerDecoderBackend::onDecodingTimerTimeout()
+void
+GStreamerDecoderBackend::onDecodingTimerTimeout()
 {
 	if(!isInitialized() || !m_decodingBus || !m_decodingPipeline)
 		return;
@@ -369,50 +383,46 @@ void GStreamerDecoderBackend::onDecodingTimerTimeout()
 			gst_message_unref(msg);
 			continue;
 		}
-		//GStreamer::inspectMessage( msg );
+		// GStreamer::inspectMessage( msg );
 
 		switch(GST_MESSAGE_TYPE(msg)) {
-		case GST_MESSAGE_STATE_CHANGED:
-			{
-				GstState old, current, target;
-				gst_message_parse_state_changed(msg, &old, &current, &target);
-				if(target == GST_STATE_PLAYING) {
-					setDecoderState(Decoder::Decoding);
-					GStreamer::setElementState(GST_ELEMENT(m_decodingPipeline), GST_STATE_PLAYING, 0);
-				} else if(current == GST_STATE_READY || current == GST_STATE_NULL) {
-					m_waveWriter.close();
-					setDecoderState(Decoder::Ready);
-				}
-				break;
-			}
-
-		case GST_MESSAGE_DURATION:
-			{
-				GstFormat format;
-				gint64 duration;
-				gst_message_parse_duration(msg, &format, &duration);
-				setDecoderLength((double)duration / GST_SECOND);
-				break;
-			}
-
-		case GST_MESSAGE_EOS:
-			{
+		case GST_MESSAGE_STATE_CHANGED: {
+			GstState old, current, target;
+			gst_message_parse_state_changed(msg, &old, &current, &target);
+			if(target == GST_STATE_PLAYING) {
+				setDecoderState(Decoder::Decoding);
+				GStreamer::setElementState(GST_ELEMENT(m_decodingPipeline), GST_STATE_PLAYING, 0);
+			} else if(current == GST_STATE_READY || current == GST_STATE_NULL) {
 				m_waveWriter.close();
 				setDecoderState(Decoder::Ready);
-				break;
 			}
+			break;
+		}
 
-		case GST_MESSAGE_ERROR:
-			{
-				gchar *debug = NULL;
-				GError *error = NULL;
-				gst_message_parse_error(msg, &error, &debug);
-				//setDecoderErrorState( QString( error->message ) );
-				setDecoderErrorState(QString(debug));
-				g_error_free(error);
-				g_free(debug);
-				break;
-			}
+		case GST_MESSAGE_DURATION: {
+			GstFormat format;
+			gint64 duration;
+			gst_message_parse_duration(msg, &format, &duration);
+			setDecoderLength((double)duration / GST_SECOND);
+			break;
+		}
+
+		case GST_MESSAGE_EOS: {
+			m_waveWriter.close();
+			setDecoderState(Decoder::Ready);
+			break;
+		}
+
+		case GST_MESSAGE_ERROR: {
+			gchar *debug = NULL;
+			GError *error = NULL;
+			gst_message_parse_error(msg, &error, &debug);
+			// setDecoderErrorState( QString( error->message ) );
+			setDecoderErrorState(QString(debug));
+			g_error_free(error);
+			g_free(debug);
+			break;
+		}
 
 		default:
 			break;

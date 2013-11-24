@@ -37,8 +37,8 @@
 
 #include <KAction>
 
-SimpleRichTextEdit::SimpleRichTextEdit(QWidget * parent):
-KTextEdit(parent)
+SimpleRichTextEdit::SimpleRichTextEdit(QWidget *parent) :
+	KTextEdit(parent)
 {
 	enableFindReplace(false);
 	setCheckSpellingEnabled(true);
@@ -153,10 +153,10 @@ KTextEdit(parent)
 	m_actions[AllowTabulations]->setText(i18n("Allow Tabulations"));
 	connect(m_actions[AllowTabulations], SIGNAL(triggered()), this, SLOT(toggleTabChangesFocus()));
 
-	QMenu *menu = QTextEdit::createStandardContextMenu();	// krazy:exclude=c++/qclasses
+	QMenu *menu = QTextEdit::createStandardContextMenu();   // krazy:exclude=c++/qclasses
 	QList<QAction *> actions = menu->actions();
 	m_insertUnicodeControlCharMenu = 0;
-	for(QList < QAction * >::ConstIterator it = actions.constBegin(), end = actions.constEnd(); it != end; ++it) {
+	for(QList<QAction *>::ConstIterator it = actions.constBegin(), end = actions.constEnd(); it != end; ++it) {
 		if((*it)->menu()) {
 			// this depends on Qt private implementation but at least is guaranteed
 			// to behave reasonably if that implementation changes in the future.
@@ -174,19 +174,22 @@ SimpleRichTextEdit::~SimpleRichTextEdit()
 		delete m_insertUnicodeControlCharMenu->parent();
 }
 
-KAction *SimpleRichTextEdit::action(int action) const
+KAction *
+SimpleRichTextEdit::action(int action) const
 {
 	return action >= 0 && action < ActionCount ? m_actions[action] : 0;
 }
+
 QList<KAction *> SimpleRichTextEdit::actions() const
 {
-	QList < KAction * >actions;
+	QList<KAction *> actions;
 	for(int index = 0; index < ActionCount; ++index)
 		actions.append(m_actions[index]);
 	return actions;
 }
 
-SubtitleComposer::SString SimpleRichTextEdit::richText()
+SubtitleComposer::SString
+SimpleRichTextEdit::richText()
 {
 	SubtitleComposer::SString richText(toPlainText());
 
@@ -223,8 +226,8 @@ SubtitleComposer::SString SimpleRichTextEdit::richText()
 	return richText;
 }
 
-
-void SimpleRichTextEdit::setRichText(const SubtitleComposer::SString & richText)
+void
+SimpleRichTextEdit::setRichText(const SubtitleComposer::SString &richText)
 {
 	setPlainText(richText.string());
 
@@ -242,7 +245,7 @@ void SimpleRichTextEdit::setRichText(const SubtitleComposer::SString & richText)
 			format.setFontItalic(currentStyleFlags & SubtitleComposer::SString::Italic);
 			format.setFontUnderline(currentStyleFlags & SubtitleComposer::SString::Underline);
 			format.setFontStrikeOut(currentStyleFlags & SubtitleComposer::SString::StrikeThrough);
-			if((currentStyleFlags & SubtitleComposer::SString::Color) == 0)
+			if((currentStyleFlags &SubtitleComposer::SString::Color) == 0)
 				format.setForeground(QBrush());
 			else
 				format.setForeground(QBrush(QColor(currentStyleColor)));
@@ -256,47 +259,56 @@ void SimpleRichTextEdit::setRichText(const SubtitleComposer::SString & richText)
 	clearUndoRedoHistory();
 }
 
-bool SimpleRichTextEdit::hasSelection() const
+bool
+SimpleRichTextEdit::hasSelection() const
 {
 	return textCursor().hasSelection();
 }
 
-QString SimpleRichTextEdit::selectedText() const
+QString
+SimpleRichTextEdit::selectedText() const
 {
 	return textCursor().selectedText();
 }
 
-void SimpleRichTextEdit::toggleFontItalic()
+void
+SimpleRichTextEdit::toggleFontItalic()
 {
 	setFontItalic(!fontItalic());
 }
 
-bool SimpleRichTextEdit::fontBold()
+bool
+SimpleRichTextEdit::fontBold()
 {
 	return fontWeight() == QFont::Bold;
 }
 
-void SimpleRichTextEdit::setFontBold(bool enabled)
+void
+SimpleRichTextEdit::setFontBold(bool enabled)
 {
 	setFontWeight(enabled ? QFont::Bold : QFont::Normal);
 }
 
-void SimpleRichTextEdit::toggleFontBold()
+void
+SimpleRichTextEdit::toggleFontBold()
 {
 	setFontBold(!fontBold());
 }
 
-void SimpleRichTextEdit::toggleFontUnderline()
+void
+SimpleRichTextEdit::toggleFontUnderline()
 {
 	setFontUnderline(!fontUnderline());
 }
 
-bool SimpleRichTextEdit::fontStrikeOut()
+bool
+SimpleRichTextEdit::fontStrikeOut()
 {
 	return currentFont().strikeOut();
 }
 
-void SimpleRichTextEdit::setFontStrikeOut(bool enabled)
+void
+SimpleRichTextEdit::setFontStrikeOut(bool enabled)
 {
 	QTextCursor cursor(textCursor());
 	QTextCharFormat format;
@@ -304,12 +316,14 @@ void SimpleRichTextEdit::setFontStrikeOut(bool enabled)
 	cursor.mergeCharFormat(format);
 }
 
-void SimpleRichTextEdit::toggleFontStrikeOut()
+void
+SimpleRichTextEdit::toggleFontStrikeOut()
 {
 	setFontStrikeOut(!fontStrikeOut());
 }
 
-void SimpleRichTextEdit::changeTextColor()
+void
+SimpleRichTextEdit::changeTextColor()
 {
 	QColor color = SubtitleComposer::SubtitleColorDialog::getColor(textColor(), this);
 	if(color.isValid()) {
@@ -325,7 +339,8 @@ void SimpleRichTextEdit::changeTextColor()
 	}
 }
 
-void SimpleRichTextEdit::deleteText()
+void
+SimpleRichTextEdit::deleteText()
 {
 	QTextCursor cursor = textCursor();
 	if(cursor.hasSelection())
@@ -334,7 +349,8 @@ void SimpleRichTextEdit::deleteText()
 		cursor.deleteChar();
 }
 
-void SimpleRichTextEdit::undoableClear()
+void
+SimpleRichTextEdit::undoableClear()
 {
 	// Taken from KTextEdit
 	QTextCursor cursor = textCursor();
@@ -345,15 +361,17 @@ void SimpleRichTextEdit::undoableClear()
 	cursor.endEditBlock();
 }
 
-void SimpleRichTextEdit::clearUndoRedoHistory()
+void
+SimpleRichTextEdit::clearUndoRedoHistory()
 {
 	if(isUndoRedoEnabled()) {
-		setUndoRedoEnabled(false);	// clears the undo/redo history
+		setUndoRedoEnabled(false);      // clears the undo/redo history
 		setUndoRedoEnabled(true);
 	}
 }
 
-void SimpleRichTextEdit::setSelection(int startIndex, int endIndex)
+void
+SimpleRichTextEdit::setSelection(int startIndex, int endIndex)
 {
 	QTextCursor cursor(textCursor());
 	cursor.setPosition(startIndex);
@@ -361,24 +379,28 @@ void SimpleRichTextEdit::setSelection(int startIndex, int endIndex)
 	setTextCursor(cursor);
 }
 
-void SimpleRichTextEdit::clearSelection()
+void
+SimpleRichTextEdit::clearSelection()
 {
 	QTextCursor cursor(textCursor());
 	cursor.clearSelection();
 	setTextCursor(cursor);
 }
 
-void SimpleRichTextEdit::toggleTabChangesFocus()
+void
+SimpleRichTextEdit::toggleTabChangesFocus()
 {
 	setTabChangesFocus(!tabChangesFocus());
 }
 
-void SimpleRichTextEdit::toggleAutoSpellChecking()
+void
+SimpleRichTextEdit::toggleAutoSpellChecking()
 {
 	setCheckSpellingEnabled(!checkSpellingEnabled());
 }
 
-void SimpleRichTextEdit::setupWordUnderPositionCursor(const QPoint & globalPos)
+void
+SimpleRichTextEdit::setupWordUnderPositionCursor(const QPoint &globalPos)
 {
 	// Get the word under the (mouse-)cursor with apostrophes at the start/end
 	m_selectedWordCursor = cursorForPosition(mapFromGlobal(globalPos));
@@ -400,23 +422,26 @@ void SimpleRichTextEdit::setupWordUnderPositionCursor(const QPoint & globalPos)
 	m_selectedWordCursor.movePosition(QTextCursor::NextCharacter, QTextCursor::KeepAnchor, selectedWord.size());
 }
 
-void SimpleRichTextEdit::addToIgnoreList()
+void
+SimpleRichTextEdit::addToIgnoreList()
 {
 	highlighter()->ignoreWord(m_selectedWordCursor.selectedText());
 	highlighter()->rehighlight();
 	m_selectedWordCursor.clearSelection();
 }
 
-void SimpleRichTextEdit::addToDictionary()
+void
+SimpleRichTextEdit::addToDictionary()
 {
 	highlighter()->addWordToDictionary(m_selectedWordCursor.selectedText());
 	highlighter()->rehighlight();
 	m_selectedWordCursor.clearSelection();
 }
 
-void SimpleRichTextEdit::replaceWithSuggestion()
+void
+SimpleRichTextEdit::replaceWithSuggestion()
 {
-	QAction *action = qobject_cast < QAction * >(sender());
+	QAction *action = qobject_cast<QAction *>(sender());
 	if(action) {
 		m_selectedWordCursor.insertText(action->text());
 		setTextCursor(m_selectedWordCursor);
@@ -424,14 +449,15 @@ void SimpleRichTextEdit::replaceWithSuggestion()
 	}
 }
 
-QMenu *SimpleRichTextEdit::createContextMenu(const QPoint & mouseGlobalPos)
+QMenu *
+SimpleRichTextEdit::createContextMenu(const QPoint &mouseGlobalPos)
 {
 	Qt::TextInteractionFlags interactionFlags = this->textInteractionFlags();
 	QTextDocument *document = this->document();
 	QTextCursor cursor = textCursor();
 
 	const bool showTextSelectionActions = (Qt::TextEditable | Qt::TextSelectableByKeyboard | Qt::TextSelectableByMouse)
-		& interactionFlags;
+	                                      & interactionFlags;
 
 	KMenu *menu = new KMenu(this);
 
@@ -535,7 +561,8 @@ QMenu *SimpleRichTextEdit::createContextMenu(const QPoint & mouseGlobalPos)
 	return menu;
 }
 
-void SimpleRichTextEdit::contextMenuEvent(QContextMenuEvent * event)
+void
+SimpleRichTextEdit::contextMenuEvent(QContextMenuEvent *event)
 {
 	QMenu *menu = createContextMenu(event->globalPos());
 
@@ -547,13 +574,14 @@ void SimpleRichTextEdit::contextMenuEvent(QContextMenuEvent * event)
 	delete menu;
 }
 
-bool SimpleRichTextEdit::event(QEvent * event)
+bool
+SimpleRichTextEdit::event(QEvent *event)
 {
 	if(event->type() == QEvent::ShortcutOverride) {
 		// Stop our actions shorcuts from being propagated
 		// to other actions when we have the focus.
 
-		QKeyEvent *keyEvent = static_cast < QKeyEvent * >(event);
+		QKeyEvent *keyEvent = static_cast<QKeyEvent *>(event);
 		QKeySequence key(keyEvent->modifiers() + keyEvent->key());
 
 		for(int index = 0; index < ActionCount; ++index) {
@@ -567,7 +595,8 @@ bool SimpleRichTextEdit::event(QEvent * event)
 	return KTextEdit::event(event);
 }
 
-void SimpleRichTextEdit::keyPressEvent(QKeyEvent * event)
+void
+SimpleRichTextEdit::keyPressEvent(QKeyEvent *event)
 {
 	QKeySequence key(event->modifiers() + event->key());
 

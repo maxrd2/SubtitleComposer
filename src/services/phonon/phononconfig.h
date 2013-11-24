@@ -27,27 +27,31 @@
 #include "../../config/appconfiggroup.h"
 
 namespace SubtitleComposer {
-	class PhononConfig:public AppConfigGroup {
-		friend class PhononPlayerBackend;
-		friend class PhononConfigWidget;
+class PhononConfig : public AppConfigGroup
+{
+	friend class PhononPlayerBackend;
+	friend class PhononConfigWidget;
 
-	public:
+public:
 
-		virtual AppConfigGroup * clone() const {
-			return new PhononConfig(*this);
-		}
-	private:
+	virtual AppConfigGroup * clone() const
+	{
+		return new PhononConfig(*this);
+	}
 
-		PhononConfig():AppConfigGroup("Phonon", defaults()) {
-		}
-		PhononConfig(const PhononConfig & config):AppConfigGroup(config) {
-		} static QMap < QString, QString > defaults() {
-			QMap < QString, QString > defaults;
+private:
 
-			return defaults;
-		}
+	PhononConfig() : AppConfigGroup("Phonon", defaults()) {}
 
-	};
+	PhononConfig(const PhononConfig &config) : AppConfigGroup(config) {}
+
+	static QMap<QString, QString> defaults()
+	{
+		QMap<QString, QString> defaults;
+
+		return defaults;
+	}
+};
 }
 
 #endif

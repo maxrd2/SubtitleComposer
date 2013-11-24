@@ -31,32 +31,30 @@ class QCheckBox;
 class KComboBox;
 
 namespace SubtitleComposer {
-	class XineConfigWidget:public AppConfigGroupWidget {
-		Q_OBJECT friend class XinePlayerBackend;
-		friend class XineDecoderBackend;
+class XineConfigWidget : public AppConfigGroupWidget
+{
+	Q_OBJECT
 
-	public:
+	friend class XinePlayerBackend;
+	friend class XineDecoderBackend;
 
-		virtual ~ XineConfigWidget();
+public:
+	virtual ~XineConfigWidget();
 
-		virtual void setControlsFromConfig();
-		virtual void setConfigFromControls();
+	virtual void setControlsFromConfig();
+	virtual void setConfigFromControls();
 
-	private:
+private:
+	explicit XineConfigWidget(QWidget *parent = 0);
 
-		explicit XineConfigWidget(QWidget * parent = 0);
+	XineConfig * config() { return static_cast<XineConfig *>(m_config); }
 
-		XineConfig *config() {
-			return static_cast < XineConfig * >(m_config);
-		};
-
-	private:
-
-		KComboBox * m_audioDriverComboBox;
-		QCheckBox *m_audioDriverCheckBox;
-		KComboBox *m_videoDriverComboBox;
-		QCheckBox *m_videoDriverCheckBox;
-	};
+private:
+	KComboBox *m_audioDriverComboBox;
+	QCheckBox *m_audioDriverCheckBox;
+	KComboBox *m_videoDriverComboBox;
+	QCheckBox *m_videoDriverCheckBox;
+};
 }
 
 #endif

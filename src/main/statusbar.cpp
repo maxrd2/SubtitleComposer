@@ -26,8 +26,8 @@
 
 using namespace SubtitleComposer;
 
-StatusBar2::StatusBar2(QWidget * parent):
-KStatusBar(parent)
+StatusBar2::StatusBar2(QWidget *parent) :
+	KStatusBar(parent)
 {
 	m_decodingProgressBar = new QProgressBar(this);
 	m_decodingProgressBar->hide();
@@ -44,27 +44,28 @@ KStatusBar(parent)
 }
 
 StatusBar2::~StatusBar2()
-{
-}
+{}
 
-void StatusBar2::loadConfig()
-{
-}
+void
+StatusBar2::loadConfig()
+{}
 
-void StatusBar2::saveConfig()
-{
-}
+void
+StatusBar2::saveConfig()
+{}
 
-void StatusBar2::plugActions()
+void
+StatusBar2::plugActions()
 {
 	m_cancelDecodingButton->setDefaultAction(app()->action(ACT_CANCEL_AUDIO_EXTRACTION));
 }
 
-void StatusBar2::setSubtitle(Subtitle * /*subtitle */ )
-{
-}
+void
+StatusBar2::setSubtitle(Subtitle * /*subtitle */)
+{}
 
-void StatusBar2::initDecoding()
+void
+StatusBar2::initDecoding()
 {
 	addPermanentWidget(m_decodingProgressBar);
 	m_decodingProgressBar->show();
@@ -73,19 +74,22 @@ void StatusBar2::initDecoding()
 	m_decodingProgressBar->setValue(0);
 }
 
-void StatusBar2::setDecodingPosition(double position)
+void
+StatusBar2::setDecodingPosition(double position)
 {
 	if(position > 0.0)
 		m_decodingProgressBar->setValue((int)position);
 }
 
-void StatusBar2::setDecodingLength(double length)
+void
+StatusBar2::setDecodingLength(double length)
 {
 	if(length > 0.0)
 		m_decodingProgressBar->setMaximum((int)length);
 }
 
-void StatusBar2::endDecoding()
+void
+StatusBar2::endDecoding()
 {
 	removeWidget(m_decodingProgressBar);
 	m_decodingProgressBar->hide();
@@ -93,7 +97,8 @@ void StatusBar2::endDecoding()
 	m_cancelDecodingButton->hide();
 }
 
-void StatusBar2::showEvent(QShowEvent * event)
+void
+StatusBar2::showEvent(QShowEvent *event)
 {
 	QWidget::showEvent(event);
 

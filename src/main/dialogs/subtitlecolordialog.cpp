@@ -27,9 +27,9 @@
 
 using namespace SubtitleComposer;
 
-SubtitleColorDialog::SubtitleColorDialog(QWidget *parent/* = 0*/)
-	: QColorDialog(parent),
-	  defaultColorSelected(false)
+SubtitleColorDialog::SubtitleColorDialog(QWidget *parent /* = 0*/) :
+	QColorDialog(parent),
+	defaultColorSelected(false)
 {
 	QDialogButtonBox *buttons = findChild<QDialogButtonBox *>();
 
@@ -40,12 +40,10 @@ SubtitleColorDialog::SubtitleColorDialog(QWidget *parent/* = 0*/)
 }
 
 SubtitleColorDialog::~SubtitleColorDialog()
-{
-
-}
+{}
 
 /*static*/ QColor
-SubtitleColorDialog::getColor(const QColor &initial, QWidget *parent, const QString &title, ColorDialogOptions options/* = 0*/)
+SubtitleColorDialog::getColor(const QColor &initial, QWidget *parent, const QString &title, ColorDialogOptions options /* = 0*/)
 {
 	SubtitleColorDialog dlg(parent);
 	if(!title.isEmpty())
@@ -58,7 +56,7 @@ SubtitleColorDialog::getColor(const QColor &initial, QWidget *parent, const QStr
 }
 
 /*static*/ QColor
-SubtitleColorDialog::getColor(const QColor &initial/* = Qt::white*/, QWidget *parent/* = 0*/)
+SubtitleColorDialog::getColor(const QColor &initial /* = Qt::white*/, QWidget *parent /* = 0*/)
 {
 	return getColor(initial, parent, QString(), ColorDialogOptions(0));
 }

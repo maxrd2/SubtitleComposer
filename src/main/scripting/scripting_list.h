@@ -28,35 +28,38 @@
 #include <QtCore/QList>
 
 namespace SubtitleComposer {
-	namespace Scripting {
-		class List:public QObject {
-		Q_OBJECT public:
+namespace Scripting {
+class List : public QObject
+{
+	Q_OBJECT
 
-			List(const char *contentClass, QObject * parent);
-			List(const QList < QObject * >&backend, const char *contentClass, QObject * parent);
+public:
+	List(const char *contentClass, QObject *parent);
+	List(const QList<QObject *> &backend, const char *contentClass, QObject *parent);
 
-			public slots:bool isEmpty() const;
+public slots:
+	bool isEmpty() const;
 
-			int length() const;
-			int size() const;
-			int count() const;
+	int length() const;
+	int size() const;
+	int count() const;
 
-			QObject *at(int index) const;
+	QObject * at(int index) const;
 
-			void insert(int index, QObject * object);
-			void append(QObject * object);
-			void prepend(QObject * object);
+	void insert(int index, QObject *object);
+	void append(QObject *object);
+	void prepend(QObject *object);
 
-			void removeFirst();
-			void removeLast();
-			void removeAt(int index);
+	void removeFirst();
+	void removeLast();
+	void removeAt(int index);
 
-			void clear();
+	void clear();
 
-		private:
-
-			const char *m_contentClass;
-			QList < QObject * >m_backend;
-		};
-}}
+private:
+	const char *m_contentClass;
+	QList<QObject *> m_backend;
+};
+}
+}
 #endif

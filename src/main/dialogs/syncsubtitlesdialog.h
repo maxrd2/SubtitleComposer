@@ -29,18 +29,19 @@
 class QRadioButton;
 
 namespace SubtitleComposer {
-	class SyncSubtitlesDialog:public SelectableSubtitleDialog {
-	Q_OBJECT public:
+class SyncSubtitlesDialog : public SelectableSubtitleDialog
+{
+	Q_OBJECT
 
-		explicit SyncSubtitlesDialog(QWidget * parent = 0);
+public:
+	explicit SyncSubtitlesDialog(QWidget *parent = 0);
 
-		bool adjustToReferenceSubtitle() const;
-		bool synchronizeToReferenceTimes() const;
+	bool adjustToReferenceSubtitle() const;
+	bool synchronizeToReferenceTimes() const;
 
-	private:
-
-		QRadioButton * m_adjustRadioButton;
-		QRadioButton *m_synchronizeRadioButton;
-	};
+private:
+	QRadioButton *m_adjustRadioButton;
+	QRadioButton *m_synchronizeRadioButton;
+};
 }
 #endif

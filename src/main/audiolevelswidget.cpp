@@ -31,28 +31,40 @@
 
 using namespace SubtitleComposer;
 
-AudioLevelsWidget::AudioLevelsWidget(QWidget * parent):
-QWidget(parent), m_subtitle(0), m_audiolevels(0), m_lowerPosition(0), m_playingPosition(5000), m_upperPosition(10000), m_regions(0), m_points(0), m_playingX(-1)
-{
-}
+AudioLevelsWidget::AudioLevelsWidget(QWidget *parent) :
+	QWidget(parent),
+	m_subtitle(0),
+	m_audiolevels(0),
+	m_lowerPosition(0),
+	m_playingPosition(5000),
+	m_upperPosition(10000),
+	m_regions(0),
+	m_points(0),
+	m_playingX(-1)
+{}
 
 AudioLevelsWidget::~AudioLevelsWidget()
 {
-	delete[]m_regions;
-	delete[]m_points;
+	delete[] m_regions;
+	delete[] m_points;
 }
 
-void AudioLevelsWidget::loadConfig()
+void
+AudioLevelsWidget::loadConfig()
+{}
+
+void
+AudioLevelsWidget::saveConfig()
+{}
+
+Time
+AudioLevelsWidget::windowSize() const
 {
-}
-
-void AudioLevelsWidget::saveConfig()
-{
-}
-
-Time AudioLevelsWidget::windowSize() const {
 	return m_upperPosition - m_lowerPosition;
-} void AudioLevelsWidget::setWindowSize(const Time & size)
+}
+
+void
+AudioLevelsWidget::setWindowSize(const Time &size)
 {
 	if(size != windowSize()) {
 		m_upperPosition = m_lowerPosition + size;
@@ -62,16 +74,18 @@ Time AudioLevelsWidget::windowSize() const {
 	}
 }
 
-void AudioLevelsWidget::setSubtitle(Subtitle * subtitle)
+void
+AudioLevelsWidget::setSubtitle(Subtitle *subtitle)
 {
 	m_subtitle = subtitle;
 }
 
-void AudioLevelsWidget::setAudioLevels(AudioLevels * audiolevels)
+void
+AudioLevelsWidget::setAudioLevels(AudioLevels *audiolevels)
 {
-	delete[]m_regions;
+	delete[] m_regions;
 	m_regions = 0;
-	delete[]m_points;
+	delete[] m_points;
 	m_points = 0;
 	m_playingX = -1;
 
@@ -91,7 +105,8 @@ void AudioLevelsWidget::setAudioLevels(AudioLevels * audiolevels)
 	update();
 }
 
-void AudioLevelsWidget::paintEvent(QPaintEvent * e)
+void
+AudioLevelsWidget::paintEvent(QPaintEvent *e)
 {
 	QPainter painter(this);
 
@@ -107,8 +122,8 @@ void AudioLevelsWidget::paintEvent(QPaintEvent * e)
 
 	for(unsigned channel = 0; channel < m_audiolevels->channelsCount(); ++channel) {
 		/*  painter.setClipRegion( m_regions[channel] );
-		painter.fillRect( rect, Qt::red );
-		painter.setClipping( false ); */
+		   painter.fillRect( rect, Qt::red );
+		   painter.setClipping( false ); */
 
 		painter.setPen(QPen(Qt::green, 2, Qt::SolidLine));
 		const unsigned size = m_points[channel].size();
@@ -123,7 +138,8 @@ void AudioLevelsWidget::paintEvent(QPaintEvent * e)
 		painter.drawLine(m_playingX, 0, m_playingX, height());
 }
 
-void AudioLevelsWidget::resizeEvent(QResizeEvent * e)
+void
+AudioLevelsWidget::resizeEvent(QResizeEvent *e)
 {
 	QWidget::resizeEvent(e);
 
@@ -133,7 +149,8 @@ void AudioLevelsWidget::resizeEvent(QResizeEvent * e)
 	}
 }
 
-void AudioLevelsWidget::onPlayerPositionChanged(double seconds)
+void
+AudioLevelsWidget::onPlayerPositionChanged(double seconds)
 {
 	Time playingPosition;
 	playingPosition.setSecondsTime(seconds);
@@ -147,7 +164,7 @@ void AudioLevelsWidget::onPlayerPositionChanged(double seconds)
 		Time windowSize = this->windowSize();
 
 		if(m_playingPosition > m_upperPosition) {
-			m_lowerPosition = m_playingPosition - 2000;	// 2000 can't be harcoded (must be relative to windowSize)
+			m_lowerPosition = m_playingPosition - 2000;     // 2000 can't be harcoded (must be relative to windowSize)
 			m_upperPosition = m_lowerPosition + windowSize;
 			rebuild = true;
 		} else if(m_playingPosition < m_lowerPosition) {
@@ -165,9 +182,10 @@ void AudioLevelsWidget::onPlayerPositionChanged(double seconds)
 	}
 }
 
-#define ABS( x ) ((x) >= 0 ? (-x) : (x))
+#define ABS(x) ((x) >= 0 ? (-x) : (x))
 
-void AudioLevelsWidget::rebuildRegions()
+void
+AudioLevelsWidget::rebuildRegions()
 {
 	const unsigned lowerSample = m_audiolevels->sampleForPosition(m_lowerPosition);
 	const unsigned upperSample = m_audiolevels->sampleForPosition(m_upperPosition);
@@ -195,8 +213,7 @@ void AudioLevelsWidget::rebuildRegions()
 
 			m_regions[channel] = QRegion(regionPoints);
 		}
-	} else						// samples >= 2
-	{
+	} else {                                        // samples >= 2
 		const unsigned samples = upperSample - lowerSample + 1;
 		const double stepX = width / samples;
 
@@ -222,6 +239,5 @@ void AudioLevelsWidget::rebuildRegions()
 		}
 	}
 }
-
 
 #include "audiolevelswidget.moc"

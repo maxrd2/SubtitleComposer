@@ -31,14 +31,15 @@ class QCheckBox;
 class KPushButton;
 
 namespace SubtitleComposer {
-	class ClearErrorsDialog:public ActionWithErrorTargetsDialog {
-	Q_OBJECT public:
+class ClearErrorsDialog : public ActionWithErrorTargetsDialog
+{
+	Q_OBJECT
 
-		ClearErrorsDialog(QWidget * parent = 0);
+public:
+	ClearErrorsDialog(QWidget *parent = 0);
 
-	protected:
-
-		virtual void setTranslationMode(bool value);
-	};
+protected:
+	virtual void setTranslationMode(bool value);
+};
 }
 #endif

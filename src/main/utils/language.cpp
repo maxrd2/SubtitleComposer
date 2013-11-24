@@ -27,19 +27,21 @@
 
 using namespace SubtitleComposer;
 
-const QList < Language::Value > &Language::all()
+const QList<Language::Value> &
+Language::all()
 {
-	static QList < Value > languages;
+	static QList<Value> languages;
 	if(languages.empty()) {
 		for(int index = Auto; index < SIZE; ++index)
-			languages << (Value) index;
+			languages << (Value)index;
 	}
 	return languages;
 }
 
-const QList < Language::Value > &Language::input()
+const QList<Language::Value> &
+Language::input()
 {
-	static QList < Value > inputLanguages;
+	static QList<Value> inputLanguages;
 	if(inputLanguages.empty()) {
 		inputLanguages = all();
 		inputLanguages.removeAll(ChineseT);
@@ -47,9 +49,10 @@ const QList < Language::Value > &Language::input()
 	return inputLanguages;
 }
 
-const QList < Language::Value > &Language::output()
+const QList<Language::Value> &
+Language::output()
 {
-	static QList < Value > outputLanguages;
+	static QList<Value> outputLanguages;
 	if(outputLanguages.empty()) {
 		outputLanguages = all();
 		outputLanguages.removeAll(Auto);
@@ -57,18 +60,20 @@ const QList < Language::Value > &Language::output()
 	return outputLanguages;
 }
 
-Language::Value Language::fromCode(const QString & code)
+Language::Value
+Language::fromCode(const QString &code)
 {
-	for(QList < Value >::ConstIterator it = all().begin(), end = all().end(); it != end; ++it) {
+	for(QList<Value>::ConstIterator it = all().begin(), end = all().end(); it != end; ++it) {
 		if(Language::code(*it) == code)
 			return *it;
 	}
 	return INVALID;
 }
 
-const QString & Language::code(Language::Value language)
+const QString &
+Language::code(Language::Value language)
 {
-	static QMap < Value, QString > codes;
+	static QMap<Value, QString> codes;
 	static QString notFound;
 
 	if(codes.empty()) {
@@ -114,7 +119,8 @@ const QString & Language::code(Language::Value language)
 	return codes.contains(language) ? codes[language] : notFound;
 }
 
-QString Language::name(Language::Value language)
+QString
+Language::name(Language::Value language)
 {
 	switch(language) {
 	case Auto:
@@ -123,7 +129,7 @@ QString Language::name(Language::Value language)
 		return KGlobal::locale()->languageCodeToName("zh_CN");
 	case ChineseT:
 		return KGlobal::locale()->languageCodeToName("zh_TW");
-		//case Filipino:        return KGlobal::locale()->languageCodeToName( "tl" );
+	// case Filipino:        return KGlobal::locale()->languageCodeToName( "tl" );
 	case Filipino:
 		return i18nc("Official language of the Philippines, aka Filipino", "Tagalog");
 	case Hebrew:
@@ -135,10 +141,11 @@ QString Language::name(Language::Value language)
 	}
 }
 
-QString Language::flagPath(Value language)
+QString
+Language::flagPath(Value language)
 {
 	static QStringList localesDirs = KGlobal::dirs()->findDirs("locale", "l10n");
-	static QString localeDir = localesDirs.isEmpty()? QString() : localesDirs.first();
+	static QString localeDir = localesDirs.isEmpty() ? QString() : localesDirs.first();
 
 	QString localeCode;
 
@@ -262,26 +269,29 @@ QString Language::flagPath(Value language)
 	return QFile::exists(flagPath) ? flagPath : QString();
 }
 
-QStringList Language::codes(const QList < Language::Value > &languages)
+QStringList
+Language::codes(const QList<Language::Value> &languages)
 {
 	QStringList codes;
-	for(QList < Value >::ConstIterator it = languages.begin(), end = languages.end(); it != end; ++it)
+	for(QList<Value>::ConstIterator it = languages.begin(), end = languages.end(); it != end; ++it)
 		codes << code(*it);
 	return codes;
 }
 
-QStringList Language::names(const QList < Language::Value > &languages)
+QStringList
+Language::names(const QList<Language::Value> &languages)
 {
 	QStringList names;
-	for(QList < Value >::ConstIterator it = languages.begin(), end = languages.end(); it != end; ++it)
+	for(QList<Value>::ConstIterator it = languages.begin(), end = languages.end(); it != end; ++it)
 		names << name(*it);
 	return names;
 }
 
-QStringList Language::flagPaths(const QList < Language::Value > &languages)
+QStringList
+Language::flagPaths(const QList<Language::Value> &languages)
 {
 	QStringList flagPaths;
-	for(QList < Value >::ConstIterator it = languages.begin(), end = languages.end(); it != end; ++it)
+	for(QList<Value>::ConstIterator it = languages.begin(), end = languages.end(); it != end; ++it)
 		flagPaths << flagPath(*it);
 	return flagPaths;
 }

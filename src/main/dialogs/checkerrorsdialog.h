@@ -29,22 +29,22 @@
 class QCheckBox;
 
 namespace SubtitleComposer {
-	class CheckErrorsDialog:public ActionWithErrorTargetsDialog {
-	Q_OBJECT public:
+class CheckErrorsDialog : public ActionWithErrorTargetsDialog
+{
+	Q_OBJECT
 
-		CheckErrorsDialog(QWidget * parent = 0);
+public:
+	CheckErrorsDialog(QWidget *parent = 0);
 
-		bool clearOtherErrors() const;
-		bool clearMarks() const;
+	bool clearOtherErrors() const;
+	bool clearMarks() const;
 
-	protected:
+protected:
+	virtual void setTranslationMode(bool value);
 
-		virtual void setTranslationMode(bool value);
-
-	private:
-
-		QCheckBox * m_clearOtherErrorsCheckBox;
-		QCheckBox *m_clearMarksCheckBox;
-	};
+private:
+	QCheckBox *m_clearOtherErrorsCheckBox;
+	QCheckBox *m_clearMarksCheckBox;
+};
 }
 #endif

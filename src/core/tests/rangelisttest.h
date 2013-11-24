@@ -26,8 +26,11 @@
 
 #include <QtCore/QObject>
 
-class RangeListTest:public QObject {
-	Q_OBJECT private slots:void testConstructors();
+class RangeListTest : public QObject
+{
+	Q_OBJECT
+private slots:
+	void testConstructors();
 	void testJoinAndTrim();
 };
 

@@ -27,10 +27,10 @@
 #include "actionwithtargetdialog.h"
 
 namespace SubtitleComposer {
-	class RemoveLinesDialog:public ActionWithTextsTargetDialog {
-	public:
-
-		RemoveLinesDialog(QWidget * parent = 0);
-	};
+class RemoveLinesDialog : public ActionWithTextsTargetDialog
+{
+public:
+	RemoveLinesDialog(QWidget *parent = 0);
+};
 }
 #endif

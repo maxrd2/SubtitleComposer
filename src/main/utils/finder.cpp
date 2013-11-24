@@ -34,8 +34,14 @@
 
 using namespace SubtitleComposer;
 
-Finder::Finder(QWidget * parent):
-QObject(parent), m_subtitle(0), m_translationMode(false), m_feedingPrimary(false), m_find(0), m_iterator(0), m_dataLine(0)
+Finder::Finder(QWidget *parent) :
+	QObject(parent),
+	m_subtitle(0),
+	m_translationMode(false),
+	m_feedingPrimary(false),
+	m_find(0),
+	m_iterator(0),
+	m_dataLine(0)
 {
 	m_dialog = new KFindDialog(parent);
 	m_dialog->setHasSelection(true);
@@ -75,7 +81,8 @@ Finder::~Finder()
 	invalidate();
 }
 
-void Finder::invalidate()
+void
+Finder::invalidate()
 {
 	delete m_find;
 	m_find = 0;
@@ -96,19 +103,22 @@ void Finder::invalidate()
 	}
 }
 
-QWidget *Finder::parentWidget()
+QWidget *
+Finder::parentWidget()
 {
-	return static_cast < QWidget * >(parent());
+	return static_cast<QWidget *>(parent());
 }
 
-void Finder::setSubtitle(Subtitle * subtitle)
+void
+Finder::setSubtitle(Subtitle *subtitle)
 {
 	m_subtitle = subtitle;
 
 	invalidate();
 }
 
-void Finder::setTranslationMode(bool enabled)
+void
+Finder::setTranslationMode(bool enabled)
 {
 	if(m_translationMode != enabled) {
 		m_translationMode = enabled;
@@ -122,7 +132,8 @@ void Finder::setTranslationMode(bool enabled)
 	}
 }
 
-void Finder::find(const RangeList & selectionRanges, int currentIndex, const QString & text, bool findBackwards)
+void
+Finder::find(const RangeList &selectionRanges, int currentIndex, const QString &text, bool findBackwards)
 {
 	if(!m_subtitle || !m_subtitle->linesCount())
 		return;
@@ -168,7 +179,8 @@ void Finder::find(const RangeList & selectionRanges, int currentIndex, const QSt
 	advance();
 }
 
-bool Finder::findNext()
+bool
+Finder::findNext()
 {
 	if(!m_iterator)
 		return false;
@@ -179,7 +191,8 @@ bool Finder::findNext()
 	return true;
 }
 
-bool Finder::findPrevious()
+bool
+Finder::findPrevious()
 {
 	if(!m_iterator)
 		return false;
@@ -190,7 +203,8 @@ bool Finder::findPrevious()
 	return true;
 }
 
-void Finder::advance()
+void
+Finder::advance()
 {
 	KFind::Result res = KFind::NoMatch;
 
@@ -213,9 +227,8 @@ void Finder::advance()
 				} else if(m_targetRadioButtons[SubtitleLine::Secondary]->isChecked()) {
 					m_feedingPrimary = false;
 					m_find->setData(m_dataLine->secondaryText().string());
-				} else			// m_translationMode && m_targetRadioButtons[SubtitleLine::Both]->isChecked()
-				{
-					m_feedingPrimary = !m_feedingPrimary;	// we alternate the source of data
+				} else {                // m_translationMode && m_targetRadioButtons[SubtitleLine::Both]->isChecked()
+					m_feedingPrimary = !m_feedingPrimary;   // we alternate the source of data
 					m_find->setData((m_feedingPrimary ? m_dataLine->primaryText() : m_dataLine->secondaryText()).string());
 				}
 
@@ -235,9 +248,10 @@ void Finder::advance()
 
 			// special case: we searched all lines and didn't found any matches
 			if(!m_instancesFound && (m_allSearchedIndex == m_iterator->index() || (backwards ? (m_allSearchedIndex == m_iterator->lastIndex() && m_iterator->index() == SubtitleIterator::BehindFirst) : (m_allSearchedIndex == m_iterator->firstIndex() && m_iterator->index() == SubtitleIterator::AfterLast))
-			)) {
+			                         ))
+			{
 				KMessageBox::sorry(parentWidget(), i18n("No instances of '%1' found!", m_find->pattern()), i18n("Find")
-					);
+				                   );
 
 				invalidate();
 
@@ -251,34 +265,37 @@ void Finder::advance()
 					m_iterator->toFirst();
 
 				if(KMessageBox::warningContinueCancel(parentWidget(), backwards ? (selection ? i18n("Beginning of selection reached.\nContinue from the end?") : i18n("Beginning of subtitle reached.\nContinue from the end?")) : (selection ? i18n("End of selection reached.\nContinue from the beginning?") : i18n("End of subtitle reached.\nContinue from the beginning?")), i18n("Find")
-				) != KMessageBox::Continue)
+				                                      ) != KMessageBox::Continue)
 					break;
 			}
 		}
-	}
-	while(res == KFind::NoMatch);
+	} while(res == KFind::NoMatch);
 }
 
-void Finder::onHighlight(const QString &, int matchingIndex, int matchedLength)
+void
+Finder::onHighlight(const QString &, int matchingIndex, int matchedLength)
 {
 	m_instancesFound = true;
 
 	emit found(m_iterator->current(), m_feedingPrimary, matchingIndex, matchingIndex + matchedLength - 1);
 }
 
-void Finder::onLinePrimaryTextChanged(const SString & text)
+void
+Finder::onLinePrimaryTextChanged(const SString &text)
 {
 	if(m_feedingPrimary)
 		m_find->setData(text.string());
 }
 
-void Finder::onLineSecondaryTextChanged(const SString & text)
+void
+Finder::onLineSecondaryTextChanged(const SString &text)
 {
 	if(!m_feedingPrimary)
 		m_find->setData(text.string());
 }
 
-void Finder::onIteratorSynchronized(int firstIndex, int lastIndex, bool inserted)
+void
+Finder::onIteratorSynchronized(int firstIndex, int lastIndex, bool inserted)
 {
 	if(m_iterator->index() == SubtitleIterator::Invalid) {
 		invalidate();
@@ -290,8 +307,7 @@ void Finder::onIteratorSynchronized(int firstIndex, int lastIndex, bool inserted
 		if(m_allSearchedIndex >= firstIndex)
 			m_allSearchedIndex += linesCount;
 	} else {
-		if(m_dataLine->index() < 0)	// m_dataLine was removed
-		{
+		if(m_dataLine->index() < 0) {   // m_dataLine was removed
 			// work around missing "invalidateData" method in KFind
 			long options = m_find->options();
 			QString pattern = m_find->pattern();
@@ -303,7 +319,7 @@ void Finder::onIteratorSynchronized(int firstIndex, int lastIndex, bool inserted
 
 		if(m_allSearchedIndex > lastIndex)
 			m_allSearchedIndex -= linesCount;
-		else if(m_allSearchedIndex >= firstIndex && m_allSearchedIndex <= lastIndex)	// was one of the removed lines
+		else if(m_allSearchedIndex >= firstIndex && m_allSearchedIndex <= lastIndex) // was one of the removed lines
 			m_allSearchedIndex = m_iterator->index();
 	}
 }

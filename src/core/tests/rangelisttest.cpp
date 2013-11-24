@@ -20,12 +20,13 @@
 #include "rangelisttest.h"
 #include "../rangelist.h"
 
-#include <QtTest>				// krazy:exclude=c++/includes
-#include <QtCore>				// krazy:exclude=c++/includes
+#include <QtTest>                               // krazy:exclude=c++/includes
+#include <QtCore>                               // krazy:exclude=c++/includes
 
 using namespace SubtitleComposer;
 
-void RangeListTest::testConstructors()
+void
+RangeListTest::testConstructors()
 {
 	RangeList ranges;
 	QVERIFY(ranges.isEmpty() && ranges.rangesCount() == 0);
@@ -58,7 +59,8 @@ void RangeListTest::testConstructors()
 	QVERIFY(*(complementRangesIt++) == Range(10, Range::MaxIndex));
 }
 
-void RangeListTest::testJoinAndTrim()
+void
+RangeListTest::testJoinAndTrim()
 {
 	RangeList ranges;
 

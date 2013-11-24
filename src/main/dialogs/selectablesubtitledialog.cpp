@@ -34,11 +34,12 @@
 
 using namespace SubtitleComposer;
 
-SelectableSubtitleDialog::SelectableSubtitleDialog(const QString & title, QWidget * parent):ActionWithTargetDialog(title, parent)
-{
-}
+SelectableSubtitleDialog::SelectableSubtitleDialog(const QString &title, QWidget *parent) :
+	ActionWithTargetDialog(title, parent)
+{}
 
-QGroupBox *SelectableSubtitleDialog::createSubtitleGroupBox(const QString & title, bool addToLayout)
+QGroupBox *
+SelectableSubtitleDialog::createSubtitleGroupBox(const QString &title, bool addToLayout)
 {
 	m_subtitleGroupBox = createGroupBox(title, addToLayout);
 
@@ -84,10 +85,10 @@ QGroupBox *SelectableSubtitleDialog::createSubtitleGroupBox(const QString & titl
 	return m_subtitleGroupBox;
 }
 
-void SelectableSubtitleDialog::selectSubtitle()
+void
+SelectableSubtitleDialog::selectSubtitle()
 {
-	OpenSubtitleDialog openDlg(true, subtitleUrl().isEmpty()? app()->lastSubtitleDirectory().prettyUrl() : subtitleUrl().prettyUrl(), subtitleEncoding()
-		);
+	OpenSubtitleDialog openDlg(true, subtitleUrl().isEmpty() ? app()->lastSubtitleDirectory().prettyUrl() : subtitleUrl().prettyUrl(), subtitleEncoding());
 
 	if(openDlg.exec() == QDialog::Accepted) {
 		m_subtitleUrlLineEdit->setText(openDlg.selectedFile());
@@ -98,12 +99,19 @@ void SelectableSubtitleDialog::selectSubtitle()
 	}
 }
 
-KUrl SelectableSubtitleDialog::subtitleUrl() const {
+KUrl
+SelectableSubtitleDialog::subtitleUrl() const
+{
 	return KUrl(m_subtitleUrlLineEdit->text());
-} QString SelectableSubtitleDialog::subtitleEncoding() const {
+}
+
+QString
+SelectableSubtitleDialog::subtitleEncoding() const
+{
 	if(m_subtitleEncodingComboBox->currentIndex() == 0)
 		return QString();
 	else
 		return m_subtitleEncodingComboBox->currentText();
 }
+
 #include "selectablesubtitledialog.moc"

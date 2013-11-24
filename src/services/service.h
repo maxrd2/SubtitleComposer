@@ -30,109 +30,140 @@
 #include <QtGui/QWidget>
 
 namespace SubtitleComposer {
-	class ServiceBackend;
+class ServiceBackend;
 
-	class Service:public QObject {
-	Q_OBJECT public:
+class Service : public QObject
+{
+	Q_OBJECT
 
-		typedef enum {
-			Uninitialized = 0,
-			Initialized,
-		} State;
+public:
+	typedef enum {
+		Uninitialized = 0,
+		Initialized,
+	} State;
 
-			/** attempts to initialize the backend defined by prefBackendName; if that fails, attempts to initialize any other.
-				returns false if there was already an initialized backend or none could be initialized (true otherwise).
-			*/
-		bool initialize(QWidget * widgetParent, const QString & prefBackendName = QString());
+	/**
+	 * @brief initialize - attempts to initialize the backend defined by prefBackendName; if that fails, attempts to initialize any other.
+	 * @param widgetParent
+	 * @param prefBackendName
+	 * @return false if there was already an initialized backend or none could be initialized; true otherwise
+	 */
+	bool initialize(QWidget *widgetParent, const QString &prefBackendName = QString());
 
-			/** finalizes the active backend and attempts to initialize the one defined by prefBackendName (or
-				the active one, if is not valid a valid name); if that fails, attempts to initialize any other.
-				returns false if there was no initialized backend or none could be initialized (true otherwise).
-			*/
-		bool reinitialize(const QString & prefBackendName = QString());
+	/**
+	 * @brief reinitialize - finalizes the active backend and attempts to initialize the one defined by
+	 *  prefBackendName (or the active one, if is not valid a valid name); if that fails, attempts to
+	 *  initialize any other.
+	 * @param prefBackendName
+	 * @return false if there was no initialized backend or none could be initialized; true otherwise
+	 */
+	bool reinitialize(const QString &prefBackendName = QString());
 
-			/** finalizes the active backend. */
-		void finalize();
+	/**
+	 * @brief finalize - finalizes the active backend
+	 */
+	void finalize();
 
-			/** services should provide a dummy backend (one that implements its operations as noops) so
-				that the application can act reasonably even in absence of (real) supported backends. */
-		virtual QString dummyBackendName() const = 0;
+	/**
+	 * @brief dummyBackendName - services should provide a dummy backend (one that implements its
+	 *  operations as noops) so that the application can act reasonably even in absence of (real)
+	 *  supported backends.
+	 * @return
+	 */
+	virtual QString dummyBackendName() const = 0;
 
-		QString activeBackendName() const;
-		QStringList backendNames() const;
+	QString activeBackendName() const;
+	QStringList backendNames() const;
 
-		inline bool isActiveBackendDummy() const;
+	inline bool isActiveBackendDummy() const;
 
-		inline ServiceBackend *backend(const QString & name) const;
-		inline ServiceBackend *activeBackend() const;
+	inline ServiceBackend * backend(const QString &name) const;
+	inline ServiceBackend * activeBackend() const;
 
-			/**
-			Indicates that the application is closing down and the backends shouldn't
-			rely on it for some things (such as processing events).
-			*/
-		bool isApplicationClosingDown() const;
+	/**
+	 * @brief isApplicationClosingDown - Indicates that the application is closing down and the backends
+	 *  shouldn't rely on it for some things (such as processing events).
+	 * @return
+	 */
+	bool isApplicationClosingDown() const;
 
-		inline int state() const;
-		inline bool isInitialized() const;
+	inline int state() const;
+	inline bool isInitialized() const;
 
-		public slots:
-			/**
-			Used to indicate the active backend that the application is closing down
-			*/
-		void setApplicationClosingDown();
+public slots:
+	/**
+	 * @brief setApplicationClosingDown - Used to indicate the active backend that the application is closing down
+	 */
+	void setApplicationClosingDown();
 
-		signals:void backendInitialized(ServiceBackend * serviceBackend);
-		void backendFinalized(ServiceBackend * serviceBackend);
+signals:
+	void backendInitialized(ServiceBackend *serviceBackend);
+	void backendFinalized(ServiceBackend *serviceBackend);
 
-	protected:
+protected:
+	Service();
+	virtual ~Service();
 
-		Service();
-		virtual ~ Service();
+	/**
+	 * @brief initializeBackend - attempts to initialize the backend, making it the active backend.
+	 * @param backend
+	 * @param widgetParent
+	 * @return true if backend is the active backend after the call; false if there was already another backend initialized
+	 */
+	virtual bool initializeBackend(ServiceBackend *backend, QWidget *widgetParent) = 0;
 
-			/** attempts to initialize the backend, making it the active backend.
-				returns true if backend is the active backend after the call.
-				if there was already another backend initialized returns false immediately.
-			*/
-		virtual bool initializeBackend(ServiceBackend * backend, QWidget * widgetParent) = 0;
+	/**
+	 * @brief finalizeBackend - finalizes the active backend, leaving no active backend.
+	 * @param backend
+	 * returns??? the previously initialized backend (or 0 if there was none)
+	 */
+	virtual void finalizeBackend(ServiceBackend *backend) = 0;
 
-			/** finalizes the active backend, leaving no active backend.
-				returns the previously initialized backend (or 0 if there was none). */
-		virtual void finalizeBackend(ServiceBackend * backend) = 0;
+	void addBackend(ServiceBackend *backend);
 
-		void addBackend(ServiceBackend * backend);
+private:
+	bool initializeBackendPrivate(ServiceBackend *backend);
 
-	private:
+	QMap<QString, ServiceBackend *> m_backends;
+	ServiceBackend *m_activeBackend;
+	QWidget *m_widgetParent;
 
-		bool initializeBackendPrivate(ServiceBackend * backend);
+	bool m_applicationClosingDown;
 
-		QMap < QString, ServiceBackend * >m_backends;
-		ServiceBackend *m_activeBackend;
-		QWidget *m_widgetParent;
+protected:
+	int m_state;
 
-		bool m_applicationClosingDown;
+	friend class ServiceBackend;
+};
 
-	protected:
+int
+Service::state() const
+{
+	return m_state;
+}
 
-		int m_state;
+bool
+Service::isInitialized() const
+{
+	return m_state >= Service::Initialized;
+}
 
-		friend class ServiceBackend;
-	};
+ServiceBackend *
+Service::activeBackend() const
+{
+	return m_activeBackend;
+}
 
+ServiceBackend *
+Service::backend(const QString &backendName) const
+{
+	return m_backends.contains(backendName) ? m_backends[backendName] : 0;
+}
 
-	int Service::state() const {
-		return m_state;
-	}
-	bool Service::isInitialized() const {
-		return m_state >= Service::Initialized;
-	}
-	ServiceBackend *Service::activeBackend() const {
-		return m_activeBackend;
-	}
-	ServiceBackend *Service::backend(const QString & backendName)const {
-		return m_backends.contains(backendName) ? m_backends[backendName] : 0;
-	}
-	bool Service::isActiveBackendDummy() const {
-		return activeBackendName() == dummyBackendName();
-	}
+bool
+Service::isActiveBackendDummy() const
+{
+	return activeBackendName() == dummyBackendName();
+}
 }
 #endif

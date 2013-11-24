@@ -31,7 +31,9 @@
 
 using namespace SubtitleComposer;
 
-AutoDurationsDialog::AutoDurationsDialog(unsigned charMillis, unsigned wordMillis, unsigned lineMillis, QWidget * parent):ActionWithTargetDialog(i18n("Set Automatic Durations"), parent), m_translationMode(false)
+AutoDurationsDialog::AutoDurationsDialog(unsigned charMillis, unsigned wordMillis, unsigned lineMillis, QWidget *parent) :
+	ActionWithTargetDialog(i18n("Set Automatic Durations"), parent),
+	m_translationMode(false)
 {
 	QGroupBox *settingsGroupBox = createGroupBox(i18nc("@title:group", "Settings"));
 
@@ -92,17 +94,38 @@ AutoDurationsDialog::AutoDurationsDialog(unsigned charMillis, unsigned wordMilli
 		calculationLayout->addWidget(m_calculationButtonGroup->button(index), index, 0);
 }
 
-unsigned AutoDurationsDialog::charMillis() const {
+unsigned
+AutoDurationsDialog::charMillis() const
+{
 	return m_charMillisSpinBox->value();
-} unsigned AutoDurationsDialog::wordMillis() const {
+}
+
+unsigned
+AutoDurationsDialog::wordMillis() const
+{
 	return m_wordMillisSpinBox->value();
-} unsigned AutoDurationsDialog::lineMillis() const {
+}
+
+unsigned
+AutoDurationsDialog::lineMillis() const
+{
 	return m_lineMillisSpinBox->value();
-} bool AutoDurationsDialog::preventOverlap() const {
+}
+
+bool
+AutoDurationsDialog::preventOverlap() const
+{
 	return m_preventOverlapCheckBox->isChecked();
-} bool AutoDurationsDialog::translationMode() const {
+}
+
+bool
+AutoDurationsDialog::translationMode() const
+{
 	return m_translationMode;
-} void AutoDurationsDialog::setTranslationMode(bool enabled)
+}
+
+void
+AutoDurationsDialog::setTranslationMode(bool enabled)
 {
 	if(m_translationMode != enabled) {
 		m_translationMode = enabled;
@@ -124,8 +147,9 @@ unsigned AutoDurationsDialog::charMillis() const {
 	}
 }
 
-Subtitle::TextTarget AutoDurationsDialog::calculationMode()const
+Subtitle::TextTarget
+AutoDurationsDialog::calculationMode() const
 {
 	int checkedId = m_calculationButtonGroup->checkedId();
-	return checkedId == -1 ? Subtitle::TextTargetSIZE : (Subtitle::TextTarget) checkedId;
+	return checkedId == -1 ? Subtitle::TextTargetSIZE : (Subtitle::TextTarget)checkedId;
 }

@@ -31,65 +31,76 @@
 #include <KUrl>
 
 namespace SubtitleComposer {
-	class AudioLevels:public QObject {
-	Q_OBJECT public:
+class AudioLevels : public QObject
+{
+	Q_OBJECT
 
-		AudioLevels();
-		virtual ~ AudioLevels();
+public:
+	AudioLevels();
+	virtual ~AudioLevels();
 
-		bool load(const KUrl & fileUrl);
-		bool loadFromMedia(const QString & mediaPath, unsigned streamIndex);
-		bool save(const KUrl & fileUrl, bool overwrite) const;
+	bool load(const KUrl &fileUrl);
+	bool loadFromMedia(const QString &mediaPath, unsigned streamIndex);
+	bool save(const KUrl &fileUrl, bool overwrite) const;
 
-		void reset();
+	void reset();
 
-		inline unsigned channelsCount() const {
-			return m_channelsCount;
-		};
+	inline unsigned channelsCount() const { return m_channelsCount; }
 
-		inline unsigned samplesCount() const	// in milliseconds
-		{
-			return m_samplesCount;
-		};
+	/**
+	 * @brief samplesCount
+	 * @return count of samples in miliseconds
+	 */
+	inline unsigned samplesCount() const { return m_samplesCount; }
 
-		inline unsigned samplesInterval() const	// in milliseconds
-		{
-			return m_samplesInterval;
-		};
+	/**
+	 * @brief samplesInterval
+	 * @return interval of samples in miliseconds
+	 */
+	inline unsigned samplesInterval() const { return m_samplesInterval; }
 
-		inline Time length() const	// in milliseconds
-		{
-			return m_samplesCount * m_samplesInterval;
-		};
+	/**
+	 * @brief length
+	 * @return total length in miliseconds
+	 */
+	inline Time length() const { return m_samplesCount * m_samplesInterval; }
 
-		/// warning!! no checks performed!
-		inline double dataBySample(unsigned channel, unsigned sample) const {
-			//return sample >= m_samplesCount ? 0 : m_samplesData[m_samplesCount*channel+sample];
-			return m_samplesData[m_samplesCount * channel + sample];
-		};
+	/**
+	 * @brief dataBySample - WARNING!! no checks performed!
+	 * @param channel
+	 * @param sample
+	 * @return
+	 */
+	inline double dataBySample(unsigned channel, unsigned sample) const
+	{
+		// return sample >= m_samplesCount ? 0 : m_samplesData[m_samplesCount*channel+sample];
+		return m_samplesData[m_samplesCount * channel + sample];
+	}
 
-		inline double dataByPosition(unsigned channel, const Time & position) const {
-			int dataIndex = m_samplesCount * channel + position.toMillis() / m_samplesInterval;
-			return dataIndex > m_lastDataIndex ? 0 : m_samplesData[dataIndex];
-		};
+	inline double dataByPosition(unsigned channel, const Time &position) const
+	{
+		int dataIndex = m_samplesCount * channel + position.toMillis() / m_samplesInterval;
+		return dataIndex > m_lastDataIndex ? 0 : m_samplesData[dataIndex];
+	}
 
-		inline unsigned sampleForPosition(const Time & position) const {
-			if(position > length())
-				return m_samplesCount - 1;
+	inline unsigned sampleForPosition(const Time &position) const
+	{
+		if(position > length())
+			return m_samplesCount - 1;
 
-			return position.toMillis() / m_samplesInterval;
-		};
+		return position.toMillis() / m_samplesInterval;
+	}
 
-		signals:void loadProgress(int percentage);
+signals:
+	void loadProgress(int percentage);
 
-	private:
-
-		unsigned m_channelsCount;
-		unsigned m_samplesInterval;
-		unsigned m_samplesCount;
-		double *m_samplesData;
-		int m_lastDataIndex;
-		KUrl m_mediaUrl;
-	};
+private:
+	unsigned m_channelsCount;
+	unsigned m_samplesInterval;
+	unsigned m_samplesCount;
+	double *m_samplesData;
+	int m_lastDataIndex;
+	KUrl m_mediaUrl;
+};
 }
 #endif

@@ -21,12 +21,14 @@
 
 using namespace SubtitleComposer;
 
-Time::Time(long mseconds):m_mseconds(0)
+Time::Time(long mseconds) :
+	m_mseconds(0)
 {
 	operator=(mseconds);
 }
 
-Time::Time(int hours, int minutes, int seconds, int mseconds):m_mseconds(0)
+Time::Time(int hours, int minutes, int seconds, int mseconds) :
+	m_mseconds(0)
 {
 	setHours(hours);
 	setMinutes(minutes);
@@ -34,21 +36,25 @@ Time::Time(int hours, int minutes, int seconds, int mseconds):m_mseconds(0)
 	setMseconds(mseconds);
 }
 
-Time::Time(const Time & time):m_mseconds(time.m_mseconds)
-{
-}
+Time::Time(const Time &time) :
+	m_mseconds(time.m_mseconds)
+{}
 
-void Time::setSecondsTime(double seconds)
+void
+Time::setSecondsTime(double seconds)
 {
 	operator=((long)(seconds * 1000 + 0.5));
 }
 
-void Time::setMsecondsTime(long mseconds)
+void
+Time::setMsecondsTime(long mseconds)
 {
 	operator=(mseconds);
 }
 
-QString Time::toString(bool showMillis) const {
+QString
+Time::toString(bool showMillis) const
+{
 	static QString builder;
 
 	int hours = m_mseconds / 3600000;
@@ -61,11 +67,14 @@ QString Time::toString(bool showMillis) const {
 		return builder.sprintf("%02d:%02d:%02d", hours, minutes, seconds);
 }
 
-int Time::hours() const {
+int
+Time::hours() const
+{
 	return m_mseconds / 3600000;
 }
 
-bool Time::setHours(int hours)
+bool
+Time::setHours(int hours)
 {
 	if(hours < 0 || hours > 23)
 		return false;
@@ -75,11 +84,14 @@ bool Time::setHours(int hours)
 	return true;
 }
 
-int Time::minutes() const {
+int
+Time::minutes() const
+{
 	return (m_mseconds % 3600000) / 60000;
 }
 
-bool Time::setMinutes(int minutes)
+bool
+Time::setMinutes(int minutes)
 {
 	if(minutes < 0 || minutes > 59)
 		return false;
@@ -89,11 +101,14 @@ bool Time::setMinutes(int minutes)
 	return true;
 }
 
-int Time::seconds() const {
+int
+Time::seconds() const
+{
 	return (m_mseconds % 60000) / 1000;
 }
 
-bool Time::setSeconds(int seconds)
+bool
+Time::setSeconds(int seconds)
 {
 	if(seconds < 0 || seconds > 59)
 		return false;
@@ -103,11 +118,14 @@ bool Time::setSeconds(int seconds)
 	return true;
 }
 
-int Time::mseconds() const {
+int
+Time::mseconds() const
+{
 	return m_mseconds % 1000;
 }
 
-bool Time::setMseconds(int mseconds)
+bool
+Time::setMseconds(int mseconds)
 {
 	if(mseconds < 0 || mseconds > 999)
 		return false;
@@ -117,25 +135,32 @@ bool Time::setMseconds(int mseconds)
 	return true;
 }
 
-void Time::shift(long mseconds)
+void
+Time::shift(long mseconds)
 {
 	operator=(m_mseconds + mseconds);
 }
 
-Time Time::shifted(long mseconds) const {
+Time
+Time::shifted(long mseconds) const
+{
 	return Time(m_mseconds + mseconds);
 }
 
-void Time::adjust(double shiftMseconds, double scaleFactor)
+void
+Time::adjust(double shiftMseconds, double scaleFactor)
 {
 	operator=((long)(shiftMseconds + m_mseconds * scaleFactor + 0.5));
 }
 
-Time Time::adjusted(double shiftMseconds, double scaleFactor) const {
+Time
+Time::adjusted(double shiftMseconds, double scaleFactor) const
+{
 	return Time((long)(shiftMseconds + m_mseconds * scaleFactor + 0.5));
 }
 
-Time & Time::operator=(const Time & time)
+Time &
+Time::operator=(const Time &time)
 {
 	if(this == &time)
 		return *this;
@@ -147,7 +172,8 @@ Time & Time::operator=(const Time & time)
 	return *this;
 }
 
-Time & Time::operator=(long mseconds)
+Time &
+Time::operator=(long mseconds)
 {
 	if(mseconds < 0)
 		m_mseconds = 0;
@@ -161,89 +187,126 @@ Time & Time::operator=(long mseconds)
 	return *this;
 }
 
-Time Time::operator+(const Time & time) const {
+Time
+Time::operator+(const Time &time) const
+{
 	return Time(m_mseconds + time.m_mseconds);
 }
-Time Time::operator+(long mseconds) const {
+
+Time
+Time::operator+(long mseconds) const
+{
 	return Time(m_mseconds + mseconds);
 }
-Time & Time::operator+=(const Time & time)
+
+Time &
+Time::operator+=(const Time &time)
 {
 	operator=(m_mseconds + time.m_mseconds);
 	return *this;
 }
 
-Time & Time::operator+=(long mseconds)
+Time &
+Time::operator+=(long mseconds)
 {
 	operator=(m_mseconds + mseconds);
 	return *this;
 }
 
-Time Time::operator-(const Time & time) const {
+Time
+Time::operator-(const Time &time) const
+{
 	return Time(m_mseconds - time.m_mseconds);
 }
 
-Time Time::operator-(long mseconds) const {
+Time
+Time::operator-(long mseconds) const
+{
 	return Time(m_mseconds - mseconds);
 }
 
-Time & Time::operator-=(const Time & time)
+Time &
+Time::operator-=(const Time &time)
 {
 	operator=(m_mseconds - time.m_mseconds);
 	return *this;
 }
 
-Time & Time::operator-=(long mseconds)
+Time &
+Time::operator-=(long mseconds)
 {
 	operator=(m_mseconds - mseconds);
 	return *this;
 }
 
-
-bool Time::operator==(const Time & time) const {
+bool
+Time::operator==(const Time &time) const
+{
 	return m_mseconds == time.m_mseconds;
 }
 
-bool Time::operator==(long mseconds) const {
+bool
+Time::operator==(long mseconds) const
+{
 	return m_mseconds == mseconds;
 }
 
-bool Time::operator!=(const Time & time) const {
+bool
+Time::operator!=(const Time &time) const
+{
 	return m_mseconds != time.m_mseconds;
 }
 
-bool Time::operator!=(long mseconds) const {
+bool
+Time::operator!=(long mseconds) const
+{
 	return m_mseconds != mseconds;
 }
 
-bool Time::operator<(const Time & time) const {
+bool
+Time::operator<(const Time &time) const
+{
 	return m_mseconds < time.m_mseconds;
 }
 
-bool Time::operator<(long mseconds) const {
+bool
+Time::operator<(long mseconds) const
+{
 	return m_mseconds < mseconds;
 }
 
-bool Time::operator<=(const Time & time) const {
+bool
+Time::operator<=(const Time &time) const
+{
 	return m_mseconds <= time.m_mseconds;
 }
 
-bool Time::operator<=(long mseconds) const {
+bool
+Time::operator<=(long mseconds) const
+{
 	return m_mseconds <= mseconds;
 }
 
-bool Time::operator>(const Time & time) const {
+bool
+Time::operator>(const Time &time) const
+{
 	return m_mseconds > time.m_mseconds;
 }
 
-bool Time::operator>(long mseconds) const {
+bool
+Time::operator>(long mseconds) const
+{
 	return m_mseconds > mseconds;
 }
 
-bool Time::operator>=(const Time & time) const {
+bool
+Time::operator>=(const Time &time) const
+{
 	return m_mseconds >= time.m_mseconds;
 }
 
-bool Time::operator>=(long mseconds) const {
+bool
+Time::operator>=(long mseconds) const
+{
 	return m_mseconds >= mseconds;
 }

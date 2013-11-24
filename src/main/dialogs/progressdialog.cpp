@@ -28,14 +28,14 @@
 
 using namespace SubtitleComposer;
 
-ProgressDialog::ProgressDialog(const QString & caption, const QString & description, bool allowCancel, QWidget * parent):
-//  KDialog( parent, Qt::FramelessWindowHint )
-KDialog(parent, Qt::WindowTitleHint)
+ProgressDialog::ProgressDialog(const QString &caption, const QString &description, bool allowCancel, QWidget *parent) :
+//  KDialog(parent, Qt::FramelessWindowHint)
+	KDialog(parent, Qt::WindowTitleHint)
 {
 	setCaption(caption);
 
 	setModal(true);
-	setButtons(allowCancel ? KDialog::Cancel : (QFlags < KDialog::ButtonCode >) 0);
+	setButtons(allowCancel ? KDialog::Cancel : (QFlags<KDialog::ButtonCode>) 0);
 
 	QWidget *mainWidget = new QWidget(this);
 	setMainWidget(mainWidget);
@@ -57,52 +57,80 @@ KDialog(parent, Qt::WindowTitleHint)
 	resize(QSize(300, 10));
 }
 
-void ProgressDialog::closeEvent(QCloseEvent * event)
+void
+ProgressDialog::closeEvent(QCloseEvent *event)
 {
 	event->ignore();
 }
 
-QString ProgressDialog::description() const {
+QString
+ProgressDialog::description() const
+{
 	return m_label->text();
-} void ProgressDialog::setDescription(const QString & description)
+}
+
+void
+ProgressDialog::setDescription(const QString &description)
 {
 	m_label->setText(description);
 }
 
-int ProgressDialog::value() const {
+int
+ProgressDialog::value() const
+{
 	return m_progressBar->value();
-} void ProgressDialog::setValue(int value)
+}
+
+void
+ProgressDialog::setValue(int value)
 {
 	m_progressBar->setValue(value);
 }
 
-int ProgressDialog::minimum() const {
+int
+ProgressDialog::minimum() const
+{
 	return m_progressBar->minimum();
-} void ProgressDialog::setMinimum(int minimum)
+}
+
+void
+ProgressDialog::setMinimum(int minimum)
 {
 	m_progressBar->setMinimum(minimum);
 }
 
-void ProgressDialog::incrementMinimum(int delta)
+void
+ProgressDialog::incrementMinimum(int delta)
 {
 	m_progressBar->setMinimum(m_progressBar->minimum() + delta);
 }
 
-int ProgressDialog::maximum() const {
+int
+ProgressDialog::maximum() const
+{
 	return m_progressBar->maximum();
-} void ProgressDialog::setMaximum(int maximum)
+}
+
+void
+ProgressDialog::setMaximum(int maximum)
 {
 	m_progressBar->setMaximum(maximum);
 }
 
-void ProgressDialog::incrementMaximum(int delta)
+void
+ProgressDialog::incrementMaximum(int delta)
 {
 	m_progressBar->setMaximum(m_progressBar->maximum() + delta);
 }
 
-bool ProgressDialog::isCancellable() const {
+bool
+ProgressDialog::isCancellable() const
+{
 	return isButtonEnabled(KDialog::Cancel);
-} void ProgressDialog::setCancellable(bool cancellable)
+}
+
+void
+ProgressDialog::setCancellable(bool cancellable)
 {
 	enableButton(KDialog::Cancel, cancellable);
 }

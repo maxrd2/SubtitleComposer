@@ -37,14 +37,23 @@
 
 using namespace SubtitleComposer;
 
-#define EVENT_PLAYBACK_FINISHED		 (QEvent::User + 1)
-#define EVENT_CHANNELS_CHANGED		 (QEvent::User + 2)
-#define EVENT_FRAME_FORMAT_CHANGED	 (QEvent::User + 3)
+#define EVENT_PLAYBACK_FINISHED (QEvent::User + 1)
+#define EVENT_CHANNELS_CHANGED (QEvent::User + 2)
+#define EVENT_FRAME_FORMAT_CHANGED (QEvent::User + 3)
 
 #define UPDATE_INTERVAL 50
 
-XinePlayerBackend::XinePlayerBackend(Player * player):
-PlayerBackend(player, "Xine", new XineConfig()), m_connection(0), m_xineEngine(0), m_audioDriver(0), m_videoDriver(0), m_xineStream(0), m_eventQueue(0), m_updatePosition(true), m_softwareMixer(false), m_streamIsSeekable(false)
+XinePlayerBackend::XinePlayerBackend(Player *player) :
+	PlayerBackend(player, "Xine", new XineConfig()),
+	m_connection(0),
+	m_xineEngine(0),
+	m_audioDriver(0),
+	m_videoDriver(0),
+	m_xineStream(0),
+	m_eventQueue(0),
+	m_updatePosition(true),
+	m_softwareMixer(false),
+	m_streamIsSeekable(false)
 {
 	connect(&m_timesTimer, SIGNAL(timeout()), this, SLOT(updatePosition()));
 }
@@ -55,7 +64,8 @@ XinePlayerBackend::~XinePlayerBackend()
 		_finalize();
 }
 
-VideoWidget *XinePlayerBackend::initialize(QWidget * videoWidgetParent)
+VideoWidget *
+XinePlayerBackend::initialize(QWidget *videoWidgetParent)
 {
 	XineVideoLayerWidget *videoLayer = new XineVideoLayerWidget(0);
 	VideoWidget *videoWidget = new VideoWidget(videoLayer, videoWidgetParent);
@@ -72,24 +82,28 @@ VideoWidget *XinePlayerBackend::initialize(QWidget * videoWidgetParent)
 	return videoWidget;
 }
 
-void XinePlayerBackend::finalize()
+void
+XinePlayerBackend::finalize()
 {
 	return _finalize();
 }
 
-void XinePlayerBackend::_finalize()
+void
+XinePlayerBackend::_finalize()
 {
 	m_timesTimer.stop();
 
 	finalizeXine();
 }
 
-SubtitleComposer::AppConfigGroupWidget * XinePlayerBackend::newAppConfigGroupWidget(QWidget * parent)
+SubtitleComposer::AppConfigGroupWidget *
+XinePlayerBackend::newAppConfigGroupWidget(QWidget *parent)
 {
 	return new XineConfigWidget(parent);
 }
 
-bool XinePlayerBackend::openFile(const QString & filePath, bool & playingAfterCall)
+bool
+XinePlayerBackend::openFile(const QString &filePath, bool &playingAfterCall)
 {
 	playingAfterCall = true;
 
@@ -123,16 +137,17 @@ bool XinePlayerBackend::openFile(const QString & filePath, bool & playingAfterCa
 	return true;
 }
 
-void XinePlayerBackend::closeFile()
-{
-}
+void
+XinePlayerBackend::closeFile()
+{}
 
-bool XinePlayerBackend::play()
+bool
+XinePlayerBackend::play()
 {
 	if(xine_get_status(m_xineStream) != XINE_STATUS_PLAY)
-		xine_play(m_xineStream, 0, 0);	// was stopped
+		xine_play(m_xineStream, 0, 0); // was stopped
 	else
-		xine_set_param(m_xineStream, XINE_PARAM_SPEED, XINE_SPEED_NORMAL);	// was paused
+		xine_set_param(m_xineStream, XINE_PARAM_SPEED, XINE_SPEED_NORMAL); // was paused
 
 	setPlayerState(Player::Playing);
 
@@ -141,7 +156,8 @@ bool XinePlayerBackend::play()
 	return true;
 }
 
-bool XinePlayerBackend::pause()
+bool
+XinePlayerBackend::pause()
 {
 	m_timesTimer.stop();
 
@@ -151,7 +167,8 @@ bool XinePlayerBackend::pause()
 	return true;
 }
 
-bool XinePlayerBackend::seek(double seconds, bool accurate)
+bool
+XinePlayerBackend::seek(double seconds, bool accurate)
 {
 	if(m_streamIsSeekable) {
 		int targetTime = (int)(seconds * 1000 + 0.5);
@@ -171,7 +188,7 @@ bool XinePlayerBackend::seek(double seconds, bool accurate)
 
 			xine_set_param(m_xineStream, XINE_PARAM_SPEED, XINE_SPEED_FAST_4);
 
-			while(targetTime - time > 200 /*|| time - targetTime > 100 || */ ) {
+			while(targetTime - time > 200 /*|| time - targetTime > 100 || */) {
 				QApplication::processEvents(QEventLoop::ExcludeUserInputEvents);
 
 				if(!xine_get_pos_length(m_xineStream, 0, &time, 0))
@@ -193,7 +210,8 @@ bool XinePlayerBackend::seek(double seconds, bool accurate)
 	return true;
 }
 
-bool XinePlayerBackend::stop()
+bool
+XinePlayerBackend::stop()
 {
 	m_timesTimer.stop();
 
@@ -203,22 +221,24 @@ bool XinePlayerBackend::stop()
 	return true;
 }
 
-bool XinePlayerBackend::setActiveAudioStream(int audioStream)
+bool
+XinePlayerBackend::setActiveAudioStream(int audioStream)
 {
 	xine_set_param(m_xineStream, XINE_PARAM_AUDIO_CHANNEL_LOGICAL, audioStream);
 
 	return true;
 }
 
-bool XinePlayerBackend::setVolume(double volume)
+bool
+XinePlayerBackend::setVolume(double volume)
 {
 	xine_set_param(m_xineStream, m_softwareMixer ? XINE_PARAM_AUDIO_AMP_LEVEL : XINE_PARAM_AUDIO_VOLUME, (int)(volume + 0.5));
 
 	return true;
 }
 
-
-void XinePlayerBackend::updateVideoData()
+void
+XinePlayerBackend::updateVideoData()
 {
 	if(!m_xineStream)
 		return;
@@ -229,9 +249,9 @@ void XinePlayerBackend::updateVideoData()
 			setPlayerFramesPerSecond(90000.0 / fps);
 
 			// tweak prebuffer so we can be sure to show only a single frame
-			// kDebug() << "PREBUFFER " << xine_get_param( m_xineStream, XINE_PARAM_METRONOM_PREBUFFER );
+			// kDebug() << "PREBUFFER " << xine_get_param(m_xineStream, XINE_PARAM_METRONOM_PREBUFFER);
 			xine_set_param(m_xineStream, XINE_PARAM_METRONOM_PREBUFFER, fps);
-			// kDebug() << "PREBUFFER " << xine_get_param( m_xineStream, XINE_PARAM_METRONOM_PREBUFFER );
+			// kDebug() << "PREBUFFER " << xine_get_param(m_xineStream, XINE_PARAM_METRONOM_PREBUFFER);
 		}
 
 		int width = xine_get_stream_info(m_xineStream, XINE_STREAM_INFO_VIDEO_WIDTH);
@@ -248,7 +268,8 @@ void XinePlayerBackend::updateVideoData()
 	m_videoLayerGeometry = QRect(globalPos.x(), globalPos.y(), size.width(), size.height());
 }
 
-void XinePlayerBackend::updateAudioData()
+void
+XinePlayerBackend::updateAudioData()
 {
 	if(!m_xineStream)
 		return;
@@ -264,10 +285,11 @@ void XinePlayerBackend::updateAudioData()
 		audioStreams << audioStreamName;
 	}
 
-	setPlayerAudioStreams(audioStreams, audioStreams.isEmpty()? -1 : 0);
+	setPlayerAudioStreams(audioStreams, audioStreams.isEmpty() ? -1 : 0);
 }
 
-void XinePlayerBackend::updateLengthData()
+void
+XinePlayerBackend::updateLengthData()
 {
 	if(!m_xineStream)
 		return;
@@ -277,7 +299,8 @@ void XinePlayerBackend::updateLengthData()
 		setPlayerLength(length / 1000.0);
 }
 
-void XinePlayerBackend::updatePosition()
+void
+XinePlayerBackend::updatePosition()
 {
 	if(!m_xineStream || !m_updatePosition)
 		return;
@@ -297,31 +320,33 @@ void XinePlayerBackend::updatePosition()
 	}
 }
 
-void XinePlayerBackend::onVideoLayerGeometryChanged()
+void
+XinePlayerBackend::onVideoLayerGeometryChanged()
 {
 	QSize size = player()->videoWidget()->videoLayer()->size();
 	QPoint globalPos = player()->videoWidget()->videoLayer()->mapToGlobal(QPoint(0, 0));
 	m_videoLayerGeometry = QRect(globalPos.x(), globalPos.y(), size.width(), size.height());
 }
 
-void XinePlayerBackend::xineEventListener(void *p, const xine_event_t * event)
+void
+XinePlayerBackend::xineEventListener(void *p, const xine_event_t *event)
 {
 	if(p == NULL)
 		return;
 
-	XinePlayerBackend *xinePlayer = (XinePlayerBackend *) p;
+	XinePlayerBackend *xinePlayer = (XinePlayerBackend *)p;
 
 	switch(event->type) {
 	case XINE_EVENT_UI_PLAYBACK_FINISHED:
-		QApplication::postEvent(xinePlayer, new QEvent((QEvent::Type) EVENT_PLAYBACK_FINISHED));
+		QApplication::postEvent(xinePlayer, new QEvent((QEvent::Type)EVENT_PLAYBACK_FINISHED));
 		break;
 
 	case XINE_EVENT_UI_CHANNELS_CHANGED:
-		QApplication::postEvent(xinePlayer, new QEvent((QEvent::Type) EVENT_CHANNELS_CHANGED));
+		QApplication::postEvent(xinePlayer, new QEvent((QEvent::Type)EVENT_CHANNELS_CHANGED));
 		break;
 
 	case XINE_EVENT_FRAME_FORMAT_CHANGE:
-		QApplication::postEvent(xinePlayer, new QEvent((QEvent::Type) EVENT_FRAME_FORMAT_CHANGED));
+		QApplication::postEvent(xinePlayer, new QEvent((QEvent::Type)EVENT_FRAME_FORMAT_CHANGED));
 		break;
 
 	default:
@@ -329,7 +354,8 @@ void XinePlayerBackend::xineEventListener(void *p, const xine_event_t * event)
 	}
 }
 
-void XinePlayerBackend::customEvent(QEvent * event)
+void
+XinePlayerBackend::customEvent(QEvent *event)
 {
 	switch((int)event->type()) {
 	case EVENT_PLAYBACK_FINISHED:
@@ -342,7 +368,7 @@ void XinePlayerBackend::customEvent(QEvent * event)
 		break;
 
 	case EVENT_FRAME_FORMAT_CHANGED:
-		//updateLengthData();
+		// updateLengthData();
 		updateVideoData();
 		break;
 
@@ -351,7 +377,8 @@ void XinePlayerBackend::customEvent(QEvent * event)
 	}
 }
 
-bool XinePlayerBackend::initializeXine(WId winId)
+bool
+XinePlayerBackend::initializeXine(WId winId)
 {
 #ifdef HAVE_XCB
 	int screen_nbr = 0;
@@ -377,7 +404,7 @@ bool XinePlayerBackend::initializeXine(WId winId)
 
 	xine_init(m_xineEngine);
 
-	m_softwareMixer = (bool) xine_config_register_bool(m_xineEngine, "audio.mixer_software", 1, NULL, NULL, 10, &XinePlayerBackend::audioMixerMethodChangedCallback, this);
+	m_softwareMixer = (bool)xine_config_register_bool(m_xineEngine, "audio.mixer_software", 1, NULL, NULL, 10, &XinePlayerBackend::audioMixerMethodChangedCallback, this);
 
 #ifdef HAVE_XCB
 	xcb_screen_iterator_t screen_it = xcb_setup_roots_iterator(xcb_get_setup(m_connection));
@@ -397,7 +424,6 @@ bool XinePlayerBackend::initializeXine(WId winId)
 	m_x11Visual.frame_output_cb = &XinePlayerBackend::frameOutputCallback;
 	m_x11Visual.user_data = (void *)this;
 
-
 	QStringList videoDriverNames = QString("xv xvmc opengl xxmc sdl xshm fb XDirectFB DirectFB aa caca auto").split(' ');
 	videoDriverNames.prepend(config()->videoDriver());
 	for(QStringList::Iterator it = videoDriverNames.begin(), end = videoDriverNames.end(); it != end; ++it) {
@@ -410,12 +436,12 @@ bool XinePlayerBackend::initializeXine(WId winId)
 
 		m_videoDriver = xine_open_video_driver(m_xineEngine, (*it).toAscii(),
 #ifdef HAVE_XCB
-			XINE_VISUAL_TYPE_XCB,
+											   XINE_VISUAL_TYPE_XCB,
 #else
-			XINE_VISUAL_TYPE_X11,
+											   XINE_VISUAL_TYPE_X11,
 #endif
-			(void *)&(m_x11Visual)
-		);
+											   (void *)&(m_x11Visual)
+											   );
 
 		if(m_videoDriver)
 			break;
@@ -425,7 +451,6 @@ bool XinePlayerBackend::initializeXine(WId winId)
 		kDebug() << "All video drivers failed to initialize!";
 		return false;
 	}
-
 
 	QStringList audioDriverNames = QString("alsa oss jack pulseaudio esd auto").split(' ');
 	audioDriverNames.prepend(config()->audioDriver());
@@ -451,7 +476,8 @@ bool XinePlayerBackend::initializeXine(WId winId)
 	return true;
 }
 
-void XinePlayerBackend::finalizeXine()
+void
+XinePlayerBackend::finalizeXine()
 {
 	if(m_xineStream)
 		xine_close(m_xineStream);
@@ -491,25 +517,25 @@ void XinePlayerBackend::finalizeXine()
 	}
 }
 
-void XinePlayerBackend::destSizeCallback(void *p, int /*video_width */ , int /*video_height */ , double /*video_aspect */ ,
-										int *dest_width, int *dest_height, double *dest_aspect)
+void
+XinePlayerBackend::destSizeCallback(void *p, int /*video_width */, int /*video_height */, double /*video_aspect */, int *dest_width, int *dest_height, double *dest_aspect)
 {
 	if(p == NULL)
 		return;
 
-	XinePlayerBackend *xinePlayer = (XinePlayerBackend *) p;
+	XinePlayerBackend *xinePlayer = (XinePlayerBackend *)p;
 	*dest_width = xinePlayer->m_videoLayerGeometry.width();
 	*dest_height = xinePlayer->m_videoLayerGeometry.height();
 	*dest_aspect = 1.0;
 }
 
-void XinePlayerBackend::frameOutputCallback(void *p, int /*video_width */ , int /*video_height */ , double /*video_aspect */ ,
-											int *dest_x, int *dest_y, int *dest_width, int *dest_height, double *dest_aspect, int *win_x, int *win_y)
+void
+XinePlayerBackend::frameOutputCallback(void *p, int /*video_width */, int /*video_height */, double /*video_aspect */, int *dest_x, int *dest_y, int *dest_width, int *dest_height, double *dest_aspect, int *win_x, int *win_y)
 {
 	if(p == NULL)
 		return;
 
-	XinePlayerBackend *xinePlayer = (XinePlayerBackend *) p;
+	XinePlayerBackend *xinePlayer = (XinePlayerBackend *)p;
 
 	*dest_x = 0;
 	*dest_y = 0;
@@ -520,13 +546,14 @@ void XinePlayerBackend::frameOutputCallback(void *p, int /*video_width */ , int 
 	*win_y = xinePlayer->m_videoLayerGeometry.y();
 }
 
-void XinePlayerBackend::audioMixerMethodChangedCallback(void *p, xine_cfg_entry_t * entry)
+void
+XinePlayerBackend::audioMixerMethodChangedCallback(void *p, xine_cfg_entry_t *entry)
 {
 	if(p == NULL)
 		return;
 
-	XinePlayerBackend *xinePlayer = (XinePlayerBackend *) p;
-	xinePlayer->m_softwareMixer = (bool) entry->num_value;
+	XinePlayerBackend *xinePlayer = (XinePlayerBackend *)p;
+	xinePlayer->m_softwareMixer = (bool)entry->num_value;
 }
 
 #include "xineplayerbackend.moc"

@@ -30,7 +30,8 @@
 
 using namespace SubtitleComposer;
 
-ChangeFrameRateDialog::ChangeFrameRateDialog(double fromFramesPerSecond, QWidget * parent):ActionDialog(i18n("Change Frame Rate"), parent)
+ChangeFrameRateDialog::ChangeFrameRateDialog(double fromFramesPerSecond, QWidget *parent) :
+	ActionDialog(i18n("Change Frame Rate"), parent)
 {
 	QGroupBox *settingsGroupBox = createGroupBox(i18nc("@title:group", "Settings"));
 
@@ -65,21 +66,32 @@ ChangeFrameRateDialog::ChangeFrameRateDialog(double fromFramesPerSecond, QWidget
 	setMinimumWidth(sizeHint().width() + 25);
 }
 
-double ChangeFrameRateDialog::fromFramesPerSecond() const {
+double
+ChangeFrameRateDialog::fromFramesPerSecond() const
+{
 	return m_fromFramesPerSecondComboBox->lineEdit()->text().toDouble();
-} void ChangeFrameRateDialog::setFromFramesPerSecond(double framesPerSecond)
+}
+
+void
+ChangeFrameRateDialog::setFromFramesPerSecond(double framesPerSecond)
 {
 	m_fromFramesPerSecondComboBox->lineEdit()->setText(QString::number(framesPerSecond, 'f', 3));
 }
 
-double ChangeFrameRateDialog::toFramesPerSecond() const {
+double
+ChangeFrameRateDialog::toFramesPerSecond() const
+{
 	return m_toFramesPerSecondComboBox->lineEdit()->text().toDouble();
-} void ChangeFrameRateDialog::setNewFramesPerSecond(double framesPerSecond)
+}
+
+void
+ChangeFrameRateDialog::setNewFramesPerSecond(double framesPerSecond)
 {
 	m_toFramesPerSecondComboBox->lineEdit()->setText(QString::number(framesPerSecond, 'f', 3));
 }
 
-void ChangeFrameRateDialog::onTextChanged()
+void
+ChangeFrameRateDialog::onTextChanged()
 {
 	bool applyButtonEnabled;
 	m_fromFramesPerSecondComboBox->lineEdit()->text().toDouble(&applyButtonEnabled);

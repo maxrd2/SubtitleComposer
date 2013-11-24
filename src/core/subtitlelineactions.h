@@ -33,168 +33,156 @@
 #include <QtCore/QString>
 
 namespace SubtitleComposer {
-	class SubtitleLineAction:public Action {
-	public:
+class SubtitleLineAction : public Action
+{
+public:
+	SubtitleLineAction(SubtitleLine &line, SubtitleAction::DirtyMode dirtyMode, const QString &desc = QString());
+	virtual ~SubtitleLineAction();
 
-		SubtitleLineAction(SubtitleLine & line, SubtitleAction::DirtyMode dirtyMode, const QString & desc = QString());
-		virtual ~ SubtitleLineAction();
+protected:
+	virtual void _undo();
 
-	protected:
+	virtual void _preRedo();
+	virtual void _preUndo();
 
-		virtual void _undo();
+	virtual void _emitUndoSignals();
 
-		virtual void _preRedo();
-		virtual void _preUndo();
+	template<class T>
+	T * tryCastToThisLineAction(Action *prevAction)
+	{
+		T *castedPrevAction = tryCastTo<T>(prevAction);
+		return castedPrevAction ? (&castedPrevAction->m_line == &m_line ? castedPrevAction : 0) : 0;
+	}
 
-		virtual void _emitUndoSignals();
+protected:
+	SubtitleLine &m_line;
+	SubtitleAction::DirtyMode m_dirtyMode;
+};
 
-		template < class T > T * tryCastToThisLineAction(Action * prevAction) {
-			T *castedPrevAction = tryCastTo < T > (prevAction);
-			return castedPrevAction ? (&castedPrevAction->m_line == &m_line ? castedPrevAction : 0) : 0;
-		}
-	protected:
+class SetLinePrimaryTextAction : public SubtitleLineAction
+{
+	friend class SetLineTextsAction;
 
-		SubtitleLine & m_line;
-		SubtitleAction::DirtyMode m_dirtyMode;
-	};
+public:
+	SetLinePrimaryTextAction(SubtitleLine &line, const SString &primaryText);
+	virtual ~SetLinePrimaryTextAction();
 
-	class SetLinePrimaryTextAction:public SubtitleLineAction {
-		friend class SetLineTextsAction;
+protected:
+	virtual bool mergeWithPrevious(Action *prevAction);
 
-	public:
+	virtual void _redo();
+	virtual void _emitRedoSignals();
 
-		SetLinePrimaryTextAction(SubtitleLine & line, const SString & primaryText);
-		virtual ~ SetLinePrimaryTextAction();
+private:
+	SString m_primaryText;
+};
 
-	protected:
+class SetLineSecondaryTextAction : public SubtitleLineAction
+{
+	friend class SetLineTextsAction;
 
-		virtual bool mergeWithPrevious(Action * prevAction);
+public:
+	SetLineSecondaryTextAction(SubtitleLine &line, const SString &secondaryText);
+	virtual ~SetLineSecondaryTextAction();
 
-		virtual void _redo();
-		virtual void _emitRedoSignals();
+protected:
+	virtual bool mergeWithPrevious(Action *prevAction);
 
-	private:
+	virtual void _redo();
+	virtual void _emitRedoSignals();
 
-		SString m_primaryText;
-	};
+private:
+	SString m_secondaryText;
+};
 
-	class SetLineSecondaryTextAction:public SubtitleLineAction {
-		friend class SetLineTextsAction;
+class SetLineTextsAction : public SubtitleLineAction
+{
+public:
 
-	public:
+	SetLineTextsAction(SubtitleLine &line, const SString &primaryText, const SString &secondaryText);
+	virtual ~SetLineTextsAction();
 
-		SetLineSecondaryTextAction(SubtitleLine & line, const SString & secondaryText);
-		virtual ~ SetLineSecondaryTextAction();
+protected:
+	virtual bool mergeWithPrevious(Action *prevAction);
 
-	protected:
+	virtual void _redo();
+	virtual void _emitRedoSignals();
 
-		virtual bool mergeWithPrevious(Action * prevAction);
+private:
+	SString m_primaryText;
+	SString m_secondaryText;
+};
 
-		virtual void _redo();
-		virtual void _emitRedoSignals();
+class SetLineShowTimeAction : public SubtitleLineAction
+{
+	friend class SetLineTimesAction;
 
-	private:
+public:
+	SetLineShowTimeAction(SubtitleLine &line, const Time &showTime);
+	virtual ~SetLineShowTimeAction();
 
-		SString m_secondaryText;
-	};
+protected:
+	virtual bool mergeWithPrevious(Action *prevAction);
 
-	class SetLineTextsAction:public SubtitleLineAction {
-	public:
+	virtual void _redo();
+	virtual void _emitRedoSignals();
 
-		SetLineTextsAction(SubtitleLine & line, const SString & primaryText, const SString & secondaryText);
-		virtual ~ SetLineTextsAction();
+private:
+	Time m_showTime;
+};
 
-	protected:
+class SetLineHideTimeAction : public SubtitleLineAction
+{
+	friend class SetLineTimesAction;
 
-		virtual bool mergeWithPrevious(Action * prevAction);
+public:
+	SetLineHideTimeAction(SubtitleLine &line, const Time &hideTime);
+	virtual ~SetLineHideTimeAction();
 
-		virtual void _redo();
-		virtual void _emitRedoSignals();
+protected:
+	virtual bool mergeWithPrevious(Action *prevAction);
 
-	private:
+	virtual void _redo();
+	virtual void _emitRedoSignals();
 
-		SString m_primaryText;
-		SString m_secondaryText;
-	};
+private:
+	Time m_hideTime;
+};
 
-	class SetLineShowTimeAction:public SubtitleLineAction {
-		friend class SetLineTimesAction;
+class SetLineTimesAction : public SubtitleLineAction
+{
+public:
+	SetLineTimesAction(SubtitleLine &line, const Time &showTime, const Time &hideTime, QString description = QString());
+	virtual ~SetLineTimesAction();
 
-	public:
+protected:
+	virtual bool mergeWithPrevious(Action *prevAction);
 
-		SetLineShowTimeAction(SubtitleLine & line, const Time & showTime);
-		virtual ~ SetLineShowTimeAction();
+	virtual void _redo();
+	virtual void _emitRedoSignals();
 
-	protected:
+private:
+	typedef enum { ShowTime = 0x1, HideTime = 0x2 } SignalFlags;
 
-		virtual bool mergeWithPrevious(Action * prevAction);
+	Time m_showTime;
+	Time m_hideTime;
+};
 
-		virtual void _redo();
-		virtual void _emitRedoSignals();
+class SetLineErrorsAction : public SubtitleLineAction
+{
+public:
+	SetLineErrorsAction(SubtitleLine &line, int errorFlags);
+	virtual ~SetLineErrorsAction();
 
-	private:
+protected:
+	virtual bool mergeWithPrevious(Action *prevAction);
 
-		Time m_showTime;
-	};
+	virtual void _redo();
+	virtual void _emitRedoSignals();
 
-	class SetLineHideTimeAction:public SubtitleLineAction {
-		friend class SetLineTimesAction;
-
-	public:
-
-		SetLineHideTimeAction(SubtitleLine & line, const Time & hideTime);
-		virtual ~ SetLineHideTimeAction();
-
-	protected:
-
-		virtual bool mergeWithPrevious(Action * prevAction);
-
-		virtual void _redo();
-		virtual void _emitRedoSignals();
-
-	private:
-
-		Time m_hideTime;
-	};
-
-	class SetLineTimesAction:public SubtitleLineAction {
-	public:
-
-		SetLineTimesAction(SubtitleLine & line, const Time & showTime, const Time & hideTime, QString description = QString());
-		virtual ~ SetLineTimesAction();
-
-	protected:
-
-		virtual bool mergeWithPrevious(Action * prevAction);
-
-		virtual void _redo();
-		virtual void _emitRedoSignals();
-
-	private:
-
-		typedef enum { ShowTime = 0x1, HideTime = 0x2 } SignalFlags;
-
-		Time m_showTime;
-		Time m_hideTime;
-	};
-
-	class SetLineErrorsAction:public SubtitleLineAction {
-	public:
-
-		SetLineErrorsAction(SubtitleLine & line, int errorFlags);
-		virtual ~ SetLineErrorsAction();
-
-	protected:
-
-		virtual bool mergeWithPrevious(Action * prevAction);
-
-		virtual void _redo();
-		virtual void _emitRedoSignals();
-
-	private:
-
-		int m_errorFlags;
-	};
+private:
+	int m_errorFlags;
+};
 }
 
 #endif

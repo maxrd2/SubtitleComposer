@@ -29,37 +29,54 @@
 
 #include <KDebug>
 
-AttachableWidget::AttachableWidget(AttachableWidget::Place place, unsigned animStepDuration):
-	//QWidget( 0, Qt::Window|Qt::FramelessWindowHint|Qt::X11BypassWindowManagerHint ),
-QWidget(0), m_targetWidget(0), m_place(place), m_animStepDuration(animStepDuration), m_animHiding(true)
+AttachableWidget::AttachableWidget(AttachableWidget::Place place, unsigned animStepDuration) :
+	// QWidget(0, Qt::Window | Qt::FramelessWindowHint | Qt::X11BypassWindowManagerHint),
+	QWidget(0),
+	m_targetWidget(0),
+	m_place(place),
+	m_animStepDuration(animStepDuration),
+	m_animHiding(true)
 {
-	//m_animStepDuration = 0;
+//	m_animStepDuration = 0;
 
 	hide();
 
-//  QPalette palette;
-//  palette.setColor( backgroundRole(), Qt::red );
-//  setPalette( palette );
-//
-//  setAttribute( Qt::WA_TranslucentBackground, false );
+//	QPalette palette;
+//	palette.setColor(backgroundRole(), Qt::red);
+//	setPalette(palette);
+
+//	setAttribute(Qt::WA_TranslucentBackground, false);
 }
 
 AttachableWidget::~AttachableWidget()
+{}
+
+bool
+AttachableWidget::isAttached() const
 {
+	return m_targetWidget != 0;
 }
 
-bool AttachableWidget::isAttached() const {
-	return m_targetWidget != 0;
-} bool AttachableWidget::isAnimated() const {
+bool
+AttachableWidget::isAnimated() const
+{
 	return m_animStepDuration > 0;
-} int AttachableWidget::animStepDuration() const {
+}
+
+int
+AttachableWidget::animStepDuration() const
+{
 	return m_animStepDuration;
-} void AttachableWidget::setAnimStepDuration(int duration)
+}
+
+void
+AttachableWidget::setAnimStepDuration(int duration)
 {
 	m_animStepDuration = duration;
 }
 
-void AttachableWidget::attach(QWidget * targetWidget)
+void
+AttachableWidget::attach(QWidget *targetWidget)
 {
 	if(m_targetWidget != targetWidget) {
 		if(m_targetWidget) {
@@ -77,13 +94,14 @@ void AttachableWidget::attach(QWidget * targetWidget)
 	}
 }
 
-void AttachableWidget::dettach()
+void
+AttachableWidget::dettach()
 {
 	if(m_targetWidget) {
 		m_targetWidget->removeEventFilter(this);
 		m_targetWidget = 0;
 
-		m_animHiding = true;	// reset the flag
+		m_animHiding = true;    // reset the flag
 
 		hide();
 
@@ -92,10 +110,10 @@ void AttachableWidget::dettach()
 		kWarning() << "dettach attempted but not attached to any widget";
 }
 
-void AttachableWidget::timerEvent(QTimerEvent * event)
+void
+AttachableWidget::timerEvent(QTimerEvent *event)
 {
-	if(event->timerId() == m_animTID)	// Advance animation
-	{
+	if(event->timerId() == m_animTID) {     // Advance animation
 		if(m_animCurrentY == m_animFinalY) {
 			killTimer(m_animTID);
 			m_animTID = 0;
@@ -111,12 +129,14 @@ void AttachableWidget::timerEvent(QTimerEvent * event)
 	}
 }
 
-void AttachableWidget::toggleVisible(bool visible)
+void
+AttachableWidget::toggleVisible(bool visible)
 {
 	toggleVisible(visible, false);
 }
 
-void AttachableWidget::toggleVisible(bool visible, bool force)
+void
+AttachableWidget::toggleVisible(bool visible, bool force)
 {
 	if(!force && visible != m_animHiding)
 		return;
@@ -132,13 +152,11 @@ void AttachableWidget::toggleVisible(bool visible, bool force)
 
 	QPoint targetPos = m_targetWidget->mapToGlobal(QPoint(0, 0));
 
-	if(visible)					// we have to show the widget
-	{
+	if(visible) {                                   // we have to show the widget
 		m_animFinalY = m_place == Top ? targetPos.y() : targetPos.y() + m_targetWidget->height() - height();
 		m_animCurrentY = m_place == Top ? m_animFinalY - height() : m_animFinalY + height();
 		m_animDirection = m_place == Top ? Downward : Upward;
-	} else						// we have to hide the widget
-	{
+	} else {                                        // we have to hide the widget
 		m_animFinalY = m_place == Top ? targetPos.y() - height() : targetPos.y() + m_targetWidget->height();
 		m_animCurrentY = m_place == Top ? m_animFinalY + height() : m_animFinalY - height();
 		m_animDirection = m_place == Top ? Upward : Downward;
@@ -149,7 +167,7 @@ void AttachableWidget::toggleVisible(bool visible, bool force)
 		show();
 		raise();
 
-		m_animTID = startTimer(m_animStepDuration);	// start the animation
+		m_animTID = startTimer(m_animStepDuration);     // start the animation
 	} else {
 		move(targetPos.x(), m_animFinalY);
 		show();
@@ -157,7 +175,8 @@ void AttachableWidget::toggleVisible(bool visible, bool force)
 	}
 }
 
-bool AttachableWidget::eventFilter(QObject * object, QEvent * event)
+bool
+AttachableWidget::eventFilter(QObject *object, QEvent *event)
 {
 	if(object == m_targetWidget) {
 		if(event->type() == QEvent::Resize || event->type() == QEvent::Move) {

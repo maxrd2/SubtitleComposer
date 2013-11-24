@@ -33,33 +33,31 @@ class QCheckBox;
 class KComboBox;
 
 namespace SubtitleComposer {
-	class GStreamerConfigWidget:public AppConfigGroupWidget {
-		Q_OBJECT friend class GStreamerPlayerBackend;
-		friend class GStreamerDecoderBackend;
+class GStreamerConfigWidget : public AppConfigGroupWidget
+{
+	Q_OBJECT
 
-	public:
+	friend class GStreamerPlayerBackend;
+	friend class GStreamerDecoderBackend;
 
-		virtual ~ GStreamerConfigWidget();
+public:
+	virtual ~GStreamerConfigWidget();
 
-		virtual void setControlsFromConfig();
-		virtual void setConfigFromControls();
+	virtual void setControlsFromConfig();
+	virtual void setConfigFromControls();
 
-	private:
+private:
+	explicit GStreamerConfigWidget(QWidget *parent = 0);
 
-		explicit GStreamerConfigWidget(QWidget * parent = 0);
+	GStreamerConfig * config() { return static_cast<GStreamerConfig *>(m_config); }
 
-		GStreamerConfig *config() {
-			return static_cast < GStreamerConfig * >(m_config);
-		};
-
-	private:
-
-		KComboBox * m_audioSinkComboBox;
-		QCheckBox *m_audioSinkCheckBox;
-		KComboBox *m_videoSinkComboBox;
-		QCheckBox *m_videoSinkCheckBox;
-		QCheckBox *m_experimentalFeaturesCheckBox;
-	};
+private:
+	KComboBox *m_audioSinkComboBox;
+	QCheckBox *m_audioSinkCheckBox;
+	KComboBox *m_videoSinkComboBox;
+	QCheckBox *m_videoSinkCheckBox;
+	QCheckBox *m_experimentalFeaturesCheckBox;
+};
 }
 
 #endif

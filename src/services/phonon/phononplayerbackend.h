@@ -28,7 +28,7 @@
 #include "../playerbackend.h"
 
 #include <QtCore/QString>
-#include <QtCore/QTextStream>	// NOTE this is only here because Qt complains otherwise when including Phonon/Global...
+#include <QtCore/QTextStream>   // NOTE this is only here because Qt complains otherwise when including Phonon/Global...
 #include <QtGui/QWidget>
 #include <Phonon/Global>
 
@@ -40,57 +40,58 @@ namespace Phonon {
 	class AudioOutput;
 	class VideoWidget;
 }
+
 namespace SubtitleComposer {
-	class PhononPlayerBackend:public PlayerBackend {
-	Q_OBJECT public:
+class PhononPlayerBackend : public PlayerBackend
+{
+	Q_OBJECT
 
-		PhononPlayerBackend(Player * player);
-		virtual ~ PhononPlayerBackend();
+public:
+	PhononPlayerBackend(Player *player);
+	virtual ~PhononPlayerBackend();
 
-		const PhononConfig *config() {
-			return static_cast < const PhononConfig *const >(PlayerBackend::config());
-		} virtual AppConfigGroupWidget *newAppConfigGroupWidget(QWidget * parent);
+	const PhononConfig * config() { return static_cast<const PhononConfig *const>(PlayerBackend::config()); }
 
-	protected:
+	virtual AppConfigGroupWidget * newAppConfigGroupWidget(QWidget *parent);
 
-		virtual bool doesVolumeCorrection() const;
-		virtual bool supportsChangingAudioStream(bool * onTheFly) const;
+protected:
+	virtual bool doesVolumeCorrection() const;
+	virtual bool supportsChangingAudioStream(bool *onTheFly) const;
 
-		virtual VideoWidget *initialize(QWidget * videoWidgetParent);
-		virtual void finalize();
-		void _finalize();
+	virtual VideoWidget * initialize(QWidget *videoWidgetParent);
+	virtual void finalize();
+	void _finalize();
 
-		virtual bool openFile(const QString & filePath, bool & playingAfterCall);
-		virtual void closeFile();
+	virtual bool openFile(const QString &filePath, bool &playingAfterCall);
+	virtual void closeFile();
 
-		virtual bool play();
-		virtual bool pause();
-		virtual bool seek(double seconds, bool accurate);
-		virtual bool stop();
+	virtual bool play();
+	virtual bool pause();
+	virtual bool seek(double seconds, bool accurate);
+	virtual bool stop();
 
-		virtual bool setActiveAudioStream(int audioStream);
+	virtual bool setActiveAudioStream(int audioStream);
 
-		virtual bool setVolume(double volume);
+	virtual bool setVolume(double volume);
 
-	protected:
+protected:
+	void initMediaObject();
 
-		void initMediaObject();
+protected slots:
+	void onHasVideoChanged(bool hasVideo);
+	void onFinished();
+	void onTick(qint64 currentTime);
+	void onTotalTimeChanged(qint64 newTotalTime);
+	void onAvailableAudioChannelsChanged();
+	void onAvailableSubtitlesChanged();
+	void onStateChanged(Phonon::State newState, Phonon::State oldState);
 
-		protected slots:void onHasVideoChanged(bool hasVideo);
-		void onFinished();
-		void onTick(qint64 currentTime);
-		void onTotalTimeChanged(qint64 newTotalTime);
-		void onAvailableAudioChannelsChanged();
-		void onAvailableSubtitlesChanged();
-		void onStateChanged(Phonon::State newState, Phonon::State oldState);
-
-	protected:
-
-		Phonon::MediaObject * m_mediaObject;
-		Phonon::MediaController * m_mediaController;
-		Phonon::AudioOutput * m_audioOutput;
-		Phonon::VideoWidget * m_videoOutput;
-	};
+protected:
+	Phonon::MediaObject *m_mediaObject;
+	Phonon::MediaController *m_mediaController;
+	Phonon::AudioOutput *m_audioOutput;
+	Phonon::VideoWidget *m_videoOutput;
+};
 }
 
 #endif

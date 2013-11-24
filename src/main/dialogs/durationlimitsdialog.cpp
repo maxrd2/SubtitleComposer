@@ -29,7 +29,7 @@
 
 using namespace SubtitleComposer;
 
-DurationLimitsDialog::DurationLimitsDialog(const Time & minDuration, const Time & maxDuration, QWidget * parent):ActionWithTargetDialog(i18n("Enforce Duration Limits"), parent)
+DurationLimitsDialog::DurationLimitsDialog(const Time &minDuration, const Time &maxDuration, QWidget *parent) : ActionWithTargetDialog(i18n("Enforce Duration Limits"), parent)
 {
 	m_minGroupBox = createGroupBox(i18nc("@title:group", "Minimum Duration"));
 	m_minGroupBox->setCheckable(true);
@@ -78,27 +78,48 @@ DurationLimitsDialog::DurationLimitsDialog(const Time & minDuration, const Time 
 	m_minDurationTimeEdit->setValue(minDuration.toMillis());
 }
 
-void DurationLimitsDialog::onMaxDurationValueChanged(int value)
+void
+DurationLimitsDialog::onMaxDurationValueChanged(int value)
 {
 	if(m_minDurationTimeEdit->value() > value)
 		m_minDurationTimeEdit->setValue(value);
 }
 
-void DurationLimitsDialog::onMinDurationValueChanged(int value)
+void
+DurationLimitsDialog::onMinDurationValueChanged(int value)
 {
 	if(m_maxDurationTimeEdit->value() < value)
 		m_maxDurationTimeEdit->setValue(value);
 }
 
-Time DurationLimitsDialog::minDuration() const {
+Time
+DurationLimitsDialog::minDuration() const
+{
 	return Time(m_minDurationTimeEdit->value());
-} Time DurationLimitsDialog::maxDuration() const {
+}
+
+Time
+DurationLimitsDialog::maxDuration() const
+{
 	return Time(m_maxDurationTimeEdit->value());
-} bool DurationLimitsDialog::enforceMaxDuration() const {
+}
+
+bool
+DurationLimitsDialog::enforceMaxDuration() const
+{
 	return m_maxGroupBox->isChecked();
-} bool DurationLimitsDialog::enforceMinDuration() const {
+}
+
+bool
+DurationLimitsDialog::enforceMinDuration() const
+{
 	return m_minGroupBox->isChecked();
-} bool DurationLimitsDialog::preventOverlap() const {
+}
+
+bool
+DurationLimitsDialog::preventOverlap() const
+{
 	return m_preventOverlapCheckBox->isChecked();
 }
+
 #include "durationlimitsdialog.moc"

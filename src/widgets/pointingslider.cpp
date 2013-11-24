@@ -27,28 +27,26 @@
 #include <QtGui/QStyle>
 #include <QtGui/QMouseEvent>
 
-PointingSlider::PointingSlider(QWidget * parent):
-QSlider(parent)
-{
-}
+PointingSlider::PointingSlider(QWidget *parent) :
+	QSlider(parent)
+{}
 
-PointingSlider::PointingSlider(Qt::Orientation orientation, QWidget * parent):
-QSlider(orientation, parent)
-{
-}
+PointingSlider::PointingSlider(Qt::Orientation orientation, QWidget *parent) :
+	QSlider(orientation, parent)
+{}
 
 PointingSlider::~PointingSlider()
-{
-}
+{}
 
 // The code from the following function is from Javier Díaz,
 // taken from a post in the Qt-interest mailing list.
-void PointingSlider::mousePressEvent(QMouseEvent * e)
+void
+PointingSlider::mousePressEvent(QMouseEvent *e)
 {
 	int range = maximum() - minimum();
 
-	int clickedValue;			// this will contain the value corresponding to the clicked (x,y) screen position
-	double pixelsPerUnit;		// the will contain the amount of pixels corresponding to each slider range unit
+	int clickedValue;                       // this will contain the value corresponding to the clicked (x,y) screen position
+	double pixelsPerUnit;           // the will contain the amount of pixels corresponding to each slider range unit
 
 	if(orientation() == Qt::Horizontal) {
 		int width = this->width();
@@ -74,8 +72,9 @@ void PointingSlider::mousePressEvent(QMouseEvent * e)
 	if(qAbs(clickedValue - value()) > sliderHandleUnits) {
 		setValue(clickedValue);
 		emit sliderMoved(clickedValue);
-	} else
+	} else {
 		QSlider::mousePressEvent(e);
+	}
 }
 
 #include "pointingslider.moc"

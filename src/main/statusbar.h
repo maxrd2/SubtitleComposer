@@ -32,33 +32,34 @@ class QProgressBar;
 class QToolButton;
 
 namespace SubtitleComposer {
-	// NOTE "StatusBar" seems to be conflicting with something so we have to use another class name
-	class StatusBar2:public KStatusBar {
-	Q_OBJECT public:
+// NOTE "StatusBar" seems to be conflicting with something so we have to use another class name
+class StatusBar2 : public KStatusBar
+{
+	Q_OBJECT
 
-		StatusBar2(QWidget * parent = 0);
-		virtual ~ StatusBar2();
+public:
+	StatusBar2(QWidget *parent = 0);
+	virtual ~StatusBar2();
 
-		void loadConfig();
-		void saveConfig();
+	void loadConfig();
+	void saveConfig();
 
-		void plugActions();
+	void plugActions();
 
-		public slots:void setSubtitle(Subtitle * subtitle = 0);
+public slots:
+	void setSubtitle(Subtitle *subtitle = 0);
 
-		void initDecoding();
-		void setDecodingPosition(double position);
-		void setDecodingLength(double length);
-		void endDecoding();
+	void initDecoding();
+	void setDecodingPosition(double position);
+	void setDecodingLength(double length);
+	void endDecoding();
 
-	protected:
+protected:
+	virtual void showEvent(QShowEvent *event);
 
-		virtual void showEvent(QShowEvent * event);
-
-	private:
-
-		QProgressBar * m_decodingProgressBar;
-		QToolButton *m_cancelDecodingButton;
-	};
+private:
+	QProgressBar *m_decodingProgressBar;
+	QToolButton *m_cancelDecodingButton;
+};
 }
 #endif

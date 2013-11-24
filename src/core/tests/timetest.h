@@ -26,8 +26,12 @@
 
 #include <QtCore/QObject>
 
-class TimeTest:public QObject {
-	Q_OBJECT private slots:void testConstructors();
+class TimeTest : public QObject
+{
+	Q_OBJECT
+
+private slots:
+	void testConstructors();
 	void testSetters();
 	void testOperators();
 };

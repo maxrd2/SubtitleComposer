@@ -29,24 +29,28 @@
 #include <QtCore/QObject>
 
 namespace SubtitleComposer {
-	namespace Scripting {
-		class Range:public QObject {
-			Q_OBJECT public slots:int start() const;
-			int end() const;
-			int length() const;
+namespace Scripting {
+class Range : public QObject
+{
+	Q_OBJECT
 
-			bool contains(int index) const;
-			bool contains(const QObject * range) const;
+public slots:
+	int start() const;
+	int end() const;
+	int length() const;
 
-		private:
+	bool contains(int index) const;
+	bool contains(const QObject *range) const;
 
-			friend class RangesModule;
-			friend class RangeList;
-			friend class Subtitle;
+private:
+	friend class RangesModule;
+	friend class RangeList;
+	friend class Subtitle;
 
-			Range(const SubtitleComposer::Range & range, QObject * parent);
+	Range(const SubtitleComposer::Range &range, QObject *parent);
 
-			SubtitleComposer::Range m_backend;
-		};
-}}
+	SubtitleComposer::Range m_backend;
+};
+}
+}
 #endif

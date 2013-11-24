@@ -27,70 +27,94 @@
 #include "../../config/appconfiggroup.h"
 
 namespace SubtitleComposer {
-	class GStreamerConfig:public AppConfigGroup {
-		friend class GStreamerPlayerBackend;
-		friend class GStreamerDecoderBackend;
-		friend class GStreamerConfigWidget;
+class GStreamerConfig : public AppConfigGroup
+{
+	friend class GStreamerPlayerBackend;
+	friend class GStreamerDecoderBackend;
+	friend class GStreamerConfigWidget;
 
-	public:
+public:
 
-		virtual AppConfigGroup * clone() const {
-			return new GStreamerConfig(*this);
-		}
-		bool hasAudioSink() const {
-			return !option(keyAudioSink()).isEmpty();
-		}
-		QString audioSink() const {
-			return option(keyAudioSink());
-		}
-		void setAudioSink(const QString & audioSink) {
-			setOption(keyAudioSink(), audioSink);
-		} bool hasVideoSink() const {
-			return !option(keyVideoSink()).isEmpty();
-		}
-		QString videoSink() const {
-			return option(keyVideoSink());
-		}
-		void setVideoSink(const QString & videoSink) {
-			setOption(keyVideoSink(), videoSink);
-		} bool experimentalFeatures() const {
-			return optionAsBool(keyExperimentalFeatures());
-		}
-		void setExperimentalFeatures(bool value) {
-			setOption(keyExperimentalFeatures(), value);
-		}
+	virtual AppConfigGroup * clone() const
+	{
+		return new GStreamerConfig(*this);
+	}
 
-		static const QString & keyAudioSink() {
-			static const QString key("AudioSink");
-			return key;
-		}
-		static const QString & keyVideoSink() {
-			static const QString key("VideoSink");
-			return key;
-		}
-		static const QString & keyExperimentalFeatures() {
-			static const QString key("ExperimentalFeatures");
-			return key;
-		}
+	bool hasAudioSink() const
+	{
+		return !option(keyAudioSink()).isEmpty();
+	}
 
-	private:
+	QString audioSink() const
+	{
+		return option(keyAudioSink());
+	}
 
-	GStreamerConfig():AppConfigGroup("GStreamer", defaults()) {
-		}
-	GStreamerConfig(const GStreamerConfig & config):AppConfigGroup(config) {
-		}
+	void setAudioSink(const QString &audioSink)
+	{
+		setOption(keyAudioSink(), audioSink);
+	}
 
-		static QMap < QString, QString > defaults() {
-			QMap < QString, QString > defaults;
+	bool hasVideoSink() const
+	{
+		return !option(keyVideoSink()).isEmpty();
+	}
 
-			defaults[keyAudioSink()] = "";
-			defaults[keyVideoSink()] = "";
-			defaults[keyExperimentalFeatures()] = "true";
+	QString videoSink() const
+	{
+		return option(keyVideoSink());
+	}
 
-			return defaults;
-		}
+	void setVideoSink(const QString &videoSink)
+	{
+		setOption(keyVideoSink(), videoSink);
+	}
 
-	};
+	bool experimentalFeatures() const
+	{
+		return optionAsBool(keyExperimentalFeatures());
+	}
+
+	void setExperimentalFeatures(bool value)
+	{
+		setOption(keyExperimentalFeatures(), value);
+	}
+
+	static const QString & keyAudioSink()
+	{
+		static const QString key("AudioSink");
+		return key;
+	}
+
+	static const QString & keyVideoSink()
+	{
+		static const QString key("VideoSink");
+		return key;
+	}
+
+	static const QString & keyExperimentalFeatures()
+	{
+		static const QString key("ExperimentalFeatures");
+		return key;
+	}
+
+private:
+
+	GStreamerConfig() : AppConfigGroup("GStreamer", defaults()) {}
+
+	GStreamerConfig(const GStreamerConfig &config) : AppConfigGroup(config) {}
+
+	static QMap<QString, QString> defaults()
+	{
+		QMap<QString, QString> defaults;
+
+		defaults[keyAudioSink()] = "";
+		defaults[keyVideoSink()] = "";
+		defaults[keyExperimentalFeatures()] = "true";
+
+		return defaults;
+	}
+};
 }
 
 #endif

@@ -24,20 +24,26 @@
 
 using namespace SubtitleComposer;
 
-PlayerBackend::PlayerBackend(Player * player, const QString & name, AppConfigGroup * config):ServiceBackend(player, name, config)
-{
-}
+PlayerBackend::PlayerBackend(Player *player, const QString &name, AppConfigGroup *config) :
+	ServiceBackend(player, name, config)
+{}
 
 PlayerBackend::~PlayerBackend()
+{}
+
+bool
+PlayerBackend::doesVolumeCorrection() const
 {
+	return false;
 }
 
-bool PlayerBackend::doesVolumeCorrection() const {
-	return false;
-} bool PlayerBackend::supportsChangingAudioStream(bool * onTheFly) const {
+bool
+PlayerBackend::supportsChangingAudioStream(bool *onTheFly) const
+{
 	if(onTheFly)
 		*onTheFly = true;
 
 	return true;
 }
+
 #include "playerbackend.moc"

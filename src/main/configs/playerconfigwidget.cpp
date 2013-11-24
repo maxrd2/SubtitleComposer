@@ -39,8 +39,8 @@
 
 using namespace SubtitleComposer;
 
-PlayerConfigWidget::PlayerConfigWidget(QWidget * parent):
-AppConfigGroupWidget(new PlayerConfig(), parent)
+PlayerConfigWidget::PlayerConfigWidget(QWidget *parent) :
+	AppConfigGroupWidget(new PlayerConfig(), parent)
 {
 	QGroupBox *generalGroupBox = createGroupBox(i18nc("@title:group General settings", "General"));
 
@@ -80,7 +80,6 @@ AppConfigGroupWidget(new PlayerConfig(), parent)
 	m_showPositionTimeEditCheckBox = new QCheckBox(generalGroupBox);
 	m_showPositionTimeEditCheckBox->setText(i18n("Show editable position control"));
 
-
 	QGroupBox *fontGroupBox = createGroupBox(i18nc("@title:group", "Subtitles"));
 
 	m_fontComboBox = new QFontComboBox(fontGroupBox);
@@ -119,7 +118,6 @@ AppConfigGroupWidget(new PlayerConfig(), parent)
 	outlineWidthLabel->setText(i18n("Outline width:"));
 	outlineWidthLabel->setBuddy(m_outlineWidthSpinBox);
 
-
 	QGroupBox *previewGroupBox = createGroupBox(i18nc("@title:group", "Subtitles Preview"));
 
 	QWidget *previewWidget = new LayeredWidget(previewGroupBox);
@@ -131,7 +129,6 @@ AppConfigGroupWidget(new PlayerConfig(), parent)
 	m_textOverlayWidget->setText(i18nc("Text for previewing the subtitles font settings", "<p>The Quick Brown Fox<br/>Jumps Over The Lazy Dog</p>"));
 	m_textOverlayWidget->setOutlineWidth(1);
 	m_textOverlayWidget->setAlignment(Qt::AlignHCenter | Qt::AlignVCenter);
-
 
 	QGridLayout *generalLayout = createGridLayout(generalGroupBox);
 	generalLayout->addWidget(decoderBackendLabel, 0, 0, Qt::AlignRight | Qt::AlignVCenter);
@@ -157,7 +154,6 @@ AppConfigGroupWidget(new PlayerConfig(), parent)
 	QGridLayout *previewLayout = createGridLayout(previewGroupBox);
 	previewLayout->addWidget(previewWidget, 0, 0);
 
-
 	connect(m_playerBackendComboBox, SIGNAL(activated(int)), this, SIGNAL(settingsChanged()));
 	connect(m_decoderBackendComboBox, SIGNAL(activated(int)), this, SIGNAL(settingsChanged()));
 	connect(m_seekJumpSecsSpinBox, SIGNAL(valueChanged(int)), this, SIGNAL(settingsChanged()));
@@ -176,15 +172,14 @@ AppConfigGroupWidget(new PlayerConfig(), parent)
 	connect(m_outlineColorComboBox, SIGNAL(activated(const QColor &)), this, SIGNAL(settingsChanged()));
 	connect(m_outlineWidthSpinBox, SIGNAL(valueChanged(int)), this, SIGNAL(settingsChanged()));
 
-
 	setControlsFromConfig();
 }
 
 PlayerConfigWidget::~PlayerConfigWidget()
-{
-}
+{}
 
-void PlayerConfigWidget::setControlsFromConfig()
+void
+PlayerConfigWidget::setControlsFromConfig()
 {
 	m_playerBackendComboBox->setCurrentItem(config()->playerBackend());
 	m_decoderBackendComboBox->setCurrentItem(config()->decoderBackend());
@@ -207,7 +202,8 @@ void PlayerConfigWidget::setControlsFromConfig()
 	onOutlineWidthChanged(config()->outlineWidth());
 }
 
-void PlayerConfigWidget::setConfigFromControls()
+void
+PlayerConfigWidget::setConfigFromControls()
 {
 	config()->setPlayerBackend(m_playerBackendComboBox->currentText());
 	config()->setDecoderBackend(m_decoderBackendComboBox->currentText());
@@ -221,28 +217,33 @@ void PlayerConfigWidget::setConfigFromControls()
 	config()->setOutlineWidth((int)m_textOverlayWidget->outlineWidth());
 }
 
-void PlayerConfigWidget::onFamilyChanged(const QString & family)
+void
+PlayerConfigWidget::onFamilyChanged(const QString &family)
 {
 	if(m_fontComboBox->findText(family) != -1)
 		m_textOverlayWidget->setFamily(family);
 }
 
-void PlayerConfigWidget::onSizeChanged(int size)
+void
+PlayerConfigWidget::onSizeChanged(int size)
 {
 	m_textOverlayWidget->setPointSize(size);
 }
 
-void PlayerConfigWidget::onPrimaryColorChanged(const QColor & color)
+void
+PlayerConfigWidget::onPrimaryColorChanged(const QColor &color)
 {
 	m_textOverlayWidget->setPrimaryColor(color);
 }
 
-void PlayerConfigWidget::onOutlineColorChanged(const QColor & color)
+void
+PlayerConfigWidget::onOutlineColorChanged(const QColor &color)
 {
 	m_textOverlayWidget->setOutlineColor(color);
 }
 
-void PlayerConfigWidget::onOutlineWidthChanged(int width)
+void
+PlayerConfigWidget::onOutlineWidthChanged(int width)
 {
 	m_textOverlayWidget->setOutlineWidth(width);
 }

@@ -27,58 +27,77 @@
 #include "../../config/appconfiggroup.h"
 
 namespace SubtitleComposer {
-	class XineConfig:public AppConfigGroup {
-		friend class XinePlayerBackend;
-		friend class XineDecoderBackend;
-		friend class XineConfigWidget;
+class XineConfig : public AppConfigGroup
+{
+	friend class XinePlayerBackend;
+	friend class XineDecoderBackend;
+	friend class XineConfigWidget;
 
-	public:
+public:
 
-		virtual AppConfigGroup * clone() const {
-			return new XineConfig(*this);
-		}
-		bool hasAudioDriver() const {
-			return !option(keyAudioDriver()).isEmpty();
-		}
-		QString audioDriver() const {
-			return option(keyAudioDriver());
-		}
-		void setAudioDriver(const QString & audioDriver) {
-			setOption(keyAudioDriver(), audioDriver);
-		} bool hasVideoDriver() const {
-			return !option(keyVideoDriver()).isEmpty();
-		}
-		QString videoDriver() const {
-			return option(keyVideoDriver());
-		}
-		void setVideoDriver(const QString & videoDriver) {
-			setOption(keyVideoDriver(), videoDriver);
-		} static const QString & keyAudioDriver() {
-			static const QString key("AudioDriver");
-			return key;
-		}
-		static const QString & keyVideoDriver() {
-			static const QString key("VideoDriver");
-			return key;
-		}
+	virtual AppConfigGroup * clone() const
+	{
+		return new XineConfig(*this);
+	}
 
-	private:
+	bool hasAudioDriver() const
+	{
+		return !option(keyAudioDriver()).isEmpty();
+	}
 
-	XineConfig():AppConfigGroup("Xine", defaults()) {
-		}
-	XineConfig(const XineConfig & config):AppConfigGroup(config) {
-		}
+	QString audioDriver() const
+	{
+		return option(keyAudioDriver());
+	}
 
-		static QMap < QString, QString > defaults() {
-			QMap < QString, QString > defaults;
+	void setAudioDriver(const QString &audioDriver)
+	{
+		setOption(keyAudioDriver(), audioDriver);
+	}
 
-			defaults[keyAudioDriver()] = "";
-			defaults[keyVideoDriver()] = "";
+	bool hasVideoDriver() const
+	{
+		return !option(keyVideoDriver()).isEmpty();
+	}
 
-			return defaults;
-		}
+	QString videoDriver() const
+	{
+		return option(keyVideoDriver());
+	}
 
-	};
+	void setVideoDriver(const QString &videoDriver)
+	{
+		setOption(keyVideoDriver(), videoDriver);
+	}
+
+	static const QString & keyAudioDriver()
+	{
+		static const QString key("AudioDriver");
+		return key;
+	}
+
+	static const QString & keyVideoDriver()
+	{
+		static const QString key("VideoDriver");
+		return key;
+	}
+
+private:
+
+	XineConfig() : AppConfigGroup("Xine", defaults()) {}
+
+	XineConfig(const XineConfig &config) : AppConfigGroup(config) {}
+
+	static QMap<QString, QString> defaults()
+	{
+		QMap<QString, QString> defaults;
+
+		defaults[keyAudioDriver()] = "";
+		defaults[keyVideoDriver()] = "";
+
+		return defaults;
+	}
+};
 }
 
 #endif

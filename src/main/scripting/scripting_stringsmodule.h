@@ -31,22 +31,26 @@
 #include <QtCore/QString>
 
 namespace SubtitleComposer {
-	namespace Scripting {
-		class StringsModule:public QObject {
-			Q_OBJECT Q_ENUMS(StyleFlag)
+namespace Scripting {
+class StringsModule : public QObject
+{
+	Q_OBJECT
 
-		public:
+	Q_ENUMS(StyleFlag)
 
-			typedef enum {
-				Bold = SubtitleComposer::SString::Bold,
-				Italic = SubtitleComposer::SString::Italic,
-				Underline = SubtitleComposer::SString::Underline,
-				StrikeThrough = SubtitleComposer::SString::StrikeThrough,
-			} StyleFlag;
+public:
+	typedef enum {
+		Bold = SubtitleComposer::SString::Bold,
+		Italic = SubtitleComposer::SString::Italic,
+		Underline = SubtitleComposer::SString::Underline,
+		StrikeThrough = SubtitleComposer::SString::StrikeThrough,
+	} StyleFlag;
 
-			StringsModule(QObject * parent = 0);
+	StringsModule(QObject *parent = 0);
 
-			public slots:QObject * newString(const QString & text = QString());
-		};
-}}
+public slots:
+	QObject * newString(const QString &text = QString());
+};
+}
+}
 #endif

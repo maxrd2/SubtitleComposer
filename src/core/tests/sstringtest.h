@@ -26,8 +26,12 @@
 
 #include <QtCore/QObject>
 
-class SStringTest:public QObject {
-	Q_OBJECT private slots:void testStyleFlags();
+class SStringTest : public QObject
+{
+	Q_OBJECT
+
+private slots:
+	void testStyleFlags();
 	void testLeftMidRight();
 	void testInsert();
 	void testReplace();

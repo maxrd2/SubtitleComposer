@@ -29,22 +29,21 @@
 class QCheckBox;
 
 namespace SubtitleComposer {
-	class FixPunctuationDialog:public ActionWithTargetDialog {
-	public:
+class FixPunctuationDialog : public ActionWithTargetDialog
+{
+public:
+	FixPunctuationDialog(QWidget *parent = 0);
 
-		FixPunctuationDialog(QWidget * parent = 0);
+	bool spaces() const;
+	bool quotes() const;
+	bool englishI() const;
+	bool ellipisis() const;
 
-		bool spaces() const;
-		bool quotes() const;
-		bool englishI() const;
-		bool ellipisis() const;
-
-	private:
-
-		QCheckBox * m_spacesCheckBox;
-		QCheckBox *m_quotesCheckBox;
-		QCheckBox *m_englishICheckBox;
-		QCheckBox *m_ellipsisCheckBox;
-	};
+private:
+	QCheckBox *m_spacesCheckBox;
+	QCheckBox *m_quotesCheckBox;
+	QCheckBox *m_englishICheckBox;
+	QCheckBox *m_ellipsisCheckBox;
+};
 }
 #endif

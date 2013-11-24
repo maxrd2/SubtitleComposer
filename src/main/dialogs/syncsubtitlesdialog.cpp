@@ -25,11 +25,10 @@
 
 #include <KLocale>
 
-
 using namespace SubtitleComposer;
 
-SyncSubtitlesDialog::SyncSubtitlesDialog(QWidget * parent):
-SelectableSubtitleDialog(i18n("Synchronize with Subtitle"), parent)
+SyncSubtitlesDialog::SyncSubtitlesDialog(QWidget *parent) :
+	SelectableSubtitleDialog(i18n("Synchronize with Subtitle"), parent)
 {
 	createSubtitleGroupBox(i18n("Reference Subtitle"));
 
@@ -47,9 +46,16 @@ SelectableSubtitleDialog(i18n("Synchronize with Subtitle"), parent)
 	syncModeLayout->addWidget(m_synchronizeRadioButton, 1, 0);
 }
 
-bool SyncSubtitlesDialog::adjustToReferenceSubtitle() const {
+bool
+SyncSubtitlesDialog::adjustToReferenceSubtitle() const
+{
 	return m_adjustRadioButton->isChecked();
-} bool SyncSubtitlesDialog::synchronizeToReferenceTimes() const {
+}
+
+bool
+SyncSubtitlesDialog::synchronizeToReferenceTimes() const
+{
 	return m_synchronizeRadioButton->isChecked();
 }
+
 #include "syncsubtitlesdialog.moc"

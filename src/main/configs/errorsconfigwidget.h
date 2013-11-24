@@ -31,32 +31,31 @@ class KIntNumInput;
 class QCheckBox;
 
 namespace SubtitleComposer {
-	class ErrorsConfigWidget:public AppConfigGroupWidget {
-		Q_OBJECT friend class ConfigDialog;
+class ErrorsConfigWidget : public AppConfigGroupWidget
+{
+	Q_OBJECT
 
-	public:
+	friend class ConfigDialog;
 
-		virtual ~ ErrorsConfigWidget();
+public:
+	virtual ~ErrorsConfigWidget();
 
-		virtual void setControlsFromConfig();
-		virtual void setConfigFromControls();
+	virtual void setControlsFromConfig();
+	virtual void setConfigFromControls();
 
-	private:
+private:
+	explicit ErrorsConfigWidget(QWidget *parent = 0);
 
-		explicit ErrorsConfigWidget(QWidget * parent = 0);
+	ErrorsConfig * config() { return static_cast<ErrorsConfig *>(m_config); }
 
-		ErrorsConfig *config() {
-			return static_cast < ErrorsConfig * >(m_config);
-		};
-
-		KIntNumInput *m_minDurationSpinBox;
-		KIntNumInput *m_maxDurationSpinBox;
-		KIntNumInput *m_maxCharactersSpinBox;
-		KIntNumInput *m_maxLinesSpinBox;
-		KIntNumInput *m_minDurationPerCharSpinBox;
-		KIntNumInput *m_maxDurationPerCharSpinBox;
-		QCheckBox *m_autoClearFixedCheckBox;
-	};
+	KIntNumInput *m_minDurationSpinBox;
+	KIntNumInput *m_maxDurationSpinBox;
+	KIntNumInput *m_maxCharactersSpinBox;
+	KIntNumInput *m_maxLinesSpinBox;
+	KIntNumInput *m_minDurationPerCharSpinBox;
+	KIntNumInput *m_maxDurationPerCharSpinBox;
+	QCheckBox *m_autoClearFixedCheckBox;
+};
 }
 
 #endif

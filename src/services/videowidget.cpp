@@ -32,16 +32,24 @@
 
 using namespace SubtitleComposer;
 
-VideoWidget::VideoWidget(QWidget * parent):
-QWidget(parent), m_videoLayer(new QWidget(this)), m_videoWidth(0), m_videoHeight(0), m_videoDAR(0)
+VideoWidget::VideoWidget(QWidget *parent) :
+	QWidget(parent),
+	m_videoLayer(new QWidget(this)),
+	m_videoWidth(0),
+	m_videoHeight(0),
+	m_videoDAR(0)
 {
 	m_videoLayer->hide();
 
 	init(true);
 }
 
-VideoWidget::VideoWidget(QWidget * videoLayer, QWidget * parent):
-QWidget(parent), m_videoLayer(videoLayer), m_videoWidth(0), m_videoHeight(0), m_videoDAR(0)
+VideoWidget::VideoWidget(QWidget *videoLayer, QWidget *parent) :
+	QWidget(parent),
+	m_videoLayer(videoLayer),
+	m_videoWidth(0),
+	m_videoHeight(0),
+	m_videoDAR(0)
 {
 	m_videoLayer->setParent(this);
 	m_videoLayer->hide();
@@ -49,7 +57,8 @@ QWidget(parent), m_videoLayer(videoLayer), m_videoWidth(0), m_videoHeight(0), m_
 	init(true);
 }
 
-void VideoWidget::init(bool setVideoLayerAttributes)
+void
+VideoWidget::init(bool setVideoLayerAttributes)
 {
 	if(setVideoLayerAttributes) {
 		m_videoLayer->setFocusPolicy(Qt::NoFocus);
@@ -70,24 +79,34 @@ void VideoWidget::init(bool setVideoLayerAttributes)
 }
 
 VideoWidget::~VideoWidget()
-{
-}
+{}
 
-QWidget *VideoWidget::videoLayer()
+QWidget *
+VideoWidget::videoLayer()
 {
 	return m_videoLayer;
 }
 
-int VideoWidget::videoWidth() const {
+int
+VideoWidget::videoWidth() const
+{
 	return m_videoWidth;
 }
-int VideoWidget::videoHeight() const {
+
+int
+VideoWidget::videoHeight() const
+{
 	return m_videoHeight;
 }
-double VideoWidget::videoDAR() const {
+
+double
+VideoWidget::videoDAR() const
+{
 	return m_videoDAR;
 }
-void VideoWidget::setVideoResolution(int width, int height, double dar)
+
+void
+VideoWidget::setVideoResolution(int width, int height, double dar)
 {
 	if(width <= 0 || height <= 0) {
 		kWarning() << "invalid video with or height reported";
@@ -101,18 +120,21 @@ void VideoWidget::setVideoResolution(int width, int height, double dar)
 	updateVideoLayerGeometry();
 }
 
-void VideoWidget::setMouseTracking(bool enable)
+void
+VideoWidget::setMouseTracking(bool enable)
 {
 	QWidget::setMouseTracking(enable);
 	m_videoLayer->setMouseTracking(enable);
 }
 
-void VideoWidget::resizeEvent(QResizeEvent *)
+void
+VideoWidget::resizeEvent(QResizeEvent *)
 {
 	updateVideoLayerGeometry();
 }
 
-void VideoWidget::mouseReleaseEvent(QMouseEvent * e)
+void
+VideoWidget::mouseReleaseEvent(QMouseEvent *e)
 {
 	if(e->button() == Qt::LeftButton) {
 		e->accept();
@@ -125,34 +147,39 @@ void VideoWidget::mouseReleaseEvent(QMouseEvent * e)
 	}
 }
 
-void VideoWidget::mouseDoubleClickEvent(QMouseEvent * e)
+void
+VideoWidget::mouseDoubleClickEvent(QMouseEvent *e)
 {
 	e->accept();
 	emit doubleClicked(e->globalPos());
 }
 
-void VideoWidget::wheelEvent(QWheelEvent * e)
+void
+VideoWidget::wheelEvent(QWheelEvent *e)
 {
 	e->accept();
 	if(e->delta() >= 0)
 		emit wheelUp();
 	else
-	emit wheelDown();
+		emit wheelDown();
 }
 
-QSize VideoWidget::desktopSize()
+QSize
+VideoWidget::desktopSize()
 {
 	QRect rect = QApplication::desktop()->screenGeometry(this);
 	return QSize(rect.width(), rect.height());
 }
 
-double VideoWidget::desktopAspectRatio()
+double
+VideoWidget::desktopAspectRatio()
 {
 	QSize size = desktopSize();
 	return (double)size.width() / size.height();
 }
 
-void VideoWidget::updateVideoLayerGeometry()
+void
+VideoWidget::updateVideoLayerGeometry()
 {
 	QSize frameSize = size();
 
@@ -177,10 +204,16 @@ void VideoWidget::updateVideoLayerGeometry()
 	update();
 }
 
-QSize VideoWidget::sizeHint() const {
+QSize
+VideoWidget::sizeHint() const
+{
 	return QSize(m_videoWidth, m_videoHeight);
 }
-QSize VideoWidget::minimumSizeHint() const {
+
+QSize
+VideoWidget::minimumSizeHint() const
+{
 	return QSize(0, 0);
 }
+
 #include "videowidget.moc"

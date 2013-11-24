@@ -28,27 +28,25 @@
 
 #include <KUrl>
 
-class FileSaveHelper {
-  public:
-
-	FileSaveHelper(const KUrl & url, bool overwrite);
+class FileSaveHelper
+{
+public:
+	FileSaveHelper(const KUrl &url, bool overwrite);
 	~FileSaveHelper();
 
 	const KUrl & url();
 	bool overwrite();
-	QFile *file();
+	QFile * file();
 
 	bool open();
 	bool close();
 
-	static bool exists(const KUrl & url);
+	static bool exists(const KUrl &url);
 
-  private:
-
+private:
 	KUrl m_url;
 	bool m_overwrite;
 	QFile *m_file;
 };
-
 
 #endif

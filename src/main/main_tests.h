@@ -35,7 +35,8 @@
 
 using namespace SubtitleComposer;
 
-void showRanges(const RangeList & ranges)
+void
+showRanges(const RangeList &ranges)
 {
 	QString aux;
 	for(RangeList::ConstIterator it = ranges.begin(), end = ranges.end(); it != end; ++it)
@@ -44,7 +45,8 @@ void showRanges(const RangeList & ranges)
 	kDebug() << QString("Showing ranges: %1").arg(aux.trimmed());
 }
 
-void showSubtitle(const Subtitle & subtitle)
+void
+showSubtitle(const Subtitle &subtitle)
 {
 	kDebug() << "Showing subtitle";
 	for(int index = 0, size = subtitle.linesCount(); index < size; ++index)
@@ -52,7 +54,8 @@ void showSubtitle(const Subtitle & subtitle)
 	kDebug() << "--------------------------";
 }
 
-void iterateSubtitle(const Subtitle & subtitle, const RangeList & ranges)
+void
+iterateSubtitle(const Subtitle &subtitle, const RangeList &ranges)
 {
 	showRanges(ranges);
 
@@ -70,7 +73,8 @@ void iterateSubtitle(const Subtitle & subtitle, const RangeList & ranges)
 	kDebug() << "--------------------------";
 }
 
-void testSubtitleIterator()
+void
+testSubtitleIterator()
 {
 	Subtitle subtitle;
 
@@ -103,27 +107,29 @@ void testSubtitleIterator()
 //      --it;
 
 	/*QTime time;
-	time.start();
+	   time.start();
 
-	for ( SubtitleIterator it( subtitle, Range::full(), true ); it.current(); --it )
-	it.current()->text();
+	   for ( SubtitleIterator it( subtitle, Range::full(), true ); it.current(); --it )
+	   it.current()->text();
 
-	kDebug() << time.elapsed();
+	   kDebug() << time.elapsed();
 
-	for ( SubtitleIterator it( subtitle, Range::full(), true ); it.current(); --it )
-	it.current()->text();
+	   for ( SubtitleIterator it( subtitle, Range::full(), true ); it.current(); --it )
+	   it.current()->text();
 
-	kDebug() << time.elapsed(); */
+	   kDebug() << time.elapsed(); */
 }
 
-void testAudioLevels()
+void
+testAudioLevels()
 {
 /*	AudioLevels audiolevels;
-	audiolevels.load( "/home/sergio/Desktop/scomp-trunk/SAMPLES/chasing.amy.cd1.wf" );
-	audiolevels.save( "/home/sergio/Desktop/scomp-trunk/SAMPLES/chasing.amy.cd1.2.wf", true );*/
+        audiolevels.load( "/home/sergio/Desktop/scomp-trunk/SAMPLES/chasing.amy.cd1.wf" );
+        audiolevels.save( "/home/sergio/Desktop/scomp-trunk/SAMPLES/chasing.amy.cd1.2.wf", true );*/
 }
 
-int main(int, char **)
+int
+main(int, char **)
 {
 	// testSubtitleIterator();
 	// testAudioLevels();

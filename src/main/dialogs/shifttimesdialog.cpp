@@ -28,8 +28,8 @@
 
 using namespace SubtitleComposer;
 
-ShiftTimesDialog::ShiftTimesDialog(QWidget * parent):
-ActionWithTargetDialog(i18n("Shift"), parent)
+ShiftTimesDialog::ShiftTimesDialog(QWidget *parent) :
+	ActionWithTargetDialog(i18n("Shift"), parent)
 {
 	QGroupBox *settingsGroupBox = createGroupBox(i18nc("@title:group", "Shifting"));
 
@@ -48,11 +48,14 @@ ActionWithTargetDialog(i18n("Shift"), parent)
 	settingsLayout->addWidget(m_shiftTimeEdit, 0, 1);
 }
 
-void ShiftTimesDialog::resetShiftTime()
+void
+ShiftTimesDialog::resetShiftTime()
 {
 	m_shiftTimeEdit->setValue(0);
 }
 
-int ShiftTimesDialog::shiftTimeMillis() const {
+int
+ShiftTimesDialog::shiftTimeMillis() const
+{
 	return m_directionComboBox->currentIndex() == 0 ? m_shiftTimeEdit->value() : -m_shiftTimeEdit->value();
 }

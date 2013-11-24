@@ -28,10 +28,12 @@
 
 class QEvent;
 
-class TimeEdit:public QTimeEdit {
-  Q_OBJECT public:
+class TimeEdit : public QTimeEdit
+{
+	Q_OBJECT
 
-	TimeEdit(QWidget * parent = 0);
+public:
+	TimeEdit(QWidget *parent = 0);
 
 	int msecsStep() const;
 
@@ -39,22 +41,22 @@ class TimeEdit:public QTimeEdit {
 
 	virtual void stepBy(int steps);
 
-	public slots:void setMSecsStep(int msecs);
-
+public slots:
+	void setMSecsStep(int msecs);
 	void setValue(int value);
 
-	signals:void valueChanged(int value);
+signals:
+	void valueChanged(int value);
 	void valueEntered(int value);
 
-	protected slots:void onTimeChanged(const QTime & time);
+protected slots:
+	void onTimeChanged(const QTime &time);
 
-  protected:
-
+protected:
 	virtual StepEnabled stepEnabled() const;
-	virtual void keyPressEvent(QKeyEvent * event);
+	virtual void keyPressEvent(QKeyEvent *event);
 
-  private:
-
+private:
 	int m_secsStep;
 };
 

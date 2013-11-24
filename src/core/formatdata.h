@@ -28,46 +28,53 @@
 #include <QtCore/QMap>
 
 namespace SubtitleComposer {
-	class FormatData {
-		friend class Format;
+class FormatData
+{
+	friend class Format;
 
-	public:
+public:
+	FormatData(const FormatData &formatData) :
+		m_formatName(formatData.m_formatName),
+		m_data(formatData.m_data) {}
 
-		FormatData(const FormatData & formatData):m_formatName(formatData.m_formatName), m_data(formatData.m_data) {
-		} FormatData & operator=(const FormatData & formatData) {
-			if(this == &formatData)
-				return *this;
-
-			m_formatName = formatData.m_formatName;
-			m_data = formatData.m_data;
-
+	FormatData & operator=(const FormatData &formatData)
+	{
+		if(this == &formatData)
 			return *this;
-		}
-		inline const QString & formatName() {
-			return m_formatName;
-		}
 
-		inline const QString & value(const QString & key) {
-			static const QString empty;
-			return m_data.contains(key) ? m_data[key] : empty;
-		}
+		m_formatName = formatData.m_formatName;
+		m_data = formatData.m_data;
 
-		inline void setValue(const QString & key, const QString & value) {
-			m_data[key] = value;
-		}
+		return *this;
+	}
 
-		inline void clear() {
-			m_data.clear();
-		}
+	inline const QString & formatName()
+	{
+		return m_formatName;
+	}
 
-	private:
+	inline const QString & value(const QString &key)
+	{
+		static const QString empty;
+		return m_data.contains(key) ? m_data[key] : empty;
+	}
 
-		FormatData(const QString & formatName):m_formatName(formatName) {
-		}
+	inline void setValue(const QString &key, const QString &value)
+	{
+		m_data[key] = value;
+	}
 
-		QString m_formatName;
-		QMap < QString, QString > m_data;
-	};
+	inline void clear()
+	{
+		m_data.clear();
+	}
+
+private:
+	FormatData(const QString &formatName) : m_formatName(formatName) {}
+
+	QString m_formatName;
+	QMap<QString, QString> m_data;
+};
 }
 
 #endif
