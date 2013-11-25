@@ -8,7 +8,7 @@
 # Server = http://smoothware.net/$repo/$arch
 
 pkgname=subtitlecomposer-git
-pkgver=v0.5.5.6.gadace48
+pkgver=v0.5.6
 pkgrel=1
 pkgdesc="A KDE subtitle editor - nightly build"
 arch=('i686' 'x86_64')
