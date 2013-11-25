@@ -82,7 +82,7 @@
 		<comment>TMPlayer subtitles</comment>
 		<sub-class-of type="text/plain"/>
 		<generic-icon name="text-x-generic"/>
-		<magic priority="100">
+		<magic priority="40">
 			<match type="string" value="xx\:xx\:xx\:" mask="0x0000ff0000ff0000ff" offset="0"/>
 			<match type="string" value="xx\:xx\:xx\:" mask="0x0000ff0000ff0000ff" offset="9:256"/>
 		</magic>
@@ -93,7 +93,7 @@
 		<comment>TMPlayer+ subtitles</comment>
 		<sub-class-of type="text/plain"/>
 		<generic-icon name="text-x-generic"/>
-		<magic priority="100">
+		<magic priority="40">
 			<match type="string" value="xx\:xx\:xx=" mask="0x0000ff0000ff0000ff" offset="0"/>
 			<match type="string" value="xx\:xx\:xx\,1=" mask="0x0000ff0000ff0000ffffff" offset="0">
 				<match type="string" value="xx\:xx\:xx\,2=" mask="0x0000ff0000ff0000ffffff" offset="9:256"/>
