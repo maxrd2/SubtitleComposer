@@ -26,7 +26,7 @@
 
 #include "../inputformat.h"
 
-#include <QtCore/QRegExp>
+#include <QRegExp>
 
 namespace SubtitleComposer {
 class SubStationAlphaInputFormat : public InputFormat
@@ -41,7 +41,6 @@ protected:
 	SString toSString(QString string) const
 	{
 		static QRegExp cmdRegExp("\\{([^\\}]+)\\}");
-		static QRegExp tagCmdRegExp("\\[ibu][01]");
 
 		SString ret;
 
@@ -49,39 +48,50 @@ protected:
 		string.replace("\\n", "\n");
 
 		int currentStyle = 0;
+		QRgb currentColor = 0;
 
 		int offsetPos = 0, matchedPos;
 		while((matchedPos = cmdRegExp.indexIn(string, offsetPos)) != -1) {
 			int newStyleFlags = currentStyle;
+			QRgb newColor = currentColor;
 
 			QString commands(cmdRegExp.cap(1));
 			QStringList commandsList(commands.split('\\'));
 			for(QStringList::ConstIterator it = commandsList.begin(), end = commandsList.end(); it != end; ++it) {
-				if(*it == "\\il")
-					newStyleFlags |= SString::Italic;
-				else if(*it == "\\bl")
-					newStyleFlags |= SString::Bold;
-				else if(*it == "\\ul")
-					newStyleFlags |= SString::Underline;
-				else if(*it == "\\i0")
+				if(it->isEmpty()) {
+					continue;
+				} else if(*it == "i0") {
 					newStyleFlags &= ~SString::Italic;
-				else if(*it == "\\b0")
+				} else if(*it == "b0") {
 					newStyleFlags &= ~SString::Bold;
-				else if(*it == "\\u0")
+				} else if(*it == "u0") {
 					newStyleFlags &= ~SString::Underline;
+				} else if(*it == "i1") {
+					newStyleFlags |= SString::Italic;
+				} else if(it->at(0) == 'b') {
+					// it's usually followed 1, but can be weight of the font: 400, 700, ...
+					newStyleFlags |= SString::Bold;
+				} else if(*it == "u1") {
+					newStyleFlags |= SString::Underline;
+				} else if(it->at(0) == 'c') {
+					QString val = ("000000" + it->mid(3, -2)).right(6);
+					if(val == "000000") {
+						newStyleFlags &= ~SString::Color;
+						newColor = 0;
+					} else {
+						newStyleFlags |= SString::Color;
+						newColor = QColor("#" + val.mid(4, 2) + val.mid(2, 2) + val.mid(0, 2)).rgb();
+					}
+				}
 			}
-			commands.replace(tagCmdRegExp, "");
 
-			QString token(string.mid(offsetPos, matchedPos - offsetPos));
-			if(commands.length())
-				token += "{" + commands + "}";
+			ret.append(SString(string.mid(offsetPos, matchedPos - offsetPos), currentStyle, currentColor));
 
-			ret.append(SString(token, currentStyle));
 			currentStyle = newStyleFlags;
-
+			currentColor = newColor;
 			offsetPos = matchedPos + cmdRegExp.matchedLength();
 		}
-		ret.append(SString(string.mid(offsetPos, matchedPos - offsetPos), currentStyle));
+		ret.append(SString(string.mid(offsetPos, matchedPos - offsetPos), currentStyle, currentColor));
 
 		return ret;
 	}
@@ -97,7 +107,7 @@ protected:
 
 		FormatData formatData = createFormatData();
 
-		formatData.setValue("ScriptInfo", data.mid(0, stylesStart - 1));
+		formatData.setValue("ScriptInfo", data.mid(0, stylesStart));
 
 		int eventsStart = m_eventsRegExp.indexIn(data, stylesStart);
 		if(eventsStart == -1)
@@ -117,19 +127,15 @@ protected:
 		for(; m_dialogueRegExp.indexIn(data, offset) != -1; offset += m_dialogueRegExp.matchedLength()) {
 			if(m_timeRegExp.indexIn(m_dialogueRegExp.cap(1)) == -1)
 				continue;
-
 			Time showTime(m_timeRegExp.cap(1).toInt(), m_timeRegExp.cap(2).toInt(), m_timeRegExp.cap(3).toInt(), m_timeRegExp.cap(4).toInt() * 10);
 
 			if(m_timeRegExp.indexIn(m_dialogueRegExp.cap(2)) == -1)
 				continue;
-
 			Time hideTime(m_timeRegExp.cap(1).toInt(), m_timeRegExp.cap(2).toInt(), m_timeRegExp.cap(3).toInt(), m_timeRegExp.cap(4).toInt() * 10);
 
 			SubtitleLine *line = new SubtitleLine(toSString(m_dialogueRegExp.cap(3)), showTime, hideTime);
 
-			formatData.setValue("Dialogue", m_dialogueRegExp.cap(0).replace(m_dialogue2RegExp, "\\1%1\\2%2\\3%3\n")
-								);
-
+			formatData.setValue("Dialogue", m_dialogueRegExp.cap(0).replace(m_dialogueDataRegExp, "\\1%1\\2%2\\3%3\n"));
 			setFormatData(line, formatData);
 
 			subtitle.insertLine(line);
@@ -139,47 +145,44 @@ protected:
 		return readLines > 0;
 	}
 
-	SubStationAlphaInputFormat() :
-		InputFormat("SubStation Alpha", QStringList("ssa")),
-		m_scriptInfoRegExp("^ *\\[Script Info\\] *\n"),
-		m_stylesRegExp(s_stylesRegExp),
-		m_eventsRegExp("\n\\ *\\[Events\\] *\n"),
+	SubStationAlphaInputFormat(
+			const QString &name = "SubStation Alpha",
+			const QStringList &extensions = QStringList("ssa"),
+			const QString &stylesRegExp = s_stylesRegExp) :
+		InputFormat(name, extensions),
+		m_scriptInfoRegExp(s_scriptInfoRegExp),
+		m_stylesRegExp(stylesRegExp),
+		m_eventsRegExp(s_eventsRegExp),
 		m_formatRegExp(s_formatRegExp),
 		m_dialogueRegExp(s_dialogueRegExp),
-		m_dialogue2RegExp(s_dialogue2RegExp),
-		m_timeRegExp("([0-9]):([0-5][0-9]):([0-5][0-9]).([0-9][0-9])") {}
-
-	SubStationAlphaInputFormat(const QString &name, const QStringList &extensions, const QString &stylesRegExp, const QString &formatRegExp) :
-		InputFormat(name, extensions),
-		m_scriptInfoRegExp("^ *\\[Script Info\\] *\n"),
-		m_stylesRegExp(stylesRegExp),
-		m_eventsRegExp("\n\\ *\\[Events\\] *\n"),
-		m_formatRegExp(formatRegExp),
-		m_dialogueRegExp(s_dialogueRegExp),
-		m_dialogue2RegExp(s_dialogue2RegExp),
-		m_timeRegExp("([0-9]):([0-5][0-9]):([0-5][0-9]).([0-9][0-9])") {}
+		m_dialogueDataRegExp(s_dialogueDataRegExp),
+		m_timeRegExp(s_timeRegExp)
+	{}
 
 	mutable QRegExp m_scriptInfoRegExp;
 	mutable QRegExp m_stylesRegExp;
 	mutable QRegExp m_eventsRegExp;
 	mutable QRegExp m_formatRegExp;
 	mutable QRegExp m_dialogueRegExp;
-	mutable QRegExp m_dialogue2RegExp;
+	mutable QRegExp m_dialogueDataRegExp;
 	mutable QRegExp m_timeRegExp;
 
+	static const char *s_scriptInfoRegExp;
 	static const char *s_stylesRegExp;
 	static const char *s_formatRegExp;
+	static const char *s_eventsRegExp;
 	static const char *s_dialogueRegExp;
-	static const char *s_dialogue2RegExp;
+	static const char *s_dialogueDataRegExp;
+	static const char *s_timeRegExp;
 };
 
-const char *SubStationAlphaInputFormat::s_stylesRegExp = "\n\\ *\\[V4 Styles\\] *\n";
-
-const char *SubStationAlphaInputFormat::s_formatRegExp = " *Format: *Marked, *Start, *End, *Style, *Name, *MarginL, *MarginR, *MarginV, *Effect, *Text *\n";
-
-const char *SubStationAlphaInputFormat::s_dialogueRegExp = " *Dialogue: *[^,]+, *([^,]+), *([^,]+), *[^,]+, *[^,]*, *[0-9]{4,4}, *[0-9]{4,4}, *[0-9]{4,4}, *[^,]*, *([^\n]*)\n?";
-
-const char *SubStationAlphaInputFormat::s_dialogue2RegExp = " *(Dialogue: *[^,]+, *)[^,]+(, *)[^,]+(, *[^,]+, *[^,]*, *[0-9]{4,4}, *[0-9]{4,4}, *[0-9]{4,4}, *[^,]*, *).*";
+const char *SubStationAlphaInputFormat::s_scriptInfoRegExp = "^ *\\[Script Info\\] *[\r\n]+";
+const char *SubStationAlphaInputFormat::s_stylesRegExp = "[\r\n]+ *\\[[vV]4 Styles\\] *[\r\n]+";
+const char *SubStationAlphaInputFormat::s_formatRegExp = " *Format: *(\\w+,? *)+[\r\n]+";
+const char *SubStationAlphaInputFormat::s_eventsRegExp = "[\r\n]+ *\\[Events\\] *[\r\n]+";
+const char *SubStationAlphaInputFormat::s_dialogueRegExp = " *Dialogue: *[^,]+, *([^,]+), *([^,]+), *[^,]+, *[^,]*, *\\d{4}, *\\d{4}, *\\d{4}, *[^,]*, *([^\r\n]*)[\r\n]+";
+const char *SubStationAlphaInputFormat::s_dialogueDataRegExp = " *(Dialogue: *[^,]+, *)[^,]+(, *)[^,]+(, *[^,]+, *[^,]*, *\\d{4}, *\\d{4}, *\\d{4}, *[^,]*, *).*";
+const char *SubStationAlphaInputFormat::s_timeRegExp = "(\\d+):(\\d+):(\\d+).(\\d+)";
 
 class AdvancedSubStationAlphaInputFormat : public SubStationAlphaInputFormat
 {
@@ -187,17 +190,10 @@ class AdvancedSubStationAlphaInputFormat : public SubStationAlphaInputFormat
 
 protected:
 	AdvancedSubStationAlphaInputFormat() :
-		SubStationAlphaInputFormat("Advanced SubStation Alpha", QStringList("ass"), s_stylesRegExp, s_formatRegExp)
+		SubStationAlphaInputFormat("Advanced SubStation Alpha", QStringList("ass"), "[\r\n]+ *\\[[vV]4\\+ Styles\\] *[\r\n]+")
 	{}
-
-	static const char *s_stylesRegExp;
-	static const char *s_formatRegExp;
 };
 
-const char *AdvancedSubStationAlphaInputFormat::s_stylesRegExp = "\n\\ *\\[V4\\+ Styles\\] *\n";
-
-const char *AdvancedSubStationAlphaInputFormat::s_formatRegExp = " *Format: *Layer, *Start, *End, *Style, *(Actor|Name), *MarginL, *MarginR, *MarginV, *Effect, *Text *\n";
-// Format: Layer, Start, End, Style, Name, MarginL, MarginR, MarginV, Effect, Text
 }
 
 #endif
