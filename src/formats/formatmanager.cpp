@@ -283,6 +283,7 @@ FormatManager::writeSubtitle(const Subtitle &subtitle, bool primary, const KUrl 
 
 	QTextStream stream(fileSaveHelper.file());
 	stream.setCodec(codec);
+	stream.setGenerateByteOrderMark(true);
 	stream << data;
 
 	return fileSaveHelper.close();
