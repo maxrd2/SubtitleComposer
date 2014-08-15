@@ -36,6 +36,17 @@
 #include <KLocale>
 #include <KStandardDirs>
 
+static inline KUrl
+KUrlFromParam(const QString path)
+{
+	KUrl url(path);
+	if(!url.isRelative())
+		return url;
+	url.setPath(QDir::currentPath());
+	url.addPath(path);
+	return url;
+}
+
 int
 main(int argc, char **argv)
 {
@@ -82,15 +93,11 @@ main(int argc, char **argv)
 	// Handle our own options/arguments
 	KCmdLineArgs *args = KCmdLineArgs::parsedArgs();
 
-	// current working directory url
-	KUrl cwd(QDir::currentPath());
-	cwd.adjustPath(KUrl::AddTrailingSlash);
-
 	if(args->count())
-		app.openSubtitle(KUrl(cwd, args->arg(0)));
+		app.openSubtitle(KUrlFromParam(args->arg(0)));
 
 	if(args->count() > 1)
-		app.openSubtitleTr(KUrl(cwd, args->arg(1)));
+		app.openSubtitleTr(KUrlFromParam(args->arg(1)));
 
 	args->clear();
 
