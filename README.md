@@ -27,8 +27,12 @@ Help and ideas are welcome.
 If you would like to do some code changes, please check the new [coding style][coding style] or [wiki][coding style wiki].   
 
 ### AUTHORS / CONTRIBUTORS
- - Sergio Pistone - original author and maintainer
  - Mladen Milinkovic - maintainer
+ - Gogo - Croatian translation
+ - Petar Toushkov - Bulgarian translation
+ - Sergio Pistone - original author and maintainer
+ - Petr Gadula (Goliash), Thomas Gastine, Panagiotis Papadopoulos, Alessandro Polverini, Tomasz Argasiński, Marcio P. Moraes,
+ Alexander Antsev, Slobodan Simic, Yuri Chornoivan, Alexandros Perdikomatis, Barcza Károly - original translations
  - wantilles - support for VDPAU decoding on the mplayer backend
  - Martin Steghöfer
  - and many others

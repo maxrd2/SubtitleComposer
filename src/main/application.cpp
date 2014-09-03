@@ -3059,11 +3059,8 @@ Application::onPlayerOptionChanged(const QString &option, const QString &value)
 	if(option == PlayerConfig::keyDecoderBackend()) {
 		m_decoder->reinitialize(value);
 	} else if(option == PlayerConfig::keySeekJumpLength()) {
-		action(ACT_SEEK_BACKWARDS)->setStatusTip(i18np("Seek backwards 1 second", "Seek backwards %1 seconds", value.toInt()
-													   ));
-
-		action(ACT_SEEK_FORWARDS)->setStatusTip(i18np("Seek forwards 1 second", "Seek forwards %1 seconds", value.toInt()
-													  ));
+		action(ACT_SEEK_BACKWARDS)->setStatusTip(i18np("Seek backwards 1 second", "Seek backwards %1 seconds", value.toInt()));
+		action(ACT_SEEK_FORWARDS)->setStatusTip(i18np("Seek forwards 1 second", "Seek forwards %1 seconds", value.toInt()));
 	}
 }
 

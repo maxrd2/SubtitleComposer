@@ -2,7 +2,7 @@
 
 BASEDIR="../src/" # root of translatable sources
 PROJECT="subtitlecomposer" # project name
-BUGADDR="https://sourceforge.net/tracker/?atid=1005652&group_id=208427&func=browse" # MSGID-Bugs
+BUGADDR="https://github.com/maxrd2/subtitlecomposer/issues" # MSGID-Bugs
 WDIR=`pwd` # working dir
 
 
