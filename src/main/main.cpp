@@ -36,6 +36,10 @@
 #include <KLocale>
 #include <KStandardDirs>
 
+#if defined HAVE_XINE && !defined HAVE_XCB
+#include <X11/Xlib.h>
+#endif
+
 static inline KUrl
 KUrlFromParam(const QString path)
 {
@@ -50,6 +54,10 @@ KUrlFromParam(const QString path)
 int
 main(int argc, char **argv)
 {
+#if defined HAVE_XINE && !defined HAVE_XCB
+	XInitThreads(); // needed for XinePlayerBackend
+#endif
+
 	KAboutData aboutData(
 			"subtitlecomposer",     // The program name used internally.
 			"subtitlecomposer",     // The message catalog name.
@@ -57,7 +65,7 @@ main(int argc, char **argv)
 			"0.5.6",        // The program version string.
 			ki18n("A KDE subtitle editor."),        // A short description of what the program does.
 			KAboutData::License_GPL,        // License identifier
-			ki18n("&copy; 2007-2012 Sergio Pistone\n&copy; 2013 Mladen Milinković"),        // Copyright Statement
+			ki18n("&copy; 2007-2012 Sergio Pistone\n&copy; 2013-2014 Mladen Milinković"),        // Copyright Statement
 			KLocalizedString(),     // Additional text
 			// We are not a project under the KDE umbrella (hopefully, we will be someday)
 			"https://github.com/maxrd2/subtitlecomposer",   // Project Homepage

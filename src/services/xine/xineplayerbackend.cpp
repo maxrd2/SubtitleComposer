@@ -384,7 +384,7 @@ XinePlayerBackend::initializeXine(WId winId)
 	int screen_nbr = 0;
 	m_connection = xcb_connect(NULL, &screen_nbr);
 #else
-	XInitThreads();
+	// XInitThreads() is called from main() otherwise the process can and will crash
 	m_connection = XOpenDisplay(NULL);
 #endif
 
