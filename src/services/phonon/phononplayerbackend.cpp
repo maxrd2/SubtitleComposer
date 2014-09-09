@@ -50,12 +50,6 @@ PhononPlayerBackend::doesVolumeCorrection() const
 	return true;
 }
 
-bool
-PhononPlayerBackend::supportsChangingAudioStream(bool * /*onTheFly */) const
-{
-	return false;
-}
-
 void
 PhononPlayerBackend::initMediaObject()
 {
@@ -203,8 +197,12 @@ PhononPlayerBackend::stop()
 bool
 PhononPlayerBackend::setActiveAudioStream(int audioStream)
 {
-	m_mediaController->setCurrentAudioChannel(Phonon::AudioChannelDescription::fromIndex(audioStream));
-	return true;
+	QList<Phonon::AudioChannelDescription> audioChannels = m_mediaController->availableAudioChannels();
+	if (audioChannels.length() > audioStream && audioStream >= 0) {
+		m_mediaController->setCurrentAudioChannel(audioChannels[audioStream]);
+		return true;
+	}
+	return false;
 }
 
 bool
@@ -249,10 +247,16 @@ PhononPlayerBackend::onAvailableAudioChannelsChanged()
 	QStringList audioStreams;
 
 	QList<Phonon::AudioChannelDescription> audioChannels = m_mediaController->availableAudioChannels();
-	for(QList<Phonon::AudioChannelDescription>::ConstIterator it = audioChannels.begin(), end = audioChannels.end(); it != end; ++it)
+        int idx = -1, i = 0;
+	for(QList<Phonon::AudioChannelDescription>::ConstIterator it = audioChannels.begin(), end = audioChannels.end(); it != end; ++it) {
 		audioStreams << (*it).name();
+		if (it->index() == m_mediaController->currentAudioChannel().index()) {
+			idx = i;
+		}
+		i ++;
+	}
 
-	setPlayerAudioStreams(audioStreams, m_mediaController->currentAudioChannel().index());
+	setPlayerAudioStreams(audioStreams, idx);
 }
 
 void
