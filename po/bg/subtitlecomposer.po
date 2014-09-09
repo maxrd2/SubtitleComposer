@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: subtitlecomposer\n"
 "Report-Msgid-Bugs-To: https://github.com/maxrd2/subtitlecomposer/issues\n"
 "POT-Creation-Date: 2014-09-03 02:43+0200\n"
-"PO-Revision-Date: 2014-09-02 21:27+0200\n"
+"PO-Revision-Date: 2014-09-10 00:11+0200\n"
 "Last-Translator: Petar Toushkov <peterdottoushkovetgmailcom>\n"
 "Language-Team: Bulgarian <kde-i18n-doc@kde.org>\n"
 "Language: bg\n"
@@ -157,9 +157,8 @@ msgid "Toggle Lines Style"
 msgstr "Включване стила на репликите"
 
 #: core/subtitle.cpp:1177
-#, fuzzy
 msgid "Change Lines Text Color"
-msgstr "Задаване текст за реплика"
+msgstr "Промяна на цвета на репликите"
 
 #: core/subtitle.cpp:1190
 msgid "Set Lines Mark"
@@ -760,14 +759,12 @@ msgid "Toggle selected lines strike through attribute"
 msgstr "Включване на зачертаване за избраните реплики"
 
 #: main/application.cpp:833 main/currentlinewidget.cpp:97
-#, fuzzy
 msgid "Change Text Color"
-msgstr "Промяна до"
+msgstr "Промяна на цвета на текста"
 
 #: main/application.cpp:834
-#, fuzzy
 msgid "Change text color of selected lines"
-msgstr "Изчистване на грешките от текущо избраните реплики"
+msgstr "Промяна цвета на избраните реплики"
 
 #: main/application.cpp:841 main/lineswidget.cpp:1071
 msgid "Shift..."
@@ -1904,9 +1901,8 @@ msgid "Forwards (+)"
 msgstr "Напред (+)"
 
 #: main/dialogs/shifttimesdialog.cpp:39
-#, fuzzy
 msgid "Backwards (−)"
-msgstr "Назад (-)"
+msgstr "Назад (−)"
 
 #: main/dialogs/smarttextsadjustdialog.cpp:43
 msgid "Minimum length for line break:"
@@ -2089,7 +2085,7 @@ msgstr "Зачертан"
 #: main/lineswidget.cpp:1064 widgets/simplerichtextedit.cpp:138
 msgctxt "@action:inmenu Change Text Color"
 msgid "Text Color"
-msgstr ""
+msgstr "Цвят на текста"
 
 #: main/lineswidget.cpp:1066
 msgid "Times"
@@ -2100,9 +2096,8 @@ msgid "Shift +%1 Milliseconds"
 msgstr "Изместване с +%1 милисекунди"
 
 #: main/lineswidget.cpp:1069
-#, fuzzy
 msgid "Shift −%1 Milliseconds"
-msgstr "Изместване с +%1 милисекунди"
+msgstr "Изместване с −%1 милисекунди"
 
 #: main/lineswidget.cpp:1078
 msgid "Errors"
@@ -2125,6 +2120,8 @@ msgid ""
 "&copy; 2007-2012 Sergio Pistone\n"
 "&copy; 2013 Mladen Milinković"
 msgstr ""
+"&copy; 2007-2012 Sergio Pistone\n"
+"&copy; 2013 Mladen Milinković"
 
 #: main/main.cpp:68
 msgid "Sergio Pistone"
@@ -2132,14 +2129,13 @@ msgstr "Sergio Pistone"
 
 #: main/main.cpp:69
 msgid "Original Author"
-msgstr ""
+msgstr "Основател на проекта"
 
 #: main/main.cpp:73
 msgid "Mladen Milinković"
-msgstr ""
+msgstr "Mladen Milinković"
 
 #: main/main.cpp:74
-#, fuzzy
 msgid "Author & Maintainer"
 msgstr "Автор и поддръжка"
 
@@ -2508,7 +2504,7 @@ msgstr "Изходен видео драйвер:"
 
 #: services/mplayer/mplayerconfigwidget.cpp:66
 msgid "Enable vdpau for DivX/XviD"
-msgstr ""
+msgstr "Включване на vdpau за DivX/XviD"
 
 #: services/mplayer/mplayerconfigwidget.cpp:69
 msgid "Allow frame dropping"
@@ -2675,7 +2671,6 @@ msgstr "Главна лента с инструменти"
 #. i18n: file: main/subtitlecomposerui.rc:168
 #. i18n: ectx: ToolBar (editToolBar)
 #: rc.cpp:36
-#, fuzzy
 msgid "Edit Toolbar"
 msgstr "Лента с инструменти за редактиране"
 
