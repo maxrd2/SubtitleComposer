@@ -56,7 +56,6 @@ public:
 
 protected:
 	virtual bool doesVolumeCorrection() const;
-	virtual bool supportsChangingAudioStream(bool *onTheFly) const;
 
 	virtual VideoWidget * initialize(QWidget *videoWidgetParent);
 	virtual void finalize();
