@@ -1,0 +1,8 @@
+# The following scripts are intended to be executed on Kross, we don't need to make them executable.
+# You can execute them inside subtitlecomposer clicking menu Tools -> foo_script.rb
+subtitlecomposer: script-not-executable usr/share/kde4/apps/subtitlecomposer/scripts/example_capitalize_all_lines.rb
+subtitlecomposer: script-not-executable usr/share/kde4/apps/subtitlecomposer/scripts/example_iterate_selection.rb
+subtitlecomposer: script-not-executable usr/share/kde4/apps/subtitlecomposer/scripts/example_remove_impair_lines.rb
+subtitlecomposer: script-not-executable usr/share/kde4/apps/subtitlecomposer/scripts/example_trim_to_selection.rb
+# Also provided by libxine2-dev
+subtitlecomposer source: missing-build-dependency-for-dh-addon xine => libxine-dev

@@ -1,0 +1,71 @@
+subtitlecomposer (0.5.6.9~trusty) trusty; urgency=high
+
+  * New release
+
+ -- Goran Vidovic (gogo) <trebelnik2@gmail.com>  Sat, 14 Jun 2014 20:07:05 +0100
+
+subtitlecomposer (0.5.3-4) unstable; urgency=low
+
+  [ José Manuel Santamaría Lema ]
+  * Using ${xine-x:Depends} provided by dh_xine (Closes: #575124).
+  * Point debian/control Vcs fields to the new Git repository.
+  * Build depend on libxine2-dev instead of libxine-dev (Closes: #724751).
+  * Add link_against_x11.diff (Closes: #713576).
+  * Bump Standards-Version to 3.9.4, no changes required.
+  * Update lintian overrides.
+
+  [ Maximiliano Curia ]
+  * Update vcs fields.
+  * Migrate cdbs to dh 9.
+  * Add myself as uploader.
+  * Add lintian override, xine addon provided by libxine2-dev.
+
+ -- Maximiliano Curia <maxy@debian.org>  Tue, 26 Nov 2013 10:26:58 +0100
+
+subtitlecomposer (0.5.3-3) unstable; urgency=low
+
+  * Switch to dpkg-source 3.0 (quilt) format.
+  * Added 04_fix_ftbfs_gcc_4_5.diff (Closes: #565078).
+  * Added "DEB_KDE_LINK_WITH_AS_NEEDED := yes" to debian/rules.
+
+ -- José Manuel Santamaría Lema <panfaust@gmail.com>  Thu, 14 Jan 2010 15:30:06 +0100
+
+subtitlecomposer (0.5.3-2) unstable; urgency=low
+
+  * Added patches to avoid an FTBFS when compiling with binutils-gold:
+    + 01_link_gobject.diff
+    + 02_link_krosscore.diff
+    + 03_link_phonon.diff
+  * Bump Standards Version to 3.8.3, no changes needed.
+
+ -- José Manuel Santamaría Lema <panfaust@gmail.com>  Fri, 13 Nov 2009 19:48:15 +0100
+
+subtitlecomposer (0.5.3-1) unstable; urgency=low
+
+  * New upstream release.
+  * Dropped the following patches because upstream fixed the issues:
+    + debian/patches/missing_gstreamer_headers.patch
+    + debian/patches/missing_phonon_link.patch
+    + debian/patches/textoverlay_fix.patch
+  * No build-depend on quilt since there are no patches to apply.
+  * Don't install KRAZY file because upstream is not provinding it for this
+    release.
+  * Bump Standards Version to 3.8.2, no changes needed.
+  * Added lintian overrides for ruby scripts intended to be ran using Kross.
+  * Refreshed man page, generated with kdemangen.pl and edited by hand to avoid
+    lintian warnings.
+
+ -- José Manuel Santamaría Lema <panfaust@gmail.com>  Fri, 19 Jun 2009 00:41:55 +0200
+
+subtitlecomposer (0.5.2-1) unstable; urgency=low
+
+  * Manpage generated with kdemangen.pl and edited by hand to avoid lintian
+    warnings.
+  * Patches to fix missing library links/headers:
+    + debian/patches/missing_gstreamer_headers.patch
+    + debian/patches/missing_phonon_link.patch
+  * Patch to make the video player work:
+    + debian/patches/textoverlay_fix.patch
+  * Initial release (Closes: #516372).
+
+ -- José Manuel Santamaría Lema <panfaust@gmail.com>  Tue, 19 May 2009 00:47:30 +0200
