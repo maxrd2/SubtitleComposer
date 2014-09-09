@@ -198,7 +198,7 @@ bool
 PhononPlayerBackend::setActiveAudioStream(int audioStream)
 {
 	QList<Phonon::AudioChannelDescription> audioChannels = m_mediaController->availableAudioChannels();
-	if (audioChannels.length() > audioStream && audioStream >= 0) {
+	if(audioChannels.length() > audioStream && audioStream >= 0) {
 		m_mediaController->setCurrentAudioChannel(audioChannels[audioStream]);
 		return true;
 	}
@@ -247,13 +247,12 @@ PhononPlayerBackend::onAvailableAudioChannelsChanged()
 	QStringList audioStreams;
 
 	QList<Phonon::AudioChannelDescription> audioChannels = m_mediaController->availableAudioChannels();
-        int idx = -1, i = 0;
+	int idx = -1, i = 0;
 	for(QList<Phonon::AudioChannelDescription>::ConstIterator it = audioChannels.begin(), end = audioChannels.end(); it != end; ++it) {
 		audioStreams << (*it).name();
-		if (it->index() == m_mediaController->currentAudioChannel().index()) {
+		if(it->index() == m_mediaController->currentAudioChannel().index())
 			idx = i;
-		}
-		i ++;
+		i++;
 	}
 
 	setPlayerAudioStreams(audioStreams, idx);
