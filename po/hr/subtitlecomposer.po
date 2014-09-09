@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: https://github.com/maxrd2/subtitlecomposer/issues\n"
 "POT-Creation-Date: 2014-09-03 02:43+0200\n"
-"PO-Revision-Date: 2014-09-09 17:00+0100\n"
+"PO-Revision-Date: 2014-09-09 17:27+0100\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: Croatian <hr@hr.org>\n"
 "Language: hr\n"
@@ -906,7 +906,7 @@ msgstr "Uredi tekst trenutnog redka na mjestu"
 
 #: main/application.cpp:975
 msgid "Open Video..."
-msgstr "Otvori video..."
+msgstr "Otvori video snimku..."
 
 #: main/application.cpp:976 main/application.cpp:983
 msgid "Open video file"
@@ -914,11 +914,11 @@ msgstr "Otvori video datoteku"
 
 #: main/application.cpp:982
 msgid "Open &Recent Video"
-msgstr "Otvori &nedavni video"
+msgstr "Otvori &nedavnu video snimku"
 
 #: main/application.cpp:989
 msgid "Close Video"
-msgstr "Zatvori video"
+msgstr "Zatvori video snimku"
 
 #: main/application.cpp:990
 msgid "Close video file"
@@ -1016,7 +1016,7 @@ msgstr "Trenutni redak slijedi položaj reproduciranog videa"
 #: main/application.cpp:1102
 msgctxt "@action:inmenu Toggle audio muted"
 msgid "Mute"
-msgstr "Utišaj"
+msgstr "Utišaj/Uključi zvuk"
 
 #. i18n( "Mute" ), i18n( "Unmute" ) );
 #: main/application.cpp:1104
