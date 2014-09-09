@@ -1,0 +1,15 @@
+# Description: This pacth adds a missing link against Phonon.
+#  Without this patch the package will FTBFS with binutils-gold.
+# Forwarded: not-needed
+# Author: José Manuel Santamaría Lema <panfaust@gmail.com>
+# 
+--- subtitlecomposer-0.5.3.orig/src/player/phonon/CMakeLists.txt
++++ subtitlecomposer-0.5.3/src/player/phonon/CMakeLists.txt
+@@ -4,3 +4,7 @@
+ 	CACHE INTERNAL EXPORTEDVARIABLE
+ )
+ 
++SET( players_phonon_LIBS
++	${KDE4_PHONON_LIBS}
++	CACHE INTERNAL EXPORTEDVARIABLE
++)

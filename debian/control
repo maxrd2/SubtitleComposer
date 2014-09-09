@@ -1,0 +1,26 @@
+Source: subtitlecomposer
+Section: kde
+Priority: optional
+Maintainer: Ubuntu Developers <ubuntu-devel-discuss@lists.ubuntu.com>
+XSBC-Original-Maintainer: Debian KDE Extras Team <pkg-kde-extras@lists.alioth.debian.org>
+Uploaders: gogo <trebelnik2@gmail.com>
+Build-Depends: debhelper (>= 9), cmake, pkg-kde-tools,
+ kdelibs5-dev, libgstreamer-plugins-base0.10-dev, libglib2.0-dev, libxml2-dev,
+ libxine2-dev, libx11-dev, libicu-dev
+Standards-Version: 3.9.4
+Homepage: https://github.com/maxrd2/subtitlecomposer
+Vcs-Browser: http://anonscm.debian.org/gitweb/?p=pkg-kde/kde-extras/subtitlecomposer.git
+Vcs-Git: git://anonscm.debian.org/pkg-kde/kde-extras/subtitlecomposer.git
+
+Package: subtitlecomposer
+Architecture: any
+Depends: ${shlibs:Depends}, ${misc:Depends}, ${xine-x:Depends}
+Suggests: mplayer
+Description: Subtitles editor for KDE
+ A text-based subtitles editor for KDE supporting basic operations (text,
+ time and style edition), realtime previewing and spell checking. Other
+ fancy features are delaying all subtitles in the current subtitle file,
+ checking errors or creating translations.
+ .
+ Different backends (GStreamer, MPlayer, Phonon or xine) can be used to play
+ the realtime video preview which helps to synchronize the subtitles.

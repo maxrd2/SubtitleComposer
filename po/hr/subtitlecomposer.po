@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: https://github.com/maxrd2/subtitlecomposer/issues\n"
 "POT-Creation-Date: 2014-09-03 02:43+0200\n"
-"PO-Revision-Date: 2014-04-26 14:26+0100\n"
+"PO-Revision-Date: 2014-09-09 17:27+0100\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: Croatian <hr@hr.org>\n"
 "Language: hr\n"
@@ -158,9 +158,8 @@ msgid "Toggle Lines Style"
 msgstr "Uklj/Isklj stil redaka"
 
 #: core/subtitle.cpp:1177
-#, fuzzy
 msgid "Change Lines Text Color"
-msgstr "Postavi oznaku redaka"
+msgstr "Promijeni oznaku redaka"
 
 #: core/subtitle.cpp:1190
 msgid "Set Lines Mark"
@@ -768,14 +767,12 @@ msgid "Toggle selected lines strike through attribute"
 msgstr "Precrtajte znakove odabranih redaka"
 
 #: main/application.cpp:833 main/currentlinewidget.cpp:97
-#, fuzzy
 msgid "Change Text Color"
-msgstr "Promijeni u"
+msgstr "Promijeni boju teksta"
 
 #: main/application.cpp:834
-#, fuzzy
 msgid "Change text color of selected lines"
-msgstr "Obriši greške iz odabranih redaka"
+msgstr "Promijeni boju teksta odabranih redaka"
 
 #: main/application.cpp:841 main/lineswidget.cpp:1071
 msgid "Shift..."
@@ -909,7 +906,7 @@ msgstr "Uredi tekst trenutnog redka na mjestu"
 
 #: main/application.cpp:975
 msgid "Open Video..."
-msgstr "Otvori video..."
+msgstr "Otvori video snimku..."
 
 #: main/application.cpp:976 main/application.cpp:983
 msgid "Open video file"
@@ -917,11 +914,11 @@ msgstr "Otvori video datoteku"
 
 #: main/application.cpp:982
 msgid "Open &Recent Video"
-msgstr "Otvori &nedavni video"
+msgstr "Otvori &nedavnu video snimku"
 
 #: main/application.cpp:989
 msgid "Close Video"
-msgstr "Zatvori video"
+msgstr "Zatvori video snimku"
 
 #: main/application.cpp:990
 msgid "Close video file"
@@ -945,7 +942,7 @@ msgstr "Prekini izdvajanje zvučnog zapisa videa"
 
 #: main/application.cpp:1014
 msgid "Full Screen Mode"
-msgstr "Cijelozaslonski pikaz"
+msgstr "Cijelozaslonski/Prozorski pikaz"
 
 #: main/application.cpp:1015
 msgid "Toggle full screen mode"
@@ -1019,7 +1016,7 @@ msgstr "Trenutni redak slijedi položaj reproduciranog videa"
 #: main/application.cpp:1102
 msgctxt "@action:inmenu Toggle audio muted"
 msgid "Mute"
-msgstr "Utišaj"
+msgstr "Utišaj/Uključi zvuk"
 
 #. i18n( "Mute" ), i18n( "Unmute" ) );
 #: main/application.cpp:1104
@@ -1426,7 +1423,7 @@ msgstr "Maksimalan broj redaka:"
 #: main/configs/errorsconfigwidget.cpp:57
 msgctxt "@title:group"
 msgid "Absolute Durations"
-msgstr "Potpuno trajanje"
+msgstr "Potpuna trajanja"
 
 #: main/configs/errorsconfigwidget.cpp:62
 #: main/configs/errorsconfigwidget.cpp:71
@@ -1525,7 +1522,7 @@ msgstr "Trajanje skoka premotavanja:"
 
 #: main/configs/playerconfigwidget.cpp:81 main/playerwidget.cpp:449
 msgid "Show editable position control"
-msgstr "Prikaži promjenjivu kontrolu položaja"
+msgstr "Prikaži promjenjivo upravljanje položaja"
 
 #: main/configs/playerconfigwidget.cpp:83
 msgctxt "@title:group"
@@ -1895,7 +1892,7 @@ msgstr "Podnaslov"
 
 #: main/dialogs/shifttimesdialog.cpp:32
 msgid "Shift"
-msgstr "Pomakni"
+msgstr "Shift"
 
 #: main/dialogs/shifttimesdialog.cpp:34
 msgctxt "@title:group"
@@ -1907,7 +1904,6 @@ msgid "Forwards (+)"
 msgstr "Unaprijed (+)"
 
 #: main/dialogs/shifttimesdialog.cpp:39
-#, fuzzy
 msgid "Backwards (−)"
 msgstr "Unatrag (–)"
 
@@ -2096,7 +2092,7 @@ msgstr "Precrtano"
 #: main/lineswidget.cpp:1064 widgets/simplerichtextedit.cpp:138
 msgctxt "@action:inmenu Change Text Color"
 msgid "Text Color"
-msgstr ""
+msgstr "Boja teksta"
 
 #: main/lineswidget.cpp:1066
 msgid "Times"
@@ -2107,7 +2103,6 @@ msgid "Shift +%1 Milliseconds"
 msgstr "Pomakni +%1 milisekundi"
 
 #: main/lineswidget.cpp:1069
-#, fuzzy
 msgid "Shift −%1 Milliseconds"
 msgstr "Pomakni +%1 milisekundi"
 
@@ -2132,6 +2127,8 @@ msgid ""
 "&copy; 2007-2012 Sergio Pistone\n"
 "&copy; 2013 Mladen Milinković"
 msgstr ""
+"&copy; 2007-2012 Sergio Pistone\n"
+"&copy; 2013 Mladen Milinković"
 
 #: main/main.cpp:68
 msgid "Sergio Pistone"
@@ -2139,14 +2136,13 @@ msgstr "Sergio Pistone"
 
 #: main/main.cpp:69
 msgid "Original Author"
-msgstr ""
+msgstr "Izvorni author"
 
 #: main/main.cpp:73
 msgid "Mladen Milinković"
-msgstr ""
+msgstr "Mladen Milinković"
 
 #: main/main.cpp:74
-#, fuzzy
 msgid "Author & Maintainer"
 msgstr "Autor i održavatelj"
 
@@ -2206,7 +2202,7 @@ msgstr "Greška"
 
 #: main/scripting/scriptsmanager.cpp:119
 msgid "Scripts Manager"
-msgstr "Upravitelj skripta"
+msgstr "Upravitelj skripti"
 
 #: main/scripting/scriptsmanager.cpp:135
 msgid "Create..."
@@ -2476,11 +2472,11 @@ msgstr "Mogućnosti"
 
 #: services/gstreamer/gstreamerconfigwidget.cpp:37
 msgid "Audio sink:"
-msgstr "Zvučni slivnik:"
+msgstr "Slivnik zvuka:"
 
 #: services/gstreamer/gstreamerconfigwidget.cpp:45
 msgid "Video sink:"
-msgstr "Video slivnik:"
+msgstr "Slivnik slike:"
 
 #: services/gstreamer/gstreamerconfigwidget.cpp:53
 msgid "Use experimental features"
@@ -2504,7 +2500,7 @@ msgstr "Odaberi MPlayer izvršnu datotkeku"
 
 #: services/mplayer/mplayerconfigwidget.cpp:48
 msgid "A/V synchronization factor:"
-msgstr "Faktor usklađivanja Videa/Zvuka:"
+msgstr "Faktor usklađivanja Slike/Zvuka:"
 
 #: services/mplayer/mplayerconfigwidget.cpp:55
 msgctxt "@title:group Video settings"
@@ -2513,11 +2509,11 @@ msgstr "Video"
 
 #: services/mplayer/mplayerconfigwidget.cpp:58
 msgid "Video output driver:"
-msgstr "Izlazni pogon videa"
+msgstr "Izlazni pogon slike"
 
 #: services/mplayer/mplayerconfigwidget.cpp:66
 msgid "Enable vdpau for DivX/XviD"
-msgstr ""
+msgstr "Omogući VDPAU za DivX/XviD"
 
 #: services/mplayer/mplayerconfigwidget.cpp:69
 msgid "Allow frame dropping"
@@ -2559,7 +2555,7 @@ msgstr "Pogon zvuka:"
 
 #: services/xine/xineconfigwidget.cpp:45
 msgid "Video driver:"
-msgstr "Pogon videa:"
+msgstr "Pogon slike:"
 
 #: services/xine/xinedecoderbackend.cpp:306
 msgid "There was an error converting audio data to output format."
@@ -2683,7 +2679,6 @@ msgstr "Glavna alatna traka"
 #. i18n: file: main/subtitlecomposerui.rc:168
 #. i18n: ectx: ToolBar (editToolBar)
 #: rc.cpp:36
-#, fuzzy
 msgid "Edit Toolbar"
 msgstr "Uredi alatnu traku"
 

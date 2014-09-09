@@ -1,0 +1,4 @@
+?package(subtitlecomposer):needs="X11" section="Applications/Editors"\
+  title="Subtitle Composer"\
+  longtitle="Subtitle Composer (SRT Subtitle Editor)"\
+  command="/usr/bin/subtitlecomposer"

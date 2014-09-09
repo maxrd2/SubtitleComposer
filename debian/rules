@@ -1,0 +1,13 @@
+#!/usr/bin/make -f
+
+BUILDDIR ?= obj-$(shell dpkg-architecture -qDEB_HOST_GNU_TYPE)
+
+%:
+	dh $@ --parallel --with=kde,xine --builddir=$(BUILDDIR)
+
+override_dh_install:
+	dh_install
+
+override_dh_auto_test:
+	cd $(BUILDDIR) && make buildtests
+	dh_auto_test
