@@ -23,11 +23,11 @@
 
 #include <KDebug>
 
-// #define VERBOSE
+//#define VERBOSE
 
 using namespace SubtitleComposer;
 
-int GStreamer::s_inited(0);
+int GStreamer::s_inited = 0;
 
 bool
 GStreamer::init()
@@ -53,14 +53,9 @@ GStreamer::deinit()
 }
 
 GstElement *
-GStreamer::createElement(const QString &typess, const char *name)
+GStreamer::createElement(const QString &types, const char *name)
 {
-	QStringList types = typess.split(" ");
-	GstElement *element = 0;
-	for(QStringList::ConstIterator it = types.begin(), end = types.end(); it != end; ++it)
-		if(!(*it).isEmpty() && (element = gst_element_factory_make((*it).toAscii(), name)))
-			break;
-	return element;
+	return createElement(types.split(" "), name);
 }
 
 GstElement *
@@ -76,15 +71,12 @@ GStreamer::createElement(const QStringList &types, const char *name)
 GstStateChangeReturn
 GStreamer::setElementState(GstElement *element, int state, unsigned timeout)
 {
-//  if ( GST_STATE( element ) == state )
-//      return GST_STATE_CHANGE_SUCCESS;
-
 	GstStateChangeReturn ret = gst_element_set_state(element, (GstState)state);
 	if(ret == GST_STATE_CHANGE_SUCCESS)
 		return ret;
 
 	if(ret != GST_STATE_CHANGE_ASYNC) {
-#ifdef VERBOSE
+#if defined(VERBOSE) || !defined(NDEBUG)
 		if(ret == GST_STATE_CHANGE_FAILURE)
 			qDebug() << "error setting element" << gst_element_get_name(element) << "state to" << state;
 #endif
@@ -96,7 +88,7 @@ GStreamer::setElementState(GstElement *element, int state, unsigned timeout)
 
 	// wait for state change or timeout
 	if(!gst_element_get_state(element, NULL, NULL, timeout * GST_MSECOND) == GST_STATE_CHANGE_SUCCESS) {
-#ifdef VERBOSE
+#if defined(VERBOSE) || !defined(NDEBUG)
 		qDebug() << "error setting element" << gst_element_get_name(element) << "state to" << state;
 #endif
 		return GST_STATE_CHANGE_FAILURE;
@@ -179,11 +171,11 @@ GstCaps *
 GStreamer::audioCapsFromFormat(const WaveFormat &format, bool addSampleRate)
 {
 	GstCaps *caps = gst_caps_new_simple(format.isInteger() ? "audio/x-raw-int" : "audio/x-raw-float",
-	                                    "endianness", G_TYPE_INT, (gint)1234,
-	                                    "channels", G_TYPE_INT, (gint)format.channels(),
-	                                    "width", G_TYPE_INT, (gint)format.bitsPerSample(),
-	                                    "depth", G_TYPE_INT, (gint)format.bitsPerSample(),
-	                                    NULL);
+										"endianness", G_TYPE_INT, (gint)1234,
+										"channels", G_TYPE_INT, (gint)format.channels(),
+										"width", G_TYPE_INT, (gint)format.bitsPerSample(),
+										"depth", G_TYPE_INT, (gint)format.bitsPerSample(),
+										NULL);
 	GstStructure *structure = gst_caps_get_structure(caps, 0);
 	if(format.isInteger())
 		gst_structure_set(structure, "signed", G_TYPE_BOOLEAN, (gboolean)format.isSigned(), NULL);
@@ -213,7 +205,7 @@ GStreamer::link(GstBin *bin, const char *srcElement, const char *srcPad, const c
 	else
 		result = gst_pad_link(srcpad, sinkpad);
 
-#ifdef VERBOSE
+#if defined(VERBOSE) || !defined(NDEBUG)
 	inspectPad(srcpad, srcElement);
 	inspectPad(sinkpad, sinkElement);
 
@@ -241,7 +233,7 @@ GStreamer::freePipeline(GstPipeline **pipeline, GstBus **bus)
 	}
 
 	if(*pipeline) {
-#ifdef VERBOSE
+#if defined(VERBOSE) || !defined(NDEBUG)
 		qDebug() << "disposing pipeline" << gst_element_get_name(GST_ELEMENT(*pipeline));
 #endif
 
@@ -282,21 +274,21 @@ GStreamer::inspectPad(GstPad *pad, const QString &prefix)
 	gchar *padname = gst_pad_get_name(pad);
 
 	QString message = prefix + QString("PAD %1 (%2)")
-	                   .arg(padname)
-	                   .arg(gst_pad_get_direction(pad) == GST_PAD_SRC ? "SOURCE" : "SINK");
+					   .arg(padname)
+					   .arg(gst_pad_get_direction(pad) == GST_PAD_SRC ? "SOURCE" : "SINK");
 
 	qDebug() << message;
 
-	GstCaps *caps = gst_pad_get_negotiated_caps(pad);
+	GstCaps *caps = gst_pad_get_current_caps(pad);
 	if(caps) {
-		inspectCaps(caps, "NEGOTIATED ");
+		inspectCaps(caps, "CURRENT ");
 		gst_caps_unref(caps);
 		return;
 	}
 
-	caps = gst_pad_get_caps(pad);
+	caps = gst_pad_get_pad_template_caps(pad);
 	if(caps) {
-		inspectCaps(caps, "REGULAR ");
+		inspectCaps(caps, "TEMPLATE ");
 		gst_caps_unref(caps);
 	}
 
@@ -311,7 +303,7 @@ void
 GStreamer::inspectCaps(GstCaps *caps, const QString &prefix)
 {
 	QString message = prefix + QString("CAPS (%1)")
-	                   .arg(gst_caps_is_fixed(caps) ? "FIXED" : "NON FIXED");
+					   .arg(gst_caps_is_fixed(caps) ? "FIXED" : "NON FIXED");
 
 	gchar *debug = gst_caps_to_string(caps);
 	QString token;
@@ -400,11 +392,11 @@ GStreamer::inspectObject(GObject *object)
 		}
 
 		stream << '\n' << "NAME " << params[index]->name << " | NICK " << g_param_spec_get_nick(params[index])
-		       << " | BLURB " << g_param_spec_get_blurb(params[index])
-		       << " | TYPE " << g_type_name(params[index]->value_type)
-		       << " | FLAGS " << ((params[index]->flags & (G_PARAM_READABLE | G_PARAM_WRITABLE)) == (G_PARAM_READABLE | G_PARAM_WRITABLE) ? "RW" : (params[index]->flags & G_PARAM_READABLE ? "R" : params[index]->flags & G_PARAM_WRITABLE ? "W" : "U")
-		                   )
-		       << " | VALUE " << strValue;
+			   << " | BLURB " << g_param_spec_get_blurb(params[index])
+			   << " | TYPE " << g_type_name(params[index]->value_type)
+			   << " | FLAGS " << ((params[index]->flags & (G_PARAM_READABLE | G_PARAM_WRITABLE)) == (G_PARAM_READABLE | G_PARAM_WRITABLE) ? "RW" : (params[index]->flags & G_PARAM_READABLE ? "R" : params[index]->flags & G_PARAM_WRITABLE ? "W" : "U")
+						   )
+			   << " | VALUE " << strValue;
 
 		if(params[index]->flags & G_PARAM_READABLE && strValue)
 			g_free(strValue);

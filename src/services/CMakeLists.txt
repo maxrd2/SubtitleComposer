@@ -1,23 +1,26 @@
-MACRO_OPTIONAL_FIND_PACKAGE( GStreamer )
-IF( GSTREAMER_FOUND )
-	SET( HAVE_GSTREAMER 1 CACHE INTERNAL EXPORTEDVARIABLE )
-	ADD_SUBDIRECTORY( gstreamer )
-ELSE( GSTREAMER_FOUND )
-	MESSAGE( STATUS "GStreamer was not found. GStreamer backend will not be built" )
-ENDIF( GSTREAMER_FOUND )
+set(CMAKE_MODULE_PATH ${CMAKE_CURRENT_SOURCE_DIR} ${CMAKE_MODULE_PATH})
 
-ADD_SUBDIRECTORY( mplayer )
-ADD_SUBDIRECTORY( phonon )
+find_package(GStreamer QUIET)
+if(GSTREAMER_FOUND)
+	set(HAVE_GSTREAMER 1 CACHE INTERNAL EXPORTEDVARIABLE)
+	message(STATUS "Found GStreamer: ${GSTREAMER_LIBRARIES} (version ${GSTREAMER_VERSION})")
+	add_subdirectory(gstreamer)
+else(GSTREAMER_FOUND)
+	message(STATUS "GStreamer was not found. GStreamer backend will not be built")
+endif(GSTREAMER_FOUND)
 
-MACRO_OPTIONAL_FIND_PACKAGE( Xine )
-IF( XINE_FOUND )
-	SET( HAVE_XINE 1 CACHE INTERNAL EXPORTEDVARIABLE )
-	ADD_SUBDIRECTORY( xine )
-ELSE( XINE_FOUND )
-	MESSAGE( STATUS "Xine was not found. Xine backend will not be built" )
-ENDIF( XINE_FOUND )
+add_subdirectory(mplayer)
+add_subdirectory(phonon)
 
-SET( services_INCLUDE_DIR
+macro_optional_find_package(Xine)
+if(XINE_FOUND)
+	set(HAVE_XINE 1 CACHE INTERNAL EXPORTEDVARIABLE)
+	add_subdirectory(xine)
+else(XINE_FOUND)
+	MESSAGE(STATUS "Xine was not found. Xine backend will not be built")
+endif(XINE_FOUND)
+
+set(services_INCLUDE_DIR
 	${services_gstreamer_INCLUDE_DIR}
 	${services_mplayer_INCLUDE_DIR}
 	${services_phonon_INCLUDE_DIR}
@@ -25,7 +28,7 @@ SET( services_INCLUDE_DIR
 	CACHE INTERNAL EXPORTEDVARIABLE
 )
 
-SET( services_DEFS
+set(services_DEFS
 	${services_gstreamer_DEFS}
 	${services_mplayer_DEFS}
 	${services_phonon_DEFS}
@@ -33,7 +36,7 @@ SET( services_DEFS
 	CACHE INTERNAL EXPORTEDVARIABLE
 )
 
-SET( services_LIBS
+set(services_LIBS
 	${services_gstreamer_LIBS}
 	${services_mplayer_LIBS}
 	${services_phonon_LIBS}
@@ -41,7 +44,7 @@ SET( services_LIBS
 	CACHE INTERNAL EXPORTEDVARIABLE
 )
 
-SET( services_SRCS
+set(services_SRCS
 	${CMAKE_CURRENT_SOURCE_DIR}/service.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/servicebackend.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/player.cpp
@@ -58,4 +61,4 @@ SET( services_SRCS
 	CACHE INTERNAL EXPORTEDVARIABLE
 )
 
-ADD_SUBDIRECTORY( tests )
+add_subdirectory(tests)

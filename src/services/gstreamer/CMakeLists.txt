@@ -1,29 +1,31 @@
-# TODO why aren't these packages find by MACRO_OPTIONAL_FIND_PACKAGE( Gstreamer )? aren't they required by Gstreamer?
-FIND_PACKAGE( GLIB2 REQUIRED )
-FIND_PACKAGE( GObject REQUIRED )
-FIND_PACKAGE( LibXml2 REQUIRED )
+find_package(GLIB2 REQUIRED QUIET)
+find_package(GObject REQUIRED QUIET)
+find_package(LibXml2 REQUIRED QUIET)
 
-SET( services_gstreamer_INCLUDE_DIR
+set(services_gstreamer_INCLUDE_DIR
 	${GLIB2_INCLUDE_DIR}
 	${LIBXML2_INCLUDE_DIR}
 	${GSTREAMER_INCLUDE_DIR}
+#	${GSTREAMER_BASE_INCLUDE_DIRS}
+	${GSTREAMER_VIDEO_INCLUDE_DIRS}
 	CACHE INTERNAL EXPORTEDVARIABLE
 )
 
-SET( services_gstreamer_DEFS
+set(services_gstreamer_DEFS
 	${GOBJECT_DEFINITIONS}
-	${GSTREAMER_DEFINITIONS}
 	CACHE INTERNAL EXPORTEDVARIABLE
 )
 
-SET( services_gstreamer_LIBS
+set(services_gstreamer_LIBS
+	${GLIB2_LIBRARIES}
 	${GOBJECT_LIBRARIES}
 	${GSTREAMER_LIBRARIES}
-	${GSTREAMER_INTERFACE_LIBRARY}
+#	${GSTREAMER_BASE_LIBRARIES}
+	${GSTREAMER_VIDEO_LIBRARIES}
 	CACHE INTERNAL EXPORTEDVARIABLE
 )
 
-SET( services_gstreamer_SRCS
+set(services_gstreamer_SRCS
 	${CMAKE_CURRENT_SOURCE_DIR}/gstreamerplayerbackend.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/gstreamerdecoderbackend.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/gstreamerconfigwidget.cpp

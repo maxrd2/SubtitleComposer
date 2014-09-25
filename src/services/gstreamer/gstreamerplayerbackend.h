@@ -67,22 +67,19 @@ protected slots:
 	void onPlaybinTimerTimeout();
 
 private:
-	void setupVideoSink(bool finalizing);
+	void setupVideoOverlay();
 
 //	static void audioChanged(GstElement *playbin2, gpointer userData);
 //	static void videoChanged(GstElement *playbin2, gpointer userData);
-
-	GList * streamInfoForType(const char *typestr);
 
 	void updateAudioData();
 	void updateVideoData();
 
 private:
-	GstPipeline *m_playbin;
-	GstBus *m_playbinBus;
-	QTimer *m_playbinTimer;
+	GstPipeline *m_pipeline;
+	GstBus *m_pipelineBus;
+	QTimer *m_pipelineTimer;
 	bool m_lengthInformed;
-	bool m_usingPlaybin2;
 };
 }
 

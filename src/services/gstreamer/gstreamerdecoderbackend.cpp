@@ -50,7 +50,7 @@ GStreamerDecoderBackend::~GStreamerDecoderBackend()
 }
 
 QWidget *
-GStreamerDecoderBackend::initialize(QWidget * /*videoWidgetParent */)
+GStreamerDecoderBackend::initialize(QWidget * /*videoWidgetParent*/)
 {
 	return GStreamer::init() ? (QWidget *)0 : (QWidget *)1;
 }
@@ -211,8 +211,11 @@ void
 GStreamerDecoderBackend::dataHandoff(GstElement * /*fakesink */, GstBuffer *buffer, GstPad * /*pad */, gpointer userData)
 {
 	GStreamerDecoderBackend *backend = (GStreamerDecoderBackend *)userData;
+	GstMapInfo map;
 
-	backend->m_waveWriter.writeSamplesData(GST_BUFFER_DATA(buffer), GST_BUFFER_SIZE(buffer), backend->m_waveWriter.outputFormat());
+	gst_buffer_map(buffer, &map, GST_MAP_READ);
+	backend->m_waveWriter.writeSamplesData(map.data, map.size, backend->m_waveWriter.outputFormat());
+	gst_buffer_unmap(buffer, &map);
 }
 
 void
@@ -250,7 +253,7 @@ GStreamerDecoderBackend::decodebinPadAdded(GstElement *decodebin, GstPad *srcpad
 		if(!compatible)
 			return;
 
-		GstCaps *srccaps = gst_pad_get_caps(srcpad);
+		GstCaps *srccaps = gst_pad_get_pad_template_caps(srcpad);
 		if(srccaps) {
 			WaveFormat filterFormat = GStreamer::formatFromAudioCaps(srccaps);
 
@@ -366,12 +369,11 @@ GStreamerDecoderBackend::onDecodingTimerTimeout()
 
 	// first we update the decoding position and file length (if it hasn't been informed yet)
 	gint64 time;
-	GstFormat fmt = GST_FORMAT_TIME;
-	if(!m_lengthInformed && gst_element_query_duration(GST_ELEMENT(m_decodingPipeline), &fmt, &time) && GST_CLOCK_TIME_IS_VALID(time)) {
+	if(!m_lengthInformed && gst_element_query_duration(GST_ELEMENT(m_decodingPipeline), GST_FORMAT_TIME, &time) && GST_CLOCK_TIME_IS_VALID(time)) {
 		setDecoderLength((double)time / GST_SECOND);
 		m_lengthInformed = true;
 	}
-	if(gst_element_query_position(GST_ELEMENT(m_decodingPipeline), &fmt, &time))
+	if(gst_element_query_position(GST_ELEMENT(m_decodingPipeline), GST_FORMAT_TIME, &time))
 		setDecoderPosition(((double)time / GST_SECOND));
 
 	GstMessage *msg;

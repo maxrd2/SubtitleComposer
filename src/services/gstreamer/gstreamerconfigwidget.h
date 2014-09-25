@@ -56,7 +56,6 @@ private:
 	QCheckBox *m_audioSinkCheckBox;
 	KComboBox *m_videoSinkComboBox;
 	QCheckBox *m_videoSinkCheckBox;
-	QCheckBox *m_experimentalFeaturesCheckBox;
 };
 }
 
