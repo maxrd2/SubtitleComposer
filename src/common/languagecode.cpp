@@ -425,3 +425,10 @@ LanguageCode::nameFromIso3(const QString &iso3Code)
 	QString name = KGlobal::locale()->languageCodeToName(toIso2(iso3Code));
 	return name.isEmpty() ? i18n("Unknown") : name;
 }
+
+/*static*/ QString
+LanguageCode::nameFromIso(const QString &isoCode)
+{
+	QString name = KGlobal::locale()->languageCodeToName(isoCode.length() == 2 ? isoCode : toIso2(isoCode));
+	return name.isEmpty() ? i18n("Unknown") + " (" + isoCode + ")" : name;
+}
