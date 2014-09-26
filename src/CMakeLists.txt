@@ -21,6 +21,7 @@ INCLUDE_DIRECTORIES(
 )
 
 ADD_DEFINITIONS(${QT_DEFINITIONS} ${KDE4_DEFINITIONS} -fexceptions -DHAVE_CONFIG_H)
+add_definitions(-D_DEFAULT_SOURCE)
 
 # the subdirs must be added in a specific order
 # if one dir uses code from another, its CMakeLists.txt will reference variables
