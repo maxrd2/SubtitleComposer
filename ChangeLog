@@ -1,3 +1,13 @@
+Version 0.5.7
+- ADD: GStreamer 1.0 support
+- ADD: added Debian build
+- MOD: updated Bulgarian and Croatian translations
+- FIX: Phonon backend supports audio channel change
+- FIX: Command line params were expected to be URL encoded
+- FIX: UTF subtitles are saved with BOM
+- FIX: updated/fixed translation catalogs and list of translators
+- FIX: some files were wrongly identified as tmplayer subtitles
+
 Version 0.5.6:
 - SubStation Alpha format fixes and color support
 - source cleanup
