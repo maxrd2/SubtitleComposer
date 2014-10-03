@@ -294,7 +294,7 @@ GStreamerDecoderBackend::decodebinNoMorePads(GstElement * /*decodebin */, gpoint
 {
 	GStreamerDecoderBackend *backend = (GStreamerDecoderBackend *)userData;
 
-	GstStructure *structure = gst_structure_new("app_message", "type", G_TYPE_INT, MESSAGE_INFO_INIT_DISPOSE, 0);
+	GstStructure *structure = gst_structure_new("app_message", "type", G_TYPE_INT, MESSAGE_INFO_INIT_DISPOSE, NULL);
 	GstMessage *msg = gst_message_new_application(GST_OBJECT(backend->m_infoPipeline), structure);
 
 	gst_element_post_message(GST_ELEMENT(backend->m_infoPipeline), msg);
