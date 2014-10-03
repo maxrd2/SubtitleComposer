@@ -263,11 +263,11 @@ PhononPlayerBackend::onAvailableSubtitlesChanged()
 {
 	// Subtitles display is not handled by the video backends
 	// If there are subtitles, the backend must hide them.
-	m_mediaController->setCurrentSubtitle(Phonon::SubtitleDescription::fromIndex(-1));
+	m_mediaController->setCurrentSubtitle(Phonon::SubtitleDescription::fromIndex(1));
 }
 
 void
-PhononPlayerBackend::onStateChanged(Phonon::State newState, Phonon::State /*oldState */)
+PhononPlayerBackend::onStateChanged(Phonon::State newState, Phonon::State /*oldState*/)
 {
 	if(!isInitialized())
 		return;
