@@ -51,6 +51,7 @@ private:
 
 	KComboBox *m_defaultEncodingComboBox;
 	KIntNumInput *m_relativeSeekPositionSpinBox;
+	QCheckBox *m_relativeSeekUnpause;
 	QCheckBox *m_autoLoadVideoCheckBox;
 	KIntNumInput *m_shiftMsecsSpinBox;
 	KIntNumInput *m_videoPosCompMsecsSpinBox;

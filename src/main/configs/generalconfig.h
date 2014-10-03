@@ -54,8 +54,11 @@ public:
 	void setDefaultSubtitlesEncoding(const QString &encoding) { setOption(keyDefaultSubtitlesEncoding(), encoding); }
 
 	int seekOffsetOnDoubleClick() const { return optionAsInt(keySeekOffsetOnDoubleClick()); } // in milliseconds
-
 	void setSeekOffsetOnDoubleClick(int mseconds) { setOption(keySeekOffsetOnDoubleClick(), mseconds); }
+
+	bool unpauseOnDoubleClick() const { return optionAsBool(keyUnpauseOnDoubleClick()); }
+	void setUnpauseOnDoubleClick(bool unpause) { setOption(keyUnpauseOnDoubleClick(), unpause); }
+
 	bool automaticVideoLoad() const { return optionAsBool(keyAutomaticVideoLoad()); }
 	void setAutomaticVideoLoad(bool automaticLoad) { setOption(keyAutomaticVideoLoad(), automaticLoad); }
 
@@ -68,6 +71,8 @@ public:
 	static const QString & keyDefaultSubtitlesEncoding() { static const QString key("DefaultSubtitlesEncoding"); return key; }
 
 	static const QString & keySeekOffsetOnDoubleClick() { static const QString key("SeekOffsetOnDoubleClick"); return key; }
+
+	static const QString & keyUnpauseOnDoubleClick() { static const QString key("UnpauseOnDoubleClick"); return key; }
 
 	static const QString & keyAutomaticVideoLoad() { static const QString key("AutomaticVideoLoad"); return key; }
 
@@ -87,6 +92,7 @@ private:
 
 		defaults[keyDefaultSubtitlesEncoding()] = KGlobal::locale()->codecForEncoding()->name();
 		defaults[keySeekOffsetOnDoubleClick()] = "1500";        // in milliseconds
+		defaults[keyUnpauseOnDoubleClick()] = "false";
 		defaults[keyAutomaticVideoLoad()] = "true";
 		defaults[keyLinesQuickShiftAmount()] = "100";   // in milliseconds
 		defaults[keyGrabbedPositionCompensation()] = "250";     // in milliseconds

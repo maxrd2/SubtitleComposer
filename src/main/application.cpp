@@ -2955,7 +2955,7 @@ Application::onLineDoubleClicked(SubtitleLine *line)
 	int mseconds = line->showTime().toMillis() - generalConfig()->seekOffsetOnDoubleClick();
 	m_player->seek(mseconds > 0 ? mseconds / 1000.0 : 0.0, true);
 
-	if(m_player->state() == Player::Paused)
+	if(m_player->state() == Player::Paused && generalConfig()->unpauseOnDoubleClick())
 		m_player->play();
 }
 

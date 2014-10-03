@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: subtitlecomposer\n"
 "Report-Msgid-Bugs-To: https://github.com/maxrd2/subtitlecomposer/issues\n"
-"POT-Creation-Date: 2014-09-03 02:43+0200\n"
+"POT-Creation-Date: 2014-10-03 16:30+0200\n"
 "PO-Revision-Date: 2009-05-24 17:11-0300\n"
 "Last-Translator: Sergio Pistone <sergio_pistone@yahoo,com.ar>\n"
 "Language-Team: American English <kde-i18n-doc@kde.org>\n"
@@ -19,6 +19,7 @@ msgstr ""
 "Plural-Forms:  nplurals=2; plural=(n != 1);\n"
 
 #: common/languagecode.cpp:419 common/languagecode.cpp:426
+#: common/languagecode.cpp:433
 msgid "Unknown"
 msgstr "Desconhecido"
 
@@ -1427,8 +1428,8 @@ msgstr "Durações absolutas"
 #: main/configs/errorsconfigwidget.cpp:62
 #: main/configs/errorsconfigwidget.cpp:71
 #: main/configs/generalconfigwidget.cpp:51
-#: main/configs/generalconfigwidget.cpp:65
-#: main/configs/generalconfigwidget.cpp:74
+#: main/configs/generalconfigwidget.cpp:68
+#: main/configs/generalconfigwidget.cpp:77
 #: main/dialogs/fixoverlappingtimesdialog.cpp:37
 msgid " msecs"
 msgstr " msegs"
@@ -1484,19 +1485,23 @@ msgid "On line double click, jump to show time minus:"
 msgstr "Duplo clique na linha, pula o tempo de exibição menos:"
 
 #: main/configs/generalconfigwidget.cpp:58
+msgid "Resume playback after line double click"
+msgstr ""
+
+#: main/configs/generalconfigwidget.cpp:61
 msgid "Automatically load video file when opening subtitle"
 msgstr "Carregar vídeo automaticamente ao abrir legenda"
 
-#: main/configs/generalconfigwidget.cpp:60
+#: main/configs/generalconfigwidget.cpp:63
 msgctxt "@title:group"
 msgid "Quick Actions"
 msgstr "Ações rápidas"
 
-#: main/configs/generalconfigwidget.cpp:68
+#: main/configs/generalconfigwidget.cpp:71
 msgid "Time shift for selected lines:"
 msgstr "Mover tempo para linhas selecionadas:"
 
-#: main/configs/generalconfigwidget.cpp:77
+#: main/configs/generalconfigwidget.cpp:80
 msgid "Compensation for captured video times:"
 msgstr "Compensação de tempo para os tempos de vídeo capturado"
 
@@ -2106,42 +2111,42 @@ msgstr "Erros"
 msgid "Mark"
 msgstr "Marcar"
 
-#: main/main.cpp:56
+#: main/main.cpp:64
 msgid "Subtitle Composer"
 msgstr "Criador de Legenda"
 
-#: main/main.cpp:58
+#: main/main.cpp:66
 msgid "A KDE subtitle editor."
 msgstr "Um editor de legenda para KDE"
 
-#: main/main.cpp:60
+#: main/main.cpp:68
 msgid ""
 "&copy; 2007-2012 Sergio Pistone\n"
-"&copy; 2013 Mladen Milinković"
+"&copy; 2013-2014 Mladen Milinković"
 msgstr ""
 
-#: main/main.cpp:68
+#: main/main.cpp:76
 msgid "Sergio Pistone"
 msgstr "Sergio Pistone"
 
-#: main/main.cpp:69
+#: main/main.cpp:77
 msgid "Original Author"
 msgstr ""
 
-#: main/main.cpp:73
+#: main/main.cpp:81
 msgid "Mladen Milinković"
 msgstr ""
 
-#: main/main.cpp:74
+#: main/main.cpp:82
 #, fuzzy
 msgid "Author & Maintainer"
 msgstr "Autor e mantenedor"
 
-#: main/main.cpp:83
+#: main/main.cpp:91
 msgid "Open location as primary subtitle"
 msgstr "Abrir localização da legenda primária"
 
-#: main/main.cpp:84
+#: main/main.cpp:92
 msgid "Open location as translation subtitle"
 msgstr "Abrir localização da legenda traduzida"
 
@@ -2468,12 +2473,7 @@ msgstr "Saída de áudio:"
 msgid "Video sink:"
 msgstr "Saída de vídeo:"
 
-#: services/gstreamer/gstreamerconfigwidget.cpp:53
-msgid "Use experimental features"
-msgstr ""
-
-#: services/gstreamer/gstreamerplayerbackend.cpp:389
-#: services/gstreamer/gstreamerplayerbackend.cpp:423
+#: services/gstreamer/gstreamerplayerbackend.cpp:321
 #: services/mplayer/mplayerplayerbackend.cpp:243
 #: services/xine/xinedecoderbackend.cpp:199
 #: services/xine/xineplayerbackend.cpp:281

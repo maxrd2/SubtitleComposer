@@ -54,6 +54,9 @@ GeneralConfigWidget::GeneralConfigWidget(QWidget *parent) :
 	relativeSeekPositionLabel->setText(i18n("On line double click, jump to show time minus:"));
 	relativeSeekPositionLabel->setBuddy(m_relativeSeekPositionSpinBox);
 
+	m_relativeSeekUnpause = new QCheckBox(generalGroupBox);
+	m_relativeSeekUnpause->setText(i18n("Resume playback after line double click"));
+
 	m_autoLoadVideoCheckBox = new QCheckBox(generalGroupBox);
 	m_autoLoadVideoCheckBox->setText(i18n("Automatically load video file when opening subtitle"));
 
@@ -82,7 +85,8 @@ GeneralConfigWidget::GeneralConfigWidget(QWidget *parent) :
 	generalLayout->addWidget(m_defaultEncodingComboBox, 1, 1);
 	generalLayout->addWidget(relativeSeekPositionLabel, 2, 0, Qt::AlignRight | Qt::AlignVCenter);
 	generalLayout->addWidget(m_relativeSeekPositionSpinBox, 2, 1);
-	generalLayout->addWidget(m_autoLoadVideoCheckBox, 3, 0, 1, 2);
+	generalLayout->addWidget(m_relativeSeekUnpause, 3, 0, 1, 2);
+	generalLayout->addWidget(m_autoLoadVideoCheckBox, 4, 0, 1, 2);
 
 	QGridLayout *quickActionsLayout = createGridLayout(quickActionsGroupBox);
 	quickActionsLayout->addWidget(shiftMsecsLabel, 0, 0, Qt::AlignRight | Qt::AlignVCenter);
@@ -92,6 +96,7 @@ GeneralConfigWidget::GeneralConfigWidget(QWidget *parent) :
 
 	connect(m_defaultEncodingComboBox, SIGNAL(activated(int)), this, SIGNAL(settingsChanged()));
 	connect(m_relativeSeekPositionSpinBox, SIGNAL(valueChanged(int)), this, SIGNAL(settingsChanged()));
+	connect(m_relativeSeekUnpause, SIGNAL(toggled(bool)), this, SIGNAL(settingsChanged()));
 	connect(m_autoLoadVideoCheckBox, SIGNAL(toggled(bool)), this, SIGNAL(settingsChanged()));
 	connect(m_shiftMsecsSpinBox, SIGNAL(valueChanged(int)), this, SIGNAL(settingsChanged()));
 	connect(m_videoPosCompMsecsSpinBox, SIGNAL(valueChanged(int)), this, SIGNAL(settingsChanged()));
@@ -107,6 +112,7 @@ GeneralConfigWidget::setConfigFromControls()
 {
 	config()->setDefaultSubtitlesEncoding(m_defaultEncodingComboBox->currentText());
 	config()->setSeekOffsetOnDoubleClick(m_relativeSeekPositionSpinBox->value());
+	config()->setUnpauseOnDoubleClick(m_relativeSeekUnpause->isChecked());
 	config()->setAutomaticVideoLoad(m_autoLoadVideoCheckBox->isChecked());
 	config()->setLinesQuickShiftAmount(m_shiftMsecsSpinBox->value());
 	config()->setGrabbedPositionCompensation(m_videoPosCompMsecsSpinBox->value());
@@ -117,6 +123,7 @@ GeneralConfigWidget::setControlsFromConfig()
 {
 	m_defaultEncodingComboBox->setCurrentItem(config()->defaultSubtitlesEncoding());
 	m_relativeSeekPositionSpinBox->setValue(config()->seekOffsetOnDoubleClick());
+	m_relativeSeekUnpause->setChecked(config()->unpauseOnDoubleClick());
 	m_autoLoadVideoCheckBox->setChecked(config()->automaticVideoLoad());
 	m_shiftMsecsSpinBox->setValue(config()->linesQuickShiftAmount());
 	m_videoPosCompMsecsSpinBox->setValue(config()->grabbedPositionCompensation());
