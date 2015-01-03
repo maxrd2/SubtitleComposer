@@ -113,10 +113,10 @@ Speller::onBufferDone()
 	if(advance()) {
 		if(m_translationMode) {
 			m_feedPrimaryNext = !m_feedPrimaryNext;
-			m_sonnetDialog->setBuffer(m_feedPrimaryNext ? m_iterator->current()->secondaryText().string() : m_iterator->current()->primaryText().string()
-			                          );
-		} else
+			m_sonnetDialog->setBuffer(m_feedPrimaryNext ? m_iterator->current()->secondaryText().string() : m_iterator->current()->primaryText().string());
+		} else {
 			m_sonnetDialog->setBuffer(m_iterator->current()->primaryText().string());
+		}
 	}
 }
 
@@ -132,8 +132,7 @@ Speller::advance()
 		if(m_iterator->index() < 0) {
 			m_iterator->toFirst();
 
-			if(KMessageBox::warningContinueCancel(parentWidget(), i18n("End of subtitle reached.\nContinue from the beginning?"), i18n("Spell Checking")
-			                                      ) != KMessageBox::Continue)
+			if(KMessageBox::Continue != KMessageBox::warningContinueCancel(parentWidget(), i18n("End of subtitle reached.\nContinue from the beginning?"), i18n("Spell Checking")))
 				return false;
 		}
 	}
@@ -152,12 +151,13 @@ Speller::onMisspelling(const QString &before, int pos)
 void
 Speller::onCorrected(const QString &before, int pos, const QString &after)
 {
+	if(before == after)
+		return;
+
 	if(m_translationMode && m_feedPrimaryNext)
-		m_iterator->current()->setSecondaryText(SString(m_iterator->current()->secondaryText()).replace(pos, before.length(), after)
-		                                        );
+		m_iterator->current()->setSecondaryText(SString(m_iterator->current()->secondaryText()).replace(pos, before.length(), after));
 	else
-		m_iterator->current()->setPrimaryText(SString(m_iterator->current()->primaryText()).replace(pos, before.length(), after)
-		                                      );
+		m_iterator->current()->setPrimaryText(SString(m_iterator->current()->primaryText()).replace(pos, before.length(), after));
 }
 
 void
