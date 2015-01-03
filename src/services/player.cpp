@@ -24,6 +24,7 @@
 #include "gstreamer/gstreamerplayerbackend.h"
 #endif
 #include "mplayer/mplayerplayerbackend.h"
+#include "mpv/mpvbackend.h"
 #include "phonon/phononplayerbackend.h"
 #ifdef HAVE_XINE
 #include "xine/xineplayerbackend.h"
@@ -96,6 +97,7 @@ Player::Player() :
 #endif
 
 	addBackend(new MPlayerPlayerBackend(this));
+	addBackend(new MPVBackend(this));
 	addBackend(new PhononPlayerBackend(this));
 
 #ifdef HAVE_XINE
