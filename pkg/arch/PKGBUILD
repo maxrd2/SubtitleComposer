@@ -18,6 +18,7 @@ depends=('kdelibs' 'gettext')
 makedepends=('cmake' 'automoc4' 'git')
 conflicts=('subtitlecomposer-git')
 optdepends=(
+	'mpv: for MPV backend'
 	'mplayer: for MPlayer backend'
 	'mplayer2: for MPlayer backend'
 	'gstreamer: for GStreamer backend'
