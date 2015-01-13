@@ -124,7 +124,7 @@ ScriptsManager::ScriptsManager(QObject *parent) :
 
 	m_scriptsWidget = new TreeView(mainWidget);
 	m_scriptsWidget->installEventFilter(this);
-	m_scriptsWidget->setModel(new InstalledScriptsModel);
+	m_scriptsWidget->setModel(new InstalledScriptsModel(m_scriptsWidget));
 
 	m_scriptsWidget->setRootIsDecorated(false);
 	m_scriptsWidget->setSortingEnabled(false);

@@ -97,7 +97,8 @@ Subtitle::setPrimaryData(const Subtitle &from, bool usePrimaryData)
 			thisLine->setFormatData(fromIt.current()->formatData());
 			lines.append(thisLine);
 		}
-		processAction(new InsertLinesAction(*this, lines));
+		InsertLinesAction a(*this, lines);
+		processAction(&a);
 	} else if(thisIt.current()) {   // '*this'  had more lines than 'from'
 		for(SubtitleLine *thisLine = thisIt.current(); thisLine; ++thisIt, thisLine = thisIt.current()) {
 			thisLine->setPrimaryText(SString());

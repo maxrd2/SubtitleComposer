@@ -153,6 +153,7 @@ Service::addBackend(ServiceBackend *backend)
 	}
 
 	m_backends[backend->name()] = backend;
+	backend->setParent(this); // Service will delete *backend
 }
 
 #include "service.moc"

@@ -128,7 +128,9 @@ UserActionManager::instance()
 void
 UserActionManager::addAction(QAction *action, int enableFlags)
 {
-	addAction(new UserAction(action, enableFlags));
+	UserAction *a = new UserAction(action, enableFlags);
+	addAction(a);
+	a->setParent(this); // UserActionManager will delete *a
 }
 
 void

@@ -173,6 +173,7 @@ FormatManager::readSubtitle(Subtitle &subtitle, bool primary, const KUrl &url, K
 			else
 				*codec = 0;
 		}
+		ucsdet_close(csd);
 	}
 #endif
 	if(*codec) {
