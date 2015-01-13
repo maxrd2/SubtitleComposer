@@ -1,6 +1,6 @@
 /***************************************************************************
  *   Copyright (C) 2007-2009 Sergio Pistone (sergio_pistone@yahoo.com.ar)  *
- *   based on smpv by Ricardo Villalba                                 *
+ *   Copyright (C) 2010-2015 Mladen Milinkovic <max@smoothware.net>        *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
@@ -68,21 +68,18 @@ MPVBackend::newAppConfigGroupWidget(QWidget *parent)
 }
 
 bool
-MPVBackend::mpvInit(int audioStream, int audioStreamCount)
+MPVBackend::mpvInit()
 {
-	if(m_mpv)
-		mpv_detach_destroy(m_mpv);
-
 	// TODO: libmpv requires LC_NUMERIC category to be set to "C".. is there some nicer way to do this?
 	std::setlocale(LC_NUMERIC, "C");
+
+	if(m_mpv)
+		mpv_detach_destroy(m_mpv);
 
 	m_mpv = mpv_create();
 
 	if(!m_mpv)
 		return false;
-
-	if(audioStream >= 0 && audioStreamCount > 1)
-		mpv_set_option_string(m_mpv, "aid", QString::number(audioStream).toUtf8().constData());
 
 	if(config()->hasVideoOutput())
 		mpv_set_option_string(m_mpv, "vo", config()->videoOutput().toUtf8().constData());
@@ -142,6 +139,7 @@ MPVBackend::mpvInit(int audioStream, int audioStreamCount)
 	// relay the wakeup in a thread-safe way.
 	connect(this, SIGNAL(mpvEvents()), this, SLOT(onMPVEvents()), Qt::QueuedConnection);
 	mpv_set_wakeup_callback(m_mpv, wakeup, this);
+
 	return mpv_initialize(m_mpv) >= 0;
 }
 
@@ -239,10 +237,7 @@ MPVBackend::mpvEventHandle(mpv_event *event)
 	}
 	case MPV_EVENT_LOG_MESSAGE: {
 		struct mpv_event_log_message *msg = (struct mpv_event_log_message *)event->data;
-//		std::stringstream ss;
-//		ss << "[" << msg->prefix << "] " << msg->level << ": " << msg->text;
 		kDebug() << "[MPV:" << msg->prefix << "] " << msg->level << ": " << msg->text;
-//		append_log(QString::fromStdString(ss.str()));
 		break;
 	}
 	case MPV_EVENT_SHUTDOWN: {
@@ -286,12 +281,16 @@ MPVBackend::openFile(const QString &filePath, bool &playingAfterCall)
 {
 	playingAfterCall = true;
 
-	if(!m_mpv && !mpvInit(player()->activeAudioStream(), player()->audioStreams().count()))
+	if(!m_mpv && !mpvInit())
 		return false;
 
+	QByteArray filename = filePath.toUtf8();
 	currentFilePath = filePath;
-	const char *args[] = { "loadfile", filePath.toUtf8().data(), NULL };
-	mpv_command_async(m_mpv, 0, args);
+	const char *args[] = { "loadfile", filename.constData(), NULL };
+	mpv_command(m_mpv, args);
+
+	if(player()->activeAudioStream() >= 0 && player()->audioStreams().count() > 1)
+		mpv_set_option_string(m_mpv, "aid", QString::number(player()->activeAudioStream()).toUtf8().constData());
 
 	return true;
 }
@@ -312,8 +311,12 @@ bool
 MPVBackend::play()
 {
 	if(player()->isStopped()) {
-		const char *args[] = { "loadfile", currentFilePath.toUtf8().data(), NULL };
-		mpv_command_async(m_mpv, 0, args);
+		QByteArray filename = currentFilePath.toUtf8();
+		const char *args[] = { "loadfile", filename.constData(), NULL };
+		mpv_command(m_mpv, args);
+
+		if(player()->activeAudioStream() >= 0 && player()->audioStreams().count() > 1)
+			mpv_set_option_string(m_mpv, "aid", QString::number(player()->activeAudioStream()).toUtf8().constData());
 	} else {
 		const char *args[] = { "cycle", "pause", NULL };
 		mpv_command_async(m_mpv, 0, args);
@@ -332,11 +335,12 @@ MPVBackend::pause()
 bool
 MPVBackend::seek(double seconds, bool accurate)
 {
+	QByteArray strVal = QByteArray::number(seconds);
 	if(accurate) {
-		const char *args[] = { "seek", QByteArray::number(seconds).data(), "absolute", "exact", NULL };
+		const char *args[] = { "seek", strVal.constData(), "absolute", "exact", NULL };
 		mpv_command_async(m_mpv, 0, args);
 	} else {
-		const char *args[] = { "seek", QByteArray::number(seconds).data(), "absolute", "keyframes", NULL };
+		const char *args[] = { "seek", strVal.constData(), "absolute", "keyframes", NULL };
 		mpv_command_async(m_mpv, 0, args);
 	}
 	return true;
@@ -345,7 +349,8 @@ MPVBackend::seek(double seconds, bool accurate)
 bool
 MPVBackend::setActiveAudioStream(int audioStream)
 {
-	const char *args[] = { "aid", QByteArray::number(audioStream).data(), NULL };
+	QByteArray strVal = QByteArray::number(audioStream);
+	const char *args[] = { "aid", strVal.constData(), NULL };
 	mpv_command_async(m_mpv, 0, args);
 	return true;
 }
@@ -353,7 +358,8 @@ MPVBackend::setActiveAudioStream(int audioStream)
 bool
 MPVBackend::setVolume(double volume)
 {
-	const char *args[] = { "set", "volume", QByteArray::number(volume).data(), NULL };
+	QByteArray strVal = QByteArray::number(volume);
+	const char *args[] = { "set", "volume", strVal.constData(), NULL };
 	mpv_command_async(m_mpv, 0, args);
 	return true;
 }

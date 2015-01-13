@@ -3,7 +3,7 @@
 
 /***************************************************************************
  *   Copyright (C) 2007-2009 Sergio Pistone (sergio_pistone@yahoo.com.ar)  *
- *   based on smpv by Ricardo Villalba                                 *
+ *   Copyright (C) 2010-2015 Mladen Milinkovic <max@smoothware.net>        *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
@@ -65,7 +65,7 @@ protected:
 
 	virtual bool setVolume(double volume);
 
-	bool mpvInit(int audioStream = -1, int audioStreamCount = 1);
+	bool mpvInit();
 	void mpvExit();
 
 signals:
