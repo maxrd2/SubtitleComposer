@@ -3,8 +3,8 @@
 # Forwarded: not-needed
 # Author: José Manuel Santamaría Lema <panfaust@gmail.com>
 # 
---- subtitlecomposer-0.5.3.orig/src/player/phonon/CMakeLists.txt
-+++ subtitlecomposer-0.5.3/src/player/phonon/CMakeLists.txt
+--- /dev/null
++++ subtitlecomposer/src/services/phonon/CMakeLists.txt
 @@ -4,3 +4,7 @@
  	CACHE INTERNAL EXPORTEDVARIABLE
  )

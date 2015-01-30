@@ -1,15 +1,15 @@
 # SOME DESCRIPTIVE TITLE.
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
-# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+# gogo <trebelnik2@gmail.com>, 2014.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: https://github.com/maxrd2/subtitlecomposer/issues\n"
 "POT-Creation-Date: 2014-10-03 16:30+0200\n"
-"PO-Revision-Date: 2014-09-09 17:27+0100\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"PO-Revision-Date: 2015-01-04 22:38+0100\n"
+"Last-Translator: gogo <trebelnik2@gmail.com>\n"
 "Language-Team: Croatian <hr@hr.org>\n"
 "Language: hr\n"
 "MIME-Version: 1.0\n"
@@ -1490,7 +1490,7 @@ msgstr "Pri dvostrukom kliku na redak, skoči na vrijeme prikaza umanjeno za:"
 
 #: main/configs/generalconfigwidget.cpp:58
 msgid "Resume playback after line double click"
-msgstr ""
+msgstr "Nastavi reprodukciju nakon dvostrukog klika"
 
 #: main/configs/generalconfigwidget.cpp:61
 msgid "Automatically load video file when opening subtitle"
@@ -2128,7 +2128,6 @@ msgid "A KDE subtitle editor."
 msgstr "KDE uređivač podnaslova."
 
 #: main/main.cpp:68
-#, fuzzy
 msgid ""
 "&copy; 2007-2012 Sergio Pistone\n"
 "&copy; 2013-2014 Mladen Milinković"
