@@ -1,8 +1,22 @@
+subtitlecomposer (0.5.7.4~vivid) vivid; urgency=high
+
+  * Add MPV player support
+  * Add GStreamer 1.0 support
+  * Add added Debian build
+  * Add updated Bulgarian and Croatian translations
+  * Add Phonon backend supports audio channel change
+  * Add Command line params were expected to be URL encoded
+  * Add UTF subtitles are saved with BOM
+  * Add updated/fixed translation catalogs and list of translators
+  * Add some files were wrongly identified as tmplayer subtitles
+
+ -- Goran Vidovic (gogo) <trebelnik2@gmail.com>  Fri, 30 Jan 2015 13:35:05 +0100
+
 subtitlecomposer (0.5.6.9~trusty) trusty; urgency=high
 
   * New release
 
- -- Goran Vidovic (gogo) <trebelnik2@gmail.com>  Sat, 14 Jun 2014 20:07:05 +0100
+ -- Goran Vidovic (gogo) <trebelnik2@gmail.com>  Fri, 14 Jun 2014 20:07:05 +0100
 
 subtitlecomposer (0.5.3-4) unstable; urgency=low
 

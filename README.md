@@ -7,7 +7,7 @@ Since original author didn't have time anymore to continue development of this g
 
 ### FEATURES
  - Support for multiple formats, including SubRip, MicroDVD, SSA/ASS (without advanced styles), MPlayer, TMPlayer and YouTube captions.
- - Live preview of subtitles and video with support for multiple backends (GStreamer, MPlayer/2, Xine, Phonon), audio channel selection and full screen mode.
+ - Live preview of subtitles and video with support for multiple backends (GStreamer, MPlayer/2, MPV, Xine, Phonon), audio channel selection and full screen mode.
  - Time shifting and adjusting, lines duration calculation, synchronization with video, etc.
  - Working with original subtitle and translation.
  - Texts styles (italic, bold, underline, stroke, color), spell checking, automatic translation (using Google services), etc.
