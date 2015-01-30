@@ -6,7 +6,7 @@ XSBC-Original-Maintainer: Debian KDE Extras Team <pkg-kde-extras@lists.alioth.de
 Uploaders: gogo <trebelnik2@gmail.com>
 Build-Depends: debhelper (>= 9), cmake, pkg-kde-tools,
  kdelibs5-dev, libgstreamer-plugins-base1.0-dev, libglib2.0-dev, libxml2-dev,
- libxine2-dev, libx11-dev, libicu-dev,libmpv-dev, mplayer, mpv
+ libxine2-dev, libx11-dev, libicu-dev,libmpv-dev
 Standards-Version: 3.9.4
 Homepage: https://github.com/maxrd2/subtitlecomposer
 Vcs-Browser: http://anonscm.debian.org/gitweb/?p=pkg-kde/kde-extras/subtitlecomposer.git
