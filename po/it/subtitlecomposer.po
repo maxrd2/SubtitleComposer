@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: subtitlecomposer\n"
 "Report-Msgid-Bugs-To: https://github.com/maxrd2/subtitlecomposer/issues\n"
-"POT-Creation-Date: 2014-10-03 16:30+0200\n"
+"POT-Creation-Date: 2015-02-03 12:19+0100\n"
 "PO-Revision-Date: 2010-03-13 13:23+0100\n"
 "Last-Translator: \n"
 "Language-Team: Italian <kde-i18n-doc@kde.org>\n"
@@ -30,8 +30,8 @@ msgstr "Imposta la velocità dei fotogrammi"
 msgid "Insert Lines"
 msgstr "Inserisci righe"
 
-#: core/subtitleactions.cpp:175 core/subtitle.cpp:432 core/subtitle.cpp:442
-#: core/subtitle.cpp:459
+#: core/subtitleactions.cpp:175 core/subtitle.cpp:433 core/subtitle.cpp:443
+#: core/subtitle.cpp:460
 msgid "Remove Lines"
 msgstr "Inserisci righe"
 
@@ -47,138 +47,138 @@ msgstr "Intercambiar textos"
 msgid "Set Primary Data"
 msgstr "Aggiorna dati primari"
 
-#: core/subtitle.cpp:115
+#: core/subtitle.cpp:116
 msgid "Clear Primary Text Data"
 msgstr "Svuota dati principali"
 
-#: core/subtitle.cpp:128
+#: core/subtitle.cpp:129
 msgid "Set Secondary Data"
 msgstr "Imposta dati secondari"
 
-#: core/subtitle.cpp:167
+#: core/subtitle.cpp:168
 msgid "Clear Secondary Text Data"
 msgstr "Svuota dati secondari"
 
-#: core/subtitle.cpp:255 main/dialogs/changeframeratedialog.cpp:34
+#: core/subtitle.cpp:256 main/dialogs/changeframeratedialog.cpp:34
 msgid "Change Frame Rate"
 msgstr "Cambia la velocità dei fotogrammi"
 
-#: core/subtitle.cpp:385 core/subtitle.cpp:399
+#: core/subtitle.cpp:386 core/subtitle.cpp:400
 msgid "Insert Line"
 msgstr "Inserisci riga"
 
-#: core/subtitle.cpp:512 main/application.cpp:643 main/lineswidget.cpp:1096
+#: core/subtitle.cpp:513 main/application.cpp:643 main/lineswidget.cpp:1096
 msgid "Split Lines"
 msgstr "Dividi righe"
 
-#: core/subtitle.cpp:563 main/application.cpp:650 main/lineswidget.cpp:1095
+#: core/subtitle.cpp:564 main/application.cpp:650 main/lineswidget.cpp:1095
 msgid "Join Lines"
 msgstr "Unisci linee"
 
-#: core/subtitle.cpp:611
+#: core/subtitle.cpp:612
 msgid "Shift Lines"
 msgstr "Sposta linee"
 
-#: core/subtitle.cpp:657
+#: core/subtitle.cpp:658
 msgid "Adjust Lines"
 msgstr "Aggiusta linee"
 
-#: core/subtitle.cpp:668 main/application.cpp:2315 main/lineswidget.cpp:1072
+#: core/subtitle.cpp:669 main/application.cpp:2315 main/lineswidget.cpp:1072
 msgid "Sort"
 msgstr "Ordina"
 
-#: core/subtitle.cpp:710 main/dialogs/durationlimitsdialog.cpp:32
+#: core/subtitle.cpp:711 main/dialogs/durationlimitsdialog.cpp:32
 msgid "Enforce Duration Limits"
 msgstr "Forza i limiti di durata"
 
-#: core/subtitle.cpp:749 main/application.cpp:2377 main/lineswidget.cpp:1075
+#: core/subtitle.cpp:750 main/application.cpp:2377 main/lineswidget.cpp:1075
 msgid "Maximize Durations"
 msgstr "Massimizza la durata"
 
-#: core/subtitle.cpp:772 main/dialogs/autodurationsdialog.cpp:35
+#: core/subtitle.cpp:773 main/dialogs/autodurationsdialog.cpp:35
 msgid "Set Automatic Durations"
 msgstr "Imposta durata automatica"
 
-#: core/subtitle.cpp:806 main/dialogs/fixoverlappingtimesdialog.cpp:32
+#: core/subtitle.cpp:807 main/dialogs/fixoverlappingtimesdialog.cpp:32
 #: main/lineswidget.cpp:1076
 msgid "Fix Overlapping Times"
 msgstr "Correggi tempi sovrapposti"
 
-#: core/subtitle.cpp:838
+#: core/subtitle.cpp:839
 msgid "Fix Lines Punctuation"
 msgstr "Correggi punteggiature linee"
 
-#: core/subtitle.cpp:885
+#: core/subtitle.cpp:886
 msgid "Lower Case"
 msgstr "Converti in minuscolo"
 
-#: core/subtitle.cpp:916
+#: core/subtitle.cpp:917
 msgid "Upper Case"
 msgstr "Converti in maiuscolo"
 
-#: core/subtitle.cpp:947
+#: core/subtitle.cpp:948
 msgid "Title Case"
 msgstr "Maiuscola Ogni Parola"
 
-#: core/subtitle.cpp:979
+#: core/subtitle.cpp:980
 msgid "Sentence Case"
 msgstr "Maiuscola ogni frase"
 
-#: core/subtitle.cpp:1022 main/dialogs/smarttextsadjustdialog.cpp:32
+#: core/subtitle.cpp:1023 main/dialogs/smarttextsadjustdialog.cpp:32
 msgid "Break Lines"
 msgstr "Inserisci acapo in linee"
 
-#: core/subtitle.cpp:1031 main/application.cpp:2429 main/lineswidget.cpp:1042
+#: core/subtitle.cpp:1032 main/application.cpp:2429 main/lineswidget.cpp:1042
 msgid "Unbreak Lines"
 msgstr "Togli acapo in linee"
 
-#: core/subtitle.cpp:1040 main/application.cpp:2440 main/lineswidget.cpp:1043
+#: core/subtitle.cpp:1041 main/application.cpp:2440 main/lineswidget.cpp:1043
 msgid "Simplify Spaces"
 msgstr "Semplifica spaziature"
 
-#: core/subtitle.cpp:1049
+#: core/subtitle.cpp:1050
 msgid "Synchronize Subtitles"
 msgstr "Sincronizza sottotitoli"
 
-#: core/subtitle.cpp:1070 main/dialogs/joinsubtitlesdialog.cpp:35
+#: core/subtitle.cpp:1071 main/dialogs/joinsubtitlesdialog.cpp:35
 msgid "Join Subtitles"
 msgstr "Unisci sottotitoli"
 
-#: core/subtitle.cpp:1112 core/subtitle.cpp:1118
+#: core/subtitle.cpp:1113 core/subtitle.cpp:1119
 msgid "Split Subtitles"
 msgstr "Dividi sottotitoli"
 
-#: core/subtitle.cpp:1133 core/subtitle.cpp:1148
+#: core/subtitle.cpp:1134 core/subtitle.cpp:1149
 msgid "Set Lines Style"
 msgstr "Imposta stile riga"
 
-#: core/subtitle.cpp:1165
+#: core/subtitle.cpp:1166
 msgid "Toggle Lines Style"
 msgstr "Alterna stile riga"
 
-#: core/subtitle.cpp:1177
+#: core/subtitle.cpp:1178
 #, fuzzy
 msgid "Change Lines Text Color"
 msgstr "Imposta testo riga"
 
-#: core/subtitle.cpp:1190
+#: core/subtitle.cpp:1191
 msgid "Set Lines Mark"
 msgstr "Imposta segnalibri"
 
-#: core/subtitle.cpp:1190
+#: core/subtitle.cpp:1191
 msgid "Clear Lines Mark"
 msgstr "Elimina segnalibro su riga"
 
-#: core/subtitle.cpp:1205
+#: core/subtitle.cpp:1206
 msgid "Toggle Lines Mark"
 msgstr "Alterna segnalibro su riga"
 
-#: core/subtitle.cpp:1215 main/application.cpp:2188 main/application.cpp:2199
+#: core/subtitle.cpp:1216 main/application.cpp:2188 main/application.cpp:2199
 #: main/errorswidget.cpp:797
 msgid "Clear Lines Errors"
 msgstr "Svuota errori di riga"
 
-#: core/subtitle.cpp:1226 core/subtitle.cpp:1238 main/application.cpp:2143
+#: core/subtitle.cpp:1227 core/subtitle.cpp:1239 main/application.cpp:2143
 #: main/application.cpp:2174
 msgid "Check Lines Errors"
 msgstr "Controlla errori di riga"
@@ -1467,6 +1467,7 @@ msgstr "Smarca automatcamente gli errori corretti"
 #: main/configs/generalconfigwidget.cpp:38
 #: main/configs/playerconfigwidget.cpp:45
 #: services/mplayer/mplayerconfigwidget.cpp:37
+#: services/mpv/mpvconfigwidget.cpp:38
 msgctxt "@title:group General settings"
 msgid "General"
 msgstr "Generale"
@@ -2494,15 +2495,18 @@ msgid "Select the MPlayer executable"
 msgstr "Seleziona l'eseguibile di MPlayer"
 
 #: services/mplayer/mplayerconfigwidget.cpp:48
+#: services/mpv/mpvconfigwidget.cpp:41
 msgid "A/V synchronization factor:"
 msgstr "Fattore di sincronizzazione A/V:"
 
 #: services/mplayer/mplayerconfigwidget.cpp:55
+#: services/mpv/mpvconfigwidget.cpp:48
 msgctxt "@title:group Video settings"
 msgid "Video"
 msgstr "Vídeo"
 
 #: services/mplayer/mplayerconfigwidget.cpp:58
+#: services/mpv/mpvconfigwidget.cpp:51
 msgid "Video output driver:"
 msgstr "Driver visualizzazione video:"
 
@@ -2511,6 +2515,7 @@ msgid "Enable vdpau for DivX/XviD"
 msgstr ""
 
 #: services/mplayer/mplayerconfigwidget.cpp:69
+#: services/mpv/mpvconfigwidget.cpp:67
 msgid "Allow frame dropping"
 msgstr "Permetti la perdita di fotogrammi video"
 
@@ -2519,25 +2524,39 @@ msgid "Allow hard frame dropping"
 msgstr "Permetti una forte perdita di fotogrammi video"
 
 #: services/mplayer/mplayerconfigwidget.cpp:74
+#: services/mpv/mpvconfigwidget.cpp:69
 msgctxt "@title:group Audio settings"
 msgid "Audio"
 msgstr "Audio"
 
 #: services/mplayer/mplayerconfigwidget.cpp:77
+#: services/mpv/mpvconfigwidget.cpp:72
 msgid "Audio output driver:"
 msgstr "Driver uscita audio:"
 
 #: services/mplayer/mplayerconfigwidget.cpp:85
+#: services/mpv/mpvconfigwidget.cpp:80
 msgid "Audio channels:"
 msgstr "Canali audio:"
 
 #: services/mplayer/mplayerconfigwidget.cpp:93
+#: services/mpv/mpvconfigwidget.cpp:88
 msgid "Volume amplification:"
 msgstr "Amplificazione del volume:"
 
 #: services/mplayer/mplayerconfigwidget.cpp:102
+#: services/mpv/mpvconfigwidget.cpp:97
 msgid "Volume normalization"
 msgstr "Normalizzazione volume"
+
+#: services/mpv/mpvbackend.cpp:212
+#, fuzzy
+msgid "Stream #%1"
+msgstr "Flussio audio #%1"
+
+#: services/mpv/mpvconfigwidget.cpp:59
+msgid "Hardware video decoding:"
+msgstr ""
 
 #: services/xine/xineconfigwidget.cpp:34
 msgctxt "@title:group Xine settings"

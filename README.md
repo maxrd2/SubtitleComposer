@@ -28,7 +28,7 @@ If you would like to do some code changes, please check the new [coding style][c
 
 ### AUTHORS / CONTRIBUTORS
  - Mladen Milinkovic - maintainer
- - Gogo - Croatian translation
+ - Goran Vidovic (gogo) - Croatian translation
  - Petar Toushkov - Bulgarian translation
  - Sergio Pistone - original author and maintainer
  - Petr Gadula (Goliash), Thomas Gastine, Panagiotis Papadopoulos, Alessandro Polverini, Tomasz Argasiński, Marcio P. Moraes,

@@ -1,5 +1,5 @@
 Bulgarian:				currently maintained by Petar Toushkov <peter.toushkov@gmail.com>
-Croatian:				currently maintained by gogo <trebelnik2@gmail.com>
+Croatian:				currently maintained by Goran Vidovic (gogo) <trebelnik2@gmail.com>
 Czech:					currently unmaintained (contributed by Petr Gadula (Goliash) <goliash@goliash.net>)
 French					currently unmaintained (contributed by Thomas Gastine <thomas.gastine@wanadoo.fr>)
 German:					currently unmaintained (contributed by Panagiotis Papadopoulos <pano_90@gmx.net>)
