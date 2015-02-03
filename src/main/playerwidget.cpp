@@ -681,6 +681,7 @@ PlayerWidget::onPlayerOptionChanged(const QString &option, const QString &value)
 		m_textOverlay->setPointSize(app()->playerConfig()->fontPointSize());
 		m_textOverlay->setOutlineColor(app()->playerConfig()->outlineColor());
 		m_textOverlay->setOutlineWidth(app()->playerConfig()->outlineWidth());
+		m_textOverlay->setAntialias(app()->playerConfig()->antialiasEnabled());
 	}
 }
 
@@ -732,11 +733,9 @@ void
 PlayerWidget::onPlayerPlaybackError(const QString &errorMessage)
 {
 	if(errorMessage.isEmpty())
-		KMessageBox::error(this, i18n("Unexpected error when playing file."), i18n("Error Playing File")
-		                   );
+		KMessageBox::error(this, i18n("Unexpected error when playing file."), i18n("Error Playing File"));
 	else
-		KMessageBox::detailedError(this, i18n("Unexpected error when playing file."), errorMessage, i18n("Error Playing File")
-		                           );
+		KMessageBox::detailedError(this, i18n("Unexpected error when playing file."), errorMessage, i18n("Error Playing File"));
 	// onPlayerFileClosed();
 }
 

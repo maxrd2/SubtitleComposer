@@ -136,9 +136,19 @@ public:
 		return optionAsInt(keyOutlineWidth());
 	}
 
+	bool antialiasEnabled() const
+	{
+		return optionAsBool(keyAntialias());
+	}
+
 	void setOutlineWidth(int width)
 	{
 		setOption(keyOutlineWidth(), width);
+	}
+
+	void setAntialiasEnabled(bool antialias)
+	{
+		setOption(keyAntialias(), antialias);
 	}
 
 	static const QString & keyPlayerBackend()
@@ -194,6 +204,11 @@ public:
 		static const QString key("OutlineWidth");
 		return key;
 	}
+	static const QString & keyAntialias()
+	{
+		static const QString key("Antialias");
+		return key;
+	}
 
 private:
 
@@ -227,6 +242,7 @@ private:
 		defaults[keyFontColor()] = QColor(Qt::yellow).name();
 		defaults[keyOutlineColor()] = QColor(Qt::black).name();
 		defaults[keyOutlineWidth()] = "1";
+		defaults[keyAntialias()] = "true";
 
 		return defaults;
 	}

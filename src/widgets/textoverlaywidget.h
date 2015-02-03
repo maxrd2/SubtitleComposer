@@ -64,8 +64,9 @@ public slots:
 	void setPixelSize(int pixelSize);
 	void setFamily(const QString &family);
 	void setPrimaryColor(const QColor &color);
-	void setOutlineWidth(int with);
+	void setOutlineWidth(int width);
 	void setOutlineColor(const QColor &color);
+	void setAntialias(bool antialias);
 
 protected:
 	virtual void customEvent(QEvent *event);
@@ -77,10 +78,12 @@ protected:
 	void updateContents();
 
 	QRect calculateTextRect() const;
-	void setMaskAndOutline(int width);
+	void setMonoMask();
+	void setOutline();
 
 private:
 	QString m_text;
+	bool m_antialias;
 
 	int m_alignment;
 	QFont m_font;                           // font family and size are stored here

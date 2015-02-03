@@ -118,6 +118,12 @@ PlayerConfigWidget::PlayerConfigWidget(QWidget *parent) :
 	outlineWidthLabel->setText(i18n("Outline width:"));
 	outlineWidthLabel->setBuddy(m_outlineWidthSpinBox);
 
+	m_antialiasCheckBox = new QCheckBox(generalGroupBox);
+
+	QLabel *antialiasLabel = new QLabel(fontGroupBox);
+	antialiasLabel->setText(i18n("Antialiasing:"));
+	antialiasLabel->setBuddy(m_antialiasCheckBox);
+
 	QGroupBox *previewGroupBox = createGroupBox(i18nc("@title:group", "Subtitles Preview"));
 
 	QWidget *previewWidget = new LayeredWidget(previewGroupBox);
@@ -150,6 +156,8 @@ PlayerConfigWidget::PlayerConfigWidget(QWidget *parent) :
 	fontLayout->addWidget(m_outlineColorComboBox, 3, 1);
 	fontLayout->addWidget(outlineWidthLabel, 4, 0, Qt::AlignRight | Qt::AlignVCenter);
 	fontLayout->addWidget(m_outlineWidthSpinBox, 4, 1);
+	fontLayout->addWidget(antialiasLabel, 5, 0, Qt::AlignRight | Qt::AlignVCenter);
+	fontLayout->addWidget(m_antialiasCheckBox, 5, 1);
 
 	QGridLayout *previewLayout = createGridLayout(previewGroupBox);
 	previewLayout->addWidget(previewWidget, 0, 0);
@@ -165,12 +173,14 @@ PlayerConfigWidget::PlayerConfigWidget(QWidget *parent) :
 	connect(m_primaryColorComboBox, SIGNAL(activated(const QColor &)), this, SLOT(onPrimaryColorChanged(const QColor &)));
 	connect(m_outlineColorComboBox, SIGNAL(activated(const QColor &)), this, SLOT(onOutlineColorChanged(const QColor &)));
 	connect(m_outlineWidthSpinBox, SIGNAL(valueChanged(int)), this, SLOT(onOutlineWidthChanged(int)));
+	connect(m_antialiasCheckBox, SIGNAL(toggled(bool)), this, SLOT(onAntialiasChanged(bool)));
 
 	connect(m_fontComboBox, SIGNAL(activated(int)), this, SIGNAL(settingsChanged()));
 	connect(m_sizeSpinBox, SIGNAL(valueChanged(int)), this, SIGNAL(settingsChanged()));
 	connect(m_primaryColorComboBox, SIGNAL(activated(const QColor &)), this, SIGNAL(settingsChanged()));
 	connect(m_outlineColorComboBox, SIGNAL(activated(const QColor &)), this, SIGNAL(settingsChanged()));
 	connect(m_outlineWidthSpinBox, SIGNAL(valueChanged(int)), this, SIGNAL(settingsChanged()));
+	connect(m_antialiasCheckBox, SIGNAL(toggled(bool)), this, SIGNAL(settingsChanged()));
 
 	setControlsFromConfig();
 }
@@ -200,6 +210,9 @@ PlayerConfigWidget::setControlsFromConfig()
 
 	m_outlineWidthSpinBox->setValue(config()->outlineWidth());
 	onOutlineWidthChanged(config()->outlineWidth());
+
+	m_antialiasCheckBox->setChecked(config()->antialiasEnabled());
+	onAntialiasChanged(config()->antialiasEnabled());
 }
 
 void
@@ -215,6 +228,7 @@ PlayerConfigWidget::setConfigFromControls()
 	config()->setFontColor(m_textOverlayWidget->primaryColor());
 	config()->setOutlineColor(m_textOverlayWidget->outlineColor());
 	config()->setOutlineWidth((int)m_textOverlayWidget->outlineWidth());
+	config()->setAntialiasEnabled(m_antialiasCheckBox->isChecked());
 }
 
 void
@@ -246,6 +260,12 @@ void
 PlayerConfigWidget::onOutlineWidthChanged(int width)
 {
 	m_textOverlayWidget->setOutlineWidth(width);
+}
+
+void
+PlayerConfigWidget::onAntialiasChanged(bool antialias)
+{
+	m_textOverlayWidget->setAntialias(antialias);
 }
 
 #include "playerconfigwidget.moc"

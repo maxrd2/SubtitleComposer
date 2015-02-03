@@ -53,6 +53,7 @@ private slots:
 	void onPrimaryColorChanged(const QColor &color);
 	void onOutlineColorChanged(const QColor &color);
 	void onOutlineWidthChanged(int width);
+	void onAntialiasChanged(bool antialias);
 
 private:
 	explicit PlayerConfigWidget(QWidget *parent = 0);
@@ -70,6 +71,7 @@ private:
 	KColorCombo *m_primaryColorComboBox;
 	KColorCombo *m_outlineColorComboBox;
 	KIntNumInput *m_outlineWidthSpinBox;
+	QCheckBox *m_antialiasCheckBox;
 	TextOverlayWidget *m_textOverlayWidget;
 };
 }

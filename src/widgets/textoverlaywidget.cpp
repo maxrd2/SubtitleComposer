@@ -31,6 +31,7 @@
 TextOverlayWidget::TextOverlayWidget(QWidget *parent) :
 	QWidget(parent, 0),
 	m_text(),
+	m_antialias(false),
 	m_alignment(Qt::AlignVCenter | Qt::AlignHCenter),
 	m_font(),
 	m_primaryColor(Qt::yellow),
@@ -52,7 +53,7 @@ TextOverlayWidget::TextOverlayWidget(QWidget *parent) :
 	setAttribute(Qt::WA_NoSystemBackground, true);
 
 	m_font.setPointSize(15);
-	m_font.setStyleStrategy(QFont::NoAntialias);
+	m_font.setStyleStrategy(m_antialias ? QFont::PreferAntialias : QFont::NoAntialias);
 	m_textDocument->setDefaultFont(m_font);
 
 	QTextOption textOption;
@@ -203,6 +204,17 @@ TextOverlayWidget::setOutlineWidth(int width)
 {
 	if(m_outlineWidth != width) {
 		m_outlineWidth = width;
+		setDirty(false, false);
+	}
+}
+
+void
+TextOverlayWidget::setAntialias(bool antialias)
+{
+	if(m_antialias != antialias) {
+		m_antialias = antialias;
+		m_font.setStyleStrategy(m_antialias ? QFont::PreferAntialias : QFont::NoAntialias);
+		m_textDocument->setDefaultFont(m_font);
 		setDirty(false, false);
 	}
 }
@@ -358,8 +370,7 @@ TextOverlayWidget::updateContents()
 
 		QPainter painter(&m_bgImage);
 
-		// Disable rendering hints to (hopefully) improve performance
-		painter.setRenderHints(QPainter::Antialiasing | QPainter::TextAntialiasing | QPainter::SmoothPixmapTransform | QPainter::HighQualityAntialiasing | QPainter::NonCosmeticDefaultPen, false);
+		painter.setRenderHints(QPainter::Antialiasing | QPainter::TextAntialiasing | QPainter::SmoothPixmapTransform | QPainter::HighQualityAntialiasing | QPainter::NonCosmeticDefaultPen, m_antialias);
 
 		painter.fillRect(rect, m_transColor);
 		painter.setFont(m_font);
@@ -367,19 +378,26 @@ TextOverlayWidget::updateContents()
 		painter.translate(0, 0);
 		QAbstractTextDocumentLayout::PaintContext context;
 		context.palette = palette();
+
+		if(m_outlineWidth > 0) {
+			context.palette.setColor(QPalette::Text, m_outlineColor);
+			m_textDocument->documentLayout()->draw(&painter, context);
+			setOutline();
+		}
+
 		context.palette.setColor(QPalette::Text, m_primaryColor);
 		m_textDocument->documentLayout()->draw(&painter, context);
 
 		painter.end();
 
-		setMaskAndOutline(m_outlineWidth);
+		setMonoMask();
 	}
 
 	m_dirty = false;
 }
 
 void
-TextOverlayWidget::setMaskAndOutline(int outlineWidth)
+TextOverlayWidget::setMonoMask()
 {
 	static const QRgb color0 = QColor(Qt::color0).rgb();    // mask transparent
 	static const QRgb color1 = QColor(Qt::color1).rgb();    // mask non transparent
@@ -390,58 +408,77 @@ TextOverlayWidget::setMaskAndOutline(int outlineWidth)
 	QImage maskImage(size, QImage::Format_RGB32);
 	maskImage.fill(color0);
 
-	if(outlineWidth > 0) {
-		const int maxX = size.width() - 1;
-		const int maxY = size.height() - 1;
+	QRgb *bgImageBits = (QRgb *)m_bgImage.bits();
+	QRgb *maskImageBits = (QRgb *)maskImage.bits();
 
-		QRgb *bgImageScanLines[size.height()];
-		QRgb *maskImageScanLines[size.height()];
-
-		// we don't need all the values initialized, only the ones we will actually use
-		for(int y = 0; y <= maxY; ++y) {
-			bgImageScanLines[y] = (QRgb *)m_bgImage.scanLine(y);
-			maskImageScanLines[y] = (QRgb *)maskImage.scanLine(y);
-		}
-
-		int lminX, lmaxX, lminY, lmaxY;
-		for(int y = 0; y <= maxY; ++y) {
-			for(int x = 0; x <= maxX; ++x) {
-				if(bgImageScanLines[y][x] == m_primaryRGB) {    // draw the outline
-					lminY = y - outlineWidth;
-					if(lminY < 0)
-						lminY = 0;
-					lmaxY = y + outlineWidth;
-					if(lmaxY > maxY)
-						lmaxY = maxY;
-
-					lminX = x - outlineWidth;
-					if(lminX < 0)
-						lminX = 0;
-					lmaxX = x + outlineWidth;
-					if(lmaxX > maxX)
-						lmaxX = maxX;
-
-					for(int ly = lminY; ly <= lmaxY; ++ly) {
-						for(int lx = lminX; lx <= lmaxX; ++lx) {
-							maskImageScanLines[ly][lx] = color1;
-							if(bgImageScanLines[ly][lx] != m_primaryRGB)
-								bgImageScanLines[ly][lx] = m_outlineRGB;
-						}
-					}
-				}
-			}
-		}
-	} else {
-		QRgb *bgImageBits = (QRgb *)m_bgImage.bits();
-		QRgb *maskImageBits = (QRgb *)maskImage.bits();
-
-		for(int index = 0, count = size.width() * size.height(); index < count; ++index) {
-			if(bgImageBits[index] != m_transRGB)
-				maskImageBits[index] = color1;
-		}
+	for(int index = 0, count = size.width() * size.height(); index < count; ++index) {
+		if(bgImageBits[index] != m_transRGB)
+			maskImageBits[index] = color1;
 	}
 
 	setMask(QBitmap::fromImage(maskImage, Qt::MonoOnly));
+}
+
+void
+TextOverlayWidget::setOutline()
+{
+	if(!m_outlineWidth)
+		return;
+
+	const QSize size = this->size();
+	const int maxX = size.width() - 1;
+	const int maxY = size.height() - 1;
+
+	QRgb *bgImageScanLines[size.height()];
+
+	for(int y = 0; y <= maxY; y++)
+		bgImageScanLines[y] = (QRgb *)m_bgImage.scanLine(y);
+
+	QRgb *cc, *cd;
+	for(int y = 0; y <= maxY; y++) {
+		for(int x = m_outlineWidth; x <= maxX; x++) {
+			int ix = maxX - x;
+			for(int d = 1; d <= m_outlineWidth; d++) {
+				// left to right
+				cd = &bgImageScanLines[y][x - d];
+				if(*cd != m_outlineRGB) {
+					cc = &bgImageScanLines[y][x];
+					if(*cc != m_transRGB)
+						*cd = *cc;
+				}
+				// right to left
+				cd = &bgImageScanLines[y][ix + d];
+				if(*cd != m_outlineRGB) {
+					cc = &bgImageScanLines[y][ix];
+					if(*cc != m_transRGB)
+						*cd = *cc;
+				}
+			}
+		}
+	}
+
+	for(int x = 0; x <= maxX; x++) {
+		for(int y = m_outlineWidth; y <= maxY; y++) {
+			int iy = maxY - y;
+			for(int d = 1; d <= m_outlineWidth; d++) {
+				// top to bottom
+				cd = &bgImageScanLines[y - d][x];
+				if(*cd != m_outlineRGB) {
+					cc = &bgImageScanLines[y][x];
+					if(*cc != m_transRGB)
+						*cd = *cc;
+				}
+				// bottom to top
+				cd = &bgImageScanLines[iy + d][x];
+				if(*cd != m_outlineRGB) {
+					cc = &bgImageScanLines[iy][x];
+					if(*cc != m_transRGB)
+						*cd = *cc;
+				}
+			}
+		}
+	}
+
 }
 
 #include "textoverlaywidget.moc"
