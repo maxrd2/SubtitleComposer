@@ -84,6 +84,8 @@ MPVBackend::mpvInit()
 	if(config()->hasVideoOutput())
 		mpv_set_option_string(m_mpv, "vo", config()->videoOutput().toUtf8().constData());
 
+	mpv_set_option_string(m_mpv, "hwdec", config()->hasHwDecode() ? config()->hwDecode().toUtf8().constData() : "no");
+
 	if(config()->hasAudioOutput())
 		mpv_set_option_string(m_mpv, "ao", config()->audioOutput().toUtf8().constData());
 

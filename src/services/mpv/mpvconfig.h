@@ -62,14 +62,29 @@ public:
 		return !option(keyVideoOutput()).isEmpty();
 	}
 
+	bool hasHwDecode() const
+	{
+		return !option(keyHwDecode()).isEmpty();
+	}
+
 	QString videoOutput() const
 	{
 		return option(keyVideoOutput());
 	}
 
+	QString hwDecode() const
+	{
+		return option(keyHwDecode());
+	}
+
 	void setVideoOutput(const QString &videoOutput)
 	{
 		setOption(keyVideoOutput(), videoOutput);
+	}
+
+	void setHwDecode(const QString &hwDecode)
+	{
+		setOption(keyHwDecode(), hwDecode);
 	}
 
 	bool hasCacheSize() const
@@ -168,6 +183,12 @@ public:
 		return key;
 	}
 
+	static const QString & keyHwDecode()
+	{
+		static const QString key("HWDecoding");
+		return key;
+	}
+
 	static const QString & keyFrameDropping()
 	{
 		static const QString key("FrameDropping");
@@ -218,6 +239,7 @@ private:
 		defaults[keyAutoSyncFactor()] = "";
 
 		defaults[keyVideoOutput()] = "";
+		defaults[keyHwDecode()] = "auto";
 		defaults[keyFrameDropping()] = "false";
 
 		defaults[keyAudioOutput()] = "";

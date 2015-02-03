@@ -53,8 +53,10 @@ private:
 
 private:
 	QCheckBox *m_frameDropCheckBox;
-	KComboBox *m_videoOutputComboBox;
 	QCheckBox *m_videoOutputCheckBox;
+	KComboBox *m_videoOutputComboBox;
+	QCheckBox *m_hwDecodeCheckBox;
+	KComboBox *m_hwDecodeComboBox;
 	KComboBox *m_audioOutputComboBox;
 	KIntSpinBox *m_avsyncSpinBox;
 	QCheckBox *m_audioChannelsCheckBox;

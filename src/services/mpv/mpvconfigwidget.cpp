@@ -55,6 +55,14 @@ MPVConfigWidget::MPVConfigWidget(QWidget *parent) :
 	m_videoOutputComboBox->setEditable(true);
 	m_videoOutputComboBox->addItems(QString("vdpau vaapi xv wayland opengl opengl-hq opengl-old x11 null").split(' '));
 
+	m_hwDecodeCheckBox = new QCheckBox(videoGroupBox);
+	m_hwDecodeCheckBox->setText(i18n("Hardware video decoding:"));
+
+	m_hwDecodeComboBox = new KComboBox(false, videoGroupBox);
+	m_hwDecodeComboBox->setEnabled(false);
+	m_hwDecodeComboBox->setEditable(true);
+	m_hwDecodeComboBox->addItems(QString("auto vdpau vaapi vaapi-copy").split(' '));
+
 	m_frameDropCheckBox = new QCheckBox(videoGroupBox);
 	m_frameDropCheckBox->setText(i18n("Allow frame dropping"));
 
@@ -95,6 +103,8 @@ MPVConfigWidget::MPVConfigWidget(QWidget *parent) :
 	QGridLayout *videoLayout = createGridLayout(videoGroupBox);
 	videoLayout->addWidget(m_videoOutputCheckBox, 0, 0, Qt::AlignRight | Qt::AlignVCenter);
 	videoLayout->addWidget(m_videoOutputComboBox, 0, 1);
+	videoLayout->addWidget(m_hwDecodeCheckBox, 1, 0, Qt::AlignRight | Qt::AlignVCenter);
+	videoLayout->addWidget(m_hwDecodeComboBox, 1, 1);
 	videoLayout->addWidget(m_frameDropCheckBox, 2, 0, 1, 2);
 
 	QGridLayout *audioLayout = createGridLayout(audioGroupBox);
@@ -108,6 +118,7 @@ MPVConfigWidget::MPVConfigWidget(QWidget *parent) :
 
 	connect(m_avsyncCheckBox, SIGNAL(toggled(bool)), m_avsyncSpinBox, SLOT(setEnabled(bool)));
 	connect(m_videoOutputCheckBox, SIGNAL(toggled(bool)), m_videoOutputComboBox, SLOT(setEnabled(bool)));
+	connect(m_hwDecodeCheckBox, SIGNAL(toggled(bool)), m_hwDecodeComboBox, SLOT(setEnabled(bool)));
 	connect(m_audioOutputCheckBox, SIGNAL(toggled(bool)), m_audioOutputComboBox, SLOT(setEnabled(bool)));
 	connect(m_audioChannelsCheckBox, SIGNAL(toggled(bool)), m_audioChannelsSpinBox, SLOT(setEnabled(bool)));
 	connect(m_volumeAmplificationCheckBox, SIGNAL(toggled(bool)), m_volumeAmplificationSpinBox, SLOT(setEnabled(bool)));
@@ -117,6 +128,8 @@ MPVConfigWidget::MPVConfigWidget(QWidget *parent) :
 
 	connect(m_videoOutputCheckBox, SIGNAL(toggled(bool)), this, SIGNAL(settingsChanged()));
 	connect(m_videoOutputComboBox, SIGNAL(textChanged(const QString &)), this, SIGNAL(settingsChanged()));
+	connect(m_hwDecodeCheckBox, SIGNAL(toggled(bool)), this, SIGNAL(settingsChanged()));
+	connect(m_hwDecodeComboBox, SIGNAL(textChanged(const QString &)), this, SIGNAL(settingsChanged()));
 	connect(m_frameDropCheckBox, SIGNAL(toggled(bool)), this, SIGNAL(settingsChanged()));
 
 	connect(m_audioOutputCheckBox, SIGNAL(toggled(bool)), this, SIGNAL(settingsChanged()));
@@ -139,6 +152,7 @@ MPVConfigWidget::setConfigFromControls()
 	config()->setAutoSyncFactor(m_avsyncCheckBox->isChecked() ? m_avsyncSpinBox->value() : -1);
 
 	config()->setVideoOutput(m_videoOutputCheckBox->isChecked() ? m_videoOutputComboBox->currentText() : QString());
+	config()->setHwDecode(m_hwDecodeCheckBox->isChecked() ? m_hwDecodeComboBox->currentText() : QString());
 	config()->setFrameDropping(m_frameDropCheckBox->isChecked());
 
 	config()->setAudioOutput(m_audioOutputCheckBox->isChecked() ? m_audioOutputComboBox->currentText() : QString());
@@ -157,6 +171,9 @@ MPVConfigWidget::setControlsFromConfig()
 	m_videoOutputCheckBox->setChecked(config()->hasVideoOutput());
 	if(m_videoOutputCheckBox->isChecked())
 		m_videoOutputComboBox->setEditText(config()->videoOutput());
+	m_hwDecodeCheckBox->setChecked(config()->hasHwDecode());
+	if(m_hwDecodeCheckBox->isChecked())
+		m_hwDecodeComboBox->setEditText(config()->hwDecode());
 	m_frameDropCheckBox->setChecked(config()->frameDropping());
 
 	m_audioOutputCheckBox->setChecked(config()->hasAudioOutput());
