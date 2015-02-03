@@ -64,7 +64,6 @@ private:
 	QCheckBox *m_volumeNormalizationCheckBox;
 	QCheckBox *m_avsyncCheckBox;
 	QCheckBox *m_audioOutputCheckBox;
-	KUrlRequester *m_pathUrlRequester;
 };
 }
 

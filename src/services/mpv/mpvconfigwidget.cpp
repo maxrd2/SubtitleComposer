@@ -37,14 +37,6 @@ MPVConfigWidget::MPVConfigWidget(QWidget *parent) :
 {
 	QGroupBox *generalGroupBox = createGroupBox(i18nc("@title:group General settings", "General"));
 
-	QLabel *pathLabel = new QLabel(generalGroupBox);
-	pathLabel->setText(i18n("Executable path:"));
-
-	m_pathUrlRequester = new KUrlRequester(generalGroupBox);
-	m_pathUrlRequester->setWindowTitle(i18n("Select the MPV executable"));
-	m_pathUrlRequester->setMode(KFile::File | KFile::ExistingOnly | KFile::LocalOnly);
-	m_pathUrlRequester->setUrl(KUrl("mpv"));
-
 	m_avsyncCheckBox = new QCheckBox(generalGroupBox);
 	m_avsyncCheckBox->setText(i18n("A/V synchronization factor:"));
 
@@ -97,8 +89,6 @@ MPVConfigWidget::MPVConfigWidget(QWidget *parent) :
 	m_volumeNormalizationCheckBox->setText(i18n("Volume normalization"));
 
 	QGridLayout *generalLayout = createGridLayout(generalGroupBox);
-	generalLayout->addWidget(pathLabel, 0, 0, Qt::AlignRight | Qt::AlignVCenter);
-	generalLayout->addWidget(m_pathUrlRequester, 0, 1);
 	generalLayout->addWidget(m_avsyncCheckBox, 1, 0, Qt::AlignRight | Qt::AlignVCenter);
 	generalLayout->addWidget(m_avsyncSpinBox, 1, 1);
 
@@ -122,7 +112,6 @@ MPVConfigWidget::MPVConfigWidget(QWidget *parent) :
 	connect(m_audioChannelsCheckBox, SIGNAL(toggled(bool)), m_audioChannelsSpinBox, SLOT(setEnabled(bool)));
 	connect(m_volumeAmplificationCheckBox, SIGNAL(toggled(bool)), m_volumeAmplificationSpinBox, SLOT(setEnabled(bool)));
 
-	connect(m_pathUrlRequester, SIGNAL(textChanged(const QString &)), this, SIGNAL(settingsChanged()));
 	connect(m_avsyncCheckBox, SIGNAL(toggled(bool)), this, SIGNAL(settingsChanged()));
 	connect(m_avsyncSpinBox, SIGNAL(valueChanged(int)), this, SIGNAL(settingsChanged()));
 
@@ -147,7 +136,6 @@ MPVConfigWidget::~MPVConfigWidget()
 void
 MPVConfigWidget::setConfigFromControls()
 {
-	config()->setExecutablePath(m_pathUrlRequester->url().path());
 	config()->setAutoSyncFactor(m_avsyncCheckBox->isChecked() ? m_avsyncSpinBox->value() : -1);
 
 	config()->setVideoOutput(m_videoOutputCheckBox->isChecked() ? m_videoOutputComboBox->currentText() : QString());
@@ -162,7 +150,6 @@ MPVConfigWidget::setConfigFromControls()
 void
 MPVConfigWidget::setControlsFromConfig()
 {
-	m_pathUrlRequester->setUrl(config()->executablePath());
 	m_avsyncCheckBox->setChecked(config()->hasAutoSyncFactor());
 	if(m_avsyncCheckBox->isChecked())
 		m_avsyncSpinBox->setValue(config()->autoSyncFactor());

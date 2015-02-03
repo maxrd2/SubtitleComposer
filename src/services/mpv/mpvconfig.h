@@ -42,16 +42,6 @@ public:
 		return new MPVConfig(*this);
 	}
 
-	QString executablePath() const
-	{
-		return option(keyExecutablePath());
-	}
-
-	void setExecutablePath(const QString &execPath)
-	{
-		setOption(keyExecutablePath(), execPath);
-	}
-
 	bool hasAudioOutput() const
 	{
 		return !option(keyAudioOutput()).isEmpty();
@@ -160,12 +150,6 @@ public:
 		setOption(keyAutoSyncFactor(), factor < 0 ? "" : QString::number(factor));
 	}
 
-	static const QString & keyExecutablePath()
-	{
-		static const QString key("ExecutablePath");
-		return key;
-	}
-
 	static const QString & keyCacheSize()
 	{
 		static const QString key("CacheSize");
@@ -230,7 +214,6 @@ private:
 	{
 		QMap<QString, QString> defaults;
 
-		defaults[keyExecutablePath()] = "mpv";
 		defaults[keyCacheSize()] = "5120";      // in kbytes
 		defaults[keyAutoSyncFactor()] = "";
 
