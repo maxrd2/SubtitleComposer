@@ -125,6 +125,9 @@ MPVBackend::mpvInit()
 	mpv_set_option_string(m_mpv, "input-default-bindings", "no");
 	// Disable keyboard input on the X11 window
 	mpv_set_option_string(m_mpv, "input-vo-keyboard", "no");
+	// Disable mouse input and let us handle mouse hiding
+	mpv_set_option_string(m_mpv, "input-cursor", "no");
+	mpv_set_option_string(m_mpv, "cursor-autohide", "no");
 
 	// Receive property change events with MPV_EVENT_PROPERTY_CHANGE
 	mpv_observe_property(m_mpv, 0, "time-pos", MPV_FORMAT_DOUBLE);
