@@ -1,4 +1,4 @@
-SET( widgets_SRCS
+set(widgets_SRCS
 	${CMAKE_CURRENT_SOURCE_DIR}/attachablewidget.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/layeredwidget.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/pointingslider.cpp

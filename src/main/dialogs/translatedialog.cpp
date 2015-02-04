@@ -20,10 +20,11 @@
 #include "translatedialog.h"
 
 #include <QtCore/QFile>
-#include <QtGui/QLabel>
-#include <QtGui/QComboBox>
-#include <QtGui/QGroupBox>
-#include <QtGui/QGridLayout>
+#include <QLabel>
+#include <QComboBox>
+#include <QGroupBox>
+#include <QGridLayout>
+#include <KIcon>
 
 using namespace SubtitleComposer;
 

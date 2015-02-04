@@ -31,22 +31,22 @@
 #include "../widgets/timeedit.h"
 
 #include <QtCore/QEvent>
-#include <QtGui/QDragEnterEvent>
-#include <QtGui/QDropEvent>
-#include <QtGui/QKeyEvent>
+#include <QDragEnterEvent>
+#include <QDropEvent>
+#include <QKeyEvent>
 
-#include <QtGui/QDesktopWidget>
-#include <QtGui/QCursor>
-#include <QtGui/QLabel>
-#include <QtGui/QToolButton>
-#include <QtGui/QGroupBox>
-#include <QtGui/QGridLayout>
+#include <QDesktopWidget>
+#include <QCursor>
+#include <QLabel>
+#include <QToolButton>
+#include <QGroupBox>
+#include <QGridLayout>
 
 #include <KLocale>
 #include <KConfigGroup>
 #include <KMessageBox>
 #include <KMenu>
-#include <KPushButton>
+#include <QPushButton>
 
 using namespace SubtitleComposer;
 
@@ -241,7 +241,7 @@ PlayerWidget::PlayerWidget(QWidget *parent) :
 	connect(m_player, SIGNAL(fileOpened(const QString &)), this, SLOT(onPlayerFileOpened(const QString &)));
 	connect(m_player, SIGNAL(fileOpenError(const QString &)), this, SLOT(onPlayerFileOpenError(const QString &)));
 	connect(m_player, SIGNAL(fileClosed()), this, SLOT(onPlayerFileClosed()));
-	connect(m_player, SIGNAL(playbackError(const QString &)), this, SLOT(onPlayerPlaybackError(const QString &)));
+	connect(m_player, SIGNAL(playbacqCritical(const QString &)), this, SLOT(onPlayerPlaybacqCritical(const QString &)));
 	connect(m_player, SIGNAL(playing()), this, SLOT(onPlayerPlaying()));
 	connect(m_player, SIGNAL(stopped()), this, SLOT(onPlayerStopped()));
 	connect(m_player, SIGNAL(positionChanged(double)), this, SLOT(onPlayerPositionChanged(double)));
@@ -393,24 +393,29 @@ PlayerWidget::eventFilter(QObject *object, QEvent *event)
 {
 	if(object == m_layeredWidget) {
 		if(event->type() == QEvent::DragEnter) {
+			/*
+			FIXME:
 			QDragEnterEvent *dragEnterEvent = static_cast<QDragEnterEvent *>(event);
-			KUrl::List urls = KUrl::List::fromMimeData(dragEnterEvent->mimeData());
+			QList<QUrl> urls = QList<QUrl>::fromMimeData(dragEnterEvent->mimeData());
 			if(!urls.isEmpty())
 				dragEnterEvent->accept();
 			else
 				dragEnterEvent->ignore();
 			return true;
+			*/
 		} else if(event->type() == QEvent::DragMove) {
 			return true;            // eat event
 		} else if(event->type() == QEvent::Drop) {
+			/*
+			FIXME:
 			QDropEvent *dropEvent = static_cast<QDropEvent *>(event);
 
-			KUrl::List urls = KUrl::List::fromMimeData(dropEvent->mimeData());
+			QList<QUrl> urls = QList<QUrl>::fromMimeData(dropEvent->mimeData());
 			if(!urls.isEmpty()) {
-				for(KUrl::List::ConstIterator it = urls.begin(), end = urls.end(); it != end; ++it) {
-					const KUrl &url = *it;
+				for(QList<QUrl>::ConstIterator it = urls.begin(), end = urls.end(); it != end; ++it) {
+					const QUrl &url = *it;
 
-					if(url.protocol() != "file")
+					if(url.scheme() != "file")
 						continue;
 
 					app()->openVideo(url);
@@ -419,6 +424,7 @@ PlayerWidget::eventFilter(QObject *object, QEvent *event)
 			}
 
 			return true;            // eat event
+			*/
 		} else if(event->type() == QEvent::KeyPress) {
 			// NOTE: when on full screen mode, the keyboard input is received but
 			// for some reason it doesn't trigger the correct actions automatically
@@ -730,7 +736,7 @@ PlayerWidget::onPlayerFileClosed()
 }
 
 void
-PlayerWidget::onPlayerPlaybackError(const QString &errorMessage)
+PlayerWidget::onPlayerPlaybacqCritical(const QString &errorMessage)
 {
 	if(errorMessage.isEmpty())
 		KMessageBox::error(this, i18n("Unexpected error when playing file."), i18n("Error Playing File"));
@@ -888,4 +894,4 @@ PlayerWidget::onPlayerBackendInitialized()
 	m_textOverlay->raise();
 }
 
-#include "playerwidget.moc"
+

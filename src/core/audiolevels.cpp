@@ -44,7 +44,7 @@ AudioLevels::~AudioLevels()
 }
 
 bool
-AudioLevels::load(const KUrl &fileUrl)
+AudioLevels::load(const QUrl &fileUrl)
 {
 	if(m_samplesData)
 		return false;
@@ -61,7 +61,7 @@ AudioLevels::load(const KUrl &fileUrl)
 	if(QString("audiolevels") != textStream.readLine())
 		return false;
 
-	m_mediaUrl = KUrl(textStream.readLine());
+	m_mediaUrl = QUrl(textStream.readLine());
 
 	file->read((char *)&m_channelsCount, sizeof(m_channelsCount));
 
@@ -119,7 +119,7 @@ AudioLevels::loadFromMedia(const QString & /*mediaPath */, unsigned /*streamInde
 }
 
 bool
-AudioLevels::save(const KUrl &fileUrl, bool overwrite) const
+AudioLevels::save(const QUrl &fileUrl, bool overwrite) const
 {
 	FileSaveHelper fileSaveHelper(fileUrl, overwrite);
 
@@ -157,7 +157,7 @@ AudioLevels::reset()
 	delete[] m_samplesData;
 	m_samplesData = 0;
 	m_lastDataIndex = -1;
-	m_mediaUrl = KUrl();
+	m_mediaUrl = QUrl();
 }
 
-#include "audiolevels.moc"
+

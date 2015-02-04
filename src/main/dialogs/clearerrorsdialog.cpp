@@ -19,12 +19,12 @@
 
 #include "clearerrorsdialog.h"
 
-#include <QtGui/QGridLayout>
-#include <QtGui/QGroupBox>
-#include <QtGui/QCheckBox>
+#include <QGridLayout>
+#include <QGroupBox>
+#include <QCheckBox>
 
 #include <KLocale>
-#include <KPushButton>
+#include <QPushButton>
 
 using namespace SubtitleComposer;
 
@@ -45,4 +45,4 @@ ClearErrorsDialog::setTranslationMode(bool value)
 	createErrorsButtons(true, value);
 }
 
-#include "clearerrorsdialog.moc"
+

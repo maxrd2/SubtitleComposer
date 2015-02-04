@@ -19,11 +19,11 @@
 
 #include "inputdialog.h"
 
-#include <QtGui/QLabel>
-#include <QtGui/QLineEdit>
-#include <QtGui/QGridLayout>
+#include <QLabel>
+#include <QLineEdit>
+#include <QGridLayout>
 
-#include <KPushButton>
+#include <QPushButton>
 #include <KNumInput>
 
 using namespace SubtitleComposer;
@@ -175,4 +175,4 @@ IntInputDialog::setValue(int value)
 	m_intNumInput->setValue(value);
 }
 
-#include "inputdialog.moc"
+

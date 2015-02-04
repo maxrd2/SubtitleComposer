@@ -20,7 +20,7 @@
 #include "treeview.h"
 
 #include <QtCore/QTimer>
-#include <QtGui/QScrollBar>
+#include <QScrollBar>
 
 TreeView::TreeView(QWidget *parent) :
 	QTreeView(parent),
@@ -106,4 +106,4 @@ TreeView::onUpdateGeometriesTimeout()
 	QTreeView::updateGeometries();
 }
 
-#include "treeview.moc"
+

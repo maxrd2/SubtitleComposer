@@ -20,13 +20,13 @@
 #include "phononplayerbackend.h"
 #include "phononconfigwidget.h"
 
-#include <Phonon/MediaObject>
-#include <Phonon/MediaController>
-#include <Phonon/ObjectDescription>
-#include <Phonon/AudioOutput>
-#include <Phonon/VideoWidget>
+#include <KDE/Phonon/MediaObject>
+#include <KDE/Phonon/MediaController>
+#include <KDE/Phonon/ObjectDescription>
+#include <KDE/Phonon/AudioOutput>
+#include <KDE/Phonon/VideoWidget>
 
-#include <KDebug>
+#include <QDebug>
 
 using namespace SubtitleComposer;
 
@@ -291,4 +291,4 @@ PhononPlayerBackend::onStateChanged(Phonon::State newState, Phonon::State /*oldS
 	}
 }
 
-#include "phononplayerbackend.moc"
+

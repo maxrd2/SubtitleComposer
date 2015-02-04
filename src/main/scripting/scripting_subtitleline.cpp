@@ -21,7 +21,7 @@
 #include "scripting_sstring.h"
 #include "../application.h"
 
-#include <KDebug>
+#include <QDebug>
 
 using namespace SubtitleComposer;
 
@@ -418,4 +418,4 @@ Scripting::SubtitleLine::check(int errorFlagsToCheck, int minDuration, int maxDu
 	return m_backend->check(errorFlagsToCheck, minDuration, maxDuration, minDurationPerChar, maxDurationPerChar, maxChars, maxLines, update);
 }
 
-#include "scripting_subtitleline.moc"
+

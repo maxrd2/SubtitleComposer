@@ -21,10 +21,10 @@
 #include "mplayerplayerprocess.h"
 #include "../../common/qxtsignalwaiter.h"
 
-#include <QtGui/QApplication>
+#include <QApplication>
 #include <QtCore/QStringList>
 
-#include <KDebug>
+#include <QDebug>
 #include <KStandardDirs>
 
 using namespace SubtitleComposer;
@@ -137,7 +137,7 @@ MPlayerPlayerProcess::start(const QString &filePath, int winId, int audioStream,
 
 	args << filePath;
 
-//  kDebug() << KStandardDirs::findExe( m_config->executablePath() ) << " " << args.join(" ");
+//  qDebug() << KStandardDirs::findExe( m_config->executablePath() ) << " " << args.join(" ");
 
 	setProcessChannelMode(QProcess::MergedChannels);
 	QProcess::start(KStandardDirs::findExe(m_config->executablePath()), args);
@@ -210,7 +210,7 @@ MPlayerPlayerProcess::sendCommand(const QByteArray &cmd, MPlayerPlayerProcess::C
 	static int count = 0;
 
 	if(count) {
-		kDebug() << "call to sendCommand already in progress";
+		qDebug() << "call to sendCommand already in progress";
 		return;
 	}
 
@@ -220,30 +220,30 @@ MPlayerPlayerProcess::sendCommand(const QByteArray &cmd, MPlayerPlayerProcess::C
 	count++;
 
 	if(mode == Pausing || (mode == PausingKeep && m_isPaused)) {
-//		kDebug() << "sending pausing" << cmd;
+//		qDebug() << "sending pausing" << cmd;
 
 		if(block) {
 			QxtSignalWaiter pauseWaiter(this, SIGNAL(pausedReceived()));
 			write("pausing " + cmd + '\n');
-//			kDebug() << "WAITING";
+//			qDebug() << "WAITING";
 			if(!pauseWaiter.wait(5000))
-				kDebug() << ">>>>>>>TIMEDOUT<<<<<<<";
-//			kDebug() << "WAITED";
+				qDebug() << ">>>>>>>TIMEDOUT<<<<<<<";
+//			qDebug() << "WAITED";
 		} else {
 			write("pausing " + cmd + '\n');
 		}
 	} else {
 //		if(mode == Playing || (mode == PausingKeep && !m_isPaused))
-//			kDebug() << "sending" << cmd;
+//			qDebug() << "sending" << cmd;
 
 		if(block) {
 			QxtSignalWaiter playingWaiter(this, SIGNAL(playingReceived()));
 			m_emitPlaying = true;   // to make the playingReceived() signal be emmited again
 			write(cmd + '\n');
-//			kDebug() << "WAITING";
+//			qDebug() << "WAITING";
 			if(!playingWaiter.wait(5000))
-				kDebug() << ">>>>>>TIMEDOUT<<<<<<<";
-//			kDebug() << "WAITED";
+				qDebug() << ">>>>>>TIMEDOUT<<<<<<<";
+//			qDebug() << "WAITED";
 		} else {
 			write(cmd + '\n');
 		}
@@ -324,7 +324,7 @@ MPlayerPlayerProcess::parseLine(const QString &line)
 	if(line.isEmpty())
 		return;
 
-//	kDebug() << line;
+//	qDebug() << line;
 
 	if(m_mediaData.videoFPS != 0.0 && m_videoFrameRegExp.indexIn(line) > -1) {
 		// try to parse the position from the reported frame number
@@ -430,4 +430,4 @@ MPlayerPlayerProcess::parseLine(const QString &line)
 	}
 }
 
-#include "mplayerplayerprocess.moc"
+

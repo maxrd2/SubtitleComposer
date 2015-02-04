@@ -26,7 +26,7 @@
 
 #include "appconfiggroup.h"
 
-#include <QtGui/QWidget>
+#include <QWidget>
 
 class QGroupBox;
 class QGridLayout;

@@ -1,4 +1,4 @@
-SET( core_SRCS
+set(core_SRCS
 	${CMAKE_CURRENT_SOURCE_DIR}/action.h
 	${CMAKE_CURRENT_SOURCE_DIR}/compositeaction.h
 	${CMAKE_CURRENT_SOURCE_DIR}/actionmanager.cpp
@@ -16,4 +16,4 @@ SET( core_SRCS
 	CACHE INTERNAL EXPORTEDVARIABLE
 )
 
-ADD_SUBDIRECTORY( tests )
+add_subdirectory(tests)

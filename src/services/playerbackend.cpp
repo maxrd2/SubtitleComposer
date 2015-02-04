@@ -20,7 +20,7 @@
 #include "playerbackend.h"
 #include "videowidget.h"
 
-#include <KDebug>
+#include <QDebug>
 
 using namespace SubtitleComposer;
 
@@ -46,4 +46,4 @@ PlayerBackend::supportsChangingAudioStream(bool *onTheFly) const
 	return true;
 }
 
-#include "playerbackend.moc"
+

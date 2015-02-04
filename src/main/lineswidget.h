@@ -30,11 +30,11 @@
 #include "../widgets/treeview.h"
 
 #include <QtCore/QAbstractItemModel>
-#include <QtGui/QStyledItemDelegate>
-#include <QtGui/QStyleOptionViewItemV4>
-#include <QtGui/QPen>
-#include <QtGui/QIcon>
-#include <QtGui/QPixmap>
+#include <QStyledItemDelegate>
+#include <QStyleOptionViewItemV4>
+#include <QPen>
+#include <QIcon>
+#include <QPixmap>
 
 class QTextDocument;
 class QTimer;

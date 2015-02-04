@@ -21,7 +21,9 @@
 #include "kreplace.h"
 #include "kfind_p.h"
 
-#include <QtGui/QLabel>
+#include <KDialog>
+
+#include <QLabel>
 #include <KApplication>
 #include <kdebug.h>
 
@@ -145,7 +147,7 @@ KFind::Result
 KReplace::replace()
 {
 #ifdef DEBUG_REPLACE
-	kDebug() << "d->index=" << KFind::d->index;
+	qDebug() << "d->index=" << KFind::d->index;
 #endif
 	if(KFind::d->index == INDEX_NOMATCH && KFind::d->lastResult == Match) {
 		KFind::d->lastResult = NoMatch;
@@ -154,7 +156,7 @@ KReplace::replace()
 
 	do {                                                    // this loop is only because validateMatch can fail
 #ifdef DEBUG_REPLACE
-		kDebug() << "beginning of loop: KFind::d->index=" << KFind::d->index;
+		qDebug() << "beginning of loop: KFind::d->index=" << KFind::d->index;
 #endif
 		// Find the next match.
 		if(KFind::d->options & KFind::RegularExpression)
@@ -163,14 +165,14 @@ KReplace::replace()
 			KFind::d->index = KFind::find(KFind::d->text, KFind::d->pattern, KFind::d->index, KFind::d->options, &KFind::d->matchedLength);
 
 #ifdef DEBUG_REPLACE
-		kDebug() << "KFind::find returned KFind::d->index=" << KFind::d->index;
+		qDebug() << "KFind::find returned KFind::d->index=" << KFind::d->index;
 #endif
 		if(KFind::d->index != -1) {
 			// Flexibility: the app can add more rules to validate a possible match
 			if(validateMatch(KFind::d->text, KFind::d->index, KFind::d->matchedLength)) {
 				if(KFind::d->options & KReplaceDialog::PromptOnReplace) {
 #ifdef DEBUG_REPLACE
-					kDebug() << "PromptOnReplace";
+					qDebug() << "PromptOnReplace";
 #endif
 					// Display accurate initial string and replacement string, they can vary
 					QString matchedText(KFind::d->text.mid(KFind::d->index, KFind::d->matchedLength));
@@ -272,7 +274,7 @@ KReplacePrivate::replace(QString &text, const QString &replacement, QRegExp *reg
 		// the back references with the corresponding captures as we find them.
 
 		if(regExp->indexIn(text.mid(index, length) /* the matched text */) != -1) {    // set up the captures
-			int capNumber, maxCapNumber = qMin(9, regExp->numCaptures());
+			int capNumber, maxCapNumber = qMin(9, regExp->captureCount());
 
 			int idx = 0;
 			while(idx < mutableReplacement.length()) {
@@ -347,7 +349,7 @@ KReplacePrivate::doReplace()
 	// highlight it.
 	emit q->replace(q->KFind::d->text, q->KFind::d->index, replacedLength, q->KFind::d->matchedLength);
 #ifdef DEBUG_REPLACE
-	kDebug() << "after replace() signal: KFind::d->index=" << q->KFind::d->index << " replacedLength=" << replacedLength;
+	qDebug() << "after replace() signal: KFind::d->index=" << q->KFind::d->index << " replacedLength=" << replacedLength;
 #endif
 	m_replacements++;
 	if(q->KFind::d->options & KFind::FindBackwards)
@@ -359,7 +361,7 @@ KReplacePrivate::doReplace()
 			++(q->KFind::d->index);
 	}
 #ifdef DEBUG_REPLACE
-	kDebug() << "after adjustement: KFind::d->index=" << q->KFind::d->index;
+	qDebug() << "after adjustement: KFind::d->index=" << q->KFind::d->index;
 #endif
 }
 
@@ -409,4 +411,4 @@ KReplace::closeReplaceNextDialog()
 	closeFindNextDialog();
 }
 
-#include "kreplace.moc"
+

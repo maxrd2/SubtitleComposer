@@ -24,7 +24,7 @@
 #include <config.h>
 #endif
 
-#include <KUrl>
+#include <QUrl>
 #include <KConfigGroup>
 #include <KSelectAction>
 
@@ -45,31 +45,31 @@ public:
 	bool isEmpty() const;
 	int count() const;
 
-	KUrl::List urls() const;
+	QList<QUrl> urls() const;
 
-	QString encodingForUrl(const KUrl &url) const;
+	QString encodingForUrl(const QUrl &url) const;
 
 	virtual QAction * removeAction(QAction *action);
 
 public slots:
 	void setMaxItems(int maxItems);
 
-	void setUrls(const KUrl::List &urls);
+	void setUrls(const QList<QUrl> &urls);
 
-	void addUrl(const KUrl &url);
-	void removeUrl(const KUrl &url);
+	void addUrl(const QUrl &url);
+	void removeUrl(const QUrl &url);
 	void clearUrls();
 
 	void loadEntries(const KConfigGroup &group);
 	void saveEntries(const KConfigGroup &group);
 
 signals:
-	void urlSelected(const KUrl &url);
+	void urlSelected(const QUrl &url);
 
 protected:
-	void setUrls(const KUrl::List &urls, bool ignoreCollisions);
+	void setUrls(const QList<QUrl> &urls, bool ignoreCollisions);
 
-	virtual QAction * actionForUrl(const KUrl &url) const;
+	virtual QAction * actionForUrl(const QUrl &url) const;
 
 protected slots:
 	void onActionTriggered(QAction *action);
@@ -78,8 +78,8 @@ protected slots:
 protected:
 	int m_maxItems;
 
-	QMap<QAction *, KUrl> m_urls;
-	QMap<KUrl, QAction *> m_actions;
+	QMap<QAction *, QUrl> m_urls;
+	QMap<QUrl, QAction *> m_actions;
 
 	QAction *m_separatorAction;
 	QAction *m_clearHistoryAction;

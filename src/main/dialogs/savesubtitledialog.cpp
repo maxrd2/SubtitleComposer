@@ -22,28 +22,27 @@
 #include "../../common/filesavehelper.h"
 #include "../../formats/formatmanager.h"
 
-#include <QtGui/QLabel>
-#include <QtGui/QGridLayout>
+#include <QLabel>
+#include <QGridLayout>
 
 #include <KLocale>
 #include <KMessageBox>
-#include <kabstractfilewidget.h>
+#include <KFileWidget>
 #include <KFileFilterCombo>
 #include <KComboBox>
 
 using namespace SubtitleComposer;
 
-SaveSubtitleDialog::SaveSubtitleDialog(bool primary, const KUrl &startDir, const QString &encoding, Format::NewLine newLine, const QString &format, QWidget *parent) :
-	KFileDialog(startDir, outputFormatsFilter(), parent)
+SaveSubtitleDialog::SaveSubtitleDialog(bool primary, const QUrl &startDir, const QString &encoding, Format::NewLine newLine, const QString &format, QWidget *parent) :
+	QFileDialog(parent, primary ? i18n("Save Subtitle") : i18n("Save Translation Subtitle"), startDir.toString(), outputFormatsFilter())
 {
-	setCaption(primary ? i18n("Save Subtitle") : i18n("Save Translation Subtitle"));
-	setOperationMode(KFileDialog::Saving);
+	setAcceptMode(QFileDialog::AcceptSave);
 
 	setModal(true);
-	setMode(KFile::File);
+	setFileMode(QFileDialog::AnyFile);
 	setConfirmOverwrite(true);
 
-	filterWidget()->setEditable(false);
+//	filterWidget()->setEditable(false);
 
 	if(FormatManager::instance().output(format))
 		setCurrentFilter(format);
@@ -52,7 +51,7 @@ SaveSubtitleDialog::SaveSubtitleDialog(bool primary, const KUrl &startDir, const
 
 	// setting the current filter will force the first valid extension for the format which
 	// may not be the one of the file (even when the file's extension is perfectly valid)
-	setSelection(startDir.prettyUrl());
+	selectFile(startDir.toString());
 
 	QWidget *customWidget = new QWidget(this);
 
@@ -78,7 +77,13 @@ SaveSubtitleDialog::SaveSubtitleDialog(bool primary, const KUrl &startDir, const
 	layout->addWidget(m_newLineComboBox, 0, 2);
 
 	// FIXME set "encoding" label buddy to m_encodingComboBox (how do we get the "encoding" label widget?)
-	fileWidget()->setCustomWidget(i18n("Encoding:"), customWidget);
+//	fileWidget()->setCustomWidget(i18n("Encoding:"), customWidget);
+	QGridLayout* mainLayout = dynamic_cast<QGridLayout*>(this->layout());
+	if(mainLayout) {
+		int numRows = mainLayout->rowCount();
+//		int numCols = mainLayout->columnCount();
+		mainLayout->addWidget(customWidget, numRows, 0, 1, -1);
+	}
 }
 
 QString
@@ -98,14 +103,14 @@ SaveSubtitleDialog::setCurrentFilter(const QString &formatName)
 			filter += "*." + *it + " *." + (*it).toUpper();
 		filter += '|' + formatName;
 
-		filterWidget()->setCurrentFilter(filter);
+		setNameFilter(filter);
 	}
 }
 
 QString
 SaveSubtitleDialog::selectedFormat() const
 {
-	return filterWidget()->currentText();
+	return selectedNameFilter();
 }
 
 Format::NewLine

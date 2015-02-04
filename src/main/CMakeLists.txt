@@ -1,11 +1,11 @@
-ADD_SUBDIRECTORY( configs )
-ADD_SUBDIRECTORY( dialogs )
-ADD_SUBDIRECTORY( images )
-ADD_SUBDIRECTORY( actions )
-ADD_SUBDIRECTORY( utils )
-ADD_SUBDIRECTORY( scripting )
+add_subdirectory(configs)
+add_subdirectory(dialogs)
+add_subdirectory(images)
+add_subdirectory(actions)
+add_subdirectory(utils)
+add_subdirectory(scripting)
 
-INCLUDE_DIRECTORIES(
+include_directories(
 	${common_INCLUDE_DIR}
 	${config_INCLUDE_DIR}
 	${core_INCLUDE_DIR}
@@ -14,7 +14,7 @@ INCLUDE_DIRECTORIES(
 	${widgets_INCLUDE_DIR}
 )
 
-SET( subtitlecomposer_SRCS
+set(subtitlecomposer_SRCS
 	${common_SRCS}
 	${config_SRCS}
 	${core_SRCS}
@@ -40,16 +40,16 @@ SET( subtitlecomposer_SRCS
 	CACHE INTERNAL EXPORTEDVARIABLE
 )
 
-KDE4_ADD_EXECUTABLE( subtitlecomposer ${subtitlecomposer_SRCS} )
+add_executable(subtitlecomposer ${subtitlecomposer_SRCS})
 
-TARGET_LINK_LIBRARIES(
-	subtitlecomposer
-	${KDE4_KDEUI_LIBS}
-	${KDE4_KHTML_LIBS}
-	${KDE4_KFILE_LIBS}
-	${KDE4_KROSSCORE_LIBS}
-	${KDE4_KROSSUI_LIBS}
-	${KDE4_PHONON_LIBS}
+qt5_use_modules(subtitlecomposer Core Widgets)
+
+target_link_libraries(subtitlecomposer
+	KF5::CoreAddons KF5::WidgetsAddons KF5::TextWidgets KF5::Codecs
+	KF5::SonnetCore KF5::SonnetUi
+	KF5::KrossCore KF5::KrossUi
+	KF5::KDELibs4Support
+	${PHONON_LIBRARY}
 	${common_LIBS}
 	${config_LIBS}
 	${core_LIBS}
@@ -58,7 +58,7 @@ TARGET_LINK_LIBRARIES(
 	${widgets_LIBS}
 )
 
-ADD_DEFINITIONS(
+add_definitions(
 	${common_DEFS}
 	${config_DEFS}
 	${core_DEFS}
@@ -67,9 +67,9 @@ ADD_DEFINITIONS(
 	${widgets_DEFS}
 )
 
-INSTALL( TARGETS subtitlecomposer DESTINATION ${BIN_INSTALL_DIR} )
+install(TARGETS subtitlecomposer DESTINATION ${BIN_INSTALL_DIR})
 
-INSTALL( FILES subtitlecomposerrc DESTINATION ${CONFIG_INSTALL_DIR} )
-INSTALL( FILES subtitlecomposerui.rc DESTINATION ${DATA_INSTALL_DIR}/subtitlecomposer )
-INSTALL( FILES subtitlecomposer.desktop DESTINATION ${XDG_APPS_INSTALL_DIR} )
-INSTALL( FILES subtitlecomposer.xml DESTINATION ${XDG_MIME_INSTALL_DIR} )
+install(FILES subtitlecomposerrc DESTINATION ${CONFIG_INSTALL_DIR})
+install(FILES subtitlecomposerui.rc DESTINATION ${DATA_INSTALL_DIR}/subtitlecomposer)
+install(FILES subtitlecomposer.desktop DESTINATION ${XDG_APPS_INSTALL_DIR})
+install(FILES subtitlecomposer.xml DESTINATION ${XDG_MIME_INSTALL_DIR})

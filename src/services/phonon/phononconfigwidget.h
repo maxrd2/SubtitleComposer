@@ -27,7 +27,7 @@
 #include "phononconfig.h"
 #include "../../config/appconfiggroupwidget.h"
 
-#include <QtGui/QWidget>
+#include <QWidget>
 
 namespace SubtitleComposer {
 class PhononConfigWidget : public AppConfigGroupWidget

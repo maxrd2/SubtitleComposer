@@ -341,4 +341,4 @@ Scripting::SString::compareToPlain(const QString &string) const
 		return 1;
 }
 
-#include "scripting_sstring.moc"
+

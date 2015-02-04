@@ -29,7 +29,7 @@
 
 class QCheckBox;
 class TimeEdit;
-class KPushButton;
+class QPushButton;
 
 namespace SubtitleComposer {
 class SplitSubtitleDialog : public ActionDialog
@@ -49,7 +49,7 @@ private slots:
 
 private:
 	TimeEdit *m_splitTimeEdit;
-	KPushButton *m_splitTimeFromVideoButton;
+	QPushButton *m_splitTimeFromVideoButton;
 	QCheckBox *m_shiftNewSubtitleCheckBox;
 };
 }

@@ -13,14 +13,13 @@ if(CMAKE_COMPILER_IS_GNUCC)
 	set(CMAKE_CXX_FLAGS_RELWITHDEBINFO "${CMAKE_CXX_FLAGS_RELEASE} -g")
 endif()
 
-INCLUDE_DIRECTORIES(
+include_directories(
 	${CMAKE_CURRENT_BINARY_DIR} # so files can find config.h
 	${CMAKE_CURRENT_SOURCE_DIR} # so that we can refer to our files starting at src dir
-	${KDE4_INCLUDES} # so we don't need to include it in other files
-	${QT4_INCLUDES} # same as previous
+	${Qt5Core_INCLUDE_DIRS} ${Qt5Widgets_INCLUDE_DIRS}
 )
 
-ADD_DEFINITIONS(${QT_DEFINITIONS} ${KDE4_DEFINITIONS} -fexceptions -DHAVE_CONFIG_H)
+add_definitions(${QT_DEFINITIONS} -fexceptions -DHAVE_CONFIG_H)
 add_definitions(-D_DEFAULT_SOURCE)
 
 # the subdirs must be added in a specific order
@@ -28,14 +27,14 @@ add_definitions(-D_DEFAULT_SOURCE)
 # defined in the dependency directory that must be created before the former
 # CMakeLists.txt is processed
 
-ADD_SUBDIRECTORY(common)
-ADD_SUBDIRECTORY(core)
-ADD_SUBDIRECTORY(formats)
-ADD_SUBDIRECTORY(config) # depends on common
-ADD_SUBDIRECTORY(widgets)
-ADD_SUBDIRECTORY(services)
-ADD_SUBDIRECTORY(main)
+add_subdirectory(common)
+add_subdirectory(core)
+add_subdirectory(formats)
+add_subdirectory(config) # depends on common
+add_subdirectory(widgets)
+add_subdirectory(services)
+add_subdirectory(main)
 
 # do the configuration of config.h at the end, so all the necessary variables have been set
-CONFIGURE_FILE(${CMAKE_CURRENT_SOURCE_DIR}/config.h.cmake ${CMAKE_CURRENT_BINARY_DIR}/config.h)
+configure_file(${CMAKE_CURRENT_SOURCE_DIR}/config.h.cmake ${CMAKE_CURRENT_BINARY_DIR}/config.h)
 

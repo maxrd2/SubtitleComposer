@@ -21,10 +21,10 @@
 #include "../application.h"
 
 #include <QtCore/QTextCodec>
-#include <QtGui/QGridLayout>
-#include <QtGui/QGroupBox>
-#include <QtGui/QCheckBox>
-#include <QtGui/QLabel>
+#include <QGridLayout>
+#include <QGroupBox>
+#include <QCheckBox>
+#include <QLabel>
 
 #include <KLocale>
 #include <KComboBox>
@@ -129,4 +129,4 @@ GeneralConfigWidget::setControlsFromConfig()
 	m_videoPosCompMsecsSpinBox->setValue(config()->grabbedPositionCompensation());
 }
 
-#include "generalconfigwidget.moc"
+

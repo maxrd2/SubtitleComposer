@@ -23,7 +23,7 @@
 #include <KConfig>
 #include <KSharedConfig>
 #include <KConfigGroup>
-#include <KDebug>
+#include <QDebug>
 
 using namespace SubtitleComposer;
 
@@ -64,7 +64,7 @@ AppConfigGroup::operator=(const AppConfigGroup &configGroup)
 		return *this;
 
 	if(!isCompatibleWith(configGroup)) {
-		kDebug() << "can't assign imcompatible AppConfigGroup instances";
+		qDebug() << "can't assign imcompatible AppConfigGroup instances";
 		return *this;
 	}
 
@@ -255,4 +255,4 @@ AppConfigGroup::operator!=(const AppConfigGroup &configGroup) const
 	return !operator==(configGroup);
 }
 
-#include "appconfiggroup.moc"
+

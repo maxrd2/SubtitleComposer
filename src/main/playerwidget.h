@@ -29,7 +29,7 @@
 #include "../core/subtitleline.h"
 
 #include <QtCore/QPoint>
-#include <QtGui/QWidget>
+#include <QWidget>
 
 class LayeredWidget;
 class TextOverlayWidget;
@@ -104,7 +104,7 @@ private slots:
 	void onPlayerFileOpened(const QString &filePath);
 	void onPlayerFileOpenError(const QString &filePath);
 	void onPlayerFileClosed();
-	void onPlayerPlaybackError(const QString &errorMessage);
+	void onPlayerPlaybacqCritical(const QString &errorMessage);
 	void onPlayerPlaying();
 	void onPlayerStopped();
 	void onPlayerPositionChanged(double seconds);

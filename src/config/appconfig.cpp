@@ -23,7 +23,7 @@
 
 #include <KConfig>
 #include <KSharedConfig>
-#include <KDebug>
+#include <QDebug>
 
 using namespace SubtitleComposer;
 
@@ -47,7 +47,7 @@ AppConfig::operator=(const AppConfig &config)
 		return *this;
 
 	if(!isCompatibleWith(config)) {
-		kDebug() << "can't assign imcompatible AppConfig instances";
+		qDebug() << "can't assign imcompatible AppConfig instances";
 		return *this;
 	}
 
@@ -159,4 +159,4 @@ AppConfig::removeGroup(const QString &name)
 	return 0;
 }
 
-#include "appconfig.moc"
+

@@ -24,17 +24,18 @@
 #include <config.h>
 #endif
 
-#include "../formats/format.h"
+#include "../../formats/format.h"
 
 #include <KEncodingFileDialog>
+#include <QFileDialog>
 
 class KComboBox;
 
 namespace SubtitleComposer {
-class SaveSubtitleDialog : public KFileDialog
+class SaveSubtitleDialog : public QFileDialog
 {
 public:
-	explicit SaveSubtitleDialog(bool primary, const KUrl &startDir = QString(), const QString &encoding = QString(), Format::NewLine newLine = Format::CurrentOS, const QString &format = QString(), QWidget *parent = 0);
+	explicit SaveSubtitleDialog(bool primary, const QUrl &startDir = QUrl(), const QString &encoding = QString(), Format::NewLine newLine = Format::CurrentOS, const QString &format = QString(), QWidget *parent = 0);
 
 	QString selectedEncoding() const;
 	QString selectedFormat() const;

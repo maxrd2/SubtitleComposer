@@ -19,12 +19,12 @@
 
 #include "filesavehelper.h"
 
-#include <KDebug>
-#include <KSaveFile>
-#include <KTemporaryFile>
-#include <KIO/NetAccess>
+#include <QtDebug>
+#include <ksavefile.h>
+#include <ktemporaryfile.h>
+#include <kio/netaccess.h>
 
-FileSaveHelper::FileSaveHelper(const KUrl &url, bool overwrite) :
+FileSaveHelper::FileSaveHelper(const QUrl &url, bool overwrite) :
 	m_url(url),
 	m_overwrite(overwrite),
 	m_file(0)
@@ -36,7 +36,7 @@ FileSaveHelper::~FileSaveHelper()
 		close();
 }
 
-const KUrl &
+const QUrl &
 FileSaveHelper::url()
 {
 	return m_url;
@@ -66,7 +66,7 @@ FileSaveHelper::open()
 	if(m_url.isLocalFile()) {
 		m_file = new KSaveFile(m_url.path());
 		if(!m_file->open(QIODevice::WriteOnly | QIODevice::Truncate)) {
-			kDebug() << "couldn't open output file" << m_file->fileName();
+			qDebug() << "couldn't open output file" << m_file->fileName();
 			delete m_file;
 			m_file = 0;
 			return false;
@@ -74,7 +74,7 @@ FileSaveHelper::open()
 	} else {
 		m_file = new KTemporaryFile();
 		if(!((KTemporaryFile *)m_file)->open()) {
-			kDebug() << "couldn't open output file" << m_file->fileName();
+			qDebug() << "couldn't open output file" << m_file->fileName();
 			delete m_file;
 			m_file = 0;
 			return false;
@@ -96,7 +96,7 @@ FileSaveHelper::close()
 	} else {
 		m_file->close();                // close the file to ensure everything has been written to it
 
-		bool success = m_overwrite ? KIO::NetAccess::upload(m_file->fileName(), m_url, 0) : KIO::NetAccess::file_copy(KUrl(m_file->fileName()), m_url, 0);
+		bool success = m_overwrite ? KIO::NetAccess::upload(m_file->fileName(), m_url, 0) : KIO::NetAccess::file_copy(QUrl(m_file->fileName()), m_url, 0);
 
 		delete m_file;                  // the destructor removes the temporary file
 		m_file = 0;
@@ -106,7 +106,7 @@ FileSaveHelper::close()
 }
 
 bool
-FileSaveHelper::exists(const KUrl &url)
+FileSaveHelper::exists(const QUrl &url)
 {
 	return KIO::NetAccess::exists(url, KIO::NetAccess::DestinationSide, 0);
 }

@@ -21,7 +21,7 @@
 
 #include <typeinfo>
 
-#include <QtGui/QResizeEvent>
+#include <QResizeEvent>
 
 LayeredWidget::LayeredWidget(QWidget *parent, Qt::WFlags f) :
 	QWidget(parent, f)
@@ -58,4 +58,4 @@ LayeredWidget::resizeEvent(QResizeEvent *)
 	}
 }
 
-#include "layeredwidget.moc"
+

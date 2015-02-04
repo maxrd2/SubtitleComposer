@@ -28,7 +28,7 @@
 #include "mplayerconfig.h"
 #include "../playerbackend.h"
 
-#include <QtGui/QWidget>
+#include <QWidget>
 #include <QtCore/QString>
 
 namespace SubtitleComposer {

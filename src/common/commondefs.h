@@ -27,7 +27,7 @@
 #include <QtCore/QString>
 #include <QtCore/QStringList>
 
-#include <KUrl>
+#include <QUrl>
 
 class String
 {
@@ -56,7 +56,7 @@ public:
 	static QString homeDir();
 	static QString tempDir();
 
-	static KUrl newUrl(const KUrl &baseUrl, const QString &fileName = "tempfile", const QString &extension = "", int retries = 10);
+	static QUrl newUrl(const QUrl &baseUrl, const QString &fileName = "tempfile", const QString &extension = "", int retries = 10);
 };
 
 #endif

@@ -28,7 +28,7 @@
 #include <config.h>
 #endif
 
-#include <QtGui/QSlider>
+#include <QSlider>
 
 class PointingSlider : public QSlider
 {

@@ -26,25 +26,25 @@
 
 #include <QtCore/QFile>
 
-#include <KUrl>
+#include <QUrl>
 
 class FileSaveHelper
 {
 public:
-	FileSaveHelper(const KUrl &url, bool overwrite);
+	FileSaveHelper(const QUrl &url, bool overwrite);
 	~FileSaveHelper();
 
-	const KUrl & url();
+	const QUrl & url();
 	bool overwrite();
 	QFile * file();
 
 	bool open();
 	bool close();
 
-	static bool exists(const KUrl &url);
+	static bool exists(const QUrl &url);
 
 private:
-	KUrl m_url;
+	QUrl m_url;
 	bool m_overwrite;
 	QFile *m_file;
 };

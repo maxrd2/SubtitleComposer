@@ -80,10 +80,12 @@
 #include <QtCore/QFileInfo>
 #include <QtCore/QTextCodec>
 #include <QtCore/QProcess>
-#include <QtGui/QGridLayout>
-#include <QtGui/QMenu>
+#include <QGridLayout>
+#include <QMenu>
 
-#include <KAboutData>
+#include <KFileDialog>
+#include <KShortcut>
+#include <K4AboutData>
 #include <KCmdLineArgs>
 #include <KGlobal>
 #include <KConfig>
@@ -91,7 +93,7 @@
 #include <KStandardDirs>
 #include <KLocale>
 #include <KStandardShortcut>
-#include <KAction>
+#include <QAction>
 #include <KStandardAction>
 #include <KToggleAction>
 #include <kcodecaction.h>
@@ -294,14 +296,14 @@ Application::loadConfig()
 {
 	KConfigGroup group(KGlobal::config()->group("Application Settings"));
 
-	m_lastSubtitleUrl = KUrl(group.readPathEntry("LastSubtitleUrl", QDir::homePath()));
+	m_lastSubtitleUrl = QUrl(group.readPathEntry("LastSubtitleUrl", QDir::homePath()));
 	m_recentSubtitlesAction->loadEntries(KGlobal::config()->group("Recent Subtitles"));
 	m_recentSubtitlesTrAction->loadEntries(KGlobal::config()->group("Recent Translation Subtitles"));
 
-	m_lastAudioLevelsUrl = KUrl(group.readPathEntry("LastAudioLevelsUrl", QDir::homePath()));
+	m_lastAudioLevelsUrl = QUrl(group.readPathEntry("LastAudioLevelsUrl", QDir::homePath()));
 //  m_recentAudioLevelsAction->loadEntries( group, "Recent Audio Levels" ); // FIXME audio levels
 
-	m_lastVideoUrl = KUrl(group.readPathEntry("LastVideoUrl", QDir::homePath()));
+	m_lastVideoUrl = QUrl(group.readPathEntry("LastVideoUrl", QDir::homePath()));
 	m_recentVideosAction->loadEntries(KGlobal::config()->group("Recent Videos"));
 
 	m_player->setMuted(group.readEntry<bool>("Muted", false));
@@ -324,14 +326,14 @@ Application::saveConfig()
 
 	KConfigGroup group(KGlobal::config()->group("Application Settings"));
 
-	group.writePathEntry("LastSubtitleUrl", m_lastSubtitleUrl.prettyUrl());
+	group.writePathEntry("LastSubtitleUrl", m_lastSubtitleUrl.toString(QUrl::PreferLocalFile));
 	m_recentSubtitlesAction->saveEntries(KGlobal::config()->group("Recent Subtitles"));
 	m_recentSubtitlesTrAction->saveEntries(KGlobal::config()->group("Recent Translation Subtitles"));
 
-	group.writePathEntry("LastAudioLevelsUrl", m_lastAudioLevelsUrl.prettyUrl());
+	group.writePathEntry("LastAudioLevelsUrl", m_lastAudioLevelsUrl.toString(QUrl::PreferLocalFile));
 //  m_recentAudioLevelsAction->saveEntries( KGlobal::config()->group( "Recent Audio Levels" ) ); // FIXME audio levels
 
-	group.writePathEntry("LastVideoUrl", m_lastVideoUrl.prettyUrl());
+	group.writePathEntry("LastVideoUrl", m_lastVideoUrl.toString(QUrl::PreferLocalFile));
 	m_recentVideosAction->saveEntries(KGlobal::config()->group("Recent Videos"));
 
 	group.writeEntry("Muted", m_player->isMuted());
@@ -358,9 +360,9 @@ Application::triggerAction(const QKeySequence &keySequence)
 
 	for(QList<QAction *>::ConstIterator it = actions.begin(), end = actions.end(); it != end; ++it) {
 		if((*it)->isEnabled()) {
-			if(KAction * action = qobject_cast<KAction *>(*it)) {
-				KShortcut shortcut = action->shortcut();
-				if(shortcut.primary() == keySequence || shortcut.alternate() == keySequence) {
+			if(QAction * action = qobject_cast<QAction *>(*it)) {
+				QKeySequence shortcut = action->shortcut();
+				if(shortcut.matches(keySequence) == QKeySequence::ExactMatch) {
 					action->trigger();
 					return true;
 				}
@@ -395,7 +397,7 @@ Application::availableEncodingNames() const
 	return encodingNames;
 }
 
-const KUrl &
+const QUrl &
 Application::lastSubtitleDirectory() const
 {
 	return m_lastSubtitleUrl;
@@ -456,26 +458,26 @@ Application::setupActions()
 	KActionCollection *actionCollection = m_mainWindow->actionCollection();
 	UserActionManager *actionManager = UserActionManager::instance();
 
-	KAction *quitAction = KStandardAction::quit(m_mainWindow, SLOT(close()), actionCollection);
+	QAction *quitAction = KStandardAction::quit(m_mainWindow, SLOT(close()), actionCollection);
 	quitAction->setStatusTip(i18n("Exit the application"));
 
-	KAction *prefsAction = KStandardAction::preferences(m_configDialog, SLOT(show()), actionCollection);
+	QAction *prefsAction = KStandardAction::preferences(m_configDialog, SLOT(show()), actionCollection);
 	prefsAction->setStatusTip(i18n("Configure Subtitle Composer"));
 
-	KAction *newSubtitleAction = new KAction(actionCollection);
+	QAction *newSubtitleAction = new QAction(actionCollection);
 	newSubtitleAction->setIcon(KIcon("document-new"));
 	newSubtitleAction->setText(i18nc("@action:inmenu Create a new subtitle", "New"));
 	newSubtitleAction->setStatusTip(i18n("Create an empty subtitle"));
-	newSubtitleAction->setShortcut(KStandardShortcut::openNew(), KAction::DefaultShortcut | KAction::ActiveShortcut);
+	newSubtitleAction->setShortcuts(KStandardShortcut::openNew()/*, QAction::DefaultShortcut | QAction::ActiveShortcut*/);
 	connect(newSubtitleAction, SIGNAL(triggered()), this, SLOT(newSubtitle()));
 	actionCollection->addAction(ACT_NEW_SUBTITLE, newSubtitleAction);
 	actionManager->addAction(newSubtitleAction, UserAction::FullScreenOff);
 
-	KAction *openSubtitleAction = new KAction(actionCollection);
+	QAction *openSubtitleAction = new QAction(actionCollection);
 	openSubtitleAction->setIcon(KIcon("document-open"));
 	openSubtitleAction->setText(i18nc("@action:inmenu Open subtitle file", "Open..."));
 	openSubtitleAction->setStatusTip(i18n("Open subtitle file"));
-	openSubtitleAction->setShortcut(KStandardShortcut::open(), KAction::DefaultShortcut | KAction::ActiveShortcut);
+	openSubtitleAction->setShortcuts(KStandardShortcut::open()/*, QAction::DefaultShortcut | QAction::ActiveShortcut*/);
 	connect(openSubtitleAction, SIGNAL(triggered()), this, SLOT(openSubtitle()));
 	actionCollection->addAction(ACT_OPEN_SUBTITLE, openSubtitleAction);
 	actionManager->addAction(openSubtitleAction, 0);
@@ -493,19 +495,19 @@ Application::setupActions()
 	m_recentSubtitlesAction->setIcon(KIcon("document-open"));
 	m_recentSubtitlesAction->setText(i18nc("@action:inmenu Open rencently used subtitle file", "Open &Recent"));
 	m_recentSubtitlesAction->setStatusTip(i18n("Open subtitle file"));
-	connect(m_recentSubtitlesAction, SIGNAL(urlSelected(const KUrl &)), this, SLOT(openSubtitle(const KUrl &)));
+	connect(m_recentSubtitlesAction, SIGNAL(urlSelected(const QUrl &)), this, SLOT(openSubtitle(const QUrl &)));
 	actionCollection->addAction(ACT_RECENT_SUBTITLES, m_recentSubtitlesAction);
 
-	KAction *saveSubtitleAction = new KAction(actionCollection);
+	QAction *saveSubtitleAction = new QAction(actionCollection);
 	saveSubtitleAction->setIcon(KIcon("document-save"));
 	saveSubtitleAction->setText(i18n("Save"));
 	saveSubtitleAction->setStatusTip(i18n("Save opened subtitle"));
-	saveSubtitleAction->setShortcut(KStandardShortcut::save(), KAction::DefaultShortcut | KAction::ActiveShortcut);
+	saveSubtitleAction->setShortcuts(KStandardShortcut::save()/*, QAction::DefaultShortcut | QAction::ActiveShortcut*/);
 	connect(saveSubtitleAction, SIGNAL(triggered()), this, SLOT(saveSubtitle()));
 	actionCollection->addAction(ACT_SAVE_SUBTITLE, saveSubtitleAction);
 	actionManager->addAction(saveSubtitleAction, UserAction::SubPDirty | UserAction::FullScreenOff);
 
-	KAction *saveSubtitleAsAction = new KAction(actionCollection);
+	QAction *saveSubtitleAsAction = new QAction(actionCollection);
 	saveSubtitleAsAction->setIcon(KIcon("document-save-as"));
 	saveSubtitleAsAction->setText(i18n("Save As..."));
 	saveSubtitleAsAction->setStatusTip(i18n("Save opened subtitle with different settings"));
@@ -513,29 +515,29 @@ Application::setupActions()
 	actionCollection->addAction(ACT_SAVE_SUBTITLE_AS, saveSubtitleAsAction);
 	actionManager->addAction(saveSubtitleAsAction, UserAction::SubOpened | UserAction::FullScreenOff);
 
-	KAction *closeSubtitleAction = new KAction(actionCollection);
+	QAction *closeSubtitleAction = new QAction(actionCollection);
 	closeSubtitleAction->setIcon(KIcon("window-close"));
 	closeSubtitleAction->setText(i18n("Close"));
 	closeSubtitleAction->setStatusTip(i18n("Close opened subtitle"));
-	closeSubtitleAction->setShortcut(KStandardShortcut::close(), KAction::DefaultShortcut | KAction::ActiveShortcut);
+	closeSubtitleAction->setShortcuts(KStandardShortcut::close()/*, QAction::DefaultShortcut | QAction::ActiveShortcut*/);
 	connect(closeSubtitleAction, SIGNAL(triggered()), this, SLOT(closeSubtitle()));
 	actionCollection->addAction(ACT_CLOSE_SUBTITLE, closeSubtitleAction);
 	actionManager->addAction(closeSubtitleAction, UserAction::SubOpened | UserAction::FullScreenOff);
 
-	KAction *newSubtitleTrAction = new KAction(actionCollection);
+	QAction *newSubtitleTrAction = new QAction(actionCollection);
 	newSubtitleTrAction->setIcon(KIcon("document-new"));
 	newSubtitleTrAction->setText(i18n("New Translation"));
 	newSubtitleTrAction->setStatusTip(i18n("Create an empty translation subtitle"));
-	newSubtitleTrAction->setShortcut(KShortcut("Ctrl+Shift+N"), KAction::DefaultShortcut | KAction::ActiveShortcut);
+	newSubtitleTrAction->setShortcut(QKeySequence("Ctrl+Shift+N")/*, QAction::DefaultShortcut | QAction::ActiveShortcut*/);
 	connect(newSubtitleTrAction, SIGNAL(triggered()), this, SLOT(newSubtitleTr()));
 	actionCollection->addAction(ACT_NEW_SUBTITLE_TR, newSubtitleTrAction);
 	actionManager->addAction(newSubtitleTrAction, UserAction::SubOpened | UserAction::FullScreenOff);
 
-	KAction *openSubtitleTrAction = new KAction(actionCollection);
+	QAction *openSubtitleTrAction = new QAction(actionCollection);
 	openSubtitleTrAction->setIcon(KIcon("document-open"));
 	openSubtitleTrAction->setText(i18n("Open Translation..."));
 	openSubtitleTrAction->setStatusTip(i18n("Open translation subtitle file"));
-	openSubtitleTrAction->setShortcut(KShortcut("Ctrl+Shift+O"), KAction::DefaultShortcut | KAction::ActiveShortcut);
+	openSubtitleTrAction->setShortcut(QKeySequence("Ctrl+Shift+O")/*, QAction::DefaultShortcut | QAction::ActiveShortcut*/);
 	connect(openSubtitleTrAction, SIGNAL(triggered()), this, SLOT(openSubtitleTr()));
 	actionCollection->addAction(ACT_OPEN_SUBTITLE_TR, openSubtitleTrAction);
 	actionManager->addAction(openSubtitleTrAction, UserAction::SubOpened);
@@ -553,20 +555,20 @@ Application::setupActions()
 	m_recentSubtitlesTrAction->setIcon(KIcon("document-open"));
 	m_recentSubtitlesTrAction->setText(i18n("Open &Recent Translation"));
 	m_recentSubtitlesTrAction->setStatusTip(i18n("Open translation subtitle file"));
-	connect(m_recentSubtitlesTrAction, SIGNAL(urlSelected(const KUrl &)), this, SLOT(openSubtitleTr(const KUrl &)));
+	connect(m_recentSubtitlesTrAction, SIGNAL(urlSelected(const QUrl &)), this, SLOT(openSubtitleTr(const QUrl &)));
 	actionCollection->addAction(ACT_RECENT_SUBTITLES_TR, m_recentSubtitlesTrAction);
 	actionManager->addAction(m_recentSubtitlesTrAction, UserAction::SubOpened | UserAction::FullScreenOff);
 
-	KAction *saveSubtitleTrAction = new KAction(actionCollection);
+	QAction *saveSubtitleTrAction = new QAction(actionCollection);
 	saveSubtitleTrAction->setIcon(KIcon("document-save"));
 	saveSubtitleTrAction->setText(i18n("Save Translation"));
 	saveSubtitleTrAction->setStatusTip(i18n("Save opened translation subtitle"));
-	saveSubtitleTrAction->setShortcut(KShortcut("Ctrl+Shift+S"), KAction::DefaultShortcut | KAction::ActiveShortcut);
+	saveSubtitleTrAction->setShortcut(QKeySequence("Ctrl+Shift+S")/*, QAction::DefaultShortcut | QAction::ActiveShortcut*/);
 	connect(saveSubtitleTrAction, SIGNAL(triggered()), this, SLOT(saveSubtitleTr()));
 	actionCollection->addAction(ACT_SAVE_SUBTITLE_TR, saveSubtitleTrAction);
 	actionManager->addAction(saveSubtitleTrAction, UserAction::SubSDirty | UserAction::FullScreenOff);
 
-	KAction *saveSubtitleTrAsAction = new KAction(actionCollection);
+	QAction *saveSubtitleTrAsAction = new QAction(actionCollection);
 	saveSubtitleTrAsAction->setIcon(KIcon("document-save-as"));
 	saveSubtitleTrAsAction->setText(i18n("Save Translation As..."));
 	saveSubtitleTrAsAction->setStatusTip(i18n("Save opened translation subtitle with different settings"));
@@ -574,209 +576,209 @@ Application::setupActions()
 	actionCollection->addAction(ACT_SAVE_SUBTITLE_TR_AS, saveSubtitleTrAsAction);
 	actionManager->addAction(saveSubtitleTrAsAction, UserAction::SubTrOpened | UserAction::FullScreenOff);
 
-	KAction *closeSubtitleTrAction = new KAction(actionCollection);
+	QAction *closeSubtitleTrAction = new QAction(actionCollection);
 	closeSubtitleTrAction->setIcon(KIcon("window-close"));
 	closeSubtitleTrAction->setText(i18n("Close Translation"));
 	closeSubtitleTrAction->setStatusTip(i18n("Close opened translation subtitle"));
-	closeSubtitleTrAction->setShortcut(KShortcut("Ctrl+Shift+F4; Ctrl+Shift+W"), KAction::DefaultShortcut | KAction::ActiveShortcut);
+	closeSubtitleTrAction->setShortcut(QKeySequence("Ctrl+Shift+F4; Ctrl+Shift+W")/*, QAction::DefaultShortcut | QAction::ActiveShortcut*/);
 	connect(closeSubtitleTrAction, SIGNAL(triggered()), this, SLOT(closeSubtitleTr()));
 	actionCollection->addAction(ACT_CLOSE_SUBTITLE_TR, closeSubtitleTrAction);
 	actionManager->addAction(closeSubtitleTrAction, UserAction::SubTrOpened | UserAction::FullScreenOff);
 
-	KAction *undoAction = new KAction(actionCollection);
+	QAction *undoAction = new QAction(actionCollection);
 	undoAction->setIcon(KIcon("edit-undo"));
 	undoAction->setText(i18n("Undo"));
 	undoAction->setStatusTip(i18n("Undo"));
-	undoAction->setShortcut(KStandardShortcut::undo(), KAction::DefaultShortcut | KAction::ActiveShortcut);
+	undoAction->setShortcuts(KStandardShortcut::undo()/*, QAction::DefaultShortcut | QAction::ActiveShortcut*/);
 	connect(undoAction, SIGNAL(triggered()), this, SLOT(undo()));
 	actionCollection->addAction(ACT_UNDO, undoAction);
 	actionManager->addAction(undoAction, UserAction::SubHasUndo);
 
-	KAction *redoAction = new KAction(actionCollection);
+	QAction *redoAction = new QAction(actionCollection);
 	redoAction->setIcon(KIcon("edit-redo"));
 	redoAction->setText(i18n("Redo"));
 	redoAction->setStatusTip(i18n("Redo"));
-	redoAction->setShortcut(KStandardShortcut::redo(), KAction::DefaultShortcut | KAction::ActiveShortcut);
+	redoAction->setShortcuts(KStandardShortcut::redo()/*, QAction::DefaultShortcut | QAction::ActiveShortcut*/);
 	connect(redoAction, SIGNAL(triggered()), this, SLOT(redo()));
 	actionCollection->addAction(ACT_REDO, redoAction);
 	actionManager->addAction(redoAction, UserAction::SubHasRedo);
 
-	KAction *splitSubtitleAction = new KAction(actionCollection);
+	QAction *splitSubtitleAction = new QAction(actionCollection);
 	splitSubtitleAction->setText(i18n("Split Subtitle..."));
 	splitSubtitleAction->setStatusTip(i18n("Split the opened subtitle in two parts"));
 	connect(splitSubtitleAction, SIGNAL(triggered()), this, SLOT(splitSubtitle()));
 	actionCollection->addAction(ACT_SPLIT_SUBTITLE, splitSubtitleAction);
 	actionManager->addAction(splitSubtitleAction, UserAction::SubHasLine | UserAction::FullScreenOff);
 
-	KAction *joinSubtitlesAction = new KAction(actionCollection);
+	QAction *joinSubtitlesAction = new QAction(actionCollection);
 	joinSubtitlesAction->setText(i18n("Join Subtitles..."));
 	joinSubtitlesAction->setStatusTip(i18n("Append to the opened subtitle another one"));
 	connect(joinSubtitlesAction, SIGNAL(triggered()), this, SLOT(joinSubtitles()));
 	actionCollection->addAction(ACT_JOIN_SUBTITLES, joinSubtitlesAction);
 	actionManager->addAction(joinSubtitlesAction, UserAction::SubOpened | UserAction::FullScreenOff);
 
-	KAction *insertBeforeCurrentLineAction = new KAction(actionCollection);
+	QAction *insertBeforeCurrentLineAction = new QAction(actionCollection);
 	insertBeforeCurrentLineAction->setText(i18n("Insert Before"));
 	insertBeforeCurrentLineAction->setStatusTip(i18n("Insert empty line before current one"));
-	insertBeforeCurrentLineAction->setShortcut(KShortcut("Ctrl+Insert"), KAction::DefaultShortcut | KAction::ActiveShortcut);
+	insertBeforeCurrentLineAction->setShortcut(QKeySequence("Ctrl+Insert")/*, QAction::DefaultShortcut | QAction::ActiveShortcut*/);
 	connect(insertBeforeCurrentLineAction, SIGNAL(triggered()), this, SLOT(insertBeforeCurrentLine()));
 	actionCollection->addAction(ACT_INSERT_BEFORE_CURRENT_LINE, insertBeforeCurrentLineAction);
 	actionManager->addAction(insertBeforeCurrentLineAction, UserAction::SubOpened | UserAction::FullScreenOff);
 
-	KAction *insertAfterCurrentLineAction = new KAction(actionCollection);
+	QAction *insertAfterCurrentLineAction = new QAction(actionCollection);
 	insertAfterCurrentLineAction->setText(i18n("Insert After"));
 	insertAfterCurrentLineAction->setStatusTip(i18n("Insert empty line after current one"));
-	insertAfterCurrentLineAction->setShortcut(KShortcut("Insert"), KAction::DefaultShortcut | KAction::ActiveShortcut);
+	insertAfterCurrentLineAction->setShortcut(QKeySequence("Insert")/*, QAction::DefaultShortcut | QAction::ActiveShortcut*/);
 	connect(insertAfterCurrentLineAction, SIGNAL(triggered()), this, SLOT(insertAfterCurrentLine()));
 	actionCollection->addAction(ACT_INSERT_AFTER_CURRENT_LINE, insertAfterCurrentLineAction);
 	actionManager->addAction(insertAfterCurrentLineAction, UserAction::SubOpened | UserAction::FullScreenOff);
 
-	KAction *removeSelectedLinesAction = new KAction(actionCollection);
+	QAction *removeSelectedLinesAction = new QAction(actionCollection);
 	removeSelectedLinesAction->setText(i18n("Remove"));
 	removeSelectedLinesAction->setStatusTip(i18n("Remove selected lines"));
-	removeSelectedLinesAction->setShortcut(KShortcut("Delete"), KAction::DefaultShortcut | KAction::ActiveShortcut);
+	removeSelectedLinesAction->setShortcut(QKeySequence("Delete")/*, QAction::DefaultShortcut | QAction::ActiveShortcut*/);
 	connect(removeSelectedLinesAction, SIGNAL(triggered()), this, SLOT(removeSelectedLines()));
 	actionCollection->addAction(ACT_REMOVE_SELECTED_LINES, removeSelectedLinesAction);
 	actionManager->addAction(removeSelectedLinesAction, UserAction::HasSelection | UserAction::FullScreenOff);
 
-	KAction *splitSelectedLinesAction = new KAction(actionCollection);
+	QAction *splitSelectedLinesAction = new QAction(actionCollection);
 	splitSelectedLinesAction->setText(i18n("Split Lines"));
 	splitSelectedLinesAction->setStatusTip(i18n("Split selected lines"));
 	connect(splitSelectedLinesAction, SIGNAL(triggered()), this, SLOT(splitSelectedLines()));
 	actionCollection->addAction(ACT_SPLIT_SELECTED_LINES, splitSelectedLinesAction);
 	actionManager->addAction(splitSelectedLinesAction, UserAction::HasSelection | UserAction::FullScreenOff);
 
-	KAction *joinSelectedLinesAction = new KAction(actionCollection);
+	QAction *joinSelectedLinesAction = new QAction(actionCollection);
 	joinSelectedLinesAction->setText(i18n("Join Lines"));
 	joinSelectedLinesAction->setStatusTip(i18n("Join selected lines"));
 	connect(joinSelectedLinesAction, SIGNAL(triggered()), this, SLOT(joinSelectedLines()));
 	actionCollection->addAction(ACT_JOIN_SELECTED_LINES, joinSelectedLinesAction);
 	actionManager->addAction(joinSelectedLinesAction, UserAction::HasSelection | UserAction::FullScreenOff);
 
-	KAction *selectAllLinesAction = new KAction(actionCollection);
+	QAction *selectAllLinesAction = new QAction(actionCollection);
 	selectAllLinesAction->setText(i18n("Select All"));
 	selectAllLinesAction->setStatusTip(i18n("Select all lines"));
-	selectAllLinesAction->setShortcut(KStandardShortcut::selectAll(), KAction::DefaultShortcut | KAction::ActiveShortcut);
+	selectAllLinesAction->setShortcuts(KStandardShortcut::selectAll()/*, QAction::DefaultShortcut | QAction::ActiveShortcut*/);
 	connect(selectAllLinesAction, SIGNAL(triggered()), this, SLOT(selectAllLines()));
 	actionCollection->addAction(ACT_SELECT_ALL_LINES, selectAllLinesAction);
 	actionManager->addAction(selectAllLinesAction, UserAction::SubHasLine | UserAction::FullScreenOff);
 
-	KAction *gotoLineAction = new KAction(actionCollection);
+	QAction *gotoLineAction = new QAction(actionCollection);
 	gotoLineAction->setText(i18n("Go to Line..."));
 	gotoLineAction->setStatusTip(i18n("Go to specified line"));
-	gotoLineAction->setShortcut(KStandardShortcut::gotoLine(), KAction::DefaultShortcut | KAction::ActiveShortcut);
+	gotoLineAction->setShortcuts(KStandardShortcut::gotoLine()/*, QAction::DefaultShortcut | QAction::ActiveShortcut*/);
 	connect(gotoLineAction, SIGNAL(triggered()), this, SLOT(gotoLine()));
 	actionCollection->addAction(ACT_GOTO_LINE, gotoLineAction);
 	actionManager->addAction(gotoLineAction, UserAction::SubHasLines);
 
-	KAction *findAction = new KAction(actionCollection);
+	QAction *findAction = new QAction(actionCollection);
 	findAction->setIcon(KIcon("edit-find"));
 	findAction->setText(i18n("Find..."));
 	findAction->setStatusTip(i18n("Find occurrences of strings or regular expressions"));
-	findAction->setShortcut(KStandardShortcut::find(), KAction::DefaultShortcut | KAction::ActiveShortcut);
+	findAction->setShortcuts(KStandardShortcut::find()/*, QAction::DefaultShortcut | QAction::ActiveShortcut*/);
 	connect(findAction, SIGNAL(triggered()), this, SLOT(find()));
 	actionCollection->addAction(ACT_FIND, findAction);
 	actionManager->addAction(findAction, UserAction::SubHasLine);
 
-	KAction *findNextAction = new KAction(actionCollection);
+	QAction *findNextAction = new QAction(actionCollection);
 //  findNextAction->setIcon( KIcon( "go-down" ) );
 	findNextAction->setIcon(KIcon("go-down-search"));
 	findNextAction->setText(i18n("Find Next"));
 	findNextAction->setStatusTip(i18n("Find next occurrence of string or regular expression"));
-	findNextAction->setShortcut(KStandardShortcut::findNext(), KAction::DefaultShortcut | KAction::ActiveShortcut);
+	findNextAction->setShortcuts(KStandardShortcut::findNext()/*, QAction::DefaultShortcut | QAction::ActiveShortcut*/);
 	connect(findNextAction, SIGNAL(triggered()), this, SLOT(findNext()));
 	actionCollection->addAction(ACT_FIND_NEXT, findNextAction);
 	actionManager->addAction(findNextAction, UserAction::SubHasLine);
 
-	KAction *findPreviousAction = new KAction(actionCollection);
+	QAction *findPreviousAction = new QAction(actionCollection);
 //  findPreviousAction->setIcon( KIcon( "go-up" ) );
 	findPreviousAction->setIcon(KIcon("go-up-search"));
 	findPreviousAction->setText(i18n("Find Previous"));
 	findPreviousAction->setStatusTip(i18n("Find previous occurrence of string or regular expression"));
-	findPreviousAction->setShortcut(KStandardShortcut::findPrev(), KAction::DefaultShortcut | KAction::ActiveShortcut);
+	findPreviousAction->setShortcuts(KStandardShortcut::findPrev()/*, QAction::DefaultShortcut | QAction::ActiveShortcut*/);
 	connect(findPreviousAction, SIGNAL(triggered()), this, SLOT(findPrevious()));
 	actionCollection->addAction(ACT_FIND_PREVIOUS, findPreviousAction);
 	actionManager->addAction(findPreviousAction, UserAction::SubHasLine);
 
-	KAction *replaceAction = new KAction(actionCollection);
+	QAction *replaceAction = new QAction(actionCollection);
 	replaceAction->setText(i18n("Replace..."));
 	replaceAction->setStatusTip(i18n("Replace occurrences of strings or regular expressions"));
-	replaceAction->setShortcut(KStandardShortcut::replace(), KAction::DefaultShortcut | KAction::ActiveShortcut);
+	replaceAction->setShortcuts(KStandardShortcut::replace()/*, QAction::DefaultShortcut | QAction::ActiveShortcut*/);
 	connect(replaceAction, SIGNAL(triggered()), this, SLOT(replace()));
 	actionCollection->addAction(ACT_REPLACE, replaceAction);
 	actionManager->addAction(replaceAction, UserAction::SubHasLine | UserAction::FullScreenOff);
 
-	KAction *retrocedeCurrentLineAction = new KAction(actionCollection);
+	QAction *retrocedeCurrentLineAction = new QAction(actionCollection);
 	retrocedeCurrentLineAction->setIcon(KIcon("go-down"));
 	retrocedeCurrentLineAction->setText(i18n("Retrocede current line"));
 	retrocedeCurrentLineAction->setStatusTip(i18n("Makes the line before the current one active"));
-	retrocedeCurrentLineAction->setShortcut(KShortcut("Alt+Up"), KAction::DefaultShortcut | KAction::ActiveShortcut);
+	retrocedeCurrentLineAction->setShortcut(QKeySequence("Alt+Up")/*, QAction::DefaultShortcut | QAction::ActiveShortcut*/);
 	connect(retrocedeCurrentLineAction, SIGNAL(triggered()), this, SLOT(retrocedeCurrentLine()));
 	actionCollection->addAction(ACT_RETROCEDE_CURRENT_LINE, retrocedeCurrentLineAction);
 	actionManager->addAction(retrocedeCurrentLineAction, UserAction::SubHasLines | UserAction::HasSelection);
 
-	KAction *advanceCurrentLineAction = new KAction(actionCollection);
+	QAction *advanceCurrentLineAction = new QAction(actionCollection);
 	advanceCurrentLineAction->setIcon(KIcon("go-down"));
 	advanceCurrentLineAction->setText(i18n("Advance current line"));
 	advanceCurrentLineAction->setStatusTip(i18n("Makes the line after the current one active"));
-	advanceCurrentLineAction->setShortcut(KShortcut("Alt+Down"), KAction::DefaultShortcut | KAction::ActiveShortcut);
+	advanceCurrentLineAction->setShortcut(QKeySequence("Alt+Down")/*, QAction::DefaultShortcut | QAction::ActiveShortcut*/);
 	connect(advanceCurrentLineAction, SIGNAL(triggered()), this, SLOT(advanceCurrentLine()));
 	actionCollection->addAction(ACT_ADVANCE_CURRENT_LINE, advanceCurrentLineAction);
 	actionManager->addAction(advanceCurrentLineAction, UserAction::SubHasLines | UserAction::HasSelection);
 
-	KAction *checkErrorsAction = new KAction(actionCollection);
-	checkErrorsAction->setText(i18n("Check Errors..."));
-	checkErrorsAction->setStatusTip(i18n("Check for errors in the current subtitle"));
-	checkErrorsAction->setShortcut(KShortcut("Ctrl+E"), KAction::DefaultShortcut | KAction::ActiveShortcut);
-	connect(checkErrorsAction, SIGNAL(triggered()), this, SLOT(checkErrors()));
-	actionCollection->addAction(ACT_CHECK_ERRORS, checkErrorsAction);
-	actionManager->addAction(checkErrorsAction, UserAction::HasSelection | UserAction::FullScreenOff);
+	QAction *checqCriticalsAction = new QAction(actionCollection);
+	checqCriticalsAction->setText(i18n("Check Errors..."));
+	checqCriticalsAction->setStatusTip(i18n("Check for errors in the current subtitle"));
+	checqCriticalsAction->setShortcut(QKeySequence("Ctrl+E")/*, QAction::DefaultShortcut | QAction::ActiveShortcut*/);
+	connect(checqCriticalsAction, SIGNAL(triggered()), this, SLOT(checqCriticals()));
+	actionCollection->addAction(ACT_CHECK_ERRORS, checqCriticalsAction);
+	actionManager->addAction(checqCriticalsAction, UserAction::HasSelection | UserAction::FullScreenOff);
 
-	KAction *clearErrorsAction = new KAction(actionCollection);
+	QAction *clearErrorsAction = new QAction(actionCollection);
 	clearErrorsAction->setText(i18n("Clear Errors..."));
 	clearErrorsAction->setStatusTip(i18n("Clear errors from selected lines"));
 	connect(clearErrorsAction, SIGNAL(triggered()), this, SLOT(clearErrors()));
 	actionCollection->addAction(ACT_CLEAR_ERRORS, clearErrorsAction);
 	actionManager->addAction(clearErrorsAction, UserAction::HasSelection | UserAction::FullScreenOff);
 
-	KAction *showErrorsAction = new KAction(actionCollection);
+	QAction *showErrorsAction = new QAction(actionCollection);
 	showErrorsAction->setText(i18n("Show Errors..."));
 	showErrorsAction->setStatusTip(i18n("Show errors information for the current subtitle"));
-	showErrorsAction->setShortcut(KShortcut("Shift+E"), KAction::DefaultShortcut | KAction::ActiveShortcut);
+	showErrorsAction->setShortcut(QKeySequence("Shift+E")/*, QAction::DefaultShortcut | QAction::ActiveShortcut*/);
 	connect(showErrorsAction, SIGNAL(triggered()), this, SLOT(showErrors()));
 	actionCollection->addAction(ACT_SHOW_ERRORS, showErrorsAction);
 	actionManager->addAction(showErrorsAction, UserAction::SubHasLine | UserAction::FullScreenOff);
 
-	KAction *findErrorAction = new KAction(actionCollection);
+	QAction *findErrorAction = new QAction(actionCollection);
 	findErrorAction->setIcon(KIcon("edit-find"));
 	findErrorAction->setText(i18n("Find Error..."));
 	findErrorAction->setStatusTip(i18n("Find lines with specified errors"));
-	findErrorAction->setShortcut(KShortcut("Ctrl+Shift+E"), KAction::DefaultShortcut | KAction::ActiveShortcut);
+	findErrorAction->setShortcut(QKeySequence("Ctrl+Shift+E")/*, QAction::DefaultShortcut | QAction::ActiveShortcut*/);
 	connect(findErrorAction, SIGNAL(triggered()), this, SLOT(findError()));
 	actionCollection->addAction(ACT_FIND_ERROR, findErrorAction);
 	actionManager->addAction(findErrorAction, UserAction::SubHasLine);
 
-	KAction *findNextErrorAction = new KAction(actionCollection);
+	QAction *findNextErrorAction = new QAction(actionCollection);
 //  findNextErrorAction->setIcon( KIcon( "go-down" ) );
 	findNextErrorAction->setIcon(KIcon("go-down-search"));
 	findNextErrorAction->setText(i18n("Find Next Error"));
 	findNextErrorAction->setStatusTip(i18n("Find next line with specified errors"));
-	findNextErrorAction->setShortcut(KShortcut("F4"), KAction::DefaultShortcut | KAction::ActiveShortcut);
+	findNextErrorAction->setShortcut(QKeySequence("F4")/*, QAction::DefaultShortcut | QAction::ActiveShortcut*/);
 	connect(findNextErrorAction, SIGNAL(triggered()), this, SLOT(findNextError()));
 	actionCollection->addAction(ACT_FIND_NEXT_ERROR, findNextErrorAction);
 	actionManager->addAction(findNextErrorAction, UserAction::SubHasLine);
 
-	KAction *findPreviousErrorAction = new KAction(actionCollection);
+	QAction *findPreviousErrorAction = new QAction(actionCollection);
 //  findPreviousErrorAction->setIcon( KIcon( "go-up" ) );
 	findPreviousErrorAction->setIcon(KIcon("go-up-search"));
 	findPreviousErrorAction->setText(i18n("Find Previous Error"));
 	findPreviousErrorAction->setStatusTip(i18n("Find previous line with specified errors"));
-	findPreviousErrorAction->setShortcut(KShortcut("Shift+F4"), KAction::DefaultShortcut | KAction::ActiveShortcut);
+	findPreviousErrorAction->setShortcut(QKeySequence("Shift+F4")/*, QAction::DefaultShortcut | QAction::ActiveShortcut*/);
 	connect(findPreviousErrorAction, SIGNAL(triggered()), this, SLOT(findPreviousError()));
 	actionCollection->addAction(ACT_FIND_PREVIOUS_ERROR, findPreviousErrorAction);
 	actionManager->addAction(findPreviousErrorAction, UserAction::SubHasLine);
 
-	KAction *spellCheckAction = new KAction(actionCollection);
+	QAction *spellCheckAction = new QAction(actionCollection);
 	spellCheckAction->setIcon(KIcon("tools-check-spelling"));
 	spellCheckAction->setText(i18n("Spelling..."));
 	spellCheckAction->setStatusTip(i18n("Check lines spelling"));
@@ -784,77 +786,77 @@ Application::setupActions()
 	actionCollection->addAction(ACT_SPELL_CHECK, spellCheckAction);
 	actionManager->addAction(spellCheckAction, UserAction::SubHasLine | UserAction::FullScreenOff);
 
-	KAction *toggleSelectedLinesMarkAction = new KAction(actionCollection);
+	QAction *toggleSelectedLinesMarkAction = new QAction(actionCollection);
 	toggleSelectedLinesMarkAction->setText(i18n("Toggle Mark"));
 	toggleSelectedLinesMarkAction->setStatusTip(i18n("Toggle selected lines mark"));
-	toggleSelectedLinesMarkAction->setShortcut(KShortcut("Ctrl+M"), KAction::DefaultShortcut | KAction::ActiveShortcut);
+	toggleSelectedLinesMarkAction->setShortcut(QKeySequence("Ctrl+M")/*, QAction::DefaultShortcut | QAction::ActiveShortcut*/);
 	connect(toggleSelectedLinesMarkAction, SIGNAL(triggered()), this, SLOT(toggleSelectedLinesMark()));
 	actionCollection->addAction(ACT_TOGGLE_SELECTED_LINES_MARK, toggleSelectedLinesMarkAction);
 	actionManager->addAction(toggleSelectedLinesMarkAction, UserAction::HasSelection | UserAction::FullScreenOff);
 
-	KAction *toggleSelectedLinesBoldAction = new KAction(actionCollection);
+	QAction *toggleSelectedLinesBoldAction = new QAction(actionCollection);
 	toggleSelectedLinesBoldAction->setIcon(KIcon("format-text-bold"));
 	toggleSelectedLinesBoldAction->setText(i18n("Toggle Bold"));
 	toggleSelectedLinesBoldAction->setStatusTip(i18n("Toggle selected lines bold attribute"));
-	toggleSelectedLinesBoldAction->setShortcut(KShortcut("Ctrl+B"), KAction::DefaultShortcut | KAction::ActiveShortcut);
+	toggleSelectedLinesBoldAction->setShortcut(QKeySequence("Ctrl+B")/*, QAction::DefaultShortcut | QAction::ActiveShortcut*/);
 	connect(toggleSelectedLinesBoldAction, SIGNAL(triggered()), this, SLOT(toggleSelectedLinesBold()));
 	actionCollection->addAction(ACT_TOGGLE_SELECTED_LINES_BOLD, toggleSelectedLinesBoldAction);
 	actionManager->addAction(toggleSelectedLinesBoldAction, UserAction::HasSelection | UserAction::FullScreenOff);
 
-	KAction *toggleSelectedLinesItalicAction = new KAction(actionCollection);
+	QAction *toggleSelectedLinesItalicAction = new QAction(actionCollection);
 	toggleSelectedLinesItalicAction->setIcon(KIcon("format-text-italic"));
 	toggleSelectedLinesItalicAction->setText(i18n("Toggle Italic"));
 	toggleSelectedLinesItalicAction->setStatusTip(i18n("Toggle selected lines italic attribute"));
-	toggleSelectedLinesItalicAction->setShortcut(KShortcut("Ctrl+I"), KAction::DefaultShortcut | KAction::ActiveShortcut);
+	toggleSelectedLinesItalicAction->setShortcut(QKeySequence("Ctrl+I")/*, QAction::DefaultShortcut | QAction::ActiveShortcut*/);
 	connect(toggleSelectedLinesItalicAction, SIGNAL(triggered()), this, SLOT(toggleSelectedLinesItalic()));
 	actionCollection->addAction(ACT_TOGGLE_SELECTED_LINES_ITALIC, toggleSelectedLinesItalicAction);
 	actionManager->addAction(toggleSelectedLinesItalicAction, UserAction::HasSelection | UserAction::FullScreenOff);
 
-	KAction *toggleSelectedLinesUnderlineAction = new KAction(actionCollection);
+	QAction *toggleSelectedLinesUnderlineAction = new QAction(actionCollection);
 	toggleSelectedLinesUnderlineAction->setIcon(KIcon("format-text-underline"));
 	toggleSelectedLinesUnderlineAction->setText(i18n("Toggle Underline"));
 	toggleSelectedLinesUnderlineAction->setStatusTip(i18n("Toggle selected lines underline attribute"));
-	toggleSelectedLinesUnderlineAction->setShortcut(KShortcut("Ctrl+U"), KAction::DefaultShortcut | KAction::ActiveShortcut);
+	toggleSelectedLinesUnderlineAction->setShortcut(QKeySequence("Ctrl+U")/*, QAction::DefaultShortcut | QAction::ActiveShortcut*/);
 	connect(toggleSelectedLinesUnderlineAction, SIGNAL(triggered()), this, SLOT(toggleSelectedLinesUnderline()));
 	actionCollection->addAction(ACT_TOGGLE_SELECTED_LINES_UNDERLINE, toggleSelectedLinesUnderlineAction);
 	actionManager->addAction(toggleSelectedLinesUnderlineAction, UserAction::HasSelection | UserAction::FullScreenOff);
 
-	KAction *toggleSelectedLinesStrikeThroughAction = new KAction(actionCollection);
+	QAction *toggleSelectedLinesStrikeThroughAction = new QAction(actionCollection);
 	toggleSelectedLinesStrikeThroughAction->setIcon(KIcon("format-text-strikethrough"));
 	toggleSelectedLinesStrikeThroughAction->setText(i18n("Toggle Strike Through"));
 	toggleSelectedLinesStrikeThroughAction->setStatusTip(i18n("Toggle selected lines strike through attribute"));
-	toggleSelectedLinesStrikeThroughAction->setShortcut(KShortcut("Ctrl+T"), KAction::DefaultShortcut | KAction::ActiveShortcut);
+	toggleSelectedLinesStrikeThroughAction->setShortcut(QKeySequence("Ctrl+T")/*, QAction::DefaultShortcut | QAction::ActiveShortcut*/);
 	connect(toggleSelectedLinesStrikeThroughAction, SIGNAL(triggered()), this, SLOT(toggleSelectedLinesStrikeThrough()));
 	actionCollection->addAction(ACT_TOGGLE_SELECTED_LINES_STRIKETHROUGH, toggleSelectedLinesStrikeThroughAction);
 	actionManager->addAction(toggleSelectedLinesStrikeThroughAction, UserAction::HasSelection | UserAction::FullScreenOff);
 
-	KAction *changeSelectedLinesColorAction = new KAction(actionCollection);
+	QAction *changeSelectedLinesColorAction = new QAction(actionCollection);
 	changeSelectedLinesColorAction->setIcon(KIcon("format-text-color"));
 	changeSelectedLinesColorAction->setText(i18n("Change Text Color"));
 	changeSelectedLinesColorAction->setStatusTip(i18n("Change text color of selected lines"));
-	changeSelectedLinesColorAction->setShortcut(KShortcut("Ctrl+Shift+C"), KAction::DefaultShortcut | KAction::ActiveShortcut);
+	changeSelectedLinesColorAction->setShortcut(QKeySequence("Ctrl+Shift+C")/*, QAction::DefaultShortcut | QAction::ActiveShortcut*/);
 	connect(changeSelectedLinesColorAction, SIGNAL(triggered()), this, SLOT(changeSelectedLinesColor()));
 	actionCollection->addAction(ACT_CHANGE_SELECTED_LINES_TEXT_COLOR, changeSelectedLinesColorAction);
 	actionManager->addAction(changeSelectedLinesColorAction, UserAction::HasSelection | UserAction::FullScreenOff);
 
-	KAction *shiftAction = new KAction(actionCollection);
+	QAction *shiftAction = new QAction(actionCollection);
 	shiftAction->setText(i18n("Shift..."));
 	shiftAction->setStatusTip(i18n("Shift lines an specified amount of time"));
-	shiftAction->setShortcut(KShortcut("Ctrl+D"), KAction::DefaultShortcut | KAction::ActiveShortcut);
+	shiftAction->setShortcut(QKeySequence("Ctrl+D")/*, QAction::DefaultShortcut | QAction::ActiveShortcut*/);
 	connect(shiftAction, SIGNAL(triggered()), this, SLOT(shiftLines()));
 	actionCollection->addAction(ACT_SHIFT, shiftAction);
 	actionManager->addAction(shiftAction, UserAction::SubHasLine | UserAction::FullScreenOff);
 
 	QString shiftTimeMillis(generalConfig()->linesQuickShiftAmount());
 
-	KAction *shiftSelectedLinesFwdAction = new KAction(actionCollection);
-	shiftSelectedLinesFwdAction->setShortcut(KShortcut("Shift++"), KAction::DefaultShortcut | KAction::ActiveShortcut);
+	QAction *shiftSelectedLinesFwdAction = new QAction(actionCollection);
+	shiftSelectedLinesFwdAction->setShortcut(QKeySequence("Shift++")/*, QAction::DefaultShortcut | QAction::ActiveShortcut*/);
 	connect(shiftSelectedLinesFwdAction, SIGNAL(triggered()), this, SLOT(shiftSelectedLinesForwards()));
 	actionCollection->addAction(ACT_SHIFT_SELECTED_LINES_FORWARDS, shiftSelectedLinesFwdAction);
 	actionManager->addAction(shiftSelectedLinesFwdAction, UserAction::HasSelection | UserAction::FullScreenOff);
 
-	KAction *shiftSelectedLinesBwdAction = new KAction(actionCollection);
-	shiftSelectedLinesBwdAction->setShortcut(KShortcut("Shift+-"), KAction::DefaultShortcut | KAction::ActiveShortcut);
+	QAction *shiftSelectedLinesBwdAction = new QAction(actionCollection);
+	shiftSelectedLinesBwdAction->setShortcut(QKeySequence("Shift+-")/*, QAction::DefaultShortcut | QAction::ActiveShortcut*/);
 	connect(shiftSelectedLinesBwdAction, SIGNAL(triggered()), this, SLOT(shiftSelectedLinesBackwards()));
 	actionCollection->addAction(ACT_SHIFT_SELECTED_LINES_BACKWARDS, shiftSelectedLinesBwdAction);
 	actionManager->addAction(shiftSelectedLinesBwdAction, UserAction::HasSelection | UserAction::FullScreenOff);
@@ -862,115 +864,115 @@ Application::setupActions()
 	// update shiftSelectedLinesFwdAction and shiftSelectedLinesBwdAction texts and status tips
 	onGeneralOptionChanged(GeneralConfig::keyLinesQuickShiftAmount(), QString::number(generalConfig()->linesQuickShiftAmount()));
 
-	KAction *adjustAction = new KAction(actionCollection);
+	QAction *adjustAction = new QAction(actionCollection);
 	adjustAction->setText(i18n("Adjust..."));
 	adjustAction->setStatusTip(i18n("Linearly adjust all lines to a specified interval"));
-	adjustAction->setShortcut(KShortcut("Ctrl+J"), KAction::DefaultShortcut | KAction::ActiveShortcut);
+	adjustAction->setShortcut(QKeySequence("Ctrl+J")/*, QAction::DefaultShortcut | QAction::ActiveShortcut*/);
 	connect(adjustAction, SIGNAL(triggered()), this, SLOT(adjustLines()));
 	actionCollection->addAction(ACT_ADJUST, adjustAction);
 	actionManager->addAction(adjustAction, UserAction::SubHasLines | UserAction::FullScreenOff);
 
-	KAction *sortLinesAction = new KAction(actionCollection);
+	QAction *sortLinesAction = new QAction(actionCollection);
 	sortLinesAction->setText(i18n("Sort..."));
 	sortLinesAction->setStatusTip(i18n("Sort lines based on their show time"));
 	connect(sortLinesAction, SIGNAL(triggered()), this, SLOT(sortLines()));
 	actionCollection->addAction(ACT_SORT_LINES, sortLinesAction);
 	actionManager->addAction(sortLinesAction, UserAction::SubHasLines | UserAction::FullScreenOff);
 
-	KAction *changeFrameRateAction = new KAction(actionCollection);
+	QAction *changeFrameRateAction = new QAction(actionCollection);
 	changeFrameRateAction->setText(i18n("Change Frame Rate..."));
 	changeFrameRateAction->setStatusTip(i18n("Retime subtitle lines by reinterpreting its frame rate"));
 	connect(changeFrameRateAction, SIGNAL(triggered()), this, SLOT(changeFrameRate()));
 	actionCollection->addAction(ACT_CHANGE_FRAME_RATE, changeFrameRateAction);
 	actionManager->addAction(changeFrameRateAction, UserAction::SubOpened | UserAction::FullScreenOff);
 
-	KAction *durationLimitsAction = new KAction(actionCollection);
+	QAction *durationLimitsAction = new QAction(actionCollection);
 	durationLimitsAction->setText(i18n("Enforce Duration Limits..."));
 	durationLimitsAction->setStatusTip(i18n("Enforce lines minimum and/or maximum duration limits"));
-	durationLimitsAction->setShortcut(KShortcut("Ctrl+L"), KAction::DefaultShortcut | KAction::ActiveShortcut);
+	durationLimitsAction->setShortcut(QKeySequence("Ctrl+L")/*, QAction::DefaultShortcut | QAction::ActiveShortcut*/);
 	connect(durationLimitsAction, SIGNAL(triggered()), this, SLOT(enforceDurationLimits()));
 	actionCollection->addAction(ACT_DURATION_LIMITS, durationLimitsAction);
 	actionManager->addAction(durationLimitsAction, UserAction::SubHasLine | UserAction::FullScreenOff);
 
-	KAction *autoDurationsAction = new KAction(actionCollection);
+	QAction *autoDurationsAction = new QAction(actionCollection);
 	autoDurationsAction->setText(i18n("Set Automatic Durations..."));
 	autoDurationsAction->setStatusTip(i18n("Set lines durations based on amount of letters, words and line breaks"));
 	connect(autoDurationsAction, SIGNAL(triggered()), this, SLOT(setAutoDurations()));
 	actionCollection->addAction(ACT_AUTOMATIC_DURATIONS, autoDurationsAction);
 	actionManager->addAction(autoDurationsAction, UserAction::SubHasLine | UserAction::FullScreenOff);
 
-	KAction *maximizeDurationsAction = new KAction(actionCollection);
+	QAction *maximizeDurationsAction = new QAction(actionCollection);
 	maximizeDurationsAction->setText(i18n("Maximize Durations..."));
 	maximizeDurationsAction->setStatusTip(i18n("Extend lines durations up to their next lines show time"));
 	connect(maximizeDurationsAction, SIGNAL(triggered()), this, SLOT(maximizeDurations()));
 	actionCollection->addAction(ACT_MAXIMIZE_DURATIONS, maximizeDurationsAction);
 	actionManager->addAction(maximizeDurationsAction, UserAction::SubHasLine | UserAction::FullScreenOff);
 
-	KAction *fixOverlappingLinesAction = new KAction(actionCollection);
+	QAction *fixOverlappingLinesAction = new QAction(actionCollection);
 	fixOverlappingLinesAction->setText(i18n("Fix Overlapping Times..."));
 	fixOverlappingLinesAction->setStatusTip(i18n("Fix lines overlapping times"));
 	connect(fixOverlappingLinesAction, SIGNAL(triggered()), this, SLOT(fixOverlappingLines()));
 	actionCollection->addAction(ACT_FIX_OVERLAPPING_LINES, fixOverlappingLinesAction);
 	actionManager->addAction(fixOverlappingLinesAction, UserAction::SubHasLine | UserAction::FullScreenOff);
 
-	KAction *syncWithSubtitleAction = new KAction(actionCollection);
+	QAction *syncWithSubtitleAction = new QAction(actionCollection);
 	syncWithSubtitleAction->setText(i18n("Synchronize with Subtitle..."));
 	syncWithSubtitleAction->setStatusTip(i18n("Copy timing information from another subtitle"));
 	connect(syncWithSubtitleAction, SIGNAL(triggered()), this, SLOT(syncWithSubtitle()));
 	actionCollection->addAction(ACT_SYNC_WITH_SUBTITLE, syncWithSubtitleAction);
 	actionManager->addAction(syncWithSubtitleAction, UserAction::SubHasLine | UserAction::FullScreenOff);
 
-	KAction *breakLinesAction = new KAction(actionCollection);
+	QAction *breakLinesAction = new QAction(actionCollection);
 	breakLinesAction->setText(i18n("Break Lines..."));
 	breakLinesAction->setStatusTip(i18n("Automatically set line breaks"));
 	connect(breakLinesAction, SIGNAL(triggered()), this, SLOT(breakLines()));
 	actionCollection->addAction(ACT_ADJUST_TEXTS, breakLinesAction);
 	actionManager->addAction(breakLinesAction, UserAction::SubHasLine | UserAction::FullScreenOff);
 
-	KAction *unbreakTextsAction = new KAction(actionCollection);
+	QAction *unbreakTextsAction = new QAction(actionCollection);
 	unbreakTextsAction->setText(i18n("Unbreak Lines..."));
 	unbreakTextsAction->setStatusTip(i18n("Remove line breaks from lines"));
 	connect(unbreakTextsAction, SIGNAL(triggered()), this, SLOT(unbreakTexts()));
 	actionCollection->addAction(ACT_UNBREAK_TEXTS, unbreakTextsAction);
 	actionManager->addAction(unbreakTextsAction, UserAction::SubHasLine | UserAction::FullScreenOff);
 
-	KAction *simplifySpacesAction = new KAction(actionCollection);
+	QAction *simplifySpacesAction = new QAction(actionCollection);
 	simplifySpacesAction->setText(i18n("Simplify Spaces..."));
 	simplifySpacesAction->setStatusTip(i18n("Remove unneeded spaces from lines"));
 	connect(simplifySpacesAction, SIGNAL(triggered()), this, SLOT(simplifySpaces()));
 	actionCollection->addAction(ACT_SIMPLIFY_SPACES, simplifySpacesAction);
 	actionManager->addAction(simplifySpacesAction, UserAction::SubHasLine | UserAction::FullScreenOff);
 
-	KAction *changeCaseAction = new KAction(actionCollection);
+	QAction *changeCaseAction = new QAction(actionCollection);
 	changeCaseAction->setText(i18n("Change Case..."));
 	changeCaseAction->setStatusTip(i18n("Change lines text to upper, lower, title or sentence case"));
 	connect(changeCaseAction, SIGNAL(triggered()), this, SLOT(changeCase()));
 	actionCollection->addAction(ACT_CHANGE_CASE, changeCaseAction);
 	actionManager->addAction(changeCaseAction, UserAction::SubHasLine | UserAction::FullScreenOff);
 
-	KAction *fixPunctuationAction = new KAction(actionCollection);
+	QAction *fixPunctuationAction = new QAction(actionCollection);
 	fixPunctuationAction->setText(i18n("Fix Punctuation..."));
 	fixPunctuationAction->setStatusTip(i18n("Fix punctuation errors in lines"));
 	connect(fixPunctuationAction, SIGNAL(triggered()), this, SLOT(fixPunctuation()));
 	actionCollection->addAction(ACT_FIX_PUNCTUATION, fixPunctuationAction);
 	actionManager->addAction(fixPunctuationAction, UserAction::SubHasLine | UserAction::FullScreenOff);
 
-	KAction *translateAction = new KAction(actionCollection);
+	QAction *translateAction = new QAction(actionCollection);
 	translateAction->setText(i18n("Translate..."));
 	translateAction->setStatusTip(i18n("Translate lines texts using Google services"));
 	connect(translateAction, SIGNAL(triggered()), this, SLOT(translate()));
 	actionCollection->addAction(ACT_TRANSLATE, translateAction);
 	actionManager->addAction(translateAction, UserAction::SubHasLine | UserAction::FullScreenOff);
 
-	KAction *editCurrentLineInPlaceAction = new KAction(actionCollection);
+	QAction *editCurrentLineInPlaceAction = new QAction(actionCollection);
 	editCurrentLineInPlaceAction->setText(i18n("Edit Line in Place"));
 	editCurrentLineInPlaceAction->setStatusTip(i18n("Edit current line text in place"));
-	editCurrentLineInPlaceAction->setShortcut(KShortcut("F2"), KAction::DefaultShortcut | KAction::ActiveShortcut);
+	editCurrentLineInPlaceAction->setShortcut(QKeySequence("F2")/*, QAction::DefaultShortcut | QAction::ActiveShortcut*/);
 	connect(editCurrentLineInPlaceAction, SIGNAL(triggered()), m_linesWidget, SLOT(editCurrentLineInPlace()));
 	actionCollection->addAction(ACT_EDIT_CURRENT_LINE_IN_PLACE, editCurrentLineInPlaceAction);
 	actionManager->addAction(editCurrentLineInPlaceAction, UserAction::HasSelection | UserAction::FullScreenOff);
 
-	KAction *openVideoAction = new KAction(actionCollection);
+	QAction *openVideoAction = new QAction(actionCollection);
 	openVideoAction->setIcon(KIcon("document-open"));
 	openVideoAction->setText(i18n("Open Video..."));
 	openVideoAction->setStatusTip(i18n("Open video file"));
@@ -981,10 +983,10 @@ Application::setupActions()
 	m_recentVideosAction->setIcon(KIcon("document-open"));
 	m_recentVideosAction->setText(i18n("Open &Recent Video"));
 	m_recentVideosAction->setStatusTip(i18n("Open video file"));
-	connect(m_recentVideosAction, SIGNAL(urlSelected(const KUrl &)), this, SLOT(openVideo(const KUrl &)));
+	connect(m_recentVideosAction, SIGNAL(urlSelected(const QUrl &)), this, SLOT(openVideo(const QUrl &)));
 	actionCollection->addAction(ACT_RECENT_VIDEOS, m_recentVideosAction);
 
-	KAction *closeVideoAction = new KAction(actionCollection);
+	QAction *closeVideoAction = new QAction(actionCollection);
 	closeVideoAction->setIcon(KIcon("window-close"));
 	closeVideoAction->setText(i18n("Close Video"));
 	closeVideoAction->setStatusTip(i18n("Close video file"));
@@ -992,7 +994,7 @@ Application::setupActions()
 	actionCollection->addAction(ACT_CLOSE_VIDEO, closeVideoAction);
 	actionManager->addAction(closeVideoAction, UserAction::VideoOpened);
 
-	KAction *extractVideoAudioAction = new KAction(actionCollection);
+	QAction *extractVideoAudioAction = new QAction(actionCollection);
 	extractVideoAudioAction->setIcon(KIcon("audio-extract"));
 	extractVideoAudioAction->setText(i18n("Extract Audio"));
 	extractVideoAudioAction->setStatusTip(i18n("Extract video's active audio stream"));
@@ -1000,7 +1002,7 @@ Application::setupActions()
 	actionCollection->addAction(ACT_EXTRACT_VIDEO_AUDIO, extractVideoAudioAction);
 	actionManager->addAction(extractVideoAudioAction, UserAction::VideoOpened);
 
-	KAction *cancelAudioExtractionAction = new KAction(actionCollection);
+	QAction *cancelAudioExtractionAction = new QAction(actionCollection);
 	cancelAudioExtractionAction->setIcon(KIcon("dialog-cancel"));
 	cancelAudioExtractionAction->setText(i18n("Cancel Audio Extraction"));
 	cancelAudioExtractionAction->setStatusTip(i18n("Cancel video's audio stream extraction"));
@@ -1013,11 +1015,11 @@ Application::setupActions()
 	fullScreenAction->setIcon(KIcon("view-fullscreen"));
 	fullScreenAction->setText(i18n("Full Screen Mode"));
 	fullScreenAction->setStatusTip(i18n("Toggle full screen mode"));
-	fullScreenAction->setShortcut(KStandardShortcut::fullScreen(), KAction::DefaultShortcut | KAction::ActiveShortcut);
+	fullScreenAction->setShortcuts(KStandardShortcut::fullScreen()/*, QAction::DefaultShortcut | QAction::ActiveShortcut*/);
 	connect(fullScreenAction, SIGNAL(toggled(bool)), this, SLOT(setFullScreenMode(bool)));
 	actionCollection->addAction(ACT_TOGGLE_FULL_SCREEN, fullScreenAction);
 
-	KAction *stopAction = new KAction(actionCollection);
+	QAction *stopAction = new QAction(actionCollection);
 	stopAction->setIcon(KIcon("media-playback-stop"));
 	stopAction->setText(i18n("Stop"));
 	stopAction->setStatusTip(i18n("Stop video playback"));
@@ -1025,7 +1027,7 @@ Application::setupActions()
 	actionCollection->addAction(ACT_STOP, stopAction);
 	actionManager->addAction(stopAction, UserAction::VideoPlaying);
 
-	KAction *playPauseAction = new KAction(actionCollection);
+	QAction *playPauseAction = new QAction(actionCollection);
 	playPauseAction->setIcon(KIcon("media-playback-start"));
 	playPauseAction->setText(i18n("Play"));
 	playPauseAction->setStatusTip(i18n("Toggle video playing/paused"));
@@ -1033,18 +1035,18 @@ Application::setupActions()
 	actionCollection->addAction(ACT_PLAY_PAUSE, playPauseAction);
 	actionManager->addAction(playPauseAction, UserAction::VideoOpened);
 
-	KAction *seekBackwardsAction = new KAction(actionCollection);
+	QAction *seekBackwardsAction = new QAction(actionCollection);
 	seekBackwardsAction->setIcon(KIcon("media-seek-backward"));
 	seekBackwardsAction->setText(i18n("Seek Backwards"));
-	seekBackwardsAction->setShortcut(KShortcut("Left"), KAction::DefaultShortcut | KAction::ActiveShortcut);
+	seekBackwardsAction->setShortcut(QKeySequence("Left")/*, QAction::DefaultShortcut | QAction::ActiveShortcut*/);
 	connect(seekBackwardsAction, SIGNAL(triggered()), this, SLOT(seekBackwards()));
 	actionCollection->addAction(ACT_SEEK_BACKWARDS, seekBackwardsAction);
 	actionManager->addAction(seekBackwardsAction, UserAction::VideoPlaying);
 
-	KAction *seekForwardsAction = new KAction(actionCollection);
+	QAction *seekForwardsAction = new QAction(actionCollection);
 	seekForwardsAction->setIcon(KIcon("media-seek-forward"));
 	seekForwardsAction->setText(i18n("Seek Forwards"));
-	seekForwardsAction->setShortcut(KShortcut("Right"), KAction::DefaultShortcut | KAction::ActiveShortcut);
+	seekForwardsAction->setShortcut(QKeySequence("Right")/*, QAction::DefaultShortcut | QAction::ActiveShortcut*/);
 	connect(seekForwardsAction, SIGNAL(triggered()), this, SLOT(seekForwards()));
 	actionCollection->addAction(ACT_SEEK_FORWARDS, seekForwardsAction);
 	actionManager->addAction(seekForwardsAction, UserAction::VideoPlaying);
@@ -1052,40 +1054,40 @@ Application::setupActions()
 	// update seekBackwardsAction and seekForwardsAction status tip
 	onPlayerOptionChanged(PlayerConfig::keySeekJumpLength(), QString::number(playerConfig()->seekJumpLength()));
 
-	KAction *seekToPrevLineAction = new KAction(actionCollection);
+	QAction *seekToPrevLineAction = new QAction(actionCollection);
 	seekToPrevLineAction->setIcon(KIcon("media-skip-backward"));
 	seekToPrevLineAction->setText(i18n("Jump to Previous Line"));
 	seekToPrevLineAction->setStatusTip(i18n("Seek to previous subtitle line show time"));
-	seekToPrevLineAction->setShortcut(KShortcut("Shift+Left"), KAction::DefaultShortcut | KAction::ActiveShortcut);
+	seekToPrevLineAction->setShortcut(QKeySequence("Shift+Left")/*, QAction::DefaultShortcut | QAction::ActiveShortcut*/);
 	connect(seekToPrevLineAction, SIGNAL(triggered()), this, SLOT(seekToPrevLine()));
 	actionCollection->addAction(ACT_SEEK_TO_PREVIOUS_LINE, seekToPrevLineAction);
 	actionManager->addAction(seekToPrevLineAction, UserAction::SubHasLine | UserAction::VideoPlaying);
 
-	KAction *seekToNextLineAction = new KAction(actionCollection);
+	QAction *seekToNextLineAction = new QAction(actionCollection);
 	seekToNextLineAction->setIcon(KIcon("media-skip-forward"));
 	seekToNextLineAction->setText(i18n("Jump to Next Line"));
 	seekToNextLineAction->setStatusTip(i18n("Seek to next subtitle line show time"));
-	seekToNextLineAction->setShortcut(KShortcut("Shift+Right"), KAction::DefaultShortcut | KAction::ActiveShortcut);
+	seekToNextLineAction->setShortcut(QKeySequence("Shift+Right")/*, QAction::DefaultShortcut | QAction::ActiveShortcut*/);
 	connect(seekToNextLineAction, SIGNAL(triggered()), this, SLOT(seekToNextLine()));
 	actionCollection->addAction(ACT_SEEK_TO_NEXT_LINE, seekToNextLineAction);
 	actionManager->addAction(seekToNextLineAction, UserAction::SubHasLine | UserAction::VideoPlaying);
 
-	KAction *setCurrentLineShowTimeFromVideoAction = new KAction(actionCollection);
+	QAction *setCurrentLineShowTimeFromVideoAction = new QAction(actionCollection);
 //  setCurrentLineShowTimeFromVideoAction->setIcon( KIcon( "set-show-time" ) );
 	setCurrentLineShowTimeFromVideoAction->setIcon(KIcon("zone-start"));
 	setCurrentLineShowTimeFromVideoAction->setText(i18n("Set Current Line Show Time"));
 	setCurrentLineShowTimeFromVideoAction->setStatusTip(i18n("Set current line show time to video position"));
-	setCurrentLineShowTimeFromVideoAction->setShortcut(KShortcut("Shift+Z"), KAction::DefaultShortcut | KAction::ActiveShortcut);
+	setCurrentLineShowTimeFromVideoAction->setShortcut(QKeySequence("Shift+Z")/*, QAction::DefaultShortcut | QAction::ActiveShortcut*/);
 	connect(setCurrentLineShowTimeFromVideoAction, SIGNAL(triggered()), this, SLOT(setCurrentLineShowTimeFromVideo()));
 	actionCollection->addAction(ACT_SET_CURRENT_LINE_SHOW_TIME, setCurrentLineShowTimeFromVideoAction);
 	actionManager->addAction(setCurrentLineShowTimeFromVideoAction, UserAction::HasSelection | UserAction::VideoPlaying);
 
-	KAction *setCurrentLineHideTimeFromVideoAction = new KAction(actionCollection);
+	QAction *setCurrentLineHideTimeFromVideoAction = new QAction(actionCollection);
 //  setCurrentLineHideTimeFromVideoAction->setIcon( KIcon( "set-hide-time" ) );
 	setCurrentLineHideTimeFromVideoAction->setIcon(KIcon("zone-end"));
 	setCurrentLineHideTimeFromVideoAction->setText(i18n("Set Current Line Hide Time"));
 	setCurrentLineHideTimeFromVideoAction->setStatusTip(i18n("Set current line hide time to video position"));
-	setCurrentLineHideTimeFromVideoAction->setShortcut(KShortcut("Shift+X"), KAction::DefaultShortcut | KAction::ActiveShortcut);
+	setCurrentLineHideTimeFromVideoAction->setShortcut(QKeySequence("Shift+X")/*, QAction::DefaultShortcut | QAction::ActiveShortcut*/);
 	connect(setCurrentLineHideTimeFromVideoAction, SIGNAL(triggered()), this, SLOT(setCurrentLineHideTimeFromVideo()));
 	actionCollection->addAction(ACT_SET_CURRENT_LINE_HIDE_TIME, setCurrentLineHideTimeFromVideoAction);
 	actionManager->addAction(setCurrentLineHideTimeFromVideoAction, UserAction::HasSelection | UserAction::VideoPlaying);
@@ -1102,23 +1104,23 @@ Application::setupActions()
 	toggleMuteAction->setText(i18nc("@action:inmenu Toggle audio muted", "Mute"));
 //  toggleMuteAction->setText( i18n( "Mute" ), i18n( "Unmute" ) );
 	toggleMuteAction->setStatusTip(i18n("Enable/disable playback sound"));
-	toggleMuteAction->setShortcut(KShortcut("/"), KAction::DefaultShortcut | KAction::ActiveShortcut);
+	toggleMuteAction->setShortcut(QKeySequence("/")/*, QAction::DefaultShortcut | QAction::ActiveShortcut*/);
 	connect(toggleMuteAction, SIGNAL(toggled(bool)), m_player, SLOT(setMuted(bool)));
 	actionCollection->addAction(ACT_TOGGLE_MUTED, toggleMuteAction);
 
-	KAction *increaseVolumeAction = new KAction(actionCollection);
+	QAction *increaseVolumeAction = new QAction(actionCollection);
 	increaseVolumeAction->setIcon(KIcon("audio-volume-high"));
 	increaseVolumeAction->setText(i18n("Increase Volume"));
 	increaseVolumeAction->setStatusTip(i18n("Increase volume by 5%"));
-	increaseVolumeAction->setShortcut(Qt::Key_Plus, KAction::DefaultShortcut | KAction::ActiveShortcut);
+	increaseVolumeAction->setShortcut(Qt::Key_Plus/*, QAction::DefaultShortcut | QAction::ActiveShortcut*/);
 	connect(increaseVolumeAction, SIGNAL(triggered()), m_player, SLOT(increaseVolume()));
 	actionCollection->addAction(ACT_INCREASE_VOLUME, increaseVolumeAction);
 
-	KAction *decreaseVolumeAction = new KAction(actionCollection);
+	QAction *decreaseVolumeAction = new QAction(actionCollection);
 	decreaseVolumeAction->setIcon(KIcon("audio-volume-low"));
 	decreaseVolumeAction->setText(i18n("Decrease Volume"));
 	decreaseVolumeAction->setStatusTip(i18n("Decrease volume by 5%"));
-	decreaseVolumeAction->setShortcut(Qt::Key_Minus, KAction::DefaultShortcut | KAction::ActiveShortcut);
+	decreaseVolumeAction->setShortcut(Qt::Key_Minus/*, QAction::DefaultShortcut | QAction::ActiveShortcut*/);
 	connect(decreaseVolumeAction, SIGNAL(triggered()), m_player, SLOT(decreaseVolume()));
 	actionCollection->addAction(ACT_DECREASE_VOLUME, decreaseVolumeAction);
 
@@ -1130,19 +1132,19 @@ Application::setupActions()
 	actionCollection->addAction(ACT_SET_ACTIVE_AUDIO_STREAM, setActiveAudioStreamAction);
 	actionManager->addAction(setActiveAudioStreamAction, UserAction::VideoOpened);
 
-	KAction *increaseSubtitleFontAction = new KAction(actionCollection);
+	QAction *increaseSubtitleFontAction = new QAction(actionCollection);
 	increaseSubtitleFontAction->setIcon(KIcon("format-font-size-more"));
 	increaseSubtitleFontAction->setText(i18n("Increase Font Size"));
 	increaseSubtitleFontAction->setStatusTip(i18n("Increase subtitles font size by 1 point"));
-	increaseSubtitleFontAction->setShortcut(KShortcut("Alt++"), KAction::DefaultShortcut | KAction::ActiveShortcut);
+	increaseSubtitleFontAction->setShortcut(QKeySequence("Alt++")/*, QAction::DefaultShortcut | QAction::ActiveShortcut*/);
 	connect(increaseSubtitleFontAction, SIGNAL(triggered()), m_playerWidget, SLOT(increaseFontSize()));
 	actionCollection->addAction(ACT_INCREASE_SUBTITLE_FONT, increaseSubtitleFontAction);
 
-	KAction *decreaseSubtitleFontAction = new KAction(actionCollection);
+	QAction *decreaseSubtitleFontAction = new QAction(actionCollection);
 	decreaseSubtitleFontAction->setIcon(KIcon("format-font-size-less"));
 	decreaseSubtitleFontAction->setText(i18n("Decrease Font Size"));
 	decreaseSubtitleFontAction->setStatusTip(i18n("Decrease subtitles font size by 1 point"));
-	decreaseSubtitleFontAction->setShortcut(KShortcut("Alt+-"), KAction::DefaultShortcut | KAction::ActiveShortcut);
+	decreaseSubtitleFontAction->setShortcut(QKeySequence("Alt+-")/*, QAction::DefaultShortcut | QAction::ActiveShortcut*/);
 	connect(decreaseSubtitleFontAction, SIGNAL(triggered()), m_playerWidget, SLOT(decreaseFontSize()));
 	actionCollection->addAction(ACT_DECREASE_SUBTITLE_FONT, decreaseSubtitleFontAction);
 
@@ -1154,31 +1156,31 @@ Application::setupActions()
 	actionCollection->addAction(ACT_SET_ACTIVE_SUBTITLE_STREAM, setActiveSubtitleStreamAction);
 	actionManager->addAction(setActiveSubtitleStreamAction, UserAction::SubTrOpened);
 
-	KAction *shiftToVideoPositionAction = new KAction(actionCollection);
+	QAction *shiftToVideoPositionAction = new QAction(actionCollection);
 	shiftToVideoPositionAction->setText(i18n("Shift to Video Position"));
 	shiftToVideoPositionAction->setStatusTip(i18n("Set current line show time to video position by equally shifting all lines"));
-	shiftToVideoPositionAction->setShortcut(KShortcut("Shift+A"), KAction::DefaultShortcut | KAction::ActiveShortcut);
+	shiftToVideoPositionAction->setShortcut(QKeySequence("Shift+A")/*, QAction::DefaultShortcut | QAction::ActiveShortcut*/);
 	connect(shiftToVideoPositionAction, SIGNAL(triggered()), this, SLOT(shiftToVideoPosition()));
 	actionCollection->addAction(ACT_SHIFT_TO_VIDEO_POSITION, shiftToVideoPositionAction);
 	actionManager->addAction(shiftToVideoPositionAction, UserAction::HasSelection | UserAction::VideoPlaying | UserAction::FullScreenOff);
 
-	KAction *adjustToVideoPositionAnchorLastAction = new KAction(actionCollection);
+	QAction *adjustToVideoPositionAnchorLastAction = new QAction(actionCollection);
 	adjustToVideoPositionAnchorLastAction->setText(i18n("Adjust to Video Position (Anchor Last Line)"));
 	adjustToVideoPositionAnchorLastAction->setStatusTip(i18n("Set current line to video position by fixing the last line and linearly adjusting the other ones"));
-	adjustToVideoPositionAnchorLastAction->setShortcut(KShortcut("Alt+Z"), KAction::DefaultShortcut | KAction::ActiveShortcut);
+	adjustToVideoPositionAnchorLastAction->setShortcut(QKeySequence("Alt+Z")/*, QAction::DefaultShortcut | QAction::ActiveShortcut*/);
 	connect(adjustToVideoPositionAnchorLastAction, SIGNAL(triggered()), this, SLOT(adjustToVideoPositionAnchorLast()));
 	actionCollection->addAction(ACT_ADJUST_TO_VIDEO_POSITION_A_L, adjustToVideoPositionAnchorLastAction);
 	actionManager->addAction(adjustToVideoPositionAnchorLastAction, UserAction::HasSelection | UserAction::VideoPlaying | UserAction::FullScreenOff);
 
-	KAction *adjustToVideoPositionAnchorFirstAction = new KAction(actionCollection);
+	QAction *adjustToVideoPositionAnchorFirstAction = new QAction(actionCollection);
 	adjustToVideoPositionAnchorFirstAction->setText(i18n("Adjust to Video Position (Anchor First Line)"));
 	adjustToVideoPositionAnchorFirstAction->setStatusTip(i18n("Set current line to video position by fixing the first line and linearly adjusting the other ones"));
-	adjustToVideoPositionAnchorFirstAction->setShortcut(KShortcut("Alt+X"), KAction::DefaultShortcut | KAction::ActiveShortcut);
+	adjustToVideoPositionAnchorFirstAction->setShortcut(QKeySequence("Alt+X")/*, QAction::DefaultShortcut | QAction::ActiveShortcut*/);
 	connect(adjustToVideoPositionAnchorFirstAction, SIGNAL(triggered()), this, SLOT(adjustToVideoPositionAnchorFirst()));
 	actionCollection->addAction(ACT_ADJUST_TO_VIDEO_POSITION_A_F, adjustToVideoPositionAnchorFirstAction);
 	actionManager->addAction(adjustToVideoPositionAnchorFirstAction, UserAction::HasSelection | UserAction::VideoPlaying | UserAction::FullScreenOff);
 
-	KAction *scriptsManagerAction = new KAction(actionCollection);
+	QAction *scriptsManagerAction = new QAction(actionCollection);
 	scriptsManagerAction->setIcon(KIcon("folder-development"));
 	scriptsManagerAction->setText(i18nc("@action:inmenu Manage user scripts", "Scripts Manager..."));
 	scriptsManagerAction->setStatusTip(i18n("Manage user scripts"));
@@ -1186,7 +1188,7 @@ Application::setupActions()
 	actionCollection->addAction(ACT_SCRIPTS_MANAGER, scriptsManagerAction);
 	actionManager->addAction(scriptsManagerAction, UserAction::FullScreenOff);
 
-//  KAction* openAudioLevelsAction = new KAction( actionCollection );
+//  QAction * openAudioLevelsAction = new QAction( actionCollection );
 //  openAudioLevelsAction->setIcon( "fileopen" );
 //  openAudioLevelsAction->setText( i18n( "Open Levels..." ) );
 //  openAudioLevelsAction->setStatusTip( i18n( "Open audio levels file" ) );
@@ -1198,11 +1200,11 @@ Application::setupActions()
 //  m_recentAudioLevelsAction->setIcon( "fileopen" );
 //  m_recentAudioLevelsAction->setText( i18n( "Open &Recent Levels" ) );
 //  m_recentAudioLevelsAction->setStatusTip( i18n( "Open audio levels file" ) );
-//  connect( m_recentAudioLevelsAction, SIGNAL(urlSelected(const KUrl&)), this, SLOT(openAudioLevels(const KUrl&)) );
+//  connect( m_recentAudioLevelsAction, SIGNAL(urlSelected(const QUrl&)), this, SLOT(openAudioLevels(const QUrl&)) );
 //  actionCollection->addAction( ACT_RECENT_WAVEFORMS, m_recentAudioLevelsAction );
 //
 //
-//  KAction* saveAudioLevelsAsAction = new KAction( actionCollection );
+//  QAction * saveAudioLevelsAsAction = new QAction( actionCollection );
 //  saveAudioLevelsAsAction->setIcon( "filesaveas" );
 //  saveAudioLevelsAsAction->setText( i18n( "Save Levels As..." ) );
 //  saveAudioLevelsAsAction->setStatusTip( i18n( "Save audio levels file" ) );
@@ -1211,7 +1213,7 @@ Application::setupActions()
 //  actionManager->addAction( saveAudioLevelsAsAction, UserAction::AudioLevelsOpened );
 //
 //
-//  KAction* closeAudioLevelsAction = new KAction( actionCollection );
+//  QAction * closeAudioLevelsAction = new QAction( actionCollection );
 //  closeAudioLevelsAction->setIcon( "fileclose" );
 //  closeAudioLevelsAction->setText( i18n( "Close Levels" ) );
 //  closeAudioLevelsAction->setStatusTip( i18n( "Close audio levels file" ) );
@@ -1220,7 +1222,7 @@ Application::setupActions()
 //  actionManager->addAction( closeAudioLevelsAction, UserAction::AudioLevelsOpened );
 //
 //
-//  KAction* increaseAudioLevelsVZoomAction = new KAction( actionCollection );
+//  QAction * increaseAudioLevelsVZoomAction = new QAction( actionCollection );
 //  increaseAudioLevelsVZoomAction->setIcon( "viewmag+" );
 //  increaseAudioLevelsVZoomAction->setText( i18n( "Increase Vertical Zoom" ) );
 //  increaseAudioLevelsVZoomAction->setStatusTip( i18n( "Increase audio levels vertical zoom" ) );
@@ -1229,7 +1231,7 @@ Application::setupActions()
 //  actionManager->addAction( increaseAudioLevelsVZoomAction, UserAction::AudioLevelsOpened );
 //
 //
-//  KAction* decreaseAudioLevelsVZoomAction = new KAction( actionCollection );
+//  QAction * decreaseAudioLevelsVZoomAction = new QAction( actionCollection );
 //  decreaseAudioLevelsVZoomAction->setIcon( "viewmag-" );
 //  decreaseAudioLevelsVZoomAction->setText( i18n( "Decrease Vertical Zoom" ) );
 //  decreaseAudioLevelsVZoomAction->setStatusTip( i18n( "Decrease audio levels vertical zoom" ) );
@@ -1238,7 +1240,7 @@ Application::setupActions()
 //  actionManager->addAction( decreaseAudioLevelsVZoomAction, UserAction::AudioLevelsOpened );
 //
 //
-//  KAction* increaseAudioLevelsHZoomAction = new KAction( actionCollection );
+//  QAction * increaseAudioLevelsHZoomAction = new QAction( actionCollection );
 //  increaseAudioLevelsHZoomAction->setIcon( "viewmag+" );
 //  increaseAudioLevelsHZoomAction->setText( i18n( "Increase Horizontal Zoom" ) );
 //  increaseAudioLevelsHZoomAction->setStatusTip( i18n( "Increase audio levels horizontal zoom" ) );
@@ -1247,7 +1249,7 @@ Application::setupActions()
 //  actionManager->addAction( increaseAudioLevelsHZoomAction, UserAction::AudioLevelsOpened );
 //
 //
-//  KAction* decreaseAudioLevelsHZoomAction = new KAction( actionCollection );
+//  QAction * decreaseAudioLevelsHZoomAction = new QAction( actionCollection );
 //  decreaseAudioLevelsHZoomAction->setIcon( "viewmag-" );
 //  decreaseAudioLevelsHZoomAction->setText( i18n( "Decrease Horizontal Zoom" ) );
 //  decreaseAudioLevelsHZoomAction->setStatusTip( i18n( "Decrease audio levels horizontal zoom" ) );
@@ -1282,25 +1284,25 @@ Application::redo()
 }
 
 QTextCodec *
-Application::codecForUrl(const KUrl &url, bool useRecentFiles, bool useDefault)
+Application::codecForUrl(const QUrl &url, bool useRecentFiles, bool useDefault)
 {
-	QString encoding = url.fileEncoding();
+//	QString encoding = url.fileEncoding();
 
-	if(useRecentFiles) {
-		if(encoding.isEmpty())
-			m_recentSubtitlesAction->encodingForUrl(url);
-		if(encoding.isEmpty())
-			encoding = m_recentSubtitlesTrAction->encodingForUrl(url);
-	}
+//	if(useRecentFiles) {
+//		if(encoding.isEmpty())
+//			m_recentSubtitlesAction->encodingForUrl(url);
+//		if(encoding.isEmpty())
+//			encoding = m_recentSubtitlesTrAction->encodingForUrl(url);
+//	}
 
 	QTextCodec *codec = 0;
 
-	if(!encoding.isEmpty()) {
-		bool codecFound = false;
-		codec = KGlobal::charsets()->codecForName(encoding, codecFound);
-		if(!codecFound)
-			codec = 0;
-	}
+//	if(!encoding.isEmpty()) {
+//		bool codecFound = false;
+//		codec = KGlobal::charsets()->codecForName(encoding, codecFound);
+//		if(!codecFound)
+//			codec = 0;
+//	}
 
 	if(!codec && useDefault)
 		codec = generalConfig()->defaultSubtitlesCodec();
@@ -1327,12 +1329,12 @@ Application::codecForEncoding(const QString &encoding, bool useDefault)
 }
 
 bool
-Application::acceptClashingUrls(const KUrl &subtitleUrl, const KUrl &subtitleTrUrl)
+Application::acceptClashingUrls(const QUrl &subtitleUrl, const QUrl &subtitleTrUrl)
 {
-	KUrl url(subtitleUrl);
-	url.setFileEncoding(QString());
-	KUrl trUrl(subtitleTrUrl);
-	trUrl.setFileEncoding(QString());
+	QUrl url(subtitleUrl);
+//	url.setFileEncoding(QString());
+	QUrl trUrl(subtitleTrUrl);
+//	trUrl.setFileEncoding(QString());
 
 	if(url != trUrl || url.isEmpty() || trUrl.isEmpty())
 		return true;
@@ -1361,25 +1363,25 @@ Application::newSubtitle()
 void
 Application::openSubtitle()
 {
-	OpenSubtitleDialog openDlg(true, m_lastSubtitleUrl.prettyUrl(), QString());
+	OpenSubtitleDialog openDlg(true, m_lastSubtitleUrl.toString(QUrl::PreferLocalFile), QString());
 
 	if(openDlg.exec() == QDialog::Accepted) {
-		if(!acceptClashingUrls(openDlg.selectedUrl(), m_subtitleTrUrl))
+		if(!acceptClashingUrls(openDlg.selectedUrls().first(), m_subtitleTrUrl))
 			return;
 
 		if(!closeSubtitle())
 			return;
 
-		m_lastSubtitleUrl = openDlg.selectedUrl();
+		m_lastSubtitleUrl = openDlg.selectedUrls().first();
 
-		KUrl fileUrl = m_lastSubtitleUrl;
-		fileUrl.setFileEncoding(openDlg.selectedEncoding());
+		QUrl fileUrl = m_lastSubtitleUrl;
+//		fileUrl.setFileEncoding(openDlg.selectedEncoding());
 		openSubtitle(fileUrl);
 	}
 }
 
 void
-Application::openSubtitle(const KUrl &url, bool warnClashingUrls)
+Application::openSubtitle(const QUrl &url, bool warnClashingUrls)
 {
 	if(warnClashingUrls && !acceptClashingUrls(url, m_subtitleTrUrl))
 		return;
@@ -1389,12 +1391,12 @@ Application::openSubtitle(const KUrl &url, bool warnClashingUrls)
 
 	QTextCodec *codec = codecForUrl(url, true, false);
 
-	KUrl fileUrl = url;
-	fileUrl.setFileEncoding(QString());
+	QUrl fileUrl = url;
+//	fileUrl.setFileEncoding(QString());
 
 	m_subtitle = new Subtitle();
 
-	if(FormatManager::instance().readSubtitle(*m_subtitle, true, fileUrl, KEncodingDetector::SemiautomaticDetection, &codec, &m_subtitleEOL, &m_subtitleFormat)) {
+	if(FormatManager::instance().readSubtitle(*m_subtitle, true, fileUrl, &codec, &m_subtitleEOL, &m_subtitleFormat)) {
 		// The loading of the subtitle shouldn't be an undoable action as there's no state before it
 		m_subtitle->actionManager().clearHistory();
 		m_subtitle->clearPrimaryDirty();
@@ -1406,7 +1408,7 @@ Application::openSubtitle(const KUrl &url, bool warnClashingUrls)
 		m_subtitleFileName = QFileInfo(m_subtitleUrl.path()).fileName();
 		m_subtitleEncoding = codec->name();
 
-		fileUrl.setFileEncoding(codec->name());
+//		fileUrl.setFileEncoding(codec->name());
 		m_recentSubtitlesAction->addUrl(fileUrl);
 
 		m_reopenSubtitleAsAction->setCurrentCodec(codec);
@@ -1431,8 +1433,8 @@ Application::openSubtitle(const KUrl &url, bool warnClashingUrls)
 					QFileInfo fileInfo(*it);
 					if(videoExtensions.contains(fileInfo.suffix().toLower())) {
 						if(subtitleFileName.indexOf(fileInfo.completeBaseName().toLower()) == 0) {
-							KUrl auxUrl;
-							auxUrl.setProtocol("file");
+							QUrl auxUrl;
+							auxUrl.setScheme("file");
 							auxUrl.setPath(subtitleFileInfo.dir().filePath(*it));
 							openVideo(auxUrl);
 							break;
@@ -1450,19 +1452,19 @@ Application::openSubtitle(const KUrl &url, bool warnClashingUrls)
 }
 
 void
-Application::reopenSubtitleWithDetectScript(KEncodingDetector::AutoDetectScript autodetectScript)
+Application::reopenSubtitleWithDetectScript()
 {
-	reopenSubtitleWithCodecOrDetectScript((QTextCodec *)0, autodetectScript);
+	reopenSubtitleWithCodecOrDetectScript((QTextCodec *)NULL);
 }
 
 void
 Application::reopenSubtitleWithCodec(QTextCodec *codec)
 {
-	reopenSubtitleWithCodecOrDetectScript(codec, KEncodingDetector::SemiautomaticDetection);
+	reopenSubtitleWithCodecOrDetectScript(codec);
 }
 
 void
-Application::reopenSubtitleWithCodecOrDetectScript(QTextCodec *codec, KEncodingDetector::AutoDetectScript autodetectScript)
+Application::reopenSubtitleWithCodecOrDetectScript(QTextCodec *codec)
 {
 	if(m_subtitleUrl.isEmpty())
 		return;
@@ -1471,7 +1473,7 @@ Application::reopenSubtitleWithCodecOrDetectScript(QTextCodec *codec, KEncodingD
 	Format::NewLine subtitleEOL;
 	QString subtitleFormat;
 
-	if(!FormatManager::instance().readSubtitle(*subtitle, true, m_subtitleUrl, autodetectScript, &codec, &subtitleEOL, &subtitleFormat)) {
+	if(!FormatManager::instance().readSubtitle(*subtitle, true, m_subtitleUrl, &codec, &subtitleEOL, &subtitleFormat)) {
 		delete subtitle;
 		KMessageBox::sorry(m_mainWindow, i18n("<qt>Could not parse the subtitle file.<br/>This may have been caused by usage of the wrong encoding.</qt>"));
 		return;
@@ -1499,8 +1501,8 @@ Application::reopenSubtitleWithCodecOrDetectScript(QTextCodec *codec, KEncodingD
 
 	m_reopenSubtitleAsAction->setCurrentCodec(codec);
 
-	KUrl fileUrl = m_subtitleUrl;
-	fileUrl.setFileEncoding(codec->name());
+	QUrl fileUrl = m_subtitleUrl;
+//	fileUrl.setFileEncoding(codec->name());
 	m_recentSubtitlesAction->addUrl(fileUrl);
 
 	connect(m_subtitle, SIGNAL(primaryDirtyStateChanged(bool)), this, SLOT(updateTitle()));
@@ -1522,8 +1524,8 @@ Application::saveSubtitle()
 	if(FormatManager::instance().writeSubtitle(*m_subtitle, true, m_subtitleUrl, codec, m_subtitleEOL, m_subtitleFormat, true)) {
 		m_subtitle->clearPrimaryDirty();
 
-		KUrl recentUrl = m_subtitleUrl;
-		recentUrl.setFileEncoding(codec->name());
+		QUrl recentUrl = m_subtitleUrl;
+//		recentUrl.setFileEncoding(codec->name());
 		m_recentSubtitlesAction->addUrl(recentUrl);
 
 		m_reopenSubtitleAsAction->setCurrentCodec(codec);
@@ -1540,13 +1542,18 @@ Application::saveSubtitle()
 bool
 Application::saveSubtitleAs()
 {
-	SaveSubtitleDialog saveDlg(true, m_subtitleUrl.prettyUrl(), m_subtitleEncoding.isEmpty() ? generalConfig()->defaultSubtitlesEncoding() : m_subtitleEncoding, m_subtitleEOL, m_subtitleFormat);
+	SaveSubtitleDialog saveDlg(
+		true,
+		m_subtitleUrl,
+		m_subtitleEncoding.isEmpty() ? generalConfig()->defaultSubtitlesEncoding() : m_subtitleEncoding,
+		m_subtitleEOL,
+		m_subtitleFormat);
 
 	if(saveDlg.exec() == QDialog::Accepted) {
-		if(!acceptClashingUrls(saveDlg.selectedUrl(), m_subtitleTrUrl))
+		if(!acceptClashingUrls(saveDlg.selectedUrls().first(), m_subtitleTrUrl))
 			return false;
 
-		m_subtitleUrl = saveDlg.selectedUrl();
+		m_subtitleUrl = saveDlg.selectedUrls().first();
 		m_subtitleFileName = QFileInfo(m_subtitleUrl.path()).completeBaseName();
 		m_subtitleEncoding = saveDlg.selectedEncoding();
 		m_subtitleFormat = saveDlg.selectedFormat();
@@ -1594,12 +1601,12 @@ Application::closeSubtitle()
 		delete m_subtitle;
 		m_subtitle = 0;
 
-		m_subtitleUrl = KUrl();
+		m_subtitleUrl = QUrl();
 		m_subtitleFileName.clear();
 		m_subtitleEncoding.clear();
 		m_subtitleFormat.clear();
 
-		m_subtitleTrUrl = KUrl();
+		m_subtitleTrUrl = QUrl();
 		m_subtitleTrFileName.clear();
 		m_subtitleTrEncoding.clear();
 		m_subtitleTrFormat.clear();
@@ -1628,25 +1635,25 @@ Application::openSubtitleTr()
 	if(!m_subtitle)
 		return;
 
-	OpenSubtitleDialog openDlg(false, m_lastSubtitleUrl.prettyUrl(), QString());
+	OpenSubtitleDialog openDlg(false, m_lastSubtitleUrl.toString(QUrl::PreferLocalFile), QString());
 
 	if(openDlg.exec() == QDialog::Accepted) {
-		if(!acceptClashingUrls(m_subtitleUrl, openDlg.selectedUrl()))
+		if(!acceptClashingUrls(m_subtitleUrl, openDlg.selectedUrls().first()))
 			return;
 
 		if(!closeSubtitleTr())
 			return;
 
-		m_lastSubtitleUrl = openDlg.selectedUrl();
+		m_lastSubtitleUrl = openDlg.selectedUrls().first();
 
-		KUrl fileUrl = m_lastSubtitleUrl;
-		fileUrl.setFileEncoding(openDlg.selectedEncoding());
+		QUrl fileUrl = m_lastSubtitleUrl;
+//		fileUrl.setFileEncoding(openDlg.selectedEncoding());
 		openSubtitleTr(fileUrl);
 	}
 }
 
 void
-Application::openSubtitleTr(const KUrl &url, bool warnClashingUrls)
+Application::openSubtitleTr(const QUrl &url, bool warnClashingUrls)
 {
 	if(!m_subtitle)
 		return;
@@ -1659,15 +1666,15 @@ Application::openSubtitleTr(const KUrl &url, bool warnClashingUrls)
 
 	QTextCodec *codec = codecForUrl(url, true, false);
 
-	KUrl fileUrl = url;
-	fileUrl.setFileEncoding(QString());
+	QUrl fileUrl = url;
+//	fileUrl.setFileEncoding(QString());
 
-	if(FormatManager::instance().readSubtitle(*m_subtitle, false, fileUrl, KEncodingDetector::SemiautomaticDetection, &codec, &m_subtitleTrEOL, &m_subtitleTrFormat)) {
+	if(FormatManager::instance().readSubtitle(*m_subtitle, false, fileUrl, &codec, &m_subtitleTrEOL, &m_subtitleTrFormat)) {
 		m_subtitleTrUrl = fileUrl;
 		m_subtitleTrFileName = QFileInfo(m_subtitleTrUrl.path()).fileName();
 		m_subtitleTrEncoding = codec->name();
 
-		fileUrl.setFileEncoding(codec->name());
+//		fileUrl.setFileEncoding(codec->name());
 		m_recentSubtitlesTrAction->addUrl(fileUrl);
 
 		QStringList subtitleStreams;
@@ -1696,19 +1703,19 @@ Application::openSubtitleTr(const KUrl &url, bool warnClashingUrls)
 }
 
 void
-Application::reopenSubtitleTrWithDetectScript(KEncodingDetector::AutoDetectScript autodetectScript)
+Application::reopenSubtitleTrWithDetectScript()
 {
-	reopenSubtitleTrWithCodecOrDetectScript((QTextCodec *)0, autodetectScript);
+	reopenSubtitleTrWithCodecOrDetectScript((QTextCodec *)NULL);
 }
 
 void
 Application::reopenSubtitleTrWithCodec(QTextCodec *codec)
 {
-	reopenSubtitleTrWithCodecOrDetectScript(codec, KEncodingDetector::SemiautomaticDetection);
+	reopenSubtitleTrWithCodecOrDetectScript(codec);
 }
 
 void
-Application::reopenSubtitleTrWithCodecOrDetectScript(QTextCodec *codec, KEncodingDetector::AutoDetectScript autodetectScript)
+Application::reopenSubtitleTrWithCodecOrDetectScript(QTextCodec *codec)
 {
 	if(m_subtitleTrUrl.isEmpty())
 		return;
@@ -1717,7 +1724,7 @@ Application::reopenSubtitleTrWithCodecOrDetectScript(QTextCodec *codec, KEncodin
 	Format::NewLine subtitleTrEOL;
 	QString subtitleTrFormat;
 
-	if(!FormatManager::instance().readSubtitle(*subtitleTr, false, m_subtitleTrUrl, autodetectScript, &codec, &subtitleTrEOL, &subtitleTrFormat)) {
+	if(!FormatManager::instance().readSubtitle(*subtitleTr, false, m_subtitleTrUrl, &codec, &subtitleTrEOL, &subtitleTrFormat)) {
 		delete subtitleTr;
 		KMessageBox::sorry(m_mainWindow, i18n("<qt>Could not parse the subtitle file.<br/>This may have been caused by usage of the wrong encoding.</qt>"));
 		return;
@@ -1747,8 +1754,8 @@ Application::reopenSubtitleTrWithCodecOrDetectScript(QTextCodec *codec, KEncodin
 
 	m_reopenSubtitleTrAsAction->setCurrentCodec(codec);
 
-	KUrl fileUrl = m_subtitleTrUrl;
-	fileUrl.setFileEncoding(codec->name());
+	QUrl fileUrl = m_subtitleTrUrl;
+//	fileUrl.setFileEncoding(codec->name());
 	m_recentSubtitlesTrAction->addUrl(fileUrl);
 
 	connect(m_subtitle, SIGNAL(primaryDirtyStateChanged(bool)), this, SLOT(updateTitle()));
@@ -1770,8 +1777,8 @@ Application::saveSubtitleTr()
 	if(FormatManager::instance().writeSubtitle(*m_subtitle, false, m_subtitleTrUrl, codec, m_subtitleTrEOL, m_subtitleTrFormat, true)) {
 		m_subtitle->clearSecondaryDirty();
 
-		KUrl recentUrl = m_subtitleTrUrl;
-		recentUrl.setFileEncoding(codec->name());
+		QUrl recentUrl = m_subtitleTrUrl;
+//		recentUrl.setFileEncoding(codec->name());
 		m_recentSubtitlesTrAction->addUrl(recentUrl);
 
 		updateTitle();
@@ -1786,13 +1793,18 @@ Application::saveSubtitleTr()
 bool
 Application::saveSubtitleTrAs()
 {
-	SaveSubtitleDialog saveDlg(false, m_subtitleTrUrl.prettyUrl(), m_subtitleTrEncoding.isEmpty() ? generalConfig()->defaultSubtitlesEncoding() : m_subtitleTrEncoding, m_subtitleTrEOL, m_subtitleTrFormat);
+	SaveSubtitleDialog saveDlg(
+		false,
+		m_subtitleTrUrl,
+		m_subtitleTrEncoding.isEmpty() ? generalConfig()->defaultSubtitlesEncoding() : m_subtitleTrEncoding,
+		m_subtitleTrEOL,
+		m_subtitleTrFormat);
 
 	if(saveDlg.exec() == QDialog::Accepted) {
-		if(!acceptClashingUrls(m_subtitleUrl, saveDlg.selectedUrl()))
+		if(!acceptClashingUrls(m_subtitleUrl, saveDlg.selectedUrls().first()))
 			return false;
 
-		m_subtitleTrUrl = saveDlg.selectedUrl();
+		m_subtitleTrUrl = saveDlg.selectedUrls().first();
 		m_subtitleTrFileName = QFileInfo(m_subtitleTrUrl.path()).completeBaseName();
 		m_subtitleTrEncoding = saveDlg.selectedEncoding();
 		m_subtitleTrFormat = saveDlg.selectedFormat();
@@ -1850,7 +1862,7 @@ Application::joinSubtitles()
 
 		Subtitle secondSubtitle;
 		bool primary = dlg->selectedTextsTarget() != Subtitle::Secondary;
-		if(FormatManager::instance().readSubtitle(secondSubtitle, primary, dlg->subtitleUrl(), KEncodingDetector::SemiautomaticDetection, &codec)) {
+		if(FormatManager::instance().readSubtitle(secondSubtitle, primary, dlg->subtitleUrl(), &codec)) {
 			if(dlg->selectedTextsTarget() == Subtitle::Both)
 				secondSubtitle.setSecondaryData(secondSubtitle, true);
 
@@ -1860,10 +1872,10 @@ Application::joinSubtitles()
 	}
 }
 
-KUrl
-Application::saveSplitSubtitle(const Subtitle &subtitle, const KUrl &srcUrl, QString encoding, QString format, bool primary)
+QUrl
+Application::saveSplitSubtitle(const Subtitle &subtitle, const QUrl &srcUrl, QString encoding, QString format, bool primary)
 {
-	KUrl dstUrl;
+	QUrl dstUrl;
 
 	if(subtitle.linesCount()) {
 		if(encoding.isEmpty())
@@ -1896,15 +1908,15 @@ Application::saveSplitSubtitle(const Subtitle &subtitle, const KUrl &srcUrl, QSt
 															   format,
 															   false);
 
-		if(success)
-			dstUrl.setFileEncoding(codec->name());
-		else
-			dstUrl = KUrl();
+//		if(success)
+//			dstUrl.setFileEncoding(codec->name());
+//		else
+		if(!success)
+			dstUrl = QUrl();
 	}
 
 	if(dstUrl.path().isEmpty()) {
-		KMessageBox::sorry(m_mainWindow, primary ? i18n("Could not write the split subtitle file.") : i18n("Could not write the split subtitle translation file.")
-						   );
+		KMessageBox::sorry(m_mainWindow, primary ? i18n("Could not write the split subtitle file.") : i18n("Could not write the split subtitle translation file."));
 	}
 
 	return dstUrl;
@@ -1925,11 +1937,12 @@ Application::splitSubtitle()
 		return;
 	}
 
-	KUrl splitUrl = saveSplitSubtitle(newSubtitle,
-									  m_subtitleUrl.prettyUrl(),
-									  m_subtitleEncoding,
-									  m_subtitleFormat,
-									  true);
+	QUrl splitUrl = saveSplitSubtitle(
+		newSubtitle,
+		m_subtitleUrl,
+		m_subtitleEncoding,
+		m_subtitleFormat,
+		true);
 
 	if(splitUrl.path().isEmpty()) {
 		// there was an error saving the split part, undo the splitting of m_subtitle
@@ -1937,7 +1950,7 @@ Application::splitSubtitle()
 		return;
 	}
 
-	KUrl splitTrUrl;
+	QUrl splitTrUrl;
 	if(m_translationMode) {
 		splitTrUrl = saveSplitSubtitle(newSubtitle, m_subtitleTrUrl, m_subtitleTrEncoding, m_subtitleTrFormat, false);
 
@@ -1949,15 +1962,14 @@ Application::splitSubtitle()
 	}
 
 	QStringList args;
-	args << splitUrl.prettyUrl();
+	args << splitUrl.toString(QUrl::PreferLocalFile);
 	if(m_translationMode)
-		args << splitTrUrl.prettyUrl();
+		args << splitTrUrl.toString(QUrl::PreferLocalFile);
 
 	if(!QProcess::startDetached(KCmdLineArgs::aboutData()->appName(), args)) {
-		KMessageBox::sorry(m_mainWindow, m_translationMode ? i18n("Could not open a new Subtitle Composer window.\n" "The split part was saved as %1.", splitUrl.path()
-																  ) : i18n("Could not open a new Subtitle Composer window.\n" "The split parts were saved as %1 and %2.", splitUrl.path(), splitTrUrl.path()
-																		   )
-						   );
+		KMessageBox::sorry(m_mainWindow, m_translationMode
+			? i18n("Could not open a new Subtitle Composer window.\n" "The split part was saved as %1.", splitUrl.path())
+			: i18n("Could not open a new Subtitle Composer window.\n" "The split parts were saved as %1 and %2.", splitUrl.path(), splitTrUrl.path()));
 	}
 }
 
@@ -2135,9 +2147,9 @@ Application::advanceCurrentLine()
 }
 
 void
-Application::checkErrors()
+Application::checqCriticals()
 {
-	static CheckErrorsDialog *dlg = new CheckErrorsDialog(m_mainWindow);
+	static ChecqCriticalsDialog *dlg = new ChecqCriticalsDialog(m_mainWindow);
 
 	if(dlg->exec() == QDialog::Accepted) {
 		SubtitleCompositeActionExecutor executor(*m_subtitle, i18n("Check Lines Errors"));
@@ -2152,7 +2164,7 @@ Application::checkErrors()
 		if(dlg->clearMarks())
 			m_subtitle->setMarked(targetRanges, false);
 
-		m_subtitle->checkErrors(targetRanges, dlg->selectedErrorFlags(), errorsConfig()->minDuration(), errorsConfig()->maxDuration(), errorsConfig()->minDurationPerChar(), errorsConfig()->maxDurationPerChar(), errorsConfig()->maxCharacters(), errorsConfig()->maxLines()
+		m_subtitle->checqCriticals(targetRanges, dlg->selectedErrorFlags(), errorsConfig()->minDuration(), errorsConfig()->maxDuration(), errorsConfig()->minDurationPerChar(), errorsConfig()->maxDurationPerChar(), errorsConfig()->maxCharacters(), errorsConfig()->maxLines()
 								);
 	}
 }
@@ -2160,14 +2172,14 @@ Application::checkErrors()
 void
 Application::recheckAllErrors()
 {
-	m_subtitle->recheckErrors(Range::full(), errorsConfig()->minDuration(), errorsConfig()->maxDuration(), errorsConfig()->minDurationPerChar(), errorsConfig()->maxDurationPerChar(), errorsConfig()->maxCharacters(), errorsConfig()->maxLines()
+	m_subtitle->rechecqCriticals(Range::full(), errorsConfig()->minDuration(), errorsConfig()->maxDuration(), errorsConfig()->minDurationPerChar(), errorsConfig()->maxDurationPerChar(), errorsConfig()->maxCharacters(), errorsConfig()->maxLines()
 							  );
 }
 
 void
 Application::recheckSelectedErrors()
 {
-	// NOTE we can't just use Subtitle::recheckErrors() with the selected lines ranges
+	// NOTE we can't just use Subtitle::rechecqCriticals() with the selected lines ranges
 	// because this slots handles the error dialog action where the user can not only
 	// select lines but can also select (or unselect) specific errors
 
@@ -2399,7 +2411,7 @@ Application::syncWithSubtitle()
 		QTextCodec *codec = codecForEncoding(dlg->subtitleEncoding(), false);
 
 		Subtitle referenceSubtitle;
-		if(FormatManager::instance().readSubtitle(referenceSubtitle, true, dlg->subtitleUrl(), KEncodingDetector::SemiautomaticDetection, &codec)) {
+		if(FormatManager::instance().readSubtitle(referenceSubtitle, true, dlg->subtitleUrl(), &codec)) {
 			if(dlg->adjustToReferenceSubtitle()) {
 				if(referenceSubtitle.linesCount() <= 1)
 					KMessageBox::sorry(m_mainWindow, i18n("The reference subtitle must have more than one line to proceed."));
@@ -2568,9 +2580,9 @@ Application::translate()
 }
 
 void
-Application::openVideo(const KUrl &url)
+Application::openVideo(const QUrl &url)
 {
-	if(url.protocol() != "file")
+	if(url.scheme() != "file")
 		return;
 
 	m_player->closeFile();
@@ -2584,11 +2596,11 @@ Application::openVideo()
 	KFileDialog openDlg(m_lastVideoUrl, buildMediaFilesFilter(), m_mainWindow);
 
 	openDlg.setModal(true);
-	openDlg.setCaption(i18n("Open Video"));
+	openDlg.setWindowTitle(i18n("Open Video"));
 
 	if(openDlg.exec() == QDialog::Accepted) {
-		m_lastVideoUrl = openDlg.selectedUrl();
-		openVideo(openDlg.selectedUrl());
+		m_lastVideoUrl = openDlg.selectedUrls().first();
+		openVideo(openDlg.selectedUrls().first());
 	}
 }
 
@@ -2809,13 +2821,13 @@ Application::openAudioLevels()
 //
 //  if ( openDlg.exec() == QDialog::Accepted )
 //  {
-//      m_lastAudioLevelsUrl = openDlg.selectedUrl();
-//      openAudioLevels( openDlg.selectedUrl() );
+//      m_lastAudioLevelsUrl = openDlg.selectedUrls().first();
+//      openAudioLevels( openDlg.selectedUrls().first() );
 //  }
 }
 
 void
-Application::openAudioLevels(const KUrl & /*url */)
+Application::openAudioLevels(const QUrl & /*url */)
 {
 // FIXME audio levels
 /*
@@ -2852,7 +2864,7 @@ Application::saveAudioLevelsAs()
 
 		if ( saveDlg.exec() == QDialog::Accepted )
 		{
-				KUrl selectedUrl = saveDlg.selectedUrl();
+				QUrl selectedUrl = saveDlg.selectedUrls().first();
 
 				if ( FileSaveHelper::exists( selectedUrl ) )
 				{
@@ -2917,7 +2929,7 @@ Application::updateTitle()
 									  .arg(m_subtitleTrUrl.isEmpty() ? i18n("Untitled Translation") : m_subtitleTrFileName)
 									  .arg(m_subtitle->isSecondaryDirty() ? modified : QString()), false);
 		} else {
-			m_mainWindow->setCaption(m_subtitleUrl.isEmpty() ? i18n("Untitled") : (m_subtitleUrl.isLocalFile() ? m_subtitleUrl.path() : m_subtitleUrl.prettyUrl()), m_subtitle->isPrimaryDirty()
+			m_mainWindow->setCaption(m_subtitleUrl.isEmpty() ? i18n("Untitled") : (m_subtitleUrl.isLocalFile() ? m_subtitleUrl.path() : m_subtitleUrl.toString(QUrl::PreferLocalFile)), m_subtitle->isPrimaryDirty()
 									 );
 		}
 	} else
@@ -3003,7 +3015,7 @@ Application::onLinkCurrentLineToVideoToggled(bool value)
 void
 Application::onPlayerFileOpened(const QString &filePath)
 {
-	m_recentVideosAction->addUrl(KUrl(filePath));
+	m_recentVideosAction->addUrl(QUrl(filePath));
 }
 
 void
@@ -3091,4 +3103,4 @@ Application::updateConfigFromDialog()
 		m_player->backend(*it)->setConfig(m_config.group(*it));
 }
 
-#include "application.moc"
+

@@ -19,10 +19,10 @@
 
 #include "changeframeratedialog.h"
 
-#include <QtGui/QLabel>
+#include <QLabel>
 #include <KLineEdit>
-#include <QtGui/QGroupBox>
-#include <QtGui/QGridLayout>
+#include <QGroupBox>
+#include <QGridLayout>
 
 #include <KLocale>
 #include <KMessageBox>
@@ -101,4 +101,4 @@ ChangeFrameRateDialog::onTextChanged()
 	enableButton(KDialog::Ok, applyButtonEnabled);
 }
 
-#include "changeframeratedialog.moc"
+

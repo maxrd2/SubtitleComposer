@@ -19,15 +19,15 @@
 
 #include "checkerrorsdialog.h"
 
-#include <QtGui/QCheckBox>
-#include <QtGui/QGroupBox>
-#include <QtGui/QGridLayout>
+#include <QCheckBox>
+#include <QGroupBox>
+#include <QGridLayout>
 
 #include <KLocale>
 
 using namespace SubtitleComposer;
 
-CheckErrorsDialog::CheckErrorsDialog(QWidget *parent) :
+ChecqCriticalsDialog::ChecqCriticalsDialog(QWidget *parent) :
 	ActionWithErrorTargetsDialog(i18n("Check Errors"), parent)
 {
 	createErrorsGroupBox(i18nc("@title:group", "Errors to Check"));
@@ -52,22 +52,22 @@ CheckErrorsDialog::CheckErrorsDialog(QWidget *parent) :
 }
 
 void
-CheckErrorsDialog::setTranslationMode(bool value)
+ChecqCriticalsDialog::setTranslationMode(bool value)
 {
 	ActionWithErrorTargetsDialog::setTranslationMode(value);
 	createErrorsButtons(false, value);
 }
 
 bool
-CheckErrorsDialog::clearOtherErrors() const
+ChecqCriticalsDialog::clearOtherErrors() const
 {
 	return m_clearOtherErrorsCheckBox->isChecked();
 }
 
 bool
-CheckErrorsDialog::clearMarks() const
+ChecqCriticalsDialog::clearMarks() const
 {
 	return m_clearMarksCheckBox->isChecked();
 }
 
-#include "checkerrorsdialog.moc"
+

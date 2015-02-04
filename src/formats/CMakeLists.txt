@@ -1,15 +1,15 @@
 # each format appends its files to formats_SRCS
-ADD_SUBDIRECTORY( microdvd )
-ADD_SUBDIRECTORY( mplayer )
-ADD_SUBDIRECTORY( mplayer2 )
-ADD_SUBDIRECTORY( subrip )
-ADD_SUBDIRECTORY( substationalpha )
-ADD_SUBDIRECTORY( subviewer1 )
-ADD_SUBDIRECTORY( subviewer2 )
-ADD_SUBDIRECTORY( tmplayer )
-ADD_SUBDIRECTORY( youtubecaptions )
+add_subdirectory(microdvd)
+add_subdirectory(mplayer)
+add_subdirectory(mplayer2)
+add_subdirectory(subrip)
+add_subdirectory(substationalpha)
+add_subdirectory(subviewer1)
+add_subdirectory(subviewer2)
+add_subdirectory(tmplayer)
+add_subdirectory(youtubecaptions)
 
-SET( formats_DEFS
+set(formats_DEFS
 	${formats_microdvd_DEFS}
 	${formats_mplayer_DEFS}
 	${formats_mplayer2_DEFS}
@@ -22,7 +22,7 @@ SET( formats_DEFS
 	CACHE INTERNAL EXPORTEDVARIABLE
 )
 
-SET( formats_LIBS
+set(formats_LIBS
 	${formats_microdvd_LIBS}
 	${formats_mplayer_LIBS}
 	${formats_mplayer2_LIBS}
@@ -35,7 +35,7 @@ SET( formats_LIBS
 	CACHE INTERNAL EXPORTEDVARIABLE
 )
 
-SET( formats_SRCS
+set(formats_SRCS
 	${CMAKE_CURRENT_SOURCE_DIR}/format.h
 	${CMAKE_CURRENT_SOURCE_DIR}/formatmanager.h
 	${CMAKE_CURRENT_SOURCE_DIR}/inputformat.h
@@ -53,25 +53,21 @@ SET( formats_SRCS
 	CACHE INTERNAL EXPORTEDVARIABLE
 )
 
-SET( CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} ${CMAKE_CURRENT_SOURCE_DIR} )
-MACRO_OPTIONAL_FIND_PACKAGE( ICU )
+find_package(ICU)
+if(ICU_FOUND)
+	message(STATUS "FOUND FOUND")
 
-IF( ICU_FOUND )
-	MESSAGE( STATUS "FOUND FOUND" )
+	set(HAVE_ICU 1 CACHE INTERNAL EXPORTEDVARIABLE)
 
-	SET( HAVE_ICU 1 CACHE INTERNAL EXPORTEDVARIABLE )
+	include_directories(${ICU_INCLUDE_DIRS})
 
-	INCLUDE_DIRECTORIES( ${ICU_INCLUDE_DIRS} )
-
-	SET( formats_DEFS
+	set(formats_DEFS
 		${ICU_DEFINITIONS}
 		${formats_DEFS}
-		CACHE INTERNAL EXPORTEDVARIABLE
-	)
-	SET( formats_LIBS
+		CACHE INTERNAL EXPORTEDVARIABLE)
+	set(formats_LIBS
 		${ICU_LIBRARIES}
 		${formats_LIBS}
-		CACHE INTERNAL EXPORTEDVARIABLE
-	)
+		CACHE INTERNAL EXPORTEDVARIABLE)
 
-ENDIF( ICU_FOUND )
+endif(ICU_FOUND)

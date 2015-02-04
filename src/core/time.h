@@ -30,8 +30,8 @@ namespace SubtitleComposer {
 class Time
 {
 public:
-	static const int MaxMseconds = 86399999;
-	static const double MaxSeconds = MaxMseconds / 1000.0;
+	static constexpr int MaxMseconds = 86399999;
+	static constexpr double MaxSeconds = MaxMseconds / 1000.0;
 
 	/*explicit*/ Time(long mseconds = 0);
 	Time(int hours, int minutes, int seconds, int mseconds);

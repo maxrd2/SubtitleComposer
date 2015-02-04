@@ -1,13 +1,12 @@
-set(CMAKE_MODULE_PATH ${CMAKE_CURRENT_SOURCE_DIR} ${CMAKE_MODULE_PATH})
-
 find_package(GStreamer QUIET)
-if(GSTREAMER_FOUND)
+find_package(GStreamerPlugins QUIET)
+if(GSTREAMER_FOUND AND GSTREAMER_PLUGIN_VIDEO_FOUND)
 	set(HAVE_GSTREAMER 1 CACHE INTERNAL EXPORTEDVARIABLE)
 	message(STATUS "Found GStreamer: ${GSTREAMER_LIBRARIES} (version ${GSTREAMER_VERSION})")
 	add_subdirectory(gstreamer)
-else(GSTREAMER_FOUND)
-	message(STATUS "GStreamer was not found. GStreamer backend will not be built")
-endif(GSTREAMER_FOUND)
+else(GSTREAMER_FOUND AND GSTREAMER_PLUGIN_VIDEO_FOUND)
+	message(STATUS "GStreamer and/or GStreamer Video was not found. GStreamer backend will not be built")
+endif(GSTREAMER_FOUND AND GSTREAMER_PLUGIN_VIDEO_FOUND)
 
 find_package(MPV QUIET)
 if(MPV_FOUND)
@@ -21,12 +20,12 @@ endif(MPV_FOUND)
 add_subdirectory(mplayer)
 add_subdirectory(phonon)
 
-macro_optional_find_package(Xine)
+find_package(Xine)
 if(XINE_FOUND)
 	set(HAVE_XINE 1 CACHE INTERNAL EXPORTEDVARIABLE)
 	add_subdirectory(xine)
 else(XINE_FOUND)
-	MESSAGE(STATUS "Xine was not found. Xine backend will not be built")
+	message(STATUS "Xine was not found. Xine backend will not be built")
 endif(XINE_FOUND)
 
 set(services_INCLUDE_DIR

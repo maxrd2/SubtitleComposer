@@ -20,7 +20,7 @@
 #include "timetest.h"
 #include "../time.h"
 
-#include <QtTest>                               // krazy:exclude=c++/includes
+#include <QTest>                               // krazy:exclude=c++/includes
 #include <QtCore>                               // krazy:exclude=c++/includes
 
 using namespace SubtitleComposer;
@@ -121,4 +121,4 @@ TimeTest::testOperators()
 
 QTEST_MAIN(TimeTest);
 
-#include "timetest.moc"
+

@@ -22,13 +22,14 @@
 #include "../../services/player.h"
 #include "../../widgets/timeedit.h"
 
-#include <QtGui/QLabel>
-#include <QtGui/QGroupBox>
-#include <QtGui/QCheckBox>
-#include <QtGui/QGridLayout>
+#include <QLabel>
+#include <QGroupBox>
+#include <QCheckBox>
+#include <QGridLayout>
 
+#include <KIcon>
 #include <KLocale>
-#include <KPushButton>
+#include <QPushButton>
 
 using namespace SubtitleComposer;
 
@@ -37,7 +38,7 @@ SplitSubtitleDialog::SplitSubtitleDialog(QWidget *parent) :
 {
 	QGroupBox *settingsGroupBox = createGroupBox(i18nc("@title:group", "Settings"));
 
-	m_splitTimeFromVideoButton = new KPushButton(settingsGroupBox);
+	m_splitTimeFromVideoButton = new QPushButton(settingsGroupBox);
 	m_splitTimeFromVideoButton->setIcon(KIcon("time-from-video"));
 	int buttonSize = m_splitTimeFromVideoButton->sizeHint().height();
 	m_splitTimeFromVideoButton->setFixedSize(buttonSize, buttonSize);
@@ -93,4 +94,4 @@ SplitSubtitleDialog::show()
 	ActionDialog::show();
 }
 
-#include "splitsubtitledialog.moc"
+

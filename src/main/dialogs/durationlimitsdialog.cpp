@@ -20,10 +20,10 @@
 #include "durationlimitsdialog.h"
 #include "../../widgets/timeedit.h"
 
-#include <QtGui/QLabel>
-#include <QtGui/QCheckBox>
-#include <QtGui/QGroupBox>
-#include <QtGui/QGridLayout>
+#include <QLabel>
+#include <QCheckBox>
+#include <QGroupBox>
+#include <QGridLayout>
 
 #include <KLocale>
 
@@ -122,4 +122,4 @@ DurationLimitsDialog::preventOverlap() const
 	return m_preventOverlapCheckBox->isChecked();
 }
 
-#include "durationlimitsdialog.moc"
+

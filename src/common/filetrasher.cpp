@@ -19,11 +19,10 @@
 
 #include "filetrasher.h"
 
-#include <KDebug>
-#include <KIO/NetAccess>
-#include <KIO/CopyJob>
+#include <kio/netaccess.h>
+#include <kio/copyjob.h>
 
-FileTrasher::FileTrasher(const KUrl &url) :
+FileTrasher::FileTrasher(const QUrl &url) :
 	m_url(url)
 {}
 
@@ -35,7 +34,7 @@ FileTrasher::FileTrasher(const QString &path) : m_url()
 	m_url.setPath(path);
 }
 
-const KUrl &
+const QUrl &
 FileTrasher::url()
 {
 	return m_url;

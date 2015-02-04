@@ -20,8 +20,8 @@
 #include "shifttimesdialog.h"
 #include "../../widgets/timeedit.h"
 
-#include <QtGui/QGroupBox>
-#include <QtGui/QGridLayout>
+#include <QGroupBox>
+#include <QGridLayout>
 
 #include <KLocale>
 #include <KComboBox>

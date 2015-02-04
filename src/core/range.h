@@ -28,7 +28,7 @@
 
 #include <QtCore/QList>
 
-#include <KDebug>
+#include <QDebug>
 
 namespace SubtitleComposer {
 class Range

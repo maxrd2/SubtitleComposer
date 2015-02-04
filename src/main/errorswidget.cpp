@@ -28,15 +28,16 @@
 #include <climits>
 
 #include <QtCore/QTimer>
-#include <QtGui/QKeyEvent>
-#include <QtGui/QMouseEvent>
-#include <QtGui/QContextMenuEvent>
-#include <QtGui/QHeaderView>
+#include <QKeyEvent>
+#include <QMouseEvent>
+#include <QContextMenuEvent>
+#include <QHeaderView>
 
+#include <KIcon>
 #include <KMenu>
 #include <KConfig>
 #include <KConfigGroup>
-#include <KDebug>
+#include <QDebug>
 #include <KLocale>
 
 using namespace SubtitleComposer;
@@ -407,7 +408,7 @@ ErrorsModel::index(int row, int column, const QModelIndex &parent) const
 		if(row < 0 || row >= m_lineWithErrorsCount)
 			return QModelIndex();
 
-//      kDebug() << "retrieved level 1 CHILD index " << row;
+//      qDebug() << "retrieved level 1 CHILD index " << row;
 
 		return createIndex(row, column, (void *)&LEVEL1_LINE);
 	}
@@ -415,11 +416,11 @@ ErrorsModel::index(int row, int column, const QModelIndex &parent) const
 		if(row >= rowCount(parent) || row < 0 /*|| column != Number */)
 			return QModelIndex();
 
-//      kDebug() << "retrieved level 2 CHILD index " << row;
+//      qDebug() << "retrieved level 2 CHILD index " << row;
 
 		return createIndex(row, column, m_subtitle->line(mapModelL1RowToLineIndex(parent.row())));
 	} else {                                        // if ( line ) // index is a second level item (error item)
-//      kDebug() << "attempted to retrieve level 3 CHILD index " << row;
+//      qDebug() << "attempted to retrieve level 3 CHILD index " << row;
 
 		return QModelIndex();
 	}
@@ -431,16 +432,16 @@ ErrorsModel::parent(const QModelIndex &index) const
 	SubtitleLine *line = static_cast<SubtitleLine *>(index.internalPointer());
 
 	if(!line) {                                     // index is a root level item
-//      kDebug() << "attempted to retrieve level -1 PARENT index" << -2;
+//      qDebug() << "attempted to retrieve level -1 PARENT index" << -2;
 
 		return QModelIndex();
 	}
 	if(line == &LEVEL1_LINE) {      // index is a first level item (line item)
-//      kDebug() << "retrieved level 0 PARENT index" << -1;
+//      qDebug() << "retrieved level 0 PARENT index" << -1;
 
 		return QModelIndex();
 	} else {                                        // if ( line ) // index is a second level item (error item)
-//      kDebug() << "retrieved level 1 PARENT index" << line->index();
+//      qDebug() << "retrieved level 1 PARENT index" << line->index();
 
 		return createIndex(mapLineIndexToModelL1Row(line->index()), 0, (void *)&LEVEL1_LINE);
 	}
@@ -804,4 +805,4 @@ ErrorsWidget::keyPressEvent(QKeyEvent *event)
 		TreeView::keyPressEvent(event);
 }
 
-#include "errorswidget.moc"
+

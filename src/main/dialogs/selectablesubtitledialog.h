@@ -27,7 +27,7 @@
 #include "actionwithtargetdialog.h"
 
 #include <KLocale>
-#include <KUrl>
+#include <QUrl>
 
 class QGridLayout;
 class QGroupBox;
@@ -42,7 +42,7 @@ class SelectableSubtitleDialog : public ActionWithTargetDialog
 public:
 	SelectableSubtitleDialog(const QString &title, QWidget *parent = 0);
 
-	KUrl subtitleUrl() const;
+	QUrl subtitleUrl() const;
 	QString subtitleEncoding() const;
 
 protected:

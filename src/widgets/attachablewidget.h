@@ -24,7 +24,7 @@
  *   Boston, MA 02110-1301, USA.                                           *
  ***************************************************************************/
 
-#include <QtGui/QWidget>
+#include <QWidget>
 
 class AttachableWidget : public QWidget
 {

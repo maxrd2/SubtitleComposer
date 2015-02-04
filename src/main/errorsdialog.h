@@ -29,7 +29,7 @@
 #include <KDialog>
 
 class QLabel;
-class KPushButton;
+class QPushButton;
 
 namespace SubtitleComposer {
 class ErrorsDialog : public KDialog
@@ -52,8 +52,8 @@ private slots:
 private:
 	ErrorsWidget *m_errorsWidget;
 	QLabel *m_statsLabel;
-	KPushButton *m_clearFixedButton;
-	KPushButton *m_clearErrorsButton;
+	QPushButton *m_clearFixedButton;
+	QPushButton *m_clearErrorsButton;
 	bool m_autoClearFixed;
 };
 }

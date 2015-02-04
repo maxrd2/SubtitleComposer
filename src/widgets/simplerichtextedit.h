@@ -33,7 +33,7 @@
 class QEvent;
 class QKeyEvent;
 class QFocusEvent;
-class KAction;
+class QAction;
 class QMenu;
 
 class SimpleRichTextEdit : public KTextEdit
@@ -59,8 +59,8 @@ public:
 	bool fontBold();
 	bool fontStrikeOut();
 
-	virtual KAction * action(int action) const;
-	virtual QList<KAction *> actions() const;
+	virtual QAction * action(int action) const;
+	virtual QList<QAction *> actions() const;
 
 	virtual bool event(QEvent *event);
 
@@ -103,7 +103,7 @@ protected slots:
 	void replaceWithSuggestion();
 
 protected:
-	KAction *m_actions[ActionCount];
+	QAction *m_actions[ActionCount];
 	QMenu *m_insertUnicodeControlCharMenu;
 	QTextCursor m_selectedWordCursor;
 };

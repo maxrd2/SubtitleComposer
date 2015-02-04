@@ -26,11 +26,11 @@
 #include <QtCore/QEvent>
 #include <QtCore/QDir>
 #include <QtCore/QFile>
-#include <QtGui/QApplication>
+#include <QApplication>
 
-#include <KDebug>
+#include <QDebug>
 #include <KLocale>
-#include <KUrl>
+#include <QUrl>
 
 #include <xine/xineutils.h>
 #include <X11/Xlib.h>
@@ -72,7 +72,7 @@ XinePlayerBackend::initialize(QWidget *videoWidgetParent)
 	if(!initializeXine(videoWidget->videoLayer()->winId())) {
 		delete videoWidget;
 		finalizeXine();
-		kError() << "xine initialization failed!";
+		qCritical() << "xine initialization failed!";
 		return 0;
 	}
 
@@ -112,8 +112,8 @@ XinePlayerBackend::openFile(const QString &filePath, bool &playingAfterCall)
 
 	m_streamIsSeekable = false;
 
-	KUrl fileUrl;
-	fileUrl.setProtocol("file");
+	QUrl fileUrl;
+	fileUrl.setScheme("file");
 	fileUrl.setPath(filePath);
 
 	if(!xine_open(m_xineStream, fileUrl.url().toLocal8Bit()))
@@ -249,9 +249,9 @@ XinePlayerBackend::updateVideoData()
 			setPlayerFramesPerSecond(90000.0 / fps);
 
 			// tweak prebuffer so we can be sure to show only a single frame
-			// kDebug() << "PREBUFFER " << xine_get_param(m_xineStream, XINE_PARAM_METRONOM_PREBUFFER);
+			// qDebug() << "PREBUFFER " << xine_get_param(m_xineStream, XINE_PARAM_METRONOM_PREBUFFER);
 			xine_set_param(m_xineStream, XINE_PARAM_METRONOM_PREBUFFER, fps);
-			// kDebug() << "PREBUFFER " << xine_get_param(m_xineStream, XINE_PARAM_METRONOM_PREBUFFER);
+			// qDebug() << "PREBUFFER " << xine_get_param(m_xineStream, XINE_PARAM_METRONOM_PREBUFFER);
 		}
 
 		int width = xine_get_stream_info(m_xineStream, XINE_STREAM_INFO_VIDEO_WIDTH);
@@ -389,12 +389,12 @@ XinePlayerBackend::initializeXine(WId winId)
 #endif
 
 	if(!m_connection) {
-		kDebug() << "Failed to connect to X-Server!";
+		qDebug() << "Failed to connect to X-Server!";
 		return false;
 	}
 
 	if(!(m_xineEngine = xine_new())) {
-		kDebug() << "Couldn't init xine Engine!";
+		qDebug() << "Couldn't init xine Engine!";
 		return false;
 	}
 
@@ -448,7 +448,7 @@ XinePlayerBackend::initializeXine(WId winId)
 	}
 
 	if(!m_videoDriver) {
-		kDebug() << "All video drivers failed to initialize!";
+		qDebug() << "All video drivers failed to initialize!";
 		return false;
 	}
 
@@ -459,14 +459,14 @@ XinePlayerBackend::initializeXine(WId winId)
 			break;
 
 	if(!m_audioDriver) {
-		kDebug() << "All audio drivers failed to initialize!";
+		qDebug() << "All audio drivers failed to initialize!";
 		return false;
 	}
 
 	m_xineStream = xine_stream_new(m_xineEngine, m_audioDriver, m_videoDriver);
 
 	if(!m_xineStream) {
-		kDebug() << "Couldn't create a new xine stream!";
+		qDebug() << "Couldn't create a new xine stream!";
 		return false;
 	}
 
@@ -556,4 +556,4 @@ XinePlayerBackend::audioMixerMethodChangedCallback(void *p, xine_cfg_entry_t *en
 	xinePlayer->m_softwareMixer = (bool)entry->num_value;
 }
 
-#include "xineplayerbackend.moc"
+

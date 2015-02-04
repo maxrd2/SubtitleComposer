@@ -20,9 +20,9 @@
 #include "adjusttimesdialog.h"
 #include "../../widgets/timeedit.h"
 
-#include <QtGui/QLabel>
-#include <QtGui/QGroupBox>
-#include <QtGui/QGridLayout>
+#include <QLabel>
+#include <QGroupBox>
+#include <QGridLayout>
 
 #include <KLocale>
 

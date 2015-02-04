@@ -155,4 +155,4 @@ ActionManager::clearHistory()
 	emit historyCleared();
 }
 
-#include "actionmanager.moc"
+

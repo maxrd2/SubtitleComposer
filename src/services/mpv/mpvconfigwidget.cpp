@@ -20,10 +20,10 @@
 
 #include "mpvconfigwidget.h"
 
-#include <QtGui/QGridLayout>
-#include <QtGui/QGroupBox>
-#include <QtGui/QCheckBox>
-#include <QtGui/QLabel>
+#include <QGridLayout>
+#include <QGroupBox>
+#include <QCheckBox>
+#include <QLabel>
 
 #include <KLocale>
 #include <KComboBox>
@@ -190,4 +190,4 @@ MPVConfigWidget::setControlsFromConfig()
 	m_volumeNormalizationCheckBox->setChecked(config()->volumeNormalization());
 }
 
-#include "mpvconfigwidget.moc"
+

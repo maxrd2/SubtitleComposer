@@ -28,7 +28,7 @@
 #include "../core/subtitle.h"
 #include "../core/audiolevels.h"
 
-#include <QtGui/QWidget>
+#include <QWidget>
 
 class QRegion;
 class QPolygon;

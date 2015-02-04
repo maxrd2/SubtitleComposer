@@ -36,4 +36,4 @@ void
 PhononConfigWidget::setControlsFromConfig()
 {}
 
-#include "phononconfigwidget.moc"
+

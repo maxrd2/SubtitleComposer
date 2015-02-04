@@ -24,12 +24,12 @@
 #include <config.h>
 #endif
 
-#include <QtGui/QWidget>
-#include <QtGui/QFont>
-#include <QtGui/QPen>
-#include <QtGui/QColor>
-#include <QtGui/QImage>
-#include <QtGui/QBitmap>
+#include <QWidget>
+#include <QFont>
+#include <QPen>
+#include <QColor>
+#include <QImage>
+#include <QBitmap>
 
 class QTextDocument;
 

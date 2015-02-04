@@ -24,8 +24,9 @@
 #include <config.h>
 #endif
 
-#include <QtGui/QWidget>
+#include <QWidget>
 
+typedef union _XEvent XEvent;
 #include <xine.h>
 
 namespace SubtitleComposer {

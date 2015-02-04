@@ -24,7 +24,7 @@
 #include <config.h>
 #endif
 
-#include <QtGui/QTimeEdit>
+#include <QTimeEdit>
 
 class QEvent;
 

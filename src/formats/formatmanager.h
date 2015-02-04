@@ -31,8 +31,8 @@
 #include <QtCore/QStringList>
 #include <QtCore/QMap>
 
-#include <KUrl>
-#include <kencodingdetector.h>
+#include <QUrl>
+#include <KEncodingProber>
 
 namespace SubtitleComposer {
 class FormatManager
@@ -44,14 +44,14 @@ public:
 	const InputFormat * input(const QString &name) const;
 	QStringList inputNames() const;
 
-	bool readSubtitle(Subtitle &subtitle, bool primary, const KUrl &url, KEncodingDetector::AutoDetectScript autodetectScript, QTextCodec **codec, Format::NewLine *newLine = 0, QString *format = 0) const;
+	bool readSubtitle(Subtitle &subtitle, bool primary, const QUrl &url, QTextCodec **codec, Format::NewLine *newLine = 0, QString *format = 0) const;
 
 	bool hasOutput(const QString &name) const;
 	const OutputFormat * output(const QString &name) const;
 	const OutputFormat * defaultOutput() const;
 	QStringList outputNames() const;
 
-	bool writeSubtitle(const Subtitle &subtitle, bool primary, const KUrl &url, QTextCodec *codec, Format::NewLine newLine, const QString &format, bool overwrite) const;
+	bool writeSubtitle(const Subtitle &subtitle, bool primary, const QUrl &url, QTextCodec *codec, Format::NewLine newLine, const QString &format, bool overwrite) const;
 
 protected:
 	FormatManager();

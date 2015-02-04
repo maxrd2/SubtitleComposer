@@ -21,11 +21,13 @@
 #include "../../core/subtitleiterator.h"
 #include "kreplace.h"
 
-#include <QtGui/QGroupBox>
-#include <QtGui/QRadioButton>
-#include <QtGui/QGridLayout>
+#include <QGroupBox>
+#include <QRadioButton>
+#include <QGridLayout>
 
-#include <KDebug>
+#include <KFind>
+
+#include <QDebug>
 #include <KLocale>
 #include <KDialog>
 #include <KMessageBox>
@@ -46,7 +48,7 @@ Replacer::Replacer(QWidget *parent) :
 	m_dialog->setHasCursor(true);
 	m_dialog->setOptions(m_dialog->options() | KFind::FromCursor);
 
-	QWidget *mainWidget = m_dialog->mainWidget();
+	QWidget *mainWidget = m_dialog;//->mainWidget();
 	QLayout *mainLayout = mainWidget->layout();
 
 	m_targetGroupBox = new QGroupBox(mainWidget);
@@ -209,10 +211,10 @@ Replacer::advance()
 
 				if(m_instancesFound && m_replace->numReplacements())
 					KMessageBox::information(parentWidget(), i18np("1 replacement done.", "%1 replacements done.", m_replace->numReplacements()), i18n("Replace")
-					                         );
+											 );
 				else // special case
 					KMessageBox::sorry(parentWidget(), i18n("No instances of '%1' found!", m_replace->pattern()), i18n("Replace")
-					                   );
+									   );
 
 				m_replace->resetCounts();
 				break;
@@ -229,7 +231,7 @@ Replacer::advance()
 				m_replace->resetCounts();
 
 				if(KMessageBox::warningContinueCancel(parentWidget(), i18np("1 replacement done.", "%1 replacements done.", numReplacements) + "\n\n" + (backwards ? (selection ? i18n("Beginning of selection reached.\nContinue from the end?") : i18n("Beginning of subtitle reached.\nContinue from the end?")) : (selection ? i18n("End of selection reached.\nContinue from the beginning?") : i18n("End of subtitle reached.\nContinue from the beginning?"))), i18n("Replace")
-				                                      ) != KMessageBox::Continue)
+													  ) != KMessageBox::Continue)
 				{
 					if(replaceNextDialog)
 						replaceNextDialog->hide();
@@ -280,4 +282,4 @@ Replacer::onReplace(const QString &text, int replacementIndex, int replacedLengt
 	}
 }
 
-#include "replacer.moc"
+

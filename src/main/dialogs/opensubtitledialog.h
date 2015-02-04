@@ -24,12 +24,12 @@
 #include <config.h>
 #endif
 
-#include <KFileDialog>
+#include <QFileDialog>
 
 class KComboBox;
 
 namespace SubtitleComposer {
-class OpenSubtitleDialog : public KFileDialog
+class OpenSubtitleDialog : public QFileDialog
 {
 public:
 	explicit OpenSubtitleDialog(bool primary, const QString &startDir = QString(), const QString &encoding = QString(), QWidget *parent = 0);

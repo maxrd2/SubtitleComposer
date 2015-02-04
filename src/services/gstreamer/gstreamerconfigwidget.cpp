@@ -19,9 +19,9 @@
 
 #include "gstreamerconfigwidget.h"
 
-#include <QtGui/QGridLayout>
-#include <QtGui/QGroupBox>
-#include <QtGui/QCheckBox>
+#include <QGridLayout>
+#include <QGroupBox>
+#include <QCheckBox>
 
 #include <KLocale>
 #include <KComboBox>
@@ -87,4 +87,4 @@ GStreamerConfigWidget::setControlsFromConfig()
 		m_videoSinkComboBox->setEditText(config()->videoSink());
 }
 
-#include "gstreamerconfigwidget.moc"
+

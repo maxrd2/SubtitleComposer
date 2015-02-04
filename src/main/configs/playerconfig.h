@@ -26,7 +26,7 @@
 
 #include "../../config/appconfiggroup.h"
 
-#include <QtGui/QColor>
+#include <QColor>
 
 namespace SubtitleComposer {
 class PlayerConfig : public AppConfigGroup

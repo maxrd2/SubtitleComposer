@@ -19,12 +19,12 @@
 
 #include "actionwitherrortargetsdialog.h"
 
-#include <QtGui/QCheckBox>
-#include <QtGui/QGroupBox>
-#include <QtGui/QGridLayout>
+#include <QCheckBox>
+#include <QGroupBox>
+#include <QGridLayout>
 
 #include <KLocale>
-#include <KPushButton>
+#include <QPushButton>
 
 using namespace SubtitleComposer;
 
@@ -92,9 +92,9 @@ ActionWithErrorTargetsDialog::createErrorsButtons(bool showUserMarks, bool showM
 		}
 	}
 
-	KPushButton *selectAllButton = new KPushButton(m_errorsGroupBox);
+	QPushButton *selectAllButton = new QPushButton(m_errorsGroupBox);
 	selectAllButton->setText(i18n("Select All"));
-	KPushButton *selectNoneButton = new KPushButton(m_errorsGroupBox);
+	QPushButton *selectNoneButton = new QPushButton(m_errorsGroupBox);
 	selectNoneButton->setText(i18n("Select None"));
 
 	connect(selectAllButton, SIGNAL(clicked()), this, SLOT(selectAllErrorFlags()));
@@ -159,4 +159,4 @@ ActionWithErrorTargetsDialog::selectedErrorFlags() const
 	}
 }
 
-#include "actionwitherrortargetsdialog.moc"
+

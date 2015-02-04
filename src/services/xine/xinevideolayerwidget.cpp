@@ -20,7 +20,7 @@
 
 #include "xinevideolayerwidget.h"
 
-#include <QtGui/QPaintEvent>
+#include <QPaintEvent>
 
 #include <X11/Xlib.h>
 #ifdef HAVE_XCB
@@ -88,8 +88,8 @@ XineVideoLayerWidget::resizeEvent(QResizeEvent *event)
 	emit geometryChanged();
 
 /*	QSize size = videoWidget()->videoLayer()->size();
-        QPoint globalPos = videoWidget()->videoLayer()->mapToGlobal( QPoint( 0, 0 ) );
-        m_videoLayerGeometry = QRect( globalPos.x(), globalPos.y(), size.width(), size.height() );
+		QPoint globalPos = videoWidget()->videoLayer()->mapToGlobal( QPoint( 0, 0 ) );
+		m_videoLayerGeometry = QRect( globalPos.x(), globalPos.y(), size.width(), size.height() );
  */
 }
 
@@ -100,4 +100,4 @@ XineVideoLayerWidget::moveEvent(QMoveEvent *event)
 	emit geometryChanged();
 }
 
-#include "xinevideolayerwidget.moc"
+

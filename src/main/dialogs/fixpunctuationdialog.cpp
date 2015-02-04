@@ -19,9 +19,9 @@
 
 #include "fixpunctuationdialog.h"
 
-#include <QtGui/QCheckBox>
-#include <QtGui/QGroupBox>
-#include <QtGui/QGridLayout>
+#include <QCheckBox>
+#include <QGroupBox>
+#include <QGridLayout>
 
 #include <KLocale>
 

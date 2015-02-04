@@ -21,10 +21,10 @@
 #include "../decoder.h"
 #include "../../common/qxtsignalwaiter.h"
 
-#include <QtTest>                               // krazy:exclude=c++/includes
+#include <QTest>                               // krazy:exclude=c++/includes
 #include <QtCore>                               // krazy:exclude=c++/includes
 
-#include <KDebug>
+#include <QDebug>
 
 using namespace SubtitleComposer;
 
@@ -42,18 +42,18 @@ convertoToFormat(int bitsPerSample, int channels)
 		QString inputPath = filesDir + inputFile;
 
 		QxtSignalWaiter openedWaiter(decoder, SIGNAL(fileOpened(const QString &)), SIGNAL(fileOpenError(const QString &)));
-		kDebug() << "opening" << inputPath;
+		qDebug() << "opening" << inputPath;
 		decoder->openFile(inputPath);
-		kDebug() << "waiting opened signal";
+		qDebug() << "waiting opened signal";
 		openedWaiter.wait(20000);
 
 		if(decoder->filePath().isEmpty()) {
-			kDebug() << "failed to open file";
+			qDebug() << "failed to open file";
 			return;
 		}
 
 		if(decoder->audioStreamNames().isEmpty()) {
-			kDebug() << "no audio streams found in file";
+			qDebug() << "no audio streams found in file";
 			return;
 		}
 
@@ -62,15 +62,15 @@ convertoToFormat(int bitsPerSample, int channels)
 		QxtSignalWaiter decodingWaiter(decoder, SIGNAL(stopped()));
 		WaveFormat outputFormat(decoder->audioStreamFormats().at(audioStream).sampleRate(), channels, bitsPerSample);
 		QString outputPath = filesDir + QString("converted/") + inputFile.left(inputFile.length() - 4) + "_" + outputFormat.toString() + ".wav";
-		kDebug() << "decoding as" << outputFormat.toString() << "to" << outputPath;
+		qDebug() << "decoding as" << outputFormat.toString() << "to" << outputPath;
 		decoder->decode(audioStream, outputPath, outputFormat);
-		kDebug() << "waiting coversion end signal";
+		qDebug() << "waiting coversion end signal";
 		decodingWaiter.wait(200000);
 
 		QxtSignalWaiter closedWaiter(decoder, SIGNAL(fileClosed()));
-		kDebug() << "closing" << inputFile;
+		qDebug() << "closing" << inputFile;
 		decoder->closeFile();
-		kDebug() << "waiting closed signal";
+		qDebug() << "waiting closed signal";
 		closedWaiter.wait(20000);
 	}
 }
@@ -192,4 +192,4 @@ void WaveWriterTest::testJoinAndTrim()
 
 QTEST_MAIN(WaveWriterTest);
 
-#include "wavewritertest.moc"
+

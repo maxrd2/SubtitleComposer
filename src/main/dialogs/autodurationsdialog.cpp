@@ -19,12 +19,12 @@
 
 #include "autodurationsdialog.h"
 
-#include <QtGui/QLabel>
-#include <QtGui/QCheckBox>
-#include <QtGui/QGroupBox>
-#include <QtGui/QButtonGroup>
-#include <QtGui/QRadioButton>
-#include <QtGui/QGridLayout>
+#include <QLabel>
+#include <QCheckBox>
+#include <QGroupBox>
+#include <QButtonGroup>
+#include <QRadioButton>
+#include <QGridLayout>
 
 #include <KLocale>
 #include <KNumInput>

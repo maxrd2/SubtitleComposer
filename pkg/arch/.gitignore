@@ -3,6 +3,7 @@ pkg/
 repo/
 .build
 .build-nightly
+.build-kf5
 .updaterepo
 subtitlecomposer-*.src.tar.gz
 subtitlecomposer-*.pkg.tar.xz

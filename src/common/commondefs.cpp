@@ -28,10 +28,10 @@
 #include <QtCore/QDir>
 #include <QtCore/QFileInfo>
 
-#include <KDebug>
-#include <KGlobal>
-#include <KStandardDirs>
-#include <KIO/NetAccess>
+#include <QDebug>
+#include <QStandardPaths>
+
+#include <kio/netaccess.h>
 
 #ifndef Q_WS_WIN
 #include <unistd.h>
@@ -139,13 +139,13 @@ bool
 System::move(const QString &srcPath, const QString &dstPath)
 {
 	if(!System::copy(srcPath, dstPath)) {
-		kDebug() << "move: error copying" << srcPath << "to" << dstPath;
+		qDebug() << "move: error copying" << srcPath << "to" << dstPath;
 
 		return false;
 	}
 
 	if(!QFile::remove(srcPath)) {
-		kDebug() << "move: error removing" << srcPath;
+		qDebug() << "move: error removing" << srcPath;
 
 		return false;
 	}
@@ -182,13 +182,13 @@ System::homeDir()
 QString
 System::tempDir()
 {
-	QString tempDir = KGlobal::dirs()->saveLocation("tmp");
+	QString tempDir = QStandardPaths::writableLocation(QStandardPaths::TempLocation);
 	tempDir.remove(QRegExp("[\\/]+$"));
 	return tempDir;
 }
 
-KUrl
-System::newUrl(const KUrl &baseUrl, const QString &fileName, const QString &extension, int retries)
+QUrl
+System::newUrl(const QUrl &baseUrl, const QString &fileName, const QString &extension, int retries)
 {
 	if(retries < 0)
 		retries = INT_MAX;
@@ -209,16 +209,16 @@ System::newUrl(const KUrl &baseUrl, const QString &fileName, const QString &exte
 		if(dirInfo.isDir() && dirInfo.isWritable()) {
 			QString newFilePath = newFileDir + newFileName;
 			if(!QFile::exists(newFilePath))
-				return KUrl(newFilePath);
+				return QUrl(newFilePath);
 
 			for(int i = 2, limit = retries + i; i < limit; ++i) {
 				newFilePath = newFileDir + newFileNameBuilder.arg(i);
 				if(!QFile::exists(newFilePath))
-					return KUrl(newFilePath);
+					return QUrl(newFilePath);
 			}
 		}
 	} else {
-		KUrl newUrl = baseUrl;
+		QUrl newUrl = baseUrl;
 
 		newUrl.setPath(newFileDir + newFileName);
 		if(!KIO::NetAccess::exists(newUrl, KIO::NetAccess::DestinationSide, 0))
@@ -236,12 +236,12 @@ System::newUrl(const KUrl &baseUrl, const QString &fileName, const QString &exte
 
 	QString newFilePath = newFileDir + newFileName;
 	if(!QFile::exists(newFilePath))
-		return KUrl(newFilePath);
+		return QUrl(newFilePath);
 
 	int i = 2;
 	do {
 		newFilePath = newFileDir + newFileNameBuilder.arg(i++);
 	} while(QFile::exists(newFilePath));
 
-	return KUrl(newFilePath);
+	return QUrl(newFilePath);
 }

@@ -34,4 +34,4 @@ Scripting::StringsModule::newString(const QString &text)
 	return new SString(SubtitleComposer::SString(text), this);
 }
 
-#include "scripting_stringsmodule.moc"
+

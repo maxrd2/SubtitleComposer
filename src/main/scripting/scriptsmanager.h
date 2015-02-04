@@ -27,14 +27,14 @@
 #include <QtCore/QObject>
 #include <QtCore/QMap>
 
-#include <KUrl>
+#include <QUrl>
 
 class QAction;
 class QMenu;
 class TreeView;
-class KAction;
+class QAction;
 class KDialog;
-class KPushButton;
+class QPushButton;
 
 namespace SubtitleComposer {
 class Subtitle;
@@ -58,7 +58,7 @@ public slots:
 	void showDialog();
 
 	void createScript(const QString &scriptName = QString());
-	void addScript(const KUrl &srcScriptUrl = KUrl());
+	void addScript(const QUrl &srcScriptUrl = QUrl());
 	void removeScript(const QString &scriptName = QString());
 	void editScript(const QString &scriptName = QString());
 	void runScript(const QString &scriptName = QString());
@@ -74,7 +74,7 @@ private slots:
 private:
 	QMap<QString, QString> m_scripts;               // name => path
 	TreeView *m_scriptsWidget;
-	KPushButton *m_runScriptButton;
+	QPushButton *m_runScriptButton;
 	KDialog *m_dialog;
 };
 

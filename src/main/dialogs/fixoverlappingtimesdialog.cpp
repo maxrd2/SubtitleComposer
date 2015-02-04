@@ -19,9 +19,9 @@
 
 #include "fixoverlappingtimesdialog.h"
 
-#include <QtGui/QLabel>
-#include <QtGui/QGroupBox>
-#include <QtGui/QGridLayout>
+#include <QLabel>
+#include <QGroupBox>
+#include <QGridLayout>
 
 #include <KLocale>
 #include <KNumInput>

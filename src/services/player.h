@@ -30,7 +30,7 @@
 #include <QtCore/QString>
 #include <QtCore/QStringList>
 #include <QtCore/QMap>
-#include <QtGui/QWidget>
+#include <QWidget>
 
 class QTimer;
 
@@ -99,7 +99,7 @@ signals:
 	void fileOpened(const QString &filePath);
 	void fileClosed();
 
-	void playbackError(const QString &errorMessage = QString());
+	void playbacqCritical(const QString &errorMessage = QString());
 	void playing();
 	void positionChanged(double seconds);
 	void lengthChanged(double seconds);

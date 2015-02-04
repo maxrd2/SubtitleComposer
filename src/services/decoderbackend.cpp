@@ -19,7 +19,7 @@
 
 #include "decoderbackend.h"
 
-#include <KDebug>
+#include <QDebug>
 
 using namespace SubtitleComposer;
 
@@ -30,4 +30,4 @@ DecoderBackend::DecoderBackend(Decoder *decoder, const QString &name, AppConfigG
 DecoderBackend::~DecoderBackend()
 {}
 
-#include "decoderbackend.moc"
+

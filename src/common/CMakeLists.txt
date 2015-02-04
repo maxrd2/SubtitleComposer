@@ -1,9 +1,9 @@
-SET( common_LIBS
-	${KDE4_KIO_LIBS}
+set(common_LIBS
+	KF5::KIOCore
 	CACHE INTERNAL EXPORTEDVARIABLE
 )
 
-SET( common_SRCS
+set(common_SRCS
 	${CMAKE_CURRENT_SOURCE_DIR}/commondefs.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/qxtsignalwaiter.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/fileloadhelper.cpp

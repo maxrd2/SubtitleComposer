@@ -31,11 +31,13 @@
 #include <QtCore/QString>
 #include <QtCore/QRect>
 #include <QtCore/QTimer>
-#include <QtGui/QWidget>
+#include <QWidget>
 
 #include <xine.h>
 #ifdef HAVE_XCB
 #include <xcb/xcb.h>
+#else
+typedef struct _XDisplay Display;
 #endif
 
 class QEvent;
@@ -90,12 +92,12 @@ protected slots:
 	void onVideoLayerGeometryChanged();
 
 private:
-#ifndef HAVE_XCB
-	Display * m_connection;
-	x11_visual_t m_x11Visual;
-#else
+#ifdef HAVE_XCB
 	xcb_connection_t * m_connection;
 	xcb_visual_t m_x11Visual;
+#else
+	Display * m_connection;
+	x11_visual_t m_x11Visual;
 #endif
 
 	xine_t *m_xineEngine;

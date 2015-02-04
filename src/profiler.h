@@ -29,7 +29,7 @@
 #ifdef PROFILING
 
 #include <QtCore/QTime>
-#include <KDebug>
+#include <QDebug>
 
 class Profiler
 {

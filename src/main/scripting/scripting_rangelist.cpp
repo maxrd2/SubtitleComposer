@@ -128,4 +128,4 @@ Scripting::RangeList::shiftIndexesBackwards(int fromIndex, int delta)
 		m_backend.shiftIndexesBackwards(fromIndex, delta);
 }
 
-#include "scripting_rangelist.moc"
+

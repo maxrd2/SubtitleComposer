@@ -30,7 +30,7 @@
 
 #include <mpv/qthelper.hpp>
 
-#include <QtGui/QWidget>
+#include <QWidget>
 #include <QtCore/QString>
 
 namespace SubtitleComposer {

@@ -23,16 +23,16 @@
 #include "../core/subtitle.h"
 #include "../core/subtitleline.h"
 
-#include <QtGui/QLabel>
-#include <QtGui/QGridLayout>
+#include <QLabel>
+#include <QGridLayout>
 
-#include <KDebug>
+#include <QDebug>
 #include <KLocale>
 #include <KApplication>
 #include <KConfig>
 #include <KConfigGroup>
 #include <KMenu>
-#include <KPushButton>
+#include <QPushButton>
 
 using namespace SubtitleComposer;
 
@@ -51,17 +51,17 @@ ErrorsDialog::ErrorsDialog(QWidget *parent) :
 	mainLayout->setSpacing(5);
 
 	m_autoClearFixed = app()->errorsConfig()->autoClearFixed();
-	m_clearFixedButton = new KPushButton(mainWidget);
+	m_clearFixedButton = new QPushButton(mainWidget);
 	m_clearFixedButton->setText(i18n("Clear Fixed Errors"));
 	m_clearFixedButton->setEnabled(!m_autoClearFixed);
 
-	KPushButton *checkErrorsButton = new KPushButton(mainWidget);
-	checkErrorsButton->setText(i18n("Check Errors..."));
+	QPushButton *checqCriticalsButton = new QPushButton(mainWidget);
+	checqCriticalsButton->setText(i18n("Check Errors..."));
 
-	m_clearErrorsButton = new KPushButton(mainWidget);
+	m_clearErrorsButton = new QPushButton(mainWidget);
 	m_clearErrorsButton->setText(i18n("Clear Errors..."));
 
-	KPushButton *settingsButton = new KPushButton(mainWidget);
+	QPushButton *settingsButton = new QPushButton(mainWidget);
 	settingsButton->setText(i18n("Settings..."));
 
 	m_errorsWidget = new ErrorsWidget(mainWidget);
@@ -72,7 +72,7 @@ ErrorsDialog::ErrorsDialog(QWidget *parent) :
 	mainLayout->addWidget(m_statsLabel, 0, 0, 1, 5);
 	mainLayout->addWidget(m_clearFixedButton, 2, 0);
 	mainLayout->addItem(new QSpacerItem(20, 20, QSizePolicy::Expanding, QSizePolicy::Minimum), 2, 1);
-	mainLayout->addWidget(checkErrorsButton, 2, 2);
+	mainLayout->addWidget(checqCriticalsButton, 2, 2);
 	mainLayout->addWidget(m_clearErrorsButton, 2, 3);
 	mainLayout->addWidget(settingsButton, 2, 4);
 
@@ -81,7 +81,7 @@ ErrorsDialog::ErrorsDialog(QWidget *parent) :
 	onStatsChanged();
 
 	connect(m_clearFixedButton, SIGNAL(clicked()), app(), SLOT(recheckAllErrors()));
-	connect(checkErrorsButton, SIGNAL(clicked()), app(), SLOT(checkErrors()));
+	connect(checqCriticalsButton, SIGNAL(clicked()), app(), SLOT(checqCriticals()));
 	connect(m_clearErrorsButton, SIGNAL(clicked()), app(), SLOT(clearErrors()));
 	connect(settingsButton, SIGNAL(clicked()), app(), SLOT(showErrorsConfig()));
 
@@ -147,4 +147,4 @@ ErrorsDialog::onOptionChanged(const QString &option, const QString &value)
 	}
 }
 
-#include "errorsdialog.moc"
+

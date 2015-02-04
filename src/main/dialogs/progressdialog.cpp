@@ -19,10 +19,10 @@
 
 #include "progressdialog.h"
 
-#include <QtGui/QLabel>
-#include <QtGui/QProgressBar>
-#include <QtGui/QBoxLayout>
-#include <QtGui/QCloseEvent>
+#include <QLabel>
+#include <QProgressBar>
+#include <QBoxLayout>
+#include <QCloseEvent>
 
 #include <KLocale>
 
@@ -135,4 +135,4 @@ ProgressDialog::setCancellable(bool cancellable)
 	enableButton(KDialog::Cancel, cancellable);
 }
 
-#include "progressdialog.moc"
+

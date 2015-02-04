@@ -22,7 +22,7 @@
 #include "../configs/spellingconfig.h"
 #include "../../core/subtitleiterator.h"
 
-#include <KDebug>
+#include <QDebug>
 #include <KLocale>
 #include <KMessageBox>
 #include <sonnet/dialog.h>
@@ -173,4 +173,4 @@ Speller::onSpellingOptionChanged(const QString &option, const QString & /*value 
 	}
 }
 
-#include "speller.moc"
+

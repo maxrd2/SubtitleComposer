@@ -26,24 +26,24 @@
 
 #include <QtCore/QFile>
 
-#include <KUrl>
+#include <QUrl>
 
 class FileLoadHelper
 {
 public:
-	FileLoadHelper(const KUrl &url);
+	FileLoadHelper(const QUrl &url);
 	~FileLoadHelper();
 
-	const KUrl & url();
+	const QUrl & url();
 	QFile * file();
 
 	bool open();
 	bool close();
 
-	static bool exists(const KUrl &url);
+	static bool exists(const QUrl &url);
 
 private:
-	KUrl m_url;
+	QUrl m_url;
 	QFile *m_file;
 };
 

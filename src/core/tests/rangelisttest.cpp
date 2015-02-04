@@ -20,7 +20,7 @@
 #include "rangelisttest.h"
 #include "../rangelist.h"
 
-#include <QtTest>                               // krazy:exclude=c++/includes
+#include <QTest>                               // krazy:exclude=c++/includes
 #include <QtCore>                               // krazy:exclude=c++/includes
 
 using namespace SubtitleComposer;
@@ -94,4 +94,4 @@ RangeListTest::testJoinAndTrim()
 
 QTEST_MAIN(RangeListTest);
 
-#include "rangelisttest.moc"
+

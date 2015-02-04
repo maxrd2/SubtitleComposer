@@ -24,7 +24,7 @@
 #include "mediadata.h"
 #include "../../common/qxtsignalwaiter.h"
 
-#include <KDebug>
+#include <QDebug>
 #include <KLocale>
 #include <KStandardDirs>
 
@@ -295,4 +295,4 @@ MPlayerPlayerBackend::onProcessExited()
 	setPlayerState(Player::Ready);
 }
 
-#include "mplayerplayerbackend.moc"
+

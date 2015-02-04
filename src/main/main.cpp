@@ -31,7 +31,7 @@
 #include <QtCore/QFile>
 #include <QtCore/QDir>
 
-#include <KAboutData>
+#include <K4AboutData>
 #include <KCmdLineArgs>
 #include <KLocale>
 #include <KStandardDirs>
@@ -40,14 +40,13 @@
 #include <X11/Xlib.h>
 #endif
 
-static inline KUrl
+static inline QUrl
 KUrlFromParam(const QString path)
 {
-	KUrl url(path);
+	QUrl url(path);
 	if(!url.isRelative())
 		return url;
-	url.setPath(QDir::currentPath());
-	url.addPath(path);
+	url.setPath(QDir::currentPath() + "/" + path);
 	return url;
 }
 
@@ -58,13 +57,13 @@ main(int argc, char **argv)
 	XInitThreads(); // needed for XinePlayerBackend
 #endif
 
-	KAboutData aboutData(
+	K4AboutData aboutData(
 			"subtitlecomposer",     // The program name used internally.
 			"subtitlecomposer",     // The message catalog name.
 			ki18n("Subtitle Composer"),     // A displayable program name string.
 			"0.5.7",        // The program version string.
 			ki18n("A KDE subtitle editor."),        // A short description of what the program does.
-			KAboutData::License_GPL,        // License identifier
+			K4AboutData::License_GPL,        // License identifier
 			ki18n("&copy; 2007-2012 Sergio Pistone\n&copy; 2013-2014 Mladen Milinković"),        // Copyright Statement
 			KLocalizedString(),     // Additional text
 			// We are not a project under the KDE umbrella (hopefully, we will be someday)
@@ -85,6 +84,8 @@ main(int argc, char **argv)
 
 	// Initialize command line args
 	KCmdLineArgs::init(argc, argv, &aboutData);
+
+	KAboutData::setApplicationData(aboutData);
 
 	// Define the command line options using KCmdLineOptions
 	KCmdLineOptions options;

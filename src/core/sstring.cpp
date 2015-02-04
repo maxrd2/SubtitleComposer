@@ -22,7 +22,9 @@
 #include <QtCore/QList>
 #include <QtCore/QStringList>
 
-#include <KDebug>
+#include <QDebug>
+
+#include <QColor>
 
 using namespace SubtitleComposer;
 
@@ -846,7 +848,7 @@ SString::replace(const QRegExp &rx, const QString &a)
 				escaping = false;
 				if(chr.isNumber()) {
 					int capNumber = chr.digitValue();
-					if(capNumber <= regExp.numCaptures()) {
+					if(capNumber <= regExp.captureCount()) {
 						QString cap(regExp.cap(capNumber));
 						after.replace(afterIndex - 1, 2, cap);
 						afterIndex = afterIndex - 1 + cap.length();
@@ -933,7 +935,7 @@ SString::replace(const QRegExp &rx, const SString &a)
 				escaping = false;
 				if(chr.isNumber()) {
 					int capNumber = chr.digitValue();
-					if(capNumber <= regExp.numCaptures()) {
+					if(capNumber <= regExp.captureCount()) {
 						QString cap(regExp.cap(capNumber));
 						after.replace(afterIndex - 1, 2, cap);
 						afterIndex = afterIndex - 1 + cap.length();

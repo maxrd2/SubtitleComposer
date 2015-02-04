@@ -19,16 +19,16 @@
 
 #include "videowidget.h"
 
-#include <QtGui/QApplication>
-#include <QtGui/QDesktopWidget>
+#include <QApplication>
+#include <QDesktopWidget>
 
-#include <QtGui/QPainter>
-#include <QtGui/QPaintEvent>
-#include <QtGui/QResizeEvent>
-#include <QtGui/QMoveEvent>
-#include <QtGui/QMouseEvent>
+#include <QPainter>
+#include <QPaintEvent>
+#include <QResizeEvent>
+#include <QMoveEvent>
+#include <QMouseEvent>
 
-#include <KDebug>
+#include <QDebug>
 
 using namespace SubtitleComposer;
 
@@ -109,7 +109,7 @@ void
 VideoWidget::setVideoResolution(int width, int height, double dar)
 {
 	if(width <= 0 || height <= 0) {
-		kWarning() << "invalid video with or height reported";
+		qWarning() << "invalid video with or height reported";
 		return;
 	}
 
@@ -216,4 +216,4 @@ VideoWidget::minimumSizeHint() const
 	return QSize(0, 0);
 }
 
-#include "videowidget.moc"
+

@@ -35,15 +35,15 @@
 
 #include <QtCore/QMap>
 #include <QtCore/QString>
-#include <QtGui/QKeySequence>
+#include <QKeySequence>
 
 #include <KApplication>
-#include <KAction>
-#include <KUrl>
+#include <QAction>
+#include <QUrl>
 #include <kencodingdetector.h>
 
 class KComboBox;
-class KAction;
+class QAction;
 class KToggleAction;
 class KRecentFilesActionExt;
 class KCodecActionExt;
@@ -106,7 +106,7 @@ public:
 
 	const QStringList & availableEncodingNames() const;
 
-	const KUrl & lastSubtitleDirectory() const;
+	const QUrl & lastSubtitleDirectory() const;
 
 public slots:
 	void undo();
@@ -115,9 +115,9 @@ public slots:
 	void newSubtitle();
 	void openSubtitle();
 	void reopenSubtitleWithCodec(QTextCodec *codec);
-	void reopenSubtitleWithDetectScript(KEncodingDetector::AutoDetectScript autodetectScript);
-	void reopenSubtitleWithCodecOrDetectScript(QTextCodec *codec, KEncodingDetector::AutoDetectScript autodetectScript);
-	void openSubtitle(const KUrl &url, bool warnClashingUrls = true);
+	void reopenSubtitleWithDetectScript();
+	void reopenSubtitleWithCodecOrDetectScript(QTextCodec *codec);
+	void openSubtitle(const QUrl &url, bool warnClashingUrls = true);
 	bool saveSubtitle();
 	bool saveSubtitleAs();
 	bool closeSubtitle();
@@ -125,10 +125,10 @@ public slots:
 	void newSubtitleTr();
 	void openSubtitleTr();
 	void reopenSubtitleTrWithCodec(QTextCodec *codec);
-	void reopenSubtitleTrWithDetectScript(KEncodingDetector::AutoDetectScript autodetectScript);
-	void reopenSubtitleTrWithCodecOrDetectScript(QTextCodec *codec, KEncodingDetector::AutoDetectScript autodetectScript);
+	void reopenSubtitleTrWithDetectScript();
+	void reopenSubtitleTrWithCodecOrDetectScript(QTextCodec *codec);
 
-	void openSubtitleTr(const KUrl &url, bool warnClashingUrls = true);
+	void openSubtitleTr(const QUrl &url, bool warnClashingUrls = true);
 	bool saveSubtitleTr();
 	bool saveSubtitleTrAs();
 	bool closeSubtitleTr();
@@ -160,7 +160,7 @@ public slots:
 	void retrocedeCurrentLine();
 	void advanceCurrentLine();
 
-	void checkErrors();
+	void checqCriticals();
 	void recheckAllErrors();
 	void recheckSelectedErrors();
 	void clearErrors();
@@ -199,7 +199,7 @@ public slots:
 	void translate();
 
 	void openVideo();
-	void openVideo(const KUrl &url);
+	void openVideo(const QUrl &url);
 
 	void toggleFullScreenMode();
 	void setFullScreenMode(bool enabled);
@@ -219,7 +219,7 @@ public slots:
 	void extractVideoAudio();
 
 	void openAudioLevels();
-	void openAudioLevels(const KUrl &url);
+	void openAudioLevels(const QUrl &url);
 	void saveAudioLevelsAs();
 	void closeAudioLevels();
 
@@ -236,12 +236,12 @@ signals:
 	void fullScreenModeChanged(bool value);
 
 private:
-	QTextCodec * codecForUrl(const KUrl &url, bool useRecentFiles, bool useDefault);
+	QTextCodec * codecForUrl(const QUrl &url, bool useRecentFiles, bool useDefault);
 	QTextCodec * codecForEncoding(const QString &encoding, bool useDefault);
 
-	bool acceptClashingUrls(const KUrl &subtitleUrl, const KUrl &subtitleTrUrl);
+	bool acceptClashingUrls(const QUrl &subtitleUrl, const QUrl &subtitleTrUrl);
 
-	KUrl saveSplitSubtitle(const Subtitle &subtitle, const KUrl &srcUrl, QString encoding, QString format, bool primary);
+	QUrl saveSplitSubtitle(const Subtitle &subtitle, const QUrl &srcUrl, QString encoding, QString format, bool primary);
 
 	void setupActions();
 
@@ -284,14 +284,14 @@ private:
 	AppConfig m_config;
 
 	Subtitle *m_subtitle;
-	KUrl m_subtitleUrl;
+	QUrl m_subtitleUrl;
 	QString m_subtitleFileName;
 	QString m_subtitleEncoding;
 	Format::NewLine m_subtitleEOL;
 	QString m_subtitleFormat;
 
 	bool m_translationMode;
-	KUrl m_subtitleTrUrl;
+	QUrl m_subtitleTrUrl;
 	QString m_subtitleTrFileName;
 	QString m_subtitleTrEncoding;
 	Format::NewLine m_subtitleTrEOL;
@@ -313,7 +313,7 @@ private:
 
 	ErrorsWidget *m_errorsWidget;
 
-	KUrl m_lastSubtitleUrl;
+	QUrl m_lastSubtitleUrl;
 	KRecentFilesActionExt *m_recentSubtitlesAction;
 	KRecentFilesActionExt *m_recentSubtitlesTrAction;
 
@@ -329,11 +329,11 @@ private:
 
 	ScriptsManager *m_scriptsManager;
 
-	KUrl m_lastVideoUrl;
+	QUrl m_lastVideoUrl;
 	bool m_linkCurrentLineToPosition;
 	KRecentFilesActionExt *m_recentVideosAction;
 
-	KUrl m_lastAudioLevelsUrl;
+	QUrl m_lastAudioLevelsUrl;
 	KRecentFilesActionExt *m_recentAudioLevelsAction;
 };
 

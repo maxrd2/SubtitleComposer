@@ -22,12 +22,13 @@
 #include "../../services/player.h"
 #include "../../widgets/timeedit.h"
 
-#include <QtGui/QGridLayout>
-#include <QtGui/QGroupBox>
-#include <QtGui/QCheckBox>
+#include <KIcon>
+#include <QGridLayout>
+#include <QGroupBox>
+#include <QCheckBox>
 
 #include <KLocale>
-#include <KPushButton>
+#include <QPushButton>
 
 using namespace SubtitleComposer;
 
@@ -40,7 +41,7 @@ JoinSubtitlesDialog::JoinSubtitlesDialog(QWidget *parent) :
 	m_shiftSubtitleCheckBox->setText(i18n("Shift subtitle forwards before append"));
 	m_shiftSubtitleCheckBox->setChecked(true);
 
-	m_shiftTimeFromVideoButton = new KPushButton(m_subtitleGroupBox);
+	m_shiftTimeFromVideoButton = new QPushButton(m_subtitleGroupBox);
 	m_shiftTimeFromVideoButton->setIcon(KIcon("time-from-video"));
 	int buttonSize = m_shiftTimeFromVideoButton->sizeHint().height();
 	m_shiftTimeFromVideoButton->setFixedSize(buttonSize, buttonSize);
@@ -86,4 +87,4 @@ JoinSubtitlesDialog::show()
 	SelectableSubtitleDialog::show();
 }
 
-#include "joinsubtitlesdialog.moc"
+

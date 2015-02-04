@@ -1,17 +1,47 @@
-SET( EXECUTABLE_OUTPUT_PATH ${CMAKE_CURRENT_BINARY_DIR} )
+set(EXECUTABLE_OUTPUT_PATH ${CMAKE_CURRENT_BINARY_DIR})
 
-SET( rangelisttest_SRCS rangelisttest.cpp )
-KDE4_ADD_UNIT_TEST( core-rangelisttest ${rangelisttest_SRCS} )
-TARGET_LINK_LIBRARIES( core-rangelisttest ${QT_QTTEST_LIBRARY} ${KDE4_KDEUI_LIBS} )
+include_directories(
+	${common_INCLUDE_DIR}
+	${core_INCLUDE_DIR}
+	${Qt5Test_INCLUDE_DIRS}
+)
 
-SET( rangetest_SRCS rangetest.cpp )
-KDE4_ADD_UNIT_TEST( core-rangetest ${rangetest_SRCS} )
-TARGET_LINK_LIBRARIES( core-rangetest ${QT_QTTEST_LIBRARY} ${KDE4_KDEUI_LIBS} )
+set(rangelisttest_SRCS rangelisttest.cpp)
+add_executable(core-rangelisttest ${rangelisttest_SRCS})
+add_test(subtitlecomposer core-rangelisttest)
+ecm_mark_as_test(core-rangelisttest)
+target_link_libraries(core-rangelisttest
+	${common_LIBS}
+	KF5::KDELibs4Support
+)
+qt5_use_modules(core-rangelisttest Core Test)
 
-SET( timetest_SRCS ../time.cpp timetest.cpp )
-KDE4_ADD_UNIT_TEST( core-timetest ${timetest_SRCS} )
-TARGET_LINK_LIBRARIES( core-timetest ${QT_QTTEST_LIBRARY} ${KDE4_KDEUI_LIBS} )
+set(rangetest_SRCS rangetest.cpp)
+add_executable(core-rangetest ${rangetest_SRCS})
+add_test(subtitlecomposer core-rangetest)
+ecm_mark_as_test(core-rangetest)
+target_link_libraries(core-rangetest
+	${common_LIBS}
+	KF5::KDELibs4Support
+)
+qt5_use_modules(core-rangetest Core Test)
 
-SET( sstringtest_SRCS ../sstring.cpp sstringtest.cpp )
-KDE4_ADD_UNIT_TEST( core-sstringtest ${sstringtest_SRCS} )
-TARGET_LINK_LIBRARIES( core-sstringtest ${QT_QTTEST_LIBRARY} ${KDE4_KDEUI_LIBS} )
+set(timetest_SRCS ../time.cpp timetest.cpp)
+add_executable(core-timetest ${timetest_SRCS})
+add_test(subtitlecomposer core-timetest)
+ecm_mark_as_test(core-timetest)
+target_link_libraries(core-timetest
+	${common_LIBS}
+	KF5::KDELibs4Support
+)
+qt5_use_modules(core-timetest Core Test)
+
+set(sstringtest_SRCS ../sstring.cpp sstringtest.cpp)
+add_executable(core-sstringtest ${sstringtest_SRCS})
+add_test(subtitlecomposer core-sstringtest)
+ecm_mark_as_test(core-sstringtest)
+target_link_libraries(core-sstringtest
+	${common_LIBS}
+	KF5::KDELibs4Support
+)
+qt5_use_modules(core-sstringtest Core Test)

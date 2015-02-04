@@ -19,7 +19,7 @@
 
 #include "scripting_subtitlelinemodule.h"
 
-#include <KDebug>
+#include <QDebug>
 
 using namespace SubtitleComposer;
 
@@ -27,4 +27,4 @@ Scripting::SubtitleLineModule::SubtitleLineModule(QObject *parent) :
 	QObject(parent)
 {}
 
-#include "scripting_subtitlelinemodule.moc"
+

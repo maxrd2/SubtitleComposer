@@ -25,7 +25,7 @@
 #endif
 
 #include <QtCore/QList>
-#include <QtGui/QWidget>
+#include <QWidget>
 
 /// a class used to show varios widgets simultaneously one in top
 /// of the another (unlike QStackWidget which shows one at a time)

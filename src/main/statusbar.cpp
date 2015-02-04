@@ -21,8 +21,8 @@
 #include "application.h"
 #include "actions/useractionnames.h"
 
-#include <QtGui/QProgressBar>
-#include <QtGui/QToolButton>
+#include <QProgressBar>
+#include <QToolButton>
 
 using namespace SubtitleComposer;
 
@@ -109,4 +109,4 @@ StatusBar2::showEvent(QShowEvent *event)
 	m_cancelDecodingButton->setMaximumWidth(statusBarHeight - 4);
 }
 
-#include "statusbar.moc"
+

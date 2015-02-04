@@ -21,7 +21,8 @@
 #ifndef KREPLACE_H
 #define KREPLACE_H
 
-#include "kfind.h"
+#include <KFind>
+#include <KDialog>
 
 class KReplaceNextDialog;
 class KReplacePrivate;
@@ -93,7 +94,7 @@ class KReplacePrivate;
  *  unless you gave it a parent widget on construction.
  *
  */
-class KDEUI_EXPORT KReplace : public KFind
+class /*KDEUI_EXPORT*/ KReplace : public KFind
 {
 	Q_OBJECT
 

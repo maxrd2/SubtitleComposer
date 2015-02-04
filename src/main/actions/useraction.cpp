@@ -43,7 +43,7 @@ UserAction::onActionChanged()
 {
 	if(!m_ignoreActionEnabledSignal) {
 		if(m_action->isEnabled() != isEnabled()) {
-			// kDebug() << "enabled state externaly changed for" << m_action->objectName();
+			// qDebug() << "enabled state externaly changed for" << m_action->objectName();
 
 			m_actionEnabled = m_action->isEnabled();
 			updateEnabledState();
@@ -100,7 +100,7 @@ UserAction::updateEnabledState()
 
 		// QCoreApplication::processEvents( QEventLoop::ExcludeUserInputEvents );
 
-		// kDebug() << "setting action" << (m_action->isEnabled() ? "ENABLED":"DISABLED");
+		// qDebug() << "setting action" << (m_action->isEnabled() ? "ENABLED":"DISABLED");
 
 		m_ignoreActionEnabledSignal = false;
 	}
@@ -450,11 +450,11 @@ void
 UserActionManager::updateActionsContext(int contextFlags)
 {
 //  if ( (m_contextFlags & UserAction::SubHasLine) != (contextFlags & UserAction::SubHasLine)  )
-//      kDebug() << "has line:" << ((contextFlags & UserAction::SubHasLine) != 0);
+//      qDebug() << "has line:" << ((contextFlags & UserAction::SubHasLine) != 0);
 //  if ( (m_contextFlags & UserAction::SubHasLines) != (contextFlags & UserAction::SubHasLines)  )
-//      kDebug() << "has lines:" << ((contextFlags & UserAction::SubHasLines) != 0);
+//      qDebug() << "has lines:" << ((contextFlags & UserAction::SubHasLines) != 0);
 //  if ( (m_contextFlags & UserAction::HasSelection) != (contextFlags & UserAction::HasSelection)  )
-//      kDebug() << "has selection:" << ((contextFlags & UserAction::HasSelection) != 0);
+//      qDebug() << "has selection:" << ((contextFlags & UserAction::HasSelection) != 0);
 
 	if(m_contextFlags != contextFlags) {
 		m_contextFlags = contextFlags;
@@ -463,4 +463,4 @@ UserActionManager::updateActionsContext(int contextFlags)
 	}
 }
 
-#include "useraction.moc"
+

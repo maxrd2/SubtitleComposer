@@ -27,7 +27,7 @@
 #include "../core/subtitle.h"
 #include "../core/subtitleline.h"
 
-#include <QtGui/QWidget>
+#include <QWidget>
 
 class QTimer;
 class QGridLayout;

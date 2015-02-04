@@ -19,7 +19,7 @@
 
 #include "spellingconfigwidget.h"
 
-#include <QtGui/QLayout>
+#include <QLayout>
 
 #include <KGlobal>
 #include <KConfig>
@@ -61,7 +61,7 @@ SpellingConfigWidget::setControlsFromConfig()
 	setUpdatesEnabled(false);
 
 	delete m_sonnetConfigWidget;
-	m_sonnetConfigWidget = new Sonnet::ConfigWidget(m_globalConfig, this);
+	m_sonnetConfigWidget = new Sonnet::ConfigWidget(/* FIXME: m_globalConfig,*/ this);
 	layout()->addWidget(m_sonnetConfigWidget);
 
 	setUpdatesEnabled(true);
@@ -89,4 +89,4 @@ SpellingConfigWidget::setConfigFromControls()
 	config()->setOption(SpellingConfig::keySkipRunTogether(), group.readEntry(SpellingConfig::keySkipRunTogether()));
 }
 
-#include "spellingconfigwidget.moc"
+

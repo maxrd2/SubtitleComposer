@@ -23,9 +23,9 @@
 
 #include "pointingslider.h"
 
-#include <QtGui/QApplication>
-#include <QtGui/QStyle>
-#include <QtGui/QMouseEvent>
+#include <QApplication>
+#include <QStyle>
+#include <QMouseEvent>
 
 PointingSlider::PointingSlider(QWidget *parent) :
 	QSlider(parent)
@@ -77,4 +77,4 @@ PointingSlider::mousePressEvent(QMouseEvent *e)
 	}
 }
 
-#include "pointingslider.moc"
+

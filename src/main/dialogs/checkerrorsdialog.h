@@ -29,12 +29,12 @@
 class QCheckBox;
 
 namespace SubtitleComposer {
-class CheckErrorsDialog : public ActionWithErrorTargetsDialog
+class ChecqCriticalsDialog : public ActionWithErrorTargetsDialog
 {
 	Q_OBJECT
 
 public:
-	CheckErrorsDialog(QWidget *parent = 0);
+	ChecqCriticalsDialog(QWidget *parent = 0);
 
 	bool clearOtherErrors() const;
 	bool clearMarks() const;

@@ -31,7 +31,7 @@
 #include <QGlobal>
 #include <QtCore/QString>
 
-#include <KDebug>
+#include <QDebug>
 
 using namespace SubtitleComposer;
 
@@ -42,16 +42,16 @@ showRanges(const RangeList &ranges)
 	for(RangeList::ConstIterator it = ranges.begin(), end = ranges.end(); it != end; ++it)
 		aux += QString(" [%1,%2]").arg((*it).start()).arg((*it).end());
 
-	kDebug() << QString("Showing ranges: %1").arg(aux.trimmed());
+	qDebug() << QString("Showing ranges: %1").arg(aux.trimmed());
 }
 
 void
 showSubtitle(const Subtitle &subtitle)
 {
-	kDebug() << "Showing subtitle";
+	qDebug() << "Showing subtitle";
 	for(int index = 0, size = subtitle.linesCount(); index < size; ++index)
-		kDebug() << QString("Line: %1").arg(subtitle.line(index)->primaryText().richString());
-	kDebug() << "--------------------------";
+		qDebug() << QString("Line: %1").arg(subtitle.line(index)->primaryText().richString());
+	qDebug() << "--------------------------";
 }
 
 void
@@ -61,16 +61,16 @@ iterateSubtitle(const Subtitle &subtitle, const RangeList &ranges)
 
 //  for ( int idx=0; idx < 3; ++idx )
 	{
-		kDebug() << "Iterating subtitle forwards from ranges";
+		qDebug() << "Iterating subtitle forwards from ranges";
 		for(SubtitleIterator it(subtitle, ranges); it.current(); ++it)
-			kDebug() << QString("Line: %1").arg(it.current()->primaryText().richString());
+			qDebug() << QString("Line: %1").arg(it.current()->primaryText().richString());
 
-		kDebug() << "Iterating subtitle backwards from ranges";
+		qDebug() << "Iterating subtitle backwards from ranges";
 		for(SubtitleIterator it(subtitle, ranges, true); it.current(); --it)
-			kDebug() << QString("Line: %1").arg(it.current()->primaryText().richString());
+			qDebug() << QString("Line: %1").arg(it.current()->primaryText().richString());
 	}
 
-	kDebug() << "--------------------------";
+	qDebug() << "--------------------------";
 }
 
 void
@@ -112,12 +112,12 @@ testSubtitleIterator()
 	   for ( SubtitleIterator it( subtitle, Range::full(), true ); it.current(); --it )
 	   it.current()->text();
 
-	   kDebug() << time.elapsed();
+	   qDebug() << time.elapsed();
 
 	   for ( SubtitleIterator it( subtitle, Range::full(), true ); it.current(); --it )
 	   it.current()->text();
 
-	   kDebug() << time.elapsed(); */
+	   qDebug() << time.elapsed(); */
 }
 
 void

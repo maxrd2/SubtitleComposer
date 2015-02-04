@@ -27,8 +27,8 @@
 #include "../services/player.h"
 #include "../services/decoder.h"
 
-#include <QtGui/QGridLayout>
-#include <QtGui/QSplitter>
+#include <QGridLayout>
+#include <QSplitter>
 
 #include <KMenuBar>
 #include <KToolBar>
@@ -114,4 +114,4 @@ MainWindow::queryClose()
 	return app()->closeSubtitle();
 }
 
-#include "mainwindow.moc"
+

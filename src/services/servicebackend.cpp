@@ -19,7 +19,7 @@
 
 #include "servicebackend.h"
 
-#include <KDebug>
+#include <QDebug>
 
 using namespace SubtitleComposer;
 
@@ -65,4 +65,4 @@ ServiceBackend::isDummy() const
 	return m_name == m_service->dummyBackendName();
 }
 
-#include "servicebackend.moc"
+

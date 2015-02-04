@@ -39,4 +39,4 @@ Scripting::SubtitleModule::translationMode()
 	return app()->translationMode();
 }
 
-#include "scripting_subtitlemodule.moc"
+

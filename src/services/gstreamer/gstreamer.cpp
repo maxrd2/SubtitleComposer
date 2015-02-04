@@ -21,7 +21,7 @@
 
 #include <QtCore/QStringList>
 
-#include <KDebug>
+#include <QDebug>
 
 //#define VERBOSE
 
@@ -34,7 +34,7 @@ GStreamer::init()
 {
 	if(!s_inited) {
 		if(!gst_init_check(NULL, NULL, NULL)) {
-			kError() << "GStreamer initialization failed!";
+			qCritical() << "GStreamer initialization failed!";
 			return false;
 		}
 	}

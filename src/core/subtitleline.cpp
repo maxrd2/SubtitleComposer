@@ -241,9 +241,9 @@ SubtitleLine::index() const
 				break;
 			}
 		}
-//		kDebug() << "searched index";
+//		qDebug() << "searched index";
 	}
-//	kDebug() << "index" << m_index << "| text" << m_primaryText.string();
+//	qDebug() << "index" << m_index << "| text" << m_primaryText.string();
 	return m_cachedIndex;
 }
 
@@ -1033,4 +1033,4 @@ SubtitleLine::processAction(Action *action)
 	}
 }
 
-#include "subtitleline.moc"
+

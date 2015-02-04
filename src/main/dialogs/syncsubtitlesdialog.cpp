@@ -19,9 +19,9 @@
 
 #include "syncsubtitlesdialog.h"
 
-#include <QtGui/QGroupBox>
-#include <QtGui/QRadioButton>
-#include <QtGui/QGridLayout>
+#include <QGroupBox>
+#include <QRadioButton>
+#include <QGridLayout>
 
 #include <KLocale>
 
@@ -58,4 +58,4 @@ SyncSubtitlesDialog::synchronizeToReferenceTimes() const
 	return m_synchronizeRadioButton->isChecked();
 }
 
-#include "syncsubtitlesdialog.moc"
+

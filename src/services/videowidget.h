@@ -26,7 +26,7 @@
 
 #include <QtCore/QPoint>
 #include <QtCore/QSize>
-#include <QtGui/QWidget>
+#include <QWidget>
 
 class QResizeEvent;
 class QPaintEvent;

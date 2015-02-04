@@ -22,6 +22,8 @@
 
 #include <kcodecaction.h>
 
+#include <KIcon>
+
 class KCodecActionExt : public KCodecAction
 {
 	Q_OBJECT
@@ -32,8 +34,8 @@ public:
 	KCodecActionExt(const KIcon &icon, const QString &text, QObject *parent, bool showAutoOptions = false, bool showDefault = false);
 
 public:
-	KEncodingDetector::AutoDetectScript currentAutoDetectScript() const;
-	bool setCurrentAutoDetectScript(KEncodingDetector::AutoDetectScript);
+	KEncodingProber::ProberType currentAutoDetectScript() const;
+	bool setCurrentAutoDetectScript(KEncodingProber::ProberType);
 
 protected Q_SLOTS:
 	virtual void actionTriggered(QAction *);
@@ -42,7 +44,7 @@ private:
 	void init(bool showDefault);
 
 	bool m_showDefault;
-	KAction *m_autodetectAction;
+	QAction *m_autodetectAction;
 };
 
 #endif

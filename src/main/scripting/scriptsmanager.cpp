@@ -33,20 +33,23 @@
 #include "../../widgets/treeview.h"
 
 #include <QtCore/QProcess>
-#include <QtGui/QAction>
-#include <QtGui/QMenu>
-#include <QtGui/QLabel>
-#include <QtGui/QLineEdit>
-#include <QtGui/QGridLayout>
-#include <QtGui/QKeyEvent>
-#include <QtGui/QStringListModel>
+#include <QAction>
+#include <QMenu>
+#include <QLabel>
+#include <QLineEdit>
+#include <QGridLayout>
+#include <QKeyEvent>
+#include <QStringListModel>
 
-#include <KAction>
+#include <KFileDialog>
+
+#include <KIcon>
+#include <QAction>
 #include <KActionCollection>
 #include <KMenuBar>
 #include <KDialog>
 #include <KFileDialog>
-#include <KPushButton>
+#include <QPushButton>
 #include <KSeparator>
 #include <KMessageBox>
 #include <KStandardDirs>
@@ -90,27 +93,27 @@ void
 Debug::information(const QString &message)
 {
 	KMessageBox::information(app()->mainWindow(), message, i18n("Information"));
-	kDebug() << message;
+	qDebug() << message;
 }
 
 void
 Debug::warning(const QString &message)
 {
 	KMessageBox::sorry(app()->mainWindow(), message, i18n("Warning"));
-	kWarning() << message;
+	qWarning() << message;
 }
 
 void
 Debug::error(const QString &message)
 {
 	KMessageBox::error(app()->mainWindow(), message, i18n("Error"));
-	kWarning() << message;
+	qWarning() << message;
 }
 
 ScriptsManager::ScriptsManager(QObject *parent) :
 	QObject(parent)
 {
-	// kDebug() << "KROSS interpreters:" << Kross::Manager::self().interpreters();
+	// qDebug() << "KROSS interpreters:" << Kross::Manager::self().interpreters();
 
 	KGlobal::dirs()->addResourceType("script", "appdata", "scripts");
 
@@ -131,38 +134,38 @@ ScriptsManager::ScriptsManager(QObject *parent) :
 
 	QWidget *buttonsWidget = new QWidget(mainWidget);
 
-	KPushButton *createScriptButton = new KPushButton(buttonsWidget);
+	QPushButton *createScriptButton = new QPushButton(buttonsWidget);
 	createScriptButton->setText(i18n("Create..."));
 	createScriptButton->setWhatsThis(i18n("Creates a new script file."));
 	createScriptButton->setIcon(KIcon("document-new"));
 	connect(createScriptButton, SIGNAL(clicked()), this, SLOT(createScript()));
 
-	KPushButton *addScriptButton = new KPushButton(buttonsWidget);
+	QPushButton *addScriptButton = new QPushButton(buttonsWidget);
 	addScriptButton->setText(i18n("Add..."));
 	addScriptButton->setWhatsThis(i18n("Copies an existing script from a specified location."));
 	addScriptButton->setIcon(KIcon("document-open"));
 	connect(addScriptButton, SIGNAL(clicked()), this, SLOT(addScript()));
 
-	KPushButton *removeScriptButton = new KPushButton(buttonsWidget);
+	QPushButton *removeScriptButton = new QPushButton(buttonsWidget);
 	removeScriptButton->setText(i18n("Remove"));
 	removeScriptButton->setWhatsThis(i18n("Sends the selected script to the trash."));
 	removeScriptButton->setIcon(KIcon("user-trash"));
 	connect(removeScriptButton, SIGNAL(clicked()), this, SLOT(removeScript()));
 
-	KPushButton *editScriptButton = new KPushButton(buttonsWidget);
+	QPushButton *editScriptButton = new QPushButton(buttonsWidget);
 	editScriptButton->setText(i18n("Edit"));
 	editScriptButton->setWhatsThis(i18n("Opens the selected script with an external editor."));
 	editScriptButton->setIcon(KIcon("document-edit"));
 	connect(editScriptButton, SIGNAL(clicked()), this, SLOT(editScript()));
 
-	m_runScriptButton = new KPushButton(buttonsWidget);
+	m_runScriptButton = new QPushButton(buttonsWidget);
 	m_runScriptButton->setEnabled(false);
 	m_runScriptButton->setText(i18n("Run"));
 	m_runScriptButton->setWhatsThis(i18n("Executes the selected script."));
 	m_runScriptButton->setIcon(KIcon("media-playback-start"));
 	connect(m_runScriptButton, SIGNAL(clicked()), this, SLOT(runScript()));
 
-	KPushButton *reloadScriptsButton = new KPushButton(buttonsWidget);
+	QPushButton *reloadScriptsButton = new QPushButton(buttonsWidget);
 	reloadScriptsButton->setText(i18n("Refresh"));
 	reloadScriptsButton->setWhatsThis(i18n("Reloads the installed scripts list."));
 	reloadScriptsButton->setIcon(KIcon("view-refresh"));
@@ -274,13 +277,13 @@ ScriptsManager::mimeTypes()
 }
 
 void
-ScriptsManager::addScript(const KUrl &sSU)
+ScriptsManager::addScript(const QUrl &sSU)
 {
-	KUrl srcScriptUrl = sSU;
+	QUrl srcScriptUrl = sSU;
 
 	if(srcScriptUrl.isEmpty()) {
-		KFileDialog fileDialog(KUrl(), QString(), m_dialog);
-		fileDialog.setCaption(i18n("Select Existing Script"));
+		KFileDialog fileDialog(QUrl(), QString(), m_dialog);
+		fileDialog.setWindowTitle(i18n("Select Existing Script"));
 		fileDialog.setOperationMode(KFileDialog::Opening);
 		fileDialog.setMimeFilter(mimeTypes());
 		fileDialog.setMode(KFile::File | KFile::ExistingOnly);
@@ -310,8 +313,7 @@ ScriptsManager::addScript(const KUrl &sSU)
 	FileLoadHelper fileLoadHelper(srcScriptUrl);
 
 	if(!fileLoadHelper.open()) {
-		KMessageBox::sorry(app()->mainWindow(), i18n("There was an error opening the file <b>%1</b>.", srcScriptUrl.prettyUrl())
-						   );
+		KMessageBox::sorry(app()->mainWindow(), i18n("There was an error opening the file <b>%1</b>.", srcScriptUrl.toString(QUrl::PreferLocalFile)));
 		return;
 	}
 
@@ -329,17 +331,15 @@ ScriptsManager::removeScript(const QString &sN)
 {
 	QString scriptName = sN.isEmpty() ? currentScriptName() : sN;
 	if(scriptName.isEmpty() || !m_scripts.contains(scriptName)) {
-		kWarning() << "unknow script specified";
+		qWarning() << "unknow script specified";
 		return;
 	}
 
-	if(KMessageBox::warningContinueCancel(app()->mainWindow(), i18n("Do you really want to send file <b>%1</b> to the trash?", scriptName), i18n("Move to Trash")
-										  ) != KMessageBox::Continue)
+	if(KMessageBox::warningContinueCancel(app()->mainWindow(), i18n("Do you really want to send file <b>%1</b> to the trash?", scriptName), i18n("Move to Trash")) != KMessageBox::Continue)
 		return;
 
 	if(!FileTrasher(m_scripts[scriptName]).exec()) {
-		KMessageBox::sorry(app()->mainWindow(), i18n("There was an error removing the file <b>%1</b>.", m_scripts[scriptName])
-						   );
+		KMessageBox::sorry(app()->mainWindow(), i18n("There was an error removing the file <b>%1</b>.", m_scripts[scriptName]));
 		return;
 	}
 
@@ -351,11 +351,11 @@ ScriptsManager::editScript(const QString &sN)
 {
 	QString scriptName = sN.isEmpty() ? currentScriptName() : sN;
 	if(scriptName.isEmpty() || !m_scripts.contains(scriptName)) {
-		kWarning() << "unknow script specified";
+		qWarning() << "unknow script specified";
 		return;
 	}
 
-	if(!KRun::runUrl(KUrl(m_scripts[scriptName]), "text/plain", app()->mainWindow(), false, false))
+	if(!KRun::runUrl(QUrl(m_scripts[scriptName]), "text/plain", app()->mainWindow(), false, false))
 		KMessageBox::sorry(app()->mainWindow(), i18n("Could not launch external editor.\n"));
 }
 
@@ -363,7 +363,7 @@ void
 ScriptsManager::runScript(const QString &sN)
 {
 	if(!app()->subtitle()) {
-		kWarning() << "attempt to run script without a working subtitle";
+		qWarning() << "attempt to run script without a working subtitle";
 		return;
 	}
 
@@ -376,7 +376,7 @@ ScriptsManager::runScript(const QString &sN)
 	}
 
 	if(!m_scripts.contains(scriptName)) {
-		kWarning() << "unknow script file specified";
+		qWarning() << "unknow script file specified";
 		return;
 	}
 
@@ -504,4 +504,4 @@ ScriptsManager::eventFilter(QObject *object, QEvent *event)
 	return QObject::eventFilter(object, event);
 }
 
-#include "scriptsmanager.moc"
+

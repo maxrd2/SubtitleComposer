@@ -38,7 +38,7 @@
 #include <QtCore/QFileInfo>
 #include <QApplication>
 
-#include <KDebug>
+#include <QDebug>
 
 #define DEFAULT_MIN_POSITION_DELTA 0.02
 
@@ -102,10 +102,10 @@ Player::Player() :
 #ifdef HAVE_MPV
 	addBackend(new MPVBackend(this));
 #endif
-	addBackend(new PhononPlayerBackend(this));
+//	addBackend(new PhononPlayerBackend(this));
 
 #ifdef HAVE_XINE
-	addBackend(new XinePlayerBackend(this));
+//	addBackend(new XinePlayerBackend(this));
 #endif
 
 	// the timeout might seem too much, but it only matters when the file couldn't be
@@ -346,7 +346,7 @@ Player::setErrorState(const QString &errorMessage)
 	} else {
 		activeBackend()->stop();
 		m_state = Player::Ready;
-		emit playbackError(errorMessage);
+		emit playbacqCritical(errorMessage);
 		emit stopped();
 	}
 }
@@ -425,7 +425,7 @@ Player::play()
 
 	if(!activeBackend()->play()) {
 		resetState();
-		emit playbackError();
+		emit playbacqCritical();
 	}
 
 	return true;
@@ -439,7 +439,7 @@ Player::pause()
 
 	if(!activeBackend()->pause()) {
 		resetState();
-		emit playbackError();
+		emit playbacqCritical();
 	}
 
 	return true;
@@ -459,7 +459,7 @@ Player::togglePlayPaused()
 
 	if(hadError) {
 		resetState();
-		emit playbackError();
+		emit playbacqCritical();
 	}
 
 	return true;
@@ -476,7 +476,7 @@ Player::seek(double seconds, bool accurate)
 
 	if(!activeBackend()->seek(seconds, accurate)) {
 		resetState();
-		emit playbackError();
+		emit playbacqCritical();
 	}
 
 	return true;
@@ -499,7 +499,7 @@ Player::stop()
 
 	if(!activeBackend()->stop()) {
 		resetState();
-		emit playbackError();
+		emit playbacqCritical();
 		return true;
 	}
 
@@ -526,21 +526,21 @@ Player::setActiveAudioStream(int audioStreamIndex)
 
 		if(!activeBackend()->setActiveAudioStream(audioStreamIndex)) {
 			resetState();
-			emit playbackError();
+			emit playbacqCritical();
 			return true;
 		}
 
 		if(!onTheFly) {
 			if(!activeBackend()->stop()) {
 				resetState();
-				emit playbackError();
+				emit playbacqCritical();
 				return true;
 			}
 
 			if(savedPosition > 0.0) {
 				if(!activeBackend()->play()) {
 					resetState();
-					emit playbackError();
+					emit playbacqCritical();
 					return true;
 				}
 
@@ -583,7 +583,7 @@ Player::setVolume(double volume)
 		if(!m_muted && m_state == Player::Playing) {
 			if(!activeBackend()->setVolume(m_backendVolume)) {
 				resetState();
-				emit playbackError();
+				emit playbacqCritical();
 				return;
 			}
 		}
@@ -603,7 +603,7 @@ Player::setMuted(bool muted)
 		if(m_state == Player::Playing) {
 			if(!activeBackend()->setVolume(m_backendVolume)) {
 				resetState();
-				emit playbackError();
+				emit playbacqCritical();
 				return;
 			}
 		}
@@ -612,4 +612,4 @@ Player::setMuted(bool muted)
 	}
 }
 
-#include "player.moc"
+

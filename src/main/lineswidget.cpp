@@ -26,21 +26,22 @@
 #include <QtCore/QVariant>
 #include <QtCore/QTimer>
 #include <QtCore/QEvent>
-#include <QtGui/QScrollBar>
-#include <QtGui/QDragEnterEvent>
-#include <QtGui/QDropEvent>
-#include <QtGui/QPainter>
-#include <QtGui/QFontMetrics>
-#include <QtGui/QTextDocument>
-#include <QtGui/QAbstractTextDocumentLayout>
-#include <QtGui/QHeaderView>
+#include <QScrollBar>
+#include <QDragEnterEvent>
+#include <QDropEvent>
+#include <QPainter>
+#include <QFontMetrics>
+#include <QTextDocument>
+#include <QAbstractTextDocumentLayout>
+#include <QHeaderView>
 
-#include <KDebug>
+#include <KIcon>
+#include <QDebug>
 #include <KLocale>
 #include <KConfig>
 #include <KConfigGroup>
 #include <KMenu>
-#include <KUrl>
+#include <QUrl>
 
 #if QT_VERSION >= 0x40500
 #define TEXT_DOCUMENT_CORRECTION 4
@@ -987,22 +988,25 @@ LinesWidget::eventFilter(QObject *object, QEvent *event)
 {
 	if(object == viewport()) {
 		if(event->type() == QEvent::DragEnter) {
+			/*
 			QDragEnterEvent *dragEnterEvent = static_cast<QDragEnterEvent *>(event);
-			KUrl::List urls = KUrl::List::fromMimeData(dragEnterEvent->mimeData());
+			QList<QUrl> urls = QList<QUrl>::fromMimeData(dragEnterEvent->mimeData());
 			if(!urls.isEmpty())
 				dragEnterEvent->accept();
 			else
 				dragEnterEvent->ignore();
 			return true;
+			*/
 		} else if(event->type() == QEvent::DragMove) {
 			return true;            // eat event
 		} else if(event->type() == QEvent::Drop) {
+			/*
 			QDropEvent *dropEvent = static_cast<QDropEvent *>(event);
 
-			KUrl::List urls = KUrl::List::fromMimeData(dropEvent->mimeData());
+			QList<QUrl> urls = QList<QUrl>::fromMimeData(dropEvent->mimeData());
 			if(!urls.isEmpty()) {
-				for(KUrl::List::ConstIterator it = urls.begin(), end = urls.end(); it != end; ++it) {
-					const KUrl &url = *it;
+				for(QList<QUrl>::ConstIterator it = urls.begin(), end = urls.end(); it != end; ++it) {
+					const QUrl &url = *it;
 
 					if(url.protocol() != "file")
 						continue;
@@ -1013,6 +1017,7 @@ LinesWidget::eventFilter(QObject *object, QEvent *event)
 			}
 
 			return true;            // eat event
+			*/
 		} else
 			return TreeView::eventFilter(object, event); // standard event processing
 	}
@@ -1080,7 +1085,7 @@ LinesWidget::contextMenuEvent(QContextMenuEvent *e)
 	action->setCheckable(true);
 	action->setChecked(referenceLine->errorFlags() & SubtitleLine::UserMark);
 	errorsMenu.addSeparator();
-	errorsMenu.addAction(i18n("Check Errors..."), app, SLOT(checkErrors()));
+	errorsMenu.addAction(i18n("Check Errors..."), app, SLOT(checqCriticals()));
 	errorsMenu.addAction(i18n("Clear Errors..."), app, SLOT(clearErrors()));
 	errorsMenu.addSeparator();
 	errorsMenu.addAction(i18n("Show Errors..."), app, SLOT(showErrors()));
@@ -1189,4 +1194,4 @@ LinesWidgetScrollToModelDetacher::~LinesWidgetScrollToModelDetacher()
 	m_linesWidget.m_scrollFollowsModel = true;
 }
 
-#include "lineswidget.moc"
+

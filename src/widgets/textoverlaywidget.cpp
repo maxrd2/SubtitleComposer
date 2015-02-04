@@ -20,13 +20,13 @@
 #include "textoverlaywidget.h"
 
 #include <QtCore/QCoreApplication>
-#include <QtGui/QPainter>
-#include <QtGui/QTextDocument>
-#include <QtGui/QAbstractTextDocumentLayout>
-#include <QtGui/QResizeEvent>
+#include <QPainter>
+#include <QTextDocument>
+#include <QAbstractTextDocumentLayout>
+#include <QResizeEvent>
 
 #include "../profiler.h"
-#include <KDebug>
+#include <QDebug>
 
 TextOverlayWidget::TextOverlayWidget(QWidget *parent) :
 	QWidget(parent, 0),
@@ -491,4 +491,4 @@ TextOverlayWidget::setOutline()
 
 }
 
-#include "textoverlaywidget.moc"
+

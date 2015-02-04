@@ -30,7 +30,7 @@
 
 #include <QtCore/QObject>
 #include <QtCore/QString>
-#include <QtGui/QWidget>
+#include <QWidget>
 
 namespace SubtitleComposer {
 class DecoderBackend : public ServiceBackend

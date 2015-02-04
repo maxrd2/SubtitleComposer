@@ -27,7 +27,7 @@
 #include <QtCore/QObject>
 #include <QtCore/QString>
 #include <QtCore/QMap>
-#include <QtGui/QColor>
+#include <QColor>
 
 class KConfig;
 class KSharedConfig;

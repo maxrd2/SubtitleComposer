@@ -24,21 +24,21 @@
 #include <config.h>
 #endif
 
-#include <KUrl>
+#include <QUrl>
 
 class FileTrasher
 {
 public:
-	FileTrasher(const KUrl &url);
+	FileTrasher(const QUrl &url);
 	FileTrasher(const QString &path);
 	~FileTrasher();
 
-	const KUrl & url();
+	const QUrl & url();
 
 	bool exec();
 
 private:
-	KUrl m_url;
+	QUrl m_url;
 };
 
 #endif

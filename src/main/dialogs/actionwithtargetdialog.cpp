@@ -20,12 +20,13 @@
 #include "actionwithtargetdialog.h"
 #include "../application.h"
 
-#include <QtGui/QGroupBox>
-#include <QtGui/QButtonGroup>
-#include <QtGui/QRadioButton>
-#include <QtGui/QGridLayout>
+#include <QGroupBox>
+#include <QButtonGroup>
+#include <QRadioButton>
+#include <QGridLayout>
 
-#include <KDebug>
+#include <KIcon>
+#include <QDebug>
 
 using namespace SubtitleComposer;
 
@@ -409,4 +410,4 @@ ActionWithLinesAndTextsTargetDialog::exec()
 	return m_targetGroupBox->isHidden() ? QDialog::Accepted : ActionDialog::exec();
 }
 
-#include "actionwithtargetdialog.moc"
+

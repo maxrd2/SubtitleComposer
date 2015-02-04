@@ -26,7 +26,7 @@
 
 #include <QtCore/QList>
 
-#include <KAction>
+#include <QAction>
 
 namespace SubtitleComposer {
 class Subtitle;

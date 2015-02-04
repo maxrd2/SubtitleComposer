@@ -29,9 +29,9 @@
 #include <QtCore/QThread>
 #include <QtCore/QCoreApplication>
 
-#include <KDebug>
+#include <QDebug>
 #include <KLocale>
-#include <KUrl>
+#include <QUrl>
 
 using namespace SubtitleComposer;
 
@@ -127,7 +127,7 @@ XineDecoderBackend::initialize(QWidget * /*videoWidgetParent */)
 {
 	if(!initializeXine()) {
 		finalizeXine();
-		kError() << "xine initialization failed!";
+		qCritical() << "xine initialization failed!";
 		return (QWidget *)1;
 	}
 
@@ -178,8 +178,8 @@ XineDecoderBackend::openFile(const QString &filePath)
 	if(fileExtension == "mkv" || fileExtension == "ogg")
 		return false;
 
-	KUrl fileUrl;
-	fileUrl.setProtocol("file");
+	QUrl fileUrl;
+	fileUrl.setScheme("file");
 	fileUrl.setPath(filePath);
 
 	if(!xine_open(m_xineStream, fileUrl.url().toLocal8Bit()))
@@ -321,7 +321,7 @@ bool
 XineDecoderBackend::initializeXine()
 {
 	if(!(m_xineEngine = xine_new())) {
-		kDebug() << "Could not init Xine engine!";
+		qDebug() << "Could not init Xine engine!";
 		return false;
 	}
 
@@ -333,13 +333,13 @@ XineDecoderBackend::initializeXine()
 
 	m_audioPort = xine_new_framegrab_audio_port(m_xineEngine);
 	if(!m_audioPort) {
-		kDebug() << "Could not get Xine framegrab audio port!";
+		qDebug() << "Could not get Xine framegrab audio port!";
 		return false;
 	}
 
 	m_xineStream = xine_stream_new(m_xineEngine, m_audioPort, NULL);
 	if(!m_xineStream) {
-		kDebug() << "Could not create Xine stream!";
+		qDebug() << "Could not create Xine stream!";
 		return false;
 	}
 
@@ -382,4 +382,4 @@ XineDecoderBackend::finalizeXine()
 	}
 }
 
-#include "xinedecoderbackend.moc"
+

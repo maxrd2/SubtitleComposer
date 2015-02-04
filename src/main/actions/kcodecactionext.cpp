@@ -20,22 +20,26 @@
 #include "kcodecactionext.h"
 
 #include <KLocale>
-#include <KDebug>
+#include <QDebug>
 #include <KGlobal>
 #include <KCharsets>
+#include <KActionCollection>
+#include <KEncodingProber>
 
 #include <QtCore/QVariant>
 #include <QtCore/QTextCodec>
-#include <QtGui/QMenu>
+#include <QMenu>
+
+#include "../application.h"
 
 void
 KCodecActionExt::init(bool showDefault)
 {
-	m_autodetectAction = new KAction(parent());
+	m_autodetectAction = new QAction(parent());
 	m_autodetectAction->setText(i18n("Autodetect"));
 	m_autodetectAction->setCheckable(true);
-	m_autodetectAction->setShortcutConfigurable(false);
-	m_autodetectAction->setData(QVariant((uint)KEncodingDetector::SemiautomaticDetection));
+	SubtitleComposer::app()->mainWindow()->actionCollection()->setShortcutsConfigurable(m_autodetectAction, false);
+	m_autodetectAction->setData(QVariant((uint)KEncodingProber::Universal));
 	m_autodetectAction->setActionGroup(selectableActionGroup());
 	menu()->insertAction(action(0), m_autodetectAction);
 	menu()->insertSeparator(action(1));
@@ -88,4 +92,4 @@ KCodecActionExt::actionTriggered(QAction *action)
 	}
 }
 
-#include "kcodecactionext.moc"
+

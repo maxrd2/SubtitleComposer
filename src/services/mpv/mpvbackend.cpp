@@ -22,7 +22,7 @@
 #include "mpvconfigwidget.h"
 #include "../../common/qxtsignalwaiter.h"
 
-#include <KDebug>
+#include <QDebug>
 #include <KLocale>
 #include <KStandardDirs>
 #include <locale>
@@ -242,7 +242,7 @@ MPVBackend::mpvEventHandle(mpv_event *event)
 	}
 	case MPV_EVENT_LOG_MESSAGE: {
 		struct mpv_event_log_message *msg = (struct mpv_event_log_message *)event->data;
-		kDebug() << "[MPV:" << msg->prefix << "] " << msg->level << ": " << msg->text;
+		qDebug() << "[MPV:" << msg->prefix << "] " << msg->level << ": " << msg->text;
 		break;
 	}
 	case MPV_EVENT_SHUTDOWN: {
@@ -369,4 +369,4 @@ MPVBackend::setVolume(double volume)
 	return true;
 }
 
-#include "mpvbackend.moc"
+

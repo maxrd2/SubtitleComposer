@@ -29,8 +29,8 @@
 
 #include <QtCore/QString>
 #include <QtCore/QTextStream>   // NOTE this is only here because Qt complains otherwise when including Phonon/Global...
-#include <QtGui/QWidget>
-#include <Phonon/Global>
+#include <QWidget>
+#include <KDE/Phonon/Global>
 
 class QTimer;
 

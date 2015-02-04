@@ -21,21 +21,21 @@
 #include "../application.h"
 #include "../../formats/formatmanager.h"
 
-#include <KDebug>
+#include <QDebug>
 #include <KLocale>
 #include <KComboBox>
-#include <kabstractfilewidget.h>
+#include <QGridLayout>
+#include <QHBoxLayout>
 
 using namespace SubtitleComposer;
 
 OpenSubtitleDialog::OpenSubtitleDialog(bool primary, const QString &startDir, const QString &encoding, QWidget *parent) :
-	KFileDialog(startDir, inputFormatsFilter(), parent)
+	QFileDialog(parent, primary ? i18n("Open Subtitle") : i18n("Open Translation Subtitle"), startDir, inputFormatsFilter())
 {
-	setCaption(primary ? i18n("Open Subtitle") : i18n("Open Translation Subtitle"));
-	setOperationMode(KFileDialog::Opening);
+	setAcceptMode(QFileDialog::AcceptOpen);
 
 	setModal(true);
-	setMode(KFile::File | KFile::ExistingOnly);
+	setFileMode(QFileDialog::ExistingFile);
 
 	m_encodingComboBox = new KComboBox(this);
 	m_encodingComboBox->addItem(i18n("Autodetect"));
@@ -44,7 +44,14 @@ OpenSubtitleDialog::OpenSubtitleDialog(bool primary, const QString &startDir, co
 	m_encodingComboBox->setSizePolicy(QSizePolicy::MinimumExpanding, QSizePolicy::Fixed);
 
 	// FIXME set "encoding" label buddy to m_encodingComboBox (how do we get the "encoding" label widget?)
-	fileWidget()->setCustomWidget(i18n("Encoding:"), m_encodingComboBox);
+//	fileWidget()->setCustomWidget(i18n("Encoding:"), m_encodingComboBox);
+
+	QGridLayout* mainLayout = dynamic_cast<QGridLayout*>(layout());
+	if(mainLayout) {
+		int numRows = mainLayout->rowCount();
+//		int numCols = mainLayout->columnCount();
+		mainLayout->addWidget(m_encodingComboBox, numRows, 0, 1, -1);
+	}
 }
 
 QString

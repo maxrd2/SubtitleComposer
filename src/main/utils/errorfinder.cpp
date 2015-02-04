@@ -21,11 +21,11 @@
 #include "../../core/subtitleiterator.h"
 #include "../dialogs/actionwitherrortargetsdialog.h"
 
-#include <QtGui/QGroupBox>
-#include <QtGui/QCheckBox>
-#include <QtGui/QGridLayout>
+#include <QGroupBox>
+#include <QCheckBox>
+#include <QGridLayout>
 
-#include <KDebug>
+#include <QDebug>
 #include <KLocale>
 
 #include <KMessageBox>
@@ -254,4 +254,4 @@ ErrorFinder::onIteratorSynchronized(int firstIndex, int lastIndex, bool inserted
 	}
 }
 
-#include "errorfinder.moc"
+

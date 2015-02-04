@@ -25,9 +25,9 @@
 
 #include <QtCore/QEvent>
 #include <QtCore/QTimerEvent>
-#include <QtGui/QMouseEvent>
+#include <QMouseEvent>
 
-#include <KDebug>
+#include <QDebug>
 
 AttachableWidget::AttachableWidget(AttachableWidget::Place place, unsigned animStepDuration) :
 	// QWidget(0, Qt::Window | Qt::FramelessWindowHint | Qt::X11BypassWindowManagerHint),
@@ -80,7 +80,7 @@ AttachableWidget::attach(QWidget *targetWidget)
 {
 	if(m_targetWidget != targetWidget) {
 		if(m_targetWidget) {
-			kWarning() << "attach attempted but already attached to another widget";
+			qWarning() << "attach attempted but already attached to another widget";
 			return;
 		}
 
@@ -107,7 +107,7 @@ AttachableWidget::dettach()
 
 		setParent(0);
 	} else
-		kWarning() << "dettach attempted but not attached to any widget";
+		qWarning() << "dettach attempted but not attached to any widget";
 }
 
 void
@@ -191,4 +191,4 @@ AttachableWidget::eventFilter(QObject *object, QEvent *event)
 	return QWidget::eventFilter(object, event);
 }
 
-#include "attachablewidget.moc"
+

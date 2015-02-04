@@ -27,7 +27,7 @@
 #include "gstreamerconfig.h"
 #include "../../config/appconfiggroupwidget.h"
 
-#include <QtGui/QWidget>
+#include <QWidget>
 
 class QCheckBox;
 class KComboBox;

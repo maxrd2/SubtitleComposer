@@ -114,4 +114,4 @@ Scripting::List::clear()
 	m_backend.clear();
 }
 
-#include "scripting_list.moc"
+

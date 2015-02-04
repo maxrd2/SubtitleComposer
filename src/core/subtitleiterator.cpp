@@ -41,7 +41,7 @@ SubtitleIterator::SubtitleIterator(const Subtitle &subtitle, const RangeList &ra
 	if(m_ranges.isEmpty()) {
 		m_index = Invalid;              // no operations allowed
 		if(m_subtitle->linesCount())
-			kDebug() << "SubtitleIterator requested with empty ranges list";
+			qDebug() << "SubtitleIterator requested with empty ranges list";
 	} else {
 		m_index = Invalid - 1;  // a non INVALID index (needed only for initialization)
 		if(gotoLast)
@@ -352,9 +352,9 @@ SubtitleIterator::onSubtitleLinesRemoved(int firstIndex, int lastIndex)
 	int prevIndex = m_index;
 	Range removedRange(firstIndex, lastIndex);
 
-	kDebug() << "PREV RANGES" << m_ranges.inspect();
+	qDebug() << "PREV RANGES" << m_ranges.inspect();
 	m_ranges.shiftIndexesBackwards(firstIndex, removedRange.length());
-	kDebug() << "NEW RANGES" << m_ranges.inspect();
+	qDebug() << "NEW RANGES" << m_ranges.inspect();
 
 	if(m_ranges.isEmpty())
 		m_index = Invalid;
@@ -381,4 +381,4 @@ SubtitleIterator::onSubtitleLinesRemoved(int firstIndex, int lastIndex)
 	emit syncronized(firstIndex, lastIndex, false);
 }
 
-#include "subtitleiterator.moc"
+

@@ -22,8 +22,9 @@
 #include <QtCore/QFile>
 
 #include <KLocale>
-#include <KDebug>
+#include <QDebug>
 #include <KStandardDirs>
+#include <QStandardPaths>
 
 KRecentFilesActionExt::KRecentFilesActionExt(QObject *parent) :
 	KSelectAction(parent),
@@ -78,16 +79,18 @@ KRecentFilesActionExt::count() const
 }
 
 QString
-KRecentFilesActionExt::encodingForUrl(const KUrl &url) const
+KRecentFilesActionExt::encodingForUrl(const QUrl &url) const
 {
-	QAction *action = actionForUrl(url);
-	return action ? m_urls[action].fileEncoding() : QString();
+	// TODO: mmmm?
+	return QString();
+//	QAction *action = actionForUrl(url);
+//	return action ? m_urls[action].fileEncoding() : QString();
 }
 
-KUrl::List
+QList<QUrl>
 KRecentFilesActionExt::urls() const
 {
-	KUrl::List urls;
+	QList<QUrl> urls;
 	QList<QAction *> actions = this->actions();
 	QAction *action;
 	for(QList<QAction *>::ConstIterator it = actions.constBegin(), end = actions.constEnd(); it != end; ++it) {
@@ -99,23 +102,21 @@ KRecentFilesActionExt::urls() const
 }
 
 void
-KRecentFilesActionExt::setUrls(const KUrl::List &urls, bool ignoreCollisions)
+KRecentFilesActionExt::setUrls(const QList<QUrl> &urls, bool ignoreCollisions)
 {
 	clearUrls();
 
 	QString entryText("%1 [%2]");
 
-	for(KUrl::List::ConstIterator it = urls.begin(), end = urls.end(); it != end; ++it) {
-		if((*it).isLocalFile() && !KGlobal::dirs()->relativeLocation("tmp", (*it).path()).startsWith('/'))
+	for(QList<QUrl>::ConstIterator it = urls.begin(), end = urls.end(); it != end; ++it) {
+		// QStandardPaths::locate might not work like it is now
+		if((*it).isLocalFile() && !QStandardPaths::locate(QStandardPaths::TempLocation, (*it).path(), QStandardPaths::LocateFile).isEmpty())
 			continue; // don't store temporary paths
 
 		if(!ignoreCollisions && actionForUrl(*it))
 			continue;
 
-		QAction *action = new QAction(entryText.arg((*it).fileName()).arg((*it).isLocalFile() ? (*it).path() : (*it).pathOrUrl()
-																		  ),
-									  selectableActionGroup()
-									  );
+		QAction *action = new QAction(entryText.arg(it->fileName()).arg(it->toString(QUrl::PreferLocalFile)), selectableActionGroup());
 
 		m_urls[action] = *it;
 		m_actions[*it] = action;
@@ -128,17 +129,17 @@ KRecentFilesActionExt::setUrls(const KUrl::List &urls, bool ignoreCollisions)
 }
 
 void
-KRecentFilesActionExt::setUrls(const KUrl::List &urls)
+KRecentFilesActionExt::setUrls(const QList<QUrl> &urls)
 {
 	setUrls(urls, false);
 }
 
 void
-KRecentFilesActionExt::addUrl(const KUrl &url)
+KRecentFilesActionExt::addUrl(const QUrl &url)
 {
 	removeUrl(url); // avoid duplicates entries (without taking encoding into account)
 
-	KUrl::List newUrls = urls();
+	QList<QUrl> newUrls = urls();
 	newUrls.prepend(url);
 
 	setUrls(newUrls, true);
@@ -156,7 +157,7 @@ KRecentFilesActionExt::removeAction(QAction *action)
 }
 
 void
-KRecentFilesActionExt::removeUrl(const KUrl &url)
+KRecentFilesActionExt::removeUrl(const QUrl &url)
 {
 	if(QAction * action = actionForUrl(url))
 		removeAction(action)->deleteLater();
@@ -173,14 +174,14 @@ KRecentFilesActionExt::clearUrls()
 }
 
 QAction *
-KRecentFilesActionExt::actionForUrl(const KUrl &url) const
+KRecentFilesActionExt::actionForUrl(const QUrl &url) const
 {
-	KUrl refUrl(url);
-	refUrl.setFileEncoding(QString());
+	QUrl refUrl(url);
+//	refUrl.setFileEncoding(QString());
 
-	for(QMap<KUrl, QAction *>::ConstIterator it = m_actions.begin(), end = m_actions.end(); it != end; ++it) {
-		KUrl curUrl(it.key());
-		curUrl.setFileEncoding(QString());
+	for(QMap<QUrl, QAction *>::ConstIterator it = m_actions.begin(), end = m_actions.end(); it != end; ++it) {
+		QUrl curUrl(it.key());
+//		curUrl.setFileEncoding(QString());
 		if(curUrl == refUrl)
 			return it.value();
 	}
@@ -190,13 +191,13 @@ KRecentFilesActionExt::actionForUrl(const KUrl &url) const
 void
 KRecentFilesActionExt::loadEntries(const KConfigGroup &group)
 {
-	KUrl::List urls;
+	QList<QUrl> urls;
 
 	QString key("File%1");
 	for(int index = 0, size = qMin(group.readEntry<int>("Files", m_maxItems), m_maxItems); index < size; ++index) {
 		QString value = group.readPathEntry(key.arg(index), QString());
 		if(!value.isEmpty()) {
-			KUrl url(value);
+			QUrl url(value);
 			if(url.isLocalFile() && !QFile::exists(url.path()))
 				continue; // Don't restore if file doesn't exist anymore
 			urls.append(url);
@@ -213,12 +214,12 @@ KRecentFilesActionExt::saveEntries(const KConfigGroup &g)
 
 	group.deleteGroup();
 
-	KUrl::List urls = this->urls();
+	QList<QUrl> urls = this->urls();
 
 	int index = 0;
 	QString key("File%1");
-	for(KUrl::List::ConstIterator it = urls.constBegin(), end = urls.constEnd(); it != end; ++it)
-		group.writePathEntry(key.arg(index++), (*it).pathOrUrl());
+	for(QList<QUrl>::ConstIterator it = urls.constBegin(), end = urls.constEnd(); it != end; ++it)
+		group.writePathEntry(key.arg(index++), (*it).toString(QUrl::PreferLocalFile));
 
 	group.writeEntry("Files", urls.count());
 }
@@ -239,4 +240,4 @@ KRecentFilesActionExt::onActionChanged()
 		setEnabled(false);
 }
 
-#include "krecentfilesactionext.moc"
+

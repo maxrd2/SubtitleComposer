@@ -30,7 +30,7 @@
 #include <QtCore/QTimer>
 #include <QtCore/QFileInfo>
 
-#include <KDebug>
+#include <QDebug>
 
 #define DEFAULT_MIN_POSITION_DELTA 0.02
 
@@ -341,4 +341,4 @@ Decoder::stop()
 	return true;
 }
 
-#include "decoder.moc"
+

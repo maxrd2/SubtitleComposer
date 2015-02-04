@@ -22,15 +22,16 @@
 #include "../application.h"
 
 #include <QtCore/QTextCodec>
-#include <QtGui/QLabel>
-#include <QtGui/QGroupBox>
-#include <QtGui/QGridLayout>
+#include <QLabel>
+#include <QGroupBox>
+#include <QGridLayout>
 
 #include <KApplication>
-#include <KPushButton>
+#include <QPushButton>
 #include <kurlcompletion.h>
 #include <KComboBox>
 #include <KLineEdit>
+#include <KIcon>
 
 using namespace SubtitleComposer;
 
@@ -50,7 +51,7 @@ SelectableSubtitleDialog::createSubtitleGroupBox(const QString &title, bool addT
 	subtitlePathLabel->setText(i18n("Path:"));
 	subtitlePathLabel->setBuddy(m_subtitleUrlLineEdit);
 
-	KPushButton *subtitleButton = new KPushButton(m_subtitleGroupBox);
+	QPushButton *subtitleButton = new QPushButton(m_subtitleGroupBox);
 	subtitleButton->setIcon(KIcon("document-open"));
 	subtitleButton->setToolTip(i18n("Select subtitle"));
 	int buttonSize = subtitleButton->sizeHint().height();
@@ -88,10 +89,10 @@ SelectableSubtitleDialog::createSubtitleGroupBox(const QString &title, bool addT
 void
 SelectableSubtitleDialog::selectSubtitle()
 {
-	OpenSubtitleDialog openDlg(true, subtitleUrl().isEmpty() ? app()->lastSubtitleDirectory().prettyUrl() : subtitleUrl().prettyUrl(), subtitleEncoding());
+	OpenSubtitleDialog openDlg(true, subtitleUrl().isEmpty() ? app()->lastSubtitleDirectory().toString() : subtitleUrl().toString(), subtitleEncoding());
 
 	if(openDlg.exec() == QDialog::Accepted) {
-		m_subtitleUrlLineEdit->setText(openDlg.selectedFile());
+		m_subtitleUrlLineEdit->setText(openDlg.selectedFiles().first());
 		if(openDlg.selectedEncoding().isEmpty())
 			m_subtitleEncodingComboBox->setCurrentItem(i18n("Autodetect"));
 		else
@@ -99,10 +100,10 @@ SelectableSubtitleDialog::selectSubtitle()
 	}
 }
 
-KUrl
+QUrl
 SelectableSubtitleDialog::subtitleUrl() const
 {
-	return KUrl(m_subtitleUrlLineEdit->text());
+	return QUrl(m_subtitleUrlLineEdit->text());
 }
 
 QString
@@ -114,4 +115,4 @@ SelectableSubtitleDialog::subtitleEncoding() const
 		return m_subtitleEncodingComboBox->currentText();
 }
 
-#include "selectablesubtitledialog.moc"
+

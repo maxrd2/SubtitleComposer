@@ -75,4 +75,4 @@ Scripting::RangesModule::newSelectionRangeList()
 	return new Scripting::RangeList(app()->linesWidget()->selectionRanges(), this);
 }
 
-#include "scripting_rangesmodule.moc"
+

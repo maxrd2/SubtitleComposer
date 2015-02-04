@@ -20,7 +20,7 @@
 #include "service.h"
 #include "servicebackend.h"
 
-#include <KDebug>
+#include <QDebug>
 
 using namespace SubtitleComposer;
 
@@ -38,7 +38,7 @@ bool
 Service::initialize(QWidget *widgetParent, const QString &prefBackendName)
 {
 	if(isInitialized()) {
-		kError() << "Service has already been initialized";
+		qCritical() << "Service has already been initialized";
 		return false;
 	}
 
@@ -56,7 +56,7 @@ Service::initialize(QWidget *widgetParent, const QString &prefBackendName)
 	}
 
 	if(!m_activeBackend)
-		kError() << "Failed to initialize a player backend";
+		qCritical() << "Failed to initialize a player backend";
 
 	return m_activeBackend;
 }
@@ -78,7 +78,7 @@ Service::reinitialize(const QString &prefBackendName)
 	}
 
 	if(!m_activeBackend)
-		kError() << "Failed to initialize a player backend";
+		qCritical() << "Failed to initialize a player backend";
 
 	return m_activeBackend;
 }
@@ -148,7 +148,7 @@ void
 Service::addBackend(ServiceBackend *backend)
 {
 	if(m_backends.contains(backend->name())) {
-		kError() << "attempted to insert duplicated service backend" << backend->name();
+		qCritical() << "attempted to insert duplicated service backend" << backend->name();
 		return;
 	}
 
@@ -156,4 +156,4 @@ Service::addBackend(ServiceBackend *backend)
 	backend->setParent(this); // Service will delete *backend
 }
 
-#include "service.moc"
+

@@ -19,12 +19,11 @@
 
 #include "fileloadhelper.h"
 
-#include <KDebug>
-#include <KSaveFile>
-#include <KTemporaryFile>
-#include <KIO/NetAccess>
+#include <ksavefile.h>
+#include <ktemporaryfile.h>
+#include <kio/netaccess.h>
 
-FileLoadHelper::FileLoadHelper(const KUrl &url) :
+FileLoadHelper::FileLoadHelper(const QUrl &url) :
 	m_url(url),
 	m_file(0)
 {}
@@ -35,7 +34,7 @@ FileLoadHelper::~FileLoadHelper()
 		close();
 }
 
-const KUrl &
+const QUrl &
 FileLoadHelper::url()
 {
 	return m_url;
@@ -59,7 +58,7 @@ FileLoadHelper::open()
 	if(m_url.isLocalFile()) {
 		m_file = new QFile(m_url.path());
 		if(!m_file->open(QIODevice::ReadOnly)) {
-			kDebug() << "couldn't open input file" << m_file->fileName();
+			qDebug() << "couldn't open input file" << m_file->fileName();
 			delete m_file;
 			m_file = 0;
 			return false;
@@ -67,14 +66,14 @@ FileLoadHelper::open()
 	} else {
 		QString tmpFile;
 		if(!KIO::NetAccess::download(m_url, tmpFile, 0)) {
-			kDebug() << "couldn't get input url:" << m_url.prettyUrl();
-			kDebug() << KIO::NetAccess::lastErrorString();
+			qDebug() << "couldn't get input url:" << m_url;
+			qDebug() << KIO::NetAccess::lastErrorString();
 			return false;
 		}
 
 		m_file = new QFile(tmpFile);
 		if(!m_file->open(QIODevice::ReadOnly)) {
-			kDebug() << "couldn't open input file" << m_file->fileName();
+			qDebug() << "couldn't open input file" << m_file->fileName();
 			delete m_file;
 			m_file = 0;
 			return false;
@@ -101,7 +100,7 @@ FileLoadHelper::close()
 }
 
 bool
-FileLoadHelper::exists(const KUrl &url)
+FileLoadHelper::exists(const QUrl &url)
 {
 	return KIO::NetAccess::exists(url, KIO::NetAccess::SourceSide, 0);
 }

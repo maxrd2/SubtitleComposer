@@ -28,7 +28,7 @@
 #include "../../core/subtitleline.h"
 
 class QCheckBox;
-class KPushButton;
+class QPushButton;
 
 namespace SubtitleComposer {
 class ClearErrorsDialog : public ActionWithErrorTargetsDialog

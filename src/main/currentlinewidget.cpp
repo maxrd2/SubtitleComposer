@@ -25,13 +25,13 @@
 #include "../widgets/simplerichtextedit.h"
 
 #include <QtCore/QTimer>
-#include <QtGui/QLabel>
-#include <QtGui/QToolButton>
-#include <QtGui/QGroupBox>
-#include <QtGui/QGridLayout>
-#include <QtGui/QKeyEvent>
+#include <QLabel>
+#include <QToolButton>
+#include <QGroupBox>
+#include <QGridLayout>
+#include <QKeyEvent>
 
-#include <KDebug>
+#include <QDebug>
 #include <KLocale>
 #include <KIcon>
 #include <KConfigGroup>
@@ -456,7 +456,7 @@ void
 CurrentLineWidget::setupActions()
 {
 	for(int index = 0; index < 2; ++index) {
-		KAction *spellingAction = m_textEdits[index]->action(SimpleRichTextEdit::CheckSpelling);
+		QAction *spellingAction = m_textEdits[index]->action(SimpleRichTextEdit::CheckSpelling);
 		spellingAction->disconnect();
 		connect(spellingAction, SIGNAL(triggered()), app(), SLOT(spellCheck()));
 	}
@@ -481,8 +481,8 @@ CurrentLineWidget::markUpdateShortcuts()
 static void
 mapShortcuts(SimpleRichTextEdit *textEdit, int textEditActionID, const char *appActionID)
 {
-	KAction *textEditAction = textEdit->action(textEditActionID);
-	KAction *appAction = static_cast<KAction *>(app()->action(appActionID));
+	QAction *textEditAction = textEdit->action(textEditActionID);
+	QAction *appAction = static_cast<QAction *>(app()->action(appActionID));
 	if(textEditAction && appAction)
 		textEditAction->setShortcut(appAction->shortcut());
 }
@@ -549,9 +549,9 @@ CurrentLineWidget::eventFilter(QObject *object, QEvent *event)
 
 			QKeySequence keySequence((keyEvent->modifiers() & ~Qt::KeypadModifier) + keyEvent->key());
 
-			KAction *action;
+			QAction *action;
 			foreach(action, m_textEdits[0]->actions()) {
-				if(action->shortcut().primary() == keySequence || action->shortcut().alternate() == keySequence)
+				if(action->shortcut().matches(keySequence) == QKeySequence::ExactMatch)
 					return QWidget::eventFilter(object, event);
 			}
 
@@ -562,4 +562,4 @@ CurrentLineWidget::eventFilter(QObject *object, QEvent *event)
 	return QWidget::eventFilter(object, event);
 }
 
-#include "currentlinewidget.moc"
+

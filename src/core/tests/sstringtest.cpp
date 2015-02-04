@@ -20,10 +20,10 @@
 #include "sstringtest.h"
 #include "../sstring.h"
 
-#include <QtTest>                               // krazy:exclude=c++/includes
+#include <QTest>                               // krazy:exclude=c++/includes
 #include <QtCore>                               // krazy:exclude=c++/includes
 
-#include <KDebug>
+#include <QDebug>
 
 using namespace SubtitleComposer;
 
@@ -299,4 +299,4 @@ SStringTest::testReplace()
 
 QTEST_MAIN(SStringTest);
 
-#include "sstringtest.moc"
+

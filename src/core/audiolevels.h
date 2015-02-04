@@ -28,7 +28,7 @@
 
 #include <QtCore/QObject>
 
-#include <KUrl>
+#include <QUrl>
 
 namespace SubtitleComposer {
 class AudioLevels : public QObject
@@ -39,9 +39,9 @@ public:
 	AudioLevels();
 	virtual ~AudioLevels();
 
-	bool load(const KUrl &fileUrl);
+	bool load(const QUrl &fileUrl);
 	bool loadFromMedia(const QString &mediaPath, unsigned streamIndex);
-	bool save(const KUrl &fileUrl, bool overwrite) const;
+	bool save(const QUrl &fileUrl, bool overwrite) const;
 
 	void reset();
 
@@ -100,7 +100,7 @@ private:
 	unsigned m_samplesCount;
 	double *m_samplesData;
 	int m_lastDataIndex;
-	KUrl m_mediaUrl;
+	QUrl m_mediaUrl;
 };
 }
 #endif

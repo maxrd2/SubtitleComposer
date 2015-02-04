@@ -1,4 +1,4 @@
-SET( main_dialogs_SRCS
+set(main_dialogs_SRCS
 	${CMAKE_CURRENT_SOURCE_DIR}/opensubtitledialog.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/savesubtitledialog.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/actiondialog.cpp

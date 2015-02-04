@@ -20,10 +20,10 @@
 #include "errorsconfigwidget.h"
 #include "../../widgets/timeedit.h"
 
-#include <QtGui/QGridLayout>
-#include <QtGui/QGroupBox>
-#include <QtGui/QLabel>
-#include <QtGui/QCheckBox>
+#include <QGridLayout>
+#include <QGroupBox>
+#include <QLabel>
+#include <QCheckBox>
 
 #include <KNumInput>
 
@@ -158,4 +158,4 @@ ErrorsConfigWidget::setControlsFromConfig()
 	m_autoClearFixedCheckBox->setChecked(config()->autoClearFixed());
 }
 
-#include "errorsconfigwidget.moc"
+

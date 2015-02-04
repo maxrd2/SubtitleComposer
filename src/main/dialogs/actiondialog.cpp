@@ -19,10 +19,10 @@
 
 #include "actiondialog.h"
 
-#include <QtGui/QGroupBox>
-#include <QtGui/QGridLayout>
+#include <QGroupBox>
+#include <QGridLayout>
 
-#include <KDebug>
+#include <QDebug>
 #include <KApplication>
 #include <KAboutData>
 
@@ -93,4 +93,4 @@ ActionDialog::createLayout(QGroupBox *groupBox)
 	return gridLayout;
 }
 
-#include "actiondialog.moc"
+

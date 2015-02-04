@@ -20,11 +20,11 @@
 #include "finder.h"
 #include "../../core/subtitleiterator.h"
 
-#include <QtGui/QGroupBox>
-#include <QtGui/QRadioButton>
-#include <QtGui/QGridLayout>
+#include <QGroupBox>
+#include <QRadioButton>
+#include <QGridLayout>
 
-#include <KDebug>
+#include <QDebug>
 #include <KLocale>
 
 #include <KMessageBox>
@@ -48,7 +48,7 @@ Finder::Finder(QWidget *parent) :
 	m_dialog->setHasCursor(true);
 	m_dialog->setOptions(m_dialog->options() | KFind::FromCursor);
 
-	QWidget *mainWidget = m_dialog->mainWidget();
+	QWidget *mainWidget = m_dialog;//->mainWidget();
 	QLayout *mainLayout = mainWidget->layout();
 
 	m_targetGroupBox = new QGroupBox(mainWidget);
@@ -248,10 +248,10 @@ Finder::advance()
 
 			// special case: we searched all lines and didn't found any matches
 			if(!m_instancesFound && (m_allSearchedIndex == m_iterator->index() || (backwards ? (m_allSearchedIndex == m_iterator->lastIndex() && m_iterator->index() == SubtitleIterator::BehindFirst) : (m_allSearchedIndex == m_iterator->firstIndex() && m_iterator->index() == SubtitleIterator::AfterLast))
-			                         ))
+									 ))
 			{
 				KMessageBox::sorry(parentWidget(), i18n("No instances of '%1' found!", m_find->pattern()), i18n("Find")
-				                   );
+								   );
 
 				invalidate();
 
@@ -265,7 +265,7 @@ Finder::advance()
 					m_iterator->toFirst();
 
 				if(KMessageBox::warningContinueCancel(parentWidget(), backwards ? (selection ? i18n("Beginning of selection reached.\nContinue from the end?") : i18n("Beginning of subtitle reached.\nContinue from the end?")) : (selection ? i18n("End of selection reached.\nContinue from the beginning?") : i18n("End of subtitle reached.\nContinue from the beginning?")), i18n("Find")
-				                                      ) != KMessageBox::Continue)
+													  ) != KMessageBox::Continue)
 					break;
 			}
 		}
@@ -324,4 +324,4 @@ Finder::onIteratorSynchronized(int firstIndex, int lastIndex, bool inserted)
 	}
 }
 
-#include "finder.moc"
+

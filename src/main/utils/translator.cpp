@@ -22,11 +22,11 @@
 
 #include <QtCore/QRegExp>
 #include <QtCore/QTextCodec>
-#include <QtGui/QLabel>
-#include <QtGui/QProgressBar>
-#include <QtGui/QBoxLayout>
+#include <QLabel>
+#include <QProgressBar>
+#include <QBoxLayout>
 
-#include <KDebug>
+#include <QDebug>
 #include <KLocale>
 #include <KDialog>
 
@@ -227,7 +227,7 @@ Translator::startChunkDownload(int chunkNumber)
 	// QByteArray postData = prepareMultipartData( params );
 	QByteArray postData = prepareUrlEncodedData(params);
 
-	m_currentTransferJob = KIO::http_post(KUrl("http://translate.google.com/translate_t"), postData, KIO::HideProgressInfo);
+	m_currentTransferJob = KIO::http_post(QUrl("http://translate.google.com/translate_t"), postData, KIO::HideProgressInfo);
 
 //  m_currentTransferJob->addMetaData( "content-type", "Content-Type: multipart/form-data; boundary=" MULTIPART_DATA_BOUNDARY );
 	m_currentTransferJob->addMetaData("content-type", "Content-Type: application/x-www-form-urlencoded");
@@ -264,7 +264,7 @@ Translator::onTransferJobResult(KJob *job)
 	if(job->error()) {
 		m_aborted = false;
 		m_errorMessage = job->errorString();
-		kDebug() << m_errorMessage;
+		qDebug() << m_errorMessage;
 		emit finishedWithError(m_errorMessage);
 		return;
 	}
@@ -603,4 +603,4 @@ Translator::namedEntities()
 	return entities;
 }
 
-#include "translator.moc"
+

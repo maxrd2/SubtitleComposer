@@ -19,10 +19,10 @@
 
 #include "mplayerconfigwidget.h"
 
-#include <QtGui/QGridLayout>
-#include <QtGui/QGroupBox>
-#include <QtGui/QCheckBox>
-#include <QtGui/QLabel>
+#include <QGridLayout>
+#include <QGroupBox>
+#include <QCheckBox>
+#include <QLabel>
 
 #include <KLocale>
 #include <KComboBox>
@@ -42,7 +42,7 @@ MPlayerConfigWidget::MPlayerConfigWidget(QWidget *parent) :
 	m_pathUrlRequester = new KUrlRequester(generalGroupBox);
 	m_pathUrlRequester->setWindowTitle(i18n("Select the MPlayer executable"));
 	m_pathUrlRequester->setMode(KFile::File | KFile::ExistingOnly | KFile::LocalOnly);
-	m_pathUrlRequester->setUrl(KUrl("mplayer"));
+	m_pathUrlRequester->setUrl(QUrl("mplayer"));
 
 	m_avsyncCheckBox = new QCheckBox(generalGroupBox);
 	m_avsyncCheckBox->setText(i18n("A/V synchronization factor:"));
@@ -173,7 +173,7 @@ MPlayerConfigWidget::setConfigFromControls()
 void
 MPlayerConfigWidget::setControlsFromConfig()
 {
-	m_pathUrlRequester->setUrl(config()->executablePath());
+	m_pathUrlRequester->setUrl(QUrl(config()->executablePath()));
 	m_avsyncCheckBox->setChecked(config()->hasAutoSyncFactor());
 	if(m_avsyncCheckBox->isChecked())
 		m_avsyncSpinBox->setValue(config()->autoSyncFactor());
@@ -199,4 +199,4 @@ MPlayerConfigWidget::setControlsFromConfig()
 	m_volumeNormalizationCheckBox->setChecked(config()->volumeNormalization());
 }
 
-#include "mplayerconfigwidget.moc"
+

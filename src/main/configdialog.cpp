@@ -26,15 +26,17 @@
 #include "../services/player.h"
 #include "../services/playerbackend.h"
 
-#include <QtGui/QCheckBox>
-#include <KPushButton>
-#include <QtGui/QLabel>
-#include <QtGui/QGroupBox>
-#include <QtGui/QGridLayout>
+#include <QCheckBox>
+#include <QPushButton>
+#include <QLabel>
+#include <QGroupBox>
+#include <QGridLayout>
+
+#include <KIcon>
 
 #include <KLocale>
 #include <KStandardDirs>
-#include <KDebug>
+#include <QDebug>
 
 using namespace SubtitleComposer;
 
@@ -43,12 +45,12 @@ ConfigDialog::ConfigDialog(const AppConfig &config, QWidget *parent) :
 	m_acceptedConfig(config),
 	m_config(config)
 {
-	setCaption(i18n("Configure"));
+	setWindowTitle(i18n("Configure"));
 
 	setFaceType(KPageDialog::List);
-	setButtons(KDialog::Ok | KDialog::Apply | KDialog::Cancel | KDialog::Default);
-	setDefaultButton(KDialog::Ok);
-	showButtonSeparator(true);
+//	setButtons(KDialog::Ok | KDialog::Apply | KDialog::Cancel | KDialog::Default);
+//	setDefaultButton(KDialog::Ok);
+//	showButtonSeparator(true);
 
 	m_configWidgets.insert(General, new GeneralConfigWidget());
 	m_pageWidgets.insert(General, addPage(m_configWidgets.at(General), i18nc("@title General settings", "General")));
@@ -85,7 +87,7 @@ ConfigDialog::ConfigDialog(const AppConfig &config, QWidget *parent) :
 
 	setControlsFromConfig();
 
-	enableButtonApply(false);
+//	enableButtonApply(false);
 
 	connect(&config, SIGNAL(optionChanged(const QString &, const QString &, const QString &)), this, SLOT(onOptionChanged(const QString &, const QString &, const QString &)));
 
@@ -124,7 +126,7 @@ ConfigDialog::setConfig(const AppConfig &config)
 	m_acceptedConfig = m_config = config;
 	setControlsFromConfig();
 
-	enableButtonApply(false);
+//	enableButtonApply(false);
 
 	if(visible)
 		show();
@@ -205,7 +207,7 @@ ConfigDialog::acceptConfig()
 	setConfigFromControls();
 	m_acceptedConfig = m_config;
 
-	enableButtonApply(false);
+//	enableButtonApply(false);
 
 	emit accepted();
 }
@@ -222,7 +224,7 @@ ConfigDialog::rejectConfig()
 {
 	m_config = m_acceptedConfig;
 	setControlsFromConfig();
-	enableButtonApply(false);
+//	enableButtonApply(false);
 }
 
 void
@@ -235,7 +237,7 @@ ConfigDialog::rejectConfigAndClose()
 void
 ConfigDialog::enableApply()
 {
-	enableButtonApply(true);
+//	enableButtonApply(true);
 }
 
 void
@@ -247,7 +249,7 @@ ConfigDialog::onOptionChanged(const QString &groupName, const QString &optionNam
 	m_config.group(groupName)->setOption(optionName, value);
 	m_acceptedConfig.group(groupName)->setOption(optionName, value);
 
-	bool wasApplyButtonEnabled = button(KDialog::Apply)->isEnabled();
+//	bool wasApplyButtonEnabled = button(KDialog::Apply)->isEnabled();
 
 	for(int pageIndex = 0; pageIndex < m_configWidgets.count(); ++pageIndex) {
 		if(m_configWidgets.at(pageIndex)->config()->name() == groupName) {
@@ -260,8 +262,8 @@ ConfigDialog::onOptionChanged(const QString &groupName, const QString &optionNam
 		}
 	}
 
-	if(!wasApplyButtonEnabled)
-		enableButtonApply(false);
+//	if(!wasApplyButtonEnabled)
+//		enableButtonApply(false);
 }
 
-#include "configdialog.moc"
+

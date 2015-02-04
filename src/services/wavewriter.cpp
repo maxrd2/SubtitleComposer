@@ -19,7 +19,7 @@
 
 #include "wavewriter.h"
 
-#include <KDebug>
+#include <QDebug>
 
 #define WAVE_HEADER_SIZE 44
 

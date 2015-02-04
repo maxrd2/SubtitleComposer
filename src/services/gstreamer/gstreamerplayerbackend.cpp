@@ -25,10 +25,10 @@
 
 #include <QtCore/QTimer>
 
-#include <KDebug>
+#include <QDebug>
 #include <KGlobal>
 #include <KLocale>
-#include <KUrl>
+#include <QUrl>
 
 #include <gst/gst.h>
 #include <gst/video/videooverlay.h>
@@ -142,8 +142,8 @@ GStreamerPlayerBackend::openFile(const QString &filePath, bool &playingAfterCall
 		return false;
 	}
 
-	KUrl fileUrl;
-	fileUrl.setProtocol("file");
+	QUrl fileUrl;
+	fileUrl.setScheme("file");
 	fileUrl.setPath(filePath);
 
 	g_object_set(G_OBJECT(m_pipeline), "uri", fileUrl.url().toUtf8().constData(), NULL);
@@ -383,4 +383,4 @@ GStreamerPlayerBackend::updateVideoData()
 	gst_object_unref(videopad);
 }
 
-#include "gstreamerplayerbackend.moc"
+

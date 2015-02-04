@@ -25,7 +25,7 @@
 #endif
 
 #include <QtCore/QString>
-#include <QtGui/QValidator>
+#include <QValidator>
 
 // class TimeValidator : public QRegExpValidator
 class TimeValidator : public QValidator

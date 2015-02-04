@@ -689,7 +689,7 @@ Subtitle::sortLines(const Range &range)
 				}
 			}
 
-//                      kDebug() << "moving from" << fromIndex << "to" << toIndex;
+//                      qDebug() << "moving from" << fromIndex << "to" << toIndex;
 			processAction(new MoveLineAction(*this, fromIndex, toIndex));
 
 			// moving the lines invalidates the iterator so we recreate it and advance it to where it was
@@ -1134,7 +1134,7 @@ Subtitle::setStyleFlags(const RangeList &ranges, int styleFlags)
 	beginCompositeAction(i18n("Set Lines Style"));
 
 	for(SubtitleIterator it(*this, ranges); it.current(); ++it) {
-		kDebug() << it.current()->primaryText().string();
+		qDebug() << it.current()->primaryText().string();
 
 		it.current()->setPrimaryText(SString(it.current()->primaryText()).setStyleFlags(0, -1, styleFlags));
 		it.current()->setSecondaryText(SString(it.current()->secondaryText()).setStyleFlags(0, -1, styleFlags));
@@ -1222,7 +1222,7 @@ Subtitle::clearErrors(const RangeList &ranges, int errorFlags)
 }
 
 void
-Subtitle::checkErrors(const RangeList &ranges, int errorFlags, int minDurationMsecs, int maxDurationMsecs, int minMsecsPerChar, int maxMsecsPerChar, int maxChars, int maxLines)
+Subtitle::checqCriticals(const RangeList &ranges, int errorFlags, int minDurationMsecs, int maxDurationMsecs, int minMsecsPerChar, int maxMsecsPerChar, int maxChars, int maxLines)
 {
 	beginCompositeAction(i18n("Check Lines Errors"));
 
@@ -1234,7 +1234,7 @@ Subtitle::checkErrors(const RangeList &ranges, int errorFlags, int minDurationMs
 }
 
 void
-Subtitle::recheckErrors(const RangeList &ranges, int minDurationMsecs, int maxDurationMsecs, int minMsecsPerChar, int maxMsecsPerChar, int maxChars, int maxLines)
+Subtitle::rechecqCriticals(const RangeList &ranges, int minDurationMsecs, int maxDurationMsecs, int minMsecsPerChar, int maxMsecsPerChar, int maxChars, int maxLines)
 {
 	beginCompositeAction(i18n("Check Lines Errors"));
 
@@ -1378,16 +1378,16 @@ Subtitle::setLastValidCachedIndex(int lastValidCachedIndex)
 	m_lastValidCachedIndex = lastValidCachedIndex;
 
 	/*
-	   kDebug() << "last valid cached index" << m_lastValidCachedIndex;
+	   qDebug() << "last valid cached index" << m_lastValidCachedIndex;
 
 	   QStringList cacheIndexList, indexList;
 	   for ( int lineIndex = 0, linesCount = m_lines.count(); lineIndex < linesCount; ++lineIndex )
 	   cacheIndexList << QString::number( m_lines.at( lineIndex )->m_cachedIndex );
-	   kDebug() << "cached indexes:" << cacheIndexList.join( " " );
+	   qDebug() << "cached indexes:" << cacheIndexList.join( " " );
 
 	   for ( int lineIndex = 0, linesCount = m_lines.count(); lineIndex < linesCount; ++lineIndex )
 	   indexList << QString::number( m_lines.at( lineIndex )->index() );
-	   kDebug() << "indexes:" << indexList.join( " " );
+	   qDebug() << "indexes:" << indexList.join( " " );
 	 */
 }
 
@@ -1404,4 +1404,4 @@ SubtitleCompositeActionExecutor::~SubtitleCompositeActionExecutor()
 	m_subtitle.endCompositeAction();
 }
 
-#include "subtitle.moc"
+

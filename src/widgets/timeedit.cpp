@@ -22,9 +22,9 @@
 
 #include <QtCore/QTime>
 #include <QtCore/QEvent>
-#include <QtGui/QKeyEvent>
+#include <QKeyEvent>
 
-#include <KDebug>
+#include <QDebug>
 
 TimeEdit::TimeEdit(QWidget *parent) :
 	QTimeEdit(parent),
@@ -145,4 +145,4 @@ TimeEdit::keyPressEvent(QKeyEvent *event)
 		QTimeEdit::keyPressEvent(event);
 }
 
-#include "timeedit.moc"
+

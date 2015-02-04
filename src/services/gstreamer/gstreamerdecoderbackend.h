@@ -28,7 +28,7 @@
 #include "../decoderbackend.h"
 #include "../wavewriter.h"
 
-#include <QtGui/QWidget>
+#include <QWidget>
 #include <QtCore/QString>
 
 #include <gst/gst.h>

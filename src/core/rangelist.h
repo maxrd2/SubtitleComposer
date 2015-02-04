@@ -29,7 +29,7 @@
 #include <QtCore/QList>
 #include <QStringList>
 
-#include <KDebug>
+#include <QDebug>
 
 namespace SubtitleComposer {
 class RangeList
@@ -74,7 +74,7 @@ public:
 
 	RangeList complement() const
 	{
-		kDebug() << this->inspect();
+		qDebug() << this->inspect();
 
 		if(m_ranges.empty())
 			return Range(0, Range::MaxIndex);
@@ -95,7 +95,7 @@ public:
 		if(lastEnd < Range::MaxIndex)
 			ret << Range(lastEnd + 1, Range::MaxIndex);
 
-		kDebug() << ret.inspect();
+		qDebug() << ret.inspect();
 
 		return ret;
 	}

@@ -148,4 +148,4 @@ QxtSignalWaiter::timerEvent(QTimerEvent *)
 	m_timeout = true;
 }
 
-#include "qxtsignalwaiter.moc"
+

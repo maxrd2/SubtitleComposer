@@ -19,8 +19,8 @@
 
 #include "appconfiggroupwidget.h"
 
-#include <QtGui/QGridLayout>
-#include <QtGui/QGroupBox>
+#include <QGridLayout>
+#include <QGroupBox>
 
 using namespace SubtitleComposer;
 
@@ -82,4 +82,4 @@ AppConfigGroupWidget::createGridLayout(QGroupBox *groupBox)
 	return gridLayout;
 }
 
-#include "appconfiggroupwidget.moc"
+

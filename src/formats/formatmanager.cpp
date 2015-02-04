@@ -46,10 +46,10 @@
 #include <QtCore/QTextCodec>
 #include <QtCore/QTextStream>
 
-#include <KDE/KGlobal>
-#include <KDE/KLocale>
-#include <KDE/KCharsets>
-#include <KDE/KUrl>
+#include <KGlobal>
+#include <KLocale>
+#include <KCharsets>
+#include <QUrl>
 
 #include <unicode/ucsdet.h>
 
@@ -68,11 +68,11 @@ FormatManager::FormatManager()
 	   {
 	   KEncodingDetector::AutoDetectScript scri = KEncodingDetector::scriptForName( encodingsForScript.at( 0 ) );
 	   if ( KEncodingDetector::hasAutoDetectionForScript( scri ) )
-	   kDebug() << encodingsForScript.at( 0 ) << "[autodetect available]";
+	   qDebug() << encodingsForScript.at( 0 ) << "[autodetect available]";
 	   else
-	   kDebug() << encodingsForScript.at( 0 );
+	   qDebug() << encodingsForScript.at( 0 );
 	   for ( int i=1; i < encodingsForScript.size(); ++i )
-	   kDebug() << "-" << encodingsForScript.at( i );
+	   qDebug() << "-" << encodingsForScript.at( i );
 	   } */
 
 	InputFormat *inputFormats[] = {
@@ -140,12 +140,12 @@ FormatManager::inputNames() const
 }
 
 bool
-FormatManager::readSubtitle(Subtitle &subtitle, bool primary, const KUrl &url, KEncodingDetector::AutoDetectScript autodetectScript, QTextCodec **codec, Format::NewLine *newLine, QString *formatName) const
+FormatManager::readSubtitle(Subtitle &subtitle, bool primary, const QUrl &url, QTextCodec **codec, Format::NewLine *newLine, QString *formatName) const
 {
 //  if ( *codec )
-//      kDebug() << "loading" << url << "script" << autodetectScript << "codec" << (*codec)->name();
+//      qDebug() << "loading" << url << "script" << autodetectScript << "codec" << (*codec)->name();
 //  else
-//      kDebug() << "loading" << url << "script" << autodetectScript;
+//      qDebug() << "loading" << url << "script" << autodetectScript;
 
 	FileLoadHelper fileLoadHelper(url);
 	if(!fileLoadHelper.open())
@@ -181,13 +181,11 @@ FormatManager::readSubtitle(Subtitle &subtitle, bool primary, const KUrl &url, K
 		textStream.setCodec(*codec);
 		stringData = textStream.readAll();
 	} else {
-		if(autodetectScript == KEncodingDetector::None)
-			autodetectScript = KEncodingDetector::SemiautomaticDetection;
-		// TODO is the value of KEncodingDetector::AutoDetectedEncoding correct??
-		KEncodingDetector detector(app()->generalConfig()->defaultSubtitlesCodec(), KEncodingDetector::AutoDetectedEncoding, autodetectScript);
-		stringData = detector.decode(byteData);
+		// FIXME: ?
+		KEncodingProber prober(KEncodingProber::Universal);
+		prober.feed(byteData);
 		bool encodingFound;
-		*codec = KGlobal::charsets()->codecForName(detector.encoding(), encodingFound);
+		*codec = KGlobal::charsets()->codecForName(prober.encoding(), encodingFound);
 	}
 
 	if(newLine) {
@@ -256,7 +254,7 @@ FormatManager::outputNames() const
 }
 
 bool
-FormatManager::writeSubtitle(const Subtitle &subtitle, bool primary, const KUrl &url, QTextCodec *codec, Format::NewLine newLine, const QString &formatName, bool overwrite) const
+FormatManager::writeSubtitle(const Subtitle &subtitle, bool primary, const QUrl &url, QTextCodec *codec, Format::NewLine newLine, const QString &formatName, bool overwrite) const
 {
 	const OutputFormat *format = output(formatName);
 	if(format == 0) {

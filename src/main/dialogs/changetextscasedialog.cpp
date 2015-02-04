@@ -19,11 +19,11 @@
 
 #include "changetextscasedialog.h"
 
-#include <QtGui/QCheckBox>
-#include <QtGui/QGroupBox>
-#include <QtGui/QButtonGroup>
-#include <QtGui/QRadioButton>
-#include <QtGui/QGridLayout>
+#include <QCheckBox>
+#include <QGroupBox>
+#include <QButtonGroup>
+#include <QRadioButton>
+#include <QGridLayout>
 
 #include <KLocale>
 
@@ -100,4 +100,4 @@ ChangeTextsCaseDialog::onCaseButtonGroupClicked(int id)
 	m_lowerFirstCheckBox->setEnabled(id >= 2);
 }
 
-#include "changetextscasedialog.moc"
+

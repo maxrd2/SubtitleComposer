@@ -124,4 +124,4 @@ ErrorTracker::onErrorsOptionChanged(const QString & /*optionName */, const QStri
 	}
 }
 
-#include "errortracker.moc"
+

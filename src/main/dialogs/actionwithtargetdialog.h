@@ -27,7 +27,7 @@
 #include "actiondialog.h"
 #include "../../core/subtitle.h"
 
-#include <QtGui/QWidget>
+#include <QWidget>
 
 #include <KLocale>
 

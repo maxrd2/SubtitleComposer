@@ -27,7 +27,7 @@
 #include <QtCore/QString>
 #include <QtCore/QStringList>
 #include <QtCore/QMap>
-#include <QtGui/QWidget>
+#include <QWidget>
 
 namespace SubtitleComposer {
 class ServiceBackend;

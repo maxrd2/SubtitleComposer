@@ -1,6 +1,6 @@
-ADD_SUBDIRECTORY( examples )
+add_subdirectory(examples)
 
-SET( main_scripting_SRCS
+set(main_scripting_SRCS
 	${CMAKE_CURRENT_SOURCE_DIR}/scripting_rangesmodule.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/scripting_stringsmodule.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/scripting_subtitlemodule.cpp

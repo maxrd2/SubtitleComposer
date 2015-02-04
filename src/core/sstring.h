@@ -31,7 +31,7 @@
 #include <QtCore/QList>
 #include <QColor>
 
-#include <KDebug>
+#include <QDebug>
 
 void * memset_n(void *ptr, int value, size_t length, size_t size);
 

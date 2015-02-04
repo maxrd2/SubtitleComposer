@@ -23,14 +23,14 @@
 #include "../../widgets/layeredwidget.h"
 #include "../../widgets/textoverlaywidget.h"
 
-#include <QtGui/QGridLayout>
-#include <QtGui/QPalette>
-#include <QtGui/QGroupBox>
-#include <QtGui/QLabel>
-#include <QtGui/QCheckBox>
-#include <QtGui/QFontComboBox>
+#include <QGridLayout>
+#include <QPalette>
+#include <QGroupBox>
+#include <QLabel>
+#include <QCheckBox>
+#include <QFontComboBox>
 
-#include <KPushButton>
+#include <QPushButton>
 #include <KComboBox>
 #include <KColorCombo>
 #include <KNumInput>
@@ -268,4 +268,4 @@ PlayerConfigWidget::onAntialiasChanged(bool antialias)
 	m_textOverlayWidget->setAntialias(antialias);
 }
 
-#include "playerconfigwidget.moc"
+

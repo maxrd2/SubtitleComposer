@@ -22,12 +22,12 @@
 #include "../services/player.h"
 
 #include <QtCore/QRect>
-#include <QtGui/QPainter>
-#include <QtGui/QPaintEvent>
-#include <QtGui/QRegion>
-#include <QtGui/QPolygon>
+#include <QPainter>
+#include <QPaintEvent>
+#include <QRegion>
+#include <QPolygon>
 
-#include <KDebug>
+#include <QDebug>
 
 using namespace SubtitleComposer;
 
@@ -240,4 +240,4 @@ AudioLevelsWidget::rebuildRegions()
 	}
 }
 
-#include "audiolevelswidget.moc"
+

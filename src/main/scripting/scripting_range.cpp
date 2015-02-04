@@ -62,4 +62,4 @@ Scripting::Range::contains(const QObject *object) const
 		return false;
 }
 
-#include "scripting_range.moc"
+

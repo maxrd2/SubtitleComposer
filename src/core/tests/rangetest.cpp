@@ -20,7 +20,7 @@
 #include "rangetest.h"
 #include "../range.h"
 
-#include <QtTest>                               // krazy:exclude=c++/includes
+#include <QTest>                               // krazy:exclude=c++/includes
 #include <QtCore>                               // krazy:exclude=c++/includes
 
 using namespace SubtitleComposer;
@@ -97,4 +97,4 @@ RangeTest::testOperators()
 
 QTEST_MAIN(RangeTest);
 
-#include "rangetest.moc"
+
