@@ -380,9 +380,19 @@ TextOverlayWidget::updateContents()
 		context.palette = palette();
 
 		if(m_outlineWidth > 0) {
+			// remove custom color info from document
+			QTextCharFormat fmt;
+			fmt.setForeground(QBrush(m_outlineColor));
+			QTextCursor cur(m_textDocument);
+			cur.select(QTextCursor::Document);
+			cur.mergeCharFormat(fmt);
+
 			context.palette.setColor(QPalette::Text, m_outlineColor);
 			m_textDocument->documentLayout()->draw(&painter, context);
 			setOutline();
+
+			// restore custom color info
+			m_textDocument->undo();
 		}
 
 		context.palette.setColor(QPalette::Text, m_primaryColor);
