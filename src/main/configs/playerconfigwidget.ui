@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>487</width>
-    <height>551</height>
+    <height>563</height>
    </rect>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
@@ -25,13 +25,13 @@
        </widget>
       </item>
       <item row="2" column="1">
-       <widget class="QSpinBox" name="m_seekJumpSecs"/>
+       <widget class="QSpinBox" name="kcfg_SeekJumpLength"/>
       </item>
       <item row="0" column="1">
-       <widget class="QComboBox" name="m_decoderBackend"/>
+       <widget class="QComboBox" name="kcfg_DecoderBackend"/>
       </item>
       <item row="1" column="1">
-       <widget class="QComboBox" name="m_playerBackend"/>
+       <widget class="QComboBox" name="kcfg_PlayerBackend"/>
       </item>
       <item row="0" column="0" alignment="Qt::AlignRight">
        <widget class="QLabel" name="label">
@@ -48,7 +48,7 @@
        </widget>
       </item>
       <item row="3" column="1">
-       <widget class="QCheckBox" name="m_editabelPositionCtrl">
+       <widget class="QCheckBox" name="kcfg_ShowPositionTimeEdit">
         <property name="text">
          <string>Show editable position control</string>
         </property>
@@ -71,13 +71,13 @@
        </widget>
       </item>
       <item row="2" column="1">
-       <widget class="KColorCombo" name="m_textColor"/>
+       <widget class="KColorCombo" name="kcfg_FontColor"/>
       </item>
       <item row="0" column="1">
-       <widget class="QFontComboBox" name="m_fontFamily"/>
+       <widget class="QFontComboBox" name="kcfg_FontFamily"/>
       </item>
       <item row="3" column="1">
-       <widget class="KColorCombo" name="m_outlineColor"/>
+       <widget class="KColorCombo" name="kcfg_OutlineColor"/>
       </item>
       <item row="4" column="0">
        <widget class="QLabel" name="label_8">
@@ -108,7 +108,7 @@
        </widget>
       </item>
       <item row="4" column="1">
-       <widget class="QSpinBox" name="m_outlineWidth">
+       <widget class="QSpinBox" name="kcfg_OutlineWidth">
         <property name="suffix">
          <string notr="true"> px</string>
         </property>
@@ -118,14 +118,14 @@
        </widget>
       </item>
       <item row="1" column="1">
-       <widget class="QSpinBox" name="m_fontSize">
+       <widget class="QSpinBox" name="kcfg_FontPointSize">
         <property name="suffix">
          <string notr="true"> px</string>
         </property>
        </widget>
       </item>
       <item row="5" column="0" colspan="2">
-       <widget class="QCheckBox" name="m_textAntialias">
+       <widget class="QCheckBox" name="kcfg_Antialias">
         <property name="text">
          <string>Text Antialiasing</string>
         </property>
@@ -194,16 +194,16 @@
   </customwidget>
  </customwidgets>
  <tabstops>
-  <tabstop>m_decoderBackend</tabstop>
-  <tabstop>m_playerBackend</tabstop>
-  <tabstop>m_seekJumpSecs</tabstop>
-  <tabstop>m_editabelPositionCtrl</tabstop>
-  <tabstop>m_fontFamily</tabstop>
-  <tabstop>m_fontSize</tabstop>
-  <tabstop>m_textColor</tabstop>
-  <tabstop>m_outlineColor</tabstop>
-  <tabstop>m_outlineWidth</tabstop>
-  <tabstop>m_textAntialias</tabstop>
+  <tabstop>kcfg_DecoderBackend</tabstop>
+  <tabstop>kcfg_PlayerBackend</tabstop>
+  <tabstop>kcfg_SeekJumpLength</tabstop>
+  <tabstop>kcfg_ShowPositionTimeEdit</tabstop>
+  <tabstop>kcfg_FontFamily</tabstop>
+  <tabstop>kcfg_FontPointSize</tabstop>
+  <tabstop>kcfg_FontColor</tabstop>
+  <tabstop>kcfg_OutlineColor</tabstop>
+  <tabstop>kcfg_OutlineWidth</tabstop>
+  <tabstop>kcfg_Antialias</tabstop>
  </tabstops>
  <resources/>
  <connections/>

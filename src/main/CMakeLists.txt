@@ -28,7 +28,6 @@ set(subtitlecomposer_SRCS
 	${main_scripting_SRCS}
 	${CMAKE_CURRENT_SOURCE_DIR}/application.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/audiolevelswidget.cpp
-	${CMAKE_CURRENT_SOURCE_DIR}/configdialog.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/currentlinewidget.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/errorsdialog.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/errorswidget.cpp
@@ -39,6 +38,8 @@ set(subtitlecomposer_SRCS
 	${CMAKE_CURRENT_SOURCE_DIR}/playerwidget.cpp
 	CACHE INTERNAL EXPORTEDVARIABLE
 )
+
+kconfig_add_kcfg_files(subtitlecomposer_SRCS GENERATE_MOC ${CMAKE_CURRENT_SOURCE_DIR}/scconfig.kcfgc)
 
 add_executable(subtitlecomposer ${subtitlecomposer_SRCS})
 

@@ -19,7 +19,6 @@
 
 #include "lineswidget.h"
 #include "application.h"
-#include "configs/generalconfig.h"
 #include "dialogs/actionwithtargetdialog.h"
 #include "profiler.h"
 
@@ -37,6 +36,7 @@
 
 #include <KIcon>
 #include <QDebug>
+#include <KGlobal>
 #include <KLocale>
 #include <KConfig>
 #include <KConfigGroup>
@@ -1069,7 +1069,7 @@ LinesWidget::contextMenuEvent(QContextMenuEvent *e)
 	action = stylesMenu.addAction(KIcon("format-text-color"), i18nc("@action:inmenu Change Text Color", "Text Color"), app, SLOT(changeSelectedLinesColor()));
 
 	KMenu timesMenu(i18n("Times"));
-	QString shiftMillis(app->generalConfig()->linesQuickShiftAmount());
+	QString shiftMillis(SCConfig::self()->linesQuickShiftAmount());
 	timesMenu.addAction(i18n("Shift +%1 Milliseconds", shiftMillis), app, SLOT(shiftSelectedLinesForwards()));
 	timesMenu.addAction(i18n("Shift −%1 Milliseconds", shiftMillis), app, SLOT(shiftSelectedLinesBackwards()));
 	timesMenu.addSeparator();

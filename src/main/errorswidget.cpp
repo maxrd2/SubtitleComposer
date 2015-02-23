@@ -21,7 +21,6 @@
 
 #include "errorswidget.h"
 #include "application.h"
-#include "configs/errorsconfig.h"
 #include "../core/subtitle.h"
 #include "../core/subtitleline.h"
 
@@ -34,6 +33,7 @@
 #include <QHeaderView>
 
 #include <KIcon>
+#include <KGlobal>
 #include <KMenu>
 #include <KConfig>
 #include <KConfigGroup>
@@ -678,7 +678,7 @@ ErrorsWidget::contextMenuEvent(QContextMenuEvent *event)
 		menu.addAction(i18n("Clear Selected Marks"), app, SLOT(clearSelectedMarks()))->setEnabled(markCount);
 		menu.addAction(i18n("Clear Selected Errors"), app, SLOT(clearSelectedErrors()))->setEnabled(errorCount);
 
-		if(!app->errorsConfig()->autoClearFixed()) {
+		if(!SCConfig::self()->autoClearFixed()) {
 			menu.addSeparator();
 
 			menu.addAction(i18n("Clear Fixed Selection"), app, SLOT(recheckSelectedErrors()))->setEnabled(errorCount);

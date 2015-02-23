@@ -19,7 +19,6 @@
 
 #include "playerwidget.h"
 #include "application.h"
-#include "configs/playerconfig.h"
 #include "actions/useractionnames.h"
 #include "../common/commondefs.h"
 #include "../core/subtitleiterator.h"
@@ -70,14 +69,14 @@ PlayerWidget::PlayerWidget(QWidget *parent) :
 	m_updateVideoPosition(false),
 	m_updateVolumeControls(true),
 	m_updatePlayerVolume(false),
-	m_showPositionTimeEdit(app()->playerConfig()->showPositionTimeEdit())
+	m_showPositionTimeEdit(SCConfig::self()->showPositionTimeEdit())
 {
 	m_layeredWidget = new LayeredWidget(this);
 	m_layeredWidget->setAcceptDrops(true);
 	m_layeredWidget->installEventFilter(this);
 	m_layeredWidget->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
 
-	m_player->initialize(m_layeredWidget, app()->playerConfig()->playerBackend());
+	m_player->initialize(m_layeredWidget, SCConfig::self()->playerBackend());
 
 	connect(m_player, SIGNAL(backendInitialized(ServiceBackend *)), this, SLOT(onPlayerBackendInitialized()));
 
@@ -236,7 +235,7 @@ PlayerWidget::PlayerWidget(QWidget *parent) :
 	connect(m_positionEdit, SIGNAL(valueChanged(int)), this, SLOT(onPositionEditValueChanged(int)));
 	connect(m_positionEdit, SIGNAL(valueEntered(int)), this, SLOT(onPositionEditValueChanged(int)));
 
-	connect(app()->playerConfig(), SIGNAL(optionChanged(const QString &, const QString &)), this, SLOT(onPlayerOptionChanged(const QString &, const QString &)));
+	connect(SCConfig::self(), SIGNAL(configChanged()), this, SLOT(onPlayerOptionChanged(const QString &, const QString &)));
 
 	connect(m_player, SIGNAL(fileOpened(const QString &)), this, SLOT(onPlayerFileOpened(const QString &)));
 	connect(m_player, SIGNAL(fileOpenError(const QString &)), this, SLOT(onPlayerFileOpenError(const QString &)));
@@ -255,7 +254,7 @@ PlayerWidget::PlayerWidget(QWidget *parent) :
 
 	setOverlayLine(0);
 	onPlayerFileClosed();
-	onPlayerOptionChanged(QString(), QString());    // initializes the font
+	onConfigChanged();    // initializes the font
 }
 
 PlayerWidget::~PlayerWidget()
@@ -454,10 +453,10 @@ PlayerWidget::eventFilter(QObject *object, QEvent *event)
 		KMenu menu;
 		QAction *action = menu.addAction(i18n("Show editable position control"));
 		action->setCheckable(true);
-		action->setChecked(app()->playerConfig()->showPositionTimeEdit());
+		action->setChecked(SCConfig::self()->showPositionTimeEdit());
 
 		if(menu.exec(mouseEvent->globalPos()) == action)
-			app()->playerConfig()->toggleShowPositionTimeEdit();
+			SCConfig::self()->setShowPositionTimeEdit(!SCConfig::self()->showPositionTimeEdit());
 
 		return true;                    // eat event
 	}
@@ -509,13 +508,13 @@ PlayerWidget::setShowTranslation(bool showTranslation)
 void
 PlayerWidget::increaseFontSize(int points)
 {
-	app()->playerConfig()->incFontPointSize(points);
+	SCConfig::self()->setFontPointSize(SCConfig::self()->fontPointSize() + points);
 }
 
 void
 PlayerWidget::decreaseFontSize(int points)
 {
-	app()->playerConfig()->incFontPointSize(-points);
+	SCConfig::self()->setFontPointSize(SCConfig::self()->fontPointSize() - points);
 }
 
 void
@@ -674,21 +673,23 @@ PlayerWidget::onPositionEditValueChanged(int position)
 }
 
 void
-PlayerWidget::onPlayerOptionChanged(const QString &option, const QString &value)
+PlayerWidget::onConfigChanged()
 {
-	if(option == PlayerConfig::keyPlayerBackend()) {
-		m_player->reinitialize(value);
-	} else if(option == PlayerConfig::keyShowPositionTimeEdit()) {
-		m_showPositionTimeEdit = (value == "true");
-		updatePositionEditVisibility();
-	} else {
-		m_textOverlay->setPrimaryColor(app()->playerConfig()->fontColor());
-		m_textOverlay->setFamily(app()->playerConfig()->fontFamily());
-		m_textOverlay->setPointSize(app()->playerConfig()->fontPointSize());
-		m_textOverlay->setOutlineColor(app()->playerConfig()->outlineColor());
-		m_textOverlay->setOutlineWidth(app()->playerConfig()->outlineWidth());
-		m_textOverlay->setAntialias(app()->playerConfig()->antialiasEnabled());
+	if(m_player->backend(SCConfig::self()->playerBackend()) != m_player->activeBackend()) {
+		m_player->reinitialize(SCConfig::self()->playerBackend());
 	}
+
+	if(m_showPositionTimeEdit != SCConfig::self()->showPositionTimeEdit()) {
+		m_showPositionTimeEdit = SCConfig::self()->showPositionTimeEdit();
+		updatePositionEditVisibility();
+	}
+
+	m_textOverlay->setPrimaryColor(SCConfig::self()->fontColor());
+	m_textOverlay->setFamily(SCConfig::self()->fontFamily());
+	m_textOverlay->setPointSize(SCConfig::self()->fontPointSize());
+	m_textOverlay->setOutlineColor(SCConfig::self()->outlineColor());
+	m_textOverlay->setOutlineWidth(SCConfig::self()->outlineWidth());
+	m_textOverlay->setAntialias(SCConfig::self()->antialias());
 }
 
 void

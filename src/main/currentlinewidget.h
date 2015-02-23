@@ -78,7 +78,7 @@ protected slots:
 	void onLineShowTimeChanged(const Time &showTime);
 	void onLineHideTimeChanged(const Time &hideTime);
 
-	void onSpellingOptionChanged(const QString &option, const QString &value);
+	void onConfigChanged();
 
 	void markUpdateShortcuts();
 	void updateShortcuts();

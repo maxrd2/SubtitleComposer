@@ -32,6 +32,7 @@
 
 #include <KMenuBar>
 #include <KToolBar>
+#include <KGlobal>
 #include <KStatusBar>
 #include <KActionCollection>
 #include <KConfigGroup>

@@ -19,7 +19,6 @@
 
 #include "speller.h"
 #include "../application.h"
-#include "../configs/spellingconfig.h"
 #include "../../core/subtitleiterator.h"
 
 #include <QDebug>
@@ -38,7 +37,7 @@ Speller::Speller(QWidget *parent) :
 	m_sonnetDialog(0),
 	m_iterator(0)
 {
-	connect(app()->spellingConfig(), SIGNAL(optionChanged(const QString &, const QString &)), this, SLOT(onSpellingOptionChanged(const QString &, const QString &)));
+	connect(SCConfig::self(), SIGNAL(configChanged()), this, SLOT(onConfigChanged()));
 }
 
 Speller::~Speller()
@@ -161,16 +160,17 @@ Speller::onCorrected(const QString &before, int pos, const QString &after)
 }
 
 void
-Speller::onSpellingOptionChanged(const QString &option, const QString & /*value */)
+Speller::onConfigChanged()
 {
-	if(option == SpellingConfig::keyDefaultLanguage()) {
+//	TODO: FIXME:
+//	if(SCConfig::self()->defaultLanguage() != m_sonnetDialog->currentLanguage) {
 		if(m_sonnetDialog) {
 			invalidate();
 
 			m_sonnetDialog->deleteLater();
 			m_sonnetDialog = 0;
 		}
-	}
+//	}
 }
 
 

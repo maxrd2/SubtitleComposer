@@ -27,15 +27,15 @@ using namespace SubtitleComposer;
 ErrorTracker::ErrorTracker(QObject *parent) :
 	QObject(parent),
 	m_subtitle(0),
-	m_autoClearFixed(app()->errorsConfig()->autoClearFixed()),
-	m_minDuration(app()->errorsConfig()->minDuration()),
-	m_maxDuration(app()->errorsConfig()->maxDuration()),
-	m_minDurationPerChar(app()->errorsConfig()->minDurationPerChar()),
-	m_maxDurationPerChar(app()->errorsConfig()->maxDurationPerChar()),
-	m_maxCharacters(app()->errorsConfig()->maxCharacters()),
-	m_maxLines(app()->errorsConfig()->maxLines())
+	m_autoClearFixed(SCConfig::self()->autoClearFixed()),
+	m_minDuration(SCConfig::self()->minDuration()),
+	m_maxDuration(SCConfig::self()->maxDuration()),
+	m_minDurationPerChar(SCConfig::self()->minDurationPerCharacter()),
+	m_maxDurationPerChar(SCConfig::self()->maxDurationPerCharacter()),
+	m_maxCharacters(SCConfig::self()->maxCharacters()),
+	m_maxLines(SCConfig::self()->maxLines())
 {
-	connect(app()->errorsConfig(), SIGNAL(optionChanged(const QString &, const QString &)), this, SLOT(onErrorsOptionChanged(const QString &, const QString &)));
+	connect(SCConfig::self(), SIGNAL(configChanged()), this, SLOT(onConfigChanged()));
 }
 
 ErrorTracker::~ErrorTracker()
@@ -104,23 +104,23 @@ ErrorTracker::onLineTimesChanged(SubtitleLine *line)
 }
 
 void
-ErrorTracker::onErrorsOptionChanged(const QString & /*optionName */, const QString & /*value */)
+ErrorTracker::onConfigChanged()
 {
-	ErrorsConfig *errorsConfig = app()->errorsConfig();
+	SCConfig *config= SCConfig::self();
 
-	if(m_autoClearFixed != errorsConfig->autoClearFixed()) { // is this option that has been toggled
+	if(m_autoClearFixed != config->autoClearFixed()) { // is this option that has been toggled
 		if(isTracking())
 			disconnectSlots();
 		m_autoClearFixed = !m_autoClearFixed;
 		if(isTracking())
 			connectSlots();
 	} else {
-		m_minDuration = errorsConfig->minDuration();
-		m_maxDuration = errorsConfig->maxDuration();
-		m_minDurationPerChar = errorsConfig->minDurationPerChar();
-		m_maxDurationPerChar = errorsConfig->maxDurationPerChar();
-		m_maxCharacters = errorsConfig->maxCharacters();
-		m_maxLines = errorsConfig->maxLines();
+		m_minDuration = config->minDuration();
+		m_maxDuration = config->maxDuration();
+		m_minDurationPerChar = config->minDurationPerCharacter();
+		m_maxDurationPerChar = config->maxDurationPerCharacter();
+		m_maxCharacters = config->maxCharacters();
+		m_maxLines = config->maxLines();
 	}
 }
 

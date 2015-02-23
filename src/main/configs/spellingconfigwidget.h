@@ -24,34 +24,23 @@
 #include <config.h>
 #endif
 
-#include "spellingconfig.h"
-#include "../../config/appconfiggroupwidget.h"
-
-class KConfig;
 namespace Sonnet {
 class ConfigWidget;
 }
+
 namespace SubtitleComposer {
-class SpellingConfigWidget : public AppConfigGroupWidget
+class SpellingConfigWidget : public QWidget
 {
 	Q_OBJECT
 
 	friend class ConfigDialog;
 
 public:
+	explicit SpellingConfigWidget(QWidget *parent=NULL);
 	virtual ~SpellingConfigWidget();
-
-	virtual void setControlsFromConfig();
-	virtual void setConfigFromControls();
-
-private:
-	explicit SpellingConfigWidget(QWidget *parent = 0);
-
-	SpellingConfig * config() { return static_cast<SpellingConfig *>(m_config); }
 
 private:
 	Sonnet::ConfigWidget *m_sonnetConfigWidget;
-	KConfig *m_globalConfig;
 };
 }
 

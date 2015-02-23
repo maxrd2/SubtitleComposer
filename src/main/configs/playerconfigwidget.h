@@ -3,6 +3,7 @@
 
 /***************************************************************************
  *   Copyright (C) 2007-2009 Sergio Pistone (sergio_pistone@yahoo.com.ar)  *
+ *   Copyright (C) 2013-2015 Mladen Milinković                             *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
@@ -26,34 +27,16 @@
 
 #include "ui_playerconfigwidget.h"
 
-#include "playerconfig.h"
-#include "../../config/appconfiggroupwidget.h"
-
 namespace SubtitleComposer {
-class PlayerConfigWidget : public AppConfigGroupWidget, private Ui::PlayerConfigWidget
+class PlayerConfigWidget : public QWidget, private Ui::PlayerConfigWidget
 {
 	Q_OBJECT
 
 	friend class ConfigDialog;
 
 public:
+	explicit PlayerConfigWidget(QWidget *parent=NULL);
 	virtual ~PlayerConfigWidget();
-
-	virtual void setControlsFromConfig();
-	virtual void setConfigFromControls();
-
-private slots:
-	void onFamilyChanged(const QString &family);
-	void onSizeChanged(int size);
-	void onPrimaryColorChanged(const QColor &color);
-	void onOutlineColorChanged(const QColor &color);
-	void onOutlineWidthChanged(int width);
-	void onAntialiasChanged(bool antialias);
-
-private:
-	explicit PlayerConfigWidget(QWidget *parent = 0);
-
-	PlayerConfig * config() { return static_cast<PlayerConfig *>(m_config); }
 };
 }
 

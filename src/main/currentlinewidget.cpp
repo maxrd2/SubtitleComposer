@@ -19,7 +19,6 @@
 
 #include "currentlinewidget.h"
 #include "application.h"
-#include "configs/spellingconfig.h"
 #include "actions/useractionnames.h"
 #include "../widgets/timeedit.h"
 #include "../widgets/simplerichtextedit.h"
@@ -33,6 +32,7 @@
 
 #include <QDebug>
 #include <KLocale>
+#include <KGlobal>
 #include <KIcon>
 #include <KConfigGroup>
 
@@ -160,7 +160,7 @@ CurrentLineWidget::CurrentLineWidget(QWidget *parent) :
 
 	connect(m_updateShorcutsTimer, SIGNAL(timeout()), this, SLOT(updateShortcuts()));
 
-	connect(app()->spellingConfig(), SIGNAL(optionChanged(const QString &, const QString &)), this, SLOT(onSpellingOptionChanged(const QString &, const QString &)));
+	connect(SCConfig::self(), SIGNAL(configChanged()), this, SLOT(onConfigChanged()));
 }
 
 CurrentLineWidget::~CurrentLineWidget()
@@ -488,12 +488,12 @@ mapShortcuts(SimpleRichTextEdit *textEdit, int textEditActionID, const char *app
 }
 
 void
-CurrentLineWidget::onSpellingOptionChanged(const QString &option, const QString &value)
+CurrentLineWidget::onConfigChanged()
 {
-	if(option == SpellingConfig::keyDefaultLanguage()) {
-		m_textEdits[0]->setSpellCheckingLanguage(value);
-		m_textEdits[1]->setSpellCheckingLanguage(value);
-	}
+//	if(option == SpellingConfig::keyDefaultLanguage()) {
+		m_textEdits[0]->setSpellCheckingLanguage(SCConfig::self()->defaultLanguage());
+		m_textEdits[1]->setSpellCheckingLanguage(SCConfig::self()->defaultLanguage());
+//	}
 }
 
 #include <KStandardShortcut>

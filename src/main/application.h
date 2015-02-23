@@ -25,19 +25,16 @@
 #endif
 
 #include "mainwindow.h"
-#include "configs/generalconfig.h"
-#include "configs/spellingconfig.h"
-#include "configs/errorsconfig.h"
-#include "configs/playerconfig.h"
 #include "../core/subtitle.h"
-#include "../config/appconfig.h"
 #include "../formats/format.h"
+#include "scconfig.h"
 
 #include <QtCore/QMap>
 #include <QtCore/QString>
 #include <QKeySequence>
 
 #include <KApplication>
+#include <KConfigDialog>
 #include <QAction>
 #include <QUrl>
 #include <kencodingdetector.h>
@@ -89,11 +86,6 @@ public:
 
 	void loadConfig();
 	void saveConfig();
-
-	GeneralConfig * generalConfig() { return static_cast<GeneralConfig *>(m_config.group("General")); }
-	SpellingConfig * spellingConfig() { return static_cast<SpellingConfig *>(m_config.group("Spelling")); }
-	ErrorsConfig * errorsConfig() { return static_cast<ErrorsConfig *>(m_config.group("Errors")); }
-	PlayerConfig * playerConfig() { return static_cast<PlayerConfig *>(m_config.group("Player")); }
 
 	QAction * action(const char *actionName);
 
@@ -281,8 +273,6 @@ private slots:
 private:
 	void toggleFullScreen(bool on);
 
-	AppConfig m_config;
-
 	Subtitle *m_subtitle;
 	QUrl m_subtitleUrl;
 	QString m_subtitleFileName;
@@ -308,10 +298,7 @@ private:
 	CurrentLineWidget *m_curLineWidget;
 	StatusBar2 *m_statusBar;
 
-	ConfigDialog *m_configDialog;
-	ErrorsDialog *m_errorsDialog;
-
-	ErrorsWidget *m_errorsWidget;
+	KConfigDialog *m_configDialog;
 
 	QUrl m_lastSubtitleUrl;
 	KRecentFilesActionExt *m_recentSubtitlesAction;

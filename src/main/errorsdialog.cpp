@@ -19,7 +19,6 @@
 
 #include "errorsdialog.h"
 #include "application.h"
-#include "configs/errorsconfig.h"
 #include "../core/subtitle.h"
 #include "../core/subtitleline.h"
 
@@ -28,6 +27,7 @@
 
 #include <QDebug>
 #include <KLocale>
+#include <KGlobal>
 #include <KApplication>
 #include <KConfig>
 #include <KConfigGroup>
@@ -50,7 +50,7 @@ ErrorsDialog::ErrorsDialog(QWidget *parent) :
 	mainLayout->setAlignment(Qt::AlignTop);
 	mainLayout->setSpacing(5);
 
-	m_autoClearFixed = app()->errorsConfig()->autoClearFixed();
+	m_autoClearFixed = SCConfig::self()->autoClearFixed();
 	m_clearFixedButton = new QPushButton(mainWidget);
 	m_clearFixedButton->setText(i18n("Clear Fixed Errors"));
 	m_clearFixedButton->setEnabled(!m_autoClearFixed);
@@ -87,7 +87,7 @@ ErrorsDialog::ErrorsDialog(QWidget *parent) :
 
 	connect(m_errorsWidget->model(), SIGNAL(statsChanged()), this, SLOT(onStatsChanged()));
 
-	connect(app()->errorsConfig(), SIGNAL(optionChanged(const QString &, const QString &)), this, SLOT(onOptionChanged(const QString &, const QString &)));
+	connect(SCConfig::self(), SIGNAL(configChanged()), this, SLOT(onConfigChanged()));
 }
 
 ErrorsWidget *
@@ -139,12 +139,12 @@ ErrorsDialog::onStatsChanged()
 }
 
 void
-ErrorsDialog::onOptionChanged(const QString &option, const QString &value)
+ErrorsDialog::onConfigChanged()
 {
-	if(option == ErrorsConfig::keyAutoClearFixed()) {
-		m_autoClearFixed = value == "true";
+//	if(option == ErrorsConfig::keyAutoClearFixed()) {
+		m_autoClearFixed = SCConfig::self()->autoClearFixed();
 		m_clearFixedButton->setEnabled(m_clearErrorsButton->isEnabled() && !m_autoClearFixed);
-	}
+//	}
 }
 
 

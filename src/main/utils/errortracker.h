@@ -53,7 +53,7 @@ private slots:
 	void onLineSecondaryTextChanged(SubtitleLine *line);
 	void onLineTimesChanged(SubtitleLine *line);
 
-	void onErrorsOptionChanged(const QString &optionName, const QString &value);
+	void onConfigChanged();
 
 private:
 	Subtitle *m_subtitle;

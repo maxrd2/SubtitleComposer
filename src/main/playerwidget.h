@@ -99,7 +99,7 @@ private slots:
 	void onSeekSliderReleased();
 	void onPositionEditValueChanged(int position);
 
-	void onPlayerOptionChanged(const QString &option, const QString &value);
+	void onConfigChanged();
 
 	void onPlayerFileOpened(const QString &filePath);
 	void onPlayerFileOpenError(const QString &filePath);

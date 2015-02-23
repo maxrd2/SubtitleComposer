@@ -3,6 +3,7 @@
 
 /***************************************************************************
  *   Copyright (C) 2007-2009 Sergio Pistone (sergio_pistone@yahoo.com.ar)  *
+ *   Copyright (C) 2013-2015 Mladen Milinković                             *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
@@ -24,37 +25,18 @@
 #include <config.h>
 #endif
 
-#include "errorsconfig.h"
-#include "../../config/appconfiggroupwidget.h"
-
-class KIntNumInput;
-class QCheckBox;
+#include "ui_errorsconfigwidget.h"
 
 namespace SubtitleComposer {
-class ErrorsConfigWidget : public AppConfigGroupWidget
+class ErrorsConfigWidget : public QWidget, private Ui::ErrorsConfigWidget
 {
 	Q_OBJECT
 
 	friend class ConfigDialog;
 
 public:
-	virtual ~ErrorsConfigWidget();
-
-	virtual void setControlsFromConfig();
-	virtual void setConfigFromControls();
-
-private:
 	explicit ErrorsConfigWidget(QWidget *parent = 0);
-
-	ErrorsConfig * config() { return static_cast<ErrorsConfig *>(m_config); }
-
-	KIntNumInput *m_minDurationSpinBox;
-	KIntNumInput *m_maxDurationSpinBox;
-	KIntNumInput *m_maxCharactersSpinBox;
-	KIntNumInput *m_maxLinesSpinBox;
-	KIntNumInput *m_minDurationPerCharSpinBox;
-	KIntNumInput *m_maxDurationPerCharSpinBox;
-	QCheckBox *m_autoClearFixedCheckBox;
+	virtual ~ErrorsConfigWidget();
 };
 }
 

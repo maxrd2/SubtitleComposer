@@ -23,6 +23,7 @@
 
 #include <QProgressBar>
 #include <QToolButton>
+#include <KLocale>
 
 using namespace SubtitleComposer;
 

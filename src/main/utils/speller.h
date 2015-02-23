@@ -63,7 +63,7 @@ private slots:
 	void onMisspelling(const QString &before, int pos);
 	void onCorrected(const QString &before, int pos, const QString &after);
 
-	void onSpellingOptionChanged(const QString &option, const QString &value);
+	void onConfigChanged();
 
 private:
 	Subtitle *m_subtitle;

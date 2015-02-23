@@ -47,6 +47,8 @@
 #include <QAction>
 #include <KActionCollection>
 #include <KMenuBar>
+#include <KGlobal>
+#include <KLocale>
 #include <KDialog>
 #include <KFileDialog>
 #include <QPushButton>

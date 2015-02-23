@@ -47,7 +47,7 @@ public:
 private slots:
 	void onStatsChanged();
 
-	void onOptionChanged(const QString &option, const QString &value);
+	void onConfigChanged();
 
 private:
 	ErrorsWidget *m_errorsWidget;

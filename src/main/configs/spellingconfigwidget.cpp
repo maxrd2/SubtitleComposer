@@ -30,12 +30,11 @@ using namespace SubtitleComposer;
 
 #define SONNET_CONFIG_GROUP "Spelling"
 
-SpellingConfigWidget::SpellingConfigWidget(QWidget *parent) :
-	AppConfigGroupWidget(new SpellingConfig(), parent),
-	m_sonnetConfigWidget(0),
-	m_globalConfig(KGlobal::config().data())
+SpellingConfigWidget::SpellingConfigWidget(QWidget *parent)
+	: QWidget(parent),
+	m_sonnetConfigWidget(0)
 {
-	setControlsFromConfig();
+	// setupUi(this)
 }
 
 SpellingConfigWidget::~SpellingConfigWidget()
