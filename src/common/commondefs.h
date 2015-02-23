@@ -56,7 +56,12 @@ public:
 	static QString homeDir();
 	static QString tempDir();
 
+	static QUrl urlFromPath(QString path);
+
 	static QUrl newUrl(const QUrl &baseUrl, const QString &fileName = "tempfile", const QString &extension = "", int retries = 10);
+
+	static bool urlIsInside(const QUrl url, QString path);
+	static bool urlIsInside(const QUrl url, QStringList path);
 };
 
 #endif

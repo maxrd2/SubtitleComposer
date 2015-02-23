@@ -245,3 +245,35 @@ System::newUrl(const QUrl &baseUrl, const QString &fileName, const QString &exte
 
 	return QUrl(newFilePath);
 }
+
+/*static*/ QUrl
+System::urlFromPath(QString path)
+{
+	QUrl url(path);
+	if(url.isRelative()) {
+		url.setScheme("file");
+		if(path[0] != QDir::separator())
+			url.setPath(QDir::currentPath() + "/" + path);
+	}
+	return url;
+}
+
+
+/*static*/ bool
+System::urlIsInside(const QUrl url, QString path)
+{
+	if(!url.scheme().isEmpty() && url.scheme() != "file")
+		return false;
+	QString urlPath = url.toLocalFile();
+	return urlPath.startsWith(path);
+}
+
+/*static*/ bool
+System::urlIsInside(const QUrl url, QStringList path)
+{
+	for(QStringList::const_iterator i = path.constBegin(), end = path.constEnd(); i != end; i++) {
+		if(urlIsInside(url, *i))
+			return true;
+	}
+	return false;
+}

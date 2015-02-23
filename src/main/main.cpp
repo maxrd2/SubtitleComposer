@@ -27,6 +27,7 @@
 #else
 
 #include "application.h"
+#include "../common/commondefs.h"
 
 #include <QtCore/QFile>
 #include <QtCore/QDir>
@@ -39,16 +40,6 @@
 #if defined HAVE_XINE && !defined HAVE_XCB
 #include <X11/Xlib.h>
 #endif
-
-static inline QUrl
-KUrlFromParam(const QString path)
-{
-	QUrl url(path);
-	if(!url.isRelative())
-		return url;
-	url.setPath(QDir::currentPath() + "/" + path);
-	return url;
-}
 
 int
 main(int argc, char **argv)
@@ -103,10 +94,10 @@ main(int argc, char **argv)
 	KCmdLineArgs *args = KCmdLineArgs::parsedArgs();
 
 	if(args->count())
-		app.openSubtitle(KUrlFromParam(args->arg(0)));
+		app.openSubtitle(System::urlFromPath(args->arg(0)));
 
 	if(args->count() > 1)
-		app.openSubtitleTr(KUrlFromParam(args->arg(1)));
+		app.openSubtitleTr(System::urlFromPath(args->arg(1)));
 
 	args->clear();
 

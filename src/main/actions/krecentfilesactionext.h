@@ -67,8 +67,6 @@ signals:
 	void urlSelected(const QUrl &url);
 
 protected:
-	void setUrls(const QList<QUrl> &urls, bool ignoreCollisions);
-
 	virtual QAction * actionForUrl(const QUrl &url) const;
 
 protected slots:
@@ -77,10 +75,7 @@ protected slots:
 
 protected:
 	int m_maxItems;
-
-	QMap<QAction *, QUrl> m_urls;
-	QMap<QUrl, QAction *> m_actions;
-
+	QMap<QUrl, QAction *> m_urls;
 	QAction *m_separatorAction;
 	QAction *m_clearHistoryAction;
 };

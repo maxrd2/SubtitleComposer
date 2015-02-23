@@ -19,6 +19,8 @@
 
 #include "krecentfilesactionext.h"
 
+#include "common/commondefs.h"
+
 #include <QtCore/QFile>
 
 #include <KLocale>
@@ -90,48 +92,33 @@ KRecentFilesActionExt::encodingForUrl(const QUrl &url) const
 QList<QUrl>
 KRecentFilesActionExt::urls() const
 {
-	QList<QUrl> urls;
-	QList<QAction *> actions = this->actions();
-	QAction *action;
-	for(QList<QAction *>::ConstIterator it = actions.constBegin(), end = actions.constEnd(); it != end; ++it) {
-		action = *it;
-		if(action != m_separatorAction && action != m_clearHistoryAction)
-			urls.append(m_urls[action]);
-	}
-	return urls;
+	return m_urls.keys();
 }
 
 void
-KRecentFilesActionExt::setUrls(const QList<QUrl> &urls, bool ignoreCollisions)
+KRecentFilesActionExt::setUrls(const QList<QUrl> &urls)
 {
+	QString entryText("%1 [%2]");
+	QStringList tempList = QStandardPaths::standardLocations(QStandardPaths::TempLocation);
+
 	clearUrls();
 
-	QString entryText("%1 [%2]");
-
 	for(QList<QUrl>::ConstIterator it = urls.begin(), end = urls.end(); it != end; ++it) {
-		// QStandardPaths::locate might not work like it is now
-		if((*it).isLocalFile() && !QStandardPaths::locate(QStandardPaths::TempLocation, (*it).path(), QStandardPaths::LocateFile).isEmpty())
+		if(System::urlIsInside(*it, tempList))
 			continue; // don't store temporary paths
 
-		if(!ignoreCollisions && actionForUrl(*it))
+		if(actionForUrl(*it))
 			continue;
 
 		QAction *action = new QAction(entryText.arg(it->fileName()).arg(it->toString(QUrl::PreferLocalFile)), selectableActionGroup());
 
-		m_urls[action] = *it;
-		m_actions[*it] = action;
+		m_urls[*it] = action;
 
 		addAction(action);
 	}
 
 	addAction(m_separatorAction);
 	addAction(m_clearHistoryAction);
-}
-
-void
-KRecentFilesActionExt::setUrls(const QList<QUrl> &urls)
-{
-	setUrls(urls, false);
 }
 
 void
@@ -142,16 +129,18 @@ KRecentFilesActionExt::addUrl(const QUrl &url)
 	QList<QUrl> newUrls = urls();
 	newUrls.prepend(url);
 
-	setUrls(newUrls, true);
+	setUrls(newUrls);
 }
 
 QAction *
 KRecentFilesActionExt::removeAction(QAction *action)
 {
 	action = KSelectAction::removeAction(action);
-	if(m_urls.contains(action)) {
-		m_actions.remove(m_urls[action]);
-		m_urls.remove(action);
+	for(QMap<QUrl, QAction *>::Iterator it = m_urls.begin(), end = m_urls.end(); it != end; ++it) {
+		if(*it == action) {
+			m_urls.erase(it);
+			break;
+		}
 	}
 	return action;
 }
@@ -159,15 +148,15 @@ KRecentFilesActionExt::removeAction(QAction *action)
 void
 KRecentFilesActionExt::removeUrl(const QUrl &url)
 {
-	if(QAction * action = actionForUrl(url))
+	while(QAction *action = actionForUrl(url))
 		removeAction(action)->deleteLater();
 }
 
 void
 KRecentFilesActionExt::clearUrls()
 {
-	while(!m_actions.empty())
-		removeAction(m_actions.begin().value())->deleteLater();
+	while(!m_urls.empty())
+		removeAction(m_urls.begin().value())->deleteLater();
 
 	removeAction(m_clearHistoryAction);
 	removeAction(m_separatorAction);
@@ -176,16 +165,7 @@ KRecentFilesActionExt::clearUrls()
 QAction *
 KRecentFilesActionExt::actionForUrl(const QUrl &url) const
 {
-	QUrl refUrl(url);
-//	refUrl.setFileEncoding(QString());
-
-	for(QMap<QUrl, QAction *>::ConstIterator it = m_actions.begin(), end = m_actions.end(); it != end; ++it) {
-		QUrl curUrl(it.key());
-//		curUrl.setFileEncoding(QString());
-		if(curUrl == refUrl)
-			return it.value();
-	}
-	return 0;
+	return m_urls[url];
 }
 
 void
@@ -197,14 +177,14 @@ KRecentFilesActionExt::loadEntries(const KConfigGroup &group)
 	for(int index = 0, size = qMin(group.readEntry<int>("Files", m_maxItems), m_maxItems); index < size; ++index) {
 		QString value = group.readPathEntry(key.arg(index), QString());
 		if(!value.isEmpty()) {
-			QUrl url(value);
-			if(url.isLocalFile() && !QFile::exists(url.path()))
-				continue; // Don't restore if file doesn't exist anymore
+			QUrl url = System::urlFromPath(value);
+			if(!QFile::exists(url.path()))
+				continue;
 			urls.append(url);
 		}
 	}
 
-	setUrls(urls, true);
+	setUrls(urls);
 }
 
 void
@@ -227,10 +207,16 @@ KRecentFilesActionExt::saveEntries(const KConfigGroup &g)
 void
 KRecentFilesActionExt::onActionTriggered(QAction *action)
 {
-	if(action == m_clearHistoryAction)
+	if(action == m_clearHistoryAction) {
 		clearUrls();
-	else
-		emit urlSelected(m_urls[action]);
+	} else {
+		for(QMap<QUrl, QAction *>::ConstIterator it = m_urls.constBegin(), end = m_urls.constEnd(); it != end; ++it) {
+			if(*it == action) {
+				emit urlSelected(it.key());
+				break;
+			}
+		}
+	}
 }
 
 void
