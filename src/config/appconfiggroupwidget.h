@@ -38,7 +38,7 @@ class AppConfigGroupWidget : public QWidget
 
 public:
 /// ownership of the config object is transferred to this object
-	explicit AppConfigGroupWidget(AppConfigGroup *configGroup, QWidget *parent = 0);
+	explicit AppConfigGroupWidget(AppConfigGroup *configGroup, QWidget *parent = 0, bool init = true);
 	virtual ~AppConfigGroupWidget();
 
 	const AppConfigGroup * config();

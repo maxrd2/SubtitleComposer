@@ -25,6 +25,8 @@
 #include <config.h>
 #endif
 
+#include "ui_mpvconfigwidget.h"
+
 #include "mpvconfig.h"
 #include "../../config/appconfiggroupwidget.h"
 
@@ -34,7 +36,7 @@ class KIntSpinBox;
 class KUrlRequester;
 
 namespace SubtitleComposer {
-class MPVConfigWidget : public AppConfigGroupWidget
+class MPVConfigWidget : public AppConfigGroupWidget, private Ui::mpvconfigwidget
 {
 	Q_OBJECT
 
@@ -50,7 +52,7 @@ private:
 	explicit MPVConfigWidget(QWidget *parent = 0);
 
 	MPVConfig * config() { return static_cast<MPVConfig *>(m_config); }
-
+/*
 private:
 	QCheckBox *m_frameDropCheckBox;
 	QCheckBox *m_videoOutputCheckBox;
@@ -65,7 +67,7 @@ private:
 	KIntSpinBox *m_volumeAmplificationSpinBox;
 	QCheckBox *m_volumeNormalizationCheckBox;
 	QCheckBox *m_avsyncCheckBox;
-	QCheckBox *m_audioOutputCheckBox;
+	QCheckBox *m_audioOutputCheckBox;*/
 };
 }
 

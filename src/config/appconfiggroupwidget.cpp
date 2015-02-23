@@ -24,14 +24,16 @@
 
 using namespace SubtitleComposer;
 
-AppConfigGroupWidget::AppConfigGroupWidget(AppConfigGroup *configGroup, QWidget *parent) :
+AppConfigGroupWidget::AppConfigGroupWidget(AppConfigGroup *configGroup, QWidget *parent, bool init) :
 	QWidget(parent, 0),
 	m_config(configGroup)
 {
-	m_mainLayout = new QGridLayout(this);
-	m_mainLayout->setAlignment(Qt::AlignTop);
-	m_mainLayout->setMargin(0);
-	m_mainLayout->setSpacing(5);
+	if(init) {
+		m_mainLayout = new QGridLayout(this);
+		m_mainLayout->setAlignment(Qt::AlignTop);
+		m_mainLayout->setMargin(0);
+		m_mainLayout->setSpacing(5);
+	}
 }
 
 AppConfigGroupWidget::~AppConfigGroupWidget()

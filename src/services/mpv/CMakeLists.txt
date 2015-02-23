@@ -2,6 +2,7 @@ set(services_mpv_SRCS
 	${CMAKE_CURRENT_SOURCE_DIR}/mpvconfig.h
 	${CMAKE_CURRENT_SOURCE_DIR}/mpvbackend.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/mpvconfigwidget.cpp
+	${CMAKE_CURRENT_SOURCE_DIR}/mpvconfigwidget.ui
 	CACHE INTERNAL EXPORTEDVARIABLE
 )
 

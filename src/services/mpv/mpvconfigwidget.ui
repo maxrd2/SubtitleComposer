@@ -1,0 +1,320 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>mpvconfigwidget</class>
+ <widget class="QWidget" name="mpvconfigwidget">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>288</width>
+    <height>431</height>
+   </rect>
+  </property>
+  <layout class="QVBoxLayout" name="verticalLayout">
+   <property name="sizeConstraint">
+    <enum>QLayout::SetMinimumSize</enum>
+   </property>
+   <item>
+    <widget class="QGroupBox" name="groupBox">
+     <property name="title">
+      <string>General</string>
+     </property>
+     <layout class="QGridLayout" name="gridLayout">
+      <item row="0" column="0" alignment="Qt::AlignRight|Qt::AlignVCenter">
+       <widget class="QCheckBox" name="m_avSyncCheckbox">
+        <property name="text">
+         <string>A/V synchronization factor:</string>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="1">
+       <widget class="QSpinBox" name="m_avSyncValue"/>
+      </item>
+     </layout>
+    </widget>
+   </item>
+   <item>
+    <widget class="QGroupBox" name="groupBox_2">
+     <property name="title">
+      <string>Video</string>
+     </property>
+     <layout class="QGridLayout" name="gridLayout_2">
+      <item row="0" column="1">
+       <widget class="QComboBox" name="m_videoOutputValue"/>
+      </item>
+      <item row="1" column="0" alignment="Qt::AlignRight|Qt::AlignVCenter">
+       <widget class="QCheckBox" name="m_hwDecodeEnabled">
+        <property name="text">
+         <string>Hardware video decoding:</string>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="1">
+       <widget class="QComboBox" name="m_hwDecodeValue"/>
+      </item>
+      <item row="2" column="0" alignment="Qt::AlignRight|Qt::AlignVCenter">
+       <widget class="QCheckBox" name="m_frameDropEnabled">
+        <property name="text">
+         <string>Allow frame dropping</string>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="0" alignment="Qt::AlignRight|Qt::AlignVCenter">
+       <widget class="QCheckBox" name="m_videoOutputEnabled">
+        <property name="text">
+         <string>Video output driver:</string>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </widget>
+   </item>
+   <item>
+    <widget class="QGroupBox" name="groupBox_3">
+     <property name="title">
+      <string>Audio</string>
+     </property>
+     <layout class="QGridLayout" name="gridLayout_3">
+      <item row="0" column="0" alignment="Qt::AlignRight|Qt::AlignVCenter">
+       <widget class="QCheckBox" name="m_audioOutputEnabled">
+        <property name="text">
+         <string>Audio output driver:</string>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="1">
+       <widget class="QSlider" name="m_audioChannelsValue">
+        <property name="minimum">
+         <number>1</number>
+        </property>
+        <property name="maximum">
+         <number>6</number>
+        </property>
+        <property name="orientation">
+         <enum>Qt::Horizontal</enum>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="1">
+       <widget class="QComboBox" name="m_audioOutputValue"/>
+      </item>
+      <item row="3" column="0" alignment="Qt::AlignRight|Qt::AlignVCenter">
+       <widget class="QCheckBox" name="m_volumeNormalizationEnabled">
+        <property name="text">
+         <string>Volume normalization</string>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="0" alignment="Qt::AlignRight|Qt::AlignVCenter">
+       <widget class="QCheckBox" name="m_audioChannelsEnabled">
+        <property name="text">
+         <string>Audio channels:</string>
+        </property>
+       </widget>
+      </item>
+      <item row="2" column="0" alignment="Qt::AlignRight|Qt::AlignVCenter">
+       <widget class="QCheckBox" name="m_volumeAmplificationEnabled">
+        <property name="text">
+         <string>Volume amplification:</string>
+        </property>
+       </widget>
+      </item>
+      <item row="2" column="1">
+       <widget class="QSlider" name="m_volumeAmplificationValue">
+        <property name="minimum">
+         <number>100</number>
+        </property>
+        <property name="maximum">
+         <number>600</number>
+        </property>
+        <property name="singleStep">
+         <number>10</number>
+        </property>
+        <property name="pageStep">
+         <number>50</number>
+        </property>
+        <property name="orientation">
+         <enum>Qt::Horizontal</enum>
+        </property>
+       </widget>
+      </item>
+      <item row="2" column="2">
+       <widget class="QLabel" name="m_volumeAmplificationLabel">
+        <property name="text">
+         <string>TextLabel</string>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="2">
+       <widget class="QLabel" name="m_audioChannelsLabel">
+        <property name="text">
+         <string>TextLabel</string>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </widget>
+   </item>
+   <item>
+    <spacer name="spacer">
+     <property name="orientation">
+      <enum>Qt::Vertical</enum>
+     </property>
+     <property name="sizeHint" stdset="0">
+      <size>
+       <width>20</width>
+       <height>40</height>
+      </size>
+     </property>
+    </spacer>
+   </item>
+  </layout>
+ </widget>
+ <tabstops>
+  <tabstop>m_avSyncCheckbox</tabstop>
+  <tabstop>m_avSyncValue</tabstop>
+  <tabstop>m_videoOutputEnabled</tabstop>
+  <tabstop>m_videoOutputValue</tabstop>
+  <tabstop>m_hwDecodeEnabled</tabstop>
+  <tabstop>m_hwDecodeValue</tabstop>
+  <tabstop>m_frameDropEnabled</tabstop>
+  <tabstop>m_audioOutputEnabled</tabstop>
+  <tabstop>m_audioOutputValue</tabstop>
+  <tabstop>m_audioChannelsEnabled</tabstop>
+  <tabstop>m_audioChannelsValue</tabstop>
+  <tabstop>m_volumeAmplificationEnabled</tabstop>
+  <tabstop>m_volumeAmplificationValue</tabstop>
+  <tabstop>m_volumeNormalizationEnabled</tabstop>
+ </tabstops>
+ <resources/>
+ <connections>
+  <connection>
+   <sender>m_videoOutputEnabled</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>m_videoOutputValue</receiver>
+   <slot>setEnabled(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>193</x>
+     <y>142</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>273</x>
+     <y>147</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>m_hwDecodeEnabled</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>m_hwDecodeValue</receiver>
+   <slot>setEnabled(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>82</x>
+     <y>179</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>273</x>
+     <y>184</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>m_audioOutputEnabled</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>m_audioOutputValue</receiver>
+   <slot>setEnabled(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>133</x>
+     <y>284</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>213</x>
+     <y>289</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>m_audioChannelsEnabled</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>m_audioChannelsValue</receiver>
+   <slot>setEnabled(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>133</x>
+     <y>316</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>213</x>
+     <y>315</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>m_volumeAmplificationEnabled</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>m_volumeAmplificationValue</receiver>
+   <slot>setEnabled(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>133</x>
+     <y>343</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>213</x>
+     <y>342</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>m_avSyncCheckbox</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>m_avSyncValue</receiver>
+   <slot>setEnabled(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>197</x>
+     <y>64</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>273</x>
+     <y>69</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>m_audioChannelsValue</sender>
+   <signal>valueChanged(int)</signal>
+   <receiver>m_audioChannelsLabel</receiver>
+   <slot>setNum(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>182</x>
+     <y>308</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>246</x>
+     <y>299</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>m_volumeAmplificationValue</sender>
+   <signal>valueChanged(int)</signal>
+   <receiver>m_volumeAmplificationLabel</receiver>
+   <slot>setNum(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>194</x>
+     <y>332</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>242</x>
+     <y>331</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
+</ui>

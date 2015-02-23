@@ -32,9 +32,10 @@
 
 using namespace SubtitleComposer;
 
-MPVConfigWidget::MPVConfigWidget(QWidget *parent) :
-	AppConfigGroupWidget(new MPVConfig(), parent)
+MPVConfigWidget::MPVConfigWidget(QWidget *parent)
+	: AppConfigGroupWidget(new MPVConfig(), parent, false)
 {
+	/*
 	QGroupBox *generalGroupBox = createGroupBox(i18nc("@title:group General settings", "General"));
 
 	m_avsyncCheckBox = new QCheckBox(generalGroupBox);
@@ -140,6 +141,13 @@ MPVConfigWidget::MPVConfigWidget(QWidget *parent) :
 	connect(m_volumeAmplificationSpinBox, SIGNAL(valueChanged(int)), this, SIGNAL(settingsChanged()));
 	connect(m_volumeNormalizationCheckBox, SIGNAL(toggled(bool)), this, SIGNAL(settingsChanged()));
 
+*/
+	setupUi(this);
+
+	m_videoOutputValue->addItems(QString("vdpau vaapi xv wayland opengl opengl-hq opengl-old x11 null").split(' '));
+	m_hwDecodeValue->addItems(QString("auto vdpau vaapi vaapi-copy").split(' '));
+	m_audioOutputValue->addItems(QString("pulse alsa oss portaudio jack null").split(' '));
+
 	setControlsFromConfig();
 }
 
@@ -149,45 +157,53 @@ MPVConfigWidget::~MPVConfigWidget()
 void
 MPVConfigWidget::setConfigFromControls()
 {
-	config()->setAutoSyncFactor(m_avsyncCheckBox->isChecked() ? m_avsyncSpinBox->value() : -1);
+	config()->setAutoSyncFactor(m_avSyncCheckbox->isChecked() ? m_avSyncValue->value() : -1);
 
-	config()->setVideoOutput(m_videoOutputCheckBox->isChecked() ? m_videoOutputComboBox->currentText() : QString());
-	config()->setHwDecode(m_hwDecodeCheckBox->isChecked() ? m_hwDecodeComboBox->currentText() : QString());
-	config()->setFrameDropping(m_frameDropCheckBox->isChecked());
+	config()->setVideoOutput(m_videoOutputEnabled->isChecked() ? m_videoOutputValue->currentText() : QString());
+	config()->setHwDecode(m_hwDecodeEnabled->isChecked() ? m_hwDecodeValue->currentText() : QString());
+	config()->setFrameDropping(m_frameDropEnabled->isChecked());
 
-	config()->setAudioOutput(m_audioOutputCheckBox->isChecked() ? m_audioOutputComboBox->currentText() : QString());
-	config()->setAudioChannels(m_audioChannelsCheckBox->isChecked() ? m_audioChannelsSpinBox->value() : 0);
-	config()->setVolumeAplification(m_volumeAmplificationCheckBox->isChecked() ? m_volumeAmplificationSpinBox->value() : 0);
-	config()->setVolumeNormalization(m_volumeNormalizationCheckBox->isChecked());
+	config()->setAudioOutput(m_audioOutputEnabled->isChecked() ? m_audioOutputValue->currentText() : QString());
+	config()->setAudioChannels(m_audioChannelsEnabled->isChecked() ? m_audioChannelsValue->value() : 0);
+	config()->setVolumeAplification(m_volumeAmplificationEnabled->isChecked() ? m_volumeAmplificationValue->value() : 0);
+	config()->setVolumeNormalization(m_volumeNormalizationEnabled->isChecked());
 }
 
 void
 MPVConfigWidget::setControlsFromConfig()
 {
-	m_avsyncCheckBox->setChecked(config()->hasAutoSyncFactor());
-	if(m_avsyncCheckBox->isChecked())
-		m_avsyncSpinBox->setValue(config()->autoSyncFactor());
+	m_avSyncCheckbox->setChecked(config()->hasAutoSyncFactor());
+	m_avSyncValue->setEnabled(config()->hasAutoSyncFactor());
+	if(m_avSyncCheckbox->isChecked())
+		m_avSyncValue->setValue(config()->autoSyncFactor());
 
-	m_videoOutputCheckBox->setChecked(config()->hasVideoOutput());
-	if(m_videoOutputCheckBox->isChecked())
-		m_videoOutputComboBox->setEditText(config()->videoOutput());
-	m_hwDecodeCheckBox->setChecked(config()->hasHwDecode());
-	if(m_hwDecodeCheckBox->isChecked())
-		m_hwDecodeComboBox->setEditText(config()->hwDecode());
-	m_frameDropCheckBox->setChecked(config()->frameDropping());
+	m_videoOutputEnabled->setChecked(config()->hasVideoOutput());
+	m_videoOutputValue->setEnabled(m_videoOutputEnabled->isChecked());
+	if(m_videoOutputEnabled->isChecked())
+		m_videoOutputValue->setEditText(config()->videoOutput());
 
-	m_audioOutputCheckBox->setChecked(config()->hasAudioOutput());
-	if(m_audioOutputCheckBox->isChecked())
-		m_audioOutputComboBox->setEditText(config()->audioOutput());
-	m_audioChannelsCheckBox->setChecked(config()->hasAudioChannels());
-	if(m_audioChannelsCheckBox->isChecked())
-		m_audioChannelsSpinBox->setValue(config()->audioChannels());
+	m_hwDecodeEnabled->setChecked(config()->hasHwDecode());
+	m_hwDecodeValue->setEnabled(m_hwDecodeEnabled->isChecked());
+	if(m_hwDecodeEnabled->isChecked())
+		m_hwDecodeValue->setEditText(config()->hwDecode());
+	m_frameDropEnabled->setChecked(config()->frameDropping());
 
-	m_volumeAmplificationCheckBox->setChecked(config()->hasVolumeAmplification());
-	if(m_volumeAmplificationCheckBox->isChecked())
-		m_volumeAmplificationSpinBox->setValue(config()->volumeAmplification());
+	m_audioOutputEnabled->setChecked(config()->hasAudioOutput());
+	m_audioOutputValue->setEnabled(m_audioOutputEnabled->isChecked());
+	if(m_audioOutputEnabled->isChecked())
+		m_audioOutputValue->setEditText(config()->audioOutput());
 
-	m_volumeNormalizationCheckBox->setChecked(config()->volumeNormalization());
+	m_audioChannelsEnabled->setChecked(config()->hasAudioChannels());
+	m_audioChannelsValue->setEnabled(m_audioChannelsEnabled->isChecked());
+	if(m_audioChannelsEnabled->isChecked())
+		m_audioChannelsValue->setValue(config()->audioChannels());
+	m_audioChannelsLabel->setNum(m_audioChannelsValue->value());
+
+	m_volumeAmplificationEnabled->setChecked(config()->hasVolumeAmplification());
+	m_volumeAmplificationValue->setEnabled(m_volumeAmplificationEnabled->isChecked());
+	if(m_volumeAmplificationEnabled->isChecked())
+		m_volumeAmplificationValue->setValue(config()->volumeAmplification());
+	m_volumeAmplificationLabel->setNum(m_volumeAmplificationValue->value());
+
+	m_volumeNormalizationEnabled->setChecked(config()->volumeNormalization());
 }
-
-
