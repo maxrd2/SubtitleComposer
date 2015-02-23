@@ -1,25 +1,24 @@
-/***************************************************************************
- *   Copyright (C) 2007-2009 Sergio Pistone (sergio_pistone@yahoo.com.ar)  *
- *   based on Kaffeine by Jürgen Kofler                                    *
- *                                                                         *
- *   This program is free software; you can redistribute it and/or modify  *
- *   it under the terms of the GNU General Public License as published by  *
- *   the Free Software Foundation; either version 2 of the License, or     *
- *   (at your option) any later version.                                   *
- *                                                                         *
- *   This program is distributed in the hope that it will be useful,       *
- *   but WITHOUT ANY WARRANTY; without even the implied warranty of        *
- *   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the         *
- *   GNU General Public License for more details.                          *
- *                                                                         *
- *   You should have received a copy of the GNU General Public License     *
- *   along with this program; if not, write to the                         *
- *   Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor,      *
- *   Boston, MA 02110-1301, USA.                                           *
- ***************************************************************************/
+/**
+ * Copyright (C) 2007-2009 Sergio Pistone <sergio_pistone@yahoo.com.ar>
+ * Copyright (C) 2010-2015 Mladen Milinkovic <max@smoothware.net>
+ * 
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or
+ * (at your option) any later version.
+ * 
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ * 
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the
+ * Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor,
+ * Boston, MA 02110-1301, USA.
+ */
 
 #include "xinedecoderbackend.h"
-#include "xineconfig.h"
 #include "xineconfigwidget.h"
 #include "../wavewriter.h"
 
@@ -101,7 +100,7 @@ private:
 }
 
 XineDecoderBackend::XineDecoderBackend(Decoder *decoder) :
-	DecoderBackend(decoder, "Xine", new XineConfig()),
+	DecoderBackend(decoder, "Xine"),
 	m_xineEngine(0),
 	m_audioPort(0),
 	m_xineStream(0),
@@ -140,8 +139,8 @@ XineDecoderBackend::finalize()
 	return finalizeXine();
 }
 
-SubtitleComposer::AppConfigGroupWidget *
-XineDecoderBackend::newAppConfigGroupWidget(QWidget *parent)
+QWidget *
+XineDecoderBackend::newConfigWidget(QWidget *parent)
 {
 	return new XineConfigWidget(parent);
 }

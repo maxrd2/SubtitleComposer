@@ -1,22 +1,23 @@
 
-/***************************************************************************
- *   Copyright (C) 2007-2009 Sergio Pistone (sergio_pistone@yahoo.com.ar)  *
- *                                                                         *
- *   This program is free software; you can redistribute it and/or modify  *
- *   it under the terms of the GNU General Public License as published by  *
- *   the Free Software Foundation; either version 2 of the License, or     *
- *   (at your option) any later version.                                   *
- *                                                                         *
- *   This program is distributed in the hope that it will be useful,       *
- *   but WITHOUT ANY WARRANTY; without even the implied warranty of        *
- *   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the         *
- *   GNU General Public License for more details.                          *
- *                                                                         *
- *   You should have received a copy of the GNU General Public License     *
- *   along with this program; if not, write to the                         *
- *   Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor,      *
- *   Boston, MA 02110-1301, USA.                                           *
- ***************************************************************************/
+/**
+ * Copyright (C) 2007-2009 Sergio Pistone <sergio_pistone@yahoo.com.ar>
+ * Copyright (C) 2010-2015 Mladen Milinkovic <max@smoothware.net>
+ * 
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or
+ * (at your option) any later version.
+ * 
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ * 
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the
+ * Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor,
+ * Boston, MA 02110-1301, USA.
+ */
 
 #include "errortracker.h"
 #include "../application.h"
@@ -27,15 +28,15 @@ using namespace SubtitleComposer;
 ErrorTracker::ErrorTracker(QObject *parent) :
 	QObject(parent),
 	m_subtitle(0),
-	m_autoClearFixed(app()->errorsConfig()->autoClearFixed()),
-	m_minDuration(app()->errorsConfig()->minDuration()),
-	m_maxDuration(app()->errorsConfig()->maxDuration()),
-	m_minDurationPerChar(app()->errorsConfig()->minDurationPerChar()),
-	m_maxDurationPerChar(app()->errorsConfig()->maxDurationPerChar()),
-	m_maxCharacters(app()->errorsConfig()->maxCharacters()),
-	m_maxLines(app()->errorsConfig()->maxLines())
+	m_autoClearFixed(SCConfig::autoClearFixed()),
+	m_minDuration(SCConfig::minDuration()),
+	m_maxDuration(SCConfig::maxDuration()),
+	m_minDurationPerChar(SCConfig::minDurationPerCharacter()),
+	m_maxDurationPerChar(SCConfig::maxDurationPerCharacter()),
+	m_maxCharacters(SCConfig::maxCharacters()),
+	m_maxLines(SCConfig::maxLines())
 {
-	connect(app()->errorsConfig(), SIGNAL(optionChanged(const QString &, const QString &)), this, SLOT(onErrorsOptionChanged(const QString &, const QString &)));
+	connect(SCConfig::self(), SIGNAL(configChanged()), this, SLOT(onConfigChanged()));
 }
 
 ErrorTracker::~ErrorTracker()
@@ -104,23 +105,23 @@ ErrorTracker::onLineTimesChanged(SubtitleLine *line)
 }
 
 void
-ErrorTracker::onErrorsOptionChanged(const QString & /*optionName */, const QString & /*value */)
+ErrorTracker::onConfigChanged()
 {
-	ErrorsConfig *errorsConfig = app()->errorsConfig();
+	SCConfig *config= SCConfig::self();
 
-	if(m_autoClearFixed != errorsConfig->autoClearFixed()) { // is this option that has been toggled
+	if(m_autoClearFixed != config->autoClearFixed()) { // is this option that has been toggled
 		if(isTracking())
 			disconnectSlots();
 		m_autoClearFixed = !m_autoClearFixed;
 		if(isTracking())
 			connectSlots();
 	} else {
-		m_minDuration = errorsConfig->minDuration();
-		m_maxDuration = errorsConfig->maxDuration();
-		m_minDurationPerChar = errorsConfig->minDurationPerChar();
-		m_maxDurationPerChar = errorsConfig->maxDurationPerChar();
-		m_maxCharacters = errorsConfig->maxCharacters();
-		m_maxLines = errorsConfig->maxLines();
+		m_minDuration = config->minDuration();
+		m_maxDuration = config->maxDuration();
+		m_minDurationPerChar = config->minDurationPerCharacter();
+		m_maxDurationPerChar = config->maxDurationPerCharacter();
+		m_maxCharacters = config->maxCharacters();
+		m_maxLines = config->maxLines();
 	}
 }
 

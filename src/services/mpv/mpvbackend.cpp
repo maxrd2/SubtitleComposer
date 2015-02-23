@@ -1,26 +1,28 @@
-/***************************************************************************
- *   Copyright (C) 2007-2009 Sergio Pistone (sergio_pistone@yahoo.com.ar)  *
- *   Copyright (C) 2010-2015 Mladen Milinkovic <max@smoothware.net>        *
- *                                                                         *
- *   This program is free software; you can redistribute it and/or modify  *
- *   it under the terms of the GNU General Public License as published by  *
- *   the Free Software Foundation; either version 2 of the License, or     *
- *   (at your option) any later version.                                   *
- *                                                                         *
- *   This program is distributed in the hope that it will be useful,       *
- *   but WITHOUT ANY WARRANTY; without even the implied warranty of        *
- *   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the         *
- *   GNU General Public License for more details.                          *
- *                                                                         *
- *   You should have received a copy of the GNU General Public License     *
- *   along with this program; if not, write to the                         *
- *   Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor,      *
- *   Boston, MA 02110-1301, USA.                                           *
- ***************************************************************************/
+/**
+ * Copyright (C) 2007-2009 Sergio Pistone <sergio_pistone@yahoo.com.ar>
+ * Copyright (C) 2010-2015 Mladen Milinkovic <max@smoothware.net>
+ * 
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or
+ * (at your option) any later version.
+ * 
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ * 
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the
+ * Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor,
+ * Boston, MA 02110-1301, USA.
+ */
 
 #include "mpvbackend.h"
 #include "mpvconfigwidget.h"
 #include "../../common/qxtsignalwaiter.h"
+
+#include "../../main/application.h"
 
 #include <QDebug>
 #include <KLocale>
@@ -31,8 +33,8 @@ using namespace SubtitleComposer;
 using namespace mpv;
 using namespace mpv::qt;
 
-MPVBackend::MPVBackend(Player *player) :
-	PlayerBackend(player, "MPV", new MPVConfig()),
+MPVBackend::MPVBackend(Player *player)
+	: PlayerBackend(player, "MPV"),
 	m_mpv(NULL)
 {
 }
@@ -61,8 +63,8 @@ MPVBackend::_finalize()
 	mpvExit();
 }
 
-SubtitleComposer::AppConfigGroupWidget *
-MPVBackend::newAppConfigGroupWidget(QWidget *parent)
+QWidget *
+MPVBackend::newConfigWidget(QWidget *parent)
 {
 	return new MPVConfigWidget(parent);
 }
@@ -81,25 +83,25 @@ MPVBackend::mpvInit()
 	if(!m_mpv)
 		return false;
 
-	if(config()->hasVideoOutput())
-		mpv_set_option_string(m_mpv, "vo", config()->videoOutput().toUtf8().constData());
+	if(SCConfig::mpvVideoOutputEnabled())
+		mpv_set_option_string(m_mpv, "vo", SCConfig::mpvVideoOutput().toUtf8().constData());
 
-	mpv_set_option_string(m_mpv, "hwdec", config()->hasHwDecode() ? config()->hwDecode().toUtf8().constData() : "no");
+	mpv_set_option_string(m_mpv, "hwdec", SCConfig::mpvHwDecodeEnabled() ? SCConfig::mpvHwDecode().toUtf8().constData() : "no");
 
-	if(config()->hasAudioOutput())
-		mpv_set_option_string(m_mpv, "ao", config()->audioOutput().toUtf8().constData());
+	if(SCConfig::mpvAudioOutputEnabled())
+		mpv_set_option_string(m_mpv, "ao", SCConfig::mpvAudioOutput().toUtf8().constData());
 
-	if(config()->hasAudioChannels())
-		mpv_set_option_string(m_mpv, "audio-channels", QString::number(config()->audioChannels()).toUtf8().constData());
+	if(SCConfig::mpvAudioChannelsEnabled())
+		mpv_set_option_string(m_mpv, "audio-channels", QString::number(SCConfig::mpvAudioChannels()).toUtf8().constData());
 
-	if(config()->frameDropping())
+	if(SCConfig::mpvFrameDropping())
 		mpv_set_option_string(m_mpv, "framedrop", "vo");
 
-	if(config()->hasAutoSyncFactor())
-		mpv_set_option_string(m_mpv, "autosync", QString::number(config()->autoSyncFactor()).toUtf8().constData());
+	if(SCConfig::mpvAutoSyncEnabled())
+		mpv_set_option_string(m_mpv, "autosync", QString::number(SCConfig::mpvAutoSyncFactor()).toUtf8().constData());
 
-	if(config()->hasCacheSize()) {
-		mpv_set_option_string(m_mpv, "cache", QString::number(config()->cacheSize()).toUtf8().constData());
+	if(SCConfig::mpvCacheEnabled()) {
+		mpv_set_option_string(m_mpv, "cache", QString::number(SCConfig::mpvCacheSize()).toUtf8().constData());
 //		mpv_set_option_string(m_mpv, "cache-min", "99");
 //		mpv_set_option_string(m_mpv, "cache-seek-min", "99");
 	}
@@ -111,12 +113,12 @@ MPVBackend::mpvInit()
 	// no OSD
 	mpv_set_option_string(m_mpv, "osd-level", "0");
 
-	if(config()->volumeNormalization())
+	if(SCConfig::mpvVolumeNormalization())
 		mpv_set_option_string(m_mpv, "drc", "1:0.25");
 
 	mpv_set_option_string(m_mpv, "softvol", "yes");
-	if(config()->hasVolumeAmplification())
-		mpv_set_option_string(m_mpv, "softvol-max", QString::number(config()->volumeAmplification()).toUtf8().constData());
+	if(SCConfig::mpvVolumeAmplificationEnabled())
+		mpv_set_option_string(m_mpv, "softvol-max", QString::number(SCConfig::mpvVolumeAmplification()).toUtf8().constData());
 
 	// Disable subtitles
 	mpv_set_option_string(m_mpv, "sid", "no");

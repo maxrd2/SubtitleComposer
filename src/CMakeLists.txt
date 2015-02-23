@@ -30,7 +30,6 @@ add_definitions(-D_DEFAULT_SOURCE)
 add_subdirectory(common)
 add_subdirectory(core)
 add_subdirectory(formats)
-add_subdirectory(config) # depends on common
 add_subdirectory(widgets)
 add_subdirectory(services)
 add_subdirectory(main)

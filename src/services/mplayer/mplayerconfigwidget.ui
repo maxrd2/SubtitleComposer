@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>MPVConfigWidget</class>
- <widget class="QWidget" name="MPVConfigWidget">
+ <class>MPlayerConfigWidget</class>
+ <widget class="QWidget" name="MPlayerConfigWidget">
   <property name="geometry">
    <rect>
     <x>0</x>
     <y>0</y>
     <width>325</width>
-    <height>431</height>
+    <height>468</height>
    </rect>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
@@ -20,17 +20,27 @@
       <string>General</string>
      </property>
      <layout class="QGridLayout" name="gridLayout" columnstretch="1,1">
+      <item row="0" column="1">
+       <widget class="KUrlRequester" name="kcfg_mpExecutablePath"/>
+      </item>
       <item row="0" column="0" alignment="Qt::AlignRight|Qt::AlignVCenter">
-       <widget class="QCheckBox" name="kcfg_mpvAutoSyncEnabled">
+       <widget class="QLabel" name="label">
         <property name="text">
-         <string>A/V synchronization factor:</string>
+         <string>Executable path:</string>
         </property>
        </widget>
       </item>
-      <item row="0" column="1">
-       <widget class="QSpinBox" name="kcfg_mpvAutoSyncFactor">
+      <item row="1" column="1">
+       <widget class="QSpinBox" name="kcfg_mpAutoSyncFactor">
         <property name="enabled">
          <bool>false</bool>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="0" alignment="Qt::AlignRight|Qt::AlignVCenter">
+       <widget class="QCheckBox" name="kcfg_mpAutoSyncEnabled">
+        <property name="text">
+         <string>A/V synchronization factor:</string>
         </property>
        </widget>
       </item>
@@ -44,37 +54,37 @@
      </property>
      <layout class="QGridLayout" name="gridLayout_2" columnstretch="1,1">
       <item row="0" column="1">
-       <widget class="QComboBox" name="kcfg_mpvVideoOutput">
-        <property name="enabled">
-         <bool>false</bool>
-        </property>
-       </widget>
-      </item>
-      <item row="1" column="0" alignment="Qt::AlignRight|Qt::AlignVCenter">
-       <widget class="QCheckBox" name="kcfg_mpvHwDecodeEnabled">
-        <property name="text">
-         <string>Hardware video decoding:</string>
-        </property>
-       </widget>
-      </item>
-      <item row="1" column="1">
-       <widget class="QComboBox" name="kcfg_mpvHwDecode">
+       <widget class="QComboBox" name="kcfg_mpVideoOutput">
         <property name="enabled">
          <bool>false</bool>
         </property>
        </widget>
       </item>
       <item row="0" column="0" alignment="Qt::AlignRight|Qt::AlignVCenter">
-       <widget class="QCheckBox" name="kcfg_mpvVideoOutputEnabled">
+       <widget class="QCheckBox" name="kcfg_mpVideoOutputEnabled">
         <property name="text">
          <string>Video output driver:</string>
         </property>
        </widget>
       </item>
+      <item row="1" column="1">
+       <widget class="QCheckBox" name="kcfg_mpVdpau">
+        <property name="text">
+         <string>Enable VDPAU for DivX/XviD</string>
+        </property>
+       </widget>
+      </item>
       <item row="2" column="1">
-       <widget class="QCheckBox" name="kcfg_mpvFrameDropping">
+       <widget class="QCheckBox" name="kcfg_mpFrameDropping">
         <property name="text">
          <string>Allow frame dropping</string>
+        </property>
+       </widget>
+      </item>
+      <item row="3" column="1">
+       <widget class="QCheckBox" name="kcfg_mpHardFrameDropping">
+        <property name="text">
+         <string>Allow hard frame dropping</string>
         </property>
        </widget>
       </item>
@@ -87,32 +97,32 @@
       <string>Audio</string>
      </property>
      <layout class="QGridLayout" name="gridLayout_3" columnstretch="1,1">
-      <item row="3" column="0" alignment="Qt::AlignRight|Qt::AlignVCenter">
-       <widget class="QCheckBox" name="kcfg_mpvVolumeAmplificationEnabled">
-        <property name="text">
-         <string>Volume amplification:</string>
-        </property>
-       </widget>
-      </item>
-      <item row="1" column="0" alignment="Qt::AlignRight|Qt::AlignVCenter">
-       <widget class="QCheckBox" name="kcfg_mpvAudioChannelsEnabled">
-        <property name="text">
-         <string>Audio channels:</string>
-        </property>
-       </widget>
-      </item>
       <item row="0" column="0" alignment="Qt::AlignRight|Qt::AlignVCenter">
-       <widget class="QCheckBox" name="kcfg_mpvAudioOutputEnabled">
+       <widget class="QCheckBox" name="kcfg_mpAudioOutputEnabled">
         <property name="text">
          <string>Audio output driver:</string>
         </property>
        </widget>
       </item>
-      <item row="3" column="1">
+      <item row="1" column="0" alignment="Qt::AlignRight|Qt::AlignVCenter">
+       <widget class="QCheckBox" name="kcfg_mpAudioChannelsEnabled">
+        <property name="text">
+         <string>Audio channels:</string>
+        </property>
+       </widget>
+      </item>
+      <item row="2" column="0" alignment="Qt::AlignRight|Qt::AlignVCenter">
+       <widget class="QCheckBox" name="kcfg_mpVolumeAmplificationEnabled">
+        <property name="text">
+         <string>Volume amplification:</string>
+        </property>
+       </widget>
+      </item>
+      <item row="2" column="1">
        <widget class="QWidget" name="widget" native="true">
         <layout class="QHBoxLayout" name="horizontalLayout">
          <item>
-          <widget class="QSlider" name="kcfg_mpvVolumeAmplification">
+          <widget class="QSlider" name="kcfg_mpVolumeAmplification">
            <property name="enabled">
             <bool>false</bool>
            </property>
@@ -134,7 +144,7 @@
           </widget>
          </item>
          <item>
-          <widget class="QLabel" name="lab_mpvVolumeAmplification">
+          <widget class="QLabel" name="m_volumeAmplificationLabel">
            <property name="text">
             <string>TextLabel</string>
            </property>
@@ -147,7 +157,7 @@
        <widget class="QWidget" name="widget_2" native="true">
         <layout class="QHBoxLayout" name="horizontalLayout_2">
          <item>
-          <widget class="QSlider" name="kcfg_mpvAudioChannels">
+          <widget class="QSlider" name="kcfg_mpAudioChannels">
            <property name="enabled">
             <bool>false</bool>
            </property>
@@ -163,7 +173,7 @@
           </widget>
          </item>
          <item>
-          <widget class="QLabel" name="lab_mpvAudioChannels">
+          <widget class="QLabel" name="m_audioChannelsLabel">
            <property name="text">
             <string>TextLabel</string>
            </property>
@@ -173,14 +183,14 @@
        </widget>
       </item>
       <item row="0" column="1">
-       <widget class="QComboBox" name="kcfg_mpvAudioOutput">
+       <widget class="QComboBox" name="kcfg_mpAudioOutput">
         <property name="enabled">
          <bool>false</bool>
         </property>
        </widget>
       </item>
-      <item row="4" column="1">
-       <widget class="QCheckBox" name="kcfg_mpvVolumeNormalization">
+      <item row="3" column="1">
+       <widget class="QCheckBox" name="kcfg_mpVolumeNormalization">
         <property name="text">
          <string>Volume normalization</string>
         </property>
@@ -204,144 +214,138 @@
    </item>
   </layout>
  </widget>
+ <customwidgets>
+  <customwidget>
+   <class>KUrlRequester</class>
+   <extends>QWidget</extends>
+   <header>kurlrequester.h</header>
+  </customwidget>
+ </customwidgets>
  <tabstops>
-  <tabstop>kcfg_mpvAutoSyncEnabled</tabstop>
-  <tabstop>kcfg_mpvAutoSyncFactor</tabstop>
-  <tabstop>kcfg_mpvVideoOutputEnabled</tabstop>
-  <tabstop>kcfg_mpvVideoOutput</tabstop>
-  <tabstop>kcfg_mpvHwDecodeEnabled</tabstop>
-  <tabstop>kcfg_mpvHwDecode</tabstop>
-  <tabstop>kcfg_mpvAudioOutputEnabled</tabstop>
-  <tabstop>kcfg_mpvAudioChannelsEnabled</tabstop>
-  <tabstop>kcfg_mpvVolumeAmplificationEnabled</tabstop>
+  <tabstop>kcfg_mpExecutablePath</tabstop>
+  <tabstop>kcfg_mpAutoSyncFactor</tabstop>
+  <tabstop>kcfg_mpVideoOutputEnabled</tabstop>
+  <tabstop>kcfg_mpVideoOutput</tabstop>
+  <tabstop>kcfg_mpVdpau</tabstop>
+  <tabstop>kcfg_mpFrameDropping</tabstop>
+  <tabstop>kcfg_mpHardFrameDropping</tabstop>
+  <tabstop>kcfg_mpAudioOutputEnabled</tabstop>
+  <tabstop>kcfg_mpAudioOutput</tabstop>
+  <tabstop>kcfg_mpAudioChannelsEnabled</tabstop>
+  <tabstop>kcfg_mpVolumeAmplificationEnabled</tabstop>
+  <tabstop>kcfg_mpVolumeNormalization</tabstop>
  </tabstops>
  <resources/>
  <connections>
   <connection>
-   <sender>kcfg_mpvVideoOutputEnabled</sender>
+   <sender>kcfg_mpVideoOutputEnabled</sender>
    <signal>toggled(bool)</signal>
-   <receiver>kcfg_mpvVideoOutput</receiver>
-   <slot>setEnabled(bool)</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>193</x>
-     <y>142</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>273</x>
-     <y>147</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>kcfg_mpvHwDecodeEnabled</sender>
-   <signal>toggled(bool)</signal>
-   <receiver>kcfg_mpvHwDecode</receiver>
-   <slot>setEnabled(bool)</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>82</x>
-     <y>179</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>273</x>
-     <y>184</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>kcfg_mpvAudioOutputEnabled</sender>
-   <signal>toggled(bool)</signal>
-   <receiver>kcfg_mpvAudioOutput</receiver>
-   <slot>setEnabled(bool)</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>133</x>
-     <y>284</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>213</x>
-     <y>289</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>kcfg_mpvAudioChannelsEnabled</sender>
-   <signal>toggled(bool)</signal>
-   <receiver>kcfg_mpvAudioChannels</receiver>
-   <slot>setEnabled(bool)</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>133</x>
-     <y>316</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>213</x>
-     <y>315</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>kcfg_mpvVolumeAmplificationEnabled</sender>
-   <signal>toggled(bool)</signal>
-   <receiver>kcfg_mpvVolumeAmplification</receiver>
-   <slot>setEnabled(bool)</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>133</x>
-     <y>343</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>213</x>
-     <y>342</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>kcfg_mpvAutoSyncEnabled</sender>
-   <signal>toggled(bool)</signal>
-   <receiver>kcfg_mpvAutoSyncFactor</receiver>
+   <receiver>kcfg_mpVideoOutput</receiver>
    <slot>setEnabled(bool)</slot>
    <hints>
     <hint type="sourcelabel">
      <x>197</x>
-     <y>64</y>
+     <y>180</y>
     </hint>
     <hint type="destinationlabel">
-     <x>273</x>
-     <y>69</y>
+     <x>310</x>
+     <y>185</y>
     </hint>
    </hints>
   </connection>
   <connection>
-   <sender>kcfg_mpvAudioChannels</sender>
-   <signal>valueChanged(int)</signal>
-   <receiver>lab_mpvAudioChannels</receiver>
-   <slot>setNum(int)</slot>
+   <sender>kcfg_mpAudioOutputEnabled</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>kcfg_mpAudioOutput</receiver>
+   <slot>setEnabled(bool)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>244</x>
-     <y>321</y>
+     <x>158</x>
+     <y>339</y>
     </hint>
     <hint type="destinationlabel">
-     <x>304</x>
-     <y>321</y>
+     <x>310</x>
+     <y>344</y>
     </hint>
    </hints>
   </connection>
   <connection>
-   <sender>kcfg_mpvVolumeAmplification</sender>
+   <sender>kcfg_mpAudioChannelsEnabled</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>kcfg_mpAudioChannels</receiver>
+   <slot>setEnabled(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>170</x>
+     <y>371</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>250</x>
+     <y>370</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>kcfg_mpVolumeAmplificationEnabled</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>kcfg_mpVolumeAmplification</receiver>
+   <slot>setEnabled(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>149</x>
+     <y>398</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>250</x>
+     <y>397</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>kcfg_mpAudioChannels</sender>
    <signal>valueChanged(int)</signal>
-   <receiver>lab_mpvVolumeAmplification</receiver>
+   <receiver>m_audioChannelsLabel</receiver>
    <slot>setNum(int)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>244</x>
-     <y>359</y>
+     <x>250</x>
+     <y>370</y>
     </hint>
     <hint type="destinationlabel">
-     <x>304</x>
-     <y>359</y>
+     <x>310</x>
+     <y>371</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>kcfg_mpVolumeAmplification</sender>
+   <signal>valueChanged(int)</signal>
+   <receiver>m_volumeAmplificationLabel</receiver>
+   <slot>setNum(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>250</x>
+     <y>397</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>310</x>
+     <y>398</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>kcfg_mpAutoSyncEnabled</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>kcfg_mpAutoSyncFactor</receiver>
+   <slot>setEnabled(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>25</x>
+     <y>88</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>240</x>
+     <y>93</y>
     </hint>
    </hints>
   </connection>

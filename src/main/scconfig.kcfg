@@ -1,0 +1,314 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<kcfg xmlns="http://www.kde.org/standards/kcfg/1.0"
+	  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	  xsi:schemaLocation="http://www.kde.org/standards/kcfg/1.0
+						  http://www.kde.org/standards/kcfg/1.0/kcfg.xsd" >
+	<kcfgfile name="subtitlecomposerrc"/>
+
+	<group name="General">
+		<entry name="DefaultSubtitlesEncoding" type="String">
+			<label>Default Subtitles Encoding</label>
+			<default>UTF-8</default>
+		</entry>
+		<entry name="SeekOffsetOnDoubleClick" type="Int">
+			<label>Seek Offset On Double Click</label>
+			<default>1500</default>
+		</entry>
+		<entry name="UnpauseOnDoubleClick" type="Bool">
+			<label>Unpause On Double Click</label>
+			<default>false</default>
+		</entry>
+		<entry name="AutomaticVideoLoad" type="Bool">
+			<label>Automatic Video Load</label>
+			<default>true</default>
+		</entry>
+
+		<entry name="LinesQuickShiftAmount" type="Int">
+			<label>Lines Quick Shift Amount</label>
+			<default>100</default>
+		</entry>
+		<entry name="GrabbedPositionCompensation" type="Int">
+			<label>Grabbed Position Compensation</label>
+			<default>250</default>
+		</entry>
+	</group>
+
+	<group name="Error Check">
+		<entry name="MaxCharacters" type="Int">
+			<label>Maximun number of characters</label>
+			<default>80</default>
+		</entry>
+		<entry name="MaxLines" type="Int">
+			<label>Maximun number of lines</label>
+			<default>2</default>
+		</entry>
+
+		<entry name="MinDuration" type="Int">
+			<label>Minimum duration</label>
+			<default>700</default>
+		</entry>
+		<entry name="MaxDuration" type="Int">
+			<label>Maximum duration</label>
+			<default>5000</default>
+		</entry>
+
+		<entry name="MinDurationPerCharacter" type="Int">
+			<label>Minimum duration per character</label>
+			<default>30</default>
+		</entry>
+		<entry name="MaxDurationPerCharacter" type="Int">
+			<label>Maximum duration per character</label>
+			<default>185</default>
+		</entry>
+
+		<entry name="AutoClearFixed" type="Bool">
+			<label>Automatically clear fixed errors</label>
+			<default>false</default>
+		</entry>
+	</group>
+
+	<group name="Spelling">
+		<entry name="DefaultLanguage" type="String">
+			<label>Default Language</label>
+			<default>en_US</default>
+		</entry>
+		<entry name="DefaultClient" type="String">
+			<label>Default client</label>
+			<default></default>
+		</entry>
+		<entry name="CheckUppercase" type="Bool">
+			<label>Check uppercase</label>
+			<default>true</default>
+		</entry>
+		<entry name="SkipRunTogether" type="Bool">
+			<label>Skip Run Together</label>
+			<default>true</default>
+		</entry>
+	</group>
+
+	<group name="Player">
+		<entry name="PlayerBackend" type="String">
+			<label>Player Backend</label>
+			<default>GStreamer</default>
+		</entry>
+		<entry name="DecoderBackend" type="String">
+			<label>Decoder Backend</label>
+			<default>GStreamer</default>
+		</entry>
+		<entry name="SeekJumpLength" type="Int">
+			<label>Jump length on seek</label>
+			<default>15</default>
+		</entry>
+		<entry name="ShowPositionTimeEdit" type="Bool">
+			<label>Show editable time position</label>
+			<default>false</default>
+		</entry>
+
+		<entry name="FontFamily" type="String">
+			<label>Font Family</label>
+			<default>Sans Serif</default>
+		</entry>
+		<entry name="FontPointSize" type="Int">
+			<label>Font Size</label>
+			<default>15</default>
+		</entry>
+		<entry name="FontColor" type="String">
+			<label>Font Color</label>
+			<default>#ffff00</default>
+		</entry>
+		<entry name="OutlineColor" type="String">
+			<label>Outline Color</label>
+			<default>#000000</default>
+		</entry>
+		<entry name="OutlineWidth" type="Int">
+			<label>Outline Width</label>
+			<default>1</default>
+		</entry>
+		<entry name="Antialias" type="Bool">
+			<label>Font Antialiasing</label>
+			<default>true</default>
+		</entry>
+	</group>
+
+	<group name="GStreamer">
+		<entry name="gstVideoSinkAuto" type="Bool">
+			<label>Auto Video Sink</label>
+			<default>true</default>
+		</entry>
+		<entry name="gstVideoSink" type="String">
+			<label>Video Sink</label>
+			<default></default>
+		</entry>
+
+		<entry name="gstAudioSinkAuto" type="Bool">
+			<label>Auto Audio Sink</label>
+			<default>true</default>
+		</entry>
+		<entry name="gstAudioSink" type="String">
+			<label>Audio Sink</label>
+			<default></default>
+		</entry>
+	</group>
+
+	<group name="MPV">
+		<entry name="mpvCacheEnabled" type="Bool">
+			<label>Cache Enabled</label>
+			<default>false</default>
+		</entry>
+		<entry name="mpvCacheSize" type="Int">
+			<label>Cache Size (KB)</label>
+			<default>5120</default>
+		</entry>
+		<entry name="mpvAutoSyncEnabled" type="Bool">
+			<label>Auto Sync Enabled</label>
+			<default>false</default>
+		</entry>
+		<entry name="mpvAutoSyncFactor" type="Int">
+			<label>Auto Sync Factor</label>
+			<default>0</default>
+		</entry>
+
+		<entry name="mpvVideoOutputEnabled" type="Bool">
+			<label>Video Output Enabled</label>
+			<default>false</default>
+		</entry>
+		<entry name="mpvVideoOutput" type="String">
+			<label>Video Output</label>
+			<default></default>
+		</entry>
+		<entry name="mpvHwDecodeEnabled" type="Bool">
+			<label>Hardware Decode Enabled</label>
+			<default>false</default>
+		</entry>
+		<entry name="mpvHwDecode" type="String">
+			<label>Hardware Decode</label>
+			<default>auto</default>
+		</entry>
+		<entry name="mpvFrameDropping" type="Bool">
+			<label>Frame Dropping</label>
+			<default>false</default>
+		</entry>
+
+		<entry name="mpvAudioOutputEnabled" type="Bool">
+			<label>Audio Output Enabled</label>
+			<default>false</default>
+		</entry>
+		<entry name="mpvAudioOutput" type="String">
+			<label>Audio Output</label>
+			<default></default>
+		</entry>
+		<entry name="mpvAudioChannelsEnabled" type="Bool">
+			<label>Audio Channels Enabled</label>
+			<default>false</default>
+		</entry>
+		<entry name="mpvAudioChannels" type="Int">
+			<label>Audio Channels</label>
+			<default>2</default>
+		</entry>
+		<entry name="mpvVolumeAmplificationEnabled" type="Bool">
+			<label>Volume Amplification Enabled</label>
+			<default>false</default>
+		</entry>
+		<entry name="mpvVolumeAmplification" type="Int">
+			<label>Volume Amplification</label>
+			<default>150</default>
+		</entry>
+		<entry name="mpvVolumeNormalization" type="Bool">
+			<label>Volume Normalization</label>
+			<default>false</default>
+		</entry>
+	</group>
+
+	<group name="MPlayer">
+		<entry name="mpCacheEnabled" type="Bool">
+			<label>Cache Enabled</label>
+			<default>false</default>
+		</entry>
+		<entry name="mpCacheSize" type="Int">
+			<label>Cache Size (KB)</label>
+			<default>5120</default>
+		</entry>
+		<entry name="mpExecutablePath" type="String">
+			<label>mplayer executable path</label>
+			<default>/usr/bin/mplayer</default>
+		</entry>
+		<entry name="mpAutoSyncEnabled" type="Bool">
+			<label>Auto Sync Enabled</label>
+			<default>false</default>
+		</entry>
+		<entry name="mpAutoSyncFactor" type="Int">
+			<label>Auto Sync Factor</label>
+			<default>0</default>
+		</entry>
+
+		<entry name="mpVideoOutputEnabled" type="Bool">
+			<label>Video Output Enabled</label>
+			<default>false</default>
+		</entry>
+		<entry name="mpVideoOutput" type="String">
+			<label>Video Output</label>
+			<default></default>
+		</entry>
+		<entry name="mpVdpau" type="Bool">
+			<label>Hardware Decode</label>
+			<default>true</default>
+		</entry>
+		<entry name="mpFrameDropping" type="Bool">
+			<label>Frame Dropping</label>
+			<default>false</default>
+		</entry>
+		<entry name="mpHardFrameDropping" type="Bool">
+			<label>Hard Frame Dropping</label>
+			<default>false</default>
+		</entry>
+
+		<entry name="mpAudioOutputEnabled" type="Bool">
+			<label>Audio Output Enabled</label>
+			<default>false</default>
+		</entry>
+		<entry name="mpAudioOutput" type="String">
+			<label>Audio Output</label>
+			<default></default>
+		</entry>
+		<entry name="mpAudioChannelsEnabled" type="Bool">
+			<label>Audio Channels Enabled</label>
+			<default>false</default>
+		</entry>
+		<entry name="mpAudioChannels" type="Int">
+			<label>Audio Channels</label>
+			<default>2</default>
+		</entry>
+		<entry name="mpVolumeAmplificationEnabled" type="Bool">
+			<label>Volume Amplification Enabled</label>
+			<default>false</default>
+		</entry>
+		<entry name="mpVolumeAmplification" type="Int">
+			<label>Volume Amplification</label>
+			<default>150</default>
+		</entry>
+		<entry name="mpVolumeNormalization" type="Bool">
+			<label>Volume Normalization</label>
+			<default>false</default>
+		</entry>
+	</group>
+
+	<group name="Xine">
+		<entry name="xineVideoEnabled" type="Bool">
+			<label>Video Enabled</label>
+			<default>false</default>
+		</entry>
+		<entry name="xineVideo" type="String">
+			<label>Video Output</label>
+			<default></default>
+		</entry>
+
+		<entry name="xineAudioEnabled" type="Bool">
+			<label>Audio Enabled</label>
+			<default>false</default>
+		</entry>
+		<entry name="xineAudio" type="String">
+			<label>Audio Output</label>
+			<default></default>
+		</entry>
+	</group>
+</kcfg>

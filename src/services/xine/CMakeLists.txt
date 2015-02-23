@@ -19,6 +19,7 @@ set(services_xine_SRCS
 	${CMAKE_CURRENT_SOURCE_DIR}/xinedecoderbackend.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/xinevideolayerwidget.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/xineconfigwidget.cpp
+	${CMAKE_CURRENT_SOURCE_DIR}/xineconfigwidget.ui
 	CACHE INTERNAL EXPORTEDVARIABLE
 )
 

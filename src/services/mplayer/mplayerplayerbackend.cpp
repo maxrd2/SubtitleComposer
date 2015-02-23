@@ -1,22 +1,22 @@
-/***************************************************************************
- *   Copyright (C) 2007-2009 Sergio Pistone (sergio_pistone@yahoo.com.ar)  *
- *   based on smplayer by Ricardo Villalba                                 *
- *                                                                         *
- *   This program is free software; you can redistribute it and/or modify  *
- *   it under the terms of the GNU General Public License as published by  *
- *   the Free Software Foundation; either version 2 of the License, or     *
- *   (at your option) any later version.                                   *
- *                                                                         *
- *   This program is distributed in the hope that it will be useful,       *
- *   but WITHOUT ANY WARRANTY; without even the implied warranty of        *
- *   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the         *
- *   GNU General Public License for more details.                          *
- *                                                                         *
- *   You should have received a copy of the GNU General Public License     *
- *   along with this program; if not, write to the                         *
- *   Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor,      *
- *   Boston, MA 02110-1301, USA.                                           *
- ***************************************************************************/
+/**
+ * Copyright (C) 2007-2009 Sergio Pistone <sergio_pistone@yahoo.com.ar>
+ * Copyright (C) 2010-2015 Mladen Milinkovic <max@smoothware.net>
+ * 
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or
+ * (at your option) any later version.
+ * 
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ * 
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the
+ * Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor,
+ * Boston, MA 02110-1301, USA.
+ */
 
 #include "mplayerplayerbackend.h"
 #include "mplayerplayerprocess.h"
@@ -30,9 +30,9 @@
 
 using namespace SubtitleComposer;
 
-MPlayerPlayerBackend::MPlayerPlayerBackend(Player *player) :
-	PlayerBackend(player, "MPlayer", new MPlayerConfig()),
-	m_process(new MPlayerPlayerProcess(config(), this)),
+MPlayerPlayerBackend::MPlayerPlayerBackend(Player *player)
+	: PlayerBackend(player, "MPlayer"),
+	m_process(new MPlayerPlayerProcess(this)),
 	m_position(0.0),
 	m_reportUpdates(true)
 {
@@ -65,8 +65,8 @@ void
 MPlayerPlayerBackend::_finalize()
 {}
 
-SubtitleComposer::AppConfigGroupWidget *
-MPlayerPlayerBackend::newAppConfigGroupWidget(QWidget *parent)
+QWidget *
+MPlayerPlayerBackend::newConfigWidget(QWidget *parent)
 {
 	return new MPlayerConfigWidget(parent);
 }
@@ -79,7 +79,7 @@ MPlayerPlayerBackend::openFile(const QString &filePath, bool &playingAfterCall)
 	playingAfterCall = true;
 
 	if(!m_process->start(filePath, (int)player()->videoWidget()->videoLayer()->winId(), player()->activeAudioStream(), player()->audioStreams().count()
-	                     ))
+						 ))
 		return false;
 
 	return true;
@@ -123,7 +123,7 @@ MPlayerPlayerBackend::play()
 		m_position = 0.0;
 
 		if(!m_process->start(player()->filePath(), (int)player()->videoWidget()->videoLayer()->winId(), player()->activeAudioStream(), player()->audioStreams().count()
-		                     ))
+							 ))
 			return false;
 
 		if(m_process->state() == QProcess::NotRunning)
@@ -141,7 +141,7 @@ MPlayerPlayerBackend::pause()
 		m_position = 0.0;
 
 		if(!m_process->start(player()->filePath(), (int)player()->videoWidget()->videoLayer()->winId(), player()->activeAudioStream(), player()->audioStreams().count()
-		                     ))
+							 ))
 			return false;
 
 		if(m_process->state() == QProcess::NotRunning)

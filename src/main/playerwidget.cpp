@@ -1,25 +1,25 @@
-/***************************************************************************
- *   Copyright (C) 2007-2009 Sergio Pistone (sergio_pistone@yahoo.com.ar)  *
- *                                                                         *
- *   This program is free software; you can redistribute it and/or modify  *
- *   it under the terms of the GNU General Public License as published by  *
- *   the Free Software Foundation; either version 2 of the License, or     *
- *   (at your option) any later version.                                   *
- *                                                                         *
- *   This program is distributed in the hope that it will be useful,       *
- *   but WITHOUT ANY WARRANTY; without even the implied warranty of        *
- *   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the         *
- *   GNU General Public License for more details.                          *
- *                                                                         *
- *   You should have received a copy of the GNU General Public License     *
- *   along with this program; if not, write to the                         *
- *   Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor,      *
- *   Boston, MA 02110-1301, USA.                                           *
- ***************************************************************************/
+/**
+ * Copyright (C) 2007-2009 Sergio Pistone <sergio_pistone@yahoo.com.ar>
+ * Copyright (C) 2010-2015 Mladen Milinkovic <max@smoothware.net>
+ * 
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or
+ * (at your option) any later version.
+ * 
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ * 
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the
+ * Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor,
+ * Boston, MA 02110-1301, USA.
+ */
 
 #include "playerwidget.h"
 #include "application.h"
-#include "configs/playerconfig.h"
 #include "actions/useractionnames.h"
 #include "../common/commondefs.h"
 #include "../core/subtitleiterator.h"
@@ -70,15 +70,14 @@ PlayerWidget::PlayerWidget(QWidget *parent) :
 	m_updateVideoPosition(false),
 	m_updateVolumeControls(true),
 	m_updatePlayerVolume(false),
-	m_showPositionTimeEdit(app()->playerConfig()->showPositionTimeEdit())
+	m_showPositionTimeEdit(SCConfig::showPositionTimeEdit())
 {
 	m_layeredWidget = new LayeredWidget(this);
 	m_layeredWidget->setAcceptDrops(true);
 	m_layeredWidget->installEventFilter(this);
 	m_layeredWidget->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
 
-	m_player->initialize(m_layeredWidget, app()->playerConfig()->playerBackend());
-
+	m_player->initialize(m_layeredWidget, SCConfig::playerBackend());
 	connect(m_player, SIGNAL(backendInitialized(ServiceBackend *)), this, SLOT(onPlayerBackendInitialized()));
 
 	m_textOverlay = new TextOverlayWidget(m_layeredWidget);
@@ -236,7 +235,7 @@ PlayerWidget::PlayerWidget(QWidget *parent) :
 	connect(m_positionEdit, SIGNAL(valueChanged(int)), this, SLOT(onPositionEditValueChanged(int)));
 	connect(m_positionEdit, SIGNAL(valueEntered(int)), this, SLOT(onPositionEditValueChanged(int)));
 
-	connect(app()->playerConfig(), SIGNAL(optionChanged(const QString &, const QString &)), this, SLOT(onPlayerOptionChanged(const QString &, const QString &)));
+	connect(SCConfig::self(), SIGNAL(configChanged()), this, SLOT(onPlayerOptionChanged(const QString &, const QString &)));
 
 	connect(m_player, SIGNAL(fileOpened(const QString &)), this, SLOT(onPlayerFileOpened(const QString &)));
 	connect(m_player, SIGNAL(fileOpenError(const QString &)), this, SLOT(onPlayerFileOpenError(const QString &)));
@@ -255,7 +254,7 @@ PlayerWidget::PlayerWidget(QWidget *parent) :
 
 	setOverlayLine(0);
 	onPlayerFileClosed();
-	onPlayerOptionChanged(QString(), QString());    // initializes the font
+	onConfigChanged();    // initializes the font
 }
 
 PlayerWidget::~PlayerWidget()
@@ -454,10 +453,10 @@ PlayerWidget::eventFilter(QObject *object, QEvent *event)
 		KMenu menu;
 		QAction *action = menu.addAction(i18n("Show editable position control"));
 		action->setCheckable(true);
-		action->setChecked(app()->playerConfig()->showPositionTimeEdit());
+		action->setChecked(SCConfig::showPositionTimeEdit());
 
 		if(menu.exec(mouseEvent->globalPos()) == action)
-			app()->playerConfig()->toggleShowPositionTimeEdit();
+			SCConfig::setShowPositionTimeEdit(!SCConfig::showPositionTimeEdit());
 
 		return true;                    // eat event
 	}
@@ -509,13 +508,13 @@ PlayerWidget::setShowTranslation(bool showTranslation)
 void
 PlayerWidget::increaseFontSize(int points)
 {
-	app()->playerConfig()->incFontPointSize(points);
+	SCConfig::setFontPointSize(SCConfig::fontPointSize() + points);
 }
 
 void
 PlayerWidget::decreaseFontSize(int points)
 {
-	app()->playerConfig()->incFontPointSize(-points);
+	SCConfig::setFontPointSize(SCConfig::fontPointSize() - points);
 }
 
 void
@@ -674,21 +673,23 @@ PlayerWidget::onPositionEditValueChanged(int position)
 }
 
 void
-PlayerWidget::onPlayerOptionChanged(const QString &option, const QString &value)
+PlayerWidget::onConfigChanged()
 {
-	if(option == PlayerConfig::keyPlayerBackend()) {
-		m_player->reinitialize(value);
-	} else if(option == PlayerConfig::keyShowPositionTimeEdit()) {
-		m_showPositionTimeEdit = (value == "true");
-		updatePositionEditVisibility();
-	} else {
-		m_textOverlay->setPrimaryColor(app()->playerConfig()->fontColor());
-		m_textOverlay->setFamily(app()->playerConfig()->fontFamily());
-		m_textOverlay->setPointSize(app()->playerConfig()->fontPointSize());
-		m_textOverlay->setOutlineColor(app()->playerConfig()->outlineColor());
-		m_textOverlay->setOutlineWidth(app()->playerConfig()->outlineWidth());
-		m_textOverlay->setAntialias(app()->playerConfig()->antialiasEnabled());
+	if(m_player->backend(SCConfig::playerBackend()) != m_player->activeBackend()) {
+		m_player->reinitialize(SCConfig::playerBackend());
 	}
+
+	if(m_showPositionTimeEdit != SCConfig::showPositionTimeEdit()) {
+		m_showPositionTimeEdit = SCConfig::showPositionTimeEdit();
+		updatePositionEditVisibility();
+	}
+
+	m_textOverlay->setPrimaryColor(SCConfig::fontColor());
+	m_textOverlay->setFamily(SCConfig::fontFamily());
+	m_textOverlay->setPointSize(SCConfig::fontPointSize());
+	m_textOverlay->setOutlineColor(SCConfig::outlineColor());
+	m_textOverlay->setOutlineWidth(SCConfig::outlineWidth());
+	m_textOverlay->setAntialias(SCConfig::antialias());
 }
 
 void

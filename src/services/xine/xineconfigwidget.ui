@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>XineConfigWidget</class>
+ <widget class="QWidget" name="XineConfigWidget">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>325</width>
+    <height>431</height>
+   </rect>
+  </property>
+  <layout class="QVBoxLayout" name="verticalLayout">
+   <property name="sizeConstraint">
+    <enum>QLayout::SetMinimumSize</enum>
+   </property>
+   <item>
+    <widget class="QGroupBox" name="grpVideo">
+     <property name="title">
+      <string>Video</string>
+     </property>
+     <layout class="QGridLayout" name="gridLayout_2">
+      <item row="0" column="1">
+       <widget class="QComboBox" name="kcfg_xineVideo">
+        <property name="enabled">
+         <bool>false</bool>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="0" alignment="Qt::AlignRight|Qt::AlignVCenter">
+       <widget class="QCheckBox" name="kcfg_xineVideoEnabled">
+        <property name="text">
+         <string>Video driver:</string>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </widget>
+   </item>
+   <item>
+    <widget class="QGroupBox" name="grpAudio">
+     <property name="title">
+      <string>Audio</string>
+     </property>
+     <layout class="QGridLayout" name="gridLayout_3">
+      <item row="0" column="0" alignment="Qt::AlignRight|Qt::AlignVCenter">
+       <widget class="QCheckBox" name="kcfg_xineAudioEnabled">
+        <property name="text">
+         <string>Audio driver:</string>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="1">
+       <widget class="QComboBox" name="kcfg_xineAudio">
+        <property name="enabled">
+         <bool>false</bool>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </widget>
+   </item>
+   <item>
+    <spacer name="spacer">
+     <property name="orientation">
+      <enum>Qt::Vertical</enum>
+     </property>
+     <property name="sizeHint" stdset="0">
+      <size>
+       <width>20</width>
+       <height>40</height>
+      </size>
+     </property>
+    </spacer>
+   </item>
+  </layout>
+ </widget>
+ <tabstops>
+  <tabstop>kcfg_xineVideoEnabled</tabstop>
+  <tabstop>kcfg_xineVideo</tabstop>
+  <tabstop>kcfg_xineAudioEnabled</tabstop>
+  <tabstop>kcfg_xineAudio</tabstop>
+ </tabstops>
+ <resources/>
+ <connections>
+  <connection>
+   <sender>kcfg_xineVideoEnabled</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>kcfg_xineVideo</receiver>
+   <slot>setEnabled(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>159</x>
+     <y>64</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>310</x>
+     <y>69</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>kcfg_xineAudioEnabled</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>kcfg_xineAudio</receiver>
+   <slot>setEnabled(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>159</x>
+     <y>142</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>310</x>
+     <y>147</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
+</ui>

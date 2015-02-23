@@ -1,27 +1,29 @@
-/***************************************************************************
- *   Copyright (C) 2007-2009 Sergio Pistone (sergio_pistone@yahoo.com.ar)  *
- *   based on Kaffeine by Jürgen Kofler                                    *
- *                                                                         *
- *   This program is free software; you can redistribute it and/or modify  *
- *   it under the terms of the GNU General Public License as published by  *
- *   the Free Software Foundation; either version 2 of the License, or     *
- *   (at your option) any later version.                                   *
- *                                                                         *
- *   This program is distributed in the hope that it will be useful,       *
- *   but WITHOUT ANY WARRANTY; without even the implied warranty of        *
- *   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the         *
- *   GNU General Public License for more details.                          *
- *                                                                         *
- *   You should have received a copy of the GNU General Public License     *
- *   along with this program; if not, write to the                         *
- *   Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor,      *
- *   Boston, MA 02110-1301, USA.                                           *
- ***************************************************************************/
+/**
+ * Copyright (C) 2007-2009 Sergio Pistone <sergio_pistone@yahoo.com.ar>
+ * Copyright (C) 2010-2015 Mladen Milinkovic <max@smoothware.net>
+ * 
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or
+ * (at your option) any later version.
+ * 
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ * 
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the
+ * Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor,
+ * Boston, MA 02110-1301, USA.
+ */
 
 #include "gstreamer.h"
 #include "gstreamerplayerbackend.h"
 #include "gstreamerconfigwidget.h"
 #include "../../common/languagecode.h"
+#include "../../main/application.h"
+
 
 #include <QtCore/QTimer>
 
@@ -76,8 +78,8 @@ typedef enum {
 } GstPlayFlags;
 #endif /* __GST_PLAY_ENUM_H__ */
 
-GStreamerPlayerBackend::GStreamerPlayerBackend(Player *player) :
-	PlayerBackend(player, "GStreamer", new GStreamerConfig()),
+GStreamerPlayerBackend::GStreamerPlayerBackend(Player *player)
+	: PlayerBackend(player, "GStreamer"),
 	m_pipeline(NULL),
 	m_pipelineBus(NULL),
 	m_pipelineTimer(new QTimer(this)),
@@ -107,8 +109,8 @@ GStreamerPlayerBackend::finalize()
 	return GStreamer::deinit();
 }
 
-SubtitleComposer::AppConfigGroupWidget *
-GStreamerPlayerBackend::newAppConfigGroupWidget(QWidget *parent)
+QWidget *
+GStreamerPlayerBackend::newConfigWidget(QWidget *parent)
 {
 	return new GStreamerConfigWidget(parent);
 }
@@ -128,8 +130,8 @@ GStreamerPlayerBackend::openFile(const QString &filePath, bool &playingAfterCall
 	m_lengthInformed = false;
 
 	m_pipeline = GST_PIPELINE(gst_element_factory_make("playbin", "playbin"));
-	GstElement *audiosink = GStreamer::createElement(config()->audioSink() + QString(" pulsesink alsasink osssink gconfaudiosink artsdsink autoaudiosink"), "audiosink");
-	GstElement *videosink = GStreamer::createElement(config()->videoSink() + QString(" xvimagesink ximagesink gconfvideosink autovideosink"), "videosink");
+	GstElement *audiosink = GStreamer::createElement(SCConfig::gstAudioSink() + QString(" pulsesink alsasink osssink gconfaudiosink artsdsink autoaudiosink"), "audiosink");
+	GstElement *videosink = GStreamer::createElement(SCConfig::gstVideoSink() + QString(" xvimagesink ximagesink gconfvideosink autovideosink"), "videosink");
 
 	if(!m_pipeline || !audiosink || !videosink) {
 		if(audiosink)

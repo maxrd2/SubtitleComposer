@@ -1,27 +1,27 @@
-/***************************************************************************
- *   Copyright (C) 2007-2009 Sergio Pistone (sergio_pistone@yahoo.com.ar)  *
- *                                                                         *
- *   This program is free software; you can redistribute it and/or modify  *
- *   it under the terms of the GNU General Public License as published by  *
- *   the Free Software Foundation; either version 2 of the License, or     *
- *   (at your option) any later version.                                   *
- *                                                                         *
- *   This program is distributed in the hope that it will be useful,       *
- *   but WITHOUT ANY WARRANTY; without even the implied warranty of        *
- *   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the         *
- *   GNU General Public License for more details.                          *
- *                                                                         *
- *   You should have received a copy of the GNU General Public License     *
- *   along with this program; if not, write to the                         *
- *   Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor,      *
- *   Boston, MA 02110-1301, USA.                                           *
- ***************************************************************************/
+/**
+ * Copyright (C) 2007-2009 Sergio Pistone <sergio_pistone@yahoo.com.ar>
+ * Copyright (C) 2010-2015 Mladen Milinkovic <max@smoothware.net>
+ * 
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or
+ * (at your option) any later version.
+ * 
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ * 
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the
+ * Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor,
+ * Boston, MA 02110-1301, USA.
+ */
 
 #include "profiler.h"
 
 #include "errorswidget.h"
 #include "application.h"
-#include "configs/errorsconfig.h"
 #include "../core/subtitle.h"
 #include "../core/subtitleline.h"
 
@@ -34,6 +34,7 @@
 #include <QHeaderView>
 
 #include <KIcon>
+#include <KGlobal>
 #include <KMenu>
 #include <KConfig>
 #include <KConfigGroup>
@@ -678,7 +679,7 @@ ErrorsWidget::contextMenuEvent(QContextMenuEvent *event)
 		menu.addAction(i18n("Clear Selected Marks"), app, SLOT(clearSelectedMarks()))->setEnabled(markCount);
 		menu.addAction(i18n("Clear Selected Errors"), app, SLOT(clearSelectedErrors()))->setEnabled(errorCount);
 
-		if(!app->errorsConfig()->autoClearFixed()) {
+		if(!SCConfig::autoClearFixed()) {
 			menu.addSeparator();
 
 			menu.addAction(i18n("Clear Fixed Selection"), app, SLOT(recheckSelectedErrors()))->setEnabled(errorCount);

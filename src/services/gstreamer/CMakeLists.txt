@@ -29,6 +29,7 @@ set(services_gstreamer_SRCS
 	${CMAKE_CURRENT_SOURCE_DIR}/gstreamerplayerbackend.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/gstreamerdecoderbackend.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/gstreamerconfigwidget.cpp
+	${CMAKE_CURRENT_SOURCE_DIR}/gstreamerconfigwidget.ui
 	${CMAKE_CURRENT_SOURCE_DIR}/gstreamer.cpp
 	CACHE INTERNAL EXPORTEDVARIABLE
 )

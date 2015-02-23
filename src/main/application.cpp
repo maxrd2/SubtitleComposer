@@ -1,21 +1,22 @@
-/***************************************************************************
- *   Copyright (C) 2007-2009 Sergio Pistone (sergio_pistone@yahoo.com.ar)  *
- *                                                                         *
- *   This program is free software; you can redistribute it and/or modify  *
- *   it under the terms of the GNU General Public License as published by  *
- *   the Free Sn; either version 2 of the License, or     *
- *   (at your option) any later version.                                   *
- *                                                                         *
- *   This program is distributed in the hope that it will be useful,       *
- *   but WITHOUT ANY WARRANTY; without even the implied warranty of        *
- *   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the         *
- *   GNU General Public License for more details.                          *
- *                                                                         *
- *   You should have received a copy of the GNU General Public License     *
- *   along with this program; if not, write to the                         *
- *   Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor,      *
- *   Boston, MA 02110-1301, USA.                                           *
- ***************************************************************************/
+/**
+ * Copyright (C) 2007-2009 Sergio Pistone <sergio_pistone@yahoo.com.ar>
+ * Copyright (C) 2010-2015 Mladen Milinkovic <max@smoothware.net>
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the
+ * Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor,
+ * Boston, MA 02110-1301, USA.
+ */
 
 #include "application.h"
 #include "mainwindow.h"
@@ -24,17 +25,19 @@
 #include "lineswidget.h"
 #include "currentlinewidget.h"
 #include "statusbar.h"
-#include "configdialog.h"
 #include "errorswidget.h"
 #include "errorsdialog.h"
 #include "actions/useraction.h"
 #include "actions/useractionnames.h"
 #include "actions/kcodecactionext.h"
 #include "actions/krecentfilesactionext.h"
-#include "configs/generalconfig.h"
-#include "configs/spellingconfig.h"
-#include "configs/playerconfig.h"
-#include "configs/errorsconfig.h"
+
+#include "configs/generalconfigwidget.h"
+#include "configs/errorsconfigwidget.h"
+#include <sonnet/configwidget.h>
+//#include "configs/spellingconfigwidget.h"
+#include "configs/playerconfigwidget.h"
+
 #include "dialogs/opensubtitledialog.h"
 #include "dialogs/savesubtitledialog.h"
 #include "dialogs/joinsubtitlesdialog.h"
@@ -112,7 +115,6 @@ SubtitleComposer::app()
 
 Application::Application() :
 	KApplication(),
-	m_config(),
 	m_subtitle(0),
 	m_subtitleUrl(),
 	m_subtitleFileName(),
@@ -136,25 +138,25 @@ Application::Application() :
 	QStringList playerBackendNames(m_player->backendNames());
 	QStringList decoderBackendNames(m_decoder->backendNames());
 
-	// The config object has to be filled first with all the groups and default data...
-	m_config.setGroup(new GeneralConfig());
-	m_config.setGroup(new SpellingConfig());
-	m_config.setGroup(new ErrorsConfig());
-	m_config.setGroup(new PlayerConfig());
-	for(QStringList::ConstIterator it = playerBackendNames.begin(), end = playerBackendNames.end(); it != end; ++it)
-		m_config.setGroup(m_player->backend(*it)->config()->clone());
+//	// The config object has to be filled first with all the groups and default data...
+//	m_config.setGroup(new GeneralConfig());
+//	m_config.setGroup(new SpellingConfig());
+//	m_config.setGroup(new SCConfig::self());
+//	m_config.setGroup(new PlayerConfig());
+//	for(QStringList::ConstIterator it = playerBackendNames.begin(), end = playerBackendNames.end(); it != end; ++it)
+//		m_config.setGroup(m_player->backend(*it)->config()->clone());
 
-	// ...only then can be loaded
-	m_config.readFrom(KGlobal::config().constData());
+//	// ...only then can be loaded
+//	m_config.readFrom(KGlobal::config().constData());
 
-	// and feed to the player and decoder backends
-	for(QStringList::ConstIterator it = playerBackendNames.begin(), end = playerBackendNames.end(); it != end; ++it)
-		m_player->backend(*it)->setConfig(m_config.group(*it));
-	for(QStringList::ConstIterator it = decoderBackendNames.begin(), end = decoderBackendNames.end(); it != end; ++it)
-		m_decoder->backend(*it)->setConfig(m_config.group(*it));
+//	// and feed to the player and decoder backends
+//	for(QStringList::ConstIterator it = playerBackendNames.begin(), end = playerBackendNames.end(); it != end; ++it)
+//		m_player->backend(*it)->setConfig(m_config.group(*it));
+//	for(QStringList::ConstIterator it = decoderBackendNames.begin(), end = decoderBackendNames.end(); it != end; ++it)
+//		m_decoder->backend(*it)->setConfig(m_config.group(*it));
 
 	// NOTE the player is initialized by PlayerWidget because it requires the parent widget
-	m_decoder->initialize(0, app()->playerConfig()->decoderBackend());
+	m_decoder->initialize(0, SCConfig::decoderBackend());
 
 	m_mainWindow = new MainWindow();
 
@@ -163,10 +165,38 @@ Application::Application() :
 	m_curLineWidget = m_mainWindow->m_curLineWidget;
 	m_statusBar = m_mainWindow->m_statusBar;
 
-	m_configDialog = new ConfigDialog(m_config, m_mainWindow);
-	m_errorsDialog = new ErrorsDialog(m_mainWindow);
+	m_configDialog = new KConfigDialog(m_mainWindow, "scconfig", SCConfig::self());
 
-	m_errorsWidget = m_errorsDialog->errorsWidget();
+	KPageWidgetItem *item;
+
+	item = m_configDialog->addPage(new GeneralConfigWidget(NULL), i18nc("@title General settings", "General"));
+	item->setHeader(i18n("General Settings"));
+	item->setIcon(KIcon("preferences-other"));
+
+	item = m_configDialog->addPage(new ErrorsConfigWidget(NULL), i18nc("@title Error Check Settings", "Error Check"));
+	item->setHeader(i18n("Error Check Settings"));
+	item->setIcon(KIcon("games-endturn"));
+
+	item = m_configDialog->addPage(new Sonnet::ConfigWidget(NULL), i18nc("@title Spelling Settings", "Spelling"));
+	item->setHeader(i18n("Spelling Settings"));
+	item->setIcon(KIcon("tools-check-spelling"));
+
+	item = m_configDialog->addPage(new PlayerConfigWidget(NULL), i18nc("@title Player Settings", "Player"));
+	item->setHeader(i18n("Player Settings"));
+	item->setIcon(KIcon("mediaplayer"));
+
+	QStringList backendNames(Player::instance()->backendNames());
+	for(QStringList::ConstIterator it = backendNames.begin(); it != backendNames.end(); it++) {
+		QWidget *configWidget = Player::instance()->backend(*it)->newConfigWidget(0);
+		if(configWidget) {
+			item = m_configDialog->addPage(configWidget, *it);
+			item->setHeader(i18nc("@title Player backend settings", "%1 Backend Settings", *it));
+			item->setIcon(KIcon((*it).toLower() + "-logo"));
+		}
+	}
+
+	// User edited the configuration - update your local copies of the configuration data
+	connect(m_configDialog, SIGNAL(settingsChanged()), this, SLOT(updateConfiguration()));
 
 	m_finder = new Finder(m_linesWidget);
 	m_replacer = new Replacer(m_linesWidget);
@@ -179,8 +209,8 @@ Application::Application() :
 
 	UserActionManager *actionManager = UserActionManager::instance();
 
-	connect(playerConfig(), SIGNAL(optionChanged(const QString &, const QString &)), this, SLOT(onPlayerOptionChanged(const QString &, const QString &)));
-	connect(generalConfig(), SIGNAL(optionChanged(const QString &, const QString &)), this, SLOT(onGeneralOptionChanged(const QString &, const QString &)));
+	connect(SCConfig::self(), SIGNAL(configChanged()), this, SLOT(onPlayerOptionChanged(const QString &, const QString &)));
+	connect(SCConfig::self(), SIGNAL(configChanged()), this, SLOT(onGeneralOptionChanged(const QString &, const QString &)));
 
 	connect(m_player, SIGNAL(fileOpened(const QString &)), this, SLOT(onPlayerFileOpened(const QString &)));
 	connect(m_player, SIGNAL(playing()), this, SLOT(onPlayerPlaying()));
@@ -197,7 +227,7 @@ Application::Application() :
 	connect(m_decoder, SIGNAL(decodingError(const QString &)), this, SLOT(onDecodingError(const QString &)));
 
 	QList<QObject *> listeners;
-	listeners << actionManager << m_mainWindow << m_playerWidget << m_linesWidget << m_curLineWidget << m_statusBar << m_errorsWidget << m_finder << m_replacer << m_errorFinder << m_speller << m_errorTracker << m_scriptsManager;
+	listeners << actionManager << m_mainWindow << m_playerWidget << m_linesWidget << m_curLineWidget << m_statusBar << /*m_errorsWidget <<*/ m_finder << m_replacer << m_errorFinder << m_speller << m_errorTracker << m_scriptsManager;
 	for(QList<QObject *>::ConstIterator it = listeners.begin(), end = listeners.end(); it != end; ++it) {
 		connect(this, SIGNAL(subtitleOpened(Subtitle *)), *it, SLOT(setSubtitle(Subtitle *)));
 		connect(this, SIGNAL(subtitleClosed()), *it, SLOT(setSubtitle()));
@@ -214,9 +244,9 @@ Application::Application() :
 
 	connect(m_linesWidget, SIGNAL(currentLineChanged(SubtitleLine *)), m_curLineWidget, SLOT(setCurrentLine(SubtitleLine *)));
 	connect(m_linesWidget, SIGNAL(lineDoubleClicked(SubtitleLine *)), this, SLOT(onLineDoubleClicked(SubtitleLine *)));
-	connect(m_linesWidget, SIGNAL(currentLineChanged(SubtitleLine *)), m_errorsWidget, SLOT(setCurrentLine(SubtitleLine *)));
+//	connect(m_linesWidget, SIGNAL(currentLineChanged(SubtitleLine *)), m_errorsWidget, SLOT(setCurrentLine(SubtitleLine *)));
 
-	connect(m_errorsWidget, SIGNAL(lineDoubleClicked(SubtitleLine *)), m_linesWidget, SLOT(setCurrentLine(SubtitleLine *)));
+//	connect(m_errorsWidget, SIGNAL(lineDoubleClicked(SubtitleLine *)), m_linesWidget, SLOT(setCurrentLine(SubtitleLine *)));
 
 	connect(m_playerWidget, SIGNAL(playingLineChanged(SubtitleLine *)), this, SLOT(onPlayingLineChanged(SubtitleLine *)));
 
@@ -316,14 +346,11 @@ Application::loadConfig()
 	m_playerWidget->loadConfig();
 	m_linesWidget->loadConfig();
 	m_curLineWidget->loadConfig();
-	m_errorsDialog->loadConfig();
 }
 
 void
 Application::saveConfig()
 {
-	m_config.writeTo(KGlobal::config().data());
-
 	KConfigGroup group(KGlobal::config()->group("Application Settings"));
 
 	group.writePathEntry("LastSubtitleUrl", m_lastSubtitleUrl.toString(QUrl::PreferLocalFile));
@@ -340,11 +367,9 @@ Application::saveConfig()
 	group.writeEntry("Volume", m_player->volume());
 
 	m_mainWindow->saveConfig();
-//  m_audiolevelsWidget->saveConfig(); // FIXME audio levels
 	m_playerWidget->saveConfig();
 	m_linesWidget->saveConfig();
 	m_curLineWidget->saveConfig();
-	m_errorsDialog->saveConfig();
 }
 
 QAction *
@@ -847,7 +872,7 @@ Application::setupActions()
 	actionCollection->addAction(ACT_SHIFT, shiftAction);
 	actionManager->addAction(shiftAction, UserAction::SubHasLine | UserAction::FullScreenOff);
 
-	QString shiftTimeMillis(generalConfig()->linesQuickShiftAmount());
+	QString shiftTimeMillis(SCConfig::linesQuickShiftAmount());
 
 	QAction *shiftSelectedLinesFwdAction = new QAction(actionCollection);
 	shiftSelectedLinesFwdAction->setShortcut(QKeySequence("Shift++")/*, QAction::DefaultShortcut | QAction::ActiveShortcut*/);
@@ -862,7 +887,8 @@ Application::setupActions()
 	actionManager->addAction(shiftSelectedLinesBwdAction, UserAction::HasSelection | UserAction::FullScreenOff);
 
 	// update shiftSelectedLinesFwdAction and shiftSelectedLinesBwdAction texts and status tips
-	onGeneralOptionChanged(GeneralConfig::keyLinesQuickShiftAmount(), QString::number(generalConfig()->linesQuickShiftAmount()));
+	// FIXME:
+//	onGeneralOptionChanged(GeneralConfig::keyLinesQuickShiftAmount(), QString::number(generalConfig()->linesQuickShiftAmount()));
 
 	QAction *adjustAction = new QAction(actionCollection);
 	adjustAction->setText(i18n("Adjust..."));
@@ -1052,7 +1078,8 @@ Application::setupActions()
 	actionManager->addAction(seekForwardsAction, UserAction::VideoPlaying);
 
 	// update seekBackwardsAction and seekForwardsAction status tip
-	onPlayerOptionChanged(PlayerConfig::keySeekJumpLength(), QString::number(playerConfig()->seekJumpLength()));
+	// FIXME:
+//	onPlayerOptionChanged(PlayerConfig::keySeekJumpLength(), QString::number(playerConfig()->seekJumpLength()));
 
 	QAction *seekToPrevLineAction = new QAction(actionCollection);
 	seekToPrevLineAction->setIcon(KIcon("media-skip-backward"));
@@ -1264,7 +1291,7 @@ Time
 Application::videoPosition(bool compensate)
 {
 	if(compensate && !m_player->isPaused())
-		return Time((long)(m_player->position() * 1000) - generalConfig()->grabbedPositionCompensation());
+		return Time((long)(m_player->position() * 1000) - SCConfig::grabbedPositionCompensation());
 	else
 		return Time((long)(m_player->position() * 1000));
 }
@@ -1305,7 +1332,7 @@ Application::codecForUrl(const QUrl &url, bool useRecentFiles, bool useDefault)
 //	}
 
 	if(!codec && useDefault)
-		codec = generalConfig()->defaultSubtitlesCodec();
+		codec = QTextCodec::codecForName(SCConfig::defaultSubtitlesEncoding().toLatin1());
 
 	return codec;
 }
@@ -1323,7 +1350,7 @@ Application::codecForEncoding(const QString &encoding, bool useDefault)
 	}
 
 	if(!codec && useDefault)
-		codec = generalConfig()->defaultSubtitlesCodec();
+		codec = QTextCodec::codecForName(SCConfig::defaultSubtitlesEncoding().toLatin1());
 
 	return codec;
 }
@@ -1419,7 +1446,7 @@ Application::openSubtitle(const QUrl &url, bool warnClashingUrls)
 
 		updateTitle();
 
-		if(m_subtitleUrl.isLocalFile() && generalConfig()->automaticVideoLoad()) {
+		if(m_subtitleUrl.isLocalFile() && SCConfig::automaticVideoLoad()) {
 			static const QStringList videoExtensions(QString("avi ogm mkv mpeg mpg mp4 rv wmv").split(' '));
 
 			QFileInfo subtitleFileInfo(m_subtitleUrl.path());
@@ -1545,7 +1572,7 @@ Application::saveSubtitleAs()
 	SaveSubtitleDialog saveDlg(
 		true,
 		m_subtitleUrl,
-		m_subtitleEncoding.isEmpty() ? generalConfig()->defaultSubtitlesEncoding() : m_subtitleEncoding,
+		m_subtitleEncoding.isEmpty() ? SCConfig::defaultSubtitlesEncoding() : m_subtitleEncoding,
 		m_subtitleEOL,
 		m_subtitleFormat);
 
@@ -1796,7 +1823,7 @@ Application::saveSubtitleTrAs()
 	SaveSubtitleDialog saveDlg(
 		false,
 		m_subtitleTrUrl,
-		m_subtitleTrEncoding.isEmpty() ? generalConfig()->defaultSubtitlesEncoding() : m_subtitleTrEncoding,
+		m_subtitleTrEncoding.isEmpty() ? SCConfig::defaultSubtitlesEncoding() : m_subtitleTrEncoding,
 		m_subtitleTrEOL,
 		m_subtitleTrFormat);
 
@@ -2164,16 +2191,27 @@ Application::checqCriticals()
 		if(dlg->clearMarks())
 			m_subtitle->setMarked(targetRanges, false);
 
-		m_subtitle->checqCriticals(targetRanges, dlg->selectedErrorFlags(), errorsConfig()->minDuration(), errorsConfig()->maxDuration(), errorsConfig()->minDurationPerChar(), errorsConfig()->maxDurationPerChar(), errorsConfig()->maxCharacters(), errorsConfig()->maxLines()
-								);
+		m_subtitle->checqCriticals(targetRanges,
+								   dlg->selectedErrorFlags(),
+								   SCConfig::minDuration(),
+								   SCConfig::maxDuration(),
+								   SCConfig::minDurationPerCharacter(),
+								   SCConfig::maxDurationPerCharacter(),
+								   SCConfig::maxCharacters(),
+								   SCConfig::maxLines());
 	}
 }
 
 void
 Application::recheckAllErrors()
 {
-	m_subtitle->rechecqCriticals(Range::full(), errorsConfig()->minDuration(), errorsConfig()->maxDuration(), errorsConfig()->minDurationPerChar(), errorsConfig()->maxDurationPerChar(), errorsConfig()->maxCharacters(), errorsConfig()->maxLines()
-							  );
+	m_subtitle->rechecqCriticals(Range::full(),
+								 SCConfig::minDuration(),
+								 SCConfig::maxDuration(),
+								 SCConfig::minDurationPerCharacter(),
+								 SCConfig::maxDurationPerCharacter(),
+								 SCConfig::maxCharacters(),
+								 SCConfig::maxLines());
 }
 
 void
@@ -2182,13 +2220,12 @@ Application::recheckSelectedErrors()
 	// NOTE we can't just use Subtitle::rechecqCriticals() with the selected lines ranges
 	// because this slots handles the error dialog action where the user can not only
 	// select lines but can also select (or unselect) specific errors
+// FIXME:
+//	SubtitleCompositeActionExecutor executor(*m_subtitle, i18n("Check Lines Errors"));
 
-	SubtitleCompositeActionExecutor executor(*m_subtitle, i18n("Check Lines Errors"));
-
-	for(SubtitleIterator it(*m_subtitle, m_errorsWidget->selectionRanges()); it.current(); ++it) {
-		it.current()->check(m_errorsWidget->lineSelectedErrorFlags(it.current()->index()), errorsConfig()->minDuration(), errorsConfig()->maxDuration(), errorsConfig()->minDurationPerChar(), errorsConfig()->maxDurationPerChar(), errorsConfig()->maxCharacters(), errorsConfig()->maxLines()
-							);
-	}
+//	for(SubtitleIterator it(*m_subtitle, m_errorsWidget->selectionRanges()); it.current(); ++it) {
+//		it.current()->check(m_errorsWidget->lineSelectedErrorFlags(it.current()->index()), SCConfig::minDuration(), SCConfig::maxDuration(), SCConfig::minDurationPerChar(), SCConfig::maxDurationPerChar(), SCConfig::maxCharacters(), SCConfig::maxLines());
+//	}
 }
 
 void
@@ -2208,36 +2245,36 @@ Application::clearErrors()
 void
 Application::clearSelectedErrors(bool includeMarks)
 {
-	SubtitleCompositeActionExecutor executor(*m_subtitle, i18n("Clear Lines Errors"));
+//	SubtitleCompositeActionExecutor executor(*m_subtitle, i18n("Clear Lines Errors"));
 
-	for(SubtitleIterator it(*m_subtitle, m_errorsWidget->selectionRanges()); it.current(); ++it) {
-		SubtitleLine *line = it.current();
-		int errorFlags = m_errorsWidget->lineSelectedErrorFlags(line->index());
+//	for(SubtitleIterator it(*m_subtitle, m_errorsWidget->selectionRanges()); it.current(); ++it) {
+//		SubtitleLine *line = it.current();
+//		int errorFlags = m_errorsWidget->lineSelectedErrorFlags(line->index());
 
-		if(!includeMarks)
-			errorFlags = errorFlags & ~SubtitleLine::UserMark;
+//		if(!includeMarks)
+//			errorFlags = errorFlags & ~SubtitleLine::UserMark;
 
-		line->setErrorFlags(errorFlags, false);
-	}
+//		line->setErrorFlags(errorFlags, false);
+//	}
 }
 
 void
 Application::clearSelectedMarks()
 {
-	m_subtitle->setMarked(m_errorsWidget->selectionRanges(), false);
+//	m_subtitle->setMarked(m_errorsWidget->selectionRanges(), false);
 }
 
 void
 Application::showErrors()
 {
-	if(m_errorsDialog->isHidden())
-		m_errorsDialog->show();
+//	if(m_errorsDialog->isHidden())
+//		m_errorsDialog->show();
 }
 
 void
 Application::showErrorsConfig()
 {
-	m_configDialog->setCurrentPage(ConfigDialog::Errors);
+//	m_configDialog->setCurrentPage(ConfigDialog::Errors);
 	m_configDialog->show();
 }
 
@@ -2299,13 +2336,13 @@ Application::shiftLines()
 void
 Application::shiftSelectedLinesForwards()
 {
-	m_subtitle->shiftLines(m_linesWidget->selectionRanges(), generalConfig()->linesQuickShiftAmount());
+	m_subtitle->shiftLines(m_linesWidget->selectionRanges(), SCConfig::linesQuickShiftAmount());
 }
 
 void
 Application::shiftSelectedLinesBackwards()
 {
-	m_subtitle->shiftLines(m_linesWidget->selectionRanges(), -generalConfig()->linesQuickShiftAmount());
+	m_subtitle->shiftLines(m_linesWidget->selectionRanges(), -SCConfig::linesQuickShiftAmount());
 }
 
 void
@@ -2363,8 +2400,8 @@ Application::changeFrameRate()
 void
 Application::enforceDurationLimits()
 {
-	static DurationLimitsDialog *dlg = new DurationLimitsDialog(errorsConfig()->minDuration(),
-																errorsConfig()->maxDuration(),
+	static DurationLimitsDialog *dlg = new DurationLimitsDialog(SCConfig::minDuration(),
+																SCConfig::maxDuration(),
 																m_mainWindow);
 
 	if(dlg->exec() == QDialog::Accepted) {
@@ -2626,14 +2663,14 @@ Application::setFullScreenMode(bool enabled)
 void
 Application::seekBackwards()
 {
-	double position = m_player->position() - playerConfig()->seekJumpLength();
+	double position = m_player->position() - SCConfig::seekJumpLength();
 	m_player->seek(position > 0.0 ? position : 0.0, false);
 }
 
 void
 Application::seekForwards()
 {
-	double position = m_player->position() + playerConfig()->seekJumpLength();
+	double position = m_player->position() + SCConfig::seekJumpLength();
 	m_player->seek(position <= m_player->length() ? position : m_player->length(), false);
 }
 
@@ -2964,10 +3001,10 @@ Application::onLineDoubleClicked(SubtitleLine *line)
 	if(m_player->state() == Player::Ready)
 		m_player->play();
 
-	int mseconds = line->showTime().toMillis() - generalConfig()->seekOffsetOnDoubleClick();
+	int mseconds = line->showTime().toMillis() - SCConfig::seekOffsetOnDoubleClick();
 	m_player->seek(mseconds > 0 ? mseconds / 1000.0 : 0.0, true);
 
-	if(m_player->state() == Player::Paused && generalConfig()->unpauseOnDoubleClick())
+	if(m_player->state() == Player::Paused && SCConfig::unpauseOnDoubleClick())
 		m_player->play();
 }
 
@@ -3068,18 +3105,19 @@ Application::onPlayerMuteChanged(bool muted)
 void
 Application::onPlayerOptionChanged(const QString &option, const QString &value)
 {
-	if(option == PlayerConfig::keyDecoderBackend()) {
+	if(m_decoder->backend(SCConfig::decoderBackend()) != m_decoder->activeBackend()) {
 		m_decoder->reinitialize(value);
-	} else if(option == PlayerConfig::keySeekJumpLength()) {
+	}
+//	if(option == PlayerConfig::keySeekJumpLength()) {
 		action(ACT_SEEK_BACKWARDS)->setStatusTip(i18np("Seek backwards 1 second", "Seek backwards %1 seconds", value.toInt()));
 		action(ACT_SEEK_FORWARDS)->setStatusTip(i18np("Seek forwards 1 second", "Seek forwards %1 seconds", value.toInt()));
-	}
+//	}
 }
 
 void
 Application::onGeneralOptionChanged(const QString &option, const QString &value)
 {
-	if(option == GeneralConfig::keyLinesQuickShiftAmount()) {
+//	if(option == GeneralConfig::keyLinesQuickShiftAmount()) {
 		int shiftTimeMillis = value.toInt();
 
 		QAction *shiftSelectedLinesFwdAction = action(ACT_SHIFT_SELECTED_LINES_FORWARDS);
@@ -3089,18 +3127,18 @@ Application::onGeneralOptionChanged(const QString &option, const QString &value)
 		QAction *shiftSelectedLinesBwdAction = action(ACT_SHIFT_SELECTED_LINES_BACKWARDS);
 		shiftSelectedLinesBwdAction->setText(i18np("Shift %21 Millisecond", "Shift %2%1 Milliseconds", shiftTimeMillis, "-"));
 		shiftSelectedLinesBwdAction->setStatusTip(i18np("Shift selected lines %21 millisecond", "Shift selected lines -%2%1 milliseconds", shiftTimeMillis, "-"));
-	}
+//	}
 }
 
 void
 Application::updateConfigFromDialog()
 {
-	m_config = m_configDialog->config();
+//	m_config = m_configDialog->config();
 
-	// We have to manually update the player backends configurations because they have their own copies
-	QStringList backendNames(m_player->backendNames());
-	for(QStringList::ConstIterator it = backendNames.begin(), end = backendNames.end(); it != end; ++it)
-		m_player->backend(*it)->setConfig(m_config.group(*it));
+//	// We have to manually update the player backends configurations because they have their own copies
+//	QStringList backendNames(m_player->backendNames());
+//	for(QStringList::ConstIterator it = backendNames.begin(), end = backendNames.end(); it != end; ++it)
+//		m_player->backend(*it)->setConfig(m_config.group(*it));
 }
 
 

@@ -3,5 +3,6 @@ set(services_mplayer_SRCS
 	${CMAKE_CURRENT_SOURCE_DIR}/mplayerplayerbackend.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/mplayerplayerprocess.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/mplayerconfigwidget.cpp
+	${CMAKE_CURRENT_SOURCE_DIR}/mplayerconfigwidget.ui
 	CACHE INTERNAL EXPORTEDVARIABLE
 )

@@ -1,132 +1,38 @@
-/***************************************************************************
- *   Copyright (C) 2007-2009 Sergio Pistone (sergio_pistone@yahoo.com.ar)  *
- *                                                                         *
- *   This program is free software; you can redistribute it and/or modify  *
- *   it under the terms of the GNU General Public License as published by  *
- *   the Free Software Foundation; either version 2 of the License, or     *
- *   (at your option) any later version.                                   *
- *                                                                         *
- *   This program is distributed in the hope that it will be useful,       *
- *   but WITHOUT ANY WARRANTY; without even the implied warranty of        *
- *   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the         *
- *   GNU General Public License for more details.                          *
- *                                                                         *
- *   You should have received a copy of the GNU General Public License     *
- *   along with this program; if not, write to the                         *
- *   Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor,      *
- *   Boston, MA 02110-1301, USA.                                           *
- ***************************************************************************/
+/**
+ * Copyright (C) 2007-2009 Sergio Pistone <sergio_pistone@yahoo.com.ar>
+ * Copyright (C) 2010-2015 Mladen Milinkovic <max@smoothware.net>
+ * 
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or
+ * (at your option) any later version.
+ * 
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ * 
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the
+ * Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor,
+ * Boston, MA 02110-1301, USA.
+ */
 
 #include "generalconfigwidget.h"
 #include "../application.h"
 
-#include <QtCore/QTextCodec>
-#include <QGridLayout>
-#include <QGroupBox>
-#include <QCheckBox>
-#include <QLabel>
-
-#include <KLocale>
-#include <KComboBox>
-#include <KNumInput>
-
 using namespace SubtitleComposer;
 
-GeneralConfigWidget::GeneralConfigWidget(QWidget *parent) :
-	AppConfigGroupWidget(new GeneralConfig(), parent)
+GeneralConfigWidget::GeneralConfigWidget(QWidget *parent)
+	: QWidget(parent)
 {
-	QGroupBox *generalGroupBox = createGroupBox(i18nc("@title:group General settings", "General"));
+	setupUi(this);
 
-	m_defaultEncodingComboBox = new KComboBox(generalGroupBox);
-	m_defaultEncodingComboBox->addItems(app()->availableEncodingNames());
-
-	QLabel *defaultEncodingLabel = new QLabel(generalGroupBox);
-	defaultEncodingLabel->setText(i18n("Default subtitles encoding:"));
-	defaultEncodingLabel->setWhatsThis(i18n("The encoding specified here will be used to load subtitles when autodetection fails and will also be suggested when saving new subtitles."));
-	defaultEncodingLabel->setBuddy(m_defaultEncodingComboBox);
-
-	m_relativeSeekPositionSpinBox = new KIntNumInput(generalGroupBox);
-	m_relativeSeekPositionSpinBox->setMinimum(0);
-	m_relativeSeekPositionSpinBox->setMaximum(10000);
-	m_relativeSeekPositionSpinBox->setSuffix(i18n(" msecs"));
-
-	QLabel *relativeSeekPositionLabel = new QLabel(generalGroupBox);
-	relativeSeekPositionLabel->setText(i18n("On line double click, jump to show time minus:"));
-	relativeSeekPositionLabel->setBuddy(m_relativeSeekPositionSpinBox);
-
-	m_relativeSeekUnpause = new QCheckBox(generalGroupBox);
-	m_relativeSeekUnpause->setText(i18n("Resume playback after line double click"));
-
-	m_autoLoadVideoCheckBox = new QCheckBox(generalGroupBox);
-	m_autoLoadVideoCheckBox->setText(i18n("Automatically load video file when opening subtitle"));
-
-	QGroupBox *quickActionsGroupBox = createGroupBox(i18nc("@title:group", "Quick Actions"));
-
-	m_shiftMsecsSpinBox = new KIntNumInput(quickActionsGroupBox);
-	m_shiftMsecsSpinBox->setMinimum(1);
-	m_shiftMsecsSpinBox->setMaximum(1000);
-	m_shiftMsecsSpinBox->setSuffix(i18n(" msecs"));
-
-	QLabel *shiftMsecsLabel = new QLabel(quickActionsGroupBox);
-	shiftMsecsLabel->setText(i18n("Time shift for selected lines:"));
-	shiftMsecsLabel->setBuddy(m_shiftMsecsSpinBox);
-
-	m_videoPosCompMsecsSpinBox = new KIntNumInput(quickActionsGroupBox);
-	m_videoPosCompMsecsSpinBox->setMinimum(1);
-	m_videoPosCompMsecsSpinBox->setMaximum(1000);
-	m_videoPosCompMsecsSpinBox->setSuffix(i18n(" msecs"));
-
-	QLabel *videoPosCompMsecsLabel = new QLabel(quickActionsGroupBox);
-	videoPosCompMsecsLabel->setText(i18n("Compensation for captured video times:"));
-	videoPosCompMsecsLabel->setBuddy(m_videoPosCompMsecsSpinBox);
-
-	QGridLayout *generalLayout = createGridLayout(generalGroupBox);
-	generalLayout->addWidget(defaultEncodingLabel, 1, 0, Qt::AlignRight | Qt::AlignVCenter);
-	generalLayout->addWidget(m_defaultEncodingComboBox, 1, 1);
-	generalLayout->addWidget(relativeSeekPositionLabel, 2, 0, Qt::AlignRight | Qt::AlignVCenter);
-	generalLayout->addWidget(m_relativeSeekPositionSpinBox, 2, 1);
-	generalLayout->addWidget(m_relativeSeekUnpause, 3, 0, 1, 2);
-	generalLayout->addWidget(m_autoLoadVideoCheckBox, 4, 0, 1, 2);
-
-	QGridLayout *quickActionsLayout = createGridLayout(quickActionsGroupBox);
-	quickActionsLayout->addWidget(shiftMsecsLabel, 0, 0, Qt::AlignRight | Qt::AlignVCenter);
-	quickActionsLayout->addWidget(m_shiftMsecsSpinBox, 0, 1);
-	quickActionsLayout->addWidget(videoPosCompMsecsLabel, 1, 0, Qt::AlignRight | Qt::AlignVCenter);
-	quickActionsLayout->addWidget(m_videoPosCompMsecsSpinBox, 1, 1);
-
-	connect(m_defaultEncodingComboBox, SIGNAL(activated(int)), this, SIGNAL(settingsChanged()));
-	connect(m_relativeSeekPositionSpinBox, SIGNAL(valueChanged(int)), this, SIGNAL(settingsChanged()));
-	connect(m_relativeSeekUnpause, SIGNAL(toggled(bool)), this, SIGNAL(settingsChanged()));
-	connect(m_autoLoadVideoCheckBox, SIGNAL(toggled(bool)), this, SIGNAL(settingsChanged()));
-	connect(m_shiftMsecsSpinBox, SIGNAL(valueChanged(int)), this, SIGNAL(settingsChanged()));
-	connect(m_videoPosCompMsecsSpinBox, SIGNAL(valueChanged(int)), this, SIGNAL(settingsChanged()));
-
-	setControlsFromConfig();
+	kcfg_DefaultSubtitlesEncoding->addItems(app()->availableEncodingNames());
+	kcfg_DefaultSubtitlesEncoding->setProperty("kcfg_property", QByteArray("currentText"));
 }
 
 GeneralConfigWidget::~GeneralConfigWidget()
-{}
-
-void
-GeneralConfigWidget::setConfigFromControls()
 {
-	config()->setDefaultSubtitlesEncoding(m_defaultEncodingComboBox->currentText());
-	config()->setSeekOffsetOnDoubleClick(m_relativeSeekPositionSpinBox->value());
-	config()->setUnpauseOnDoubleClick(m_relativeSeekUnpause->isChecked());
-	config()->setAutomaticVideoLoad(m_autoLoadVideoCheckBox->isChecked());
-	config()->setLinesQuickShiftAmount(m_shiftMsecsSpinBox->value());
-	config()->setGrabbedPositionCompensation(m_videoPosCompMsecsSpinBox->value());
+
 }
-
-void
-GeneralConfigWidget::setControlsFromConfig()
-{
-	m_defaultEncodingComboBox->setCurrentItem(config()->defaultSubtitlesEncoding());
-	m_relativeSeekPositionSpinBox->setValue(config()->seekOffsetOnDoubleClick());
-	m_relativeSeekUnpause->setChecked(config()->unpauseOnDoubleClick());
-	m_autoLoadVideoCheckBox->setChecked(config()->automaticVideoLoad());
-	m_shiftMsecsSpinBox->setValue(config()->linesQuickShiftAmount());
-	m_videoPosCompMsecsSpinBox->setValue(config()->grabbedPositionCompensation());
-}
-
-

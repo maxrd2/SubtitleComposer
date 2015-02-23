@@ -1,114 +1,86 @@
-/***************************************************************************
- *   Copyright (C) 2007-2009 Sergio Pistone (sergio_pistone@yahoo.com.ar)  *
- *                                                                         *
- *   This program is free software; you can redistribute it and/or modify  *
- *   it under the terms of the GNU General Public License as published by  *
- *   the Free Software Foundation; either version 2 of the License, or     *
- *   (at your option) any later version.                                   *
- *                                                                         *
- *   This program is distributed in the hope that it will be useful,       *
- *   but WITHOUT ANY WARRANTY; without even the implied warranty of        *
- *   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the         *
- *   GNU General Public License for more details.                          *
- *                                                                         *
- *   You should have received a copy of the GNU General Public License     *
- *   along with this program; if not, write to the                         *
- *   Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor,      *
- *   Boston, MA 02110-1301, USA.                                           *
- ***************************************************************************/
+/**
+ * Copyright (C) 2007-2009 Sergio Pistone <sergio_pistone@yahoo.com.ar>
+ * Copyright (C) 2010-2015 Mladen Milinkovic <max@smoothware.net>
+ * 
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or
+ * (at your option) any later version.
+ * 
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ * 
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the
+ * Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor,
+ * Boston, MA 02110-1301, USA.
+ */
 
 #include "playerconfigwidget.h"
+
 #include "../../services/player.h"
 #include "../../services/decoder.h"
+
 #include "../../widgets/layeredwidget.h"
 #include "../../widgets/textoverlaywidget.h"
+
+#include "../application.h"
 
 #include <KLocale>
 
 using namespace SubtitleComposer;
 
-PlayerConfigWidget::PlayerConfigWidget(QWidget *parent) :
-	AppConfigGroupWidget(new PlayerConfig(), parent, false)
+PlayerConfigWidget::PlayerConfigWidget(QWidget *parent)
+	: QWidget(parent)
 {
 	setupUi(this);
 
 	m_textOverlayWidget->setText(i18nc("Text for previewing the subtitles font settings", "<p>The Quick Brown Fox<br/>Jumps Over The Lazy Dog</p>"));
-	m_textOverlayWidget->setOutlineWidth(1);
 	m_textOverlayWidget->setAlignment(Qt::AlignCenter | Qt::AlignVCenter);
+	m_textOverlayWidget->setFamily(SCConfig::fontFamily());
+	m_textOverlayWidget->setPointSize(SCConfig::fontPointSize());
+	m_textOverlayWidget->setPrimaryColor(SCConfig::fontColor());
+	m_textOverlayWidget->setOutlineWidth(SCConfig::outlineWidth());
+	m_textOverlayWidget->setOutlineColor(SCConfig::outlineColor());
+	m_textOverlayWidget->setAntialias(SCConfig::antialias());
 
-	connect(m_fontFamily, SIGNAL(activated(const QString &)), this, SLOT(onFamilyChanged(const QString &)));
-	connect(m_fontFamily, SIGNAL(textChanged(const QString &)), this, SLOT(onFamilyChanged(const QString &)));
-	connect(m_fontSize, SIGNAL(valueChanged(int)), this, SLOT(onSizeChanged(int)));
-	connect(m_textColor, SIGNAL(activated(const QColor &)), this, SLOT(onPrimaryColorChanged(const QColor &)));
-	connect(m_outlineColor, SIGNAL(activated(const QColor &)), this, SLOT(onOutlineColorChanged(const QColor &)));
-	connect(m_outlineWidth, SIGNAL(valueChanged(int)), this, SLOT(onOutlineWidthChanged(int)));
-	connect(m_textAntialias, SIGNAL(toggled(bool)), this, SLOT(onAntialiasChanged(bool)));
+	kcfg_PlayerBackend->addItems(Player::instance()->backendNames());
+	kcfg_PlayerBackend->setProperty("kcfg_property", QByteArray("currentText"));
+	if(kcfg_PlayerBackend->count() > 1) {
+		int dummyBackendIndex = kcfg_PlayerBackend->findText(Player::instance()->dummyBackendName());
+		if(dummyBackendIndex >= 0)
+			kcfg_PlayerBackend->removeItem(dummyBackendIndex);
+	}
 
-	connect(m_playerBackend, SIGNAL(activated(int)), this, SIGNAL(settingsChanged()));
-	connect(m_decoderBackend, SIGNAL(activated(int)), this, SIGNAL(settingsChanged()));
-	connect(m_seekJumpSecs, SIGNAL(valueChanged(int)), this, SIGNAL(settingsChanged()));
-	connect(m_editabelPositionCtrl, SIGNAL(toggled(bool)), this, SIGNAL(settingsChanged()));
+	kcfg_DecoderBackend->addItems(Decoder::instance()->backendNames());
+	kcfg_DecoderBackend->setProperty("kcfg_property", QByteArray("currentText"));
+	if(kcfg_DecoderBackend->count() > 1) {
+		int dummyBackendIndex = kcfg_DecoderBackend->findText(Decoder::instance()->dummyBackendName());
+		if(dummyBackendIndex >= 0)
+			kcfg_DecoderBackend->removeItem(dummyBackendIndex);
+	}
 
-	connect(m_fontFamily, SIGNAL(activated(int)), this, SIGNAL(settingsChanged()));
-	connect(m_fontSize, SIGNAL(valueChanged(int)), this, SIGNAL(settingsChanged()));
-	connect(m_textColor, SIGNAL(activated(const QColor &)), this, SIGNAL(settingsChanged()));
-	connect(m_outlineColor, SIGNAL(activated(const QColor &)), this, SIGNAL(settingsChanged()));
-	connect(m_outlineWidth, SIGNAL(valueChanged(int)), this, SIGNAL(settingsChanged()));
-	connect(m_textAntialias, SIGNAL(toggled(bool)), this, SIGNAL(settingsChanged()));
+	kcfg_FontFamily->setProperty("kcfg_property", QByteArray("currentText"));
 
-	setControlsFromConfig();
+	connect(kcfg_FontFamily, SIGNAL(activated(const QString &)), this, SLOT(onFamilyChanged(const QString &)));
+	connect(kcfg_FontFamily, SIGNAL(textChanged(const QString &)), this, SLOT(onFamilyChanged(const QString &)));
+	connect(kcfg_FontPointSize, SIGNAL(valueChanged(int)), this, SLOT(onSizeChanged(int)));
+	connect(kcfg_FontColor, SIGNAL(activated(const QColor &)), this, SLOT(onPrimaryColorChanged(const QColor &)));
+	connect(kcfg_OutlineColor, SIGNAL(activated(const QColor &)), this, SLOT(onOutlineColorChanged(const QColor &)));
+	connect(kcfg_OutlineWidth, SIGNAL(valueChanged(int)), this, SLOT(onOutlineWidthChanged(int)));
+	connect(kcfg_Antialias, SIGNAL(toggled(bool)), this, SLOT(onAntialiasChanged(bool)));
+
 }
 
 PlayerConfigWidget::~PlayerConfigWidget()
 {}
 
 void
-PlayerConfigWidget::setControlsFromConfig()
-{
-	m_playerBackend->setEditText(config()->playerBackend());
-	m_decoderBackend->setEditText(config()->decoderBackend());
-	m_seekJumpSecs->setValue(config()->seekJumpLength());
-	m_editabelPositionCtrl->setChecked(config()->showPositionTimeEdit());
-
-	m_fontFamily->setCurrentFont(config()->fontFamily());
-	onFamilyChanged(config()->fontFamily());
-
-	m_fontSize->setValue(config()->fontPointSize());
-	onSizeChanged(config()->fontPointSize());
-
-	m_textColor->setColor(config()->fontColor());
-	onPrimaryColorChanged(config()->fontColor());
-
-	m_outlineColor->setColor(config()->outlineColor());
-	onOutlineColorChanged(config()->outlineColor());
-
-	m_outlineWidth->setValue(config()->outlineWidth());
-	onOutlineWidthChanged(config()->outlineWidth());
-
-	m_textAntialias->setChecked(config()->antialiasEnabled());
-	onAntialiasChanged(config()->antialiasEnabled());
-}
-
-void
-PlayerConfigWidget::setConfigFromControls()
-{
-	config()->setPlayerBackend(m_playerBackend->currentText());
-	config()->setDecoderBackend(m_decoderBackend->currentText());
-	config()->setSeekJumpLength(m_seekJumpSecs->value());
-	config()->setShowPositionTimeEdit(m_editabelPositionCtrl->isChecked());
-
-	config()->setFontFamily(m_textOverlayWidget->family());
-	config()->setFontPointSize(m_textOverlayWidget->pointSize());
-	config()->setFontColor(m_textOverlayWidget->primaryColor());
-	config()->setOutlineColor(m_textOverlayWidget->outlineColor());
-	config()->setOutlineWidth((int)m_textOverlayWidget->outlineWidth());
-	config()->setAntialiasEnabled(m_textAntialias->isChecked());
-}
-
-void
 PlayerConfigWidget::onFamilyChanged(const QString &family)
 {
-	if(m_fontFamily->findText(family) != -1)
+	if(kcfg_FontFamily->findText(family) != -1)
 		m_textOverlayWidget->setFamily(family);
 }
 
@@ -141,5 +113,3 @@ PlayerConfigWidget::onAntialiasChanged(bool antialias)
 {
 	m_textOverlayWidget->setAntialias(antialias);
 }
-
-

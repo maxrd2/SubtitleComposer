@@ -1,25 +1,25 @@
-/***************************************************************************
- *   Copyright (C) 2007-2009 Sergio Pistone (sergio_pistone@yahoo.com.ar)  *
- *                                                                         *
- *   This program is free software; you can redistribute it and/or modify  *
- *   it under the terms of the GNU General Public License as published by  *
- *   the Free Software Foundation; either version 2 of the License, or     *
- *   (at your option) any later version.                                   *
- *                                                                         *
- *   This program is distributed in the hope that it will be useful,       *
- *   but WITHOUT ANY WARRANTY; without even the implied warranty of        *
- *   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the         *
- *   GNU General Public License for more details.                          *
- *                                                                         *
- *   You should have received a copy of the GNU General Public License     *
- *   along with this program; if not, write to the                         *
- *   Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor,      *
- *   Boston, MA 02110-1301, USA.                                           *
- ***************************************************************************/
+/**
+ * Copyright (C) 2007-2009 Sergio Pistone <sergio_pistone@yahoo.com.ar>
+ * Copyright (C) 2010-2015 Mladen Milinkovic <max@smoothware.net>
+ * 
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or
+ * (at your option) any later version.
+ * 
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ * 
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the
+ * Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor,
+ * Boston, MA 02110-1301, USA.
+ */
 
 #include "errorsdialog.h"
 #include "application.h"
-#include "configs/errorsconfig.h"
 #include "../core/subtitle.h"
 #include "../core/subtitleline.h"
 
@@ -28,6 +28,7 @@
 
 #include <QDebug>
 #include <KLocale>
+#include <KGlobal>
 #include <KApplication>
 #include <KConfig>
 #include <KConfigGroup>
@@ -50,7 +51,7 @@ ErrorsDialog::ErrorsDialog(QWidget *parent) :
 	mainLayout->setAlignment(Qt::AlignTop);
 	mainLayout->setSpacing(5);
 
-	m_autoClearFixed = app()->errorsConfig()->autoClearFixed();
+	m_autoClearFixed = SCConfig::autoClearFixed();
 	m_clearFixedButton = new QPushButton(mainWidget);
 	m_clearFixedButton->setText(i18n("Clear Fixed Errors"));
 	m_clearFixedButton->setEnabled(!m_autoClearFixed);
@@ -87,7 +88,7 @@ ErrorsDialog::ErrorsDialog(QWidget *parent) :
 
 	connect(m_errorsWidget->model(), SIGNAL(statsChanged()), this, SLOT(onStatsChanged()));
 
-	connect(app()->errorsConfig(), SIGNAL(optionChanged(const QString &, const QString &)), this, SLOT(onOptionChanged(const QString &, const QString &)));
+	connect(SCConfig::self(), SIGNAL(configChanged()), this, SLOT(onConfigChanged()));
 }
 
 ErrorsWidget *
@@ -139,12 +140,12 @@ ErrorsDialog::onStatsChanged()
 }
 
 void
-ErrorsDialog::onOptionChanged(const QString &option, const QString &value)
+ErrorsDialog::onConfigChanged()
 {
-	if(option == ErrorsConfig::keyAutoClearFixed()) {
-		m_autoClearFixed = value == "true";
+//	if(option == ErrorsConfig::keyAutoClearFixed()) {
+		m_autoClearFixed = SCConfig::autoClearFixed();
 		m_clearFixedButton->setEnabled(m_clearErrorsButton->isEnabled() && !m_autoClearFixed);
-	}
+//	}
 }
 
 

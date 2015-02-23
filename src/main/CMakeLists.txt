@@ -7,7 +7,6 @@ add_subdirectory(scripting)
 
 include_directories(
 	${common_INCLUDE_DIR}
-	${config_INCLUDE_DIR}
 	${core_INCLUDE_DIR}
 	${formats_INCLUDE_DIR}
 	${services_INCLUDE_DIR}
@@ -16,7 +15,6 @@ include_directories(
 
 set(subtitlecomposer_SRCS
 	${common_SRCS}
-	${config_SRCS}
 	${core_SRCS}
 	${formats_SRCS}
 	${services_SRCS}
@@ -28,7 +26,6 @@ set(subtitlecomposer_SRCS
 	${main_scripting_SRCS}
 	${CMAKE_CURRENT_SOURCE_DIR}/application.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/audiolevelswidget.cpp
-	${CMAKE_CURRENT_SOURCE_DIR}/configdialog.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/currentlinewidget.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/errorsdialog.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/errorswidget.cpp
@@ -39,6 +36,8 @@ set(subtitlecomposer_SRCS
 	${CMAKE_CURRENT_SOURCE_DIR}/playerwidget.cpp
 	CACHE INTERNAL EXPORTEDVARIABLE
 )
+
+kconfig_add_kcfg_files(subtitlecomposer_SRCS GENERATE_MOC ${CMAKE_CURRENT_SOURCE_DIR}/scconfig.kcfgc)
 
 add_executable(subtitlecomposer ${subtitlecomposer_SRCS})
 
@@ -51,7 +50,6 @@ target_link_libraries(subtitlecomposer
 	KF5::KDELibs4Support
 	${PHONON_LIBRARY}
 	${common_LIBS}
-	${config_LIBS}
 	${core_LIBS}
 	${formats_LIBS}
 	${services_LIBS}
@@ -60,7 +58,6 @@ target_link_libraries(subtitlecomposer
 
 add_definitions(
 	${common_DEFS}
-	${config_DEFS}
 	${core_DEFS}
 	${formats_DEFS}
 	${services_DEFS}

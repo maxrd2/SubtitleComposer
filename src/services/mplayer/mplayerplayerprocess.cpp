@@ -1,25 +1,27 @@
-/***************************************************************************
- *   Copyright (C) 2007-2009 Sergio Pistone (sergio_pistone@yahoo.com.ar)  *
- *   based on smplayer by Ricardo Villalba                                 *
- *                                                                         *
- *   This program is free software; you can redistribute it and/or modify  *
- *   it under the terms of the GNU General Public License as published by  *
- *   the Free Software Foundation; either version 2 of the License, or     *
- *   (at your option) any later version.                                   *
- *                                                                         *
- *   This program is distributed in the hope that it will be useful,       *
- *   but WITHOUT ANY WARRANTY; without even the implied warranty of        *
- *   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the         *
- *   GNU General Public License for more details.                          *
- *                                                                         *
- *   You should have received a copy of the GNU General Public License     *
- *   along with this program; if not, write to the                         *
- *   Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor,      *
- *   Boston, MA 02110-1301, USA.                                           *
- ***************************************************************************/
+/**
+ * Copyright (C) 2007-2009 Sergio Pistone <sergio_pistone@yahoo.com.ar>
+ * Copyright (C) 2010-2015 Mladen Milinkovic <max@smoothware.net>
+ * 
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or
+ * (at your option) any later version.
+ * 
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ * 
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the
+ * Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor,
+ * Boston, MA 02110-1301, USA.
+ */
 
 #include "mplayerplayerprocess.h"
 #include "../../common/qxtsignalwaiter.h"
+
+#include "../../main/application.h"
 
 #include <QApplication>
 #include <QtCore/QStringList>
@@ -31,9 +33,8 @@ using namespace SubtitleComposer;
 
 #define MAX_VOLUME 1000
 
-MPlayerPlayerProcess::MPlayerPlayerProcess(const MPlayerConfig *const config, QObject *parent) :
-	QProcess(parent),
-	m_config(config),
+MPlayerPlayerProcess::MPlayerPlayerProcess(QObject *parent)
+	: QProcess(parent),
 	m_mediaData(),
 	m_incompleteLine(),
 	m_isMediaDataLoaded(false),
@@ -66,7 +67,7 @@ MPlayerPlayerProcess::mediaData()
 bool
 MPlayerPlayerProcess::start(const QString &filePath, int winId, int audioStream, int audioStreamCount)
 {
-	if(KStandardDirs::findExe(m_config->executablePath()).isEmpty())
+	if(KStandardDirs::findExe(SCConfig::mpExecutablePath()).isEmpty())
 		return false;
 
 	m_mediaData.reset();
@@ -86,11 +87,11 @@ MPlayerPlayerProcess::start(const QString &filePath, int winId, int audioStream,
 	args << "-slave";                       // enable slave mode so we can send commands to mplayer process
 	args << "-input" << "nodefault-bindings:conf=/dev/null";        // disable mplayer input handling
 
-	if(m_config->hasVideoOutput()) {
-		args << "-vo" << m_config->videoOutput();
-		if(m_config->videoOutput() == "vdpau") {
+	if(SCConfig::mpVideoOutputEnabled()) {
+		args << "-vo" << SCConfig::mpVideoOutput();
+		if(SCConfig::mpVideoOutput() == "vdpau") {
 			args << "-vc";
-			if(m_config->vdpauDivx()) {
+			if(SCConfig::mpVdpau()) {
 				args << "ffh264vdpau,ffmpeg12vdpau,ffwmv3vdpau,ffvc1vdpau,ffodivxvdpau,";
 			} else {
 				args << "ffh264vdpau,ffmpeg12vdpau,ffwmv3vdpau,ffvc1vdpau,";
@@ -98,49 +99,49 @@ MPlayerPlayerProcess::start(const QString &filePath, int winId, int audioStream,
 		}
 	}
 
-	if(m_config->hasAudioOutput())
-		args << "-ao" << m_config->audioOutput();
+	if(SCConfig::mpAudioOutputEnabled())
+		args << "-ao" << SCConfig::mpAudioOutput();
 
-	if(m_config->hasAudioChannels())
-		args << "-channels" << QString::number(m_config->audioChannels());
+	if(SCConfig::mpAudioChannelsEnabled())
+		args << "-channels" << QString::number(SCConfig::mpAudioChannels());
 
 	args << "-zoom";                        // allow software scaling where hardware scaling is unavaliable
 	args << "-nokeepaspect";        // do not keep window aspect ratio when resizing windows
 
-	if(m_config->frameDropping())
+	if(SCConfig::mpFrameDropping())
 		args << "-framedrop";
 
-	if(m_config->hardFrameDropping())
+	if(SCConfig::mpHardFrameDropping())
 		args << "-hardframedrop";
 
-	if(m_config->hasAutoSyncFactor())
-		args << "-autosync" << QString::number(m_config->autoSyncFactor());
+	if(SCConfig::mpAutoSyncEnabled())
+		args << "-autosync" << QString::number(SCConfig::mpAutoSyncFactor());
 
 	args << "-wid" << QString::number(winId);       // set window id so that it gets embedded in our window
 	args << "-noautosub";           // turn off automatic subtitle file loading
 
-	if(m_config->hasCacheSize()) {
-		args << "-cache" << QString::number(m_config->cacheSize());
+	if(SCConfig::mpCacheEnabled()) {
+		args << "-cache" << QString::number(SCConfig::mpCacheSize());
 		args << "-cache-min" << QString::number(99);
 		args << "-cache-seek-min" << QString::number(99);
 	}
 
 	args << "-osdlevel" << QString::number(0);      // no OSD
 
-	if(m_config->volumeNormalization())
+	if(SCConfig::mpVolumeNormalization())
 		args << "-af" << "volnorm=2"; // set volume normalization
 
 	args << "-softvol";
 
-	if(m_config->hasVolumeAmplification())
-		args << "-softvol-max" << QString::number(m_config->volumeAmplification());
+	if(SCConfig::mpVolumeAmplificationEnabled())
+		args << "-softvol-max" << QString::number(SCConfig::mpVolumeAmplification());
 
 	args << filePath;
 
-//  qDebug() << KStandardDirs::findExe( m_config->executablePath() ) << " " << args.join(" ");
+//  qDebug() << KStandardDirs::findExe( SCConfig::executablePath() ) << " " << args.join(" ");
 
 	setProcessChannelMode(QProcess::MergedChannels);
-	QProcess::start(KStandardDirs::findExe(m_config->executablePath()), args);
+	QProcess::start(KStandardDirs::findExe(SCConfig::mpExecutablePath()), args);
 	return waitForStarted(-1);
 }
 
@@ -183,7 +184,7 @@ MPlayerPlayerProcess::sendToggleMute()
 void
 MPlayerPlayerProcess::sendVolume(double volume)
 {
-	sendCommand(QByteArray("volume % 1").replace('%', QByteArray::number(volume * (m_config->volumeAmplification() / 100.0))), PausingKeep, false);
+	sendCommand(QByteArray("volume % 1").replace('%', QByteArray::number(volume * (SCConfig::mpvVolumeAmplification() / 100.0))), PausingKeep, false);
 }
 
 void

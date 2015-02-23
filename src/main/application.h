@@ -1,43 +1,41 @@
 #ifndef APPLICATION_H
 #define APPLICATION_H
 
-/***************************************************************************
- *   Copyright (C) 2007-2009 Sergio Pistone (sergio_pistone@yahoo.com.ar)  *
- *                                                                         *
- *   This program is free software; you can redistribute it and/or modify  *
- *   it under the terms of the GNU General Public License as published by  *
- *   the Free Software Foundation; either version 2 of the License, or     *
- *   (at your option) any later version.                                   *
- *                                                                         *
- *   This program is distributed in the hope that it will be useful,       *
- *   but WITHOUT ANY WARRANTY; without even the implied warranty of        *
- *   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the         *
- *   GNU General Public License for more details.                          *
- *                                                                         *
- *   You should have received a copy of the GNU General Public License     *
- *   along with this program; if not, write to the                         *
- *   Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor,      *
- *   Boston, MA 02110-1301, USA.                                           *
- ***************************************************************************/
+/**
+ * Copyright (C) 2007-2009 Sergio Pistone <sergio_pistone@yahoo.com.ar>
+ * Copyright (C) 2010-2015 Mladen Milinkovic <max@smoothware.net>
+ * 
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or
+ * (at your option) any later version.
+ * 
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ * 
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the
+ * Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor,
+ * Boston, MA 02110-1301, USA.
+ */
 
 #ifdef HAVE_CONFIG_H
 #include <config.h>
 #endif
 
 #include "mainwindow.h"
-#include "configs/generalconfig.h"
-#include "configs/spellingconfig.h"
-#include "configs/errorsconfig.h"
-#include "configs/playerconfig.h"
 #include "../core/subtitle.h"
-#include "../config/appconfig.h"
 #include "../formats/format.h"
+#include "scconfig.h"
 
 #include <QtCore/QMap>
 #include <QtCore/QString>
 #include <QKeySequence>
 
 #include <KApplication>
+#include <KConfigDialog>
 #include <QAction>
 #include <QUrl>
 #include <kencodingdetector.h>
@@ -89,11 +87,6 @@ public:
 
 	void loadConfig();
 	void saveConfig();
-
-	GeneralConfig * generalConfig() { return static_cast<GeneralConfig *>(m_config.group("General")); }
-	SpellingConfig * spellingConfig() { return static_cast<SpellingConfig *>(m_config.group("Spelling")); }
-	ErrorsConfig * errorsConfig() { return static_cast<ErrorsConfig *>(m_config.group("Errors")); }
-	PlayerConfig * playerConfig() { return static_cast<PlayerConfig *>(m_config.group("Player")); }
 
 	QAction * action(const char *actionName);
 
@@ -281,8 +274,6 @@ private slots:
 private:
 	void toggleFullScreen(bool on);
 
-	AppConfig m_config;
-
 	Subtitle *m_subtitle;
 	QUrl m_subtitleUrl;
 	QString m_subtitleFileName;
@@ -308,10 +299,7 @@ private:
 	CurrentLineWidget *m_curLineWidget;
 	StatusBar2 *m_statusBar;
 
-	ConfigDialog *m_configDialog;
-	ErrorsDialog *m_errorsDialog;
-
-	ErrorsWidget *m_errorsWidget;
+	KConfigDialog *m_configDialog;
 
 	QUrl m_lastSubtitleUrl;
 	KRecentFilesActionExt *m_recentSubtitlesAction;

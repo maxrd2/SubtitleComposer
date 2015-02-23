@@ -1,26 +1,28 @@
-/***************************************************************************
- *   Copyright (C) 2007-2009 Sergio Pistone (sergio_pistone@yahoo.com.ar)  *
- *   based on Kaffeine by Jürgen Kofler                                    *
- *                                                                         *
- *   This program is free software; you can redistribute it and/or modify  *
- *   it under the terms of the GNU General Public License as published by  *
- *   the Free Software Foundation; either version 2 of the License, or     *
- *   (at your option) any later version.                                   *
- *                                                                         *
- *   This program is distributed in the hope that it will be useful,       *
- *   but WITHOUT ANY WARRANTY; without even the implied warranty of        *
- *   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the         *
- *   GNU General Public License for more details.                          *
- *                                                                         *
- *   You should have received a copy of the GNU General Public License     *
- *   along with this program; if not, write to the                         *
- *   Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor,      *
- *   Boston, MA 02110-1301, USA.                                           *
- ***************************************************************************/
+/**
+ * Copyright (C) 2007-2009 Sergio Pistone <sergio_pistone@yahoo.com.ar>
+ * Copyright (C) 2010-2015 Mladen Milinkovic <max@smoothware.net>
+ * 
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or
+ * (at your option) any later version.
+ * 
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ * 
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the
+ * Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor,
+ * Boston, MA 02110-1301, USA.
+ */
 
 #include "xineplayerbackend.h"
 #include "xinevideolayerwidget.h"
 #include "xineconfigwidget.h"
+
+#include "../../main/application.h"
 
 #include <QtCore/QEventLoop>
 #include <QtCore/QEvent>
@@ -43,8 +45,8 @@ using namespace SubtitleComposer;
 
 #define UPDATE_INTERVAL 50
 
-XinePlayerBackend::XinePlayerBackend(Player *player) :
-	PlayerBackend(player, "Xine", new XineConfig()),
+XinePlayerBackend::XinePlayerBackend(Player *player)
+	: PlayerBackend(player, "Xine"),
 	m_connection(0),
 	m_xineEngine(0),
 	m_audioDriver(0),
@@ -96,8 +98,8 @@ XinePlayerBackend::_finalize()
 	finalizeXine();
 }
 
-SubtitleComposer::AppConfigGroupWidget *
-XinePlayerBackend::newAppConfigGroupWidget(QWidget *parent)
+QWidget *
+XinePlayerBackend::newConfigWidget(QWidget *parent)
 {
 	return new XineConfigWidget(parent);
 }
@@ -425,8 +427,9 @@ XinePlayerBackend::initializeXine(WId winId)
 	m_x11Visual.user_data = (void *)this;
 
 	QStringList videoDriverNames = QString("xv xvmc opengl xxmc sdl xshm fb XDirectFB DirectFB aa caca auto").split(' ');
-	videoDriverNames.prepend(config()->videoDriver());
-	for(QStringList::Iterator it = videoDriverNames.begin(), end = videoDriverNames.end(); it != end; ++it) {
+	if(SCConfig::xineVideoEnabled())
+		videoDriverNames.prepend(SCConfig::xineVideo());
+	for(QStringList::Iterator it = videoDriverNames.begin(); it != videoDriverNames.end(); ++it) {
 		if((*it).isEmpty())
 			continue;
 
@@ -436,12 +439,12 @@ XinePlayerBackend::initializeXine(WId winId)
 
 		m_videoDriver = xine_open_video_driver(m_xineEngine, (*it).toAscii(),
 #ifdef HAVE_XCB
-											   XINE_VISUAL_TYPE_XCB,
+			XINE_VISUAL_TYPE_XCB,
 #else
-											   XINE_VISUAL_TYPE_X11,
+			XINE_VISUAL_TYPE_X11,
 #endif
-											   (void *)&(m_x11Visual)
-											   );
+			(void *)&(m_x11Visual)
+		);
 
 		if(m_videoDriver)
 			break;
@@ -453,8 +456,9 @@ XinePlayerBackend::initializeXine(WId winId)
 	}
 
 	QStringList audioDriverNames = QString("alsa oss jack pulseaudio esd auto").split(' ');
-	audioDriverNames.prepend(config()->audioDriver());
-	for(QStringList::Iterator it = audioDriverNames.begin(), end = audioDriverNames.end(); it != end; ++it)
+	if(SCConfig::xineAudioEnabled())
+		audioDriverNames.prepend(SCConfig::xineAudio());
+	for(QStringList::Iterator it = audioDriverNames.begin(); it != audioDriverNames.end(); ++it)
 		if(!(*it).isEmpty() && (m_audioDriver = xine_open_audio_driver(m_xineEngine, (*it).toAscii(), NULL)) != NULL)
 			break;
 
