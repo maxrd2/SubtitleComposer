@@ -24,18 +24,13 @@
 #include <config.h>
 #endif
 
+#include "ui_playerconfigwidget.h"
+
 #include "playerconfig.h"
 #include "../../config/appconfiggroupwidget.h"
 
-class QCheckBox;
-class QFontComboBox;
-class KComboBox;
-class KColorCombo;
-class KIntNumInput;
-class TextOverlayWidget;
-
 namespace SubtitleComposer {
-class PlayerConfigWidget : public AppConfigGroupWidget
+class PlayerConfigWidget : public AppConfigGroupWidget, private Ui::PlayerConfigWidget
 {
 	Q_OBJECT
 
@@ -59,20 +54,6 @@ private:
 	explicit PlayerConfigWidget(QWidget *parent = 0);
 
 	PlayerConfig * config() { return static_cast<PlayerConfig *>(m_config); }
-
-private:
-	KComboBox *m_playerBackendComboBox;
-	KComboBox *m_decoderBackendComboBox;
-	KIntNumInput *m_seekJumpSecsSpinBox;
-	QCheckBox *m_showPositionTimeEditCheckBox;
-
-	QFontComboBox *m_fontComboBox;
-	KIntNumInput *m_sizeSpinBox;
-	KColorCombo *m_primaryColorComboBox;
-	KColorCombo *m_outlineColorComboBox;
-	KIntNumInput *m_outlineWidthSpinBox;
-	QCheckBox *m_antialiasCheckBox;
-	TextOverlayWidget *m_textOverlayWidget;
 };
 }
 

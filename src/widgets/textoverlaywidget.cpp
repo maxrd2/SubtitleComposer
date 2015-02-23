@@ -47,10 +47,10 @@ TextOverlayWidget::TextOverlayWidget(QWidget *parent) :
 	// NOTE: this is only supported in X11 but if we don't enable it,
 	// setting the widget mask causes a very disgusting flicker.
 	// Hopefully the flicker won't be present on other platforms...
-	setAttribute(Qt::WA_PaintOnScreen, true);
-	setAttribute(Qt::WA_StaticContents, true);
+//	setAttribute(Qt::WA_PaintOnScreen, true);
+//	setAttribute(Qt::WA_StaticContents, true);
 	setAttribute(Qt::WA_OpaquePaintEvent, true);
-	setAttribute(Qt::WA_NoSystemBackground, true);
+//	setAttribute(Qt::WA_NoSystemBackground, true);
 
 	m_font.setPointSize(15);
 	m_font.setStyleStrategy(m_antialias ? QFont::PreferAntialias : QFont::NoAntialias);
