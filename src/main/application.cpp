@@ -135,26 +135,6 @@ Application::Application() :
 	m_lastVideoUrl(QDir::homePath()),
 	m_linkCurrentLineToPosition(false)
 {
-	QStringList playerBackendNames(m_player->backendNames());
-	QStringList decoderBackendNames(m_decoder->backendNames());
-
-//	// The config object has to be filled first with all the groups and default data...
-//	m_config.setGroup(new GeneralConfig());
-//	m_config.setGroup(new SpellingConfig());
-//	m_config.setGroup(new SCConfig::self());
-//	m_config.setGroup(new PlayerConfig());
-//	for(QStringList::ConstIterator it = playerBackendNames.begin(), end = playerBackendNames.end(); it != end; ++it)
-//		m_config.setGroup(m_player->backend(*it)->config()->clone());
-
-//	// ...only then can be loaded
-//	m_config.readFrom(KGlobal::config().constData());
-
-//	// and feed to the player and decoder backends
-//	for(QStringList::ConstIterator it = playerBackendNames.begin(), end = playerBackendNames.end(); it != end; ++it)
-//		m_player->backend(*it)->setConfig(m_config.group(*it));
-//	for(QStringList::ConstIterator it = decoderBackendNames.begin(), end = decoderBackendNames.end(); it != end; ++it)
-//		m_decoder->backend(*it)->setConfig(m_config.group(*it));
-
 	// NOTE the player is initialized by PlayerWidget because it requires the parent widget
 	m_decoder->initialize(0, SCConfig::decoderBackend());
 
@@ -194,9 +174,6 @@ Application::Application() :
 			item->setIcon(KIcon((*it).toLower() + "-logo"));
 		}
 	}
-
-	// User edited the configuration - update your local copies of the configuration data
-	connect(m_configDialog, SIGNAL(settingsChanged()), this, SLOT(updateConfiguration()));
 
 	m_finder = new Finder(m_linesWidget);
 	m_replacer = new Replacer(m_linesWidget);
@@ -238,8 +215,6 @@ Application::Application() :
 		connect(this, SIGNAL(translationModeChanged(bool)), *it, SLOT(setTranslationMode(bool)));
 
 	connect(this, SIGNAL(fullScreenModeChanged(bool)), actionManager, SLOT(setFullScreenMode(bool)));
-
-	connect(m_configDialog, SIGNAL(accepted()), this, SLOT(updateConfigFromDialog()));
 
 	connect(m_linesWidget, SIGNAL(currentLineChanged(SubtitleLine *)), m_curLineWidget, SLOT(setCurrentLine(SubtitleLine *)));
 	connect(m_linesWidget, SIGNAL(lineDoubleClicked(SubtitleLine *)), this, SLOT(onLineDoubleClicked(SubtitleLine *)));
@@ -511,7 +486,7 @@ Application::setupActions()
 	m_reopenSubtitleAsAction->setText(i18n("Reload As..."));
 	m_reopenSubtitleAsAction->setStatusTip(i18n("Reload opened file with a different encoding"));
 	connect(m_reopenSubtitleAsAction, SIGNAL(triggered(QTextCodec *)), this, SLOT(reopenSubtitleWithCodec(QTextCodec *)));
-	connect(m_reopenSubtitleAsAction, SIGNAL(triggered(KEncodingDetector::AutoDetectScript)), this, SLOT(reopenSubtitleWithDetectScript(KEncodingDetector::AutoDetectScript)));
+	connect(m_reopenSubtitleAsAction, SIGNAL(triggered(KEncodingProber::ProberType)), this, SLOT(reopenSubtitleWithDetectScript()));
 	actionCollection->addAction(ACT_REOPEN_SUBTITLE_AS, m_reopenSubtitleAsAction);
 	actionManager->addAction(m_reopenSubtitleAsAction, UserAction::SubOpened | UserAction::SubPClean | UserAction::FullScreenOff);
 
@@ -571,7 +546,7 @@ Application::setupActions()
 	m_reopenSubtitleTrAsAction->setText(i18n("Reload Translation As..."));
 	m_reopenSubtitleTrAsAction->setStatusTip(i18n("Reload opened translation file with a different encoding"));
 	connect(m_reopenSubtitleTrAsAction, SIGNAL(triggered(QTextCodec *)), this, SLOT(reopenSubtitleTrWithCodec(QTextCodec *)));
-	connect(m_reopenSubtitleTrAsAction, SIGNAL(triggered(KEncodingDetector::AutoDetectScript)), this, SLOT(reopenSubtitleTrWithDetectScript(KEncodingDetector::AutoDetectScript)));
+	connect(m_reopenSubtitleTrAsAction, SIGNAL(triggered(KEncodingProber::ProberType)), this, SLOT(reopenSubtitleTrWithDetectScript()));
 	actionCollection->addAction(ACT_REOPEN_SUBTITLE_TR_AS, m_reopenSubtitleTrAsAction);
 	actionManager->addAction(m_reopenSubtitleTrAsAction, UserAction::SubTrOpened | UserAction::SubSClean | UserAction::FullScreenOff);
 
@@ -3118,16 +3093,4 @@ Application::onConfigChanged()
 	shiftSelectedLinesBwdAction->setText(i18np("Shift %21 Millisecond", "Shift %2%1 Milliseconds", SCConfig::linesQuickShiftAmount(), "-"));
 	shiftSelectedLinesBwdAction->setStatusTip(i18np("Shift selected lines %21 millisecond", "Shift selected lines -%2%1 milliseconds", SCConfig::linesQuickShiftAmount(), "-"));
 }
-
-void
-Application::updateConfigFromDialog()
-{
-//	m_config = m_configDialog->config();
-
-//	// We have to manually update the player backends configurations because they have their own copies
-//	QStringList backendNames(m_player->backendNames());
-//	for(QStringList::ConstIterator it = backendNames.begin(), end = backendNames.end(); it != end; ++it)
-//		m_player->backend(*it)->setConfig(m_config.group(*it));
-}
-
 

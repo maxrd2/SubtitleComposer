@@ -66,6 +66,6 @@ add_definitions(
 install(TARGETS subtitlecomposer DESTINATION ${BIN_INSTALL_DIR})
 
 install(FILES subtitlecomposerrc DESTINATION ${CONFIG_INSTALL_DIR})
-install(FILES subtitlecomposerui.rc DESTINATION ${DATA_INSTALL_DIR}/subtitlecomposer)
+install(FILES subtitlecomposerui.rc DESTINATION ${KXMLGUI_INSTALL_DIR}/subtitlecomposer)
 install(FILES subtitlecomposer.desktop DESTINATION ${XDG_APPS_INSTALL_DIR})
 install(FILES subtitlecomposer.xml DESTINATION ${XDG_MIME_INSTALL_DIR})

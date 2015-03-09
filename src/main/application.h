@@ -268,8 +268,6 @@ private slots:
 
 	void setActiveSubtitleStream(int subtitleStream);
 
-	void updateConfigFromDialog();
-
 private:
 	void toggleFullScreen(bool on);
 
