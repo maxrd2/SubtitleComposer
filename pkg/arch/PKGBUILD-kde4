@@ -7,7 +7,7 @@
 # SigLevel = PackageRequired
 # Server = http://smoothware.net/$repo/$arch
 
-pkgname=subtitlecomposer-kf5-git
+pkgname=subtitlecomposer-kde4-git
 pkgver=v0.5.7.22.ga9f5b8c
 pkgrel=1
 pkgdesc="A KDE subtitle editor - nightly build"
@@ -16,7 +16,7 @@ url="https://github.com/maxrd2/subtitlecomposer"
 license=('GPL')
 depends=('kdelibs' 'gettext')
 makedepends=('cmake' 'automoc4' 'git')
-conflicts=('subtitlecomposer')
+conflicts=('subtitlecomposer-kf5-git' 'subtitlecomposer-git' 'subtitlecomposer')
 provides=('subtitlecomposer')
 optdepends=(
 	'mpv: for MPV backend'
@@ -25,7 +25,7 @@ optdepends=(
 	'gstreamer: for GStreamer backend'
 	'xine-lib: for Xine backend'
 	)
-source=('git+file:///home/max/projects/SubtitleComposer#branch=kf5')
+source=('git+file:///home/max/projects/SubtitleComposer#branch=kde4')
 md5sums=('SKIP')
 
 pkgver() {
