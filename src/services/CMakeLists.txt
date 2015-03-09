@@ -18,6 +18,7 @@ else(MPV_FOUND)
 endif(MPV_FOUND)
 
 add_subdirectory(mplayer)
+
 add_subdirectory(phonon)
 
 find_package(Xine)

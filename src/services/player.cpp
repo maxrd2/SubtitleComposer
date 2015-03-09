@@ -1,17 +1,17 @@
 /**
  * Copyright (C) 2007-2009 Sergio Pistone <sergio_pistone@yahoo.com.ar>
  * Copyright (C) 2010-2015 Mladen Milinkovic <max@smoothware.net>
- * 
+ *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with this program; if not, write to the
  * Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor,
@@ -38,6 +38,7 @@
 #include <QtCore/QTimer>
 #include <QtCore/QFileInfo>
 #include <QApplication>
+#include <QEvent>
 
 #include <QDebug>
 
@@ -94,19 +95,16 @@ Player::Player() :
 	m_openFileTimer(new QTimer(this))
 {
 	addBackend(new DummyPlayerBackend(this));
-
 #ifdef HAVE_GSTREAMER
 	addBackend(new GStreamerPlayerBackend(this));
 #endif
-
 	addBackend(new MPlayerPlayerBackend(this));
 #ifdef HAVE_MPV
 	addBackend(new MPVBackend(this));
 #endif
-//	addBackend(new PhononPlayerBackend(this));
-
+addBackend(new PhononPlayerBackend(this));
 #ifdef HAVE_XINE
-//	addBackend(new XinePlayerBackend(this));
+	addBackend(new XinePlayerBackend(this));
 #endif
 
 	// the timeout might seem too much, but it only matters when the file couldn't be
@@ -142,6 +140,7 @@ Player::initializeBackend(ServiceBackend *backend, QWidget *widgetParent)
 		connect(m_videoWidget, SIGNAL(wheelDown()), this, SIGNAL(wheelDown()));
 
 		m_videoWidget->show();
+		m_videoWidget->videoLayer()->hide();
 
 		// NOTE: next is used to make videoWidgetParent update it's geometry
 		QRect geometry = widgetParent->geometry();
@@ -167,6 +166,16 @@ Player::finalizeBackend(ServiceBackend *backend)
 		m_videoWidget->deleteLater();
 		m_videoWidget = 0;
 	}
+}
+
+bool
+Player::reinitialize(const QString &prefBackendName)
+{
+	QString file = m_filePath;
+	bool res = Service::reinitialize(prefBackendName);
+	if(res && !file.isEmpty())
+		openFile(file);
+	return res;
 }
 
 void
@@ -612,5 +621,3 @@ Player::setMuted(bool muted)
 		emit muteChanged(m_muted);
 	}
 }
-
-

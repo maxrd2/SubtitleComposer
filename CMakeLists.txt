@@ -30,8 +30,6 @@ find_package(KF5 REQUIRED
 	# TODO: remove it when done porting
 	KDELibs4Support)
 
-find_package(Phonon4Qt5 REQUIRED)
-
 add_definitions(
 #  -DQT_USE_QSTRINGBUILDER
 #  -DQT_NO_CAST_TO_ASCII

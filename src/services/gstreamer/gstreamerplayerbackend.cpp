@@ -1,17 +1,17 @@
 /**
  * Copyright (C) 2007-2009 Sergio Pistone <sergio_pistone@yahoo.com.ar>
  * Copyright (C) 2010-2015 Mladen Milinkovic <max@smoothware.net>
- * 
+ *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with this program; if not, write to the
  * Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor,
@@ -31,6 +31,7 @@
 #include <KGlobal>
 #include <KLocale>
 #include <QUrl>
+#include <QResizeEvent>
 
 #include <gst/gst.h>
 #include <gst/video/videooverlay.h>
@@ -100,7 +101,9 @@ GStreamerPlayerBackend::initialize(QWidget *videoWidgetParent)
 	if(!GStreamer::init())
 		return 0;
 
-	return new VideoWidget(videoWidgetParent);
+	VideoWidget *video = new VideoWidget(videoWidgetParent);
+	video->videoLayer()->installEventFilter(this);
+	return video;
 }
 
 void
@@ -385,4 +388,16 @@ GStreamerPlayerBackend::updateVideoData()
 	gst_object_unref(videopad);
 }
 
+bool
+GStreamerPlayerBackend::eventFilter(QObject *obj, QEvent *event)
+{
+	bool res = QObject::eventFilter(obj, event);
 
+	if(m_pipeline && GST_IS_VIDEO_OVERLAY(m_pipeline) && (event->type() == QEvent::Resize || event->type() == QEvent::Move)) {
+		QResizeEvent *evt = reinterpret_cast<QResizeEvent *>(event);
+		gst_video_overlay_set_render_rectangle(GST_VIDEO_OVERLAY(m_pipeline), 0, 0, evt->size().width(), evt->size().height());
+		gst_video_overlay_expose(GST_VIDEO_OVERLAY(m_pipeline));
+	}
+
+	return res;
+}

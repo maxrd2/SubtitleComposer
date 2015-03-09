@@ -2,17 +2,17 @@
 /**
  * Copyright (C) 2007-2009 Sergio Pistone <sergio_pistone@yahoo.com.ar>
  * Copyright (C) 2010-2015 Mladen Milinkovic <max@smoothware.net>
- * 
+ *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with this program; if not, write to the
  * Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor,
@@ -107,22 +107,20 @@ ErrorTracker::onLineTimesChanged(SubtitleLine *line)
 void
 ErrorTracker::onConfigChanged()
 {
-	SCConfig *config= SCConfig::self();
-
-	if(m_autoClearFixed != config->autoClearFixed()) { // is this option that has been toggled
+	if(m_autoClearFixed != SCConfig::autoClearFixed()) {
 		if(isTracking())
 			disconnectSlots();
-		m_autoClearFixed = !m_autoClearFixed;
+		m_autoClearFixed = SCConfig::autoClearFixed();
 		if(isTracking())
 			connectSlots();
-	} else {
-		m_minDuration = config->minDuration();
-		m_maxDuration = config->maxDuration();
-		m_minDurationPerChar = config->minDurationPerCharacter();
-		m_maxDurationPerChar = config->maxDurationPerCharacter();
-		m_maxCharacters = config->maxCharacters();
-		m_maxLines = config->maxLines();
 	}
+
+	m_minDuration = SCConfig::minDuration();
+	m_maxDuration = SCConfig::maxDuration();
+	m_minDurationPerChar = SCConfig::minDurationPerCharacter();
+	m_maxDurationPerChar = SCConfig::maxDurationPerCharacter();
+	m_maxCharacters = SCConfig::maxCharacters();
+	m_maxLines = SCConfig::maxLines();
 }
 
 

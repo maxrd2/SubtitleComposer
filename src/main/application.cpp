@@ -209,8 +209,7 @@ Application::Application() :
 
 	UserActionManager *actionManager = UserActionManager::instance();
 
-	connect(SCConfig::self(), SIGNAL(configChanged()), this, SLOT(onPlayerOptionChanged(const QString &, const QString &)));
-	connect(SCConfig::self(), SIGNAL(configChanged()), this, SLOT(onGeneralOptionChanged(const QString &, const QString &)));
+	connect(SCConfig::self(), SIGNAL(configChanged()), this, SLOT(onConfigChanged()));
 
 	connect(m_player, SIGNAL(fileOpened(const QString &)), this, SLOT(onPlayerFileOpened(const QString &)));
 	connect(m_player, SIGNAL(playing()), this, SLOT(onPlayerPlaying()));
@@ -3103,31 +3102,21 @@ Application::onPlayerMuteChanged(bool muted)
 }
 
 void
-Application::onPlayerOptionChanged(const QString &option, const QString &value)
+Application::onConfigChanged()
 {
-	if(m_decoder->backend(SCConfig::decoderBackend()) != m_decoder->activeBackend()) {
-		m_decoder->reinitialize(value);
-	}
-//	if(option == PlayerConfig::keySeekJumpLength()) {
-		action(ACT_SEEK_BACKWARDS)->setStatusTip(i18np("Seek backwards 1 second", "Seek backwards %1 seconds", value.toInt()));
-		action(ACT_SEEK_FORWARDS)->setStatusTip(i18np("Seek forwards 1 second", "Seek forwards %1 seconds", value.toInt()));
-//	}
-}
+	if(m_decoder->backend(SCConfig::decoderBackend()) != m_decoder->activeBackend())
+		m_decoder->reinitialize(SCConfig::decoderBackend());
 
-void
-Application::onGeneralOptionChanged(const QString &option, const QString &value)
-{
-//	if(option == GeneralConfig::keyLinesQuickShiftAmount()) {
-		int shiftTimeMillis = value.toInt();
+	action(ACT_SEEK_BACKWARDS)->setStatusTip(i18np("Seek backwards 1 second", "Seek backwards %1 seconds", SCConfig::seekJumpLength()));
+	action(ACT_SEEK_FORWARDS)->setStatusTip(i18np("Seek forwards 1 second", "Seek forwards %1 seconds", SCConfig::seekJumpLength()));
 
-		QAction *shiftSelectedLinesFwdAction = action(ACT_SHIFT_SELECTED_LINES_FORWARDS);
-		shiftSelectedLinesFwdAction->setText(i18np("Shift %21 Millisecond", "Shift %2%1 Milliseconds", shiftTimeMillis, "+"));
-		shiftSelectedLinesFwdAction->setStatusTip(i18np("Shift selected lines %21 millisecond", "Shift selected lines %2%1 milliseconds", shiftTimeMillis, "+"));
+	QAction *shiftSelectedLinesFwdAction = action(ACT_SHIFT_SELECTED_LINES_FORWARDS);
+	shiftSelectedLinesFwdAction->setText(i18np("Shift %21 Millisecond", "Shift %2%1 Milliseconds", SCConfig::linesQuickShiftAmount(), "+"));
+	shiftSelectedLinesFwdAction->setStatusTip(i18np("Shift selected lines %21 millisecond", "Shift selected lines %2%1 milliseconds", SCConfig::linesQuickShiftAmount(), "+"));
 
-		QAction *shiftSelectedLinesBwdAction = action(ACT_SHIFT_SELECTED_LINES_BACKWARDS);
-		shiftSelectedLinesBwdAction->setText(i18np("Shift %21 Millisecond", "Shift %2%1 Milliseconds", shiftTimeMillis, "-"));
-		shiftSelectedLinesBwdAction->setStatusTip(i18np("Shift selected lines %21 millisecond", "Shift selected lines -%2%1 milliseconds", shiftTimeMillis, "-"));
-//	}
+	QAction *shiftSelectedLinesBwdAction = action(ACT_SHIFT_SELECTED_LINES_BACKWARDS);
+	shiftSelectedLinesBwdAction->setText(i18np("Shift %21 Millisecond", "Shift %2%1 Milliseconds", SCConfig::linesQuickShiftAmount(), "-"));
+	shiftSelectedLinesBwdAction->setStatusTip(i18np("Shift selected lines %21 millisecond", "Shift selected lines -%2%1 milliseconds", SCConfig::linesQuickShiftAmount(), "-"));
 }
 
 void

@@ -48,7 +48,7 @@ public:
 	 * @param prefBackendName
 	 * @return false if there was already an initialized backend or none could be initialized; true otherwise
 	 */
-	bool initialize(QWidget *widgetParent, const QString &prefBackendName = QString());
+	virtual bool initialize(QWidget *widgetParent, const QString &prefBackendName = QString());
 
 	/**
 	 * @brief reinitialize - finalizes the active backend and attempts to initialize the one defined by
@@ -57,12 +57,12 @@ public:
 	 * @param prefBackendName
 	 * @return false if there was no initialized backend or none could be initialized; true otherwise
 	 */
-	bool reinitialize(const QString &prefBackendName = QString());
+	virtual bool reinitialize(const QString &prefBackendName = QString());
 
 	/**
 	 * @brief finalize - finalizes the active backend
 	 */
-	void finalize();
+	virtual void finalize();
 
 	/**
 	 * @brief dummyBackendName - services should provide a dummy backend (one that implements its

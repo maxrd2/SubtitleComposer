@@ -230,7 +230,7 @@
 		</entry>
 		<entry name="mpExecutablePath" type="String">
 			<label>mplayer executable path</label>
-			<default>/usr/bin/mplayer</default>
+			<default>mplayer</default>
 		</entry>
 		<entry name="mpAutoSyncEnabled" type="Bool">
 			<label>Auto Sync Enabled</label>

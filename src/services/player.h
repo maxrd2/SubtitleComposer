@@ -75,6 +75,8 @@ public:
 	inline int activeAudioStream() const;
 	const QStringList & audioStreams() const;
 
+	virtual bool reinitialize(const QString &prefBackendName = QString());
+
 public slots:
 	// return values of these functions don't imply that the operation was performed OK
 	// but that it was allowed (a false return value means that nothing was attempted).

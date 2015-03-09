@@ -48,7 +48,6 @@ target_link_libraries(subtitlecomposer
 	KF5::SonnetCore KF5::SonnetUi
 	KF5::KrossCore KF5::KrossUi
 	KF5::KDELibs4Support
-	${PHONON_LIBRARY}
 	${common_LIBS}
 	${core_LIBS}
 	${formats_LIBS}

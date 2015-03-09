@@ -22,6 +22,11 @@ include_directories(
 add_definitions(${QT_DEFINITIONS} -fexceptions -DHAVE_CONFIG_H)
 add_definitions(-D_DEFAULT_SOURCE)
 
+find_package(Phonon4Qt5 4.6.60 QUIET REQUIRED NO_MODULE)
+set_package_properties(Phonon4Qt5 PROPERTIES
+   DESCRIPTION "Qt-based audio library"
+   TYPE REQUIRED)
+
 # the subdirs must be added in a specific order
 # if one dir uses code from another, its CMakeLists.txt will reference variables
 # defined in the dependency directory that must be created before the former
