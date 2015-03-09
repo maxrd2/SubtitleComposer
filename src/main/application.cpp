@@ -327,7 +327,7 @@ Application::saveConfig()
 {
 	KConfigGroup group(KGlobal::config()->group("Application Settings"));
 
-	group.writePathEntry("LastSubtitleUrl", m_lastSubtitleUrl.toString(QUrl::PreferLocalFile));
+	group.writePathEntry("LastSubtitleUrl", m_lastSubtitleUrl.toString());
 	m_recentSubtitlesAction->saveEntries(KGlobal::config()->group("Recent Subtitles"));
 	m_recentSubtitlesTrAction->saveEntries(KGlobal::config()->group("Recent Translation Subtitles"));
 
@@ -1287,23 +1287,24 @@ Application::redo()
 QTextCodec *
 Application::codecForUrl(const QUrl &url, bool useRecentFiles, bool useDefault)
 {
-//	QString encoding = url.fileEncoding();
+	QRegExp rx("encoding=([^&]*)");
+	QString encoding = rx.indexIn(url.query()) == -1 ? "" : rx.cap(1);
 
-//	if(useRecentFiles) {
-//		if(encoding.isEmpty())
-//			m_recentSubtitlesAction->encodingForUrl(url);
-//		if(encoding.isEmpty())
-//			encoding = m_recentSubtitlesTrAction->encodingForUrl(url);
-//	}
+	if(useRecentFiles) {
+		if(encoding.isEmpty())
+			m_recentSubtitlesAction->encodingForUrl(url);
+		if(encoding.isEmpty())
+			encoding = m_recentSubtitlesTrAction->encodingForUrl(url);
+	}
 
 	QTextCodec *codec = 0;
 
-//	if(!encoding.isEmpty()) {
-//		bool codecFound = false;
-//		codec = KGlobal::charsets()->codecForName(encoding, codecFound);
-//		if(!codecFound)
-//			codec = 0;
-//	}
+	if(!encoding.isEmpty()) {
+		bool codecFound = false;
+		codec = KGlobal::charsets()->codecForName(encoding, codecFound);
+		if(!codecFound)
+			codec = 0;
+	}
 
 	if(!codec && useDefault)
 		codec = QTextCodec::codecForName(SCConfig::defaultSubtitlesEncoding().toLatin1());
@@ -1364,19 +1365,19 @@ Application::newSubtitle()
 void
 Application::openSubtitle()
 {
-	OpenSubtitleDialog openDlg(true, m_lastSubtitleUrl.toString(QUrl::PreferLocalFile), QString());
+	OpenSubtitleDialog openDlg(true, m_lastSubtitleUrl, QString());
 
 	if(openDlg.exec() == QDialog::Accepted) {
-		if(!acceptClashingUrls(openDlg.selectedUrls().first(), m_subtitleTrUrl))
+		if(!acceptClashingUrls(openDlg.selectedUrl(), m_subtitleTrUrl))
 			return;
 
 		if(!closeSubtitle())
 			return;
 
-		m_lastSubtitleUrl = openDlg.selectedUrls().first();
+		m_lastSubtitleUrl = openDlg.selectedUrl();
 
 		QUrl fileUrl = m_lastSubtitleUrl;
-//		fileUrl.setFileEncoding(openDlg.selectedEncoding());
+		fileUrl.setQuery("encoding=" + openDlg.selectedEncoding());
 		openSubtitle(fileUrl);
 	}
 }
@@ -1393,7 +1394,7 @@ Application::openSubtitle(const QUrl &url, bool warnClashingUrls)
 	QTextCodec *codec = codecForUrl(url, true, false);
 
 	QUrl fileUrl = url;
-//	fileUrl.setFileEncoding(QString());
+	fileUrl.setQuery(QString());
 
 	m_subtitle = new Subtitle();
 
@@ -1409,7 +1410,7 @@ Application::openSubtitle(const QUrl &url, bool warnClashingUrls)
 		m_subtitleFileName = QFileInfo(m_subtitleUrl.path()).fileName();
 		m_subtitleEncoding = codec->name();
 
-//		fileUrl.setFileEncoding(codec->name());
+		fileUrl.setQuery("encoding=" + codec->name());
 		m_recentSubtitlesAction->addUrl(fileUrl);
 
 		m_reopenSubtitleAsAction->setCurrentCodec(codec);
@@ -1551,10 +1552,10 @@ Application::saveSubtitleAs()
 		m_subtitleFormat);
 
 	if(saveDlg.exec() == QDialog::Accepted) {
-		if(!acceptClashingUrls(saveDlg.selectedUrls().first(), m_subtitleTrUrl))
+		if(!acceptClashingUrls(saveDlg.selectedUrl(), m_subtitleTrUrl))
 			return false;
 
-		m_subtitleUrl = saveDlg.selectedUrls().first();
+		m_subtitleUrl = saveDlg.selectedUrl();
 		m_subtitleFileName = QFileInfo(m_subtitleUrl.path()).completeBaseName();
 		m_subtitleEncoding = saveDlg.selectedEncoding();
 		m_subtitleFormat = saveDlg.selectedFormat();
@@ -1636,19 +1637,19 @@ Application::openSubtitleTr()
 	if(!m_subtitle)
 		return;
 
-	OpenSubtitleDialog openDlg(false, m_lastSubtitleUrl.toString(QUrl::PreferLocalFile), QString());
+	OpenSubtitleDialog openDlg(false, m_lastSubtitleUrl, QString());
 
 	if(openDlg.exec() == QDialog::Accepted) {
-		if(!acceptClashingUrls(m_subtitleUrl, openDlg.selectedUrls().first()))
+		if(!acceptClashingUrls(m_subtitleUrl, openDlg.selectedUrl()))
 			return;
 
 		if(!closeSubtitleTr())
 			return;
 
-		m_lastSubtitleUrl = openDlg.selectedUrls().first();
+		m_lastSubtitleUrl = openDlg.selectedUrl();
 
 		QUrl fileUrl = m_lastSubtitleUrl;
-//		fileUrl.setFileEncoding(openDlg.selectedEncoding());
+		fileUrl.setQuery("encoding=" + openDlg.selectedEncoding());
 		openSubtitleTr(fileUrl);
 	}
 }
@@ -1802,10 +1803,10 @@ Application::saveSubtitleTrAs()
 		m_subtitleTrFormat);
 
 	if(saveDlg.exec() == QDialog::Accepted) {
-		if(!acceptClashingUrls(m_subtitleUrl, saveDlg.selectedUrls().first()))
+		if(!acceptClashingUrls(m_subtitleUrl, saveDlg.selectedUrl()))
 			return false;
 
-		m_subtitleTrUrl = saveDlg.selectedUrls().first();
+		m_subtitleTrUrl = saveDlg.selectedUrl();
 		m_subtitleTrFileName = QFileInfo(m_subtitleTrUrl.path()).completeBaseName();
 		m_subtitleTrEncoding = saveDlg.selectedEncoding();
 		m_subtitleTrFormat = saveDlg.selectedFormat();

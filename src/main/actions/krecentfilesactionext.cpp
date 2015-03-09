@@ -1,17 +1,17 @@
 /**
  * Copyright (C) 2007-2009 Sergio Pistone <sergio_pistone@yahoo.com.ar>
  * Copyright (C) 2010-2015 Mladen Milinkovic <max@smoothware.net>
- * 
+ *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with this program; if not, write to the
  * Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor,
@@ -84,10 +84,12 @@ KRecentFilesActionExt::count() const
 QString
 KRecentFilesActionExt::encodingForUrl(const QUrl &url) const
 {
-	// TODO: mmmm?
-	return QString();
-//	QAction *action = actionForUrl(url);
-//	return action ? m_urls[action].fileEncoding() : QString();
+	QAction *action = actionForUrl(url);
+	if(action) {
+		QRegExp rx("encoding=([^&]*)");
+		return rx.indexIn(url.query()) == -1 ? "" : rx.cap(1);
+	}
+	return "";
 }
 
 QList<QUrl>
@@ -111,7 +113,11 @@ KRecentFilesActionExt::setUrls(const QList<QUrl> &urls)
 		if(actionForUrl(*it))
 			continue;
 
-		QAction *action = new QAction(entryText.arg(it->fileName()).arg(it->toString(QUrl::PreferLocalFile)), selectableActionGroup());
+		QString path(it->path());
+		int n = path.lastIndexOf('/');
+		if(n != -1)
+			path.chop(path.length() - n - 1);
+		QAction *action = new QAction(entryText.arg(it->fileName()).arg(path), selectableActionGroup());
 
 		m_urls[*it] = action;
 
@@ -164,9 +170,16 @@ KRecentFilesActionExt::clearUrls()
 }
 
 QAction *
-KRecentFilesActionExt::actionForUrl(const QUrl &url) const
+KRecentFilesActionExt::actionForUrl(QUrl url) const
 {
-	return m_urls[url];
+	url.setQuery(QString());
+	for(QMap<QUrl, QAction *>::const_iterator it = m_urls.begin(); it != m_urls.end(); it++) {
+		QUrl key = it.key();
+		key.setQuery(QString());
+		if(key == url)
+			return *it;
+	}
+	return NULL;
 }
 
 void

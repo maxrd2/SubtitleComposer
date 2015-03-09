@@ -1,57 +1,69 @@
-/***************************************************************************
- *   Copyright (C) 2007-2009 Sergio Pistone (sergio_pistone@yahoo.com.ar)  *
- *                                                                         *
- *   This program is free software; you can redistribute it and/or modify  *
- *   it under the terms of the GNU General Public License as published by  *
- *   the Free Software Foundation; either version 2 of the License, or     *
- *   (at your option) any later version.                                   *
- *                                                                         *
- *   This program is distributed in the hope that it will be useful,       *
- *   but WITHOUT ANY WARRANTY; without even the implied warranty of        *
- *   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the         *
- *   GNU General Public License for more details.                          *
- *                                                                         *
- *   You should have received a copy of the GNU General Public License     *
- *   along with this program; if not, write to the                         *
- *   Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor,      *
- *   Boston, MA 02110-1301, USA.                                           *
- ***************************************************************************/
+/**
+ * Copyright (C) 2007-2009 Sergio Pistone <sergio_pistone@yahoo.com.ar>
+ * Copyright (C) 2010-2015 Mladen Milinkovic <max@smoothware.net>
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the
+ * Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor,
+ * Boston, MA 02110-1301, USA.
+ */
 
 #include "opensubtitledialog.h"
 #include "../application.h"
 #include "../../formats/formatmanager.h"
 
+#include <QComboBox>
+#include <QVBoxLayout>
+
+#include <KLocalizedString>
+
 #include <QDebug>
-#include <KLocale>
-#include <KComboBox>
-#include <QGridLayout>
-#include <QHBoxLayout>
 
 using namespace SubtitleComposer;
 
-OpenSubtitleDialog::OpenSubtitleDialog(bool primary, const QString &startDir, const QString &encoding, QWidget *parent) :
-	QFileDialog(parent, primary ? i18n("Open Subtitle") : i18n("Open Translation Subtitle"), startDir, inputFormatsFilter())
+OpenSubtitleDialog::OpenSubtitleDialog(bool primary, const QUrl &startDir, const QString &encoding, QWidget *parent)
+	: QDialog(parent),
+	  m_fileWidget(new KFileWidget(startDir, this))
 {
-	setAcceptMode(QFileDialog::AcceptOpen);
-
+	setWindowTitle(primary ? i18n("Open Subtitle") : i18n("Open Translation Subtitle"));
 	setModal(true);
-	setFileMode(QFileDialog::ExistingFile);
+	m_fileWidget->setOperationMode(KFileWidget::Opening);
+	m_fileWidget->setMode(KFile::File | KFile::ExistingOnly);
+	m_fileWidget->setFilter(inputFormatsFilter());
 
-	m_encodingComboBox = new KComboBox(this);
+	m_encodingComboBox = new QComboBox(this);
 	m_encodingComboBox->addItem(i18n("Autodetect"));
 	m_encodingComboBox->addItems(app()->availableEncodingNames());
-	m_encodingComboBox->setCurrentItem(encoding.isEmpty() ? i18n("Autodetect") : encoding);
+	m_encodingComboBox->setCurrentText(encoding.isEmpty() ? i18n("Autodetect") : encoding);
 	m_encodingComboBox->setSizePolicy(QSizePolicy::MinimumExpanding, QSizePolicy::Fixed);
-
 	// FIXME set "encoding" label buddy to m_encodingComboBox (how do we get the "encoding" label widget?)
-//	fileWidget()->setCustomWidget(i18n("Encoding:"), m_encodingComboBox);
+	m_fileWidget->setCustomWidget(i18n("Encoding:"), m_encodingComboBox);
 
-	QGridLayout* mainLayout = dynamic_cast<QGridLayout*>(layout());
-	if(mainLayout) {
-		int numRows = mainLayout->rowCount();
-//		int numCols = mainLayout->columnCount();
-		mainLayout->addWidget(m_encodingComboBox, numRows, 0, 1, -1);
-	}
+	setLayout(new QVBoxLayout);
+	connect(m_fileWidget, SIGNAL(filterChanged(QString)), this, SIGNAL(filterSelected(QString)));
+	layout()->addWidget(m_fileWidget);
+
+	m_buttons = new QDialogButtonBox(this);
+	m_buttons->addButton(reinterpret_cast<QAbstractButton *>(m_fileWidget->okButton()), QDialogButtonBox::AcceptRole);
+	m_buttons->addButton(reinterpret_cast<QAbstractButton *>(m_fileWidget->cancelButton()), QDialogButtonBox::RejectRole);
+	connect(m_buttons, SIGNAL(rejected()), m_fileWidget, SLOT(slotCancel()));
+	connect(reinterpret_cast<QWidget *>(m_fileWidget->okButton()), SIGNAL(clicked(bool)), m_fileWidget, SLOT(slotOk()));
+	connect(m_fileWidget, SIGNAL(accepted()), m_fileWidget, SLOT(accept()));
+	connect(m_fileWidget, SIGNAL(accepted()), this, SLOT(accept()));
+	connect(reinterpret_cast<QWidget *>(m_fileWidget->cancelButton()), SIGNAL(clicked(bool)), this, SLOT(reject()));
+	layout()->addWidget(m_buttons);
+
+	resize(m_fileWidget->dialogSizeHint());
 }
 
 QString
@@ -83,4 +95,26 @@ OpenSubtitleDialog::inputFormatsFilter()
 	}
 
 	return filter;
+}
+
+/*virtual*/ void
+OpenSubtitleDialog::showEvent(QShowEvent */*event*/)
+{
+	KConfigGroup group = KSharedConfig::openConfig()->group("FileDialogSize");
+	restoreGeometry(group.readEntry("WindowSize", QByteArray()));
+	m_fileWidget->restoreGeometry(group.readEntry("FileWidget", QByteArray()));
+}
+
+/*virtual*/ void
+OpenSubtitleDialog::hideEvent(QHideEvent */*event*/)
+{
+	KConfigGroup group = KSharedConfig::openConfig()->group("FileDialogSize");
+	group.writeEntry("WindowSize", saveGeometry());
+	group.writeEntry("FileWidget", m_fileWidget->saveGeometry());
+}
+
+QUrl
+OpenSubtitleDialog::selectedUrl() const
+{
+	return QUrl::fromLocalFile(m_fileWidget->selectedFile());
 }
