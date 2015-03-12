@@ -677,6 +677,8 @@ PlayerWidget::onConfigChanged()
 {
 	if(m_player->backend(SCConfig::playerBackend()) != m_player->activeBackend())
 		m_player->reinitialize(SCConfig::playerBackend());
+	else
+		m_player->reconfigure();
 
 	if(m_showPositionTimeEdit != SCConfig::showPositionTimeEdit()) {
 		m_showPositionTimeEdit = SCConfig::showPositionTimeEdit();

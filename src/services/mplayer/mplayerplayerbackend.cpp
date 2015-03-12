@@ -63,7 +63,9 @@ MPlayerPlayerBackend::finalize()
 
 void
 MPlayerPlayerBackend::_finalize()
-{}
+{
+
+}
 
 QWidget *
 MPlayerPlayerBackend::newConfigWidget(QWidget *parent)
@@ -121,8 +123,7 @@ MPlayerPlayerBackend::play()
 	if(m_process->state() == QProcess::NotRunning) { // player state was Ready
 		m_position = 0.0;
 
-		if(!m_process->start(player()->filePath(), (int)player()->videoWidget()->videoLayer()->winId(), player()->activeAudioStream(), player()->audioStreams().count()
-							 ))
+		if(!m_process->start(player()->filePath(), (int)player()->videoWidget()->videoLayer()->winId(), player()->activeAudioStream(), player()->audioStreams().count()))
 			return false;
 
 		if(m_process->state() == QProcess::NotRunning)
@@ -139,8 +140,7 @@ MPlayerPlayerBackend::pause()
 	if(m_process->state() == QProcess::NotRunning) { // player state was Ready
 		m_position = 0.0;
 
-		if(!m_process->start(player()->filePath(), (int)player()->videoWidget()->videoLayer()->winId(), player()->activeAudioStream(), player()->audioStreams().count()
-							 ))
+		if(!m_process->start(player()->filePath(), (int)player()->videoWidget()->videoLayer()->winId(), player()->activeAudioStream(), player()->audioStreams().count()))
 			return false;
 
 		if(m_process->state() == QProcess::NotRunning)
@@ -294,4 +294,20 @@ MPlayerPlayerBackend::onProcessExited()
 	setPlayerState(Player::Ready);
 }
 
+/*virtual*/ bool
+MPlayerPlayerBackend::reconfigure()
+{
+	if(!player()->isPlaying() && !player()->isPaused())
+		return true;
 
+	double oldPosition = m_position;
+	bool wasPaused = player()->isPaused();
+
+	stop();
+	play();
+	if(wasPaused)
+		pause();
+	seek(oldPosition, true);
+
+	return true;
+}

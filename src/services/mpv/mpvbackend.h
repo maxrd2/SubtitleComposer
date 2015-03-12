@@ -49,6 +49,9 @@ protected:
 	virtual VideoWidget * initialize(QWidget *videoWidgetParent);
 	virtual void finalize();
 	void _finalize();
+	virtual bool reconfigure();
+
+	void waitState(Player::State state);
 
 	virtual bool openFile(const QString &filePath, bool &playingAfterCall);
 	virtual void closeFile();
@@ -80,7 +83,8 @@ protected:
 
 protected:
 	mpv_handle *m_mpv;
-	QString currentFilePath;
+	bool m_initialized;
+	QString m_currentFilePath;
 };
 }
 

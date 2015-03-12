@@ -38,16 +38,12 @@
 #include <KLocale>
 #include <KStandardDirs>
 
-#if defined HAVE_XINE && !defined HAVE_XCB
 #include <X11/Xlib.h>
-#endif
 
 int
 main(int argc, char **argv)
 {
-#if defined HAVE_XINE && !defined HAVE_XCB
-	XInitThreads(); // needed for XinePlayerBackend
-#endif
+	XInitThreads(); // needed for some Player Backends
 
 	K4AboutData aboutData(
 			"subtitlecomposer",     // The program name used internally.

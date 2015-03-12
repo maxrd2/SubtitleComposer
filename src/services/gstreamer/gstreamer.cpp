@@ -1,21 +1,22 @@
-/***************************************************************************
- *   Copyright (C) 2007-2009 Sergio Pistone (sergio_pistone@yahoo.com.ar)  *
- *                                                                         *
- *   This program is free software; you can redistribute it and/or modify  *
- *   it under the terms of the GNU General Public License as published by  *
- *   the Free Software Foundation; either version 2 of the License, or     *
- *   (at your option) any later version.                                   *
- *                                                                         *
- *   This program is distributed in the hope that it will be useful,       *
- *   but WITHOUT ANY WARRANTY; without even the implied warranty of        *
- *   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the         *
- *   GNU General Public License for more details.                          *
- *                                                                         *
- *   You should have received a copy of the GNU General Public License     *
- *   along with this program; if not, write to the                         *
- *   Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor,      *
- *   Boston, MA 02110-1301, USA.                                           *
- ***************************************************************************/
+/**
+ * Copyright (C) 2007-2009 Sergio Pistone <sergio_pistone@yahoo.com.ar>
+ * Copyright (C) 2010-2015 Mladen Milinkovic <max@smoothware.net>
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the
+ * Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor,
+ * Boston, MA 02110-1301, USA.
+ */
 
 #include "gstreamer.h"
 
@@ -234,7 +235,9 @@ GStreamer::freePipeline(GstPipeline **pipeline, GstBus **bus)
 
 	if(*pipeline) {
 #if defined(VERBOSE) || !defined(NDEBUG)
-		qDebug() << "disposing pipeline" << gst_element_get_name(GST_ELEMENT(*pipeline));
+		gchar *name = gst_element_get_name(GST_ELEMENT(*pipeline));
+		qDebug() << "disposing pipeline" << name;
+		g_free(name);
 #endif
 
 		gst_object_unref(GST_OBJECT(*pipeline));
@@ -357,7 +360,9 @@ GStreamer::inspectMessage(GstMessage *msg)
 		break;
 	}
 
-	QString message = QString("message %1 from %2").arg(GST_MESSAGE_TYPE_NAME(msg)).arg(gst_element_get_name(GST_MESSAGE_SRC(msg)));
+	gchar *name = gst_element_get_name(GST_MESSAGE_SRC(msg));
+	QString message = QString("message %1 from %2").arg(GST_MESSAGE_TYPE_NAME(msg)).arg(name);
+	g_free(name);
 	if(!data.isEmpty())
 		message += ": " + data;
 

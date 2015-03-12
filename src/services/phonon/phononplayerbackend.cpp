@@ -288,4 +288,9 @@ PhononPlayerBackend::onStateChanged(Phonon::State newState, Phonon::State /*oldS
 	}
 }
 
-
+/*virtual*/ bool
+PhononPlayerBackend::reconfigure()
+{
+	// FIXME: add support for reconfigure
+	return false;
+}

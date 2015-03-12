@@ -1,17 +1,17 @@
 /**
  * Copyright (C) 2007-2009 Sergio Pistone <sergio_pistone@yahoo.com.ar>
  * Copyright (C) 2010-2015 Mladen Milinkovic <max@smoothware.net>
- * 
+ *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with this program; if not, write to the
  * Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor,
@@ -35,7 +35,8 @@ using namespace mpv::qt;
 
 MPVBackend::MPVBackend(Player *player)
 	: PlayerBackend(player, "MPV"),
-	m_mpv(NULL)
+	m_mpv(NULL),
+	m_initialized(false)
 {
 }
 
@@ -83,28 +84,7 @@ MPVBackend::mpvInit()
 	if(!m_mpv)
 		return false;
 
-	if(SCConfig::mpvVideoOutputEnabled())
-		mpv_set_option_string(m_mpv, "vo", SCConfig::mpvVideoOutput().toUtf8().constData());
-
-	mpv_set_option_string(m_mpv, "hwdec", SCConfig::mpvHwDecodeEnabled() ? SCConfig::mpvHwDecode().toUtf8().constData() : "no");
-
-	if(SCConfig::mpvAudioOutputEnabled())
-		mpv_set_option_string(m_mpv, "ao", SCConfig::mpvAudioOutput().toUtf8().constData());
-
-	if(SCConfig::mpvAudioChannelsEnabled())
-		mpv_set_option_string(m_mpv, "audio-channels", QString::number(SCConfig::mpvAudioChannels()).toUtf8().constData());
-
-	if(SCConfig::mpvFrameDropping())
-		mpv_set_option_string(m_mpv, "framedrop", "vo");
-
-	if(SCConfig::mpvAutoSyncEnabled())
-		mpv_set_option_string(m_mpv, "autosync", QString::number(SCConfig::mpvAutoSyncFactor()).toUtf8().constData());
-
-	if(SCConfig::mpvCacheEnabled()) {
-		mpv_set_option_string(m_mpv, "cache", QString::number(SCConfig::mpvCacheSize()).toUtf8().constData());
-//		mpv_set_option_string(m_mpv, "cache-min", "99");
-//		mpv_set_option_string(m_mpv, "cache-seek-min", "99");
-	}
+	reconfigure();
 
 	// window id
 	int64_t winId = player()->videoWidget()->videoLayer()->winId();
@@ -112,13 +92,6 @@ MPVBackend::mpvInit()
 
 	// no OSD
 	mpv_set_option_string(m_mpv, "osd-level", "0");
-
-	if(SCConfig::mpvVolumeNormalization())
-		mpv_set_option_string(m_mpv, "drc", "1:0.25");
-
-	mpv_set_option_string(m_mpv, "softvol", "yes");
-	if(SCConfig::mpvVolumeAmplificationEnabled())
-		mpv_set_option_string(m_mpv, "softvol-max", QString::number(SCConfig::mpvVolumeAmplification()).toUtf8().constData());
 
 	// Disable subtitles
 	mpv_set_option_string(m_mpv, "sid", "no");
@@ -147,7 +120,8 @@ MPVBackend::mpvInit()
 	connect(this, SIGNAL(mpvEvents()), this, SLOT(onMPVEvents()), Qt::QueuedConnection);
 	mpv_set_wakeup_callback(m_mpv, wakeup, this);
 
-	return mpv_initialize(m_mpv) >= 0;
+	m_initialized = mpv_initialize(m_mpv) >= 0;
+	return m_initialized;
 }
 
 void
@@ -157,6 +131,7 @@ MPVBackend::mpvExit()
 		mpv_terminate_destroy(m_mpv);
 		m_mpv = NULL;
 	}
+	m_initialized = false;
 }
 
 
@@ -292,7 +267,7 @@ MPVBackend::openFile(const QString &filePath, bool &playingAfterCall)
 		return false;
 
 	QByteArray filename = filePath.toUtf8();
-	currentFilePath = filePath;
+	m_currentFilePath = filePath;
 	const char *args[] = { "loadfile", filename.constData(), NULL };
 	mpv_command(m_mpv, args);
 
@@ -318,7 +293,7 @@ bool
 MPVBackend::play()
 {
 	if(player()->isStopped()) {
-		QByteArray filename = currentFilePath.toUtf8();
+		QByteArray filename = m_currentFilePath.toUtf8();
 		const char *args[] = { "loadfile", filename.constData(), NULL };
 		mpv_command(m_mpv, args);
 
@@ -371,4 +346,68 @@ MPVBackend::setVolume(double volume)
 	return true;
 }
 
+void
+MPVBackend::waitState(Player::State state)
+{
+	while(m_initialized && m_mpv && player()->state() != state) {
+		mpv_wait_async_requests(m_mpv);
+		QApplication::instance()->processEvents();
+	}
+}
 
+/*virtual*/ bool
+MPVBackend::reconfigure()
+{
+	if(!m_mpv)
+		return false;
+
+	if(SCConfig::mpvVideoOutputEnabled())
+		mpv_set_option_string(m_mpv, "vo", SCConfig::mpvVideoOutput().toUtf8().constData());
+
+	mpv_set_option_string(m_mpv, "hwdec", SCConfig::mpvHwDecodeEnabled() ? SCConfig::mpvHwDecode().toUtf8().constData() : "no");
+
+	if(SCConfig::mpvAudioOutputEnabled())
+		mpv_set_option_string(m_mpv, "ao", SCConfig::mpvAudioOutput().toUtf8().constData());
+
+	mpv_set_option_string(m_mpv, "audio-channels", SCConfig::mpvAudioChannelsEnabled() ? QString::number(SCConfig::mpvAudioChannels()).toUtf8().constData() : "auto");
+
+	mpv_set_option_string(m_mpv, "framedrop", SCConfig::mpvFrameDropping() ? "vo" : "no");
+
+	if(SCConfig::mpvAutoSyncEnabled())
+		mpv_set_option_string(m_mpv, "autosync", QString::number(SCConfig::mpvAutoSyncFactor()).toUtf8().constData());
+
+	if(SCConfig::mpvCacheEnabled()) {
+		mpv_set_option_string(m_mpv, "cache", QString::number(SCConfig::mpvCacheSize()).toUtf8().constData());
+//		mpv_set_option_string(m_mpv, "cache-min", "99");
+//		mpv_set_option_string(m_mpv, "cache-seek-min", "99");
+	} else {
+		mpv_set_option_string(m_mpv, "cache", "auto");
+	}
+
+	if(SCConfig::mpvVolumeNormalization())
+		mpv_set_option_string(m_mpv, "drc", "1:0.25");
+
+	if(SCConfig::mpvVolumeAmplificationEnabled()) {
+		mpv_set_option_string(m_mpv, "softvol", "yes");
+		mpv_set_option_string(m_mpv, "softvol-max", QString::number(SCConfig::mpvVolumeAmplification()).toUtf8().constData());
+	} else {
+		mpv_set_option_string(m_mpv, "softvol", "no");
+	}
+
+	// restart playing
+	if(m_initialized && (player()->isPlaying() || player()->isPaused())) {
+		bool wasPaused = player()->isPaused();
+		double oldPosition;
+		mpv_get_property(m_mpv, "time-pos", MPV_FORMAT_DOUBLE, &oldPosition);
+
+		stop();
+		waitState(Player::Ready);
+		play();
+		waitState(Player::Playing);
+		seek(oldPosition, true);
+		if(wasPaused)
+			pause();
+	}
+
+	return true;
+}

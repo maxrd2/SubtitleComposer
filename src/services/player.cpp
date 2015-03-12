@@ -74,6 +74,8 @@ protected:
 	virtual bool setActiveAudioStream(int /*audioStream*/) { return false; }
 
 	virtual bool setVolume(double /*volume*/) { return false; }
+
+	virtual bool reconfigure() { return false; }
 };
 }
 

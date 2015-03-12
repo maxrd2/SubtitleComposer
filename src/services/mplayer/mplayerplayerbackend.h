@@ -47,6 +47,7 @@ protected:
 	virtual VideoWidget * initialize(QWidget *videoWidgetParent);
 	virtual void finalize();
 	void _finalize();
+	virtual bool reconfigure();
 
 	virtual bool openFile(const QString &filePath, bool &playingAfterCall);
 	virtual void closeFile();

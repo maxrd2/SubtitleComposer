@@ -39,6 +39,8 @@
 #define MESSAGE_UPDATE_AUDIO_DATA 0
 #define MESSAGE_UPDATE_VIDEO_DATA 1
 
+#define INFINITE_WAIT 60000
+
 using namespace SubtitleComposer;
 
 #ifndef __GST_PLAY_ENUM_H__
@@ -103,6 +105,7 @@ GStreamerPlayerBackend::initialize(QWidget *videoWidgetParent)
 
 	VideoWidget *video = new VideoWidget(videoWidgetParent);
 	video->videoLayer()->installEventFilter(this);
+	onPlaybinTimerTimeout();
 	return video;
 }
 
@@ -126,6 +129,26 @@ GStreamerPlayerBackend::setupVideoOverlay()
 	gst_video_overlay_expose(GST_VIDEO_OVERLAY(m_pipeline));
 }
 
+GstElement *
+GStreamerPlayerBackend::createAudioSink()
+{
+	static QString sinks(" pulsesink alsasink osssink gconfaudiosink artsdsink autoaudiosink");
+
+	if(SCConfig::gstAudioSinkAuto())
+		return GStreamer::createElement(SCConfig::gstAudioSink() + sinks, "audiosink");
+	return GStreamer::createElement(sinks, "audiosink");
+}
+
+GstElement *
+GStreamerPlayerBackend::createVideoSink()
+{
+	static QString sinks(" xvimagesink ximagesink gconfvideosink autovideosink");
+
+	if(SCConfig::gstVideoSinkAuto())
+		return GStreamer::createElement(SCConfig::gstVideoSink() + sinks, "videosink");
+	return GStreamer::createElement(sinks, "videosink");
+}
+
 bool
 GStreamerPlayerBackend::openFile(const QString &filePath, bool &playingAfterCall)
 {
@@ -133,8 +156,8 @@ GStreamerPlayerBackend::openFile(const QString &filePath, bool &playingAfterCall
 	m_lengthInformed = false;
 
 	m_pipeline = GST_PIPELINE(gst_element_factory_make("playbin", "playbin"));
-	GstElement *audiosink = GStreamer::createElement(SCConfig::gstAudioSink() + QString(" pulsesink alsasink osssink gconfaudiosink artsdsink autoaudiosink"), "audiosink");
-	GstElement *videosink = GStreamer::createElement(SCConfig::gstVideoSink() + QString(" xvimagesink ximagesink gconfvideosink autovideosink"), "videosink");
+	GstElement *audiosink = createAudioSink();
+	GstElement *videosink = createVideoSink();
 
 	if(!m_pipeline || !audiosink || !videosink) {
 		if(audiosink)
@@ -180,7 +203,7 @@ GStreamerPlayerBackend::closeFile()
 {
 	if(m_pipeline) {
 		m_pipelineTimer->stop();
-		GStreamer::setElementState(GST_ELEMENT(m_pipeline), GST_STATE_NULL, 60000 /*"infinity" wait */);
+		GStreamer::setElementState(GST_ELEMENT(m_pipeline), GST_STATE_NULL, INFINITE_WAIT);
 		GStreamer::freePipeline(&m_pipeline, &m_pipelineBus);
 	}
 }
@@ -249,7 +272,7 @@ GStreamerPlayerBackend::onPlaybinTimerTimeout()
 		m_lengthInformed = true;
 	}
 	if(gst_element_query_position(GST_ELEMENT(m_pipeline), GST_FORMAT_TIME, &time))
-		setPlayerPosition(((double)time / GST_SECOND));
+		setPlayerPosition((double)time / GST_SECOND);
 
 	GstMessage *msg;
 	while(m_pipeline && m_pipelineBus && (msg = gst_bus_pop(m_pipelineBus))) {
@@ -395,9 +418,54 @@ GStreamerPlayerBackend::eventFilter(QObject *obj, QEvent *event)
 
 	if(m_pipeline && GST_IS_VIDEO_OVERLAY(m_pipeline) && (event->type() == QEvent::Resize || event->type() == QEvent::Move)) {
 		QResizeEvent *evt = reinterpret_cast<QResizeEvent *>(event);
-		gst_video_overlay_set_render_rectangle(GST_VIDEO_OVERLAY(m_pipeline), 0, 0, evt->size().width(), evt->size().height());
+		if(evt->size().width() > 0 && evt->size().height() > 0)
+			gst_video_overlay_set_render_rectangle(GST_VIDEO_OVERLAY(m_pipeline), 0, 0, evt->size().width(), evt->size().height());
+		else
+			gst_video_overlay_set_render_rectangle(GST_VIDEO_OVERLAY(m_pipeline), 0, 0, -1, -1);
 		gst_video_overlay_expose(GST_VIDEO_OVERLAY(m_pipeline));
 	}
 
 	return res;
+}
+
+/*virtual*/ bool
+GStreamerPlayerBackend::reconfigure()
+{
+	if(!m_pipeline || !GST_IS_PIPELINE(m_pipeline))
+		return false;
+
+	GstElement *oldsink = NULL, *newsink;
+
+	// replace video sink
+	g_object_get(G_OBJECT(m_pipeline), "video-sink", &oldsink, NULL);
+	if(!oldsink || !GST_IS_ELEMENT(oldsink))
+		return false;
+	newsink = createVideoSink();
+	g_object_set(G_OBJECT(m_pipeline), "video-sink", newsink, NULL);
+	g_object_unref(oldsink);
+
+	// replace audio sink
+	g_object_get(G_OBJECT(m_pipeline), "audio-sink", &oldsink, NULL);
+	if(!oldsink || !GST_IS_ELEMENT(oldsink))
+		return false;
+	newsink = createAudioSink();
+	g_object_set(G_OBJECT(m_pipeline), "audio-sink", newsink, NULL);
+	g_object_unref(oldsink);
+
+	// current position
+	gint64 time = 0;
+	gst_element_query_position(GST_ELEMENT(m_pipeline), GST_FORMAT_TIME, &time);
+
+	GstState state = GST_STATE_VOID_PENDING;
+	gst_element_get_state(GST_ELEMENT(m_pipeline), &state, NULL, INFINITE_WAIT);
+	GStreamer::setElementState(GST_ELEMENT(m_pipeline), GST_STATE_NULL, INFINITE_WAIT);
+	if(state == GST_STATE_PLAYING || state == GST_STATE_PAUSED) {
+		GStreamer::setElementState(GST_ELEMENT(m_pipeline), GST_STATE_PLAYING, INFINITE_WAIT);
+		onPlaybinTimerTimeout();
+		seek((double)time / GST_SECOND, true);
+		if(state == GST_STATE_PAUSED)
+			GStreamer::setElementState(GST_ELEMENT(m_pipeline), GST_STATE_PAUSED, INFINITE_WAIT);
+	}
+
+	return true;
 }

@@ -3082,6 +3082,8 @@ Application::onConfigChanged()
 {
 	if(m_decoder->backend(SCConfig::decoderBackend()) != m_decoder->activeBackend())
 		m_decoder->reinitialize(SCConfig::decoderBackend());
+	else
+		m_decoder->reconfigure();
 
 	action(ACT_SEEK_BACKWARDS)->setStatusTip(i18np("Seek backwards 1 second", "Seek backwards %1 seconds", SCConfig::seekJumpLength()));
 	action(ACT_SEEK_FORWARDS)->setStatusTip(i18np("Seek forwards 1 second", "Seek forwards %1 seconds", SCConfig::seekJumpLength()));

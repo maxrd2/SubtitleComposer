@@ -48,6 +48,10 @@ public:
 protected:
 	virtual VideoWidget * initialize(QWidget *videoWidgetParent);
 	virtual void finalize();
+	virtual bool reconfigure();
+
+	static GstElement * createAudioSink();
+	static GstElement * createVideoSink();
 
 	virtual bool openFile(const QString &filePath, bool &playingAfterCall);
 	virtual void closeFile();
@@ -68,9 +72,6 @@ protected slots:
 
 private:
 	void setupVideoOverlay();
-
-//	static void audioChanged(GstElement *playbin2, gpointer userData);
-//	static void videoChanged(GstElement *playbin2, gpointer userData);
 
 	void updateAudioData();
 	void updateVideoData();
