@@ -33,7 +33,7 @@
 #include <QContextMenuEvent>
 #include <QHeaderView>
 
-#include <KIcon>
+#include <QIcon>
 #include <KGlobal>
 #include <KMenu>
 #include <KConfig>
@@ -513,7 +513,7 @@ ErrorsModel::markIcon()
 	static QIcon markIcon;
 
 	if(markIcon.isNull())
-		markIcon = KIcon("dialog-warning");
+		markIcon = QIcon::fromTheme("dialog-warning");
 
 	return markIcon;
 }
@@ -524,7 +524,7 @@ ErrorsModel::errorIcon()
 	static QIcon errorIcon;
 
 	if(errorIcon.isNull())
-		errorIcon = KIcon("dialog-error");
+		errorIcon = QIcon::fromTheme("dialog-error");
 
 	return errorIcon;
 }

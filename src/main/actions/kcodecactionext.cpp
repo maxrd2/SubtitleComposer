@@ -74,7 +74,7 @@ KCodecActionExt::KCodecActionExt(const QString &text, QObject *parent, bool show
 	init(showDefault);
 }
 
-KCodecActionExt::KCodecActionExt(const KIcon &icon, const QString &text, QObject *parent, bool showAutoOptions, bool showDefault) :
+KCodecActionExt::KCodecActionExt(const QIcon &icon, const QString &text, QObject *parent, bool showAutoOptions, bool showDefault) :
 	KCodecAction(icon, text, parent, showAutoOptions)
 {
 	init(showDefault);

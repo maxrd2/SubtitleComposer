@@ -35,7 +35,7 @@
 #include <QAbstractTextDocumentLayout>
 #include <QHeaderView>
 
-#include <KIcon>
+#include <QIcon>
 #include <QDebug>
 #include <KGlobal>
 #include <KLocale>
@@ -630,7 +630,7 @@ LinesItemDelegate::markIcon()
 {
 	static QIcon markIcon;
 	if(markIcon.isNull())
-		markIcon = KIcon("dialog-warning");
+		markIcon = QIcon::fromTheme("dialog-warning");
 	return markIcon;
 }
 
@@ -639,7 +639,7 @@ LinesItemDelegate::errorIcon()
 {
 	static QIcon errorIcon;
 	if(errorIcon.isNull())
-		errorIcon = KIcon("dialog-error");
+		errorIcon = QIcon::fromTheme("dialog-error");
 	return errorIcon;
 }
 
@@ -1051,23 +1051,23 @@ LinesWidget::contextMenuEvent(QContextMenuEvent *e)
 	textsMenu.addAction(i18n("Fix Punctuation..."), app, SLOT(fixPunctuation()));
 	textsMenu.addAction(i18n("Translate..."), app, SLOT(translate()));
 	textsMenu.addSeparator();
-	textsMenu.addAction(KIcon("tools-check-spelling"), i18n("Spelling..."), app, SLOT(spellCheck()));
+	textsMenu.addAction(QIcon::fromTheme("tools-check-spelling"), i18n("Spelling..."), app, SLOT(spellCheck()));
 
 	KMenu stylesMenu(i18n("Styles"));
 	int styleFlags = referenceLine->primaryText().cummulativeStyleFlags() | referenceLine->secondaryText().cummulativeStyleFlags();
-	action = stylesMenu.addAction(KIcon("format-text-bold"), i18nc("@action:inmenu Toggle bold style", "Bold"), app, SLOT(toggleSelectedLinesBold()));
+	action = stylesMenu.addAction(QIcon::fromTheme("format-text-bold"), i18nc("@action:inmenu Toggle bold style", "Bold"), app, SLOT(toggleSelectedLinesBold()));
 	action->setCheckable(true);
 	action->setChecked(styleFlags & SString::Bold);
-	action = stylesMenu.addAction(KIcon("format-text-italic"), i18nc("@action:inmenu Toggle italic style", "Italic"), app, SLOT(toggleSelectedLinesItalic()));
+	action = stylesMenu.addAction(QIcon::fromTheme("format-text-italic"), i18nc("@action:inmenu Toggle italic style", "Italic"), app, SLOT(toggleSelectedLinesItalic()));
 	action->setCheckable(true);
 	action->setChecked(styleFlags & SString::Italic);
-	action = stylesMenu.addAction(KIcon("format-text-underline"), i18nc("@action:inmenu Toggle underline style", "Underline"), app, SLOT(toggleSelectedLinesUnderline()));
+	action = stylesMenu.addAction(QIcon::fromTheme("format-text-underline"), i18nc("@action:inmenu Toggle underline style", "Underline"), app, SLOT(toggleSelectedLinesUnderline()));
 	action->setCheckable(true);
 	action->setChecked(styleFlags & SString::Underline);
-	action = stylesMenu.addAction(KIcon("format-text-strikethrough"), i18nc("@action:inmenu Toggle strike through style", "Strike Through"), app, SLOT(toggleSelectedLinesStrikeThrough()));
+	action = stylesMenu.addAction(QIcon::fromTheme("format-text-strikethrough"), i18nc("@action:inmenu Toggle strike through style", "Strike Through"), app, SLOT(toggleSelectedLinesStrikeThrough()));
 	action->setCheckable(true);
 	action->setChecked(styleFlags & SString::StrikeThrough);
-	action = stylesMenu.addAction(KIcon("format-text-color"), i18nc("@action:inmenu Change Text Color", "Text Color"), app, SLOT(changeSelectedLinesColor()));
+	action = stylesMenu.addAction(QIcon::fromTheme("format-text-color"), i18nc("@action:inmenu Change Text Color", "Text Color"), app, SLOT(changeSelectedLinesColor()));
 
 	KMenu timesMenu(i18n("Times"));
 	QString shiftMillis(SCConfig::linesQuickShiftAmount());

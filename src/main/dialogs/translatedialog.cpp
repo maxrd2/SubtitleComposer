@@ -24,7 +24,7 @@
 #include <QComboBox>
 #include <QGroupBox>
 #include <QGridLayout>
-#include <KIcon>
+#include <QIcon>
 
 using namespace SubtitleComposer;
 
@@ -41,7 +41,7 @@ TranslateDialog::TranslateDialog(QWidget *parent) :
 		m_inputLanguageComboBox->addItem(Language::name(*it));
 		QString flagPath = Language::flagPath(*it);
 		if(!flagPath.isEmpty())
-			m_inputLanguageComboBox->setItemIcon(index, KIcon(flagPath));
+			m_inputLanguageComboBox->setItemIcon(index, QIcon(flagPath));
 		index++;
 	}
 
@@ -57,7 +57,7 @@ TranslateDialog::TranslateDialog(QWidget *parent) :
 		m_outputLanguageComboBox->addItem(Language::name(*it));
 		QString flagPath = Language::flagPath(*it);
 		if(!flagPath.isEmpty())
-			m_outputLanguageComboBox->setItemIcon(index, KIcon(flagPath));
+			m_outputLanguageComboBox->setItemIcon(index, QIcon(flagPath));
 		index++;
 	}
 

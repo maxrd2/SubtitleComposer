@@ -44,7 +44,7 @@
 
 #include <KFileDialog>
 
-#include <KIcon>
+#include <QIcon>
 #include <QAction>
 #include <KActionCollection>
 #include <KMenuBar>
@@ -140,38 +140,38 @@ ScriptsManager::ScriptsManager(QObject *parent) :
 	QPushButton *createScriptButton = new QPushButton(buttonsWidget);
 	createScriptButton->setText(i18n("Create..."));
 	createScriptButton->setWhatsThis(i18n("Creates a new script file."));
-	createScriptButton->setIcon(KIcon("document-new"));
+	createScriptButton->setIcon(QIcon::fromTheme("document-new"));
 	connect(createScriptButton, SIGNAL(clicked()), this, SLOT(createScript()));
 
 	QPushButton *addScriptButton = new QPushButton(buttonsWidget);
 	addScriptButton->setText(i18n("Add..."));
 	addScriptButton->setWhatsThis(i18n("Copies an existing script from a specified location."));
-	addScriptButton->setIcon(KIcon("document-open"));
+	addScriptButton->setIcon(QIcon::fromTheme("document-open"));
 	connect(addScriptButton, SIGNAL(clicked()), this, SLOT(addScript()));
 
 	QPushButton *removeScriptButton = new QPushButton(buttonsWidget);
 	removeScriptButton->setText(i18n("Remove"));
 	removeScriptButton->setWhatsThis(i18n("Sends the selected script to the trash."));
-	removeScriptButton->setIcon(KIcon("user-trash"));
+	removeScriptButton->setIcon(QIcon::fromTheme("user-trash"));
 	connect(removeScriptButton, SIGNAL(clicked()), this, SLOT(removeScript()));
 
 	QPushButton *editScriptButton = new QPushButton(buttonsWidget);
 	editScriptButton->setText(i18n("Edit"));
 	editScriptButton->setWhatsThis(i18n("Opens the selected script with an external editor."));
-	editScriptButton->setIcon(KIcon("document-edit"));
+	editScriptButton->setIcon(QIcon::fromTheme("document-edit"));
 	connect(editScriptButton, SIGNAL(clicked()), this, SLOT(editScript()));
 
 	m_runScriptButton = new QPushButton(buttonsWidget);
 	m_runScriptButton->setEnabled(false);
 	m_runScriptButton->setText(i18n("Run"));
 	m_runScriptButton->setWhatsThis(i18n("Executes the selected script."));
-	m_runScriptButton->setIcon(KIcon("media-playback-start"));
+	m_runScriptButton->setIcon(QIcon::fromTheme("media-playback-start"));
 	connect(m_runScriptButton, SIGNAL(clicked()), this, SLOT(runScript()));
 
 	QPushButton *reloadScriptsButton = new QPushButton(buttonsWidget);
 	reloadScriptsButton->setText(i18n("Refresh"));
 	reloadScriptsButton->setWhatsThis(i18n("Reloads the installed scripts list."));
-	reloadScriptsButton->setIcon(KIcon("view-refresh"));
+	reloadScriptsButton->setIcon(QIcon::fromTheme("view-refresh"));
 	connect(reloadScriptsButton, SIGNAL(clicked()), this, SLOT(reloadScripts()));
 
 	QGridLayout *buttonsLayout = new QGridLayout(buttonsWidget);

@@ -22,7 +22,7 @@
 
 #include <kcodecaction.h>
 
-#include <KIcon>
+#include <QIcon>
 
 class KCodecActionExt : public KCodecAction
 {
@@ -31,7 +31,7 @@ class KCodecActionExt : public KCodecAction
 public:
 	explicit KCodecActionExt(QObject *parent, bool showAutoOptions = false, bool showDefault = false);
 	KCodecActionExt(const QString &text, QObject *parent, bool showAutoOptions = false, bool showDefault = false);
-	KCodecActionExt(const KIcon &icon, const QString &text, QObject *parent, bool showAutoOptions = false, bool showDefault = false);
+	KCodecActionExt(const QIcon &icon, const QString &text, QObject *parent, bool showAutoOptions = false, bool showDefault = false);
 
 public:
 	KEncodingProber::ProberType currentAutoDetectScript() const;

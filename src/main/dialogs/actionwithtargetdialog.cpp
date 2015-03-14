@@ -25,7 +25,7 @@
 #include <QRadioButton>
 #include <QGridLayout>
 
-#include <KIcon>
+#include <QIcon>
 #include <QDebug>
 
 using namespace SubtitleComposer;
@@ -43,7 +43,7 @@ ActionWithTargetDialog::ActionWithTargetDialog(const QString &title, QWidget *pa
 {
 //  setButtons( KDialog::Ok | KDialog::Cancel | KDialog::Default );
 //  setDefaultButton( KDialog::Ok );
-//  setButtonIcon( KDialog::Default, KIcon() );
+//  setButtonIcon( KDialog::Default, QIcon() );
 //  setButtonText( KDialog::Default, i18n( "Target <<" ) );
 //  setButtonToolTip( KDialog::Default, QString() );
 //  connect( this, SIGNAL( defaultClicked() ), this, SLOT( onDefaultButtonClicked() ) );
@@ -142,7 +142,7 @@ ActionWithTargetDialog::createLineTargetsButtonGroup()
 {
 	setButtons(KDialog::Ok | KDialog::Cancel | KDialog::Default);
 	setDefaultButton(KDialog::Ok);
-	setButtonIcon(KDialog::Default, KIcon());
+	setButtonIcon(KDialog::Default, QIcon());
 	setButtonText(KDialog::Default, i18n("Target <<"));
 	setButtonToolTip(KDialog::Default, QString());
 	connect(this, SIGNAL(defaultClicked()), this, SLOT(onDefaultButtonClicked()));

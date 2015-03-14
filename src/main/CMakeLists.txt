@@ -1,6 +1,6 @@
 add_subdirectory(configs)
 add_subdirectory(dialogs)
-add_subdirectory(images)
+add_subdirectory(icons)
 add_subdirectory(actions)
 add_subdirectory(utils)
 add_subdirectory(scripting)

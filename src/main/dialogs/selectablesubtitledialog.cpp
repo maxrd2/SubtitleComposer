@@ -32,7 +32,7 @@
 #include <kurlcompletion.h>
 #include <KComboBox>
 #include <KLineEdit>
-#include <KIcon>
+#include <QIcon>
 
 using namespace SubtitleComposer;
 
@@ -53,7 +53,7 @@ SelectableSubtitleDialog::createSubtitleGroupBox(const QString &title, bool addT
 	subtitlePathLabel->setBuddy(m_subtitleUrlLineEdit);
 
 	QPushButton *subtitleButton = new QPushButton(m_subtitleGroupBox);
-	subtitleButton->setIcon(KIcon("document-open"));
+	subtitleButton->setIcon(QIcon::fromTheme("document-open"));
 	subtitleButton->setToolTip(i18n("Select subtitle"));
 	int buttonSize = subtitleButton->sizeHint().height();
 	subtitleButton->setFixedSize(buttonSize, buttonSize);

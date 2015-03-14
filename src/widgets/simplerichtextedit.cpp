@@ -32,7 +32,7 @@
 #include <QDebug>
 #include <KLocale>
 #include <KMenu>
-#include <KIcon>
+#include <QIcon>
 #include <KStandardShortcut>
 
 #include <QAction>
@@ -63,84 +63,84 @@ SimpleRichTextEdit::SimpleRichTextEdit(QWidget *parent) :
 	setTextInteractionFlags(Qt::TextEditorInteraction);
 
 	m_actions[Undo] = new QAction(this);
-	m_actions[Undo]->setIcon(KIcon("edit-undo"));
+	m_actions[Undo]->setIcon(QIcon::fromTheme("edit-undo"));
 	m_actions[Undo]->setText(i18n("Undo"));
 	m_actions[Undo]->setShortcuts(KStandardShortcut::undo());
 	connect(m_actions[Undo], SIGNAL(triggered()), this, SLOT(undo()));
 
 	m_actions[Redo] = new QAction(this);
-	m_actions[Redo]->setIcon(KIcon("edit-redo"));
+	m_actions[Redo]->setIcon(QIcon::fromTheme("edit-redo"));
 	m_actions[Redo]->setText(i18n("Redo"));
 	m_actions[Redo]->setShortcuts(KStandardShortcut::redo());
 	connect(m_actions[Redo], SIGNAL(triggered()), this, SLOT(redo()));
 
 	m_actions[Cut] = new QAction(this);
-	m_actions[Cut]->setIcon(KIcon("edit-cut"));
+	m_actions[Cut]->setIcon(QIcon::fromTheme("edit-cut"));
 	m_actions[Cut]->setText(i18n("Cut"));
 	m_actions[Cut]->setShortcuts(KStandardShortcut::cut());
 	connect(m_actions[Cut], SIGNAL(triggered()), this, SLOT(cut()));
 
 	m_actions[Copy] = new QAction(this);
-	m_actions[Copy]->setIcon(KIcon("edit-copy"));
+	m_actions[Copy]->setIcon(QIcon::fromTheme("edit-copy"));
 	m_actions[Copy]->setText(i18n("Copy"));
 	m_actions[Copy]->setShortcuts(KStandardShortcut::copy());
 	connect(m_actions[Copy], SIGNAL(triggered()), this, SLOT(copy()));
 
 	m_actions[Paste] = new QAction(this);
-	m_actions[Paste]->setIcon(KIcon("edit-paste"));
+	m_actions[Paste]->setIcon(QIcon::fromTheme("edit-paste"));
 	m_actions[Paste]->setText(i18n("Paste"));
 	m_actions[Paste]->setShortcuts(KStandardShortcut::paste());
 	connect(m_actions[Paste], SIGNAL(triggered()), this, SLOT(paste()));
 
 	m_actions[Delete] = new QAction(this);
-	m_actions[Delete]->setIcon(KIcon("edit-delete"));
+	m_actions[Delete]->setIcon(QIcon::fromTheme("edit-delete"));
 	m_actions[Delete]->setText(i18n("Delete"));
 	m_actions[Delete]->setShortcut(QKeySequence::Delete);
 	connect(m_actions[Delete], SIGNAL(triggered()), this, SLOT(deleteText()));
 
 	m_actions[Clear] = new QAction(this);
-	m_actions[Clear]->setIcon(KIcon("edit-clear"));
+	m_actions[Clear]->setIcon(QIcon::fromTheme("edit-clear"));
 	m_actions[Clear]->setText(i18nc("@action:inmenu Clear all text", "Clear"));
 	connect(m_actions[Clear], SIGNAL(triggered()), this, SLOT(undoableClear()));
 
 	m_actions[SelectAll] = new QAction(this);
-	m_actions[SelectAll]->setIcon(KIcon("edit-select-all"));
+	m_actions[SelectAll]->setIcon(QIcon::fromTheme("edit-select-all"));
 	m_actions[SelectAll]->setText(i18n("Select All"));
 	m_actions[SelectAll]->setShortcut(QKeySequence::SelectAll);
 	connect(m_actions[SelectAll], SIGNAL(triggered()), this, SLOT(selectAll()));
 
 	m_actions[ToggleBold] = new QAction(this);
-	m_actions[ToggleBold]->setIcon(KIcon("format-text-bold"));
+	m_actions[ToggleBold]->setIcon(QIcon::fromTheme("format-text-bold"));
 	m_actions[ToggleBold]->setText(i18nc("@action:inmenu Toggle bold style", "Bold"));
 	m_actions[ToggleBold]->setShortcuts(KShortcut("Ctrl+B"));
 	connect(m_actions[ToggleBold], SIGNAL(triggered()), this, SLOT(toggleFontBold()));
 
 	m_actions[ToggleItalic] = new QAction(this);
-	m_actions[ToggleItalic]->setIcon(KIcon("format-text-italic"));
+	m_actions[ToggleItalic]->setIcon(QIcon::fromTheme("format-text-italic"));
 	m_actions[ToggleItalic]->setText(i18nc("@action:inmenu Toggle italic style", "Italic"));
 	m_actions[ToggleItalic]->setShortcuts(KShortcut("Ctrl+I"));
 	connect(m_actions[ToggleItalic], SIGNAL(triggered()), this, SLOT(toggleFontItalic()));
 
 	m_actions[ToggleUnderline] = new QAction(this);
-	m_actions[ToggleUnderline]->setIcon(KIcon("format-text-underline"));
+	m_actions[ToggleUnderline]->setIcon(QIcon::fromTheme("format-text-underline"));
 	m_actions[ToggleUnderline]->setText(i18nc("@action:inmenu Toggle underline style", "Underline"));
 	m_actions[ToggleUnderline]->setShortcuts(KShortcut("Ctrl+U"));
 	connect(m_actions[ToggleUnderline], SIGNAL(triggered()), this, SLOT(toggleFontUnderline()));
 
 	m_actions[ToggleStrikeOut] = new QAction(this);
-	m_actions[ToggleStrikeOut]->setIcon(KIcon("format-text-strikethrough"));
+	m_actions[ToggleStrikeOut]->setIcon(QIcon::fromTheme("format-text-strikethrough"));
 	m_actions[ToggleStrikeOut]->setText(i18nc("@action:inmenu Toggle strike through style", "Strike Through"));
 	m_actions[ToggleStrikeOut]->setShortcuts(KShortcut("Ctrl+T"));
 	connect(m_actions[ToggleStrikeOut], SIGNAL(triggered()), this, SLOT(toggleFontStrikeOut()));
 
 	m_actions[ChangeTextColor] = new QAction(this);
-	m_actions[ChangeTextColor]->setIcon(KIcon("format-text-color"));
+	m_actions[ChangeTextColor]->setIcon(QIcon::fromTheme("format-text-color"));
 	m_actions[ChangeTextColor]->setText(i18nc("@action:inmenu Change Text Color", "Text Color"));
 	m_actions[ChangeTextColor]->setShortcuts(KShortcut("Ctrl+Shift+C"));
 	connect(m_actions[ChangeTextColor], SIGNAL(triggered()), this, SLOT(changeTextColor()));
 
 	m_actions[CheckSpelling] = new QAction(this);
-	m_actions[CheckSpelling]->setIcon(KIcon("tools-check-spelling"));
+	m_actions[CheckSpelling]->setIcon(QIcon::fromTheme("tools-check-spelling"));
 	m_actions[CheckSpelling]->setText(i18n("Check Spelling..."));
 	connect(m_actions[CheckSpelling], SIGNAL(triggered()), this, SLOT(checkSpelling()));
 

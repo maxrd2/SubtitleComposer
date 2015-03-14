@@ -27,7 +27,7 @@
 #include <QCheckBox>
 #include <QGridLayout>
 
-#include <KIcon>
+#include <QIcon>
 #include <KLocale>
 #include <QPushButton>
 
@@ -39,7 +39,7 @@ SplitSubtitleDialog::SplitSubtitleDialog(QWidget *parent) :
 	QGroupBox *settingsGroupBox = createGroupBox(i18nc("@title:group", "Settings"));
 
 	m_splitTimeFromVideoButton = new QPushButton(settingsGroupBox);
-	m_splitTimeFromVideoButton->setIcon(KIcon("time-from-video"));
+	m_splitTimeFromVideoButton->setIcon(QIcon::fromTheme("time-from-video"));
 	int buttonSize = m_splitTimeFromVideoButton->sizeHint().height();
 	m_splitTimeFromVideoButton->setFixedSize(buttonSize, buttonSize);
 	m_splitTimeFromVideoButton->setToolTip(i18n("Set from video length"));

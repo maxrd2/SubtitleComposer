@@ -17,6 +17,7 @@ license=('GPL')
 depends=('kdelibs' 'gettext')
 makedepends=('cmake' 'automoc4' 'git')
 conflicts=('subtitlecomposer')
+install=('subtitlecomposer.install')
 optdepends=(
 	'mpv: for MPV backend'
 	'mplayer: for MPlayer backend'

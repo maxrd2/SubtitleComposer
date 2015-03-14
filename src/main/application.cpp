@@ -151,19 +151,19 @@ Application::Application() :
 
 	item = m_configDialog->addPage(new GeneralConfigWidget(NULL), i18nc("@title General settings", "General"));
 	item->setHeader(i18n("General Settings"));
-	item->setIcon(KIcon("preferences-other"));
+	item->setIcon(QIcon::fromTheme("preferences-other"));
 
 	item = m_configDialog->addPage(new ErrorsConfigWidget(NULL), i18nc("@title Error Check Settings", "Error Check"));
 	item->setHeader(i18n("Error Check Settings"));
-	item->setIcon(KIcon("games-endturn"));
+	item->setIcon(QIcon::fromTheme("games-endturn"));
 
 	item = m_configDialog->addPage(new Sonnet::ConfigWidget(NULL), i18nc("@title Spelling Settings", "Spelling"));
 	item->setHeader(i18n("Spelling Settings"));
-	item->setIcon(KIcon("tools-check-spelling"));
+	item->setIcon(QIcon::fromTheme("tools-check-spelling"));
 
 	item = m_configDialog->addPage(new PlayerConfigWidget(NULL), i18nc("@title Player Settings", "Player"));
 	item->setHeader(i18n("Player Settings"));
-	item->setIcon(KIcon("mediaplayer"));
+	item->setIcon(QIcon::fromTheme("mediaplayer-logo"));
 
 	QStringList backendNames(Player::instance()->backendNames());
 	for(QStringList::ConstIterator it = backendNames.begin(); it != backendNames.end(); it++) {
@@ -171,7 +171,7 @@ Application::Application() :
 		if(configWidget) {
 			item = m_configDialog->addPage(configWidget, *it);
 			item->setHeader(i18nc("@title Player backend settings", "%1 Backend Settings", *it));
-			item->setIcon(KIcon((*it).toLower() + "-logo"));
+			item->setIcon(QIcon::fromTheme((*it).toLower() + "-logo"));
 		}
 	}
 
@@ -464,7 +464,7 @@ Application::setupActions()
 	prefsAction->setStatusTip(i18n("Configure Subtitle Composer"));
 
 	QAction *newSubtitleAction = new QAction(actionCollection);
-	newSubtitleAction->setIcon(KIcon("document-new"));
+	newSubtitleAction->setIcon(QIcon::fromTheme("document-new"));
 	newSubtitleAction->setText(i18nc("@action:inmenu Create a new subtitle", "New"));
 	newSubtitleAction->setStatusTip(i18n("Create an empty subtitle"));
 	newSubtitleAction->setShortcuts(KStandardShortcut::openNew()/*, QAction::DefaultShortcut | QAction::ActiveShortcut*/);
@@ -473,7 +473,7 @@ Application::setupActions()
 	actionManager->addAction(newSubtitleAction, UserAction::FullScreenOff);
 
 	QAction *openSubtitleAction = new QAction(actionCollection);
-	openSubtitleAction->setIcon(KIcon("document-open"));
+	openSubtitleAction->setIcon(QIcon::fromTheme("document-open"));
 	openSubtitleAction->setText(i18nc("@action:inmenu Open subtitle file", "Open..."));
 	openSubtitleAction->setStatusTip(i18n("Open subtitle file"));
 	openSubtitleAction->setShortcuts(KStandardShortcut::open()/*, QAction::DefaultShortcut | QAction::ActiveShortcut*/);
@@ -482,7 +482,7 @@ Application::setupActions()
 	actionManager->addAction(openSubtitleAction, 0);
 
 	m_reopenSubtitleAsAction = new KCodecActionExt(actionCollection, true);
-	m_reopenSubtitleAsAction->setIcon(KIcon("view-refresh"));
+	m_reopenSubtitleAsAction->setIcon(QIcon::fromTheme("view-refresh"));
 	m_reopenSubtitleAsAction->setText(i18n("Reload As..."));
 	m_reopenSubtitleAsAction->setStatusTip(i18n("Reload opened file with a different encoding"));
 	connect(m_reopenSubtitleAsAction, SIGNAL(triggered(QTextCodec *)), this, SLOT(reopenSubtitleWithCodec(QTextCodec *)));
@@ -491,14 +491,14 @@ Application::setupActions()
 	actionManager->addAction(m_reopenSubtitleAsAction, UserAction::SubOpened | UserAction::SubPClean | UserAction::FullScreenOff);
 
 	m_recentSubtitlesAction = new KRecentFilesActionExt(actionCollection);
-	m_recentSubtitlesAction->setIcon(KIcon("document-open"));
+	m_recentSubtitlesAction->setIcon(QIcon::fromTheme("document-open"));
 	m_recentSubtitlesAction->setText(i18nc("@action:inmenu Open rencently used subtitle file", "Open &Recent"));
 	m_recentSubtitlesAction->setStatusTip(i18n("Open subtitle file"));
 	connect(m_recentSubtitlesAction, SIGNAL(urlSelected(const QUrl &)), this, SLOT(openSubtitle(const QUrl &)));
 	actionCollection->addAction(ACT_RECENT_SUBTITLES, m_recentSubtitlesAction);
 
 	QAction *saveSubtitleAction = new QAction(actionCollection);
-	saveSubtitleAction->setIcon(KIcon("document-save"));
+	saveSubtitleAction->setIcon(QIcon::fromTheme("document-save"));
 	saveSubtitleAction->setText(i18n("Save"));
 	saveSubtitleAction->setStatusTip(i18n("Save opened subtitle"));
 	saveSubtitleAction->setShortcuts(KStandardShortcut::save()/*, QAction::DefaultShortcut | QAction::ActiveShortcut*/);
@@ -507,7 +507,7 @@ Application::setupActions()
 	actionManager->addAction(saveSubtitleAction, UserAction::SubPDirty | UserAction::FullScreenOff);
 
 	QAction *saveSubtitleAsAction = new QAction(actionCollection);
-	saveSubtitleAsAction->setIcon(KIcon("document-save-as"));
+	saveSubtitleAsAction->setIcon(QIcon::fromTheme("document-save-as"));
 	saveSubtitleAsAction->setText(i18n("Save As..."));
 	saveSubtitleAsAction->setStatusTip(i18n("Save opened subtitle with different settings"));
 	connect(saveSubtitleAsAction, SIGNAL(triggered()), this, SLOT(saveSubtitleAs()));
@@ -515,7 +515,7 @@ Application::setupActions()
 	actionManager->addAction(saveSubtitleAsAction, UserAction::SubOpened | UserAction::FullScreenOff);
 
 	QAction *closeSubtitleAction = new QAction(actionCollection);
-	closeSubtitleAction->setIcon(KIcon("window-close"));
+	closeSubtitleAction->setIcon(QIcon::fromTheme("window-close"));
 	closeSubtitleAction->setText(i18n("Close"));
 	closeSubtitleAction->setStatusTip(i18n("Close opened subtitle"));
 	closeSubtitleAction->setShortcuts(KStandardShortcut::close()/*, QAction::DefaultShortcut | QAction::ActiveShortcut*/);
@@ -524,7 +524,7 @@ Application::setupActions()
 	actionManager->addAction(closeSubtitleAction, UserAction::SubOpened | UserAction::FullScreenOff);
 
 	QAction *newSubtitleTrAction = new QAction(actionCollection);
-	newSubtitleTrAction->setIcon(KIcon("document-new"));
+	newSubtitleTrAction->setIcon(QIcon::fromTheme("document-new"));
 	newSubtitleTrAction->setText(i18n("New Translation"));
 	newSubtitleTrAction->setStatusTip(i18n("Create an empty translation subtitle"));
 	newSubtitleTrAction->setShortcut(QKeySequence("Ctrl+Shift+N")/*, QAction::DefaultShortcut | QAction::ActiveShortcut*/);
@@ -533,7 +533,7 @@ Application::setupActions()
 	actionManager->addAction(newSubtitleTrAction, UserAction::SubOpened | UserAction::FullScreenOff);
 
 	QAction *openSubtitleTrAction = new QAction(actionCollection);
-	openSubtitleTrAction->setIcon(KIcon("document-open"));
+	openSubtitleTrAction->setIcon(QIcon::fromTheme("document-open"));
 	openSubtitleTrAction->setText(i18n("Open Translation..."));
 	openSubtitleTrAction->setStatusTip(i18n("Open translation subtitle file"));
 	openSubtitleTrAction->setShortcut(QKeySequence("Ctrl+Shift+O")/*, QAction::DefaultShortcut | QAction::ActiveShortcut*/);
@@ -542,7 +542,7 @@ Application::setupActions()
 	actionManager->addAction(openSubtitleTrAction, UserAction::SubOpened);
 
 	m_reopenSubtitleTrAsAction = new KCodecActionExt(actionCollection, true);
-	m_reopenSubtitleTrAsAction->setIcon(KIcon("view-refresh"));
+	m_reopenSubtitleTrAsAction->setIcon(QIcon::fromTheme("view-refresh"));
 	m_reopenSubtitleTrAsAction->setText(i18n("Reload Translation As..."));
 	m_reopenSubtitleTrAsAction->setStatusTip(i18n("Reload opened translation file with a different encoding"));
 	connect(m_reopenSubtitleTrAsAction, SIGNAL(triggered(QTextCodec *)), this, SLOT(reopenSubtitleTrWithCodec(QTextCodec *)));
@@ -551,7 +551,7 @@ Application::setupActions()
 	actionManager->addAction(m_reopenSubtitleTrAsAction, UserAction::SubTrOpened | UserAction::SubSClean | UserAction::FullScreenOff);
 
 	m_recentSubtitlesTrAction = new KRecentFilesActionExt(actionCollection);
-	m_recentSubtitlesTrAction->setIcon(KIcon("document-open"));
+	m_recentSubtitlesTrAction->setIcon(QIcon::fromTheme("document-open"));
 	m_recentSubtitlesTrAction->setText(i18n("Open &Recent Translation"));
 	m_recentSubtitlesTrAction->setStatusTip(i18n("Open translation subtitle file"));
 	connect(m_recentSubtitlesTrAction, SIGNAL(urlSelected(const QUrl &)), this, SLOT(openSubtitleTr(const QUrl &)));
@@ -559,7 +559,7 @@ Application::setupActions()
 	actionManager->addAction(m_recentSubtitlesTrAction, UserAction::SubOpened | UserAction::FullScreenOff);
 
 	QAction *saveSubtitleTrAction = new QAction(actionCollection);
-	saveSubtitleTrAction->setIcon(KIcon("document-save"));
+	saveSubtitleTrAction->setIcon(QIcon::fromTheme("document-save"));
 	saveSubtitleTrAction->setText(i18n("Save Translation"));
 	saveSubtitleTrAction->setStatusTip(i18n("Save opened translation subtitle"));
 	saveSubtitleTrAction->setShortcut(QKeySequence("Ctrl+Shift+S")/*, QAction::DefaultShortcut | QAction::ActiveShortcut*/);
@@ -568,7 +568,7 @@ Application::setupActions()
 	actionManager->addAction(saveSubtitleTrAction, UserAction::SubSDirty | UserAction::FullScreenOff);
 
 	QAction *saveSubtitleTrAsAction = new QAction(actionCollection);
-	saveSubtitleTrAsAction->setIcon(KIcon("document-save-as"));
+	saveSubtitleTrAsAction->setIcon(QIcon::fromTheme("document-save-as"));
 	saveSubtitleTrAsAction->setText(i18n("Save Translation As..."));
 	saveSubtitleTrAsAction->setStatusTip(i18n("Save opened translation subtitle with different settings"));
 	connect(saveSubtitleTrAsAction, SIGNAL(triggered()), this, SLOT(saveSubtitleTrAs()));
@@ -576,7 +576,7 @@ Application::setupActions()
 	actionManager->addAction(saveSubtitleTrAsAction, UserAction::SubTrOpened | UserAction::FullScreenOff);
 
 	QAction *closeSubtitleTrAction = new QAction(actionCollection);
-	closeSubtitleTrAction->setIcon(KIcon("window-close"));
+	closeSubtitleTrAction->setIcon(QIcon::fromTheme("window-close"));
 	closeSubtitleTrAction->setText(i18n("Close Translation"));
 	closeSubtitleTrAction->setStatusTip(i18n("Close opened translation subtitle"));
 	closeSubtitleTrAction->setShortcut(QKeySequence("Ctrl+Shift+F4; Ctrl+Shift+W")/*, QAction::DefaultShortcut | QAction::ActiveShortcut*/);
@@ -585,7 +585,7 @@ Application::setupActions()
 	actionManager->addAction(closeSubtitleTrAction, UserAction::SubTrOpened | UserAction::FullScreenOff);
 
 	QAction *undoAction = new QAction(actionCollection);
-	undoAction->setIcon(KIcon("edit-undo"));
+	undoAction->setIcon(QIcon::fromTheme("edit-undo"));
 	undoAction->setText(i18n("Undo"));
 	undoAction->setStatusTip(i18n("Undo"));
 	undoAction->setShortcuts(KStandardShortcut::undo()/*, QAction::DefaultShortcut | QAction::ActiveShortcut*/);
@@ -594,7 +594,7 @@ Application::setupActions()
 	actionManager->addAction(undoAction, UserAction::SubHasUndo);
 
 	QAction *redoAction = new QAction(actionCollection);
-	redoAction->setIcon(KIcon("edit-redo"));
+	redoAction->setIcon(QIcon::fromTheme("edit-redo"));
 	redoAction->setText(i18n("Redo"));
 	redoAction->setStatusTip(i18n("Redo"));
 	redoAction->setShortcuts(KStandardShortcut::redo()/*, QAction::DefaultShortcut | QAction::ActiveShortcut*/);
@@ -671,7 +671,7 @@ Application::setupActions()
 	actionManager->addAction(gotoLineAction, UserAction::SubHasLines);
 
 	QAction *findAction = new QAction(actionCollection);
-	findAction->setIcon(KIcon("edit-find"));
+	findAction->setIcon(QIcon::fromTheme("edit-find"));
 	findAction->setText(i18n("Find..."));
 	findAction->setStatusTip(i18n("Find occurrences of strings or regular expressions"));
 	findAction->setShortcuts(KStandardShortcut::find()/*, QAction::DefaultShortcut | QAction::ActiveShortcut*/);
@@ -680,8 +680,7 @@ Application::setupActions()
 	actionManager->addAction(findAction, UserAction::SubHasLine);
 
 	QAction *findNextAction = new QAction(actionCollection);
-//  findNextAction->setIcon( KIcon( "go-down" ) );
-	findNextAction->setIcon(KIcon("go-down-search"));
+	findNextAction->setIcon(QIcon::fromTheme("go-down-search"));
 	findNextAction->setText(i18n("Find Next"));
 	findNextAction->setStatusTip(i18n("Find next occurrence of string or regular expression"));
 	findNextAction->setShortcuts(KStandardShortcut::findNext()/*, QAction::DefaultShortcut | QAction::ActiveShortcut*/);
@@ -690,8 +689,7 @@ Application::setupActions()
 	actionManager->addAction(findNextAction, UserAction::SubHasLine);
 
 	QAction *findPreviousAction = new QAction(actionCollection);
-//  findPreviousAction->setIcon( KIcon( "go-up" ) );
-	findPreviousAction->setIcon(KIcon("go-up-search"));
+	findPreviousAction->setIcon(QIcon::fromTheme("go-up-search"));
 	findPreviousAction->setText(i18n("Find Previous"));
 	findPreviousAction->setStatusTip(i18n("Find previous occurrence of string or regular expression"));
 	findPreviousAction->setShortcuts(KStandardShortcut::findPrev()/*, QAction::DefaultShortcut | QAction::ActiveShortcut*/);
@@ -708,7 +706,7 @@ Application::setupActions()
 	actionManager->addAction(replaceAction, UserAction::SubHasLine | UserAction::FullScreenOff);
 
 	QAction *retrocedeCurrentLineAction = new QAction(actionCollection);
-	retrocedeCurrentLineAction->setIcon(KIcon("go-down"));
+	retrocedeCurrentLineAction->setIcon(QIcon::fromTheme("go-down"));
 	retrocedeCurrentLineAction->setText(i18n("Retrocede current line"));
 	retrocedeCurrentLineAction->setStatusTip(i18n("Makes the line before the current one active"));
 	retrocedeCurrentLineAction->setShortcut(QKeySequence("Alt+Up")/*, QAction::DefaultShortcut | QAction::ActiveShortcut*/);
@@ -717,7 +715,7 @@ Application::setupActions()
 	actionManager->addAction(retrocedeCurrentLineAction, UserAction::SubHasLines | UserAction::HasSelection);
 
 	QAction *advanceCurrentLineAction = new QAction(actionCollection);
-	advanceCurrentLineAction->setIcon(KIcon("go-down"));
+	advanceCurrentLineAction->setIcon(QIcon::fromTheme("go-down"));
 	advanceCurrentLineAction->setText(i18n("Advance current line"));
 	advanceCurrentLineAction->setStatusTip(i18n("Makes the line after the current one active"));
 	advanceCurrentLineAction->setShortcut(QKeySequence("Alt+Down")/*, QAction::DefaultShortcut | QAction::ActiveShortcut*/);
@@ -749,7 +747,7 @@ Application::setupActions()
 	actionManager->addAction(showErrorsAction, UserAction::SubHasLine | UserAction::FullScreenOff);
 
 	QAction *findErrorAction = new QAction(actionCollection);
-	findErrorAction->setIcon(KIcon("edit-find"));
+	findErrorAction->setIcon(QIcon::fromTheme("edit-find"));
 	findErrorAction->setText(i18n("Find Error..."));
 	findErrorAction->setStatusTip(i18n("Find lines with specified errors"));
 	findErrorAction->setShortcut(QKeySequence("Ctrl+Shift+E")/*, QAction::DefaultShortcut | QAction::ActiveShortcut*/);
@@ -758,8 +756,7 @@ Application::setupActions()
 	actionManager->addAction(findErrorAction, UserAction::SubHasLine);
 
 	QAction *findNextErrorAction = new QAction(actionCollection);
-//  findNextErrorAction->setIcon( KIcon( "go-down" ) );
-	findNextErrorAction->setIcon(KIcon("go-down-search"));
+	findNextErrorAction->setIcon(QIcon::fromTheme("go-down-search"));
 	findNextErrorAction->setText(i18n("Find Next Error"));
 	findNextErrorAction->setStatusTip(i18n("Find next line with specified errors"));
 	findNextErrorAction->setShortcut(QKeySequence("F4")/*, QAction::DefaultShortcut | QAction::ActiveShortcut*/);
@@ -768,8 +765,7 @@ Application::setupActions()
 	actionManager->addAction(findNextErrorAction, UserAction::SubHasLine);
 
 	QAction *findPreviousErrorAction = new QAction(actionCollection);
-//  findPreviousErrorAction->setIcon( KIcon( "go-up" ) );
-	findPreviousErrorAction->setIcon(KIcon("go-up-search"));
+	findPreviousErrorAction->setIcon(QIcon::fromTheme("go-up-search"));
 	findPreviousErrorAction->setText(i18n("Find Previous Error"));
 	findPreviousErrorAction->setStatusTip(i18n("Find previous line with specified errors"));
 	findPreviousErrorAction->setShortcut(QKeySequence("Shift+F4")/*, QAction::DefaultShortcut | QAction::ActiveShortcut*/);
@@ -778,7 +774,7 @@ Application::setupActions()
 	actionManager->addAction(findPreviousErrorAction, UserAction::SubHasLine);
 
 	QAction *spellCheckAction = new QAction(actionCollection);
-	spellCheckAction->setIcon(KIcon("tools-check-spelling"));
+	spellCheckAction->setIcon(QIcon::fromTheme("tools-check-spelling"));
 	spellCheckAction->setText(i18n("Spelling..."));
 	spellCheckAction->setStatusTip(i18n("Check lines spelling"));
 	connect(spellCheckAction, SIGNAL(triggered()), this, SLOT(spellCheck()));
@@ -794,7 +790,7 @@ Application::setupActions()
 	actionManager->addAction(toggleSelectedLinesMarkAction, UserAction::HasSelection | UserAction::FullScreenOff);
 
 	QAction *toggleSelectedLinesBoldAction = new QAction(actionCollection);
-	toggleSelectedLinesBoldAction->setIcon(KIcon("format-text-bold"));
+	toggleSelectedLinesBoldAction->setIcon(QIcon::fromTheme("format-text-bold"));
 	toggleSelectedLinesBoldAction->setText(i18n("Toggle Bold"));
 	toggleSelectedLinesBoldAction->setStatusTip(i18n("Toggle selected lines bold attribute"));
 	toggleSelectedLinesBoldAction->setShortcut(QKeySequence("Ctrl+B")/*, QAction::DefaultShortcut | QAction::ActiveShortcut*/);
@@ -803,7 +799,7 @@ Application::setupActions()
 	actionManager->addAction(toggleSelectedLinesBoldAction, UserAction::HasSelection | UserAction::FullScreenOff);
 
 	QAction *toggleSelectedLinesItalicAction = new QAction(actionCollection);
-	toggleSelectedLinesItalicAction->setIcon(KIcon("format-text-italic"));
+	toggleSelectedLinesItalicAction->setIcon(QIcon::fromTheme("format-text-italic"));
 	toggleSelectedLinesItalicAction->setText(i18n("Toggle Italic"));
 	toggleSelectedLinesItalicAction->setStatusTip(i18n("Toggle selected lines italic attribute"));
 	toggleSelectedLinesItalicAction->setShortcut(QKeySequence("Ctrl+I")/*, QAction::DefaultShortcut | QAction::ActiveShortcut*/);
@@ -812,7 +808,7 @@ Application::setupActions()
 	actionManager->addAction(toggleSelectedLinesItalicAction, UserAction::HasSelection | UserAction::FullScreenOff);
 
 	QAction *toggleSelectedLinesUnderlineAction = new QAction(actionCollection);
-	toggleSelectedLinesUnderlineAction->setIcon(KIcon("format-text-underline"));
+	toggleSelectedLinesUnderlineAction->setIcon(QIcon::fromTheme("format-text-underline"));
 	toggleSelectedLinesUnderlineAction->setText(i18n("Toggle Underline"));
 	toggleSelectedLinesUnderlineAction->setStatusTip(i18n("Toggle selected lines underline attribute"));
 	toggleSelectedLinesUnderlineAction->setShortcut(QKeySequence("Ctrl+U")/*, QAction::DefaultShortcut | QAction::ActiveShortcut*/);
@@ -821,7 +817,7 @@ Application::setupActions()
 	actionManager->addAction(toggleSelectedLinesUnderlineAction, UserAction::HasSelection | UserAction::FullScreenOff);
 
 	QAction *toggleSelectedLinesStrikeThroughAction = new QAction(actionCollection);
-	toggleSelectedLinesStrikeThroughAction->setIcon(KIcon("format-text-strikethrough"));
+	toggleSelectedLinesStrikeThroughAction->setIcon(QIcon::fromTheme("format-text-strikethrough"));
 	toggleSelectedLinesStrikeThroughAction->setText(i18n("Toggle Strike Through"));
 	toggleSelectedLinesStrikeThroughAction->setStatusTip(i18n("Toggle selected lines strike through attribute"));
 	toggleSelectedLinesStrikeThroughAction->setShortcut(QKeySequence("Ctrl+T")/*, QAction::DefaultShortcut | QAction::ActiveShortcut*/);
@@ -830,7 +826,7 @@ Application::setupActions()
 	actionManager->addAction(toggleSelectedLinesStrikeThroughAction, UserAction::HasSelection | UserAction::FullScreenOff);
 
 	QAction *changeSelectedLinesColorAction = new QAction(actionCollection);
-	changeSelectedLinesColorAction->setIcon(KIcon("format-text-color"));
+	changeSelectedLinesColorAction->setIcon(QIcon::fromTheme("format-text-color"));
 	changeSelectedLinesColorAction->setText(i18n("Change Text Color"));
 	changeSelectedLinesColorAction->setStatusTip(i18n("Change text color of selected lines"));
 	changeSelectedLinesColorAction->setShortcut(QKeySequence("Ctrl+Shift+C")/*, QAction::DefaultShortcut | QAction::ActiveShortcut*/);
@@ -973,21 +969,21 @@ Application::setupActions()
 	actionManager->addAction(editCurrentLineInPlaceAction, UserAction::HasSelection | UserAction::FullScreenOff);
 
 	QAction *openVideoAction = new QAction(actionCollection);
-	openVideoAction->setIcon(KIcon("document-open"));
+	openVideoAction->setIcon(QIcon::fromTheme("document-open"));
 	openVideoAction->setText(i18n("Open Video..."));
 	openVideoAction->setStatusTip(i18n("Open video file"));
 	connect(openVideoAction, SIGNAL(triggered()), this, SLOT(openVideo()));
 	actionCollection->addAction(ACT_OPEN_VIDEO, openVideoAction);
 
 	m_recentVideosAction = new KRecentFilesActionExt(actionCollection);
-	m_recentVideosAction->setIcon(KIcon("document-open"));
+	m_recentVideosAction->setIcon(QIcon::fromTheme("document-open"));
 	m_recentVideosAction->setText(i18n("Open &Recent Video"));
 	m_recentVideosAction->setStatusTip(i18n("Open video file"));
 	connect(m_recentVideosAction, SIGNAL(urlSelected(const QUrl &)), this, SLOT(openVideo(const QUrl &)));
 	actionCollection->addAction(ACT_RECENT_VIDEOS, m_recentVideosAction);
 
 	QAction *closeVideoAction = new QAction(actionCollection);
-	closeVideoAction->setIcon(KIcon("window-close"));
+	closeVideoAction->setIcon(QIcon::fromTheme("window-close"));
 	closeVideoAction->setText(i18n("Close Video"));
 	closeVideoAction->setStatusTip(i18n("Close video file"));
 	connect(closeVideoAction, SIGNAL(triggered()), m_player, SLOT(closeFile()));
@@ -995,7 +991,7 @@ Application::setupActions()
 	actionManager->addAction(closeVideoAction, UserAction::VideoOpened);
 
 	QAction *extractVideoAudioAction = new QAction(actionCollection);
-	extractVideoAudioAction->setIcon(KIcon("audio-extract"));
+	extractVideoAudioAction->setIcon(QIcon::fromTheme("audio-extract"));
 	extractVideoAudioAction->setText(i18n("Extract Audio"));
 	extractVideoAudioAction->setStatusTip(i18n("Extract video's active audio stream"));
 	connect(extractVideoAudioAction, SIGNAL(triggered()), this, SLOT(extractVideoAudio()));
@@ -1003,7 +999,7 @@ Application::setupActions()
 	actionManager->addAction(extractVideoAudioAction, UserAction::VideoOpened);
 
 	QAction *cancelAudioExtractionAction = new QAction(actionCollection);
-	cancelAudioExtractionAction->setIcon(KIcon("dialog-cancel"));
+	cancelAudioExtractionAction->setIcon(QIcon::fromTheme("dialog-cancel"));
 	cancelAudioExtractionAction->setText(i18n("Cancel Audio Extraction"));
 	cancelAudioExtractionAction->setStatusTip(i18n("Cancel video's audio stream extraction"));
 	connect(cancelAudioExtractionAction, SIGNAL(triggered()), Decoder::instance(), SLOT(stop()));
@@ -1012,7 +1008,7 @@ Application::setupActions()
 
 	KToggleAction *fullScreenAction = new KToggleAction(actionCollection);
 //  fullScreenAction->setChecked( false )
-	fullScreenAction->setIcon(KIcon("view-fullscreen"));
+	fullScreenAction->setIcon(QIcon::fromTheme("view-fullscreen"));
 	fullScreenAction->setText(i18n("Full Screen Mode"));
 	fullScreenAction->setStatusTip(i18n("Toggle full screen mode"));
 	fullScreenAction->setShortcuts(KStandardShortcut::fullScreen()/*, QAction::DefaultShortcut | QAction::ActiveShortcut*/);
@@ -1020,7 +1016,7 @@ Application::setupActions()
 	actionCollection->addAction(ACT_TOGGLE_FULL_SCREEN, fullScreenAction);
 
 	QAction *stopAction = new QAction(actionCollection);
-	stopAction->setIcon(KIcon("media-playback-stop"));
+	stopAction->setIcon(QIcon::fromTheme("media-playback-stop"));
 	stopAction->setText(i18n("Stop"));
 	stopAction->setStatusTip(i18n("Stop video playback"));
 	connect(stopAction, SIGNAL(triggered()), m_player, SLOT(stop()));
@@ -1028,7 +1024,7 @@ Application::setupActions()
 	actionManager->addAction(stopAction, UserAction::VideoPlaying);
 
 	QAction *playPauseAction = new QAction(actionCollection);
-	playPauseAction->setIcon(KIcon("media-playback-start"));
+	playPauseAction->setIcon(QIcon::fromTheme("media-playback-start"));
 	playPauseAction->setText(i18n("Play"));
 	playPauseAction->setStatusTip(i18n("Toggle video playing/paused"));
 	connect(playPauseAction, SIGNAL(triggered()), m_player, SLOT(togglePlayPaused()));
@@ -1036,7 +1032,7 @@ Application::setupActions()
 	actionManager->addAction(playPauseAction, UserAction::VideoOpened);
 
 	QAction *seekBackwardsAction = new QAction(actionCollection);
-	seekBackwardsAction->setIcon(KIcon("media-seek-backward"));
+	seekBackwardsAction->setIcon(QIcon::fromTheme("media-seek-backward"));
 	seekBackwardsAction->setText(i18n("Seek Backwards"));
 	seekBackwardsAction->setShortcut(QKeySequence("Left")/*, QAction::DefaultShortcut | QAction::ActiveShortcut*/);
 	connect(seekBackwardsAction, SIGNAL(triggered()), this, SLOT(seekBackwards()));
@@ -1044,7 +1040,7 @@ Application::setupActions()
 	actionManager->addAction(seekBackwardsAction, UserAction::VideoPlaying);
 
 	QAction *seekForwardsAction = new QAction(actionCollection);
-	seekForwardsAction->setIcon(KIcon("media-seek-forward"));
+	seekForwardsAction->setIcon(QIcon::fromTheme("media-seek-forward"));
 	seekForwardsAction->setText(i18n("Seek Forwards"));
 	seekForwardsAction->setShortcut(QKeySequence("Right")/*, QAction::DefaultShortcut | QAction::ActiveShortcut*/);
 	connect(seekForwardsAction, SIGNAL(triggered()), this, SLOT(seekForwards()));
@@ -1056,7 +1052,7 @@ Application::setupActions()
 //	onPlayerOptionChanged(PlayerConfig::keySeekJumpLength(), QString::number(playerConfig()->seekJumpLength()));
 
 	QAction *seekToPrevLineAction = new QAction(actionCollection);
-	seekToPrevLineAction->setIcon(KIcon("media-skip-backward"));
+	seekToPrevLineAction->setIcon(QIcon::fromTheme("media-skip-backward"));
 	seekToPrevLineAction->setText(i18n("Jump to Previous Line"));
 	seekToPrevLineAction->setStatusTip(i18n("Seek to previous subtitle line show time"));
 	seekToPrevLineAction->setShortcut(QKeySequence("Shift+Left")/*, QAction::DefaultShortcut | QAction::ActiveShortcut*/);
@@ -1065,7 +1061,7 @@ Application::setupActions()
 	actionManager->addAction(seekToPrevLineAction, UserAction::SubHasLine | UserAction::VideoPlaying);
 
 	QAction *seekToNextLineAction = new QAction(actionCollection);
-	seekToNextLineAction->setIcon(KIcon("media-skip-forward"));
+	seekToNextLineAction->setIcon(QIcon::fromTheme("media-skip-forward"));
 	seekToNextLineAction->setText(i18n("Jump to Next Line"));
 	seekToNextLineAction->setStatusTip(i18n("Seek to next subtitle line show time"));
 	seekToNextLineAction->setShortcut(QKeySequence("Shift+Right")/*, QAction::DefaultShortcut | QAction::ActiveShortcut*/);
@@ -1074,8 +1070,7 @@ Application::setupActions()
 	actionManager->addAction(seekToNextLineAction, UserAction::SubHasLine | UserAction::VideoPlaying);
 
 	QAction *setCurrentLineShowTimeFromVideoAction = new QAction(actionCollection);
-//  setCurrentLineShowTimeFromVideoAction->setIcon( KIcon( "set-show-time" ) );
-	setCurrentLineShowTimeFromVideoAction->setIcon(KIcon("zone-start"));
+	setCurrentLineShowTimeFromVideoAction->setIcon(QIcon::fromTheme("set-show-time"));
 	setCurrentLineShowTimeFromVideoAction->setText(i18n("Set Current Line Show Time"));
 	setCurrentLineShowTimeFromVideoAction->setStatusTip(i18n("Set current line show time to video position"));
 	setCurrentLineShowTimeFromVideoAction->setShortcut(QKeySequence("Shift+Z")/*, QAction::DefaultShortcut | QAction::ActiveShortcut*/);
@@ -1084,8 +1079,7 @@ Application::setupActions()
 	actionManager->addAction(setCurrentLineShowTimeFromVideoAction, UserAction::HasSelection | UserAction::VideoPlaying);
 
 	QAction *setCurrentLineHideTimeFromVideoAction = new QAction(actionCollection);
-//  setCurrentLineHideTimeFromVideoAction->setIcon( KIcon( "set-hide-time" ) );
-	setCurrentLineHideTimeFromVideoAction->setIcon(KIcon("zone-end"));
+	setCurrentLineHideTimeFromVideoAction->setIcon(QIcon::fromTheme("set-hide-time"));
 	setCurrentLineHideTimeFromVideoAction->setText(i18n("Set Current Line Hide Time"));
 	setCurrentLineHideTimeFromVideoAction->setStatusTip(i18n("Set current line hide time to video position"));
 	setCurrentLineHideTimeFromVideoAction->setShortcut(QKeySequence("Shift+X")/*, QAction::DefaultShortcut | QAction::ActiveShortcut*/);
@@ -1094,14 +1088,14 @@ Application::setupActions()
 	actionManager->addAction(setCurrentLineHideTimeFromVideoAction, UserAction::HasSelection | UserAction::VideoPlaying);
 
 	KToggleAction *currentLineFollowsVideoAction = new KToggleAction(actionCollection);
-	currentLineFollowsVideoAction->setIcon(KIcon("current-line-follows-video"));
+	currentLineFollowsVideoAction->setIcon(QIcon::fromTheme("current-line-follows-video"));
 	currentLineFollowsVideoAction->setText(i18n("Current Line Follows Video"));
 	currentLineFollowsVideoAction->setStatusTip(i18n("Make current line follow the playing video position"));
 	connect(currentLineFollowsVideoAction, SIGNAL(toggled(bool)), this, SLOT(onLinkCurrentLineToVideoToggled(bool)));
 	actionCollection->addAction(ACT_CURRENT_LINE_FOLLOWS_VIDEO, currentLineFollowsVideoAction);
 
 	KToggleAction *toggleMuteAction = new KToggleAction(actionCollection);
-	toggleMuteAction->setIcon(KIcon("audio-volume-muted"));
+	toggleMuteAction->setIcon(QIcon::fromTheme("audio-volume-muted"));
 	toggleMuteAction->setText(i18nc("@action:inmenu Toggle audio muted", "Mute"));
 //  toggleMuteAction->setText( i18n( "Mute" ), i18n( "Unmute" ) );
 	toggleMuteAction->setStatusTip(i18n("Enable/disable playback sound"));
@@ -1110,7 +1104,7 @@ Application::setupActions()
 	actionCollection->addAction(ACT_TOGGLE_MUTED, toggleMuteAction);
 
 	QAction *increaseVolumeAction = new QAction(actionCollection);
-	increaseVolumeAction->setIcon(KIcon("audio-volume-high"));
+	increaseVolumeAction->setIcon(QIcon::fromTheme("audio-volume-high"));
 	increaseVolumeAction->setText(i18n("Increase Volume"));
 	increaseVolumeAction->setStatusTip(i18n("Increase volume by 5%"));
 	increaseVolumeAction->setShortcut(Qt::Key_Plus/*, QAction::DefaultShortcut | QAction::ActiveShortcut*/);
@@ -1118,7 +1112,7 @@ Application::setupActions()
 	actionCollection->addAction(ACT_INCREASE_VOLUME, increaseVolumeAction);
 
 	QAction *decreaseVolumeAction = new QAction(actionCollection);
-	decreaseVolumeAction->setIcon(KIcon("audio-volume-low"));
+	decreaseVolumeAction->setIcon(QIcon::fromTheme("audio-volume-low"));
 	decreaseVolumeAction->setText(i18n("Decrease Volume"));
 	decreaseVolumeAction->setStatusTip(i18n("Decrease volume by 5%"));
 	decreaseVolumeAction->setShortcut(Qt::Key_Minus/*, QAction::DefaultShortcut | QAction::ActiveShortcut*/);
@@ -1126,7 +1120,7 @@ Application::setupActions()
 	actionCollection->addAction(ACT_DECREASE_VOLUME, decreaseVolumeAction);
 
 	KSelectAction *setActiveAudioStreamAction = new KSelectAction(actionCollection);
-	setActiveAudioStreamAction->setIcon(KIcon("select-stream"));
+	setActiveAudioStreamAction->setIcon(QIcon::fromTheme("select-stream"));
 	setActiveAudioStreamAction->setText(i18n("Audio Streams"));
 	setActiveAudioStreamAction->setStatusTip(i18n("Select active audio stream"));
 	connect(setActiveAudioStreamAction, SIGNAL(triggered(int)), m_player, SLOT(setActiveAudioStream(int)));
@@ -1134,7 +1128,7 @@ Application::setupActions()
 	actionManager->addAction(setActiveAudioStreamAction, UserAction::VideoOpened);
 
 	QAction *increaseSubtitleFontAction = new QAction(actionCollection);
-	increaseSubtitleFontAction->setIcon(KIcon("format-font-size-more"));
+	increaseSubtitleFontAction->setIcon(QIcon::fromTheme("format-font-size-more"));
 	increaseSubtitleFontAction->setText(i18n("Increase Font Size"));
 	increaseSubtitleFontAction->setStatusTip(i18n("Increase subtitles font size by 1 point"));
 	increaseSubtitleFontAction->setShortcut(QKeySequence("Alt++")/*, QAction::DefaultShortcut | QAction::ActiveShortcut*/);
@@ -1142,7 +1136,7 @@ Application::setupActions()
 	actionCollection->addAction(ACT_INCREASE_SUBTITLE_FONT, increaseSubtitleFontAction);
 
 	QAction *decreaseSubtitleFontAction = new QAction(actionCollection);
-	decreaseSubtitleFontAction->setIcon(KIcon("format-font-size-less"));
+	decreaseSubtitleFontAction->setIcon(QIcon::fromTheme("format-font-size-less"));
 	decreaseSubtitleFontAction->setText(i18n("Decrease Font Size"));
 	decreaseSubtitleFontAction->setStatusTip(i18n("Decrease subtitles font size by 1 point"));
 	decreaseSubtitleFontAction->setShortcut(QKeySequence("Alt+-")/*, QAction::DefaultShortcut | QAction::ActiveShortcut*/);
@@ -1150,7 +1144,7 @@ Application::setupActions()
 	actionCollection->addAction(ACT_DECREASE_SUBTITLE_FONT, decreaseSubtitleFontAction);
 
 	KSelectAction *setActiveSubtitleStreamAction = new KSelectAction(actionCollection);
-	setActiveSubtitleStreamAction->setIcon(KIcon("select-stream"));
+	setActiveSubtitleStreamAction->setIcon(QIcon::fromTheme("select-stream"));
 	setActiveSubtitleStreamAction->setText(i18n("Subtitle Streams"));
 	setActiveSubtitleStreamAction->setStatusTip(i18n("Select active subtitle stream"));
 	connect(setActiveSubtitleStreamAction, SIGNAL(triggered(int)), this, SLOT(setActiveSubtitleStream(int)));
@@ -1182,7 +1176,7 @@ Application::setupActions()
 	actionManager->addAction(adjustToVideoPositionAnchorFirstAction, UserAction::HasSelection | UserAction::VideoPlaying | UserAction::FullScreenOff);
 
 	QAction *scriptsManagerAction = new QAction(actionCollection);
-	scriptsManagerAction->setIcon(KIcon("folder-development"));
+	scriptsManagerAction->setIcon(QIcon::fromTheme("folder-development"));
 	scriptsManagerAction->setText(i18nc("@action:inmenu Manage user scripts", "Scripts Manager..."));
 	scriptsManagerAction->setStatusTip(i18n("Manage user scripts"));
 	connect(scriptsManagerAction, SIGNAL(triggered()), m_scriptsManager, SLOT(showDialog()));
@@ -3034,7 +3028,7 @@ void
 Application::onPlayerPlaying()
 {
 	QAction *playPauseAction = action(ACT_PLAY_PAUSE);
-	playPauseAction->setIcon(KIcon("media-playback-pause"));
+	playPauseAction->setIcon(QIcon::fromTheme("media-playback-pause"));
 	playPauseAction->setText(i18n("Pause"));
 }
 
@@ -3042,7 +3036,7 @@ void
 Application::onPlayerPaused()
 {
 	QAction *playPauseAction = action(ACT_PLAY_PAUSE);
-	playPauseAction->setIcon(KIcon("media-playback-start"));
+	playPauseAction->setIcon(QIcon::fromTheme("media-playback-start"));
 	playPauseAction->setText(i18n("Play"));
 }
 
@@ -3050,7 +3044,7 @@ void
 Application::onPlayerStopped()
 {
 	QAction *playPauseAction = action(ACT_PLAY_PAUSE);
-	playPauseAction->setIcon(KIcon("media-playback-start"));
+	playPauseAction->setIcon(QIcon::fromTheme("media-playback-start"));
 	playPauseAction->setText(i18n("Play"));
 }
 
