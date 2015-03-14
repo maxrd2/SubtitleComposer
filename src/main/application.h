@@ -34,7 +34,7 @@
 #include <QtCore/QString>
 #include <QKeySequence>
 
-#include <KApplication>
+#include <QApplication>
 #include <KConfigDialog>
 #include <QAction>
 #include <QUrl>
@@ -67,13 +67,15 @@ class ErrorTracker;
 
 class ScriptsManager;
 
-class Application : public KApplication
+class Application : public QApplication
 {
 	Q_OBJECT
 
 public:
-	Application();
+	Application(int &argc, char **argv);
 	virtual ~Application();
+
+	void init();
 
 	static Application * instance();
 

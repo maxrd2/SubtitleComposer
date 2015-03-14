@@ -88,7 +88,6 @@
 
 #include <KFileDialog>
 #include <KShortcut>
-#include <K4AboutData>
 #include <KCmdLineArgs>
 #include <KGlobal>
 #include <KConfig>
@@ -113,8 +112,8 @@ SubtitleComposer::app()
 	return Application::instance();
 }
 
-Application::Application() :
-	KApplication(),
+Application::Application(int &argc, char **argv) :
+	QApplication(argc, argv),
 	m_subtitle(0),
 	m_subtitleUrl(),
 	m_subtitleFileName(),
@@ -130,6 +129,7 @@ Application::Application() :
 	m_player(Player::instance()),
 	m_decoder(Decoder::instance()),
 	m_lastFoundLine(0),
+	m_mainWindow(0),
 //  m_audiolevels( 0 ), // FIXME audio levels
 	m_lastSubtitleUrl(QDir::homePath()),
 	m_lastVideoUrl(QDir::homePath()),
@@ -137,7 +137,11 @@ Application::Application() :
 {
 	// NOTE the player is initialized by PlayerWidget because it requires the parent widget
 	m_decoder->initialize(0, SCConfig::decoderBackend());
+}
 
+void
+Application::init()
+{
 	m_mainWindow = new MainWindow();
 
 	m_playerWidget = m_mainWindow->m_playerWidget;
@@ -253,7 +257,7 @@ Application::~Application()
 	// (NOT BEFORE). Therefore is not possible to save the program settings (nor do
 	// pretty much anything) at this point.
 
-	// delete m_mainWindow; the windows is destroyed when it's closed
+	// delete m_mainWindow; the window is destroyed when it's closed
 
 	delete m_subtitle;
 //  delete m_audiolevels; // FIXME audio levels
@@ -262,7 +266,7 @@ Application::~Application()
 Application *
 Application::instance()
 {
-	return static_cast<Application *>(kapp);
+	return static_cast<Application *>(QApplication::instance());
 }
 
 Subtitle *
@@ -1962,7 +1966,7 @@ Application::splitSubtitle()
 	if(m_translationMode)
 		args << splitTrUrl.toString(QUrl::PreferLocalFile);
 
-	if(!QProcess::startDetached(KCmdLineArgs::aboutData()->appName(), args)) {
+	if(!QProcess::startDetached(applicationName(), args)) {
 		KMessageBox::sorry(m_mainWindow, m_translationMode
 			? i18n("Could not open a new Subtitle Composer window.\n" "The split part was saved as %1.", splitUrl.path())
 			: i18n("Could not open a new Subtitle Composer window.\n" "The split parts were saved as %1 and %2.", splitUrl.path(), splitTrUrl.path()));

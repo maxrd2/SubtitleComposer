@@ -24,7 +24,6 @@
 
 #include <QDebug>
 #include <KApplication>
-#include <KAboutData>
 
 using namespace SubtitleComposer;
 

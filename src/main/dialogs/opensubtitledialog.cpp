@@ -24,6 +24,7 @@
 
 #include <QComboBox>
 #include <QVBoxLayout>
+#include <QPushButton>
 
 #include <KLocalizedString>
 
@@ -54,13 +55,13 @@ OpenSubtitleDialog::OpenSubtitleDialog(bool primary, const QUrl &startDir, const
 	layout()->addWidget(m_fileWidget);
 
 	m_buttons = new QDialogButtonBox(this);
-	m_buttons->addButton(reinterpret_cast<QAbstractButton *>(m_fileWidget->okButton()), QDialogButtonBox::AcceptRole);
-	m_buttons->addButton(reinterpret_cast<QAbstractButton *>(m_fileWidget->cancelButton()), QDialogButtonBox::RejectRole);
+	m_buttons->addButton(m_fileWidget->okButton(), QDialogButtonBox::AcceptRole);
+	m_buttons->addButton(m_fileWidget->cancelButton(), QDialogButtonBox::RejectRole);
 	connect(m_buttons, SIGNAL(rejected()), m_fileWidget, SLOT(slotCancel()));
-	connect(reinterpret_cast<QWidget *>(m_fileWidget->okButton()), SIGNAL(clicked(bool)), m_fileWidget, SLOT(slotOk()));
+	connect(m_fileWidget->okButton(), SIGNAL(clicked(bool)), m_fileWidget, SLOT(slotOk()));
 	connect(m_fileWidget, SIGNAL(accepted()), m_fileWidget, SLOT(accept()));
 	connect(m_fileWidget, SIGNAL(accepted()), this, SLOT(accept()));
-	connect(reinterpret_cast<QWidget *>(m_fileWidget->cancelButton()), SIGNAL(clicked(bool)), this, SLOT(reject()));
+	connect(m_fileWidget->cancelButton(), SIGNAL(clicked(bool)), this, SLOT(reject()));
 	layout()->addWidget(m_buttons);
 
 	resize(m_fileWidget->dialogSizeHint());

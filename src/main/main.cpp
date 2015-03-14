@@ -22,21 +22,17 @@
 #include <config.h>
 #endif
 
-// #define BUILD_MAIN_TESTS
-#ifdef BUILD_MAIN_TESTS
-#include "main_tests.h"
-#else
-
 #include "application.h"
+#include "mainwindow.h"
 #include "../common/commondefs.h"
+
+#include <KAboutData>
+#include <KLocale>
 
 #include <QtCore/QFile>
 #include <QtCore/QDir>
-
-#include <K4AboutData>
-#include <KCmdLineArgs>
-#include <KLocale>
-#include <KStandardDirs>
+#include <QCommandLineParser>
+#include <QCommandLineOption>
 
 #include <X11/Xlib.h>
 
@@ -45,60 +41,77 @@ main(int argc, char **argv)
 {
 	XInitThreads(); // needed for some Player Backends
 
-	K4AboutData aboutData(
-			"subtitlecomposer",     // The program name used internally.
-			"subtitlecomposer",     // The message catalog name.
-			ki18n("Subtitle Composer"),     // A displayable program name string.
-			"0.5.7",        // The program version string.
-			ki18n("A KDE subtitle editor."),        // A short description of what the program does.
-			K4AboutData::License_GPL,        // License identifier
-			ki18n("&copy; 2007-2012 Sergio Pistone\n&copy; 2013-2014 Mladen Milinković"),        // Copyright Statement
-			KLocalizedString(),     // Additional text
-			// We are not a project under the KDE umbrella (hopefully, we will be someday)
-			"https://github.com/maxrd2/subtitlecomposer",   // Project Homepage
-			"max@smoothware.net"    // Address for bugs
-			);
+	SubtitleComposer::Application app(argc, argv);
 
-	aboutData.addAuthor(
-			ki18n("Sergio Pistone"),        // name
-			ki18n("Original Author"),       // task
-			"Sergio Pistone <sergio_pistone@yahoo.com.ar>"  // email
-			);
-	aboutData.addAuthor(
-			ki18n("Mladen Milinković"),     // name
-			ki18n("Author & Maintainer"),   // task
-			"Mladen Milinkovic <max@smoothware.net>"        // email
-			);
+	KLocalizedString::setApplicationDomain("subtitlecomposer");
 
-	// Initialize command line args
-	KCmdLineArgs::init(argc, argv, &aboutData);
+	KAboutData aboutData(
+		"subtitlecomposer",
+		i18n("Subtitle Composer"),
+		"0.5.7",
+		i18n("A KDE subtitle editor."),
+		KAboutLicense::GPL,
+		i18n("&copy; 2007-2012 Sergio Pistone\n&copy; 2013-2015 Mladen Milinković"),
+		QString(), // Additional text
+		"https://github.com/maxrd2/subtitlecomposer",
+		"maxrd2@smoothware.net");
 
+	aboutData.addAuthor(i18n("Mladen Milinković"), i18n("Author & Maintainer"), "Mladen Milinkovic <maxrd2@smoothware.net>");
+	aboutData.addAuthor(i18n("Sergio Pistone"), i18n("Original Author"), "Sergio Pistone <sergio_pistone@yahoo.com.ar>");
+
+	aboutData.setTranslator(i18nc("NAME OF TRANSLATORS", "Your names"), i18nc("EMAIL OF TRANSLATORS", "Your emails"));
+
+	aboutData.addCredit(i18n("Goran Vidovic (gogo)"), i18n("Croatian Translator"));
+	aboutData.addCredit(i18n("Petar Toushkov"), i18n("Bulgarian Translator"));
+	aboutData.addCredit(i18n("Petr Gadula (Goliash)"), i18n("Translator"));
+	aboutData.addCredit(i18n("Thomas Gastine"), i18n("Translator"));
+	aboutData.addCredit(i18n("Panagiotis Papadopoulos"), i18n("Translator"));
+	aboutData.addCredit(i18n("Alessandro Polverini"), i18n("Translator"));
+	aboutData.addCredit(i18n("Tomasz Argasiński"), i18n("Translator"));
+	aboutData.addCredit(i18n("Marcio P. Moraes"), i18n("Translator"));
+	aboutData.addCredit(i18n("Alexander Antsev"), i18n("Translator"));
+	aboutData.addCredit(i18n("Slobodan Simic"), i18n("Translator"));
+	aboutData.addCredit(i18n("Yuri Chornoivan"), i18n("Translator"));
+	aboutData.addCredit(i18n("Alexandros Perdikomatis"), i18n("Translator"));
+	aboutData.addCredit(i18n("Barcza Károly"), i18n("Translator"));
+	aboutData.addCredit(i18n("Martin Steghöfer"));
+	aboutData.addCredit(i18n("All people who have contributed and I have forgotten to mention"));
+
+	// register about data
 	KAboutData::setApplicationData(aboutData);
 
-	// Define the command line options using KCmdLineOptions
-	KCmdLineOptions options;
-	options.add("+[Primary URL]", ki18n("Open location as primary subtitle"));
-	options.add("+[Translation URL]", ki18n("Open location as translation subtitle"));
+	// set app stuff from about data component name
+	app.setApplicationName(aboutData.componentName());
+	app.setOrganizationDomain(aboutData.organizationDomain());
+	app.setApplicationVersion(aboutData.version());
+	app.setApplicationDisplayName(aboutData.displayName());
+	app.setWindowIcon(QIcon::fromTheme(aboutData.componentName()));
 
-	// Register the supported options
-	KCmdLineArgs::addCmdLineOptions(options);
+	// Initialize command line args
+	QCommandLineParser parser;
+	aboutData.setupCommandLine(&parser);
+	parser.setApplicationDescription(aboutData.shortDescription());
+	parser.addHelpOption();
+	parser.addVersionOption();
+	parser.addPositionalArgument("primary-url", i18n("Open location as primary subtitle"), "[primary-url]");
+	parser.addPositionalArgument("translation-url", i18n("Open location as translation subtitle"), "[translation-url]");
 
-	// Create application object
-	SubtitleComposer::Application app;
+	// do the command line parsing
+	parser.process(app);
+
+	// handle standard options
+	aboutData.processCommandLine(&parser);
+
+	app.init();
+
+	// load files
+	const QStringList args = parser.positionalArguments();
+	if(args.length() > 0)
+		app.openSubtitle(System::urlFromPath(args[0]));
+	if(args.length() > 1)
+		app.openSubtitleTr(System::urlFromPath(args[1]));
+
 	app.mainWindow()->show();
-
-	// Handle our own options/arguments
-	KCmdLineArgs *args = KCmdLineArgs::parsedArgs();
-
-	if(args->count())
-		app.openSubtitle(System::urlFromPath(args->arg(0)));
-
-	if(args->count() > 1)
-		app.openSubtitleTr(System::urlFromPath(args->arg(1)));
-
-	args->clear();
 
 	return app.exec();
 }
-
-#endif                                                  // BUILD_MAIN_TESTS

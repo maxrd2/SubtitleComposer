@@ -417,7 +417,7 @@ GStreamerPlayerBackend::eventFilter(QObject *obj, QEvent *event)
 	bool res = QObject::eventFilter(obj, event);
 
 	if(m_pipeline && GST_IS_VIDEO_OVERLAY(m_pipeline) && (event->type() == QEvent::Resize || event->type() == QEvent::Move)) {
-		QResizeEvent *evt = reinterpret_cast<QResizeEvent *>(event);
+		QResizeEvent *evt = static_cast<QResizeEvent *>(event);
 		if(evt->size().width() > 0 && evt->size().height() > 0)
 			gst_video_overlay_set_render_rectangle(GST_VIDEO_OVERLAY(m_pipeline), 0, 0, evt->size().width(), evt->size().height());
 		else
