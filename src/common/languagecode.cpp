@@ -1,28 +1,30 @@
-/***************************************************************************
- *   Copyright (C) 2007-2009 Sergio Pistone (sergio_pistone@yahoo.com.ar)  *
- *                                                                         *
- *   This program is free software; you can redistribute it and/or modify  *
- *   it under the terms of the GNU General Public License as published by  *
- *   the Free Software Foundation; either version 2 of the License, or     *
- *   (at your option) any later version.                                   *
- *                                                                         *
- *   This program is distributed in the hope that it will be useful,       *
- *   but WITHOUT ANY WARRANTY; without even the implied warranty of        *
- *   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the         *
- *   GNU General Public License for more details.                          *
- *                                                                         *
- *   You should have received a copy of the GNU General Public License     *
- *   along with this program; if not, write to the                         *
- *   Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor,      *
- *   Boston, MA 02110-1301, USA.                                           *
- ***************************************************************************/
+/**
+ * Copyright (C) 2007-2009 Sergio Pistone <sergio_pistone@yahoo.com.ar>
+ * Copyright (C) 2010-2015 Mladen Milinkovic <max@smoothware.net>
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the
+ * Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor,
+ * Boston, MA 02110-1301, USA.
+ */
 
 #include "languagecode.h"
 
 #include <QtCore/QMap>
 
-#include <KGlobal>
-#include <KLocale>
+#include <QLocale>
+
+#include <KLocalizedString>
 
 QString
 LanguageCode::toIso2(const QString &iso3Code)
@@ -415,20 +417,18 @@ LanguageCode::toIso3(const QString &iso2Code)
 QString
 LanguageCode::nameFromIso2(const QString &iso2Code)
 {
-	QString name = KGlobal::locale()->languageCodeToName(iso2Code);
+	QString name = QLocale::languageToString(QLocale(iso2Code).language());
 	return name.isEmpty() ? i18n("Unknown") : name;
 }
 
 QString
 LanguageCode::nameFromIso3(const QString &iso3Code)
 {
-	QString name = KGlobal::locale()->languageCodeToName(toIso2(iso3Code));
-	return name.isEmpty() ? i18n("Unknown") : name;
+	return nameFromIso2(toIso2(iso3Code));
 }
 
 /*static*/ QString
 LanguageCode::nameFromIso(const QString &isoCode)
 {
-	QString name = KGlobal::locale()->languageCodeToName(isoCode.length() == 2 ? isoCode : toIso2(isoCode));
-	return name.isEmpty() ? i18n("Unknown") + " (" + isoCode + ")" : name;
+	return nameFromIso2(isoCode.length() == 2 ? isoCode : toIso2(isoCode));
 }

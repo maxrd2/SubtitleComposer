@@ -44,11 +44,6 @@ add_executable(subtitlecomposer ${subtitlecomposer_SRCS})
 qt5_use_modules(subtitlecomposer Core Widgets)
 
 target_link_libraries(subtitlecomposer
-	KF5::CoreAddons KF5::WidgetsAddons KF5::TextWidgets KF5::Codecs
-	KF5::SonnetCore KF5::SonnetUi
-	KF5::KrossCore KF5::KrossUi
-	KF5::KIOCore KF5::KIOFileWidgets KF5::KIOWidgets KF5::KIONTLM
-	KF5::KDELibs4Support
 	${common_LIBS}
 	${core_LIBS}
 	${formats_LIBS}

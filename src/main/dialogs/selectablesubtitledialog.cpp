@@ -26,18 +26,18 @@
 #include <QLabel>
 #include <QGroupBox>
 #include <QGridLayout>
-
-#include <KApplication>
 #include <QPushButton>
-#include <kurlcompletion.h>
+#include <QIcon>
+
+#include <KUrlCompletion>
 #include <KComboBox>
 #include <KLineEdit>
-#include <QIcon>
+#include <KLocalizedString>
 
 using namespace SubtitleComposer;
 
-SelectableSubtitleDialog::SelectableSubtitleDialog(const QString &title, QWidget *parent) :
-	ActionWithTargetDialog(title, parent)
+SelectableSubtitleDialog::SelectableSubtitleDialog(const QString &title, QWidget *parent)
+	: ActionWithTargetDialog(title, parent)
 {}
 
 QGroupBox *

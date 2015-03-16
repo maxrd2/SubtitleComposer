@@ -274,7 +274,7 @@ GStreamerDecoderBackend::decodebinPadAdded(GstElement *decodebin, GstPad *srcpad
 			GstCaps *outputFilter = GStreamer::audioCapsFromFormat(backend->m_waveWriter.outputFormat());
 
 			gboolean success = TRUE;
-			success = success && GST_PAD_LINK_SUCCESSFUL(GStreamer::link(bin, "decodebin", srcPadName.toAscii(), "audioresample", "sink" /*, sourceFilter */));
+			success = success && GST_PAD_LINK_SUCCESSFUL(GStreamer::link(bin, "decodebin", srcPadName.toLatin1(), "audioresample", "sink" /*, sourceFilter */));
 			success = success && GST_PAD_LINK_SUCCESSFUL(GStreamer::link(bin, "audioresample", "audioconvert"));
 			success = success && GST_PAD_LINK_SUCCESSFUL(GStreamer::link(bin, "audioconvert", "fakesink", outputFilter));
 

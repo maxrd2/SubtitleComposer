@@ -23,8 +23,10 @@
 #include "../../core/subtitleiterator.h"
 
 #include <QDebug>
-#include <KLocale>
+
 #include <KMessageBox>
+#include <KLocalizedString>
+
 #include <sonnet/dialog.h>
 #include <sonnet/backgroundchecker.h>
 

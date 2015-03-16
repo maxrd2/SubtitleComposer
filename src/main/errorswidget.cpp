@@ -1,17 +1,17 @@
 /**
  * Copyright (C) 2007-2009 Sergio Pistone <sergio_pistone@yahoo.com.ar>
  * Copyright (C) 2010-2015 Mladen Milinkovic <max@smoothware.net>
- * 
+ *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with this program; if not, write to the
  * Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor,
@@ -32,14 +32,13 @@
 #include <QMouseEvent>
 #include <QContextMenuEvent>
 #include <QHeaderView>
-
 #include <QIcon>
-#include <KGlobal>
-#include <KMenu>
+#include <QMenu>
+#include <QDebug>
+
 #include <KConfig>
 #include <KConfigGroup>
-#include <QDebug>
-#include <KLocale>
+#include <KLocalizedString>
 
 using namespace SubtitleComposer;
 
@@ -539,9 +538,9 @@ ErrorsWidget::ErrorsWidget(QWidget *parent) :
 	setModel(new ErrorsModel(this));
 
 	QHeaderView *header = this->header();
-	header->setResizeMode(ErrorsModel::Number, QHeaderView::Interactive);
-	header->setResizeMode(ErrorsModel::ErrorCount, QHeaderView::Interactive);
-	header->setResizeMode(ErrorsModel::UserMark, QHeaderView::Interactive);
+	header->setSectionResizeMode(ErrorsModel::Number, QHeaderView::Interactive);
+	header->setSectionResizeMode(ErrorsModel::ErrorCount, QHeaderView::Interactive);
+	header->setSectionResizeMode(ErrorsModel::UserMark, QHeaderView::Interactive);
 
 	setSortingEnabled(false);
 	setRootIsDecorated(true);
@@ -569,7 +568,7 @@ ErrorsWidget::expandAll()
 void
 ErrorsWidget::loadConfig()
 {
-	KConfigGroup group(KGlobal::config()->group("ErrorsWidget Settings"));
+	KConfigGroup group(KSharedConfig::openConfig()->group("ErrorsWidget Settings"));
 
 	QByteArray state;
 	QStringList strState = group.readXdgListEntry("Columns State", QString("").split(' '));
@@ -581,7 +580,7 @@ ErrorsWidget::loadConfig()
 void
 ErrorsWidget::saveConfig()
 {
-	KConfigGroup group(KGlobal::config()->group("ErrorsWidget Settings"));
+	KConfigGroup group(KSharedConfig::openConfig()->group("ErrorsWidget Settings"));
 
 	QStringList strState;
 	QByteArray state = header()->saveState();
@@ -668,7 +667,7 @@ ErrorsWidget::contextMenuEvent(QContextMenuEvent *event)
 	errorCount -= markCount;
 
 	if(lineWithErrorsCount || errorCount || markCount) {
-		KMenu menu;
+		QMenu menu;
 		Application *app = Application::instance();
 
 		menu.addAction(i18n("Expand All"), this, SLOT(expandAll()));

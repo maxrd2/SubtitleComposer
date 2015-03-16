@@ -30,12 +30,11 @@
 #include <QGroupBox>
 #include <QGridLayout>
 #include <QKeyEvent>
-
 #include <QDebug>
-#include <KLocale>
-#include <KGlobal>
 #include <QIcon>
+
 #include <KConfigGroup>
+#include <KLocalizedString>
 
 using namespace SubtitleComposer;
 
@@ -179,7 +178,7 @@ CurrentLineWidget::focusedText() const
 void
 CurrentLineWidget::loadConfig()
 {
-	KConfigGroup group(KGlobal::config()->group("Current Line Settings"));
+	KConfigGroup group(KSharedConfig::openConfig()->group("Current Line Settings"));
 
 	m_textEdits[0]->setCheckSpellingEnabled(group.readEntry<bool>("PrimaryCheckSpelling", false));
 	m_textEdits[1]->setCheckSpellingEnabled(group.readEntry<bool>("TranslationCheckSpelling", false));
@@ -188,7 +187,7 @@ CurrentLineWidget::loadConfig()
 void
 CurrentLineWidget::saveConfig()
 {
-	KConfigGroup group(KGlobal::config()->group("Current Line Settings"));
+	KConfigGroup group(KSharedConfig::openConfig()->group("Current Line Settings"));
 
 	group.writeEntry("PrimaryCheckSpelling", m_textEdits[0]->checkSpellingEnabled());
 	group.writeEntry("TranslationCheckSpelling", m_textEdits[1]->checkSpellingEnabled());

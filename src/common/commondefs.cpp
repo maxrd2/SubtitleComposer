@@ -1,17 +1,17 @@
 /**
  * Copyright (C) 2007-2009 Sergio Pistone <sergio_pistone@yahoo.com.ar>
  * Copyright (C) 2010-2015 Mladen Milinkovic <max@smoothware.net>
- * 
+ *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with this program; if not, write to the
  * Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor,
@@ -32,7 +32,7 @@
 #include <QDebug>
 #include <QStandardPaths>
 
-#include <kio/netaccess.h>
+#include <kio/statjob.h>
 
 #ifndef Q_WS_WIN
 #include <unistd.h>
@@ -222,12 +222,14 @@ System::newUrl(const QUrl &baseUrl, const QString &fileName, const QString &exte
 		QUrl newUrl = baseUrl;
 
 		newUrl.setPath(newFileDir + newFileName);
-		if(!KIO::NetAccess::exists(newUrl, KIO::NetAccess::DestinationSide, 0))
+		KIO::Job *job = KIO::stat(newUrl, KIO::StatJob::DestinationSide, 2);
+		if(!job->exec())
 			return newUrl;
 
 		for(int i = 2, limit = retries + i; i < limit; ++i) {
 			newUrl.setPath(newFileDir + newFileNameBuilder.arg(i));
-			if(!KIO::NetAccess::exists(newUrl, KIO::NetAccess::DestinationSide, 0))
+			job = KIO::stat(newUrl, KIO::StatJob::DestinationSide, 2);
+			if(!job->exec())
 				return newUrl;
 		}
 	}

@@ -64,7 +64,7 @@ GStreamer::createElement(const QStringList &types, const char *name)
 {
 	GstElement *element = 0;
 	for(QStringList::ConstIterator it = types.begin(), end = types.end(); it != end; ++it)
-		if(!(*it).isEmpty() && (element = gst_element_factory_make((*it).toAscii(), name)))
+		if(!(*it).isEmpty() && (element = gst_element_factory_make((*it).toLatin1(), name)))
 			break;
 	return element;
 }

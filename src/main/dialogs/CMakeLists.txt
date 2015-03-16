@@ -24,6 +24,9 @@ set(main_dialogs_SRCS
 	${CMAKE_CURRENT_SOURCE_DIR}/insertlinedialog.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/removelinesdialog.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/progressdialog.cpp
-	${CMAKE_CURRENT_SOURCE_DIR}/inputdialog.cpp
+	${CMAKE_CURRENT_SOURCE_DIR}/textinputdialog.cpp
+	${CMAKE_CURRENT_SOURCE_DIR}/textinputdialog.ui
+	${CMAKE_CURRENT_SOURCE_DIR}/intinputdialog.cpp
+	${CMAKE_CURRENT_SOURCE_DIR}/intinputdialog.ui
 	CACHE INTERNAL EXPORTEDVARIABLE
 )

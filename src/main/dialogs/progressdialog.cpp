@@ -1,21 +1,22 @@
-/***************************************************************************
- *   Copyright (C) 2007-2009 Sergio Pistone (sergio_pistone@yahoo.com.ar)  *
- *                                                                         *
- *   This program is free software; you can redistribute it and/or modify  *
- *   it under the terms of the GNU General Public License as published by  *
- *   the Free Software Foundation; either version 2 of the License, or     *
- *   (at your option) any later version.                                   *
- *                                                                         *
- *   This program is distributed in the hope that it will be useful,       *
- *   but WITHOUT ANY WARRANTY; without even the implied warranty of        *
- *   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the         *
- *   GNU General Public License for more details.                          *
- *                                                                         *
- *   You should have received a copy of the GNU General Public License     *
- *   along with this program; if not, write to the                         *
- *   Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor,      *
- *   Boston, MA 02110-1301, USA.                                           *
- ***************************************************************************/
+/**
+ * Copyright (C) 2007-2009 Sergio Pistone <sergio_pistone@yahoo.com.ar>
+ * Copyright (C) 2010-2015 Mladen Milinkovic <max@smoothware.net>
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the
+ * Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor,
+ * Boston, MA 02110-1301, USA.
+ */
 
 #include "progressdialog.h"
 
@@ -23,35 +24,34 @@
 #include <QProgressBar>
 #include <QBoxLayout>
 #include <QCloseEvent>
-
-#include <KLocale>
+#include <QDialogButtonBox>
+#include <QPushButton>
 
 using namespace SubtitleComposer;
 
 ProgressDialog::ProgressDialog(const QString &caption, const QString &description, bool allowCancel, QWidget *parent) :
-//  KDialog(parent, Qt::FramelessWindowHint)
-	KDialog(parent, Qt::WindowTitleHint)
+	QDialog(parent, Qt::WindowTitleHint)
 {
-	setCaption(caption);
-
+	setWindowTitle(caption);
 	setModal(true);
-	setButtons(allowCancel ? KDialog::Cancel : (QFlags<KDialog::ButtonCode>) 0);
 
-	QWidget *mainWidget = new QWidget(this);
-	setMainWidget(mainWidget);
+	m_buttonBox = new QDialogButtonBox(allowCancel ? QDialogButtonBox::Cancel : QDialogButtonBox::NoButton, this);
+	connect(m_buttonBox, SIGNAL(accepted()), this, SLOT(accept()));
+	connect(m_buttonBox, SIGNAL(rejected()), this, SLOT(reject()));
 
-	m_label = new QLabel(mainWidget);
+	m_label = new QLabel(this);
 	m_label->setText(description);
 	m_label->setAlignment(Qt::AlignHCenter);
 
-	m_progressBar = new QProgressBar(mainWidget);
+	m_progressBar = new QProgressBar(this);
 	m_progressBar->setMaximum(1);
 	m_progressBar->setValue(0);
 
-	QBoxLayout *mainLayout = new QBoxLayout(QBoxLayout::TopToBottom, mainWidget);
+	QBoxLayout *mainLayout = new QBoxLayout(QBoxLayout::TopToBottom, this);
 	mainLayout->setMargin(0);
 	mainLayout->addWidget(m_label);
 	mainLayout->addWidget(m_progressBar);
+	mainLayout->addWidget(m_buttonBox);
 
 	setMinimumWidth(300);
 	resize(QSize(300, 10));
@@ -126,13 +126,13 @@ ProgressDialog::incrementMaximum(int delta)
 bool
 ProgressDialog::isCancellable() const
 {
-	return isButtonEnabled(KDialog::Cancel);
+	return m_buttonBox->button(QDialogButtonBox::Cancel)->isEnabled();
 }
 
 void
 ProgressDialog::setCancellable(bool cancellable)
 {
-	enableButton(KDialog::Cancel, cancellable);
+	m_buttonBox->button(QDialogButtonBox::Cancel)->setEnabled(cancellable);
 }
 
 

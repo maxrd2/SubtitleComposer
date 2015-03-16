@@ -51,7 +51,6 @@ OpenSubtitleDialog::OpenSubtitleDialog(bool primary, const QUrl &startDir, const
 	m_fileWidget->setCustomWidget(i18n("Encoding:"), m_encodingComboBox);
 
 	setLayout(new QVBoxLayout);
-	connect(m_fileWidget, SIGNAL(filterChanged(QString)), this, SIGNAL(filterSelected(QString)));
 	layout()->addWidget(m_fileWidget);
 
 	m_buttons = new QDialogButtonBox(this);

@@ -128,7 +128,7 @@ PhononPlayerBackend::openFile(const QString &filePath, bool &playingAfterCall)
 {
 	playingAfterCall = true;
 
-	Phonon::MediaSource mediaSource(filePath);
+	Phonon::MediaSource mediaSource(QUrl::fromLocalFile(filePath));
 
 	if(mediaSource.type() == Phonon::MediaSource::Invalid)
 		return false;

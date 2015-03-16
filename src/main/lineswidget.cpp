@@ -1,17 +1,17 @@
 /**
  * Copyright (C) 2007-2009 Sergio Pistone <sergio_pistone@yahoo.com.ar>
  * Copyright (C) 2010-2015 Mladen Milinkovic <max@smoothware.net>
- * 
+ *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with this program; if not, write to the
  * Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor,
@@ -37,11 +37,9 @@
 
 #include <QIcon>
 #include <QDebug>
-#include <KGlobal>
-#include <KLocale>
 #include <KConfig>
 #include <KConfigGroup>
-#include <KMenu>
+#include <QMenu>
 #include <QUrl>
 
 #if QT_VERSION >= 0x40500
@@ -678,13 +676,13 @@ LinesWidget::LinesWidget(QWidget *parent) :
 		setItemDelegateForColumn(column, column < LinesModel::Text ? plainTextDelegate : richTextDelegate);
 
 	QHeaderView *header = this->header();
-	header->setClickable(false);
-	header->setMovable(false);
-	header->setResizeMode(LinesModel::Number, QHeaderView::ResizeToContents);
-	header->setResizeMode(LinesModel::ShowTime, QHeaderView::ResizeToContents);
-	header->setResizeMode(LinesModel::HideTime, QHeaderView::ResizeToContents);
-	header->setResizeMode(LinesModel::Text, QHeaderView::Interactive);
-	header->setResizeMode(LinesModel::Translation, QHeaderView::Interactive);
+	header->setSectionsClickable(false);
+	header->setSectionsMovable(false);
+	header->setSectionResizeMode(LinesModel::Number, QHeaderView::ResizeToContents);
+	header->setSectionResizeMode(LinesModel::ShowTime, QHeaderView::ResizeToContents);
+	header->setSectionResizeMode(LinesModel::HideTime, QHeaderView::ResizeToContents);
+	header->setSectionResizeMode(LinesModel::Text, QHeaderView::Interactive);
+	header->setSectionResizeMode(LinesModel::Translation, QHeaderView::Interactive);
 	header->setSectionHidden(LinesModel::Translation, true);
 
 	setUniformRowHeights(true);
@@ -914,7 +912,7 @@ LinesWidget::targetRanges(int target) const
 void
 LinesWidget::loadConfig()
 {
-	KConfigGroup group(KGlobal::config()->group("LinesWidget Settings"));
+	KConfigGroup group(KSharedConfig::openConfig()->group("LinesWidget Settings"));
 
 	QByteArray state;
 	QStringList strState = group.readXdgListEntry("Columns State", QString("").split(' '));
@@ -926,7 +924,7 @@ LinesWidget::loadConfig()
 void
 LinesWidget::saveConfig()
 {
-	KConfigGroup group(KGlobal::config()->group("LinesWidget Settings"));
+	KConfigGroup group(KSharedConfig::openConfig()->group("LinesWidget Settings"));
 
 	QStringList strState;
 	QByteArray state = header()->saveState();
@@ -1043,7 +1041,7 @@ LinesWidget::contextMenuEvent(QContextMenuEvent *e)
 	Application *app = Application::instance();
 	QAction *action;
 
-	KMenu textsMenu(i18n("Texts"));
+	QMenu textsMenu(i18n("Texts"));
 	textsMenu.addAction(i18n("Break Lines..."), app, SLOT(breakLines()));
 	textsMenu.addAction(m_translationMode ? i18n("Unbreak Lines...") : i18n("Unbreak Lines"), app, SLOT(unbreakTexts()));
 	textsMenu.addAction(m_translationMode ? i18n("Simplify Spaces...") : i18n("Simplify Spaces"), app, SLOT(simplifySpaces()));
@@ -1053,7 +1051,7 @@ LinesWidget::contextMenuEvent(QContextMenuEvent *e)
 	textsMenu.addSeparator();
 	textsMenu.addAction(QIcon::fromTheme("tools-check-spelling"), i18n("Spelling..."), app, SLOT(spellCheck()));
 
-	KMenu stylesMenu(i18n("Styles"));
+	QMenu stylesMenu(i18n("Styles"));
 	int styleFlags = referenceLine->primaryText().cummulativeStyleFlags() | referenceLine->secondaryText().cummulativeStyleFlags();
 	action = stylesMenu.addAction(QIcon::fromTheme("format-text-bold"), i18nc("@action:inmenu Toggle bold style", "Bold"), app, SLOT(toggleSelectedLinesBold()));
 	action->setCheckable(true);
@@ -1069,7 +1067,7 @@ LinesWidget::contextMenuEvent(QContextMenuEvent *e)
 	action->setChecked(styleFlags & SString::StrikeThrough);
 	action = stylesMenu.addAction(QIcon::fromTheme("format-text-color"), i18nc("@action:inmenu Change Text Color", "Text Color"), app, SLOT(changeSelectedLinesColor()));
 
-	KMenu timesMenu(i18n("Times"));
+	QMenu timesMenu(i18n("Times"));
 	QString shiftMillis(SCConfig::linesQuickShiftAmount());
 	timesMenu.addAction(i18n("Shift +%1 Milliseconds", shiftMillis), app, SLOT(shiftSelectedLinesForwards()));
 	timesMenu.addAction(i18n("Shift −%1 Milliseconds", shiftMillis), app, SLOT(shiftSelectedLinesBackwards()));
@@ -1081,7 +1079,7 @@ LinesWidget::contextMenuEvent(QContextMenuEvent *e)
 	timesMenu.addAction(i18n("Maximize Durations"), app, SLOT(maximizeDurations()));
 	timesMenu.addAction(i18n("Fix Overlapping Times"), app, SLOT(fixOverlappingLines()));
 
-	KMenu errorsMenu(i18n("Errors"));
+	QMenu errorsMenu(i18n("Errors"));
 	action = errorsMenu.addAction(i18n("Mark"), app, SLOT(toggleSelectedLinesMark()));
 	action->setCheckable(true);
 	action->setChecked(referenceLine->errorFlags() & SubtitleLine::UserMark);
@@ -1091,7 +1089,7 @@ LinesWidget::contextMenuEvent(QContextMenuEvent *e)
 	errorsMenu.addSeparator();
 	errorsMenu.addAction(i18n("Show Errors..."), app, SLOT(showErrors()));
 
-	KMenu menu;
+	QMenu menu;
 	menu.addAction(i18n("Select All"), app, SLOT(selectAllLines()));
 	menu.addSeparator();
 	menu.addAction(i18n("Remove"), app, SLOT(removeSelectedLines()));

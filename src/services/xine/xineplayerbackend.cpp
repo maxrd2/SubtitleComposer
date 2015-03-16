@@ -29,10 +29,10 @@
 #include <QtCore/QDir>
 #include <QtCore/QFile>
 #include <QApplication>
-
 #include <QDebug>
-#include <KLocale>
 #include <QUrl>
+
+#include <KLocalizedString>
 
 #include <xine/xineutils.h>
 #include <X11/Xlib.h>
@@ -429,15 +429,20 @@ XinePlayerBackend::initializeXine(WId winId)
 	QStringList videoDriverNames = QString("xv xvmc opengl xxmc sdl xshm fb XDirectFB DirectFB aa caca auto").split(' ');
 	if(SCConfig::xineVideoEnabled())
 		videoDriverNames.prepend(SCConfig::xineVideo());
-	for(QStringList::Iterator it = videoDriverNames.begin(); it != videoDriverNames.end(); ++it) {
-		if((*it).isEmpty())
+	foreach(QString videoDriver, videoDriverNames) {
+		if(videoDriver.isEmpty())
 			continue;
 
-		// NOTE: magical fix follows... (taken from Phonon Xine backend)
-		// make sure all Qt<->X communication is done, else xine_open_video_driver will crash
-		QApplication::syncX();
+		{
+			// NOTE: magical fix follows... make sure all Qt<->X communication is done, else xine_open_video_driver will crash
+			static Display* display = 0;
+			if(!display)
+				display = XOpenDisplay(0);
+			Q_ASSERT(display);
+			XSync(display, false);
+		}
 
-		m_videoDriver = xine_open_video_driver(m_xineEngine, (*it).toAscii(),
+		m_videoDriver = xine_open_video_driver(m_xineEngine, videoDriver.toLatin1(),
 #ifdef HAVE_XCB
 			XINE_VISUAL_TYPE_XCB,
 #else
@@ -458,9 +463,10 @@ XinePlayerBackend::initializeXine(WId winId)
 	QStringList audioDriverNames = QString("alsa oss jack pulseaudio esd auto").split(' ');
 	if(SCConfig::xineAudioEnabled())
 		audioDriverNames.prepend(SCConfig::xineAudio());
-	for(QStringList::Iterator it = audioDriverNames.begin(); it != audioDriverNames.end(); ++it)
-		if(!(*it).isEmpty() && (m_audioDriver = xine_open_audio_driver(m_xineEngine, (*it).toAscii(), NULL)) != NULL)
+	foreach(QString audioDriver, audioDriverNames) {
+		if(!audioDriver.isEmpty() && (m_audioDriver = xine_open_audio_driver(m_xineEngine, audioDriver.toLatin1(), NULL)) != NULL)
 			break;
+	}
 
 	if(!m_audioDriver) {
 		qDebug() << "All audio drivers failed to initialize!";

@@ -20,16 +20,6 @@
 
 #include "mplayerconfigwidget.h"
 
-#include <QGridLayout>
-#include <QGroupBox>
-#include <QCheckBox>
-#include <QLabel>
-
-#include <KLocale>
-#include <KComboBox>
-#include <KNumInput>
-#include <kurlrequester.h>
-
 using namespace SubtitleComposer;
 
 MPlayerConfigWidget::MPlayerConfigWidget(QWidget *parent) :

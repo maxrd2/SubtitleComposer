@@ -1,28 +1,31 @@
-/***************************************************************************
- *   Copyright (C) 2007-2009 Sergio Pistone (sergio_pistone@yahoo.com.ar)  *
- *                                                                         *
- *   This program is free software; you can redistribute it and/or modify  *
- *   it under the terms of the GNU General Public License as published by  *
- *   the Free Software Foundation; either version 2 of the License, or     *
- *   (at your option) any later version.                                   *
- *                                                                         *
- *   This program is distributed in the hope that it will be useful,       *
- *   but WITHOUT ANY WARRANTY; without even the implied warranty of        *
- *   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the         *
- *   GNU General Public License for more details.                          *
- *                                                                         *
- *   You should have received a copy of the GNU General Public License     *
- *   along with this program; if not, write to the                         *
- *   Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor,      *
- *   Boston, MA 02110-1301, USA.                                           *
- ***************************************************************************/
+/**
+ * Copyright (C) 2007-2009 Sergio Pistone <sergio_pistone@yahoo.com.ar>
+ * Copyright (C) 2010-2015 Mladen Milinkovic <max@smoothware.net>
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the
+ * Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor,
+ * Boston, MA 02110-1301, USA.
+ */
 
 #include "filesavehelper.h"
 
 #include <QtDebug>
-#include <ksavefile.h>
-#include <ktemporaryfile.h>
-#include <kio/netaccess.h>
+#include <QSaveFile>
+#include <QTemporaryFile>
+
+#include <kio/filecopyjob.h>
+#include <kio/statjob.h>
 
 FileSaveHelper::FileSaveHelper(const QUrl &url, bool overwrite) :
 	m_url(url),
@@ -48,7 +51,7 @@ FileSaveHelper::overwrite()
 	return m_overwrite;
 }
 
-QFile *
+QFileDevice *
 FileSaveHelper::file()
 {
 	return m_file;
@@ -60,11 +63,11 @@ FileSaveHelper::open()
 	if(m_file)
 		return false;
 
-	if(!m_overwrite && KIO::NetAccess::exists(m_url, KIO::NetAccess::DestinationSide, 0))
+	if(!m_overwrite && exists(m_url))
 		return false;
 
 	if(m_url.isLocalFile()) {
-		m_file = new KSaveFile(m_url.path());
+		m_file = new QSaveFile(m_url.path());
 		if(!m_file->open(QIODevice::WriteOnly | QIODevice::Truncate)) {
 			qDebug() << "couldn't open output file" << m_file->fileName();
 			delete m_file;
@@ -72,8 +75,8 @@ FileSaveHelper::open()
 			return false;
 		}
 	} else {
-		m_file = new KTemporaryFile();
-		if(!((KTemporaryFile *)m_file)->open()) {
+		m_file = new QTemporaryFile();
+		if(!((QTemporaryFile *)m_file)->open()) {
 			qDebug() << "couldn't open output file" << m_file->fileName();
 			delete m_file;
 			m_file = 0;
@@ -90,15 +93,15 @@ FileSaveHelper::close()
 		return false;
 
 	if(m_url.isLocalFile()) {
-		delete m_file;                  // the destructor calls finalize() which in turn calls close()
+		static_cast<QSaveFile*>(m_file)->commit();
+		delete m_file;
 		m_file = 0;
 		return true;
 	} else {
-		m_file->close();                // close the file to ensure everything has been written to it
-
-		bool success = m_overwrite ? KIO::NetAccess::upload(m_file->fileName(), m_url, 0) : KIO::NetAccess::file_copy(QUrl(m_file->fileName()), m_url, 0);
-
-		delete m_file;                  // the destructor removes the temporary file
+		m_file->close();
+		KIO::Job *job = KIO::file_copy(QUrl::fromLocalFile(m_file->fileName()), m_url, -1, m_overwrite ? KIO::Overwrite : KIO::DefaultFlags);
+		bool success = job->exec();
+		delete m_file;
 		m_file = 0;
 
 		return success;
@@ -108,5 +111,6 @@ FileSaveHelper::close()
 bool
 FileSaveHelper::exists(const QUrl &url)
 {
-	return KIO::NetAccess::exists(url, KIO::NetAccess::DestinationSide, 0);
+	KIO::Job *job = KIO::stat(url, KIO::StatJob::DestinationSide, 2);
+	return job->exec();
 }

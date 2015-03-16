@@ -1,21 +1,22 @@
-/***************************************************************************
- *   Copyright (C) 2007-2009 Sergio Pistone (sergio_pistone@yahoo.com.ar)  *
- *                                                                         *
- *   This program is free software; you can redistribute it and/or modify  *
- *   it under the terms of the GNU General Public License as published by  *
- *   the Free Software Foundation; either version 2 of the License, or     *
- *   (at your option) any later version.                                   *
- *                                                                         *
- *   This program is distributed in the hope that it will be useful,       *
- *   but WITHOUT ANY WARRANTY; without even the implied warranty of        *
- *   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the         *
- *   GNU General Public License for more details.                          *
- *                                                                         *
- *   You should have received a copy of the GNU General Public License     *
- *   along with this program; if not, write to the                         *
- *   Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor,      *
- *   Boston, MA 02110-1301, USA.                                           *
- ***************************************************************************/
+/**
+ * Copyright (C) 2007-2009 Sergio Pistone <sergio_pistone@yahoo.com.ar>
+ * Copyright (C) 2010-2015 Mladen Milinkovic <max@smoothware.net>
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the
+ * Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor,
+ * Boston, MA 02110-1301, USA.
+ */
 
 #include "autodurationsdialog.h"
 
@@ -25,19 +26,17 @@
 #include <QButtonGroup>
 #include <QRadioButton>
 #include <QGridLayout>
-
-#include <KLocale>
-#include <KNumInput>
+#include <QSpinBox>
 
 using namespace SubtitleComposer;
 
-AutoDurationsDialog::AutoDurationsDialog(unsigned charMillis, unsigned wordMillis, unsigned lineMillis, QWidget *parent) :
-	ActionWithTargetDialog(i18n("Set Automatic Durations"), parent),
+AutoDurationsDialog::AutoDurationsDialog(unsigned charMillis, unsigned wordMillis, unsigned lineMillis, QWidget *parent)
+	: ActionWithTargetDialog(i18n("Set Automatic Durations"), parent),
 	m_translationMode(false)
 {
 	QGroupBox *settingsGroupBox = createGroupBox(i18nc("@title:group", "Settings"));
 
-	m_lineMillisSpinBox = new KIntSpinBox(settingsGroupBox);
+	m_lineMillisSpinBox = new QSpinBox(settingsGroupBox);
 	m_lineMillisSpinBox->setMinimum(0);
 	m_lineMillisSpinBox->setMaximum(1000);
 	m_lineMillisSpinBox->setValue(lineMillis);
@@ -46,7 +45,7 @@ AutoDurationsDialog::AutoDurationsDialog(unsigned charMillis, unsigned wordMilli
 	lineMillisLabel->setText(i18n("Milliseconds per line:"));
 	lineMillisLabel->setBuddy(m_lineMillisSpinBox);
 
-	m_wordMillisSpinBox = new KIntSpinBox(settingsGroupBox);
+	m_wordMillisSpinBox = new QSpinBox(settingsGroupBox);
 	m_wordMillisSpinBox->setMinimum(0);
 	m_wordMillisSpinBox->setMaximum(1000);
 	m_wordMillisSpinBox->setValue(wordMillis);
@@ -55,7 +54,7 @@ AutoDurationsDialog::AutoDurationsDialog(unsigned charMillis, unsigned wordMilli
 	wordMillisLabel->setText(i18n("Milliseconds per word:"));
 	wordMillisLabel->setBuddy(m_wordMillisSpinBox);
 
-	m_charMillisSpinBox = new KIntSpinBox(settingsGroupBox);
+	m_charMillisSpinBox = new QSpinBox(settingsGroupBox);
 	m_charMillisSpinBox->setMinimum(0);
 	m_charMillisSpinBox->setMaximum(1000);
 	m_charMillisSpinBox->setValue(charMillis);

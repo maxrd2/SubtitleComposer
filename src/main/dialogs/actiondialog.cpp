@@ -1,47 +1,49 @@
-/***************************************************************************
- *   Copyright (C) 2007-2009 Sergio Pistone (sergio_pistone@yahoo.com.ar)  *
- *                                                                         *
- *   This program is free software; you can redistribute it and/or modify  *
- *   it under the terms of the GNU General Public License as published by  *
- *   the Free Software Foundation; either version 2 of the License, or     *
- *   (at your option) any later version.                                   *
- *                                                                         *
- *   This program is distributed in the hope that it will be useful,       *
- *   but WITHOUT ANY WARRANTY; without even the implied warranty of        *
- *   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the         *
- *   GNU General Public License for more details.                          *
- *                                                                         *
- *   You should have received a copy of the GNU General Public License     *
- *   along with this program; if not, write to the                         *
- *   Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor,      *
- *   Boston, MA 02110-1301, USA.                                           *
- ***************************************************************************/
+/**
+ * Copyright (C) 2007-2009 Sergio Pistone <sergio_pistone@yahoo.com.ar>
+ * Copyright (C) 2010-2015 Mladen Milinkovic <max@smoothware.net>
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the
+ * Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor,
+ * Boston, MA 02110-1301, USA.
+ */
 
 #include "actiondialog.h"
 
 #include <QGroupBox>
 #include <QGridLayout>
 
-#include <QDebug>
-#include <KApplication>
-
 using namespace SubtitleComposer;
 
-ActionDialog::ActionDialog(const QString &title, QWidget *parent) :
-	KDialog(parent)
+ActionDialog::ActionDialog(const QString &title, QWidget *parent)
+	: QDialog(parent)
 {
-	setCaption(title);
+	setWindowTitle(title);
 
-	setButtons(KDialog::Ok | KDialog::Cancel);
-	setDefaultButton(KDialog::Ok);
+	m_buttonBox = new QDialogButtonBox(QDialogButtonBox::Ok | QDialogButtonBox::Cancel);
+	connect(m_buttonBox, SIGNAL(accepted()), this, SLOT(accept()));
+	connect(m_buttonBox, SIGNAL(rejected()), this, SLOT(reject()));
 
 	m_mainWidget = new QWidget(this);
 	m_mainLayout = new QVBoxLayout(m_mainWidget);
-	m_mainLayout->setAlignment(Qt::AlignTop);
-	m_mainLayout->setContentsMargins(0, 0, 0, 0);
-	m_mainLayout->setSpacing(5);
 
-	setMainWidget(m_mainWidget);
+	QVBoxLayout *layout = new QVBoxLayout(this);
+	layout->setAlignment(Qt::AlignTop);
+	layout->setContentsMargins(0, 0, 0, 0);
+	layout->setSpacing(5);
+
+	layout->addWidget(m_mainWidget);
+	layout->addWidget(m_buttonBox);
 }
 
 int
@@ -54,7 +56,7 @@ ActionDialog::exec()
 //      setMinimumWidth( minWidth );
 
 	resize(minimumSizeHint());
-	return KDialog::exec();
+	return QDialog::exec();
 }
 
 void
@@ -67,7 +69,7 @@ ActionDialog::show()
 //      setMinimumWidth( minWidth );
 
 	resize(minimumSizeHint());
-	KDialog::show();
+	QDialog::show();
 }
 
 QGroupBox *
@@ -77,7 +79,6 @@ ActionDialog::createGroupBox(const QString &title, bool addToLayout)
 	groupBox->setTitle(title);
 
 	if(addToLayout)
-//      m_mainLayout->addWidget( groupBox, m_mainLayout->rowCount(), 0 );
 		m_mainLayout->addWidget(groupBox);
 
 	return groupBox;
@@ -91,5 +92,3 @@ ActionDialog::createLayout(QGroupBox *groupBox)
 	gridLayout->setSpacing(5);
 	return gridLayout;
 }
-
-

@@ -35,6 +35,8 @@
 #include <QDropEvent>
 #include <QKeyEvent>
 
+#include <QMenu>
+#include <QPushButton>
 #include <QDesktopWidget>
 #include <QCursor>
 #include <QLabel>
@@ -42,11 +44,9 @@
 #include <QGroupBox>
 #include <QGridLayout>
 
-#include <KLocale>
 #include <KConfigGroup>
 #include <KMessageBox>
-#include <KMenu>
-#include <QPushButton>
+#include <KLocalizedString>
 
 using namespace SubtitleComposer;
 
@@ -450,7 +450,7 @@ PlayerWidget::eventFilter(QObject *object, QEvent *event)
 		if(mouseEvent->button() != Qt::RightButton)
 			return QWidget::eventFilter(object, event);
 
-		KMenu menu;
+		QMenu menu;
 		QAction *action = menu.addAction(i18n("Show editable position control"));
 		action->setCheckable(true);
 		action->setChecked(SCConfig::showPositionTimeEdit());
@@ -836,7 +836,7 @@ PlayerWidget::onPlayerLeftClicked(const QPoint & /*point */)
 void
 PlayerWidget::onPlayerRightClicked(const QPoint &point)
 {
-	static KMenu *menu = new KMenu(this);
+	static QMenu *menu = new QMenu(this);
 
 	menu->clear();
 

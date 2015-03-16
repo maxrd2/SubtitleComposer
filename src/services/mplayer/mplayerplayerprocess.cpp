@@ -24,10 +24,10 @@
 #include "../../main/application.h"
 
 #include <QApplication>
+#include <QStandardPaths>
 #include <QtCore/QStringList>
 
 #include <QDebug>
-#include <KStandardDirs>
 
 using namespace SubtitleComposer;
 
@@ -67,7 +67,7 @@ MPlayerPlayerProcess::mediaData()
 bool
 MPlayerPlayerProcess::start(const QString &filePath, int winId, int audioStream, int audioStreamCount)
 {
-	QString exePath = KStandardDirs::findExe(QUrl(SCConfig::mpExecutablePath()).toLocalFile());
+	QString exePath = QStandardPaths::findExecutable(QUrl(SCConfig::mpExecutablePath()).toLocalFile());
 	if(exePath.isEmpty())
 		return false;
 

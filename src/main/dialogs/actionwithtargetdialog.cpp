@@ -1,21 +1,22 @@
-/***************************************************************************
- *   Copyright (C) 2007-2009 Sergio Pistone (sergio_pistone@yahoo.com.ar)  *
- *                                                                         *
- *   This program is free software; you can redistribute it and/or modify  *
- *   it under the terms of the GNU General Public License as published by  *
- *   the Free Software Foundation; either version 2 of the License, or     *
- *   (at your option) any later version.                                   *
- *                                                                         *
- *   This program is distributed in the hope that it will be useful,       *
- *   but WITHOUT ANY WARRANTY; without even the implied warranty of        *
- *   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the         *
- *   GNU General Public License for more details.                          *
- *                                                                         *
- *   You should have received a copy of the GNU General Public License     *
- *   along with this program; if not, write to the                         *
- *   Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor,      *
- *   Boston, MA 02110-1301, USA.                                           *
- ***************************************************************************/
+/**
+ * Copyright (C) 2007-2009 Sergio Pistone <sergio_pistone@yahoo.com.ar>
+ * Copyright (C) 2010-2015 Mladen Milinkovic <max@smoothware.net>
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the
+ * Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor,
+ * Boston, MA 02110-1301, USA.
+ */
 
 #include "actionwithtargetdialog.h"
 #include "../application.h"
@@ -41,12 +42,6 @@ ActionWithTargetDialog::ActionWithTargetDialog(const QString &title, QWidget *pa
 	m_translationMode(false),
 	m_nonTranslationModeTarget(Subtitle::Primary)
 {
-//  setButtons( KDialog::Ok | KDialog::Cancel | KDialog::Default );
-//  setDefaultButton( KDialog::Ok );
-//  setButtonIcon( KDialog::Default, QIcon() );
-//  setButtonText( KDialog::Default, i18n( "Target <<" ) );
-//  setButtonToolTip( KDialog::Default, QString() );
-//  connect( this, SIGNAL( defaultClicked() ), this, SLOT( onDefaultButtonClicked() ) );
 }
 
 int
@@ -126,7 +121,7 @@ ActionWithTargetDialog::setTargetsButtonsHiddenState(QButtonGroup *targetButtonG
 	updateTargetsGroupBoxHiddenState();
 
 	if(targetButtonGroup == m_lineTargetsButtonGroup) {
-		setButtonText(KDialog::Default, hidden ? i18n("Target >>") : i18n("Target <<"));
+		m_buttonBox->button(QDialogButtonBox::RestoreDefaults)->setText(hidden ? i18n("Target >>") : i18n("Target <<"));
 
 		m_mainWidget->updateGeometry();
 		setMinimumSize(minimumSizeHint());
@@ -140,12 +135,11 @@ ActionWithTargetDialog::setTargetsButtonsHiddenState(QButtonGroup *targetButtonG
 void
 ActionWithTargetDialog::createLineTargetsButtonGroup()
 {
-	setButtons(KDialog::Ok | KDialog::Cancel | KDialog::Default);
-	setDefaultButton(KDialog::Ok);
-	setButtonIcon(KDialog::Default, QIcon());
-	setButtonText(KDialog::Default, i18n("Target <<"));
-	setButtonToolTip(KDialog::Default, QString());
-	connect(this, SIGNAL(defaultClicked()), this, SLOT(onDefaultButtonClicked()));
+	QPushButton *btnDefault = m_buttonBox->addButton(QDialogButtonBox::RestoreDefaults);
+	btnDefault->setIcon(QIcon());
+	btnDefault->setText(i18n("Target <<"));
+	btnDefault->setToolTip(QString());
+	connect(btnDefault, SIGNAL(clicked()), this, SLOT(onDefaultButtonClicked()));
 
 	createTargetsGroupBox();
 

@@ -1,29 +1,30 @@
-/***************************************************************************
- *   Copyright (C) 2007-2009 Sergio Pistone (sergio_pistone@yahoo.com.ar)  *
- *                                                                         *
- *   This program is free software; you can redistribute it and/or modify  *
- *   it under the terms of the GNU General Public License as published by  *
- *   the Free Software Foundation; either version 2 of the License, or     *
- *   (at your option) any later version.                                   *
- *                                                                         *
- *   This program is distributed in the hope that it will be useful,       *
- *   but WITHOUT ANY WARRANTY; without even the implied warranty of        *
- *   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the         *
- *   GNU General Public License for more details.                          *
- *                                                                         *
- *   You should have received a copy of the GNU General Public License     *
- *   along with this program; if not, write to the                         *
- *   Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor,      *
- *   Boston, MA 02110-1301, USA.                                           *
- ***************************************************************************/
+/**
+ * Copyright (C) 2007-2009 Sergio Pistone <sergio_pistone@yahoo.com.ar>
+ * Copyright (C) 2010-2015 Mladen Milinkovic <max@smoothware.net>
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the
+ * Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor,
+ * Boston, MA 02110-1301, USA.
+ */
 
 #include "language.h"
 
 #include <QtCore/QFile>
+#include <QStandardPaths>
+#include <QLocale>
 
-#include <KGlobal>
-#include <KLocale>
-#include <KStandardDirs>
+#include <KLocalizedString>
 
 using namespace SubtitleComposer;
 
@@ -126,25 +127,26 @@ Language::name(Language::Value language)
 	case Auto:
 		return i18n("Automatic");
 	case ChineseS:
-		return KGlobal::locale()->languageCodeToName("zh_CN");
+		return QLocale::languageToString(QLocale("zh_CN").language());
 	case ChineseT:
-		return KGlobal::locale()->languageCodeToName("zh_TW");
-	// case Filipino:        return KGlobal::locale()->languageCodeToName( "tl" );
+		return QLocale::languageToString(QLocale("zh_TW").language());
+	// case Filipino:        return KLocale::global()->languageCodeToName( "tl" );
 	case Filipino:
 		return i18nc("Official language of the Philippines, aka Filipino", "Tagalog");
 	case Hebrew:
-		return KGlobal::locale()->languageCodeToName("he");
+		return QLocale::languageToString(QLocale("he").language());
 	case Norwegian:
-		return KGlobal::locale()->languageCodeToName("nb");
+		return QLocale::languageToString(QLocale("nb").language());
 	default:
-		return KGlobal::locale()->languageCodeToName(code(language));
+		return QLocale::languageToString(QLocale(code(language)).language());
 	}
 }
 
 QString
 Language::flagPath(Value language)
 {
-	static QStringList localesDirs = KGlobal::dirs()->findDirs("locale", "l10n");
+	static QStringList localesDirs = QStandardPaths::locateAll(QStandardPaths::GenericDataLocation, "locale", QStandardPaths::LocateDirectory)
+			<< QStandardPaths::locateAll(QStandardPaths::GenericDataLocation, "l10n", QStandardPaths::LocateDirectory);
 	static QString localeDir = localesDirs.isEmpty() ? QString() : localesDirs.first();
 
 	QString localeCode;

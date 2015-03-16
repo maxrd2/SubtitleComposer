@@ -2,17 +2,17 @@
 /**
  * Copyright (C) 2007-2009 Sergio Pistone <sergio_pistone@yahoo.com.ar>
  * Copyright (C) 2010-2015 Mladen Milinkovic <max@smoothware.net>
- * 
+ *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with this program; if not, write to the
  * Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor,
@@ -28,35 +28,24 @@
 #include "../application.h"
 #include "../actions/useraction.h"
 #include "../actions/useractionnames.h"
-#include "../dialogs/inputdialog.h"
+#include "../dialogs/textinputdialog.h"
 #include "../../common/fileloadhelper.h"
 #include "../../common/filetrasher.h"
 #include "../../widgets/treeview.h"
 
-#include <QtCore/QProcess>
-#include <QAction>
-#include <QMenu>
-#include <QLabel>
-#include <QLineEdit>
-#include <QGridLayout>
-#include <QKeyEvent>
 #include <QStringListModel>
+#include <QStandardPaths>
+#include <QDialog>
+#include <QFileDialog>
+#include <QMenuBar>
+#include <QMenu>
 
-#include <KFileDialog>
+#include <QKeyEvent>
 
-#include <QIcon>
-#include <QAction>
-#include <KActionCollection>
-#include <KMenuBar>
-#include <KGlobal>
-#include <KLocale>
-#include <KDialog>
-#include <KFileDialog>
-#include <QPushButton>
-#include <KSeparator>
 #include <KMessageBox>
-#include <KStandardDirs>
 #include <KRun>
+#include <KActionCollection>
+#include <KLocalizedString>
 
 #include <kross/core/manager.h>
 #include <kross/core/interpreter.h>
@@ -113,95 +102,38 @@ Debug::error(const QString &message)
 	qWarning() << message;
 }
 
-ScriptsManager::ScriptsManager(QObject *parent) :
-	QObject(parent)
+ScriptsManager::ScriptsManager(QObject *parent)
+	: QObject(parent)
 {
+	m_dialog = new QDialog(app()->mainWindow());
+	setupUi(m_dialog);
+
 	// qDebug() << "KROSS interpreters:" << Kross::Manager::self().interpreters();
 
-	KGlobal::dirs()->addResourceType("script", "appdata", "scripts");
+	scriptsView->installEventFilter(this);
+	scriptsView->setModel(new InstalledScriptsModel(scriptsView));
+	scriptsView->setRootIsDecorated(false);
+	scriptsView->setSortingEnabled(false);
 
-	m_dialog = new KDialog(app()->mainWindow());
+	connect(btnCreate, SIGNAL(clicked()), this, SLOT(createScript()));
+	connect(btnAdd, SIGNAL(clicked()), this, SLOT(addScript()));
+	connect(btnRemove, SIGNAL(clicked()), this, SLOT(removeScript()));
+	connect(btnEdit, SIGNAL(clicked()), this, SLOT(editScript()));
+	connect(btnRun, SIGNAL(clicked()), this, SLOT(runScript()));
+	connect(btnRefresh, SIGNAL(clicked()), this, SLOT(reloadScripts()));
 
-	m_dialog->setCaption(i18n("Scripts Manager"));
-	m_dialog->setButtons(0);
-	m_dialog->setMainWidget(new QWidget(m_dialog));
-
-	QWidget *mainWidget = m_dialog->mainWidget();
-
-	m_scriptsWidget = new TreeView(mainWidget);
-	m_scriptsWidget->installEventFilter(this);
-	m_scriptsWidget->setModel(new InstalledScriptsModel(m_scriptsWidget));
-
-	m_scriptsWidget->setRootIsDecorated(false);
-	m_scriptsWidget->setSortingEnabled(false);
-
-	QWidget *buttonsWidget = new QWidget(mainWidget);
-
-	QPushButton *createScriptButton = new QPushButton(buttonsWidget);
-	createScriptButton->setText(i18n("Create..."));
-	createScriptButton->setWhatsThis(i18n("Creates a new script file."));
-	createScriptButton->setIcon(QIcon::fromTheme("document-new"));
-	connect(createScriptButton, SIGNAL(clicked()), this, SLOT(createScript()));
-
-	QPushButton *addScriptButton = new QPushButton(buttonsWidget);
-	addScriptButton->setText(i18n("Add..."));
-	addScriptButton->setWhatsThis(i18n("Copies an existing script from a specified location."));
-	addScriptButton->setIcon(QIcon::fromTheme("document-open"));
-	connect(addScriptButton, SIGNAL(clicked()), this, SLOT(addScript()));
-
-	QPushButton *removeScriptButton = new QPushButton(buttonsWidget);
-	removeScriptButton->setText(i18n("Remove"));
-	removeScriptButton->setWhatsThis(i18n("Sends the selected script to the trash."));
-	removeScriptButton->setIcon(QIcon::fromTheme("user-trash"));
-	connect(removeScriptButton, SIGNAL(clicked()), this, SLOT(removeScript()));
-
-	QPushButton *editScriptButton = new QPushButton(buttonsWidget);
-	editScriptButton->setText(i18n("Edit"));
-	editScriptButton->setWhatsThis(i18n("Opens the selected script with an external editor."));
-	editScriptButton->setIcon(QIcon::fromTheme("document-edit"));
-	connect(editScriptButton, SIGNAL(clicked()), this, SLOT(editScript()));
-
-	m_runScriptButton = new QPushButton(buttonsWidget);
-	m_runScriptButton->setEnabled(false);
-	m_runScriptButton->setText(i18n("Run"));
-	m_runScriptButton->setWhatsThis(i18n("Executes the selected script."));
-	m_runScriptButton->setIcon(QIcon::fromTheme("media-playback-start"));
-	connect(m_runScriptButton, SIGNAL(clicked()), this, SLOT(runScript()));
-
-	QPushButton *reloadScriptsButton = new QPushButton(buttonsWidget);
-	reloadScriptsButton->setText(i18n("Refresh"));
-	reloadScriptsButton->setWhatsThis(i18n("Reloads the installed scripts list."));
-	reloadScriptsButton->setIcon(QIcon::fromTheme("view-refresh"));
-	connect(reloadScriptsButton, SIGNAL(clicked()), this, SLOT(reloadScripts()));
-
-	QGridLayout *buttonsLayout = new QGridLayout(buttonsWidget);
-	buttonsLayout->setContentsMargins(0, 0, 0, 0);
-	buttonsLayout->addWidget(createScriptButton, 0, 0);
-	buttonsLayout->addWidget(addScriptButton, 1, 0);
-	buttonsLayout->addWidget(removeScriptButton, 2, 0);
-	buttonsLayout->addWidget(editScriptButton, 3, 0);
-	buttonsLayout->addWidget(new KSeparator(mainWidget), 4, 0);
-	buttonsLayout->addWidget(m_runScriptButton, 5, 0);
-	buttonsLayout->addWidget(new KSeparator(mainWidget), 6, 0);
-	buttonsLayout->addWidget(reloadScriptsButton, 7, 0);
-	buttonsLayout->addItem(new QSpacerItem(20, 20, QSizePolicy::Minimum, QSizePolicy::Expanding), 8, 0);
-
-	QGridLayout *mainLayout = new QGridLayout(mainWidget);
-	mainLayout->setSpacing(5);
-	mainLayout->setContentsMargins(0, 0, 0, 0);
-	mainLayout->addWidget(m_scriptsWidget, 0, 0);
-	mainLayout->addWidget(buttonsWidget, 0, 1);
-
-	m_dialog->resize(350, 10);
+//	m_dialog->resize(350, 10);
 }
 
 ScriptsManager::~ScriptsManager()
-{}
+{
+
+}
 
 void
 ScriptsManager::setSubtitle(Subtitle *subtitle)
 {
-	m_runScriptButton->setEnabled(subtitle != 0);
+	btnRun->setEnabled(subtitle != 0);
 }
 
 void
@@ -213,8 +145,8 @@ ScriptsManager::showDialog()
 QString
 ScriptsManager::currentScriptName() const
 {
-	QModelIndex currentIndex = m_scriptsWidget->currentIndex();
-	return currentIndex.isValid() ? m_scriptsWidget->model()->data(currentIndex, Qt::DisplayRole).toString() : 0;
+	QModelIndex currentIndex = scriptsView->currentIndex();
+	return currentIndex.isValid() ? scriptsView->model()->data(currentIndex, Qt::DisplayRole).toString() : 0;
 }
 
 QStringList
@@ -229,8 +161,10 @@ ScriptsManager::createScript(const QString &sN)
 	QString scriptName = sN;
 
 	while(scriptName.isEmpty() || m_scripts.contains(scriptName)) {
-		if(m_scripts.contains(scriptName) && KMessageBox::questionYesNo(app()->mainWindow(), i18n("You must enter an unused name to continue.\nWould you like to enter another name?"), i18n("Name Already Used"), KStandardGuiItem::cont(), KStandardGuiItem::cancel()
-																		) != KMessageBox::Yes)
+		if(m_scripts.contains(scriptName)
+			&& KMessageBox::questionYesNo(app()->mainWindow(),
+				i18n("You must enter an unused name to continue.\nWould you like to enter another name?"),
+				i18n("Name Already Used"), KStandardGuiItem::cont(), KStandardGuiItem::cancel()) != KMessageBox::Yes)
 			return;
 
 		TextInputDialog nameDlg(i18n("Create New Script"), i18n("Script name:"));
@@ -239,12 +173,14 @@ ScriptsManager::createScript(const QString &sN)
 		scriptName = nameDlg.value();
 	}
 
-	QString scriptPath = KStandardDirs::locateLocal("script", scriptName, true);
+	QDir scriptPath(QStandardPaths::writableLocation(QStandardPaths::AppDataLocation));
+	if(!scriptPath.exists("scripts"))
+		scriptPath.mkpath("scripts");
+	scriptPath.cd("scripts");
 
-	QFile scriptFile(scriptPath);
+	QFile scriptFile(scriptPath.absoluteFilePath(scriptName));
 	if(!scriptFile.open(QIODevice::WriteOnly | QIODevice::Text)) {
-		KMessageBox::sorry(app()->mainWindow(), i18n("There was an error creating the file <b>%1</b>.", scriptPath)
-						   );
+		KMessageBox::sorry(app()->mainWindow(), i18n("There was an error creating the file <b>%1</b>.", scriptPath.absoluteFilePath(scriptName)));
 		return;
 	}
 
@@ -274,6 +210,8 @@ ScriptsManager::mimeTypes()
 			for(QStringList::ConstIterator it = intMimeTypes.begin(), end = intMimeTypes.end(); it != end; ++it)
 				mimeTypes << *it;
 		}
+		if(!mimeTypes.contains("application/javascript") && !mimeTypes.contains("text/javascript") && !mimeTypes.contains("application/x-javascript"))
+			mimeTypes.prepend("application/javascript");
 	}
 
 	return mimeTypes;
@@ -285,24 +223,25 @@ ScriptsManager::addScript(const QUrl &sSU)
 	QUrl srcScriptUrl = sSU;
 
 	if(srcScriptUrl.isEmpty()) {
-		KFileDialog fileDialog(QUrl(), QString(), m_dialog);
-		fileDialog.setWindowTitle(i18n("Select Existing Script"));
-		fileDialog.setOperationMode(KFileDialog::Opening);
-		fileDialog.setMimeFilter(mimeTypes());
-		fileDialog.setMode(KFile::File | KFile::ExistingOnly);
+		QFileDialog fileDialog(m_dialog, i18n("Select Existing Script"), QString(), QString());
+		fileDialog.setAcceptMode(QFileDialog::AcceptOpen);
+		fileDialog.setFileMode(QFileDialog::ExistingFile);
+		fileDialog.setMimeTypeFilters(mimeTypes());
 		fileDialog.setModal(true);
 
-		if(QDialog::Accepted != fileDialog.exec())
+		if(fileDialog.exec() != QDialog::Accepted)
 			return;
 
-		srcScriptUrl = fileDialog.selectedUrl();
+		srcScriptUrl = fileDialog.selectedUrls().first();
 	}
 
 	QString scriptName = QFileInfo(srcScriptUrl.fileName()).fileName();
 
 	while(m_scripts.contains(scriptName)) {
-		if(m_scripts.contains(scriptName) && KMessageBox::questionYesNo(app()->mainWindow(), i18n("You must enter an unused name to continue.\nWould you like to enter another name?"), i18n("Name Already Used"), KStandardGuiItem::cont(), KStandardGuiItem::cancel()
-																		) != KMessageBox::Yes)
+		if(m_scripts.contains(scriptName)
+			&& KMessageBox::questionYesNo(app()->mainWindow(),
+				i18n("You must enter an unused name to continue.\nWould you like to enter another name?"),
+				i18n("Name Already Used"), KStandardGuiItem::cont(), KStandardGuiItem::cancel()) != KMessageBox::Yes)
 			return;
 
 		TextInputDialog nameDlg(i18n("Rename Script"), i18n("Script name:"));
@@ -311,7 +250,10 @@ ScriptsManager::addScript(const QUrl &sSU)
 		scriptName = nameDlg.value();
 	}
 
-	QString scriptPath = KStandardDirs::locateLocal("script", scriptName, true);
+	QDir scriptPath(QStandardPaths::writableLocation(QStandardPaths::AppDataLocation));
+	if(!scriptPath.exists("scripts"))
+		scriptPath.mkpath("scripts");
+	scriptPath.cd("scripts");
 
 	FileLoadHelper fileLoadHelper(srcScriptUrl);
 
@@ -320,9 +262,11 @@ ScriptsManager::addScript(const QUrl &sSU)
 		return;
 	}
 
-	if(!fileLoadHelper.file()->copy(scriptPath)) {
-		KMessageBox::sorry(app()->mainWindow(), i18n("There was an error copying the file to <b>%1</b>.", scriptPath)
-						   );
+	QFile dest(scriptPath.absoluteFilePath(scriptName));
+	if(!dest.open(QIODevice::WriteOnly | QIODevice::Truncate)
+			|| dest.write(fileLoadHelper.file()->readAll()) == -1
+			|| !dest.flush()) {
+		KMessageBox::sorry(app()->mainWindow(), i18n("There was an error copying the file to <b>%1</b>.", dest.fileName()));
 		return;
 	}
 
@@ -398,8 +342,10 @@ ScriptsManager::runScript(const QString &sN)
 	krossAction.addObject(debug, "debug");
 
 	krossAction.setFile(m_scripts[scriptName]);
+	if(krossAction.interpreter() == "" && scriptName.right(3) == ".js")
+		krossAction.setInterpreter("qtscript");
 	// default javascript interpreter has weird (crash inducing) bugs
-	if(krossAction.interpreter() == "javascript")
+	else if(krossAction.interpreter() == "javascript")
 		krossAction.setInterpreter("qtscript");
 
 	{
@@ -440,6 +386,21 @@ ScriptsManager::toolsMenu()
 	return toolsMenu;
 }
 
+/*static*/ void
+ScriptsManager::findAllFiles(QString directory, QStringList &fileList)
+{
+	QDir path(directory);
+	QFileInfoList files = path.entryInfoList();
+	foreach(QFileInfo file, files) {
+		if(file.isDir()) {
+			if(file.fileName().at(0) != '.')
+				findAllFiles(file.absoluteFilePath(), fileList);
+		} else {
+			fileList.append(file.absoluteFilePath());
+		}
+	}
+}
+
 void
 ScriptsManager::reloadScripts()
 {
@@ -447,38 +408,48 @@ ScriptsManager::reloadScripts()
 	KActionCollection *actionCollection = app()->mainWindow()->actionCollection();
 	UserActionManager *actionManager = UserActionManager::instance();
 
-	QString selectedPath = m_scriptsWidget->model()->rowCount() && !currentScriptName().isEmpty() ? m_scripts[currentScriptName()] : QString();
+	QString selectedPath = scriptsView->model()->rowCount() && !currentScriptName().isEmpty() ? m_scripts[currentScriptName()] : QString();
 
-	m_scripts.clear();                      // deletes all actions
+	m_scripts.clear();
 	toolsMenu->clear();
 	toolsMenu->addAction(app()->action(ACT_SCRIPTS_MANAGER));
 	toolsMenu->addSeparator();
 
+	QStringList scriptDirs = QStandardPaths::locateAll(QStandardPaths::AppDataLocation, "scripts", QStandardPaths::LocateDirectory);
 	QStringList scriptNames;
-	QStringList scriptPaths = KGlobal::dirs()->findAllResources("script");
-	scriptPaths.sort();
 	int index = 0, newCurrentIndex = -1;
-	for(QStringList::ConstIterator it = scriptPaths.begin(), end = scriptPaths.end(); it != end; ++it) {
-		QString scriptName = QFileInfo(*it).fileName();
-		if(!m_scripts.contains(scriptName)) {
-			scriptNames << scriptName;
-			if(newCurrentIndex < 0 && *it == selectedPath)
+	foreach(const QString &path, scriptDirs) {
+		int pathLen = QDir(path).absolutePath().length() + 1;
+		QStringList scriptPaths;
+		findAllFiles(path, scriptPaths);
+		foreach(const QString &path, scriptPaths) {
+			QString name = path.mid(pathLen);
+			if(m_scripts.contains(name))
+				continue;
+
+			scriptNames << name;
+
+			m_scripts[name] = path;
+
+			QString suffix = name.right(3);
+			if(suffix == ".js" || suffix == ".py" || suffix == ".js") {
+				QAction *scriptAction = toolsMenu->addAction(name);
+				scriptAction->setObjectName(name);
+				actionCollection->addAction(name, scriptAction);
+				actionManager->addAction(scriptAction, UserAction::SubOpened | UserAction::FullScreenOff);
+			}
+
+			if(newCurrentIndex < 0 && path == selectedPath)
 				newCurrentIndex = index;
-			m_scripts[scriptName] = *it;
-
-			QAction *scriptAction = toolsMenu->addAction(scriptName);
-			scriptAction->setObjectName(scriptName);
-			actionCollection->addAction(scriptName, scriptAction);
-			actionManager->addAction(scriptAction, UserAction::SubOpened | UserAction::FullScreenOff);
-
 			index++;
 		}
 	}
+	scriptNames.sort();
 
-	static_cast<InstalledScriptsModel *>(m_scriptsWidget->model())->setStringList(scriptNames);
+	static_cast<InstalledScriptsModel *>(scriptsView->model())->setStringList(scriptNames);
 	if(!scriptNames.isEmpty()) {
-		QModelIndex currentIndex = m_scriptsWidget->model()->index(newCurrentIndex < 0 ? 0 : newCurrentIndex, 0);
-		m_scriptsWidget->setCurrentIndex(currentIndex);
+		QModelIndex currentIndex = scriptsView->model()->index(newCurrentIndex < 0 ? 0 : newCurrentIndex, 0);
+		scriptsView->setCurrentIndex(currentIndex);
 	}
 }
 
@@ -494,14 +465,9 @@ ScriptsManager::onToolsMenuActionTriggered(QAction *triggeredAction)
 bool
 ScriptsManager::eventFilter(QObject *object, QEvent *event)
 {
-	if(object == m_scriptsWidget) {
-		if(event->type() == QEvent::KeyPress) {
-			QKeyEvent *keyEvent = static_cast<QKeyEvent *>(event);
-			if(keyEvent->matches(QKeySequence::Delete)) {
-				removeScript();
-				return true;    // eat event
-			}
-		}
+	if(object == scriptsView && event->type() == QEvent::KeyPress && static_cast<QKeyEvent *>(event)->matches(QKeySequence::Delete)) {
+		removeScript();
+		return true; // eat event
 	}
 
 	return QObject::eventFilter(object, event);

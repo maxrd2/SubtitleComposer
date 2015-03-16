@@ -25,8 +25,8 @@
 #include "../../common/qxtsignalwaiter.h"
 
 #include <QDebug>
-#include <KLocale>
-#include <KStandardDirs>
+
+#include <KLocalizedString>
 
 using namespace SubtitleComposer;
 

@@ -27,19 +27,23 @@
 #include "../common/commondefs.h"
 
 #include <KAboutData>
-#include <KLocale>
+#include <KLocalizedString>
 
 #include <QtCore/QFile>
 #include <QtCore/QDir>
 #include <QCommandLineParser>
 #include <QCommandLineOption>
 
+#if defined HAVE_XINE && !defined HAVE_XCB
 #include <X11/Xlib.h>
+#endif
 
 int
 main(int argc, char **argv)
 {
-	XInitThreads(); // needed for some Player Backends
+#if defined HAVE_XINE && !defined HAVE_XCB
+	XInitThreads(); // needed for some Player Backends (Xine)
+#endif
 
 	SubtitleComposer::Application app(argc, argv);
 

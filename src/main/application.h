@@ -163,7 +163,6 @@ public slots:
 	void clearSelectedMarks();
 
 	void showErrors();
-	void showErrorsConfig();
 
 	void toggleSelectedLinesMark();
 	void toggleSelectedLinesBold();
@@ -247,6 +246,8 @@ private:
 
 	bool applyTranslation(RangeList ranges, bool primary, int inputLanguage, int outputLanguage, int textTargets);
 
+	void updateActionTexts();
+
 private slots:
 	void updateTitle();
 	void updateUndoRedoToolTips();
@@ -269,6 +270,8 @@ private slots:
 	void onConfigChanged();
 
 	void setActiveSubtitleStream(int subtitleStream);
+
+	void showPreferences();
 
 private:
 	void toggleFullScreen(bool on);

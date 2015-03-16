@@ -25,48 +25,41 @@
 
 #include <QLabel>
 #include <QGridLayout>
-
 #include <QDebug>
-#include <KLocale>
-#include <KGlobal>
-#include <KApplication>
+#include <QMenu>
+#include <QPushButton>
+
 #include <KConfig>
 #include <KConfigGroup>
-#include <KMenu>
-#include <QPushButton>
+#include <KLocalizedString>
 
 using namespace SubtitleComposer;
 
 ErrorsDialog::ErrorsDialog(QWidget *parent) :
-	KDialog(parent)
+	QDialog(parent)
 {
-	setCaption(i18n("Subtitle Errors"));
+	setWindowTitle(i18n("Subtitle Errors"));
 
-	setButtons(0);
-
-	QWidget *mainWidget = new QWidget(this);
-	setMainWidget(mainWidget);
-
-	QGridLayout *mainLayout = new QGridLayout(mainWidget);
+	QGridLayout *mainLayout = new QGridLayout(this);
 	mainLayout->setAlignment(Qt::AlignTop);
 	mainLayout->setSpacing(5);
 
-	m_clearFixedButton = new QPushButton(mainWidget);
+	m_clearFixedButton = new QPushButton(this);
 	m_clearFixedButton->setText(i18n("Clear Fixed Errors"));
 	m_clearFixedButton->setEnabled(!SCConfig::autoClearFixed());
 
-	QPushButton *checqCriticalsButton = new QPushButton(mainWidget);
+	QPushButton *checqCriticalsButton = new QPushButton(this);
 	checqCriticalsButton->setText(i18n("Check Errors..."));
 
-	m_clearErrorsButton = new QPushButton(mainWidget);
+	m_clearErrorsButton = new QPushButton(this);
 	m_clearErrorsButton->setText(i18n("Clear Errors..."));
 
-	QPushButton *settingsButton = new QPushButton(mainWidget);
+	QPushButton *settingsButton = new QPushButton(this);
 	settingsButton->setText(i18n("Settings..."));
 
-	m_errorsWidget = new ErrorsWidget(mainWidget);
+	m_errorsWidget = new ErrorsWidget(this);
 
-	m_statsLabel = new QLabel(mainWidget);
+	m_statsLabel = new QLabel(this);
 
 	mainLayout->addWidget(m_errorsWidget, 1, 0, 1, 5);
 	mainLayout->addWidget(m_statsLabel, 0, 0, 1, 5);
@@ -99,7 +92,7 @@ ErrorsDialog::errorsWidget()
 void
 ErrorsDialog::loadConfig()
 {
-	KConfigGroup group(KGlobal::config()->group("ErrorsDialog Settings"));
+	KConfigGroup group(KSharedConfig::openConfig()->group("ErrorsDialog Settings"));
 
 	resize(group.readEntry<int>("Width", width()), group.readEntry<int>("Height", height()));
 
@@ -109,7 +102,7 @@ ErrorsDialog::loadConfig()
 void
 ErrorsDialog::saveConfig()
 {
-	KConfigGroup group(KGlobal::config()->group("ErrorsDialog Settings"));
+	KConfigGroup group(KSharedConfig::openConfig()->group("ErrorsDialog Settings"));
 
 	group.writeEntry("Width", width());
 	group.writeEntry("Height", height());

@@ -18,7 +18,6 @@ add_test(subtitlecomposer services-wavewritertest)
 ecm_mark_as_test(services-wavewritertest)
 target_link_libraries(services-wavewritertest
 	${common_LIBS}
-	KF5::KDELibs4Support
 	${PHONON_LIBRARY}
 	${services_LIBS}
 )

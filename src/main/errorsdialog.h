@@ -27,13 +27,13 @@
 
 #include "errorswidget.h"
 
-#include <KDialog>
+#include <QDialog>
 
 class QLabel;
 class QPushButton;
 
 namespace SubtitleComposer {
-class ErrorsDialog : public KDialog
+class ErrorsDialog : public QDialog
 {
 	Q_OBJECT
 

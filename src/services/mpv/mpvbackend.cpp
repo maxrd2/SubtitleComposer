@@ -24,9 +24,10 @@
 
 #include "../../main/application.h"
 
+#include <KLocalizedString>
+
 #include <QDebug>
-#include <KLocale>
-#include <KStandardDirs>
+
 #include <locale>
 
 using namespace SubtitleComposer;

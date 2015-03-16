@@ -1,21 +1,22 @@
-/***************************************************************************
- *   Copyright (C) 2007-2009 Sergio Pistone (sergio_pistone@yahoo.com.ar)  *
- *                                                                         *
- *   This program is free software; you can redistribute it and/or modify  *
- *   it under the terms of the GNU General Public License as published by  *
- *   the Free Software Foundation; either version 2 of the License, or     *
- *   (at your option) any later version.                                   *
- *                                                                         *
- *   This program is distributed in the hope that it will be useful,       *
- *   but WITHOUT ANY WARRANTY; without even the implied warranty of        *
- *   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the         *
- *   GNU General Public License for more details.                          *
- *                                                                         *
- *   You should have received a copy of the GNU General Public License     *
- *   along with this program; if not, write to the                         *
- *   Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor,      *
- *   Boston, MA 02110-1301, USA.                                           *
- ***************************************************************************/
+/**
+ * Copyright (C) 2007-2009 Sergio Pistone <sergio_pistone@yahoo.com.ar>
+ * Copyright (C) 2010-2015 Mladen Milinkovic <max@smoothware.net>
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the
+ * Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor,
+ * Boston, MA 02110-1301, USA.
+ */
 
 #include "replacer.h"
 #include "../../core/subtitleiterator.h"
@@ -24,14 +25,13 @@
 #include <QGroupBox>
 #include <QRadioButton>
 #include <QGridLayout>
+#include <QDebug>
+#include <QDialog>
 
 #include <KFind>
-
-#include <QDebug>
-#include <KLocale>
-#include <KDialog>
 #include <KMessageBox>
 #include <KReplaceDialog>
+#include <KLocalizedString>
 
 using namespace SubtitleComposer;
 
@@ -177,7 +177,7 @@ Replacer::advance()
 	bool selection = m_replace->options() & KFind::SelectedText;
 	bool backwards = m_replace->options() & KFind::FindBackwards;
 
-	KDialog *replaceNextDialog = this->replaceNextDialog(); // creates the dialog if it didn't existed before
+	QDialog *replaceNextDialog = this->replaceNextDialog(); // creates the dialog if it didn't existed before
 
 	do {
 		if(m_replace->needData()) {
@@ -242,13 +242,13 @@ Replacer::advance()
 	} while(res != KFind::Match);
 }
 
-KDialog *
+QDialog *
 Replacer::replaceNextDialog()
 {
 	if(!m_replace)
 		return 0;
 
-	KDialog *replaceNextDialog = m_replace->replaceNextDialog(false);
+	QDialog *replaceNextDialog = m_replace->replaceNextDialog(false);
 
 	if(!replaceNextDialog && m_replace->options() & KReplaceDialog::PromptOnReplace) {
 		replaceNextDialog = m_replace->replaceNextDialog(true);

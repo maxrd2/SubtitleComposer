@@ -23,11 +23,10 @@
 #include "common/commondefs.h"
 
 #include <QtCore/QFile>
-
-#include <KLocale>
 #include <QDebug>
-#include <KStandardDirs>
 #include <QStandardPaths>
+
+#include <KLocalizedString>
 
 KRecentFilesActionExt::KRecentFilesActionExt(QObject *parent) :
 	KSelectAction(parent),

@@ -1,27 +1,30 @@
-/***************************************************************************
- *   Copyright (C) 2007-2009 Sergio Pistone (sergio_pistone@yahoo.com.ar)  *
- *                                                                         *
- *   This program is free software; you can redistribute it and/or modify  *
- *   it under the terms of the GNU General Public License as published by  *
- *   the Free Software Foundation; either version 2 of the License, or     *
- *   (at your option) any later version.                                   *
- *                                                                         *
- *   This program is distributed in the hope that it will be useful,       *
- *   but WITHOUT ANY WARRANTY; without even the implied warranty of        *
- *   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the         *
- *   GNU General Public License for more details.                          *
- *                                                                         *
- *   You should have received a copy of the GNU General Public License     *
- *   along with this program; if not, write to the                         *
- *   Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor,      *
- *   Boston, MA 02110-1301, USA.                                           *
- ***************************************************************************/
+/**
+ * Copyright (C) 2007-2009 Sergio Pistone <sergio_pistone@yahoo.com.ar>
+ * Copyright (C) 2010-2015 Mladen Milinkovic <max@smoothware.net>
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the
+ * Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor,
+ * Boston, MA 02110-1301, USA.
+ */
 
 #include "fileloadhelper.h"
 
-#include <ksavefile.h>
-#include <ktemporaryfile.h>
-#include <kio/netaccess.h>
+#include <QBuffer>
+#include <QDebug>
+
+#include <kio/statjob.h>
+#include <kio/storedtransferjob.h>
 
 FileLoadHelper::FileLoadHelper(const QUrl &url) :
 	m_url(url),
@@ -40,7 +43,7 @@ FileLoadHelper::url()
 	return m_url;
 }
 
-QFile *
+QIODevice *
 FileLoadHelper::file()
 {
 	return m_file;
@@ -52,32 +55,28 @@ FileLoadHelper::open()
 	if(m_file)
 		return false;
 
-	if(!KIO::NetAccess::exists(m_url, KIO::NetAccess::SourceSide, 0))
+	KIO::Job *job = KIO::stat(m_url, KIO::StatJob::SourceSide, 2);
+	if(!job->exec())
 		return false;
 
 	if(m_url.isLocalFile()) {
 		m_file = new QFile(m_url.path());
 		if(!m_file->open(QIODevice::ReadOnly)) {
-			qDebug() << "couldn't open input file" << m_file->fileName();
+			qDebug() << "couldn't open input file" << static_cast<QFile *>(m_file)->fileName();
 			delete m_file;
 			m_file = 0;
 			return false;
 		}
 	} else {
-		QString tmpFile;
-		if(!KIO::NetAccess::download(m_url, tmpFile, 0)) {
+		KIO::StoredTransferJob *xjob = KIO::storedGet(m_url);
+		connect(xjob, SIGNAL(result(KJob *job)), this, SLOT(downloadComplete(KJob *job)));
+		if(!xjob) {
 			qDebug() << "couldn't get input url:" << m_url;
-			qDebug() << KIO::NetAccess::lastErrorString();
+			qDebug() << xjob->errorString();
 			return false;
 		}
 
-		m_file = new QFile(tmpFile);
-		if(!m_file->open(QIODevice::ReadOnly)) {
-			qDebug() << "couldn't open input file" << m_file->fileName();
-			delete m_file;
-			m_file = 0;
-			return false;
-		}
+		m_file = new QBuffer(&m_data);
 	}
 	return true;
 }
@@ -88,13 +87,8 @@ FileLoadHelper::close()
 	if(!m_file)
 		return false;
 
-	QString tmpFilePath = m_file->fileName();
-
-	delete m_file;                          // closes the file
+	delete m_file;
 	m_file = 0;
-
-	if(!m_url.isLocalFile())
-		KIO::NetAccess::removeTempFile(tmpFilePath);
 
 	return true;
 }
@@ -102,5 +96,12 @@ FileLoadHelper::close()
 bool
 FileLoadHelper::exists(const QUrl &url)
 {
-	return KIO::NetAccess::exists(url, KIO::NetAccess::SourceSide, 0);
+	KIO::Job *job = KIO::stat(url, KIO::StatJob::SourceSide, 2);
+	return job->exec();
+}
+
+void
+FileLoadHelper::downloadComplete(KJob *job)
+{
+	m_data = static_cast<KIO::StoredTransferJob *>(job)->data();
 }

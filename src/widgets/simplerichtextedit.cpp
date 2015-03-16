@@ -1,21 +1,22 @@
-/***************************************************************************
- *   Copyright (C) 2007-2009 Sergio Pistone (sergio_pistone@yahoo.com.ar)  *
- *                                                                         *
- *   This program is free software; you can redistribute it and/or modify  *
- *   it under the terms of the GNU General Public License as published by  *
- *   the Free Software Foundation; either version 2 of the License, or     *
- *   (at your option) any later version.                                   *
- *                                                                         *
- *   This program is distributed in the hope that it will be useful,       *
- *   but WITHOUT ANY WARRANTY; without even the implied warranty of        *
- *   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the         *
- *   GNU General Public License for more details.                          *
- *                                                                         *
- *   You should have received a copy of the GNU General Public License     *
- *   along with this program; if not, write to the                         *
- *   Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor,      *
- *   Boston, MA 02110-1301, USA.                                           *
- ***************************************************************************/
+/**
+ * Copyright (C) 2007-2009 Sergio Pistone <sergio_pistone@yahoo.com.ar>
+ * Copyright (C) 2010-2015 Mladen Milinkovic <max@smoothware.net>
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the
+ * Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor,
+ * Boston, MA 02110-1301, USA.
+ */
 
 #include "simplerichtextedit.h"
 
@@ -28,17 +29,16 @@
 #include <QContextMenuEvent>
 #include <QFocusEvent>
 #include <QKeyEvent>
-
-#include <QDebug>
-#include <KLocale>
-#include <KMenu>
-#include <QIcon>
-#include <KStandardShortcut>
-
 #include <QAction>
+#include <QMenu>
+#include <QIcon>
+#include <QDebug>
 
-SimpleRichTextEdit::SimpleRichTextEdit(QWidget *parent) :
-	KTextEdit(parent)
+#include <KStandardShortcut>
+#include <KLocalizedString>
+
+SimpleRichTextEdit::SimpleRichTextEdit(QWidget *parent)
+	: KTextEdit(parent)
 {
 	enableFindReplace(false);
 	setCheckSpellingEnabled(true);
@@ -86,11 +86,13 @@ SimpleRichTextEdit::SimpleRichTextEdit(QWidget *parent) :
 	m_actions[Copy]->setShortcuts(KStandardShortcut::copy());
 	connect(m_actions[Copy], SIGNAL(triggered()), this, SLOT(copy()));
 
+#if !defined(QT_NO_CLIPBOARD)
 	m_actions[Paste] = new QAction(this);
 	m_actions[Paste]->setIcon(QIcon::fromTheme("edit-paste"));
 	m_actions[Paste]->setText(i18n("Paste"));
 	m_actions[Paste]->setShortcuts(KStandardShortcut::paste());
 	connect(m_actions[Paste], SIGNAL(triggered()), this, SLOT(paste()));
+#endif
 
 	m_actions[Delete] = new QAction(this);
 	m_actions[Delete]->setIcon(QIcon::fromTheme("edit-delete"));
@@ -112,31 +114,31 @@ SimpleRichTextEdit::SimpleRichTextEdit(QWidget *parent) :
 	m_actions[ToggleBold] = new QAction(this);
 	m_actions[ToggleBold]->setIcon(QIcon::fromTheme("format-text-bold"));
 	m_actions[ToggleBold]->setText(i18nc("@action:inmenu Toggle bold style", "Bold"));
-	m_actions[ToggleBold]->setShortcuts(KShortcut("Ctrl+B"));
+	m_actions[ToggleBold]->setShortcut(QKeySequence("Ctrl+B"));
 	connect(m_actions[ToggleBold], SIGNAL(triggered()), this, SLOT(toggleFontBold()));
 
 	m_actions[ToggleItalic] = new QAction(this);
 	m_actions[ToggleItalic]->setIcon(QIcon::fromTheme("format-text-italic"));
 	m_actions[ToggleItalic]->setText(i18nc("@action:inmenu Toggle italic style", "Italic"));
-	m_actions[ToggleItalic]->setShortcuts(KShortcut("Ctrl+I"));
+	m_actions[ToggleItalic]->setShortcut(QKeySequence("Ctrl+I"));
 	connect(m_actions[ToggleItalic], SIGNAL(triggered()), this, SLOT(toggleFontItalic()));
 
 	m_actions[ToggleUnderline] = new QAction(this);
 	m_actions[ToggleUnderline]->setIcon(QIcon::fromTheme("format-text-underline"));
 	m_actions[ToggleUnderline]->setText(i18nc("@action:inmenu Toggle underline style", "Underline"));
-	m_actions[ToggleUnderline]->setShortcuts(KShortcut("Ctrl+U"));
+	m_actions[ToggleUnderline]->setShortcut(QKeySequence("Ctrl+U"));
 	connect(m_actions[ToggleUnderline], SIGNAL(triggered()), this, SLOT(toggleFontUnderline()));
 
 	m_actions[ToggleStrikeOut] = new QAction(this);
 	m_actions[ToggleStrikeOut]->setIcon(QIcon::fromTheme("format-text-strikethrough"));
 	m_actions[ToggleStrikeOut]->setText(i18nc("@action:inmenu Toggle strike through style", "Strike Through"));
-	m_actions[ToggleStrikeOut]->setShortcuts(KShortcut("Ctrl+T"));
+	m_actions[ToggleStrikeOut]->setShortcut(QKeySequence("Ctrl+T"));
 	connect(m_actions[ToggleStrikeOut], SIGNAL(triggered()), this, SLOT(toggleFontStrikeOut()));
 
 	m_actions[ChangeTextColor] = new QAction(this);
 	m_actions[ChangeTextColor]->setIcon(QIcon::fromTheme("format-text-color"));
 	m_actions[ChangeTextColor]->setText(i18nc("@action:inmenu Change Text Color", "Text Color"));
-	m_actions[ChangeTextColor]->setShortcuts(KShortcut("Ctrl+Shift+C"));
+	m_actions[ChangeTextColor]->setShortcut(QKeySequence("Ctrl+Shift+C"));
 	connect(m_actions[ChangeTextColor], SIGNAL(triggered()), this, SLOT(changeTextColor()));
 
 	m_actions[CheckSpelling] = new QAction(this);
@@ -153,7 +155,7 @@ SimpleRichTextEdit::SimpleRichTextEdit(QWidget *parent) :
 	m_actions[AllowTabulations]->setText(i18n("Allow Tabulations"));
 	connect(m_actions[AllowTabulations], SIGNAL(triggered()), this, SLOT(toggleTabChangesFocus()));
 
-	QMenu *menu = QTextEdit::createStandardContextMenu();   // krazy:exclude=c++/qclasses
+	QMenu *menu = createStandardContextMenu();
 	QList<QAction *> actions = menu->actions();
 	m_insertUnicodeControlCharMenu = 0;
 	for(QList<QAction *>::ConstIterator it = actions.constBegin(), end = actions.constEnd(); it != end; ++it) {
@@ -456,10 +458,9 @@ SimpleRichTextEdit::createContextMenu(const QPoint &mouseGlobalPos)
 	QTextDocument *document = this->document();
 	QTextCursor cursor = textCursor();
 
-	const bool showTextSelectionActions = (Qt::TextEditable | Qt::TextSelectableByKeyboard | Qt::TextSelectableByMouse)
-										  & interactionFlags;
+	const bool showTextSelectionActions = (Qt::TextEditable | Qt::TextSelectableByKeyboard | Qt::TextSelectableByMouse) & interactionFlags;
 
-	KMenu *menu = new KMenu(this);
+	QMenu *menu = new QMenu(this);
 
 	if(interactionFlags & Qt::TextEditable) {
 		m_actions[Undo]->setEnabled(document->isUndoAvailable());

@@ -1,5 +1,5 @@
-#ifndef FIXOVERLAPPINGTIMESDIALOG_H
-#define FIXOVERLAPPINGTIMESDIALOG_H
+#ifndef TEXTINPUTDIALOG_H
+#define TEXTINPUTDIALOG_H
 
 /**
  * Copyright (C) 2007-2009 Sergio Pistone <sergio_pistone@yahoo.com.ar>
@@ -25,22 +25,28 @@
 #include <config.h>
 #endif
 
-#include "actionwithtargetdialog.h"
-#include "../../core/time.h"
-
-class QSpinBox;
+#include "ui_textinputdialog.h"
+#include <QDialog>
 
 namespace SubtitleComposer {
-class FixOverlappingTimesDialog : public ActionWithTargetDialog
+class TextInputDialog : public QDialog, private Ui::TextInputDialog
 {
-public:
-	FixOverlappingTimesDialog(QWidget *parent = 0);
+	Q_OBJECT
 
-	Time minimumInterval() const;
-	void setMinimumInterval(const Time &time);
+public:
+	TextInputDialog(const QString &caption, const QString &label, QWidget *parent = 0);
+	TextInputDialog(const QString &caption, const QString &label, const QString &value, QWidget *parent = 0);
+
+	const QString value() const;
+
+public slots:
+	void setValue(const QString &value);
 
 private:
-	QSpinBox *m_minIntervalSpinBox;
+	void init(const QString &caption, const QString &label, const QString &value);
+
+private slots:
+	void onLineEditTextChanged(const QString &text);
 };
 }
-#endif
+#endif /*TEXTINPUTDIALOG_H*/

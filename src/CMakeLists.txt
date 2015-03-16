@@ -16,7 +16,7 @@ endif()
 include_directories(
 	${CMAKE_CURRENT_BINARY_DIR} # so files can find config.h
 	${CMAKE_CURRENT_SOURCE_DIR} # so that we can refer to our files starting at src dir
-	${Qt5Core_INCLUDE_DIRS} ${Qt5Widgets_INCLUDE_DIRS}
+	${Qt5Core_INCLUDE_DIRS} ${Qt5Widgets_INCLUDE_DIRS} ${Qt5Gui_INCLUDE_DIRS}
 )
 
 add_definitions(${QT_DEFINITIONS} -fexceptions -DHAVE_CONFIG_H)

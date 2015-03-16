@@ -12,5 +12,6 @@ set(main_scripting_SRCS
 	${CMAKE_CURRENT_SOURCE_DIR}/scripting_subtitle.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/scripting_subtitleline.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/scriptsmanager.cpp
+	${CMAKE_CURRENT_SOURCE_DIR}/scriptsmanager.ui
 	CACHE INTERNAL EXPORTEDVARIABLE
 )

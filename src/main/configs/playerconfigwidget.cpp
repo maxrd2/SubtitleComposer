@@ -28,7 +28,7 @@
 
 #include "../application.h"
 
-#include <KLocale>
+#include <KLocalizedString>
 
 using namespace SubtitleComposer;
 

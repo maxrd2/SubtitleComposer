@@ -24,12 +24,11 @@
 #include "../../common/languagecode.h"
 #include "../../main/application.h"
 
+#include <KLocalizedString>
 
 #include <QtCore/QTimer>
 
 #include <QDebug>
-#include <KGlobal>
-#include <KLocale>
 #include <QUrl>
 #include <QResizeEvent>
 
