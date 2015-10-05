@@ -32,11 +32,7 @@
 #include "actions/kcodecactionext.h"
 #include "actions/krecentfilesactionext.h"
 
-#include "configs/generalconfigwidget.h"
-#include "configs/errorsconfigwidget.h"
-#include <sonnet/configwidget.h>
-//#include "configs/spellingconfigwidget.h"
-#include "configs/playerconfigwidget.h"
+#include "configs/configdialog.h"
 
 #include "dialogs/opensubtitledialog.h"
 #include "dialogs/savesubtitledialog.h"
@@ -127,7 +123,6 @@ Application::Application(int &argc, char **argv) :
 	m_lastFoundLine(0),
 	m_mainWindow(0),
 //  m_audiolevels( 0 ), // FIXME audio levels
-	m_configDialog(0),
 	m_lastSubtitleUrl(QDir::homePath()),
 	m_lastVideoUrl(QDir::homePath()),
 	m_linkCurrentLineToPosition(false)
@@ -426,38 +421,7 @@ Application::buildLevelsFilesFilter()
 void
 Application::showPreferences()
 {
-	if(!m_configDialog) {
-		m_configDialog = new KConfigDialog(m_mainWindow, "scconfig", SCConfig::self());
-
-		KPageWidgetItem *item;
-
-		item = m_configDialog->addPage(new GeneralConfigWidget(NULL), i18nc("@title General settings", "General"));
-		item->setHeader(i18n("General Settings"));
-		item->setIcon(QIcon::fromTheme("preferences-other"));
-
-		item = m_configDialog->addPage(new ErrorsConfigWidget(NULL), i18nc("@title Error Check Settings", "Error Check"));
-		item->setHeader(i18n("Error Check Settings"));
-		item->setIcon(QIcon::fromTheme("games-endturn"));
-
-		item = m_configDialog->addPage(new Sonnet::ConfigWidget(NULL), i18nc("@title Spelling Settings", "Spelling"));
-		item->setHeader(i18n("Spelling Settings"));
-		item->setIcon(QIcon::fromTheme("tools-check-spelling"));
-
-		item = m_configDialog->addPage(new PlayerConfigWidget(NULL), i18nc("@title Player Settings", "Player"));
-		item->setHeader(i18n("Player Settings"));
-		item->setIcon(QIcon::fromTheme("mediaplayer-logo"));
-
-		QStringList backendNames(Player::instance()->backendNames());
-		for(QStringList::ConstIterator it = backendNames.begin(); it != backendNames.end(); it++) {
-			QWidget *configWidget = Player::instance()->backend(*it)->newConfigWidget(0);
-			if(configWidget) {
-				item = m_configDialog->addPage(configWidget, *it);
-				item->setHeader(i18nc("@title Player backend settings", "%1 Backend Settings", *it));
-				item->setIcon(QIcon::fromTheme((*it).toLower() + "-logo"));
-			}
-		}
-	}
-	m_configDialog->show();
+	(new ConfigDialog(m_mainWindow, "scconfig", SCConfig::self()))->show();
 }
 
 void

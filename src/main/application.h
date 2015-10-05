@@ -35,10 +35,10 @@
 #include <QKeySequence>
 
 #include <QApplication>
-#include <KConfigDialog>
 #include <QAction>
 #include <QUrl>
 #include <kencodingdetector.h>
+#include <sonnet/configwidget.h>
 
 class KComboBox;
 class QAction;
@@ -300,8 +300,6 @@ private:
 	LinesWidget *m_linesWidget;
 	CurrentLineWidget *m_curLineWidget;
 	StatusBar2 *m_statusBar;
-
-	KConfigDialog *m_configDialog;
 
 	QUrl m_lastSubtitleUrl;
 	KRecentFilesActionExt *m_recentSubtitlesAction;
