@@ -18,7 +18,7 @@
      </property>
      <layout class="QGridLayout" name="gridLayout" columnstretch="1,1">
       <item row="1" column="1">
-       <widget class="QSpinBox" name="kcfg_SeekOffsetOnDoubleClick">
+       <widget class="QSpinBox" name="kcfg_MaxLines">
         <property name="suffix">
          <string notr="true"> lines</string>
         </property>
@@ -31,7 +31,7 @@
        </widget>
       </item>
       <item row="0" column="1">
-       <widget class="QSpinBox" name="spinBox">
+       <widget class="QSpinBox" name="kcfg_MaxCharacters">
         <property name="suffix">
          <string> characters</string>
         </property>
@@ -110,7 +110,7 @@
      </property>
      <layout class="QGridLayout" name="gridLayout_3" columnstretch="1,1">
       <item row="0" column="1">
-       <widget class="QSpinBox" name="spinBox_2">
+       <widget class="QSpinBox" name="kcfg_MinDurationPerCharacter">
         <property name="suffix">
          <string> msec/char</string>
         </property>
@@ -134,7 +134,7 @@
        </widget>
       </item>
       <item row="1" column="1">
-       <widget class="QSpinBox" name="spinBox_3">
+       <widget class="QSpinBox" name="kcfg_MaxDurationPerCharacter">
         <property name="suffix">
          <string> msec/char</string>
         </property>
@@ -153,7 +153,7 @@
      </property>
      <layout class="QGridLayout" name="gridLayout_4">
       <item row="0" column="0">
-       <widget class="QCheckBox" name="checkBox">
+       <widget class="QCheckBox" name="kcfg_AutoClearFixed">
         <property name="text">
          <string>Automatically clear fixed errors</string>
         </property>
@@ -178,13 +178,13 @@
   </layout>
  </widget>
  <tabstops>
-  <tabstop>spinBox</tabstop>
-  <tabstop>kcfg_SeekOffsetOnDoubleClick</tabstop>
-  <tabstop>kcfg_LinesQuickShiftAmount</tabstop>
-  <tabstop>kcfg_GrabbedPositionCompensation</tabstop>
-  <tabstop>spinBox_2</tabstop>
-  <tabstop>spinBox_3</tabstop>
-  <tabstop>checkBox</tabstop>
+  <tabstop>kcfg_MaxCharacters</tabstop>
+  <tabstop>kcfg_MaxLines</tabstop>
+  <tabstop>kcfg_MinDuration</tabstop>
+  <tabstop>kcfg_MaxDuration</tabstop>
+  <tabstop>kcfg_MinDurationPerCharacter</tabstop>
+  <tabstop>kcfg_MaxDurationPerCharacter</tabstop>
+  <tabstop>kcfg_AutoClearFixed</tabstop>
  </tabstops>
  <resources/>
  <connections/>
