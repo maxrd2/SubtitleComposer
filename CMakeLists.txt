@@ -26,7 +26,7 @@ set(CMAKE_AUTOUIC ON)
 find_package(Qt5 ${QT_MIN_VERSION} CONFIG REQUIRED Core Widgets Test)
 
 find_package(KF5 REQUIRED
-	Auth Config ConfigWidgets CoreAddons I18n KIO XmlGui
+	Auth Config ConfigWidgets CoreAddons I18n KIO kHtml XmlGui
 	Sonnet Kross Codecs TextWidgets WidgetsAddons)
 
 add_subdirectory(po)

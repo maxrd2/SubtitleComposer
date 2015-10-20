@@ -2,7 +2,7 @@ set(common_LIBS
 	KF5::CoreAddons KF5::WidgetsAddons KF5::TextWidgets KF5::Codecs
 	KF5::SonnetCore KF5::SonnetUi
 	KF5::KIOCore KF5::KIOFileWidgets KF5::KIOWidgets KF5::KIONTLM
-	KF5::KrossCore KF5::KrossUi KF5::XmlGui KF5::I18n
+	KF5::KrossCore KF5::KrossUi KF5::XmlGui KF5::I18n KF5::KHtml
 	CACHE INTERNAL EXPORTEDVARIABLE
 )
 
