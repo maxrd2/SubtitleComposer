@@ -86,7 +86,7 @@ KCodecActionExt::actionTriggered(QAction *action)
 	// we don't want to emit any signals from top-level items
 	// except for the default and autodetect ones
 	if(action == m_autodetectAction) {
-		emit triggered(KEncodingDetector::SemiautomaticDetection);
+		emit triggered(KEncodingProber::Universal);
 	} else if(m_showDefault && action == this->action(0)) {
 		emit defaultItemTriggered();
 	}

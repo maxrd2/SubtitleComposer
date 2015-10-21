@@ -37,7 +37,6 @@
 #include <QApplication>
 #include <QAction>
 #include <QUrl>
-#include <kencodingdetector.h>
 #include <sonnet/configwidget.h>
 
 class KComboBox;
