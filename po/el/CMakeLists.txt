@@ -1,2 +1,2 @@
-FILE(GLOB _po_files *.po)
-GETTEXT_PROCESS_PO_FILES(el ALL INSTALL_DESTINATION ${LOCALE_INSTALL_DIR} ${_po_files})
+file(GLOB _po_files *.po)
+gettext_process_po_files(el ALL INSTALL_DESTINATION ${LOCALE_INSTALL_DIR} PO_FILES ${_po_files})
