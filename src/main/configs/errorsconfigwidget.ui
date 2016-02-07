@@ -180,8 +180,8 @@
  <tabstops>
   <tabstop>kcfg_MaxCharacters</tabstop>
   <tabstop>kcfg_MaxLines</tabstop>
-  <tabstop>kcfg_MinDuration</tabstop>
-  <tabstop>kcfg_MaxDuration</tabstop>
+  <tabstop>kcfg_LinesQuickShiftAmount</tabstop>
+  <tabstop>kcfg_GrabbedPositionCompensation</tabstop>
   <tabstop>kcfg_MinDurationPerCharacter</tabstop>
   <tabstop>kcfg_MaxDurationPerCharacter</tabstop>
   <tabstop>kcfg_AutoClearFixed</tabstop>
