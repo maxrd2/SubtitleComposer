@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: subtitlecomposer\n"
 "Report-Msgid-Bugs-To: https://github.com/maxrd2/subtitlecomposer/issues\n"
-"POT-Creation-Date: 2015-02-03 12:19+0100\n"
+"POT-Creation-Date: 2016-02-08 16:14+0100\n"
 "PO-Revision-Date: 2009-05-28 20:25+0300\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian <translation@linux.org.ua>\n"
@@ -19,315 +19,330 @@ msgstr ""
 "%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
 "X-Generator: Lokalize 0.3\n"
 
-#: common/languagecode.cpp:419 common/languagecode.cpp:426
-#: common/languagecode.cpp:433
+#: rc.cpp:1 src/main/main.cpp:66
+msgctxt "NAME OF TRANSLATORS"
+msgid "Your names"
+msgstr "Юрій Чорноіван"
+
+#: rc.cpp:2 src/main/main.cpp:66
+msgctxt "EMAIL OF TRANSLATORS"
+msgid "Your emails"
+msgstr "yurchor@ukr.net"
+
+#: src/common/languagecode.cpp:421
 #, fuzzy
 msgid "Unknown"
 msgstr "<i>Невідома</i>"
 
-#: core/subtitleactions.cpp:58
+#: src/core/subtitleactions.cpp:59
 msgid "Set Frame Rate"
 msgstr "Встановити частоту кадрів"
 
-#: core/subtitleactions.cpp:94
+#: src/core/subtitleactions.cpp:95
 msgid "Insert Lines"
 msgstr "Вставити рядки"
 
-#: core/subtitleactions.cpp:175 core/subtitle.cpp:433 core/subtitle.cpp:443
-#: core/subtitle.cpp:460
+#: src/core/subtitleactions.cpp:176 src/core/subtitle.cpp:434
+#: src/core/subtitle.cpp:444 src/core/subtitle.cpp:461
 msgid "Remove Lines"
 msgstr "Вилучити рядки"
 
-#: core/subtitleactions.cpp:261
+#: src/core/subtitleactions.cpp:262
 msgid "Move Line"
 msgstr "Пересунути рядок"
 
-#: core/subtitleactions.cpp:361
+#: src/core/subtitleactions.cpp:362
 msgid "Swap Texts"
 msgstr "Обміняти тексти"
 
-#: core/subtitle.cpp:68
+#: src/core/subtitle.cpp:69
 msgid "Set Primary Data"
 msgstr "Вказати основні дані"
 
-#: core/subtitle.cpp:116
+#: src/core/subtitle.cpp:117
 msgid "Clear Primary Text Data"
 msgstr "Спорожнити основні текстові дані"
 
-#: core/subtitle.cpp:129
+#: src/core/subtitle.cpp:130
 msgid "Set Secondary Data"
 msgstr "Вказати вторинні дані"
 
-#: core/subtitle.cpp:168
+#: src/core/subtitle.cpp:169
 msgid "Clear Secondary Text Data"
 msgstr "Спорожнити вторинні текстові дані"
 
-#: core/subtitle.cpp:256 main/dialogs/changeframeratedialog.cpp:34
+#: src/core/subtitle.cpp:257 src/main/dialogs/changeframeratedialog.cpp:35
 msgid "Change Frame Rate"
 msgstr "Змінити частоту кадрів"
 
-#: core/subtitle.cpp:386 core/subtitle.cpp:400
+#: src/core/subtitle.cpp:387 src/core/subtitle.cpp:401
 msgid "Insert Line"
 msgstr "Вставити рядок"
 
-#: core/subtitle.cpp:513 main/application.cpp:643 main/lineswidget.cpp:1096
+#: src/core/subtitle.cpp:514 src/main/application.cpp:617
+#: src/main/lineswidget.cpp:1100
 msgid "Split Lines"
 msgstr "Розділити рядки"
 
-#: core/subtitle.cpp:564 main/application.cpp:650 main/lineswidget.cpp:1095
+#: src/core/subtitle.cpp:565 src/main/application.cpp:624
+#: src/main/lineswidget.cpp:1099
 msgid "Join Lines"
 msgstr "Об'єднати рядки"
 
-#: core/subtitle.cpp:612
+#: src/core/subtitle.cpp:613
 msgid "Shift Lines"
 msgstr "Посунути рядки"
 
-#: core/subtitle.cpp:658
+#: src/core/subtitle.cpp:659
 msgid "Adjust Lines"
 msgstr "Скоригувати рядки"
 
-#: core/subtitle.cpp:669 main/application.cpp:2315 main/lineswidget.cpp:1072
+#: src/core/subtitle.cpp:670 src/main/application.cpp:2279
+#: src/main/lineswidget.cpp:1076
 msgid "Sort"
 msgstr "Впорядкувати"
 
-#: core/subtitle.cpp:711 main/dialogs/durationlimitsdialog.cpp:32
+#: src/core/subtitle.cpp:712 src/main/dialogs/durationlimitsdialog.cpp:31
 msgid "Enforce Duration Limits"
 msgstr "Примусове обмеження тривалості"
 
-#: core/subtitle.cpp:750 main/application.cpp:2377 main/lineswidget.cpp:1075
+#: src/core/subtitle.cpp:751 src/main/application.cpp:2341
+#: src/main/lineswidget.cpp:1079
 msgid "Maximize Durations"
 msgstr "Максимізувати тривалість"
 
-#: core/subtitle.cpp:773 main/dialogs/autodurationsdialog.cpp:35
+#: src/core/subtitle.cpp:774 src/main/dialogs/autodurationsdialog.cpp:34
 msgid "Set Automatic Durations"
 msgstr "Встановити тривалість автоматично"
 
-#: core/subtitle.cpp:807 main/dialogs/fixoverlappingtimesdialog.cpp:32
-#: main/lineswidget.cpp:1076
+#: src/core/subtitle.cpp:808 src/main/dialogs/fixoverlappingtimesdialog.cpp:31
+#: src/main/lineswidget.cpp:1080
 msgid "Fix Overlapping Times"
 msgstr "Виправити перекриття за часом"
 
-#: core/subtitle.cpp:839
+#: src/core/subtitle.cpp:840
 msgid "Fix Lines Punctuation"
 msgstr "Виправити пунктуацію рядків"
 
-#: core/subtitle.cpp:886
+#: src/core/subtitle.cpp:887
 msgid "Lower Case"
 msgstr "Нижній регістр"
 
-#: core/subtitle.cpp:917
+#: src/core/subtitle.cpp:918
 msgid "Upper Case"
 msgstr "Верхній регістр"
 
-#: core/subtitle.cpp:948
+#: src/core/subtitle.cpp:949
 msgid "Title Case"
 msgstr "Кожне Слово З Прописної"
 
-#: core/subtitle.cpp:980
+#: src/core/subtitle.cpp:981
 msgid "Sentence Case"
 msgstr "Регістр речення"
 
-#: core/subtitle.cpp:1023 main/dialogs/smarttextsadjustdialog.cpp:32
+#: src/core/subtitle.cpp:1024 src/main/dialogs/smarttextsadjustdialog.cpp:31
 msgid "Break Lines"
 msgstr "Розбити рядки"
 
-#: core/subtitle.cpp:1032 main/application.cpp:2429 main/lineswidget.cpp:1042
+#: src/core/subtitle.cpp:1033 src/main/application.cpp:2393
+#: src/main/lineswidget.cpp:1046
 msgid "Unbreak Lines"
 msgstr "Склеїти рядки"
 
-#: core/subtitle.cpp:1041 main/application.cpp:2440 main/lineswidget.cpp:1043
+#: src/core/subtitle.cpp:1042 src/main/application.cpp:2404
+#: src/main/lineswidget.cpp:1047
 msgid "Simplify Spaces"
 msgstr "Спростити пробіли"
 
-#: core/subtitle.cpp:1050
+#: src/core/subtitle.cpp:1051
 msgid "Synchronize Subtitles"
 msgstr "Синхронізувати субтитри"
 
-#: core/subtitle.cpp:1071 main/dialogs/joinsubtitlesdialog.cpp:35
+#: src/core/subtitle.cpp:1072 src/main/dialogs/joinsubtitlesdialog.cpp:35
 msgid "Join Subtitles"
 msgstr "Об’єднати субтитри"
 
-#: core/subtitle.cpp:1113 core/subtitle.cpp:1119
+#: src/core/subtitle.cpp:1114 src/core/subtitle.cpp:1120
 msgid "Split Subtitles"
 msgstr "Розділити субтитри"
 
-#: core/subtitle.cpp:1134 core/subtitle.cpp:1149
+#: src/core/subtitle.cpp:1135 src/core/subtitle.cpp:1150
 msgid "Set Lines Style"
 msgstr "Вказати стиль рядків"
 
-#: core/subtitle.cpp:1166
+#: src/core/subtitle.cpp:1167
 msgid "Toggle Lines Style"
 msgstr "Перемкнути стиль рядків"
 
-#: core/subtitle.cpp:1178
+#: src/core/subtitle.cpp:1179
 #, fuzzy
 msgid "Change Lines Text Color"
 msgstr "Вказати текст рядка"
 
-#: core/subtitle.cpp:1191
+#: src/core/subtitle.cpp:1192
 msgid "Set Lines Mark"
 msgstr "Вказати позначку рядків"
 
-#: core/subtitle.cpp:1191
+#: src/core/subtitle.cpp:1192
 msgid "Clear Lines Mark"
 msgstr "Спорожнити позначку рядків"
 
-#: core/subtitle.cpp:1206
+#: src/core/subtitle.cpp:1207
 msgid "Toggle Lines Mark"
 msgstr "Перемкнути позначку рядків"
 
-#: core/subtitle.cpp:1216 main/application.cpp:2188 main/application.cpp:2199
-#: main/errorswidget.cpp:797
+#: src/core/subtitle.cpp:1217 src/main/application.cpp:2159
+#: src/main/errorswidget.cpp:798
 msgid "Clear Lines Errors"
 msgstr "Спорожнити помилки рядків"
 
-#: core/subtitle.cpp:1227 core/subtitle.cpp:1239 main/application.cpp:2143
-#: main/application.cpp:2174
+#: src/core/subtitle.cpp:1228 src/core/subtitle.cpp:1240
+#: src/main/application.cpp:2104
 msgid "Check Lines Errors"
 msgstr "Перевірити рядки на помилки"
 
-#: core/subtitlelineactions.cpp:71
+#: src/core/subtitlelineactions.cpp:72
 msgid "Set Line Text"
 msgstr "Вказати текст рядка"
 
-#: core/subtitlelineactions.cpp:112
+#: src/core/subtitlelineactions.cpp:113
 msgid "Set Line Secondary Text"
 msgstr "Вказати вторинний текст рядка"
 
-#: core/subtitlelineactions.cpp:153
+#: src/core/subtitlelineactions.cpp:154
 msgid "Set Line Texts"
 msgstr "Вказати тексти рядків"
 
-#: core/subtitlelineactions.cpp:227
+#: src/core/subtitlelineactions.cpp:228
 msgid "Set Line Show Time"
 msgstr "Вказати час показу рядка"
 
-#: core/subtitlelineactions.cpp:268
+#: src/core/subtitlelineactions.cpp:269
 msgid "Set Line Hide Time"
 msgstr "Вказати час приховування рядка"
 
-#: core/subtitlelineactions.cpp:383
+#: src/core/subtitlelineactions.cpp:384
 msgid "Set Line Errors"
 msgstr "Вказати помилки у рядках"
 
-#: core/subtitleline.cpp:76
+#: src/core/subtitleline.cpp:77
 msgid "Empty text"
 msgstr "Порожній текст"
 
-#: core/subtitleline.cpp:78
+#: src/core/subtitleline.cpp:79
 msgid "Too many characters"
 msgstr "Забагато символів"
 
-#: core/subtitleline.cpp:80
+#: src/core/subtitleline.cpp:81
 msgid "Too many lines"
 msgstr "Забагато рядків"
 
-#: core/subtitleline.cpp:82
+#: src/core/subtitleline.cpp:83
 msgid "Unnecessary white space"
 msgstr "Непотрібний пробіл"
 
-#: core/subtitleline.cpp:84
+#: src/core/subtitleline.cpp:85
 msgid "Unnecessary dash"
 msgstr "Непотрібне тире"
 
-#: core/subtitleline.cpp:86
+#: src/core/subtitleline.cpp:87
 msgid "Capital letter after continuation ellipsis"
 msgstr "Велика літера після трикрапки"
 
-#: core/subtitleline.cpp:88
+#: src/core/subtitleline.cpp:89
 msgid "Too long duration per character"
 msgstr "Задовга тривалість на символ"
 
-#: core/subtitleline.cpp:90
+#: src/core/subtitleline.cpp:91
 msgid "Too short duration per character"
 msgstr "Закоротка тривалість на символ"
 
-#: core/subtitleline.cpp:92
+#: src/core/subtitleline.cpp:93
 msgid "Too long duration"
 msgstr "Задовга тривалість"
 
-#: core/subtitleline.cpp:93
+#: src/core/subtitleline.cpp:94
 msgid "Too short duration"
 msgstr "Закоротка тривалість"
 
-#: core/subtitleline.cpp:94
+#: src/core/subtitleline.cpp:95
 msgid "Overlapping times"
 msgstr "Час перекриття"
 
-#: core/subtitleline.cpp:95
+#: src/core/subtitleline.cpp:96
 msgid "Untranslated text"
 msgstr "Неперекладений текст"
 
-#: core/subtitleline.cpp:96
+#: src/core/subtitleline.cpp:97
 msgid "User mark"
 msgstr "Позначка користувача"
 
-#: core/subtitleline.cpp:115
+#: src/core/subtitleline.cpp:116
 msgid "Has no primary text."
 msgstr "Не містить основного тексту."
 
-#: core/subtitleline.cpp:116
+#: src/core/subtitleline.cpp:117
 msgid "Has no translation text."
 msgstr "Не містить тексту перекладу."
 
-#: core/subtitleline.cpp:117
+#: src/core/subtitleline.cpp:118
 msgid "Has too many characters in primary text (1 char)."
 msgid_plural "Has too many characters in primary text (%1 chars)."
 msgstr[0] "Містить забагато символів основного тексту (%1 символ)."
 msgstr[1] "Містить забагато символів основного тексту (%1 символи)."
 msgstr[2] "Містить забагато символів основного тексту (%1 символів)."
 
-#: core/subtitleline.cpp:118
+#: src/core/subtitleline.cpp:119
 msgid "Has too many characters in translation text (1 char)."
 msgid_plural "Has too many characters in translation text (%1 chars)."
 msgstr[0] "Містить забагато символів тексту перекладу (%1 символ)."
 msgstr[1] "Містить забагато символів тексту перекладу (%1 символи)."
 msgstr[2] "Містить забагато символів тексту перекладу (%1 символів)."
 
-#: core/subtitleline.cpp:119
+#: src/core/subtitleline.cpp:120
 msgid "Has too many lines in primary text (1 line)."
 msgid_plural "Has too many lines in primary text (%1 lines)."
 msgstr[0] "Містить забагато рядків у основному тексті (%1 рядок)."
 msgstr[1] "Містить забагато рядків у основному тексті (%1 рядки)."
 msgstr[2] "Містить забагато рядків у основному тексті (%1 рядків)."
 
-#: core/subtitleline.cpp:120
+#: src/core/subtitleline.cpp:121
 msgid "Has too many lines in translation text (1 line)."
 msgid_plural "Has too many lines in translation text (%1 lines)."
 msgstr[0] "Містить забагато рядків у тексті перекладу (%1 рядок)."
 msgstr[1] "Містить забагато рядків у тексті перекладу (%1 рядки)."
 msgstr[2] "Містить забагато рядків у тексті перекладу (%1 рядків)."
 
-#: core/subtitleline.cpp:121
+#: src/core/subtitleline.cpp:122
 msgid "Has unnecessary spaces in primary text."
 msgstr "Містить непотрібні пробіли у основному тексті."
 
-#: core/subtitleline.cpp:122
+#: src/core/subtitleline.cpp:123
 msgid "Has unnecessary spaces in translation text."
 msgstr "Містить непотрібні пробіли у тексті перекладу."
 
-#: core/subtitleline.cpp:123
+#: src/core/subtitleline.cpp:124
 msgid "Has unnecessary dash in primary text."
 msgstr "Містить непотрібне тире у основному тексті."
 
-#: core/subtitleline.cpp:124
+#: src/core/subtitleline.cpp:125
 msgid "Has unnecessary dash in translation text."
 msgstr "Містить непотрібне тире у тексті перекладу."
 
-#: core/subtitleline.cpp:125
+#: src/core/subtitleline.cpp:126
 msgid "Has capital letter after line continuation ellipsis in primary text."
 msgstr ""
 "Містить велику літеру після трикрапки, що позначає продовження у основному "
 "тексті."
 
-#: core/subtitleline.cpp:126
+#: src/core/subtitleline.cpp:127
 msgid ""
 "Has capital letter after line continuation ellipsis in translation text."
 msgstr ""
 "Містить велику літеру після трикрапки, що позначає продовження у тексті "
 "перекладу."
 
-#: core/subtitleline.cpp:127
+#: src/core/subtitleline.cpp:128
 msgid "Has too long duration per character in primary text (1 msec/char)."
 msgid_plural ""
 "Has too long duration per character in primary text (%1 msecs/char)."
@@ -338,7 +353,7 @@ msgstr[1] ""
 msgstr[2] ""
 "Має зависоку тривалість на символ у основному тексті (%1 мс/символ)."
 
-#: core/subtitleline.cpp:128
+#: src/core/subtitleline.cpp:129
 msgid "Has too long duration per character in translation text (1 msec/char)."
 msgid_plural ""
 "Has too long duration per character in translation text (%1 msecs/char)."
@@ -349,7 +364,7 @@ msgstr[1] ""
 msgstr[2] ""
 "Має зависоку тривалість на символ у тексті перекладу (%1 мс/символ)."
 
-#: core/subtitleline.cpp:129
+#: src/core/subtitleline.cpp:130
 msgid "Has too short duration per character in primary text (1 msec/char)."
 msgid_plural ""
 "Has too short duration per character in primary text (%1 msecs/char)."
@@ -360,7 +375,7 @@ msgstr[1] ""
 msgstr[2] ""
 "Має занизьку тривалість на символ у основному тексті (%1 мс/символ)."
 
-#: core/subtitleline.cpp:130
+#: src/core/subtitleline.cpp:131
 msgid "Has too short duration per character in translation text (1 msec/char)."
 msgid_plural ""
 "Has too short duration per character in translation text (%1 msecs/char)."
@@ -371,743 +386,745 @@ msgstr[1] ""
 msgstr[2] ""
 "Має занизьку тривалість на символ у тексті перекладу (%1 мс/символ)."
 
-#: core/subtitleline.cpp:131
+#: src/core/subtitleline.cpp:132
 msgid "Has too long duration (1 msec)."
 msgid_plural "Has too long duration (%1 msecs)."
 msgstr[0] "Має зависоку тривалість (%1 мс)."
 msgstr[1] "Має зависоку тривалість (%1 мс)."
 msgstr[2] "Має зависоку тривалість (%1 мс)."
 
-#: core/subtitleline.cpp:132
+#: src/core/subtitleline.cpp:133
 msgid "Has too short duration (1 msec)."
 msgid_plural "Has too short duration (%1 msecs)."
 msgstr[0] "Має занизьку тривалість (%1 мс)."
 msgstr[1] "Має занизьку тривалість (%1 мс)."
 msgstr[2] "Має занизьку тривалість (%1 мс)."
 
-#: core/subtitleline.cpp:133
+#: src/core/subtitleline.cpp:134
 msgid "Overlaps with next line."
 msgstr "Перекривається з наступним рядком."
 
-#: core/subtitleline.cpp:134
+#: src/core/subtitleline.cpp:135
 msgid "Has untranslated text."
 msgstr "Містить неперекладений текст."
 
-#: core/subtitleline.cpp:135
+#: src/core/subtitleline.cpp:136
 msgid "Has user mark."
 msgstr "Містить позначку користувача."
 
-#: core/subtitleline.cpp:612
+#: src/core/subtitleline.cpp:613
 msgid "Set Line Times"
 msgstr "Встановити часові межі рядка"
 
-#: core/subtitleline.cpp:619
+#: src/core/subtitleline.cpp:620
 msgid "Shift Line Times"
 msgstr "Посунути часові межі рядка"
 
-#: core/subtitleline.cpp:628
+#: src/core/subtitleline.cpp:629
 msgid "Adjust Line Times"
 msgstr "Скоригувати часові межі рядка"
 
-#: main/actions/kcodecactionext.cpp:35 main/dialogs/opensubtitledialog.cpp:41
-#: main/dialogs/opensubtitledialog.cpp:43
-#: main/dialogs/selectablesubtitledialog.cpp:62
-#: main/dialogs/selectablesubtitledialog.cpp:96
+#: src/main/actions/kcodecactionext.cpp:39
+#: src/main/dialogs/opensubtitledialog.cpp:46
+#: src/main/dialogs/opensubtitledialog.cpp:48
+#: src/main/dialogs/selectablesubtitledialog.cpp:64
+#: src/main/dialogs/selectablesubtitledialog.cpp:98
 #, fuzzy
 msgid "Autodetect"
 msgstr "Автоматично"
 
-#: main/actions/krecentfilesactionext.cpp:37
+#: src/main/actions/krecentfilesactionext.cpp:40
 #, fuzzy
 msgid "Clear List"
 msgstr "Спорожнити журнал"
 
-#: main/application.cpp:418
+#: src/main/application.cpp:386
 msgid "Video Files"
 msgstr "Відеофайли"
 
-#: main/application.cpp:426
+#: src/main/application.cpp:394
 msgid "Audio Files"
 msgstr "Звукові файли"
 
-#: main/application.cpp:428
+#: src/main/application.cpp:396
 msgid "Media Files"
 msgstr "Медіафайли"
 
-#: main/application.cpp:429
+#: src/main/application.cpp:397
 msgid "All Files"
 msgstr "Всі файли"
 
-#: main/application.cpp:445
+#: src/main/application.cpp:413
 msgid "Audio Levels Files"
 msgstr "Файли рівня звуку"
 
-#: main/application.cpp:460
+#: src/main/application.cpp:434
 msgid "Exit the application"
 msgstr "Завершити роботу програми"
 
-#: main/application.cpp:463
+#: src/main/application.cpp:437
 msgid "Configure Subtitle Composer"
 msgstr "Налаштувати редактор субтитрів"
 
-#: main/application.cpp:467
+#: src/main/application.cpp:441
 msgctxt "@action:inmenu Create a new subtitle"
 msgid "New"
 msgstr "Створити"
 
-#: main/application.cpp:468
+#: src/main/application.cpp:442
 msgid "Create an empty subtitle"
 msgstr "Створити порожній запис субтитрів"
 
-#: main/application.cpp:476
+#: src/main/application.cpp:450
 msgctxt "@action:inmenu Open subtitle file"
 msgid "Open..."
 msgstr "Відкрити..."
 
-#: main/application.cpp:477 main/application.cpp:495
+#: src/main/application.cpp:451 src/main/application.cpp:469
 msgid "Open subtitle file"
 msgstr "Відкрити файл субтитрів"
 
-#: main/application.cpp:485
+#: src/main/application.cpp:459
 msgid "Reload As..."
 msgstr "Перезавантажити як..."
 
-#: main/application.cpp:486
+#: src/main/application.cpp:460
 msgid "Reload opened file with a different encoding"
 msgstr "Перезавантажити відкритий файл у іншому кодуванні"
 
-#: main/application.cpp:494
+#: src/main/application.cpp:468
 msgctxt "@action:inmenu Open rencently used subtitle file"
 msgid "Open &Recent"
 msgstr "Відкрити &недавні"
 
-#: main/application.cpp:501
+#: src/main/application.cpp:475
 msgid "Save"
 msgstr "Зберегти"
 
-#: main/application.cpp:502
+#: src/main/application.cpp:476
 msgid "Save opened subtitle"
 msgstr "Зберегти відкритий файл субтитрів"
 
-#: main/application.cpp:510
+#: src/main/application.cpp:484
 msgid "Save As..."
 msgstr "Зберегти як..."
 
-#: main/application.cpp:511
+#: src/main/application.cpp:485
 msgid "Save opened subtitle with different settings"
 msgstr "Зберегти відкритий файл субтитрів з іншими параметрами"
 
-#: main/application.cpp:518
+#: src/main/application.cpp:492
 msgid "Close"
 msgstr "Закрити"
 
-#: main/application.cpp:519
+#: src/main/application.cpp:493
 msgid "Close opened subtitle"
 msgstr "Закрити відкритий файл субтитрів"
 
-#: main/application.cpp:527
+#: src/main/application.cpp:501
 msgid "New Translation"
 msgstr "Створити переклад"
 
-#: main/application.cpp:528
+#: src/main/application.cpp:502
 msgid "Create an empty translation subtitle"
 msgstr "Створити порожній запис перекладу субтитрів"
 
-#: main/application.cpp:536
+#: src/main/application.cpp:510
 msgid "Open Translation..."
 msgstr "Відкрити переклад..."
 
-#: main/application.cpp:537 main/application.cpp:555
+#: src/main/application.cpp:511 src/main/application.cpp:529
 msgid "Open translation subtitle file"
 msgstr "Відкрити файл перекладу субтитрів"
 
-#: main/application.cpp:545
+#: src/main/application.cpp:519
 #, fuzzy
 msgid "Reload Translation As..."
 msgstr "Зберегти переклад як..."
 
-#: main/application.cpp:546
+#: src/main/application.cpp:520
 #, fuzzy
 msgid "Reload opened translation file with a different encoding"
 msgstr "Перезавантажити відкритий файл у іншому кодуванні"
 
-#: main/application.cpp:554
+#: src/main/application.cpp:528
 msgid "Open &Recent Translation"
 msgstr "Відкрити &нещодавній переклад"
 
-#: main/application.cpp:562
+#: src/main/application.cpp:536
 msgid "Save Translation"
 msgstr "Зберегти переклад"
 
-#: main/application.cpp:563
+#: src/main/application.cpp:537
 msgid "Save opened translation subtitle"
 msgstr "Зберегти відкритий файл перекладу субтитрів"
 
-#: main/application.cpp:571
+#: src/main/application.cpp:545
 msgid "Save Translation As..."
 msgstr "Зберегти переклад як..."
 
-#: main/application.cpp:572
+#: src/main/application.cpp:546
 msgid "Save opened translation subtitle with different settings"
 msgstr "Зберегти відкритий файл перекладу субтитрів з іншими параметрами"
 
-#: main/application.cpp:579
+#: src/main/application.cpp:553
 msgid "Close Translation"
 msgstr "Закрити файл перекладу"
 
-#: main/application.cpp:580
+#: src/main/application.cpp:554
 msgid "Close opened translation subtitle"
 msgstr "Закрити відкритий файл перекладу субтитрів"
 
-#: main/application.cpp:588 main/application.cpp:589
-#: widgets/simplerichtextedit.cpp:67
+#: src/main/application.cpp:562 src/main/application.cpp:563
+#: src/widgets/simplerichtextedit.cpp:67
 msgid "Undo"
 msgstr "Вернути"
 
-#: main/application.cpp:597 main/application.cpp:598
-#: widgets/simplerichtextedit.cpp:73
+#: src/main/application.cpp:571 src/main/application.cpp:572
+#: src/widgets/simplerichtextedit.cpp:73
 msgid "Redo"
 msgstr "Повторити"
 
-#: main/application.cpp:605
+#: src/main/application.cpp:579
 msgid "Split Subtitle..."
 msgstr "Розділити субтитри..."
 
-#: main/application.cpp:606
+#: src/main/application.cpp:580
 msgid "Split the opened subtitle in two parts"
 msgstr "Розділити відкритий файл субтитрів на дві частини"
 
-#: main/application.cpp:612
+#: src/main/application.cpp:586
 msgid "Join Subtitles..."
 msgstr "Об’єднати субтитри..."
 
-#: main/application.cpp:613
+#: src/main/application.cpp:587
 msgid "Append to the opened subtitle another one"
 msgstr "Додати до відкритого файла субтитрів інший файл субтитрів"
 
-#: main/application.cpp:619 main/lineswidget.cpp:1092
+#: src/main/application.cpp:593 src/main/lineswidget.cpp:1096
 msgid "Insert Before"
 msgstr "Вставити до"
 
-#: main/application.cpp:620
+#: src/main/application.cpp:594
 msgid "Insert empty line before current one"
 msgstr "Вставити порожній рядок перед поточним"
 
-#: main/application.cpp:627 main/lineswidget.cpp:1093
+#: src/main/application.cpp:601 src/main/lineswidget.cpp:1097
 msgid "Insert After"
 msgstr "Вставити після"
 
-#: main/application.cpp:628
+#: src/main/application.cpp:602
 msgid "Insert empty line after current one"
 msgstr "Вставити порожній рядок після поточного"
 
-#: main/application.cpp:635 main/lineswidget.cpp:1091
-#: main/scripting/scriptsmanager.cpp:147
+#: src/main/application.cpp:609 src/main/lineswidget.cpp:1095
 msgid "Remove"
 msgstr "Вилучити"
 
-#: main/application.cpp:636
+#: src/main/application.cpp:610
 msgid "Remove selected lines"
 msgstr "Вилучити вибрані рядки"
 
-#: main/application.cpp:644
+#: src/main/application.cpp:618
 msgid "Split selected lines"
 msgstr "Розділити позначені рядки"
 
-#: main/application.cpp:651
+#: src/main/application.cpp:625
 msgid "Join selected lines"
 msgstr "Об’єднати позначені рядки"
 
-#: main/application.cpp:657 main/dialogs/actionwitherrortargetsdialog.cpp:96
-#: main/lineswidget.cpp:1089 widgets/simplerichtextedit.cpp:108
+#: src/main/application.cpp:631
+#: src/main/dialogs/actionwitherrortargetsdialog.cpp:95
+#: src/main/lineswidget.cpp:1093 src/widgets/simplerichtextedit.cpp:110
 msgid "Select All"
 msgstr "Вибрати все"
 
-#: main/application.cpp:658
+#: src/main/application.cpp:632
 msgid "Select all lines"
 msgstr "Позначити всі рядки"
 
-#: main/application.cpp:665
+#: src/main/application.cpp:639
 msgid "Go to Line..."
 msgstr "Перейти до рядка..."
 
-#: main/application.cpp:666
+#: src/main/application.cpp:640
 msgid "Go to specified line"
 msgstr "Перейти до вказаного рядка"
 
-#: main/application.cpp:674
+#: src/main/application.cpp:648
 msgid "Find..."
 msgstr "Знайти..."
 
-#: main/application.cpp:675
+#: src/main/application.cpp:649
 msgid "Find occurrences of strings or regular expressions"
 msgstr "Знайти фрагмент тексту за вказаним рядком або формальним виразом"
 
-#: main/application.cpp:684
+#: src/main/application.cpp:657
 msgid "Find Next"
 msgstr "Знайти далі"
 
-#: main/application.cpp:685
+#: src/main/application.cpp:658
 msgid "Find next occurrence of string or regular expression"
 msgstr ""
 "Знайти наступний фрагмент тексту за вказаним рядком або формальним виразом"
 
-#: main/application.cpp:694
+#: src/main/application.cpp:666
 msgid "Find Previous"
 msgstr "Знайти попереднє"
 
-#: main/application.cpp:695
+#: src/main/application.cpp:667
 msgid "Find previous occurrence of string or regular expression"
 msgstr ""
 "Знайти попередній фрагмент тексту за вказаним рядком або формальним виразом"
 
-#: main/application.cpp:702
+#: src/main/application.cpp:674
 msgid "Replace..."
 msgstr "Замінити..."
 
-#: main/application.cpp:703
+#: src/main/application.cpp:675
 msgid "Replace occurrences of strings or regular expressions"
 msgstr ""
 "Замінити фрагменти тексту на основі вказаних рядків або формальних виразів"
 
-#: main/application.cpp:711
+#: src/main/application.cpp:683
 msgid "Retrocede current line"
 msgstr "На рядок вище"
 
-#: main/application.cpp:712
+#: src/main/application.cpp:684
 msgid "Makes the line before the current one active"
 msgstr "Зробити активним рядок, розташований вище поточного"
 
-#: main/application.cpp:720
+#: src/main/application.cpp:692
 msgid "Advance current line"
 msgstr "На рядок нижче"
 
-#: main/application.cpp:721
+#: src/main/application.cpp:693
 msgid "Makes the line after the current one active"
 msgstr "Зробити активним рядок, розташований нижче поточного"
 
-#: main/application.cpp:728 main/errorsdialog.cpp:59 main/lineswidget.cpp:1083
+#: src/main/application.cpp:700 src/main/errorsdialog.cpp:52
+#: src/main/lineswidget.cpp:1087
 msgid "Check Errors..."
 msgstr "Перевірити на помилки..."
 
-#: main/application.cpp:729
+#: src/main/application.cpp:701
 msgid "Check for errors in the current subtitle"
 msgstr "Перевірити поточний файл субтитрів на наявність помилок"
 
-#: main/application.cpp:736 main/errorsdialog.cpp:62 main/lineswidget.cpp:1084
+#: src/main/application.cpp:708 src/main/errorsdialog.cpp:55
+#: src/main/lineswidget.cpp:1088
 msgid "Clear Errors..."
 msgstr "Спорожнити список помилок..."
 
-#: main/application.cpp:737
+#: src/main/application.cpp:709
 msgid "Clear errors from selected lines"
 msgstr "Спорожнити список помилок для позначених рядків"
 
-#: main/application.cpp:743 main/lineswidget.cpp:1086
+#: src/main/application.cpp:715 src/main/lineswidget.cpp:1090
 msgid "Show Errors..."
 msgstr "Показати помилки..."
 
-#: main/application.cpp:744
+#: src/main/application.cpp:716
 msgid "Show errors information for the current subtitle"
 msgstr "Показати дані щодо помилок у поточному файлі субтитрів"
 
-#: main/application.cpp:752
+#: src/main/application.cpp:724
 msgid "Find Error..."
 msgstr "Знайти помилку..."
 
-#: main/application.cpp:753
+#: src/main/application.cpp:725
 msgid "Find lines with specified errors"
 msgstr "Знайти рядки з вказаними помилками"
 
-#: main/application.cpp:762
+#: src/main/application.cpp:733
 msgid "Find Next Error"
 msgstr "Знайти наступну помилку"
 
-#: main/application.cpp:763
+#: src/main/application.cpp:734
 msgid "Find next line with specified errors"
 msgstr "Знайти наступний рядок, що містить вказані помилки"
 
-#: main/application.cpp:772
+#: src/main/application.cpp:742
 msgid "Find Previous Error"
 msgstr "Знайти попередню помилку"
 
-#: main/application.cpp:773
+#: src/main/application.cpp:743
 msgid "Find previous line with specified errors"
 msgstr "Знайти попередній рядок, у якому містяться вказані помилки"
 
-#: main/application.cpp:781 main/lineswidget.cpp:1048
+#: src/main/application.cpp:751 src/main/lineswidget.cpp:1052
 msgid "Spelling..."
 msgstr "Правопис..."
 
-#: main/application.cpp:782
+#: src/main/application.cpp:752
 msgid "Check lines spelling"
 msgstr "Перевірити правопис рядків"
 
-#: main/application.cpp:788
+#: src/main/application.cpp:758
 msgid "Toggle Mark"
 msgstr "Увімкнути або вимкнути позначення"
 
-#: main/application.cpp:789
+#: src/main/application.cpp:759
 msgid "Toggle selected lines mark"
 msgstr "Перемкнути позначення вибраних рядків"
 
-#: main/application.cpp:797 main/currentlinewidget.cpp:93
+#: src/main/application.cpp:767 src/main/currentlinewidget.cpp:93
 msgid "Toggle Bold"
 msgstr "Перемкнути жирний"
 
-#: main/application.cpp:798
+#: src/main/application.cpp:768
 msgid "Toggle selected lines bold attribute"
 msgstr "Увімкнути або вимкнути атрибут напівжирного"
 
-#: main/application.cpp:806 main/currentlinewidget.cpp:94
+#: src/main/application.cpp:776 src/main/currentlinewidget.cpp:94
 msgid "Toggle Italic"
 msgstr "Перемкнути курсив"
 
-#: main/application.cpp:807
+#: src/main/application.cpp:777
 msgid "Toggle selected lines italic attribute"
 msgstr "Увімкнути або вимкнути атрибут курсиву"
 
-#: main/application.cpp:815 main/currentlinewidget.cpp:95
+#: src/main/application.cpp:785 src/main/currentlinewidget.cpp:95
 msgid "Toggle Underline"
 msgstr "Перемкнути підкреслювання"
 
-#: main/application.cpp:816
+#: src/main/application.cpp:786
 msgid "Toggle selected lines underline attribute"
 msgstr "Увімкнути або вимкнути атрибут підкреслювання"
 
-#: main/application.cpp:824 main/currentlinewidget.cpp:96
+#: src/main/application.cpp:794 src/main/currentlinewidget.cpp:96
 msgid "Toggle Strike Through"
 msgstr "Увімкнути або вимкнути перекреслювання"
 
-#: main/application.cpp:825
+#: src/main/application.cpp:795
 msgid "Toggle selected lines strike through attribute"
 msgstr "Увімкнути або вимкнути атрибут перекреслення вибраних рядків"
 
-#: main/application.cpp:833 main/currentlinewidget.cpp:97
+#: src/main/application.cpp:803 src/main/currentlinewidget.cpp:97
 #, fuzzy
 msgid "Change Text Color"
 msgstr "Змінити на"
 
-#: main/application.cpp:834
+#: src/main/application.cpp:804
 #, fuzzy
 msgid "Change text color of selected lines"
 msgstr "Спорожнити список помилок для позначених рядків"
 
-#: main/application.cpp:841 main/lineswidget.cpp:1071
+#: src/main/application.cpp:811 src/main/lineswidget.cpp:1075
 msgid "Shift..."
 msgstr "Зсунути..."
 
-#: main/application.cpp:842
+#: src/main/application.cpp:812
 msgid "Shift lines an specified amount of time"
 msgstr "Пересунути рядки на вказаний часовий проміжок"
 
-#: main/application.cpp:866
+#: src/main/application.cpp:831
 msgid "Adjust..."
 msgstr "Скоригувати..."
 
-#: main/application.cpp:867
+#: src/main/application.cpp:832
 msgid "Linearly adjust all lines to a specified interval"
 msgstr "Лінійно скоригувати всі рядки на вказаний часовий інтервал"
 
-#: main/application.cpp:874
+#: src/main/application.cpp:839
 msgid "Sort..."
 msgstr "Впорядкувати..."
 
-#: main/application.cpp:875
+#: src/main/application.cpp:840
 msgid "Sort lines based on their show time"
 msgstr "Впорядкувати рядки за часом їх показу"
 
-#: main/application.cpp:881
+#: src/main/application.cpp:846
 msgid "Change Frame Rate..."
 msgstr "Змінити частоту кадрів..."
 
-#: main/application.cpp:882
+#: src/main/application.cpp:847
 msgid "Retime subtitle lines by reinterpreting its frame rate"
 msgstr "Змінити прив’язку рядків субтитрів зміною частоти кадрів"
 
-#: main/application.cpp:888 main/lineswidget.cpp:1073
+#: src/main/application.cpp:853 src/main/lineswidget.cpp:1077
 msgid "Enforce Duration Limits..."
 msgstr "Примусове обмеження тривалості..."
 
-#: main/application.cpp:889
+#: src/main/application.cpp:854
 msgid "Enforce lines minimum and/or maximum duration limits"
 msgstr "Примусово застосувати обмеження мінімального і/або максимального часу"
 
-#: main/application.cpp:896 main/lineswidget.cpp:1074
+#: src/main/application.cpp:861 src/main/lineswidget.cpp:1078
 msgid "Set Automatic Durations..."
 msgstr "Встановити тривалість автоматично..."
 
-#: main/application.cpp:897
+#: src/main/application.cpp:862
 msgid "Set lines durations based on amount of letters, words and line breaks"
 msgstr ""
 "Встановити тривалість показу рядків на основі кількості літер, слів і поділу "
 "рядків"
 
-#: main/application.cpp:903
+#: src/main/application.cpp:868
 msgid "Maximize Durations..."
 msgstr "Максимізувати тривалість..."
 
-#: main/application.cpp:904
+#: src/main/application.cpp:869
 msgid "Extend lines durations up to their next lines show time"
 msgstr "Продовжити час показу рядків до часу появи наступних рядків"
 
-#: main/application.cpp:910
+#: src/main/application.cpp:875
 msgid "Fix Overlapping Times..."
 msgstr "Виправити перекриття за часом..."
 
-#: main/application.cpp:911
+#: src/main/application.cpp:876
 msgid "Fix lines overlapping times"
 msgstr "Виправити часове перекриття рядків"
 
-#: main/application.cpp:917
+#: src/main/application.cpp:882
 msgid "Synchronize with Subtitle..."
 msgstr "Синхронізувати з субтитрами..."
 
-#: main/application.cpp:918
+#: src/main/application.cpp:883
 msgid "Copy timing information from another subtitle"
 msgstr "Копіювати дані про час з іншого файла субтитрів"
 
-#: main/application.cpp:924 main/lineswidget.cpp:1041
+#: src/main/application.cpp:889 src/main/lineswidget.cpp:1045
 msgid "Break Lines..."
 msgstr "Розділити рядки..."
 
-#: main/application.cpp:925
+#: src/main/application.cpp:890
 msgid "Automatically set line breaks"
 msgstr "Автоматично встановлювати поділ рядків"
 
-#: main/application.cpp:931 main/lineswidget.cpp:1042
+#: src/main/application.cpp:896 src/main/lineswidget.cpp:1046
 msgid "Unbreak Lines..."
 msgstr "Склеїти рядки..."
 
-#: main/application.cpp:932
+#: src/main/application.cpp:897
 msgid "Remove line breaks from lines"
 msgstr "Вилучити символи розриву рядків з рядків"
 
-#: main/application.cpp:938 main/lineswidget.cpp:1043
+#: src/main/application.cpp:903 src/main/lineswidget.cpp:1047
 msgid "Simplify Spaces..."
 msgstr "Спростити пробіли..."
 
-#: main/application.cpp:939
+#: src/main/application.cpp:904
 msgid "Remove unneeded spaces from lines"
 msgstr "Вилучити з рядків непотрібні пробіли"
 
-#: main/application.cpp:945 main/lineswidget.cpp:1044
+#: src/main/application.cpp:910 src/main/lineswidget.cpp:1048
 msgid "Change Case..."
 msgstr "Змінити регістр..."
 
-#: main/application.cpp:946
+#: src/main/application.cpp:911
 msgid "Change lines text to upper, lower, title or sentence case"
 msgstr ""
 "Змінити регістр тексту рядків на верхній, нижній, заголовковий або такий, як "
 "у реченні"
 
-#: main/application.cpp:952 main/lineswidget.cpp:1045
+#: src/main/application.cpp:917 src/main/lineswidget.cpp:1049
 msgid "Fix Punctuation..."
 msgstr "Виправити пунктуацію..."
 
-#: main/application.cpp:953
+#: src/main/application.cpp:918
 msgid "Fix punctuation errors in lines"
 msgstr "Виправити помилки пунктуації у рядках"
 
-#: main/application.cpp:959 main/lineswidget.cpp:1046
+#: src/main/application.cpp:924 src/main/lineswidget.cpp:1050
 msgid "Translate..."
 msgstr "Перекласти..."
 
-#: main/application.cpp:960
+#: src/main/application.cpp:925
 msgid "Translate lines texts using Google services"
 msgstr "Перекласти рядки тексту за допомогою служб Google"
 
-#: main/application.cpp:966
+#: src/main/application.cpp:931
 msgid "Edit Line in Place"
 msgstr "Змінити рядок на місці"
 
-#: main/application.cpp:967
+#: src/main/application.cpp:932
 msgid "Edit current line text in place"
 msgstr "Змінити поточний рядок тексту на місці, де його показано"
 
-#: main/application.cpp:975
+#: src/main/application.cpp:940
 msgid "Open Video..."
 msgstr "Відкрити відео..."
 
-#: main/application.cpp:976 main/application.cpp:983
+#: src/main/application.cpp:941 src/main/application.cpp:948
 msgid "Open video file"
 msgstr "Відкрити файл відео"
 
-#: main/application.cpp:982
+#: src/main/application.cpp:947
 msgid "Open &Recent Video"
 msgstr "Відкрити &нещодавнє відео"
 
-#: main/application.cpp:989
+#: src/main/application.cpp:954
 msgid "Close Video"
 msgstr "Закрити відео"
 
-#: main/application.cpp:990
+#: src/main/application.cpp:955
 msgid "Close video file"
 msgstr "Закрити файл відео"
 
-#: main/application.cpp:997
+#: src/main/application.cpp:962
 msgid "Extract Audio"
 msgstr ""
 
-#: main/application.cpp:998
+#: src/main/application.cpp:963
 #, fuzzy
 msgid "Extract video's active audio stream"
 msgstr "Оберіть активний звуковий потік"
 
-#: main/application.cpp:1005
+#: src/main/application.cpp:970
 msgid "Cancel Audio Extraction"
 msgstr ""
 
-#: main/application.cpp:1006
+#: src/main/application.cpp:971
 msgid "Cancel video's audio stream extraction"
 msgstr ""
 
-#: main/application.cpp:1014
+#: src/main/application.cpp:978
 msgid "Full Screen Mode"
 msgstr "Повноекранний режим"
 
-#: main/application.cpp:1015
+#: src/main/application.cpp:979
 msgid "Toggle full screen mode"
 msgstr "Увімкнути або вимкнути повноекранний режим"
 
-#: main/application.cpp:1022 main/utils/kreplace.cpp:402
+#: src/main/application.cpp:986
 msgid "Stop"
 msgstr "Зупинити"
 
-#: main/application.cpp:1023
+#: src/main/application.cpp:987
 msgid "Stop video playback"
 msgstr "Припинити відтворення відео"
 
-#: main/application.cpp:1030 main/application.cpp:3022
-#: main/application.cpp:3030
+#: src/main/application.cpp:994 src/main/application.cpp:2986
+#: src/main/application.cpp:2994
 msgid "Play"
 msgstr "Пуск"
 
-#: main/application.cpp:1031
+#: src/main/application.cpp:995
 msgid "Toggle video playing/paused"
 msgstr "Поновити або зупинити відтворення відео"
 
-#: main/application.cpp:1038
+#: src/main/application.cpp:1002
 msgid "Seek Backwards"
 msgstr "Позиціонування назад"
 
-#: main/application.cpp:1046
+#: src/main/application.cpp:1010
 msgid "Seek Forwards"
 msgstr "Позиціонування вперед"
 
-#: main/application.cpp:1057
+#: src/main/application.cpp:1018
 msgid "Jump to Previous Line"
 msgstr "Перейти до попереднього рядка"
 
-#: main/application.cpp:1058
+#: src/main/application.cpp:1019
 msgid "Seek to previous subtitle line show time"
 msgstr "Позиціонування за часом показу попереднього рядка субтитрів"
 
-#: main/application.cpp:1066
+#: src/main/application.cpp:1027
 msgid "Jump to Next Line"
 msgstr "Перейти до наступного рядка"
 
-#: main/application.cpp:1067
+#: src/main/application.cpp:1028
 msgid "Seek to next subtitle line show time"
 msgstr "Позиціонування за часом показу наступного рядка субтитрів"
 
-#: main/application.cpp:1076
+#: src/main/application.cpp:1036
 msgid "Set Current Line Show Time"
 msgstr "Встановити час показу поточного рядка"
 
-#: main/application.cpp:1077
+#: src/main/application.cpp:1037
 msgid "Set current line show time to video position"
 msgstr "Встановити час показу поточного рядка за позицією у відео"
 
-#: main/application.cpp:1086
+#: src/main/application.cpp:1045
 msgid "Set Current Line Hide Time"
 msgstr "Встановити час приховування поточного рядка"
 
-#: main/application.cpp:1087
+#: src/main/application.cpp:1046
 msgid "Set current line hide time to video position"
 msgstr "Встановити час приховування поточного рядка за позицією у відео"
 
-#: main/application.cpp:1095
+#: src/main/application.cpp:1054
 msgid "Current Line Follows Video"
 msgstr "Поточний рядок прив’язано до відео"
 
-#: main/application.cpp:1096
+#: src/main/application.cpp:1055
 msgid "Make current line follow the playing video position"
 msgstr "Прив’язати поточний рядок до позиції у відео"
 
-#: main/application.cpp:1102
+#: src/main/application.cpp:1061
 msgctxt "@action:inmenu Toggle audio muted"
 msgid "Mute"
 msgstr "Вимкнути звук"
 
-#. i18n( "Mute" ), i18n( "Unmute" ) );
-#: main/application.cpp:1104
+#: src/main/application.cpp:1062
 msgid "Enable/disable playback sound"
 msgstr "Увімкнути/Вимкнути відтворення звуку"
 
-#: main/application.cpp:1111
+#: src/main/application.cpp:1069
 msgid "Increase Volume"
 msgstr "Збільшити гучність"
 
-#: main/application.cpp:1112
+#: src/main/application.cpp:1070
 msgid "Increase volume by 5%"
 msgstr "Підвищити гучність на 5%"
 
-#: main/application.cpp:1119
+#: src/main/application.cpp:1077
 msgid "Decrease Volume"
 msgstr "Зменшити гучність"
 
-#: main/application.cpp:1120
+#: src/main/application.cpp:1078
 msgid "Decrease volume by 5%"
 msgstr "Знизити гучність на 5%"
 
-#: main/application.cpp:1127
+#: src/main/application.cpp:1085
 msgid "Audio Streams"
 msgstr "Аудіопотоки"
 
-#: main/application.cpp:1128
+#: src/main/application.cpp:1086
 msgid "Select active audio stream"
 msgstr "Оберіть активний звуковий потік"
 
-#: main/application.cpp:1135
+#: src/main/application.cpp:1093
 msgid "Increase Font Size"
 msgstr "Збільшити розмір шрифту"
 
-#: main/application.cpp:1136
+#: src/main/application.cpp:1094
 msgid "Increase subtitles font size by 1 point"
 msgstr "Збільшити розмір шрифту субтитрів на 1 пункт"
 
-#: main/application.cpp:1143
+#: src/main/application.cpp:1101
 msgid "Decrease Font Size"
 msgstr "Зменшити розмір шрифту"
 
-#: main/application.cpp:1144
+#: src/main/application.cpp:1102
 msgid "Decrease subtitles font size by 1 point"
 msgstr "Зменшити розмір шрифту субтитрів на 1 пункт"
 
-#: main/application.cpp:1151
+#: src/main/application.cpp:1109
 msgid "Subtitle Streams"
 msgstr "Потоки субтитрів"
 
-#: main/application.cpp:1152
+#: src/main/application.cpp:1110
 msgid "Select active subtitle stream"
 msgstr "Вибір активного потоку субтитрів"
 
-#: main/application.cpp:1158
+#: src/main/application.cpp:1116
 msgid "Shift to Video Position"
 msgstr "Пересунути на позицію у відео"
 
-#: main/application.cpp:1159
+#: src/main/application.cpp:1117
 msgid ""
 "Set current line show time to video position by equally shifting all lines"
 msgstr ""
 "Встановити час показу поточного рядка за позицією у відео рівномірним "
 "зсуванням всіх рядків"
 
-#: main/application.cpp:1166
+#: src/main/application.cpp:1124
 msgid "Adjust to Video Position (Anchor Last Line)"
 msgstr "Скоригувати за позицією у відео (прив’язка останнього рядка)"
 
-#: main/application.cpp:1167
+#: src/main/application.cpp:1125
 msgid ""
 "Set current line to video position by fixing the last line and linearly "
 "adjusting the other ones"
@@ -1115,11 +1132,11 @@ msgstr ""
 "Встановити поточний рядок за позицією у відео фіксуванням попереднього рядка "
 "і лінійним коригуванням часу інших"
 
-#: main/application.cpp:1174
+#: src/main/application.cpp:1132
 msgid "Adjust to Video Position (Anchor First Line)"
 msgstr "Скоригувати за позицією у відео (прив’язка першого рядка)"
 
-#: main/application.cpp:1175
+#: src/main/application.cpp:1133
 msgid ""
 "Set current line to video position by fixing the first line and linearly "
 "adjusting the other ones"
@@ -1127,16 +1144,16 @@ msgstr ""
 "Встановити поточний рядок за позицією у відео фіксуванням першого рядка і "
 "лінійним коригуванням часу інших"
 
-#: main/application.cpp:1183
+#: src/main/application.cpp:1141
 msgctxt "@action:inmenu Manage user scripts"
 msgid "Scripts Manager..."
 msgstr "Керування скриптами..."
 
-#: main/application.cpp:1184
+#: src/main/application.cpp:1142
 msgid "Manage user scripts"
 msgstr "Керування скриптами користувача"
 
-#: main/application.cpp:1340
+#: src/main/application.cpp:1301
 msgid ""
 "The requested action would make the subtitle and its translation share the "
 "same file, possibly resulting in loss of information when saving.\n"
@@ -1146,12 +1163,12 @@ msgstr ""
 "файлі, що може спричинити втрату даних під час збереження.\n"
 "Ви справді бажаєте виконати вказану дію?"
 
-#: main/application.cpp:1340
+#: src/main/application.cpp:1301
 msgid "Conflicting Subtitle Files"
 msgstr "Файли субтитрів з конфліктами"
 
-#: main/application.cpp:1448 main/application.cpp:1476
-#: main/application.cpp:1684 main/application.cpp:1722
+#: src/main/application.cpp:1409 src/main/application.cpp:1437
+#: src/main/application.cpp:1650 src/main/application.cpp:1688
 msgid ""
 "<qt>Could not parse the subtitle file.<br/>This may have been caused by "
 "usage of the wrong encoding.</qt>"
@@ -1159,11 +1176,11 @@ msgstr ""
 "<qt>Не вдалося обробити файл субтитрів.<br/>Причиною може бути використання "
 "неправильного кодування.</qt>"
 
-#: main/application.cpp:1535
+#: src/main/application.cpp:1496
 msgid "There was an error saving the subtitle."
 msgstr "Під час спроби зберегти файл субтитрів сталася помилка."
 
-#: main/application.cpp:1567 main/application.cpp:1813
+#: src/main/application.cpp:1533 src/main/application.cpp:1784
 msgid ""
 "Currently opened translation subtitle has unsaved changes.\n"
 "Do you want to save them?"
@@ -1171,11 +1188,11 @@ msgstr ""
 "У поточному файлі перекладу субтитрів є незбережені зміни.\n"
 "Бажаєте їх зберегти?"
 
-#: main/application.cpp:1568 main/application.cpp:1814
+#: src/main/application.cpp:1534 src/main/application.cpp:1785
 msgid "Close Translation Subtitle"
 msgstr "Закрити файл перекладу субтитрів"
 
-#: main/application.cpp:1578
+#: src/main/application.cpp:1544
 msgid ""
 "Currently opened subtitle has unsaved changes.\n"
 "Do you want to save them?"
@@ -1183,57 +1200,57 @@ msgstr ""
 "Поточний відкритий файл субтитрів містить незбережені зміни.\n"
 "Бажаєте їх зберегти?"
 
-#: main/application.cpp:1579
+#: src/main/application.cpp:1545
 msgid "Close Subtitle"
 msgstr "Закрити файл субтитрів"
 
-#: main/application.cpp:1674
+#: src/main/application.cpp:1640
 msgctxt "@item:inmenu Display primary text in video player"
 msgid "Primary"
 msgstr "Основний"
 
-#: main/application.cpp:1675
+#: src/main/application.cpp:1641
 msgctxt "@item:inmenu Display translation text in video player"
 msgid "Translation"
 msgstr "Переклад"
 
-#: main/application.cpp:1781
+#: src/main/application.cpp:1747
 msgid "There was an error saving the translation subtitle."
 msgstr "Під час спроби зберегти переклад субтитрів сталася помилка."
 
-#: main/application.cpp:1859
+#: src/main/application.cpp:1830
 msgid "Could not read the subtitle file to append."
 msgstr "Не вдалося прочитати файл субтитрів, який слід долучити."
 
-#: main/application.cpp:1877 main/application.cpp:2915
-#: main/application.cpp:2920
+#: src/main/application.cpp:1848 src/main/application.cpp:2879
+#: src/main/application.cpp:2884
 msgid "Untitled"
 msgstr "Без назви"
 
-#: main/application.cpp:1877 main/application.cpp:2917
+#: src/main/application.cpp:1848 src/main/application.cpp:2881
 msgid "Untitled Translation"
 msgstr "Переклад без назви"
 
-#: main/application.cpp:1884
+#: src/main/application.cpp:1854
 msgctxt "Suffix added to split subtitles"
 msgid "split"
 msgstr ""
 
-#: main/application.cpp:1906
+#: src/main/application.cpp:1868
 #, fuzzy
 msgid "Could not write the split subtitle file."
 msgstr "Не вдалося здійснити запис до розділеного файла субтитрів."
 
-#: main/application.cpp:1906
+#: src/main/application.cpp:1868
 #, fuzzy
 msgid "Could not write the split subtitle translation file."
 msgstr "Не вдалося записати розділений файл перекладу субтитрів."
 
-#: main/application.cpp:1924
+#: src/main/application.cpp:1885
 msgid "The specified time does not split the subtitles."
 msgstr "Вказаний час не є часом поділу субтитрів."
 
-#: main/application.cpp:1957
+#: src/main/application.cpp:1920
 #, fuzzy
 msgid ""
 "Could not open a new Subtitle Composer window.\n"
@@ -1242,7 +1259,7 @@ msgstr ""
 "Не вдалося відкрити нове вікно редактора субтитрів.\n"
 "Відділену частину було збережено як %1."
 
-#: main/application.cpp:1958
+#: src/main/application.cpp:1921
 #, fuzzy
 msgid ""
 "Could not open a new Subtitle Composer window.\n"
@@ -1251,45 +1268,45 @@ msgstr ""
 "Не вдалося відкрити нове вікно редактора субтитрів.\n"
 "Відділені частини було збережено як %1 і %2."
 
-#: main/application.cpp:2052
+#: src/main/application.cpp:2013
 msgid "Go to Line"
 msgstr "Перейти до рядка"
 
-#: main/application.cpp:2052
+#: src/main/application.cpp:2013
 msgid "&Go to line:"
 msgstr "Пере&йти до рядка:"
 
-#: main/application.cpp:2323
+#: src/main/application.cpp:2287
 msgid "Can not perform sort on selection with multiple ranges."
 msgstr ""
 "Виконання впорядкування у вибраній області з декількома діапазонами "
 "неможливе."
 
-#: main/application.cpp:2405
+#: src/main/application.cpp:2369
 msgid "The reference subtitle must have more than one line to proceed."
 msgstr "У еталонних субтитрах має бути принаймні один рядок."
 
-#: main/application.cpp:2412
+#: src/main/application.cpp:2376
 msgid "Could not parse the reference subtitle file."
 msgstr "Не вдалося обробити еталонний файл субтитрів."
 
-#: main/application.cpp:2494 main/dialogs/translatedialog.cpp:31
+#: src/main/application.cpp:2458 src/main/dialogs/translatedialog.cpp:33
 msgid "Translate"
 msgstr "Перекласти"
 
-#: main/application.cpp:2494
+#: src/main/application.cpp:2458
 msgid "Translating text (%1 to %2)..."
 msgstr "Переклад тексту (з %1 %2)..."
 
-#: main/application.cpp:2498
+#: src/main/application.cpp:2462
 msgid "Translating primary text (%1 to %2)..."
 msgstr "Переклад основного тексту (з %1 %2)..."
 
-#: main/application.cpp:2499
+#: src/main/application.cpp:2463
 msgid "Translating secondary text (%1 to %2)..."
 msgstr "Переклад вторинного тексту (з %1 %2)..."
 
-#: main/application.cpp:2527
+#: src/main/application.cpp:2491
 msgid ""
 "Unable to perform texts synchronization (sent and received lines count do "
 "not match)."
@@ -1297,15 +1314,15 @@ msgstr ""
 "Не вдалося виконати синхронізацію текстів (кількості надісланих і отриманих "
 "рядків не збігаються)."
 
-#: main/application.cpp:2531
+#: src/main/application.cpp:2495
 msgid "Translate Primary Text"
 msgstr "Перекласти основний текст"
 
-#: main/application.cpp:2531
+#: src/main/application.cpp:2495
 msgid "Translate Secondary Text"
 msgstr "Перекласти вторинний текст"
 
-#: main/application.cpp:2546
+#: src/main/application.cpp:2510
 msgid ""
 "There was an error performing the translation:\n"
 "\n"
@@ -1315,11 +1332,11 @@ msgstr ""
 "\n"
 "%1"
 
-#: main/application.cpp:2587
+#: src/main/application.cpp:2548
 msgid "Open Video"
 msgstr "Відкрити відео"
 
-#: main/application.cpp:2717 main/application.cpp:2793
+#: src/main/application.cpp:2681 src/main/application.cpp:2757
 msgid ""
 "Continuing would result in loss of timing information for some lines.\n"
 "Are you sure you want to continue?"
@@ -1328,954 +1345,769 @@ msgstr ""
 "рядків.\n"
 "Ви справді бажаєте виконати цю дію?"
 
-#: main/application.cpp:2737
+#: src/main/application.cpp:2701
 #, fuzzy
 msgid "<qt>There was an error opening file %1 for audio extraction.</qt>"
 msgstr "<qt>Сталася помилка під час спроби відкриття файла<br/>%1</qt>"
 
-#: main/application.cpp:2763 main/application.cpp:2766
+#: src/main/application.cpp:2727 src/main/application.cpp:2730
 #, fuzzy
 msgid "Unexpected error when extracting audio."
 msgstr "Неочікувана помилка під час спроби відтворення файла."
 
-#: main/application.cpp:2763 main/application.cpp:2766
+#: src/main/application.cpp:2727 src/main/application.cpp:2730
 msgid "Error Extracting Audio"
 msgstr ""
 
-#: main/application.cpp:2913
+#: src/main/application.cpp:2877
 msgid "modified"
 msgstr "змінено"
 
-#: main/application.cpp:3014
+#: src/main/application.cpp:2978
 msgid "Pause"
 msgstr "Пауза"
 
-#: main/application.cpp:3062
+#: src/main/application.cpp:3023
 msgid "Seek backwards 1 second"
 msgid_plural "Seek backwards %1 seconds"
 msgstr[0] "Позиціонування назад на %1 секунду"
 msgstr[1] "Позиціонування назад на %1 секунди"
 msgstr[2] "Позиціонування назад на %1 секунд"
 
-#: main/application.cpp:3063
+#: src/main/application.cpp:3024
 msgid "Seek forwards 1 second"
 msgid_plural "Seek forwards %1 seconds"
 msgstr[0] "Позиціонування вперед на %1 секунду"
 msgstr[1] "Позиціонування вперед на %1 секунди"
 msgstr[2] "Позиціонування вперед на %1 секунд"
 
-#: main/application.cpp:3074 main/application.cpp:3078
+#: src/main/application.cpp:3027 src/main/application.cpp:3031
 msgid "Shift %21 Millisecond"
 msgid_plural "Shift %2%1 Milliseconds"
 msgstr[0] "Зсув %2%1 мілісекунду"
 msgstr[1] "Зсув %2%1 мілісекунди"
 msgstr[2] "Зсув %2%1 мілісекунд"
 
-#: main/application.cpp:3075 main/application.cpp:3079
+#: src/main/application.cpp:3028 src/main/application.cpp:3032
 msgid "Shift selected lines %21 millisecond"
 msgid_plural "Shift selected lines %2%1 milliseconds"
 msgstr[0] "Зсунути позначені рядки %2%1 мілісекунду"
 msgstr[1] "Зсунути позначені рядки %2%1 мілісекунди"
 msgstr[2] "Зсунути позначені рядки %2%1 мілісекунд"
 
-#: main/configdialog.cpp:46
-msgid "Configure"
-msgstr "Налаштувати"
-
-#: main/configdialog.cpp:54
+#: src/main/configs/configdialog.cpp:45
 msgctxt "@title General settings"
 msgid "General"
 msgstr "Загальне"
 
-#: main/configdialog.cpp:55
+#: src/main/configs/configdialog.cpp:46
 msgid "General Settings"
 msgstr "Загальні параметри"
 
-#: main/configdialog.cpp:59
-msgctxt "@title Error checks settings"
-msgid "Error Checks"
+#: src/main/configs/configdialog.cpp:50
+#, fuzzy
+msgctxt "@title Error Check Settings"
+msgid "Error Check"
 msgstr "Пошук помилок"
 
-#: main/configdialog.cpp:60
-msgid "Error Checks Settings"
+#: src/main/configs/configdialog.cpp:51
+#, fuzzy
+msgid "Error Check Settings"
 msgstr "Параметри перевірки на помилки"
 
-#: main/configdialog.cpp:64
-msgctxt "@title Spelling settings"
+#: src/main/configs/configdialog.cpp:57
+#, fuzzy
+msgctxt "@title Spelling Settings"
 msgid "Spelling"
 msgstr "Правопис"
 
-#: main/configdialog.cpp:65
+#: src/main/configs/configdialog.cpp:58
 msgid "Spelling Settings"
 msgstr "Параметри правопису"
 
-#: main/configdialog.cpp:69
-msgctxt "@title Player settings"
+#: src/main/configs/configdialog.cpp:62
+#, fuzzy
+msgctxt "@title Player Settings"
 msgid "Player"
 msgstr "Програвач"
 
-#: main/configdialog.cpp:70
+#: src/main/configs/configdialog.cpp:63
 msgid "Player Settings"
 msgstr "Параметри програвача"
 
-#: main/configdialog.cpp:80
+#: src/main/configs/configdialog.cpp:72
 msgctxt "@title Player backend settings"
 msgid "%1 Backend Settings"
 msgstr "Параметри сервера %1"
 
-#: main/configs/errorsconfigwidget.cpp:37
-msgctxt "@title:group"
-msgid "Texts"
-msgstr "Тексти"
-
-#: main/configs/errorsconfigwidget.cpp:42
-#: main/dialogs/smarttextsadjustdialog.cpp:40
-msgid " characters"
-msgstr " символів"
-
-#: main/configs/errorsconfigwidget.cpp:45
-msgid "Maximum number of characters:"
-msgstr "Максимальна кількість символів:"
-
-#: main/configs/errorsconfigwidget.cpp:51
-msgid " lines"
-msgstr " рядків"
-
-#: main/configs/errorsconfigwidget.cpp:54
-msgid "Maximum number of lines:"
-msgstr "Максимальна кількість рядків:"
-
-#: main/configs/errorsconfigwidget.cpp:57
-msgctxt "@title:group"
-msgid "Absolute Durations"
-msgstr "Абсолютні тривалості"
-
-#: main/configs/errorsconfigwidget.cpp:62
-#: main/configs/errorsconfigwidget.cpp:71
-#: main/configs/generalconfigwidget.cpp:51
-#: main/configs/generalconfigwidget.cpp:68
-#: main/configs/generalconfigwidget.cpp:77
-#: main/dialogs/fixoverlappingtimesdialog.cpp:37
-msgid " msecs"
-msgstr " мс"
-
-#: main/configs/errorsconfigwidget.cpp:65
-#: main/configs/errorsconfigwidget.cpp:85
-msgid "Minimum duration:"
-msgstr "Мінімальна тривалість:"
-
-#: main/configs/errorsconfigwidget.cpp:74
-#: main/configs/errorsconfigwidget.cpp:94
-msgid "Maximum duration:"
-msgstr "Максимальна тривалість:"
-
-#: main/configs/errorsconfigwidget.cpp:77
-msgctxt "@title:group"
-msgid "Relative Durations"
-msgstr "Відносна тривалість"
-
-#: main/configs/errorsconfigwidget.cpp:82
-#: main/configs/errorsconfigwidget.cpp:91
-msgid " msecs/character"
-msgstr " мс/символ"
-
-#: main/configs/errorsconfigwidget.cpp:97
-msgctxt "@title:group"
-msgid "Behavior"
-msgstr "Поведінка"
-
-#: main/configs/errorsconfigwidget.cpp:100
-msgid "Automatically clear fixed errors"
-msgstr "Автоматично вилучати записи виправлених помилок"
-
-#: main/configs/generalconfigwidget.cpp:38
-#: main/configs/playerconfigwidget.cpp:45
-#: services/mplayer/mplayerconfigwidget.cpp:37
-#: services/mpv/mpvconfigwidget.cpp:38
-msgctxt "@title:group General settings"
-msgid "General"
-msgstr "Загальне"
-
-#: main/configs/generalconfigwidget.cpp:44
-msgid "Default subtitles encoding:"
-msgstr ""
-
-#: main/configs/generalconfigwidget.cpp:45
-msgid ""
-"The encoding specified here will be used to load subtitles when "
-"autodetection fails and will also be suggested when saving new subtitles."
-msgstr ""
-
-#: main/configs/generalconfigwidget.cpp:54
-msgid "On line double click, jump to show time minus:"
-msgstr "Після подвійного клацання переходити до часу показу мінус:"
-
-#: main/configs/generalconfigwidget.cpp:58
-msgid "Resume playback after line double click"
-msgstr ""
-
-#: main/configs/generalconfigwidget.cpp:61
-msgid "Automatically load video file when opening subtitle"
-msgstr "Автоматично завантажувати файл відео під час відкриття субтитрів"
-
-#: main/configs/generalconfigwidget.cpp:63
-msgctxt "@title:group"
-msgid "Quick Actions"
-msgstr "Швидкі дії"
-
-#: main/configs/generalconfigwidget.cpp:71
-msgid "Time shift for selected lines:"
-msgstr "Часовий зсув для позначених рядків:"
-
-#: main/configs/generalconfigwidget.cpp:80
-msgid "Compensation for captured video times:"
-msgstr "Компенсація часу захоплення відео:"
-
-#: main/configs/playerconfigwidget.cpp:56
-msgid "Player backend:"
-msgstr "Сервер відтворення:"
-
-#: main/configs/playerconfigwidget.cpp:68
-#, fuzzy
-msgid "Decoder backend:"
-msgstr "Сервер відтворення:"
-
-#: main/configs/playerconfigwidget.cpp:74
-msgid " secs"
-msgstr " секунд"
-
-#: main/configs/playerconfigwidget.cpp:77
-msgid "Jump length on seek:"
-msgstr "Крок переходу при позиціонуванні:"
-
-#: main/configs/playerconfigwidget.cpp:81 main/playerwidget.cpp:449
-msgid "Show editable position control"
-msgstr "Показувати символ позиції редагування"
-
-#: main/configs/playerconfigwidget.cpp:83
-msgctxt "@title:group"
-msgid "Subtitles"
-msgstr "Субтитри"
-
-#: main/configs/playerconfigwidget.cpp:88
-msgctxt "@label:chooser The font family name"
-msgid "Font family:"
-msgstr "Гарнітура шрифту:"
-
-#: main/configs/playerconfigwidget.cpp:94
-msgid " points"
-msgstr " пунктів"
-
-#: main/configs/playerconfigwidget.cpp:97
-msgid "Font size:"
-msgstr "Розмір шрифту:"
-
-#: main/configs/playerconfigwidget.cpp:103
-msgid "Primary color:"
-msgstr "Основний колір:"
-
-#: main/configs/playerconfigwidget.cpp:109
-msgid "Outline color:"
-msgstr "Колір контуру:"
-
-#: main/configs/playerconfigwidget.cpp:115
-msgid " pixels"
-msgstr " пікселів"
-
-#: main/configs/playerconfigwidget.cpp:118
-msgid "Outline width:"
-msgstr "Товщина контуру:"
-
-#: main/configs/playerconfigwidget.cpp:121
-msgctxt "@title:group"
-msgid "Subtitles Preview"
-msgstr "Перегляд субтитрів"
-
-#: main/configs/playerconfigwidget.cpp:129
+#: src/main/configs/playerconfigwidget.cpp:40
 msgctxt "Text for previewing the subtitles font settings"
 msgid "<p>The Quick Brown Fox<br/>Jumps Over The Lazy Dog</p>"
 msgstr "<p>Тест українських та<br/>English символів</p>"
 
-#: main/currentlinewidget.cpp:67
+#: src/main/currentlinewidget.cpp:67
 msgid "<b>Show</b>"
 msgstr "<b>Показати</b>"
 
-#: main/currentlinewidget.cpp:72
+#: src/main/currentlinewidget.cpp:72
 msgid "<b>Hide</b>"
 msgstr "<b>Сховати</b>"
 
-#: main/currentlinewidget.cpp:77
+#: src/main/currentlinewidget.cpp:77
 msgid "<b>Duration</b>"
 msgstr "<b>Тривалість</b>"
 
-#: main/currentlinewidget.cpp:231 main/currentlinewidget.cpp:236
+#: src/main/currentlinewidget.cpp:231 src/main/currentlinewidget.cpp:236
 msgid "No current line"
 msgstr "Немає поточного рядка"
 
-#: main/currentlinewidget.cpp:363
+#: src/main/currentlinewidget.cpp:363
 msgid "Current line:"
 msgstr "Поточний рядок:"
 
-#: main/currentlinewidget.cpp:385
+#: src/main/currentlinewidget.cpp:385
 msgid "1 character"
 msgid_plural "%1 characters"
 msgstr[0] "1 символ"
 msgstr[1] "%1 символи"
 msgstr[2] "%1 символів"
 
-#: main/dialogs/actionwitherrortargetsdialog.cpp:69
+#: src/main/dialogs/actionwitherrortargetsdialog.cpp:68
 msgid "Available errors"
 msgstr "Можливі помилки"
 
-#: main/dialogs/actionwitherrortargetsdialog.cpp:98
+#: src/main/dialogs/actionwitherrortargetsdialog.cpp:97
 msgid "Select None"
 msgstr "Не обирати жодного"
 
-#: main/dialogs/actionwithtargetdialog.cpp:128
+#: src/main/dialogs/actionwithtargetdialog.cpp:124
 msgid "Target >>"
 msgstr "Призначення >>"
 
-#: main/dialogs/actionwithtargetdialog.cpp:128
-#: main/dialogs/actionwithtargetdialog.cpp:145
+#: src/main/dialogs/actionwithtargetdialog.cpp:124
+#: src/main/dialogs/actionwithtargetdialog.cpp:140
 msgid "Target <<"
 msgstr "Призначення <<"
 
-#: main/dialogs/actionwithtargetdialog.cpp:159
+#: src/main/dialogs/actionwithtargetdialog.cpp:154
 msgid "All lines"
 msgstr "Всі рядки"
 
-#: main/dialogs/actionwithtargetdialog.cpp:160 main/utils/errorfinder.cpp:45
+#: src/main/dialogs/actionwithtargetdialog.cpp:155
+#: src/main/utils/errorfinder.cpp:45
 msgid "Selected lines"
 msgstr "Позначені рядки"
 
-#: main/dialogs/actionwithtargetdialog.cpp:161
+#: src/main/dialogs/actionwithtargetdialog.cpp:156
 msgid "All lines from first selected"
 msgstr "Всі рядки від першого позначеного"
 
-#: main/dialogs/actionwithtargetdialog.cpp:162
+#: src/main/dialogs/actionwithtargetdialog.cpp:157
 msgid "All lines up to last selected"
 msgstr "Всі рядки над першим позначеним"
 
-#: main/dialogs/actionwithtargetdialog.cpp:250 main/utils/finder.cpp:63
-#: main/utils/replacer.cpp:61
+#: src/main/dialogs/actionwithtargetdialog.cpp:245 src/main/utils/finder.cpp:62
+#: src/main/utils/replacer.cpp:63
 msgid "Both subtitles"
 msgstr "Всі субтитри"
 
-#: main/dialogs/actionwithtargetdialog.cpp:253 main/utils/finder.cpp:65
-#: main/utils/replacer.cpp:63
+#: src/main/dialogs/actionwithtargetdialog.cpp:248 src/main/utils/finder.cpp:64
+#: src/main/utils/replacer.cpp:65
 msgid "Primary subtitle"
 msgstr "Основні субтитри"
 
-#: main/dialogs/actionwithtargetdialog.cpp:256 main/utils/finder.cpp:67
-#: main/utils/replacer.cpp:65
+#: src/main/dialogs/actionwithtargetdialog.cpp:251 src/main/utils/finder.cpp:66
+#: src/main/utils/replacer.cpp:67
 msgid "Translation subtitle"
 msgstr "Перекладені субтитри"
 
-#: main/dialogs/actionwithtargetdialog.h:74
+#: src/main/dialogs/actionwithtargetdialog.h:75
 msgid "Apply To"
 msgstr "Застосувати до"
 
-#: main/dialogs/adjusttimesdialog.cpp:32
+#: src/main/dialogs/adjusttimesdialog.cpp:33
 msgid "Adjust"
 msgstr "Скоригувати"
 
-#: main/dialogs/adjusttimesdialog.cpp:34
+#: src/main/dialogs/adjusttimesdialog.cpp:35
 msgctxt "@title:group"
 msgid "New Times"
 msgstr "Нові часові обмеження"
 
-#: main/dialogs/adjusttimesdialog.cpp:39
+#: src/main/dialogs/adjusttimesdialog.cpp:40
 msgid "First spoken line:"
 msgstr "Перший вимовлений рядок:"
 
-#: main/dialogs/adjusttimesdialog.cpp:45
+#: src/main/dialogs/adjusttimesdialog.cpp:46
 msgid "Last spoken line:"
 msgstr "Останній вимовлений рядок:"
 
-#: main/dialogs/autodurationsdialog.cpp:38
-#: main/dialogs/changeframeratedialog.cpp:36
-#: main/dialogs/fixoverlappingtimesdialog.cpp:34
-#: main/dialogs/fixpunctuationdialog.cpp:33
-#: main/dialogs/smarttextsadjustdialog.cpp:34
-#: main/dialogs/splitsubtitledialog.cpp:38 main/dialogs/translatedialog.cpp:33
+#: src/main/dialogs/autodurationsdialog.cpp:37
+#: src/main/dialogs/changeframeratedialog.cpp:37
+#: src/main/dialogs/fixoverlappingtimesdialog.cpp:33
+#: src/main/dialogs/fixpunctuationdialog.cpp:32
+#: src/main/dialogs/smarttextsadjustdialog.cpp:33
+#: src/main/dialogs/splitsubtitledialog.cpp:40
+#: src/main/dialogs/translatedialog.cpp:35
 msgctxt "@title:group"
 msgid "Settings"
 msgstr "Параметри"
 
-#: main/dialogs/autodurationsdialog.cpp:46
+#: src/main/dialogs/autodurationsdialog.cpp:45
 msgid "Milliseconds per line:"
 msgstr "Мілісекунд на рядок:"
 
-#: main/dialogs/autodurationsdialog.cpp:55
+#: src/main/dialogs/autodurationsdialog.cpp:54
 msgid "Milliseconds per word:"
 msgstr "Мілісекунд на слово:"
 
-#: main/dialogs/autodurationsdialog.cpp:64
+#: src/main/dialogs/autodurationsdialog.cpp:63
 msgid "Milliseconds per character:"
 msgstr "Мілісекунд на символ:"
 
-#: main/dialogs/autodurationsdialog.cpp:68
-#: main/dialogs/durationlimitsdialog.cpp:44
+#: src/main/dialogs/autodurationsdialog.cpp:67
+#: src/main/dialogs/durationlimitsdialog.cpp:43
 msgid "Prevent overlapping"
 msgstr "Запобігати перекриттю"
 
-#: main/dialogs/autodurationsdialog.cpp:71
+#: src/main/dialogs/autodurationsdialog.cpp:70
 msgctxt "@title:group"
 msgid "Duration Calculation"
 msgstr "Обчислення тривалості"
 
-#: main/dialogs/autodurationsdialog.cpp:77
+#: src/main/dialogs/autodurationsdialog.cpp:76
 msgid "Use primary text"
 msgstr "Використовувати основний текст"
 
-#: main/dialogs/autodurationsdialog.cpp:78
+#: src/main/dialogs/autodurationsdialog.cpp:77
 msgid "Use translation text"
 msgstr "Використовувати текст перекладу"
 
-#: main/dialogs/autodurationsdialog.cpp:79
+#: src/main/dialogs/autodurationsdialog.cpp:78
 msgid "Calculate both and use maximum"
 msgstr "Обчислити обидва і використати максимальне"
 
-#: main/dialogs/changeframeratedialog.cpp:45
+#: src/main/dialogs/changeframeratedialog.cpp:46
 msgid "Current frame rate:"
 msgstr "Поточна частота кадрів:"
 
-#: main/dialogs/changeframeratedialog.cpp:54
+#: src/main/dialogs/changeframeratedialog.cpp:55
 msgid "New frame rate:"
 msgstr "Нова частота кадрів:"
 
-#: main/dialogs/changetextscasedialog.cpp:33
+#: src/main/dialogs/changetextscasedialog.cpp:32
 msgid "Change Case"
 msgstr "Змінити регістр"
 
-#: main/dialogs/changetextscasedialog.cpp:35
+#: src/main/dialogs/changetextscasedialog.cpp:34
 msgctxt "@title:group"
 msgid "Change To"
 msgstr "Змінити на"
 
-#: main/dialogs/changetextscasedialog.cpp:39
+#: src/main/dialogs/changetextscasedialog.cpp:38
 msgid "Lower case"
 msgstr "Нижній регістр"
 
-#: main/dialogs/changetextscasedialog.cpp:44
+#: src/main/dialogs/changetextscasedialog.cpp:43
 msgid "Upper case"
 msgstr "Верхній регістр"
 
-#: main/dialogs/changetextscasedialog.cpp:48
+#: src/main/dialogs/changetextscasedialog.cpp:47
 msgid "Title case"
 msgstr "Заголовок"
 
-#: main/dialogs/changetextscasedialog.cpp:52
+#: src/main/dialogs/changetextscasedialog.cpp:51
 msgid "Sentence case"
 msgstr "Регістр речення"
 
-#: main/dialogs/changetextscasedialog.cpp:56
+#: src/main/dialogs/changetextscasedialog.cpp:55
 msgid "Convert to lower case first"
 msgstr "Спочатку перетворити на нижній регістр"
 
-#: main/dialogs/checkerrorsdialog.cpp:31
+#: src/main/dialogs/checkerrorsdialog.cpp:30
 msgid "Check Errors"
 msgstr "Перевірити на помилки"
 
-#: main/dialogs/checkerrorsdialog.cpp:33
+#: src/main/dialogs/checkerrorsdialog.cpp:32
 msgctxt "@title:group"
 msgid "Errors to Check"
 msgstr "Помилки, які слід шукати"
 
-#: main/dialogs/checkerrorsdialog.cpp:36
+#: src/main/dialogs/checkerrorsdialog.cpp:35
 msgctxt "@title:group Miscellaneous settings"
 msgid "Miscellaneous"
 msgstr "Різне"
 
-#: main/dialogs/checkerrorsdialog.cpp:39
+#: src/main/dialogs/checkerrorsdialog.cpp:38
 msgid "Clear other errors"
 msgstr "Вилучити записи інших помилок"
 
-#: main/dialogs/checkerrorsdialog.cpp:43
+#: src/main/dialogs/checkerrorsdialog.cpp:42
 msgid "Clear user marks"
 msgstr "Вилучити позначки користувача"
 
-#: main/dialogs/clearerrorsdialog.cpp:32
+#: src/main/dialogs/clearerrorsdialog.cpp:31
 msgid "Clear Errors"
 msgstr "Спорожнити список помилок"
 
-#: main/dialogs/clearerrorsdialog.cpp:34
+#: src/main/dialogs/clearerrorsdialog.cpp:33
 msgctxt "@title:group"
 msgid "Errors to Clear"
 msgstr "Помилки, які слід вилучати"
 
-#: main/dialogs/durationlimitsdialog.cpp:34
+#: src/main/dialogs/durationlimitsdialog.cpp:33
 msgctxt "@title:group"
 msgid "Minimum Duration"
 msgstr "Мінімальна тривалість"
 
-#: main/dialogs/durationlimitsdialog.cpp:40
+#: src/main/dialogs/durationlimitsdialog.cpp:39
 msgid "Expand duration to:"
 msgstr "Розтягнути тривалість до:"
 
-#: main/dialogs/durationlimitsdialog.cpp:47
+#: src/main/dialogs/durationlimitsdialog.cpp:46
 msgctxt "@title:group"
 msgid "Maximum Duration"
 msgstr "Максимальна тривалість"
 
-#: main/dialogs/durationlimitsdialog.cpp:53
+#: src/main/dialogs/durationlimitsdialog.cpp:52
 msgid "Shrink duration to:"
 msgstr "Зменшити тривалість до:"
 
-#: main/dialogs/fixoverlappingtimesdialog.cpp:43
+#: src/main/dialogs/fixoverlappingtimesdialog.cpp:36
+msgid " msecs"
+msgstr " мс"
+
+#: src/main/dialogs/fixoverlappingtimesdialog.cpp:42
 msgid "Minimum interval between lines:"
 msgstr "Мінімальний проміжок між рядками:"
 
-#: main/dialogs/fixpunctuationdialog.cpp:31
+#: src/main/dialogs/fixpunctuationdialog.cpp:30
 msgid "Fix Punctuation"
 msgstr "Виправити пунктуацію"
 
-#: main/dialogs/fixpunctuationdialog.cpp:36
+#: src/main/dialogs/fixpunctuationdialog.cpp:35
 msgid "Fix and cleanup spaces"
 msgstr "Виправляти і вилучати пробіли"
 
-#: main/dialogs/fixpunctuationdialog.cpp:40
+#: src/main/dialogs/fixpunctuationdialog.cpp:39
 msgid "Fix quotes and double quotes"
 msgstr "Виправляти лапки і подвійні лапки"
 
-#: main/dialogs/fixpunctuationdialog.cpp:44
+#: src/main/dialogs/fixpunctuationdialog.cpp:43
 msgid "Fix English 'I' pronoun"
 msgstr "Виправляти англійський займенник «I»"
 
-#: main/dialogs/fixpunctuationdialog.cpp:48
+#: src/main/dialogs/fixpunctuationdialog.cpp:47
 msgid "Add ellipisis indicating non finished lines"
 msgstr "Додавати трикрапку на позначення незавершених рядків"
 
-#: main/dialogs/insertlinedialog.cpp:27
+#: src/main/dialogs/insertlinedialog.cpp:26
 msgid "Insert Line Before Current"
 msgstr "Вставити рядок перед поточним"
 
-#: main/dialogs/insertlinedialog.cpp:27
+#: src/main/dialogs/insertlinedialog.cpp:26
 msgid "Insert Line After Current"
 msgstr "Вставити рядок після поточного"
 
-#: main/dialogs/insertlinedialog.cpp:27
+#: src/main/dialogs/insertlinedialog.cpp:26
 msgid "Insert Into"
 msgstr "Вставити у"
 
-#: main/dialogs/joinsubtitlesdialog.cpp:40
+#: src/main/dialogs/joinsubtitlesdialog.cpp:40
 msgid "Shift subtitle forwards before append"
 msgstr "Зсунути субтитри вперед перед додаванням"
 
-#: main/dialogs/joinsubtitlesdialog.cpp:47
-#: main/dialogs/splitsubtitledialog.cpp:44
+#: src/main/dialogs/joinsubtitlesdialog.cpp:47
+#: src/main/dialogs/splitsubtitledialog.cpp:46
 msgid "Set from video length"
 msgstr "Встановити за тривалістю відео"
 
-#: main/dialogs/opensubtitledialog.cpp:34
+#: src/main/dialogs/opensubtitledialog.cpp:39
 msgid "Open Subtitle"
 msgstr "Відкрити файл субтитрів"
 
-#: main/dialogs/opensubtitledialog.cpp:34
+#: src/main/dialogs/opensubtitledialog.cpp:39
 msgid "Open Translation Subtitle"
 msgstr "Відкрити файл перекладу субтитрів"
 
-#: main/dialogs/opensubtitledialog.cpp:47
-#: main/dialogs/savesubtitledialog.cpp:81
-#: main/dialogs/selectablesubtitledialog.cpp:67
+#: src/main/dialogs/opensubtitledialog.cpp:51
+#: src/main/dialogs/savesubtitledialog.cpp:85
+#: src/main/dialogs/selectablesubtitledialog.cpp:69
 msgid "Encoding:"
 msgstr "Кодування:"
 
-#: main/dialogs/opensubtitledialog.cpp:74
+#: src/main/dialogs/opensubtitledialog.cpp:93
 msgid "All Supported"
 msgstr "Всі підтримувані"
 
-#: main/dialogs/removelinesdialog.cpp:27
+#: src/main/dialogs/removelinesdialog.cpp:26
 msgid "Remove Selected Lines"
 msgstr "Вилучити позначені рядки"
 
-#: main/dialogs/removelinesdialog.cpp:27
+#: src/main/dialogs/removelinesdialog.cpp:26
 msgid "Remove From"
 msgstr "Вилучити з"
 
-#: main/dialogs/savesubtitledialog.cpp:39
+#: src/main/dialogs/savesubtitledialog.cpp:43
 msgid "Save Subtitle"
 msgstr "Зберегти субтитри"
 
-#: main/dialogs/savesubtitledialog.cpp:39
+#: src/main/dialogs/savesubtitledialog.cpp:43
 msgid "Save Translation Subtitle"
 msgstr "Зберегти переклад субтитрів"
 
-#: main/dialogs/savesubtitledialog.cpp:70
+#: src/main/dialogs/savesubtitledialog.cpp:74
 msgid "EOL:"
 msgstr "EOL:"
 
-#: main/dialogs/selectablesubtitledialog.cpp:50
+#: src/main/dialogs/selectablesubtitledialog.cpp:52
 msgid "Path:"
 msgstr "Шлях:"
 
-#: main/dialogs/selectablesubtitledialog.cpp:55
+#: src/main/dialogs/selectablesubtitledialog.cpp:57
 msgid "Select subtitle"
 msgstr "Вибір субтитрів"
 
-#: main/dialogs/selectablesubtitledialog.h:49
+#: src/main/dialogs/selectablesubtitledialog.h:49
 msgid "Subtitle"
 msgstr "Субтитри"
 
-#: main/dialogs/shifttimesdialog.cpp:32
+#: src/main/dialogs/shifttimesdialog.cpp:32
 msgid "Shift"
 msgstr "Зсув"
 
-#: main/dialogs/shifttimesdialog.cpp:34
+#: src/main/dialogs/shifttimesdialog.cpp:34
 msgctxt "@title:group"
 msgid "Shifting"
 msgstr "Зсування"
 
-#: main/dialogs/shifttimesdialog.cpp:38
+#: src/main/dialogs/shifttimesdialog.cpp:38
 msgid "Forwards (+)"
 msgstr "Вперед (+)"
 
-#: main/dialogs/shifttimesdialog.cpp:39
+#: src/main/dialogs/shifttimesdialog.cpp:39
 #, fuzzy
 msgid "Backwards (−)"
 msgstr "Назад (-)"
 
-#: main/dialogs/smarttextsadjustdialog.cpp:43
+#: src/main/dialogs/smarttextsadjustdialog.cpp:39
+msgid " characters"
+msgstr " символів"
+
+#: src/main/dialogs/smarttextsadjustdialog.cpp:42
 msgid "Minimum length for line break:"
 msgstr "Мінімальна довжина для розбиття рядків:"
 
-#: main/dialogs/splitsubtitledialog.cpp:36
+#: src/main/dialogs/splitsubtitledialog.cpp:38
 msgid "Split Subtitle"
 msgstr "Розділити субтитри"
 
-#: main/dialogs/splitsubtitledialog.cpp:49
+#: src/main/dialogs/splitsubtitledialog.cpp:51
 msgid "Split time:"
 msgstr "Час поділу:"
 
-#: main/dialogs/splitsubtitledialog.cpp:53
+#: src/main/dialogs/splitsubtitledialog.cpp:55
 msgid "Shift new part backwards after split"
 msgstr "Пересунути нову частину назад після розділення"
 
-#: main/dialogs/syncsubtitlesdialog.cpp:31
+#: src/main/dialogs/syncsubtitlesdialog.cpp:30
 msgid "Synchronize with Subtitle"
 msgstr "Синхронізувати з субтитрами"
 
-#: main/dialogs/syncsubtitlesdialog.cpp:33
+#: src/main/dialogs/syncsubtitlesdialog.cpp:32
 msgid "Reference Subtitle"
 msgstr "Еталонні субтитри"
 
-#: main/dialogs/syncsubtitlesdialog.cpp:35
+#: src/main/dialogs/syncsubtitlesdialog.cpp:34
 msgctxt "@title:group"
 msgid "Synchronization Mode"
 msgstr "Режим синхронізації"
 
-#: main/dialogs/syncsubtitlesdialog.cpp:38
+#: src/main/dialogs/syncsubtitlesdialog.cpp:37
 msgid "Adjust to reference's first and last lines"
 msgstr "Скоригувати за першим і останнім рядками еталона"
 
-#: main/dialogs/syncsubtitlesdialog.cpp:42
+#: src/main/dialogs/syncsubtitlesdialog.cpp:41
 msgid "Copy timing information from reference line by line"
 msgstr "Копіювати дані щодо часових обмежень з еталонного рядка за рядком"
 
-#: main/dialogs/translatedialog.cpp:48
+#: src/main/dialogs/translatedialog.cpp:50
 msgid "Input language:"
 msgstr "Вхідна мова:"
 
-#: main/dialogs/translatedialog.cpp:64
+#: src/main/dialogs/translatedialog.cpp:66
 msgid "Output language:"
 msgstr "Вихідна мова:"
 
-#: main/errorsdialog.cpp:42
+#: src/main/errorsdialog.cpp:41
 msgid "Subtitle Errors"
 msgstr "Помилки у субтитрах"
 
-#: main/errorsdialog.cpp:55
+#: src/main/errorsdialog.cpp:48
 msgid "Clear Fixed Errors"
 msgstr "Вилучення виправлених помилок"
 
-#: main/errorsdialog.cpp:65
+#: src/main/errorsdialog.cpp:58
 msgid "Settings..."
 msgstr "Параметри..."
 
-#: main/errorsdialog.cpp:124
+#: src/main/errorsdialog.cpp:117
 msgid "Showing 1 line with errors"
 msgid_plural "Showing %1 lines with errors"
 msgstr[0] "Показ %1 рядка з помилками"
 msgstr[1] "Показ %1 рядків з помилками"
 msgstr[2] "Показ %1 рядків з помилками"
 
-#: main/errorsdialog.cpp:126
+#: src/main/errorsdialog.cpp:119
 msgid "1 total error"
 msgid_plural "%1 total errors"
 msgstr[0] "Загалом %1 помилка"
 msgstr[1] "Загалом %1 помилки"
 msgstr[2] "Загалом %1 помилок"
 
-#: main/errorsdialog.cpp:127
+#: src/main/errorsdialog.cpp:120
 msgid "1 user mark"
 msgid_plural "%1 user marks"
 msgstr[0] "%1 позначка користувача"
 msgstr[1] "%1 позначки користувача"
 msgstr[2] "%1 позначок користувача"
 
-#: main/errorswidget.cpp:457
+#: src/main/errorswidget.cpp:458
 msgid "Line Errors"
 msgstr "Помилки у рядках"
 
-#: main/errorswidget.cpp:458
+#: src/main/errorswidget.cpp:459
 msgid "Count"
 msgstr "Кількість"
 
-#: main/errorswidget.cpp:459
+#: src/main/errorswidget.cpp:460
 msgid "Marked"
 msgstr "Позначено"
 
-#: main/errorswidget.cpp:474
+#: src/main/errorswidget.cpp:475
 msgid "yes"
 msgstr "так"
 
-#: main/errorswidget.cpp:475
+#: src/main/errorswidget.cpp:476
 msgid "no"
 msgstr "ні"
 
-#: main/errorswidget.cpp:482
+#: src/main/errorswidget.cpp:483
 msgid "Line <numid>%1</numid>"
 msgstr "Рядок <numid>%1</numid>"
 
-#: main/errorswidget.cpp:672
+#: src/main/errorswidget.cpp:673
 msgid "Expand All"
 msgstr "Розгорнути всі"
 
-#: main/errorswidget.cpp:673
+#: src/main/errorswidget.cpp:674
 msgid "Collapse All"
 msgstr "Згорнути всі"
 
-#: main/errorswidget.cpp:677
+#: src/main/errorswidget.cpp:678
 msgid "Clear Selected Marks"
 msgstr "Вилучити вибрані позначки"
 
-#: main/errorswidget.cpp:678
+#: src/main/errorswidget.cpp:679
 msgid "Clear Selected Errors"
 msgstr "Вилучити вибрані записи помилок"
 
-#: main/errorswidget.cpp:683
+#: src/main/errorswidget.cpp:684
 msgid "Clear Fixed Selection"
 msgstr "Спорожнити виправлене позначене"
 
-#: main/lineswidget.cpp:187
+#: src/main/lineswidget.cpp:187
 msgid "<b>Observations:</b>"
 msgstr "<b>Спостереження:</b>"
 
-#: main/lineswidget.cpp:214
+#: src/main/lineswidget.cpp:214
 msgctxt "@title:column Subtitle line number"
 msgid "Line"
 msgstr "Рядок"
 
-#: main/lineswidget.cpp:215
+#: src/main/lineswidget.cpp:215
 msgctxt "@title:column"
 msgid "Show Time"
 msgstr "Час показу"
 
-#: main/lineswidget.cpp:216
+#: src/main/lineswidget.cpp:216
 msgctxt "@title:column"
 msgid "Hide Time"
 msgstr "Час приховування"
 
-#: main/lineswidget.cpp:217
+#: src/main/lineswidget.cpp:217
 msgctxt "@title:column Subtitle line (primary) text"
 msgid "Text"
 msgstr "Текст"
 
-#: main/lineswidget.cpp:218
+#: src/main/lineswidget.cpp:218
 msgctxt "@title:column Subtitle line translation text"
 msgid "Translation"
 msgstr "Переклад"
 
-#: main/lineswidget.cpp:1040
+#: src/main/lineswidget.cpp:1044
 msgid "Texts"
 msgstr "Тексти"
 
-#: main/lineswidget.cpp:1050
+#: src/main/lineswidget.cpp:1054
 msgid "Styles"
 msgstr "Стилі"
 
-#: main/lineswidget.cpp:1052 widgets/simplerichtextedit.cpp:114
+#: src/main/lineswidget.cpp:1056 src/widgets/simplerichtextedit.cpp:116
 msgctxt "@action:inmenu Toggle bold style"
 msgid "Bold"
 msgstr "Жирний"
 
-#: main/lineswidget.cpp:1055 widgets/simplerichtextedit.cpp:120
+#: src/main/lineswidget.cpp:1059 src/widgets/simplerichtextedit.cpp:122
 msgctxt "@action:inmenu Toggle italic style"
 msgid "Italic"
 msgstr "Курсив"
 
-#: main/lineswidget.cpp:1058 widgets/simplerichtextedit.cpp:126
+#: src/main/lineswidget.cpp:1062 src/widgets/simplerichtextedit.cpp:128
 msgctxt "@action:inmenu Toggle underline style"
 msgid "Underline"
 msgstr "Підкреслений"
 
-#: main/lineswidget.cpp:1061 widgets/simplerichtextedit.cpp:132
+#: src/main/lineswidget.cpp:1065 src/widgets/simplerichtextedit.cpp:134
 msgctxt "@action:inmenu Toggle strike through style"
 msgid "Strike Through"
 msgstr "Перекреслений"
 
-#: main/lineswidget.cpp:1064 widgets/simplerichtextedit.cpp:138
+#: src/main/lineswidget.cpp:1068 src/widgets/simplerichtextedit.cpp:140
 msgctxt "@action:inmenu Change Text Color"
 msgid "Text Color"
 msgstr ""
 
-#: main/lineswidget.cpp:1066
+#: src/main/lineswidget.cpp:1070
 msgid "Times"
 msgstr "Час"
 
-#: main/lineswidget.cpp:1068
+#: src/main/lineswidget.cpp:1072
 msgid "Shift +%1 Milliseconds"
 msgstr "Зсув +%1 мілісекунд"
 
-#: main/lineswidget.cpp:1069
+#: src/main/lineswidget.cpp:1073
 #, fuzzy
 msgid "Shift −%1 Milliseconds"
 msgstr "Зсув +%1 мілісекунд"
 
-#: main/lineswidget.cpp:1078
+#: src/main/lineswidget.cpp:1082
 msgid "Errors"
 msgstr "Помилки"
 
-#: main/lineswidget.cpp:1079
+#: src/main/lineswidget.cpp:1083
 msgid "Mark"
 msgstr "Позначити"
 
-#: main/main.cpp:64
+#: src/main/main.cpp:54
 msgid "Subtitle Composer"
 msgstr "Редактор субтитрів"
 
-#: main/main.cpp:66
+#: src/main/main.cpp:56
 msgid "A KDE subtitle editor."
 msgstr "Редактор субтитрів для KDE."
 
-#: main/main.cpp:68
-msgid ""
-"&copy; 2007-2012 Sergio Pistone\n"
-"&copy; 2013-2014 Mladen Milinković"
-msgstr ""
-
-#: main/main.cpp:76
-msgid "Sergio Pistone"
-msgstr "Sergio Pistone"
-
-#: main/main.cpp:77
-msgid "Original Author"
-msgstr ""
-
-#: main/main.cpp:81
+#: src/main/main.cpp:63
 msgid "Mladen Milinković"
 msgstr ""
 
-#: main/main.cpp:82
+#: src/main/main.cpp:63
 #, fuzzy
 msgid "Author & Maintainer"
 msgstr "Автор і супровідник"
 
-#: main/main.cpp:91
+#: src/main/main.cpp:64
+msgid "Sergio Pistone"
+msgstr "Sergio Pistone"
+
+#: src/main/main.cpp:64
+msgid "Original Author"
+msgstr ""
+
+#: src/main/main.cpp:68
+#, fuzzy
+msgid "Croatian Translator"
+msgstr "Закрити файл перекладу"
+
+#: src/main/main.cpp:69
+#, fuzzy
+msgid "Bulgarian Translator"
+msgstr "Зберегти переклад"
+
+#: src/main/main.cpp:70 src/main/main.cpp:71 src/main/main.cpp:72
+#: src/main/main.cpp:73 src/main/main.cpp:74 src/main/main.cpp:75
+#: src/main/main.cpp:76 src/main/main.cpp:77 src/main/main.cpp:78
+#: src/main/main.cpp:79 src/main/main.cpp:80
+#, fuzzy
+msgid "Translator"
+msgstr "Переклад"
+
+#: src/main/main.cpp:82
+msgid "All people who have contributed and I have forgotten to mention"
+msgstr ""
+
+#: src/main/main.cpp:100
 msgid "Open location as primary subtitle"
 msgstr "Відкрити адресу як основні субтитри"
 
-#: main/main.cpp:92
+#: src/main/main.cpp:101
 msgid "Open location as translation subtitle"
 msgstr "Відкрити адресу як переклад субтитрів"
 
-#: main/playerwidget.cpp:100
+#: src/main/playerwidget.cpp:99
 msgid "<b>Position</b>"
 msgstr "<b>Позиція</b>"
 
-#: main/playerwidget.cpp:108
+#: src/main/playerwidget.cpp:107
 msgid "<b>Length</b>"
 msgstr "<b>Тривалість</b>"
 
-#: main/playerwidget.cpp:113
+#: src/main/playerwidget.cpp:112
 msgid "<b>FPS</b>"
 msgstr "<b>Кадрів на секунду</b>"
 
-#: main/playerwidget.cpp:694 main/playerwidget.cpp:695
-#: main/playerwidget.cpp:696 main/playerwidget.cpp:774
-#: main/playerwidget.cpp:788 main/playerwidget.cpp:796
+#: src/main/playerwidget.cpp:454
+msgid "Show editable position control"
+msgstr "Показувати символ позиції редагування"
+
+#: src/main/playerwidget.cpp:703 src/main/playerwidget.cpp:704
+#: src/main/playerwidget.cpp:705 src/main/playerwidget.cpp:784
+#: src/main/playerwidget.cpp:798 src/main/playerwidget.cpp:806
 msgid "<i>Unknown</i>"
 msgstr "<i>Невідома</i>"
 
-#: main/playerwidget.cpp:706
+#: src/main/playerwidget.cpp:715
 #, fuzzy
 msgid "<qt>There was an error opening media file %1.</qt>"
 msgstr "<qt>Сталася помилка під час спроби відкриття файла<br/>%1</qt>"
 
-#: main/playerwidget.cpp:735 main/playerwidget.cpp:738
+#: src/main/playerwidget.cpp:747 src/main/playerwidget.cpp:749
 #, fuzzy
 msgid "Unexpected error when playing file."
 msgstr "Неочікувана помилка під час спроби відтворення файла."
 
-#: main/playerwidget.cpp:735 main/playerwidget.cpp:738
+#: src/main/playerwidget.cpp:747 src/main/playerwidget.cpp:749
 msgid "Error Playing File"
 msgstr ""
 
-#: main/scripting/scriptsmanager.cpp:71
+#: src/main/scripting/scriptsmanager.cpp:66
 msgid "Installed Scripts"
 msgstr "Встановлені скрипти"
 
-#: main/scripting/scriptsmanager.cpp:92
+#: src/main/scripting/scriptsmanager.cpp:87
 msgid "Information"
 msgstr "Інформація"
 
-#: main/scripting/scriptsmanager.cpp:99
+#: src/main/scripting/scriptsmanager.cpp:94
 msgid "Warning"
 msgstr "Попередження"
 
-#: main/scripting/scriptsmanager.cpp:106
+#: src/main/scripting/scriptsmanager.cpp:101
 msgid "Error"
 msgstr "Помилка"
 
-#: main/scripting/scriptsmanager.cpp:119
-msgid "Scripts Manager"
-msgstr "Керування скриптами"
-
-#: main/scripting/scriptsmanager.cpp:135
-msgid "Create..."
-msgstr "Створити..."
-
-#: main/scripting/scriptsmanager.cpp:136
-msgid "Creates a new script file."
-msgstr "Створює новий файл скрипту."
-
-#: main/scripting/scriptsmanager.cpp:141
-msgid "Add..."
-msgstr "Додати..."
-
-#: main/scripting/scriptsmanager.cpp:142
-msgid "Copies an existing script from a specified location."
-msgstr "Копіює існуючий скрипт з вказаної адреси."
-
-#: main/scripting/scriptsmanager.cpp:148
-msgid "Sends the selected script to the trash."
-msgstr "Надсилає позначений скрипт до смітника."
-
-#: main/scripting/scriptsmanager.cpp:153
-msgid "Edit"
-msgstr "Змінити"
-
-#: main/scripting/scriptsmanager.cpp:154
-msgid "Opens the selected script with an external editor."
-msgstr "Відкриває позначений скрипт у зовнішньому редакторі."
-
-#: main/scripting/scriptsmanager.cpp:160
-msgid "Run"
-msgstr "Запустити"
-
-#: main/scripting/scriptsmanager.cpp:161
-msgid "Executes the selected script."
-msgstr "Виконує вказаний скрипт."
-
-#: main/scripting/scriptsmanager.cpp:166
-msgid "Refresh"
-msgstr "Оновити"
-
-#: main/scripting/scriptsmanager.cpp:167
-msgid "Reloads the installed scripts list."
-msgstr "Перезавантажує список встановлених скриптів."
-
-#: main/scripting/scriptsmanager.cpp:226 main/scripting/scriptsmanager.cpp:298
+#: src/main/scripting/scriptsmanager.cpp:166
+#: src/main/scripting/scriptsmanager.cpp:243
 msgid ""
 "You must enter an unused name to continue.\n"
 "Would you like to enter another name?"
@@ -2283,89 +2115,92 @@ msgstr ""
 "Вам слід ввести ще не використану назву.\n"
 "Бажаєте ввести іншу назву?"
 
-#: main/scripting/scriptsmanager.cpp:226 main/scripting/scriptsmanager.cpp:298
+#: src/main/scripting/scriptsmanager.cpp:167
+#: src/main/scripting/scriptsmanager.cpp:244
 msgid "Name Already Used"
 msgstr "Назву вже використано"
 
-#: main/scripting/scriptsmanager.cpp:230
+#: src/main/scripting/scriptsmanager.cpp:170
 msgid "Create New Script"
 msgstr "Створити новий скрипт"
 
-#: main/scripting/scriptsmanager.cpp:230 main/scripting/scriptsmanager.cpp:302
+#: src/main/scripting/scriptsmanager.cpp:170
+#: src/main/scripting/scriptsmanager.cpp:247
 msgid "Script name:"
 msgstr "Назва скрипту:"
 
-#: main/scripting/scriptsmanager.cpp:240
+#: src/main/scripting/scriptsmanager.cpp:183
 msgid "There was an error creating the file <b>%1</b>."
 msgstr "Під час спроби створення файла <b>%1</b> сталася помилка."
 
-#: main/scripting/scriptsmanager.cpp:283
+#: src/main/scripting/scriptsmanager.cpp:226
 msgid "Select Existing Script"
 msgstr "Оберіть існуючий скрипт"
 
-#: main/scripting/scriptsmanager.cpp:302
+#: src/main/scripting/scriptsmanager.cpp:247
 msgid "Rename Script"
 msgstr "Перейменувати скрипт"
 
-#: main/scripting/scriptsmanager.cpp:313
+#: src/main/scripting/scriptsmanager.cpp:261
 msgid "There was an error opening the file <b>%1</b>."
 msgstr "Під час спроби відкриття файла <b>%1</b> сталася помилка."
 
-#: main/scripting/scriptsmanager.cpp:319
+#: src/main/scripting/scriptsmanager.cpp:269
 msgid "There was an error copying the file to <b>%1</b>."
 msgstr "Під час спроби копіювання файла <b>%1</b> сталася помилка."
 
-#: main/scripting/scriptsmanager.cpp:336
+#: src/main/scripting/scriptsmanager.cpp:285
 msgid "Do you really want to send file <b>%1</b> to the trash?"
 msgstr "Ви справді бажаєте надіслати файл <b>%1</b> до смітника?"
 
-#: main/scripting/scriptsmanager.cpp:336
+#: src/main/scripting/scriptsmanager.cpp:285
 msgid "Move to Trash"
 msgstr "Пересунути до смітника"
 
-#: main/scripting/scriptsmanager.cpp:341
+#: src/main/scripting/scriptsmanager.cpp:289
 msgid "There was an error removing the file <b>%1</b>."
 msgstr "Під час спроби вилучення файла <b>%1</b> сталася помилка."
 
-#: main/scripting/scriptsmanager.cpp:359
+#: src/main/scripting/scriptsmanager.cpp:306
 msgid "Could not launch external editor.\n"
 msgstr "Не вдалося запустити зовнішній редактор.\n"
 
-#: main/scripting/scriptsmanager.cpp:417 main/scripting/scriptsmanager.cpp:419
+#: src/main/scripting/scriptsmanager.cpp:366
+#: src/main/scripting/scriptsmanager.cpp:368
 msgid "Error Running Script"
 msgstr "Помилка під час виконання скрипту"
 
-#: main/scripting/scriptsmanager.cpp:431
+#: src/main/scripting/scriptsmanager.cpp:380
 msgid "Tools"
 msgstr "Інструменти"
 
-#: main/statusbar.cpp:34
+#: src/main/statusbar.cpp:37
 msgid "Extracting audio %p%"
 msgstr ""
 
-#: main/utils/errorfinder.cpp:37 main/utils/errorfinder.cpp:209
-#: main/utils/errorfinder.cpp:223
+#: src/main/utils/errorfinder.cpp:37 src/main/utils/errorfinder.cpp:209
+#: src/main/utils/errorfinder.cpp:223
 msgid "Find Error"
 msgstr "Знайти помилку"
 
-#: main/utils/errorfinder.cpp:39
+#: src/main/utils/errorfinder.cpp:39
 msgid "Errors to Find"
 msgstr "Пошук помилок"
 
-#: main/utils/errorfinder.cpp:42
+#: src/main/utils/errorfinder.cpp:42
 msgid "Options"
 msgstr "Параметри"
 
-#: main/utils/errorfinder.cpp:48
+#: src/main/utils/errorfinder.cpp:48
 msgid "From current line"
 msgstr "Від поточного рядка"
 
-#: main/utils/errorfinder.cpp:52
+#: src/main/utils/errorfinder.cpp:52
 msgid "Find backwards"
 msgstr "Пошук назад"
 
-#: main/utils/errorfinder.cpp:209 main/utils/finder.cpp:267
-#: main/utils/replacer.cpp:231
+#: src/main/utils/errorfinder.cpp:209 src/main/utils/finder.cpp:268
+#: src/main/utils/replacer.cpp:233
 msgid ""
 "Beginning of selection reached.\n"
 "Continue from the end?"
@@ -2373,8 +2208,8 @@ msgstr ""
 "Досягнуто початку вибраної області.\n"
 "Продовжити з кінця?"
 
-#: main/utils/errorfinder.cpp:209 main/utils/finder.cpp:267
-#: main/utils/replacer.cpp:231
+#: src/main/utils/errorfinder.cpp:209 src/main/utils/finder.cpp:268
+#: src/main/utils/replacer.cpp:233
 msgid ""
 "Beginning of subtitle reached.\n"
 "Continue from the end?"
@@ -2382,8 +2217,8 @@ msgstr ""
 "Досягнуто початку субтитрів.\n"
 "Продовжити з кінця?"
 
-#: main/utils/errorfinder.cpp:209 main/utils/finder.cpp:267
-#: main/utils/replacer.cpp:231
+#: src/main/utils/errorfinder.cpp:209 src/main/utils/finder.cpp:268
+#: src/main/utils/replacer.cpp:233
 msgid ""
 "End of selection reached.\n"
 "Continue from the beginning?"
@@ -2391,8 +2226,8 @@ msgstr ""
 "Кінець позначеної області.\n"
 "Продовжити з початку?"
 
-#: main/utils/errorfinder.cpp:209 main/utils/finder.cpp:267
-#: main/utils/replacer.cpp:231 main/utils/speller.cpp:135
+#: src/main/utils/errorfinder.cpp:209 src/main/utils/finder.cpp:268
+#: src/main/utils/replacer.cpp:233 src/main/utils/speller.cpp:137
 msgid ""
 "End of subtitle reached.\n"
 "Continue from the beginning?"
@@ -2400,342 +2235,390 @@ msgstr ""
 "Кінець субтитрів.\n"
 "Продовжити з початку?"
 
-#: main/utils/errorfinder.cpp:223
+#: src/main/utils/errorfinder.cpp:223
 msgid "No errors matching given criteria found!"
 msgstr "Не знайдено помилок, що відповідають вказаним критеріям!"
 
-#: main/utils/finder.cpp:55
+#: src/main/utils/finder.cpp:54
 msgid "Find In"
 msgstr "Знайти в"
 
-#: main/utils/finder.cpp:253 main/utils/replacer.cpp:214
+#: src/main/utils/finder.cpp:254 src/main/utils/replacer.cpp:216
 msgid "No instances of '%1' found!"
 msgstr "Екземплярів «%1» не знайдено!"
 
-#: main/utils/finder.cpp:253 main/utils/finder.cpp:267
+#: src/main/utils/finder.cpp:254 src/main/utils/finder.cpp:268
 msgid "Find"
 msgstr "Знайти"
 
-#: main/utils/kreplace.cpp:49 main/utils/kreplace.cpp:53
-#: main/utils/replacer.cpp:171 main/utils/replacer.cpp:211
-#: main/utils/replacer.cpp:214 main/utils/replacer.cpp:231
+#: src/main/utils/language.cpp:128
+msgid "Automatic"
+msgstr "Автоматично"
+
+#: src/main/utils/language.cpp:135
+msgctxt "Official language of the Philippines, aka Filipino"
+msgid "Tagalog"
+msgstr "Тагалог"
+
+#: src/main/utils/replacer.cpp:55
+msgid "Find/Replace In"
+msgstr "Знайти/Замінити у"
+
+#: src/main/utils/replacer.cpp:173 src/main/utils/replacer.cpp:213
+#: src/main/utils/replacer.cpp:216 src/main/utils/replacer.cpp:233
 msgid "Replace"
 msgstr "Замінити"
 
-#: main/utils/kreplace.cpp:51
-msgid "&All"
-msgstr "&Всі"
-
-#: main/utils/kreplace.cpp:52
-msgid "&Skip"
-msgstr "Проп&устити"
-
-#: main/utils/kreplace.cpp:64
-msgid "Replace '%1' with '%2'?"
-msgstr "Замінити «%1» на «%2»?"
-
-#: main/utils/kreplace.cpp:139 main/utils/kreplace.cpp:387
-msgid "No text was replaced."
-msgstr "Нічого не було замінено."
-
-#: main/utils/kreplace.cpp:141 main/utils/kreplace.cpp:389
-#: main/utils/replacer.cpp:211 main/utils/replacer.cpp:231
+#: src/main/utils/replacer.cpp:213 src/main/utils/replacer.cpp:233
 msgid "1 replacement done."
 msgid_plural "%1 replacements done."
 msgstr[0] "Зроблено %1 заміну."
 msgstr[1] "Зроблено %1 заміни."
 msgstr[2] "Зроблено %1 замін."
 
-#: main/utils/kreplace.cpp:392
-msgid "Beginning of document reached."
-msgstr "Досягнуто початку документа."
-
-#: main/utils/kreplace.cpp:394
-msgid "End of document reached."
-msgstr "Досягнуто кінця документа."
-
-#: main/utils/kreplace.cpp:399
-msgid "Do you want to restart search from the end?"
-msgstr "Продовжити пошук з кінця?"
-
-#: main/utils/kreplace.cpp:400
-msgid "Do you want to restart search at the beginning?"
-msgstr "Продовжити пошук з початку документа?"
-
-#: main/utils/kreplace.cpp:402
-msgid "Restart"
-msgstr "Перезапустити"
-
-#: main/utils/language.cpp:127
-msgid "Automatic"
-msgstr "Автоматично"
-
-#: main/utils/language.cpp:134
-msgctxt "Official language of the Philippines, aka Filipino"
-msgid "Tagalog"
-msgstr "Тагалог"
-
-#: main/utils/replacer.cpp:53
-msgid "Find/Replace In"
-msgstr "Знайти/Замінити у"
-
-#: main/utils/speller.cpp:135
+#: src/main/utils/speller.cpp:137
 msgid "Spell Checking"
 msgstr "Перевірка правопису"
 
-#: main/utils/translator.cpp:176
+#: src/main/utils/translator.cpp:176
 msgid "Operation cancelled by user"
 msgstr "Дію скасовано користувачем"
 
-#: main/utils/translator.cpp:279 main/utils/translator.cpp:288
+#: src/main/utils/translator.cpp:276 src/main/utils/translator.cpp:285
 msgid "Unexpected contents received from translation service"
 msgstr "Отримано некоректні дані від служби перекладу"
 
-#: services/gstreamer/gstreamerconfigwidget.cpp:34
-#, fuzzy
-msgctxt "@title:group GStreamer settings"
-msgid "Options"
-msgstr "Параметри"
-
-#: services/gstreamer/gstreamerconfigwidget.cpp:37
-msgid "Audio sink:"
-msgstr "Приймач звуку:"
-
-#: services/gstreamer/gstreamerconfigwidget.cpp:45
-msgid "Video sink:"
-msgstr "Приймач відео:"
-
-#: services/gstreamer/gstreamerplayerbackend.cpp:321
-#: services/mplayer/mplayerplayerbackend.cpp:243
-#: services/xine/xinedecoderbackend.cpp:199
-#: services/xine/xineplayerbackend.cpp:281
+#: src/services/gstreamer/gstreamerplayerbackend.cpp:348
+#: src/services/mplayer/mplayerplayerbackend.cpp:242
+#: src/services/xine/xinedecoderbackend.cpp:198
+#: src/services/xine/xineplayerbackend.cpp:283
 msgid "Audio Stream #%1"
 msgstr "Звуковий потік №%1"
 
-#: services/mplayer/mplayerconfigwidget.cpp:40
-msgid "Executable path:"
-msgstr "Шлях до програми:"
-
-#: services/mplayer/mplayerconfigwidget.cpp:43
-msgid "Select the MPlayer executable"
-msgstr "Вкажіть виконуваний файл MPlayer"
-
-#: services/mplayer/mplayerconfigwidget.cpp:48
-#: services/mpv/mpvconfigwidget.cpp:41
-msgid "A/V synchronization factor:"
-msgstr "Коефіцієнт синхронізації A/V:"
-
-#: services/mplayer/mplayerconfigwidget.cpp:55
-#: services/mpv/mpvconfigwidget.cpp:48
-msgctxt "@title:group Video settings"
-msgid "Video"
-msgstr "Відео"
-
-#: services/mplayer/mplayerconfigwidget.cpp:58
-#: services/mpv/mpvconfigwidget.cpp:51
-msgid "Video output driver:"
-msgstr "Драйвер виводу відео:"
-
-#: services/mplayer/mplayerconfigwidget.cpp:66
-msgid "Enable vdpau for DivX/XviD"
-msgstr ""
-
-#: services/mplayer/mplayerconfigwidget.cpp:69
-#: services/mpv/mpvconfigwidget.cpp:67
-msgid "Allow frame dropping"
-msgstr "Дозволити викидання кадрів"
-
-#: services/mplayer/mplayerconfigwidget.cpp:72
-msgid "Allow hard frame dropping"
-msgstr "Дозволити агресивне викидання кадрів"
-
-#: services/mplayer/mplayerconfigwidget.cpp:74
-#: services/mpv/mpvconfigwidget.cpp:69
-msgctxt "@title:group Audio settings"
-msgid "Audio"
-msgstr "Аудіо"
-
-#: services/mplayer/mplayerconfigwidget.cpp:77
-#: services/mpv/mpvconfigwidget.cpp:72
-msgid "Audio output driver:"
-msgstr "Драйвер виводу звуку:"
-
-#: services/mplayer/mplayerconfigwidget.cpp:85
-#: services/mpv/mpvconfigwidget.cpp:80
-#, fuzzy
-msgid "Audio channels:"
-msgstr "Рівні &звуку"
-
-#: services/mplayer/mplayerconfigwidget.cpp:93
-#: services/mpv/mpvconfigwidget.cpp:88
-#, fuzzy
-msgid "Volume amplification:"
-msgstr "Нормалізація звуку"
-
-#: services/mplayer/mplayerconfigwidget.cpp:102
-#: services/mpv/mpvconfigwidget.cpp:97
-msgid "Volume normalization"
-msgstr "Нормалізація звуку"
-
-#: services/mpv/mpvbackend.cpp:212
+#: src/services/mpv/mpvbackend.cpp:192
 #, fuzzy
 msgid "Stream #%1"
 msgstr "Звуковий потік №%1"
 
-#: services/mpv/mpvconfigwidget.cpp:59
-msgid "Hardware video decoding:"
+#: src/services/player.cpp:374
+msgid "File does not exist."
 msgstr ""
 
-#: services/xine/xineconfigwidget.cpp:34
-#, fuzzy
-msgctxt "@title:group Xine settings"
-msgid "Options"
-msgstr "Параметри"
-
-#: services/xine/xineconfigwidget.cpp:37
-msgid "Audio driver:"
-msgstr "Звуковий драйвер:"
-
-#: services/xine/xineconfigwidget.cpp:45
-msgid "Video driver:"
-msgstr "Драйвер відео:"
-
-#: services/xine/xinedecoderbackend.cpp:306
+#: src/services/xine/xinedecoderbackend.cpp:305
 #, fuzzy
 msgid "There was an error converting audio data to output format."
 msgstr "Під час спроби зберегти переклад субтитрів сталася помилка."
 
-#: widgets/simplerichtextedit.cpp:79
+#: src/widgets/simplerichtextedit.cpp:79
 msgid "Cut"
 msgstr "Вирізати"
 
-#: widgets/simplerichtextedit.cpp:85
+#: src/widgets/simplerichtextedit.cpp:85
 msgid "Copy"
 msgstr "Копіювати"
 
-#: widgets/simplerichtextedit.cpp:91
+#: src/widgets/simplerichtextedit.cpp:92
 msgid "Paste"
 msgstr "Вставити"
 
-#: widgets/simplerichtextedit.cpp:97
+#: src/widgets/simplerichtextedit.cpp:99
 msgid "Delete"
 msgstr "Вилучити"
 
-#: widgets/simplerichtextedit.cpp:103
+#: src/widgets/simplerichtextedit.cpp:105
 msgctxt "@action:inmenu Clear all text"
 msgid "Clear"
 msgstr "Спорожнити"
 
-#: widgets/simplerichtextedit.cpp:144
+#: src/widgets/simplerichtextedit.cpp:146
 msgid "Check Spelling..."
 msgstr "Перевірити правопис..."
 
-#: widgets/simplerichtextedit.cpp:148
+#: src/widgets/simplerichtextedit.cpp:150
 msgid "Auto Spell Check"
 msgstr "Автоматична перевірка правопису"
 
-#: widgets/simplerichtextedit.cpp:153
+#: src/widgets/simplerichtextedit.cpp:155
 msgid "Allow Tabulations"
 msgstr "Дозволити табуляцію"
 
-#: widgets/simplerichtextedit.cpp:540
+#: src/widgets/simplerichtextedit.cpp:541
 msgid "Suggestions"
 msgstr "Список варіантів"
 
-#: widgets/simplerichtextedit.cpp:541
+#: src/widgets/simplerichtextedit.cpp:542
 msgid "Ignore"
 msgstr "Ігнорувати"
 
-#: widgets/simplerichtextedit.cpp:542
+#: src/widgets/simplerichtextedit.cpp:543
 msgid "Add to Dictionary"
 msgstr "Додати до словника"
 
-#: widgets/simplerichtextedit.cpp:546
+#: src/widgets/simplerichtextedit.cpp:547
 msgid "No suggestions"
 msgstr "Варіантів не знайдено"
 
-#. i18n: file: main/subtitlecomposerui.rc:5
-#. i18n: ectx: Menu (file)
-#: rc.cpp:3
-msgid "&File"
-msgstr "&Файл"
+#~ msgid "Configure"
+#~ msgstr "Налаштувати"
 
-#. i18n: file: main/subtitlecomposerui.rc:17
-#. i18n: ectx: Menu (translation)
-#: rc.cpp:6
-msgid "Translation"
-msgstr "Переклад"
+#~ msgctxt "@title:group"
+#~ msgid "Texts"
+#~ msgstr "Тексти"
 
-#. i18n: file: main/subtitlecomposerui.rc:30
-#. i18n: ectx: Menu (edit)
-#: rc.cpp:9
-msgid "&Edit"
-msgstr "&Правка"
+#~ msgid "Maximum number of characters:"
+#~ msgstr "Максимальна кількість символів:"
 
-#. i18n: file: main/subtitlecomposerui.rc:53
-#. i18n: ectx: Menu (texts)
-#: rc.cpp:12
-msgid "&Texts"
-msgstr "&Тексти"
+#~ msgid " lines"
+#~ msgstr " рядків"
 
-#. i18n: file: main/subtitlecomposerui.rc:64
-#. i18n: ectx: Menu (styles)
-#: rc.cpp:15
-msgid "St&yles"
-msgstr "Ст&илі"
+#~ msgid "Maximum number of lines:"
+#~ msgstr "Максимальна кількість рядків:"
 
-#. i18n: file: main/subtitlecomposerui.rc:72
-#. i18n: ectx: Menu (times)
-#: rc.cpp:18
-msgid "T&imes"
-msgstr "&Час"
+#~ msgctxt "@title:group"
+#~ msgid "Absolute Durations"
+#~ msgstr "Абсолютні тривалості"
 
-#. i18n: file: main/subtitlecomposerui.rc:94
-#. i18n: ectx: Menu (errors)
-#: rc.cpp:21
-msgid "E&rrors"
-msgstr "По&милки"
+#~ msgid "Minimum duration:"
+#~ msgstr "Мінімальна тривалість:"
 
-#. i18n: file: main/subtitlecomposerui.rc:107
-#. i18n: ectx: Menu (video)
-#: rc.cpp:24
-msgid "&Video"
-msgstr "&Відео"
+#~ msgid "Maximum duration:"
+#~ msgstr "Максимальна тривалість:"
 
-#. i18n: file: main/subtitlecomposerui.rc:136
-#. i18n: ectx: Menu (tools)
-#: rc.cpp:27
-msgid "T&ools"
-msgstr "&Інструменти"
+#~ msgctxt "@title:group"
+#~ msgid "Relative Durations"
+#~ msgstr "Відносна тривалість"
 
-#. i18n: file: main/subtitlecomposerui.rc:141
-#. i18n: ectx: Menu (audiolevels)
-#: rc.cpp:30
-msgid "&Audio Levels"
-msgstr "Рівні &звуку"
+#~ msgid " msecs/character"
+#~ msgstr " мс/символ"
 
-#. i18n: file: main/subtitlecomposerui.rc:157
-#. i18n: ectx: ToolBar (mainToolBar)
-#: rc.cpp:33
-msgid "Main Toolbar"
-msgstr "Головна панель"
+#~ msgctxt "@title:group"
+#~ msgid "Behavior"
+#~ msgstr "Поведінка"
 
-#. i18n: file: main/subtitlecomposerui.rc:168
-#. i18n: ectx: ToolBar (editToolBar)
-#: rc.cpp:36
+#~ msgid "Automatically clear fixed errors"
+#~ msgstr "Автоматично вилучати записи виправлених помилок"
+
+#~ msgctxt "@title:group General settings"
+#~ msgid "General"
+#~ msgstr "Загальне"
+
+#~ msgid "On line double click, jump to show time minus:"
+#~ msgstr "Після подвійного клацання переходити до часу показу мінус:"
+
+#~ msgid "Automatically load video file when opening subtitle"
+#~ msgstr "Автоматично завантажувати файл відео під час відкриття субтитрів"
+
+#~ msgctxt "@title:group"
+#~ msgid "Quick Actions"
+#~ msgstr "Швидкі дії"
+
+#~ msgid "Time shift for selected lines:"
+#~ msgstr "Часовий зсув для позначених рядків:"
+
+#~ msgid "Compensation for captured video times:"
+#~ msgstr "Компенсація часу захоплення відео:"
+
+#~ msgid "Player backend:"
+#~ msgstr "Сервер відтворення:"
+
 #, fuzzy
-msgid "Edit Toolbar"
-msgstr "Панель редагування"
+#~ msgid "Decoder backend:"
+#~ msgstr "Сервер відтворення:"
 
-#: rc.cpp:37
-msgctxt "NAME OF TRANSLATORS"
-msgid "Your names"
-msgstr "Юрій Чорноіван"
+#~ msgid " secs"
+#~ msgstr " секунд"
 
-#: rc.cpp:38
-msgctxt "EMAIL OF TRANSLATORS"
-msgid "Your emails"
-msgstr "yurchor@ukr.net"
+#~ msgid "Jump length on seek:"
+#~ msgstr "Крок переходу при позиціонуванні:"
+
+#~ msgctxt "@title:group"
+#~ msgid "Subtitles"
+#~ msgstr "Субтитри"
+
+#~ msgctxt "@label:chooser The font family name"
+#~ msgid "Font family:"
+#~ msgstr "Гарнітура шрифту:"
+
+#~ msgid " points"
+#~ msgstr " пунктів"
+
+#~ msgid "Font size:"
+#~ msgstr "Розмір шрифту:"
+
+#~ msgid "Primary color:"
+#~ msgstr "Основний колір:"
+
+#~ msgid "Outline color:"
+#~ msgstr "Колір контуру:"
+
+#~ msgid " pixels"
+#~ msgstr " пікселів"
+
+#~ msgid "Outline width:"
+#~ msgstr "Товщина контуру:"
+
+#~ msgctxt "@title:group"
+#~ msgid "Subtitles Preview"
+#~ msgstr "Перегляд субтитрів"
+
+#~ msgid "Scripts Manager"
+#~ msgstr "Керування скриптами"
+
+#~ msgid "Create..."
+#~ msgstr "Створити..."
+
+#~ msgid "Creates a new script file."
+#~ msgstr "Створює новий файл скрипту."
+
+#~ msgid "Add..."
+#~ msgstr "Додати..."
+
+#~ msgid "Copies an existing script from a specified location."
+#~ msgstr "Копіює існуючий скрипт з вказаної адреси."
+
+#~ msgid "Sends the selected script to the trash."
+#~ msgstr "Надсилає позначений скрипт до смітника."
+
+#~ msgid "Edit"
+#~ msgstr "Змінити"
+
+#~ msgid "Opens the selected script with an external editor."
+#~ msgstr "Відкриває позначений скрипт у зовнішньому редакторі."
+
+#~ msgid "Run"
+#~ msgstr "Запустити"
+
+#~ msgid "Executes the selected script."
+#~ msgstr "Виконує вказаний скрипт."
+
+#~ msgid "Refresh"
+#~ msgstr "Оновити"
+
+#~ msgid "Reloads the installed scripts list."
+#~ msgstr "Перезавантажує список встановлених скриптів."
+
+#~ msgid "&All"
+#~ msgstr "&Всі"
+
+#~ msgid "&Skip"
+#~ msgstr "Проп&устити"
+
+#~ msgid "Replace '%1' with '%2'?"
+#~ msgstr "Замінити «%1» на «%2»?"
+
+#~ msgid "No text was replaced."
+#~ msgstr "Нічого не було замінено."
+
+#~ msgid "Beginning of document reached."
+#~ msgstr "Досягнуто початку документа."
+
+#~ msgid "End of document reached."
+#~ msgstr "Досягнуто кінця документа."
+
+#~ msgid "Do you want to restart search from the end?"
+#~ msgstr "Продовжити пошук з кінця?"
+
+#~ msgid "Do you want to restart search at the beginning?"
+#~ msgstr "Продовжити пошук з початку документа?"
+
+#~ msgid "Restart"
+#~ msgstr "Перезапустити"
+
+#, fuzzy
+#~ msgctxt "@title:group GStreamer settings"
+#~ msgid "Options"
+#~ msgstr "Параметри"
+
+#~ msgid "Audio sink:"
+#~ msgstr "Приймач звуку:"
+
+#~ msgid "Video sink:"
+#~ msgstr "Приймач відео:"
+
+#~ msgid "Executable path:"
+#~ msgstr "Шлях до програми:"
+
+#~ msgid "Select the MPlayer executable"
+#~ msgstr "Вкажіть виконуваний файл MPlayer"
+
+#~ msgid "A/V synchronization factor:"
+#~ msgstr "Коефіцієнт синхронізації A/V:"
+
+#~ msgctxt "@title:group Video settings"
+#~ msgid "Video"
+#~ msgstr "Відео"
+
+#~ msgid "Video output driver:"
+#~ msgstr "Драйвер виводу відео:"
+
+#~ msgid "Allow frame dropping"
+#~ msgstr "Дозволити викидання кадрів"
+
+#~ msgid "Allow hard frame dropping"
+#~ msgstr "Дозволити агресивне викидання кадрів"
+
+#~ msgctxt "@title:group Audio settings"
+#~ msgid "Audio"
+#~ msgstr "Аудіо"
+
+#~ msgid "Audio output driver:"
+#~ msgstr "Драйвер виводу звуку:"
+
+#, fuzzy
+#~ msgid "Audio channels:"
+#~ msgstr "Рівні &звуку"
+
+#, fuzzy
+#~ msgid "Volume amplification:"
+#~ msgstr "Нормалізація звуку"
+
+#~ msgid "Volume normalization"
+#~ msgstr "Нормалізація звуку"
+
+#, fuzzy
+#~ msgctxt "@title:group Xine settings"
+#~ msgid "Options"
+#~ msgstr "Параметри"
+
+#~ msgid "Audio driver:"
+#~ msgstr "Звуковий драйвер:"
+
+#~ msgid "Video driver:"
+#~ msgstr "Драйвер відео:"
+
+#~ msgid "&File"
+#~ msgstr "&Файл"
+
+#~ msgid "&Edit"
+#~ msgstr "&Правка"
+
+#~ msgid "&Texts"
+#~ msgstr "&Тексти"
+
+#~ msgid "St&yles"
+#~ msgstr "Ст&илі"
+
+#~ msgid "T&imes"
+#~ msgstr "&Час"
+
+#~ msgid "E&rrors"
+#~ msgstr "По&милки"
+
+#~ msgid "&Video"
+#~ msgstr "&Відео"
+
+#~ msgid "T&ools"
+#~ msgstr "&Інструменти"
+
+#~ msgid "&Audio Levels"
+#~ msgstr "Рівні &звуку"
+
+#~ msgid "Main Toolbar"
+#~ msgstr "Головна панель"
+
+#, fuzzy
+#~ msgid "Edit Toolbar"
+#~ msgstr "Панель редагування"
 
 #~ msgid "Shift -%1 Milliseconds"
 #~ msgstr "Зсув -%1 мілісекунд"

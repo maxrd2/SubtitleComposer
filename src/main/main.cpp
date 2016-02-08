@@ -55,7 +55,7 @@ main(int argc, char **argv)
 		"0.5.9",
 		i18n("A KDE subtitle editor."),
 		KAboutLicense::GPL,
-		i18n("&copy; 2007-2012 Sergio Pistone\n&copy; 2013-2015 Mladen Milinković"),
+		"&copy; 2007-2012 Sergio Pistone\n&copy; 2013-2015 Mladen Milinković",
 		QString(), // Additional text
 		"https://github.com/maxrd2/subtitlecomposer",
 		"maxrd2@smoothware.net");
@@ -65,20 +65,20 @@ main(int argc, char **argv)
 
 	aboutData.setTranslator(i18nc("NAME OF TRANSLATORS", "Your names"), i18nc("EMAIL OF TRANSLATORS", "Your emails"));
 
-	aboutData.addCredit(i18n("Goran Vidovic (gogo)"), i18n("Croatian Translator"));
-	aboutData.addCredit(i18n("Petar Toushkov"), i18n("Bulgarian Translator"));
-	aboutData.addCredit(i18n("Petr Gadula (Goliash)"), i18n("Translator"));
-	aboutData.addCredit(i18n("Thomas Gastine"), i18n("Translator"));
-	aboutData.addCredit(i18n("Panagiotis Papadopoulos"), i18n("Translator"));
-	aboutData.addCredit(i18n("Alessandro Polverini"), i18n("Translator"));
-	aboutData.addCredit(i18n("Tomasz Argasiński"), i18n("Translator"));
-	aboutData.addCredit(i18n("Marcio P. Moraes"), i18n("Translator"));
-	aboutData.addCredit(i18n("Alexander Antsev"), i18n("Translator"));
-	aboutData.addCredit(i18n("Slobodan Simic"), i18n("Translator"));
-	aboutData.addCredit(i18n("Yuri Chornoivan"), i18n("Translator"));
-	aboutData.addCredit(i18n("Alexandros Perdikomatis"), i18n("Translator"));
-	aboutData.addCredit(i18n("Barcza Károly"), i18n("Translator"));
-	aboutData.addCredit(i18n("Martin Steghöfer"));
+	aboutData.addCredit("Goran Vidovic (gogo)", i18n("Croatian Translator"));
+	aboutData.addCredit("Petar Toushkov", i18n("Bulgarian Translator"));
+	aboutData.addCredit("Petr Gadula (Goliash)", i18n("Translator"));
+	aboutData.addCredit("Thomas Gastine", i18n("Translator"));
+	aboutData.addCredit("Panagiotis Papadopoulos", i18n("Translator"));
+	aboutData.addCredit("Alessandro Polverini", i18n("Translator"));
+	aboutData.addCredit("Tomasz Argasiński", i18n("Translator"));
+	aboutData.addCredit("Marcio P. Moraes", i18n("Translator"));
+	aboutData.addCredit("Alexander Antsev", i18n("Translator"));
+	aboutData.addCredit("Slobodan Simic", i18n("Translator"));
+	aboutData.addCredit("Yuri Chornoivan", i18n("Translator"));
+	aboutData.addCredit("Alexandros Perdikomatis", i18n("Translator"));
+	aboutData.addCredit("Barcza Károly", i18n("Translator"));
+	aboutData.addCredit("Martin Steghöfer");
 	aboutData.addCredit(i18n("All people who have contributed and I have forgotten to mention"));
 
 	// register about data
