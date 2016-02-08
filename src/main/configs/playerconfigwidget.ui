@@ -63,7 +63,7 @@
       <string>Subtitles</string>
      </property>
      <layout class="QGridLayout" name="gridLayout_2" columnstretch="1,1">
-      <item row="3" column="0">
+      <item row="3" column="0" alignment="Qt::AlignRight">
        <widget class="QLabel" name="label_7">
         <property name="text">
          <string>Outline Color:</string>
@@ -79,28 +79,28 @@
       <item row="3" column="1">
        <widget class="KColorCombo" name="kcfg_OutlineColor"/>
       </item>
-      <item row="4" column="0">
+      <item row="4" column="0" alignment="Qt::AlignRight">
        <widget class="QLabel" name="label_8">
         <property name="text">
          <string>Outline Width:</string>
         </property>
        </widget>
       </item>
-      <item row="2" column="0">
+      <item row="2" column="0" alignment="Qt::AlignRight">
        <widget class="QLabel" name="label_6">
         <property name="text">
          <string>Text Color:</string>
         </property>
        </widget>
       </item>
-      <item row="0" column="0">
+      <item row="0" column="0" alignment="Qt::AlignRight">
        <widget class="QLabel" name="label_2">
         <property name="text">
          <string>Font family:</string>
         </property>
        </widget>
       </item>
-      <item row="1" column="0">
+      <item row="1" column="0" alignment="Qt::AlignRight">
        <widget class="QLabel" name="label_5">
         <property name="text">
          <string>Font Size:</string>
