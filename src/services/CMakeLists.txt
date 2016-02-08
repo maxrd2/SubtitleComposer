@@ -62,9 +62,6 @@ set(services_SRCS
 	${CMAKE_CURRENT_SOURCE_DIR}/player.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/playerbackend.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/videowidget.cpp
-	${CMAKE_CURRENT_SOURCE_DIR}/decoder.cpp
-	${CMAKE_CURRENT_SOURCE_DIR}/decoderbackend.cpp
-	${CMAKE_CURRENT_SOURCE_DIR}/wavewriter.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/waveformat.h
 	${services_gstreamer_SRCS}
 	${services_mplayer_SRCS}
@@ -73,5 +70,3 @@ set(services_SRCS
 	${services_xine_SRCS}
 	CACHE INTERNAL EXPORTEDVARIABLE
 )
-
-add_subdirectory(tests)

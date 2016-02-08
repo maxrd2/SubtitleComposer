@@ -26,7 +26,6 @@
 #include "../core/subtitle.h"
 #include "../core/subtitleline.h"
 #include "../core/subtitleiterator.h"
-#include "../core/audiolevels.h"
 
 #include <QGlobal>
 #include <QtCore/QString>
@@ -120,19 +119,10 @@ testSubtitleIterator()
 	   qDebug() << time.elapsed(); */
 }
 
-void
-testAudioLevels()
-{
-/*	AudioLevels audiolevels;
-        audiolevels.load( "/home/sergio/Desktop/scomp-trunk/SAMPLES/chasing.amy.cd1.wf" );
-        audiolevels.save( "/home/sergio/Desktop/scomp-trunk/SAMPLES/chasing.amy.cd1.2.wf", true );*/
-}
-
 int
 main(int, char **)
 {
 	// testSubtitleIterator();
-	// testAudioLevels();
 }
 
 #endif

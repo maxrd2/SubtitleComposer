@@ -20,7 +20,6 @@
 #include "useraction.h"
 #include "../../core/subtitle.h"
 #include "../../services/player.h"
-#include "../../services/decoder.h"
 #include "../lineswidget.h"
 #include "../currentlinewidget.h"
 
@@ -114,7 +113,7 @@ UserActionManager::UserActionManager() :
 	m_linesWidget(0),
 	m_player(0),
 	m_translationMode(false),
-	m_contextFlags(UserAction::SubClosed | UserAction::SubTrClosed | UserAction::VideoClosed | UserAction::AudioLevelsClosed | UserAction::FullScreenOff)
+	m_contextFlags(UserAction::SubClosed | UserAction::SubTrClosed | UserAction::VideoClosed | UserAction::FullScreenOff)
 {}
 
 UserActionManager *
@@ -291,19 +290,6 @@ UserActionManager::onLinesWidgetSelectionChanged()
 }
 
 void
-UserActionManager::setAudioLevels(AudioLevels *audiolevels)
-{
-	int newContextFlags = m_contextFlags & ~UserAction::AudioLevelsMask;
-
-	if(audiolevels)
-		newContextFlags |= UserAction::AudioLevelsOpened;
-	else
-		newContextFlags |= UserAction::AudioLevelsClosed;
-
-	updateActionsContext(newContextFlags);
-}
-
-void
 UserActionManager::setPlayer(Player *player)
 {
 	if(m_player) {
@@ -354,59 +340,6 @@ UserActionManager::onPlayerStateChanged()
 			newContextFlags |= UserAction::VideoPlaying;
 	} else {
 		newContextFlags |= UserAction::VideoClosed;
-	}
-
-	updateActionsContext(newContextFlags);
-}
-
-void
-UserActionManager::setDecoder(Decoder *decoder)
-{
-	if(m_decoder) {
-		disconnect(m_decoder, SIGNAL(fileOpened(const QString &)), this, SLOT(onDecoderStateChanged()));
-		disconnect(m_decoder, SIGNAL(fileClosed()), this, SLOT(onDecoderStateChanged()));
-		disconnect(m_decoder, SIGNAL(decoding()), this, SLOT(onDecoderStateChanged()));
-		disconnect(m_decoder, SIGNAL(stopped()), this, SLOT(onDecoderStateChanged()));
-	}
-
-	m_decoder = decoder;
-
-	int newContextFlags = m_contextFlags & ~UserAction::AudioMask;
-
-	if(m_decoder) {
-		connect(m_decoder, SIGNAL(fileOpened(const QString &)), this, SLOT(onDecoderStateChanged()));
-		connect(m_decoder, SIGNAL(fileClosed()), this, SLOT(onDecoderStateChanged()));
-		connect(m_decoder, SIGNAL(decoding()), this, SLOT(onDecoderStateChanged()));
-		connect(m_decoder, SIGNAL(stopped()), this, SLOT(onDecoderStateChanged()));
-
-		int state = m_decoder->state();
-		if(state > Decoder::Opening) {
-			newContextFlags |= UserAction::AudioOpened;
-			if(state == Decoder::Decoding)
-				newContextFlags |= UserAction::AudioDecoding;
-			else
-				newContextFlags |= UserAction::AudioStopped;
-		} else
-			newContextFlags |= UserAction::AudioClosed;
-	}
-
-	updateActionsContext(newContextFlags);
-}
-
-void
-UserActionManager::onDecoderStateChanged()
-{
-	int newContextFlags = m_contextFlags & ~UserAction::AudioMask;
-
-	int state = m_decoder->state();
-	if(state > Decoder::Opening) {
-		newContextFlags |= UserAction::AudioOpened;
-		if(state == Decoder::Decoding)
-			newContextFlags |= UserAction::AudioDecoding;
-		else
-			newContextFlags |= UserAction::AudioStopped;
-	} else {
-		newContextFlags |= UserAction::AudioClosed;
 	}
 
 	updateActionsContext(newContextFlags);

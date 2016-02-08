@@ -20,11 +20,9 @@
 
 #include "application.h"
 #include "mainwindow.h"
-#include "audiolevelswidget.h"
 #include "playerwidget.h"
 #include "lineswidget.h"
 #include "currentlinewidget.h"
-#include "statusbar.h"
 #include "errorswidget.h"
 #include "errorsdialog.h"
 #include "actions/useraction.h"
@@ -71,8 +69,6 @@
 #include "../formats/formatmanager.h"
 #include "../services/player.h"
 #include "../services/playerbackend.h"
-#include "../services/decoder.h"
-#include "../services/decoderbackend.h"
 #include "../profiler.h"
 
 #include <QDir>
@@ -120,16 +116,12 @@ Application::Application(int &argc, char **argv) :
 	m_subtitleTrEOL(Format::CurrentOS),
 	m_subtitleTrFormat(),
 	m_player(Player::instance()),
-	m_decoder(Decoder::instance()),
 	m_lastFoundLine(0),
 	m_mainWindow(0),
-//  m_audiolevels( 0 ), // FIXME audio levels
 	m_lastSubtitleUrl(QDir::homePath()),
 	m_lastVideoUrl(QDir::homePath()),
 	m_linkCurrentLineToPosition(false)
 {
-	// NOTE the player is initialized by PlayerWidget because it requires the parent widget
-	m_decoder->initialize(0, SCConfig::decoderBackend());
 }
 
 void
@@ -140,7 +132,6 @@ Application::init()
 	m_playerWidget = m_mainWindow->m_playerWidget;
 	m_linesWidget = m_mainWindow->m_linesWidget;
 	m_curLineWidget = m_mainWindow->m_curLineWidget;
-	m_statusBar = m_mainWindow->m_statusBar;
 
 	m_finder = new Finder(m_linesWidget);
 	m_replacer = new Replacer(m_linesWidget);
@@ -163,14 +154,8 @@ Application::init()
 	connect(m_player, SIGNAL(activeAudioStreamChanged(int)), this, SLOT(onPlayerActiveAudioStreamChanged(int)));
 	connect(m_player, SIGNAL(muteChanged(bool)), this, SLOT(onPlayerMuteChanged(bool)));
 
-	connect(m_decoder, SIGNAL(decoding()), m_statusBar, SLOT(initDecoding()));
-	connect(m_decoder, SIGNAL(positionChanged(double)), m_statusBar, SLOT(setDecodingPosition(double)));
-	connect(m_decoder, SIGNAL(lengthChanged(double)), m_statusBar, SLOT(setDecodingLength(double)));
-	connect(m_decoder, SIGNAL(stopped()), m_statusBar, SLOT(endDecoding()));
-	connect(m_decoder, SIGNAL(decodingError(const QString &)), this, SLOT(onDecodingError(const QString &)));
-
 	QList<QObject *> listeners;
-	listeners << actionManager << m_mainWindow << m_playerWidget << m_linesWidget << m_curLineWidget << m_statusBar << /*m_errorsWidget <<*/ m_finder << m_replacer << m_errorFinder << m_speller << m_errorTracker << m_scriptsManager;
+	listeners << actionManager << m_mainWindow << m_playerWidget << m_linesWidget << m_curLineWidget << /*m_errorsWidget <<*/ m_finder << m_replacer << m_errorFinder << m_speller << m_errorTracker << m_scriptsManager;
 	for(QList<QObject *>::ConstIterator it = listeners.begin(), end = listeners.end(); it != end; ++it) {
 		connect(this, SIGNAL(subtitleOpened(Subtitle *)), *it, SLOT(setSubtitle(Subtitle *)));
 		connect(this, SIGNAL(subtitleClosed()), *it, SLOT(setSubtitle()));
@@ -198,13 +183,11 @@ Application::init()
 
 	actionManager->setLinesWidget(m_linesWidget);
 	actionManager->setPlayer(m_player);
-	actionManager->setDecoder(m_decoder);
 	actionManager->setFullScreenMode(false);
 
 	setupActions();
 
 	m_playerWidget->plugActions();
-	m_statusBar->plugActions();
 	m_curLineWidget->setupActions();
 
 	m_mainWindow->setupGUI();
@@ -223,7 +206,6 @@ Application::~Application()
 	// delete m_mainWindow; the window is destroyed when it's closed
 
 	delete m_subtitle;
-//  delete m_audiolevels; // FIXME audio levels
 }
 
 Application *
@@ -271,9 +253,6 @@ Application::loadConfig()
 	m_recentSubtitlesAction->loadEntries(KSharedConfig::openConfig()->group("Recent Subtitles"));
 	m_recentSubtitlesTrAction->loadEntries(KSharedConfig::openConfig()->group("Recent Translation Subtitles"));
 
-	m_lastAudioLevelsUrl = QUrl(group.readPathEntry("LastAudioLevelsUrl", QDir::homePath()));
-//  m_recentAudioLevelsAction->loadEntries( group, "Recent Audio Levels" ); // FIXME audio levels
-
 	m_lastVideoUrl = QUrl(group.readPathEntry("LastVideoUrl", QDir::homePath()));
 	m_recentVideosAction->loadEntries(KSharedConfig::openConfig()->group("Recent Videos"));
 
@@ -283,7 +262,6 @@ Application::loadConfig()
 	((KToggleAction *)action(ACT_TOGGLE_MUTED))->setChecked(m_player->isMuted());
 
 	m_mainWindow->loadConfig();
-//  m_audiolevelsWidget->loadConfig(); // FIXME audio levels
 	m_playerWidget->loadConfig();
 	m_linesWidget->loadConfig();
 	m_curLineWidget->loadConfig();
@@ -297,9 +275,6 @@ Application::saveConfig()
 	group.writePathEntry("LastSubtitleUrl", m_lastSubtitleUrl.toString());
 	m_recentSubtitlesAction->saveEntries(KSharedConfig::openConfig()->group("Recent Subtitles"));
 	m_recentSubtitlesTrAction->saveEntries(KSharedConfig::openConfig()->group("Recent Translation Subtitles"));
-
-	group.writePathEntry("LastAudioLevelsUrl", m_lastAudioLevelsUrl.toString(QUrl::PreferLocalFile));
-//  m_recentAudioLevelsAction->saveEntries( KSharedConfig::openConfig()->group( "Recent Audio Levels" ) ); // FIXME audio levels
 
 	group.writePathEntry("LastVideoUrl", m_lastVideoUrl.toString());
 	m_recentVideosAction->saveEntries(KSharedConfig::openConfig()->group("Recent Videos"));
@@ -380,7 +355,6 @@ Application::buildMediaFilesFilter()
 		QString videoExtensions;
 		QStringList videoExts(QStringLiteral("avi flv mkv mov mpg mpeg mp4 wmv ogm ogv rmvb ts vob").split(' '));
 		for(QStringList::ConstIterator it = videoExts.begin(), end = videoExts.end(); it != end; ++it)
-//          videoExtensions += " *." + *it /*+ " *." + (*it).toUpper()*/;
 			videoExtensions += " *." % *it % " *." % (*it).toUpper();
 		mediaExtensions += videoExtensions;
 		filter += '\n' + videoExtensions.trimmed() + '|' + i18n("Video Files");
@@ -388,31 +362,12 @@ Application::buildMediaFilesFilter()
 		QString audioExtensions;
 		QStringList audioExts(QStringLiteral("aac ac3 ape flac la m4a mac mp2 mp3 mp4 mp+ mpc mpp ofr oga ogg pac ra spx tta wav wma wv").split(' '));
 		for(QStringList::ConstIterator it = audioExts.begin(), end = audioExts.end(); it != end; ++it)
-//          audioExtensions += " *." + *it /*+ " *." + (*it).toUpper()*/;
 			audioExtensions += " *." % *it % " *." % (*it).toUpper();
 		mediaExtensions += audioExtensions;
 		filter += '\n' % audioExtensions.trimmed() % '|' % i18n("Audio Files");
 
 		filter = mediaExtensions % '|' % i18n("Media Files") % filter;
 		filter += "\n*|" % i18n("All Files");
-	}
-
-	return filter;
-}
-
-const QString &
-Application::buildLevelsFilesFilter()
-{
-	static QString filter;
-
-	if(filter.isEmpty()) {
-		QString levelsExtensions;
-		QStringList videoExts = QStringList() << QStringLiteral("wf");
-		for(QStringList::ConstIterator it = videoExts.begin(), end = videoExts.end(); it != end; ++it)
-			levelsExtensions += QStringLiteral(" *.") % *it % QStringLiteral(" *.") % (*it).toUpper();
-		filter += '\n' + levelsExtensions.trimmed() % '|' % i18n("Audio Levels Files");
-
-		filter += buildMediaFilesFilter();
 	}
 
 	return filter;
@@ -957,22 +912,6 @@ Application::setupActions()
 	actionCollection->addAction(ACT_CLOSE_VIDEO, closeVideoAction);
 	actionManager->addAction(closeVideoAction, UserAction::VideoOpened);
 
-	QAction *extractVideoAudioAction = new QAction(actionCollection);
-	extractVideoAudioAction->setIcon(QIcon::fromTheme("audio-extract"));
-	extractVideoAudioAction->setText(i18n("Extract Audio"));
-	extractVideoAudioAction->setStatusTip(i18n("Extract video's active audio stream"));
-	connect(extractVideoAudioAction, SIGNAL(triggered()), this, SLOT(extractVideoAudio()));
-	actionCollection->addAction(ACT_EXTRACT_VIDEO_AUDIO, extractVideoAudioAction);
-	actionManager->addAction(extractVideoAudioAction, UserAction::VideoOpened);
-
-	QAction *cancelAudioExtractionAction = new QAction(actionCollection);
-	cancelAudioExtractionAction->setIcon(QIcon::fromTheme("dialog-cancel"));
-	cancelAudioExtractionAction->setText(i18n("Cancel Audio Extraction"));
-	cancelAudioExtractionAction->setStatusTip(i18n("Cancel video's audio stream extraction"));
-	connect(cancelAudioExtractionAction, SIGNAL(triggered()), Decoder::instance(), SLOT(stop()));
-	actionCollection->addAction(ACT_CANCEL_AUDIO_EXTRACTION, cancelAudioExtractionAction);
-	actionManager->addAction(cancelAudioExtractionAction, UserAction::AudioDecoding);
-
 	KToggleAction *fullScreenAction = new KToggleAction(actionCollection);
 	fullScreenAction->setIcon(QIcon::fromTheme("view-fullscreen"));
 	fullScreenAction->setText(i18n("Full Screen Mode"));
@@ -1143,75 +1082,6 @@ Application::setupActions()
 	connect(scriptsManagerAction, SIGNAL(triggered()), m_scriptsManager, SLOT(showDialog()));
 	actionCollection->addAction(ACT_SCRIPTS_MANAGER, scriptsManagerAction);
 	actionManager->addAction(scriptsManagerAction, UserAction::FullScreenOff);
-
-//  QAction * openAudioLevelsAction = new QAction( actionCollection );
-//  openAudioLevelsAction->setIcon( "fileopen" );
-//  openAudioLevelsAction->setText( i18n( "Open Levels..." ) );
-//  openAudioLevelsAction->setStatusTip( i18n( "Open audio levels file" ) );
-//  connect( openAudioLevelsAction, SIGNAL( triggered() ), this, SLOT( openAudioLevels() ) );
-//  actionCollection->addAction( ACT_OPEN_WAVEFORM, openAudioLevelsAction );
-//
-//
-//  m_recentAudioLevelsAction = new KRecentFilesActionExt( actionCollection );
-//  m_recentAudioLevelsAction->setIcon( "fileopen" );
-//  m_recentAudioLevelsAction->setText( i18n( "Open &Recent Levels" ) );
-//  m_recentAudioLevelsAction->setStatusTip( i18n( "Open audio levels file" ) );
-//  connect( m_recentAudioLevelsAction, SIGNAL(urlSelected(const QUrl&)), this, SLOT(openAudioLevels(const QUrl&)) );
-//  actionCollection->addAction( ACT_RECENT_WAVEFORMS, m_recentAudioLevelsAction );
-//
-//
-//  QAction * saveAudioLevelsAsAction = new QAction( actionCollection );
-//  saveAudioLevelsAsAction->setIcon( "filesaveas" );
-//  saveAudioLevelsAsAction->setText( i18n( "Save Levels As..." ) );
-//  saveAudioLevelsAsAction->setStatusTip( i18n( "Save audio levels file" ) );
-//  connect( saveAudioLevelsAsAction, SIGNAL( triggered() ), this, SLOT( saveAudioLevelsAs() ) );
-//  actionCollection->addAction( ACT_SAVE_LEVELS_AS, saveAudioLevelsAsAction );
-//  actionManager->addAction( saveAudioLevelsAsAction, UserAction::AudioLevelsOpened );
-//
-//
-//  QAction * closeAudioLevelsAction = new QAction( actionCollection );
-//  closeAudioLevelsAction->setIcon( "fileclose" );
-//  closeAudioLevelsAction->setText( i18n( "Close Levels" ) );
-//  closeAudioLevelsAction->setStatusTip( i18n( "Close audio levels file" ) );
-//  connect( closeAudioLevelsAction, SIGNAL( triggered() ), this, SLOT( closeAudioLevels() ) );
-//  actionCollection->addAction( ACT_CLOSE_WAVEFORM, closeAudioLevelsAction );
-//  actionManager->addAction( closeAudioLevelsAction, UserAction::AudioLevelsOpened );
-//
-//
-//  QAction * increaseAudioLevelsVZoomAction = new QAction( actionCollection );
-//  increaseAudioLevelsVZoomAction->setIcon( "viewmag+" );
-//  increaseAudioLevelsVZoomAction->setText( i18n( "Increase Vertical Zoom" ) );
-//  increaseAudioLevelsVZoomAction->setStatusTip( i18n( "Increase audio levels vertical zoom" ) );
-//  connect( increaseAudioLevelsVZoomAction, SIGNAL( triggered() ), this, SLOT( increaseAudioLevelsVZoom() ) );
-//  actionCollection->addAction( ACT_INCREASE_LEVELS_V_ZOOM, increaseAudioLevelsVZoomAction );
-//  actionManager->addAction( increaseAudioLevelsVZoomAction, UserAction::AudioLevelsOpened );
-//
-//
-//  QAction * decreaseAudioLevelsVZoomAction = new QAction( actionCollection );
-//  decreaseAudioLevelsVZoomAction->setIcon( "viewmag-" );
-//  decreaseAudioLevelsVZoomAction->setText( i18n( "Decrease Vertical Zoom" ) );
-//  decreaseAudioLevelsVZoomAction->setStatusTip( i18n( "Decrease audio levels vertical zoom" ) );
-//  connect( decreaseAudioLevelsVZoomAction, SIGNAL( triggered() ), this, SLOT( decreaseAudioLevelsVZoom() ) );
-//  actionCollection->addAction( ACT_DECREASE_LEVELS_V_ZOOM, decreaseAudioLevelsVZoomAction );
-//  actionManager->addAction( decreaseAudioLevelsVZoomAction, UserAction::AudioLevelsOpened );
-//
-//
-//  QAction * increaseAudioLevelsHZoomAction = new QAction( actionCollection );
-//  increaseAudioLevelsHZoomAction->setIcon( "viewmag+" );
-//  increaseAudioLevelsHZoomAction->setText( i18n( "Increase Horizontal Zoom" ) );
-//  increaseAudioLevelsHZoomAction->setStatusTip( i18n( "Increase audio levels horizontal zoom" ) );
-//  connect( increaseAudioLevelsHZoomAction, SIGNAL( triggered() ), this, SLOT( increaseAudioLevelsHZoom() ) );
-//  actionCollection->addAction( ACT_INCREASE_LEVELS_H_ZOOM, increaseAudioLevelsHZoomAction );
-//  actionManager->addAction( increaseAudioLevelsHZoomAction, UserAction::AudioLevelsOpened );
-//
-//
-//  QAction * decreaseAudioLevelsHZoomAction = new QAction( actionCollection );
-//  decreaseAudioLevelsHZoomAction->setIcon( "viewmag-" );
-//  decreaseAudioLevelsHZoomAction->setText( i18n( "Decrease Horizontal Zoom" ) );
-//  decreaseAudioLevelsHZoomAction->setStatusTip( i18n( "Decrease audio levels horizontal zoom" ) );
-//  connect( decreaseAudioLevelsHZoomAction, SIGNAL( triggered() ), this, SLOT( decreaseAudioLevelsHZoom() ) );
-//  actionCollection->addAction( ACT_DECREASE_LEVELS_H_ZOOM, decreaseAudioLevelsHZoomAction );
-//  actionManager->addAction( decreaseAudioLevelsHZoomAction, UserAction::AudioLevelsOpened );
 
 	updateActionTexts();
 }
@@ -2688,51 +2558,6 @@ Application::adjustToVideoPositionAnchorLast()
 }
 
 void
-Application::extractVideoAudio()
-{
-	if(m_decoder->filePath() != m_player->filePath()) {
-		m_decoder->closeFile();
-
-		QxtSignalWaiter openedWaiter(Decoder::instance(), SIGNAL(fileOpened(const QString &)), SIGNAL(fileOpenError(const QString &)));
-		m_decoder->openFile(m_player->filePath());
-		openedWaiter.wait(10000);
-
-		if(m_decoder->filePath().isEmpty()) {
-			KMessageBox::sorry(m_mainWindow, i18n("<qt>There was an error opening file %1 for audio extraction.</qt>", m_player->filePath()));
-			return;
-		}
-	}
-
-	WaveFormat outputFormat = m_decoder->audioStreamFormat(m_player->activeAudioStream());
-	outputFormat.setBitsPerSample(8);
-	outputFormat.setChannels(1);
-	outputFormat.setInteger(true);
-	while(outputFormat.sampleRate() >= 5000 && outputFormat.sampleRate() % 2 == 0)
-		outputFormat.setSampleRate(outputFormat.sampleRate() / 2);
-
-	QFileInfo fileInfo(m_player->filePath());
-	QString fileBaseName = fileInfo.path() + "/" + fileInfo.completeBaseName();
-	fileInfo.setFile(fileBaseName + QStringLiteral("-stream%1.wav").arg(m_player->activeAudioStream() + 1));
-	int count = 1;
-	while(fileInfo.exists())
-		fileInfo.setFile(fileBaseName + QStringLiteral("-stream%1(%2).wav").arg(m_player->activeAudioStream() + 1).arg(++count));
-
-	m_decoder->decode(m_player->activeAudioStream(), fileInfo.filePath(), outputFormat);
-}
-
-void
-Application::onDecodingError(const QString &errorMessage)
-{
-	if(errorMessage.isEmpty())
-		KMessageBox::error(m_mainWindow, i18n("Unexpected error when extracting audio."), i18n("Error Extracting Audio")
-						   );
-	else
-		KMessageBox::detailedError(m_mainWindow, i18n("Unexpected error when extracting audio."), errorMessage, i18n("Error Extracting Audio")
-								   );
-	m_decoder->closeFile();
-}
-
-void
 Application::adjustToVideoPositionAnchorFirst()
 {
 	SubtitleLine *currentLine = m_linesWidget->currentLine();
@@ -2754,117 +2579,15 @@ Application::adjustToVideoPositionAnchorFirst()
 		long newLastLineTime = (long)(shiftTime + m_subtitle->lastLine()->showTime().toMillis() * scaleFactor);
 
 		if(newLastLineTime > Time::MaxMseconds) {
-			if(KMessageBox::warningContinueCancel(m_mainWindow, i18n("Continuing would result in loss of timing information for some lines.\nAre you sure you want to continue?")
-												  ) != KMessageBox::Continue)
+			if(KMessageBox::warningContinueCancel(m_mainWindow,
+					i18n("Continuing would result in loss of timing information for some lines.\n"
+						 "Are you sure you want to continue?")) != KMessageBox::Continue)
 				return;
 		}
 
 		m_subtitle->adjustLines(Range::full(), firstLineTime, newLastLineTime);
 	}
 }
-
-void
-Application::openAudioLevels()
-{
-//  KFileDialog openDlg( m_lastAudioLevelsUrl, buildLevelsFilesFilter(), m_mainWindow );
-//
-//  openDlg.setModal( true );
-//  openDlg.setCaption( i18n( "Open AudioLevels" ) );
-//
-//  if ( openDlg.exec() == QDialog::Accepted )
-//  {
-//      m_lastAudioLevelsUrl = openDlg.selectedUrls().first();
-//      openAudioLevels( openDlg.selectedUrls().first() );
-//  }
-}
-
-void
-Application::openAudioLevels(const QUrl & /*url */)
-{
-// FIXME audio levels
-/*
-		closeAudioLevels();
-
-		m_audiolevels = new AudioLevels();
-   //   if ( m_audiolevels->loadFromMedia( url.path(), true ) )
-		if ( m_audiolevels->load( url ) )
-		{
-				m_recentAudioLevelsAction->addUrl( url );
-
-				emit audiolevelsOpened( m_audiolevels );
-		}
-		else
-		{
-				delete m_audiolevels;
-				m_audiolevels = 0;
-
-				KMessageBox::sorry( m_mainWindow, i18n( "There was an error opening the audiolevels." ) );
-		}
- */
-}
-
-void
-Application::saveAudioLevelsAs()
-{
-// FIXME audio levels
-/*
-		KFileDialog saveDlg( m_lastAudioLevelsUrl, QString(), m_mainWindow );
-		saveDlg.setModal( true );
-		saveDlg.setCaption( i18n( "Save AudioLevels" ) );
-		saveDlg.setOperationMode( KFileDialog::Saving );
-		saveDlg.setMode( KFile::File );
-
-		if ( saveDlg.exec() == QDialog::Accepted )
-		{
-				QUrl selectedUrl = saveDlg.selectedUrls().first();
-
-				if ( FileSaveHelper::exists( selectedUrl ) )
-				{
-						if ( KMessageBox::warningContinueCancel(
-										m_mainWindow,
-										i18n(
-												"A file named \"%1\" already exists. Are you sure you want to overwrite it?",
-												QFileInfo( selectedUrl.path() ).fileName()
-										),
-										i18n( "Overwrite File?" ),
-										KGuiItem( i18n( "Overwrite" ) )
-								) != KMessageBox::Continue )
-								return;
-				}
-
-				if ( ! m_audiolevels->save( selectedUrl, true ) )
-						KMessageBox::sorry( m_mainWindow, i18n( "There was an error saving the audiolevels." ) );
-		}
- */
-}
-
-void
-Application::closeAudioLevels()
-{
-// FIXME audio levels
-/*
-		delete m_audiolevels;
-		m_audiolevels = 0;
-
-		emit audiolevelsClosed();
- */
-}
-
-void
-Application::increaseAudioLevelsVZoom()
-{}
-
-void
-Application::decreaseAudioLevelsVZoom()
-{}
-
-void
-Application::increaseAudioLevelsHZoom()
-{}
-
-void
-Application::decreaseAudioLevelsHZoom()
-{}
 
 /// END ACTION HANDLERS
 
@@ -2999,7 +2722,6 @@ Application::onPlayerAudioStreamsChanged(const QStringList &audioStreams)
 {
 	KSelectAction *activeAudioStreamAction = (KSelectAction *)action(ACT_SET_ACTIVE_AUDIO_STREAM);
 	activeAudioStreamAction->setItems(audioStreams);
-	action(ACT_EXTRACT_VIDEO_AUDIO)->setEnabled(!audioStreams.isEmpty() && !m_decoder->isActiveBackendDummy());
 }
 
 void
@@ -3035,11 +2757,6 @@ Application::updateActionTexts()
 void
 Application::onConfigChanged()
 {
-	if(m_decoder->backend(SCConfig::decoderBackend()) != m_decoder->activeBackend())
-		m_decoder->reinitialize(SCConfig::decoderBackend());
-	else
-		m_decoder->reconfigure();
-
 	updateActionTexts();
 }
 

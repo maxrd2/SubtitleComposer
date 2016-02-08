@@ -105,16 +105,6 @@
 #define ACT_SHIFT_TO_VIDEO_POSITION "shift_to_video_position"
 #define ACT_ADJUST_TO_VIDEO_POSITION_A_F "adjust_to_video_position_anchor_first"
 #define ACT_ADJUST_TO_VIDEO_POSITION_A_L "adjust_to_video_position_anchor_last"
-#define ACT_EXTRACT_VIDEO_AUDIO "extract_video_audio"
-#define ACT_CANCEL_AUDIO_EXTRACTION "cancel_audio_extraction"
-#define ACT_OPEN_WAVEFORM "open_audiolevels"
-#define ACT_RECENT_WAVEFORMS "recent_audiolevels"
-#define ACT_SAVE_LEVELS_AS "save_audiolevels_as"
-#define ACT_CLOSE_WAVEFORM "close_audiolevels"
-#define ACT_INCREASE_LEVELS_V_ZOOM "increase_audiolevels_v_zoom"
-#define ACT_DECREASE_LEVELS_V_ZOOM "decrease_audiolevels_v_zoom"
-#define ACT_INCREASE_LEVELS_H_ZOOM "increase_audiolevels_h_zoom"
-#define ACT_DECREASE_LEVELS_H_ZOOM "decrease_audiolevels_h_zoom"
 #define ACT_SCRIPTS_MANAGER "scripts_manager"
 
 #endif

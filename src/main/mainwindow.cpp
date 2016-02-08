@@ -20,13 +20,10 @@
 
 #include "mainwindow.h"
 #include "application.h"
-#include "audiolevelswidget.h"
 #include "playerwidget.h"
 #include "lineswidget.h"
 #include "currentlinewidget.h"
-#include "statusbar.h"
 #include "../services/player.h"
-#include "../services/decoder.h"
 
 #include <QGridLayout>
 #include <QSplitter>
@@ -60,15 +57,12 @@ MainWindow::MainWindow() :
 	m_curLineWidget = new CurrentLineWidget(mainWidget);
 	m_curLineWidget->setMaximumHeight(m_curLineWidget->minimumSizeHint().height());
 
-	m_statusBar = new StatusBar2(this);
-
 	QLayout *mainWidgetLayout = new QBoxLayout(QBoxLayout::TopToBottom, mainWidget);
 	mainWidgetLayout->setContentsMargins(5, 1, 5, 2);
 	mainWidgetLayout->setSpacing(5);
 	mainWidgetLayout->addWidget(m_splitter);
 	mainWidgetLayout->addWidget(m_curLineWidget);
 
-	setStatusBar(m_statusBar);
 	setCentralWidget(mainWidget);
 
 	statusBar()->show();
@@ -83,10 +77,8 @@ MainWindow::~MainWindow()
 	// We must disconnect the player and the decoder when closing down, otherwise signal
 	// handlers could be called with the some object destroyed, crashing the application
 	disconnect(Player::instance(), 0, 0, 0);
-	disconnect(Decoder::instance(), 0, 0, 0);
 
 	Player::instance()->setApplicationClosingDown();
-	Decoder::instance()->setApplicationClosingDown();
 }
 
 void

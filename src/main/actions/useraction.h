@@ -30,7 +30,6 @@
 
 namespace SubtitleComposer {
 class Subtitle;
-class AudioLevels;
 class LinesWidget;
 class CurrentLineWidget;
 
@@ -57,22 +56,14 @@ public:
 		VideoOpened = 0x4000,
 		VideoStopped = 0x8000,
 		VideoPlaying = 0x10000,
-		AudioClosed = 0x20000,
-		AudioOpened = 0x40000,
-		AudioStopped = 0x80000,
-		AudioDecoding = 0x100000,
-		AudioLevelsClosed = 0x200000,
-		AudioLevelsOpened = 0x400000,
-		FullScreenOn = 0x800000,
-		FullScreenOff = 0x1000000,
+		FullScreenOn = 0x20000,
+		FullScreenOff = 0x40000,
 
 		SubtitleMask = SubClosed | SubOpened | SubTrClosed | SubTrOpened | SubPDirty | SubPClean | SubSDirty | SubSClean | SubHasLine | SubHasLines | SubHasUndo | SubHasRedo,
 		SelectionMask = HasSelection,
 		VideoMask = VideoClosed | VideoOpened | VideoStopped | VideoPlaying,
-		AudioMask = AudioClosed | AudioOpened | AudioStopped | AudioDecoding,
-		AudioLevelsMask = AudioLevelsClosed | AudioLevelsOpened,
 		FullScreenMask = FullScreenOn | FullScreenOff,
-		AllMask = SubtitleMask | SelectionMask | VideoMask | AudioLevelsMask | FullScreenMask
+		AllMask = SubtitleMask | SelectionMask | VideoMask | FullScreenMask
 	} EnableFlag;
 
 	explicit UserAction(QAction *action, int enableFlags = SubOpened);
@@ -101,7 +92,6 @@ private:
 };
 
 class Player;
-class Decoder;
 
 class UserActionManager : public QObject
 {
@@ -117,9 +107,7 @@ public:
 public slots:
 	void setSubtitle(Subtitle *subtitle = 0);
 	void setLinesWidget(LinesWidget *linesWidget = 0);
-	void setAudioLevels(AudioLevels *audiolevels = 0);
 	void setPlayer(Player *player = 0);
-	void setDecoder(Decoder *decoder = 0);
 	void setTranslationMode(bool translationMode);
 	void setFullScreenMode(bool fullScreenMode);
 
@@ -135,7 +123,6 @@ private slots:
 	void onUndoRedoStateChanged();
 	void onLinesWidgetSelectionChanged();
 	void onPlayerStateChanged();
-	void onDecoderStateChanged();
 
 private:
 	QList<UserAction *> m_actionSpecs;
@@ -143,7 +130,6 @@ private:
 	const Subtitle *m_subtitle;
 	const LinesWidget *m_linesWidget;
 	const Player *m_player;
-	const Decoder *m_decoder;
 	bool m_translationMode;
 
 	int m_contextFlags;

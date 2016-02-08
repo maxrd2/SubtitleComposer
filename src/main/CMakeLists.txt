@@ -25,12 +25,10 @@ set(subtitlecomposer_SRCS
 	${main_utils_SRCS}
 	${main_scripting_SRCS}
 	${CMAKE_CURRENT_SOURCE_DIR}/application.cpp
-	${CMAKE_CURRENT_SOURCE_DIR}/audiolevelswidget.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/currentlinewidget.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/errorsdialog.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/errorswidget.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/lineswidget.cpp
-	${CMAKE_CURRENT_SOURCE_DIR}/statusbar.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/main.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/mainwindow.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/playerwidget.cpp

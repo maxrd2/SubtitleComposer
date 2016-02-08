@@ -47,7 +47,6 @@ class KCodecActionExt;
 
 namespace SubtitleComposer {
 class Player;
-class Decoder;
 
 class PlayerWidget;
 class LinesWidget;
@@ -209,18 +208,6 @@ public slots:
 	void adjustToVideoPositionAnchorLast();
 	void adjustToVideoPositionAnchorFirst();
 
-	void extractVideoAudio();
-
-	void openAudioLevels();
-	void openAudioLevels(const QUrl &url);
-	void saveAudioLevelsAs();
-	void closeAudioLevels();
-
-	void increaseAudioLevelsVZoom();
-	void decreaseAudioLevelsVZoom();
-	void increaseAudioLevelsHZoom();
-	void decreaseAudioLevelsHZoom();
-
 signals:
 	void subtitleOpened(Subtitle *subtitle);
 	void subtitleClosed();
@@ -241,7 +228,6 @@ private:
 	Time videoPosition(bool compensate = false);
 
 	static const QString & buildMediaFilesFilter();
-	static const QString & buildLevelsFilesFilter();
 
 	bool applyTranslation(RangeList ranges, bool primary, int inputLanguage, int outputLanguage, int textTargets);
 
@@ -263,8 +249,6 @@ private slots:
 	void onPlayerAudioStreamsChanged(const QStringList &audioStreams);
 	void onPlayerActiveAudioStreamChanged(int audioStream);
 	void onPlayerMuteChanged(bool muted);
-
-	void onDecodingError(const QString &errorMessage);
 
 	void onConfigChanged();
 
@@ -290,7 +274,6 @@ private:
 	QString m_subtitleTrFormat;
 
 	Player *m_player;
-	Decoder *m_decoder;
 
 	SubtitleLine *m_lastFoundLine;
 
@@ -298,7 +281,6 @@ private:
 	PlayerWidget *m_playerWidget;
 	LinesWidget *m_linesWidget;
 	CurrentLineWidget *m_curLineWidget;
-	StatusBar2 *m_statusBar;
 
 	QUrl m_lastSubtitleUrl;
 	KRecentFilesActionExt *m_recentSubtitlesAction;
@@ -319,9 +301,6 @@ private:
 	QUrl m_lastVideoUrl;
 	bool m_linkCurrentLineToPosition;
 	KRecentFilesActionExt *m_recentVideosAction;
-
-	QUrl m_lastAudioLevelsUrl;
-	KRecentFilesActionExt *m_recentAudioLevelsAction;
 };
 
 Application * app();

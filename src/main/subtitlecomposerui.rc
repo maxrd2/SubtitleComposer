@@ -126,7 +126,6 @@
 			<Action name="increase_volume" />
 			<Action name="decrease_volume" />
 			<Action name="toggle_muted" />
-			<Action name="extract_video_audio" />
 			<Separator />
 			<Action name="set_active_subtitle_stream" />
 			<Action name="increase_font_size" />
@@ -136,22 +135,6 @@
 			<text>T&amp;ools</text>
 			<Action name="scripts_manager" />
 		</Menu>
-		<!--
-		<Menu name="audiolevels" >
-			<text>&amp;Audio Levels</text>
-			<Action name="open_audiolevels" />
-			<Action name="recent_audiolevels" />
-			<Separator />
-			<Action name="save_audiolevels_as" />
-			<Separator />
-			<Action name="close_audiolevels" />
-			<Separator />
-			<Action name="increase_audiolevels_v_zoom" />
-			<Action name="decrease_audiolevels_v_zoom" />
-			<Action name="increase_audiolevels_h_zoom" />
-			<Action name="decrease_audiolevels_h_zoom" />
-		</Menu>
-		-->
 	</MenuBar>
 	<ToolBar alreadyVisited="1" noMerge="1" name="mainToolBar">
 		<text>Main Toolbar</text>
