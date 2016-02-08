@@ -14,7 +14,7 @@ pkgdesc="A KDE subtitle editor"
 arch=('i686' 'x86_64')
 url="https://github.com/maxrd2/${pkgname}"
 license=('GPL')
-depends=('kcoreaddons' 'sonnet' 'kcodecs' 'kio' 'kross' 'kxmlgui' 'ki18n')
+depends=('kcoreaddons' 'sonnet' 'kcodecs' 'kross' 'kxmlgui' 'ki18n')
 # Comment/uncomment the following dependencies to disable/enable support for
 # MPV, gstreamer and/or Xine backend.
 # These are not optdepends as they must be present at build time.
