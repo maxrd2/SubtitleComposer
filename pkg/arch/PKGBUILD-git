@@ -37,7 +37,7 @@ md5sums=('SKIP')
 pkgver() {
   export APP_VER=${pkgver}
   cd ${srcdir}/${_name}
-  git describe --always | sed 's|-|.|g'
+  git describe --always | sed 's|-|.|g' | sed -e 's/^v//g'
 }
 
 build() {
