@@ -97,7 +97,7 @@ public slots:
 	void setMuted(bool mute);
 
 signals:
-	void fileOpenError(const QString &filePath);
+	void fileOpenError(const QString &filePath, const QString &reason);
 	void fileOpened(const QString &filePath);
 	void fileClosed();
 
@@ -162,7 +162,7 @@ private slots:
 	void onVideoWidgetDestroyed();
 
 	/** called if the player fails to set the state to Playing after opening the file */
-	void onOpenFileTimeout();
+	void onOpenFileTimeout(const QString &reason = QString());
 
 private:
 	VideoWidget *m_videoWidget;

@@ -238,7 +238,7 @@ PlayerWidget::PlayerWidget(QWidget *parent) :
 	connect(SCConfig::self(), SIGNAL(configChanged()), this, SLOT(onConfigChanged()));
 
 	connect(m_player, SIGNAL(fileOpened(const QString &)), this, SLOT(onPlayerFileOpened(const QString &)));
-	connect(m_player, SIGNAL(fileOpenError(const QString &)), this, SLOT(onPlayerFileOpenError(const QString &)));
+	connect(m_player, SIGNAL(fileOpenError(QString,QString)), this, SLOT(onPlayerFileOpenError(QString,QString)));
 	connect(m_player, SIGNAL(fileClosed()), this, SLOT(onPlayerFileClosed()));
 	connect(m_player, SIGNAL(playbacqCritical(const QString &)), this, SLOT(onPlayerPlaybacqCritical(const QString &)));
 	connect(m_player, SIGNAL(playing()), this, SLOT(onPlayerPlaying()));
@@ -710,9 +710,12 @@ PlayerWidget::onPlayerFileOpened(const QString & /*filePath */)
 }
 
 void
-PlayerWidget::onPlayerFileOpenError(const QString &filePath)
+PlayerWidget::onPlayerFileOpenError(const QString &filePath, const QString &reason)
 {
-	KMessageBox::sorry(this, i18n("<qt>There was an error opening media file %1.</qt>", filePath));
+	QString message = i18n("<qt>There was an error opening media file %1.</qt>", filePath);
+	if(!reason.isEmpty())
+		message += "\n" + reason;
+	KMessageBox::sorry(this, message);
 }
 
 void

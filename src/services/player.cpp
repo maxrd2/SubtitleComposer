@@ -42,6 +42,8 @@
 
 #include <QDebug>
 
+#include <KLocalizedString>
+
 #define DEFAULT_MIN_POSITION_DELTA 0.02
 
 namespace SubtitleComposer {
@@ -347,14 +349,12 @@ Player::setState(Player::State newState)
 void
 Player::setErrorState(const QString &errorMessage)
 {
-	if(!isInitialized())
+	if(m_state < Player::Opening)
 		return;
 
-	if(m_state <= Player::Opening) {
-		m_openFileTimer->stop();
-		QString filePath(m_filePath);
+	if(m_state == Player::Opening) {
 		resetState();
-		emit fileOpenError(filePath);
+		emit fileOpenError(m_filePath, errorMessage);
 	} else {
 		activeBackend()->stop();
 		m_state = Player::Ready;
@@ -371,7 +371,7 @@ Player::openFile(const QString &filePath)
 
 	QFileInfo fileInfo(filePath);
 	if(!fileInfo.exists() || !fileInfo.isFile() || !fileInfo.isReadable()) {
-		emit fileOpenError(filePath);   // operation will never succed
+		emit fileOpenError(filePath, i18n("File does not exist."));   // operation will never succed
 		return true;
 	}
 
@@ -384,7 +384,7 @@ Player::openFile(const QString &filePath)
 	bool playingAfterCall = true;
 	if(!activeBackend()->openFile(fileInfo.absoluteFilePath(), playingAfterCall)) {
 		resetState();
-		emit fileOpenError(filePath);
+		emit fileOpenError(filePath, "");
 		return true;
 	}
 
@@ -395,16 +395,14 @@ Player::openFile(const QString &filePath)
 }
 
 void
-Player::onOpenFileTimeout()
+Player::onOpenFileTimeout(const QString &reason)
 {
-	QString filePath(m_filePath);
-
 	activeBackend()->stop();
 	activeBackend()->closeFile();
 
 	resetState();
 
-	emit fileOpenError(filePath);
+	emit fileOpenError(m_filePath, reason);
 }
 
 bool

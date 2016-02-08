@@ -315,8 +315,8 @@ GStreamerPlayerBackend::onPlaybinTimerTimeout()
 			gchar *debug = NULL;
 			GError *error = NULL;
 			gst_message_parse_error(msg, &error, &debug);
-			// setPlayerErrorState(QString(error->message));
-			setPlayerErrorState(QString(debug));
+			setPlayerErrorState(QString(error->message));
+			//setPlayerErrorState(QString(debug));
 			g_error_free(error);
 			g_free(debug);
 			break;

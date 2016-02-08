@@ -30,6 +30,8 @@
 
 #include <locale>
 
+#include <KMessageBox>
+
 using namespace SubtitleComposer;
 using namespace mpv;
 using namespace mpv::qt;
@@ -221,6 +223,8 @@ MPVBackend::mpvEventHandle(mpv_event *event)
 	case MPV_EVENT_LOG_MESSAGE: {
 		struct mpv_event_log_message *msg = (struct mpv_event_log_message *)event->data;
 		qDebug() << "[MPV:" << msg->prefix << "] " << msg->level << ": " << msg->text;
+		if(msg->log_level == MPV_LOG_LEVEL_ERROR && strcmp(msg->prefix, "cplayer") == 0 && player()->state() == Player::Opening)
+			setPlayerErrorState(msg->text);
 		break;
 	}
 	case MPV_EVENT_SHUTDOWN: {
