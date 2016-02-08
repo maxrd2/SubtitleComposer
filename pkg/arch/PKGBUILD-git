@@ -1,4 +1,5 @@
 # Maintainer: Mladen Milinkovic <maxrd2@smoothware.net>
+# Contributor: Martchus <martchus@gmx.net>
 
 # You can install/update Subtitle Composer from repository if you add following to /etc/pacman.conf
 # [subtitlecomposer]
@@ -6,43 +7,47 @@
 # SigLevel = PackageRequired
 # Server = http://smoothware.net/$repo/$arch
 
-# If dependencies 'mpv' and 'xine-lib' are not installed 
-# they can be removed from depends line, and 
-# package will built without mpv/xine support
-
-pkgname=subtitlecomposer-git
-pkgver=0.5.8.3.gd340bf2
+_name=subtitlecomposer
+pkgname=${_name}-git
+pkgver=v0.5.9
 pkgrel=1
-pkgdesc="A KDE subtitle editor - nightly build"
+pkgdesc="A KDE subtitle editor (git version)"
 arch=('i686' 'x86_64')
-url="https://github.com/maxrd2/subtitlecomposer"
+url="https://github.com/maxrd2/${_name}"
 license=('GPL')
-depends=('kdebase-runtime' 'kross' 'mpv' 'xine-lib')
-makedepends=('cmake' 'automoc4' 'git' 'gettext')
-conflicts=('subtitlecomposer')
-install='subtitlecomposer.install'
+depends=('kdebase-runtime' 'kross')
+# Comment/uncomment the following dependencies to disable/enable support for
+# MPV, gstreamer and/or Xine backend.
+# These are not optdepends as they must be present at build time.
+# Also ensure these deps aren't installed if you don't want to link against them
+# because Subtitle Composer will always link against them if available.
+depends+=('mpv')
+depends+=('gstreamer')
+depends+=('xine-lib')
+makedepends=('extra-cmake-modules' 'git')
+conflicts=(${_name})
+install=${_name}.install
 optdepends=(
-	'mplayer: for MPlayer backend'
-	'mplayer2: for MPlayer backend'
-	'ruby: for scripting'
-	'python: for scripting'
-	)
-source=('git+https://github.com/maxrd2/subtitlecomposer.git')
+  'mplayer: for MPlayer backend'
+  'ruby: for scripting'
+  'python: for scripting'
+  )
+source=("git+https://github.com/maxrd2/${_name}.git")
 md5sums=('SKIP')
 
 pkgver() {
-	export APP_VER=${pkgver}
-	cd ${srcdir}/subtitlecomposer
-	git describe --always | sed 's|-|.|g' | sed -e 's/^v//g'
+  export APP_VER=${pkgver}
+  cd ${srcdir}/${_name}
+  git describe --always | sed 's|-|.|g' | sed -e 's/^v//g'
 }
 
 build() {
-	cd ${srcdir}/subtitlecomposer
-	cmake -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=/usr
-	make
+  cd ${srcdir}/${_name}
+  cmake -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=/usr
+  make
 }
 
 package() {
-	cd ${srcdir}/subtitlecomposer
-	make DESTDIR=${pkgdir} install
+  cd ${srcdir}/${_name}
+  make DESTDIR=${pkgdir} install
 }
