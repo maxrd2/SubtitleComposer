@@ -25,10 +25,9 @@
 
 using namespace SubtitleComposer;
 
-PlayerBackend::PlayerBackend(VideoPlayer *player, const QString &name)
+PlayerBackend::PlayerBackend()
 	: QObject(NULL),
-	m_player(player),
-	m_name(name)
+	m_player(NULL)
 {}
 
 PlayerBackend::~PlayerBackend()

@@ -31,6 +31,11 @@
 #include <QString>
 #include <QWidget>
 
+class SCConfig;
+
+#define PlayerBackend_iid "org.kde.SubtitleComposer.PlayerBackend"
+Q_DECLARE_INTERFACE(SubtitleComposer::PlayerBackend, PlayerBackend_iid)
+
 namespace SubtitleComposer {
 class PlayerBackend : public QObject
 {
@@ -41,8 +46,6 @@ class PlayerBackend : public QObject
 public:
 // FIXME: there should be a way for backends to abort on error
 
-/// ownership of the config object is transferred to this object
-	PlayerBackend(VideoPlayer *player, const QString &name);
 	virtual ~PlayerBackend();
 
 	inline const QString & name() const { return m_name; }
@@ -55,6 +58,9 @@ public:
 	bool isDummy() const;
 
 protected:
+	/// ownership of the config object is transferred to this object
+	PlayerBackend();
+
 	/**
 	 * @brief isInitialized - There can only be one initialized backend at the time (the active
 	 *  backend). Since the active backend is also guaranteed to be initialized, this
@@ -69,7 +75,7 @@ protected:
 	 * @param widgetParent
 	 * @return
 	 */
-	virtual QWidget * initialize(QWidget *widgetParent) = 0;
+	virtual bool initialize(VideoWidget *videoWidget) = 0;
 
 	/**
 	 * @brief finalize - Cleanup anything that has been initialized by initialize(), excluding the
@@ -164,7 +170,13 @@ protected:
 	inline void setPlayerAudioStreams(const QStringList &audioStreams, int activeAudioStream) { player()->setAudioStreams(audioStreams, activeAudioStream); }
 
 private:
+	inline void setPlayer(VideoPlayer *player) { m_player = player; }
+	virtual void setSCConfig(SCConfig *scConfig) = 0;
+
+private:
 	VideoPlayer *m_player;
+
+protected:
 	QString m_name;
 };
 }

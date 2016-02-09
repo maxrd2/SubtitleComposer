@@ -1,19 +1,18 @@
 #ifndef CONFIG_H
 #define CONFIG_H
 
-/* Whether GStreamer was found */
-#cmakedefine HAVE_GSTREAMER
+#define VIDEOPLAYERPLUGIN_PATH "@VIDEOPLAYERPLUGIN_INSTALL_DIR@"
 
-/* Whether MPV was found */
+// Whether MPV was found
 #cmakedefine HAVE_MPV
 
-/* Whether Xine was found */
+// Whether Xine was found
 #cmakedefine HAVE_XINE
 
-/* Whether XCB was found */
+// Whether XCB was found
 #cmakedefine HAVE_XCB
 
-/* Whether ICU was found */
+// Whether ICU was found
 #cmakedefine HAVE_ICU
 
 #endif

@@ -22,7 +22,8 @@
 #include "xinevideolayerwidget.h"
 #include "xineconfigwidget.h"
 
-#include "../../main/application.h"
+#include "../scconfigdummy.h"
+
 
 #include <QEventLoop>
 #include <QEvent>
@@ -45,8 +46,8 @@ using namespace SubtitleComposer;
 
 #define UPDATE_INTERVAL 50
 
-XinePlayerBackend::XinePlayerBackend(VideoPlayer *player)
-	: PlayerBackend(player, "Xine"),
+XinePlayerBackend::XinePlayerBackend()
+	: PlayerBackend(),
 	m_connection(0),
 	m_xineEngine(0),
 	m_audioDriver(0),
@@ -57,6 +58,7 @@ XinePlayerBackend::XinePlayerBackend(VideoPlayer *player)
 	m_softwareMixer(false),
 	m_streamIsSeekable(false)
 {
+	m_name = QStringLiteral("Xine");
 	connect(&m_timesTimer, SIGNAL(timeout()), this, SLOT(updatePosition()));
 }
 
@@ -66,22 +68,27 @@ XinePlayerBackend::~XinePlayerBackend()
 		_finalize();
 }
 
-VideoWidget *
-XinePlayerBackend::initialize(QWidget *videoWidgetParent)
+/*virtual*/ void
+XinePlayerBackend::setSCConfig(SCConfig *scConfig)
+{
+	scConfigGlobalSet(scConfig);
+}
+
+bool
+XinePlayerBackend::initialize(VideoWidget *videoWidget)
 {
 	XineVideoLayerWidget *videoLayer = new XineVideoLayerWidget(0);
-	VideoWidget *videoWidget = new VideoWidget(videoLayer, videoWidgetParent);
-	if(!initializeXine(videoWidget->videoLayer()->winId())) {
-		delete videoWidget;
+	videoWidget->setVideoLayer(videoLayer);
+	if(!initializeXine(videoLayer->winId())) {
 		finalizeXine();
 		qCritical() << "xine initialization failed!";
-		return 0;
+		return false;
 	}
 
 	videoLayer->setVideoDriver(m_videoDriver);
 	connect(videoLayer, SIGNAL(geometryChanged()), this, SLOT(onVideoLayerGeometryChanged()));
 
-	return videoWidget;
+	return true;
 }
 
 void

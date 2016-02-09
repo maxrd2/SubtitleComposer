@@ -34,23 +34,17 @@ using namespace SubtitleComposer;
 
 VideoWidget::VideoWidget(QWidget *parent) :
 	QWidget(parent),
-	m_videoLayer(new QWidget(this)),
+	m_videoLayer(NULL),
 	m_videoWidth(0),
 	m_videoHeight(0),
 	m_videoDAR(0)
 {
-	m_videoLayer->hide();
-
-	init(true);
 }
 
-VideoWidget::VideoWidget(QWidget *videoLayer, QWidget *parent) :
-	QWidget(parent),
-	m_videoLayer(videoLayer),
-	m_videoWidth(0),
-	m_videoHeight(0),
-	m_videoDAR(0)
+void
+VideoWidget::setVideoLayer(QWidget *videoLayer)
 {
+	m_videoLayer = videoLayer;
 	m_videoLayer->setParent(this);
 	m_videoLayer->hide();
 
@@ -81,7 +75,7 @@ VideoWidget::~VideoWidget()
 {}
 
 QWidget *
-VideoWidget::videoLayer()
+VideoWidget::videoLayer() const
 {
 	return m_videoLayer;
 }

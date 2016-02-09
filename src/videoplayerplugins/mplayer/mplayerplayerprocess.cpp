@@ -21,11 +21,13 @@
 #include "mplayerplayerprocess.h"
 #include "../../common/qxtsignalwaiter.h"
 
-#include "../../main/application.h"
+#include "../scconfigdummy.h"
+
 
 #include <QApplication>
 #include <QStandardPaths>
 #include <QStringList>
+#include <QUrl>
 
 #include <QDebug>
 
@@ -185,7 +187,7 @@ MPlayerPlayerProcess::sendToggleMute()
 void
 MPlayerPlayerProcess::sendVolume(double volume)
 {
-	sendCommand(QByteArray("volume % 1").replace('%', QByteArray::number(volume * (SCConfig::mpvVolumeAmplification() / 100.0))), PausingKeep, false);
+	sendCommand(QByteArray("volume % 1").replace('%', QByteArray::number(volume * (SCConfig::mpVolumeAmplification() / 100.0))), PausingKeep, false);
 }
 
 void

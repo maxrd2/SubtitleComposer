@@ -18,20 +18,11 @@
  * Boston, MA 02110-1301, USA.
  */
 
+#include "config.h"
 #include "videoplayer.h"
 #include "playerbackend.h"
 
-#ifdef HAVE_GSTREAMER
-#include "gstreamer/gstreamerplayerbackend.h"
-#endif
-#include "mplayer/mplayerplayerbackend.h"
-#ifdef HAVE_MPV
-#include "mpv/mpvbackend.h"
-#endif
-#include "phonon/phononplayerbackend.h"
-#ifdef HAVE_XINE
-#include "xine/xineplayerbackend.h"
-#endif
+#include "main/scconfig.h"
 
 #include <math.h>
 
@@ -39,6 +30,9 @@
 #include <QFileInfo>
 #include <QApplication>
 #include <QEvent>
+#include <QPluginLoader>
+#include <QDir>
+#include <QFile>
 
 #include <QDebug>
 
@@ -50,14 +44,14 @@ namespace SubtitleComposer {
 class DummyPlayerBackend : public PlayerBackend
 {
 public:
-	DummyPlayerBackend(VideoPlayer *player) : PlayerBackend(player, "Dummy") {}
+	DummyPlayerBackend() : PlayerBackend() { m_name = QStringLiteral("Dummy"); }
 
 	virtual ~DummyPlayerBackend() {}
 
 	virtual QWidget * newConfigWidget(QWidget * /*parent */) { return 0; }
 
 protected:
-	virtual QWidget * initialize(QWidget *widgetParent) { return new VideoWidget(widgetParent); }
+	virtual bool initialize(VideoWidget *videoWidget) { videoWidget->setVideoLayer(new QWidget()); return true; }
 
 	virtual void finalize() {}
 
@@ -78,6 +72,9 @@ protected:
 	virtual bool setVolume(double /*volume*/) { return false; }
 
 	virtual bool reconfigure() { return false; }
+
+private:
+	virtual void setSCConfig(SCConfig */*scConfig*/) {}
 };
 }
 
@@ -88,7 +85,7 @@ VideoPlayer::VideoPlayer() :
 	m_widgetParent(0),
 	m_applicationClosingDown(false),
 	m_state(VideoPlayer::Uninitialized),
-	m_videoWidget(0),
+	m_videoWidget(NULL),
 	m_filePath(),
 	m_position(-1.0),
 	m_savedPosition(-1.0),
@@ -102,24 +99,27 @@ VideoPlayer::VideoPlayer() :
 	m_backendVolume(100.0),
 	m_openFileTimer(new QTimer(this))
 {
-	addBackend(new DummyPlayerBackend(this));
-#ifdef HAVE_GSTREAMER
-	addBackend(new GStreamerPlayerBackend(this));
+	backendAdd(new DummyPlayerBackend());
+
+#ifndef NDEBUG
+	const QString exePath(qApp->applicationDirPath());
+	backendLoad(exePath + QStringLiteral("/../videoplayerplugins/gstreamer/gstplayer.so"));
+	backendLoad(exePath + QStringLiteral("/../videoplayerplugins/mplayer/mplayer.so"));
+	backendLoad(exePath + QStringLiteral("/../videoplayerplugins/mpv/mpvplayer.so"));
+	backendLoad(exePath + QStringLiteral("/../videoplayerplugins/phonon/phononplayer.so"));
+	backendLoad(exePath + QStringLiteral("/../videoplayerplugins/xine/xineplayer.so"));
 #endif
-	addBackend(new MPlayerPlayerBackend(this));
-#ifdef HAVE_MPV
-	addBackend(new MPVBackend(this));
-#endif
-addBackend(new PhononPlayerBackend(this));
-#ifdef HAVE_XINE
-	addBackend(new XinePlayerBackend(this));
-#endif
+
+	QDir pluginsDir(QStringLiteral(VIDEOPLAYERPLUGIN_PATH));
+	foreach(const QString pluginPath, pluginsDir.entryList(QDir::Files, QDir::Name)) {
+		if(QLibrary::isLibrary(pluginPath))
+			backendLoad(pluginPath);
+	}
 
 	// the timeout might seem too much, but it only matters when the file couldn't be
 	// opened, and it's better to have the user wait a bit in that case than showing
 	// an error when there's nothing wrong with the file (a longer time might be needed
 	// for example if the computer is under heavy load or is just slow)
-
 	m_openFileTimer->setSingleShot(true);
 
 	connect(m_openFileTimer, SIGNAL(timeout()), this, SLOT(onOpenFileTimeout()));
@@ -149,12 +149,12 @@ VideoPlayer::initialize(QWidget *widgetParent, const QString &prefBackendName)
 
 	if(m_backends.contains(prefBackendName)) {
 		// we first try to set the requested backend as active
-		initializeBackendPrivate(m_backends[prefBackendName]);
+		backendInitializePrivate(m_backends[prefBackendName]);
 	}
 	// if that fails, we set the first available backend as active
 	if(!m_activeBackend) {
 		for(QMap<QString, PlayerBackend *>::ConstIterator it = m_backends.begin(), end = m_backends.end(); it != end; ++it)
-			if(initializeBackendPrivate(it.value()))
+			if(backendInitializePrivate(it.value()))
 				break;
 	}
 
@@ -174,9 +174,9 @@ VideoPlayer::reinitialize(const QString &prefBackendName)
 
 	finalize();
 
-	if(!initializeBackendPrivate(targetBackend)) {
+	if(!backendInitializePrivate(targetBackend)) {
 		for(QMap<QString, PlayerBackend *>::ConstIterator it = m_backends.begin(), end = m_backends.end(); it != end; ++it)
-			if(initializeBackendPrivate(it.value()))
+			if(backendInitializePrivate(it.value()))
 				break;
 	}
 
@@ -199,7 +199,7 @@ VideoPlayer::finalize()
 
 	PlayerBackend *wasActiveBackend = m_activeBackend;
 
-	finalizeBackend(m_activeBackend);
+	backendFinalize(m_activeBackend);
 
 	m_state = VideoPlayer::Uninitialized;
 	m_activeBackend = 0;
@@ -216,8 +216,33 @@ VideoPlayer::reconfigure()
 	return m_activeBackend->reconfigure();
 }
 
+PlayerBackend *
+VideoPlayer::backendLoad(const QString &pluginPath)
+{
+	const QString realPath = QDir(pluginPath).canonicalPath();
+	if(realPath.isEmpty())
+		return NULL;
+
+	QPluginLoader loader(realPath);
+	QObject *plugin = loader.instance();
+	if(!plugin)
+		return NULL;
+
+	PlayerBackend *backend = qobject_cast<PlayerBackend *>(plugin);
+	if(!backend)
+		return NULL;
+
+	qInfo() << "Loaded VideoPlayer plugin" << backend->name() << "from" << realPath;
+
+	backend->setSCConfig(SCConfig::self());
+
+	backendAdd(backend);
+
+	return backend;
+}
+
 bool
-VideoPlayer::initializeBackendPrivate(PlayerBackend *backend)
+VideoPlayer::backendInitializePrivate(PlayerBackend *backend)
 {
 	if(m_activeBackend == backend)
 		return true;
@@ -225,7 +250,7 @@ VideoPlayer::initializeBackendPrivate(PlayerBackend *backend)
 	if(m_activeBackend)
 		return false;
 
-	if(initializeBackend(backend, m_widgetParent)) {
+	if(backendInitialize(backend, m_widgetParent)) {
 		m_state = VideoPlayer::Initialized;
 		m_activeBackend = backend;
 		emit backendInitialized(backend);
@@ -262,7 +287,7 @@ VideoPlayer::backendNames() const
 }
 
 void
-VideoPlayer::addBackend(PlayerBackend *backend)
+VideoPlayer::backendAdd(PlayerBackend *backend)
 {
 	if(m_backends.contains(backend->name())) {
 		qCritical() << "attempted to insert duplicated player backend" << backend->name();
@@ -271,35 +296,37 @@ VideoPlayer::addBackend(PlayerBackend *backend)
 
 	m_backends[backend->name()] = backend;
 	backend->setParent(this); // VideoPlayer will delete *backend
+	backend->setPlayer(this);
 }
 
 bool
-VideoPlayer::initializeBackend(PlayerBackend *backend, QWidget *widgetParent)
+VideoPlayer::backendInitialize(PlayerBackend *backend, QWidget *widgetParent)
 {
-	if((m_videoWidget = static_cast<VideoWidget *>(backend->initialize(widgetParent)))) {
-		connect(m_videoWidget, SIGNAL(destroyed()), this, SLOT(onVideoWidgetDestroyed()));
-		connect(m_videoWidget, SIGNAL(doubleClicked(const QPoint &)), this, SIGNAL(doubleClicked(const QPoint &)));
-		connect(m_videoWidget, SIGNAL(leftClicked(const QPoint &)), this, SIGNAL(leftClicked(const QPoint &)));
-		connect(m_videoWidget, SIGNAL(rightClicked(const QPoint &)), this, SIGNAL(rightClicked(const QPoint &)));
-		connect(m_videoWidget, SIGNAL(wheelUp()), this, SIGNAL(wheelUp()));
-		connect(m_videoWidget, SIGNAL(wheelDown()), this, SIGNAL(wheelDown()));
+	Q_ASSERT(m_videoWidget == NULL);
 
-		m_videoWidget->show();
-		m_videoWidget->videoLayer()->hide();
+	m_videoWidget = new VideoWidget(widgetParent);
+	backend->initialize(m_videoWidget);
 
-		// NOTE: next is used to make videoWidgetParent update it's geometry
-		QRect geometry = widgetParent->geometry();
-		geometry.setHeight(geometry.height() + 1);
-		widgetParent->setGeometry(geometry);
+	connect(m_videoWidget, SIGNAL(destroyed()), this, SLOT(onVideoWidgetDestroyed()));
+	connect(m_videoWidget, SIGNAL(doubleClicked(const QPoint &)), this, SIGNAL(doubleClicked(const QPoint &)));
+	connect(m_videoWidget, SIGNAL(leftClicked(const QPoint &)), this, SIGNAL(leftClicked(const QPoint &)));
+	connect(m_videoWidget, SIGNAL(rightClicked(const QPoint &)), this, SIGNAL(rightClicked(const QPoint &)));
+	connect(m_videoWidget, SIGNAL(wheelUp()), this, SIGNAL(wheelUp()));
+	connect(m_videoWidget, SIGNAL(wheelDown()), this, SIGNAL(wheelDown()));
 
-		return true;
-	}
+	m_videoWidget->show();
+	m_videoWidget->videoLayer()->hide();
 
-	return false;
+	// NOTE: next is used to make videoWidgetParent update it's geometry
+	QRect geometry = widgetParent->geometry();
+	geometry.setHeight(geometry.height() + 1);
+	widgetParent->setGeometry(geometry);
+
+	return true;
 }
 
 void
-VideoPlayer::finalizeBackend(PlayerBackend *backend)
+VideoPlayer::backendFinalize(PlayerBackend *backend)
 {
 	closeFile();
 
@@ -309,7 +336,7 @@ VideoPlayer::finalizeBackend(PlayerBackend *backend)
 		m_videoWidget->disconnect();
 		m_videoWidget->hide();
 		m_videoWidget->deleteLater();
-		m_videoWidget = 0;
+		m_videoWidget = NULL;
 	}
 }
 

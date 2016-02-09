@@ -2,23 +2,21 @@ set(videoplayer_xine_INCLUDE_DIR
 	${XINE_INCLUDE_DIR}
 	CACHE INTERNAL EXPORTEDVARIABLE
 )
-
 set(videoplayer_xine_DEFS
 	-D_FILE_OFFSET_BITS=64
 	CACHE INTERNAL EXPORTEDVARIABLE
 )
-
 set(videoplayer_xine_LIBS
 	${XINE_LIBRARY}
 	-lX11
 	CACHE INTERNAL EXPORTEDVARIABLE
 )
-
 set(videoplayer_xine_SRCS
 	${CMAKE_CURRENT_SOURCE_DIR}/xineplayerbackend.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/xinevideolayerwidget.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/xineconfigwidget.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/xineconfigwidget.ui
+	${videoplayerplugins_SRCS}
 	CACHE INTERNAL EXPORTEDVARIABLE
 )
 
@@ -41,3 +39,14 @@ IF(XCB_FOUND AND XINE_XCB_FOUND)
 		CACHE INTERNAL EXPORTEDVARIABLE
 )
 endif(XCB_FOUND AND XINE_XCB_FOUND)
+
+add_library(xineplayer MODULE ${videoplayer_xine_SRCS})
+
+install(TARGETS xineplayer DESTINATION ${VIDEOPLAYERPLUGIN_INSTALL_DIR})
+
+target_include_directories(xineplayer SYSTEM PRIVATE ${videoplayer_xine_INCLUDE_DIR})
+set_target_properties(xineplayer PROPERTIES COMPILE_FLAGS "${videoplayer_xine_DEFS}")
+target_link_libraries(xineplayer ${common_LIBS} ${videoplayer_xine_LIBS})
+qt5_use_modules(xineplayer Core)
+
+add_dependencies(xineplayer subtitlecomposer)

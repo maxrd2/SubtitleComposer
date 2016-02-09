@@ -19,6 +19,7 @@
  */
 
 #include "phononplayerbackend.h"
+#include "../scconfigdummy.h"
 
 #include <Phonon/MediaObject>
 #include <Phonon/MediaController>
@@ -28,18 +29,26 @@
 
 using namespace SubtitleComposer;
 
-PhononPlayerBackend::PhononPlayerBackend(VideoPlayer *player)
-	: PlayerBackend(player, "Phonon"),
+PhononPlayerBackend::PhononPlayerBackend()
+	: PlayerBackend(),
 	m_mediaObject(0),
 	m_mediaController(0),
 	m_audioOutput(0),
 	m_videoOutput(0)
-{}
+{
+	m_name = QStringLiteral("Phonon");
+}
 
 PhononPlayerBackend::~PhononPlayerBackend()
 {
 	if(isInitialized())
 		_finalize();
+}
+
+/*virtual*/ void
+PhononPlayerBackend::setSCConfig(SCConfig *scConfig)
+{
+	scConfigGlobalSet(scConfig);
 }
 
 bool
@@ -69,17 +78,17 @@ PhononPlayerBackend::initMediaObject()
 	connect(m_mediaController, SIGNAL(availableSubtitlesChanged()), this, SLOT(onAvailableSubtitlesChanged()));
 }
 
-VideoWidget *
-PhononPlayerBackend::initialize(QWidget *videoWidgetParent)
+bool
+PhononPlayerBackend::initialize(VideoWidget *videoWidget)
 {
 	m_videoOutput = new Phonon::VideoWidget(0);
 	m_audioOutput = new Phonon::AudioOutput(Phonon::VideoCategory);
 
-	VideoWidget *videoWidget = new VideoWidget(m_videoOutput, videoWidgetParent);
+	videoWidget->setVideoLayer(m_videoOutput);
 
 	initMediaObject();
 
-	return videoWidget;
+	return true;
 }
 
 void

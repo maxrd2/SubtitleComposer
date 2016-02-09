@@ -50,6 +50,7 @@ target_link_libraries(subtitlecomposer
 	${videoplayer_LIBS}
 	${streamprocessor_LIBS}
 	${widgets_LIBS}
+	-lX11 # xine needs XInitThreads() call in main
 )
 
 add_definitions(

@@ -18,7 +18,7 @@
  */
 
 #include "streamprocessor.h"
-#include "../videoplayer/gstreamer/gstreamer.h"
+#include "gstreamer.h"
 
 #include <QTimer>
 #include <QDebug>

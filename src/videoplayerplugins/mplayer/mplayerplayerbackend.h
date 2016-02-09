@@ -1,5 +1,5 @@
-#ifndef GSTREAMERPLAYERBACKEND2_H
-#define GSTREAMERPLAYERBACKEND2_H
+#ifndef MPLAYERPLAYERBACKEND_H
+#define MPLAYERPLAYERBACKEND_H
 
 /**
  * Copyright (C) 2007-2009 Sergio Pistone <sergio_pistone@yahoo.com.ar>
@@ -25,33 +25,31 @@
 #include <config.h>
 #endif
 
-#include "../playerbackend.h"
+#include "../../videoplayer/playerbackend.h"
 
 #include <QWidget>
 #include <QString>
 
-#include <gst/gst.h>
-
-QT_FORWARD_DECLARE_CLASS(QTimer)
-
 namespace SubtitleComposer {
-class GStreamerPlayerBackend : public PlayerBackend
+class MPlayerPlayerProcess;
+
+class MPlayerPlayerBackend : public PlayerBackend
 {
 	Q_OBJECT
+	Q_PLUGIN_METADATA(IID PlayerBackend_iid)
+	Q_INTERFACES(SubtitleComposer::PlayerBackend)
 
 public:
-	GStreamerPlayerBackend(VideoPlayer *player);
-	virtual ~GStreamerPlayerBackend();
+	MPlayerPlayerBackend();
+	virtual ~MPlayerPlayerBackend();
 
 	virtual QWidget * newConfigWidget(QWidget *parent);
 
 protected:
-	virtual VideoWidget * initialize(QWidget *videoWidgetParent);
+	virtual bool initialize(VideoWidget *videoWidget);
 	virtual void finalize();
+	void _finalize();
 	virtual bool reconfigure();
-
-	static GstElement * createAudioSink();
-	static GstElement * createVideoSink();
 
 	virtual bool openFile(const QString &filePath, bool &playingAfterCall);
 	virtual void closeFile();
@@ -65,22 +63,24 @@ protected:
 
 	virtual bool setVolume(double volume);
 
-	bool eventFilter(QObject *obj, QEvent *event);
-
 protected slots:
-	void onPlaybinTimerTimeout();
+	void onMediaDataLoaded();
+	void onPlayingReceived();
+	void onPausedReceived();
+	void onProcessExited();
+	void onPositionReceived(double seconds);
+
+protected:
+	void setupProcessArgs(const QString &filePath);
 
 private:
-	void setupVideoOverlay();
+	virtual void setSCConfig(SCConfig *scConfig);
 
-	void updateAudioData();
-	void updateVideoData();
+protected:
+	MPlayerPlayerProcess *m_process;
 
-private:
-	GstPipeline *m_pipeline;
-	GstBus *m_pipelineBus;
-	QTimer *m_pipelineTimer;
-	bool m_lengthInformed;
+	double m_position;
+	bool m_reportUpdates;
 };
 }
 

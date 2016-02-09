@@ -40,10 +40,10 @@ class VideoWidget : public QWidget
 
 public:
 	explicit VideoWidget(QWidget *parent);
-	VideoWidget(QWidget *videoLayer, QWidget *parent);
 	virtual ~VideoWidget();
 
-	QWidget * videoLayer();
+	QWidget * videoLayer() const;
+	void setVideoLayer(QWidget *videoLayer);
 
 	int videoWidth() const;
 	int videoHeight() const;

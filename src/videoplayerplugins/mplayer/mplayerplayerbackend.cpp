@@ -23,6 +23,7 @@
 #include "mplayerconfigwidget.h"
 #include "mediadata.h"
 #include "../../common/qxtsignalwaiter.h"
+#include "../scconfigdummy.h"
 
 #include <QDebug>
 
@@ -30,12 +31,13 @@
 
 using namespace SubtitleComposer;
 
-MPlayerPlayerBackend::MPlayerPlayerBackend(VideoPlayer *player)
-	: PlayerBackend(player, "MPlayer"),
+MPlayerPlayerBackend::MPlayerPlayerBackend()
+	: PlayerBackend(),
 	m_process(new MPlayerPlayerProcess(this)),
 	m_position(0.0),
 	m_reportUpdates(true)
 {
+	m_name = QStringLiteral("MPlayer");
 	connect(m_process, SIGNAL(mediaDataLoaded()), this, SLOT(onMediaDataLoaded()));
 	connect(m_process, SIGNAL(playingReceived()), this, SLOT(onPlayingReceived()));
 	connect(m_process, SIGNAL(pausedReceived()), this, SLOT(onPausedReceived()));
@@ -49,10 +51,17 @@ MPlayerPlayerBackend::~MPlayerPlayerBackend()
 		_finalize();
 }
 
-VideoWidget *
-MPlayerPlayerBackend::initialize(QWidget *videoWidgetParent)
+/*virtual*/ void
+MPlayerPlayerBackend::setSCConfig(SCConfig *scConfig)
 {
-	return new VideoWidget(videoWidgetParent);
+	scConfigGlobalSet(scConfig);
+}
+
+bool
+MPlayerPlayerBackend::initialize(VideoWidget *videoWidget)
+{
+	videoWidget->setVideoLayer(new QWidget());
+	return true;
 }
 
 void

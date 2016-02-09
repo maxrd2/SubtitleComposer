@@ -18,11 +18,11 @@
  * Boston, MA 02110-1301, USA.
  */
 
-#include "gstreamer.h"
+#include "../../streamprocessor/gstreamer.h"
 #include "gstreamerplayerbackend.h"
 #include "gstreamerconfigwidget.h"
 #include "../../common/languagecode.h"
-#include "../../main/application.h"
+#include "../scconfigdummy.h"
 
 #include <KLocalizedString>
 
@@ -80,13 +80,14 @@ typedef enum {
 } GstPlayFlags;
 #endif /* __GST_PLAY_ENUM_H__ */
 
-GStreamerPlayerBackend::GStreamerPlayerBackend(VideoPlayer *player)
-	: PlayerBackend(player, "GStreamer"),
+GStreamerPlayerBackend::GStreamerPlayerBackend()
+	: PlayerBackend(),
 	m_pipeline(NULL),
 	m_pipelineBus(NULL),
 	m_pipelineTimer(new QTimer(this)),
 	m_lengthInformed(false)
 {
+	m_name = QStringLiteral("GStreamer");
 	connect(m_pipelineTimer, SIGNAL(timeout()), this, SLOT(onPlaybinTimerTimeout()));
 }
 
@@ -96,16 +97,23 @@ GStreamerPlayerBackend::~GStreamerPlayerBackend()
 		GStreamer::deinit();
 }
 
-VideoWidget *
-GStreamerPlayerBackend::initialize(QWidget *videoWidgetParent)
+/*virtual*/ void
+GStreamerPlayerBackend::setSCConfig(SCConfig *scConfig)
+{
+	scConfigGlobalSet(scConfig);
+}
+
+bool
+GStreamerPlayerBackend::initialize(VideoWidget *videoWidget)
 {
 	if(!GStreamer::init())
-		return 0;
+		return false;
 
-	VideoWidget *video = new VideoWidget(videoWidgetParent);
-	video->videoLayer()->installEventFilter(this);
+	QWidget *videoLayer = new QWidget();
+	videoWidget->setVideoLayer(videoLayer);
+	videoLayer->installEventFilter(this);
 	onPlaybinTimerTimeout();
-	return video;
+	return true;
 }
 
 void

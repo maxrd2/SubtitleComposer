@@ -22,7 +22,8 @@
 #include "mpvconfigwidget.h"
 #include "../../common/qxtsignalwaiter.h"
 
-#include "../../main/application.h"
+#include "../scconfigdummy.h"
+
 
 #include <KLocalizedString>
 
@@ -36,11 +37,12 @@ using namespace SubtitleComposer;
 using namespace mpv;
 using namespace mpv::qt;
 
-MPVBackend::MPVBackend(VideoPlayer *player)
-	: PlayerBackend(player, "MPV"),
+MPVBackend::MPVBackend()
+	: PlayerBackend(),
 	m_mpv(NULL),
 	m_initialized(false)
 {
+	m_name = QStringLiteral("MPV");
 }
 
 MPVBackend::~MPVBackend()
@@ -49,10 +51,17 @@ MPVBackend::~MPVBackend()
 		_finalize();
 }
 
-VideoWidget *
-MPVBackend::initialize(QWidget *videoWidgetParent)
+/*virtual*/ void
+MPVBackend::setSCConfig(SCConfig *scConfig)
 {
-	return new VideoWidget(videoWidgetParent);
+	scConfigGlobalSet(scConfig);
+}
+
+bool
+MPVBackend::initialize(VideoWidget *videoWidget)
+{
+	videoWidget->setVideoLayer(new QWidget());
+	return true;
 }
 
 void
@@ -76,7 +85,7 @@ MPVBackend::newConfigWidget(QWidget *parent)
 bool
 MPVBackend::mpvInit()
 {
-	// TODO: libmpv requires LC_NUMERIC category to be set to "C".. is there some nicer way to do this?
+	// FIXME: libmpv requires LC_NUMERIC category to be set to "C".. is there some nicer way to do this?
 	std::setlocale(LC_NUMERIC, "C");
 
 	if(m_mpv)

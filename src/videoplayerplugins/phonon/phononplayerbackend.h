@@ -25,7 +25,7 @@
 #include <config.h>
 #endif
 
-#include "../playerbackend.h"
+#include "../../videoplayer/playerbackend.h"
 
 #include <QString>
 #include <QTextStream>   // NOTE this is only here because Qt complains otherwise when including Phonon/Global...
@@ -45,9 +45,11 @@ namespace SubtitleComposer {
 class PhononPlayerBackend : public PlayerBackend
 {
 	Q_OBJECT
+	Q_PLUGIN_METADATA(IID PlayerBackend_iid)
+	Q_INTERFACES(SubtitleComposer::PlayerBackend)
 
 public:
-	PhononPlayerBackend(VideoPlayer *player);
+	PhononPlayerBackend();
 	virtual ~PhononPlayerBackend();
 
 	virtual QWidget * newConfigWidget(QWidget *parent);
@@ -55,7 +57,7 @@ public:
 protected:
 	virtual bool doesVolumeCorrection() const;
 
-	virtual VideoWidget * initialize(QWidget *videoWidgetParent);
+	virtual bool initialize(VideoWidget *videoWidget);
 	virtual void finalize();
 	void _finalize();
 	virtual bool reconfigure();
@@ -83,6 +85,9 @@ protected slots:
 	void onAvailableAudioChannelsChanged();
 	void onAvailableSubtitlesChanged();
 	void onStateChanged(Phonon::State newState, Phonon::State oldState);
+
+private:
+	virtual void setSCConfig(SCConfig *scConfig);
 
 protected:
 	Phonon::MediaObject *m_mediaObject;

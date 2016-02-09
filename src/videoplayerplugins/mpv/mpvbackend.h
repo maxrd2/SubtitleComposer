@@ -25,7 +25,7 @@
 #include <config.h>
 #endif
 
-#include "../playerbackend.h"
+#include "../../videoplayer/playerbackend.h"
 
 #include <mpv/qthelper.hpp>
 
@@ -38,15 +38,17 @@ class MPVProcess;
 class MPVBackend : public PlayerBackend
 {
 	Q_OBJECT
+	Q_PLUGIN_METADATA(IID PlayerBackend_iid)
+	Q_INTERFACES(SubtitleComposer::PlayerBackend)
 
 public:
-	MPVBackend(VideoPlayer *player);
+	MPVBackend();
 	virtual ~MPVBackend();
 
 	virtual QWidget * newConfigWidget(QWidget *parent);
 
 protected:
-	virtual VideoWidget * initialize(QWidget *videoWidgetParent);
+	virtual bool initialize(VideoWidget *videoWidgetParent);
 	virtual void finalize();
 	void _finalize();
 	virtual bool reconfigure();
@@ -80,6 +82,9 @@ protected:
 	void mpvEventHandle(mpv_event *event);
 
 	static void wakeup(void *ctx);
+
+private:
+	virtual void setSCConfig(SCConfig *scConfig);
 
 protected:
 	mpv_handle *m_mpv;

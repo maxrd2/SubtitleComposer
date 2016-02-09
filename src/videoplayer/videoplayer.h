@@ -188,18 +188,20 @@ private:
 	 * @param widgetParent
 	 * @return true if backend is the active backend after the call; false if there was already another backend initialized
 	 */
-	virtual bool initializeBackend(PlayerBackend *backend, QWidget *widgetParent);
+	virtual bool backendInitialize(PlayerBackend *backend, QWidget *widgetParent);
 
 	/**
 	 * @brief finalizeBackend - finalizes the active backend, leaving no active backend.
 	 * @param backend
 	 * returns??? the previously initialized backend (or NULL if there was none)
 	 */
-	virtual void finalizeBackend(PlayerBackend *backend);
+	virtual void backendFinalize(PlayerBackend *backend);
 
-	void addBackend(PlayerBackend *backend);
+	PlayerBackend * backendLoad(const QString &pluginPath);
 
-	bool initializeBackendPrivate(PlayerBackend *backend);
+	void backendAdd(PlayerBackend *backend);
+
+	bool backendInitializePrivate(PlayerBackend *backend);
 
 	static double logarithmicVolume(double percentage);
 

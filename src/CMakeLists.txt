@@ -32,6 +32,8 @@ set_package_properties(Phonon4Qt5 PROPERTIES
 # defined in the dependency directory that must be created before the former
 # CMakeLists.txt is processed
 
+set(VIDEOPLAYERPLUGIN_INSTALL_DIR ${CMAKE_INSTALL_PREFIX}/${LIB_INSTALL_DIR}/subtitlecomposer CACHE INTERNAL EXPORTEDVARIABLE)
+
 add_subdirectory(common)
 add_subdirectory(core)
 add_subdirectory(formats)
@@ -39,6 +41,8 @@ add_subdirectory(widgets)
 add_subdirectory(videoplayer)
 add_subdirectory(streamprocessor)
 add_subdirectory(main)
+
+add_subdirectory(videoplayerplugins)
 
 # do the configuration of config.h at the end, so all the necessary variables have been set
 configure_file(${CMAKE_CURRENT_SOURCE_DIR}/config.h.cmake ${CMAKE_CURRENT_BINARY_DIR}/config.h)

@@ -1,5 +1,5 @@
-#ifndef MPLAYERPLAYERBACKEND_H
-#define MPLAYERPLAYERBACKEND_H
+#ifndef GSTREAMERPLAYERBACKEND2_H
+#define GSTREAMERPLAYERBACKEND2_H
 
 /**
  * Copyright (C) 2007-2009 Sergio Pistone <sergio_pistone@yahoo.com.ar>
@@ -25,29 +25,35 @@
 #include <config.h>
 #endif
 
-#include "../playerbackend.h"
+#include "../../videoplayer/playerbackend.h"
 
 #include <QWidget>
 #include <QString>
 
-namespace SubtitleComposer {
-class MPlayerPlayerProcess;
+#include <gst/gst.h>
 
-class MPlayerPlayerBackend : public PlayerBackend
+QT_FORWARD_DECLARE_CLASS(QTimer)
+
+namespace SubtitleComposer {
+class GStreamerPlayerBackend : public PlayerBackend
 {
 	Q_OBJECT
+	Q_PLUGIN_METADATA(IID PlayerBackend_iid)
+	Q_INTERFACES(SubtitleComposer::PlayerBackend)
 
 public:
-	MPlayerPlayerBackend(VideoPlayer *player);
-	virtual ~MPlayerPlayerBackend();
+	GStreamerPlayerBackend();
+	virtual ~GStreamerPlayerBackend();
 
 	virtual QWidget * newConfigWidget(QWidget *parent);
 
 protected:
-	virtual VideoWidget * initialize(QWidget *videoWidgetParent);
+	virtual bool initialize(VideoWidget *videoWidget);
 	virtual void finalize();
-	void _finalize();
 	virtual bool reconfigure();
+
+	static GstElement * createAudioSink();
+	static GstElement * createVideoSink();
 
 	virtual bool openFile(const QString &filePath, bool &playingAfterCall);
 	virtual void closeFile();
@@ -61,21 +67,24 @@ protected:
 
 	virtual bool setVolume(double volume);
 
+	bool eventFilter(QObject *obj, QEvent *event);
+
 protected slots:
-	void onMediaDataLoaded();
-	void onPlayingReceived();
-	void onPausedReceived();
-	void onProcessExited();
-	void onPositionReceived(double seconds);
+	void onPlaybinTimerTimeout();
 
-protected:
-	void setupProcessArgs(const QString &filePath);
+private:
+	void setupVideoOverlay();
 
-protected:
-	MPlayerPlayerProcess *m_process;
+	void updateAudioData();
+	void updateVideoData();
 
-	double m_position;
-	bool m_reportUpdates;
+	virtual void setSCConfig(SCConfig *scConfig);
+
+private:
+	GstPipeline *m_pipeline;
+	GstBus *m_pipelineBus;
+	QTimer *m_pipelineTimer;
+	bool m_lengthInformed;
 };
 }
 

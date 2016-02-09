@@ -25,7 +25,7 @@
 #include <config.h>
 #endif
 
-#include "../playerbackend.h"
+#include "../../videoplayer/playerbackend.h"
 
 #include <QString>
 #include <QRect>
@@ -45,15 +45,17 @@ namespace SubtitleComposer {
 class XinePlayerBackend : public PlayerBackend
 {
 	Q_OBJECT
+	Q_PLUGIN_METADATA(IID PlayerBackend_iid)
+	Q_INTERFACES(SubtitleComposer::PlayerBackend)
 
 public:
-	XinePlayerBackend(VideoPlayer *player);
+	XinePlayerBackend();
 	virtual ~XinePlayerBackend();
 
 	virtual QWidget * newConfigWidget(QWidget *parent);
 
 protected:
-	virtual VideoWidget * initialize(QWidget *videoWidgetParent);
+	virtual bool initialize(VideoWidget *videoWidget);
 	virtual void finalize();
 	void _finalize();
 	virtual bool reconfigure();
@@ -88,6 +90,9 @@ protected:
 protected slots:
 	void updatePosition();
 	void onVideoLayerGeometryChanged();
+
+private:
+	virtual void setSCConfig(SCConfig *scConfig);
 
 private:
 #ifdef HAVE_XCB

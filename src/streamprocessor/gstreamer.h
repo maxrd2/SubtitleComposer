@@ -24,7 +24,7 @@
 #include <config.h>
 #endif
 
-#include "../waveformat.h"
+#include "../videoplayer/waveformat.h"
 
 #include <QString>
 #include <QStringList>
