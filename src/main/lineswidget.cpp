@@ -27,8 +27,8 @@
 #include <QtCore/QTimer>
 #include <QtCore/QEvent>
 #include <QScrollBar>
-#include <QDragEnterEvent>
 #include <QDropEvent>
+#include <QMimeData>
 #include <QPainter>
 #include <QFontMetrics>
 #include <QTextDocument>
@@ -930,7 +930,7 @@ LinesWidget::saveConfig()
 	QByteArray state = header()->saveState();
 	for(int index = 0, size = state.size(); index < size; ++index)
 		strState.append(QString::number(state[index]));
-	group.writeXdgListEntry("Columns State", strState);
+    group.writeXdgListEntry("Columns State", strState);
 }
 
 void
@@ -986,41 +986,29 @@ bool
 LinesWidget::eventFilter(QObject *object, QEvent *event)
 {
 	if(object == viewport()) {
-		if(event->type() == QEvent::DragEnter) {
-			/*
-			QDragEnterEvent *dragEnterEvent = static_cast<QDragEnterEvent *>(event);
-			QList<QUrl> urls = QList<QUrl>::fromMimeData(dragEnterEvent->mimeData());
-			if(!urls.isEmpty())
-				dragEnterEvent->accept();
-			else
-				dragEnterEvent->ignore();
-			return true;
-			*/
-		} else if(event->type() == QEvent::DragMove) {
-			return true;            // eat event
-		} else if(event->type() == QEvent::Drop) {
-			/*
-			QDropEvent *dropEvent = static_cast<QDropEvent *>(event);
-
-			QList<QUrl> urls = QList<QUrl>::fromMimeData(dropEvent->mimeData());
-			if(!urls.isEmpty()) {
-				for(QList<QUrl>::ConstIterator it = urls.begin(), end = urls.end(); it != end; ++it) {
-					const QUrl &url = *it;
-
-					if(url.protocol() != "file")
-						continue;
-
-					app()->openSubtitle(*it);
-					break;
+		switch(event->type()) {
+		case QEvent::DragEnter:
+		case QEvent::Drop:
+			foreach(const QUrl &url, static_cast<QDropEvent *>(event)->mimeData()->urls()) {
+				if(url.scheme() == QLatin1String("file")) {
+					event->accept();
+					if(event->type() == QEvent::Drop) {
+						app()->openSubtitle(url);
+					}
+					return true; // eat event
 				}
 			}
+			event->ignore();
+			return true;
 
-			return true;            // eat event
-			*/
-		} else
-			return TreeView::eventFilter(object, event); // standard event processing
+		case QEvent::DragMove:
+			return true; // eat event
+
+		default:
+			;
+		}
 	}
-
+	// standard event processing
 	return TreeView::eventFilter(object, event);
 }
 
