@@ -915,7 +915,7 @@ LinesWidget::loadConfig()
 	KConfigGroup group(KSharedConfig::openConfig()->group("LinesWidget Settings"));
 
 	QByteArray state;
-	QStringList strState = group.readXdgListEntry("Columns State", QString("").split(' '));
+	QStringList strState = group.readXdgListEntry("Columns State", QStringList() << QString());
 	for(QStringList::ConstIterator it = strState.begin(), end = strState.end(); it != end; ++it)
 		state.append((char)(*it).toInt());
 	header()->restoreState(state);
@@ -930,7 +930,7 @@ LinesWidget::saveConfig()
 	QByteArray state = header()->saveState();
 	for(int index = 0, size = state.size(); index < size; ++index)
 		strState.append(QString::number(state[index]));
-    group.writeXdgListEntry("Columns State", strState);
+	group.writeXdgListEntry("Columns State", strState);
 }
 
 void

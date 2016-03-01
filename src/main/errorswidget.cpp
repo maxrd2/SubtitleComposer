@@ -571,7 +571,7 @@ ErrorsWidget::loadConfig()
 	KConfigGroup group(KSharedConfig::openConfig()->group("ErrorsWidget Settings"));
 
 	QByteArray state;
-	QStringList strState = group.readXdgListEntry("Columns State", QString("").split(' '));
+	QStringList strState = group.readXdgListEntry("Columns State", QStringList() << QString());
 	for(QStringList::ConstIterator it = strState.begin(), end = strState.end(); it != end; ++it)
 		state.append((char)(*it).toInt());
 	header()->restoreState(state);

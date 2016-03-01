@@ -378,7 +378,7 @@ Application::buildMediaFilesFilter()
 		QString mediaExtensions;
 
 		QString videoExtensions;
-		QStringList videoExts(QString("avi flv mkv mov mpg mpeg mp4 wmv ogm ogv rmvb ts vob").split(' '));
+		QStringList videoExts(QStringLiteral("avi flv mkv mov mpg mpeg mp4 wmv ogm ogv rmvb ts vob").split(' '));
 		for(QStringList::ConstIterator it = videoExts.begin(), end = videoExts.end(); it != end; ++it)
 //          videoExtensions += " *." + *it /*+ " *." + (*it).toUpper()*/;
 			videoExtensions += " *." + *it + " *." + (*it).toUpper();
@@ -386,7 +386,7 @@ Application::buildMediaFilesFilter()
 		filter += '\n' + videoExtensions.trimmed() + '|' + i18n("Video Files");
 
 		QString audioExtensions;
-		QStringList audioExts(QString("aac ac3 ape flac la m4a mac mp2 mp3 mp4 mp+ mpc mpp ofr oga ogg pac ra spx tta wav wma wv").split(' '));
+		QStringList audioExts(QStringLiteral("aac ac3 ape flac la m4a mac mp2 mp3 mp4 mp+ mpc mpp ofr oga ogg pac ra spx tta wav wma wv").split(' '));
 		for(QStringList::ConstIterator it = audioExts.begin(), end = audioExts.end(); it != end; ++it)
 //          audioExtensions += " *." + *it /*+ " *." + (*it).toUpper()*/;
 			audioExtensions += " *." + *it + " *." + (*it).toUpper();
@@ -407,7 +407,7 @@ Application::buildLevelsFilesFilter()
 
 	if(filter.isEmpty()) {
 		QString levelsExtensions;
-		QStringList videoExts(QString("wf").split(' '));
+		QStringList videoExts(QStringLiteral("wf").split(' '));
 		for(QStringList::ConstIterator it = videoExts.begin(), end = videoExts.end(); it != end; ++it)
 			levelsExtensions += " *." + *it + " *." + (*it).toUpper();
 		filter += '\n' + levelsExtensions.trimmed() + '|' + i18n("Audio Levels Files");
@@ -1379,7 +1379,7 @@ Application::openSubtitle(const QUrl &url, bool warnClashingUrls)
 		updateTitle();
 
 		if(m_subtitleUrl.isLocalFile() && SCConfig::automaticVideoLoad()) {
-			static const QStringList videoExtensions(QString("avi ogm mkv mpeg mpg mp4 rv wmv").split(' '));
+			static const QStringList videoExtensions(QStringLiteral("avi ogm mkv mpeg mpg mp4 rv wmv").split(' '));
 
 			QFileInfo subtitleFileInfo(m_subtitleUrl.path());
 
@@ -2712,10 +2712,10 @@ Application::extractVideoAudio()
 
 	QFileInfo fileInfo(m_player->filePath());
 	QString fileBaseName = fileInfo.path() + "/" + fileInfo.completeBaseName();
-	fileInfo.setFile(fileBaseName + QString("-stream%1.wav").arg(m_player->activeAudioStream() + 1));
+	fileInfo.setFile(fileBaseName + QStringLiteral("-stream%1.wav").arg(m_player->activeAudioStream() + 1));
 	int count = 1;
 	while(fileInfo.exists())
-		fileInfo.setFile(fileBaseName + QString("-stream%1(%2).wav").arg(m_player->activeAudioStream() + 1).arg(++count));
+		fileInfo.setFile(fileBaseName + QStringLiteral("-stream%1(%2).wav").arg(m_player->activeAudioStream() + 1).arg(++count));
 
 	m_decoder->decode(m_player->activeAudioStream(), fileInfo.filePath(), outputFormat);
 }

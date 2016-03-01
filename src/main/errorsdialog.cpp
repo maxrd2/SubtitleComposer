@@ -119,9 +119,9 @@ ErrorsDialog::onStatsChanged()
 		QString errors = i18np("1 total error", "%1 total errors", model->errorCount());
 		QString marks = i18np("1 user mark", "%1 user marks", model->markCount());
 		if(model->errorCount() == model->markCount())
-			m_statsLabel->setText(QString("%1 (%2)").arg(lines).arg(marks));
+			m_statsLabel->setText(QStringLiteral("%1 (%2)").arg(lines).arg(marks));
 		else
-			m_statsLabel->setText(QString("%1 (%2, %3)").arg(lines).arg(errors).arg(marks));
+			m_statsLabel->setText(QStringLiteral("%1 (%2, %3)").arg(lines).arg(errors).arg(marks));
 		m_clearErrorsButton->setEnabled(true);
 		m_clearFixedButton->setEnabled(!SCConfig::autoClearFixed());
 	} else {

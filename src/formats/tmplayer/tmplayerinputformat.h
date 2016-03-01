@@ -75,7 +75,7 @@ protected:
 	}
 
 	TMPlayerInputFormat() :
-		InputFormat("TMPlayer", QString("sub:txt").split(":")),
+		InputFormat("TMPlayer", QStringLiteral("sub:txt").split(":")),
 		m_regExp("([0-2]?[0-9]):([0-5][0-9]):([0-5][0-9]):([^\n]*)\n?") {}
 
 	TMPlayerInputFormat(const QString &name, const QStringList &extensions, const QString &regExp) :
@@ -91,7 +91,7 @@ class TMPlayerPlusInputFormat : public TMPlayerInputFormat
 
 protected:
 	TMPlayerPlusInputFormat() :
-		TMPlayerInputFormat("TMPlayer+", QString("sub:txt").split(":"), "([0-2]?[0-9]):([0-5][0-9]):([0-5][0-9])=([^\n]*)\n?")
+		TMPlayerInputFormat("TMPlayer+", QStringLiteral("sub:txt").split(":"), "([0-2]?[0-9]):([0-5][0-9]):([0-5][0-9])=([^\n]*)\n?")
 	{}
 };
 }

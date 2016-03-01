@@ -64,7 +64,7 @@ protected:
 	}
 
 	TMPlayerOutputFormat() :
-		OutputFormat("TMPlayer", QString("sub:txt").split(":")),
+		OutputFormat("TMPlayer", QStringLiteral("sub:txt").split(":")),
 		m_timeFormat("%02d:%02d:%02d:")
 	{}
 
@@ -82,7 +82,7 @@ class TMPlayerPlusOutputFormat : public TMPlayerOutputFormat
 
 protected:
 	TMPlayerPlusOutputFormat() :
-		TMPlayerOutputFormat("TMPlayer+", QString("sub:txt").split(":"), "%02d:%02d:%02d=")
+		TMPlayerOutputFormat("TMPlayer+", QStringLiteral("sub:txt").split(":"), "%02d:%02d:%02d=")
 	{}
 };
 }
