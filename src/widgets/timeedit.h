@@ -26,7 +26,7 @@
 
 #include <QTimeEdit>
 
-class QEvent;
+QT_FORWARD_DECLARE_CLASS(QEvent)
 
 class TimeEdit : public QTimeEdit
 {

@@ -31,11 +31,11 @@
 
 #include <QKeySequence>
 
-class QEvent;
-class QKeyEvent;
-class QFocusEvent;
-class QAction;
-class QMenu;
+QT_FORWARD_DECLARE_CLASS(QEvent)
+QT_FORWARD_DECLARE_CLASS(QKeyEvent)
+QT_FORWARD_DECLARE_CLASS(QFocusEvent)
+QT_FORWARD_DECLARE_CLASS(QAction)
+QT_FORWARD_DECLARE_CLASS(QMenu)
 
 class SimpleRichTextEdit : public KTextEdit
 {

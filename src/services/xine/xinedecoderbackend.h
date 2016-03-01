@@ -32,7 +32,7 @@
 #define XINE_ENABLE_EXPERIMENTAL_FEATURES
 #include <xine.h>
 
-class QEvent;
+QT_FORWARD_DECLARE_CLASS(QEvent)
 
 namespace SubtitleComposer {
 class DecodingThread;

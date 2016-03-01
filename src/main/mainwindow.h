@@ -29,7 +29,7 @@
 
 #include <kxmlguiwindow.h>
 
-class QSplitter;
+QT_FORWARD_DECLARE_CLASS(QSplitter)
 
 namespace SubtitleComposer {
 class PlayerWidget;

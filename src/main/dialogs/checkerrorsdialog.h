@@ -26,7 +26,7 @@
 
 #include "actionwitherrortargetsdialog.h"
 
-class QCheckBox;
+QT_FORWARD_DECLARE_CLASS(QCheckBox)
 
 namespace SubtitleComposer {
 class ChecqCriticalsDialog : public ActionWithErrorTargetsDialog

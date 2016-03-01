@@ -30,10 +30,10 @@
 
 #include <QWidget>
 
-class QTimer;
-class QGridLayout;
-class QLabel;
-class QToolButton;
+QT_FORWARD_DECLARE_CLASS(QTimer)
+QT_FORWARD_DECLARE_CLASS(QGridLayout)
+QT_FORWARD_DECLARE_CLASS(QLabel)
+QT_FORWARD_DECLARE_CLASS(QToolButton)
 class TimeEdit;
 class SimpleRichTextEdit;
 

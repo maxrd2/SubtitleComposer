@@ -29,8 +29,8 @@
 
 #include <QDialog>
 
-class QLabel;
-class QPushButton;
+QT_FORWARD_DECLARE_CLASS(QLabel)
+QT_FORWARD_DECLARE_CLASS(QPushButton)
 
 namespace SubtitleComposer {
 class ErrorsDialog : public QDialog

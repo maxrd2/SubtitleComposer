@@ -28,9 +28,9 @@
 #include "ui_intinputdialog.h"
 #include <QDialog>
 
-class QLineEdit;
+QT_FORWARD_DECLARE_CLASS(QLineEdit)
+QT_FORWARD_DECLARE_CLASS(QDialogButtonBox)
 class KIntNumInput;
-class QDialogButtonBox;
 
 namespace SubtitleComposer {
 class IntInputDialog : public QDialog, private Ui::IntInputDialog

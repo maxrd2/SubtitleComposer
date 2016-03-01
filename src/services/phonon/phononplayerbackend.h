@@ -32,7 +32,7 @@
 #include <QWidget>
 #include <KDE/Phonon/Global>
 
-class QTimer;
+QT_FORWARD_DECLARE_CLASS(QTimer)
 
 namespace Phonon {
 	class MediaObject;

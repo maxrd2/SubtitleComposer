@@ -22,7 +22,7 @@
 
 #include <QTreeView>
 
-class QTimer;
+QT_FORWARD_DECLARE_CLASS(QTimer)
 
 class TreeView : public QTreeView
 {

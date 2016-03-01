@@ -27,8 +27,8 @@
 #include "actionwitherrortargetsdialog.h"
 #include "../../core/subtitleline.h"
 
-class QCheckBox;
-class QPushButton;
+QT_FORWARD_DECLARE_CLASS(QCheckBox)
+QT_FORWARD_DECLARE_CLASS(QPushButton)
 
 namespace SubtitleComposer {
 class ClearErrorsDialog : public ActionWithErrorTargetsDialog

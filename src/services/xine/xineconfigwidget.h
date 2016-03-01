@@ -27,7 +27,7 @@
 
 #include "ui_xineconfigwidget.h"
 
-class QCheckBox;
+QT_FORWARD_DECLARE_CLASS(QCheckBox)
 class KComboBox;
 
 namespace SubtitleComposer {

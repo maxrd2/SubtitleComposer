@@ -33,7 +33,7 @@
 
 #include <gst/gst.h>
 
-class QTimer;
+QT_FORWARD_DECLARE_CLASS(QTimer)
 
 namespace SubtitleComposer {
 class GStreamerDecoderBackend : public DecoderBackend

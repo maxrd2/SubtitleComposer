@@ -28,6 +28,7 @@
 #include <QComboBox>
 #include <QVBoxLayout>
 #include <QPushButton>
+#include <QDialogButtonBox>
 
 #include <KLocalizedString>
 #include <KFileFilterCombo>

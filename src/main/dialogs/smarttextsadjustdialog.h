@@ -27,7 +27,7 @@
 
 #include "actionwithtargetdialog.h"
 
-class QSpinBox;
+QT_FORWARD_DECLARE_CLASS(QSpinBox)
 
 namespace SubtitleComposer {
 class SmartTextsAdjustDialog : public ActionWithTargetDialog

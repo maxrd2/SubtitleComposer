@@ -29,9 +29,9 @@
 #include <QDialogButtonBox>
 #include <QPushButton>
 
-class QGridLayout;
-class QVBoxLayout;
-class QGroupBox;
+QT_FORWARD_DECLARE_CLASS(QGridLayout)
+QT_FORWARD_DECLARE_CLASS(QVBoxLayout)
+QT_FORWARD_DECLARE_CLASS(QGroupBox)
 
 namespace SubtitleComposer {
 class ActionDialog : public QDialog

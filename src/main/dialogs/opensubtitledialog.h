@@ -28,10 +28,10 @@
 #include "kfilewidget.h"
 
 #include <QDialog>
-#include <QDialogButtonBox>
 #include <QUrl>
 
-class QComboBox;
+QT_FORWARD_DECLARE_CLASS(QComboBox)
+QT_FORWARD_DECLARE_CLASS(QDialogButtonBox)
 
 namespace SubtitleComposer {
 class OpenSubtitleDialog : public QDialog

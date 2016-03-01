@@ -39,7 +39,7 @@
 typedef struct _XDisplay Display;
 #endif
 
-class QEvent;
+QT_FORWARD_DECLARE_CLASS(QEvent)
 
 namespace SubtitleComposer {
 class XinePlayerBackend : public PlayerBackend

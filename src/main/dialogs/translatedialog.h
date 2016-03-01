@@ -27,7 +27,7 @@
 #include "actionwithtargetdialog.h"
 #include "../utils/language.h"
 
-class QComboBox;
+QT_FORWARD_DECLARE_CLASS(QComboBox)
 
 namespace SubtitleComposer {
 class TranslateDialog : public ActionWithTargetDialog

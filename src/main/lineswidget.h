@@ -36,8 +36,8 @@
 #include <QIcon>
 #include <QPixmap>
 
-class QTextDocument;
-class QTimer;
+QT_FORWARD_DECLARE_CLASS(QTextDocument)
+QT_FORWARD_DECLARE_CLASS(QTimer)
 
 namespace SubtitleComposer {
 class LinesModel : public QAbstractListModel

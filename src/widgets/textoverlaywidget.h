@@ -31,7 +31,7 @@
 #include <QImage>
 #include <QBitmap>
 
-class QTextDocument;
+QT_FORWARD_DECLARE_CLASS(QTextDocument)
 
 class TextOverlayWidget : public QWidget
 {
