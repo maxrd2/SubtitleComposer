@@ -79,6 +79,7 @@
 #include <QtCore/QFileInfo>
 #include <QtCore/QTextCodec>
 #include <QtCore/QProcess>
+#include <QtCore/QStringBuilder>
 #include <QGridLayout>
 #include <QMenu>
 
@@ -381,7 +382,7 @@ Application::buildMediaFilesFilter()
 		QStringList videoExts(QStringLiteral("avi flv mkv mov mpg mpeg mp4 wmv ogm ogv rmvb ts vob").split(' '));
 		for(QStringList::ConstIterator it = videoExts.begin(), end = videoExts.end(); it != end; ++it)
 //          videoExtensions += " *." + *it /*+ " *." + (*it).toUpper()*/;
-			videoExtensions += " *." + *it + " *." + (*it).toUpper();
+			videoExtensions += " *." % *it % " *." % (*it).toUpper();
 		mediaExtensions += videoExtensions;
 		filter += '\n' + videoExtensions.trimmed() + '|' + i18n("Video Files");
 
@@ -389,12 +390,12 @@ Application::buildMediaFilesFilter()
 		QStringList audioExts(QStringLiteral("aac ac3 ape flac la m4a mac mp2 mp3 mp4 mp+ mpc mpp ofr oga ogg pac ra spx tta wav wma wv").split(' '));
 		for(QStringList::ConstIterator it = audioExts.begin(), end = audioExts.end(); it != end; ++it)
 //          audioExtensions += " *." + *it /*+ " *." + (*it).toUpper()*/;
-			audioExtensions += " *." + *it + " *." + (*it).toUpper();
+			audioExtensions += " *." % *it % " *." % (*it).toUpper();
 		mediaExtensions += audioExtensions;
-		filter += '\n' + audioExtensions.trimmed() + '|' + i18n("Audio Files");
+		filter += '\n' % audioExtensions.trimmed() % '|' % i18n("Audio Files");
 
-		filter = mediaExtensions + '|' + i18n("Media Files") + filter;
-		filter += "\n*|" + i18n("All Files");
+		filter = mediaExtensions % '|' % i18n("Media Files") % filter;
+		filter += "\n*|" % i18n("All Files");
 	}
 
 	return filter;
@@ -407,10 +408,10 @@ Application::buildLevelsFilesFilter()
 
 	if(filter.isEmpty()) {
 		QString levelsExtensions;
-		QStringList videoExts(QStringLiteral("wf").split(' '));
+		QStringList videoExts = QStringList() << QStringLiteral("wf");
 		for(QStringList::ConstIterator it = videoExts.begin(), end = videoExts.end(); it != end; ++it)
-			levelsExtensions += " *." + *it + " *." + (*it).toUpper();
-		filter += '\n' + levelsExtensions.trimmed() + '|' + i18n("Audio Levels Files");
+			levelsExtensions += QStringLiteral(" *.") % *it % QStringLiteral(" *.") % (*it).toUpper();
+		filter += '\n' + levelsExtensions.trimmed() % '|' % i18n("Audio Levels Files");
 
 		filter += buildMediaFilesFilter();
 	}
@@ -2873,8 +2874,8 @@ Application::updateTitle()
 {
 	if(m_subtitle) {
 		if(m_translationMode) {
-			static const QString titleBuilder("%1%2 | %3%4");
-			static const QString modified = QString::fromUtf8(" [") + i18n("modified") + QString::fromUtf8("]");
+			static const QString titleBuilder(QStringLiteral("%1%2 | %3%4"));
+			static const QString modified = QStringLiteral(" [") % i18n("modified") % QStringLiteral("]");
 
 			m_mainWindow->setCaption(titleBuilder.arg(m_subtitleUrl.isEmpty() ? i18n("Untitled") : m_subtitleFileName)
 									  .arg(m_subtitle->isPrimaryDirty() ? modified : QString())
@@ -2899,12 +2900,12 @@ Application::updateUndoRedoToolTips()
 
 	if(m_subtitle) {
 		if(m_subtitle->actionManager().hasUndo())
-			undoAction->setToolTip(undoToolTip + ": " + m_subtitle->actionManager().undoDescription());
+			undoAction->setToolTip(undoToolTip % QStringLiteral(": ") % m_subtitle->actionManager().undoDescription());
 		else
 			undoAction->setToolTip(undoToolTip);
 
 		if(m_subtitle->actionManager().hasRedo())
-			redoAction->setToolTip(redoToolTip + ": " + m_subtitle->actionManager().redoDescription());
+			redoAction->setToolTip(redoToolTip % QStringLiteral(": ") % m_subtitle->actionManager().redoDescription());
 		else
 			redoAction->setToolTip(redoToolTip);
 	}
@@ -2974,7 +2975,7 @@ void
 Application::onPlayerPlaying()
 {
 	QAction *playPauseAction = action(ACT_PLAY_PAUSE);
-	playPauseAction->setIcon(QIcon::fromTheme("media-playback-pause"));
+	playPauseAction->setIcon(QIcon::fromTheme(QStringLiteral("media-playback-pause")));
 	playPauseAction->setText(i18n("Pause"));
 }
 
@@ -2982,7 +2983,7 @@ void
 Application::onPlayerPaused()
 {
 	QAction *playPauseAction = action(ACT_PLAY_PAUSE);
-	playPauseAction->setIcon(QIcon::fromTheme("media-playback-start"));
+	playPauseAction->setIcon(QIcon::fromTheme(QStringLiteral("media-playback-start")));
 	playPauseAction->setText(i18n("Play"));
 }
 
@@ -2990,7 +2991,7 @@ void
 Application::onPlayerStopped()
 {
 	QAction *playPauseAction = action(ACT_PLAY_PAUSE);
-	playPauseAction->setIcon(QIcon::fromTheme("media-playback-start"));
+	playPauseAction->setIcon(QIcon::fromTheme(QStringLiteral("media-playback-start")));
 	playPauseAction->setText(i18n("Play"));
 }
 

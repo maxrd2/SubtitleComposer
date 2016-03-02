@@ -311,7 +311,7 @@ GStreamer::inspectCaps(GstCaps *caps, const QString &prefix)
 	gchar *debug = gst_caps_to_string(caps);
 	QString token;
 	foreach(token, QString(debug).split(';'))
-	message += "\n - " + token.trimmed();
+	message += QStringLiteral("\n - ") + token.trimmed();
 	g_free(debug);
 
 	qDebug() << message.trimmed();

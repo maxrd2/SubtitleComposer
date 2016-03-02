@@ -136,7 +136,7 @@ protected:
 	}
 
 	MicroDVDInputFormat() :
-		InputFormat("MicroDVD", QStringLiteral("sub:txt").split(QChar(':')),
+		InputFormat(QStringLiteral("MicroDVD"), QStringList() << QStringLiteral("sub") << QStringLiteral("txt")),
 		m_lineRegExp("\\{(\\d+)\\}\\{(\\d+)\\}([^\n]+)\n", Qt::CaseInsensitive),
 		m_styleRegExp("\\{([yc]):([^}]*)\\}", Qt::CaseInsensitive)
 	{}
