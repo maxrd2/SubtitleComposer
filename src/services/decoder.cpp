@@ -28,8 +28,8 @@
 #include "xine/xinedecoderbackend.h"
 #endif
 
-#include <QtCore/QTimer>
-#include <QtCore/QFileInfo>
+#include <QTimer>
+#include <QFileInfo>
 
 #include <QDebug>
 

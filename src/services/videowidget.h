@@ -24,8 +24,8 @@
 #include <config.h>
 #endif
 
-#include <QtCore/QPoint>
-#include <QtCore/QSize>
+#include <QPoint>
+#include <QSize>
 #include <QWidget>
 
 QT_FORWARD_DECLARE_CLASS(QResizeEvent)

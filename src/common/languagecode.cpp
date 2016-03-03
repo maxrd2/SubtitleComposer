@@ -20,8 +20,7 @@
 
 #include "languagecode.h"
 
-#include <QtCore/QMap>
-
+#include <QMap>
 #include <QLocale>
 
 #include <KLocalizedString>

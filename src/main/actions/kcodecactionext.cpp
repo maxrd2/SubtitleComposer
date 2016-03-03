@@ -20,8 +20,8 @@
 
 #include "kcodecactionext.h"
 
-#include <QtCore/QVariant>
-#include <QtCore/QTextCodec>
+#include <QVariant>
+#include <QTextCodec>
 #include <QMenu>
 #include <QDebug>
 

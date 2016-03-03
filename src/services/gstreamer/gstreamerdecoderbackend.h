@@ -29,7 +29,7 @@
 #include "../wavewriter.h"
 
 #include <QWidget>
-#include <QtCore/QString>
+#include <QString>
 
 #include <gst/gst.h>
 

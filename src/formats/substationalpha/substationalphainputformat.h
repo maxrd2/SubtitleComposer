@@ -34,9 +34,6 @@ class SubStationAlphaInputFormat : public InputFormat
 	friend class FormatManager;
 	friend class AdvancedSubStationAlphaInputFormat;
 
-public:
-	virtual ~SubStationAlphaInputFormat() {}
-
 protected:
 	SString toSString(QString string) const
 	{

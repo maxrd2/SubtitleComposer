@@ -30,8 +30,8 @@
 #include "../formats/format.h"
 #include "scconfig.h"
 
-#include <QtCore/QMap>
-#include <QtCore/QString>
+#include <QMap>
+#include <QString>
 #include <QKeySequence>
 
 #include <QApplication>

@@ -23,8 +23,8 @@
 
 #include "attachablewidget.h"
 
-#include <QtCore/QEvent>
-#include <QtCore/QTimerEvent>
+#include <QEvent>
+#include <QTimerEvent>
 #include <QMouseEvent>
 
 #include <QDebug>

@@ -22,7 +22,7 @@
 
 #include "common/commondefs.h"
 
-#include <QtCore/QFile>
+#include <QFile>
 #include <QDebug>
 #include <QStandardPaths>
 

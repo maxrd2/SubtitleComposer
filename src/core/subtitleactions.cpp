@@ -23,7 +23,7 @@
 #include "subtitleline.h"
 #include "sstring.h"
 
-#include <QtCore/QObject>
+#include <QObject>
 
 #include <KLocalizedString>
 

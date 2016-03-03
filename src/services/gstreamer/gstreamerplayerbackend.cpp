@@ -26,7 +26,7 @@
 
 #include <KLocalizedString>
 
-#include <QtCore/QTimer>
+#include <QTimer>
 
 #include <QDebug>
 #include <QUrl>

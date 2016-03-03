@@ -29,8 +29,8 @@
 #include "decoder.h"
 #include "waveformat.h"
 
-#include <QtCore/QObject>
-#include <QtCore/QString>
+#include <QObject>
+#include <QString>
 #include <QWidget>
 
 namespace SubtitleComposer {

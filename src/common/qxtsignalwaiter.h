@@ -26,8 +26,8 @@
 #include <config.h>
 #endif
 
-#include <QtCore/QObject>
-#include <QtCore/QEventLoop>
+#include <QObject>
+#include <QEventLoop>
 
 QT_FORWARD_DECLARE_CLASS(QTimerEvent);
 

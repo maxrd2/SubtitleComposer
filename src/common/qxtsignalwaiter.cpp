@@ -21,8 +21,8 @@
 
 #include "qxtsignalwaiter.h"
 
-#include <QtCore/QCoreApplication>
-#include <QtCore/QTimerEvent>
+#include <QCoreApplication>
+#include <QTimerEvent>
 
 QxtSignalWaiter::QxtSignalWaiter(const QObject *sender, const char *signal, unsigned count) :
 	QObject(0),

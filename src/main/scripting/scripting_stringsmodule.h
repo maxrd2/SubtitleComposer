@@ -27,8 +27,8 @@
 #include "../../core/sstring.h"
 #include "scripting_list.h"
 
-#include <QtCore/QObject>
-#include <QtCore/QString>
+#include <QObject>
+#include <QString>
 
 namespace SubtitleComposer {
 namespace Scripting {

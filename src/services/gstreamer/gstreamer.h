@@ -26,8 +26,8 @@
 
 #include "../waveformat.h"
 
-#include <QtCore/QString>
-#include <QtCore/QStringList>
+#include <QString>
+#include <QStringList>
 
 #include <gst/gst.h>
 

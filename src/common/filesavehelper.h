@@ -25,7 +25,7 @@
 #include <config.h>
 #endif
 
-#include <QtCore/QFile>
+#include <QFile>
 
 #include <QUrl>
 #include <QFileDevice>

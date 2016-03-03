@@ -27,8 +27,8 @@
 
 #include "service.h"
 
-#include <QtCore/QObject>
-#include <QtCore/QString>
+#include <QObject>
+#include <QString>
 #include <QWidget>
 
 namespace SubtitleComposer {

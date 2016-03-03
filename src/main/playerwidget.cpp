@@ -30,7 +30,7 @@
 #include "../widgets/pointingslider.h"
 #include "../widgets/timeedit.h"
 
-#include <QtCore/QEvent>
+#include <QEvent>
 #include <QDropEvent>
 #include <QMimeData>
 #include <QKeyEvent>

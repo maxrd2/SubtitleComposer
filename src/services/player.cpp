@@ -35,8 +35,8 @@
 
 #include <math.h>
 
-#include <QtCore/QTimer>
-#include <QtCore/QFileInfo>
+#include <QTimer>
+#include <QFileInfo>
 #include <QApplication>
 #include <QEvent>
 

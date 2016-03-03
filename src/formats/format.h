@@ -28,8 +28,8 @@
 #include "../core/subtitle.h"
 #include "../core/subtitleline.h"
 
-#include <QtCore/QString>
-#include <QtCore/QStringList>
+#include <QString>
+#include <QStringList>
 
 namespace SubtitleComposer {
 class Format

@@ -26,15 +26,12 @@
 
 #include "../inputformat.h"
 
-#include <QtCore/QRegExp>
+#include <QRegExp>
 
 namespace SubtitleComposer {
 class MPlayerInputFormat : public InputFormat
 {
 	friend class FormatManager;
-
-public:
-	virtual ~MPlayerInputFormat() {}
 
 protected:
 	virtual bool parseSubtitles(Subtitle &subtitle, const QString &data) const

@@ -21,8 +21,8 @@
 #include "translator.h"
 #include "../../common/qxtsignalwaiter.h"
 
-#include <QtCore/QRegExp>
-#include <QtCore/QTextCodec>
+#include <QRegExp>
+#include <QTextCodec>
 #include <QLabel>
 #include <QProgressBar>
 #include <QBoxLayout>

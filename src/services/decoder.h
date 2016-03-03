@@ -27,7 +27,7 @@
 #include "service.h"
 #include "waveformat.h"
 
-#include <QtCore/QString>
+#include <QString>
 
 QT_FORWARD_DECLARE_CLASS(QTimer)
 

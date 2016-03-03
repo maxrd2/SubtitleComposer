@@ -27,9 +27,9 @@
 #include "service.h"
 #include "videowidget.h"
 
-#include <QtCore/QString>
-#include <QtCore/QStringList>
-#include <QtCore/QMap>
+#include <QString>
+#include <QStringList>
+#include <QMap>
 #include <QWidget>
 
 QT_FORWARD_DECLARE_CLASS(QTimer)

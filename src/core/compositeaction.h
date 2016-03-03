@@ -26,8 +26,8 @@
 
 #include "action.h"
 
-#include <QtCore/QString>
-#include <QtCore/QLinkedList>
+#include <QString>
+#include <QLinkedList>
 
 namespace SubtitleComposer {
 class CompositeAction : public Action

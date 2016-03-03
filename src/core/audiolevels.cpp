@@ -25,8 +25,8 @@
 #include <vector>
 #include <cmath>                                // FIXME remove when unneeded
 
-#include <QtCore/QFile>
-#include <QtCore/QTextStream>
+#include <QFile>
+#include <QTextStream>
 
 using namespace SubtitleComposer;
 

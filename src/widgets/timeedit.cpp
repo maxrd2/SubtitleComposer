@@ -21,8 +21,8 @@
 #include "timeedit.h"
 #include "timevalidator.h"
 
-#include <QtCore/QTime>
-#include <QtCore/QEvent>
+#include <QTime>
+#include <QEvent>
 #include <QKeyEvent>
 
 #include <QDebug>

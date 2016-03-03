@@ -22,11 +22,11 @@
 #include "xineconfigwidget.h"
 #include "../wavewriter.h"
 
-#include <QtCore/QEvent>
-#include <QtCore/QDir>
-#include <QtCore/QFile>
-#include <QtCore/QThread>
-#include <QtCore/QCoreApplication>
+#include <QEvent>
+#include <QDir>
+#include <QFile>
+#include <QThread>
+#include <QCoreApplication>
 #include <QDebug>
 #include <QUrl>
 

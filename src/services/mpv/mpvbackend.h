@@ -30,7 +30,7 @@
 #include <mpv/qthelper.hpp>
 
 #include <QWidget>
-#include <QtCore/QString>
+#include <QString>
 
 namespace SubtitleComposer {
 class MPVProcess;

@@ -27,7 +27,7 @@
 #include "waveformat.h"
 
 #include <stdio.h>
-#include <QtCore/QString>
+#include <QString>
 
 class WaveWriter
 {

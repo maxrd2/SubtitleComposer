@@ -27,7 +27,7 @@
 
 #include "../decoderbackend.h"
 
-#include <QtCore/QString>
+#include <QString>
 
 #define XINE_ENABLE_EXPERIMENTAL_FEATURES
 #include <xine.h>

@@ -26,7 +26,7 @@
 
 #include "time.h"
 
-#include <QtCore/QObject>
+#include <QObject>
 
 #include <QUrl>
 

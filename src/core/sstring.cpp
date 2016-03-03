@@ -19,8 +19,8 @@
 
 #include "sstring.h"
 
-#include <QtCore/QList>
-#include <QtCore/QStringList>
+#include <QList>
+#include <QStringList>
 
 #include <QDebug>
 

@@ -30,7 +30,7 @@
 #include "subtitleline.h"
 #include "subtitleactions.h"
 
-#include <QtCore/QString>
+#include <QString>
 
 namespace SubtitleComposer {
 class SubtitleLineAction : public Action

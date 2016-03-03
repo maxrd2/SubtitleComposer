@@ -32,10 +32,10 @@
 #include "actionmanager.h"
 #include "formatdata.h"
 
-#include <QtCore/QObject>
-#include <QtCore/QString>
-#include <QtCore/QStringList>
-#include <QtCore/QList>
+#include <QObject>
+#include <QString>
+#include <QStringList>
+#include <QList>
 
 namespace SubtitleComposer {
 class CompositeAction;

@@ -28,7 +28,7 @@
 #include "../../core/subtitle.h"
 #include "../../core/rangelist.h"
 
-#include <QtCore/QObject>
+#include <QObject>
 
 namespace SubtitleComposer {
 class Subtitle;

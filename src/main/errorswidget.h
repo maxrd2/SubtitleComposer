@@ -28,8 +28,8 @@
 #include "../core/subtitle.h"
 #include "../widgets/treeview.h"
 
-#include <QtCore/QList>
-#include <QtCore/QAbstractItemModel>
+#include <QList>
+#include <QAbstractItemModel>
 
 QT_FORWARD_DECLARE_CLASS(QTimer)
 

@@ -25,7 +25,7 @@
 
 #include <QApplication>
 #include <QStandardPaths>
-#include <QtCore/QStringList>
+#include <QStringList>
 
 #include <QDebug>
 

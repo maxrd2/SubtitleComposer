@@ -29,7 +29,7 @@
 #include "../core/subtitleline.h"
 #include "../widgets/treeview.h"
 
-#include <QtCore/QAbstractItemModel>
+#include <QAbstractItemModel>
 #include <QStyledItemDelegate>
 #include <QStyleOptionViewItemV4>
 #include <QPen>

@@ -24,9 +24,9 @@
 #include <config.h>
 #endif
 
-#include <QtCore/QMap>
-#include <QtCore/QList>
-#include <QtCore/QStringList>
+#include <QMap>
+#include <QList>
+#include <QStringList>
 
 namespace SubtitleComposer {
 class Language

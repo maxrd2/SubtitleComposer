@@ -25,8 +25,8 @@
 #include <config.h>
 #endif
 
-#include <QtCore/QString>
-#include <QtCore/QStringList>
+#include <QString>
+#include <QStringList>
 
 #include <QUrl>
 

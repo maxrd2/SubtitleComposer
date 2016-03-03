@@ -24,10 +24,10 @@
 
 #include "../../main/application.h"
 
-#include <QtCore/QEventLoop>
-#include <QtCore/QEvent>
-#include <QtCore/QDir>
-#include <QtCore/QFile>
+#include <QEventLoop>
+#include <QEvent>
+#include <QDir>
+#include <QFile>
 #include <QApplication>
 #include <QDebug>
 #include <QUrl>

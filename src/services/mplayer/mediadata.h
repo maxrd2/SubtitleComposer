@@ -28,8 +28,8 @@
 #include <config.h>
 #endif
 
-#include <QtCore/QString>
-#include <QtCore/QMap>
+#include <QString>
+#include <QMap>
 
 namespace SubtitleComposer {
 class TrackData

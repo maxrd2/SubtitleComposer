@@ -26,9 +26,9 @@
 
 #include <string.h>
 
-#include <QtCore/QString>
-#include <QtCore/QRegExp>
-#include <QtCore/QList>
+#include <QString>
+#include <QRegExp>
+#include <QList>
 #include <QColor>
 
 #include <QDebug>

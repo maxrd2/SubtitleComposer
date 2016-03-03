@@ -29,7 +29,7 @@
 #include "../core/subtitle.h"
 #include "../core/subtitleline.h"
 
-#include <QtCore/QPoint>
+#include <QPoint>
 #include <QWidget>
 
 QT_FORWARD_DECLARE_CLASS(QGridLayout)

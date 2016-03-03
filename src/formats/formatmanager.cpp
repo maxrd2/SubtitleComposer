@@ -42,10 +42,10 @@
 #include "youtubecaptions/youtubecaptionsinputformat.h"
 #include "youtubecaptions/youtubecaptionsoutputformat.h"
 
-#include <QtCore/QFile>
-#include <QtCore/QFileInfo>
-#include <QtCore/QTextCodec>
-#include <QtCore/QTextStream>
+#include <QFile>
+#include <QFileInfo>
+#include <QTextCodec>
+#include <QTextStream>
 
 #include <KCharsets>
 #include <QUrl>

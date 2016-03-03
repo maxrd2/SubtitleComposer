@@ -24,7 +24,7 @@
 #include "../widgets/timeedit.h"
 #include "../widgets/simplerichtextedit.h"
 
-#include <QtCore/QTimer>
+#include <QTimer>
 #include <QLabel>
 #include <QToolButton>
 #include <QGroupBox>

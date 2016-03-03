@@ -32,9 +32,6 @@ class SubViewer2OutputFormat : public OutputFormat
 {
 	friend class FormatManager;
 
-public:
-	virtual ~SubViewer2OutputFormat() {}
-
 protected:
 	virtual QString dumpSubtitles(const Subtitle &subtitle, bool primary) const
 	{

@@ -20,7 +20,7 @@
 
 #include "textoverlaywidget.h"
 
-#include <QtCore/QCoreApplication>
+#include <QCoreApplication>
 #include <QPainter>
 #include <QTextDocument>
 #include <QAbstractTextDocumentLayout>

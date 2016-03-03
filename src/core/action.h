@@ -26,7 +26,7 @@
 
 #include <typeinfo>
 
-#include <QtCore/QString>
+#include <QString>
 
 namespace SubtitleComposer {
 class Action

@@ -24,7 +24,7 @@
 #include <config.h>
 #endif
 
-#include <QtCore/QString>
+#include <QString>
 #include <QValidator>
 
 // class TimeValidator : public QRegExpValidator
