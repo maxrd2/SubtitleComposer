@@ -29,7 +29,7 @@
 
 #include <QtCore/QString>
 
-class QTimer;
+QT_FORWARD_DECLARE_CLASS(QTimer)
 
 namespace SubtitleComposer {
 class DecoderBackend;

@@ -27,9 +27,9 @@
 #include "actionwithtargetdialog.h"
 #include "../../core/subtitleline.h"
 
-class QGroupBox;
-class QCheckBox;
-class QGridLayout;
+QT_FORWARD_DECLARE_CLASS(QGroupBox)
+QT_FORWARD_DECLARE_CLASS(QCheckBox)
+QT_FORWARD_DECLARE_CLASS(QGridLayout)
 
 namespace SubtitleComposer {
 class ActionWithErrorTargetsDialog : public ActionWithTargetDialog

@@ -186,9 +186,9 @@ ScriptsManager::createScript(const QString &sN)
 
 	QTextStream outputStream(&scriptFile);
 	QString scriptExtension = QFileInfo(scriptName).suffix().toLower();
-	if(scriptExtension == "rb")
+	if(scriptExtension == QLatin1String("rb"))
 		outputStream << "#!/usr/bin/env ruby";
-	else if(scriptExtension == "py")
+	else if(scriptExtension == QLatin1String("py"))
 		outputStream << "#!/usr/bin/env python";
 	outputStream << "\n";
 
@@ -342,10 +342,10 @@ ScriptsManager::runScript(const QString &sN)
 	krossAction.addObject(debug, "debug");
 
 	krossAction.setFile(m_scripts[scriptName]);
-	if(krossAction.interpreter() == "" && scriptName.right(3) == ".js")
+	if(krossAction.interpreter().isEmpty() && scriptName.right(3) == QLatin1String(".js"))
 		krossAction.setInterpreter("qtscript");
 	// default javascript interpreter has weird (crash inducing) bugs
-	else if(krossAction.interpreter() == "javascript")
+	else if(krossAction.interpreter() == QLatin1String("javascript"))
 		krossAction.setInterpreter("qtscript");
 
 	{
@@ -432,7 +432,7 @@ ScriptsManager::reloadScripts()
 			m_scripts[name] = path;
 
 			QString suffix = name.right(3);
-			if(suffix == ".js" || suffix == ".py" || suffix == ".js") {
+			if(suffix == QLatin1String(".js") || suffix == QLatin1String(".py") || suffix == QLatin1String(".js")) {
 				QAction *scriptAction = toolsMenu->addAction(name);
 				scriptAction->setObjectName(name);
 				actionCollection->addAction(name, scriptAction);

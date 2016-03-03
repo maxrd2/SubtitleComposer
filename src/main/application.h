@@ -39,8 +39,8 @@
 #include <QUrl>
 #include <sonnet/configwidget.h>
 
+QT_FORWARD_DECLARE_CLASS(QAction)
 class KComboBox;
-class QAction;
 class KToggleAction;
 class KRecentFilesActionExt;
 class KCodecActionExt;

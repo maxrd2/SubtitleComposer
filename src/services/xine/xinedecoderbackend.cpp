@@ -174,11 +174,11 @@ XineDecoderBackend::openFile(const QString &filePath)
 	// - Matroska files make xine_open() call hang
 	// - Ogg Vorbis files make  xine_get_next_audio_frame() call hang for the last frame
 	QString fileExtension = QFileInfo(filePath).suffix().toLower();
-	if(fileExtension == "mkv" || fileExtension == "ogg")
+	if(fileExtension == QLatin1String("mkv") || fileExtension == QLatin1String("ogg"))
 		return false;
 
 	QUrl fileUrl;
-	fileUrl.setScheme("file");
+	fileUrl.setScheme(QStringLiteral("file"));
 	fileUrl.setPath(filePath);
 
 	if(!xine_open(m_xineStream, fileUrl.url().toLocal8Bit()))
@@ -198,7 +198,7 @@ XineDecoderBackend::openFile(const QString &filePath)
 		QString audioStreamName = i18n("Audio Stream #%1", index + 1);
 		char lang[XINE_LANG_MAX];
 		if(xine_get_audio_lang(m_xineStream, index, lang))
-			audioStreamName += QString(" - ") + lang;
+			audioStreamName += QStringLiteral(" - ") + lang;
 
 		xine_set_param(m_xineStream, XINE_PARAM_AUDIO_CHANNEL_LOGICAL, index);
 		if(readNextFrame(true)) {

@@ -28,10 +28,10 @@
 #include <QtCore/QSize>
 #include <QWidget>
 
-class QResizeEvent;
-class QPaintEvent;
-class QMouseEvent;
-class QWheelEvent;
+QT_FORWARD_DECLARE_CLASS(QResizeEvent)
+QT_FORWARD_DECLARE_CLASS(QPaintEvent)
+QT_FORWARD_DECLARE_CLASS(QMouseEvent)
+QT_FORWARD_DECLARE_CLASS(QWheelEvent)
 
 namespace SubtitleComposer {
 class VideoWidget : public QWidget

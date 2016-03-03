@@ -90,7 +90,7 @@ MPlayerPlayerProcess::start(const QString &filePath, int winId, int audioStream,
 
 	if(SCConfig::mpVideoOutputEnabled()) {
 		args << "-vo" << SCConfig::mpVideoOutput();
-		if(SCConfig::mpVideoOutput() == "vdpau") {
+		if(SCConfig::mpVideoOutput() == QLatin1String("vdpau")) {
 			args << "-vc";
 			if(SCConfig::mpVdpau()) {
 				args << "ffh264vdpau,ffmpeg12vdpau,ffwmv3vdpau,ffvc1vdpau,ffodivxvdpau,";
@@ -387,7 +387,7 @@ MPlayerPlayerProcess::parseLine(const QString &line)
 		// Matroska audio
 		if(m_audioTagRegExp.indexIn(line) > -1) {
 			int ID = m_audioTagRegExp.cap(1).toInt();
-			if(m_audioTagRegExp.cap(2) == "NAME")
+			if(m_audioTagRegExp.cap(2) == QLatin1String("NAME"))
 				m_mediaData.audioTracks[ID].name = m_audioTagRegExp.cap(3);
 			else
 				m_mediaData.audioTracks[ID].language = m_audioTagRegExp.cap(3);
@@ -397,24 +397,24 @@ MPlayerPlayerProcess::parseLine(const QString &line)
 			QString tag = m_generalTagRegExp.cap(1);
 			QString value = m_generalTagRegExp.cap(2);
 
-			if(tag == "ID_AUDIO_ID") {      // Generic audio
+			if(tag == QLatin1String("ID_AUDIO_ID")) {      // Generic audio
 				int ID = value.toInt();
 				if(!m_mediaData.audioTracks.contains(ID))
 					m_mediaData.audioTracks.insert(ID, TrackData());
-			} else if(tag == "ID_LENGTH") {
+			} else if(tag == QLatin1String("ID_LENGTH")) {
 				m_mediaData.duration = value.toDouble();
-			} else if(tag == "ID_VIDEO_WIDTH") {
+			} else if(tag == QLatin1String("ID_VIDEO_WIDTH")) {
 				m_mediaData.hasVideo = true;
 				m_mediaData.videoWidth = value.toInt();
-			} else if(tag == "ID_VIDEO_HEIGHT") {
+			} else if(tag == QLatin1String("ID_VIDEO_HEIGHT")) {
 				m_mediaData.hasVideo = true;
 				m_mediaData.videoHeight = value.toInt();
-			} else if(tag == "ID_VIDEO_ASPECT") {
+			} else if(tag == QLatin1String("ID_VIDEO_ASPECT")) {
 				m_mediaData.hasVideo = true;
 				m_mediaData.videoDAR = value.toDouble();
 				if(m_mediaData.videoDAR == 0.0 && m_mediaData.videoWidth != 0.0 && m_mediaData.videoHeight != 0)
 					m_mediaData.videoDAR = (double)m_mediaData.videoWidth / m_mediaData.videoHeight;
-			} else if(tag == "ID_VIDEO_FPS") {
+			} else if(tag == QLatin1String("ID_VIDEO_FPS")) {
 				bool ok;
 				m_mediaData.videoFPS = value.toDouble(&ok);
 				if(!ok)

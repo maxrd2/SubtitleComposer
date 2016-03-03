@@ -27,9 +27,9 @@
 
 #include "actionwithtargetdialog.h"
 
-class QCheckBox;
-class QSpinBox;
-class QButtonGroup;
+QT_FORWARD_DECLARE_CLASS(QCheckBox)
+QT_FORWARD_DECLARE_CLASS(QSpinBox)
+QT_FORWARD_DECLARE_CLASS(QButtonGroup)
 
 namespace SubtitleComposer {
 class AutoDurationsDialog : public ActionWithTargetDialog

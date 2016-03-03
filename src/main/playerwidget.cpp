@@ -31,8 +31,8 @@
 #include "../widgets/timeedit.h"
 
 #include <QtCore/QEvent>
-#include <QDragEnterEvent>
 #include <QDropEvent>
+#include <QMimeData>
 #include <QKeyEvent>
 
 #include <QMenu>
@@ -391,47 +391,33 @@ bool
 PlayerWidget::eventFilter(QObject *object, QEvent *event)
 {
 	if(object == m_layeredWidget) {
-		if(event->type() == QEvent::DragEnter) {
-			/*
-			FIXME:
-			QDragEnterEvent *dragEnterEvent = static_cast<QDragEnterEvent *>(event);
-			QList<QUrl> urls = QList<QUrl>::fromMimeData(dragEnterEvent->mimeData());
-			if(!urls.isEmpty())
-				dragEnterEvent->accept();
-			else
-				dragEnterEvent->ignore();
-			return true;
-			*/
-		} else if(event->type() == QEvent::DragMove) {
-			return true;            // eat event
-		} else if(event->type() == QEvent::Drop) {
-			/*
-			FIXME:
-			QDropEvent *dropEvent = static_cast<QDropEvent *>(event);
-
-			QList<QUrl> urls = QList<QUrl>::fromMimeData(dropEvent->mimeData());
-			if(!urls.isEmpty()) {
-				for(QList<QUrl>::ConstIterator it = urls.begin(), end = urls.end(); it != end; ++it) {
-					const QUrl &url = *it;
-
-					if(url.scheme() != "file")
-						continue;
-
-					app()->openVideo(url);
-					break;
+		switch(event->type()) {
+		case QEvent::DragEnter:
+		case QEvent::Drop:
+			foreach(const QUrl &url, static_cast<QDropEvent *>(event)->mimeData()->urls()) {
+				if(url.scheme() == QLatin1String("file")) {
+					event->accept();
+					if(event->type() == QEvent::Drop) {
+						app()->openVideo(url);
+					}
+					return true; // eat event
 				}
 			}
+			event->ignore();
+			return true;
 
-			return true;            // eat event
-			*/
-		} else if(event->type() == QEvent::KeyPress) {
+		case QEvent::DragMove:
+			return true; // eat event
+
+		case QEvent::KeyPress: {
 			// NOTE: when on full screen mode, the keyboard input is received but
 			// for some reason it doesn't trigger the correct actions automatically
 			// so we process the event and handle the issue ourselves.
-
 			QKeyEvent *keyEvent = static_cast<QKeyEvent *>(event);
 			return app()->triggerAction(QKeySequence((keyEvent->modifiers() & ~Qt::KeypadModifier) + keyEvent->key()));
-		} else if(event->type() == QEvent::MouseMove) {
+		}
+
+		case QEvent::MouseMove: {
 			QMouseEvent *mouseEvent = static_cast<QMouseEvent *>(event);
 			if(mouseEvent->globalPos() != m_currentCursorPos) {
 				m_currentCursorPos = mouseEvent->globalPos();
@@ -440,7 +426,13 @@ PlayerWidget::eventFilter(QObject *object, QEvent *event)
 				if(m_fullScreenControls->isAttached())
 					m_fullScreenControls->toggleVisible(true);
 			}
+			break;
 		}
+
+		default:
+			;
+		}
+
 	} else if(object == m_infoControlsGroupBox || object->parent() == m_infoControlsGroupBox) {
 		if(event->type() != QEvent::MouseButtonRelease)
 			return QWidget::eventFilter(object, event);
@@ -458,7 +450,7 @@ PlayerWidget::eventFilter(QObject *object, QEvent *event)
 		if(menu.exec(mouseEvent->globalPos()) == action)
 			SCConfig::setShowPositionTimeEdit(!SCConfig::showPositionTimeEdit());
 
-		return true;                    // eat event
+		return true; // eat event
 	}
 
 	return QWidget::eventFilter(object, event);

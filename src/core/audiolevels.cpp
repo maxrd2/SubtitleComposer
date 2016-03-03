@@ -59,7 +59,7 @@ AudioLevels::load(const QUrl &fileUrl)
 
 	QTextStream textStream(file);
 
-	if(QString("audiolevels") != textStream.readLine())
+	if(QStringLiteral("audiolevels") != textStream.readLine())
 		return false;
 
 	m_mediaUrl = QUrl(textStream.readLine());

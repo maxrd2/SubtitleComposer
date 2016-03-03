@@ -283,7 +283,7 @@ XinePlayerBackend::updateAudioData()
 		QString audioStreamName = i18n("Audio Stream #%1", index + 1);
 		char lang[128];
 		if(xine_get_audio_lang(m_xineStream, index, lang))
-			audioStreamName += QString(" - ") + lang;
+			audioStreamName += QStringLiteral(" - ") + lang;
 		audioStreams << audioStreamName;
 	}
 
@@ -426,7 +426,7 @@ XinePlayerBackend::initializeXine(WId winId)
 	m_x11Visual.frame_output_cb = &XinePlayerBackend::frameOutputCallback;
 	m_x11Visual.user_data = (void *)this;
 
-	QStringList videoDriverNames = QString("xv xvmc opengl xxmc sdl xshm fb XDirectFB DirectFB aa caca auto").split(' ');
+	QStringList videoDriverNames = QStringLiteral("xv xvmc opengl xxmc sdl xshm fb XDirectFB DirectFB aa caca auto").split(' ');
 	if(SCConfig::xineVideoEnabled())
 		videoDriverNames.prepend(SCConfig::xineVideo());
 	foreach(QString videoDriver, videoDriverNames) {
@@ -460,7 +460,7 @@ XinePlayerBackend::initializeXine(WId winId)
 		return false;
 	}
 
-	QStringList audioDriverNames = QString("alsa oss jack pulseaudio esd auto").split(' ');
+	QStringList audioDriverNames = QStringLiteral("alsa oss jack pulseaudio esd auto").split(' ');
 	if(SCConfig::xineAudioEnabled())
 		audioDriverNames.prepend(SCConfig::xineAudio());
 	foreach(QString audioDriver, audioDriverNames) {

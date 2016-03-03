@@ -31,9 +31,9 @@
 
 #include <QtCore/QObject>
 
-class QGroupBox;
-class QRadioButton;
-class QDialog;
+QT_FORWARD_DECLARE_CLASS(QGroupBox)
+QT_FORWARD_DECLARE_CLASS(QRadioButton)
+QT_FORWARD_DECLARE_CLASS(QDialog)
 class KReplace;
 class KReplaceDialog;
 

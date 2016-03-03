@@ -83,7 +83,7 @@ protected:
 	}
 
 	MicroDVDOutputFormat() :
-		OutputFormat("MicroDVD", QString("sub:txt").split(":")),
+		OutputFormat(QStringLiteral("MicroDVD"), QStringList() << QStringLiteral("sub") << QStringLiteral("txt")),
 		m_lineBuilder("{%1}{%2}%3\n")
 	{
 		m_stylesMap[0] = "{y:}";

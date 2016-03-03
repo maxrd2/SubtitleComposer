@@ -27,10 +27,10 @@
 
 #include <QDialog>
 
-class QLabel;
-class QProgressBar;
-class QCloseEvent;
-class QDialogButtonBox;
+QT_FORWARD_DECLARE_CLASS(QLabel)
+QT_FORWARD_DECLARE_CLASS(QProgressBar)
+QT_FORWARD_DECLARE_CLASS(QCloseEvent)
+QT_FORWARD_DECLARE_CLASS(QDialogButtonBox)
 
 namespace SubtitleComposer {
 class ProgressDialog : public QDialog

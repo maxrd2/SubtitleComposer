@@ -265,26 +265,26 @@ SString::setRichString(const QString &string)
 		int newStyle = currentStyle;
 		QColor newColor(currentColor);
 
-		if(matched == "b") {
+		if(matched == QLatin1String("b")) {
 			newStyle |= SString::Bold;
-		} else if(matched == "i") {
+		} else if(matched == QLatin1String("i")) {
 			newStyle |= SString::Italic;
-		} else if(matched == "u") {
+		} else if(matched == QLatin1String("u")) {
 			newStyle |= SString::Underline;
-		} else if(matched == "s") {
+		} else if(matched == QLatin1String("s")) {
 			newStyle |= SString::StrikeThrough;
-		} else if(matched == "font") {
+		} else if(matched == QLatin1String("font")) {
 			newStyle |= SString::Color;
 			newColor.setNamedColor(tagRegExp.cap(4).toLower());
-		} else if(matched == "/b") {
+		} else if(matched == QLatin1String("/b")) {
 			newStyle &= ~SString::Bold;
-		} else if(matched == "/i") {
+		} else if(matched == QLatin1String("/i")) {
 			newStyle &= ~SString::Italic;
-		} else if(matched == "/u") {
+		} else if(matched == QLatin1String("/u")) {
 			newStyle &= ~SString::Underline;
-		} else if(matched == "/s") {
+		} else if(matched == QLatin1String("/s")) {
 			newStyle &= ~SString::StrikeThrough;
-		} else if(matched == "/font") {
+		} else if(matched == QLatin1String("/font")) {
 			newStyle &= ~SString::Color;
 			newColor.setNamedColor("-invalid-");
 		}

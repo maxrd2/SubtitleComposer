@@ -27,9 +27,9 @@
 #include "actiondialog.h"
 #include "../../core/time.h"
 
-class QCheckBox;
+QT_FORWARD_DECLARE_CLASS(QCheckBox)
+QT_FORWARD_DECLARE_CLASS(QPushButton)
 class TimeEdit;
-class QPushButton;
 
 namespace SubtitleComposer {
 class SplitSubtitleDialog : public ActionDialog

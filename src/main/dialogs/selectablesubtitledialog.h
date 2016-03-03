@@ -29,8 +29,8 @@
 
 #include <QUrl>
 
-class QGridLayout;
-class QGroupBox;
+QT_FORWARD_DECLARE_CLASS(QGridLayout)
+QT_FORWARD_DECLARE_CLASS(QGroupBox)
 class KLineEdit;
 class KComboBox;
 

@@ -276,7 +276,7 @@ GStreamer::inspectPad(GstPad *pad, const QString &prefix)
 {
 	gchar *padname = gst_pad_get_name(pad);
 
-	QString message = prefix + QString("PAD %1 (%2)")
+	QString message = prefix + QStringLiteral("PAD %1 (%2)")
 					   .arg(padname)
 					   .arg(gst_pad_get_direction(pad) == GST_PAD_SRC ? "SOURCE" : "SINK");
 
@@ -305,13 +305,13 @@ GStreamer::inspectPad(GstPad *pad, const QString &prefix)
 void
 GStreamer::inspectCaps(GstCaps *caps, const QString &prefix)
 {
-	QString message = prefix + QString("CAPS (%1)")
+	QString message = prefix + QStringLiteral("CAPS (%1)")
 					   .arg(gst_caps_is_fixed(caps) ? "FIXED" : "NON FIXED");
 
 	gchar *debug = gst_caps_to_string(caps);
 	QString token;
 	foreach(token, QString(debug).split(';'))
-	message += "\n - " + token.trimmed();
+	message += QStringLiteral("\n - ") + token.trimmed();
 	g_free(debug);
 
 	qDebug() << message.trimmed();
@@ -361,7 +361,7 @@ GStreamer::inspectMessage(GstMessage *msg)
 	}
 
 	gchar *name = gst_element_get_name(GST_MESSAGE_SRC(msg));
-	QString message = QString("message %1 from %2").arg(GST_MESSAGE_TYPE_NAME(msg)).arg(name);
+	QString message = QStringLiteral("message %1 from %2").arg(GST_MESSAGE_TYPE_NAME(msg)).arg(name);
 	g_free(name);
 	if(!data.isEmpty())
 		message += ": " + data;

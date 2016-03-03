@@ -29,7 +29,7 @@
 #include <QtCore/QObject>
 #include <QtCore/QEventLoop>
 
-class QTimerEvent;
+QT_FORWARD_DECLARE_CLASS(QTimerEvent);
 
 // QxtSignalWaiter is, sadly, not reentrant. In particular, only one QxSignalWaiter
 // object can be safely waiting at a time. If a second QxSignalWaiter is used while

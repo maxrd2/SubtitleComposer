@@ -32,15 +32,15 @@
 #include <QtCore/QPoint>
 #include <QWidget>
 
+QT_FORWARD_DECLARE_CLASS(QGridLayout)
+QT_FORWARD_DECLARE_CLASS(QGroupBox)
+QT_FORWARD_DECLARE_CLASS(QLabel)
+QT_FORWARD_DECLARE_CLASS(QToolButton)
+QT_FORWARD_DECLARE_CLASS(QSlider)
 class LayeredWidget;
 class TextOverlayWidget;
 class AttachableWidget;
 class TimeEdit;
-class QGridLayout;
-class QGroupBox;
-class QLabel;
-class QToolButton;
-class QSlider;
 
 namespace SubtitleComposer {
 class Player;

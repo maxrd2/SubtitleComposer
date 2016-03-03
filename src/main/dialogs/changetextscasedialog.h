@@ -26,8 +26,8 @@
 
 #include "actionwithtargetdialog.h"
 
-class QCheckBox;
-class QRadioButton;
+QT_FORWARD_DECLARE_CLASS(QCheckBox)
+QT_FORWARD_DECLARE_CLASS(QRadioButton)
 
 namespace SubtitleComposer {
 class ChangeTextsCaseDialog : public ActionWithTargetDialog

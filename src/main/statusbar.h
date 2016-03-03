@@ -29,8 +29,8 @@
 
 #include <QStatusBar>
 
-class QProgressBar;
-class QToolButton;
+QT_FORWARD_DECLARE_CLASS(QProgressBar)
+QT_FORWARD_DECLARE_CLASS(QToolButton)
 
 namespace SubtitleComposer {
 // NOTE "StatusBar" seems to be conflicting with something so we have to use another class name

@@ -28,7 +28,7 @@
 #include "actionwithtargetdialog.h"
 #include "../../core/time.h"
 
-class QSpinBox;
+QT_FORWARD_DECLARE_CLASS(QSpinBox)
 
 namespace SubtitleComposer {
 class FixOverlappingTimesDialog : public ActionWithTargetDialog

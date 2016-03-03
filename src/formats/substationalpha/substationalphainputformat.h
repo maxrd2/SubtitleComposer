@@ -60,22 +60,22 @@ protected:
 			for(QStringList::ConstIterator it = commandsList.begin(), end = commandsList.end(); it != end; ++it) {
 				if(it->isEmpty()) {
 					continue;
-				} else if(*it == "i0") {
+				} else if(*it == QLatin1String("i0")) {
 					newStyleFlags &= ~SString::Italic;
-				} else if(*it == "b0") {
+				} else if(*it == QLatin1String("b0")) {
 					newStyleFlags &= ~SString::Bold;
-				} else if(*it == "u0") {
+				} else if(*it == QLatin1String("u0")) {
 					newStyleFlags &= ~SString::Underline;
-				} else if(*it == "i1") {
+				} else if(*it == QLatin1String("i1")) {
 					newStyleFlags |= SString::Italic;
 				} else if(it->at(0) == 'b') {
 					// it's usually followed 1, but can be weight of the font: 400, 700, ...
 					newStyleFlags |= SString::Bold;
-				} else if(*it == "u1") {
+				} else if(*it == QLatin1String("u1")) {
 					newStyleFlags |= SString::Underline;
 				} else if(it->at(0) == 'c') {
 					QString val = ("000000" + it->mid(3, -2)).right(6);
-					if(val == "000000") {
+					if(val == QLatin1String("000000")) {
 						newStyleFlags &= ~SString::Color;
 						newColor = 0;
 					} else {

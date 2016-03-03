@@ -38,7 +38,7 @@ ChangeFrameRateDialog::ChangeFrameRateDialog(double fromFramesPerSecond, QWidget
 
 	m_fromFramesPerSecondComboBox = new KComboBox(false, settingsGroupBox);
 	m_fromFramesPerSecondComboBox->setEditable(true);
-	m_fromFramesPerSecondComboBox->addItems(QString("15 20 23.976 24 25 29.970 30").split(' '));
+	m_fromFramesPerSecondComboBox->addItems(QStringLiteral("15 20 23.976 24 25 29.970 30").split(' '));
 	m_fromFramesPerSecondComboBox->setCurrentIndex(2);
 	setFromFramesPerSecond(fromFramesPerSecond);
 
@@ -48,7 +48,7 @@ ChangeFrameRateDialog::ChangeFrameRateDialog(double fromFramesPerSecond, QWidget
 
 	m_toFramesPerSecondComboBox = new KComboBox(false, settingsGroupBox);
 	m_toFramesPerSecondComboBox->setEditable(true);
-	m_toFramesPerSecondComboBox->addItems(QString("15 20 23.976 24 25 29.970 30").split(' '));
+	m_toFramesPerSecondComboBox->addItems(QStringLiteral("15 20 23.976 24 25 29.970 30").split(' '));
 	m_toFramesPerSecondComboBox->setCurrentIndex(2);
 
 	QLabel *toFramesPerSecondLabel = new QLabel(settingsGroupBox);

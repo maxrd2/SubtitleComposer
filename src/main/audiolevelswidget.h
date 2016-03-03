@@ -30,8 +30,8 @@
 
 #include <QWidget>
 
-class QRegion;
-class QPolygon;
+QT_FORWARD_DECLARE_CLASS(QRegion)
+QT_FORWARD_DECLARE_CLASS(QPolygon)
 
 namespace SubtitleComposer {
 class AudioLevelsWidget : public QWidget

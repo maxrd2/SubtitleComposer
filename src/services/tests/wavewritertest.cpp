@@ -61,7 +61,7 @@ convertoToFormat(int bitsPerSample, int channels)
 
 		QxtSignalWaiter decodingWaiter(decoder, SIGNAL(stopped()));
 		WaveFormat outputFormat(decoder->audioStreamFormats().at(audioStream).sampleRate(), channels, bitsPerSample);
-		QString outputPath = filesDir + QString("converted/") + inputFile.left(inputFile.length() - 4) + "_" + outputFormat.toString() + ".wav";
+		QString outputPath = filesDir + QStringLiteral("converted/") + inputFile.left(inputFile.length() - 4) + "_" + outputFormat.toString() + ".wav";
 		qDebug() << "decoding as" << outputFormat.toString() << "to" << outputPath;
 		decoder->decode(audioStream, outputPath, outputFormat);
 		qDebug() << "waiting coversion end signal";

@@ -351,7 +351,7 @@ GStreamerPlayerBackend::updateAudioData()
 				g_free(str);
 			}
 			if(gst_tag_list_get_string(tags, GST_TAG_AUDIO_CODEC, &str)) {
-				audioStreamName += QString(" [") + str + "]";
+				audioStreamName += QStringLiteral(" [") + str + "]";
 				g_free(str);
 			}
 			if(gst_tag_list_get_uint(tags, GST_TAG_BITRATE, &rate)) {

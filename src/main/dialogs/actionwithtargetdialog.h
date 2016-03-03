@@ -32,9 +32,9 @@
 
 #include <KLocalizedString>
 
-class QGridLayout;
-class QGroupBox;
-class QButtonGroup;
+QT_FORWARD_DECLARE_CLASS(QGridLayout)
+QT_FORWARD_DECLARE_CLASS(QGroupBox)
+QT_FORWARD_DECLARE_CLASS(QButtonGroup)
 
 namespace SubtitleComposer {
 class ActionWithTargetDialog : public ActionDialog

@@ -31,7 +31,7 @@
 #include <QtCore/QList>
 #include <QtCore/QAbstractItemModel>
 
-class QTimer;
+QT_FORWARD_DECLARE_CLASS(QTimer)
 
 namespace SubtitleComposer {
 class ErrorsModel;

@@ -27,6 +27,7 @@
 #include "../inputformat.h"
 
 #include <QtCore/QRegExp>
+#include <QtCore/QStringBuilder>
 
 namespace SubtitleComposer {
 class MicroDVDInputFormat : public InputFormat
@@ -47,7 +48,7 @@ protected:
 		// if present, the FPS must by indicated by the first entry with both initial and final frames at 1
 		bool ok;
 		double framesPerSecond = m_lineRegExp.cap(3).toDouble(&ok);
-		if(ok && m_lineRegExp.cap(1) == "1" && m_lineRegExp.cap(2) == "1") {
+		if(ok && m_lineRegExp.cap(1) == QLatin1String("1") && m_lineRegExp.cap(2) == QLatin1String("1")) {
 			// first line contained the frames per second
 			subtitle.setFramesPerSecond(framesPerSecond);
 
@@ -80,7 +81,7 @@ protected:
 				int newStyle = currentStyle;
 				QRgb newColor = currentColor;
 
-				if(tag == "Y") {
+				if(tag == QLatin1String("Y")) {
 					globalStyle = 0;
 					if(val.contains('b'))
 						globalStyle |= SString::Bold;
@@ -88,9 +89,9 @@ protected:
 						globalStyle |= SString::Italic;
 					if(val.contains('u'))
 						globalStyle |= SString::Underline;
-				} else if(tag == "C") {
-					globalColor = val.length() != 7 ? 0 : QColor("#" + val.mid(5, 2) + val.mid(3, 2) + val.mid(1, 2)).rgb();
-				} else if(tag == "y") {
+				} else if(tag == QLatin1String("C")) {
+					globalColor = val.length() != 7 ? 0 : QColor(QChar('#') % val.mid(5, 2) % val.mid(3, 2) % val.mid(1, 2)).rgb();
+				} else if(tag == QLatin1String("y")) {
 					newStyle = 0;
 					if(val.contains('b'))
 						newStyle |= SString::Bold;
@@ -98,8 +99,8 @@ protected:
 						newStyle |= SString::Italic;
 					if(val.contains('u'))
 						newStyle |= SString::Underline;
-				} else if(tag == "c") {
-					newColor = val.length() != 7 ? 0 : QColor("#" + val.mid(5, 2) + val.mid(3, 2) + val.mid(1, 2)).rgb();
+				} else if(tag == QLatin1String("c")) {
+					newColor = val.length() != 7 ? 0 : QColor(QChar('#') % val.mid(5, 2) % val.mid(3, 2) % val.mid(1, 2)).rgb();
 				}
 
 				if(newStyle != currentStyle || currentColor != newColor) {
@@ -135,7 +136,7 @@ protected:
 	}
 
 	MicroDVDInputFormat() :
-		InputFormat("MicroDVD", QString("sub:txt").split(":")),
+		InputFormat(QStringLiteral("MicroDVD"), QStringList() << QStringLiteral("sub") << QStringLiteral("txt")),
 		m_lineRegExp("\\{(\\d+)\\}\\{(\\d+)\\}([^\n]+)\n", Qt::CaseInsensitive),
 		m_styleRegExp("\\{([yc]):([^}]*)\\}", Qt::CaseInsensitive)
 	{}

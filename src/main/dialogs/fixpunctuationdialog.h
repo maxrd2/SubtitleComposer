@@ -26,7 +26,7 @@
 
 #include "actionwithtargetdialog.h"
 
-class QCheckBox;
+QT_FORWARD_DECLARE_CLASS(QCheckBox)
 
 namespace SubtitleComposer {
 class FixPunctuationDialog : public ActionWithTargetDialog

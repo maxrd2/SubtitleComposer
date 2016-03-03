@@ -32,7 +32,7 @@
 #include <QtCore/QMap>
 #include <QWidget>
 
-class QTimer;
+QT_FORWARD_DECLARE_CLASS(QTimer)
 
 namespace SubtitleComposer {
 class PlayerBackend;

@@ -29,8 +29,8 @@
 
 #include <QtCore/QObject>
 
-class QGroupBox;
-class QRadioButton;
+QT_FORWARD_DECLARE_CLASS(QGroupBox)
+QT_FORWARD_DECLARE_CLASS(QRadioButton)
 class KFind;
 class KFindDialog;
 

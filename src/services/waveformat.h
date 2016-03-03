@@ -90,7 +90,7 @@ public:
 	inline int blockAlign() const { return m_channels * m_bitsPerSample / 8; }
 	inline static int blockAlign(int channels, int bitsPerSample) { return channels * bitsPerSample / 8; }
 
-	inline QString toString() const { return QString("%1Hz.%2ch.%3bps.%4").arg(m_sampleRate).arg(m_channels).arg(m_bitsPerSample).arg(m_integer ? "int" : "float"); }
+	inline QString toString() const { return QStringLiteral("%1Hz.%2ch.%3bps.%4").arg(m_sampleRate).arg(m_channels).arg(m_bitsPerSample).arg(m_integer ? "int" : "float"); }
 
 private:
 	int m_sampleRate;

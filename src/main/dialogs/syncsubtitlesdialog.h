@@ -26,7 +26,7 @@
 
 #include "selectablesubtitledialog.h"
 
-class QRadioButton;
+QT_FORWARD_DECLARE_CLASS(QRadioButton)
 
 namespace SubtitleComposer {
 class SyncSubtitlesDialog : public SelectableSubtitleDialog

@@ -27,8 +27,9 @@
 #include "actionwithtargetdialog.h"
 #include "../../core/time.h"
 
-class QGroupBox;
-class QCheckBox;
+QT_FORWARD_DECLARE_CLASS(QGroupBox)
+QT_FORWARD_DECLARE_CLASS(QCheckBox)
+QT_FORWARD_DECLARE_CLASS(QCheckBox)
 class TimeEdit;
 
 namespace SubtitleComposer {
