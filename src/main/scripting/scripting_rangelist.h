@@ -26,7 +26,7 @@
 
 #include "../../core/rangelist.h"
 
-#include <QtCore/QObject>
+#include <QObject>
 
 namespace SubtitleComposer {
 namespace Scripting {

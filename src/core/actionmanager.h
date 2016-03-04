@@ -26,9 +26,9 @@
 
 #include "action.h"
 
-#include <QtCore/QObject>
-#include <QtCore/QTime>
-#include <QtCore/QLinkedList>
+#include <QObject>
+#include <QTime>
+#include <QLinkedList>
 
 namespace SubtitleComposer {
 class ActionManager : public QObject

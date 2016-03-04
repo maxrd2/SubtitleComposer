@@ -23,9 +23,9 @@
 #include "dialogs/actionwithtargetdialog.h"
 #include "profiler.h"
 
-#include <QtCore/QVariant>
-#include <QtCore/QTimer>
-#include <QtCore/QEvent>
+#include <QVariant>
+#include <QTimer>
+#include <QEvent>
 #include <QScrollBar>
 #include <QDropEvent>
 #include <QMimeData>

@@ -26,7 +26,7 @@
 
 #include <climits>
 
-#include <QtCore/QList>
+#include <QList>
 
 #include <QDebug>
 

@@ -26,15 +26,12 @@
 
 #include "../inputformat.h"
 
-#include <QtCore/QRegExp>
+#include <QRegExp>
 
 namespace SubtitleComposer {
 class YouTubeCaptionsInputFormat : public InputFormat
 {
 	friend class FormatManager;
-
-public:
-	virtual ~YouTubeCaptionsInputFormat() {}
 
 protected:
 	virtual bool parseSubtitles(Subtitle &subtitle, const QString &data) const

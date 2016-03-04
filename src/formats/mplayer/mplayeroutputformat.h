@@ -32,9 +32,6 @@ class MPlayerOutputFormat : public OutputFormat
 {
 	friend class FormatManager;
 
-public:
-	virtual ~MPlayerOutputFormat() {}
-
 protected:
 	virtual QString dumpSubtitles(const Subtitle &subtitle, bool primary) const
 	{

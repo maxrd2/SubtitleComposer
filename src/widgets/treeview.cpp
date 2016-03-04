@@ -19,7 +19,7 @@
 
 #include "treeview.h"
 
-#include <QtCore/QTimer>
+#include <QTimer>
 #include <QScrollBar>
 
 TreeView::TreeView(QWidget *parent) :

@@ -20,7 +20,7 @@
 
 #include "gstreamer.h"
 
-#include <QtCore/QStringList>
+#include <QStringList>
 
 #include <QDebug>
 

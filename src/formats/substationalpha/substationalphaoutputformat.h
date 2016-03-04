@@ -34,8 +34,6 @@ class SubStationAlphaOutputFormat : public OutputFormat
 	friend class FormatManager;
 
 public:
-	virtual ~SubStationAlphaOutputFormat() {}
-
 	QString fromSString(const SString &text) const
 	{
 

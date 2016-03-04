@@ -24,7 +24,7 @@
 #include <config.h>
 #endif
 
-#include <QtCore/QObject>
+#include <QObject>
 
 class RangeListTest : public QObject
 {

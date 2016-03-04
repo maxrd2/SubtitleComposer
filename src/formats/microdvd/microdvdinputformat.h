@@ -26,16 +26,13 @@
 
 #include "../inputformat.h"
 
-#include <QtCore/QRegExp>
-#include <QtCore/QStringBuilder>
+#include <QRegExp>
+#include <QStringBuilder>
 
 namespace SubtitleComposer {
 class MicroDVDInputFormat : public InputFormat
 {
 	friend class FormatManager;
-
-public:
-	virtual ~MicroDVDInputFormat() {}
 
 protected:
 	virtual bool parseSubtitles(Subtitle &subtitle, const QString &data) const

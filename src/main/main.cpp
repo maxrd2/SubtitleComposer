@@ -29,8 +29,8 @@
 #include <KAboutData>
 #include <KLocalizedString>
 
-#include <QtCore/QFile>
-#include <QtCore/QDir>
+#include <QFile>
+#include <QDir>
 #include <QCommandLineParser>
 #include <QCommandLineOption>
 

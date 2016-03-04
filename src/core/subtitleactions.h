@@ -28,8 +28,8 @@
 #include "rangelist.h"
 #include "subtitle.h"
 
-#include <QtCore/QString>
-#include <QtCore/QList>
+#include <QString>
+#include <QList>
 
 namespace SubtitleComposer {
 class CompositeAction;

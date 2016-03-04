@@ -21,7 +21,7 @@
 #include "../core/subtitleline.h"
 #include "../services/player.h"
 
-#include <QtCore/QRect>
+#include <QRect>
 #include <QPainter>
 #include <QPaintEvent>
 #include <QRegion>

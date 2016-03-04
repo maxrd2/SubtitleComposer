@@ -24,7 +24,7 @@
 #include <config.h>
 #endif
 
-#include <QtCore/QList>
+#include <QList>
 
 #include <QAction>
 

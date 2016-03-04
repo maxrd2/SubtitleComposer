@@ -26,8 +26,8 @@
 
 #include "../../core/subtitleline.h"
 
-#include <QtCore/QObject>
-#include <QtCore/QString>
+#include <QObject>
+#include <QString>
 
 namespace SubtitleComposer {
 namespace Scripting {

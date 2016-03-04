@@ -22,7 +22,7 @@
 #include "opensubtitledialog.h"
 #include "../application.h"
 
-#include <QtCore/QTextCodec>
+#include <QTextCodec>
 #include <QLabel>
 #include <QGroupBox>
 #include <QGridLayout>

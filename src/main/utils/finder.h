@@ -27,7 +27,7 @@
 #include "../../core/subtitle.h"
 #include "../../core/subtitleline.h"
 
-#include <QtCore/QObject>
+#include <QObject>
 
 QT_FORWARD_DECLARE_CLASS(QGroupBox)
 QT_FORWARD_DECLARE_CLASS(QRadioButton)

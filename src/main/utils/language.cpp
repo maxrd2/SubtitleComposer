@@ -20,7 +20,7 @@
 
 #include "language.h"
 
-#include <QtCore/QFile>
+#include <QFile>
 #include <QStandardPaths>
 #include <QLocale>
 

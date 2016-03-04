@@ -25,7 +25,7 @@
 #include <config.h>
 #endif
 
-#include <QtCore/QList>
+#include <QList>
 #include <QWidget>
 
 /// a class used to show varios widgets simultaneously one in top

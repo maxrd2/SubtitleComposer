@@ -27,13 +27,13 @@
 
 #include "mediadata.h"
 
-#include <QtCore/QObject>
-#include <QtCore/QString>
-#include <QtCore/QRegExp>
-#include <QtCore/QByteArray>
-#include <QtCore/QList>
-#include <QtCore/QTimer>
-#include <QtCore/QProcess>
+#include <QObject>
+#include <QString>
+#include <QRegExp>
+#include <QByteArray>
+#include <QList>
+#include <QTimer>
+#include <QProcess>
 
 namespace SubtitleComposer {
 class MPlayerPlayerProcess : public QProcess

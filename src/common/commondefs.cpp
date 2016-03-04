@@ -23,11 +23,11 @@
 #include <cstdlib>
 #include <climits>
 
-#include <QtCore/QString>
-#include <QtCore/QStringList>
-#include <QtCore/QRegExp>
-#include <QtCore/QDir>
-#include <QtCore/QFileInfo>
+#include <QString>
+#include <QStringList>
+#include <QRegExp>
+#include <QDir>
+#include <QFileInfo>
 
 #include <QDebug>
 #include <QStandardPaths>

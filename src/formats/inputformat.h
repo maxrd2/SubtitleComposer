@@ -30,8 +30,6 @@ namespace SubtitleComposer {
 class InputFormat : public Format
 {
 public:
-	virtual ~InputFormat() {}
-
 	bool readSubtitle(Subtitle &subtitle, bool primary, const QString &data) const
 	{
 		Subtitle newSubtitle;

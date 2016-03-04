@@ -27,9 +27,9 @@
 #include "language.h"
 #include "../dialogs/progressdialog.h"
 
-#include <QtCore/QObject>
-#include <QtCore/QMap>
-#include <QtCore/QByteArray>
+#include <QObject>
+#include <QMap>
+#include <QByteArray>
 
 class KJob;
 namespace KIO {

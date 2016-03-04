@@ -26,7 +26,7 @@
 
 #include "../inputformat.h"
 
-#include <QtCore/QRegExp>
+#include <QRegExp>
 
 namespace SubtitleComposer {
 // FIXME TMPlayer Multiline variant
@@ -34,9 +34,6 @@ namespace SubtitleComposer {
 class TMPlayerInputFormat : public InputFormat
 {
 	friend class FormatManager;
-
-public:
-	virtual ~TMPlayerInputFormat() {}
 
 protected:
 	virtual bool parseSubtitles(Subtitle &subtitle, const QString &data) const

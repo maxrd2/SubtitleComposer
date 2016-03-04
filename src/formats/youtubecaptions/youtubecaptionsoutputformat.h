@@ -32,9 +32,6 @@ class YouTubeCaptionsOutputFormat : public OutputFormat
 {
 	friend class FormatManager;
 
-public:
-	virtual ~YouTubeCaptionsOutputFormat() {}
-
 protected:
 	virtual QString dumpSubtitles(const Subtitle &subtitle, bool primary) const
 	{
@@ -68,8 +65,8 @@ protected:
 	}
 
 	YouTubeCaptionsOutputFormat() :
-		OutputFormat("YouTube Captions", QStringList("sbv")),
-		m_dialogueBuilder("%1%2%3%4%5%6%7\n\n")
+		OutputFormat(QStringLiteral("YouTube Captions"), QStringList(QStringLiteral("sbv"))),
+		m_dialogueBuilder(QStringLiteral("%1%2%3%4%5%6%7\n\n"))
 	{}
 
 	const QString m_dialogueBuilder;

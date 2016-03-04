@@ -22,7 +22,7 @@
 #include "gstreamerconfigwidget.h"
 #include "gstreamer.h"
 
-#include <QtCore/QTimer>
+#include <QTimer>
 
 #include <QDebug>
 

@@ -27,8 +27,8 @@
 
 #include "../playerbackend.h"
 
-#include <QtCore/QString>
-#include <QtCore/QTextStream>   // NOTE this is only here because Qt complains otherwise when including Phonon/Global...
+#include <QString>
+#include <QTextStream>   // NOTE this is only here because Qt complains otherwise when including Phonon/Global...
 #include <QWidget>
 #include <KDE/Phonon/Global>
 

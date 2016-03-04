@@ -27,9 +27,9 @@
 
 #include "../playerbackend.h"
 
-#include <QtCore/QString>
-#include <QtCore/QRect>
-#include <QtCore/QTimer>
+#include <QString>
+#include <QRect>
+#include <QTimer>
 #include <QWidget>
 
 #include <xine.h>

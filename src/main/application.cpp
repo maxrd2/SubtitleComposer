@@ -75,11 +75,11 @@
 #include "../services/decoderbackend.h"
 #include "../profiler.h"
 
-#include <QtCore/QDir>
-#include <QtCore/QFileInfo>
-#include <QtCore/QTextCodec>
-#include <QtCore/QProcess>
-#include <QtCore/QStringBuilder>
+#include <QDir>
+#include <QFileInfo>
+#include <QTextCodec>
+#include <QProcess>
+#include <QStringBuilder>
 #include <QGridLayout>
 #include <QMenu>
 
@@ -222,8 +222,7 @@ Application::~Application()
 
 	// delete m_mainWindow; the window is destroyed when it's closed
 
-	if(m_subtitle)
-		delete m_subtitle;
+	delete m_subtitle;
 //  delete m_audiolevels; // FIXME audio levels
 }
 

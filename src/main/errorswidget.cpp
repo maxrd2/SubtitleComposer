@@ -27,7 +27,7 @@
 
 #include <climits>
 
-#include <QtCore/QTimer>
+#include <QTimer>
 #include <QKeyEvent>
 #include <QMouseEvent>
 #include <QContextMenuEvent>

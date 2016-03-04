@@ -29,8 +29,8 @@
 #include "range.h"
 #include "rangelist.h"
 
-#include <QtCore/QObject>
-#include <QtCore/QList>
+#include <QObject>
+#include <QList>
 
 namespace SubtitleComposer {
 class SubtitleIterator : public QObject

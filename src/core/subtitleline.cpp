@@ -22,7 +22,7 @@
 #include "subtitlelineactions.h"
 #include "subtitle.h"
 
-#include <QtCore/QRegExp>
+#include <QRegExp>
 
 #include <KLocalizedString>
 

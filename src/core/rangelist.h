@@ -26,7 +26,7 @@
 
 #include "range.h"
 
-#include <QtCore/QList>
+#include <QList>
 #include <QStringList>
 
 #include <QDebug>

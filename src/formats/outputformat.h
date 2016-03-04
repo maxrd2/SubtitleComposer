@@ -29,7 +29,6 @@ namespace SubtitleComposer {
 class OutputFormat : public Format
 {
 public:
-	virtual ~OutputFormat() {}
 
 	QString writeSubtitle(const Subtitle &subtitle, bool primary) const
 	{

@@ -25,9 +25,9 @@
 #include <config.h>
 #endif
 
-#include <QtCore/QString>
-#include <QtCore/QStringList>
-#include <QtCore/QMap>
+#include <QString>
+#include <QStringList>
+#include <QMap>
 #include <QWidget>
 
 namespace SubtitleComposer {

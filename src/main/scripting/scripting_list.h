@@ -24,8 +24,8 @@
 #include <config.h>
 #endif
 
-#include <QtCore/QObject>
-#include <QtCore/QList>
+#include <QObject>
+#include <QList>
 
 namespace SubtitleComposer {
 namespace Scripting {

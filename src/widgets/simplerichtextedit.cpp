@@ -22,8 +22,8 @@
 
 #include "../main/dialogs/subtitlecolordialog.h"
 
-#include <QtCore/QRegExp>
-#include <QtCore/QEvent>
+#include <QRegExp>
+#include <QEvent>
 #include <QMenu>
 #include <QShortcutEvent>
 #include <QContextMenuEvent>

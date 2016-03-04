@@ -32,9 +32,6 @@ class SubRipOutputFormat : public OutputFormat
 {
 	friend class FormatManager;
 
-public:
-	virtual ~SubRipOutputFormat() {}
-
 protected:
 	virtual QString dumpSubtitles(const Subtitle &subtitle, bool primary) const
 	{

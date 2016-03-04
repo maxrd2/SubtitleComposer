@@ -20,7 +20,7 @@
 
 #include "translatedialog.h"
 
-#include <QtCore/QFile>
+#include <QFile>
 #include <QLabel>
 #include <QComboBox>
 #include <QGroupBox>

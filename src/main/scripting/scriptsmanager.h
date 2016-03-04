@@ -25,8 +25,8 @@
 #include <config.h>
 #endif
 
-#include <QtCore/QObject>
-#include <QtCore/QMap>
+#include <QObject>
+#include <QMap>
 #include <QUrl>
 
 #include "ui_scriptsmanager.h"
