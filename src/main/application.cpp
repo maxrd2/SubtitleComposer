@@ -29,9 +29,7 @@
 #include "actions/useractionnames.h"
 #include "actions/kcodecactionext.h"
 #include "actions/krecentfilesactionext.h"
-
 #include "configs/configdialog.h"
-
 #include "dialogs/opensubtitledialog.h"
 #include "dialogs/savesubtitledialog.h"
 #include "dialogs/joinsubtitlesdialog.h"
@@ -69,6 +67,7 @@
 #include "../formats/formatmanager.h"
 #include "../videoplayer/videoplayer.h"
 #include "../videoplayer/playerbackend.h"
+#include "../widgets/waveformwidget.h"
 #include "../profiler.h"
 
 #include <QDir>
@@ -155,7 +154,9 @@ Application::init()
 	connect(m_player, SIGNAL(muteChanged(bool)), this, SLOT(onPlayerMuteChanged(bool)));
 
 	QList<QObject *> listeners;
-	listeners << actionManager << m_mainWindow << m_playerWidget << m_linesWidget << m_curLineWidget << /*m_errorsWidget <<*/ m_finder << m_replacer << m_errorFinder << m_speller << m_errorTracker << m_scriptsManager;
+	listeners << actionManager << m_mainWindow << m_playerWidget << m_linesWidget
+			  << m_curLineWidget << m_finder << m_replacer << m_errorFinder << m_speller
+			  << m_errorTracker << m_scriptsManager << m_mainWindow->m_waveformWidget;
 	for(QList<QObject *>::ConstIterator it = listeners.begin(), end = listeners.end(); it != end; ++it) {
 		connect(this, SIGNAL(subtitleOpened(Subtitle *)), *it, SLOT(setSubtitle(Subtitle *)));
 		connect(this, SIGNAL(subtitleClosed()), *it, SLOT(setSubtitle()));
@@ -2422,7 +2423,7 @@ Application::openVideo()
 
 	if(openDlg.exec() == QDialog::Accepted) {
 		m_lastVideoUrl = openDlg.selectedUrls().first();
-		openVideo(openDlg.selectedUrls().first());
+		openVideo(m_lastVideoUrl);
 	}
 }
 
@@ -2728,8 +2729,12 @@ void
 Application::onPlayerActiveAudioStreamChanged(int audioStream)
 {
 	KSelectAction *activeAudioStreamAction = (KSelectAction *)action(ACT_SET_ACTIVE_AUDIO_STREAM);
-	if(audioStream >= 0)
+	if(audioStream >= 0) {
 		activeAudioStreamAction->setCurrentItem(audioStream);
+		m_mainWindow->m_waveformWidget->setAudioStream(m_player->filePath(), audioStream);
+	} else {
+		m_mainWindow->m_waveformWidget->clearAudioStream();
+	}
 }
 
 void

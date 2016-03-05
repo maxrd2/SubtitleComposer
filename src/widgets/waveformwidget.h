@@ -1,9 +1,8 @@
-#ifndef MAINWINDOW_H
-#define MAINWINDOW_H
+#ifndef WAVEFORMWIDGET_H
+#define WAVEFORMWIDGET_H
 
 /**
- * Copyright (C) 2007-2009 Sergio Pistone <sergio_pistone@yahoo.com.ar>
- * Copyright (C) 2010-2015 Mladen Milinkovic <max@smoothware.net>
+ * Copyright (C) 2010-2016 Mladen Milinkovic <max@smoothware.net>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -25,44 +24,47 @@
 #include <config.h>
 #endif
 
+#include "../core/time.h"
 #include "../core/subtitle.h"
 
-#include <kxmlguiwindow.h>
+#include <QWidget>
 
-QT_FORWARD_DECLARE_CLASS(QSplitter)
+QT_FORWARD_DECLARE_CLASS(QRegion)
+QT_FORWARD_DECLARE_CLASS(QPolygon)
 
 namespace SubtitleComposer {
-class PlayerWidget;
-class LinesWidget;
-class CurrentLineWidget;
-class WaveformWidget;
-
-class MainWindow : public KXmlGuiWindow
+class WaveformWidget : public QWidget
 {
 	Q_OBJECT
 
-	friend class Application;
-
 public:
-	MainWindow();
-	virtual ~MainWindow();
+	WaveformWidget(QWidget *parent);
+	virtual ~WaveformWidget();
 
-	void loadConfig();
-	void saveConfig();
+	Time windowSize() const;
+	void setWindowSize(const Time &size);
 
 public slots:
 	void setSubtitle(Subtitle *subtitle = 0);
+	void setAudioStream(const QString &mediaFile, int audioStream);
+	void clearAudioStream();
 
 protected:
-	virtual bool queryClose();
+	virtual void paintEvent(QPaintEvent *);
+	virtual void resizeEvent(QResizeEvent *e);
 
-protected:
-	QSplitter *m_mainSplitter;
-	PlayerWidget *m_playerWidget;
-	LinesWidget *m_linesWidget;
-	CurrentLineWidget *m_curLineWidget;
-	QSplitter *m_horizontalSplitter;
-	WaveformWidget *m_waveformWidget;
+private slots:
+	void onPlayerPositionChanged(double seconds);
+
+private:
+	Subtitle *m_subtitle;
+
+	Time m_timeStart;
+	Time m_timeCurrent;
+	Time m_timeEnd;
+
+	int m_waveformChannels;
+	qreal **m_waveform;
 };
 }
 #endif

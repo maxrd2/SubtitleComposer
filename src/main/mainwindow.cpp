@@ -24,6 +24,7 @@
 #include "lineswidget.h"
 #include "currentlinewidget.h"
 #include "../videoplayer/videoplayer.h"
+#include "../widgets/waveformwidget.h"
 
 #include <QGridLayout>
 #include <QSplitter>
@@ -39,20 +40,31 @@ using namespace SubtitleComposer;
 MainWindow::MainWindow() :
 	KXmlGuiWindow(0)
 {
-	QWidget *mainWidget = new QWidget(this);
+	m_horizontalSplitter = new QSplitter(this);
 
-	m_splitter = new QSplitter(mainWidget);
+	QWidget *mainWidget = new QWidget(m_horizontalSplitter);
+	mainWidget->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
 
-	m_playerWidget = new PlayerWidget(m_splitter);
+	m_waveformWidget = new WaveformWidget(m_horizontalSplitter);
+	m_waveformWidget->setContentsMargins(0, 0, 0, 0);
+
+	m_horizontalSplitter->setOrientation(Qt::Horizontal);
+	m_horizontalSplitter->setLineWidth(0);
+	m_horizontalSplitter->setCollapsible(0, false);
+	m_horizontalSplitter->setSizes(QList<int>() << 400 << 100);
+
+	m_mainSplitter = new QSplitter(mainWidget);
+
+	m_playerWidget = new PlayerWidget(m_mainSplitter);
 	m_playerWidget->setContentsMargins(0, 0, 0, 0);
 
-	m_linesWidget = new LinesWidget(m_splitter);
+	m_linesWidget = new LinesWidget(m_mainSplitter);
 	m_linesWidget->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
 
-	m_splitter->setOrientation(Qt::Vertical);
-	m_splitter->setLineWidth(0);
-	m_splitter->setCollapsible(1, false);
-	m_splitter->setSizes(QList<int>() << 100 << 200);
+	m_mainSplitter->setOrientation(Qt::Vertical);
+	m_mainSplitter->setLineWidth(0);
+	m_mainSplitter->setCollapsible(1, false);
+	m_mainSplitter->setSizes(QList<int>() << 100 << 200);
 
 	m_curLineWidget = new CurrentLineWidget(mainWidget);
 	m_curLineWidget->setMaximumHeight(m_curLineWidget->minimumSizeHint().height());
@@ -60,10 +72,10 @@ MainWindow::MainWindow() :
 	QLayout *mainWidgetLayout = new QBoxLayout(QBoxLayout::TopToBottom, mainWidget);
 	mainWidgetLayout->setContentsMargins(5, 1, 5, 2);
 	mainWidgetLayout->setSpacing(5);
-	mainWidgetLayout->addWidget(m_splitter);
+	mainWidgetLayout->addWidget(m_mainSplitter);
 	mainWidgetLayout->addWidget(m_curLineWidget);
 
-	setCentralWidget(mainWidget);
+	setCentralWidget(m_horizontalSplitter);
 
 	statusBar()->show();
 	toolBar()->show();
@@ -85,16 +97,16 @@ void
 MainWindow::loadConfig()
 {
 	KConfigGroup group(KSharedConfig::openConfig()->group("MainWindow Settings"));
-
-	m_splitter->setSizes(group.readEntry("Splitter Sizes", m_splitter->sizes()));
+	m_mainSplitter->setSizes(group.readEntry("Splitter Sizes", m_mainSplitter->sizes()));
+	m_horizontalSplitter->setSizes(group.readEntry("Horizontal Splitter Sizes", m_horizontalSplitter->sizes()));
 }
 
 void
 MainWindow::saveConfig()
 {
 	KConfigGroup group(KSharedConfig::openConfig()->group("MainWindow Settings"));
-
-	group.writeEntry("Splitter Sizes", m_splitter->sizes());
+	group.writeEntry("Splitter Sizes", m_mainSplitter->sizes());
+	group.writeEntry("Horizontal Splitter Sizes", m_horizontalSplitter->sizes());
 }
 
 void
