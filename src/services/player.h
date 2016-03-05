@@ -1,30 +1,30 @@
 #ifndef PLAYER_H
 #define PLAYER_H
 
-/***************************************************************************
- *   Copyright (C) 2007-2009 Sergio Pistone (sergio_pistone@yahoo.com.ar)  *
- *                                                                         *
- *   This program is free software; you can redistribute it and/or modify  *
- *   it under the terms of the GNU General Public License as published by  *
- *   the Free Software Foundation; either version 2 of the License, or     *
- *   (at your option) any later version.                                   *
- *                                                                         *
- *   This program is distributed in the hope that it will be useful,       *
- *   but WITHOUT ANY WARRANTY; without even the implied warranty of        *
- *   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the         *
- *   GNU General Public License for more details.                          *
- *                                                                         *
- *   You should have received a copy of the GNU General Public License     *
- *   along with this program; if not, write to the                         *
- *   Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor,      *
- *   Boston, MA 02110-1301, USA.                                           *
- ***************************************************************************/
+/**
+ * Copyright (C) 2007-2009 Sergio Pistone <sergio_pistone@yahoo.com.ar>
+ * Copyright (C) 2010-2016 Mladen Milinkovic <max@smoothware.net>
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the
+ * Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor,
+ * Boston, MA 02110-1301, USA.
+ */
 
 #ifdef HAVE_CONFIG_H
 #include <config.h>
 #endif
 
-#include "service.h"
 #include "videowidget.h"
 
 #include <QString>
@@ -37,13 +37,15 @@ QT_FORWARD_DECLARE_CLASS(QTimer)
 namespace SubtitleComposer {
 class PlayerBackend;
 
-class Player : public Service
+class Player : public QObject
 {
 	Q_OBJECT
 
 public:
 	typedef enum {
-		Closed = Service::Initialized,          // same as Initialized
+		Uninitialized = 0,
+		Initialized,
+		Closed = Initialized,
 		Opening,
 		// Opened, same as >Opening
 		Playing,
@@ -51,13 +53,61 @@ public:
 		Ready                                   // same as Stopped or Finished
 	} State;
 
+	static Player * instance();
+
+	/**
+	 * @brief initialize - attempts to initialize the backend defined by prefBackendName; if that fails, attempts to initialize any other.
+	 * @param widgetParent
+	 * @param prefBackendName
+	 * @return false if there was already an initialized backend or none could be initialized; true otherwise
+	 */
+	virtual bool initialize(QWidget *widgetParent, const QString &prefBackendName = QString());
+
+	/**
+	 * @brief reinitialize - finalizes the active backend and attempts to initialize the one defined by
+	 *  prefBackendName (or the active one if is not valid a valid name); if that fails, attempts to
+	 *  initialize any other backend.
+	 * @param prefBackendName
+	 * @return false if there was no initialized backend or none could be initialized; true otherwise
+	 */
+	virtual bool reinitialize(const QString &prefBackendName = QString());
+
+	/**
+	 * @brief finalize - finalizes the active backend
+	 */
+	virtual void finalize();
+
+	/**
+	 * @brief reconfigure - re-read active backend configuration
+	 * @return false if there is no active backend or if error occured
+	 */
+	virtual bool reconfigure();
+
+	/**
+	 * @brief dummyBackendName - players should provide a dummy backend (one that implements its
+	 *  operations as noops) so that the application can act reasonably even in absence of (real)
+	 *  supported backends.
+	 * @return
+	 */
 	virtual QString dummyBackendName() const { return "Dummy"; }
 
-	inline PlayerBackend * backend(const QString &name) const { return (PlayerBackend *)Service::backend(name); }
+	QString activeBackendName() const;
+	QStringList backendNames() const;
 
-	inline PlayerBackend * activeBackend() const { return (PlayerBackend *)Service::activeBackend(); }
+	inline bool isActiveBackendDummy() const;
 
-	static Player * instance();
+	inline PlayerBackend * backend(const QString &name) const;
+	inline PlayerBackend * activeBackend() const;
+
+	/**
+	 * @brief isApplicationClosingDown - Indicates that the application is closing down and the backends
+	 *  shouldn't rely on it for some things (such as processing events).
+	 * @return
+	 */
+	bool isApplicationClosingDown() const;
+
+	inline int state() const;
+	inline bool isInitialized() const;
 
 	inline VideoWidget * videoWidget();
 
@@ -75,11 +125,16 @@ public:
 	inline int activeAudioStream() const;
 	const QStringList & audioStreams() const;
 
-	virtual bool reinitialize(const QString &prefBackendName = QString());
-
 public slots:
-	// return values of these functions don't imply that the operation was performed OK
-	// but that it was allowed (a false return value means that nothing was attempted).
+	/**
+	 * @brief setApplicationClosingDown - Used to indicate the active backend that the application is closing down
+	 */
+	void setApplicationClosingDown();
+
+	/**
+	 * @brief return values of open/closeFile() don't imply that the operation was performed OK but that
+	 * it was attempted. Error/success could be signaled later through fileOpenError/fileOpened() signals
+	 */
 	bool openFile(const QString &filePath);
 	bool closeFile();
 
@@ -97,6 +152,9 @@ public slots:
 	void setMuted(bool mute);
 
 signals:
+	void backendInitialized(PlayerBackend *playerBackend);
+	void backendFinalized(PlayerBackend *playerBackend);
+
 	void fileOpenError(const QString &filePath, const QString &reason);
 	void fileOpened(const QString &filePath);
 	void fileClosed();
@@ -120,25 +178,28 @@ signals:
 	void wheelUp();
 	void wheelDown();
 
-protected:
+private:
+	Player();
+	virtual ~Player();
+
 	/**
 	 * @brief initializeBackend - attempts to initialize the backend, making it the active backend.
 	 * @param backend
 	 * @param widgetParent
 	 * @return true if backend is the active backend after the call; false if there was already another backend initialized
 	 */
-	virtual bool initializeBackend(ServiceBackend *backend, QWidget *widgetParent);
+	virtual bool initializeBackend(PlayerBackend *backend, QWidget *widgetParent);
 
 	/**
 	 * @brief finalizeBackend - finalizes the active backend, leaving no active backend.
 	 * @param backend
-	 * returns??? the previously initialized backend (or 0 if there was none).
+	 * returns??? the previously initialized backend (or NULL if there was none)
 	 */
-	virtual void finalizeBackend(ServiceBackend *backend);
+	virtual void finalizeBackend(PlayerBackend *backend);
 
-private:
-	Player();
-	virtual ~Player();
+	void addBackend(PlayerBackend *backend);
+
+	bool initializeBackendPrivate(PlayerBackend *backend);
 
 	static double logarithmicVolume(double percentage);
 
@@ -165,6 +226,14 @@ private slots:
 	void onOpenFileTimeout(const QString &reason = QString());
 
 private:
+	QMap<QString, PlayerBackend *> m_backends;
+	PlayerBackend *m_activeBackend;
+	QWidget *m_widgetParent;
+
+	bool m_applicationClosingDown;
+
+	int m_state;
+
 	VideoWidget *m_videoWidget;
 
 	QString m_filePath;
@@ -185,6 +254,36 @@ private:
 
 	friend class PlayerBackend;
 };
+
+int
+Player::state() const
+{
+	return m_state;
+}
+
+bool
+Player::isInitialized() const
+{
+	return m_state >= Player::Initialized;
+}
+
+PlayerBackend *
+Player::activeBackend() const
+{
+	return m_activeBackend;
+}
+
+PlayerBackend *
+Player::backend(const QString &backendName) const
+{
+	return m_backends.contains(backendName) ? m_backends[backendName] : 0;
+}
+
+bool
+Player::isActiveBackendDummy() const
+{
+	return activeBackendName() == dummyBackendName();
+}
 
 VideoWidget *
 Player::videoWidget()

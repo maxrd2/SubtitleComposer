@@ -57,8 +57,6 @@ set(services_LIBS
 )
 
 set(services_SRCS
-	${CMAKE_CURRENT_SOURCE_DIR}/service.cpp
-	${CMAKE_CURRENT_SOURCE_DIR}/servicebackend.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/player.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/playerbackend.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/videowidget.cpp

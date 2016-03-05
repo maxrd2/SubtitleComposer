@@ -4,17 +4,17 @@
 /**
  * Copyright (C) 2007-2009 Sergio Pistone <sergio_pistone@yahoo.com.ar>
  * Copyright (C) 2010-2015 Mladen Milinkovic <max@smoothware.net>
- * 
+ *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with this program; if not, write to the
  * Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor,
@@ -25,7 +25,6 @@
 #include <config.h>
 #endif
 
-#include "servicebackend.h"
 #include "player.h"
 
 #include <QObject>
@@ -33,7 +32,7 @@
 #include <QWidget>
 
 namespace SubtitleComposer {
-class PlayerBackend : public ServiceBackend
+class PlayerBackend : public QObject
 {
 	Q_OBJECT
 
@@ -46,7 +45,43 @@ public:
 	PlayerBackend(Player *player, const QString &name);
 	virtual ~PlayerBackend();
 
+	inline const QString & name() const { return m_name; }
+
+// If possible (i.e., configs are compatible), copies the config object into
+// the player backend config. Ownership of config object it's not transferred.
+	void setConfig();
+	virtual QWidget * newConfigWidget(QWidget *parent) = 0;
+
+	bool isDummy() const;
+
 protected:
+	/**
+	 * @brief isInitialized - There can only be one initialized backend at the time (the active
+	 *  backend). Since the active backend is also guaranteed to be initialized, this
+	 *  return the same as isActiveBackend() method.
+	 * @return true if initialize() has been successful on this backend; false otherwise
+	 */
+	bool isInitialized() const;
+	bool isActiveBackend() const;
+
+	/**
+	 * @brief initialize - Perform any required initialization
+	 * @param widgetParent
+	 * @return
+	 */
+	virtual QWidget * initialize(QWidget *widgetParent) = 0;
+
+	/**
+	 * @brief finalize - Cleanup anything that has been initialized by initialize(), excluding the
+	 *  videoWidget() which is destroyed after calling fninalize() (all references to it must be
+	 *  cleaned up, however)
+	 */
+	virtual void finalize() = 0;
+
+	virtual bool reconfigure() = 0;
+
+	inline Player * player() const { return m_player; }
+
 	virtual bool doesVolumeCorrection() const;
 	virtual bool supportsChangingAudioStream(bool *onTheFly) const;
 
@@ -108,8 +143,6 @@ protected:
 	 */
 	virtual bool setVolume(double volume) = 0;
 
-	inline Player * player() const { return static_cast<Player *>(service()); }
-
 	/**
 	 * @brief setPlayerPosition
 	 * @param position value in seconds
@@ -129,6 +162,10 @@ protected:
 	inline void setPlayerFramesPerSecond(double framesPerSecond) { player()->setFramesPerSecond(framesPerSecond); }
 
 	inline void setPlayerAudioStreams(const QStringList &audioStreams, int activeAudioStream) { player()->setAudioStreams(audioStreams, activeAudioStream); }
+
+private:
+	Player *m_player;
+	QString m_name;
 };
 }
 

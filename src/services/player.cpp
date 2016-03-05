@@ -1,6 +1,6 @@
 /**
  * Copyright (C) 2007-2009 Sergio Pistone <sergio_pistone@yahoo.com.ar>
- * Copyright (C) 2010-2015 Mladen Milinkovic <max@smoothware.net>
+ * Copyright (C) 2010-2016 Mladen Milinkovic <max@smoothware.net>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -84,6 +84,10 @@ protected:
 using namespace SubtitleComposer;
 
 Player::Player() :
+	m_activeBackend(0),
+	m_widgetParent(0),
+	m_applicationClosingDown(false),
+	m_state(Player::Uninitialized),
 	m_videoWidget(0),
 	m_filePath(),
 	m_position(-1.0),
@@ -122,7 +126,8 @@ addBackend(new PhononPlayerBackend(this));
 }
 
 Player::~Player()
-{}
+{
+}
 
 Player *
 Player::instance()
@@ -133,7 +138,143 @@ Player::instance()
 }
 
 bool
-Player::initializeBackend(ServiceBackend *backend, QWidget *widgetParent)
+Player::initialize(QWidget *widgetParent, const QString &prefBackendName)
+{
+	if(isInitialized()) {
+		qCritical() << "Player has already been initialized";
+		return false;
+	}
+
+	m_widgetParent = widgetParent;
+
+	if(m_backends.contains(prefBackendName)) {
+		// we first try to set the requested backend as active
+		initializeBackendPrivate(m_backends[prefBackendName]);
+	}
+	// if that fails, we set the first available backend as active
+	if(!m_activeBackend) {
+		for(QMap<QString, PlayerBackend *>::ConstIterator it = m_backends.begin(), end = m_backends.end(); it != end; ++it)
+			if(initializeBackendPrivate(it.value()))
+				break;
+	}
+
+	if(!m_activeBackend)
+		qCritical() << "Failed to initialize a player backend";
+
+	return m_activeBackend;
+}
+
+bool
+Player::reinitialize(const QString &prefBackendName)
+{
+	if(!isInitialized())
+		return false;
+
+	PlayerBackend *targetBackend = m_backends.contains(prefBackendName) ? m_backends[prefBackendName] : m_activeBackend;
+
+	finalize();
+
+	if(!initializeBackendPrivate(targetBackend)) {
+		for(QMap<QString, PlayerBackend *>::ConstIterator it = m_backends.begin(), end = m_backends.end(); it != end; ++it)
+			if(initializeBackendPrivate(it.value()))
+				break;
+	}
+
+	if(!m_activeBackend) {
+		qCritical() << "Failed to initialize a player backend";
+		return false;
+	}
+
+	if(!m_filePath.isEmpty())
+		openFile(m_filePath);
+
+	return true;
+}
+
+void
+Player::finalize()
+{
+	if(!isInitialized())
+		return;
+
+	PlayerBackend *wasActiveBackend = m_activeBackend;
+
+	finalizeBackend(m_activeBackend);
+
+	m_state = Player::Uninitialized;
+	m_activeBackend = 0;
+
+	emit backendFinalized(wasActiveBackend);
+}
+
+/*virtual*/ bool
+Player::reconfigure()
+{
+	if(!isInitialized() || !m_activeBackend)
+		return false;
+
+	return m_activeBackend->reconfigure();
+}
+
+bool
+Player::initializeBackendPrivate(PlayerBackend *backend)
+{
+	if(m_activeBackend == backend)
+		return true;
+
+	if(m_activeBackend)
+		return false;
+
+	if(initializeBackend(backend, m_widgetParent)) {
+		m_state = Player::Initialized;
+		m_activeBackend = backend;
+		emit backendInitialized(backend);
+	}
+
+	return m_activeBackend == backend;
+}
+
+bool
+Player::isApplicationClosingDown() const
+{
+	return m_applicationClosingDown;
+}
+
+void
+Player::setApplicationClosingDown()
+{
+	m_applicationClosingDown = true;
+}
+
+QString
+Player::activeBackendName() const
+{
+	for(QMap<QString, PlayerBackend *>::ConstIterator it = m_backends.begin(), end = m_backends.end(); it != end; ++it)
+		if(it.value() == m_activeBackend)
+			return it.key();
+	return QString();
+}
+
+QStringList
+Player::backendNames() const
+{
+	return m_backends.keys();
+}
+
+void
+Player::addBackend(PlayerBackend *backend)
+{
+	if(m_backends.contains(backend->name())) {
+		qCritical() << "attempted to insert duplicated player backend" << backend->name();
+		return;
+	}
+
+	m_backends[backend->name()] = backend;
+	backend->setParent(this); // Player will delete *backend
+}
+
+bool
+Player::initializeBackend(PlayerBackend *backend, QWidget *widgetParent)
 {
 	if((m_videoWidget = static_cast<VideoWidget *>(backend->initialize(widgetParent)))) {
 		connect(m_videoWidget, SIGNAL(destroyed()), this, SLOT(onVideoWidgetDestroyed()));
@@ -158,7 +299,7 @@ Player::initializeBackend(ServiceBackend *backend, QWidget *widgetParent)
 }
 
 void
-Player::finalizeBackend(ServiceBackend *backend)
+Player::finalizeBackend(PlayerBackend *backend)
 {
 	closeFile();
 
@@ -170,16 +311,6 @@ Player::finalizeBackend(ServiceBackend *backend)
 		m_videoWidget->deleteLater();
 		m_videoWidget = 0;
 	}
-}
-
-bool
-Player::reinitialize(const QString &prefBackendName)
-{
-	QString file = m_filePath;
-	bool res = Service::reinitialize(prefBackendName);
-	if(res && !file.isEmpty())
-		openFile(file);
-	return res;
 }
 
 void

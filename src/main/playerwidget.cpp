@@ -78,7 +78,7 @@ PlayerWidget::PlayerWidget(QWidget *parent) :
 	m_layeredWidget->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
 
 	m_player->initialize(m_layeredWidget, SCConfig::playerBackend());
-	connect(m_player, SIGNAL(backendInitialized(ServiceBackend *)), this, SLOT(onPlayerBackendInitialized()));
+	connect(m_player, SIGNAL(backendInitialized(PlayerBackend *)), this, SLOT(onPlayerBackendInitialized()));
 
 	m_textOverlay = new TextOverlayWidget(m_layeredWidget);
 	m_textOverlay->setAlignment(Qt::AlignHCenter | Qt::AlignBottom);
