@@ -37,6 +37,7 @@ add_subdirectory(core)
 add_subdirectory(formats)
 add_subdirectory(widgets)
 add_subdirectory(videoplayer)
+add_subdirectory(streamprocessor)
 add_subdirectory(main)
 
 # do the configuration of config.h at the end, so all the necessary variables have been set

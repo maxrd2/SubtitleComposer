@@ -35,7 +35,7 @@ namespace SubtitleComposer {
 class GStreamer
 {
 	friend class GStreamerPlayerBackend;
-	friend class GStreamerDecoderBackend;
+	friend class StreamProcessor;
 
 private:
 	static bool init();

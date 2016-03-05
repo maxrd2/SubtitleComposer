@@ -77,6 +77,8 @@ MainWindow::MainWindow() :
 
 	setCentralWidget(m_horizontalSplitter);
 
+	statusBar()->addPermanentWidget(m_waveformWidget->progressWidget());
+
 	statusBar()->show();
 	toolBar()->show();
 	menuBar()->show();

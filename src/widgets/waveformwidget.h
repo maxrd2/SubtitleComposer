@@ -26,11 +26,28 @@
 
 #include "../core/time.h"
 #include "../core/subtitle.h"
+#include "../videoplayer/waveformat.h"
+#include "../streamprocessor/streamprocessor.h"
 
 #include <QWidget>
 
 QT_FORWARD_DECLARE_CLASS(QRegion)
 QT_FORWARD_DECLARE_CLASS(QPolygon)
+QT_FORWARD_DECLARE_CLASS(QProgressBar)
+
+// FIXME: make sample size configurable or drop this
+/*
+#define BYTES_PER_SAMPLE 2
+#define SAMPLE_TYPE qint16
+#define SIGNED_PAD 0 // 32768
+#define SAMPLE_MAX 32768 // 65535
+/*/
+#define BYTES_PER_SAMPLE 1
+#define SAMPLE_TYPE quint8
+#define SIGNED_PAD -128 // 0
+#define SAMPLE_MAX 128 // 255
+//*/
+#define SAMPLE_RATE_MILIS (8000 / 1000)
 
 namespace SubtitleComposer {
 class WaveformWidget : public QWidget
@@ -44,6 +61,8 @@ public:
 	Time windowSize() const;
 	void setWindowSize(const Time &size);
 
+	QWidget *progressWidget();
+
 public slots:
 	void setSubtitle(Subtitle *subtitle = 0);
 	void setAudioStream(const QString &mediaFile, int audioStream);
@@ -55,16 +74,28 @@ protected:
 
 private slots:
 	void onPlayerPositionChanged(double seconds);
+	void onStreamData(const void *buffer, const qint32 size, const WaveFormat *waveFormat);
+	void onStreamProgress(quint64 msecPos, quint64 msecLength);
+	void onStreamFinished();
 
 private:
+	QString m_mediaFile;
+	int m_streamIndex;
+
+	StreamProcessor *m_stream;
 	Subtitle *m_subtitle;
 
 	Time m_timeStart;
 	Time m_timeCurrent;
 	Time m_timeEnd;
 
+	qint64 m_waveformDuration;
+	quint32 m_waveformDataOffset;
 	int m_waveformChannels;
-	qreal **m_waveform;
+	SAMPLE_TYPE **m_waveform;
+
+	QWidget *m_progressWidget;
+	QProgressBar *m_progressBar;
 };
 }
 #endif

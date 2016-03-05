@@ -283,7 +283,9 @@ GStreamerPlayerBackend::onPlaybinTimerTimeout()
 			continue;
 		}
 
+#if defined(VERBOSE) || !defined(NDEBUG)
 		GStreamer::inspectMessage(msg);
+#endif
 
 		switch(GST_MESSAGE_TYPE(msg)) {
 		case GST_MESSAGE_STATE_CHANGED: {

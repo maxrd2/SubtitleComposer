@@ -1,6 +1,6 @@
 /**
  * Copyright (C) 2007-2009 Sergio Pistone <sergio_pistone@yahoo.com.ar>
- * Copyright (C) 2010-2015 Mladen Milinkovic <max@smoothware.net>
+ * Copyright (C) 2010-2016 Mladen Milinkovic <max@smoothware.net>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -21,6 +21,7 @@
 #include "gstreamer.h"
 
 #include <QStringList>
+#include <QStringBuilder>
 
 #include <QDebug>
 
@@ -147,22 +148,24 @@ GStreamer::formatFromAudioCaps(GstCaps *caps)
 {
 	WaveFormat format(0, 0, 0);
 
-	const GstStructure *capsStruct = gst_caps_get_structure(caps, 0);
-	if(capsStruct) {
-		const gchar *name = gst_structure_get_name(capsStruct);
-		format.setInteger(strcmp(name, "audio/x-raw-int") == 0);
+	if(gst_caps_get_size(caps) > 0) {
+		const GstStructure *capsStruct = gst_caps_get_structure(caps, 0);
+		if(capsStruct) {
+			const gchar *name = gst_structure_get_name(capsStruct);
+			format.setInteger(strcmp(name, "audio/x-raw-int") == 0);
 
-		QList<int> suggestedValues;
+			QList<int> suggestedValues;
 
-		if(gst_structure_has_field(capsStruct, "channels"))
-			format.setChannels(intValue(gst_structure_get_value(capsStruct, "channels"), true, suggestedValues));
+			if(gst_structure_has_field(capsStruct, "channels"))
+				format.setChannels(intValue(gst_structure_get_value(capsStruct, "channels"), true, suggestedValues));
 
-		if(gst_structure_has_field(capsStruct, "width"))
-			format.setBitsPerSample(intValue(gst_structure_get_value(capsStruct, "width"), true, suggestedValues));
+			if(gst_structure_has_field(capsStruct, "width"))
+				format.setBitsPerSample(intValue(gst_structure_get_value(capsStruct, "width"), true, suggestedValues));
 
-		suggestedValues << 48000 << 44100 << 24000 << 22050 << 12000 << 11025 << 8000;
-		if(gst_structure_has_field(capsStruct, "rate"))
-			format.setSampleRate(intValue(gst_structure_get_value(capsStruct, "rate"), true, suggestedValues));
+			suggestedValues << 48000 << 44100 << 24000 << 22050 << 12000 << 11025 << 8000;
+			if(gst_structure_has_field(capsStruct, "rate"))
+				format.setSampleRate(intValue(gst_structure_get_value(capsStruct, "rate"), true, suggestedValues));
+		}
 	}
 
 	return format;
@@ -171,17 +174,23 @@ GStreamer::formatFromAudioCaps(GstCaps *caps)
 GstCaps *
 GStreamer::audioCapsFromFormat(const WaveFormat &format, bool addSampleRate)
 {
-	GstCaps *caps = gst_caps_new_simple(format.isInteger() ? "audio/x-raw-int" : "audio/x-raw-float",
-										"endianness", G_TYPE_INT, (gint)1234,
-										"channels", G_TYPE_INT, (gint)format.channels(),
-										"width", G_TYPE_INT, (gint)format.bitsPerSample(),
-										"depth", G_TYPE_INT, (gint)format.bitsPerSample(),
-										NULL);
+	GstCaps *caps = gst_caps_new_empty_simple("audio/x-raw");
 	GstStructure *structure = gst_caps_get_structure(caps, 0);
+	if(format.bitsPerSample()) {
+		const char *fmt = "F32LE";
+		if(format.isInteger())
+			fmt = format.bitsPerSample() == 8 ? "U8" : "S16LE";
+		gst_structure_set(structure, "format", G_TYPE_STRING, fmt, NULL);
+		gst_structure_set(structure, "width", G_TYPE_INT, (gint)format.bitsPerSample(), NULL);
+		gst_structure_set(structure, "depth", G_TYPE_INT, (gint)format.bitsPerSample(), NULL);
+	}
+	if(format.channels())
+		gst_structure_set(structure, "channels", G_TYPE_INT, (gint)format.channels(), NULL);
 	if(format.isInteger())
 		gst_structure_set(structure, "signed", G_TYPE_BOOLEAN, (gboolean)format.isSigned(), NULL);
 	if(addSampleRate)
 		gst_structure_set(structure, "rate", G_TYPE_INT, (gint)format.sampleRate(), NULL);
+	qDebug() << "Generated caps: " << gst_caps_to_string(caps);
 	return caps;
 }
 
@@ -305,8 +314,7 @@ GStreamer::inspectPad(GstPad *pad, const QString &prefix)
 void
 GStreamer::inspectCaps(GstCaps *caps, const QString &prefix)
 {
-	QString message = prefix + QStringLiteral("CAPS (%1)")
-					   .arg(gst_caps_is_fixed(caps) ? "FIXED" : "NON FIXED");
+	QString message = prefix % " " % QStringLiteral("CAPS (%1)").arg(gst_caps_is_fixed(caps) ? "FIXED" : "NON FIXED");
 
 	gchar *debug = gst_caps_to_string(caps);
 	QString token;
@@ -351,13 +359,43 @@ GStreamer::inspectMessage(GstMessage *msg)
 		gchar *debug = NULL;
 		GError *error = NULL;
 		gst_message_parse_error(msg, &error, &debug);
-		data = QString(error ? error->message : "") + " " + QString(debug);
+		data = QString::number(error->code) % QStringLiteral(": ")
+				% QString::fromUtf8(error->message) % QStringLiteral(" - ")
+				% QString::fromUtf8(debug);
 		g_error_free(error);
 		g_free(debug);
 		break;
 	}
-	default:
+	case GST_MESSAGE_WARNING: {
+		gchar *debug = NULL;
+		GError *error = NULL;
+		gst_message_parse_warning(msg, &error, &debug);
+		data = QString::number(error->code) % QStringLiteral(": ")
+				% QString::fromUtf8(error->message) % QStringLiteral(" - ")
+				% QString::fromUtf8(debug);
+		g_error_free(error);
+		g_free(debug);
 		break;
+	}
+	case GST_MESSAGE_INFO: {
+		gchar *debug = NULL;
+		GError *error = NULL;
+		gst_message_parse_info(msg, &error, &debug);
+		data = QString::number(error->code) % QStringLiteral(": ")
+				% QString::fromUtf8(error->message) % QStringLiteral(" - ")
+				% QString::fromUtf8(debug);
+		g_error_free(error);
+		g_free(debug);
+		break;
+	}
+	default: {
+		const GstStructure *msgStruct = gst_message_get_structure(msg);
+		if(msgStruct) {
+			data = gst_structure_to_string(msgStruct);
+			data.truncate(100);
+		}
+		break;
+	}
 	}
 
 	gchar *name = gst_element_get_name(GST_MESSAGE_SRC(msg));

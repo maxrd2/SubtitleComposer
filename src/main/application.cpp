@@ -2733,7 +2733,7 @@ Application::onPlayerActiveAudioStreamChanged(int audioStream)
 		activeAudioStreamAction->setCurrentItem(audioStream);
 		m_mainWindow->m_waveformWidget->setAudioStream(m_player->filePath(), audioStream);
 	} else {
-		m_mainWindow->m_waveformWidget->clearAudioStream();
+//		m_mainWindow->m_waveformWidget->clearAudioStream();
 	}
 }
 
