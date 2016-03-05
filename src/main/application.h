@@ -46,7 +46,7 @@ class KRecentFilesActionExt;
 class KCodecActionExt;
 
 namespace SubtitleComposer {
-class Player;
+class VideoPlayer;
 
 class PlayerWidget;
 class LinesWidget;
@@ -273,7 +273,7 @@ private:
 	Format::NewLine m_subtitleTrEOL;
 	QString m_subtitleTrFormat;
 
-	Player *m_player;
+	VideoPlayer *m_player;
 
 	SubtitleLine *m_lastFoundLine;
 

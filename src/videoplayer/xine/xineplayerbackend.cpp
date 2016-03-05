@@ -45,7 +45,7 @@ using namespace SubtitleComposer;
 
 #define UPDATE_INTERVAL 50
 
-XinePlayerBackend::XinePlayerBackend(Player *player)
+XinePlayerBackend::XinePlayerBackend(VideoPlayer *player)
 	: PlayerBackend(player, "Xine"),
 	m_connection(0),
 	m_xineEngine(0),
@@ -127,7 +127,7 @@ XinePlayerBackend::openFile(const QString &filePath, bool &playingAfterCall)
 	if(!xine_play(m_xineStream, 0, 0))
 		return false;
 
-	setPlayerState(Player::Playing);
+	setPlayerState(VideoPlayer::Playing);
 
 	// this methods do nothing if the information is not available
 	updateVideoData();
@@ -151,7 +151,7 @@ XinePlayerBackend::play()
 	else
 		xine_set_param(m_xineStream, XINE_PARAM_SPEED, XINE_SPEED_NORMAL); // was paused
 
-	setPlayerState(Player::Playing);
+	setPlayerState(VideoPlayer::Playing);
 
 	m_timesTimer.start(UPDATE_INTERVAL);
 
@@ -164,7 +164,7 @@ XinePlayerBackend::pause()
 	m_timesTimer.stop();
 
 	xine_set_param(m_xineStream, XINE_PARAM_SPEED, XINE_SPEED_PAUSE);
-	setPlayerState(Player::Paused);
+	setPlayerState(VideoPlayer::Paused);
 
 	return true;
 }
@@ -218,7 +218,7 @@ XinePlayerBackend::stop()
 	m_timesTimer.stop();
 
 	xine_stop(m_xineStream);
-	setPlayerState(Player::Ready);
+	setPlayerState(VideoPlayer::Ready);
 
 	return true;
 }

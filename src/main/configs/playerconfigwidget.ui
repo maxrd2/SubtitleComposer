@@ -43,7 +43,7 @@
       <item row="1" column="0" alignment="Qt::AlignRight">
        <widget class="QLabel" name="label_3">
         <property name="text">
-         <string>Player backend:</string>
+         <string>VideoPlayer backend:</string>
         </property>
        </widget>
       </item>

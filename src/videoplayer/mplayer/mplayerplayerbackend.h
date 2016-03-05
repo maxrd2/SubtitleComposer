@@ -1,5 +1,5 @@
-#ifndef MPVBACKEND_H
-#define MPVBACKEND_H
+#ifndef MPLAYERPLAYERBACKEND_H
+#define MPLAYERPLAYERBACKEND_H
 
 /**
  * Copyright (C) 2007-2009 Sergio Pistone <sergio_pistone@yahoo.com.ar>
@@ -27,21 +27,19 @@
 
 #include "../playerbackend.h"
 
-#include <mpv/qthelper.hpp>
-
 #include <QWidget>
 #include <QString>
 
 namespace SubtitleComposer {
-class MPVProcess;
+class MPlayerPlayerProcess;
 
-class MPVBackend : public PlayerBackend
+class MPlayerPlayerBackend : public PlayerBackend
 {
 	Q_OBJECT
 
 public:
-	MPVBackend(Player *player);
-	virtual ~MPVBackend();
+	MPlayerPlayerBackend(VideoPlayer *player);
+	virtual ~MPlayerPlayerBackend();
 
 	virtual QWidget * newConfigWidget(QWidget *parent);
 
@@ -50,8 +48,6 @@ protected:
 	virtual void finalize();
 	void _finalize();
 	virtual bool reconfigure();
-
-	void waitState(Player::State state);
 
 	virtual bool openFile(const QString &filePath, bool &playingAfterCall);
 	virtual void closeFile();
@@ -65,26 +61,21 @@ protected:
 
 	virtual bool setVolume(double volume);
 
-	bool mpvInit();
-	void mpvExit();
-
-signals:
-	void mpvEvents();
-
 protected slots:
-	void onMPVEvents();
+	void onMediaDataLoaded();
+	void onPlayingReceived();
+	void onPausedReceived();
+	void onProcessExited();
+	void onPositionReceived(double seconds);
 
 protected:
 	void setupProcessArgs(const QString &filePath);
 
-	void mpvEventHandle(mpv_event *event);
-
-	static void wakeup(void *ctx);
-
 protected:
-	mpv_handle *m_mpv;
-	bool m_initialized;
-	QString m_currentFilePath;
+	MPlayerPlayerProcess *m_process;
+
+	double m_position;
+	bool m_reportUpdates;
 };
 }
 

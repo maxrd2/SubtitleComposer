@@ -47,7 +47,7 @@ class PhononPlayerBackend : public PlayerBackend
 	Q_OBJECT
 
 public:
-	PhononPlayerBackend(Player *player);
+	PhononPlayerBackend(VideoPlayer *player);
 	virtual ~PhononPlayerBackend();
 
 	virtual QWidget * newConfigWidget(QWidget *parent);

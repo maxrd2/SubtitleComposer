@@ -2,7 +2,7 @@ find_package(GLIB2 REQUIRED QUIET)
 find_package(GObject REQUIRED QUIET)
 find_package(LibXml2 REQUIRED QUIET)
 
-set(services_gstreamer_INCLUDE_DIR
+set(videoplayer_gstreamer_INCLUDE_DIR
 	${GLIB2_INCLUDE_DIR}
 	${LIBXML2_INCLUDE_DIR}
 	${GSTREAMER_INCLUDE_DIR}
@@ -11,12 +11,12 @@ set(services_gstreamer_INCLUDE_DIR
 	CACHE INTERNAL EXPORTEDVARIABLE
 )
 
-set(services_gstreamer_DEFS
+set(videoplayer_gstreamer_DEFS
 	${GOBJECT_DEFINITIONS}
 	CACHE INTERNAL EXPORTEDVARIABLE
 )
 
-set(services_gstreamer_LIBS
+set(videoplayer_gstreamer_LIBS
 	${GLIB2_LIBRARIES}
 	${GOBJECT_LIBRARIES}
 	${GSTREAMER_LIBRARIES}
@@ -25,7 +25,7 @@ set(services_gstreamer_LIBS
 	CACHE INTERNAL EXPORTEDVARIABLE
 )
 
-set(services_gstreamer_SRCS
+set(videoplayer_gstreamer_SRCS
 	${CMAKE_CURRENT_SOURCE_DIR}/gstreamerplayerbackend.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/gstreamerconfigwidget.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/gstreamerconfigwidget.ui

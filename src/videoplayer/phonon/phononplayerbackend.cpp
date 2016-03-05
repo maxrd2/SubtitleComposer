@@ -28,7 +28,7 @@
 
 using namespace SubtitleComposer;
 
-PhononPlayerBackend::PhononPlayerBackend(Player *player)
+PhononPlayerBackend::PhononPlayerBackend(VideoPlayer *player)
 	: PlayerBackend(player, "Phonon"),
 	m_mediaObject(0),
 	m_mediaController(0),
@@ -221,7 +221,7 @@ PhononPlayerBackend::onHasVideoChanged(bool /*hasVideo */)
 void
 PhononPlayerBackend::onFinished()
 {
-	setPlayerState(Player::Ready);
+	setPlayerState(VideoPlayer::Ready);
 }
 
 void
@@ -271,14 +271,14 @@ PhononPlayerBackend::onStateChanged(Phonon::State newState, Phonon::State /*oldS
 
 	switch(newState) {
 	case Phonon::StoppedState:
-		setPlayerState(Player::Ready);
+		setPlayerState(VideoPlayer::Ready);
 		break;
 	case Phonon::LoadingState:
 	case Phonon::PlayingState:
-		setPlayerState(Player::Playing);
+		setPlayerState(VideoPlayer::Playing);
 		break;
 	case Phonon::PausedState:
-		setPlayerState(Player::Paused);
+		setPlayerState(VideoPlayer::Paused);
 		break;
 	case Phonon::ErrorState:
 		setPlayerErrorState();

@@ -37,7 +37,7 @@ QT_FORWARD_DECLARE_CLASS(QTimer)
 namespace SubtitleComposer {
 class PlayerBackend;
 
-class Player : public QObject
+class VideoPlayer : public QObject
 {
 	Q_OBJECT
 
@@ -53,7 +53,7 @@ public:
 		Ready                                   // same as Stopped or Finished
 	} State;
 
-	static Player * instance();
+	static VideoPlayer * instance();
 
 	/**
 	 * @brief initialize - attempts to initialize the backend defined by prefBackendName; if that fails, attempts to initialize any other.
@@ -179,8 +179,8 @@ signals:
 	void wheelDown();
 
 private:
-	Player();
-	virtual ~Player();
+	VideoPlayer();
+	virtual ~VideoPlayer();
 
 	/**
 	 * @brief initializeBackend - attempts to initialize the backend, making it the active backend.
@@ -210,7 +210,7 @@ private:
 	void setPosition(double position);              // value in seconds
 	void setLength(double length);          // value in seconds
 
-	void setState(Player::State state);
+	void setState(VideoPlayer::State state);
 	void setErrorState(const QString &errorMessage = QString());
 
 	void setFramesPerSecond(double framesPerSecond);
@@ -256,99 +256,99 @@ private:
 };
 
 int
-Player::state() const
+VideoPlayer::state() const
 {
 	return m_state;
 }
 
 bool
-Player::isInitialized() const
+VideoPlayer::isInitialized() const
 {
-	return m_state >= Player::Initialized;
+	return m_state >= VideoPlayer::Initialized;
 }
 
 PlayerBackend *
-Player::activeBackend() const
+VideoPlayer::activeBackend() const
 {
 	return m_activeBackend;
 }
 
 PlayerBackend *
-Player::backend(const QString &backendName) const
+VideoPlayer::backend(const QString &backendName) const
 {
 	return m_backends.contains(backendName) ? m_backends[backendName] : 0;
 }
 
 bool
-Player::isActiveBackendDummy() const
+VideoPlayer::isActiveBackendDummy() const
 {
 	return activeBackendName() == dummyBackendName();
 }
 
 VideoWidget *
-Player::videoWidget()
+VideoPlayer::videoWidget()
 {
 	return m_videoWidget;
 }
 
 const QString &
-Player::filePath() const
+VideoPlayer::filePath() const
 {
 	return m_filePath;
 }
 
 bool
-Player::isPlaying() const
+VideoPlayer::isPlaying() const
 {
-	return m_state == Player::Playing;
+	return m_state == VideoPlayer::Playing;
 }
 
 bool
-Player::isPaused() const
+VideoPlayer::isPaused() const
 {
-	return m_state == Player::Paused;
+	return m_state == VideoPlayer::Paused;
 }
 
 double
-Player::position() const
+VideoPlayer::position() const
 {
-	return m_state <= Player::Opening ? -1.0 : (m_state == Player::Ready ? 0.0 : m_position);
+	return m_state <= VideoPlayer::Opening ? -1.0 : (m_state == VideoPlayer::Ready ? 0.0 : m_position);
 }
 
 double
-Player::length() const
+VideoPlayer::length() const
 {
-	return m_state <= Player::Opening ? -1.0 : m_length;
+	return m_state <= VideoPlayer::Opening ? -1.0 : m_length;
 }
 
 double
-Player::framesPerSecond() const
+VideoPlayer::framesPerSecond() const
 {
-	return m_state <= Player::Opening ? -1.0 : m_framesPerSecond;
+	return m_state <= VideoPlayer::Opening ? -1.0 : m_framesPerSecond;
 }
 
 bool
-Player::isStopped() const
+VideoPlayer::isStopped() const
 {
-	return m_state == Player::Ready;
+	return m_state == VideoPlayer::Ready;
 }
 
 double
-Player::volume() const
+VideoPlayer::volume() const
 {
 	return m_volume;
 }
 
 bool
-Player::isMuted() const
+VideoPlayer::isMuted() const
 {
 	return m_muted;
 }
 
 int
-Player::activeAudioStream() const
+VideoPlayer::activeAudioStream() const
 {
-	return m_state <= Player::Opening ? -1 : m_activeAudioStream;
+	return m_state <= VideoPlayer::Opening ? -1 : m_activeAudioStream;
 }
 }
 #endif

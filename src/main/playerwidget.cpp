@@ -23,7 +23,7 @@
 #include "actions/useractionnames.h"
 #include "../common/commondefs.h"
 #include "../core/subtitleiterator.h"
-#include "../services/player.h"
+#include "../videoplayer/videoplayer.h"
 #include "../widgets/layeredwidget.h"
 #include "../widgets/textoverlaywidget.h"
 #include "../widgets/attachablewidget.h"
@@ -64,7 +64,7 @@ PlayerWidget::PlayerWidget(QWidget *parent) :
 	m_playingLine(0),
 	m_fullScreenTID(0),
 	m_fullScreenMode(false),
-	m_player(Player::instance()),
+	m_player(VideoPlayer::instance()),
 	m_lengthString(UNKNOWN_LENGTH_STRING),
 	m_updatePositionControls(1),
 	m_updateVideoPosition(false),
@@ -595,7 +595,7 @@ PlayerWidget::setPlayingLine(SubtitleLine *line)
 void
 PlayerWidget::updatePositionEditVisibility()
 {
-	if(m_showPositionTimeEdit && (m_player->state() == Player::Playing || m_player->state() == Player::Paused))
+	if(m_showPositionTimeEdit && (m_player->state() == VideoPlayer::Playing || m_player->state() == VideoPlayer::Paused))
 		m_positionEdit->show();
 	else
 		m_positionEdit->hide();

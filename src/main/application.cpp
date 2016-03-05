@@ -67,8 +67,8 @@
 #include "../common/qxtsignalwaiter.h"
 #include "../core/subtitleiterator.h"
 #include "../formats/formatmanager.h"
-#include "../services/player.h"
-#include "../services/playerbackend.h"
+#include "../videoplayer/videoplayer.h"
+#include "../videoplayer/playerbackend.h"
 #include "../profiler.h"
 
 #include <QDir>
@@ -115,7 +115,7 @@ Application::Application(int &argc, char **argv) :
 	m_subtitleTrEncoding(),
 	m_subtitleTrEOL(Format::CurrentOS),
 	m_subtitleTrFormat(),
-	m_player(Player::instance()),
+	m_player(VideoPlayer::instance()),
 	m_lastFoundLine(0),
 	m_mainWindow(0),
 	m_lastSubtitleUrl(QDir::homePath()),
@@ -2636,13 +2636,13 @@ Application::updateUndoRedoToolTips()
 void
 Application::onLineDoubleClicked(SubtitleLine *line)
 {
-	if(m_player->state() == Player::Ready)
+	if(m_player->state() == VideoPlayer::Ready)
 		m_player->play();
 
 	int mseconds = line->showTime().toMillis() - SCConfig::seekOffsetOnDoubleClick();
 	m_player->seek(mseconds > 0 ? mseconds / 1000.0 : 0.0, true);
 
-	if(m_player->state() == Player::Paused && SCConfig::unpauseOnDoubleClick())
+	if(m_player->state() == VideoPlayer::Paused && SCConfig::unpauseOnDoubleClick())
 		m_player->play();
 }
 

@@ -9,7 +9,7 @@ include_directories(
 	${common_INCLUDE_DIR}
 	${core_INCLUDE_DIR}
 	${formats_INCLUDE_DIR}
-	${services_INCLUDE_DIR}
+	${videoplayer_INCLUDE_DIR}
 	${widgets_INCLUDE_DIR}
 )
 
@@ -17,7 +17,7 @@ set(subtitlecomposer_SRCS
 	${common_SRCS}
 	${core_SRCS}
 	${formats_SRCS}
-	${services_SRCS}
+	${videoplayer_SRCS}
 	${widgets_SRCS}
 	${main_configs_SRCS}
 	${main_dialogs_SRCS}
@@ -45,7 +45,7 @@ target_link_libraries(subtitlecomposer
 	${common_LIBS}
 	${core_LIBS}
 	${formats_LIBS}
-	${services_LIBS}
+	${videoplayer_LIBS}
 	${widgets_LIBS}
 )
 
@@ -53,7 +53,7 @@ add_definitions(
 	${common_DEFS}
 	${core_DEFS}
 	${formats_DEFS}
-	${services_DEFS}
+	${videoplayer_DEFS}
 	${widgets_DEFS}
 )
 

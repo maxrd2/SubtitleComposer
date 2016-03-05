@@ -19,7 +19,7 @@
 
 #include "useraction.h"
 #include "../../core/subtitle.h"
-#include "../../services/player.h"
+#include "../../videoplayer/videoplayer.h"
 #include "../lineswidget.h"
 #include "../currentlinewidget.h"
 
@@ -290,7 +290,7 @@ UserActionManager::onLinesWidgetSelectionChanged()
 }
 
 void
-UserActionManager::setPlayer(Player *player)
+UserActionManager::setPlayer(VideoPlayer *player)
 {
 	if(m_player) {
 		disconnect(m_player, SIGNAL(fileOpened(const QString &)), this, SLOT(onPlayerStateChanged()));
@@ -312,9 +312,9 @@ UserActionManager::setPlayer(Player *player)
 		connect(m_player, SIGNAL(stopped()), this, SLOT(onPlayerStateChanged()));
 
 		int state = m_player->state();
-		if(state > Player::Opening) {
+		if(state > VideoPlayer::Opening) {
 			newContextFlags |= UserAction::VideoOpened;
-			if(state > Player::Paused)
+			if(state > VideoPlayer::Paused)
 				newContextFlags |= UserAction::VideoStopped;
 			else
 				newContextFlags |= UserAction::VideoPlaying;
@@ -332,9 +332,9 @@ UserActionManager::onPlayerStateChanged()
 	int newContextFlags = m_contextFlags & ~UserAction::VideoMask;
 
 	int state = m_player->state();
-	if(state > Player::Opening) {
+	if(state > VideoPlayer::Opening) {
 		newContextFlags |= UserAction::VideoOpened;
-		if(state > Player::Paused)
+		if(state > VideoPlayer::Paused)
 			newContextFlags |= UserAction::VideoStopped;
 		else
 			newContextFlags |= UserAction::VideoPlaying;

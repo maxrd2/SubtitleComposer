@@ -1,21 +1,21 @@
-set(services_mpv_SRCS
+set(videoplayer_mpv_SRCS
 	${CMAKE_CURRENT_SOURCE_DIR}/mpvbackend.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/mpvconfigwidget.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/mpvconfigwidget.ui
 	CACHE INTERNAL EXPORTEDVARIABLE
 )
 
-set(services_mpv_INCLUDE_DIR
+set(videoplayer_mpv_INCLUDE_DIR
 	${MPV_INCLUDE_DIRS}
 	CACHE INTERNAL EXPORTEDVARIABLE
 )
 
-set(services_mpv_DEFS
+set(videoplayer_mpv_DEFS
 	${MPV_DEFINITIONS}
 	CACHE INTERNAL EXPORTEDVARIABLE
 )
 
-set(services_mpv_LIBS
+set(videoplayer_mpv_LIBS
 	${MPV_LIBRARIES}
 	CACHE INTERNAL EXPORTEDVARIABLE
 )

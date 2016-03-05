@@ -1,5 +1,5 @@
-#ifndef GSTREAMERPLAYERBACKEND2_H
-#define GSTREAMERPLAYERBACKEND2_H
+#ifndef MPVBACKEND_H
+#define MPVBACKEND_H
 
 /**
  * Copyright (C) 2007-2009 Sergio Pistone <sergio_pistone@yahoo.com.ar>
@@ -27,31 +27,31 @@
 
 #include "../playerbackend.h"
 
+#include <mpv/qthelper.hpp>
+
 #include <QWidget>
 #include <QString>
 
-#include <gst/gst.h>
-
-QT_FORWARD_DECLARE_CLASS(QTimer)
-
 namespace SubtitleComposer {
-class GStreamerPlayerBackend : public PlayerBackend
+class MPVProcess;
+
+class MPVBackend : public PlayerBackend
 {
 	Q_OBJECT
 
 public:
-	GStreamerPlayerBackend(Player *player);
-	virtual ~GStreamerPlayerBackend();
+	MPVBackend(VideoPlayer *player);
+	virtual ~MPVBackend();
 
 	virtual QWidget * newConfigWidget(QWidget *parent);
 
 protected:
 	virtual VideoWidget * initialize(QWidget *videoWidgetParent);
 	virtual void finalize();
+	void _finalize();
 	virtual bool reconfigure();
 
-	static GstElement * createAudioSink();
-	static GstElement * createVideoSink();
+	void waitState(VideoPlayer::State state);
 
 	virtual bool openFile(const QString &filePath, bool &playingAfterCall);
 	virtual void closeFile();
@@ -65,22 +65,26 @@ protected:
 
 	virtual bool setVolume(double volume);
 
-	bool eventFilter(QObject *obj, QEvent *event);
+	bool mpvInit();
+	void mpvExit();
+
+signals:
+	void mpvEvents();
 
 protected slots:
-	void onPlaybinTimerTimeout();
+	void onMPVEvents();
 
-private:
-	void setupVideoOverlay();
+protected:
+	void setupProcessArgs(const QString &filePath);
 
-	void updateAudioData();
-	void updateVideoData();
+	void mpvEventHandle(mpv_event *event);
 
-private:
-	GstPipeline *m_pipeline;
-	GstBus *m_pipelineBus;
-	QTimer *m_pipelineTimer;
-	bool m_lengthInformed;
+	static void wakeup(void *ctx);
+
+protected:
+	mpv_handle *m_mpv;
+	bool m_initialized;
+	QString m_currentFilePath;
 };
 }
 

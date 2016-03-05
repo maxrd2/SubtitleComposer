@@ -23,7 +23,7 @@
 #include "playerwidget.h"
 #include "lineswidget.h"
 #include "currentlinewidget.h"
-#include "../services/player.h"
+#include "../videoplayer/videoplayer.h"
 
 #include <QGridLayout>
 #include <QSplitter>
@@ -76,9 +76,9 @@ MainWindow::~MainWindow()
 
 	// We must disconnect the player and the decoder when closing down, otherwise signal
 	// handlers could be called with the some object destroyed, crashing the application
-	disconnect(Player::instance(), 0, 0, 0);
+	disconnect(VideoPlayer::instance(), 0, 0, 0);
 
-	Player::instance()->setApplicationClosingDown();
+	VideoPlayer::instance()->setApplicationClosingDown();
 }
 
 void

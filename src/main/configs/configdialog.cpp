@@ -25,8 +25,8 @@
 #include "configs/errorsconfigwidget.h"
 #include "configs/playerconfigwidget.h"
 
-#include "../services/player.h"
-#include "../services/playerbackend.h"
+#include "../videoplayer/videoplayer.h"
+#include "../videoplayer/playerbackend.h"
 
 #include <KConfigDialog>
 #include <klocalizedstring.h>
@@ -58,18 +58,18 @@ ConfigDialog::ConfigDialog(QWidget *parent, const QString &name, KCoreConfigSkel
 	item->setHeader(i18n("Spelling Settings"));
 	item->setIcon(QIcon::fromTheme("tools-check-spelling"));
 
-	// Player page
-	item = addPage(new PlayerConfigWidget(NULL), i18nc("@title Player Settings", "Player"));
-	item->setHeader(i18n("Player Settings"));
+	// VideoPlayer page
+	item = addPage(new PlayerConfigWidget(NULL), i18nc("@title VideoPlayer Settings", "VideoPlayer"));
+	item->setHeader(i18n("VideoPlayer Settings"));
 	item->setIcon(QIcon::fromTheme("mediaplayer-logo"));
 
 	// Backend pages
-	QStringList backendNames(Player::instance()->backendNames());
+	QStringList backendNames(VideoPlayer::instance()->backendNames());
 	for(QStringList::ConstIterator it = backendNames.begin(); it != backendNames.end(); it++) {
-		QWidget *configWidget = Player::instance()->backend(*it)->newConfigWidget(0);
+		QWidget *configWidget = VideoPlayer::instance()->backend(*it)->newConfigWidget(0);
 		if(configWidget) {
 			item = addPage(configWidget, *it);
-			item->setHeader(i18nc("@title Player backend settings", "%1 Backend Settings", *it));
+			item->setHeader(i18nc("@title VideoPlayer backend settings", "%1 Backend Settings", *it));
 			item->setIcon(QIcon::fromTheme((*it).toLower() + "-logo"));
 		}
 	}

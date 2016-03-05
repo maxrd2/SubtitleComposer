@@ -86,9 +86,9 @@
 		</entry>
 	</group>
 
-	<group name="Player">
+	<group name="VideoPlayer">
 		<entry name="PlayerBackend" type="String">
-			<label>Player Backend</label>
+			<label>VideoPlayer Backend</label>
 			<default>GStreamer</default>
 		</entry>
 		<entry name="DecoderBackend" type="String">

@@ -25,7 +25,7 @@
 #include <config.h>
 #endif
 
-#include "player.h"
+#include "videoplayer.h"
 
 #include <QObject>
 #include <QString>
@@ -36,13 +36,13 @@ class PlayerBackend : public QObject
 {
 	Q_OBJECT
 
-	friend class Player;
+	friend class VideoPlayer;
 
 public:
 // FIXME: there should be a way for backends to abort on error
 
 /// ownership of the config object is transferred to this object
-	PlayerBackend(Player *player, const QString &name);
+	PlayerBackend(VideoPlayer *player, const QString &name);
 	virtual ~PlayerBackend();
 
 	inline const QString & name() const { return m_name; }
@@ -80,7 +80,7 @@ protected:
 
 	virtual bool reconfigure() = 0;
 
-	inline Player * player() const { return m_player; }
+	inline VideoPlayer * player() const { return m_player; }
 
 	virtual bool doesVolumeCorrection() const;
 	virtual bool supportsChangingAudioStream(bool *onTheFly) const;
@@ -155,7 +155,7 @@ protected:
 	 */
 	inline void setPlayerLength(double length) { player()->setLength(length); }
 
-	inline void setPlayerState(Player::State state) { player()->setState(state); }
+	inline void setPlayerState(VideoPlayer::State state) { player()->setState(state); }
 
 	inline void setPlayerErrorState(const QString &errorMessage = QString()) { player()->setErrorState(errorMessage); }
 
@@ -164,7 +164,7 @@ protected:
 	inline void setPlayerAudioStreams(const QStringList &audioStreams, int activeAudioStream) { player()->setAudioStreams(audioStreams, activeAudioStream); }
 
 private:
-	Player *m_player;
+	VideoPlayer *m_player;
 	QString m_name;
 };
 }

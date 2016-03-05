@@ -80,7 +80,7 @@ typedef enum {
 } GstPlayFlags;
 #endif /* __GST_PLAY_ENUM_H__ */
 
-GStreamerPlayerBackend::GStreamerPlayerBackend(Player *player)
+GStreamerPlayerBackend::GStreamerPlayerBackend(VideoPlayer *player)
 	: PlayerBackend(player, "GStreamer"),
 	m_pipeline(NULL),
 	m_pipelineBus(NULL),
@@ -291,11 +291,11 @@ GStreamerPlayerBackend::onPlaybinTimerTimeout()
 			gst_message_parse_state_changed(msg, &old, &current, &target);
 
 			if(current == GST_STATE_PAUSED)
-				setPlayerState(Player::Paused);
+				setPlayerState(VideoPlayer::Paused);
 			else if(current == GST_STATE_PLAYING)
-				setPlayerState(Player::Playing);
+				setPlayerState(VideoPlayer::Playing);
 			else if(current == GST_STATE_READY)
-				setPlayerState(Player::Ready);
+				setPlayerState(VideoPlayer::Ready);
 
 			if(old == GST_STATE_READY) {
 				updateAudioData();
@@ -305,7 +305,7 @@ GStreamerPlayerBackend::onPlaybinTimerTimeout()
 		}
 
 		case GST_MESSAGE_EOS: {
-			setPlayerState(Player::Ready);
+			setPlayerState(VideoPlayer::Ready);
 			seek(0, true);
 			GStreamer::setElementState(GST_ELEMENT(m_pipeline), GST_STATE_PAUSED, 0);
 			break;

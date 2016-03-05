@@ -42,7 +42,7 @@ int
 main(int argc, char **argv)
 {
 #if defined HAVE_XINE && !defined HAVE_XCB
-	XInitThreads(); // needed for some Player Backends (Xine)
+	XInitThreads(); // needed for some VideoPlayer Backends (Xine)
 #endif
 
 	SubtitleComposer::Application app(argc, argv);

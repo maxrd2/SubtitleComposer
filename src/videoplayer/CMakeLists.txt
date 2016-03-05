@@ -29,42 +29,42 @@ else(XINE_FOUND)
 	message(STATUS "Xine was not found. Xine backend will not be built")
 endif(XINE_FOUND)
 
-set(services_INCLUDE_DIR
-	${services_gstreamer_INCLUDE_DIR}
-	${services_mplayer_INCLUDE_DIR}
-	${services_mpv_INCLUDE_DIR}
-	${services_phonon_INCLUDE_DIR}
-	${services_xine_INCLUDE_DIR}
+set(videoplayer_INCLUDE_DIR
+	${videoplayer_gstreamer_INCLUDE_DIR}
+	${videoplayer_mplayer_INCLUDE_DIR}
+	${videoplayer_mpv_INCLUDE_DIR}
+	${videoplayer_phonon_INCLUDE_DIR}
+	${videoplayer_xine_INCLUDE_DIR}
 	CACHE INTERNAL EXPORTEDVARIABLE
 )
 
-set(services_DEFS
-	${services_gstreamer_DEFS}
-	${services_mplayer_DEFS}
-	${services_mpv_DEFS}
-	${services_phonon_DEFS}
-	${services_xine_DEFS}
+set(videoplayer_DEFS
+	${videoplayer_gstreamer_DEFS}
+	${videoplayer_mplayer_DEFS}
+	${videoplayer_mpv_DEFS}
+	${videoplayer_phonon_DEFS}
+	${videoplayer_xine_DEFS}
 	CACHE INTERNAL EXPORTEDVARIABLE
 )
 
-set(services_LIBS
-	${services_gstreamer_LIBS}
-	${services_mplayer_LIBS}
-	${services_mpv_LIBS}
-	${services_phonon_LIBS}
-	${services_xine_LIBS}
+set(videoplayer_LIBS
+	${videoplayer_gstreamer_LIBS}
+	${videoplayer_mplayer_LIBS}
+	${videoplayer_mpv_LIBS}
+	${videoplayer_phonon_LIBS}
+	${videoplayer_xine_LIBS}
 	CACHE INTERNAL EXPORTEDVARIABLE
 )
 
-set(services_SRCS
-	${CMAKE_CURRENT_SOURCE_DIR}/player.cpp
+set(videoplayer_SRCS
+	${CMAKE_CURRENT_SOURCE_DIR}/videoplayer.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/playerbackend.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/videowidget.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/waveformat.h
-	${services_gstreamer_SRCS}
-	${services_mplayer_SRCS}
-	${services_mpv_SRCS}
-	${services_phonon_SRCS}
-	${services_xine_SRCS}
+	${videoplayer_gstreamer_SRCS}
+	${videoplayer_mplayer_SRCS}
+	${videoplayer_mpv_SRCS}
+	${videoplayer_phonon_SRCS}
+	${videoplayer_xine_SRCS}
 	CACHE INTERNAL EXPORTEDVARIABLE
 )

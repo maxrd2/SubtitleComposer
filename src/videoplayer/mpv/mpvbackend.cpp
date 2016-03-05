@@ -36,7 +36,7 @@ using namespace SubtitleComposer;
 using namespace mpv;
 using namespace mpv::qt;
 
-MPVBackend::MPVBackend(Player *player)
+MPVBackend::MPVBackend(VideoPlayer *player)
 	: PlayerBackend(player, "MPV"),
 	m_mpv(NULL),
 	m_initialized(false)
@@ -148,19 +148,19 @@ MPVBackend::mpvEventHandle(mpv_event *event)
 			if(prop->format == MPV_FORMAT_DOUBLE) {
 				double time = *(double *)prop->data;
 				if(!player()->isPlaying() && !player()->isPaused())
-					setPlayerState(Player::Playing);
+					setPlayerState(VideoPlayer::Playing);
 				setPlayerPosition(time);
 			} else if(prop->format == MPV_FORMAT_NONE) {
 				// property is unavailable, probably means that playback was stopped.
-				setPlayerState(Player::Ready);
+				setPlayerState(VideoPlayer::Ready);
 			}
 		} else if(strcmp(prop->name, "pause") == 0) {
 			if(prop->format == MPV_FORMAT_FLAG) {
 				int paused = *(int *)prop->data;
 				if(paused && !player()->isPaused()) {
-					setPlayerState(Player::Paused);
+					setPlayerState(VideoPlayer::Paused);
 				} else if(!paused && player()->isPaused()) {
-					setPlayerState(Player::Playing);
+					setPlayerState(VideoPlayer::Playing);
 				}
 			}
 		} else if(strcmp(prop->name, "length") == 0) {
@@ -223,14 +223,14 @@ MPVBackend::mpvEventHandle(mpv_event *event)
 	case MPV_EVENT_LOG_MESSAGE: {
 		struct mpv_event_log_message *msg = (struct mpv_event_log_message *)event->data;
 		qDebug() << "[MPV:" << msg->prefix << "] " << msg->level << ": " << msg->text;
-		if(msg->log_level == MPV_LOG_LEVEL_ERROR && strcmp(msg->prefix, "cplayer") == 0 && player()->state() == Player::Opening)
+		if(msg->log_level == MPV_LOG_LEVEL_ERROR && strcmp(msg->prefix, "cplayer") == 0 && player()->state() == VideoPlayer::Opening)
 			setPlayerErrorState(msg->text);
 		break;
 	}
 	case MPV_EVENT_SHUTDOWN: {
 		mpv_terminate_destroy(m_mpv);
 		m_mpv = NULL;
-		setPlayerState(Player::Ready);
+		setPlayerState(VideoPlayer::Ready);
 		break;
 	}
 	default:
@@ -352,7 +352,7 @@ MPVBackend::setVolume(double volume)
 }
 
 void
-MPVBackend::waitState(Player::State state)
+MPVBackend::waitState(VideoPlayer::State state)
 {
 	while(m_initialized && m_mpv && player()->state() != state) {
 		mpv_wait_async_requests(m_mpv);
@@ -406,9 +406,9 @@ MPVBackend::reconfigure()
 		mpv_get_property(m_mpv, "time-pos", MPV_FORMAT_DOUBLE, &oldPosition);
 
 		stop();
-		waitState(Player::Ready);
+		waitState(VideoPlayer::Ready);
 		play();
-		waitState(Player::Playing);
+		waitState(VideoPlayer::Playing);
 		seek(oldPosition, true);
 		if(wasPaused)
 			pause();

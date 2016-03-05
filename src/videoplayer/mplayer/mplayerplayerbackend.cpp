@@ -30,7 +30,7 @@
 
 using namespace SubtitleComposer;
 
-MPlayerPlayerBackend::MPlayerPlayerBackend(Player *player)
+MPlayerPlayerBackend::MPlayerPlayerBackend(VideoPlayer *player)
 	: PlayerBackend(player, "MPlayer"),
 	m_process(new MPlayerPlayerProcess(this)),
 	m_position(0.0),
@@ -262,7 +262,7 @@ MPlayerPlayerBackend::onPlayingReceived()
 	if(!m_reportUpdates)
 		return;
 
-	setPlayerState(Player::Playing);
+	setPlayerState(VideoPlayer::Playing);
 }
 
 void
@@ -271,7 +271,7 @@ MPlayerPlayerBackend::onPausedReceived()
 	if(!m_reportUpdates)
 		return;
 
-	setPlayerState(Player::Paused);
+	setPlayerState(VideoPlayer::Paused);
 }
 
 void
@@ -283,7 +283,7 @@ MPlayerPlayerBackend::onPositionReceived(double seconds)
 		return;
 
 	if(!player()->isPlaying())
-		setPlayerState(Player::Playing);
+		setPlayerState(VideoPlayer::Playing);
 
 	setPlayerPosition(seconds);
 }
@@ -291,7 +291,7 @@ MPlayerPlayerBackend::onPositionReceived(double seconds)
 void
 MPlayerPlayerBackend::onProcessExited()
 {
-	setPlayerState(Player::Ready);
+	setPlayerState(VideoPlayer::Ready);
 }
 
 /*virtual*/ bool

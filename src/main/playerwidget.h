@@ -43,7 +43,7 @@ class AttachableWidget;
 class TimeEdit;
 
 namespace SubtitleComposer {
-class Player;
+class VideoPlayer;
 
 class PlayerWidget : public QWidget
 {
@@ -128,7 +128,7 @@ private:
 
 	int m_fullScreenTID;
 	bool m_fullScreenMode;
-	Player *m_player;
+	VideoPlayer *m_player;
 
 	Time m_lastSearchedLineToShowTime;
 	Time m_lastCheckedTime;

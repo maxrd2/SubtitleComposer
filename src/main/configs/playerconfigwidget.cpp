@@ -20,7 +20,7 @@
 
 #include "playerconfigwidget.h"
 
-#include "../../services/player.h"
+#include "../../videoplayer/videoplayer.h"
 
 #include "../../widgets/layeredwidget.h"
 #include "../../widgets/textoverlaywidget.h"
@@ -45,10 +45,10 @@ PlayerConfigWidget::PlayerConfigWidget(QWidget *parent)
 	m_textOverlayWidget->setOutlineColor(SCConfig::outlineColor());
 	m_textOverlayWidget->setAntialias(SCConfig::antialias());
 
-	kcfg_PlayerBackend->addItems(Player::instance()->backendNames());
+	kcfg_PlayerBackend->addItems(VideoPlayer::instance()->backendNames());
 	kcfg_PlayerBackend->setProperty("kcfg_property", QByteArray("currentText"));
 	if(kcfg_PlayerBackend->count() > 1) {
-		int dummyBackendIndex = kcfg_PlayerBackend->findText(Player::instance()->dummyBackendName());
+		int dummyBackendIndex = kcfg_PlayerBackend->findText(VideoPlayer::instance()->dummyBackendName());
 		if(dummyBackendIndex >= 0)
 			kcfg_PlayerBackend->removeItem(dummyBackendIndex);
 	}

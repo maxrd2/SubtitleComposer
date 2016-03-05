@@ -47,7 +47,7 @@ class XinePlayerBackend : public PlayerBackend
 	Q_OBJECT
 
 public:
-	XinePlayerBackend(Player *player);
+	XinePlayerBackend(VideoPlayer *player);
 	virtual ~XinePlayerBackend();
 
 	virtual QWidget * newConfigWidget(QWidget *parent);

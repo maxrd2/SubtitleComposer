@@ -1,12 +1,12 @@
-set(services_phonon_SRCS
+set(videoplayer_phonon_SRCS
 	${CMAKE_CURRENT_SOURCE_DIR}/phononplayerbackend.cpp
 	CACHE INTERNAL EXPORTEDVARIABLE
 )
-set(services_phonon_INCLUDE_DIR
+set(videoplayer_phonon_INCLUDE_DIR
 	${PHONON_INCLUDES}
 	CACHE INTERNAL EXPORTEDVARIABLE
 )
-set(services_phonon_LIBS
+set(videoplayer_phonon_LIBS
 	${PHONON_LIBRARIES}
 	CACHE INTERNAL EXPORTEDVARIABLE
 )
