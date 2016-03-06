@@ -156,6 +156,7 @@ SimpleRichTextEdit::SimpleRichTextEdit(QWidget *parent)
 	connect(m_actions[AllowTabulations], SIGNAL(triggered()), this, SLOT(toggleTabChangesFocus()));
 
 	QMenu *menu = createStandardContextMenu();
+	menu->setParent(this);
 	QList<QAction *> actions = menu->actions();
 	m_insertUnicodeControlCharMenu = 0;
 	for(QList<QAction *>::ConstIterator it = actions.constBegin(), end = actions.constEnd(); it != end; ++it) {
