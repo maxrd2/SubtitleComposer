@@ -1,5 +1,4 @@
 # Maintainer: Mladen Milinkovic <maxrd2@smoothware.net>
-# Contributor: Mladen Milinkovic <maxrd2@smoothware.net>
 # Contributor: Martchus <martchus@gmx.net>
 
 # You can install/update Subtitle Composer from repository if you add following to /etc/pacman.conf
@@ -16,19 +15,18 @@ pkgdesc="A KDE subtitle editor (git version)"
 arch=('i686' 'x86_64')
 url="https://github.com/maxrd2/${_name}"
 license=('GPL')
-depends=('kcoreaddons' 'sonnet' 'kcodecs' 'kross' 'kxmlgui' 'ki18n')
-# Comment/uncomment the following dependencies to disable/enable support for
-# MPV, gstreamer and/or Xine backend.
-# These are not optdepends as they must be present at build time.
-# Also ensure these deps aren't installed if you don't want to link against them
-# because Subtitle Composer will always link against them if available.
-#depends+=('mpv')
-depends+=('gstreamer')
-depends+=('xine-lib')
+depends=('kcoreaddons' 'sonnet' 'kcodecs' 'kross' 'kxmlgui' 'ki18n' 'gstreamer')
 makedepends=('extra-cmake-modules' 'git')
+# Comment/uncomment the following dependencies to disable/enable
+# building of plugins for MPV and Xine player backends.
+makedepends+=('xine-lib')
+makedepends+=('mpv')
 conflicts=(${_name})
 install=${_name}.install
-optdepends=('mplayer: for MPlayer backend'
+optdepends=(
+            'mpv: for MPV backend'
+            'mplayer: for MPlayer backend'
+            'xine-lib: for Xine backend'
             'ruby: for scripting'
             'python: for scripting')
 source=("git+https://github.com/maxrd2/${_name}.git")
@@ -42,7 +40,12 @@ pkgver() {
 
 build() {
   cd ${srcdir}/${_name}
-  cmake -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=/usr
+  cmake \
+    -DCMAKE_BUILD_TYPE=Release \
+    -DCMAKE_INSTALL_PREFIX=/usr \
+    -DLIB_INSTALL_DIR=lib \
+    -DKDE_INSTALL_USE_QT_SYS_PATHS=ON \
+    -DBUILD_TESTING=OFF
   make
 }
 
