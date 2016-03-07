@@ -108,13 +108,13 @@ VideoPlayer::VideoPlayer() :
 	backendLoad(exePath + QStringLiteral("/../videoplayerplugins/mpv/mpvplayer.so"));
 	backendLoad(exePath + QStringLiteral("/../videoplayerplugins/phonon/phononplayer.so"));
 	backendLoad(exePath + QStringLiteral("/../videoplayerplugins/xine/xineplayer.so"));
-#endif
-
+#else
 	QDir pluginsDir(QStringLiteral(VIDEOPLAYERPLUGIN_PATH));
 	foreach(const QString pluginFile, pluginsDir.entryList(QDir::Files, QDir::Name)) {
 		if(QLibrary::isLibrary(pluginFile))
 			backendLoad(pluginsDir.filePath(pluginFile));
 	}
+#endif
 
 	// the timeout might seem too much, but it only matters when the file couldn't be
 	// opened, and it's better to have the user wait a bit in that case than showing
@@ -289,13 +289,14 @@ VideoPlayer::backendNames() const
 void
 VideoPlayer::backendAdd(PlayerBackend *backend)
 {
+	backend->setParent(this); // VideoPlayer will delete *backend
+
 	if(m_backends.contains(backend->name())) {
-		qCritical() << "attempted to insert duplicated player backend" << backend->name();
+		qCritical() << "Attempted to insert duplicate VideoPlayer backend" << backend->name();
 		return;
 	}
 
 	m_backends[backend->name()] = backend;
-	backend->setParent(this); // VideoPlayer will delete *backend
 	backend->setPlayer(this);
 }
 
