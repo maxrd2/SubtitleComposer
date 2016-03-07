@@ -225,21 +225,15 @@ WaveformWidget::paintEvent(QPaintEvent *e)
 		int yMin = (SAMPLE_RATE_MILIS * m_timeStart.toMillis() / spp) * spp;
 		int yMax = (SAMPLE_RATE_MILIS * m_timeEnd.toMillis() / spp) * spp;
 		int yLimit = m_waveformDataOffset / m_waveformChannels;
-		qint32 xMin, xMax;
-//		qint32 xAvg;
-//		qreal xRMS;
+		qint32 xMin = 65535, xMax = 0;
+//		qint32 xAvg = 0;
+//		qreal xRMS = 0;
 
 		qint32 chHalfWidth = widgetWidth / m_waveformChannels / 2;
 
 		for(int ch = 0; ch < m_waveformChannels; ch++) {
 			qint32 chCenter = (ch * 2 + 1) * chHalfWidth;
 			for(int i = yMin; i < yMax; i++) {
-				if(i % spp == 0) {
-					xMin = 65535;
-					xMax = 0;
-//					xAvg = 0;
-//					xRMS = 0.0;
-				}
 				qint32 val = i >= yLimit ? 0 : (qint32)m_waveform[ch][i] + SIGNED_PAD;
 				if(xMin > val)
 					xMin = val;
@@ -263,6 +257,10 @@ WaveformWidget::paintEvent(QPaintEvent *e)
 					painter.setPen(waveLight);
 					painter.drawLine(chCenter - xMin, y, chCenter + xMin, y);
 //*/
+					xMin = 65535;
+					xMax = 0;
+//					xAvg = 0;
+//					xRMS = 0.0;
 				}
 			}
 		}
