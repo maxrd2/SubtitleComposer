@@ -111,9 +111,9 @@ VideoPlayer::VideoPlayer() :
 #endif
 
 	QDir pluginsDir(QStringLiteral(VIDEOPLAYERPLUGIN_PATH));
-	foreach(const QString pluginPath, pluginsDir.entryList(QDir::Files, QDir::Name)) {
-		if(QLibrary::isLibrary(pluginPath))
-			backendLoad(pluginPath);
+	foreach(const QString pluginFile, pluginsDir.entryList(QDir::Files, QDir::Name)) {
+		if(QLibrary::isLibrary(pluginFile))
+			backendLoad(pluginsDir.filePath(pluginFile));
 	}
 
 	// the timeout might seem too much, but it only matters when the file couldn't be
