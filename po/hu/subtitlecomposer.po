@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: subtitlecomposer\n"
 "Report-Msgid-Bugs-To: https://github.com/maxrd2/subtitlecomposer/issues\n"
-"POT-Creation-Date: 2016-02-08 16:14+0100\n"
+"POT-Creation-Date: 2016-03-07 17:06+0100\n"
 "PO-Revision-Date: 2009-11-06 17:37+0100\n"
 "Last-Translator: Barcza Károly <kbarcza@blackpanther.hu>\n"
 "Language-Team: blackPanther Europe <info@blackpanther.hu>\n"
@@ -29,32 +29,10 @@ msgctxt "EMAIL OF TRANSLATORS"
 msgid "Your emails"
 msgstr "kbarcza@blackpanther.hu"
 
-#: src/common/languagecode.cpp:421
+#: src/common/languagecode.cpp:420
 #, fuzzy
 msgid "Unknown"
 msgstr "<i>Ismeretlen</i>"
-
-#: src/core/subtitleactions.cpp:59
-msgid "Set Frame Rate"
-msgstr "FPS megadása"
-
-#: src/core/subtitleactions.cpp:95
-msgid "Insert Lines"
-msgstr "Sorok beszúrása"
-
-#: src/core/subtitleactions.cpp:176 src/core/subtitle.cpp:434
-#: src/core/subtitle.cpp:444 src/core/subtitle.cpp:461
-msgid "Remove Lines"
-msgstr "Sorok eltávolítása"
-
-#: src/core/subtitleactions.cpp:262
-msgid "Move Line"
-msgstr "Sor mozgatása"
-
-#: src/core/subtitleactions.cpp:362
-#, fuzzy
-msgid "Swap Texts"
-msgstr "Lapozási terület: %1%"
 
 #: src/core/subtitle.cpp:69
 msgid "Set Primary Data"
@@ -80,13 +58,18 @@ msgstr "Az fps érték változtatása"
 msgid "Insert Line"
 msgstr "Sor beszúrása"
 
-#: src/core/subtitle.cpp:514 src/main/application.cpp:617
-#: src/main/lineswidget.cpp:1100
+#: src/core/subtitle.cpp:434 src/core/subtitle.cpp:444
+#: src/core/subtitle.cpp:461 src/core/subtitleactions.cpp:176
+msgid "Remove Lines"
+msgstr "Sorok eltávolítása"
+
+#: src/core/subtitle.cpp:514 src/main/application.cpp:573
+#: src/main/lineswidget.cpp:1088
 msgid "Split Lines"
 msgstr "Sorok levágása"
 
-#: src/core/subtitle.cpp:565 src/main/application.cpp:624
-#: src/main/lineswidget.cpp:1099
+#: src/core/subtitle.cpp:565 src/main/application.cpp:580
+#: src/main/lineswidget.cpp:1087
 msgid "Join Lines"
 msgstr "Sorok összevonása"
 
@@ -99,8 +82,8 @@ msgstr "Eltolt sorok"
 msgid "Adjust Lines"
 msgstr "A sorok száma:"
 
-#: src/core/subtitle.cpp:670 src/main/application.cpp:2279
-#: src/main/lineswidget.cpp:1076
+#: src/core/subtitle.cpp:670 src/main/application.cpp:2150
+#: src/main/lineswidget.cpp:1064
 msgid "Sort"
 msgstr "Rendezés"
 
@@ -108,8 +91,8 @@ msgstr "Rendezés"
 msgid "Enforce Duration Limits"
 msgstr ""
 
-#: src/core/subtitle.cpp:751 src/main/application.cpp:2341
-#: src/main/lineswidget.cpp:1079
+#: src/core/subtitle.cpp:751 src/main/application.cpp:2212
+#: src/main/lineswidget.cpp:1067
 msgid "Maximize Durations"
 msgstr "Az időtartam maximalizálása"
 
@@ -118,7 +101,7 @@ msgid "Set Automatic Durations"
 msgstr "Automatikus időtartam beállítása"
 
 #: src/core/subtitle.cpp:808 src/main/dialogs/fixoverlappingtimesdialog.cpp:31
-#: src/main/lineswidget.cpp:1080
+#: src/main/lineswidget.cpp:1068
 msgid "Fix Overlapping Times"
 msgstr "Átfedési idők javítása"
 
@@ -150,13 +133,13 @@ msgstr "HuLLáMzÓ"
 msgid "Break Lines"
 msgstr "Sortördelés"
 
-#: src/core/subtitle.cpp:1033 src/main/application.cpp:2393
-#: src/main/lineswidget.cpp:1046
+#: src/core/subtitle.cpp:1033 src/main/application.cpp:2264
+#: src/main/lineswidget.cpp:1034
 msgid "Unbreak Lines"
 msgstr "Nem sortödelt"
 
-#: src/core/subtitle.cpp:1042 src/main/application.cpp:2404
-#: src/main/lineswidget.cpp:1047
+#: src/core/subtitle.cpp:1042 src/main/application.cpp:2275
+#: src/main/lineswidget.cpp:1035
 msgid "Simplify Spaces"
 msgstr "Sima szóközök"
 
@@ -198,45 +181,34 @@ msgstr "&Jelölővonalak törlése"
 msgid "Toggle Lines Mark"
 msgstr "Sor-jelölés váltása"
 
-#: src/core/subtitle.cpp:1217 src/main/application.cpp:2159
+#: src/core/subtitle.cpp:1217 src/main/application.cpp:2030
 #: src/main/errorswidget.cpp:798
 #, fuzzy
 msgid "Clear Lines Errors"
 msgstr "Hibák"
 
 #: src/core/subtitle.cpp:1228 src/core/subtitle.cpp:1240
-#: src/main/application.cpp:2104
+#: src/main/application.cpp:1975
 #, fuzzy
 msgid "Check Lines Errors"
 msgstr "Hibák"
 
-#: src/core/subtitlelineactions.cpp:72
+#: src/core/subtitleactions.cpp:59
+msgid "Set Frame Rate"
+msgstr "FPS megadása"
+
+#: src/core/subtitleactions.cpp:95
+msgid "Insert Lines"
+msgstr "Sorok beszúrása"
+
+#: src/core/subtitleactions.cpp:262
+msgid "Move Line"
+msgstr "Sor mozgatása"
+
+#: src/core/subtitleactions.cpp:362
 #, fuzzy
-msgid "Set Line Text"
-msgstr "A szövegsor beállításai"
-
-#: src/core/subtitlelineactions.cpp:113
-msgid "Set Line Secondary Text"
-msgstr ""
-
-#: src/core/subtitlelineactions.cpp:154
-#, fuzzy
-msgid "Set Line Texts"
-msgstr "Sorháttér beállítva"
-
-#: src/core/subtitlelineactions.cpp:228
-#, fuzzy
-msgid "Set Line Show Time"
-msgstr "Az aktuális idő megjelenítése (Marcus Bains-vonal)"
-
-#: src/core/subtitlelineactions.cpp:269
-msgid "Set Line Hide Time"
-msgstr "A sor elrejtési idejének megadása"
-
-#: src/core/subtitlelineactions.cpp:384
-#, fuzzy
-msgid "Set Line Errors"
-msgstr "Sorháttér beállítva"
+msgid "Swap Texts"
+msgstr "Lapozási terület: %1%"
 
 #: src/core/subtitleline.cpp:77
 msgid "Empty text"
@@ -419,9 +391,37 @@ msgstr ""
 msgid "Adjust Line Times"
 msgstr "Sortávolság beállítása"
 
+#: src/core/subtitlelineactions.cpp:72
+#, fuzzy
+msgid "Set Line Text"
+msgstr "A szövegsor beállításai"
+
+#: src/core/subtitlelineactions.cpp:113
+msgid "Set Line Secondary Text"
+msgstr ""
+
+#: src/core/subtitlelineactions.cpp:154
+#, fuzzy
+msgid "Set Line Texts"
+msgstr "Sorháttér beállítva"
+
+#: src/core/subtitlelineactions.cpp:228
+#, fuzzy
+msgid "Set Line Show Time"
+msgstr "Az aktuális idő megjelenítése (Marcus Bains-vonal)"
+
+#: src/core/subtitlelineactions.cpp:269
+msgid "Set Line Hide Time"
+msgstr "A sor elrejtési idejének megadása"
+
+#: src/core/subtitlelineactions.cpp:384
+#, fuzzy
+msgid "Set Line Errors"
+msgstr "Sorháttér beállítva"
+
 #: src/main/actions/kcodecactionext.cpp:39
-#: src/main/dialogs/opensubtitledialog.cpp:46
-#: src/main/dialogs/opensubtitledialog.cpp:48
+#: src/main/dialogs/opensubtitledialog.cpp:47
+#: src/main/dialogs/opensubtitledialog.cpp:49
 #: src/main/dialogs/selectablesubtitledialog.cpp:64
 #: src/main/dialogs/selectablesubtitledialog.cpp:98
 #, fuzzy
@@ -433,929 +433,893 @@ msgstr "automatikus"
 msgid "Clear List"
 msgstr "Előzmények törlése"
 
-#: src/main/application.cpp:386
+#: src/main/application.cpp:361
 msgid "Video Files"
 msgstr "Videófájlok"
 
-#: src/main/application.cpp:394
+#: src/main/application.cpp:368
 msgid "Audio Files"
 msgstr "Hangfájlok"
 
-#: src/main/application.cpp:396
+#: src/main/application.cpp:370
 msgid "Media Files"
 msgstr "Médiafájlok"
 
-#: src/main/application.cpp:397
+#: src/main/application.cpp:371
 msgid "All Files"
 msgstr "Minden fájl"
 
-#: src/main/application.cpp:413
-#, fuzzy
-msgid "Audio Levels Files"
-msgstr "A hangfájlok megőr&zése:"
-
-#: src/main/application.cpp:434
+#: src/main/application.cpp:390
 msgid "Exit the application"
 msgstr "Kilépés az alkalmazásból"
 
-#: src/main/application.cpp:437
+#: src/main/application.cpp:393
 msgid "Configure Subtitle Composer"
 msgstr "A \"Subtitle Composer\" bállítása"
 
-#: src/main/application.cpp:441
+#: src/main/application.cpp:397
 msgctxt "@action:inmenu Create a new subtitle"
 msgid "New"
 msgstr "Új"
 
-#: src/main/application.cpp:442
+#: src/main/application.cpp:398
 msgid "Create an empty subtitle"
 msgstr "Üres feliratfájl létrehozása"
 
-#: src/main/application.cpp:450
+#: src/main/application.cpp:406
 msgctxt "@action:inmenu Open subtitle file"
 msgid "Open..."
 msgstr "Megnyitás..."
 
-#: src/main/application.cpp:451 src/main/application.cpp:469
+#: src/main/application.cpp:407 src/main/application.cpp:425
 msgid "Open subtitle file"
 msgstr "Feliratfájl megnyitása"
 
-#: src/main/application.cpp:459
+#: src/main/application.cpp:415
 msgid "Reload As..."
 msgstr "Újratöltés mint..."
 
-#: src/main/application.cpp:460
+#: src/main/application.cpp:416
 msgid "Reload opened file with a different encoding"
 msgstr ""
 
-#: src/main/application.cpp:468
+#: src/main/application.cpp:424
 msgctxt "@action:inmenu Open rencently used subtitle file"
 msgid "Open &Recent"
 msgstr "Leg&utóbbi megnyitása"
 
-#: src/main/application.cpp:475
+#: src/main/application.cpp:431
 msgid "Save"
 msgstr "Mentés"
 
-#: src/main/application.cpp:476
+#: src/main/application.cpp:432
 msgid "Save opened subtitle"
 msgstr "A megnyitott felirat mentése"
 
-#: src/main/application.cpp:484
+#: src/main/application.cpp:440
 msgid "Save As..."
 msgstr "Mentés másként..."
 
-#: src/main/application.cpp:485
+#: src/main/application.cpp:441
 msgid "Save opened subtitle with different settings"
 msgstr "A megnyitott felirat mentés más beállításokkal"
 
-#: src/main/application.cpp:492
+#: src/main/application.cpp:448
 msgid "Close"
 msgstr "Bezárás"
 
-#: src/main/application.cpp:493
+#: src/main/application.cpp:449
 msgid "Close opened subtitle"
 msgstr "A megnyitott feliratfájl bezárása"
 
-#: src/main/application.cpp:501
+#: src/main/application.cpp:457
 msgid "New Translation"
 msgstr "Új fordítás"
 
-#: src/main/application.cpp:502
+#: src/main/application.cpp:458
 msgid "Create an empty translation subtitle"
 msgstr "Egy üres fordítási felirat létrehozása"
 
-#: src/main/application.cpp:510
+#: src/main/application.cpp:466
 msgid "Open Translation..."
 msgstr "Fordítás megnyitása..."
 
-#: src/main/application.cpp:511 src/main/application.cpp:529
+#: src/main/application.cpp:467 src/main/application.cpp:485
 msgid "Open translation subtitle file"
 msgstr "Feliratfájl megnyitása"
 
-#: src/main/application.cpp:519
+#: src/main/application.cpp:475
 #, fuzzy
 msgid "Reload Translation As..."
 msgstr "A fodrítás mentése mint..."
 
-#: src/main/application.cpp:520
+#: src/main/application.cpp:476
 #, fuzzy
 msgid "Reload opened translation file with a different encoding"
 msgstr "Elmenti a megnyitott feliratot más beállításokkal"
 
-#: src/main/application.cpp:528
+#: src/main/application.cpp:484
 msgid "Open &Recent Translation"
 msgstr "Nemrég használt fordítás megnyitása"
 
-#: src/main/application.cpp:536
+#: src/main/application.cpp:492
 msgid "Save Translation"
 msgstr "A fordítás mentése"
 
-#: src/main/application.cpp:537
+#: src/main/application.cpp:493
 msgid "Save opened translation subtitle"
 msgstr "Megnyitott feliratfájl mentése"
 
-#: src/main/application.cpp:545
+#: src/main/application.cpp:501
 msgid "Save Translation As..."
 msgstr "A fodrítás mentése mint..."
 
-#: src/main/application.cpp:546
+#: src/main/application.cpp:502
 msgid "Save opened translation subtitle with different settings"
 msgstr "Elmenti a megnyitott feliratot más beállításokkal"
 
-#: src/main/application.cpp:553
+#: src/main/application.cpp:509
 msgid "Close Translation"
 msgstr "Fordítás bezárása"
 
-#: src/main/application.cpp:554
+#: src/main/application.cpp:510
 msgid "Close opened translation subtitle"
 msgstr "Bezárja a megnyitott feliratot"
 
-#: src/main/application.cpp:562 src/main/application.cpp:563
+#: src/main/application.cpp:518 src/main/application.cpp:519
 #: src/widgets/simplerichtextedit.cpp:67
 msgid "Undo"
 msgstr "Visszavonás"
 
-#: src/main/application.cpp:571 src/main/application.cpp:572
+#: src/main/application.cpp:527 src/main/application.cpp:528
 #: src/widgets/simplerichtextedit.cpp:73
 msgid "Redo"
 msgstr "Újra"
 
-#: src/main/application.cpp:579
+#: src/main/application.cpp:535
 msgid "Split Subtitle..."
 msgstr "Felirat levágás..."
 
-#: src/main/application.cpp:580
+#: src/main/application.cpp:536
 msgid "Split the opened subtitle in two parts"
 msgstr ""
 
-#: src/main/application.cpp:586
+#: src/main/application.cpp:542
 msgid "Join Subtitles..."
 msgstr "Felirat egyesítés..."
 
-#: src/main/application.cpp:587
+#: src/main/application.cpp:543
 msgid "Append to the opened subtitle another one"
 msgstr ""
 
-#: src/main/application.cpp:593 src/main/lineswidget.cpp:1096
+#: src/main/application.cpp:549 src/main/lineswidget.cpp:1084
 msgid "Insert Before"
 msgstr "Beszúrása elé"
 
-#: src/main/application.cpp:594
+#: src/main/application.cpp:550
 msgid "Insert empty line before current one"
 msgstr ""
 
-#: src/main/application.cpp:601 src/main/lineswidget.cpp:1097
+#: src/main/application.cpp:557 src/main/lineswidget.cpp:1085
 msgid "Insert After"
 msgstr "Beszúrása mögé"
 
-#: src/main/application.cpp:602
+#: src/main/application.cpp:558
 msgid "Insert empty line after current one"
 msgstr ""
 
-#: src/main/application.cpp:609 src/main/lineswidget.cpp:1095
+#: src/main/application.cpp:565 src/main/lineswidget.cpp:1083
 msgid "Remove"
 msgstr "Eltávolítás"
 
-#: src/main/application.cpp:610
+#: src/main/application.cpp:566
 msgid "Remove selected lines"
 msgstr "A kijelölt sorok eltávolítása"
 
-#: src/main/application.cpp:618
+#: src/main/application.cpp:574
 msgid "Split selected lines"
 msgstr "A kijelölt sorok levágása"
 
-#: src/main/application.cpp:625
+#: src/main/application.cpp:581
 msgid "Join selected lines"
 msgstr "A kijelölt sorok egyesítése"
 
-#: src/main/application.cpp:631
+#: src/main/application.cpp:587
 #: src/main/dialogs/actionwitherrortargetsdialog.cpp:95
-#: src/main/lineswidget.cpp:1093 src/widgets/simplerichtextedit.cpp:110
+#: src/main/lineswidget.cpp:1081 src/widgets/simplerichtextedit.cpp:110
 msgid "Select All"
 msgstr "Minden kijelölése"
 
-#: src/main/application.cpp:632
+#: src/main/application.cpp:588
 msgid "Select all lines"
 msgstr "Minden sor kijelölése"
 
-#: src/main/application.cpp:639
+#: src/main/application.cpp:595
 msgid "Go to Line..."
 msgstr "Ugrás adott sorra..."
 
-#: src/main/application.cpp:640
+#: src/main/application.cpp:596
 msgid "Go to specified line"
 msgstr ""
 
-#: src/main/application.cpp:648
+#: src/main/application.cpp:604
 msgid "Find..."
 msgstr "Keresés..."
 
-#: src/main/application.cpp:649
+#: src/main/application.cpp:605
 msgid "Find occurrences of strings or regular expressions"
 msgstr ""
 
-#: src/main/application.cpp:657
+#: src/main/application.cpp:613
 msgid "Find Next"
 msgstr "A következő keresése"
 
-#: src/main/application.cpp:658
+#: src/main/application.cpp:614
 msgid "Find next occurrence of string or regular expression"
 msgstr ""
 
-#: src/main/application.cpp:666
+#: src/main/application.cpp:622
 msgid "Find Previous"
 msgstr "Előző keresése"
 
-#: src/main/application.cpp:667
+#: src/main/application.cpp:623
 msgid "Find previous occurrence of string or regular expression"
 msgstr ""
 
-#: src/main/application.cpp:674
+#: src/main/application.cpp:630
 msgid "Replace..."
 msgstr "Csere..."
 
-#: src/main/application.cpp:675
+#: src/main/application.cpp:631
 msgid "Replace occurrences of strings or regular expressions"
 msgstr ""
 
-#: src/main/application.cpp:683
+#: src/main/application.cpp:639
 #, fuzzy
 msgid "Retrocede current line"
 msgstr "Az aktuális idővonal"
 
-#: src/main/application.cpp:684
+#: src/main/application.cpp:640
 msgid "Makes the line before the current one active"
 msgstr ""
 
-#: src/main/application.cpp:692
+#: src/main/application.cpp:648
 #, fuzzy
 msgid "Advance current line"
 msgstr "Az aktuális idővonal"
 
-#: src/main/application.cpp:693
+#: src/main/application.cpp:649
 msgid "Makes the line after the current one active"
 msgstr ""
 
-#: src/main/application.cpp:700 src/main/errorsdialog.cpp:52
-#: src/main/lineswidget.cpp:1087
+#: src/main/application.cpp:656 src/main/errorsdialog.cpp:52
+#: src/main/lineswidget.cpp:1075
 msgid "Check Errors..."
 msgstr "A hibák ellenőrzése..."
 
-#: src/main/application.cpp:701
+#: src/main/application.cpp:657
 msgid "Check for errors in the current subtitle"
 msgstr ""
 
-#: src/main/application.cpp:708 src/main/errorsdialog.cpp:55
-#: src/main/lineswidget.cpp:1088
+#: src/main/application.cpp:664 src/main/errorsdialog.cpp:55
+#: src/main/lineswidget.cpp:1076
 msgid "Clear Errors..."
 msgstr "A hibák törlése..."
 
-#: src/main/application.cpp:709
+#: src/main/application.cpp:665
 msgid "Clear errors from selected lines"
 msgstr "A hibák törlése a kiválasztott soroktól"
 
-#: src/main/application.cpp:715 src/main/lineswidget.cpp:1090
+#: src/main/application.cpp:671 src/main/lineswidget.cpp:1078
 msgid "Show Errors..."
 msgstr "Hibák mutatása..."
 
-#: src/main/application.cpp:716
+#: src/main/application.cpp:672
 msgid "Show errors information for the current subtitle"
 msgstr ""
 
-#: src/main/application.cpp:724
+#: src/main/application.cpp:680
 msgid "Find Error..."
 msgstr "Hibák keresése..."
 
-#: src/main/application.cpp:725
+#: src/main/application.cpp:681
 msgid "Find lines with specified errors"
 msgstr ""
 
-#: src/main/application.cpp:733
+#: src/main/application.cpp:689
 msgid "Find Next Error"
 msgstr "Következő hiba keresése"
 
-#: src/main/application.cpp:734
+#: src/main/application.cpp:690
 msgid "Find next line with specified errors"
 msgstr ""
 
-#: src/main/application.cpp:742
+#: src/main/application.cpp:698
 msgid "Find Previous Error"
 msgstr "Előző hiba keresése"
 
-#: src/main/application.cpp:743
+#: src/main/application.cpp:699
 msgid "Find previous line with specified errors"
 msgstr ""
 
-#: src/main/application.cpp:751 src/main/lineswidget.cpp:1052
+#: src/main/application.cpp:707 src/main/lineswidget.cpp:1040
 msgid "Spelling..."
 msgstr "Helyesírás..."
 
-#: src/main/application.cpp:752
+#: src/main/application.cpp:708
 #, fuzzy
 msgid "Check lines spelling"
 msgstr "A kijelölt szöveg helyesírásának ellenőrzése"
 
-#: src/main/application.cpp:758
+#: src/main/application.cpp:714
 msgid "Toggle Mark"
 msgstr "Jelölés"
 
-#: src/main/application.cpp:759
+#: src/main/application.cpp:715
 msgid "Toggle selected lines mark"
 msgstr ""
 
-#: src/main/application.cpp:767 src/main/currentlinewidget.cpp:93
+#: src/main/application.cpp:723 src/main/currentlinewidget.cpp:93
 msgid "Toggle Bold"
 msgstr "Félkövér"
 
-#: src/main/application.cpp:768
+#: src/main/application.cpp:724
 msgid "Toggle selected lines bold attribute"
 msgstr ""
 
-#: src/main/application.cpp:776 src/main/currentlinewidget.cpp:94
+#: src/main/application.cpp:732 src/main/currentlinewidget.cpp:94
 msgid "Toggle Italic"
 msgstr "Dőlt"
 
-#: src/main/application.cpp:777
+#: src/main/application.cpp:733
 msgid "Toggle selected lines italic attribute"
 msgstr ""
 
-#: src/main/application.cpp:785 src/main/currentlinewidget.cpp:95
+#: src/main/application.cpp:741 src/main/currentlinewidget.cpp:95
 msgid "Toggle Underline"
 msgstr "Aláhúzott"
 
-#: src/main/application.cpp:786
+#: src/main/application.cpp:742
 msgid "Toggle selected lines underline attribute"
 msgstr ""
 
-#: src/main/application.cpp:794 src/main/currentlinewidget.cpp:96
+#: src/main/application.cpp:750 src/main/currentlinewidget.cpp:96
 msgid "Toggle Strike Through"
 msgstr "Áthúzott"
 
-#: src/main/application.cpp:795
+#: src/main/application.cpp:751
 msgid "Toggle selected lines strike through attribute"
 msgstr ""
 
-#: src/main/application.cpp:803 src/main/currentlinewidget.cpp:97
+#: src/main/application.cpp:759 src/main/currentlinewidget.cpp:97
 #, fuzzy
 msgid "Change Text Color"
 msgstr "Váltás erre"
 
-#: src/main/application.cpp:804
+#: src/main/application.cpp:760
 #, fuzzy
 msgid "Change text color of selected lines"
 msgstr "A hibák törlése a kiválasztott soroktól"
 
-#: src/main/application.cpp:811 src/main/lineswidget.cpp:1075
+#: src/main/application.cpp:767 src/main/lineswidget.cpp:1063
 msgid "Shift..."
 msgstr "Eltolás…"
 
-#: src/main/application.cpp:812
+#: src/main/application.cpp:768
 msgid "Shift lines an specified amount of time"
 msgstr ""
 
-#: src/main/application.cpp:831
+#: src/main/application.cpp:787
 msgid "Adjust..."
 msgstr "Igazítás..."
 
-#: src/main/application.cpp:832
+#: src/main/application.cpp:788
 msgid "Linearly adjust all lines to a specified interval"
 msgstr ""
 
-#: src/main/application.cpp:839
+#: src/main/application.cpp:795
 msgid "Sort..."
 msgstr "Rendezés..."
 
-#: src/main/application.cpp:840
+#: src/main/application.cpp:796
 msgid "Sort lines based on their show time"
 msgstr ""
 
-#: src/main/application.cpp:846
+#: src/main/application.cpp:802
 msgid "Change Frame Rate..."
 msgstr "Az fps érték változtatása..."
 
-#: src/main/application.cpp:847
+#: src/main/application.cpp:803
 msgid "Retime subtitle lines by reinterpreting its frame rate"
 msgstr ""
 
-#: src/main/application.cpp:853 src/main/lineswidget.cpp:1077
+#: src/main/application.cpp:809 src/main/lineswidget.cpp:1065
 msgid "Enforce Duration Limits..."
 msgstr ""
 
-#: src/main/application.cpp:854
+#: src/main/application.cpp:810
 msgid "Enforce lines minimum and/or maximum duration limits"
 msgstr ""
 
-#: src/main/application.cpp:861 src/main/lineswidget.cpp:1078
+#: src/main/application.cpp:817 src/main/lineswidget.cpp:1066
 #, fuzzy
 msgid "Set Automatic Durations..."
 msgstr "Automatikus újr&atöltés beállítása"
 
-#: src/main/application.cpp:862
+#: src/main/application.cpp:818
 msgid "Set lines durations based on amount of letters, words and line breaks"
 msgstr ""
 
-#: src/main/application.cpp:868
+#: src/main/application.cpp:824
 #, fuzzy
 msgid "Maximize Durations..."
 msgstr "Az ablak maximalizálása"
 
-#: src/main/application.cpp:869
+#: src/main/application.cpp:825
 msgid "Extend lines durations up to their next lines show time"
 msgstr ""
 
-#: src/main/application.cpp:875
+#: src/main/application.cpp:831
 msgid "Fix Overlapping Times..."
 msgstr "Átfedési idők javítása..."
 
-#: src/main/application.cpp:876
+#: src/main/application.cpp:832
 msgid "Fix lines overlapping times"
 msgstr "A sorok átfedési idejének javítása"
 
-#: src/main/application.cpp:882
+#: src/main/application.cpp:838
 #, fuzzy
 msgid "Synchronize with Subtitle..."
 msgstr "Sz&inkronizálás KGet-tel"
 
-#: src/main/application.cpp:883
+#: src/main/application.cpp:839
 msgid "Copy timing information from another subtitle"
 msgstr ""
 
-#: src/main/application.cpp:889 src/main/lineswidget.cpp:1045
+#: src/main/application.cpp:845 src/main/lineswidget.cpp:1033
 msgid "Break Lines..."
 msgstr "Sortördelt sorok..."
 
-#: src/main/application.cpp:890
+#: src/main/application.cpp:846
 msgid "Automatically set line breaks"
 msgstr "Automatikus sortörés beállítás"
 
-#: src/main/application.cpp:896 src/main/lineswidget.cpp:1046
+#: src/main/application.cpp:852 src/main/lineswidget.cpp:1034
 msgid "Unbreak Lines..."
 msgstr "Nem sortördelt sorok..."
 
-#: src/main/application.cpp:897
+#: src/main/application.cpp:853
 msgid "Remove line breaks from lines"
 msgstr "Sortörtés eltávolítása a sorról"
 
-#: src/main/application.cpp:903 src/main/lineswidget.cpp:1047
+#: src/main/application.cpp:859 src/main/lineswidget.cpp:1035
 msgid "Simplify Spaces..."
 msgstr "Sima szóközök..."
 
-#: src/main/application.cpp:904
+#: src/main/application.cpp:860
 msgid "Remove unneeded spaces from lines"
 msgstr "Eltávolítja a szükségtelen szóközöket a sorról"
 
-#: src/main/application.cpp:910 src/main/lineswidget.cpp:1048
+#: src/main/application.cpp:866 src/main/lineswidget.cpp:1036
 #, fuzzy
 msgid "Change Case..."
 msgstr "HuLLáMzÓ"
 
-#: src/main/application.cpp:911
+#: src/main/application.cpp:867
 msgid "Change lines text to upper, lower, title or sentence case"
 msgstr ""
 
-#: src/main/application.cpp:917 src/main/lineswidget.cpp:1049
+#: src/main/application.cpp:873 src/main/lineswidget.cpp:1037
 #, fuzzy
 msgid "Fix Punctuation..."
 msgstr "Általános központozási jelek"
 
-#: src/main/application.cpp:918
+#: src/main/application.cpp:874
 msgid "Fix punctuation errors in lines"
 msgstr ""
 
-#: src/main/application.cpp:924 src/main/lineswidget.cpp:1050
+#: src/main/application.cpp:880 src/main/lineswidget.cpp:1038
 msgid "Translate..."
 msgstr "Fordítás..."
 
-#: src/main/application.cpp:925
+#: src/main/application.cpp:881
 msgid "Translate lines texts using Google services"
 msgstr "Sorok lefordítása Google szolgáltatással"
 
-#: src/main/application.cpp:931
+#: src/main/application.cpp:887
 msgid "Edit Line in Place"
 msgstr "A sor szerkesztése ezen a helyen"
 
-#: src/main/application.cpp:932
+#: src/main/application.cpp:888
 msgid "Edit current line text in place"
 msgstr "A szöveg szerkesztése ezen a helyen"
 
-#: src/main/application.cpp:940
+#: src/main/application.cpp:896
 msgid "Open Video..."
 msgstr "Videó megnyitása"
 
-#: src/main/application.cpp:941 src/main/application.cpp:948
+#: src/main/application.cpp:897 src/main/application.cpp:904
 msgid "Open video file"
 msgstr "Videó-fájl megnyitása"
 
-#: src/main/application.cpp:947
+#: src/main/application.cpp:903
 msgid "Open &Recent Video"
 msgstr "Nemrég használt videó megnyitása"
 
-#: src/main/application.cpp:954
+#: src/main/application.cpp:910
 msgid "Close Video"
 msgstr "Videó bezárása"
 
-#: src/main/application.cpp:955
+#: src/main/application.cpp:911
 msgid "Close video file"
 msgstr "A videó-fájl bezárása"
 
-#: src/main/application.cpp:962
-msgid "Extract Audio"
-msgstr ""
-
-#: src/main/application.cpp:963
-#, fuzzy
-msgid "Extract video's active audio stream"
-msgstr "Az aktív audio adatfolyam kiválasztása"
-
-#: src/main/application.cpp:970
-msgid "Cancel Audio Extraction"
-msgstr ""
-
-#: src/main/application.cpp:971
-msgid "Cancel video's audio stream extraction"
-msgstr ""
-
-#: src/main/application.cpp:978
+#: src/main/application.cpp:918
 msgid "Full Screen Mode"
 msgstr "Teljes képernyős mód"
 
-#: src/main/application.cpp:979
+#: src/main/application.cpp:919
 msgid "Toggle full screen mode"
 msgstr "A teljes képernyős mód beállítása"
 
-#: src/main/application.cpp:986
+#: src/main/application.cpp:926
 msgid "Stop"
 msgstr "Megállítás"
 
-#: src/main/application.cpp:987
+#: src/main/application.cpp:927
 msgid "Stop video playback"
 msgstr "Megállítja a videó lejátszást"
 
-#: src/main/application.cpp:994 src/main/application.cpp:2986
-#: src/main/application.cpp:2994
+#: src/main/application.cpp:934 src/main/application.cpp:2710
+#: src/main/application.cpp:2718
 msgid "Play"
 msgstr "Lejátszás"
 
-#: src/main/application.cpp:995
+#: src/main/application.cpp:935
 msgid "Toggle video playing/paused"
 msgstr "Videó lejátszása/szüneteltetése"
 
-#: src/main/application.cpp:1002
+#: src/main/application.cpp:942
 msgid "Seek Backwards"
 msgstr "Visszafelé keresés"
 
-#: src/main/application.cpp:1010
+#: src/main/application.cpp:950
 msgid "Seek Forwards"
 msgstr "Előre keresés"
 
-#: src/main/application.cpp:1018
+#: src/main/application.cpp:958
 msgid "Jump to Previous Line"
 msgstr "Ugrás az előző sorra"
 
-#: src/main/application.cpp:1019
+#: src/main/application.cpp:959
 msgid "Seek to previous subtitle line show time"
 msgstr ""
 
-#: src/main/application.cpp:1027
+#: src/main/application.cpp:967
 msgid "Jump to Next Line"
 msgstr "Ugrás a következő sorra"
 
-#: src/main/application.cpp:1028
+#: src/main/application.cpp:968
 msgid "Seek to next subtitle line show time"
 msgstr ""
 
-#: src/main/application.cpp:1036
+#: src/main/application.cpp:976
 #, fuzzy
 msgid "Set Current Line Show Time"
 msgstr "Az aktuális idő megjelenítése (Marcus Bains-vonal)"
 
-#: src/main/application.cpp:1037
+#: src/main/application.cpp:977
 msgid "Set current line show time to video position"
 msgstr "Beállítja a jelenlegi sor mutatási időt a videó pozícióhoz"
 
-#: src/main/application.cpp:1045
+#: src/main/application.cpp:985
 msgid "Set Current Line Hide Time"
 msgstr "Jelenlegi sor beállítása az elrejtési időnek"
 
-#: src/main/application.cpp:1046
+#: src/main/application.cpp:986
 msgid "Set current line hide time to video position"
 msgstr "Beállítja a jelenlegi sor elrejtési idejét a videó pozícióhoz"
 
-#: src/main/application.cpp:1054
+#: src/main/application.cpp:994
 msgid "Current Line Follows Video"
 msgstr ""
 
-#: src/main/application.cpp:1055
+#: src/main/application.cpp:995
 msgid "Make current line follow the playing video position"
 msgstr ""
 
-#: src/main/application.cpp:1061
+#: src/main/application.cpp:1001
 msgctxt "@action:inmenu Toggle audio muted"
 msgid "Mute"
 msgstr "Némítás"
 
-#: src/main/application.cpp:1062
+#: src/main/application.cpp:1002
 msgid "Enable/disable playback sound"
 msgstr "Bekapcsolja/kikapcsolja a lejátszási hangot"
 
-#: src/main/application.cpp:1069
+#: src/main/application.cpp:1009
 msgid "Increase Volume"
 msgstr "A hangerő növelése"
 
-#: src/main/application.cpp:1070
+#: src/main/application.cpp:1010
 msgid "Increase volume by 5%"
 msgstr "Hangerő növelése %5-al"
 
-#: src/main/application.cpp:1077
+#: src/main/application.cpp:1017
 msgid "Decrease Volume"
 msgstr "A hangerő csökkentése"
 
-#: src/main/application.cpp:1078
+#: src/main/application.cpp:1018
 msgid "Decrease volume by 5%"
 msgstr "Hangerő csökkentése %5-al"
 
-#: src/main/application.cpp:1085
+#: src/main/application.cpp:1025
 msgid "Audio Streams"
 msgstr "Hang adatfolyam"
 
-#: src/main/application.cpp:1086
+#: src/main/application.cpp:1026
 msgid "Select active audio stream"
 msgstr "Az aktív audio adatfolyam kiválasztása"
 
-#: src/main/application.cpp:1093
+#: src/main/application.cpp:1033
 msgid "Increase Font Size"
 msgstr "A betűméret növelése"
 
-#: src/main/application.cpp:1094
+#: src/main/application.cpp:1034
 msgid "Increase subtitles font size by 1 point"
 msgstr ""
 
-#: src/main/application.cpp:1101
+#: src/main/application.cpp:1041
 msgid "Decrease Font Size"
 msgstr "A betűméret csökkentése"
 
-#: src/main/application.cpp:1102
+#: src/main/application.cpp:1042
 msgid "Decrease subtitles font size by 1 point"
 msgstr ""
 
-#: src/main/application.cpp:1109
+#: src/main/application.cpp:1049
 msgid "Subtitle Streams"
 msgstr "Felirat adatfolyam"
 
-#: src/main/application.cpp:1110
+#: src/main/application.cpp:1050
 msgid "Select active subtitle stream"
 msgstr "Aktív felirat adatfolyam kiválasztása"
 
-#: src/main/application.cpp:1116
+#: src/main/application.cpp:1056
 msgid "Shift to Video Position"
 msgstr "Eltolás a videó pozícióhoz"
 
-#: src/main/application.cpp:1117
+#: src/main/application.cpp:1057
 msgid ""
 "Set current line show time to video position by equally shifting all lines"
 msgstr ""
 
-#: src/main/application.cpp:1124
+#: src/main/application.cpp:1064
 msgid "Adjust to Video Position (Anchor Last Line)"
 msgstr ""
 
-#: src/main/application.cpp:1125
+#: src/main/application.cpp:1065
 msgid ""
 "Set current line to video position by fixing the last line and linearly "
 "adjusting the other ones"
 msgstr ""
 
-#: src/main/application.cpp:1132
+#: src/main/application.cpp:1072
 msgid "Adjust to Video Position (Anchor First Line)"
 msgstr ""
 
-#: src/main/application.cpp:1133
+#: src/main/application.cpp:1073
 msgid ""
 "Set current line to video position by fixing the first line and linearly "
 "adjusting the other ones"
 msgstr ""
 
-#: src/main/application.cpp:1141
+#: src/main/application.cpp:1081
 msgctxt "@action:inmenu Manage user scripts"
 msgid "Scripts Manager..."
 msgstr "Szkript-kezelő"
 
-#: src/main/application.cpp:1142
+#: src/main/application.cpp:1082
 msgid "Manage user scripts"
 msgstr "Felhasználói szkriptek kezelése"
 
-#: src/main/application.cpp:1301
+#: src/main/application.cpp:1172
 msgid ""
 "The requested action would make the subtitle and its translation share the "
 "same file, possibly resulting in loss of information when saving.\n"
 "Are you sure you want to continue?"
 msgstr ""
 
-#: src/main/application.cpp:1301
+#: src/main/application.cpp:1172
 msgid "Conflicting Subtitle Files"
 msgstr "Ellentmondó felirat fájlok"
 
-#: src/main/application.cpp:1409 src/main/application.cpp:1437
-#: src/main/application.cpp:1650 src/main/application.cpp:1688
+#: src/main/application.cpp:1280 src/main/application.cpp:1308
+#: src/main/application.cpp:1521 src/main/application.cpp:1559
 msgid ""
 "<qt>Could not parse the subtitle file.<br/>This may have been caused by "
 "usage of the wrong encoding.</qt>"
 msgstr ""
 
-#: src/main/application.cpp:1496
+#: src/main/application.cpp:1367
 #, fuzzy
 msgid "There was an error saving the subtitle."
 msgstr ""
 "Hiba történt a kép elmentése közben:\n"
 "%1"
 
-#: src/main/application.cpp:1533 src/main/application.cpp:1784
+#: src/main/application.cpp:1404 src/main/application.cpp:1655
 msgid ""
 "Currently opened translation subtitle has unsaved changes.\n"
 "Do you want to save them?"
 msgstr ""
 
-#: src/main/application.cpp:1534 src/main/application.cpp:1785
+#: src/main/application.cpp:1405 src/main/application.cpp:1656
 msgid "Close Translation Subtitle"
 msgstr "Fordítási felirat bezárása"
 
-#: src/main/application.cpp:1544
+#: src/main/application.cpp:1415
 msgid ""
 "Currently opened subtitle has unsaved changes.\n"
 "Do you want to save them?"
 msgstr ""
 
-#: src/main/application.cpp:1545
+#: src/main/application.cpp:1416
 msgid "Close Subtitle"
 msgstr "A feliratfájl bezárása"
 
-#: src/main/application.cpp:1640
+#: src/main/application.cpp:1511
 msgctxt "@item:inmenu Display primary text in video player"
 msgid "Primary"
 msgstr "Elsődleges"
 
-#: src/main/application.cpp:1641
+#: src/main/application.cpp:1512
 msgctxt "@item:inmenu Display translation text in video player"
 msgid "Translation"
 msgstr "Fordítás"
 
-#: src/main/application.cpp:1747
+#: src/main/application.cpp:1618
 msgid "There was an error saving the translation subtitle."
 msgstr ""
 
-#: src/main/application.cpp:1830
+#: src/main/application.cpp:1701
 msgid "Could not read the subtitle file to append."
 msgstr ""
 
-#: src/main/application.cpp:1848 src/main/application.cpp:2879
-#: src/main/application.cpp:2884
+#: src/main/application.cpp:1719 src/main/application.cpp:2603
+#: src/main/application.cpp:2608
 msgid "Untitled"
 msgstr "Névtelen"
 
-#: src/main/application.cpp:1848 src/main/application.cpp:2881
+#: src/main/application.cpp:1719 src/main/application.cpp:2605
 msgid "Untitled Translation"
 msgstr "Névtelen fordítás"
 
-#: src/main/application.cpp:1854
+#: src/main/application.cpp:1725
 msgctxt "Suffix added to split subtitles"
 msgid "split"
 msgstr ""
 
-#: src/main/application.cpp:1868
+#: src/main/application.cpp:1739
 #, fuzzy
 msgid "Could not write the split subtitle file."
 msgstr "Nem sikerült feldolgozni ezt az XML-fájlt: %1"
 
-#: src/main/application.cpp:1868
+#: src/main/application.cpp:1739
 #, fuzzy
 msgid "Could not write the split subtitle translation file."
 msgstr "Nem sikerült feldolgozni ezt az XML-fájlt: %1"
 
-#: src/main/application.cpp:1885
+#: src/main/application.cpp:1756
 msgid "The specified time does not split the subtitles."
 msgstr ""
 
-#: src/main/application.cpp:1920
+#: src/main/application.cpp:1791
 msgid ""
 "Could not open a new Subtitle Composer window.\n"
 "The split part was saved as %1."
 msgstr ""
 
-#: src/main/application.cpp:1921
+#: src/main/application.cpp:1792
 msgid ""
 "Could not open a new Subtitle Composer window.\n"
 "The split parts were saved as %1 and %2."
 msgstr ""
 
-#: src/main/application.cpp:2013
+#: src/main/application.cpp:1884
 msgid "Go to Line"
 msgstr "Ugrás egy sorra"
 
-#: src/main/application.cpp:2013
+#: src/main/application.cpp:1884
 msgid "&Go to line:"
 msgstr "&Ugrás egy sorra:"
 
-#: src/main/application.cpp:2287
+#: src/main/application.cpp:2158
 msgid "Can not perform sort on selection with multiple ranges."
 msgstr ""
 
-#: src/main/application.cpp:2369
+#: src/main/application.cpp:2240
 msgid "The reference subtitle must have more than one line to proceed."
 msgstr ""
 
-#: src/main/application.cpp:2376
+#: src/main/application.cpp:2247
 msgid "Could not parse the reference subtitle file."
 msgstr ""
 
-#: src/main/application.cpp:2458 src/main/dialogs/translatedialog.cpp:33
+#: src/main/application.cpp:2329 src/main/dialogs/translatedialog.cpp:33
 msgid "Translate"
 msgstr "Fordítás"
 
-#: src/main/application.cpp:2458
+#: src/main/application.cpp:2329
 msgid "Translating text (%1 to %2)..."
 msgstr "Szöveg fordítása  (%1 to %2)..."
 
-#: src/main/application.cpp:2462
+#: src/main/application.cpp:2333
 msgid "Translating primary text (%1 to %2)..."
 msgstr "Az elsődleges szöveg lefordítása (%1 erre %2)..."
 
-#: src/main/application.cpp:2463
+#: src/main/application.cpp:2334
 msgid "Translating secondary text (%1 to %2)..."
 msgstr "A másodlagos szöveg lefordítása (%1 erre %2)..."
 
-#: src/main/application.cpp:2491
+#: src/main/application.cpp:2362
 msgid ""
 "Unable to perform texts synchronization (sent and received lines count do "
 "not match)."
 msgstr ""
 
-#: src/main/application.cpp:2495
+#: src/main/application.cpp:2366
 msgid "Translate Primary Text"
 msgstr "Elsődleges szöveg fordítása"
 
-#: src/main/application.cpp:2495
+#: src/main/application.cpp:2366
 msgid "Translate Secondary Text"
 msgstr "A másodlagos szöveg fordítása"
 
-#: src/main/application.cpp:2510
+#: src/main/application.cpp:2381
 msgid ""
 "There was an error performing the translation:\n"
 "\n"
 "%1"
 msgstr ""
 
-#: src/main/application.cpp:2548
+#: src/main/application.cpp:2419
 msgid "Open Video"
 msgstr "Videó megnyitása"
 
-#: src/main/application.cpp:2681 src/main/application.cpp:2757
+#: src/main/application.cpp:2552 src/main/application.cpp:2584
 msgid ""
 "Continuing would result in loss of timing information for some lines.\n"
 "Are you sure you want to continue?"
 msgstr ""
 
-#: src/main/application.cpp:2701
-#, fuzzy
-msgid "<qt>There was an error opening file %1 for audio extraction.</qt>"
-msgstr "<qt>Vamilyen hiba történt a(z)<br/>%1 megnyitásakor</qt>"
-
-#: src/main/application.cpp:2727 src/main/application.cpp:2730
-#, fuzzy
-msgid "Unexpected error when extracting audio."
-msgstr "Ismeretlen hiba történt a fájl lejátszása közben"
-
-#: src/main/application.cpp:2727 src/main/application.cpp:2730
-msgid "Error Extracting Audio"
-msgstr ""
-
-#: src/main/application.cpp:2877
+#: src/main/application.cpp:2601
 msgid "modified"
 msgstr "módosítva"
 
-#: src/main/application.cpp:2978
+#: src/main/application.cpp:2702
 msgid "Pause"
 msgstr "Szünet"
 
-#: src/main/application.cpp:3023
+#: src/main/application.cpp:2750
 msgid "Seek backwards 1 second"
 msgid_plural "Seek backwards %1 seconds"
 msgstr[0] "Keresés visszafelé 1 másodperccel"
 msgstr[1] "Keresés visszafelé %1 másodperccel"
 
-#: src/main/application.cpp:3024
+#: src/main/application.cpp:2751
 msgid "Seek forwards 1 second"
 msgid_plural "Seek forwards %1 seconds"
 msgstr[0] "Keresés előre 1 másodperccel"
 msgstr[1] "Keresés előre %1 másodperccel"
 
-#: src/main/application.cpp:3027 src/main/application.cpp:3031
+#: src/main/application.cpp:2754 src/main/application.cpp:2758
 msgid "Shift %21 Millisecond"
 msgid_plural "Shift %2%1 Milliseconds"
 msgstr[0] "Eltolás %21 ezredmásodperccel"
 msgstr[1] "Eltolás %2%1 ezredmásodperccel"
 
-#: src/main/application.cpp:3028 src/main/application.cpp:3032
+#: src/main/application.cpp:2755 src/main/application.cpp:2759
 msgid "Shift selected lines %21 millisecond"
 msgid_plural "Shift selected lines %2%1 milliseconds"
 msgstr[0] "A kiválasztott sorok eltolása %21 ezredmásodperccel"
@@ -1393,20 +1357,22 @@ msgstr "Helyesítrási beállítások"
 
 #: src/main/configs/configdialog.cpp:62
 #, fuzzy
-msgctxt "@title Player Settings"
-msgid "Player"
+msgctxt "@title VideoPlayer Settings"
+msgid "VideoPlayer"
 msgstr "Lejátszó"
 
 #: src/main/configs/configdialog.cpp:63
-msgid "Player Settings"
+#, fuzzy
+msgid "VideoPlayer Settings"
 msgstr "A lejátszó beállításai"
 
 #: src/main/configs/configdialog.cpp:72
-msgctxt "@title Player backend settings"
+#, fuzzy
+msgctxt "@title VideoPlayer backend settings"
 msgid "%1 Backend Settings"
 msgstr "%1 backend beállítások"
 
-#: src/main/configs/playerconfigwidget.cpp:40
+#: src/main/configs/playerconfigwidget.cpp:39
 msgctxt "Text for previewing the subtitles font settings"
 msgid "<p>The Quick Brown Fox<br/>Jumps Over The Lazy Dog</p>"
 msgstr ""
@@ -1704,21 +1670,21 @@ msgstr ""
 msgid "Set from video length"
 msgstr "Beállítás a videó hoszzától"
 
-#: src/main/dialogs/opensubtitledialog.cpp:39
+#: src/main/dialogs/opensubtitledialog.cpp:40
 msgid "Open Subtitle"
 msgstr "Feliratfájl megnyitása"
 
-#: src/main/dialogs/opensubtitledialog.cpp:39
+#: src/main/dialogs/opensubtitledialog.cpp:40
 msgid "Open Translation Subtitle"
 msgstr "Fordítási felirat megnyitása"
 
-#: src/main/dialogs/opensubtitledialog.cpp:51
-#: src/main/dialogs/savesubtitledialog.cpp:85
+#: src/main/dialogs/opensubtitledialog.cpp:52
+#: src/main/dialogs/savesubtitledialog.cpp:86
 #: src/main/dialogs/selectablesubtitledialog.cpp:69
 msgid "Encoding:"
 msgstr "Karakterkódolás:"
 
-#: src/main/dialogs/opensubtitledialog.cpp:93
+#: src/main/dialogs/opensubtitledialog.cpp:94
 msgid "All Supported"
 msgstr "Minden támogatott típus"
 
@@ -1730,15 +1696,15 @@ msgstr "A kijelölt sorok eltávolítása"
 msgid "Remove From"
 msgstr "Eltávolítás ettől"
 
-#: src/main/dialogs/savesubtitledialog.cpp:43
+#: src/main/dialogs/savesubtitledialog.cpp:44
 msgid "Save Subtitle"
 msgstr "Felirat mentése"
 
-#: src/main/dialogs/savesubtitledialog.cpp:43
+#: src/main/dialogs/savesubtitledialog.cpp:44
 msgid "Save Translation Subtitle"
 msgstr "Fordítási felirat mentése"
 
-#: src/main/dialogs/savesubtitledialog.cpp:74
+#: src/main/dialogs/savesubtitledialog.cpp:75
 msgid "EOL:"
 msgstr "EOL:"
 
@@ -1927,57 +1893,57 @@ msgctxt "@title:column Subtitle line translation text"
 msgid "Translation"
 msgstr "Fordítás"
 
-#: src/main/lineswidget.cpp:1044
+#: src/main/lineswidget.cpp:1032
 msgid "Texts"
 msgstr "Szövegek"
 
-#: src/main/lineswidget.cpp:1054
+#: src/main/lineswidget.cpp:1042
 msgid "Styles"
 msgstr "Stílusok"
 
-#: src/main/lineswidget.cpp:1056 src/widgets/simplerichtextedit.cpp:116
+#: src/main/lineswidget.cpp:1044 src/widgets/simplerichtextedit.cpp:116
 msgctxt "@action:inmenu Toggle bold style"
 msgid "Bold"
 msgstr "Félkövér"
 
-#: src/main/lineswidget.cpp:1059 src/widgets/simplerichtextedit.cpp:122
+#: src/main/lineswidget.cpp:1047 src/widgets/simplerichtextedit.cpp:122
 msgctxt "@action:inmenu Toggle italic style"
 msgid "Italic"
 msgstr "Dőlt"
 
-#: src/main/lineswidget.cpp:1062 src/widgets/simplerichtextedit.cpp:128
+#: src/main/lineswidget.cpp:1050 src/widgets/simplerichtextedit.cpp:128
 msgctxt "@action:inmenu Toggle underline style"
 msgid "Underline"
 msgstr "Aláhúzás"
 
-#: src/main/lineswidget.cpp:1065 src/widgets/simplerichtextedit.cpp:134
+#: src/main/lineswidget.cpp:1053 src/widgets/simplerichtextedit.cpp:134
 msgctxt "@action:inmenu Toggle strike through style"
 msgid "Strike Through"
 msgstr "Áthúzott"
 
-#: src/main/lineswidget.cpp:1068 src/widgets/simplerichtextedit.cpp:140
+#: src/main/lineswidget.cpp:1056 src/widgets/simplerichtextedit.cpp:140
 msgctxt "@action:inmenu Change Text Color"
 msgid "Text Color"
 msgstr ""
 
-#: src/main/lineswidget.cpp:1070
+#: src/main/lineswidget.cpp:1058
 msgid "Times"
 msgstr "Idők"
 
-#: src/main/lineswidget.cpp:1072
+#: src/main/lineswidget.cpp:1060
 msgid "Shift +%1 Milliseconds"
 msgstr "Eltolja +%1 ezredmásodpercet"
 
-#: src/main/lineswidget.cpp:1073
+#: src/main/lineswidget.cpp:1061
 #, fuzzy
 msgid "Shift −%1 Milliseconds"
 msgstr "Eltolja +%1 ezredmásodpercet"
 
-#: src/main/lineswidget.cpp:1082
+#: src/main/lineswidget.cpp:1070
 msgid "Errors"
 msgstr "Hibák"
 
-#: src/main/lineswidget.cpp:1083
+#: src/main/lineswidget.cpp:1071
 msgid "Mark"
 msgstr "Jelölés"
 
@@ -2048,27 +2014,27 @@ msgstr "<b>Hossz</b>"
 msgid "<b>FPS</b>"
 msgstr "<b>FPS</b>"
 
-#: src/main/playerwidget.cpp:454
+#: src/main/playerwidget.cpp:446
 msgid "Show editable position control"
 msgstr "Szerkeszthető pozíció kezelő mutatása"
 
-#: src/main/playerwidget.cpp:703 src/main/playerwidget.cpp:704
-#: src/main/playerwidget.cpp:705 src/main/playerwidget.cpp:784
-#: src/main/playerwidget.cpp:798 src/main/playerwidget.cpp:806
+#: src/main/playerwidget.cpp:695 src/main/playerwidget.cpp:696
+#: src/main/playerwidget.cpp:697 src/main/playerwidget.cpp:776
+#: src/main/playerwidget.cpp:790 src/main/playerwidget.cpp:798
 msgid "<i>Unknown</i>"
 msgstr "<i>Ismeretlen</i>"
 
-#: src/main/playerwidget.cpp:715
+#: src/main/playerwidget.cpp:707
 #, fuzzy
 msgid "<qt>There was an error opening media file %1.</qt>"
 msgstr "<qt>Vamilyen hiba történt a(z)<br/>%1 megnyitásakor</qt>"
 
-#: src/main/playerwidget.cpp:747 src/main/playerwidget.cpp:749
+#: src/main/playerwidget.cpp:739 src/main/playerwidget.cpp:741
 #, fuzzy
 msgid "Unexpected error when playing file."
 msgstr "Ismeretlen hiba történt a fájl lejátszása közben"
 
-#: src/main/playerwidget.cpp:747 src/main/playerwidget.cpp:749
+#: src/main/playerwidget.cpp:739 src/main/playerwidget.cpp:741
 msgid "Error Playing File"
 msgstr ""
 
@@ -2153,10 +2119,6 @@ msgstr "Hiba a parancsfájl futtatásakor"
 #: src/main/scripting/scriptsmanager.cpp:380
 msgid "Tools"
 msgstr "Eszközök"
-
-#: src/main/statusbar.cpp:37
-msgid "Extracting audio %p%"
-msgstr ""
 
 #: src/main/utils/errorfinder.cpp:37 src/main/utils/errorfinder.cpp:209
 #: src/main/utils/errorfinder.cpp:223
@@ -2268,28 +2230,20 @@ msgstr "A felhasználó félbeszakította a műveletet."
 msgid "Unexpected contents received from translation service"
 msgstr ""
 
-#: src/services/gstreamer/gstreamerplayerbackend.cpp:348
-#: src/services/mplayer/mplayerplayerbackend.cpp:242
-#: src/services/xine/xinedecoderbackend.cpp:198
-#: src/services/xine/xineplayerbackend.cpp:283
+#: src/videoplayer/gstreamer/gstreamerplayerbackend.cpp:350
+#: src/videoplayer/mplayer/mplayerplayerbackend.cpp:242
+#: src/videoplayer/xine/xineplayerbackend.cpp:283
 msgid "Audio Stream #%1"
 msgstr "Audio adatfolyam #%1"
 
-#: src/services/mpv/mpvbackend.cpp:192
+#: src/videoplayer/mpv/mpvbackend.cpp:192
 #, fuzzy
 msgid "Stream #%1"
 msgstr "Audio adatfolyam #%1"
 
-#: src/services/player.cpp:374
+#: src/videoplayer/videoplayer.cpp:505
 msgid "File does not exist."
 msgstr ""
-
-#: src/services/xine/xinedecoderbackend.cpp:305
-#, fuzzy
-msgid "There was an error converting audio data to output format."
-msgstr ""
-"Hiba történt a kép elmentése közben:\n"
-"%1"
 
 #: src/widgets/simplerichtextedit.cpp:79
 msgid "Cut"
@@ -2324,21 +2278,47 @@ msgstr "Automatikus helyesírás-ellenőrzés"
 msgid "Allow Tabulations"
 msgstr "Tabulátorok engedélyezése"
 
-#: src/widgets/simplerichtextedit.cpp:541
+#: src/widgets/simplerichtextedit.cpp:542
 msgid "Suggestions"
 msgstr "Javaslatok"
 
-#: src/widgets/simplerichtextedit.cpp:542
+#: src/widgets/simplerichtextedit.cpp:543
 msgid "Ignore"
 msgstr "Kihagyás"
 
-#: src/widgets/simplerichtextedit.cpp:543
+#: src/widgets/simplerichtextedit.cpp:544
 msgid "Add to Dictionary"
 msgstr "Hozzáadás a szótárhoz"
 
-#: src/widgets/simplerichtextedit.cpp:547
+#: src/widgets/simplerichtextedit.cpp:548
 msgid "No suggestions"
 msgstr "Nincsenek javaslatok"
+
+#: src/widgets/waveformwidget.cpp:57
+msgid "Generating waveform"
+msgstr ""
+
+#, fuzzy
+#~ msgid "Audio Levels Files"
+#~ msgstr "A hangfájlok megőr&zése:"
+
+#, fuzzy
+#~ msgid "Extract video's active audio stream"
+#~ msgstr "Az aktív audio adatfolyam kiválasztása"
+
+#, fuzzy
+#~ msgid "<qt>There was an error opening file %1 for audio extraction.</qt>"
+#~ msgstr "<qt>Vamilyen hiba történt a(z)<br/>%1 megnyitásakor</qt>"
+
+#, fuzzy
+#~ msgid "Unexpected error when extracting audio."
+#~ msgstr "Ismeretlen hiba történt a fájl lejátszása közben"
+
+#, fuzzy
+#~ msgid "There was an error converting audio data to output format."
+#~ msgstr ""
+#~ "Hiba történt a kép elmentése közben:\n"
+#~ "%1"
 
 #~ msgid "Configure"
 #~ msgstr "Beállítás"

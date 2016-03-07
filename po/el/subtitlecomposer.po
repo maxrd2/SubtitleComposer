@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: subtitlecomposer\n"
 "Report-Msgid-Bugs-To: https://github.com/maxrd2/subtitlecomposer/issues\n"
-"POT-Creation-Date: 2016-02-08 16:14+0100\n"
+"POT-Creation-Date: 2016-03-07 17:06+0100\n"
 "PO-Revision-Date: 2008-07-11 07:53+0300\n"
 "Last-Translator: Alexandros Perdikomatis <atanasia.kalampaka@ontelecoms.gr>\n"
 "Language-Team: ΕΛΛΗΝΙΚΑ <el@li.org>\n"
@@ -27,32 +27,10 @@ msgctxt "EMAIL OF TRANSLATORS"
 msgid "Your emails"
 msgstr "atanasia@ontelecoms.gr"
 
-#: src/common/languagecode.cpp:421
+#: src/common/languagecode.cpp:420
 #, fuzzy
 msgid "Unknown"
 msgstr "<i>Άγνωστο</i>"
-
-#: src/core/subtitleactions.cpp:59
-msgid "Set Frame Rate"
-msgstr "Ορισμός Λόγου Καρέ"
-
-#: src/core/subtitleactions.cpp:95
-#, fuzzy
-msgid "Insert Lines"
-msgstr "Εισαγωγή Γραμμής"
-
-#: src/core/subtitleactions.cpp:176 src/core/subtitle.cpp:434
-#: src/core/subtitle.cpp:444 src/core/subtitle.cpp:461
-msgid "Remove Lines"
-msgstr "Αφαίρεση Γραμμών"
-
-#: src/core/subtitleactions.cpp:262
-msgid "Move Line"
-msgstr "Μετακίνηση Γραμμής"
-
-#: src/core/subtitleactions.cpp:362
-msgid "Swap Texts"
-msgstr "Αντιμετάθεση Κειμένων"
 
 #: src/core/subtitle.cpp:69
 msgid "Set Primary Data"
@@ -78,13 +56,18 @@ msgstr "Αλλαγή Λόγου Καρέ"
 msgid "Insert Line"
 msgstr "Εισαγωγή Γραμμής"
 
-#: src/core/subtitle.cpp:514 src/main/application.cpp:617
-#: src/main/lineswidget.cpp:1100
+#: src/core/subtitle.cpp:434 src/core/subtitle.cpp:444
+#: src/core/subtitle.cpp:461 src/core/subtitleactions.cpp:176
+msgid "Remove Lines"
+msgstr "Αφαίρεση Γραμμών"
+
+#: src/core/subtitle.cpp:514 src/main/application.cpp:573
+#: src/main/lineswidget.cpp:1088
 msgid "Split Lines"
 msgstr "Διαχωρισμός Γραμμών"
 
-#: src/core/subtitle.cpp:565 src/main/application.cpp:624
-#: src/main/lineswidget.cpp:1099
+#: src/core/subtitle.cpp:565 src/main/application.cpp:580
+#: src/main/lineswidget.cpp:1087
 msgid "Join Lines"
 msgstr "Ένωση Γραμμών"
 
@@ -96,8 +79,8 @@ msgstr "Ολίσθηση Γραμμών"
 msgid "Adjust Lines"
 msgstr "Ρύθμιση Γραμμών"
 
-#: src/core/subtitle.cpp:670 src/main/application.cpp:2279
-#: src/main/lineswidget.cpp:1076
+#: src/core/subtitle.cpp:670 src/main/application.cpp:2150
+#: src/main/lineswidget.cpp:1064
 msgid "Sort"
 msgstr ""
 
@@ -106,8 +89,8 @@ msgstr ""
 msgid "Enforce Duration Limits"
 msgstr "Όρια Διάρκειας"
 
-#: src/core/subtitle.cpp:751 src/main/application.cpp:2341
-#: src/main/lineswidget.cpp:1079
+#: src/core/subtitle.cpp:751 src/main/application.cpp:2212
+#: src/main/lineswidget.cpp:1067
 msgid "Maximize Durations"
 msgstr "Μεγιστοποίηση Διαρκειών"
 
@@ -116,7 +99,7 @@ msgid "Set Automatic Durations"
 msgstr "Ορισμός Αυτόματων Διαρκειών"
 
 #: src/core/subtitle.cpp:808 src/main/dialogs/fixoverlappingtimesdialog.cpp:31
-#: src/main/lineswidget.cpp:1080
+#: src/main/lineswidget.cpp:1068
 #, fuzzy
 msgid "Fix Overlapping Times"
 msgstr "Διόρθωση Επικαλυπτόμενων Γραμμών"
@@ -146,13 +129,13 @@ msgstr "Γράμματα Πρότασης"
 msgid "Break Lines"
 msgstr "Επανένωση Γραμμών"
 
-#: src/core/subtitle.cpp:1033 src/main/application.cpp:2393
-#: src/main/lineswidget.cpp:1046
+#: src/core/subtitle.cpp:1033 src/main/application.cpp:2264
+#: src/main/lineswidget.cpp:1034
 msgid "Unbreak Lines"
 msgstr "Επανένωση Γραμμών"
 
-#: src/core/subtitle.cpp:1042 src/main/application.cpp:2404
-#: src/main/lineswidget.cpp:1047
+#: src/core/subtitle.cpp:1042 src/main/application.cpp:2275
+#: src/main/lineswidget.cpp:1035
 msgid "Simplify Spaces"
 msgstr "Απλοποίηση Κενών"
 
@@ -194,39 +177,32 @@ msgstr "Καθαρισμός Σημαδιού Γραμμών"
 msgid "Toggle Lines Mark"
 msgstr "Αντιθέτηση Σημαδιού Γραμμής"
 
-#: src/core/subtitle.cpp:1217 src/main/application.cpp:2159
+#: src/core/subtitle.cpp:1217 src/main/application.cpp:2030
 #: src/main/errorswidget.cpp:798
 msgid "Clear Lines Errors"
 msgstr "Καθαρισμός Λαθών Γραμμών"
 
 #: src/core/subtitle.cpp:1228 src/core/subtitle.cpp:1240
-#: src/main/application.cpp:2104
+#: src/main/application.cpp:1975
 msgid "Check Lines Errors"
 msgstr "Έλεγχος Λαθών Γραμμών"
 
-#: src/core/subtitlelineactions.cpp:72
-msgid "Set Line Text"
-msgstr "Ορισμός Κειμένου Γραμμής"
+#: src/core/subtitleactions.cpp:59
+msgid "Set Frame Rate"
+msgstr "Ορισμός Λόγου Καρέ"
 
-#: src/core/subtitlelineactions.cpp:113
-msgid "Set Line Secondary Text"
-msgstr "Ορισμός Δευτερεύοντος Κειμένου Γραμμής"
+#: src/core/subtitleactions.cpp:95
+#, fuzzy
+msgid "Insert Lines"
+msgstr "Εισαγωγή Γραμμής"
 
-#: src/core/subtitlelineactions.cpp:154
-msgid "Set Line Texts"
-msgstr "Ορισμός Κειμένων Γραμμής"
+#: src/core/subtitleactions.cpp:262
+msgid "Move Line"
+msgstr "Μετακίνηση Γραμμής"
 
-#: src/core/subtitlelineactions.cpp:228
-msgid "Set Line Show Time"
-msgstr "Ορισμός Χρόνου Παρουσίας Γραμμής"
-
-#: src/core/subtitlelineactions.cpp:269
-msgid "Set Line Hide Time"
-msgstr "Ορισμός Χρόνου Απόκρυψης Γραμμής"
-
-#: src/core/subtitlelineactions.cpp:384
-msgid "Set Line Errors"
-msgstr "Ορισμός Λαθών Γραμμής"
+#: src/core/subtitleactions.cpp:362
+msgid "Swap Texts"
+msgstr "Αντιμετάθεση Κειμένων"
 
 #: src/core/subtitleline.cpp:77
 msgid "Empty text"
@@ -425,9 +401,33 @@ msgstr "Ολίσθηση Χρόνων Γραμμής"
 msgid "Adjust Line Times"
 msgstr "Ρύθμιση Χρόνων Γραμμής"
 
+#: src/core/subtitlelineactions.cpp:72
+msgid "Set Line Text"
+msgstr "Ορισμός Κειμένου Γραμμής"
+
+#: src/core/subtitlelineactions.cpp:113
+msgid "Set Line Secondary Text"
+msgstr "Ορισμός Δευτερεύοντος Κειμένου Γραμμής"
+
+#: src/core/subtitlelineactions.cpp:154
+msgid "Set Line Texts"
+msgstr "Ορισμός Κειμένων Γραμμής"
+
+#: src/core/subtitlelineactions.cpp:228
+msgid "Set Line Show Time"
+msgstr "Ορισμός Χρόνου Παρουσίας Γραμμής"
+
+#: src/core/subtitlelineactions.cpp:269
+msgid "Set Line Hide Time"
+msgstr "Ορισμός Χρόνου Απόκρυψης Γραμμής"
+
+#: src/core/subtitlelineactions.cpp:384
+msgid "Set Line Errors"
+msgstr "Ορισμός Λαθών Γραμμής"
+
 #: src/main/actions/kcodecactionext.cpp:39
-#: src/main/dialogs/opensubtitledialog.cpp:46
-#: src/main/dialogs/opensubtitledialog.cpp:48
+#: src/main/dialogs/opensubtitledialog.cpp:47
+#: src/main/dialogs/opensubtitledialog.cpp:49
 #: src/main/dialogs/selectablesubtitledialog.cpp:64
 #: src/main/dialogs/selectablesubtitledialog.cpp:98
 #, fuzzy
@@ -439,709 +439,688 @@ msgstr "Αυτόματες Διάρκειες"
 msgid "Clear List"
 msgstr "Καθαρισμός Ιστορικού"
 
-#: src/main/application.cpp:386
+#: src/main/application.cpp:361
 msgid "Video Files"
 msgstr "Αρχεία Βίντεο"
 
-#: src/main/application.cpp:394
+#: src/main/application.cpp:368
 msgid "Audio Files"
 msgstr "Αρχεία Ήχου"
 
-#: src/main/application.cpp:396
+#: src/main/application.cpp:370
 msgid "Media Files"
 msgstr "Αρχεία Μέσων"
 
-#: src/main/application.cpp:397
+#: src/main/application.cpp:371
 msgid "All Files"
 msgstr "Όλα τα Αρχεία"
 
-#: src/main/application.cpp:413
-msgid "Audio Levels Files"
-msgstr "Αρχεία Επιπέδων Ήχου"
-
-#: src/main/application.cpp:434
+#: src/main/application.cpp:390
 msgid "Exit the application"
 msgstr "Έξοδος από την εφαρμογή"
 
-#: src/main/application.cpp:437
+#: src/main/application.cpp:393
 msgid "Configure Subtitle Composer"
 msgstr "Ρύθμιση του Συνθέτη Υποτίτλων"
 
-#: src/main/application.cpp:441
+#: src/main/application.cpp:397
 msgctxt "@action:inmenu Create a new subtitle"
 msgid "New"
 msgstr "Νέο"
 
-#: src/main/application.cpp:442
+#: src/main/application.cpp:398
 msgid "Create an empty subtitle"
 msgstr "Δημιουργία ενός άδειου υπότιτλου"
 
-#: src/main/application.cpp:450
+#: src/main/application.cpp:406
 #, fuzzy
 msgctxt "@action:inmenu Open subtitle file"
 msgid "Open..."
 msgstr "Άνοιγμα..."
 
-#: src/main/application.cpp:451 src/main/application.cpp:469
+#: src/main/application.cpp:407 src/main/application.cpp:425
 msgid "Open subtitle file"
 msgstr "Άνοιγμα αρχείου υποτίτλων"
 
-#: src/main/application.cpp:459
+#: src/main/application.cpp:415
 msgid "Reload As..."
 msgstr "Επαναφόρτωση Ως..."
 
-#: src/main/application.cpp:460
+#: src/main/application.cpp:416
 msgid "Reload opened file with a different encoding"
 msgstr "Επαναφόρτωση ανοιγμένου αρχείου με διαφορετική κωδικοποίηση"
 
-#: src/main/application.cpp:468
+#: src/main/application.cpp:424
 #, fuzzy
 msgctxt "@action:inmenu Open rencently used subtitle file"
 msgid "Open &Recent"
 msgstr "Άνοιγμα &Πρόσφατου"
 
-#: src/main/application.cpp:475
+#: src/main/application.cpp:431
 msgid "Save"
 msgstr "Αποθήκευση"
 
-#: src/main/application.cpp:476
+#: src/main/application.cpp:432
 msgid "Save opened subtitle"
 msgstr "Αποθήκευση ανοιγμένου υπότιτλου"
 
-#: src/main/application.cpp:484
+#: src/main/application.cpp:440
 msgid "Save As..."
 msgstr "Αποθήκευση ως..."
 
-#: src/main/application.cpp:485
+#: src/main/application.cpp:441
 msgid "Save opened subtitle with different settings"
 msgstr "Αποθήκευση ανοιγμένου υπότιτλου με διαφορετικές ρυθμίσεις"
 
-#: src/main/application.cpp:492
+#: src/main/application.cpp:448
 msgid "Close"
 msgstr "Κλείσιμο"
 
-#: src/main/application.cpp:493
+#: src/main/application.cpp:449
 msgid "Close opened subtitle"
 msgstr "Κλείσιμο ανοιγμένου υπότιτλου"
 
-#: src/main/application.cpp:501
+#: src/main/application.cpp:457
 msgid "New Translation"
 msgstr "Νέα Μετάφραση"
 
-#: src/main/application.cpp:502
+#: src/main/application.cpp:458
 msgid "Create an empty translation subtitle"
 msgstr "Δημιουργία ενός άδειου υπότιτλου μετάφρασης"
 
-#: src/main/application.cpp:510
+#: src/main/application.cpp:466
 msgid "Open Translation..."
 msgstr "Άνοιγμα Μετάφρασης..."
 
-#: src/main/application.cpp:511 src/main/application.cpp:529
+#: src/main/application.cpp:467 src/main/application.cpp:485
 msgid "Open translation subtitle file"
 msgstr "Άνοιγμα αρχείου μετάφρασης υποτίτλων"
 
-#: src/main/application.cpp:519
+#: src/main/application.cpp:475
 #, fuzzy
 msgid "Reload Translation As..."
 msgstr "Αποθήκευση Μετάφρασης Ως..."
 
-#: src/main/application.cpp:520
+#: src/main/application.cpp:476
 #, fuzzy
 msgid "Reload opened translation file with a different encoding"
 msgstr "Επαναφόρτωση ανοιγμένου αρχείου με διαφορετική κωδικοποίηση"
 
-#: src/main/application.cpp:528
+#: src/main/application.cpp:484
 msgid "Open &Recent Translation"
 msgstr "Άνοιγμα &Πρόσφατης Μετάφρασης"
 
-#: src/main/application.cpp:536
+#: src/main/application.cpp:492
 msgid "Save Translation"
 msgstr "Αποθήκευση Μετάφρασης"
 
-#: src/main/application.cpp:537
+#: src/main/application.cpp:493
 msgid "Save opened translation subtitle"
 msgstr "Αποθήκευση ανοιγμένου υπότιτλου μετάφρασης"
 
-#: src/main/application.cpp:545
+#: src/main/application.cpp:501
 msgid "Save Translation As..."
 msgstr "Αποθήκευση Μετάφρασης Ως..."
 
-#: src/main/application.cpp:546
+#: src/main/application.cpp:502
 msgid "Save opened translation subtitle with different settings"
 msgstr "Αποθήκευση ανοιγμένου υπότιτλου μετάφρασης με διαφορετικές ρυθμίσεις"
 
-#: src/main/application.cpp:553
+#: src/main/application.cpp:509
 msgid "Close Translation"
 msgstr "Κλείσιμο Μετάφρασης"
 
-#: src/main/application.cpp:554
+#: src/main/application.cpp:510
 msgid "Close opened translation subtitle"
 msgstr "Κλείσιμο ανοιγμένου υπότιτλου μετάφρασης"
 
-#: src/main/application.cpp:562 src/main/application.cpp:563
+#: src/main/application.cpp:518 src/main/application.cpp:519
 #: src/widgets/simplerichtextedit.cpp:67
 msgid "Undo"
 msgstr "Αναίρεση"
 
-#: src/main/application.cpp:571 src/main/application.cpp:572
+#: src/main/application.cpp:527 src/main/application.cpp:528
 #: src/widgets/simplerichtextedit.cpp:73
 msgid "Redo"
 msgstr "Επαναφορά"
 
-#: src/main/application.cpp:579
+#: src/main/application.cpp:535
 msgid "Split Subtitle..."
 msgstr "Διαχωρισμός Υπότιτλου"
 
-#: src/main/application.cpp:580
+#: src/main/application.cpp:536
 msgid "Split the opened subtitle in two parts"
 msgstr "Διαχωρισμός ανοιγμένου υπότιτλου σε δύο μέρη"
 
-#: src/main/application.cpp:586
+#: src/main/application.cpp:542
 msgid "Join Subtitles..."
 msgstr "Ένωση Υποτίτλων"
 
-#: src/main/application.cpp:587
+#: src/main/application.cpp:543
 msgid "Append to the opened subtitle another one"
 msgstr "Προσθήκη ενός ακόμη υπότιτλου στον ανοιγμένο"
 
-#: src/main/application.cpp:593 src/main/lineswidget.cpp:1096
+#: src/main/application.cpp:549 src/main/lineswidget.cpp:1084
 msgid "Insert Before"
 msgstr "Εισαγωγή Πριν"
 
-#: src/main/application.cpp:594
+#: src/main/application.cpp:550
 msgid "Insert empty line before current one"
 msgstr "Εισαγωγή άδειας γραμμής πριν την τρέχουσα"
 
-#: src/main/application.cpp:601 src/main/lineswidget.cpp:1097
+#: src/main/application.cpp:557 src/main/lineswidget.cpp:1085
 msgid "Insert After"
 msgstr "Εισαγωγή Μετά"
 
-#: src/main/application.cpp:602
+#: src/main/application.cpp:558
 msgid "Insert empty line after current one"
 msgstr "Εισαγωγή άδειας γραμμής μετά αυτής"
 
-#: src/main/application.cpp:609 src/main/lineswidget.cpp:1095
+#: src/main/application.cpp:565 src/main/lineswidget.cpp:1083
 msgid "Remove"
 msgstr "Αφαίρεση"
 
-#: src/main/application.cpp:610
+#: src/main/application.cpp:566
 msgid "Remove selected lines"
 msgstr "Αφαίρεση επιλεγμένων γραμμών"
 
-#: src/main/application.cpp:618
+#: src/main/application.cpp:574
 msgid "Split selected lines"
 msgstr "Διαχωρισμός επιλεγμένων γραμμών"
 
-#: src/main/application.cpp:625
+#: src/main/application.cpp:581
 msgid "Join selected lines"
 msgstr "Ένωση επιλεγμένων γραμμών"
 
-#: src/main/application.cpp:631
+#: src/main/application.cpp:587
 #: src/main/dialogs/actionwitherrortargetsdialog.cpp:95
-#: src/main/lineswidget.cpp:1093 src/widgets/simplerichtextedit.cpp:110
+#: src/main/lineswidget.cpp:1081 src/widgets/simplerichtextedit.cpp:110
 msgid "Select All"
 msgstr "Επιλογή Όλων"
 
-#: src/main/application.cpp:632
+#: src/main/application.cpp:588
 msgid "Select all lines"
 msgstr "Επιλογή όλων των γραμμών"
 
-#: src/main/application.cpp:639
+#: src/main/application.cpp:595
 msgid "Go to Line..."
 msgstr "Πήγαινε στη Γραμμή..."
 
-#: src/main/application.cpp:640
+#: src/main/application.cpp:596
 msgid "Go to specified line"
 msgstr "Πήγαινε σε συγκεκριμένη γραμμή"
 
-#: src/main/application.cpp:648
+#: src/main/application.cpp:604
 msgid "Find..."
 msgstr "Εύρεση..."
 
-#: src/main/application.cpp:649
+#: src/main/application.cpp:605
 msgid "Find occurrences of strings or regular expressions"
 msgstr "Εύρεση απαντώμενων λεκτικών ή σταθερών εκφράσεων"
 
-#: src/main/application.cpp:657
+#: src/main/application.cpp:613
 msgid "Find Next"
 msgstr "Εύρεση Επόμενου"
 
-#: src/main/application.cpp:658
+#: src/main/application.cpp:614
 msgid "Find next occurrence of string or regular expression"
 msgstr "Εύρεση επόμενου απαντώμενου λεκτικού ή σταθερής έκφρασης"
 
-#: src/main/application.cpp:666
+#: src/main/application.cpp:622
 msgid "Find Previous"
 msgstr "Εύρεση Προηγούμενου"
 
-#: src/main/application.cpp:667
+#: src/main/application.cpp:623
 msgid "Find previous occurrence of string or regular expression"
 msgstr "Εύρεση προηγούμενου απαντώμενου λεκτικού ή σταθερής έκφρασης"
 
-#: src/main/application.cpp:674
+#: src/main/application.cpp:630
 msgid "Replace..."
 msgstr "Αντικατάσταση..."
 
-#: src/main/application.cpp:675
+#: src/main/application.cpp:631
 msgid "Replace occurrences of strings or regular expressions"
 msgstr "Αντικατάσταση απαντώμενων λεκτικών ή σταθερών εκφράσεων"
 
-#: src/main/application.cpp:683
+#: src/main/application.cpp:639
 msgid "Retrocede current line"
 msgstr ""
 
-#: src/main/application.cpp:684
+#: src/main/application.cpp:640
 msgid "Makes the line before the current one active"
 msgstr ""
 
-#: src/main/application.cpp:692
+#: src/main/application.cpp:648
 msgid "Advance current line"
 msgstr ""
 
-#: src/main/application.cpp:693
+#: src/main/application.cpp:649
 msgid "Makes the line after the current one active"
 msgstr ""
 
-#: src/main/application.cpp:700 src/main/errorsdialog.cpp:52
-#: src/main/lineswidget.cpp:1087
+#: src/main/application.cpp:656 src/main/errorsdialog.cpp:52
+#: src/main/lineswidget.cpp:1075
 msgid "Check Errors..."
 msgstr "Έλεγχος Λαθών"
 
-#: src/main/application.cpp:701
+#: src/main/application.cpp:657
 msgid "Check for errors in the current subtitle"
 msgstr "Έλεγχος για λάθη στον τρέχοντα υπότιτλο"
 
-#: src/main/application.cpp:708 src/main/errorsdialog.cpp:55
-#: src/main/lineswidget.cpp:1088
+#: src/main/application.cpp:664 src/main/errorsdialog.cpp:55
+#: src/main/lineswidget.cpp:1076
 msgid "Clear Errors..."
 msgstr "Καθαρισμός Λαθών"
 
-#: src/main/application.cpp:709
+#: src/main/application.cpp:665
 msgid "Clear errors from selected lines"
 msgstr "Καθαρισμός λαθών από επιλεγμένες γραμμές"
 
-#: src/main/application.cpp:715 src/main/lineswidget.cpp:1090
+#: src/main/application.cpp:671 src/main/lineswidget.cpp:1078
 msgid "Show Errors..."
 msgstr "Εμφάνιση Λαθών"
 
-#: src/main/application.cpp:716
+#: src/main/application.cpp:672
 msgid "Show errors information for the current subtitle"
 msgstr "Εμφάνιση πληροφοριών λαθών για τον συγκεκριμένο υπότιτλο"
 
-#: src/main/application.cpp:724
+#: src/main/application.cpp:680
 #, fuzzy
 msgid "Find Error..."
 msgstr "Εύρεση Λάθους"
 
-#: src/main/application.cpp:725
+#: src/main/application.cpp:681
 #, fuzzy
 msgid "Find lines with specified errors"
 msgstr "Εύρεση επόμενης γραμμής με λάθη"
 
-#: src/main/application.cpp:733
+#: src/main/application.cpp:689
 msgid "Find Next Error"
 msgstr "Εύρεση Επόμενου Λάθους"
 
-#: src/main/application.cpp:734
+#: src/main/application.cpp:690
 #, fuzzy
 msgid "Find next line with specified errors"
 msgstr "Εύρεση επόμενης γραμμής με λάθη"
 
-#: src/main/application.cpp:742
+#: src/main/application.cpp:698
 msgid "Find Previous Error"
 msgstr "Εύρεση Προηγούμενου Λάθους"
 
-#: src/main/application.cpp:743
+#: src/main/application.cpp:699
 #, fuzzy
 msgid "Find previous line with specified errors"
 msgstr "Εύρεση προηγούμενης γραμμής με λάθη"
 
-#: src/main/application.cpp:751 src/main/lineswidget.cpp:1052
+#: src/main/application.cpp:707 src/main/lineswidget.cpp:1040
 msgid "Spelling..."
 msgstr "Συλλαβισμός..."
 
-#: src/main/application.cpp:752
+#: src/main/application.cpp:708
 msgid "Check lines spelling"
 msgstr "Έλεγχος συλλαβισμού γραμμών"
 
-#: src/main/application.cpp:758
+#: src/main/application.cpp:714
 msgid "Toggle Mark"
 msgstr "Αντιθέτηση Σημαδιού"
 
-#: src/main/application.cpp:759
+#: src/main/application.cpp:715
 msgid "Toggle selected lines mark"
 msgstr "Αντιθέτηση σημαδιού επιλεγμένων γραμμών"
 
-#: src/main/application.cpp:767 src/main/currentlinewidget.cpp:93
+#: src/main/application.cpp:723 src/main/currentlinewidget.cpp:93
 msgid "Toggle Bold"
 msgstr "Αντιθέτηση Έντονου"
 
-#: src/main/application.cpp:768
+#: src/main/application.cpp:724
 msgid "Toggle selected lines bold attribute"
 msgstr "Αντιθέτηση ιδιότητας έντονου επιλεγμένων γραμμών"
 
-#: src/main/application.cpp:776 src/main/currentlinewidget.cpp:94
+#: src/main/application.cpp:732 src/main/currentlinewidget.cpp:94
 msgid "Toggle Italic"
 msgstr "Αντιθέτηση Πλάγιου"
 
-#: src/main/application.cpp:777
+#: src/main/application.cpp:733
 msgid "Toggle selected lines italic attribute"
 msgstr "Αντιθέτηση ιδιότητας πλάγιου επιλεγμένων γραμμών"
 
-#: src/main/application.cpp:785 src/main/currentlinewidget.cpp:95
+#: src/main/application.cpp:741 src/main/currentlinewidget.cpp:95
 msgid "Toggle Underline"
 msgstr "Αντιθέτηση Υπογραμμισμένου"
 
-#: src/main/application.cpp:786
+#: src/main/application.cpp:742
 msgid "Toggle selected lines underline attribute"
 msgstr "Αντιθέτηση ιδιότητας υπογραμμισμένου επιλεγμένων γραμμών"
 
-#: src/main/application.cpp:794 src/main/currentlinewidget.cpp:96
+#: src/main/application.cpp:750 src/main/currentlinewidget.cpp:96
 msgid "Toggle Strike Through"
 msgstr "Αντιθέτηση Διαγραμμένου"
 
-#: src/main/application.cpp:795
+#: src/main/application.cpp:751
 #, fuzzy
 msgid "Toggle selected lines strike through attribute"
 msgstr "Αντιθέτηση ιδιότητας διαγραμμένου επιλεγμένων γραμμών"
 
-#: src/main/application.cpp:803 src/main/currentlinewidget.cpp:97
+#: src/main/application.cpp:759 src/main/currentlinewidget.cpp:97
 #, fuzzy
 msgid "Change Text Color"
 msgstr "Εναλλαγή πεζά/κεφαλαία"
 
-#: src/main/application.cpp:804
+#: src/main/application.cpp:760
 #, fuzzy
 msgid "Change text color of selected lines"
 msgstr "Καθαρισμός λαθών από επιλεγμένες γραμμές"
 
-#: src/main/application.cpp:811 src/main/lineswidget.cpp:1075
+#: src/main/application.cpp:767 src/main/lineswidget.cpp:1063
 #, fuzzy
 msgid "Shift..."
 msgstr "Ολίσθηση Γραμμών..."
 
-#: src/main/application.cpp:812
+#: src/main/application.cpp:768
 msgid "Shift lines an specified amount of time"
 msgstr "Ολίσθηση γραμμών κατά ορισμένο χρόνο"
 
-#: src/main/application.cpp:831
+#: src/main/application.cpp:787
 #, fuzzy
 msgid "Adjust..."
 msgstr "Προσαρμογή Γραμμών..."
 
-#: src/main/application.cpp:832
+#: src/main/application.cpp:788
 #, fuzzy
 msgid "Linearly adjust all lines to a specified interval"
 msgstr "Προσαρμογή γραμμών γραμμικά κατά ορισμένο χρονικό"
 
-#: src/main/application.cpp:839
+#: src/main/application.cpp:795
 #, fuzzy
 msgid "Sort..."
 msgstr "Ταξινόμηση Γραμμών"
 
-#: src/main/application.cpp:840
+#: src/main/application.cpp:796
 msgid "Sort lines based on their show time"
 msgstr "Ταξινόμηση γραμμών κατά χρόνο παρουσίας"
 
-#: src/main/application.cpp:846
+#: src/main/application.cpp:802
 msgid "Change Frame Rate..."
 msgstr "Αλλαγή Λόγου Καρέ"
 
-#: src/main/application.cpp:847
+#: src/main/application.cpp:803
 msgid "Retime subtitle lines by reinterpreting its frame rate"
 msgstr "Αναχρονισμός γραμμών υποτίτλων βάσει επανερμηνείας τού λόγου των καρέ"
 
-#: src/main/application.cpp:853 src/main/lineswidget.cpp:1077
+#: src/main/application.cpp:809 src/main/lineswidget.cpp:1065
 #, fuzzy
 msgid "Enforce Duration Limits..."
 msgstr "Όρια Διάρκειας"
 
-#: src/main/application.cpp:854
+#: src/main/application.cpp:810
 #, fuzzy
 msgid "Enforce lines minimum and/or maximum duration limits"
 msgstr "Υποχρέωση των γραμμών κατά τη ελάχιστη και/ή τη μέγιστη διάρκεια"
 
-#: src/main/application.cpp:861 src/main/lineswidget.cpp:1078
+#: src/main/application.cpp:817 src/main/lineswidget.cpp:1066
 #, fuzzy
 msgid "Set Automatic Durations..."
 msgstr "Ορισμός Αυτόματων Διαρκειών"
 
-#: src/main/application.cpp:862
+#: src/main/application.cpp:818
 #, fuzzy
 msgid "Set lines durations based on amount of letters, words and line breaks"
 msgstr ""
 "Όρισε τις διάρκειες των γραμμών βάσει τού πλήθους των λέξεων και/ή τού "
 "πλήθους αυτών"
 
-#: src/main/application.cpp:868
+#: src/main/application.cpp:824
 msgid "Maximize Durations..."
 msgstr "Μεγιστοποίηση Διαρκειών..."
 
-#: src/main/application.cpp:869
+#: src/main/application.cpp:825
 msgid "Extend lines durations up to their next lines show time"
 msgstr "Επέκταση διάρκειας γραμμών ως τη στιγμή εμφάνισης των επόμενων"
 
-#: src/main/application.cpp:875
+#: src/main/application.cpp:831
 #, fuzzy
 msgid "Fix Overlapping Times..."
 msgstr "Διόρθωση Επικαλυπτόμενων Γραμμών..."
 
-#: src/main/application.cpp:876
+#: src/main/application.cpp:832
 msgid "Fix lines overlapping times"
 msgstr "Διόρθωση χρόνων επικαλυπτόμενων γραμμών"
 
-#: src/main/application.cpp:882
+#: src/main/application.cpp:838
 #, fuzzy
 msgid "Synchronize with Subtitle..."
 msgstr "Συγχρονισμός Με Υπότιτλο..."
 
-#: src/main/application.cpp:883
+#: src/main/application.cpp:839
 msgid "Copy timing information from another subtitle"
 msgstr "Αντιγραφή πληροφορίας χρονισμού από άλλο υπότιτλο"
 
-#: src/main/application.cpp:889 src/main/lineswidget.cpp:1045
+#: src/main/application.cpp:845 src/main/lineswidget.cpp:1033
 #, fuzzy
 msgid "Break Lines..."
 msgstr "Επανένωση Γραμμών..."
 
-#: src/main/application.cpp:890
+#: src/main/application.cpp:846
 msgid "Automatically set line breaks"
 msgstr "Αυτόματος ορισμός αλλαγών γραμμής"
 
-#: src/main/application.cpp:896 src/main/lineswidget.cpp:1046
+#: src/main/application.cpp:852 src/main/lineswidget.cpp:1034
 msgid "Unbreak Lines..."
 msgstr "Επανένωση Γραμμών..."
 
-#: src/main/application.cpp:897
+#: src/main/application.cpp:853
 msgid "Remove line breaks from lines"
 msgstr "Αφαίρεση αλλαγών γραμμής από γραμμές"
 
-#: src/main/application.cpp:903 src/main/lineswidget.cpp:1047
+#: src/main/application.cpp:859 src/main/lineswidget.cpp:1035
 msgid "Simplify Spaces..."
 msgstr "Απλοποίηση Κενών..."
 
-#: src/main/application.cpp:904
+#: src/main/application.cpp:860
 msgid "Remove unneeded spaces from lines"
 msgstr "Αφαίρεση αχρείαστων κενών από γραμμές"
 
-#: src/main/application.cpp:910 src/main/lineswidget.cpp:1048
+#: src/main/application.cpp:866 src/main/lineswidget.cpp:1036
 msgid "Change Case..."
 msgstr "Εναλλαγή Πεζών ή Κεφαλαίων..."
 
-#: src/main/application.cpp:911
+#: src/main/application.cpp:867
 msgid "Change lines text to upper, lower, title or sentence case"
 msgstr "Αλλαγή τύπου γραμμών σε κεφαλαία, πεζά, τίτλου ή πρότασης"
 
-#: src/main/application.cpp:917 src/main/lineswidget.cpp:1049
+#: src/main/application.cpp:873 src/main/lineswidget.cpp:1037
 msgid "Fix Punctuation..."
 msgstr "Διόρθωση Στίξης..."
 
-#: src/main/application.cpp:918
+#: src/main/application.cpp:874
 msgid "Fix punctuation errors in lines"
 msgstr "Διόρθωση λαθών στίξης εντός των γραμμών"
 
-#: src/main/application.cpp:924 src/main/lineswidget.cpp:1050
+#: src/main/application.cpp:880 src/main/lineswidget.cpp:1038
 #, fuzzy
 msgid "Translate..."
 msgstr "Άνοιγμα Μετάφρασης..."
 
-#: src/main/application.cpp:925
+#: src/main/application.cpp:881
 msgid "Translate lines texts using Google services"
 msgstr ""
 
-#: src/main/application.cpp:931
+#: src/main/application.cpp:887
 #, fuzzy
 msgid "Edit Line in Place"
 msgstr "Επεξεργασία Κειμένου Εντός Θέσης"
 
-#: src/main/application.cpp:932
+#: src/main/application.cpp:888
 msgid "Edit current line text in place"
 msgstr "Επεξεργασία κειμένου τρέχουσας γραμμής εντός θέσης"
 
-#: src/main/application.cpp:940
+#: src/main/application.cpp:896
 msgid "Open Video..."
 msgstr "Άνοιγμα Βίντεο..."
 
-#: src/main/application.cpp:941 src/main/application.cpp:948
+#: src/main/application.cpp:897 src/main/application.cpp:904
 msgid "Open video file"
 msgstr "Άνοιγμα αρχείου βίντεο"
 
-#: src/main/application.cpp:947
+#: src/main/application.cpp:903
 msgid "Open &Recent Video"
 msgstr "Άνοιγμα &Πρόσφατου Βίντεο"
 
-#: src/main/application.cpp:954
+#: src/main/application.cpp:910
 msgid "Close Video"
 msgstr "Κλείσιμο Βίντεο"
 
-#: src/main/application.cpp:955
+#: src/main/application.cpp:911
 msgid "Close video file"
 msgstr "Κλείσιμο αρχείου βίντεο"
 
-#: src/main/application.cpp:962
-msgid "Extract Audio"
-msgstr ""
-
-#: src/main/application.cpp:963
-#, fuzzy
-msgid "Extract video's active audio stream"
-msgstr "Επιλογή ενεργής ροής δεδομένων ήχου"
-
-#: src/main/application.cpp:970
-msgid "Cancel Audio Extraction"
-msgstr ""
-
-#: src/main/application.cpp:971
-msgid "Cancel video's audio stream extraction"
-msgstr ""
-
-#: src/main/application.cpp:978
+#: src/main/application.cpp:918
 msgid "Full Screen Mode"
 msgstr "Λειτουργία Πλήρους Οθόνης"
 
-#: src/main/application.cpp:979
+#: src/main/application.cpp:919
 msgid "Toggle full screen mode"
 msgstr "Αντιθέτηση λειτουργίας πλήρους οθόνης"
 
-#: src/main/application.cpp:986
+#: src/main/application.cpp:926
 msgid "Stop"
 msgstr "Σταμάτημα"
 
-#: src/main/application.cpp:987
+#: src/main/application.cpp:927
 msgid "Stop video playback"
 msgstr "Σταμάτημα αναπαραγωγής βίντεο"
 
-#: src/main/application.cpp:994 src/main/application.cpp:2986
-#: src/main/application.cpp:2994
+#: src/main/application.cpp:934 src/main/application.cpp:2710
+#: src/main/application.cpp:2718
 msgid "Play"
 msgstr "Αναπαραγωγή"
 
-#: src/main/application.cpp:995
+#: src/main/application.cpp:935
 msgid "Toggle video playing/paused"
 msgstr "Αντιθέτηση παύσης/αναπαραγωγής βίντεο"
 
-#: src/main/application.cpp:1002
+#: src/main/application.cpp:942
 msgid "Seek Backwards"
 msgstr "Ανίχνευση Οπισθοδρομώντας"
 
-#: src/main/application.cpp:1010
+#: src/main/application.cpp:950
 msgid "Seek Forwards"
 msgstr "Ανίχνευση Εμπροσθοδρομώντας"
 
-#: src/main/application.cpp:1018
+#: src/main/application.cpp:958
 msgid "Jump to Previous Line"
 msgstr "Μεταπήδηση στην Προηγούμενη Γραμμή"
 
-#: src/main/application.cpp:1019
+#: src/main/application.cpp:959
 msgid "Seek to previous subtitle line show time"
 msgstr "Ανίχνευση του προηγούμενου χρόνου γραμμής υπότιτλου"
 
-#: src/main/application.cpp:1027
+#: src/main/application.cpp:967
 msgid "Jump to Next Line"
 msgstr "Μεταπήδηση στην Επόμενη Γραμμή"
 
-#: src/main/application.cpp:1028
+#: src/main/application.cpp:968
 msgid "Seek to next subtitle line show time"
 msgstr "Ανίχνευση του επόμενου χρόνου γραμμής υπότιτλου"
 
-#: src/main/application.cpp:1036
+#: src/main/application.cpp:976
 msgid "Set Current Line Show Time"
 msgstr "Ορισμός Τρέχοντος Χρόνου Εμφάνισης Γραμμής"
 
-#: src/main/application.cpp:1037
+#: src/main/application.cpp:977
 msgid "Set current line show time to video position"
 msgstr "Ορισμός του χρόνου εμφάνισης γραμμής στη θέση του βίντεο"
 
-#: src/main/application.cpp:1045
+#: src/main/application.cpp:985
 msgid "Set Current Line Hide Time"
 msgstr "Ορισμός Τρέχοντος Χρόνου Απόκρυψης Γραμμής"
 
-#: src/main/application.cpp:1046
+#: src/main/application.cpp:986
 msgid "Set current line hide time to video position"
 msgstr "Ορισμός του χρόνου απόκρυψης γραμμής στη θέση του βίντεο"
 
-#: src/main/application.cpp:1054
+#: src/main/application.cpp:994
 msgid "Current Line Follows Video"
 msgstr "η Τρέχουσα Γραμμή Ακολουθεί το Βίντεο"
 
-#: src/main/application.cpp:1055
+#: src/main/application.cpp:995
 msgid "Make current line follow the playing video position"
 msgstr "Κάνε την τρέχουσα γραμμή να ακολουθεί τη θέση αναπαραγωγής του βίντεο"
 
-#: src/main/application.cpp:1061
+#: src/main/application.cpp:1001
 #, fuzzy
 msgctxt "@action:inmenu Toggle audio muted"
 msgid "Mute"
 msgstr "Φίμωση"
 
-#: src/main/application.cpp:1062
+#: src/main/application.cpp:1002
 msgid "Enable/disable playback sound"
 msgstr "Ενεργοποίηση/απενεργοποίηση ήχου αναπαραγωγής"
 
-#: src/main/application.cpp:1069
+#: src/main/application.cpp:1009
 msgid "Increase Volume"
 msgstr "Αύξηση Στάθμης"
 
-#: src/main/application.cpp:1070
+#: src/main/application.cpp:1010
 msgid "Increase volume by 5%"
 msgstr "Αύξηση Στάθμης κατά 5%"
 
-#: src/main/application.cpp:1077
+#: src/main/application.cpp:1017
 msgid "Decrease Volume"
 msgstr "Μείωση Στάθμης"
 
-#: src/main/application.cpp:1078
+#: src/main/application.cpp:1018
 msgid "Decrease volume by 5%"
 msgstr "Μείωση Στάθμης κατά 5%"
 
-#: src/main/application.cpp:1085
+#: src/main/application.cpp:1025
 msgid "Audio Streams"
 msgstr "Ροές Δεδομένων Ήχου"
 
-#: src/main/application.cpp:1086
+#: src/main/application.cpp:1026
 msgid "Select active audio stream"
 msgstr "Επιλογή ενεργής ροής δεδομένων ήχου"
 
-#: src/main/application.cpp:1093
+#: src/main/application.cpp:1033
 msgid "Increase Font Size"
 msgstr "Μεγέθυνση γραμματοσειράς"
 
-#: src/main/application.cpp:1094
+#: src/main/application.cpp:1034
 msgid "Increase subtitles font size by 1 point"
 msgstr "Μεγέθυνση γραμματοσειράς υποτίτλων κατά 1 πόντο"
 
-#: src/main/application.cpp:1101
+#: src/main/application.cpp:1041
 msgid "Decrease Font Size"
 msgstr "Σμίκρυνση Γραμματοσειράς"
 
-#: src/main/application.cpp:1102
+#: src/main/application.cpp:1042
 msgid "Decrease subtitles font size by 1 point"
 msgstr "Σμίκρυνση γραμματοσειράς υποτίτλων κατά 1 πόντο"
 
-#: src/main/application.cpp:1109
+#: src/main/application.cpp:1049
 msgid "Subtitle Streams"
 msgstr "Ροές Δεδομένων Υποτίτλων"
 
-#: src/main/application.cpp:1110
+#: src/main/application.cpp:1050
 msgid "Select active subtitle stream"
 msgstr "Επιλογή ενεργής ροής δεδομένων υποτίτλων"
 
-#: src/main/application.cpp:1116
+#: src/main/application.cpp:1056
 msgid "Shift to Video Position"
 msgstr "Ολίσθηση στην Θέση του Βίντεο"
 
-#: src/main/application.cpp:1117
+#: src/main/application.cpp:1057
 msgid ""
 "Set current line show time to video position by equally shifting all lines"
 msgstr ""
 "Ορισμός χρόνου παρουσίας τρέχουσας γραμμής στην θέση του βίντεο μέσω "
 "ισόβαθμης ολίσθησης όλων των γραμμών"
 
-#: src/main/application.cpp:1124
+#: src/main/application.cpp:1064
 msgid "Adjust to Video Position (Anchor Last Line)"
 msgstr "Προσαρμογή στη Θέση του Βίντεο (Αγκύλωση Τελευταίας Γραμμής)"
 
-#: src/main/application.cpp:1125
+#: src/main/application.cpp:1065
 msgid ""
 "Set current line to video position by fixing the last line and linearly "
 "adjusting the other ones"
@@ -1149,11 +1128,11 @@ msgstr ""
 "Ορισμός τρέχουσας γραμμής στην θέση του βίντεο μέσω διόρθωσης της τελευταίας "
 "γραμμής και γραμμικής προσαρμογής των άλλων"
 
-#: src/main/application.cpp:1132
+#: src/main/application.cpp:1072
 msgid "Adjust to Video Position (Anchor First Line)"
 msgstr "Προσαρμογή στην Θέση του Βίντεο (Αγκύλωση Πρώτης Γραμμής)"
 
-#: src/main/application.cpp:1133
+#: src/main/application.cpp:1073
 msgid ""
 "Set current line to video position by fixing the first line and linearly "
 "adjusting the other ones"
@@ -1161,16 +1140,16 @@ msgstr ""
 "Ορισμός τρέχουσας γραμμής στην θέση του βίντεο μέσω διόρθωσης της πρώτης "
 "γραμμής και γραμμικής προσαρμογής των άλλων"
 
-#: src/main/application.cpp:1141
+#: src/main/application.cpp:1081
 msgctxt "@action:inmenu Manage user scripts"
 msgid "Scripts Manager..."
 msgstr ""
 
-#: src/main/application.cpp:1142
+#: src/main/application.cpp:1082
 msgid "Manage user scripts"
 msgstr ""
 
-#: src/main/application.cpp:1301
+#: src/main/application.cpp:1172
 #, fuzzy
 msgid ""
 "The requested action would make the subtitle and its translation share the "
@@ -1182,12 +1161,12 @@ msgstr ""
 "αποθήκευση.\n"
 "Είσαστε σίγουρος/η ότι θέλετε να συνεχίσετε;"
 
-#: src/main/application.cpp:1301
+#: src/main/application.cpp:1172
 msgid "Conflicting Subtitle Files"
 msgstr "Διένεξη Αρχείων Υποτίτλων"
 
-#: src/main/application.cpp:1409 src/main/application.cpp:1437
-#: src/main/application.cpp:1650 src/main/application.cpp:1688
+#: src/main/application.cpp:1280 src/main/application.cpp:1308
+#: src/main/application.cpp:1521 src/main/application.cpp:1559
 #, fuzzy
 msgid ""
 "<qt>Could not parse the subtitle file.<br/>This may have been caused by "
@@ -1196,11 +1175,11 @@ msgstr ""
 "<qt>Αδυναμία επικόλλησης του αρχείου υποτίτλων.<br/>Αυτό ίσως προκλήθηκε από "
 "χρήση λάθους κωδικοποίησης.</qt>"
 
-#: src/main/application.cpp:1496
+#: src/main/application.cpp:1367
 msgid "There was an error saving the subtitle."
 msgstr "Παρουσιάστηκε σφάλμα αποθηκεύοντας τον υπότιτλο."
 
-#: src/main/application.cpp:1533 src/main/application.cpp:1784
+#: src/main/application.cpp:1404 src/main/application.cpp:1655
 msgid ""
 "Currently opened translation subtitle has unsaved changes.\n"
 "Do you want to save them?"
@@ -1208,11 +1187,11 @@ msgstr ""
 "Ο τρέχων ανοιχτός υπότιτλος μετάφρασης έχει αναποθήκευτες αλλαγές.\n"
 "Θέλετε να τις αποθηκεύσετε;"
 
-#: src/main/application.cpp:1534 src/main/application.cpp:1785
+#: src/main/application.cpp:1405 src/main/application.cpp:1656
 msgid "Close Translation Subtitle"
 msgstr "Κλείσιμο Υπότιτλου Μετάφρασης"
 
-#: src/main/application.cpp:1544
+#: src/main/application.cpp:1415
 msgid ""
 "Currently opened subtitle has unsaved changes.\n"
 "Do you want to save them?"
@@ -1220,60 +1199,60 @@ msgstr ""
 "Ο τρέχων ανοιχτός υπότιτλος έχει αναποθήκευτες αλλαγές.\n"
 "Θέλετε να τις αποθηκεύσετε;"
 
-#: src/main/application.cpp:1545
+#: src/main/application.cpp:1416
 msgid "Close Subtitle"
 msgstr "Κλείσιμο Υπότιτλου"
 
-#: src/main/application.cpp:1640
+#: src/main/application.cpp:1511
 #, fuzzy
 msgctxt "@item:inmenu Display primary text in video player"
 msgid "Primary"
 msgstr "Πρωτεύον"
 
-#: src/main/application.cpp:1641
+#: src/main/application.cpp:1512
 #, fuzzy
 msgctxt "@item:inmenu Display translation text in video player"
 msgid "Translation"
 msgstr "Μετάφραση"
 
-#: src/main/application.cpp:1747
+#: src/main/application.cpp:1618
 msgid "There was an error saving the translation subtitle."
 msgstr "Παρουσιάστηκε σφάλμα αποθηκεύοντας τον υπότιτλο μετάφρασης."
 
-#: src/main/application.cpp:1830
+#: src/main/application.cpp:1701
 #, fuzzy
 msgid "Could not read the subtitle file to append."
 msgstr "Αδυναμία ανάγνωσης του αρχείου υποτίτλων προς ενημέρωση."
 
-#: src/main/application.cpp:1848 src/main/application.cpp:2879
-#: src/main/application.cpp:2884
+#: src/main/application.cpp:1719 src/main/application.cpp:2603
+#: src/main/application.cpp:2608
 msgid "Untitled"
 msgstr "Άτιτλο"
 
-#: src/main/application.cpp:1848 src/main/application.cpp:2881
+#: src/main/application.cpp:1719 src/main/application.cpp:2605
 msgid "Untitled Translation"
 msgstr "Άτιτλη Μετάφραση"
 
-#: src/main/application.cpp:1854
+#: src/main/application.cpp:1725
 msgctxt "Suffix added to split subtitles"
 msgid "split"
 msgstr ""
 
-#: src/main/application.cpp:1868
+#: src/main/application.cpp:1739
 #, fuzzy
 msgid "Could not write the split subtitle file."
 msgstr "Αδυναμία εγγραφής του διαχωρισμένου αρχείου υποτίτλων."
 
-#: src/main/application.cpp:1868
+#: src/main/application.cpp:1739
 #, fuzzy
 msgid "Could not write the split subtitle translation file."
 msgstr "Αδυναμία εγγραφής του διαχωρισμένου αρχείου υποτίτλων μετάφρασης."
 
-#: src/main/application.cpp:1885
+#: src/main/application.cpp:1756
 msgid "The specified time does not split the subtitles."
 msgstr "Ο συγκεκριμένος χρόνος δεν διαχωρίζει τους υπότιτλους"
 
-#: src/main/application.cpp:1920
+#: src/main/application.cpp:1791
 #, fuzzy
 msgid ""
 "Could not open a new Subtitle Composer window.\n"
@@ -1282,7 +1261,7 @@ msgstr ""
 "Αδυναμία ανοίγματος ενός νέου παράθυρου Συνθέτη Υποτίτλων.\n"
 "Το διαχωρισμένο τμήμα αποθηκεύτηκε ως %1."
 
-#: src/main/application.cpp:1921
+#: src/main/application.cpp:1792
 #, fuzzy
 msgid ""
 "Could not open a new Subtitle Composer window.\n"
@@ -1291,64 +1270,64 @@ msgstr ""
 "Αδυναμία ανοίγματος ενός νέου παράθυρου Συνθέτη Υποτίτλων.\n"
 "Το διαχωρισμένο τμήμα αποθηκεύτηκε ως %1 και %2."
 
-#: src/main/application.cpp:2013
+#: src/main/application.cpp:1884
 msgid "Go to Line"
 msgstr "Πήγαινε στη Γραμμή"
 
-#: src/main/application.cpp:2013
+#: src/main/application.cpp:1884
 msgid "&Go to line:"
 msgstr "&Πήγαινε στη γραμμή:"
 
-#: src/main/application.cpp:2287
+#: src/main/application.cpp:2158
 #, fuzzy
 msgid "Can not perform sort on selection with multiple ranges."
 msgstr "Αδυνατώ να ταξινομήσω σε επιλογή πολλαπλής έκτασης."
 
-#: src/main/application.cpp:2369
+#: src/main/application.cpp:2240
 msgid "The reference subtitle must have more than one line to proceed."
 msgstr ""
 "Ο υπότιτλος αναφοράς πρέπει να έχει πλέον της μίας γραμμής για να συνεχίσω."
 
-#: src/main/application.cpp:2376
+#: src/main/application.cpp:2247
 #, fuzzy
 msgid "Could not parse the reference subtitle file."
 msgstr "Αδυναμία επικόλλησης του αρχείου υποτίτλων αναφοράς."
 
-#: src/main/application.cpp:2458 src/main/dialogs/translatedialog.cpp:33
+#: src/main/application.cpp:2329 src/main/dialogs/translatedialog.cpp:33
 #, fuzzy
 msgid "Translate"
 msgstr "Μετάφραση"
 
-#: src/main/application.cpp:2458
+#: src/main/application.cpp:2329
 #, fuzzy
 msgid "Translating text (%1 to %2)..."
 msgstr "Χρήση μεταφραστικού κειμένου"
 
-#: src/main/application.cpp:2462
+#: src/main/application.cpp:2333
 msgid "Translating primary text (%1 to %2)..."
 msgstr ""
 
-#: src/main/application.cpp:2463
+#: src/main/application.cpp:2334
 msgid "Translating secondary text (%1 to %2)..."
 msgstr ""
 
-#: src/main/application.cpp:2491
+#: src/main/application.cpp:2362
 msgid ""
 "Unable to perform texts synchronization (sent and received lines count do "
 "not match)."
 msgstr ""
 
-#: src/main/application.cpp:2495
+#: src/main/application.cpp:2366
 #, fuzzy
 msgid "Translate Primary Text"
 msgstr "Χρήση πρωτεύοντος κειμένου"
 
-#: src/main/application.cpp:2495
+#: src/main/application.cpp:2366
 #, fuzzy
 msgid "Translate Secondary Text"
 msgstr "Ορισμός Δευτερεύοντος Κειμένου Γραμμής"
 
-#: src/main/application.cpp:2510
+#: src/main/application.cpp:2381
 #, fuzzy
 msgid ""
 "There was an error performing the translation:\n"
@@ -1356,11 +1335,11 @@ msgid ""
 "%1"
 msgstr "Παρουσιάστηκε σφάλμα αποθηκεύοντας τον υπότιτλο μετάφρασης."
 
-#: src/main/application.cpp:2548
+#: src/main/application.cpp:2419
 msgid "Open Video"
 msgstr "Άνοιγμα Βίντεο"
 
-#: src/main/application.cpp:2681 src/main/application.cpp:2757
+#: src/main/application.cpp:2552 src/main/application.cpp:2584
 msgid ""
 "Continuing would result in loss of timing information for some lines.\n"
 "Are you sure you want to continue?"
@@ -1369,48 +1348,34 @@ msgstr ""
 "κάποιες γραμμές.\n"
 "Είστε σίγουρος/η ότι θέλετε να συνεχίσετε;"
 
-#: src/main/application.cpp:2701
-#, fuzzy
-msgid "<qt>There was an error opening file %1 for audio extraction.</qt>"
-msgstr "<qt>Παρουσιάστηκε σφάλμα κατά το άνοιγμα αρχείου<br/>%1</qt>"
-
-#: src/main/application.cpp:2727 src/main/application.cpp:2730
-#, fuzzy
-msgid "Unexpected error when extracting audio."
-msgstr "Απρόσμενο λάθος κατά την αναπαραγωγή αρχείου."
-
-#: src/main/application.cpp:2727 src/main/application.cpp:2730
-msgid "Error Extracting Audio"
-msgstr ""
-
-#: src/main/application.cpp:2877
+#: src/main/application.cpp:2601
 msgid "modified"
 msgstr "τροποποιημένο"
 
-#: src/main/application.cpp:2978
+#: src/main/application.cpp:2702
 msgid "Pause"
 msgstr "Παύση"
 
-#: src/main/application.cpp:3023
+#: src/main/application.cpp:2750
 msgid "Seek backwards 1 second"
 msgid_plural "Seek backwards %1 seconds"
 msgstr[0] "Ανίχνευση Οπισθοδρομώντας κατά 1 δευτερόλεπτο"
 msgstr[1] "Ανίχνευση Οπισθοδρομώντας κατά %1 δευτερόλεπτα"
 
-#: src/main/application.cpp:3024
+#: src/main/application.cpp:2751
 msgid "Seek forwards 1 second"
 msgid_plural "Seek forwards %1 seconds"
 msgstr[0] "Ανίχνευση Εμπροσθοδρομώντας κατά 1 δευτερόλεπτο"
 msgstr[1] "Ανίχνευση Εμπροσθοδρομώντας κατά %1 δευτερόλεπτα"
 
-#: src/main/application.cpp:3027 src/main/application.cpp:3031
+#: src/main/application.cpp:2754 src/main/application.cpp:2758
 #, fuzzy
 msgid "Shift %21 Millisecond"
 msgid_plural "Shift %2%1 Milliseconds"
 msgstr[0] "Ολίσθηση +%1 Χιλιοστά του δευτερολέπτου"
 msgstr[1] "Ολίσθηση +%1 Χιλιοστά του δευτερολέπτου"
 
-#: src/main/application.cpp:3028 src/main/application.cpp:3032
+#: src/main/application.cpp:2755 src/main/application.cpp:2759
 #, fuzzy
 msgid "Shift selected lines %21 millisecond"
 msgid_plural "Shift selected lines %2%1 milliseconds"
@@ -1450,20 +1415,21 @@ msgstr ""
 
 #: src/main/configs/configdialog.cpp:62
 #, fuzzy
-msgctxt "@title Player Settings"
-msgid "Player"
+msgctxt "@title VideoPlayer Settings"
+msgid "VideoPlayer"
 msgstr "Αναπαραγωγέας"
 
 #: src/main/configs/configdialog.cpp:63
-msgid "Player Settings"
+msgid "VideoPlayer Settings"
 msgstr ""
 
 #: src/main/configs/configdialog.cpp:72
-msgctxt "@title Player backend settings"
+#, fuzzy
+msgctxt "@title VideoPlayer backend settings"
 msgid "%1 Backend Settings"
-msgstr ""
+msgstr "Έλεγχος Λαθών"
 
-#: src/main/configs/playerconfigwidget.cpp:40
+#: src/main/configs/playerconfigwidget.cpp:39
 #, fuzzy
 msgctxt "Text for previewing the subtitles font settings"
 msgid "<p>The Quick Brown Fox<br/>Jumps Over The Lazy Dog</p>"
@@ -1768,21 +1734,21 @@ msgstr "Ολίσθηση τίτλου εμπρός πριν την ενημέρ�
 msgid "Set from video length"
 msgstr "Ορισμός από το μήκος του βίντεο"
 
-#: src/main/dialogs/opensubtitledialog.cpp:39
+#: src/main/dialogs/opensubtitledialog.cpp:40
 msgid "Open Subtitle"
 msgstr "Άνοιγμα Τίτλου"
 
-#: src/main/dialogs/opensubtitledialog.cpp:39
+#: src/main/dialogs/opensubtitledialog.cpp:40
 msgid "Open Translation Subtitle"
 msgstr "Άνοιγμα Τίτλου Μετάφρασης"
 
-#: src/main/dialogs/opensubtitledialog.cpp:51
-#: src/main/dialogs/savesubtitledialog.cpp:85
+#: src/main/dialogs/opensubtitledialog.cpp:52
+#: src/main/dialogs/savesubtitledialog.cpp:86
 #: src/main/dialogs/selectablesubtitledialog.cpp:69
 msgid "Encoding:"
 msgstr "Κωδικοποίηση: "
 
-#: src/main/dialogs/opensubtitledialog.cpp:93
+#: src/main/dialogs/opensubtitledialog.cpp:94
 msgid "All Supported"
 msgstr "Όλων των Υποστηριζόμενων"
 
@@ -1796,15 +1762,15 @@ msgstr "Αφαίρεση επιλεγμένων γραμμών"
 msgid "Remove From"
 msgstr "Αφαίρεση"
 
-#: src/main/dialogs/savesubtitledialog.cpp:43
+#: src/main/dialogs/savesubtitledialog.cpp:44
 msgid "Save Subtitle"
 msgstr "Αποθήκευση Υπότιτλου"
 
-#: src/main/dialogs/savesubtitledialog.cpp:43
+#: src/main/dialogs/savesubtitledialog.cpp:44
 msgid "Save Translation Subtitle"
 msgstr "Αποθήκευση Υπότιτλου Μετάφρασης"
 
-#: src/main/dialogs/savesubtitledialog.cpp:74
+#: src/main/dialogs/savesubtitledialog.cpp:75
 msgid "EOL:"
 msgstr "Τελ.Γρ.:"
 
@@ -2020,61 +1986,61 @@ msgctxt "@title:column Subtitle line translation text"
 msgid "Translation"
 msgstr "Μετάφραση"
 
-#: src/main/lineswidget.cpp:1044
+#: src/main/lineswidget.cpp:1032
 msgid "Texts"
 msgstr "Κείμενα"
 
-#: src/main/lineswidget.cpp:1054
+#: src/main/lineswidget.cpp:1042
 msgid "Styles"
 msgstr "Μοτίβα"
 
-#: src/main/lineswidget.cpp:1056 src/widgets/simplerichtextedit.cpp:116
+#: src/main/lineswidget.cpp:1044 src/widgets/simplerichtextedit.cpp:116
 #, fuzzy
 msgctxt "@action:inmenu Toggle bold style"
 msgid "Bold"
 msgstr "Έντονα"
 
-#: src/main/lineswidget.cpp:1059 src/widgets/simplerichtextedit.cpp:122
+#: src/main/lineswidget.cpp:1047 src/widgets/simplerichtextedit.cpp:122
 #, fuzzy
 msgctxt "@action:inmenu Toggle italic style"
 msgid "Italic"
 msgstr "Πλάγια"
 
-#: src/main/lineswidget.cpp:1062 src/widgets/simplerichtextedit.cpp:128
+#: src/main/lineswidget.cpp:1050 src/widgets/simplerichtextedit.cpp:128
 #, fuzzy
 msgctxt "@action:inmenu Toggle underline style"
 msgid "Underline"
 msgstr "Υπογραμμισμένα"
 
-#: src/main/lineswidget.cpp:1065 src/widgets/simplerichtextedit.cpp:134
+#: src/main/lineswidget.cpp:1053 src/widgets/simplerichtextedit.cpp:134
 #, fuzzy
 msgctxt "@action:inmenu Toggle strike through style"
 msgid "Strike Through"
 msgstr "Διαγραμμισμένα"
 
-#: src/main/lineswidget.cpp:1068 src/widgets/simplerichtextedit.cpp:140
+#: src/main/lineswidget.cpp:1056 src/widgets/simplerichtextedit.cpp:140
 msgctxt "@action:inmenu Change Text Color"
 msgid "Text Color"
 msgstr ""
 
-#: src/main/lineswidget.cpp:1070
+#: src/main/lineswidget.cpp:1058
 msgid "Times"
 msgstr "Χρόνοι"
 
-#: src/main/lineswidget.cpp:1072
+#: src/main/lineswidget.cpp:1060
 msgid "Shift +%1 Milliseconds"
 msgstr "Ολίσθηση +%1 Χιλιοστά του δευτερολέπτου"
 
-#: src/main/lineswidget.cpp:1073
+#: src/main/lineswidget.cpp:1061
 #, fuzzy
 msgid "Shift −%1 Milliseconds"
 msgstr "Ολίσθηση +%1 Χιλιοστά του δευτερολέπτου"
 
-#: src/main/lineswidget.cpp:1082
+#: src/main/lineswidget.cpp:1070
 msgid "Errors"
 msgstr "Λάθη"
 
-#: src/main/lineswidget.cpp:1083
+#: src/main/lineswidget.cpp:1071
 msgid "Mark"
 msgstr "Σημάδι"
 
@@ -2145,27 +2111,27 @@ msgstr "<b>Μήκος</b>"
 msgid "<b>FPS</b>"
 msgstr "<b>Καρέ/δευτ.</b>"
 
-#: src/main/playerwidget.cpp:454
+#: src/main/playerwidget.cpp:446
 msgid "Show editable position control"
 msgstr "Εμφάνιση ελέγχου θέσης δυνάμενης να διορθωθεί"
 
-#: src/main/playerwidget.cpp:703 src/main/playerwidget.cpp:704
-#: src/main/playerwidget.cpp:705 src/main/playerwidget.cpp:784
-#: src/main/playerwidget.cpp:798 src/main/playerwidget.cpp:806
+#: src/main/playerwidget.cpp:695 src/main/playerwidget.cpp:696
+#: src/main/playerwidget.cpp:697 src/main/playerwidget.cpp:776
+#: src/main/playerwidget.cpp:790 src/main/playerwidget.cpp:798
 msgid "<i>Unknown</i>"
 msgstr "<i>Άγνωστο</i>"
 
-#: src/main/playerwidget.cpp:715
+#: src/main/playerwidget.cpp:707
 #, fuzzy
 msgid "<qt>There was an error opening media file %1.</qt>"
 msgstr "<qt>Παρουσιάστηκε σφάλμα κατά το άνοιγμα αρχείου<br/>%1</qt>"
 
-#: src/main/playerwidget.cpp:747 src/main/playerwidget.cpp:749
+#: src/main/playerwidget.cpp:739 src/main/playerwidget.cpp:741
 #, fuzzy
 msgid "Unexpected error when playing file."
 msgstr "Απρόσμενο λάθος κατά την αναπαραγωγή αρχείου."
 
-#: src/main/playerwidget.cpp:747 src/main/playerwidget.cpp:749
+#: src/main/playerwidget.cpp:739 src/main/playerwidget.cpp:741
 msgid "Error Playing File"
 msgstr ""
 
@@ -2255,10 +2221,6 @@ msgstr ""
 
 #: src/main/scripting/scriptsmanager.cpp:380
 msgid "Tools"
-msgstr ""
-
-#: src/main/statusbar.cpp:37
-msgid "Extracting audio %p%"
 msgstr ""
 
 #: src/main/utils/errorfinder.cpp:37 src/main/utils/errorfinder.cpp:209
@@ -2376,26 +2338,20 @@ msgstr ""
 msgid "Unexpected contents received from translation service"
 msgstr ""
 
-#: src/services/gstreamer/gstreamerplayerbackend.cpp:348
-#: src/services/mplayer/mplayerplayerbackend.cpp:242
-#: src/services/xine/xinedecoderbackend.cpp:198
-#: src/services/xine/xineplayerbackend.cpp:283
+#: src/videoplayer/gstreamer/gstreamerplayerbackend.cpp:350
+#: src/videoplayer/mplayer/mplayerplayerbackend.cpp:242
+#: src/videoplayer/xine/xineplayerbackend.cpp:283
 msgid "Audio Stream #%1"
 msgstr "Ροή Δεδομένων Ήχου #%1"
 
-#: src/services/mpv/mpvbackend.cpp:192
+#: src/videoplayer/mpv/mpvbackend.cpp:192
 #, fuzzy
 msgid "Stream #%1"
 msgstr "Ροή Δεδομένων Ήχου #%1"
 
-#: src/services/player.cpp:374
+#: src/videoplayer/videoplayer.cpp:505
 msgid "File does not exist."
 msgstr ""
-
-#: src/services/xine/xinedecoderbackend.cpp:305
-#, fuzzy
-msgid "There was an error converting audio data to output format."
-msgstr "Παρουσιάστηκε σφάλμα αποθηκεύοντας τον υπότιτλο μετάφρασης."
 
 #: src/widgets/simplerichtextedit.cpp:79
 msgid "Cut"
@@ -2432,21 +2388,44 @@ msgstr ""
 msgid "Allow Tabulations"
 msgstr "Επίτρεψη Στηλοθετήσεων"
 
-#: src/widgets/simplerichtextedit.cpp:541
+#: src/widgets/simplerichtextedit.cpp:542
 msgid "Suggestions"
 msgstr ""
 
-#: src/widgets/simplerichtextedit.cpp:542
+#: src/widgets/simplerichtextedit.cpp:543
 msgid "Ignore"
 msgstr ""
 
-#: src/widgets/simplerichtextedit.cpp:543
+#: src/widgets/simplerichtextedit.cpp:544
 msgid "Add to Dictionary"
 msgstr ""
 
-#: src/widgets/simplerichtextedit.cpp:547
+#: src/widgets/simplerichtextedit.cpp:548
 msgid "No suggestions"
 msgstr ""
+
+#: src/widgets/waveformwidget.cpp:57
+msgid "Generating waveform"
+msgstr ""
+
+#~ msgid "Audio Levels Files"
+#~ msgstr "Αρχεία Επιπέδων Ήχου"
+
+#, fuzzy
+#~ msgid "Extract video's active audio stream"
+#~ msgstr "Επιλογή ενεργής ροής δεδομένων ήχου"
+
+#, fuzzy
+#~ msgid "<qt>There was an error opening file %1 for audio extraction.</qt>"
+#~ msgstr "<qt>Παρουσιάστηκε σφάλμα κατά το άνοιγμα αρχείου<br/>%1</qt>"
+
+#, fuzzy
+#~ msgid "Unexpected error when extracting audio."
+#~ msgstr "Απρόσμενο λάθος κατά την αναπαραγωγή αρχείου."
+
+#, fuzzy
+#~ msgid "There was an error converting audio data to output format."
+#~ msgstr "Παρουσιάστηκε σφάλμα αποθηκεύοντας τον υπότιτλο μετάφρασης."
 
 #~ msgid "Configure"
 #~ msgstr "Ρύθμιση"

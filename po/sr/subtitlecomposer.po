@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: subtitlecomposer\n"
 "Report-Msgid-Bugs-To: https://github.com/maxrd2/subtitlecomposer/issues\n"
-"POT-Creation-Date: 2016-02-08 16:14+0100\n"
+"POT-Creation-Date: 2016-03-07 17:06+0100\n"
 "PO-Revision-Date: 2009-05-24 17:03-0300\n"
 "Last-Translator: Sergio Pistone <sergio_pistone@yahoo,com.ar>\n"
 "Language-Team: American English <kde-i18n-doc@kde.org>\n"
@@ -29,31 +29,10 @@ msgctxt "EMAIL OF TRANSLATORS"
 msgid "Your emails"
 msgstr "simicsl@verat.net"
 
-#: src/common/languagecode.cpp:421
+#: src/common/languagecode.cpp:420
 #, fuzzy
 msgid "Unknown"
 msgstr "<i>Непознат</i>"
-
-#: src/core/subtitleactions.cpp:59
-msgid "Set Frame Rate"
-msgstr "Постави брзину кадрова"
-
-#: src/core/subtitleactions.cpp:95
-msgid "Insert Lines"
-msgstr "Убаци редове"
-
-#: src/core/subtitleactions.cpp:176 src/core/subtitle.cpp:434
-#: src/core/subtitle.cpp:444 src/core/subtitle.cpp:461
-msgid "Remove Lines"
-msgstr "Уклони редове"
-
-#: src/core/subtitleactions.cpp:262
-msgid "Move Line"
-msgstr "Помери ред"
-
-#: src/core/subtitleactions.cpp:362
-msgid "Swap Texts"
-msgstr "Замени текстове"
 
 #: src/core/subtitle.cpp:69
 msgid "Set Primary Data"
@@ -79,13 +58,18 @@ msgstr "Измени број кадрова"
 msgid "Insert Line"
 msgstr "Убаци ред"
 
-#: src/core/subtitle.cpp:514 src/main/application.cpp:617
-#: src/main/lineswidget.cpp:1100
+#: src/core/subtitle.cpp:434 src/core/subtitle.cpp:444
+#: src/core/subtitle.cpp:461 src/core/subtitleactions.cpp:176
+msgid "Remove Lines"
+msgstr "Уклони редове"
+
+#: src/core/subtitle.cpp:514 src/main/application.cpp:573
+#: src/main/lineswidget.cpp:1088
 msgid "Split Lines"
 msgstr "Раздвоји редове"
 
-#: src/core/subtitle.cpp:565 src/main/application.cpp:624
-#: src/main/lineswidget.cpp:1099
+#: src/core/subtitle.cpp:565 src/main/application.cpp:580
+#: src/main/lineswidget.cpp:1087
 msgid "Join Lines"
 msgstr "Споји редове"
 
@@ -97,8 +81,8 @@ msgstr "Помери редове"
 msgid "Adjust Lines"
 msgstr "Подеси редове"
 
-#: src/core/subtitle.cpp:670 src/main/application.cpp:2279
-#: src/main/lineswidget.cpp:1076
+#: src/core/subtitle.cpp:670 src/main/application.cpp:2150
+#: src/main/lineswidget.cpp:1064
 msgid "Sort"
 msgstr "Поређај"
 
@@ -106,8 +90,8 @@ msgstr "Поређај"
 msgid "Enforce Duration Limits"
 msgstr "Присили ограничења трајања"
 
-#: src/core/subtitle.cpp:751 src/main/application.cpp:2341
-#: src/main/lineswidget.cpp:1079
+#: src/core/subtitle.cpp:751 src/main/application.cpp:2212
+#: src/main/lineswidget.cpp:1067
 msgid "Maximize Durations"
 msgstr "Максимизуј трајања"
 
@@ -116,7 +100,7 @@ msgid "Set Automatic Durations"
 msgstr "Постави аутоматска трајања"
 
 #: src/core/subtitle.cpp:808 src/main/dialogs/fixoverlappingtimesdialog.cpp:31
-#: src/main/lineswidget.cpp:1080
+#: src/main/lineswidget.cpp:1068
 msgid "Fix Overlapping Times"
 msgstr "Среди преклапајућа времена"
 
@@ -144,13 +128,13 @@ msgstr "Величина реченица"
 msgid "Break Lines"
 msgstr "Преломи редове"
 
-#: src/core/subtitle.cpp:1033 src/main/application.cpp:2393
-#: src/main/lineswidget.cpp:1046
+#: src/core/subtitle.cpp:1033 src/main/application.cpp:2264
+#: src/main/lineswidget.cpp:1034
 msgid "Unbreak Lines"
 msgstr "Врати преломљене редове"
 
-#: src/core/subtitle.cpp:1042 src/main/application.cpp:2404
-#: src/main/lineswidget.cpp:1047
+#: src/core/subtitle.cpp:1042 src/main/application.cpp:2275
+#: src/main/lineswidget.cpp:1035
 msgid "Simplify Spaces"
 msgstr "Поједностави размаке"
 
@@ -191,39 +175,31 @@ msgstr "Очисти маркер редова"
 msgid "Toggle Lines Mark"
 msgstr "Мењај маркацију редова"
 
-#: src/core/subtitle.cpp:1217 src/main/application.cpp:2159
+#: src/core/subtitle.cpp:1217 src/main/application.cpp:2030
 #: src/main/errorswidget.cpp:798
 msgid "Clear Lines Errors"
 msgstr "Очисти грешке редова"
 
 #: src/core/subtitle.cpp:1228 src/core/subtitle.cpp:1240
-#: src/main/application.cpp:2104
+#: src/main/application.cpp:1975
 msgid "Check Lines Errors"
 msgstr "Провери грешке редова"
 
-#: src/core/subtitlelineactions.cpp:72
-msgid "Set Line Text"
-msgstr "Постави текст реда"
+#: src/core/subtitleactions.cpp:59
+msgid "Set Frame Rate"
+msgstr "Постави брзину кадрова"
 
-#: src/core/subtitlelineactions.cpp:113
-msgid "Set Line Secondary Text"
-msgstr "Постави секундарни текст реда"
+#: src/core/subtitleactions.cpp:95
+msgid "Insert Lines"
+msgstr "Убаци редове"
 
-#: src/core/subtitlelineactions.cpp:154
-msgid "Set Line Texts"
-msgstr "Постави текст реда"
+#: src/core/subtitleactions.cpp:262
+msgid "Move Line"
+msgstr "Помери ред"
 
-#: src/core/subtitlelineactions.cpp:228
-msgid "Set Line Show Time"
-msgstr "Постави време приказивања реда"
-
-#: src/core/subtitlelineactions.cpp:269
-msgid "Set Line Hide Time"
-msgstr "Постави време нестајања реда"
-
-#: src/core/subtitlelineactions.cpp:384
-msgid "Set Line Errors"
-msgstr "Постави грешке реда"
+#: src/core/subtitleactions.cpp:362
+msgid "Swap Texts"
+msgstr "Замени текстове"
 
 #: src/core/subtitleline.cpp:77
 msgid "Empty text"
@@ -418,9 +394,33 @@ msgstr "Помери времена реда"
 msgid "Adjust Line Times"
 msgstr "Подеси времена реда"
 
+#: src/core/subtitlelineactions.cpp:72
+msgid "Set Line Text"
+msgstr "Постави текст реда"
+
+#: src/core/subtitlelineactions.cpp:113
+msgid "Set Line Secondary Text"
+msgstr "Постави секундарни текст реда"
+
+#: src/core/subtitlelineactions.cpp:154
+msgid "Set Line Texts"
+msgstr "Постави текст реда"
+
+#: src/core/subtitlelineactions.cpp:228
+msgid "Set Line Show Time"
+msgstr "Постави време приказивања реда"
+
+#: src/core/subtitlelineactions.cpp:269
+msgid "Set Line Hide Time"
+msgstr "Постави време нестајања реда"
+
+#: src/core/subtitlelineactions.cpp:384
+msgid "Set Line Errors"
+msgstr "Постави грешке реда"
+
 #: src/main/actions/kcodecactionext.cpp:39
-#: src/main/dialogs/opensubtitledialog.cpp:46
-#: src/main/dialogs/opensubtitledialog.cpp:48
+#: src/main/dialogs/opensubtitledialog.cpp:47
+#: src/main/dialogs/opensubtitledialog.cpp:49
 #: src/main/dialogs/selectablesubtitledialog.cpp:64
 #: src/main/dialogs/selectablesubtitledialog.cpp:98
 #, fuzzy
@@ -432,686 +432,665 @@ msgstr "Аутоматски"
 msgid "Clear List"
 msgstr "Очисти историјат"
 
-#: src/main/application.cpp:386
+#: src/main/application.cpp:361
 msgid "Video Files"
 msgstr "Видео фајлови"
 
-#: src/main/application.cpp:394
+#: src/main/application.cpp:368
 msgid "Audio Files"
 msgstr "Аудио фајлови"
 
-#: src/main/application.cpp:396
+#: src/main/application.cpp:370
 msgid "Media Files"
 msgstr "Медија фајлови"
 
-#: src/main/application.cpp:397
+#: src/main/application.cpp:371
 msgid "All Files"
 msgstr "Сви фајлови"
 
-#: src/main/application.cpp:413
-msgid "Audio Levels Files"
-msgstr "Фајлови аудио нивоа"
-
-#: src/main/application.cpp:434
+#: src/main/application.cpp:390
 msgid "Exit the application"
 msgstr "Изађи из програма"
 
-#: src/main/application.cpp:437
+#: src/main/application.cpp:393
 msgid "Configure Subtitle Composer"
 msgstr "Подеси „Састављача титлова“"
 
-#: src/main/application.cpp:441
+#: src/main/application.cpp:397
 msgctxt "@action:inmenu Create a new subtitle"
 msgid "New"
 msgstr "Нови"
 
-#: src/main/application.cpp:442
+#: src/main/application.cpp:398
 msgid "Create an empty subtitle"
 msgstr "Направи празан титл"
 
-#: src/main/application.cpp:450
+#: src/main/application.cpp:406
 msgctxt "@action:inmenu Open subtitle file"
 msgid "Open..."
 msgstr "Отвори..."
 
-#: src/main/application.cpp:451 src/main/application.cpp:469
+#: src/main/application.cpp:407 src/main/application.cpp:425
 msgid "Open subtitle file"
 msgstr "Отвори фајл титла"
 
-#: src/main/application.cpp:459
+#: src/main/application.cpp:415
 msgid "Reload As..."
 msgstr "Учитај као..."
 
-#: src/main/application.cpp:460
+#: src/main/application.cpp:416
 msgid "Reload opened file with a different encoding"
 msgstr "Поново учитај отворени титл са другачијим кодирањем"
 
-#: src/main/application.cpp:468
+#: src/main/application.cpp:424
 msgctxt "@action:inmenu Open rencently used subtitle file"
 msgid "Open &Recent"
 msgstr "Отвори ско&рашњи"
 
-#: src/main/application.cpp:475
+#: src/main/application.cpp:431
 msgid "Save"
 msgstr "Сачувај"
 
-#: src/main/application.cpp:476
+#: src/main/application.cpp:432
 msgid "Save opened subtitle"
 msgstr "Сачувај отворени титл"
 
-#: src/main/application.cpp:484
+#: src/main/application.cpp:440
 msgid "Save As..."
 msgstr "Сачувај као..."
 
-#: src/main/application.cpp:485
+#: src/main/application.cpp:441
 msgid "Save opened subtitle with different settings"
 msgstr "Сачувај отворени титл са другачијим поставкама"
 
-#: src/main/application.cpp:492
+#: src/main/application.cpp:448
 msgid "Close"
 msgstr "Затвори"
 
-#: src/main/application.cpp:493
+#: src/main/application.cpp:449
 msgid "Close opened subtitle"
 msgstr "Затвори отворени титл"
 
-#: src/main/application.cpp:501
+#: src/main/application.cpp:457
 msgid "New Translation"
 msgstr "Нови превод"
 
-#: src/main/application.cpp:502
+#: src/main/application.cpp:458
 msgid "Create an empty translation subtitle"
 msgstr "Направи празан преведени титл"
 
-#: src/main/application.cpp:510
+#: src/main/application.cpp:466
 msgid "Open Translation..."
 msgstr "Отвори превод..."
 
-#: src/main/application.cpp:511 src/main/application.cpp:529
+#: src/main/application.cpp:467 src/main/application.cpp:485
 msgid "Open translation subtitle file"
 msgstr "Отвори фајл преведеног титла"
 
-#: src/main/application.cpp:519
+#: src/main/application.cpp:475
 #, fuzzy
 msgid "Reload Translation As..."
 msgstr "Сачувај превод као..."
 
-#: src/main/application.cpp:520
+#: src/main/application.cpp:476
 #, fuzzy
 msgid "Reload opened translation file with a different encoding"
 msgstr "Поново учитај отворени титл са другачијим кодирањем"
 
-#: src/main/application.cpp:528
+#: src/main/application.cpp:484
 msgid "Open &Recent Translation"
 msgstr "Отвори ско&рашњи превод"
 
-#: src/main/application.cpp:536
+#: src/main/application.cpp:492
 msgid "Save Translation"
 msgstr "Сачувај превод"
 
-#: src/main/application.cpp:537
+#: src/main/application.cpp:493
 msgid "Save opened translation subtitle"
 msgstr "Сачувај отворени преведени титл"
 
-#: src/main/application.cpp:545
+#: src/main/application.cpp:501
 msgid "Save Translation As..."
 msgstr "Сачувај превод као..."
 
-#: src/main/application.cpp:546
+#: src/main/application.cpp:502
 msgid "Save opened translation subtitle with different settings"
 msgstr "Сачувај отворени преведени титл са другачијим поставкама"
 
-#: src/main/application.cpp:553
+#: src/main/application.cpp:509
 msgid "Close Translation"
 msgstr "Затвори превод"
 
-#: src/main/application.cpp:554
+#: src/main/application.cpp:510
 msgid "Close opened translation subtitle"
 msgstr "Затвори отворени преведени титл"
 
-#: src/main/application.cpp:562 src/main/application.cpp:563
+#: src/main/application.cpp:518 src/main/application.cpp:519
 #: src/widgets/simplerichtextedit.cpp:67
 msgid "Undo"
 msgstr "Опозови"
 
-#: src/main/application.cpp:571 src/main/application.cpp:572
+#: src/main/application.cpp:527 src/main/application.cpp:528
 #: src/widgets/simplerichtextedit.cpp:73
 msgid "Redo"
 msgstr "Понови"
 
-#: src/main/application.cpp:579
+#: src/main/application.cpp:535
 msgid "Split Subtitle..."
 msgstr "Раздвоји титл..."
 
-#: src/main/application.cpp:580
+#: src/main/application.cpp:536
 msgid "Split the opened subtitle in two parts"
 msgstr "Раздвоји отворени титл на два дела"
 
-#: src/main/application.cpp:586
+#: src/main/application.cpp:542
 msgid "Join Subtitles..."
 msgstr "Здружи титлове..."
 
-#: src/main/application.cpp:587
+#: src/main/application.cpp:543
 msgid "Append to the opened subtitle another one"
 msgstr "Додавање другог титла отвореном"
 
-#: src/main/application.cpp:593 src/main/lineswidget.cpp:1096
+#: src/main/application.cpp:549 src/main/lineswidget.cpp:1084
 msgid "Insert Before"
 msgstr "Уметни пре"
 
-#: src/main/application.cpp:594
+#: src/main/application.cpp:550
 msgid "Insert empty line before current one"
 msgstr "Уметни празан ред пре текућег"
 
-#: src/main/application.cpp:601 src/main/lineswidget.cpp:1097
+#: src/main/application.cpp:557 src/main/lineswidget.cpp:1085
 msgid "Insert After"
 msgstr "Уметни након"
 
-#: src/main/application.cpp:602
+#: src/main/application.cpp:558
 msgid "Insert empty line after current one"
 msgstr "Уметни празан ред након текућег"
 
-#: src/main/application.cpp:609 src/main/lineswidget.cpp:1095
+#: src/main/application.cpp:565 src/main/lineswidget.cpp:1083
 msgid "Remove"
 msgstr "Уклони"
 
-#: src/main/application.cpp:610
+#: src/main/application.cpp:566
 msgid "Remove selected lines"
 msgstr "Уклони изабране редове"
 
-#: src/main/application.cpp:618
+#: src/main/application.cpp:574
 msgid "Split selected lines"
 msgstr "Раздвоји изабране редове"
 
-#: src/main/application.cpp:625
+#: src/main/application.cpp:581
 msgid "Join selected lines"
 msgstr "Здружи изабране редове"
 
-#: src/main/application.cpp:631
+#: src/main/application.cpp:587
 #: src/main/dialogs/actionwitherrortargetsdialog.cpp:95
-#: src/main/lineswidget.cpp:1093 src/widgets/simplerichtextedit.cpp:110
+#: src/main/lineswidget.cpp:1081 src/widgets/simplerichtextedit.cpp:110
 msgid "Select All"
 msgstr "Изабери све"
 
-#: src/main/application.cpp:632
+#: src/main/application.cpp:588
 msgid "Select all lines"
 msgstr "Изабери све редове"
 
-#: src/main/application.cpp:639
+#: src/main/application.cpp:595
 msgid "Go to Line..."
 msgstr "Иди на ред..."
 
-#: src/main/application.cpp:640
+#: src/main/application.cpp:596
 msgid "Go to specified line"
 msgstr "Иди на одређени ред"
 
-#: src/main/application.cpp:648
+#: src/main/application.cpp:604
 msgid "Find..."
 msgstr "Нађи..."
 
-#: src/main/application.cpp:649
+#: src/main/application.cpp:605
 msgid "Find occurrences of strings or regular expressions"
 msgstr "Проналази знаковне низове или регуларне изразе"
 
-#: src/main/application.cpp:657
+#: src/main/application.cpp:613
 msgid "Find Next"
 msgstr "Нађи следеће"
 
-#: src/main/application.cpp:658
+#: src/main/application.cpp:614
 msgid "Find next occurrence of string or regular expression"
 msgstr "Налази следећу појаву знаковног низа или регуларног израза"
 
-#: src/main/application.cpp:666
+#: src/main/application.cpp:622
 msgid "Find Previous"
 msgstr "Нађи претходно"
 
-#: src/main/application.cpp:667
+#: src/main/application.cpp:623
 msgid "Find previous occurrence of string or regular expression"
 msgstr "Налази претходну појаву знаковног низа или регуларног израза"
 
-#: src/main/application.cpp:674
+#: src/main/application.cpp:630
 msgid "Replace..."
 msgstr "Замени..."
 
-#: src/main/application.cpp:675
+#: src/main/application.cpp:631
 msgid "Replace occurrences of strings or regular expressions"
 msgstr "Врши замену знаковних низова или регуларних израза"
 
-#: src/main/application.cpp:683
+#: src/main/application.cpp:639
 msgid "Retrocede current line"
 msgstr "Претеча текућег реда"
 
-#: src/main/application.cpp:684
+#: src/main/application.cpp:640
 msgid "Makes the line before the current one active"
 msgstr "Чини да ред пре текућег буде активан"
 
-#: src/main/application.cpp:692
+#: src/main/application.cpp:648
 msgid "Advance current line"
 msgstr "Следбеник текућег реда"
 
-#: src/main/application.cpp:693
+#: src/main/application.cpp:649
 msgid "Makes the line after the current one active"
 msgstr "Чини да ред након текућег буде активан"
 
-#: src/main/application.cpp:700 src/main/errorsdialog.cpp:52
-#: src/main/lineswidget.cpp:1087
+#: src/main/application.cpp:656 src/main/errorsdialog.cpp:52
+#: src/main/lineswidget.cpp:1075
 msgid "Check Errors..."
 msgstr "Провери грешке..."
 
-#: src/main/application.cpp:701
+#: src/main/application.cpp:657
 msgid "Check for errors in the current subtitle"
 msgstr "Провери грешке у текућем титлу"
 
-#: src/main/application.cpp:708 src/main/errorsdialog.cpp:55
-#: src/main/lineswidget.cpp:1088
+#: src/main/application.cpp:664 src/main/errorsdialog.cpp:55
+#: src/main/lineswidget.cpp:1076
 msgid "Clear Errors..."
 msgstr "Очисти грешке..."
 
-#: src/main/application.cpp:709
+#: src/main/application.cpp:665
 msgid "Clear errors from selected lines"
 msgstr "Очисти грешке из изабраних редова"
 
-#: src/main/application.cpp:715 src/main/lineswidget.cpp:1090
+#: src/main/application.cpp:671 src/main/lineswidget.cpp:1078
 msgid "Show Errors..."
 msgstr "Прикажи грешке..."
 
-#: src/main/application.cpp:716
+#: src/main/application.cpp:672
 msgid "Show errors information for the current subtitle"
 msgstr "Прикажи податке о грешкама за текући титл"
 
-#: src/main/application.cpp:724
+#: src/main/application.cpp:680
 msgid "Find Error..."
 msgstr "Нађи грешку..."
 
-#: src/main/application.cpp:725
+#: src/main/application.cpp:681
 msgid "Find lines with specified errors"
 msgstr "Нађи редове са наведеним грешкама"
 
-#: src/main/application.cpp:733
+#: src/main/application.cpp:689
 msgid "Find Next Error"
 msgstr "Нађи следећу грешку"
 
-#: src/main/application.cpp:734
+#: src/main/application.cpp:690
 msgid "Find next line with specified errors"
 msgstr "Нађи следећи ред са наведеним грешкама"
 
-#: src/main/application.cpp:742
+#: src/main/application.cpp:698
 msgid "Find Previous Error"
 msgstr "Нађи претходну грешку"
 
-#: src/main/application.cpp:743
+#: src/main/application.cpp:699
 msgid "Find previous line with specified errors"
 msgstr "Нађи претходни ред са наведеним грешкама"
 
-#: src/main/application.cpp:751 src/main/lineswidget.cpp:1052
+#: src/main/application.cpp:707 src/main/lineswidget.cpp:1040
 msgid "Spelling..."
 msgstr "Правопис..."
 
-#: src/main/application.cpp:752
+#: src/main/application.cpp:708
 msgid "Check lines spelling"
 msgstr "Провери правопис у редовима"
 
-#: src/main/application.cpp:758
+#: src/main/application.cpp:714
 msgid "Toggle Mark"
 msgstr "Маркирано"
 
-#: src/main/application.cpp:759
+#: src/main/application.cpp:715
 msgid "Toggle selected lines mark"
 msgstr "Мења стање маркираности изабраних редова"
 
-#: src/main/application.cpp:767 src/main/currentlinewidget.cpp:93
+#: src/main/application.cpp:723 src/main/currentlinewidget.cpp:93
 msgid "Toggle Bold"
 msgstr "Подебљано"
 
-#: src/main/application.cpp:768
+#: src/main/application.cpp:724
 msgid "Toggle selected lines bold attribute"
 msgstr "Укључује или искључује подебљани испис изабраних редова"
 
-#: src/main/application.cpp:776 src/main/currentlinewidget.cpp:94
+#: src/main/application.cpp:732 src/main/currentlinewidget.cpp:94
 msgid "Toggle Italic"
 msgstr "Курзив"
 
-#: src/main/application.cpp:777
+#: src/main/application.cpp:733
 msgid "Toggle selected lines italic attribute"
 msgstr "Укључује или искључује курзивни испис изабраних редова"
 
-#: src/main/application.cpp:785 src/main/currentlinewidget.cpp:95
+#: src/main/application.cpp:741 src/main/currentlinewidget.cpp:95
 msgid "Toggle Underline"
 msgstr "Подвучено"
 
-#: src/main/application.cpp:786
+#: src/main/application.cpp:742
 msgid "Toggle selected lines underline attribute"
 msgstr "Укључује или искључује подвучени испис изабраних редова"
 
-#: src/main/application.cpp:794 src/main/currentlinewidget.cpp:96
+#: src/main/application.cpp:750 src/main/currentlinewidget.cpp:96
 msgid "Toggle Strike Through"
 msgstr "Прецртано"
 
-#: src/main/application.cpp:795
+#: src/main/application.cpp:751
 msgid "Toggle selected lines strike through attribute"
 msgstr "Укључује или искључује прецртани испис изабраних редова"
 
-#: src/main/application.cpp:803 src/main/currentlinewidget.cpp:97
+#: src/main/application.cpp:759 src/main/currentlinewidget.cpp:97
 #, fuzzy
 msgid "Change Text Color"
 msgstr "Промени у"
 
-#: src/main/application.cpp:804
+#: src/main/application.cpp:760
 #, fuzzy
 msgid "Change text color of selected lines"
 msgstr "Очисти грешке из изабраних редова"
 
-#: src/main/application.cpp:811 src/main/lineswidget.cpp:1075
+#: src/main/application.cpp:767 src/main/lineswidget.cpp:1063
 msgid "Shift..."
 msgstr "Померај..."
 
-#: src/main/application.cpp:812
+#: src/main/application.cpp:768
 msgid "Shift lines an specified amount of time"
 msgstr "Померај редова за одређено време"
 
-#: src/main/application.cpp:831
+#: src/main/application.cpp:787
 msgid "Adjust..."
 msgstr "Подеси..."
 
-#: src/main/application.cpp:832
+#: src/main/application.cpp:788
 msgid "Linearly adjust all lines to a specified interval"
 msgstr "Линеарно подеси све редове на одређени интервал"
 
-#: src/main/application.cpp:839
+#: src/main/application.cpp:795
 msgid "Sort..."
 msgstr "Поређај..."
 
-#: src/main/application.cpp:840
+#: src/main/application.cpp:796
 msgid "Sort lines based on their show time"
 msgstr "Поређај редове на основу времена појављивања"
 
-#: src/main/application.cpp:846
+#: src/main/application.cpp:802
 msgid "Change Frame Rate..."
 msgstr "Измени брзину кадрова..."
 
-#: src/main/application.cpp:847
+#: src/main/application.cpp:803
 msgid "Retime subtitle lines by reinterpreting its frame rate"
 msgstr "Прилагоди времена редова прерачунавајући брзину кадрова"
 
-#: src/main/application.cpp:853 src/main/lineswidget.cpp:1077
+#: src/main/application.cpp:809 src/main/lineswidget.cpp:1065
 msgid "Enforce Duration Limits..."
 msgstr "Присили ограничења трајања..."
 
-#: src/main/application.cpp:854
+#: src/main/application.cpp:810
 msgid "Enforce lines minimum and/or maximum duration limits"
 msgstr "Форсирај ограничења максималног и/или минималног трајања"
 
-#: src/main/application.cpp:861 src/main/lineswidget.cpp:1078
+#: src/main/application.cpp:817 src/main/lineswidget.cpp:1066
 msgid "Set Automatic Durations..."
 msgstr "Постави аутоматска трајања..."
 
-#: src/main/application.cpp:862
+#: src/main/application.cpp:818
 msgid "Set lines durations based on amount of letters, words and line breaks"
 msgstr "Постави трајање редова на основу броја слова, речи и прелома редова"
 
-#: src/main/application.cpp:868
+#: src/main/application.cpp:824
 msgid "Maximize Durations..."
 msgstr "Максимизуј трајања..."
 
-#: src/main/application.cpp:869
+#: src/main/application.cpp:825
 msgid "Extend lines durations up to their next lines show time"
 msgstr "Продужи трајања редова до времена појављивања наредног реда"
 
-#: src/main/application.cpp:875
+#: src/main/application.cpp:831
 msgid "Fix Overlapping Times..."
 msgstr "Среди преклапајућа времена..."
 
-#: src/main/application.cpp:876
+#: src/main/application.cpp:832
 msgid "Fix lines overlapping times"
 msgstr "Среди времена преклопљених редова"
 
-#: src/main/application.cpp:882
+#: src/main/application.cpp:838
 msgid "Synchronize with Subtitle..."
 msgstr "Синхронизуј са титлом..."
 
-#: src/main/application.cpp:883
+#: src/main/application.cpp:839
 msgid "Copy timing information from another subtitle"
 msgstr "Копирај податке о временима из другог титла"
 
-#: src/main/application.cpp:889 src/main/lineswidget.cpp:1045
+#: src/main/application.cpp:845 src/main/lineswidget.cpp:1033
 msgid "Break Lines..."
 msgstr "Преломи редове..."
 
-#: src/main/application.cpp:890
+#: src/main/application.cpp:846
 msgid "Automatically set line breaks"
 msgstr "Аутоматски подеси прелом реда"
 
-#: src/main/application.cpp:896 src/main/lineswidget.cpp:1046
+#: src/main/application.cpp:852 src/main/lineswidget.cpp:1034
 msgid "Unbreak Lines..."
 msgstr "Врати преломљене редове..."
 
-#: src/main/application.cpp:897
+#: src/main/application.cpp:853
 msgid "Remove line breaks from lines"
 msgstr "Уклони прелом реда из редова"
 
-#: src/main/application.cpp:903 src/main/lineswidget.cpp:1047
+#: src/main/application.cpp:859 src/main/lineswidget.cpp:1035
 msgid "Simplify Spaces..."
 msgstr "Поједностави размаке..."
 
-#: src/main/application.cpp:904
+#: src/main/application.cpp:860
 msgid "Remove unneeded spaces from lines"
 msgstr "Уклони непотребне размаке из редова"
 
-#: src/main/application.cpp:910 src/main/lineswidget.cpp:1048
+#: src/main/application.cpp:866 src/main/lineswidget.cpp:1036
 msgid "Change Case..."
 msgstr "Измени велика/мала слова..."
 
-#: src/main/application.cpp:911
+#: src/main/application.cpp:867
 msgid "Change lines text to upper, lower, title or sentence case"
 msgstr "Промени текст у велика или мала слова, наслов или величину за реченицу"
 
-#: src/main/application.cpp:917 src/main/lineswidget.cpp:1049
+#: src/main/application.cpp:873 src/main/lineswidget.cpp:1037
 msgid "Fix Punctuation..."
 msgstr "Среди интерпункцију..."
 
-#: src/main/application.cpp:918
+#: src/main/application.cpp:874
 msgid "Fix punctuation errors in lines"
 msgstr "Среди грешке интерпункције у редовима"
 
-#: src/main/application.cpp:924 src/main/lineswidget.cpp:1050
+#: src/main/application.cpp:880 src/main/lineswidget.cpp:1038
 msgid "Translate..."
 msgstr "Преведи..."
 
-#: src/main/application.cpp:925
+#: src/main/application.cpp:881
 msgid "Translate lines texts using Google services"
 msgstr "Преведи текст редова помоћу Гугл услуга"
 
-#: src/main/application.cpp:931
+#: src/main/application.cpp:887
 msgid "Edit Line in Place"
 msgstr "Уреди текст на месту"
 
-#: src/main/application.cpp:932
+#: src/main/application.cpp:888
 msgid "Edit current line text in place"
 msgstr "Уреди текст текућег реда на месту"
 
-#: src/main/application.cpp:940
+#: src/main/application.cpp:896
 msgid "Open Video..."
 msgstr "Отвори видео..."
 
-#: src/main/application.cpp:941 src/main/application.cpp:948
+#: src/main/application.cpp:897 src/main/application.cpp:904
 msgid "Open video file"
 msgstr "Отвори видео фајл"
 
-#: src/main/application.cpp:947
+#: src/main/application.cpp:903
 msgid "Open &Recent Video"
 msgstr "Отвори ско&рашњи видео"
 
-#: src/main/application.cpp:954
+#: src/main/application.cpp:910
 msgid "Close Video"
 msgstr "Затвори видео"
 
-#: src/main/application.cpp:955
+#: src/main/application.cpp:911
 msgid "Close video file"
 msgstr "Затвори видео фајл"
 
-#: src/main/application.cpp:962
-msgid "Extract Audio"
-msgstr ""
-
-#: src/main/application.cpp:963
-#, fuzzy
-msgid "Extract video's active audio stream"
-msgstr "Изабери активни аудио ток"
-
-#: src/main/application.cpp:970
-msgid "Cancel Audio Extraction"
-msgstr ""
-
-#: src/main/application.cpp:971
-msgid "Cancel video's audio stream extraction"
-msgstr ""
-
-#: src/main/application.cpp:978
+#: src/main/application.cpp:918
 msgid "Full Screen Mode"
 msgstr "Преко целог екрана"
 
-#: src/main/application.cpp:979
+#: src/main/application.cpp:919
 msgid "Toggle full screen mode"
 msgstr "Укљ/искљ. приказ преко целог екрана"
 
-#: src/main/application.cpp:986
+#: src/main/application.cpp:926
 msgid "Stop"
 msgstr "Заустави"
 
-#: src/main/application.cpp:987
+#: src/main/application.cpp:927
 msgid "Stop video playback"
 msgstr "Заустави пуштање видеа"
 
-#: src/main/application.cpp:994 src/main/application.cpp:2986
-#: src/main/application.cpp:2994
+#: src/main/application.cpp:934 src/main/application.cpp:2710
+#: src/main/application.cpp:2718
 msgid "Play"
 msgstr "Пусти"
 
-#: src/main/application.cpp:995
+#: src/main/application.cpp:935
 msgid "Toggle video playing/paused"
 msgstr "Пуштам/Паузирано"
 
-#: src/main/application.cpp:1002
+#: src/main/application.cpp:942
 msgid "Seek Backwards"
 msgstr "Тражи уназад"
 
-#: src/main/application.cpp:1010
+#: src/main/application.cpp:950
 msgid "Seek Forwards"
 msgstr "Тражи унапред"
 
-#: src/main/application.cpp:1018
+#: src/main/application.cpp:958
 msgid "Jump to Previous Line"
 msgstr "Скочи на претходни ред"
 
-#: src/main/application.cpp:1019
+#: src/main/application.cpp:959
 msgid "Seek to previous subtitle line show time"
 msgstr "Иди на време приказа претходног реда"
 
-#: src/main/application.cpp:1027
+#: src/main/application.cpp:967
 msgid "Jump to Next Line"
 msgstr "Скочи на следећи ред"
 
-#: src/main/application.cpp:1028
+#: src/main/application.cpp:968
 msgid "Seek to next subtitle line show time"
 msgstr "Иди на време приказа следећег реда"
 
-#: src/main/application.cpp:1036
+#: src/main/application.cpp:976
 msgid "Set Current Line Show Time"
 msgstr "Постави време приказа текућег реда"
 
-#: src/main/application.cpp:1037
+#: src/main/application.cpp:977
 msgid "Set current line show time to video position"
 msgstr "Постави време приказа текућег реда на позицију видеа"
 
-#: src/main/application.cpp:1045
+#: src/main/application.cpp:985
 msgid "Set Current Line Hide Time"
 msgstr "Постави време нестајања текућег реда"
 
-#: src/main/application.cpp:1046
+#: src/main/application.cpp:986
 msgid "Set current line hide time to video position"
 msgstr "Постави време нестајања текућег реда на позицију видеа"
 
-#: src/main/application.cpp:1054
+#: src/main/application.cpp:994
 msgid "Current Line Follows Video"
 msgstr "Текући ред прати видео"
 
-#: src/main/application.cpp:1055
+#: src/main/application.cpp:995
 msgid "Make current line follow the playing video position"
 msgstr "Текући ред прати позицију пуштеног видеа"
 
-#: src/main/application.cpp:1061
+#: src/main/application.cpp:1001
 msgctxt "@action:inmenu Toggle audio muted"
 msgid "Mute"
 msgstr "Умукни"
 
-#: src/main/application.cpp:1062
+#: src/main/application.cpp:1002
 msgid "Enable/disable playback sound"
 msgstr "Укључује или искључује звук"
 
-#: src/main/application.cpp:1069
+#: src/main/application.cpp:1009
 msgid "Increase Volume"
 msgstr "Повећај јачину"
 
-#: src/main/application.cpp:1070
+#: src/main/application.cpp:1010
 msgid "Increase volume by 5%"
 msgstr "Повећај јачину за 5%"
 
-#: src/main/application.cpp:1077
+#: src/main/application.cpp:1017
 msgid "Decrease Volume"
 msgstr "Смањи јачину"
 
-#: src/main/application.cpp:1078
+#: src/main/application.cpp:1018
 msgid "Decrease volume by 5%"
 msgstr "Смањи јачину за 5%"
 
-#: src/main/application.cpp:1085
+#: src/main/application.cpp:1025
 msgid "Audio Streams"
 msgstr "Аудио токови"
 
-#: src/main/application.cpp:1086
+#: src/main/application.cpp:1026
 msgid "Select active audio stream"
 msgstr "Изабери активни аудио ток"
 
-#: src/main/application.cpp:1093
+#: src/main/application.cpp:1033
 msgid "Increase Font Size"
 msgstr "Повећај величину фонта"
 
-#: src/main/application.cpp:1094
+#: src/main/application.cpp:1034
 msgid "Increase subtitles font size by 1 point"
 msgstr "Повећај величину фонта титла за 1 тачку"
 
-#: src/main/application.cpp:1101
+#: src/main/application.cpp:1041
 msgid "Decrease Font Size"
 msgstr "Смањи величину фонта"
 
-#: src/main/application.cpp:1102
+#: src/main/application.cpp:1042
 msgid "Decrease subtitles font size by 1 point"
 msgstr "Смањи величину фонта титла за 1 тачку"
 
-#: src/main/application.cpp:1109
+#: src/main/application.cpp:1049
 msgid "Subtitle Streams"
 msgstr "Токови титла"
 
-#: src/main/application.cpp:1110
+#: src/main/application.cpp:1050
 msgid "Select active subtitle stream"
 msgstr "Изабери активни ток титла"
 
-#: src/main/application.cpp:1116
+#: src/main/application.cpp:1056
 msgid "Shift to Video Position"
 msgstr "Померај на позицију видеа"
 
-#: src/main/application.cpp:1117
+#: src/main/application.cpp:1057
 msgid ""
 "Set current line show time to video position by equally shifting all lines"
 msgstr ""
 "Поставља време приказа текућег реда на позицију видеа једнако померајући све "
 "линије"
 
-#: src/main/application.cpp:1124
+#: src/main/application.cpp:1064
 msgid "Adjust to Video Position (Anchor Last Line)"
 msgstr "Подеси на позицију видеа (усидри последњи ред)"
 
-#: src/main/application.cpp:1125
+#: src/main/application.cpp:1065
 msgid ""
 "Set current line to video position by fixing the last line and linearly "
 "adjusting the other ones"
@@ -1119,11 +1098,11 @@ msgstr ""
 "Поставља текући ред на позицију видеа фиксирајући последњи ред и линеарно "
 "подешавајући остале"
 
-#: src/main/application.cpp:1132
+#: src/main/application.cpp:1072
 msgid "Adjust to Video Position (Anchor First Line)"
 msgstr "Подеси на позицију видеа (усидри први ред)"
 
-#: src/main/application.cpp:1133
+#: src/main/application.cpp:1073
 msgid ""
 "Set current line to video position by fixing the first line and linearly "
 "adjusting the other ones"
@@ -1131,16 +1110,16 @@ msgstr ""
 "Поставља текући ред на позицију видеа фиксирајући први ред и линеарно "
 "подешавајући остале"
 
-#: src/main/application.cpp:1141
+#: src/main/application.cpp:1081
 msgctxt "@action:inmenu Manage user scripts"
 msgid "Scripts Manager..."
 msgstr "Менаџер скрипти..."
 
-#: src/main/application.cpp:1142
+#: src/main/application.cpp:1082
 msgid "Manage user scripts"
 msgstr "Управљање корисничким скриптама"
 
-#: src/main/application.cpp:1301
+#: src/main/application.cpp:1172
 msgid ""
 "The requested action would make the subtitle and its translation share the "
 "same file, possibly resulting in loss of information when saving.\n"
@@ -1150,12 +1129,12 @@ msgstr ""
 "довести до губитка података при снимању.\n"
 "Желите ли да наставите?"
 
-#: src/main/application.cpp:1301
+#: src/main/application.cpp:1172
 msgid "Conflicting Subtitle Files"
 msgstr "Конфликтни фајлови титла"
 
-#: src/main/application.cpp:1409 src/main/application.cpp:1437
-#: src/main/application.cpp:1650 src/main/application.cpp:1688
+#: src/main/application.cpp:1280 src/main/application.cpp:1308
+#: src/main/application.cpp:1521 src/main/application.cpp:1559
 msgid ""
 "<qt>Could not parse the subtitle file.<br/>This may have been caused by "
 "usage of the wrong encoding.</qt>"
@@ -1163,11 +1142,11 @@ msgstr ""
 "<qt>Не могу да рашчланим фајл титла.<br/>То може бити проузроковано "
 "коришћењем погрешног кодирања.</qt>"
 
-#: src/main/application.cpp:1496
+#: src/main/application.cpp:1367
 msgid "There was an error saving the subtitle."
 msgstr "Дошло је до грешке при снимању титла."
 
-#: src/main/application.cpp:1533 src/main/application.cpp:1784
+#: src/main/application.cpp:1404 src/main/application.cpp:1655
 msgid ""
 "Currently opened translation subtitle has unsaved changes.\n"
 "Do you want to save them?"
@@ -1175,11 +1154,11 @@ msgstr ""
 "Тренутно отворени преведени титл има несачуване измене.\n"
 "Желите ли да их сачувате?"
 
-#: src/main/application.cpp:1534 src/main/application.cpp:1785
+#: src/main/application.cpp:1405 src/main/application.cpp:1656
 msgid "Close Translation Subtitle"
 msgstr "Затвори преведени титл"
 
-#: src/main/application.cpp:1544
+#: src/main/application.cpp:1415
 msgid ""
 "Currently opened subtitle has unsaved changes.\n"
 "Do you want to save them?"
@@ -1187,57 +1166,57 @@ msgstr ""
 "Тренутно отворени титл има несачуване измене.\n"
 "Желите ли да их сачувате?"
 
-#: src/main/application.cpp:1545
+#: src/main/application.cpp:1416
 msgid "Close Subtitle"
 msgstr "Затвори титл"
 
-#: src/main/application.cpp:1640
+#: src/main/application.cpp:1511
 msgctxt "@item:inmenu Display primary text in video player"
 msgid "Primary"
 msgstr "Главни"
 
-#: src/main/application.cpp:1641
+#: src/main/application.cpp:1512
 msgctxt "@item:inmenu Display translation text in video player"
 msgid "Translation"
 msgstr "Превод"
 
-#: src/main/application.cpp:1747
+#: src/main/application.cpp:1618
 msgid "There was an error saving the translation subtitle."
 msgstr "Дошло је до грешке при снимању преведеног титла."
 
-#: src/main/application.cpp:1830
+#: src/main/application.cpp:1701
 msgid "Could not read the subtitle file to append."
 msgstr "Не могу да прочитам фајл титла за додавање."
 
-#: src/main/application.cpp:1848 src/main/application.cpp:2879
-#: src/main/application.cpp:2884
+#: src/main/application.cpp:1719 src/main/application.cpp:2603
+#: src/main/application.cpp:2608
 msgid "Untitled"
 msgstr "Безимени"
 
-#: src/main/application.cpp:1848 src/main/application.cpp:2881
+#: src/main/application.cpp:1719 src/main/application.cpp:2605
 msgid "Untitled Translation"
 msgstr "Безимени превод"
 
-#: src/main/application.cpp:1854
+#: src/main/application.cpp:1725
 msgctxt "Suffix added to split subtitles"
 msgid "split"
 msgstr ""
 
-#: src/main/application.cpp:1868
+#: src/main/application.cpp:1739
 #, fuzzy
 msgid "Could not write the split subtitle file."
 msgstr "Не могу да упишем подељени фајл титла."
 
-#: src/main/application.cpp:1868
+#: src/main/application.cpp:1739
 #, fuzzy
 msgid "Could not write the split subtitle translation file."
 msgstr "Не могу да упишем подељени фајл преведеног титла."
 
-#: src/main/application.cpp:1885
+#: src/main/application.cpp:1756
 msgid "The specified time does not split the subtitles."
 msgstr "Наведено време не дели титлове."
 
-#: src/main/application.cpp:1920
+#: src/main/application.cpp:1791
 #, fuzzy
 msgid ""
 "Could not open a new Subtitle Composer window.\n"
@@ -1246,7 +1225,7 @@ msgstr ""
 "Не могу да отворим нови прозор „Уређивача титла“.\n"
 "Подељени део је сачуван као %1."
 
-#: src/main/application.cpp:1921
+#: src/main/application.cpp:1792
 #, fuzzy
 msgid ""
 "Could not open a new Subtitle Composer window.\n"
@@ -1255,43 +1234,43 @@ msgstr ""
 "Не могу да отворим нови прозор „Уређивача титла“.\n"
 "Подељени делови су сачувани као %1 и %2."
 
-#: src/main/application.cpp:2013
+#: src/main/application.cpp:1884
 msgid "Go to Line"
 msgstr "Иди на ред"
 
-#: src/main/application.cpp:2013
+#: src/main/application.cpp:1884
 msgid "&Go to line:"
 msgstr "&Иди на ред:"
 
-#: src/main/application.cpp:2287
+#: src/main/application.cpp:2158
 msgid "Can not perform sort on selection with multiple ranges."
 msgstr "Не могу да урадим разврставање избора са вишеструким опсезима."
 
-#: src/main/application.cpp:2369
+#: src/main/application.cpp:2240
 msgid "The reference subtitle must have more than one line to proceed."
 msgstr "Референтни титл мора имати више од једног реда да би радио."
 
-#: src/main/application.cpp:2376
+#: src/main/application.cpp:2247
 msgid "Could not parse the reference subtitle file."
 msgstr "Не могу да рашчланим фајл референтног титла."
 
-#: src/main/application.cpp:2458 src/main/dialogs/translatedialog.cpp:33
+#: src/main/application.cpp:2329 src/main/dialogs/translatedialog.cpp:33
 msgid "Translate"
 msgstr "Преведи"
 
-#: src/main/application.cpp:2458
+#: src/main/application.cpp:2329
 msgid "Translating text (%1 to %2)..."
 msgstr "Преводим текст (%1 у %2)..."
 
-#: src/main/application.cpp:2462
+#: src/main/application.cpp:2333
 msgid "Translating primary text (%1 to %2)..."
 msgstr "Преводим главни текст (%1 у %2)..."
 
-#: src/main/application.cpp:2463
+#: src/main/application.cpp:2334
 msgid "Translating secondary text (%1 to %2)..."
 msgstr "Преводим секундарни текст (%1 у %2)..."
 
-#: src/main/application.cpp:2491
+#: src/main/application.cpp:2362
 msgid ""
 "Unable to perform texts synchronization (sent and received lines count do "
 "not match)."
@@ -1299,15 +1278,15 @@ msgstr ""
 "Не могу да урадим усклађивање текстова (број послатих и примљених редова "
 "није исти)."
 
-#: src/main/application.cpp:2495
+#: src/main/application.cpp:2366
 msgid "Translate Primary Text"
 msgstr "Преведи главни текст"
 
-#: src/main/application.cpp:2495
+#: src/main/application.cpp:2366
 msgid "Translate Secondary Text"
 msgstr "Преведи секундарни текст"
 
-#: src/main/application.cpp:2510
+#: src/main/application.cpp:2381
 msgid ""
 "There was an error performing the translation:\n"
 "\n"
@@ -1317,11 +1296,11 @@ msgstr ""
 "\n"
 "%1"
 
-#: src/main/application.cpp:2548
+#: src/main/application.cpp:2419
 msgid "Open Video"
 msgstr "Отвори видео"
 
-#: src/main/application.cpp:2681 src/main/application.cpp:2757
+#: src/main/application.cpp:2552 src/main/application.cpp:2584
 msgid ""
 "Continuing would result in loss of timing information for some lines.\n"
 "Are you sure you want to continue?"
@@ -1329,29 +1308,15 @@ msgstr ""
 "Настављање ће довести до губитка времена на неким редовима.\n"
 "Желите ли да наставите?"
 
-#: src/main/application.cpp:2701
-#, fuzzy
-msgid "<qt>There was an error opening file %1 for audio extraction.</qt>"
-msgstr "<qt>Дошло је до грешке при отварању фајла<br/>%1</qt>"
-
-#: src/main/application.cpp:2727 src/main/application.cpp:2730
-#, fuzzy
-msgid "Unexpected error when extracting audio."
-msgstr "Неочекивана грешка при пуштању фајла."
-
-#: src/main/application.cpp:2727 src/main/application.cpp:2730
-msgid "Error Extracting Audio"
-msgstr ""
-
-#: src/main/application.cpp:2877
+#: src/main/application.cpp:2601
 msgid "modified"
 msgstr "измењен"
 
-#: src/main/application.cpp:2978
+#: src/main/application.cpp:2702
 msgid "Pause"
 msgstr "Паузирај"
 
-#: src/main/application.cpp:3023
+#: src/main/application.cpp:2750
 msgid "Seek backwards 1 second"
 msgid_plural "Seek backwards %1 seconds"
 msgstr[0] "Тражи уназад %1 секунду"
@@ -1359,7 +1324,7 @@ msgstr[1] "Тражи уназад %1 секунде"
 msgstr[2] "Тражи уназад %1 секунди"
 msgstr[3] "Тражи уназад 1 секунду"
 
-#: src/main/application.cpp:3024
+#: src/main/application.cpp:2751
 msgid "Seek forwards 1 second"
 msgid_plural "Seek forwards %1 seconds"
 msgstr[0] "Тражи унапред %1 секунду"
@@ -1367,7 +1332,7 @@ msgstr[1] "Тражи унапред %1 секунде"
 msgstr[2] "Тражи унапред %1 секунди"
 msgstr[3] "Тражи унапред 1 секунду"
 
-#: src/main/application.cpp:3027 src/main/application.cpp:3031
+#: src/main/application.cpp:2754 src/main/application.cpp:2758
 msgid "Shift %21 Millisecond"
 msgid_plural "Shift %2%1 Milliseconds"
 msgstr[0] "Помери %21 милисекунду"
@@ -1375,7 +1340,7 @@ msgstr[1] "Помери %2%1 милисекунде"
 msgstr[2] "Помери %2%1 милисекунди"
 msgstr[3] "Помери %2%1 милисекунду"
 
-#: src/main/application.cpp:3028 src/main/application.cpp:3032
+#: src/main/application.cpp:2755 src/main/application.cpp:2759
 msgid "Shift selected lines %21 millisecond"
 msgid_plural "Shift selected lines %2%1 milliseconds"
 msgstr[0] "Померај изабраних редова %21 милисекунду"
@@ -1415,20 +1380,22 @@ msgstr "Поставке правописа"
 
 #: src/main/configs/configdialog.cpp:62
 #, fuzzy
-msgctxt "@title Player Settings"
-msgid "Player"
+msgctxt "@title VideoPlayer Settings"
+msgid "VideoPlayer"
 msgstr "Плејер"
 
 #: src/main/configs/configdialog.cpp:63
-msgid "Player Settings"
+#, fuzzy
+msgid "VideoPlayer Settings"
 msgstr "Поставке плејера"
 
 #: src/main/configs/configdialog.cpp:72
-msgctxt "@title Player backend settings"
+#, fuzzy
+msgctxt "@title VideoPlayer backend settings"
 msgid "%1 Backend Settings"
 msgstr "%1 поставке"
 
-#: src/main/configs/playerconfigwidget.cpp:40
+#: src/main/configs/playerconfigwidget.cpp:39
 msgctxt "Text for previewing the subtitles font settings"
 msgid "<p>The Quick Brown Fox<br/>Jumps Over The Lazy Dog</p>"
 msgstr "<p>Љубазни фењерџија чађавог<br/>лица хоће да ми покаже штос</p>"
@@ -1711,21 +1678,21 @@ msgstr "Померај титла унапред пре додавања"
 msgid "Set from video length"
 msgstr "Постави из дужине видеа"
 
-#: src/main/dialogs/opensubtitledialog.cpp:39
+#: src/main/dialogs/opensubtitledialog.cpp:40
 msgid "Open Subtitle"
 msgstr "Отвори титл"
 
-#: src/main/dialogs/opensubtitledialog.cpp:39
+#: src/main/dialogs/opensubtitledialog.cpp:40
 msgid "Open Translation Subtitle"
 msgstr "Отвори преведени титл"
 
-#: src/main/dialogs/opensubtitledialog.cpp:51
-#: src/main/dialogs/savesubtitledialog.cpp:85
+#: src/main/dialogs/opensubtitledialog.cpp:52
+#: src/main/dialogs/savesubtitledialog.cpp:86
 #: src/main/dialogs/selectablesubtitledialog.cpp:69
 msgid "Encoding:"
 msgstr "Кодирање:"
 
-#: src/main/dialogs/opensubtitledialog.cpp:93
+#: src/main/dialogs/opensubtitledialog.cpp:94
 msgid "All Supported"
 msgstr "Све подржано"
 
@@ -1737,15 +1704,15 @@ msgstr "Уклони изабране редове"
 msgid "Remove From"
 msgstr "Уклони из"
 
-#: src/main/dialogs/savesubtitledialog.cpp:43
+#: src/main/dialogs/savesubtitledialog.cpp:44
 msgid "Save Subtitle"
 msgstr "Сачувај титл"
 
-#: src/main/dialogs/savesubtitledialog.cpp:43
+#: src/main/dialogs/savesubtitledialog.cpp:44
 msgid "Save Translation Subtitle"
 msgstr "Сачувај преведени титл"
 
-#: src/main/dialogs/savesubtitledialog.cpp:74
+#: src/main/dialogs/savesubtitledialog.cpp:75
 msgid "EOL:"
 msgstr "КрЛин:"
 
@@ -1937,57 +1904,57 @@ msgctxt "@title:column Subtitle line translation text"
 msgid "Translation"
 msgstr "Превод"
 
-#: src/main/lineswidget.cpp:1044
+#: src/main/lineswidget.cpp:1032
 msgid "Texts"
 msgstr "Текстови"
 
-#: src/main/lineswidget.cpp:1054
+#: src/main/lineswidget.cpp:1042
 msgid "Styles"
 msgstr "Стилови"
 
-#: src/main/lineswidget.cpp:1056 src/widgets/simplerichtextedit.cpp:116
+#: src/main/lineswidget.cpp:1044 src/widgets/simplerichtextedit.cpp:116
 msgctxt "@action:inmenu Toggle bold style"
 msgid "Bold"
 msgstr "Подебљано"
 
-#: src/main/lineswidget.cpp:1059 src/widgets/simplerichtextedit.cpp:122
+#: src/main/lineswidget.cpp:1047 src/widgets/simplerichtextedit.cpp:122
 msgctxt "@action:inmenu Toggle italic style"
 msgid "Italic"
 msgstr "Курзив"
 
-#: src/main/lineswidget.cpp:1062 src/widgets/simplerichtextedit.cpp:128
+#: src/main/lineswidget.cpp:1050 src/widgets/simplerichtextedit.cpp:128
 msgctxt "@action:inmenu Toggle underline style"
 msgid "Underline"
 msgstr "Подвучено"
 
-#: src/main/lineswidget.cpp:1065 src/widgets/simplerichtextedit.cpp:134
+#: src/main/lineswidget.cpp:1053 src/widgets/simplerichtextedit.cpp:134
 msgctxt "@action:inmenu Toggle strike through style"
 msgid "Strike Through"
 msgstr "Прецртано"
 
-#: src/main/lineswidget.cpp:1068 src/widgets/simplerichtextedit.cpp:140
+#: src/main/lineswidget.cpp:1056 src/widgets/simplerichtextedit.cpp:140
 msgctxt "@action:inmenu Change Text Color"
 msgid "Text Color"
 msgstr ""
 
-#: src/main/lineswidget.cpp:1070
+#: src/main/lineswidget.cpp:1058
 msgid "Times"
 msgstr "Времена"
 
-#: src/main/lineswidget.cpp:1072
+#: src/main/lineswidget.cpp:1060
 msgid "Shift +%1 Milliseconds"
 msgstr "Помери +%1 милисекунди"
 
-#: src/main/lineswidget.cpp:1073
+#: src/main/lineswidget.cpp:1061
 #, fuzzy
 msgid "Shift −%1 Milliseconds"
 msgstr "Помери +%1 милисекунди"
 
-#: src/main/lineswidget.cpp:1082
+#: src/main/lineswidget.cpp:1070
 msgid "Errors"
 msgstr "Грешке"
 
-#: src/main/lineswidget.cpp:1083
+#: src/main/lineswidget.cpp:1071
 msgid "Mark"
 msgstr "Маркирај"
 
@@ -2058,27 +2025,27 @@ msgstr "<b>Дужина</b>"
 msgid "<b>FPS</b>"
 msgstr "<b>Кадрова у сек.</b>"
 
-#: src/main/playerwidget.cpp:454
+#: src/main/playerwidget.cpp:446
 msgid "Show editable position control"
 msgstr "Прикажи измењиву контролу позиције"
 
-#: src/main/playerwidget.cpp:703 src/main/playerwidget.cpp:704
-#: src/main/playerwidget.cpp:705 src/main/playerwidget.cpp:784
-#: src/main/playerwidget.cpp:798 src/main/playerwidget.cpp:806
+#: src/main/playerwidget.cpp:695 src/main/playerwidget.cpp:696
+#: src/main/playerwidget.cpp:697 src/main/playerwidget.cpp:776
+#: src/main/playerwidget.cpp:790 src/main/playerwidget.cpp:798
 msgid "<i>Unknown</i>"
 msgstr "<i>Непознат</i>"
 
-#: src/main/playerwidget.cpp:715
+#: src/main/playerwidget.cpp:707
 #, fuzzy
 msgid "<qt>There was an error opening media file %1.</qt>"
 msgstr "<qt>Дошло је до грешке при отварању фајла<br/>%1</qt>"
 
-#: src/main/playerwidget.cpp:747 src/main/playerwidget.cpp:749
+#: src/main/playerwidget.cpp:739 src/main/playerwidget.cpp:741
 #, fuzzy
 msgid "Unexpected error when playing file."
 msgstr "Неочекивана грешка при пуштању фајла."
 
-#: src/main/playerwidget.cpp:747 src/main/playerwidget.cpp:749
+#: src/main/playerwidget.cpp:739 src/main/playerwidget.cpp:741
 msgid "Error Playing File"
 msgstr ""
 
@@ -2166,10 +2133,6 @@ msgstr "Грешка при покретању скрипте"
 #: src/main/scripting/scriptsmanager.cpp:380
 msgid "Tools"
 msgstr "Алатке"
-
-#: src/main/statusbar.cpp:37
-msgid "Extracting audio %p%"
-msgstr ""
 
 #: src/main/utils/errorfinder.cpp:37 src/main/utils/errorfinder.cpp:209
 #: src/main/utils/errorfinder.cpp:223
@@ -2282,26 +2245,20 @@ msgstr ""
 msgid "Unexpected contents received from translation service"
 msgstr "Неочекиван садржај је примљен од сервиса за превођење"
 
-#: src/services/gstreamer/gstreamerplayerbackend.cpp:348
-#: src/services/mplayer/mplayerplayerbackend.cpp:242
-#: src/services/xine/xinedecoderbackend.cpp:198
-#: src/services/xine/xineplayerbackend.cpp:283
+#: src/videoplayer/gstreamer/gstreamerplayerbackend.cpp:350
+#: src/videoplayer/mplayer/mplayerplayerbackend.cpp:242
+#: src/videoplayer/xine/xineplayerbackend.cpp:283
 msgid "Audio Stream #%1"
 msgstr "Аудио ток #%1"
 
-#: src/services/mpv/mpvbackend.cpp:192
+#: src/videoplayer/mpv/mpvbackend.cpp:192
 #, fuzzy
 msgid "Stream #%1"
 msgstr "Аудио ток #%1"
 
-#: src/services/player.cpp:374
+#: src/videoplayer/videoplayer.cpp:505
 msgid "File does not exist."
 msgstr ""
-
-#: src/services/xine/xinedecoderbackend.cpp:305
-#, fuzzy
-msgid "There was an error converting audio data to output format."
-msgstr "Дошло је до грешке при снимању преведеног титла."
 
 #: src/widgets/simplerichtextedit.cpp:79
 msgid "Cut"
@@ -2336,21 +2293,44 @@ msgstr "Аутоматска провера правописа"
 msgid "Allow Tabulations"
 msgstr "Дозволи табулације"
 
-#: src/widgets/simplerichtextedit.cpp:541
+#: src/widgets/simplerichtextedit.cpp:542
 msgid "Suggestions"
 msgstr "Предлози"
 
-#: src/widgets/simplerichtextedit.cpp:542
+#: src/widgets/simplerichtextedit.cpp:543
 msgid "Ignore"
 msgstr "Игнориши"
 
-#: src/widgets/simplerichtextedit.cpp:543
+#: src/widgets/simplerichtextedit.cpp:544
 msgid "Add to Dictionary"
 msgstr "Додај у речник"
 
-#: src/widgets/simplerichtextedit.cpp:547
+#: src/widgets/simplerichtextedit.cpp:548
 msgid "No suggestions"
 msgstr "Нема предлога"
+
+#: src/widgets/waveformwidget.cpp:57
+msgid "Generating waveform"
+msgstr ""
+
+#~ msgid "Audio Levels Files"
+#~ msgstr "Фајлови аудио нивоа"
+
+#, fuzzy
+#~ msgid "Extract video's active audio stream"
+#~ msgstr "Изабери активни аудио ток"
+
+#, fuzzy
+#~ msgid "<qt>There was an error opening file %1 for audio extraction.</qt>"
+#~ msgstr "<qt>Дошло је до грешке при отварању фајла<br/>%1</qt>"
+
+#, fuzzy
+#~ msgid "Unexpected error when extracting audio."
+#~ msgstr "Неочекивана грешка при пуштању фајла."
+
+#, fuzzy
+#~ msgid "There was an error converting audio data to output format."
+#~ msgstr "Дошло је до грешке при снимању преведеног титла."
 
 #~ msgid "Configure"
 #~ msgstr "Подешавања"
