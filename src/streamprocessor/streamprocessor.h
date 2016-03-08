@@ -52,13 +52,14 @@ public:
 
 signals:
 	void audioDataAvailable(const void *buffer, const qint32 size, const WaveFormat *waveFormat);
-	void textDataAvailable(const void *buffer, const qint32 size);
+	void textDataAvailable(const QString &text, const quint64 msecStart, const quint64 msecDuration);
 	void streamProgress(quint64 msecPosition, quint64 msecLength);
 	void streamError(int code, const QString &message, const QString &debug);
 	void streamFinished();
 
 private:
 	static void onAudioDataReady(GstElement *fakesrc, GstBuffer *buffer, GstPad *pad, gpointer userData);
+	static void onTextDataReady(GstElement *fakesrc, GstBuffer *buffer, GstPad *pad, gpointer userData);
 	static void onPadAdded(GstElement *decodebin, GstPad *pad, gpointer userData);
 	static gboolean onPadCheck(GstElement *decodebin, GstPad *pad, GstCaps *caps, gpointer userData);
 	void decoderMessageProc();

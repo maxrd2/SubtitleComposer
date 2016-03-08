@@ -148,15 +148,32 @@ StreamProcessor::initAudio(const int streamIndex, const WaveFormat &waveFormat)
 }
 
 bool
-StreamProcessor::initText(const int /*streamIndex*/)
+StreamProcessor::initText(const int streamIndex)
 {
 	if(!m_opened)
 		return false;
 
 	m_textStreamCurrent = -1;
+	m_textStreamIndex = streamIndex;
+	m_textReady = false;
 
-	// FIXME: implement text stream demux
-	return false;
+	GstElement *textsink = gst_element_factory_make("fakesink", "textsink");
+
+	if(!textsink) {
+		if(textsink)
+			gst_object_unref(GST_OBJECT(textsink));
+		return false;
+	}
+
+	g_object_set(G_OBJECT(textsink), "signal-handoffs", TRUE, NULL);
+	g_signal_connect(textsink, "handoff", G_CALLBACK(onTextDataReady), this);
+
+	gst_bin_add_many(GST_BIN(m_decodingPipeline), textsink, NULL);
+
+	m_decodingBus = gst_pipeline_get_bus(GST_PIPELINE(m_decodingPipeline));
+	m_textReady = true;
+
+	return m_textReady;
 }
 
 bool
@@ -198,6 +215,26 @@ StreamProcessor::onAudioDataReady(GstElement */*fakesink*/, GstBuffer *buffer, G
 }
 
 /*static*/ void
+StreamProcessor::onTextDataReady(GstElement */*fakesrc*/, GstBuffer *buffer, GstPad */*pad*/, gpointer userData)
+{
+	StreamProcessor *me = reinterpret_cast<StreamProcessor *>(userData);
+	GstMapInfo map;
+
+	while(!me->m_streamLen) {
+		gint64 time;
+		if(gst_element_query_duration(GST_ELEMENT(me->m_decodingPipeline), GST_FORMAT_TIME, &time) && GST_CLOCK_TIME_IS_VALID(time) && time) {
+			me->m_streamLen = time / GST_MSECOND;
+			emit me->streamProgress(me->m_streamPos, me->m_streamLen);
+		}
+		QThread::yieldCurrentThread();
+	}
+
+	gst_buffer_map(buffer, &map, GST_MAP_READ);
+	emit me->textDataAvailable(QString::fromUtf8((const char *)map.data, map.size), buffer->pts / GST_MSECOND, buffer->duration / GST_MSECOND);
+	gst_buffer_unmap(buffer, &map);
+}
+
+/*static*/ void
 StreamProcessor::onPadAdded(GstElement */*decodebin*/, GstPad *pad, gpointer userData)
 {
 	StreamProcessor *me = reinterpret_cast<StreamProcessor *>(userData);
@@ -224,6 +261,15 @@ StreamProcessor::onPadAdded(GstElement */*decodebin*/, GstPad *pad, gpointer use
 			if(GST_PAD_LINK_FAILED(GStreamer::link(GST_BIN(me->m_decodingPipeline), "decodebin", padName, "audioresample", "sink")))
 				qCritical() << "Failed to connect decodebin pad" << padName;
 			qDebug() << "Selected audio stream #" << me->m_audioStreamCurrent << " [" << padName << "] " << gst_caps_to_string(caps);
+		}
+	} else if(strncmp(mimeType, "text/", 5) == 0) {
+		if(++(me->m_textStreamCurrent) == me->m_textStreamIndex) {
+			// link decodebin to textsink
+			const gchar *padName = gst_pad_get_name(pad);
+			GstCaps *outputFilter = GStreamer::textCapsFromEncoding("utf8");
+			if(GST_PAD_LINK_FAILED(GStreamer::link(GST_BIN(me->m_decodingPipeline), "decodebin", padName, "textsink", "sink", outputFilter)))
+				qCritical() << "Failed to connect decodebin pad" << padName;
+			qDebug() << "Selected text stream #" << me->m_audioStreamCurrent << " [" << padName << "] " << gst_caps_to_string(caps);
 		}
 	}
 

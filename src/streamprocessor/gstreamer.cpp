@@ -201,6 +201,17 @@ GStreamer::audioCapsFromFormat(const WaveFormat &format, bool addSampleRate)
 	return caps;
 }
 
+GstCaps *
+GStreamer::textCapsFromEncoding(const char *encoding)
+{
+	GstCaps *caps = gst_caps_new_empty_simple("text/x-raw");
+	GstStructure *structure = gst_caps_get_structure(caps, 0);
+	if(encoding)
+		gst_structure_set(structure, "format", G_TYPE_STRING, encoding, NULL);
+	qDebug() << "Generated caps: " << gst_caps_to_string(caps);
+	return caps;
+}
+
 GstPadLinkReturn
 GStreamer::link(GstBin *bin, const char *srcElement, const char *dstElement, GstCaps *filter)
 {
@@ -280,7 +291,7 @@ writeTag(const GstTagList *list, const gchar *tag, gpointer userData)
 void
 GStreamer::inspectTags(GstTagList *tags, const QString &prefix)
 {
-	QString debugString = QString(prefix + "TAGS (%1empty)").arg(gst_tag_list_is_empty(tags) ? "" : "not ");
+	QString debugString = QString(prefix + "TAGS (%1)").arg(gst_tag_list_is_empty(tags) ? "empty" : QString::number(gst_tag_list_n_tags(tags)));
 
 	gst_tag_list_foreach(tags, writeTag, &debugString);
 

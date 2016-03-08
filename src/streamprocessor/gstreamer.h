@@ -48,6 +48,7 @@ private:
 
 	static WaveFormat formatFromAudioCaps(GstCaps *caps);
 	static GstCaps * audioCapsFromFormat(const WaveFormat &format, bool addSampleRate = true);
+	static GstCaps * textCapsFromEncoding(const char *encoding);
 
 	static GstPadLinkReturn link(GstBin *bin, const char *srcElement, const char *dstElement, GstCaps *filter = 0);
 	static GstPadLinkReturn link(GstBin *bin, const char *srcElement, const char *srcPad, const char *dstElement, const char *dstPad, GstCaps *filter = 0);
