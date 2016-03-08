@@ -122,6 +122,7 @@ public:
 
 	inline double volume() const;
 	inline bool isMuted() const;
+	const QStringList & textStreams() const;
 	inline int activeAudioStream() const;
 	const QStringList & audioStreams() const;
 
@@ -166,6 +167,7 @@ signals:
 	void framesPerSecondChanged(double fps);
 	void paused();
 	void stopped();
+	void textStreamsChanged(const QStringList &textStreams);
 	void activeAudioStreamChanged(int audioStreamIndex);
 	void audioStreamsChanged(const QStringList &audioStreams);
 
@@ -216,6 +218,7 @@ private:
 	void setErrorState(const QString &errorMessage = QString());
 
 	void setFramesPerSecond(double framesPerSecond);
+	void setTextStreams(const QStringList &textStreams);
 	void setAudioStreams(const QStringList &audioStreams, int activeAudioStream);
 
 private slots:
@@ -245,6 +248,7 @@ private:
 	double m_length;
 	double m_framesPerSecond;
 	double m_minPositionDelta;
+	QStringList m_textStreams;
 	int m_activeAudioStream;
 	QStringList m_audioStreams;
 

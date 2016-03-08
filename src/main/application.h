@@ -110,6 +110,7 @@ public slots:
 	void reopenSubtitleWithCodec(QTextCodec *codec);
 	void reopenSubtitleWithDetectScript();
 	void reopenSubtitleWithCodecOrDetectScript(QTextCodec *codec);
+	void demuxTextStream(int textStreamIndex);
 	void openSubtitle(const QUrl &url, bool warnClashingUrls = true);
 	bool saveSubtitle();
 	bool saveSubtitleAs();
@@ -251,6 +252,7 @@ private slots:
 	void onPlayerPlaying();
 	void onPlayerPaused();
 	void onPlayerStopped();
+	void onPlayerTextStreamsChanged(const QStringList &textStreams);
 	void onPlayerAudioStreamsChanged(const QStringList &audioStreams);
 	void onPlayerActiveAudioStreamChanged(int audioStream);
 	void onPlayerMuteChanged(bool muted);

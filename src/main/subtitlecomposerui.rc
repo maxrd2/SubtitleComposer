@@ -111,6 +111,8 @@
 			<Action name="open_video" />
 			<Action name="recent_videos" />
 			<Separator />
+			<Action name="demux_text_stream" />
+			<Separator />
 			<Action name="close_video" />
 			<Separator />
 			<Action name="toggle_full_screen" />

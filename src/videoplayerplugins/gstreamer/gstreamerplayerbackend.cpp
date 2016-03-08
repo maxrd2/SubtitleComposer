@@ -308,6 +308,7 @@ GStreamerPlayerBackend::onPlaybinTimerTimeout()
 				setPlayerState(VideoPlayer::Ready);
 
 			if(old == GST_STATE_READY) {
+				updateTextData();
 				updateAudioData();
 				updateVideoData();
 			}
@@ -331,6 +332,40 @@ GStreamerPlayerBackend::onPlaybinTimerTimeout()
 
 		gst_message_unref(msg);
 	}
+}
+
+void
+GStreamerPlayerBackend::updateTextData()
+{
+	QStringList textStreams;
+
+	gint n;
+	g_object_get(m_pipeline, "n-text", &n, NULL);
+	for(gint i = 0; i < n; i++) {
+		QString textStreamName;
+		GstTagList *tags = NULL;
+		gchar *str;
+		g_signal_emit_by_name(m_pipeline, "get-text-tags", i, &tags);
+		if(tags) {
+			textStreamName = i18n("Text Stream #%1", i);
+			if(gst_tag_list_get_string(tags, GST_TAG_LANGUAGE_NAME, &str)) {
+				textStreamName += QStringLiteral(": ") + (const char *)str;
+				g_free(str);
+			} else if(gst_tag_list_get_string(tags, GST_TAG_LANGUAGE_CODE, &str)) {
+				textStreamName += QStringLiteral(": ") + LanguageCode::nameFromIso(str);
+				g_free(str);
+			}
+			if(gst_tag_list_get_string(tags, GST_TAG_SUBTITLE_CODEC, &str)) {
+				textStreamName += QStringLiteral(" [") + str + QStringLiteral("]");
+				g_free(str);
+			}
+			gst_tag_list_free(tags);
+
+			textStreams << textStreamName;
+		}
+	}
+
+	setPlayerTextStreams(textStreams);
 }
 
 void

@@ -167,6 +167,8 @@ protected:
 
 	inline void setPlayerFramesPerSecond(double framesPerSecond) { player()->setFramesPerSecond(framesPerSecond); }
 
+	inline void setPlayerTextStreams(const QStringList &textStreams) { player()->setTextStreams(textStreams); }
+
 	inline void setPlayerAudioStreams(const QStringList &audioStreams, int activeAudioStream) { player()->setAudioStreams(audioStreams, activeAudioStream); }
 
 private:

@@ -92,6 +92,7 @@ VideoPlayer::VideoPlayer() :
 	m_length(-1.0),
 	m_framesPerSecond(-1.0),
 	m_minPositionDelta(DEFAULT_MIN_POSITION_DELTA),
+	m_textStreams(),
 	m_activeAudioStream(-1),
 	m_audioStreams(),
 	m_muted(false),
@@ -365,6 +366,12 @@ VideoPlayer::logarithmicVolume(double volume)
 }
 
 const QStringList &
+VideoPlayer::textStreams() const
+{
+	return m_textStreams;
+}
+
+const QStringList &
 VideoPlayer::audioStreams() const
 {
 	static const QStringList emptyList;
@@ -387,6 +394,7 @@ VideoPlayer::resetState()
 	m_minPositionDelta = DEFAULT_MIN_POSITION_DELTA;
 
 	m_activeAudioStream = -1;
+	m_textStreams.clear();
 	m_audioStreams.clear();
 
 	m_state = VideoPlayer::Closed;
@@ -444,6 +452,13 @@ VideoPlayer::setFramesPerSecond(double framesPerSecond)
 }
 
 void
+VideoPlayer::setTextStreams(const QStringList &textStreams)
+{
+	m_textStreams = textStreams;
+	emit textStreamsChanged(m_textStreams);
+}
+
+void
 VideoPlayer::setAudioStreams(const QStringList &audioStreams, int activeAudioStream)
 {
 	if(m_state <= VideoPlayer::Closed)
@@ -477,6 +492,7 @@ VideoPlayer::setState(VideoPlayer::State newState)
 			// we emit this signals in case their values were already set
 			emit lengthChanged(m_length);
 			emit framesPerSecondChanged(m_framesPerSecond);
+			emit textStreamsChanged(m_textStreams);
 			emit audioStreamsChanged(m_audioStreams);
 			emit activeAudioStreamChanged(m_activeAudioStream);
 

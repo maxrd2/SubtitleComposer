@@ -98,6 +98,7 @@
 #define ACT_TOGGLE_MUTED "toggle_muted"
 #define ACT_INCREASE_VOLUME "increase_volume"
 #define ACT_DECREASE_VOLUME "decrease_volume"
+#define ACT_DEMUX_TEXT_STREAM "demux_text_stream"
 #define ACT_SET_ACTIVE_AUDIO_STREAM "set_active_audio_stream"
 #define ACT_INCREASE_SUBTITLE_FONT "increase_font_size"
 #define ACT_DECREASE_SUBTITLE_FONT "decrease_font_size"

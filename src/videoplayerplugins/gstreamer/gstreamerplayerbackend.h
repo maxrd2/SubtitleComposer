@@ -75,6 +75,7 @@ protected slots:
 private:
 	void setupVideoOverlay();
 
+	void updateTextData();
 	void updateAudioData();
 	void updateVideoData();
 

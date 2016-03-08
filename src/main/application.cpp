@@ -77,6 +77,7 @@
 #include <QStringBuilder>
 #include <QGridLayout>
 #include <QMenu>
+#include <QThread>
 
 #include <QFileDialog>
 #include <QKeySequence>
@@ -150,6 +151,7 @@ Application::init()
 	connect(m_player, SIGNAL(paused()), this, SLOT(onPlayerPaused()));
 	connect(m_player, SIGNAL(stopped()), this, SLOT(onPlayerStopped()));
 	connect(m_player, SIGNAL(audioStreamsChanged(const QStringList &)), this, SLOT(onPlayerAudioStreamsChanged(const QStringList &)));
+	connect(m_player, SIGNAL(textStreamsChanged(const QStringList &)), this, SLOT(onPlayerTextStreamsChanged(const QStringList &)));
 	connect(m_player, SIGNAL(activeAudioStreamChanged(int)), this, SLOT(onPlayerActiveAudioStreamChanged(int)));
 	connect(m_player, SIGNAL(muteChanged(bool)), this, SLOT(onPlayerMuteChanged(bool)));
 
@@ -914,6 +916,15 @@ Application::setupActions()
 	connect(m_recentVideosAction, SIGNAL(urlSelected(const QUrl &)), this, SLOT(openVideo(const QUrl &)));
 	actionCollection->addAction(ACT_RECENT_VIDEOS, m_recentVideosAction);
 
+	QAction *demuxTextStreamAction = new KSelectAction(actionCollection);
+	QMenu *demuxTextStreamActionMenu = new QMenu(m_mainWindow);
+	demuxTextStreamAction->setMenu(demuxTextStreamActionMenu);
+	demuxTextStreamAction->setIcon(QIcon::fromTheme("select-stream"));
+	demuxTextStreamAction->setText(i18n("Import Subtitle Stream"));
+	demuxTextStreamAction->setStatusTip(i18n("Import subtitle stream into subtitle editor"));
+	connect(demuxTextStreamActionMenu, &QMenu::triggered, [this](QAction *action){ demuxTextStream(action->data().value<int>()); });
+	actionCollection->addAction(ACT_DEMUX_TEXT_STREAM, demuxTextStreamAction);
+
 	QAction *closeVideoAction = new QAction(actionCollection);
 	closeVideoAction->setIcon(QIcon::fromTheme("window-close"));
 	closeVideoAction->setText(i18n("Close Video"));
@@ -1389,6 +1400,47 @@ Application::reopenSubtitleWithCodecOrDetectScript(QTextCodec *codec)
 	connect(m_subtitle, SIGNAL(primaryDirtyStateChanged(bool)), this, SLOT(updateTitle()));
 	connect(m_subtitle, SIGNAL(secondaryDirtyStateChanged(bool)), this, SLOT(updateTitle()));
 	connect(&m_subtitle->actionManager(), SIGNAL(stateChanged()), this, SLOT(updateUndoRedoToolTips()));
+}
+
+void
+Application::demuxTextStream(int textStreamIndex)
+{
+	// FIXME: MAX: need to place below slots into it's own QObject class as
+	// things are being called from GStreamer threads and eventually everything crashes
+
+	if(!closeSubtitle())
+		return;
+
+	newSubtitle();
+
+	static StreamProcessor *stream = NULL;
+
+	if(!stream) {
+		stream = new StreamProcessor(this);
+
+		connect(stream, &StreamProcessor::streamProgress, [](quint64 msecPos, quint64 msecLength){
+			qDebug() << "*** TEXT demux progress" << msecPos << "/" << msecLength;
+		});
+		connect(stream, &StreamProcessor::streamError, [&stream](int code, const QString &message, const QString &debug){
+			qWarning() << "*** TEXT demux error:" << code << message << "\n" << debug;
+			stream->close();
+			stream->deleteLater();
+			stream = NULL;
+		});
+		connect(stream, &StreamProcessor::streamFinished, [&stream](){
+			qDebug() << "*** TEXT demux finished";
+			stream->close();
+			stream->deleteLater();
+			stream = NULL;
+		});
+		connect(stream, &StreamProcessor::textDataAvailable, [this](const QString &text, quint64 msecStart, quint64 msecDuration){
+			m_subtitle->insertLine(new SubtitleLine(SString(text), Time(double(msecStart)), Time(double(msecStart) + double(msecDuration))));
+		});
+	}
+
+	if(stream->open(m_player->filePath()) && stream->initText(textStreamIndex))
+		stream->start();
+
 }
 
 bool
@@ -2792,6 +2844,18 @@ Application::onPlayerStopped()
 	QAction *playPauseAction = action(ACT_PLAY_PAUSE);
 	playPauseAction->setIcon(QIcon::fromTheme(QStringLiteral("media-playback-start")));
 	playPauseAction->setText(i18n("Play"));
+}
+
+void
+Application::onPlayerTextStreamsChanged(const QStringList &textStreams)
+{
+	QAction *demuxTextStreamAction = (KSelectAction *)action(ACT_DEMUX_TEXT_STREAM);
+	QMenu *menu = demuxTextStreamAction->menu();
+	menu->clear();
+	int i = 0;
+	foreach(const QString &textStream, textStreams)
+		menu->addAction(textStream)->setData(QVariant::fromValue<int>(i++));
+	demuxTextStreamAction->setEnabled(i > 0);
 }
 
 void
