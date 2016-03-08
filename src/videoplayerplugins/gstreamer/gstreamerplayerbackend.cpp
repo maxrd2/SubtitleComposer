@@ -314,13 +314,6 @@ GStreamerPlayerBackend::onPlaybinTimerTimeout()
 			break;
 		}
 
-		case GST_MESSAGE_EOS: {
-			setPlayerState(VideoPlayer::Ready);
-			seek(0, true);
-			GStreamer::setElementState(GST_ELEMENT(m_pipeline), GST_STATE_PAUSED, 0);
-			break;
-		}
-
 		case GST_MESSAGE_ERROR: {
 			gchar *debug = NULL;
 			GError *error = NULL;
