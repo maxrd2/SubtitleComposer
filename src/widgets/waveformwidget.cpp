@@ -49,7 +49,7 @@ WaveformWidget::WaveformWidget(QWidget *parent)
 	: QWidget(parent),
 	  m_mediaFile(QString()),
 	  m_streamIndex(-1),
-	  m_stream(new StreamProcessor()),
+	  m_stream(new StreamProcessor(this)),
 	  m_subtitle(NULL),
 	  m_timeStart(0.),
 	  m_timeCurrent(0.),

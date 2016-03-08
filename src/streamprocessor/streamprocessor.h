@@ -40,7 +40,7 @@ class StreamProcessor : public QObject
 	Q_OBJECT
 
 public:
-	StreamProcessor();
+	StreamProcessor(QObject *parent=NULL);
 	virtual ~StreamProcessor();
 
 	bool open(const QString &filename);
@@ -75,7 +75,6 @@ private:
 	bool m_textReady;
 	int m_textStreamIndex;
 	int m_textStreamCurrent;
-	QString m_textStreamFormat;
 
 	quint64 m_streamPos;
 	quint64 m_streamLen;

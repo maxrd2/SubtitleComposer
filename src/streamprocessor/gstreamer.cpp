@@ -47,11 +47,18 @@ GStreamer::init()
 void
 GStreamer::deinit()
 {
+	// It is normally not needed to call this function in a normal application as the resources will
+	// automatically be freed when the program terminates. This function is therefore mostly used by
+	// testsuites and other memory profiling tools.
+	// NOTE: enabling this will deadlock if using GStreamer videoplayer plugin, since app also uses
+	// GStreamer
+#if 0
 	if(s_inited) {
 		s_inited--;
 		if(!s_inited)
 			gst_deinit();
 	}
+#endif
 }
 
 GstElement *

@@ -28,8 +28,9 @@
 
 using namespace SubtitleComposer;
 
-StreamProcessor::StreamProcessor()
-	: m_opened(false),
+StreamProcessor::StreamProcessor(QObject *parent)
+	: QObject(parent),
+	  m_opened(false),
 	  m_audioReady(false),
 	  m_textReady(false),
 	  m_decodingPipeline(NULL),
@@ -217,7 +218,6 @@ StreamProcessor::onPadAdded(GstElement */*decodebin*/, GstPad *pad, gpointer use
 				me->m_audioStreamFormat.setBitsPerSample(g_value_get_int(gst_structure_get_value(capsStruct, "width")));
 			if(me->m_audioStreamFormat.sampleRate() == 0)
 				me->m_audioStreamFormat.setSampleRate(g_value_get_int(gst_structure_get_value(capsStruct, "rate")));
-			gst_caps_unref(caps);
 
 			// link decodebin to audioresample
 			const gchar *padName = gst_pad_get_name(pad);
@@ -226,6 +226,8 @@ StreamProcessor::onPadAdded(GstElement */*decodebin*/, GstPad *pad, gpointer use
 			qDebug() << "Selected audio stream #" << me->m_audioStreamCurrent << " [" << padName << "] " << gst_caps_to_string(caps);
 		}
 	}
+
+	gst_caps_unref(caps);
 }
 
 /*static*/ gboolean
@@ -243,17 +245,17 @@ StreamProcessor::onPadCheck(GstElement */*decodebin*/, GstPad *pad, GstCaps *cap
 	|| strcmp(mimeType, "video/ogg") == 0
 	|| strcmp(mimeType, "video/x-msvideo") == 0) {
 #if defined(VERBOSE) || !defined(NDEBUG)
-	GStreamer::inspectCaps(caps, QStringLiteral("Container stream"));
+		GStreamer::inspectCaps(caps, QStringLiteral("Container stream"));
 #endif
 		return TRUE;
 	} else if(strncmp(mimeType, "audio/", 6) == 0 && me->m_audioStreamIndex >= 0) {
 #if defined(VERBOSE) || !defined(NDEBUG)
-	GStreamer::inspectCaps(caps, QStringLiteral("Probing stream"));
+		GStreamer::inspectCaps(caps, QStringLiteral("Probing stream"));
 #endif
 		return TRUE;
-	} else if(strncmp(mimeType, "text/", 6) == 0 && me->m_textStreamIndex >= 0) {
+	} else if(strncmp(mimeType, "text/", 5) == 0 && me->m_textStreamIndex >= 0) {
 #if defined(VERBOSE) || !defined(NDEBUG)
-	GStreamer::inspectCaps(caps, QStringLiteral("Probing stream"));
+		GStreamer::inspectCaps(caps, QStringLiteral("Probing stream"));
 #endif
 		return TRUE;
 	}
