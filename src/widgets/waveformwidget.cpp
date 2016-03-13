@@ -221,7 +221,7 @@ WaveformWidget::paintEvent(QPaintEvent *e)
 	// FIXME: make visualization types configurable? Min/Max/Avg/RMS
 
 	if(m_waveform) {
-		int spp = SAMPLE_RATE_MILIS * (m_timeEnd.toMillis() - m_timeStart.toMillis()) / widgetHeight;
+		int spp = SAMPLE_RATE_MILIS * msWindowSize / widgetHeight;
 		int yMin = (SAMPLE_RATE_MILIS * m_timeStart.toMillis() / spp) * spp;
 		int yMax = (SAMPLE_RATE_MILIS * m_timeEnd.toMillis() / spp) * spp;
 		int yLimit = m_waveformDataOffset / m_waveformChannels;
@@ -329,9 +329,9 @@ WaveformWidget::onPlayerPositionChanged(double seconds)
 			windowPadding = windowSize / 8, // scroll when we reach padding
 			windowSizePad = windowSize - 2 * windowPadding;
 
-		if(m_timeCurrent > m_timeEnd.adjusted(-windowPadding, 1.0) || m_timeCurrent < m_timeStart.adjusted(windowPadding, 1.0)) {
+		if(m_timeCurrent > m_timeEnd.shifted(-windowPadding) || m_timeCurrent < m_timeStart.shifted(windowPadding)) {
 			m_timeStart.setMsecondsTime((m_timeCurrent.toMillis() / windowSizePad) * windowSizePad);
-			m_timeEnd = m_timeStart.adjusted(windowSize, 1.0);
+			m_timeEnd = m_timeStart.shifted(windowSize);
 		}
 
 		update();
