@@ -64,10 +64,9 @@ VideoWidget::init(bool setVideoLayerAttributes)
 
 	setFocusPolicy(Qt::NoFocus);
 	setAttribute(Qt::WA_StaticContents, true);
-	setAttribute(Qt::WA_OpaquePaintEvent, true);
-	setAttribute(Qt::WA_NoSystemBackground, false);
 	QPalette pal(palette());
 	pal.setColor(QPalette::Background, Qt::black);
+	setAutoFillBackground(true);
 	setPalette(pal);
 }
 
