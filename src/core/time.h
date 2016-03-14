@@ -30,17 +30,17 @@ namespace SubtitleComposer {
 class Time
 {
 public:
-	static constexpr int MaxMseconds = 86399999;
+	static constexpr double MaxMseconds = 86399999.0;
 	static constexpr double MaxSeconds = MaxMseconds / 1000.0;
 
-	/*explicit*/ Time(long mseconds = 0);
+	/*explicit*/ Time(double mseconds = 0);
 	Time(int hours, int minutes, int seconds, int mseconds);
 	Time(const Time &time);
 
 	void setSecondsTime(double seconds);
-	void setMsecondsTime(long mseconds);
+	void setMillisTime(double mseconds);
 
-	inline int toMillis() const { return m_mseconds; }
+	inline double toMillis() const { return m_mseconds; }
 	QString toString(bool showMillis = true) const;
 
 	int hours() const;
@@ -52,38 +52,38 @@ public:
 	int mseconds() const;
 	bool setMseconds(int mseconds);
 
-	void shift(long mseconds);
-	Time shifted(long m_seconds) const;
+	void shift(double mseconds);
+	Time shifted(double m_seconds) const;
 	void adjust(double shiftMseconds, double scaleFactor);
 	Time adjusted(double shiftMseconds, double scaleFactor) const;
 
 	Time & operator=(const Time &time);
-	Time & operator=(long mseconds);
+	Time & operator=(double mseconds);
 	Time & operator+=(const Time &time);
-	Time & operator+=(long mseconds);
+	Time & operator+=(double mseconds);
 	Time & operator-=(const Time &time);
-	Time & operator-=(long mseconds);
+	Time & operator-=(double mseconds);
 
 	Time operator+(const Time &time) const;
-	Time operator+(long mseconds) const;
+	Time operator+(double mseconds) const;
 	Time operator-(const Time &time) const;
-	Time operator-(long mseconds) const;
+	Time operator-(double mseconds) const;
 
 	bool operator==(const Time &time) const;
-	bool operator==(long mseconds) const;
+	bool operator==(double mseconds) const;
 	bool operator!=(const Time &time) const;
-	bool operator!=(long mseconds) const;
+	bool operator!=(double mseconds) const;
 	bool operator<(const Time &time) const;
-	bool operator<(long mseconds) const;
+	bool operator<(double mseconds) const;
 	bool operator<=(const Time &time) const;
-	bool operator<=(long mseconds) const;
+	bool operator<=(double mseconds) const;
 	bool operator>(const Time &time) const;
-	bool operator>(long mseconds) const;
+	bool operator>(double mseconds) const;
 	bool operator>=(const Time &time) const;
-	bool operator>=(long mseconds) const;
+	bool operator>=(double mseconds) const;
 
 private:
-	int m_mseconds;
+	double m_mseconds;
 };
 }
 #endif

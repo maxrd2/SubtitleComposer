@@ -325,12 +325,12 @@ WaveformWidget::onPlayerPositionChanged(double seconds)
 	if(m_timeCurrent != playingPosition) {
 		m_timeCurrent = playingPosition;
 
-		int windowSize = this->windowSize().toMillis(),
+		int windowSize = this->windowSize().toMillis() + 0.5,
 			windowPadding = windowSize / 8, // scroll when we reach padding
 			windowSizePad = windowSize - 2 * windowPadding;
 
 		if(m_timeCurrent > m_timeEnd.shifted(-windowPadding) || m_timeCurrent < m_timeStart.shifted(windowPadding)) {
-			m_timeStart.setMsecondsTime((m_timeCurrent.toMillis() / windowSizePad) * windowSizePad);
+			m_timeStart.setMillisTime((int(m_timeCurrent.toMillis() + 0.5) / windowSizePad) * windowSizePad);
 			m_timeEnd = m_timeStart.shifted(windowSize);
 		}
 

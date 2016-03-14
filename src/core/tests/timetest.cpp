@@ -55,7 +55,7 @@ TimeTest::testSetters()
 	time.setSecondsTime(555.663);
 	QVERIFY(time.toMillis() == 555663);
 
-	time.setMsecondsTime(64563);
+	time.setMillisTime(64563);
 	QVERIFY(time.toMillis() == 64563);
 
 	// the following setters should all fail:
@@ -69,7 +69,7 @@ TimeTest::testSetters()
 	QVERIFY(time.toMillis() == 64563);
 
 	// the following setters should all succed:
-	time.setMsecondsTime(0);
+	time.setMillisTime(0);
 	QVERIFY(time.setHours(23));
 	QVERIFY(time.toMillis() == 82800000);
 	QVERIFY(time.setMinutes(14));
