@@ -55,7 +55,8 @@ CurrentLineWidget::createToolButton(const QString &text, const char *icon, QObje
 
 CurrentLineWidget::CurrentLineWidget(QWidget *parent) :
 	QWidget(parent),
-	m_currentLine(0),
+	m_subtitle(NULL),
+	m_currentLine(NULL),
 	m_translationMode(false),
 	m_updateCurrentLine(true),
 	m_updateControls(true),
@@ -196,8 +197,15 @@ CurrentLineWidget::saveConfig()
 void
 CurrentLineWidget::setSubtitle(Subtitle *subtitle)
 {
-	if(!subtitle)
-		setCurrentLine(0);
+	if(m_subtitle)
+		disconnect(m_subtitle, SIGNAL(lineAnchorChanged(const SubtitleLine*,bool)), this, SLOT(onLineAnchorChanged(const SubtitleLine*,bool)));
+
+	m_subtitle = subtitle;
+
+	if(subtitle)
+		connect(m_subtitle, SIGNAL(lineAnchorChanged(const SubtitleLine*,bool)), this, SLOT(onLineAnchorChanged(const SubtitleLine*,bool)));
+	else
+		setCurrentLine(NULL);
 }
 
 void
@@ -225,6 +233,8 @@ CurrentLineWidget::setCurrentLine(SubtitleLine *line)
 	if(m_currentLine) {
 		onLinePrimaryTextChanged(m_currentLine->primaryText());
 		onLineSecondaryTextChanged(m_currentLine->secondaryText());
+		if(m_subtitle)
+			onLineAnchorChanged(m_currentLine, m_subtitle->isLineAnchored(m_currentLine));
 	} else {
 		m_updateCurrentLine = false;
 
@@ -330,6 +340,7 @@ CurrentLineWidget::onShowTimeEditChanged(int showTime)
 	if(m_updateCurrentLine) {
 		m_updateControls = false;
 		m_currentLine->setShowTime(showTime);
+		m_hideTimeEdit->setValue(m_currentLine->hideTime().toMillis());
 		m_durationTimeEdit->setValue(m_hideTimeEdit->value() - showTime);
 		m_updateControls = true;
 	}
@@ -383,6 +394,13 @@ CurrentLineWidget::buildTextDescription(const QString &text)
 	}
 
 	return currentLineText + expressionText + i18np("1 character", "%1 characters", characters);
+}
+
+void
+CurrentLineWidget::onLineAnchorChanged(const SubtitleLine *line, bool anchored)
+{
+	if(m_subtitle && line == m_currentLine)
+		m_showTimeEdit->setEnabled(m_subtitle->anchoredLines().empty() || anchored);
 }
 
 void

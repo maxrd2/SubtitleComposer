@@ -105,6 +105,8 @@
 #define ACT_SHIFT_TO_VIDEO_POSITION "shift_to_video_position"
 #define ACT_ADJUST_TO_VIDEO_POSITION_A_F "adjust_to_video_position_anchor_first"
 #define ACT_ADJUST_TO_VIDEO_POSITION_A_L "adjust_to_video_position_anchor_last"
+#define ACT_ANCHOR_TOGGLE "anchor_toggle"
+#define ACT_ANCHOR_REMOVE_ALL "anchor_remove_all"
 #define ACT_SCRIPTS_MANAGER "scripts_manager"
 
 #endif

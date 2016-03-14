@@ -114,6 +114,13 @@ public:
 	SubtitleLine * lastLine();
 	const SubtitleLine * lastLine() const;
 
+	const QList<const SubtitleLine *> & anchoredLines() const;
+	bool isLineAnchored(int index);
+	bool isLineAnchored(const SubtitleLine *line);
+	void toggleLineAnchor(int index);
+	void toggleLineAnchor(const SubtitleLine *line);
+	void removeAllAnchors();
+
 	void insertLine(SubtitleLine *line, int index = -1);
 	void insertLines(const QList<SubtitleLine *> &lines, int index = -1);
 	SubtitleLine * insertNewLine(int index, bool timeAfter, TextTarget target);
@@ -123,6 +130,8 @@ public:
 
 	void splitLines(const RangeList &ranges);
 	void joinLines(const RangeList &ranges);
+
+	void shiftAnchoredLine(SubtitleLine *anchoredLine, const Time &newShowTime);
 
 	void shiftLines(const RangeList &ranges, long msecs);
 	void adjustLines(const Range &range, long firstTime, long lastTime);
@@ -171,6 +180,8 @@ signals:
 	void linesAboutToBeRemoved(int firstIndex, int lastIndex);
 	void linesRemoved(int firstIndex, int lastIndex);
 
+	void lineAnchorChanged(const SubtitleLine *line, bool anchored);
+
 /// forwarded line signals
 	void linePrimaryTextChanged(SubtitleLine *line, const SString &text);
 	void lineSecondaryTextChanged(SubtitleLine *line, const SString &text);
@@ -206,6 +217,7 @@ private:
 
 	double m_framesPerSecond;
 	mutable QList<SubtitleLine *> m_lines;
+	QList<const SubtitleLine *> m_anchoredLines;
 
 	int m_lastValidCachedIndex;             // all SubtitleLines with a m_cachedIndex greater
 // than this value have to recalculate its value

@@ -55,11 +55,12 @@ using namespace SubtitleComposer;
 
 LinesModel::LinesModel(QObject *parent) :
 	QAbstractListModel(parent),
-	m_subtitle(0),
-	m_playingLine(0),
+	m_subtitle(NULL),
+	m_playingLine(NULL),
 	m_dataChangedTimer(new QTimer(this)),
 	m_minChangedLineIndex(-1),
-	m_maxChangedLineIndex(-1)
+	m_maxChangedLineIndex(-1),
+	m_graftPoints(QList<Subtitle *>())
 {
 	m_dataChangedTimer->setInterval(0);
 	m_dataChangedTimer->setSingleShot(true);
@@ -80,21 +81,17 @@ LinesModel::setSubtitle(Subtitle *subtitle)
 		m_playingLine = 0;
 
 		if(m_subtitle) {
-/*			disconnect( m_subtitle, SIGNAL( linesAboutToBeInserted( int, int ) ),
-												this, SLOT( onLinesAboutToBeInserted( int, int ) ) );*/
 			disconnect(m_subtitle, SIGNAL(linesInserted(int, int)), this, SLOT(onLinesInserted(int, int)));
-/*			disconnect( m_subtitle, SIGNAL( linesAboutToBeRemoved( int, int ) ),
-												this, SLOT( onLinesAboutToBeRemoved( int, int ) ) );*/
 			disconnect(m_subtitle, SIGNAL(linesRemoved(int, int)), this, SLOT(onLinesRemoved(int, int)));
 
-			disconnect(m_subtitle, SIGNAL(lineErrorFlagsChanged(SubtitleLine *, int)), this, SLOT(onLineChanged(SubtitleLine *)));
-			disconnect(m_subtitle, SIGNAL(linePrimaryTextChanged(SubtitleLine *, const SString &)), this, SLOT(onLineChanged(SubtitleLine *)));
-			disconnect(m_subtitle, SIGNAL(lineSecondaryTextChanged(SubtitleLine *, const SString &)), this, SLOT(onLineChanged(SubtitleLine *)));
-			disconnect(m_subtitle, SIGNAL(lineShowTimeChanged(SubtitleLine *, const Time &)), this, SLOT(onLineChanged(SubtitleLine *)));
-			disconnect(m_subtitle, SIGNAL(lineHideTimeChanged(SubtitleLine *, const Time &)), this, SLOT(onLineChanged(SubtitleLine *)));
+			disconnect(m_subtitle, &Subtitle::lineAnchorChanged, this, &LinesModel::onLineChanged);
+			disconnect(m_subtitle, &Subtitle::lineErrorFlagsChanged, this, &LinesModel::onLineChanged);
+			disconnect(m_subtitle, &Subtitle::linePrimaryTextChanged, this, &LinesModel::onLineChanged);
+			disconnect(m_subtitle, &Subtitle::lineSecondaryTextChanged, this, &LinesModel::onLineChanged);
+			disconnect(m_subtitle, &Subtitle::lineShowTimeChanged, this, &LinesModel::onLineChanged);
+			disconnect(m_subtitle, &Subtitle::lineHideTimeChanged, this, &LinesModel::onLineChanged);
 
 			if(m_subtitle->linesCount()) {
-//              onLinesAboutToBeRemoved( 0, m_subtitle->linesCount() - 1 );
 				onLinesRemoved(0, m_subtitle->linesCount() - 1);
 			}
 		}
@@ -103,24 +100,26 @@ LinesModel::setSubtitle(Subtitle *subtitle)
 
 		if(m_subtitle) {
 			if(m_subtitle->linesCount()) {
-//              onLinesAboutToBeInserted( 0, m_subtitle->linesCount() - 1 );
 				onLinesInserted(0, m_subtitle->linesCount() - 1);
 			}
 
-/*			connect( m_subtitle, SIGNAL( linesAboutToBeInserted( int, int ) ),
-										this, SLOT( onLinesAboutToBeInserted( int, int ) ) );*/
 			connect(m_subtitle, SIGNAL(linesInserted(int, int)), this, SLOT(onLinesInserted(int, int)));
-/*			connect( m_subtitle, SIGNAL( linesAboutToBeRemoved( int, int ) ),
-										this, SLOT( onLinesAboutToBeRemoved( int, int ) ) );*/
 			connect(m_subtitle, SIGNAL(linesRemoved(int, int)), this, SLOT(onLinesRemoved(int, int)));
 
-			connect(m_subtitle, SIGNAL(lineErrorFlagsChanged(SubtitleLine *, int)), this, SLOT(onLineChanged(SubtitleLine *)));
-			connect(m_subtitle, SIGNAL(linePrimaryTextChanged(SubtitleLine *, const SString &)), this, SLOT(onLineChanged(SubtitleLine *)));
-			connect(m_subtitle, SIGNAL(lineSecondaryTextChanged(SubtitleLine *, const SString &)), this, SLOT(onLineChanged(SubtitleLine *)));
-			connect(m_subtitle, SIGNAL(lineShowTimeChanged(SubtitleLine *, const Time &)), this, SLOT(onLineChanged(SubtitleLine *)));
-			connect(m_subtitle, SIGNAL(lineHideTimeChanged(SubtitleLine *, const Time &)), this, SLOT(onLineChanged(SubtitleLine *)));
+			connect(m_subtitle, &Subtitle::lineAnchorChanged, this, &LinesModel::onLineChanged);
+			connect(m_subtitle, &Subtitle::lineErrorFlagsChanged, this, &LinesModel::onLineChanged);
+			connect(m_subtitle, &Subtitle::linePrimaryTextChanged, this, &LinesModel::onLineChanged);
+			connect(m_subtitle, &Subtitle::lineSecondaryTextChanged, this, &LinesModel::onLineChanged);
+			connect(m_subtitle, &Subtitle::lineShowTimeChanged, this, &LinesModel::onLineChanged);
+			connect(m_subtitle, &Subtitle::lineHideTimeChanged, this, &LinesModel::onLineChanged);
 		}
 	}
+}
+
+const QList<Subtitle *> &
+LinesModel::graftPoints() const
+{
+	return m_graftPoints;
 }
 
 SubtitleLine *
@@ -211,11 +210,11 @@ LinesModel::headerData(int section, Qt::Orientation orientation, int role) const
 		return QVariant();
 
 	switch(section) {
-	case 0: return i18nc("@title:column Subtitle line number", "Line");
-	case 1: return i18nc("@title:column", "Show Time");
-	case 2: return i18nc("@title:column", "Hide Time");
-	case 3: return i18nc("@title:column Subtitle line (primary) text", "Text");
-	case 4: return i18nc("@title:column Subtitle line translation text", "Translation");
+	case Number: return i18nc("@title:column Subtitle line number", "Line");
+	case ShowTime: return i18nc("@title:column", "Show Time");
+	case HideTime: return i18nc("@title:column", "Hide Time");
+	case Text: return i18nc("@title:column Subtitle line (primary) text", "Text");
+	case Translation: return i18nc("@title:column Subtitle line translation text", "Translation");
 	default: return QVariant();
 	}
 }
@@ -223,7 +222,7 @@ LinesModel::headerData(int section, Qt::Orientation orientation, int role) const
 QVariant
 LinesModel::data(const QModelIndex &index, int role) const
 {
-	if(!m_subtitle /*|| ! index.isValid() || index.row() >= rowCount() || index.column() >= ColumnCount */)
+	if(!m_subtitle)
 		return QVariant();
 
 	SubtitleLine *line = m_subtitle->line(index.row());
@@ -231,48 +230,61 @@ LinesModel::data(const QModelIndex &index, int role) const
 	if(role == PlayingLineRole)
 		return line == m_playingLine;
 
+	if(role == AnchoredRole) {
+		const QList<const SubtitleLine *> &anchors = m_subtitle->anchoredLines();
+		return anchors.empty() ? 0 : (anchors.indexOf(line) != -1 ? 1 : -1);
+	}
+
 	switch(index.column()) {
 	case Number:
 		if(role == Qt::DisplayRole)
 			return index.row() + 1;
+		if(role == Qt::SizeHintRole)
+			return QSize(QFontMetrics(QFont()).width(QString::number(index.row() + 1)) + 28, 0);
 		break;
+
 	case ShowTime:
-		// if ( role == Qt::DisplayRole || role == Qt::ToolTipRole )
 		if(role == Qt::DisplayRole)
 			return line->showTime().toString();
-		else if(role == Qt::TextAlignmentRole)
+		if(role == Qt::TextAlignmentRole)
 			return Qt::AlignCenter;
 		break;
+
 	case HideTime:
-		// if ( role == Qt::DisplayRole || role == Qt::ToolTipRole )
 		if(role == Qt::DisplayRole)
 			return line->hideTime().toString();
-		else if(role == Qt::TextAlignmentRole)
+		if(role == Qt::TextAlignmentRole)
 			return Qt::AlignCenter;
 		break;
-	case Text: if(role == Qt::DisplayRole)
+
+	case Text:
+		if(role == Qt::DisplayRole)
 			return line->primaryText().richString();
-		else if(role == MarkedRole)
+		if(role == MarkedRole)
 			return line->errorFlags() & SubtitleLine::UserMark;
-		else if(role == ErrorRole)
+		if(role == ErrorRole)
 			return line->errorFlags() & ((SubtitleLine::SharedErrors | SubtitleLine::PrimaryOnlyErrors) & ~SubtitleLine::UserMark);
-		else if(role == Qt::ToolTipRole)
+		if(role == Qt::ToolTipRole)
 			return buildToolTip(m_subtitle->line(index.row()), true);
-		else if(role == Qt::EditRole)
+		if(role == Qt::EditRole)
 			return m_subtitle->line(index.row())->primaryText().richString().replace('\n', '|');
 		break;
-	case Translation: if(role == Qt::DisplayRole)
+
+	case Translation:
+		if(role == Qt::DisplayRole)
 			return m_subtitle->line(index.row())->secondaryText().richString();
-		else if(role == MarkedRole)
+		if(role == MarkedRole)
 			return line->errorFlags() & SubtitleLine::UserMark;
-		else if(role == ErrorRole)
+		if(role == ErrorRole)
 			return line->errorFlags() & ((SubtitleLine::SharedErrors | SubtitleLine::SecondaryOnlyErrors) & ~SubtitleLine::UserMark);
-		else if(role == Qt::ToolTipRole)
+		if(role == Qt::ToolTipRole)
 			return buildToolTip(m_subtitle->line(index.row()), false);
-		else if(role == Qt::EditRole)
+		if(role == Qt::EditRole)
 			return m_subtitle->line(index.row())->secondaryText().richString().replace('\n', '|');
 		break;
-	default: break;
+
+	default:
+		break;
 	}
 	return QVariant();
 }
@@ -328,7 +340,7 @@ LinesModel::onLinesRemoved(int firstIndex, int lastIndex)
 }
 
 void
-LinesModel::onLineChanged(SubtitleLine *line)
+LinesModel::onLineChanged(const SubtitleLine *line)
 {
 	int lineIndex = line->index();
 
@@ -489,7 +501,7 @@ LinesItemDelegate::drawBackgroundPrimitive(QPainter *painter, const QStyle *styl
 }
 
 void
-LinesItemDelegate::drawTextPrimitive(QPainter *painter, const QStyle *style, const QStyleOptionViewItemV4 &option, const QRect &rect, QPalette::ColorGroup cg) const
+LinesItemDelegate::drawTextPrimitive(QPainter *painter, const QStyle *style, const QStyleOptionViewItemV4 &option, const QRect &rect, QPalette::ColorGroup cg, const QModelIndex &index) const
 {
 	const int textMargin = style->pixelMetric(QStyle::PM_FocusFrameHMargin, 0, option.widget) + 1;
 	const int alignment = QStyle::visualAlignment(option.direction, option.displayAlignment);
@@ -511,8 +523,7 @@ LinesItemDelegate::drawTextPrimitive(QPainter *painter, const QStyle *style, con
 		m_textDocument->setHtml("<p>" + text + "</p>");
 
 		QPalette palette(option.palette);
-		palette.setColor(QPalette::Text, palette.color(cg, option.state & QStyle::State_Selected ? QPalette::HighlightedText : QPalette::Text)
-						 );
+		palette.setColor(QPalette::Text, palette.color(cg, option.state & QStyle::State_Selected ? QPalette::HighlightedText : QPalette::Text));
 
 		QAbstractTextDocumentLayout::PaintContext context;
 		context.palette = palette;
@@ -521,10 +532,32 @@ LinesItemDelegate::drawTextPrimitive(QPainter *painter, const QStyle *style, con
 		m_textDocument->documentLayout()->draw(painter, context);
 		painter->translate(-textRect.x() + TEXT_DOCUMENT_CORRECTION, -textRect.y() + TEXT_DOCUMENT_CORRECTION);
 	} else {
+		QColor textColor;
 		if(option.state & QStyle::State_Selected)
-			painter->setPen(option.palette.color(cg, QPalette::HighlightedText));
+			textColor = option.palette.color(cg, QPalette::HighlightedText);
 		else
-			painter->setPen(option.palette.color(cg, QPalette::Text));
+			textColor = option.palette.color(cg, QPalette::Text);
+
+		if(index.column() == LinesModel::ShowTime && index.data(LinesModel::AnchoredRole).toInt() == -1)
+			textColor.setAlpha(50);
+
+		painter->setPen(textColor);
+
+		if(index.column() == LinesModel::Number && index.data(LinesModel::AnchoredRole).toInt() == 1) {
+			int iconSize = qMin(textRect.width(), textRect.height()) - 3;
+			QRect iconRect = QRect(textRect.right() - iconSize - 2, textRect.y() + 1, iconSize, iconSize);
+
+			QIcon::Mode mode = QIcon::Normal;
+			if(!(option.state & QStyle::State_Enabled))
+				mode = QIcon::Disabled;
+			else if(option.state & QStyle::State_Selected)
+				mode = QIcon::Selected;
+			QIcon::State state = option.state & QStyle::State_Open ? QIcon::On : QIcon::Off;
+
+			textRect.setRight(textRect.right() - iconSize);
+
+			anchorIcon().paint(painter, iconRect, option.decorationAlignment, mode, state);
+		}
 
 		painter->drawText(textRect, alignment, text);
 	}
@@ -553,8 +586,9 @@ LinesItemDelegate::paint(QPainter *painter, const QStyleOptionViewItem &opt, con
 		if(option.state & QStyle::State_Selected) {
 			option.backgroundBrush = option.palette.highlight().color().lighter(125);
 			option.palette.setBrush(cg, QPalette::Highlight, option.backgroundBrush);
-		} else
+		} else {
 			option.backgroundBrush = option.palette.highlight().color().lighter(165);
+		}
 	}
 	drawBackgroundPrimitive(painter, style, option);
 
@@ -574,7 +608,6 @@ LinesItemDelegate::paint(QPainter *painter, const QStyleOptionViewItem &opt, con
 		QIcon::State state = option.state & QStyle::State_Open ? QIcon::On : QIcon::Off;
 
 		if(showMarkedIcon) {
-			// painter->drawPixmap( iconRect, markPixmap() );
 			markIcon().paint(painter, iconRect, option.decorationAlignment, mode, state);
 			textRect.setX(textRect.x() + iconSize + 2);
 			if(showErrorIcon)
@@ -582,7 +615,6 @@ LinesItemDelegate::paint(QPainter *painter, const QStyleOptionViewItem &opt, con
 		}
 
 		if(showErrorIcon) {
-			// painter->drawPixmap( iconRect, errorPixmap() );
 			errorIcon().paint(painter, iconRect, option.decorationAlignment, mode, state);
 			textRect.setX(textRect.x() + iconSize + 2);
 		}
@@ -594,7 +626,7 @@ LinesItemDelegate::paint(QPainter *painter, const QStyleOptionViewItem &opt, con
 			painter->drawRect(textRect.adjusted(0, 0, -1, -1));
 		}
 
-		drawTextPrimitive(painter, style, option, textRect, cg);
+		drawTextPrimitive(painter, style, option, textRect, cg, index);
 	}
 	// draw the focus rect
 	if(option.state & QStyle::State_HasFocus) {
@@ -639,6 +671,15 @@ LinesItemDelegate::errorIcon()
 	if(errorIcon.isNull())
 		errorIcon = QIcon::fromTheme("dialog-error");
 	return errorIcon;
+}
+
+const QIcon &
+LinesItemDelegate::anchorIcon()
+{
+	static QIcon anchorIcon;
+	if(anchorIcon.isNull())
+		anchorIcon = QIcon::fromTheme("anchor");
+	return anchorIcon;
 }
 
 const QPixmap &

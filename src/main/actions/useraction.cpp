@@ -113,7 +113,7 @@ UserActionManager::UserActionManager() :
 	m_linesWidget(0),
 	m_player(0),
 	m_translationMode(false),
-	m_contextFlags(UserAction::SubClosed | UserAction::SubTrClosed | UserAction::VideoClosed | UserAction::FullScreenOff)
+	m_contextFlags(UserAction::SubClosed | UserAction::SubTrClosed | UserAction::VideoClosed | UserAction::FullScreenOff | UserAction::AnchorsNone)
 {}
 
 UserActionManager *
@@ -150,6 +150,8 @@ UserActionManager::setSubtitle(Subtitle *subtitle)
 		disconnect(m_subtitle, SIGNAL(primaryDirtyStateChanged(bool)), this, SLOT(onPrimaryDirtyStateChanged(bool)));
 		disconnect(m_subtitle, SIGNAL(secondaryDirtyStateChanged(bool)), this, SLOT(onSecondaryDirtyStateChanged(bool)));
 
+		disconnect(m_subtitle, SIGNAL(lineAnchorChanged(const SubtitleLine*,bool)), this, SLOT(onSubtitleAnchorsChanged()));
+
 		disconnect(&(m_subtitle->actionManager()), SIGNAL(stateChanged()), this, SLOT(onUndoRedoStateChanged()));
 	}
 
@@ -165,6 +167,8 @@ UserActionManager::setSubtitle(Subtitle *subtitle)
 
 		connect(m_subtitle, SIGNAL(primaryDirtyStateChanged(bool)), this, SLOT(onPrimaryDirtyStateChanged(bool)));
 		connect(m_subtitle, SIGNAL(secondaryDirtyStateChanged(bool)), this, SLOT(onSecondaryDirtyStateChanged(bool)));
+
+		connect(m_subtitle, SIGNAL(lineAnchorChanged(const SubtitleLine*,bool)), this, SLOT(onSubtitleAnchorsChanged()));
 
 		connect(actionManager, SIGNAL(stateChanged()), this, SLOT(onUndoRedoStateChanged()));
 
@@ -190,6 +194,17 @@ UserActionManager::setSubtitle(Subtitle *subtitle)
 			newContextFlags |= UserAction::SubHasLine;
 		if(m_subtitle->linesCount() > 1)
 			newContextFlags |= UserAction::SubHasLines;
+
+		const QList<const SubtitleLine *> &anchors = m_subtitle->anchoredLines();
+		if(anchors.empty()) {
+			newContextFlags |= UserAction::AnchorsNone;
+			newContextFlags |= UserAction::EditableShowTime;
+		} else {
+			newContextFlags |= UserAction::AnchorsSome;
+			const SubtitleLine *selected = m_subtitle->line(m_linesWidget->firstSelectedIndex());
+			if(anchors.indexOf(selected) != -1)
+				newContextFlags |= UserAction::EditableShowTime;
+		}
 
 		if(actionManager->hasUndo())
 			newContextFlags |= UserAction::SubHasUndo;
@@ -266,25 +281,32 @@ UserActionManager::setLinesWidget(LinesWidget *linesWidget)
 
 	m_linesWidget = linesWidget;
 
-	int newContextFlags = m_contextFlags & ~UserAction::SelectionMask;
-
 	if(m_linesWidget) {
 		connect(m_linesWidget->selectionModel(), SIGNAL(selectionChanged(const QItemSelection &, const QItemSelection &)), this, SLOT(onLinesWidgetSelectionChanged()));
-
-		if(m_linesWidget->firstSelectedIndex() >= 0)
-			newContextFlags |= UserAction::HasSelection;
+		onLinesWidgetSelectionChanged();
 	}
-
-	updateActionsContext(newContextFlags);
 }
 
 void
 UserActionManager::onLinesWidgetSelectionChanged()
 {
-	int newContextFlags = m_contextFlags & ~UserAction::SelectionMask;
+	int newContextFlags = m_contextFlags & ~(UserAction::SelectionMask | UserAction::EditableShowTime);
 
-	if(m_linesWidget->firstSelectedIndex() >= 0)
+	int selectedIndex = m_linesWidget->firstSelectedIndex();
+
+	if(selectedIndex >= 0)
 		newContextFlags |= UserAction::HasSelection;
+
+	if(m_subtitle) {
+		const QList<const SubtitleLine *> &anchors = m_subtitle->anchoredLines();
+		if(anchors.empty()) {
+			newContextFlags |= UserAction::EditableShowTime;
+		} else {
+			const SubtitleLine *line = m_subtitle->line(selectedIndex);
+			if(anchors.indexOf(line) != -1)
+				newContextFlags |= UserAction::EditableShowTime;
+		}
+	}
 
 	updateActionsContext(newContextFlags);
 }
@@ -340,6 +362,25 @@ UserActionManager::onPlayerStateChanged()
 			newContextFlags |= UserAction::VideoPlaying;
 	} else {
 		newContextFlags |= UserAction::VideoClosed;
+	}
+
+	updateActionsContext(newContextFlags);
+}
+
+void
+UserActionManager::onSubtitleAnchorsChanged()
+{
+	int newContextFlags = m_contextFlags & ~UserAction::AnchorsMask;
+
+	const QList<const SubtitleLine *> &anchors = m_subtitle->anchoredLines();
+	if(anchors.empty()) {
+		newContextFlags |= UserAction::AnchorsNone;
+		newContextFlags |= UserAction::EditableShowTime;
+	} else {
+		newContextFlags |= UserAction::AnchorsSome;
+		const SubtitleLine *selected = m_subtitle->line(m_linesWidget->firstSelectedIndex());
+		if(anchors.indexOf(selected) != -1)
+			newContextFlags |= UserAction::EditableShowTime;
 	}
 
 	updateActionsContext(newContextFlags);

@@ -331,6 +331,66 @@ Subtitle::lastLine() const
 	return m_lines.isEmpty() ? 0 : m_lines.last();
 }
 
+const QList<const SubtitleLine *> &
+Subtitle::anchoredLines() const
+{
+	return m_anchoredLines;
+}
+
+bool
+Subtitle::isLineAnchored(int index)
+{
+	if(index < 0 || index >= m_lines.count())
+		return false;
+
+	return isLineAnchored(m_lines[index]);
+}
+
+bool
+Subtitle::isLineAnchored(const SubtitleLine *line)
+{
+	if(!line)
+		return false;
+
+	return m_anchoredLines.indexOf(line) >= 0;
+}
+
+void
+Subtitle::toggleLineAnchor(int index)
+{
+	if(index < 0 || index >= m_lines.count())
+		return;
+
+	toggleLineAnchor(m_lines[index]);
+}
+
+void
+Subtitle::toggleLineAnchor(const SubtitleLine *line)
+{
+	if(!line)
+		return;
+
+	int anchorIndex = m_anchoredLines.indexOf(line);
+
+	if(anchorIndex == -1)
+		m_anchoredLines.append(line);
+	else
+		m_anchoredLines.removeAt(anchorIndex);
+
+	emit lineAnchorChanged(line, anchorIndex == -1);
+}
+
+void
+Subtitle::removeAllAnchors()
+{
+	QList<const SubtitleLine *> anchoredLines = m_anchoredLines;
+
+	m_anchoredLines.clear();
+
+	foreach(auto line, anchoredLines)
+		emit lineAnchorChanged(line, false);
+}
+
 void
 Subtitle::insertLine(SubtitleLine *line, int index)
 {
@@ -550,8 +610,7 @@ Subtitle::splitLines(const RangeList &ranges)
 				}
 
 				line->setTexts(*ptIt, *stIt);
-				line->setDurationTime(Time((long)
-										   (factor * autoDurations[splitLineIndex]) - 1));
+				line->setDurationTime(Time((factor * autoDurations[splitLineIndex]) - 1.0));
 			}
 		}
 	}
@@ -605,6 +664,52 @@ Subtitle::joinLines(const RangeList &ranges)
 }
 
 void
+Subtitle::shiftAnchoredLine(SubtitleLine *anchoredLine, const Time &newShowTime)
+{
+	if(m_anchoredLines.indexOf(anchoredLine) == -1)
+		return;
+
+	const SubtitleLine *prevAnchor = NULL;
+	const SubtitleLine *nextAnchor = NULL;
+	foreach(auto anchor, m_anchoredLines) {
+		if((prevAnchor == NULL || prevAnchor->m_showTime < anchor->m_showTime) && anchor->m_showTime < anchoredLine->m_showTime)
+			prevAnchor = anchor;
+		if((nextAnchor == NULL || nextAnchor->m_showTime > anchor->m_showTime) && anchor->m_showTime > anchoredLine->m_showTime)
+			nextAnchor = anchor;
+	}
+	if((prevAnchor && prevAnchor->m_showTime > newShowTime) || (nextAnchor && nextAnchor->m_showTime < newShowTime))
+		return;
+
+	if(!prevAnchor && !nextAnchor) {
+		double shift = newShowTime.toMillis() - anchoredLine->m_showTime.toMillis();
+		foreach(auto line, m_lines)
+			line->shiftTimes(shift);
+	} else {
+		Time savedShowTime(anchoredLine->m_showTime); // save times as adjustLines() will modify them
+		Time savedHideTime(anchoredLine->m_hideTime);
+		if(prevAnchor) {
+			adjustLines(Range(prevAnchor->index(), anchoredLine->index()), prevAnchor->m_showTime.toMillis(), newShowTime.toMillis());
+		} else if(nextAnchor->m_showTime.toMillis() != anchoredLine->m_showTime.toMillis()) {
+			const SubtitleLine *first = firstLine();
+			double scaleFactor = (nextAnchor->m_showTime.toMillis() - newShowTime.toMillis()) / (nextAnchor->m_showTime.toMillis() - anchoredLine->m_showTime.toMillis());
+			Time firstShowTime(scaleFactor * (first->m_showTime.toMillis() - nextAnchor->m_showTime.toMillis()) + nextAnchor->m_showTime.toMillis());
+			adjustLines(Range(first->index(), anchoredLine->index()), firstShowTime.toMillis(), newShowTime.toMillis());
+		}
+
+		anchoredLine->m_showTime = savedShowTime; // restore times so adjustLines() wont modify them twice
+		anchoredLine->m_hideTime = savedHideTime;
+		if(nextAnchor) {
+			adjustLines(Range(anchoredLine->index(), nextAnchor->index()), newShowTime.toMillis(), nextAnchor->m_showTime.toMillis());
+		} else if(anchoredLine->m_showTime.toMillis() != prevAnchor->m_showTime.toMillis()) {
+			const SubtitleLine *last = lastLine();
+			double scaleFactor = (newShowTime.toMillis() - prevAnchor->m_showTime.toMillis()) / (anchoredLine->m_showTime.toMillis() - prevAnchor->m_showTime.toMillis());
+			Time lastShowTime(scaleFactor * (last->m_showTime.toMillis() - prevAnchor->m_showTime.toMillis()) + prevAnchor->m_showTime.toMillis());
+			adjustLines(Range(anchoredLine->index(), last->index()), newShowTime.toMillis(), lastShowTime.toMillis());
+		}
+	}
+}
+
+void
 Subtitle::shiftLines(const RangeList &ranges, long msecs)
 {
 	if(msecs == 0)
@@ -612,8 +717,18 @@ Subtitle::shiftLines(const RangeList &ranges, long msecs)
 
 	beginCompositeAction(i18n("Shift Lines"));
 
-	for(SubtitleIterator it(*this, ranges); it.current(); ++it)
-		it.current()->shiftTimes(msecs);
+	if(!m_anchoredLines.empty()) {
+		for(SubtitleIterator it(*this, ranges); it.current(); ++it) {
+			SubtitleLine *line = it.current();
+			if(m_anchoredLines.indexOf(line) != -1) {
+				shiftAnchoredLine(line, line->showTime().shifted(msecs));
+				break;
+			}
+		}
+	} else {
+		for(SubtitleIterator it(*this, ranges); it.current(); ++it)
+			it.current()->shiftTimes(msecs);
+	}
 
 	endCompositeAction();
 }
@@ -630,11 +745,11 @@ Subtitle::adjustLines(const Range &range, long newFirstTime, long newLastTime)
 	if(firstIndex >= lastIndex)
 		return;
 
-	long oldFirstTime = m_lines.at(firstIndex)->showTime().toMillis();
-	long oldLastTime = m_lines.at(lastIndex)->showTime().toMillis();
-	long oldDeltaTime = oldLastTime - oldFirstTime;
+	double oldFirstTime = m_lines.at(firstIndex)->showTime().toMillis();
+	double oldLastTime = m_lines.at(lastIndex)->showTime().toMillis();
+	double oldDeltaTime = oldLastTime - oldFirstTime;
 
-	long newDeltaTime = newLastTime - newFirstTime;
+	double newDeltaTime = newLastTime - newFirstTime;
 
 	// special case in which we can't procede as there's no way to
 	// linearly transform the same time into two different ones...
@@ -645,8 +760,8 @@ Subtitle::adjustLines(const Range &range, long newFirstTime, long newLastTime)
 	double scaleFactor;
 
 	if(oldDeltaTime) {
-		shiftMseconds = newFirstTime - ((double)newDeltaTime / oldDeltaTime) * oldFirstTime;
-		scaleFactor = (double)newDeltaTime / oldDeltaTime;
+		shiftMseconds = newFirstTime - (newDeltaTime / oldDeltaTime) * oldFirstTime;
+		scaleFactor = newDeltaTime / oldDeltaTime;
 	} else {                                        // oldDeltaTime == 0 && newDeltaTime == 0
 		// in this particular case we can make the adjust transformation act as a plain shift
 		shiftMseconds = newFirstTime - oldFirstTime;

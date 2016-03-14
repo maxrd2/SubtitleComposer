@@ -769,19 +769,19 @@ Application::setupActions()
 	actionCollection->setDefaultShortcut(shiftAction, QKeySequence("Ctrl+D"));
 	connect(shiftAction, SIGNAL(triggered()), this, SLOT(shiftLines()));
 	actionCollection->addAction(ACT_SHIFT, shiftAction);
-	actionManager->addAction(shiftAction, UserAction::SubHasLine | UserAction::FullScreenOff);
+	actionManager->addAction(shiftAction, UserAction::SubHasLine | UserAction::FullScreenOff | UserAction::AnchorsNone);
 
 	QAction *shiftSelectedLinesFwdAction = new QAction(actionCollection);
 	actionCollection->setDefaultShortcut(shiftSelectedLinesFwdAction, QKeySequence("Shift++"));
 	connect(shiftSelectedLinesFwdAction, SIGNAL(triggered()), this, SLOT(shiftSelectedLinesForwards()));
 	actionCollection->addAction(ACT_SHIFT_SELECTED_LINES_FORWARDS, shiftSelectedLinesFwdAction);
-	actionManager->addAction(shiftSelectedLinesFwdAction, UserAction::HasSelection | UserAction::FullScreenOff);
+	actionManager->addAction(shiftSelectedLinesFwdAction, UserAction::HasSelection | UserAction::FullScreenOff | UserAction::EditableShowTime);
 
 	QAction *shiftSelectedLinesBwdAction = new QAction(actionCollection);
 	actionCollection->setDefaultShortcut(shiftSelectedLinesBwdAction, QKeySequence("Shift+-"));
 	connect(shiftSelectedLinesBwdAction, SIGNAL(triggered()), this, SLOT(shiftSelectedLinesBackwards()));
 	actionCollection->addAction(ACT_SHIFT_SELECTED_LINES_BACKWARDS, shiftSelectedLinesBwdAction);
-	actionManager->addAction(shiftSelectedLinesBwdAction, UserAction::HasSelection | UserAction::FullScreenOff);
+	actionManager->addAction(shiftSelectedLinesBwdAction, UserAction::HasSelection | UserAction::FullScreenOff | UserAction::EditableShowTime);
 
 	QAction *adjustAction = new QAction(actionCollection);
 	adjustAction->setText(i18n("Adjust..."));
@@ -789,7 +789,7 @@ Application::setupActions()
 	actionCollection->setDefaultShortcut(adjustAction, QKeySequence("Ctrl+J"));
 	connect(adjustAction, SIGNAL(triggered()), this, SLOT(adjustLines()));
 	actionCollection->addAction(ACT_ADJUST, adjustAction);
-	actionManager->addAction(adjustAction, UserAction::SubHasLines | UserAction::FullScreenOff);
+	actionManager->addAction(adjustAction, UserAction::SubHasLines | UserAction::FullScreenOff | UserAction::AnchorsNone);
 
 	QAction *sortLinesAction = new QAction(actionCollection);
 	sortLinesAction->setText(i18n("Sort..."));
@@ -803,7 +803,7 @@ Application::setupActions()
 	changeFrameRateAction->setStatusTip(i18n("Retime subtitle lines by reinterpreting its frame rate"));
 	connect(changeFrameRateAction, SIGNAL(triggered()), this, SLOT(changeFrameRate()));
 	actionCollection->addAction(ACT_CHANGE_FRAME_RATE, changeFrameRateAction);
-	actionManager->addAction(changeFrameRateAction, UserAction::SubOpened | UserAction::FullScreenOff);
+	actionManager->addAction(changeFrameRateAction, UserAction::SubOpened | UserAction::FullScreenOff | UserAction::AnchorsNone);
 
 	QAction *durationLimitsAction = new QAction(actionCollection);
 	durationLimitsAction->setText(i18n("Enforce Duration Limits..."));
@@ -839,7 +839,7 @@ Application::setupActions()
 	syncWithSubtitleAction->setStatusTip(i18n("Copy timing information from another subtitle"));
 	connect(syncWithSubtitleAction, SIGNAL(triggered()), this, SLOT(syncWithSubtitle()));
 	actionCollection->addAction(ACT_SYNC_WITH_SUBTITLE, syncWithSubtitleAction);
-	actionManager->addAction(syncWithSubtitleAction, UserAction::SubHasLine | UserAction::FullScreenOff);
+	actionManager->addAction(syncWithSubtitleAction, UserAction::SubHasLine | UserAction::FullScreenOff | UserAction::AnchorsNone);
 
 	QAction *breakLinesAction = new QAction(actionCollection);
 	breakLinesAction->setText(i18n("Break Lines..."));
@@ -978,7 +978,7 @@ Application::setupActions()
 	actionCollection->setDefaultShortcut(setCurrentLineShowTimeFromVideoAction, QKeySequence("Shift+Z"));
 	connect(setCurrentLineShowTimeFromVideoAction, SIGNAL(triggered()), this, SLOT(setCurrentLineShowTimeFromVideo()));
 	actionCollection->addAction(ACT_SET_CURRENT_LINE_SHOW_TIME, setCurrentLineShowTimeFromVideoAction);
-	actionManager->addAction(setCurrentLineShowTimeFromVideoAction, UserAction::HasSelection | UserAction::VideoPlaying);
+	actionManager->addAction(setCurrentLineShowTimeFromVideoAction, UserAction::HasSelection | UserAction::VideoPlaying | UserAction::EditableShowTime);
 
 	QAction *setCurrentLineHideTimeFromVideoAction = new QAction(actionCollection);
 	setCurrentLineHideTimeFromVideoAction->setIcon(QIcon::fromTheme("set-hide-time"));
@@ -987,7 +987,7 @@ Application::setupActions()
 	actionCollection->setDefaultShortcut(setCurrentLineHideTimeFromVideoAction, QKeySequence("Shift+X"));
 	connect(setCurrentLineHideTimeFromVideoAction, SIGNAL(triggered()), this, SLOT(setCurrentLineHideTimeFromVideo()));
 	actionCollection->addAction(ACT_SET_CURRENT_LINE_HIDE_TIME, setCurrentLineHideTimeFromVideoAction);
-	actionManager->addAction(setCurrentLineHideTimeFromVideoAction, UserAction::HasSelection | UserAction::VideoPlaying);
+	actionManager->addAction(setCurrentLineHideTimeFromVideoAction, UserAction::HasSelection | UserAction::VideoPlaying | UserAction::EditableShowTime);
 
 	KToggleAction *currentLineFollowsVideoAction = new KToggleAction(actionCollection);
 	currentLineFollowsVideoAction->setIcon(QIcon::fromTheme("current-line-follows-video"));
@@ -1058,7 +1058,7 @@ Application::setupActions()
 	actionCollection->setDefaultShortcut(shiftToVideoPositionAction, QKeySequence("Shift+A"));
 	connect(shiftToVideoPositionAction, SIGNAL(triggered()), this, SLOT(shiftToVideoPosition()));
 	actionCollection->addAction(ACT_SHIFT_TO_VIDEO_POSITION, shiftToVideoPositionAction);
-	actionManager->addAction(shiftToVideoPositionAction, UserAction::HasSelection | UserAction::VideoPlaying | UserAction::FullScreenOff);
+	actionManager->addAction(shiftToVideoPositionAction, UserAction::HasSelection | UserAction::VideoPlaying | UserAction::FullScreenOff | UserAction::EditableShowTime);
 
 	QAction *adjustToVideoPositionAnchorLastAction = new QAction(actionCollection);
 	adjustToVideoPositionAnchorLastAction->setText(i18n("Adjust to Video Position (Anchor Last Line)"));
@@ -1066,7 +1066,7 @@ Application::setupActions()
 	actionCollection->setDefaultShortcut(adjustToVideoPositionAnchorLastAction, QKeySequence("Alt+Z"));
 	connect(adjustToVideoPositionAnchorLastAction, SIGNAL(triggered()), this, SLOT(adjustToVideoPositionAnchorLast()));
 	actionCollection->addAction(ACT_ADJUST_TO_VIDEO_POSITION_A_L, adjustToVideoPositionAnchorLastAction);
-	actionManager->addAction(adjustToVideoPositionAnchorLastAction, UserAction::HasSelection | UserAction::VideoPlaying | UserAction::FullScreenOff);
+	actionManager->addAction(adjustToVideoPositionAnchorLastAction, UserAction::HasSelection | UserAction::VideoPlaying | UserAction::FullScreenOff | UserAction::AnchorsNone);
 
 	QAction *adjustToVideoPositionAnchorFirstAction = new QAction(actionCollection);
 	adjustToVideoPositionAnchorFirstAction->setText(i18n("Adjust to Video Position (Anchor First Line)"));
@@ -1074,7 +1074,23 @@ Application::setupActions()
 	actionCollection->setDefaultShortcut(adjustToVideoPositionAnchorFirstAction, QKeySequence("Alt+X"));
 	connect(adjustToVideoPositionAnchorFirstAction, SIGNAL(triggered()), this, SLOT(adjustToVideoPositionAnchorFirst()));
 	actionCollection->addAction(ACT_ADJUST_TO_VIDEO_POSITION_A_F, adjustToVideoPositionAnchorFirstAction);
-	actionManager->addAction(adjustToVideoPositionAnchorFirstAction, UserAction::HasSelection | UserAction::VideoPlaying | UserAction::FullScreenOff);
+	actionManager->addAction(adjustToVideoPositionAnchorFirstAction, UserAction::HasSelection | UserAction::VideoPlaying | UserAction::FullScreenOff | UserAction::AnchorsNone);
+
+	QAction *toggleAnchor = new QAction(actionCollection);
+	toggleAnchor->setText(i18n("Toggle Anchor"));
+	toggleAnchor->setStatusTip(i18n("(Un)Anchor current line's show time to timeline (Editing anchored line's show time will stretch/compact the timeline between adjanced anchors)"));
+	actionCollection->setDefaultShortcut(toggleAnchor, QKeySequence("Alt+A"));
+	connect(toggleAnchor, SIGNAL(triggered()), this, SLOT(anchorToggle()));
+	actionCollection->addAction(ACT_ANCHOR_TOGGLE, toggleAnchor);
+	actionManager->addAction(toggleAnchor, UserAction::HasSelection | UserAction::FullScreenOff);
+
+	QAction *removeAllAnchors = new QAction(actionCollection);
+	removeAllAnchors->setText(i18n("Remove All Anchors"));
+	removeAllAnchors->setStatusTip(i18n("Unanchor show time from the timeline on all anchored lines"));
+	actionCollection->setDefaultShortcut(removeAllAnchors, QKeySequence("Alt+R"));
+	connect(removeAllAnchors, SIGNAL(triggered()), this, SLOT(anchorRemoveAll()));
+	actionCollection->addAction(ACT_ANCHOR_REMOVE_ALL, removeAllAnchors);
+	actionManager->addAction(removeAllAnchors, UserAction::HasSelection | UserAction::FullScreenOff | UserAction::AnchorsSome);
 
 	QAction *scriptsManagerAction = new QAction(actionCollection);
 	scriptsManagerAction->setIcon(QIcon::fromTheme("folder-development"));
@@ -2517,13 +2533,25 @@ Application::setActiveSubtitleStream(int subtitleStream)
 	m_playerWidget->setShowTranslation(subtitleStream ? true : false);
 }
 
+
+void
+Application::anchorToggle()
+{
+	m_subtitle->toggleLineAnchor(m_linesWidget->currentLine());
+}
+
+void
+Application::anchorRemoveAll()
+{
+	m_subtitle->removeAllAnchors();
+}
+
 void
 Application::shiftToVideoPosition()
 {
 	SubtitleLine *currentLine = m_linesWidget->currentLine();
 	if(currentLine) {
-		m_subtitle->shiftLines(Range::full(), videoPosition(true).toMillis() - currentLine->showTime().toMillis()
-							   );
+		m_subtitle->shiftLines(Range::full(), videoPosition(true).toMillis() - currentLine->showTime().toMillis());
 	}
 }
 
@@ -2549,8 +2577,7 @@ Application::adjustToVideoPositionAnchorLast()
 		long newFirstLineTime = (long)(shiftTime + m_subtitle->firstLine()->showTime().toMillis() * scaleFactor);
 
 		if(newFirstLineTime < 0) {
-			if(KMessageBox::warningContinueCancel(m_mainWindow, i18n("Continuing would result in loss of timing information for some lines.\nAre you sure you want to continue?")
-												  ) != KMessageBox::Continue)
+			if(KMessageBox::warningContinueCancel(m_mainWindow, i18n("Continuing would result in loss of timing information for some lines.\nAre you sure you want to continue?")) != KMessageBox::Continue)
 				return;
 		}
 

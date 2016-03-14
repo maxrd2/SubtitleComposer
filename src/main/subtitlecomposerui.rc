@@ -86,6 +86,9 @@
 			<Action name="set_current_line_show_time" />
 			<Action name="set_current_line_hide_time" />
 			<Separator />
+			<Action name="anchor_toggle" />
+			<Action name="anchor_remove_all" />
+			<Separator />
 			<Action name="shift_to_video_position" />
 			<Action name="adjust_to_video_position_anchor_last" />
 			<Action name="adjust_to_video_position_anchor_first" />

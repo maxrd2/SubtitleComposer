@@ -39,31 +39,35 @@ class UserAction : public QObject
 
 public:
 	typedef enum {
-		SubClosed = 0x1,                // Subtitle is not opened
-		SubOpened = 0x2,                // Subtitle is opened
-		SubTrClosed = 0x4,              // Subtitle is not opened
-		SubTrOpened = 0x8,              // Subtitle is opened
-		SubHasLine = 0x10,              // Subtitle opened with, at least, one line
-		SubHasLines = 0x20,             // Subtitle opened with, at least, two lines
-		SubPDirty = 0x40,               // Subtitle opened and has unsaved changes
-		SubPClean = 0x80,               // Subtitle opened or closed without unsaved changes
-		SubSDirty = 0x100,              // Subtitle opened and has unsaved changes
-		SubSClean = 0x200,              // Subtitle opened or closed without unsaved changes
-		SubHasUndo = 0x400,             // An action can be undone
-		SubHasRedo = 0x800,             // An action can be redone
-		HasSelection = 0x1000,          // Subtitle opened with, at least, one line selected
-		VideoClosed = 0x2000,
-		VideoOpened = 0x4000,
-		VideoStopped = 0x8000,
-		VideoPlaying = 0x10000,
-		FullScreenOn = 0x20000,
-		FullScreenOff = 0x40000,
+		SubClosed        = 0x1,	// Subtitle is not opened
+		SubOpened        = 0x2,	// Subtitle is opened
+		SubTrClosed      = 0x4,	// Subtitle is not opened
+		SubTrOpened      = 0x8,	// Subtitle is opened
+		SubHasLine       = 0x10,	// Subtitle opened with, at least, one line
+		SubHasLines      = 0x20,	// Subtitle opened with, at least, two lines
+		SubPDirty        = 0x40,	// Subtitle opened and has unsaved changes
+		SubPClean        = 0x80,	// Subtitle opened or closed without unsaved changes
+		SubSDirty        = 0x100,	// Subtitle opened and has unsaved changes
+		SubSClean        = 0x200,	// Subtitle opened or closed without unsaved changes
+		SubHasUndo       = 0x400,	// An action can be undone
+		SubHasRedo       = 0x800,	// An action can be redone
+		HasSelection     = 0x1000,	// Subtitle opened with, at least, one line selected
+		VideoClosed      = 0x2000,
+		VideoOpened      = 0x4000,
+		VideoStopped     = 0x8000,
+		VideoPlaying     = 0x10000,
+		FullScreenOn     = 0x20000,
+		FullScreenOff    = 0x40000,
+		AnchorsNone      = 0x80000,	// None of the subtitles is anchored
+		AnchorsSome      = 0x100000,	// At least one subtitle is anchored
+		EditableShowTime = 0x200000,	// Selected line's show time is editable
 
-		SubtitleMask = SubClosed | SubOpened | SubTrClosed | SubTrOpened | SubPDirty | SubPClean | SubSDirty | SubSClean | SubHasLine | SubHasLines | SubHasUndo | SubHasRedo,
+		AnchorsMask = AnchorsNone | AnchorsSome | EditableShowTime,
+		SubtitleMask = SubClosed | SubOpened | SubTrClosed | SubTrOpened | SubPDirty | SubPClean | SubSDirty | SubSClean | SubHasLine | SubHasLines | SubHasUndo | SubHasRedo | AnchorsMask,
 		SelectionMask = HasSelection,
 		VideoMask = VideoClosed | VideoOpened | VideoStopped | VideoPlaying,
 		FullScreenMask = FullScreenOn | FullScreenOff,
-		AllMask = SubtitleMask | SelectionMask | VideoMask | FullScreenMask
+		AllMask = AnchorsMask | SubtitleMask | SelectionMask | VideoMask | FullScreenMask
 	} EnableFlag;
 
 	explicit UserAction(QAction *action, int enableFlags = SubOpened);
@@ -123,6 +127,7 @@ private slots:
 	void onUndoRedoStateChanged();
 	void onLinesWidgetSelectionChanged();
 	void onPlayerStateChanged();
+	void onSubtitleAnchorsChanged();
 
 private:
 	QList<UserAction *> m_actionSpecs;

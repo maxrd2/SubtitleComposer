@@ -502,8 +502,16 @@ SubtitleLine::showTime() const
 void
 SubtitleLine::setShowTime(const Time &showTime)
 {
-	if(m_showTime != showTime)
+	if(m_showTime == showTime)
+		return;
+
+	if(m_subtitle && m_subtitle->isLineAnchored(this)) {
+		m_subtitle->beginCompositeAction(i18n("Set Line Show Time"));
+		m_subtitle->shiftAnchoredLine(this, showTime);
+		m_subtitle->endCompositeAction();
+	} else {
 		processAction(new SetLineShowTimeAction(*this, showTime));
+	}
 }
 
 Time
@@ -529,6 +537,21 @@ void
 SubtitleLine::setDurationTime(const Time &durationTime)
 {
 	setHideTime(m_showTime + durationTime);
+}
+
+void
+SubtitleLine::setTimes(const Time &showTime, const Time &hideTime)
+{
+	if(m_showTime == showTime && m_hideTime == hideTime)
+		return;
+
+	if(m_subtitle && m_subtitle->isLineAnchored(this)) {
+		m_subtitle->beginCompositeAction(i18n("Set Line Times"));
+		m_subtitle->shiftAnchoredLine(this, showTime);
+		m_subtitle->endCompositeAction();
+	} else {
+		processAction(new SetLineTimesAction(*this, showTime, hideTime, i18n("Set Line Times")));
+	}
 }
 
 int
@@ -607,29 +630,19 @@ SubtitleLine::autoDuration(int msecsPerChar, int msecsPerWord, int msecsPerLine,
 }
 
 void
-SubtitleLine::setTimes(const Time &showTime, const Time &hideTime)
-{
-	if(m_showTime != showTime || m_hideTime != hideTime)
-		processAction(new SetLineTimesAction(*this, showTime, hideTime, i18n("Set Line Times")));
-}
-
-void
 SubtitleLine::shiftTimes(long mseconds)
 {
-	if(mseconds)
-		processAction(new SetLineTimesAction(*this, Time(m_showTime.toMillis() + mseconds), Time(m_hideTime.toMillis() + mseconds), i18n("Shift Line Times")
-											 )
-					  );
+	if(!mseconds)
+		return;
+
+	processAction(new SetLineTimesAction(*this, m_showTime.shifted(mseconds), m_hideTime.shifted(mseconds), i18n("Shift Line Times")));
 }
 
 void
 SubtitleLine::adjustTimes(double shiftMseconds, double scaleFactor)
 {
-	if(shiftMseconds || scaleFactor != 1.0) {
-		processAction(new SetLineTimesAction(*this, m_showTime.adjusted(shiftMseconds, scaleFactor), m_hideTime.adjusted(shiftMseconds, scaleFactor), i18n("Adjust Line Times")
-											 )
-					  );
-	}
+	if(shiftMseconds || scaleFactor != 1.0)
+		processAction(new SetLineTimesAction(*this, m_showTime.adjusted(shiftMseconds, scaleFactor), m_hideTime.adjusted(shiftMseconds, scaleFactor), i18n("Adjust Line Times")));
 }
 
 /// ERRORS

@@ -35,6 +35,7 @@
 #include <QPen>
 #include <QIcon>
 #include <QPixmap>
+#include <QList>
 
 QT_FORWARD_DECLARE_CLASS(QTextDocument)
 QT_FORWARD_DECLARE_CLASS(QTimer)
@@ -46,12 +47,14 @@ class LinesModel : public QAbstractListModel
 
 public:
 	enum { Number = 0, ShowTime, HideTime, Text, Translation, ColumnCount };
-	enum { PlayingLineRole = Qt::UserRole, MarkedRole, ErrorRole };
+	enum { PlayingLineRole = Qt::UserRole, MarkedRole, ErrorRole, AnchoredRole };
 
 	explicit LinesModel(QObject *parent = 0);
 
 	Subtitle * subtitle() const;
 	void setSubtitle(Subtitle *subtitle);
+
+	const QList<Subtitle *> & graftPoints() const;
 
 	SubtitleLine * playingLine() const;
 	void setPlayingLine(SubtitleLine *line);
@@ -70,7 +73,7 @@ private slots:
 	void onLinesInserted(int firstIndex, int lastIndex);
 	void onLinesRemoved(int firstIndex, int lastIndex);
 
-	void onLineChanged(SubtitleLine *line);
+	void onLineChanged(const SubtitleLine *line);
 	void emitDataChanged();
 
 private:
@@ -82,6 +85,7 @@ private:
 	QTimer *m_dataChangedTimer;
 	int m_minChangedLineIndex;
 	int m_maxChangedLineIndex;
+	QList<Subtitle *> m_graftPoints;
 };
 
 class LinesWidget;
@@ -117,6 +121,7 @@ public:
 
 	static const QIcon & markIcon();
 	static const QIcon & errorIcon();
+	static const QIcon & anchorIcon();
 
 	static const QPixmap & markPixmap();
 	static const QPixmap & errorPixmap();
@@ -128,7 +133,7 @@ protected:
 
 	void drawBackgroundPrimitive(QPainter *painter, const QStyle *style, const QStyleOptionViewItemV4 &option) const;
 
-	void drawTextPrimitive(QPainter *painter, const QStyle *style, const QStyleOptionViewItemV4 &option, const QRect &rect, QPalette::ColorGroup cg) const;
+	void drawTextPrimitive(QPainter *painter, const QStyle *style, const QStyleOptionViewItemV4 &option, const QRect &rect, QPalette::ColorGroup cg, const QModelIndex &index) const;
 
 private:
 	bool m_useStyle;

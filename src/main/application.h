@@ -204,6 +204,9 @@ public slots:
 	void setCurrentLineShowTimeFromVideo();
 	void setCurrentLineHideTimeFromVideo();
 
+	void anchorToggle();
+	void anchorRemoveAll();
+
 	void shiftToVideoPosition();
 	void adjustToVideoPositionAnchorLast();
 	void adjustToVideoPositionAnchorFirst();
