@@ -34,6 +34,7 @@
 QT_FORWARD_DECLARE_CLASS(QRegion)
 QT_FORWARD_DECLARE_CLASS(QPolygon)
 QT_FORWARD_DECLARE_CLASS(QProgressBar)
+QT_FORWARD_DECLARE_CLASS(QToolButton)
 
 // FIXME: make sample size configurable or drop this
 /*
@@ -69,14 +70,18 @@ public slots:
 	void clearAudioStream();
 
 protected:
-	virtual void paintEvent(QPaintEvent *);
 	virtual void resizeEvent(QResizeEvent *e);
+	bool eventFilter(QObject *obj, QEvent *ev);
 
 private slots:
 	void onPlayerPositionChanged(double seconds);
 	void onStreamData(const void *buffer, const qint32 size, const WaveFormat *waveFormat);
 	void onStreamProgress(quint64 msecPos, quint64 msecLength);
 	void onStreamFinished();
+
+private:
+	void paintGraphics(QPainter &painter);
+	QToolButton * createToolButton(const QString &iconName, int iconSize);
 
 private:
 	QString m_mediaFile;
@@ -94,8 +99,12 @@ private:
 	int m_waveformChannels;
 	SAMPLE_TYPE **m_waveform;
 
+	QWidget *m_waveformGraphics;
+
 	QWidget *m_progressWidget;
 	QProgressBar *m_progressBar;
+
+	friend class WaveformGraphics;
 };
 }
 #endif

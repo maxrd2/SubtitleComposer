@@ -20,6 +20,8 @@
 #include "waveformwidget.h"
 #include "../core/subtitleline.h"
 #include "../videoplayer/videoplayer.h"
+//#include "application.h"
+#include "actions/useractionnames.h"
 
 #include <QRect>
 #include <QPainter>
@@ -31,6 +33,7 @@
 #include <QProgressBar>
 #include <QLabel>
 #include <QBoxLayout>
+#include <QToolButton>
 
 #include <QDebug>
 
@@ -49,8 +52,31 @@ WaveformWidget::WaveformWidget(QWidget *parent)
 	  m_timeEnd(6000),
 	  m_waveformChannels(0),
 	  m_waveform(NULL),
+	  m_waveformGraphics(new QWidget(this)),
 	  m_progressWidget(new QWidget(this))
 {
+	m_waveformGraphics->setAttribute(Qt::WA_OpaquePaintEvent, true);
+	m_waveformGraphics->setAttribute(Qt::WA_NoSystemBackground, true);
+	m_waveformGraphics->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
+	m_waveformGraphics->installEventFilter(this);
+	m_waveformGraphics->show();
+
+	QHBoxLayout *toolbarLayout = new QHBoxLayout();
+	toolbarLayout->setMargin(0);
+	toolbarLayout->setSpacing(2);
+	toolbarLayout->addWidget(createToolButton(QStringLiteral("zoom-in"), 16));
+	toolbarLayout->addWidget(createToolButton(QStringLiteral("zoom-out"), 16));
+	toolbarLayout->addSpacerItem(new QSpacerItem(1, 1, QSizePolicy::Expanding, QSizePolicy::Preferred));
+
+	QVBoxLayout *mainLayout = new QVBoxLayout(this);
+	mainLayout->setMargin(0);
+	mainLayout->setSpacing(5);
+	mainLayout->addWidget(m_waveformGraphics);
+	mainLayout->addLayout(toolbarLayout);
+
+	setMinimumWidth(300);
+
+	// Progress Bar
 	m_progressWidget->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Expanding);
 	m_progressWidget->hide();
 
@@ -89,7 +115,7 @@ WaveformWidget::setWindowSize(const Time &size)
 {
 	if(size != windowSize()) {
 		m_timeEnd = m_timeStart + size;
-		update();
+		m_waveformGraphics->update();
 	}
 }
 
@@ -197,11 +223,8 @@ WaveformWidget::onStreamData(const void *buffer, const qint32 size, const WaveFo
 }
 
 void
-WaveformWidget::paintEvent(QPaintEvent *e)
+WaveformWidget::paintGraphics(QPainter &painter)
 {
-	QPainter painter(this);
-	painter.fillRect(e->rect(), Qt::black);
-
 	const static QFont fontBig("helvetica", 10);
 	const static int fontBigHeight = QFontMetrics(fontBig).height();
 	const static QFont fontSubText("helvetica", 9);
@@ -214,8 +237,8 @@ WaveformWidget::paintEvent(QPaintEvent *e)
 	const static QPen waveLight(QColor(150, 150, 150, 255), 0, Qt::SolidLine);
 
 	int msWindowSize = windowSize().toMillis();
-	int widgetHeight = height();
-	int widgetWidth = width();
+	int widgetHeight = m_waveformGraphics->height();
+	int widgetWidth = m_waveformGraphics->width();
 
 	// FIXME: draw waveform and overlay text from/to separate buffer
 	// FIXME: make visualization types configurable? Min/Max/Avg/RMS
@@ -313,7 +336,21 @@ WaveformWidget::resizeEvent(QResizeEvent *e)
 {
 	QWidget::resizeEvent(e);
 
-	update();
+	m_waveformGraphics->update();
+}
+
+bool
+WaveformWidget::eventFilter(QObject *obj, QEvent *ev)
+{
+	if(obj != m_waveformGraphics || ev->type() != QEvent::Paint)
+		return false;
+
+	QPainter painter(m_waveformGraphics);
+	painter.fillRect(reinterpret_cast<QPaintEvent *>(ev)->rect(), Qt::black);
+
+	paintGraphics(painter);
+
+	return true;
 }
 
 void
@@ -334,6 +371,21 @@ WaveformWidget::onPlayerPositionChanged(double seconds)
 			m_timeEnd = m_timeStart.shifted(windowSize);
 		}
 
-		update();
+		m_waveformGraphics->update();
 	}
+}
+
+QToolButton *
+WaveformWidget::createToolButton(const QString &iconName, int iconSize)
+{
+	QToolButton *toolButton = new QToolButton(this);
+	toolButton->setObjectName(iconName);
+	toolButton->setMinimumSize(iconSize, iconSize);
+	toolButton->setIconSize(iconSize >= 32 ? QSize(iconSize - 6, iconSize - 6) : QSize(iconSize, iconSize));
+	toolButton->setAutoRaise(true);
+	toolButton->setFocusPolicy(Qt::NoFocus);
+//	toolButton->setDefaultAction(Application::instance()->action(actionName));
+	toolButton->setIcon(QIcon::fromTheme(iconName));
+	toolButton->show();
+	return toolButton;
 }
