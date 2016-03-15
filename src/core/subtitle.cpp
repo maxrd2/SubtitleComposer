@@ -666,7 +666,7 @@ Subtitle::joinLines(const RangeList &ranges)
 void
 Subtitle::shiftAnchoredLine(SubtitleLine *anchoredLine, const Time &newShowTime)
 {
-	if(m_anchoredLines.indexOf(anchoredLine) == -1)
+	if(m_anchoredLines.indexOf(anchoredLine) == -1 || m_lines.isEmpty())
 		return;
 
 	const SubtitleLine *prevAnchor = NULL;
@@ -685,26 +685,32 @@ Subtitle::shiftAnchoredLine(SubtitleLine *anchoredLine, const Time &newShowTime)
 		foreach(auto line, m_lines)
 			line->shiftTimes(shift);
 	} else {
-		Time savedShowTime(anchoredLine->m_showTime); // save times as adjustLines() will modify them
+		// save times as adjustLines() will modify them, and processing nextAnchor will modify them again
+		Time savedShowTime(anchoredLine->m_showTime);
 		Time savedHideTime(anchoredLine->m_hideTime);
 		if(prevAnchor) {
 			adjustLines(Range(prevAnchor->index(), anchoredLine->index()), prevAnchor->m_showTime.toMillis(), newShowTime.toMillis());
-		} else if(nextAnchor->m_showTime.toMillis() != anchoredLine->m_showTime.toMillis()) {
+		} else if(nextAnchor->m_showTime != anchoredLine->m_showTime) {
 			const SubtitleLine *first = firstLine();
 			double scaleFactor = (nextAnchor->m_showTime.toMillis() - newShowTime.toMillis()) / (nextAnchor->m_showTime.toMillis() - anchoredLine->m_showTime.toMillis());
 			Time firstShowTime(scaleFactor * (first->m_showTime.toMillis() - nextAnchor->m_showTime.toMillis()) + nextAnchor->m_showTime.toMillis());
 			adjustLines(Range(first->index(), anchoredLine->index()), firstShowTime.toMillis(), newShowTime.toMillis());
 		}
 
-		anchoredLine->m_showTime = savedShowTime; // restore times so adjustLines() wont modify them twice
-		anchoredLine->m_hideTime = savedHideTime;
+		double lastShowTime;
+		const SubtitleLine *last;
 		if(nextAnchor) {
-			adjustLines(Range(anchoredLine->index(), nextAnchor->index()), newShowTime.toMillis(), nextAnchor->m_showTime.toMillis());
-		} else if(anchoredLine->m_showTime.toMillis() != prevAnchor->m_showTime.toMillis()) {
-			const SubtitleLine *last = lastLine();
+			last = nextAnchor;
+			lastShowTime = nextAnchor->m_showTime.toMillis();
+		} else if(anchoredLine->m_showTime != prevAnchor->m_showTime) {
+			last = lastLine();
 			double scaleFactor = (newShowTime.toMillis() - prevAnchor->m_showTime.toMillis()) / (anchoredLine->m_showTime.toMillis() - prevAnchor->m_showTime.toMillis());
-			Time lastShowTime(scaleFactor * (last->m_showTime.toMillis() - prevAnchor->m_showTime.toMillis()) + prevAnchor->m_showTime.toMillis());
-			adjustLines(Range(anchoredLine->index(), last->index()), newShowTime.toMillis(), lastShowTime.toMillis());
+			lastShowTime = scaleFactor * (last->m_showTime.toMillis() - prevAnchor->m_showTime.toMillis()) + prevAnchor->m_showTime.toMillis();
+		}
+		if(newShowTime.toMillis() < lastShowTime) {
+			anchoredLine->m_showTime = savedShowTime;
+			anchoredLine->m_hideTime = savedHideTime;
+			adjustLines(Range(anchoredLine->index(), last->index()), newShowTime.toMillis(), lastShowTime);
 		}
 	}
 }
