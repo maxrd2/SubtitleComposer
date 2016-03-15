@@ -192,6 +192,7 @@ Application::init()
 	m_curLineWidget->setupActions();
 
 	m_mainWindow->setupGUI();
+	m_mainWindow->m_waveformWidget->initActions();
 
 	m_scriptsManager->reloadScripts();
 
@@ -1099,6 +1100,20 @@ Application::setupActions()
 	connect(scriptsManagerAction, SIGNAL(triggered()), m_scriptsManager, SLOT(showDialog()));
 	actionCollection->addAction(ACT_SCRIPTS_MANAGER, scriptsManagerAction);
 	actionManager->addAction(scriptsManagerAction, UserAction::FullScreenOff);
+
+	QAction *waveformZoomInAction = new QAction(actionCollection);
+	waveformZoomInAction->setIcon(QIcon::fromTheme("zoom-in"));
+	waveformZoomInAction->setText(i18n("Waveform Zoom In"));
+	waveformZoomInAction->setStatusTip(i18n("Waveform Zoom In"));
+	connect(waveformZoomInAction, SIGNAL(triggered()), m_mainWindow->m_waveformWidget, SLOT(zoomIn()));
+	actionCollection->addAction(ACT_WAVEFORM_ZOOM_IN, waveformZoomInAction);
+
+	QAction *waveformZoomOutAction = new QAction(actionCollection);
+	waveformZoomOutAction->setIcon(QIcon::fromTheme("zoom-out"));
+	waveformZoomOutAction->setText(i18n("Waveform Zoom Out"));
+	waveformZoomOutAction->setStatusTip(i18n("Waveform Zoom Out"));
+	connect(waveformZoomOutAction, SIGNAL(triggered()), m_mainWindow->m_waveformWidget, SLOT(zoomOut()));
+	actionCollection->addAction(ACT_WAVEFORM_ZOOM_OUT, waveformZoomOutAction);
 
 	updateActionTexts();
 }

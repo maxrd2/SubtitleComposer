@@ -108,5 +108,7 @@
 #define ACT_ANCHOR_TOGGLE "anchor_toggle"
 #define ACT_ANCHOR_REMOVE_ALL "anchor_remove_all"
 #define ACT_SCRIPTS_MANAGER "scripts_manager"
+#define ACT_WAVEFORM_ZOOM_IN "waveform-zoom-in"
+#define ACT_WAVEFORM_ZOOM_OUT "waveform-zoom-out"
 
 #endif

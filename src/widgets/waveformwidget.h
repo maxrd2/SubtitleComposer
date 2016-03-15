@@ -59,8 +59,10 @@ public:
 	WaveformWidget(QWidget *parent);
 	virtual ~WaveformWidget();
 
-	Time windowSize() const;
-	void setWindowSize(const Time &size);
+	void initActions();
+
+	quint32 windowSize() const;
+	void setWindowSize(const quint32 size);
 
 	QWidget *progressWidget();
 
@@ -68,6 +70,8 @@ public slots:
 	void setSubtitle(Subtitle *subtitle = 0);
 	void setAudioStream(const QString &mediaFile, int audioStream);
 	void clearAudioStream();
+	void zoomIn();
+	void zoomOut();
 
 protected:
 	virtual void resizeEvent(QResizeEvent *e);
@@ -81,7 +85,7 @@ private slots:
 
 private:
 	void paintGraphics(QPainter &painter);
-	QToolButton * createToolButton(const QString &iconName, int iconSize);
+	QToolButton * createToolButton(const QString &actionName, int iconSize=16);
 	void updateZoomData();
 
 private:

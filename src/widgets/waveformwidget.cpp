@@ -20,7 +20,7 @@
 #include "waveformwidget.h"
 #include "../core/subtitleline.h"
 #include "../videoplayer/videoplayer.h"
-//#include "application.h"
+#include "application.h"
 #include "actions/useractionnames.h"
 
 #include <QRect>
@@ -39,6 +39,8 @@
 
 #include <KLocalizedString>
 
+#define MAX_WINDOW_ZOOM 6000
+
 using namespace SubtitleComposer;
 
 WaveformWidget::WaveformWidget(QWidget *parent)
@@ -48,8 +50,8 @@ WaveformWidget::WaveformWidget(QWidget *parent)
 	  m_stream(new StreamProcessor()),
 	  m_subtitle(NULL),
 	  m_timeStart(0),
-	  m_timeCurrent(3000),
-	  m_timeEnd(6000),
+	  m_timeCurrent(0),
+	  m_timeEnd(MAX_WINDOW_ZOOM),
 	  m_waveformChannels(0),
 	  m_waveform(NULL),
 	  m_waveformGraphics(new QWidget(this)),
@@ -68,8 +70,8 @@ WaveformWidget::WaveformWidget(QWidget *parent)
 	QHBoxLayout *toolbarLayout = new QHBoxLayout();
 	toolbarLayout->setMargin(0);
 	toolbarLayout->setSpacing(2);
-	toolbarLayout->addWidget(createToolButton(QStringLiteral("zoom-in"), 16));
-	toolbarLayout->addWidget(createToolButton(QStringLiteral("zoom-out"), 16));
+	toolbarLayout->addWidget(createToolButton(QStringLiteral(ACT_WAVEFORM_ZOOM_IN)));
+	toolbarLayout->addWidget(createToolButton(QStringLiteral(ACT_WAVEFORM_ZOOM_OUT)));
 	toolbarLayout->addSpacerItem(new QSpacerItem(1, 1, QSizePolicy::Expanding, QSizePolicy::Preferred));
 
 	QVBoxLayout *mainLayout = new QVBoxLayout(this);
@@ -103,25 +105,61 @@ WaveformWidget::WaveformWidget(QWidget *parent)
 	connect(m_stream, &StreamProcessor::audioDataAvailable, this, &WaveformWidget::onStreamData, Qt::DirectConnection);
 }
 
+void
+WaveformWidget::initActions()
+{
+	Application *app = Application::instance();
+	const quint32 size = windowSize();
+	QToolButton *btn;
+
+	btn = findChild<QToolButton *>(QStringLiteral(ACT_WAVEFORM_ZOOM_IN));
+	btn->setDefaultAction(app->action(ACT_WAVEFORM_ZOOM_IN));
+	btn->setEnabled(m_waveformZoomed && size > MAX_WINDOW_ZOOM);
+
+	btn = findChild<QToolButton *>(QStringLiteral(ACT_WAVEFORM_ZOOM_OUT));
+	btn->setDefaultAction(app->action(ACT_WAVEFORM_ZOOM_OUT));
+	btn->setEnabled(m_waveformZoomed && size < m_waveformChannelSize / SAMPLE_RATE_MILIS);
+}
+
 WaveformWidget::~WaveformWidget()
 {
 	clearAudioStream();
 }
 
-Time
+quint32
 WaveformWidget::windowSize() const
 {
-	return m_timeEnd - m_timeStart;
+	return (m_timeEnd - m_timeStart).toMillis();
 }
 
 void
-WaveformWidget::setWindowSize(const Time &size)
+WaveformWidget::setWindowSize(const quint32 size)
 {
 	if(size != windowSize()) {
+		initActions();
 		m_timeEnd = m_timeStart + size;
 		updateZoomData();
 		m_waveformGraphics->update();
 	}
+}
+
+void
+WaveformWidget::zoomIn()
+{
+	quint32 winSize = windowSize();
+	if(winSize <= MAX_WINDOW_ZOOM)
+		return;
+	setWindowSize(winSize / 2);
+}
+
+void
+WaveformWidget::zoomOut()
+{
+	quint32 winSize = windowSize();
+	quint32 totalLength = m_waveformChannelSize / SAMPLE_RATE_MILIS;
+	if(winSize >= totalLength)
+		return;
+	setWindowSize(winSize * 2);
 }
 
 void
@@ -130,7 +168,7 @@ WaveformWidget::updateZoomData()
 	if(!m_waveformGraphics->height())
 		return;
 
-	quint32 samplesPerPixel = SAMPLE_RATE_MILIS * windowSize().toMillis() / m_waveformGraphics->height();
+	quint32 samplesPerPixel = SAMPLE_RATE_MILIS * windowSize() / m_waveformGraphics->height();
 	if(m_samplesPerPixel != samplesPerPixel) {
 		m_samplesPerPixel = samplesPerPixel;
 		m_waveformZoomedOffset = 0;
@@ -152,6 +190,8 @@ WaveformWidget::updateZoomData()
 			m_waveformZoomed = new ZoomData *[m_waveformChannels];
 			for(quint32 i = 0; i < m_waveformChannels; i++)
 				m_waveformZoomed[i] = new ZoomData[m_waveformZoomedSize];
+
+			initActions();
 		}
 
 		int iMin = m_waveformZoomedOffset * m_samplesPerPixel;
@@ -316,7 +356,7 @@ WaveformWidget::paintGraphics(QPainter &painter)
 	const static QPen waveDark(QColor(100, 100, 100, 255), 0, Qt::SolidLine);
 	const static QPen waveLight(QColor(150, 150, 150, 255), 0, Qt::SolidLine);
 
-	int msWindowSize = windowSize().toMillis();
+	quint32 msWindowSize = windowSize();
 	int widgetHeight = m_waveformGraphics->height();
 	int widgetWidth = m_waveformGraphics->width();
 
@@ -424,7 +464,7 @@ WaveformWidget::onPlayerPositionChanged(double seconds)
 	if(m_timeCurrent != playingPosition) {
 		m_timeCurrent = playingPosition;
 
-		int windowSize = this->windowSize().toMillis() + 0.5,
+		int windowSize = this->windowSize() + 0.5,
 			windowPadding = windowSize / 8, // scroll when we reach padding
 			windowSizePad = windowSize - 2 * windowPadding;
 
@@ -438,16 +478,13 @@ WaveformWidget::onPlayerPositionChanged(double seconds)
 }
 
 QToolButton *
-WaveformWidget::createToolButton(const QString &iconName, int iconSize)
+WaveformWidget::createToolButton(const QString &actionName, int iconSize)
 {
 	QToolButton *toolButton = new QToolButton(this);
-	toolButton->setObjectName(iconName);
+	toolButton->setObjectName(actionName);
 	toolButton->setMinimumSize(iconSize, iconSize);
 	toolButton->setIconSize(iconSize >= 32 ? QSize(iconSize - 6, iconSize - 6) : QSize(iconSize, iconSize));
 	toolButton->setAutoRaise(true);
 	toolButton->setFocusPolicy(Qt::NoFocus);
-//	toolButton->setDefaultAction(Application::instance()->action(actionName));
-	toolButton->setIcon(QIcon::fromTheme(iconName));
-	toolButton->show();
 	return toolButton;
 }
