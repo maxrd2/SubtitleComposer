@@ -53,7 +53,11 @@ WaveformWidget::WaveformWidget(QWidget *parent)
 	  m_waveformChannels(0),
 	  m_waveform(NULL),
 	  m_waveformGraphics(new QWidget(this)),
-	  m_progressWidget(new QWidget(this))
+	  m_progressWidget(new QWidget(this)),
+	  m_samplesPerPixel(0),
+	  m_waveformZoomed(NULL),
+	  m_waveformZoomedSize(0),
+	  m_waveformZoomedOffset(0)
 {
 	m_waveformGraphics->setAttribute(Qt::WA_OpaquePaintEvent, true);
 	m_waveformGraphics->setAttribute(Qt::WA_NoSystemBackground, true);
@@ -115,7 +119,73 @@ WaveformWidget::setWindowSize(const Time &size)
 {
 	if(size != windowSize()) {
 		m_timeEnd = m_timeStart + size;
+		updateZoomData();
 		m_waveformGraphics->update();
+	}
+}
+
+void
+WaveformWidget::updateZoomData()
+{
+	if(!m_waveformGraphics->height())
+		return;
+
+	quint32 samplesPerPixel = SAMPLE_RATE_MILIS * windowSize().toMillis() / m_waveformGraphics->height();
+	if(m_samplesPerPixel != samplesPerPixel) {
+		m_samplesPerPixel = samplesPerPixel;
+		m_waveformZoomedOffset = 0;
+		m_waveformZoomedSize = 0;
+		if(m_waveformZoomed) {
+			for(quint32 i = 0; i < m_waveformChannels; i++)
+				delete[] m_waveformZoomed[i];
+			delete[] m_waveformZoomed;
+			m_waveformZoomed = NULL;
+		}
+	}
+
+	if(m_waveformChannels && m_waveform) {
+		if(!m_waveformZoomed) {
+			m_waveformZoomedOffset = 0;
+			m_waveformZoomedSize = m_waveformChannelSize / m_samplesPerPixel;
+			if(m_waveformChannelSize % m_samplesPerPixel)
+				m_waveformZoomedSize++;
+			m_waveformZoomed = new ZoomData *[m_waveformChannels];
+			for(quint32 i = 0; i < m_waveformChannels; i++)
+				m_waveformZoomed[i] = new ZoomData[m_waveformZoomedSize];
+		}
+
+		int iMin = m_waveformZoomedOffset * m_samplesPerPixel;
+		int iMax = m_waveformDataOffset / BYTES_PER_SAMPLE / m_waveformChannels;
+		qint32 xMin = 65535, xMax = -65535;
+//		qint32 xAvg = 0;
+//		qreal xRMS = 0;
+
+		for(quint32 ch = 0; ch < m_waveformChannels; ch++) {
+			for(int i = iMin; i < iMax; i++) {
+				qint32 val = (qint32)m_waveform[ch][i] + SIGNED_PAD;
+				if(xMin > val)
+					xMin = val;
+				if(xMax < val)
+					xMax = val;
+//				xAvg += val;
+//				xRMS += val * val;
+
+				if(i % m_samplesPerPixel == m_samplesPerPixel - 1) {
+//					xAvg /= m_samplesPerPixel;
+//					xRMS = sqrt(xRMS / m_samplesPerPixel);
+
+					int zi = i / m_samplesPerPixel;
+					m_waveformZoomed[ch][zi].min = xMin;
+					m_waveformZoomed[ch][zi].max = xMax;
+
+					xMin = 65535;
+					xMax = 0;
+//					xAvg = 0;
+//					xRMS = 0.0;
+				}
+			}
+		}
+		m_waveformZoomedOffset = iMax / m_samplesPerPixel;
 	}
 }
 
@@ -153,17 +223,26 @@ WaveformWidget::setAudioStream(const QString &mediaFile, int audioStream)
 void
 WaveformWidget::clearAudioStream()
 {
-	m_stream->close();;
+	m_stream->close();
 
 	m_mediaFile.clear();
 	m_streamIndex = -1;
 
-	for(int i = 0; i < m_waveformChannels; i++)
-		delete[] m_waveform[i];
-	m_waveformChannels = 0;
+	if(m_waveformZoomed) {
+		for(quint32 i = 0; i < m_waveformChannels; i++)
+			delete[] m_waveformZoomed[i];
+		delete[] m_waveformZoomed;
+		m_waveformZoomed = NULL;
+	}
 
-	delete[] m_waveform;
-	m_waveform = NULL;
+	if(m_waveform) {
+		for(quint32 i = 0; i < m_waveformChannels; i++)
+			delete[] m_waveform[i];
+		delete[] m_waveform;
+		m_waveform = NULL;
+	}
+
+	m_waveformChannels = 0;
 }
 
 void
@@ -181,6 +260,7 @@ void
 WaveformWidget::onStreamFinished()
 {
 	m_progressWidget->hide();
+	m_stream->close();
 }
 
 void
@@ -192,13 +272,13 @@ WaveformWidget::onStreamData(const void *buffer, const qint32 size, const WaveFo
 
 	if(!m_waveformChannels) {
 		m_waveformChannels = waveFormat->channels();
-		int channelSize = waveFormat->sampleRate() * (m_waveformDuration + 60); // FIXME: added 60sec not to overflow below
+		m_waveformChannelSize = waveFormat->sampleRate() * (m_waveformDuration + 60); // FIXME: added 60sec not to overflow below
 		m_waveform = new SAMPLE_TYPE *[m_waveformChannels];
-		for(int i = 0; i < m_waveformChannels; i++)
-			m_waveform[i] = new SAMPLE_TYPE[channelSize];
+		for(quint32 i = 0; i < m_waveformChannels; i++)
+			m_waveform[i] = new SAMPLE_TYPE[m_waveformChannelSize];
 	}
 
-	Q_ASSERT(m_waveformDataOffset + size < waveFormat->sampleRate() * (m_waveformDuration + 60) * BYTES_PER_SAMPLE * m_waveformChannels);
+	Q_ASSERT(m_waveformDataOffset + size < m_waveformChannelSize * BYTES_PER_SAMPLE * m_waveformChannels);
 	Q_ASSERT(waveFormat->bitsPerSample() == BYTES_PER_SAMPLE * 8);
 	Q_ASSERT(waveFormat->sampleRate() == 8000);
 	Q_ASSERT(size % BYTES_PER_SAMPLE == 0);
@@ -207,7 +287,7 @@ WaveformWidget::onStreamData(const void *buffer, const qint32 size, const WaveFo
 	int len = size / BYTES_PER_SAMPLE;
 	int i = m_waveformDataOffset / BYTES_PER_SAMPLE / m_waveformChannels;
 	while(len > 0) {
-		for(int c = m_waveformDataOffset / BYTES_PER_SAMPLE % m_waveformChannels; len > 0 && c < m_waveformChannels; c++) {
+		for(quint32 c = m_waveformDataOffset / BYTES_PER_SAMPLE % m_waveformChannels; len > 0 && c < m_waveformChannels; c++) {
 			qint32 val = *sample++;
 			if(i > 0) {
 				// simple lowpass filter
@@ -240,51 +320,31 @@ WaveformWidget::paintGraphics(QPainter &painter)
 	int widgetHeight = m_waveformGraphics->height();
 	int widgetWidth = m_waveformGraphics->width();
 
-	// FIXME: draw waveform and overlay text from/to separate buffer
-	// FIXME: make visualization types configurable? Min/Max/Avg/RMS
+	updateZoomData();
 
-	if(m_waveform) {
-		int spp = SAMPLE_RATE_MILIS * msWindowSize / widgetHeight;
-		int yMin = (SAMPLE_RATE_MILIS * m_timeStart.toMillis() / spp) * spp;
-		int yMax = (SAMPLE_RATE_MILIS * m_timeEnd.toMillis() / spp) * spp;
-		int yLimit = m_waveformDataOffset / m_waveformChannels;
-		qint32 xMin = 65535, xMax = 0;
-//		qint32 xAvg = 0;
-//		qreal xRMS = 0;
+	// FIXME: make visualization types configurable? Min/Max/Avg/RMS
+	if(m_waveformZoomed) {
+		quint32 yMin = SAMPLE_RATE_MILIS * m_timeStart.toMillis() / m_samplesPerPixel;
+		quint32 yMax = SAMPLE_RATE_MILIS * m_timeEnd.toMillis() / m_samplesPerPixel;
+		qint32 xMin, xMax;
 
 		qint32 chHalfWidth = widgetWidth / m_waveformChannels / 2;
 
-		for(int ch = 0; ch < m_waveformChannels; ch++) {
+		for(quint32 ch = 0; ch < m_waveformChannels; ch++) {
 			qint32 chCenter = (ch * 2 + 1) * chHalfWidth;
-			for(int i = yMin; i < yMax; i++) {
-				qint32 val = i >= yLimit ? 0 : (qint32)m_waveform[ch][i] + SIGNED_PAD;
-				if(xMin > val)
-					xMin = val;
-				if(xMax < val)
-					xMax = val;
-//				xAvg += val;
-//				xRMS += val * val;
-
-				if(i % spp == spp - 1) {
-//					xAvg /= spp;
-//					xRMS = sqrt(xRMS / spp);
-					qint32 y = (i - yMin) / spp;
-					xMax = xMax * 9 / 5 * chHalfWidth / SAMPLE_MAX;
-					xMin = xMin * 5 / 3 * chHalfWidth / SAMPLE_MAX;
-/*
-					painter.setPen(waveDark);
-					painter.drawLine(chCenter + xMax, y, chCenter + xMin, y);
-/*/
-					painter.setPen(waveDark);
-					painter.drawLine(chCenter - xMax, y, chCenter + xMax, y);
-					painter.setPen(waveLight);
-					painter.drawLine(chCenter - xMin, y, chCenter + xMin, y);
-//*/
-					xMin = 65535;
-					xMax = 0;
-//					xAvg = 0;
-//					xRMS = 0.0;
+			for(quint32 i = yMin; i < yMax; i++) {
+				if(i >= m_waveformZoomedOffset) {
+					xMin = xMax = 0;
+				} else {
+					xMin = m_waveformZoomed[ch][i].min * 9 / 5 * chHalfWidth / SAMPLE_MAX;
+					xMax = m_waveformZoomed[ch][i].max * 9 / 5 * chHalfWidth / SAMPLE_MAX;
 				}
+
+				int y = i - yMin;
+				painter.setPen(waveDark);
+				painter.drawLine(chCenter - xMax, y, chCenter + xMax, y);
+				painter.setPen(waveLight);
+				painter.drawLine(chCenter - xMin, y, chCenter + xMin, y);
 			}
 		}
 	}
@@ -335,6 +395,8 @@ void
 WaveformWidget::resizeEvent(QResizeEvent *e)
 {
 	QWidget::resizeEvent(e);
+
+	updateZoomData();
 
 	m_waveformGraphics->update();
 }

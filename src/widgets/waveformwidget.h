@@ -82,6 +82,7 @@ private slots:
 private:
 	void paintGraphics(QPainter &painter);
 	QToolButton * createToolButton(const QString &iconName, int iconSize);
+	void updateZoomData();
 
 private:
 	QString m_mediaFile;
@@ -94,9 +95,10 @@ private:
 	Time m_timeCurrent;
 	Time m_timeEnd;
 
-	qint64 m_waveformDuration;
+	quint32 m_waveformDuration;
 	quint32 m_waveformDataOffset;
-	int m_waveformChannels;
+	quint32 m_waveformChannels;
+	quint32 m_waveformChannelSize;
 	SAMPLE_TYPE **m_waveform;
 
 	QWidget *m_waveformGraphics;
@@ -104,7 +106,14 @@ private:
 	QWidget *m_progressWidget;
 	QProgressBar *m_progressBar;
 
-	friend class WaveformGraphics;
+	struct ZoomData {
+		qint32 min;
+		qint32 max;
+	};
+	quint32 m_samplesPerPixel;
+	ZoomData **m_waveformZoomed;
+	quint32 m_waveformZoomedSize;
+	quint32 m_waveformZoomedOffset;
 };
 }
 #endif
