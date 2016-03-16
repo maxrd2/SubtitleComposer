@@ -178,57 +178,15 @@ MPVBackend::mpvEventHandle(mpv_event *event)
 				setPlayerLength(duration);
 			}
 		} else if(strcmp(prop->name, "track-list") == 0) {
-			QStringList audioStreams;
-			if(prop->format == MPV_FORMAT_NODE) {
-				mpv_node *node = (mpv_node *)prop->data;
-				if(node->format == MPV_FORMAT_NODE_ARRAY) {
-					for(int i = 0; i < node->u.list->num; i++) {
-						mpv_node &val = node->u.list->values[i];
-						if(val.format == MPV_FORMAT_NODE_MAP) {
-							QMap<QString, QVariant> map = mpv::qt::node_to_variant(&val).toMap();
-							if(map["type"].toString() != "audio")
-								continue;
-
-							QString audioStreamName;
-							if(map.contains("lang") && !map["lang"].toString().isEmpty())
-								audioStreamName = map["lang"].toString();
-							if(map.contains("title") && !map["title"].toString().isEmpty()) {
-								if(!audioStreamName.isEmpty())
-									audioStreamName += " / ";
-								audioStreamName += map["title"].toString();
-							}
-							if(audioStreamName.isEmpty())
-								audioStreamName = i18n("Stream #%1", map["id"].toLongLong());
-							if(map.contains("codec") && !map["codec"].toString().isEmpty()) {
-								audioStreamName += " [";
-								audioStreamName += map["codec"].toString();
-								audioStreamName += "]";
-							}
-							audioStreams << audioStreamName;
-						}
-					}
-				}
-			}
-			setPlayerAudioStreams(audioStreams, audioStreams.isEmpty() ? -1 : 0);
+			updateAudioData(prop);
+			updateTextData(prop);
 		}
 		break;
 	}
-	case MPV_EVENT_VIDEO_RECONFIG: {
-		// Retrieve the new video size.
-		int64_t w, h;
-		double dar, fps;
-		if(mpv_get_property(m_mpv, "dwidth", MPV_FORMAT_INT64, &w) >= 0
-				&& mpv_get_property(m_mpv, "dheight", MPV_FORMAT_INT64, &h) >= 0
-				&& mpv_get_property(m_mpv, "video-aspect", MPV_FORMAT_DOUBLE, &dar)
-				&& w > 0 && h > 0) {
-			player()->videoWidget()->setVideoResolution(w, h, dar);
-		}
-		if(mpv_get_property(m_mpv, "fps", MPV_FORMAT_DOUBLE, &fps) >= 0 && fps > 0) {
-			setPlayerFramesPerSecond(fps);
-		}
-
+	case MPV_EVENT_VIDEO_RECONFIG:
+		updateVideoData();
 		break;
-	}
+
 	case MPV_EVENT_LOG_MESSAGE: {
 		struct mpv_event_log_message *msg = (struct mpv_event_log_message *)event->data;
 		qDebug() << "[MPV:" << msg->prefix << "] " << msg->level << ": " << msg->text;
@@ -247,6 +205,97 @@ MPVBackend::mpvEventHandle(mpv_event *event)
 		break;
 	}
 }
+
+void
+MPVBackend::updateTextData(const mpv_event_property *prop)
+{
+	QStringList textStreams;
+	if(prop->format == MPV_FORMAT_NODE) {
+		const mpv_node *node = (mpv_node *)prop->data;
+		if(node->format == MPV_FORMAT_NODE_ARRAY) {
+			for(int i = 0; i < node->u.list->num; i++) {
+				const mpv_node &val = node->u.list->values[i];
+				if(val.format != MPV_FORMAT_NODE_MAP)
+					continue;
+
+				const QMap<QString, QVariant> &map = mpv::qt::node_to_variant(&val).toMap();
+
+				if(map[QStringLiteral("type")].toString() != QStringLiteral("sub")
+				|| map[QStringLiteral("codec")].toString() != QStringLiteral("mov_text")
+				|| map[QStringLiteral("external")].toBool() == true)
+					continue;
+
+				const int &id = map[QStringLiteral("id")].toInt();
+				const QString &lang = map[QStringLiteral("lang")].toString();
+				const QString &title = map[QStringLiteral("title")].toString();
+
+				QString textStreamName = i18n("Text Stream #%1", id);
+				if(!lang.isEmpty() && lang != QStringLiteral("und"))
+					textStreamName += QStringLiteral(": ") + lang;
+				if(!title.isEmpty())
+					textStreamName += QStringLiteral(": ") + title;
+
+				textStreams << textStreamName;
+			}
+		}
+	}
+	setPlayerTextStreams(textStreams);
+}
+
+void
+MPVBackend::updateAudioData(const mpv_event_property *prop)
+{
+	QStringList audioStreams;
+	if(prop->format == MPV_FORMAT_NODE) {
+		const mpv_node *node = (mpv_node *)prop->data;
+		if(node->format == MPV_FORMAT_NODE_ARRAY) {
+			for(int i = 0; i < node->u.list->num; i++) {
+				const mpv_node &val = node->u.list->values[i];
+				if(val.format != MPV_FORMAT_NODE_MAP)
+					continue;
+
+				const QMap<QString, QVariant> &map = mpv::qt::node_to_variant(&val).toMap();
+
+				if(map[QStringLiteral("type")].toString() != QStringLiteral("audio"))
+					continue;
+
+				const int &id = map[QStringLiteral("id")].toInt();
+				const QString &lang = map[QStringLiteral("lang")].toString();
+				const QString &title = map[QStringLiteral("title")].toString();
+				const QString &codec = map[QStringLiteral("codec")].toString();
+
+				QString audioStreamName = i18n("Audio Stream #%1", id);
+				if(!lang.isEmpty() && lang != QStringLiteral("und"))
+					audioStreamName += QStringLiteral(": ") + lang;
+				if(!title.isEmpty())
+					audioStreamName += QStringLiteral(": ") + title;
+				if(!codec.isEmpty())
+					audioStreamName += QStringLiteral(" [") + codec + QStringLiteral("]");
+
+				audioStreams << audioStreamName;
+			}
+		}
+	}
+	setPlayerAudioStreams(audioStreams, audioStreams.isEmpty() ? -1 : 0);
+}
+
+void
+MPVBackend::updateVideoData()
+{
+	// Retrieve the new video size.
+	int64_t w, h;
+	double dar, fps;
+	if(mpv_get_property(m_mpv, "dwidth", MPV_FORMAT_INT64, &w) >= 0
+			&& mpv_get_property(m_mpv, "dheight", MPV_FORMAT_INT64, &h) >= 0
+			&& mpv_get_property(m_mpv, "video-aspect", MPV_FORMAT_DOUBLE, &dar)
+			&& w > 0 && h > 0) {
+		player()->videoWidget()->setVideoResolution(w, h, dar);
+	}
+	if(mpv_get_property(m_mpv, "fps", MPV_FORMAT_DOUBLE, &fps) >= 0 && fps > 0) {
+		setPlayerFramesPerSecond(fps);
+	}
+}
+
 
 // This slot is invoked by wakeup() (through the mpv_events signal).
 void

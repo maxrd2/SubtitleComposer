@@ -84,6 +84,10 @@ protected:
 	static void wakeup(void *ctx);
 
 private:
+	void updateTextData(const mpv_event_property *prop);
+	void updateAudioData(const mpv_event_property *prop);
+	void updateVideoData();
+
 	virtual void setSCConfig(SCConfig *scConfig);
 
 protected:
