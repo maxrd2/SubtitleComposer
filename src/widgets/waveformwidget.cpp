@@ -559,8 +559,11 @@ WaveformWidget::eventFilter(QObject *obj, QEvent *event)
 		if(m_draggedLine) {
 			m_draggedTime = m_pointerTime;
 		} else {
-			WaveformWidget::DragPosition res = subtitleAt(y, NULL);
-			if(res == DRAG_SHOW || res == DRAG_HIDE)
+			SubtitleLine *sub = NULL;
+			WaveformWidget::DragPosition res = subtitleAt(y, &sub);
+			if(res != DRAG_LINE && sub && !m_subtitle->anchoredLines().empty() && m_subtitle->anchoredLines().indexOf(sub) == -1)
+				m_waveformGraphics->setCursor(QCursor(Qt::ForbiddenCursor));
+			else if(res == DRAG_SHOW || res == DRAG_HIDE)
 				m_waveformGraphics->setCursor(QCursor(Qt::SplitVCursor));
 			else
 				m_waveformGraphics->unsetCursor();
@@ -579,14 +582,14 @@ WaveformWidget::eventFilter(QObject *obj, QEvent *event)
 	case QEvent::MouseButtonPress: {
 		int y = reinterpret_cast<QMouseEvent *>(event)->y();
 		m_draggedPos = subtitleAt(y, &m_draggedLine);
-		if(m_draggedPos == DRAG_SHOW) {
-			m_draggedTime = m_draggedLine->showTime();
-		} else if(m_draggedPos == DRAG_HIDE) {
-			m_draggedTime = m_draggedLine->hideTime();
-		} else if(m_draggedPos == DRAG_LINE) {
+		if(m_draggedPos == DRAG_LINE || (m_draggedLine && !m_subtitle->anchoredLines().empty() && m_subtitle->anchoredLines().indexOf(m_draggedLine) == -1)) {
 			m_draggedTime = 0.;
 			m_draggedPos = DRAG_NONE;
 			m_draggedLine = NULL;
+		} else if(m_draggedPos == DRAG_SHOW) {
+			m_draggedTime = m_draggedLine->showTime();
+		} else if(m_draggedPos == DRAG_HIDE) {
+			m_draggedTime = m_draggedLine->hideTime();
 		}
 
 		if(m_draggedLine)
