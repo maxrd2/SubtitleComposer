@@ -40,6 +40,7 @@
 #include <KLocalizedString>
 
 #define MAX_WINDOW_ZOOM 6000
+#define DRAG_TOLERANCE (double(10 * m_samplesPerPixel / SAMPLE_RATE_MILIS))
 
 using namespace SubtitleComposer;
 
@@ -49,8 +50,8 @@ WaveformWidget::WaveformWidget(QWidget *parent)
 	  m_streamIndex(-1),
 	  m_stream(new StreamProcessor()),
 	  m_subtitle(NULL),
-	  m_timeStart(0),
-	  m_timeCurrent(0),
+	  m_timeStart(0.),
+	  m_timeCurrent(0.),
 	  m_timeEnd(MAX_WINDOW_ZOOM),
 	  m_waveformChannels(0),
 	  m_waveform(NULL),
@@ -59,11 +60,15 @@ WaveformWidget::WaveformWidget(QWidget *parent)
 	  m_samplesPerPixel(0),
 	  m_waveformZoomed(NULL),
 	  m_waveformZoomedSize(0),
-	  m_waveformZoomedOffset(0)
+	  m_waveformZoomedOffset(0),
+	  m_draggedLine(NULL),
+	  m_draggedPos(DRAG_NONE),
+	  m_draggedTime(0.)
 {
 	m_waveformGraphics->setAttribute(Qt::WA_OpaquePaintEvent, true);
 	m_waveformGraphics->setAttribute(Qt::WA_NoSystemBackground, true);
 	m_waveformGraphics->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
+	m_waveformGraphics->setMouseTracking(true);
 	m_waveformGraphics->installEventFilter(this);
 	m_waveformGraphics->show();
 
@@ -168,7 +173,7 @@ WaveformWidget::updateZoomData()
 	if(!m_waveformGraphics->height())
 		return;
 
-	quint32 samplesPerPixel = SAMPLE_RATE_MILIS * windowSize() / m_waveformGraphics->height();
+	double samplesPerPixel = double(SAMPLE_RATE_MILIS * windowSize()) / m_waveformGraphics->height();
 	if(m_samplesPerPixel != samplesPerPixel) {
 		m_samplesPerPixel = samplesPerPixel;
 		m_waveformZoomedOffset = 0;
@@ -185,7 +190,7 @@ WaveformWidget::updateZoomData()
 		if(!m_waveformZoomed) {
 			m_waveformZoomedOffset = 0;
 			m_waveformZoomedSize = m_waveformChannelSize / m_samplesPerPixel;
-			if(m_waveformChannelSize % m_samplesPerPixel)
+			if(m_waveformChannelSize % int(m_samplesPerPixel))
 				m_waveformZoomedSize++;
 			m_waveformZoomed = new ZoomData *[m_waveformChannels];
 			for(quint32 i = 0; i < m_waveformChannels; i++)
@@ -210,7 +215,7 @@ WaveformWidget::updateZoomData()
 //				xAvg += val;
 //				xRMS += val * val;
 
-				if(i % m_samplesPerPixel == m_samplesPerPixel - 1) {
+				if(i % int(m_samplesPerPixel) == int(m_samplesPerPixel) - 1) {
 //					xAvg /= m_samplesPerPixel;
 //					xRMS = sqrt(xRMS / m_samplesPerPixel);
 
@@ -352,6 +357,7 @@ WaveformWidget::paintGraphics(QPainter &painter)
 	const static QColor subtitleBg(0, 0, 150, 100);
 	const static QPen subtitleBorder(QColor(0, 0, 255, 150), 0, Qt::SolidLine);
 	const static QPen textWhite(Qt::white, 0, Qt::SolidLine);
+	const static QPen mousePointer(QColor(255, 255, 255, 80), 0, Qt::DotLine);
 	const static QPen textShadow(QColor(0, 0, 0, 192), 0, Qt::SolidLine);
 	const static QPen waveDark(QColor(100, 100, 100, 255), 0, Qt::SolidLine);
 	const static QPen waveLight(QColor(150, 150, 150, 255), 0, Qt::SolidLine);
@@ -389,12 +395,15 @@ WaveformWidget::paintGraphics(QPainter &painter)
 		}
 	}
 
+	m_visibleLines.clear();
 	if(m_subtitle) {
 		for(int i = 0, n = m_subtitle->linesCount(); i < n; i++) {
-			const SubtitleLine *sub = m_subtitle->line(i);
-			const Time timeShow = sub->showTime();
-			const Time timeHide = sub->hideTime();
+			SubtitleLine *sub = m_subtitle->line(i);
+			const Time timeShow = sub == m_draggedLine && m_draggedPos == DRAG_SHOW ? m_draggedTime : sub->showTime();
+			const Time timeHide = sub == m_draggedLine && m_draggedPos == DRAG_HIDE ? m_draggedTime : sub->hideTime();
 			if(timeShow <= m_timeEnd && m_timeStart <= timeHide) {
+				m_visibleLines.push_back(sub);
+
 				int showY = widgetHeight * (timeShow.toMillis() - m_timeStart.toMillis()) / msWindowSize;
 				int hideY = widgetHeight * (timeHide.toMillis() - m_timeStart.toMillis()) / msWindowSize;
 				QRect box(0, showY, widgetWidth, hideY - showY + 1);
@@ -422,13 +431,17 @@ WaveformWidget::paintGraphics(QPainter &painter)
 
 	int playY = widgetHeight * (m_timeCurrent - m_timeStart).toMillis() / msWindowSize;
 	painter.setPen(textWhite);
-	painter.drawLine(0, playY, width(), playY);
+	painter.drawLine(0, playY, widgetWidth, playY);
 
-	QRect textRect(rect().left() + 6, rect().top() + 4, rect().width() - 12, rect().height() - 8);
+	QRect textRect(6, 4, m_waveformGraphics->width() - 12, m_waveformGraphics->height() - 8);
 	painter.setPen(textWhite);
 	painter.setFont(fontSubText);
 	painter.drawText(textRect, Qt::AlignRight | Qt::AlignTop, m_timeStart.toString());
 	painter.drawText(textRect, Qt::AlignRight | Qt::AlignBottom, m_timeEnd.toString());
+
+	painter.setPen(mousePointer);
+	playY = widgetHeight * (m_pointerTime - m_timeStart).toMillis() / msWindowSize;
+	painter.drawLine(0, playY, widgetWidth, playY);
 }
 
 void
@@ -444,15 +457,109 @@ WaveformWidget::resizeEvent(QResizeEvent *e)
 bool
 WaveformWidget::eventFilter(QObject *obj, QEvent *ev)
 {
-	if(obj != m_waveformGraphics || ev->type() != QEvent::Paint)
+	if(obj != m_waveformGraphics)
 		return false;
 
-	QPainter painter(m_waveformGraphics);
-	painter.fillRect(reinterpret_cast<QPaintEvent *>(ev)->rect(), Qt::black);
+	switch(ev->type()) {
+	case QEvent::Paint: {
+		QPainter painter(m_waveformGraphics);
+		painter.fillRect(reinterpret_cast<QPaintEvent *>(ev)->rect(), Qt::black);
+		paintGraphics(painter);
+		return true;
+	}
 
-	paintGraphics(painter);
+	case QEvent::MouseMove: {
+		int y = reinterpret_cast<QMouseEvent *>(ev)->y();
 
-	return true;
+		m_pointerTime = timeAt(y);
+
+		if(m_draggedLine) {
+			m_draggedTime = m_pointerTime;
+		} else {
+			WaveformWidget::DragPosition res = subtitleAt(y, NULL);
+			if(res == DRAG_SHOW || res == DRAG_HIDE)
+				m_waveformGraphics->setCursor(QCursor(Qt::SplitVCursor));
+			else
+				m_waveformGraphics->unsetCursor();
+		}
+
+		m_waveformGraphics->update();
+
+		return true;
+	}
+
+	case QEvent::MouseButtonPress: {
+		int y = reinterpret_cast<QMouseEvent *>(ev)->y();
+		m_draggedPos = subtitleAt(y, &m_draggedLine);
+		if(m_draggedPos == DRAG_SHOW) {
+			m_draggedTime = m_draggedLine->showTime();
+		} else if(m_draggedPos == DRAG_HIDE) {
+			m_draggedTime = m_draggedLine->hideTime();
+		} else if(m_draggedPos == DRAG_LINE) {
+			m_draggedTime = 0.;
+			m_draggedPos = DRAG_NONE;
+			m_draggedLine = NULL;
+		}
+		return true;
+	}
+
+	case QEvent::MouseButtonRelease: {
+		if(m_draggedLine) {
+			m_draggedTime = timeAt(reinterpret_cast<QMouseEvent *>(ev)->y());
+			if(m_draggedPos == DRAG_SHOW)
+				m_draggedLine->setShowTime(m_draggedTime);
+			else if(m_draggedPos == DRAG_HIDE)
+				m_draggedLine->setHideTime(m_draggedTime);
+		}
+		m_draggedLine = NULL;
+		m_draggedPos = DRAG_NONE;
+		m_draggedTime = 0.;
+		return true;
+	}
+
+	default:
+		return false;
+	}
+}
+
+Time
+WaveformWidget::timeAt(int y)
+{
+//	return m_timeStart.toMillis() + double(y) * m_samplesPerPixel / SAMPLE_RATE_MILIS;
+	return m_timeStart.toMillis() + double(y * windowSize() / m_waveformGraphics->height());
+}
+
+WaveformWidget::DragPosition
+WaveformWidget::subtitleAt(int y, SubtitleLine **result)
+{
+	double yTime = timeAt(y).toMillis();
+	double closestDistance = DRAG_TOLERANCE, currentDistance;
+	WaveformWidget::DragPosition closestDrag = DRAG_NONE;
+	if(result)
+		*result = NULL;
+
+	foreach(auto sub, m_visibleLines) {
+		if(sub->showTime() - DRAG_TOLERANCE <= yTime && sub->hideTime() + DRAG_TOLERANCE >= yTime) {
+			if(closestDistance > (currentDistance = qAbs(sub->showTime().toMillis() - yTime))) {
+				closestDistance = currentDistance;
+				closestDrag = DRAG_SHOW;
+				if(result)
+					*result = sub;
+			} else if(closestDistance > (currentDistance = qAbs(sub->hideTime().toMillis() - yTime))) {
+				closestDistance = currentDistance;
+				closestDrag = DRAG_HIDE;
+				if(result)
+					*result = sub;
+			} else if(closestDrag == DRAG_NONE) {
+				closestDistance = DRAG_TOLERANCE;
+				closestDrag = DRAG_LINE;
+				if(result)
+					*result = sub;
+			}
+		}
+	}
+
+	return closestDrag;
 }
 
 void
@@ -464,13 +571,15 @@ WaveformWidget::onPlayerPositionChanged(double seconds)
 	if(m_timeCurrent != playingPosition) {
 		m_timeCurrent = playingPosition;
 
-		int windowSize = this->windowSize() + 0.5,
-			windowPadding = windowSize / 8, // scroll when we reach padding
-			windowSizePad = windowSize - 2 * windowPadding;
+		if(!m_draggedLine) {
+			int windowSize = this->windowSize() + 0.5,
+				windowPadding = windowSize / 8, // scroll when we reach padding
+				windowSizePad = windowSize - 2 * windowPadding;
 
-		if(m_timeCurrent > m_timeEnd.shifted(-windowPadding) || m_timeCurrent < m_timeStart.shifted(windowPadding)) {
-			m_timeStart.setMillisTime((int(m_timeCurrent.toMillis() + 0.5) / windowSizePad) * windowSizePad);
-			m_timeEnd = m_timeStart.shifted(windowSize);
+			if(m_timeCurrent > m_timeEnd.shifted(-windowPadding) || m_timeCurrent < m_timeStart.shifted(windowPadding)) {
+				m_timeStart.setMillisTime((int(m_timeCurrent.toMillis() + 0.5) / windowSizePad) * windowSizePad);
+				m_timeEnd = m_timeStart.shifted(windowSize);
+			}
 		}
 
 		m_waveformGraphics->update();

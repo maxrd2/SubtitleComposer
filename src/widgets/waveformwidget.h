@@ -30,6 +30,7 @@
 #include "../streamprocessor/streamprocessor.h"
 
 #include <QWidget>
+#include <QList>
 
 QT_FORWARD_DECLARE_CLASS(QRegion)
 QT_FORWARD_DECLARE_CLASS(QPolygon)
@@ -54,6 +55,14 @@ namespace SubtitleComposer {
 class WaveformWidget : public QWidget
 {
 	Q_OBJECT
+
+private:
+	enum DragPosition {
+		DRAG_NONE = 0,
+		DRAG_SHOW,
+		DRAG_LINE,
+		DRAG_HIDE
+	};
 
 public:
 	WaveformWidget(QWidget *parent);
@@ -87,6 +96,8 @@ private:
 	void paintGraphics(QPainter &painter);
 	QToolButton * createToolButton(const QString &actionName, int iconSize=16);
 	void updateZoomData();
+	Time timeAt(int y);
+	WaveformWidget::DragPosition subtitleAt(int y, SubtitleLine **result);
 
 private:
 	QString m_mediaFile;
@@ -114,10 +125,18 @@ private:
 		qint32 min;
 		qint32 max;
 	};
-	quint32 m_samplesPerPixel;
+	double m_samplesPerPixel;
 	ZoomData **m_waveformZoomed;
 	quint32 m_waveformZoomedSize;
 	quint32 m_waveformZoomedOffset;
+
+	QList<SubtitleLine *> m_visibleLines;
+
+	SubtitleLine *m_draggedLine;
+	DragPosition m_draggedPos;
+	Time m_draggedTime;
+
+	Time m_pointerTime;
 };
 }
 #endif
