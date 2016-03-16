@@ -1163,12 +1163,15 @@ Application::redo()
 QTextCodec *
 Application::codecForUrl(const QUrl &url, bool useRecentFiles, bool useDefault)
 {
-	QRegExp rx("encoding=([^&]*)");
-	QString encoding = rx.indexIn(url.query()) == -1 ? "" : rx.cap(1);
+	static const QRegExp rx("encoding=([^&]*)");
+	QString encoding;
+
+	if(rx.indexIn(url.query()) >= 0)
+		encoding = rx.cap(1);
 
 	if(useRecentFiles) {
 		if(encoding.isEmpty())
-			m_recentSubtitlesAction->encodingForUrl(url);
+			encoding = m_recentSubtitlesAction->encodingForUrl(url);
 		if(encoding.isEmpty())
 			encoding = m_recentSubtitlesTrAction->encodingForUrl(url);
 	}

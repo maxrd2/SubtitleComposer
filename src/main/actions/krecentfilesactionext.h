@@ -2,8 +2,7 @@
 #define KRECENTFILESACTIONEXT_H
 
 /**
- * Copyright (C) 2007-2009 Sergio Pistone <sergio_pistone@yahoo.com.ar>
- * Copyright (C) 2010-2015 Mladen Milinkovic <max@smoothware.net>
+ * Copyright (C) 2010-2016 Mladen Milinkovic <max@smoothware.net>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -26,59 +25,17 @@
 #endif
 
 #include <QUrl>
-#include <KConfigGroup>
-#include <KSelectAction>
+#include <KRecentFilesAction>
 
-/// Taken from KDELibs and rewritten almost entirely because the
-/// KDE implementations is buggy and limited for our needs.
-class KRecentFilesActionExt : public KSelectAction
+class KRecentFilesActionExt : public KRecentFilesAction
 {
 	Q_OBJECT
 
-	Q_PROPERTY(int maxItems READ maxItems WRITE setMaxItems)
-
 public:
-	KRecentFilesActionExt(QObject *parent = 0);
+	explicit KRecentFilesActionExt(QObject *parent);
 	virtual ~KRecentFilesActionExt();
 
-	int maxItems() const;
-
-	bool isEmpty() const;
-	int count() const;
-
-	QList<QUrl> urls() const;
-
 	QString encodingForUrl(const QUrl &url) const;
-
-	virtual QAction * removeAction(QAction *action);
-
-public slots:
-	void setMaxItems(int maxItems);
-
-	void setUrls(const QList<QUrl> &urls);
-
-	void addUrl(const QUrl &url);
-	void removeUrl(const QUrl &url);
-	void clearUrls();
-
-	void loadEntries(const KConfigGroup &group);
-	void saveEntries(const KConfigGroup &group);
-
-signals:
-	void urlSelected(const QUrl &url);
-
-protected:
-	virtual QAction * actionForUrl(QUrl url) const;
-
-protected slots:
-	void onActionTriggered(QAction *action);
-	void onActionChanged();
-
-protected:
-	int m_maxItems;
-	QMap<QUrl, QAction *> m_urls;
-	QAction *m_separatorAction;
-	QAction *m_clearHistoryAction;
 };
 
 #endif
