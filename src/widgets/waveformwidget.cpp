@@ -288,6 +288,9 @@ void
 WaveformWidget::setSubtitle(Subtitle *subtitle)
 {
 	m_subtitle = subtitle;
+
+	m_visibleLines.clear();
+	m_visibleLinesDirty = subtitle != NULL;
 }
 
 QWidget *
