@@ -110,5 +110,6 @@
 #define ACT_SCRIPTS_MANAGER "scripts_manager"
 #define ACT_WAVEFORM_ZOOM_IN "waveform-zoom-in"
 #define ACT_WAVEFORM_ZOOM_OUT "waveform-zoom-out"
+#define ACT_WAVEFORM_AUTOSCROLL "waveform-autoscroll"
 
 #endif

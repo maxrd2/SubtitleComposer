@@ -194,7 +194,7 @@ Application::init()
 	m_curLineWidget->setupActions();
 
 	m_mainWindow->setupGUI();
-	m_mainWindow->m_waveformWidget->initActions();
+	m_mainWindow->m_waveformWidget->updateActions();
 
 	m_scriptsManager->reloadScripts();
 
@@ -265,6 +265,9 @@ Application::loadConfig()
 
 	((KToggleAction *)action(ACT_TOGGLE_MUTED))->setChecked(m_player->isMuted());
 
+	action(ACT_WAVEFORM_AUTOSCROLL)->setChecked(group.readEntry<bool>("WaveformAutoScroll", true));
+	m_mainWindow->m_waveformWidget->setWindowSize(group.readEntry<quint32>("WaveformZoom", 6000));
+
 	m_mainWindow->loadConfig();
 	m_playerWidget->loadConfig();
 	m_linesWidget->loadConfig();
@@ -285,6 +288,9 @@ Application::saveConfig()
 
 	group.writeEntry("Muted", m_player->isMuted());
 	group.writeEntry("Volume", m_player->volume());
+
+	group.writeEntry("WaveformAutoScroll", m_mainWindow->m_waveformWidget->autoScroll());
+	group.writeEntry("WaveformZoom", m_mainWindow->m_waveformWidget->windowSize());
 
 	m_mainWindow->saveConfig();
 	m_playerWidget->saveConfig();
@@ -1117,6 +1123,14 @@ Application::setupActions()
 	waveformZoomOutAction->setStatusTip(i18n("Waveform Zoom Out"));
 	connect(waveformZoomOutAction, SIGNAL(triggered()), m_mainWindow->m_waveformWidget, SLOT(zoomOut()));
 	actionCollection->addAction(ACT_WAVEFORM_ZOOM_OUT, waveformZoomOutAction);
+
+	QAction *waveformAutoScrollAction = new QAction(actionCollection);
+	waveformAutoScrollAction->setCheckable(true);
+	waveformAutoScrollAction->setIcon(QIcon::fromTheme("current-line-follows-video"));
+	waveformAutoScrollAction->setText(i18n("Waveform Auto Scroll"));
+	waveformAutoScrollAction->setStatusTip(i18n("Waveform display will automatically scroll to video position"));
+	connect(waveformAutoScrollAction, SIGNAL(toggled(bool)), m_mainWindow->m_waveformWidget, SLOT(setAutoscroll(bool)));
+	actionCollection->addAction(ACT_WAVEFORM_AUTOSCROLL, waveformAutoScrollAction);
 
 	updateActionTexts();
 }
@@ -2645,16 +2659,19 @@ Application::updateTitle()
 			static const QString titleBuilder(QStringLiteral("%1%2 | %3%4"));
 			static const QString modified = QStringLiteral(" [") % i18n("modified") % QStringLiteral("]");
 
-			m_mainWindow->setCaption(titleBuilder.arg(m_subtitleUrl.isEmpty() ? i18n("Untitled") : m_subtitleFileName)
-									  .arg(m_subtitle->isPrimaryDirty() ? modified : QString())
-									  .arg(m_subtitleTrUrl.isEmpty() ? i18n("Untitled Translation") : m_subtitleTrFileName)
-									  .arg(m_subtitle->isSecondaryDirty() ? modified : QString()), false);
+			m_mainWindow->setCaption(titleBuilder
+									 .arg(m_subtitleUrl.isEmpty() ? i18n("Untitled") : m_subtitleFileName)
+									 .arg(m_subtitle->isPrimaryDirty() ? modified : QString())
+									 .arg(m_subtitleTrUrl.isEmpty() ? i18n("Untitled Translation") : m_subtitleTrFileName)
+									 .arg(m_subtitle->isSecondaryDirty() ? modified : QString()), false);
 		} else {
-			m_mainWindow->setCaption(m_subtitleUrl.isEmpty() ? i18n("Untitled") : (m_subtitleUrl.isLocalFile() ? m_subtitleUrl.path() : m_subtitleUrl.toString(QUrl::PreferLocalFile)), m_subtitle->isPrimaryDirty()
-									 );
+			m_mainWindow->setCaption(
+						m_subtitleUrl.isEmpty() ? i18n("Untitled") : (m_subtitleUrl.isLocalFile() ? m_subtitleUrl.path() : m_subtitleUrl.toString(QUrl::PreferLocalFile)),
+						m_subtitle->isPrimaryDirty());
 		}
-	} else
+	} else {
 		m_mainWindow->setCaption(QString());
+	}
 }
 
 void
@@ -2699,6 +2716,8 @@ Application::onLineDoubleClicked(SubtitleLine *line)
 
 	if(m_player->state() == VideoPlayer::Paused && SCConfig::unpauseOnDoubleClick())
 		m_player->play();
+
+	m_mainWindow->m_waveformWidget->setScrollPosition(line->showTime().toMillis());
 }
 
 void

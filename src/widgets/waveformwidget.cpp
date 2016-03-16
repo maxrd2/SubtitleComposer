@@ -34,12 +34,13 @@
 #include <QLabel>
 #include <QBoxLayout>
 #include <QToolButton>
+#include <QScrollBar>
 
 #include <QDebug>
 
 #include <KLocalizedString>
 
-#define MAX_WINDOW_ZOOM 6000
+#define MAX_WINDOW_ZOOM 3000
 #define DRAG_TOLERANCE (double(10 * m_samplesPerPixel / SAMPLE_RATE_MILIS))
 
 using namespace SubtitleComposer;
@@ -53,6 +54,8 @@ WaveformWidget::WaveformWidget(QWidget *parent)
 	  m_timeStart(0.),
 	  m_timeCurrent(0.),
 	  m_timeEnd(MAX_WINDOW_ZOOM),
+	  m_scrollBar(NULL),
+	  m_autoScroll(true),
 	  m_waveformChannels(0),
 	  m_waveform(NULL),
 	  m_waveformGraphics(new QWidget(this)),
@@ -71,19 +74,37 @@ WaveformWidget::WaveformWidget(QWidget *parent)
 	m_waveformGraphics->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
 	m_waveformGraphics->setMouseTracking(true);
 	m_waveformGraphics->installEventFilter(this);
-	m_waveformGraphics->show();
+
+	m_scrollBar = new QScrollBar(Qt::Vertical);
+	m_scrollBar->setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Expanding);
+	m_scrollBar->setDisabled(m_autoScroll);
+	m_scrollBar->setPageStep(windowSize());
+	m_scrollBar->setRange(0, windowSize());
+	m_scrollBar->installEventFilter(this);
+
+	QHBoxLayout *topLayout = new QHBoxLayout();
+	topLayout->setMargin(0);
+	topLayout->setSpacing(0);
+	topLayout->addWidget(m_waveformGraphics);
+	topLayout->addWidget(m_scrollBar);
+
+	m_btnZoomOut = createToolButton(QStringLiteral(ACT_WAVEFORM_ZOOM_OUT));
+	m_btnZoomIn = createToolButton(QStringLiteral(ACT_WAVEFORM_ZOOM_IN));
+	m_btnAutoScroll = createToolButton(QStringLiteral(ACT_WAVEFORM_AUTOSCROLL));
 
 	QHBoxLayout *toolbarLayout = new QHBoxLayout();
 	toolbarLayout->setMargin(0);
 	toolbarLayout->setSpacing(2);
-	toolbarLayout->addWidget(createToolButton(QStringLiteral(ACT_WAVEFORM_ZOOM_IN)));
-	toolbarLayout->addWidget(createToolButton(QStringLiteral(ACT_WAVEFORM_ZOOM_OUT)));
+	toolbarLayout->addWidget(m_btnZoomOut);
+	toolbarLayout->addWidget(m_btnZoomIn);
+	toolbarLayout->addSpacerItem(new QSpacerItem(2, 2, QSizePolicy::Preferred, QSizePolicy::Preferred));
+	toolbarLayout->addWidget(m_btnAutoScroll);
 	toolbarLayout->addSpacerItem(new QSpacerItem(1, 1, QSizePolicy::Expanding, QSizePolicy::Preferred));
 
 	QVBoxLayout *mainLayout = new QVBoxLayout(this);
 	mainLayout->setMargin(0);
 	mainLayout->setSpacing(5);
-	mainLayout->addWidget(m_waveformGraphics);
+	mainLayout->addLayout(topLayout);
 	mainLayout->addLayout(toolbarLayout);
 
 	setMinimumWidth(300);
@@ -104,6 +125,8 @@ WaveformWidget::WaveformWidget(QWidget *parent)
 	layout->addWidget(label);
 	layout->addWidget(m_progressBar);
 
+	connect(m_scrollBar, &QScrollBar::valueChanged, this, &WaveformWidget::onScrollBarValueChanged);
+
 	connect(VideoPlayer::instance(), &VideoPlayer::positionChanged, this, &WaveformWidget::onPlayerPositionChanged);
 	connect(m_stream, &StreamProcessor::streamProgress, this, &WaveformWidget::onStreamProgress);
 	connect(m_stream, &StreamProcessor::streamFinished, this, &WaveformWidget::onStreamFinished);
@@ -112,19 +135,21 @@ WaveformWidget::WaveformWidget(QWidget *parent)
 }
 
 void
-WaveformWidget::initActions()
+WaveformWidget::updateActions()
 {
 	Application *app = Application::instance();
 	const quint32 size = windowSize();
-	QToolButton *btn;
 
-	btn = findChild<QToolButton *>(QStringLiteral(ACT_WAVEFORM_ZOOM_IN));
-	btn->setDefaultAction(app->action(ACT_WAVEFORM_ZOOM_IN));
-	btn->setEnabled(m_waveformZoomed && size > MAX_WINDOW_ZOOM);
+	m_btnZoomIn->setDefaultAction(app->action(ACT_WAVEFORM_ZOOM_IN));
+	m_btnZoomIn->setEnabled(m_waveformZoomed && size > MAX_WINDOW_ZOOM);
 
-	btn = findChild<QToolButton *>(QStringLiteral(ACT_WAVEFORM_ZOOM_OUT));
-	btn->setDefaultAction(app->action(ACT_WAVEFORM_ZOOM_OUT));
-	btn->setEnabled(m_waveformZoomed && size < m_waveformChannelSize / SAMPLE_RATE_MILIS);
+	m_btnZoomOut->setDefaultAction(app->action(ACT_WAVEFORM_ZOOM_OUT));
+	m_btnZoomOut->setEnabled(m_waveformZoomed && size < m_waveformChannelSize / SAMPLE_RATE_MILIS);
+
+	QAction *action = app->action(ACT_WAVEFORM_AUTOSCROLL);
+	action->setChecked(m_autoScroll);
+	m_btnAutoScroll->setDefaultAction(action);
+	m_btnAutoScroll->setEnabled(m_waveformZoomed);
 }
 
 WaveformWidget::~WaveformWidget()
@@ -142,11 +167,13 @@ void
 WaveformWidget::setWindowSize(const quint32 size)
 {
 	if(size != windowSize()) {
-		initActions();
+		updateActions();
 		m_timeEnd = m_timeStart + size;
 		m_visibleLinesDirty = true;
 		updateZoomData();
 		m_waveformGraphics->update();
+		m_scrollBar->setPageStep(size);
+		m_scrollBar->setRange(0, m_waveformDuration * 1000 - windowSize());
 	}
 }
 
@@ -156,6 +183,7 @@ WaveformWidget::zoomIn()
 	quint32 winSize = windowSize();
 	if(winSize <= MAX_WINDOW_ZOOM)
 		return;
+	m_scrollBar->setValue(m_timeStart.toMillis() + winSize / 4);
 	setWindowSize(winSize / 2);
 }
 
@@ -166,7 +194,27 @@ WaveformWidget::zoomOut()
 	quint32 totalLength = m_waveformChannelSize / SAMPLE_RATE_MILIS;
 	if(winSize >= totalLength)
 		return;
+	m_scrollBar->setValue(m_timeStart.toMillis() - winSize / 2);
 	setWindowSize(winSize * 2);
+}
+
+void
+WaveformWidget::setAutoscroll(bool autoscroll)
+{
+	m_autoScroll = autoscroll;
+	m_scrollBar->setDisabled(m_autoScroll);
+	updateActions();
+}
+
+void
+WaveformWidget::onScrollBarValueChanged(int value)
+{
+	double winSize = windowSize();
+	m_timeStart = value;
+	m_timeEnd = m_timeStart.shifted(winSize);
+
+	m_visibleLinesDirty = true;
+	m_waveformGraphics->update();
 }
 
 void
@@ -198,7 +246,7 @@ WaveformWidget::updateZoomData()
 			for(quint32 i = 0; i < m_waveformChannels; i++)
 				m_waveformZoomed[i] = new ZoomData[m_waveformZoomedSize];
 
-			initActions();
+			updateActions();
 		}
 
 		int iMin = m_waveformZoomedOffset * m_samplesPerPixel;
@@ -299,6 +347,7 @@ WaveformWidget::onStreamProgress(quint64 msecPos, quint64 msecLength)
 		m_waveformDuration = msecLength / 1000;
 		m_progressBar->setRange(0, m_waveformDuration);
 		m_progressWidget->show();
+		m_scrollBar->setRange(0, m_waveformDuration * 1000 - windowSize());
 	}
 	m_progressBar->setValue(msecPos / 1000);
 }
@@ -460,10 +509,10 @@ WaveformWidget::paintGraphics(QPainter &painter)
 	painter.drawLine(0, playY, widgetWidth, playY);
 }
 
-void
-WaveformWidget::resizeEvent(QResizeEvent *e)
+/*virtual*/ void
+WaveformWidget::resizeEvent(QResizeEvent *event)
 {
-	QWidget::resizeEvent(e);
+	QWidget::resizeEvent(event);
 
 	m_visibleLinesDirty = true;
 	updateZoomData();
@@ -472,21 +521,38 @@ WaveformWidget::resizeEvent(QResizeEvent *e)
 }
 
 bool
-WaveformWidget::eventFilter(QObject *obj, QEvent *ev)
+WaveformWidget::eventFilter(QObject *obj, QEvent *event)
 {
+	if(obj != m_scrollBar && obj != m_waveformGraphics)
+		return false;
+
+	if(event->type() == QEvent::Wheel) {
+		if(m_autoScroll)
+			return false;
+
+		QPoint delta = reinterpret_cast<QWheelEvent *>(event)->angleDelta() / 8;
+		if(delta.isNull())
+			delta = reinterpret_cast<QWheelEvent *>(event)->pixelDelta();
+		if(delta.isNull())
+			return false;
+
+		m_scrollBar->setValue(m_timeStart.shifted(-4 * double(delta.ry()) * windowSize() / m_waveformGraphics->height()).toMillis());
+		return true;
+	}
+
 	if(obj != m_waveformGraphics)
 		return false;
 
-	switch(ev->type()) {
+	switch(event->type()) {
 	case QEvent::Paint: {
 		QPainter painter(m_waveformGraphics);
-		painter.fillRect(reinterpret_cast<QPaintEvent *>(ev)->rect(), Qt::black);
+		painter.fillRect(reinterpret_cast<QPaintEvent *>(event)->rect(), Qt::black);
 		paintGraphics(painter);
 		return true;
 	}
 
 	case QEvent::MouseMove: {
-		int y = reinterpret_cast<QMouseEvent *>(ev)->y();
+		int y = reinterpret_cast<QMouseEvent *>(event)->y();
 
 		m_pointerTime = timeAt(y);
 
@@ -506,12 +572,12 @@ WaveformWidget::eventFilter(QObject *obj, QEvent *ev)
 	}
 
 	case QEvent::MouseButtonDblClick: {
-		emit doubleClick(timeAt(reinterpret_cast<QMouseEvent *>(ev)->y()));
+		emit doubleClick(timeAt(reinterpret_cast<QMouseEvent *>(event)->y()));
 		return true;
 	}
 
 	case QEvent::MouseButtonPress: {
-		int y = reinterpret_cast<QMouseEvent *>(ev)->y();
+		int y = reinterpret_cast<QMouseEvent *>(event)->y();
 		m_draggedPos = subtitleAt(y, &m_draggedLine);
 		if(m_draggedPos == DRAG_SHOW) {
 			m_draggedTime = m_draggedLine->showTime();
@@ -531,7 +597,7 @@ WaveformWidget::eventFilter(QObject *obj, QEvent *ev)
 
 	case QEvent::MouseButtonRelease: {
 		if(m_draggedLine) {
-			m_draggedTime = timeAt(reinterpret_cast<QMouseEvent *>(ev)->y());
+			m_draggedTime = timeAt(reinterpret_cast<QMouseEvent *>(event)->y());
 			if(m_draggedPos == DRAG_SHOW)
 				m_draggedLine->setShowTime(m_draggedTime);
 			else if(m_draggedPos == DRAG_HIDE)
@@ -593,6 +659,18 @@ WaveformWidget::subtitleAt(int y, SubtitleLine **result)
 }
 
 void
+WaveformWidget::setScrollPosition(int milliseconds)
+{
+	milliseconds -= windowSize() / 2;
+	if(milliseconds != m_scrollBar->value()) {
+		m_scrollBar->setValue(milliseconds);
+
+		m_visibleLinesDirty = true;
+		m_waveformGraphics->update();
+	}
+}
+
+void
 WaveformWidget::onPlayerPositionChanged(double seconds)
 {
 	Time playingPosition;
@@ -601,15 +679,13 @@ WaveformWidget::onPlayerPositionChanged(double seconds)
 	if(m_timeCurrent != playingPosition) {
 		m_timeCurrent = playingPosition;
 
-		if(!m_draggedLine) {
-			int windowSize = this->windowSize() + 0.5,
-				windowPadding = windowSize / 8, // scroll when we reach padding
+		if(m_autoScroll && !m_draggedLine) {
+			int windowSize = this->windowSize(),
+				windowPadding = windowSize / 8, // autoscroll when we reach padding
 				windowSizePad = windowSize - 2 * windowPadding;
 
-			if(m_timeCurrent > m_timeEnd.shifted(-windowPadding) || m_timeCurrent < m_timeStart.shifted(windowPadding)) {
-				m_timeStart.setMillisTime((int(m_timeCurrent.toMillis() + 0.5) / windowSizePad) * windowSizePad);
-				m_timeEnd = m_timeStart.shifted(windowSize);
-			}
+			if(m_timeCurrent > m_timeEnd.shifted(-windowPadding) || m_timeCurrent < m_timeStart.shifted(windowPadding))
+				m_scrollBar->setValue((int(m_timeCurrent.toMillis() + 0.5) / windowSizePad) * windowSizePad);
 		}
 
 		m_visibleLinesDirty = true;

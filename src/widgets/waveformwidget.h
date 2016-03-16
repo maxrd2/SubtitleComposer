@@ -36,6 +36,8 @@ QT_FORWARD_DECLARE_CLASS(QRegion)
 QT_FORWARD_DECLARE_CLASS(QPolygon)
 QT_FORWARD_DECLARE_CLASS(QProgressBar)
 QT_FORWARD_DECLARE_CLASS(QToolButton)
+QT_FORWARD_DECLARE_CLASS(QScrollBar)
+QT_FORWARD_DECLARE_CLASS(QToolButton)
 
 // FIXME: make sample size configurable or drop this
 /*
@@ -68,12 +70,14 @@ public:
 	WaveformWidget(QWidget *parent);
 	virtual ~WaveformWidget();
 
-	void initActions();
+	void updateActions();
 
 	quint32 windowSize() const;
 	void setWindowSize(const quint32 size);
 
 	QWidget *progressWidget();
+
+	inline bool autoScroll() const { return m_autoScroll; }
 
 signals:
 	void doubleClick(Time time);
@@ -86,16 +90,19 @@ public slots:
 	void clearAudioStream();
 	void zoomIn();
 	void zoomOut();
+	void setAutoscroll(bool autoscroll);
+	void setScrollPosition(int milliseconds);
 
 protected:
-	virtual void resizeEvent(QResizeEvent *e);
-	bool eventFilter(QObject *obj, QEvent *ev);
+	virtual void resizeEvent(QResizeEvent *event);
+	bool eventFilter(QObject *obj, QEvent *event);
 
 private slots:
 	void onPlayerPositionChanged(double seconds);
 	void onStreamData(const void *buffer, const qint32 size, const WaveFormat *waveFormat);
 	void onStreamProgress(quint64 msecPos, quint64 msecLength);
 	void onStreamFinished();
+	void onScrollBarValueChanged(int value);
 
 private:
 	void paintGraphics(QPainter &painter);
@@ -115,6 +122,9 @@ private:
 	Time m_timeStart;
 	Time m_timeCurrent;
 	Time m_timeEnd;
+
+	QScrollBar *m_scrollBar;
+	bool m_autoScroll;
 
 	quint32 m_waveformDuration;
 	quint32 m_waveformDataOffset;
@@ -144,6 +154,10 @@ private:
 	Time m_draggedTime;
 
 	Time m_pointerTime;
+
+	QToolButton *m_btnZoomIn;
+	QToolButton *m_btnZoomOut;
+	QToolButton *m_btnAutoScroll;
 };
 }
 #endif
