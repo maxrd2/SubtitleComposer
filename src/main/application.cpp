@@ -169,6 +169,8 @@ Application::init()
 
 	connect(this, SIGNAL(fullScreenModeChanged(bool)), actionManager, SLOT(setFullScreenMode(bool)));
 
+	connect(m_mainWindow->m_waveformWidget, SIGNAL(doubleClick(Time)), this, SLOT(onWaveformDoubleClicked(Time)));
+
 	connect(m_linesWidget, SIGNAL(currentLineChanged(SubtitleLine *)), m_curLineWidget, SLOT(setCurrentLine(SubtitleLine *)));
 	connect(m_linesWidget, SIGNAL(lineDoubleClicked(SubtitleLine *)), this, SLOT(onLineDoubleClicked(SubtitleLine *)));
 //	connect(m_linesWidget, SIGNAL(currentLineChanged(SubtitleLine *)), m_errorsWidget, SLOT(setCurrentLine(SubtitleLine *)));
@@ -2674,6 +2676,15 @@ Application::updateUndoRedoToolTips()
 		else
 			redoAction->setToolTip(redoToolTip);
 	}
+}
+
+void
+Application::onWaveformDoubleClicked(Time time)
+{
+	if(m_player->state() == VideoPlayer::Ready)
+		m_player->play();
+
+	m_player->seek(time.toSeconds(), true);
 }
 
 void

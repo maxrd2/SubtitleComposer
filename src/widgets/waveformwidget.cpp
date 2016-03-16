@@ -488,6 +488,11 @@ WaveformWidget::eventFilter(QObject *obj, QEvent *ev)
 		return true;
 	}
 
+	case QEvent::MouseButtonDblClick: {
+		emit doubleClick(timeAt(reinterpret_cast<QMouseEvent *>(ev)->y()));
+		return true;
+	}
+
 	case QEvent::MouseButtonPress: {
 		int y = reinterpret_cast<QMouseEvent *>(ev)->y();
 		m_draggedPos = subtitleAt(y, &m_draggedLine);

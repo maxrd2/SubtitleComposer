@@ -240,6 +240,8 @@ private slots:
 	void updateTitle();
 	void updateUndoRedoToolTips();
 
+	void onWaveformDoubleClicked(Time time);
+
 	void onLineDoubleClicked(SubtitleLine *line);
 	void onHighlightLine(SubtitleLine *line, bool primary = true, int firstIndex = -1, int lastIndex = -1);
 	void onPlayingLineChanged(SubtitleLine *line);

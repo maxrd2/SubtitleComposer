@@ -75,6 +75,9 @@ public:
 
 	QWidget *progressWidget();
 
+signals:
+	void doubleClick(Time time);
+
 public slots:
 	void setSubtitle(Subtitle *subtitle = 0);
 	void setAudioStream(const QString &mediaFile, int audioStream);
