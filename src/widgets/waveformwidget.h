@@ -77,6 +77,8 @@ public:
 
 signals:
 	void doubleClick(Time time);
+	void dragStart(SubtitleLine *line, DragPosition dragPosition);
+	void dragEnd(SubtitleLine *line, DragPosition dragPosition);
 
 public slots:
 	void setSubtitle(Subtitle *subtitle = 0);

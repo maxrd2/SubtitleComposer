@@ -522,6 +522,10 @@ WaveformWidget::eventFilter(QObject *obj, QEvent *ev)
 			m_draggedPos = DRAG_NONE;
 			m_draggedLine = NULL;
 		}
+
+		if(m_draggedLine)
+			emit dragStart(m_draggedLine, m_draggedPos);
+
 		return true;
 	}
 
@@ -532,6 +536,8 @@ WaveformWidget::eventFilter(QObject *obj, QEvent *ev)
 				m_draggedLine->setShowTime(m_draggedTime);
 			else if(m_draggedPos == DRAG_HIDE)
 				m_draggedLine->setHideTime(m_draggedTime);
+
+			emit dragEnd(m_draggedLine, m_draggedPos);
 		}
 		m_draggedLine = NULL;
 		m_draggedPos = DRAG_NONE;
