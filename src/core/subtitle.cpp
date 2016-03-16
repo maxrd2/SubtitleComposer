@@ -700,6 +700,9 @@ Subtitle::shiftAnchoredLine(SubtitleLine *anchoredLine, const Time &newShowTime)
 			last = lastLine();
 			double scaleFactor = (newShowTime.toMillis() - prevAnchor->m_showTime.toMillis()) / (anchoredLine->m_showTime.toMillis() - prevAnchor->m_showTime.toMillis());
 			lastShowTime = scaleFactor * (last->m_showTime.toMillis() - prevAnchor->m_showTime.toMillis()) + prevAnchor->m_showTime.toMillis();
+		} else {
+			last = NULL;
+			lastShowTime = 0;
 		}
 		if(newShowTime.toMillis() < lastShowTime) {
 			anchoredLine->m_showTime = savedShowTime;
