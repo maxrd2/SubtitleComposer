@@ -331,12 +331,6 @@ Subtitle::lastLine() const
 	return m_lines.isEmpty() ? 0 : m_lines.last();
 }
 
-const QList<const SubtitleLine *> &
-Subtitle::anchoredLines() const
-{
-	return m_anchoredLines;
-}
-
 bool
 Subtitle::isLineAnchored(int index)
 {

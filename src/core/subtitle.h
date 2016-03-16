@@ -114,7 +114,10 @@ public:
 	SubtitleLine * lastLine();
 	const SubtitleLine * lastLine() const;
 
-	const QList<const SubtitleLine *> & anchoredLines() const;
+	inline const QList<SubtitleLine *> & allLines() const { return m_lines; }
+
+	inline const QList<const SubtitleLine *> & anchoredLines() const { return m_anchoredLines; }
+
 	bool isLineAnchored(int index);
 	bool isLineAnchored(const SubtitleLine *line);
 	void toggleLineAnchor(int index);

@@ -61,6 +61,7 @@ WaveformWidget::WaveformWidget(QWidget *parent)
 	  m_waveformZoomed(NULL),
 	  m_waveformZoomedSize(0),
 	  m_waveformZoomedOffset(0),
+	  m_visibleLinesDirty(true),
 	  m_draggedLine(NULL),
 	  m_draggedPos(DRAG_NONE),
 	  m_draggedTime(0.)
@@ -143,6 +144,7 @@ WaveformWidget::setWindowSize(const quint32 size)
 	if(size != windowSize()) {
 		initActions();
 		m_timeEnd = m_timeStart + size;
+		m_visibleLinesDirty = true;
 		updateZoomData();
 		m_waveformGraphics->update();
 	}
@@ -347,9 +349,27 @@ WaveformWidget::onStreamData(const void *buffer, const qint32 size, const WaveFo
 	m_waveformDataOffset += size;
 }
 
+
+void
+WaveformWidget::updateVisibleLines()
+{
+	if(!m_subtitle || !m_visibleLinesDirty)
+		return;
+
+	m_visibleLinesDirty = false;
+
+	m_visibleLines.clear();
+
+	foreach(SubtitleLine *sub, m_subtitle->allLines()) {
+		if(sub == m_draggedLine || (sub->showTime() <= m_timeEnd && m_timeStart <= sub->hideTime()))
+			m_visibleLines.push_back(sub);
+	}
+}
+
 void
 WaveformWidget::paintGraphics(QPainter &painter)
 {
+	// FIXME: make colors configurable?
 	const static QFont fontBig("helvetica", 10);
 	const static int fontBigHeight = QFontMetrics(fontBig).height();
 	const static QFont fontSubText("helvetica", 9);
@@ -395,37 +415,33 @@ WaveformWidget::paintGraphics(QPainter &painter)
 		}
 	}
 
-	m_visibleLines.clear();
-	if(m_subtitle) {
-		for(int i = 0, n = m_subtitle->linesCount(); i < n; i++) {
-			SubtitleLine *sub = m_subtitle->line(i);
-			const Time timeShow = sub == m_draggedLine && m_draggedPos == DRAG_SHOW ? m_draggedTime : sub->showTime();
-			const Time timeHide = sub == m_draggedLine && m_draggedPos == DRAG_HIDE ? m_draggedTime : sub->hideTime();
-			if(timeShow <= m_timeEnd && m_timeStart <= timeHide) {
-				m_visibleLines.push_back(sub);
+	updateVisibleLines();
 
-				int showY = widgetHeight * (timeShow.toMillis() - m_timeStart.toMillis()) / msWindowSize;
-				int hideY = widgetHeight * (timeHide.toMillis() - m_timeStart.toMillis()) / msWindowSize;
-				QRect box(0, showY, widgetWidth, hideY - showY + 1);
+	foreach(const SubtitleLine *sub, m_visibleLines) {
+		const Time timeShow = sub == m_draggedLine && m_draggedPos == DRAG_SHOW ? m_draggedTime : sub->showTime();
+		const Time timeHide = sub == m_draggedLine && m_draggedPos == DRAG_HIDE ? m_draggedTime : sub->hideTime();
+		if(timeShow <= m_timeEnd && m_timeStart <= timeHide) {
+			int showY = widgetHeight * (timeShow.toMillis() - m_timeStart.toMillis()) / msWindowSize;
+			int hideY = widgetHeight * (timeHide.toMillis() - m_timeStart.toMillis()) / msWindowSize;
+			QRect box(0, showY, widgetWidth, hideY - showY + 1);
 
-				painter.fillRect(box, subtitleBg);
+			painter.fillRect(box, subtitleBg);
 
-				painter.setPen(subtitleBorder);
-				painter.drawLine(0, showY, widgetWidth, showY);
-				painter.drawLine(0, hideY, widgetWidth, hideY);
+			painter.setPen(subtitleBorder);
+			painter.drawLine(0, showY, widgetWidth, showY);
+			painter.drawLine(0, hideY, widgetWidth, hideY);
 
-				painter.setFont(fontSubText);
-				painter.setPen(textShadow);
-				box.adjust(fontBigHeight + 1, fontBigHeight / 2 + 1, -fontBigHeight, -fontBigHeight / 2);
-				painter.drawText(box, Qt::AlignCenter, sub->primaryText().string());
-				painter.setPen(textWhite);
-				box.adjust(-1, -1, 0, 0);
-				painter.drawText(box, Qt::AlignCenter, sub->primaryText().string());
+			painter.setFont(fontSubText);
+			painter.setPen(textShadow);
+			box.adjust(fontBigHeight + 1, fontBigHeight / 2 + 1, -fontBigHeight, -fontBigHeight / 2);
+			painter.drawText(box, Qt::AlignCenter, sub->primaryText().string());
+			painter.setPen(textWhite);
+			box.adjust(-1, -1, 0, 0);
+			painter.drawText(box, Qt::AlignCenter, sub->primaryText().string());
 
-				painter.setPen(textWhite);
-				painter.setFont(fontBig);
-				painter.drawText(fontBigHeight / 2, showY + fontBigHeight * 3 / 2, QString::number(i));
-			}
+			painter.setPen(textWhite);
+			painter.setFont(fontBig);
+			painter.drawText(fontBigHeight / 2, showY + fontBigHeight * 3 / 2, QString::number(sub->index()));
 		}
 	}
 
@@ -449,6 +465,7 @@ WaveformWidget::resizeEvent(QResizeEvent *e)
 {
 	QWidget::resizeEvent(e);
 
+	m_visibleLinesDirty = true;
 	updateZoomData();
 
 	m_waveformGraphics->update();
@@ -543,7 +560,9 @@ WaveformWidget::subtitleAt(int y, SubtitleLine **result)
 	if(result)
 		*result = NULL;
 
-	foreach(auto sub, m_visibleLines) {
+	updateVisibleLines();
+
+	foreach(SubtitleLine *sub, m_visibleLines) {
 		if(sub->showTime() - DRAG_TOLERANCE <= yTime && sub->hideTime() + DRAG_TOLERANCE >= yTime) {
 			if(closestDistance > (currentDistance = qAbs(sub->showTime().toMillis() - yTime))) {
 				closestDistance = currentDistance;
@@ -587,6 +606,7 @@ WaveformWidget::onPlayerPositionChanged(double seconds)
 			}
 		}
 
+		m_visibleLinesDirty = true;
 		m_waveformGraphics->update();
 	}
 }

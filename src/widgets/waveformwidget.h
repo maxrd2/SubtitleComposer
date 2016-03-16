@@ -99,6 +99,7 @@ private:
 	void paintGraphics(QPainter &painter);
 	QToolButton * createToolButton(const QString &actionName, int iconSize=16);
 	void updateZoomData();
+	void updateVisibleLines();
 	Time timeAt(int y);
 	WaveformWidget::DragPosition subtitleAt(int y, SubtitleLine **result);
 
@@ -134,6 +135,7 @@ private:
 	quint32 m_waveformZoomedOffset;
 
 	QList<SubtitleLine *> m_visibleLines;
+	bool m_visibleLinesDirty;
 
 	SubtitleLine *m_draggedLine;
 	DragPosition m_draggedPos;
