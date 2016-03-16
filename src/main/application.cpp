@@ -936,6 +936,7 @@ Application::setupActions()
 	playPauseAction->setIcon(QIcon::fromTheme("media-playback-start"));
 	playPauseAction->setText(i18n("Play"));
 	playPauseAction->setStatusTip(i18n("Toggle video playing/paused"));
+	actionCollection->setDefaultShortcut(playPauseAction, QKeySequence("Ctrl+Space"));
 	connect(playPauseAction, SIGNAL(triggered()), m_player, SLOT(togglePlayPaused()));
 	actionCollection->addAction(ACT_PLAY_PAUSE, playPauseAction);
 	actionManager->addAction(playPauseAction, UserAction::VideoOpened);
