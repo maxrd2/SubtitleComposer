@@ -210,7 +210,7 @@ StreamProcessor::onAudioDataReady(GstElement */*fakesink*/, GstBuffer *buffer, G
 	}
 
 	gst_buffer_map(buffer, &map, GST_MAP_READ);
-	emit me->audioDataAvailable(map.data, map.size, &me->m_audioStreamFormat);
+	emit me->audioDataAvailable(map.data, map.size, &me->m_audioStreamFormat, buffer->pts / GST_MSECOND, buffer->duration / GST_MSECOND);
 	gst_buffer_unmap(buffer, &map);
 }
 

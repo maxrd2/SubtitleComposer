@@ -70,6 +70,7 @@
 #include "../widgets/waveformwidget.h"
 #include "../profiler.h"
 #include "formats/textdemux/textdemux.h"
+#include "speechprocessor/speechprocessor.h"
 
 #include <QDir>
 #include <QFileInfo>
@@ -119,6 +120,7 @@ Application::Application(int &argc, char **argv) :
 	m_subtitleTrFormat(),
 	m_player(VideoPlayer::instance()),
 	m_textDemux(NULL),
+	m_speechProcessor(NULL),
 	m_lastFoundLine(0),
 	m_mainWindow(0),
 	m_lastSubtitleUrl(QDir::homePath()),
@@ -198,6 +200,12 @@ Application::init()
 	m_textDemux = new TextDemux(m_mainWindow);
 	connect(m_textDemux, &TextDemux::onError, [&](const QString &message){ KMessageBox::sorry(m_mainWindow, message); });
 	m_mainWindow->statusBar()->addPermanentWidget(m_textDemux->progressWidget());
+
+	m_speechProcessor = new SpeechProcessor(m_mainWindow);
+	connect(m_speechProcessor, &SpeechProcessor::onError, [&](const QString &message){ KMessageBox::sorry(m_mainWindow, message); });
+	connect(this, SIGNAL(subtitleOpened(Subtitle *)), m_speechProcessor, SLOT(setSubtitle(Subtitle *)));
+	connect(this, SIGNAL(subtitleClosed()), m_speechProcessor, SLOT(setSubtitle()));
+	m_mainWindow->statusBar()->addPermanentWidget(m_speechProcessor->progressWidget());
 
 	m_playerWidget->plugActions();
 	m_curLineWidget->setupActions();
@@ -932,6 +940,15 @@ Application::setupActions()
 	connect(demuxTextStreamActionMenu, &QMenu::triggered, [this](QAction *action){ demuxTextStream(action->data().value<int>()); });
 	actionCollection->addAction(ACT_DEMUX_TEXT_STREAM, demuxTextStreamAction);
 
+	QAction *speechImportStreamAction = new KSelectAction(actionCollection);
+	QMenu *speechImportStreamActionMenu = new QMenu(m_mainWindow);
+	speechImportStreamAction->setMenu(speechImportStreamActionMenu);
+	speechImportStreamAction->setIcon(QIcon::fromTheme("select-stream"));
+	speechImportStreamAction->setText(i18n("Recognize Speech"));
+	speechImportStreamAction->setStatusTip(i18n("Recognize speech in audio stream"));
+	connect(speechImportStreamActionMenu, &QMenu::triggered, [this](QAction *action){ speechImportAudioStream(action->data().value<int>()); });
+	actionCollection->addAction(ACT_ASR_IMPORT_AUDIO_STREAM, speechImportStreamAction);
+
 	QAction *closeVideoAction = new QAction(actionCollection);
 	closeVideoAction->setIcon(QIcon::fromTheme("window-close"));
 	closeVideoAction->setText(i18n("Close Video"));
@@ -1417,8 +1434,19 @@ Application::demuxTextStream(int textStreamIndex)
 
 	newSubtitle();
 
-	// FIXME: connect on error
 	m_textDemux->demuxFile(m_subtitle, m_player->filePath(), textStreamIndex);
+}
+
+void
+Application::speechImportAudioStream(int audioStreamIndex)
+{
+	if(!closeSubtitle())
+		return;
+
+	newSubtitle();
+
+	m_speechProcessor->setSubtitle(m_subtitle);
+	m_speechProcessor->setAudioStream(m_player->filePath(), audioStreamIndex);
 }
 
 bool
@@ -2841,6 +2869,14 @@ Application::onPlayerAudioStreamsChanged(const QStringList &audioStreams)
 {
 	KSelectAction *activeAudioStreamAction = (KSelectAction *)action(ACT_SET_ACTIVE_AUDIO_STREAM);
 	activeAudioStreamAction->setItems(audioStreams);
+
+	QAction *speechImportStreamAction = (KSelectAction *)action(ACT_ASR_IMPORT_AUDIO_STREAM);
+	QMenu *speechImportStreamActionMenu = speechImportStreamAction->menu();
+	speechImportStreamActionMenu->clear();
+	int i = 0;
+	foreach(const QString &audioStream, audioStreams)
+		speechImportStreamActionMenu->addAction(audioStream)->setData(QVariant::fromValue<int>(i++));
+	speechImportStreamAction->setEnabled(i > 0);
 }
 
 void
@@ -2850,8 +2886,6 @@ Application::onPlayerActiveAudioStreamChanged(int audioStream)
 	if(audioStream >= 0) {
 		activeAudioStreamAction->setCurrentItem(audioStream);
 		m_mainWindow->m_waveformWidget->setAudioStream(m_player->filePath(), audioStream);
-	} else {
-//		m_mainWindow->m_waveformWidget->clearAudioStream();
 	}
 }
 

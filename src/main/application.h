@@ -48,6 +48,7 @@ class KCodecActionExt;
 namespace SubtitleComposer {
 class VideoPlayer;
 class TextDemux;
+class SpeechProcessor;
 
 class PlayerWidget;
 class LinesWidget;
@@ -116,6 +117,8 @@ public slots:
 	bool saveSubtitle();
 	bool saveSubtitleAs();
 	bool closeSubtitle();
+
+	void speechImportAudioStream(int audioStreamIndex);
 
 	void newSubtitleTr();
 	void openSubtitleTr();
@@ -282,6 +285,7 @@ private:
 	VideoPlayer *m_player;
 
 	TextDemux *m_textDemux;
+	SpeechProcessor *m_speechProcessor;
 
 	SubtitleLine *m_lastFoundLine;
 

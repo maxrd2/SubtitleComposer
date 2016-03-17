@@ -51,7 +51,7 @@ public:
 	bool start();
 
 signals:
-	void audioDataAvailable(const void *buffer, const qint32 size, const WaveFormat *waveFormat);
+	void audioDataAvailable(const void *buffer, const qint32 size, const WaveFormat *waveFormat, const quint64 msecStart, const quint64 msecDuration);
 	void textDataAvailable(const QString &text, const quint64 msecStart, const quint64 msecDuration);
 	void streamProgress(quint64 msecPosition, quint64 msecLength);
 	void streamError(int code, const QString &message, const QString &debug);

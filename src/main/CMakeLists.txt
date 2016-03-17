@@ -11,6 +11,7 @@ include_directories(
 	${formats_INCLUDE_DIR}
 	${videoplayer_INCLUDE_DIR}
 	${streamprocessor_INCLUDE_DIR}
+	${speechprocessor_INCLUDE_DIR}
 	${widgets_INCLUDE_DIR}
 )
 
@@ -20,6 +21,7 @@ set(subtitlecomposer_SRCS
 	${formats_SRCS}
 	${videoplayer_SRCS}
 	${streamprocessor_SRCS}
+	${speechprocessor_SRCS}
 	${widgets_SRCS}
 	${main_configs_SRCS}
 	${main_dialogs_SRCS}
@@ -49,6 +51,7 @@ target_link_libraries(subtitlecomposer
 	${formats_LIBS}
 	${videoplayer_LIBS}
 	${streamprocessor_LIBS}
+	${speechprocessor_LIBS}
 	${widgets_LIBS}
 	${X11_LIBRARIES} # xine needs XInitThreads() call in main
 )
@@ -59,6 +62,7 @@ add_definitions(
 	${formats_DEFS}
 	${videoplayer_DEFS}
 	${streamprocessor_DEFS}
+	${speechprocessor_DEFS}
 	${widgets_DEFS}
 )
 

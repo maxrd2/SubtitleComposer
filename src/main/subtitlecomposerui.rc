@@ -113,6 +113,8 @@
 			<Separator />
 			<Action name="demux_text_stream" />
 			<Separator />
+			<Action name="asr_import_audio_stream" />
+			<Separator />
 			<Action name="close_video" />
 			<Separator />
 			<Action name="toggle_full_screen" />

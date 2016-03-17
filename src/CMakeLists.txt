@@ -42,6 +42,7 @@ add_subdirectory(formats)
 add_subdirectory(widgets)
 add_subdirectory(videoplayer)
 add_subdirectory(streamprocessor)
+add_subdirectory(speechprocessor)
 add_subdirectory(main)
 
 add_subdirectory(videoplayerplugins)
