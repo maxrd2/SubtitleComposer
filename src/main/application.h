@@ -47,6 +47,7 @@ class KCodecActionExt;
 
 namespace SubtitleComposer {
 class VideoPlayer;
+class TextDemux;
 
 class PlayerWidget;
 class LinesWidget;
@@ -281,6 +282,8 @@ private:
 	QString m_subtitleTrFormat;
 
 	VideoPlayer *m_player;
+
+	TextDemux *m_textDemux;
 
 	SubtitleLine *m_lastFoundLine;
 

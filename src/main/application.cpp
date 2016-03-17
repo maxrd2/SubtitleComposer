@@ -69,6 +69,7 @@
 #include "../videoplayer/playerbackend.h"
 #include "../widgets/waveformwidget.h"
 #include "../profiler.h"
+#include "formats/textdemux/textdemux.h"
 
 #include <QDir>
 #include <QFileInfo>
@@ -78,6 +79,7 @@
 #include <QGridLayout>
 #include <QMenu>
 #include <QThread>
+#include <QStatusBar>
 
 #include <QFileDialog>
 #include <QKeySequence>
@@ -116,6 +118,7 @@ Application::Application(int &argc, char **argv) :
 	m_subtitleTrEOL(Format::CurrentOS),
 	m_subtitleTrFormat(),
 	m_player(VideoPlayer::instance()),
+	m_textDemux(NULL),
 	m_lastFoundLine(0),
 	m_mainWindow(0),
 	m_lastSubtitleUrl(QDir::homePath()),
@@ -191,6 +194,10 @@ Application::init()
 	actionManager->setFullScreenMode(false);
 
 	setupActions();
+
+	m_textDemux = new TextDemux(m_mainWindow);
+	connect(m_textDemux, &TextDemux::onError, [&](const QString &message){ KMessageBox::sorry(m_mainWindow, message); });
+	m_mainWindow->statusBar()->addPermanentWidget(m_textDemux->progressWidget());
 
 	m_playerWidget->plugActions();
 	m_curLineWidget->setupActions();
@@ -1405,42 +1412,13 @@ Application::reopenSubtitleWithCodecOrDetectScript(QTextCodec *codec)
 void
 Application::demuxTextStream(int textStreamIndex)
 {
-	// FIXME: MAX: need to place below slots into it's own QObject class as
-	// things are being called from GStreamer threads and eventually everything crashes
-
 	if(!closeSubtitle())
 		return;
 
 	newSubtitle();
 
-	static StreamProcessor *stream = NULL;
-
-	if(!stream) {
-		stream = new StreamProcessor(this);
-
-		connect(stream, &StreamProcessor::streamProgress, [](quint64 msecPos, quint64 msecLength){
-			qDebug() << "*** TEXT demux progress" << msecPos << "/" << msecLength;
-		});
-		connect(stream, &StreamProcessor::streamError, [&stream](int code, const QString &message, const QString &debug){
-			qWarning() << "*** TEXT demux error:" << code << message << "\n" << debug;
-			stream->close();
-			stream->deleteLater();
-			stream = NULL;
-		});
-		connect(stream, &StreamProcessor::streamFinished, [&stream](){
-			qDebug() << "*** TEXT demux finished";
-			stream->close();
-			stream->deleteLater();
-			stream = NULL;
-		});
-		connect(stream, &StreamProcessor::textDataAvailable, [this](const QString &text, quint64 msecStart, quint64 msecDuration){
-			m_subtitle->insertLine(new SubtitleLine(SString(text), Time(double(msecStart)), Time(double(msecStart) + double(msecDuration))));
-		});
-	}
-
-	if(stream->open(m_player->filePath()) && stream->initText(textStreamIndex))
-		stream->start();
-
+	// FIXME: connect on error
+	m_textDemux->demuxFile(m_subtitle, m_player->filePath(), textStreamIndex);
 }
 
 bool
