@@ -1,12 +1,16 @@
 #!/bin/sh
 
-CURRENT_DIR=$(echo $0 | sed -e 's/^\(.*\/\)[^\/][^\/]*$/\1/')
-BUILD_TESTS=ON
+cd "$(dirname "$0")"
 
-cd ${CURRENT_DIR} && \
-(rm -R build; \
-mkdir build && \
+rm -rf build >/dev/null 2>&1
+mkdir build
 cd build && \
-cmake ../ -DCMAKE_INSTALL_PREFIX=$(kde4-config --prefix) -DCMAKE_BUILD_TYPE=debugfull -DKDE4_BUILD_TESTS:BOOL=${BUILD_TESTS} && \
-make && \
-sudo make install)
+cmake \
+    -DCMAKE_BUILD_TYPE=Release \
+    -DCMAKE_INSTALL_PREFIX=/usr \
+    -DLIB_INSTALL_DIR=lib \
+    -DKDE_INSTALL_USE_QT_SYS_PATHS=ON \
+    -DBUILD_TESTING=OFF \
+    .. && \
+make -j4 && \
+sudo make install
