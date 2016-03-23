@@ -46,6 +46,7 @@ public:
 	bool open(const QString &filename);
 	bool initAudio(const int streamIndex, const WaveFormat &waveFormat);
 	bool initText(const int streamIndex);
+	bool initSpeech(const int streamIndex);
 	void close();
 
 	bool start();
@@ -59,6 +60,7 @@ signals:
 
 private:
 	static void onAudioDataReady(GstElement *fakesrc, GstBuffer *buffer, GstPad *pad, gpointer userData);
+	static void onSpeechDataReady(GstElement *fakesrc, GstBuffer *buffer, GstPad *pad, gpointer userData);
 	static void onTextDataReady(GstElement *fakesrc, GstBuffer *buffer, GstPad *pad, gpointer userData);
 	static void onPadAdded(GstElement *decodebin, GstPad *pad, gpointer userData);
 	static gboolean onPadCheck(GstElement *decodebin, GstPad *pad, GstCaps *caps, gpointer userData);
