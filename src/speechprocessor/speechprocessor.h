@@ -57,10 +57,10 @@ private slots:
 	void onStreamProgress(quint64 msecPos, quint64 msecLength);
 	void onStreamError(int code, const QString &message, const QString &debug);
 	void onStreamFinished();
-	void onStreamData(const QString &text, const quint64 msecStart, const quint64 msecDuration);
+	void onStreamData(const void *buffer, const qint32 size, const WaveFormat *waveFormat, const quint64 msecStart, const quint64 msecDuration);
 
 private:
-	void processSamples(qint16 *sampleData, qint16 sampleCount, const quint64 msecStart);
+	void processUtterance();
 
 private:
 	QString m_mediaFile;
@@ -73,6 +73,13 @@ private:
 
 	QWidget *m_progressWidget;
 	QProgressBar *m_progressBar;
+
+	cmd_ln_t *m_psConfig;
+	ps_decoder_t *m_psDecoder;
+	qint32 m_psFrameRate;
+
+	bool m_utteranceStarted;
+	bool m_speechStarted;
 };
 }
 

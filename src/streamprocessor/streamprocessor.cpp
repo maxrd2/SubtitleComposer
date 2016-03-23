@@ -148,49 +148,6 @@ StreamProcessor::initAudio(const int streamIndex, const WaveFormat &waveFormat)
 }
 
 bool
-StreamProcessor::initSpeech(const int streamIndex)
-{
-	if(!m_opened)
-		return false;
-
-	m_audioStreamCurrent = -1;
-	m_audioStreamIndex = streamIndex;
-	m_audioStreamFormat = WaveFormat(16000, 1, 16, true);
-	m_audioReady = false;
-
-	GstElement *audioconvert = gst_element_factory_make("audioconvert", "audioconvert");
-	GstElement *audioresample = gst_element_factory_make("audioresample", "audioresample");
-	GstElement *pocketsphinx = gst_element_factory_make("pocketsphinx", "pocketsphinx");
-	GstElement *fakesink = gst_element_factory_make("fakesink", "fakesink");
-
-	if(!audioresample || !audioconvert || !pocketsphinx || !fakesink) {
-		if(audioresample)
-			gst_object_unref(GST_OBJECT(audioresample));
-		if(audioconvert)
-			gst_object_unref(GST_OBJECT(audioconvert));
-		if(pocketsphinx)
-			gst_object_unref(GST_OBJECT(pocketsphinx));
-		if(fakesink)
-			gst_object_unref(GST_OBJECT(fakesink));
-		return false;
-	}
-
-	g_object_set(G_OBJECT(fakesink), "signal-handoffs", TRUE, NULL);
-	g_signal_connect(fakesink, "handoff", G_CALLBACK(onSpeechDataReady), this);
-
-	gst_bin_add_many(GST_BIN(m_decodingPipeline), audioresample, audioconvert, pocketsphinx, fakesink, NULL);
-
-	if(gst_element_link(audioresample, audioconvert)
-			&& gst_element_link(audioconvert, pocketsphinx)
-			&& gst_element_link(pocketsphinx, fakesink)) {
-		m_decodingBus = gst_pipeline_get_bus(GST_PIPELINE(m_decodingPipeline));
-		m_audioReady = true;
-	}
-
-	return m_audioReady;
-}
-
-bool
 StreamProcessor::initText(const int streamIndex)
 {
 	if(!m_opened)
@@ -254,26 +211,6 @@ StreamProcessor::onAudioDataReady(GstElement */*fakesink*/, GstBuffer *buffer, G
 
 	gst_buffer_map(buffer, &map, GST_MAP_READ);
 	emit me->audioDataAvailable(map.data, map.size, &me->m_audioStreamFormat, buffer->pts / GST_MSECOND, buffer->duration / GST_MSECOND);
-	gst_buffer_unmap(buffer, &map);
-}
-
-/*static*/ void
-StreamProcessor::onSpeechDataReady(GstElement */*fakesrc*/, GstBuffer *buffer, GstPad */*pad*/, gpointer userData)
-{
-	StreamProcessor *me = reinterpret_cast<StreamProcessor *>(userData);
-	GstMapInfo map;
-
-	while(!me->m_streamLen) {
-		gint64 time;
-		if(gst_element_query_duration(GST_ELEMENT(me->m_decodingPipeline), GST_FORMAT_TIME, &time) && GST_CLOCK_TIME_IS_VALID(time) && time) {
-			me->m_streamLen = time / GST_MSECOND;
-			emit me->streamProgress(me->m_streamPos, me->m_streamLen);
-		}
-		QThread::yieldCurrentThread();
-	}
-
-	gst_buffer_map(buffer, &map, GST_MAP_READ);
-	emit me->textDataAvailable(QString::fromUtf8((const char *)map.data, map.size), buffer->pts / GST_MSECOND, buffer->duration / GST_MSECOND);
 	gst_buffer_unmap(buffer, &map);
 }
 
