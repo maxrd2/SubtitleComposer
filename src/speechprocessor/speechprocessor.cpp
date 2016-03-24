@@ -179,8 +179,6 @@ SpeechProcessor::processUtterance()
 	if(!hyp || !*hyp)
 		return;
 
-	qDebug() << "RECOGNIZED:" << hyp;
-
 	QString lineText;
 	int lineIn, lineOut;
 	ps_seg_t *iter = ps_seg_iter(m_psDecoder);
@@ -188,12 +186,8 @@ SpeechProcessor::processUtterance()
 		const char *word = ps_seg_word(iter);
 		int wordIn, wordOut;
 		ps_seg_frames(iter, &wordIn, &wordOut);
-		if(*word == '<' || *word == '['
-//		|| strcmp(word, "<s>") == 0
-//		|| strcmp(word, "</s>") == 0
-//		|| strcmp(word, "<sil>") == 0
-//		|| strcmp(word, "[SPEECH]") == 0
-		) {
+		if(*word == '<' || *word == '[') {
+			// "<s>" "</s>" "<sil>" "[SPEECH]"
 			if(!lineText.isEmpty()) {
 				m_subtitle->insertLine(new SubtitleLine(SString(lineText),
 														double(lineIn) * 1000. / double(m_psFrameRate),
@@ -201,17 +195,24 @@ SpeechProcessor::processUtterance()
 				lineText.clear();
 			}
 		} else {
+			QString sWord = QString::fromLatin1(word);
+
+			// strip nnumber suffix
+			const char *pos = word;
+			while(*pos && *pos != '(')
+				pos++;
+			sWord.truncate(pos - word);
+
 			if(lineText.isEmpty()) {
-				lineText = QString::fromLatin1(word);
+				lineText = sWord;
 				lineIn = wordIn;
 			} else {
 				lineText += ' ';
-				lineText += QString::fromLatin1(word);
+				lineText += sWord;
 			}
 			lineOut = wordOut;
 		}
 
-		qDebug() << word << ": " << wordIn << "-" << wordOut;
 		iter = ps_seg_next(iter);
 	}
 	if(!lineText.isEmpty()) {
