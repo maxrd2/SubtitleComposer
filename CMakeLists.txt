@@ -1,6 +1,6 @@
 project(subtitlecomposer)
 
-cmake_minimum_required(VERSION 3.3)
+cmake_minimum_required(VERSION 2.8.12)
 set(QT_MIN_VERSION "5.2.0")
 
 #set(CMAKE_CXX_STANDARD 11)
@@ -10,7 +10,9 @@ find_package(ECM 1.2.0 REQUIRED NO_MODULE)
 set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} ${ECM_MODULE_PATH} ${ECM_KDE_MODULE_DIR} "${CMAKE_CURRENT_SOURCE_DIR}/cmake")
 
 cmake_policy(SET CMP0043 NEW)
-cmake_policy(SET CMP0063 NEW)
+if(CMAKE_VERSION VERSION_GREATER 3.3.0)
+	cmake_policy(SET CMP0063 NEW)
+endif(CMAKE_VERSION VERSION_GREATER 3.3.0)
 
 include(KDEInstallDirs)
 include(KDECMakeSettings)
