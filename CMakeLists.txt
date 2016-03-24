@@ -1,6 +1,6 @@
 project(subtitlecomposer)
 
-cmake_minimum_required(VERSION 2.8.12)
+cmake_minimum_required(VERSION 3.3)
 set(QT_MIN_VERSION "5.2.0")
 
 #set(CMAKE_CXX_STANDARD 11)
