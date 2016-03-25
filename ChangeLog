@@ -1,4 +1,53 @@
-Version 0.5.7
+Version 0.6.2
+ - ADD: Ability to demux text streams from loaded video
+ - MOD: WaveformWidget: added scrollbar and manual scrolling mode, improved zoom, widget state is loaded/saved
+ - MOD: WaveformWidget: double click will seek in video player
+ - MOD: WaveformWidget: subtitle show/hide time can be dragged
+ - MOD: Added default shortcut for play/pause video.
+ - MOD: Support for building with cmake older version than 3.3
+ - FIX: Changing player backend setting will reopen loaded video in new player backend.
+ - FIX: Timeline after last anchored subtitle was scaled incorrectly.
+ - FIX: WaveformWidget: optimizations and speed improvements
+ - FIX: Recent files list was not saved properly in some cases (subtitle list full).
+ - FIX: WaveformWidget: fixed crash after closing subtitle
+ - FIX: WaveformWidget: editing of non-anchored lines is not allowed
+ - FIX: StreamProcessor was not freeing it's resources.
+ - FIX: Updated configure and install scripts
+ - FIX: Removed "Decoder backend" entry from video player settings page.
+
+Version 0.6.1
+ - FIX: Anchor points syncing wasn't working right in some cases
+
+Version 0.6.0
+ - ADD: Anchor points syncing
+ - ADD: Waveform widget.
+ - MOD: Improved precision of the Time class.
+ - MOD: GStreamerPlayerBackend will pause when reaching end-of-stream instead of stopping/resetting player.
+ - MOD: Converted playerbackends to plugins
+ - MOD: updated German translation
+ - FIX: Video player widget will repaint background correctly.
+ - FIX: Code refactoring, cleanups and optimizations.
+ - FIX: fixed/enabled Drag & Drop
+
+Version 0.5.9
+ - FIX: Improved error reporting during video open.
+ - MOD: Added italian translation.
+
+Version 0.5.8
+ - ADD: MPV player support
+ - MOD: Replaced remaining KDE4 deprecated code, removed KDELibs4Support dependency. Finalized KF5 porting.
+ - MOD: Update croatian translation and README.md
+ - MOD: Added option not to resume playback after subtitle doubleclick if player is paused
+ - FIX: Gettext translations were not created during build process.
+ - FIX: FindGStreamer.cmake was not searching for and including arch-specific include dir
+ - FIX: Errors/Spelling in "Error Check" settings
+ - FIX: Build process fixes
+ - FIX: improved player/decoder backends, solved crashes when switching backends
+ - FIX: Added option to antialias subtitles
+ - FIX: Phonon player backend was displaying embeded subtitles
+ - FIX: OBS (OpenSuse) package creation was failing
+
+ Version 0.5.7
 - ADD: GStreamer 1.0 support
 - ADD: added Debian build
 - MOD: updated Bulgarian and Croatian translations
