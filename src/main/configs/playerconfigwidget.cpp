@@ -53,14 +53,6 @@ PlayerConfigWidget::PlayerConfigWidget(QWidget *parent)
 			kcfg_PlayerBackend->removeItem(dummyBackendIndex);
 	}
 
-//	kcfg_DecoderBackend->addItems(Decoder::instance()->backendNames());
-//	kcfg_DecoderBackend->setProperty("kcfg_property", QByteArray("currentText"));
-//	if(kcfg_DecoderBackend->count() > 1) {
-//		int dummyBackendIndex = kcfg_DecoderBackend->findText(Decoder::instance()->dummyBackendName());
-//		if(dummyBackendIndex >= 0)
-//			kcfg_DecoderBackend->removeItem(dummyBackendIndex);
-//	}
-
 	kcfg_FontFamily->setProperty("kcfg_property", QByteArray("currentText"));
 
 	connect(kcfg_FontFamily, SIGNAL(activated(const QString &)), this, SLOT(onFamilyChanged(const QString &)));
