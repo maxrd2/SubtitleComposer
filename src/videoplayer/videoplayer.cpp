@@ -171,6 +171,8 @@ VideoPlayer::reinitialize(const QString &prefBackendName)
 	if(!isInitialized())
 		return false;
 
+	QString currentFile = m_filePath;
+
 	PlayerBackend *targetBackend = m_backends.contains(prefBackendName) ? m_backends[prefBackendName] : m_activeBackend;
 
 	finalize();
@@ -186,8 +188,8 @@ VideoPlayer::reinitialize(const QString &prefBackendName)
 		return false;
 	}
 
-	if(!m_filePath.isEmpty())
-		openFile(m_filePath);
+	if(!currentFile.isEmpty())
+		openFile(currentFile);
 
 	return true;
 }
