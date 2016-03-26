@@ -8,8 +8,8 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://github.com/maxrd2/subtitlecomposer/issues\n"
 "POT-Creation-Date: 2016-03-15 05:47+0100\n"
-"PO-Revision-Date: 2016-02-08 16:12+0100\n"
-"Last-Translator: Mladen Milinkovic <max@scarlettvisionmedia.com>\n"
+"PO-Revision-Date: 2016-03-26 15:52+0100\n"
+"Last-Translator: gogo <trebelnik2@gmail.com>\n"
 "Language-Team: Croatian <hr@hr.org>\n"
 "Language: hr\n"
 "MIME-Version: 1.0\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=4; plural=n==1 ? 3 : n%10==1 && n%100!=11 ? 0 : n"
 "%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
-"X-Generator: Poedit 1.8.6\n"
+"X-Generator: Poedit 1.8.7.1\n"
 
 #: common/languagecode.cpp:420
 msgid "Unknown"
@@ -1082,24 +1082,27 @@ msgstr ""
 "podešavajući ostale"
 
 #: main/application.cpp:1080
-#, fuzzy
 msgid "Toggle Anchor"
-msgstr "Označi"
+msgstr "Uklj/Isklj usidrenje redka"
 
 #: main/application.cpp:1081
 msgid ""
 "(Un)Anchor current line's show time to timeline (Editing anchored line's "
 "show time will stretch/compact the timeline between adjanced anchors)"
 msgstr ""
+"Dodaj /Ukloni usidrenje vremena početka prikaza trenutnog redka u vremenskoj "
+"liniji (Uređivanje usidrenih vremena početka prikaza redaka će povećati/"
+"smanjiti vremensku liniju između zadanih usidrenja)"
 
 #: main/application.cpp:1088
-#, fuzzy
 msgid "Remove All Anchors"
-msgstr "Ukloni redke"
+msgstr "Ukloni sva usidrenja"
 
 #: main/application.cpp:1089
 msgid "Unanchor show time from the timeline on all anchored lines"
 msgstr ""
+"Ukloni usidrenje vremena početka prikaza iz vremenske linije sa svih "
+"usidrenih redaka"
 
 #: main/application.cpp:1097
 msgctxt "@action:inmenu Manage user scripts"
@@ -1363,21 +1366,18 @@ msgid "Spelling Settings"
 msgstr "Postavke pravopisa"
 
 #: main/configs/configdialog.cpp:62
-#, fuzzy
 msgctxt "@title VideoPlayer Settings"
 msgid "VideoPlayer"
-msgstr "Reproduktor"
+msgstr "Video reproduktor"
 
 #: main/configs/configdialog.cpp:63
-#, fuzzy
 msgid "VideoPlayer Settings"
-msgstr "Postavke reproduktora"
+msgstr "Postavke video reproduktora"
 
 #: main/configs/configdialog.cpp:72
-#, fuzzy
 msgctxt "@title VideoPlayer backend settings"
 msgid "%1 Backend Settings"
-msgstr "%1 postavke"
+msgstr "Postavke %1 pozadinskog reproduktora"
 
 #: main/configs/playerconfigwidget.cpp:39
 msgctxt "Text for previewing the subtitles font settings"
@@ -2288,7 +2288,7 @@ msgstr "Nema prijedloga"
 
 #: widgets/waveformwidget.cpp:57
 msgid "Generating waveform"
-msgstr ""
+msgstr "Stvaranje valnog prikaza"
 
 #~ msgid "Audio Levels Files"
 #~ msgstr "Datoteka pojačanja zvuka"
