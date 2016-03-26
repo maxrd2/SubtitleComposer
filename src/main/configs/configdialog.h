@@ -43,8 +43,8 @@ protected:
 	virtual bool hasChanged();
 
 private:
-	bool hasWidgetChanged;
-	Sonnet::ConfigWidget *sonnetConfigWidget;
+	bool m_hasWidgetChanged;
+	Sonnet::ConfigWidget *m_sonnetConfigWidget;
 };
 
 }
