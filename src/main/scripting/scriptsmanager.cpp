@@ -278,7 +278,7 @@ ScriptsManager::removeScript(const QString &sN)
 {
 	QString scriptName = sN.isEmpty() ? currentScriptName() : sN;
 	if(scriptName.isEmpty() || !m_scripts.contains(scriptName)) {
-		qWarning() << "unknow script specified";
+		qWarning() << "unknown script specified";
 		return;
 	}
 
@@ -298,7 +298,7 @@ ScriptsManager::editScript(const QString &sN)
 {
 	QString scriptName = sN.isEmpty() ? currentScriptName() : sN;
 	if(scriptName.isEmpty() || !m_scripts.contains(scriptName)) {
-		qWarning() << "unknow script specified";
+		qWarning() << "unknown script specified";
 		return;
 	}
 
@@ -323,7 +323,7 @@ ScriptsManager::runScript(const QString &sN)
 	}
 
 	if(!m_scripts.contains(scriptName)) {
-		qWarning() << "unknow script file specified";
+		qWarning() << "unknown script file specified";
 		return;
 	}
 
