@@ -8,7 +8,7 @@ set(videoplayer_xine_DEFS
 )
 set(videoplayer_xine_LIBS
 	${XINE_LIBRARY}
-	-lX11
+	${X11_LIBRARIES}
 	CACHE INTERNAL EXPORTEDVARIABLE
 )
 set(videoplayer_xine_SRCS
