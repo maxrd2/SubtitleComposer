@@ -308,14 +308,27 @@ PlayerWidget::setFullScreenMode(bool fullScreenMode)
 			increaseFontSize(18);
 
 			window()->hide();
-			m_layeredWidget->setParent(0);  // removes the widget from this window (and this m_mainLayout)
-			m_layeredWidget->showFullScreen();      // krazy:exclude=c++/qmethods
+
+			// Move m_layeredWidget to a temporary widget which will be
+			// displayed in full screen mode.
+			// Can not call showFullScreen() on m_layeredWidget directly
+			// because restoring the previous state is buggy under
+			// some desktop environments / window managers.
+
+			auto *fullScreenWidget = new QWidget;
+			auto *fullScreenLayout = new QHBoxLayout;
+			fullScreenLayout->setMargin(0);
+			fullScreenWidget->setLayout(fullScreenLayout);
+			m_layeredWidget->setParent(fullScreenWidget);
+			fullScreenLayout->addWidget(m_layeredWidget);
+			fullScreenWidget->showFullScreen();
 
 			m_layeredWidget->unsetCursor();
 			m_layeredWidget->setMouseTracking(true);
 			m_fullScreenControls->attach(m_layeredWidget);
 
 			m_fullScreenTID = startTimer(HIDE_MOUSE_MSECS);
+
 		} else {
 			if(m_fullScreenTID) {
 				killTimer(m_fullScreenTID);
@@ -328,11 +341,13 @@ PlayerWidget::setFullScreenMode(bool fullScreenMode)
 			m_layeredWidget->setMouseTracking(false);
 			m_layeredWidget->unsetCursor();
 
-			window()->show();
+			// delete temporary parent widget later and set this as parent again
+			m_layeredWidget->parent()->deleteLater();
 			m_layeredWidget->setParent(this);
-			m_layeredWidget->showNormal();  // krazy:exclude=c++/qmethods
 
 			m_mainLayout->addWidget(m_layeredWidget, 0, 1);
+
+			window()->show();
 		}
 	}
 }

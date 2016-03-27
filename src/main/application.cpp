@@ -2520,7 +2520,7 @@ Application::setFullScreenMode(bool enabled)
 	if(enabled != m_playerWidget->fullScreenMode()) {
 		m_playerWidget->setFullScreenMode(enabled);
 
-		KToggleAction *toggleFullScreenAction = (KToggleAction *)action(ACT_TOGGLE_FULL_SCREEN);
+		KToggleAction *toggleFullScreenAction = static_cast<KToggleAction *>(action(ACT_TOGGLE_FULL_SCREEN));
 		toggleFullScreenAction->setChecked(enabled);
 
 		emit fullScreenModeChanged(enabled);

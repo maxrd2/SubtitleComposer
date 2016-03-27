@@ -265,8 +265,6 @@ private slots:
 	void showPreferences();
 
 private:
-	void toggleFullScreen(bool on);
-
 	Subtitle *m_subtitle;
 	QUrl m_subtitleUrl;
 	QString m_subtitleFileName;

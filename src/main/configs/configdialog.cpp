@@ -28,6 +28,8 @@
 #include "../videoplayer/videoplayer.h"
 #include "../videoplayer/playerbackend.h"
 
+#include "config.h"
+
 #include <KConfigDialog>
 #include <klocalizedstring.h>
 
@@ -37,40 +39,38 @@ using namespace SubtitleComposer;
 
 ConfigDialog::ConfigDialog(QWidget *parent, const QString &name, KCoreConfigSkeleton *config) :
 	KConfigDialog(parent, name, config),
-	hasWidgetChanged(false)
+	m_hasWidgetChanged(false)
 {
 	KPageWidgetItem *item;
 
 	// General page
-	item = addPage(new GeneralConfigWidget(NULL), i18nc("@title General settings", "General"));
+	item = addPage(new GeneralConfigWidget(nullptr), i18nc("@title General settings", "General"));
 	item->setHeader(i18n("General Settings"));
-	item->setIcon(QIcon::fromTheme("preferences-other"));
+	item->setIcon(QIcon::fromTheme(QStringLiteral("preferences-other")));
 
 	// Error Check page
-	item = addPage(new ErrorsConfigWidget(NULL), i18nc("@title Error Check Settings", "Error Check"));
+	item = addPage(new ErrorsConfigWidget(nullptr), i18nc("@title Error Check Settings", "Error check"));
 	item->setHeader(i18n("Error Check Settings"));
-	item->setIcon(QIcon::fromTheme("games-endturn"));
+	item->setIcon(QIcon::fromTheme(QStringLiteral("games-endturn")));
 
 	// Spelling page
-	sonnetConfigWidget = new Sonnet::ConfigWidget(NULL);
-	connect(sonnetConfigWidget, SIGNAL(configChanged()), this, SLOT(widgetChanged()));
-	item = addPage(sonnetConfigWidget, i18nc("@title Spelling Settings", "Spelling"));
+	m_sonnetConfigWidget = new Sonnet::ConfigWidget(nullptr);
+	connect(m_sonnetConfigWidget, SIGNAL(configChanged()), this, SLOT(widgetChanged()));
+	item = addPage(m_sonnetConfigWidget, i18nc("@title Spelling settings", "Spelling"));
 	item->setHeader(i18n("Spelling Settings"));
-	item->setIcon(QIcon::fromTheme("tools-check-spelling"));
+	item->setIcon(QIcon::fromTheme(QStringLiteral("tools-check-spelling")));
 
 	// VideoPlayer page
-	item = addPage(new PlayerConfigWidget(NULL), i18nc("@title VideoPlayer Settings", "VideoPlayer"));
-	item->setHeader(i18n("VideoPlayer Settings"));
-	item->setIcon(QIcon::fromTheme("mediaplayer-logo"));
+	item = addPage(new PlayerConfigWidget(nullptr), i18nc("@title Video player Settings", "Video player"));
+	item->setHeader(i18n("Video player settings"));
+	item->setIcon(QIcon::fromTheme(QStringLiteral("mediaplayer-logo"), QIcon(QStringLiteral(CUSTOM_ICON_INSTALL_PATH "mediaplayer-logo"))));
 
 	// Backend pages
-	QStringList backendNames(VideoPlayer::instance()->backendNames());
-	for(QStringList::ConstIterator it = backendNames.begin(); it != backendNames.end(); it++) {
-		QWidget *configWidget = VideoPlayer::instance()->backend(*it)->newConfigWidget(0);
-		if(configWidget) {
-			item = addPage(configWidget, *it);
-			item->setHeader(i18nc("@title VideoPlayer backend settings", "%1 Backend Settings", *it));
-			item->setIcon(QIcon::fromTheme((*it).toLower() + "-logo"));
+	for(const QString backendName : VideoPlayer::instance()->backendNames()) {
+		if(QWidget *configWidget = VideoPlayer::instance()->backend(backendName)->newConfigWidget(nullptr)) {
+			item = addPage(configWidget, backendName);
+			item->setHeader(i18nc("@title Video player backend settings", "%1 backend settings", backendName));
+			item->setIcon(QIcon::fromTheme(backendName.toLower() + QStringLiteral("-logo"), QIcon(QStringLiteral(CUSTOM_ICON_INSTALL_PATH) + backendName.toLower() + QStringLiteral("-logo"))));
 		}
 	}
 }
@@ -78,15 +78,15 @@ ConfigDialog::ConfigDialog(QWidget *parent, const QString &name, KCoreConfigSkel
 void
 ConfigDialog::widgetChanged()
 {
-	hasWidgetChanged = true;
+	m_hasWidgetChanged = true;
 	updateButtons();
 }
 
 void
 ConfigDialog::updateSettings()
 {
-	sonnetConfigWidget->save();
-	hasWidgetChanged = false;
+	m_sonnetConfigWidget->save();
+	m_hasWidgetChanged = false;
 	KConfigDialog::updateSettings();
 	settingsChangedSlot();
 }
@@ -94,6 +94,6 @@ ConfigDialog::updateSettings()
 bool
 ConfigDialog::hasChanged()
 {
-	return hasWidgetChanged || KConfigDialog::hasChanged();
+	return m_hasWidgetChanged || KConfigDialog::hasChanged();
 }
 
