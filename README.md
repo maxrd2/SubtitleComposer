@@ -34,21 +34,13 @@ Please look at [Milestone list][milestones] and [issue tracker on GitHub][bugs] 
 
 ### CONTRIBUTING
 Help and ideas are welcome.   
-If you would like to do some code changes, please check the [wiki][coding style wiki].   
+If you would like to do some code changes, please check the [coding style doc][coding style].   
 
 ### AUTHORS / CONTRIBUTORS
- - Mladen Milinkovic - author/maintainer
- - @Martchus - code contributions, arch linux builds, German translation
- - Goran Vidovic (gogo) - Croatian translation
- - Petar Toushkov - Bulgarian translation
- - Sergio Pistone - original author
- - Petr Gadula (Goliash), Thomas Gastine, Panagiotis Papadopoulos, Alessandro Polverini, Tomasz Argasiński, Marcio P. Moraes,
- Alexander Antsev, Slobodan Simic, Yuri Chornoivan, Alexandros Perdikomatis, Barcza Károly - original translations
- - wantilles - support for VDPAU decoding on the mplayer backend
- - Martin Steghöfer
- - and many others
+Please look in [AUTHORS file][authors] for incomplete list.
 
 
 [bugs]: https://github.com/maxrd2/subtitlecomposer/issues "Issue Tracker"
 [milestones]: https://github.com/maxrd2/subtitlecomposer/milestones "Milestones"
-[coding style wiki]: https://github.com/maxrd2/subtitlecomposer/wiki/Coding-Style "Coding Style - Wiki"
+[coding style]: https://github.com/maxrd2/subtitlecomposer/blob/master/README.CodingStyle.md "Coding Style"
+[authors]: https://github.com/maxrd2/subtitlecomposer/blob/master/AUTHORS "Authors / Contributors"
