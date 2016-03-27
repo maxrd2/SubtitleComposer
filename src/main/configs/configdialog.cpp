@@ -63,14 +63,14 @@ ConfigDialog::ConfigDialog(QWidget *parent, const QString &name, KCoreConfigSkel
 	// VideoPlayer page
 	item = addPage(new PlayerConfigWidget(nullptr), i18nc("@title Video player Settings", "Video player"));
 	item->setHeader(i18n("Video player settings"));
-	item->setIcon(QIcon::fromTheme(QStringLiteral("mediaplayer-logo"), QIcon(QStringLiteral(CUSTOM_ICON_INSTALL_PATH "mediaplayer-logo"))));
+	item->setIcon(QIcon(QStringLiteral(CUSTOM_ICON_INSTALL_PATH "mediaplayer-logo")));
 
 	// Backend pages
 	for(const QString backendName : VideoPlayer::instance()->backendNames()) {
 		if(QWidget *configWidget = VideoPlayer::instance()->backend(backendName)->newConfigWidget(nullptr)) {
 			item = addPage(configWidget, backendName);
 			item->setHeader(i18nc("@title Video player backend settings", "%1 backend settings", backendName));
-			item->setIcon(QIcon::fromTheme(backendName.toLower() + QStringLiteral("-logo"), QIcon(QStringLiteral(CUSTOM_ICON_INSTALL_PATH) + backendName.toLower() + QStringLiteral("-logo"))));
+			item->setIcon(QIcon(QStringLiteral(CUSTOM_ICON_INSTALL_PATH) + backendName.toLower() + QStringLiteral("-logo")));
 		}
 	}
 }
