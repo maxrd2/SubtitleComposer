@@ -1912,8 +1912,7 @@ Application::insertBeforeCurrentLine()
 		{
 			LinesWidgetScrollToModelDetacher detacher(*m_linesWidget);
 			SubtitleLine *currentLine = m_linesWidget->currentLine();
-			newLine = m_subtitle->insertNewLine(currentLine ? currentLine->index() : 0, false, dlg->selectedTextsTarget()
-												);
+			newLine = m_subtitle->insertNewLine(currentLine ? currentLine->index() : 0, false, dlg->selectedTextsTarget());
 		}
 		m_linesWidget->setCurrentLine(newLine, true);
 	}
