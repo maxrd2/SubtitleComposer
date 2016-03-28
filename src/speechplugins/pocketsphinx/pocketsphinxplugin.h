@@ -54,6 +54,10 @@ private:
 	ps_decoder_t *m_psDecoder;
 	qint32 m_psFrameRate;
 
+	QString m_lineText;
+	int m_lineIn;
+	int m_lineOut;
+
 	bool m_utteranceStarted;
 	bool m_speechStarted;
 };

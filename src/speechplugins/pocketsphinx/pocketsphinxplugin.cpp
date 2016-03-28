@@ -62,6 +62,9 @@ PocketSphinxPlugin::init()
 
 	m_psFrameRate = cmd_ln_int32_r(m_psConfig, "-frate");
 
+	m_lineText.clear();
+	m_lineIn = m_lineOut = 0;
+
 	m_utteranceStarted = false;
 	m_speechStarted = false;
 
@@ -84,54 +87,50 @@ PocketSphinxPlugin::cleanup()
 void
 PocketSphinxPlugin::processUtterance()
 {
-//	if(!m_subtitle)
-//		return;
-
 	qint32 score;
 	char const *hyp = ps_get_hyp(m_psDecoder, &score);
 	if(!hyp || !*hyp)
 		return;
 
-	QString lineText;
-	int lineIn, lineOut;
 	ps_seg_t *iter = ps_seg_iter(m_psDecoder);
-	while(iter != NULL /*&& m_subtitle != NULL*/) {
+	while(iter != NULL) {
 		const char *word = ps_seg_word(iter);
 		int wordIn, wordOut;
 		ps_seg_frames(iter, &wordIn, &wordOut);
 		if(*word == '<' || *word == '[') {
 			// "<s>" "</s>" "<sil>" "[SPEECH]"
-			if(!lineText.isEmpty()) {
-				emit textRecognized(lineText,
-									  double(lineIn) * 1000. / double(m_psFrameRate),
-									  double(lineOut) * 1000. / double(m_psFrameRate));
-				lineText.clear();
+			if(!m_lineText.isEmpty()) {
+				emit textRecognized(m_lineText,
+									  double(m_lineIn) * 1000. / double(m_psFrameRate),
+									  double(m_lineOut) * 1000. / double(m_psFrameRate));
+				m_lineText.clear();
 			}
 		} else {
 			QString sWord = QString::fromLatin1(word);
 
-			// strip nnumber suffix
+			// strip number suffix
 			const char *pos = word;
 			while(*pos && *pos != '(')
 				pos++;
 			sWord.truncate(pos - word);
 
-			if(lineText.isEmpty()) {
-				lineText = sWord;
-				lineIn = wordIn;
+			if(m_lineText.isEmpty()) {
+				m_lineText = sWord;
+				m_lineIn = wordIn;
 			} else {
-				lineText += ' ';
-				lineText += sWord;
+				m_lineText += ' ';
+				m_lineText += sWord;
 			}
-			lineOut = wordOut;
+			m_lineOut = wordOut;
 		}
 
 		iter = ps_seg_next(iter);
 	}
-	if(!lineText.isEmpty()) {
-		emit textRecognized(lineText,
-							  double(lineIn) * 1000. / double(m_psFrameRate),
-							  double(lineOut) * 1000. / double(m_psFrameRate));
+	if(!m_lineText.isEmpty()) {
+		emit textRecognized(m_lineText,
+							  double(m_lineIn) * 1000. / double(m_psFrameRate),
+							  double(m_lineOut) * 1000. / double(m_psFrameRate));
+		m_lineText.clear();
 	}
 }
 
