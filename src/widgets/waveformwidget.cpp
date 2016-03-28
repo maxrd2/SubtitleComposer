@@ -291,6 +291,8 @@ WaveformWidget::setSubtitle(Subtitle *subtitle)
 
 	m_visibleLines.clear();
 	m_visibleLinesDirty = subtitle != NULL;
+
+	m_waveformGraphics->update();
 }
 
 QWidget *
