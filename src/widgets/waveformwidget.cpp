@@ -554,7 +554,8 @@ WaveformWidget::leaveEvent(QEvent */*event*/)
 {
 	if(m_userScroll) {
 		m_userScroll = false;
-		onPlayerPositionChanged(m_timeCurrent.toSeconds());
+		if(m_autoScroll)
+			onPlayerPositionChanged(m_timeCurrent.toSeconds());
 	}
 }
 
@@ -627,7 +628,11 @@ WaveformWidget::eventFilter(QObject *obj, QEvent *event)
 	}
 
 	case QEvent::MouseButtonPress: {
-		int y = reinterpret_cast<QMouseEvent *>(event)->y();
+		QMouseEvent *mouse = reinterpret_cast<QMouseEvent *>(event);
+		if(mouse->button() != Qt::LeftButton)
+			return false;
+
+		int y = mouse->y();
 		m_draggedPos = subtitleAt(y, &m_draggedLine);
 		if(m_draggedLine && !m_subtitle->anchoredLines().empty() && m_subtitle->anchoredLines().indexOf(m_draggedLine) == -1) {
 			m_draggedTime = 0.;
@@ -650,8 +655,12 @@ WaveformWidget::eventFilter(QObject *obj, QEvent *event)
 	}
 
 	case QEvent::MouseButtonRelease: {
+		QMouseEvent *mouse = reinterpret_cast<QMouseEvent *>(event);
+		if(mouse->button() != Qt::LeftButton)
+			return false;
+
 		if(m_draggedLine) {
-			m_draggedTime = timeAt(reinterpret_cast<QMouseEvent *>(event)->y());
+			m_draggedTime = timeAt(mouse->y());
 			if(m_draggedPos == DRAG_LINE) {
 				m_draggedLine->setHideTime(m_draggedTime - m_draggedOffset + m_draggedLine->durationTime());
 				m_draggedLine->setShowTime(m_draggedTime - m_draggedOffset);
