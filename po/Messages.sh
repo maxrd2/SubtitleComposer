@@ -1,10 +1,10 @@
 #!/bin/sh
 
-BASEDIR="../src/" # root of translatable sources
 PROJECT="subtitlecomposer" # project name
 BUGADDR="https://github.com/maxrd2/subtitlecomposer/issues" # MSGID-Bugs
 WDIR=`pwd` # working dir
-
+cd "$(dirname "$0")/../src/"
+BASEDIR=`pwd` # root of translatable sources
 
 echo "Preparing rc files"
 cd ${BASEDIR}

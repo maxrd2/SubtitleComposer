@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: https://github.com/maxrd2/subtitlecomposer/issues\n"
-"POT-Creation-Date: 2016-03-07 17:06+0100\n"
+"POT-Creation-Date: 2016-03-28 10:18+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -18,2194 +18,2224 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
 
-#: rc.cpp:1 src/main/main.cpp:66 rc.cpp:1
-msgctxt "NAME OF TRANSLATORS"
-msgid "Your names"
-msgstr ""
-
-#: rc.cpp:2 src/main/main.cpp:66 rc.cpp:2
-msgctxt "EMAIL OF TRANSLATORS"
-msgid "Your emails"
-msgstr ""
-
-#: src/common/languagecode.cpp:420
+#: common/languagecode.cpp:420
 msgid "Unknown"
 msgstr ""
 
-#: src/core/subtitle.cpp:69
-msgid "Set Primary Data"
-msgstr ""
-
-#: src/core/subtitle.cpp:117
-msgid "Clear Primary Text Data"
-msgstr ""
-
-#: src/core/subtitle.cpp:130
-msgid "Set Secondary Data"
-msgstr ""
-
-#: src/core/subtitle.cpp:169
-msgid "Clear Secondary Text Data"
-msgstr ""
-
-#: src/core/subtitle.cpp:257 src/main/dialogs/changeframeratedialog.cpp:35
-msgid "Change Frame Rate"
-msgstr ""
-
-#: src/core/subtitle.cpp:387 src/core/subtitle.cpp:401
-msgid "Insert Line"
-msgstr ""
-
-#: src/core/subtitle.cpp:434 src/core/subtitle.cpp:444
-#: src/core/subtitle.cpp:461 src/core/subtitleactions.cpp:176
-msgid "Remove Lines"
-msgstr ""
-
-#: src/core/subtitle.cpp:514 src/main/application.cpp:573
-#: src/main/lineswidget.cpp:1088
-msgid "Split Lines"
-msgstr ""
-
-#: src/core/subtitle.cpp:565 src/main/application.cpp:580
-#: src/main/lineswidget.cpp:1087
-msgid "Join Lines"
-msgstr ""
-
-#: src/core/subtitle.cpp:613
-msgid "Shift Lines"
-msgstr ""
-
-#: src/core/subtitle.cpp:659
-msgid "Adjust Lines"
-msgstr ""
-
-#: src/core/subtitle.cpp:670 src/main/application.cpp:2150
-#: src/main/lineswidget.cpp:1064
-msgid "Sort"
-msgstr ""
-
-#: src/core/subtitle.cpp:712 src/main/dialogs/durationlimitsdialog.cpp:31
-msgid "Enforce Duration Limits"
-msgstr ""
-
-#: src/core/subtitle.cpp:751 src/main/application.cpp:2212
-#: src/main/lineswidget.cpp:1067
-msgid "Maximize Durations"
-msgstr ""
-
-#: src/core/subtitle.cpp:774 src/main/dialogs/autodurationsdialog.cpp:34
-msgid "Set Automatic Durations"
-msgstr ""
-
-#: src/core/subtitle.cpp:808 src/main/dialogs/fixoverlappingtimesdialog.cpp:31
-#: src/main/lineswidget.cpp:1068
-msgid "Fix Overlapping Times"
-msgstr ""
-
-#: src/core/subtitle.cpp:840
-msgid "Fix Lines Punctuation"
-msgstr ""
-
-#: src/core/subtitle.cpp:887
-msgid "Lower Case"
-msgstr ""
-
-#: src/core/subtitle.cpp:918
-msgid "Upper Case"
-msgstr ""
-
-#: src/core/subtitle.cpp:949
-msgid "Title Case"
-msgstr ""
-
-#: src/core/subtitle.cpp:981
-msgid "Sentence Case"
-msgstr ""
-
-#: src/core/subtitle.cpp:1024 src/main/dialogs/smarttextsadjustdialog.cpp:31
-msgid "Break Lines"
-msgstr ""
-
-#: src/core/subtitle.cpp:1033 src/main/application.cpp:2264
-#: src/main/lineswidget.cpp:1034
-msgid "Unbreak Lines"
-msgstr ""
-
-#: src/core/subtitle.cpp:1042 src/main/application.cpp:2275
-#: src/main/lineswidget.cpp:1035
-msgid "Simplify Spaces"
-msgstr ""
-
-#: src/core/subtitle.cpp:1051
-msgid "Synchronize Subtitles"
-msgstr ""
-
-#: src/core/subtitle.cpp:1072 src/main/dialogs/joinsubtitlesdialog.cpp:35
-msgid "Join Subtitles"
-msgstr ""
-
-#: src/core/subtitle.cpp:1114 src/core/subtitle.cpp:1120
-msgid "Split Subtitles"
-msgstr ""
-
-#: src/core/subtitle.cpp:1135 src/core/subtitle.cpp:1150
-msgid "Set Lines Style"
-msgstr ""
-
-#: src/core/subtitle.cpp:1167
-msgid "Toggle Lines Style"
-msgstr ""
-
-#: src/core/subtitle.cpp:1179
-msgid "Change Lines Text Color"
-msgstr ""
-
-#: src/core/subtitle.cpp:1192
-msgid "Set Lines Mark"
-msgstr ""
-
-#: src/core/subtitle.cpp:1192
-msgid "Clear Lines Mark"
-msgstr ""
-
-#: src/core/subtitle.cpp:1207
-msgid "Toggle Lines Mark"
-msgstr ""
-
-#: src/core/subtitle.cpp:1217 src/main/application.cpp:2030
-#: src/main/errorswidget.cpp:798
-msgid "Clear Lines Errors"
-msgstr ""
-
-#: src/core/subtitle.cpp:1228 src/core/subtitle.cpp:1240
-#: src/main/application.cpp:1975
-msgid "Check Lines Errors"
-msgstr ""
-
-#: src/core/subtitleactions.cpp:59
+#: core/subtitleactions.cpp:59
 msgid "Set Frame Rate"
 msgstr ""
 
-#: src/core/subtitleactions.cpp:95
+#: core/subtitleactions.cpp:95
 msgid "Insert Lines"
 msgstr ""
 
-#: src/core/subtitleactions.cpp:262
+#: core/subtitleactions.cpp:176 core/subtitle.cpp:488 core/subtitle.cpp:498
+#: core/subtitle.cpp:515
+msgid "Remove Lines"
+msgstr ""
+
+#: core/subtitleactions.cpp:262
 msgid "Move Line"
 msgstr ""
 
-#: src/core/subtitleactions.cpp:362
+#: core/subtitleactions.cpp:362
 msgid "Swap Texts"
 msgstr ""
 
-#: src/core/subtitleline.cpp:77
+#: core/subtitle.cpp:69
+msgid "Set Primary Data"
+msgstr ""
+
+#: core/subtitle.cpp:117
+msgid "Clear Primary Text Data"
+msgstr ""
+
+#: core/subtitle.cpp:130
+msgid "Set Secondary Data"
+msgstr ""
+
+#: core/subtitle.cpp:169
+msgid "Clear Secondary Text Data"
+msgstr ""
+
+#: core/subtitle.cpp:257 main/dialogs/changeframeratedialog.cpp:35
+msgid "Change Frame Rate"
+msgstr ""
+
+#: core/subtitle.cpp:441 core/subtitle.cpp:455
+msgid "Insert Line"
+msgstr ""
+
+#: core/subtitle.cpp:568 main/application.cpp:591 main/lineswidget.cpp:1129
+msgid "Split Lines"
+msgstr ""
+
+#: core/subtitle.cpp:618 main/application.cpp:598 main/lineswidget.cpp:1128
+msgid "Join Lines"
+msgstr ""
+
+#: core/subtitle.cpp:721
+msgid "Shift Lines"
+msgstr ""
+
+#: core/subtitle.cpp:777
+msgid "Adjust Lines"
+msgstr ""
+
+#: core/subtitle.cpp:788 main/application.cpp:2231 main/lineswidget.cpp:1105
+msgid "Sort"
+msgstr ""
+
+#: core/subtitle.cpp:830 main/dialogs/durationlimitsdialog.cpp:31
+msgid "Enforce Duration Limits"
+msgstr ""
+
+#: core/subtitle.cpp:869 main/application.cpp:2293 main/lineswidget.cpp:1108
+msgid "Maximize Durations"
+msgstr ""
+
+#: core/subtitle.cpp:892 main/dialogs/autodurationsdialog.cpp:34
+msgid "Set Automatic Durations"
+msgstr ""
+
+#: core/subtitle.cpp:926 main/dialogs/fixoverlappingtimesdialog.cpp:31
+#: main/lineswidget.cpp:1109
+msgid "Fix Overlapping Times"
+msgstr ""
+
+#: core/subtitle.cpp:958
+msgid "Fix Lines Punctuation"
+msgstr ""
+
+#: core/subtitle.cpp:1005
+msgid "Lower Case"
+msgstr ""
+
+#: core/subtitle.cpp:1036
+msgid "Upper Case"
+msgstr ""
+
+#: core/subtitle.cpp:1067
+msgid "Title Case"
+msgstr ""
+
+#: core/subtitle.cpp:1099
+msgid "Sentence Case"
+msgstr ""
+
+#: core/subtitle.cpp:1142 main/dialogs/smarttextsadjustdialog.cpp:31
+msgid "Break Lines"
+msgstr ""
+
+#: core/subtitle.cpp:1151 main/application.cpp:2345 main/lineswidget.cpp:1075
+msgid "Unbreak Lines"
+msgstr ""
+
+#: core/subtitle.cpp:1160 main/application.cpp:2356 main/lineswidget.cpp:1076
+msgid "Simplify Spaces"
+msgstr ""
+
+#: core/subtitle.cpp:1169
+msgid "Synchronize Subtitles"
+msgstr ""
+
+#: core/subtitle.cpp:1190 main/dialogs/joinsubtitlesdialog.cpp:35
+msgid "Join Subtitles"
+msgstr ""
+
+#: core/subtitle.cpp:1232 core/subtitle.cpp:1238
+msgid "Split Subtitles"
+msgstr ""
+
+#: core/subtitle.cpp:1253 core/subtitle.cpp:1268
+msgid "Set Lines Style"
+msgstr ""
+
+#: core/subtitle.cpp:1285
+msgid "Toggle Lines Style"
+msgstr ""
+
+#: core/subtitle.cpp:1297
+msgid "Change Lines Text Color"
+msgstr ""
+
+#: core/subtitle.cpp:1310
+msgid "Set Lines Mark"
+msgstr ""
+
+#: core/subtitle.cpp:1310
+msgid "Clear Lines Mark"
+msgstr ""
+
+#: core/subtitle.cpp:1325
+msgid "Toggle Lines Mark"
+msgstr ""
+
+#: core/subtitle.cpp:1335 main/application.cpp:2111 main/errorswidget.cpp:798
+msgid "Clear Lines Errors"
+msgstr ""
+
+#: core/subtitle.cpp:1346 core/subtitle.cpp:1358 main/application.cpp:2056
+msgid "Check Lines Errors"
+msgstr ""
+
+#: core/subtitlelineactions.cpp:72
+msgid "Set Line Text"
+msgstr ""
+
+#: core/subtitlelineactions.cpp:113
+msgid "Set Line Secondary Text"
+msgstr ""
+
+#: core/subtitlelineactions.cpp:154
+msgid "Set Line Texts"
+msgstr ""
+
+#: core/subtitlelineactions.cpp:228 core/subtitleline.cpp:509
+msgid "Set Line Show Time"
+msgstr ""
+
+#: core/subtitlelineactions.cpp:269
+msgid "Set Line Hide Time"
+msgstr ""
+
+#: core/subtitlelineactions.cpp:384
+msgid "Set Line Errors"
+msgstr ""
+
+#: core/subtitleline.cpp:77
 msgid "Empty text"
 msgstr ""
 
-#: src/core/subtitleline.cpp:79
+#: core/subtitleline.cpp:79
 msgid "Too many characters"
 msgstr ""
 
-#: src/core/subtitleline.cpp:81
+#: core/subtitleline.cpp:81
 msgid "Too many lines"
 msgstr ""
 
-#: src/core/subtitleline.cpp:83
+#: core/subtitleline.cpp:83
 msgid "Unnecessary white space"
 msgstr ""
 
-#: src/core/subtitleline.cpp:85
+#: core/subtitleline.cpp:85
 msgid "Unnecessary dash"
 msgstr ""
 
-#: src/core/subtitleline.cpp:87
+#: core/subtitleline.cpp:87
 msgid "Capital letter after continuation ellipsis"
 msgstr ""
 
-#: src/core/subtitleline.cpp:89
+#: core/subtitleline.cpp:89
 msgid "Too long duration per character"
 msgstr ""
 
-#: src/core/subtitleline.cpp:91
+#: core/subtitleline.cpp:91
 msgid "Too short duration per character"
 msgstr ""
 
-#: src/core/subtitleline.cpp:93
+#: core/subtitleline.cpp:93
 msgid "Too long duration"
 msgstr ""
 
-#: src/core/subtitleline.cpp:94
+#: core/subtitleline.cpp:94
 msgid "Too short duration"
 msgstr ""
 
-#: src/core/subtitleline.cpp:95
+#: core/subtitleline.cpp:95
 msgid "Overlapping times"
 msgstr ""
 
-#: src/core/subtitleline.cpp:96
+#: core/subtitleline.cpp:96
 msgid "Untranslated text"
 msgstr ""
 
-#: src/core/subtitleline.cpp:97
+#: core/subtitleline.cpp:97
 msgid "User mark"
 msgstr ""
 
-#: src/core/subtitleline.cpp:116
+#: core/subtitleline.cpp:116
 msgid "Has no primary text."
 msgstr ""
 
-#: src/core/subtitleline.cpp:117
+#: core/subtitleline.cpp:117
 msgid "Has no translation text."
 msgstr ""
 
-#: src/core/subtitleline.cpp:118
+#: core/subtitleline.cpp:118
 msgid "Has too many characters in primary text (1 char)."
 msgid_plural "Has too many characters in primary text (%1 chars)."
 msgstr[0] ""
 msgstr[1] ""
 
-#: src/core/subtitleline.cpp:119
+#: core/subtitleline.cpp:119
 msgid "Has too many characters in translation text (1 char)."
 msgid_plural "Has too many characters in translation text (%1 chars)."
 msgstr[0] ""
 msgstr[1] ""
 
-#: src/core/subtitleline.cpp:120
+#: core/subtitleline.cpp:120
 msgid "Has too many lines in primary text (1 line)."
 msgid_plural "Has too many lines in primary text (%1 lines)."
 msgstr[0] ""
 msgstr[1] ""
 
-#: src/core/subtitleline.cpp:121
+#: core/subtitleline.cpp:121
 msgid "Has too many lines in translation text (1 line)."
 msgid_plural "Has too many lines in translation text (%1 lines)."
 msgstr[0] ""
 msgstr[1] ""
 
-#: src/core/subtitleline.cpp:122
+#: core/subtitleline.cpp:122
 msgid "Has unnecessary spaces in primary text."
 msgstr ""
 
-#: src/core/subtitleline.cpp:123
+#: core/subtitleline.cpp:123
 msgid "Has unnecessary spaces in translation text."
 msgstr ""
 
-#: src/core/subtitleline.cpp:124
+#: core/subtitleline.cpp:124
 msgid "Has unnecessary dash in primary text."
 msgstr ""
 
-#: src/core/subtitleline.cpp:125
+#: core/subtitleline.cpp:125
 msgid "Has unnecessary dash in translation text."
 msgstr ""
 
-#: src/core/subtitleline.cpp:126
+#: core/subtitleline.cpp:126
 msgid "Has capital letter after line continuation ellipsis in primary text."
 msgstr ""
 
-#: src/core/subtitleline.cpp:127
+#: core/subtitleline.cpp:127
 msgid ""
 "Has capital letter after line continuation ellipsis in translation text."
 msgstr ""
 
-#: src/core/subtitleline.cpp:128
+#: core/subtitleline.cpp:128
 msgid "Has too long duration per character in primary text (1 msec/char)."
 msgid_plural ""
 "Has too long duration per character in primary text (%1 msecs/char)."
 msgstr[0] ""
 msgstr[1] ""
 
-#: src/core/subtitleline.cpp:129
+#: core/subtitleline.cpp:129
 msgid "Has too long duration per character in translation text (1 msec/char)."
 msgid_plural ""
 "Has too long duration per character in translation text (%1 msecs/char)."
 msgstr[0] ""
 msgstr[1] ""
 
-#: src/core/subtitleline.cpp:130
+#: core/subtitleline.cpp:130
 msgid "Has too short duration per character in primary text (1 msec/char)."
 msgid_plural ""
 "Has too short duration per character in primary text (%1 msecs/char)."
 msgstr[0] ""
 msgstr[1] ""
 
-#: src/core/subtitleline.cpp:131
+#: core/subtitleline.cpp:131
 msgid "Has too short duration per character in translation text (1 msec/char)."
 msgid_plural ""
 "Has too short duration per character in translation text (%1 msecs/char)."
 msgstr[0] ""
 msgstr[1] ""
 
-#: src/core/subtitleline.cpp:132
+#: core/subtitleline.cpp:132
 msgid "Has too long duration (1 msec)."
 msgid_plural "Has too long duration (%1 msecs)."
 msgstr[0] ""
 msgstr[1] ""
 
-#: src/core/subtitleline.cpp:133
+#: core/subtitleline.cpp:133
 msgid "Has too short duration (1 msec)."
 msgid_plural "Has too short duration (%1 msecs)."
 msgstr[0] ""
 msgstr[1] ""
 
-#: src/core/subtitleline.cpp:134
+#: core/subtitleline.cpp:134
 msgid "Overlaps with next line."
 msgstr ""
 
-#: src/core/subtitleline.cpp:135
+#: core/subtitleline.cpp:135
 msgid "Has untranslated text."
 msgstr ""
 
-#: src/core/subtitleline.cpp:136
+#: core/subtitleline.cpp:136
 msgid "Has user mark."
 msgstr ""
 
-#: src/core/subtitleline.cpp:613
+#: core/subtitleline.cpp:549 core/subtitleline.cpp:553
 msgid "Set Line Times"
 msgstr ""
 
-#: src/core/subtitleline.cpp:620
+#: core/subtitleline.cpp:638
 msgid "Shift Line Times"
 msgstr ""
 
-#: src/core/subtitleline.cpp:629
+#: core/subtitleline.cpp:645
 msgid "Adjust Line Times"
 msgstr ""
 
-#: src/core/subtitlelineactions.cpp:72
-msgid "Set Line Text"
+#: formats/textdemux/textdemux.cpp:43
+msgid "Importing Subtitle Stream"
 msgstr ""
 
-#: src/core/subtitlelineactions.cpp:113
-msgid "Set Line Secondary Text"
+#: formats/textdemux/textdemux.cpp:93
+msgid ""
+"Subtitle demux failed %1: %2\n"
+"%3"
 msgstr ""
 
-#: src/core/subtitlelineactions.cpp:154
-msgid "Set Line Texts"
-msgstr ""
-
-#: src/core/subtitlelineactions.cpp:228
-msgid "Set Line Show Time"
-msgstr ""
-
-#: src/core/subtitlelineactions.cpp:269
-msgid "Set Line Hide Time"
-msgstr ""
-
-#: src/core/subtitlelineactions.cpp:384
-msgid "Set Line Errors"
-msgstr ""
-
-#: src/main/actions/kcodecactionext.cpp:39
-#: src/main/dialogs/opensubtitledialog.cpp:47
-#: src/main/dialogs/opensubtitledialog.cpp:49
-#: src/main/dialogs/selectablesubtitledialog.cpp:64
-#: src/main/dialogs/selectablesubtitledialog.cpp:98
+#: main/actions/kcodecactionext.cpp:39 main/dialogs/opensubtitledialog.cpp:47
+#: main/dialogs/opensubtitledialog.cpp:49
+#: main/dialogs/selectablesubtitledialog.cpp:64
+#: main/dialogs/selectablesubtitledialog.cpp:98
 msgid "Autodetect"
 msgstr ""
 
-#: src/main/actions/krecentfilesactionext.cpp:40
-msgid "Clear List"
-msgstr ""
-
-#: src/main/application.cpp:361
+#: main/application.cpp:379
 msgid "Video Files"
 msgstr ""
 
-#: src/main/application.cpp:368
+#: main/application.cpp:386
 msgid "Audio Files"
 msgstr ""
 
-#: src/main/application.cpp:370
+#: main/application.cpp:388
 msgid "Media Files"
 msgstr ""
 
-#: src/main/application.cpp:371
+#: main/application.cpp:389
 msgid "All Files"
 msgstr ""
 
-#: src/main/application.cpp:390
+#: main/application.cpp:408
 msgid "Exit the application"
 msgstr ""
 
-#: src/main/application.cpp:393
+#: main/application.cpp:411
 msgid "Configure Subtitle Composer"
 msgstr ""
 
-#: src/main/application.cpp:397
+#: main/application.cpp:415
 msgctxt "@action:inmenu Create a new subtitle"
 msgid "New"
 msgstr ""
 
-#: src/main/application.cpp:398
+#: main/application.cpp:416
 msgid "Create an empty subtitle"
 msgstr ""
 
-#: src/main/application.cpp:406
+#: main/application.cpp:424
 msgctxt "@action:inmenu Open subtitle file"
 msgid "Open..."
 msgstr ""
 
-#: src/main/application.cpp:407 src/main/application.cpp:425
+#: main/application.cpp:425 main/application.cpp:443
 msgid "Open subtitle file"
 msgstr ""
 
-#: src/main/application.cpp:415
+#: main/application.cpp:433
 msgid "Reload As..."
 msgstr ""
 
-#: src/main/application.cpp:416
+#: main/application.cpp:434
 msgid "Reload opened file with a different encoding"
 msgstr ""
 
-#: src/main/application.cpp:424
+#: main/application.cpp:442
 msgctxt "@action:inmenu Open rencently used subtitle file"
 msgid "Open &Recent"
 msgstr ""
 
-#: src/main/application.cpp:431
+#: main/application.cpp:449
 msgid "Save"
 msgstr ""
 
-#: src/main/application.cpp:432
+#: main/application.cpp:450
 msgid "Save opened subtitle"
 msgstr ""
 
-#: src/main/application.cpp:440
+#: main/application.cpp:458
 msgid "Save As..."
 msgstr ""
 
-#: src/main/application.cpp:441
+#: main/application.cpp:459
 msgid "Save opened subtitle with different settings"
 msgstr ""
 
-#: src/main/application.cpp:448
+#: main/application.cpp:466
 msgid "Close"
 msgstr ""
 
-#: src/main/application.cpp:449
+#: main/application.cpp:467
 msgid "Close opened subtitle"
 msgstr ""
 
-#: src/main/application.cpp:457
+#: main/application.cpp:475
 msgid "New Translation"
 msgstr ""
 
-#: src/main/application.cpp:458
+#: main/application.cpp:476
 msgid "Create an empty translation subtitle"
 msgstr ""
 
-#: src/main/application.cpp:466
+#: main/application.cpp:484
 msgid "Open Translation..."
 msgstr ""
 
-#: src/main/application.cpp:467 src/main/application.cpp:485
+#: main/application.cpp:485 main/application.cpp:503
 msgid "Open translation subtitle file"
 msgstr ""
 
-#: src/main/application.cpp:475
+#: main/application.cpp:493
 msgid "Reload Translation As..."
 msgstr ""
 
-#: src/main/application.cpp:476
+#: main/application.cpp:494
 msgid "Reload opened translation file with a different encoding"
 msgstr ""
 
-#: src/main/application.cpp:484
+#: main/application.cpp:502
 msgid "Open &Recent Translation"
 msgstr ""
 
-#: src/main/application.cpp:492
+#: main/application.cpp:510
 msgid "Save Translation"
 msgstr ""
 
-#: src/main/application.cpp:493
+#: main/application.cpp:511
 msgid "Save opened translation subtitle"
 msgstr ""
 
-#: src/main/application.cpp:501
+#: main/application.cpp:519
 msgid "Save Translation As..."
 msgstr ""
 
-#: src/main/application.cpp:502
+#: main/application.cpp:520
 msgid "Save opened translation subtitle with different settings"
 msgstr ""
 
-#: src/main/application.cpp:509
+#: main/application.cpp:527
 msgid "Close Translation"
 msgstr ""
 
-#: src/main/application.cpp:510
+#: main/application.cpp:528
 msgid "Close opened translation subtitle"
 msgstr ""
 
-#: src/main/application.cpp:518 src/main/application.cpp:519
-#: src/widgets/simplerichtextedit.cpp:67
+#: main/application.cpp:536 main/application.cpp:537
+#: widgets/simplerichtextedit.cpp:67
 msgid "Undo"
 msgstr ""
 
-#: src/main/application.cpp:527 src/main/application.cpp:528
-#: src/widgets/simplerichtextedit.cpp:73
+#: main/application.cpp:545 main/application.cpp:546
+#: widgets/simplerichtextedit.cpp:73
 msgid "Redo"
 msgstr ""
 
-#: src/main/application.cpp:535
+#: main/application.cpp:553
 msgid "Split Subtitle..."
 msgstr ""
 
-#: src/main/application.cpp:536
+#: main/application.cpp:554
 msgid "Split the opened subtitle in two parts"
 msgstr ""
 
-#: src/main/application.cpp:542
+#: main/application.cpp:560
 msgid "Join Subtitles..."
 msgstr ""
 
-#: src/main/application.cpp:543
+#: main/application.cpp:561
 msgid "Append to the opened subtitle another one"
 msgstr ""
 
-#: src/main/application.cpp:549 src/main/lineswidget.cpp:1084
+#: main/application.cpp:567 main/lineswidget.cpp:1125
 msgid "Insert Before"
 msgstr ""
 
-#: src/main/application.cpp:550
+#: main/application.cpp:568
 msgid "Insert empty line before current one"
 msgstr ""
 
-#: src/main/application.cpp:557 src/main/lineswidget.cpp:1085
+#: main/application.cpp:575 main/lineswidget.cpp:1126
 msgid "Insert After"
 msgstr ""
 
-#: src/main/application.cpp:558
+#: main/application.cpp:576
 msgid "Insert empty line after current one"
 msgstr ""
 
-#: src/main/application.cpp:565 src/main/lineswidget.cpp:1083
+#: main/application.cpp:583 main/lineswidget.cpp:1124
 msgid "Remove"
 msgstr ""
 
-#: src/main/application.cpp:566
+#: main/application.cpp:584
 msgid "Remove selected lines"
 msgstr ""
 
-#: src/main/application.cpp:574
+#: main/application.cpp:592
 msgid "Split selected lines"
 msgstr ""
 
-#: src/main/application.cpp:581
+#: main/application.cpp:599
 msgid "Join selected lines"
 msgstr ""
 
-#: src/main/application.cpp:587
-#: src/main/dialogs/actionwitherrortargetsdialog.cpp:95
-#: src/main/lineswidget.cpp:1081 src/widgets/simplerichtextedit.cpp:110
+#: main/application.cpp:605 main/dialogs/actionwitherrortargetsdialog.cpp:95
+#: main/lineswidget.cpp:1122 widgets/simplerichtextedit.cpp:110
 msgid "Select All"
 msgstr ""
 
-#: src/main/application.cpp:588
+#: main/application.cpp:606
 msgid "Select all lines"
 msgstr ""
 
-#: src/main/application.cpp:595
+#: main/application.cpp:613
 msgid "Go to Line..."
 msgstr ""
 
-#: src/main/application.cpp:596
+#: main/application.cpp:614
 msgid "Go to specified line"
 msgstr ""
 
-#: src/main/application.cpp:604
+#: main/application.cpp:622
 msgid "Find..."
 msgstr ""
 
-#: src/main/application.cpp:605
+#: main/application.cpp:623
 msgid "Find occurrences of strings or regular expressions"
 msgstr ""
 
-#: src/main/application.cpp:613
+#: main/application.cpp:631
 msgid "Find Next"
 msgstr ""
 
-#: src/main/application.cpp:614
+#: main/application.cpp:632
 msgid "Find next occurrence of string or regular expression"
 msgstr ""
 
-#: src/main/application.cpp:622
+#: main/application.cpp:640
 msgid "Find Previous"
 msgstr ""
 
-#: src/main/application.cpp:623
+#: main/application.cpp:641
 msgid "Find previous occurrence of string or regular expression"
 msgstr ""
 
-#: src/main/application.cpp:630
+#: main/application.cpp:648
 msgid "Replace..."
 msgstr ""
 
-#: src/main/application.cpp:631
+#: main/application.cpp:649
 msgid "Replace occurrences of strings or regular expressions"
 msgstr ""
 
-#: src/main/application.cpp:639
+#: main/application.cpp:657
 msgid "Retrocede current line"
 msgstr ""
 
-#: src/main/application.cpp:640
+#: main/application.cpp:658
 msgid "Makes the line before the current one active"
 msgstr ""
 
-#: src/main/application.cpp:648
+#: main/application.cpp:666
 msgid "Advance current line"
 msgstr ""
 
-#: src/main/application.cpp:649
+#: main/application.cpp:667
 msgid "Makes the line after the current one active"
 msgstr ""
 
-#: src/main/application.cpp:656 src/main/errorsdialog.cpp:52
-#: src/main/lineswidget.cpp:1075
+#: main/application.cpp:674 main/errorsdialog.cpp:52 main/lineswidget.cpp:1116
 msgid "Check Errors..."
 msgstr ""
 
-#: src/main/application.cpp:657
+#: main/application.cpp:675
 msgid "Check for errors in the current subtitle"
 msgstr ""
 
-#: src/main/application.cpp:664 src/main/errorsdialog.cpp:55
-#: src/main/lineswidget.cpp:1076
+#: main/application.cpp:682 main/errorsdialog.cpp:55 main/lineswidget.cpp:1117
 msgid "Clear Errors..."
 msgstr ""
 
-#: src/main/application.cpp:665
+#: main/application.cpp:683
 msgid "Clear errors from selected lines"
 msgstr ""
 
-#: src/main/application.cpp:671 src/main/lineswidget.cpp:1078
+#: main/application.cpp:689 main/lineswidget.cpp:1119
 msgid "Show Errors..."
 msgstr ""
 
-#: src/main/application.cpp:672
+#: main/application.cpp:690
 msgid "Show errors information for the current subtitle"
 msgstr ""
 
-#: src/main/application.cpp:680
+#: main/application.cpp:698
 msgid "Find Error..."
 msgstr ""
 
-#: src/main/application.cpp:681
+#: main/application.cpp:699
 msgid "Find lines with specified errors"
 msgstr ""
 
-#: src/main/application.cpp:689
+#: main/application.cpp:707
 msgid "Find Next Error"
 msgstr ""
 
-#: src/main/application.cpp:690
+#: main/application.cpp:708
 msgid "Find next line with specified errors"
 msgstr ""
 
-#: src/main/application.cpp:698
+#: main/application.cpp:716
 msgid "Find Previous Error"
 msgstr ""
 
-#: src/main/application.cpp:699
+#: main/application.cpp:717
 msgid "Find previous line with specified errors"
 msgstr ""
 
-#: src/main/application.cpp:707 src/main/lineswidget.cpp:1040
+#: main/application.cpp:725 main/lineswidget.cpp:1081
 msgid "Spelling..."
 msgstr ""
 
-#: src/main/application.cpp:708
+#: main/application.cpp:726
 msgid "Check lines spelling"
 msgstr ""
 
-#: src/main/application.cpp:714
+#: main/application.cpp:732
 msgid "Toggle Mark"
 msgstr ""
 
-#: src/main/application.cpp:715
+#: main/application.cpp:733
 msgid "Toggle selected lines mark"
 msgstr ""
 
-#: src/main/application.cpp:723 src/main/currentlinewidget.cpp:93
+#: main/application.cpp:741 main/currentlinewidget.cpp:94
 msgid "Toggle Bold"
 msgstr ""
 
-#: src/main/application.cpp:724
+#: main/application.cpp:742
 msgid "Toggle selected lines bold attribute"
 msgstr ""
 
-#: src/main/application.cpp:732 src/main/currentlinewidget.cpp:94
+#: main/application.cpp:750 main/currentlinewidget.cpp:95
 msgid "Toggle Italic"
 msgstr ""
 
-#: src/main/application.cpp:733
+#: main/application.cpp:751
 msgid "Toggle selected lines italic attribute"
 msgstr ""
 
-#: src/main/application.cpp:741 src/main/currentlinewidget.cpp:95
+#: main/application.cpp:759 main/currentlinewidget.cpp:96
 msgid "Toggle Underline"
 msgstr ""
 
-#: src/main/application.cpp:742
+#: main/application.cpp:760
 msgid "Toggle selected lines underline attribute"
 msgstr ""
 
-#: src/main/application.cpp:750 src/main/currentlinewidget.cpp:96
+#: main/application.cpp:768 main/currentlinewidget.cpp:97
 msgid "Toggle Strike Through"
 msgstr ""
 
-#: src/main/application.cpp:751
+#: main/application.cpp:769
 msgid "Toggle selected lines strike through attribute"
 msgstr ""
 
-#: src/main/application.cpp:759 src/main/currentlinewidget.cpp:97
+#: main/application.cpp:777 main/currentlinewidget.cpp:98
 msgid "Change Text Color"
 msgstr ""
 
-#: src/main/application.cpp:760
+#: main/application.cpp:778
 msgid "Change text color of selected lines"
 msgstr ""
 
-#: src/main/application.cpp:767 src/main/lineswidget.cpp:1063
+#: main/application.cpp:785 main/lineswidget.cpp:1104
 msgid "Shift..."
 msgstr ""
 
-#: src/main/application.cpp:768
+#: main/application.cpp:786
 msgid "Shift lines an specified amount of time"
 msgstr ""
 
-#: src/main/application.cpp:787
+#: main/application.cpp:805
 msgid "Adjust..."
 msgstr ""
 
-#: src/main/application.cpp:788
+#: main/application.cpp:806
 msgid "Linearly adjust all lines to a specified interval"
 msgstr ""
 
-#: src/main/application.cpp:795
+#: main/application.cpp:813
 msgid "Sort..."
 msgstr ""
 
-#: src/main/application.cpp:796
+#: main/application.cpp:814
 msgid "Sort lines based on their show time"
 msgstr ""
 
-#: src/main/application.cpp:802
+#: main/application.cpp:820
 msgid "Change Frame Rate..."
 msgstr ""
 
-#: src/main/application.cpp:803
+#: main/application.cpp:821
 msgid "Retime subtitle lines by reinterpreting its frame rate"
 msgstr ""
 
-#: src/main/application.cpp:809 src/main/lineswidget.cpp:1065
+#: main/application.cpp:827 main/lineswidget.cpp:1106
 msgid "Enforce Duration Limits..."
 msgstr ""
 
-#: src/main/application.cpp:810
+#: main/application.cpp:828
 msgid "Enforce lines minimum and/or maximum duration limits"
 msgstr ""
 
-#: src/main/application.cpp:817 src/main/lineswidget.cpp:1066
+#: main/application.cpp:835 main/lineswidget.cpp:1107
 msgid "Set Automatic Durations..."
 msgstr ""
 
-#: src/main/application.cpp:818
+#: main/application.cpp:836
 msgid "Set lines durations based on amount of letters, words and line breaks"
 msgstr ""
 
-#: src/main/application.cpp:824
+#: main/application.cpp:842
 msgid "Maximize Durations..."
 msgstr ""
 
-#: src/main/application.cpp:825
+#: main/application.cpp:843
 msgid "Extend lines durations up to their next lines show time"
 msgstr ""
 
-#: src/main/application.cpp:831
+#: main/application.cpp:849
 msgid "Fix Overlapping Times..."
 msgstr ""
 
-#: src/main/application.cpp:832
+#: main/application.cpp:850
 msgid "Fix lines overlapping times"
 msgstr ""
 
-#: src/main/application.cpp:838
+#: main/application.cpp:856
 msgid "Synchronize with Subtitle..."
 msgstr ""
 
-#: src/main/application.cpp:839
+#: main/application.cpp:857
 msgid "Copy timing information from another subtitle"
 msgstr ""
 
-#: src/main/application.cpp:845 src/main/lineswidget.cpp:1033
+#: main/application.cpp:863 main/lineswidget.cpp:1074
 msgid "Break Lines..."
 msgstr ""
 
-#: src/main/application.cpp:846
+#: main/application.cpp:864
 msgid "Automatically set line breaks"
 msgstr ""
 
-#: src/main/application.cpp:852 src/main/lineswidget.cpp:1034
+#: main/application.cpp:870 main/lineswidget.cpp:1075
 msgid "Unbreak Lines..."
 msgstr ""
 
-#: src/main/application.cpp:853
+#: main/application.cpp:871
 msgid "Remove line breaks from lines"
 msgstr ""
 
-#: src/main/application.cpp:859 src/main/lineswidget.cpp:1035
+#: main/application.cpp:877 main/lineswidget.cpp:1076
 msgid "Simplify Spaces..."
 msgstr ""
 
-#: src/main/application.cpp:860
+#: main/application.cpp:878
 msgid "Remove unneeded spaces from lines"
 msgstr ""
 
-#: src/main/application.cpp:866 src/main/lineswidget.cpp:1036
+#: main/application.cpp:884 main/lineswidget.cpp:1077
 msgid "Change Case..."
 msgstr ""
 
-#: src/main/application.cpp:867
+#: main/application.cpp:885
 msgid "Change lines text to upper, lower, title or sentence case"
 msgstr ""
 
-#: src/main/application.cpp:873 src/main/lineswidget.cpp:1037
+#: main/application.cpp:891 main/lineswidget.cpp:1078
 msgid "Fix Punctuation..."
 msgstr ""
 
-#: src/main/application.cpp:874
+#: main/application.cpp:892
 msgid "Fix punctuation errors in lines"
 msgstr ""
 
-#: src/main/application.cpp:880 src/main/lineswidget.cpp:1038
+#: main/application.cpp:898 main/lineswidget.cpp:1079
 msgid "Translate..."
 msgstr ""
 
-#: src/main/application.cpp:881
+#: main/application.cpp:899
 msgid "Translate lines texts using Google services"
 msgstr ""
 
-#: src/main/application.cpp:887
+#: main/application.cpp:905
 msgid "Edit Line in Place"
 msgstr ""
 
-#: src/main/application.cpp:888
+#: main/application.cpp:906
 msgid "Edit current line text in place"
 msgstr ""
 
-#: src/main/application.cpp:896
+#: main/application.cpp:914
 msgid "Open Video..."
 msgstr ""
 
-#: src/main/application.cpp:897 src/main/application.cpp:904
+#: main/application.cpp:915 main/application.cpp:922
 msgid "Open video file"
 msgstr ""
 
-#: src/main/application.cpp:903
+#: main/application.cpp:921
 msgid "Open &Recent Video"
 msgstr ""
 
-#: src/main/application.cpp:910
+#: main/application.cpp:930
+msgid "Import Subtitle Stream"
+msgstr ""
+
+#: main/application.cpp:931
+msgid "Import subtitle stream into subtitle editor"
+msgstr ""
+
+#: main/application.cpp:937
 msgid "Close Video"
 msgstr ""
 
-#: src/main/application.cpp:911
+#: main/application.cpp:938
 msgid "Close video file"
 msgstr ""
 
-#: src/main/application.cpp:918
+#: main/application.cpp:945
 msgid "Full Screen Mode"
 msgstr ""
 
-#: src/main/application.cpp:919
+#: main/application.cpp:946
 msgid "Toggle full screen mode"
 msgstr ""
 
-#: src/main/application.cpp:926
+#: main/application.cpp:953
 msgid "Stop"
 msgstr ""
 
-#: src/main/application.cpp:927
+#: main/application.cpp:954
 msgid "Stop video playback"
 msgstr ""
 
-#: src/main/application.cpp:934 src/main/application.cpp:2710
-#: src/main/application.cpp:2718
+#: main/application.cpp:961 main/application.cpp:2816 main/application.cpp:2824
 msgid "Play"
 msgstr ""
 
-#: src/main/application.cpp:935
+#: main/application.cpp:962
 msgid "Toggle video playing/paused"
 msgstr ""
 
-#: src/main/application.cpp:942
+#: main/application.cpp:970
 msgid "Seek Backwards"
 msgstr ""
 
-#: src/main/application.cpp:950
+#: main/application.cpp:978
 msgid "Seek Forwards"
 msgstr ""
 
-#: src/main/application.cpp:958
+#: main/application.cpp:986
 msgid "Jump to Previous Line"
 msgstr ""
 
-#: src/main/application.cpp:959
+#: main/application.cpp:987
 msgid "Seek to previous subtitle line show time"
 msgstr ""
 
-#: src/main/application.cpp:967
+#: main/application.cpp:995
 msgid "Jump to Next Line"
 msgstr ""
 
-#: src/main/application.cpp:968
+#: main/application.cpp:996
 msgid "Seek to next subtitle line show time"
 msgstr ""
 
-#: src/main/application.cpp:976
+#: main/application.cpp:1004
 msgid "Set Current Line Show Time"
 msgstr ""
 
-#: src/main/application.cpp:977
+#: main/application.cpp:1005
 msgid "Set current line show time to video position"
 msgstr ""
 
-#: src/main/application.cpp:985
+#: main/application.cpp:1013
 msgid "Set Current Line Hide Time"
 msgstr ""
 
-#: src/main/application.cpp:986
+#: main/application.cpp:1014
 msgid "Set current line hide time to video position"
 msgstr ""
 
-#: src/main/application.cpp:994
+#: main/application.cpp:1022
 msgid "Current Line Follows Video"
 msgstr ""
 
-#: src/main/application.cpp:995
+#: main/application.cpp:1023
 msgid "Make current line follow the playing video position"
 msgstr ""
 
-#: src/main/application.cpp:1001
+#: main/application.cpp:1029
 msgctxt "@action:inmenu Toggle audio muted"
 msgid "Mute"
 msgstr ""
 
-#: src/main/application.cpp:1002
+#: main/application.cpp:1030
 msgid "Enable/disable playback sound"
 msgstr ""
 
-#: src/main/application.cpp:1009
+#: main/application.cpp:1037
 msgid "Increase Volume"
 msgstr ""
 
-#: src/main/application.cpp:1010
+#: main/application.cpp:1038
 msgid "Increase volume by 5%"
 msgstr ""
 
-#: src/main/application.cpp:1017
+#: main/application.cpp:1045
 msgid "Decrease Volume"
 msgstr ""
 
-#: src/main/application.cpp:1018
+#: main/application.cpp:1046
 msgid "Decrease volume by 5%"
 msgstr ""
 
-#: src/main/application.cpp:1025
+#: main/application.cpp:1053
 msgid "Audio Streams"
 msgstr ""
 
-#: src/main/application.cpp:1026
+#: main/application.cpp:1054
 msgid "Select active audio stream"
 msgstr ""
 
-#: src/main/application.cpp:1033
+#: main/application.cpp:1061
 msgid "Increase Font Size"
 msgstr ""
 
-#: src/main/application.cpp:1034
+#: main/application.cpp:1062
 msgid "Increase subtitles font size by 1 point"
 msgstr ""
 
-#: src/main/application.cpp:1041
+#: main/application.cpp:1069
 msgid "Decrease Font Size"
 msgstr ""
 
-#: src/main/application.cpp:1042
+#: main/application.cpp:1070
 msgid "Decrease subtitles font size by 1 point"
 msgstr ""
 
-#: src/main/application.cpp:1049
+#: main/application.cpp:1077
 msgid "Subtitle Streams"
 msgstr ""
 
-#: src/main/application.cpp:1050
+#: main/application.cpp:1078
 msgid "Select active subtitle stream"
 msgstr ""
 
-#: src/main/application.cpp:1056
+#: main/application.cpp:1084
 msgid "Shift to Video Position"
 msgstr ""
 
-#: src/main/application.cpp:1057
+#: main/application.cpp:1085
 msgid ""
 "Set current line show time to video position by equally shifting all lines"
 msgstr ""
 
-#: src/main/application.cpp:1064
+#: main/application.cpp:1092
 msgid "Adjust to Video Position (Anchor Last Line)"
 msgstr ""
 
-#: src/main/application.cpp:1065
+#: main/application.cpp:1093
 msgid ""
 "Set current line to video position by fixing the last line and linearly "
 "adjusting the other ones"
 msgstr ""
 
-#: src/main/application.cpp:1072
+#: main/application.cpp:1100
 msgid "Adjust to Video Position (Anchor First Line)"
 msgstr ""
 
-#: src/main/application.cpp:1073
+#: main/application.cpp:1101
 msgid ""
 "Set current line to video position by fixing the first line and linearly "
 "adjusting the other ones"
 msgstr ""
 
-#: src/main/application.cpp:1081
+#: main/application.cpp:1108
+msgid "Toggle Anchor"
+msgstr ""
+
+#: main/application.cpp:1109
+msgid ""
+"(Un)Anchor current line's show time to timeline (Editing anchored line's "
+"show time will stretch/compact the timeline between adjanced anchors)"
+msgstr ""
+
+#: main/application.cpp:1116
+msgid "Remove All Anchors"
+msgstr ""
+
+#: main/application.cpp:1117
+msgid "Unanchor show time from the timeline on all anchored lines"
+msgstr ""
+
+#: main/application.cpp:1125
 msgctxt "@action:inmenu Manage user scripts"
 msgid "Scripts Manager..."
 msgstr ""
 
-#: src/main/application.cpp:1082
+#: main/application.cpp:1126
 msgid "Manage user scripts"
 msgstr ""
 
-#: src/main/application.cpp:1172
+#: main/application.cpp:1133 main/application.cpp:1134
+msgid "Waveform Zoom In"
+msgstr ""
+
+#: main/application.cpp:1140 main/application.cpp:1141
+msgid "Waveform Zoom Out"
+msgstr ""
+
+#: main/application.cpp:1148
+msgid "Waveform Auto Scroll"
+msgstr ""
+
+#: main/application.cpp:1149
+msgid "Waveform display will automatically scroll to video position"
+msgstr ""
+
+#: main/application.cpp:1241
 msgid ""
 "The requested action would make the subtitle and its translation share the "
 "same file, possibly resulting in loss of information when saving.\n"
 "Are you sure you want to continue?"
 msgstr ""
 
-#: src/main/application.cpp:1172
+#: main/application.cpp:1241
 msgid "Conflicting Subtitle Files"
 msgstr ""
 
-#: src/main/application.cpp:1280 src/main/application.cpp:1308
-#: src/main/application.cpp:1521 src/main/application.cpp:1559
+#: main/application.cpp:1349 main/application.cpp:1377
+#: main/application.cpp:1602 main/application.cpp:1640
 msgid ""
 "<qt>Could not parse the subtitle file.<br/>This may have been caused by "
 "usage of the wrong encoding.</qt>"
 msgstr ""
 
-#: src/main/application.cpp:1367
+#: main/application.cpp:1448
 msgid "There was an error saving the subtitle."
 msgstr ""
 
-#: src/main/application.cpp:1404 src/main/application.cpp:1655
+#: main/application.cpp:1485 main/application.cpp:1736
 msgid ""
 "Currently opened translation subtitle has unsaved changes.\n"
 "Do you want to save them?"
 msgstr ""
 
-#: src/main/application.cpp:1405 src/main/application.cpp:1656
+#: main/application.cpp:1486 main/application.cpp:1737
 msgid "Close Translation Subtitle"
 msgstr ""
 
-#: src/main/application.cpp:1415
+#: main/application.cpp:1496
 msgid ""
 "Currently opened subtitle has unsaved changes.\n"
 "Do you want to save them?"
 msgstr ""
 
-#: src/main/application.cpp:1416
+#: main/application.cpp:1497
 msgid "Close Subtitle"
 msgstr ""
 
-#: src/main/application.cpp:1511
+#: main/application.cpp:1592
 msgctxt "@item:inmenu Display primary text in video player"
 msgid "Primary"
 msgstr ""
 
-#: src/main/application.cpp:1512
+#: main/application.cpp:1593
 msgctxt "@item:inmenu Display translation text in video player"
 msgid "Translation"
 msgstr ""
 
-#: src/main/application.cpp:1618
+#: main/application.cpp:1699
 msgid "There was an error saving the translation subtitle."
 msgstr ""
 
-#: src/main/application.cpp:1701
+#: main/application.cpp:1782
 msgid "Could not read the subtitle file to append."
 msgstr ""
 
-#: src/main/application.cpp:1719 src/main/application.cpp:2603
-#: src/main/application.cpp:2608
+#: main/application.cpp:1800 main/application.cpp:2696
+#: main/application.cpp:2702
 msgid "Untitled"
 msgstr ""
 
-#: src/main/application.cpp:1719 src/main/application.cpp:2605
+#: main/application.cpp:1800 main/application.cpp:2698
 msgid "Untitled Translation"
 msgstr ""
 
-#: src/main/application.cpp:1725
+#: main/application.cpp:1806
 msgctxt "Suffix added to split subtitles"
 msgid "split"
 msgstr ""
 
-#: src/main/application.cpp:1739
+#: main/application.cpp:1820
 msgid "Could not write the split subtitle file."
 msgstr ""
 
-#: src/main/application.cpp:1739
+#: main/application.cpp:1820
 msgid "Could not write the split subtitle translation file."
 msgstr ""
 
-#: src/main/application.cpp:1756
+#: main/application.cpp:1837
 msgid "The specified time does not split the subtitles."
 msgstr ""
 
-#: src/main/application.cpp:1791
+#: main/application.cpp:1872
 msgid ""
 "Could not open a new Subtitle Composer window.\n"
 "The split part was saved as %1."
 msgstr ""
 
-#: src/main/application.cpp:1792
+#: main/application.cpp:1873
 msgid ""
 "Could not open a new Subtitle Composer window.\n"
 "The split parts were saved as %1 and %2."
 msgstr ""
 
-#: src/main/application.cpp:1884
+#: main/application.cpp:1965
 msgid "Go to Line"
 msgstr ""
 
-#: src/main/application.cpp:1884
+#: main/application.cpp:1965
 msgid "&Go to line:"
 msgstr ""
 
-#: src/main/application.cpp:2158
+#: main/application.cpp:2239
 msgid "Can not perform sort on selection with multiple ranges."
 msgstr ""
 
-#: src/main/application.cpp:2240
+#: main/application.cpp:2321
 msgid "The reference subtitle must have more than one line to proceed."
 msgstr ""
 
-#: src/main/application.cpp:2247
+#: main/application.cpp:2328
 msgid "Could not parse the reference subtitle file."
 msgstr ""
 
-#: src/main/application.cpp:2329 src/main/dialogs/translatedialog.cpp:33
+#: main/application.cpp:2410 main/dialogs/translatedialog.cpp:33
 msgid "Translate"
 msgstr ""
 
-#: src/main/application.cpp:2329
+#: main/application.cpp:2410
 msgid "Translating text (%1 to %2)..."
 msgstr ""
 
-#: src/main/application.cpp:2333
+#: main/application.cpp:2414
 msgid "Translating primary text (%1 to %2)..."
 msgstr ""
 
-#: src/main/application.cpp:2334
+#: main/application.cpp:2415
 msgid "Translating secondary text (%1 to %2)..."
 msgstr ""
 
-#: src/main/application.cpp:2362
+#: main/application.cpp:2443
 msgid ""
 "Unable to perform texts synchronization (sent and received lines count do "
 "not match)."
 msgstr ""
 
-#: src/main/application.cpp:2366
+#: main/application.cpp:2447
 msgid "Translate Primary Text"
 msgstr ""
 
-#: src/main/application.cpp:2366
+#: main/application.cpp:2447
 msgid "Translate Secondary Text"
 msgstr ""
 
-#: src/main/application.cpp:2381
+#: main/application.cpp:2462
 msgid ""
 "There was an error performing the translation:\n"
 "\n"
 "%1"
 msgstr ""
 
-#: src/main/application.cpp:2419
+#: main/application.cpp:2500
 msgid "Open Video"
 msgstr ""
 
-#: src/main/application.cpp:2552 src/main/application.cpp:2584
+#: main/application.cpp:2645 main/application.cpp:2676
 msgid ""
 "Continuing would result in loss of timing information for some lines.\n"
 "Are you sure you want to continue?"
 msgstr ""
 
-#: src/main/application.cpp:2601
+#: main/application.cpp:2693
 msgid "modified"
 msgstr ""
 
-#: src/main/application.cpp:2702
+#: main/application.cpp:2808
 msgid "Pause"
 msgstr ""
 
-#: src/main/application.cpp:2750
+#: main/application.cpp:2868
 msgid "Seek backwards 1 second"
 msgid_plural "Seek backwards %1 seconds"
 msgstr[0] ""
 msgstr[1] ""
 
-#: src/main/application.cpp:2751
+#: main/application.cpp:2869
 msgid "Seek forwards 1 second"
 msgid_plural "Seek forwards %1 seconds"
 msgstr[0] ""
 msgstr[1] ""
 
-#: src/main/application.cpp:2754 src/main/application.cpp:2758
+#: main/application.cpp:2872 main/application.cpp:2876
 msgid "Shift %21 Millisecond"
 msgid_plural "Shift %2%1 Milliseconds"
 msgstr[0] ""
 msgstr[1] ""
 
-#: src/main/application.cpp:2755 src/main/application.cpp:2759
+#: main/application.cpp:2873 main/application.cpp:2877
 msgid "Shift selected lines %21 millisecond"
 msgid_plural "Shift selected lines %2%1 milliseconds"
 msgstr[0] ""
 msgstr[1] ""
 
-#: src/main/configs/configdialog.cpp:45
+#: main/configs/configdialog.cpp:47
 msgctxt "@title General settings"
 msgid "General"
 msgstr ""
 
-#: src/main/configs/configdialog.cpp:46
+#: main/configs/configdialog.cpp:48
 msgid "General Settings"
 msgstr ""
 
-#: src/main/configs/configdialog.cpp:50
+#: main/configs/configdialog.cpp:52
 msgctxt "@title Error Check Settings"
-msgid "Error Check"
+msgid "Error check"
 msgstr ""
 
-#: src/main/configs/configdialog.cpp:51
+#: main/configs/configdialog.cpp:53
 msgid "Error Check Settings"
 msgstr ""
 
-#: src/main/configs/configdialog.cpp:57
-msgctxt "@title Spelling Settings"
+#: main/configs/configdialog.cpp:59
+msgctxt "@title Spelling settings"
 msgid "Spelling"
 msgstr ""
 
-#: src/main/configs/configdialog.cpp:58
+#: main/configs/configdialog.cpp:60
 msgid "Spelling Settings"
 msgstr ""
 
-#: src/main/configs/configdialog.cpp:62
-msgctxt "@title VideoPlayer Settings"
-msgid "VideoPlayer"
+#: main/configs/configdialog.cpp:64
+msgctxt "@title Video player Settings"
+msgid "Video player"
 msgstr ""
 
-#: src/main/configs/configdialog.cpp:63
-msgid "VideoPlayer Settings"
+#: main/configs/configdialog.cpp:65
+msgid "Video player settings"
 msgstr ""
 
-#: src/main/configs/configdialog.cpp:72
-msgctxt "@title VideoPlayer backend settings"
-msgid "%1 Backend Settings"
+#: main/configs/configdialog.cpp:72
+msgctxt "@title Video player backend settings"
+msgid "%1 backend settings"
 msgstr ""
 
-#: src/main/configs/playerconfigwidget.cpp:39
+#: main/configs/playerconfigwidget.cpp:39
 msgctxt "Text for previewing the subtitles font settings"
 msgid "<p>The Quick Brown Fox<br/>Jumps Over The Lazy Dog</p>"
 msgstr ""
 
-#: src/main/currentlinewidget.cpp:67
+#: main/currentlinewidget.cpp:68
 msgid "<b>Show</b>"
 msgstr ""
 
-#: src/main/currentlinewidget.cpp:72
+#: main/currentlinewidget.cpp:73
 msgid "<b>Hide</b>"
 msgstr ""
 
-#: src/main/currentlinewidget.cpp:77
+#: main/currentlinewidget.cpp:78
 msgid "<b>Duration</b>"
 msgstr ""
 
-#: src/main/currentlinewidget.cpp:231 src/main/currentlinewidget.cpp:236
+#: main/currentlinewidget.cpp:241 main/currentlinewidget.cpp:246
 msgid "No current line"
 msgstr ""
 
-#: src/main/currentlinewidget.cpp:363
+#: main/currentlinewidget.cpp:374
 msgid "Current line:"
 msgstr ""
 
-#: src/main/currentlinewidget.cpp:385
+#: main/currentlinewidget.cpp:396
 msgid "1 character"
 msgid_plural "%1 characters"
 msgstr[0] ""
 msgstr[1] ""
 
-#: src/main/dialogs/actionwitherrortargetsdialog.cpp:68
+#: main/dialogs/actionwitherrortargetsdialog.cpp:68
 msgid "Available errors"
 msgstr ""
 
-#: src/main/dialogs/actionwitherrortargetsdialog.cpp:97
+#: main/dialogs/actionwitherrortargetsdialog.cpp:97
 msgid "Select None"
 msgstr ""
 
-#: src/main/dialogs/actionwithtargetdialog.cpp:124
+#: main/dialogs/actionwithtargetdialog.cpp:124
 msgid "Target >>"
 msgstr ""
 
-#: src/main/dialogs/actionwithtargetdialog.cpp:124
-#: src/main/dialogs/actionwithtargetdialog.cpp:140
+#: main/dialogs/actionwithtargetdialog.cpp:124
+#: main/dialogs/actionwithtargetdialog.cpp:140
 msgid "Target <<"
 msgstr ""
 
-#: src/main/dialogs/actionwithtargetdialog.cpp:154
+#: main/dialogs/actionwithtargetdialog.cpp:154
 msgid "All lines"
 msgstr ""
 
-#: src/main/dialogs/actionwithtargetdialog.cpp:155
-#: src/main/utils/errorfinder.cpp:45
+#: main/dialogs/actionwithtargetdialog.cpp:155 main/utils/errorfinder.cpp:45
 msgid "Selected lines"
 msgstr ""
 
-#: src/main/dialogs/actionwithtargetdialog.cpp:156
+#: main/dialogs/actionwithtargetdialog.cpp:156
 msgid "All lines from first selected"
 msgstr ""
 
-#: src/main/dialogs/actionwithtargetdialog.cpp:157
+#: main/dialogs/actionwithtargetdialog.cpp:157
 msgid "All lines up to last selected"
 msgstr ""
 
-#: src/main/dialogs/actionwithtargetdialog.cpp:245 src/main/utils/finder.cpp:62
-#: src/main/utils/replacer.cpp:63
+#: main/dialogs/actionwithtargetdialog.cpp:245 main/utils/finder.cpp:62
+#: main/utils/replacer.cpp:63
 msgid "Both subtitles"
 msgstr ""
 
-#: src/main/dialogs/actionwithtargetdialog.cpp:248 src/main/utils/finder.cpp:64
-#: src/main/utils/replacer.cpp:65
+#: main/dialogs/actionwithtargetdialog.cpp:248 main/utils/finder.cpp:64
+#: main/utils/replacer.cpp:65
 msgid "Primary subtitle"
 msgstr ""
 
-#: src/main/dialogs/actionwithtargetdialog.cpp:251 src/main/utils/finder.cpp:66
-#: src/main/utils/replacer.cpp:67
+#: main/dialogs/actionwithtargetdialog.cpp:251 main/utils/finder.cpp:66
+#: main/utils/replacer.cpp:67
 msgid "Translation subtitle"
 msgstr ""
 
-#: src/main/dialogs/actionwithtargetdialog.h:75
+#: main/dialogs/actionwithtargetdialog.h:75
 msgid "Apply To"
 msgstr ""
 
-#: src/main/dialogs/adjusttimesdialog.cpp:33
+#: main/dialogs/adjusttimesdialog.cpp:33
 msgid "Adjust"
 msgstr ""
 
-#: src/main/dialogs/adjusttimesdialog.cpp:35
+#: main/dialogs/adjusttimesdialog.cpp:35
 msgctxt "@title:group"
 msgid "New Times"
 msgstr ""
 
-#: src/main/dialogs/adjusttimesdialog.cpp:40
+#: main/dialogs/adjusttimesdialog.cpp:40
 msgid "First spoken line:"
 msgstr ""
 
-#: src/main/dialogs/adjusttimesdialog.cpp:46
+#: main/dialogs/adjusttimesdialog.cpp:46
 msgid "Last spoken line:"
 msgstr ""
 
-#: src/main/dialogs/autodurationsdialog.cpp:37
-#: src/main/dialogs/changeframeratedialog.cpp:37
-#: src/main/dialogs/fixoverlappingtimesdialog.cpp:33
-#: src/main/dialogs/fixpunctuationdialog.cpp:32
-#: src/main/dialogs/smarttextsadjustdialog.cpp:33
-#: src/main/dialogs/splitsubtitledialog.cpp:40
-#: src/main/dialogs/translatedialog.cpp:35
+#: main/dialogs/autodurationsdialog.cpp:37
+#: main/dialogs/changeframeratedialog.cpp:37
+#: main/dialogs/fixoverlappingtimesdialog.cpp:33
+#: main/dialogs/fixpunctuationdialog.cpp:32
+#: main/dialogs/smarttextsadjustdialog.cpp:33
+#: main/dialogs/splitsubtitledialog.cpp:40 main/dialogs/translatedialog.cpp:35
 msgctxt "@title:group"
 msgid "Settings"
 msgstr ""
 
-#: src/main/dialogs/autodurationsdialog.cpp:45
+#: main/dialogs/autodurationsdialog.cpp:45
 msgid "Milliseconds per line:"
 msgstr ""
 
-#: src/main/dialogs/autodurationsdialog.cpp:54
+#: main/dialogs/autodurationsdialog.cpp:54
 msgid "Milliseconds per word:"
 msgstr ""
 
-#: src/main/dialogs/autodurationsdialog.cpp:63
+#: main/dialogs/autodurationsdialog.cpp:63
 msgid "Milliseconds per character:"
 msgstr ""
 
-#: src/main/dialogs/autodurationsdialog.cpp:67
-#: src/main/dialogs/durationlimitsdialog.cpp:43
+#: main/dialogs/autodurationsdialog.cpp:67
+#: main/dialogs/durationlimitsdialog.cpp:43
 msgid "Prevent overlapping"
 msgstr ""
 
-#: src/main/dialogs/autodurationsdialog.cpp:70
+#: main/dialogs/autodurationsdialog.cpp:70
 msgctxt "@title:group"
 msgid "Duration Calculation"
 msgstr ""
 
-#: src/main/dialogs/autodurationsdialog.cpp:76
+#: main/dialogs/autodurationsdialog.cpp:76
 msgid "Use primary text"
 msgstr ""
 
-#: src/main/dialogs/autodurationsdialog.cpp:77
+#: main/dialogs/autodurationsdialog.cpp:77
 msgid "Use translation text"
 msgstr ""
 
-#: src/main/dialogs/autodurationsdialog.cpp:78
+#: main/dialogs/autodurationsdialog.cpp:78
 msgid "Calculate both and use maximum"
 msgstr ""
 
-#: src/main/dialogs/changeframeratedialog.cpp:46
+#: main/dialogs/changeframeratedialog.cpp:46
 msgid "Current frame rate:"
 msgstr ""
 
-#: src/main/dialogs/changeframeratedialog.cpp:55
+#: main/dialogs/changeframeratedialog.cpp:55
 msgid "New frame rate:"
 msgstr ""
 
-#: src/main/dialogs/changetextscasedialog.cpp:32
+#: main/dialogs/changetextscasedialog.cpp:32
 msgid "Change Case"
 msgstr ""
 
-#: src/main/dialogs/changetextscasedialog.cpp:34
+#: main/dialogs/changetextscasedialog.cpp:34
 msgctxt "@title:group"
 msgid "Change To"
 msgstr ""
 
-#: src/main/dialogs/changetextscasedialog.cpp:38
+#: main/dialogs/changetextscasedialog.cpp:38
 msgid "Lower case"
 msgstr ""
 
-#: src/main/dialogs/changetextscasedialog.cpp:43
+#: main/dialogs/changetextscasedialog.cpp:43
 msgid "Upper case"
 msgstr ""
 
-#: src/main/dialogs/changetextscasedialog.cpp:47
+#: main/dialogs/changetextscasedialog.cpp:47
 msgid "Title case"
 msgstr ""
 
-#: src/main/dialogs/changetextscasedialog.cpp:51
+#: main/dialogs/changetextscasedialog.cpp:51
 msgid "Sentence case"
 msgstr ""
 
-#: src/main/dialogs/changetextscasedialog.cpp:55
+#: main/dialogs/changetextscasedialog.cpp:55
 msgid "Convert to lower case first"
 msgstr ""
 
-#: src/main/dialogs/checkerrorsdialog.cpp:30
+#: main/dialogs/checkerrorsdialog.cpp:30
 msgid "Check Errors"
 msgstr ""
 
-#: src/main/dialogs/checkerrorsdialog.cpp:32
+#: main/dialogs/checkerrorsdialog.cpp:32
 msgctxt "@title:group"
 msgid "Errors to Check"
 msgstr ""
 
-#: src/main/dialogs/checkerrorsdialog.cpp:35
+#: main/dialogs/checkerrorsdialog.cpp:35
 msgctxt "@title:group Miscellaneous settings"
 msgid "Miscellaneous"
 msgstr ""
 
-#: src/main/dialogs/checkerrorsdialog.cpp:38
+#: main/dialogs/checkerrorsdialog.cpp:38
 msgid "Clear other errors"
 msgstr ""
 
-#: src/main/dialogs/checkerrorsdialog.cpp:42
+#: main/dialogs/checkerrorsdialog.cpp:42
 msgid "Clear user marks"
 msgstr ""
 
-#: src/main/dialogs/clearerrorsdialog.cpp:31
+#: main/dialogs/clearerrorsdialog.cpp:31
 msgid "Clear Errors"
 msgstr ""
 
-#: src/main/dialogs/clearerrorsdialog.cpp:33
+#: main/dialogs/clearerrorsdialog.cpp:33
 msgctxt "@title:group"
 msgid "Errors to Clear"
 msgstr ""
 
-#: src/main/dialogs/durationlimitsdialog.cpp:33
+#: main/dialogs/durationlimitsdialog.cpp:33
 msgctxt "@title:group"
 msgid "Minimum Duration"
 msgstr ""
 
-#: src/main/dialogs/durationlimitsdialog.cpp:39
+#: main/dialogs/durationlimitsdialog.cpp:39
 msgid "Expand duration to:"
 msgstr ""
 
-#: src/main/dialogs/durationlimitsdialog.cpp:46
+#: main/dialogs/durationlimitsdialog.cpp:46
 msgctxt "@title:group"
 msgid "Maximum Duration"
 msgstr ""
 
-#: src/main/dialogs/durationlimitsdialog.cpp:52
+#: main/dialogs/durationlimitsdialog.cpp:52
 msgid "Shrink duration to:"
 msgstr ""
 
-#: src/main/dialogs/fixoverlappingtimesdialog.cpp:36
+#: main/dialogs/fixoverlappingtimesdialog.cpp:36
 msgid " msecs"
 msgstr ""
 
-#: src/main/dialogs/fixoverlappingtimesdialog.cpp:42
+#: main/dialogs/fixoverlappingtimesdialog.cpp:42
 msgid "Minimum interval between lines:"
 msgstr ""
 
-#: src/main/dialogs/fixpunctuationdialog.cpp:30
+#: main/dialogs/fixpunctuationdialog.cpp:30
 msgid "Fix Punctuation"
 msgstr ""
 
-#: src/main/dialogs/fixpunctuationdialog.cpp:35
+#: main/dialogs/fixpunctuationdialog.cpp:35
 msgid "Fix and cleanup spaces"
 msgstr ""
 
-#: src/main/dialogs/fixpunctuationdialog.cpp:39
+#: main/dialogs/fixpunctuationdialog.cpp:39
 msgid "Fix quotes and double quotes"
 msgstr ""
 
-#: src/main/dialogs/fixpunctuationdialog.cpp:43
+#: main/dialogs/fixpunctuationdialog.cpp:43
 msgid "Fix English 'I' pronoun"
 msgstr ""
 
-#: src/main/dialogs/fixpunctuationdialog.cpp:47
+#: main/dialogs/fixpunctuationdialog.cpp:47
 msgid "Add ellipisis indicating non finished lines"
 msgstr ""
 
-#: src/main/dialogs/insertlinedialog.cpp:26
+#: main/dialogs/insertlinedialog.cpp:26
 msgid "Insert Line Before Current"
 msgstr ""
 
-#: src/main/dialogs/insertlinedialog.cpp:26
+#: main/dialogs/insertlinedialog.cpp:26
 msgid "Insert Line After Current"
 msgstr ""
 
-#: src/main/dialogs/insertlinedialog.cpp:26
+#: main/dialogs/insertlinedialog.cpp:26
 msgid "Insert Into"
 msgstr ""
 
-#: src/main/dialogs/joinsubtitlesdialog.cpp:40
+#: main/dialogs/joinsubtitlesdialog.cpp:40
 msgid "Shift subtitle forwards before append"
 msgstr ""
 
-#: src/main/dialogs/joinsubtitlesdialog.cpp:47
-#: src/main/dialogs/splitsubtitledialog.cpp:46
+#: main/dialogs/joinsubtitlesdialog.cpp:47
+#: main/dialogs/splitsubtitledialog.cpp:46
 msgid "Set from video length"
 msgstr ""
 
-#: src/main/dialogs/opensubtitledialog.cpp:40
+#: main/dialogs/opensubtitledialog.cpp:40
 msgid "Open Subtitle"
 msgstr ""
 
-#: src/main/dialogs/opensubtitledialog.cpp:40
+#: main/dialogs/opensubtitledialog.cpp:40
 msgid "Open Translation Subtitle"
 msgstr ""
 
-#: src/main/dialogs/opensubtitledialog.cpp:52
-#: src/main/dialogs/savesubtitledialog.cpp:86
-#: src/main/dialogs/selectablesubtitledialog.cpp:69
+#: main/dialogs/opensubtitledialog.cpp:52
+#: main/dialogs/savesubtitledialog.cpp:86
+#: main/dialogs/selectablesubtitledialog.cpp:69
 msgid "Encoding:"
 msgstr ""
 
-#: src/main/dialogs/opensubtitledialog.cpp:94
+#: main/dialogs/opensubtitledialog.cpp:94
 msgid "All Supported"
 msgstr ""
 
-#: src/main/dialogs/removelinesdialog.cpp:26
+#: main/dialogs/removelinesdialog.cpp:26
 msgid "Remove Selected Lines"
 msgstr ""
 
-#: src/main/dialogs/removelinesdialog.cpp:26
+#: main/dialogs/removelinesdialog.cpp:26
 msgid "Remove From"
 msgstr ""
 
-#: src/main/dialogs/savesubtitledialog.cpp:44
+#: main/dialogs/savesubtitledialog.cpp:44
 msgid "Save Subtitle"
 msgstr ""
 
-#: src/main/dialogs/savesubtitledialog.cpp:44
+#: main/dialogs/savesubtitledialog.cpp:44
 msgid "Save Translation Subtitle"
 msgstr ""
 
-#: src/main/dialogs/savesubtitledialog.cpp:75
+#: main/dialogs/savesubtitledialog.cpp:75
 msgid "EOL:"
 msgstr ""
 
-#: src/main/dialogs/selectablesubtitledialog.cpp:52
+#: main/dialogs/selectablesubtitledialog.cpp:52
 msgid "Path:"
 msgstr ""
 
-#: src/main/dialogs/selectablesubtitledialog.cpp:57
+#: main/dialogs/selectablesubtitledialog.cpp:57
 msgid "Select subtitle"
 msgstr ""
 
-#: src/main/dialogs/selectablesubtitledialog.h:49
+#: main/dialogs/selectablesubtitledialog.h:49
 msgid "Subtitle"
 msgstr ""
 
-#: src/main/dialogs/shifttimesdialog.cpp:32
+#: main/dialogs/shifttimesdialog.cpp:32
 msgid "Shift"
 msgstr ""
 
-#: src/main/dialogs/shifttimesdialog.cpp:34
+#: main/dialogs/shifttimesdialog.cpp:34
 msgctxt "@title:group"
 msgid "Shifting"
 msgstr ""
 
-#: src/main/dialogs/shifttimesdialog.cpp:38
+#: main/dialogs/shifttimesdialog.cpp:38
 msgid "Forwards (+)"
 msgstr ""
 
-#: src/main/dialogs/shifttimesdialog.cpp:39
+#: main/dialogs/shifttimesdialog.cpp:39
 msgid "Backwards (−)"
 msgstr ""
 
-#: src/main/dialogs/smarttextsadjustdialog.cpp:39
+#: main/dialogs/smarttextsadjustdialog.cpp:39
 msgid " characters"
 msgstr ""
 
-#: src/main/dialogs/smarttextsadjustdialog.cpp:42
+#: main/dialogs/smarttextsadjustdialog.cpp:42
 msgid "Minimum length for line break:"
 msgstr ""
 
-#: src/main/dialogs/splitsubtitledialog.cpp:38
+#: main/dialogs/splitsubtitledialog.cpp:38
 msgid "Split Subtitle"
 msgstr ""
 
-#: src/main/dialogs/splitsubtitledialog.cpp:51
+#: main/dialogs/splitsubtitledialog.cpp:51
 msgid "Split time:"
 msgstr ""
 
-#: src/main/dialogs/splitsubtitledialog.cpp:55
+#: main/dialogs/splitsubtitledialog.cpp:55
 msgid "Shift new part backwards after split"
 msgstr ""
 
-#: src/main/dialogs/syncsubtitlesdialog.cpp:30
+#: main/dialogs/syncsubtitlesdialog.cpp:30
 msgid "Synchronize with Subtitle"
 msgstr ""
 
-#: src/main/dialogs/syncsubtitlesdialog.cpp:32
+#: main/dialogs/syncsubtitlesdialog.cpp:32
 msgid "Reference Subtitle"
 msgstr ""
 
-#: src/main/dialogs/syncsubtitlesdialog.cpp:34
+#: main/dialogs/syncsubtitlesdialog.cpp:34
 msgctxt "@title:group"
 msgid "Synchronization Mode"
 msgstr ""
 
-#: src/main/dialogs/syncsubtitlesdialog.cpp:37
+#: main/dialogs/syncsubtitlesdialog.cpp:37
 msgid "Adjust to reference's first and last lines"
 msgstr ""
 
-#: src/main/dialogs/syncsubtitlesdialog.cpp:41
+#: main/dialogs/syncsubtitlesdialog.cpp:41
 msgid "Copy timing information from reference line by line"
 msgstr ""
 
-#: src/main/dialogs/translatedialog.cpp:50
+#: main/dialogs/translatedialog.cpp:50
 msgid "Input language:"
 msgstr ""
 
-#: src/main/dialogs/translatedialog.cpp:66
+#: main/dialogs/translatedialog.cpp:66
 msgid "Output language:"
 msgstr ""
 
-#: src/main/errorsdialog.cpp:41
+#: main/errorsdialog.cpp:41
 msgid "Subtitle Errors"
 msgstr ""
 
-#: src/main/errorsdialog.cpp:48
+#: main/errorsdialog.cpp:48
 msgid "Clear Fixed Errors"
 msgstr ""
 
-#: src/main/errorsdialog.cpp:58
+#: main/errorsdialog.cpp:58
 msgid "Settings..."
 msgstr ""
 
-#: src/main/errorsdialog.cpp:117
+#: main/errorsdialog.cpp:117
 msgid "Showing 1 line with errors"
 msgid_plural "Showing %1 lines with errors"
 msgstr[0] ""
 msgstr[1] ""
 
-#: src/main/errorsdialog.cpp:119
+#: main/errorsdialog.cpp:119
 msgid "1 total error"
 msgid_plural "%1 total errors"
 msgstr[0] ""
 msgstr[1] ""
 
-#: src/main/errorsdialog.cpp:120
+#: main/errorsdialog.cpp:120
 msgid "1 user mark"
 msgid_plural "%1 user marks"
 msgstr[0] ""
 msgstr[1] ""
 
-#: src/main/errorswidget.cpp:458
+#: main/errorswidget.cpp:458
 msgid "Line Errors"
 msgstr ""
 
-#: src/main/errorswidget.cpp:459
+#: main/errorswidget.cpp:459
 msgid "Count"
 msgstr ""
 
-#: src/main/errorswidget.cpp:460
+#: main/errorswidget.cpp:460
 msgid "Marked"
 msgstr ""
 
-#: src/main/errorswidget.cpp:475
+#: main/errorswidget.cpp:475
 msgid "yes"
 msgstr ""
 
-#: src/main/errorswidget.cpp:476
+#: main/errorswidget.cpp:476
 msgid "no"
 msgstr ""
 
-#: src/main/errorswidget.cpp:483
+#: main/errorswidget.cpp:483
 msgid "Line <numid>%1</numid>"
 msgstr ""
 
-#: src/main/errorswidget.cpp:673
+#: main/errorswidget.cpp:673
 msgid "Expand All"
 msgstr ""
 
-#: src/main/errorswidget.cpp:674
+#: main/errorswidget.cpp:674
 msgid "Collapse All"
 msgstr ""
 
-#: src/main/errorswidget.cpp:678
+#: main/errorswidget.cpp:678
 msgid "Clear Selected Marks"
 msgstr ""
 
-#: src/main/errorswidget.cpp:679
+#: main/errorswidget.cpp:679
 msgid "Clear Selected Errors"
 msgstr ""
 
-#: src/main/errorswidget.cpp:684
+#: main/errorswidget.cpp:684
 msgid "Clear Fixed Selection"
 msgstr ""
 
-#: src/main/lineswidget.cpp:187
+#: main/lineswidget.cpp:186
 msgid "<b>Observations:</b>"
 msgstr ""
 
-#: src/main/lineswidget.cpp:214
+#: main/lineswidget.cpp:213
 msgctxt "@title:column Subtitle line number"
 msgid "Line"
 msgstr ""
 
-#: src/main/lineswidget.cpp:215
+#: main/lineswidget.cpp:214
 msgctxt "@title:column"
 msgid "Show Time"
 msgstr ""
 
-#: src/main/lineswidget.cpp:216
+#: main/lineswidget.cpp:215
 msgctxt "@title:column"
 msgid "Hide Time"
 msgstr ""
 
-#: src/main/lineswidget.cpp:217
+#: main/lineswidget.cpp:216
 msgctxt "@title:column Subtitle line (primary) text"
 msgid "Text"
 msgstr ""
 
-#: src/main/lineswidget.cpp:218
+#: main/lineswidget.cpp:217
 msgctxt "@title:column Subtitle line translation text"
 msgid "Translation"
 msgstr ""
 
-#: src/main/lineswidget.cpp:1032
+#: main/lineswidget.cpp:1073
 msgid "Texts"
 msgstr ""
 
-#: src/main/lineswidget.cpp:1042
+#: main/lineswidget.cpp:1083
 msgid "Styles"
 msgstr ""
 
-#: src/main/lineswidget.cpp:1044 src/widgets/simplerichtextedit.cpp:116
+#: main/lineswidget.cpp:1085 widgets/simplerichtextedit.cpp:116
 msgctxt "@action:inmenu Toggle bold style"
 msgid "Bold"
 msgstr ""
 
-#: src/main/lineswidget.cpp:1047 src/widgets/simplerichtextedit.cpp:122
+#: main/lineswidget.cpp:1088 widgets/simplerichtextedit.cpp:122
 msgctxt "@action:inmenu Toggle italic style"
 msgid "Italic"
 msgstr ""
 
-#: src/main/lineswidget.cpp:1050 src/widgets/simplerichtextedit.cpp:128
+#: main/lineswidget.cpp:1091 widgets/simplerichtextedit.cpp:128
 msgctxt "@action:inmenu Toggle underline style"
 msgid "Underline"
 msgstr ""
 
-#: src/main/lineswidget.cpp:1053 src/widgets/simplerichtextedit.cpp:134
+#: main/lineswidget.cpp:1094 widgets/simplerichtextedit.cpp:134
 msgctxt "@action:inmenu Toggle strike through style"
 msgid "Strike Through"
 msgstr ""
 
-#: src/main/lineswidget.cpp:1056 src/widgets/simplerichtextedit.cpp:140
+#: main/lineswidget.cpp:1097 widgets/simplerichtextedit.cpp:140
 msgctxt "@action:inmenu Change Text Color"
 msgid "Text Color"
 msgstr ""
 
-#: src/main/lineswidget.cpp:1058
+#: main/lineswidget.cpp:1099
 msgid "Times"
 msgstr ""
 
-#: src/main/lineswidget.cpp:1060
+#: main/lineswidget.cpp:1101
 msgid "Shift +%1 Milliseconds"
 msgstr ""
 
-#: src/main/lineswidget.cpp:1061
+#: main/lineswidget.cpp:1102
 msgid "Shift −%1 Milliseconds"
 msgstr ""
 
-#: src/main/lineswidget.cpp:1070
+#: main/lineswidget.cpp:1111
 msgid "Errors"
 msgstr ""
 
-#: src/main/lineswidget.cpp:1071
+#: main/lineswidget.cpp:1112
 msgid "Mark"
 msgstr ""
 
-#: src/main/main.cpp:54
+#: main/main.cpp:54
 msgid "Subtitle Composer"
 msgstr ""
 
-#: src/main/main.cpp:56
+#: main/main.cpp:56
 msgid "A KDE subtitle editor."
 msgstr ""
 
-#: src/main/main.cpp:63
+#: main/main.cpp:63
 msgid "Mladen Milinković"
 msgstr ""
 
-#: src/main/main.cpp:63
+#: main/main.cpp:63
 msgid "Author & Maintainer"
 msgstr ""
 
-#: src/main/main.cpp:64
+#: main/main.cpp:64
 msgid "Sergio Pistone"
 msgstr ""
 
-#: src/main/main.cpp:64
+#: main/main.cpp:64
 msgid "Original Author"
 msgstr ""
 
-#: src/main/main.cpp:68
+#: main/main.cpp:66 rc.cpp:1
+msgctxt "NAME OF TRANSLATORS"
+msgid "Your names"
+msgstr ""
+
+#: main/main.cpp:66 rc.cpp:2
+msgctxt "EMAIL OF TRANSLATORS"
+msgid "Your emails"
+msgstr ""
+
+#: main/main.cpp:68
 msgid "Croatian Translator"
 msgstr ""
 
-#: src/main/main.cpp:69
+#: main/main.cpp:69
 msgid "Bulgarian Translator"
 msgstr ""
 
-#: src/main/main.cpp:70 src/main/main.cpp:71 src/main/main.cpp:72
-#: src/main/main.cpp:73 src/main/main.cpp:74 src/main/main.cpp:75
-#: src/main/main.cpp:76 src/main/main.cpp:77 src/main/main.cpp:78
-#: src/main/main.cpp:79 src/main/main.cpp:80
+#: main/main.cpp:70 main/main.cpp:71 main/main.cpp:72 main/main.cpp:73
+#: main/main.cpp:74 main/main.cpp:75 main/main.cpp:76 main/main.cpp:77
+#: main/main.cpp:78 main/main.cpp:79 main/main.cpp:80
 msgid "Translator"
 msgstr ""
 
-#: src/main/main.cpp:82
+#: main/main.cpp:82
 msgid "All people who have contributed and I have forgotten to mention"
 msgstr ""
 
-#: src/main/main.cpp:100
+#: main/main.cpp:100
 msgid "Open location as primary subtitle"
 msgstr ""
 
-#: src/main/main.cpp:101
+#: main/main.cpp:101
 msgid "Open location as translation subtitle"
 msgstr ""
 
-#: src/main/playerwidget.cpp:99
+#: main/playerwidget.cpp:99
 msgid "<b>Position</b>"
 msgstr ""
 
-#: src/main/playerwidget.cpp:107
+#: main/playerwidget.cpp:107
 msgid "<b>Length</b>"
 msgstr ""
 
-#: src/main/playerwidget.cpp:112
+#: main/playerwidget.cpp:112
 msgid "<b>FPS</b>"
 msgstr ""
 
-#: src/main/playerwidget.cpp:446
+#: main/playerwidget.cpp:461
 msgid "Show editable position control"
 msgstr ""
 
-#: src/main/playerwidget.cpp:695 src/main/playerwidget.cpp:696
-#: src/main/playerwidget.cpp:697 src/main/playerwidget.cpp:776
-#: src/main/playerwidget.cpp:790 src/main/playerwidget.cpp:798
+#: main/playerwidget.cpp:710 main/playerwidget.cpp:711
+#: main/playerwidget.cpp:712 main/playerwidget.cpp:791
+#: main/playerwidget.cpp:805 main/playerwidget.cpp:813
 msgid "<i>Unknown</i>"
 msgstr ""
 
-#: src/main/playerwidget.cpp:707
+#: main/playerwidget.cpp:722
 msgid "<qt>There was an error opening media file %1.</qt>"
 msgstr ""
 
-#: src/main/playerwidget.cpp:739 src/main/playerwidget.cpp:741
+#: main/playerwidget.cpp:754 main/playerwidget.cpp:756
 msgid "Unexpected error when playing file."
 msgstr ""
 
-#: src/main/playerwidget.cpp:739 src/main/playerwidget.cpp:741
+#: main/playerwidget.cpp:754 main/playerwidget.cpp:756
 msgid "Error Playing File"
 msgstr ""
 
-#: src/main/scripting/scriptsmanager.cpp:66
+#: main/scripting/scriptsmanager.cpp:66
 msgid "Installed Scripts"
 msgstr ""
 
-#: src/main/scripting/scriptsmanager.cpp:87
+#: main/scripting/scriptsmanager.cpp:87
 msgid "Information"
 msgstr ""
 
-#: src/main/scripting/scriptsmanager.cpp:94
+#: main/scripting/scriptsmanager.cpp:94
 msgid "Warning"
 msgstr ""
 
-#: src/main/scripting/scriptsmanager.cpp:101
+#: main/scripting/scriptsmanager.cpp:101
 msgid "Error"
 msgstr ""
 
-#: src/main/scripting/scriptsmanager.cpp:166
-#: src/main/scripting/scriptsmanager.cpp:243
+#: main/scripting/scriptsmanager.cpp:166 main/scripting/scriptsmanager.cpp:243
 msgid ""
 "You must enter an unused name to continue.\n"
 "Would you like to enter another name?"
 msgstr ""
 
-#: src/main/scripting/scriptsmanager.cpp:167
-#: src/main/scripting/scriptsmanager.cpp:244
+#: main/scripting/scriptsmanager.cpp:167 main/scripting/scriptsmanager.cpp:244
 msgid "Name Already Used"
 msgstr ""
 
-#: src/main/scripting/scriptsmanager.cpp:170
+#: main/scripting/scriptsmanager.cpp:170
 msgid "Create New Script"
 msgstr ""
 
-#: src/main/scripting/scriptsmanager.cpp:170
-#: src/main/scripting/scriptsmanager.cpp:247
+#: main/scripting/scriptsmanager.cpp:170 main/scripting/scriptsmanager.cpp:247
 msgid "Script name:"
 msgstr ""
 
-#: src/main/scripting/scriptsmanager.cpp:183
+#: main/scripting/scriptsmanager.cpp:183
 msgid "There was an error creating the file <b>%1</b>."
 msgstr ""
 
-#: src/main/scripting/scriptsmanager.cpp:226
+#: main/scripting/scriptsmanager.cpp:226
 msgid "Select Existing Script"
 msgstr ""
 
-#: src/main/scripting/scriptsmanager.cpp:247
+#: main/scripting/scriptsmanager.cpp:247
 msgid "Rename Script"
 msgstr ""
 
-#: src/main/scripting/scriptsmanager.cpp:261
+#: main/scripting/scriptsmanager.cpp:261
 msgid "There was an error opening the file <b>%1</b>."
 msgstr ""
 
-#: src/main/scripting/scriptsmanager.cpp:269
+#: main/scripting/scriptsmanager.cpp:269
 msgid "There was an error copying the file to <b>%1</b>."
 msgstr ""
 
-#: src/main/scripting/scriptsmanager.cpp:285
+#: main/scripting/scriptsmanager.cpp:285
 msgid "Do you really want to send file <b>%1</b> to the trash?"
 msgstr ""
 
-#: src/main/scripting/scriptsmanager.cpp:285
+#: main/scripting/scriptsmanager.cpp:285
 msgid "Move to Trash"
 msgstr ""
 
-#: src/main/scripting/scriptsmanager.cpp:289
+#: main/scripting/scriptsmanager.cpp:289
 msgid "There was an error removing the file <b>%1</b>."
 msgstr ""
 
-#: src/main/scripting/scriptsmanager.cpp:306
+#: main/scripting/scriptsmanager.cpp:306
 msgid "Could not launch external editor.\n"
 msgstr ""
 
-#: src/main/scripting/scriptsmanager.cpp:366
-#: src/main/scripting/scriptsmanager.cpp:368
+#: main/scripting/scriptsmanager.cpp:366 main/scripting/scriptsmanager.cpp:368
 msgid "Error Running Script"
 msgstr ""
 
-#: src/main/scripting/scriptsmanager.cpp:380
+#: main/scripting/scriptsmanager.cpp:380
 msgid "Tools"
 msgstr ""
 
-#: src/main/utils/errorfinder.cpp:37 src/main/utils/errorfinder.cpp:209
-#: src/main/utils/errorfinder.cpp:223
+#: main/utils/errorfinder.cpp:37 main/utils/errorfinder.cpp:209
+#: main/utils/errorfinder.cpp:223
 msgid "Find Error"
 msgstr ""
 
-#: src/main/utils/errorfinder.cpp:39
+#: main/utils/errorfinder.cpp:39
 msgid "Errors to Find"
 msgstr ""
 
-#: src/main/utils/errorfinder.cpp:42
+#: main/utils/errorfinder.cpp:42
 msgid "Options"
 msgstr ""
 
-#: src/main/utils/errorfinder.cpp:48
+#: main/utils/errorfinder.cpp:48
 msgid "From current line"
 msgstr ""
 
-#: src/main/utils/errorfinder.cpp:52
+#: main/utils/errorfinder.cpp:52
 msgid "Find backwards"
 msgstr ""
 
-#: src/main/utils/errorfinder.cpp:209 src/main/utils/finder.cpp:268
-#: src/main/utils/replacer.cpp:233
+#: main/utils/errorfinder.cpp:209 main/utils/finder.cpp:268
+#: main/utils/replacer.cpp:233
 msgid ""
 "Beginning of selection reached.\n"
 "Continue from the end?"
 msgstr ""
 
-#: src/main/utils/errorfinder.cpp:209 src/main/utils/finder.cpp:268
-#: src/main/utils/replacer.cpp:233
+#: main/utils/errorfinder.cpp:209 main/utils/finder.cpp:268
+#: main/utils/replacer.cpp:233
 msgid ""
 "Beginning of subtitle reached.\n"
 "Continue from the end?"
 msgstr ""
 
-#: src/main/utils/errorfinder.cpp:209 src/main/utils/finder.cpp:268
-#: src/main/utils/replacer.cpp:233
+#: main/utils/errorfinder.cpp:209 main/utils/finder.cpp:268
+#: main/utils/replacer.cpp:233
 msgid ""
 "End of selection reached.\n"
 "Continue from the beginning?"
 msgstr ""
 
-#: src/main/utils/errorfinder.cpp:209 src/main/utils/finder.cpp:268
-#: src/main/utils/replacer.cpp:233 src/main/utils/speller.cpp:137
+#: main/utils/errorfinder.cpp:209 main/utils/finder.cpp:268
+#: main/utils/replacer.cpp:233 main/utils/speller.cpp:137
 msgid ""
 "End of subtitle reached.\n"
 "Continue from the beginning?"
 msgstr ""
 
-#: src/main/utils/errorfinder.cpp:223
+#: main/utils/errorfinder.cpp:223
 msgid "No errors matching given criteria found!"
 msgstr ""
 
-#: src/main/utils/finder.cpp:54
+#: main/utils/finder.cpp:54
 msgid "Find In"
 msgstr ""
 
-#: src/main/utils/finder.cpp:254 src/main/utils/replacer.cpp:216
+#: main/utils/finder.cpp:254 main/utils/replacer.cpp:216
 msgid "No instances of '%1' found!"
 msgstr ""
 
-#: src/main/utils/finder.cpp:254 src/main/utils/finder.cpp:268
+#: main/utils/finder.cpp:254 main/utils/finder.cpp:268
 msgid "Find"
 msgstr ""
 
-#: src/main/utils/language.cpp:128
+#: main/utils/language.cpp:128
 msgid "Automatic"
 msgstr ""
 
-#: src/main/utils/language.cpp:135
+#: main/utils/language.cpp:135
 msgctxt "Official language of the Philippines, aka Filipino"
 msgid "Tagalog"
 msgstr ""
 
-#: src/main/utils/replacer.cpp:55
+#: main/utils/replacer.cpp:55
 msgid "Find/Replace In"
 msgstr ""
 
-#: src/main/utils/replacer.cpp:173 src/main/utils/replacer.cpp:213
-#: src/main/utils/replacer.cpp:216 src/main/utils/replacer.cpp:233
+#: main/utils/replacer.cpp:173 main/utils/replacer.cpp:213
+#: main/utils/replacer.cpp:216 main/utils/replacer.cpp:233
 msgid "Replace"
 msgstr ""
 
-#: src/main/utils/replacer.cpp:213 src/main/utils/replacer.cpp:233
+#: main/utils/replacer.cpp:213 main/utils/replacer.cpp:233
 msgid "1 replacement done."
 msgid_plural "%1 replacements done."
 msgstr[0] ""
 msgstr[1] ""
 
-#: src/main/utils/speller.cpp:137
+#: main/utils/speller.cpp:137
 msgid "Spell Checking"
 msgstr ""
 
-#: src/main/utils/translator.cpp:176
+#: main/utils/translator.cpp:176
 msgid "Operation cancelled by user"
 msgstr ""
 
-#: src/main/utils/translator.cpp:276 src/main/utils/translator.cpp:285
+#: main/utils/translator.cpp:276 main/utils/translator.cpp:285
 msgid "Unexpected contents received from translation service"
 msgstr ""
 
-#: src/videoplayer/gstreamer/gstreamerplayerbackend.cpp:350
-#: src/videoplayer/mplayer/mplayerplayerbackend.cpp:242
-#: src/videoplayer/xine/xineplayerbackend.cpp:283
+#: videoplayerplugins/gstreamer/gstreamerplayerbackend.cpp:350
+#: videoplayerplugins/mpv/mpvbackend.cpp:232
+msgid "Text Stream #%1"
+msgstr ""
+
+#: videoplayerplugins/gstreamer/gstreamerplayerbackend.cpp:386
+#: videoplayerplugins/mplayer/mplayerplayerbackend.cpp:251
+#: videoplayerplugins/mpv/mpvbackend.cpp:267
+#: videoplayerplugins/xine/xineplayerbackend.cpp:290
 msgid "Audio Stream #%1"
 msgstr ""
 
-#: src/videoplayer/mpv/mpvbackend.cpp:192
-msgid "Stream #%1"
-msgstr ""
-
-#: src/videoplayer/videoplayer.cpp:505
+#: videoplayer/videoplayer.cpp:551
 msgid "File does not exist."
 msgstr ""
 
-#: src/widgets/simplerichtextedit.cpp:79
+#: widgets/simplerichtextedit.cpp:79
 msgid "Cut"
 msgstr ""
 
-#: src/widgets/simplerichtextedit.cpp:85
+#: widgets/simplerichtextedit.cpp:85
 msgid "Copy"
 msgstr ""
 
-#: src/widgets/simplerichtextedit.cpp:92
+#: widgets/simplerichtextedit.cpp:92
 msgid "Paste"
 msgstr ""
 
-#: src/widgets/simplerichtextedit.cpp:99
+#: widgets/simplerichtextedit.cpp:99
 msgid "Delete"
 msgstr ""
 
-#: src/widgets/simplerichtextedit.cpp:105
+#: widgets/simplerichtextedit.cpp:105
 msgctxt "@action:inmenu Clear all text"
 msgid "Clear"
 msgstr ""
 
-#: src/widgets/simplerichtextedit.cpp:146
+#: widgets/simplerichtextedit.cpp:146
 msgid "Check Spelling..."
 msgstr ""
 
-#: src/widgets/simplerichtextedit.cpp:150
+#: widgets/simplerichtextedit.cpp:150
 msgid "Auto Spell Check"
 msgstr ""
 
-#: src/widgets/simplerichtextedit.cpp:155
+#: widgets/simplerichtextedit.cpp:155
 msgid "Allow Tabulations"
 msgstr ""
 
-#: src/widgets/simplerichtextedit.cpp:542
+#: widgets/simplerichtextedit.cpp:542
 msgid "Suggestions"
 msgstr ""
 
-#: src/widgets/simplerichtextedit.cpp:543
+#: widgets/simplerichtextedit.cpp:543
 msgid "Ignore"
 msgstr ""
 
-#: src/widgets/simplerichtextedit.cpp:544
+#: widgets/simplerichtextedit.cpp:544
 msgid "Add to Dictionary"
 msgstr ""
 
-#: src/widgets/simplerichtextedit.cpp:548
+#: widgets/simplerichtextedit.cpp:548
 msgid "No suggestions"
 msgstr ""
 
-#: src/widgets/waveformwidget.cpp:57
+#: widgets/waveformwidget.cpp:116
 msgid "Generating waveform"
 msgstr ""
