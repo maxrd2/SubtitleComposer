@@ -7,6 +7,7 @@ This is a continuation of Subtitle Composer by Sergio Pistone from sourceforget.
 ### FEATURES
  - Load/save multiple formats - SubRip, MicroDVD, SSA/ASS, MPlayer, TMPlayer and YouTube captions
  - Demux text streams from video file
+ - Speech Recognition using PocketSphinx
  - Smart language/text encoding selection
  - Live preview of subtitles in video player (GStreamer, MPlayer, MPV, Xine, Phonon) w/ audio stream selection
  - Live preview of subtitles on audio waveform w/ audio stream selection
