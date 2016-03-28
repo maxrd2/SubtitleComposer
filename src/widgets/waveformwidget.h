@@ -97,7 +97,8 @@ public slots:
 	void onConfigChanged();
 
 protected:
-	virtual void resizeEvent(QResizeEvent *event);
+	void resizeEvent(QResizeEvent *event);
+	void leaveEvent(QEvent *event);
 	bool eventFilter(QObject *obj, QEvent *event);
 
 private slots:
@@ -128,6 +129,7 @@ private:
 
 	QScrollBar *m_scrollBar;
 	bool m_autoScroll;
+	bool m_userScroll;
 
 	quint32 m_waveformDuration;
 	quint32 m_waveformDataOffset;

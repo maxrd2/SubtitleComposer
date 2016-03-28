@@ -57,6 +57,7 @@ WaveformWidget::WaveformWidget(QWidget *parent)
 	  m_timeEnd(MAX_WINDOW_ZOOM),
 	  m_scrollBar(NULL),
 	  m_autoScroll(true),
+	  m_userScroll(false),
 	  m_waveformChannels(0),
 	  m_waveform(NULL),
 	  m_waveformGraphics(new QWidget(this)),
@@ -78,7 +79,6 @@ WaveformWidget::WaveformWidget(QWidget *parent)
 
 	m_scrollBar = new QScrollBar(Qt::Vertical);
 	m_scrollBar->setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Expanding);
-	m_scrollBar->setDisabled(m_autoScroll);
 	m_scrollBar->setPageStep(windowSize());
 	m_scrollBar->setRange(0, windowSize());
 	m_scrollBar->installEventFilter(this);
@@ -231,7 +231,6 @@ void
 WaveformWidget::setAutoscroll(bool autoscroll)
 {
 	m_autoScroll = autoscroll;
-	m_scrollBar->setDisabled(m_autoScroll);
 	updateActions();
 }
 
@@ -550,24 +549,40 @@ WaveformWidget::resizeEvent(QResizeEvent *event)
 	m_waveformGraphics->update();
 }
 
-bool
+/*virtual*/ void
+WaveformWidget::leaveEvent(QEvent */*event*/)
+{
+	if(m_userScroll) {
+		m_userScroll = false;
+		onPlayerPositionChanged(m_timeCurrent.toSeconds());
+	}
+}
+
+/*virtual*/ bool
 WaveformWidget::eventFilter(QObject *obj, QEvent *event)
 {
 	if(obj != m_scrollBar && obj != m_waveformGraphics)
 		return false;
 
-	if(event->type() == QEvent::Wheel) {
-		if(m_autoScroll)
-			return false;
-
+	switch(event->type()) {
+	case QEvent::Wheel: {
 		QPoint delta = reinterpret_cast<QWheelEvent *>(event)->angleDelta() / 8;
 		if(delta.isNull())
 			delta = reinterpret_cast<QWheelEvent *>(event)->pixelDelta();
 		if(delta.isNull())
 			return false;
 
+		m_userScroll = true;
+
 		m_scrollBar->setValue(m_timeStart.shifted(-4 * double(delta.ry()) * windowSize() / m_waveformGraphics->height()).toMillis());
 		return true;
+	}
+	case QEvent::MouseButtonPress:
+		m_userScroll = true;
+		break; // do not capture mouse presses
+
+	default:
+		break;
 	}
 
 	if(obj != m_waveformGraphics)
@@ -722,7 +737,7 @@ WaveformWidget::onPlayerPositionChanged(double seconds)
 	if(m_timeCurrent != playingPosition) {
 		m_timeCurrent = playingPosition;
 
-		if(m_autoScroll && !m_draggedLine) {
+		if(m_autoScroll && !m_draggedLine && !m_userScroll) {
 			int windowSize = this->windowSize(),
 				windowPadding = windowSize / 8, // autoscroll when we reach padding
 				windowSizePad = windowSize - 2 * windowPadding;
