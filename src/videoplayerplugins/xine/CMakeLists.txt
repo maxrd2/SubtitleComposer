@@ -42,7 +42,7 @@ endif(XCB_FOUND AND XINE_XCB_FOUND)
 
 add_library(xineplayer MODULE ${videoplayer_xine_SRCS})
 
-install(TARGETS xineplayer DESTINATION ${VIDEOPLAYERPLUGIN_INSTALL_DIR})
+install(TARGETS xineplayer DESTINATION ${SC_PLUGIN_INSTALL_DIR})
 
 target_include_directories(xineplayer SYSTEM PRIVATE ${videoplayer_xine_INCLUDE_DIR})
 set_target_properties(xineplayer PROPERTIES COMPILE_FLAGS "${videoplayer_xine_DEFS}")

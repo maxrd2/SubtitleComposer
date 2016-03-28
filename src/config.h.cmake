@@ -1,7 +1,7 @@
 #ifndef CONFIG_H
 #define CONFIG_H
 
-#define VIDEOPLAYERPLUGIN_PATH "@VIDEOPLAYERPLUGIN_INSTALL_DIR@"
+#define SCPLUGIN_PATH "@SC_PLUGIN_INSTALL_DIR@"
 
 // Whether MPV was found
 #cmakedefine HAVE_MPV
@@ -17,7 +17,5 @@
 
 // fallback path to locate icons under non-KDE desktop environments
 #define CUSTOM_ICON_INSTALL_PATH "@CMAKE_INSTALL_PREFIX@/@DATA_INSTALL_DIR@/subtitlecomposer/pics/"
-
-#define POCKETSPHINX_MODELDIR "@POCKETSPHINX_MODELDIR@"
 
 #endif

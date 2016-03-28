@@ -14,7 +14,7 @@ set(videoplayer_phonon_SRCS
 
 add_library(phononplayer MODULE ${videoplayer_phonon_SRCS})
 
-install(TARGETS phononplayer DESTINATION ${VIDEOPLAYERPLUGIN_INSTALL_DIR})
+install(TARGETS phononplayer DESTINATION ${SC_PLUGIN_INSTALL_DIR})
 
 target_include_directories(phononplayer SYSTEM PRIVATE ${videoplayer_phonon_INCLUDE_DIR})
 set_target_properties(phononplayer PROPERTIES COMPILE_FLAGS "${videoplayer_phonon_DEFS}")

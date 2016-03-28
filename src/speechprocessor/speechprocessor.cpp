@@ -19,13 +19,20 @@
 
 #include "config.h"
 #include "speechprocessor.h"
+#include "speechplugin.h"
 
-#include <pocketsphinx.h>
+#include "scconfig.h"
 
 #include <QLabel>
 #include <QProgressBar>
 #include <QBoxLayout>
 #include <QThread>
+
+#include <QPluginLoader>
+#include <QDir>
+#include <QFile>
+
+#include <QDebug>
 
 #include <KLocalizedString>
 
@@ -36,12 +43,9 @@ SpeechProcessor::SpeechProcessor(QWidget *parent)
 	  m_mediaFile(QString()),
 	  m_streamIndex(-1),
 	  m_stream(new StreamProcessor(this)),
-	  m_subtitle(NULL),
+	  m_subtitle(nullptr),
 	  m_progressWidget(new QWidget(parent)),
-	  m_psConfig(NULL),
-	  m_psDecoder(NULL)/*,
-	  m_sampleFrame(new qint16[SAMPLE_FRAME_SIZE]),
-	  m_sampleFrameLen(0)*/
+	  m_plugin(nullptr)
 {
 	// Progress Bar
 	m_progressWidget->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Expanding);
@@ -64,12 +68,62 @@ SpeechProcessor::SpeechProcessor(QWidget *parent)
 	connect(m_stream, &StreamProcessor::streamFinished, this, &SpeechProcessor::onStreamFinished);
 	// Using Qt::DirectConnection here makes SpeechProcessor::onStreamData() to execute in GStreamer's thread
 	connect(m_stream, &StreamProcessor::audioDataAvailable, this, &SpeechProcessor::onStreamData, Qt::DirectConnection);
+
+#ifndef NDEBUG
+	const QString exePath(qApp->applicationDirPath());
+	pluginLoad(exePath + QStringLiteral("/../speechplugins/pocketsphinx/pocketsphinxasr.so"));
+#else
+	QDir pluginsDir(QStringLiteral(SCPLUGIN_PATH));
+	foreach(const QString pluginFile, pluginsDir.entryList(QDir::Files, QDir::Name)) {
+		if(QLibrary::isLibrary(pluginFile))
+			pluginLoad(pluginsDir.filePath(pluginFile));
+	}
+#endif
+
 }
 
 SpeechProcessor::~SpeechProcessor()
 {
 	m_progressWidget = NULL;
 	clearAudioStream();
+}
+
+SpeechPlugin *
+SpeechProcessor::pluginLoad(const QString &pluginPath)
+{
+	const QString realPath = QDir(pluginPath).canonicalPath();
+	if(realPath.isEmpty())
+		return NULL;
+
+	QPluginLoader loader(realPath);
+	QObject *plugin = loader.instance();
+	if(!plugin)
+		return NULL;
+
+	SpeechPlugin *asrPlugin = qobject_cast<SpeechPlugin *>(plugin);
+	if(!asrPlugin)
+		return NULL;
+
+	qInfo() << "Loaded SpeechProcessor plugin" << asrPlugin->name() << "from" << realPath;
+
+	asrPlugin->setSCConfig(SCConfig::self());
+
+	pluginAdd(asrPlugin);
+
+	return asrPlugin;
+}
+
+void
+SpeechProcessor::pluginAdd(SpeechPlugin *plugin)
+{
+	plugin->setParent(this); // SpeechProcessor will delete *plugin
+
+	if(m_plugins.contains(plugin->name())) {
+		qCritical() << "Attempted to insert duplicate SpeechProcessor plugin" << plugin->name();
+		return;
+	}
+
+	m_plugins[plugin->name()] = plugin;
 }
 
 void
@@ -93,32 +147,25 @@ SpeechProcessor::setAudioStream(const QString &mediaFile, int audioStream)
 
 	clearAudioStream();
 
-	m_psConfig = cmd_ln_init(NULL, ps_args(), TRUE,
-				 "-hmm", POCKETSPHINX_MODELDIR "/en-us/en-us",
-				 "-lm", POCKETSPHINX_MODELDIR "/en-us/en-us.lm.bin",
-				 "-dict", POCKETSPHINX_MODELDIR "/en-us/cmudict-en-us.dict",
-//				 "-frate", "100",
-				 NULL);
-	if(m_psConfig == NULL) {
-		qWarning() << "Failed to create PocketSphinx config object";
+	if(!m_plugins.isEmpty()) {
+		m_plugin = m_plugins.first();
+	} else {
+		onStreamError(1, i18n("No speech recognition plugins available"), QString());
 		return;
 	}
 
-	m_psDecoder = ps_init(m_psConfig);
-	if(m_psDecoder == NULL) {
-		qWarning() << "Failed to create PocketSphinx recognizer";
+	if(!m_plugin->init()) {
+		onStreamError(1, i18n("Initialization of speech recognition plugin failed"), QString());
 		return;
 	}
 
-	m_psFrameRate = cmd_ln_int32_r(m_psConfig, "-frate");
+	connect(m_plugin, &SpeechPlugin::textRecognized, this, &SpeechProcessor::onTextRecognized);
+	connect(m_plugin, &SpeechPlugin::error, [this](int code, const QString &message) { onStreamError(code, message, QString()); });
 
 	m_mediaFile = mediaFile;
 	m_streamIndex = audioStream;
 
 	m_audioDuration = 0;
-
-	m_utteranceStarted = false;
-	m_speechStarted = false;
 
 	static WaveFormat waveFormat(16000, 1, 16, true);
 	if(m_stream->open(mediaFile) && m_stream->initAudio(audioStream, waveFormat))
@@ -136,13 +183,10 @@ SpeechProcessor::clearAudioStream()
 	m_mediaFile.clear();
 	m_streamIndex = -1;
 
-	if(m_psDecoder != NULL) {
-		ps_free(m_psDecoder);
-		m_psDecoder = NULL;
-	}
-	if(m_psConfig != NULL) {
-		cmd_ln_free_r(m_psConfig);
-		m_psConfig = NULL;
+	if(m_plugin) {
+		m_plugin->disconnect();
+		m_plugin->cleanup();
+		m_plugin = nullptr;
 	}
 }
 
@@ -160,66 +204,9 @@ SpeechProcessor::onStreamProgress(quint64 msecPos, quint64 msecLength)
 void
 SpeechProcessor::onStreamFinished()
 {
-	if(m_psDecoder) {
-		if(m_utteranceStarted)
-			ps_end_utt(m_psDecoder);
-		processUtterance();
-	}
+	if(m_plugin)
+		m_plugin->processComplete();
 	clearAudioStream();
-}
-
-void
-SpeechProcessor::processUtterance()
-{
-	if(!m_subtitle)
-		return;
-
-	qint32 score;
-	char const *hyp = ps_get_hyp(m_psDecoder, &score);
-	if(!hyp || !*hyp)
-		return;
-
-	QString lineText;
-	int lineIn, lineOut;
-	ps_seg_t *iter = ps_seg_iter(m_psDecoder);
-	while(iter != NULL && m_subtitle != NULL) {
-		const char *word = ps_seg_word(iter);
-		int wordIn, wordOut;
-		ps_seg_frames(iter, &wordIn, &wordOut);
-		if(*word == '<' || *word == '[') {
-			// "<s>" "</s>" "<sil>" "[SPEECH]"
-			if(!lineText.isEmpty()) {
-				m_subtitle->insertLine(new SubtitleLine(SString(lineText),
-														double(lineIn) * 1000. / double(m_psFrameRate),
-														double(lineOut) * 1000. / double(m_psFrameRate)));
-				lineText.clear();
-			}
-		} else {
-			QString sWord = QString::fromLatin1(word);
-
-			// strip nnumber suffix
-			const char *pos = word;
-			while(*pos && *pos != '(')
-				pos++;
-			sWord.truncate(pos - word);
-
-			if(lineText.isEmpty()) {
-				lineText = sWord;
-				lineIn = wordIn;
-			} else {
-				lineText += ' ';
-				lineText += sWord;
-			}
-			lineOut = wordOut;
-		}
-
-		iter = ps_seg_next(iter);
-	}
-	if(!lineText.isEmpty()) {
-		m_subtitle->insertLine(new SubtitleLine(SString(lineText),
-												double(lineIn) * 1000. / double(m_psFrameRate),
-												double(lineOut) * 1000. / double(m_psFrameRate)));
-	}
 }
 
 void
@@ -229,38 +216,29 @@ SpeechProcessor::onStreamData(const void *buffer, const qint32 size, const WaveF
 	while(!m_audioDuration)
 		QThread::yieldCurrentThread();
 
-	Q_ASSERT(size % 2 == 0);
+	Q_ASSERT(size % sizeof(qint16) == 0);
 
-	qint16 *sampleData = reinterpret_cast<qint16 *>(const_cast<void *>(buffer));
-	int sampleCount = size / 2;
-
-	if(!m_utteranceStarted) {
-		ps_start_utt(m_psDecoder);
-		m_utteranceStarted = true;
-		m_speechStarted = false;
-	}
-
-	ps_process_raw(m_psDecoder, sampleData, sampleCount, FALSE, FALSE);
-
-	if(ps_get_in_speech(m_psDecoder)) {
-		m_speechStarted = true;
-	} else {
-		if(m_utteranceStarted && m_speechStarted) {
-			ps_end_utt(m_psDecoder);
-			processUtterance();
-			m_speechStarted = false;
-			m_utteranceStarted = false;
-		}
-	}
+	if(m_plugin)
+		m_plugin->processSamples(reinterpret_cast<const qint16 *>(buffer), size / sizeof(qint16));
 }
 
 void
 SpeechProcessor::onStreamError(int code, const QString &message, const QString &debug)
 {
-	emit onError(i18n("Subtitle demux failed %1: %2\n%3")
+	emit onError(i18n("Speech Recognition failed: %2\nCode %1: %3")
 				 .arg(code)
 				 .arg(message)
 				 .arg(debug));
 
 	clearAudioStream();
 }
+
+void
+SpeechProcessor::onTextRecognized(const QString &text, const double milliShow, const double milliHide)
+{
+	if(!m_subtitle)
+		return;
+
+	m_subtitle->insertLine(new SubtitleLine(SString(text), milliShow, milliHide));
+}
+

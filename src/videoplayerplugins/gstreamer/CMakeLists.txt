@@ -30,7 +30,7 @@ set(videoplayer_gstreamer_SRCS
 
 add_library(gstplayer MODULE ${videoplayer_gstreamer_SRCS})
 
-install(TARGETS gstplayer DESTINATION ${VIDEOPLAYERPLUGIN_INSTALL_DIR})
+install(TARGETS gstplayer DESTINATION ${SC_PLUGIN_INSTALL_DIR})
 
 target_include_directories(gstplayer SYSTEM PRIVATE ${videoplayer_gstreamer_INCLUDE_DIR})
 set_target_properties(gstplayer PROPERTIES COMPILE_FLAGS "${videoplayer_gstreamer_DEFS}")

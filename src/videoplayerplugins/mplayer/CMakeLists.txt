@@ -11,7 +11,7 @@ set(videoplayer_mplayer_SRCS
 
 add_library(mplayer MODULE ${videoplayer_mplayer_SRCS})
 
-install(TARGETS mplayer DESTINATION ${VIDEOPLAYERPLUGIN_INSTALL_DIR})
+install(TARGETS mplayer DESTINATION ${SC_PLUGIN_INSTALL_DIR})
 
 target_include_directories(mplayer SYSTEM PRIVATE ${videoplayer_mplayer_INCLUDE_DIR})
 set_target_properties(mplayer PROPERTIES COMPILE_FLAGS "${videoplayer_mplayer_DEFS}")

@@ -1,6 +1,5 @@
 #ifndef SPEECHPROCESSOR_H
 #define SPEECHPROCESSOR_H
-
 /**
  * Copyright (C) 2010-2016 Mladen Milinkovic <max@smoothware.net>
  *
@@ -30,11 +29,8 @@
 QT_FORWARD_DECLARE_CLASS(QWidget)
 QT_FORWARD_DECLARE_CLASS(QProgressBar)
 
-typedef struct ps_decoder_s ps_decoder_t;
-typedef struct cmd_ln_s cmd_ln_t;
-typedef struct SpeexPreprocessState_ SpeexPreprocessState;
-
 namespace SubtitleComposer {
+class SpeechPlugin;
 class SpeechProcessor : public QObject
 {
 	Q_OBJECT
@@ -58,9 +54,11 @@ private slots:
 	void onStreamError(int code, const QString &message, const QString &debug);
 	void onStreamFinished();
 	void onStreamData(const void *buffer, const qint32 size, const WaveFormat *waveFormat, const quint64 msecStart, const quint64 msecDuration);
+	void onTextRecognized(const QString &text, const double milliShow, const double milliHide);
 
 private:
-	void processUtterance();
+	SpeechPlugin * pluginLoad(const QString &pluginPath);
+	void pluginAdd(SpeechPlugin *plugin);
 
 private:
 	QString m_mediaFile;
@@ -74,12 +72,8 @@ private:
 	QWidget *m_progressWidget;
 	QProgressBar *m_progressBar;
 
-	cmd_ln_t *m_psConfig;
-	ps_decoder_t *m_psDecoder;
-	qint32 m_psFrameRate;
-
-	bool m_utteranceStarted;
-	bool m_speechStarted;
+	SpeechPlugin *m_plugin;
+	QMap<QString, SpeechPlugin *> m_plugins;
 };
 }
 

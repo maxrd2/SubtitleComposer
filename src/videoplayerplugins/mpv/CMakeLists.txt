@@ -20,7 +20,7 @@ set(videoplayer_mpv_SRCS
 
 add_library(mpvplayer MODULE ${videoplayer_mpv_SRCS})
 
-install(TARGETS mpvplayer DESTINATION ${VIDEOPLAYERPLUGIN_INSTALL_DIR})
+install(TARGETS mpvplayer DESTINATION ${SC_PLUGIN_INSTALL_DIR})
 
 target_include_directories(mpvplayer SYSTEM PRIVATE ${videoplayer_mpv_INCLUDE_DIR})
 set_target_properties(mpvplayer PROPERTIES COMPILE_FLAGS "${videoplayer_mpv_DEFS}")

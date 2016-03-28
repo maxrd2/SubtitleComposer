@@ -34,7 +34,6 @@
 class SCConfig;
 
 #define PlayerBackend_iid "org.kde.SubtitleComposer.PlayerBackend"
-Q_DECLARE_INTERFACE(SubtitleComposer::PlayerBackend, PlayerBackend_iid)
 
 namespace SubtitleComposer {
 class PlayerBackend : public QObject
@@ -182,5 +181,7 @@ protected:
 	QString m_name;
 };
 }
+
+Q_DECLARE_INTERFACE(SubtitleComposer::PlayerBackend, PlayerBackend_iid)
 
 #endif

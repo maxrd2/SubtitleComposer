@@ -110,7 +110,7 @@ VideoPlayer::VideoPlayer() :
 	backendLoad(exePath + QStringLiteral("/../videoplayerplugins/phonon/phononplayer.so"));
 	backendLoad(exePath + QStringLiteral("/../videoplayerplugins/xine/xineplayer.so"));
 #else
-	QDir pluginsDir(QStringLiteral(VIDEOPLAYERPLUGIN_PATH));
+	QDir pluginsDir(QStringLiteral(SCPLUGIN_PATH));
 	foreach(const QString pluginFile, pluginsDir.entryList(QDir::Files, QDir::Name)) {
 		if(QLibrary::isLibrary(pluginFile))
 			backendLoad(pluginsDir.filePath(pluginFile));
