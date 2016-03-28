@@ -6,7 +6,7 @@ set(main_configs_SRCS
 	${CMAKE_CURRENT_SOURCE_DIR}/generalconfigwidget.ui
 	${CMAKE_CURRENT_SOURCE_DIR}/playerconfigwidget.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/playerconfigwidget.ui
-#	${CMAKE_CURRENT_SOURCE_DIR}/spellingconfigwidget.cpp
-#	${CMAKE_CURRENT_SOURCE_DIR}/spellingconfigwidget.ui
+	${CMAKE_CURRENT_SOURCE_DIR}/waveformconfigwidget.cpp
+	${CMAKE_CURRENT_SOURCE_DIR}/waveformconfigwidget.ui
 	CACHE INTERNAL EXPORTEDVARIABLE
 )

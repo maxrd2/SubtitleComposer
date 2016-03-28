@@ -1,6 +1,5 @@
 #ifndef WAVEFORMWIDGET_H
 #define WAVEFORMWIDGET_H
-
 /**
  * Copyright (C) 2010-2016 Mladen Milinkovic <max@smoothware.net>
  *
@@ -31,6 +30,9 @@
 
 #include <QWidget>
 #include <QList>
+#include <QPen>
+#include <QColor>
+#include <QFont>
 
 QT_FORWARD_DECLARE_CLASS(QRegion)
 QT_FORWARD_DECLARE_CLASS(QPolygon)
@@ -92,6 +94,7 @@ public slots:
 	void zoomOut();
 	void setAutoscroll(bool autoscroll);
 	void setScrollPosition(int milliseconds);
+	void onConfigChanged();
 
 protected:
 	virtual void resizeEvent(QResizeEvent *event);
@@ -159,6 +162,27 @@ private:
 	QToolButton *m_btnZoomIn;
 	QToolButton *m_btnZoomOut;
 	QToolButton *m_btnAutoScroll;
+
+	QFont m_fontNumber;
+	int m_fontNumberHeight;
+	QFont m_fontText;
+
+	int m_subBorderWidth;
+
+	QPen m_subNumberColor;
+	QPen m_subTextColor;
+
+	QPen m_waveInner;
+	QPen m_waveOuter;
+
+	QColor m_subtitleBack;
+	QColor m_subtitleBorder;
+
+	QColor m_selectedBack;
+	QColor m_selectedBorder;
+
+	QPen m_playColor;
+	QPen m_mouseColor;
 };
 }
 #endif

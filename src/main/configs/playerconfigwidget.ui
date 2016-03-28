@@ -16,7 +16,7 @@
      <property name="title">
       <string>General</string>
      </property>
-     <layout class="QGridLayout" name="gridLayout" columnstretch="1,0">
+     <layout class="QGridLayout" name="gridLayout" columnstretch="1,1">
       <item row="1" column="0" alignment="Qt::AlignRight">
        <widget class="QLabel" name="label_4">
         <property name="text">
@@ -56,7 +56,7 @@
       <item row="3" column="0" alignment="Qt::AlignRight">
        <widget class="QLabel" name="label_7">
         <property name="text">
-         <string>Outline Color:</string>
+         <string>Outline color:</string>
         </property>
        </widget>
       </item>
@@ -72,14 +72,14 @@
       <item row="4" column="0" alignment="Qt::AlignRight">
        <widget class="QLabel" name="label_8">
         <property name="text">
-         <string>Outline Width:</string>
+         <string>Outline width:</string>
         </property>
        </widget>
       </item>
       <item row="2" column="0" alignment="Qt::AlignRight">
        <widget class="QLabel" name="label_6">
         <property name="text">
-         <string>Text Color:</string>
+         <string>Text color:</string>
         </property>
        </widget>
       </item>
@@ -93,7 +93,7 @@
       <item row="1" column="0" alignment="Qt::AlignRight">
        <widget class="QLabel" name="label_5">
         <property name="text">
-         <string>Font Size:</string>
+         <string>Font size:</string>
         </property>
        </widget>
       </item>

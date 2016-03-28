@@ -23,6 +23,7 @@
 
 #include "configs/generalconfigwidget.h"
 #include "configs/errorsconfigwidget.h"
+#include "configs/waveformconfigwidget.h"
 #include "configs/playerconfigwidget.h"
 
 #include "../videoplayer/videoplayer.h"
@@ -49,7 +50,7 @@ ConfigDialog::ConfigDialog(QWidget *parent, const QString &name, KCoreConfigSkel
 	item->setIcon(QIcon::fromTheme(QStringLiteral("preferences-other")));
 
 	// Error Check page
-	item = addPage(new ErrorsConfigWidget(nullptr), i18nc("@title Error Check Settings", "Error check"));
+	item = addPage(new ErrorsConfigWidget(nullptr), i18nc("@title Error check settings", "Error Check"));
 	item->setHeader(i18n("Error Check Settings"));
 	item->setIcon(QIcon::fromTheme(QStringLiteral("games-endturn")));
 
@@ -60,9 +61,14 @@ ConfigDialog::ConfigDialog(QWidget *parent, const QString &name, KCoreConfigSkel
 	item->setHeader(i18n("Spelling Settings"));
 	item->setIcon(QIcon::fromTheme(QStringLiteral("tools-check-spelling")));
 
+	// Waveform page
+	item = addPage(new WaveformConfigWidget(nullptr), i18nc("@title Waveform settings", "Waveform"));
+	item->setHeader(i18n("Waveform settings"));
+	item->setIcon(QIcon(QStringLiteral(CUSTOM_ICON_INSTALL_PATH "waveform-logo")));
+
 	// VideoPlayer page
-	item = addPage(new PlayerConfigWidget(nullptr), i18nc("@title Video player Settings", "Video player"));
-	item->setHeader(i18n("Video player settings"));
+	item = addPage(new PlayerConfigWidget(nullptr), i18nc("@title Video player settings", "Video Player"));
+	item->setHeader(i18n("Video Player Settings"));
 	item->setIcon(QIcon(QStringLiteral(CUSTOM_ICON_INSTALL_PATH "mediaplayer-logo")));
 
 	// Backend pages

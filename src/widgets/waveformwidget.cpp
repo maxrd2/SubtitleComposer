@@ -22,6 +22,7 @@
 #include "../videoplayer/videoplayer.h"
 #include "application.h"
 #include "actions/useractionnames.h"
+#include "lineswidget.h"
 
 #include <QRect>
 #include <QPainter>
@@ -132,6 +133,34 @@ WaveformWidget::WaveformWidget(QWidget *parent)
 	connect(m_stream, &StreamProcessor::streamFinished, this, &WaveformWidget::onStreamFinished);
 	// Using Qt::DirectConnection here makes WaveformWidget::onStreamData() to execute in GStreamer's thread
 	connect(m_stream, &StreamProcessor::audioDataAvailable, this, &WaveformWidget::onStreamData, Qt::DirectConnection);
+
+	connect(SCConfig::self(), SIGNAL(configChanged()), this, SLOT(onConfigChanged()));
+	onConfigChanged();
+}
+
+void
+WaveformWidget::onConfigChanged()
+{
+	m_fontNumber = QFont(SCConfig::wfFontFamily(), SCConfig::wfSubNumberFontSize());
+	m_fontNumberHeight = QFontMetrics(m_fontNumber).height();
+	m_fontText = QFont(SCConfig::wfFontFamily(), SCConfig::wfSubTextFontSize());
+
+	m_subBorderWidth = SCConfig::wfSubBorderWidth();
+
+	m_subNumberColor = QPen(QColor(SCConfig::wfSubNumberColor()), 0, Qt::SolidLine);
+	m_subTextColor = QPen(QColor(SCConfig::wfSubTextColor()), 0, Qt::SolidLine);
+
+	m_waveInner = QPen(QColor(SCConfig::wfInnerColor()), 0, Qt::SolidLine);
+	m_waveOuter = QPen(QColor(SCConfig::wfOuterColor()), 0, Qt::SolidLine);
+
+	m_subtitleBack = QColor(SCConfig::wfSubBackground());
+	m_subtitleBorder = QColor(SCConfig::wfSubBorder());
+
+	m_selectedBack = QColor(SCConfig::wfSelBackground());
+	m_selectedBorder = QColor(SCConfig::wfSelBorder());
+
+	m_playColor = QPen(QColor(SCConfig::wfPlayLocation()), 0, Qt::SolidLine);
+	m_mouseColor = QPen(QColor(SCConfig::wfMouseLocation()), 0, Qt::DotLine);
 }
 
 void
@@ -423,19 +452,6 @@ WaveformWidget::updateVisibleLines()
 void
 WaveformWidget::paintGraphics(QPainter &painter)
 {
-	// FIXME: make colors configurable?
-	const static QFont fontBig("helvetica", 10);
-	const static int fontBigHeight = QFontMetrics(fontBig).height();
-	const static QFont fontSubText("helvetica", 9);
-
-	const static QColor subtitleBg(0, 0, 150, 100);
-	const static QPen subtitleBorder(QColor(0, 0, 255, 150), 0, Qt::SolidLine);
-	const static QPen textWhite(Qt::white, 0, Qt::SolidLine);
-	const static QPen mousePointer(QColor(255, 255, 255, 80), 0, Qt::DotLine);
-	const static QPen textShadow(QColor(0, 0, 0, 192), 0, Qt::SolidLine);
-	const static QPen waveDark(QColor(100, 100, 100, 255), 0, Qt::SolidLine);
-	const static QPen waveLight(QColor(150, 150, 150, 255), 0, Qt::SolidLine);
-
 	quint32 msWindowSize = windowSize();
 	int widgetHeight = m_waveformGraphics->height();
 	int widgetWidth = m_waveformGraphics->width();
@@ -461,9 +477,9 @@ WaveformWidget::paintGraphics(QPainter &painter)
 				}
 
 				int y = i - yMin;
-				painter.setPen(waveDark);
+				painter.setPen(m_waveOuter);
 				painter.drawLine(chCenter - xMax, y, chCenter + xMax, y);
-				painter.setPen(waveLight);
+				painter.setPen(m_waveInner);
 				painter.drawLine(chCenter - xMin, y, chCenter + xMin, y);
 			}
 		}
@@ -471,7 +487,9 @@ WaveformWidget::paintGraphics(QPainter &painter)
 
 	updateVisibleLines();
 
+	const RangeList &selection = Application::instance()->linesWidget()->selectionRanges();
 	foreach(const SubtitleLine *sub, m_visibleLines) {
+		bool selected = selection.contains(sub->index());
 		Time timeShow = sub->showTime();
 		Time timeHide = sub->hideTime();
 		if(sub == m_draggedLine) {
@@ -487,39 +505,36 @@ WaveformWidget::paintGraphics(QPainter &painter)
 		if(timeShow <= m_timeEnd && m_timeStart <= timeHide) {
 			int showY = widgetHeight * (timeShow.toMillis() - m_timeStart.toMillis()) / msWindowSize;
 			int hideY = widgetHeight * (timeHide.toMillis() - m_timeStart.toMillis()) / msWindowSize;
-			QRect box(0, showY, widgetWidth, hideY - showY + 1);
+			QRect box(0, showY + m_subBorderWidth, widgetWidth, hideY - showY - 2 * m_subBorderWidth);
 
-			painter.fillRect(box, subtitleBg);
+			painter.fillRect(box, selected ? m_selectedBack : m_subtitleBack);
 
-			painter.setPen(subtitleBorder);
-			painter.drawLine(0, showY, widgetWidth, showY);
-			painter.drawLine(0, hideY, widgetWidth, hideY);
+			if(m_subBorderWidth) {
+				painter.fillRect(0, showY, widgetWidth, m_subBorderWidth, selected ? m_selectedBorder : m_subtitleBorder);
+				painter.fillRect(0, hideY - m_subBorderWidth, widgetWidth, m_subBorderWidth, selected ? m_selectedBorder : m_subtitleBorder);
+			}
 
-			painter.setFont(fontSubText);
-			painter.setPen(textShadow);
-			box.adjust(fontBigHeight + 1, fontBigHeight / 2 + 1, -fontBigHeight, -fontBigHeight / 2);
-			painter.drawText(box, Qt::AlignCenter, sub->primaryText().string());
-			painter.setPen(textWhite);
-			box.adjust(-1, -1, 0, 0);
+			painter.setFont(m_fontText);
+			painter.setPen(m_subTextColor);
 			painter.drawText(box, Qt::AlignCenter, sub->primaryText().string());
 
-			painter.setPen(textWhite);
-			painter.setFont(fontBig);
-			painter.drawText(fontBigHeight / 2, showY + fontBigHeight * 3 / 2, QString::number(sub->index()));
+			painter.setPen(m_subNumberColor);
+			painter.setFont(m_fontNumber);
+			painter.drawText(m_fontNumberHeight / 2, showY + m_fontNumberHeight + 2, QString::number(sub->index()));
 		}
 	}
 
 	int playY = widgetHeight * (m_timeCurrent - m_timeStart).toMillis() / msWindowSize;
-	painter.setPen(textWhite);
+	painter.setPen(m_playColor);
 	painter.drawLine(0, playY, widgetWidth, playY);
 
 	QRect textRect(6, 4, m_waveformGraphics->width() - 12, m_waveformGraphics->height() - 8);
-	painter.setPen(textWhite);
-	painter.setFont(fontSubText);
+	painter.setPen(m_subTextColor);
+	painter.setFont(m_fontText);
 	painter.drawText(textRect, Qt::AlignRight | Qt::AlignTop, m_timeStart.toString());
 	painter.drawText(textRect, Qt::AlignRight | Qt::AlignBottom, m_timeEnd.toString());
 
-	painter.setPen(mousePointer);
+	painter.setPen(m_mouseColor);
 	playY = widgetHeight * (m_pointerTime - m_timeStart).toMillis() / msWindowSize;
 	painter.drawLine(0, playY, widgetWidth, playY);
 }

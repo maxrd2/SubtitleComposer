@@ -282,8 +282,9 @@ Application::loadConfig()
 
 	((KToggleAction *)action(ACT_TOGGLE_MUTED))->setChecked(m_player->isMuted());
 
-	action(ACT_WAVEFORM_AUTOSCROLL)->setChecked(group.readEntry<bool>("WaveformAutoScroll", true));
-	m_mainWindow->m_waveformWidget->setWindowSize(group.readEntry<quint32>("WaveformZoom", 6000));
+	KConfigGroup wfGroup(KSharedConfig::openConfig()->group("Waveform Widget"));
+	action(ACT_WAVEFORM_AUTOSCROLL)->setChecked(wfGroup.readEntry<bool>("AutoScroll", true));
+	m_mainWindow->m_waveformWidget->setWindowSize(wfGroup.readEntry<quint32>("Zoom", 6000));
 
 	m_mainWindow->loadConfig();
 	m_playerWidget->loadConfig();
@@ -306,8 +307,9 @@ Application::saveConfig()
 	group.writeEntry("Muted", m_player->isMuted());
 	group.writeEntry("Volume", m_player->volume());
 
-	group.writeEntry("WaveformAutoScroll", m_mainWindow->m_waveformWidget->autoScroll());
-	group.writeEntry("WaveformZoom", m_mainWindow->m_waveformWidget->windowSize());
+	KConfigGroup wfGroup(KSharedConfig::openConfig()->group("Waveform Widget"));
+	wfGroup.writeEntry("AutoScroll", m_mainWindow->m_waveformWidget->autoScroll());
+	wfGroup.writeEntry("Zoom", m_mainWindow->m_waveformWidget->windowSize());
 
 	m_mainWindow->saveConfig();
 	m_playerWidget->saveConfig();

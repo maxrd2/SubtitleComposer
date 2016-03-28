@@ -86,6 +86,65 @@
 		</entry>
 	</group>
 
+	<group name="Waveform Widget">
+		<entry name="wfInnerColor" type="String">
+			<label>Waveform Inner Color</label>
+			<default>#969696</default>
+		</entry>
+		<entry name="wfOuterColor" type="String">
+			<label>Waveform Outer Color</label>
+			<default>#646464</default>
+		</entry>
+		<entry name="wfSubBackground" type="String">
+			<label>Waveform Subtitle Background Color</label>
+			<default>#64000064</default>
+		</entry>
+		<entry name="wfSubBorder" type="String">
+			<label>Waveform Subtitle Border Color</label>
+			<default>#960000ff</default>
+		</entry>
+		<entry name="wfSubBorderWidth" type="Int">
+			<label>Waveform Subtitle Border Width</label>
+			<default>1</default>
+		</entry>
+		<entry name="wfSelBackground" type="String">
+			<label>Waveform Selected Subtitle Background Color</label>
+			<default>#64646400</default>
+		</entry>
+		<entry name="wfSelBorder" type="String">
+			<label>Waveform Selected Subtitle Border Color</label>
+			<default>#96ffff00</default>
+		</entry>
+		<entry name="wfFontFamily" type="String">
+			<label>Font Family</label>
+			<default>Sans Serif</default>
+		</entry>
+		<entry name="wfSubNumberFontSize" type="Int">
+			<label>Subtitle Number Font Size</label>
+			<default>10</default>
+		</entry>
+		<entry name="wfSubNumberColor" type="String">
+			<label>Subtitle Number Font Color</label>
+			<default>#ffffff</default>
+		</entry>
+		<entry name="wfSubTextFontSize" type="Int">
+			<label>Subtitle Text Font Size</label>
+			<default>9</default>
+		</entry>
+		<entry name="wfSubTextColor" type="String">
+			<label>Subtitle Text Font Color</label>
+			<default>#e1ffffff</default>
+		</entry>
+		<entry name="wfMouseLocation" type="String">
+			<label>Mouse Location Line Color</label>
+			<default>#50ffffff</default>
+		</entry>
+		<entry name="wfPlayLocation" type="String">
+			<label>Play Location Line Color</label>
+			<default>#a0ffffff</default>
+		</entry>
+	</group>
+
 	<group name="VideoPlayer">
 		<entry name="PlayerBackend" type="String">
 			<label>VideoPlayer Backend</label>
