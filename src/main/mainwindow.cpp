@@ -27,9 +27,8 @@
 #include "../widgets/waveformwidget.h"
 
 #include <QGridLayout>
-#include <QSplitter>
-#include <QStatusBar>
 #include <QDockWidget>
+#include <QStatusBar>
 
 #include <QMenuBar>
 #include <QMainWindow>
@@ -37,15 +36,14 @@
 #include <KActionCollection>
 #include <KConfigGroup>
 
+#include <KLocalizedString>
+
 using namespace SubtitleComposer;
 
 MainWindow::MainWindow() :
 	KXmlGuiWindow(0)
 {
-	QWidget *mainWidget = new QWidget(this);
-	mainWidget->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
-
-	QDockWidget *waveformDock = new QDockWidget(this);
+	QDockWidget *waveformDock = new QDockWidget(i18n("Waveform"), this);
 	waveformDock->setObjectName(QStringLiteral("waveform_dock"));
 	waveformDock->setAllowedAreas(Qt::AllDockWidgetAreas);
 	waveformDock->setFeatures(QDockWidget::DockWidgetMovable);
@@ -58,18 +56,26 @@ MainWindow::MainWindow() :
 	waveformDock->setTitleBarWidget(m_waveformWidget->toolbarWidget());
 	addDockWidget(Qt::RightDockWidgetArea, waveformDock);
 
-	m_mainSplitter = new QSplitter(mainWidget);
 
-	m_playerWidget = new PlayerWidget(m_mainSplitter);
+	QDockWidget *playerDock = new QDockWidget(i18n("Video Player"), this);
+	playerDock->setObjectName(QStringLiteral("player_dock"));
+	playerDock->setAllowedAreas(Qt::AllDockWidgetAreas);
+	playerDock->setFeatures(QDockWidget::DockWidgetMovable | QDockWidget::DockWidgetVerticalTitleBar);
+	playerDock->setFloating(false);
+
+	m_playerWidget = new PlayerWidget(playerDock);
 	m_playerWidget->setContentsMargins(0, 0, 0, 0);
 
-	m_linesWidget = new LinesWidget(m_mainSplitter);
-	m_linesWidget->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
+	playerDock->setWidget(m_playerWidget);
+	playerDock->setTitleBarWidget(m_playerWidget->infoSidebarWidget());
+	addDockWidget(Qt::TopDockWidgetArea, playerDock);
 
-	m_mainSplitter->setOrientation(Qt::Vertical);
-	m_mainSplitter->setLineWidth(0);
-	m_mainSplitter->setCollapsible(1, false);
-	m_mainSplitter->setSizes(QList<int>() << 100 << 200);
+
+	QWidget *mainWidget = new QWidget(this);
+	mainWidget->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
+
+	m_linesWidget = new LinesWidget(mainWidget);
+	m_linesWidget->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
 
 	m_curLineWidget = new CurrentLineWidget(mainWidget);
 	m_curLineWidget->setMaximumHeight(m_curLineWidget->minimumSizeHint().height());
@@ -77,7 +83,7 @@ MainWindow::MainWindow() :
 	QLayout *mainWidgetLayout = new QBoxLayout(QBoxLayout::TopToBottom, mainWidget);
 	mainWidgetLayout->setContentsMargins(5, 1, 5, 2);
 	mainWidgetLayout->setSpacing(5);
-	mainWidgetLayout->addWidget(m_mainSplitter);
+	mainWidgetLayout->addWidget(m_linesWidget);
 	mainWidgetLayout->addWidget(m_curLineWidget);
 
 	setCentralWidget(mainWidget);
@@ -104,15 +110,20 @@ void
 MainWindow::loadConfig()
 {
 	KConfigGroup group(KSharedConfig::openConfig()->group("MainWindow Settings"));
-	m_mainSplitter->setSizes(group.readEntry("Splitter Sizes", m_mainSplitter->sizes()));
+//	m_mainSplitter->setSizes(group.readEntry("Splitter Sizes", m_mainSplitter->sizes()));
 //	m_horizontalSplitter->setSizes(group.readEntry("Horizontal Splitter Sizes", m_horizontalSplitter->sizes()));
+
+	setCorner(Qt::TopLeftCorner, Qt::TopDockWidgetArea);
+	setCorner(Qt::TopRightCorner, Qt::RightDockWidgetArea);
+	setCorner(Qt::BottomLeftCorner, Qt::LeftDockWidgetArea);
+	setCorner(Qt::BottomRightCorner, Qt::BottomDockWidgetArea);
 }
 
 void
 MainWindow::saveConfig()
 {
 	KConfigGroup group(KSharedConfig::openConfig()->group("MainWindow Settings"));
-	group.writeEntry("Splitter Sizes", m_mainSplitter->sizes());
+//	group.writeEntry("Splitter Sizes", m_mainSplitter->sizes());
 //	group.writeEntry("Horizontal Splitter Sizes", m_horizontalSplitter->sizes());
 }
 

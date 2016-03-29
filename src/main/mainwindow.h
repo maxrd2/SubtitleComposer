@@ -29,8 +29,6 @@
 
 #include <kxmlguiwindow.h>
 
-QT_FORWARD_DECLARE_CLASS(QSplitter)
-
 namespace SubtitleComposer {
 class PlayerWidget;
 class LinesWidget;
@@ -57,7 +55,6 @@ protected:
 	virtual bool queryClose();
 
 protected:
-	QSplitter *m_mainSplitter;
 	PlayerWidget *m_playerWidget;
 	LinesWidget *m_linesWidget;
 	CurrentLineWidget *m_curLineWidget;

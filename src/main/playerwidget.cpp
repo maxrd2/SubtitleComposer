@@ -91,7 +91,7 @@ PlayerWidget::PlayerWidget(QWidget *parent) :
 	m_seekSlider->setPageStep(10);
 	m_seekSlider->setFocusPolicy(Qt::NoFocus);
 
-	m_infoControlsGroupBox = new QGroupBox(this);
+	m_infoControlsGroupBox = new QWidget(this);
 	m_infoControlsGroupBox->setAcceptDrops(true);
 	m_infoControlsGroupBox->installEventFilter(this);
 
@@ -262,6 +262,12 @@ PlayerWidget::~PlayerWidget()
 	m_player->finalize();
 
 	m_fullScreenControls->deleteLater();
+}
+
+QWidget *
+PlayerWidget::infoSidebarWidget()
+{
+	return m_infoControlsGroupBox;
 }
 
 QToolButton *
@@ -450,12 +456,12 @@ PlayerWidget::eventFilter(QObject *object, QEvent *event)
 
 	} else if(object == m_infoControlsGroupBox || object->parent() == m_infoControlsGroupBox) {
 		if(event->type() != QEvent::MouseButtonRelease)
-			return QWidget::eventFilter(object, event);
+			return false;
 
 		QMouseEvent *mouseEvent = static_cast<QMouseEvent *>(event);
 
 		if(mouseEvent->button() != Qt::RightButton)
-			return QWidget::eventFilter(object, event);
+			return false;
 
 		QMenu menu;
 		QAction *action = menu.addAction(i18n("Show editable position control"));
@@ -468,7 +474,7 @@ PlayerWidget::eventFilter(QObject *object, QEvent *event)
 		return true; // eat event
 	}
 
-	return QWidget::eventFilter(object, event);
+	return false;
 }
 
 void

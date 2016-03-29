@@ -33,10 +33,10 @@
 #include <QWidget>
 
 QT_FORWARD_DECLARE_CLASS(QGridLayout)
-QT_FORWARD_DECLARE_CLASS(QGroupBox)
 QT_FORWARD_DECLARE_CLASS(QLabel)
 QT_FORWARD_DECLARE_CLASS(QToolButton)
 QT_FORWARD_DECLARE_CLASS(QSlider)
+
 class LayeredWidget;
 class TextOverlayWidget;
 class AttachableWidget;
@@ -65,6 +65,8 @@ public:
 	void plugActions();
 
 	virtual bool eventFilter(QObject *object, QEvent *event);
+
+	QWidget *infoSidebarWidget();
 
 public slots:
 	void setSubtitle(Subtitle *subtitle = 0);
@@ -151,7 +153,7 @@ private:
 	bool m_updateVolumeControls;
 	bool m_updatePlayerVolume;
 
-	QGroupBox *m_infoControlsGroupBox;
+	QWidget *m_infoControlsGroupBox;
 	QLabel *m_positionLabel;
 	TimeEdit *m_positionEdit;
 	bool m_showPositionTimeEdit;
