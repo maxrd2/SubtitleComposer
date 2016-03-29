@@ -1,3 +1,15 @@
+Version 0.6.3
+ - ADD: WaveformWidget: customization settings page
+ - ADD: Speech recognition with PocketSphinx
+ - MOD: Waveform and Player widgets can be docked to any side of the main window
+ - MOD: WaveformWidget: can be manually scrolled even if autoscroll is enabled
+ - MOD: WaveformWidget: ability to drag whole subtitle line
+ - MOD: Updated croatian translation - thanks @muzena
+ - FIX: Video player fullscreen and icon display under was not right under some desktop environments - thanks @Martchus
+ - FIX: WaveformWidget: when dragging subtitle borders (or clicking near them), show/hide time was jumping to mouse position
+ - FIX: po/Messages.sh will generate .po files compatible with Qt Linguist, and will run from any path
+ - FIX: Build cleanups - thanks @pinotree
+
 Version 0.6.2
  - ADD: Ability to demux text streams from loaded video
  - MOD: WaveformWidget: added scrollbar and manual scrolling mode, improved zoom, widget state is loaded/saved
