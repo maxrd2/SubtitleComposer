@@ -79,6 +79,8 @@ public:
 
 	QWidget *progressWidget();
 
+	QWidget *toolbarWidget();
+
 	inline bool autoScroll() const { return m_autoScroll; }
 
 signals:
@@ -136,6 +138,8 @@ private:
 	quint32 m_waveformChannels;
 	quint32 m_waveformChannelSize;
 	SAMPLE_TYPE **m_waveform;
+
+	QWidget *m_toolbar;
 
 	QWidget *m_waveformGraphics;
 

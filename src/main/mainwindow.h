@@ -61,7 +61,6 @@ protected:
 	PlayerWidget *m_playerWidget;
 	LinesWidget *m_linesWidget;
 	CurrentLineWidget *m_curLineWidget;
-	QSplitter *m_horizontalSplitter;
 	WaveformWidget *m_waveformWidget;
 };
 }

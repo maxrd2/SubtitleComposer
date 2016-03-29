@@ -29,8 +29,10 @@
 #include <QGridLayout>
 #include <QSplitter>
 #include <QStatusBar>
+#include <QDockWidget>
 
 #include <QMenuBar>
+#include <QMainWindow>
 #include <KToolBar>
 #include <KActionCollection>
 #include <KConfigGroup>
@@ -40,18 +42,21 @@ using namespace SubtitleComposer;
 MainWindow::MainWindow() :
 	KXmlGuiWindow(0)
 {
-	m_horizontalSplitter = new QSplitter(this);
-
-	QWidget *mainWidget = new QWidget(m_horizontalSplitter);
+	QWidget *mainWidget = new QWidget(this);
 	mainWidget->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
 
-	m_waveformWidget = new WaveformWidget(m_horizontalSplitter);
+	QDockWidget *waveformDock = new QDockWidget(this);
+	waveformDock->setObjectName(QStringLiteral("waveform_dock"));
+	waveformDock->setAllowedAreas(Qt::AllDockWidgetAreas);
+	waveformDock->setFeatures(QDockWidget::DockWidgetMovable);
+	waveformDock->setFloating(false);
+
+	m_waveformWidget = new WaveformWidget(waveformDock);
 	m_waveformWidget->setContentsMargins(0, 0, 0, 0);
 
-	m_horizontalSplitter->setOrientation(Qt::Horizontal);
-	m_horizontalSplitter->setLineWidth(0);
-	m_horizontalSplitter->setCollapsible(0, false);
-	m_horizontalSplitter->setSizes(QList<int>() << 400 << 100);
+	waveformDock->setWidget(m_waveformWidget);
+	waveformDock->setTitleBarWidget(m_waveformWidget->toolbarWidget());
+	addDockWidget(Qt::RightDockWidgetArea, waveformDock);
 
 	m_mainSplitter = new QSplitter(mainWidget);
 
@@ -75,7 +80,7 @@ MainWindow::MainWindow() :
 	mainWidgetLayout->addWidget(m_mainSplitter);
 	mainWidgetLayout->addWidget(m_curLineWidget);
 
-	setCentralWidget(m_horizontalSplitter);
+	setCentralWidget(mainWidget);
 
 	statusBar()->addPermanentWidget(m_waveformWidget->progressWidget());
 
@@ -100,7 +105,7 @@ MainWindow::loadConfig()
 {
 	KConfigGroup group(KSharedConfig::openConfig()->group("MainWindow Settings"));
 	m_mainSplitter->setSizes(group.readEntry("Splitter Sizes", m_mainSplitter->sizes()));
-	m_horizontalSplitter->setSizes(group.readEntry("Horizontal Splitter Sizes", m_horizontalSplitter->sizes()));
+//	m_horizontalSplitter->setSizes(group.readEntry("Horizontal Splitter Sizes", m_horizontalSplitter->sizes()));
 }
 
 void
@@ -108,7 +113,7 @@ MainWindow::saveConfig()
 {
 	KConfigGroup group(KSharedConfig::openConfig()->group("MainWindow Settings"));
 	group.writeEntry("Splitter Sizes", m_mainSplitter->sizes());
-	group.writeEntry("Horizontal Splitter Sizes", m_horizontalSplitter->sizes());
+//	group.writeEntry("Horizontal Splitter Sizes", m_horizontalSplitter->sizes());
 }
 
 void

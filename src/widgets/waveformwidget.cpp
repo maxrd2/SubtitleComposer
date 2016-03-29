@@ -102,11 +102,14 @@ WaveformWidget::WaveformWidget(QWidget *parent)
 	toolbarLayout->addWidget(m_btnAutoScroll);
 	toolbarLayout->addSpacerItem(new QSpacerItem(1, 1, QSizePolicy::Expanding, QSizePolicy::Preferred));
 
+	m_toolbar = new QWidget(this);
+	m_toolbar->setLayout(toolbarLayout);
+
 	QVBoxLayout *mainLayout = new QVBoxLayout(this);
 	mainLayout->setMargin(0);
 	mainLayout->setSpacing(5);
 	mainLayout->addLayout(topLayout);
-	mainLayout->addLayout(toolbarLayout);
+	mainLayout->addWidget(m_toolbar);
 
 	setMinimumWidth(300);
 
@@ -327,6 +330,12 @@ QWidget *
 WaveformWidget::progressWidget()
 {
 	return m_progressWidget;
+}
+
+QWidget *
+WaveformWidget::toolbarWidget()
+{
+	return m_toolbar;
 }
 
 void
