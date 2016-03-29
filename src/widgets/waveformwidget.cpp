@@ -69,8 +69,11 @@ WaveformWidget::WaveformWidget(QWidget *parent)
 	  m_visibleLinesDirty(true),
 	  m_draggedLine(Q_NULLPTR),
 	  m_draggedPos(DRAG_NONE),
-	  m_draggedTime(0.)
+	  m_draggedTime(0.),
+	  m_widgetLayout(Q_NULLPTR)
 {
+	m_vertical = height() > width();
+
 	m_waveformGraphics->setAttribute(Qt::WA_OpaquePaintEvent, true);
 	m_waveformGraphics->setAttribute(Qt::WA_NoSystemBackground, true);
 	m_waveformGraphics->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
@@ -78,16 +81,9 @@ WaveformWidget::WaveformWidget(QWidget *parent)
 	m_waveformGraphics->installEventFilter(this);
 
 	m_scrollBar = new QScrollBar(Qt::Vertical);
-	m_scrollBar->setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Expanding);
 	m_scrollBar->setPageStep(windowSize());
 	m_scrollBar->setRange(0, windowSize());
 	m_scrollBar->installEventFilter(this);
-
-	QHBoxLayout *topLayout = new QHBoxLayout();
-	topLayout->setMargin(0);
-	topLayout->setSpacing(0);
-	topLayout->addWidget(m_waveformGraphics);
-	topLayout->addWidget(m_scrollBar);
 
 	m_btnZoomOut = createToolButton(QStringLiteral(ACT_WAVEFORM_ZOOM_OUT));
 	m_btnZoomIn = createToolButton(QStringLiteral(ACT_WAVEFORM_ZOOM_IN));
@@ -105,11 +101,12 @@ WaveformWidget::WaveformWidget(QWidget *parent)
 	m_toolbar = new QWidget(this);
 	m_toolbar->setLayout(toolbarLayout);
 
-	QVBoxLayout *mainLayout = new QVBoxLayout(this);
-	mainLayout->setMargin(0);
-	mainLayout->setSpacing(5);
-	mainLayout->addLayout(topLayout);
-	mainLayout->addWidget(m_toolbar);
+	m_mainLayout = new QVBoxLayout(this);
+	m_mainLayout->setMargin(0);
+	m_mainLayout->setSpacing(5);
+	m_mainLayout->addWidget(m_toolbar);
+
+	setupScrollBar();
 
 	setMinimumWidth(300);
 
@@ -251,10 +248,11 @@ WaveformWidget::onScrollBarValueChanged(int value)
 void
 WaveformWidget::updateZoomData()
 {
-	if(!m_waveformGraphics->height())
+	int height = m_vertical ? m_waveformGraphics->height() : m_waveformGraphics->width();
+	if(!height)
 		return;
 
-	double samplesPerPixel = double(SAMPLE_RATE_MILIS * windowSize()) / m_waveformGraphics->height();
+	double samplesPerPixel = double(SAMPLE_RATE_MILIS * windowSize()) / height;
 	if(m_samplesPerPixel != samplesPerPixel) {
 		m_samplesPerPixel = samplesPerPixel;
 		m_waveformZoomedOffset = 0;
@@ -463,6 +461,7 @@ WaveformWidget::paintGraphics(QPainter &painter)
 	quint32 msWindowSize = windowSize();
 	int widgetHeight = m_waveformGraphics->height();
 	int widgetWidth = m_waveformGraphics->width();
+	int widgetSpan = m_vertical ? widgetHeight : widgetWidth;
 
 	updateZoomData();
 
@@ -472,7 +471,7 @@ WaveformWidget::paintGraphics(QPainter &painter)
 		quint32 yMax = SAMPLE_RATE_MILIS * m_timeEnd.toMillis() / m_samplesPerPixel;
 		qint32 xMin, xMax;
 
-		qint32 chHalfWidth = widgetWidth / m_waveformChannels / 2;
+		qint32 chHalfWidth = (m_vertical ? widgetWidth : widgetHeight) / m_waveformChannels / 2;
 
 		for(quint32 ch = 0; ch < m_waveformChannels; ch++) {
 			qint32 chCenter = (ch * 2 + 1) * chHalfWidth;
@@ -486,9 +485,15 @@ WaveformWidget::paintGraphics(QPainter &painter)
 
 				int y = i - yMin;
 				painter.setPen(m_waveOuter);
-				painter.drawLine(chCenter - xMax, y, chCenter + xMax, y);
+				if(m_vertical)
+					painter.drawLine(chCenter - xMax, y, chCenter + xMax, y);
+				else
+					painter.drawLine(y, chCenter - xMax, y, chCenter + xMax);
 				painter.setPen(m_waveInner);
-				painter.drawLine(chCenter - xMin, y, chCenter + xMin, y);
+				if(m_vertical)
+					painter.drawLine(chCenter - xMin, y, chCenter + xMin, y);
+				else
+					painter.drawLine(y, chCenter - xMin, y, chCenter + xMin);
 			}
 		}
 	}
@@ -511,15 +516,24 @@ WaveformWidget::paintGraphics(QPainter &painter)
 			}
 		}
 		if(timeShow <= m_timeEnd && m_timeStart <= timeHide) {
-			int showY = widgetHeight * (timeShow.toMillis() - m_timeStart.toMillis()) / msWindowSize;
-			int hideY = widgetHeight * (timeHide.toMillis() - m_timeStart.toMillis()) / msWindowSize;
-			QRect box(0, showY + m_subBorderWidth, widgetWidth, hideY - showY - 2 * m_subBorderWidth);
+			int showY = widgetSpan * (timeShow.toMillis() - m_timeStart.toMillis()) / msWindowSize;
+			int hideY = widgetSpan * (timeHide.toMillis() - m_timeStart.toMillis()) / msWindowSize;
+			QRect box;
+			if(m_vertical)
+				box = QRect(0, showY + m_subBorderWidth, widgetWidth, hideY - showY - 2 * m_subBorderWidth);
+			else
+				box = QRect(showY + m_subBorderWidth, 0, hideY - showY - 2 * m_subBorderWidth, widgetHeight);
 
 			painter.fillRect(box, selected ? m_selectedBack : m_subtitleBack);
 
 			if(m_subBorderWidth) {
-				painter.fillRect(0, showY, widgetWidth, m_subBorderWidth, selected ? m_selectedBorder : m_subtitleBorder);
-				painter.fillRect(0, hideY - m_subBorderWidth, widgetWidth, m_subBorderWidth, selected ? m_selectedBorder : m_subtitleBorder);
+				if(m_vertical) {
+					painter.fillRect(0, showY, widgetWidth, m_subBorderWidth, selected ? m_selectedBorder : m_subtitleBorder);
+					painter.fillRect(0, hideY - m_subBorderWidth, widgetWidth, m_subBorderWidth, selected ? m_selectedBorder : m_subtitleBorder);
+				} else {
+					painter.fillRect(showY, 0, m_subBorderWidth, widgetHeight, selected ? m_selectedBorder : m_subtitleBorder);
+					painter.fillRect(hideY - m_subBorderWidth, 0, m_subBorderWidth, widgetHeight, selected ? m_selectedBorder : m_subtitleBorder);
+				}
 			}
 
 			painter.setFont(m_fontText);
@@ -528,29 +542,74 @@ WaveformWidget::paintGraphics(QPainter &painter)
 
 			painter.setPen(m_subNumberColor);
 			painter.setFont(m_fontNumber);
-			painter.drawText(m_fontNumberHeight / 2, showY + m_fontNumberHeight + 2, QString::number(sub->index()));
+			if(m_vertical)
+				painter.drawText(m_fontNumberHeight / 2, showY + m_fontNumberHeight + 2, QString::number(sub->index()));
+			else
+				painter.drawText(showY + m_fontNumberHeight / 2, m_fontNumberHeight + 2, QString::number(sub->index()));
 		}
 	}
 
-	int playY = widgetHeight * (m_timeCurrent - m_timeStart).toMillis() / msWindowSize;
+	int playY = widgetSpan * (m_timeCurrent - m_timeStart).toMillis() / msWindowSize;
 	painter.setPen(m_playColor);
-	painter.drawLine(0, playY, widgetWidth, playY);
+	if(m_vertical)
+		painter.drawLine(0, playY, widgetWidth, playY);
+	else
+		painter.drawLine(playY, 0, playY, widgetHeight);
 
-	QRect textRect(6, 4, m_waveformGraphics->width() - 12, m_waveformGraphics->height() - 8);
 	painter.setPen(m_subTextColor);
 	painter.setFont(m_fontText);
-	painter.drawText(textRect, Qt::AlignRight | Qt::AlignTop, m_timeStart.toString());
-	painter.drawText(textRect, Qt::AlignRight | Qt::AlignBottom, m_timeEnd.toString());
+	if(m_vertical) {
+		QRect textRect(6, 4, widgetWidth - 12, widgetHeight - 8);
+		painter.drawText(textRect, Qt::AlignRight | Qt::AlignTop, m_timeStart.toString());
+		painter.drawText(textRect, Qt::AlignRight | Qt::AlignBottom, m_timeEnd.toString());
+	} else {
+		QRect textRect(4, 6, widgetWidth - 8, widgetHeight - 12);
+		painter.drawText(textRect, Qt::AlignLeft | Qt::AlignTop, m_timeStart.toString());
+		painter.drawText(textRect, Qt::AlignRight | Qt::AlignTop, m_timeEnd.toString());
+	}
 
 	painter.setPen(m_mouseColor);
-	playY = widgetHeight * (m_pointerTime - m_timeStart).toMillis() / msWindowSize;
-	painter.drawLine(0, playY, widgetWidth, playY);
+	playY = widgetSpan * (m_pointerTime - m_timeStart).toMillis() / msWindowSize;
+	if(m_vertical)
+		painter.drawLine(0, playY, widgetWidth, playY);
+	else
+		painter.drawLine(playY, 0, playY, widgetHeight);
+}
+
+void
+WaveformWidget::setupScrollBar()
+{
+	if(m_widgetLayout)
+		m_widgetLayout->deleteLater();
+
+	if(m_vertical) {
+		m_widgetLayout = new QHBoxLayout();
+		m_scrollBar->setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Expanding);
+		m_scrollBar->setOrientation(Qt::Vertical);
+	} else {
+		m_widgetLayout = new QVBoxLayout();
+		m_scrollBar->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Preferred);
+		m_scrollBar->setOrientation(Qt::Horizontal);
+	}
+
+	m_widgetLayout->setMargin(0);
+	m_widgetLayout->setSpacing(0);
+	m_widgetLayout->addWidget(m_waveformGraphics);
+	m_widgetLayout->addWidget(m_scrollBar);
+
+	m_mainLayout->insertLayout(0, m_widgetLayout);
 }
 
 /*virtual*/ void
 WaveformWidget::resizeEvent(QResizeEvent *event)
 {
 	QWidget::resizeEvent(event);
+
+	bool vertical = height() > width();
+	if(m_vertical != vertical) {
+		m_vertical = vertical;
+		setupScrollBar();
+	}
 
 	m_visibleLinesDirty = true;
 	updateZoomData();
@@ -607,7 +666,8 @@ WaveformWidget::eventFilter(QObject *obj, QEvent *event)
 	}
 
 	case QEvent::MouseMove: {
-		int y = reinterpret_cast<QMouseEvent *>(event)->y();
+		QMouseEvent *mouse = reinterpret_cast<QMouseEvent *>(event);
+		int y = m_vertical ? mouse->y() : mouse->x();
 
 		m_pointerTime = timeAt(y);
 
@@ -619,9 +679,9 @@ WaveformWidget::eventFilter(QObject *obj, QEvent *event)
 			if(sub && !m_subtitle->anchoredLines().empty() && m_subtitle->anchoredLines().indexOf(sub) == -1)
 				m_waveformGraphics->setCursor(QCursor(Qt::ForbiddenCursor));
 			else if(res == DRAG_LINE)
-				m_waveformGraphics->setCursor(QCursor(Qt::SizeVerCursor));
+				m_waveformGraphics->setCursor(QCursor(m_vertical ? Qt::SizeVerCursor : Qt::SizeHorCursor));
 			else if(res == DRAG_SHOW || res == DRAG_HIDE)
-				m_waveformGraphics->setCursor(QCursor(Qt::SplitVCursor));
+				m_waveformGraphics->setCursor(QCursor(m_vertical ? Qt::SplitVCursor : Qt::SplitHCursor));
 			else
 				m_waveformGraphics->unsetCursor();
 		}
@@ -632,7 +692,8 @@ WaveformWidget::eventFilter(QObject *obj, QEvent *event)
 	}
 
 	case QEvent::MouseButtonDblClick: {
-		emit doubleClick(timeAt(reinterpret_cast<QMouseEvent *>(event)->y()));
+		QMouseEvent *mouse = reinterpret_cast<QMouseEvent *>(event);
+		emit doubleClick(timeAt(m_vertical ? mouse->y() : mouse->x()));
 		return true;
 	}
 
@@ -641,7 +702,7 @@ WaveformWidget::eventFilter(QObject *obj, QEvent *event)
 		if(mouse->button() != Qt::LeftButton)
 			return false;
 
-		int y = mouse->y();
+		int y = m_vertical ? mouse->y() : mouse->x();
 		m_draggedPos = subtitleAt(y, &m_draggedLine);
 		if(m_draggedLine && !m_subtitle->anchoredLines().empty() && m_subtitle->anchoredLines().indexOf(m_draggedLine) == -1) {
 			m_draggedTime = 0.;
@@ -668,7 +729,7 @@ WaveformWidget::eventFilter(QObject *obj, QEvent *event)
 			return false;
 
 		if(m_draggedLine) {
-			m_draggedTime = timeAt(mouse->y());
+			m_draggedTime = timeAt(m_vertical ? mouse->y() : mouse->x());
 			if(m_draggedPos == DRAG_LINE) {
 				m_draggedLine->setHideTime(m_draggedTime - m_draggedOffset + m_draggedLine->durationTime());
 				m_draggedLine->setShowTime(m_draggedTime - m_draggedOffset);
@@ -694,8 +755,9 @@ WaveformWidget::eventFilter(QObject *obj, QEvent *event)
 Time
 WaveformWidget::timeAt(int y)
 {
+	int height = m_vertical ? m_waveformGraphics->height() : m_waveformGraphics->width();
 //	return m_timeStart.toMillis() + double(y) * m_samplesPerPixel / SAMPLE_RATE_MILIS;
-	return m_timeStart.toMillis() + double(y * windowSize() / m_waveformGraphics->height());
+	return m_timeStart.toMillis() + double(y * windowSize() / height);
 }
 
 WaveformWidget::DragPosition

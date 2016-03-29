@@ -40,6 +40,7 @@ QT_FORWARD_DECLARE_CLASS(QProgressBar)
 QT_FORWARD_DECLARE_CLASS(QToolButton)
 QT_FORWARD_DECLARE_CLASS(QScrollBar)
 QT_FORWARD_DECLARE_CLASS(QToolButton)
+QT_FORWARD_DECLARE_CLASS(QBoxLayout)
 
 // FIXME: make sample size configurable or drop this
 /*
@@ -117,6 +118,7 @@ private:
 	void updateVisibleLines();
 	Time timeAt(int y);
 	WaveformWidget::DragPosition subtitleAt(int y, SubtitleLine **result);
+	void setupScrollBar();
 
 private:
 	QString m_mediaFile;
@@ -162,6 +164,10 @@ private:
 	DragPosition m_draggedPos;
 	Time m_draggedTime;
 	double m_draggedOffset;
+
+	bool m_vertical;
+	QBoxLayout *m_mainLayout;
+	QBoxLayout *m_widgetLayout;
 
 	Time m_pointerTime;
 
