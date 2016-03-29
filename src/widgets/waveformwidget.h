@@ -161,7 +161,7 @@ private:
 	SubtitleLine *m_draggedLine;
 	DragPosition m_draggedPos;
 	Time m_draggedTime;
-	Time m_draggedOffset;
+	double m_draggedOffset;
 
 	Time m_pointerTime;
 
