@@ -45,6 +45,10 @@ add_executable(subtitlecomposer ${subtitlecomposer_SRCS})
 
 qt5_use_modules(subtitlecomposer Core Widgets)
 
+# Xine videoplayer plugin needs XInitThreads() call in main
+# optional since Xine will not be built without X11
+find_package(X11 QUIET)
+
 target_link_libraries(subtitlecomposer
 	${common_LIBS}
 	${core_LIBS}
@@ -53,7 +57,7 @@ target_link_libraries(subtitlecomposer
 	${streamprocessor_LIBS}
 	${speechprocessor_LIBS}
 	${widgets_LIBS}
-	${X11_LIBRARIES} # xine needs XInitThreads() call in main
+	${X11_LIBRARIES}
 )
 
 add_definitions(
