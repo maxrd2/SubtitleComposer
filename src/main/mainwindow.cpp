@@ -99,9 +99,9 @@ MainWindow::~MainWindow()
 {
 	app()->saveConfig();
 
-	// We must disconnect the player and the decoder when closing down, otherwise signal
-	// handlers could be called with the some object destroyed, crashing the application
-	disconnect(VideoPlayer::instance(), 0, 0, 0);
+	// We must disconnect the player when closing down, otherwise signal handlers
+	// could be called with the some object destroyed, crashing the application
+	VideoPlayer::instance()->disconnect();
 
 	VideoPlayer::instance()->setApplicationClosingDown();
 }
@@ -109,10 +109,6 @@ MainWindow::~MainWindow()
 void
 MainWindow::loadConfig()
 {
-	KConfigGroup group(KSharedConfig::openConfig()->group("MainWindow Settings"));
-//	m_mainSplitter->setSizes(group.readEntry("Splitter Sizes", m_mainSplitter->sizes()));
-//	m_horizontalSplitter->setSizes(group.readEntry("Horizontal Splitter Sizes", m_horizontalSplitter->sizes()));
-
 	setCorner(Qt::TopLeftCorner, Qt::TopDockWidgetArea);
 	setCorner(Qt::TopRightCorner, Qt::RightDockWidgetArea);
 	setCorner(Qt::BottomLeftCorner, Qt::LeftDockWidgetArea);
@@ -122,13 +118,10 @@ MainWindow::loadConfig()
 void
 MainWindow::saveConfig()
 {
-	KConfigGroup group(KSharedConfig::openConfig()->group("MainWindow Settings"));
-//	group.writeEntry("Splitter Sizes", m_mainSplitter->sizes());
-//	group.writeEntry("Horizontal Splitter Sizes", m_horizontalSplitter->sizes());
 }
 
 void
-MainWindow::setSubtitle(Subtitle * /*subtitle */)
+MainWindow::setSubtitle(Subtitle */*subtitle*/)
 {}
 
 bool

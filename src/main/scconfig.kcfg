@@ -150,10 +150,6 @@
 			<label>VideoPlayer Backend</label>
 			<default>GStreamer</default>
 		</entry>
-		<entry name="DecoderBackend" type="String">
-			<label>Decoder Backend</label>
-			<default>GStreamer</default>
-		</entry>
 		<entry name="SeekJumpLength" type="Int">
 			<label>Jump length on seek</label>
 			<default>15</default>
