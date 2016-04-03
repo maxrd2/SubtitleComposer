@@ -237,7 +237,7 @@ private:
 
 	bool m_applicationClosingDown;
 
-	int m_state;
+	State m_state;
 
 	VideoWidget *m_videoWidget;
 

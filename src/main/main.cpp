@@ -108,14 +108,14 @@ main(int argc, char **argv)
 
 	app.init();
 
+	app.mainWindow()->show();
+
 	// load files
 	const QStringList args = parser.positionalArguments();
 	if(args.length() > 0)
 		app.openSubtitle(System::urlFromPath(args[0]));
 	if(args.length() > 1)
 		app.openSubtitleTr(System::urlFromPath(args[1]));
-
-	app.mainWindow()->show();
 
 	return app.exec();
 }
