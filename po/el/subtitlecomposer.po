@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: subtitlecomposer\n"
 "Report-Msgid-Bugs-To: https://github.com/maxrd2/subtitlecomposer/issues\n"
-"POT-Creation-Date: 2016-03-28 11:04+0200\n"
+"POT-Creation-Date: 2016-04-05 21:56+0200\n"
 "PO-Revision-Date: 2008-07-11 07:53+0300\n"
 "Last-Translator: Alexandros Perdikomatis <atanasia.kalampaka@ontelecoms.gr>\n"
 "Language-Team: ΕΛΛΗΝΙΚΑ <el@li.org>\n"
@@ -21,28 +21,6 @@ msgstr ""
 #, fuzzy
 msgid "Unknown"
 msgstr "<i>Άγνωστο</i>"
-
-#: ../../src/core/subtitleactions.cpp:59
-msgid "Set Frame Rate"
-msgstr "Ορισμός Λόγου Καρέ"
-
-#: ../../src/core/subtitleactions.cpp:95
-#, fuzzy
-msgid "Insert Lines"
-msgstr "Εισαγωγή Γραμμής"
-
-#: ../../src/core/subtitleactions.cpp:176 ../../src/core/subtitle.cpp:488
-#: ../../src/core/subtitle.cpp:498 ../../src/core/subtitle.cpp:515
-msgid "Remove Lines"
-msgstr "Αφαίρεση Γραμμών"
-
-#: ../../src/core/subtitleactions.cpp:262
-msgid "Move Line"
-msgstr "Μετακίνηση Γραμμής"
-
-#: ../../src/core/subtitleactions.cpp:362
-msgid "Swap Texts"
-msgstr "Αντιμετάθεση Κειμένων"
 
 #: ../../src/core/subtitle.cpp:69
 msgid "Set Primary Data"
@@ -69,12 +47,17 @@ msgstr "Αλλαγή Λόγου Καρέ"
 msgid "Insert Line"
 msgstr "Εισαγωγή Γραμμής"
 
-#: ../../src/core/subtitle.cpp:568 ../../src/main/application.cpp:591
+#: ../../src/core/subtitle.cpp:488 ../../src/core/subtitle.cpp:498
+#: ../../src/core/subtitle.cpp:515 ../../src/core/subtitleactions.cpp:176
+msgid "Remove Lines"
+msgstr "Αφαίρεση Γραμμών"
+
+#: ../../src/core/subtitle.cpp:568 ../../src/main/application.cpp:601
 #: ../../src/main/lineswidget.cpp:1129
 msgid "Split Lines"
 msgstr "Διαχωρισμός Γραμμών"
 
-#: ../../src/core/subtitle.cpp:618 ../../src/main/application.cpp:598
+#: ../../src/core/subtitle.cpp:618 ../../src/main/application.cpp:608
 #: ../../src/main/lineswidget.cpp:1128
 msgid "Join Lines"
 msgstr "Ένωση Γραμμών"
@@ -87,7 +70,7 @@ msgstr "Ολίσθηση Γραμμών"
 msgid "Adjust Lines"
 msgstr "Ρύθμιση Γραμμών"
 
-#: ../../src/core/subtitle.cpp:788 ../../src/main/application.cpp:2231
+#: ../../src/core/subtitle.cpp:788 ../../src/main/application.cpp:2260
 #: ../../src/main/lineswidget.cpp:1105
 #, fuzzy
 msgid "Sort"
@@ -98,7 +81,7 @@ msgstr "Ταξινόμηση Γραμμών"
 msgid "Enforce Duration Limits"
 msgstr "Όρια Διάρκειας"
 
-#: ../../src/core/subtitle.cpp:869 ../../src/main/application.cpp:2293
+#: ../../src/core/subtitle.cpp:869 ../../src/main/application.cpp:2322
 #: ../../src/main/lineswidget.cpp:1108
 msgid "Maximize Durations"
 msgstr "Μεγιστοποίηση Διαρκειών"
@@ -140,12 +123,12 @@ msgstr "Γράμματα Πρότασης"
 msgid "Break Lines"
 msgstr "Επανένωση Γραμμών"
 
-#: ../../src/core/subtitle.cpp:1151 ../../src/main/application.cpp:2345
+#: ../../src/core/subtitle.cpp:1151 ../../src/main/application.cpp:2374
 #: ../../src/main/lineswidget.cpp:1075
 msgid "Unbreak Lines"
 msgstr "Επανένωση Γραμμών"
 
-#: ../../src/core/subtitle.cpp:1160 ../../src/main/application.cpp:2356
+#: ../../src/core/subtitle.cpp:1160 ../../src/main/application.cpp:2385
 #: ../../src/main/lineswidget.cpp:1076
 msgid "Simplify Spaces"
 msgstr "Απλοποίηση Κενών"
@@ -188,39 +171,32 @@ msgstr "Καθαρισμός Σημαδιού Γραμμών"
 msgid "Toggle Lines Mark"
 msgstr "Αντιθέτηση Σημαδιού Γραμμής"
 
-#: ../../src/core/subtitle.cpp:1335 ../../src/main/application.cpp:2111
+#: ../../src/core/subtitle.cpp:1335 ../../src/main/application.cpp:2140
 #: ../../src/main/errorswidget.cpp:798
 msgid "Clear Lines Errors"
 msgstr "Καθαρισμός Λαθών Γραμμών"
 
 #: ../../src/core/subtitle.cpp:1346 ../../src/core/subtitle.cpp:1358
-#: ../../src/main/application.cpp:2056
+#: ../../src/main/application.cpp:2085
 msgid "Check Lines Errors"
 msgstr "Έλεγχος Λαθών Γραμμών"
 
-#: ../../src/core/subtitlelineactions.cpp:72
-msgid "Set Line Text"
-msgstr "Ορισμός Κειμένου Γραμμής"
+#: ../../src/core/subtitleactions.cpp:59
+msgid "Set Frame Rate"
+msgstr "Ορισμός Λόγου Καρέ"
 
-#: ../../src/core/subtitlelineactions.cpp:113
-msgid "Set Line Secondary Text"
-msgstr "Ορισμός Δευτερεύοντος Κειμένου Γραμμής"
+#: ../../src/core/subtitleactions.cpp:95
+#, fuzzy
+msgid "Insert Lines"
+msgstr "Εισαγωγή Γραμμής"
 
-#: ../../src/core/subtitlelineactions.cpp:154
-msgid "Set Line Texts"
-msgstr "Ορισμός Κειμένων Γραμμής"
+#: ../../src/core/subtitleactions.cpp:262
+msgid "Move Line"
+msgstr "Μετακίνηση Γραμμής"
 
-#: ../../src/core/subtitlelineactions.cpp:228 ../../src/core/subtitleline.cpp:509
-msgid "Set Line Show Time"
-msgstr "Ορισμός Χρόνου Παρουσίας Γραμμής"
-
-#: ../../src/core/subtitlelineactions.cpp:269
-msgid "Set Line Hide Time"
-msgstr "Ορισμός Χρόνου Απόκρυψης Γραμμής"
-
-#: ../../src/core/subtitlelineactions.cpp:384
-msgid "Set Line Errors"
-msgstr "Ορισμός Λαθών Γραμμής"
+#: ../../src/core/subtitleactions.cpp:362
+msgid "Swap Texts"
+msgstr "Αντιμετάθεση Κειμένων"
 
 #: ../../src/core/subtitleline.cpp:77
 msgid "Empty text"
@@ -407,6 +383,10 @@ msgstr "Δεν έχει κείμενο μετάφρασης."
 msgid "Has user mark."
 msgstr "Έχει σημάδι χρήστη"
 
+#: ../../src/core/subtitleline.cpp:509 ../../src/core/subtitlelineactions.cpp:228
+msgid "Set Line Show Time"
+msgstr "Ορισμός Χρόνου Παρουσίας Γραμμής"
+
 #: ../../src/core/subtitleline.cpp:549 ../../src/core/subtitleline.cpp:553
 msgid "Set Line Times"
 msgstr "Ορισμός Χρόνων Γραμμής"
@@ -418,6 +398,26 @@ msgstr "Ολίσθηση Χρόνων Γραμμής"
 #: ../../src/core/subtitleline.cpp:645
 msgid "Adjust Line Times"
 msgstr "Ρύθμιση Χρόνων Γραμμής"
+
+#: ../../src/core/subtitlelineactions.cpp:72
+msgid "Set Line Text"
+msgstr "Ορισμός Κειμένου Γραμμής"
+
+#: ../../src/core/subtitlelineactions.cpp:113
+msgid "Set Line Secondary Text"
+msgstr "Ορισμός Δευτερεύοντος Κειμένου Γραμμής"
+
+#: ../../src/core/subtitlelineactions.cpp:154
+msgid "Set Line Texts"
+msgstr "Ορισμός Κειμένων Γραμμής"
+
+#: ../../src/core/subtitlelineactions.cpp:269
+msgid "Set Line Hide Time"
+msgstr "Ορισμός Χρόνου Απόκρυψης Γραμμής"
+
+#: ../../src/core/subtitlelineactions.cpp:384
+msgid "Set Line Errors"
+msgstr "Ορισμός Λαθών Γραμμής"
 
 #: ../../src/formats/textdemux/textdemux.cpp:43
 #, fuzzy
@@ -439,704 +439,713 @@ msgstr ""
 msgid "Autodetect"
 msgstr "Αυτόματες Διάρκειες"
 
-#: ../../src/main/application.cpp:379
+#: ../../src/main/application.cpp:389
 msgid "Video Files"
 msgstr "Αρχεία Βίντεο"
 
-#: ../../src/main/application.cpp:386
+#: ../../src/main/application.cpp:396
 msgid "Audio Files"
 msgstr "Αρχεία Ήχου"
 
-#: ../../src/main/application.cpp:388
+#: ../../src/main/application.cpp:398
 msgid "Media Files"
 msgstr "Αρχεία Μέσων"
 
-#: ../../src/main/application.cpp:389
+#: ../../src/main/application.cpp:399
 msgid "All Files"
 msgstr "Όλα τα Αρχεία"
 
-#: ../../src/main/application.cpp:408
+#: ../../src/main/application.cpp:418
 msgid "Exit the application"
 msgstr "Έξοδος από την εφαρμογή"
 
-#: ../../src/main/application.cpp:411
+#: ../../src/main/application.cpp:421
 msgid "Configure Subtitle Composer"
 msgstr "Ρύθμιση του Συνθέτη Υποτίτλων"
 
-#: ../../src/main/application.cpp:415
+#: ../../src/main/application.cpp:425
 msgctxt "@action:inmenu Create a new subtitle"
 msgid "New"
 msgstr "Νέο"
 
-#: ../../src/main/application.cpp:416
+#: ../../src/main/application.cpp:426
 msgid "Create an empty subtitle"
 msgstr "Δημιουργία ενός άδειου υπότιτλου"
 
-#: ../../src/main/application.cpp:424
+#: ../../src/main/application.cpp:434
 #, fuzzy
 msgctxt "@action:inmenu Open subtitle file"
 msgid "Open..."
 msgstr "Άνοιγμα..."
 
-#: ../../src/main/application.cpp:425 ../../src/main/application.cpp:443
+#: ../../src/main/application.cpp:435 ../../src/main/application.cpp:453
 msgid "Open subtitle file"
 msgstr "Άνοιγμα αρχείου υποτίτλων"
 
-#: ../../src/main/application.cpp:433
+#: ../../src/main/application.cpp:443
 msgid "Reload As..."
 msgstr "Επαναφόρτωση Ως..."
 
-#: ../../src/main/application.cpp:434
+#: ../../src/main/application.cpp:444
 msgid "Reload opened file with a different encoding"
 msgstr "Επαναφόρτωση ανοιγμένου αρχείου με διαφορετική κωδικοποίηση"
 
-#: ../../src/main/application.cpp:442
+#: ../../src/main/application.cpp:452
 #, fuzzy
 msgctxt "@action:inmenu Open rencently used subtitle file"
 msgid "Open &Recent"
 msgstr "Άνοιγμα &Πρόσφατου"
 
-#: ../../src/main/application.cpp:449
+#: ../../src/main/application.cpp:459
 msgid "Save"
 msgstr "Αποθήκευση"
 
-#: ../../src/main/application.cpp:450
+#: ../../src/main/application.cpp:460
 msgid "Save opened subtitle"
 msgstr "Αποθήκευση ανοιγμένου υπότιτλου"
 
-#: ../../src/main/application.cpp:458
+#: ../../src/main/application.cpp:468
 msgid "Save As..."
 msgstr "Αποθήκευση ως..."
 
-#: ../../src/main/application.cpp:459
+#: ../../src/main/application.cpp:469
 msgid "Save opened subtitle with different settings"
 msgstr "Αποθήκευση ανοιγμένου υπότιτλου με διαφορετικές ρυθμίσεις"
 
-#: ../../src/main/application.cpp:466
+#: ../../src/main/application.cpp:476
 msgid "Close"
 msgstr "Κλείσιμο"
 
-#: ../../src/main/application.cpp:467
+#: ../../src/main/application.cpp:477
 msgid "Close opened subtitle"
 msgstr "Κλείσιμο ανοιγμένου υπότιτλου"
 
-#: ../../src/main/application.cpp:475
+#: ../../src/main/application.cpp:485
 msgid "New Translation"
 msgstr "Νέα Μετάφραση"
 
-#: ../../src/main/application.cpp:476
+#: ../../src/main/application.cpp:486
 msgid "Create an empty translation subtitle"
 msgstr "Δημιουργία ενός άδειου υπότιτλου μετάφρασης"
 
-#: ../../src/main/application.cpp:484
+#: ../../src/main/application.cpp:494
 msgid "Open Translation..."
 msgstr "Άνοιγμα Μετάφρασης..."
 
-#: ../../src/main/application.cpp:485 ../../src/main/application.cpp:503
+#: ../../src/main/application.cpp:495 ../../src/main/application.cpp:513
 msgid "Open translation subtitle file"
 msgstr "Άνοιγμα αρχείου μετάφρασης υποτίτλων"
 
-#: ../../src/main/application.cpp:493
+#: ../../src/main/application.cpp:503
 #, fuzzy
 msgid "Reload Translation As..."
 msgstr "Αποθήκευση Μετάφρασης Ως..."
 
-#: ../../src/main/application.cpp:494
+#: ../../src/main/application.cpp:504
 #, fuzzy
 msgid "Reload opened translation file with a different encoding"
 msgstr "Επαναφόρτωση ανοιγμένου αρχείου με διαφορετική κωδικοποίηση"
 
-#: ../../src/main/application.cpp:502
+#: ../../src/main/application.cpp:512
 msgid "Open &Recent Translation"
 msgstr "Άνοιγμα &Πρόσφατης Μετάφρασης"
 
-#: ../../src/main/application.cpp:510
+#: ../../src/main/application.cpp:520
 msgid "Save Translation"
 msgstr "Αποθήκευση Μετάφρασης"
 
-#: ../../src/main/application.cpp:511
+#: ../../src/main/application.cpp:521
 msgid "Save opened translation subtitle"
 msgstr "Αποθήκευση ανοιγμένου υπότιτλου μετάφρασης"
 
-#: ../../src/main/application.cpp:519
+#: ../../src/main/application.cpp:529
 msgid "Save Translation As..."
 msgstr "Αποθήκευση Μετάφρασης Ως..."
 
-#: ../../src/main/application.cpp:520
+#: ../../src/main/application.cpp:530
 msgid "Save opened translation subtitle with different settings"
 msgstr "Αποθήκευση ανοιγμένου υπότιτλου μετάφρασης με διαφορετικές ρυθμίσεις"
 
-#: ../../src/main/application.cpp:527
+#: ../../src/main/application.cpp:537
 msgid "Close Translation"
 msgstr "Κλείσιμο Μετάφρασης"
 
-#: ../../src/main/application.cpp:528
+#: ../../src/main/application.cpp:538
 msgid "Close opened translation subtitle"
 msgstr "Κλείσιμο ανοιγμένου υπότιτλου μετάφρασης"
 
-#: ../../src/main/application.cpp:536 ../../src/main/application.cpp:537
+#: ../../src/main/application.cpp:546 ../../src/main/application.cpp:547
 #: ../../src/widgets/simplerichtextedit.cpp:67
 msgid "Undo"
 msgstr "Αναίρεση"
 
-#: ../../src/main/application.cpp:545 ../../src/main/application.cpp:546
+#: ../../src/main/application.cpp:555 ../../src/main/application.cpp:556
 #: ../../src/widgets/simplerichtextedit.cpp:73
 msgid "Redo"
 msgstr "Επαναφορά"
 
-#: ../../src/main/application.cpp:553
+#: ../../src/main/application.cpp:563
 msgid "Split Subtitle..."
 msgstr "Διαχωρισμός Υπότιτλου"
 
-#: ../../src/main/application.cpp:554
+#: ../../src/main/application.cpp:564
 msgid "Split the opened subtitle in two parts"
 msgstr "Διαχωρισμός ανοιγμένου υπότιτλου σε δύο μέρη"
 
-#: ../../src/main/application.cpp:560
+#: ../../src/main/application.cpp:570
 msgid "Join Subtitles..."
 msgstr "Ένωση Υποτίτλων"
 
-#: ../../src/main/application.cpp:561
+#: ../../src/main/application.cpp:571
 msgid "Append to the opened subtitle another one"
 msgstr "Προσθήκη ενός ακόμη υπότιτλου στον ανοιγμένο"
 
-#: ../../src/main/application.cpp:567 ../../src/main/lineswidget.cpp:1125
+#: ../../src/main/application.cpp:577 ../../src/main/lineswidget.cpp:1125
 msgid "Insert Before"
 msgstr "Εισαγωγή Πριν"
 
-#: ../../src/main/application.cpp:568
+#: ../../src/main/application.cpp:578
 msgid "Insert empty line before current one"
 msgstr "Εισαγωγή άδειας γραμμής πριν την τρέχουσα"
 
-#: ../../src/main/application.cpp:575 ../../src/main/lineswidget.cpp:1126
+#: ../../src/main/application.cpp:585 ../../src/main/lineswidget.cpp:1126
 msgid "Insert After"
 msgstr "Εισαγωγή Μετά"
 
-#: ../../src/main/application.cpp:576
+#: ../../src/main/application.cpp:586
 msgid "Insert empty line after current one"
 msgstr "Εισαγωγή άδειας γραμμής μετά αυτής"
 
 #. i18n: file: ../../src/main/scripting/scriptsmanager.ui:62
 #. i18n: ectx: property (text), widget (QPushButton, btnRemove)
-#: ../../src/main/application.cpp:583 ../../src/main/lineswidget.cpp:1124 rc.cpp:327
+#: ../../src/main/application.cpp:593 ../../src/main/lineswidget.cpp:1124 rc.cpp:426
 msgid "Remove"
 msgstr "Αφαίρεση"
 
-#: ../../src/main/application.cpp:584
+#: ../../src/main/application.cpp:594
 msgid "Remove selected lines"
 msgstr "Αφαίρεση επιλεγμένων γραμμών"
 
-#: ../../src/main/application.cpp:592
+#: ../../src/main/application.cpp:602
 msgid "Split selected lines"
 msgstr "Διαχωρισμός επιλεγμένων γραμμών"
 
-#: ../../src/main/application.cpp:599
+#: ../../src/main/application.cpp:609
 msgid "Join selected lines"
 msgstr "Ένωση επιλεγμένων γραμμών"
 
-#: ../../src/main/application.cpp:605
+#: ../../src/main/application.cpp:615
 #: ../../src/main/dialogs/actionwitherrortargetsdialog.cpp:95
 #: ../../src/main/lineswidget.cpp:1122 ../../src/widgets/simplerichtextedit.cpp:110
 msgid "Select All"
 msgstr "Επιλογή Όλων"
 
-#: ../../src/main/application.cpp:606
+#: ../../src/main/application.cpp:616
 msgid "Select all lines"
 msgstr "Επιλογή όλων των γραμμών"
 
-#: ../../src/main/application.cpp:613
+#: ../../src/main/application.cpp:623
 msgid "Go to Line..."
 msgstr "Πήγαινε στη Γραμμή..."
 
-#: ../../src/main/application.cpp:614
+#: ../../src/main/application.cpp:624
 msgid "Go to specified line"
 msgstr "Πήγαινε σε συγκεκριμένη γραμμή"
 
-#: ../../src/main/application.cpp:622
+#: ../../src/main/application.cpp:632
 msgid "Find..."
 msgstr "Εύρεση..."
 
-#: ../../src/main/application.cpp:623
+#: ../../src/main/application.cpp:633
 msgid "Find occurrences of strings or regular expressions"
 msgstr "Εύρεση απαντώμενων λεκτικών ή σταθερών εκφράσεων"
 
-#: ../../src/main/application.cpp:631
+#: ../../src/main/application.cpp:641
 msgid "Find Next"
 msgstr "Εύρεση Επόμενου"
 
-#: ../../src/main/application.cpp:632
+#: ../../src/main/application.cpp:642
 msgid "Find next occurrence of string or regular expression"
 msgstr "Εύρεση επόμενου απαντώμενου λεκτικού ή σταθερής έκφρασης"
 
-#: ../../src/main/application.cpp:640
+#: ../../src/main/application.cpp:650
 msgid "Find Previous"
 msgstr "Εύρεση Προηγούμενου"
 
-#: ../../src/main/application.cpp:641
+#: ../../src/main/application.cpp:651
 msgid "Find previous occurrence of string or regular expression"
 msgstr "Εύρεση προηγούμενου απαντώμενου λεκτικού ή σταθερής έκφρασης"
 
-#: ../../src/main/application.cpp:648
+#: ../../src/main/application.cpp:658
 msgid "Replace..."
 msgstr "Αντικατάσταση..."
 
-#: ../../src/main/application.cpp:649
+#: ../../src/main/application.cpp:659
 msgid "Replace occurrences of strings or regular expressions"
 msgstr "Αντικατάσταση απαντώμενων λεκτικών ή σταθερών εκφράσεων"
 
-#: ../../src/main/application.cpp:657
+#: ../../src/main/application.cpp:667
 #, fuzzy
 msgid "Retrocede current line"
 msgstr "Ανυπαρξία τρέχουσας γραμμής"
 
-#: ../../src/main/application.cpp:658
+#: ../../src/main/application.cpp:668
 #, fuzzy
 msgid "Makes the line before the current one active"
 msgstr "Εισαγωγή άδειας γραμμής πριν την τρέχουσα"
 
-#: ../../src/main/application.cpp:666
+#: ../../src/main/application.cpp:676
 #, fuzzy
 msgid "Advance current line"
 msgstr "Ανυπαρξία τρέχουσας γραμμής"
 
-#: ../../src/main/application.cpp:667
+#: ../../src/main/application.cpp:677
 #, fuzzy
 msgid "Makes the line after the current one active"
 msgstr "Εισαγωγή άδειας γραμμής μετά αυτής"
 
-#: ../../src/main/application.cpp:674 ../../src/main/errorsdialog.cpp:52
+#: ../../src/main/application.cpp:684 ../../src/main/errorsdialog.cpp:52
 #: ../../src/main/lineswidget.cpp:1116
 msgid "Check Errors..."
 msgstr "Έλεγχος Λαθών"
 
-#: ../../src/main/application.cpp:675
+#: ../../src/main/application.cpp:685
 msgid "Check for errors in the current subtitle"
 msgstr "Έλεγχος για λάθη στον τρέχοντα υπότιτλο"
 
-#: ../../src/main/application.cpp:682 ../../src/main/errorsdialog.cpp:55
+#: ../../src/main/application.cpp:692 ../../src/main/errorsdialog.cpp:55
 #: ../../src/main/lineswidget.cpp:1117
 msgid "Clear Errors..."
 msgstr "Καθαρισμός Λαθών"
 
-#: ../../src/main/application.cpp:683
+#: ../../src/main/application.cpp:693
 msgid "Clear errors from selected lines"
 msgstr "Καθαρισμός λαθών από επιλεγμένες γραμμές"
 
-#: ../../src/main/application.cpp:689 ../../src/main/lineswidget.cpp:1119
+#: ../../src/main/application.cpp:699 ../../src/main/lineswidget.cpp:1119
 msgid "Show Errors..."
 msgstr "Εμφάνιση Λαθών"
 
-#: ../../src/main/application.cpp:690
+#: ../../src/main/application.cpp:700
 msgid "Show errors information for the current subtitle"
 msgstr "Εμφάνιση πληροφοριών λαθών για τον συγκεκριμένο υπότιτλο"
 
-#: ../../src/main/application.cpp:698
+#: ../../src/main/application.cpp:708
 #, fuzzy
 msgid "Find Error..."
 msgstr "Εύρεση Λάθους"
 
-#: ../../src/main/application.cpp:699
+#: ../../src/main/application.cpp:709
 #, fuzzy
 msgid "Find lines with specified errors"
 msgstr "Εύρεση επόμενης γραμμής με λάθη"
 
-#: ../../src/main/application.cpp:707
+#: ../../src/main/application.cpp:717
 msgid "Find Next Error"
 msgstr "Εύρεση Επόμενου Λάθους"
 
-#: ../../src/main/application.cpp:708
+#: ../../src/main/application.cpp:718
 #, fuzzy
 msgid "Find next line with specified errors"
 msgstr "Εύρεση επόμενης γραμμής με λάθη"
 
-#: ../../src/main/application.cpp:716
+#: ../../src/main/application.cpp:726
 msgid "Find Previous Error"
 msgstr "Εύρεση Προηγούμενου Λάθους"
 
-#: ../../src/main/application.cpp:717
+#: ../../src/main/application.cpp:727
 #, fuzzy
 msgid "Find previous line with specified errors"
 msgstr "Εύρεση προηγούμενης γραμμής με λάθη"
 
-#: ../../src/main/application.cpp:725 ../../src/main/lineswidget.cpp:1081
+#: ../../src/main/application.cpp:735 ../../src/main/lineswidget.cpp:1081
 msgid "Spelling..."
 msgstr "Συλλαβισμός..."
 
-#: ../../src/main/application.cpp:726
+#: ../../src/main/application.cpp:736
 msgid "Check lines spelling"
 msgstr "Έλεγχος συλλαβισμού γραμμών"
 
-#: ../../src/main/application.cpp:732
+#: ../../src/main/application.cpp:742
 msgid "Toggle Mark"
 msgstr "Αντιθέτηση Σημαδιού"
 
-#: ../../src/main/application.cpp:733
+#: ../../src/main/application.cpp:743
 msgid "Toggle selected lines mark"
 msgstr "Αντιθέτηση σημαδιού επιλεγμένων γραμμών"
 
-#: ../../src/main/application.cpp:741 ../../src/main/currentlinewidget.cpp:94
+#: ../../src/main/application.cpp:751 ../../src/main/currentlinewidget.cpp:94
 msgid "Toggle Bold"
 msgstr "Αντιθέτηση Έντονου"
 
-#: ../../src/main/application.cpp:742
+#: ../../src/main/application.cpp:752
 msgid "Toggle selected lines bold attribute"
 msgstr "Αντιθέτηση ιδιότητας έντονου επιλεγμένων γραμμών"
 
-#: ../../src/main/application.cpp:750 ../../src/main/currentlinewidget.cpp:95
+#: ../../src/main/application.cpp:760 ../../src/main/currentlinewidget.cpp:95
 msgid "Toggle Italic"
 msgstr "Αντιθέτηση Πλάγιου"
 
-#: ../../src/main/application.cpp:751
+#: ../../src/main/application.cpp:761
 msgid "Toggle selected lines italic attribute"
 msgstr "Αντιθέτηση ιδιότητας πλάγιου επιλεγμένων γραμμών"
 
-#: ../../src/main/application.cpp:759 ../../src/main/currentlinewidget.cpp:96
+#: ../../src/main/application.cpp:769 ../../src/main/currentlinewidget.cpp:96
 msgid "Toggle Underline"
 msgstr "Αντιθέτηση Υπογραμμισμένου"
 
-#: ../../src/main/application.cpp:760
+#: ../../src/main/application.cpp:770
 msgid "Toggle selected lines underline attribute"
 msgstr "Αντιθέτηση ιδιότητας υπογραμμισμένου επιλεγμένων γραμμών"
 
-#: ../../src/main/application.cpp:768 ../../src/main/currentlinewidget.cpp:97
+#: ../../src/main/application.cpp:778 ../../src/main/currentlinewidget.cpp:97
 msgid "Toggle Strike Through"
 msgstr "Αντιθέτηση Διαγραμμένου"
 
-#: ../../src/main/application.cpp:769
+#: ../../src/main/application.cpp:779
 #, fuzzy
 msgid "Toggle selected lines strike through attribute"
 msgstr "Αντιθέτηση ιδιότητας διαγραμμένου επιλεγμένων γραμμών"
 
-#: ../../src/main/application.cpp:777 ../../src/main/currentlinewidget.cpp:98
+#: ../../src/main/application.cpp:787 ../../src/main/currentlinewidget.cpp:98
 #, fuzzy
 msgid "Change Text Color"
 msgstr "Εναλλαγή πεζά/κεφαλαία"
 
-#: ../../src/main/application.cpp:778
+#: ../../src/main/application.cpp:788
 #, fuzzy
 msgid "Change text color of selected lines"
 msgstr "Καθαρισμός λαθών από επιλεγμένες γραμμές"
 
-#: ../../src/main/application.cpp:785 ../../src/main/lineswidget.cpp:1104
+#: ../../src/main/application.cpp:795 ../../src/main/lineswidget.cpp:1104
 #, fuzzy
 msgid "Shift..."
 msgstr "Ολίσθηση Γραμμών..."
 
-#: ../../src/main/application.cpp:786
+#: ../../src/main/application.cpp:796
 msgid "Shift lines an specified amount of time"
 msgstr "Ολίσθηση γραμμών κατά ορισμένο χρόνο"
 
-#: ../../src/main/application.cpp:805
+#: ../../src/main/application.cpp:815
 #, fuzzy
 msgid "Adjust..."
 msgstr "Προσαρμογή Γραμμών..."
 
-#: ../../src/main/application.cpp:806
+#: ../../src/main/application.cpp:816
 #, fuzzy
 msgid "Linearly adjust all lines to a specified interval"
 msgstr "Προσαρμογή γραμμών γραμμικά κατά ορισμένο χρονικό"
 
-#: ../../src/main/application.cpp:813
+#: ../../src/main/application.cpp:823
 #, fuzzy
 msgid "Sort..."
 msgstr "Ταξινόμηση Γραμμών"
 
-#: ../../src/main/application.cpp:814
+#: ../../src/main/application.cpp:824
 msgid "Sort lines based on their show time"
 msgstr "Ταξινόμηση γραμμών κατά χρόνο παρουσίας"
 
-#: ../../src/main/application.cpp:820
+#: ../../src/main/application.cpp:830
 msgid "Change Frame Rate..."
 msgstr "Αλλαγή Λόγου Καρέ"
 
-#: ../../src/main/application.cpp:821
+#: ../../src/main/application.cpp:831
 msgid "Retime subtitle lines by reinterpreting its frame rate"
 msgstr "Αναχρονισμός γραμμών υποτίτλων βάσει επανερμηνείας τού λόγου των καρέ"
 
-#: ../../src/main/application.cpp:827 ../../src/main/lineswidget.cpp:1106
+#: ../../src/main/application.cpp:837 ../../src/main/lineswidget.cpp:1106
 #, fuzzy
 msgid "Enforce Duration Limits..."
 msgstr "Όρια Διάρκειας"
 
-#: ../../src/main/application.cpp:828
+#: ../../src/main/application.cpp:838
 #, fuzzy
 msgid "Enforce lines minimum and/or maximum duration limits"
 msgstr "Υποχρέωση των γραμμών κατά τη ελάχιστη και/ή τη μέγιστη διάρκεια"
 
-#: ../../src/main/application.cpp:835 ../../src/main/lineswidget.cpp:1107
+#: ../../src/main/application.cpp:845 ../../src/main/lineswidget.cpp:1107
 #, fuzzy
 msgid "Set Automatic Durations..."
 msgstr "Ορισμός Αυτόματων Διαρκειών"
 
-#: ../../src/main/application.cpp:836
+#: ../../src/main/application.cpp:846
 #, fuzzy
 msgid "Set lines durations based on amount of letters, words and line breaks"
 msgstr ""
 "Όρισε τις διάρκειες των γραμμών βάσει τού πλήθους των λέξεων και/ή τού "
 "πλήθους αυτών"
 
-#: ../../src/main/application.cpp:842
+#: ../../src/main/application.cpp:852
 msgid "Maximize Durations..."
 msgstr "Μεγιστοποίηση Διαρκειών..."
 
-#: ../../src/main/application.cpp:843
+#: ../../src/main/application.cpp:853
 msgid "Extend lines durations up to their next lines show time"
 msgstr "Επέκταση διάρκειας γραμμών ως τη στιγμή εμφάνισης των επόμενων"
 
-#: ../../src/main/application.cpp:849
+#: ../../src/main/application.cpp:859
 #, fuzzy
 msgid "Fix Overlapping Times..."
 msgstr "Διόρθωση Επικαλυπτόμενων Γραμμών..."
 
-#: ../../src/main/application.cpp:850
+#: ../../src/main/application.cpp:860
 msgid "Fix lines overlapping times"
 msgstr "Διόρθωση χρόνων επικαλυπτόμενων γραμμών"
 
-#: ../../src/main/application.cpp:856
+#: ../../src/main/application.cpp:866
 #, fuzzy
 msgid "Synchronize with Subtitle..."
 msgstr "Συγχρονισμός Με Υπότιτλο..."
 
-#: ../../src/main/application.cpp:857
+#: ../../src/main/application.cpp:867
 msgid "Copy timing information from another subtitle"
 msgstr "Αντιγραφή πληροφορίας χρονισμού από άλλο υπότιτλο"
 
-#: ../../src/main/application.cpp:863 ../../src/main/lineswidget.cpp:1074
+#: ../../src/main/application.cpp:873 ../../src/main/lineswidget.cpp:1074
 #, fuzzy
 msgid "Break Lines..."
 msgstr "Επανένωση Γραμμών..."
 
-#: ../../src/main/application.cpp:864
+#: ../../src/main/application.cpp:874
 msgid "Automatically set line breaks"
 msgstr "Αυτόματος ορισμός αλλαγών γραμμής"
 
-#: ../../src/main/application.cpp:870 ../../src/main/lineswidget.cpp:1075
+#: ../../src/main/application.cpp:880 ../../src/main/lineswidget.cpp:1075
 msgid "Unbreak Lines..."
 msgstr "Επανένωση Γραμμών..."
 
-#: ../../src/main/application.cpp:871
+#: ../../src/main/application.cpp:881
 msgid "Remove line breaks from lines"
 msgstr "Αφαίρεση αλλαγών γραμμής από γραμμές"
 
-#: ../../src/main/application.cpp:877 ../../src/main/lineswidget.cpp:1076
+#: ../../src/main/application.cpp:887 ../../src/main/lineswidget.cpp:1076
 msgid "Simplify Spaces..."
 msgstr "Απλοποίηση Κενών..."
 
-#: ../../src/main/application.cpp:878
+#: ../../src/main/application.cpp:888
 msgid "Remove unneeded spaces from lines"
 msgstr "Αφαίρεση αχρείαστων κενών από γραμμές"
 
-#: ../../src/main/application.cpp:884 ../../src/main/lineswidget.cpp:1077
+#: ../../src/main/application.cpp:894 ../../src/main/lineswidget.cpp:1077
 msgid "Change Case..."
 msgstr "Εναλλαγή Πεζών ή Κεφαλαίων..."
 
-#: ../../src/main/application.cpp:885
+#: ../../src/main/application.cpp:895
 msgid "Change lines text to upper, lower, title or sentence case"
 msgstr "Αλλαγή τύπου γραμμών σε κεφαλαία, πεζά, τίτλου ή πρότασης"
 
-#: ../../src/main/application.cpp:891 ../../src/main/lineswidget.cpp:1078
+#: ../../src/main/application.cpp:901 ../../src/main/lineswidget.cpp:1078
 msgid "Fix Punctuation..."
 msgstr "Διόρθωση Στίξης..."
 
-#: ../../src/main/application.cpp:892
+#: ../../src/main/application.cpp:902
 msgid "Fix punctuation errors in lines"
 msgstr "Διόρθωση λαθών στίξης εντός των γραμμών"
 
-#: ../../src/main/application.cpp:898 ../../src/main/lineswidget.cpp:1079
+#: ../../src/main/application.cpp:908 ../../src/main/lineswidget.cpp:1079
 #, fuzzy
 msgid "Translate..."
 msgstr "Άνοιγμα Μετάφρασης..."
 
-#: ../../src/main/application.cpp:899
+#: ../../src/main/application.cpp:909
 msgid "Translate lines texts using Google services"
 msgstr ""
 
-#: ../../src/main/application.cpp:905
+#: ../../src/main/application.cpp:915
 #, fuzzy
 msgid "Edit Line in Place"
 msgstr "Επεξεργασία Κειμένου Εντός Θέσης"
 
-#: ../../src/main/application.cpp:906
+#: ../../src/main/application.cpp:916
 msgid "Edit current line text in place"
 msgstr "Επεξεργασία κειμένου τρέχουσας γραμμής εντός θέσης"
 
-#: ../../src/main/application.cpp:914
+#: ../../src/main/application.cpp:924
 msgid "Open Video..."
 msgstr "Άνοιγμα Βίντεο..."
 
-#: ../../src/main/application.cpp:915 ../../src/main/application.cpp:922
+#: ../../src/main/application.cpp:925 ../../src/main/application.cpp:932
 msgid "Open video file"
 msgstr "Άνοιγμα αρχείου βίντεο"
 
-#: ../../src/main/application.cpp:921
+#: ../../src/main/application.cpp:931
 msgid "Open &Recent Video"
 msgstr "Άνοιγμα &Πρόσφατου Βίντεο"
 
-#: ../../src/main/application.cpp:930
+#: ../../src/main/application.cpp:940
 #, fuzzy
 msgid "Import Subtitle Stream"
 msgstr "Ροές Δεδομένων Υποτίτλων"
 
-#: ../../src/main/application.cpp:931
+#: ../../src/main/application.cpp:941
 #, fuzzy
 msgid "Import subtitle stream into subtitle editor"
 msgstr "Ροές Δεδομένων Υποτίτλων"
 
-#: ../../src/main/application.cpp:937
+#: ../../src/main/application.cpp:949
+msgid "Recognize Speech"
+msgstr ""
+
+#: ../../src/main/application.cpp:950
+#, fuzzy
+msgid "Recognize speech in audio stream"
+msgstr "Επιλογή ενεργής ροής δεδομένων ήχου"
+
+#: ../../src/main/application.cpp:956
 msgid "Close Video"
 msgstr "Κλείσιμο Βίντεο"
 
-#: ../../src/main/application.cpp:938
+#: ../../src/main/application.cpp:957
 msgid "Close video file"
 msgstr "Κλείσιμο αρχείου βίντεο"
 
-#: ../../src/main/application.cpp:945
+#: ../../src/main/application.cpp:964
 msgid "Full Screen Mode"
 msgstr "Λειτουργία Πλήρους Οθόνης"
 
-#: ../../src/main/application.cpp:946
+#: ../../src/main/application.cpp:965
 msgid "Toggle full screen mode"
 msgstr "Αντιθέτηση λειτουργίας πλήρους οθόνης"
 
-#: ../../src/main/application.cpp:953
+#: ../../src/main/application.cpp:972
 msgid "Stop"
 msgstr "Σταμάτημα"
 
-#: ../../src/main/application.cpp:954
+#: ../../src/main/application.cpp:973
 msgid "Stop video playback"
 msgstr "Σταμάτημα αναπαραγωγής βίντεο"
 
-#: ../../src/main/application.cpp:961 ../../src/main/application.cpp:2816
-#: ../../src/main/application.cpp:2824
+#: ../../src/main/application.cpp:980 ../../src/main/application.cpp:2845
+#: ../../src/main/application.cpp:2853
 msgid "Play"
 msgstr "Αναπαραγωγή"
 
-#: ../../src/main/application.cpp:962
+#: ../../src/main/application.cpp:981
 msgid "Toggle video playing/paused"
 msgstr "Αντιθέτηση παύσης/αναπαραγωγής βίντεο"
 
-#: ../../src/main/application.cpp:970
+#: ../../src/main/application.cpp:989
 msgid "Seek Backwards"
 msgstr "Ανίχνευση Οπισθοδρομώντας"
 
-#: ../../src/main/application.cpp:978
+#: ../../src/main/application.cpp:997
 msgid "Seek Forwards"
 msgstr "Ανίχνευση Εμπροσθοδρομώντας"
 
-#: ../../src/main/application.cpp:986
+#: ../../src/main/application.cpp:1005
 msgid "Jump to Previous Line"
 msgstr "Μεταπήδηση στην Προηγούμενη Γραμμή"
 
-#: ../../src/main/application.cpp:987
+#: ../../src/main/application.cpp:1006
 msgid "Seek to previous subtitle line show time"
 msgstr "Ανίχνευση του προηγούμενου χρόνου γραμμής υπότιτλου"
 
-#: ../../src/main/application.cpp:995
+#: ../../src/main/application.cpp:1014
 msgid "Jump to Next Line"
 msgstr "Μεταπήδηση στην Επόμενη Γραμμή"
 
-#: ../../src/main/application.cpp:996
+#: ../../src/main/application.cpp:1015
 msgid "Seek to next subtitle line show time"
 msgstr "Ανίχνευση του επόμενου χρόνου γραμμής υπότιτλου"
 
-#: ../../src/main/application.cpp:1004
+#: ../../src/main/application.cpp:1023
 msgid "Set Current Line Show Time"
 msgstr "Ορισμός Τρέχοντος Χρόνου Εμφάνισης Γραμμής"
 
-#: ../../src/main/application.cpp:1005
+#: ../../src/main/application.cpp:1024
 msgid "Set current line show time to video position"
 msgstr "Ορισμός του χρόνου εμφάνισης γραμμής στη θέση του βίντεο"
 
-#: ../../src/main/application.cpp:1013
+#: ../../src/main/application.cpp:1032
 msgid "Set Current Line Hide Time"
 msgstr "Ορισμός Τρέχοντος Χρόνου Απόκρυψης Γραμμής"
 
-#: ../../src/main/application.cpp:1014
+#: ../../src/main/application.cpp:1033
 msgid "Set current line hide time to video position"
 msgstr "Ορισμός του χρόνου απόκρυψης γραμμής στη θέση του βίντεο"
 
-#: ../../src/main/application.cpp:1022
+#: ../../src/main/application.cpp:1041
 msgid "Current Line Follows Video"
 msgstr "η Τρέχουσα Γραμμή Ακολουθεί το Βίντεο"
 
-#: ../../src/main/application.cpp:1023
+#: ../../src/main/application.cpp:1042
 msgid "Make current line follow the playing video position"
 msgstr "Κάνε την τρέχουσα γραμμή να ακολουθεί τη θέση αναπαραγωγής του βίντεο"
 
-#: ../../src/main/application.cpp:1029
+#: ../../src/main/application.cpp:1048
 #, fuzzy
 msgctxt "@action:inmenu Toggle audio muted"
 msgid "Mute"
 msgstr "Φίμωση"
 
-#: ../../src/main/application.cpp:1030
+#: ../../src/main/application.cpp:1049
 msgid "Enable/disable playback sound"
 msgstr "Ενεργοποίηση/απενεργοποίηση ήχου αναπαραγωγής"
 
-#: ../../src/main/application.cpp:1037
+#: ../../src/main/application.cpp:1056
 msgid "Increase Volume"
 msgstr "Αύξηση Στάθμης"
 
-#: ../../src/main/application.cpp:1038
+#: ../../src/main/application.cpp:1057
 msgid "Increase volume by 5%"
 msgstr "Αύξηση Στάθμης κατά 5%"
 
-#: ../../src/main/application.cpp:1045
+#: ../../src/main/application.cpp:1064
 msgid "Decrease Volume"
 msgstr "Μείωση Στάθμης"
 
-#: ../../src/main/application.cpp:1046
+#: ../../src/main/application.cpp:1065
 msgid "Decrease volume by 5%"
 msgstr "Μείωση Στάθμης κατά 5%"
 
-#: ../../src/main/application.cpp:1053
+#: ../../src/main/application.cpp:1072
 msgid "Audio Streams"
 msgstr "Ροές Δεδομένων Ήχου"
 
-#: ../../src/main/application.cpp:1054
+#: ../../src/main/application.cpp:1073
 msgid "Select active audio stream"
 msgstr "Επιλογή ενεργής ροής δεδομένων ήχου"
 
-#: ../../src/main/application.cpp:1061
+#: ../../src/main/application.cpp:1080
 msgid "Increase Font Size"
 msgstr "Μεγέθυνση γραμματοσειράς"
 
-#: ../../src/main/application.cpp:1062
+#: ../../src/main/application.cpp:1081
 msgid "Increase subtitles font size by 1 point"
 msgstr "Μεγέθυνση γραμματοσειράς υποτίτλων κατά 1 πόντο"
 
-#: ../../src/main/application.cpp:1069
+#: ../../src/main/application.cpp:1088
 msgid "Decrease Font Size"
 msgstr "Σμίκρυνση Γραμματοσειράς"
 
-#: ../../src/main/application.cpp:1070
+#: ../../src/main/application.cpp:1089
 msgid "Decrease subtitles font size by 1 point"
 msgstr "Σμίκρυνση γραμματοσειράς υποτίτλων κατά 1 πόντο"
 
-#: ../../src/main/application.cpp:1077
+#: ../../src/main/application.cpp:1096
 msgid "Subtitle Streams"
 msgstr "Ροές Δεδομένων Υποτίτλων"
 
-#: ../../src/main/application.cpp:1078
+#: ../../src/main/application.cpp:1097
 msgid "Select active subtitle stream"
 msgstr "Επιλογή ενεργής ροής δεδομένων υποτίτλων"
 
-#: ../../src/main/application.cpp:1084
+#: ../../src/main/application.cpp:1103
 msgid "Shift to Video Position"
 msgstr "Ολίσθηση στην Θέση του Βίντεο"
 
-#: ../../src/main/application.cpp:1085
+#: ../../src/main/application.cpp:1104
 msgid ""
 "Set current line show time to video position by equally shifting all lines"
 msgstr ""
 "Ορισμός χρόνου παρουσίας τρέχουσας γραμμής στην θέση του βίντεο μέσω "
 "ισόβαθμης ολίσθησης όλων των γραμμών"
 
-#: ../../src/main/application.cpp:1092
+#: ../../src/main/application.cpp:1111
 msgid "Adjust to Video Position (Anchor Last Line)"
 msgstr "Προσαρμογή στη Θέση του Βίντεο (Αγκύλωση Τελευταίας Γραμμής)"
 
-#: ../../src/main/application.cpp:1093
+#: ../../src/main/application.cpp:1112
 msgid ""
 "Set current line to video position by fixing the last line and linearly "
 "adjusting the other ones"
@@ -1144,11 +1153,11 @@ msgstr ""
 "Ορισμός τρέχουσας γραμμής στην θέση του βίντεο μέσω διόρθωσης της τελευταίας "
 "γραμμής και γραμμικής προσαρμογής των άλλων"
 
-#: ../../src/main/application.cpp:1100
+#: ../../src/main/application.cpp:1119
 msgid "Adjust to Video Position (Anchor First Line)"
 msgstr "Προσαρμογή στην Θέση του Βίντεο (Αγκύλωση Πρώτης Γραμμής)"
 
-#: ../../src/main/application.cpp:1101
+#: ../../src/main/application.cpp:1120
 msgid ""
 "Set current line to video position by fixing the first line and linearly "
 "adjusting the other ones"
@@ -1156,52 +1165,52 @@ msgstr ""
 "Ορισμός τρέχουσας γραμμής στην θέση του βίντεο μέσω διόρθωσης της πρώτης "
 "γραμμής και γραμμικής προσαρμογής των άλλων"
 
-#: ../../src/main/application.cpp:1108
+#: ../../src/main/application.cpp:1127
 #, fuzzy
 msgid "Toggle Anchor"
 msgstr "Αντιθέτηση Σημαδιού"
 
-#: ../../src/main/application.cpp:1109
+#: ../../src/main/application.cpp:1128
 msgid ""
 "(Un)Anchor current line's show time to timeline (Editing anchored line's "
 "show time will stretch/compact the timeline between adjanced anchors)"
 msgstr ""
 
-#: ../../src/main/application.cpp:1116
+#: ../../src/main/application.cpp:1135
 #, fuzzy
 msgid "Remove All Anchors"
 msgstr "Αφαίρεση Γραμμών"
 
-#: ../../src/main/application.cpp:1117
+#: ../../src/main/application.cpp:1136
 msgid "Unanchor show time from the timeline on all anchored lines"
 msgstr ""
 
-#: ../../src/main/application.cpp:1125
+#: ../../src/main/application.cpp:1144
 msgctxt "@action:inmenu Manage user scripts"
 msgid "Scripts Manager..."
 msgstr ""
 
-#: ../../src/main/application.cpp:1126
+#: ../../src/main/application.cpp:1145
 msgid "Manage user scripts"
 msgstr ""
 
-#: ../../src/main/application.cpp:1133 ../../src/main/application.cpp:1134
+#: ../../src/main/application.cpp:1152 ../../src/main/application.cpp:1153
 msgid "Waveform Zoom In"
 msgstr ""
 
-#: ../../src/main/application.cpp:1140 ../../src/main/application.cpp:1141
+#: ../../src/main/application.cpp:1159 ../../src/main/application.cpp:1160
 msgid "Waveform Zoom Out"
 msgstr ""
 
-#: ../../src/main/application.cpp:1148
+#: ../../src/main/application.cpp:1167
 msgid "Waveform Auto Scroll"
 msgstr ""
 
-#: ../../src/main/application.cpp:1149
+#: ../../src/main/application.cpp:1168
 msgid "Waveform display will automatically scroll to video position"
 msgstr ""
 
-#: ../../src/main/application.cpp:1241
+#: ../../src/main/application.cpp:1260
 #, fuzzy
 msgid ""
 "The requested action would make the subtitle and its translation share the "
@@ -1213,12 +1222,12 @@ msgstr ""
 "αποθήκευση.\n"
 "Είσαστε σίγουρος/η ότι θέλετε να συνεχίσετε;"
 
-#: ../../src/main/application.cpp:1241
+#: ../../src/main/application.cpp:1260
 msgid "Conflicting Subtitle Files"
 msgstr "Διένεξη Αρχείων Υποτίτλων"
 
-#: ../../src/main/application.cpp:1349 ../../src/main/application.cpp:1377
-#: ../../src/main/application.cpp:1602 ../../src/main/application.cpp:1640
+#: ../../src/main/application.cpp:1368 ../../src/main/application.cpp:1396
+#: ../../src/main/application.cpp:1632 ../../src/main/application.cpp:1670
 #, fuzzy
 msgid ""
 "<qt>Could not parse the subtitle file.<br/>This may have been caused by "
@@ -1227,11 +1236,11 @@ msgstr ""
 "<qt>Αδυναμία επικόλλησης του αρχείου υποτίτλων.<br/>Αυτό ίσως προκλήθηκε από "
 "χρήση λάθους κωδικοποίησης.</qt>"
 
-#: ../../src/main/application.cpp:1448
+#: ../../src/main/application.cpp:1478
 msgid "There was an error saving the subtitle."
 msgstr "Παρουσιάστηκε σφάλμα αποθηκεύοντας τον υπότιτλο."
 
-#: ../../src/main/application.cpp:1485 ../../src/main/application.cpp:1736
+#: ../../src/main/application.cpp:1515 ../../src/main/application.cpp:1766
 msgid ""
 "Currently opened translation subtitle has unsaved changes.\n"
 "Do you want to save them?"
@@ -1239,11 +1248,11 @@ msgstr ""
 "Ο τρέχων ανοιχτός υπότιτλος μετάφρασης έχει αναποθήκευτες αλλαγές.\n"
 "Θέλετε να τις αποθηκεύσετε;"
 
-#: ../../src/main/application.cpp:1486 ../../src/main/application.cpp:1737
+#: ../../src/main/application.cpp:1516 ../../src/main/application.cpp:1767
 msgid "Close Translation Subtitle"
 msgstr "Κλείσιμο Υπότιτλου Μετάφρασης"
 
-#: ../../src/main/application.cpp:1496
+#: ../../src/main/application.cpp:1526
 msgid ""
 "Currently opened subtitle has unsaved changes.\n"
 "Do you want to save them?"
@@ -1251,60 +1260,60 @@ msgstr ""
 "Ο τρέχων ανοιχτός υπότιτλος έχει αναποθήκευτες αλλαγές.\n"
 "Θέλετε να τις αποθηκεύσετε;"
 
-#: ../../src/main/application.cpp:1497
+#: ../../src/main/application.cpp:1527
 msgid "Close Subtitle"
 msgstr "Κλείσιμο Υπότιτλου"
 
-#: ../../src/main/application.cpp:1592
+#: ../../src/main/application.cpp:1622
 #, fuzzy
 msgctxt "@item:inmenu Display primary text in video player"
 msgid "Primary"
 msgstr "Πρωτεύον"
 
-#: ../../src/main/application.cpp:1593
+#: ../../src/main/application.cpp:1623
 #, fuzzy
 msgctxt "@item:inmenu Display translation text in video player"
 msgid "Translation"
 msgstr "Μετάφραση"
 
-#: ../../src/main/application.cpp:1699
+#: ../../src/main/application.cpp:1729
 msgid "There was an error saving the translation subtitle."
 msgstr "Παρουσιάστηκε σφάλμα αποθηκεύοντας τον υπότιτλο μετάφρασης."
 
-#: ../../src/main/application.cpp:1782
+#: ../../src/main/application.cpp:1812
 #, fuzzy
 msgid "Could not read the subtitle file to append."
 msgstr "Αδυναμία ανάγνωσης του αρχείου υποτίτλων προς ενημέρωση."
 
-#: ../../src/main/application.cpp:1800 ../../src/main/application.cpp:2696
-#: ../../src/main/application.cpp:2702
+#: ../../src/main/application.cpp:1830 ../../src/main/application.cpp:2725
+#: ../../src/main/application.cpp:2731
 msgid "Untitled"
 msgstr "Άτιτλο"
 
-#: ../../src/main/application.cpp:1800 ../../src/main/application.cpp:2698
+#: ../../src/main/application.cpp:1830 ../../src/main/application.cpp:2727
 msgid "Untitled Translation"
 msgstr "Άτιτλη Μετάφραση"
 
-#: ../../src/main/application.cpp:1806
+#: ../../src/main/application.cpp:1836
 msgctxt "Suffix added to split subtitles"
 msgid "split"
 msgstr ""
 
-#: ../../src/main/application.cpp:1820
+#: ../../src/main/application.cpp:1850
 #, fuzzy
 msgid "Could not write the split subtitle file."
 msgstr "Αδυναμία εγγραφής του διαχωρισμένου αρχείου υποτίτλων."
 
-#: ../../src/main/application.cpp:1820
+#: ../../src/main/application.cpp:1850
 #, fuzzy
 msgid "Could not write the split subtitle translation file."
 msgstr "Αδυναμία εγγραφής του διαχωρισμένου αρχείου υποτίτλων μετάφρασης."
 
-#: ../../src/main/application.cpp:1837
+#: ../../src/main/application.cpp:1867
 msgid "The specified time does not split the subtitles."
 msgstr "Ο συγκεκριμένος χρόνος δεν διαχωρίζει τους υπότιτλους"
 
-#: ../../src/main/application.cpp:1872
+#: ../../src/main/application.cpp:1902
 #, fuzzy
 msgid ""
 "Could not open a new Subtitle Composer window.\n"
@@ -1313,7 +1322,7 @@ msgstr ""
 "Αδυναμία ανοίγματος ενός νέου παράθυρου Συνθέτη Υποτίτλων.\n"
 "Το διαχωρισμένο τμήμα αποθηκεύτηκε ως %1."
 
-#: ../../src/main/application.cpp:1873
+#: ../../src/main/application.cpp:1903
 #, fuzzy
 msgid ""
 "Could not open a new Subtitle Composer window.\n"
@@ -1322,66 +1331,66 @@ msgstr ""
 "Αδυναμία ανοίγματος ενός νέου παράθυρου Συνθέτη Υποτίτλων.\n"
 "Το διαχωρισμένο τμήμα αποθηκεύτηκε ως %1 και %2."
 
-#: ../../src/main/application.cpp:1965
+#: ../../src/main/application.cpp:1994
 msgid "Go to Line"
 msgstr "Πήγαινε στη Γραμμή"
 
-#: ../../src/main/application.cpp:1965
+#: ../../src/main/application.cpp:1994
 msgid "&Go to line:"
 msgstr "&Πήγαινε στη γραμμή:"
 
-#: ../../src/main/application.cpp:2239
+#: ../../src/main/application.cpp:2268
 #, fuzzy
 msgid "Can not perform sort on selection with multiple ranges."
 msgstr "Αδυνατώ να ταξινομήσω σε επιλογή πολλαπλής έκτασης."
 
-#: ../../src/main/application.cpp:2321
+#: ../../src/main/application.cpp:2350
 msgid "The reference subtitle must have more than one line to proceed."
 msgstr ""
 "Ο υπότιτλος αναφοράς πρέπει να έχει πλέον της μίας γραμμής για να συνεχίσω."
 
-#: ../../src/main/application.cpp:2328
+#: ../../src/main/application.cpp:2357
 #, fuzzy
 msgid "Could not parse the reference subtitle file."
 msgstr "Αδυναμία επικόλλησης του αρχείου υποτίτλων αναφοράς."
 
-#: ../../src/main/application.cpp:2410 ../../src/main/dialogs/translatedialog.cpp:33
+#: ../../src/main/application.cpp:2439 ../../src/main/dialogs/translatedialog.cpp:33
 #, fuzzy
 msgid "Translate"
 msgstr "Μετάφραση"
 
-#: ../../src/main/application.cpp:2410
+#: ../../src/main/application.cpp:2439
 #, fuzzy
 msgid "Translating text (%1 to %2)..."
 msgstr "Χρήση μεταφραστικού κειμένου"
 
-#: ../../src/main/application.cpp:2414
+#: ../../src/main/application.cpp:2443
 #, fuzzy
 msgid "Translating primary text (%1 to %2)..."
 msgstr "Χρήση μεταφραστικού κειμένου"
 
-#: ../../src/main/application.cpp:2415
+#: ../../src/main/application.cpp:2444
 #, fuzzy
 msgid "Translating secondary text (%1 to %2)..."
 msgstr "Χρήση μεταφραστικού κειμένου"
 
-#: ../../src/main/application.cpp:2443
+#: ../../src/main/application.cpp:2472
 msgid ""
 "Unable to perform texts synchronization (sent and received lines count do "
 "not match)."
 msgstr ""
 
-#: ../../src/main/application.cpp:2447
+#: ../../src/main/application.cpp:2476
 #, fuzzy
 msgid "Translate Primary Text"
 msgstr "Χρήση πρωτεύοντος κειμένου"
 
-#: ../../src/main/application.cpp:2447
+#: ../../src/main/application.cpp:2476
 #, fuzzy
 msgid "Translate Secondary Text"
 msgstr "Ορισμός Δευτερεύοντος Κειμένου Γραμμής"
 
-#: ../../src/main/application.cpp:2462
+#: ../../src/main/application.cpp:2491
 #, fuzzy
 msgid ""
 "There was an error performing the translation:\n"
@@ -1389,11 +1398,11 @@ msgid ""
 "%1"
 msgstr "Παρουσιάστηκε σφάλμα αποθηκεύοντας τον υπότιτλο μετάφρασης."
 
-#: ../../src/main/application.cpp:2500
+#: ../../src/main/application.cpp:2529
 msgid "Open Video"
 msgstr "Άνοιγμα Βίντεο"
 
-#: ../../src/main/application.cpp:2645 ../../src/main/application.cpp:2676
+#: ../../src/main/application.cpp:2674 ../../src/main/application.cpp:2705
 msgid ""
 "Continuing would result in loss of timing information for some lines.\n"
 "Are you sure you want to continue?"
@@ -1402,85 +1411,95 @@ msgstr ""
 "κάποιες γραμμές.\n"
 "Είστε σίγουρος/η ότι θέλετε να συνεχίσετε;"
 
-#: ../../src/main/application.cpp:2693
+#: ../../src/main/application.cpp:2722
 msgid "modified"
 msgstr "τροποποιημένο"
 
-#: ../../src/main/application.cpp:2808
+#: ../../src/main/application.cpp:2837
 msgid "Pause"
 msgstr "Παύση"
 
-#: ../../src/main/application.cpp:2868
+#: ../../src/main/application.cpp:2903
 msgid "Seek backwards 1 second"
 msgid_plural "Seek backwards %1 seconds"
 msgstr[0] "Ανίχνευση Οπισθοδρομώντας κατά 1 δευτερόλεπτο"
 msgstr[1] "Ανίχνευση Οπισθοδρομώντας κατά %1 δευτερόλεπτα"
 
-#: ../../src/main/application.cpp:2869
+#: ../../src/main/application.cpp:2904
 msgid "Seek forwards 1 second"
 msgid_plural "Seek forwards %1 seconds"
 msgstr[0] "Ανίχνευση Εμπροσθοδρομώντας κατά 1 δευτερόλεπτο"
 msgstr[1] "Ανίχνευση Εμπροσθοδρομώντας κατά %1 δευτερόλεπτα"
 
-#: ../../src/main/application.cpp:2872 ../../src/main/application.cpp:2876
+#: ../../src/main/application.cpp:2907 ../../src/main/application.cpp:2911
 #, fuzzy
 msgid "Shift %21 Millisecond"
 msgid_plural "Shift %2%1 Milliseconds"
 msgstr[0] "Ολίσθηση +%1 Χιλιοστά του δευτερολέπτου"
 msgstr[1] "Ολίσθηση +%1 Χιλιοστά του δευτερολέπτου"
 
-#: ../../src/main/application.cpp:2873 ../../src/main/application.cpp:2877
+#: ../../src/main/application.cpp:2908 ../../src/main/application.cpp:2912
 #, fuzzy
 msgid "Shift selected lines %21 millisecond"
 msgid_plural "Shift selected lines %2%1 milliseconds"
 msgstr[0] "Ολίσθηση +%1 Χιλιοστά του δευτερολέπτου επιλεγμένων γραμμών"
 msgstr[1] "Ολίσθηση +%1 Χιλιοστά του δευτερολέπτου επιλεγμένων γραμμών"
 
-#: ../../src/main/configs/configdialog.cpp:47
+#: ../../src/main/configs/configdialog.cpp:48
 #, fuzzy
 msgctxt "@title General settings"
 msgid "General"
 msgstr "Γενικά"
 
-#: ../../src/main/configs/configdialog.cpp:48
+#: ../../src/main/configs/configdialog.cpp:49
 #, fuzzy
 msgid "General Settings"
 msgstr "Ρυθμίσεις"
 
-#: ../../src/main/configs/configdialog.cpp:52
+#: ../../src/main/configs/configdialog.cpp:53
 #, fuzzy
-msgctxt "@title Error Check Settings"
-msgid "Error check"
+msgctxt "@title Error check settings"
+msgid "Error Check"
 msgstr "Έλεγχος Λαθών"
 
-#: ../../src/main/configs/configdialog.cpp:53
+#: ../../src/main/configs/configdialog.cpp:54
 #, fuzzy
 msgid "Error Check Settings"
 msgstr "Έλεγχος Λαθών"
 
-#: ../../src/main/configs/configdialog.cpp:59
+#: ../../src/main/configs/configdialog.cpp:60
 #, fuzzy
 msgctxt "@title Spelling settings"
 msgid "Spelling"
 msgstr "Συλλαβισμός..."
 
-#: ../../src/main/configs/configdialog.cpp:60
+#: ../../src/main/configs/configdialog.cpp:61
 #, fuzzy
 msgid "Spelling Settings"
 msgstr "Ορθογραφικός Έλεγχος"
 
-#: ../../src/main/configs/configdialog.cpp:64
-#, fuzzy
-msgctxt "@title Video player Settings"
-msgid "Video player"
-msgstr "Αναπαραγωγέας"
-
 #: ../../src/main/configs/configdialog.cpp:65
+msgctxt "@title Waveform settings"
+msgid "Waveform"
+msgstr ""
+
+#: ../../src/main/configs/configdialog.cpp:66
 #, fuzzy
-msgid "Video player settings"
+msgid "Waveform settings"
 msgstr "Αναπαραγωγέας"
 
-#: ../../src/main/configs/configdialog.cpp:72
+#: ../../src/main/configs/configdialog.cpp:70
+#, fuzzy
+msgctxt "@title Video player settings"
+msgid "Video Player"
+msgstr "Αναπαραγωγέας"
+
+#: ../../src/main/configs/configdialog.cpp:71
+#, fuzzy
+msgid "Video Player Settings"
+msgstr "Αναπαραγωγέας"
+
+#: ../../src/main/configs/configdialog.cpp:78
 #, fuzzy
 msgctxt "@title Video player backend settings"
 msgid "%1 backend settings"
@@ -2136,12 +2155,12 @@ msgstr "Sergio Pistone"
 msgid "Original Author"
 msgstr ""
 
-#: ../../src/main/main.cpp:66 rc.cpp:484
+#: ../../src/main/main.cpp:66 rc.cpp:583
 msgctxt "NAME OF TRANSLATORS"
 msgid "Your names"
 msgstr "Αλέξανδρος Περδικομάτης"
 
-#: ../../src/main/main.cpp:66 rc.cpp:485
+#: ../../src/main/main.cpp:66 rc.cpp:584
 msgctxt "EMAIL OF TRANSLATORS"
 msgid "Your emails"
 msgstr "atanasia@ontelecoms.gr"
@@ -2176,6 +2195,15 @@ msgstr "Άνοιγμα τοποθεσίας ως πρωτεύοντος τίτλ
 msgid "Open location as translation subtitle"
 msgstr "Άνοιγμα τοποθεσίας ως τίτλου μετάφρασης"
 
+#: ../../src/main/mainwindow.cpp:46
+msgid "Waveform"
+msgstr ""
+
+#: ../../src/main/mainwindow.cpp:60
+#, fuzzy
+msgid "Video Player"
+msgstr "Αναπαραγωγέας"
+
 #: ../../src/main/playerwidget.cpp:99
 msgid "<b>Position</b>"
 msgstr "<b>Θέση</b>"
@@ -2190,27 +2218,27 @@ msgstr "<b>Καρέ/δευτ.</b>"
 
 #. i18n: file: ../../src/main/configs/playerconfigwidget.ui:36
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_ShowPositionTimeEdit)
-#: ../../src/main/playerwidget.cpp:461 rc.cpp:75
+#: ../../src/main/playerwidget.cpp:467 rc.cpp:75
 msgid "Show editable position control"
 msgstr "Εμφάνιση ελέγχου θέσης δυνάμενης να διορθωθεί"
 
-#: ../../src/main/playerwidget.cpp:710 ../../src/main/playerwidget.cpp:711
-#: ../../src/main/playerwidget.cpp:712 ../../src/main/playerwidget.cpp:791
-#: ../../src/main/playerwidget.cpp:805 ../../src/main/playerwidget.cpp:813
+#: ../../src/main/playerwidget.cpp:716 ../../src/main/playerwidget.cpp:717
+#: ../../src/main/playerwidget.cpp:718 ../../src/main/playerwidget.cpp:797
+#: ../../src/main/playerwidget.cpp:811 ../../src/main/playerwidget.cpp:819
 msgid "<i>Unknown</i>"
 msgstr "<i>Άγνωστο</i>"
 
-#: ../../src/main/playerwidget.cpp:722
+#: ../../src/main/playerwidget.cpp:728
 #, fuzzy
 msgid "<qt>There was an error opening media file %1.</qt>"
 msgstr "<qt>Παρουσιάστηκε σφάλμα κατά το άνοιγμα αρχείου<br/>%1</qt>"
 
-#: ../../src/main/playerwidget.cpp:754 ../../src/main/playerwidget.cpp:756
+#: ../../src/main/playerwidget.cpp:760 ../../src/main/playerwidget.cpp:762
 #, fuzzy
 msgid "Unexpected error when playing file."
 msgstr "Απρόσμενο λάθος κατά την αναπαραγωγή αρχείου."
 
-#: ../../src/main/playerwidget.cpp:754 ../../src/main/playerwidget.cpp:756
+#: ../../src/main/playerwidget.cpp:760 ../../src/main/playerwidget.cpp:762
 msgid "Error Playing File"
 msgstr ""
 
@@ -2315,7 +2343,7 @@ msgstr "Λάθη προς έλεγχο"
 
 #. i18n: file: ../../src/videoplayerplugins/gstreamer/gstreamerconfigwidget.ui:20
 #. i18n: ectx: property (title), widget (QGroupBox, grpOptions)
-#: ../../src/main/utils/errorfinder.cpp:42 rc.cpp:381
+#: ../../src/main/utils/errorfinder.cpp:42 rc.cpp:480
 msgid "Options"
 msgstr ""
 
@@ -2420,6 +2448,28 @@ msgstr ""
 msgid "Unexpected contents received from translation service"
 msgstr ""
 
+#: ../../src/speechprocessor/speechprocessor.cpp:56
+msgid "Recognizing speech"
+msgstr ""
+
+#: ../../src/speechprocessor/speechprocessor.cpp:155
+msgid "No speech recognition plugins available"
+msgstr ""
+
+#: ../../src/speechprocessor/speechprocessor.cpp:160
+msgid "Initialization of speech recognition plugin failed"
+msgstr ""
+
+#: ../../src/speechprocessor/speechprocessor.cpp:230
+msgid ""
+"Speech Recognition failed: %2\n"
+"Code %1: %3"
+msgstr ""
+
+#: ../../src/videoplayer/videoplayer.cpp:551
+msgid "File does not exist."
+msgstr ""
+
 #: ../../src/videoplayerplugins/gstreamer/gstreamerplayerbackend.cpp:350
 #: ../../src/videoplayerplugins/mpv/mpvbackend.cpp:232
 #, fuzzy
@@ -2432,10 +2482,6 @@ msgstr "Ροή Δεδομένων Ήχου #%1"
 #: ../../src/videoplayerplugins/xine/xineplayerbackend.cpp:290
 msgid "Audio Stream #%1"
 msgstr "Ροή Δεδομένων Ήχου #%1"
-
-#: ../../src/videoplayer/videoplayer.cpp:551
-msgid "File does not exist."
-msgstr ""
 
 #: ../../src/widgets/simplerichtextedit.cpp:79
 msgid "Cut"
@@ -2489,7 +2535,7 @@ msgstr ""
 msgid "No suggestions"
 msgstr ""
 
-#: ../../src/widgets/waveformwidget.cpp:116
+#: ../../src/widgets/waveformwidget.cpp:117
 msgid "Generating waveform"
 msgstr ""
 
@@ -2555,7 +2601,7 @@ msgstr "Συμπεριφορά"
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_AutoClearFixed)
 #. i18n: file: ../../src/main/scconfig.kcfg:65
 #. i18n: ectx: label, entry (AutoClearFixed), group (Error Check)
-#: rc.cpp:42 rc.cpp:141
+#: rc.cpp:42 rc.cpp:201
 msgid "Automatically clear fixed errors"
 msgstr "Αυτόματος καθαρισμός διορθωμένων λαθών"
 
@@ -2567,7 +2613,7 @@ msgstr "Αυτόματος καθαρισμός διορθωμένων λαθώ�
 #. i18n: ectx: property (title), widget (QGroupBox, grpGeneral)
 #. i18n: file: ../../src/videoplayerplugins/mpv/mpvconfigwidget.ui:20
 #. i18n: ectx: property (title), widget (QGroupBox, grpGeneral)
-#: rc.cpp:45 rc.cpp:69 rc.cpp:390 rc.cpp:435
+#: rc.cpp:45 rc.cpp:69 rc.cpp:489 rc.cpp:534
 #, fuzzy
 msgid "General"
 msgstr "Γενικά"
@@ -2642,21 +2688,21 @@ msgstr "Υπότιτλος"
 #. i18n: ectx: property (text), widget (QLabel, label_7)
 #: rc.cpp:84
 #, fuzzy
-msgid "Outline Color:"
+msgid "Outline color:"
 msgstr "Χρώμα Περιγράμματος:"
 
 #. i18n: file: ../../src/main/configs/playerconfigwidget.ui:75
 #. i18n: ectx: property (text), widget (QLabel, label_8)
 #: rc.cpp:87
 #, fuzzy
-msgid "Outline Width:"
+msgid "Outline width:"
 msgstr "Πλάτος Περιγράμματος:"
 
 #. i18n: file: ../../src/main/configs/playerconfigwidget.ui:82
 #. i18n: ectx: property (text), widget (QLabel, label_6)
 #: rc.cpp:90
 #, fuzzy
-msgid "Text Color:"
+msgid "Text color:"
 msgstr "Εναλλαγή πεζά/κεφαλαία"
 
 #. i18n: file: ../../src/main/configs/playerconfigwidget.ui:89
@@ -2670,7 +2716,7 @@ msgstr "Οικογένεια:"
 #. i18n: ectx: property (text), widget (QLabel, label_5)
 #: rc.cpp:96
 #, fuzzy
-msgid "Font Size:"
+msgid "Font size:"
 msgstr "Μέγεθος:"
 
 #. i18n: file: ../../src/main/configs/playerconfigwidget.ui:120
@@ -2686,537 +2732,745 @@ msgstr ""
 msgid "Subtitles Preview"
 msgstr "Επισκόπηση υποτίτλων"
 
+#. i18n: file: ../../src/main/configs/waveformconfigwidget.ui:17
+#. i18n: ectx: property (title), widget (QGroupBox, groupBox_3)
+#: rc.cpp:105
+msgid "Waveform Display"
+msgstr ""
+
+#. i18n: file: ../../src/main/configs/waveformconfigwidget.ui:42
+#. i18n: ectx: property (text), widget (QLabel, label_12)
+#: rc.cpp:108
+#, fuzzy
+msgid "Outer color:"
+msgstr "Χρώμα Περιγράμματος:"
+
+#. i18n: file: ../../src/main/configs/waveformconfigwidget.ui:68
+#. i18n: ectx: property (text), widget (QLabel, label_11)
+#: rc.cpp:111
+#, fuzzy
+msgid "Inner color:"
+msgstr "Πρωτεύον Χρώμα:"
+
+#. i18n: file: ../../src/main/configs/waveformconfigwidget.ui:78
+#. i18n: ectx: property (title), widget (QGroupBox, m_grpGeneral)
+#: rc.cpp:114
+#, fuzzy
+msgid "Subtitle Display"
+msgstr "Υπότιτλος"
+
+#. i18n: file: ../../src/main/configs/waveformconfigwidget.ui:106
+#. i18n: ectx: property (text), widget (QLabel, label_14)
+#: rc.cpp:117
+#, fuzzy
+msgid "Subtitle border color:"
+msgstr "Λάθη Υποτίτλων"
+
+#. i18n: file: ../../src/main/configs/waveformconfigwidget.ui:113
+#. i18n: ectx: property (text), widget (QLabel, label_16)
+#: rc.cpp:120
+msgid "Selected background color:"
+msgstr ""
+
+#. i18n: file: ../../src/main/configs/waveformconfigwidget.ui:120
+#. i18n: ectx: property (text), widget (QLabel, label_15)
+#: rc.cpp:123
+#, fuzzy
+msgid "Subtitle border width:"
+msgstr "Συνθέτης Υποτίτλων"
+
+#. i18n: file: ../../src/main/configs/waveformconfigwidget.ui:127
+#. i18n: ectx: property (text), widget (QLabel, label_13)
+#: rc.cpp:126
+msgid "Subtitle background color:"
+msgstr ""
+
+#. i18n: file: ../../src/main/configs/waveformconfigwidget.ui:153
+#. i18n: ectx: property (text), widget (QLabel, label_17)
+#: rc.cpp:129
+#, fuzzy
+msgid "Selected border color:"
+msgstr "Καθαρισμός Λαθών"
+
+#. i18n: file: ../../src/main/configs/waveformconfigwidget.ui:201
+#. i18n: ectx: property (title), widget (QGroupBox, groupBox)
+#: rc.cpp:132
+#, fuzzy
+msgid "Text Font and Colors"
+msgstr "Εναλλαγή πεζά/κεφαλαία"
+
+#. i18n: file: ../../src/main/configs/waveformconfigwidget.ui:207
+#. i18n: ectx: property (text), widget (QLabel, label_21)
+#: rc.cpp:135
+#, fuzzy
+msgid "Subtitle font family:"
+msgstr "Γραμματοσειρά υποτίτλων"
+
+#. i18n: file: ../../src/main/configs/waveformconfigwidget.ui:217
+#. i18n: ectx: property (text), widget (QLabel, label_22)
+#: rc.cpp:138
+#, fuzzy
+msgid "Subtitle number font size:"
+msgstr "Γραμματοσειρά υποτίτλων"
+
+#. i18n: file: ../../src/main/configs/waveformconfigwidget.ui:224
+#. i18n: ectx: property (suffix), widget (QSpinBox, kcfg_wfSubNumberFontSize)
+#. i18n: file: ../../src/main/configs/waveformconfigwidget.ui:264
+#. i18n: ectx: property (suffix), widget (QSpinBox, kcfg_wfSubTextFontSize)
+#: rc.cpp:141 rc.cpp:150
+#, fuzzy
+msgid " pt"
+msgstr "πόντοι"
+
+#. i18n: file: ../../src/main/configs/waveformconfigwidget.ui:231
+#. i18n: ectx: property (text), widget (QLabel, label_23)
+#: rc.cpp:144
+#, fuzzy
+msgid "Subtitle Number Color"
+msgstr "Συνθέτης Υποτίτλων"
+
+#. i18n: file: ../../src/main/configs/waveformconfigwidget.ui:257
+#. i18n: ectx: property (text), widget (QLabel, label_24)
+#: rc.cpp:147
+#, fuzzy
+msgid "Subtitle text font size:"
+msgstr "Γραμματοσειρά υποτίτλων"
+
+#. i18n: file: ../../src/main/configs/waveformconfigwidget.ui:271
+#. i18n: ectx: property (text), widget (QLabel, label_25)
+#: rc.cpp:153
+#, fuzzy
+msgid "Subtitle Text Color"
+msgstr "Συνθέτης Υποτίτλων"
+
+#. i18n: file: ../../src/main/configs/waveformconfigwidget.ui:300
+#. i18n: ectx: property (title), widget (QGroupBox, groupBox_2)
+#: rc.cpp:156
+#, fuzzy
+msgid "Line Indicators"
+msgstr "Ορισμός Λαθών Γραμμής"
+
+#. i18n: file: ../../src/main/configs/waveformconfigwidget.ui:306
+#. i18n: ectx: property (text), widget (QLabel, label_11)
+#: rc.cpp:159
+msgid "Player position color:"
+msgstr ""
+
+#. i18n: file: ../../src/main/configs/waveformconfigwidget.ui:313
+#. i18n: ectx: property (text), widget (QLabel, label_12)
+#: rc.cpp:162
+msgid "Mouse indicator color:"
+msgstr ""
+
 #. i18n: file: ../../src/main/scconfig.kcfg:10
 #. i18n: ectx: label, entry (DefaultSubtitlesEncoding), group (General)
-#: rc.cpp:105
+#: rc.cpp:165
 msgid "Default Subtitles Encoding"
 msgstr ""
 
 #. i18n: file: ../../src/main/scconfig.kcfg:14
 #. i18n: ectx: label, entry (SeekOffsetOnDoubleClick), group (General)
-#: rc.cpp:108
+#: rc.cpp:168
 msgid "Seek Offset On Double Click"
 msgstr ""
 
 #. i18n: file: ../../src/main/scconfig.kcfg:18
 #. i18n: ectx: label, entry (UnpauseOnDoubleClick), group (General)
-#: rc.cpp:111
+#: rc.cpp:171
 msgid "Unpause On Double Click"
 msgstr ""
 
 #. i18n: file: ../../src/main/scconfig.kcfg:22
 #. i18n: ectx: label, entry (AutomaticVideoLoad), group (General)
-#: rc.cpp:114
+#: rc.cpp:174
 #, fuzzy
 msgid "Automatic Video Load"
 msgstr "Αυτόματες Διάρκειες"
 
 #. i18n: file: ../../src/main/scconfig.kcfg:27
 #. i18n: ectx: label, entry (LinesQuickShiftAmount), group (General)
-#: rc.cpp:117
+#: rc.cpp:177
 msgid "Lines Quick Shift Amount"
 msgstr ""
 
 #. i18n: file: ../../src/main/scconfig.kcfg:31
 #. i18n: ectx: label, entry (GrabbedPositionCompensation), group (General)
-#: rc.cpp:120
+#: rc.cpp:180
 msgid "Grabbed Position Compensation"
 msgstr ""
 
 #. i18n: file: ../../src/main/scconfig.kcfg:38
 #. i18n: ectx: label, entry (MaxCharacters), group (Error Check)
-#: rc.cpp:123
+#: rc.cpp:183
 #, fuzzy
 msgid "Maximum number of characters"
 msgstr "Μέγιστος αριθμός χαρακτήρων:"
 
 #. i18n: file: ../../src/main/scconfig.kcfg:42
 #. i18n: ectx: label, entry (MaxLines), group (Error Check)
-#: rc.cpp:126
+#: rc.cpp:186
 #, fuzzy
 msgid "Maximum number of lines"
 msgstr "Μέγιστος αριθμός γραμμών:"
 
 #. i18n: file: ../../src/main/scconfig.kcfg:47
 #. i18n: ectx: label, entry (MinDuration), group (Error Check)
-#: rc.cpp:129
+#: rc.cpp:189
 #, fuzzy
 msgid "Minimum duration"
 msgstr "Ελάχιστη διάρκεια:"
 
 #. i18n: file: ../../src/main/scconfig.kcfg:51
 #. i18n: ectx: label, entry (MaxDuration), group (Error Check)
-#: rc.cpp:132
+#: rc.cpp:192
 #, fuzzy
 msgid "Maximum duration"
 msgstr "Μέγιστη διάρκεια:"
 
 #. i18n: file: ../../src/main/scconfig.kcfg:56
 #. i18n: ectx: label, entry (MinDurationPerCharacter), group (Error Check)
-#: rc.cpp:135
+#: rc.cpp:195
 #, fuzzy
 msgid "Minimum duration per character"
 msgstr "Πολύ μακρά διάρκεια ανά χαρακτήρα"
 
 #. i18n: file: ../../src/main/scconfig.kcfg:60
 #. i18n: ectx: label, entry (MaxDurationPerCharacter), group (Error Check)
-#: rc.cpp:138
+#: rc.cpp:198
 #, fuzzy
 msgid "Maximum duration per character"
 msgstr "Πολύ μακρά διάρκεια ανά χαρακτήρα"
 
 #. i18n: file: ../../src/main/scconfig.kcfg:72
 #. i18n: ectx: label, entry (DefaultLanguage), group (Spelling)
-#: rc.cpp:144
+#: rc.cpp:204
 msgid "Default Language"
 msgstr ""
 
 #. i18n: file: ../../src/main/scconfig.kcfg:76
 #. i18n: ectx: label, entry (DefaultClient), group (Spelling)
-#: rc.cpp:147
+#: rc.cpp:207
 msgid "Default client"
 msgstr ""
 
 #. i18n: file: ../../src/main/scconfig.kcfg:80
 #. i18n: ectx: label, entry (CheckUppercase), group (Spelling)
-#: rc.cpp:150
+#: rc.cpp:210
 #, fuzzy
 msgid "Check uppercase"
 msgstr "Κεφαλαία"
 
 #. i18n: file: ../../src/main/scconfig.kcfg:84
 #. i18n: ectx: label, entry (SkipRunTogether), group (Spelling)
-#: rc.cpp:153
+#: rc.cpp:213
 msgid "Skip Run Together"
 msgstr ""
 
 #. i18n: file: ../../src/main/scconfig.kcfg:91
-#. i18n: ectx: label, entry (PlayerBackend), group (VideoPlayer)
-#: rc.cpp:156
-#, fuzzy
-msgid "VideoPlayer Backend"
-msgstr "Ενδότερα αναπαραγωγέα:"
+#. i18n: ectx: label, entry (wfInnerColor), group (Waveform Widget)
+#: rc.cpp:216
+msgid "Waveform Inner Color"
+msgstr ""
 
 #. i18n: file: ../../src/main/scconfig.kcfg:95
-#. i18n: ectx: label, entry (DecoderBackend), group (VideoPlayer)
-#: rc.cpp:159
+#. i18n: ectx: label, entry (wfOuterColor), group (Waveform Widget)
+#: rc.cpp:219
 #, fuzzy
-msgid "Decoder Backend"
-msgstr "Ενδότερα αναπαραγωγέα:"
+msgid "Waveform Outer Color"
+msgstr "Χρώμα Περιγράμματος:"
 
 #. i18n: file: ../../src/main/scconfig.kcfg:99
-#. i18n: ectx: label, entry (SeekJumpLength), group (VideoPlayer)
-#: rc.cpp:162
-#, fuzzy
-msgid "Jump length on seek"
-msgstr "μήκος μεταπήδησης κατά την ανίχνευση εμπρός/πίσω:"
+#. i18n: ectx: label, entry (wfSubBackground), group (Waveform Widget)
+#: rc.cpp:222
+msgid "Waveform Subtitle Background Color"
+msgstr ""
 
 #. i18n: file: ../../src/main/scconfig.kcfg:103
-#. i18n: ectx: label, entry (ShowPositionTimeEdit), group (VideoPlayer)
-#: rc.cpp:165
-#, fuzzy
-msgid "Show editable time position"
-msgstr "Εμφάνιση ελέγχου θέσης δυνάμενης να διορθωθεί"
+#. i18n: ectx: label, entry (wfSubBorder), group (Waveform Widget)
+#: rc.cpp:225
+msgid "Waveform Subtitle Border Color"
+msgstr ""
 
-#. i18n: file: ../../src/main/scconfig.kcfg:108
+#. i18n: file: ../../src/main/scconfig.kcfg:107
+#. i18n: ectx: label, entry (wfSubBorderWidth), group (Waveform Widget)
+#: rc.cpp:228
+msgid "Waveform Subtitle Border Width"
+msgstr ""
+
+#. i18n: file: ../../src/main/scconfig.kcfg:111
+#. i18n: ectx: label, entry (wfSelBackground), group (Waveform Widget)
+#: rc.cpp:231
+msgid "Waveform Selected Subtitle Background Color"
+msgstr ""
+
+#. i18n: file: ../../src/main/scconfig.kcfg:115
+#. i18n: ectx: label, entry (wfSelBorder), group (Waveform Widget)
+#: rc.cpp:234
+msgid "Waveform Selected Subtitle Border Color"
+msgstr ""
+
+#. i18n: file: ../../src/main/scconfig.kcfg:119
+#. i18n: ectx: label, entry (wfFontFamily), group (Waveform Widget)
+#. i18n: file: ../../src/main/scconfig.kcfg:163
 #. i18n: ectx: label, entry (FontFamily), group (VideoPlayer)
-#: rc.cpp:168
+#: rc.cpp:237 rc.cpp:267
 #, fuzzy
 msgid "Font Family"
 msgstr "Οικογένεια:"
 
-#. i18n: file: ../../src/main/scconfig.kcfg:112
+#. i18n: file: ../../src/main/scconfig.kcfg:123
+#. i18n: ectx: label, entry (wfSubNumberFontSize), group (Waveform Widget)
+#: rc.cpp:240
+#, fuzzy
+msgid "Subtitle Number Font Size"
+msgstr "Γραμματοσειρά υποτίτλων"
+
+#. i18n: file: ../../src/main/scconfig.kcfg:127
+#. i18n: ectx: label, entry (wfSubNumberColor), group (Waveform Widget)
+#: rc.cpp:243
+#, fuzzy
+msgid "Subtitle Number Font Color"
+msgstr "Συνθέτης Υποτίτλων"
+
+#. i18n: file: ../../src/main/scconfig.kcfg:131
+#. i18n: ectx: label, entry (wfSubTextFontSize), group (Waveform Widget)
+#: rc.cpp:246
+#, fuzzy
+msgid "Subtitle Text Font Size"
+msgstr "Γραμματοσειρά υποτίτλων"
+
+#. i18n: file: ../../src/main/scconfig.kcfg:135
+#. i18n: ectx: label, entry (wfSubTextColor), group (Waveform Widget)
+#: rc.cpp:249
+#, fuzzy
+msgid "Subtitle Text Font Color"
+msgstr "Συνθέτης Υποτίτλων"
+
+#. i18n: file: ../../src/main/scconfig.kcfg:139
+#. i18n: ectx: label, entry (wfMouseLocation), group (Waveform Widget)
+#: rc.cpp:252
+msgid "Mouse Location Line Color"
+msgstr ""
+
+#. i18n: file: ../../src/main/scconfig.kcfg:143
+#. i18n: ectx: label, entry (wfPlayLocation), group (Waveform Widget)
+#: rc.cpp:255
+msgid "Play Location Line Color"
+msgstr ""
+
+#. i18n: file: ../../src/main/scconfig.kcfg:150
+#. i18n: ectx: label, entry (PlayerBackend), group (VideoPlayer)
+#: rc.cpp:258
+#, fuzzy
+msgid "VideoPlayer Backend"
+msgstr "Ενδότερα αναπαραγωγέα:"
+
+#. i18n: file: ../../src/main/scconfig.kcfg:154
+#. i18n: ectx: label, entry (SeekJumpLength), group (VideoPlayer)
+#: rc.cpp:261
+#, fuzzy
+msgid "Jump length on seek"
+msgstr "μήκος μεταπήδησης κατά την ανίχνευση εμπρός/πίσω:"
+
+#. i18n: file: ../../src/main/scconfig.kcfg:158
+#. i18n: ectx: label, entry (ShowPositionTimeEdit), group (VideoPlayer)
+#: rc.cpp:264
+#, fuzzy
+msgid "Show editable time position"
+msgstr "Εμφάνιση ελέγχου θέσης δυνάμενης να διορθωθεί"
+
+#. i18n: file: ../../src/main/scconfig.kcfg:167
 #. i18n: ectx: label, entry (FontPointSize), group (VideoPlayer)
-#: rc.cpp:171
+#: rc.cpp:270
 #, fuzzy
 msgid "Font Size"
 msgstr "Μεγέθυνση γραμματοσειράς"
 
-#. i18n: file: ../../src/main/scconfig.kcfg:116
+#. i18n: file: ../../src/main/scconfig.kcfg:171
 #. i18n: ectx: label, entry (FontColor), group (VideoPlayer)
-#: rc.cpp:174
+#: rc.cpp:273
 #, fuzzy
 msgid "Font Color"
 msgstr "Εναλλαγή πεζά/κεφαλαία"
 
-#. i18n: file: ../../src/main/scconfig.kcfg:120
+#. i18n: file: ../../src/main/scconfig.kcfg:175
 #. i18n: ectx: label, entry (OutlineColor), group (VideoPlayer)
-#: rc.cpp:177
+#: rc.cpp:276
 #, fuzzy
 msgid "Outline Color"
 msgstr "Χρώμα Περιγράμματος:"
 
-#. i18n: file: ../../src/main/scconfig.kcfg:124
+#. i18n: file: ../../src/main/scconfig.kcfg:179
 #. i18n: ectx: label, entry (OutlineWidth), group (VideoPlayer)
-#: rc.cpp:180
+#: rc.cpp:279
 #, fuzzy
 msgid "Outline Width"
 msgstr "Πλάτος Περιγράμματος:"
 
-#. i18n: file: ../../src/main/scconfig.kcfg:128
+#. i18n: file: ../../src/main/scconfig.kcfg:183
 #. i18n: ectx: label, entry (Antialias), group (VideoPlayer)
-#: rc.cpp:183
+#: rc.cpp:282
 msgid "Font Antialiasing"
 msgstr ""
 
-#. i18n: file: ../../src/main/scconfig.kcfg:135
+#. i18n: file: ../../src/main/scconfig.kcfg:190
 #. i18n: ectx: label, entry (gstVideoSinkAuto), group (GStreamer)
-#: rc.cpp:186
+#: rc.cpp:285
 #, fuzzy
 msgid "Auto Video Sink"
 msgstr "Βύθιση βίντεο:"
 
-#. i18n: file: ../../src/main/scconfig.kcfg:139
+#. i18n: file: ../../src/main/scconfig.kcfg:194
 #. i18n: ectx: label, entry (gstVideoSink), group (GStreamer)
-#: rc.cpp:189
+#: rc.cpp:288
 #, fuzzy
 msgid "Video Sink"
 msgstr "Βύθιση βίντεο:"
 
-#. i18n: file: ../../src/main/scconfig.kcfg:144
+#. i18n: file: ../../src/main/scconfig.kcfg:199
 #. i18n: ectx: label, entry (gstAudioSinkAuto), group (GStreamer)
-#: rc.cpp:192
+#: rc.cpp:291
 #, fuzzy
 msgid "Auto Audio Sink"
 msgstr "Βύθιση ήχου:"
 
-#. i18n: file: ../../src/main/scconfig.kcfg:148
+#. i18n: file: ../../src/main/scconfig.kcfg:203
 #. i18n: ectx: label, entry (gstAudioSink), group (GStreamer)
-#: rc.cpp:195
+#: rc.cpp:294
 #, fuzzy
 msgid "Audio Sink"
 msgstr "Βύθιση ήχου:"
 
-#. i18n: file: ../../src/main/scconfig.kcfg:155
+#. i18n: file: ../../src/main/scconfig.kcfg:210
 #. i18n: ectx: label, entry (mpvCacheEnabled), group (MPV)
-#. i18n: file: ../../src/main/scconfig.kcfg:224
+#. i18n: file: ../../src/main/scconfig.kcfg:279
 #. i18n: ectx: label, entry (mpCacheEnabled), group (MPlayer)
-#: rc.cpp:198 rc.cpp:246
+#: rc.cpp:297 rc.cpp:345
 #, fuzzy
 msgid "Cache Enabled"
 msgstr "Αρχεία Βίντεο"
 
-#. i18n: file: ../../src/main/scconfig.kcfg:159
+#. i18n: file: ../../src/main/scconfig.kcfg:214
 #. i18n: ectx: label, entry (mpvCacheSize), group (MPV)
-#. i18n: file: ../../src/main/scconfig.kcfg:228
+#. i18n: file: ../../src/main/scconfig.kcfg:283
 #. i18n: ectx: label, entry (mpCacheSize), group (MPlayer)
-#: rc.cpp:201 rc.cpp:249
+#: rc.cpp:300 rc.cpp:348
 msgid "Cache Size (KB)"
 msgstr ""
 
-#. i18n: file: ../../src/main/scconfig.kcfg:163
+#. i18n: file: ../../src/main/scconfig.kcfg:218
 #. i18n: ectx: label, entry (mpvAutoSyncEnabled), group (MPV)
-#. i18n: file: ../../src/main/scconfig.kcfg:236
+#. i18n: file: ../../src/main/scconfig.kcfg:291
 #. i18n: ectx: label, entry (mpAutoSyncEnabled), group (MPlayer)
-#: rc.cpp:204 rc.cpp:255
+#: rc.cpp:303 rc.cpp:354
 #, fuzzy
 msgid "Auto Sync Enabled"
 msgstr "Αρχεία Ήχου"
 
-#. i18n: file: ../../src/main/scconfig.kcfg:167
+#. i18n: file: ../../src/main/scconfig.kcfg:222
 #. i18n: ectx: label, entry (mpvAutoSyncFactor), group (MPV)
-#. i18n: file: ../../src/main/scconfig.kcfg:240
+#. i18n: file: ../../src/main/scconfig.kcfg:295
 #. i18n: ectx: label, entry (mpAutoSyncFactor), group (MPlayer)
-#: rc.cpp:207 rc.cpp:258
+#: rc.cpp:306 rc.cpp:357
 msgid "Auto Sync Factor"
 msgstr ""
 
-#. i18n: file: ../../src/main/scconfig.kcfg:172
+#. i18n: file: ../../src/main/scconfig.kcfg:227
 #. i18n: ectx: label, entry (mpvVideoOutputEnabled), group (MPV)
-#. i18n: file: ../../src/main/scconfig.kcfg:245
+#. i18n: file: ../../src/main/scconfig.kcfg:300
 #. i18n: ectx: label, entry (mpVideoOutputEnabled), group (MPlayer)
-#: rc.cpp:210 rc.cpp:261
+#: rc.cpp:309 rc.cpp:360
 #, fuzzy
 msgid "Video Output Enabled"
 msgstr "Οδηγός εξόδου βίντεο:"
 
-#. i18n: file: ../../src/main/scconfig.kcfg:176
+#. i18n: file: ../../src/main/scconfig.kcfg:231
 #. i18n: ectx: label, entry (mpvVideoOutput), group (MPV)
-#. i18n: file: ../../src/main/scconfig.kcfg:249
+#. i18n: file: ../../src/main/scconfig.kcfg:304
 #. i18n: ectx: label, entry (mpVideoOutput), group (MPlayer)
-#. i18n: file: ../../src/main/scconfig.kcfg:301
+#. i18n: file: ../../src/main/scconfig.kcfg:356
 #. i18n: ectx: label, entry (xineVideo), group (Xine)
-#: rc.cpp:213 rc.cpp:264 rc.cpp:300
+#: rc.cpp:312 rc.cpp:363 rc.cpp:399
 #, fuzzy
 msgid "Video Output"
 msgstr "Οδηγός εξόδου βίντεο:"
 
-#. i18n: file: ../../src/main/scconfig.kcfg:180
+#. i18n: file: ../../src/main/scconfig.kcfg:235
 #. i18n: ectx: label, entry (mpvHwDecodeEnabled), group (MPV)
-#: rc.cpp:216
+#: rc.cpp:315
 #, fuzzy
 msgid "Hardware Decode Enabled"
 msgstr "Αρχεία Βίντεο"
 
-#. i18n: file: ../../src/main/scconfig.kcfg:184
+#. i18n: file: ../../src/main/scconfig.kcfg:239
 #. i18n: ectx: label, entry (mpvHwDecode), group (MPV)
-#. i18n: file: ../../src/main/scconfig.kcfg:253
+#. i18n: file: ../../src/main/scconfig.kcfg:308
 #. i18n: ectx: label, entry (mpVdpau), group (MPlayer)
-#: rc.cpp:219 rc.cpp:267
+#: rc.cpp:318 rc.cpp:366
 msgid "Hardware Decode"
 msgstr ""
 
-#. i18n: file: ../../src/main/scconfig.kcfg:188
+#. i18n: file: ../../src/main/scconfig.kcfg:243
 #. i18n: ectx: label, entry (mpvFrameDropping), group (MPV)
-#. i18n: file: ../../src/main/scconfig.kcfg:257
+#. i18n: file: ../../src/main/scconfig.kcfg:312
 #. i18n: ectx: label, entry (mpFrameDropping), group (MPlayer)
-#: rc.cpp:222 rc.cpp:270
+#: rc.cpp:321 rc.cpp:369
 #, fuzzy
 msgid "Frame Dropping"
 msgstr "Επιτρεπτή η απώλεια καρέ"
 
-#. i18n: file: ../../src/main/scconfig.kcfg:193
+#. i18n: file: ../../src/main/scconfig.kcfg:248
 #. i18n: ectx: label, entry (mpvAudioOutputEnabled), group (MPV)
-#. i18n: file: ../../src/main/scconfig.kcfg:266
+#. i18n: file: ../../src/main/scconfig.kcfg:321
 #. i18n: ectx: label, entry (mpAudioOutputEnabled), group (MPlayer)
-#: rc.cpp:225 rc.cpp:276
+#: rc.cpp:324 rc.cpp:375
 #, fuzzy
 msgid "Audio Output Enabled"
 msgstr "Οδηγός εξόδου ήχου:"
 
-#. i18n: file: ../../src/main/scconfig.kcfg:197
+#. i18n: file: ../../src/main/scconfig.kcfg:252
 #. i18n: ectx: label, entry (mpvAudioOutput), group (MPV)
-#. i18n: file: ../../src/main/scconfig.kcfg:270
+#. i18n: file: ../../src/main/scconfig.kcfg:325
 #. i18n: ectx: label, entry (mpAudioOutput), group (MPlayer)
-#. i18n: file: ../../src/main/scconfig.kcfg:310
+#. i18n: file: ../../src/main/scconfig.kcfg:365
 #. i18n: ectx: label, entry (xineAudio), group (Xine)
-#: rc.cpp:228 rc.cpp:279 rc.cpp:306
+#: rc.cpp:327 rc.cpp:378 rc.cpp:405
 #, fuzzy
 msgid "Audio Output"
 msgstr "Οδηγός εξόδου ήχου:"
 
-#. i18n: file: ../../src/main/scconfig.kcfg:201
+#. i18n: file: ../../src/main/scconfig.kcfg:256
 #. i18n: ectx: label, entry (mpvAudioChannelsEnabled), group (MPV)
-#. i18n: file: ../../src/main/scconfig.kcfg:274
+#. i18n: file: ../../src/main/scconfig.kcfg:329
 #. i18n: ectx: label, entry (mpAudioChannelsEnabled), group (MPlayer)
-#: rc.cpp:231 rc.cpp:282
+#: rc.cpp:330 rc.cpp:381
 #, fuzzy
 msgid "Audio Channels Enabled"
 msgstr "Στάθμες &Ήχου"
 
-#. i18n: file: ../../src/main/scconfig.kcfg:205
+#. i18n: file: ../../src/main/scconfig.kcfg:260
 #. i18n: ectx: label, entry (mpvAudioChannels), group (MPV)
-#. i18n: file: ../../src/main/scconfig.kcfg:278
+#. i18n: file: ../../src/main/scconfig.kcfg:333
 #. i18n: ectx: label, entry (mpAudioChannels), group (MPlayer)
-#: rc.cpp:234 rc.cpp:285
+#: rc.cpp:333 rc.cpp:384
 #, fuzzy
 msgid "Audio Channels"
 msgstr "Στάθμες &Ήχου"
 
-#. i18n: file: ../../src/main/scconfig.kcfg:209
+#. i18n: file: ../../src/main/scconfig.kcfg:264
 #. i18n: ectx: label, entry (mpvVolumeAmplificationEnabled), group (MPV)
-#. i18n: file: ../../src/main/scconfig.kcfg:282
+#. i18n: file: ../../src/main/scconfig.kcfg:337
 #. i18n: ectx: label, entry (mpVolumeAmplificationEnabled), group (MPlayer)
-#: rc.cpp:237 rc.cpp:288
+#: rc.cpp:336 rc.cpp:387
 #, fuzzy
 msgid "Volume Amplification Enabled"
 msgstr "Κανονικοποίηση Στάθμης ήχου"
 
-#. i18n: file: ../../src/main/scconfig.kcfg:213
+#. i18n: file: ../../src/main/scconfig.kcfg:268
 #. i18n: ectx: label, entry (mpvVolumeAmplification), group (MPV)
-#. i18n: file: ../../src/main/scconfig.kcfg:286
+#. i18n: file: ../../src/main/scconfig.kcfg:341
 #. i18n: ectx: label, entry (mpVolumeAmplification), group (MPlayer)
-#: rc.cpp:240 rc.cpp:291
+#: rc.cpp:339 rc.cpp:390
 #, fuzzy
 msgid "Volume Amplification"
 msgstr "Κανονικοποίηση Στάθμης ήχου"
 
-#. i18n: file: ../../src/main/scconfig.kcfg:217
+#. i18n: file: ../../src/main/scconfig.kcfg:272
 #. i18n: ectx: label, entry (mpvVolumeNormalization), group (MPV)
-#. i18n: file: ../../src/main/scconfig.kcfg:290
+#. i18n: file: ../../src/main/scconfig.kcfg:345
 #. i18n: ectx: label, entry (mpVolumeNormalization), group (MPlayer)
-#: rc.cpp:243 rc.cpp:294
+#: rc.cpp:342 rc.cpp:393
 #, fuzzy
 msgid "Volume Normalization"
 msgstr "Κανονικοποίηση Στάθμης ήχου"
 
-#. i18n: file: ../../src/main/scconfig.kcfg:232
+#. i18n: file: ../../src/main/scconfig.kcfg:287
 #. i18n: ectx: label, entry (mpExecutablePath), group (MPlayer)
-#: rc.cpp:252
+#: rc.cpp:351
 #, fuzzy
 msgid "mplayer executable path"
 msgstr "Διαδρομή εκτελέσιμου:"
 
-#. i18n: file: ../../src/main/scconfig.kcfg:261
+#. i18n: file: ../../src/main/scconfig.kcfg:316
 #. i18n: ectx: label, entry (mpHardFrameDropping), group (MPlayer)
-#: rc.cpp:273
+#: rc.cpp:372
 #, fuzzy
 msgid "Hard Frame Dropping"
 msgstr "Επιτρεπτή η σαφής απώλεια καρέ"
 
-#. i18n: file: ../../src/main/scconfig.kcfg:297
+#. i18n: file: ../../src/main/scconfig.kcfg:352
 #. i18n: ectx: label, entry (xineVideoEnabled), group (Xine)
-#: rc.cpp:297
+#: rc.cpp:396
 #, fuzzy
 msgid "Video Enabled"
 msgstr "Αρχεία Βίντεο"
 
-#. i18n: file: ../../src/main/scconfig.kcfg:306
+#. i18n: file: ../../src/main/scconfig.kcfg:361
 #. i18n: ectx: label, entry (xineAudioEnabled), group (Xine)
-#: rc.cpp:303
+#: rc.cpp:402
 #, fuzzy
 msgid "Audio Enabled"
 msgstr "Αρχεία Ήχου"
 
 #. i18n: file: ../../src/main/scripting/scriptsmanager.ui:14
 #. i18n: ectx: property (windowTitle), widget (QDialog, ScriptsManager)
-#: rc.cpp:309
+#: rc.cpp:408
 msgid "Scripts Manager"
 msgstr ""
 
 #. i18n: file: ../../src/main/scripting/scriptsmanager.ui:29
 #. i18n: ectx: property (whatsThis), widget (QPushButton, btnCreate)
-#: rc.cpp:312
+#: rc.cpp:411
 #, fuzzy
 msgid "Creates a new script file."
 msgstr "Δημιουργία ενός άδειου υπότιτλου"
 
 #. i18n: file: ../../src/main/scripting/scriptsmanager.ui:32
 #. i18n: ectx: property (text), widget (QPushButton, btnCreate)
-#: rc.cpp:315
+#: rc.cpp:414
 #, fuzzy
 msgid "Create..."
 msgstr "Αντικατάσταση..."
 
 #. i18n: file: ../../src/main/scripting/scriptsmanager.ui:44
 #. i18n: ectx: property (whatsThis), widget (QPushButton, btnAdd)
-#: rc.cpp:318
+#: rc.cpp:417
 msgid "Copies an existing script from a specified location."
 msgstr ""
 
 #. i18n: file: ../../src/main/scripting/scriptsmanager.ui:47
 #. i18n: ectx: property (text), widget (QPushButton, btnAdd)
-#: rc.cpp:321
+#: rc.cpp:420
 #, fuzzy
 msgid "Add..."
 msgstr "Προσαρμογή Γραμμών..."
 
 #. i18n: file: ../../src/main/scripting/scriptsmanager.ui:59
 #. i18n: ectx: property (whatsThis), widget (QPushButton, btnRemove)
-#: rc.cpp:324
+#: rc.cpp:423
 msgid "Sends the selected script to the trash."
 msgstr ""
 
 #. i18n: file: ../../src/main/scripting/scriptsmanager.ui:74
 #. i18n: ectx: property (whatsThis), widget (QPushButton, btnEdit)
-#: rc.cpp:330
+#: rc.cpp:429
 msgid "Opens the selected script with an external editor."
 msgstr ""
 
 #. i18n: file: ../../src/main/scripting/scriptsmanager.ui:77
 #. i18n: ectx: property (text), widget (QPushButton, btnEdit)
-#: rc.cpp:333
+#: rc.cpp:432
 #, fuzzy
 msgid "Edit"
 msgstr "&Επεξεργασία"
 
 #. i18n: file: ../../src/main/scripting/scriptsmanager.ui:105
 #. i18n: ectx: property (whatsThis), widget (QPushButton, btnRun)
-#: rc.cpp:336
+#: rc.cpp:435
 msgid "Executes the selected script."
 msgstr ""
 
 #. i18n: file: ../../src/main/scripting/scriptsmanager.ui:108
 #. i18n: ectx: property (text), widget (QPushButton, btnRun)
-#: rc.cpp:339
+#: rc.cpp:438
 msgid "Run"
 msgstr ""
 
 #. i18n: file: ../../src/main/scripting/scriptsmanager.ui:136
 #. i18n: ectx: property (whatsThis), widget (QPushButton, btnRefresh)
-#: rc.cpp:342
+#: rc.cpp:441
 msgid "Reloads the installed scripts list."
 msgstr ""
 
 #. i18n: file: ../../src/main/scripting/scriptsmanager.ui:139
 #. i18n: ectx: property (text), widget (QPushButton, btnRefresh)
-#: rc.cpp:345
+#: rc.cpp:444
 msgid "Refresh"
 msgstr ""
 
 #. i18n: file: ../../src/main/subtitlecomposerui.rc:5
 #. i18n: ectx: Menu (file)
-#: rc.cpp:348
+#: rc.cpp:447
 msgid "&File"
 msgstr "&Αρχείο"
 
 #. i18n: file: ../../src/main/subtitlecomposerui.rc:17
 #. i18n: ectx: Menu (translation)
-#: rc.cpp:351
+#: rc.cpp:450
 #, fuzzy
 msgid "Translation"
 msgstr "Μετάφραση"
 
 #. i18n: file: ../../src/main/subtitlecomposerui.rc:30
 #. i18n: ectx: Menu (edit)
-#: rc.cpp:354
+#: rc.cpp:453
 msgid "&Edit"
 msgstr "&Επεξεργασία"
 
 #. i18n: file: ../../src/main/subtitlecomposerui.rc:53
 #. i18n: ectx: Menu (texts)
-#: rc.cpp:357
+#: rc.cpp:456
 msgid "&Texts"
 msgstr "&Κείμενα"
 
 #. i18n: file: ../../src/main/subtitlecomposerui.rc:64
 #. i18n: ectx: Menu (styles)
-#: rc.cpp:360
+#: rc.cpp:459
 msgid "St&yles"
 msgstr "&Μοτίβα"
 
 #. i18n: file: ../../src/main/subtitlecomposerui.rc:72
 #. i18n: ectx: Menu (times)
-#: rc.cpp:363
+#: rc.cpp:462
 msgid "T&imes"
 msgstr "&Χρόνοι"
 
 #. i18n: file: ../../src/main/subtitlecomposerui.rc:97
 #. i18n: ectx: Menu (errors)
-#: rc.cpp:366
+#: rc.cpp:465
 msgid "E&rrors"
 msgstr "&Λάθη"
 
 #. i18n: file: ../../src/main/subtitlecomposerui.rc:110
 #. i18n: ectx: Menu (video)
-#: rc.cpp:369
+#: rc.cpp:468
 msgid "&Video"
 msgstr "&Βίντεο"
 
-#. i18n: file: ../../src/main/subtitlecomposerui.rc:140
+#. i18n: file: ../../src/main/subtitlecomposerui.rc:142
 #. i18n: ectx: Menu (tools)
-#: rc.cpp:372
+#: rc.cpp:471
 msgid "T&ools"
 msgstr ""
 
-#. i18n: file: ../../src/main/subtitlecomposerui.rc:145
+#. i18n: file: ../../src/main/subtitlecomposerui.rc:147
 #. i18n: ectx: ToolBar (mainToolBar)
-#: rc.cpp:375
+#: rc.cpp:474
 msgid "Main Toolbar"
 msgstr "Κύρια Εργαλειοδοκός"
 
-#. i18n: file: ../../src/main/subtitlecomposerui.rc:156
+#. i18n: file: ../../src/main/subtitlecomposerui.rc:158
 #. i18n: ectx: ToolBar (editToolBar)
-#: rc.cpp:378
+#: rc.cpp:477
 #, fuzzy
 msgid "Edit Toolbar"
 msgstr "Εργαλειοδοκός Επεξεργασίας"
 
 #. i18n: file: ../../src/videoplayerplugins/gstreamer/gstreamerconfigwidget.ui:26
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_gstVideoSinkAuto)
-#: rc.cpp:384
+#: rc.cpp:483
 msgid "Video sink:"
 msgstr "Βύθιση βίντεο:"
 
 #. i18n: file: ../../src/videoplayerplugins/gstreamer/gstreamerconfigwidget.ui:40
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_gstAudioSinkAuto)
-#: rc.cpp:387
+#: rc.cpp:486
 msgid "Audio sink:"
 msgstr "Βύθιση ήχου:"
 
 #. i18n: file: ../../src/videoplayerplugins/mplayer/mplayerconfigwidget.ui:29
 #. i18n: ectx: property (text), widget (QLabel, label)
-#: rc.cpp:393
+#: rc.cpp:492
 msgid "Executable path:"
 msgstr "Διαδρομή εκτελέσιμου:"
 
@@ -3224,7 +3478,7 @@ msgstr "Διαδρομή εκτελέσιμου:"
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_mpAutoSyncEnabled)
 #. i18n: file: ../../src/videoplayerplugins/mpv/mpvconfigwidget.ui:26
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_mpvAutoSyncEnabled)
-#: rc.cpp:396 rc.cpp:438
+#: rc.cpp:495 rc.cpp:537
 msgid "A/V synchronization factor:"
 msgstr "Συντελεστής συγχρονισμού Ήχου/Βίντεο:"
 
@@ -3234,7 +3488,7 @@ msgstr "Συντελεστής συγχρονισμού Ήχου/Βίντεο:"
 #. i18n: ectx: property (title), widget (QGroupBox, grpVideo)
 #. i18n: file: ../../src/videoplayerplugins/xine/xineconfigwidget.ui:20
 #. i18n: ectx: property (title), widget (QGroupBox, grpVideo)
-#: rc.cpp:399 rc.cpp:441 rc.cpp:474
+#: rc.cpp:498 rc.cpp:540 rc.cpp:573
 #, fuzzy
 msgid "Video"
 msgstr "Βίντεο"
@@ -3243,13 +3497,13 @@ msgstr "Βίντεο"
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_mpVideoOutputEnabled)
 #. i18n: file: ../../src/videoplayerplugins/mpv/mpvconfigwidget.ui:70
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_mpvVideoOutputEnabled)
-#: rc.cpp:402 rc.cpp:447
+#: rc.cpp:501 rc.cpp:546
 msgid "Video output driver:"
 msgstr "Οδηγός εξόδου βίντεο:"
 
 #. i18n: file: ../../src/videoplayerplugins/mplayer/mplayerconfigwidget.ui:73
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_mpVdpau)
-#: rc.cpp:405
+#: rc.cpp:504
 msgid "Enable VDPAU for DivX/XviD"
 msgstr ""
 
@@ -3257,13 +3511,13 @@ msgstr ""
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_mpFrameDropping)
 #. i18n: file: ../../src/videoplayerplugins/mpv/mpvconfigwidget.ui:77
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_mpvFrameDropping)
-#: rc.cpp:408 rc.cpp:450
+#: rc.cpp:507 rc.cpp:549
 msgid "Allow frame dropping"
 msgstr "Επιτρεπτή η απώλεια καρέ"
 
 #. i18n: file: ../../src/videoplayerplugins/mplayer/mplayerconfigwidget.ui:87
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_mpHardFrameDropping)
-#: rc.cpp:411
+#: rc.cpp:510
 msgid "Allow hard frame dropping"
 msgstr "Επιτρεπτή η σαφής απώλεια καρέ"
 
@@ -3273,7 +3527,7 @@ msgstr "Επιτρεπτή η σαφής απώλεια καρέ"
 #. i18n: ectx: property (title), widget (QGroupBox, grpAudio)
 #. i18n: file: ../../src/videoplayerplugins/xine/xineconfigwidget.ui:43
 #. i18n: ectx: property (title), widget (QGroupBox, grpAudio)
-#: rc.cpp:414 rc.cpp:453 rc.cpp:480
+#: rc.cpp:513 rc.cpp:552 rc.cpp:579
 #, fuzzy
 msgid "Audio"
 msgstr "Ήχος"
@@ -3282,7 +3536,7 @@ msgstr "Ήχος"
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_mpAudioOutputEnabled)
 #. i18n: file: ../../src/videoplayerplugins/mpv/mpvconfigwidget.ui:107
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_mpvAudioOutputEnabled)
-#: rc.cpp:417 rc.cpp:462
+#: rc.cpp:516 rc.cpp:561
 msgid "Audio output driver:"
 msgstr "Οδηγός εξόδου ήχου:"
 
@@ -3290,7 +3544,7 @@ msgstr "Οδηγός εξόδου ήχου:"
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_mpAudioChannelsEnabled)
 #. i18n: file: ../../src/videoplayerplugins/mpv/mpvconfigwidget.ui:100
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_mpvAudioChannelsEnabled)
-#: rc.cpp:420 rc.cpp:459
+#: rc.cpp:519 rc.cpp:558
 #, fuzzy
 msgid "Audio channels:"
 msgstr "Στάθμες &Ήχου"
@@ -3299,7 +3553,7 @@ msgstr "Στάθμες &Ήχου"
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_mpVolumeAmplificationEnabled)
 #. i18n: file: ../../src/videoplayerplugins/mpv/mpvconfigwidget.ui:93
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_mpvVolumeAmplificationEnabled)
-#: rc.cpp:423 rc.cpp:456
+#: rc.cpp:522 rc.cpp:555
 #, fuzzy
 msgid "Volume amplification:"
 msgstr "Κανονικοποίηση Στάθμης ήχου"
@@ -3312,7 +3566,7 @@ msgstr "Κανονικοποίηση Στάθμης ήχου"
 #. i18n: ectx: property (text), widget (QLabel, lab_mpvVolumeAmplification)
 #. i18n: file: ../../src/videoplayerplugins/mpv/mpvconfigwidget.ui:168
 #. i18n: ectx: property (text), widget (QLabel, lab_mpvAudioChannels)
-#: rc.cpp:426 rc.cpp:429 rc.cpp:465 rc.cpp:468
+#: rc.cpp:525 rc.cpp:528 rc.cpp:564 rc.cpp:567
 #, fuzzy
 msgid "TextLabel"
 msgstr "Κείμενο"
@@ -3321,27 +3575,31 @@ msgstr "Κείμενο"
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_mpVolumeNormalization)
 #. i18n: file: ../../src/videoplayerplugins/mpv/mpvconfigwidget.ui:185
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_mpvVolumeNormalization)
-#: rc.cpp:432 rc.cpp:471
+#: rc.cpp:531 rc.cpp:570
 msgid "Volume normalization"
 msgstr "Κανονικοποίηση Στάθμης ήχου"
 
 #. i18n: file: ../../src/videoplayerplugins/mpv/mpvconfigwidget.ui:56
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_mpvHwDecodeEnabled)
-#: rc.cpp:444
+#: rc.cpp:543
 msgid "Hardware video decoding:"
 msgstr ""
 
 #. i18n: file: ../../src/videoplayerplugins/xine/xineconfigwidget.ui:33
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_xineVideoEnabled)
-#: rc.cpp:477
+#: rc.cpp:576
 msgid "Video driver:"
 msgstr "Οδηγός βίντεο:"
 
 #. i18n: file: ../../src/videoplayerplugins/xine/xineconfigwidget.ui:49
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_xineAudioEnabled)
-#: rc.cpp:483
+#: rc.cpp:582
 msgid "Audio driver:"
 msgstr "Οδηγός ήχου:"
+
+#, fuzzy
+#~ msgid "Decoder Backend"
+#~ msgstr "Ενδότερα αναπαραγωγέα:"
 
 #, fuzzy
 #~ msgid "Clear List"
@@ -3387,12 +3645,6 @@ msgstr "Οδηγός ήχου:"
 
 #~ msgid " secs"
 #~ msgstr "δευτ."
-
-#~ msgid " points"
-#~ msgstr "πόντοι"
-
-#~ msgid "Primary color:"
-#~ msgstr "Πρωτεύον Χρώμα:"
 
 #~ msgid " pixels"
 #~ msgstr "εικονοστοιχεία"
@@ -3478,11 +3730,6 @@ msgstr "Οδηγός ήχου:"
 
 #~ msgid "Toggle Line Mark"
 #~ msgstr "Αντιθέτηση Σημαδιού Γραμμής"
-
-#, fuzzy
-#~ msgctxt "@title:group"
-#~ msgid "Subtitles font"
-#~ msgstr "Γραμματοσειρά υποτίτλων"
 
 #, fuzzy
 #~ msgid "1 mark"
