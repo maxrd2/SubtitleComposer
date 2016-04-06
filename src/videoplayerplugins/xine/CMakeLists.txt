@@ -23,19 +23,19 @@ ki18n_wrap_ui(videoplayer_xine_SRCS
 	${CMAKE_CURRENT_SOURCE_DIR}/xineconfigwidget.ui
 )
 
-find_package(XCB)
+find_package(XCB COMPONENTS XCB)
 IF(XCB_FOUND AND XINE_XCB_FOUND)
 	set(HAVE_XCB 1 CACHE INTERNAL EXPORTEDVARIABLE)
 	set(videoplayer_xine_INCLUDE_DIR
-		${LIBXCB_INCLUDE_DIR}
+		${XCB_INCLUDE_DIR}
 		${videoplayer_xine_INCLUDE_DIR}
 		CACHE INTERNAL EXPORTEDVARIABLE)
 	set(videoplayer_xine_DEFS
-		${LIBXCB_DEFINITIONS}
+		${XCB_DEFINITIONS}
 		${videoplayer_xine_DEFS}
 		CACHE INTERNAL EXPORTEDVARIABLE)
 	set(videoplayer_xine_LIBS
-		${LIBXCB_LIBRARIES}
+		${XCB_LIBRARIES}
 		${videoplayer_xine_LIBS}
 		CACHE INTERNAL EXPORTEDVARIABLE)
 endif(XCB_FOUND AND XINE_XCB_FOUND)
