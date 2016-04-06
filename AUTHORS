@@ -1,5 +1,5 @@
 Mladen Milinkovic <max@smoothware.net> - current maintainer/author
-@Martchus - code contributions, arch linux builds, German translation
+Marius Kittler - code contributions, Arch Linux packaging, German translation
 Goran Vidovic (gogo) - Croatian translation
 Petar Toushkov - Bulgarian translation
 Sergio Pistone <sergio_pistone@yahoo.com.ar> - original author
@@ -14,7 +14,7 @@ Slobodan Simic - translation
 Yuri Chornoivan - translation
 Alexandros Perdikomatis - translation
 Barcza Károly - translation
-wantilles - support for VDPAU decoding on the mplayer backend
+wantilles - support for VDPAU decoding on the MPlayer backend
 Martin Steghöfer
 and many others I probably forgot to mention
 
