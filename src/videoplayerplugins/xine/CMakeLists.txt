@@ -15,9 +15,12 @@ set(videoplayer_xine_SRCS
 	${CMAKE_CURRENT_SOURCE_DIR}/xineplayerbackend.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/xinevideolayerwidget.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/xineconfigwidget.cpp
-	${CMAKE_CURRENT_SOURCE_DIR}/xineconfigwidget.ui
 	${videoplayerplugins_SRCS}
 	CACHE INTERNAL EXPORTEDVARIABLE
+)
+
+ki18n_wrap_ui(videoplayer_xine_SRCS
+	${CMAKE_CURRENT_SOURCE_DIR}/xineconfigwidget.ui
 )
 
 find_package(XCB)

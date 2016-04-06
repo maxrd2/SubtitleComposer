@@ -1,5 +1,5 @@
 <!DOCTYPE kpartgui SYSTEM "kpartgui.dtd">
-<kpartgui name="subtitlecomposer" version="5" >
+<kpartgui name="subtitlecomposer" version="5" translationDomain="subtitlecomposer">
 	<MenuBar>
 		<Menu name="file" >
 			<text>&amp;File</text>

@@ -13,9 +13,12 @@ set(videoplayer_mpv_LIBS
 set(videoplayer_mpv_SRCS
 	${CMAKE_CURRENT_SOURCE_DIR}/mpvbackend.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/mpvconfigwidget.cpp
-	${CMAKE_CURRENT_SOURCE_DIR}/mpvconfigwidget.ui
 	${videoplayerplugins_SRCS}
 	CACHE INTERNAL EXPORTEDVARIABLE
+)
+
+ki18n_wrap_ui(videoplayer_mpv_SRCS
+	${CMAKE_CURRENT_SOURCE_DIR}/mpvconfigwidget.ui
 )
 
 add_library(mpvplayer MODULE ${videoplayer_mpv_SRCS})

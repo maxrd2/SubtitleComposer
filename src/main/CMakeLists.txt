@@ -41,6 +41,11 @@ set(subtitlecomposer_SRCS
 
 kconfig_add_kcfg_files(subtitlecomposer_SRCS GENERATE_MOC ${CMAKE_CURRENT_SOURCE_DIR}/scconfig.kcfgc)
 
+ki18n_wrap_ui(subtitlecomposer_SRCS
+	${main_configs_UIS}
+	${main_dialogs_UIS}
+	${main_scripting_UIS})
+
 add_executable(subtitlecomposer ${subtitlecomposer_SRCS})
 
 qt5_use_modules(subtitlecomposer Core Widgets)

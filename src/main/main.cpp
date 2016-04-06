@@ -79,8 +79,8 @@ main(int argc, char **argv)
 	aboutData.addCredit("Alexandros Perdikomatis", i18n("Translator"));
 	aboutData.addCredit("Barcza Károly", i18n("Translator"));
 	aboutData.addCredit("Martin Steghöfer");
-    aboutData.addCredit("Marius Kittler", i18n("code contributions, Arch Linux packaging, German translation"));
-    
+	aboutData.addCredit("Marius Kittler", i18n("code contributions, Arch Linux packaging, German translation"));
+
 	aboutData.addCredit(i18n("All people who have contributed and I have forgotten to mention"));
 
 	// register about data

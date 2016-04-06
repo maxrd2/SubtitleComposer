@@ -3,10 +3,13 @@ set(videoplayer_mplayer_SRCS
 	${CMAKE_CURRENT_SOURCE_DIR}/mplayerplayerbackend.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/mplayerplayerprocess.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/mplayerconfigwidget.cpp
-	${CMAKE_CURRENT_SOURCE_DIR}/mplayerconfigwidget.ui
 	${CMAKE_CURRENT_SOURCE_DIR}/../../common/qxtsignalwaiter.cpp
 	${videoplayerplugins_SRCS}
 	CACHE INTERNAL EXPORTEDVARIABLE
+)
+
+ki18n_wrap_ui(videoplayer_mplayer_SRCS
+	${CMAKE_CURRENT_SOURCE_DIR}/mplayerconfigwidget.ui
 )
 
 add_library(mplayer MODULE ${videoplayer_mplayer_SRCS})

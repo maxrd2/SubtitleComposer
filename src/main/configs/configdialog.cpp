@@ -32,7 +32,7 @@
 #include "config.h"
 
 #include <KConfigDialog>
-#include <klocalizedstring.h>
+#include <KLocalizedString>
 
 #include <sonnet/configwidget.h>
 
