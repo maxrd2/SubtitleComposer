@@ -1155,8 +1155,9 @@ msgid "Waveform Zoom Out"
 msgstr "Waveform gröber skalieren"
 
 #: ../../src/main/application.cpp:1167
+#, fuzzy
 msgid "Waveform Auto Scroll"
-msgstr "Waveform automatisches Scrollen"
+msgstr "Waveform automatisch scrollen"
 
 #: ../../src/main/application.cpp:1168
 msgid "Waveform display will automatically scroll to video position"
