@@ -1,3 +1,17 @@
+subtitlecomposer (0.6.3-~stretch) trusty; urgency=low
+
+  * Added waveform widget
+  * Added Speech recognition with PocketSphinx
+  * Waveform and Player widgets can be docked to any side of the main window
+  * Updated german and croatian translations, translation fixes
+  * Added ability to demux text streams from loaded video
+  * Added anchor points sync method
+  * Removed binary dependency on player packages
+  * Various smaller improvements and fixes
+  * Finished KF5 porting
+
+ -- Mladen Milinkovic <maxrd2@smoothware.net>  Fri, 08 Apr 2016 12:32:11 +0100
+
 subtitlecomposer (0.5.7.4~vivid) vivid; urgency=high
 
   * Add MPV player support

@@ -4,9 +4,9 @@ Priority: optional
 Maintainer: Ubuntu Developers <ubuntu-devel-discuss@lists.ubuntu.com>
 XSBC-Original-Maintainer: Debian KDE Extras Team <pkg-kde-extras@lists.alioth.debian.org>
 Uploaders: gogo <trebelnik2@gmail.com>
-Build-Depends: debhelper (>= 9), cmake, pkg-kde-tools,
- kdelibs5-dev, libgstreamer-plugins-base1.0-dev, libglib2.0-dev, libxml2-dev,
- libxine2-dev, libx11-dev, libicu-dev,libmpv-dev
+Build-Depends: debhelper (>= 9), qtbase5-dev, git, cmake, extra-cmake-modules,
+ libgstreamer1.0-dev, libgstreamer-plugins-base1.0-dev,  kdelibs5-dev, libkf5xmlgui-dev, kross-dev,
+ mpv, libmpv-dev, mplayer, libxine2-dev, libphonon4qt5-dev, libphonon4qt5experimental-dev
 Standards-Version: 3.9.4
 Homepage: https://github.com/maxrd2/subtitlecomposer
 Vcs-Browser: http://anonscm.debian.org/gitweb/?p=pkg-kde/kde-extras/subtitlecomposer.git
@@ -14,8 +14,8 @@ Vcs-Git: git://anonscm.debian.org/pkg-kde/kde-extras/subtitlecomposer.git
 
 Package: subtitlecomposer
 Architecture: any
-Depends: ${shlibs:Depends}, ${misc:Depends}, ${xine-x:Depends}
-Suggests: mplayer, mpv
+Depends: ${shlibs:Depends}, ${misc:Depends}, ${gstreamer:Depends} 
+Suggests: mplayer, mpv, ${xine-x:Depends}
 Description: Subtitles editor for KDE
  A text-based subtitles editor for KDE supporting basic operations (text,
  time and style edition), realtime previewing and spell checking. Other

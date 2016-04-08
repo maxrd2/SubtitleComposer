@@ -3,11 +3,23 @@
 BUILDDIR ?= obj-$(shell dpkg-architecture -qDEB_HOST_GNU_TYPE)
 
 %:
-	dh $@ --parallel --with=kde,xine --builddir=$(BUILDDIR)
+	dh $@ --parallel --with=xine --builddir=$(BUILDDIR)
+
+override_dh_auto_configure:
+	rm -rf $(BUILDDIR) >/dev/null 2>&1
+	mkdir $(BUILDDIR)
+	cd $(BUILDDIR) && cmake \
+	    -DCMAKE_BUILD_TYPE=RelWithDebInfo \
+	    -DCMAKE_INSTALL_PREFIX=/usr \
+	    -DLIB_INSTALL_DIR=lib \
+	    -DKDE_INSTALL_USE_QT_SYS_PATHS=ON \
+	    -DBUILD_TESTING=OFF \
+	    ..
 
 override_dh_install:
+	cd $(BUILDDIR)
 	dh_install
 
 override_dh_auto_test:
-	cd $(BUILDDIR) && make buildtests #For building Ubuntu Vivid remove '&& make buildtests'
+	cd $(BUILDDIR)
 	dh_auto_test

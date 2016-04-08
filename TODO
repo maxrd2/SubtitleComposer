@@ -1,6 +1,2 @@
-Planned features / known issues
+Please look here: https://github.com/maxrd2/subtitlecomposer/issues
 
-* integrate waveform visuals
-* automatic correction of OCR errors
-
-add a way to synchronize video and subtitle fps values for formats that neede it like MicroDVD
