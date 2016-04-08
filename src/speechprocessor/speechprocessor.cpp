@@ -71,17 +71,17 @@ SpeechProcessor::SpeechProcessor(QWidget *parent)
 	// Using Qt::DirectConnection here makes SpeechProcessor::onStreamData() to execute in GStreamer's thread
 	connect(m_stream, &StreamProcessor::audioDataAvailable, this, &SpeechProcessor::onStreamData, Qt::DirectConnection);
 
-#ifndef NDEBUG
-	const QString exePath(qApp->applicationDirPath());
-	pluginLoad(exePath + QStringLiteral("/../speechplugins/pocketsphinx/pocketsphinxasr.so"));
-#else
-	QDir pluginsDir(QStringLiteral(SCPLUGIN_PATH));
-	foreach(const QString pluginFile, pluginsDir.entryList(QDir::Files, QDir::Name)) {
-		if(QLibrary::isLibrary(pluginFile))
-			pluginLoad(pluginsDir.filePath(pluginFile));
+	const QString buildPluginPath(qApp->applicationDirPath() + QStringLiteral("/../speechplugins"));
+	if(QDir(buildPluginPath).exists()) {
+		// if application is launched from build directory it will load plugins from build directory
+		pluginLoad(buildPluginPath + QStringLiteral("/pocketsphinx/pocketsphinxasr.so"));
+	} else {
+		QDir pluginsDir(QStringLiteral(SCPLUGIN_PATH));
+		foreach(const QString pluginFile, pluginsDir.entryList(QDir::Files, QDir::Name)) {
+			if(QLibrary::isLibrary(pluginFile))
+				pluginLoad(pluginsDir.filePath(pluginFile));
+		}
 	}
-#endif
-
 }
 
 SpeechProcessor::~SpeechProcessor()

@@ -102,20 +102,21 @@ VideoPlayer::VideoPlayer() :
 {
 	backendAdd(new DummyPlayerBackend());
 
-#ifndef NDEBUG
-	const QString exePath(qApp->applicationDirPath());
-	backendLoad(exePath + QStringLiteral("/../videoplayerplugins/gstreamer/gstplayer.so"));
-	backendLoad(exePath + QStringLiteral("/../videoplayerplugins/mplayer/mplayer.so"));
-	backendLoad(exePath + QStringLiteral("/../videoplayerplugins/mpv/mpvplayer.so"));
-	backendLoad(exePath + QStringLiteral("/../videoplayerplugins/phonon/phononplayer.so"));
-	backendLoad(exePath + QStringLiteral("/../videoplayerplugins/xine/xineplayer.so"));
-#else
-	QDir pluginsDir(QStringLiteral(SCPLUGIN_PATH));
-	foreach(const QString pluginFile, pluginsDir.entryList(QDir::Files, QDir::Name)) {
-		if(QLibrary::isLibrary(pluginFile))
-			backendLoad(pluginsDir.filePath(pluginFile));
+	const QString buildPluginPath(qApp->applicationDirPath() + QStringLiteral("/../videoplayerplugins"));
+	if(QDir(buildPluginPath).exists()) {
+		// if application is launched from build directory it will load plugins from build directory
+		backendLoad(buildPluginPath + QStringLiteral("/gstreamer/gstplayer.so"));
+		backendLoad(buildPluginPath + QStringLiteral("/mplayer/mplayer.so"));
+		backendLoad(buildPluginPath + QStringLiteral("/mpv/mpvplayer.so"));
+		backendLoad(buildPluginPath + QStringLiteral("/phonon/phononplayer.so"));
+		backendLoad(buildPluginPath + QStringLiteral("/xine/xineplayer.so"));
+	} else {
+		QDir pluginsDir(QStringLiteral(SCPLUGIN_PATH));
+		foreach(const QString pluginFile, pluginsDir.entryList(QDir::Files, QDir::Name)) {
+			if(QLibrary::isLibrary(pluginFile))
+				backendLoad(pluginsDir.filePath(pluginFile));
+		}
 	}
-#endif
 
 	// the timeout might seem too much, but it only matters when the file couldn't be
 	// opened, and it's better to have the user wait a bit in that case than showing

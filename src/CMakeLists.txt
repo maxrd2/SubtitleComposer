@@ -33,6 +33,7 @@ set_package_properties(Phonon4Qt5 PROPERTIES
 # CMakeLists.txt is processed
 
 set(SC_PLUGIN_INSTALL_DIR ${CMAKE_INSTALL_PREFIX}/${LIB_INSTALL_DIR}/subtitlecomposer CACHE INTERNAL EXPORTEDVARIABLE)
+message(STATUS "Subtitle Composer plugin path: ${SC_PLUGIN_INSTALL_DIR}")
 
 add_subdirectory(common)
 add_subdirectory(core)
