@@ -59,7 +59,7 @@ set(formats_SRCS
 
 find_package(ICU)
 if(ICU_FOUND)
-	message(STATUS "FOUND FOUND")
+	message(STATUS "ICU Library will be used for charset detection.")
 
 	set(HAVE_ICU 1 CACHE INTERNAL EXPORTEDVARIABLE)
 
@@ -73,5 +73,6 @@ if(ICU_FOUND)
 		${ICU_LIBRARIES}
 		${formats_LIBS}
 		CACHE INTERNAL EXPORTEDVARIABLE)
-
+else(ICU_FOUND)
+	message(STATUS "ICU Library not found. KEncodingProber fallback will be used for charset detection.")
 endif(ICU_FOUND)
