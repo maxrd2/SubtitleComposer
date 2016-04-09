@@ -25,6 +25,8 @@ ki18n_wrap_ui(videoplayer_xine_SRCS
 
 find_package(XCB COMPONENTS XCB)
 IF(XCB_FOUND AND XINE_XCB_FOUND)
+	message(STATUS "Found XCB: ${XCB_LIBRARIES} (version ${XCB_VERSION})")
+	message(STATUS "Xine Player backend will use XCB instead of LibX11")
 	set(HAVE_XCB 1 CACHE INTERNAL EXPORTEDVARIABLE)
 	set(videoplayer_xine_INCLUDE_DIR
 		${XCB_INCLUDE_DIR}
@@ -38,6 +40,8 @@ IF(XCB_FOUND AND XINE_XCB_FOUND)
 		${XCB_LIBRARIES}
 		${videoplayer_xine_LIBS}
 		CACHE INTERNAL EXPORTEDVARIABLE)
+else(XCB_FOUND AND XINE_XCB_FOUND)
+	message(STATUS "Xine XCB support not available (Found XCB version ${XCB_VERSION})")
 endif(XCB_FOUND AND XINE_XCB_FOUND)
 
 add_library(xineplayer MODULE ${videoplayer_xine_SRCS})
