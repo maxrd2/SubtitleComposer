@@ -20,6 +20,8 @@ set(MPV_INCLUDE_DIRS ${MPV_INCLUDE_DIR})
 
 include(FindPackageHandleStandardArgs)
 # handle the QUIETLY and REQUIRED arguments and set MPV_FOUND to TRUE if all listed variables are TRUE
-find_package_handle_standard_args(MPV DEFAULT_MSG MPV_LIBRARY MPV_INCLUDE_DIR)
+find_package_handle_standard_args(MPV
+	REQUIRED_VARS MPV_LIBRARY MPV_INCLUDE_DIR
+	VERSION_VAR MPV_VERSION)
 
 mark_as_advanced(MPV_INCLUDE_DIR MPV_LIBRARY)
