@@ -8,15 +8,15 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://github.com/maxrd2/subtitlecomposer/issues\n"
 "POT-Creation-Date: 2016-04-05 21:56+0200\n"
-"PO-Revision-Date: 2016-03-26 15:52+0100\n"
+"PO-Revision-Date: 2016-04-10 10:21+0200\n"
 "Last-Translator: gogo <trebelnik2@gmail.com>\n"
 "Language-Team: Croatian <hr@hr.org>\n"
 "Language: hr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=4; plural=n==1 ? 3 : n%10==1 && n%100!=11 ? 0 : n"
-"%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
+"Plural-Forms: nplurals=4; plural=n==1 ? 3 : n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
+"%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
 "X-Generator: Poedit 1.8.7.1\n"
 
 #: ../../src/common/languagecode.cpp:420
@@ -305,14 +305,12 @@ msgid "Has capital letter after line continuation ellipsis in primary text."
 msgstr "Ima veliko slovo nakon crtice za novi redak u glavnom tekstu."
 
 #: ../../src/core/subtitleline.cpp:127
-msgid ""
-"Has capital letter after line continuation ellipsis in translation text."
+msgid "Has capital letter after line continuation ellipsis in translation text."
 msgstr "Ima veliko slovo nakon crtice za novi redak u prevedenom tekstu."
 
 #: ../../src/core/subtitleline.cpp:128
 msgid "Has too long duration per character in primary text (1 msec/char)."
-msgid_plural ""
-"Has too long duration per character in primary text (%1 msecs/char)."
+msgid_plural "Has too long duration per character in primary text (%1 msecs/char)."
 msgstr[0] "Ima predugo trajanje po znaku u glavnom tekstu (%1 ms/znaku)."
 msgstr[1] "Ima predugo trajanje po znaku u glavnom tekstu (%1 ms/znaku)."
 msgstr[2] "Ima predugo trajanje po znaku u glavnom tekstu (%1 ms/znaku)."
@@ -329,8 +327,7 @@ msgstr[3] "Ima predugo trajanje po znaku u prevedenom tekstu (1 ms/znaku)."
 
 #: ../../src/core/subtitleline.cpp:130
 msgid "Has too short duration per character in primary text (1 msec/char)."
-msgid_plural ""
-"Has too short duration per character in primary text (%1 msecs/char)."
+msgid_plural "Has too short duration per character in primary text (%1 msecs/char)."
 msgstr[0] "Ima prekratko trajanje po znaku u glavnom tekstu (%1 ms/znaku)."
 msgstr[1] "Ima prekratko trajanje po znaku u glavnom tekstu (%1 ms/znaku)."
 msgstr[2] "Ima prekratko trajanje po znaku u glavnom tekstu (%1 ms/znaku)."
@@ -410,15 +407,16 @@ msgid "Set Line Errors"
 msgstr "Postavi greške redka"
 
 #: ../../src/formats/textdemux/textdemux.cpp:43
-#, fuzzy
 msgid "Importing Subtitle Stream"
-msgstr "Zapisi podnalova"
+msgstr "Uvažanje zapisa podnaslova"
 
 #: ../../src/formats/textdemux/textdemux.cpp:93
 msgid ""
 "Subtitle demux failed %1: %2\n"
 "%3"
 msgstr ""
+"Izdvajanje podnaslova neuspješno %1: %2\n"
+"%3"
 
 #: ../../src/main/actions/kcodecactionext.cpp:39
 #: ../../src/main/dialogs/opensubtitledialog.cpp:47
@@ -837,8 +835,7 @@ msgstr "Postavi automatska trajanja..."
 
 #: ../../src/main/application.cpp:846
 msgid "Set lines durations based on amount of letters, words and line breaks"
-msgstr ""
-"Postavi trajanje redaka na osnovi broja slova, riječi i prijeloma redaka"
+msgstr "Postavi trajanje redaka na osnovi broja slova, riječi i prijeloma redaka"
 
 #: ../../src/main/application.cpp:852
 msgid "Maximize Durations..."
@@ -894,8 +891,7 @@ msgstr "Promijeni slova..."
 
 #: ../../src/main/application.cpp:895
 msgid "Change lines text to upper, lower, title or sentence case"
-msgstr ""
-"Promijeni u tekstu redaka velika ili mala slova, naslov ili duljinu rečenice"
+msgstr "Promijeni u tekstu redaka velika ili mala slova, naslov ili duljinu rečenice"
 
 #: ../../src/main/application.cpp:901 ../../src/main/lineswidget.cpp:1078
 msgid "Fix Punctuation..."
@@ -934,23 +930,20 @@ msgid "Open &Recent Video"
 msgstr "Otvori &nedavnu video snimku"
 
 #: ../../src/main/application.cpp:940
-#, fuzzy
 msgid "Import Subtitle Stream"
-msgstr "Zapisi podnalova"
+msgstr "Uvezi zapis podnaslova"
 
 #: ../../src/main/application.cpp:941
-#, fuzzy
 msgid "Import subtitle stream into subtitle editor"
-msgstr "Zapisi podnalova"
+msgstr "Uvezi zapisi podnaslova u uređivač podnaslova"
 
 #: ../../src/main/application.cpp:949
 msgid "Recognize Speech"
-msgstr ""
+msgstr "Prepoznavanje govora"
 
 #: ../../src/main/application.cpp:950
-#, fuzzy
 msgid "Recognize speech in audio stream"
-msgstr "Odaberi aktivni zvučni zapis"
+msgstr "Prepoznavanje govora u zvučnom zapisu"
 
 #: ../../src/main/application.cpp:956
 msgid "Close Video"
@@ -1095,11 +1088,10 @@ msgid "Shift to Video Position"
 msgstr "Pomakni položaj videa"
 
 #: ../../src/main/application.cpp:1104
-msgid ""
-"Set current line show time to video position by equally shifting all lines"
+msgid "Set current line show time to video position by equally shifting all lines"
 msgstr ""
-"Postavi vrijeme prikaza trenutnog redka na položaj videa jednakim pomakom "
-"svih redaka"
+"Postavi vrijeme prikaza trenutnog redka na položaj videa jednakim pomakom svih "
+"redaka"
 
 #: ../../src/main/application.cpp:1111
 msgid "Adjust to Video Position (Anchor Last Line)"
@@ -1107,11 +1099,11 @@ msgstr "Prilagodi na položaj videa (usidri zadnji redak)"
 
 #: ../../src/main/application.cpp:1112
 msgid ""
-"Set current line to video position by fixing the last line and linearly "
-"adjusting the other ones"
+"Set current line to video position by fixing the last line and linearly adjusting "
+"the other ones"
 msgstr ""
-"Postavi trenutni redak na položaj videa fiksirajući posljednji redak i "
-"linearno podešavajući ostale"
+"Postavi trenutni redak na položaj videa fiksirajući posljednji redak i linearno "
+"podešavajući ostale"
 
 #: ../../src/main/application.cpp:1119
 msgid "Adjust to Video Position (Anchor First Line)"
@@ -1119,8 +1111,8 @@ msgstr "Prilagodi na položaj videa (usidri prvi redak)"
 
 #: ../../src/main/application.cpp:1120
 msgid ""
-"Set current line to video position by fixing the first line and linearly "
-"adjusting the other ones"
+"Set current line to video position by fixing the first line and linearly adjusting "
+"the other ones"
 msgstr ""
 "Postavi trenutni redak na položaj videa fiksirajući prvi redak i linearno "
 "podešavajući ostale"
@@ -1131,12 +1123,12 @@ msgstr "Uklj/Isklj usidrenje redka"
 
 #: ../../src/main/application.cpp:1128
 msgid ""
-"(Un)Anchor current line's show time to timeline (Editing anchored line's "
-"show time will stretch/compact the timeline between adjanced anchors)"
+"(Un)Anchor current line's show time to timeline (Editing anchored line's show time "
+"will stretch/compact the timeline between adjanced anchors)"
 msgstr ""
 "Dodaj /Ukloni usidrenje vremena početka prikaza trenutnog redka u vremenskoj "
-"liniji (Uređivanje usidrenih vremena početka prikaza redaka će povećati/"
-"smanjiti vremensku liniju između zadanih usidrenja)"
+"liniji (Uređivanje usidrenih vremena početka prikaza redaka će povećati/smanjiti "
+"vremensku liniju između zadanih usidrenja)"
 
 #: ../../src/main/application.cpp:1135
 msgid "Remove All Anchors"
@@ -1145,8 +1137,8 @@ msgstr "Ukloni sva usidrenja"
 #: ../../src/main/application.cpp:1136
 msgid "Unanchor show time from the timeline on all anchored lines"
 msgstr ""
-"Ukloni usidrenje vremena početka prikaza iz vremenske linije sa svih "
-"usidrenih redaka"
+"Ukloni usidrenje vremena početka prikaza iz vremenske linije sa svih usidrenih "
+"redaka"
 
 #: ../../src/main/application.cpp:1144
 msgctxt "@action:inmenu Manage user scripts"
@@ -1159,28 +1151,29 @@ msgstr "Upravljanje korisničkim skriptama"
 
 #: ../../src/main/application.cpp:1152 ../../src/main/application.cpp:1153
 msgid "Waveform Zoom In"
-msgstr ""
+msgstr "Uvećaj valni prikaz zvuka"
 
 #: ../../src/main/application.cpp:1159 ../../src/main/application.cpp:1160
 msgid "Waveform Zoom Out"
-msgstr ""
+msgstr "Smanji valni prikaz zvuka"
 
 #: ../../src/main/application.cpp:1167
 msgid "Waveform Auto Scroll"
-msgstr ""
+msgstr "Automatsko pomicanje valnog prikaza zvuka"
 
 #: ../../src/main/application.cpp:1168
 msgid "Waveform display will automatically scroll to video position"
 msgstr ""
+"Valni prikaz zvuka će se automatski pomicati u skladu s položajem video zapisa"
 
 #: ../../src/main/application.cpp:1260
 msgid ""
-"The requested action would make the subtitle and its translation share the "
-"same file, possibly resulting in loss of information when saving.\n"
+"The requested action would make the subtitle and its translation share the same "
+"file, possibly resulting in loss of information when saving.\n"
 "Are you sure you want to continue?"
 msgstr ""
-"Tražena radnja će učiniti da podnaslov i njegov prijevod dijele istu "
-"datoteku, što može dovesti do gubitka podataka prilikom spremanja.\n"
+"Tražena radnja će učiniti da podnaslov i njegov prijevod dijele istu datoteku, što "
+"može dovesti do gubitka podataka prilikom spremanja.\n"
 "Želite li nastaviti?"
 
 #: ../../src/main/application.cpp:1260
@@ -1190,8 +1183,8 @@ msgstr "Sukob datoteka podnaslova"
 #: ../../src/main/application.cpp:1368 ../../src/main/application.cpp:1396
 #: ../../src/main/application.cpp:1632 ../../src/main/application.cpp:1670
 msgid ""
-"<qt>Could not parse the subtitle file.<br/>This may have been caused by "
-"usage of the wrong encoding.</qt>"
+"<qt>Could not parse the subtitle file.<br/>This may have been caused by usage of "
+"the wrong encoding.</qt>"
 msgstr ""
 "<qt>Nemoguća obrada datoteke podnaslova.<br/>To može uzrokovati korištenje "
 "pogrešnog kôdiranja.</qt>"
@@ -1322,11 +1315,11 @@ msgstr "Prijevod pomoćnog teksta (%1 u %2)..."
 
 #: ../../src/main/application.cpp:2472
 msgid ""
-"Unable to perform texts synchronization (sent and received lines count do "
-"not match)."
+"Unable to perform texts synchronization (sent and received lines count do not "
+"match)."
 msgstr ""
-"Nemoguće izvođenje usklađivanja tekstova (broj poslanih i primljenih redaka "
-"se ne podudara)."
+"Nemoguće izvođenje usklađivanja tekstova (broj poslanih i primljenih redaka se ne "
+"podudara)."
 
 #: ../../src/main/application.cpp:2476
 msgid "Translate Primary Text"
@@ -1408,17 +1401,15 @@ msgid "General Settings"
 msgstr "Općenite postavke"
 
 #: ../../src/main/configs/configdialog.cpp:53
-#, fuzzy
 msgctxt "@title Error check settings"
 msgid "Error Check"
-msgstr "Provjera greški"
+msgstr "Prepoznavanje grešaka"
 
 #: ../../src/main/configs/configdialog.cpp:54
 msgid "Error Check Settings"
 msgstr "Postavke provjera greški"
 
 #: ../../src/main/configs/configdialog.cpp:60
-#, fuzzy
 msgctxt "@title Spelling settings"
 msgid "Spelling"
 msgstr "Pravopis"
@@ -1430,26 +1421,22 @@ msgstr "Postavke pravopisa"
 #: ../../src/main/configs/configdialog.cpp:65
 msgctxt "@title Waveform settings"
 msgid "Waveform"
-msgstr ""
+msgstr "Valni prikaz zvuka"
 
 #: ../../src/main/configs/configdialog.cpp:66
-#, fuzzy
 msgid "Waveform settings"
-msgstr "Postavke video reproduktora"
+msgstr "Postavke valnog prikaza zvuka"
 
 #: ../../src/main/configs/configdialog.cpp:70
-#, fuzzy
 msgctxt "@title Video player settings"
 msgid "Video Player"
 msgstr "Video reproduktor"
 
 #: ../../src/main/configs/configdialog.cpp:71
-#, fuzzy
 msgid "Video Player Settings"
 msgstr "Postavke video reproduktora"
 
 #: ../../src/main/configs/configdialog.cpp:78
-#, fuzzy
 msgctxt "@title Video player backend settings"
 msgid "%1 backend settings"
 msgstr "Postavke %1 pozadinskog reproduktora"
@@ -2082,10 +2069,9 @@ msgstr "Otvori lokaciju kao prijevod podnaslova"
 
 #: ../../src/main/mainwindow.cpp:46
 msgid "Waveform"
-msgstr ""
+msgstr "Valni prikaz zvuka"
 
 #: ../../src/main/mainwindow.cpp:60
-#, fuzzy
 msgid "Video Player"
 msgstr "Video reproduktor"
 
@@ -2324,21 +2310,23 @@ msgstr "Neočekivan sadržaj je primljen od usluge prevođenja"
 
 #: ../../src/speechprocessor/speechprocessor.cpp:56
 msgid "Recognizing speech"
-msgstr ""
+msgstr "Prepoznavanje govora"
 
 #: ../../src/speechprocessor/speechprocessor.cpp:155
 msgid "No speech recognition plugins available"
-msgstr ""
+msgstr "Nema dostupnog priključka prepoznavanja govora"
 
 #: ../../src/speechprocessor/speechprocessor.cpp:160
 msgid "Initialization of speech recognition plugin failed"
-msgstr ""
+msgstr "Neuspjelo pokretanje priključka prepoznavanja govora"
 
 #: ../../src/speechprocessor/speechprocessor.cpp:230
 msgid ""
 "Speech Recognition failed: %2\n"
 "Code %1: %3"
 msgstr ""
+"Neuspjelo prepoznavanje govora: %2\n"
+"Kôd %1: %3"
 
 #: ../../src/videoplayer/videoplayer.cpp:551
 msgid "File does not exist."
@@ -2346,9 +2334,8 @@ msgstr "Datoteka ne postoji."
 
 #: ../../src/videoplayerplugins/gstreamer/gstreamerplayerbackend.cpp:350
 #: ../../src/videoplayerplugins/mpv/mpvbackend.cpp:232
-#, fuzzy
 msgid "Text Stream #%1"
-msgstr "Zvučni zapis #%1"
+msgstr "Tekstni zapis #%1"
 
 #: ../../src/videoplayerplugins/gstreamer/gstreamerplayerbackend.cpp:386
 #: ../../src/videoplayerplugins/mplayer/mplayerplayerbackend.cpp:251
@@ -2408,7 +2395,7 @@ msgstr "Nema prijedloga"
 
 #: ../../src/widgets/waveformwidget.cpp:117
 msgid "Generating waveform"
-msgstr "Stvaranje valnog prikaza"
+msgstr "Stvaranje valnog prikaza zvuka"
 
 #. i18n: file: ../../src/main/configs/errorsconfigwidget.ui:46
 #. i18n: ectx: property (text), widget (QLabel, label)
@@ -2425,7 +2412,6 @@ msgstr "Maksimalan broj redaka:"
 #. i18n: file: ../../src/main/configs/errorsconfigwidget.ui:63
 #. i18n: ectx: property (title), widget (QGroupBox, m_grpQuickActions)
 #: rc.cpp:15
-#, fuzzy
 msgid "Absolute Durations"
 msgstr "Potpuna trajanja"
 
@@ -2448,7 +2434,6 @@ msgstr "Minimalno trajanje:"
 #. i18n: file: ../../src/main/configs/errorsconfigwidget.ui:109
 #. i18n: ectx: property (title), widget (QGroupBox, groupBox)
 #: rc.cpp:24
-#, fuzzy
 msgid "Relative Durations"
 msgstr "Relativna trajanja"
 
@@ -2457,14 +2442,12 @@ msgstr "Relativna trajanja"
 #. i18n: file: ../../src/main/configs/errorsconfigwidget.ui:139
 #. i18n: ectx: property (suffix), widget (QSpinBox, kcfg_MaxDurationPerCharacter)
 #: rc.cpp:27 rc.cpp:36
-#, fuzzy
 msgid " msec/char"
 msgstr " ms/znaku"
 
 #. i18n: file: ../../src/main/configs/errorsconfigwidget.ui:152
 #. i18n: ectx: property (title), widget (QGroupBox, groupBox_2)
 #: rc.cpp:39
-#, fuzzy
 msgid "Behavior"
 msgstr "Ponašanje"
 
@@ -2485,7 +2468,6 @@ msgstr "Automatski obriši popravljene greške"
 #. i18n: file: ../../src/videoplayerplugins/mpv/mpvconfigwidget.ui:20
 #. i18n: ectx: property (title), widget (QGroupBox, grpGeneral)
 #: rc.cpp:45 rc.cpp:69 rc.cpp:489 rc.cpp:534
-#, fuzzy
 msgid "General"
 msgstr "Općenito"
 
@@ -2510,14 +2492,12 @@ msgstr "Nastavi reprodukciju nakon dvostrukog klika"
 #. i18n: file: ../../src/main/configs/generalconfigwidget.ui:57
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_AutomaticVideoLoad)
 #: rc.cpp:57
-#, fuzzy
 msgid "Automatically load video file when opening a subtitle"
-msgstr "Automatski učitaj video datoteku pri otvaranju podnaslova"
+msgstr "Automatski učitaj video snimku pri otvaranju podnaslova"
 
 #. i18n: file: ../../src/main/configs/generalconfigwidget.ui:67
 #. i18n: ectx: property (title), widget (QGroupBox, m_grpQuickActions)
 #: rc.cpp:60
-#, fuzzy
 msgid "Quick Actions"
 msgstr "Brze radnje"
 
@@ -2542,49 +2522,42 @@ msgstr "Trajanje skoka premotavanja:"
 #. i18n: file: ../../src/main/configs/playerconfigwidget.ui:43
 #. i18n: ectx: property (text), widget (QLabel, label_3)
 #: rc.cpp:78
-#, fuzzy
 msgid "VideoPlayer backend:"
-msgstr "Pozadinski reproduktor:"
+msgstr "Pozadinski reproduktor"
 
 #. i18n: file: ../../src/main/configs/playerconfigwidget.ui:53
 #. i18n: ectx: property (title), widget (QGroupBox, m_grpSubtitles)
 #: rc.cpp:81
-#, fuzzy
 msgid "Subtitles"
 msgstr "Podnaslovi"
 
 #. i18n: file: ../../src/main/configs/playerconfigwidget.ui:59
 #. i18n: ectx: property (text), widget (QLabel, label_7)
 #: rc.cpp:84
-#, fuzzy
 msgid "Outline color:"
-msgstr "Boja obrisa:"
+msgstr "Boja obruba:"
 
 #. i18n: file: ../../src/main/configs/playerconfigwidget.ui:75
 #. i18n: ectx: property (text), widget (QLabel, label_8)
 #: rc.cpp:87
-#, fuzzy
 msgid "Outline width:"
-msgstr "Širina obrisa:"
+msgstr "Širina obruba:"
 
 #. i18n: file: ../../src/main/configs/playerconfigwidget.ui:82
 #. i18n: ectx: property (text), widget (QLabel, label_6)
 #: rc.cpp:90
-#, fuzzy
 msgid "Text color:"
-msgstr "Boja teksta"
+msgstr "Boja teksta:"
 
 #. i18n: file: ../../src/main/configs/playerconfigwidget.ui:89
 #. i18n: ectx: property (text), widget (QLabel, label_2)
 #: rc.cpp:93
-#, fuzzy
 msgid "Font family:"
 msgstr "Vrsta slova:"
 
 #. i18n: file: ../../src/main/configs/playerconfigwidget.ui:96
 #. i18n: ectx: property (text), widget (QLabel, label_5)
 #: rc.cpp:96
-#, fuzzy
 msgid "Font size:"
 msgstr "Veličina slova:"
 
@@ -2592,149 +2565,133 @@ msgstr "Veličina slova:"
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_Antialias)
 #: rc.cpp:99
 msgid "Text Antialiasing"
-msgstr ""
+msgstr "Zaglađivanje teksta"
 
 #. i18n: file: ../../src/main/configs/playerconfigwidget.ui:130
 #. i18n: ectx: property (title), widget (QGroupBox, m_grpPreview)
 #: rc.cpp:102
-#, fuzzy
 msgid "Subtitles Preview"
-msgstr "Pregled podnaslova"
+msgstr "Prikaz podnaslova"
 
 #. i18n: file: ../../src/main/configs/waveformconfigwidget.ui:17
 #. i18n: ectx: property (title), widget (QGroupBox, groupBox_3)
 #: rc.cpp:105
 msgid "Waveform Display"
-msgstr ""
+msgstr "Valni prikaz"
 
 #. i18n: file: ../../src/main/configs/waveformconfigwidget.ui:42
 #. i18n: ectx: property (text), widget (QLabel, label_12)
 #: rc.cpp:108
-#, fuzzy
 msgid "Outer color:"
-msgstr "Boja obrisa:"
+msgstr "Vanjska boja:"
 
 #. i18n: file: ../../src/main/configs/waveformconfigwidget.ui:68
 #. i18n: ectx: property (text), widget (QLabel, label_11)
 #: rc.cpp:111
-#, fuzzy
 msgid "Inner color:"
-msgstr "Glavna boja:"
+msgstr "Unutarnja boja:"
 
 #. i18n: file: ../../src/main/configs/waveformconfigwidget.ui:78
 #. i18n: ectx: property (title), widget (QGroupBox, m_grpGeneral)
 #: rc.cpp:114
-#, fuzzy
 msgid "Subtitle Display"
-msgstr "Podnaslovi"
+msgstr "Prikaz podnaslova"
 
 #. i18n: file: ../../src/main/configs/waveformconfigwidget.ui:106
 #. i18n: ectx: property (text), widget (QLabel, label_14)
 #: rc.cpp:117
-#, fuzzy
 msgid "Subtitle border color:"
-msgstr "Greške podnaslova"
+msgstr "Boja ruba podnaslova:"
 
 #. i18n: file: ../../src/main/configs/waveformconfigwidget.ui:113
 #. i18n: ectx: property (text), widget (QLabel, label_16)
 #: rc.cpp:120
 msgid "Selected background color:"
-msgstr ""
+msgstr "Boja odabrane pozadine:"
 
 #. i18n: file: ../../src/main/configs/waveformconfigwidget.ui:120
 #. i18n: ectx: property (text), widget (QLabel, label_15)
 #: rc.cpp:123
-#, fuzzy
 msgid "Subtitle border width:"
-msgstr "Kompozitor podnaslova"
+msgstr "Širina ruba podnaslova:"
 
 #. i18n: file: ../../src/main/configs/waveformconfigwidget.ui:127
 #. i18n: ectx: property (text), widget (QLabel, label_13)
 #: rc.cpp:126
 msgid "Subtitle background color:"
-msgstr ""
+msgstr "Boja pozadine podnaslova:"
 
 #. i18n: file: ../../src/main/configs/waveformconfigwidget.ui:153
 #. i18n: ectx: property (text), widget (QLabel, label_17)
 #: rc.cpp:129
-#, fuzzy
 msgid "Selected border color:"
-msgstr "Obriši odabrane greške"
+msgstr "Boja odabranog ruba:"
 
 #. i18n: file: ../../src/main/configs/waveformconfigwidget.ui:201
 #. i18n: ectx: property (title), widget (QGroupBox, groupBox)
 #: rc.cpp:132
-#, fuzzy
 msgid "Text Font and Colors"
-msgstr "Boja teksta"
+msgstr "Slova i boje teksta"
 
 #. i18n: file: ../../src/main/configs/waveformconfigwidget.ui:207
 #. i18n: ectx: property (text), widget (QLabel, label_21)
 #: rc.cpp:135
-#, fuzzy
 msgid "Subtitle font family:"
-msgstr "Vrsta slova:"
+msgstr "Vrsta slova podnaslova:"
 
 #. i18n: file: ../../src/main/configs/waveformconfigwidget.ui:217
 #. i18n: ectx: property (text), widget (QLabel, label_22)
 #: rc.cpp:138
-#, fuzzy
 msgid "Subtitle number font size:"
-msgstr "Kompozitor podnaslova"
+msgstr "Veličina slova broja podnaslova:"
 
 #. i18n: file: ../../src/main/configs/waveformconfigwidget.ui:224
 #. i18n: ectx: property (suffix), widget (QSpinBox, kcfg_wfSubNumberFontSize)
 #. i18n: file: ../../src/main/configs/waveformconfigwidget.ui:264
 #. i18n: ectx: property (suffix), widget (QSpinBox, kcfg_wfSubTextFontSize)
 #: rc.cpp:141 rc.cpp:150
-#, fuzzy
 msgid " pt"
-msgstr " točaka"
+msgstr " točka"
 
 #. i18n: file: ../../src/main/configs/waveformconfigwidget.ui:231
 #. i18n: ectx: property (text), widget (QLabel, label_23)
 #: rc.cpp:144
-#, fuzzy
 msgid "Subtitle Number Color"
-msgstr "Kompozitor podnaslova"
+msgstr "Boja broja podnaslova:"
 
 #. i18n: file: ../../src/main/configs/waveformconfigwidget.ui:257
 #. i18n: ectx: property (text), widget (QLabel, label_24)
 #: rc.cpp:147
-#, fuzzy
 msgid "Subtitle text font size:"
-msgstr "Zapisi podnalova"
+msgstr "Veličina slova teksta podnaslova:"
 
 #. i18n: file: ../../src/main/configs/waveformconfigwidget.ui:271
 #. i18n: ectx: property (text), widget (QLabel, label_25)
 #: rc.cpp:153
-#, fuzzy
 msgid "Subtitle Text Color"
-msgstr "Kompozitor podnaslova"
+msgstr "Boja teksta podnaslova:"
 
 #. i18n: file: ../../src/main/configs/waveformconfigwidget.ui:300
 #. i18n: ectx: property (title), widget (QGroupBox, groupBox_2)
 #: rc.cpp:156
-#, fuzzy
 msgid "Line Indicators"
-msgstr "Greške redka"
+msgstr "Linije položaja"
 
 #. i18n: file: ../../src/main/configs/waveformconfigwidget.ui:306
 #. i18n: ectx: property (text), widget (QLabel, label_11)
 #: rc.cpp:159
 msgid "Player position color:"
-msgstr ""
+msgstr "Boja linije položaja reproduktora:"
 
 #. i18n: file: ../../src/main/configs/waveformconfigwidget.ui:313
 #. i18n: ectx: property (text), widget (QLabel, label_12)
 #: rc.cpp:162
 msgid "Mouse indicator color:"
-msgstr ""
+msgstr "Boja linije položaja miša:"
 
 #. i18n: file: ../../src/main/scconfig.kcfg:10
 #. i18n: ectx: label, entry (DefaultSubtitlesEncoding), group (General)
 #: rc.cpp:165
-#, fuzzy
 msgid "Default Subtitles Encoding"
 msgstr "Zadano kôdiranje podnaslova"
 
@@ -2742,284 +2699,257 @@ msgstr "Zadano kôdiranje podnaslova"
 #. i18n: ectx: label, entry (SeekOffsetOnDoubleClick), group (General)
 #: rc.cpp:168
 msgid "Seek Offset On Double Click"
-msgstr ""
+msgstr "Pomak premotavanja pri dvostrukom kliku"
 
 #. i18n: file: ../../src/main/scconfig.kcfg:18
 #. i18n: ectx: label, entry (UnpauseOnDoubleClick), group (General)
 #: rc.cpp:171
 msgid "Unpause On Double Click"
-msgstr ""
+msgstr "Nastavi reprodukciju dvostrukim klikom"
 
 #. i18n: file: ../../src/main/scconfig.kcfg:22
 #. i18n: ectx: label, entry (AutomaticVideoLoad), group (General)
 #: rc.cpp:174
-#, fuzzy
 msgid "Automatic Video Load"
-msgstr "Automatski"
+msgstr "Automatsko učitavanje video snimke"
 
 #. i18n: file: ../../src/main/scconfig.kcfg:27
 #. i18n: ectx: label, entry (LinesQuickShiftAmount), group (General)
 #: rc.cpp:177
 msgid "Lines Quick Shift Amount"
-msgstr ""
+msgstr "Iznos brzog premotavanja redaka"
 
 #. i18n: file: ../../src/main/scconfig.kcfg:31
 #. i18n: ectx: label, entry (GrabbedPositionCompensation), group (General)
 #: rc.cpp:180
 msgid "Grabbed Position Compensation"
-msgstr ""
+msgstr "Kompenzacija za uhvaćeni položaj"
 
 #. i18n: file: ../../src/main/scconfig.kcfg:38
 #. i18n: ectx: label, entry (MaxCharacters), group (Error Check)
 #: rc.cpp:183
-#, fuzzy
 msgid "Maximum number of characters"
-msgstr "Maksimalan broj znakova:"
+msgstr "Najveći broj znakova"
 
 #. i18n: file: ../../src/main/scconfig.kcfg:42
 #. i18n: ectx: label, entry (MaxLines), group (Error Check)
 #: rc.cpp:186
-#, fuzzy
 msgid "Maximum number of lines"
-msgstr "Maksimalan broj redaka:"
+msgstr "Najveći broj redaka"
 
 #. i18n: file: ../../src/main/scconfig.kcfg:47
 #. i18n: ectx: label, entry (MinDuration), group (Error Check)
 #: rc.cpp:189
-#, fuzzy
 msgid "Minimum duration"
-msgstr "Minimalno trajanje:"
+msgstr "Najmanje trajanje"
 
 #. i18n: file: ../../src/main/scconfig.kcfg:51
 #. i18n: ectx: label, entry (MaxDuration), group (Error Check)
 #: rc.cpp:192
-#, fuzzy
 msgid "Maximum duration"
-msgstr "Maksimalno trajanje:"
+msgstr "Najveće trajanje"
 
 #. i18n: file: ../../src/main/scconfig.kcfg:56
 #. i18n: ectx: label, entry (MinDurationPerCharacter), group (Error Check)
 #: rc.cpp:195
-#, fuzzy
 msgid "Minimum duration per character"
-msgstr "Predugo trajanje po znaku"
+msgstr "Najmanje trajanje po znaku"
 
 #. i18n: file: ../../src/main/scconfig.kcfg:60
 #. i18n: ectx: label, entry (MaxDurationPerCharacter), group (Error Check)
 #: rc.cpp:198
-#, fuzzy
 msgid "Maximum duration per character"
-msgstr "Predugo trajanje po znaku"
+msgstr "Najveće trajanje po znaku"
 
 #. i18n: file: ../../src/main/scconfig.kcfg:72
 #. i18n: ectx: label, entry (DefaultLanguage), group (Spelling)
 #: rc.cpp:204
-#, fuzzy
 msgid "Default Language"
-msgstr "Ulazni jezik:"
+msgstr "Zadani jezik"
 
 #. i18n: file: ../../src/main/scconfig.kcfg:76
 #. i18n: ectx: label, entry (DefaultClient), group (Spelling)
 #: rc.cpp:207
-#, fuzzy
 msgid "Default client"
-msgstr "Ulazni jezik:"
+msgstr "Zadani klijent"
 
 #. i18n: file: ../../src/main/scconfig.kcfg:80
 #. i18n: ectx: label, entry (CheckUppercase), group (Spelling)
 #: rc.cpp:210
-#, fuzzy
 msgid "Check uppercase"
-msgstr "Velika slova"
+msgstr "Provjeri velika slova"
 
 #. i18n: file: ../../src/main/scconfig.kcfg:84
 #. i18n: ectx: label, entry (SkipRunTogether), group (Spelling)
 #: rc.cpp:213
 msgid "Skip Run Together"
-msgstr ""
+msgstr "Preskoči zajedničko pokretanje"
 
 #. i18n: file: ../../src/main/scconfig.kcfg:91
 #. i18n: ectx: label, entry (wfInnerColor), group (Waveform Widget)
 #: rc.cpp:216
 msgid "Waveform Inner Color"
-msgstr ""
+msgstr "Unutarnja boja valnog prikaza zvuka"
 
 #. i18n: file: ../../src/main/scconfig.kcfg:95
 #. i18n: ectx: label, entry (wfOuterColor), group (Waveform Widget)
 #: rc.cpp:219
-#, fuzzy
 msgid "Waveform Outer Color"
-msgstr "Boja obrisa:"
+msgstr "Vanjska boja valnog prikaza zvuka"
 
 #. i18n: file: ../../src/main/scconfig.kcfg:99
 #. i18n: ectx: label, entry (wfSubBackground), group (Waveform Widget)
 #: rc.cpp:222
 msgid "Waveform Subtitle Background Color"
-msgstr ""
+msgstr "Boja pozadine podnaslova valnog prikaza zvuka"
 
 #. i18n: file: ../../src/main/scconfig.kcfg:103
 #. i18n: ectx: label, entry (wfSubBorder), group (Waveform Widget)
 #: rc.cpp:225
 msgid "Waveform Subtitle Border Color"
-msgstr ""
+msgstr "Boja ruba podnaslova valnog prikaza zvuka"
 
 #. i18n: file: ../../src/main/scconfig.kcfg:107
 #. i18n: ectx: label, entry (wfSubBorderWidth), group (Waveform Widget)
 #: rc.cpp:228
 msgid "Waveform Subtitle Border Width"
-msgstr ""
+msgstr "Širina ruba podnaslova valnog prikaza zvuka"
 
 #. i18n: file: ../../src/main/scconfig.kcfg:111
 #. i18n: ectx: label, entry (wfSelBackground), group (Waveform Widget)
 #: rc.cpp:231
 msgid "Waveform Selected Subtitle Background Color"
-msgstr ""
+msgstr "Boja pozadine odabranog podnaslova valnog prikaza zvuka"
 
 #. i18n: file: ../../src/main/scconfig.kcfg:115
 #. i18n: ectx: label, entry (wfSelBorder), group (Waveform Widget)
 #: rc.cpp:234
 msgid "Waveform Selected Subtitle Border Color"
-msgstr ""
+msgstr "Boja ruba odabranog podnaslova vanog prikaza zvuka"
 
 #. i18n: file: ../../src/main/scconfig.kcfg:119
 #. i18n: ectx: label, entry (wfFontFamily), group (Waveform Widget)
 #. i18n: file: ../../src/main/scconfig.kcfg:163
 #. i18n: ectx: label, entry (FontFamily), group (VideoPlayer)
 #: rc.cpp:237 rc.cpp:267
-#, fuzzy
 msgid "Font Family"
-msgstr "Vrsta slova:"
+msgstr "Vrsta slova"
 
 #. i18n: file: ../../src/main/scconfig.kcfg:123
 #. i18n: ectx: label, entry (wfSubNumberFontSize), group (Waveform Widget)
 #: rc.cpp:240
 msgid "Subtitle Number Font Size"
-msgstr ""
+msgstr "Veličina slova broja podnaslova"
 
 #. i18n: file: ../../src/main/scconfig.kcfg:127
 #. i18n: ectx: label, entry (wfSubNumberColor), group (Waveform Widget)
 #: rc.cpp:243
-#, fuzzy
 msgid "Subtitle Number Font Color"
-msgstr "Kompozitor podnaslova"
+msgstr "Boja slova broja podnaslova"
 
 #. i18n: file: ../../src/main/scconfig.kcfg:131
 #. i18n: ectx: label, entry (wfSubTextFontSize), group (Waveform Widget)
 #: rc.cpp:246
-#, fuzzy
 msgid "Subtitle Text Font Size"
-msgstr "Pregled podnaslova"
+msgstr "Veličina slova teksta podnaslova"
 
 #. i18n: file: ../../src/main/scconfig.kcfg:135
 #. i18n: ectx: label, entry (wfSubTextColor), group (Waveform Widget)
 #: rc.cpp:249
-#, fuzzy
 msgid "Subtitle Text Font Color"
-msgstr "Kompozitor podnaslova"
+msgstr "Boja slova teksta podnaslova"
 
 #. i18n: file: ../../src/main/scconfig.kcfg:139
 #. i18n: ectx: label, entry (wfMouseLocation), group (Waveform Widget)
 #: rc.cpp:252
 msgid "Mouse Location Line Color"
-msgstr ""
+msgstr "Boja linije položaja miša"
 
 #. i18n: file: ../../src/main/scconfig.kcfg:143
 #. i18n: ectx: label, entry (wfPlayLocation), group (Waveform Widget)
 #: rc.cpp:255
 msgid "Play Location Line Color"
-msgstr ""
+msgstr "Boja linije položaja reproduktora"
 
 #. i18n: file: ../../src/main/scconfig.kcfg:150
 #. i18n: ectx: label, entry (PlayerBackend), group (VideoPlayer)
 #: rc.cpp:258
-#, fuzzy
 msgid "VideoPlayer Backend"
-msgstr "Pozadinski reproduktor:"
+msgstr "Video pozadinski reproduktor"
 
 #. i18n: file: ../../src/main/scconfig.kcfg:154
 #. i18n: ectx: label, entry (SeekJumpLength), group (VideoPlayer)
 #: rc.cpp:261
-#, fuzzy
 msgid "Jump length on seek"
-msgstr "Trajanje skoka premotavanja:"
+msgstr "Trajanje skoka premotavanja"
 
 #. i18n: file: ../../src/main/scconfig.kcfg:158
 #. i18n: ectx: label, entry (ShowPositionTimeEdit), group (VideoPlayer)
 #: rc.cpp:264
-#, fuzzy
 msgid "Show editable time position"
 msgstr "Prikaži promjenjivo upravljanje položaja"
 
 #. i18n: file: ../../src/main/scconfig.kcfg:167
 #. i18n: ectx: label, entry (FontPointSize), group (VideoPlayer)
 #: rc.cpp:270
-#, fuzzy
 msgid "Font Size"
-msgstr "Veličina slova:"
+msgstr "Veličina slova"
 
 #. i18n: file: ../../src/main/scconfig.kcfg:171
 #. i18n: ectx: label, entry (FontColor), group (VideoPlayer)
 #: rc.cpp:273
-#, fuzzy
 msgid "Font Color"
-msgstr "Boja teksta"
+msgstr "Boja slova"
 
 #. i18n: file: ../../src/main/scconfig.kcfg:175
 #. i18n: ectx: label, entry (OutlineColor), group (VideoPlayer)
 #: rc.cpp:276
-#, fuzzy
 msgid "Outline Color"
-msgstr "Boja obrisa:"
+msgstr "Boja obruba"
 
 #. i18n: file: ../../src/main/scconfig.kcfg:179
 #. i18n: ectx: label, entry (OutlineWidth), group (VideoPlayer)
 #: rc.cpp:279
-#, fuzzy
 msgid "Outline Width"
-msgstr "Širina obrisa:"
+msgstr "Širina obruba"
 
 #. i18n: file: ../../src/main/scconfig.kcfg:183
 #. i18n: ectx: label, entry (Antialias), group (VideoPlayer)
 #: rc.cpp:282
 msgid "Font Antialiasing"
-msgstr ""
+msgstr "Zaglađivanje slova"
 
 #. i18n: file: ../../src/main/scconfig.kcfg:190
 #. i18n: ectx: label, entry (gstVideoSinkAuto), group (GStreamer)
 #: rc.cpp:285
-#, fuzzy
 msgid "Auto Video Sink"
-msgstr "Slivnik slike:"
+msgstr "Automatski slivnik slike"
 
 #. i18n: file: ../../src/main/scconfig.kcfg:194
 #. i18n: ectx: label, entry (gstVideoSink), group (GStreamer)
 #: rc.cpp:288
-#, fuzzy
 msgid "Video Sink"
-msgstr "Slivnik slike:"
+msgstr "Slivnik slike"
 
 #. i18n: file: ../../src/main/scconfig.kcfg:199
 #. i18n: ectx: label, entry (gstAudioSinkAuto), group (GStreamer)
 #: rc.cpp:291
-#, fuzzy
 msgid "Auto Audio Sink"
-msgstr "Slivnik zvuka:"
+msgstr "Automatski slivnik zvuka"
 
 #. i18n: file: ../../src/main/scconfig.kcfg:203
 #. i18n: ectx: label, entry (gstAudioSink), group (GStreamer)
 #: rc.cpp:294
-#, fuzzy
 msgid "Audio Sink"
-msgstr "Slivnik zvuka:"
+msgstr "Slivnik zvuka"
 
 #. i18n: file: ../../src/main/scconfig.kcfg:210
 #. i18n: ectx: label, entry (mpvCacheEnabled), group (MPV)
 #. i18n: file: ../../src/main/scconfig.kcfg:279
 #. i18n: ectx: label, entry (mpCacheEnabled), group (MPlayer)
 #: rc.cpp:297 rc.cpp:345
-#, fuzzy
 msgid "Cache Enabled"
-msgstr "Video datoteke"
+msgstr "Predmemorija omogućena"
 
 #. i18n: file: ../../src/main/scconfig.kcfg:214
 #. i18n: ectx: label, entry (mpvCacheSize), group (MPV)
@@ -3027,16 +2957,15 @@ msgstr "Video datoteke"
 #. i18n: ectx: label, entry (mpCacheSize), group (MPlayer)
 #: rc.cpp:300 rc.cpp:348
 msgid "Cache Size (KB)"
-msgstr ""
+msgstr "Veličina predmemorije (KB)"
 
 #. i18n: file: ../../src/main/scconfig.kcfg:218
 #. i18n: ectx: label, entry (mpvAutoSyncEnabled), group (MPV)
 #. i18n: file: ../../src/main/scconfig.kcfg:291
 #. i18n: ectx: label, entry (mpAutoSyncEnabled), group (MPlayer)
 #: rc.cpp:303 rc.cpp:354
-#, fuzzy
 msgid "Auto Sync Enabled"
-msgstr "Zvučne datoteke"
+msgstr "Automatsko usklađivanje omogućeno"
 
 #. i18n: file: ../../src/main/scconfig.kcfg:222
 #. i18n: ectx: label, entry (mpvAutoSyncFactor), group (MPV)
@@ -3044,16 +2973,15 @@ msgstr "Zvučne datoteke"
 #. i18n: ectx: label, entry (mpAutoSyncFactor), group (MPlayer)
 #: rc.cpp:306 rc.cpp:357
 msgid "Auto Sync Factor"
-msgstr ""
+msgstr "Faktor automatskog usklađivanja"
 
 #. i18n: file: ../../src/main/scconfig.kcfg:227
 #. i18n: ectx: label, entry (mpvVideoOutputEnabled), group (MPV)
 #. i18n: file: ../../src/main/scconfig.kcfg:300
 #. i18n: ectx: label, entry (mpVideoOutputEnabled), group (MPlayer)
 #: rc.cpp:309 rc.cpp:360
-#, fuzzy
 msgid "Video Output Enabled"
-msgstr "Izlazni pogon slike"
+msgstr "Izlaz slike omogućen"
 
 #. i18n: file: ../../src/main/scconfig.kcfg:231
 #. i18n: ectx: label, entry (mpvVideoOutput), group (MPV)
@@ -3062,16 +2990,14 @@ msgstr "Izlazni pogon slike"
 #. i18n: file: ../../src/main/scconfig.kcfg:356
 #. i18n: ectx: label, entry (xineVideo), group (Xine)
 #: rc.cpp:312 rc.cpp:363 rc.cpp:399
-#, fuzzy
 msgid "Video Output"
-msgstr "Izlazni pogon slike"
+msgstr "Izlaz slike"
 
 #. i18n: file: ../../src/main/scconfig.kcfg:235
 #. i18n: ectx: label, entry (mpvHwDecodeEnabled), group (MPV)
 #: rc.cpp:315
-#, fuzzy
 msgid "Hardware Decode Enabled"
-msgstr "Video datoteke"
+msgstr "Hardversko dekôdiranje omogućeno"
 
 #. i18n: file: ../../src/main/scconfig.kcfg:239
 #. i18n: ectx: label, entry (mpvHwDecode), group (MPV)
@@ -3079,25 +3005,23 @@ msgstr "Video datoteke"
 #. i18n: ectx: label, entry (mpVdpau), group (MPlayer)
 #: rc.cpp:318 rc.cpp:366
 msgid "Hardware Decode"
-msgstr ""
+msgstr "Hardversko dekôdiranje"
 
 #. i18n: file: ../../src/main/scconfig.kcfg:243
 #. i18n: ectx: label, entry (mpvFrameDropping), group (MPV)
 #. i18n: file: ../../src/main/scconfig.kcfg:312
 #. i18n: ectx: label, entry (mpFrameDropping), group (MPlayer)
 #: rc.cpp:321 rc.cpp:369
-#, fuzzy
 msgid "Frame Dropping"
-msgstr "Dopusti ispuštanje sličica"
+msgstr "Dopusti preskakanje sličica"
 
 #. i18n: file: ../../src/main/scconfig.kcfg:248
 #. i18n: ectx: label, entry (mpvAudioOutputEnabled), group (MPV)
 #. i18n: file: ../../src/main/scconfig.kcfg:321
 #. i18n: ectx: label, entry (mpAudioOutputEnabled), group (MPlayer)
 #: rc.cpp:324 rc.cpp:375
-#, fuzzy
 msgid "Audio Output Enabled"
-msgstr "Izlazni pogon zvuka:"
+msgstr "Izlaz zvuka omogućen"
 
 #. i18n: file: ../../src/main/scconfig.kcfg:252
 #. i18n: ectx: label, entry (mpvAudioOutput), group (MPV)
@@ -3106,43 +3030,38 @@ msgstr "Izlazni pogon zvuka:"
 #. i18n: file: ../../src/main/scconfig.kcfg:365
 #. i18n: ectx: label, entry (xineAudio), group (Xine)
 #: rc.cpp:327 rc.cpp:378 rc.cpp:405
-#, fuzzy
 msgid "Audio Output"
-msgstr "Izlazni pogon zvuka:"
+msgstr "Izlaz zvuka"
 
 #. i18n: file: ../../src/main/scconfig.kcfg:256
 #. i18n: ectx: label, entry (mpvAudioChannelsEnabled), group (MPV)
 #. i18n: file: ../../src/main/scconfig.kcfg:329
 #. i18n: ectx: label, entry (mpAudioChannelsEnabled), group (MPlayer)
 #: rc.cpp:330 rc.cpp:381
-#, fuzzy
 msgid "Audio Channels Enabled"
-msgstr "Zvučni kanali:"
+msgstr "Zvučni kanali omogućeni"
 
 #. i18n: file: ../../src/main/scconfig.kcfg:260
 #. i18n: ectx: label, entry (mpvAudioChannels), group (MPV)
 #. i18n: file: ../../src/main/scconfig.kcfg:333
 #. i18n: ectx: label, entry (mpAudioChannels), group (MPlayer)
 #: rc.cpp:333 rc.cpp:384
-#, fuzzy
 msgid "Audio Channels"
-msgstr "Zvučni kanali:"
+msgstr "Zvučni kanali"
 
 #. i18n: file: ../../src/main/scconfig.kcfg:264
 #. i18n: ectx: label, entry (mpvVolumeAmplificationEnabled), group (MPV)
 #. i18n: file: ../../src/main/scconfig.kcfg:337
 #. i18n: ectx: label, entry (mpVolumeAmplificationEnabled), group (MPlayer)
 #: rc.cpp:336 rc.cpp:387
-#, fuzzy
 msgid "Volume Amplification Enabled"
-msgstr "Pojačanje glasnoće zvuka"
+msgstr "Pojačanje glasnoće zvuka omogućeno"
 
 #. i18n: file: ../../src/main/scconfig.kcfg:268
 #. i18n: ectx: label, entry (mpvVolumeAmplification), group (MPV)
 #. i18n: file: ../../src/main/scconfig.kcfg:341
 #. i18n: ectx: label, entry (mpVolumeAmplification), group (MPlayer)
 #: rc.cpp:339 rc.cpp:390
-#, fuzzy
 msgid "Volume Amplification"
 msgstr "Pojačanje glasnoće zvuka"
 
@@ -3151,37 +3070,32 @@ msgstr "Pojačanje glasnoće zvuka"
 #. i18n: file: ../../src/main/scconfig.kcfg:345
 #. i18n: ectx: label, entry (mpVolumeNormalization), group (MPlayer)
 #: rc.cpp:342 rc.cpp:393
-#, fuzzy
 msgid "Volume Normalization"
 msgstr "Normalizacija glasnoće zvuka"
 
 #. i18n: file: ../../src/main/scconfig.kcfg:287
 #. i18n: ectx: label, entry (mpExecutablePath), group (MPlayer)
 #: rc.cpp:351
-#, fuzzy
 msgid "mplayer executable path"
-msgstr "Putanja izvršne datoteke:"
+msgstr "mplayer putanja izvršne datoteke:"
 
 #. i18n: file: ../../src/main/scconfig.kcfg:316
 #. i18n: ectx: label, entry (mpHardFrameDropping), group (MPlayer)
 #: rc.cpp:372
-#, fuzzy
 msgid "Hard Frame Dropping"
-msgstr "Dopusti jače ispuštanje sličica"
+msgstr "Dopusti jače preskakanje sličica"
 
 #. i18n: file: ../../src/main/scconfig.kcfg:352
 #. i18n: ectx: label, entry (xineVideoEnabled), group (Xine)
 #: rc.cpp:396
-#, fuzzy
 msgid "Video Enabled"
-msgstr "Video datoteke"
+msgstr "Video omogućen"
 
 #. i18n: file: ../../src/main/scconfig.kcfg:361
 #. i18n: ectx: label, entry (xineAudioEnabled), group (Xine)
 #: rc.cpp:402
-#, fuzzy
 msgid "Audio Enabled"
-msgstr "Zvučne datoteke"
+msgstr "Zvuk omogućen"
 
 #. i18n: file: ../../src/main/scripting/scriptsmanager.ui:14
 #. i18n: ectx: property (windowTitle), widget (QDialog, ScriptsManager)
@@ -3264,7 +3178,6 @@ msgstr "&Datoteka"
 #. i18n: file: ../../src/main/subtitlecomposerui.rc:17
 #. i18n: ectx: Menu (translation)
 #: rc.cpp:450
-#, fuzzy
 msgid "Translation"
 msgstr "Prijevod"
 
@@ -3355,7 +3268,6 @@ msgstr "Faktor usklađivanja Slike/Zvuka:"
 #. i18n: file: ../../src/videoplayerplugins/xine/xineconfigwidget.ui:20
 #. i18n: ectx: property (title), widget (QGroupBox, grpVideo)
 #: rc.cpp:498 rc.cpp:540 rc.cpp:573
-#, fuzzy
 msgid "Video"
 msgstr "Video"
 
@@ -3370,7 +3282,6 @@ msgstr "Izlazni pogon slike"
 #. i18n: file: ../../src/videoplayerplugins/mplayer/mplayerconfigwidget.ui:73
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_mpVdpau)
 #: rc.cpp:504
-#, fuzzy
 msgid "Enable VDPAU for DivX/XviD"
 msgstr "Omogući VDPAU za DivX/XviD"
 
@@ -3380,13 +3291,13 @@ msgstr "Omogući VDPAU za DivX/XviD"
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_mpvFrameDropping)
 #: rc.cpp:507 rc.cpp:549
 msgid "Allow frame dropping"
-msgstr "Dopusti ispuštanje sličica"
+msgstr "Dopusti preskakanje sličica"
 
 #. i18n: file: ../../src/videoplayerplugins/mplayer/mplayerconfigwidget.ui:87
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_mpHardFrameDropping)
 #: rc.cpp:510
 msgid "Allow hard frame dropping"
-msgstr "Dopusti jače ispuštanje sličica"
+msgstr "Dopusti jače preskakanje sličica"
 
 #. i18n: file: ../../src/videoplayerplugins/mplayer/mplayerconfigwidget.ui:97
 #. i18n: ectx: property (title), widget (QGroupBox, grpAudio)
@@ -3395,7 +3306,6 @@ msgstr "Dopusti jače ispuštanje sličica"
 #. i18n: file: ../../src/videoplayerplugins/xine/xineconfigwidget.ui:43
 #. i18n: ectx: property (title), widget (QGroupBox, grpAudio)
 #: rc.cpp:513 rc.cpp:552 rc.cpp:579
-#, fuzzy
 msgid "Audio"
 msgstr "Zvuk"
 
@@ -3432,9 +3342,8 @@ msgstr "Pojačanje glasnoće zvuka"
 #. i18n: file: ../../src/videoplayerplugins/mpv/mpvconfigwidget.ui:168
 #. i18n: ectx: property (text), widget (QLabel, lab_mpvAudioChannels)
 #: rc.cpp:525 rc.cpp:528 rc.cpp:564 rc.cpp:567
-#, fuzzy
 msgid "TextLabel"
-msgstr "Tekst"
+msgstr "Naslov-teksta"
 
 #. i18n: file: ../../src/videoplayerplugins/mplayer/mplayerconfigwidget.ui:195
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_mpVolumeNormalization)
@@ -3448,7 +3357,7 @@ msgstr "Normalizacija glasnoće zvuka"
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_mpvHwDecodeEnabled)
 #: rc.cpp:543
 msgid "Hardware video decoding:"
-msgstr ""
+msgstr "Hardversko dekôdiranje videa:"
 
 #. i18n: file: ../../src/videoplayerplugins/xine/xineconfigwidget.ui:33
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_xineVideoEnabled)
@@ -3485,8 +3394,7 @@ msgstr "Pogon zvuka:"
 #~ msgstr "Prekini izdvajanje zvučnog zapisa videa"
 
 #~ msgid "<qt>There was an error opening file %1 for audio extraction.</qt>"
-#~ msgstr ""
-#~ "<qt>Dogodila se greška otvaranja datoteke %1 pri izdvajanju zvuka.</qt>"
+#~ msgstr "<qt>Dogodila se greška otvaranja datoteke %1 pri izdvajanju zvuka.</qt>"
 
 #~ msgid "Unexpected error when extracting audio."
 #~ msgstr "Neočekivana greška tijekom izdvajanja zvuka."
@@ -3515,8 +3423,8 @@ msgstr "Pogon zvuka:"
 #~ msgstr "Opčenito"
 
 #~ msgid ""
-#~ "The encoding specified here will be used to load subtitles when "
-#~ "autodetection fails and will also be suggested when saving new subtitles."
+#~ "The encoding specified here will be used to load subtitles when autodetection "
+#~ "fails and will also be suggested when saving new subtitles."
 #~ msgstr ""
 #~ "Kôdiranje određeno ovdje će se koristiti pri učitavanju podnaslova kada "
 #~ "automatsko otkrivanje ne uspije i isto tako će biti predloženo prilikom "
