@@ -1403,7 +1403,7 @@ msgstr "Općenite postavke"
 #: ../../src/main/configs/configdialog.cpp:53
 msgctxt "@title Error check settings"
 msgid "Error Check"
-msgstr "Prepoznavanje grešaka"
+msgstr "Provjera grešaka"
 
 #: ../../src/main/configs/configdialog.cpp:54
 msgid "Error Check Settings"
