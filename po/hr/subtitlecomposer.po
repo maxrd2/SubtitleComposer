@@ -2825,7 +2825,7 @@ msgstr "Boja pozadine odabranog podnaslova valnog prikaza zvuka"
 #. i18n: ectx: label, entry (wfSelBorder), group (Waveform Widget)
 #: rc.cpp:234
 msgid "Waveform Selected Subtitle Border Color"
-msgstr "Boja ruba odabranog podnaslova vanog prikaza zvuka"
+msgstr "Boja ruba odabranog podnaslova valnog prikaza zvuka"
 
 #. i18n: file: ../../src/main/scconfig.kcfg:119
 #. i18n: ectx: label, entry (wfFontFamily), group (Waveform Widget)
@@ -2845,7 +2845,7 @@ msgstr "Veličina slova broja podnaslova"
 #. i18n: ectx: label, entry (wfSubNumberColor), group (Waveform Widget)
 #: rc.cpp:243
 msgid "Subtitle Number Font Color"
-msgstr "Boja slova broja podnaslova"
+msgstr "Boja broja slova podnaslova"
 
 #. i18n: file: ../../src/main/scconfig.kcfg:131
 #. i18n: ectx: label, entry (wfSubTextFontSize), group (Waveform Widget)
