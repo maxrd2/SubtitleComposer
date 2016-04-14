@@ -1077,7 +1077,7 @@ msgstr "Smanji veličinu slova podnaslova za 1 točku"
 
 #: ../../src/main/application.cpp:1096
 msgid "Subtitle Streams"
-msgstr "Zapisi podnalova"
+msgstr "Zapisi podnaslova"
 
 #: ../../src/main/application.cpp:1097
 msgid "Select active subtitle stream"
@@ -1756,7 +1756,7 @@ msgstr "Spremi podnaslov"
 
 #: ../../src/main/dialogs/savesubtitledialog.cpp:44
 msgid "Save Translation Subtitle"
-msgstr "Spremi prijevod podnalova"
+msgstr "Spremi prijevod podnaslova"
 
 #: ../../src/main/dialogs/savesubtitledialog.cpp:75
 msgid "EOL:"
