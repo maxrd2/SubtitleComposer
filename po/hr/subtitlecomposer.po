@@ -935,7 +935,7 @@ msgstr "Uvezi zapis podnaslova"
 
 #: ../../src/main/application.cpp:941
 msgid "Import subtitle stream into subtitle editor"
-msgstr "Uvezi zapisi podnaslova u uređivač podnaslova"
+msgstr "Uvezi zapis podnaslova u uređivač podnaslova"
 
 #: ../../src/main/application.cpp:949
 msgid "Recognize Speech"
@@ -3077,7 +3077,7 @@ msgstr "Normalizacija glasnoće zvuka"
 #. i18n: ectx: label, entry (mpExecutablePath), group (MPlayer)
 #: rc.cpp:351
 msgid "mplayer executable path"
-msgstr "mplayer putanja izvršne datoteke:"
+msgstr "Putanja mplayer izvršne datoteke:"
 
 #. i18n: file: ../../src/main/scconfig.kcfg:316
 #. i18n: ectx: label, entry (mpHardFrameDropping), group (MPlayer)
