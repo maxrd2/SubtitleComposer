@@ -2845,7 +2845,7 @@ msgstr "Veličina slova broja podnaslova"
 #. i18n: ectx: label, entry (wfSubNumberColor), group (Waveform Widget)
 #: rc.cpp:243
 msgid "Subtitle Number Font Color"
-msgstr "Boja broja slova podnaslova"
+msgstr "Boja slova broja podnaslova"
 
 #. i18n: file: ../../src/main/scconfig.kcfg:131
 #. i18n: ectx: label, entry (wfSubTextFontSize), group (Waveform Widget)
