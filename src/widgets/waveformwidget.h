@@ -98,6 +98,7 @@ public slots:
 	void setAutoscroll(bool autoscroll);
 	void setScrollPosition(int milliseconds);
 	void onConfigChanged();
+	void onSubtitleChanged();
 
 protected:
 	void resizeEvent(QResizeEvent *event);

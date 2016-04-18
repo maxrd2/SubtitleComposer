@@ -90,6 +90,8 @@ MainWindow::MainWindow() :
 
 	statusBar()->addPermanentWidget(m_waveformWidget->progressWidget());
 
+	connect(m_linesWidget, &LinesWidget::currentLineChanged, m_waveformWidget, &WaveformWidget::onSubtitleChanged);
+
 	statusBar()->show();
 	toolBar()->show();
 	menuBar()->show();

@@ -316,11 +316,24 @@ WaveformWidget::updateZoomData()
 void
 WaveformWidget::setSubtitle(Subtitle *subtitle)
 {
+	if(m_subtitle)
+		disconnect(m_subtitle, &Subtitle::primaryChanged, this, &WaveformWidget::onSubtitleChanged);
+
 	m_subtitle = subtitle;
+
+	if(m_subtitle)
+		connect(m_subtitle, &Subtitle::primaryChanged, this, &WaveformWidget::onSubtitleChanged);
 
 	m_visibleLines.clear();
 	m_visibleLinesDirty = subtitle != Q_NULLPTR;
 
+	m_waveformGraphics->update();
+}
+
+void
+WaveformWidget::onSubtitleChanged()
+{
+	m_visibleLinesDirty = true;
 	m_waveformGraphics->update();
 }
 
@@ -620,10 +633,14 @@ WaveformWidget::resizeEvent(QResizeEvent *event)
 /*virtual*/ void
 WaveformWidget::leaveEvent(QEvent */*event*/)
 {
+	m_pointerTime.setMillisTime(Time::MaxMseconds);
+
 	if(m_userScroll) {
 		m_userScroll = false;
 		if(m_autoScroll)
 			onPlayerPositionChanged(m_timeCurrent.toSeconds());
+	} else {
+		m_waveformGraphics->update();
 	}
 }
 

@@ -174,6 +174,9 @@ public:
 	void rechecqCriticals(const RangeList &ranges, int minDurationMsecs, int maxDurationMsecs, int minMsecsPerChar, int maxMsecsPerChar, int maxChars, int maxLines);
 
 signals:
+	void primaryChanged();
+	void secondaryChanged();
+
 	void primaryDirtyStateChanged(bool dirty);
 	void secondaryDirtyStateChanged(bool dirty);
 

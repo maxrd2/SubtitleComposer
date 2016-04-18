@@ -1414,14 +1414,20 @@ Subtitle::incrementState(int dirtyMode)
 			emit primaryDirtyStateChanged(true);
 		else if(m_primaryState == m_primaryCleanState)
 			emit primaryDirtyStateChanged(false);
+
+		emit primaryChanged();
 		break;
+
 	case SubtitleAction::Secondary:
 		m_secondaryState++;
 		if(m_secondaryState == (m_secondaryCleanState + 1))
 			emit secondaryDirtyStateChanged(true);
 		else if(m_secondaryState == m_secondaryCleanState)
 			emit secondaryDirtyStateChanged(false);
+
+		emit secondaryChanged();
 		break;
+
 	case SubtitleAction::Both:
 		m_primaryState++;
 		m_secondaryState++;
@@ -1433,8 +1439,9 @@ Subtitle::incrementState(int dirtyMode)
 			emit secondaryDirtyStateChanged(true);
 		else if(m_secondaryState == m_secondaryCleanState)
 			emit secondaryDirtyStateChanged(false);
-		break;
-	default:
+
+		emit primaryChanged();
+		emit secondaryChanged();
 		break;
 	}
 }
@@ -1449,14 +1456,20 @@ Subtitle::decrementState(int dirtyMode)
 			emit primaryDirtyStateChanged(false);
 		else if(m_primaryState == (m_primaryCleanState - 1))
 			emit primaryDirtyStateChanged(true);
+
+		emit primaryChanged();
 		break;
+
 	case SubtitleAction::Secondary:
 		m_secondaryState--;
 		if(m_secondaryState == m_secondaryCleanState)
 			emit secondaryDirtyStateChanged(false);
 		else if(m_secondaryState == (m_secondaryCleanState - 1))
 			emit secondaryDirtyStateChanged(true);
+
+		emit secondaryChanged();
 		break;
+
 	case SubtitleAction::Both:
 		m_primaryState--;
 		m_secondaryState--;
@@ -1468,6 +1481,9 @@ Subtitle::decrementState(int dirtyMode)
 			emit secondaryDirtyStateChanged(false);
 		else if(m_secondaryState == (m_secondaryCleanState - 1))
 			emit secondaryDirtyStateChanged(true);
+
+		emit primaryChanged();
+		emit secondaryChanged();
 		break;
 	}
 }
