@@ -1,0 +1,13 @@
+diff --git a/src/speechplugins/pocketsphinx/pocketsphinxplugin.cpp b/src/speechplugins/pocketsphinx/pocketsphinxplugin.cpp
+index 4c6375e..eaad334 100644
+--- a/src/speechplugins/pocketsphinx/pocketsphinxplugin.cpp
++++ b/src/speechplugins/pocketsphinx/pocketsphinxplugin.cpp
+@@ -92,7 +92,7 @@ PocketSphinxPlugin::processUtterance()
+ 	if(!hyp || !*hyp)
+ 		return;
+ 
+-	ps_seg_t *iter = ps_seg_iter(m_psDecoder);
++	ps_seg_t *iter = ps_seg_iter(m_psDecoder, &score);
+ 	while(iter != NULL) {
+ 		const char *word = ps_seg_word(iter);
+ 		int wordIn, wordOut;
