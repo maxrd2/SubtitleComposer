@@ -291,7 +291,8 @@ StreamProcessor::onPadCheck(GstElement */*decodebin*/, GstPad *pad, GstCaps *cap
 	if(strcmp(mimeType, "video/quicktime") == 0
 	|| strcmp(mimeType, "video/x-matroska") == 0
 	|| strcmp(mimeType, "video/ogg") == 0
-	|| strcmp(mimeType, "video/x-msvideo") == 0) {
+	|| strcmp(mimeType, "video/x-msvideo") == 0
+	|| strcmp(mimeType, "video/x-flv") == 0) {
 #if defined(VERBOSE) || !defined(NDEBUG)
 		GStreamer::inspectCaps(caps, QStringLiteral("Container stream"));
 #endif
