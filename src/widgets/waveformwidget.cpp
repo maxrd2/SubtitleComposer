@@ -556,9 +556,9 @@ WaveformWidget::paintGraphics(QPainter &painter)
 			painter.setPen(m_subNumberColor);
 			painter.setFont(m_fontNumber);
 			if(m_vertical)
-				painter.drawText(m_fontNumberHeight / 2, showY + m_fontNumberHeight + 2, QString::number(sub->index() + 1));
+				painter.drawText(m_fontNumberHeight / 2, showY + m_fontNumberHeight + 2, QString::number(sub->index() + 2));
 			else
-				painter.drawText(showY + m_fontNumberHeight / 2, m_fontNumberHeight + 2, QString::number(sub->index() + 1));
+				painter.drawText(showY + m_fontNumberHeight / 2, m_fontNumberHeight + 2, QString::number(sub->index() + 2));
 		}
 	}
 
