@@ -22,7 +22,6 @@
 #include "mplayerplayerprocess.h"
 #include "mplayerconfigwidget.h"
 #include "mediadata.h"
-#include "../../common/qxtsignalwaiter.h"
 #include "../scconfigdummy.h"
 
 #include <QDebug>
@@ -89,7 +88,7 @@ MPlayerPlayerBackend::openFile(const QString &filePath, bool &playingAfterCall)
 
 	playingAfterCall = true;
 
-	if(!m_process->start(filePath, (int)player()->videoWidget()->videoLayer()->winId(), player()->activeAudioStream(), player()->audioStreams().count()))
+	if(!m_process->start(filePath, player()->videoWidget()->videoLayer()->winId(), player()->activeAudioStream(), player()->audioStreams().count()))
 		return false;
 
 	return true;

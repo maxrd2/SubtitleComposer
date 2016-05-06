@@ -562,7 +562,7 @@ VideoPlayer::openFile(const QString &filePath)
 	bool playingAfterCall = true;
 	if(!activeBackend()->openFile(fileInfo.absoluteFilePath(), playingAfterCall)) {
 		resetState();
-		emit fileOpenError(filePath, "");
+		emit fileOpenError(filePath, QString());
 		return true;
 	}
 

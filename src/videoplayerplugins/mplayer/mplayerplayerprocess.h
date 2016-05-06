@@ -34,6 +34,7 @@
 #include <QList>
 #include <QTimer>
 #include <QProcess>
+#include <QWindow>
 
 namespace SubtitleComposer {
 class MPlayerPlayerProcess : public QProcess
@@ -54,7 +55,7 @@ public:
 	 * @param audioStreamCount
 	 * @return returns false only if the executable couldn't be found (in which case the process could not be started)
 	 */
-	bool start(const QString &filePath, int winId, int audioStream = -1, int audioStreamCount = 1);
+	bool start(const QString &filePath, WId winId, int audioStream = -1, int audioStreamCount = 1);
 
 	void sendTogglePause();
 	void sendSeek(double seconds);

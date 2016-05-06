@@ -19,7 +19,6 @@
  */
 
 #include "translator.h"
-#include "../../common/qxtsignalwaiter.h"
 
 #include <QRegExp>
 #include <QTextCodec>
@@ -27,6 +26,7 @@
 #include <QProgressBar>
 #include <QBoxLayout>
 #include <QUrlQuery>
+#include <QEventLoop>
 #include <QDebug>
 
 #include <KLocalizedString>
@@ -117,10 +117,10 @@ Translator::syncTranslate(const QString &text, Language::Value inputLang, Langua
 		progressDialog->show();
 	}
 
-	QxtSignalWaiter finishedSignalWaiter(this, SIGNAL(finished()));
-	finishedSignalWaiter.setProcessEventFlags(QEventLoop::AllEvents);
+	QEventLoop loop;
+	connect(this, static_cast<void(Translator::*)(void)>(&Translator::finished), &loop, &QEventLoop::quit);
 	translate(text, inputLang, outputLang);
-	finishedSignalWaiter.wait();
+	loop.exec();
 
 	if(progressDialog)
 		progressDialog->hide();
