@@ -290,6 +290,7 @@ StreamProcessor::onPadCheck(GstElement */*decodebin*/, GstPad *pad, GstCaps *cap
 	const gchar *mimeType = gst_structure_get_name(capsStruct);
 	if(strcmp(mimeType, "video/quicktime") == 0
 	|| strcmp(mimeType, "video/x-matroska") == 0
+	|| strcmp(mimeType, "video/webm") == 0
 	|| strcmp(mimeType, "video/ogg") == 0
 	|| strcmp(mimeType, "video/x-msvideo") == 0
 	|| strcmp(mimeType, "video/x-flv") == 0) {
@@ -297,7 +298,8 @@ StreamProcessor::onPadCheck(GstElement */*decodebin*/, GstPad *pad, GstCaps *cap
 		GStreamer::inspectCaps(caps, QStringLiteral("Container stream"));
 #endif
 		return TRUE;
-	} else if(strncmp(mimeType, "audio/", 6) == 0 && me->m_audioStreamIndex >= 0) {
+	} else if((strncmp(mimeType, "audio/", 6) == 0
+			|| strcmp(mimeType, "application/x-apetag") == 0 || strcmp(mimeType, "application/x-id3") == 0) && me->m_audioStreamIndex >= 0) {
 #if defined(VERBOSE) || !defined(NDEBUG)
 		GStreamer::inspectCaps(caps, QStringLiteral("Probing stream"));
 #endif
