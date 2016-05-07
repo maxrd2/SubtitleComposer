@@ -20,7 +20,6 @@
 
 #include "mpvbackend.h"
 #include "mpvconfigwidget.h"
-#include "../../common/qxtsignalwaiter.h"
 
 #include "../scconfigdummy.h"
 

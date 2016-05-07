@@ -652,9 +652,9 @@ WaveformWidget::eventFilter(QObject *obj, QEvent *event)
 
 	switch(event->type()) {
 	case QEvent::Wheel: {
-		QPoint delta = reinterpret_cast<QWheelEvent *>(event)->angleDelta() / 8;
+		QPoint delta = static_cast<QWheelEvent *>(event)->angleDelta() / 8;
 		if(delta.isNull())
-			delta = reinterpret_cast<QWheelEvent *>(event)->pixelDelta();
+			delta = static_cast<QWheelEvent *>(event)->pixelDelta();
 		if(delta.isNull())
 			return false;
 
@@ -677,13 +677,13 @@ WaveformWidget::eventFilter(QObject *obj, QEvent *event)
 	switch(event->type()) {
 	case QEvent::Paint: {
 		QPainter painter(m_waveformGraphics);
-		painter.fillRect(reinterpret_cast<QPaintEvent *>(event)->rect(), Qt::black);
+		painter.fillRect(static_cast<QPaintEvent *>(event)->rect(), Qt::black);
 		paintGraphics(painter);
 		return true;
 	}
 
 	case QEvent::MouseMove: {
-		QMouseEvent *mouse = reinterpret_cast<QMouseEvent *>(event);
+		QMouseEvent *mouse = static_cast<QMouseEvent *>(event);
 		int y = m_vertical ? mouse->y() : mouse->x();
 
 		m_pointerTime = timeAt(y);
@@ -709,13 +709,13 @@ WaveformWidget::eventFilter(QObject *obj, QEvent *event)
 	}
 
 	case QEvent::MouseButtonDblClick: {
-		QMouseEvent *mouse = reinterpret_cast<QMouseEvent *>(event);
+		QMouseEvent *mouse = static_cast<QMouseEvent *>(event);
 		emit doubleClick(timeAt(m_vertical ? mouse->y() : mouse->x()));
 		return true;
 	}
 
 	case QEvent::MouseButtonPress: {
-		QMouseEvent *mouse = reinterpret_cast<QMouseEvent *>(event);
+		QMouseEvent *mouse = static_cast<QMouseEvent *>(event);
 		if(mouse->button() != Qt::LeftButton)
 			return false;
 
@@ -741,7 +741,7 @@ WaveformWidget::eventFilter(QObject *obj, QEvent *event)
 	}
 
 	case QEvent::MouseButtonRelease: {
-		QMouseEvent *mouse = reinterpret_cast<QMouseEvent *>(event);
+		QMouseEvent *mouse = static_cast<QMouseEvent *>(event);
 		if(mouse->button() != Qt::LeftButton)
 			return false;
 

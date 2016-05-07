@@ -62,7 +62,6 @@
 #include "../common/commondefs.h"
 #include "../common/fileloadhelper.h"
 #include "../common/filesavehelper.h"
-#include "../common/qxtsignalwaiter.h"
 #include "../core/subtitleiterator.h"
 #include "../formats/formatmanager.h"
 #include "../videoplayer/videoplayer.h"

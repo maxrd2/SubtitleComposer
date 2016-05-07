@@ -19,7 +19,6 @@
  */
 
 #include "mplayerplayerprocess.h"
-#include "../../common/qxtsignalwaiter.h"
 
 #include "../scconfigdummy.h"
 
@@ -31,7 +30,10 @@
 
 #include <QDebug>
 
+#include <functional>
+
 using namespace SubtitleComposer;
+using namespace std;
 
 #define MAX_VOLUME 1000
 
@@ -67,7 +69,7 @@ MPlayerPlayerProcess::mediaData()
 }
 
 bool
-MPlayerPlayerProcess::start(const QString &filePath, int winId, int audioStream, int audioStreamCount)
+MPlayerPlayerProcess::start(const QString &filePath, WId winId, int audioStream, int audioStreamCount)
 {
 	QString exePath = QStandardPaths::findExecutable(QUrl(SCConfig::mpExecutablePath()).toLocalFile());
 	if(exePath.isEmpty())
@@ -85,10 +87,10 @@ MPlayerPlayerProcess::start(const QString &filePath, int winId, int audioStream,
 		args << "-aid" << QString::number(audioStream);
 
 	args << "-noquiet";
-	args << "-nofs";                        // no mplayer fullscreen mode
-	args << "-identify";            // makes mplayer emit all kinds of additional information
-	args << "-slave";                       // enable slave mode so we can send commands to mplayer process
-	args << "-input" << "nodefault-bindings:conf=/dev/null";        // disable mplayer input handling
+	args << "-nofs"; // no mplayer fullscreen mode
+	args << "-identify"; // makes mplayer emit all kinds of additional information
+	args << "-slave"; // enable slave mode so we can send commands to mplayer process
+	args << "-input" << "nodefault-bindings:conf=/dev/null"; // disable mplayer input handling
 
 	if(SCConfig::mpVideoOutputEnabled()) {
 		args << "-vo" << SCConfig::mpVideoOutput();
@@ -227,10 +229,12 @@ MPlayerPlayerProcess::sendCommand(const QByteArray &cmd, MPlayerPlayerProcess::C
 //		qDebug() << "sending pausing" << cmd;
 
 		if(block) {
-			QxtSignalWaiter pauseWaiter(this, SIGNAL(pausedReceived()));
+			QEventLoop loop;
+			QTimer::singleShot(5000, Qt::VeryCoarseTimer, &loop, bind(&QEventLoop::exit, ref(loop), -1));
+			connect(this, &MPlayerPlayerProcess::pausedReceived, &loop, &QEventLoop::quit);
 			write("pausing " + cmd + '\n');
 //			qDebug() << "WAITING";
-			if(!pauseWaiter.wait(5000))
+			if(loop.exec() != 0)
 				qDebug() << ">>>>>>>TIMEDOUT<<<<<<<";
 //			qDebug() << "WAITED";
 		} else {
@@ -241,11 +245,13 @@ MPlayerPlayerProcess::sendCommand(const QByteArray &cmd, MPlayerPlayerProcess::C
 //			qDebug() << "sending" << cmd;
 
 		if(block) {
-			QxtSignalWaiter playingWaiter(this, SIGNAL(playingReceived()));
+			QEventLoop loop;
+			QTimer::singleShot(5000, Qt::VeryCoarseTimer, bind(&QEventLoop::exit, ref(loop), -1));
+			connect(this, &MPlayerPlayerProcess::playingReceived, &loop, &QEventLoop::quit);
 			m_emitPlaying = true;   // to make the playingReceived() signal be emmited again
 			write(cmd + '\n');
 //			qDebug() << "WAITING";
-			if(!playingWaiter.wait(5000))
+			if(loop.exec() != 0)
 				qDebug() << ">>>>>>TIMEDOUT<<<<<<<";
 //			qDebug() << "WAITED";
 		} else {

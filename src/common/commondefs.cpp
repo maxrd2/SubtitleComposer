@@ -25,6 +25,7 @@
 
 #include <QString>
 #include <QStringList>
+#include <QStringBuilder>
 #include <QRegExp>
 #include <QDir>
 #include <QFileInfo>
@@ -46,18 +47,15 @@ QString
 String::title(const QString &text)
 {
 	QString auxText = text.toLower();
-	const QString separators(" -_([:,;./\\\t\n\"");
-	int len = separators.length(), sepIdx = 0;
-	while(sepIdx < len) {
+	for(const QChar sep : QStringLiteral(" -_([:,;./\\\t\n\"")) {
 		QStringList auxWordsList;
-		QStringList wordsList = auxText.split(separators[sepIdx]);
-		for(QStringList::ConstIterator it = wordsList.begin(), end = wordsList.end(); it != end; ++it)
-			if(!(*it).isEmpty())
-				auxWordsList.append((*it)[0].toUpper() + (*it).mid(1));
+		for(const QString &word : auxText.split(sep)) {
+			if(!word.isEmpty())
+				auxWordsList << (word.at(0).toUpper() + word.mid(1));
 			else
-				auxWordsList.append("");
-		auxText = auxWordsList.join(separators[sepIdx]);
-		sepIdx++;
+				auxWordsList << QString();
+		}
+		auxText = auxWordsList.join(sep);
 	}
 	return auxText;
 }
@@ -65,24 +63,24 @@ String::title(const QString &text)
 QString
 String::capitalize(const QString &text)
 {
-	return text.isEmpty() ? "" : text[0].toUpper() + text.mid(1).toLower();
+	return text.isEmpty() ? QString() : text.at(0).toUpper() + text.mid(1).toLower();
 }
 
 QString
 String::sentence(const QString &text)
 {
-	return text.isEmpty() ? "" : text[0].toUpper() + text.mid(1).toLower();
+	return text.isEmpty() ? QString() : text.at(0).toUpper() + text.mid(1).toLower();
 }
 
 int
 String::rfindFunctionStart(const QString &text)
 {
 	int pos[5] = {
-		text.lastIndexOf("capitalize{"),
-		text.lastIndexOf("titlecase{"),
-		text.lastIndexOf("uppercase{"),
-		text.lastIndexOf("lowercase{"),
-		text.lastIndexOf("ascii{"),
+		text.lastIndexOf(QLatin1String("capitalize{")),
+		text.lastIndexOf(QLatin1String("titlecase{")),
+		text.lastIndexOf(QLatin1String("uppercase{")),
+		text.lastIndexOf(QLatin1String("lowercase{")),
+		text.lastIndexOf(QLatin1String("ascii{")),
 	};
 
 	return qMax(qMax(qMax(qMax(pos[0], pos[1]), pos[2]), pos[3]), pos[4]);
@@ -111,8 +109,8 @@ System::recursiveMakeDir(const QString &path, QStringList *createdDirsList)
 	if(createdDirsList)
 		createdDirsList->clear();
 
-	QDir parcialPath("/");
-	QStringList tokens = path.split('/', QString::SkipEmptyParts);
+	QDir parcialPath(QStringLiteral("/"));
+	QStringList tokens = path.split(QChar('/'), QString::SkipEmptyParts);
 	for(QStringList::ConstIterator it = tokens.begin(), end = tokens.end(); it != end; ++it) {
 		parcialPath.setPath(parcialPath.path() + '/' + *it);
 		if(!QFileInfo(parcialPath.path()).exists()) {
@@ -184,7 +182,7 @@ QString
 System::tempDir()
 {
 	QString tempDir = QStandardPaths::writableLocation(QStandardPaths::TempLocation);
-	tempDir.remove(QRegExp("[\\/]+$"));
+	tempDir.remove(QRegExp(QStringLiteral("[\\/]+$")));
 	return tempDir;
 }
 
@@ -195,14 +193,14 @@ System::newUrl(const QUrl &baseUrl, const QString &fileName, const QString &exte
 		retries = INT_MAX;
 
 	QString newFileName(fileName);
-	QString newFileNameBuilder(fileName + "-%1");
+	QString newFileNameBuilder(fileName + QStringLiteral("-%1"));
 	if(!extension.isEmpty()) {
 		newFileName += '.' + extension;
 		newFileNameBuilder += '.' + extension;
 	}
 
 	QString newFileDir = baseUrl.path();
-	newFileDir.remove(QRegExp("[\\/]+$"));
+	newFileDir.remove(QRegExp(QStringLiteral("[\\/]+$")));
 	newFileDir += '/';
 
 	if(baseUrl.isLocalFile()) {
@@ -254,9 +252,9 @@ System::urlFromPath(QString path)
 {
 	QUrl url(path);
 	if(url.isRelative()) {
-		url.setScheme("file");
+		url.setScheme(QStringLiteral("file"));
 		if(path[0] != QDir::separator())
-			url.setPath(QDir::currentPath() + "/" + path);
+			url.setPath(QDir::currentPath() % QChar('/') % path);
 	}
 	return url;
 }
@@ -265,7 +263,7 @@ System::urlFromPath(QString path)
 /*static*/ bool
 System::urlIsInside(const QUrl url, QString path)
 {
-	if(!url.scheme().isEmpty() && url.scheme() != "file")
+	if(!url.scheme().isEmpty() && url.scheme() != QLatin1String("file"))
 		return false;
 	QString urlPath = url.toLocalFile();
 	return urlPath.startsWith(path);

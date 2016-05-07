@@ -3,7 +3,6 @@ set(videoplayer_mplayer_SRCS
 	${CMAKE_CURRENT_SOURCE_DIR}/mplayerplayerbackend.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/mplayerplayerprocess.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/mplayerconfigwidget.cpp
-	${CMAKE_CURRENT_SOURCE_DIR}/../../common/qxtsignalwaiter.cpp
 	${videoplayerplugins_SRCS}
 	CACHE INTERNAL EXPORTEDVARIABLE
 )
