@@ -1168,6 +1168,29 @@ Application::setupActions()
 	connect(waveformAutoScrollAction, SIGNAL(toggled(bool)), m_mainWindow->m_waveformWidget, SLOT(setAutoscroll(bool)));
 	actionCollection->addAction(ACT_WAVEFORM_AUTOSCROLL, waveformAutoScrollAction);
 
+	QAction *waveformSetCurrentLineShowTimeAction = new QAction(actionCollection);
+	waveformSetCurrentLineShowTimeAction->setIcon(QIcon(QStringLiteral(CUSTOM_ICON_INSTALL_PATH "set-show-time")));
+	waveformSetCurrentLineShowTimeAction->setText(i18n("Set Current Line Show Time"));
+	waveformSetCurrentLineShowTimeAction->setStatusTip(i18n("Set current line show time to waveform mouse position"));
+	connect(waveformSetCurrentLineShowTimeAction, &QAction::triggered, this, &Application::setCurrentLineShowTimeFromWaveform);
+	actionCollection->addAction(ACT_WAVEFORM_SET_CURRENT_LINE_SHOW_TIME, waveformSetCurrentLineShowTimeAction);
+	actionManager->addAction(waveformSetCurrentLineShowTimeAction, UserAction::HasSelection | UserAction::EditableShowTime);
+
+	QAction *waveformSetCurrentLineHideTimeAction = new QAction(actionCollection);
+	waveformSetCurrentLineHideTimeAction->setIcon(QIcon(QStringLiteral(CUSTOM_ICON_INSTALL_PATH "set-hide-time")));
+	waveformSetCurrentLineHideTimeAction->setText(i18n("Set Current Line Hide Time"));
+	waveformSetCurrentLineHideTimeAction->setStatusTip(i18n("Set current line hide time to waveform mouse position"));
+	connect(waveformSetCurrentLineHideTimeAction, &QAction::triggered, this, &Application::setCurrentLineHideTimeFromWaveform);
+	actionCollection->addAction(ACT_WAVEFORM_SET_CURRENT_LINE_HIDE_TIME, waveformSetCurrentLineHideTimeAction);
+	actionManager->addAction(waveformSetCurrentLineHideTimeAction, UserAction::HasSelection | UserAction::EditableShowTime);
+
+	QAction *waveformInserLineAction = new QAction(actionCollection);
+	waveformInserLineAction->setText(i18n("Insert Line"));
+	waveformInserLineAction->setStatusTip(i18n("Insert empty line at waveform mouse position(s)"));
+	connect(waveformInserLineAction, &QAction::triggered, this, &Application::insertLineFromWaveform);
+	actionCollection->addAction(ACT_WAVEFORM_INSERT_LINE, waveformInserLineAction);
+	actionManager->addAction(waveformInserLineAction, UserAction::SubOpened);
+
 	updateActionTexts();
 }
 
@@ -2708,6 +2731,44 @@ Application::adjustToVideoPositionAnchorFirst()
 
 		m_subtitle->adjustLines(Range::full(), firstLineTime, newLastLineTime);
 	}
+}
+
+void
+Application::setCurrentLineShowTimeFromWaveform()
+{
+	SubtitleLine *currentLine = m_linesWidget->currentLine();
+	if(currentLine)
+		currentLine->setShowTime(m_mainWindow->m_waveformWidget->rightMousePressTime());
+}
+
+void
+Application::setCurrentLineHideTimeFromWaveform()
+{
+	SubtitleLine *currentLine = m_linesWidget->currentLine();
+	if(currentLine) {
+		currentLine->setHideTime(m_mainWindow->m_waveformWidget->rightMousePressTime());
+		SubtitleLine *nextLine = currentLine->nextLine();
+		if(nextLine)
+			m_linesWidget->setCurrentLine(nextLine, true);
+	}
+}
+
+void
+Application::insertLineFromWaveform()
+{
+	const Time timeShow = m_mainWindow->m_waveformWidget->rightMousePressTime();
+	const Time timeHide = m_mainWindow->m_waveformWidget->rightMouseReleaseTime();
+	SubtitleLine *sub = nullptr;
+
+	foreach(sub, m_subtitle->allLines()) {
+		if(sub->showTime() > timeShow)
+			break;
+	}
+
+	SubtitleLine *newLine = new SubtitleLine();
+	newLine->setTimes(timeShow, timeHide.toMillis() - timeShow.toMillis() > 500. ? timeHide : timeShow + 500.);
+	m_subtitle->insertLine(newLine, sub ? sub->index() : 0);
+	m_linesWidget->setCurrentLine(newLine, true);
 }
 
 /// END ACTION HANDLERS

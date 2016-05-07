@@ -33,6 +33,7 @@
 
 #include <QProgressBar>
 #include <QLabel>
+#include <QMenu>
 #include <QBoxLayout>
 #include <QToolButton>
 #include <QScrollBar>
@@ -55,6 +56,7 @@ WaveformWidget::WaveformWidget(QWidget *parent)
 	  m_timeStart(0.),
 	  m_timeCurrent(0.),
 	  m_timeEnd(MAX_WINDOW_ZOOM),
+	  m_RMBDown(false),
 	  m_scrollBar(Q_NULLPTR),
 	  m_autoScroll(true),
 	  m_userScroll(false),
@@ -325,7 +327,7 @@ WaveformWidget::setSubtitle(Subtitle *subtitle)
 		connect(m_subtitle, &Subtitle::primaryChanged, this, &WaveformWidget::onSubtitleChanged);
 
 	m_visibleLines.clear();
-	m_visibleLinesDirty = subtitle != Q_NULLPTR;
+	m_visibleLinesDirty = true;
 
 	m_waveformGraphics->update();
 }
@@ -562,6 +564,19 @@ WaveformWidget::paintGraphics(QPainter &painter)
 		}
 	}
 
+	if(m_RMBDown) {
+		int showY = widgetSpan * (m_timeRMBPress.toMillis() - m_timeStart.toMillis()) / msWindowSize;
+		int hideY = widgetSpan * (m_timeRMBRelease.toMillis() - m_timeStart.toMillis()) / msWindowSize;
+
+		QRect box;
+		if(m_vertical)
+			box = QRect(0, showY + m_subBorderWidth, widgetWidth, hideY - showY - 2 * m_subBorderWidth);
+		else
+			box = QRect(showY + m_subBorderWidth, 0, hideY - showY - 2 * m_subBorderWidth, widgetHeight);
+
+		painter.fillRect(box, m_selectedBack);
+	}
+
 	int playY = widgetSpan * (m_timeCurrent - m_timeStart).toMillis() / msWindowSize;
 	painter.setPen(m_playColor);
 	if(m_vertical)
@@ -688,6 +703,9 @@ WaveformWidget::eventFilter(QObject *obj, QEvent *event)
 
 		m_pointerTime = timeAt(y);
 
+		if(m_RMBDown)
+			m_timeRMBRelease = m_pointerTime;
+
 		if(m_draggedLine) {
 			m_draggedTime = m_pointerTime;
 		} else {
@@ -716,10 +734,17 @@ WaveformWidget::eventFilter(QObject *obj, QEvent *event)
 
 	case QEvent::MouseButtonPress: {
 		QMouseEvent *mouse = static_cast<QMouseEvent *>(event);
+		int y = m_vertical ? mouse->y() : mouse->x();
+
+		if(mouse->button() == Qt::RightButton) {
+			m_timeRMBPress = timeAt(y);
+			m_RMBDown = true;
+			return false;
+		}
+
 		if(mouse->button() != Qt::LeftButton)
 			return false;
 
-		int y = m_vertical ? mouse->y() : mouse->x();
 		m_draggedPos = subtitleAt(y, &m_draggedLine);
 		if(m_draggedLine && !m_subtitle->anchoredLines().empty() && m_subtitle->anchoredLines().indexOf(m_draggedLine) == -1) {
 			m_draggedTime = 0.;
@@ -742,11 +767,20 @@ WaveformWidget::eventFilter(QObject *obj, QEvent *event)
 
 	case QEvent::MouseButtonRelease: {
 		QMouseEvent *mouse = static_cast<QMouseEvent *>(event);
+		int y = m_vertical ? mouse->y() : mouse->x();
+
+		if(mouse->button() == Qt::RightButton) {
+			m_timeRMBRelease = timeAt(y);
+			m_RMBDown = false;
+			showContextMenu(mouse);
+			return false;
+		}
+
 		if(mouse->button() != Qt::LeftButton)
 			return false;
 
 		if(m_draggedLine) {
-			m_draggedTime = timeAt(m_vertical ? mouse->y() : mouse->x());
+			m_draggedTime = timeAt(y);
 			if(m_draggedPos == DRAG_LINE) {
 				m_draggedLine->setHideTime(m_draggedTime - m_draggedOffset + m_draggedLine->durationTime());
 				m_draggedLine->setShowTime(m_draggedTime - m_draggedOffset);
@@ -857,4 +891,19 @@ WaveformWidget::createToolButton(const QString &actionName, int iconSize)
 	toolButton->setAutoRaise(true);
 	toolButton->setFocusPolicy(Qt::NoFocus);
 	return toolButton;
+}
+
+void
+WaveformWidget::showContextMenu(QMouseEvent *event)
+{
+	static QMenu *menu = nullptr;
+
+	if(!menu) {
+		menu = new QMenu(this);
+		menu->addAction(app()->action(ACT_WAVEFORM_SET_CURRENT_LINE_SHOW_TIME));
+		menu->addAction(app()->action(ACT_WAVEFORM_SET_CURRENT_LINE_HIDE_TIME));
+		menu->addAction(app()->action(ACT_WAVEFORM_INSERT_LINE));
+	}
+
+	menu->popup(event->globalPos());
 }

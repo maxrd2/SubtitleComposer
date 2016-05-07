@@ -109,9 +109,11 @@
 #define ACT_ANCHOR_TOGGLE "anchor_toggle"
 #define ACT_ANCHOR_REMOVE_ALL "anchor_remove_all"
 #define ACT_SCRIPTS_MANAGER "scripts_manager"
-#define ACT_WAVEFORM_ZOOM_IN "waveform-zoom-in"
-#define ACT_WAVEFORM_ZOOM_OUT "waveform-zoom-out"
-#define ACT_WAVEFORM_AUTOSCROLL "waveform-autoscroll"
+#define ACT_WAVEFORM_ZOOM_IN "waveform_zoom_in"
+#define ACT_WAVEFORM_ZOOM_OUT "waveform_zoom_out"
+#define ACT_WAVEFORM_AUTOSCROLL "waveform_autoscroll"
 #define ACT_ASR_IMPORT_AUDIO_STREAM "asr_import_audio_stream"
-
+#define ACT_WAVEFORM_SET_CURRENT_LINE_SHOW_TIME "waveform_set_current_line_show_time"
+#define ACT_WAVEFORM_SET_CURRENT_LINE_HIDE_TIME "waveform_set_current_line_hide_time"
+#define ACT_WAVEFORM_INSERT_LINE "waveform_insert_line"
 #endif

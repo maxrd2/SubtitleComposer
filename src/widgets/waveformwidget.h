@@ -84,6 +84,9 @@ public:
 
 	inline bool autoScroll() const { return m_autoScroll; }
 
+	inline const Time & rightMousePressTime() const { return m_timeRMBPress; }
+	inline const Time & rightMouseReleaseTime() const { return m_timeRMBRelease; }
+
 signals:
 	void doubleClick(Time time);
 	void dragStart(SubtitleLine *line, DragPosition dragPosition);
@@ -104,6 +107,7 @@ protected:
 	void resizeEvent(QResizeEvent *event);
 	void leaveEvent(QEvent *event);
 	bool eventFilter(QObject *obj, QEvent *event);
+	void showContextMenu(QMouseEvent *event);
 
 private slots:
 	void onPlayerPositionChanged(double seconds);
@@ -131,6 +135,10 @@ private:
 	Time m_timeStart;
 	Time m_timeCurrent;
 	Time m_timeEnd;
+
+	Time m_timeRMBPress;
+	Time m_timeRMBRelease;
+	bool m_RMBDown;
 
 	QScrollBar *m_scrollBar;
 	bool m_autoScroll;

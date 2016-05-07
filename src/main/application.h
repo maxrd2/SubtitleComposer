@@ -216,6 +216,10 @@ public slots:
 	void adjustToVideoPositionAnchorLast();
 	void adjustToVideoPositionAnchorFirst();
 
+	void setCurrentLineShowTimeFromWaveform();
+	void setCurrentLineHideTimeFromWaveform();
+	void insertLineFromWaveform();
+
 signals:
 	void subtitleOpened(Subtitle *subtitle);
 	void subtitleClosed();
