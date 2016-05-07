@@ -54,7 +54,7 @@ SubtitleLine::errorID(SubtitleLine::ErrorFlag flag)
 	if(flag < 1)
 		return ErrorUNKNOWN;
 
-	int id = (int)log2(flag);
+	int id = log2(static_cast<int>(flag));
 	return id < ErrorSIZE ? (ErrorID)id : ErrorUNKNOWN;
 }
 
