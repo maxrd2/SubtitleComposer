@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: subtitlecomposer\n"
 "Report-Msgid-Bugs-To: https://github.com/maxrd2/subtitlecomposer/issues\n"
-"POT-Creation-Date: 2016-04-05 21:56+0200\n"
+"POT-Creation-Date: 2016-05-07 21:04+0200\n"
 "PO-Revision-Date: 2009-05-24 17:01-0300\n"
 "Last-Translator: Sergio Pistone <sergio_pistone@yahoo,com.ar>\n"
 "Language-Team: American English <kde-i18n-doc@kde.org>\n"
@@ -23,6 +23,27 @@ msgstr ""
 #, fuzzy
 msgid "Unknown"
 msgstr "<i>Neznámý</i>"
+
+#: ../../src/core/subtitleactions.cpp:59
+msgid "Set Frame Rate"
+msgstr "Nastav snímky za sekundu"
+
+#: ../../src/core/subtitleactions.cpp:95
+msgid "Insert Lines"
+msgstr "Vlož řádky"
+
+#: ../../src/core/subtitleactions.cpp:176 ../../src/core/subtitle.cpp:491
+#: ../../src/core/subtitle.cpp:501 ../../src/core/subtitle.cpp:518
+msgid "Remove Lines"
+msgstr "Odstraň řádky"
+
+#: ../../src/core/subtitleactions.cpp:262
+msgid "Move Line"
+msgstr "Přesuň řádky"
+
+#: ../../src/core/subtitleactions.cpp:362
+msgid "Swap Texts"
+msgstr "Vyměň texty"
 
 #: ../../src/core/subtitle.cpp:69
 msgid "Set Primary Data"
@@ -45,154 +66,158 @@ msgstr "Vymaž sekundární data"
 msgid "Change Frame Rate"
 msgstr "Změň snímky za sekundu"
 
-#: ../../src/core/subtitle.cpp:441 ../../src/core/subtitle.cpp:455
+#: ../../src/core/subtitle.cpp:444 ../../src/core/subtitle.cpp:458
+#: ../../src/main/application.cpp:1188
 msgid "Insert Line"
 msgstr "Vlož řádek"
 
-#: ../../src/core/subtitle.cpp:488 ../../src/core/subtitle.cpp:498
-#: ../../src/core/subtitle.cpp:515 ../../src/core/subtitleactions.cpp:176
-msgid "Remove Lines"
-msgstr "Odstraň řádky"
-
-#: ../../src/core/subtitle.cpp:568 ../../src/main/application.cpp:601
+#: ../../src/core/subtitle.cpp:571 ../../src/main/application.cpp:600
 #: ../../src/main/lineswidget.cpp:1129
 msgid "Split Lines"
 msgstr "Rozděl řádky"
 
-#: ../../src/core/subtitle.cpp:618 ../../src/main/application.cpp:608
+#: ../../src/core/subtitle.cpp:621 ../../src/main/application.cpp:607
 #: ../../src/main/lineswidget.cpp:1128
 msgid "Join Lines"
 msgstr "Spoj řádky"
 
-#: ../../src/core/subtitle.cpp:721
+#: ../../src/core/subtitle.cpp:724
 msgid "Shift Lines"
 msgstr "Posuň řádky"
 
-#: ../../src/core/subtitle.cpp:777
+#: ../../src/core/subtitle.cpp:780
 msgid "Adjust Lines"
 msgstr "Přizpůsob řádky"
 
-#: ../../src/core/subtitle.cpp:788 ../../src/main/application.cpp:2260
+#: ../../src/core/subtitle.cpp:791 ../../src/main/application.cpp:2282
 #: ../../src/main/lineswidget.cpp:1105
 msgid "Sort"
 msgstr "Třídit"
 
-#: ../../src/core/subtitle.cpp:830 ../../src/main/dialogs/durationlimitsdialog.cpp:31
+#: ../../src/core/subtitle.cpp:833 ../../src/main/dialogs/durationlimitsdialog.cpp:31
 msgid "Enforce Duration Limits"
 msgstr "Vnutit limity trvání"
 
-#: ../../src/core/subtitle.cpp:869 ../../src/main/application.cpp:2322
+#: ../../src/core/subtitle.cpp:872 ../../src/main/application.cpp:2344
 #: ../../src/main/lineswidget.cpp:1108
 msgid "Maximize Durations"
 msgstr "Maximalizuj trvání"
 
-#: ../../src/core/subtitle.cpp:892 ../../src/main/dialogs/autodurationsdialog.cpp:34
+#: ../../src/core/subtitle.cpp:895 ../../src/main/dialogs/autodurationsdialog.cpp:34
 msgid "Set Automatic Durations"
 msgstr "Nastav automatické trvání"
 
-#: ../../src/core/subtitle.cpp:926
+#: ../../src/core/subtitle.cpp:929
 #: ../../src/main/dialogs/fixoverlappingtimesdialog.cpp:31
 #: ../../src/main/lineswidget.cpp:1109
 msgid "Fix Overlapping Times"
 msgstr "Oprav překrývající se časy"
 
-#: ../../src/core/subtitle.cpp:958
+#: ../../src/core/subtitle.cpp:961
 msgid "Fix Lines Punctuation"
 msgstr "Oprav interpunkci řádků"
 
-#: ../../src/core/subtitle.cpp:1005
+#: ../../src/core/subtitle.cpp:1008
 msgid "Lower Case"
 msgstr "Malá písmena"
 
-#: ../../src/core/subtitle.cpp:1036
+#: ../../src/core/subtitle.cpp:1039
 msgid "Upper Case"
 msgstr "Velká písmena"
 
-#: ../../src/core/subtitle.cpp:1067
+#: ../../src/core/subtitle.cpp:1070
 msgid "Title Case"
 msgstr "Nadpis"
 
-#: ../../src/core/subtitle.cpp:1099
+#: ../../src/core/subtitle.cpp:1102
 msgid "Sentence Case"
 msgstr "Věty"
 
-#: ../../src/core/subtitle.cpp:1142
+#: ../../src/core/subtitle.cpp:1145
 #: ../../src/main/dialogs/smarttextsadjustdialog.cpp:31
 msgid "Break Lines"
 msgstr "Zalom řádky"
 
-#: ../../src/core/subtitle.cpp:1151 ../../src/main/application.cpp:2374
+#: ../../src/core/subtitle.cpp:1154 ../../src/main/application.cpp:2396
 #: ../../src/main/lineswidget.cpp:1075
 msgid "Unbreak Lines"
 msgstr "Spoj řádky"
 
-#: ../../src/core/subtitle.cpp:1160 ../../src/main/application.cpp:2385
+#: ../../src/core/subtitle.cpp:1163 ../../src/main/application.cpp:2407
 #: ../../src/main/lineswidget.cpp:1076
 msgid "Simplify Spaces"
 msgstr "Zjednoduš mezery"
 
-#: ../../src/core/subtitle.cpp:1169
+#: ../../src/core/subtitle.cpp:1172
 msgid "Synchronize Subtitles"
 msgstr "Synchronizuj titulky"
 
-#: ../../src/core/subtitle.cpp:1190 ../../src/main/dialogs/joinsubtitlesdialog.cpp:35
+#: ../../src/core/subtitle.cpp:1193 ../../src/main/dialogs/joinsubtitlesdialog.cpp:35
 msgid "Join Subtitles"
 msgstr "Spoj titulky"
 
-#: ../../src/core/subtitle.cpp:1232 ../../src/core/subtitle.cpp:1238
+#: ../../src/core/subtitle.cpp:1235 ../../src/core/subtitle.cpp:1241
 msgid "Split Subtitles"
 msgstr "Rozděl titulky"
 
-#: ../../src/core/subtitle.cpp:1253 ../../src/core/subtitle.cpp:1268
+#: ../../src/core/subtitle.cpp:1256 ../../src/core/subtitle.cpp:1271
 msgid "Set Lines Style"
 msgstr "Nastav styl řádků"
 
-#: ../../src/core/subtitle.cpp:1285
+#: ../../src/core/subtitle.cpp:1288
 msgid "Toggle Lines Style"
 msgstr "Přepni styl řádků"
 
-#: ../../src/core/subtitle.cpp:1297
+#: ../../src/core/subtitle.cpp:1300
 #, fuzzy
 msgid "Change Lines Text Color"
 msgstr "Zapiš text"
 
-#: ../../src/core/subtitle.cpp:1310
+#: ../../src/core/subtitle.cpp:1313
 msgid "Set Lines Mark"
 msgstr "Nastav značku"
 
-#: ../../src/core/subtitle.cpp:1310
+#: ../../src/core/subtitle.cpp:1313
 msgid "Clear Lines Mark"
 msgstr "Smaž značku"
 
-#: ../../src/core/subtitle.cpp:1325
+#: ../../src/core/subtitle.cpp:1328
 msgid "Toggle Lines Mark"
 msgstr "Přepni značku"
 
-#: ../../src/core/subtitle.cpp:1335 ../../src/main/application.cpp:2140
+#: ../../src/core/subtitle.cpp:1338 ../../src/main/application.cpp:2162
 #: ../../src/main/errorswidget.cpp:798
 msgid "Clear Lines Errors"
 msgstr "Vymaž chyby řádků"
 
-#: ../../src/core/subtitle.cpp:1346 ../../src/core/subtitle.cpp:1358
-#: ../../src/main/application.cpp:2085
+#: ../../src/core/subtitle.cpp:1349 ../../src/core/subtitle.cpp:1361
+#: ../../src/main/application.cpp:2107
 msgid "Check Lines Errors"
 msgstr "Zkontroluj chyby na řádcích"
 
-#: ../../src/core/subtitleactions.cpp:59
-msgid "Set Frame Rate"
-msgstr "Nastav snímky za sekundu"
+#: ../../src/core/subtitlelineactions.cpp:72
+msgid "Set Line Text"
+msgstr "Zapiš text"
 
-#: ../../src/core/subtitleactions.cpp:95
-msgid "Insert Lines"
-msgstr "Vlož řádky"
+#: ../../src/core/subtitlelineactions.cpp:113
+msgid "Set Line Secondary Text"
+msgstr "Zapiš druhotný text"
 
-#: ../../src/core/subtitleactions.cpp:262
-msgid "Move Line"
-msgstr "Přesuň řádky"
+#: ../../src/core/subtitlelineactions.cpp:154
+msgid "Set Line Texts"
+msgstr "Zapiš texty"
 
-#: ../../src/core/subtitleactions.cpp:362
-msgid "Swap Texts"
-msgstr "Vyměň texty"
+#: ../../src/core/subtitlelineactions.cpp:228 ../../src/core/subtitleline.cpp:509
+msgid "Set Line Show Time"
+msgstr "Nastav čas zobrazení"
+
+#: ../../src/core/subtitlelineactions.cpp:269
+msgid "Set Line Hide Time"
+msgstr "Nastav čas skrytí"
+
+#: ../../src/core/subtitlelineactions.cpp:384
+msgid "Set Line Errors"
+msgstr "Nastav chyby"
 
 #: ../../src/core/subtitleline.cpp:77
 msgid "Empty text"
@@ -358,10 +383,6 @@ msgstr "Nemá přeložený text."
 msgid "Has user mark."
 msgstr "Obsahuje uživatelskou značku."
 
-#: ../../src/core/subtitleline.cpp:509 ../../src/core/subtitlelineactions.cpp:228
-msgid "Set Line Show Time"
-msgstr "Nastav čas zobrazení"
-
 #: ../../src/core/subtitleline.cpp:549 ../../src/core/subtitleline.cpp:553
 msgid "Set Line Times"
 msgstr "Nastav časování řádku"
@@ -373,26 +394,6 @@ msgstr "Posuň časování řádku"
 #: ../../src/core/subtitleline.cpp:645
 msgid "Adjust Line Times"
 msgstr "Přizpůsob časování řádku"
-
-#: ../../src/core/subtitlelineactions.cpp:72
-msgid "Set Line Text"
-msgstr "Zapiš text"
-
-#: ../../src/core/subtitlelineactions.cpp:113
-msgid "Set Line Secondary Text"
-msgstr "Zapiš druhotný text"
-
-#: ../../src/core/subtitlelineactions.cpp:154
-msgid "Set Line Texts"
-msgstr "Zapiš texty"
-
-#: ../../src/core/subtitlelineactions.cpp:269
-msgid "Set Line Hide Time"
-msgstr "Nastav čas skrytí"
-
-#: ../../src/core/subtitlelineactions.cpp:384
-msgid "Set Line Errors"
-msgstr "Nastav chyby"
 
 #: ../../src/formats/textdemux/textdemux.cpp:43
 #, fuzzy
@@ -414,684 +415,684 @@ msgstr ""
 msgid "Autodetect"
 msgstr "Automatický"
 
-#: ../../src/main/application.cpp:389
+#: ../../src/main/application.cpp:388
 msgid "Video Files"
 msgstr "Video soubory"
 
-#: ../../src/main/application.cpp:396
+#: ../../src/main/application.cpp:395
 msgid "Audio Files"
 msgstr "Zvukové soubory"
 
-#: ../../src/main/application.cpp:398
+#: ../../src/main/application.cpp:397
 msgid "Media Files"
 msgstr "Mediální soubory"
 
-#: ../../src/main/application.cpp:399
+#: ../../src/main/application.cpp:398
 msgid "All Files"
 msgstr "Všechny soubory"
 
-#: ../../src/main/application.cpp:418
+#: ../../src/main/application.cpp:417
 msgid "Exit the application"
 msgstr "Ukonči program"
 
-#: ../../src/main/application.cpp:421
+#: ../../src/main/application.cpp:420
 msgid "Configure Subtitle Composer"
 msgstr "Nastavení Subtitle Composeru"
 
-#: ../../src/main/application.cpp:425
+#: ../../src/main/application.cpp:424
 msgctxt "@action:inmenu Create a new subtitle"
 msgid "New"
 msgstr "Nový"
 
-#: ../../src/main/application.cpp:426
+#: ../../src/main/application.cpp:425
 msgid "Create an empty subtitle"
 msgstr "Vytvoř prázdné titulky"
 
-#: ../../src/main/application.cpp:434
+#: ../../src/main/application.cpp:433
 msgctxt "@action:inmenu Open subtitle file"
 msgid "Open..."
 msgstr "Otevři..."
 
-#: ../../src/main/application.cpp:435 ../../src/main/application.cpp:453
+#: ../../src/main/application.cpp:434 ../../src/main/application.cpp:452
 msgid "Open subtitle file"
 msgstr "Otevři soubor s titulky"
 
-#: ../../src/main/application.cpp:443
+#: ../../src/main/application.cpp:442
 msgid "Reload As..."
 msgstr "Znovu otevři jako..."
 
-#: ../../src/main/application.cpp:444
+#: ../../src/main/application.cpp:443
 msgid "Reload opened file with a different encoding"
 msgstr "Znovu otevři s jiným kódováním"
 
-#: ../../src/main/application.cpp:452
+#: ../../src/main/application.cpp:451
 msgctxt "@action:inmenu Open rencently used subtitle file"
 msgid "Open &Recent"
 msgstr "Otevři &nedávný"
 
-#: ../../src/main/application.cpp:459
+#: ../../src/main/application.cpp:458
 msgid "Save"
 msgstr "Ulož"
 
-#: ../../src/main/application.cpp:460
+#: ../../src/main/application.cpp:459
 msgid "Save opened subtitle"
 msgstr "Ulož otevřené titulky"
 
-#: ../../src/main/application.cpp:468
+#: ../../src/main/application.cpp:467
 msgid "Save As..."
 msgstr "Ulož jako..."
 
-#: ../../src/main/application.cpp:469
+#: ../../src/main/application.cpp:468
 msgid "Save opened subtitle with different settings"
 msgstr "Ulož otevřené titulky s jiným nastavením"
 
-#: ../../src/main/application.cpp:476
+#: ../../src/main/application.cpp:475
 msgid "Close"
 msgstr "Zavři"
 
-#: ../../src/main/application.cpp:477
+#: ../../src/main/application.cpp:476
 msgid "Close opened subtitle"
 msgstr "Zavři otevřené titulky"
 
-#: ../../src/main/application.cpp:485
+#: ../../src/main/application.cpp:484
 msgid "New Translation"
 msgstr "Nový překlad"
 
-#: ../../src/main/application.cpp:486
+#: ../../src/main/application.cpp:485
 msgid "Create an empty translation subtitle"
 msgstr "Vytvoř prázdný překlad"
 
-#: ../../src/main/application.cpp:494
+#: ../../src/main/application.cpp:493
 msgid "Open Translation..."
 msgstr "Otevři překlad..."
 
-#: ../../src/main/application.cpp:495 ../../src/main/application.cpp:513
+#: ../../src/main/application.cpp:494 ../../src/main/application.cpp:512
 msgid "Open translation subtitle file"
 msgstr "Otevři soubor s překladem"
 
-#: ../../src/main/application.cpp:503
+#: ../../src/main/application.cpp:502
 #, fuzzy
 msgid "Reload Translation As..."
 msgstr "Ulož překlad jako..."
 
-#: ../../src/main/application.cpp:504
+#: ../../src/main/application.cpp:503
 #, fuzzy
 msgid "Reload opened translation file with a different encoding"
 msgstr "Znovu otevři s jiným kódováním"
 
-#: ../../src/main/application.cpp:512
+#: ../../src/main/application.cpp:511
 msgid "Open &Recent Translation"
 msgstr "Otevři &nedávný překlad"
 
-#: ../../src/main/application.cpp:520
+#: ../../src/main/application.cpp:519
 msgid "Save Translation"
 msgstr "Ulož překlad"
 
-#: ../../src/main/application.cpp:521
+#: ../../src/main/application.cpp:520
 msgid "Save opened translation subtitle"
 msgstr "Ulož otevřený překlad"
 
-#: ../../src/main/application.cpp:529
+#: ../../src/main/application.cpp:528
 msgid "Save Translation As..."
 msgstr "Ulož překlad jako..."
 
-#: ../../src/main/application.cpp:530
+#: ../../src/main/application.cpp:529
 msgid "Save opened translation subtitle with different settings"
 msgstr "Ulož otevřený překlad s jiným nastavením"
 
-#: ../../src/main/application.cpp:537
+#: ../../src/main/application.cpp:536
 msgid "Close Translation"
 msgstr "Zavři překlad"
 
-#: ../../src/main/application.cpp:538
+#: ../../src/main/application.cpp:537
 msgid "Close opened translation subtitle"
 msgstr "Zavři otevřený překlad"
 
-#: ../../src/main/application.cpp:546 ../../src/main/application.cpp:547
+#: ../../src/main/application.cpp:545 ../../src/main/application.cpp:546
 #: ../../src/widgets/simplerichtextedit.cpp:67
 msgid "Undo"
 msgstr "Zpět"
 
-#: ../../src/main/application.cpp:555 ../../src/main/application.cpp:556
+#: ../../src/main/application.cpp:554 ../../src/main/application.cpp:555
 #: ../../src/widgets/simplerichtextedit.cpp:73
 msgid "Redo"
 msgstr "Vpřed"
 
-#: ../../src/main/application.cpp:563
+#: ../../src/main/application.cpp:562
 msgid "Split Subtitle..."
 msgstr "Rozděl titulky..."
 
-#: ../../src/main/application.cpp:564
+#: ../../src/main/application.cpp:563
 msgid "Split the opened subtitle in two parts"
 msgstr "Rozděl otevřené titulky na dvě části"
 
-#: ../../src/main/application.cpp:570
+#: ../../src/main/application.cpp:569
 msgid "Join Subtitles..."
 msgstr "Spoj titulky..."
 
-#: ../../src/main/application.cpp:571
+#: ../../src/main/application.cpp:570
 msgid "Append to the opened subtitle another one"
 msgstr "Připoj k otevřeným další"
 
-#: ../../src/main/application.cpp:577 ../../src/main/lineswidget.cpp:1125
+#: ../../src/main/application.cpp:576 ../../src/main/lineswidget.cpp:1125
 msgid "Insert Before"
 msgstr "Vlož před"
 
-#: ../../src/main/application.cpp:578
+#: ../../src/main/application.cpp:577
 msgid "Insert empty line before current one"
 msgstr "Vlož prázdný řádek před současný"
 
-#: ../../src/main/application.cpp:585 ../../src/main/lineswidget.cpp:1126
+#: ../../src/main/application.cpp:584 ../../src/main/lineswidget.cpp:1126
 msgid "Insert After"
 msgstr "Vlož za"
 
-#: ../../src/main/application.cpp:586
+#: ../../src/main/application.cpp:585
 msgid "Insert empty line after current one"
 msgstr "Vlož prázdný řádek za současný"
 
 #. i18n: file: ../../src/main/scripting/scriptsmanager.ui:62
 #. i18n: ectx: property (text), widget (QPushButton, btnRemove)
-#: ../../src/main/application.cpp:593 ../../src/main/lineswidget.cpp:1124 rc.cpp:426
+#: ../../src/main/application.cpp:592 ../../src/main/lineswidget.cpp:1124 rc.cpp:426
 msgid "Remove"
 msgstr "Odstraň"
 
-#: ../../src/main/application.cpp:594
+#: ../../src/main/application.cpp:593
 msgid "Remove selected lines"
 msgstr "Odstraň označené řádky"
 
-#: ../../src/main/application.cpp:602
+#: ../../src/main/application.cpp:601
 msgid "Split selected lines"
 msgstr "Rozděl označené řádky"
 
-#: ../../src/main/application.cpp:609
+#: ../../src/main/application.cpp:608
 msgid "Join selected lines"
 msgstr "Spoj označené řádky"
 
-#: ../../src/main/application.cpp:615
+#: ../../src/main/application.cpp:614
 #: ../../src/main/dialogs/actionwitherrortargetsdialog.cpp:95
 #: ../../src/main/lineswidget.cpp:1122 ../../src/widgets/simplerichtextedit.cpp:110
 msgid "Select All"
 msgstr "Označ všechno"
 
-#: ../../src/main/application.cpp:616
+#: ../../src/main/application.cpp:615
 msgid "Select all lines"
 msgstr "Označ všechny řádky"
 
-#: ../../src/main/application.cpp:623
+#: ../../src/main/application.cpp:622
 msgid "Go to Line..."
 msgstr "Jdi na řádek..."
 
-#: ../../src/main/application.cpp:624
+#: ../../src/main/application.cpp:623
 msgid "Go to specified line"
 msgstr "Jdi na vybraný řádek"
 
-#: ../../src/main/application.cpp:632
+#: ../../src/main/application.cpp:631
 msgid "Find..."
 msgstr "Najdi..."
 
-#: ../../src/main/application.cpp:633
+#: ../../src/main/application.cpp:632
 msgid "Find occurrences of strings or regular expressions"
 msgstr "Najdi výskyt řetězce nebo regulárního výrazu"
 
-#: ../../src/main/application.cpp:641
+#: ../../src/main/application.cpp:640
 msgid "Find Next"
 msgstr "Najdi další"
 
-#: ../../src/main/application.cpp:642
+#: ../../src/main/application.cpp:641
 msgid "Find next occurrence of string or regular expression"
 msgstr "Najdi další výskyt řetězce nebo reg. výrazu"
 
-#: ../../src/main/application.cpp:650
+#: ../../src/main/application.cpp:649
 msgid "Find Previous"
 msgstr "Najdi předchozí"
 
-#: ../../src/main/application.cpp:651
+#: ../../src/main/application.cpp:650
 msgid "Find previous occurrence of string or regular expression"
 msgstr "Najdi předchozí výskyt řetězce nebo reg. výrazu"
 
-#: ../../src/main/application.cpp:658
+#: ../../src/main/application.cpp:657
 msgid "Replace..."
 msgstr "Nahraď"
 
-#: ../../src/main/application.cpp:659
+#: ../../src/main/application.cpp:658
 msgid "Replace occurrences of strings or regular expressions"
 msgstr "Nahraď výskyty řetězců nebo reg. výrazů"
 
-#: ../../src/main/application.cpp:667
+#: ../../src/main/application.cpp:666
 msgid "Retrocede current line"
 msgstr "Posuň zpět současný řádek"
 
-#: ../../src/main/application.cpp:668
+#: ../../src/main/application.cpp:667
 msgid "Makes the line before the current one active"
 msgstr "Označ předchozí řádek jako aktivní"
 
-#: ../../src/main/application.cpp:676
+#: ../../src/main/application.cpp:675
 msgid "Advance current line"
 msgstr "Posuň vpřed současný řádek"
 
-#: ../../src/main/application.cpp:677
+#: ../../src/main/application.cpp:676
 msgid "Makes the line after the current one active"
 msgstr "Označ následující řádek jako aktivní"
 
-#: ../../src/main/application.cpp:684 ../../src/main/errorsdialog.cpp:52
+#: ../../src/main/application.cpp:683 ../../src/main/errorsdialog.cpp:52
 #: ../../src/main/lineswidget.cpp:1116
 msgid "Check Errors..."
 msgstr "Zkontroluj chyby..."
 
-#: ../../src/main/application.cpp:685
+#: ../../src/main/application.cpp:684
 msgid "Check for errors in the current subtitle"
 msgstr "Zkontroluj chyby v současných titulkách"
 
-#: ../../src/main/application.cpp:692 ../../src/main/errorsdialog.cpp:55
+#: ../../src/main/application.cpp:691 ../../src/main/errorsdialog.cpp:55
 #: ../../src/main/lineswidget.cpp:1117
 msgid "Clear Errors..."
 msgstr "Vymaž chyby..."
 
-#: ../../src/main/application.cpp:693
+#: ../../src/main/application.cpp:692
 msgid "Clear errors from selected lines"
 msgstr "Vymaž chyby v označených řádcích"
 
-#: ../../src/main/application.cpp:699 ../../src/main/lineswidget.cpp:1119
+#: ../../src/main/application.cpp:698 ../../src/main/lineswidget.cpp:1119
 msgid "Show Errors..."
 msgstr "Ukaž chyby..."
 
-#: ../../src/main/application.cpp:700
+#: ../../src/main/application.cpp:699
 msgid "Show errors information for the current subtitle"
 msgstr "Ukaž informace o chybách v současných titulkách"
 
-#: ../../src/main/application.cpp:708
+#: ../../src/main/application.cpp:707
 msgid "Find Error..."
 msgstr "Najdi chybu"
 
-#: ../../src/main/application.cpp:709
+#: ../../src/main/application.cpp:708
 msgid "Find lines with specified errors"
 msgstr "Najdi další řádek s chybami"
 
-#: ../../src/main/application.cpp:717
+#: ../../src/main/application.cpp:716
 msgid "Find Next Error"
 msgstr "Najdi další chybu"
 
-#: ../../src/main/application.cpp:718
+#: ../../src/main/application.cpp:717
 msgid "Find next line with specified errors"
 msgstr "Najdi další řádek s chybami"
 
-#: ../../src/main/application.cpp:726
+#: ../../src/main/application.cpp:725
 msgid "Find Previous Error"
 msgstr "Najdi předchozí chybu"
 
-#: ../../src/main/application.cpp:727
+#: ../../src/main/application.cpp:726
 msgid "Find previous line with specified errors"
 msgstr "Najdi předchozí řádek s chybami"
 
-#: ../../src/main/application.cpp:735 ../../src/main/lineswidget.cpp:1081
+#: ../../src/main/application.cpp:734 ../../src/main/lineswidget.cpp:1081
 msgid "Spelling..."
 msgstr "Pravopis..."
 
-#: ../../src/main/application.cpp:736
+#: ../../src/main/application.cpp:735
 msgid "Check lines spelling"
 msgstr "Zkontroluj pravopis"
 
-#: ../../src/main/application.cpp:742
+#: ../../src/main/application.cpp:741
 msgid "Toggle Mark"
 msgstr "Přepni značku"
 
-#: ../../src/main/application.cpp:743
+#: ../../src/main/application.cpp:742
 msgid "Toggle selected lines mark"
 msgstr "Přepni značku na označených řádcích"
 
-#: ../../src/main/application.cpp:751 ../../src/main/currentlinewidget.cpp:94
+#: ../../src/main/application.cpp:750 ../../src/main/currentlinewidget.cpp:94
 msgid "Toggle Bold"
 msgstr "Přepni tučné"
 
-#: ../../src/main/application.cpp:752
+#: ../../src/main/application.cpp:751
 msgid "Toggle selected lines bold attribute"
 msgstr "Přepni tučný atribut na označených"
 
-#: ../../src/main/application.cpp:760 ../../src/main/currentlinewidget.cpp:95
+#: ../../src/main/application.cpp:759 ../../src/main/currentlinewidget.cpp:95
 msgid "Toggle Italic"
 msgstr "Přepni kurzívu"
 
-#: ../../src/main/application.cpp:761
+#: ../../src/main/application.cpp:760
 msgid "Toggle selected lines italic attribute"
 msgstr "Přepni kurzívu na označených"
 
-#: ../../src/main/application.cpp:769 ../../src/main/currentlinewidget.cpp:96
+#: ../../src/main/application.cpp:768 ../../src/main/currentlinewidget.cpp:96
 msgid "Toggle Underline"
 msgstr "Přepni podtržení"
 
-#: ../../src/main/application.cpp:770
+#: ../../src/main/application.cpp:769
 msgid "Toggle selected lines underline attribute"
 msgstr "Přepni podtržení na označených"
 
-#: ../../src/main/application.cpp:778 ../../src/main/currentlinewidget.cpp:97
+#: ../../src/main/application.cpp:777 ../../src/main/currentlinewidget.cpp:97
 msgid "Toggle Strike Through"
 msgstr "Přepni strike through"
 
-#: ../../src/main/application.cpp:779
+#: ../../src/main/application.cpp:778
 msgid "Toggle selected lines strike through attribute"
 msgstr "Přepni strike through na označených"
 
-#: ../../src/main/application.cpp:787 ../../src/main/currentlinewidget.cpp:98
+#: ../../src/main/application.cpp:786 ../../src/main/currentlinewidget.cpp:98
 #, fuzzy
 msgid "Change Text Color"
 msgstr "Změň na"
 
-#: ../../src/main/application.cpp:788
+#: ../../src/main/application.cpp:787
 #, fuzzy
 msgid "Change text color of selected lines"
 msgstr "Vymaž chyby v označených řádcích"
 
-#: ../../src/main/application.cpp:795 ../../src/main/lineswidget.cpp:1104
+#: ../../src/main/application.cpp:794 ../../src/main/lineswidget.cpp:1104
 msgid "Shift..."
 msgstr "Posuň..."
 
-#: ../../src/main/application.cpp:796
+#: ../../src/main/application.cpp:795
 msgid "Shift lines an specified amount of time"
 msgstr "Posuň řádky o určitý čas"
 
-#: ../../src/main/application.cpp:815
+#: ../../src/main/application.cpp:814
 msgid "Adjust..."
 msgstr "Přizpůsob..."
 
-#: ../../src/main/application.cpp:816
+#: ../../src/main/application.cpp:815
 msgid "Linearly adjust all lines to a specified interval"
 msgstr "Přizpůsob všechny řádky lineárně podle zadaného intervalu"
 
-#: ../../src/main/application.cpp:823
+#: ../../src/main/application.cpp:822
 msgid "Sort..."
 msgstr "Třídit..."
 
-#: ../../src/main/application.cpp:824
+#: ../../src/main/application.cpp:823
 msgid "Sort lines based on their show time"
 msgstr "Seřaď řádky podle jejich zobrazení"
 
-#: ../../src/main/application.cpp:830
+#: ../../src/main/application.cpp:829
 msgid "Change Frame Rate..."
 msgstr "Změň počet snímku za sekundu"
 
-#: ../../src/main/application.cpp:831
+#: ../../src/main/application.cpp:830
 msgid "Retime subtitle lines by reinterpreting its frame rate"
 msgstr "Přečasuj titulky změnou FPS"
 
-#: ../../src/main/application.cpp:837 ../../src/main/lineswidget.cpp:1106
+#: ../../src/main/application.cpp:836 ../../src/main/lineswidget.cpp:1106
 msgid "Enforce Duration Limits..."
 msgstr "Vnutit limity trvání..."
 
-#: ../../src/main/application.cpp:838
+#: ../../src/main/application.cpp:837
 msgid "Enforce lines minimum and/or maximum duration limits"
 msgstr "Vnuť maximální/minimální trvání řádků"
 
-#: ../../src/main/application.cpp:845 ../../src/main/lineswidget.cpp:1107
+#: ../../src/main/application.cpp:844 ../../src/main/lineswidget.cpp:1107
 msgid "Set Automatic Durations..."
 msgstr "Nastav automatické trvání..."
 
-#: ../../src/main/application.cpp:846
+#: ../../src/main/application.cpp:845
 msgid "Set lines durations based on amount of letters, words and line breaks"
 msgstr "Nastav trvání podle počtu písmen, slov a zalomení řádků"
 
-#: ../../src/main/application.cpp:852
+#: ../../src/main/application.cpp:851
 msgid "Maximize Durations..."
 msgstr "Maximalizuj trvání..."
 
-#: ../../src/main/application.cpp:853
+#: ../../src/main/application.cpp:852
 msgid "Extend lines durations up to their next lines show time"
 msgstr "Rozšiř délku trvání až k zobrazení dalšího"
 
-#: ../../src/main/application.cpp:859
+#: ../../src/main/application.cpp:858
 msgid "Fix Overlapping Times..."
 msgstr "Oprav překrývající se časy"
 
-#: ../../src/main/application.cpp:860
+#: ../../src/main/application.cpp:859
 msgid "Fix lines overlapping times"
 msgstr "Oprav překrývající se časování"
 
-#: ../../src/main/application.cpp:866
+#: ../../src/main/application.cpp:865
 msgid "Synchronize with Subtitle..."
 msgstr "Synchronizuj s titulky..."
 
-#: ../../src/main/application.cpp:867
+#: ../../src/main/application.cpp:866
 msgid "Copy timing information from another subtitle"
 msgstr "Zkopíruj informaci o časování z jiných titulků"
 
-#: ../../src/main/application.cpp:873 ../../src/main/lineswidget.cpp:1074
+#: ../../src/main/application.cpp:872 ../../src/main/lineswidget.cpp:1074
 msgid "Break Lines..."
 msgstr "Zalom řádky..."
 
-#: ../../src/main/application.cpp:874
+#: ../../src/main/application.cpp:873
 msgid "Automatically set line breaks"
 msgstr "Automaticky nastav zalomení"
 
-#: ../../src/main/application.cpp:880 ../../src/main/lineswidget.cpp:1075
+#: ../../src/main/application.cpp:879 ../../src/main/lineswidget.cpp:1075
 msgid "Unbreak Lines..."
 msgstr "Spoj řádky..."
 
-#: ../../src/main/application.cpp:881
+#: ../../src/main/application.cpp:880
 msgid "Remove line breaks from lines"
 msgstr "Odstraň zalomení z řádků"
 
-#: ../../src/main/application.cpp:887 ../../src/main/lineswidget.cpp:1076
+#: ../../src/main/application.cpp:886 ../../src/main/lineswidget.cpp:1076
 msgid "Simplify Spaces..."
 msgstr "Zjednoduš mezery..."
 
-#: ../../src/main/application.cpp:888
+#: ../../src/main/application.cpp:887
 msgid "Remove unneeded spaces from lines"
 msgstr "Odstraň nepotřebné mezery"
 
-#: ../../src/main/application.cpp:894 ../../src/main/lineswidget.cpp:1077
+#: ../../src/main/application.cpp:893 ../../src/main/lineswidget.cpp:1077
 msgid "Change Case..."
 msgstr "Změň velikost..."
 
-#: ../../src/main/application.cpp:895
+#: ../../src/main/application.cpp:894
 msgid "Change lines text to upper, lower, title or sentence case"
 msgstr "Změň znaky na velká, malá, nadpis nebo věty"
 
-#: ../../src/main/application.cpp:901 ../../src/main/lineswidget.cpp:1078
+#: ../../src/main/application.cpp:900 ../../src/main/lineswidget.cpp:1078
 msgid "Fix Punctuation..."
 msgstr "Oprav interpunkci..."
 
-#: ../../src/main/application.cpp:902
+#: ../../src/main/application.cpp:901
 msgid "Fix punctuation errors in lines"
 msgstr "Oprav interpunkční chyby v řádcích"
 
-#: ../../src/main/application.cpp:908 ../../src/main/lineswidget.cpp:1079
+#: ../../src/main/application.cpp:907 ../../src/main/lineswidget.cpp:1079
 msgid "Translate..."
 msgstr "Otevři překlad..."
 
-#: ../../src/main/application.cpp:909
+#: ../../src/main/application.cpp:908
 msgid "Translate lines texts using Google services"
 msgstr "Přelož řádky textu použitím Google služeb"
 
-#: ../../src/main/application.cpp:915
+#: ../../src/main/application.cpp:914
 msgid "Edit Line in Place"
 msgstr "Uprav řádek"
 
-#: ../../src/main/application.cpp:916
+#: ../../src/main/application.cpp:915
 msgid "Edit current line text in place"
 msgstr "Uprav současný řádek"
 
-#: ../../src/main/application.cpp:924
+#: ../../src/main/application.cpp:923
 msgid "Open Video..."
 msgstr "Otevři video..."
 
-#: ../../src/main/application.cpp:925 ../../src/main/application.cpp:932
+#: ../../src/main/application.cpp:924 ../../src/main/application.cpp:931
 msgid "Open video file"
 msgstr "Otevři video soubor"
 
-#: ../../src/main/application.cpp:931
+#: ../../src/main/application.cpp:930
 msgid "Open &Recent Video"
 msgstr "Otevři nedavné video"
 
-#: ../../src/main/application.cpp:940
+#: ../../src/main/application.cpp:939
 #, fuzzy
 msgid "Import Subtitle Stream"
 msgstr "Titulkové stopy"
 
-#: ../../src/main/application.cpp:941
+#: ../../src/main/application.cpp:940
 #, fuzzy
 msgid "Import subtitle stream into subtitle editor"
 msgstr "Titulkové stopy"
 
-#: ../../src/main/application.cpp:949
+#: ../../src/main/application.cpp:948
 msgid "Recognize Speech"
 msgstr ""
 
-#: ../../src/main/application.cpp:950
+#: ../../src/main/application.cpp:949
 #, fuzzy
 msgid "Recognize speech in audio stream"
 msgstr "Vyber aktivní zvukovou stopu"
 
-#: ../../src/main/application.cpp:956
+#: ../../src/main/application.cpp:955
 msgid "Close Video"
 msgstr "Zavři video"
 
-#: ../../src/main/application.cpp:957
+#: ../../src/main/application.cpp:956
 msgid "Close video file"
 msgstr "Zavři video soubor"
 
-#: ../../src/main/application.cpp:964
+#: ../../src/main/application.cpp:963
 msgid "Full Screen Mode"
 msgstr "Celá obrazovka"
 
-#: ../../src/main/application.cpp:965
+#: ../../src/main/application.cpp:964
 msgid "Toggle full screen mode"
 msgstr "Přepni na celou obrazovku"
 
-#: ../../src/main/application.cpp:972
+#: ../../src/main/application.cpp:971
 msgid "Stop"
 msgstr "Zastav"
 
-#: ../../src/main/application.cpp:973
+#: ../../src/main/application.cpp:972
 msgid "Stop video playback"
 msgstr "Zastav přehrávání videa"
 
-#: ../../src/main/application.cpp:980 ../../src/main/application.cpp:2845
-#: ../../src/main/application.cpp:2853
+#: ../../src/main/application.cpp:979 ../../src/main/application.cpp:2905
+#: ../../src/main/application.cpp:2913
 msgid "Play"
 msgstr "Přehraj"
 
-#: ../../src/main/application.cpp:981
+#: ../../src/main/application.cpp:980
 msgid "Toggle video playing/paused"
 msgstr "Přehrávání/pauza videa"
 
-#: ../../src/main/application.cpp:989
+#: ../../src/main/application.cpp:988
 msgid "Seek Backwards"
 msgstr "Hledej nazpět"
 
-#: ../../src/main/application.cpp:997
+#: ../../src/main/application.cpp:996
 msgid "Seek Forwards"
 msgstr "Hledej dopředu"
 
-#: ../../src/main/application.cpp:1005
+#: ../../src/main/application.cpp:1004
 msgid "Jump to Previous Line"
 msgstr "Skoč na předchozí řádek"
 
-#: ../../src/main/application.cpp:1006
+#: ../../src/main/application.cpp:1005
 msgid "Seek to previous subtitle line show time"
 msgstr "Hledej do zobrazení předchozícho titulku"
 
-#: ../../src/main/application.cpp:1014
+#: ../../src/main/application.cpp:1013
 msgid "Jump to Next Line"
 msgstr "Skoč na další řádek"
 
-#: ../../src/main/application.cpp:1015
+#: ../../src/main/application.cpp:1014
 msgid "Seek to next subtitle line show time"
 msgstr "Hledej do zobrazení následujícího titulku"
 
-#: ../../src/main/application.cpp:1023
+#: ../../src/main/application.cpp:1022 ../../src/main/application.cpp:1173
 msgid "Set Current Line Show Time"
 msgstr "Nastav na řádek současný čas zobrazení z videa"
 
-#: ../../src/main/application.cpp:1024
+#: ../../src/main/application.cpp:1023
 msgid "Set current line show time to video position"
 msgstr "Nastav na řádek současný čas zobrazení z videa"
 
-#: ../../src/main/application.cpp:1032
+#: ../../src/main/application.cpp:1031 ../../src/main/application.cpp:1181
 msgid "Set Current Line Hide Time"
 msgstr "Nastav na řádek současný čas skrytí titulku"
 
-#: ../../src/main/application.cpp:1033
+#: ../../src/main/application.cpp:1032
 msgid "Set current line hide time to video position"
 msgstr "Nastav na řádek současný čas skrytí z videa"
 
-#: ../../src/main/application.cpp:1041
+#: ../../src/main/application.cpp:1040
 msgid "Current Line Follows Video"
 msgstr "Současný řádek následuje video"
 
-#: ../../src/main/application.cpp:1042
+#: ../../src/main/application.cpp:1041
 msgid "Make current line follow the playing video position"
 msgstr "Současný řádek bude následovat pozici přehrávaného videa"
 
-#: ../../src/main/application.cpp:1048
+#: ../../src/main/application.cpp:1047
 msgctxt "@action:inmenu Toggle audio muted"
 msgid "Mute"
 msgstr "Umlčet"
 
-#: ../../src/main/application.cpp:1049
+#: ../../src/main/application.cpp:1048
 msgid "Enable/disable playback sound"
 msgstr "Zapnout/vypnout zvuk"
 
-#: ../../src/main/application.cpp:1056
+#: ../../src/main/application.cpp:1055
 msgid "Increase Volume"
 msgstr "Zvýšit hlasitost"
 
-#: ../../src/main/application.cpp:1057
+#: ../../src/main/application.cpp:1056
 msgid "Increase volume by 5%"
 msgstr "Snížit hlasitost o 5%"
 
-#: ../../src/main/application.cpp:1064
+#: ../../src/main/application.cpp:1063
 msgid "Decrease Volume"
 msgstr "Snížit hlasitost"
 
-#: ../../src/main/application.cpp:1065
+#: ../../src/main/application.cpp:1064
 msgid "Decrease volume by 5%"
 msgstr "Snížit hlasitost o 5%"
 
-#: ../../src/main/application.cpp:1072
+#: ../../src/main/application.cpp:1071
 msgid "Audio Streams"
 msgstr "Zvukové stopy"
 
-#: ../../src/main/application.cpp:1073
+#: ../../src/main/application.cpp:1072
 msgid "Select active audio stream"
 msgstr "Vyber aktivní zvukovou stopu"
 
-#: ../../src/main/application.cpp:1080
+#: ../../src/main/application.cpp:1079
 msgid "Increase Font Size"
 msgstr "Zvětšit velikost písma"
 
-#: ../../src/main/application.cpp:1081
+#: ../../src/main/application.cpp:1080
 msgid "Increase subtitles font size by 1 point"
 msgstr "Zvětšit velikost písma o 1 bod"
 
-#: ../../src/main/application.cpp:1088
+#: ../../src/main/application.cpp:1087
 msgid "Decrease Font Size"
 msgstr "Snížit velikost písma"
 
-#: ../../src/main/application.cpp:1089
+#: ../../src/main/application.cpp:1088
 msgid "Decrease subtitles font size by 1 point"
 msgstr "Snížit velikost písma o 1 bod"
 
-#: ../../src/main/application.cpp:1096
+#: ../../src/main/application.cpp:1095
 msgid "Subtitle Streams"
 msgstr "Titulkové stopy"
 
-#: ../../src/main/application.cpp:1097
+#: ../../src/main/application.cpp:1096
 msgid "Select active subtitle stream"
 msgstr "Vyber aktivní titulky"
 
-#: ../../src/main/application.cpp:1103
+#: ../../src/main/application.cpp:1102
 msgid "Shift to Video Position"
 msgstr "Posuň na video pozici"
 
-#: ../../src/main/application.cpp:1104
+#: ../../src/main/application.cpp:1103
 msgid ""
 "Set current line show time to video position by equally shifting all lines"
 msgstr "Nastav zobrazení řádku na současnou video pozici posunutím všech řádků"
 
-#: ../../src/main/application.cpp:1111
+#: ../../src/main/application.cpp:1110
 msgid "Adjust to Video Position (Anchor Last Line)"
 msgstr "Přiřaď k pozici videa (ukotvi poslední řádek)"
 
-#: ../../src/main/application.cpp:1112
+#: ../../src/main/application.cpp:1111
 msgid ""
 "Set current line to video position by fixing the last line and linearly "
 "adjusting the other ones"
@@ -1099,11 +1100,11 @@ msgstr ""
 "Přiřaď současný řádek k video pozici upevněním posledního řádku a lineárním "
 "seřízením ostatních"
 
-#: ../../src/main/application.cpp:1119
+#: ../../src/main/application.cpp:1118
 msgid "Adjust to Video Position (Anchor First Line)"
 msgstr "Přiřaď k pozici videa (ukotvi první řádek)"
 
-#: ../../src/main/application.cpp:1120
+#: ../../src/main/application.cpp:1119
 msgid ""
 "Set current line to video position by fixing the first line and linearly "
 "adjusting the other ones"
@@ -1111,52 +1112,67 @@ msgstr ""
 "Přiřaď současný řádek k video pozici upevněním prvního řádku a lineárním "
 "seřízením ostatních"
 
-#: ../../src/main/application.cpp:1127
+#: ../../src/main/application.cpp:1126
 #, fuzzy
 msgid "Toggle Anchor"
 msgstr "Přepni značku"
 
-#: ../../src/main/application.cpp:1128
+#: ../../src/main/application.cpp:1127
 msgid ""
 "(Un)Anchor current line's show time to timeline (Editing anchored line's "
 "show time will stretch/compact the timeline between adjanced anchors)"
 msgstr ""
 
-#: ../../src/main/application.cpp:1135
+#: ../../src/main/application.cpp:1134
 #, fuzzy
 msgid "Remove All Anchors"
 msgstr "Odstraň řádky"
 
-#: ../../src/main/application.cpp:1136
+#: ../../src/main/application.cpp:1135
 msgid "Unanchor show time from the timeline on all anchored lines"
 msgstr ""
 
-#: ../../src/main/application.cpp:1144
+#: ../../src/main/application.cpp:1143
 msgctxt "@action:inmenu Manage user scripts"
 msgid "Scripts Manager..."
 msgstr "Správce skriptů..."
 
-#: ../../src/main/application.cpp:1145
+#: ../../src/main/application.cpp:1144
 msgid "Manage user scripts"
 msgstr "Spravuj uživatelské skripty"
 
-#: ../../src/main/application.cpp:1152 ../../src/main/application.cpp:1153
+#: ../../src/main/application.cpp:1151 ../../src/main/application.cpp:1152
 msgid "Waveform Zoom In"
 msgstr ""
 
-#: ../../src/main/application.cpp:1159 ../../src/main/application.cpp:1160
+#: ../../src/main/application.cpp:1158 ../../src/main/application.cpp:1159
 msgid "Waveform Zoom Out"
 msgstr ""
 
-#: ../../src/main/application.cpp:1167
+#: ../../src/main/application.cpp:1166
 msgid "Waveform Auto Scroll"
 msgstr ""
 
-#: ../../src/main/application.cpp:1168
+#: ../../src/main/application.cpp:1167
 msgid "Waveform display will automatically scroll to video position"
 msgstr ""
 
-#: ../../src/main/application.cpp:1260
+#: ../../src/main/application.cpp:1174
+#, fuzzy
+msgid "Set current line show time to waveform mouse position"
+msgstr "Nastav na řádek současný čas zobrazení z videa"
+
+#: ../../src/main/application.cpp:1182
+#, fuzzy
+msgid "Set current line hide time to waveform mouse position"
+msgstr "Nastav na řádek současný čas skrytí z videa"
+
+#: ../../src/main/application.cpp:1189
+#, fuzzy
+msgid "Insert empty line at waveform mouse position(s)"
+msgstr "Vlož prázdný řádek za současný"
+
+#: ../../src/main/application.cpp:1282
 msgid ""
 "The requested action would make the subtitle and its translation share the "
 "same file, possibly resulting in loss of information when saving.\n"
@@ -1166,12 +1182,12 @@ msgstr ""
 "používaly ten samý soubor. Je možné, že by se ztratila data, pokud budete "
 "trvat na uložení. Opravdu chcete pokračovat?"
 
-#: ../../src/main/application.cpp:1260
+#: ../../src/main/application.cpp:1282
 msgid "Conflicting Subtitle Files"
 msgstr "Konflikt v titulkových souborech"
 
-#: ../../src/main/application.cpp:1368 ../../src/main/application.cpp:1396
-#: ../../src/main/application.cpp:1632 ../../src/main/application.cpp:1670
+#: ../../src/main/application.cpp:1390 ../../src/main/application.cpp:1418
+#: ../../src/main/application.cpp:1654 ../../src/main/application.cpp:1692
 msgid ""
 "<qt>Could not parse the subtitle file.<br/>This may have been caused by "
 "usage of the wrong encoding.</qt>"
@@ -1179,11 +1195,11 @@ msgstr ""
 "<qt>Nebylo možné přečíst titulkový soubor.<br/>Mohlo to být způsobeno "
 "použitím špatného kódování.</qt>"
 
-#: ../../src/main/application.cpp:1478
+#: ../../src/main/application.cpp:1500
 msgid "There was an error saving the subtitle."
 msgstr "Vyskytla se chyba při ukládání titulků."
 
-#: ../../src/main/application.cpp:1515 ../../src/main/application.cpp:1766
+#: ../../src/main/application.cpp:1537 ../../src/main/application.cpp:1788
 msgid ""
 "Currently opened translation subtitle has unsaved changes.\n"
 "Do you want to save them?"
@@ -1191,11 +1207,11 @@ msgstr ""
 "Současně otevřený překlad má neuložené změny.\n"
 "Chcete jej uložit?"
 
-#: ../../src/main/application.cpp:1516 ../../src/main/application.cpp:1767
+#: ../../src/main/application.cpp:1538 ../../src/main/application.cpp:1789
 msgid "Close Translation Subtitle"
 msgstr "Zavři překlad"
 
-#: ../../src/main/application.cpp:1526
+#: ../../src/main/application.cpp:1548
 msgid ""
 "Currently opened subtitle has unsaved changes.\n"
 "Do you want to save them?"
@@ -1203,57 +1219,57 @@ msgstr ""
 "Současně otevřené titulky mají neuložené změny.\n"
 "Chcete je uložit?"
 
-#: ../../src/main/application.cpp:1527
+#: ../../src/main/application.cpp:1549
 msgid "Close Subtitle"
 msgstr "Zavři titulky"
 
-#: ../../src/main/application.cpp:1622
+#: ../../src/main/application.cpp:1644
 msgctxt "@item:inmenu Display primary text in video player"
 msgid "Primary"
 msgstr "Primární"
 
-#: ../../src/main/application.cpp:1623
+#: ../../src/main/application.cpp:1645
 msgctxt "@item:inmenu Display translation text in video player"
 msgid "Translation"
 msgstr "Překlad"
 
-#: ../../src/main/application.cpp:1729
+#: ../../src/main/application.cpp:1751
 msgid "There was an error saving the translation subtitle."
 msgstr "Vyskytla se chyba při ukládání překladu."
 
-#: ../../src/main/application.cpp:1812
+#: ../../src/main/application.cpp:1834
 msgid "Could not read the subtitle file to append."
 msgstr "Nebylo možné načíst titulky k připojení."
 
-#: ../../src/main/application.cpp:1830 ../../src/main/application.cpp:2725
-#: ../../src/main/application.cpp:2731
+#: ../../src/main/application.cpp:1852 ../../src/main/application.cpp:2785
+#: ../../src/main/application.cpp:2791
 msgid "Untitled"
 msgstr "Nepojmenovaný"
 
-#: ../../src/main/application.cpp:1830 ../../src/main/application.cpp:2727
+#: ../../src/main/application.cpp:1852 ../../src/main/application.cpp:2787
 msgid "Untitled Translation"
 msgstr "Nepojmenovaný překlad"
 
-#: ../../src/main/application.cpp:1836
+#: ../../src/main/application.cpp:1858
 msgctxt "Suffix added to split subtitles"
 msgid "split"
 msgstr ""
 
-#: ../../src/main/application.cpp:1850
+#: ../../src/main/application.cpp:1872
 #, fuzzy
 msgid "Could not write the split subtitle file."
 msgstr "Nebylo možné zapsat rozdělené titulky."
 
-#: ../../src/main/application.cpp:1850
+#: ../../src/main/application.cpp:1872
 #, fuzzy
 msgid "Could not write the split subtitle translation file."
 msgstr "Nebylo možné zapsat rozdělený překlad."
 
-#: ../../src/main/application.cpp:1867
+#: ../../src/main/application.cpp:1889
 msgid "The specified time does not split the subtitles."
 msgstr "Požadovaný čas nerozdělil titulky."
 
-#: ../../src/main/application.cpp:1902
+#: ../../src/main/application.cpp:1924
 #, fuzzy
 msgid ""
 "Could not open a new Subtitle Composer window.\n"
@@ -1262,7 +1278,7 @@ msgstr ""
 "Nebylo možné otevřít nové okno Subtitle Composeru.\n"
 "Rozdělená část byla uložena jako %1."
 
-#: ../../src/main/application.cpp:1903
+#: ../../src/main/application.cpp:1925
 #, fuzzy
 msgid ""
 "Could not open a new Subtitle Composer window.\n"
@@ -1271,43 +1287,43 @@ msgstr ""
 "Nebylo možné otevřít nové okno Subtitle Composeru.\n"
 "Rozdělené části byly uloženy jako %1 a %2."
 
-#: ../../src/main/application.cpp:1994
+#: ../../src/main/application.cpp:2016
 msgid "Go to Line"
 msgstr "Jdi na řádek"
 
-#: ../../src/main/application.cpp:1994
+#: ../../src/main/application.cpp:2016
 msgid "&Go to line:"
 msgstr "&Jdi na řádek:"
 
-#: ../../src/main/application.cpp:2268
+#: ../../src/main/application.cpp:2290
 msgid "Can not perform sort on selection with multiple ranges."
 msgstr "Nebylo možné provést třídění s více rozsahy."
 
-#: ../../src/main/application.cpp:2350
+#: ../../src/main/application.cpp:2372
 msgid "The reference subtitle must have more than one line to proceed."
 msgstr "Odkazované titulky musely mít více než jeden řádek."
 
-#: ../../src/main/application.cpp:2357
+#: ../../src/main/application.cpp:2379
 msgid "Could not parse the reference subtitle file."
 msgstr "Nebylo možné načíst odkazované titulky."
 
-#: ../../src/main/application.cpp:2439 ../../src/main/dialogs/translatedialog.cpp:33
+#: ../../src/main/application.cpp:2461 ../../src/main/dialogs/translatedialog.cpp:33
 msgid "Translate"
 msgstr "Překlad"
 
-#: ../../src/main/application.cpp:2439
+#: ../../src/main/application.cpp:2461
 msgid "Translating text (%1 to %2)..."
 msgstr "Překládám text (%1 do %2)..."
 
-#: ../../src/main/application.cpp:2443
+#: ../../src/main/application.cpp:2465
 msgid "Translating primary text (%1 to %2)..."
 msgstr "Překládám primární text (%1 do %2)..."
 
-#: ../../src/main/application.cpp:2444
+#: ../../src/main/application.cpp:2466
 msgid "Translating secondary text (%1 to %2)..."
 msgstr "Překládám sekundární text (%1 do %2)..."
 
-#: ../../src/main/application.cpp:2472
+#: ../../src/main/application.cpp:2494
 msgid ""
 "Unable to perform texts synchronization (sent and received lines count do "
 "not match)."
@@ -1315,15 +1331,15 @@ msgstr ""
 "Není možné provést synchronizaci textu (neshodují se počty poslaných a "
 "přijatých řádků)."
 
-#: ../../src/main/application.cpp:2476
+#: ../../src/main/application.cpp:2498
 msgid "Translate Primary Text"
 msgstr "Přelož primární text"
 
-#: ../../src/main/application.cpp:2476
+#: ../../src/main/application.cpp:2498
 msgid "Translate Secondary Text"
 msgstr "Přelož druhotný text"
 
-#: ../../src/main/application.cpp:2491
+#: ../../src/main/application.cpp:2513
 msgid ""
 "There was an error performing the translation:\n"
 "\n"
@@ -1332,11 +1348,11 @@ msgstr ""
 "Vyskytla se chyba při ukládání překladu:\n"
 "%1"
 
-#: ../../src/main/application.cpp:2529
+#: ../../src/main/application.cpp:2551
 msgid "Open Video"
 msgstr "Otevři video"
 
-#: ../../src/main/application.cpp:2674 ../../src/main/application.cpp:2705
+#: ../../src/main/application.cpp:2696 ../../src/main/application.cpp:2727
 msgid ""
 "Continuing would result in loss of timing information for some lines.\n"
 "Are you sure you want to continue?"
@@ -1344,33 +1360,33 @@ msgstr ""
 "Pokračovaní by mohlo způsobit ztrátu časovaní u některých řádků.\n"
 "Opravdu chcete pokračovat?"
 
-#: ../../src/main/application.cpp:2722
+#: ../../src/main/application.cpp:2782
 msgid "modified"
 msgstr "změněn"
 
-#: ../../src/main/application.cpp:2837
+#: ../../src/main/application.cpp:2897
 msgid "Pause"
 msgstr "Pauza"
 
-#: ../../src/main/application.cpp:2903
+#: ../../src/main/application.cpp:2963
 msgid "Seek backwards 1 second"
 msgid_plural "Seek backwards %1 seconds"
 msgstr[0] "Hledej zpětně 1 vteřinu."
 msgstr[1] "Hledej zpětně %1 vteřin."
 
-#: ../../src/main/application.cpp:2904
+#: ../../src/main/application.cpp:2964
 msgid "Seek forwards 1 second"
 msgid_plural "Seek forwards %1 seconds"
 msgstr[0] "Hledej dopředu 1 vteřinu."
 msgstr[1] "Hledej dopředu %1 vteřin."
 
-#: ../../src/main/application.cpp:2907 ../../src/main/application.cpp:2911
+#: ../../src/main/application.cpp:2967 ../../src/main/application.cpp:2971
 msgid "Shift %21 Millisecond"
 msgid_plural "Shift %2%1 Milliseconds"
 msgstr[0] "Posuň %21 milisekundu"
 msgstr[1] "Posuň %2%1 milisekund"
 
-#: ../../src/main/application.cpp:2908 ../../src/main/application.cpp:2912
+#: ../../src/main/application.cpp:2968 ../../src/main/application.cpp:2972
 msgid "Shift selected lines %21 millisecond"
 msgid_plural "Shift selected lines %2%1 milliseconds"
 msgstr[0] "Posuň vybrané řádky %21 milisekundu"
@@ -2047,14 +2063,18 @@ msgid "Translator"
 msgstr "Překlad"
 
 #: ../../src/main/main.cpp:82
+msgid "code contributions, Arch Linux packaging, German translation"
+msgstr ""
+
+#: ../../src/main/main.cpp:84
 msgid "All people who have contributed and I have forgotten to mention"
 msgstr ""
 
-#: ../../src/main/main.cpp:100
+#: ../../src/main/main.cpp:102
 msgid "Open location as primary subtitle"
 msgstr "Otevři umístění jako primární titulky"
 
-#: ../../src/main/main.cpp:101
+#: ../../src/main/main.cpp:103
 msgid "Open location as translation subtitle"
 msgstr "Otevři umístění jako překlad"
 
@@ -2319,22 +2339,22 @@ msgid ""
 "Code %1: %3"
 msgstr ""
 
-#: ../../src/videoplayer/videoplayer.cpp:551
-msgid "File does not exist."
-msgstr ""
-
 #: ../../src/videoplayerplugins/gstreamer/gstreamerplayerbackend.cpp:350
-#: ../../src/videoplayerplugins/mpv/mpvbackend.cpp:232
+#: ../../src/videoplayerplugins/mpv/mpvbackend.cpp:231
 #, fuzzy
 msgid "Text Stream #%1"
 msgstr "Zvuková stopa #%1"
 
 #: ../../src/videoplayerplugins/gstreamer/gstreamerplayerbackend.cpp:386
-#: ../../src/videoplayerplugins/mplayer/mplayerplayerbackend.cpp:251
-#: ../../src/videoplayerplugins/mpv/mpvbackend.cpp:267
+#: ../../src/videoplayerplugins/mplayer/mplayerplayerbackend.cpp:250
+#: ../../src/videoplayerplugins/mpv/mpvbackend.cpp:266
 #: ../../src/videoplayerplugins/xine/xineplayerbackend.cpp:290
 msgid "Audio Stream #%1"
 msgstr "Zvuková stopa #%1"
+
+#: ../../src/videoplayer/videoplayer.cpp:552
+msgid "File does not exist."
+msgstr ""
 
 #: ../../src/widgets/simplerichtextedit.cpp:79
 msgid "Cut"
@@ -2385,7 +2405,7 @@ msgstr "Přidej slovník"
 msgid "No suggestions"
 msgstr "Žádné návrhy"
 
-#: ../../src/widgets/waveformwidget.cpp:117
+#: ../../src/widgets/waveformwidget.cpp:119
 msgid "Generating waveform"
 msgstr ""
 
@@ -2699,13 +2719,13 @@ msgid "Line Indicators"
 msgstr "Chyby na řádcích"
 
 #. i18n: file: ../../src/main/configs/waveformconfigwidget.ui:306
-#. i18n: ectx: property (text), widget (QLabel, label_11)
+#. i18n: ectx: property (text), widget (QLabel, label_31)
 #: rc.cpp:159
 msgid "Player position color:"
 msgstr ""
 
 #. i18n: file: ../../src/main/configs/waveformconfigwidget.ui:313
-#. i18n: ectx: property (text), widget (QLabel, label_12)
+#. i18n: ectx: property (text), widget (QLabel, label_32)
 #: rc.cpp:162
 msgid "Mouse indicator color:"
 msgstr ""
