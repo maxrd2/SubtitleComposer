@@ -52,7 +52,7 @@ main(int argc, char **argv)
 	KAboutData aboutData(
 		"subtitlecomposer",
 		i18n("Subtitle Composer"),
-		"0.6.3",
+		"0.6.4",
 		i18n("A KDE subtitle editor."),
 		KAboutLicense::GPL,
 		"&copy; 2007-2012 Sergio Pistone\n&copy; 2013-2016 Mladen Milinković",

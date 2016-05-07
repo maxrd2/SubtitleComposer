@@ -1,3 +1,10 @@
+Version 0.6.4
+ - ADD: WaveformWidget: context menu 
+ - MOD: Updated German translations - thanks @Martchus
+ - MOD: Updated Croatian translations - thanks @muzena
+ - FIX: Inserting subtitle line would corrupt subtitle indexes
+ - FIX: Display audio of WebM/FLV files in waveform - thanks @Martchus
+
 Version 0.6.3
  - ADD: WaveformWidget: customization settings page
  - ADD: Speech recognition with PocketSphinx
