@@ -242,9 +242,9 @@ SubtitleLine::index() const
 				break;
 			}
 		}
-//		qDebug() << "searched index";
+//		qDebug() << "searched index" << m_cachedIndex;
 	}
-//	qDebug() << "index" << m_index << "| text" << m_primaryText.string();
+//	qDebug() << "index" << m_cachedIndex << "| text" << m_primaryText.string();
 	return m_cachedIndex;
 }
 

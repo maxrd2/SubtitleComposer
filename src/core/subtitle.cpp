@@ -388,6 +388,9 @@ Subtitle::removeAllAnchors()
 void
 Subtitle::insertLine(SubtitleLine *line, int index)
 {
+	if(index > 0)
+		setLastValidCachedIndex(index - 1);
+
 	QList<SubtitleLine *> lines;
 	lines.append(line);
 	insertLines(lines, index);
@@ -1512,18 +1515,18 @@ Subtitle::setLastValidCachedIndex(int lastValidCachedIndex)
 
 	m_lastValidCachedIndex = lastValidCachedIndex;
 
-	/*
-	   qDebug() << "last valid cached index" << m_lastValidCachedIndex;
+/*
+	qDebug() << "last valid cached index" << m_lastValidCachedIndex;
 
-	   QStringList cacheIndexList, indexList;
-	   for ( int lineIndex = 0, linesCount = m_lines.count(); lineIndex < linesCount; ++lineIndex )
-	   cacheIndexList << QString::number( m_lines.at( lineIndex )->m_cachedIndex );
-	   qDebug() << "cached indexes:" << cacheIndexList.join( " " );
+	QStringList cacheIndexList, indexList;
+	for ( int lineIndex = 0, linesCount = m_lines.count(); lineIndex < linesCount; ++lineIndex )
+	cacheIndexList << QString::number( m_lines.at( lineIndex )->m_cachedIndex );
+	qDebug() << "cached indexes:" << cacheIndexList.join( " " );
 
-	   for ( int lineIndex = 0, linesCount = m_lines.count(); lineIndex < linesCount; ++lineIndex )
-	   indexList << QString::number( m_lines.at( lineIndex )->index() );
-	   qDebug() << "indexes:" << indexList.join( " " );
-	 */
+	for ( int lineIndex = 0, linesCount = m_lines.count(); lineIndex < linesCount; ++lineIndex )
+	indexList << QString::number( m_lines.at( lineIndex )->index() );
+	qDebug() << "indexes:" << indexList.join( " " );
+//*/
 }
 
 /// SUBTITLECOMPOSITEACTIONEXECUTOR
