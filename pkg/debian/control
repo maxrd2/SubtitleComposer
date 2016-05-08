@@ -14,7 +14,7 @@ Vcs-Git: git://anonscm.debian.org/pkg-kde/kde-extras/subtitlecomposer.git
 
 Package: subtitlecomposer
 Architecture: any
-Depends: kio, ${shlibs:Depends}, ${misc:Depends}, ${gstreamer:Depends} 
+Depends: kio, pocketsphinx, pocketsphinx-en-us, ${shlibs:Depends}, ${misc:Depends}, ${gstreamer:Depends} 
 Suggests: mplayer, mpv, ${xine-x:Depends}
 Description: Subtitles editor for KDE
  A text-based subtitles editor for KDE supporting basic operations (text,
