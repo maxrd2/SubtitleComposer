@@ -8,15 +8,15 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://github.com/maxrd2/subtitlecomposer/issues\n"
 "POT-Creation-Date: 2016-05-07 21:04+0200\n"
-"PO-Revision-Date: 2016-04-10 10:21+0200\n"
+"PO-Revision-Date: 2016-05-08 15:33+0200\n"
 "Last-Translator: gogo <trebelnik2@gmail.com>\n"
 "Language-Team: Croatian <hr@hr.org>\n"
 "Language: hr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=4; plural=n==1 ? 3 : n%10==1 && n%100!=11 ? 0 : n"
-"%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
+"Plural-Forms: nplurals=4; plural=n==1 ? 3 : n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
+"%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
 "X-Generator: Poedit 1.8.7.1\n"
 
 #: ../../src/common/languagecode.cpp:420
@@ -330,14 +330,12 @@ msgid "Has capital letter after line continuation ellipsis in primary text."
 msgstr "Ima veliko slovo nakon crtice za novi redak u glavnom tekstu."
 
 #: ../../src/core/subtitleline.cpp:127
-msgid ""
-"Has capital letter after line continuation ellipsis in translation text."
+msgid "Has capital letter after line continuation ellipsis in translation text."
 msgstr "Ima veliko slovo nakon crtice za novi redak u prevedenom tekstu."
 
 #: ../../src/core/subtitleline.cpp:128
 msgid "Has too long duration per character in primary text (1 msec/char)."
-msgid_plural ""
-"Has too long duration per character in primary text (%1 msecs/char)."
+msgid_plural "Has too long duration per character in primary text (%1 msecs/char)."
 msgstr[0] "Ima predugo trajanje po znaku u glavnom tekstu (%1 ms/znaku)."
 msgstr[1] "Ima predugo trajanje po znaku u glavnom tekstu (%1 ms/znaku)."
 msgstr[2] "Ima predugo trajanje po znaku u glavnom tekstu (%1 ms/znaku)."
@@ -354,8 +352,7 @@ msgstr[3] "Ima predugo trajanje po znaku u prevedenom tekstu (1 ms/znaku)."
 
 #: ../../src/core/subtitleline.cpp:130
 msgid "Has too short duration per character in primary text (1 msec/char)."
-msgid_plural ""
-"Has too short duration per character in primary text (%1 msecs/char)."
+msgid_plural "Has too short duration per character in primary text (%1 msecs/char)."
 msgstr[0] "Ima prekratko trajanje po znaku u glavnom tekstu (%1 ms/znaku)."
 msgstr[1] "Ima prekratko trajanje po znaku u glavnom tekstu (%1 ms/znaku)."
 msgstr[2] "Ima prekratko trajanje po znaku u glavnom tekstu (%1 ms/znaku)."
@@ -839,8 +836,7 @@ msgstr "Postavi automatska trajanja..."
 
 #: ../../src/main/application.cpp:845
 msgid "Set lines durations based on amount of letters, words and line breaks"
-msgstr ""
-"Postavi trajanje redaka na osnovi broja slova, riječi i prijeloma redaka"
+msgstr "Postavi trajanje redaka na osnovi broja slova, riječi i prijeloma redaka"
 
 #: ../../src/main/application.cpp:851
 msgid "Maximize Durations..."
@@ -896,8 +892,7 @@ msgstr "Promijeni slova..."
 
 #: ../../src/main/application.cpp:894
 msgid "Change lines text to upper, lower, title or sentence case"
-msgstr ""
-"Promijeni u tekstu redaka velika ili mala slova, naslov ili duljinu rečenice"
+msgstr "Promijeni u tekstu redaka velika ili mala slova, naslov ili duljinu rečenice"
 
 #: ../../src/main/application.cpp:900 ../../src/main/lineswidget.cpp:1078
 msgid "Fix Punctuation..."
@@ -1094,11 +1089,10 @@ msgid "Shift to Video Position"
 msgstr "Pomakni položaj videa"
 
 #: ../../src/main/application.cpp:1103
-msgid ""
-"Set current line show time to video position by equally shifting all lines"
+msgid "Set current line show time to video position by equally shifting all lines"
 msgstr ""
-"Postavi vrijeme prikaza trenutnog redka na položaj videa jednakim pomakom "
-"svih redaka"
+"Postavi vrijeme prikaza trenutnog redka na položaj videa jednakim pomakom svih "
+"redaka"
 
 #: ../../src/main/application.cpp:1110
 msgid "Adjust to Video Position (Anchor Last Line)"
@@ -1106,11 +1100,11 @@ msgstr "Prilagodi na položaj videa (usidri zadnji redak)"
 
 #: ../../src/main/application.cpp:1111
 msgid ""
-"Set current line to video position by fixing the last line and linearly "
-"adjusting the other ones"
+"Set current line to video position by fixing the last line and linearly adjusting "
+"the other ones"
 msgstr ""
-"Postavi trenutni redak na položaj videa fiksirajući posljednji redak i "
-"linearno podešavajući ostale"
+"Postavi trenutni redak na položaj videa fiksirajući posljednji redak i linearno "
+"podešavajući ostale"
 
 #: ../../src/main/application.cpp:1118
 msgid "Adjust to Video Position (Anchor First Line)"
@@ -1118,8 +1112,8 @@ msgstr "Prilagodi na položaj videa (usidri prvi redak)"
 
 #: ../../src/main/application.cpp:1119
 msgid ""
-"Set current line to video position by fixing the first line and linearly "
-"adjusting the other ones"
+"Set current line to video position by fixing the first line and linearly adjusting "
+"the other ones"
 msgstr ""
 "Postavi trenutni redak na položaj videa fiksirajući prvi redak i linearno "
 "podešavajući ostale"
@@ -1130,12 +1124,12 @@ msgstr "Uklj/Isklj usidrenje redka"
 
 #: ../../src/main/application.cpp:1127
 msgid ""
-"(Un)Anchor current line's show time to timeline (Editing anchored line's "
-"show time will stretch/compact the timeline between adjanced anchors)"
+"(Un)Anchor current line's show time to timeline (Editing anchored line's show time "
+"will stretch/compact the timeline between adjanced anchors)"
 msgstr ""
 "Dodaj /Ukloni usidrenje vremena početka prikaza trenutnog redka u vremenskoj "
-"liniji (Uređivanje usidrenih vremena početka prikaza redaka će povećati/"
-"smanjiti vremensku liniju između zadanih usidrenja)"
+"liniji (Uređivanje usidrenih vremena početka prikaza redaka će povećati/smanjiti "
+"vremensku liniju između zadanih usidrenja)"
 
 #: ../../src/main/application.cpp:1134
 msgid "Remove All Anchors"
@@ -1144,8 +1138,8 @@ msgstr "Ukloni sva usidrenja"
 #: ../../src/main/application.cpp:1135
 msgid "Unanchor show time from the timeline on all anchored lines"
 msgstr ""
-"Ukloni usidrenje vremena početka prikaza iz vremenske linije sa svih "
-"usidrenih redaka"
+"Ukloni usidrenje vremena početka prikaza iz vremenske linije sa svih usidrenih "
+"redaka"
 
 #: ../../src/main/application.cpp:1143
 msgctxt "@action:inmenu Manage user scripts"
@@ -1171,32 +1165,31 @@ msgstr "Automatsko pomicanje valnog prikaza zvuka"
 #: ../../src/main/application.cpp:1167
 msgid "Waveform display will automatically scroll to video position"
 msgstr ""
-"Valni prikaz zvuka će se automatski pomicati u skladu s položajem video "
-"zapisa"
+"Valni prikaz zvuka će se automatski pomicati u skladu s položajem video zapisa"
 
 #: ../../src/main/application.cpp:1174
-#, fuzzy
 msgid "Set current line show time to waveform mouse position"
-msgstr "Postavi vrijeme prikaza trenutnog redka prema položaju videa"
+msgstr ""
+"Postavi vrijeme prikaza trenutnog redka prema položaju miša u valnom prikazu zvuka"
 
 #: ../../src/main/application.cpp:1182
-#, fuzzy
 msgid "Set current line hide time to waveform mouse position"
-msgstr "Postavi vrijeme nestajanja trenutnog redka prema položaju videa"
+msgstr ""
+"Postavi vrijeme nestajanja trenutnog redka prema položaju miša u valnom prikazu "
+"zvuka"
 
 #: ../../src/main/application.cpp:1189
-#, fuzzy
 msgid "Insert empty line at waveform mouse position(s)"
-msgstr "Umetni prazani redak nakon trenutnog"
+msgstr "Umetni prazani redak na položaj miša u valnom prikazu zvuka"
 
 #: ../../src/main/application.cpp:1282
 msgid ""
-"The requested action would make the subtitle and its translation share the "
-"same file, possibly resulting in loss of information when saving.\n"
+"The requested action would make the subtitle and its translation share the same "
+"file, possibly resulting in loss of information when saving.\n"
 "Are you sure you want to continue?"
 msgstr ""
-"Tražena radnja će učiniti da podnaslov i njegov prijevod dijele istu "
-"datoteku, što može dovesti do gubitka podataka prilikom spremanja.\n"
+"Tražena radnja će učiniti da podnaslov i njegov prijevod dijele istu datoteku, što "
+"može dovesti do gubitka podataka prilikom spremanja.\n"
 "Želite li nastaviti?"
 
 #: ../../src/main/application.cpp:1282
@@ -1206,8 +1199,8 @@ msgstr "Sukob datoteka podnaslova"
 #: ../../src/main/application.cpp:1390 ../../src/main/application.cpp:1418
 #: ../../src/main/application.cpp:1654 ../../src/main/application.cpp:1692
 msgid ""
-"<qt>Could not parse the subtitle file.<br/>This may have been caused by "
-"usage of the wrong encoding.</qt>"
+"<qt>Could not parse the subtitle file.<br/>This may have been caused by usage of "
+"the wrong encoding.</qt>"
 msgstr ""
 "<qt>Nemoguća obrada datoteke podnaslova.<br/>To može uzrokovati korištenje "
 "pogrešnog kôdiranja.</qt>"
@@ -1338,11 +1331,11 @@ msgstr "Prijevod pomoćnog teksta (%1 u %2)..."
 
 #: ../../src/main/application.cpp:2494
 msgid ""
-"Unable to perform texts synchronization (sent and received lines count do "
-"not match)."
+"Unable to perform texts synchronization (sent and received lines count do not "
+"match)."
 msgstr ""
-"Nemoguće izvođenje usklađivanja tekstova (broj poslanih i primljenih redaka "
-"se ne podudara)."
+"Nemoguće izvođenje usklađivanja tekstova (broj poslanih i primljenih redaka se ne "
+"podudara)."
 
 #: ../../src/main/application.cpp:2498
 msgid "Translate Primary Text"
@@ -2080,7 +2073,7 @@ msgstr "Prevoditelj"
 
 #: ../../src/main/main.cpp:82
 msgid "code contributions, Arch Linux packaging, German translation"
-msgstr ""
+msgstr "doprinos kôdu, Arch Linux pakiranje, nJemački prijevod"
 
 #: ../../src/main/main.cpp:84
 msgid "All people who have contributed and I have forgotten to mention"
@@ -3421,8 +3414,7 @@ msgstr "Pogon zvuka:"
 #~ msgstr "Prekini izdvajanje zvučnog zapisa videa"
 
 #~ msgid "<qt>There was an error opening file %1 for audio extraction.</qt>"
-#~ msgstr ""
-#~ "<qt>Dogodila se greška otvaranja datoteke %1 pri izdvajanju zvuka.</qt>"
+#~ msgstr "<qt>Dogodila se greška otvaranja datoteke %1 pri izdvajanju zvuka.</qt>"
 
 #~ msgid "Unexpected error when extracting audio."
 #~ msgstr "Neočekivana greška tijekom izdvajanja zvuka."
@@ -3451,8 +3443,8 @@ msgstr "Pogon zvuka:"
 #~ msgstr "Opčenito"
 
 #~ msgid ""
-#~ "The encoding specified here will be used to load subtitles when "
-#~ "autodetection fails and will also be suggested when saving new subtitles."
+#~ "The encoding specified here will be used to load subtitles when autodetection "
+#~ "fails and will also be suggested when saving new subtitles."
 #~ msgstr ""
 #~ "Kôdiranje određeno ovdje će se koristiti pri učitavanju podnaslova kada "
 #~ "automatsko otkrivanje ne uspije i isto tako će biti predloženo prilikom "
