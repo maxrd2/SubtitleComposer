@@ -2537,7 +2537,7 @@ Application::translate()
 void
 Application::openVideo(const QUrl &url)
 {
-	if(url.scheme() != "file")
+	if(url.scheme() != QStringLiteral("file"))
 		return;
 
 	m_player->closeFile();
@@ -2895,7 +2895,7 @@ Application::onLinkCurrentLineToVideoToggled(bool value)
 void
 Application::onPlayerFileOpened(const QString &filePath)
 {
-	m_recentVideosAction->addUrl(QUrl(filePath));
+	m_recentVideosAction->addUrl(QUrl::fromLocalFile(filePath));
 }
 
 void
