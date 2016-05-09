@@ -388,9 +388,6 @@ Subtitle::removeAllAnchors()
 void
 Subtitle::insertLine(SubtitleLine *line, int index)
 {
-	if(index > 0)
-		setLastValidCachedIndex(index - 1);
-
 	QList<SubtitleLine *> lines;
 	lines.append(line);
 	insertLines(lines, index);
@@ -403,6 +400,9 @@ Subtitle::insertLines(const QList<SubtitleLine *> &lines, int index)
 
 	if(index < 0)
 		index = m_lines.count();
+
+	if(m_lastValidCachedIndex >= index)
+		setLastValidCachedIndex(index - 1);
 
 	processAction(new InsertLinesAction(*this, lines, index));
 }

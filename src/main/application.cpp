@@ -2759,15 +2759,24 @@ Application::insertLineFromWaveform()
 	const Time timeShow = m_mainWindow->m_waveformWidget->rightMousePressTime();
 	const Time timeHide = m_mainWindow->m_waveformWidget->rightMouseReleaseTime();
 	SubtitleLine *sub = nullptr;
+	int insertIndex;
 
 	foreach(sub, m_subtitle->allLines()) {
 		if(sub->showTime() > timeShow)
 			break;
 	}
 
+	if(!sub) {
+		insertIndex = 0;
+	} else {
+		insertIndex = sub->index();
+		if(sub->showTime() <= timeShow)
+			insertIndex++;
+	}
+
 	SubtitleLine *newLine = new SubtitleLine();
 	newLine->setTimes(timeShow, timeHide.toMillis() - timeShow.toMillis() > 500. ? timeHide : timeShow + 500.);
-	m_subtitle->insertLine(newLine, sub ? sub->index() : 0);
+	m_subtitle->insertLine(newLine, insertIndex);
 	m_linesWidget->setCurrentLine(newLine, true);
 }
 
