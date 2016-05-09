@@ -20,6 +20,7 @@
 
 #include "lineswidget.h"
 #include "application.h"
+#include "actions/useractionnames.h"
 #include "dialogs/actionwithtargetdialog.h"
 #include "profiler.h"
 
@@ -1127,6 +1128,9 @@ LinesWidget::contextMenuEvent(QContextMenuEvent *e)
 	menu.addSeparator();
 	menu.addAction(i18n("Join Lines"), app, SLOT(joinSelectedLines()));
 	menu.addAction(i18n("Split Lines"), app, SLOT(splitSelectedLines()));
+	menu.addSeparator();
+	menu.addAction(app->action(ACT_ANCHOR_TOGGLE));
+	menu.addAction(app->action(ACT_ANCHOR_REMOVE_ALL));
 	menu.addSeparator();
 	menu.addMenu(&textsMenu);
 	menu.addMenu(&stylesMenu);
