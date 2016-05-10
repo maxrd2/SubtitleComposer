@@ -2058,11 +2058,11 @@ msgstr "trebelnik2@gmail.com"
 
 #: ../../src/main/main.cpp:68
 msgid "Croatian Translator"
-msgstr "Hrvatski Prevoditelj"
+msgstr "Hrvatski prevoditelj"
 
 #: ../../src/main/main.cpp:69
 msgid "Bulgarian Translator"
-msgstr "Bugarski Prevoditelj"
+msgstr "Bugarski prevoditelj"
 
 #: ../../src/main/main.cpp:70 ../../src/main/main.cpp:71 ../../src/main/main.cpp:72
 #: ../../src/main/main.cpp:73 ../../src/main/main.cpp:74 ../../src/main/main.cpp:75
@@ -2073,7 +2073,7 @@ msgstr "Prevoditelj"
 
 #: ../../src/main/main.cpp:82
 msgid "code contributions, Arch Linux packaging, German translation"
-msgstr "doprinos kôdu, Arch Linux pakiranje, nJemački prijevod"
+msgstr "doprinos kôdu, Arch Linux pakiranje, njemački prijevod"
 
 #: ../../src/main/main.cpp:84
 msgid "All people who have contributed and I have forgotten to mention"
