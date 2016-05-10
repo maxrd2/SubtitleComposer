@@ -24,9 +24,11 @@ makedepends=('extra-cmake-modules')
 # building of plugins for MPV and Xine player backends.
 makedepends+=('xine-lib')
 makedepends+=('mpv')
+makedepends+=('pocketsphinx')
 optdepends=('mpv: for MPV backend'
             'mplayer: for MPlayer backend'
             'xine-lib: for Xine backend'
+            'pocketsphinx: for speech recognition'
             'ruby: for scripting'
             'python: for scripting')
 source=("https://github.com/maxrd2/${pkgname}/archive/v${pkgver}.tar.gz")
