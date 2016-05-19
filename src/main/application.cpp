@@ -1008,6 +1008,14 @@ Application::setupActions()
 	actionCollection->addAction(ACT_SEEK_TO_PREVIOUS_LINE, seekToPrevLineAction);
 	actionManager->addAction(seekToPrevLineAction, UserAction::SubHasLine | UserAction::VideoPlaying);
 
+	QAction *playCurrentLineAndPauseAction = new QAction(actionCollection);
+	playCurrentLineAndPauseAction->setText(i18n("Play Current Line and Pause"));
+	playCurrentLineAndPauseAction->setStatusTip(i18n("Seek to start of current subtitle line show time, play it and then pause"));
+	actionCollection->setDefaultShortcut(playCurrentLineAndPauseAction, QKeySequence("Ctrl+Shift+Left"));
+	connect(playCurrentLineAndPauseAction, SIGNAL(triggered()), this, SLOT(playOnlyCurrentLine()));
+	actionCollection->addAction(ACT_PLAY_CURRENT_LINE_AND_PAUSE, playCurrentLineAndPauseAction);
+	actionManager->addAction(playCurrentLineAndPauseAction, UserAction::SubHasLine | UserAction::VideoPlaying);
+
 	QAction *seekToNextLineAction = new QAction(actionCollection);
 	seekToNextLineAction->setIcon(QIcon::fromTheme("media-skip-forward"));
 	seekToNextLineAction->setText(i18n("Jump to Next Line"));
@@ -2599,10 +2607,25 @@ Application::seekToPrevLine()
 	if(overlayLine) {
 		SubtitleLine *prevLine = overlayLine->prevLine();
 		if(prevLine) {
-			m_player->seek((prevLine->showTime().toMillis()) / 1000.0, true);
+			m_player->seek(prevLine->showTime().toSeconds() - SCConfig::jumpLineOffset() / 1000.0, true);
 			m_linesWidget->setCurrentLine(prevLine);
 			m_curLineWidget->setCurrentLine(prevLine);
 		}
+	}
+}
+
+void
+Application::playOnlyCurrentLine()
+{
+	int selectedIndex = m_linesWidget->firstSelectedIndex();
+	if(selectedIndex < 0)
+		return;
+	SubtitleLine *currentLine = m_subtitle->line(selectedIndex);
+	if(currentLine) {
+		if(!m_player->isPlaying())
+			m_player->play();
+		m_player->seek(currentLine->showTime().toSeconds() - SCConfig::jumpLineOffset() / 1000.0, true);
+		m_player->pauseAt(currentLine->hideTime().toSeconds());
 	}
 }
 
@@ -2613,7 +2636,7 @@ Application::seekToNextLine()
 	if(overlayLine) {
 		SubtitleLine *nextLine = overlayLine->nextLine();
 		if(nextLine) {
-			m_player->seek((nextLine->showTime().toMillis()) / 1000.0, true);
+			m_player->seek(nextLine->showTime().toSeconds() - SCConfig::jumpLineOffset() / 1000.0, true);
 			m_linesWidget->setCurrentLine(nextLine);
 			m_curLineWidget->setCurrentLine(nextLine);
 		}
@@ -2858,7 +2881,7 @@ Application::onHighlightLine(SubtitleLine *line, bool primary, int firstIndex, i
 		if(m_lastFoundLine != line) {
 			m_lastFoundLine = line;
 
-			m_player->seek(line->showTime().toMillis() / 1000.0, true);
+			m_player->seek(line->showTime().toSeconds(), true);
 		}
 	} else {
 		m_linesWidget->setCurrentLine(line, true);

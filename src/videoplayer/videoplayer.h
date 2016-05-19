@@ -141,6 +141,7 @@ public slots:
 
 	bool play();
 	bool pause();
+	void pauseAt(double seconds);
 	bool togglePlayPaused();
 	bool seek(double seconds, bool accurate);
 	bool stop();
@@ -245,6 +246,7 @@ private:
 
 	double m_position;
 	double m_savedPosition;
+	double m_pausePosition;
 	double m_length;
 	double m_framesPerSecond;
 	double m_minPositionDelta;

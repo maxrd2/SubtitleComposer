@@ -14,6 +14,10 @@
 			<label>Seek Offset On Double Click</label>
 			<default>1500</default>
 		</entry>
+		<entry name="JumpLineOffset" type="Int">
+			<label>Jump to prev/next line offset</label>
+			<default>0</default>
+		</entry>
 		<entry name="UnpauseOnDoubleClick" type="Bool">
 			<label>Unpause On Double Click</label>
 			<default>false</default>

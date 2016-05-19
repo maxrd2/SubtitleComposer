@@ -125,6 +125,7 @@
 			<Action name="seek_forwards" />
 			<Separator />
 			<Action name="seek_to_previous_line" />
+			<Action name="play_current_line_and_pause" />
 			<Action name="seek_to_next_line" />
 			<Separator />
 			<Action name="current_line_follows_video" />

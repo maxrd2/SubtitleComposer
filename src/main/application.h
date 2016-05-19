@@ -203,6 +203,7 @@ public slots:
 
 	void seekBackwards();
 	void seekForwards();
+	void playOnlyCurrentLine();
 	void seekToPrevLine();
 	void seekToNextLine();
 

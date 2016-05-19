@@ -89,6 +89,7 @@ VideoPlayer::VideoPlayer() :
 	m_filePath(),
 	m_position(-1.0),
 	m_savedPosition(-1.0),
+	m_pausePosition(86400.0),
 	m_length(-1.0),
 	m_framesPerSecond(-1.0),
 	m_minPositionDelta(DEFAULT_MIN_POSITION_DELTA),
@@ -392,6 +393,7 @@ VideoPlayer::resetState()
 
 	m_position = -1.0;
 	m_savedPosition = -1.0;
+	m_pausePosition = 86400.0;
 	m_length = -1.0;
 	m_framesPerSecond = -1.0;
 	m_minPositionDelta = DEFAULT_MIN_POSITION_DELTA;
@@ -419,11 +421,15 @@ VideoPlayer::setPosition(double position)
 		if(m_position <= 0 || m_minPositionDelta <= 0.0) {
 			m_position = position;
 			emit positionChanged(position);
+			if(m_position > m_pausePosition)
+				pause();
 		} else {
 			double positionDelta = m_position - position;
 			if(positionDelta >= m_minPositionDelta || -positionDelta >= m_minPositionDelta) {
 				m_position = position;
 				emit positionChanged(position);
+				if(m_position > m_pausePosition)
+					pause();
 			}
 		}
 	}
@@ -611,6 +617,8 @@ VideoPlayer::play()
 	if(m_state <= VideoPlayer::Opening || m_state == VideoPlayer::Playing)
 		return false;
 
+	m_pausePosition = 86400.0;
+
 	if(!activeBackend()->play()) {
 		resetState();
 		emit playbacqCritical();
@@ -632,6 +640,13 @@ VideoPlayer::pause()
 
 	return true;
 }
+
+void
+VideoPlayer::pauseAt(double seconds)
+{
+	m_pausePosition = seconds;
+}
+
 
 bool
 VideoPlayer::togglePlayPaused()

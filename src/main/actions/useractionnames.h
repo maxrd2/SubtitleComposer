@@ -92,6 +92,7 @@
 #define ACT_SEEK_FORWARDS "seek_forwards"
 #define ACT_SEEK_TO_NEXT_LINE "seek_to_next_line"
 #define ACT_SEEK_TO_PREVIOUS_LINE "seek_to_previous_line"
+#define ACT_PLAY_CURRENT_LINE_AND_PAUSE "play_current_line_and_pause"
 #define ACT_SET_CURRENT_LINE_SHOW_TIME "set_current_line_show_time"
 #define ACT_SET_CURRENT_LINE_HIDE_TIME "set_current_line_hide_time"
 #define ACT_CURRENT_LINE_FOLLOWS_VIDEO "current_line_follows_video"
