@@ -48,6 +48,10 @@ PocketSphinxPlugin::init()
 				 "-lm", POCKETSPHINX_MODELDIR "/en-us/en-us.lm.bin",
 				 "-dict", POCKETSPHINX_MODELDIR "/en-us/cmudict-en-us.dict",
 //				 "-frate", "100",
+				 "-vad_postspeech", "75", //  50 - Num of silence frames to keep after from speech to silence.
+				 "-vad_prespeech", "30", // 20 - Num of speech frames to keep before silence to speech.
+				 "-vad_startspeech", "10", // 10 - Num of speech frames to trigger vad from silence to speech.
+//				 "-vad_threshold", "2.0", // 2.0 - Threshold for decision between noise and silence frames. Log-ratio between signal level and noise level.
 				 NULL);
 	if(m_psConfig == NULL) {
 		qWarning() << "Failed to create PocketSphinx config object";
