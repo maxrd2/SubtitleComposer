@@ -142,6 +142,7 @@ public slots:
 	bool play();
 	bool pause();
 	void pauseAt(double seconds);
+	void pauseAtClear();
 	bool togglePlayPaused();
 	bool seek(double seconds, bool accurate);
 	bool stop();

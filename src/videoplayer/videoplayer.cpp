@@ -393,7 +393,7 @@ VideoPlayer::resetState()
 
 	m_position = -1.0;
 	m_savedPosition = -1.0;
-	m_pausePosition = 86400.0;
+	pauseAtClear();
 	m_length = -1.0;
 	m_framesPerSecond = -1.0;
 	m_minPositionDelta = DEFAULT_MIN_POSITION_DELTA;
@@ -617,7 +617,7 @@ VideoPlayer::play()
 	if(m_state <= VideoPlayer::Opening || m_state == VideoPlayer::Playing)
 		return false;
 
-	m_pausePosition = 86400.0;
+	pauseAtClear();
 
 	if(!activeBackend()->play()) {
 		resetState();
@@ -633,6 +633,8 @@ VideoPlayer::pause()
 	if(m_state <= VideoPlayer::Opening || m_state == VideoPlayer::Paused)
 		return false;
 
+	pauseAtClear();
+
 	if(!activeBackend()->pause()) {
 		resetState();
 		emit playbacqCritical();
@@ -647,12 +649,19 @@ VideoPlayer::pauseAt(double seconds)
 	m_pausePosition = seconds;
 }
 
+void
+VideoPlayer::pauseAtClear()
+{
+	m_pausePosition = 86400.0;
+}
 
 bool
 VideoPlayer::togglePlayPaused()
 {
 	if(m_state <= VideoPlayer::Opening)
 		return false;
+
+	pauseAtClear();
 
 	bool hadError;
 	if(m_state == VideoPlayer::Playing)
@@ -677,6 +686,8 @@ VideoPlayer::seek(double seconds, bool accurate)
 	if(seconds == m_position)
 		return true;
 
+	pauseAtClear();
+
 	if(!activeBackend()->seek(seconds, accurate)) {
 		resetState();
 		emit playbacqCritical();
@@ -699,6 +710,8 @@ VideoPlayer::stop()
 {
 	if(m_state <= VideoPlayer::Opening || m_state == VideoPlayer::Ready)
 		return false;
+
+	pauseAtClear();
 
 	if(!activeBackend()->stop()) {
 		resetState();
