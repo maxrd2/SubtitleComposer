@@ -20,10 +20,6 @@
  *   Boston, MA 02110-1301, USA.                                           *
  ***************************************************************************/
 
-#ifdef HAVE_CONFIG_H
-#include <config.h>
-#endif
-
 #include "../inputformat.h"
 
 #include <QRegExp>
@@ -47,7 +43,7 @@ protected:
 
 			Time showTime(m_regExp.cap(1).toInt(), m_regExp.cap(2).toInt(), m_regExp.cap(3).toInt(), 0);
 
-			QString text(m_regExp.cap(4).replace("|", "\n").trimmed());
+			QString text(m_regExp.cap(4).replace('|', '\n').trimmed());
 
 			// search hideTime
 			if(m_regExp.indexIn(data, offset) == -1)
@@ -60,14 +56,14 @@ protected:
 			offset += m_regExp.matchedLength();
 
 			readLines++;
-		} while(m_regExp.indexIn(data, offset) != -1);          // search next line's showTime
+		} while(m_regExp.indexIn(data, offset) != -1); // search next line's showTime
 
 		return readLines > 0;
 	}
 
 	SubViewer1InputFormat() :
-		InputFormat("SubViewer 1.0", QStringList("sub")),
-		m_regExp("\\[([0-2][0-9]):([0-5][0-9]):([0-5][0-9])\\]\n([^\n]*)\n")
+		InputFormat(QStringLiteral("SubViewer 1.0"), QStringList(QStringLiteral("sub"))),
+		m_regExp(QStringLiteral("\\[([0-2][0-9]):([0-5][0-9]):([0-5][0-9])\\]\n([^\n]*)\n"))
 	{}
 
 	mutable QRegExp m_regExp;

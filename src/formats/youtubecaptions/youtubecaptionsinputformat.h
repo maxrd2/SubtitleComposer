@@ -20,10 +20,6 @@
  *   Boston, MA 02110-1301, USA.                                           *
  ***************************************************************************/
 
-#ifdef HAVE_CONFIG_H
-#include <config.h>
-#endif
-
 #include "../inputformat.h"
 
 #include <QRegExp>
@@ -49,11 +45,11 @@ protected:
 
 			offset += m_regExp.matchedLength();
 
-			QString text(data.mid(offset, (unsigned)m_regExp.indexIn(data, offset) - offset));
+			QString text(data.mid(offset, m_regExp.indexIn(data, offset) - offset));
 
 			offset += text.length();
 
-			// TODO does the format actually supports styled text?
+			// TODO does the format actually support styled text?
 			// if so, does it use standard HTML style tags?
 			SString stext;
 			stext.setRichString(text.trimmed());
@@ -67,8 +63,8 @@ protected:
 	}
 
 	YouTubeCaptionsInputFormat() :
-		InputFormat("YouTube Captions", QStringList("sbv")),
-		m_regExp("[\\d]+\n([0-2][0-9]):([0-5][0-9]):([0-5][0-9])[,\\.]([0-9][0-9][0-9]),([0-2][0-9]):([0-5][0-9]):([0-5][0-9])[,\\.]([0-9][0-9][0-9])\n")
+		InputFormat(QStringLiteral("YouTube Captions"), QStringList(QStringLiteral("sbv"))),
+		m_regExp(QStringLiteral("[\\d]+\n([0-2][0-9]):([0-5][0-9]):([0-5][0-9])[,\\.]([0-9][0-9][0-9]),([0-2][0-9]):([0-5][0-9]):([0-5][0-9])[,\\.]([0-9][0-9][0-9])\n"))
 	{}
 
 	mutable QRegExp m_regExp;

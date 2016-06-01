@@ -20,10 +20,6 @@
  *   Boston, MA 02110-1301, USA.                                           *
  ***************************************************************************/
 
-#ifdef HAVE_CONFIG_H
-#include <config.h>
-#endif
-
 #include "../core/formatdata.h"
 #include "../core/subtitle.h"
 #include "../core/subtitleline.h"
@@ -64,10 +60,10 @@ public:
 
 	bool knowsExtension(const QString &extension) const
 	{
-		QString ext = extension.toLower();
-		for(QStringList::ConstIterator it = m_extensions.begin(), end = m_extensions.end(); it != end; ++it) {
-			if(*it == ext && *it != "*")
+		for(const QString &knownExtension : m_extensions) {
+			if(knownExtension != QChar('*') && knownExtension.compare(extension, Qt::CaseInsensitive) == 0) {
 				return true;
+			}
 		}
 		return false;
 	}
@@ -81,7 +77,7 @@ protected:
 	FormatData * formatData(const Subtitle &subtitle) const
 	{
 		FormatData *formatData = subtitle.formatData();
-		return formatData && formatData->formatName() == m_name ? formatData : 0;
+		return formatData && formatData->formatName() == m_name ? formatData : nullptr;
 	}
 
 	void setFormatData(Subtitle &subtitle, FormatData *formatData) const
@@ -97,7 +93,7 @@ protected:
 	FormatData * formatData(const SubtitleLine *line) const
 	{
 		FormatData *formatData = line->formatData();
-		return formatData && formatData->formatName() == m_name ? formatData : 0;
+		return formatData && formatData->formatName() == m_name ? formatData : nullptr;
 	}
 
 	void setFormatData(SubtitleLine *line, FormatData *formatData) const

@@ -20,10 +20,6 @@
  *   Boston, MA 02110-1301, USA.                                           *
  ***************************************************************************/
 
-#ifdef HAVE_CONFIG_H
-#include <config.h>
-#endif
-
 #include "../inputformat.h"
 
 #include <QRegExp>
@@ -44,12 +40,12 @@ protected:
 			return false;
 
 		Time previousShowTime(m_regExp.cap(1).toInt(), m_regExp.cap(2).toInt(), m_regExp.cap(3).toInt(), 0);
-		QString previousText(m_regExp.cap(4).replace("|", "\n").trimmed());
+		QString previousText(m_regExp.cap(4).replace('|', '\n').trimmed());
 
 		int offset = m_regExp.matchedLength();
 		for(; m_regExp.indexIn(data, offset) != -1; offset += m_regExp.matchedLength()) {
 			Time showTime(m_regExp.cap(1).toInt(), m_regExp.cap(2).toInt(), m_regExp.cap(3).toInt(), 0);
-			QString text(m_regExp.cap(4).replace("|", "\n").trimmed());
+			QString text(m_regExp.cap(4).replace('|', '\n').trimmed());
 
 			// To compensate for the format deficiencies, Subtitle Composer writes empty lines
 			// indicating that way the line hide time. We do the same.

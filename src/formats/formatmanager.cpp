@@ -50,7 +50,12 @@
 #include <KCharsets>
 #include <QUrl>
 
-#include <unicode/ucsdet.h>
+#ifdef HAVE_CONFIG_H
+# include <config.h>
+# ifdef HAVE_ICU
+#  include <unicode/ucsdet.h>
+# endif
+#endif
 
 using namespace SubtitleComposer;
 
@@ -175,33 +180,33 @@ FormatManager::readSubtitle(Subtitle &subtitle, bool primary, const QUrl &url, Q
 		ucsdet_close(csd);
 	}
 #endif
-	if(*codec) {
-		QTextStream textStream(byteData);
-		textStream.setCodec(*codec);
-		stringData = textStream.readAll();
-	} else {
-		// FIXME: ?
+	if(!*codec) {
 		KEncodingProber prober(KEncodingProber::Universal);
 		prober.feed(byteData);
 		bool encodingFound;
 		*codec = KCharsets::charsets()->codecForName(prober.encoding(), encodingFound);
 	}
+	if(*codec) {
+		QTextStream textStream(byteData);
+		textStream.setCodec(*codec);
+		stringData = textStream.readAll();
+	}
 
 	if(newLine) {
-		if(stringData.indexOf("\r\n") != -1)
+		if(stringData.indexOf(QLatin1String("\r\n")) != -1)
 			*newLine = Format::Windows;
-		else if(stringData.indexOf("\r") != -1)
+		else if(stringData.indexOf('\r') != -1)
 			*newLine = Format::Macintosh;
-		else if(stringData.indexOf("\n") != -1)
+		else if(stringData.indexOf('\n') != -1)
 			*newLine = Format::UNIX;
 		else
 			*newLine = Format::CurrentOS;
 	}
 
-	stringData.replace("\r\n", "\n");
-	stringData.replace("\r", "\n");
+	stringData.replace(QLatin1String("\r\n"), QLatin1String("\n"));
+	stringData.replace('\r', '\n');
 
-	QString extension = QFileInfo(url.path()).suffix();
+	const QString extension = QFileInfo(url.path()).suffix();
 
 	// attempt to parse subtitles based on extension information first
 	for(QMap<QString, InputFormat *>::ConstIterator it = m_inputFormats.begin(), end = m_inputFormats.end(); it != end; ++it) {
@@ -237,13 +242,13 @@ FormatManager::hasOutput(const QString &name) const
 const OutputFormat *
 FormatManager::output(const QString &name) const
 {
-	return m_outputFormats.contains(name) ? m_outputFormats[name] : 0;
+	return m_outputFormats.contains(name) ? m_outputFormats[name] : nullptr;
 }
 
 const OutputFormat *
 FormatManager::defaultOutput() const
 {
-	return output("SubRip");
+	return output(QStringLiteral("SubRip"));
 }
 
 QStringList
@@ -275,9 +280,9 @@ FormatManager::writeSubtitle(const Subtitle &subtitle, bool primary, const QUrl 
 
 	QString data = format->writeSubtitle(subtitle, primary);
 	if(newLine == Format::Windows)
-		data.replace("\n", "\r\n");
+		data.replace(QLatin1String("\n"), QLatin1String("\r\n"));
 	else if(newLine == Format::Macintosh)
-		data.replace("\n", "\r");
+		data.replace('\n', '\r');
 
 	QTextStream stream(fileSaveHelper.file());
 	stream.setCodec(codec);

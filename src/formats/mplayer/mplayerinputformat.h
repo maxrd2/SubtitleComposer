@@ -20,10 +20,6 @@
  *   Boston, MA 02110-1301, USA.                                           *
  ***************************************************************************/
 
-#ifdef HAVE_CONFIG_H
-#include <config.h>
-#endif
-
 #include "../inputformat.h"
 
 #include <QRegExp>
@@ -41,8 +37,8 @@ protected:
 		unsigned readLines = 0;
 
 		for(int offset = 0; m_lineRegExp.indexIn(data, offset) != -1; offset += m_lineRegExp.matchedLength()) {
-			Time showTime((long)((m_lineRegExp.cap(1).toLong() / framesPerSecond) * 1000));
-			Time hideTime((long)((m_lineRegExp.cap(2).toLong() / framesPerSecond) * 1000));
+			Time showTime(static_cast<long>((m_lineRegExp.cap(1).toLong() / framesPerSecond) * 1000));
+			Time hideTime(static_cast<long>((m_lineRegExp.cap(2).toLong() / framesPerSecond) * 1000));
 			QString text(m_lineRegExp.cap(3).replace("|", "\n"));
 
 			subtitle.insertLine(new SubtitleLine(text, showTime, hideTime));
@@ -53,8 +49,8 @@ protected:
 	}
 
 	MPlayerInputFormat() :
-		InputFormat("MPlayer", QStringList("mpl")),
-		m_lineRegExp("(^|\n)(\\d+),(\\d+),0,([^\n]+)[^\n]")
+		InputFormat(QStringLiteral("MPlayer"), QStringList(QStringLiteral("mpl"))),
+		m_lineRegExp(QStringLiteral("(^|\n)(\\d+),(\\d+),0,([^\n]+)[^\n]"))
 	{}
 
 	mutable QRegExp m_lineRegExp;

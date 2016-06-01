@@ -20,7 +20,6 @@
  * Boston, MA 02110-1301, USA.
  */
 
-
 #include <QObject>
 
 QT_FORWARD_DECLARE_CLASS(QWidget)
