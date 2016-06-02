@@ -46,16 +46,16 @@ protected:
 
 			const SString &text = primary ? line->primaryText() : line->secondaryText();
 
-			ret += text.richString().replace("&amp;", ">").replace("&lt;", "<").replace("&gt;", ">");
+			ret += text.richString().replace(QLatin1String("&amp;"), QLatin1String(">")).replace(QLatin1String("&lt;"), QLatin1String("<")).replace(QLatin1String("&gt;"), QLatin1String(">"));
 
-			ret += "\n\n";
+			ret += QStringLiteral("\n\n");
 		}
 		return ret;
 	}
 
 	SubRipOutputFormat() :
-		OutputFormat("SubRip", QStringList("srt")),
-		m_dialogueBuilder("%1%2%3%4%5%6%7\n\n")
+		OutputFormat(QStringLiteral("SubRip"), QStringList(QStringLiteral("srt"))),
+		m_dialogueBuilder(QStringLiteral("%1%2%3%4%5%6%7\n\n"))
 	{}
 
 	const QString m_dialogueBuilder;

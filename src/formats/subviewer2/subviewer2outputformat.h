@@ -20,10 +20,6 @@
  *   Boston, MA 02110-1301, USA.                                           *
  ***************************************************************************/
 
-#ifdef HAVE_CONFIG_H
-#include <config.h>
-#endif
-
 #include "../outputformat.h"
 #include "../../core/subtitleiterator.h"
 
@@ -35,36 +31,35 @@ class SubViewer2OutputFormat : public OutputFormat
 protected:
 	virtual QString dumpSubtitles(const Subtitle &subtitle, bool primary) const
 	{
-		QString ret("[INFORMATION]\n[TITLE]\n[AUTHOR]\n[SOURCE]\n[PRG]\n[FILEPATH]\n[DELAY]0\n[CD TRACK]0\n" "[COMMENT]\n[END INFORMATION]\n[SUBTITLE]\n[COLF]&HFFFFFF,[STYLE]bd,[SIZE]24,[FONT]Tahoma\n");
+		QString ret(QStringLiteral("[INFORMATION]\n[TITLE]\n[AUTHOR]\n[SOURCE]\n[PRG]\n[FILEPATH]\n[DELAY]0\n[CD TRACK]0\n" "[COMMENT]\n[END INFORMATION]\n[SUBTITLE]\n[COLF]&HFFFFFF,[STYLE]bd,[SIZE]24,[FONT]Tahoma\n"));
 
 		for(SubtitleIterator it(subtitle); it.current(); ++it) {
 			const SubtitleLine *line = it.current();
 
 			Time showTime = line->showTime();
 			Time hideTime = line->hideTime();
-			ret += m_builder.sprintf("%02d:%02d:%02d.%02d,%02d:%02d:%02d.%02d\n", showTime.hours(), showTime.minutes(), showTime.seconds(), (int)((showTime.mseconds() + 5) / 10), hideTime.hours(), hideTime.minutes(), hideTime.seconds(), (int)((hideTime.mseconds() + 5) / 10)
-									 );
+			ret += m_builder.sprintf("%02d:%02d:%02d.%02d,%02d:%02d:%02d.%02d\n", showTime.hours(), showTime.minutes(), showTime.seconds(), (showTime.mseconds() + 5) / 10, hideTime.hours(), hideTime.minutes(), hideTime.seconds(), (hideTime.mseconds() + 5) / 10);
 
 			const SString &text = primary ? line->primaryText() : line->secondaryText();
 			ret += m_stylesMap[text.cummulativeStyleFlags()];
 			ret += text.string().replace("\n", "[br]");
 
-			ret += "\n\n";
+			ret += QStringLiteral("\n\n");
 		}
 		return ret;
 	}
 
 	SubViewer2OutputFormat() :
-		OutputFormat("SubViewer 2.0", QStringList("sub")),
+		OutputFormat(QStringLiteral("SubViewer 2.0"), QStringList(QStringLiteral("sub"))),
 		m_stylesMap()
 	{
-		m_stylesMap[SString::Bold] = "{Y:b}";
-		m_stylesMap[SString::Italic] = "{Y:i}";
-		m_stylesMap[SString::Underline] = "{Y:u}";
-		m_stylesMap[SString::Bold | SString::Italic] = "{Y:bi}";
-		m_stylesMap[SString::Bold | SString::Underline] = "{Y:ub}";
-		m_stylesMap[SString::Italic | SString::Underline] = "{Y:ui}";
-		m_stylesMap[SString::Bold | SString::Italic | SString::Underline] = "{Y:ubi}";
+		m_stylesMap[SString::Bold] = QStringLiteral("{Y:b}");
+		m_stylesMap[SString::Italic] = QStringLiteral("{Y:i}");
+		m_stylesMap[SString::Underline] = QStringLiteral("{Y:u}");
+		m_stylesMap[SString::Bold | SString::Italic] = QStringLiteral("{Y:bi}");
+		m_stylesMap[SString::Bold | SString::Underline] = QStringLiteral("{Y:ub}");
+		m_stylesMap[SString::Italic | SString::Underline] = QStringLiteral("{Y:ui}");
+		m_stylesMap[SString::Bold | SString::Italic | SString::Underline] = QStringLiteral("{Y:ubi}");
 	}
 
 	mutable QString m_builder;

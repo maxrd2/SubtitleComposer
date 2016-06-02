@@ -48,7 +48,7 @@ protected:
 
 			offset += m_regExp.matchedLength();
 
-			QString text(data.mid(offset, (unsigned)m_regExp.indexIn(data, offset) - offset));
+			QString text(data.mid(offset, m_regExp.indexIn(data, offset) - offset));
 
 			offset += text.length();
 
@@ -64,8 +64,8 @@ protected:
 	}
 
 	SubRipInputFormat() :
-		InputFormat("SubRip", QStringList("srt")),
-		m_regExp("[\\d]+\n([0-2][0-9]):([0-5][0-9]):([0-5][0-9])[,\\.]([0-9][0-9][0-9]) --> ([0-2][0-9]):([0-5][0-9]):([0-5][0-9])[,\\.]([0-9][0-9][0-9])\n")
+		InputFormat(QStringLiteral("SubRip"), QStringList(QStringLiteral("srt"))),
+		m_regExp(QStringLiteral("[\\d]+\n([0-2][0-9]):([0-5][0-9]):([0-5][0-9])[,\\.]([0-9][0-9][0-9]) --> ([0-2][0-9]):([0-5][0-9]):([0-5][0-9])[,\\.]([0-9][0-9][0-9])\n"))
 	{}
 
 	mutable QRegExp m_regExp;

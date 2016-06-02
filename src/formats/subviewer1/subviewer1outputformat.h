@@ -20,10 +20,6 @@
  *   Boston, MA 02110-1301, USA.                                           *
  ***************************************************************************/
 
-#ifdef HAVE_CONFIG_H
-#include <config.h>
-#endif
-
 #include "../outputformat.h"
 #include "../../core/subtitleiterator.h"
 
@@ -35,9 +31,7 @@ class SubViewer1OutputFormat : public OutputFormat
 protected:
 	virtual QString dumpSubtitles(const Subtitle &subtitle, bool primary) const
 	{
-		QString ret;
-
-		ret += "[TITLE]\n\n[AUTHOR]\n\n[SOURCE]\n\n[PRG]\n\n[FILEPATH]\n\n[DELAY]\n0\n[CD TRACK]\n0\n[BEGIN]\n" "******** START SCRIPT ********\n";
+		QString ret(QStringLiteral("[TITLE]\n\n[AUTHOR]\n\n[SOURCE]\n\n[PRG]\n\n[FILEPATH]\n\n[DELAY]\n0\n[CD TRACK]\n0\n[BEGIN]\n" "******** START SCRIPT ********\n"));
 
 		for(SubtitleIterator it(subtitle); it.current(); ++it) {
 			const SubtitleLine *line = it.current();
@@ -57,7 +51,7 @@ protected:
 	}
 
 	SubViewer1OutputFormat() :
-		OutputFormat("SubViewer 1.0", QStringList("sub"))
+		OutputFormat(QStringLiteral("SubViewer 1.0"), QStringList(QStringLiteral("sub")))
 	{}
 
 	mutable QString m_builder;

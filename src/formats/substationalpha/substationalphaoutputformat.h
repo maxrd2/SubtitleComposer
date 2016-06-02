@@ -20,10 +20,6 @@
  *   Boston, MA 02110-1301, USA.                                           *
  ***************************************************************************/
 
-#ifdef HAVE_CONFIG_H
-#include <config.h>
-#endif
-
 #include "../outputformat.h"
 #include "../../core/formatdata.h"
 #include "../../core/subtitleiterator.h"
@@ -37,7 +33,7 @@ public:
 	QString fromSString(const SString &text) const
 	{
 
-		QString subtitle = "";
+		QString subtitle;
 
 		int prevStyle = 0;
 		QRgb prevColor = 0;
@@ -47,25 +43,25 @@ public:
 			curStyle &= SString::Bold | SString::Italic | SString::Underline;
 			if(prevStyle != curStyle) {
 				int diff = curStyle ^ prevStyle;
-				subtitle += "{";
+				subtitle += '{';
 				if(diff & SString::Bold)
-					subtitle += curStyle & SString::Bold ? "\\b1" : "\\b0";
+					subtitle += curStyle & SString::Bold ? QStringLiteral("\\b1") : QStringLiteral("\\b0");
 				if(diff & SString::Italic)
-					subtitle += curStyle & SString::Italic ? "\\i1" : "\\i0";
+					subtitle += curStyle & SString::Italic ? QStringLiteral("\\i1") : QStringLiteral("\\i0");
 				if(diff & SString::Underline)
-					subtitle += curStyle & SString::Underline ? "\\u1" : "\\u0";
+					subtitle += curStyle & SString::Underline ? QStringLiteral("\\u1") : QStringLiteral("\\u0");
 				subtitle += "}";
 			}
 			if(prevColor != curColor) {
-				subtitle += "{\\c&H";
+				subtitle += QStringLiteral("{\\c&H");
 				if(curColor != 0) {
-					subtitle += ("0" + QString::number(qBlue(curColor), 16)).toUpper().right(2);
-					subtitle += ("0" + QString::number(qGreen(curColor), 16)).toUpper().right(2);
-					subtitle += ("0" + QString::number(qRed(curColor), 16)).toUpper().right(2);
+					subtitle += (QChar('0') + QString::number(qBlue(curColor), 16)).toUpper().right(2);
+					subtitle += (QChar('0') + QString::number(qGreen(curColor), 16)).toUpper().right(2);
+					subtitle += (QChar('0') + QString::number(qRed(curColor), 16)).toUpper().right(2);
 				} else {
-					subtitle += "00";
+					subtitle += QStringLiteral("00");
 				}
-				subtitle += "&}";
+				subtitle += QStringLiteral("&}");
 			}
 
 			subtitle += text.at(i);
@@ -75,19 +71,19 @@ public:
 		}
 
 		if(prevStyle) {
-			subtitle += "{";
+			subtitle +='{';
 			if(prevStyle & SString::Bold)
-				subtitle += "\\b0";
+				subtitle += QStringLiteral("\\b0");
 			if(prevStyle & SString::Italic)
-				subtitle += "\\i0";
+				subtitle += QStringLiteral("\\i0");
 			if(prevStyle & SString::Underline)
-				subtitle += "\\u0";
-			subtitle += "}";
+				subtitle += QStringLiteral("\\u0");
+			subtitle += '}';
 		}
 
-		subtitle = subtitle.replace("\r\n", "\\N");
-		subtitle = subtitle.replace("\n", "\\N");
-		subtitle = subtitle.replace("\r", "\\N");
+		subtitle = subtitle.replace(QStringLiteral("\r\n"), QStringLiteral("\\N"));
+		subtitle = subtitle.replace(QStringLiteral("\n"), QStringLiteral("\\N"));
+		subtitle = subtitle.replace(QStringLiteral("\r"), QStringLiteral("\\N"));
 
 		return subtitle;
 	}
@@ -102,15 +98,15 @@ protected:
 		while(data.at(end).isSpace() && end >= begin)
 			end--;
 
-		return data.mid(begin, end - begin + 1) + "\n\n";
+		return data.mid(begin, end - begin + 1) + QStringLiteral("\n\n");
 	}
 
 	virtual QString dumpSubtitles(const Subtitle &subtitle, bool primary) const
 	{
 		FormatData *formatData = this->formatData(subtitle);
 
-		QString ret = normalizeBlock(formatData ? formatData->value("ScriptInfo") : m_defaultScriptInfo)
-				+ normalizeBlock(formatData ? formatData->value("Styles") : m_defaultStyles)
+		QString ret = normalizeBlock(formatData ? formatData->value(QStringLiteral("ScriptInfo")) : m_defaultScriptInfo)
+				+ normalizeBlock(formatData ? formatData->value(QStringLiteral("Styles")) : m_defaultStyles)
 				+ normalizeBlock(m_events);
 
 		for(SubtitleIterator it(subtitle); it.current(); ++it) {
@@ -133,7 +129,7 @@ protected:
 
 			formatData = this->formatData(line);
 
-			ret += QString(formatData ? formatData->value("Dialogue") : m_dialogueBuilder)
+			ret += QString(formatData ? formatData->value(QStringLiteral("Dialogue")) : m_dialogueBuilder)
 					.arg(showTimeArg)
 					.arg(hideTimeArg)
 					.arg(fromSString(primary ? line->primaryText() : line->secondaryText()));
@@ -142,8 +138,8 @@ protected:
 	}
 
 	SubStationAlphaOutputFormat(
-			const QString &name = "SubStation Alpha",
-			const QStringList &extensions = QStringList("ssa"),
+			const QString &name = QStringLiteral("SubStation Alpha"),
+			const QStringList &extensions = QStringList(QStringLiteral("ssa")),
 			const QString &scriptInfo = s_defaultScriptInfo,
 			const QString &styles = s_defaultStyles,
 			const QString &events = s_events,

@@ -20,10 +20,6 @@
  *   Boston, MA 02110-1301, USA.                                           *
  ***************************************************************************/
 
-#ifdef HAVE_CONFIG_H
-#include <config.h>
-#endif
-
 #include "../outputformat.h"
 #include "../../core/subtitleiterator.h"
 
@@ -44,16 +40,16 @@ protected:
 
 			const SString &text = primary ? line->primaryText() : line->secondaryText();
 
-			ret += m_lineBuilder.arg((long)((line->showTime().toMillis() / 1000.0) * framesPerSecond + 0.5))
-					.arg((long)((line->hideTime().toMillis() / 1000.0) * framesPerSecond + 0.5))
+			ret += m_lineBuilder.arg(static_cast<long>((line->showTime().toMillis() / 1000.0) * framesPerSecond + 0.5))
+					.arg(static_cast<long>((line->hideTime().toMillis() / 1000.0) * framesPerSecond + 0.5))
 					.arg(text.string().replace('\n', '|'));
 		}
 		return ret;
 	}
 
 	MPlayerOutputFormat() :
-		OutputFormat("MPlayer", QStringList("mpl")),
-		m_lineBuilder("%1,%2,0,%3\n")
+		OutputFormat(QStringLiteral("MPlayer"), QStringList(QStringLiteral("mpl"))),
+		m_lineBuilder(QStringLiteral("%1,%2,0,%3\n"))
 	{}
 
 	const QString m_lineBuilder;

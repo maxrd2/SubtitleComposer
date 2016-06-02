@@ -20,13 +20,10 @@
  *   Boston, MA 02110-1301, USA.                                           *
  ***************************************************************************/
 
-#ifdef HAVE_CONFIG_H
-#include <config.h>
-#endif
-
 #include "../inputformat.h"
 
 #include <QRegExp>
+#include <QStringBuilder>
 
 namespace SubtitleComposer {
 class SubStationAlphaInputFormat : public InputFormat
@@ -37,12 +34,12 @@ class SubStationAlphaInputFormat : public InputFormat
 protected:
 	SString toSString(QString string) const
 	{
-		static QRegExp cmdRegExp("\\{([^\\}]+)\\}");
+		static const QRegExp cmdRegExp(QStringLiteral("\\{([^\\}]+)\\}"));
 
 		SString ret;
 
-		string.replace("\\N", "\n");
-		string.replace("\\n", "\n");
+		string.replace(QLatin1String("\\N"), QLatin1String("\n"));
+		string.replace(QLatin1String("\\n"), QLatin1String("\n"));
 
 		int currentStyle = 0;
 		QRgb currentColor = 0;
@@ -71,13 +68,13 @@ protected:
 				} else if(*it == QLatin1String("u1")) {
 					newStyleFlags |= SString::Underline;
 				} else if(it->at(0) == 'c') {
-					QString val = ("000000" + it->mid(3, -2)).right(6);
+					QString val = (QStringLiteral("000000") + it->mid(3, -2)).right(6);
 					if(val == QLatin1String("000000")) {
 						newStyleFlags &= ~SString::Color;
 						newColor = 0;
 					} else {
 						newStyleFlags |= SString::Color;
-						newColor = QColor("#" + val.mid(4, 2) + val.mid(2, 2) + val.mid(0, 2)).rgb();
+						newColor = QColor(QChar('#') % val.mid(4, 2) % val.mid(2, 2) % val.mid(0, 2)).rgb();
 					}
 				}
 			}
@@ -132,28 +129,28 @@ protected:
 
 			SubtitleLine *line = new SubtitleLine(toSString(m_dialogueRegExp.cap(3)), showTime, hideTime);
 
-			formatData.setValue("Dialogue", m_dialogueRegExp.cap(0).replace(m_dialogueDataRegExp, "\\1%1\\2%2\\3%3\n"));
+			formatData.setValue(QStringLiteral("Dialogue"), m_dialogueRegExp.cap(0).replace(m_dialogueDataRegExp, "\\1%1\\2%2\\3%3\n"));
 			setFormatData(line, formatData);
 
 			subtitle.insertLine(line);
 
 			readLines++;
 		}
-		return readLines > 0;
+		return readLines;
 	}
 
 	SubStationAlphaInputFormat(
-			const QString &name = "SubStation Alpha",
-			const QStringList &extensions = QStringList("ssa"),
-			const QString &stylesRegExp = s_stylesRegExp) :
+			const QString &name = QStringLiteral("SubStation Alpha"),
+			const QStringList &extensions = QStringList(QStringLiteral("ssa")),
+			const QString &stylesRegExp = QStringLiteral("[\r\n]+ *\\[[vV]4 Styles\\] *[\r\n]+")) :
 		InputFormat(name, extensions),
-		m_scriptInfoRegExp(s_scriptInfoRegExp),
+		m_scriptInfoRegExp(QStringLiteral("^ *\\[Script Info\\] *[\r\n]+")),
 		m_stylesRegExp(stylesRegExp),
-		m_eventsRegExp(s_eventsRegExp),
-		m_formatRegExp(s_formatRegExp),
-		m_dialogueRegExp(s_dialogueRegExp),
-		m_dialogueDataRegExp(s_dialogueDataRegExp),
-		m_timeRegExp(s_timeRegExp)
+		m_eventsRegExp(QStringLiteral("[\r\n]+ *\\[Events\\] *[\r\n]+")),
+		m_formatRegExp(QStringLiteral(" *Format: *(\\w+,? *)+[\r\n]+")),
+		m_dialogueRegExp(QStringLiteral(" *Dialogue: *[^,]+, *([^,]+), *([^,]+), *[^,]*, *[^,]*, *[^,]*, *[^,]*, *[^,]*, *[^,]*, *([^\r\n]*)[\r\n]+")),
+		m_dialogueDataRegExp(QStringLiteral(" *(Dialogue: *[^,]+, *)[^,]+(, *)[^,]+(, *[^,]+, *[^,]*, *[^,]*, *[^,]*, *[^,]*, *[^,]*, *).*")),
+		m_timeRegExp(QStringLiteral("(\\d+):(\\d+):(\\d+).(\\d+)"))
 	{}
 
 	mutable QRegExp m_scriptInfoRegExp;
@@ -163,23 +160,7 @@ protected:
 	mutable QRegExp m_dialogueRegExp;
 	mutable QRegExp m_dialogueDataRegExp;
 	mutable QRegExp m_timeRegExp;
-
-	static const char *s_scriptInfoRegExp;
-	static const char *s_stylesRegExp;
-	static const char *s_formatRegExp;
-	static const char *s_eventsRegExp;
-	static const char *s_dialogueRegExp;
-	static const char *s_dialogueDataRegExp;
-	static const char *s_timeRegExp;
 };
-
-const char *SubStationAlphaInputFormat::s_scriptInfoRegExp = "^ *\\[Script Info\\] *[\r\n]+";
-const char *SubStationAlphaInputFormat::s_stylesRegExp = "[\r\n]+ *\\[[vV]4 Styles\\] *[\r\n]+";
-const char *SubStationAlphaInputFormat::s_formatRegExp = " *Format: *(\\w+,? *)+[\r\n]+";
-const char *SubStationAlphaInputFormat::s_eventsRegExp = "[\r\n]+ *\\[Events\\] *[\r\n]+";
-const char *SubStationAlphaInputFormat::s_dialogueRegExp = " *Dialogue: *[^,]+, *([^,]+), *([^,]+), *[^,]+, *[^,]*, *\\d{4}, *\\d{4}, *\\d{4}, *[^,]*, *([^\r\n]*)[\r\n]+";
-const char *SubStationAlphaInputFormat::s_dialogueDataRegExp = " *(Dialogue: *[^,]+, *)[^,]+(, *)[^,]+(, *[^,]+, *[^,]*, *\\d{4}, *\\d{4}, *\\d{4}, *[^,]*, *).*";
-const char *SubStationAlphaInputFormat::s_timeRegExp = "(\\d+):(\\d+):(\\d+).(\\d+)";
 
 class AdvancedSubStationAlphaInputFormat : public SubStationAlphaInputFormat
 {
@@ -187,7 +168,7 @@ class AdvancedSubStationAlphaInputFormat : public SubStationAlphaInputFormat
 
 protected:
 	AdvancedSubStationAlphaInputFormat() :
-		SubStationAlphaInputFormat("Advanced SubStation Alpha", QStringList("ass"), "[\r\n]+ *\\[[vV]4\\+ Styles\\] *[\r\n]+")
+		SubStationAlphaInputFormat(QStringLiteral("Advanced SubStation Alpha"), QStringList(QStringLiteral("ass")), "[\r\n]+ *\\[[vV]4\\+ Styles\\] *[\r\n]+")
 	{}
 };
 

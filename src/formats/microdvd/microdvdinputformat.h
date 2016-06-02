@@ -20,10 +20,6 @@
  *   Boston, MA 02110-1301, USA.                                           *
  ***************************************************************************/
 
-#ifdef HAVE_CONFIG_H
-#include <config.h>
-#endif
-
 #include "../inputformat.h"
 
 #include <QRegExp>
@@ -62,8 +58,8 @@ protected:
 		do {
 			offset += m_lineRegExp.matchedLength();
 
-			Time showTime((long)((m_lineRegExp.cap(1).toLong() / framesPerSecond) * 1000));
-			Time hideTime((long)((m_lineRegExp.cap(2).toLong() / framesPerSecond) * 1000));
+                        Time showTime(static_cast<long>((m_lineRegExp.cap(1).toLong() / framesPerSecond) * 1000));
+                        Time hideTime(static_cast<long>((m_lineRegExp.cap(2).toLong() / framesPerSecond) * 1000));
 
 			SString richText;
 
@@ -78,9 +74,9 @@ protected:
 				int newStyle = currentStyle;
 				QRgb newColor = currentColor;
 
-				if(tag == QLatin1String("Y")) {
+                                if(tag == QChar('Y')) {
 					globalStyle = 0;
-					if(val.contains('b'))
+                                        if(val.contains('b'))
 						globalStyle |= SString::Bold;
 					if(val.contains('i'))
 						globalStyle |= SString::Italic;
@@ -134,8 +130,8 @@ protected:
 
 	MicroDVDInputFormat() :
 		InputFormat(QStringLiteral("MicroDVD"), QStringList() << QStringLiteral("sub") << QStringLiteral("txt")),
-		m_lineRegExp("\\{(\\d+)\\}\\{(\\d+)\\}([^\n]+)\n", Qt::CaseInsensitive),
-		m_styleRegExp("\\{([yc]):([^}]*)\\}", Qt::CaseInsensitive)
+                m_lineRegExp(QStringLiteral("\\{(\\d+)\\}\\{(\\d+)\\}([^\n]+)\n"), Qt::CaseInsensitive),
+                m_styleRegExp(QStringLiteral("\\{([yc]):([^}]*)\\}"), Qt::CaseInsensitive)
 	{}
 
 	mutable QRegExp m_lineRegExp;

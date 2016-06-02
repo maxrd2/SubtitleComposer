@@ -20,10 +20,6 @@
  *   Boston, MA 02110-1301, USA.                                           *
  ***************************************************************************/
 
-#ifdef HAVE_CONFIG_H
-#include <config.h>
-#endif
-
 #include "../inputformat.h"
 
 #include <QRegExp>
@@ -44,7 +40,7 @@ protected:
 			Time hideTime(m_lineRegExp.cap(5).toInt(), m_lineRegExp.cap(6).toInt(), m_lineRegExp.cap(7).toInt(), m_lineRegExp.cap(8).toInt() * 10);
 
 			int styleFlags = 0;
-			QString text = m_lineRegExp.cap(9).replace("[br]", "\n").trimmed();
+			QString text = m_lineRegExp.cap(9).replace(QLatin1String("[br]"), QLatin1String("\n")).trimmed();
 			if(m_styleRegExp.indexIn(text) != -1) {
 				QString styleText(m_styleRegExp.cap(1));
 				if(styleText.contains('b', Qt::CaseInsensitive))
@@ -65,9 +61,9 @@ protected:
 	}
 
 	SubViewer2InputFormat() :
-		InputFormat("SubViewer 2.0", QStringList("sub")),
-		m_lineRegExp("([0-2][0-9]):([0-5][0-9]):([0-5][0-9])\\.([0-9][0-9])," "([0-2][0-9]):([0-5][0-9]):([0-5][0-9])\\.([0-9][0-9])\n" "([^\n]*)\n\n", Qt::CaseInsensitive),
-		m_styleRegExp("(\\{y:[ubi]+\\})", Qt::CaseInsensitive)
+		InputFormat(QStringLiteral("SubViewer 2.0"), QStringList(QStringLiteral("sub"))),
+		m_lineRegExp(QStringLiteral("([0-2][0-9]):([0-5][0-9]):([0-5][0-9])\\.([0-9][0-9])," "([0-2][0-9]):([0-5][0-9]):([0-5][0-9])\\.([0-9][0-9])\n" "([^\n]*)\n\n"), Qt::CaseInsensitive),
+		m_styleRegExp(QStringLiteral("(\\{y:[ubi]+\\})"), Qt::CaseInsensitive)
 	{}
 
 	mutable QRegExp m_lineRegExp;
