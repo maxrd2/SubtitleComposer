@@ -59,17 +59,22 @@
 #include "utils/errortracker.h"
 #include "utils/translator.h"
 #include "scripting/scriptsmanager.h"
-#include "../common/commondefs.h"
-#include "../common/fileloadhelper.h"
-#include "../common/filesavehelper.h"
-#include "../core/subtitleiterator.h"
-#include "../formats/formatmanager.h"
-#include "../videoplayer/videoplayer.h"
-#include "../videoplayer/playerbackend.h"
-#include "../widgets/waveformwidget.h"
-#include "../profiler.h"
+#include "common/commondefs.h"
+#include "common/fileloadhelper.h"
+#include "common/filesavehelper.h"
+#include "core/subtitleiterator.h"
+#include "videoplayer/videoplayer.h"
+#include "videoplayer/playerbackend.h"
+#include "widgets/waveformwidget.h"
+#include "profiler.h"
+#include "formats/formatmanager.h"
 #include "formats/textdemux/textdemux.h"
+#include "formats/outputformat.h"
 #include "speechprocessor/speechprocessor.h"
+
+#ifdef HAVE_CONFIG_H
+# include <config.h>
+#endif
 
 #include <QDir>
 #include <QFileInfo>

@@ -21,6 +21,8 @@
 #include "savesubtitledialog.h"
 #include "../application.h"
 #include "../../common/filesavehelper.h"
+#include "../../formats/inputformat.h"
+#include "../../formats/outputformat.h"
 #include "../../formats/formatmanager.h"
 
 #include <QLabel>
@@ -29,6 +31,7 @@
 #include <QVBoxLayout>
 #include <QPushButton>
 #include <QDialogButtonBox>
+#include <QStringBuilder>
 
 #include <KLocalizedString>
 #include <KFileFilterCombo>
@@ -146,8 +149,8 @@ SaveSubtitleDialog::outputFormatsFilter()
 			const QStringList &formatExtensions = format->extensions();
 			QString extensions;
 			for(QStringList::ConstIterator extIt = formatExtensions.begin(), extEnd = formatExtensions.end(); extIt != extEnd; ++extIt)
-				extensions += "*." + *extIt + " *." + (*extIt).toUpper();
-			filter += '\n' + extensions + '|' + format->name();
+				extensions += QStringLiteral("*.") % *extIt % QStringLiteral(" *.") % (*extIt).toUpper();
+			filter += '\n' % extensions + '|' % format->name();
 		}
 
 		filter = filter.trimmed();

@@ -269,7 +269,7 @@ Translator::onTransferJobResult(KJob *job)
 	QTextCodec *codec = QTextCodec::codecForHtml(m_currentTransferData, QTextCodec::codecForName("UTF-8"));
 	QString content = codec->toUnicode(m_currentTransferData);
 
-	QRegExp resultStartRegExp("^.*<textarea name=utrans [^>]+>", Qt::CaseInsensitive);
+	static const QRegExp resultStartRegExp(QStringLiteral("^.*<textarea name=utrans [^>]+>"), Qt::CaseInsensitive);
 	if(content.contains(resultStartRegExp)) {
 		content.remove(resultStartRegExp);
 	} else {
@@ -278,7 +278,7 @@ Translator::onTransferJobResult(KJob *job)
 		return;
 	}
 
-	QRegExp resultEndRegExp("</textarea>.*$", Qt::CaseInsensitive);
+	QRegExp resultEndRegExp(QStringLiteral("</textarea>.*$"), Qt::CaseInsensitive);
 	if(content.contains(resultEndRegExp)) {
 		content.remove(resultEndRegExp);
 	} else {
@@ -288,13 +288,13 @@ Translator::onTransferJobResult(KJob *job)
 	}
 
 	replaceHTMLEntities(content);
-	content.replace("&quot;", "\"");
-	content.replace("&lt;", "<");
-	content.replace("&gt;", ">");
+	content.replace(QLatin1String("&quot;"), QLatin1String("\""));
+	content.replace(QLatin1String("&lt;"), QLatin1String("<"));
+	content.replace(QLatin1String("&gt;"), QLatin1String(">"));
 
-	content.replace(QRegExp("< *(/?) *([a-z]+) *(/?) *>", Qt::CaseInsensitive), "<\\1\\2\\3>");
-	content.replace(QRegExp(" ?<br ?/?> ?", Qt::CaseInsensitive), "\n");
-	content.replace(QRegExp("\n{2,}", Qt::CaseInsensitive), "\n");
+	content.replace(QRegExp(QStringLiteral("< *(/?) *([a-z]+) *(/?) *>"), Qt::CaseInsensitive), QStringLiteral("<\\1\\2\\3>"));
+	content.replace(QRegExp(QStringLiteral(" ?<br ?/?> ?"), Qt::CaseInsensitive), QStringLiteral("\n"));
+	content.replace(QRegExp(QStringLiteral("\n{2,}"), Qt::CaseInsensitive), QStringLiteral("\n"));
 
 	if(!m_outputText.isEmpty())
 		m_outputText += "\n";
@@ -323,13 +323,13 @@ Translator::replaceHTMLEntities(QString &text)
 		}
 	}
 
-	static QRegExp unnamedB10EntitiesRegExp("&#(\\d{2,4});");
+	static QRegExp unnamedB10EntitiesRegExp(QStringLiteral("&#(\\d{2,4});"));
 	for(int offsetIndex = 0, matchedIndex; (matchedIndex = unnamedB10EntitiesRegExp.indexIn(text, offsetIndex)) != -1; offsetIndex = matchedIndex + 1) {
 		QChar entityValue(unnamedB10EntitiesRegExp.cap(1).toUInt(0, 10));
 		text.replace(matchedIndex, unnamedB10EntitiesRegExp.matchedLength(), entityValue);
 	}
 
-	static QRegExp unnamedB16EntitiesRegExp("&#x([\\da-fA-F]{2,4});");
+	static QRegExp unnamedB16EntitiesRegExp(QStringLiteral("&#x([\\da-fA-F]{2,4});"));
 	for(int offsetIndex = 0, matchedIndex; (matchedIndex = unnamedB16EntitiesRegExp.indexIn(text, offsetIndex)) != -1; offsetIndex = matchedIndex + 1) {
 		QChar entityValue(unnamedB16EntitiesRegExp.cap(1).toUInt(0, 16));
 		text.replace(matchedIndex, unnamedB16EntitiesRegExp.matchedLength(), entityValue);

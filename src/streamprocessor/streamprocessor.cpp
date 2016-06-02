@@ -326,7 +326,7 @@ StreamProcessor::decoderMessageProc()
 
 	gint64 time;
 	if(gst_element_query_position(GST_ELEMENT(m_decodingPipeline), GST_FORMAT_TIME, &time)) {
-		if(m_streamPos != (quint64)time / GST_MSECOND) {
+		if(m_streamPos != static_cast<quint64>(time) / GST_MSECOND) {
 			m_streamPos = time / GST_MSECOND;
 			if(m_streamLen)
 				emit streamProgress(m_streamPos, m_streamLen);

@@ -20,10 +20,6 @@
  *   Boston, MA 02110-1301, USA.                                           *
  ***************************************************************************/
 
-#ifdef HAVE_CONFIG_H
-#include <config.h>
-#endif
-
 #include "range.h"
 #include "rangelist.h"
 #include "subtitle.h"
@@ -60,8 +56,8 @@ public:
 	}
 
 protected:
-	virtual void _preRedo();
-	virtual void _preUndo();
+	virtual void internalPreRedo();
+	virtual void internalPreUndo();
 
 protected:
 	Subtitle &m_subtitle;
@@ -75,11 +71,11 @@ public:
 	virtual ~SetFramesPerSecondAction();
 
 protected:
-	virtual void _redo();
-	virtual void _undo();
+	virtual void internalRedo();
+	virtual void internalUndo();
 
-	virtual void _emitRedoSignals();
-	virtual void _emitUndoSignals();
+	virtual void internalEmitRedoSignals();
+	virtual void internalEmitUndoSignals();
 
 private:
 	double m_framesPerSecond;
@@ -94,8 +90,8 @@ public:
 protected:
 	virtual bool mergeWithPrevious(Action *prevAction);
 
-	virtual void _redo();
-	virtual void _undo();
+	virtual void internalRedo();
+	virtual void internalUndo();
 
 private:
 	int m_insertIndex;
@@ -112,8 +108,8 @@ public:
 protected:
 	virtual bool mergeWithPrevious(Action *prevAction);
 
-	virtual void _redo();
-	virtual void _undo();
+	virtual void internalRedo();
+	virtual void internalUndo();
 
 private:
 	const int m_firstIndex;
@@ -130,8 +126,8 @@ public:
 protected:
 	virtual bool mergeWithPrevious(Action *prevAction);
 
-	virtual void _redo();
-	virtual void _undo();
+	virtual void internalRedo();
+	virtual void internalUndo();
 
 private:
 	int m_fromIndex;
@@ -145,11 +141,11 @@ public:
 	virtual ~SwapLinesTextsAction();
 
 protected:
-	virtual void _redo();
-	virtual void _undo();
+	virtual void internalRedo();
+	virtual void internalUndo();
 
-	virtual void _emitRedoSignals();
-	virtual void _emitUndoSignals();
+	virtual void internalEmitRedoSignals();
+	virtual void internalEmitUndoSignals();
 
 private:
 	const RangeList m_ranges;

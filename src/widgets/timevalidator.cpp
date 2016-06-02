@@ -75,7 +75,7 @@ TimeValidator::parse(const QString &input, int &timeMillis)
 
 		QString msecs = m_parserRegExp.cap(4).mid(1);
 
-		timeMillis = hours.toInt() * 3600000 + mins.toInt() * 60000 + m_parserRegExp.cap(3).toInt() * 1000 + (int)pow(msecs.toInt(), 4 - msecs.length());
+		timeMillis = hours.toInt() * 3600000 + mins.toInt() * 60000 + m_parserRegExp.cap(3).toInt() * 1000 + static_cast<int>(pow(msecs.toInt(), 4 - msecs.length()));
 
 		return true;
 	}

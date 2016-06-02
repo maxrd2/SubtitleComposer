@@ -29,7 +29,9 @@
 #include "../videoplayer/videoplayer.h"
 #include "../videoplayer/playerbackend.h"
 
-#include "config.h"
+#ifdef HAVE_CONFIG_H
+# include "config.h"
+#endif
 
 #include <KConfigDialog>
 #include <KLocalizedString>

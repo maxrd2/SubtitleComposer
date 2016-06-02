@@ -20,6 +20,8 @@
 
 #include "opensubtitledialog.h"
 #include "../application.h"
+#include "../../formats/inputformat.h"
+#include "../../formats/outputformat.h"
 #include "../../formats/formatmanager.h"
 
 #include <QComboBox>

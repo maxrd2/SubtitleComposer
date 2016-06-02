@@ -32,7 +32,7 @@ FileTrasher::~FileTrasher()
 FileTrasher::FileTrasher(const QString &path) : m_url()
 {
 	m_url.setPath(path);
-	m_url.setScheme("file");
+	m_url.setScheme(QStringLiteral("file"));
 }
 
 const QUrl &

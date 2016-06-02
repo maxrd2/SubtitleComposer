@@ -21,10 +21,6 @@
  * Boston, MA 02110-1301, USA.
  */
 
-#ifdef HAVE_CONFIG_H
-#include <config.h>
-#endif
-
 #include <QString>
 #include <QStringList>
 
@@ -57,12 +53,12 @@ public:
 	static QString homeDir();
 	static QString tempDir();
 
-	static QUrl urlFromPath(QString path);
+	static QUrl urlFromPath(const QString &path);
 
-	static QUrl newUrl(const QUrl &baseUrl, const QString &fileName = "tempfile", const QString &extension = "", int retries = 10);
+	static QUrl newUrl(const QUrl &baseUrl, const QString &fileName = QStringLiteral("tempfile"), const QString &extension = QString(), int retries = 10);
 
-	static bool urlIsInside(const QUrl url, QString path);
-	static bool urlIsInside(const QUrl url, QStringList path);
+	static bool urlIsInside(const QUrl &url, const QString &path);
+	static bool urlIsInside(const QUrl &url, QStringList &path);
 };
 
 #endif

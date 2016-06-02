@@ -183,7 +183,7 @@ class AdvancedSubStationAlphaOutputFormat : public SubStationAlphaOutputFormat
 
 protected:
 	AdvancedSubStationAlphaOutputFormat() :
-		SubStationAlphaOutputFormat("Advanced SubStation Alpha", QStringList("ass"), s_defaultScriptInfo, s_defaultStyles, s_events, s_dialogueBuilder)
+		SubStationAlphaOutputFormat(QStringLiteral("Advanced SubStation Alpha"), QStringList(QStringLiteral("ass")), s_defaultScriptInfo, s_defaultStyles, s_events, s_dialogueBuilder)
 	{}
 
 	static const char *s_defaultScriptInfo;

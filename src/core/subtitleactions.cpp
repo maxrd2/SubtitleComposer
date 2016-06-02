@@ -42,13 +42,13 @@ SubtitleAction::~SubtitleAction()
 {}
 
 void
-SubtitleAction::_preRedo()
+SubtitleAction::internalPreRedo()
 {
 	m_subtitle.incrementState(m_dirtyMode);
 }
 
 void
-SubtitleAction::_preUndo()
+SubtitleAction::internalPreUndo()
 {
 	m_subtitle.decrementState(m_dirtyMode);
 }
@@ -64,7 +64,7 @@ SetFramesPerSecondAction::~SetFramesPerSecondAction()
 {}
 
 void
-SetFramesPerSecondAction::_redo()
+SetFramesPerSecondAction::internalRedo()
 {
 	double aux = m_subtitle.m_framesPerSecond;
 	m_subtitle.m_framesPerSecond = m_framesPerSecond;
@@ -72,21 +72,21 @@ SetFramesPerSecondAction::_redo()
 }
 
 void
-SetFramesPerSecondAction::_undo()
+SetFramesPerSecondAction::internalUndo()
 {
-	_redo();
+	internalRedo();
 }
 
 void
-SetFramesPerSecondAction::_emitRedoSignals()
+SetFramesPerSecondAction::internalEmitRedoSignals()
 {
 	emit m_subtitle.framesPerSecondChanged(m_subtitle.m_framesPerSecond);
 }
 
 void
-SetFramesPerSecondAction::_emitUndoSignals()
+SetFramesPerSecondAction::internalEmitUndoSignals()
 {
-	_emitRedoSignals();
+	internalEmitRedoSignals();
 }
 
 /// INSERT LINES ACTION
@@ -111,19 +111,19 @@ InsertLinesAction::~InsertLinesAction()
 bool
 InsertLinesAction::mergeWithPrevious(Action *pa)
 {
-	InsertLinesAction *prevAction = tryCastTo<InsertLinesAction>(pa);
+	InsertLinesAction *prevAction = dynamic_cast<InsertLinesAction *>(pa);
 	if(!prevAction || &prevAction->m_subtitle != &m_subtitle)
 		return false;
 
 	if(m_insertIndex == prevAction->m_insertIndex) {
 		// this inserted lines immediately above those inserted by prevAction
 		m_lastIndex += (prevAction->m_lastIndex - prevAction->m_insertIndex + 1);
-		prevAction->_preUndo();
+		prevAction->internalPreUndo();
 		return true;
 	} else if(m_insertIndex == prevAction->m_lastIndex + 1) {
 		// this inserted lines immediately below those inserted by prevAction
 		m_insertIndex -= (prevAction->m_lastIndex - prevAction->m_insertIndex + 1);
-		prevAction->_preUndo();
+		prevAction->internalPreUndo();
 		return true;
 	}
 
@@ -131,7 +131,7 @@ InsertLinesAction::mergeWithPrevious(Action *pa)
 }
 
 void
-InsertLinesAction::_redo()
+InsertLinesAction::internalRedo()
 {
 	emit m_subtitle.linesAboutToBeInserted(m_insertIndex, m_lastIndex);
 
@@ -153,7 +153,7 @@ InsertLinesAction::_redo()
 }
 
 void
-InsertLinesAction::_undo()
+InsertLinesAction::internalUndo()
 {
 	emit m_subtitle.linesAboutToBeRemoved(m_insertIndex, m_lastIndex);
 
@@ -193,7 +193,7 @@ RemoveLinesAction::~RemoveLinesAction()
 bool
 RemoveLinesAction::mergeWithPrevious(Action *pa)
 {
-	RemoveLinesAction *prevAction = tryCastTo<RemoveLinesAction>(pa);
+	RemoveLinesAction *prevAction = dynamic_cast<RemoveLinesAction *>(pa);
 	if(!prevAction || &prevAction->m_subtitle != &m_subtitle)
 		return false;
 
@@ -202,7 +202,7 @@ RemoveLinesAction::mergeWithPrevious(Action *pa)
 		m_lastIndex += prevAction->m_lines.count();
 		while(!prevAction->m_lines.isEmpty())
 			m_lines.prepend(prevAction->m_lines.takeLast());
-		prevAction->_preUndo();
+		prevAction->internalPreUndo();
 		return true;
 	} else if(m_lastIndex + 1 == prevAction->m_firstIndex) {
 		// this removed lines immediately above those removed by prevAction
@@ -210,7 +210,7 @@ RemoveLinesAction::mergeWithPrevious(Action *pa)
 		while(!prevAction->m_lines.isEmpty())
 			m_lines.append(prevAction->m_lines.takeFirst());
 
-		prevAction->_preUndo();
+		prevAction->internalPreUndo();
 		return true;
 	}
 
@@ -218,7 +218,7 @@ RemoveLinesAction::mergeWithPrevious(Action *pa)
 }
 
 void
-RemoveLinesAction::_redo()
+RemoveLinesAction::internalRedo()
 {
 	emit m_subtitle.linesAboutToBeRemoved(m_firstIndex, m_lastIndex);
 
@@ -235,7 +235,7 @@ RemoveLinesAction::_redo()
 }
 
 void
-RemoveLinesAction::_undo()
+RemoveLinesAction::internalUndo()
 {
 	emit m_subtitle.linesAboutToBeInserted(m_firstIndex, m_lastIndex);
 
@@ -276,7 +276,7 @@ MoveLineAction::~MoveLineAction()
 bool
 MoveLineAction::mergeWithPrevious(Action *pa)
 {
-	MoveLineAction *prevAction = tryCastTo<MoveLineAction>(pa);
+	MoveLineAction *prevAction = dynamic_cast<MoveLineAction *>(pa);
 	if(!prevAction || &prevAction->m_subtitle != &m_subtitle)
 		return false;
 
@@ -313,14 +313,14 @@ MoveLineAction::mergeWithPrevious(Action *pa)
 	}
 
 	if(compressed) {
-		prevAction->_preUndo();
+		prevAction->internalPreUndo();
 	}
 
 	return compressed;
 }
 
 void
-MoveLineAction::_redo()
+MoveLineAction::internalRedo()
 {
 	emit m_subtitle.linesAboutToBeRemoved(m_fromIndex, m_fromIndex);
 	SubtitleLine *line = m_subtitle.m_lines.takeAt(m_fromIndex);
@@ -338,7 +338,7 @@ MoveLineAction::_redo()
 }
 
 void
-MoveLineAction::_undo()
+MoveLineAction::internalUndo()
 {
 	emit m_subtitle.linesAboutToBeRemoved(m_toIndex, m_toIndex);
 	SubtitleLine *line = m_subtitle.m_lines.takeAt(m_toIndex);
@@ -367,7 +367,7 @@ SwapLinesTextsAction::~SwapLinesTextsAction()
 {}
 
 void
-SwapLinesTextsAction::_redo()
+SwapLinesTextsAction::internalRedo()
 {
 	for(SubtitleIterator it(m_subtitle, m_ranges); it.current(); ++it) {
 		SubtitleLine *line = it.current();
@@ -378,13 +378,13 @@ SwapLinesTextsAction::_redo()
 }
 
 void
-SwapLinesTextsAction::_undo()
+SwapLinesTextsAction::internalUndo()
 {
-	_redo();
+	internalRedo();
 }
 
 void
-SwapLinesTextsAction::_emitRedoSignals()
+SwapLinesTextsAction::internalEmitRedoSignals()
 {
 	for(SubtitleIterator it(m_subtitle, m_ranges); it.current(); ++it) {
 		SubtitleLine *line = it.current();
@@ -394,7 +394,7 @@ SwapLinesTextsAction::_emitRedoSignals()
 }
 
 void
-SwapLinesTextsAction::_emitUndoSignals()
+SwapLinesTextsAction::internalEmitUndoSignals()
 {
-	_emitRedoSignals();
+	internalEmitRedoSignals();
 }

@@ -1088,7 +1088,7 @@ SString::toUpper() const
 SString
 SString::toTitleCase(bool lowerFirst) const
 {
-	const QString wordSeparators(" -_([:,;./\\\t\n\"");
+	const QString wordSeparators(QStringLiteral(" -_([:,;./\\\t\n\""));
 
 	SString ret(*this);
 

@@ -23,8 +23,6 @@
 #include <cstdlib>
 #include <climits>
 
-#include <QString>
-#include <QStringList>
 #include <QStringBuilder>
 #include <QRegExp>
 #include <QDir>
@@ -248,12 +246,12 @@ System::newUrl(const QUrl &baseUrl, const QString &fileName, const QString &exte
 }
 
 /*static*/ QUrl
-System::urlFromPath(QString path)
+System::urlFromPath(const QString &path)
 {
 	QUrl url(path);
 	if(url.isRelative()) {
 		url.setScheme(QStringLiteral("file"));
-		if(path[0] != QDir::separator())
+		if(path.at(0) != QDir::separator())
 			url.setPath(QDir::currentPath() % QChar('/') % path);
 	}
 	return url;
@@ -261,7 +259,7 @@ System::urlFromPath(QString path)
 
 
 /*static*/ bool
-System::urlIsInside(const QUrl url, QString path)
+System::urlIsInside(const QUrl &url, const QString &path)
 {
 	if(!url.scheme().isEmpty() && url.scheme() != QLatin1String("file"))
 		return false;
@@ -270,7 +268,7 @@ System::urlIsInside(const QUrl url, QString path)
 }
 
 /*static*/ bool
-System::urlIsInside(const QUrl url, QStringList path)
+System::urlIsInside(const QUrl &url, QStringList &path)
 {
 	for(QStringList::const_iterator i = path.constBegin(), end = path.constEnd(); i != end; i++) {
 		if(urlIsInside(url, *i))

@@ -101,13 +101,13 @@ protected:
 
 		FormatData formatData = createFormatData();
 
-		formatData.setValue("ScriptInfo", data.mid(0, stylesStart));
+		formatData.setValue(QStringLiteral("ScriptInfo"), data.mid(0, stylesStart));
 
 		int eventsStart = m_eventsRegExp.indexIn(data, stylesStart);
 		if(eventsStart == -1)
 			return false;
 
-		formatData.setValue("Styles", data.mid(stylesStart, eventsStart - stylesStart));
+		formatData.setValue(QStringLiteral("Styles"), data.mid(stylesStart, eventsStart - stylesStart));
 
 		if(m_formatRegExp.indexIn(data, eventsStart) == -1)
 			return false;
@@ -129,7 +129,7 @@ protected:
 
 			SubtitleLine *line = new SubtitleLine(toSString(m_dialogueRegExp.cap(3)), showTime, hideTime);
 
-			formatData.setValue(QStringLiteral("Dialogue"), m_dialogueRegExp.cap(0).replace(m_dialogueDataRegExp, "\\1%1\\2%2\\3%3\n"));
+			formatData.setValue(QStringLiteral("Dialogue"), m_dialogueRegExp.cap(0).replace(m_dialogueDataRegExp, QStringLiteral("\\1%1\\2%2\\3%3\n")));
 			setFormatData(line, formatData);
 
 			subtitle.insertLine(line);

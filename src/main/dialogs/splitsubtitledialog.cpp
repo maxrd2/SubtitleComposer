@@ -23,6 +23,10 @@
 #include "../../videoplayer/videoplayer.h"
 #include "../../widgets/timeedit.h"
 
+#ifdef HAVE_CONFIG_H
+# include "config.h"
+#endif
+
 #include <QLabel>
 #include <QGroupBox>
 #include <QCheckBox>
@@ -70,7 +74,7 @@ SplitSubtitleDialog::SplitSubtitleDialog(QWidget *parent) :
 void
 SplitSubtitleDialog::setSplitTimeFromVideo()
 {
-	m_splitTimeEdit->setValue((int)(VideoPlayer::instance()->length() * 1000 + 0.5));
+	m_splitTimeEdit->setValue(static_cast<int>(VideoPlayer::instance()->length() * 1000 + 0.5));
 }
 
 Time

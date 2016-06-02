@@ -55,7 +55,7 @@ protected:
 			// if so, does it use standard HTML style tags?
 			ret += text.richString();
 
-			ret += "\n\n";
+			ret += QStringLiteral("\n\n");
 		}
 		return ret;
 	}

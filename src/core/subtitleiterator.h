@@ -20,12 +20,6 @@
  *   Boston, MA 02110-1301, USA.                                           *
  ***************************************************************************/
 
-#ifdef HAVE_CONFIG_H
-#include <config.h>
-#endif
-
-#include "subtitleline.h"
-#include "subtitle.h"
 #include "range.h"
 #include "rangelist.h"
 
@@ -33,6 +27,8 @@
 #include <QList>
 
 namespace SubtitleComposer {
+class SubtitleLine;
+class Subtitle;
 class SubtitleIterator : public QObject
 {
 	Q_OBJECT

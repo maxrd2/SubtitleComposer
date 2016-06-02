@@ -45,14 +45,14 @@ protected:
 
 			offset += m_regExp.matchedLength();
 
-			QString text(data.mid(offset, m_regExp.indexIn(data, offset) - offset));
+			QStringRef text(data.midRef(offset, m_regExp.indexIn(data, offset) - offset));
 
 			offset += text.length();
 
 			// TODO does the format actually support styled text?
 			// if so, does it use standard HTML style tags?
 			SString stext;
-			stext.setRichString(text.trimmed());
+			stext.setRichString(text.trimmed().toString());
 
 			subtitle.insertLine(new SubtitleLine(stext, showTime, hideTime));
 

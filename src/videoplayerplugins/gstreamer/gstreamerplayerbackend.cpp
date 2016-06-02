@@ -18,11 +18,11 @@
  * Boston, MA 02110-1301, USA.
  */
 
-#include "../../streamprocessor/gstreamer.h"
 #include "gstreamerplayerbackend.h"
 #include "gstreamerconfigwidget.h"
-#include "../../common/languagecode.h"
 #include "../scconfigdummy.h"
+#include "../../streamprocessor/gstreamer.h"
+#include "../../common/languagecode.h"
 
 #include <KLocalizedString>
 

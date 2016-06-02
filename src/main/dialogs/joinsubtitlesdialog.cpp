@@ -23,6 +23,10 @@
 #include "../../videoplayer/videoplayer.h"
 #include "../../widgets/timeedit.h"
 
+#ifdef HAVE_CONFIG_H
+# include "config.h"
+#endif
+
 #include <QIcon>
 #include <QGridLayout>
 #include <QGroupBox>

@@ -18,10 +18,6 @@
  * Boston, MA 02110-1301, USA.
  */
 
-#ifdef HAVE_CONFIG_H
-#include <config.h>
-#endif
-
 #include "application.h"
 #include "mainwindow.h"
 #include "../common/commondefs.h"
@@ -34,8 +30,11 @@
 #include <QCommandLineParser>
 #include <QCommandLineOption>
 
-#if defined HAVE_XINE && !defined HAVE_XCB
-#include <X11/Xlib.h>
+#ifdef HAVE_CONFIG_H
+# include "config.h"
+# if defined HAVE_XINE && !defined HAVE_XCB
+#  include <X11/Xlib.h>
+# endif
 #endif
 
 int
@@ -55,10 +54,10 @@ main(int argc, char **argv)
 		"0.6.4",
 		i18n("A KDE subtitle editor."),
 		KAboutLicense::GPL,
-		"&copy; 2007-2012 Sergio Pistone\n&copy; 2013-2016 Mladen Milinković",
+		QStringLiteral("&copy; 2007-2012 Sergio Pistone\n&copy; 2013-2016 Mladen Milinković"),
 		QString(), // Additional text
-		"https://github.com/maxrd2/subtitlecomposer",
-		"maxrd2@smoothware.net");
+		QStringLiteral("https://github.com/maxrd2/subtitlecomposer"),
+		QStringLiteral("maxrd2@smoothware.net"));
 
 	aboutData.addAuthor(i18n("Mladen Milinković"), i18n("Author & Maintainer"), "Mladen Milinkovic <maxrd2@smoothware.net>");
 	aboutData.addAuthor(i18n("Sergio Pistone"), i18n("Original Author"), "Sergio Pistone <sergio_pistone@yahoo.com.ar>");

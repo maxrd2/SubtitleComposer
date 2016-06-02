@@ -18,6 +18,7 @@
  ***************************************************************************/
 
 #include "scripting_sstring.h"
+#include "scripting_list.h"
 
 #include <QRegExp>
 

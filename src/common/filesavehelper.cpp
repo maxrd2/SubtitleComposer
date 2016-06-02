@@ -20,9 +20,10 @@
 
 #include "filesavehelper.h"
 
-#include <QtDebug>
+#include <QDebug>
 #include <QSaveFile>
 #include <QTemporaryFile>
+#include <QFileDevice>
 
 #include <kio/filecopyjob.h>
 #include <kio/statjob.h>
@@ -76,7 +77,7 @@ FileSaveHelper::open()
 		}
 	} else {
 		m_file = new QTemporaryFile();
-		if(!((QTemporaryFile *)m_file)->open()) {
+		if(!static_cast<QTemporaryFile *>(m_file)->open()) {
 			qDebug() << "couldn't open output file" << m_file->fileName();
 			delete m_file;
 			m_file = 0;

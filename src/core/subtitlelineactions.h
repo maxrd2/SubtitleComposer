@@ -20,10 +20,6 @@
  *   Boston, MA 02110-1301, USA.                                           *
  ***************************************************************************/
 
-#ifdef HAVE_CONFIG_H
-#include <config.h>
-#endif
-
 #include "action.h"
 #include "time.h"
 #include "sstring.h"
@@ -40,17 +36,17 @@ public:
 	virtual ~SubtitleLineAction();
 
 protected:
-	virtual void _undo();
+	virtual void internalUndo();
 
-	virtual void _preRedo();
-	virtual void _preUndo();
+	virtual void internalPreRedo();
+	virtual void internalPreUndo();
 
-	virtual void _emitUndoSignals();
+	virtual void internalEmitUndoSignals();
 
 	template<class T>
 	T * tryCastToThisLineAction(Action *prevAction)
 	{
-		T *castedPrevAction = tryCastTo<T>(prevAction);
+		T *castedPrevAction = dynamic_cast<T *>(prevAction);
 		return castedPrevAction ? (&castedPrevAction->m_line == &m_line ? castedPrevAction : 0) : 0;
 	}
 
@@ -70,8 +66,8 @@ public:
 protected:
 	virtual bool mergeWithPrevious(Action *prevAction);
 
-	virtual void _redo();
-	virtual void _emitRedoSignals();
+	virtual void internalRedo();
+	virtual void internalEmitRedoSignals();
 
 private:
 	SString m_primaryText;
@@ -88,8 +84,8 @@ public:
 protected:
 	virtual bool mergeWithPrevious(Action *prevAction);
 
-	virtual void _redo();
-	virtual void _emitRedoSignals();
+	virtual void internalRedo();
+	virtual void internalEmitRedoSignals();
 
 private:
 	SString m_secondaryText;
@@ -105,8 +101,8 @@ public:
 protected:
 	virtual bool mergeWithPrevious(Action *prevAction);
 
-	virtual void _redo();
-	virtual void _emitRedoSignals();
+	virtual void internalRedo();
+	virtual void internalEmitRedoSignals();
 
 private:
 	SString m_primaryText;
@@ -124,8 +120,8 @@ public:
 protected:
 	virtual bool mergeWithPrevious(Action *prevAction);
 
-	virtual void _redo();
-	virtual void _emitRedoSignals();
+	virtual void internalRedo();
+	virtual void internalEmitRedoSignals();
 
 private:
 	Time m_showTime;
@@ -142,8 +138,8 @@ public:
 protected:
 	virtual bool mergeWithPrevious(Action *prevAction);
 
-	virtual void _redo();
-	virtual void _emitRedoSignals();
+	virtual void internalRedo();
+	virtual void internalEmitRedoSignals();
 
 private:
 	Time m_hideTime;
@@ -158,8 +154,8 @@ public:
 protected:
 	virtual bool mergeWithPrevious(Action *prevAction);
 
-	virtual void _redo();
-	virtual void _emitRedoSignals();
+	virtual void internalRedo();
+	virtual void internalEmitRedoSignals();
 
 private:
 	typedef enum { ShowTime = 0x1, HideTime = 0x2 } SignalFlags;
@@ -177,8 +173,8 @@ public:
 protected:
 	virtual bool mergeWithPrevious(Action *prevAction);
 
-	virtual void _redo();
-	virtual void _emitRedoSignals();
+	virtual void internalRedo();
+	virtual void internalEmitRedoSignals();
 
 private:
 	int m_errorFlags;

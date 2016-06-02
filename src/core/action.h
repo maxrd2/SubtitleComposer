@@ -20,10 +20,6 @@
  *   Boston, MA 02110-1301, USA.                                           *
  ***************************************************************************/
 
-#ifdef HAVE_CONFIG_H
-#include <config.h>
-#endif
-
 #include <typeinfo>
 
 #include <QString>
@@ -57,57 +53,50 @@ public:
 	 */
 	inline bool done() { return m_state & Done; }
 
-	void redo() { _redo(true); }
+	void redo() { internalRedo(true); }
 
-	void undo() { _undo(true); }
+	void undo() { internalUndo(true); }
 
 protected:
-	template<class T>
-	T * tryCastTo(Action *action)
-	{
-		try {
-			return dynamic_cast<T *>(action);
-		} catch(const std::bad_cast &) {
-			return 0;
-		}
-	}
-
-/// when this method is called both the callee and the action parameter have been executed
-/// so, if the callee can be merged with the previous action, it must recover the state
-/// previous to execution of both actions and return true (if the actions can't be merged,
-/// just return false).
+	/**
+	 * @brief Called if both - the callee and the action parameter - have been executed.
+	 *
+	 * Hence, if the callee can be merged with the previous action, it must recover the state
+	 * previous to execution of both actions and return true (if the actions can't be merged,
+	 * just return false).
+	 */
 	inline virtual bool mergeWithPrevious(Action * /*action*/) { return false; }
 
-	void _redo(bool emitSignals)
+	void internalRedo(bool emitSignals)
 	{
 		if(!(m_state & Done)) {
-			_preRedo();
-			_redo();
+			internalPreRedo();
+			internalRedo();
 			if(emitSignals)
-				_emitRedoSignals();
+				internalEmitRedoSignals();
 			m_state |= Executed | Done;
 		}
 	}
 
-	void _undo(bool emitSignals)
+	void internalUndo(bool emitSignals)
 	{
 		if(m_state & Done) {
-			_preUndo();
-			_undo();
+			internalPreUndo();
+			internalUndo();
 			if(emitSignals)
-				_emitUndoSignals();
+				internalEmitUndoSignals();
 			m_state &= ~Done;
 		}
 	}
 
-	virtual void _redo() = 0;
-	virtual void _undo() = 0;
+	virtual void internalRedo() = 0;
+	virtual void internalUndo() = 0;
 
-	virtual void _preRedo() {}
-	virtual void _preUndo() {}
+	virtual void internalPreRedo() {}
+	virtual void internalPreUndo() {}
 
-	virtual void _emitRedoSignals() {}
-	virtual void _emitUndoSignals() {}
+	virtual void internalEmitRedoSignals() {}
+	virtual void internalEmitUndoSignals() {}
 
 protected:
 	QString m_description;

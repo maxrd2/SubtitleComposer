@@ -241,7 +241,7 @@ Subtitle::framesPerSecond() const
 void
 Subtitle::setFramesPerSecond(double framesPerSecond)
 {
-	if(m_framesPerSecond != framesPerSecond)
+	if(m_framesPerSecond != framesPerSecond) // FIXME: Is this check important (floating point comparsion is unsafe)?
 		processAction(new SetFramesPerSecondAction(*this, framesPerSecond));
 }
 
@@ -585,7 +585,7 @@ Subtitle::splitLines(const RangeList &ranges)
 				autoDurationsSum += autoDuration.toMillis();
 			}
 
-			double factor = (double)line->durationTime().toMillis() / autoDurationsSum;
+			double factor = line->durationTime().toMillis() / autoDurationsSum;
 
 			SStringList secondaryLines = line->secondaryText().split('\n');
 			while(secondaryLines.count() < primaryLines.count())
