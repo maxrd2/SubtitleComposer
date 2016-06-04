@@ -20,12 +20,7 @@
  *   Boston, MA 02110-1301, USA.                                           *
  ***************************************************************************/
 
-#ifdef HAVE_CONFIG_H
-#include <config.h>
-#endif
-
-#include <QObject>
-#include <QList>
+#include <QObjectList>
 
 namespace SubtitleComposer {
 namespace Scripting {
@@ -35,7 +30,7 @@ class List : public QObject
 
 public:
 	List(const char *contentClass, QObject *parent);
-	List(const QList<QObject *> &backend, const char *contentClass, QObject *parent);
+	List(const QObjectList &backend, const char *contentClass, QObject *parent);
 
 public slots:
 	bool isEmpty() const;
@@ -58,7 +53,7 @@ public slots:
 
 private:
 	const char *m_contentClass;
-	QList<QObject *> m_backend;
+	QObjectList m_backend;
 };
 }
 }

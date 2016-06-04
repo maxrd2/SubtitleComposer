@@ -20,11 +20,6 @@
  *   Boston, MA 02110-1301, USA.                                           *
  ***************************************************************************/
 
-#ifdef HAVE_CONFIG_H
-#include <config.h>
-#endif
-
-#include <QPoint>
 #include <QSize>
 #include <QWidget>
 
@@ -32,6 +27,7 @@ QT_FORWARD_DECLARE_CLASS(QResizeEvent)
 QT_FORWARD_DECLARE_CLASS(QPaintEvent)
 QT_FORWARD_DECLARE_CLASS(QMouseEvent)
 QT_FORWARD_DECLARE_CLASS(QWheelEvent)
+QT_FORWARD_DECLARE_CLASS(QPoint)
 
 namespace SubtitleComposer {
 class VideoWidget : public QWidget

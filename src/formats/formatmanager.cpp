@@ -19,6 +19,8 @@
  */
 
 #include "formatmanager.h"
+#include "inputformat.h"
+#include "outputformat.h"
 #include "../common/fileloadhelper.h"
 #include "../common/filesavehelper.h"
 #include "../main/application.h"

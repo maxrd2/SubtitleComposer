@@ -20,18 +20,14 @@
  *   Boston, MA 02110-1301, USA.                                           *
  ***************************************************************************/
 
-#ifdef HAVE_CONFIG_H
-#include <config.h>
-#endif
-
 #include "../../core/sstring.h"
-#include "scripting_list.h"
 
 #include <QObject>
 #include <QString>
 
 namespace SubtitleComposer {
 namespace Scripting {
+class List;
 class SString : public QObject
 {
 	Q_OBJECT

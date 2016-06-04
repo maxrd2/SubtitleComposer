@@ -24,7 +24,6 @@
 
 #include "../scconfigdummy.h"
 
-
 #include <QEventLoop>
 #include <QEvent>
 #include <QDir>

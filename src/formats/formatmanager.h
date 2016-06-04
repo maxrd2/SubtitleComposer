@@ -20,8 +20,7 @@
  *   Boston, MA 02110-1301, USA.                                           *
  ***************************************************************************/
 
-#include "inputformat.h"
-#include "outputformat.h"
+#include "format.h"
 
 #include <QString>
 #include <QStringList>
@@ -31,6 +30,9 @@
 #include <KEncodingProber>
 
 namespace SubtitleComposer {
+class InputFormat;
+class OutputFormat;
+class Subtitle;
 class FormatManager
 {
 public:

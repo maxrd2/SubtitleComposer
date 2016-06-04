@@ -40,29 +40,29 @@ SubtitleLineAction::~SubtitleLineAction()
 {}
 
 void
-SubtitleLineAction::_undo()
+SubtitleLineAction::internalUndo()
 {
-	_redo();
+	internalRedo();
 }
 
 void
-SubtitleLineAction::_preRedo()
+SubtitleLineAction::internalPreRedo()
 {
 	if(m_line.m_subtitle)
 		m_line.m_subtitle->incrementState(m_dirtyMode);
 }
 
 void
-SubtitleLineAction::_preUndo()
+SubtitleLineAction::internalPreUndo()
 {
 	if(m_line.m_subtitle)
 		m_line.m_subtitle->decrementState(m_dirtyMode);
 }
 
 void
-SubtitleLineAction::_emitUndoSignals()
+SubtitleLineAction::internalEmitUndoSignals()
 {
-	_emitRedoSignals();
+	internalEmitRedoSignals();
 }
 
 /// SET LINE PRIMARY TEXT ACTION
@@ -83,13 +83,13 @@ SetLinePrimaryTextAction::mergeWithPrevious(Action *pa)
 	if(!prevAction)
 		return false;
 
-	prevAction->_preUndo();
+	prevAction->internalPreUndo();
 	m_primaryText = prevAction->m_primaryText;
 	return true;
 }
 
 void
-SetLinePrimaryTextAction::_redo()
+SetLinePrimaryTextAction::internalRedo()
 {
 	SString aux = m_line.m_primaryText;
 	m_line.m_primaryText = m_primaryText;
@@ -97,7 +97,7 @@ SetLinePrimaryTextAction::_redo()
 }
 
 void
-SetLinePrimaryTextAction::_emitRedoSignals()
+SetLinePrimaryTextAction::internalEmitRedoSignals()
 {
 	m_line.emit primaryTextChanged(m_line.m_primaryText);
 #ifdef PROPAGATE_LINE_SIGNALS
@@ -124,13 +124,13 @@ SetLineSecondaryTextAction::mergeWithPrevious(Action *pa)
 	if(!prevAction)
 		return false;
 
-	prevAction->_preUndo();
+	prevAction->internalPreUndo();
 	m_secondaryText = prevAction->m_secondaryText;
 	return true;
 }
 
 void
-SetLineSecondaryTextAction::_redo()
+SetLineSecondaryTextAction::internalRedo()
 {
 	SString aux = m_line.m_secondaryText;
 	m_line.m_secondaryText = m_secondaryText;
@@ -138,7 +138,7 @@ SetLineSecondaryTextAction::_redo()
 }
 
 void
-SetLineSecondaryTextAction::_emitRedoSignals()
+SetLineSecondaryTextAction::internalEmitRedoSignals()
 {
 	m_line.emit secondaryTextChanged(m_line.m_secondaryText);
 #ifdef PROPAGATE_LINE_SIGNALS
@@ -164,18 +164,18 @@ SetLineTextsAction::mergeWithPrevious(Action *pa)
 {
 	SetLineTextsAction *prevAction = tryCastToThisLineAction<SetLineTextsAction>(pa);
 	if(prevAction) {
-		prevAction->_preUndo();
+		prevAction->internalPreUndo();
 		m_primaryText = prevAction->m_primaryText;
 		m_secondaryText = prevAction->m_secondaryText;
 	} else {
 		SetLinePrimaryTextAction *prevAction2 = tryCastToThisLineAction<SetLinePrimaryTextAction>(pa);
 		if(prevAction2) {
-			prevAction2->_preUndo();
+			prevAction2->internalPreUndo();
 			m_primaryText = prevAction2->m_primaryText;
 		} else {
 			SetLineSecondaryTextAction *prevAction3 = tryCastToThisLineAction<SetLineSecondaryTextAction>(pa);
 			if(prevAction3) {
-				prevAction3->_preUndo();
+				prevAction3->internalPreUndo();
 				m_secondaryText = prevAction3->m_secondaryText;
 			} else
 				return false;
@@ -186,7 +186,7 @@ SetLineTextsAction::mergeWithPrevious(Action *pa)
 }
 
 void
-SetLineTextsAction::_redo()
+SetLineTextsAction::internalRedo()
 {
 	if(m_line.m_primaryText != m_primaryText) {
 		SString aux = m_line.m_primaryText;
@@ -202,7 +202,7 @@ SetLineTextsAction::_redo()
 }
 
 void
-SetLineTextsAction::_emitRedoSignals()
+SetLineTextsAction::internalEmitRedoSignals()
 {
 	if(m_line.m_primaryText != m_primaryText) {
 		m_line.emit primaryTextChanged(m_line.m_primaryText);
@@ -239,13 +239,13 @@ SetLineShowTimeAction::mergeWithPrevious(Action *pa)
 	if(!prevAction)
 		return false;
 
-	prevAction->_preUndo();
+	prevAction->internalPreUndo();
 	m_showTime = prevAction->m_showTime;
 	return true;
 }
 
 void
-SetLineShowTimeAction::_redo()
+SetLineShowTimeAction::internalRedo()
 {
 	Time aux = m_line.m_showTime;
 	m_line.m_showTime = m_showTime;
@@ -253,7 +253,7 @@ SetLineShowTimeAction::_redo()
 }
 
 void
-SetLineShowTimeAction::_emitRedoSignals()
+SetLineShowTimeAction::internalEmitRedoSignals()
 {
 	m_line.emit showTimeChanged(m_line.m_showTime);
 #ifdef PROPAGATE_LINE_SIGNALS
@@ -280,13 +280,13 @@ SetLineHideTimeAction::mergeWithPrevious(Action *pa)
 	if(!prevAction)
 		return false;
 
-	prevAction->_preUndo();
+	prevAction->internalPreUndo();
 	m_hideTime = prevAction->m_hideTime;
 	return true;
 }
 
 void
-SetLineHideTimeAction::_redo()
+SetLineHideTimeAction::internalRedo()
 {
 	Time aux = m_line.m_hideTime;
 	m_line.m_hideTime = m_hideTime;
@@ -294,7 +294,7 @@ SetLineHideTimeAction::_redo()
 }
 
 void
-SetLineHideTimeAction::_emitRedoSignals()
+SetLineHideTimeAction::internalEmitRedoSignals()
 {
 	m_line.emit hideTimeChanged(m_line.m_hideTime);
 #ifdef PROPAGATE_LINE_SIGNALS
@@ -320,18 +320,18 @@ SetLineTimesAction::mergeWithPrevious(Action *pa)
 {
 	SetLineTimesAction *prevAction = tryCastToThisLineAction<SetLineTimesAction>(pa);
 	if(prevAction) {
-		prevAction->_preUndo();
+		prevAction->internalPreUndo();
 		m_showTime = prevAction->m_showTime;
 		m_hideTime = prevAction->m_hideTime;
 	} else {
 		SetLineHideTimeAction *prevAction2 = tryCastToThisLineAction<SetLineHideTimeAction>(pa);
 		if(prevAction2) {
-			prevAction2->_preUndo();
+			prevAction2->internalPreUndo();
 			m_hideTime = prevAction2->m_hideTime;
 		} else {
 			SetLineShowTimeAction *prevAction3 = tryCastToThisLineAction<SetLineShowTimeAction>(pa);
 			if(prevAction3) {
-				prevAction3->_preUndo();
+				prevAction3->internalPreUndo();
 				m_showTime = prevAction3->m_showTime;
 			} else
 				return false;
@@ -342,7 +342,7 @@ SetLineTimesAction::mergeWithPrevious(Action *pa)
 }
 
 void
-SetLineTimesAction::_redo()
+SetLineTimesAction::internalRedo()
 {
 	if(m_line.m_showTime != m_showTime) {
 		Time aux = m_line.m_showTime;
@@ -358,7 +358,7 @@ SetLineTimesAction::_redo()
 }
 
 void
-SetLineTimesAction::_emitRedoSignals()
+SetLineTimesAction::internalEmitRedoSignals()
 {
 	if(m_line.m_showTime != m_showTime) {
 		m_line.emit showTimeChanged(m_line.m_showTime);
@@ -395,13 +395,13 @@ SetLineErrorsAction::mergeWithPrevious(Action *pa)
 	if(!prevAction)
 		return false;
 
-	prevAction->_preUndo();
+	prevAction->internalPreUndo();
 	m_errorFlags = prevAction->m_errorFlags;
 	return true;
 }
 
 void
-SetLineErrorsAction::_redo()
+SetLineErrorsAction::internalRedo()
 {
 	int aux = m_line.m_errorFlags;
 	m_line.m_errorFlags = m_errorFlags;
@@ -409,7 +409,7 @@ SetLineErrorsAction::_redo()
 }
 
 void
-SetLineErrorsAction::_emitRedoSignals()
+SetLineErrorsAction::internalEmitRedoSignals()
 {
 	m_line.emit errorFlagsChanged(m_line.m_errorFlags);
 #ifdef PROPAGATE_LINE_SIGNALS

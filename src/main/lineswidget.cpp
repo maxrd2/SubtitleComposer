@@ -24,6 +24,10 @@
 #include "dialogs/actionwithtargetdialog.h"
 #include "profiler.h"
 
+#ifdef HAVE_CONFIG_H
+# include "config.h"
+#endif
+
 #include <QVariant>
 #include <QTimer>
 #include <QEvent>

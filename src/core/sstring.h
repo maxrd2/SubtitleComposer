@@ -20,10 +20,6 @@
  *   Boston, MA 02110-1301, USA.                                           *
  ***************************************************************************/
 
-#ifdef HAVE_CONFIG_H
-#include <config.h>
-#endif
-
 #include <string.h>
 
 #include <QString>
@@ -334,25 +330,25 @@ SString::operator+=(const SString &str)
 inline SString &
 SString::remove(int index, int len)
 {
-	return replace(index, len, "");
+	return replace(index, len, QString());
 }
 
 inline SString &
 SString::remove(const QString &str, Qt::CaseSensitivity cs)
 {
-	return replace(str, "", cs);
+	return replace(str, QString(), cs);
 }
 
 inline SString &
 SString::remove(QChar ch, Qt::CaseSensitivity cs)
 {
-	return replace(ch, "", cs);
+	return replace(ch, QString(), cs);
 }
 
 inline SString &
 SString::remove(const QRegExp &rx)
 {
-	return replace(rx, "");
+	return replace(rx, QString());
 }
 
 inline int
@@ -526,7 +522,7 @@ SString::operator>=(const QString &string) const
 inline int
 SString::length(int index, int len) const
 {
-	return (len < 0) || ((index + len) > (int)m_string.length()) ? m_string.length() - index : len;
+	return (len < 0) || ((index + len) > m_string.length()) ? m_string.length() - index : len;
 }
 }
 #endif

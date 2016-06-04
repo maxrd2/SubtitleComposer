@@ -21,14 +21,11 @@
  * Boston, MA 02110-1301, USA.
  */
 
-#ifdef HAVE_CONFIG_H
-#include <config.h>
-#endif
-
 #include "../../videoplayer/playerbackend.h"
 
 #include <QWidget>
-#include <QString>
+
+QT_FORWARD_DECLARE_CLASS(QString)
 
 namespace SubtitleComposer {
 class MPlayerPlayerProcess;

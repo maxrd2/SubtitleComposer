@@ -20,10 +20,6 @@
  *   Boston, MA 02110-1301, USA.                                           *
  ***************************************************************************/
 
-#ifdef HAVE_CONFIG_H
-#include <config.h>
-#endif
-
 #include "language.h"
 #include "../dialogs/progressdialog.h"
 
@@ -42,7 +38,7 @@ class Translator : public QObject
 	Q_OBJECT
 
 public:
-	static const int MaxChunkSize = 25000;          // in characters
+	static const int MaxChunkSize = 25000; // in characters
 
 	Translator(QObject *parent = 0);
 	~Translator();
@@ -53,7 +49,7 @@ public:
 	Language::Value inputLanguage() const;
 	Language::Value outputLanguage() const;
 
-	int chunksCount() const;                // upon how many chunks will the imput text be split on?
+	int chunksCount() const; // upon how many chunks will the imput text be split on?
 
 	bool isFinished() const;
 	bool isFinishedWithError() const;
@@ -73,7 +69,7 @@ signals:
 	void finished(const QString &translatedText);
 	void finishedWithError(const QString &errorMessage);
 
-	void finished();                        // finished with or without error
+	void finished(); // finished with or without error
 
 private:
 	static QByteArray prepareUrlEncodedData(const QMap<QString, QString> &params);
@@ -81,7 +77,7 @@ private:
 	static QString & replaceHTMLEntities(QString &text);
 	static const QMap<QString, QChar> & namedEntities();
 
-	void startChunkDownload(int chunkNumber);               // first chunk is number 1
+	void startChunkDownload(int chunkNumber); // first chunk is number 1
 
 private slots:
 	void onTransferJobProgress(KJob *job, unsigned long percent);

@@ -20,6 +20,7 @@
 
 #include "fileloadhelper.h"
 
+#include <QIODevice>
 #include <QBuffer>
 #include <QDebug>
 

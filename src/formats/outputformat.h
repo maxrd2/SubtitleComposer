@@ -21,6 +21,7 @@
  ***************************************************************************/
 
 #include "format.h"
+
 namespace SubtitleComposer {
 class OutputFormat : public Format
 {

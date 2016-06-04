@@ -20,10 +20,6 @@
  *   Boston, MA 02110-1301, USA.                                           *
  ***************************************************************************/
 
-#ifdef HAVE_CONFIG_H
-#include <config.h>
-#endif
-
 #include "scripting_subtitleline.h"
 #include "../../core/subtitle.h"
 #include "../../core/rangelist.h"

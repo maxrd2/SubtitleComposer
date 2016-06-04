@@ -1,5 +1,5 @@
 #ifndef COMPOSITEACTION_H
-#define COMPOSITE_H
+#define COMPOSITEACTION_H
 
 /***************************************************************************
  *   Copyright (C) 2007-2009 Sergio Pistone (sergio_pistone@yahoo.com.ar)  *
@@ -19,10 +19,6 @@
  *   Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor,      *
  *   Boston, MA 02110-1301, USA.                                           *
  ***************************************************************************/
-
-#ifdef HAVE_CONFIG_H
-#include <config.h>
-#endif
 
 #include "action.h"
 
@@ -63,7 +59,7 @@ public:
 		if(m_immediateExecution && m_delaySignals) {
 			// NOTE: the action is in an "inconsistent" state: it has been
 			// executed but the resulting signals have not been emitted yet
-			action->_emitRedoSignals();
+			action->internalEmitRedoSignals();
 		}
 
 		return action;
@@ -72,7 +68,7 @@ public:
 	void appendAction(Action *action)
 	{
 		if(m_immediateExecution)
-			action->_redo(!m_delaySignals);
+			action->internalRedo(!m_delaySignals);
 
 		m_actions.append(action);
 	}
@@ -92,43 +88,43 @@ protected:
 		}
 	}
 
-	virtual void _redo()
+	virtual void internalRedo()
 	{
 		if(executed() || !m_immediateExecution)
 			for(QLinkedList<Action *>::ConstIterator it = m_actions.begin(), end = m_actions.end(); it != end; ++it)
-				(*it)->_redo(!m_delaySignals);
+				(*it)->internalRedo(!m_delaySignals);
 
 		if(!executed())
 			compressActions();
 	}
 
-	virtual void _undo()
+	virtual void internalUndo()
 	{
 		if(m_actions.isEmpty())
 			return;
 
 		QLinkedList<Action *>::Iterator it = --m_actions.end();
 		for(QLinkedList<Action *>::ConstIterator begin = m_actions.begin(); it != begin; --it)
-			(*it)->_undo(!m_delaySignals);
-		(*it)->_undo(!m_delaySignals);
+			(*it)->internalUndo(!m_delaySignals);
+		(*it)->internalUndo(!m_delaySignals);
 	}
 
-	virtual void _emitRedoSignals()
+	virtual void internalEmitRedoSignals()
 	{
 		if(m_delaySignals)
 			for(QLinkedList<Action *>::ConstIterator it = m_actions.begin(), end = m_actions.end(); it != end; ++it)
-				(*it)->_emitRedoSignals();
+				(*it)->internalEmitRedoSignals();
 	}
 
-	virtual void _emitUndoSignals()
+	virtual void internalEmitUndoSignals()
 	{
 		if(m_actions.isEmpty() || !m_delaySignals)
 			return;
 
 		QLinkedList<Action *>::Iterator it = --m_actions.end();
 		for(QLinkedList<Action *>::ConstIterator begin = m_actions.begin(); it != begin; --it)
-			(*it)->_emitUndoSignals();
-		(*it)->_emitUndoSignals();
+			(*it)->internalEmitUndoSignals();
+		(*it)->internalEmitUndoSignals();
 	}
 
 protected:

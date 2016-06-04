@@ -26,7 +26,7 @@ Scripting::List::List(const char *contentClass, QObject *parent) :
 	m_contentClass(contentClass)
 {}
 
-Scripting::List::List(const QList<QObject *> &backend, const char *contentClass, QObject *parent) :
+Scripting::List::List(const QObjectList &backend, const char *contentClass, QObject *parent) :
 	QObject(parent),
 	m_contentClass(contentClass),
 	m_backend(backend)

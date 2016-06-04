@@ -21,7 +21,6 @@
 #include "../sstring.h"
 
 #include <QTest>                               // krazy:exclude=c++/includes
-#include <QtCore>                               // krazy:exclude=c++/includes
 
 #include <QDebug>
 
@@ -108,7 +107,7 @@ SStringTest::testInsert()
 {
 	SString sstring;
 
-	sstring.append("");
+	sstring.append(QString());
 	QVERIFY(sstring == SString());
 
 	sstring.append(SString("x", SString::Bold));
