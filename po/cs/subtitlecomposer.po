@@ -20,7 +20,6 @@ msgstr ""
 "X-Generator: Lokalize 0.3\n"
 
 #: ../../src/common/languagecode.cpp:420
-#, fuzzy
 msgid "Unknown"
 msgstr "<i>Neznámý</i>"
 
@@ -169,9 +168,8 @@ msgid "Toggle Lines Style"
 msgstr "Přepni styl řádků"
 
 #: ../../src/core/subtitle.cpp:1300
-#, fuzzy
 msgid "Change Lines Text Color"
-msgstr "Zapiš text"
+msgstr "Změň barvu řádků"
 
 #: ../../src/core/subtitle.cpp:1313
 msgid "Set Lines Mark"
@@ -396,9 +394,8 @@ msgid "Adjust Line Times"
 msgstr "Přizpůsob časování řádku"
 
 #: ../../src/formats/textdemux/textdemux.cpp:43
-#, fuzzy
 msgid "Importing Subtitle Stream"
-msgstr "Titulkové stopy"
+msgstr "Importování titulkové stopy"
 
 #: ../../src/formats/textdemux/textdemux.cpp:93
 msgid ""
@@ -411,9 +408,8 @@ msgstr ""
 #: ../../src/main/dialogs/opensubtitledialog.cpp:49
 #: ../../src/main/dialogs/selectablesubtitledialog.cpp:64
 #: ../../src/main/dialogs/selectablesubtitledialog.cpp:98
-#, fuzzy
 msgid "Autodetect"
-msgstr "Automatický"
+msgstr "Automaticky detekuj"
 
 #: ../../src/main/application.cpp:388
 msgid "Video Files"
@@ -511,14 +507,12 @@ msgid "Open translation subtitle file"
 msgstr "Otevři soubor s překladem"
 
 #: ../../src/main/application.cpp:502
-#, fuzzy
 msgid "Reload Translation As..."
-msgstr "Ulož překlad jako..."
+msgstr "Znovu nahraj překlad jako..."
 
 #: ../../src/main/application.cpp:503
-#, fuzzy
 msgid "Reload opened translation file with a different encoding"
-msgstr "Znovu otevři s jiným kódováním"
+msgstr "Znovu otevři překlad s jiným kódováním"
 
 #: ../../src/main/application.cpp:511
 msgid "Open &Recent Translation"
@@ -766,21 +760,19 @@ msgstr "Přepni podtržení na označených"
 
 #: ../../src/main/application.cpp:777 ../../src/main/currentlinewidget.cpp:97
 msgid "Toggle Strike Through"
-msgstr "Přepni strike through"
+msgstr "Přepni přeškrtnuté"
 
 #: ../../src/main/application.cpp:778
 msgid "Toggle selected lines strike through attribute"
-msgstr "Přepni strike through na označených"
+msgstr "Přepni přeškrtnuté na označených"
 
 #: ../../src/main/application.cpp:786 ../../src/main/currentlinewidget.cpp:98
-#, fuzzy
 msgid "Change Text Color"
-msgstr "Změň na"
+msgstr "Změň barvu textu"
 
 #: ../../src/main/application.cpp:787
-#, fuzzy
 msgid "Change text color of selected lines"
-msgstr "Vymaž chyby v označených řádcích"
+msgstr "Změn barvu textu na označených řádcích"
 
 #: ../../src/main/application.cpp:794 ../../src/main/lineswidget.cpp:1104
 msgid "Shift..."
@@ -923,23 +915,20 @@ msgid "Open &Recent Video"
 msgstr "Otevři nedavné video"
 
 #: ../../src/main/application.cpp:939
-#, fuzzy
 msgid "Import Subtitle Stream"
-msgstr "Titulkové stopy"
+msgstr "Importuj titulkové stopy"
 
 #: ../../src/main/application.cpp:940
-#, fuzzy
 msgid "Import subtitle stream into subtitle editor"
-msgstr "Titulkové stopy"
+msgstr "Importuj titulkové stopy do titulkového editoru"
 
 #: ../../src/main/application.cpp:948
 msgid "Recognize Speech"
-msgstr ""
+msgstr "Rozpoznat řeč"
 
 #: ../../src/main/application.cpp:949
-#, fuzzy
 msgid "Recognize speech in audio stream"
-msgstr "Vyber aktivní zvukovou stopu"
+msgstr "Rozpoznat řeč v audio stopě"
 
 #: ../../src/main/application.cpp:955
 msgid "Close Video"
@@ -1113,7 +1102,6 @@ msgstr ""
 "seřízením ostatních"
 
 #: ../../src/main/application.cpp:1126
-#, fuzzy
 msgid "Toggle Anchor"
 msgstr "Přepni značku"
 
@@ -1124,9 +1112,8 @@ msgid ""
 msgstr ""
 
 #: ../../src/main/application.cpp:1134
-#, fuzzy
 msgid "Remove All Anchors"
-msgstr "Odstraň řádky"
+msgstr "Odstraň všechny značky"
 
 #: ../../src/main/application.cpp:1135
 msgid "Unanchor show time from the timeline on all anchored lines"
@@ -1143,34 +1130,31 @@ msgstr "Spravuj uživatelské skripty"
 
 #: ../../src/main/application.cpp:1151 ../../src/main/application.cpp:1152
 msgid "Waveform Zoom In"
-msgstr ""
+msgstr "Waveform přiblížení"
 
 #: ../../src/main/application.cpp:1158 ../../src/main/application.cpp:1159
 msgid "Waveform Zoom Out"
-msgstr ""
+msgstr "Waveform oddálení"
 
 #: ../../src/main/application.cpp:1166
 msgid "Waveform Auto Scroll"
-msgstr ""
+msgstr "Waveform automatické posouvání"
 
 #: ../../src/main/application.cpp:1167
 msgid "Waveform display will automatically scroll to video position"
-msgstr ""
+msgstr "Waveform se automaticky zobrazí na pozici videa"
 
 #: ../../src/main/application.cpp:1174
-#, fuzzy
 msgid "Set current line show time to waveform mouse position"
-msgstr "Nastav na řádek současný čas zobrazení z videa"
+msgstr "Nastav zobrazení řádku podle pozice myši na waveformu"
 
 #: ../../src/main/application.cpp:1182
-#, fuzzy
 msgid "Set current line hide time to waveform mouse position"
-msgstr "Nastav na řádek současný čas skrytí z videa"
+msgstr "Nastav skrytí současný řádku podle pozice myši na waveformu"
 
 #: ../../src/main/application.cpp:1189
-#, fuzzy
 msgid "Insert empty line at waveform mouse position(s)"
-msgstr "Vlož prázdný řádek za současný"
+msgstr "Vlož prázdný řádek na místo myši ve waveformu"
 
 #: ../../src/main/application.cpp:1282
 msgid ""
@@ -1256,12 +1240,10 @@ msgid "split"
 msgstr ""
 
 #: ../../src/main/application.cpp:1872
-#, fuzzy
 msgid "Could not write the split subtitle file."
 msgstr "Nebylo možné zapsat rozdělené titulky."
 
 #: ../../src/main/application.cpp:1872
-#, fuzzy
 msgid "Could not write the split subtitle translation file."
 msgstr "Nebylo možné zapsat rozdělený překlad."
 
@@ -1270,7 +1252,6 @@ msgid "The specified time does not split the subtitles."
 msgstr "Požadovaný čas nerozdělil titulky."
 
 #: ../../src/main/application.cpp:1924
-#, fuzzy
 msgid ""
 "Could not open a new Subtitle Composer window.\n"
 "The split part was saved as %1."
@@ -1279,7 +1260,6 @@ msgstr ""
 "Rozdělená část byla uložena jako %1."
 
 #: ../../src/main/application.cpp:1925
-#, fuzzy
 msgid ""
 "Could not open a new Subtitle Composer window.\n"
 "The split parts were saved as %1 and %2."
@@ -1402,18 +1382,15 @@ msgid "General Settings"
 msgstr "Obecné nastavení"
 
 #: ../../src/main/configs/configdialog.cpp:53
-#, fuzzy
 msgctxt "@title Error check settings"
 msgid "Error Check"
 msgstr "Kontroly chyb"
 
 #: ../../src/main/configs/configdialog.cpp:54
-#, fuzzy
 msgid "Error Check Settings"
 msgstr "Nastavení kontroly chyb"
 
 #: ../../src/main/configs/configdialog.cpp:60
-#, fuzzy
 msgctxt "@title Spelling settings"
 msgid "Spelling"
 msgstr "Pravopis"
@@ -1425,26 +1402,22 @@ msgstr "Nastavení pravopisu"
 #: ../../src/main/configs/configdialog.cpp:65
 msgctxt "@title Waveform settings"
 msgid "Waveform"
-msgstr ""
+msgstr "Waveform"
 
 #: ../../src/main/configs/configdialog.cpp:66
-#, fuzzy
 msgid "Waveform settings"
-msgstr "Nastavení přehrávače"
+msgstr "Nastavení Waveform"
 
 #: ../../src/main/configs/configdialog.cpp:70
-#, fuzzy
 msgctxt "@title Video player settings"
 msgid "Video Player"
-msgstr "Přehrávač"
+msgstr "Video přehrávač"
 
 #: ../../src/main/configs/configdialog.cpp:71
-#, fuzzy
 msgid "Video Player Settings"
-msgstr "Nastavení přehrávače"
+msgstr "Nastavení video přehrávače"
 
 #: ../../src/main/configs/configdialog.cpp:78
-#, fuzzy
 msgctxt "@title Video player backend settings"
 msgid "%1 backend settings"
 msgstr "%1 nastavení backendu"
@@ -1794,7 +1767,6 @@ msgid "Forwards (+)"
 msgstr "Dopředu (+)"
 
 #: ../../src/main/dialogs/shifttimesdialog.cpp:39
-#, fuzzy
 msgid "Backwards (−)"
 msgstr "Dozadu (–)"
 
@@ -1802,7 +1774,7 @@ msgstr "Dozadu (–)"
 #. i18n: ectx: property (suffix), widget (QSpinBox, kcfg_MaxCharacters)
 #: ../../src/main/dialogs/smarttextsadjustdialog.cpp:39 rc.cpp:6
 msgid " characters"
-msgstr "znaky"
+msgstr " znaků"
 
 #: ../../src/main/dialogs/smarttextsadjustdialog.cpp:42
 msgid "Minimum length for line break:"
@@ -1983,10 +1955,9 @@ msgid "Strike Through"
 msgstr "Strike Through"
 
 #: ../../src/main/lineswidget.cpp:1097 ../../src/widgets/simplerichtextedit.cpp:140
-#, fuzzy
 msgctxt "@action:inmenu Change Text Color"
 msgid "Text Color"
-msgstr "Změň na"
+msgstr "Barva textu"
 
 #: ../../src/main/lineswidget.cpp:1099
 msgid "Times"
@@ -1997,9 +1968,8 @@ msgid "Shift +%1 Milliseconds"
 msgstr "Posuň +%1 milisekund"
 
 #: ../../src/main/lineswidget.cpp:1102
-#, fuzzy
 msgid "Shift −%1 Milliseconds"
-msgstr "Posuň +%1 milisekund"
+msgstr "Posuň -%1 milisekund"
 
 #: ../../src/main/lineswidget.cpp:1111
 msgid "Errors"
@@ -2022,7 +1992,6 @@ msgid "Mladen Milinković"
 msgstr ""
 
 #: ../../src/main/main.cpp:63
-#, fuzzy
 msgid "Author & Maintainer"
 msgstr "Autor a správce"
 
@@ -2032,12 +2001,12 @@ msgstr "Sergio Pistone"
 
 #: ../../src/main/main.cpp:64
 msgid "Original Author"
-msgstr ""
+msgstr "Původní autor"
 
 #: ../../src/main/main.cpp:66 rc.cpp:583
 msgctxt "NAME OF TRANSLATORS"
 msgid "Your names"
-msgstr "Goliash"
+msgstr "Petr Gadula"
 
 #: ../../src/main/main.cpp:66 rc.cpp:584
 msgctxt "EMAIL OF TRANSLATORS"
@@ -2045,30 +2014,27 @@ msgid "Your emails"
 msgstr "goliash@goliash.net"
 
 #: ../../src/main/main.cpp:68
-#, fuzzy
 msgid "Croatian Translator"
-msgstr "Zavři překlad"
+msgstr "Chorvatský překladatel"
 
 #: ../../src/main/main.cpp:69
-#, fuzzy
 msgid "Bulgarian Translator"
-msgstr "Ulož překlad"
+msgstr "Bulharský překladatel"
 
 #: ../../src/main/main.cpp:70 ../../src/main/main.cpp:71 ../../src/main/main.cpp:72
 #: ../../src/main/main.cpp:73 ../../src/main/main.cpp:74 ../../src/main/main.cpp:75
 #: ../../src/main/main.cpp:76 ../../src/main/main.cpp:77 ../../src/main/main.cpp:78
 #: ../../src/main/main.cpp:79 ../../src/main/main.cpp:80
-#, fuzzy
 msgid "Translator"
-msgstr "Překlad"
+msgstr "Překladatel"
 
 #: ../../src/main/main.cpp:82
 msgid "code contributions, Arch Linux packaging, German translation"
-msgstr ""
+msgstr "příspěvky do kódu, balíčky pro Arch Linux, německý překlad"
 
 #: ../../src/main/main.cpp:84
 msgid "All people who have contributed and I have forgotten to mention"
-msgstr ""
+msgstr "Všichni, kteří přispěli a zapomněl jsem je zmínit"
 
 #: ../../src/main/main.cpp:102
 msgid "Open location as primary subtitle"
@@ -2080,12 +2046,11 @@ msgstr "Otevři umístění jako překlad"
 
 #: ../../src/main/mainwindow.cpp:46
 msgid "Waveform"
-msgstr ""
+msgstr "Waveform"
 
 #: ../../src/main/mainwindow.cpp:60
-#, fuzzy
 msgid "Video Player"
-msgstr "Přehrávač"
+msgstr "Video přehrávač"
 
 #: ../../src/main/playerwidget.cpp:99
 msgid "<b>Position</b>"
@@ -2112,35 +2077,32 @@ msgid "<i>Unknown</i>"
 msgstr "<i>Neznámý</i>"
 
 #: ../../src/main/playerwidget.cpp:728
-#, fuzzy
 msgid "<qt>There was an error opening media file %1.</qt>"
 msgstr "<qt>Vyskytla se chyba při otevírání souboru<br/>%1</qt>"
 
 #: ../../src/main/playerwidget.cpp:760 ../../src/main/playerwidget.cpp:762
-#, fuzzy
 msgid "Unexpected error when playing file."
 msgstr "Nečekaná chyba při přehrávání souboru."
 
 #: ../../src/main/playerwidget.cpp:760 ../../src/main/playerwidget.cpp:762
 msgid "Error Playing File"
-msgstr ""
+msgstr "Chyba při přehrávání souboru"
 
 #: ../../src/main/scripting/scriptsmanager.cpp:66
 msgid "Installed Scripts"
-msgstr "Instalované skripty"
+msgstr "Nainstalované skripty"
 
 #: ../../src/main/scripting/scriptsmanager.cpp:87
 msgid "Information"
-msgstr ""
+msgstr "Informace"
 
 #: ../../src/main/scripting/scriptsmanager.cpp:94
 msgid "Warning"
-msgstr ""
+msgstr "Varování"
 
 #: ../../src/main/scripting/scriptsmanager.cpp:101
-#, fuzzy
 msgid "Error"
-msgstr "Chyby"
+msgstr "Chyba"
 
 #: ../../src/main/scripting/scriptsmanager.cpp:166
 #: ../../src/main/scripting/scriptsmanager.cpp:243
@@ -2315,7 +2277,7 @@ msgstr "Oprava pravopisu"
 
 #: ../../src/main/utils/translator.cpp:176
 msgid "Operation cancelled by user"
-msgstr ""
+msgstr "Operace zrušena uživatelem"
 
 #: ../../src/main/utils/translator.cpp:276 ../../src/main/utils/translator.cpp:285
 msgid "Unexpected contents received from translation service"
@@ -2323,15 +2285,15 @@ msgstr "Nečekaný obsah obdržený překládací službou"
 
 #: ../../src/speechprocessor/speechprocessor.cpp:56
 msgid "Recognizing speech"
-msgstr ""
+msgstr "Rozpoznávání řeči"
 
 #: ../../src/speechprocessor/speechprocessor.cpp:155
 msgid "No speech recognition plugins available"
-msgstr ""
+msgstr "Žádný plugin pro rozpoznávání řeči"
 
 #: ../../src/speechprocessor/speechprocessor.cpp:160
 msgid "Initialization of speech recognition plugin failed"
-msgstr ""
+msgstr "Načtení pluginu pro rozpozávání řeči selhalo"
 
 #: ../../src/speechprocessor/speechprocessor.cpp:230
 msgid ""
@@ -2341,7 +2303,6 @@ msgstr ""
 
 #: ../../src/videoplayerplugins/gstreamer/gstreamerplayerbackend.cpp:350
 #: ../../src/videoplayerplugins/mpv/mpvbackend.cpp:231
-#, fuzzy
 msgid "Text Stream #%1"
 msgstr "Zvuková stopa #%1"
 
@@ -2354,7 +2315,7 @@ msgstr "Zvuková stopa #%1"
 
 #: ../../src/videoplayer/videoplayer.cpp:552
 msgid "File does not exist."
-msgstr ""
+msgstr "Soubor neexistuje."
 
 #: ../../src/widgets/simplerichtextedit.cpp:79
 msgid "Cut"
@@ -2407,7 +2368,7 @@ msgstr "Žádné návrhy"
 
 #: ../../src/widgets/waveformwidget.cpp:119
 msgid "Generating waveform"
-msgstr ""
+msgstr "Generuji waveform (vlnový diagram)"
 
 #. i18n: file: ../../src/main/configs/errorsconfigwidget.ui:46
 #. i18n: ectx: property (text), widget (QLabel, label)
@@ -2424,7 +2385,6 @@ msgstr "Maximální počet řádků:"
 #. i18n: file: ../../src/main/configs/errorsconfigwidget.ui:63
 #. i18n: ectx: property (title), widget (QGroupBox, m_grpQuickActions)
 #: rc.cpp:15
-#, fuzzy
 msgid "Absolute Durations"
 msgstr "Absolutní délka trvání"
 
@@ -2447,7 +2407,6 @@ msgstr "Minimální délka trvání:"
 #. i18n: file: ../../src/main/configs/errorsconfigwidget.ui:109
 #. i18n: ectx: property (title), widget (QGroupBox, groupBox)
 #: rc.cpp:24
-#, fuzzy
 msgid "Relative Durations"
 msgstr "Relativní trvání"
 
@@ -2456,14 +2415,12 @@ msgstr "Relativní trvání"
 #. i18n: file: ../../src/main/configs/errorsconfigwidget.ui:139
 #. i18n: ectx: property (suffix), widget (QSpinBox, kcfg_MaxDurationPerCharacter)
 #: rc.cpp:27 rc.cpp:36
-#, fuzzy
 msgid " msec/char"
-msgstr "ms/znak"
+msgstr " ms/znak"
 
 #. i18n: file: ../../src/main/configs/errorsconfigwidget.ui:152
 #. i18n: ectx: property (title), widget (QGroupBox, groupBox_2)
 #: rc.cpp:39
-#, fuzzy
 msgid "Behavior"
 msgstr "Chování"
 
@@ -2484,7 +2441,6 @@ msgstr "Automaticky vymaž opravené chyby"
 #. i18n: file: ../../src/videoplayerplugins/mpv/mpvconfigwidget.ui:20
 #. i18n: ectx: property (title), widget (QGroupBox, grpGeneral)
 #: rc.cpp:45 rc.cpp:69 rc.cpp:489 rc.cpp:534
-#, fuzzy
 msgid "General"
 msgstr "Obecné"
 
@@ -2498,25 +2454,23 @@ msgstr "Při dvojkliku na titulek skoč na čas zobrazení mínus:"
 #. i18n: ectx: property (text), widget (QLabel, label)
 #: rc.cpp:51
 msgid "Default subtitles encoding:"
-msgstr ""
+msgstr "Výchozí kódování titulků:"
 
 #. i18n: file: ../../src/main/configs/generalconfigwidget.ui:50
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_UnpauseOnDoubleClick)
 #: rc.cpp:54
 msgid "Resume playback after line double click"
-msgstr ""
+msgstr "Znovu přehrávat po dvojkliku na řádek"
 
 #. i18n: file: ../../src/main/configs/generalconfigwidget.ui:57
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_AutomaticVideoLoad)
 #: rc.cpp:57
-#, fuzzy
 msgid "Automatically load video file when opening a subtitle"
 msgstr "Automaticky zapni video při otevírání titulků"
 
 #. i18n: file: ../../src/main/configs/generalconfigwidget.ui:67
 #. i18n: ectx: property (title), widget (QGroupBox, m_grpQuickActions)
 #: rc.cpp:60
-#, fuzzy
 msgid "Quick Actions"
 msgstr "Rychlé akce"
 
@@ -2541,49 +2495,42 @@ msgstr "Skoč o čas při hledání:"
 #. i18n: file: ../../src/main/configs/playerconfigwidget.ui:43
 #. i18n: ectx: property (text), widget (QLabel, label_3)
 #: rc.cpp:78
-#, fuzzy
 msgid "VideoPlayer backend:"
-msgstr "Backend přehrávače:"
+msgstr "Backend video přehrávače:"
 
 #. i18n: file: ../../src/main/configs/playerconfigwidget.ui:53
 #. i18n: ectx: property (title), widget (QGroupBox, m_grpSubtitles)
 #: rc.cpp:81
-#, fuzzy
 msgid "Subtitles"
 msgstr "Titulky"
 
 #. i18n: file: ../../src/main/configs/playerconfigwidget.ui:59
 #. i18n: ectx: property (text), widget (QLabel, label_7)
 #: rc.cpp:84
-#, fuzzy
 msgid "Outline color:"
 msgstr "Obrysová barva:"
 
 #. i18n: file: ../../src/main/configs/playerconfigwidget.ui:75
 #. i18n: ectx: property (text), widget (QLabel, label_8)
 #: rc.cpp:87
-#, fuzzy
 msgid "Outline width:"
 msgstr "Obrysová šířka:"
 
 #. i18n: file: ../../src/main/configs/playerconfigwidget.ui:82
 #. i18n: ectx: property (text), widget (QLabel, label_6)
 #: rc.cpp:90
-#, fuzzy
 msgid "Text color:"
-msgstr "Změň na"
+msgstr "Barva textu:"
 
 #. i18n: file: ../../src/main/configs/playerconfigwidget.ui:89
 #. i18n: ectx: property (text), widget (QLabel, label_2)
 #: rc.cpp:93
-#, fuzzy
 msgid "Font family:"
 msgstr "Typ písma:"
 
 #. i18n: file: ../../src/main/configs/playerconfigwidget.ui:96
 #. i18n: ectx: property (text), widget (QLabel, label_5)
 #: rc.cpp:96
-#, fuzzy
 msgid "Font size:"
 msgstr "Velikost písma:"
 
@@ -2591,12 +2538,11 @@ msgstr "Velikost písma:"
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_Antialias)
 #: rc.cpp:99
 msgid "Text Antialiasing"
-msgstr ""
+msgstr "Vyhlazení textu"
 
 #. i18n: file: ../../src/main/configs/playerconfigwidget.ui:130
 #. i18n: ectx: property (title), widget (QGroupBox, m_grpPreview)
 #: rc.cpp:102
-#, fuzzy
 msgid "Subtitles Preview"
 msgstr "Náhled titulků"
 
@@ -2604,162 +2550,147 @@ msgstr "Náhled titulků"
 #. i18n: ectx: property (title), widget (QGroupBox, groupBox_3)
 #: rc.cpp:105
 msgid "Waveform Display"
-msgstr ""
+msgstr "Waveform"
 
 #. i18n: file: ../../src/main/configs/waveformconfigwidget.ui:42
 #. i18n: ectx: property (text), widget (QLabel, label_12)
 #: rc.cpp:108
-#, fuzzy
 msgid "Outer color:"
-msgstr "Obrysová barva:"
+msgstr "Vnější barva:"
 
 #. i18n: file: ../../src/main/configs/waveformconfigwidget.ui:68
 #. i18n: ectx: property (text), widget (QLabel, label_11)
 #: rc.cpp:111
-#, fuzzy
 msgid "Inner color:"
-msgstr "Primární barva:"
+msgstr "Vnitřní barva:"
 
 #. i18n: file: ../../src/main/configs/waveformconfigwidget.ui:78
 #. i18n: ectx: property (title), widget (QGroupBox, m_grpGeneral)
 #: rc.cpp:114
-#, fuzzy
 msgid "Subtitle Display"
 msgstr "Titulky"
 
 #. i18n: file: ../../src/main/configs/waveformconfigwidget.ui:106
 #. i18n: ectx: property (text), widget (QLabel, label_14)
 #: rc.cpp:117
-#, fuzzy
 msgid "Subtitle border color:"
-msgstr "Chyby v titulkách"
+msgstr "Barva hranice titulků:"
 
 #. i18n: file: ../../src/main/configs/waveformconfigwidget.ui:113
 #. i18n: ectx: property (text), widget (QLabel, label_16)
 #: rc.cpp:120
 msgid "Selected background color:"
-msgstr ""
+msgstr "Barva pozadí výběru:"
 
 #. i18n: file: ../../src/main/configs/waveformconfigwidget.ui:120
 #. i18n: ectx: property (text), widget (QLabel, label_15)
 #: rc.cpp:123
-#, fuzzy
 msgid "Subtitle border width:"
-msgstr "Subtitle Composer"
+msgstr "Šířka hranice titulků"
 
 #. i18n: file: ../../src/main/configs/waveformconfigwidget.ui:127
 #. i18n: ectx: property (text), widget (QLabel, label_13)
 #: rc.cpp:126
 msgid "Subtitle background color:"
-msgstr ""
+msgstr "Barva pozadí titulků:"
 
 #. i18n: file: ../../src/main/configs/waveformconfigwidget.ui:153
 #. i18n: ectx: property (text), widget (QLabel, label_17)
 #: rc.cpp:129
-#, fuzzy
 msgid "Selected border color:"
-msgstr "Vymaž označené chyby"
+msgstr "Barva hranice výběru:"
 
 #. i18n: file: ../../src/main/configs/waveformconfigwidget.ui:201
 #. i18n: ectx: property (title), widget (QGroupBox, groupBox)
 #: rc.cpp:132
-#, fuzzy
 msgid "Text Font and Colors"
-msgstr "Změň na"
+msgstr "Písmo a barvy"
 
 #. i18n: file: ../../src/main/configs/waveformconfigwidget.ui:207
 #. i18n: ectx: property (text), widget (QLabel, label_21)
 #: rc.cpp:135
-#, fuzzy
 msgid "Subtitle font family:"
-msgstr "Typ písma:"
+msgstr "Typ písma titulků:"
 
 #. i18n: file: ../../src/main/configs/waveformconfigwidget.ui:217
 #. i18n: ectx: property (text), widget (QLabel, label_22)
 #: rc.cpp:138
-#, fuzzy
 msgid "Subtitle number font size:"
-msgstr "Subtitle Composer"
+msgstr "Velikost písma čísla titulků"
 
 #. i18n: file: ../../src/main/configs/waveformconfigwidget.ui:224
 #. i18n: ectx: property (suffix), widget (QSpinBox, kcfg_wfSubNumberFontSize)
 #. i18n: file: ../../src/main/configs/waveformconfigwidget.ui:264
 #. i18n: ectx: property (suffix), widget (QSpinBox, kcfg_wfSubTextFontSize)
 #: rc.cpp:141 rc.cpp:150
-#, fuzzy
 msgid " pt"
-msgstr "body"
+msgstr " bodů"
 
 #. i18n: file: ../../src/main/configs/waveformconfigwidget.ui:231
 #. i18n: ectx: property (text), widget (QLabel, label_23)
 #: rc.cpp:144
-#, fuzzy
 msgid "Subtitle Number Color"
-msgstr "Subtitle Composer"
+msgstr "Barva písma čísla titulků"
 
 #. i18n: file: ../../src/main/configs/waveformconfigwidget.ui:257
 #. i18n: ectx: property (text), widget (QLabel, label_24)
 #: rc.cpp:147
-#, fuzzy
 msgid "Subtitle text font size:"
-msgstr "Titulkové stopy"
+msgstr "Velikost písma titulků:"
 
 #. i18n: file: ../../src/main/configs/waveformconfigwidget.ui:271
 #. i18n: ectx: property (text), widget (QLabel, label_25)
 #: rc.cpp:153
-#, fuzzy
 msgid "Subtitle Text Color"
-msgstr "Subtitle Composer"
+msgstr "Barva titulků"
 
 #. i18n: file: ../../src/main/configs/waveformconfigwidget.ui:300
 #. i18n: ectx: property (title), widget (QGroupBox, groupBox_2)
 #: rc.cpp:156
-#, fuzzy
 msgid "Line Indicators"
-msgstr "Chyby na řádcích"
+msgstr "Ukazatel řádku"
 
 #. i18n: file: ../../src/main/configs/waveformconfigwidget.ui:306
 #. i18n: ectx: property (text), widget (QLabel, label_31)
 #: rc.cpp:159
 msgid "Player position color:"
-msgstr ""
+msgstr "Barva pozice přehrávače:"
 
 #. i18n: file: ../../src/main/configs/waveformconfigwidget.ui:313
 #. i18n: ectx: property (text), widget (QLabel, label_32)
 #: rc.cpp:162
 msgid "Mouse indicator color:"
-msgstr ""
+msgstr "Barva ukazatele myši:"
 
 #. i18n: file: ../../src/main/scconfig.kcfg:10
 #. i18n: ectx: label, entry (DefaultSubtitlesEncoding), group (General)
 #: rc.cpp:165
 msgid "Default Subtitles Encoding"
-msgstr ""
+msgstr "Výchozí kódování titulků"
 
 #. i18n: file: ../../src/main/scconfig.kcfg:14
 #. i18n: ectx: label, entry (SeekOffsetOnDoubleClick), group (General)
 #: rc.cpp:168
 msgid "Seek Offset On Double Click"
-msgstr ""
+msgstr "Vyhledávací interval při dvojkliku"
 
 #. i18n: file: ../../src/main/scconfig.kcfg:18
 #. i18n: ectx: label, entry (UnpauseOnDoubleClick), group (General)
 #: rc.cpp:171
 msgid "Unpause On Double Click"
-msgstr ""
+msgstr "Odpauzovat při dvojkliku"
 
 #. i18n: file: ../../src/main/scconfig.kcfg:22
 #. i18n: ectx: label, entry (AutomaticVideoLoad), group (General)
 #: rc.cpp:174
-#, fuzzy
 msgid "Automatic Video Load"
-msgstr "Automatický"
+msgstr "Automatické spuštění videa"
 
 #. i18n: file: ../../src/main/scconfig.kcfg:27
 #. i18n: ectx: label, entry (LinesQuickShiftAmount), group (General)
 #: rc.cpp:177
 msgid "Lines Quick Shift Amount"
-msgstr ""
+msgstr "Počet řádků při rychlém posunu"
 
 #. i18n: file: ../../src/main/scconfig.kcfg:31
 #. i18n: ectx: label, entry (GrabbedPositionCompensation), group (General)
@@ -2770,254 +2701,228 @@ msgstr ""
 #. i18n: file: ../../src/main/scconfig.kcfg:38
 #. i18n: ectx: label, entry (MaxCharacters), group (Error Check)
 #: rc.cpp:183
-#, fuzzy
 msgid "Maximum number of characters"
-msgstr "Maximální počet znaků:"
+msgstr "Maximální počet znaků"
 
 #. i18n: file: ../../src/main/scconfig.kcfg:42
 #. i18n: ectx: label, entry (MaxLines), group (Error Check)
 #: rc.cpp:186
-#, fuzzy
 msgid "Maximum number of lines"
-msgstr "Maximální počet řádků:"
+msgstr "Maximální počet řádků"
 
 #. i18n: file: ../../src/main/scconfig.kcfg:47
 #. i18n: ectx: label, entry (MinDuration), group (Error Check)
 #: rc.cpp:189
-#, fuzzy
 msgid "Minimum duration"
-msgstr "Minimální délka trvání:"
+msgstr "Minimální délka trvání"
 
 #. i18n: file: ../../src/main/scconfig.kcfg:51
 #. i18n: ectx: label, entry (MaxDuration), group (Error Check)
 #: rc.cpp:192
-#, fuzzy
 msgid "Maximum duration"
-msgstr "Maximální délka trvání:"
+msgstr "Maximální délka trvání"
 
 #. i18n: file: ../../src/main/scconfig.kcfg:56
 #. i18n: ectx: label, entry (MinDurationPerCharacter), group (Error Check)
 #: rc.cpp:195
-#, fuzzy
 msgid "Minimum duration per character"
-msgstr "Příliš dlouhé trvání na počet písmen"
+msgstr "Minimální trvání na znak"
 
 #. i18n: file: ../../src/main/scconfig.kcfg:60
 #. i18n: ectx: label, entry (MaxDurationPerCharacter), group (Error Check)
 #: rc.cpp:198
-#, fuzzy
 msgid "Maximum duration per character"
-msgstr "Příliš dlouhé trvání na počet písmen"
+msgstr "Maximální trvání na znak"
 
 #. i18n: file: ../../src/main/scconfig.kcfg:72
 #. i18n: ectx: label, entry (DefaultLanguage), group (Spelling)
 #: rc.cpp:204
-#, fuzzy
 msgid "Default Language"
-msgstr "Vstupní jazyk:"
+msgstr "Výchozí jazyk"
 
 #. i18n: file: ../../src/main/scconfig.kcfg:76
 #. i18n: ectx: label, entry (DefaultClient), group (Spelling)
 #: rc.cpp:207
-#, fuzzy
 msgid "Default client"
-msgstr "Vstupní jazyk:"
+msgstr "Výchozí klient"
 
 #. i18n: file: ../../src/main/scconfig.kcfg:80
 #. i18n: ectx: label, entry (CheckUppercase), group (Spelling)
 #: rc.cpp:210
-#, fuzzy
 msgid "Check uppercase"
-msgstr "Velká písmena"
+msgstr "Kontroluj velká písmena"
 
 #. i18n: file: ../../src/main/scconfig.kcfg:84
 #. i18n: ectx: label, entry (SkipRunTogether), group (Spelling)
 #: rc.cpp:213
 msgid "Skip Run Together"
-msgstr ""
+msgstr "Přeskoč Run Together"
 
 #. i18n: file: ../../src/main/scconfig.kcfg:91
 #. i18n: ectx: label, entry (wfInnerColor), group (Waveform Widget)
 #: rc.cpp:216
 msgid "Waveform Inner Color"
-msgstr ""
+msgstr "Waveform vnitřní barva"
 
 #. i18n: file: ../../src/main/scconfig.kcfg:95
 #. i18n: ectx: label, entry (wfOuterColor), group (Waveform Widget)
 #: rc.cpp:219
-#, fuzzy
 msgid "Waveform Outer Color"
-msgstr "Obrysová barva:"
+msgstr "Waveform vnější barva"
 
 #. i18n: file: ../../src/main/scconfig.kcfg:99
 #. i18n: ectx: label, entry (wfSubBackground), group (Waveform Widget)
 #: rc.cpp:222
 msgid "Waveform Subtitle Background Color"
-msgstr ""
+msgstr "Waveform barva pozadí titulků"
 
 #. i18n: file: ../../src/main/scconfig.kcfg:103
 #. i18n: ectx: label, entry (wfSubBorder), group (Waveform Widget)
 #: rc.cpp:225
 msgid "Waveform Subtitle Border Color"
-msgstr ""
+msgstr "Waveform barva hranice titulků"
 
 #. i18n: file: ../../src/main/scconfig.kcfg:107
 #. i18n: ectx: label, entry (wfSubBorderWidth), group (Waveform Widget)
 #: rc.cpp:228
 msgid "Waveform Subtitle Border Width"
-msgstr ""
+msgstr "Waveform šířka hranice titulků"
 
 #. i18n: file: ../../src/main/scconfig.kcfg:111
 #. i18n: ectx: label, entry (wfSelBackground), group (Waveform Widget)
 #: rc.cpp:231
 msgid "Waveform Selected Subtitle Background Color"
-msgstr ""
+msgstr "Waveform barva pozadí vybraných titulků"
 
 #. i18n: file: ../../src/main/scconfig.kcfg:115
 #. i18n: ectx: label, entry (wfSelBorder), group (Waveform Widget)
 #: rc.cpp:234
 msgid "Waveform Selected Subtitle Border Color"
-msgstr ""
+msgstr "Waveform barva hranice vybraných titulků"
 
 #. i18n: file: ../../src/main/scconfig.kcfg:119
 #. i18n: ectx: label, entry (wfFontFamily), group (Waveform Widget)
 #. i18n: file: ../../src/main/scconfig.kcfg:163
 #. i18n: ectx: label, entry (FontFamily), group (VideoPlayer)
 #: rc.cpp:237 rc.cpp:267
-#, fuzzy
 msgid "Font Family"
-msgstr "Typ písma:"
+msgstr "Typ písma"
 
 #. i18n: file: ../../src/main/scconfig.kcfg:123
 #. i18n: ectx: label, entry (wfSubNumberFontSize), group (Waveform Widget)
 #: rc.cpp:240
 msgid "Subtitle Number Font Size"
-msgstr ""
+msgstr "Velikost písma čísla titulků"
 
 #. i18n: file: ../../src/main/scconfig.kcfg:127
 #. i18n: ectx: label, entry (wfSubNumberColor), group (Waveform Widget)
 #: rc.cpp:243
-#, fuzzy
 msgid "Subtitle Number Font Color"
-msgstr "Subtitle Composer"
+msgstr "Barva písma čísla titulků"
 
 #. i18n: file: ../../src/main/scconfig.kcfg:131
 #. i18n: ectx: label, entry (wfSubTextFontSize), group (Waveform Widget)
 #: rc.cpp:246
-#, fuzzy
 msgid "Subtitle Text Font Size"
-msgstr "Náhled titulků"
+msgstr "Velikost písma titulků"
 
 #. i18n: file: ../../src/main/scconfig.kcfg:135
 #. i18n: ectx: label, entry (wfSubTextColor), group (Waveform Widget)
 #: rc.cpp:249
-#, fuzzy
 msgid "Subtitle Text Font Color"
-msgstr "Subtitle Composer"
+msgstr "Barva písma titulků"
 
 #. i18n: file: ../../src/main/scconfig.kcfg:139
 #. i18n: ectx: label, entry (wfMouseLocation), group (Waveform Widget)
 #: rc.cpp:252
 msgid "Mouse Location Line Color"
-msgstr ""
+msgstr "Barva řádku při najetí myší"
 
 #. i18n: file: ../../src/main/scconfig.kcfg:143
 #. i18n: ectx: label, entry (wfPlayLocation), group (Waveform Widget)
 #: rc.cpp:255
 msgid "Play Location Line Color"
-msgstr ""
+msgstr "Barva přehrávaného řádku"
 
 #. i18n: file: ../../src/main/scconfig.kcfg:150
 #. i18n: ectx: label, entry (PlayerBackend), group (VideoPlayer)
 #: rc.cpp:258
-#, fuzzy
 msgid "VideoPlayer Backend"
-msgstr "Backend přehrávače:"
+msgstr "Backend video přehrávače"
 
 #. i18n: file: ../../src/main/scconfig.kcfg:154
 #. i18n: ectx: label, entry (SeekJumpLength), group (VideoPlayer)
 #: rc.cpp:261
-#, fuzzy
 msgid "Jump length on seek"
 msgstr "Skoč o čas při hledání:"
 
 #. i18n: file: ../../src/main/scconfig.kcfg:158
 #. i18n: ectx: label, entry (ShowPositionTimeEdit), group (VideoPlayer)
 #: rc.cpp:264
-#, fuzzy
 msgid "Show editable time position"
 msgstr "Zobraz prvek pro nastavení pozice"
 
 #. i18n: file: ../../src/main/scconfig.kcfg:167
 #. i18n: ectx: label, entry (FontPointSize), group (VideoPlayer)
 #: rc.cpp:270
-#, fuzzy
 msgid "Font Size"
-msgstr "Velikost písma:"
+msgstr "Velikost písma"
 
 #. i18n: file: ../../src/main/scconfig.kcfg:171
 #. i18n: ectx: label, entry (FontColor), group (VideoPlayer)
 #: rc.cpp:273
-#, fuzzy
 msgid "Font Color"
-msgstr "Změň na"
+msgstr "Barva písma"
 
 #. i18n: file: ../../src/main/scconfig.kcfg:175
 #. i18n: ectx: label, entry (OutlineColor), group (VideoPlayer)
 #: rc.cpp:276
-#, fuzzy
 msgid "Outline Color"
-msgstr "Obrysová barva:"
+msgstr "Obrysová barva"
 
 #. i18n: file: ../../src/main/scconfig.kcfg:179
 #. i18n: ectx: label, entry (OutlineWidth), group (VideoPlayer)
 #: rc.cpp:279
-#, fuzzy
 msgid "Outline Width"
-msgstr "Obrysová šířka:"
+msgstr "Obrysová šířka"
 
 #. i18n: file: ../../src/main/scconfig.kcfg:183
 #. i18n: ectx: label, entry (Antialias), group (VideoPlayer)
 #: rc.cpp:282
 msgid "Font Antialiasing"
-msgstr ""
+msgstr "Vyhlazení písma"
 
 #. i18n: file: ../../src/main/scconfig.kcfg:190
 #. i18n: ectx: label, entry (gstVideoSinkAuto), group (GStreamer)
 #: rc.cpp:285
-#, fuzzy
 msgid "Auto Video Sink"
-msgstr "Zpomalení videa:"
+msgstr "Automatický video výstup"
 
 #. i18n: file: ../../src/main/scconfig.kcfg:194
 #. i18n: ectx: label, entry (gstVideoSink), group (GStreamer)
 #: rc.cpp:288
-#, fuzzy
 msgid "Video Sink"
-msgstr "Zpomalení videa:"
+msgstr "Video výstup"
 
 #. i18n: file: ../../src/main/scconfig.kcfg:199
 #. i18n: ectx: label, entry (gstAudioSinkAuto), group (GStreamer)
 #: rc.cpp:291
-#, fuzzy
 msgid "Auto Audio Sink"
-msgstr "Ztišení zvuku:"
+msgstr "Automatický audio výstup"
 
 #. i18n: file: ../../src/main/scconfig.kcfg:203
 #. i18n: ectx: label, entry (gstAudioSink), group (GStreamer)
 #: rc.cpp:294
-#, fuzzy
 msgid "Audio Sink"
-msgstr "Ztišení zvuku:"
+msgstr "Audio výstup (sink)"
 
 #. i18n: file: ../../src/main/scconfig.kcfg:210
 #. i18n: ectx: label, entry (mpvCacheEnabled), group (MPV)
 #. i18n: file: ../../src/main/scconfig.kcfg:279
 #. i18n: ectx: label, entry (mpCacheEnabled), group (MPlayer)
 #: rc.cpp:297 rc.cpp:345
-#, fuzzy
 msgid "Cache Enabled"
-msgstr "Video soubory"
+msgstr "Cache povolena"
 
 #. i18n: file: ../../src/main/scconfig.kcfg:214
 #. i18n: ectx: label, entry (mpvCacheSize), group (MPV)
@@ -3025,16 +2930,15 @@ msgstr "Video soubory"
 #. i18n: ectx: label, entry (mpCacheSize), group (MPlayer)
 #: rc.cpp:300 rc.cpp:348
 msgid "Cache Size (KB)"
-msgstr ""
+msgstr "Velikost cache (KB)"
 
 #. i18n: file: ../../src/main/scconfig.kcfg:218
 #. i18n: ectx: label, entry (mpvAutoSyncEnabled), group (MPV)
 #. i18n: file: ../../src/main/scconfig.kcfg:291
 #. i18n: ectx: label, entry (mpAutoSyncEnabled), group (MPlayer)
 #: rc.cpp:303 rc.cpp:354
-#, fuzzy
 msgid "Auto Sync Enabled"
-msgstr "Zvukové soubory"
+msgstr "Auto Sync povoleno"
 
 #. i18n: file: ../../src/main/scconfig.kcfg:222
 #. i18n: ectx: label, entry (mpvAutoSyncFactor), group (MPV)
@@ -3042,16 +2946,15 @@ msgstr "Zvukové soubory"
 #. i18n: ectx: label, entry (mpAutoSyncFactor), group (MPlayer)
 #: rc.cpp:306 rc.cpp:357
 msgid "Auto Sync Factor"
-msgstr ""
+msgstr "Automatický synchronizační faktor"
 
 #. i18n: file: ../../src/main/scconfig.kcfg:227
 #. i18n: ectx: label, entry (mpvVideoOutputEnabled), group (MPV)
 #. i18n: file: ../../src/main/scconfig.kcfg:300
 #. i18n: ectx: label, entry (mpVideoOutputEnabled), group (MPlayer)
 #: rc.cpp:309 rc.cpp:360
-#, fuzzy
 msgid "Video Output Enabled"
-msgstr "Výstupní ovladač videa:"
+msgstr "Video výstup povolen"
 
 #. i18n: file: ../../src/main/scconfig.kcfg:231
 #. i18n: ectx: label, entry (mpvVideoOutput), group (MPV)
@@ -3060,16 +2963,14 @@ msgstr "Výstupní ovladač videa:"
 #. i18n: file: ../../src/main/scconfig.kcfg:356
 #. i18n: ectx: label, entry (xineVideo), group (Xine)
 #: rc.cpp:312 rc.cpp:363 rc.cpp:399
-#, fuzzy
 msgid "Video Output"
-msgstr "Výstupní ovladač videa:"
+msgstr "Video výstup"
 
 #. i18n: file: ../../src/main/scconfig.kcfg:235
 #. i18n: ectx: label, entry (mpvHwDecodeEnabled), group (MPV)
 #: rc.cpp:315
-#, fuzzy
 msgid "Hardware Decode Enabled"
-msgstr "Video soubory"
+msgstr "Hardwarové zpracování povoleno"
 
 #. i18n: file: ../../src/main/scconfig.kcfg:239
 #. i18n: ectx: label, entry (mpvHwDecode), group (MPV)
@@ -3077,25 +2978,23 @@ msgstr "Video soubory"
 #. i18n: ectx: label, entry (mpVdpau), group (MPlayer)
 #: rc.cpp:318 rc.cpp:366
 msgid "Hardware Decode"
-msgstr ""
+msgstr "Hardwarové zpracování"
 
 #. i18n: file: ../../src/main/scconfig.kcfg:243
 #. i18n: ectx: label, entry (mpvFrameDropping), group (MPV)
 #. i18n: file: ../../src/main/scconfig.kcfg:312
 #. i18n: ectx: label, entry (mpFrameDropping), group (MPlayer)
 #: rc.cpp:321 rc.cpp:369
-#, fuzzy
 msgid "Frame Dropping"
-msgstr "Povol zahazování snímků"
+msgstr "Zahazování snímků"
 
 #. i18n: file: ../../src/main/scconfig.kcfg:248
 #. i18n: ectx: label, entry (mpvAudioOutputEnabled), group (MPV)
 #. i18n: file: ../../src/main/scconfig.kcfg:321
 #. i18n: ectx: label, entry (mpAudioOutputEnabled), group (MPlayer)
 #: rc.cpp:324 rc.cpp:375
-#, fuzzy
 msgid "Audio Output Enabled"
-msgstr "Výstupní zvukový ovladač:"
+msgstr "Zvukový výstup povolen"
 
 #. i18n: file: ../../src/main/scconfig.kcfg:252
 #. i18n: ectx: label, entry (mpvAudioOutput), group (MPV)
@@ -3104,82 +3003,72 @@ msgstr "Výstupní zvukový ovladač:"
 #. i18n: file: ../../src/main/scconfig.kcfg:365
 #. i18n: ectx: label, entry (xineAudio), group (Xine)
 #: rc.cpp:327 rc.cpp:378 rc.cpp:405
-#, fuzzy
 msgid "Audio Output"
-msgstr "Výstupní zvukový ovladač:"
+msgstr "Zvukový výstup"
 
 #. i18n: file: ../../src/main/scconfig.kcfg:256
 #. i18n: ectx: label, entry (mpvAudioChannelsEnabled), group (MPV)
 #. i18n: file: ../../src/main/scconfig.kcfg:329
 #. i18n: ectx: label, entry (mpAudioChannelsEnabled), group (MPlayer)
 #: rc.cpp:330 rc.cpp:381
-#, fuzzy
 msgid "Audio Channels Enabled"
-msgstr "&Audio Levels"
+msgstr "&Zvukové kanály povoleny"
 
 #. i18n: file: ../../src/main/scconfig.kcfg:260
 #. i18n: ectx: label, entry (mpvAudioChannels), group (MPV)
 #. i18n: file: ../../src/main/scconfig.kcfg:333
 #. i18n: ectx: label, entry (mpAudioChannels), group (MPlayer)
 #: rc.cpp:333 rc.cpp:384
-#, fuzzy
 msgid "Audio Channels"
-msgstr "&Audio Levels"
+msgstr "&Zvukové kanály"
 
 #. i18n: file: ../../src/main/scconfig.kcfg:264
 #. i18n: ectx: label, entry (mpvVolumeAmplificationEnabled), group (MPV)
 #. i18n: file: ../../src/main/scconfig.kcfg:337
 #. i18n: ectx: label, entry (mpVolumeAmplificationEnabled), group (MPlayer)
 #: rc.cpp:336 rc.cpp:387
-#, fuzzy
 msgid "Volume Amplification Enabled"
-msgstr "Normalizace hlasitosti"
+msgstr "Zesílení hlasitosti povoleno"
 
 #. i18n: file: ../../src/main/scconfig.kcfg:268
 #. i18n: ectx: label, entry (mpvVolumeAmplification), group (MPV)
 #. i18n: file: ../../src/main/scconfig.kcfg:341
 #. i18n: ectx: label, entry (mpVolumeAmplification), group (MPlayer)
 #: rc.cpp:339 rc.cpp:390
-#, fuzzy
 msgid "Volume Amplification"
-msgstr "Normalizace hlasitosti"
+msgstr "Zesílení hlasitosti"
 
 #. i18n: file: ../../src/main/scconfig.kcfg:272
 #. i18n: ectx: label, entry (mpvVolumeNormalization), group (MPV)
 #. i18n: file: ../../src/main/scconfig.kcfg:345
 #. i18n: ectx: label, entry (mpVolumeNormalization), group (MPlayer)
 #: rc.cpp:342 rc.cpp:393
-#, fuzzy
 msgid "Volume Normalization"
 msgstr "Normalizace hlasitosti"
 
 #. i18n: file: ../../src/main/scconfig.kcfg:287
 #. i18n: ectx: label, entry (mpExecutablePath), group (MPlayer)
 #: rc.cpp:351
-#, fuzzy
 msgid "mplayer executable path"
-msgstr "Spustitelná cesta:"
+msgstr "Spustitelná cesta pro mplayer:"
 
 #. i18n: file: ../../src/main/scconfig.kcfg:316
 #. i18n: ectx: label, entry (mpHardFrameDropping), group (MPlayer)
 #: rc.cpp:372
-#, fuzzy
 msgid "Hard Frame Dropping"
-msgstr "Povol silné zahazování snímků"
+msgstr "Silné zahazování snímků"
 
 #. i18n: file: ../../src/main/scconfig.kcfg:352
 #. i18n: ectx: label, entry (xineVideoEnabled), group (Xine)
 #: rc.cpp:396
-#, fuzzy
 msgid "Video Enabled"
-msgstr "Video soubory"
+msgstr "Video povoleno"
 
 #. i18n: file: ../../src/main/scconfig.kcfg:361
 #. i18n: ectx: label, entry (xineAudioEnabled), group (Xine)
 #: rc.cpp:402
-#, fuzzy
 msgid "Audio Enabled"
-msgstr "Zvukové soubory"
+msgstr "Zvuk povolen"
 
 #. i18n: file: ../../src/main/scripting/scriptsmanager.ui:14
 #. i18n: ectx: property (windowTitle), widget (QDialog, ScriptsManager)
@@ -3262,7 +3151,6 @@ msgstr "&Soubor"
 #. i18n: file: ../../src/main/subtitlecomposerui.rc:17
 #. i18n: ectx: Menu (translation)
 #: rc.cpp:450
-#, fuzzy
 msgid "Translation"
 msgstr "Překlad"
 
@@ -3317,7 +3205,6 @@ msgstr "Hlavní lišta"
 #. i18n: file: ../../src/main/subtitlecomposerui.rc:158
 #. i18n: ectx: ToolBar (editToolBar)
 #: rc.cpp:477
-#, fuzzy
 msgid "Edit Toolbar"
 msgstr "Nástrojová lišta"
 
@@ -3325,13 +3212,13 @@ msgstr "Nástrojová lišta"
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_gstVideoSinkAuto)
 #: rc.cpp:483
 msgid "Video sink:"
-msgstr "Zpomalení videa:"
+msgstr "Video výstup (sink):"
 
 #. i18n: file: ../../src/videoplayerplugins/gstreamer/gstreamerconfigwidget.ui:40
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_gstAudioSinkAuto)
 #: rc.cpp:486
 msgid "Audio sink:"
-msgstr "Ztišení zvuku:"
+msgstr "Zvukový výstup (sink):"
 
 #. i18n: file: ../../src/videoplayerplugins/mplayer/mplayerconfigwidget.ui:29
 #. i18n: ectx: property (text), widget (QLabel, label)
@@ -3354,7 +3241,6 @@ msgstr "A/V synchronizační faktor:"
 #. i18n: file: ../../src/videoplayerplugins/xine/xineconfigwidget.ui:20
 #. i18n: ectx: property (title), widget (QGroupBox, grpVideo)
 #: rc.cpp:498 rc.cpp:540 rc.cpp:573
-#, fuzzy
 msgid "Video"
 msgstr "Video"
 
@@ -3370,7 +3256,7 @@ msgstr "Výstupní ovladač videa:"
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_mpVdpau)
 #: rc.cpp:504
 msgid "Enable VDPAU for DivX/XviD"
-msgstr ""
+msgstr "Zapnout VDPAU pro DivX/XviD"
 
 #. i18n: file: ../../src/videoplayerplugins/mplayer/mplayerconfigwidget.ui:80
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_mpFrameDropping)
@@ -3393,7 +3279,6 @@ msgstr "Povol silné zahazování snímků"
 #. i18n: file: ../../src/videoplayerplugins/xine/xineconfigwidget.ui:43
 #. i18n: ectx: property (title), widget (QGroupBox, grpAudio)
 #: rc.cpp:513 rc.cpp:552 rc.cpp:579
-#, fuzzy
 msgid "Audio"
 msgstr "Zvuk"
 
@@ -3410,18 +3295,16 @@ msgstr "Výstupní zvukový ovladač:"
 #. i18n: file: ../../src/videoplayerplugins/mpv/mpvconfigwidget.ui:100
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_mpvAudioChannelsEnabled)
 #: rc.cpp:519 rc.cpp:558
-#, fuzzy
 msgid "Audio channels:"
-msgstr "&Audio Levels"
+msgstr "&Zvukové kanály:"
 
 #. i18n: file: ../../src/videoplayerplugins/mplayer/mplayerconfigwidget.ui:117
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_mpVolumeAmplificationEnabled)
 #. i18n: file: ../../src/videoplayerplugins/mpv/mpvconfigwidget.ui:93
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_mpvVolumeAmplificationEnabled)
 #: rc.cpp:522 rc.cpp:555
-#, fuzzy
 msgid "Volume amplification:"
-msgstr "Normalizace hlasitosti"
+msgstr "Zesílení hlasitosti:"
 
 #. i18n: file: ../../src/videoplayerplugins/mplayer/mplayerconfigwidget.ui:149
 #. i18n: ectx: property (text), widget (QLabel, m_volumeAmplificationLabel)
@@ -3432,7 +3315,6 @@ msgstr "Normalizace hlasitosti"
 #. i18n: file: ../../src/videoplayerplugins/mpv/mpvconfigwidget.ui:168
 #. i18n: ectx: property (text), widget (QLabel, lab_mpvAudioChannels)
 #: rc.cpp:525 rc.cpp:528 rc.cpp:564 rc.cpp:567
-#, fuzzy
 msgid "TextLabel"
 msgstr "Text"
 
@@ -3448,7 +3330,7 @@ msgstr "Normalizace hlasitosti"
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_mpvHwDecodeEnabled)
 #: rc.cpp:543
 msgid "Hardware video decoding:"
-msgstr ""
+msgstr "Hardwarové zpracování videa"
 
 #. i18n: file: ../../src/videoplayerplugins/xine/xineconfigwidget.ui:33
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_xineVideoEnabled)
@@ -3461,6 +3343,12 @@ msgstr "Video ovladač:"
 #: rc.cpp:582
 msgid "Audio driver:"
 msgstr "Zvukový ovladač:"
+
+msgid " lines"
+msgstr " řádky"
+
+msgid " secs"
+msgstr " s"
 
 #, fuzzy
 #~ msgid "Decoder Backend"
@@ -3496,15 +3384,13 @@ msgstr "Zvukový ovladač:"
 #~ msgid "Texts"
 #~ msgstr "Texty"
 
-#~ msgid " lines"
-#~ msgstr "řádky"
+
 
 #~ msgctxt "@title:group General settings"
 #~ msgid "General"
 #~ msgstr "Obecné"
 
-#~ msgid " secs"
-#~ msgstr "s"
+
 
 #~ msgid " pixels"
 #~ msgstr "pixelů"
