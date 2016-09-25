@@ -27,7 +27,7 @@
 
 #include <QAbstractItemModel>
 #include <QStyledItemDelegate>
-#include <QStyleOptionViewItemV4>
+#include <QStyleOptionViewItem>
 #include <QPen>
 #include <QIcon>
 #include <QPixmap>
@@ -127,9 +127,9 @@ protected:
 
 	virtual void paint(QPainter *painter, const QStyleOptionViewItem &option, const QModelIndex &index) const;
 
-	void drawBackgroundPrimitive(QPainter *painter, const QStyle *style, const QStyleOptionViewItemV4 &option) const;
+	void drawBackgroundPrimitive(QPainter *painter, const QStyle *style, const QStyleOptionViewItem &option) const;
 
-	void drawTextPrimitive(QPainter *painter, const QStyle *style, const QStyleOptionViewItemV4 &option, const QRect &rect, QPalette::ColorGroup cg, const QModelIndex &index) const;
+	void drawTextPrimitive(QPainter *painter, const QStyle *style, const QStyleOptionViewItem &option, const QRect &rect, QPalette::ColorGroup cg, const QModelIndex &index) const;
 
 private:
 	bool m_useStyle;

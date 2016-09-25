@@ -477,7 +477,7 @@ LinesItemDelegate::eventFilter(QObject *object, QEvent *event)
 }
 
 void
-LinesItemDelegate::drawBackgroundPrimitive(QPainter *painter, const QStyle *style, const QStyleOptionViewItemV4 &option) const
+LinesItemDelegate::drawBackgroundPrimitive(QPainter *painter, const QStyle *style, const QStyleOptionViewItem &option) const
 {
 	if(m_useStyle) {
 		style->drawPrimitive(QStyle::PE_PanelItemViewItem, &option, painter, option.widget);
@@ -506,7 +506,7 @@ LinesItemDelegate::drawBackgroundPrimitive(QPainter *painter, const QStyle *styl
 }
 
 void
-LinesItemDelegate::drawTextPrimitive(QPainter *painter, const QStyle *style, const QStyleOptionViewItemV4 &option, const QRect &rect, QPalette::ColorGroup cg, const QModelIndex &index) const
+LinesItemDelegate::drawTextPrimitive(QPainter *painter, const QStyle *style, const QStyleOptionViewItem &option, const QRect &rect, QPalette::ColorGroup cg, const QModelIndex &index) const
 {
 	const int textMargin = style->pixelMetric(QStyle::PM_FocusFrameHMargin, 0, option.widget) + 1;
 	const int alignment = QStyle::visualAlignment(option.direction, option.displayAlignment);
@@ -571,7 +571,7 @@ LinesItemDelegate::drawTextPrimitive(QPainter *painter, const QStyle *style, con
 void
 LinesItemDelegate::paint(QPainter *painter, const QStyleOptionViewItem &opt, const QModelIndex &index) const
 {
-	QStyleOptionViewItemV4 option = opt;
+	QStyleOptionViewItem option = opt;
 	initStyleOption(&option, index);
 
 	const QWidget *widget = option.widget;
