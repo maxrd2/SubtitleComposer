@@ -64,6 +64,8 @@ public:
 
 	QWidget *infoSidebarWidget();
 
+	void pauseAfterPlayingLine(const SubtitleLine *line);
+
 public slots:
 	void setSubtitle(Subtitle *subtitle = 0);
 	void setTranslationMode(bool enabled);
@@ -83,6 +85,7 @@ private:
 	static QToolButton * createToolButton(QWidget *parent, const char *name, int size);
 
 	void updateOverlayLine(const Time &videoPosition);
+	void updatePlayingLine(const Time &videoPosition);
 	void setOverlayLine(SubtitleLine *line);
 	void setPlayingLine(SubtitleLine *line);
 
@@ -123,6 +126,8 @@ private:
 	bool m_showTranslation;
 	SubtitleLine *m_overlayLine;            // the line being shown or to be shown next
 	SubtitleLine *m_playingLine;            // the line being shown or the last one shown
+
+	const SubtitleLine *m_pauseAfterPlayingLine;
 
 	int m_fullScreenTID;
 	bool m_fullScreenMode;

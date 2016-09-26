@@ -61,7 +61,8 @@ PlayerWidget::PlayerWidget(QWidget *parent) :
 	m_translationMode(false),
 	m_showTranslation(false),
 	m_overlayLine(0),
-	m_playingLine(0),
+	m_playingLine(nullptr),
+	m_pauseAfterPlayingLine(nullptr),
 	m_fullScreenTID(0),
 	m_fullScreenMode(false),
 	m_player(VideoPlayer::instance()),
@@ -487,7 +488,7 @@ PlayerWidget::setSubtitle(Subtitle *subtitle)
 		m_subtitle = 0;                 // has to be set to 0 for invalidateOverlayLine
 
 		invalidateOverlayLine();
-		setPlayingLine(0);
+		setPlayingLine(nullptr);
 	}
 
 	m_subtitle = subtitle;
@@ -514,7 +515,7 @@ PlayerWidget::setShowTranslation(bool showTranslation)
 		m_showTranslation = showTranslation;
 
 		invalidateOverlayLine();
-		setPlayingLine(0);
+		setPlayingLine(nullptr);
 	}
 }
 
@@ -545,7 +546,6 @@ PlayerWidget::updateOverlayLine(const Time &videoPosition)
 			if(videoPosition >= m_overlayLine->showTime()) { // m_overlayLine is the line to show
 				const SString &text = m_showTranslation ? m_overlayLine->secondaryText() : m_overlayLine->primaryText();
 				m_textOverlay->setText(text.richString(SString::Verbose));
-				setPlayingLine(m_overlayLine);
 			}
 			return;
 		} else {
@@ -567,13 +567,54 @@ PlayerWidget::updateOverlayLine(const Time &videoPosition)
 				if(m_overlayLine->showTime() <= videoPosition && videoPosition <= m_overlayLine->hideTime()) {
 					const SString &text = m_showTranslation ? m_overlayLine->secondaryText() : m_overlayLine->primaryText();
 					m_textOverlay->setText(text.richString(SString::Verbose));
-					setPlayingLine(m_overlayLine);
 				}
 				return;
 			}
 		}
-		setPlayingLine(0);
 	}
+}
+
+void
+PlayerWidget::updatePlayingLine(const Time &videoPosition)
+{
+	if(!m_subtitle)
+		return;
+
+	// playing line is already correct
+	if(m_playingLine && videoPosition <= m_playingLine->hideTime() && videoPosition >= m_playingLine->showTime())
+		return;
+
+	// pause if requested
+	if(m_pauseAfterPlayingLine && videoPosition >= m_pauseAfterPlayingLine->hideTime()) {
+		m_player->pause();
+		setPlayingLine(const_cast<SubtitleLine *>(m_pauseAfterPlayingLine));
+		m_pauseAfterPlayingLine = nullptr;
+		return;
+	}
+
+	// overlay line is playing line
+	if(m_overlayLine && videoPosition <= m_overlayLine->hideTime() && videoPosition >= m_overlayLine->showTime()) {
+		setPlayingLine(m_overlayLine);
+		return;
+	}
+
+	// iterate through all lines and find the playing line
+	SubtitleIterator it(*m_subtitle);
+	while(it.current()) {
+		if(videoPosition <= it.current()->hideTime() && videoPosition >= it.current()->showTime()) {
+			setPlayingLine(it.current());
+			return;
+		}
+		++it;
+	}
+
+	setPlayingLine(nullptr);
+}
+
+void
+PlayerWidget::pauseAfterPlayingLine(const SubtitleLine *line)
+{
+	m_pauseAfterPlayingLine = line;
 }
 
 void
@@ -658,6 +699,7 @@ PlayerWidget::onSeekSliderValueChanged(int value)
 {
 	if(m_updateVideoPosition) {
 		m_updatePositionControls = MAGIC_NUMBER;
+		pauseAfterPlayingLine(nullptr);
 		m_player->seek(m_player->length() * value / 1000.0, true);
 	}
 }
@@ -665,6 +707,7 @@ PlayerWidget::onSeekSliderValueChanged(int value)
 void
 PlayerWidget::onSeekSliderMoved(int value)
 {
+	pauseAfterPlayingLine(nullptr);
 	m_player->seek(m_player->length() * value / 1000.0, false);
 
 	Time time((long)(m_player->length() * value));
@@ -681,6 +724,7 @@ PlayerWidget::onPositionEditValueChanged(int position)
 {
 	if(m_positionEdit->hasFocus()) {
 		m_updatePositionControls = MAGIC_NUMBER;
+		pauseAfterPlayingLine(nullptr);
 		m_player->seek(position / 1000.0, true);
 	}
 }
@@ -777,7 +821,7 @@ PlayerWidget::onPlayerPositionChanged(double seconds)
 {
 	if(m_updatePositionControls > 0) {
 		if(seconds >= 0) {
-			Time videoPosition((long)(seconds * 1000));
+			Time videoPosition(seconds * 1000.);
 
 			m_positionLabel->setText(videoPosition.toString());
 			m_fsPositionLabel->setText(videoPosition.toString(false) + m_lengthString);
@@ -786,6 +830,7 @@ PlayerWidget::onPlayerPositionChanged(double seconds)
 				m_positionEdit->setValue(videoPosition.toMillis());
 
 			updateOverlayLine(videoPosition);
+			updatePlayingLine(videoPosition);
 
 			int sliderValue = (int)((seconds / m_player->length()) * 1000);
 
@@ -797,8 +842,9 @@ PlayerWidget::onPlayerPositionChanged(double seconds)
 			m_positionLabel->setText(i18n("<i>Unknown</i>"));
 			m_fsPositionLabel->setText(Time().toString(false) + m_lengthString);
 		}
-	} else if(m_updatePositionControls < 0)
+	} else if(m_updatePositionControls < 0) {
 		m_updatePositionControls += 2;
+	}
 }
 
 void
@@ -827,7 +873,7 @@ PlayerWidget::onPlayerStopped()
 	m_seekSlider->setEnabled(false);
 	m_fsSeekSlider->setEnabled(false);
 
-	setPlayingLine(0);
+	setPlayingLine(nullptr);
 
 	updatePositionEditVisibility();
 }

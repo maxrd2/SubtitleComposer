@@ -2595,6 +2595,7 @@ void
 Application::seekBackwards()
 {
 	double position = m_player->position() - SCConfig::seekJumpLength();
+	m_playerWidget->pauseAfterPlayingLine(nullptr);
 	m_player->seek(position > 0.0 ? position : 0.0, false);
 }
 
@@ -2602,16 +2603,21 @@ void
 Application::seekForwards()
 {
 	double position = m_player->position() + SCConfig::seekJumpLength();
+	m_playerWidget->pauseAfterPlayingLine(nullptr);
 	m_player->seek(position <= m_player->length() ? position : m_player->length(), false);
 }
 
 void
 Application::seekToPrevLine()
 {
-	SubtitleLine *overlayLine = m_playerWidget->overlayLine();
-	if(overlayLine) {
-		SubtitleLine *prevLine = overlayLine->prevLine();
+	int selectedIndex = m_linesWidget->firstSelectedIndex();
+	if(selectedIndex < 0)
+		return;
+	SubtitleLine *currentLine = m_subtitle->line(selectedIndex);
+	if(currentLine) {
+		SubtitleLine *prevLine = currentLine->prevLine();
 		if(prevLine) {
+			m_playerWidget->pauseAfterPlayingLine(nullptr);
 			m_player->seek(prevLine->showTime().toSeconds() - SCConfig::jumpLineOffset() / 1000.0, true);
 			m_linesWidget->setCurrentLine(prevLine);
 			m_curLineWidget->setCurrentLine(prevLine);
@@ -2630,17 +2636,21 @@ Application::playOnlyCurrentLine()
 		if(!m_player->isPlaying())
 			m_player->play();
 		m_player->seek(currentLine->showTime().toSeconds() - SCConfig::jumpLineOffset() / 1000.0, true);
-		m_player->pauseAt(currentLine->hideTime().toSeconds());
+		m_playerWidget->pauseAfterPlayingLine(currentLine);
 	}
 }
 
 void
 Application::seekToNextLine()
 {
-	SubtitleLine *overlayLine = m_playerWidget->overlayLine();
-	if(overlayLine) {
-		SubtitleLine *nextLine = overlayLine->nextLine();
+	int selectedIndex = m_linesWidget->firstSelectedIndex();
+	if(selectedIndex < 0)
+		return;
+	SubtitleLine *currentLine = m_subtitle->line(selectedIndex);
+	if(currentLine) {
+		SubtitleLine *nextLine = currentLine->nextLine();
 		if(nextLine) {
+			m_playerWidget->pauseAfterPlayingLine(nullptr);
 			m_player->seek(nextLine->showTime().toSeconds() - SCConfig::jumpLineOffset() / 1000.0, true);
 			m_linesWidget->setCurrentLine(nextLine);
 			m_curLineWidget->setCurrentLine(nextLine);
@@ -2861,6 +2871,7 @@ Application::onWaveformDoubleClicked(Time time)
 	if(m_player->state() == VideoPlayer::Ready)
 		m_player->play();
 
+	m_playerWidget->pauseAfterPlayingLine(nullptr);
 	m_player->seek(time.toSeconds(), true);
 }
 
@@ -2871,6 +2882,7 @@ Application::onLineDoubleClicked(SubtitleLine *line)
 		m_player->play();
 
 	int mseconds = line->showTime().toMillis() - SCConfig::seekOffsetOnDoubleClick();
+	m_playerWidget->pauseAfterPlayingLine(nullptr);
 	m_player->seek(mseconds > 0 ? mseconds / 1000.0 : 0.0, true);
 
 	if(m_player->state() == VideoPlayer::Paused && SCConfig::unpauseOnDoubleClick())
@@ -2886,6 +2898,7 @@ Application::onHighlightLine(SubtitleLine *line, bool primary, int firstIndex, i
 		if(m_lastFoundLine != line) {
 			m_lastFoundLine = line;
 
+			m_playerWidget->pauseAfterPlayingLine(nullptr);
 			m_player->seek(line->showTime().toSeconds(), true);
 		}
 	} else {

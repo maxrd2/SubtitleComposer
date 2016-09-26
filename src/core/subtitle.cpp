@@ -296,15 +296,13 @@ Subtitle::lastIndex() const
 SubtitleLine *
 Subtitle::line(int index)
 {
-//      return (index < m_lines.count() ? m_lines.at( index ) : 0);
-	return index < 0 ? 0 : (index < m_lines.count() ? m_lines.at(index) : 0);
+	return index < 0 ? nullptr : (index < m_lines.count() ? m_lines.at(index) : nullptr);
 }
 
 const SubtitleLine *
 Subtitle::line(int index) const
 {
-//      return (index < m_lines.count() ? m_lines.at( index ) : 0);
-	return index < 0 ? 0 : (index < m_lines.count() ? m_lines.at(index) : 0);
+	return index < 0 ? nullptr : (index < m_lines.count() ? m_lines.at(index) : nullptr);
 }
 
 SubtitleLine *
