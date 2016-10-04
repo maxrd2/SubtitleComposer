@@ -61,7 +61,7 @@ protected:
 
 	SubRipInputFormat() :
 		InputFormat(QStringLiteral("SubRip"), QStringList(QStringLiteral("srt"))),
-		m_regExp(QStringLiteral("[\\d]+\n([0-2][0-9]):([0-5][0-9]):([0-5][0-9])[,\\.]([0-9][0-9][0-9]) --> ([0-2][0-9]):([0-5][0-9]):([0-5][0-9])[,\\.]([0-9][0-9][0-9])\n"))
+		m_regExp(QStringLiteral("[\\d]+\n([0-2][0-9]):([0-5][0-9]):([0-5][0-9])[,\\.]([0-9]+) --> ([0-2][0-9]):([0-5][0-9]):([0-5][0-9])[,\\.]([0-9]+)\n"))
 	{}
 
 	mutable QRegExp m_regExp;
