@@ -91,6 +91,7 @@ signals:
 public slots:
 	void setSubtitle(Subtitle *subtitle = 0);
 	void setAudioStream(const QString &mediaFile, int audioStream);
+	void setNullAudioStream(quint64 msecVideoLength);
 	void clearAudioStream();
 	void zoomIn();
 	void zoomOut();

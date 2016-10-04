@@ -2984,6 +2984,8 @@ Application::onPlayerActiveAudioStreamChanged(int audioStream)
 	if(audioStream >= 0) {
 		activeAudioStreamAction->setCurrentItem(audioStream);
 		m_mainWindow->m_waveformWidget->setAudioStream(m_player->filePath(), audioStream);
+	} else {
+		m_mainWindow->m_waveformWidget->setNullAudioStream(m_player->length() * 1000);
 	}
 }
 

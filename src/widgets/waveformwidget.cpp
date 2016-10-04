@@ -60,6 +60,7 @@ WaveformWidget::WaveformWidget(QWidget *parent)
 	  m_scrollBar(Q_NULLPTR),
 	  m_autoScroll(true),
 	  m_userScroll(false),
+	  m_waveformDuration(0),
 	  m_waveformChannels(0),
 	  m_waveform(Q_NULLPTR),
 	  m_waveformGraphics(new QWidget(this)),
@@ -172,15 +173,15 @@ WaveformWidget::updateActions()
 	const quint32 size = windowSize();
 
 	m_btnZoomIn->setDefaultAction(app->action(ACT_WAVEFORM_ZOOM_IN));
-	m_btnZoomIn->setEnabled(m_waveformZoomed && size > MAX_WINDOW_ZOOM);
+	m_btnZoomIn->setEnabled(m_waveformDuration > 0 && size > MAX_WINDOW_ZOOM);
 
 	m_btnZoomOut->setDefaultAction(app->action(ACT_WAVEFORM_ZOOM_OUT));
-	m_btnZoomOut->setEnabled(m_waveformZoomed && size < m_waveformChannelSize / SAMPLE_RATE_MILIS);
+	m_btnZoomOut->setEnabled(m_waveformDuration > 0 && size < m_waveformChannelSize / SAMPLE_RATE_MILIS);
 
 	QAction *action = app->action(ACT_WAVEFORM_AUTOSCROLL);
 	action->setChecked(m_autoScroll);
 	m_btnAutoScroll->setDefaultAction(action);
-	m_btnAutoScroll->setEnabled(m_waveformZoomed);
+	m_btnAutoScroll->setEnabled(m_waveformDuration > 0);
 }
 
 WaveformWidget::~WaveformWidget()
@@ -198,8 +199,8 @@ void
 WaveformWidget::setWindowSize(const quint32 size)
 {
 	if(size != windowSize()) {
-		updateActions();
 		m_timeEnd = m_timeStart + size;
+		updateActions();
 		m_visibleLinesDirty = true;
 		updateZoomData();
 		m_waveformGraphics->update();
@@ -368,6 +369,17 @@ WaveformWidget::setAudioStream(const QString &mediaFile, int audioStream)
 	static WaveFormat waveFormat(8000, 0, BYTES_PER_SAMPLE * 8, true);
 	if(m_stream->open(mediaFile) && m_stream->initAudio(audioStream, waveFormat))
 		m_stream->start();
+}
+
+void
+WaveformWidget::setNullAudioStream(quint64 msecVideoLength)
+{
+	clearAudioStream();
+
+	m_waveformDuration = msecVideoLength / 1000;
+	m_scrollBar->setRange(0, m_waveformDuration * 1000 - windowSize());
+
+	updateActions();
 }
 
 void
