@@ -267,10 +267,11 @@ StreamProcessor::onPadAdded(GstElement */*decodebin*/, GstPad *pad, gpointer use
 			// link decodebin to textsink
 			const gchar *padName = gst_pad_get_name(pad);
 			GstCaps *outputFilter = GStreamer::textCapsFromEncoding("utf8");
-			if(GST_PAD_LINK_FAILED(GStreamer::link(GST_BIN(me->m_decodingPipeline), "decodebin", padName, "textsink", "sink", outputFilter)))
+			if(GST_PAD_LINK_FAILED(GStreamer::link(GST_BIN(me->m_decodingPipeline), "decodebin", padName, "textsink", "sink", outputFilter))) {
 				outputFilter = GStreamer::textCapsFromEncoding(NULL);
-			if(GST_PAD_LINK_FAILED(GStreamer::link(GST_BIN(me->m_decodingPipeline), "decodebin", padName, "textsink", "sink", outputFilter)))
-				qCritical() << "Failed to connect decodebin pad" << padName;
+				if(GST_PAD_LINK_FAILED(GStreamer::link(GST_BIN(me->m_decodingPipeline), "decodebin", padName, "textsink", "sink", outputFilter)))
+					qCritical() << "Failed to connect decodebin pad" << padName;
+			}
 			qDebug() << "Selected text stream #" << me->m_audioStreamCurrent << " [" << padName << "] " << gst_caps_to_string(caps);
 		}
 	}
