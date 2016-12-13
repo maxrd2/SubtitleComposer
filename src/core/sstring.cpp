@@ -252,7 +252,7 @@ SString::richString(RichOutputMode mode) const
 SString &
 SString::setRichString(const QString &string)
 {
-	QRegExp tagRegExp("<(/?([bBiIuUsS]|font))(\\s+color=\"?([\\w#]+)\"?)?>");
+	QRegExp tagRegExp("<(/?([bBiIuUsS]|font))[^>]*(\\s+color=\"?([\\w#]+)\"?)?[^>]*>");
 
 	m_string.clear();
 
@@ -274,8 +274,11 @@ SString::setRichString(const QString &string)
 		} else if(matched == QLatin1String("s")) {
 			newStyle |= SString::StrikeThrough;
 		} else if(matched == QLatin1String("font")) {
-			newStyle |= SString::Color;
-			newColor.setNamedColor(tagRegExp.cap(4).toLower());
+			const QString &color = tagRegExp.cap(4);
+			if(!color.isEmpty()) {
+				newStyle |= SString::Color;
+				newColor.setNamedColor(color.toLower());
+			}
 		} else if(matched == QLatin1String("/b")) {
 			newStyle &= ~SString::Bold;
 		} else if(matched == QLatin1String("/i")) {
@@ -289,12 +292,10 @@ SString::setRichString(const QString &string)
 			newColor.setNamedColor("-invalid-");
 		}
 
-		if(newStyle != currentStyle || currentColor != newColor) {
-			QString token(string.mid(offsetPos, matchedPos - offsetPos));
-			append(SString(token /*.replace("&lt;", "<").replace("&gt;", ">")*/, currentStyle, currentColor.isValid() ? currentColor.rgb() : 0));
-			currentStyle = newStyle;
-			currentColor = newColor;
-		}
+		QString token(string.mid(offsetPos, matchedPos - offsetPos));
+		append(SString(token, currentStyle, currentColor.isValid() ? currentColor.rgb() : 0));
+		currentStyle = newStyle;
+		currentColor = newColor;
 
 		offsetPos = matchedPos + tagRegExp.cap(0).length();
 	}
