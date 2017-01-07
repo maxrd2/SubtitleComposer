@@ -171,11 +171,6 @@ MPVBackend::mpvEventHandle(mpv_event *event)
 					setPlayerState(VideoPlayer::Playing);
 				}
 			}
-		} else if(strcmp(prop->name, "length") == 0) {
-			if(prop->format == MPV_FORMAT_DOUBLE) {
-				double duration = *(double *)prop->data;
-				setPlayerLength(duration);
-			}
 		} else if(strcmp(prop->name, "track-list") == 0) {
 			updateAudioData(prop);
 			updateTextData(prop);
@@ -283,16 +278,17 @@ MPVBackend::updateVideoData()
 {
 	// Retrieve the new video size.
 	int64_t w, h;
-	double dar, fps;
+	double dar, fps, length;
 	if(mpv_get_property(m_mpv, "dwidth", MPV_FORMAT_INT64, &w) >= 0
 			&& mpv_get_property(m_mpv, "dheight", MPV_FORMAT_INT64, &h) >= 0
 			&& mpv_get_property(m_mpv, "video-aspect", MPV_FORMAT_DOUBLE, &dar)
 			&& w > 0 && h > 0) {
 		player()->videoWidget()->setVideoResolution(w, h, dar);
 	}
-	if(mpv_get_property(m_mpv, "fps", MPV_FORMAT_DOUBLE, &fps) >= 0 && fps > 0) {
+	if(mpv_get_property(m_mpv, "fps", MPV_FORMAT_DOUBLE, &fps) >= 0 && fps > 0)
 		setPlayerFramesPerSecond(fps);
-	}
+	if(mpv_get_property(m_mpv, "duration", MPV_FORMAT_DOUBLE, &length) >= 0 && length > 0)
+		setPlayerLength(length);
 }
 
 
