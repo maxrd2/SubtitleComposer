@@ -379,6 +379,8 @@ WaveformWidget::setNullAudioStream(quint64 msecVideoLength)
 	m_waveformDuration = msecVideoLength / 1000;
 	m_scrollBar->setRange(0, m_waveformDuration * 1000 - windowSize());
 
+	m_waveformChannelSize = SAMPLE_RATE_MILIS * msecVideoLength;
+
 	updateActions();
 }
 
