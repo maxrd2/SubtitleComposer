@@ -136,6 +136,8 @@ Application::Application(int &argc, char **argv) :
 void
 Application::init()
 {
+	setAttribute(Qt::AA_UseHighDpiPixmaps, true);
+
 	m_mainWindow = new MainWindow();
 
 	m_playerWidget = m_mainWindow->m_playerWidget;
