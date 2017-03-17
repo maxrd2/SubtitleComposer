@@ -290,10 +290,8 @@ TextOverlayWidget::setDirty(bool updateRichText, bool updateColors, bool flicker
 		hide();
 	resize(textRect.size());
 	move(textRect.topLeft());
-	if(flickerless) {
-		setMask(m_noTextMask);
+	if(flickerless)
 		show();
-	}
 
 	update();
 }
@@ -432,6 +430,7 @@ TextOverlayWidget::setOutline()
 	if(!m_outlineWidth)
 		return;
 
+	const int outlineWidth = m_outlineWidth * m_bgImage.devicePixelRatio();
 	const QSize size = this->size();
 	const int maxX = size.width() - 1;
 	const int maxY = size.height() - 1;
@@ -443,9 +442,9 @@ TextOverlayWidget::setOutline()
 
 	QRgb *cc, *cd;
 	for(int y = 0; y <= maxY; y++) {
-		for(int x = m_outlineWidth; x <= maxX; x++) {
+		for(int x = outlineWidth; x <= maxX; x++) {
 			int ix = maxX - x;
-			for(int d = 1; d <= m_outlineWidth; d++) {
+			for(int d = 1; d <= outlineWidth; d++) {
 				// left to right
 				cd = &bgImageScanLines[y][x - d];
 				if(*cd != m_outlineRGB) {
@@ -465,9 +464,9 @@ TextOverlayWidget::setOutline()
 	}
 
 	for(int x = 0; x <= maxX; x++) {
-		for(int y = m_outlineWidth; y <= maxY; y++) {
+		for(int y = outlineWidth; y <= maxY; y++) {
 			int iy = maxY - y;
-			for(int d = 1; d <= m_outlineWidth; d++) {
+			for(int d = 1; d <= outlineWidth; d++) {
 				// top to bottom
 				cd = &bgImageScanLines[y - d][x];
 				if(*cd != m_outlineRGB) {
