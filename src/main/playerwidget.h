@@ -112,6 +112,7 @@ private slots:
 	void onPlayerPositionChanged(double seconds);
 	void onPlayerLengthChanged(double seconds);
 	void onPlayerFramesPerSecondChanged(double fps);
+	void onPlayerPlaybackRateChanged(double rate);
 	void onPlayerVolumeChanged(double volume);
 
 	void onPlayerLeftClicked(const QPoint &point);
@@ -160,6 +161,7 @@ private:
 	bool m_showPositionTimeEdit;
 	QLabel *m_lengthLabel;
 	QLabel *m_fpsLabel;
+	QLabel *m_rateLabel;
 
 	QPoint m_savedCursorPos;                // for hidding the mouse on full screen mode
 	QPoint m_currentCursorPos;

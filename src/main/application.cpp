@@ -1013,6 +1013,22 @@ Application::setupActions()
 	actionCollection->addAction(ACT_SEEK_TO_PREVIOUS_LINE, seekToPrevLineAction);
 	actionManager->addAction(seekToPrevLineAction, UserAction::SubHasLine | UserAction::VideoPlaying);
 
+	QAction *playrateIncreaseAction = new QAction(actionCollection);
+	playrateIncreaseAction->setIcon(QIcon(QStringLiteral(CUSTOM_ICON_INSTALL_PATH "playrate-plus")));
+	playrateIncreaseAction->setText(i18n("Increase media play rate"));
+	playrateIncreaseAction->setStatusTip(i18n("Increase media plauyback rate by factor of two"));
+	connect(playrateIncreaseAction, SIGNAL(triggered()), this, SLOT(playrateIncrease()));
+	actionCollection->addAction(ACT_PLAY_RATE_INCREASE, playrateIncreaseAction);
+	actionManager->addAction(playrateIncreaseAction, UserAction::VideoPlaying);
+
+	QAction *playrateDecreaseAction = new QAction(actionCollection);
+	playrateDecreaseAction->setIcon(QIcon(QStringLiteral(CUSTOM_ICON_INSTALL_PATH "playrate-minus")));
+	playrateDecreaseAction->setText(i18n("Decrease media play rate"));
+	playrateDecreaseAction->setStatusTip(i18n("Decrease media plauyback rate by factor of two"));
+	connect(playrateDecreaseAction, SIGNAL(triggered()), this, SLOT(playrateDecrease()));
+	actionCollection->addAction(ACT_PLAY_RATE_DECREASE, playrateDecreaseAction);
+	actionManager->addAction(playrateDecreaseAction, UserAction::VideoPlaying);
+
 	QAction *playCurrentLineAndPauseAction = new QAction(actionCollection);
 	playCurrentLineAndPauseAction->setText(i18n("Play Current Line and Pause"));
 	playCurrentLineAndPauseAction->setStatusTip(i18n("Seek to start of current subtitle line show time, play it and then pause"));
@@ -2656,6 +2672,18 @@ Application::seekToNextLine()
 			m_curLineWidget->setCurrentLine(nextLine);
 		}
 	}
+}
+
+void
+Application::playrateIncrease()
+{
+	m_player->playbackRate(m_player->playbackRate() * 2.0);
+}
+
+void
+Application::playrateDecrease()
+{
+	m_player->playbackRate(m_player->playbackRate() / 2.0);
 }
 
 void

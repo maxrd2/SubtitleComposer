@@ -117,6 +117,7 @@ MPVBackend::mpvInit()
 
 	// Receive property change events with MPV_EVENT_PROPERTY_CHANGE
 	mpv_observe_property(m_mpv, 0, "time-pos", MPV_FORMAT_DOUBLE);
+	mpv_observe_property(m_mpv, 0, "speed", MPV_FORMAT_DOUBLE);
 	mpv_observe_property(m_mpv, 0, "pause", MPV_FORMAT_FLAG);
 	mpv_observe_property(m_mpv, 0, "length", MPV_FORMAT_DOUBLE);
 	mpv_observe_property(m_mpv, 0, "track-list", MPV_FORMAT_NODE);
@@ -174,6 +175,11 @@ MPVBackend::mpvEventHandle(mpv_event *event)
 		} else if(strcmp(prop->name, "track-list") == 0) {
 			updateAudioData(prop);
 			updateTextData(prop);
+		} else if(strcmp(prop->name, "speed") == 0) {
+			if(prop->format == MPV_FORMAT_DOUBLE) {
+				double rate = *(double *)prop->data;
+				playbackRateNotify(rate);
+			}
 		}
 		break;
 	}
@@ -386,6 +392,16 @@ MPVBackend::seek(double seconds, bool accurate)
 		mpv_command_async(m_mpv, 0, args);
 	}
 	return true;
+}
+
+/*virtual*/ void
+MPVBackend::playbackRate(double newRate)
+{
+	if(newRate > 1.) // without frame dropping we might go out of sync
+		mpv_set_option_string(m_mpv, "framedrop", "vo");
+	else
+		mpv_set_option_string(m_mpv, "framedrop", SCConfig::mpvFrameDropping() ? "vo" : "no");
+	mpv_set_option(m_mpv, "speed", MPV_FORMAT_DOUBLE, &newRate);
 }
 
 bool

@@ -73,4 +73,12 @@ PlayerBackend::supportsChangingAudioStream(bool *onTheFly) const
 	return true;
 }
 
+void
+PlayerBackend::playbackRateNotify(double newRate)
+{
+	if(m_player->m_playbackRate != newRate) {
+		m_player->m_playbackRate = newRate;
+		emit m_player->playbackRateChanged(newRate);
+	}
+}
 

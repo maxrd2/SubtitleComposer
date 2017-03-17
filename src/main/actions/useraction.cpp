@@ -97,9 +97,9 @@ UserAction::updateEnabledState()
 
 		m_action->setEnabled(enabled);
 
-		// QCoreApplication::processEvents( QEventLoop::ExcludeUserInputEvents );
+//		QCoreApplication::processEvents(QEventLoop::ExcludeUserInputEvents);
 
-		// qDebug() << "setting action" << (m_action->isEnabled() ? "ENABLED":"DISABLED");
+//		qDebug() << "setting action" << m_action->text() << (m_action->isEnabled() ? "ENABLED" : "DISABLED");
 
 		m_ignoreActionEnabledSignal = false;
 	}

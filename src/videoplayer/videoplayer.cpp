@@ -70,6 +70,8 @@ protected:
 
 	virtual bool stop() { return false; }
 
+	virtual void playbackRate(double /*newRate*/) { }
+
 	virtual bool setActiveAudioStream(int /*audioStream*/) { return false; }
 
 	virtual bool setVolume(double /*volume*/) { return false; }
@@ -94,6 +96,7 @@ VideoPlayer::VideoPlayer() :
 	m_savedPosition(-1.0),
 	m_length(-1.0),
 	m_framesPerSecond(-1.0),
+	m_playbackRate(.0),
 	m_minPositionDelta(DEFAULT_MIN_POSITION_DELTA),
 	m_textStreams(),
 	m_activeAudioStream(-1),
@@ -498,6 +501,7 @@ VideoPlayer::setState(VideoPlayer::State newState)
 			// we emit this signals in case their values were already set
 			emit lengthChanged(m_length);
 			emit framesPerSecondChanged(m_framesPerSecond);
+			emit playbackRateChanged(m_playbackRate);
 			emit textStreamsChanged(m_textStreams);
 			emit audioStreamsChanged(m_audioStreams);
 			emit activeAudioStreamChanged(m_activeAudioStream);
@@ -743,6 +747,15 @@ VideoPlayer::setActiveAudioStream(int audioStreamIndex)
 
 	emit activeAudioStreamChanged(audioStreamIndex);
 	return true;
+}
+
+void
+VideoPlayer::playbackRate(double newRate)
+{
+	if(m_state != VideoPlayer::Playing || newRate < .125 || newRate > 128)
+		return;
+
+	activeBackend()->playbackRate(newRate);
 }
 
 void

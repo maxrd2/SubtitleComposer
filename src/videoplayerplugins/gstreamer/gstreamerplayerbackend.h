@@ -59,6 +59,8 @@ protected:
 	virtual bool seek(double seconds, bool accurate);
 	virtual bool stop();
 
+	virtual void playbackRate(double newRate);
+
 	virtual bool setActiveAudioStream(int audioStream);
 
 	virtual bool setVolume(double volume);
@@ -82,6 +84,7 @@ private:
 	GstBus *m_pipelineBus;
 	QTimer *m_pipelineTimer;
 	bool m_lengthInformed;
+	gdouble m_playbackRate;
 };
 }
 

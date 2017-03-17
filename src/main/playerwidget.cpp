@@ -113,8 +113,12 @@ PlayerWidget::PlayerWidget(QWidget *parent) :
 	fpsTagLabel->setText(i18n("<b>FPS</b>"));
 	fpsTagLabel->installEventFilter(this);
 	m_fpsLabel = new QLabel(m_infoControlsGroupBox);
-
 	m_fpsLabel->setMinimumWidth(m_positionEdit->sizeHint().width());        // sets the minimum width for the whole group
+
+	QLabel *rateTagLabel = new QLabel(m_infoControlsGroupBox);
+	rateTagLabel->setText(i18n("<b>Playback Rate</b>"));
+	rateTagLabel->installEventFilter(this);
+	m_rateLabel = new QLabel(m_infoControlsGroupBox);
 
 	m_volumeSlider = new PointingSlider(Qt::Vertical, this);
 	m_volumeSlider->setFocusPolicy(Qt::NoFocus);
@@ -141,7 +145,10 @@ PlayerWidget::PlayerWidget(QWidget *parent) :
 	videoControlsLayout->addWidget(createToolButton(this, ACT_SET_CURRENT_LINE_HIDE_TIME, 16), 0, 9);
 	videoControlsLayout->addItem(new QSpacerItem(2, 2), 0, 10);
 	videoControlsLayout->addWidget(createToolButton(this, ACT_CURRENT_LINE_FOLLOWS_VIDEO, 16), 0, 11);
-	videoControlsLayout->addWidget(m_seekSlider, 0, 12);
+	videoControlsLayout->addItem(new QSpacerItem(2, 2), 0, 12);
+	videoControlsLayout->addWidget(createToolButton(this, ACT_PLAY_RATE_DECREASE, 16), 0, 13);
+	videoControlsLayout->addWidget(createToolButton(this, ACT_PLAY_RATE_INCREASE, 16), 0, 14);
+	videoControlsLayout->addWidget(m_seekSlider, 0, 15);
 
 	QGridLayout *audioControlsLayout = new QGridLayout();
 	audioControlsLayout->setMargin(0);
@@ -153,12 +160,15 @@ PlayerWidget::PlayerWidget(QWidget *parent) :
 	infoControlsLayout->addWidget(fpsTagLabel, 0, 0);
 	infoControlsLayout->addWidget(m_fpsLabel, 1, 0);
 	infoControlsLayout->addItem(new QSpacerItem(1, 1, QSizePolicy::Minimum, QSizePolicy::MinimumExpanding), 2, 0);
-	infoControlsLayout->addWidget(lengthTagLabel, 3, 0);
-	infoControlsLayout->addWidget(m_lengthLabel, 4, 0);
+	infoControlsLayout->addWidget(rateTagLabel, 3, 0);
+	infoControlsLayout->addWidget(m_rateLabel, 4, 0);
 	infoControlsLayout->addItem(new QSpacerItem(1, 1, QSizePolicy::Minimum, QSizePolicy::MinimumExpanding), 5, 0);
-	infoControlsLayout->addWidget(positionTagLabel, 6, 0);
-	infoControlsLayout->addWidget(m_positionLabel, 7, 0);
-	infoControlsLayout->addWidget(m_positionEdit, 8, 0);
+	infoControlsLayout->addWidget(lengthTagLabel, 6, 0);
+	infoControlsLayout->addWidget(m_lengthLabel, 7, 0);
+	infoControlsLayout->addItem(new QSpacerItem(1, 1, QSizePolicy::Minimum, QSizePolicy::MinimumExpanding), 8, 0);
+	infoControlsLayout->addWidget(positionTagLabel, 9, 0);
+	infoControlsLayout->addWidget(m_positionLabel, 10, 0);
+	infoControlsLayout->addWidget(m_positionEdit, 11, 0);
 
 	m_mainLayout = new QGridLayout(this);
 	m_mainLayout->setMargin(0);
@@ -213,6 +223,9 @@ PlayerWidget::PlayerWidget(QWidget *parent) :
 	fullScreenControlsLayout->addWidget(createToolButton(m_fullScreenControls, ACT_SEEK_TO_PREVIOUS_LINE, FS_BUTTON_SIZE));
 	fullScreenControlsLayout->addWidget(createToolButton(m_fullScreenControls, ACT_SEEK_TO_NEXT_LINE, FS_BUTTON_SIZE));
 	fullScreenControlsLayout->addSpacing(3);
+	fullScreenControlsLayout->addWidget(createToolButton(m_fullScreenControls, ACT_PLAY_RATE_DECREASE, FS_BUTTON_SIZE));
+	fullScreenControlsLayout->addWidget(createToolButton(m_fullScreenControls, ACT_PLAY_RATE_INCREASE, FS_BUTTON_SIZE));
+	fullScreenControlsLayout->addSpacing(3);
 	fullScreenControlsLayout->addWidget(m_fsSeekSlider, 9);
 //  fullScreenControlsLayout->addSpacing( 1 );
 	fullScreenControlsLayout->addWidget(m_fsPositionLabel);
@@ -247,6 +260,7 @@ PlayerWidget::PlayerWidget(QWidget *parent) :
 	connect(m_player, SIGNAL(positionChanged(double)), this, SLOT(onPlayerPositionChanged(double)));
 	connect(m_player, SIGNAL(lengthChanged(double)), this, SLOT(onPlayerLengthChanged(double)));
 	connect(m_player, SIGNAL(framesPerSecondChanged(double)), this, SLOT(onPlayerFramesPerSecondChanged(double)));
+	connect(m_player, SIGNAL(playbackRateChanged(double)), this, SLOT(onPlayerPlaybackRateChanged(double)));
 	connect(m_player, SIGNAL(volumeChanged(double)), this, SLOT(onPlayerVolumeChanged(double)));
 
 	connect(m_player, SIGNAL(leftClicked(const QPoint &)), this, SLOT(onPlayerLeftClicked(const QPoint &)));
@@ -385,6 +399,8 @@ PlayerWidget::plugActions()
 	toolButton(this, ACT_CURRENT_LINE_FOLLOWS_VIDEO)->setDefaultAction(app()->action(ACT_CURRENT_LINE_FOLLOWS_VIDEO));
 	toolButton(this, ACT_TOGGLE_MUTED)->setDefaultAction(app()->action(ACT_TOGGLE_MUTED));
 	toolButton(this, ACT_TOGGLE_FULL_SCREEN)->setDefaultAction(app()->action(ACT_TOGGLE_FULL_SCREEN));
+	toolButton(this, ACT_PLAY_RATE_DECREASE)->setDefaultAction(app()->action(ACT_PLAY_RATE_DECREASE));
+	toolButton(this, ACT_PLAY_RATE_INCREASE)->setDefaultAction(app()->action(ACT_PLAY_RATE_INCREASE));
 
 	toolButton(m_fullScreenControls, ACT_STOP)->setDefaultAction(app()->action(ACT_STOP));
 	toolButton(m_fullScreenControls, ACT_PLAY_PAUSE)->setDefaultAction(app()->action(ACT_PLAY_PAUSE));
@@ -394,6 +410,8 @@ PlayerWidget::plugActions()
 	toolButton(m_fullScreenControls, ACT_SEEK_TO_NEXT_LINE)->setDefaultAction(app()->action(ACT_SEEK_TO_NEXT_LINE));
 	toolButton(m_fullScreenControls, ACT_TOGGLE_MUTED)->setDefaultAction(app()->action(ACT_TOGGLE_MUTED));
 	toolButton(m_fullScreenControls, ACT_TOGGLE_FULL_SCREEN)->setDefaultAction(app()->action(ACT_TOGGLE_FULL_SCREEN));
+	toolButton(m_fullScreenControls, ACT_PLAY_RATE_DECREASE)->setDefaultAction(app()->action(ACT_PLAY_RATE_DECREASE));
+	toolButton(m_fullScreenControls, ACT_PLAY_RATE_INCREASE)->setDefaultAction(app()->action(ACT_PLAY_RATE_INCREASE));
 }
 
 void
@@ -760,6 +778,7 @@ PlayerWidget::onPlayerFileOpened(const QString & /*filePath */)
 	m_positionLabel->setText(i18n("<i>Unknown</i>"));
 	m_lengthLabel->setText(i18n("<i>Unknown</i>"));
 	m_fpsLabel->setText(i18n("<i>Unknown</i>"));
+	m_rateLabel->setText(i18n("<i>Unknown</i>"));
 
 	m_lengthString = UNKNOWN_LENGTH_STRING;
 
@@ -866,6 +885,14 @@ PlayerWidget::onPlayerFramesPerSecondChanged(double fps)
 }
 
 void
+PlayerWidget::onPlayerPlaybackRateChanged(double rate)
+{
+	m_rateLabel->setText(rate > .0
+		? (rate < 1. ? QStringLiteral("1/%1x").arg(1. / rate) : QStringLiteral("%1x").arg(rate))
+		: i18n("<i>Unknown</i>"));
+}
+
+void
 PlayerWidget::onPlayerStopped()
 {
 	onPlayerPositionChanged(0);
@@ -920,6 +947,11 @@ PlayerWidget::onPlayerRightClicked(const QPoint &point)
 
 	menu->addAction(app()->action(ACT_SEEK_TO_PREVIOUS_LINE));
 	menu->addAction(app()->action(ACT_SEEK_TO_NEXT_LINE));
+
+	menu->addSeparator();
+
+	menu->addAction(app()->action(ACT_PLAY_RATE_DECREASE));
+	menu->addAction(app()->action(ACT_PLAY_RATE_INCREASE));
 
 	menu->addSeparator();
 

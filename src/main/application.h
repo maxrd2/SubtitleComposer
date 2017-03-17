@@ -203,6 +203,9 @@ public slots:
 	void seekToPrevLine();
 	void seekToNextLine();
 
+	void playrateIncrease();
+	void playrateDecrease();
+
 	void setCurrentLineShowTimeFromVideo();
 	void setCurrentLineHideTimeFromVideo();
 

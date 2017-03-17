@@ -131,6 +131,18 @@ protected:
 	virtual bool stop() = 0;
 
 	/**
+	 * @brief playbackRateNotify
+	 * @param new playback rate
+	 */
+	void playbackRateNotify(double newRate);
+
+	/**
+	 * @brief playbackRate
+	 * @param new playback rate
+	 */
+	virtual void playbackRate(double newRate) = 0;
+
+	/**
 	 * @brief setActiveAudioStream
 	 * @param audioStream
 	 * @return false if there is an error and playback must be aborted; true (all internal cleanup must be done before returning).

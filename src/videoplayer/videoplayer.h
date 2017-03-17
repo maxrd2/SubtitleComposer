@@ -114,6 +114,9 @@ public:
 	inline double position() const;
 	inline double length() const;
 	inline double framesPerSecond() const;
+	inline double playbackRate() const;
+	void playbackRate(double newRate);
+
 	inline bool isStopped() const;
 
 	inline double volume() const;
@@ -161,6 +164,7 @@ signals:
 	void positionChanged(double seconds);
 	void lengthChanged(double seconds);
 	void framesPerSecondChanged(double fps);
+	void playbackRateChanged(double rate);
 	void paused();
 	void stopped();
 	void textStreamsChanged(const QStringList &textStreams);
@@ -243,6 +247,7 @@ private:
 	double m_savedPosition;
 	double m_length;
 	double m_framesPerSecond;
+	double m_playbackRate;
 	double m_minPositionDelta;
 	QStringList m_textStreams;
 	int m_activeAudioStream;
@@ -328,6 +333,13 @@ VideoPlayer::framesPerSecond() const
 {
 	return m_state <= VideoPlayer::Opening ? -1.0 : m_framesPerSecond;
 }
+
+double
+VideoPlayer::playbackRate() const
+{
+	return m_state != VideoPlayer::Playing ? .0 : m_playbackRate;
+}
+
 
 bool
 VideoPlayer::isStopped() const

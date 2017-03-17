@@ -85,7 +85,8 @@ GStreamerPlayerBackend::GStreamerPlayerBackend()
 	m_pipeline(NULL),
 	m_pipelineBus(NULL),
 	m_pipelineTimer(new QTimer(this)),
-	m_lengthInformed(false)
+	m_lengthInformed(false),
+	m_playbackRate(1.)
 {
 	m_name = QStringLiteral("GStreamer");
 	connect(m_pipelineTimer, SIGNAL(timeout()), this, SLOT(onPlaybinTimerTimeout()));
@@ -166,6 +167,39 @@ GStreamerPlayerBackend::openFile(const QString &filePath, bool &playingAfterCall
 	GstElement *audiosink = createAudioSink();
 	GstElement *videosink = createVideoSink();
 
+	GstElement *audiobin = gst_bin_new("audiobin");
+	GstElement *scaletempo = gst_element_factory_make("scaletempo", "scaletempo");
+	GstElement *convert = gst_element_factory_make("audioconvert", "convert");
+	GstElement *resample = gst_element_factory_make("audioresample", "resample");
+
+	bool audiobin_ok = false;
+
+	if(audiobin && scaletempo && convert && resample && audiosink) {
+		GstPad *padSink = NULL;
+		gst_bin_add_many(GST_BIN(audiobin), scaletempo, convert, resample, audiosink, NULL);
+		audiobin_ok = gst_element_link(scaletempo, convert)
+			&& gst_element_link(convert, resample)
+			&& gst_element_link(resample, audiosink)
+			&& (padSink = gst_element_get_static_pad(scaletempo, "sink")) != NULL
+			&& gst_element_add_pad(audiobin, gst_ghost_pad_new("sink", padSink));
+
+		if(padSink)
+			g_object_unref(padSink);
+	}
+
+	if(!audiobin_ok) {
+		if(scaletempo)
+			gst_object_unref(GST_OBJECT(scaletempo));
+		if(convert)
+			gst_object_unref(GST_OBJECT(convert));
+		if(resample)
+			gst_object_unref(GST_OBJECT(resample));
+		if(audiobin)
+			gst_object_unref(GST_OBJECT(audiobin));
+		// output audio without scaletempo plugin
+		audiobin = audiosink;
+	}
+
 	if(!m_pipeline || !audiosink || !videosink) {
 		if(audiosink)
 			gst_object_unref(GST_OBJECT(audiosink));
@@ -192,7 +226,7 @@ GStreamerPlayerBackend::openFile(const QString &filePath, bool &playingAfterCall
 	// the volume is adjusted when file playback starts and it's best if it's initially at 0
 	g_object_set(G_OBJECT(m_pipeline), "volume", (gdouble)0.0, NULL);
 
-	g_object_set(G_OBJECT(m_pipeline), "audio-sink", audiosink, NULL);
+	g_object_set(G_OBJECT(m_pipeline), "audio-sink", audiobin, NULL);
 	g_object_set(G_OBJECT(m_pipeline), "video-sink", videosink, NULL);
 
 	m_pipelineBus = gst_pipeline_get_bus(GST_PIPELINE(m_pipeline));
@@ -235,12 +269,28 @@ GStreamerPlayerBackend::pause()
 bool
 GStreamerPlayerBackend::seek(double seconds, bool accurate)
 {
-	gst_element_seek_simple(GST_ELEMENT(m_pipeline),
-		GST_FORMAT_TIME, // time in nanoseconds
-		(GstSeekFlags)(GST_SEEK_FLAG_FLUSH | (accurate ? GST_SEEK_FLAG_ACCURATE : GST_SEEK_FLAG_KEY_UNIT)),
-		(gint64)(seconds * GST_SECOND));
+	gst_element_seek(GST_ELEMENT(m_pipeline), m_playbackRate,
+		GST_FORMAT_TIME, (GstSeekFlags)(GST_SEEK_FLAG_FLUSH | (accurate ? GST_SEEK_FLAG_ACCURATE : GST_SEEK_FLAG_KEY_UNIT)),
+		GST_SEEK_TYPE_SET, (gint64)(seconds * GST_SECOND),
+		GST_SEEK_TYPE_NONE, GST_CLOCK_TIME_NONE);
 
 	return true;
+}
+
+/*virtual*/ void
+GStreamerPlayerBackend::playbackRate(double newRate)
+{
+	m_playbackRate = newRate;
+
+	gint64 time;
+	if(gst_element_query_position(GST_ELEMENT(m_pipeline), GST_FORMAT_TIME, &time)) {
+		setPlayerPosition((double)time / GST_SECOND);
+
+		gst_element_seek(GST_ELEMENT(m_pipeline), newRate,
+			GST_FORMAT_TIME, (GstSeekFlags)(GST_SEEK_FLAG_FLUSH | GST_SEEK_FLAG_ACCURATE),
+			GST_SEEK_TYPE_SET, time, // we need to set the time otherwise playback will jump
+			GST_SEEK_TYPE_NONE, GST_CLOCK_TIME_NONE);
+	}
 }
 
 bool
@@ -280,6 +330,13 @@ GStreamerPlayerBackend::onPlaybinTimerTimeout()
 	}
 	if(gst_element_query_position(GST_ELEMENT(m_pipeline), GST_FORMAT_TIME, &time))
 		setPlayerPosition((double)time / GST_SECOND);
+
+	GstQuery *rateQuery = gst_query_new_segment(GST_FORMAT_DEFAULT);
+	if(gst_element_query(GST_ELEMENT(m_pipeline), rateQuery)) {
+		gst_query_parse_segment(rateQuery, &m_playbackRate, NULL, NULL, NULL);
+		playbackRateNotify(m_playbackRate);
+	}
+	gst_query_unref(rateQuery);
 
 	GstMessage *msg;
 	while(m_pipeline && m_pipelineBus && (msg = gst_bus_pop(m_pipelineBus))) {
