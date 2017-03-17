@@ -285,7 +285,9 @@ MPVBackend::updateVideoData()
 			&& w > 0 && h > 0) {
 		player()->videoWidget()->setVideoResolution(w, h, dar);
 	}
-	if(mpv_get_property(m_mpv, "fps", MPV_FORMAT_DOUBLE, &fps) >= 0 && fps > 0)
+	if(mpv_get_property(m_mpv, "estimated-vf-fps", MPV_FORMAT_DOUBLE, &fps) >= 0 && fps > 0)
+			setPlayerFramesPerSecond(fps);
+	else if(mpv_get_property(m_mpv, "container-fps", MPV_FORMAT_DOUBLE, &fps) >= 0 && fps > 0)
 		setPlayerFramesPerSecond(fps);
 	if(mpv_get_property(m_mpv, "duration", MPV_FORMAT_DOUBLE, &length) >= 0 && length > 0)
 		setPlayerLength(length);
