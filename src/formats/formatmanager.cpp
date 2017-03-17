@@ -44,6 +44,7 @@
 #include "tmplayer/tmplayeroutputformat.h"
 #include "youtubecaptions/youtubecaptionsinputformat.h"
 #include "youtubecaptions/youtubecaptionsoutputformat.h"
+#include "vobsub/vobsubinputformat.h"
 
 #include <QFile>
 #include <QFileInfo>
@@ -94,6 +95,7 @@ FormatManager::FormatManager()
 		new TMPlayerInputFormat(),
 		new TMPlayerPlusInputFormat(),
 		new YouTubeCaptionsInputFormat(),
+		new VobSubInputFormat(),
 	};
 
 	for(int index = 0, count = sizeof(inputFormats) / sizeof(*(inputFormats)); index < count; ++index) {
