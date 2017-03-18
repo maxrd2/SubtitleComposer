@@ -302,7 +302,7 @@ ScriptsManager::editScript(const QString &sN)
 		return;
 	}
 
-	if(!KRun::runUrl(QUrl(m_scripts[scriptName]), "text/plain", app()->mainWindow(), false, false))
+	if(!KRun::runUrl(QUrl(m_scripts[scriptName]), "text/plain", app()->mainWindow(), (KRun::RunFlags)0))
 		KMessageBox::sorry(app()->mainWindow(), i18n("Could not launch external editor.\n"));
 }
 
