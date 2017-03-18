@@ -683,7 +683,7 @@ LinesItemDelegate::anchorIcon()
 {
 	static QIcon anchorIcon;
 	if(anchorIcon.isNull())
-		anchorIcon = QIcon(QStringLiteral(CUSTOM_ICON_INSTALL_PATH "anchor"));
+		anchorIcon = QIcon(QStringLiteral(CUSTOM_ICON_INSTALL_PATH "anchor.svg"));
 	return anchorIcon;
 }
 

@@ -1014,7 +1014,7 @@ Application::setupActions()
 	actionManager->addAction(seekToPrevLineAction, UserAction::SubHasLine | UserAction::VideoPlaying);
 
 	QAction *playrateIncreaseAction = new QAction(actionCollection);
-	playrateIncreaseAction->setIcon(QIcon(QStringLiteral(CUSTOM_ICON_INSTALL_PATH "playrate-plus")));
+	playrateIncreaseAction->setIcon(QIcon(QStringLiteral(CUSTOM_ICON_INSTALL_PATH "playrate-plus.svg")));
 	playrateIncreaseAction->setText(i18n("Increase media play rate"));
 	playrateIncreaseAction->setStatusTip(i18n("Increase media plauyback rate by factor of two"));
 	connect(playrateIncreaseAction, SIGNAL(triggered()), this, SLOT(playrateIncrease()));
@@ -1022,7 +1022,7 @@ Application::setupActions()
 	actionManager->addAction(playrateIncreaseAction, UserAction::VideoPlaying);
 
 	QAction *playrateDecreaseAction = new QAction(actionCollection);
-	playrateDecreaseAction->setIcon(QIcon(QStringLiteral(CUSTOM_ICON_INSTALL_PATH "playrate-minus")));
+	playrateDecreaseAction->setIcon(QIcon(QStringLiteral(CUSTOM_ICON_INSTALL_PATH "playrate-minus.svg")));
 	playrateDecreaseAction->setText(i18n("Decrease media play rate"));
 	playrateDecreaseAction->setStatusTip(i18n("Decrease media plauyback rate by factor of two"));
 	connect(playrateDecreaseAction, SIGNAL(triggered()), this, SLOT(playrateDecrease()));
@@ -1047,7 +1047,7 @@ Application::setupActions()
 	actionManager->addAction(seekToNextLineAction, UserAction::SubHasLine | UserAction::VideoPlaying);
 
 	QAction *setCurrentLineShowTimeFromVideoAction = new QAction(actionCollection);
-	setCurrentLineShowTimeFromVideoAction->setIcon(QIcon(QStringLiteral(CUSTOM_ICON_INSTALL_PATH "set-show-time")));
+	setCurrentLineShowTimeFromVideoAction->setIcon(QIcon(QStringLiteral(CUSTOM_ICON_INSTALL_PATH "set-show-time.svg")));
 	setCurrentLineShowTimeFromVideoAction->setText(i18n("Set Current Line Show Time"));
 	setCurrentLineShowTimeFromVideoAction->setStatusTip(i18n("Set current line show time to video position"));
 	actionCollection->setDefaultShortcut(setCurrentLineShowTimeFromVideoAction, QKeySequence("Shift+Z"));
@@ -1056,7 +1056,7 @@ Application::setupActions()
 	actionManager->addAction(setCurrentLineShowTimeFromVideoAction, UserAction::HasSelection | UserAction::VideoPlaying | UserAction::EditableShowTime);
 
 	QAction *setCurrentLineHideTimeFromVideoAction = new QAction(actionCollection);
-	setCurrentLineHideTimeFromVideoAction->setIcon(QIcon(QStringLiteral(CUSTOM_ICON_INSTALL_PATH "set-hide-time")));
+	setCurrentLineHideTimeFromVideoAction->setIcon(QIcon(QStringLiteral(CUSTOM_ICON_INSTALL_PATH "set-hide-time.svg")));
 	setCurrentLineHideTimeFromVideoAction->setText(i18n("Set Current Line Hide Time"));
 	setCurrentLineHideTimeFromVideoAction->setStatusTip(i18n("Set current line hide time to video position"));
 	actionCollection->setDefaultShortcut(setCurrentLineHideTimeFromVideoAction, QKeySequence("Shift+X"));
@@ -1065,7 +1065,7 @@ Application::setupActions()
 	actionManager->addAction(setCurrentLineHideTimeFromVideoAction, UserAction::HasSelection | UserAction::VideoPlaying | UserAction::EditableShowTime);
 
 	KToggleAction *currentLineFollowsVideoAction = new KToggleAction(actionCollection);
-	currentLineFollowsVideoAction->setIcon(QIcon(QStringLiteral(CUSTOM_ICON_INSTALL_PATH "current-line-follows-video")));
+	currentLineFollowsVideoAction->setIcon(QIcon(QStringLiteral(CUSTOM_ICON_INSTALL_PATH "current-line-follows-video.svg")));
 	currentLineFollowsVideoAction->setText(i18n("Current Line Follows Video"));
 	currentLineFollowsVideoAction->setStatusTip(i18n("Make current line follow the playing video position"));
 	connect(currentLineFollowsVideoAction, SIGNAL(toggled(bool)), this, SLOT(onLinkCurrentLineToVideoToggled(bool)));
@@ -1191,14 +1191,14 @@ Application::setupActions()
 
 	QAction *waveformAutoScrollAction = new QAction(actionCollection);
 	waveformAutoScrollAction->setCheckable(true);
-	waveformAutoScrollAction->setIcon(QIcon(QStringLiteral(CUSTOM_ICON_INSTALL_PATH "current-line-follows-video")));
+	waveformAutoScrollAction->setIcon(QIcon(QStringLiteral(CUSTOM_ICON_INSTALL_PATH "current-line-follows-video.svg")));
 	waveformAutoScrollAction->setText(i18n("Waveform Auto Scroll"));
 	waveformAutoScrollAction->setStatusTip(i18n("Waveform display will automatically scroll to video position"));
 	connect(waveformAutoScrollAction, SIGNAL(toggled(bool)), m_mainWindow->m_waveformWidget, SLOT(setAutoscroll(bool)));
 	actionCollection->addAction(ACT_WAVEFORM_AUTOSCROLL, waveformAutoScrollAction);
 
 	QAction *waveformSetCurrentLineShowTimeAction = new QAction(actionCollection);
-	waveformSetCurrentLineShowTimeAction->setIcon(QIcon(QStringLiteral(CUSTOM_ICON_INSTALL_PATH "set-show-time")));
+	waveformSetCurrentLineShowTimeAction->setIcon(QIcon(QStringLiteral(CUSTOM_ICON_INSTALL_PATH "set-show-time.svg")));
 	waveformSetCurrentLineShowTimeAction->setText(i18n("Set Current Line Show Time"));
 	waveformSetCurrentLineShowTimeAction->setStatusTip(i18n("Set current line show time to waveform mouse position"));
 	connect(waveformSetCurrentLineShowTimeAction, &QAction::triggered, this, &Application::setCurrentLineShowTimeFromWaveform);
@@ -1206,7 +1206,7 @@ Application::setupActions()
 	actionManager->addAction(waveformSetCurrentLineShowTimeAction, UserAction::HasSelection | UserAction::EditableShowTime);
 
 	QAction *waveformSetCurrentLineHideTimeAction = new QAction(actionCollection);
-	waveformSetCurrentLineHideTimeAction->setIcon(QIcon(QStringLiteral(CUSTOM_ICON_INSTALL_PATH "set-hide-time")));
+	waveformSetCurrentLineHideTimeAction->setIcon(QIcon(QStringLiteral(CUSTOM_ICON_INSTALL_PATH "set-hide-time.svg")));
 	waveformSetCurrentLineHideTimeAction->setText(i18n("Set Current Line Hide Time"));
 	waveformSetCurrentLineHideTimeAction->setStatusTip(i18n("Set current line hide time to waveform mouse position"));
 	connect(waveformSetCurrentLineHideTimeAction, &QAction::triggered, this, &Application::setCurrentLineHideTimeFromWaveform);
