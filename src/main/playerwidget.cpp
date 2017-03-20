@@ -887,9 +887,7 @@ PlayerWidget::onPlayerFramesPerSecondChanged(double fps)
 void
 PlayerWidget::onPlayerPlaybackRateChanged(double rate)
 {
-	m_rateLabel->setText(rate > .0
-		? (rate < 1. ? QStringLiteral("1/%1x").arg(1. / rate) : QStringLiteral("%1x").arg(rate))
-		: i18n("<i>Unknown</i>"));
+	m_rateLabel->setText(rate > .0 ? QStringLiteral("%1x").arg(rate, 0, 'g', 3) : i18n("<i>Unknown</i>"));
 }
 
 void
