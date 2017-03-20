@@ -2679,13 +2679,13 @@ Application::seekToNextLine()
 void
 Application::playrateIncrease()
 {
-	m_player->playbackRate(m_player->playbackRate() * 2.0);
+	m_player->playbackRate(m_player->playbackRate() + 0.1);
 }
 
 void
 Application::playrateDecrease()
 {
-	m_player->playbackRate(m_player->playbackRate() / 2.0);
+	m_player->playbackRate(m_player->playbackRate() - 0.1);
 }
 
 void
