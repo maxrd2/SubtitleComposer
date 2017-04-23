@@ -25,6 +25,9 @@ This is a continuation of Subtitle Composer by Sergio Pistone from sourceforget.
 	<img src="https://raw.githubusercontent.com/maxrd2/subtitlecomposer/gh-pages/screenshots/screen-settings.png" alt="Settings Window"/>
 </p>
 
+### BUILD/INSTALL
+Instructions can be found on ['Building from sources' wiki page](https://github.com/maxrd2/subtitlecomposer/wiki/Building-from-sources)
+
 ### BUGS
 Please submit bug reports or feature requests to the [issue tracker on GitHub][bugs]. 
 If you do not have a GitHub account and feel uncomfortable creating one then feel free to send an 
