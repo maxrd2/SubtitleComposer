@@ -464,10 +464,10 @@ MPVBackend::reconfigure()
 		mpv_set_option_string(m_mpv, "drc", "1:0.25");
 
 	if(SCConfig::mpvVolumeAmplificationEnabled()) {
-		mpv_set_option_string(m_mpv, "softvol", "yes");
-		mpv_set_option_string(m_mpv, "softvol-max", QString::number(SCConfig::mpvVolumeAmplification()).toUtf8().constData());
+		mpv_set_option_string(m_mpv, "volume", "yes");
+		mpv_set_option_string(m_mpv, "volume-max", QString::number(SCConfig::mpvVolumeAmplification()).toUtf8().constData());
 	} else {
-		mpv_set_option_string(m_mpv, "softvol", "no");
+		mpv_set_option_string(m_mpv, "volume", "no");
 	}
 
 	// restart playing
