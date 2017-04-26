@@ -29,7 +29,7 @@ set(CMAKE_INCLUDE_CURRENT_DIR ON)
 find_package(Qt5 ${QT_MIN_VERSION} CONFIG REQUIRED Core Widgets Test)
 
 find_package(KF5 REQUIRED
-	Auth Config ConfigWidgets CoreAddons I18n KIO XmlGui
+	Auth Config ConfigWidgets CoreAddons I18n KIO KHtml XmlGui
 	Sonnet Kross Codecs TextWidgets WidgetsAddons)
 
 add_subdirectory(po)
