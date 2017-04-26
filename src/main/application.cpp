@@ -1018,7 +1018,7 @@ Application::setupActions()
 	QAction *playrateIncreaseAction = new QAction(actionCollection);
 	playrateIncreaseAction->setIcon(QIcon(QStringLiteral(CUSTOM_ICON_INSTALL_PATH "playrate-plus.svg")));
 	playrateIncreaseAction->setText(i18n("Increase media play rate"));
-	playrateIncreaseAction->setStatusTip(i18n("Increase media plauyback rate by factor of two"));
+	playrateIncreaseAction->setStatusTip(i18n("Increase media playback rate by 0.1 factor"));
 	connect(playrateIncreaseAction, SIGNAL(triggered()), this, SLOT(playrateIncrease()));
 	actionCollection->addAction(ACT_PLAY_RATE_INCREASE, playrateIncreaseAction);
 	actionManager->addAction(playrateIncreaseAction, UserAction::VideoPlaying);
@@ -1026,7 +1026,7 @@ Application::setupActions()
 	QAction *playrateDecreaseAction = new QAction(actionCollection);
 	playrateDecreaseAction->setIcon(QIcon(QStringLiteral(CUSTOM_ICON_INSTALL_PATH "playrate-minus.svg")));
 	playrateDecreaseAction->setText(i18n("Decrease media play rate"));
-	playrateDecreaseAction->setStatusTip(i18n("Decrease media plauyback rate by factor of two"));
+	playrateDecreaseAction->setStatusTip(i18n("Decrease media playback rate by 0.1 factor"));
 	connect(playrateDecreaseAction, SIGNAL(triggered()), this, SLOT(playrateDecrease()));
 	actionCollection->addAction(ACT_PLAY_RATE_DECREASE, playrateDecreaseAction);
 	actionManager->addAction(playrateDecreaseAction, UserAction::VideoPlaying);
