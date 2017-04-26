@@ -292,7 +292,7 @@ MPVBackend::updateVideoData()
 		player()->videoWidget()->setVideoResolution(w, h, dar);
 	}
 	if(mpv_get_property(m_mpv, "estimated-vf-fps", MPV_FORMAT_DOUBLE, &fps) >= 0 && fps > 0)
-			setPlayerFramesPerSecond(fps);
+		setPlayerFramesPerSecond(fps);
 	else if(mpv_get_property(m_mpv, "container-fps", MPV_FORMAT_DOUBLE, &fps) >= 0 && fps > 0)
 		setPlayerFramesPerSecond(fps);
 	if(mpv_get_property(m_mpv, "duration", MPV_FORMAT_DOUBLE, &length) >= 0 && length > 0)
@@ -437,8 +437,18 @@ MPVBackend::reconfigure()
 	if(!m_mpv)
 		return false;
 
-	if(SCConfig::mpvVideoOutputEnabled())
+	if(SCConfig::mpvVideoOutputEnabled()) {
+#if MPV_CLIENT_API_VERSION >= MPV_MAKE_VERSION(1, 21)
+		if(SCConfig::mpvVideoOutput() == QStringLiteral("opengl-hq")) {
+			mpv_set_option_string(m_mpv, "vo", "opengl");
+			mpv_set_option_string(m_mpv, "profile", "opengl-hq");
+		} else {
+			mpv_set_option_string(m_mpv, "vo", SCConfig::mpvVideoOutput().toUtf8().constData());
+		}
+#else
 		mpv_set_option_string(m_mpv, "vo", SCConfig::mpvVideoOutput().toUtf8().constData());
+#endif
+	}
 
 	mpv_set_option_string(m_mpv, "hwdec", SCConfig::mpvHwDecodeEnabled() ? SCConfig::mpvHwDecode().toUtf8().constData() : "no");
 
@@ -464,10 +474,14 @@ MPVBackend::reconfigure()
 		mpv_set_option_string(m_mpv, "drc", "1:0.25");
 
 	if(SCConfig::mpvVolumeAmplificationEnabled()) {
+#if MPV_CLIENT_API_VERSION >= MPV_MAKE_VERSION(1, 22)
+		mpv_set_option_string(m_mpv, "volume-max", QString::number(SCConfig::mpvVolumeAmplification()).toUtf8().constData());
+#else
 		mpv_set_option_string(m_mpv, "softvol", "yes");
 		mpv_set_option_string(m_mpv, "softvol-max", QString::number(SCConfig::mpvVolumeAmplification()).toUtf8().constData());
 	} else {
 		mpv_set_option_string(m_mpv, "softvol", "no");
+#endif
 	}
 
 	// restart playing
