@@ -64,7 +64,7 @@
      </property>
      <layout class="QGridLayout" name="gridLayout_2" columnstretch="1,1">
       <item row="0" column="1">
-       <widget class="QSpinBox" name="kcfg_LinesQuickShiftAmount">
+       <widget class="QSpinBox" name="kcfg_MinDuration">
         <property name="suffix">
          <string notr="true"> msec</string>
         </property>
@@ -74,7 +74,7 @@
        </widget>
       </item>
       <item row="1" column="1">
-       <widget class="QSpinBox" name="kcfg_GrabbedPositionCompensation">
+       <widget class="QSpinBox" name="kcfg_MaxDuration">
         <property name="suffix">
          <string notr="true"> msec</string>
         </property>
@@ -180,8 +180,8 @@
  <tabstops>
   <tabstop>kcfg_MaxCharacters</tabstop>
   <tabstop>kcfg_MaxLines</tabstop>
-  <tabstop>kcfg_LinesQuickShiftAmount</tabstop>
-  <tabstop>kcfg_GrabbedPositionCompensation</tabstop>
+  <tabstop>kcfg_MinDuration</tabstop>
+  <tabstop>kcfg_MaxDuration</tabstop>
   <tabstop>kcfg_MinDurationPerCharacter</tabstop>
   <tabstop>kcfg_MaxDurationPerCharacter</tabstop>
   <tabstop>kcfg_AutoClearFixed</tabstop>
