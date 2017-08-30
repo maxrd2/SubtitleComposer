@@ -413,13 +413,13 @@ VideoPlayer::resetState()
 }
 
 void
-VideoPlayer::setPosition(double position)
+VideoPlayer::notifyPosition(double position)
 {
 	if(m_state <= VideoPlayer::Closed)
 		return;
 
 	if(position > m_length && m_length > 0)
-		setLength(position);
+		notifyLength(position);
 
 	if(m_position != position) {
 		if(m_position <= 0 || m_minPositionDelta <= 0.0) {
@@ -436,7 +436,7 @@ VideoPlayer::setPosition(double position)
 }
 
 void
-VideoPlayer::setLength(double length)
+VideoPlayer::notifyLength(double length)
 {
 	if(m_state <= VideoPlayer::Closed)
 		return;
@@ -448,7 +448,7 @@ VideoPlayer::setLength(double length)
 }
 
 void
-VideoPlayer::setFramesPerSecond(double framesPerSecond)
+VideoPlayer::notifyFramesPerSecond(double framesPerSecond)
 {
 	if(m_state <= VideoPlayer::Closed)
 		return;
@@ -461,14 +461,14 @@ VideoPlayer::setFramesPerSecond(double framesPerSecond)
 }
 
 void
-VideoPlayer::setTextStreams(const QStringList &textStreams)
+VideoPlayer::notifyTextStreams(const QStringList &textStreams)
 {
 	m_textStreams = textStreams;
 	emit textStreamsChanged(m_textStreams);
 }
 
 void
-VideoPlayer::setAudioStreams(const QStringList &audioStreams, int activeAudioStream)
+VideoPlayer::notifyAudioStreams(const QStringList &audioStreams, int activeAudioStream)
 {
 	if(m_state <= VideoPlayer::Closed)
 		return;
@@ -486,7 +486,7 @@ VideoPlayer::setAudioStreams(const QStringList &audioStreams, int activeAudioStr
 }
 
 void
-VideoPlayer::setState(VideoPlayer::State newState)
+VideoPlayer::notifyState(VideoPlayer::State newState)
 {
 	if(m_state == VideoPlayer::Opening) {
 		if(newState == VideoPlayer::Playing) {
@@ -532,7 +532,7 @@ VideoPlayer::setState(VideoPlayer::State newState)
 }
 
 void
-VideoPlayer::setErrorState(const QString &errorMessage)
+VideoPlayer::notifyErrorState(const QString &errorMessage)
 {
 	if(m_state < VideoPlayer::Opening)
 		return;

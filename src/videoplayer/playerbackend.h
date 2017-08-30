@@ -160,23 +160,23 @@ protected:
 	 * @brief setPlayerPosition
 	 * @param position value in seconds
 	 */
-	inline void setPlayerPosition(double position) { player()->setPosition(position); }
+	inline void setPlayerPosition(double position) { player()->notifyPosition(position); }
 
 	/**
 	 * @brief setPlayerLength
 	 * @param length value in seconds
 	 */
-	inline void setPlayerLength(double length) { player()->setLength(length); }
+	inline void setPlayerLength(double length) { player()->notifyLength(length); }
 
-	inline void setPlayerState(VideoPlayer::State state) { player()->setState(state); }
+	inline void setPlayerState(VideoPlayer::State state) { player()->notifyState(state); }
 
-	inline void setPlayerErrorState(const QString &errorMessage = QString()) { player()->setErrorState(errorMessage); }
+	inline void setPlayerErrorState(const QString &errorMessage = QString()) { player()->notifyErrorState(errorMessage); }
 
-	inline void setPlayerFramesPerSecond(double framesPerSecond) { player()->setFramesPerSecond(framesPerSecond); }
+	inline void setPlayerFramesPerSecond(double framesPerSecond) { player()->notifyFramesPerSecond(framesPerSecond); }
 
-	inline void setPlayerTextStreams(const QStringList &textStreams) { player()->setTextStreams(textStreams); }
+	inline void setPlayerTextStreams(const QStringList &textStreams) { player()->notifyTextStreams(textStreams); }
 
-	inline void setPlayerAudioStreams(const QStringList &audioStreams, int activeAudioStream) { player()->setAudioStreams(audioStreams, activeAudioStream); }
+	inline void setPlayerAudioStreams(const QStringList &audioStreams, int activeAudioStream) { player()->notifyAudioStreams(audioStreams, activeAudioStream); }
 
 private:
 	inline void setPlayer(VideoPlayer *player) { m_player = player; }

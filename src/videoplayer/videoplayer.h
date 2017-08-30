@@ -211,15 +211,16 @@ private:
 
 	// functions used by the backends to inform changes in state:
 
-	void setPosition(double position);              // value in seconds
-	void setLength(double length);          // value in seconds
 
-	void setState(VideoPlayer::State state);
-	void setErrorState(const QString &errorMessage = QString());
+	void notifyPosition(double position);              // value in seconds
+	void notifyLength(double length);          // value in seconds
 
-	void setFramesPerSecond(double framesPerSecond);
-	void setTextStreams(const QStringList &textStreams);
-	void setAudioStreams(const QStringList &audioStreams, int activeAudioStream);
+	void notifyState(VideoPlayer::State state);
+	void notifyErrorState(const QString &errorMessage = QString());
+
+	void notifyFramesPerSecond(double framesPerSecond);
+	void notifyTextStreams(const QStringList &textStreams);
+	void notifyAudioStreams(const QStringList &audioStreams, int activeAudioStream);
 
 private slots:
 	void seekToSavedPosition();
