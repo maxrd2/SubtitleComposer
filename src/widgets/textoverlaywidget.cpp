@@ -435,7 +435,7 @@ TextOverlayWidget::setOutline()
 	const int maxX = size.width() - 1;
 	const int maxY = size.height() - 1;
 
-	QRgb *bgImageScanLines[size.height()];
+	QRgb **bgImageScanLines = new QRgb*[size.height()];
 
 	for(int y = 0; y <= maxY; y++)
 		bgImageScanLines[y] = (QRgb *)m_bgImage.scanLine(y);
@@ -485,6 +485,7 @@ TextOverlayWidget::setOutline()
 		}
 	}
 
+	delete bgImageScanLines;
 }
 
 
