@@ -7,6 +7,9 @@
 			<Action name="open_subtitle" />
 			<Action name="recent_subtitles" />
 			<Separator />
+			<Action name="open_video" />
+			<Action name="recent_videos" />
+			<Separator />
 			<Action name="save_subtitle" />
 			<Action name="save_subtitle_as" />
 			<Action name="reopen_subtitle_as" />
@@ -108,9 +111,6 @@
 		</Menu>
 		<Menu name="video" >
 			<text>&amp;Video</text>
-			<Action name="open_video" />
-			<Action name="recent_videos" />
-			<Separator />
 			<Action name="demux_text_stream" />
 			<Separator />
 			<Action name="asr_import_audio_stream" />

@@ -437,7 +437,7 @@ Application::setupActions()
 
 	QAction *openSubtitleAction = new QAction(actionCollection);
 	openSubtitleAction->setIcon(QIcon::fromTheme("document-open"));
-	openSubtitleAction->setText(i18nc("@action:inmenu Open subtitle file", "Open..."));
+	openSubtitleAction->setText(i18nc("@action:inmenu Open subtitle file", "Open Subtitle..."));
 	openSubtitleAction->setStatusTip(i18n("Open subtitle file"));
 	actionCollection->setDefaultShortcuts(openSubtitleAction, KStandardShortcut::open());
 	connect(openSubtitleAction, SIGNAL(triggered()), this, SLOT(openSubtitle()));
@@ -455,7 +455,7 @@ Application::setupActions()
 
 	m_recentSubtitlesAction = new KRecentFilesActionExt(actionCollection);
 	m_recentSubtitlesAction->setIcon(QIcon::fromTheme("document-open"));
-	m_recentSubtitlesAction->setText(i18nc("@action:inmenu Open rencently used subtitle file", "Open &Recent"));
+	m_recentSubtitlesAction->setText(i18nc("@action:inmenu Open rencently used subtitle file", "Open &Recent Subtitle"));
 	m_recentSubtitlesAction->setStatusTip(i18n("Open subtitle file"));
 	connect(m_recentSubtitlesAction, SIGNAL(urlSelected(const QUrl &)), this, SLOT(openSubtitle(const QUrl &)));
 	actionCollection->addAction(ACT_RECENT_SUBTITLES, m_recentSubtitlesAction);
