@@ -46,6 +46,9 @@ main(int argc, char **argv)
 
 	SubtitleComposer::Application app(argc, argv);
 
+	// hack(?) to find custom icons outside kde
+	QIcon::setThemeSearchPaths(QIcon::themeSearchPaths() << QStringLiteral(CUSTOM_ICON_INSTALL_PATH));
+
 	KLocalizedString::setApplicationDomain("subtitlecomposer");
 
 	KAboutData aboutData(

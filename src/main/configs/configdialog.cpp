@@ -66,19 +66,19 @@ ConfigDialog::ConfigDialog(QWidget *parent, const QString &name, KCoreConfigSkel
 	// Waveform page
 	item = addPage(new WaveformConfigWidget(nullptr), i18nc("@title Waveform settings", "Waveform"));
 	item->setHeader(i18n("Waveform settings"));
-	item->setIcon(QIcon(QStringLiteral(CUSTOM_ICON_INSTALL_PATH "waveform-logo")));
+	item->setIcon(QIcon::fromTheme(QStringLiteral("waveform")));
 
 	// VideoPlayer page
 	item = addPage(new PlayerConfigWidget(nullptr), i18nc("@title Video player settings", "Video Player"));
 	item->setHeader(i18n("Video Player Settings"));
-	item->setIcon(QIcon(QStringLiteral(CUSTOM_ICON_INSTALL_PATH "mediaplayer-logo")));
+	item->setIcon(QIcon::fromTheme(QStringLiteral("mediaplayer")));
 
 	// Backend pages
 	for(const QString backendName : VideoPlayer::instance()->backendNames()) {
 		if(QWidget *configWidget = VideoPlayer::instance()->backend(backendName)->newConfigWidget(nullptr)) {
 			item = addPage(configWidget, backendName);
 			item->setHeader(i18nc("@title Video player backend settings", "%1 backend settings", backendName));
-			item->setIcon(QIcon(QStringLiteral(CUSTOM_ICON_INSTALL_PATH) + backendName.toLower() + QStringLiteral("-logo")));
+			item->setIcon(QIcon::fromTheme(backendName.toLower()));
 		}
 	}
 }

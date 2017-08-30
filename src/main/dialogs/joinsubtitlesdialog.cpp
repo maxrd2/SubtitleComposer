@@ -45,7 +45,7 @@ JoinSubtitlesDialog::JoinSubtitlesDialog(QWidget *parent) :
 	m_shiftSubtitleCheckBox->setChecked(true);
 
 	m_shiftTimeFromVideoButton = new QPushButton(m_subtitleGroupBox);
-	m_shiftTimeFromVideoButton->setIcon(QIcon(QStringLiteral(CUSTOM_ICON_INSTALL_PATH "time-from-video")));
+	m_shiftTimeFromVideoButton->setIcon(QIcon::fromTheme(QStringLiteral("time_from_video")));
 	int buttonSize = m_shiftTimeFromVideoButton->sizeHint().height();
 	m_shiftTimeFromVideoButton->setFixedSize(buttonSize, buttonSize);
 	m_shiftTimeFromVideoButton->setToolTip(i18n("Set from video length"));

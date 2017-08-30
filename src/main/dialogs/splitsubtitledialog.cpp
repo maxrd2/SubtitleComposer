@@ -44,7 +44,7 @@ SplitSubtitleDialog::SplitSubtitleDialog(QWidget *parent) :
 	QGroupBox *settingsGroupBox = createGroupBox(i18nc("@title:group", "Settings"));
 
 	m_splitTimeFromVideoButton = new QPushButton(settingsGroupBox);
-	m_splitTimeFromVideoButton->setIcon(QIcon(QStringLiteral(CUSTOM_ICON_INSTALL_PATH "time-from-video")));
+	m_splitTimeFromVideoButton->setIcon(QIcon::fromTheme(QStringLiteral("time_from_video")));
 	int buttonSize = m_splitTimeFromVideoButton->sizeHint().height();
 	m_splitTimeFromVideoButton->setFixedSize(buttonSize, buttonSize);
 	m_splitTimeFromVideoButton->setToolTip(i18n("Set from video length"));
