@@ -388,7 +388,7 @@ Application::buildMediaFilesFilter()
 		QString mediaExtensions;
 
 		QString videoExtensions;
-		QStringList videoExts(QStringLiteral("avi flv mkv mov mpg mpeg mp4 wmv ogm ogv rmvb ts vob").split(' '));
+		QStringList videoExts(QStringLiteral("avi flv mkv mov mpg mpeg mp4 wmv ogm ogv rmvb ts vob webm divx").split(' '));
 		for(QStringList::ConstIterator it = videoExts.begin(), end = videoExts.end(); it != end; ++it)
 			videoExtensions += " *." % *it % " *." % (*it).toUpper();
 		mediaExtensions += videoExtensions;
