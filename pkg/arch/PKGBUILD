@@ -12,27 +12,32 @@
 # you also find the URL of (another) binary repository (i686 and x86_64).
 
 pkgname=subtitlecomposer
-pkgver=0.6.3
-pkgrel=1
+pkgver=0.6.4
+pkgrel=3
 pkgdesc="A KDE subtitle editor"
 arch=('i686' 'x86_64')
 url="https://github.com/maxrd2/${pkgname}"
 license=('GPL')
 depends=('kcoreaddons' 'sonnet' 'kcodecs' 'kross' 'kxmlgui' 'ki18n' 'gstreamer')
 makedepends=('extra-cmake-modules')
+
 # Comment/uncomment the following dependencies to disable/enable
-# building of plugins for MPV and Xine player backends.
+# building the plugins for MPV and Xine player backends and pocketsphinx
 makedepends+=('xine-lib')
 makedepends+=('mpv')
 makedepends+=('pocketsphinx')
-optdepends=('mpv: for MPV backend'
-            'mplayer: for MPlayer backend'
-            'xine-lib: for Xine backend'
-            'pocketsphinx: for speech recognition'
-            'ruby: for scripting'
-            'python: for scripting')
+
+# For consistency, also enable/disable the corresponding optdepends
+optdepends=('mplayer: MPlayer backend'
+            'mpv: MPV backend'
+            'xine-lib: Xine backend'
+            'pocketsphinx: speech recognition'
+            'kross-interpreters: ruby and python scripting support'
+            'ruby: scripting'
+            'python: scripting')
+
 source=("https://github.com/maxrd2/${pkgname}/archive/v${pkgver}.tar.gz")
-sha256sums=('5dd2a74f16bc3c0b8771690a0fdc0a6928c38578ad2d27a1c84df6890e41fbf8')
+sha256sums=('030f3a33dccdc95b890c06de6f2566c4e6ec85264c8bc47430c72c137ce74f91')
 
 build() {
   cd ${srcdir}/${pkgname}-${pkgver}

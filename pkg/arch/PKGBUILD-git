@@ -13,7 +13,7 @@
 
 _name=subtitlecomposer
 pkgname=${_name}-git
-pkgver=v0.6.3
+pkgver=0.6.4
 pkgrel=1
 pkgdesc="A KDE subtitle editor (git version)"
 arch=('i686' 'x86_64')
@@ -25,12 +25,13 @@ makedepends=('extra-cmake-modules' 'git')
 # building of plugins for MPV and Xine player backends.
 makedepends+=('xine-lib')
 makedepends+=('mpv')
-makedepends+=('pocketsphinx')
+#makedepends+=('pocketsphinx')
 conflicts=(${_name})
 optdepends=('mpv: for MPV backend'
             'mplayer: for MPlayer backend'
             'xine-lib: for Xine backend'
             'pocketsphinx: for speech recognition'
+            'kross-interpreters: for ruby and python scripting support'
             'ruby: for scripting'
             'python: for scripting')
 source=("git+https://github.com/maxrd2/${_name}.git")
