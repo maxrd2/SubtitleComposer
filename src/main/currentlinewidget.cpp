@@ -439,6 +439,7 @@ CurrentLineWidget::onLineShowTimeChanged(const Time &showTime)
 	if(m_updateControls) {
 		m_updateCurrentLine = false;
 		m_showTimeEdit->setValue(showTime.toMillis());
+		m_hideTimeEdit->setMinimumTime(QTime(0, 0, 0, 0).addMSecs(showTime.toMillis()));
 		m_updateCurrentLine = true;
 	}
 }

@@ -536,13 +536,24 @@ WaveformWidget::paintGraphics(QPainter &painter)
 		Time timeShow = sub->showTime();
 		Time timeHide = sub->hideTime();
 		if(sub == m_draggedLine) {
+			Time newTime = m_draggedTime - m_draggedOffset;
 			if(m_draggedPos == DRAG_LINE) {
-				timeShow = m_draggedTime - m_draggedOffset;
+				timeShow = newTime;
 				timeHide = timeShow + sub->durationTime();
 			} else if(m_draggedPos == DRAG_SHOW) {
-				timeShow = m_draggedTime - m_draggedOffset;
+				if(newTime > timeHide) {
+					timeShow = timeHide;
+					timeHide = newTime;
+				} else {
+					timeShow = newTime;
+				}
 			} else if(m_draggedPos == DRAG_HIDE) {
-				timeHide = m_draggedTime - m_draggedOffset;
+				if(timeShow > newTime) {
+					timeHide = timeShow;
+					timeShow = newTime;
+				} else {
+					timeHide = newTime;
+				}
 			}
 		}
 		if(timeShow <= m_timeEnd && m_timeStart <= timeHide) {
@@ -800,9 +811,21 @@ WaveformWidget::eventFilter(QObject *obj, QEvent *event)
 				m_draggedLine->setHideTime(m_draggedTime - m_draggedOffset + m_draggedLine->durationTime());
 				m_draggedLine->setShowTime(m_draggedTime - m_draggedOffset);
 			} else if(m_draggedPos == DRAG_SHOW) {
-				m_draggedLine->setShowTime(m_draggedTime - m_draggedOffset);
+				Time newTime = m_draggedTime - m_draggedOffset;
+				if(newTime > m_draggedLine->hideTime()) {
+					m_draggedLine->setShowTime(m_draggedLine->hideTime());
+					m_draggedLine->setHideTime(newTime);
+				} else {
+					m_draggedLine->setShowTime(newTime);
+				}
 			} else if(m_draggedPos == DRAG_HIDE) {
-				m_draggedLine->setHideTime(m_draggedTime - m_draggedOffset);
+				Time newTime = m_draggedTime - m_draggedOffset;
+				if(m_draggedLine->showTime() > newTime) {
+					m_draggedLine->setHideTime(m_draggedLine->showTime());
+					m_draggedLine->setShowTime(newTime);
+				} else {
+					m_draggedLine->setHideTime(newTime);
+				}
 			}
 
 			emit dragEnd(m_draggedLine, m_draggedPos);
