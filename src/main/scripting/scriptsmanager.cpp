@@ -108,8 +108,6 @@ ScriptsManager::ScriptsManager(QObject *parent)
 	m_dialog = new QDialog(app()->mainWindow());
 	setupUi(m_dialog);
 
-	// qDebug() << "KROSS interpreters:" << Kross::Manager::self().interpreters();
-
 	scriptsView->installEventFilter(this);
 	scriptsView->setModel(new InstalledScriptsModel(scriptsView));
 	scriptsView->setRootIsDecorated(false);
@@ -415,6 +413,17 @@ ScriptsManager::reloadScripts()
 	toolsMenu->addAction(app()->action(ACT_SCRIPTS_MANAGER));
 	toolsMenu->addSeparator();
 
+	qDebug() << "KROSS interpreters:" << Kross::Manager::self().interpreters();
+	QStringList scriptExtensions;
+	foreach(const QString interpreter, Kross::Manager::self().interpreters()) {
+		if(interpreter == QStringLiteral("qtscript"))
+			scriptExtensions.append(QStringLiteral(".js"));
+		else if(interpreter == QStringLiteral("ruby"))
+			scriptExtensions.append(QStringLiteral(".rb"));
+		else if(interpreter == QStringLiteral("python"))
+			scriptExtensions.append(QStringLiteral(".py"));
+	}
+
 	QStringList scriptDirs = QStandardPaths::locateAll(QStandardPaths::AppDataLocation, "scripts", QStandardPaths::LocateDirectory);
 	QStringList scriptNames;
 	int index = 0, newCurrentIndex = -1;
@@ -432,7 +441,7 @@ ScriptsManager::reloadScripts()
 			m_scripts[name] = path;
 
 			QString suffix = name.right(3);
-			if(suffix == QLatin1String(".js") || suffix == QLatin1String(".py") || suffix == QLatin1String(".js")) {
+			if(scriptExtensions.contains(suffix)) {
 				QAction *scriptAction = toolsMenu->addAction(name);
 				scriptAction->setObjectName(name);
 				actionCollection->addAction(name, scriptAction);
