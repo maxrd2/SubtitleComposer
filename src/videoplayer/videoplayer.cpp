@@ -413,6 +413,29 @@ VideoPlayer::resetState()
 }
 
 void
+VideoPlayer::notifyVolume(double volume)
+{
+	if(volume < 0.0)
+		volume = 0.0;
+	else if(volume > 100.0)
+		volume = 100.0;
+
+	if(m_volume != volume) {
+		m_volume = volume;
+		emit volumeChanged(m_volume);
+	}
+}
+
+void
+VideoPlayer::notifyMute(bool muted)
+{
+	if(m_muted != muted) {
+		m_muted = muted;
+		emit muteChanged(m_muted);
+	}
+}
+
+void
 VideoPlayer::notifyPosition(double position)
 {
 	if(m_state <= VideoPlayer::Closed)

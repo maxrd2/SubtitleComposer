@@ -211,6 +211,8 @@ private:
 
 	// functions used by the backends to inform changes in state:
 
+	void notifyVolume(double volume);
+	void notifyMute(bool muted);
 
 	void notifyPosition(double position);              // value in seconds
 	void notifyLength(double length);          // value in seconds

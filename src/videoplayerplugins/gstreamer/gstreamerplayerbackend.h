@@ -48,6 +48,8 @@ protected:
 	virtual void finalize();
 	virtual bool reconfigure();
 
+	virtual bool doesVolumeCorrection() const { return true; }
+
 	static GstElement * createAudioSink();
 	static GstElement * createVideoSink();
 
@@ -85,6 +87,8 @@ private:
 	QTimer *m_pipelineTimer;
 	bool m_lengthInformed;
 	gdouble m_playbackRate;
+	gdouble m_volume;
+	gboolean m_muted;
 };
 }
 

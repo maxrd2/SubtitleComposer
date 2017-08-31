@@ -156,6 +156,9 @@ protected:
 	 */
 	virtual bool setVolume(double volume) = 0;
 
+	inline void setPlayerVolume(double volume) { player()->notifyVolume(volume); }
+	inline void setPlayerMuted(bool muted) { player()->notifyMute(muted); }
+
 	/**
 	 * @brief setPlayerPosition
 	 * @param position value in seconds

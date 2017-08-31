@@ -27,6 +27,7 @@
 #include <KLocalizedString>
 
 #include <QTimer>
+#include <QtMath>
 
 #include <QDebug>
 #include <QUrl>
@@ -39,6 +40,8 @@
 #define MESSAGE_UPDATE_VIDEO_DATA 1
 
 #define INFINITE_WAIT 60000
+
+#define MAX_VOLUME 3.548
 
 using namespace SubtitleComposer;
 
@@ -86,7 +89,9 @@ GStreamerPlayerBackend::GStreamerPlayerBackend()
 	m_pipelineBus(NULL),
 	m_pipelineTimer(new QTimer(this)),
 	m_lengthInformed(false),
-	m_playbackRate(1.)
+	m_playbackRate(1.),
+	m_volume(.0),
+	m_muted(true)
 {
 	m_name = QStringLiteral("GStreamer");
 	connect(m_pipelineTimer, SIGNAL(timeout()), this, SLOT(onPlaybinTimerTimeout()));
@@ -312,7 +317,8 @@ GStreamerPlayerBackend::setActiveAudioStream(int audioStream)
 bool
 GStreamerPlayerBackend::setVolume(double volume)
 {
-	g_object_set(G_OBJECT(m_pipeline), "volume", (gdouble)(volume * 0.01), NULL);
+	g_object_set(G_OBJECT(m_pipeline), "volume", (gdouble)(qPow(volume / 100., 3.) * MAX_VOLUME), NULL);
+	g_object_get(G_OBJECT(m_pipeline), "volume", &m_volume, NULL); // fix volume jumping around when changing it from gui
 
 	return true;
 }
@@ -330,6 +336,21 @@ GStreamerPlayerBackend::onPlaybinTimerTimeout()
 	}
 	if(gst_element_query_position(GST_ELEMENT(m_pipeline), GST_FORMAT_TIME, &time))
 		setPlayerPosition((double)time / GST_SECOND);
+
+	gboolean muted = false;
+	g_object_get(G_OBJECT(m_pipeline), "mute", &muted, NULL);
+	if(muted != m_muted) {
+		m_muted = muted;
+		setPlayerMuted(muted);
+	}
+	if(!muted) {
+		gdouble volume = -1.0;
+		g_object_get(G_OBJECT(m_pipeline), "volume", &volume, NULL);
+		if(volume != m_volume) {
+			m_volume = volume;
+			setPlayerVolume(qPow(volume / MAX_VOLUME, .33333) * 100.);
+		}
+	}
 
 	GstQuery *rateQuery = gst_query_new_segment(GST_FORMAT_DEFAULT);
 	if(gst_element_query(GST_ELEMENT(m_pipeline), rateQuery)) {
