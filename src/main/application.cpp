@@ -100,6 +100,9 @@
 #include <KMessageBox>
 #include <KComboBox>
 
+#define SC_VIDEO_EXTENSIONS "avi flv mkv mov mpg mpeg mp4 wmv ogm ogv rmvb ts vob webm divx"
+#define SC_AUDIO_EXTENSIONS "aac ac3 ape flac la m4a mac mp2 mp3 mp4 mp+ mpc mpp ofr oga ogg pac ra spx tta wav wma wv"
+
 using namespace SubtitleComposer;
 
 Application *
@@ -388,14 +391,14 @@ Application::buildMediaFilesFilter()
 		QString mediaExtensions;
 
 		QString videoExtensions;
-		QStringList videoExts(QStringLiteral("avi flv mkv mov mpg mpeg mp4 wmv ogm ogv rmvb ts vob webm divx").split(' '));
+		QStringList videoExts(QStringLiteral(SC_VIDEO_EXTENSIONS).split(' '));
 		for(QStringList::ConstIterator it = videoExts.begin(), end = videoExts.end(); it != end; ++it)
 			videoExtensions += " *." % *it % " *." % (*it).toUpper();
 		mediaExtensions += videoExtensions;
 		filter += '\n' + videoExtensions.trimmed() + '|' + i18n("Video Files");
 
 		QString audioExtensions;
-		QStringList audioExts(QStringLiteral("aac ac3 ape flac la m4a mac mp2 mp3 mp4 mp+ mpc mpp ofr oga ogg pac ra spx tta wav wma wv").split(' '));
+		QStringList audioExts(QStringLiteral(SC_AUDIO_EXTENSIONS).split(' '));
 		for(QStringList::ConstIterator it = audioExts.begin(), end = audioExts.end(); it != end; ++it)
 			audioExtensions += " *." % *it % " *." % (*it).toUpper();
 		mediaExtensions += audioExtensions;
@@ -1391,7 +1394,7 @@ Application::openSubtitle(const QUrl &url, bool warnClashingUrls)
 		updateTitle();
 
 		if(m_subtitleUrl.isLocalFile() && SCConfig::automaticVideoLoad()) {
-			static const QStringList videoExtensions(QStringLiteral("avi ogm mkv mpeg mpg mp4 rv wmv").split(' '));
+			static const QStringList videoExtensions(QStringLiteral(SC_VIDEO_EXTENSIONS).split(' '));
 
 			QFileInfo subtitleFileInfo(m_subtitleUrl.path());
 
