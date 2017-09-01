@@ -1,6 +1,6 @@
 /**
  * Copyright (C) 2007-2009 Sergio Pistone <sergio_pistone@yahoo.com.ar>
- * Copyright (C) 2010-2015 Mladen Milinkovic <max@smoothware.net>
+ * Copyright (C) 2010-2017 Mladen Milinkovic <max@smoothware.net>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -1167,7 +1167,7 @@ Application::setupActions()
 	QAction *removeAllAnchors = new QAction(actionCollection);
 	removeAllAnchors->setText(i18n("Remove All Anchors"));
 	removeAllAnchors->setStatusTip(i18n("Unanchor show time from the timeline on all anchored lines"));
-	actionCollection->setDefaultShortcut(removeAllAnchors, QKeySequence("Alt+R"));
+	actionCollection->setDefaultShortcut(removeAllAnchors, QKeySequence("Alt+Shift+A"));
 	connect(removeAllAnchors, SIGNAL(triggered()), this, SLOT(anchorRemoveAll()));
 	actionCollection->addAction(ACT_ANCHOR_REMOVE_ALL, removeAllAnchors);
 	actionManager->addAction(removeAllAnchors, UserAction::HasSelection | UserAction::FullScreenOff | UserAction::AnchorsSome);
