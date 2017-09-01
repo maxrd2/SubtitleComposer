@@ -1,6 +1,6 @@
 /**
  * Copyright (C) 2007-2009 Sergio Pistone <sergio_pistone@yahoo.com.ar>
- * Copyright (C) 2010-2015 Mladen Milinkovic <max@smoothware.net>
+ * Copyright (C) 2010-2017 Mladen Milinkovic <max@smoothware.net>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -57,13 +57,13 @@ main(int argc, char **argv)
 		"0.6.4",
 		i18n("A KDE subtitle editor."),
 		KAboutLicense::GPL,
-		QStringLiteral("&copy; 2007-2012 Sergio Pistone\n&copy; 2013-2016 Mladen Milinković"),
+		QStringLiteral("&copy; 2007-2012 Sergio Pistone\n&copy; 2013-2017 Mladen Milinković"),
 		QString(), // Additional text
 		QStringLiteral("https://github.com/maxrd2/subtitlecomposer"),
 		QStringLiteral("maxrd2@smoothware.net"));
 
-	aboutData.addAuthor(i18n("Mladen Milinković"), i18n("Author & Maintainer"), "Mladen Milinkovic <maxrd2@smoothware.net>");
-	aboutData.addAuthor(i18n("Sergio Pistone"), i18n("Original Author"), "Sergio Pistone <sergio_pistone@yahoo.com.ar>");
+	aboutData.addAuthor(i18n("Mladen Milinković"), i18n("Author & Maintainer"), "maxrd2@smoothware.net");
+	aboutData.addAuthor(i18n("Sergio Pistone"), i18n("Original Author"), "sergio_pistone@yahoo.com.ar");
 
 	aboutData.setTranslator(i18nc("NAME OF TRANSLATORS", "Your names"), i18nc("EMAIL OF TRANSLATORS", "Your emails"));
 
