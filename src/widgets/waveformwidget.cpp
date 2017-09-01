@@ -808,7 +808,8 @@ WaveformWidget::eventFilter(QObject *obj, QEvent *event)
 		if(m_draggedLine) {
 			m_draggedTime = timeAt(y);
 			if(m_draggedPos == DRAG_LINE) {
-				m_draggedLine->setHideTime(m_draggedTime - m_draggedOffset + m_draggedLine->durationTime());
+				if(m_subtitle->anchoredLines().empty())
+					m_draggedLine->setHideTime(m_draggedTime - m_draggedOffset + m_draggedLine->durationTime());
 				m_draggedLine->setShowTime(m_draggedTime - m_draggedOffset);
 			} else if(m_draggedPos == DRAG_SHOW) {
 				Time newTime = m_draggedTime - m_draggedOffset;
@@ -860,16 +861,18 @@ WaveformWidget::subtitleAt(int y, SubtitleLine **result)
 
 	updateVisibleLines();
 
+	bool anchoredLineExists = !m_subtitle->anchoredLines().empty();
+
 	foreach(SubtitleLine *sub, m_visibleLines) {
 		if(sub->showTime() - DRAG_TOLERANCE <= yTime && sub->hideTime() + DRAG_TOLERANCE >= yTime) {
 			if(closestDistance > (currentDistance = qAbs(sub->showTime().toMillis() - yTime))) {
 				closestDistance = currentDistance;
-				closestDrag = DRAG_SHOW;
+				closestDrag = anchoredLineExists ? DRAG_LINE : DRAG_SHOW;
 				if(result)
 					*result = sub;
 			} else if(closestDistance > (currentDistance = qAbs(sub->hideTime().toMillis() - yTime))) {
 				closestDistance = currentDistance;
-				closestDrag = DRAG_HIDE;
+				closestDrag = anchoredLineExists ? DRAG_LINE : DRAG_HIDE;
 				if(result)
 					*result = sub;
 			} else if(closestDrag == DRAG_NONE) {
