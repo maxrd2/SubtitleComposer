@@ -116,8 +116,10 @@ public:
 	SString & replace(QChar before, QChar after, Qt::CaseSensitivity cs = Qt::CaseSensitive);
 	SString & replace(QChar ch, const QString &after, Qt::CaseSensitivity cs = Qt::CaseSensitive);
 	SString & replace(QChar ch, const SString &after, Qt::CaseSensitivity cs = Qt::CaseSensitive);
-	SString & replace(const QRegExp &rx, const QString &after);
-	SString & replace(const QRegExp &rx, const SString &after);
+	SString & replace(const QRegExp &regExp, const QString &replacement);
+	SString & replace(const QRegExp &regExp, const SString &replacement);
+	SString & replace(const QRegularExpression &regExp, const QString &replacement);
+	SString & replace(const QRegularExpression &regExp, const SString &replacement, bool styleFromReplacement=true);
 
 	SStringList split(const QString &sep, QString::SplitBehavior behavior = QString::KeepEmptyParts, Qt::CaseSensitivity cs = Qt::CaseSensitive) const;
 	SStringList split(const QChar &sep, QString::SplitBehavior behavior = QString::KeepEmptyParts, Qt::CaseSensitivity cs = Qt::CaseSensitive) const;

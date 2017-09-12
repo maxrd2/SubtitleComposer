@@ -22,6 +22,7 @@
 
 #include <QList>
 #include <QStringList>
+#include <QRegularExpression>
 
 #include <QDebug>
 
@@ -962,6 +963,146 @@ struct SStringCapture {
 	int no;
 };
 
+SString &
+SString::replace(const QRegularExpression &regExp, const QString &replacement)
+{
+	return replace(regExp, SString(replacement), false);
+}
+
+SString &
+SString::replace(const QRegularExpression &regExp, const SString &replacement, bool styleFromReplacement/*=true*/)
+{
+	if(!regExp.isValid()) {
+		qWarning("SString::replace(): invalid regular expression at character %d:\n\t%s\n\t%s",
+				 regExp.patternErrorOffset(),
+				 regExp.pattern().toLatin1().constData(),
+				 regExp.errorString().toLatin1().constData());
+		return *this;
+	}
+
+	const QString copy(*this);
+	QRegularExpressionMatchIterator iterator = regExp.globalMatch(copy);
+	if(!iterator.hasNext())
+		return *this;
+
+	int numCaptures = regExp.captureCount();
+
+	// store backreference offsets
+	QVector<SStringCapture> backReferences;
+	const int repLen = replacement.length();
+	const QChar *repChar = replacement.unicode();
+	for(int i = 0; i < repLen - 1; i++) {
+		if(repChar[i] == QLatin1Char('\\')) {
+			int no = repChar[i + 1].digitValue();
+			if(no > 0 && no <= numCaptures) {
+				SStringCapture backRef;
+				backRef.pos = i;
+				backRef.len = 2;
+
+				if(i < repLen - 2) {
+					int secondDigit = repChar[i + 2].digitValue();
+					if(secondDigit != -1 && ((no * 10) + secondDigit) <= numCaptures) {
+						no = (no * 10) + secondDigit;
+						++backRef.len;
+					}
+				}
+
+				backRef.no = no;
+				backReferences.append(backRef);
+			}
+		}
+	}
+
+	// store data offsets
+	int newLength = 0;
+	int lastEnd = 0;
+	int len;
+	QVector<int> chunks; // set of (offset, length) values, even values reference 'copy' string, odd values reference 'replacement' string
+	while(iterator.hasNext()) {
+		QRegularExpressionMatch match = iterator.next();
+
+		// add the part from 'copy' string before the match
+		len = match.capturedStart() - lastEnd;
+		Q_ASSERT(len >= 0);
+		chunks << lastEnd << len;
+		newLength += len;
+
+		lastEnd = 0;
+		for(const SStringCapture &backRef: qAsConst(backReferences)) {
+			// part of 'replacement' before the backreference
+			len = backRef.pos - lastEnd;
+			Q_ASSERT(len >= 0);
+			chunks << lastEnd << len;
+			newLength += len;
+
+			// add the 'copy' string that backreference points to
+			len = match.capturedLength(backRef.no);
+			Q_ASSERT(len >= 0);
+			chunks << match.capturedStart(backRef.no) << len;
+			newLength += len;
+
+			lastEnd = backRef.pos + backRef.len;
+		}
+
+		// add the last part of the 'replacement' string
+		len = replacement.length() - lastEnd;
+		Q_ASSERT(len >= 0);
+		chunks << lastEnd << len;
+		newLength += len;
+
+		lastEnd = match.capturedEnd();
+	}
+
+	// add trailing part from 'copy' string after the last match
+	len = copy.length() - lastEnd;
+	Q_ASSERT(len >= 0);
+	chunks << lastEnd << len;
+	newLength += len;
+
+	// finally copy the data
+	resize(newLength);
+	char *oldStyleFlags = detachFlags();
+	QRgb *oldStyleColors = detachColors();
+	setMinFlagsCapacity(newLength);
+
+	int newOff = 0;
+	QChar *newData = data();
+	for(int i = 0, n = chunks.size(); i < n; i += 2) {
+		// copy data from 'copy' string
+		int off = chunks[i];
+		int len = chunks[i + 1];
+		if(len > 0) {
+			memcpy(newData + newOff, copy.midRef(off, len).unicode(), len * sizeof(QChar));
+			memcpy(m_styleFlags + newOff, oldStyleFlags + off, len * sizeof(*m_styleFlags));
+			memcpy(m_styleColors + newOff, oldStyleColors + off, len * sizeof(*m_styleColors));
+			newOff += len;
+		}
+
+		i += 2;
+		if(i < n) {
+			// copy data from 'replacement' string
+			int repOff = chunks[i];
+			int repLen = chunks[i + 1];
+			if(repLen > 0) {
+				memcpy(newData + newOff, replacement.midRef(repOff, repLen).unicode(), repLen * sizeof(QChar));
+				if(styleFromReplacement) {
+					memcpy(m_styleFlags + newOff, replacement.m_styleFlags + repOff, repLen * sizeof(*m_styleFlags));
+					memcpy(m_styleColors + newOff, replacement.m_styleColors + repOff, repLen * sizeof(*m_styleColors));
+				} else {
+					memset(m_styleFlags + newOff, oldStyleFlags[off + len], repLen * sizeof(*m_styleFlags));
+					memset_n(m_styleColors + newOff, oldStyleColors[off + len], repLen, sizeof(*m_styleColors));
+				}
+				newOff += repLen;
+			}
+		}
+	}
+
+	delete[] oldStyleFlags;
+	delete[] oldStyleColors;
+
+	return *this;
+}
+
 SStringList
 SString::split(const QString &sep, QString::SplitBehavior behavior, Qt::CaseSensitivity cs) const
 {
@@ -1193,7 +1334,7 @@ char *
 SString::detachFlags()
 {
 	char *ret = m_styleFlags;
-	m_styleFlags = NULL;
+	m_styleFlags = nullptr;
 	m_capacity = 0;
 	return ret;
 }
@@ -1202,7 +1343,7 @@ QRgb *
 SString::detachColors()
 {
 	QRgb *ret = m_styleColors;
-	m_styleColors = NULL;
+	m_styleColors = nullptr;
 	m_capacity = 0;
 	return ret;
 }
@@ -1219,9 +1360,9 @@ SString::setMinFlagsCapacity(int capacity)
 	} else if(capacity == 0) {
 		m_capacity = 0;
 		delete[] m_styleFlags;
-		m_styleFlags = NULL;
+		m_styleFlags = nullptr;
 		delete[] m_styleColors;
-		m_styleColors = NULL;
+		m_styleColors = nullptr;
 	} else if(m_capacity > 100 && capacity < m_capacity / 2) {
 		m_capacity = m_capacity / 2;
 		delete[] m_styleFlags;
