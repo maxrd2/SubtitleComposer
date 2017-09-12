@@ -1,4 +1,4 @@
-/**
+/*
  * Copyright (C) 2007-2009 Sergio Pistone <sergio_pistone@yahoo.com.ar>
  * Copyright (C) 2010-2017 Mladen Milinkovic <max@smoothware.net>
  *
@@ -1380,12 +1380,16 @@ Application::openSubtitle(const QUrl &url, bool warnClashingUrls)
 
 		m_subtitleUrl = fileUrl;
 		m_subtitleFileName = QFileInfo(m_subtitleUrl.path()).fileName();
-		m_subtitleEncoding = codec->name();
 
-		fileUrl.setQuery("encoding=" + codec->name());
+		if(codec) {
+			m_subtitleEncoding = codec->name();
+			fileUrl.setQuery("encoding=" + codec->name());
+			m_reopenSubtitleAsAction->setCurrentCodec(codec);
+		} else {
+			m_subtitleEncoding = QStringLiteral("binary");
+		}
+
 		m_recentSubtitlesAction->addUrl(fileUrl);
-
-		m_reopenSubtitleAsAction->setCurrentCodec(codec);
 
 		connect(m_subtitle, SIGNAL(primaryDirtyStateChanged(bool)), this, SLOT(updateTitle()));
 		connect(m_subtitle, SIGNAL(secondaryDirtyStateChanged(bool)), this, SLOT(updateTitle()));
