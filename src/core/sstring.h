@@ -1,24 +1,25 @@
 #ifndef SSTRING_H
 #define SSTRING_H
 
-/***************************************************************************
- *   Copyright (C) 2007-2009 Sergio Pistone (sergio_pistone@yahoo.com.ar)  *
- *                                                                         *
- *   This program is free software; you can redistribute it and/or modify  *
- *   it under the terms of the GNU General Public License as published by  *
- *   the Free Software Foundation; either version 2 of the License, or     *
- *   (at your option) any later version.                                   *
- *                                                                         *
- *   This program is distributed in the hope that it will be useful,       *
- *   but WITHOUT ANY WARRANTY; without even the implied warranty of        *
- *   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the         *
- *   GNU General Public License for more details.                          *
- *                                                                         *
- *   You should have received a copy of the GNU General Public License     *
- *   along with this program; if not, write to the                         *
- *   Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor,      *
- *   Boston, MA 02110-1301, USA.                                           *
- ***************************************************************************/
+/*
+ * Copyright (C) 2007-2009 Sergio Pistone <sergio_pistone@yahoo.com.ar>
+ * Copyright (C) 2010-2017 Mladen Milinkovic <max@smoothware.net>
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the
+ * Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor,
+ * Boston, MA 02110-1301, USA.
+ */
 
 #include <string.h>
 
@@ -26,6 +27,7 @@
 #include <QRegExp>
 #include <QList>
 #include <QColor>
+#include <QDataStream>
 
 #include <QDebug>
 
@@ -178,6 +180,9 @@ public:
 	bool operator>(const QString &string) const;
 	bool operator>=(const SString &sstring) const;
 	bool operator>=(const QString &string) const;
+
+	friend inline QDataStream & operator<<(QDataStream &stream, const SString &string);
+	friend inline QDataStream & operator>>(QDataStream &stream, SString &string);
 
 private:
 	char * detachFlags();
@@ -524,5 +529,25 @@ SString::length(int index, int len) const
 {
 	return (len < 0) || ((index + len) > m_string.length()) ? m_string.length() - index : len;
 }
+
+inline QDataStream &
+operator<<(QDataStream &stream, const SubtitleComposer::SString &string) {
+	stream << string.m_string;
+	stream.writeRawData(string.m_styleFlags, string.m_string.length() * sizeof(*string.m_styleFlags));
+	stream.writeRawData(reinterpret_cast<const char *>(string.m_styleColors), string.m_string.length() * sizeof(*string.m_styleColors));
+
+	return stream;
 }
+
+inline QDataStream &
+operator>>(QDataStream &stream, SubtitleComposer::SString &string) {
+	stream >> string.m_string;
+	string.setMinFlagsCapacity(string.m_string.size());
+	stream.readRawData(string.m_styleFlags, string.m_string.length() * sizeof(*string.m_styleFlags));
+	stream.readRawData(reinterpret_cast<char *>(string.m_styleColors), string.m_string.length() * sizeof(*string.m_styleColors));
+
+	return stream;
+}
+}
+
 #endif
