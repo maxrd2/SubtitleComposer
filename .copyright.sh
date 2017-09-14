@@ -5,10 +5,9 @@ if [ "$1" == "" ]; then
 	exit
 fi
 
-TEXT=':a;N;$!ba;s/\/\*[^\/]+Copyright([^\/]+|[^\*]\/)+\*\//\/*\
- * Copyright (C) 2007-2009 Sergio Pistone <sergio_pistone@yahoo.com.ar>\
- * Copyright (C) 2010-2017 Mladen Milinkovic <max@smoothware.net>\
- *\
+textc=-$(date +%Y)' Mladen Milinkovic <max\@smoothware.net>'
+text1=':a;N;$!ba;s/\/\*[^\/]+Copyright([^\/]+|[^\*]\/)+\*\//\/*\n'
+text2=' *\
  * This program is free software; you can redistribute it and\/or modify\
  * it under the terms of the GNU General Public License as published by\
  * the Free Software Foundation; either version 2 of the License, or\
@@ -25,13 +24,23 @@ TEXT=':a;N;$!ba;s/\/\*[^\/]+Copyright([^\/]+|[^\*]\/)+\*\//\/*\
  * Boston, MA 02110-1301, USA.\
  *\//'
 
- 
-for f in `git diff --name-only "$@"` ; do
+for f in `git diff --name-only "$@" | grep -Pe '\.[ch](pp)?$'` ; do
 	if [[ ! -f "$f" ]]; then
 		continue
 	fi
 	echo -e '\e[01;33mProcessing \e[01;39m'$f'\e[01;33m\e[00m'
-	grep -n Copyright "$f" | grep -v Mladen | grep -v Sergio
-	sed -r "$TEXT" --in-place "$f"
+	copy=$(perl -pe 'BEGIN{undef $/;} s!^.*?/\*[^/]*?(([\t *]*?Copyright[^\n]*?[\t *]*?\n)+).*?$!$1!sg' "$f" \
+		| perl -pe 's!(^|\n)[\t *]+! * !mg' \
+		| perl -pe 's![\t *]+$!!mg' \
+		| perl -pe 's!\(([^)>]+@[^)>]+)\)!<$1>!' \
+		| perl -pe "s!(-\d+)? Mladen Milinkovic [<(][^>]+[>)]!$textc!g" \
+		| perl -pe 'BEGIN{undef $/;} s!\n+!\\n!sg')
+
+	if [[ $copy == *"Sergio Pistone"* || $copy == *"Mladen Milinkovic"* ]]; then
+		if [[ $copy != *"Mladen Milinkovic"* ]]; then
+			copy="$copy * Copyright (C) 2010-${textc:1}\n"
+		fi
+		sed -r "$text1$copy$text2" --in-place "$f"
+	fi
 done
-	
+
