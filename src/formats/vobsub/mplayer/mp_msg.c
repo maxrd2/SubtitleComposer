@@ -37,7 +37,11 @@
 #define MSGSIZE_MAX 3072
 
 int mp_msg_levels[MSGT_MAX]; // verbose level of this module. initialized to -2
+#if defined(VERBOSE) || !defined(NDEBUG)
 int mp_msg_level_all = MSGL_STATUS;
+#else
+int mp_msg_level_all = MSGL_WARN;
+#endif
 int verbose = 0;
 int mp_msg_color = 0;
 int mp_msg_module = 0;
