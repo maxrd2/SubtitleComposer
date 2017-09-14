@@ -44,12 +44,14 @@ public:
 		qputenv("MPLAYER_VERBOSE", QByteArrayLiteral("1"));
 #endif
 
-		mp_msg_init();
-
 		const QString filename = url.toLocalFile();
-		const QByteArray filebase = filename.left(filename.lastIndexOf('.')).toLatin1();
+		const int extension = filename.lastIndexOf('.');
+		if(filename.midRef(extension) != QStringLiteral(".idx"))
+			return false;
+		const QByteArray filebase = filename.left(extension).toLatin1();
 
 		// Open the sub/idx subtitles
+		mp_msg_init();
 		void *spu;
 		void *vob = vobsub_open(filebase.constData(), 0, 1, 0, &spu);
 		if(!vob || !vobsub_get_indexes_count(vob)) {
