@@ -1,6 +1,6 @@
-/**
+/*
  * Copyright (C) 2007-2009 Sergio Pistone <sergio_pistone@yahoo.com.ar>
- * Copyright (C) 2010-2015 Mladen Milinkovic <max@smoothware.net>
+ * Copyright (C) 2010-2017 Mladen Milinkovic <max@smoothware.net>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -53,11 +53,6 @@ SaveSubtitleDialog::SaveSubtitleDialog(bool primary, const QUrl &startDir, const
 
 	m_fileWidget->filterWidget()->setEditable(false);
 
-	if(FormatManager::instance().output(format))
-		setCurrentFilter(format);
-	else
-		setCurrentFilter(FormatManager::instance().outputNames().first());
-
 	// setting the current filter will force the first valid extension for the format which
 	// may not be the one of the file (even when the file's extension is perfectly valid)
 //	m_fileWidget->setUrl(startDir); // FIXME?
@@ -66,8 +61,15 @@ SaveSubtitleDialog::SaveSubtitleDialog(bool primary, const QUrl &startDir, const
 
 	m_encodingComboBox = new QComboBox(customWidget);
 	m_encodingComboBox->addItems(app()->availableEncodingNames());
-	m_encodingComboBox->setCurrentText(encoding.toUpper());
 	m_encodingComboBox->setSizePolicy(QSizePolicy::MinimumExpanding, QSizePolicy::Fixed);
+
+	if(FormatManager::instance().output(format)) {
+		setCurrentFilter(format);
+		m_encodingComboBox->setCurrentText(encoding.toUpper());
+	} else {
+		setCurrentFilter(FormatManager::instance().defaultOutput()->name());
+		m_encodingComboBox->setCurrentText(SCConfig::defaultSubtitlesEncoding().toUpper());
+	}
 
 	m_newLineComboBox = new QComboBox(customWidget);
 	m_newLineComboBox->addItems(QStringList() << "UNIX" << "Windows" << "Macintosh");

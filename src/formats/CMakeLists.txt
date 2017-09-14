@@ -9,6 +9,7 @@ add_subdirectory(subviewer2)
 add_subdirectory(tmplayer)
 add_subdirectory(youtubecaptions)
 add_subdirectory(textdemux)
+add_subdirectory(vobsub)
 
 set(formats_DEFS
 	${formats_microdvd_DEFS}
@@ -21,6 +22,7 @@ set(formats_DEFS
 	${formats_tmplayer_DEFS}
 	${formats_youtubecaptions_DEFS}
 	${formats_textdemux_DEFS}
+	${formats_vobsub_DEFS}
 	CACHE INTERNAL EXPORTEDVARIABLE
 )
 
@@ -35,6 +37,7 @@ set(formats_LIBS
 	${formats_tmplayer_LIBS}
 	${formats_youtubecaptions_LIBS}
 	${formats_textdemux_LIBS}
+	${formats_vobsub_LIBS}
 	CACHE INTERNAL EXPORTEDVARIABLE
 )
 
@@ -54,6 +57,13 @@ set(formats_SRCS
 	${formats_tmplayer_SRCS}
 	${formats_youtubecaptions_SRCS}
 	${formats_textdemux_SRCS}
+	${formats_vobsub_SRCS}
+	CACHE INTERNAL EXPORTEDVARIABLE
+)
+
+
+set(formats_UIS
+	${formats_vobsub_UIS}
 	CACHE INTERNAL EXPORTEDVARIABLE
 )
 

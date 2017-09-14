@@ -1,6 +1,6 @@
-/**
+/*
  * Copyright (C) 2007-2009 Sergio Pistone <sergio_pistone@yahoo.com.ar>
- * Copyright (C) 2010-2015 Mladen Milinkovic <max@smoothware.net>
+ * Copyright (C) 2010-2017 Mladen Milinkovic <max@smoothware.net>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -21,9 +21,10 @@
 #include "formatmanager.h"
 #include "inputformat.h"
 #include "outputformat.h"
-#include "../common/fileloadhelper.h"
-#include "../common/filesavehelper.h"
-#include "../main/application.h"
+#include "lineswidget.h"
+#include "application.h"
+#include "common/fileloadhelper.h"
+#include "common/filesavehelper.h"
 
 #include "microdvd/microdvdinputformat.h"
 #include "microdvd/microdvdoutputformat.h"
@@ -43,6 +44,7 @@
 #include "tmplayer/tmplayeroutputformat.h"
 #include "youtubecaptions/youtubecaptionsinputformat.h"
 #include "youtubecaptions/youtubecaptionsoutputformat.h"
+#include "vobsub/vobsubinputformat.h"
 
 #include <QFile>
 #include <QFileInfo>
@@ -93,6 +95,7 @@ FormatManager::FormatManager()
 		new TMPlayerInputFormat(),
 		new TMPlayerPlusInputFormat(),
 		new YouTubeCaptionsInputFormat(),
+		new VobSubInputFormat(),
 	};
 
 	for(int index = 0, count = sizeof(inputFormats) / sizeof(*(inputFormats)); index < count; ++index) {
@@ -148,11 +151,21 @@ FormatManager::inputNames() const
 bool
 FormatManager::readSubtitle(Subtitle &subtitle, bool primary, const QUrl &url, QTextCodec **codec, Format::NewLine *newLine, QString *formatName) const
 {
-//  if ( *codec )
-//      qDebug() << "loading" << url << "script" << autodetectScript << "codec" << (*codec)->name();
-//  else
-//      qDebug() << "loading" << url << "script" << autodetectScript;
+	// attempt to load binary subtitle
+	Subtitle newSubtitle;
+	foreach(InputFormat *format, m_inputFormats) {
+		if(format->readBinary(newSubtitle, url)) {
+			if(formatName)
+				*formatName = format->name();
+			if(primary)
+				subtitle.setPrimaryData(newSubtitle, true);
+			else
+				subtitle.setSecondaryData(newSubtitle, true);
+			return true;
+		}
+	}
 
+	// attempt to load text subtitle
 	FileLoadHelper fileLoadHelper(url);
 	if(!fileLoadHelper.open())
 		return false;

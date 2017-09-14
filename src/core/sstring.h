@@ -1,24 +1,25 @@
 #ifndef SSTRING_H
 #define SSTRING_H
 
-/***************************************************************************
- *   Copyright (C) 2007-2009 Sergio Pistone (sergio_pistone@yahoo.com.ar)  *
- *                                                                         *
- *   This program is free software; you can redistribute it and/or modify  *
- *   it under the terms of the GNU General Public License as published by  *
- *   the Free Software Foundation; either version 2 of the License, or     *
- *   (at your option) any later version.                                   *
- *                                                                         *
- *   This program is distributed in the hope that it will be useful,       *
- *   but WITHOUT ANY WARRANTY; without even the implied warranty of        *
- *   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the         *
- *   GNU General Public License for more details.                          *
- *                                                                         *
- *   You should have received a copy of the GNU General Public License     *
- *   along with this program; if not, write to the                         *
- *   Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor,      *
- *   Boston, MA 02110-1301, USA.                                           *
- ***************************************************************************/
+/*
+ * Copyright (C) 2007-2009 Sergio Pistone <sergio_pistone@yahoo.com.ar>
+ * Copyright (C) 2010-2017 Mladen Milinkovic <max@smoothware.net>
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the
+ * Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor,
+ * Boston, MA 02110-1301, USA.
+ */
 
 #include <string.h>
 
@@ -26,6 +27,7 @@
 #include <QRegExp>
 #include <QList>
 #include <QColor>
+#include <QDataStream>
 
 #include <QDebug>
 
@@ -47,7 +49,7 @@ public:
 	SString join(const SString &sep) const;
 };
 
-class SString
+class SString : public QString
 {
 public:
 	typedef enum {
@@ -70,21 +72,11 @@ public:
 
 	~SString();
 
-	bool isNull() const;
-	bool isEmpty() const;
-
-	int length() const;
-	int size() const;
-
-	QString string() const;
+	inline QString string() const { return *this; }
 	void setString(const QString &string, int styleFlags = 0, QRgb styleColor = 0);         // always clears all the style flags
 
 	QString richString(RichOutputMode mode = Compact) const;
 	SString & setRichString(const QString &string);
-
-	const QChar at(int index) const;
-	QCharRef operator[](int index);
-	const QChar operator[](int index) const;
 
 	int styleFlagsAt(int index) const;
 	void setStyleFlagsAt(int index, int styleFlags) const;
@@ -98,7 +90,6 @@ public:
 	SString & setStyleColor(int index, int len, QRgb color);
 
 	void clear();
-	void truncate(int size);
 
 	SString & insert(int index, QChar ch);
 	SString & insert(int index, const QString &str);
@@ -125,29 +116,10 @@ public:
 	SString & replace(QChar before, QChar after, Qt::CaseSensitivity cs = Qt::CaseSensitive);
 	SString & replace(QChar ch, const QString &after, Qt::CaseSensitivity cs = Qt::CaseSensitive);
 	SString & replace(QChar ch, const SString &after, Qt::CaseSensitivity cs = Qt::CaseSensitive);
-	SString & replace(const QRegExp &rx, const QString &after);
-	SString & replace(const QRegExp &rx, const SString &after);
-
-	int indexOf(QChar c, int index = 0, Qt::CaseSensitivity cs = Qt::CaseSensitive) const;
-	int indexOf(char c, int index = 0, Qt::CaseSensitivity cs = Qt::CaseSensitive) const;
-	int indexOf(const QString &str, int index = 0, Qt::CaseSensitivity cs = Qt::CaseSensitive) const;
-	int indexOf(const QRegExp &rx, int index = 0) const;
-	int indexOf(const char *str, int index = 0) const;
-
-	int lastIndexOf(QChar c, int index = -1, Qt::CaseSensitivity cs = Qt::CaseSensitive) const;
-	int lastIndexOf(char c, int index = -1, Qt::CaseSensitivity cs = Qt::CaseSensitive) const;
-	int lastIndexOf(const QString &str, int index = -1, Qt::CaseSensitivity cs = Qt::CaseSensitive) const;
-	int lastIndexOf(const QRegExp &rx, int index = -1) const;
-	int lastIndexOf(const char *str, int index = -1) const;
-
-	bool contains(QChar c, Qt::CaseSensitivity cs = Qt::CaseSensitive) const;
-	bool contains(const QString &str, Qt::CaseSensitivity cs = Qt::CaseSensitive) const;
-	bool contains(const QRegExp &rx) const;
-
-	int count(const QString &str, Qt::CaseSensitivity cs = Qt::CaseSensitive) const;
-	int count(QChar ch, Qt::CaseSensitivity cs = Qt::CaseSensitive) const;
-	int count(const QRegExp &rx) const;
-	int count() const;
+	SString & replace(const QRegExp &regExp, const QString &replacement);
+	SString & replace(const QRegExp &regExp, const SString &replacement);
+	SString & replace(const QRegularExpression &regExp, const QString &replacement);
+	SString & replace(const QRegularExpression &regExp, const SString &replacement, bool styleFromReplacement=true);
 
 	SStringList split(const QString &sep, QString::SplitBehavior behavior = QString::KeepEmptyParts, Qt::CaseSensitivity cs = Qt::CaseSensitive) const;
 	SStringList split(const QChar &sep, QString::SplitBehavior behavior = QString::KeepEmptyParts, Qt::CaseSensitivity cs = Qt::CaseSensitive) const;
@@ -166,18 +138,12 @@ public:
 	SString trimmed() const;
 
 	bool operator==(const SString &sstring) const;
-	bool operator==(const QString &string) const;
 	bool operator!=(const SString &sstring) const;
-	bool operator!=(const QString &string) const;
 
-	bool operator<(const SString &sstring) const;
-	bool operator<(const QString &string) const;
-	bool operator<=(const SString &sstring) const;
-	bool operator<=(const QString &string) const;
-	bool operator>(const SString &sstring) const;
-	bool operator>(const QString &string) const;
-	bool operator>=(const SString &sstring) const;
-	bool operator>=(const QString &string) const;
+	friend inline QDataStream & operator<<(QDataStream &stream, const SString &string);
+	friend inline QDataStream & operator>>(QDataStream &stream, SString &string);
+
+	inline int length() const { return QString::length(); }
 
 private:
 	char * detachFlags();
@@ -187,70 +153,21 @@ private:
 	int length(int index, int len) const;
 
 private:
-	QString m_string;
 	char *m_styleFlags;
 	QRgb *m_styleColors;
 	int m_capacity;
 };
 
-inline bool
-SString::isNull() const
-{
-	return m_string.isNull();
-}
-
-inline bool
-SString::isEmpty() const
-{
-	return m_string.isEmpty();
-}
-
-inline int
-SString::length() const
-{
-	return m_string.length();
-}
-
-inline int
-SString::size() const
-{
-	return m_string.size();
-}
-
-inline QString
-SString::string() const
-{
-	return m_string;
-}
-
-inline const QChar
-SString::at(int index) const
-{
-	return m_string.at(index);
-}
-
-inline QCharRef
-SString::operator[](int index)
-{
-	return m_string[index];
-}
-
-inline const QChar
-SString::operator[](int index) const
-{
-	return m_string[index];
-}
-
 inline int
 SString::styleFlagsAt(int index) const
 {
-	return index < 0 || index >= m_string.length() ? 0 : m_styleFlags[index];
+	return index < 0 || index >= length() ? 0 : m_styleFlags[index];
 }
 
 inline void
 SString::setStyleFlagsAt(int index, int styleFlags) const
 {
-	if(index < 0 || index >= m_string.length())
+	if(index < 0 || index >= length())
 		return;
 	m_styleFlags[index] = styleFlags;
 }
@@ -258,13 +175,13 @@ SString::setStyleFlagsAt(int index, int styleFlags) const
 inline QRgb
 SString::styleColorAt(int index) const
 {
-	return index < 0 || index >= m_string.length() || (m_styleFlags[index] & SString::Color) == 0 ? 0 : m_styleColors[index];
+	return index < 0 || index >= length() || (m_styleFlags[index] & SString::Color) == 0 ? 0 : m_styleColors[index];
 }
 
 inline void
 SString::setStyleColorAt(int index, QRgb rgbColor) const
 {
-	if(index < 0 || index >= m_string.length())
+	if(index < 0 || index >= length())
 		return;
 	if(rgbColor == 0)
 		m_styleFlags[index] &= ~SString::Color;
@@ -276,19 +193,19 @@ SString::setStyleColorAt(int index, QRgb rgbColor) const
 inline SString &
 SString::append(QChar ch)
 {
-	return insert(m_string.length(), ch);
+	return insert(length(), ch);
 }
 
 inline SString &
 SString::append(const QString &str)
 {
-	return insert(m_string.length(), str);
+	return insert(length(), str);
 }
 
 inline SString &
 SString::append(const SString &str)
 {
-	return insert(m_string.length(), str);
+	return insert(length(), str);
 }
 
 inline SString &
@@ -351,178 +268,36 @@ SString::remove(const QRegExp &rx)
 	return replace(rx, QString());
 }
 
-inline int
-SString::indexOf(QChar c, int index, Qt::CaseSensitivity cs) const
-{
-	return m_string.indexOf(c, index, cs);
-}
-
-inline int
-SString::indexOf(char c, int index, Qt::CaseSensitivity cs) const
-{
-	return m_string.indexOf(c, index, cs);
-}
-
-inline int
-SString::indexOf(const QString &str, int index, Qt::CaseSensitivity cs) const
-{
-	return m_string.indexOf(str, index, cs);
-}
-
-inline int
-SString::indexOf(const QRegExp &rx, int index) const
-{
-	return m_string.indexOf(rx, index);
-}
-
-inline int
-SString::indexOf(const char *str, int index) const
-{
-	return m_string.indexOf(str, index);
-}
-
-inline int
-SString::lastIndexOf(QChar c, int index, Qt::CaseSensitivity cs) const
-{
-	return m_string.lastIndexOf(c, index, cs);
-}
-
-inline int
-SString::lastIndexOf(char c, int index, Qt::CaseSensitivity cs) const
-{
-	return m_string.lastIndexOf(c, index, cs);
-}
-
-inline int
-SString::lastIndexOf(const QString &str, int index, Qt::CaseSensitivity cs) const
-{
-	return m_string.lastIndexOf(str, index, cs);
-}
-
-inline int
-SString::lastIndexOf(const QRegExp &rx, int index) const
-{
-	return m_string.lastIndexOf(rx, index);
-}
-
-inline int
-SString::lastIndexOf(const char *str, int index) const
-{
-	return m_string.lastIndexOf(str, index);
-}
-
-inline bool
-SString::contains(QChar chr, Qt::CaseSensitivity cs) const
-{
-	return m_string.contains(chr, cs);
-}
-
-inline bool
-SString::contains(const QString &str, Qt::CaseSensitivity cs) const
-{
-	return m_string.contains(str, cs);
-}
-
-inline bool
-SString::contains(const QRegExp &rx) const
-{
-	return m_string.contains(rx);
-}
-
-inline int
-SString::count(const QString &str, Qt::CaseSensitivity cs) const
-{
-	return m_string.count(str, cs);
-}
-
-inline int
-SString::count(QChar chr, Qt::CaseSensitivity cs) const
-{
-	return m_string.count(chr, cs);
-}
-
-inline int
-SString::count(const QRegExp &rx) const
-{
-	return m_string.count(rx);
-}
-
-inline int
-SString::count() const
-{
-	return m_string.count();
-}
-
 inline bool
 SString::operator==(const SString &sstring) const
 {
 	return !operator!=(sstring);
 }
 
-inline bool
-SString::operator==(const QString &string) const
-{
-	return m_string == string;
-}
-
-inline bool
-SString::operator!=(const QString &string) const
-{
-	return m_string != string;
-}
-
-inline bool
-SString::operator<(const SString &sstring) const
-{
-	return m_string < sstring.m_string;
-}
-
-inline bool
-SString::operator<(const QString &string) const
-{
-	return m_string < string;
-}
-
-inline bool
-SString::operator<=(const SString &sstring) const
-{
-	return m_string <= sstring.m_string;
-}
-
-inline bool
-SString::operator<=(const QString &string) const
-{
-	return m_string <= string;
-}
-
-inline bool
-SString::operator>(const SString &sstring) const
-{
-	return m_string > sstring.m_string;
-}
-
-inline bool
-SString::operator>(const QString &string) const
-{
-	return m_string > string;
-}
-
-inline bool
-SString::operator>=(const SString &sstring) const
-{
-	return m_string >= sstring.m_string;
-}
-
-inline bool
-SString::operator>=(const QString &string) const
-{
-	return m_string >= string;
-}
-
 inline int
 SString::length(int index, int len) const
 {
-	return (len < 0) || ((index + len) > m_string.length()) ? m_string.length() - index : len;
+	return len < 0 || (index + len) > length() ? length() - index : len;
+}
+
+inline QDataStream &
+operator<<(QDataStream &stream, const SubtitleComposer::SString &string) {
+	stream << static_cast<const QString &>(string);
+	stream.writeRawData(string.m_styleFlags, string.length() * sizeof(*string.m_styleFlags));
+	stream.writeRawData(reinterpret_cast<const char *>(string.m_styleColors), string.length() * sizeof(*string.m_styleColors));
+
+	return stream;
+}
+
+inline QDataStream &
+operator>>(QDataStream &stream, SubtitleComposer::SString &string) {
+	stream >> static_cast<QString &>(string);
+	string.setMinFlagsCapacity(string.size());
+	stream.readRawData(string.m_styleFlags, string.length() * sizeof(*string.m_styleFlags));
+	stream.readRawData(reinterpret_cast<char *>(string.m_styleColors), string.length() * sizeof(*string.m_styleColors));
+
+	return stream;
 }
 }
+
 #endif

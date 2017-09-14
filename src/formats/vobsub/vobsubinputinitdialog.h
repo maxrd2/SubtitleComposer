@@ -1,5 +1,5 @@
-#ifndef INPUTFORMAT_H
-#define INPUTFORMAT_H
+#ifndef VOBSUBINPUTINITDIALOG_H
+#define VOBSUBINPUTINITDIALOG_H
 
 /*
  * Copyright (C) 2007-2009 Sergio Pistone <sergio_pistone@yahoo.com.ar>
@@ -21,37 +21,39 @@
  * Boston, MA 02110-1301, USA.
  */
 
-#include "format.h"
+#include <QDialog>
+
+namespace Ui {
+class VobSubInputInitDialog;
+}
 
 namespace SubtitleComposer {
-class InputFormat : public Format
+class VobSubInputInitDialog : public QDialog
 {
+	Q_OBJECT
+
 public:
-	bool readSubtitle(Subtitle &subtitle, bool primary, const QString &data) const
-	{
-		Subtitle newSubtitle;
+	enum PostProcessFlags {
+		APOSTROPHE_TO_QUOTES = 1,
+		SPACE_PUNCTUATION = 2,
+		SPACE_NUMBERS = 4,
+		SPACE_PARENTHESES = 8,
+		CHARS_OCR = 16
+	};
 
-		if(!parseSubtitles(newSubtitle, data))
-			return false;
+	VobSubInputInitDialog(void *vob, void *spu, QWidget *parent = 0);
+	~VobSubInputInitDialog();
 
-		if(primary)
-			subtitle.setPrimaryData(newSubtitle, true);
-		else
-			subtitle.setSecondaryData(newSubtitle, true);
+	int streamIndex() const;
 
-		return true;
-	}
+	quint32 postProcessingFlags() const;
 
-	virtual bool readBinary(Subtitle &, const QUrl &)
-	{
-		return false;
-	}
+private:
+	Ui::VobSubInputInitDialog *ui;
 
-protected:
-	virtual bool parseSubtitles(Subtitle &subtitle, const QString &data) const = 0;
-
-	InputFormat(const QString &name, const QStringList &extensions) : Format(name, extensions) {}
+	void *m_vob;
+	void *m_spu;
 };
 }
 
-#endif
+#endif // VOBSUBINPUTINITDIALOG_H

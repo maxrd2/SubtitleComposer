@@ -42,6 +42,7 @@ set(subtitlecomposer_SRCS
 kconfig_add_kcfg_files(subtitlecomposer_SRCS GENERATE_MOC ${CMAKE_CURRENT_SOURCE_DIR}/scconfig.kcfgc)
 
 ki18n_wrap_ui(subtitlecomposer_SRCS
+	${formats_UIS}
 	${main_configs_UIS}
 	${main_dialogs_UIS}
 	${main_scripting_UIS})

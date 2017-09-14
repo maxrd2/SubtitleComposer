@@ -1,0 +1,4 @@
+This folder was copied from the VobSub2SRT project (https://github.com/ruediger/VobSub2SRT), which in turn
+was copied from the MPlayer project (http://www.mplayerhq.hu/). A really great movie player! It is licensed under the GPL2+ license.
+
+Comments prefixed with R: are marking changes from the original MPlayer code.
