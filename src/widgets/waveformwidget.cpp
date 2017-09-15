@@ -763,7 +763,7 @@ WaveformWidget::eventFilter(QObject *obj, QEvent *event)
 		int y = m_vertical ? mouse->y() : mouse->x();
 
 		if(mouse->button() == Qt::RightButton) {
-			m_timeRMBPress = timeAt(y);
+			m_timeRMBPress = m_timeRMBRelease = timeAt(y);
 			m_RMBDown = true;
 			return false;
 		}
