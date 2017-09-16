@@ -60,6 +60,7 @@ WaveformWidget::WaveformWidget(QWidget *parent)
 	  m_scrollBar(Q_NULLPTR),
 	  m_autoScroll(true),
 	  m_userScroll(false),
+	  m_hoverScrollAmount(.0),
 	  m_waveformDuration(0),
 	  m_waveformChannels(0),
 	  m_waveform(Q_NULLPTR),
@@ -137,8 +138,12 @@ WaveformWidget::WaveformWidget(QWidget *parent)
 	// Using Qt::DirectConnection here makes WaveformWidget::onStreamData() to execute in GStreamer's thread
 	connect(m_stream, &StreamProcessor::audioDataAvailable, this, &WaveformWidget::onStreamData, Qt::DirectConnection);
 
-	connect(SCConfig::self(), SIGNAL(configChanged()), this, SLOT(onConfigChanged()));
+	connect(SCConfig::self(), &SCConfig::configChanged, this, &WaveformWidget::onConfigChanged);
 	onConfigChanged();
+
+	m_hoverScrollTimer.setInterval(50);
+	m_hoverScrollTimer.setSingleShot(false);
+	connect(&m_hoverScrollTimer, &QTimer::timeout, this, &WaveformWidget::onHoverScrollTimeout);
 }
 
 void
@@ -200,7 +205,7 @@ void
 WaveformWidget::setWindowSize(const quint32 size)
 {
 	if(size != windowSize()) {
-		m_timeEnd = m_timeStart + size;
+		m_timeEnd = m_timeStart.shifted(size);
 		updateActions();
 		m_visibleLinesDirty = true;
 		updateZoomData();
@@ -729,11 +734,14 @@ WaveformWidget::eventFilter(QObject *obj, QEvent *event)
 
 		m_pointerTime = timeAt(y);
 
-		if(m_RMBDown)
+		if(m_RMBDown) {
 			m_timeRMBRelease = m_pointerTime;
+			autoscrollToTime(m_pointerTime, false);
+		}
 
 		if(m_draggedLine) {
 			m_draggedTime = m_pointerTime;
+			autoscrollToTime(m_pointerTime, false);
 		} else {
 			SubtitleLine *sub = Q_NULLPTR;
 			WaveformWidget::DragPosition res = subtitleAt(y, &sub);
@@ -797,6 +805,7 @@ WaveformWidget::eventFilter(QObject *obj, QEvent *event)
 
 		if(mouse->button() == Qt::RightButton) {
 			m_timeRMBRelease = timeAt(y);
+			m_hoverScrollTimer.stop();
 			m_RMBDown = false;
 			showContextMenu(mouse);
 			return false;
@@ -846,8 +855,8 @@ Time
 WaveformWidget::timeAt(int y)
 {
 	int height = m_vertical ? m_waveformGraphics->height() : m_waveformGraphics->width();
-//	return m_timeStart.toMillis() + double(y) * m_samplesPerPixel / SAMPLE_RATE_MILIS;
-	return m_timeStart.toMillis() + double(y * windowSize() / height);
+//	return m_timeStart + double(y) * m_samplesPerPixel / SAMPLE_RATE_MILIS;
+	return m_timeStart + double(y * qint32(windowSize()) / height);
 }
 
 WaveformWidget::DragPosition
@@ -900,6 +909,60 @@ WaveformWidget::setScrollPosition(int milliseconds)
 }
 
 void
+WaveformWidget::onHoverScrollTimeout()
+{
+	if(!m_draggedLine && !m_RMBDown) {
+		m_hoverScrollAmount = .0;
+		m_hoverScrollTimer.stop();
+		return;
+	}
+
+	if(m_hoverScrollAmount == .0)
+		return;
+
+	m_pointerTime += m_hoverScrollAmount;
+	if(m_draggedLine)
+		m_draggedTime = m_pointerTime;
+	if(m_RMBDown)
+		m_timeRMBRelease = m_pointerTime;
+	m_scrollBar->setValue(m_timeStart.toMillis() + m_hoverScrollAmount);
+}
+
+bool
+WaveformWidget::autoscrollToTime(const Time &time, bool scrollPage)
+{
+	const double windowSize = this->windowSize();
+	const double windowPadding = windowSize / 8.; // autoscroll when we reach padding
+	const int windowSizePad = windowSize - 2. * windowPadding;
+
+	const double topPadding = m_timeStart.toMillis() + windowPadding;
+	const double bottomPadding = m_timeEnd.toMillis() - windowPadding;
+
+	if(time <= bottomPadding && time >= topPadding) {
+		if(!scrollPage) {
+			m_hoverScrollAmount = .0;
+			m_hoverScrollTimer.stop();
+		}
+		return false;
+	}
+
+	if(scrollPage) {
+		m_scrollBar->setValue((int(time.toMillis() + 0.5) / windowSizePad) * windowSizePad);
+	} else {
+		if(time < topPadding)
+			m_hoverScrollAmount = time.toMillis() - topPadding;
+		else
+			m_hoverScrollAmount = time.toMillis() - bottomPadding;
+		m_hoverScrollAmount = m_hoverScrollAmount * m_hoverScrollAmount * m_hoverScrollAmount /
+				(3. * windowPadding * windowPadding);
+		if(!m_hoverScrollTimer.isActive())
+			m_hoverScrollTimer.start();
+	}
+
+	return true;
+}
+
+void
 WaveformWidget::onPlayerPositionChanged(double seconds)
 {
 	Time playingPosition;
@@ -908,14 +971,8 @@ WaveformWidget::onPlayerPositionChanged(double seconds)
 	if(m_timeCurrent != playingPosition) {
 		m_timeCurrent = playingPosition;
 
-		if(m_autoScroll && !m_draggedLine && !m_userScroll) {
-			int windowSize = this->windowSize(),
-				windowPadding = windowSize / 8, // autoscroll when we reach padding
-				windowSizePad = windowSize - 2 * windowPadding;
-
-			if(m_timeCurrent > m_timeEnd.shifted(-windowPadding) || m_timeCurrent < m_timeStart.shifted(windowPadding))
-				m_scrollBar->setValue((int(m_timeCurrent.toMillis() + 0.5) / windowSizePad) * windowSizePad);
-		}
+		if(m_autoScroll && !m_draggedLine && !m_userScroll)
+			autoscrollToTime(m_timeCurrent, true);
 
 		m_visibleLinesDirty = true;
 		m_waveformGraphics->update();

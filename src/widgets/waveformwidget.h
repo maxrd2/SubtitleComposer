@@ -29,6 +29,7 @@
 #include <QPen>
 #include <QColor>
 #include <QFont>
+#include <QTimer>
 
 QT_FORWARD_DECLARE_CLASS(QRegion)
 QT_FORWARD_DECLARE_CLASS(QPolygon)
@@ -112,6 +113,7 @@ private slots:
 	void onStreamProgress(quint64 msecPos, quint64 msecLength);
 	void onStreamFinished();
 	void onScrollBarValueChanged(int value);
+	void onHoverScrollTimeout();
 
 private:
 	void paintGraphics(QPainter &painter);
@@ -121,6 +123,7 @@ private:
 	Time timeAt(int y);
 	WaveformWidget::DragPosition subtitleAt(int y, SubtitleLine **result);
 	void setupScrollBar();
+	bool autoscrollToTime(const Time &time, bool scrollPage);
 
 private:
 	QString m_mediaFile;
@@ -140,6 +143,8 @@ private:
 	QScrollBar *m_scrollBar;
 	bool m_autoScroll;
 	bool m_userScroll;
+	double m_hoverScrollAmount;
+	QTimer m_hoverScrollTimer;
 
 	quint32 m_waveformDuration;
 	quint32 m_waveformDataOffset;
