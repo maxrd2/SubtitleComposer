@@ -43,7 +43,7 @@
 #include <KLocalizedString>
 
 #define MAX_WINDOW_ZOOM 3000
-#define DRAG_TOLERANCE (double(10 * m_samplesPerPixel / SAMPLE_RATE_MILIS))
+#define DRAG_TOLERANCE (double(10 * m_samplesPerPixel / SAMPLE_RATE_MILLIS))
 
 using namespace SubtitleComposer;
 
@@ -182,7 +182,7 @@ WaveformWidget::updateActions()
 	m_btnZoomIn->setEnabled(m_waveformDuration > 0 && size > MAX_WINDOW_ZOOM);
 
 	m_btnZoomOut->setDefaultAction(app->action(ACT_WAVEFORM_ZOOM_OUT));
-	m_btnZoomOut->setEnabled(m_waveformDuration > 0 && size < m_waveformChannelSize / SAMPLE_RATE_MILIS);
+	m_btnZoomOut->setEnabled(m_waveformDuration > 0 && size < m_waveformChannelSize / SAMPLE_RATE_MILLIS);
 
 	QAction *action = app->action(ACT_WAVEFORM_AUTOSCROLL);
 	action->setChecked(m_autoScroll);
@@ -229,7 +229,7 @@ void
 WaveformWidget::zoomOut()
 {
 	quint32 winSize = windowSize();
-	quint32 totalLength = m_waveformChannelSize / SAMPLE_RATE_MILIS;
+	quint32 totalLength = m_waveformChannelSize / SAMPLE_RATE_MILLIS;
 	if(winSize >= totalLength)
 		return;
 	m_scrollBar->setValue(m_timeStart.toMillis() - winSize / 2);
@@ -261,7 +261,7 @@ WaveformWidget::updateZoomData()
 	if(!height)
 		return;
 
-	const quint32 samplesPerPixel = double(SAMPLE_RATE_MILIS * windowSize()) / height;
+	const quint32 samplesPerPixel = double(SAMPLE_RATE_MILLIS * windowSize()) / height;
 
 	if(m_samplesPerPixel != samplesPerPixel) {
 		m_samplesPerPixel = samplesPerPixel;
@@ -378,7 +378,7 @@ WaveformWidget::setNullAudioStream(quint64 msecVideoLength)
 	m_waveformDuration = msecVideoLength / 1000;
 	m_scrollBar->setRange(0, m_waveformDuration * 1000 - windowSize());
 
-	m_waveformChannelSize = SAMPLE_RATE_MILIS * msecVideoLength;
+	m_waveformChannelSize = SAMPLE_RATE_MILLIS * msecVideoLength;
 
 	updateActions();
 }
@@ -495,8 +495,8 @@ WaveformWidget::paintGraphics(QPainter &painter)
 
 	// FIXME: make visualization types configurable? Min/Max/Avg/RMS
 	if(m_waveformZoomed) {
-		quint32 yMin = SAMPLE_RATE_MILIS * m_timeStart.toMillis() / m_samplesPerPixel;
-		quint32 yMax = SAMPLE_RATE_MILIS * m_timeEnd.toMillis() / m_samplesPerPixel;
+		quint32 yMin = SAMPLE_RATE_MILLIS * m_timeStart.toMillis() / m_samplesPerPixel;
+		quint32 yMax = SAMPLE_RATE_MILLIS * m_timeEnd.toMillis() / m_samplesPerPixel;
 		qint32 xMin, xMax;
 
 		qint32 chHalfWidth = (m_vertical ? widgetWidth : widgetHeight) / m_waveformChannels / 2;

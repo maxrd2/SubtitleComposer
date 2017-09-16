@@ -419,21 +419,21 @@ Subtitle::insertNewLine(int index, bool timeAfter, TextTarget target)
 	if(timeAfter) {
 		if(newLineIndex) {              // there is a previous line
 			SubtitleLine *prevLine = m_lines.value(newLineIndex - 1);
-			newLine->setTimes(prevLine->hideTime() + 100, prevLine->hideTime() + 1000);
+			newLine->setTimes(prevLine->hideTime() + 100., prevLine->hideTime() + 1000.);
 		} else if(newLineIndex < m_lines.count()) {     // there is a next line
 			SubtitleLine *nextLine = m_lines.value(newLineIndex);
-			newLine->setTimes(nextLine->showTime() - 1100, nextLine->showTime() - 100);
+			newLine->setTimes(nextLine->showTime() - 1100., nextLine->showTime() - 100.);
 		} else
-			newLine->setHideTime(1000);
+			newLine->setHideTime(1000.);
 	} else {                                        // ! timeAfter
 		if(newLineIndex < m_lines.count()) {    // there is a next line
 			SubtitleLine *nextLine = m_lines.at(newLineIndex);
-			newLine->setTimes(nextLine->showTime() - 1100, nextLine->showTime() - 100);
+			newLine->setTimes(nextLine->showTime() - 1100., nextLine->showTime() - 100.);
 		} else if(newLineIndex) {       // there is a previous line
 			SubtitleLine *prevLine = m_lines.at(newLineIndex - 1);
-			newLine->setTimes(prevLine->hideTime() + 100, prevLine->hideTime() + 1000);
+			newLine->setTimes(prevLine->hideTime() + 100., prevLine->hideTime() + 1000.);
 		} else
-			newLine->setHideTime(1000);
+			newLine->setHideTime(1000.);
 	}
 
 	if(target == Both || index == m_lines.count()) {
@@ -526,14 +526,14 @@ Subtitle::removeLines(const RangeList &r, TextTarget target)
 		Range lastRange = mutableRanges.last();
 		int lastIndex = lastRange.end() == linesCount - 1 ? lastRange.start() - 1 : linesCount - 1;
 		SubtitleLine *lastLine = lastIndex < linesCount ? m_lines.at(lastIndex) : 0;
-		Time showTime(lastLine ? lastLine->hideTime() + 100 : 0);
-		Time hideTime(showTime + 1000);
+		Time showTime(lastLine ? lastLine->hideTime() + 100. : Time());
+		Time hideTime(showTime + 1000.);
 
 		QList<SubtitleLine *> lines;
 		for(int index = 0, size = ranges.indexesCount(); index < size; ++index) {
 			lines.append(new SubtitleLine(SString(), SString(), showTime, hideTime));
-			showTime.shift(1100);
-			hideTime.shift(1100);
+			showTime.shift(1100.);
+			hideTime.shift(1100.);
 		}
 
 		processAction(new InsertLinesAction(*this, lines));
@@ -624,7 +624,7 @@ Subtitle::splitLines(const RangeList &ranges)
 		for(SStringList::ConstIterator ptIt = primaryLines.begin(), ptEnd = secondaryLines.end(), stIt = secondaryLines.begin(), stEnd = secondaryLines.end(); ptIt != ptEnd && stIt != stEnd; ++ptIt, ++stIt, ++subLineIndex, ++splitLineIndex) {
 			if(splitLineIndex) {
 				SubtitleLine *newLine = new SubtitleLine();
-				newLine->setShowTime(line->hideTime() + 1);
+				newLine->setShowTime(line->hideTime() + 1.);
 				insertLine(newLine, subLineIndex);
 				line = newLine;
 			}

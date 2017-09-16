@@ -51,7 +51,7 @@ QT_FORWARD_DECLARE_CLASS(QBoxLayout)
 #define SIGNED_PAD -128 // 0
 #define SAMPLE_MAX 128 // 255
 //*/
-#define SAMPLE_RATE_MILIS (8000 / 1000)
+#define SAMPLE_RATE_MILLIS (8000 / 1000)
 
 namespace SubtitleComposer {
 class WaveformWidget : public QWidget

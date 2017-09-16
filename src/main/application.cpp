@@ -2361,7 +2361,7 @@ Application::enforceDurationLimits()
 																m_mainWindow);
 
 	if(dlg->exec() == QDialog::Accepted) {
-		m_subtitle->applyDurationLimits(m_linesWidget->targetRanges(dlg->selectedLinesTarget()), dlg->enforceMinDuration() ? dlg->minDuration() : 0, dlg->enforceMaxDuration() ? dlg->maxDuration() : Time::MaxMseconds, !dlg->preventOverlap());
+		m_subtitle->applyDurationLimits(m_linesWidget->targetRanges(dlg->selectedLinesTarget()), dlg->enforceMinDuration() ? dlg->minDuration() : Time(), dlg->enforceMaxDuration() ? dlg->maxDuration() : Time(Time::MaxMseconds), !dlg->preventOverlap());
 	}
 }
 

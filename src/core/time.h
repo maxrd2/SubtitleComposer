@@ -30,7 +30,7 @@ public:
 	static constexpr double MaxMseconds = 86399999.0;
 	static constexpr double MaxSeconds = MaxMseconds / 1000.0;
 
-	/*explicit*/ Time(double mseconds = 0);
+	/*explicit*/ Time(double mseconds = .0);
 	Time(int hours, int minutes, int seconds, int mseconds);
 	Time(const Time &time);
 
