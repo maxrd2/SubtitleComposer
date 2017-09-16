@@ -69,7 +69,8 @@ WaveformWidget::WaveformWidget(QWidget *parent)
 	  m_samplesPerPixel(0),
 	  m_waveformZoomed(Q_NULLPTR),
 	  m_waveformZoomedSize(0),
-	  m_waveformZoomedOffset(0),
+	  m_waveformZoomedOffsetMin(0),
+	  m_waveformZoomedOffsetMax(0),
 	  m_visibleLinesDirty(true),
 	  m_draggedLine(Q_NULLPTR),
 	  m_draggedPos(DRAG_NONE),
@@ -264,8 +265,9 @@ WaveformWidget::updateZoomData()
 	const quint32 samplesPerPixel = double(SAMPLE_RATE_MILLIS * windowSize()) / height;
 
 	if(m_samplesPerPixel != samplesPerPixel) {
+		// free memory if samples per pixel changed
 		m_samplesPerPixel = samplesPerPixel;
-		m_waveformZoomedOffset = 0;
+		m_waveformZoomedOffsetMin = m_waveformZoomedOffsetMax = 0;
 		m_waveformZoomedSize = 0;
 		if(m_waveformZoomed) {
 			for(quint32 i = 0; i < m_waveformChannels; i++)
@@ -275,22 +277,9 @@ WaveformWidget::updateZoomData()
 		}
 	}
 
-	if(m_waveformChannels && m_waveform) {
-		if(!m_waveformZoomed) {
-			m_waveformZoomedOffset = 0;
-			m_waveformZoomedSize = m_waveformChannelSize / m_samplesPerPixel;
-			if(m_waveformChannelSize % m_samplesPerPixel)
-				m_waveformZoomedSize++;
-			m_waveformZoomed = new ZoomData *[m_waveformChannels];
-			for(quint32 i = 0; i < m_waveformChannels; i++)
-				m_waveformZoomed[i] = new ZoomData[m_waveformZoomedSize];
-
-			updateActions();
-		}
-
-		const quint32 iMin = m_waveformZoomedOffset * m_samplesPerPixel;
-		const quint32 iMax = m_waveformDataOffset / BYTES_PER_SAMPLE / m_waveformChannels;
+	auto updateZoomDataRange = [&](const quint32 iMin, const quint32 iMax){
 		Q_ASSERT(iMax <= (m_waveformZoomedSize - 1) * m_samplesPerPixel);
+
 		qint32 xMin = 65535, xMax = -65535;
 
 		for(quint32 ch = 0; ch < m_waveformChannels; ch++) {
@@ -311,7 +300,44 @@ WaveformWidget::updateZoomData()
 				}
 			}
 		}
-		m_waveformZoomedOffset = iMax / m_samplesPerPixel;
+	};
+
+	if(m_waveformChannels && m_waveform) {
+		if(!m_waveformZoomed) {
+			// alloc memory for zoomed pixel data
+			m_waveformZoomedOffsetMin = m_waveformZoomedOffsetMax = 0;
+			m_waveformZoomedSize = m_waveformChannelSize / m_samplesPerPixel;
+			if(m_waveformChannelSize % m_samplesPerPixel)
+				m_waveformZoomedSize++;
+			m_waveformZoomed = new ZoomData *[m_waveformChannels];
+			for(quint32 i = 0; i < m_waveformChannels; i++)
+				m_waveformZoomed[i] = new ZoomData[m_waveformZoomedSize];
+
+			updateActions();
+		}
+
+		const int dataMaxPossible = m_waveformDataOffset / BYTES_PER_SAMPLE / m_waveformChannels;
+		int dataRangeMin = SAMPLE_RATE_MILLIS * (m_timeStart.toMillis() - 2 * windowSize());
+		int dataRangeMax = SAMPLE_RATE_MILLIS * (m_timeEnd.toMillis() + 2 * windowSize());
+		if(dataRangeMin < 0)
+			dataRangeMin = 0;
+		if(dataRangeMax > dataMaxPossible)
+			dataRangeMax = dataMaxPossible;
+
+		if(m_waveformZoomedOffsetMin == m_waveformZoomedOffsetMax) {
+			updateZoomDataRange(dataRangeMin, dataRangeMax);
+			m_waveformZoomedOffsetMin = dataRangeMin / m_samplesPerPixel;
+			m_waveformZoomedOffsetMax = dataRangeMax / m_samplesPerPixel;
+		} else {
+			if(dataRangeMin / m_samplesPerPixel < m_waveformZoomedOffsetMin) {
+				updateZoomDataRange(dataRangeMin, m_waveformZoomedOffsetMin * m_samplesPerPixel);
+				m_waveformZoomedOffsetMin = dataRangeMin / m_samplesPerPixel;
+			}
+			if(dataRangeMax / m_samplesPerPixel > m_waveformZoomedOffsetMax) {
+				updateZoomDataRange(m_waveformZoomedOffsetMax * m_samplesPerPixel, dataRangeMax);
+				m_waveformZoomedOffsetMax = dataRangeMax / m_samplesPerPixel;
+			}
+		}
 	}
 }
 
@@ -504,7 +530,7 @@ WaveformWidget::paintGraphics(QPainter &painter)
 		for(quint32 ch = 0; ch < m_waveformChannels; ch++) {
 			qint32 chCenter = (ch * 2 + 1) * chHalfWidth;
 			for(quint32 i = yMin; i < yMax; i++) {
-				if(i >= m_waveformZoomedOffset) {
+				if(i >= m_waveformZoomedOffsetMax) {
 					xMin = xMax = 0;
 				} else {
 					xMin = m_waveformZoomed[ch][i].min * 9 / 5 * chHalfWidth / SAMPLE_MAX;

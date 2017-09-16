@@ -173,7 +173,8 @@ private:
 	quint32 m_samplesPerPixel;
 	ZoomData **m_waveformZoomed;
 	quint32 m_waveformZoomedSize;
-	quint32 m_waveformZoomedOffset;
+	quint32 m_waveformZoomedOffsetMin;
+	quint32 m_waveformZoomedOffsetMax;
 
 	QList<SubtitleLine *> m_visibleLines;
 	bool m_visibleLinesDirty;
