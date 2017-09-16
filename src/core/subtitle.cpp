@@ -688,12 +688,12 @@ Subtitle::shiftAnchoredLine(SubtitleLine *anchoredLine, const Time &newShowTime)
 	if(m_anchoredLines.indexOf(anchoredLine) == -1 || m_lines.isEmpty())
 		return;
 
-	const SubtitleLine *prevAnchor = NULL;
-	const SubtitleLine *nextAnchor = NULL;
+	const SubtitleLine *prevAnchor = nullptr;
+	const SubtitleLine *nextAnchor = nullptr;
 	foreach(auto anchor, m_anchoredLines) {
-		if((prevAnchor == NULL || prevAnchor->m_showTime < anchor->m_showTime) && anchor->m_showTime < anchoredLine->m_showTime)
+		if((prevAnchor == nullptr || prevAnchor->m_showTime < anchor->m_showTime) && anchor->m_showTime < anchoredLine->m_showTime)
 			prevAnchor = anchor;
-		if((nextAnchor == NULL || nextAnchor->m_showTime > anchor->m_showTime) && anchor->m_showTime > anchoredLine->m_showTime)
+		if((nextAnchor == nullptr || nextAnchor->m_showTime > anchor->m_showTime) && anchor->m_showTime > anchoredLine->m_showTime)
 			nextAnchor = anchor;
 	}
 	if((prevAnchor && prevAnchor->m_showTime > newShowTime) || (nextAnchor && nextAnchor->m_showTime < newShowTime))
@@ -726,10 +726,10 @@ Subtitle::shiftAnchoredLine(SubtitleLine *anchoredLine, const Time &newShowTime)
 			double scaleFactor = (newShowTime.toMillis() - prevAnchor->m_showTime.toMillis()) / (savedShowTime.toMillis() - prevAnchor->m_showTime.toMillis());
 			lastShowTime = scaleFactor * (last->m_showTime.toMillis() - prevAnchor->m_showTime.toMillis()) + prevAnchor->m_showTime.toMillis();
 		} else {
-			last = NULL;
+			last = nullptr;
 			lastShowTime = 0;
 		}
-		if(newShowTime.toMillis() < lastShowTime) {
+		if(newShowTime.toMillis() < lastShowTime && anchoredLine != last) {
 			anchoredLine->m_showTime = savedShowTime;
 			anchoredLine->m_hideTime = savedHideTime;
 			adjustLines(Range(anchoredLine->index(), last->index()), newShowTime.toMillis(), lastShowTime);
