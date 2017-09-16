@@ -261,7 +261,8 @@ WaveformWidget::updateZoomData()
 	if(!height)
 		return;
 
-	double samplesPerPixel = double(SAMPLE_RATE_MILIS * windowSize()) / height;
+	const quint32 samplesPerPixel = double(SAMPLE_RATE_MILIS * windowSize()) / height;
+
 	if(m_samplesPerPixel != samplesPerPixel) {
 		m_samplesPerPixel = samplesPerPixel;
 		m_waveformZoomedOffset = 0;
@@ -278,7 +279,7 @@ WaveformWidget::updateZoomData()
 		if(!m_waveformZoomed) {
 			m_waveformZoomedOffset = 0;
 			m_waveformZoomedSize = m_waveformChannelSize / m_samplesPerPixel;
-			if(m_waveformChannelSize % int(m_samplesPerPixel))
+			if(m_waveformChannelSize % m_samplesPerPixel)
 				m_waveformZoomedSize++;
 			m_waveformZoomed = new ZoomData *[m_waveformChannels];
 			for(quint32 i = 0; i < m_waveformChannels; i++)
@@ -287,34 +288,26 @@ WaveformWidget::updateZoomData()
 			updateActions();
 		}
 
-		int iMin = m_waveformZoomedOffset * m_samplesPerPixel;
-		int iMax = m_waveformDataOffset / BYTES_PER_SAMPLE / m_waveformChannels;
+		const quint32 iMin = m_waveformZoomedOffset * m_samplesPerPixel;
+		const quint32 iMax = m_waveformDataOffset / BYTES_PER_SAMPLE / m_waveformChannels;
+		Q_ASSERT(iMax <= (m_waveformZoomedSize - 1) * m_samplesPerPixel);
 		qint32 xMin = 65535, xMax = -65535;
-//		qint32 xAvg = 0;
-//		qreal xRMS = 0;
 
 		for(quint32 ch = 0; ch < m_waveformChannels; ch++) {
-			for(int i = iMin; i < iMax; i++) {
+			for(quint32 i = iMin; i < iMax; i++) {
 				qint32 val = (qint32)m_waveform[ch][i] + SIGNED_PAD;
 				if(xMin > val)
 					xMin = val;
 				if(xMax < val)
 					xMax = val;
-//				xAvg += val;
-//				xRMS += val * val;
 
-				if(i % int(m_samplesPerPixel) == int(m_samplesPerPixel) - 1) {
-//					xAvg /= m_samplesPerPixel;
-//					xRMS = sqrt(xRMS / m_samplesPerPixel);
-
-					int zi = i / m_samplesPerPixel;
+				if(i % m_samplesPerPixel == m_samplesPerPixel - 1) {
+					const int zi = i / m_samplesPerPixel;
 					m_waveformZoomed[ch][zi].min = xMin;
 					m_waveformZoomed[ch][zi].max = xMax;
 
 					xMin = 65535;
-					xMax = 0;
-//					xAvg = 0;
-//					xRMS = 0.0;
+					xMax = -65535;
 				}
 			}
 		}

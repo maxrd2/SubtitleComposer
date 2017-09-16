@@ -170,7 +170,7 @@ private:
 		qint32 min;
 		qint32 max;
 	};
-	double m_samplesPerPixel;
+	quint32 m_samplesPerPixel;
 	ZoomData **m_waveformZoomed;
 	quint32 m_waveformZoomedSize;
 	quint32 m_waveformZoomedOffset;
