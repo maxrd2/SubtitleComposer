@@ -84,6 +84,13 @@ public:
 	inline const Time & rightMousePressTime() const { return m_timeRMBPress; }
 	inline const Time & rightMouseReleaseTime() const { return m_timeRMBRelease; }
 
+	inline const Time & rightMouseSoonerTime() const {
+		return m_timeRMBPress > m_timeRMBRelease ? m_timeRMBRelease : m_timeRMBPress;
+	}
+	inline const Time & rightMouseLaterTime() const {
+		return m_timeRMBPress > m_timeRMBRelease ? m_timeRMBPress : m_timeRMBRelease;
+	}
+
 signals:
 	void doubleClick(Time time);
 	void dragStart(SubtitleLine *line, DragPosition dragPosition);

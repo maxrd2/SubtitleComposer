@@ -2831,8 +2831,8 @@ Application::setCurrentLineHideTimeFromWaveform()
 void
 Application::insertLineFromWaveform()
 {
-	const Time timeShow = m_mainWindow->m_waveformWidget->rightMousePressTime();
-	const Time timeHide = m_mainWindow->m_waveformWidget->rightMouseReleaseTime();
+	const Time timeShow = m_mainWindow->m_waveformWidget->rightMouseSoonerTime();
+	const Time timeHide = m_mainWindow->m_waveformWidget->rightMouseLaterTime();
 	SubtitleLine *sub = nullptr;
 	int insertIndex;
 
