@@ -1,3 +1,31 @@
+Version 0.6.5
+ - ADD: Added support for binary subtitle formats
+ - ADD: fine control video playback speed
+ - ADD: controls for video playback speed
+ - MOD: GStreamer backend audio improvements.
+ - MOD: Moved open video actions under File menu
+ - MOD: More tolerant parsing of SubRip subtitles.
+ - MOD: Improved split lines command
+ - MOD: Updated Czech translation - thanks @goliashcz
+ - MOD: Updated Croatian translations - thanks @muzena
+ - FIX: Waveform widget dragging and speed improvements, fixed buffer overflow
+ - FIX: WaveformWidget: zoom out wasn't working on movies without audio
+ - FIX: Fixed cases where subtitle hide time would end up before show time.
+ - FIX: Improved context menus.
+ - FIX: Fixed moving of anchored lines.
+ - FIX: Open subtitle wouldn't autoload video in some cases
+ - FIX: Open video now includes .divx and .webm extensions
+ - FIX: Tools menu scripts are filtered based on installed kross interpreters
+ - FIX: Moved custom icons to more standard location, using QIcon::fromTheme()
+ - FIX: Error Check > Absolute Duration config fields were changing incorrect values.
+ - FIX: MPV Backend: fixed deprecated options, updated vo devices - thanks @luzfcb
+ - FIX: better rendering on high DPI screens.
+ - FIX: MPV Backend: framerate/video length  wasn't reported to subtitle composer anymore
+ - FIX: detection/handling of current playing line
+ - FIX: Parsing text containing <font> without color attribute
+ - FIX: compilation without xine - thanks @pinotree
+ - FIX: ASS parsing - thanks @Martchus
+
 Version 0.6.4
  - ADD: WaveformWidget: context menu 
  - MOD: Updated German translations - thanks @Martchus
