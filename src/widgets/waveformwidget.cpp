@@ -837,25 +837,13 @@ WaveformWidget::eventFilter(QObject *obj, QEvent *event)
 		if(m_draggedLine) {
 			m_draggedTime = timeAt(y);
 			if(m_draggedPos == DRAG_LINE) {
-				if(m_subtitle->anchoredLines().empty())
-					m_draggedLine->setHideTime(m_draggedTime - m_draggedOffset + m_draggedLine->durationTime());
-				m_draggedLine->setShowTime(m_draggedTime - m_draggedOffset);
+				m_draggedLine->setTimes(m_draggedTime - m_draggedOffset, m_draggedTime - m_draggedOffset + m_draggedLine->durationTime());
 			} else if(m_draggedPos == DRAG_SHOW) {
 				Time newTime = m_draggedTime - m_draggedOffset;
-				if(newTime > m_draggedLine->hideTime()) {
-					m_draggedLine->setShowTime(m_draggedLine->hideTime());
-					m_draggedLine->setHideTime(newTime);
-				} else {
-					m_draggedLine->setShowTime(newTime);
-				}
+				m_draggedLine->setShowTime(newTime, true);
 			} else if(m_draggedPos == DRAG_HIDE) {
 				Time newTime = m_draggedTime - m_draggedOffset;
-				if(m_draggedLine->showTime() > newTime) {
-					m_draggedLine->setHideTime(m_draggedLine->showTime());
-					m_draggedLine->setShowTime(newTime);
-				} else {
-					m_draggedLine->setHideTime(newTime);
-				}
+				m_draggedLine->setHideTime(newTime, true);
 			}
 
 			emit dragEnd(m_draggedLine, m_draggedPos);

@@ -1211,9 +1211,9 @@ Time
 Application::videoPosition(bool compensate)
 {
 	if(compensate && !m_player->isPaused())
-		return Time((long)(m_player->position() * 1000) - SCConfig::grabbedPositionCompensation());
+		return Time(double(m_player->position()) * 1000. - SCConfig::grabbedPositionCompensation());
 	else
-		return Time((long)(m_player->position() * 1000));
+		return Time(double(m_player->position()) * 1000.);
 }
 
 void
@@ -2677,7 +2677,7 @@ Application::setCurrentLineShowTimeFromVideo()
 {
 	SubtitleLine *currentLine = m_linesWidget->currentLine();
 	if(currentLine)
-		currentLine->setShowTime(videoPosition(true));
+		currentLine->setShowTime(videoPosition(true), true);
 }
 
 void
@@ -2685,7 +2685,7 @@ Application::setCurrentLineHideTimeFromVideo()
 {
 	SubtitleLine *currentLine = m_linesWidget->currentLine();
 	if(currentLine) {
-		currentLine->setHideTime(videoPosition(true));
+		currentLine->setHideTime(videoPosition(true), true);
 		SubtitleLine *nextLine = currentLine->nextLine();
 		if(nextLine)
 			m_linesWidget->setCurrentLine(nextLine, true);
@@ -2798,7 +2798,7 @@ Application::setCurrentLineShowTimeFromWaveform()
 {
 	SubtitleLine *currentLine = m_linesWidget->currentLine();
 	if(currentLine)
-		currentLine->setShowTime(m_mainWindow->m_waveformWidget->rightMousePressTime());
+		currentLine->setShowTime(m_mainWindow->m_waveformWidget->rightMouseReleaseTime(), true);
 }
 
 void
@@ -2806,7 +2806,7 @@ Application::setCurrentLineHideTimeFromWaveform()
 {
 	SubtitleLine *currentLine = m_linesWidget->currentLine();
 	if(currentLine) {
-		currentLine->setHideTime(m_mainWindow->m_waveformWidget->rightMousePressTime());
+		currentLine->setHideTime(m_mainWindow->m_waveformWidget->rightMouseReleaseTime(), true);
 		SubtitleLine *nextLine = currentLine->nextLine();
 		if(nextLine)
 			m_linesWidget->setCurrentLine(nextLine, true);

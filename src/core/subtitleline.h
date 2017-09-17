@@ -166,10 +166,10 @@ public:
 	void simplifyTextWhiteSpace(TextTarget target);
 
 	Time showTime() const;
-	void setShowTime(const Time &showTime);
+	void setShowTime(const Time &showTime, bool safe=false);
 
 	Time hideTime() const;
-	void setHideTime(const Time &hideTime);
+	void setHideTime(const Time &hideTime, bool safe=false);
 
 	Time durationTime() const;
 	void setDurationTime(const Time &durationTime);
