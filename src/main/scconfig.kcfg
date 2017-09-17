@@ -99,6 +99,10 @@
 			<label>Waveform Outer Color</label>
 			<default>#646464</default>
 		</entry>
+		<entry name="wfSmoothScroll" type="Bool">
+			<label>Waveform Smooth Scrolling</label>
+			<default>true</default>
+		</entry>
 		<entry name="wfSubBackground" type="String">
 			<label>Waveform Subtitle Background Color</label>
 			<default>#64000064</default>

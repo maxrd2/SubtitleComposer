@@ -38,6 +38,7 @@
 #include <QBoxLayout>
 #include <QToolButton>
 #include <QScrollBar>
+#include <QPropertyAnimation>
 
 #include <QDebug>
 
@@ -197,14 +198,14 @@ WaveformWidget::~WaveformWidget()
 	clearAudioStream();
 }
 
-quint32
+double
 WaveformWidget::windowSize() const
 {
 	return (m_timeEnd - m_timeStart).toMillis();
 }
 
 void
-WaveformWidget::setWindowSize(const quint32 size)
+WaveformWidget::setWindowSize(const double size)
 {
 	if(size != windowSize()) {
 		m_timeEnd = m_timeStart.shifted(size);
@@ -220,7 +221,7 @@ WaveformWidget::setWindowSize(const quint32 size)
 void
 WaveformWidget::zoomIn()
 {
-	quint32 winSize = windowSize();
+	const double winSize = windowSize();
 	if(winSize <= MAX_WINDOW_ZOOM)
 		return;
 	m_scrollBar->setValue(m_timeStart.toMillis() + winSize / 4);
@@ -230,8 +231,8 @@ WaveformWidget::zoomIn()
 void
 WaveformWidget::zoomOut()
 {
-	quint32 winSize = windowSize();
-	quint32 totalLength = m_waveformChannelSize / SAMPLE_RATE_MILLIS;
+	const double winSize = windowSize();
+	const quint32 totalLength = m_waveformChannelSize / SAMPLE_RATE_MILLIS;
 	if(winSize >= totalLength)
 		return;
 	m_scrollBar->setValue(m_timeStart.toMillis() - winSize / 2);
@@ -779,12 +780,12 @@ WaveformWidget::eventFilter(QObject *obj, QEvent *event)
 
 		if(m_RMBDown) {
 			m_timeRMBRelease = m_pointerTime;
-			autoscrollToTime(m_pointerTime, false);
+			scrollToTime(m_pointerTime, false);
 		}
 
 		if(m_draggedLine) {
 			m_draggedTime = m_pointerTime;
-			autoscrollToTime(m_pointerTime, false);
+			scrollToTime(m_pointerTime, false);
 		} else {
 			SubtitleLine *sub = Q_NULLPTR;
 			WaveformWidget::DragPosition res = subtitleAt(y, &sub);
@@ -939,12 +940,10 @@ WaveformWidget::subtitleLineAtMousePosition() const
 }
 
 void
-WaveformWidget::setScrollPosition(int milliseconds)
+WaveformWidget::setScrollPosition(double milliseconds)
 {
-	milliseconds -= windowSize() / 2;
-	if(milliseconds != m_scrollBar->value()) {
-		m_scrollBar->setValue(milliseconds);
-
+	if(milliseconds < m_timeStart.toMillis() || milliseconds > m_timeEnd.toMillis()) {
+		scrollToTime(milliseconds, true);
 		m_visibleLinesDirty = true;
 		m_waveformGraphics->update();
 	}
@@ -971,7 +970,7 @@ WaveformWidget::onHoverScrollTimeout()
 }
 
 bool
-WaveformWidget::autoscrollToTime(const Time &time, bool scrollPage)
+WaveformWidget::scrollToTime(const Time &time, bool scrollToPage)
 {
 	const double windowSize = this->windowSize();
 	const double windowPadding = windowSize / 8.; // autoscroll when we reach padding
@@ -981,15 +980,23 @@ WaveformWidget::autoscrollToTime(const Time &time, bool scrollPage)
 	const double bottomPadding = m_timeEnd.toMillis() - windowPadding;
 
 	if(time <= bottomPadding && time >= topPadding) {
-		if(!scrollPage) {
+		if(!scrollToPage) {
 			m_hoverScrollAmount = .0;
 			m_hoverScrollTimer.stop();
 		}
 		return false;
 	}
 
-	if(scrollPage) {
-		m_scrollBar->setValue((int(time.toMillis() + 0.5) / windowSizePad) * windowSizePad);
+	if(scrollToPage) {
+		const int scrollPosition = (int(time.toMillis() + 0.5) / windowSizePad) * windowSizePad;
+		if(SCConfig::wfSmoothScroll()) {
+			QPropertyAnimation *animation = new QPropertyAnimation(m_scrollBar, "value");
+			animation->setDuration(150);
+			animation->setEndValue(scrollPosition);
+			animation->start();
+		} else {
+			m_scrollBar->setValue(scrollPosition);
+		}
 	} else {
 		if(time < topPadding)
 			m_hoverScrollAmount = time.toMillis() - topPadding;
@@ -1014,7 +1021,7 @@ WaveformWidget::onPlayerPositionChanged(double seconds)
 		m_timeCurrent = playingPosition;
 
 		if(m_autoScroll && !m_draggedLine && !m_userScroll)
-			autoscrollToTime(m_timeCurrent, true);
+			scrollToTime(m_timeCurrent, true);
 
 		m_visibleLinesDirty = true;
 		m_waveformGraphics->update();

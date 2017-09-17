@@ -72,8 +72,8 @@ public:
 
 	void updateActions();
 
-	quint32 windowSize() const;
-	void setWindowSize(const quint32 size);
+	double windowSize() const;
+	void setWindowSize(const double size);
 
 	QWidget *progressWidget();
 
@@ -106,7 +106,7 @@ public slots:
 	void zoomIn();
 	void zoomOut();
 	void setAutoscroll(bool autoscroll);
-	void setScrollPosition(int milliseconds);
+	void setScrollPosition(double milliseconds);
 	void onConfigChanged();
 	void onSubtitleChanged();
 
@@ -132,7 +132,7 @@ private:
 	Time timeAt(int y);
 	WaveformWidget::DragPosition subtitleAt(int y, SubtitleLine **result);
 	void setupScrollBar();
-	bool autoscrollToTime(const Time &time, bool scrollPage);
+	bool scrollToTime(const Time &time, bool scrollToPage);
 
 private:
 	QString m_mediaFile;
