@@ -165,7 +165,7 @@ SaveSubtitleDialog::outputFormatsFilter()
 SaveSubtitleDialog::showEvent(QShowEvent */*event*/)
 {
 	KConfigGroup group = KSharedConfig::openConfig()->group("FileDialogSize");
-	restoreGeometry(group.readEntry("WindowSize", QByteArray()));
+//	restoreGeometry(group.readEntry("WindowSize", QByteArray()));
 	m_fileWidget->restoreGeometry(group.readEntry("FileWidget", QByteArray()));
 }
 

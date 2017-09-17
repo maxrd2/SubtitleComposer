@@ -1318,7 +1318,7 @@ Application::newSubtitle()
 void
 Application::openSubtitle()
 {
-	OpenSubtitleDialog openDlg(true, m_lastSubtitleUrl, QString());
+	OpenSubtitleDialog openDlg(true, m_lastSubtitleUrl, QString(), m_mainWindow);
 
 	if(openDlg.exec() == QDialog::Accepted) {
 		if(!acceptClashingUrls(openDlg.selectedUrl(), m_subtitleTrUrl))
@@ -1529,7 +1529,8 @@ Application::saveSubtitleAs()
 		m_subtitleUrl,
 		m_subtitleEncoding.isEmpty() ? SCConfig::defaultSubtitlesEncoding() : m_subtitleEncoding,
 		m_subtitleEOL,
-		m_subtitleFormat);
+		m_subtitleFormat,
+		m_mainWindow);
 
 	if(saveDlg.exec() == QDialog::Accepted) {
 		if(!acceptClashingUrls(saveDlg.selectedUrl(), m_subtitleTrUrl))
@@ -1617,7 +1618,7 @@ Application::openSubtitleTr()
 	if(!m_subtitle)
 		return;
 
-	OpenSubtitleDialog openDlg(false, m_lastSubtitleUrl, QString());
+	OpenSubtitleDialog openDlg(false, m_lastSubtitleUrl, QString(), m_mainWindow);
 
 	if(openDlg.exec() == QDialog::Accepted) {
 		if(!acceptClashingUrls(m_subtitleUrl, openDlg.selectedUrl()))
@@ -1780,7 +1781,8 @@ Application::saveSubtitleTrAs()
 		m_subtitleTrUrl,
 		m_subtitleTrEncoding.isEmpty() ? SCConfig::defaultSubtitlesEncoding() : m_subtitleTrEncoding,
 		m_subtitleTrEOL,
-		m_subtitleTrFormat);
+		m_subtitleTrFormat,
+		m_mainWindow);
 
 	if(saveDlg.exec() == QDialog::Accepted) {
 		if(!acceptClashingUrls(m_subtitleUrl, saveDlg.selectedUrl()))
