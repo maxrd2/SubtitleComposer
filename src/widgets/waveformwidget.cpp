@@ -345,13 +345,17 @@ WaveformWidget::updateZoomData()
 void
 WaveformWidget::setSubtitle(Subtitle *subtitle)
 {
-	if(m_subtitle)
+	if(m_subtitle) {
 		disconnect(m_subtitle, &Subtitle::primaryChanged, this, &WaveformWidget::onSubtitleChanged);
+		disconnect(m_subtitle, &Subtitle::lineAnchorChanged, this, &WaveformWidget::onSubtitleChanged);
+	}
 
 	m_subtitle = subtitle;
 
-	if(m_subtitle)
+	if(m_subtitle) {
 		connect(m_subtitle, &Subtitle::primaryChanged, this, &WaveformWidget::onSubtitleChanged);
+		connect(m_subtitle, &Subtitle::lineAnchorChanged, this, &WaveformWidget::onSubtitleChanged);
+	}
 
 	m_visibleLines.clear();
 	m_visibleLinesDirty = true;
@@ -555,6 +559,10 @@ WaveformWidget::paintGraphics(QPainter &painter)
 
 	updateVisibleLines();
 
+	QList<const SubtitleLine *> anchoredLines;
+	if(m_subtitle)
+		anchoredLines = m_subtitle->anchoredLines();
+
 	const RangeList &selection = Application::instance()->linesWidget()->selectionRanges();
 	foreach(const SubtitleLine *sub, m_visibleLines) {
 		bool selected = selection.contains(sub->index());
@@ -586,9 +594,15 @@ WaveformWidget::paintGraphics(QPainter &painter)
 			int hideY = widgetSpan * (timeHide.toMillis() - m_timeStart.toMillis()) / msWindowSize;
 			QRect box;
 			if(m_vertical)
-				box = QRect(0, showY + m_subBorderWidth, widgetWidth, hideY - showY - 2 * m_subBorderWidth);
+				box = QRect(2, showY + m_subBorderWidth, widgetWidth - 4, hideY - showY - 2 * m_subBorderWidth);
 			else
-				box = QRect(showY + m_subBorderWidth, 0, hideY - showY - 2 * m_subBorderWidth, widgetHeight);
+				box = QRect(showY + m_subBorderWidth, 2, hideY - showY - 2 * m_subBorderWidth, widgetHeight - 4);
+
+			const bool isAnchored = anchoredLines.contains(sub);
+			if(anchoredLines.isEmpty() || isAnchored)
+				painter.setOpacity(1.);
+			else
+				painter.setOpacity(.5);
 
 			painter.fillRect(box, selected ? m_selectedBack : m_subtitleBack);
 
@@ -612,6 +626,15 @@ WaveformWidget::paintGraphics(QPainter &painter)
 				painter.drawText(m_fontNumberHeight / 2, showY + m_fontNumberHeight + 2, QString::number(sub->number()));
 			else
 				painter.drawText(showY + m_fontNumberHeight / 2, m_fontNumberHeight + 2, QString::number(sub->number()));
+
+			if(isAnchored) {
+				static QFont fontAnchor("sans-serif", 12);
+				painter.setFont(fontAnchor);
+				if(m_vertical)
+					painter.drawText(box, Qt::AlignTop | Qt::AlignRight, QStringLiteral("\u2693"));
+				else
+					painter.drawText(box, Qt::AlignBottom | Qt::AlignLeft, QStringLiteral("\u2693"));
+			}
 		}
 	}
 
