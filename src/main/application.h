@@ -86,7 +86,7 @@ public:
 	void loadConfig();
 	void saveConfig();
 
-	QAction * action(const char *actionName);
+	QAction * action(const char *actionName) const;
 
 	/**
 	 * @brief triggerAction
@@ -216,6 +216,7 @@ public slots:
 	void adjustToVideoPositionAnchorLast();
 	void adjustToVideoPositionAnchorFirst();
 
+	void selectCurrentLineFromWaveform();
 	void setCurrentLineShowTimeFromWaveform();
 	void setCurrentLineHideTimeFromWaveform();
 	void insertLineFromWaveform();

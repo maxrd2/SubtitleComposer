@@ -115,9 +115,6 @@
 #define ACT_WAVEFORM_ZOOM_OUT "waveform_zoom_out"
 #define ACT_WAVEFORM_AUTOSCROLL "waveform_autoscroll"
 #define ACT_ASR_IMPORT_AUDIO_STREAM "asr_import_audio_stream"
-#define ACT_WAVEFORM_SET_CURRENT_LINE_SHOW_TIME "waveform_set_current_line_show_time"
-#define ACT_WAVEFORM_SET_CURRENT_LINE_HIDE_TIME "waveform_set_current_line_hide_time"
-#define ACT_WAVEFORM_INSERT_LINE "waveform_insert_line"
 #define ACT_PLAY_RATE_INCREASE "playrate_increase"
 #define ACT_PLAY_RATE_DECREASE "playrate_decrease"
 #endif

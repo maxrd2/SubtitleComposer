@@ -84,6 +84,8 @@ public:
 	inline const Time & rightMousePressTime() const { return m_timeRMBPress; }
 	inline const Time & rightMouseReleaseTime() const { return m_timeRMBRelease; }
 
+	SubtitleLine * subtitleLineAtMousePosition() const;
+
 	inline const Time & rightMouseSoonerTime() const {
 		return m_timeRMBPress > m_timeRMBRelease ? m_timeRMBRelease : m_timeRMBPress;
 	}

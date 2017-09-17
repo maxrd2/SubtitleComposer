@@ -21,6 +21,7 @@
 #include "../core/subtitleline.h"
 #include "../videoplayer/videoplayer.h"
 #include "application.h"
+#include "actions/useraction.h"
 #include "actions/useractionnames.h"
 #include "lineswidget.h"
 
@@ -825,8 +826,8 @@ WaveformWidget::eventFilter(QObject *obj, QEvent *event)
 		if(mouse->button() == Qt::RightButton) {
 			m_timeRMBRelease = timeAt(y);
 			m_hoverScrollTimer.stop();
-			m_RMBDown = false;
 			showContextMenu(mouse);
+			m_RMBDown = false;
 			return false;
 		}
 
@@ -913,6 +914,17 @@ WaveformWidget::subtitleAt(int y, SubtitleLine **result)
 	}
 
 	return closestDrag;
+}
+
+SubtitleLine *
+WaveformWidget::subtitleLineAtMousePosition() const
+{
+	const Time mouseTime = m_RMBDown ? m_timeRMBRelease : m_pointerTime;
+	foreach(SubtitleLine *sub, m_visibleLines) {
+		if(sub->showTime() <= mouseTime && sub->hideTime() >= mouseTime)
+			return sub;
+	}
+	return nullptr;
 }
 
 void
@@ -1014,13 +1026,25 @@ void
 WaveformWidget::showContextMenu(QMouseEvent *event)
 {
 	static QMenu *menu = nullptr;
+	static QAction *actSelectLine;
 
 	if(!menu) {
+		const Application *app = Application::instance();
+		UserActionManager *actionManager = UserActionManager::instance();
 		menu = new QMenu(this);
-		menu->addAction(app()->action(ACT_WAVEFORM_SET_CURRENT_LINE_SHOW_TIME));
-		menu->addAction(app()->action(ACT_WAVEFORM_SET_CURRENT_LINE_HIDE_TIME));
-		menu->addAction(app()->action(ACT_WAVEFORM_INSERT_LINE));
+		actSelectLine = menu->addAction(QIcon::fromTheme(QStringLiteral("select")), i18n("Select Line"), app, &Application::selectCurrentLineFromWaveform);
+		actionManager->addAction(
+			menu->addAction(QIcon::fromTheme(QStringLiteral("set_show_time")), i18n("Set Current Line Show Time"), app, &Application::setCurrentLineShowTimeFromWaveform),
+			UserAction::HasSelection | UserAction::EditableShowTime);
+		actionManager->addAction(
+			menu->addAction(QIcon::fromTheme(QStringLiteral("set_hide_time")), i18n("Set Current Line Hide Time"), app, &Application::setCurrentLineHideTimeFromWaveform),
+			UserAction::HasSelection | UserAction::EditableShowTime);
+		actionManager->addAction(
+			menu->addAction(i18n("Insert Line"), app, &Application::insertLineFromWaveform),
+			UserAction::SubOpened);
 	}
 
-	menu->popup(event->globalPos());
+	actSelectLine->setDisabled(subtitleLineAtMousePosition() == nullptr);
+
+	menu->exec(event->globalPos(), actSelectLine);
 }

@@ -327,7 +327,7 @@ Application::saveConfig()
 }
 
 QAction *
-Application::action(const char *actionName)
+Application::action(const char *actionName) const
 {
 	return m_mainWindow->actionCollection()->action(actionName);
 }
@@ -1201,29 +1201,6 @@ Application::setupActions()
 	waveformAutoScrollAction->setStatusTip(i18n("Waveform display will automatically scroll to video position"));
 	connect(waveformAutoScrollAction, SIGNAL(toggled(bool)), m_mainWindow->m_waveformWidget, SLOT(setAutoscroll(bool)));
 	actionCollection->addAction(ACT_WAVEFORM_AUTOSCROLL, waveformAutoScrollAction);
-
-	QAction *waveformSetCurrentLineShowTimeAction = new QAction(actionCollection);
-	waveformSetCurrentLineShowTimeAction->setIcon(QIcon::fromTheme(QStringLiteral("set_show_time")));
-	waveformSetCurrentLineShowTimeAction->setText(i18n("Set Current Line Show Time"));
-	waveformSetCurrentLineShowTimeAction->setStatusTip(i18n("Set current line show time to waveform mouse position"));
-	connect(waveformSetCurrentLineShowTimeAction, &QAction::triggered, this, &Application::setCurrentLineShowTimeFromWaveform);
-	actionCollection->addAction(ACT_WAVEFORM_SET_CURRENT_LINE_SHOW_TIME, waveformSetCurrentLineShowTimeAction);
-	actionManager->addAction(waveformSetCurrentLineShowTimeAction, UserAction::HasSelection | UserAction::EditableShowTime);
-
-	QAction *waveformSetCurrentLineHideTimeAction = new QAction(actionCollection);
-	waveformSetCurrentLineHideTimeAction->setIcon(QIcon::fromTheme(QStringLiteral("set_hide_time")));
-	waveformSetCurrentLineHideTimeAction->setText(i18n("Set Current Line Hide Time"));
-	waveformSetCurrentLineHideTimeAction->setStatusTip(i18n("Set current line hide time to waveform mouse position"));
-	connect(waveformSetCurrentLineHideTimeAction, &QAction::triggered, this, &Application::setCurrentLineHideTimeFromWaveform);
-	actionCollection->addAction(ACT_WAVEFORM_SET_CURRENT_LINE_HIDE_TIME, waveformSetCurrentLineHideTimeAction);
-	actionManager->addAction(waveformSetCurrentLineHideTimeAction, UserAction::HasSelection | UserAction::EditableShowTime);
-
-	QAction *waveformInserLineAction = new QAction(actionCollection);
-	waveformInserLineAction->setText(i18n("Insert Line"));
-	waveformInserLineAction->setStatusTip(i18n("Insert empty line at waveform mouse position(s)"));
-	connect(waveformInserLineAction, &QAction::triggered, this, &Application::insertLineFromWaveform);
-	actionCollection->addAction(ACT_WAVEFORM_INSERT_LINE, waveformInserLineAction);
-	actionManager->addAction(waveformInserLineAction, UserAction::SubOpened);
 
 	updateActionTexts();
 }
@@ -2809,6 +2786,14 @@ Application::adjustToVideoPositionAnchorFirst()
 }
 
 void
+Application::selectCurrentLineFromWaveform()
+{
+	SubtitleLine *currentLine = m_mainWindow->m_waveformWidget->subtitleLineAtMousePosition();
+	if(currentLine)
+		m_linesWidget->setCurrentLine(currentLine, true);
+}
+
+void
 Application::setCurrentLineShowTimeFromWaveform()
 {
 	SubtitleLine *currentLine = m_linesWidget->currentLine();
@@ -3049,16 +3034,19 @@ Application::onPlayerMuteChanged(bool muted)
 void
 Application::updateActionTexts()
 {
-	action(ACT_SEEK_BACKWARDS)->setStatusTip(i18np("Seek backwards 1 second", "Seek backwards %1 seconds", SCConfig::seekJumpLength()));
-	action(ACT_SEEK_FORWARDS)->setStatusTip(i18np("Seek forwards 1 second", "Seek forwards %1 seconds", SCConfig::seekJumpLength()));
+	const int shiftAmount = SCConfig::linesQuickShiftAmount();
+	const int jumpLength = SCConfig::seekJumpLength();
+
+	action(ACT_SEEK_BACKWARDS)->setStatusTip(i18np("Seek backwards 1 second", "Seek backwards %1 seconds", jumpLength));
+	action(ACT_SEEK_FORWARDS)->setStatusTip(i18np("Seek forwards 1 second", "Seek forwards %1 seconds", jumpLength));
 
 	QAction *shiftSelectedLinesFwdAction = action(ACT_SHIFT_SELECTED_LINES_FORWARDS);
-	shiftSelectedLinesFwdAction->setText(i18np("Shift %21 Millisecond", "Shift %2%1 Milliseconds", SCConfig::linesQuickShiftAmount(), "+"));
-	shiftSelectedLinesFwdAction->setStatusTip(i18np("Shift selected lines %21 millisecond", "Shift selected lines %2%1 milliseconds", SCConfig::linesQuickShiftAmount(), "+"));
+	shiftSelectedLinesFwdAction->setText(i18np("Shift %2%1 millisecond", "Shift %2%1 milliseconds", shiftAmount, "+"));
+	shiftSelectedLinesFwdAction->setStatusTip(i18np("Shift selected lines %2%1 millisecond", "Shift selected lines %2%1 milliseconds", shiftAmount, "+"));
 
 	QAction *shiftSelectedLinesBwdAction = action(ACT_SHIFT_SELECTED_LINES_BACKWARDS);
-	shiftSelectedLinesBwdAction->setText(i18np("Shift %21 Millisecond", "Shift %2%1 Milliseconds", SCConfig::linesQuickShiftAmount(), "-"));
-	shiftSelectedLinesBwdAction->setStatusTip(i18np("Shift selected lines %21 millisecond", "Shift selected lines -%2%1 milliseconds", SCConfig::linesQuickShiftAmount(), "-"));
+	shiftSelectedLinesBwdAction->setText(i18np("Shift %2%1 Millisecond", "Shift %2%1 Milliseconds", shiftAmount, "-"));
+	shiftSelectedLinesBwdAction->setStatusTip(i18np("Shift selected lines %2%1 millisecond", "Shift selected lines %2%1 milliseconds", shiftAmount, "-"));
 }
 
 void
