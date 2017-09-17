@@ -1,4 +1,4 @@
-/**
+/*
  * Copyright (C) 2007-2009 Sergio Pistone <sergio_pistone@yahoo.com.ar>
  * Copyright (C) 2010-2017 Mladen Milinkovic <max@smoothware.net>
  *
@@ -54,15 +54,15 @@ main(int argc, char **argv)
 	KAboutData aboutData(
 		"subtitlecomposer",
 		i18n("Subtitle Composer"),
-		"0.6.4",
+		"0.6.5",
 		i18n("A KDE subtitle editor."),
 		KAboutLicense::GPL,
-		QStringLiteral("&copy; 2007-2012 Sergio Pistone\n&copy; 2013-2017 Mladen Milinković"),
+		QStringLiteral("&copy; 2007-2017 Subtitle Composer project"),
 		QString(), // Additional text
 		QStringLiteral("https://github.com/maxrd2/subtitlecomposer"),
 		QStringLiteral("maxrd2@smoothware.net"));
 
-	aboutData.addAuthor(i18n("Mladen Milinković"), i18n("Author & Maintainer"), "maxrd2@smoothware.net");
+	aboutData.addAuthor(i18n("Mladen Milinković"), i18n("Current Author & Maintainer"), "maxrd2@smoothware.net");
 	aboutData.addAuthor(i18n("Sergio Pistone"), i18n("Original Author"), "sergio_pistone@yahoo.com.ar");
 
 	aboutData.setTranslator(i18nc("NAME OF TRANSLATORS", "Your names"), i18nc("EMAIL OF TRANSLATORS", "Your emails"));
@@ -80,7 +80,7 @@ main(int argc, char **argv)
 	aboutData.addCredit("Yuri Chornoivan", i18n("Translator"));
 	aboutData.addCredit("Alexandros Perdikomatis", i18n("Translator"));
 	aboutData.addCredit("Barcza Károly", i18n("Translator"));
-	aboutData.addCredit("Martin Steghöfer");
+	aboutData.addCredit("Martin Steghöfer", i18n("code contributions"));
 	aboutData.addCredit("Marius Kittler", i18n("code contributions, Arch Linux packaging, German translation"));
 
 	aboutData.addCredit(i18n("All people who have contributed and I have forgotten to mention"));

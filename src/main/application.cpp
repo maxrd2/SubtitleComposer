@@ -327,7 +327,7 @@ Application::saveConfig()
 }
 
 QAction *
-Application::action(const char *actionName)
+Application::action(const char *actionName) const
 {
 	return m_mainWindow->actionCollection()->action(actionName);
 }
@@ -583,6 +583,7 @@ Application::setupActions()
 	actionManager->addAction(joinSubtitlesAction, UserAction::SubOpened | UserAction::FullScreenOff);
 
 	QAction *insertBeforeCurrentLineAction = new QAction(actionCollection);
+	insertBeforeCurrentLineAction->setIcon(QIcon::fromTheme(QStringLiteral("list-add")));
 	insertBeforeCurrentLineAction->setText(i18n("Insert Before"));
 	insertBeforeCurrentLineAction->setStatusTip(i18n("Insert empty line before current one"));
 	actionCollection->setDefaultShortcut(insertBeforeCurrentLineAction, QKeySequence("Ctrl+Insert"));
@@ -591,6 +592,7 @@ Application::setupActions()
 	actionManager->addAction(insertBeforeCurrentLineAction, UserAction::SubOpened | UserAction::FullScreenOff);
 
 	QAction *insertAfterCurrentLineAction = new QAction(actionCollection);
+	insertAfterCurrentLineAction->setIcon(QIcon::fromTheme(QStringLiteral("list-add")));
 	insertAfterCurrentLineAction->setText(i18n("Insert After"));
 	insertAfterCurrentLineAction->setStatusTip(i18n("Insert empty line after current one"));
 	actionCollection->setDefaultShortcut(insertAfterCurrentLineAction, QKeySequence("Insert"));
@@ -599,6 +601,7 @@ Application::setupActions()
 	actionManager->addAction(insertAfterCurrentLineAction, UserAction::SubOpened | UserAction::FullScreenOff);
 
 	QAction *removeSelectedLinesAction = new QAction(actionCollection);
+	removeSelectedLinesAction->setIcon(QIcon::fromTheme(QStringLiteral("list-remove")));
 	removeSelectedLinesAction->setText(i18n("Remove"));
 	removeSelectedLinesAction->setStatusTip(i18n("Remove selected lines"));
 	actionCollection->setDefaultShortcut(removeSelectedLinesAction, QKeySequence("Delete"));
@@ -621,6 +624,7 @@ Application::setupActions()
 	actionManager->addAction(joinSelectedLinesAction, UserAction::HasSelection | UserAction::FullScreenOff);
 
 	QAction *selectAllLinesAction = new QAction(actionCollection);
+	selectAllLinesAction->setIcon(QIcon::fromTheme(QStringLiteral("edit-select-all")));
 	selectAllLinesAction->setText(i18n("Select All"));
 	selectAllLinesAction->setStatusTip(i18n("Select all lines"));
 	actionCollection->setDefaultShortcuts(selectAllLinesAction, KStandardShortcut::selectAll());
@@ -1202,29 +1206,6 @@ Application::setupActions()
 	connect(waveformAutoScrollAction, SIGNAL(toggled(bool)), m_mainWindow->m_waveformWidget, SLOT(setAutoscroll(bool)));
 	actionCollection->addAction(ACT_WAVEFORM_AUTOSCROLL, waveformAutoScrollAction);
 
-	QAction *waveformSetCurrentLineShowTimeAction = new QAction(actionCollection);
-	waveformSetCurrentLineShowTimeAction->setIcon(QIcon::fromTheme(QStringLiteral("set_show_time")));
-	waveformSetCurrentLineShowTimeAction->setText(i18n("Set Current Line Show Time"));
-	waveformSetCurrentLineShowTimeAction->setStatusTip(i18n("Set current line show time to waveform mouse position"));
-	connect(waveformSetCurrentLineShowTimeAction, &QAction::triggered, this, &Application::setCurrentLineShowTimeFromWaveform);
-	actionCollection->addAction(ACT_WAVEFORM_SET_CURRENT_LINE_SHOW_TIME, waveformSetCurrentLineShowTimeAction);
-	actionManager->addAction(waveformSetCurrentLineShowTimeAction, UserAction::HasSelection | UserAction::EditableShowTime);
-
-	QAction *waveformSetCurrentLineHideTimeAction = new QAction(actionCollection);
-	waveformSetCurrentLineHideTimeAction->setIcon(QIcon::fromTheme(QStringLiteral("set_hide_time")));
-	waveformSetCurrentLineHideTimeAction->setText(i18n("Set Current Line Hide Time"));
-	waveformSetCurrentLineHideTimeAction->setStatusTip(i18n("Set current line hide time to waveform mouse position"));
-	connect(waveformSetCurrentLineHideTimeAction, &QAction::triggered, this, &Application::setCurrentLineHideTimeFromWaveform);
-	actionCollection->addAction(ACT_WAVEFORM_SET_CURRENT_LINE_HIDE_TIME, waveformSetCurrentLineHideTimeAction);
-	actionManager->addAction(waveformSetCurrentLineHideTimeAction, UserAction::HasSelection | UserAction::EditableShowTime);
-
-	QAction *waveformInserLineAction = new QAction(actionCollection);
-	waveformInserLineAction->setText(i18n("Insert Line"));
-	waveformInserLineAction->setStatusTip(i18n("Insert empty line at waveform mouse position(s)"));
-	connect(waveformInserLineAction, &QAction::triggered, this, &Application::insertLineFromWaveform);
-	actionCollection->addAction(ACT_WAVEFORM_INSERT_LINE, waveformInserLineAction);
-	actionManager->addAction(waveformInserLineAction, UserAction::SubOpened);
-
 	updateActionTexts();
 }
 
@@ -1234,9 +1215,9 @@ Time
 Application::videoPosition(bool compensate)
 {
 	if(compensate && !m_player->isPaused())
-		return Time((long)(m_player->position() * 1000) - SCConfig::grabbedPositionCompensation());
+		return Time(double(m_player->position()) * 1000. - SCConfig::grabbedPositionCompensation());
 	else
-		return Time((long)(m_player->position() * 1000));
+		return Time(double(m_player->position()) * 1000.);
 }
 
 void
@@ -1337,7 +1318,7 @@ Application::newSubtitle()
 void
 Application::openSubtitle()
 {
-	OpenSubtitleDialog openDlg(true, m_lastSubtitleUrl, QString());
+	OpenSubtitleDialog openDlg(true, m_lastSubtitleUrl, QString(), m_mainWindow);
 
 	if(openDlg.exec() == QDialog::Accepted) {
 		if(!acceptClashingUrls(openDlg.selectedUrl(), m_subtitleTrUrl))
@@ -1548,7 +1529,8 @@ Application::saveSubtitleAs()
 		m_subtitleUrl,
 		m_subtitleEncoding.isEmpty() ? SCConfig::defaultSubtitlesEncoding() : m_subtitleEncoding,
 		m_subtitleEOL,
-		m_subtitleFormat);
+		m_subtitleFormat,
+		m_mainWindow);
 
 	if(saveDlg.exec() == QDialog::Accepted) {
 		if(!acceptClashingUrls(saveDlg.selectedUrl(), m_subtitleTrUrl))
@@ -1636,7 +1618,7 @@ Application::openSubtitleTr()
 	if(!m_subtitle)
 		return;
 
-	OpenSubtitleDialog openDlg(false, m_lastSubtitleUrl, QString());
+	OpenSubtitleDialog openDlg(false, m_lastSubtitleUrl, QString(), m_mainWindow);
 
 	if(openDlg.exec() == QDialog::Accepted) {
 		if(!acceptClashingUrls(m_subtitleUrl, openDlg.selectedUrl()))
@@ -1799,7 +1781,8 @@ Application::saveSubtitleTrAs()
 		m_subtitleTrUrl,
 		m_subtitleTrEncoding.isEmpty() ? SCConfig::defaultSubtitlesEncoding() : m_subtitleTrEncoding,
 		m_subtitleTrEOL,
-		m_subtitleTrFormat);
+		m_subtitleTrFormat,
+		m_mainWindow);
 
 	if(saveDlg.exec() == QDialog::Accepted) {
 		if(!acceptClashingUrls(m_subtitleUrl, saveDlg.selectedUrl()))
@@ -2361,7 +2344,7 @@ Application::enforceDurationLimits()
 																m_mainWindow);
 
 	if(dlg->exec() == QDialog::Accepted) {
-		m_subtitle->applyDurationLimits(m_linesWidget->targetRanges(dlg->selectedLinesTarget()), dlg->enforceMinDuration() ? dlg->minDuration() : 0, dlg->enforceMaxDuration() ? dlg->maxDuration() : Time::MaxMseconds, !dlg->preventOverlap());
+		m_subtitle->applyDurationLimits(m_linesWidget->targetRanges(dlg->selectedLinesTarget()), dlg->enforceMinDuration() ? dlg->minDuration() : Time(), dlg->enforceMaxDuration() ? dlg->maxDuration() : Time(Time::MaxMseconds), !dlg->preventOverlap());
 	}
 }
 
@@ -2700,7 +2683,7 @@ Application::setCurrentLineShowTimeFromVideo()
 {
 	SubtitleLine *currentLine = m_linesWidget->currentLine();
 	if(currentLine)
-		currentLine->setShowTime(videoPosition(true));
+		currentLine->setShowTime(videoPosition(true), true);
 }
 
 void
@@ -2708,7 +2691,7 @@ Application::setCurrentLineHideTimeFromVideo()
 {
 	SubtitleLine *currentLine = m_linesWidget->currentLine();
 	if(currentLine) {
-		currentLine->setHideTime(videoPosition(true));
+		currentLine->setHideTime(videoPosition(true), true);
 		SubtitleLine *nextLine = currentLine->nextLine();
 		if(nextLine)
 			m_linesWidget->setCurrentLine(nextLine, true);
@@ -2806,53 +2789,6 @@ Application::adjustToVideoPositionAnchorFirst()
 
 		m_subtitle->adjustLines(Range::full(), firstLineTime, newLastLineTime);
 	}
-}
-
-void
-Application::setCurrentLineShowTimeFromWaveform()
-{
-	SubtitleLine *currentLine = m_linesWidget->currentLine();
-	if(currentLine)
-		currentLine->setShowTime(m_mainWindow->m_waveformWidget->rightMousePressTime());
-}
-
-void
-Application::setCurrentLineHideTimeFromWaveform()
-{
-	SubtitleLine *currentLine = m_linesWidget->currentLine();
-	if(currentLine) {
-		currentLine->setHideTime(m_mainWindow->m_waveformWidget->rightMousePressTime());
-		SubtitleLine *nextLine = currentLine->nextLine();
-		if(nextLine)
-			m_linesWidget->setCurrentLine(nextLine, true);
-	}
-}
-
-void
-Application::insertLineFromWaveform()
-{
-	const Time timeShow = m_mainWindow->m_waveformWidget->rightMousePressTime();
-	const Time timeHide = m_mainWindow->m_waveformWidget->rightMouseReleaseTime();
-	SubtitleLine *sub = nullptr;
-	int insertIndex;
-
-	foreach(sub, m_subtitle->allLines()) {
-		if(sub->showTime() > timeShow)
-			break;
-	}
-
-	if(!sub) {
-		insertIndex = 0;
-	} else {
-		insertIndex = sub->index();
-		if(sub->showTime() <= timeShow)
-			insertIndex++;
-	}
-
-	SubtitleLine *newLine = new SubtitleLine();
-	newLine->setTimes(timeShow, timeHide.toMillis() - timeShow.toMillis() > 500. ? timeHide : timeShow + 500.);
-	m_subtitle->insertLine(newLine, insertIndex);
-	m_linesWidget->setCurrentLine(newLine, true);
 }
 
 /// END ACTION HANDLERS
@@ -3049,16 +2985,19 @@ Application::onPlayerMuteChanged(bool muted)
 void
 Application::updateActionTexts()
 {
-	action(ACT_SEEK_BACKWARDS)->setStatusTip(i18np("Seek backwards 1 second", "Seek backwards %1 seconds", SCConfig::seekJumpLength()));
-	action(ACT_SEEK_FORWARDS)->setStatusTip(i18np("Seek forwards 1 second", "Seek forwards %1 seconds", SCConfig::seekJumpLength()));
+	const int shiftAmount = SCConfig::linesQuickShiftAmount();
+	const int jumpLength = SCConfig::seekJumpLength();
+
+	action(ACT_SEEK_BACKWARDS)->setStatusTip(i18np("Seek backwards 1 second", "Seek backwards %1 seconds", jumpLength));
+	action(ACT_SEEK_FORWARDS)->setStatusTip(i18np("Seek forwards 1 second", "Seek forwards %1 seconds", jumpLength));
 
 	QAction *shiftSelectedLinesFwdAction = action(ACT_SHIFT_SELECTED_LINES_FORWARDS);
-	shiftSelectedLinesFwdAction->setText(i18np("Shift %21 Millisecond", "Shift %2%1 Milliseconds", SCConfig::linesQuickShiftAmount(), "+"));
-	shiftSelectedLinesFwdAction->setStatusTip(i18np("Shift selected lines %21 millisecond", "Shift selected lines %2%1 milliseconds", SCConfig::linesQuickShiftAmount(), "+"));
+	shiftSelectedLinesFwdAction->setText(i18np("Shift %2%1 millisecond", "Shift %2%1 milliseconds", shiftAmount, "+"));
+	shiftSelectedLinesFwdAction->setStatusTip(i18np("Shift selected lines %2%1 millisecond", "Shift selected lines %2%1 milliseconds", shiftAmount, "+"));
 
 	QAction *shiftSelectedLinesBwdAction = action(ACT_SHIFT_SELECTED_LINES_BACKWARDS);
-	shiftSelectedLinesBwdAction->setText(i18np("Shift %21 Millisecond", "Shift %2%1 Milliseconds", SCConfig::linesQuickShiftAmount(), "-"));
-	shiftSelectedLinesBwdAction->setStatusTip(i18np("Shift selected lines %21 millisecond", "Shift selected lines -%2%1 milliseconds", SCConfig::linesQuickShiftAmount(), "-"));
+	shiftSelectedLinesBwdAction->setText(i18np("Shift %2%1 Millisecond", "Shift %2%1 Milliseconds", shiftAmount, "-"));
+	shiftSelectedLinesBwdAction->setStatusTip(i18np("Shift selected lines %2%1 millisecond", "Shift selected lines %2%1 milliseconds", shiftAmount, "-"));
 }
 
 void

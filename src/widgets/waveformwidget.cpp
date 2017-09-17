@@ -1,4 +1,4 @@
-/**
+/*
  * Copyright (C) 2010-2017 Mladen Milinkovic <max@smoothware.net>
  *
  * This program is free software; you can redistribute it and/or modify
@@ -21,6 +21,7 @@
 #include "../core/subtitleline.h"
 #include "../videoplayer/videoplayer.h"
 #include "application.h"
+#include "actions/useraction.h"
 #include "actions/useractionnames.h"
 #include "lineswidget.h"
 
@@ -43,7 +44,7 @@
 #include <KLocalizedString>
 
 #define MAX_WINDOW_ZOOM 3000
-#define DRAG_TOLERANCE (double(10 * m_samplesPerPixel / SAMPLE_RATE_MILIS))
+#define DRAG_TOLERANCE (double(10 * m_samplesPerPixel / SAMPLE_RATE_MILLIS))
 
 using namespace SubtitleComposer;
 
@@ -60,6 +61,7 @@ WaveformWidget::WaveformWidget(QWidget *parent)
 	  m_scrollBar(Q_NULLPTR),
 	  m_autoScroll(true),
 	  m_userScroll(false),
+	  m_hoverScrollAmount(.0),
 	  m_waveformDuration(0),
 	  m_waveformChannels(0),
 	  m_waveform(Q_NULLPTR),
@@ -68,7 +70,8 @@ WaveformWidget::WaveformWidget(QWidget *parent)
 	  m_samplesPerPixel(0),
 	  m_waveformZoomed(Q_NULLPTR),
 	  m_waveformZoomedSize(0),
-	  m_waveformZoomedOffset(0),
+	  m_waveformZoomedOffsetMin(0),
+	  m_waveformZoomedOffsetMax(0),
 	  m_visibleLinesDirty(true),
 	  m_draggedLine(Q_NULLPTR),
 	  m_draggedPos(DRAG_NONE),
@@ -137,8 +140,12 @@ WaveformWidget::WaveformWidget(QWidget *parent)
 	// Using Qt::DirectConnection here makes WaveformWidget::onStreamData() to execute in GStreamer's thread
 	connect(m_stream, &StreamProcessor::audioDataAvailable, this, &WaveformWidget::onStreamData, Qt::DirectConnection);
 
-	connect(SCConfig::self(), SIGNAL(configChanged()), this, SLOT(onConfigChanged()));
+	connect(SCConfig::self(), &SCConfig::configChanged, this, &WaveformWidget::onConfigChanged);
 	onConfigChanged();
+
+	m_hoverScrollTimer.setInterval(50);
+	m_hoverScrollTimer.setSingleShot(false);
+	connect(&m_hoverScrollTimer, &QTimer::timeout, this, &WaveformWidget::onHoverScrollTimeout);
 }
 
 void
@@ -170,14 +177,14 @@ WaveformWidget::onConfigChanged()
 void
 WaveformWidget::updateActions()
 {
-	Application *app = Application::instance();
+	const Application *app = Application::instance();
 	const quint32 size = windowSize();
 
 	m_btnZoomIn->setDefaultAction(app->action(ACT_WAVEFORM_ZOOM_IN));
 	m_btnZoomIn->setEnabled(m_waveformDuration > 0 && size > MAX_WINDOW_ZOOM);
 
 	m_btnZoomOut->setDefaultAction(app->action(ACT_WAVEFORM_ZOOM_OUT));
-	m_btnZoomOut->setEnabled(m_waveformDuration > 0 && size < m_waveformChannelSize / SAMPLE_RATE_MILIS);
+	m_btnZoomOut->setEnabled(m_waveformDuration > 0 && size < m_waveformChannelSize / SAMPLE_RATE_MILLIS);
 
 	QAction *action = app->action(ACT_WAVEFORM_AUTOSCROLL);
 	action->setChecked(m_autoScroll);
@@ -200,7 +207,7 @@ void
 WaveformWidget::setWindowSize(const quint32 size)
 {
 	if(size != windowSize()) {
-		m_timeEnd = m_timeStart + size;
+		m_timeEnd = m_timeStart.shifted(size);
 		updateActions();
 		m_visibleLinesDirty = true;
 		updateZoomData();
@@ -224,7 +231,7 @@ void
 WaveformWidget::zoomOut()
 {
 	quint32 winSize = windowSize();
-	quint32 totalLength = m_waveformChannelSize / SAMPLE_RATE_MILIS;
+	quint32 totalLength = m_waveformChannelSize / SAMPLE_RATE_MILLIS;
 	if(winSize >= totalLength)
 		return;
 	m_scrollBar->setValue(m_timeStart.toMillis() - winSize / 2);
@@ -256,10 +263,12 @@ WaveformWidget::updateZoomData()
 	if(!height)
 		return;
 
-	double samplesPerPixel = double(SAMPLE_RATE_MILIS * windowSize()) / height;
+	const quint32 samplesPerPixel = double(SAMPLE_RATE_MILLIS * windowSize()) / height;
+
 	if(m_samplesPerPixel != samplesPerPixel) {
+		// free memory if samples per pixel changed
 		m_samplesPerPixel = samplesPerPixel;
-		m_waveformZoomedOffset = 0;
+		m_waveformZoomedOffsetMin = m_waveformZoomedOffsetMax = 0;
 		m_waveformZoomedSize = 0;
 		if(m_waveformZoomed) {
 			for(quint32 i = 0; i < m_waveformChannels; i++)
@@ -269,11 +278,37 @@ WaveformWidget::updateZoomData()
 		}
 	}
 
+	auto updateZoomDataRange = [&](const quint32 iMin, const quint32 iMax){
+		Q_ASSERT(iMax <= (m_waveformZoomedSize - 1) * m_samplesPerPixel);
+
+		qint32 xMin = 65535, xMax = -65535;
+
+		for(quint32 ch = 0; ch < m_waveformChannels; ch++) {
+			for(quint32 i = iMin; i < iMax; i++) {
+				qint32 val = (qint32)m_waveform[ch][i] + SIGNED_PAD;
+				if(xMin > val)
+					xMin = val;
+				if(xMax < val)
+					xMax = val;
+
+				if(i % m_samplesPerPixel == m_samplesPerPixel - 1) {
+					const int zi = i / m_samplesPerPixel;
+					m_waveformZoomed[ch][zi].min = xMin;
+					m_waveformZoomed[ch][zi].max = xMax;
+
+					xMin = 65535;
+					xMax = -65535;
+				}
+			}
+		}
+	};
+
 	if(m_waveformChannels && m_waveform) {
 		if(!m_waveformZoomed) {
-			m_waveformZoomedOffset = 0;
+			// alloc memory for zoomed pixel data
+			m_waveformZoomedOffsetMin = m_waveformZoomedOffsetMax = 0;
 			m_waveformZoomedSize = m_waveformChannelSize / m_samplesPerPixel;
-			if(m_waveformChannelSize % int(m_samplesPerPixel))
+			if(m_waveformChannelSize % m_samplesPerPixel)
 				m_waveformZoomedSize++;
 			m_waveformZoomed = new ZoomData *[m_waveformChannels];
 			for(quint32 i = 0; i < m_waveformChannels; i++)
@@ -282,51 +317,45 @@ WaveformWidget::updateZoomData()
 			updateActions();
 		}
 
-		int iMin = m_waveformZoomedOffset * m_samplesPerPixel;
-		int iMax = m_waveformDataOffset / BYTES_PER_SAMPLE / m_waveformChannels;
-		qint32 xMin = 65535, xMax = -65535;
-//		qint32 xAvg = 0;
-//		qreal xRMS = 0;
+		const int dataMaxPossible = m_waveformDataOffset / BYTES_PER_SAMPLE / m_waveformChannels;
+		int dataRangeMin = SAMPLE_RATE_MILLIS * (m_timeStart.toMillis() - 2 * windowSize());
+		int dataRangeMax = SAMPLE_RATE_MILLIS * (m_timeEnd.toMillis() + 2 * windowSize());
+		if(dataRangeMin < 0)
+			dataRangeMin = 0;
+		if(dataRangeMax > dataMaxPossible)
+			dataRangeMax = dataMaxPossible;
 
-		for(quint32 ch = 0; ch < m_waveformChannels; ch++) {
-			for(int i = iMin; i < iMax; i++) {
-				qint32 val = (qint32)m_waveform[ch][i] + SIGNED_PAD;
-				if(xMin > val)
-					xMin = val;
-				if(xMax < val)
-					xMax = val;
-//				xAvg += val;
-//				xRMS += val * val;
-
-				if(i % int(m_samplesPerPixel) == int(m_samplesPerPixel) - 1) {
-//					xAvg /= m_samplesPerPixel;
-//					xRMS = sqrt(xRMS / m_samplesPerPixel);
-
-					int zi = i / m_samplesPerPixel;
-					m_waveformZoomed[ch][zi].min = xMin;
-					m_waveformZoomed[ch][zi].max = xMax;
-
-					xMin = 65535;
-					xMax = 0;
-//					xAvg = 0;
-//					xRMS = 0.0;
-				}
+		if(m_waveformZoomedOffsetMin == m_waveformZoomedOffsetMax) {
+			updateZoomDataRange(dataRangeMin, dataRangeMax);
+			m_waveformZoomedOffsetMin = dataRangeMin / m_samplesPerPixel;
+			m_waveformZoomedOffsetMax = dataRangeMax / m_samplesPerPixel;
+		} else {
+			if(dataRangeMin / m_samplesPerPixel < m_waveformZoomedOffsetMin) {
+				updateZoomDataRange(dataRangeMin, m_waveformZoomedOffsetMin * m_samplesPerPixel);
+				m_waveformZoomedOffsetMin = dataRangeMin / m_samplesPerPixel;
+			}
+			if(dataRangeMax / m_samplesPerPixel > m_waveformZoomedOffsetMax) {
+				updateZoomDataRange(m_waveformZoomedOffsetMax * m_samplesPerPixel, dataRangeMax);
+				m_waveformZoomedOffsetMax = dataRangeMax / m_samplesPerPixel;
 			}
 		}
-		m_waveformZoomedOffset = iMax / m_samplesPerPixel;
 	}
 }
 
 void
 WaveformWidget::setSubtitle(Subtitle *subtitle)
 {
-	if(m_subtitle)
+	if(m_subtitle) {
 		disconnect(m_subtitle, &Subtitle::primaryChanged, this, &WaveformWidget::onSubtitleChanged);
+		disconnect(m_subtitle, &Subtitle::lineAnchorChanged, this, &WaveformWidget::onSubtitleChanged);
+	}
 
 	m_subtitle = subtitle;
 
-	if(m_subtitle)
+	if(m_subtitle) {
 		connect(m_subtitle, &Subtitle::primaryChanged, this, &WaveformWidget::onSubtitleChanged);
+		connect(m_subtitle, &Subtitle::lineAnchorChanged, this, &WaveformWidget::onSubtitleChanged);
+	}
 
 	m_visibleLines.clear();
 	m_visibleLinesDirty = true;
@@ -380,7 +409,7 @@ WaveformWidget::setNullAudioStream(quint64 msecVideoLength)
 	m_waveformDuration = msecVideoLength / 1000;
 	m_scrollBar->setRange(0, m_waveformDuration * 1000 - windowSize());
 
-	m_waveformChannelSize = SAMPLE_RATE_MILIS * msecVideoLength;
+	m_waveformChannelSize = SAMPLE_RATE_MILLIS * msecVideoLength;
 
 	updateActions();
 }
@@ -497,8 +526,8 @@ WaveformWidget::paintGraphics(QPainter &painter)
 
 	// FIXME: make visualization types configurable? Min/Max/Avg/RMS
 	if(m_waveformZoomed) {
-		quint32 yMin = SAMPLE_RATE_MILIS * m_timeStart.toMillis() / m_samplesPerPixel;
-		quint32 yMax = SAMPLE_RATE_MILIS * m_timeEnd.toMillis() / m_samplesPerPixel;
+		quint32 yMin = SAMPLE_RATE_MILLIS * m_timeStart.toMillis() / m_samplesPerPixel;
+		quint32 yMax = SAMPLE_RATE_MILLIS * m_timeEnd.toMillis() / m_samplesPerPixel;
 		qint32 xMin, xMax;
 
 		qint32 chHalfWidth = (m_vertical ? widgetWidth : widgetHeight) / m_waveformChannels / 2;
@@ -506,7 +535,7 @@ WaveformWidget::paintGraphics(QPainter &painter)
 		for(quint32 ch = 0; ch < m_waveformChannels; ch++) {
 			qint32 chCenter = (ch * 2 + 1) * chHalfWidth;
 			for(quint32 i = yMin; i < yMax; i++) {
-				if(i >= m_waveformZoomedOffset) {
+				if(i >= m_waveformZoomedOffsetMax) {
 					xMin = xMax = 0;
 				} else {
 					xMin = m_waveformZoomed[ch][i].min * 9 / 5 * chHalfWidth / SAMPLE_MAX;
@@ -529,6 +558,10 @@ WaveformWidget::paintGraphics(QPainter &painter)
 	}
 
 	updateVisibleLines();
+
+	QList<const SubtitleLine *> anchoredLines;
+	if(m_subtitle)
+		anchoredLines = m_subtitle->anchoredLines();
 
 	const RangeList &selection = Application::instance()->linesWidget()->selectionRanges();
 	foreach(const SubtitleLine *sub, m_visibleLines) {
@@ -561,9 +594,15 @@ WaveformWidget::paintGraphics(QPainter &painter)
 			int hideY = widgetSpan * (timeHide.toMillis() - m_timeStart.toMillis()) / msWindowSize;
 			QRect box;
 			if(m_vertical)
-				box = QRect(0, showY + m_subBorderWidth, widgetWidth, hideY - showY - 2 * m_subBorderWidth);
+				box = QRect(2, showY + m_subBorderWidth, widgetWidth - 4, hideY - showY - 2 * m_subBorderWidth);
 			else
-				box = QRect(showY + m_subBorderWidth, 0, hideY - showY - 2 * m_subBorderWidth, widgetHeight);
+				box = QRect(showY + m_subBorderWidth, 2, hideY - showY - 2 * m_subBorderWidth, widgetHeight - 4);
+
+			const bool isAnchored = anchoredLines.contains(sub);
+			if(anchoredLines.isEmpty() || isAnchored)
+				painter.setOpacity(1.);
+			else
+				painter.setOpacity(.5);
 
 			painter.fillRect(box, selected ? m_selectedBack : m_subtitleBack);
 
@@ -587,6 +626,15 @@ WaveformWidget::paintGraphics(QPainter &painter)
 				painter.drawText(m_fontNumberHeight / 2, showY + m_fontNumberHeight + 2, QString::number(sub->number()));
 			else
 				painter.drawText(showY + m_fontNumberHeight / 2, m_fontNumberHeight + 2, QString::number(sub->number()));
+
+			if(isAnchored) {
+				static QFont fontAnchor("sans-serif", 12);
+				painter.setFont(fontAnchor);
+				if(m_vertical)
+					painter.drawText(box, Qt::AlignTop | Qt::AlignRight, QStringLiteral("\u2693"));
+				else
+					painter.drawText(box, Qt::AlignBottom | Qt::AlignLeft, QStringLiteral("\u2693"));
+			}
 		}
 	}
 
@@ -729,11 +777,14 @@ WaveformWidget::eventFilter(QObject *obj, QEvent *event)
 
 		m_pointerTime = timeAt(y);
 
-		if(m_RMBDown)
+		if(m_RMBDown) {
 			m_timeRMBRelease = m_pointerTime;
+			autoscrollToTime(m_pointerTime, false);
+		}
 
 		if(m_draggedLine) {
 			m_draggedTime = m_pointerTime;
+			autoscrollToTime(m_pointerTime, false);
 		} else {
 			SubtitleLine *sub = Q_NULLPTR;
 			WaveformWidget::DragPosition res = subtitleAt(y, &sub);
@@ -763,7 +814,7 @@ WaveformWidget::eventFilter(QObject *obj, QEvent *event)
 		int y = m_vertical ? mouse->y() : mouse->x();
 
 		if(mouse->button() == Qt::RightButton) {
-			m_timeRMBPress = timeAt(y);
+			m_timeRMBPress = m_timeRMBRelease = timeAt(y);
 			m_RMBDown = true;
 			return false;
 		}
@@ -797,8 +848,9 @@ WaveformWidget::eventFilter(QObject *obj, QEvent *event)
 
 		if(mouse->button() == Qt::RightButton) {
 			m_timeRMBRelease = timeAt(y);
-			m_RMBDown = false;
+			m_hoverScrollTimer.stop();
 			showContextMenu(mouse);
+			m_RMBDown = false;
 			return false;
 		}
 
@@ -808,25 +860,13 @@ WaveformWidget::eventFilter(QObject *obj, QEvent *event)
 		if(m_draggedLine) {
 			m_draggedTime = timeAt(y);
 			if(m_draggedPos == DRAG_LINE) {
-				if(m_subtitle->anchoredLines().empty())
-					m_draggedLine->setHideTime(m_draggedTime - m_draggedOffset + m_draggedLine->durationTime());
-				m_draggedLine->setShowTime(m_draggedTime - m_draggedOffset);
+				m_draggedLine->setTimes(m_draggedTime - m_draggedOffset, m_draggedTime - m_draggedOffset + m_draggedLine->durationTime());
 			} else if(m_draggedPos == DRAG_SHOW) {
 				Time newTime = m_draggedTime - m_draggedOffset;
-				if(newTime > m_draggedLine->hideTime()) {
-					m_draggedLine->setShowTime(m_draggedLine->hideTime());
-					m_draggedLine->setHideTime(newTime);
-				} else {
-					m_draggedLine->setShowTime(newTime);
-				}
+				m_draggedLine->setShowTime(newTime, true);
 			} else if(m_draggedPos == DRAG_HIDE) {
 				Time newTime = m_draggedTime - m_draggedOffset;
-				if(m_draggedLine->showTime() > newTime) {
-					m_draggedLine->setHideTime(m_draggedLine->showTime());
-					m_draggedLine->setShowTime(newTime);
-				} else {
-					m_draggedLine->setHideTime(newTime);
-				}
+				m_draggedLine->setHideTime(newTime, true);
 			}
 
 			emit dragEnd(m_draggedLine, m_draggedPos);
@@ -846,8 +886,8 @@ Time
 WaveformWidget::timeAt(int y)
 {
 	int height = m_vertical ? m_waveformGraphics->height() : m_waveformGraphics->width();
-//	return m_timeStart.toMillis() + double(y) * m_samplesPerPixel / SAMPLE_RATE_MILIS;
-	return m_timeStart.toMillis() + double(y * windowSize() / height);
+//	return m_timeStart + double(y) * m_samplesPerPixel / SAMPLE_RATE_MILIS;
+	return m_timeStart + double(y * qint32(windowSize()) / height);
 }
 
 WaveformWidget::DragPosition
@@ -887,6 +927,17 @@ WaveformWidget::subtitleAt(int y, SubtitleLine **result)
 	return closestDrag;
 }
 
+SubtitleLine *
+WaveformWidget::subtitleLineAtMousePosition() const
+{
+	const Time mouseTime = m_RMBDown ? m_timeRMBRelease : m_pointerTime;
+	foreach(SubtitleLine *sub, m_visibleLines) {
+		if(sub->showTime() <= mouseTime && sub->hideTime() >= mouseTime)
+			return sub;
+	}
+	return nullptr;
+}
+
 void
 WaveformWidget::setScrollPosition(int milliseconds)
 {
@@ -900,6 +951,60 @@ WaveformWidget::setScrollPosition(int milliseconds)
 }
 
 void
+WaveformWidget::onHoverScrollTimeout()
+{
+	if(!m_draggedLine && !m_RMBDown) {
+		m_hoverScrollAmount = .0;
+		m_hoverScrollTimer.stop();
+		return;
+	}
+
+	if(m_hoverScrollAmount == .0)
+		return;
+
+	m_pointerTime += m_hoverScrollAmount;
+	if(m_draggedLine)
+		m_draggedTime = m_pointerTime;
+	if(m_RMBDown)
+		m_timeRMBRelease = m_pointerTime;
+	m_scrollBar->setValue(m_timeStart.toMillis() + m_hoverScrollAmount);
+}
+
+bool
+WaveformWidget::autoscrollToTime(const Time &time, bool scrollPage)
+{
+	const double windowSize = this->windowSize();
+	const double windowPadding = windowSize / 8.; // autoscroll when we reach padding
+	const int windowSizePad = windowSize - 2. * windowPadding;
+
+	const double topPadding = m_timeStart.toMillis() + windowPadding;
+	const double bottomPadding = m_timeEnd.toMillis() - windowPadding;
+
+	if(time <= bottomPadding && time >= topPadding) {
+		if(!scrollPage) {
+			m_hoverScrollAmount = .0;
+			m_hoverScrollTimer.stop();
+		}
+		return false;
+	}
+
+	if(scrollPage) {
+		m_scrollBar->setValue((int(time.toMillis() + 0.5) / windowSizePad) * windowSizePad);
+	} else {
+		if(time < topPadding)
+			m_hoverScrollAmount = time.toMillis() - topPadding;
+		else
+			m_hoverScrollAmount = time.toMillis() - bottomPadding;
+		m_hoverScrollAmount = m_hoverScrollAmount * m_hoverScrollAmount * m_hoverScrollAmount /
+				(3. * windowPadding * windowPadding);
+		if(!m_hoverScrollTimer.isActive())
+			m_hoverScrollTimer.start();
+	}
+
+	return true;
+}
+
+void
 WaveformWidget::onPlayerPositionChanged(double seconds)
 {
 	Time playingPosition;
@@ -908,14 +1013,8 @@ WaveformWidget::onPlayerPositionChanged(double seconds)
 	if(m_timeCurrent != playingPosition) {
 		m_timeCurrent = playingPosition;
 
-		if(m_autoScroll && !m_draggedLine && !m_userScroll) {
-			int windowSize = this->windowSize(),
-				windowPadding = windowSize / 8, // autoscroll when we reach padding
-				windowSizePad = windowSize - 2 * windowPadding;
-
-			if(m_timeCurrent > m_timeEnd.shifted(-windowPadding) || m_timeCurrent < m_timeStart.shifted(windowPadding))
-				m_scrollBar->setValue((int(m_timeCurrent.toMillis() + 0.5) / windowSizePad) * windowSizePad);
-		}
+		if(m_autoScroll && !m_draggedLine && !m_userScroll)
+			autoscrollToTime(m_timeCurrent, true);
 
 		m_visibleLinesDirty = true;
 		m_waveformGraphics->update();
@@ -938,13 +1037,67 @@ void
 WaveformWidget::showContextMenu(QMouseEvent *event)
 {
 	static QMenu *menu = nullptr;
+	static QList<QAction *> needCurrentLine;
+
+	const Application *app = Application::instance();
+	SubtitleLine *currentLine = subtitleLineAtMousePosition();
+	SubtitleLine *selectedLine = app->linesWidget()->currentLine();
 
 	if(!menu) {
+		UserActionManager *actionManager = UserActionManager::instance();
 		menu = new QMenu(this);
-		menu->addAction(app()->action(ACT_WAVEFORM_SET_CURRENT_LINE_SHOW_TIME));
-		menu->addAction(app()->action(ACT_WAVEFORM_SET_CURRENT_LINE_HIDE_TIME));
-		menu->addAction(app()->action(ACT_WAVEFORM_INSERT_LINE));
+
+		needCurrentLine.append(
+			menu->addAction(QIcon::fromTheme(QStringLiteral("select")), i18n("Select Line"), [&](){
+				app->linesWidget()->setCurrentLine(currentLine, true);
+			}));
+		menu->addSeparator();
+		actionManager->addAction(
+			menu->addAction(QIcon::fromTheme(QStringLiteral("list-add")), i18n("Insert Line"), [&](){
+				const Time timeShow = rightMouseSoonerTime();
+				const Time timeHide = rightMouseLaterTime();
+
+				int insertIndex = 0;
+				foreach(SubtitleLine *sub, m_subtitle->allLines()) {
+					if(sub->showTime() > timeShow) {
+						insertIndex = sub->index();
+						if(sub->showTime() <= timeShow)
+							insertIndex++;
+						break;
+					}
+				}
+
+				SubtitleLine *newLine = new SubtitleLine(SString(), timeShow,
+					timeHide.toMillis() - timeShow.toMillis() > SCConfig::minDuration() ? timeHide : timeShow + SCConfig::minDuration());
+				m_subtitle->insertLine(newLine, insertIndex);
+				app->linesWidget()->setCurrentLine(newLine, true);
+			}),
+			UserAction::SubOpened);
+		needCurrentLine.append(
+			menu->addAction(QIcon::fromTheme(QStringLiteral("list-remove")), i18n("Remove Line"), [&](){
+				m_subtitle->removeLines(RangeList(Range(currentLine->index())), Subtitle::Both);
+				if(selectedLine != currentLine)
+					app->linesWidget()->setCurrentLine(selectedLine, true);
+			}));
+		menu->addSeparator();
+		needCurrentLine.append(
+			menu->addAction(i18n("Toggle Anchor"), [&](){ m_subtitle->toggleLineAnchor(currentLine); }));
+		menu->addAction(app->action(ACT_ANCHOR_REMOVE_ALL));
+		menu->addSeparator();
+		actionManager->addAction(
+			menu->addAction(QIcon::fromTheme(QStringLiteral("set_show_time")), i18n("Set Current Line Show Time"), [&](){
+				selectedLine->setShowTime(m_timeRMBRelease, true);
+			}),
+			UserAction::HasSelection | UserAction::EditableShowTime);
+		actionManager->addAction(
+			menu->addAction(QIcon::fromTheme(QStringLiteral("set_hide_time")), i18n("Set Current Line Hide Time"), [&](){
+				selectedLine->setHideTime(m_timeRMBRelease, true);
+			}),
+			UserAction::HasSelection | UserAction::EditableShowTime);
 	}
 
-	menu->popup(event->globalPos());
+	foreach(QAction *action, needCurrentLine)
+		action->setDisabled(currentLine == nullptr);
+
+	menu->exec(event->globalPos());
 }

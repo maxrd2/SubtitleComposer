@@ -1,7 +1,7 @@
 #ifndef WAVEFORMWIDGET_H
 #define WAVEFORMWIDGET_H
-/**
- * Copyright (C) 2010-2016 Mladen Milinkovic <max@smoothware.net>
+/*
+ * Copyright (C) 2010-2017 Mladen Milinkovic <max@smoothware.net>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -29,6 +29,7 @@
 #include <QPen>
 #include <QColor>
 #include <QFont>
+#include <QTimer>
 
 QT_FORWARD_DECLARE_CLASS(QRegion)
 QT_FORWARD_DECLARE_CLASS(QPolygon)
@@ -50,7 +51,7 @@ QT_FORWARD_DECLARE_CLASS(QBoxLayout)
 #define SIGNED_PAD -128 // 0
 #define SAMPLE_MAX 128 // 255
 //*/
-#define SAMPLE_RATE_MILIS (8000 / 1000)
+#define SAMPLE_RATE_MILLIS (8000 / 1000)
 
 namespace SubtitleComposer {
 class WaveformWidget : public QWidget
@@ -83,6 +84,15 @@ public:
 	inline const Time & rightMousePressTime() const { return m_timeRMBPress; }
 	inline const Time & rightMouseReleaseTime() const { return m_timeRMBRelease; }
 
+	SubtitleLine * subtitleLineAtMousePosition() const;
+
+	inline const Time & rightMouseSoonerTime() const {
+		return m_timeRMBPress > m_timeRMBRelease ? m_timeRMBRelease : m_timeRMBPress;
+	}
+	inline const Time & rightMouseLaterTime() const {
+		return m_timeRMBPress > m_timeRMBRelease ? m_timeRMBPress : m_timeRMBRelease;
+	}
+
 signals:
 	void doubleClick(Time time);
 	void dragStart(SubtitleLine *line, DragPosition dragPosition);
@@ -112,6 +122,7 @@ private slots:
 	void onStreamProgress(quint64 msecPos, quint64 msecLength);
 	void onStreamFinished();
 	void onScrollBarValueChanged(int value);
+	void onHoverScrollTimeout();
 
 private:
 	void paintGraphics(QPainter &painter);
@@ -121,6 +132,7 @@ private:
 	Time timeAt(int y);
 	WaveformWidget::DragPosition subtitleAt(int y, SubtitleLine **result);
 	void setupScrollBar();
+	bool autoscrollToTime(const Time &time, bool scrollPage);
 
 private:
 	QString m_mediaFile;
@@ -140,6 +152,8 @@ private:
 	QScrollBar *m_scrollBar;
 	bool m_autoScroll;
 	bool m_userScroll;
+	double m_hoverScrollAmount;
+	QTimer m_hoverScrollTimer;
 
 	quint32 m_waveformDuration;
 	quint32 m_waveformDataOffset;
@@ -158,10 +172,11 @@ private:
 		qint32 min;
 		qint32 max;
 	};
-	double m_samplesPerPixel;
+	quint32 m_samplesPerPixel;
 	ZoomData **m_waveformZoomed;
 	quint32 m_waveformZoomedSize;
-	quint32 m_waveformZoomedOffset;
+	quint32 m_waveformZoomedOffsetMin;
+	quint32 m_waveformZoomedOffsetMax;
 
 	QList<SubtitleLine *> m_visibleLines;
 	bool m_visibleLinesDirty;

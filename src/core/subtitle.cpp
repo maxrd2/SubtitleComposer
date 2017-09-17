@@ -1,6 +1,6 @@
-/**
+/*
  * Copyright (C) 2007-2009 Sergio Pistone <sergio_pistone@yahoo.com.ar>
- * Copyright (C) 2010-2015 Mladen Milinkovic <max@smoothware.net>
+ * Copyright (C) 2010-2017 Mladen Milinkovic <max@smoothware.net>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -419,21 +419,21 @@ Subtitle::insertNewLine(int index, bool timeAfter, TextTarget target)
 	if(timeAfter) {
 		if(newLineIndex) {              // there is a previous line
 			SubtitleLine *prevLine = m_lines.value(newLineIndex - 1);
-			newLine->setTimes(prevLine->hideTime() + 100, prevLine->hideTime() + 1000);
+			newLine->setTimes(prevLine->hideTime() + 100., prevLine->hideTime() + 1000.);
 		} else if(newLineIndex < m_lines.count()) {     // there is a next line
 			SubtitleLine *nextLine = m_lines.value(newLineIndex);
-			newLine->setTimes(nextLine->showTime() - 1100, nextLine->showTime() - 100);
+			newLine->setTimes(nextLine->showTime() - 1100., nextLine->showTime() - 100.);
 		} else
-			newLine->setHideTime(1000);
+			newLine->setHideTime(1000.);
 	} else {                                        // ! timeAfter
 		if(newLineIndex < m_lines.count()) {    // there is a next line
 			SubtitleLine *nextLine = m_lines.at(newLineIndex);
-			newLine->setTimes(nextLine->showTime() - 1100, nextLine->showTime() - 100);
+			newLine->setTimes(nextLine->showTime() - 1100., nextLine->showTime() - 100.);
 		} else if(newLineIndex) {       // there is a previous line
 			SubtitleLine *prevLine = m_lines.at(newLineIndex - 1);
-			newLine->setTimes(prevLine->hideTime() + 100, prevLine->hideTime() + 1000);
+			newLine->setTimes(prevLine->hideTime() + 100., prevLine->hideTime() + 1000.);
 		} else
-			newLine->setHideTime(1000);
+			newLine->setHideTime(1000.);
 	}
 
 	if(target == Both || index == m_lines.count()) {
@@ -526,14 +526,14 @@ Subtitle::removeLines(const RangeList &r, TextTarget target)
 		Range lastRange = mutableRanges.last();
 		int lastIndex = lastRange.end() == linesCount - 1 ? lastRange.start() - 1 : linesCount - 1;
 		SubtitleLine *lastLine = lastIndex < linesCount ? m_lines.at(lastIndex) : 0;
-		Time showTime(lastLine ? lastLine->hideTime() + 100 : 0);
-		Time hideTime(showTime + 1000);
+		Time showTime(lastLine ? lastLine->hideTime() + 100. : Time());
+		Time hideTime(showTime + 1000.);
 
 		QList<SubtitleLine *> lines;
 		for(int index = 0, size = ranges.indexesCount(); index < size; ++index) {
 			lines.append(new SubtitleLine(SString(), SString(), showTime, hideTime));
-			showTime.shift(1100);
-			hideTime.shift(1100);
+			showTime.shift(1100.);
+			hideTime.shift(1100.);
 		}
 
 		processAction(new InsertLinesAction(*this, lines));
@@ -624,7 +624,7 @@ Subtitle::splitLines(const RangeList &ranges)
 		for(SStringList::ConstIterator ptIt = primaryLines.begin(), ptEnd = secondaryLines.end(), stIt = secondaryLines.begin(), stEnd = secondaryLines.end(); ptIt != ptEnd && stIt != stEnd; ++ptIt, ++stIt, ++subLineIndex, ++splitLineIndex) {
 			if(splitLineIndex) {
 				SubtitleLine *newLine = new SubtitleLine();
-				newLine->setShowTime(line->hideTime() + 1);
+				newLine->setShowTime(line->hideTime() + 1.);
 				insertLine(newLine, subLineIndex);
 				line = newLine;
 			}
@@ -688,12 +688,12 @@ Subtitle::shiftAnchoredLine(SubtitleLine *anchoredLine, const Time &newShowTime)
 	if(m_anchoredLines.indexOf(anchoredLine) == -1 || m_lines.isEmpty())
 		return;
 
-	const SubtitleLine *prevAnchor = NULL;
-	const SubtitleLine *nextAnchor = NULL;
+	const SubtitleLine *prevAnchor = nullptr;
+	const SubtitleLine *nextAnchor = nullptr;
 	foreach(auto anchor, m_anchoredLines) {
-		if((prevAnchor == NULL || prevAnchor->m_showTime < anchor->m_showTime) && anchor->m_showTime < anchoredLine->m_showTime)
+		if((prevAnchor == nullptr || prevAnchor->m_showTime < anchor->m_showTime) && anchor->m_showTime < anchoredLine->m_showTime)
 			prevAnchor = anchor;
-		if((nextAnchor == NULL || nextAnchor->m_showTime > anchor->m_showTime) && anchor->m_showTime > anchoredLine->m_showTime)
+		if((nextAnchor == nullptr || nextAnchor->m_showTime > anchor->m_showTime) && anchor->m_showTime > anchoredLine->m_showTime)
 			nextAnchor = anchor;
 	}
 	if((prevAnchor && prevAnchor->m_showTime > newShowTime) || (nextAnchor && nextAnchor->m_showTime < newShowTime))
@@ -726,10 +726,10 @@ Subtitle::shiftAnchoredLine(SubtitleLine *anchoredLine, const Time &newShowTime)
 			double scaleFactor = (newShowTime.toMillis() - prevAnchor->m_showTime.toMillis()) / (savedShowTime.toMillis() - prevAnchor->m_showTime.toMillis());
 			lastShowTime = scaleFactor * (last->m_showTime.toMillis() - prevAnchor->m_showTime.toMillis()) + prevAnchor->m_showTime.toMillis();
 		} else {
-			last = NULL;
+			last = nullptr;
 			lastShowTime = 0;
 		}
-		if(newShowTime.toMillis() < lastShowTime) {
+		if(newShowTime.toMillis() < lastShowTime && anchoredLine != last) {
 			anchoredLine->m_showTime = savedShowTime;
 			anchoredLine->m_hideTime = savedHideTime;
 			adjustLines(Range(anchoredLine->index(), last->index()), newShowTime.toMillis(), lastShowTime);

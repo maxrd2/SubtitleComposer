@@ -1,6 +1,6 @@
-/**
+/*
  * Copyright (C) 2007-2009 Sergio Pistone <sergio_pistone@yahoo.com.ar>
- * Copyright (C) 2010-2015 Mladen Milinkovic <max@smoothware.net>
+ * Copyright (C) 2010-2017 Mladen Milinkovic <max@smoothware.net>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -1072,78 +1072,80 @@ LinesWidget::contextMenuEvent(QContextMenuEvent *e)
 	if(!referenceLine)
 		return;
 
-	Application *app = Application::instance();
-	QAction *action;
-
-	QMenu textsMenu(i18n("Texts"));
-	textsMenu.addAction(i18n("Break Lines..."), app, SLOT(breakLines()));
-	textsMenu.addAction(m_translationMode ? i18n("Unbreak Lines...") : i18n("Unbreak Lines"), app, SLOT(unbreakTexts()));
-	textsMenu.addAction(m_translationMode ? i18n("Simplify Spaces...") : i18n("Simplify Spaces"), app, SLOT(simplifySpaces()));
-	textsMenu.addAction(i18n("Change Case..."), app, SLOT(changeCase()));
-	textsMenu.addAction(i18n("Fix Punctuation..."), app, SLOT(fixPunctuation()));
-	textsMenu.addAction(i18n("Translate..."), app, SLOT(translate()));
-	textsMenu.addSeparator();
-	textsMenu.addAction(QIcon::fromTheme("tools-check-spelling"), i18n("Spelling..."), app, SLOT(spellCheck()));
-
-	QMenu stylesMenu(i18n("Styles"));
-	int styleFlags = referenceLine->primaryText().cummulativeStyleFlags() | referenceLine->secondaryText().cummulativeStyleFlags();
-	action = stylesMenu.addAction(QIcon::fromTheme("format-text-bold"), i18nc("@action:inmenu Toggle bold style", "Bold"), app, SLOT(toggleSelectedLinesBold()));
-	action->setCheckable(true);
-	action->setChecked(styleFlags & SString::Bold);
-	action = stylesMenu.addAction(QIcon::fromTheme("format-text-italic"), i18nc("@action:inmenu Toggle italic style", "Italic"), app, SLOT(toggleSelectedLinesItalic()));
-	action->setCheckable(true);
-	action->setChecked(styleFlags & SString::Italic);
-	action = stylesMenu.addAction(QIcon::fromTheme("format-text-underline"), i18nc("@action:inmenu Toggle underline style", "Underline"), app, SLOT(toggleSelectedLinesUnderline()));
-	action->setCheckable(true);
-	action->setChecked(styleFlags & SString::Underline);
-	action = stylesMenu.addAction(QIcon::fromTheme("format-text-strikethrough"), i18nc("@action:inmenu Toggle strike through style", "Strike Through"), app, SLOT(toggleSelectedLinesStrikeThrough()));
-	action->setCheckable(true);
-	action->setChecked(styleFlags & SString::StrikeThrough);
-	action = stylesMenu.addAction(QIcon::fromTheme("format-text-color"), i18nc("@action:inmenu Change Text Color", "Text Color"), app, SLOT(changeSelectedLinesColor()));
-
-	QMenu timesMenu(i18n("Times"));
-	QString shiftMillis(SCConfig::linesQuickShiftAmount());
-	timesMenu.addAction(i18n("Shift +%1 Milliseconds", shiftMillis), app, SLOT(shiftSelectedLinesForwards()));
-	timesMenu.addAction(i18n("Shift −%1 Milliseconds", shiftMillis), app, SLOT(shiftSelectedLinesBackwards()));
-	timesMenu.addSeparator();
-	timesMenu.addAction(i18n("Shift..."), app, SLOT(shiftLines()));
-	timesMenu.addAction(i18n("Sort"), app, SLOT(sortLines()));
-	timesMenu.addAction(i18n("Enforce Duration Limits..."), app, SLOT(enforceDurationLimits()));
-	timesMenu.addAction(i18n("Set Automatic Durations..."), app, SLOT(setAutoDurations()));
-	timesMenu.addAction(i18n("Maximize Durations"), app, SLOT(maximizeDurations()));
-	timesMenu.addAction(i18n("Fix Overlapping Times"), app, SLOT(fixOverlappingLines()));
-
-	QMenu errorsMenu(i18n("Errors"));
-	action = errorsMenu.addAction(i18n("Mark"), app, SLOT(toggleSelectedLinesMark()));
-	action->setCheckable(true);
-	action->setChecked(referenceLine->errorFlags() & SubtitleLine::UserMark);
-	errorsMenu.addSeparator();
-	errorsMenu.addAction(i18n("Check Errors..."), app, SLOT(checqCriticals()));
-	errorsMenu.addAction(i18n("Clear Errors..."), app, SLOT(clearErrors()));
-	errorsMenu.addSeparator();
-	errorsMenu.addAction(i18n("Show Errors..."), app, SLOT(showErrors()));
+	QList<QAction *> checkableActions;
+	auto appAction = [&](const char *actionName, bool checkable=false, bool checked=false) -> QAction * {
+		static const Application *app = Application::instance();
+		QAction *action = app->action(actionName);
+		if(checkable) {
+			checkableActions.append(action);
+			action->setCheckable(true);
+			action->setChecked(checked);
+		}
+		return action;
+	};
 
 	QMenu menu;
-	menu.addAction(i18n("Select All"), app, SLOT(selectAllLines()));
+	menu.addAction(appAction(ACT_SELECT_ALL_LINES));
+	menu.addAction(appAction(ACT_EDIT_CURRENT_LINE_IN_PLACE));
 	menu.addSeparator();
-	menu.addAction(i18n("Remove"), app, SLOT(removeSelectedLines()));
-	menu.addAction(i18n("Insert Before"), app, SLOT(insertBeforeCurrentLine()));
-	menu.addAction(i18n("Insert After"), app, SLOT(insertAfterCurrentLine()));
+	menu.addAction(appAction(ACT_INSERT_BEFORE_CURRENT_LINE));
+	menu.addAction(appAction(ACT_INSERT_AFTER_CURRENT_LINE));
+	menu.addAction(appAction(ACT_REMOVE_SELECTED_LINES));
 	menu.addSeparator();
-	menu.addAction(i18n("Join Lines"), app, SLOT(joinSelectedLines()));
-	menu.addAction(i18n("Split Lines"), app, SLOT(splitSelectedLines()));
+	menu.addAction(appAction(ACT_JOIN_SELECTED_LINES));
+	menu.addAction(appAction(ACT_SPLIT_SELECTED_LINES));
 	menu.addSeparator();
-	menu.addAction(app->action(ACT_ANCHOR_TOGGLE));
-	menu.addAction(app->action(ACT_ANCHOR_REMOVE_ALL));
+	menu.addAction(appAction(ACT_ANCHOR_TOGGLE));
+	menu.addAction(appAction(ACT_ANCHOR_REMOVE_ALL));
 	menu.addSeparator();
+
+	QMenu textsMenu(i18n("Texts"));
+	textsMenu.addAction(appAction(ACT_ADJUST_TEXTS));
+	textsMenu.addAction(appAction(ACT_UNBREAK_TEXTS));
+	textsMenu.addAction(appAction(ACT_SIMPLIFY_SPACES));
+	textsMenu.addAction(appAction(ACT_CHANGE_CASE));
+	textsMenu.addAction(appAction(ACT_FIX_PUNCTUATION));
+	textsMenu.addAction(appAction(ACT_TRANSLATE));
+	textsMenu.addSeparator();
+	textsMenu.addAction(appAction(ACT_SPELL_CHECK));
 	menu.addMenu(&textsMenu);
+
+	QMenu stylesMenu(i18n("Styles"));
+	const int styleFlags = referenceLine->primaryText().cummulativeStyleFlags() | referenceLine->secondaryText().cummulativeStyleFlags();
+	stylesMenu.addAction(appAction(ACT_TOGGLE_SELECTED_LINES_BOLD, true, styleFlags & SString::Bold));
+	stylesMenu.addAction(appAction(ACT_TOGGLE_SELECTED_LINES_ITALIC, true, styleFlags & SString::Italic));
+	stylesMenu.addAction(appAction(ACT_TOGGLE_SELECTED_LINES_UNDERLINE, true, styleFlags & SString::Underline));
+	stylesMenu.addAction(appAction(ACT_TOGGLE_SELECTED_LINES_STRIKETHROUGH, true, styleFlags & SString::StrikeThrough));
+	stylesMenu.addAction(appAction(ACT_CHANGE_SELECTED_LINES_TEXT_COLOR));
 	menu.addMenu(&stylesMenu);
+
+	QMenu timesMenu(i18n("Times"));
+	timesMenu.addAction(appAction(ACT_SHIFT_SELECTED_LINES_FORWARDS));
+	timesMenu.addAction(appAction(ACT_SHIFT_SELECTED_LINES_BACKWARDS));
+	timesMenu.addSeparator();
+	timesMenu.addAction(appAction(ACT_SHIFT));
+	timesMenu.addAction(appAction(ACT_SORT_LINES));
+	timesMenu.addAction(appAction(ACT_DURATION_LIMITS));
+	timesMenu.addAction(appAction(ACT_AUTOMATIC_DURATIONS));
+	timesMenu.addAction(appAction(ACT_MAXIMIZE_DURATIONS));
+	timesMenu.addAction(appAction(ACT_FIX_OVERLAPPING_LINES));
 	menu.addMenu(&timesMenu);
+
+	QMenu errorsMenu(i18n("Errors"));
+	errorsMenu.addAction(appAction(ACT_TOGGLE_SELECTED_LINES_MARK, true, referenceLine->errorFlags() & SubtitleLine::UserMark));
+	errorsMenu.addSeparator();
+	errorsMenu.addAction(appAction(ACT_CHECK_ERRORS));
+	errorsMenu.addAction(appAction(ACT_CLEAR_ERRORS));
+	errorsMenu.addSeparator();
+	errorsMenu.addAction(appAction(ACT_SHOW_ERRORS));
 	menu.addMenu(&errorsMenu);
 
 	m_showingContextMenu = true;
 	menu.exec(e->globalPos());
 	m_showingContextMenu = false;
+
+	foreach(QAction *action, checkableActions)
+		action->setCheckable(false);
 
 	e->ignore();
 
