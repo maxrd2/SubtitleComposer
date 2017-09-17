@@ -583,6 +583,7 @@ Application::setupActions()
 	actionManager->addAction(joinSubtitlesAction, UserAction::SubOpened | UserAction::FullScreenOff);
 
 	QAction *insertBeforeCurrentLineAction = new QAction(actionCollection);
+	insertBeforeCurrentLineAction->setIcon(QIcon::fromTheme(QStringLiteral("list-add")));
 	insertBeforeCurrentLineAction->setText(i18n("Insert Before"));
 	insertBeforeCurrentLineAction->setStatusTip(i18n("Insert empty line before current one"));
 	actionCollection->setDefaultShortcut(insertBeforeCurrentLineAction, QKeySequence("Ctrl+Insert"));
@@ -591,6 +592,7 @@ Application::setupActions()
 	actionManager->addAction(insertBeforeCurrentLineAction, UserAction::SubOpened | UserAction::FullScreenOff);
 
 	QAction *insertAfterCurrentLineAction = new QAction(actionCollection);
+	insertAfterCurrentLineAction->setIcon(QIcon::fromTheme(QStringLiteral("list-add")));
 	insertAfterCurrentLineAction->setText(i18n("Insert After"));
 	insertAfterCurrentLineAction->setStatusTip(i18n("Insert empty line after current one"));
 	actionCollection->setDefaultShortcut(insertAfterCurrentLineAction, QKeySequence("Insert"));
@@ -599,6 +601,7 @@ Application::setupActions()
 	actionManager->addAction(insertAfterCurrentLineAction, UserAction::SubOpened | UserAction::FullScreenOff);
 
 	QAction *removeSelectedLinesAction = new QAction(actionCollection);
+	removeSelectedLinesAction->setIcon(QIcon::fromTheme(QStringLiteral("list-remove")));
 	removeSelectedLinesAction->setText(i18n("Remove"));
 	removeSelectedLinesAction->setStatusTip(i18n("Remove selected lines"));
 	actionCollection->setDefaultShortcut(removeSelectedLinesAction, QKeySequence("Delete"));
@@ -621,6 +624,7 @@ Application::setupActions()
 	actionManager->addAction(joinSelectedLinesAction, UserAction::HasSelection | UserAction::FullScreenOff);
 
 	QAction *selectAllLinesAction = new QAction(actionCollection);
+	selectAllLinesAction->setIcon(QIcon::fromTheme(QStringLiteral("edit-select-all")));
 	selectAllLinesAction->setText(i18n("Select All"));
 	selectAllLinesAction->setStatusTip(i18n("Select all lines"));
 	actionCollection->setDefaultShortcuts(selectAllLinesAction, KStandardShortcut::selectAll());
@@ -2783,61 +2787,6 @@ Application::adjustToVideoPositionAnchorFirst()
 
 		m_subtitle->adjustLines(Range::full(), firstLineTime, newLastLineTime);
 	}
-}
-
-void
-Application::selectCurrentLineFromWaveform()
-{
-	SubtitleLine *currentLine = m_mainWindow->m_waveformWidget->subtitleLineAtMousePosition();
-	if(currentLine)
-		m_linesWidget->setCurrentLine(currentLine, true);
-}
-
-void
-Application::setCurrentLineShowTimeFromWaveform()
-{
-	SubtitleLine *currentLine = m_linesWidget->currentLine();
-	if(currentLine)
-		currentLine->setShowTime(m_mainWindow->m_waveformWidget->rightMouseReleaseTime(), true);
-}
-
-void
-Application::setCurrentLineHideTimeFromWaveform()
-{
-	SubtitleLine *currentLine = m_linesWidget->currentLine();
-	if(currentLine) {
-		currentLine->setHideTime(m_mainWindow->m_waveformWidget->rightMouseReleaseTime(), true);
-		SubtitleLine *nextLine = currentLine->nextLine();
-		if(nextLine)
-			m_linesWidget->setCurrentLine(nextLine, true);
-	}
-}
-
-void
-Application::insertLineFromWaveform()
-{
-	const Time timeShow = m_mainWindow->m_waveformWidget->rightMouseSoonerTime();
-	const Time timeHide = m_mainWindow->m_waveformWidget->rightMouseLaterTime();
-	SubtitleLine *sub = nullptr;
-	int insertIndex;
-
-	foreach(sub, m_subtitle->allLines()) {
-		if(sub->showTime() > timeShow)
-			break;
-	}
-
-	if(!sub) {
-		insertIndex = 0;
-	} else {
-		insertIndex = sub->index();
-		if(sub->showTime() <= timeShow)
-			insertIndex++;
-	}
-
-	SubtitleLine *newLine = new SubtitleLine();
-	newLine->setTimes(timeShow, timeHide.toMillis() - timeShow.toMillis() > 500. ? timeHide : timeShow + 500.);
-	m_subtitle->insertLine(newLine, insertIndex);
-	m_linesWidget->setCurrentLine(newLine, true);
 }
 
 /// END ACTION HANDLERS

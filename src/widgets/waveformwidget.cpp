@@ -177,7 +177,7 @@ WaveformWidget::onConfigChanged()
 void
 WaveformWidget::updateActions()
 {
-	Application *app = Application::instance();
+	const Application *app = Application::instance();
 	const quint32 size = windowSize();
 
 	m_btnZoomIn->setDefaultAction(app->action(ACT_WAVEFORM_ZOOM_IN));
@@ -1014,25 +1014,67 @@ void
 WaveformWidget::showContextMenu(QMouseEvent *event)
 {
 	static QMenu *menu = nullptr;
-	static QAction *actSelectLine;
+	static QList<QAction *> needCurrentLine;
+
+	const Application *app = Application::instance();
+	SubtitleLine *currentLine = subtitleLineAtMousePosition();
+	SubtitleLine *selectedLine = app->linesWidget()->currentLine();
 
 	if(!menu) {
-		const Application *app = Application::instance();
 		UserActionManager *actionManager = UserActionManager::instance();
 		menu = new QMenu(this);
-		actSelectLine = menu->addAction(QIcon::fromTheme(QStringLiteral("select")), i18n("Select Line"), app, &Application::selectCurrentLineFromWaveform);
+
+		needCurrentLine.append(
+			menu->addAction(QIcon::fromTheme(QStringLiteral("select")), i18n("Select Line"), [&](){
+				app->linesWidget()->setCurrentLine(currentLine, true);
+			}));
+		menu->addSeparator();
 		actionManager->addAction(
-			menu->addAction(QIcon::fromTheme(QStringLiteral("set_show_time")), i18n("Set Current Line Show Time"), app, &Application::setCurrentLineShowTimeFromWaveform),
-			UserAction::HasSelection | UserAction::EditableShowTime);
-		actionManager->addAction(
-			menu->addAction(QIcon::fromTheme(QStringLiteral("set_hide_time")), i18n("Set Current Line Hide Time"), app, &Application::setCurrentLineHideTimeFromWaveform),
-			UserAction::HasSelection | UserAction::EditableShowTime);
-		actionManager->addAction(
-			menu->addAction(i18n("Insert Line"), app, &Application::insertLineFromWaveform),
+			menu->addAction(QIcon::fromTheme(QStringLiteral("list-add")), i18n("Insert Line"), [&](){
+				const Time timeShow = rightMouseSoonerTime();
+				const Time timeHide = rightMouseLaterTime();
+
+				int insertIndex = 0;
+				foreach(SubtitleLine *sub, m_subtitle->allLines()) {
+					if(sub->showTime() > timeShow) {
+						insertIndex = sub->index();
+						if(sub->showTime() <= timeShow)
+							insertIndex++;
+						break;
+					}
+				}
+
+				SubtitleLine *newLine = new SubtitleLine(SString(), timeShow,
+					timeHide.toMillis() - timeShow.toMillis() > SCConfig::minDuration() ? timeHide : timeShow + SCConfig::minDuration());
+				m_subtitle->insertLine(newLine, insertIndex);
+				app->linesWidget()->setCurrentLine(newLine, true);
+			}),
 			UserAction::SubOpened);
+		needCurrentLine.append(
+			menu->addAction(QIcon::fromTheme(QStringLiteral("list-remove")), i18n("Remove Line"), [&](){
+				m_subtitle->removeLines(RangeList(Range(currentLine->index())), Subtitle::Both);
+				if(selectedLine != currentLine)
+					app->linesWidget()->setCurrentLine(selectedLine, true);
+			}));
+		menu->addSeparator();
+		needCurrentLine.append(
+			menu->addAction(i18n("Toggle Anchor"), [&](){ m_subtitle->toggleLineAnchor(currentLine); }));
+		menu->addAction(app->action(ACT_ANCHOR_REMOVE_ALL));
+		menu->addSeparator();
+		actionManager->addAction(
+			menu->addAction(QIcon::fromTheme(QStringLiteral("set_show_time")), i18n("Set Current Line Show Time"), [&](){
+				selectedLine->setShowTime(m_timeRMBRelease, true);
+			}),
+			UserAction::HasSelection | UserAction::EditableShowTime);
+		actionManager->addAction(
+			menu->addAction(QIcon::fromTheme(QStringLiteral("set_hide_time")), i18n("Set Current Line Hide Time"), [&](){
+				selectedLine->setHideTime(m_timeRMBRelease, true);
+			}),
+			UserAction::HasSelection | UserAction::EditableShowTime);
 	}
 
-	actSelectLine->setDisabled(subtitleLineAtMousePosition() == nullptr);
+	foreach(QAction *action, needCurrentLine)
+		action->setDisabled(currentLine == nullptr);
 
-	menu->exec(event->globalPos(), actSelectLine);
+	menu->exec(event->globalPos());
 }
