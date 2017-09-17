@@ -1084,6 +1084,21 @@ LinesWidget::contextMenuEvent(QContextMenuEvent *e)
 		return action;
 	};
 
+	QMenu menu;
+	menu.addAction(appAction(ACT_SELECT_ALL_LINES));
+	menu.addAction(appAction(ACT_EDIT_CURRENT_LINE_IN_PLACE));
+	menu.addSeparator();
+	menu.addAction(appAction(ACT_INSERT_BEFORE_CURRENT_LINE));
+	menu.addAction(appAction(ACT_INSERT_AFTER_CURRENT_LINE));
+	menu.addAction(appAction(ACT_REMOVE_SELECTED_LINES));
+	menu.addSeparator();
+	menu.addAction(appAction(ACT_JOIN_SELECTED_LINES));
+	menu.addAction(appAction(ACT_SPLIT_SELECTED_LINES));
+	menu.addSeparator();
+	menu.addAction(appAction(ACT_ANCHOR_TOGGLE));
+	menu.addAction(appAction(ACT_ANCHOR_REMOVE_ALL));
+	menu.addSeparator();
+
 	QMenu textsMenu(i18n("Texts"));
 	textsMenu.addAction(appAction(ACT_ADJUST_TEXTS));
 	textsMenu.addAction(appAction(ACT_UNBREAK_TEXTS));
@@ -1093,6 +1108,7 @@ LinesWidget::contextMenuEvent(QContextMenuEvent *e)
 	textsMenu.addAction(appAction(ACT_TRANSLATE));
 	textsMenu.addSeparator();
 	textsMenu.addAction(appAction(ACT_SPELL_CHECK));
+	menu.addMenu(&textsMenu);
 
 	QMenu stylesMenu(i18n("Styles"));
 	const int styleFlags = referenceLine->primaryText().cummulativeStyleFlags() | referenceLine->secondaryText().cummulativeStyleFlags();
@@ -1101,6 +1117,7 @@ LinesWidget::contextMenuEvent(QContextMenuEvent *e)
 	stylesMenu.addAction(appAction(ACT_TOGGLE_SELECTED_LINES_UNDERLINE, true, styleFlags & SString::Underline));
 	stylesMenu.addAction(appAction(ACT_TOGGLE_SELECTED_LINES_STRIKETHROUGH, true, styleFlags & SString::StrikeThrough));
 	stylesMenu.addAction(appAction(ACT_CHANGE_SELECTED_LINES_TEXT_COLOR));
+	menu.addMenu(&stylesMenu);
 
 	QMenu timesMenu(i18n("Times"));
 	timesMenu.addAction(appAction(ACT_SHIFT_SELECTED_LINES_FORWARDS));
@@ -1112,6 +1129,7 @@ LinesWidget::contextMenuEvent(QContextMenuEvent *e)
 	timesMenu.addAction(appAction(ACT_AUTOMATIC_DURATIONS));
 	timesMenu.addAction(appAction(ACT_MAXIMIZE_DURATIONS));
 	timesMenu.addAction(appAction(ACT_FIX_OVERLAPPING_LINES));
+	menu.addMenu(&timesMenu);
 
 	QMenu errorsMenu(i18n("Errors"));
 	errorsMenu.addAction(appAction(ACT_TOGGLE_SELECTED_LINES_MARK, true, referenceLine->errorFlags() & SubtitleLine::UserMark));
@@ -1120,23 +1138,6 @@ LinesWidget::contextMenuEvent(QContextMenuEvent *e)
 	errorsMenu.addAction(appAction(ACT_CLEAR_ERRORS));
 	errorsMenu.addSeparator();
 	errorsMenu.addAction(appAction(ACT_SHOW_ERRORS));
-
-	QMenu menu;
-	menu.addAction(appAction(ACT_SELECT_ALL_LINES));
-	menu.addSeparator();
-	menu.addAction(appAction(ACT_REMOVE_SELECTED_LINES));
-	menu.addAction(appAction(ACT_INSERT_BEFORE_CURRENT_LINE));
-	menu.addAction(appAction(ACT_INSERT_AFTER_CURRENT_LINE));
-	menu.addSeparator();
-	menu.addAction(appAction(ACT_JOIN_SELECTED_LINES));
-	menu.addAction(appAction(ACT_SPLIT_SELECTED_LINES));
-	menu.addSeparator();
-	menu.addAction(appAction(ACT_ANCHOR_TOGGLE));
-	menu.addAction(appAction(ACT_ANCHOR_REMOVE_ALL));
-	menu.addSeparator();
-	menu.addMenu(&textsMenu);
-	menu.addMenu(&stylesMenu);
-	menu.addMenu(&timesMenu);
 	menu.addMenu(&errorsMenu);
 
 	m_showingContextMenu = true;
