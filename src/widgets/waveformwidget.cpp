@@ -1080,6 +1080,27 @@ WaveformWidget::showContextMenu(QMouseEvent *event)
 					app->linesWidget()->setCurrentLine(selectedLine, true);
 			}));
 		menu->addSeparator();
+		menu->addAction(i18n("Join Lines"), [&](){
+			int startIndex = -1, endIndex = -1;
+			const Time startTime = rightMouseSoonerTime();
+			const Time endTime = rightMouseLaterTime();
+			foreach(SubtitleLine *sub, m_subtitle->allLines()) {
+				if(sub->showTime() <= endTime && startTime <= sub->hideTime()) {
+					if(startIndex == -1 || startIndex > sub->index())
+						startIndex = sub->index();
+					if(endIndex == -1 || endIndex < sub->index())
+						endIndex = sub->index();
+				}
+			}
+			if(endIndex >= 0 && startIndex != endIndex)
+				m_subtitle->joinLines(RangeList(Range(startIndex, endIndex)));
+		});
+		needCurrentLine.append(
+			menu->addAction(i18n("Split Line"), [&](){
+				// TODO: split the line at exact waveform mouse position
+				m_subtitle->splitLines(RangeList(Range(currentLine->index())));
+			}));
+		menu->addSeparator();
 		needCurrentLine.append(
 			menu->addAction(i18n("Toggle Anchor"), [&](){ m_subtitle->toggleLineAnchor(currentLine); }));
 		menu->addAction(app->action(ACT_ANCHOR_REMOVE_ALL));
