@@ -21,7 +21,7 @@
  * Boston, MA 02110-1301, USA.
  */
 
-#include "../inputformat.h"
+#include "formats/inputformat.h"
 
 #include <QRegExp>
 

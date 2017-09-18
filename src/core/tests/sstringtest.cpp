@@ -19,7 +19,7 @@
  */
 
 #include "sstringtest.h"
-#include "../sstring.h"
+#include "core/sstring.h"
 
 #include <QTest>                               // krazy:exclude=c++/includes
 

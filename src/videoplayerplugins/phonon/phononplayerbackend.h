@@ -21,7 +21,7 @@
  * Boston, MA 02110-1301, USA.
  */
 
-#include "../../videoplayer/playerbackend.h"
+#include "videoplayer/playerbackend.h"
 
 #include <QString>
 #include <QTextStream>   // NOTE this is only here because Qt complains otherwise when including Phonon/Global...

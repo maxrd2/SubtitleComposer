@@ -19,7 +19,7 @@
  */
 
 #include "subtitlelineactions.h"
-#include "subtitle.h"
+#include "core/subtitle.h"
 
 #define PROPAGATE_LINE_SIGNALS
 

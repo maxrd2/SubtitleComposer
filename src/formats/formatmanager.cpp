@@ -23,8 +23,8 @@
 #include "outputformat.h"
 #include "lineswidget.h"
 #include "application.h"
-#include "common/fileloadhelper.h"
-#include "common/filesavehelper.h"
+#include "helpers/fileloadhelper.h"
+#include "helpers/filesavehelper.h"
 
 #include "microdvd/microdvdinputformat.h"
 #include "microdvd/microdvdoutputformat.h"

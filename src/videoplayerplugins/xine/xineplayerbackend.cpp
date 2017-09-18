@@ -22,7 +22,7 @@
 #include "xinevideolayerwidget.h"
 #include "xineconfigwidget.h"
 
-#include "../scconfigdummy.h"
+#include "scconfigdummy.h"
 
 #include <QEventLoop>
 #include <QEvent>

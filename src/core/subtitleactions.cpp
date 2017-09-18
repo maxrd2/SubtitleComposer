@@ -21,7 +21,7 @@
 #include "subtitleactions.h"
 #include "subtitleiterator.h"
 #include "subtitleline.h"
-#include "sstring.h"
+#include "core/sstring.h"
 
 #include <QObject>
 

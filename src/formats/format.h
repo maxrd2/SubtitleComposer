@@ -21,9 +21,9 @@
  * Boston, MA 02110-1301, USA.
  */
 
-#include "../core/formatdata.h"
-#include "../core/subtitle.h"
-#include "../core/subtitleline.h"
+#include "core/formatdata.h"
+#include "core/subtitle.h"
+#include "core/subtitleline.h"
 
 #include <QString>
 #include <QStringList>

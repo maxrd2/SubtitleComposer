@@ -25,7 +25,7 @@
 #include "videoplayer.h"
 #include "playerbackend.h"
 
-#include "main/scconfig.h"
+#include "scconfig.h"
 
 #include <math.h>
 
@@ -108,7 +108,7 @@ VideoPlayer::VideoPlayer() :
 {
 	backendAdd(new DummyPlayerBackend());
 
-	const QString buildPluginPath(qApp->applicationDirPath() + QStringLiteral("/../videoplayerplugins"));
+	const QString buildPluginPath(qApp->applicationDirPath() + QStringLiteral("/videoplayerplugins"));
 	if(QDir(buildPluginPath).exists()) {
 		// if application is launched from build directory it will load plugins from build directory
 		backendLoad(buildPluginPath + QStringLiteral("/gstreamer/gstplayer.so"));

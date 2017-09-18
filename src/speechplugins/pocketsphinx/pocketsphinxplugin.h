@@ -19,7 +19,7 @@
  * Boston, MA 02110-1301, USA.
  */
 
-#include "../../speechprocessor/speechplugin.h"
+#include "speechprocessor/speechplugin.h"
 
 typedef struct ps_decoder_s ps_decoder_t;
 typedef struct cmd_ln_s cmd_ln_t;

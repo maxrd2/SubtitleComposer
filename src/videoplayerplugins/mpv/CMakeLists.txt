@@ -27,7 +27,7 @@ install(TARGETS mpvplayer DESTINATION ${SC_PLUGIN_INSTALL_DIR})
 
 target_include_directories(mpvplayer SYSTEM PRIVATE ${videoplayer_mpv_INCLUDE_DIR})
 set_target_properties(mpvplayer PROPERTIES COMPILE_FLAGS "${videoplayer_mpv_DEFS}")
-target_link_libraries(mpvplayer ${common_LIBS} ${videoplayer_mpv_LIBS})
+target_link_libraries(mpvplayer ${subtitlecomposer_LIBS} ${videoplayer_mpv_LIBS})
 qt5_use_modules(mpvplayer Core)
 
 add_dependencies(mpvplayer subtitlecomposer)

@@ -21,7 +21,7 @@
  * Boston, MA 02110-1301, USA.
  */
 
-#include "../../videoplayer/playerbackend.h"
+#include "videoplayer/playerbackend.h"
 
 #include <mpv/qthelper.hpp>
 

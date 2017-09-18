@@ -21,7 +21,7 @@
 #include "mpvbackend.h"
 #include "mpvconfigwidget.h"
 
-#include "../scconfigdummy.h"
+#include "scconfigdummy.h"
 
 
 #include <KLocalizedString>

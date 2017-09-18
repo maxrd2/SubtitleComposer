@@ -20,7 +20,7 @@
 
 #include "mplayerplayerprocess.h"
 
-#include "../scconfigdummy.h"
+#include "scconfigdummy.h"
 
 
 #include <QApplication>

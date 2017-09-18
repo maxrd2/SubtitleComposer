@@ -19,7 +19,7 @@
  */
 
 #include "phononplayerbackend.h"
-#include "../scconfigdummy.h"
+#include "scconfigdummy.h"
 
 #include <Phonon/MediaObject>
 #include <Phonon/MediaController>

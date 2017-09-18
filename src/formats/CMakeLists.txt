@@ -54,6 +54,7 @@ set(formats_SRCS
 	${formats_substationalpha_SRCS}
 	${formats_subviewer1_SRCS}
 	${formats_subviewer2_SRCS}
+	${formats_textdemux_SRCS}
 	${formats_tmplayer_SRCS}
 	${formats_youtubecaptions_SRCS}
 	${formats_textdemux_SRCS}

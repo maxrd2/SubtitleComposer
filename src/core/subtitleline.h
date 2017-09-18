@@ -22,8 +22,8 @@
  */
 
 #include "action.h"
-#include "sstring.h"
-#include "time.h"
+#include "core/sstring.h"
+#include "core/time.h"
 #include "formatdata.h"
 
 #include <QObject>

@@ -20,9 +20,9 @@
 
 #include "gstreamerplayerbackend.h"
 #include "gstreamerconfigwidget.h"
-#include "../scconfigdummy.h"
-#include "../../streamprocessor/gstreamer.h"
-#include "../../common/languagecode.h"
+#include "scconfigdummy.h"
+#include "streamprocessor/gstreamer.h"
+#include "helpers/languagecode.h"
 
 #include <KLocalizedString>
 

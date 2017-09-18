@@ -18,7 +18,7 @@ install(TARGETS phononplayer DESTINATION ${SC_PLUGIN_INSTALL_DIR})
 
 target_include_directories(phononplayer SYSTEM PRIVATE ${videoplayer_phonon_INCLUDE_DIR})
 set_target_properties(phononplayer PROPERTIES COMPILE_FLAGS "${videoplayer_phonon_DEFS}")
-target_link_libraries(phononplayer ${common_LIBS} ${videoplayer_phonon_LIBS})
+target_link_libraries(phononplayer ${subtitlecomposer_LIBS} ${videoplayer_phonon_LIBS})
 qt5_use_modules(phononplayer Core)
 
 add_dependencies(phononplayer subtitlecomposer)

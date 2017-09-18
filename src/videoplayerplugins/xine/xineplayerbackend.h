@@ -25,7 +25,7 @@
 # include "config.h"
 #endif
 
-#include "../../videoplayer/playerbackend.h"
+#include "videoplayer/playerbackend.h"
 
 #include <QString>
 #include <QRect>

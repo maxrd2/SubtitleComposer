@@ -11,5 +11,4 @@ set(widgets_SRCS
 	${CMAKE_CURRENT_SOURCE_DIR}/timeedit.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/timevalidator.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/treeview.cpp
-	${CMAKE_CURRENT_SOURCE_DIR}/waveformwidget.cpp
 	CACHE INTERNAL EXPORTEDVARIABLE)

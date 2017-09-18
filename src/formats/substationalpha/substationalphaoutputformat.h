@@ -21,9 +21,9 @@
  * Boston, MA 02110-1301, USA.
  */
 
-#include "../outputformat.h"
-#include "../../core/formatdata.h"
-#include "../../core/subtitleiterator.h"
+#include "formats/outputformat.h"
+#include "core/formatdata.h"
+#include "core/subtitleiterator.h"
 
 namespace SubtitleComposer {
 class SubStationAlphaOutputFormat : public OutputFormat

@@ -17,7 +17,7 @@ install(TARGETS mplayer DESTINATION ${SC_PLUGIN_INSTALL_DIR})
 
 target_include_directories(mplayer SYSTEM PRIVATE ${videoplayer_mplayer_INCLUDE_DIR})
 set_target_properties(mplayer PROPERTIES COMPILE_FLAGS "${videoplayer_mplayer_DEFS}")
-target_link_libraries(mplayer ${common_LIBS} ${videoplayer_mplayer_LIBS})
+target_link_libraries(mplayer ${subtitlecomposer_LIBS} ${videoplayer_mplayer_LIBS})
 
 qt5_use_modules(mplayer Core)
 

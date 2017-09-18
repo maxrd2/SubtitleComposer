@@ -20,7 +20,7 @@
 
 #include "subtitleline.h"
 #include "subtitlelineactions.h"
-#include "subtitle.h"
+#include "core/subtitle.h"
 
 #include <QRegExp>
 

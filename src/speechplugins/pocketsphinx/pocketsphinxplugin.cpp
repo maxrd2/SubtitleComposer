@@ -20,7 +20,7 @@
 #include "plugin-config.h"
 
 #include "pocketsphinxplugin.h"
-#include "../scconfigdummy.h"
+#include "scconfigdummy.h"
 
 #include <pocketsphinx.h>
 

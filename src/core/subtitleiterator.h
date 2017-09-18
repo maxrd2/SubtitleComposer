@@ -21,8 +21,8 @@
  * Boston, MA 02110-1301, USA.
  */
 
-#include "range.h"
-#include "rangelist.h"
+#include "core/range.h"
+#include "core/rangelist.h"
 
 #include <QObject>
 #include <QList>

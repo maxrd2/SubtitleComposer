@@ -20,7 +20,7 @@
 
 #include "simplerichtextedit.h"
 
-#include "../main/dialogs/subtitlecolordialog.h"
+#include "dialogs/subtitlecolordialog.h"
 
 #include <QRegExp>
 #include <QEvent>

@@ -22,7 +22,7 @@
 #include "mplayerplayerprocess.h"
 #include "mplayerconfigwidget.h"
 #include "mediadata.h"
-#include "../scconfigdummy.h"
+#include "scconfigdummy.h"
 
 #include <QDebug>
 

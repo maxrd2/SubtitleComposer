@@ -19,7 +19,7 @@
  */
 
 #include "rangetest.h"
-#include "../range.h"
+#include "core/range.h"
 
 #include <QTest>                               // krazy:exclude=c++/includes
 

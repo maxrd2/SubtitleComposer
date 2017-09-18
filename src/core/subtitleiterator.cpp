@@ -20,7 +20,7 @@
 
 #include "subtitleiterator.h"
 #include "subtitleline.h"
-#include "subtitle.h"
+#include "core/subtitle.h"
 
 using namespace SubtitleComposer;
 

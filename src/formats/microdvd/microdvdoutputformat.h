@@ -21,8 +21,8 @@
  * Boston, MA 02110-1301, USA.
  */
 
-#include "../outputformat.h"
-#include "../../core/subtitleiterator.h"
+#include "formats/outputformat.h"
+#include "core/subtitleiterator.h"
 
 namespace SubtitleComposer {
 class MicroDVDOutputFormat : public OutputFormat
@@ -48,7 +48,7 @@ protected:
 			const SubtitleLine *line = it.current();
 
 			const SString &text = primary ? line->primaryText() : line->secondaryText();
-                        QString subtitle;
+			QString subtitle;
 
 			int prevStyle = 0;
 			QRgb prevColor = 0;
@@ -72,8 +72,8 @@ protected:
 			}
 
 			ret += m_lineBuilder
-                                        .arg(static_cast<long>((line->showTime().toMillis() / 1000.0) * framesPerSecond + 0.5))
-                                        .arg(static_cast<long>((line->hideTime().toMillis() / 1000.0) * framesPerSecond + 0.5))
+					.arg(static_cast<long>((line->showTime().toMillis() / 1000.0) * framesPerSecond + 0.5))
+					.arg(static_cast<long>((line->hideTime().toMillis() / 1000.0) * framesPerSecond + 0.5))
 					.arg(subtitle);
 		}
 		return ret;
@@ -81,16 +81,16 @@ protected:
 
 	MicroDVDOutputFormat() :
 		OutputFormat(QStringLiteral("MicroDVD"), QStringList() << QStringLiteral("sub") << QStringLiteral("txt")),
-                m_lineBuilder(QStringLiteral("{%1}{%2}%3\n"))
+		m_lineBuilder(QStringLiteral("{%1}{%2}%3\n"))
 	{
-                m_stylesMap[0] = QStringLiteral("{y:}");
-                m_stylesMap[SString::Bold] = QStringLiteral("{y:b}");
-                m_stylesMap[SString::Italic] = QStringLiteral("{y:i}");
-                m_stylesMap[SString::Underline] = QStringLiteral("{y:u}");
-                m_stylesMap[SString::Bold | SString::Italic] = QStringLiteral("{y:b,i}");
-                m_stylesMap[SString::Bold | SString::Underline] = QStringLiteral("{y:u,b}");
-                m_stylesMap[SString::Italic | SString::Underline] = QStringLiteral("{y:u,i}");
-                m_stylesMap[SString::Bold | SString::Italic | SString::Underline] = QStringLiteral("{y:u,b,i}");
+		m_stylesMap[0] = QStringLiteral("{y:}");
+		m_stylesMap[SString::Bold] = QStringLiteral("{y:b}");
+		m_stylesMap[SString::Italic] = QStringLiteral("{y:i}");
+		m_stylesMap[SString::Underline] = QStringLiteral("{y:u}");
+		m_stylesMap[SString::Bold | SString::Italic] = QStringLiteral("{y:b,i}");
+		m_stylesMap[SString::Bold | SString::Underline] = QStringLiteral("{y:u,b}");
+		m_stylesMap[SString::Italic | SString::Underline] = QStringLiteral("{y:u,i}");
+		m_stylesMap[SString::Bold | SString::Italic | SString::Underline] = QStringLiteral("{y:u,b,i}");
 	}
 
 	const QString m_lineBuilder;

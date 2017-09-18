@@ -21,10 +21,10 @@
  * Boston, MA 02110-1301, USA.
  */
 
-#include "range.h"
-#include "rangelist.h"
-#include "time.h"
-#include "sstring.h"
+#include "core/range.h"
+#include "core/rangelist.h"
+#include "core/time.h"
+#include "core/sstring.h"
 #include "subtitleline.h"
 #include "actionmanager.h"
 #include "formatdata.h"

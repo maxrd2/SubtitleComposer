@@ -26,7 +26,7 @@
 #include <QAbstractTextDocumentLayout>
 #include <QResizeEvent>
 
-#include "../profiler.h"
+#include "profiler.h"
 #include <QDebug>
 
 TextOverlayWidget::TextOverlayWidget(QWidget *parent) :

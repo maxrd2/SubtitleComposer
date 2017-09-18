@@ -50,7 +50,7 @@ install(TARGETS xineplayer DESTINATION ${SC_PLUGIN_INSTALL_DIR})
 
 target_include_directories(xineplayer SYSTEM PRIVATE ${videoplayer_xine_INCLUDE_DIR})
 set_target_properties(xineplayer PROPERTIES COMPILE_FLAGS "${videoplayer_xine_DEFS}")
-target_link_libraries(xineplayer ${common_LIBS} ${videoplayer_xine_LIBS})
+target_link_libraries(xineplayer ${subtitlecomposer_LIBS} ${videoplayer_xine_LIBS})
 qt5_use_modules(xineplayer Core)
 
 add_dependencies(xineplayer subtitlecomposer)

@@ -1,7 +1,8 @@
 project(subtitlecomposer)
 
-cmake_minimum_required(VERSION 2.8.12)
-set(QT_MIN_VERSION "5.2.0")
+cmake_minimum_required(VERSION 2.8.12 FATAL_ERROR)
+set(QT_MIN_VERSION "5.3.0")
+set(KF5_MIN_VERSION "5.2.0")
 
 #set(CMAKE_CXX_STANDARD 11)
 #set(CMAKE_CXX_STANDARD_REQUIRED ON)
@@ -24,11 +25,11 @@ include(ECMAddTests) # build tests
 
 include(FeatureSummary)
 
-set(CMAKE_INCLUDE_CURRENT_DIR ON)
+find_package(Qt5 ${QT_MIN_VERSION} CONFIG REQUIRED COMPONENTS
+	Core Widgets Gui Test
+)
 
-find_package(Qt5 ${QT_MIN_VERSION} CONFIG REQUIRED Core Widgets Test)
-
-find_package(KF5 REQUIRED
+find_package(KF5 ${KF5_MIN_VERSION} REQUIRED COMPONENTS
 	Auth Config ConfigWidgets CoreAddons I18n KIO XmlGui
 	Sonnet Kross Codecs TextWidgets WidgetsAddons)
 

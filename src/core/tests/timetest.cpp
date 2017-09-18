@@ -19,7 +19,7 @@
  */
 
 #include "timetest.h"
-#include "../time.h"
+#include "core/time.h"
 
 #include <QTest>                               // krazy:exclude=c++/includes
 

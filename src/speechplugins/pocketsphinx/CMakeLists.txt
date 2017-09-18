@@ -23,7 +23,7 @@ install(TARGETS pocketsphinxasr DESTINATION ${SC_PLUGIN_INSTALL_DIR})
 
 target_include_directories(pocketsphinxasr SYSTEM PRIVATE ${speech_pocketsphinx_INCLUDE_DIRS})
 set_target_properties(pocketsphinxasr PROPERTIES COMPILE_FLAGS "${speech_pocketsphinx_DEFS}")
-target_link_libraries(pocketsphinxasr ${common_LIBS} ${speech_pocketsphinx_LIBS})
+target_link_libraries(pocketsphinxasr ${subtitlecomposer_LIBS} ${speech_pocketsphinx_LIBS})
 qt5_use_modules(pocketsphinxasr Core)
 
 add_dependencies(pocketsphinxasr subtitlecomposer)

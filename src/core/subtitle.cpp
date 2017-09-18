@@ -18,7 +18,7 @@
  * Boston, MA 02110-1301, USA.
  */
 
-#include "subtitle.h"
+#include "core/subtitle.h"
 #include "subtitleline.h"
 #include "subtitleiterator.h"
 #include "subtitleactions.h"

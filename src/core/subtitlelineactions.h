@@ -22,8 +22,8 @@
  */
 
 #include "action.h"
-#include "time.h"
-#include "sstring.h"
+#include "core/time.h"
+#include "core/sstring.h"
 #include "subtitleline.h"
 #include "subtitleactions.h"
 
