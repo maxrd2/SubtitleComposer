@@ -45,13 +45,10 @@ PlayerConfigWidget::PlayerConfigWidget(QWidget *parent)
 	m_textOverlayWidget->setOutlineColor(SCConfig::outlineColor());
 	m_textOverlayWidget->setAntialias(SCConfig::antialias());
 
-	kcfg_PlayerBackend->addItems(VideoPlayer::instance()->backendNames());
+	QStringList backends = VideoPlayer::instance()->backendNames();
+	backends.removeOne(VideoPlayer::instance()->dummyBackendName());
+	kcfg_PlayerBackend->addItems(backends);
 	kcfg_PlayerBackend->setProperty("kcfg_property", QByteArray("currentText"));
-	if(kcfg_PlayerBackend->count() > 1) {
-		int dummyBackendIndex = kcfg_PlayerBackend->findText(VideoPlayer::instance()->dummyBackendName());
-		if(dummyBackendIndex >= 0)
-			kcfg_PlayerBackend->removeItem(dummyBackendIndex);
-	}
 
 	kcfg_FontFamily->setProperty("kcfg_property", QByteArray("currentText"));
 

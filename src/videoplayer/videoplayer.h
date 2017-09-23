@@ -85,7 +85,7 @@ public:
 	 *  supported backends.
 	 * @return
 	 */
-	virtual QString dummyBackendName() const { return "Dummy"; }
+	virtual QString dummyBackendName() const { return QStringLiteral("Dummy"); }
 
 	QString activeBackendName() const;
 	QStringList backendNames() const;
