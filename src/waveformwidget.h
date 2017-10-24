@@ -36,6 +36,7 @@ QT_FORWARD_DECLARE_CLASS(QPolygon)
 QT_FORWARD_DECLARE_CLASS(QProgressBar)
 QT_FORWARD_DECLARE_CLASS(QToolButton)
 QT_FORWARD_DECLARE_CLASS(QScrollBar)
+QT_FORWARD_DECLARE_CLASS(QPropertyAnimation)
 QT_FORWARD_DECLARE_CLASS(QToolButton)
 QT_FORWARD_DECLARE_CLASS(QBoxLayout)
 
@@ -150,6 +151,7 @@ private:
 	bool m_RMBDown;
 
 	QScrollBar *m_scrollBar;
+	QPropertyAnimation *m_scrollAnimation;
 	bool m_autoScroll;
 	bool m_userScroll;
 	double m_hoverScrollAmount;

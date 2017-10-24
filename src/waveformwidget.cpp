@@ -60,6 +60,7 @@ WaveformWidget::WaveformWidget(QWidget *parent)
 	  m_timeEnd(MAX_WINDOW_ZOOM),
 	  m_RMBDown(false),
 	  m_scrollBar(Q_NULLPTR),
+	  m_scrollAnimation(nullptr),
 	  m_autoScroll(true),
 	  m_userScroll(false),
 	  m_hoverScrollAmount(.0),
@@ -87,10 +88,13 @@ WaveformWidget::WaveformWidget(QWidget *parent)
 	m_waveformGraphics->setMouseTracking(true);
 	m_waveformGraphics->installEventFilter(this);
 
-	m_scrollBar = new QScrollBar(Qt::Vertical);
+	m_scrollBar = new QScrollBar(Qt::Vertical, this);
 	m_scrollBar->setPageStep(windowSize());
 	m_scrollBar->setRange(0, windowSize());
 	m_scrollBar->installEventFilter(this);
+
+	m_scrollAnimation = new QPropertyAnimation(m_scrollBar, "value", this);
+	m_scrollAnimation->setDuration(150);
 
 	m_btnZoomOut = createToolButton(QStringLiteral(ACT_WAVEFORM_ZOOM_OUT));
 	m_btnZoomIn = createToolButton(QStringLiteral(ACT_WAVEFORM_ZOOM_IN));
@@ -995,10 +999,10 @@ WaveformWidget::scrollToTime(const Time &time, bool scrollToPage)
 	if(scrollToPage) {
 		const int scrollPosition = (int(time.toMillis() + 0.5) / windowSizePad) * windowSizePad;
 		if(SCConfig::wfSmoothScroll()) {
-			QPropertyAnimation *animation = new QPropertyAnimation(m_scrollBar, "value");
-			animation->setDuration(150);
-			animation->setEndValue(scrollPosition);
-			animation->start();
+			m_scrollAnimation->stop();
+			m_scrollAnimation->setStartValue(m_scrollBar->value());
+			m_scrollAnimation->setEndValue(scrollPosition);
+			m_scrollAnimation->start();
 		} else {
 			m_scrollBar->setValue(scrollPosition);
 		}
