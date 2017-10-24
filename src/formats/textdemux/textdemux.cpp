@@ -32,7 +32,8 @@ using namespace SubtitleComposer;
 
 TextDemux::TextDemux(QWidget *parent)
 	: QObject(parent),
-	  m_subtitle(NULL),
+	  m_subtitle(nullptr),
+	  m_subtitleTemp(nullptr),
 	  m_streamProcessor(new StreamProcessor(this)),
 	  m_progressWidget(new QWidget(parent))
 {
@@ -68,6 +69,7 @@ TextDemux::demuxFile(Subtitle *subtitle, const QString filename, int textStreamI
 	m_streamProcessor->close();
 
 	m_subtitle = subtitle;
+	m_subtitleTemp = new Subtitle();
 
 	if(m_streamProcessor->open(filename) && m_streamProcessor->initText(textStreamIndex))
 		m_streamProcessor->start();
@@ -76,7 +78,7 @@ TextDemux::demuxFile(Subtitle *subtitle, const QString filename, int textStreamI
 void
 TextDemux::onStreamData(const QString &text, quint64 msecStart, quint64 msecDuration)
 {
-	m_subtitle->insertLine(new SubtitleLine(SString(text), Time(double(msecStart)), Time(double(msecStart) + double(msecDuration))));
+	m_subtitleTemp->insertLine(new SubtitleLine(SString(text), Time(double(msecStart)), Time(double(msecStart) + double(msecDuration))));
 }
 
 void
@@ -90,6 +92,9 @@ TextDemux::onStreamProgress(quint64 msecPos, quint64 msecLength)
 void
 TextDemux::onStreamError(int code, const QString &message, const QString &debug)
 {
+	delete m_subtitleTemp;
+	m_subtitleTemp = nullptr;
+
 	emit onError(i18n("Subtitle demux failed %1: %2\n%3")
 				 .arg(code)
 				 .arg(message)
@@ -101,6 +106,10 @@ TextDemux::onStreamError(int code, const QString &message, const QString &debug)
 void
 TextDemux::onStreamFinished()
 {
+	m_subtitle->setPrimaryData(*m_subtitleTemp, true);
+	delete m_subtitleTemp;
+	m_subtitleTemp = nullptr;
+
 	m_streamProcessor->close();
 	m_progressWidget->hide();
 }

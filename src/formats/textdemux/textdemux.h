@@ -51,6 +51,7 @@ private slots:
 
 private:
 	Subtitle *m_subtitle;
+	Subtitle *m_subtitleTemp;
 	StreamProcessor *m_streamProcessor;
 
 	QWidget *m_progressWidget;
