@@ -30,6 +30,11 @@
 #include <QCommandLineParser>
 #include <QCommandLineOption>
 
+extern "C" {
+#include <libavcodec/avcodec.h>
+#include <libavformat/avformat.h>
+}
+
 #ifdef HAVE_CONFIG_H
 # include "config.h"
 # if defined HAVE_XINE && !defined HAVE_XCB
@@ -43,6 +48,9 @@ main(int argc, char **argv)
 #if defined HAVE_XINE && !defined HAVE_XCB
 	XInitThreads(); // needed for some VideoPlayer Backends (Xine)
 #endif
+
+	av_register_all();
+	avcodec_register_all();
 
 	SubtitleComposer::Application app(argc, argv);
 

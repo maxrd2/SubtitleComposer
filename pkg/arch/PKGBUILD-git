@@ -19,7 +19,7 @@ pkgdesc="A KDE subtitle editor (git version)"
 arch=('i686' 'x86_64')
 url="https://github.com/maxrd2/${_name}"
 license=('GPL')
-depends=('kcoreaddons' 'sonnet' 'kcodecs' 'kross' 'kxmlgui' 'ki18n' 'gstreamer')
+depends=('kcoreaddons' 'sonnet' 'kcodecs' 'kross' 'kxmlgui' 'ki18n' 'ffmpeg')
 makedepends=('extra-cmake-modules' 'git')
 # Comment/uncomment the following dependencies to disable/enable
 # building of plugins for MPV and Xine player backends.
@@ -27,7 +27,8 @@ makedepends+=('xine-lib')
 makedepends+=('mpv')
 #makedepends+=('pocketsphinx')
 conflicts=(${_name})
-optdepends=('mpv: for MPV backend'
+optdepends=('gstreamer: for GStreamer backend'
+            'mpv: for MPV backend'
             'mplayer: for MPlayer backend'
             'xine-lib: for Xine backend'
             'pocketsphinx: for speech recognition'

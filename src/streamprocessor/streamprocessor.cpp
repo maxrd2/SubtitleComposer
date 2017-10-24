@@ -18,35 +18,35 @@
  */
 
 #include "streamprocessor.h"
-#include "gstreamer.h"
 
-#include <QTimer>
 #include <QDebug>
 #include <QThread>
 
-#define MESSAGE_INFO_INIT_DISPOSE 1
+extern "C" {
+#include <libavcodec/avcodec.h>
+#include <libavformat/avformat.h>
+#include <libavutil/timestamp.h>
+#include <libavutil/opt.h>
+#include <libswresample/swresample.h>
+}
 
 using namespace SubtitleComposer;
 
 StreamProcessor::StreamProcessor(QObject *parent)
-	: QObject(parent),
+	: QThread(parent),
 	  m_opened(false),
 	  m_audioReady(false),
 	  m_textReady(false),
-	  m_decodingPipeline(NULL),
-	  m_decodingBus(NULL),
-	  m_decodingTimer(new QTimer(this))
+	  m_avFormat(nullptr),
+	  m_avStream(nullptr),
+	  m_codecCtx(nullptr),
+	  m_swResample(nullptr)
 {
-	connect(m_decodingTimer, &QTimer::timeout, this, &StreamProcessor::decoderMessageProc);
-
-	GStreamer::init();
 }
 
 StreamProcessor::~StreamProcessor()
 {
 	close();
-
-	GStreamer::deinit();
 }
 
 bool
@@ -60,120 +60,204 @@ StreamProcessor::open(const QString &filename)
 	m_textStreamIndex = -1;
 	m_streamLen = m_streamPos = 0;
 
-	m_decodingPipeline = GST_PIPELINE(gst_pipeline_new("streamprocessor_pipeline"));
-	GstElement *filesrc = gst_element_factory_make("filesrc", "filesrc");
-	GstElement *decodebin = gst_element_factory_make("decodebin", "decodebin");
+#if defined(VERBOSE) || !defined(NDEBUG)
+	av_log_set_level(AV_LOG_VERBOSE);
+#else
+	av_log_set_level(AV_LOG_WARNING);
+#endif
 
-	if(!m_decodingPipeline || !filesrc || !decodebin) {
-		if(filesrc)
-			gst_object_unref(GST_OBJECT(filesrc));
-		if(decodebin)
-			gst_object_unref(GST_OBJECT(decodebin));
-		if(m_decodingPipeline)
-			gst_object_unref(GST_OBJECT(m_decodingPipeline));
-		m_decodingPipeline = NULL;
+	int ret;
+	char errorText[1024];
+	if((ret = avformat_open_input(&m_avFormat, filename.toUtf8().constData(), NULL, NULL)) < 0) {
+		av_strerror(ret, errorText, sizeof(errorText));
+		qWarning() << "Cannot open input file:" << errorText;
+		return false;
+	}
+	if((ret = avformat_find_stream_info(m_avFormat, NULL)) < 0) {
+		av_strerror(ret, errorText, sizeof(errorText));
+		qWarning() << "Cannot find stream information:" << errorText;
 		return false;
 	}
 
-	gchar *uri = g_strdup(m_filename.toLocal8Bit());
-	g_object_set(G_OBJECT(filesrc), "location", uri, NULL);
-	g_free(uri);
+#if defined(VERBOSE) || !defined(NDEBUG)
+	av_dump_format(m_avFormat, 0, filename.toUtf8().constData(), 0);
+#endif
 
-	g_signal_connect(decodebin, "pad-added", G_CALLBACK(onPadAdded), this);
-	g_signal_connect(decodebin, "autoplug-continue", G_CALLBACK(onPadCheck), this);
+	m_opened = true;
 
-	gst_bin_add_many(GST_BIN(m_decodingPipeline), filesrc, decodebin, NULL);
-
-	if(gst_element_link(filesrc, decodebin)) {
-		m_opened = true;
-		return true;
-	}
-
-	close();
-	return false;
+    return true;
 }
 
 void
 StreamProcessor::close()
 {
-	if(m_decodingPipeline) {
-		m_decodingTimer->stop();
-		GStreamer::setElementState(GST_ELEMENT(m_decodingPipeline), GST_STATE_NULL, 60000);
-		GStreamer::freePipeline(&m_decodingPipeline, &m_decodingBus);
-	}
+	requestInterruption();
+	wait();
+
+	if(m_swResample)
+		swr_free(&m_swResample);
+	if(m_codecCtx)
+		avcodec_free_context(&m_codecCtx);
+	if(m_avFormat)
+		avformat_close_input(&m_avFormat);
 
 	m_opened = false;
 	m_audioReady = false;
 	m_textReady = false;
 }
 
-bool
-StreamProcessor::initAudio(const int streamIndex, const WaveFormat &waveFormat)
+int
+StreamProcessor::findStream(int streamType, int streamIndex)
 {
-	if(!m_opened)
-		return false;
+	for(unsigned int i = 0; i < m_avFormat->nb_streams; i++) {
+		m_avStream = m_avFormat->streams[i];
+		if(m_avStream->codecpar->codec_type != streamType)
+			continue;
 
-	m_audioStreamCurrent = -1;
-	m_audioStreamIndex = streamIndex;
-	m_audioStreamFormat = waveFormat;
-	m_audioReady = false;
+		if(streamIndex--)
+			continue;
 
-	GstElement *audioconvert = gst_element_factory_make("audioconvert", "audioconvert");
-	GstElement *audioresample = gst_element_factory_make("audioresample", "audioresample");
-	GstElement *fakesink = gst_element_factory_make("fakesink", "fakesink");
+		int ret;
+		char errorText[1024];
 
-	if(!audioresample || !audioconvert || !fakesink) {
-		if(audioresample)
-			gst_object_unref(GST_OBJECT(audioresample));
-		if(audioconvert)
-			gst_object_unref(GST_OBJECT(audioconvert));
-		if(fakesink)
-			gst_object_unref(GST_OBJECT(fakesink));
-		return false;
+		AVCodec *dec = avcodec_find_decoder(m_avStream->codecpar->codec_id);
+		if(!dec) {
+			qWarning() << "Failed to find decoder for stream" << i;
+			return false;
+		}
+
+		m_codecCtx = avcodec_alloc_context3(dec);
+		if(!m_codecCtx) {
+			qWarning() << "Failed to allocate the decoder context for stream" << i;
+			continue;
+		}
+		ret = avcodec_parameters_to_context(m_codecCtx, m_avStream->codecpar);
+		if(ret < 0) {
+			av_strerror(ret, errorText, sizeof(errorText));
+			qWarning() << "Failed to copy decoder parameters to input decoder context for stream" << i << errorText;
+			avcodec_free_context(&m_codecCtx);
+			continue;
+		}
+		if(m_codecCtx->codec_type != streamType) {
+			avcodec_free_context(&m_codecCtx);
+			continue;
+		}
+		ret = avcodec_open2(m_codecCtx, dec, nullptr);
+		if(ret < 0) {
+			av_strerror(ret, errorText, sizeof(errorText));
+			qWarning() << "Failed to open decoder for stream" << i << errorText;
+			avcodec_free_context(&m_codecCtx);
+			continue;
+		}
+
+		return i;
 	}
 
-	g_object_set(G_OBJECT(fakesink), "signal-handoffs", TRUE, NULL);
-	g_signal_connect(fakesink, "handoff", G_CALLBACK(onAudioDataReady), this);
-
-	gst_bin_add_many(GST_BIN(m_decodingPipeline), audioresample, audioconvert, fakesink, NULL);
-
-	GstCaps *outputFilter = GStreamer::audioCapsFromFormat(m_audioStreamFormat);
-	if(gst_element_link(audioresample, audioconvert)
-			&& GST_PAD_LINK_SUCCESSFUL(GStreamer::link(GST_BIN(m_decodingPipeline), "audioconvert", "fakesink", outputFilter))) {
-		m_decodingBus = gst_pipeline_get_bus(GST_PIPELINE(m_decodingPipeline));
-		m_audioReady = true;
-	}
-
-	return m_audioReady;
+	return -1;
 }
 
 bool
-StreamProcessor::initText(const int streamIndex)
+StreamProcessor::initAudio(int streamIndex, const WaveFormat &waveFormat)
 {
 	if(!m_opened)
 		return false;
 
-	m_textStreamCurrent = -1;
-	m_textStreamIndex = streamIndex;
+	m_audioStreamIndex = streamIndex;
+	m_audioStreamFormat = waveFormat;
 	m_textReady = false;
 
-	GstElement *textsink = gst_element_factory_make("fakesink", "textsink");
+	m_audioStreamCurrent = findStream(AVMEDIA_TYPE_AUDIO, streamIndex);
+	m_audioReady = m_audioStreamCurrent != -1;
 
-	if(!textsink) {
-		if(textsink)
-			gst_object_unref(GST_OBJECT(textsink));
+	if(!m_audioReady)
+		return false;
+
+	// update stream format so zero values are set to input stream format values
+	if(m_audioStreamFormat.sampleRate() == 0)
+		m_audioStreamFormat.setSampleRate(m_codecCtx->sample_rate);
+	if(m_audioStreamFormat.bitsPerSample() == 0)
+		m_audioStreamFormat.setBitsPerSample(m_codecCtx->bits_per_raw_sample);
+
+	// figure sample format and update stream format
+	const int bps = m_audioStreamFormat.bitsPerSample();
+	if(bps == 8) {
+		m_audioSampleFormat = AV_SAMPLE_FMT_U8;
+		m_audioStreamFormat.setInteger(true);
+	} else if(bps == 16) {
+		m_audioSampleFormat = AV_SAMPLE_FMT_S16;
+		m_audioStreamFormat.setInteger(true);
+	} else if(bps == 32) {
+		m_audioSampleFormat = m_audioStreamFormat.isInteger() ? AV_SAMPLE_FMT_S32 : AV_SAMPLE_FMT_FLT;
+	} else if(bps == 64) {
+		m_audioSampleFormat = AV_SAMPLE_FMT_DBL;
+		m_audioStreamFormat.setInteger(false);
+	} else {
+		qWarning() << "Invalid wave format requested:" << bps << "bits per sample";
+		emit streamError(AVERROR_BUG, QStringLiteral("Invalid wave format requested"), QString::number(bps) + QStringLiteral(" bits per sample"));
 		return false;
 	}
 
-	g_object_set(G_OBJECT(textsink), "signal-handoffs", TRUE, NULL);
-	g_signal_connect(textsink, "handoff", G_CALLBACK(onTextDataReady), this);
+	// figure channel layout or update stream format
+	if(m_audioStreamFormat.channels() == 0) {
+		m_audioStreamFormat.setChannels(m_codecCtx->channels);
+		m_audioChannelLayout = m_codecCtx->channel_layout;
+	} else {
+		switch(m_audioStreamFormat.channels()) {
+		case 1: m_audioChannelLayout = AV_CH_LAYOUT_MONO; break;
+		case 2: m_audioChannelLayout = AV_CH_LAYOUT_STEREO; break;
+		case 3: m_audioChannelLayout = AV_CH_LAYOUT_2POINT1; break;
+		case 4: m_audioChannelLayout = AV_CH_LAYOUT_4POINT0; break;
+		case 5: m_audioChannelLayout = AV_CH_LAYOUT_4POINT1; break;
+		case 6: m_audioChannelLayout = AV_CH_LAYOUT_6POINT0; break;
+		case 7: m_audioChannelLayout = AV_CH_LAYOUT_7POINT0; break;
+		case 8: m_audioChannelLayout = AV_CH_LAYOUT_7POINT1; break;
+		default:
+			qWarning() << "Invalid wave format requested:" << m_audioStreamFormat.channels() << "channels";
+			emit streamError(AVERROR_BUG, QStringLiteral("Invalid wave format requested"), QString::number(m_audioStreamFormat.channels()) + QStringLiteral(" channels"));
+			return false;
+		}
+	}
 
-	gst_bin_add_many(GST_BIN(m_decodingPipeline), textsink, NULL);
+	// setup resampler if needed
+	const bool convChannels = m_codecCtx->channel_layout != m_audioChannelLayout;
+	const bool convSampleRate = m_codecCtx->sample_rate != m_audioStreamFormat.sampleRate();
+	const bool convSampleFormat = m_codecCtx->sample_fmt != m_audioSampleFormat;
+	if(convChannels || convSampleRate || convSampleFormat) {
+		m_swResample = swr_alloc();
+		if(convChannels) {
+			av_opt_set_channel_layout(m_swResample, "in_channel_layout", m_codecCtx->channel_layout, 0);
+			av_opt_set_channel_layout(m_swResample, "out_channel_layout", m_audioChannelLayout, 0);
+		}
+		if(convSampleRate) {
+			av_opt_set_int(m_swResample, "in_sample_rate", m_codecCtx->sample_rate, 0);
+			av_opt_set_int(m_swResample, "out_sample_rate", m_audioStreamFormat.sampleRate(), 0);
+		}
+		if(convSampleFormat) {
+			av_opt_set_sample_fmt(m_swResample, "in_sample_fmt", m_codecCtx->sample_fmt, 0);
+			av_opt_set_sample_fmt(m_swResample, "out_sample_fmt", static_cast<AVSampleFormat>(m_audioSampleFormat), 0);
+		}
+		swr_init(m_swResample);
+	}
 
-	m_decodingBus = gst_pipeline_get_bus(GST_PIPELINE(m_decodingPipeline));
-	m_textReady = true;
+	return true;
+}
 
-	return m_textReady;
+bool
+StreamProcessor::initText(int streamIndex)
+{
+	if(!m_opened)
+		return false;
+
+	m_textStreamIndex = streamIndex;
+	m_audioReady = false;
+
+	m_textStreamCurrent = findStream(AVMEDIA_TYPE_SUBTITLE, streamIndex);
+	m_textReady = m_audioStreamCurrent != -1;
+
+	if(!m_textReady)
+		return false;
+
+	return true;
 }
 
 bool
@@ -182,206 +266,228 @@ StreamProcessor::start()
 	if(!m_opened || !(m_audioReady || m_textReady))
 		return false;
 
-	// do not start twice
-	GstState valCurrent, valPending;
-	if(gst_element_get_state(GST_ELEMENT(m_decodingPipeline), &valCurrent, &valPending, 0) != GST_STATE_CHANGE_SUCCESS
-			|| valCurrent == GST_STATE_PLAYING || valPending == GST_STATE_PLAYING)
-		return false;
-
-	m_decodingTimer->start(20);
-	GStreamer::setElementState(GST_ELEMENT(m_decodingPipeline), GST_STATE_PLAYING, 0);
+	QThread::start(LowPriority);
 
 	return true;
 }
 
-/*static*/ void
-StreamProcessor::onAudioDataReady(GstElement */*fakesink*/, GstBuffer *buffer, GstPad */*pad*/, gpointer userData)
-{
-	StreamProcessor *me = reinterpret_cast<StreamProcessor *>(userData);
-	GstMapInfo map;
-
-	while(!me->m_streamLen) {
-		gint64 time;
-		if(gst_element_query_duration(GST_ELEMENT(me->m_decodingPipeline), GST_FORMAT_TIME, &time) && GST_CLOCK_TIME_IS_VALID(time) && time) {
-			me->m_streamLen = time / GST_MSECOND;
-			emit me->streamProgress(me->m_streamPos, me->m_streamLen);
-		}
-		QThread::yieldCurrentThread();
-	}
-
-	gst_buffer_map(buffer, &map, GST_MAP_READ);
-	emit me->audioDataAvailable(map.data, map.size, &me->m_audioStreamFormat, buffer->pts / GST_MSECOND, buffer->duration / GST_MSECOND);
-	gst_buffer_unmap(buffer, &map);
-}
-
-/*static*/ void
-StreamProcessor::onTextDataReady(GstElement */*fakesrc*/, GstBuffer *buffer, GstPad */*pad*/, gpointer userData)
-{
-	StreamProcessor *me = reinterpret_cast<StreamProcessor *>(userData);
-	GstMapInfo map;
-
-	while(!me->m_streamLen) {
-		gint64 time;
-		if(gst_element_query_duration(GST_ELEMENT(me->m_decodingPipeline), GST_FORMAT_TIME, &time) && GST_CLOCK_TIME_IS_VALID(time) && time) {
-			me->m_streamLen = time / GST_MSECOND;
-			emit me->streamProgress(me->m_streamPos, me->m_streamLen);
-		}
-		QThread::yieldCurrentThread();
-	}
-
-	gst_buffer_map(buffer, &map, GST_MAP_READ);
-	emit me->textDataAvailable(QString::fromUtf8((const char *)map.data, map.size), buffer->pts / GST_MSECOND, buffer->duration / GST_MSECOND);
-	gst_buffer_unmap(buffer, &map);
-}
-
-/*static*/ void
-StreamProcessor::onPadAdded(GstElement */*decodebin*/, GstPad *pad, gpointer userData)
-{
-	StreamProcessor *me = reinterpret_cast<StreamProcessor *>(userData);
-
-	if(!me->m_decodingPipeline || gst_pad_get_direction(pad) != GST_PAD_SRC)
-		return;
-
-	GstCaps *caps = gst_pad_get_current_caps(pad);
-	const GstStructure *capsStruct = gst_caps_get_structure(caps, 0);
-	const gchar *mimeType = gst_structure_get_name(capsStruct);
-
-	if(strncmp(mimeType, "audio/", 6) == 0) {
-		if(++(me->m_audioStreamCurrent) == me->m_audioStreamIndex) {
-			// fill in missing values in WaveFormat from source values
-			if(me->m_audioStreamFormat.channels() == 0)
-				me->m_audioStreamFormat.setChannels(g_value_get_int(gst_structure_get_value(capsStruct, "channels")));
-			if(me->m_audioStreamFormat.bitsPerSample() == 0)
-				me->m_audioStreamFormat.setBitsPerSample(g_value_get_int(gst_structure_get_value(capsStruct, "width")));
-			if(me->m_audioStreamFormat.sampleRate() == 0)
-				me->m_audioStreamFormat.setSampleRate(g_value_get_int(gst_structure_get_value(capsStruct, "rate")));
-
-			// link decodebin to audioresample
-			const gchar *padName = gst_pad_get_name(pad);
-			if(GST_PAD_LINK_FAILED(GStreamer::link(GST_BIN(me->m_decodingPipeline), "decodebin", padName, "audioresample", "sink")))
-				qCritical() << "Failed to connect decodebin pad" << padName;
-			qDebug() << "Selected audio stream #" << me->m_audioStreamCurrent << " [" << padName << "] " << gst_caps_to_string(caps);
-		}
-	} else if(strncmp(mimeType, "text/", 5) == 0) {
-		if(++(me->m_textStreamCurrent) == me->m_textStreamIndex) {
-			// link decodebin to textsink
-			const gchar *padName = gst_pad_get_name(pad);
-			GstCaps *outputFilter = GStreamer::textCapsFromEncoding("utf8");
-			if(GST_PAD_LINK_FAILED(GStreamer::link(GST_BIN(me->m_decodingPipeline), "decodebin", padName, "textsink", "sink", outputFilter))) {
-				outputFilter = GStreamer::textCapsFromEncoding(NULL);
-				if(GST_PAD_LINK_FAILED(GStreamer::link(GST_BIN(me->m_decodingPipeline), "decodebin", padName, "textsink", "sink", outputFilter)))
-					qCritical() << "Failed to connect decodebin pad" << padName;
-			}
-			qDebug() << "Selected text stream #" << me->m_audioStreamCurrent << " [" << padName << "] " << gst_caps_to_string(caps);
-		}
-	}
-
-	gst_caps_unref(caps);
-}
-
-/*static*/ gboolean
-StreamProcessor::onPadCheck(GstElement */*decodebin*/, GstPad *pad, GstCaps *caps, gpointer userData)
-{
-	StreamProcessor *me = reinterpret_cast<StreamProcessor *>(userData);
-
-	if(!me->m_decodingPipeline || gst_pad_get_direction(pad) != GST_PAD_SRC)
-		return TRUE;
-
-	const GstStructure *capsStruct = gst_caps_get_structure(caps, 0);
-	const gchar *mimeType = gst_structure_get_name(capsStruct);
-	if(strcmp(mimeType, "video/quicktime") == 0
-	|| strcmp(mimeType, "video/x-matroska") == 0
-	|| strcmp(mimeType, "video/webm") == 0
-	|| strcmp(mimeType, "video/ogg") == 0
-	|| strcmp(mimeType, "video/x-msvideo") == 0
-	|| strcmp(mimeType, "video/x-flv") == 0) {
-#if defined(VERBOSE) || !defined(NDEBUG)
-		GStreamer::inspectCaps(caps, QStringLiteral("Container stream"));
-#endif
-		return TRUE;
-	} else if((strncmp(mimeType, "audio/", 6) == 0
-			|| strcmp(mimeType, "application/x-apetag") == 0 || strcmp(mimeType, "application/x-id3") == 0) && me->m_audioStreamIndex >= 0) {
-#if defined(VERBOSE) || !defined(NDEBUG)
-		GStreamer::inspectCaps(caps, QStringLiteral("Probing stream"));
-#endif
-		return TRUE;
-	} else if(strncmp(mimeType, "text/", 5) == 0 && me->m_textStreamIndex >= 0) {
-#if defined(VERBOSE) || !defined(NDEBUG)
-		GStreamer::inspectCaps(caps, QStringLiteral("Probing stream"));
-#endif
-		return TRUE;
-	}
-
-	// we don't want to decode unused streams as they will unnecessarily hog the cpu/gpu
-#if defined(VERBOSE) || !defined(NDEBUG)
-	GStreamer::inspectCaps(caps, QStringLiteral("Ignoring stream"));
-#endif
-	return FALSE;
-}
-
 void
-StreamProcessor::decoderMessageProc()
+StreamProcessor::processAudio()
 {
-	if(!m_decodingBus || !m_decodingPipeline)
-		return;
+	int ret;
+	char errorText[1024];
+	AVPacket pkt;
+	av_init_packet(&pkt);
+	pkt.data = nullptr;
+	pkt.size = 0;
 
-	gint64 time;
-	if(gst_element_query_position(GST_ELEMENT(m_decodingPipeline), GST_FORMAT_TIME, &time)) {
-		if(m_streamPos != static_cast<quint64>(time) / GST_MSECOND) {
-			m_streamPos = time / GST_MSECOND;
-			if(m_streamLen)
-				emit streamProgress(m_streamPos, m_streamLen);
-		}
+	AVFrame *frame = av_frame_alloc();
+	Q_ASSERT(frame != nullptr);
+	AVFrame *frameResampled = nullptr;
+
+	if(m_swResample) {
+		frameResampled = av_frame_alloc();
+		Q_ASSERT(frameResampled != nullptr);
+		frameResampled->channel_layout = m_audioChannelLayout;
+		frameResampled->sample_rate = m_audioStreamFormat.sampleRate();
+		frameResampled->format = m_audioSampleFormat;
 	}
 
-	GstMessage *msg;
-	while(m_decodingBus && m_decodingPipeline && (msg = gst_bus_pop(m_decodingBus))) {
-		GstObject *src = GST_MESSAGE_SRC(msg);
+	const int64_t timeStreamStart = m_avStream->start_time * 1000 * m_avStream->time_base.num / m_avStream->time_base.den;
+	const int64_t streamDuration = m_avStream->duration * 1000 * m_avStream->time_base.num / m_avStream->time_base.den;
+	const int64_t containerDuration = m_avFormat->duration * 1000 / AV_TIME_BASE;
+	m_streamLen = streamDuration > containerDuration ? streamDuration : containerDuration;
 
-#if defined(VERBOSE) || !defined(NDEBUG)
-		GStreamer::inspectMessage(msg);
-#endif
+	int64_t timeFrameStart = 0;
+	int64_t timeFrameDuration = 0;
+	int64_t timeFrameEnd = 0;
+	int64_t timeResampleDelay = 0;
 
-		if(src == GST_OBJECT(m_decodingPipeline)) {
-			switch(GST_MESSAGE_TYPE(msg)) {
-			case GST_MESSAGE_STATE_CHANGED: {
-				GstState old, current, target;
-				gst_message_parse_state_changed(msg, &old, &current, &target);
-				if(old > GST_STATE_PAUSED && current <= GST_STATE_PAUSED) {
-					emit streamFinished();
-					close();
+	// AVFormatContext *ifmt_ctx = m_avFormat;
+	while(!isInterruptionRequested()) {
+		ret = av_read_frame(m_avFormat, &pkt);
+		bool drainDecoder = ret == AVERROR_EOF;
+		if(ret < 0 && !drainDecoder) {
+			av_strerror(ret, errorText, sizeof(errorText));
+			qWarning() << "Error reading packet" << errorText;
+			emit streamError(ret, QStringLiteral("Error reading packet"), QString::fromUtf8(errorText));
+			break;
+		}
+
+		if(pkt.stream_index == m_audioStreamCurrent || drainDecoder) {
+			ret = avcodec_send_packet(m_codecCtx, &pkt);
+			if(ret < 0) {
+				if(ret != AVERROR(EAGAIN)) {
+					av_strerror(ret, errorText, sizeof(errorText));
+					qWarning() << "Error decoding packet" << errorText;
+					emit streamError(ret, QStringLiteral("Error decoding packet"), QString::fromUtf8(errorText));
 				}
 				break;
 			}
+			for(;;) {
+				ret = avcodec_receive_frame(m_codecCtx, frame);
+				bool drainResampler = ret == AVERROR_EOF;
+				if(ret < 0 && !drainResampler) {
+					if(ret != AVERROR(EAGAIN)) {
+						av_strerror(ret, errorText, sizeof(errorText));
+						qWarning() << "Error decoding audio frame" << errorText;
+						emit streamError(ret, QStringLiteral("Error decoding audio frame"), QString::fromUtf8(errorText));
+					}
+					break;
+				}
+				if(ret == 0) {
+					if(frame->best_effort_timestamp)
+						timeFrameStart = timeStreamStart + frame->best_effort_timestamp * 1000 * m_avStream->time_base.num / m_avStream->time_base.den;
+				}
 
-			case GST_MESSAGE_DURATION: {
-				GstFormat format;
-				gst_message_parse_duration(msg, &format, &time);
-				m_streamLen = time / GST_MSECOND;
-				break;
-			}
+				Q_ASSERT(drainResampler == drainDecoder); // TODO: FIXME: drop drainResampler if not needed
 
-			case GST_MESSAGE_EOS: {
-				emit streamFinished();
-				close();
-				break;
-			}
+				size_t frameSize;
+				if(m_swResample) {
+					ret = swr_convert_frame(m_swResample, frameResampled, drainResampler ? nullptr : frame);
+					if(ret < 0) {
+						av_strerror(ret, errorText, sizeof(errorText));
+						qWarning() << "Error resampling audio frame" << errorText;
+						emit streamError(ret, QStringLiteral("Error resampling audio frame"), QString::fromUtf8(errorText));
+						break;
+					}
+					timeResampleDelay = -swr_get_delay(m_swResample, 1000);
+					frameSize = frameResampled->nb_samples * av_get_bytes_per_sample(static_cast<AVSampleFormat>(frameResampled->format));
+					timeFrameDuration = frameResampled->nb_samples * 1000 / frameResampled->sample_rate;
+				} else {
+					frameSize = frame->nb_samples * av_get_bytes_per_sample(static_cast<AVSampleFormat>(frame->format));
+					if(frame->pkt_duration)
+						timeFrameDuration = frame->pkt_duration * 1000 * m_avStream->time_base.num / m_avStream->time_base.den;
+				}
+				timeFrameEnd = timeFrameStart + timeFrameDuration;
 
-			case GST_MESSAGE_ERROR: {
-				gchar *debug = NULL;
-				GError *error = NULL;
-				gst_message_parse_error(msg, &error, &debug);
-				emit streamError(error->code, QString::fromUtf8(error->message), QString::fromUtf8(debug));
-				g_error_free(error);
-				g_free(debug);
-				break;
-			}
+				if(drainResampler && (!frameResampled || frameResampled->nb_samples == 0))
+					break;
 
-			default:
-				break;
+				if(!drainResampler) {
+					m_streamPos = timeFrameEnd;
+					Q_ASSERT(m_streamPos <= m_streamLen);
+					emit streamProgress(m_streamPos, m_streamLen);
+				}
+
+				if(m_swResample) {
+					emit audioDataAvailable(frameResampled->data[0], frameSize * frameResampled->channels,
+						&m_audioStreamFormat, timeFrameStart + timeResampleDelay, timeFrameDuration);
+				} else {
+					emit audioDataAvailable(frame->data[0], frameSize * frame->channels,
+						&m_audioStreamFormat, timeFrameStart, timeFrameDuration);
+				}
 			}
 		}
 
-		gst_message_unref(msg);
+		av_packet_unref(&pkt);
+
+		if(drainDecoder)
+			break;
 	}
+
+	av_frame_free(&frame);
+	if(frameResampled)
+		av_frame_free(&frameResampled);
+
+	emit streamFinished();
+	QMetaObject::invokeMethod(this, "close", Qt::QueuedConnection);
+}
+
+void
+StreamProcessor::processText()
+{
+	int ret;
+	char errorText[1024];
+	AVPacket pkt;
+	av_init_packet(&pkt);
+	pkt.data = nullptr;
+	pkt.size = 0;
+
+	const quint64 timeStreamStart = m_avStream->start_time * 1000 * m_avStream->time_base.num / m_avStream->time_base.den;
+	const quint64 streamDuration = m_avStream->duration * 1000 * m_avStream->time_base.num / m_avStream->time_base.den;
+	const quint64 containerDuration = m_avFormat->duration * 1000 / AV_TIME_BASE;
+	m_streamLen = streamDuration > containerDuration ? streamDuration : containerDuration;
+
+    AVSubtitle subtitle;
+	QString text;
+	quint64 timeStart = 0;
+	quint64 timeEnd = 0;
+
+	while(av_read_frame(m_avFormat, &pkt) >= 0) {
+		if(pkt.stream_index == m_textStreamCurrent) {
+			int got_sub = 0;
+			ret = avcodec_decode_subtitle2(m_codecCtx, &subtitle, &got_sub, &pkt);
+			if(ret < 0) {
+				av_strerror(ret, errorText, sizeof(errorText));
+				qWarning() << "Failed to decode subtitle:" << errorText;
+				if(got_sub)
+					avsubtitle_free(&subtitle);
+				continue;
+			}
+			if(!got_sub)
+				continue;
+
+			const quint64 timeFrameStart = timeStreamStart + pkt.pts * 1000 * m_avStream->time_base.num / m_avStream->time_base.den;
+			const quint64 timeFrameEnd = timeFrameStart + pkt.duration * 1000 * m_avStream->time_base.num / m_avStream->time_base.den;
+
+			if(timeFrameStart < timeEnd)
+				timeEnd = timeFrameStart - 10;
+			if(!text.isEmpty()) {
+				emit textDataAvailable(text.trimmed(), timeStart, timeEnd - timeStart);
+				text.clear();
+			}
+
+			timeStart = timeFrameStart;
+			timeEnd = timeFrameEnd;
+
+			for(unsigned int i = 0; i < subtitle.num_rects; i++) {
+				const AVSubtitleRect *sub = subtitle.rects[i];
+				switch(sub->type) {
+				case SUBTITLE_ASS: {
+					const char *assText = sub->ass;
+					if(strncmp("Dialogue", assText, 8) != 0)
+						break;
+					// Dialogue: Marked, Start, End, Style, Name, MarginL, MarginR, MarginV, Effect, Text
+					for(int c = 9; c && *assText; assText++) {
+						if(*assText == ',')
+							c--;
+					}
+					if(!text.isEmpty())
+						text.append(QChar('\n'));
+					text.append(QString::fromUtf8(assText));
+					text.replace(QStringLiteral("\\N"), QStringLiteral("\n"));
+					break;
+				}
+
+				default:
+					Q_ASSERT(false);
+					break;
+				}
+			}
+
+			m_streamPos = timeFrameEnd;
+			Q_ASSERT(m_streamPos <= m_streamLen);
+			emit streamProgress(m_streamPos, m_streamLen);
+
+			avsubtitle_free(&subtitle);
+		}
+
+		av_packet_unref(&pkt);
+    }
+
+	if(!text.isEmpty())
+		emit textDataAvailable(text.trimmed(), timeStart, timeEnd - timeStart);
+
+	emit streamFinished();
+	QMetaObject::invokeMethod(this, "close", Qt::QueuedConnection);
+}
+
+/*virtual*/ void
+StreamProcessor::run()
+{
+	if(m_textReady)
+		processText();
+	else if(m_audioReady)
+		processAudio();
 }

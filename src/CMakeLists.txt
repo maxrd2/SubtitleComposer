@@ -27,6 +27,13 @@ set_package_properties(Phonon4Qt5 PROPERTIES
    DESCRIPTION "Qt-based audio library"
    TYPE REQUIRED)
 
+find_package(FFmpeg REQUIRED QUIET)
+if(FFMPEG_FOUND)
+	message(STATUS "Found FFmpeg")
+else(FFMPEG_FOUND)
+	message(ERROR "FFmpeg was not found")
+endif(FFMPEG_FOUND)
+
 # the subdirs must be added in a specific order
 # if one dir uses code from another, its CMakeLists.txt will reference variables
 # defined in the dependency directory that must be created before the former
@@ -67,6 +74,7 @@ include_directories(
 	${streamprocessor_INCLUDE_DIR}
 	${speechprocessor_INCLUDE_DIR}
 	${widgets_INCLUDE_DIR}
+	${FFMPEG_INCLUDE_DIR}
 )
 
 set(subtitlecomposer_SRCS
@@ -118,6 +126,7 @@ target_link_libraries(subtitlecomposer
 	${speechprocessor_LIBS}
 	${widgets_LIBS}
 	${X11_LIBRARIES}
+	${FFMPEG_LIBRARIES}
 )
 
 add_definitions(

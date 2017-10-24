@@ -23,15 +23,23 @@
 #include "videoplayer/waveformat.h"
 
 #include <QObject>
+#include <QThread>
 #include <QString>
-
-#include <gst/gst.h>
 
 QT_FORWARD_DECLARE_CLASS(QTimer)
 
+QT_FORWARD_DECLARE_STRUCT(AVFormatContext)
+typedef struct AVFormatContext AVFormatContext;
+QT_FORWARD_DECLARE_STRUCT(AVCodecContext)
+typedef struct AVCodecContext AVCodecContext;
+QT_FORWARD_DECLARE_STRUCT(AVStream)
+typedef struct AVStream AVStream;
+QT_FORWARD_DECLARE_STRUCT(SwrContext)
+typedef struct SwrContext SwrContext;
+
 namespace SubtitleComposer {
 
-class StreamProcessor : public QObject
+class StreamProcessor : public QThread
 {
 	Q_OBJECT
 
@@ -40,9 +48,9 @@ public:
 	virtual ~StreamProcessor();
 
 	bool open(const QString &filename);
-	bool initAudio(const int streamIndex, const WaveFormat &waveFormat);
-	bool initText(const int streamIndex);
-	void close();
+	bool initAudio(int streamIndex, const WaveFormat &waveFormat);
+	bool initText(int streamIndex);
+	Q_INVOKABLE void close();
 
 	bool start();
 
@@ -53,12 +61,11 @@ signals:
 	void streamError(int code, const QString &message, const QString &debug);
 	void streamFinished();
 
-private:
-	static void onAudioDataReady(GstElement *fakesrc, GstBuffer *buffer, GstPad *pad, gpointer userData);
-	static void onTextDataReady(GstElement *fakesrc, GstBuffer *buffer, GstPad *pad, gpointer userData);
-	static void onPadAdded(GstElement *decodebin, GstPad *pad, gpointer userData);
-	static gboolean onPadCheck(GstElement *decodebin, GstPad *pad, GstCaps *caps, gpointer userData);
-	void decoderMessageProc();
+protected:
+	int findStream(int streamType, int streamIndex);
+	void processAudio();
+	void processText();
+    virtual void run() Q_DECL_OVERRIDE;
 
 private:
 	bool m_opened;
@@ -76,9 +83,12 @@ private:
 	quint64 m_streamPos;
 	quint64 m_streamLen;
 
-	GstPipeline *m_decodingPipeline;
-	GstBus *m_decodingBus;
-	QTimer *m_decodingTimer;
+	AVFormatContext *m_avFormat;
+	AVStream *m_avStream;
+	AVCodecContext *m_codecCtx;
+	SwrContext *m_swResample;
+	int m_audioSampleFormat;
+	uint64_t m_audioChannelLayout;
 };
 
 }

@@ -474,7 +474,10 @@ WaveformWidget::onStreamData(const void *buffer, const qint32 size, const WaveFo
 			m_waveform[i] = new SAMPLE_TYPE[m_waveformChannelSize];
 	}
 
-	Q_ASSERT(m_waveformDataOffset + size < m_waveformChannelSize * BYTES_PER_SAMPLE * m_waveformChannels);
+	if(m_waveformDataOffset + size >= m_waveformChannelSize * BYTES_PER_SAMPLE * m_waveformChannels)
+		return; // we got incorrect stream duration
+
+//	Q_ASSERT(m_waveformDataOffset + size < m_waveformChannelSize * BYTES_PER_SAMPLE * m_waveformChannels);
 	Q_ASSERT(waveFormat->bitsPerSample() == BYTES_PER_SAMPLE * 8);
 	Q_ASSERT(waveFormat->sampleRate() == 8000);
 	Q_ASSERT(size % BYTES_PER_SAMPLE == 0);
@@ -482,8 +485,9 @@ WaveformWidget::onStreamData(const void *buffer, const qint32 size, const WaveFo
 	const SAMPLE_TYPE *sample = reinterpret_cast<const SAMPLE_TYPE *>(buffer);
 	int len = size / BYTES_PER_SAMPLE;
 	int i = m_waveformDataOffset / BYTES_PER_SAMPLE / m_waveformChannels;
+	quint32 c = m_waveformDataOffset / BYTES_PER_SAMPLE % m_waveformChannels;
 	while(len > 0) {
-		for(quint32 c = m_waveformDataOffset / BYTES_PER_SAMPLE % m_waveformChannels; len > 0 && c < m_waveformChannels; c++) {
+		for(; len > 0 && c < m_waveformChannels; c++) {
 			qint32 val = *sample++;
 			if(i > 0) {
 				// simple lowpass filter
@@ -494,6 +498,7 @@ WaveformWidget::onStreamData(const void *buffer, const qint32 size, const WaveFo
 			len--;
 		}
 		i++;
+		c = 0;
 	}
 	m_waveformDataOffset += size;
 }

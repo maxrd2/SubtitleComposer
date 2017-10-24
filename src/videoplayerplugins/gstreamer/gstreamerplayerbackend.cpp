@@ -21,7 +21,7 @@
 #include "gstreamerplayerbackend.h"
 #include "gstreamerconfigwidget.h"
 #include "scconfigdummy.h"
-#include "streamprocessor/gstreamer.h"
+#include "gstreamer.h"
 #include "helpers/languagecode.h"
 
 #include <KLocalizedString>
