@@ -21,14 +21,11 @@
  * Boston, MA 02110-1301, USA.
  */
 
-#include "mplayer/mp_msg.h"
-#include "mplayer/vobsub.h"
-#include "mplayer/spudec.h"
-
 #include "application.h"
 #include "formats/inputformat.h"
 #include "vobsubinputinitdialog.h"
 #include "vobsubinputprocessdialog.h"
+#include "streamprocessor/streamprocessor.h"
 
 #include <QUrl>
 
@@ -40,37 +37,39 @@ class VobSubInputFormat : public InputFormat
 public:
 	virtual bool readBinary(Subtitle &subtitle, const QUrl &url)
 	{
-#if defined(VERBOSE) || !defined(NDEBUG)
-		qputenv("MPLAYER_VERBOSE", QByteArrayLiteral("1"));
-#endif
-
 		const QString filename = url.toLocalFile();
 		const int extension = filename.lastIndexOf('.');
 		if(filename.midRef(extension) != QStringLiteral(".idx"))
 			return false;
 		const QByteArray filebase = filename.left(extension).toLatin1();
 
-		// Open the sub/idx subtitles
-		mp_msg_init();
-		void *spu;
-		void *vob = vobsub_open(filebase.constData(), 0, 1, 0, &spu);
-		if(!vob || !vobsub_get_indexes_count(vob)) {
-			qDebug() << "Couldn't open VobSub files '" << filebase << ".idx/.sub'\n";
+		// open the sub/idx subtitles
+		StreamProcessor proc;
+		if(!proc.open(filename))
 			return false;
-		}
 
-		VobSubInputInitDialog dlgInit(vob, spu, Application::instance()->mainWindow());
+		QStringList streamList = proc.listImage();
+		if(streamList.empty())
+			return false;
+
+		// show init dialog
+		VobSubInputInitDialog dlgInit(Application::instance()->mainWindow());
+		dlgInit.streamListSet(streamList);
 		if(dlgInit.exec() == QDialog::Rejected)
 			return true;
 
-		vobsub_id = dlgInit.streamIndex();
+		if(!proc.initImage(dlgInit.streamIndex()))
+			return true;
 
-		// show subtitle updates in realtime
+		// subtitle updates will show in realtime
 		LinesWidget *linesWidget = Application::instance()->linesWidget();
 		Subtitle *oldSubtitle = linesWidget->model()->subtitle();
 		linesWidget->setSubtitle(&subtitle);
 
-		VobSubInputProcessDialog dlgProc(&subtitle, vob, spu, Application::instance()->mainWindow());
+		// show process dialog
+		VobSubInputProcessDialog dlgProc(&subtitle, Application::instance()->mainWindow());
+
+		dlgProc.processFrames(&proc);
 
 		QByteArray symFile(filebase + ".sym");
 

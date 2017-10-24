@@ -18,9 +18,12 @@
  */
 
 #include "streamprocessor.h"
+#include "helpers/languagecode.h"
 
 #include <QDebug>
 #include <QThread>
+#include <QPixmap>
+#include <QImage>
 
 extern "C" {
 #include <libavcodec/avcodec.h>
@@ -36,6 +39,7 @@ StreamProcessor::StreamProcessor(QObject *parent)
 	: QThread(parent),
 	  m_opened(false),
 	  m_audioReady(false),
+	  m_imageReady(false),
 	  m_textReady(false),
 	  m_avFormat(nullptr),
 	  m_avStream(nullptr),
@@ -57,6 +61,7 @@ StreamProcessor::open(const QString &filename)
 
 	m_filename = filename;
 	m_audioStreamIndex = -1;
+	m_imageStreamIndex = -1;
 	m_textStreamIndex = -1;
 	m_streamLen = m_streamPos = 0;
 
@@ -103,15 +108,90 @@ StreamProcessor::close()
 
 	m_opened = false;
 	m_audioReady = false;
+	m_imageReady = false;
 	m_textReady = false;
 }
 
+static inline bool
+isImageSubtitle(int codecId)
+{
+	const AVCodecDescriptor *desc = avcodec_descriptor_get(static_cast<AVCodecID>(codecId));
+
+	if(!desc)
+		return false;
+
+	return desc->props & AV_CODEC_PROP_BITMAP_SUB;
+}
+
+QStringList
+StreamProcessor::listAudio()
+{
+	QStringList streamList;
+
+	for(unsigned int i = 0; i < m_avFormat->nb_streams; i++) {
+		AVStream *stream = m_avFormat->streams[i];
+		if(stream->codecpar->codec_type != AVMEDIA_TYPE_AUDIO)
+			continue;
+
+		AVDictionaryEntry *lang = av_dict_get(stream->metadata, "lang", nullptr, AV_DICT_IGNORE_SUFFIX);
+		streamList.append(QString("#%1 audio - %2 (%3)")
+						  .arg(stream->id)
+						  .arg(lang ? LanguageCode::nameFromIso(lang->value) : QStringLiteral("Unknown"))
+						  .arg(lang ? lang->value : "--"));
+	}
+
+	return streamList;
+}
+
+QStringList
+StreamProcessor::listText()
+{
+	QStringList streamList;
+
+	for(unsigned int i = 0; i < m_avFormat->nb_streams; i++) {
+		AVStream *stream = m_avFormat->streams[i];
+		if(stream->codecpar->codec_type != AVMEDIA_TYPE_SUBTITLE || isImageSubtitle(stream->codecpar->codec_id))
+			continue;
+
+		AVDictionaryEntry *lang = av_dict_get(stream->metadata, "lang", nullptr, AV_DICT_IGNORE_SUFFIX);
+		streamList.append(QString("#%1 text - %2 (%3)")
+						  .arg(stream->id)
+						  .arg(lang ? LanguageCode::nameFromIso(lang->value) : QStringLiteral("Unknown"))
+						  .arg(lang ? lang->value : "--"));
+	}
+
+	return streamList;
+}
+
+QStringList
+StreamProcessor::listImage()
+{
+	QStringList streamList;
+
+	for(unsigned int i = 0; i < m_avFormat->nb_streams; i++) {
+		AVStream *stream = m_avFormat->streams[i];
+		if(stream->codecpar->codec_type != AVMEDIA_TYPE_SUBTITLE || !isImageSubtitle(stream->codecpar->codec_id))
+			continue;
+
+		AVDictionaryEntry *lang = av_dict_get(stream->metadata, "lang", nullptr, AV_DICT_IGNORE_SUFFIX);
+		streamList.append(QString("#%1 image - %2 (%3) - %4x%5")
+						  .arg(stream->id)
+						  .arg(lang ? LanguageCode::nameFromIso(lang->value) : QStringLiteral("Unknown"))
+						  .arg(lang ? lang->value : "--")
+						  .arg(stream->codecpar->width)
+						  .arg(stream->codecpar->height));
+	}
+
+	return streamList;
+}
+
 int
-StreamProcessor::findStream(int streamType, int streamIndex)
+StreamProcessor::findStream(int streamType, int streamIndex, bool imageSub)
 {
 	for(unsigned int i = 0; i < m_avFormat->nb_streams; i++) {
 		m_avStream = m_avFormat->streams[i];
-		if(m_avStream->codecpar->codec_type != streamType)
+		if(m_avStream->codecpar->codec_type != streamType
+		|| (streamType == AVMEDIA_TYPE_SUBTITLE && imageSub != isImageSubtitle(m_avStream->codecpar->codec_id)))
 			continue;
 
 		if(streamIndex--)
@@ -164,9 +244,10 @@ StreamProcessor::initAudio(int streamIndex, const WaveFormat &waveFormat)
 
 	m_audioStreamIndex = streamIndex;
 	m_audioStreamFormat = waveFormat;
+	m_imageReady = false;
 	m_textReady = false;
 
-	m_audioStreamCurrent = findStream(AVMEDIA_TYPE_AUDIO, streamIndex);
+	m_audioStreamCurrent = findStream(AVMEDIA_TYPE_AUDIO, streamIndex, false);
 	m_audioReady = m_audioStreamCurrent != -1;
 
 	if(!m_audioReady)
@@ -243,6 +324,25 @@ StreamProcessor::initAudio(int streamIndex, const WaveFormat &waveFormat)
 }
 
 bool
+StreamProcessor::initImage(int streamIndex)
+{
+	if(!m_opened)
+		return false;
+
+	m_imageStreamIndex = streamIndex;
+	m_audioReady = false;
+	m_textReady = false;
+
+	m_imageStreamCurrent = findStream(AVMEDIA_TYPE_SUBTITLE, streamIndex, true);
+	m_imageReady = m_imageStreamCurrent != -1;
+
+	if(!m_imageReady)
+		return false;
+
+	return true;
+}
+
+bool
 StreamProcessor::initText(int streamIndex)
 {
 	if(!m_opened)
@@ -250,9 +350,10 @@ StreamProcessor::initText(int streamIndex)
 
 	m_textStreamIndex = streamIndex;
 	m_audioReady = false;
+	m_imageReady = false;
 
-	m_textStreamCurrent = findStream(AVMEDIA_TYPE_SUBTITLE, streamIndex);
-	m_textReady = m_audioStreamCurrent != -1;
+	m_textStreamCurrent = findStream(AVMEDIA_TYPE_SUBTITLE, streamIndex, false);
+	m_textReady = m_textStreamCurrent != -1;
 
 	if(!m_textReady)
 		return false;
@@ -263,7 +364,7 @@ StreamProcessor::initText(int streamIndex)
 bool
 StreamProcessor::start()
 {
-	if(!m_opened || !(m_audioReady || m_textReady))
+	if(!m_opened || !(m_audioReady || m_imageReady || m_textReady))
 		return false;
 
 	QThread::start(LowPriority);
@@ -413,9 +514,13 @@ StreamProcessor::processText()
 	QString text;
 	quint64 timeStart = 0;
 	quint64 timeEnd = 0;
+	QPixmap pixmap;
+	bool pixmapIsValid = false;
+
+	const int streamIndex = m_textReady ? m_textStreamCurrent : m_imageStreamCurrent;
 
 	while(av_read_frame(m_avFormat, &pkt) >= 0) {
-		if(pkt.stream_index == m_textStreamCurrent) {
+		if(pkt.stream_index == streamIndex) {
 			int got_sub = 0;
 			ret = avcodec_decode_subtitle2(m_codecCtx, &subtitle, &got_sub, &pkt);
 			if(ret < 0) {
@@ -437,9 +542,13 @@ StreamProcessor::processText()
 				emit textDataAvailable(text.trimmed(), timeStart, timeEnd - timeStart);
 				text.clear();
 			}
+			if(pixmapIsValid) {
+				emit imageDataAvailable(pixmap, timeStart, timeEnd - timeStart);
+				pixmapIsValid = false;
+			}
 
-			timeStart = timeFrameStart;
-			timeEnd = timeFrameEnd;
+			timeStart = timeFrameStart + subtitle.start_display_time;// * 1000 * m_avStream->time_base.num / m_avStream->time_base.den;
+			timeEnd = timeFrameEnd + subtitle.end_display_time;// * 1000 * m_avStream->time_base.num / m_avStream->time_base.den;
 
 			for(unsigned int i = 0; i < subtitle.num_rects; i++) {
 				const AVSubtitleRect *sub = subtitle.rects[i];
@@ -460,6 +569,19 @@ StreamProcessor::processText()
 					break;
 				}
 
+				case SUBTITLE_BITMAP: {
+					const uint32_t *palette = reinterpret_cast<const uint32_t *>(sub->data[1]);
+
+					QImage img(sub->data[0], sub->w, sub->h, sub->linesize[0], QImage::Format_Indexed8);
+					img.setColorCount(sub->nb_colors);
+					for(int i = 0; i < sub->nb_colors; i++)
+						img.setColor(i, static_cast<QRgb>(palette[i]));
+
+					pixmap.convertFromImage(img);
+					pixmapIsValid = true;
+					break;
+				}
+
 				default:
 					Q_ASSERT(false);
 					break;
@@ -467,7 +589,7 @@ StreamProcessor::processText()
 			}
 
 			m_streamPos = timeFrameEnd;
-			Q_ASSERT(m_streamPos <= m_streamLen);
+//			Q_ASSERT(m_streamPos <= m_streamLen);
 			emit streamProgress(m_streamPos, m_streamLen);
 
 			avsubtitle_free(&subtitle);
@@ -486,8 +608,8 @@ StreamProcessor::processText()
 /*virtual*/ void
 StreamProcessor::run()
 {
-	if(m_textReady)
-		processText();
-	else if(m_audioReady)
+	if(m_audioReady)
 		processAudio();
+	else if(m_imageReady || m_textReady)
+		processText();
 }

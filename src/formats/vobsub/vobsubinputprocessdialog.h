@@ -23,6 +23,8 @@
 
 #include "core/subtitle.h"
 
+#include "streamprocessor/streamprocessor.h"
+
 #include <QDialog>
 #include <QHash>
 #include <QExplicitlySharedDataPointer>
@@ -44,13 +46,15 @@ public:
 	class Line;
 	typedef QExplicitlySharedDataPointer<Line> LinePtr;
 
-	VobSubInputProcessDialog(Subtitle *subtitle, void *vob, void *spu, QWidget *parent = 0);
+	VobSubInputProcessDialog(Subtitle *subtitle, QWidget *parent = 0);
 	~VobSubInputProcessDialog();
 
 	bool symFileOpen(const QString &filename);
 	bool symFileSave(const QString &filename);
 
 	virtual bool eventFilter(QObject *obj, QEvent *event) override;
+
+	void processFrames(StreamProcessor *streamProcessor);
 
 private slots:
 	void onOkClicked();
@@ -61,12 +65,14 @@ private slots:
 	void onNextSymbolClicked();
 	void onSymbolCountChanged(int symbolCount);
 
+	void onStreamData(const QPixmap &pixmap, quint64 msecStart, quint64 msecDuration);
+	void onStreamError(int code, const QString &message, const QString &debug);
+	void onStreamFinished();
+
 private:
 	friend class VobSubInputFormat;
 	Ui::VobSubInputProcessDialog *ui;
 
-	Q_INVOKABLE void processFrames(void *vob, void *spu);
-	Q_INVOKABLE void processNextFrame(void *vob, void *spu, quint32 lastStartPts);
 	Q_INVOKABLE void processNextImage();
 	void processCurrentPiece();
 	void updateCurrentPiece();

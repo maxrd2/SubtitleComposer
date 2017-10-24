@@ -21,14 +21,13 @@
 #include "vobsubinputprocessdialog.h"
 #include "ui_vobsubinputprocessdialog.h"
 
-#include "mplayer/mp_msg.h"
-#include "mplayer/vobsub.h"
-#include "mplayer/spudec.h"
-
 #include <QDebug>
 #include <QPainter>
 #include <QKeyEvent>
 
+#include <KMessageBox>
+
+#include <QStringBuilder>
 #include <QDataStream>
 #include <QFile>
 #include <QSaveFile>
@@ -359,7 +358,7 @@ qHash(const VobSubInputProcessDialog::Piece &piece)
 
 
 // VobSubInputProcessDialog
-VobSubInputProcessDialog::VobSubInputProcessDialog(Subtitle *subtitle, void *vob, void *spu, QWidget *parent) :
+VobSubInputProcessDialog::VobSubInputProcessDialog(Subtitle *subtitle, QWidget *parent) :
 	QDialog(parent),
 	ui(new Ui::VobSubInputProcessDialog),
 	m_subtitle(subtitle),
@@ -395,8 +394,6 @@ VobSubInputProcessDialog::VobSubInputProcessDialog(Subtitle *subtitle, void *vob
 
 	ui->lineEdit->installEventFilter(this);
 	ui->lineEdit->setFocus();
-
-	QMetaObject::invokeMethod(this, "processFrames", Qt::QueuedConnection, Q_ARG(void *, vob), Q_ARG(void *, spu));
 }
 
 VobSubInputProcessDialog::~VobSubInputProcessDialog()
@@ -552,8 +549,14 @@ VobSubInputProcessDialog::eventFilter(QObject *obj, QEvent *event) /*override*/
 }
 
 void
-VobSubInputProcessDialog::processFrames(void *vob, void *spu)
+VobSubInputProcessDialog::processFrames(StreamProcessor *streamProcessor)
 {
+	connect(streamProcessor, &StreamProcessor::streamError, this, &VobSubInputProcessDialog::onStreamError);
+	connect(streamProcessor, &StreamProcessor::streamFinished, this, &VobSubInputProcessDialog::onStreamFinished);
+	connect(streamProcessor, &StreamProcessor::imageDataAvailable, this, &VobSubInputProcessDialog::onStreamData, Qt::BlockingQueuedConnection);
+
+	streamProcessor->start();
+
 	Frame::spaceCount = 0;
 	Frame::spaceStats.clear();
 
@@ -562,72 +565,36 @@ VobSubInputProcessDialog::processFrames(void *vob, void *spu)
 
 	ui->grpText->setDisabled(true);
 	ui->grpNavButtons->setDisabled(true);
-
-	QMetaObject::invokeMethod(this, "processNextFrame", Qt::QueuedConnection, Q_ARG(void *, vob), Q_ARG(void *, spu), Q_ARG(quint32, 0));
 }
 
 void
-VobSubInputProcessDialog::processNextFrame(void *vob, void *spu, quint32 lastStartPts)
+VobSubInputProcessDialog::onStreamData(const QPixmap &pixmap, quint64 msecStart, quint64 msecDuration)
 {
-	void *packet;
-	int timestamp;
-	int len;
+	FramePtr frame(new Frame());
+	frame->subShowTime.setMillisTime(double(msecStart));
+	frame->subHideTime.setMillisTime(double(msecStart + msecDuration));
+	frame->subPixmap = pixmap;
 
-	while((len = vobsub_get_next_packet(vob, &packet, &timestamp)) > 0) {
-		if(timestamp < 0)
-			continue;
+	ui->subtitleView->setPixmap(frame->subPixmap);
+	QCoreApplication::processEvents();
 
+	if(frame->processPieces()) {
+		frame->index = m_frames.length();
 		ui->progressBar->setMaximum(m_frames.length());
-
-		FramePtr frame(new Frame());
-
-		spudec_assemble(spu, reinterpret_cast<unsigned char*>(packet), len, timestamp);
-		spudec_heartbeat(spu, timestamp);
-
-		unsigned char const *image;
-		size_t image_size;
-		unsigned width, height, stride, start_pts, end_pts;
-		spudec_get_data(spu, &image, &image_size, &width, &height, &stride, &start_pts, &end_pts);
-
-		// skip this packet if it is another packet of a subtitle that was decoded from multiple mpeg packets.
-		if(start_pts == lastStartPts)
-			continue;
-
-		if(static_cast<unsigned>(timestamp) != start_pts)
-			qWarning() << "VobSub Line " << m_frames.length() << ": time stamp from .idx (" << timestamp << ") doesn't match time stamp from .sub (" << start_pts << ")\n";
-
-		frame->subShowTime.setMillisTime((double)start_pts / 90.);
-		frame->subHideTime.setMillisTime((double)end_pts / 90.);
-
-		QByteArray pgmBuffer;
-		pgmBuffer
-				.append("P5\n")
-				.append(QByteArray::number(width))
-				.append(" ")
-				.append(QByteArray::number(height))
-				.append(" ")
-				.append(QByteArray::number(255))
-				.append("\n")
-				.append(reinterpret_cast<const char *>(image), image_size);
-
-		if(!frame->subPixmap.loadFromData(pgmBuffer)) {
-			qWarning() << "VobSub Line " << m_frames.length() << ": Invalid pixmap - size: " << image_size << " bytes, " << width << "x" << height << " pixels\n";
-			continue;
-		}
-
-		// display current piece
-		ui->subtitleView->setPixmap(frame->subPixmap);
-		QCoreApplication::processEvents();
-
-		if(frame->processPieces()) {
-			frame->index = m_frames.length();
-			m_frames.append(frame);
-
-			QMetaObject::invokeMethod(this, "processNextFrame", Qt::QueuedConnection, Q_ARG(void *, vob), Q_ARG(void *, spu), Q_ARG(quint32, start_pts));
-			return;
-		}
+		m_frames.append(frame);
 	}
+}
 
+void
+VobSubInputProcessDialog::onStreamError(int /*code*/, const QString &message, const QString &debug)
+{
+	QString text = message % QStringLiteral("\n") % debug;
+	KMessageBox::error(this, text, i18n("VobSub Error"));
+}
+
+void
+VobSubInputProcessDialog::onStreamFinished()
+{
 	m_frameCurrent = m_frames.begin() - 1;
 
 	m_spaceWidth = 100;

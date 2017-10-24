@@ -1,5 +1,3 @@
-add_subdirectory(mplayer)
-
 set(formats_vobsub_SRCS
 	${CMAKE_CURRENT_SOURCE_DIR}/vobsubinputformat.h
 	${CMAKE_CURRENT_SOURCE_DIR}/vobsubinputinitdialog.cpp
@@ -14,6 +12,5 @@ set(formats_vobsub_UIS
 )
 
 set(formats_vobsub_LIBS
-	vobsubmplayer
 	CACHE INTERNAL EXPORTEDVARIABLE
 )

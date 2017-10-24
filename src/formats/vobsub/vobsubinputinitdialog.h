@@ -41,18 +41,16 @@ public:
 		CHARS_OCR = 16
 	};
 
-	VobSubInputInitDialog(void *vob, void *spu, QWidget *parent = 0);
+	VobSubInputInitDialog(QWidget *parent = 0);
 	~VobSubInputInitDialog();
 
+	void streamListSet(const QStringList streams);
 	int streamIndex() const;
 
 	quint32 postProcessingFlags() const;
 
 private:
 	Ui::VobSubInputInitDialog *ui;
-
-	void *m_vob;
-	void *m_spu;
 };
 }
 

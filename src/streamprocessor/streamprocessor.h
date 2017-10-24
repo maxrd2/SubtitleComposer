@@ -22,9 +22,10 @@
 
 #include "videoplayer/waveformat.h"
 
-#include <QObject>
 #include <QThread>
 #include <QString>
+#include <QStringList>
+#include <QPixmap>
 
 QT_FORWARD_DECLARE_CLASS(QTimer)
 
@@ -49,20 +50,26 @@ public:
 
 	bool open(const QString &filename);
 	bool initAudio(int streamIndex, const WaveFormat &waveFormat);
+	bool initImage(int streamIndex);
 	bool initText(int streamIndex);
 	Q_INVOKABLE void close();
+
+	QStringList listAudio();
+	QStringList listText();
+	QStringList listImage();
 
 	bool start();
 
 signals:
 	void audioDataAvailable(const void *buffer, const qint32 size, const WaveFormat *waveFormat, const quint64 msecStart, const quint64 msecDuration);
 	void textDataAvailable(const QString &text, const quint64 msecStart, const quint64 msecDuration);
+	void imageDataAvailable(const QPixmap &pixmap, const quint64 msecStart, const quint64 msecDuration);
 	void streamProgress(quint64 msecPosition, quint64 msecLength);
 	void streamError(int code, const QString &message, const QString &debug);
 	void streamFinished();
 
 protected:
-	int findStream(int streamType, int streamIndex);
+	int findStream(int streamType, int streamIndex, bool imageSub);
 	void processAudio();
 	void processText();
     virtual void run() Q_DECL_OVERRIDE;
@@ -75,6 +82,10 @@ private:
 	int m_audioStreamIndex;
 	int m_audioStreamCurrent;
 	WaveFormat m_audioStreamFormat;
+
+	bool m_imageReady;
+	int m_imageStreamIndex;
+	int m_imageStreamCurrent;
 
 	bool m_textReady;
 	int m_textStreamIndex;

@@ -21,24 +21,13 @@
 #include "vobsubinputinitdialog.h"
 #include "ui_vobsubinputinitdialog.h"
 
-#include "mplayer/mp_msg.h"
-#include "mplayer/vobsub.h"
-#include "mplayer/spudec.h"
-
 using namespace SubtitleComposer;
 
-VobSubInputInitDialog::VobSubInputInitDialog(void *vob, void *spu, QWidget *parent) :
+VobSubInputInitDialog::VobSubInputInitDialog(QWidget *parent) :
 	QDialog(parent),
-	ui(new Ui::VobSubInputInitDialog),
-	m_vob(vob),
-	m_spu(spu)
+	ui(new Ui::VobSubInputInitDialog)
 {
 	ui->setupUi(this);
-
-	for(size_t i = 0; i < vobsub_get_indexes_count(m_vob); i++) {
-		char const *const id = vobsub_get_id(m_vob, i);
-		ui->comboStream->addItem(QString("Stream %1: %2").arg(i).arg(id ? id : "(no id)"));
-	}
 }
 
 VobSubInputInitDialog::~VobSubInputInitDialog()
@@ -46,6 +35,11 @@ VobSubInputInitDialog::~VobSubInputInitDialog()
 	delete ui;
 }
 
+void
+VobSubInputInitDialog::streamListSet(const QStringList streams)
+{
+	ui->comboStream->addItems(streams);
+}
 
 int
 VobSubInputInitDialog::streamIndex() const
