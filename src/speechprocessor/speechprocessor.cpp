@@ -32,6 +32,7 @@
 #include <QProgressBar>
 #include <QBoxLayout>
 #include <QThread>
+#include <QToolButton>
 
 #include <QPluginLoader>
 #include <QDir>
@@ -62,16 +63,22 @@ SpeechProcessor::SpeechProcessor(QWidget *parent)
 	m_progressBar->setMinimumWidth(300);
 	m_progressBar->setTextVisible(true);
 
+	QToolButton *btnAbort = new QToolButton(m_progressWidget);
+	btnAbort->setIcon(QIcon::fromTheme(QStringLiteral("process-stop")));
+	btnAbort->setToolTip(i18n("Abort speech recognition"));
+
 	QBoxLayout *layout = new QBoxLayout(QBoxLayout::LeftToRight, m_progressWidget);
 	layout->setContentsMargins(1, 0, 1, 0);
 	layout->setSpacing(1);
 	layout->addWidget(label);
 	layout->addWidget(m_progressBar);
+	layout->addWidget(btnAbort);
 
+	connect(btnAbort, &QToolButton::clicked, m_stream, &StreamProcessor::close);
 	connect(m_stream, &StreamProcessor::streamProgress, this, &SpeechProcessor::onStreamProgress);
 	connect(m_stream, &StreamProcessor::streamError, this, &SpeechProcessor::onStreamError);
 	connect(m_stream, &StreamProcessor::streamFinished, this, &SpeechProcessor::onStreamFinished);
-	// Using Qt::DirectConnection here makes SpeechProcessor::onStreamData() to execute in GStreamer's thread
+	// Using Qt::DirectConnection here makes SpeechProcessor::onStreamData() to execute in SpeechProcessor's thread
 	connect(m_stream, &StreamProcessor::audioDataAvailable, this, &SpeechProcessor::onStreamData, Qt::DirectConnection);
 
 	const QString buildPluginPath(qApp->applicationDirPath() + QStringLiteral("/speechplugins"));
