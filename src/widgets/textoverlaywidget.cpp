@@ -485,7 +485,7 @@ TextOverlayWidget::setOutline()
 		}
 	}
 
-	delete bgImageScanLines;
+	delete[] bgImageScanLines;
 }
 
 
