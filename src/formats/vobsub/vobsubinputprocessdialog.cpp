@@ -134,8 +134,9 @@ VobSubInputProcessDialog::Frame::processPieces()
 	QImage pieceBitmap = subPixmap.toImage();
 	int width = pieceBitmap.width();
 	int height = pieceBitmap.height();
-	int bgColor = pieceBitmap.pixel(0, 0);
+	int bgColor = qGray(pieceBitmap.pixel(0, 0));
 	int color;
+	const int colorOffset = 127;
 	PiecePtr piece;
 
 	pieces.clear();
@@ -156,13 +157,13 @@ VobSubInputProcessDialog::Frame::processPieces()
 		piece->pixels.append(QPoint(x, y));
 		pieceBitmap.setPixel(x, y, bgColor);
 
-		if(x < width - 1 && qGray(pieceBitmap.pixel(x + 1, y)) > 127)
+		if(x < width - 1 && qGray(pieceBitmap.pixel(x + 1, y)) > colorOffset)
 			cutPiece(x + 1, y);
-		if(x > 0 && qGray(pieceBitmap.pixel(x - 1, y)) > 127)
+		if(x > 0 && qGray(pieceBitmap.pixel(x - 1, y)) > colorOffset)
 			cutPiece(x - 1, y);
-		if(y < height - 1 && qGray(pieceBitmap.pixel(x, y + 1)) > 127)
+		if(y < height - 1 && qGray(pieceBitmap.pixel(x, y + 1)) > colorOffset)
 			cutPiece(x, y + 1);
-		if(y > 0 && qGray(pieceBitmap.pixel(x, y - 1)) > 127)
+		if(y > 0 && qGray(pieceBitmap.pixel(x, y - 1)) > colorOffset)
 			cutPiece(x, y - 1);
 	};
 
@@ -170,7 +171,7 @@ VobSubInputProcessDialog::Frame::processPieces()
 	for(int y = 0; y < height; y++) {
 		for(int x = 0; x < width; x++) {
 			color = qGray(pieceBitmap.pixel(x, y));
-			if(color > 127) {
+			if(color > colorOffset && color != bgColor) {
 				piece = new Piece(x, y);
 				cutPiece(x, y);
 				pieces.append(piece);
