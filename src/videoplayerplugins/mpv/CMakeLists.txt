@@ -1,3 +1,11 @@
+find_package(MPV 1.14)
+if(NOT MPV_FOUND)
+	message(STATUS "Have NOT Found LibMPV v1.14 - MPV videoplayer plugin will not be built")
+	return()
+endif(NOT MPV_FOUND)
+
+set(HAVE_MPV 1 CACHE INTERNAL EXPORTEDVARIABLE)
+
 set(videoplayer_mpv_INCLUDE_DIR
 	${MPV_INCLUDE_DIRS}
 	CACHE INTERNAL EXPORTEDVARIABLE

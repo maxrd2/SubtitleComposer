@@ -1,3 +1,9 @@
+find_package(PocketSphinx)
+if(NOT POCKETSPHINX_FOUND)
+	message(STATUS "Have NOT Found PocketSphinx - Speech plugin will not be built")
+	return()
+endif(NOT POCKETSPHINX_FOUND)
+
 set(speech_pocketsphinx_INCLUDE_DIRS
 	${CMAKE_CURRENT_BINARY_DIR} # so files can find plugin-config.h
 	${POCKETSPHINX_INCLUDE_DIRS}

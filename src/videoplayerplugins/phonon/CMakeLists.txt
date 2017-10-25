@@ -1,3 +1,9 @@
+find_package(Phonon4Qt5 4.6.60 NO_MODULE)
+if(NOT Phonon4Qt5_FOUND)
+	message(STATUS "Have NOT Found Phonon4Qt5 v4.6.60+ - Phonon videoplayer plugin will not be built")
+	return()
+endif(NOT Phonon4Qt5_FOUND)
+
 set(videoplayer_phonon_INCLUDE_DIR
 	${PHONON_INCLUDES}
 	CACHE INTERNAL EXPORTEDVARIABLE

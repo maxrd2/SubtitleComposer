@@ -1,3 +1,12 @@
+find_package(Xine 1.1.9)
+find_package(X11)
+if(NOT XINE_FOUND OR NOT X11_FOUND)
+	message(STATUS "Have NOT found Xine v1.1.9+ and/or LibX11 - Xine videoplayer plugin will not be built")
+	return()
+endif(NOT XINE_FOUND OR NOT X11_FOUND)
+
+set(HAVE_XINE 1 CACHE INTERNAL EXPORTEDVARIABLE)
+
 set(videoplayer_xine_INCLUDE_DIR
 	${XINE_INCLUDE_DIR}
 	CACHE INTERNAL EXPORTEDVARIABLE
@@ -23,7 +32,7 @@ ki18n_wrap_ui(videoplayer_xine_SRCS
 	${CMAKE_CURRENT_SOURCE_DIR}/xineconfigwidget.ui
 )
 
-find_package(XCB COMPONENTS XCB)
+find_package(XCB QUIET COMPONENTS XCB)
 IF(XCB_FOUND AND XINE_XCB_FOUND)
 	message(STATUS "Found XCB: ${XCB_LIBRARIES} (version ${XCB_VERSION})")
 	message(STATUS "Xine Player backend will use XCB instead of LibX11")

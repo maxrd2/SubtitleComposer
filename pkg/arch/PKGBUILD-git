@@ -27,11 +27,12 @@ makedepends+=('xine-lib')
 makedepends+=('mpv')
 #makedepends+=('pocketsphinx')
 conflicts=(${_name})
-optdepends=('gstreamer: for GStreamer backend'
-            'mpv: for MPV backend'
-            'mplayer: for MPlayer backend'
-            'xine-lib: for Xine backend'
-            'pocketsphinx: for speech recognition'
+optdepends=('gstreamer: for GStreamer videoplayer backend'
+            'mpv: for MPV videoplayer backend'
+            'mplayer: for MPlayer videoplayer backend'
+            'phonon-qt5: for Phonon videoplayer backend'
+            'xine-lib: for Xine videoplayer backend'
+            'pocketsphinx: for speech recognition backend'
             'kross-interpreters: for ruby and python scripting support'
             'ruby: for scripting'
             'python: for scripting')
