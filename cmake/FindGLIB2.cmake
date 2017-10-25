@@ -16,8 +16,8 @@ if(GLIB2_INCLUDE_DIR AND GLIB2_LIBRARIES)
     set(GLIB2_FIND_QUIETLY TRUE)
 endif(GLIB2_INCLUDE_DIR AND GLIB2_LIBRARIES)
 
-find_package(PkgConfig)
-pkg_check_modules(PC_LibGLIB2 glib-2.0)
+find_package(PkgConfig REQUIRED)
+pkg_check_modules(PC_LibGLIB2 QUIET glib-2.0)
 
 find_path(GLIB2_MAIN_INCLUDE_DIR
           NAMES glib.h

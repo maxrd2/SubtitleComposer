@@ -1,9 +1,13 @@
-find_package(GLIB2 REQUIRED QUIET)
-find_package(GObject REQUIRED QUIET)
-#find_package(LibXml2 REQUIRED QUIET)
+find_package(GLIB2)
+find_package(GObject)
+#find_package(LibXml2)
+find_package(GStreamer)
+find_package(GStreamerPlugins)
 
-find_package(GStreamer REQUIRED QUIET)
-#find_package(GStreamerPlugins REQUIRED QUIET)
+if(NOT GLIB2_FOUND OR NOT GOBJECT_FOUND OR NOT GSTREAMER_FOUND OR NOT GSTREAMER_PLUGIN_VIDEO_FOUND)
+	message(STATUS "Have NOT Found GLib/GObject/GStreamer/GStreamerVideo - GStreamer videoplayer plugin will not be built")
+	return()
+endif(NOT GLIB2_FOUND OR NOT GOBJECT_FOUND OR NOT GSTREAMER_FOUND OR NOT GSTREAMER_PLUGIN_VIDEO_FOUND)
 
 set(videoplayer_gstreamer_INCLUDE_DIR
 	${GLIB2_INCLUDE_DIR}

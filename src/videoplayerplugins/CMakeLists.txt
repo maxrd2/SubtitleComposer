@@ -6,15 +6,7 @@ set(videoplayerplugins_SRCS
 	CACHE INTERNAL EXPORTEDVARIABLE
 )
 
-find_package(GStreamer QUIET)
-find_package(GStreamerPlugins QUIET)
-if(GSTREAMER_FOUND AND GSTREAMER_PLUGIN_VIDEO_FOUND)
-	set(HAVE_GSTREAMER 1 CACHE INTERNAL EXPORTEDVARIABLE)
-	message(STATUS "Found GStreamer: ${GSTREAMER_LIBRARIES} (version ${GSTREAMER_VERSION})")
-	add_subdirectory(gstreamer)
-else(GSTREAMER_FOUND AND GSTREAMER_PLUGIN_VIDEO_FOUND)
-	message(STATUS "GStreamer and/or GStreamer Video was not found. GStreamer backend will not be built")
-endif(GSTREAMER_FOUND AND GSTREAMER_PLUGIN_VIDEO_FOUND)
+add_subdirectory(gstreamer)
 
 find_package(MPV 1.14 QUIET)
 if(MPV_FOUND)

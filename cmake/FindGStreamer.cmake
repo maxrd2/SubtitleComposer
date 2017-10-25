@@ -25,7 +25,7 @@ IF (NOT WIN32)
 	# use pkg-config to get the directories and then use these values
 	# in the FIND_PATH() and FIND_LIBRARY() calls
 	# don't make this check required - otherwise you can't use macro_optional_find_package on this one
-	PKG_CHECK_MODULES(PKG_GSTREAMER gstreamer-1.0)
+	PKG_CHECK_MODULES(PKG_GSTREAMER QUIET gstreamer-1.0)
 	SET(GSTREAMER_VERSION ${PKG_GSTREAMER_VERSION})
 	SET(GSTREAMER_DEFINITIONS ${PKG_GSTREAMER_CFLAGS})
 ENDIF (NOT WIN32)
@@ -84,7 +84,7 @@ ENDIF (GSTREAMER_INCLUDE_DIR AND GSTREAMER_LIBRARIES AND GSTREAMER_BASE_LIBRARY 
 
 IF (GSTREAMER_FOUND)
 	IF (NOT GStreamer_FIND_QUIETLY)
-		MESSAGE(STATUS "Found GStreamer: ${GSTREAMER_LIBRARIES}")
+		MESSAGE(STATUS "Found GStreamer: ${GSTREAMER_LIBRARIES} (version ${GSTREAMER_VERSION})")
 	ENDIF (NOT GStreamer_FIND_QUIETLY)
 ELSE (GSTREAMER_FOUND)
 	IF (GStreamer_FIND_REQUIRED)
