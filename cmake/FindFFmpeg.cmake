@@ -1,15 +1,14 @@
-# - Try to find FFMpeg libraries
+# - Try to find FFmpeg libraries
 # Once done this will define
-#  FFMPEG_FOUND - System has LibFFMPEG
-#  FFMPEG_VERSION - LibFFMPEG version
-#  FFMPEG_INCLUDE_DIRS - The LibFFMPEG include directories
-#  FFMPEG_LIBRARIES - The libraries needed to use LibFFMPEG
-#  FFMPEG_DEFINITIONS - Compiler switches required for using LibFFMPEG
+#  FFMPEG_FOUND - System has FFmpeg
+#  FFMPEG_INCLUDE_DIRS - The FFmpeg include directories
+#  FFMPEG_LIBRARIES - The libraries needed to use FFmpeg
 
-find_package(PkgConfig)
+find_package(PkgConfig REQUIRED)
 pkg_check_modules(PC_FFMPEG_AVCODEC QUIET libavcodec)
 pkg_check_modules(PC_FFMPEG_AVFORMAT QUIET libavformat)
 pkg_check_modules(PC_FFMPEG_AVUTIL QUIET libavutil)
+pkg_check_modules(PC_FFMPEG_SWRESAMPLE QUIET libswresample)
 set(FFMPEG_DEFINITIONS ${PC_FFMPEG_CFLAGS_OTHER})
 set(FFMPEG_VERSION ${PC_FFMPEG_VERSION})
 
@@ -46,6 +45,21 @@ set(FFMPEG_INCLUDE_DIRS ${FFMPEG_INCLUDE_DIR})
 include(FindPackageHandleStandardArgs)
 # handle the QUIETLY and REQUIRED arguments and set FFMPEG_FOUND to TRUE if all listed variables are TRUE
 find_package_handle_standard_args(FFMPEG
-	REQUIRED_VARS FFMPEG_AVCODEC_LIBRARY FFMPEG_AVFORMAT_LIBRARY FFMPEG_AVUTIL_LIBRARY FFMPEG_SWRESAMPLE_LIBRARY FFMPEG_LIBRARY FFMPEG_INCLUDE_DIR)
+	REQUIRED_VARS FFMPEG_AVCODEC_LIBRARY FFMPEG_AVFORMAT_LIBRARY FFMPEG_AVUTIL_LIBRARY FFMPEG_SWRESAMPLE_LIBRARY FFMPEG_INCLUDE_DIR)
+
+if(FFMPEG_FOUND)
+	if(NOT FFmpeg_FIND_QUIETLY)
+		message(STATUS "Found FFmpeg: "
+			"\n\tinclude dir: ${FFMPEG_INCLUDE_DIR}"
+			"\n\t${FFMPEG_AVCODEC_LIBRARY} (version ${PC_FFMPEG_AVCODEC_VERSION})"
+			"\n\t${FFMPEG_AVFORMAT_LIBRARY} (version ${PC_FFMPEG_AVFORMAT_VERSION})"
+			"\n\t${FFMPEG_AVUTIL_LIBRARY} (version ${PC_FFMPEG_AVUTIL_VERSION})"
+			"\n\t${FFMPEG_SWRESAMPLE_LIBRARY} (version ${PC_FFMPEG_SWRESAMPLE_VERSION})")
+	endif(NOT FFmpeg_FIND_QUIETLY)
+else(FFMPEG_FOUND)
+	if(Fmpeg_FIND_REQUIRED)
+		message(FATAL_ERROR "FFmpeg was not found.")
+	endif(Fmpeg_FIND_REQUIRED)
+endif(FFMPEG_FOUND)
 
 mark_as_advanced(FFMPEG_INCLUDE_DIR FFMPEG_LIBRARY)

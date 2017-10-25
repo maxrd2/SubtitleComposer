@@ -27,12 +27,7 @@ set_package_properties(Phonon4Qt5 PROPERTIES
    DESCRIPTION "Qt-based audio library"
    TYPE REQUIRED)
 
-find_package(FFmpeg REQUIRED QUIET)
-if(FFMPEG_FOUND)
-	message(STATUS "Found FFmpeg")
-else(FFMPEG_FOUND)
-	message(ERROR "FFmpeg was not found")
-endif(FFMPEG_FOUND)
+find_package(FFmpeg REQUIRED)
 
 # the subdirs must be added in a specific order
 # if one dir uses code from another, its CMakeLists.txt will reference variables
