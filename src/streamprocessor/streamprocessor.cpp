@@ -24,6 +24,7 @@
 #include <QThread>
 #include <QPixmap>
 #include <QImage>
+#include <QRegularExpression>
 
 extern "C" {
 #include <libavcodec/avcodec.h>
@@ -554,18 +555,61 @@ StreamProcessor::processText()
 				const AVSubtitleRect *sub = subtitle.rects[i];
 				switch(sub->type) {
 				case SUBTITLE_ASS: {
+#if 1
 					const char *assText = sub->ass;
 					if(strncmp("Dialogue", assText, 8) != 0)
 						break;
+
 					// Dialogue: Marked, Start, End, Style, Name, MarginL, MarginR, MarginV, Effect, Text
 					for(int c = 9; c && *assText; assText++) {
 						if(*assText == ',')
 							c--;
 					}
+#else
+					const char *assText = "This is {\\b100}bold{\\b0} {\\b1\\i1}bolditalic{\\b0\\i0}\\N{\\u1}underline{\\u0} {\\s1}striked{\\s0}\\n"
+										  "{\\c&H0000ff&}red {\\c&H00ff00&}green {\\c&Hff0000&}blue{\\r}\\n"
+										  "Another {\\b100}bold\\h{\\i1}bolditalic{\\b0\\i0} some{\\anidfsd} unspported tag";
+#endif
+					QString assChunk(assText);
+
+					assChunk
+							.replace(QStringLiteral("\\N"), QStringLiteral("\n"))
+							.replace(QStringLiteral("\\n"), QStringLiteral("\n"))
+							.replace(QStringLiteral("\\h"), QStringLiteral(" "));
+
+#define ANY_ASS_VAL "[^}\\\\]*"
+#define ANY_ASS_TAG "(?:\\\\" ANY_ASS_VAL ")*"
+
+					// replace rich text style tags
+					for(;;) {
+						const static QRegularExpression reStyle(QStringLiteral("\\{" ANY_ASS_TAG "\\\\([bius])(\\d+)" ANY_ASS_TAG "\\}"), QRegularExpression::CaseInsensitiveOption);
+						QRegularExpressionMatch match = reStyle.match(assChunk);
+						if(!match.hasMatch())
+							break;
+						QString repl("<%1%2>");
+						assChunk.insert(match.capturedEnd(0), repl
+									.arg(match.captured(2) == QStringLiteral("0") ? QStringLiteral("/") : QStringLiteral(""))
+									.arg(match.captured(1)));
+						assChunk.remove(match.capturedStart(1), match.capturedLength(2) + 1);
+					}
+
+					// replace text color tags
+					const static QRegularExpression reStyleColor(QStringLiteral("\\{" ANY_ASS_TAG "\\\\c&H([a-z0-9]{2})([a-z0-9]{2})([a-z0-9]{2})&" ANY_ASS_TAG "\\}"), QRegularExpression::CaseInsensitiveOption);
+					assChunk.replace(reStyleColor, QStringLiteral("<font color=\"#\\3\\2\\1\">"));
+
+					// replace reset tags
+					const static QRegularExpression reStyleReset(QStringLiteral("\\{" ANY_ASS_TAG "\\\\r" ANY_ASS_VAL ANY_ASS_TAG "\\}"), QRegularExpression::CaseInsensitiveOption);
+					assChunk.replace(reStyleReset, QStringLiteral("</font></b></i></u></s>"));
+
+					// remove unsupported/empty tags
+					const static QRegularExpression reUnsupported(QStringLiteral("\\{" ANY_ASS_TAG "\\}"));
+					assChunk.remove(reUnsupported);
+
+					// append chunk
 					if(!text.isEmpty())
 						text.append(QChar('\n'));
-					text.append(QString::fromUtf8(assText));
-					text.replace(QStringLiteral("\\N"), QStringLiteral("\n"));
+					text.append(assChunk);
+
 					break;
 				}
 

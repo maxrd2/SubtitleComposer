@@ -78,7 +78,10 @@ TextDemux::demuxFile(Subtitle *subtitle, const QString filename, int textStreamI
 void
 TextDemux::onStreamData(const QString &text, quint64 msecStart, quint64 msecDuration)
 {
-	m_subtitleTemp->insertLine(new SubtitleLine(SString(text), Time(double(msecStart)), Time(double(msecStart) + double(msecDuration))));
+	SString stxt;
+	stxt.setRichString(text);
+
+	m_subtitleTemp->insertLine(new SubtitleLine(stxt, Time(double(msecStart)), Time(double(msecStart) + double(msecDuration))));
 }
 
 void
