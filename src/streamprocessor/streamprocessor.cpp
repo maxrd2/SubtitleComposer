@@ -468,7 +468,6 @@ StreamProcessor::processAudio()
 
 				if(!drainResampler) {
 					m_streamPos = timeFrameEnd;
-					Q_ASSERT(m_streamPos <= m_streamLen);
 					emit streamProgress(m_streamPos, m_streamLen);
 				}
 
@@ -633,7 +632,6 @@ StreamProcessor::processText()
 			}
 
 			m_streamPos = timeFrameEnd;
-//			Q_ASSERT(m_streamPos <= m_streamLen);
 			emit streamProgress(m_streamPos, m_streamLen);
 
 			avsubtitle_free(&subtitle);
