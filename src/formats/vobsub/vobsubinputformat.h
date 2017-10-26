@@ -39,9 +39,7 @@ public:
 	{
 		const QString filename = url.toLocalFile();
 		const int extension = filename.lastIndexOf('.');
-		if(filename.midRef(extension) != QStringLiteral(".idx"))
-			return false;
-		const QByteArray filebase = filename.left(extension).toLatin1();
+		const QByteArray filebase = filename.left(extension).toUtf8();
 
 		// open the sub/idx subtitles
 		StreamProcessor proc;
