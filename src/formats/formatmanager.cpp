@@ -169,7 +169,7 @@ FormatManager::readSubtitle(Subtitle &subtitle, bool primary, const QUrl &url, Q
 	FileLoadHelper fileLoadHelper(url);
 	if(!fileLoadHelper.open())
 		return false;
-	QByteArray byteData = fileLoadHelper.file()->readAll();
+	QByteArray byteData = fileLoadHelper.file()->read(1024 * 1024);
 	fileLoadHelper.close();
 
 	QString stringData;
