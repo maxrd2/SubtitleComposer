@@ -1,36 +1,117 @@
-subtitlecomposer (0.6.3-~stretch) trusty; urgency=low
+subtitlecomposer (0.6.5-1) unstable; urgency=medium
 
-  * Added waveform widget
-  * Added Speech recognition with PocketSphinx
-  * Waveform and Player widgets can be docked to any side of the main window
-  * Updated german and croatian translations, translation fixes
-  * Added ability to demux text streams from loaded video
-  * Added anchor points sync method
-  * Removed binary dependency on player packages
-  * Various smaller improvements and fixes
-  * Finished KF5 porting
+  * Team upload.
+  * New upstream release.
+  * Replace the transitional build dependencies:
+    - kio-dev -> libkf5kio-dev
+  * Update copyright.
+  * Update the patches:
+    - xine-cmake.diff: drop, backported from upstream
+  * Do not install the upstream TODO as documentation, since it is not
+    interesting for users, and in this case also basically empty.
+  * Bump Standards-Version to 4.1.1, no changes required.
+  * Update Vcs-Browser field.
 
- -- Mladen Milinkovic <maxrd2@smoothware.net>  Fri, 08 Apr 2016 12:32:11 +0100
+ -- Pino Toscano <pino@debian.org>  Fri, 29 Sep 2017 19:27:28 +0200
 
-subtitlecomposer (0.5.7.4~vivid) vivid; urgency=high
+subtitlecomposer (0.6.4-2) unstable; urgency=medium
 
-  * Add MPV player support
-  * Add GStreamer 1.0 support
-  * Add added Debian build
-  * Add updated Bulgarian and Croatian translations
-  * Add Phonon backend supports audio channel change
-  * Add Command line params were expected to be URL encoded
-  * Add UTF subtitles are saved with BOM
-  * Add updated/fixed translation catalogs and list of translators
-  * Add some files were wrongly identified as tmplayer subtitles
+  * Team upload.
+  * Remove support for Xine:
+    - drop the libxine2-dev build dependency
+    - stop mentioning it in the description
+    - stop using the xine dh addon
+    - stop mentioning the ${xine-x:Depends} variable
+    - avoid cmake failure when Xine is not found; patch xine-cmake.diff.
 
- -- Goran Vidovic (gogo) <trebelnik2@gmail.com>  Fri, 30 Jan 2015 13:35:05 +0100
+ -- Pino Toscano <pino@debian.org>  Fri, 17 Jun 2016 23:33:49 +0200
 
-subtitlecomposer (0.5.6.9~trusty) trusty; urgency=high
+subtitlecomposer (0.6.4-1) unstable; urgency=medium
 
-  * New release
+  * Team upload.
+  * New upstream release:
+    - fixes build with GCC 6 (Closes: #812035)
+  * Update copyright.
+  * Update the patches:
+    - fix-plugins-loading.diff: drop, fixed upstream
+  * Bump Standards-Version to 3.9.8, no changes required.
 
- -- Goran Vidovic (gogo) <trebelnik2@gmail.com>  Fri, 14 Jun 2014 20:07:05 +0100
+ -- Pino Toscano <pino@debian.org>  Mon, 16 May 2016 08:28:08 +0200
+
+subtitlecomposer (0.6.3-1) unstable; urgency=medium
+
+  * Team upload.
+  * New upstream release.
+  * Fix Vcs-Git field.
+  * Update the patches:
+    - link-x11.diff: drop, fixed upstream
+  * Fix the loading of videoplayer plugins; patch fix-plugins-loading.diff.
+
+ -- Pino Toscano <pino@debian.org>  Tue, 05 Apr 2016 00:04:04 +0200
+
+subtitlecomposer (0.6.2-1) unstable; urgency=medium
+
+  * Team upload.
+  * New upstream release.
+  * Update the build dependencies following the port to Frameworks:
+    - remove kdelibs5-dev
+    - add qtbase5-dev, extra-cmake-modules,  libkf5auth-dev, libkf5codecs-dev,
+      libkf5config-dev, libkf5configwidgets-dev, libkf5coreaddons-dev,
+      libkf5i18n-dev, kio-dev, kross-dev, libkf5sonnet-dev,
+      libkf5textwidgets-dev, libkf5widgetsaddons-dev, libkf5xmlgui-dev
+  * Use the right dh addon:
+    - switch from kde to kf5 dh addon
+    - bump the pkg-kde-tools build dependency to >= 0.15.16
+  * Update Homepage to the new github home.
+  * Drop menu file, since subtitlecomposer already provides a .desktop file.
+  * Remove useless dh_install override, since it does the same thing.
+  * Update the build dependencies:
+    - add libphonon4qt5-dev, libphonon4qt5experimental-dev, libicu-dev,
+      libmpv-dev, and libxcb1-dev, needed by the new version
+    - remove unused libxml2-dev
+    - make pkg-config explicit
+  * Update the Vcs-* fields.
+  * Update the patches:
+    - 0001-Link-phonon.patch: drop, fixed upstream
+    - 0002-Link-against-X11.patch: drop, reworking it in a new link-x11.diff
+    - 0003-Find-platform-dependant-include-files-of-GStreamer.patch: drop,
+      fixed upstream
+    - 0004-Fix-crash-Sonnet-Dialog-cannot-handle-empty-buffers.patch: drop,
+      obsolete
+  * The test suite needs X11, so:
+    - add the xvfb and xauth build dependencies
+    - run dh_auto_test with xvfb-run
+  * Update lintian overrides.
+  * Link in as-needed mode.
+  * Bump Standards-Version to 3.9.7, no changes required.
+  * Remove no more useful Build-Conflicts: qt5-default.
+  * Switch mplayer2 suggest to mplayer.
+  * Update copyright.
+
+ -- Pino Toscano <pino@debian.org>  Sun, 27 Mar 2016 13:13:26 +0200
+
+subtitlecomposer (0.5.7-1) unstable; urgency=medium
+
+  [ Martin Steghöfer ]
+  * Imported Upstream version 0.5.7 (Closes: #571687, #704067, #776326,
+    #799957).
+  * Dropped patches regarding bugs that are already fixed in the new upstream version.
+  * Rebased remaining patches onto new upstream version.
+  * Updated debian/watch to new repository location.
+  * The new upstream version needs GStreamer 1.x. (Closes: #785853)
+  * Patched FindGStreamer.cmake, so it finds gst/gstconfig.h in the Debian directory layout.
+  * Declared build conflict with Qt5. (Closes: #784075)
+  * Suggest "mplayer2" instead of "mplayer". (Closes: #686167)
+  * Removed lintian override that is both malformed (lintian complains about the override itself)
+    and obsolete (lintian accepts a Build-Depends on "libxine2-dev").
+  * Bumped Standards-Version to 3.9.6 (no changes necessary according to upgrading checklist).
+  * Fix crash on spell checking an empty subtitle entry. (Closes: #694812)
+
+  [ Maximiliano Curia ]
+  * Migrate copyright file to copyright 1.0.
+  * Update watch file.
+
+ -- Maximiliano Curia <maxy@debian.org>  Fri, 16 Oct 2015 11:33:42 +0200
 
 subtitlecomposer (0.5.3-4) unstable; urgency=low
 

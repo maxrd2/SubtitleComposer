@@ -1,109 +1,69 @@
-This package was debianized by José Manuel Santamaría Lema <panfaust@gmail.com> on
-Fri, 10 Apr 2009 22:11:11 +0200                                                   
+Format: https://www.debian.org/doc/packaging-manuals/copyright-format/1.0/
+Upstream-Name: subtitlecomposer
+Source: https://github.com/maxrd2/subtitlecomposer
 
+Files: *
+Copyright: 2006-2008, Ricardo Villalba <rvm@escomposlinux.org>
+           2007-2009, Sergio Pistone <sergio_pistone@yahoo.com.ar> based on Kaffeine by Jürgen Kofler
+           2007-2009, Sergio Pistone <sergio_pistone@yahoo.com.ar> based on smplayer by Ricardo Villalba
+           2007-2012, Sergio Pistone <sergio_pistone@yahoo.com.ar>
+           2010-2017, Mladen Milinkovic <max@smoothware.net>
+License: GPL-2+
 
-Upstream Author: 
-
- Mladen Milinkovic <max@smoothware.net>
-
-
-Copyright:
-
- Copyright © 2007-2009 Sergio Pistone <sergio_pistone@yahoo.com.ar>
- Copyright © 2010-2015 Mladen Milinkovic <max@smoothware.net>
-
-
-License:
-
-   This package is free software; you can redistribute it and/or modify
-   it under the terms of the GNU General Public License as published by
-   the Free Software Foundation; either version 2 of the license, or   
-   (at your option) any later version.                                 
-
-   This package is distributed in the hope that it will be useful,
-   but WITHOUT ANY WARRANTY; without even the implied warranty of 
-   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the  
-   GNU General Public License for more details.                   
-
-   You should have received a copy of the GNU General Public License
-   along with this package; if not, write to the Free Software      
-   Foundation, Inc., 51 Franklin St, Fifth Floor, Boston,           
-   MA 02110-1301, USA.                                              
-
-On Debian systems, the complete text of the GNU General Public License
-can be found in the file `/usr/share/common-licenses/GPL-2'.          
-
-Files src/player/mplayer/mediadata.h, src/widgets/pointingslider.h,
-src/widgets/pointingslider.cpp, src/widgets/attachablewidget.h and 
-src/widgets/attachablewidget.cpp:                                  
-                                                                   
- Copyright © 2006-2008 Ricardo Villalba <rvm@escomposlinux.org>    
- Copyright © 2007-2008 Sergio Pistone <sergio_pistone@yahoo.com.ar>
-
-File src/player/xine/FindXCB.cmake:
-
- Copyright © 2007 Matthias Kretz <kretz@kde.org>
-
- Redistribution and use is allowed according to the terms of the BSD license.
- For details see the accompanying COPYING-CMAKE-SCRIPTS file.                
-
- Contents of COPYING-CMAKE-SCRIPTS file:
-
+Files: cmake/*
+Copyright: 2006-2008, Laurent Montel <montel@kde.org>
+           2006-2007, Matthias Kretz <kretz@kde.org>
+           2006, Tim Beaulen <tbscope@gmail.com>
+           2008, Helio Chissini de Castro <helio@kde.org>
+           2009, Nokia Corporation
+           2010, Yury G. Kudryashov <urkud@ya.ru>
+           2011, Raphael Kubo da Costa <kubito@gmail.com>
+License: BSD-3-clause
  Redistribution and use in source and binary forms, with or without
  modification, are permitted provided that the following conditions
- are met:                                                          
-
- 1. Redistributions of source code must retain the above copyright
-    notice, this list of conditions and the following disclaimer. 
- 2. Redistributions in binary form must reproduce the above copyright
+ are met:
+ .
+ 1. Redistributions of source code must retain the copyright
+    notice, this list of conditions and the following disclaimer.
+ 2. Redistributions in binary form must reproduce the copyright
     notice, this list of conditions and the following disclaimer in the
     documentation and/or other materials provided with the distribution.
- 3. The name of the author may not be used to endorse or promote products 
-    derived from this software without specific prior written permission. 
-
+ 3. The name of the author may not be used to endorse or promote products
+    derived from this software without specific prior written permission.
+ .
  THIS SOFTWARE IS PROVIDED BY THE AUTHOR ``AS IS'' AND ANY EXPRESS OR
  IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES
- OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED.  
- IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY DIRECT, INDIRECT,         
- INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT 
+ OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED.
+ IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY DIRECT, INDIRECT,
+ INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT
  NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
- DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY    
- THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT      
- (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF 
- THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.        
+ DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
+ THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+ (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
+ THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-Files src/main/utils/kreplace.h, src/main/utils/kreplace.cpp
-and src/main/utils/kfind_p.h:
+Files: src/formats/vobsub/mplayer/*
+Copyright: MPlayer
+           2005, Jindrich Makovicka <makovick@gmail.com>
+           2007, Ulion <ulion2002@gmail.com>
+License: GPL-2+
 
- Copyright © 2001 S.R.Haque <srhaque@iee.org>
- Copyright © 2002 David Faure <david@mandrakesoft.com>
- Copyright © 2004 Arend van Beelen jr. <arend@auton.nl>
+Files: debian/*
+Copyright: 2009, José Manuel Santamaría Lema <panfaust@gmail.com>
+           2015, Martin Steghöfer <martin@steghoefer.eu>
+           2016-2017, Pino Toscano <pino@debian.org>
+License: GPL-2+
 
- These files are under GNU Lesser General Public License as published by the
- Free Software Foundation, version 2; on Debian systems the full text of the
- GNU Lesser General Public License can be found in the
- `/usr/share/common-licenses/LGPL-2' file.
-
-Files src/common/qxtsignalwaiter.h and src/common/qxtsignalwaiter.cpp:
-
- Copyright © 2006 Adam Higerd <ahigerd@stratitec.com>
-
- QxtSignalWaiter is free software; you can redistribute it and/or modify
+License: GPL-2+
+ This package is free software; you can redistribute it and/or modify
  it under the terms of the GNU General Public License as published by
- the Free Software Foundation, version 2 or greater, or under the terms
- of the GNU Lesser General Public License, version 2.1 or greater, or
- under the terms of the Q Public License as published by Trolltech.
- This disjunctive license follows the license of the linked Qt toolkit.
- Specifically, if you use Qt under the GPL, QxtSignalWaiter is licensed
- to you under the GPL. If you use Qt under the QPL, this is licensed to
- you under the QPL. If you use Qt with a commercial license purchased
- from Trolltech, this is licensed to you under the LGPL.
-
- QxtSignalWaiter is distributed in the hope that it will be useful,
+ the Free Software Foundation; either version 2 of the license, or
+ (at your option) any later version.
+ .
+ This package is distributed in the hope that it will be useful,
  but WITHOUT ANY WARRANTY; without even the implied warranty of
- MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
- appropriate license agreement for more details.
-
-The Debian packaging is © 2009 José Manuel Santamaría Lema
-<panfaust@gmail.com> and is licensed under the GPL v2 or later,
-see `/usr/share/common-licenses/GPL-2'.
+ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ GNU General Public License for more details.
+ .
+ The complete text of the GNU General Public License version 2 can be found in
+ the file `/usr/share/common-licenses/GPL-2'.

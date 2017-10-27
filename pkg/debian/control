@@ -1,26 +1,46 @@
 Source: subtitlecomposer
 Section: kde
 Priority: optional
-Maintainer: Ubuntu Developers <ubuntu-devel-discuss@lists.ubuntu.com>
-XSBC-Original-Maintainer: Debian KDE Extras Team <pkg-kde-extras@lists.alioth.debian.org>
-Uploaders: gogo <trebelnik2@gmail.com>
-Build-Depends: debhelper (>= 9), qtbase5-dev, git, cmake, extra-cmake-modules,
- libgstreamer1.0-dev, libgstreamer-plugins-base1.0-dev,  kdelibs5-dev, libkf5xmlgui-dev, kross-dev,
- mpv, libmpv-dev, mplayer, libxine2-dev, libphonon4qt5-dev, libphonon4qt5experimental-dev, libsphinxbase3, libsphinxbase-dev, libpocketsphinx3, libpocketsphinx-dev
-Standards-Version: 3.9.4
+Maintainer: Debian KDE Extras Team <pkg-kde-extras@lists.alioth.debian.org>
+Uploaders: Maximiliano Curia <maxy@debian.org>
+Build-Depends: debhelper (>= 9), cmake, pkg-kde-tools (>= 0.15.16),
+ qtbase5-dev,
+ extra-cmake-modules (>= 1.2.0),
+ libkf5auth-dev,
+ libkf5codecs-dev,
+ libkf5config-dev,
+ libkf5configwidgets-dev,
+ libkf5coreaddons-dev,
+ libkf5i18n-dev,
+ libkf5kio-dev,
+ kross-dev,
+ libkf5sonnet-dev,
+ libkf5textwidgets-dev,
+ libkf5widgetsaddons-dev,
+ libkf5xmlgui-dev,
+ libphonon4qt5-dev, libphonon4qt5experimental-dev,
+ pkg-config,
+ libgstreamer-plugins-base1.0-dev, libglib2.0-dev,
+ libx11-dev,
+ libicu-dev,
+ libmpv-dev,
+ libxcb1-dev,
+# for tests:
+ xvfb, xauth,
+Standards-Version: 4.1.1
 Homepage: https://github.com/maxrd2/subtitlecomposer
-Vcs-Browser: http://anonscm.debian.org/gitweb/?p=pkg-kde/kde-extras/subtitlecomposer.git
-Vcs-Git: git://anonscm.debian.org/pkg-kde/kde-extras/subtitlecomposer.git
+Vcs-Browser: https://anonscm.debian.org/cgit/pkg-kde/kde-extras/subtitlecomposer.git
+Vcs-Git: https://anonscm.debian.org/git/pkg-kde/kde-extras/subtitlecomposer.git
 
 Package: subtitlecomposer
 Architecture: any
-Depends: kio, pocketsphinx, pocketsphinx-en-us, ${shlibs:Depends}, ${misc:Depends}, ${gstreamer:Depends} 
-Suggests: mplayer, mpv, ${xine-x:Depends}
+Depends: ${shlibs:Depends}, ${misc:Depends}
+Suggests: mplayer
 Description: Subtitles editor for KDE
  A text-based subtitles editor for KDE supporting basic operations (text,
  time and style edition), realtime previewing and spell checking. Other
  fancy features are delaying all subtitles in the current subtitle file,
  checking errors or creating translations.
  .
- Different backends (GStreamer, MPlayer, Phonon or xine) can be used to play
+ Different backends (GStreamer, MPlayer, or Phonon) can be used to play
  the realtime video preview which helps to synchronize the subtitles.
