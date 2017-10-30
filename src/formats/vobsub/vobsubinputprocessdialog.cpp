@@ -20,6 +20,8 @@
 #include "vobsubinputprocessdialog.h"
 #include "ui_vobsubinputprocessdialog.h"
 
+#include <functional>
+
 #include <QDebug>
 #include <QPainter>
 #include <QKeyEvent>
