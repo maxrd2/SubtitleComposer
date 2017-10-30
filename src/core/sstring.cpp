@@ -28,6 +28,10 @@
 
 #include <QColor>
 
+#if (QT_VERSION < QT_VERSION_CHECK(5, 7, 0))
+	#define qAsConst
+#endif
+
 using namespace SubtitleComposer;
 
 void *
