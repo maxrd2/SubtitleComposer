@@ -627,7 +627,7 @@ msgstr ""
 
 #: ../../src/application.cpp:1049
 msgid "Jump to Next Line"
-msgstr "Skoči na slijedeći redak"
+msgstr "Skoči na sljedeći redak"
 
 #: ../../src/application.cpp:1050
 msgid "Seek to next subtitle line show time"
