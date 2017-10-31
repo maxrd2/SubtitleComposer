@@ -561,7 +561,7 @@ msgstr "Zatvori video datoteku"
 
 #: ../../src/application.cpp:975
 msgid "Full Screen Mode"
-msgstr "Cjelozaslonski/Prozorski pikaz"
+msgstr "Cjelozaslonski/Prozorski prikaz"
 
 #: ../../src/application.cpp:976
 msgid "Toggle full screen mode"
