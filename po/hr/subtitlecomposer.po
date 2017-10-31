@@ -2811,7 +2811,7 @@ msgstr "Pomak premotavanja pri dvostrukom kliku"
 #. i18n: ectx: label, entry (JumpLineOffset), group (General)
 #: rc.cpp:262
 msgid "Jump to prev/next line offset"
-msgstr "Pomak skoka na prijašnji/sljedeći redak:"
+msgstr "Pomak skoka na prijašnji/sljedeći redak"
 
 #. i18n: file: ../../src/scconfig.kcfg:22
 #. i18n: ectx: label, entry (UnpauseOnDoubleClick), group (General)
