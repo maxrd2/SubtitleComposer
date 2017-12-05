@@ -35,6 +35,11 @@
 			<label>Grabbed Position Compensation</label>
 			<default>250</default>
 		</entry>
+
+		<entry name="NewLinePadding" type="Int">
+			<label>Padding between new lines</label>
+			<default>100</default>
+		</entry>
 	</group>
 
 	<group name="Error Check">

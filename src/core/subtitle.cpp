@@ -23,6 +23,7 @@
 #include "subtitleiterator.h"
 #include "subtitleactions.h"
 #include "compositeaction.h"
+#include "scconfig.h"
 
 #include <KLocalizedString>
 
@@ -415,22 +416,24 @@ Subtitle::insertNewLine(int index, bool timeAfter, TextTarget target)
 	SubtitleLine *newLine = new SubtitleLine();
 	int newLineIndex = (target == Secondary) ? m_lines.count() : index;
 
+	double newLinePadding = (double)SCConfig::newLinePadding();
+
 	if(timeAfter) {
 		if(newLineIndex) {              // there is a previous line
 			SubtitleLine *prevLine = m_lines.value(newLineIndex - 1);
-			newLine->setTimes(prevLine->hideTime() + 100., prevLine->hideTime() + 1000.);
+			newLine->setTimes(prevLine->hideTime() + newLinePadding, prevLine->hideTime() + 1000.);
 		} else if(newLineIndex < m_lines.count()) {     // there is a next line
 			SubtitleLine *nextLine = m_lines.value(newLineIndex);
-			newLine->setTimes(nextLine->showTime() - 1100., nextLine->showTime() - 100.);
+			newLine->setTimes(nextLine->showTime() - 1100., nextLine->showTime() - newLinePadding);
 		} else
 			newLine->setHideTime(1000.);
 	} else {                                        // ! timeAfter
 		if(newLineIndex < m_lines.count()) {    // there is a next line
 			SubtitleLine *nextLine = m_lines.at(newLineIndex);
-			newLine->setTimes(nextLine->showTime() - 1100., nextLine->showTime() - 100.);
+			newLine->setTimes(nextLine->showTime() - 1100., nextLine->showTime() - newLinePadding);
 		} else if(newLineIndex) {       // there is a previous line
 			SubtitleLine *prevLine = m_lines.at(newLineIndex - 1);
-			newLine->setTimes(prevLine->hideTime() + 100., prevLine->hideTime() + 1000.);
+			newLine->setTimes(prevLine->hideTime() + newLinePadding, prevLine->hideTime() + 1000.);
 		} else
 			newLine->setHideTime(1000.);
 	}
@@ -1562,5 +1565,3 @@ SubtitleCompositeActionExecutor::~SubtitleCompositeActionExecutor()
 {
 	m_subtitle.endCompositeAction();
 }
-
-
