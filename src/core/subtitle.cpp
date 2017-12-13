@@ -383,6 +383,43 @@ Subtitle::removeAllAnchors()
 		emit lineAnchorChanged(line, false);
 }
 
+int
+Subtitle::indexForTime(Time time)
+{
+	int index = 0;
+	foreach(SubtitleLine *sub, allLines()) {
+		if(sub->showTime() > time) {
+			index = sub->index();
+			break;
+		} else {
+			index++;
+		}
+	}
+
+	return index;
+}
+
+void
+Subtitle::reIndex(SubtitleLine* line)
+{
+	int oldIndex = line->index();
+	int newIndex = indexForTime(line->showTime()) - 1;
+	if (newIndex < 0)
+		newIndex = 0;
+
+	if (oldIndex == newIndex)
+		return;
+
+	m_lines.removeOne(line);
+	m_lines.insert(newIndex, line);
+
+	int i = 0;
+	foreach(SubtitleLine* sub, allLines()) {
+		sub->m_cachedIndex = i;
+		i++;
+	}
+}
+
 void
 Subtitle::insertLine(SubtitleLine *line, int index)
 {

@@ -121,6 +121,9 @@ public:
 	void toggleLineAnchor(const SubtitleLine *line);
 	void removeAllAnchors();
 
+	int indexForTime(Time time);
+	void reIndex(SubtitleLine* line);
+
 	void insertLine(SubtitleLine *line, int index = -1);
 	void insertLines(const QList<SubtitleLine *> &lines, int index = -1);
 	SubtitleLine * insertNewLine(int index, bool timeAfter, TextTarget target);

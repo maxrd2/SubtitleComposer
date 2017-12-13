@@ -1089,15 +1089,7 @@ WaveformWidget::showContextMenu(QMouseEvent *event)
 				const Time timeShow = rightMouseSoonerTime();
 				const Time timeHide = rightMouseLaterTime();
 
-				int insertIndex = 0;
-				foreach(SubtitleLine *sub, m_subtitle->allLines()) {
-					insertIndex++;
-
-					if(sub->showTime() > timeShow) {
-						insertIndex = sub->index();
-						break;
-					}
-				}
+				int insertIndex = m_subtitle->indexForTime(timeShow);
 
 				SubtitleLine *newLine = new SubtitleLine(SString(), timeShow,
 					timeHide.toMillis() - timeShow.toMillis() > SCConfig::minDuration() ? timeHide : timeShow + SCConfig::minDuration());
