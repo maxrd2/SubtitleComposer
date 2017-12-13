@@ -76,14 +76,31 @@
        </widget>
       </item>
       <item row="3" column="0" alignment="Qt::AlignRight">
-       <widget class="QLabel" name="label_2">
+       <widget class="QLabel" name="label_LineMargin">
         <property name="text">
-         <string>Padding between new lines:</string>
+         <string>Default duration between subtitle lines:</string>
         </property>
        </widget>
       </item>
       <item row="3" column="1">
-       <widget class="QSpinBox" name="kcfg_NewLinePadding">
+       <widget class="QSpinBox" name="kcfg_LineMargin">
+        <property name="suffix">
+         <string> msec</string>
+        </property>
+        <property name="maximum">
+         <number>10000</number>
+        </property>
+       </widget>
+      </item>
+      <item row="4" column="0" alignment="Qt::AlignRight">
+       <widget class="QLabel" name="label_LineDuration">
+        <property name="text">
+         <string>Default subtitle line duration:</string>
+        </property>
+       </widget>
+      </item>
+      <item row="4" column="1">
+       <widget class="QSpinBox" name="kcfg_LineDuration">
         <property name="suffix">
          <string> msec</string>
         </property>

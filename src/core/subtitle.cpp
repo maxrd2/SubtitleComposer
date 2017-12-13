@@ -416,26 +416,28 @@ Subtitle::insertNewLine(int index, bool timeAfter, TextTarget target)
 	SubtitleLine *newLine = new SubtitleLine();
 	int newLineIndex = (target == Secondary) ? m_lines.count() : index;
 
-	double newLinePadding = (double)SCConfig::newLinePadding();
+	double lineMargin = (double)SCConfig::lineMargin();
+	double lineDuration = (double)SCConfig::lineDuration();
+	double lineDurationMargin = lineDuration + lineMargin;
 
 	if(timeAfter) {
 		if(newLineIndex) {              // there is a previous line
 			SubtitleLine *prevLine = m_lines.value(newLineIndex - 1);
-			newLine->setTimes(prevLine->hideTime() + newLinePadding, prevLine->hideTime() + 1000.);
+			newLine->setTimes(prevLine->hideTime() + lineMargin, prevLine->hideTime() + lineDurationMargin);
 		} else if(newLineIndex < m_lines.count()) {     // there is a next line
 			SubtitleLine *nextLine = m_lines.value(newLineIndex);
-			newLine->setTimes(nextLine->showTime() - 1100., nextLine->showTime() - newLinePadding);
+			newLine->setTimes(nextLine->showTime() - lineDurationMargin, nextLine->showTime() - lineMargin);
 		} else
-			newLine->setHideTime(1000.);
+			newLine->setHideTime(lineDuration);
 	} else {                                        // ! timeAfter
 		if(newLineIndex < m_lines.count()) {    // there is a next line
 			SubtitleLine *nextLine = m_lines.at(newLineIndex);
-			newLine->setTimes(nextLine->showTime() - 1100., nextLine->showTime() - newLinePadding);
+			newLine->setTimes(nextLine->showTime() - lineDurationMargin, nextLine->showTime() - lineMargin);
 		} else if(newLineIndex) {       // there is a previous line
 			SubtitleLine *prevLine = m_lines.at(newLineIndex - 1);
-			newLine->setTimes(prevLine->hideTime() + newLinePadding, prevLine->hideTime() + 1000.);
+			newLine->setTimes(prevLine->hideTime() + lineMargin, prevLine->hideTime() + lineDurationMargin);
 		} else
-			newLine->setHideTime(1000.);
+			newLine->setHideTime(lineDuration);
 	}
 
 	if(target == Both || index == m_lines.count()) {
