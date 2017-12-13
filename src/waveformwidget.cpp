@@ -1091,8 +1091,7 @@ WaveformWidget::showContextMenu(QMouseEvent *event)
 
 				int insertIndex = 0;
 				foreach(SubtitleLine *sub, m_subtitle->allLines()) {
-					if(sub->showTime() <= timeShow)
-						insertIndex++;
+					insertIndex++;
 
 					if(sub->showTime() > timeShow) {
 						insertIndex = sub->index();
