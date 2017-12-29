@@ -8,16 +8,16 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://github.com/maxrd2/subtitlecomposer/issues\n"
 "POT-Creation-Date: 2017-10-27 22:37+0200\n"
-"PO-Revision-Date: 2017-10-27 22:52+0200\n"
-"Last-Translator: Mladen Milinkovic <max@scarlettvisionmedia.com>\n"
+"PO-Revision-Date: 2017-10-31 23:46+0100\n"
+"Last-Translator: gogo <trebelnik2@gmail.com>\n"
 "Language-Team: Croatian <hr@hr.org>\n"
 "Language: hr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=4; plural=n==1 ? 3 : n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
-"%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
-"X-Generator: Poedit 2.0.4\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n"
+"%100<10 || n%100>=20) ? 1 : 2);\n"
+"X-Generator: Poedit 1.8.7.1\n"
 
 #: ../../src/actions/kcodecactionext.cpp:39 ../../src/dialogs/opensubtitledialog.cpp:49
 #: ../../src/dialogs/opensubtitledialog.cpp:51
@@ -561,11 +561,11 @@ msgstr "Zatvori video datoteku"
 
 #: ../../src/application.cpp:975
 msgid "Full Screen Mode"
-msgstr "Cijelozaslonski/Prozorski pikaz"
+msgstr "Cjelozaslonski/Prozorski prikaz"
 
 #: ../../src/application.cpp:976
 msgid "Toggle full screen mode"
-msgstr "Prikaz preko cijelog zaslon"
+msgstr "Prikaz preko cijelog zaslona"
 
 #: ../../src/application.cpp:983
 msgid "Stop"
@@ -601,36 +601,33 @@ msgid "Seek to previous subtitle line show time"
 msgstr "Idi na vrijeme prikaza prijašnjeg redka"
 
 #: ../../src/application.cpp:1025
-#, fuzzy
 msgid "Increase media play rate"
-msgstr "Povećaj glasnoću zvuka za 5%"
+msgstr "Ubrzaj reprodukciju video snimke"
 
 #: ../../src/application.cpp:1026
 msgid "Increase media playback rate"
-msgstr ""
+msgstr "Ubrzaj reprodukciju video snimke"
 
 #: ../../src/application.cpp:1033
-#, fuzzy
 msgid "Decrease media play rate"
-msgstr "Smanji glasnoću zvuka za 5%"
+msgstr "Uspori reprodukciju video snimke"
 
 #: ../../src/application.cpp:1034
 msgid "Decrease media playback rate"
-msgstr ""
+msgstr "Uspori reprodukciju video snimke"
 
 #: ../../src/application.cpp:1040
-#, fuzzy
 msgid "Play Current Line and Pause"
-msgstr "Postavi vrijeme nestajanja trenutnog redka"
+msgstr "Reproduciraj trenutni redak i pauziraj"
 
 #: ../../src/application.cpp:1041
-#, fuzzy
 msgid "Seek to start of current subtitle line show time, play it and then pause"
-msgstr "Idi na vrijeme prikaza slijedećeg redka"
+msgstr ""
+"Idi na vrijeme prikaza sljedećeg redka podnaslova, reproduciraj ga i zatim pauziraj"
 
 #: ../../src/application.cpp:1049
 msgid "Jump to Next Line"
-msgstr "Skoči na slijedeći redak"
+msgstr "Skoči na sljedeći redak"
 
 #: ../../src/application.cpp:1050
 msgid "Seek to next subtitle line show time"
@@ -1019,7 +1016,6 @@ msgid_plural "Seek backwards %1 seconds"
 msgstr[0] "Premotaj unatrag %1 sekundu"
 msgstr[1] "Premotaj unatrag %1 sekunde"
 msgstr[2] "Premotaj unatrag %1 sekundi"
-msgstr[3] "Premotaj unatrag 1 sekundu"
 
 #: ../../src/application.cpp:2990
 msgid "Seek forwards 1 second"
@@ -1027,7 +1023,6 @@ msgid_plural "Seek forwards %1 seconds"
 msgstr[0] "Premotaj unaprijed %1 sekundu"
 msgstr[1] "Premotaj unaprijed %1 sekunde"
 msgstr[2] "Premotaj unaprijed %1 sekundi"
-msgstr[3] "Premotaj unaprijed 1 sekundu"
 
 #: ../../src/application.cpp:2993
 msgid "Shift %2%1 millisecond"
@@ -1035,7 +1030,6 @@ msgid_plural "Shift %2%1 milliseconds"
 msgstr[0] "Pomakni %2%1 milisekundu"
 msgstr[1] "Pomakni %2%1 milisekunde"
 msgstr[2] "Pomakni %2%1 milisekundi"
-msgstr[3] "Pomakni %2%1 milisekundu"
 
 #: ../../src/application.cpp:2994 ../../src/application.cpp:2998
 msgid "Shift selected lines %2%1 millisecond"
@@ -1043,7 +1037,6 @@ msgid_plural "Shift selected lines %2%1 milliseconds"
 msgstr[0] "Pomakni odabrane redke %2%1 milisekundu"
 msgstr[1] "Pomakni odabrane redke %2%1 milisekunde"
 msgstr[2] "Pomakni odabrane redke %2%1 milisekundi"
-msgstr[3] "Pomakni odabrane redke %2%1 milisekundu"
 
 #: ../../src/application.cpp:2997
 msgid "Shift %2%1 Millisecond"
@@ -1051,7 +1044,6 @@ msgid_plural "Shift %2%1 Milliseconds"
 msgstr[0] "Pomakni %2%1 milisekundu"
 msgstr[1] "Pomakni %2%1 milisekunde"
 msgstr[2] "Pomakni %2%1 milisekundi"
-msgstr[3] "Pomakni %2%1 milisekundu"
 
 #: ../../src/configs/configdialog.cpp:49
 msgctxt "@title General settings"
@@ -1324,7 +1316,6 @@ msgid_plural "Has too many characters in primary text (%1 chars)."
 msgstr[0] "Ima previše znakova u glavnom tekstu (%1 znak)."
 msgstr[1] "Ima previše znakova u glavnom tekstu (%1 znaka)."
 msgstr[2] "Ima previše znakova u glavnom tekstu (%1 znakova)."
-msgstr[3] "Ima previše znakova u glavnom tekstu (1 znak)."
 
 #: ../../src/core/subtitleline.cpp:119
 msgid "Has too many characters in translation text (1 char)."
@@ -1332,7 +1323,6 @@ msgid_plural "Has too many characters in translation text (%1 chars)."
 msgstr[0] "Ima previše znakova u prevedenom tekstu (%1 znak)."
 msgstr[1] "Ima previše znakova u prevedenom tekstu (%1 znaka)."
 msgstr[2] "Ima previše znakova u prevedenom tekstu (%1 znakova)."
-msgstr[3] "Ima previše znakova u prevedenom tekstu (1 znak)."
 
 #: ../../src/core/subtitleline.cpp:120
 msgid "Has too many lines in primary text (1 line)."
@@ -1340,7 +1330,6 @@ msgid_plural "Has too many lines in primary text (%1 lines)."
 msgstr[0] "Ima previše redaka u glavnom tekstu (%1 redak)."
 msgstr[1] "Ima previše redaka u glavnom tekstu (%1 redaka)."
 msgstr[2] "Ima previše redaka u glavnom tekstu (%1 redaka)."
-msgstr[3] "Ima previše redaka u glavnom tekstu (1 redak)."
 
 #: ../../src/core/subtitleline.cpp:121
 msgid "Has too many lines in translation text (1 line)."
@@ -1348,7 +1337,6 @@ msgid_plural "Has too many lines in translation text (%1 lines)."
 msgstr[0] "Ima previše redaka u prevedenom tekstu (%1 redak)."
 msgstr[1] "Ima previše redaka u prevedenom tekstu (%1 redaka)."
 msgstr[2] "Ima previše redaka u prevedenom tekstu (%1 redaka)."
-msgstr[3] "Ima previše redaka u prevedenom tekstu (1 redak)."
 
 #: ../../src/core/subtitleline.cpp:122
 msgid "Has unnecessary spaces in primary text."
@@ -1380,7 +1368,6 @@ msgid_plural "Has too long duration per character in primary text (%1 msecs/char
 msgstr[0] "Ima predugo trajanje po znaku u glavnom tekstu (%1 ms/znaku)."
 msgstr[1] "Ima predugo trajanje po znaku u glavnom tekstu (%1 ms/znaku)."
 msgstr[2] "Ima predugo trajanje po znaku u glavnom tekstu (%1 ms/znaku)."
-msgstr[3] "Ima predugo trajanje po znaku u glavnom tekstu (1 ms/znaku)."
 
 #: ../../src/core/subtitleline.cpp:129
 msgid "Has too long duration per character in translation text (1 msec/char)."
@@ -1388,7 +1375,6 @@ msgid_plural "Has too long duration per character in translation text (%1 msecs/
 msgstr[0] "Ima predugo trajanje po znaku u prevedenom tekstu (%1 ms/znaku)."
 msgstr[1] "Ima predugo trajanje po znaku u prevedenom tekstu (%1 ms/znaku)."
 msgstr[2] "Ima predugo trajanje po znaku u prevedenom tekstu (%1 ms/znaku)."
-msgstr[3] "Ima predugo trajanje po znaku u prevedenom tekstu (1 ms/znaku)."
 
 #: ../../src/core/subtitleline.cpp:130
 msgid "Has too short duration per character in primary text (1 msec/char)."
@@ -1396,7 +1382,6 @@ msgid_plural "Has too short duration per character in primary text (%1 msecs/cha
 msgstr[0] "Ima prekratko trajanje po znaku u glavnom tekstu (%1 ms/znaku)."
 msgstr[1] "Ima prekratko trajanje po znaku u glavnom tekstu (%1 ms/znaku)."
 msgstr[2] "Ima prekratko trajanje po znaku u glavnom tekstu (%1 ms/znaku)."
-msgstr[3] "Ima prekratko trajanje po znaku u glavnom tekstu (1 ms/znaku)."
 
 #: ../../src/core/subtitleline.cpp:131
 msgid "Has too short duration per character in translation text (1 msec/char)."
@@ -1404,7 +1389,6 @@ msgid_plural "Has too short duration per character in translation text (%1 msecs
 msgstr[0] "Ima prekratko trajanje po znaku u prevedenom tekstu (%1 ms/znaku)."
 msgstr[1] "Ima prekratko trajanje po znaku u prevedenom tekstu (%1 ms/znaku)."
 msgstr[2] "Ima prekratko trajanje po znaku u prevedenom tekstu (%1 ms/znaku)."
-msgstr[3] "Ima prekratko trajanje po znaku u prevedenom tekstu (1 ms/znaku)."
 
 #: ../../src/core/subtitleline.cpp:132
 msgid "Has too long duration (1 msec)."
@@ -1412,7 +1396,6 @@ msgid_plural "Has too long duration (%1 msecs)."
 msgstr[0] "Ima predugo trajanje (%1 ms)."
 msgstr[1] "Ima predugo trajanje (%1 ms)."
 msgstr[2] "Ima predugo trajanje (%1 ms)."
-msgstr[3] "Ima predugo trajanje (1 ms)."
 
 #: ../../src/core/subtitleline.cpp:133
 msgid "Has too short duration (1 msec)."
@@ -1420,7 +1403,6 @@ msgid_plural "Has too short duration (%1 msecs)."
 msgstr[0] "Ima prekratko trajanje (%1 ms)."
 msgstr[1] "Ima prekratko trajanje (%1 ms)."
 msgstr[2] "Ima prekratko trajanje (%1 ms)."
-msgstr[3] "Ima prekratko trajanje (1 ms)."
 
 #: ../../src/core/subtitleline.cpp:134
 msgid "Overlaps with next line."
@@ -1472,7 +1454,6 @@ msgid_plural "%1 characters"
 msgstr[0] "%1 znak"
 msgstr[1] "%1 znaka"
 msgstr[2] "%1 znakova"
-msgstr[3] "1 znak"
 
 #: ../../src/dialogs/actionwitherrortargetsdialog.cpp:68
 msgid "Available errors"
@@ -1852,9 +1833,8 @@ msgstr ""
 "%3"
 
 #: ../../src/formats/vobsub/vobsubinputprocessdialog.cpp:593
-#, fuzzy
 msgid "VobSub Error"
-msgstr "Greške podnaslova"
+msgstr "VobSub greška"
 
 #: ../../src/helpers/languagecode.cpp:420
 msgid "Unknown"
@@ -1920,9 +1900,8 @@ msgid "Mladen Milinković"
 msgstr "Mladen Milinković"
 
 #: ../../src/main.cpp:73
-#, fuzzy
 msgid "Current Author & Maintainer"
-msgstr "Autor i održavatelj"
+msgstr "Trenutni autor i održavatelj"
 
 #: ../../src/main.cpp:74
 msgid "Sergio Pistone"
@@ -1958,7 +1937,7 @@ msgstr "Prevoditelj"
 
 #: ../../src/main.cpp:91
 msgid "code contributions"
-msgstr ""
+msgstr "doprinos kôdu"
 
 #: ../../src/main.cpp:92
 msgid "code contributions, Arch Linux packaging, German translation"
@@ -1998,7 +1977,7 @@ msgstr "<b>Sl/Sek</b>"
 
 #: ../../src/playerwidget.cpp:119
 msgid "<b>Playback Rate</b>"
-msgstr ""
+msgstr "<b>Brzina reprodukcije</b>"
 
 #. i18n: file: ../../src/configs/playerconfigwidget.ui:36
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_ShowPositionTimeEdit)
@@ -2110,9 +2089,8 @@ msgid "Recognizing speech"
 msgstr "Prepoznavanje govora"
 
 #: ../../src/speechprocessor/speechprocessor.cpp:68
-#, fuzzy
 msgid "Abort speech recognition"
-msgstr "Nema dostupnog priključka prepoznavanja govora"
+msgstr "Prekini prepoznavanje govora"
 
 #: ../../src/speechprocessor/speechprocessor.cpp:165
 msgid "No speech recognition plugins available"
@@ -2229,7 +2207,6 @@ msgid_plural "%1 replacements done."
 msgstr[0] "Učinjena je %1 zamjena."
 msgstr[1] "Učinjene su %1 zamjene."
 msgstr[2] "Učinjeno je %1 zamjena."
-msgstr[3] "Učinjena je 1 zamjena."
 
 #: ../../src/utils/speller.cpp:137
 msgid "Spell Checking"
@@ -2264,19 +2241,16 @@ msgid "Generating waveform"
 msgstr "Stvaranje valnog prikaza zvuka"
 
 #: ../../src/waveformwidget.cpp:1067
-#, fuzzy
 msgid "Select Line"
-msgstr "Odaberi ništa"
+msgstr "Odaberi redak"
 
 #: ../../src/waveformwidget.cpp:1093
-#, fuzzy
 msgid "Remove Line"
-msgstr "Ukloni redke"
+msgstr "Ukloni redak"
 
 #: ../../src/waveformwidget.cpp:1115
-#, fuzzy
 msgid "Split Line"
-msgstr "Razdvoji redke"
+msgstr "Razdvoji redak"
 
 #: ../../src/widgets/simplerichtextedit.cpp:79
 msgid "Cut"
@@ -2453,9 +2427,8 @@ msgstr "Automatski učitaj video snimku pri otvaranju podnaslova"
 #. i18n: file: ../../src/configs/generalconfigwidget.ui:64
 #. i18n: ectx: property (text), widget (QLabel, label_2)
 #: rc.cpp:60
-#, fuzzy
 msgid "Jump to prev/next line offset:"
-msgstr "Skoči na slijedeći redak"
+msgstr "Pomak skoka na prijašnji/sljedeći redak:"
 
 #. i18n: file: ../../src/configs/generalconfigwidget.ui:71
 #. i18n: ectx: property (suffix), widget (QSpinBox, kcfg_JumpLineOffset)
@@ -2563,7 +2536,7 @@ msgstr "Unutarnja boja:"
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_wfSmoothScroll)
 #: rc.cpp:120
 msgid "Smooth Scrolling"
-msgstr ""
+msgstr "Glatko pomicanje"
 
 #. i18n: file: ../../src/configs/waveformconfigwidget.ui:85
 #. i18n: ectx: property (title), widget (QGroupBox, m_grpGeneral)
@@ -2669,161 +2642,158 @@ msgstr "Boja linije položaja miša:"
 #. i18n: ectx: property (windowTitle), widget (QDialog, VobSubInputProcessDialog)
 #: rc.cpp:174 rc.cpp:198
 msgid "VobSub Import"
-msgstr ""
+msgstr "VobSub uvoz"
 
 #. i18n: file: ../../src/formats/vobsub/vobsubinputinitdialog.ui:20
 #. i18n: ectx: property (text), widget (QLabel, labelStream)
 #: rc.cpp:177
-#, fuzzy
 msgid "Stream / Language"
-msgstr "Zadani jezik"
+msgstr "Zapis / Jezik"
 
 #. i18n: file: ../../src/formats/vobsub/vobsubinputinitdialog.ui:53
 #. i18n: ectx: property (title), widget (QGroupBox, grpPostProc)
 #: rc.cpp:180
 msgid "Post Processing"
-msgstr ""
+msgstr "Završna obrada"
 
 #. i18n: file: ../../src/formats/vobsub/vobsubinputinitdialog.ui:59
 #. i18n: ectx: property (text), widget (QCheckBox, ppSpaceNumber)
 #: rc.cpp:183
 msgid "Fix space between numbers"
-msgstr ""
+msgstr "Popravi razmak između brojeva"
 
 #. i18n: file: ../../src/formats/vobsub/vobsubinputinitdialog.ui:69
 #. i18n: ectx: property (text), widget (QCheckBox, ppSpacePunct)
 #: rc.cpp:186
 msgid "Fix space around punctuation (.,;:?!)"
-msgstr ""
+msgstr "Popravi razmak oko interpunkcija (.,;:?!)"
 
 #. i18n: file: ../../src/formats/vobsub/vobsubinputinitdialog.ui:79
 #. i18n: ectx: property (text), widget (QCheckBox, ppSpaceParen)
 #: rc.cpp:189
 msgid "Fix space around quotes and parentheses (\"()[]{})"
-msgstr ""
+msgstr "Popravi razmak oko navodnika i zagrada (\"()[]{})"
 
 #. i18n: file: ../../src/formats/vobsub/vobsubinputinitdialog.ui:89
 #. i18n: ectx: property (text), widget (QCheckBox, ppAposQuote)
 #: rc.cpp:192
 msgid "Fix double apostrophes/quotes"
-msgstr ""
+msgstr "Popravi dvostruke apostrofe/navodnike"
 
 #. i18n: file: ../../src/formats/vobsub/vobsubinputinitdialog.ui:99
 #. i18n: ectx: property (text), widget (QCheckBox, ppCharsOCR)
 #: rc.cpp:195
 msgid "Fix i <-> l, 0 <-> O mistakes"
-msgstr ""
+msgstr "Popravi i <-> l, 0 <-> O greške"
 
 #. i18n: file: ../../src/formats/vobsub/vobsubinputprocessdialog.ui:26
 #. i18n: ectx: property (title), widget (QGroupBox, grpText)
 #: rc.cpp:201
-#, fuzzy
 msgid "Enter character(s)"
-msgstr " znakova"
+msgstr "Upiši znak(ove)"
 
 #. i18n: file: ../../src/formats/vobsub/vobsubinputprocessdialog.ui:35
 #. i18n: ectx: property (text), widget (QLabel, symbolLabel)
 #: rc.cpp:204
 msgid "S&ymbols:"
-msgstr ""
+msgstr "S&imboli:"
 
 #. i18n: file: ../../src/formats/vobsub/vobsubinputprocessdialog.ui:45
 #. i18n: ectx: property (toolTip), widget (QSpinBox, symbolCount)
 #: rc.cpp:207
 msgid "Up/Down: change value"
-msgstr ""
+msgstr "Up/Down: promjena vrijednosti"
 
 #. i18n: file: ../../src/formats/vobsub/vobsubinputprocessdialog.ui:71
 #. i18n: ectx: property (toolTip), widget (QPushButton, styleBold)
 #: rc.cpp:210
 msgid "Ctrl+B"
-msgstr ""
+msgstr "Ctrl+B"
 
 #. i18n: file: ../../src/formats/vobsub/vobsubinputprocessdialog.ui:91
 #. i18n: ectx: property (toolTip), widget (QPushButton, styleItalic)
 #: rc.cpp:213
 msgid "Ctrl+I"
-msgstr ""
+msgstr "Ctrl+I"
 
 #. i18n: file: ../../src/formats/vobsub/vobsubinputprocessdialog.ui:111
 #. i18n: ectx: property (toolTip), widget (QPushButton, styleUnderline)
 #: rc.cpp:216
 msgid "Ctrl+U"
-msgstr ""
+msgstr "Ctrl+U"
 
 #. i18n: file: ../../src/formats/vobsub/vobsubinputprocessdialog.ui:146
 #. i18n: ectx: property (text), widget (QPushButton, btnOk)
 #: rc.cpp:219
 msgid "OK"
-msgstr ""
+msgstr "U redu"
 
 #. i18n: file: ../../src/formats/vobsub/vobsubinputprocessdialog.ui:202
 #. i18n: ectx: property (toolTip), widget (QPushButton, btnPrevImage)
 #: rc.cpp:222
 msgid "Ctrl+Shift+Left"
-msgstr ""
+msgstr "Ctrl+Shift+Lijeva strelica"
 
 #. i18n: file: ../../src/formats/vobsub/vobsubinputprocessdialog.ui:205
 #. i18n: ectx: property (text), widget (QPushButton, btnPrevImage)
 #: rc.cpp:225
 msgid "Prev Image"
-msgstr ""
+msgstr "Prijašnja slika"
 
 #. i18n: file: ../../src/formats/vobsub/vobsubinputprocessdialog.ui:219
 #. i18n: ectx: property (toolTip), widget (QPushButton, btnPrevSymbol)
 #: rc.cpp:228
 msgid "Ctrl+Left"
-msgstr ""
+msgstr "Ctrl+Lijeva strelica"
 
 #. i18n: file: ../../src/formats/vobsub/vobsubinputprocessdialog.ui:222
 #. i18n: ectx: property (text), widget (QPushButton, btnPrevSymbol)
 #: rc.cpp:231
 msgid "Prev Symbol"
-msgstr ""
+msgstr "Prijašnji simbol"
 
 #. i18n: file: ../../src/formats/vobsub/vobsubinputprocessdialog.ui:236
 #. i18n: ectx: property (toolTip), widget (QPushButton, btnNextSymbol)
 #: rc.cpp:234
 msgid "Ctrl+Right"
-msgstr ""
+msgstr "Ctrl+Desna strelica"
 
 #. i18n: file: ../../src/formats/vobsub/vobsubinputprocessdialog.ui:239
 #. i18n: ectx: property (text), widget (QPushButton, btnNextSymbol)
 #: rc.cpp:237
 msgid "Next Symbol"
-msgstr ""
+msgstr "Sljedeći simbol"
 
 #. i18n: file: ../../src/formats/vobsub/vobsubinputprocessdialog.ui:250
 #. i18n: ectx: property (toolTip), widget (QPushButton, btnNextImage)
 #: rc.cpp:240
 msgid "Ctrl+Shift+Right"
-msgstr ""
+msgstr "Ctrl+Shift+Desna strelica"
 
 #. i18n: file: ../../src/formats/vobsub/vobsubinputprocessdialog.ui:253
 #. i18n: ectx: property (text), widget (QPushButton, btnNextImage)
 #: rc.cpp:243
 msgid "Next Image"
-msgstr ""
+msgstr "Sljedeća slika"
 
 #. i18n: file: ../../src/formats/vobsub/vobsubinputprocessdialog.ui:280
 #. i18n: ectx: property (text), widget (QPushButton, btnAbort)
 #: rc.cpp:246
 msgid "Abort"
-msgstr ""
+msgstr "Prekini"
 
 #. i18n: file: ../../src/formats/vobsub/vobsubinputprocessdialog.ui:303
 #. i18n: ectx: property (title), widget (QGroupBox, grpPreview)
 #: rc.cpp:249
-#, fuzzy
 msgid "Subtitle Image"
-msgstr "Podnaslov"
+msgstr "Slika podnaslova"
 
 #. i18n: file: ../../src/formats/vobsub/vobsubinputprocessdialog.ui:325
 #. i18n: ectx: property (format), widget (QProgressBar, progressBar)
 #: rc.cpp:253
 #, no-c-format
 msgid "%v/%m"
-msgstr ""
+msgstr "%v/%m"
 
 #. i18n: file: ../../src/scconfig.kcfg:10
 #. i18n: ectx: label, entry (DefaultSubtitlesEncoding), group (General)
@@ -2840,9 +2810,8 @@ msgstr "Pomak premotavanja pri dvostrukom kliku"
 #. i18n: file: ../../src/scconfig.kcfg:18
 #. i18n: ectx: label, entry (JumpLineOffset), group (General)
 #: rc.cpp:262
-#, fuzzy
 msgid "Jump to prev/next line offset"
-msgstr "Skoči na slijedeći redak"
+msgstr "Pomak skoka na prijašnji/sljedeći redak"
 
 #. i18n: file: ../../src/scconfig.kcfg:22
 #. i18n: ectx: label, entry (UnpauseOnDoubleClick), group (General)
@@ -2943,9 +2912,8 @@ msgstr "Vanjska boja valnog prikaza zvuka"
 #. i18n: file: ../../src/scconfig.kcfg:103
 #. i18n: ectx: label, entry (wfSmoothScroll), group (Waveform Widget)
 #: rc.cpp:316
-#, fuzzy
 msgid "Waveform Smooth Scrolling"
-msgstr "Automatsko pomicanje valnog prikaza zvuka"
+msgstr "Glatko pomicanje valnog prikaza zvuka"
 
 #. i18n: file: ../../src/scconfig.kcfg:107
 #. i18n: ectx: label, entry (wfSubBackground), group (Waveform Widget)
