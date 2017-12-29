@@ -792,6 +792,11 @@ WaveformWidget::eventFilter(QObject *obj, QEvent *event)
 			scrollToTime(m_pointerTime, false);
 		}
 
+		if (m_MMBDown) {
+			emit doubleClick(timeAt(y));
+			return true;
+		}
+
 		if(m_draggedLine) {
 			m_draggedTime = m_pointerTime;
 			scrollToTime(m_pointerTime, false);
@@ -829,6 +834,12 @@ WaveformWidget::eventFilter(QObject *obj, QEvent *event)
 			return false;
 		}
 
+		if(mouse->button() == Qt::MiddleButton) {
+			emit doubleClick(timeAt(y));
+			m_MMBDown = true;
+			return true;
+		}
+
 		if(mouse->button() != Qt::LeftButton)
 			return false;
 
@@ -862,6 +873,11 @@ WaveformWidget::eventFilter(QObject *obj, QEvent *event)
 			showContextMenu(mouse);
 			m_RMBDown = false;
 			return false;
+		}
+
+		if(mouse->button() == Qt::MiddleButton) {
+			m_MMBDown = false;
+			return true;
 		}
 
 		if(mouse->button() != Qt::LeftButton)
@@ -1073,15 +1089,7 @@ WaveformWidget::showContextMenu(QMouseEvent *event)
 				const Time timeShow = rightMouseSoonerTime();
 				const Time timeHide = rightMouseLaterTime();
 
-				int insertIndex = 0;
-				foreach(SubtitleLine *sub, m_subtitle->allLines()) {
-					if(sub->showTime() > timeShow) {
-						insertIndex = sub->index();
-						if(sub->showTime() <= timeShow)
-							insertIndex++;
-						break;
-					}
-				}
+				int insertIndex = m_subtitle->indexForTime(timeShow);
 
 				SubtitleLine *newLine = new SubtitleLine(SString(), timeShow,
 					timeHide.toMillis() - timeShow.toMillis() > SCConfig::minDuration() ? timeHide : timeShow + SCConfig::minDuration());

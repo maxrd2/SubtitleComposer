@@ -150,6 +150,8 @@ private:
 	Time m_timeRMBRelease;
 	bool m_RMBDown;
 
+	bool m_MMBDown;
+
 	QScrollBar *m_scrollBar;
 	QPropertyAnimation *m_scrollAnimation;
 	bool m_autoScroll;

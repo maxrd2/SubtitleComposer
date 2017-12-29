@@ -23,6 +23,7 @@
 #include "subtitleiterator.h"
 #include "subtitleactions.h"
 #include "compositeaction.h"
+#include "scconfig.h"
 
 #include <KLocalizedString>
 
@@ -382,6 +383,43 @@ Subtitle::removeAllAnchors()
 		emit lineAnchorChanged(line, false);
 }
 
+int
+Subtitle::indexForTime(Time time)
+{
+	int index = 0;
+	foreach(SubtitleLine *sub, allLines()) {
+		if(sub->showTime() > time) {
+			index = sub->index();
+			break;
+		} else {
+			index++;
+		}
+	}
+
+	return index;
+}
+
+void
+Subtitle::reIndex(SubtitleLine* line)
+{
+	int oldIndex = line->index();
+	int newIndex = indexForTime(line->showTime()) - 1;
+	if (newIndex < 0)
+		newIndex = 0;
+
+	if (oldIndex == newIndex)
+		return;
+
+	m_lines.removeOne(line);
+	m_lines.insert(newIndex, line);
+
+	int i = 0;
+	foreach(SubtitleLine* sub, allLines()) {
+		sub->m_cachedIndex = i;
+		i++;
+	}
+}
+
 void
 Subtitle::insertLine(SubtitleLine *line, int index)
 {
@@ -415,24 +453,28 @@ Subtitle::insertNewLine(int index, bool timeAfter, TextTarget target)
 	SubtitleLine *newLine = new SubtitleLine();
 	int newLineIndex = (target == Secondary) ? m_lines.count() : index;
 
+	double lineMargin = (double)SCConfig::lineMargin();
+	double lineDuration = (double)SCConfig::lineDuration();
+	double lineDurationMargin = lineDuration + lineMargin;
+
 	if(timeAfter) {
 		if(newLineIndex) {              // there is a previous line
 			SubtitleLine *prevLine = m_lines.value(newLineIndex - 1);
-			newLine->setTimes(prevLine->hideTime() + 100., prevLine->hideTime() + 1000.);
+			newLine->setTimes(prevLine->hideTime() + lineMargin, prevLine->hideTime() + lineDurationMargin);
 		} else if(newLineIndex < m_lines.count()) {     // there is a next line
 			SubtitleLine *nextLine = m_lines.value(newLineIndex);
-			newLine->setTimes(nextLine->showTime() - 1100., nextLine->showTime() - 100.);
+			newLine->setTimes(nextLine->showTime() - lineDurationMargin, nextLine->showTime() - lineMargin);
 		} else
-			newLine->setHideTime(1000.);
+			newLine->setHideTime(lineDuration);
 	} else {                                        // ! timeAfter
 		if(newLineIndex < m_lines.count()) {    // there is a next line
 			SubtitleLine *nextLine = m_lines.at(newLineIndex);
-			newLine->setTimes(nextLine->showTime() - 1100., nextLine->showTime() - 100.);
+			newLine->setTimes(nextLine->showTime() - lineDurationMargin, nextLine->showTime() - lineMargin);
 		} else if(newLineIndex) {       // there is a previous line
 			SubtitleLine *prevLine = m_lines.at(newLineIndex - 1);
-			newLine->setTimes(prevLine->hideTime() + 100., prevLine->hideTime() + 1000.);
+			newLine->setTimes(prevLine->hideTime() + lineMargin, prevLine->hideTime() + lineDurationMargin);
 		} else
-			newLine->setHideTime(1000.);
+			newLine->setHideTime(lineDuration);
 	}
 
 	if(target == Both || index == m_lines.count()) {
@@ -1562,5 +1604,3 @@ SubtitleCompositeActionExecutor::~SubtitleCompositeActionExecutor()
 {
 	m_subtitle.endCompositeAction();
 }
-
-
