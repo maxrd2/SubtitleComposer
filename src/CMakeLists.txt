@@ -29,7 +29,7 @@ find_package(FFmpeg REQUIRED)
 # defined in the dependency directory that must be created before the former
 # CMakeLists.txt is processed
 
-set(SC_PLUGIN_INSTALL_DIR ${CMAKE_INSTALL_PREFIX}/${LIB_INSTALL_DIR}/subtitlecomposer CACHE INTERNAL EXPORTEDVARIABLE)
+set(SC_PLUGIN_INSTALL_DIR ${CMAKE_INSTALL_PREFIX}/${KDE_INSTALL_LIBDIR}/subtitlecomposer CACHE INTERNAL EXPORTEDVARIABLE)
 message(STATUS "Subtitle Composer plugin path: ${SC_PLUGIN_INSTALL_DIR}")
 
 set(subtitlecomposer_LIBS
