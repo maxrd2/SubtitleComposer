@@ -59,6 +59,7 @@ WaveformWidget::WaveformWidget(QWidget *parent)
 	  m_timeCurrent(0.),
 	  m_timeEnd(MAX_WINDOW_ZOOM),
 	  m_RMBDown(false),
+	  m_MMBDown(false),
 	  m_scrollBar(Q_NULLPTR),
 	  m_scrollAnimation(nullptr),
 	  m_autoScroll(true),
