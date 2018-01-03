@@ -244,6 +244,8 @@ private slots:
 	void updateUndoRedoToolTips();
 
 	void onWaveformDoubleClicked(Time time);
+	void onWaveformMiddleMouseDown(Time time);
+	void onWaveformMiddleMouseUp(Time time);
 
 	void onLineDoubleClicked(SubtitleLine *line);
 	void onHighlightLine(SubtitleLine *line, bool primary = true, int firstIndex = -1, int lastIndex = -1);

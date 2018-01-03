@@ -183,7 +183,9 @@ Application::init()
 
 	connect(this, SIGNAL(fullScreenModeChanged(bool)), actionManager, SLOT(setFullScreenMode(bool)));
 
-	connect(m_mainWindow->m_waveformWidget, SIGNAL(doubleClick(Time)), this, SLOT(onWaveformDoubleClicked(Time)));
+	connect(m_mainWindow->m_waveformWidget, &WaveformWidget::doubleClick, this, &Application::onWaveformDoubleClicked);
+	connect(m_mainWindow->m_waveformWidget, &WaveformWidget::middleMouseDown, this, &Application::onWaveformMiddleMouseDown);
+	connect(m_mainWindow->m_waveformWidget, &WaveformWidget::middleMouseUp, this, &Application::onWaveformMiddleMouseUp);
 
 	connect(m_linesWidget, SIGNAL(currentLineChanged(SubtitleLine *)), m_curLineWidget, SLOT(setCurrentLine(SubtitleLine *)));
 	connect(m_linesWidget, SIGNAL(lineDoubleClicked(SubtitleLine *)), this, SLOT(onLineDoubleClicked(SubtitleLine *)));
@@ -2844,6 +2846,26 @@ Application::onWaveformDoubleClicked(Time time)
 
 	m_playerWidget->pauseAfterPlayingLine(nullptr);
 	m_player->seek(time.toSeconds(), true);
+}
+
+void
+Application::onWaveformMiddleMouseDown(Time time)
+{
+	if(m_player->state() == VideoPlayer::Ready) {
+		m_player->play();
+		m_player->pause();
+	} else if(m_player->state() != VideoPlayer::Paused) {
+		m_player->pause();
+	}
+
+	m_playerWidget->pauseAfterPlayingLine(nullptr);
+	m_player->seek(time.toSeconds(), true);
+}
+
+void
+Application::onWaveformMiddleMouseUp(Time /*time*/)
+{
+	m_player->play();
 }
 
 void

@@ -793,9 +793,9 @@ WaveformWidget::eventFilter(QObject *obj, QEvent *event)
 			scrollToTime(m_pointerTime, false);
 		}
 
-		if (m_MMBDown) {
-			emit doubleClick(timeAt(y));
-			return true;
+		if(m_MMBDown) {
+			scrollToTime(m_pointerTime, false);
+			emit middleMouseDown(m_pointerTime);
 		}
 
 		if(m_draggedLine) {
@@ -836,9 +836,9 @@ WaveformWidget::eventFilter(QObject *obj, QEvent *event)
 		}
 
 		if(mouse->button() == Qt::MiddleButton) {
-			emit doubleClick(timeAt(y));
 			m_MMBDown = true;
-			return true;
+			emit middleMouseDown(timeAt(y));
+			return false;
 		}
 
 		if(mouse->button() != Qt::LeftButton)
@@ -877,6 +877,8 @@ WaveformWidget::eventFilter(QObject *obj, QEvent *event)
 		}
 
 		if(mouse->button() == Qt::MiddleButton) {
+			emit middleMouseUp(timeAt(y));
+			m_hoverScrollTimer.stop();
 			m_MMBDown = false;
 			return true;
 		}
@@ -978,7 +980,7 @@ WaveformWidget::setScrollPosition(double milliseconds)
 void
 WaveformWidget::onHoverScrollTimeout()
 {
-	if(!m_draggedLine && !m_RMBDown) {
+	if(!m_draggedLine && !m_RMBDown && !m_MMBDown) {
 		m_hoverScrollAmount = .0;
 		m_hoverScrollTimer.stop();
 		return;
@@ -1040,6 +1042,9 @@ WaveformWidget::scrollToTime(const Time &time, bool scrollToPage)
 void
 WaveformWidget::onPlayerPositionChanged(double seconds)
 {
+	if(m_MMBDown)
+		return;
+
 	Time playingPosition;
 	playingPosition.setSecondsTime(seconds);
 
