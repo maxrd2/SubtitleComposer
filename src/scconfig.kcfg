@@ -36,14 +36,13 @@
 			<default>250</default>
 		</entry>
 
-		<entry name="LineMargin" type="Int">
-			<label>Default duration between subtitle lines</label>
-			<default>100</default>
-		</entry>
-
 		<entry name="LineDuration" type="Int">
 			<label>Default subtitle line duration</label>
 			<default>1000</default>
+		</entry>
+		<entry name="LinePause" type="Int">
+			<label>Default duration between subtitle lines</label>
+			<default>100</default>
 		</entry>
 	</group>
 

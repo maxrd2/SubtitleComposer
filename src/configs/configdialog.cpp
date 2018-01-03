@@ -80,6 +80,8 @@ ConfigDialog::ConfigDialog(QWidget *parent, const QString &name, KCoreConfigSkel
 			item->setIcon(QIcon::fromTheme(backendName.toLower()));
 		}
 	}
+
+	resize(800, 600);
 }
 
 void

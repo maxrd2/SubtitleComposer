@@ -443,7 +443,7 @@ Subtitle::insertLines(const QList<SubtitleLine *> &lines, int index)
 }
 
 SubtitleLine *
-Subtitle::insertNewLine(int index, bool timeAfter, TextTarget target)
+Subtitle::insertNewLine(int index, bool insertAfter, TextTarget target)
 {
 	Q_ASSERT(index <= m_lines.count());
 
@@ -451,28 +451,28 @@ Subtitle::insertNewLine(int index, bool timeAfter, TextTarget target)
 		index = m_lines.count();
 
 	SubtitleLine *newLine = new SubtitleLine();
-	int newLineIndex = (target == Secondary) ? m_lines.count() : index;
+	const int newLineIndex = (target == Secondary) ? m_lines.count() : index;
 
-	double lineMargin = (double)SCConfig::lineMargin();
-	double lineDuration = (double)SCConfig::lineDuration();
-	double lineDurationMargin = lineDuration + lineMargin;
+	const double linePause = (double)SCConfig::linePause();
+	const double lineDuration = (double)SCConfig::lineDuration();
+	const double lineDurationAndPause = lineDuration + linePause;
 
-	if(timeAfter) {
+	if(insertAfter) {
 		if(newLineIndex) {              // there is a previous line
-			SubtitleLine *prevLine = m_lines.value(newLineIndex - 1);
-			newLine->setTimes(prevLine->hideTime() + lineMargin, prevLine->hideTime() + lineDurationMargin);
+			const SubtitleLine *prevLine = m_lines.value(newLineIndex - 1);
+			newLine->setTimes(prevLine->hideTime() + linePause, prevLine->hideTime() + lineDurationAndPause);
 		} else if(newLineIndex < m_lines.count()) {     // there is a next line
-			SubtitleLine *nextLine = m_lines.value(newLineIndex);
-			newLine->setTimes(nextLine->showTime() - lineDurationMargin, nextLine->showTime() - lineMargin);
+			const SubtitleLine *nextLine = m_lines.value(newLineIndex);
+			newLine->setTimes(nextLine->showTime() - lineDurationAndPause, nextLine->showTime() - linePause);
 		} else
 			newLine->setHideTime(lineDuration);
-	} else {                                        // ! timeAfter
+	} else {
 		if(newLineIndex < m_lines.count()) {    // there is a next line
-			SubtitleLine *nextLine = m_lines.at(newLineIndex);
-			newLine->setTimes(nextLine->showTime() - lineDurationMargin, nextLine->showTime() - lineMargin);
+			const SubtitleLine *nextLine = m_lines.at(newLineIndex);
+			newLine->setTimes(nextLine->showTime() - lineDurationAndPause, nextLine->showTime() - linePause);
 		} else if(newLineIndex) {       // there is a previous line
-			SubtitleLine *prevLine = m_lines.at(newLineIndex - 1);
-			newLine->setTimes(prevLine->hideTime() + lineMargin, prevLine->hideTime() + lineDurationMargin);
+			const SubtitleLine *prevLine = m_lines.at(newLineIndex - 1);
+			newLine->setTimes(prevLine->hideTime() + linePause, prevLine->hideTime() + lineDurationAndPause);
 		} else
 			newLine->setHideTime(lineDuration);
 	}

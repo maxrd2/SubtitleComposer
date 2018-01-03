@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
+﻿<?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
  <class>GeneralConfigWidget</class>
  <widget class="QWidget" name="GeneralConfigWidget">
@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>623</width>
-    <height>563</height>
+    <width>554</width>
+    <height>502</height>
    </rect>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
@@ -17,7 +17,93 @@
       <string>General</string>
      </property>
      <layout class="QGridLayout" name="gridLayout" columnstretch="1,1">
+      <item row="0" column="1">
+       <widget class="QComboBox" name="kcfg_DefaultSubtitlesEncoding"/>
+      </item>
+      <item row="0" column="0" alignment="Qt::AlignRight">
+       <widget class="QLabel" name="label">
+        <property name="text">
+         <string>Defau&amp;lt subtitles encoding:</string>
+        </property>
+        <property name="buddy">
+         <cstring>kcfg_DefaultSubtitlesEncoding</cstring>
+        </property>
+       </widget>
+      </item>
+      <item row="3" column="1">
+       <widget class="QCheckBox" name="kcfg_UnpauseOnDoubleClick">
+        <property name="text">
+         <string>Resume playback after line double click</string>
+        </property>
+       </widget>
+      </item>
+      <item row="4" column="1">
+       <widget class="QCheckBox" name="kcfg_AutomaticVideoLoad">
+        <property name="text">
+         <string>Automatically load video file when opening a subtitle</string>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </widget>
+   </item>
+   <item>
+    <widget class="QGroupBox" name="m_grpSubtitleLine">
+     <property name="title">
+      <string>Subtitle Line</string>
+     </property>
+     <layout class="QGridLayout" name="gridLayout_3" columnstretch="1,1">
+      <item row="1" column="0" alignment="Qt::AlignRight">
+       <widget class="QLabel" name="label_LineDuration">
+        <property name="text">
+         <string>Default subtitle line duration:</string>
+        </property>
+        <property name="buddy">
+         <cstring>kcfg_LineDuration</cstring>
+        </property>
+       </widget>
+      </item>
+      <item row="3" column="0" alignment="Qt::AlignRight">
+       <widget class="QLabel" name="label_4">
+        <property name="text">
+         <string>On double click, &amp;jump to show time minus:</string>
+        </property>
+        <property name="buddy">
+         <cstring>kcfg_SeekOffsetOnDoubleClick</cstring>
+        </property>
+       </widget>
+      </item>
+      <item row="2" column="0" alignment="Qt::AlignRight">
+       <widget class="QLabel" name="label_LinePause">
+        <property name="text">
+         <string>Default pause between subtitle lines:</string>
+        </property>
+        <property name="buddy">
+         <cstring>kcfg_LinePause</cstring>
+        </property>
+       </widget>
+      </item>
+      <item row="2" column="1">
+       <widget class="QSpinBox" name="kcfg_LinePause">
+        <property name="suffix">
+         <string> msec</string>
+        </property>
+        <property name="maximum">
+         <number>10000</number>
+        </property>
+       </widget>
+      </item>
       <item row="1" column="1">
+       <widget class="QSpinBox" name="kcfg_LineDuration">
+        <property name="suffix">
+         <string> msec</string>
+        </property>
+        <property name="maximum">
+         <number>10000</number>
+        </property>
+       </widget>
+      </item>
+      <item row="3" column="1">
        <widget class="QSpinBox" name="kcfg_SeekOffsetOnDoubleClick">
         <property name="suffix">
          <string notr="true"> msec</string>
@@ -27,80 +113,18 @@
         </property>
        </widget>
       </item>
-      <item row="1" column="0" alignment="Qt::AlignRight">
-       <widget class="QLabel" name="label_4">
-        <property name="text">
-         <string>On line double click, jump to show time minus:</string>
-        </property>
-       </widget>
-      </item>
-      <item row="0" column="1">
-       <widget class="QComboBox" name="kcfg_DefaultSubtitlesEncoding"/>
-      </item>
-      <item row="0" column="0" alignment="Qt::AlignRight">
-       <widget class="QLabel" name="label">
-        <property name="text">
-         <string>Default subtitles encoding:</string>
-        </property>
-       </widget>
-      </item>
-      <item row="4" column="1">
-       <widget class="QCheckBox" name="kcfg_UnpauseOnDoubleClick">
-        <property name="text">
-         <string>Resume playback after line double click</string>
-        </property>
-       </widget>
-      </item>
-      <item row="5" column="1">
-       <widget class="QCheckBox" name="kcfg_AutomaticVideoLoad">
-        <property name="text">
-         <string>Automatically load video file when opening a subtitle</string>
-        </property>
-       </widget>
-      </item>
-      <item row="2" column="0" alignment="Qt::AlignRight">
+      <item row="4" column="0" alignment="Qt::AlignRight">
        <widget class="QLabel" name="label_2">
         <property name="text">
-         <string>Jump to prev/next line offset:</string>
+         <string>Ju&amp;mp to prev/next line offset:</string>
         </property>
-       </widget>
-      </item>
-      <item row="2" column="1">
-       <widget class="QSpinBox" name="kcfg_JumpLineOffset">
-        <property name="suffix">
-         <string> msec</string>
-        </property>
-        <property name="maximum">
-         <number>10000</number>
-        </property>
-       </widget>
-      </item>
-      <item row="3" column="0" alignment="Qt::AlignRight">
-       <widget class="QLabel" name="label_LineMargin">
-        <property name="text">
-         <string>Default duration between subtitle lines:</string>
-        </property>
-       </widget>
-      </item>
-      <item row="3" column="1">
-       <widget class="QSpinBox" name="kcfg_LineMargin">
-        <property name="suffix">
-         <string> msec</string>
-        </property>
-        <property name="maximum">
-         <number>10000</number>
-        </property>
-       </widget>
-      </item>
-      <item row="4" column="0" alignment="Qt::AlignRight">
-       <widget class="QLabel" name="label_LineDuration">
-        <property name="text">
-         <string>Default subtitle line duration:</string>
+        <property name="buddy">
+         <cstring>kcfg_JumpLineOffset</cstring>
         </property>
        </widget>
       </item>
       <item row="4" column="1">
-       <widget class="QSpinBox" name="kcfg_LineDuration">
+       <widget class="QSpinBox" name="kcfg_JumpLineOffset">
         <property name="suffix">
          <string> msec</string>
         </property>
@@ -141,14 +165,20 @@
       <item row="1" column="0" alignment="Qt::AlignRight">
        <widget class="QLabel" name="label_8">
         <property name="text">
-         <string>Compensation for captured video times:</string>
+         <string>Compensation for captured &amp;video times:</string>
+        </property>
+        <property name="buddy">
+         <cstring>kcfg_GrabbedPositionCompensation</cstring>
         </property>
        </widget>
       </item>
       <item row="0" column="0" alignment="Qt::AlignRight">
        <widget class="QLabel" name="label_5">
         <property name="text">
-         <string>Time shift for selected lines:</string>
+         <string>Ti&amp;me shift for selected lines:</string>
+        </property>
+        <property name="buddy">
+         <cstring>kcfg_LinesQuickShiftAmount</cstring>
         </property>
        </widget>
       </item>
@@ -172,10 +202,12 @@
  </widget>
  <tabstops>
   <tabstop>kcfg_DefaultSubtitlesEncoding</tabstop>
-  <tabstop>kcfg_SeekOffsetOnDoubleClick</tabstop>
-  <tabstop>kcfg_JumpLineOffset</tabstop>
   <tabstop>kcfg_UnpauseOnDoubleClick</tabstop>
   <tabstop>kcfg_AutomaticVideoLoad</tabstop>
+  <tabstop>kcfg_LineDuration</tabstop>
+  <tabstop>kcfg_LinePause</tabstop>
+  <tabstop>kcfg_SeekOffsetOnDoubleClick</tabstop>
+  <tabstop>kcfg_JumpLineOffset</tabstop>
   <tabstop>kcfg_LinesQuickShiftAmount</tabstop>
   <tabstop>kcfg_GrabbedPositionCompensation</tabstop>
  </tabstops>
