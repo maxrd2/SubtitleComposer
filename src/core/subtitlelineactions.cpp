@@ -355,8 +355,6 @@ SetLineTimesAction::internalRedo()
 		m_line.m_hideTime = m_hideTime;
 		m_hideTime = aux;
 	}
-
-	m_line.m_subtitle->reIndex(&m_line);
 }
 
 void
