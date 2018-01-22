@@ -388,24 +388,20 @@ Application::buildMediaFilesFilter()
 	static QString filter;
 
 	if(filter.isEmpty()) {
-		QString mediaExtensions;
-
 		QString videoExtensions;
-		QStringList videoExts(QStringLiteral(SC_VIDEO_EXTENSIONS).split(' '));
-		for(QStringList::ConstIterator it = videoExts.begin(), end = videoExts.end(); it != end; ++it)
-			videoExtensions += " *." % *it % " *." % (*it).toUpper();
-		mediaExtensions += videoExtensions;
-		filter += '\n' + videoExtensions.trimmed() + '|' + i18n("Video Files");
+		const QStringList videoExts(QStringLiteral(SC_VIDEO_EXTENSIONS).split(' '));
+		foreach(const QString ext, videoExts)
+			videoExtensions += " *." % ext;
 
 		QString audioExtensions;
-		QStringList audioExts(QStringLiteral(SC_AUDIO_EXTENSIONS).split(' '));
-		for(QStringList::ConstIterator it = audioExts.begin(), end = audioExts.end(); it != end; ++it)
-			audioExtensions += " *." % *it % " *." % (*it).toUpper();
-		mediaExtensions += audioExtensions;
-		filter += '\n' % audioExtensions.trimmed() % '|' % i18n("Audio Files");
+		const QStringList audioExts(QStringLiteral(SC_AUDIO_EXTENSIONS).split(' '));
+		foreach(const QString ext, audioExts)
+			audioExtensions += " *." % ext;
 
-		filter = mediaExtensions % '|' % i18n("Media Files") % filter;
-		filter += "\n*|" % i18n("All Files");
+		filter = i18n("Media Files") % QStringLiteral(" (") % videoExtensions.midRef(1) % audioExtensions.midRef(1) % QStringLiteral(")\n")
+			% i18n("Video Files") % QStringLiteral(" (") % videoExtensions.midRef(1) % QStringLiteral(")\n")
+			% i18n("Audio Files") % QStringLiteral(" (") % audioExtensions.midRef(1) % QStringLiteral(")\n")
+			% i18n("All Files") % QStringLiteral(" (*)") ;
 	}
 
 	return filter;
