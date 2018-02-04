@@ -222,7 +222,7 @@ public:
 
 	int check(int errorFlagsToCheck, int minDurationMsecs, int maxDurationMsecs, int minMsecsPerChar, int maxMsecsPerChar, int maxChars, int maxLines, bool update = true);
 
-	bool isRightToLeft();
+	bool isRightToLeft() const;
 
 signals:
 	void primaryTextChanged(const SString &text);

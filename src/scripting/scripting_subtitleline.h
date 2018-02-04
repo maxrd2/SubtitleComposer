@@ -118,7 +118,7 @@ public slots:
 
 	int check(int errorFlagsToCheck, int minDuration, int maxDuration, int minDurationPerChar, int maxDurationPerChar, int maxChars, int maxLines, bool update = true);
 
-	bool isRightToLeft();
+	bool isRightToLeft() const;
 
 private:
 	friend class Subtitle;

@@ -1045,7 +1045,7 @@ SubtitleLine::check(int errorFlagsToCheck, int minDurationMsecs, int maxDuration
 }
 
 bool
-SubtitleLine::isRightToLeft()
+SubtitleLine::isRightToLeft() const
 {
 	return m_primaryText.string().isRightToLeft();
 }
