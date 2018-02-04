@@ -222,6 +222,8 @@ public:
 
 	int check(int errorFlagsToCheck, int minDurationMsecs, int maxDurationMsecs, int minMsecsPerChar, int maxMsecsPerChar, int maxChars, int maxLines, bool update = true);
 
+	bool isRightToLeft();
+
 signals:
 	void primaryTextChanged(const SString &text);
 	void secondaryTextChanged(const SString &text);
