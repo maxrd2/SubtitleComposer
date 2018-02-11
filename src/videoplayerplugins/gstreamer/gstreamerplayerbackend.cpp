@@ -103,7 +103,7 @@ GStreamerPlayerBackend::~GStreamerPlayerBackend()
 		GStreamer::deinit();
 }
 
-/*virtual*/ void
+void
 GStreamerPlayerBackend::setSCConfig(SCConfig *scConfig)
 {
 	scConfigGlobalSet(scConfig);
@@ -282,7 +282,18 @@ GStreamerPlayerBackend::seek(double seconds, bool accurate)
 	return true;
 }
 
-/*virtual*/ void
+bool
+GStreamerPlayerBackend::step(int frameOffset)
+{
+	if(player()->state() != VideoPlayer::Paused)
+		GStreamer::setElementState(GST_ELEMENT(m_pipeline), GST_STATE_PAUSED, 0);
+	return gst_element_seek(GST_ELEMENT(m_pipeline), m_playbackRate,
+		GST_FORMAT_TIME, GstSeekFlags(GST_SEEK_FLAG_FLUSH | GST_SEEK_FLAG_ACCURATE),
+		GST_SEEK_TYPE_SET, m_currentPosition + gint64(frameOffset) * m_frameDuration,
+		GST_SEEK_TYPE_NONE, GST_CLOCK_TIME_NONE);
+}
+
+void
 GStreamerPlayerBackend::playbackRate(double newRate)
 {
 	m_playbackRate = newRate;
@@ -329,13 +340,16 @@ GStreamerPlayerBackend::onPlaybinTimerTimeout()
 	if(!isInitialized() || !m_pipeline || !m_pipelineBus)
 		return;
 
+
 	gint64 time;
 	if(!m_lengthInformed && gst_element_query_duration(GST_ELEMENT(m_pipeline), GST_FORMAT_TIME, &time) && GST_CLOCK_TIME_IS_VALID(time)) {
 		setPlayerLength((double)time / GST_SECOND);
 		m_lengthInformed = true;
 	}
-	if(gst_element_query_position(GST_ELEMENT(m_pipeline), GST_FORMAT_TIME, &time))
+	if(gst_element_query_position(GST_ELEMENT(m_pipeline), GST_FORMAT_TIME, &time)) {
 		setPlayerPosition((double)time / GST_SECOND);
+		m_currentPosition = time;
+	}
 
 	gboolean muted = false;
 	g_object_get(G_OBJECT(m_pipeline), "mute", &muted, NULL);
@@ -520,6 +534,7 @@ GStreamerPlayerBackend::updateVideoData()
 		int num = gst_value_get_fraction_numerator(fps);
 		int den = gst_value_get_fraction_denominator(fps);
 		setPlayerFramesPerSecond((double)num / den);
+		m_frameDuration = gint64(den) * GST_SECOND / gint64(num);
 	}
 
 	gst_caps_unref(caps);
@@ -543,7 +558,7 @@ GStreamerPlayerBackend::eventFilter(QObject *obj, QEvent *event)
 	return res;
 }
 
-/*virtual*/ bool
+bool
 GStreamerPlayerBackend::reconfigure()
 {
 	if(!m_pipeline || !GST_IS_PIPELINE(m_pipeline))

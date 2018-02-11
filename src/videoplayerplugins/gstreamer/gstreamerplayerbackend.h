@@ -41,31 +41,32 @@ public:
 	GStreamerPlayerBackend();
 	virtual ~GStreamerPlayerBackend();
 
-	virtual QWidget * newConfigWidget(QWidget *parent);
+	QWidget * newConfigWidget(QWidget *parent) Q_DECL_OVERRIDE;
 
 protected:
-	virtual bool initialize(VideoWidget *videoWidget);
-	virtual void finalize();
-	virtual bool reconfigure();
+	bool initialize(VideoWidget *videoWidget) Q_DECL_OVERRIDE;
+	void finalize() Q_DECL_OVERRIDE;
+	bool reconfigure() Q_DECL_OVERRIDE;
 
-	virtual bool doesVolumeCorrection() const { return true; }
+	bool doesVolumeCorrection() const Q_DECL_OVERRIDE { return true; }
 
 	static GstElement * createAudioSink();
 	static GstElement * createVideoSink();
 
-	virtual bool openFile(const QString &filePath, bool &playingAfterCall);
-	virtual void closeFile();
+	bool openFile(const QString &filePath, bool &playingAfterCall) Q_DECL_OVERRIDE;
+	void closeFile() Q_DECL_OVERRIDE;
 
-	virtual bool play();
-	virtual bool pause();
-	virtual bool seek(double seconds, bool accurate);
-	virtual bool stop();
+	bool play() Q_DECL_OVERRIDE;
+	bool pause() Q_DECL_OVERRIDE;
+	bool seek(double seconds, bool accurate) Q_DECL_OVERRIDE;
+	bool step(int frameOffset) Q_DECL_OVERRIDE;
+	bool stop() Q_DECL_OVERRIDE;
 
-	virtual void playbackRate(double newRate);
+	void playbackRate(double newRate) Q_DECL_OVERRIDE;
 
-	virtual bool setActiveAudioStream(int audioStream);
+	bool setActiveAudioStream(int audioStream) Q_DECL_OVERRIDE;
 
-	virtual bool setVolume(double volume);
+	bool setVolume(double volume) Q_DECL_OVERRIDE;
 
 	bool eventFilter(QObject *obj, QEvent *event);
 
@@ -79,7 +80,7 @@ private:
 	void updateAudioData();
 	void updateVideoData();
 
-	virtual void setSCConfig(SCConfig *scConfig);
+	void setSCConfig(SCConfig *scConfig) Q_DECL_OVERRIDE;
 
 private:
 	GstPipeline *m_pipeline;
@@ -89,6 +90,8 @@ private:
 	gdouble m_playbackRate;
 	gdouble m_volume;
 	gboolean m_muted;
+	gint64 m_currentPosition;
+	gint64 m_frameDuration;
 };
 }
 

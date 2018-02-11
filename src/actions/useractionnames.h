@@ -89,8 +89,8 @@
 #define ACT_TOGGLE_FULL_SCREEN "toggle_full_screen"
 #define ACT_STOP "stop"
 #define ACT_PLAY_PAUSE "play_pause"
-#define ACT_SEEK_BACKWARDS "seek_backwards"
-#define ACT_SEEK_FORWARDS "seek_forwards"
+#define ACT_SEEK_BACKWARD "seek_backward"
+#define ACT_SEEK_FORWARD "seek_forward"
 #define ACT_SEEK_TO_NEXT_LINE "seek_to_next_line"
 #define ACT_SEEK_TO_PREVIOUS_LINE "seek_to_previous_line"
 #define ACT_PLAY_CURRENT_LINE_AND_PAUSE "play_current_line_and_pause"
@@ -117,4 +117,6 @@
 #define ACT_ASR_IMPORT_AUDIO_STREAM "asr_import_audio_stream"
 #define ACT_PLAY_RATE_INCREASE "playrate_increase"
 #define ACT_PLAY_RATE_DECREASE "playrate_decrease"
+#define ACT_STEP_FRAME_BACKWARD "frame_step_backward"
+#define ACT_STEP_FRAME_FORWARD "frame_step_forward"
 #endif

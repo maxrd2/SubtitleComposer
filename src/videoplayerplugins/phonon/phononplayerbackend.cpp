@@ -45,7 +45,7 @@ PhononPlayerBackend::~PhononPlayerBackend()
 		_finalize();
 }
 
-/*virtual*/ void
+void
 PhononPlayerBackend::setSCConfig(SCConfig *scConfig)
 {
 	scConfigGlobalSet(scConfig);
@@ -297,7 +297,7 @@ PhononPlayerBackend::onStateChanged(Phonon::State newState, Phonon::State /*oldS
 	}
 }
 
-/*virtual*/ bool
+bool
 PhononPlayerBackend::reconfigure()
 {
 	// FIXME: add support for reconfigure

@@ -67,7 +67,7 @@ XinePlayerBackend::~XinePlayerBackend()
 		_finalize();
 }
 
-/*virtual*/ void
+void
 XinePlayerBackend::setSCConfig(SCConfig *scConfig)
 {
 	scConfigGlobalSet(scConfig);
@@ -572,7 +572,7 @@ XinePlayerBackend::audioMixerMethodChangedCallback(void *p, xine_cfg_entry_t *en
 	xinePlayer->m_softwareMixer = (bool)entry->num_value;
 }
 
-/*virtual*/ bool
+bool
 XinePlayerBackend::reconfigure()
 {
 	// FIXME: add support for reconfigure

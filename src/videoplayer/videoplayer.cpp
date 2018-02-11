@@ -54,32 +54,34 @@ public:
 	virtual QWidget * newConfigWidget(QWidget * /*parent */) { return 0; }
 
 protected:
-	virtual bool initialize(VideoWidget *videoWidget) { videoWidget->setVideoLayer(new QWidget()); return true; }
+	bool initialize(VideoWidget *videoWidget) Q_DECL_OVERRIDE { videoWidget->setVideoLayer(new QWidget()); return true; }
 
-	virtual void finalize() {}
+	void finalize() Q_DECL_OVERRIDE {}
 
-	virtual bool openFile(const QString &/*filePath*/, bool &/*playingAfterCall*/) { return false; }
+	bool openFile(const QString &/*filePath*/, bool &/*playingAfterCall*/) Q_DECL_OVERRIDE { return false; }
 
-	virtual void closeFile() {}
+	void closeFile() Q_DECL_OVERRIDE {}
 
-	virtual bool play() { return false; }
+	bool play() Q_DECL_OVERRIDE { return false; }
 
-	virtual bool pause() { return false; }
+	bool pause() Q_DECL_OVERRIDE { return false; }
 
-	virtual bool seek(double /*seconds*/, bool /*accurate*/) { return false; }
+	bool seek(double /*seconds*/, bool /*accurate*/) Q_DECL_OVERRIDE { return false; }
 
-	virtual bool stop() { return false; }
+	bool step(int /*frameOffset*/) Q_DECL_OVERRIDE { return false; }
 
-	virtual void playbackRate(double /*newRate*/) { }
+	bool stop() Q_DECL_OVERRIDE { return false; }
 
-	virtual bool setActiveAudioStream(int /*audioStream*/) { return false; }
+	void playbackRate(double /*newRate*/) Q_DECL_OVERRIDE { }
 
-	virtual bool setVolume(double /*volume*/) { return false; }
+	bool setActiveAudioStream(int /*audioStream*/) Q_DECL_OVERRIDE { return false; }
 
-	virtual bool reconfigure() { return false; }
+	bool setVolume(double /*volume*/) Q_DECL_OVERRIDE { return false; }
+
+	bool reconfigure() Q_DECL_OVERRIDE { return false; }
 
 private:
-	virtual void setSCConfig(SCConfig */*scConfig*/) {}
+	void setSCConfig(SCConfig */*scConfig*/) Q_DECL_OVERRIDE {}
 };
 }
 
@@ -693,6 +695,20 @@ VideoPlayer::seek(double seconds, bool accurate)
 		return true;
 
 	if(!activeBackend()->seek(seconds, accurate)) {
+		resetState();
+		emit playbacqCritical();
+	}
+
+	return true;
+}
+
+bool
+VideoPlayer::step(int frameOffset)
+{
+	if(m_state != VideoPlayer::Playing && m_state != VideoPlayer::Paused)
+		return false;
+
+	if(!activeBackend()->step(frameOffset)) {
 		resetState();
 		emit playbacqCritical();
 	}

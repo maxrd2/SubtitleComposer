@@ -121,8 +121,10 @@
 			<Separator />
 			<Action name="play_pause" />
 			<Action name="stop" />
-			<Action name="seek_backwards" />
-			<Action name="seek_forwards" />
+			<Action name="seek_backward" />
+			<Action name="seek_forward" />
+			<Action name="frame_step_backward" />
+			<Action name="frame_step_forward" />
 			<Action name="playrate_increase" />
 			<Action name="playrate_decrease" />
 			<Separator />

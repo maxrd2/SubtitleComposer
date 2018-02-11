@@ -171,6 +171,10 @@
 			<label>Jump length on seek</label>
 			<default>15</default>
 		</entry>
+		<entry name="StepJumpLength" type="Int">
+			<label>Jump length on frame step</label>
+			<default>2</default>
+		</entry>
 		<entry name="ShowPositionTimeEdit" type="Bool">
 			<label>Show editable time position</label>
 			<default>false</default>

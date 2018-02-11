@@ -982,21 +982,37 @@ Application::setupActions()
 	actionCollection->addAction(ACT_PLAY_PAUSE, playPauseAction);
 	actionManager->addAction(playPauseAction, UserAction::VideoOpened);
 
-	QAction *seekBackwardsAction = new QAction(actionCollection);
-	seekBackwardsAction->setIcon(QIcon::fromTheme("media-seek-backward"));
-	seekBackwardsAction->setText(i18n("Seek Backwards"));
-	actionCollection->setDefaultShortcut(seekBackwardsAction, QKeySequence("Left"));
-	connect(seekBackwardsAction, SIGNAL(triggered()), this, SLOT(seekBackwards()));
-	actionCollection->addAction(ACT_SEEK_BACKWARDS, seekBackwardsAction);
-	actionManager->addAction(seekBackwardsAction, UserAction::VideoPlaying);
+	QAction *seekBackwardAction = new QAction(actionCollection);
+	seekBackwardAction->setIcon(QIcon::fromTheme("media-seek-backward"));
+	seekBackwardAction->setText(i18n("Seek Backward"));
+	actionCollection->setDefaultShortcut(seekBackwardAction, QKeySequence("Left"));
+	connect(seekBackwardAction, SIGNAL(triggered()), this, SLOT(seekBackward()));
+	actionCollection->addAction(ACT_SEEK_BACKWARD, seekBackwardAction);
+	actionManager->addAction(seekBackwardAction, UserAction::VideoPlaying);
 
-	QAction *seekForwardsAction = new QAction(actionCollection);
-	seekForwardsAction->setIcon(QIcon::fromTheme("media-seek-forward"));
-	seekForwardsAction->setText(i18n("Seek Forwards"));
-	actionCollection->setDefaultShortcut(seekForwardsAction, QKeySequence("Right"));
-	connect(seekForwardsAction, SIGNAL(triggered()), this, SLOT(seekForwards()));
-	actionCollection->addAction(ACT_SEEK_FORWARDS, seekForwardsAction);
-	actionManager->addAction(seekForwardsAction, UserAction::VideoPlaying);
+	QAction *seekForwardAction = new QAction(actionCollection);
+	seekForwardAction->setIcon(QIcon::fromTheme("media-seek-forward"));
+	seekForwardAction->setText(i18n("Seek Forward"));
+	actionCollection->setDefaultShortcut(seekForwardAction, QKeySequence("Right"));
+	connect(seekForwardAction, SIGNAL(triggered()), this, SLOT(seekForward()));
+	actionCollection->addAction(ACT_SEEK_FORWARD, seekForwardAction);
+	actionManager->addAction(seekForwardAction, UserAction::VideoPlaying);
+
+	QAction *stepFrameBackwardAction = new QAction(actionCollection);
+	stepFrameBackwardAction->setIcon(QIcon::fromTheme("media-step-backward"));
+	stepFrameBackwardAction->setText(i18n("Frame Step Backward"));
+	actionCollection->setDefaultShortcut(stepFrameBackwardAction, QKeySequence("Ctrl+Left"));
+	connect(stepFrameBackwardAction, SIGNAL(triggered()), this, SLOT(stepBackward()));
+	actionCollection->addAction(ACT_STEP_FRAME_BACKWARD, stepFrameBackwardAction);
+	actionManager->addAction(stepFrameBackwardAction, UserAction::VideoPlaying);
+
+	QAction *stepFrameForwardAction = new QAction(actionCollection);
+	stepFrameForwardAction->setIcon(QIcon::fromTheme("media-step-forward"));
+	stepFrameForwardAction->setText(i18n("Frame Step Forward"));
+	actionCollection->setDefaultShortcut(stepFrameForwardAction, QKeySequence("Ctrl+Right"));
+	connect(stepFrameForwardAction, SIGNAL(triggered()), this, SLOT(stepForward()));
+	actionCollection->addAction(ACT_STEP_FRAME_FORWARD, stepFrameForwardAction);
+	actionManager->addAction(stepFrameForwardAction, UserAction::VideoPlaying);
 
 	QAction *seekToPrevLineAction = new QAction(actionCollection);
 	seekToPrevLineAction->setIcon(QIcon::fromTheme("media-skip-backward"));
@@ -2567,7 +2583,7 @@ Application::setFullScreenMode(bool enabled)
 }
 
 void
-Application::seekBackwards()
+Application::seekBackward()
 {
 	double position = m_player->position() - SCConfig::seekJumpLength();
 	m_playerWidget->pauseAfterPlayingLine(nullptr);
@@ -2575,11 +2591,23 @@ Application::seekBackwards()
 }
 
 void
-Application::seekForwards()
+Application::seekForward()
 {
 	double position = m_player->position() + SCConfig::seekJumpLength();
 	m_playerWidget->pauseAfterPlayingLine(nullptr);
 	m_player->seek(position <= m_player->length() ? position : m_player->length(), false);
+}
+
+void
+Application::stepBackward()
+{
+	m_player->step(-SCConfig::stepJumpLength());
+}
+
+void
+Application::stepForward()
+{
+	m_player->step(SCConfig::stepJumpLength());
 }
 
 void
@@ -2953,8 +2981,8 @@ Application::updateActionTexts()
 	const int shiftAmount = SCConfig::linesQuickShiftAmount();
 	const int jumpLength = SCConfig::seekJumpLength();
 
-	action(ACT_SEEK_BACKWARDS)->setStatusTip(i18np("Seek backwards 1 second", "Seek backwards %1 seconds", jumpLength));
-	action(ACT_SEEK_FORWARDS)->setStatusTip(i18np("Seek forwards 1 second", "Seek forwards %1 seconds", jumpLength));
+	action(ACT_SEEK_BACKWARD)->setStatusTip(i18np("Seek backwards 1 second", "Seek backwards %1 seconds", jumpLength));
+	action(ACT_SEEK_FORWARD)->setStatusTip(i18np("Seek forwards 1 second", "Seek forwards %1 seconds", jumpLength));
 
 	QAction *shiftSelectedLinesFwdAction = action(ACT_SHIFT_SELECTED_LINES_FORWARDS);
 	shiftSelectedLinesFwdAction->setText(i18np("Shift %2%1 millisecond", "Shift %2%1 milliseconds", shiftAmount, "+"));

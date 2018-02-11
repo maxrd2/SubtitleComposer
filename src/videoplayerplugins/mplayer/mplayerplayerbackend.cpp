@@ -50,7 +50,7 @@ MPlayerPlayerBackend::~MPlayerPlayerBackend()
 		_finalize();
 }
 
-/*virtual*/ void
+void
 MPlayerPlayerBackend::setSCConfig(SCConfig *scConfig)
 {
 	scConfigGlobalSet(scConfig);
@@ -302,7 +302,7 @@ MPlayerPlayerBackend::onProcessExited()
 	setPlayerState(VideoPlayer::Ready);
 }
 
-/*virtual*/ bool
+bool
 MPlayerPlayerBackend::reconfigure()
 {
 	if(!player()->isPlaying() && !player()->isPaused())

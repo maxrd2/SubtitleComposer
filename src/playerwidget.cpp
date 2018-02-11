@@ -135,8 +135,8 @@ PlayerWidget::PlayerWidget(QWidget *parent) :
 	videoControlsLayout->setSpacing(2);
 	videoControlsLayout->addWidget(createToolButton(this, ACT_PLAY_PAUSE, 16), 0, 0);
 	videoControlsLayout->addWidget(createToolButton(this, ACT_STOP, 16), 0, 1);
-	videoControlsLayout->addWidget(createToolButton(this, ACT_SEEK_BACKWARDS, 16), 0, 2);
-	videoControlsLayout->addWidget(createToolButton(this, ACT_SEEK_FORWARDS, 16), 0, 3);
+	videoControlsLayout->addWidget(createToolButton(this, ACT_SEEK_BACKWARD, 16), 0, 2);
+	videoControlsLayout->addWidget(createToolButton(this, ACT_SEEK_FORWARD, 16), 0, 3);
 	videoControlsLayout->addItem(new QSpacerItem(2, 2), 0, 4);
 	videoControlsLayout->addWidget(createToolButton(this, ACT_SEEK_TO_PREVIOUS_LINE, 16), 0, 5);
 	videoControlsLayout->addWidget(createToolButton(this, ACT_SEEK_TO_NEXT_LINE, 16), 0, 6);
@@ -217,8 +217,8 @@ PlayerWidget::PlayerWidget(QWidget *parent) :
 	const int FS_BUTTON_SIZE = 32;
 	fullScreenControlsLayout->addWidget(createToolButton(m_fullScreenControls, ACT_PLAY_PAUSE, FS_BUTTON_SIZE));
 	fullScreenControlsLayout->addWidget(createToolButton(m_fullScreenControls, ACT_STOP, FS_BUTTON_SIZE));
-	fullScreenControlsLayout->addWidget(createToolButton(m_fullScreenControls, ACT_SEEK_BACKWARDS, FS_BUTTON_SIZE));
-	fullScreenControlsLayout->addWidget(createToolButton(m_fullScreenControls, ACT_SEEK_FORWARDS, FS_BUTTON_SIZE));
+	fullScreenControlsLayout->addWidget(createToolButton(m_fullScreenControls, ACT_SEEK_BACKWARD, FS_BUTTON_SIZE));
+	fullScreenControlsLayout->addWidget(createToolButton(m_fullScreenControls, ACT_SEEK_FORWARD, FS_BUTTON_SIZE));
 	fullScreenControlsLayout->addSpacing(3);
 	fullScreenControlsLayout->addWidget(createToolButton(m_fullScreenControls, ACT_SEEK_TO_PREVIOUS_LINE, FS_BUTTON_SIZE));
 	fullScreenControlsLayout->addWidget(createToolButton(m_fullScreenControls, ACT_SEEK_TO_NEXT_LINE, FS_BUTTON_SIZE));
@@ -390,8 +390,8 @@ PlayerWidget::plugActions()
 {
 	toolButton(this, ACT_STOP)->setDefaultAction(app()->action(ACT_STOP));
 	toolButton(this, ACT_PLAY_PAUSE)->setDefaultAction(app()->action(ACT_PLAY_PAUSE));
-	toolButton(this, ACT_SEEK_BACKWARDS)->setDefaultAction(app()->action(ACT_SEEK_BACKWARDS));
-	toolButton(this, ACT_SEEK_FORWARDS)->setDefaultAction(app()->action(ACT_SEEK_FORWARDS));
+	toolButton(this, ACT_SEEK_BACKWARD)->setDefaultAction(app()->action(ACT_SEEK_BACKWARD));
+	toolButton(this, ACT_SEEK_FORWARD)->setDefaultAction(app()->action(ACT_SEEK_FORWARD));
 	toolButton(this, ACT_SEEK_TO_PREVIOUS_LINE)->setDefaultAction(app()->action(ACT_SEEK_TO_PREVIOUS_LINE));
 	toolButton(this, ACT_SEEK_TO_NEXT_LINE)->setDefaultAction(app()->action(ACT_SEEK_TO_NEXT_LINE));
 	toolButton(this, ACT_SET_CURRENT_LINE_SHOW_TIME)->setDefaultAction(app()->action(ACT_SET_CURRENT_LINE_SHOW_TIME));
@@ -404,8 +404,8 @@ PlayerWidget::plugActions()
 
 	toolButton(m_fullScreenControls, ACT_STOP)->setDefaultAction(app()->action(ACT_STOP));
 	toolButton(m_fullScreenControls, ACT_PLAY_PAUSE)->setDefaultAction(app()->action(ACT_PLAY_PAUSE));
-	toolButton(m_fullScreenControls, ACT_SEEK_BACKWARDS)->setDefaultAction(app()->action(ACT_SEEK_BACKWARDS));
-	toolButton(m_fullScreenControls, ACT_SEEK_FORWARDS)->setDefaultAction(app()->action(ACT_SEEK_FORWARDS));
+	toolButton(m_fullScreenControls, ACT_SEEK_BACKWARD)->setDefaultAction(app()->action(ACT_SEEK_BACKWARD));
+	toolButton(m_fullScreenControls, ACT_SEEK_FORWARD)->setDefaultAction(app()->action(ACT_SEEK_FORWARD));
 	toolButton(m_fullScreenControls, ACT_SEEK_TO_PREVIOUS_LINE)->setDefaultAction(app()->action(ACT_SEEK_TO_PREVIOUS_LINE));
 	toolButton(m_fullScreenControls, ACT_SEEK_TO_NEXT_LINE)->setDefaultAction(app()->action(ACT_SEEK_TO_NEXT_LINE));
 	toolButton(m_fullScreenControls, ACT_TOGGLE_MUTED)->setDefaultAction(app()->action(ACT_TOGGLE_MUTED));
@@ -938,8 +938,8 @@ PlayerWidget::onPlayerRightClicked(const QPoint &point)
 
 	menu->addAction(app()->action(ACT_STOP));
 	menu->addAction(app()->action(ACT_PLAY_PAUSE));
-	menu->addAction(app()->action(ACT_SEEK_BACKWARDS));
-	menu->addAction(app()->action(ACT_SEEK_FORWARDS));
+	menu->addAction(app()->action(ACT_SEEK_BACKWARD));
+	menu->addAction(app()->action(ACT_SEEK_FORWARD));
 
 	menu->addSeparator();
 

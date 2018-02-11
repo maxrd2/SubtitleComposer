@@ -125,6 +125,13 @@ protected:
 	virtual bool seek(double seconds, bool accurate) = 0;
 
 	/**
+	 * @brief step
+	 * @param frameOffset
+	 * @return false if there is an error and playback must be aborted; true (all internal cleanup must be done before returning).
+	 */
+	virtual bool step(int frameOffset) = 0;
+
+	/**
 	 * @brief stop
 	 * @return false if there is an error and playback must be aborted; true (all internal cleanup must be done before returning).
 	 */

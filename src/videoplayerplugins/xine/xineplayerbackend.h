@@ -52,27 +52,28 @@ public:
 	XinePlayerBackend();
 	virtual ~XinePlayerBackend();
 
-	virtual QWidget * newConfigWidget(QWidget *parent);
+	QWidget * newConfigWidget(QWidget *parent) Q_DECL_OVERRIDE;
 
 protected:
-	virtual bool initialize(VideoWidget *videoWidget);
-	virtual void finalize();
+	bool initialize(VideoWidget *videoWidget) Q_DECL_OVERRIDE;
+	void finalize() Q_DECL_OVERRIDE;
 	void _finalize();
-	virtual bool reconfigure();
+	bool reconfigure() Q_DECL_OVERRIDE;
 
-	virtual bool openFile(const QString &filePath, bool &playingAfterCall);
-	virtual void closeFile();
+	bool openFile(const QString &filePath, bool &playingAfterCall) Q_DECL_OVERRIDE;
+	void closeFile() Q_DECL_OVERRIDE;
 
-	virtual bool play();
-	virtual bool pause();
-	virtual bool seek(double seconds, bool accurate);
-	virtual bool stop();
+	bool play() Q_DECL_OVERRIDE;
+	bool pause() Q_DECL_OVERRIDE;
+	bool seek(double seconds, bool accurate) Q_DECL_OVERRIDE;
+	bool step(int /*frameOffset*/) Q_DECL_OVERRIDE { return false; }
+	bool stop() Q_DECL_OVERRIDE;
 
-	virtual void playbackRate(double /*newRate*/) {}
+	void playbackRate(double /*newRate*/) Q_DECL_OVERRIDE {}
 
-	virtual bool setActiveAudioStream(int audioStream);
+	bool setActiveAudioStream(int audioStream) Q_DECL_OVERRIDE;
 
-	virtual bool setVolume(double volume);
+	bool setVolume(double volume) Q_DECL_OVERRIDE;
 
 protected:
 	bool initializeXine(WId winId);
@@ -83,7 +84,7 @@ protected:
 	void updateLengthData();
 
 	static void xineEventListener(void *p, const xine_event_t *);
-	virtual void customEvent(QEvent *event);
+	void customEvent(QEvent *event) Q_DECL_OVERRIDE;
 
 	static void destSizeCallback(void *p, int video_width, int video_height, double video_aspect, int *dest_width, int *dest_height, double *dest_aspect);
 	static void frameOutputCallback(void *p, int video_width, int video_height, double video_aspect, int *dest_x, int *dest_y, int *dest_width, int *dest_height, double *dest_aspect, int *win_x, int *win_y);
@@ -94,7 +95,7 @@ protected slots:
 	void onVideoLayerGeometryChanged();
 
 private:
-	virtual void setSCConfig(SCConfig *scConfig);
+	void setSCConfig(SCConfig *scConfig) Q_DECL_OVERRIDE;
 
 private:
 #ifdef HAVE_XCB

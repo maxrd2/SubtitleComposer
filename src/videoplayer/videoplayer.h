@@ -142,6 +142,7 @@ public slots:
 	bool pause();
 	bool togglePlayPaused();
 	bool seek(double seconds, bool accurate);
+	bool step(int frameOffset);
 	bool stop();
 	bool setActiveAudioStream(int audioStreamIndex);
 

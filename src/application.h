@@ -196,8 +196,10 @@ public slots:
 	void toggleFullScreenMode();
 	void setFullScreenMode(bool enabled);
 
-	void seekBackwards();
-	void seekForwards();
+	void seekBackward();
+	void seekForward();
+	void stepBackward();
+	void stepForward();
 	void playOnlyCurrentLine();
 	void seekToPrevLine();
 	void seekToNextLine();

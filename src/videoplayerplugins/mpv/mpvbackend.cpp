@@ -50,7 +50,7 @@ MPVBackend::~MPVBackend()
 		_finalize();
 }
 
-/*virtual*/ void
+void
 MPVBackend::setSCConfig(SCConfig *scConfig)
 {
 	scConfigGlobalSet(scConfig);
@@ -394,7 +394,18 @@ MPVBackend::seek(double seconds, bool accurate)
 	return true;
 }
 
-/*virtual*/ void
+bool
+MPVBackend::step(int frameOffset)
+{
+	QByteArray strVal = QByteArray::number(frameOffset);
+	const char *cmd = frameOffset > 0 ? "frame-step" : "frame-back-step";
+	const char *args[] = { cmd, nullptr };
+	for(int i = 0, n = qAbs(frameOffset); i < n; i++)
+		mpv_command_async(m_mpv, 0, args);
+	return true;
+}
+
+void
 MPVBackend::playbackRate(double newRate)
 {
 	if(newRate > 1.) // without frame dropping we might go out of sync
@@ -431,7 +442,7 @@ MPVBackend::waitState(VideoPlayer::State state)
 	}
 }
 
-/*virtual*/ bool
+bool
 MPVBackend::reconfigure()
 {
 	if(!m_mpv)
