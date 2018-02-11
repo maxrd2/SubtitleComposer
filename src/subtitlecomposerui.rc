@@ -123,6 +123,8 @@
 			<Action name="stop" />
 			<Action name="seek_backwards" />
 			<Action name="seek_forwards" />
+			<Action name="playrate_increase" />
+			<Action name="playrate_decrease" />
 			<Separator />
 			<Action name="seek_to_previous_line" />
 			<Action name="play_current_line_and_pause" />
