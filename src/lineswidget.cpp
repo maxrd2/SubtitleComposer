@@ -1074,8 +1074,7 @@ LinesWidget::contextMenuEvent(QContextMenuEvent *e)
 
 	QList<QAction *> checkableActions;
 	auto appAction = [&](const char *actionName, bool checkable=false, bool checked=false) -> QAction * {
-		static const Application *app = Application::instance();
-		QAction *action = app->action(actionName);
+		QAction *action = app()->action(actionName);
 		if(checkable) {
 			checkableActions.append(action);
 			action->setCheckable(true);

@@ -27,393 +27,257 @@
 
 using namespace SubtitleComposer;
 
-/// SUBTITLE LINE ACTION
-/// ====================
-
-SubtitleLineAction::SubtitleLineAction(SubtitleLine &line, SubtitleAction::DirtyMode dirtyMode, const QString &description) :
-	Action(description),
-	m_line(line),
-	m_dirtyMode(dirtyMode)
+// *** SubtitleLineAction
+SubtitleLineAction::SubtitleLineAction(SubtitleLine &line, UndoAction::DirtyMode dirtyMode, const QString &description)
+	: UndoAction(dirtyMode, line.subtitle(), description),
+	  m_line(line)
 {}
 
 SubtitleLineAction::~SubtitleLineAction()
 {}
 
-void
-SubtitleLineAction::internalUndo()
-{
-	internalRedo();
-}
 
-void
-SubtitleLineAction::internalPreRedo()
-{
-	if(m_line.m_subtitle)
-		m_line.m_subtitle->incrementState(m_dirtyMode);
-}
-
-void
-SubtitleLineAction::internalPreUndo()
-{
-	if(m_line.m_subtitle)
-		m_line.m_subtitle->decrementState(m_dirtyMode);
-}
-
-void
-SubtitleLineAction::internalEmitUndoSignals()
-{
-	internalEmitRedoSignals();
-}
-
-/// SET LINE PRIMARY TEXT ACTION
-/// ============================
-
-SetLinePrimaryTextAction::SetLinePrimaryTextAction(SubtitleLine &line, const SString &primaryText) :
-	SubtitleLineAction(line, SubtitleAction::Primary, i18n("Set Line Text")),
-	m_primaryText(primaryText)
+// *** SetLinePrimaryTextAction
+SetLinePrimaryTextAction::SetLinePrimaryTextAction(SubtitleLine &line, const SString &primaryText)
+	: SubtitleLineAction(line, UndoAction::Primary, i18n("Set Line Text")),
+	  m_primaryText(primaryText)
 {}
 
 SetLinePrimaryTextAction::~SetLinePrimaryTextAction()
 {}
 
 bool
-SetLinePrimaryTextAction::mergeWithPrevious(Action *pa)
+SetLinePrimaryTextAction::mergeWith(const QUndoCommand *command)
 {
-	SetLinePrimaryTextAction *prevAction = tryCastToThisLineAction<SetLinePrimaryTextAction>(pa);
-	if(!prevAction)
-		return false;
-
-	prevAction->internalPreUndo();
-	m_primaryText = prevAction->m_primaryText;
-	return true;
+	const SetLinePrimaryTextAction *currentAction = static_cast<const SetLinePrimaryTextAction *>(command);
+	return &currentAction->m_line == &m_line;
 }
 
 void
-SetLinePrimaryTextAction::internalRedo()
+SetLinePrimaryTextAction::redo()
 {
-	SString aux = m_line.m_primaryText;
+	SString tmp = m_line.m_primaryText;
 	m_line.m_primaryText = m_primaryText;
-	m_primaryText = aux;
-}
+	m_primaryText = tmp;
 
-void
-SetLinePrimaryTextAction::internalEmitRedoSignals()
-{
-	m_line.emit primaryTextChanged(m_line.m_primaryText);
+	emit m_line.primaryTextChanged(m_line.m_primaryText);
 #ifdef PROPAGATE_LINE_SIGNALS
 	if(m_line.m_subtitle)
-		m_line.m_subtitle->emit linePrimaryTextChanged(&m_line, m_line.m_primaryText);
+		emit m_line.m_subtitle->linePrimaryTextChanged(&m_line, m_line.m_primaryText);
 #endif
 }
 
-/// SET LINE SECONDARY TEXT ACTION
-/// ==============================
 
-SetLineSecondaryTextAction::SetLineSecondaryTextAction(SubtitleLine &line, const SString &secondaryText) :
-	SubtitleLineAction(line, SubtitleAction::Secondary, i18n("Set Line Secondary Text")),
-	m_secondaryText(secondaryText)
+// *** SetLineSecondaryTextAction
+SetLineSecondaryTextAction::SetLineSecondaryTextAction(SubtitleLine &line, const SString &secondaryText)
+	: SubtitleLineAction(line, UndoAction::Secondary, i18n("Set Line Secondary Text")),
+	  m_secondaryText(secondaryText)
 {}
 
 SetLineSecondaryTextAction::~SetLineSecondaryTextAction()
 {}
 
 bool
-SetLineSecondaryTextAction::mergeWithPrevious(Action *pa)
+SetLineSecondaryTextAction::mergeWith(const QUndoCommand *command)
 {
-	SetLineSecondaryTextAction *prevAction = tryCastToThisLineAction<SetLineSecondaryTextAction>(pa);
-	if(!prevAction)
-		return false;
-
-	prevAction->internalPreUndo();
-	m_secondaryText = prevAction->m_secondaryText;
-	return true;
+	const SetLineSecondaryTextAction *currentAction = static_cast<const SetLineSecondaryTextAction *>(command);
+	return &currentAction->m_line == &m_line;
 }
 
 void
-SetLineSecondaryTextAction::internalRedo()
+SetLineSecondaryTextAction::redo()
 {
-	SString aux = m_line.m_secondaryText;
+	SString tmp = m_line.m_secondaryText;
 	m_line.m_secondaryText = m_secondaryText;
-	m_secondaryText = aux;
-}
+	m_secondaryText = tmp;
 
-void
-SetLineSecondaryTextAction::internalEmitRedoSignals()
-{
-	m_line.emit secondaryTextChanged(m_line.m_secondaryText);
+	emit m_line.secondaryTextChanged(m_line.m_secondaryText);
 #ifdef PROPAGATE_LINE_SIGNALS
 	if(m_line.m_subtitle)
-		m_line.m_subtitle->emit lineSecondaryTextChanged(&m_line, m_line.m_secondaryText);
+		emit m_line.m_subtitle->lineSecondaryTextChanged(&m_line, m_line.m_secondaryText);
 #endif
 }
 
-/// SET LINE TEXTS ACTION
-/// =====================
 
-SetLineTextsAction::SetLineTextsAction(SubtitleLine &line, const SString &primaryText, const SString &secondaryText) :
-	SubtitleLineAction(line, SubtitleAction::Both, i18n("Set Line Texts")),
-	m_primaryText(primaryText),
-	m_secondaryText(secondaryText)
+// *** SetLineTextsAction
+SetLineTextsAction::SetLineTextsAction(SubtitleLine &line, const SString &primaryText, const SString &secondaryText)
+	: SubtitleLineAction(line, UndoAction::Both, i18n("Set Line Texts")),
+	  m_primaryText(primaryText),
+	  m_secondaryText(secondaryText)
 {}
 
 SetLineTextsAction::~SetLineTextsAction()
 {}
 
 bool
-SetLineTextsAction::mergeWithPrevious(Action *pa)
+SetLineTextsAction::mergeWith(const QUndoCommand *command)
 {
-	SetLineTextsAction *prevAction = tryCastToThisLineAction<SetLineTextsAction>(pa);
-	if(prevAction) {
-		prevAction->internalPreUndo();
-		m_primaryText = prevAction->m_primaryText;
-		m_secondaryText = prevAction->m_secondaryText;
-	} else {
-		SetLinePrimaryTextAction *prevAction2 = tryCastToThisLineAction<SetLinePrimaryTextAction>(pa);
-		if(prevAction2) {
-			prevAction2->internalPreUndo();
-			m_primaryText = prevAction2->m_primaryText;
-		} else {
-			SetLineSecondaryTextAction *prevAction3 = tryCastToThisLineAction<SetLineSecondaryTextAction>(pa);
-			if(prevAction3) {
-				prevAction3->internalPreUndo();
-				m_secondaryText = prevAction3->m_secondaryText;
-			} else
-				return false;
-		}
-	}
-
-	return true;
+	const SetLineTextsAction *currentAction = static_cast<const SetLineTextsAction *>(command);
+	return &currentAction->m_line == &m_line;
 }
 
 void
-SetLineTextsAction::internalRedo()
+SetLineTextsAction::redo()
 {
 	if(m_line.m_primaryText != m_primaryText) {
-		SString aux = m_line.m_primaryText;
+		SString tmp = m_line.m_primaryText;
 		m_line.m_primaryText = m_primaryText;
-		m_primaryText = aux;
+		m_primaryText = tmp;
+
+		emit m_line.primaryTextChanged(m_line.m_primaryText);
+#ifdef PROPAGATE_LINE_SIGNALS
+		if(m_line.m_subtitle)
+			emit m_line.m_subtitle->linePrimaryTextChanged(&m_line, m_line.m_primaryText);
+#endif
 	}
 
 	if(m_line.m_secondaryText != m_secondaryText) {
-		SString aux = m_line.m_secondaryText;
+		SString tmp = m_line.m_secondaryText;
 		m_line.m_secondaryText = m_secondaryText;
-		m_secondaryText = aux;
-	}
-}
+		m_secondaryText = tmp;
 
-void
-SetLineTextsAction::internalEmitRedoSignals()
-{
-	if(m_line.m_primaryText != m_primaryText) {
-		m_line.emit primaryTextChanged(m_line.m_primaryText);
+		emit m_line.secondaryTextChanged(m_line.m_secondaryText);
 #ifdef PROPAGATE_LINE_SIGNALS
 		if(m_line.m_subtitle)
-			m_line.m_subtitle->emit linePrimaryTextChanged(&m_line, m_line.m_primaryText);
-#endif
-	}
-
-	if(m_line.m_secondaryText != m_secondaryText) {
-		m_line.emit secondaryTextChanged(m_line.m_secondaryText);
-#ifdef PROPAGATE_LINE_SIGNALS
-		if(m_line.m_subtitle)
-			m_line.m_subtitle->emit lineSecondaryTextChanged(&m_line, m_line.m_secondaryText);
+			emit m_line.m_subtitle->lineSecondaryTextChanged(&m_line, m_line.m_secondaryText);
 #endif
 	}
 }
 
-/// SET LINE SHOW TIME ACTION
-/// =========================
 
-SetLineShowTimeAction::SetLineShowTimeAction(SubtitleLine &line, const Time &showTime) :
-	SubtitleLineAction(line, SubtitleAction::Both, i18n("Set Line Show Time")),
-	m_showTime(showTime)
+// *** SetLineShowTimeAction
+SetLineShowTimeAction::SetLineShowTimeAction(SubtitleLine &line, const Time &showTime)
+	: SubtitleLineAction(line, UndoAction::Both, i18n("Set Line Show Time")),
+	  m_showTime(showTime)
 {}
 
 SetLineShowTimeAction::~SetLineShowTimeAction()
 {}
 
 bool
-SetLineShowTimeAction::mergeWithPrevious(Action *pa)
+SetLineShowTimeAction::mergeWith(const QUndoCommand *command)
 {
-	SetLineShowTimeAction *prevAction = tryCastToThisLineAction<SetLineShowTimeAction>(pa);
-	if(!prevAction)
-		return false;
-
-	prevAction->internalPreUndo();
-	m_showTime = prevAction->m_showTime;
-	return true;
+	const SetLineShowTimeAction *currentAction = static_cast<const SetLineShowTimeAction *>(command);
+	return &currentAction->m_line == &m_line;
 }
 
 void
-SetLineShowTimeAction::internalRedo()
+SetLineShowTimeAction::redo()
 {
-	Time aux = m_line.m_showTime;
+	Time tmp = m_line.m_showTime;
 	m_line.m_showTime = m_showTime;
-	m_showTime = aux;
-}
+	m_showTime = tmp;
 
-void
-SetLineShowTimeAction::internalEmitRedoSignals()
-{
-	m_line.emit showTimeChanged(m_line.m_showTime);
+	emit m_line.showTimeChanged(m_line.m_showTime);
 #ifdef PROPAGATE_LINE_SIGNALS
 	if(m_line.m_subtitle)
-		m_line.m_subtitle->emit lineShowTimeChanged(&m_line, m_line.m_showTime);
+		emit m_line.m_subtitle->lineShowTimeChanged(&m_line, m_line.m_showTime);
 #endif
 }
 
-/// SET LINE HIDE TIME ACTION
-/// =========================
 
-SetLineHideTimeAction::SetLineHideTimeAction(SubtitleLine &line, const Time &hideTime) :
-	SubtitleLineAction(line, SubtitleAction::Both, i18n("Set Line Hide Time")),
-	m_hideTime(hideTime)
+// *** SetLineHideTimeAction
+SetLineHideTimeAction::SetLineHideTimeAction(SubtitleLine &line, const Time &hideTime)
+	: SubtitleLineAction(line, UndoAction::Both, i18n("Set Line Hide Time")),
+	  m_hideTime(hideTime)
 {}
 
 SetLineHideTimeAction::~SetLineHideTimeAction()
 {}
 
 bool
-SetLineHideTimeAction::mergeWithPrevious(Action *pa)
+SetLineHideTimeAction::mergeWith(const QUndoCommand *command)
 {
-	SetLineHideTimeAction *prevAction = tryCastToThisLineAction<SetLineHideTimeAction>(pa);
-	if(!prevAction)
-		return false;
-
-	prevAction->internalPreUndo();
-	m_hideTime = prevAction->m_hideTime;
-	return true;
+	const SetLineHideTimeAction *currentAction = static_cast<const SetLineHideTimeAction *>(command);
+	return &currentAction->m_line == &m_line;
 }
 
 void
-SetLineHideTimeAction::internalRedo()
+SetLineHideTimeAction::redo()
 {
-	Time aux = m_line.m_hideTime;
+	Time tmp = m_line.m_hideTime;
 	m_line.m_hideTime = m_hideTime;
-	m_hideTime = aux;
-}
+	m_hideTime = tmp;
 
-void
-SetLineHideTimeAction::internalEmitRedoSignals()
-{
-	m_line.emit hideTimeChanged(m_line.m_hideTime);
+	emit m_line.hideTimeChanged(m_line.m_hideTime);
 #ifdef PROPAGATE_LINE_SIGNALS
 	if(m_line.m_subtitle)
-		m_line.m_subtitle->emit lineHideTimeChanged(&m_line, m_line.m_hideTime);
+		emit m_line.m_subtitle->lineHideTimeChanged(&m_line, m_line.m_hideTime);
 #endif
 }
 
-/// SET LINE TIMES ACTION
-/// =====================
 
-SetLineTimesAction::SetLineTimesAction(SubtitleLine &line, const Time &showTime, const Time &hideTime, QString description) :
-	SubtitleLineAction(line, SubtitleAction::Both, description),
-	m_showTime(showTime),
-	m_hideTime(hideTime)
+// *** SetLineTimesAction
+SetLineTimesAction::SetLineTimesAction(SubtitleLine &line, const Time &showTime, const Time &hideTime, QString description)
+	: SubtitleLineAction(line, UndoAction::Both, description),
+	  m_showTime(showTime),
+	  m_hideTime(hideTime)
 {}
 
 SetLineTimesAction::~SetLineTimesAction()
 {}
 
 bool
-SetLineTimesAction::mergeWithPrevious(Action *pa)
+SetLineTimesAction::mergeWith(const QUndoCommand *command)
 {
-	SetLineTimesAction *prevAction = tryCastToThisLineAction<SetLineTimesAction>(pa);
-	if(prevAction) {
-		prevAction->internalPreUndo();
-		m_showTime = prevAction->m_showTime;
-		m_hideTime = prevAction->m_hideTime;
-	} else {
-		SetLineHideTimeAction *prevAction2 = tryCastToThisLineAction<SetLineHideTimeAction>(pa);
-		if(prevAction2) {
-			prevAction2->internalPreUndo();
-			m_hideTime = prevAction2->m_hideTime;
-		} else {
-			SetLineShowTimeAction *prevAction3 = tryCastToThisLineAction<SetLineShowTimeAction>(pa);
-			if(prevAction3) {
-				prevAction3->internalPreUndo();
-				m_showTime = prevAction3->m_showTime;
-			} else
-				return false;
-		}
-	}
-
-	return true;
+	const SetLineTimesAction *currentAction = static_cast<const SetLineTimesAction *>(command);
+	return &currentAction->m_line == &m_line;
 }
 
 void
-SetLineTimesAction::internalRedo()
+SetLineTimesAction::redo()
 {
 	if(m_line.m_showTime != m_showTime) {
-		Time aux = m_line.m_showTime;
+		Time tmp = m_line.m_showTime;
 		m_line.m_showTime = m_showTime;
-		m_showTime = aux;
+		m_showTime = tmp;
+
+		emit m_line.showTimeChanged(m_line.m_showTime);
+#ifdef PROPAGATE_LINE_SIGNALS
+		if(m_line.m_subtitle)
+			emit m_line.m_subtitle->lineShowTimeChanged(&m_line, m_line.m_showTime);
+#endif
 	}
 
 	if(m_line.m_hideTime != m_hideTime) {
-		Time aux = m_line.m_hideTime;
+		Time tmp = m_line.m_hideTime;
 		m_line.m_hideTime = m_hideTime;
-		m_hideTime = aux;
-	}
-}
+		m_hideTime = tmp;
 
-void
-SetLineTimesAction::internalEmitRedoSignals()
-{
-	if(m_line.m_showTime != m_showTime) {
-		m_line.emit showTimeChanged(m_line.m_showTime);
+		emit m_line.hideTimeChanged(m_line.m_hideTime);
 #ifdef PROPAGATE_LINE_SIGNALS
 		if(m_line.m_subtitle)
-			m_line.m_subtitle->emit lineShowTimeChanged(&m_line, m_line.m_showTime);
-#endif
-	}
-
-	if(m_line.m_hideTime != m_hideTime) {
-		m_line.emit hideTimeChanged(m_line.m_hideTime);
-#ifdef PROPAGATE_LINE_SIGNALS
-		if(m_line.m_subtitle)
-			m_line.m_subtitle->emit lineHideTimeChanged(&m_line, m_line.m_hideTime);
+			emit m_line.m_subtitle->lineHideTimeChanged(&m_line, m_line.m_hideTime);
 #endif
 	}
 }
 
-/// SET LINE ERRORS ACTION
-/// ======================
-
-SetLineErrorsAction::SetLineErrorsAction(SubtitleLine &line, int errorFlags) :
-	SubtitleLineAction(line, SubtitleAction::None, i18n("Set Line Errors")),
-	m_errorFlags(errorFlags)
+// *** SetLineErrorsAction
+SetLineErrorsAction::SetLineErrorsAction(SubtitleLine &line, int errorFlags)
+	: SubtitleLineAction(line, UndoAction::None, i18n("Set Line Errors")),
+	  m_errorFlags(errorFlags)
 {}
 
 SetLineErrorsAction::~SetLineErrorsAction()
 {}
 
 bool
-SetLineErrorsAction::mergeWithPrevious(Action *pa)
+SetLineErrorsAction::mergeWith(const QUndoCommand *command)
 {
-	SetLineErrorsAction *prevAction = tryCastToThisLineAction<SetLineErrorsAction>(pa);
-	if(!prevAction)
-		return false;
-
-	prevAction->internalPreUndo();
-	m_errorFlags = prevAction->m_errorFlags;
-	return true;
+	const SetLineErrorsAction *currentAction = static_cast<const SetLineErrorsAction *>(command);
+	return &currentAction->m_line == &m_line;
 }
 
 void
-SetLineErrorsAction::internalRedo()
+SetLineErrorsAction::redo()
 {
-	int aux = m_line.m_errorFlags;
+	int tmp = m_line.m_errorFlags;
 	m_line.m_errorFlags = m_errorFlags;
-	m_errorFlags = aux;
-}
+	m_errorFlags = tmp;
 
-void
-SetLineErrorsAction::internalEmitRedoSignals()
-{
-	m_line.emit errorFlagsChanged(m_line.m_errorFlags);
+	emit m_line.errorFlagsChanged(m_line.m_errorFlags);
 #ifdef PROPAGATE_LINE_SIGNALS
 	if(m_line.m_subtitle)
-		m_line.m_subtitle->emit lineErrorFlagsChanged(&m_line, m_line.m_errorFlags);
+		emit m_line.m_subtitle->lineErrorFlagsChanged(&m_line, m_line.m_errorFlags);
 #endif
 }

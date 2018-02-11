@@ -183,7 +183,7 @@ WaveformWidget::onConfigChanged()
 void
 WaveformWidget::updateActions()
 {
-	const Application *app = Application::instance();
+	const Application *app = SubtitleComposer::app();
 	const quint32 size = windowSize();
 
 	m_btnZoomIn->setDefaultAction(app->action(ACT_WAVEFORM_ZOOM_IN));
@@ -574,7 +574,7 @@ WaveformWidget::paintGraphics(QPainter &painter)
 	if(m_subtitle)
 		anchoredLines = m_subtitle->anchoredLines();
 
-	const RangeList &selection = Application::instance()->linesWidget()->selectionRanges();
+	const RangeList &selection = app()->linesWidget()->selectionRanges();
 	foreach(const SubtitleLine *sub, m_visibleLines) {
 		bool selected = selection.contains(sub->index());
 		Time timeShow = sub->showTime();
@@ -1077,7 +1077,7 @@ WaveformWidget::showContextMenu(QMouseEvent *event)
 	static QMenu *menu = nullptr;
 	static QList<QAction *> needCurrentLine;
 
-	const Application *app = Application::instance();
+	const Application *app = SubtitleComposer::app();
 	SubtitleLine *currentLine = subtitleLineAtMousePosition();
 	SubtitleLine *selectedLine = app->linesWidget()->currentLine();
 

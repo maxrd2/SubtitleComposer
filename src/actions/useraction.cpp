@@ -152,8 +152,6 @@ UserActionManager::setSubtitle(Subtitle *subtitle)
 		disconnect(m_subtitle, SIGNAL(secondaryDirtyStateChanged(bool)), this, SLOT(onSecondaryDirtyStateChanged(bool)));
 
 		disconnect(m_subtitle, SIGNAL(lineAnchorChanged(const SubtitleLine*,bool)), this, SLOT(onSubtitleAnchorsChanged()));
-
-		disconnect(&(m_subtitle->actionManager()), SIGNAL(stateChanged()), this, SLOT(onUndoRedoStateChanged()));
 	}
 
 	m_subtitle = subtitle;
@@ -161,8 +159,6 @@ UserActionManager::setSubtitle(Subtitle *subtitle)
 	int newContextFlags = m_contextFlags & ~UserAction::SubtitleMask;
 
 	if(m_subtitle) {
-		const ActionManager *actionManager = &(m_subtitle->actionManager());
-
 		connect(m_subtitle, SIGNAL(linesRemoved(int, int)), this, SLOT(onSubtitleLinesChanged()));
 		connect(m_subtitle, SIGNAL(linesInserted(int, int)), this, SLOT(onSubtitleLinesChanged()));
 
@@ -170,8 +166,6 @@ UserActionManager::setSubtitle(Subtitle *subtitle)
 		connect(m_subtitle, SIGNAL(secondaryDirtyStateChanged(bool)), this, SLOT(onSecondaryDirtyStateChanged(bool)));
 
 		connect(m_subtitle, SIGNAL(lineAnchorChanged(const SubtitleLine*,bool)), this, SLOT(onSubtitleAnchorsChanged()));
-
-		connect(actionManager, SIGNAL(stateChanged()), this, SLOT(onUndoRedoStateChanged()));
 
 		newContextFlags |= UserAction::SubOpened;
 
@@ -206,11 +200,6 @@ UserActionManager::setSubtitle(Subtitle *subtitle)
 			if(anchors.indexOf(selected) != -1)
 				newContextFlags |= UserAction::EditableShowTime;
 		}
-
-		if(actionManager->hasUndo())
-			newContextFlags |= UserAction::SubHasUndo;
-		if(actionManager->hasRedo())
-			newContextFlags |= UserAction::SubHasRedo;
 	} else {
 		newContextFlags |= (UserAction::SubClosed | UserAction::SubPClean | UserAction::SubTrClosed | UserAction::SubSClean);
 	}
@@ -257,19 +246,6 @@ UserActionManager::onSecondaryDirtyStateChanged(bool dirty)
 	} else {
 		newContextFlags |= UserAction::SubSClean;
 	}
-
-	updateActionsContext(newContextFlags);
-}
-
-void
-UserActionManager::onUndoRedoStateChanged()
-{
-	int newContextFlags = m_contextFlags & ~(UserAction::SubHasUndo | UserAction::SubHasRedo);
-
-	if(m_subtitle->actionManager().hasUndo())
-		newContextFlags |= UserAction::SubHasUndo;
-	if(m_subtitle->actionManager().hasRedo())
-		newContextFlags |= UserAction::SubHasRedo;
 
 	updateActionsContext(newContextFlags);
 }

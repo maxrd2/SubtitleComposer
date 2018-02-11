@@ -46,21 +46,19 @@ public:
 		SubPClean        = 0x80,	// Subtitle opened or closed without unsaved changes
 		SubSDirty        = 0x100,	// Subtitle opened and has unsaved changes
 		SubSClean        = 0x200,	// Subtitle opened or closed without unsaved changes
-		SubHasUndo       = 0x400,	// An action can be undone
-		SubHasRedo       = 0x800,	// An action can be redone
-		HasSelection     = 0x1000,	// Subtitle opened with, at least, one line selected
-		VideoClosed      = 0x2000,
-		VideoOpened      = 0x4000,
-		VideoStopped     = 0x8000,
-		VideoPlaying     = 0x10000,
-		FullScreenOn     = 0x20000,
-		FullScreenOff    = 0x40000,
-		AnchorsNone      = 0x80000,	// None of the subtitles is anchored
-		AnchorsSome      = 0x100000,	// At least one subtitle is anchored
-		EditableShowTime = 0x200000,	// Selected line's show time is editable
+		HasSelection     = 0x400,	// Subtitle opened with, at least, one line selected
+		VideoClosed      = 0x800,
+		VideoOpened      = 0x1000,
+		VideoStopped     = 0x2000,
+		VideoPlaying     = 0x4000,
+		FullScreenOn     = 0x8000,
+		FullScreenOff    = 0x10000,
+		AnchorsNone      = 0x20000,	// None of the subtitles is anchored
+		AnchorsSome      = 0x40000,	// At least one subtitle is anchored
+		EditableShowTime = 0x80000,	// Selected line's show time is editable
 
 		AnchorsMask = AnchorsNone | AnchorsSome | EditableShowTime,
-		SubtitleMask = SubClosed | SubOpened | SubTrClosed | SubTrOpened | SubPDirty | SubPClean | SubSDirty | SubSClean | SubHasLine | SubHasLines | SubHasUndo | SubHasRedo | AnchorsMask,
+		SubtitleMask = SubClosed | SubOpened | SubTrClosed | SubTrOpened | SubPDirty | SubPClean | SubSDirty | SubSClean | SubHasLine | SubHasLines | AnchorsMask,
 		SelectionMask = HasSelection,
 		VideoMask = VideoClosed | VideoOpened | VideoStopped | VideoPlaying,
 		FullScreenMask = FullScreenOn | FullScreenOff,
@@ -121,7 +119,6 @@ private slots:
 	void onSubtitleLinesChanged();
 	void onPrimaryDirtyStateChanged(bool dirty);
 	void onSecondaryDirtyStateChanged(bool dirty);
-	void onUndoRedoStateChanged();
 	void onLinesWidgetSelectionChanged();
 	void onPlayerStateChanged();
 	void onSubtitleAnchorsChanged();

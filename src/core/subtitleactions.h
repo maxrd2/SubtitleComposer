@@ -23,6 +23,7 @@
 
 #include "core/range.h"
 #include "core/rangelist.h"
+#include "core/undoaction.h"
 #include "core/subtitle.h"
 
 #include <QString>
@@ -31,17 +32,10 @@
 namespace SubtitleComposer {
 class CompositeAction;
 
-class SubtitleAction : public Action
+class SubtitleAction : public UndoAction
 {
 public:
-	typedef enum {
-		None,
-		Primary,
-		Secondary,
-		Both
-	} DirtyMode;
-
-	SubtitleAction(Subtitle &subtitle, DirtyMode dirtyMode, const QString &description = QString());
+	SubtitleAction(Subtitle &subtitle, UndoAction::DirtyMode dirtyMode, const QString &description = QString());
 	virtual ~SubtitleAction();
 
 	inline void setLineSubtitle(SubtitleLine *line, int index)
@@ -57,12 +51,7 @@ public:
 	}
 
 protected:
-	virtual void internalPreRedo();
-	virtual void internalPreUndo();
-
-protected:
 	Subtitle &m_subtitle;
-	const DirtyMode m_dirtyMode;
 };
 
 class SetFramesPerSecondAction : public SubtitleAction
@@ -71,12 +60,10 @@ public:
 	SetFramesPerSecondAction(Subtitle &subtitle, double framesPerSecond);
 	virtual ~SetFramesPerSecondAction();
 
-protected:
-	virtual void internalRedo();
-	virtual void internalUndo();
+	inline int id() const Q_DECL_OVERRIDE { return UndoAction::SetFramesPerSecond; }
 
-	virtual void internalEmitRedoSignals();
-	virtual void internalEmitUndoSignals();
+protected:
+	void redo() Q_DECL_OVERRIDE;
 
 private:
 	double m_framesPerSecond;
@@ -88,11 +75,12 @@ public:
 	InsertLinesAction(Subtitle &subtitle, const QList<SubtitleLine *> &lines, int insertIndex = -1);
 	virtual ~InsertLinesAction();
 
-protected:
-	virtual bool mergeWithPrevious(Action *prevAction);
+	inline int id() const Q_DECL_OVERRIDE { return UndoAction::InsertLines; }
+	bool mergeWith(const QUndoCommand *command) Q_DECL_OVERRIDE;
 
-	virtual void internalRedo();
-	virtual void internalUndo();
+protected:
+	void redo() Q_DECL_OVERRIDE;
+	void undo() Q_DECL_OVERRIDE;
 
 private:
 	int m_insertIndex;
@@ -106,15 +94,16 @@ public:
 	RemoveLinesAction(Subtitle &subtitle, int firstIndex, int lastIndex = -1);
 	virtual ~RemoveLinesAction();
 
-protected:
-	virtual bool mergeWithPrevious(Action *prevAction);
+	inline int id() const Q_DECL_OVERRIDE { return UndoAction::RemoveLines; }
+	bool mergeWith(const QUndoCommand *command) Q_DECL_OVERRIDE;
 
-	virtual void internalRedo();
-	virtual void internalUndo();
+protected:
+	void redo() Q_DECL_OVERRIDE;
+	void undo() Q_DECL_OVERRIDE;
 
 private:
-	const int m_firstIndex;
-	/*const*/ int m_lastIndex;
+	int m_firstIndex;
+	int m_lastIndex;
 	QList<SubtitleLine *> m_lines;
 };
 
@@ -124,11 +113,12 @@ public:
 	MoveLineAction(Subtitle &subtitle, int fromIndex, int toIndex = -1);
 	virtual ~MoveLineAction();
 
-protected:
-	virtual bool mergeWithPrevious(Action *prevAction);
+	inline int id() const Q_DECL_OVERRIDE { return UndoAction::MoveLine; }
+	bool mergeWith(const QUndoCommand *command) Q_DECL_OVERRIDE;
 
-	virtual void internalRedo();
-	virtual void internalUndo();
+protected:
+	void redo() Q_DECL_OVERRIDE;
+	void undo() Q_DECL_OVERRIDE;
 
 private:
 	int m_fromIndex;
@@ -141,12 +131,10 @@ public:
 	SwapLinesTextsAction(Subtitle &subtitle, const RangeList &ranges);
 	virtual ~SwapLinesTextsAction();
 
-protected:
-	virtual void internalRedo();
-	virtual void internalUndo();
+	inline int id() const Q_DECL_OVERRIDE { return UndoAction::SwapLinesTexts; }
 
-	virtual void internalEmitRedoSignals();
-	virtual void internalEmitUndoSignals();
+protected:
+	void redo() Q_DECL_OVERRIDE;
 
 private:
 	const RangeList m_ranges;

@@ -21,13 +21,15 @@
  * Boston, MA 02110-1301, USA.
  */
 
-#include "action.h"
+#include "core/undoaction.h"
 #include "core/sstring.h"
 #include "core/time.h"
 #include "formatdata.h"
 
 #include <QObject>
 #include <QString>
+
+class QUndoCommand;
 
 namespace SubtitleComposer {
 class Subtitle;
@@ -233,7 +235,7 @@ private:
 	FormatData * formatData() const;
 	void setFormatData(const FormatData *formatData);
 
-	void processAction(Action *action);
+	void processAction(QUndoCommand *action);
 
 private:
 	Subtitle *m_subtitle;

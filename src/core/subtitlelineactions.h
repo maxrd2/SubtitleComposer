@@ -21,39 +21,30 @@
  * Boston, MA 02110-1301, USA.
  */
 
-#include "action.h"
+#include "core/undoaction.h"
 #include "core/time.h"
 #include "core/sstring.h"
-#include "subtitleline.h"
-#include "subtitleactions.h"
+#include "core/undoaction.h"
+#include "core/subtitleline.h"
 
 #include <QString>
 
 namespace SubtitleComposer {
-class SubtitleLineAction : public Action
+class SubtitleLineAction : public UndoAction
 {
 public:
-	SubtitleLineAction(SubtitleLine &line, SubtitleAction::DirtyMode dirtyMode, const QString &desc = QString());
+	SubtitleLineAction(SubtitleLine &line, UndoAction::DirtyMode dirtyMode, const QString &desc = QString());
 	virtual ~SubtitleLineAction();
 
 protected:
-	virtual void internalUndo();
-
-	virtual void internalPreRedo();
-	virtual void internalPreUndo();
-
-	virtual void internalEmitUndoSignals();
+	SubtitleLine &m_line;
 
 	template<class T>
-	T * tryCastToThisLineAction(Action *prevAction)
+	const T * tryCastToThisLineAction(const QUndoCommand *prevAction)
 	{
-		T *castedPrevAction = dynamic_cast<T *>(prevAction);
+		const T *castedPrevAction = dynamic_cast<const T *>(prevAction);
 		return castedPrevAction ? (&castedPrevAction->m_line == &m_line ? castedPrevAction : 0) : 0;
 	}
-
-protected:
-	SubtitleLine &m_line;
-	SubtitleAction::DirtyMode m_dirtyMode;
 };
 
 class SetLinePrimaryTextAction : public SubtitleLineAction
@@ -64,11 +55,11 @@ public:
 	SetLinePrimaryTextAction(SubtitleLine &line, const SString &primaryText);
 	virtual ~SetLinePrimaryTextAction();
 
-protected:
-	virtual bool mergeWithPrevious(Action *prevAction);
+	inline int id() const Q_DECL_OVERRIDE { return UndoAction::SetLinePrimaryText; }
+	bool mergeWith(const QUndoCommand *command) Q_DECL_OVERRIDE;
 
-	virtual void internalRedo();
-	virtual void internalEmitRedoSignals();
+protected:
+	void redo() Q_DECL_OVERRIDE;
 
 private:
 	SString m_primaryText;
@@ -82,11 +73,11 @@ public:
 	SetLineSecondaryTextAction(SubtitleLine &line, const SString &secondaryText);
 	virtual ~SetLineSecondaryTextAction();
 
-protected:
-	virtual bool mergeWithPrevious(Action *prevAction);
+	inline int id() const Q_DECL_OVERRIDE { return UndoAction::SetLineSecondaryText; }
+	bool mergeWith(const QUndoCommand *command) Q_DECL_OVERRIDE;
 
-	virtual void internalRedo();
-	virtual void internalEmitRedoSignals();
+protected:
+	void redo() Q_DECL_OVERRIDE;
 
 private:
 	SString m_secondaryText;
@@ -99,11 +90,11 @@ public:
 	SetLineTextsAction(SubtitleLine &line, const SString &primaryText, const SString &secondaryText);
 	virtual ~SetLineTextsAction();
 
-protected:
-	virtual bool mergeWithPrevious(Action *prevAction);
+	inline int id() const Q_DECL_OVERRIDE { return UndoAction::SetLineTexts; }
+	bool mergeWith(const QUndoCommand *command) Q_DECL_OVERRIDE;
 
-	virtual void internalRedo();
-	virtual void internalEmitRedoSignals();
+protected:
+	void redo() Q_DECL_OVERRIDE;
 
 private:
 	SString m_primaryText;
@@ -118,11 +109,11 @@ public:
 	SetLineShowTimeAction(SubtitleLine &line, const Time &showTime);
 	virtual ~SetLineShowTimeAction();
 
-protected:
-	virtual bool mergeWithPrevious(Action *prevAction);
+	inline int id() const Q_DECL_OVERRIDE { return UndoAction::SetLineShowTime; }
+	bool mergeWith(const QUndoCommand *command) Q_DECL_OVERRIDE;
 
-	virtual void internalRedo();
-	virtual void internalEmitRedoSignals();
+protected:
+	void redo() Q_DECL_OVERRIDE;
 
 private:
 	Time m_showTime;
@@ -136,11 +127,11 @@ public:
 	SetLineHideTimeAction(SubtitleLine &line, const Time &hideTime);
 	virtual ~SetLineHideTimeAction();
 
-protected:
-	virtual bool mergeWithPrevious(Action *prevAction);
+	inline int id() const Q_DECL_OVERRIDE { return UndoAction::SetLineHideTime; }
+	bool mergeWith(const QUndoCommand *command) Q_DECL_OVERRIDE;
 
-	virtual void internalRedo();
-	virtual void internalEmitRedoSignals();
+protected:
+	void redo() Q_DECL_OVERRIDE;
 
 private:
 	Time m_hideTime;
@@ -152,11 +143,11 @@ public:
 	SetLineTimesAction(SubtitleLine &line, const Time &showTime, const Time &hideTime, QString description = QString());
 	virtual ~SetLineTimesAction();
 
-protected:
-	virtual bool mergeWithPrevious(Action *prevAction);
+	inline int id() const Q_DECL_OVERRIDE { return UndoAction::SetLineTimes; }
+	bool mergeWith(const QUndoCommand *command) Q_DECL_OVERRIDE;
 
-	virtual void internalRedo();
-	virtual void internalEmitRedoSignals();
+protected:
+	void redo() Q_DECL_OVERRIDE;
 
 private:
 	typedef enum { ShowTime = 0x1, HideTime = 0x2 } SignalFlags;
@@ -171,11 +162,11 @@ public:
 	SetLineErrorsAction(SubtitleLine &line, int errorFlags);
 	virtual ~SetLineErrorsAction();
 
-protected:
-	virtual bool mergeWithPrevious(Action *prevAction);
+	inline int id() const Q_DECL_OVERRIDE { return UndoAction::SetLineErrors; }
+	bool mergeWith(const QUndoCommand *command) Q_DECL_OVERRIDE;
 
-	virtual void internalRedo();
-	virtual void internalEmitRedoSignals();
+protected:
+	void redo() Q_DECL_OVERRIDE;
 
 private:
 	int m_errorFlags;

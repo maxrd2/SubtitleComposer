@@ -511,7 +511,7 @@ SubtitleLine::setShowTime(const Time &showTime, bool safe/*=false*/)
 		m_subtitle->endCompositeAction();
 	} else {
 		if(safe && showTime > m_hideTime)
-			setTimes(m_hideTime, showTime);
+			setTimes(showTime, showTime);
 		else
 			processAction(new SetLineShowTimeAction(*this, showTime));
 	}
@@ -1045,7 +1045,7 @@ SubtitleLine::check(int errorFlagsToCheck, int minDurationMsecs, int maxDuration
 }
 
 void
-SubtitleLine::processAction(Action *action)
+SubtitleLine::processAction(QUndoCommand *action)
 {
 	if(m_subtitle) {
 		m_subtitle->processAction(action);

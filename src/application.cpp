@@ -98,16 +98,13 @@
 #include <KMessageBox>
 #include <KComboBox>
 
+#include <QUndoGroup>
+#include <QUndoStack>
+
 #define SC_VIDEO_EXTENSIONS "avi flv mkv mov mpg mpeg mp4 wmv ogm ogv rmvb ts vob webm divx"
 #define SC_AUDIO_EXTENSIONS "aac ac3 ape flac la m4a mac mp2 mp3 mp4 mp+ mpc mpp ofr oga ogg pac ra spx tta wav wma wv"
 
 using namespace SubtitleComposer;
-
-Application *
-SubtitleComposer::app()
-{
-	return Application::instance();
-}
 
 Application::Application(int &argc, char **argv) :
 	QApplication(argc, argv),
@@ -152,9 +149,27 @@ Application::init()
 
 	m_errorTracker = new ErrorTracker(this);
 
+	m_textDemux = new TextDemux(m_mainWindow);
+	m_mainWindow->statusBar()->addPermanentWidget(m_textDemux->progressWidget());
+
+	m_speechProcessor = new SpeechProcessor(m_mainWindow);
+	m_mainWindow->statusBar()->addPermanentWidget(m_speechProcessor->progressWidget());
+
 	m_scriptsManager = new ScriptsManager(this);
 
+	m_undoStack = new QUndoStack(m_mainWindow);
+
 	UserActionManager *actionManager = UserActionManager::instance();
+	actionManager->setLinesWidget(m_linesWidget);
+	actionManager->setPlayer(m_player);
+	actionManager->setFullScreenMode(false);
+
+	setupActions();
+
+	connect(m_undoStack, &QUndoStack::undoTextChanged, [&](const QString &text){ static QAction *a = action(ACT_UNDO); a->setToolTip(text); });
+	connect(m_undoStack, &QUndoStack::redoTextChanged, [&](const QString &text){ static QAction *a = action(ACT_REDO); a->setToolTip(text); });
+	connect(m_undoStack, &QUndoStack::indexChanged, [&](int){ if(m_subtitle) m_subtitle->updateState(); });
+	connect(m_undoStack, &QUndoStack::cleanChanged, [&](bool){ if(m_subtitle) m_subtitle->updateState(); });
 
 	connect(SCConfig::self(), SIGNAL(configChanged()), this, SLOT(onConfigChanged()));
 
@@ -170,7 +185,7 @@ Application::init()
 	QList<QObject *> listeners;
 	listeners << actionManager << m_mainWindow << m_playerWidget << m_linesWidget
 			  << m_curLineWidget << m_finder << m_replacer << m_errorFinder << m_speller
-			  << m_errorTracker << m_scriptsManager << m_mainWindow->m_waveformWidget;
+			  << m_errorTracker << m_scriptsManager << m_mainWindow->m_waveformWidget << m_speechProcessor;
 	for(QList<QObject *>::ConstIterator it = listeners.begin(), end = listeners.end(); it != end; ++it) {
 		connect(this, SIGNAL(subtitleOpened(Subtitle *)), *it, SLOT(setSubtitle(Subtitle *)));
 		connect(this, SIGNAL(subtitleClosed()), *it, SLOT(setSubtitle()));
@@ -200,21 +215,9 @@ Application::init()
 	connect(m_errorFinder, SIGNAL(found(SubtitleLine *)), this, SLOT(onHighlightLine(SubtitleLine *)));
 	connect(m_speller, SIGNAL(misspelled(SubtitleLine *, bool, int, int)), this, SLOT(onHighlightLine(SubtitleLine *, bool, int, int)));
 
-	actionManager->setLinesWidget(m_linesWidget);
-	actionManager->setPlayer(m_player);
-	actionManager->setFullScreenMode(false);
-
-	setupActions();
-
-	m_textDemux = new TextDemux(m_mainWindow);
 	connect(m_textDemux, &TextDemux::onError, [&](const QString &message){ KMessageBox::sorry(m_mainWindow, message); });
-	m_mainWindow->statusBar()->addPermanentWidget(m_textDemux->progressWidget());
 
-	m_speechProcessor = new SpeechProcessor(m_mainWindow);
 	connect(m_speechProcessor, &SpeechProcessor::onError, [&](const QString &message){ KMessageBox::sorry(m_mainWindow, message); });
-	connect(this, SIGNAL(subtitleOpened(Subtitle *)), m_speechProcessor, SLOT(setSubtitle(Subtitle *)));
-	connect(this, SIGNAL(subtitleClosed()), m_speechProcessor, SLOT(setSubtitle()));
-	m_mainWindow->statusBar()->addPermanentWidget(m_speechProcessor->progressWidget());
 
 	m_playerWidget->plugActions();
 	m_curLineWidget->setupActions();
@@ -236,12 +239,6 @@ Application::~Application()
 	// delete m_mainWindow; the window is destroyed when it's closed
 
 	delete m_subtitle;
-}
-
-Application *
-Application::instance()
-{
-	return static_cast<Application *>(QApplication::instance());
 }
 
 Subtitle *
@@ -546,23 +543,15 @@ Application::setupActions()
 	actionCollection->addAction(ACT_CLOSE_SUBTITLE_TR, closeSubtitleTrAction);
 	actionManager->addAction(closeSubtitleTrAction, UserAction::SubTrOpened | UserAction::FullScreenOff);
 
-	QAction *undoAction = new QAction(actionCollection);
+	QAction *undoAction = m_undoStack->createUndoAction(actionManager);
 	undoAction->setIcon(QIcon::fromTheme("edit-undo"));
-	undoAction->setText(i18n("Undo"));
-	undoAction->setStatusTip(i18n("Undo"));
 	actionCollection->setDefaultShortcuts(undoAction, KStandardShortcut::undo());
-	connect(undoAction, SIGNAL(triggered()), this, SLOT(undo()));
 	actionCollection->addAction(ACT_UNDO, undoAction);
-	actionManager->addAction(undoAction, UserAction::SubHasUndo);
 
-	QAction *redoAction = new QAction(actionCollection);
+	QAction *redoAction = m_undoStack->createRedoAction(actionManager);
 	redoAction->setIcon(QIcon::fromTheme("edit-redo"));
-	redoAction->setText(i18n("Redo"));
-	redoAction->setStatusTip(i18n("Redo"));
 	actionCollection->setDefaultShortcuts(redoAction, KStandardShortcut::redo());
-	connect(redoAction, SIGNAL(triggered()), this, SLOT(redo()));
 	actionCollection->addAction(ACT_REDO, redoAction);
-	actionManager->addAction(redoAction, UserAction::SubHasRedo);
 
 	QAction *splitSubtitleAction = new QAction(actionCollection);
 	splitSubtitleAction->setText(i18n("Split Subtitle..."));
@@ -1216,20 +1205,6 @@ Application::videoPosition(bool compensate)
 		return Time(double(m_player->position()) * 1000.);
 }
 
-void
-Application::undo()
-{
-	if(m_subtitle)
-		m_subtitle->actionManager().undo();
-}
-
-void
-Application::redo()
-{
-	if(m_subtitle)
-		m_subtitle->actionManager().redo();
-}
-
 QTextCodec *
 Application::codecForUrl(const QUrl &url, bool useRecentFiles, bool useDefault)
 {
@@ -1306,7 +1281,6 @@ Application::newSubtitle()
 
 	connect(m_subtitle, SIGNAL(primaryDirtyStateChanged(bool)), this, SLOT(updateTitle()));
 	connect(m_subtitle, SIGNAL(secondaryDirtyStateChanged(bool)), this, SLOT(updateTitle()));
-	connect(&m_subtitle->actionManager(), SIGNAL(stateChanged()), this, SLOT(updateUndoRedoToolTips()));
 
 	updateTitle();
 }
@@ -1349,7 +1323,7 @@ Application::openSubtitle(const QUrl &url, bool warnClashingUrls)
 
 	if(FormatManager::instance().readSubtitle(*m_subtitle, true, fileUrl, &codec, &m_subtitleEOL, &m_subtitleFormat)) {
 		// The loading of the subtitle shouldn't be an undoable action as there's no state before it
-		m_subtitle->actionManager().clearHistory();
+		m_undoStack->clear();
 		m_subtitle->clearPrimaryDirty();
 		m_subtitle->clearSecondaryDirty();
 
@@ -1370,7 +1344,6 @@ Application::openSubtitle(const QUrl &url, bool warnClashingUrls)
 
 		connect(m_subtitle, SIGNAL(primaryDirtyStateChanged(bool)), this, SLOT(updateTitle()));
 		connect(m_subtitle, SIGNAL(secondaryDirtyStateChanged(bool)), this, SLOT(updateTitle()));
-		connect(&m_subtitle->actionManager(), SIGNAL(stateChanged()), this, SLOT(updateUndoRedoToolTips()));
 
 		updateTitle();
 
@@ -1444,7 +1417,7 @@ Application::reopenSubtitleWithCodecOrDetectScript(QTextCodec *codec)
 	m_subtitle = subtitle;
 
 	// The loading of the subtitle shouldn't be an undoable action as there's no state before it
-	m_subtitle->actionManager().clearHistory();
+	m_undoStack->clear();
 	m_subtitle->clearPrimaryDirty();
 	m_subtitle->clearSecondaryDirty();
 
@@ -1462,7 +1435,6 @@ Application::reopenSubtitleWithCodecOrDetectScript(QTextCodec *codec)
 
 	connect(m_subtitle, SIGNAL(primaryDirtyStateChanged(bool)), this, SLOT(updateTitle()));
 	connect(m_subtitle, SIGNAL(secondaryDirtyStateChanged(bool)), this, SLOT(updateTitle()));
-	connect(&m_subtitle->actionManager(), SIGNAL(stateChanged()), this, SLOT(updateUndoRedoToolTips()));
 }
 
 void
@@ -1575,6 +1547,8 @@ Application::closeSubtitle()
 			emit translationModeChanged(false);
 		}
 
+		m_undoStack->clear();
+
 		emit subtitleClosed();
 
 		delete m_subtitle;
@@ -1672,7 +1646,7 @@ Application::openSubtitleTr(const QUrl &url, bool warnClashingUrls)
 	// After the loading of the translation subtitle we must clear the history or (from
 	// a user POV) it would be possible to execute (undo) actions which would result in an
 	// unexpected state.
-	m_subtitle->actionManager().clearHistory();
+	m_undoStack->clear();
 	// We don't clear the primary dirty state because the loading of the translation
 	// only changes it when actually needed (i.e., when the translation had more lines)
 	m_subtitle->clearSecondaryDirty();
@@ -1719,10 +1693,10 @@ Application::reopenSubtitleTrWithCodecOrDetectScript(QTextCodec *codec)
 	// After the loading of the translation subtitle we must clear the history or (from
 	// a user POV) it would be possible to execute (undo) actions which would result in an
 	// unexpected state.
-	m_subtitle->actionManager().clearHistory();
+	m_undoStack->clear();
 	// We don't clear the primary dirty state because the loading of the translation
 	// only changes it when actually needed (i.e., when the translation had more lines)
-	m_subtitle->clearPrimaryDirty();        // TODO is this needed?
+	m_subtitle->clearPrimaryDirty();
 	m_subtitle->clearSecondaryDirty();
 
 	emit subtitleOpened(m_subtitle);
@@ -1739,7 +1713,6 @@ Application::reopenSubtitleTrWithCodecOrDetectScript(QTextCodec *codec)
 
 	connect(m_subtitle, SIGNAL(primaryDirtyStateChanged(bool)), this, SLOT(updateTitle()));
 	connect(m_subtitle, SIGNAL(secondaryDirtyStateChanged(bool)), this, SLOT(updateTitle()));
-	connect(&m_subtitle->actionManager(), SIGNAL(stateChanged()), this, SLOT(updateUndoRedoToolTips()));
 }
 
 bool
@@ -1818,13 +1791,12 @@ Application::closeSubtitleTr()
 
 		m_linesWidget->setUpdatesEnabled(false);
 
-		int oldUndoCount = m_subtitle->actionManager().undoCount();
+		// The cleaning of the translations texts shouldn't be an undoable action
+//		QUndoStack *savedStack = m_undoStack;
+//		m_undoStack = new QUndoStack();
 		m_subtitle->clearSecondaryTextData();
-
-		// The cleaning of the translations texts shouldn't be an undoable action so if
-		// such action was stored by m_subtitle->clearSecondaryTextData() we remove it
-		if(m_subtitle->actionManager().undoCount() != oldUndoCount)
-			m_subtitle->actionManager().popUndo();
+//		delete m_undoStack;
+//		m_undoStack = savedStack;
 
 		m_linesWidget->setUpdatesEnabled(true);
 	}
@@ -1916,7 +1888,7 @@ Application::splitSubtitle()
 
 	if(splitUrl.path().isEmpty()) {
 		// there was an error saving the split part, undo the splitting of m_subtitle
-		m_subtitle->actionManager().undo();
+		m_undoStack->undo();
 		return;
 	}
 
@@ -1926,7 +1898,7 @@ Application::splitSubtitle()
 
 		if(splitTrUrl.path().isEmpty()) {
 			// there was an error saving the split part, undo the splitting of m_subtitle
-			m_subtitle->actionManager().undo();
+			m_undoStack->undo();
 			return;
 		}
 	}
@@ -2808,28 +2780,6 @@ Application::updateTitle()
 		}
 	} else {
 		m_mainWindow->setCaption(QString());
-	}
-}
-
-void
-Application::updateUndoRedoToolTips()
-{
-	static QAction *undoAction = action(ACT_UNDO);
-	static QAction *redoAction = action(ACT_REDO);
-
-	static const QString undoToolTip = undoAction->toolTip();
-	static const QString redoToolTip = redoAction->toolTip();
-
-	if(m_subtitle) {
-		if(m_subtitle->actionManager().hasUndo())
-			undoAction->setToolTip(undoToolTip % QStringLiteral(": ") % m_subtitle->actionManager().undoDescription());
-		else
-			undoAction->setToolTip(undoToolTip);
-
-		if(m_subtitle->actionManager().hasRedo())
-			redoAction->setToolTip(redoToolTip % QStringLiteral(": ") % m_subtitle->actionManager().redoDescription());
-		else
-			redoAction->setToolTip(redoToolTip);
 	}
 }
 

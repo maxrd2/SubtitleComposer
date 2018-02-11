@@ -26,7 +26,6 @@
 #include "core/time.h"
 #include "core/sstring.h"
 #include "subtitleline.h"
-#include "actionmanager.h"
 #include "formatdata.h"
 
 #include <QObject>
@@ -35,14 +34,17 @@
 #include <QList>
 
 namespace SubtitleComposer {
-class CompositeAction;
 
 class Subtitle : public QObject
 {
 	Q_OBJECT
 
+	friend class Application;
+
 	friend class SubtitleLine;
 	friend class SubtitleIterator;
+
+	friend class UndoAction;
 
 	friend class SubtitleAction;
 	friend class SetFramesPerSecondAction;
@@ -92,9 +94,6 @@ public:
 
 	bool isSecondaryDirty() const;
 	void clearSecondaryDirty();
-
-	ActionManager & actionManager();
-	const ActionManager & actionManager() const;
 
 	double framesPerSecond() const;
 	void setFramesPerSecond(double framesPerSecond);
@@ -197,26 +196,21 @@ private:
 	FormatData * formatData() const;
 	void setFormatData(const FormatData *formatData);
 
-	void beginCompositeAction(const QString &title, bool immediateExecution = true, bool delaySignals = true);
+	void beginCompositeAction(const QString &title);
 	void endCompositeAction();
-	void processAction(Action *action);
+	void processAction(QUndoCommand *action);
 
-	void incrementState(int dirtyMode);
-	void decrementState(int dirtyMode);
+	void updateState();
 
 	inline int normalizeRangeIndex(int index) const { return index >= m_lines.count() ? m_lines.count() - 1 : index; }
 
 	void setLastValidCachedIndex(int lastValidCachedIndex);
 
 private:
-	ActionManager m_actionManager;
 	int m_primaryState;
 	int m_primaryCleanState;
 	int m_secondaryState;
 	int m_secondaryCleanState;
-
-	CompositeAction *m_compositeAction;
-	int m_compositeActionDepth;
 
 	double m_framesPerSecond;
 	mutable QList<SubtitleLine *> m_lines;

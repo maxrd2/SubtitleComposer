@@ -339,7 +339,7 @@ CurrentLineWidget::onShowTimeEditChanged(int showTime)
 {
 	if(m_updateCurrentLine) {
 		m_updateControls = false;
-		m_currentLine->setShowTime(showTime);
+		m_currentLine->setShowTime(showTime, true);
 		m_hideTimeEdit->setValue(m_currentLine->hideTime().toMillis());
 		m_durationTimeEdit->setValue(m_hideTimeEdit->value() - showTime);
 		m_updateControls = true;

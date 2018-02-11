@@ -19,13 +19,14 @@
  */
 
 #include "core/subtitle.h"
-#include "subtitleline.h"
-#include "subtitleiterator.h"
-#include "subtitleactions.h"
-#include "compositeaction.h"
+#include "core/subtitleline.h"
+#include "core/subtitleiterator.h"
+#include "core/subtitleactions.h"
 #include "scconfig.h"
+#include "application.h"
 
 #include <KLocalizedString>
+#include <QUndoStack>
 
 using namespace SubtitleComposer;
 
@@ -43,23 +44,19 @@ Subtitle::setDefaultFramesPerSecond(double framesPerSecond)
 	s_defaultFramesPerSecond = framesPerSecond;
 }
 
-Subtitle::Subtitle(double framesPerSecond) :
-	m_primaryState(0),
-	m_primaryCleanState(0),
-	m_secondaryState(0),
-	m_secondaryCleanState(0),
-	m_compositeAction(0),
-	m_compositeActionDepth(0),
-	m_framesPerSecond(framesPerSecond),
-	m_lastValidCachedIndex(-1),
-	m_formatData(0)
+Subtitle::Subtitle(double framesPerSecond)
+	: m_primaryState(0),
+	  m_primaryCleanState(0),
+	  m_secondaryState(0),
+	  m_secondaryCleanState(0),
+	  m_framesPerSecond(framesPerSecond),
+	  m_lastValidCachedIndex(-1),
+	  m_formatData(nullptr)
 {}
 
 Subtitle::~Subtitle()
 {
 	qDeleteAll(m_lines);
-
-	delete m_compositeAction;
 
 	delete m_formatData;
 }
@@ -220,18 +217,6 @@ Subtitle::setFormatData(const FormatData *formatData)
 	m_formatData = formatData ? new FormatData(*formatData) : NULL;
 }
 
-ActionManager &
-Subtitle::actionManager()
-{
-	return m_actionManager;
-}
-
-const ActionManager &
-Subtitle::actionManager() const
-{
-	return m_actionManager;
-}
-
 double
 Subtitle::framesPerSecond() const
 {
@@ -241,7 +226,7 @@ Subtitle::framesPerSecond() const
 void
 Subtitle::setFramesPerSecond(double framesPerSecond)
 {
-	if(m_framesPerSecond != framesPerSecond) // FIXME: Is this check important (floating point comparsion is unsafe)?
+	if(qAbs(m_framesPerSecond - framesPerSecond) > 1e-6)
 		processAction(new SetFramesPerSecondAction(*this, framesPerSecond));
 }
 
@@ -516,8 +501,8 @@ Subtitle::removeLines(const RangeList &r, TextTarget target)
 			dstIt.current()->setSecondaryText(SString());
 
 		endCompositeAction();
-	} else {                                        // if target == Primary
-		beginCompositeAction(i18n("Remove Lines"), true, false);
+	} else { // target == Primary
+		beginCompositeAction(i18n("Remove Lines"));
 
 		RangeList mutableRanges(ranges);
 		mutableRanges.trimToIndex(m_lines.count() - 1);
@@ -814,7 +799,7 @@ Subtitle::adjustLines(const Range &range, long newFirstTime, long newLastTime)
 void
 Subtitle::sortLines(const Range &range)
 {
-	beginCompositeAction(i18n("Sort"), true, false);
+	beginCompositeAction(i18n("Sort"));
 
 	SubtitleIterator it(*this, range);
 	SubtitleLine *line = it.current();
@@ -1394,125 +1379,63 @@ Subtitle::rechecqCriticals(const RangeList &ranges, int minDurationMsecs, int ma
 }
 
 void
-Subtitle::processAction(Action *action)
+Subtitle::processAction(QUndoCommand *action)
 {
-	if(m_compositeAction)
-		m_compositeAction->appendAction(action);
-	else
-		m_actionManager.execAndStore(action);
+	app()->undoStack()->push(action);
 }
 
 void
-Subtitle::beginCompositeAction(const QString &title, bool immediateExecution, bool delaySignals)
+Subtitle::beginCompositeAction(const QString &title)
 {
-	m_compositeActionDepth++;
-
-	if(!m_compositeAction)
-		m_compositeAction = new CompositeAction(title, immediateExecution, delaySignals);
+	app()->undoStack()->beginMacro(title);
 }
 
 void
 Subtitle::endCompositeAction()
 {
-	m_compositeActionDepth--;
-
-	if(!m_compositeActionDepth) {
-		// NOTE: it is EXTREMELY IMPORTANT to mark the composite action as finished (setting it to 0)
-		// before performing m_actionManager.execAndStore() because that call may spawn other composite
-		// actions that won't be correctly initialized if m_compositeAction was not set to 0.
-		CompositeAction *compositeAction = m_compositeAction;
-		m_compositeAction = 0;
-
-		if(compositeAction->count() > 1)
-			m_actionManager.execAndStore(compositeAction);
-		else {
-			if(compositeAction->count()) // compositeAction->count() == 1
-				m_actionManager.execAndStore(compositeAction->detachContainedAction());
-			delete compositeAction;
-		}
-	}
+	app()->undoStack()->endMacro();
 }
 
 void
-Subtitle::incrementState(int dirtyMode)
+Subtitle::updateState()
 {
+	auto updatePrimary = [&](int index){
+		m_primaryState = index;
+		if(m_primaryState == m_primaryCleanState)
+			emit primaryDirtyStateChanged(false);
+		else
+			emit primaryDirtyStateChanged(true);
+		emit primaryChanged();
+	};
+	auto updateSecondary = [&](int index){
+		m_secondaryState = index;
+		if(m_secondaryState == m_secondaryCleanState)
+			emit secondaryDirtyStateChanged(false);
+		else
+			emit secondaryDirtyStateChanged(true);
+		emit secondaryChanged();
+	};
+
+	QUndoStack *undoStack = app()->undoStack();
+	int index = undoStack->index();
+	const UndoAction *action = static_cast<const UndoAction *>(undoStack->command(index - 1));
+	UndoAction::DirtyMode dirtyMode = action ? action->m_dirtyMode : SubtitleAction::Both;
+
 	switch(dirtyMode) {
 	case SubtitleAction::Primary:
-		m_primaryState++;
-		if(m_primaryState == (m_primaryCleanState + 1))
-			emit primaryDirtyStateChanged(true);
-		else if(m_primaryState == m_primaryCleanState)
-			emit primaryDirtyStateChanged(false);
-
-		emit primaryChanged();
+		updatePrimary(index);
 		break;
 
 	case SubtitleAction::Secondary:
-		m_secondaryState++;
-		if(m_secondaryState == (m_secondaryCleanState + 1))
-			emit secondaryDirtyStateChanged(true);
-		else if(m_secondaryState == m_secondaryCleanState)
-			emit secondaryDirtyStateChanged(false);
-
-		emit secondaryChanged();
+		updateSecondary(index);
 		break;
 
 	case SubtitleAction::Both:
-		m_primaryState++;
-		m_secondaryState++;
-		if(m_primaryState == (m_primaryCleanState + 1))
-			emit primaryDirtyStateChanged(true);
-		else if(m_primaryState == m_primaryCleanState)
-			emit primaryDirtyStateChanged(false);
-		if(m_secondaryState == (m_secondaryCleanState + 1))
-			emit secondaryDirtyStateChanged(true);
-		else if(m_secondaryState == m_secondaryCleanState)
-			emit secondaryDirtyStateChanged(false);
-
-		emit primaryChanged();
-		emit secondaryChanged();
-		break;
-	}
-}
-
-void
-Subtitle::decrementState(int dirtyMode)
-{
-	switch(dirtyMode) {
-	case SubtitleAction::Primary:
-		m_primaryState--;
-		if(m_primaryState == m_primaryCleanState)
-			emit primaryDirtyStateChanged(false);
-		else if(m_primaryState == (m_primaryCleanState - 1))
-			emit primaryDirtyStateChanged(true);
-
-		emit primaryChanged();
+		updatePrimary(index);
+		updateSecondary(index);
 		break;
 
-	case SubtitleAction::Secondary:
-		m_secondaryState--;
-		if(m_secondaryState == m_secondaryCleanState)
-			emit secondaryDirtyStateChanged(false);
-		else if(m_secondaryState == (m_secondaryCleanState - 1))
-			emit secondaryDirtyStateChanged(true);
-
-		emit secondaryChanged();
-		break;
-
-	case SubtitleAction::Both:
-		m_primaryState--;
-		m_secondaryState--;
-		if(m_primaryState == m_primaryCleanState)
-			emit primaryDirtyStateChanged(false);
-		else if(m_primaryState == (m_primaryCleanState - 1))
-			emit primaryDirtyStateChanged(true);
-		if(m_secondaryState == m_secondaryCleanState)
-			emit secondaryDirtyStateChanged(false);
-		else if(m_secondaryState == (m_secondaryCleanState - 1))
-			emit secondaryDirtyStateChanged(true);
-
-		emit primaryChanged();
-		emit secondaryChanged();
+	case SubtitleAction::None:
 		break;
 	}
 }

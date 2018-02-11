@@ -251,7 +251,7 @@ SpeechProcessor::onTextRecognized(const QString &text, const double milliShow, c
 	if(!m_subtitle)
 		return;
 
-	LinesWidgetScrollToModelDetacher detacher(*Application::instance()->linesWidget());
+	LinesWidgetScrollToModelDetacher detacher(*app()->linesWidget());
 	m_subtitle->insertLine(new SubtitleLine(SString(text), milliShow, milliHide));
 }
 

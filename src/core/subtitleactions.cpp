@@ -29,73 +29,42 @@
 
 using namespace SubtitleComposer;
 
-/// SUBTITLE ACTION
-/// ===============
-
-SubtitleAction::SubtitleAction(Subtitle &subtitle, SubtitleAction::DirtyMode dirtyMode, const QString &description) :
-	Action(description),
-	m_subtitle(subtitle),
-	m_dirtyMode(dirtyMode)
+// *** SubtitleAction
+SubtitleAction::SubtitleAction(Subtitle &subtitle, SubtitleAction::DirtyMode dirtyMode, const QString &description)
+	: UndoAction(dirtyMode, &subtitle, description),
+	  m_subtitle(subtitle)
 {}
 
 SubtitleAction::~SubtitleAction()
 {}
 
-void
-SubtitleAction::internalPreRedo()
-{
-	m_subtitle.incrementState(m_dirtyMode);
-}
 
-void
-SubtitleAction::internalPreUndo()
-{
-	m_subtitle.decrementState(m_dirtyMode);
-}
-
-/// SET FRAMES PER SECOND ACTION
-/// ============================
-
-SetFramesPerSecondAction::SetFramesPerSecondAction(Subtitle &subtitle, double framesPerSecond) : SubtitleAction(subtitle, SubtitleAction::Both, i18n("Set Frame Rate")),
-	m_framesPerSecond(framesPerSecond)
+// *** SetFramesPerSecondAction
+SetFramesPerSecondAction::SetFramesPerSecondAction(Subtitle &subtitle, double framesPerSecond)
+	: SubtitleAction(subtitle, UndoAction::Both, i18n("Set Frame Rate")),
+	  m_framesPerSecond(framesPerSecond)
 {}
 
 SetFramesPerSecondAction::~SetFramesPerSecondAction()
 {}
 
 void
-SetFramesPerSecondAction::internalRedo()
+SetFramesPerSecondAction::redo()
 {
-	double aux = m_subtitle.m_framesPerSecond;
+	double tmp = m_subtitle.m_framesPerSecond;
 	m_subtitle.m_framesPerSecond = m_framesPerSecond;
-	m_framesPerSecond = aux;
-}
+	m_framesPerSecond = tmp;
 
-void
-SetFramesPerSecondAction::internalUndo()
-{
-	internalRedo();
-}
-
-void
-SetFramesPerSecondAction::internalEmitRedoSignals()
-{
 	emit m_subtitle.framesPerSecondChanged(m_subtitle.m_framesPerSecond);
 }
 
-void
-SetFramesPerSecondAction::internalEmitUndoSignals()
-{
-	internalEmitRedoSignals();
-}
 
-/// INSERT LINES ACTION
-/// ===================
-
-InsertLinesAction::InsertLinesAction(Subtitle &subtitle, const QList<SubtitleLine *> &lines, int insertIndex) : SubtitleAction(subtitle, SubtitleAction::Both, i18n("Insert Lines")),
-	m_insertIndex(insertIndex < 0 ? subtitle.linesCount() : insertIndex),
-	m_lastIndex(m_insertIndex + lines.count() - 1),
-	m_lines(lines)
+// *** InsertLinesAction
+InsertLinesAction::InsertLinesAction(Subtitle &subtitle, const QList<SubtitleLine *> &lines, int insertIndex)
+	: SubtitleAction(subtitle, UndoAction::Both, i18n("Insert Lines")),
+	  m_insertIndex(insertIndex < 0 ? subtitle.linesCount() : insertIndex),
+	  m_lastIndex(m_insertIndex + lines.count() - 1),
+	  m_lines(lines)
 {
 	Q_ASSERT(m_insertIndex >= 0);
 	Q_ASSERT(m_insertIndex <= m_subtitle.linesCount());
@@ -109,21 +78,18 @@ InsertLinesAction::~InsertLinesAction()
 }
 
 bool
-InsertLinesAction::mergeWithPrevious(Action *pa)
+InsertLinesAction::mergeWith(const QUndoCommand *command)
 {
-	InsertLinesAction *prevAction = dynamic_cast<InsertLinesAction *>(pa);
-	if(!prevAction || &prevAction->m_subtitle != &m_subtitle)
+	const InsertLinesAction *currentAction = static_cast<const InsertLinesAction *>(command);
+	if(&currentAction->m_subtitle != &m_subtitle)
 		return false;
 
-	if(m_insertIndex == prevAction->m_insertIndex) {
-		// this inserted lines immediately above those inserted by prevAction
-		m_lastIndex += (prevAction->m_lastIndex - prevAction->m_insertIndex + 1);
-		prevAction->internalPreUndo();
-		return true;
-	} else if(m_insertIndex == prevAction->m_lastIndex + 1) {
-		// this inserted lines immediately below those inserted by prevAction
-		m_insertIndex -= (prevAction->m_lastIndex - prevAction->m_insertIndex + 1);
-		prevAction->internalPreUndo();
+	if(currentAction->m_insertIndex == m_lastIndex + 1 || (m_insertIndex <= currentAction->m_lastIndex && currentAction->m_insertIndex <= m_lastIndex)) {
+		m_lastIndex += currentAction->m_lastIndex - currentAction->m_insertIndex + 1;
+		if(m_insertIndex > currentAction->m_insertIndex) {
+			m_lastIndex -= m_insertIndex - currentAction->m_insertIndex;
+			m_insertIndex = currentAction->m_insertIndex;
+		}
 		return true;
 	}
 
@@ -131,7 +97,7 @@ InsertLinesAction::mergeWithPrevious(Action *pa)
 }
 
 void
-InsertLinesAction::internalRedo()
+InsertLinesAction::redo()
 {
 	emit m_subtitle.linesAboutToBeInserted(m_insertIndex, m_lastIndex);
 
@@ -153,7 +119,7 @@ InsertLinesAction::internalRedo()
 }
 
 void
-InsertLinesAction::internalUndo()
+InsertLinesAction::undo()
 {
 	emit m_subtitle.linesAboutToBeRemoved(m_insertIndex, m_lastIndex);
 
@@ -169,14 +135,13 @@ InsertLinesAction::internalUndo()
 	emit m_subtitle.linesRemoved(m_insertIndex, m_lastIndex);
 }
 
-/// REMOVE LINES ACTION
-/// ===================
 
-RemoveLinesAction::RemoveLinesAction(Subtitle &subtitle, int firstIndex, int lastIndex) :
-	SubtitleAction(subtitle, SubtitleAction::Both, i18n("Remove Lines")),
-	m_firstIndex(firstIndex),
-	m_lastIndex(lastIndex < 0 ? subtitle.lastIndex() : lastIndex),
-	m_lines()
+// *** RemoveLinesAction
+RemoveLinesAction::RemoveLinesAction(Subtitle &subtitle, int firstIndex, int lastIndex)
+	: SubtitleAction(subtitle, UndoAction::Both, i18n("Remove Lines")),
+	  m_firstIndex(firstIndex),
+	  m_lastIndex(lastIndex < 0 ? subtitle.lastIndex() : lastIndex),
+	  m_lines()
 {
 	Q_ASSERT(m_firstIndex >= 0);
 	Q_ASSERT(m_firstIndex <= m_subtitle.linesCount());
@@ -191,26 +156,25 @@ RemoveLinesAction::~RemoveLinesAction()
 }
 
 bool
-RemoveLinesAction::mergeWithPrevious(Action *pa)
+RemoveLinesAction::mergeWith(const QUndoCommand *command)
 {
-	RemoveLinesAction *prevAction = dynamic_cast<RemoveLinesAction *>(pa);
-	if(!prevAction || &prevAction->m_subtitle != &m_subtitle)
+	const RemoveLinesAction *currentAction = static_cast<const RemoveLinesAction *>(command);
+	if(&currentAction->m_subtitle != &m_subtitle)
 		return false;
 
-	if(m_firstIndex == prevAction->m_firstIndex) {
-		// this removed lines immediately below those removed by prevAction
-		m_lastIndex += prevAction->m_lines.count();
-		while(!prevAction->m_lines.isEmpty())
-			m_lines.prepend(prevAction->m_lines.takeLast());
-		prevAction->internalPreUndo();
+	if(m_firstIndex == currentAction->m_firstIndex) {
+		// currentAction removed lines immediately below those removed by this
+		m_lastIndex += currentAction->m_lines.count();
+		while(!currentAction->m_lines.isEmpty())
+			m_lines.append(const_cast<RemoveLinesAction *>(currentAction)->m_lines.takeFirst());
 		return true;
-	} else if(m_lastIndex + 1 == prevAction->m_firstIndex) {
-		// this removed lines immediately above those removed by prevAction
-		m_lastIndex += prevAction->m_lines.count();
-		while(!prevAction->m_lines.isEmpty())
-			m_lines.append(prevAction->m_lines.takeFirst());
+	}
 
-		prevAction->internalPreUndo();
+	if(currentAction->m_lastIndex + 1 == m_firstIndex) {
+		// currentAction removed lines immediately above those removed by this
+		m_firstIndex = currentAction->m_firstIndex;
+		while(!currentAction->m_lines.isEmpty())
+			m_lines.prepend(const_cast<RemoveLinesAction *>(currentAction)->m_lines.takeLast());
 		return true;
 	}
 
@@ -218,7 +182,7 @@ RemoveLinesAction::mergeWithPrevious(Action *pa)
 }
 
 void
-RemoveLinesAction::internalRedo()
+RemoveLinesAction::redo()
 {
 	emit m_subtitle.linesAboutToBeRemoved(m_firstIndex, m_lastIndex);
 
@@ -235,7 +199,7 @@ RemoveLinesAction::internalRedo()
 }
 
 void
-RemoveLinesAction::internalUndo()
+RemoveLinesAction::undo()
 {
 	emit m_subtitle.linesAboutToBeInserted(m_firstIndex, m_lastIndex);
 
@@ -255,11 +219,10 @@ RemoveLinesAction::internalUndo()
 	emit m_subtitle.linesInserted(m_firstIndex, m_lastIndex);
 }
 
-/// MOVE LINE ACTION
-/// ================
 
+// *** MoveLineAction
 MoveLineAction::MoveLineAction(Subtitle &subtitle, int fromIndex, int toIndex) :
-	SubtitleAction(subtitle, SubtitleAction::Both, i18n("Move Line")),
+	SubtitleAction(subtitle, UndoAction::Both, i18n("Move Line")),
 	m_fromIndex(fromIndex),
 	m_toIndex(toIndex < 0 ? subtitle.lastIndex() : toIndex)
 {
@@ -274,53 +237,47 @@ MoveLineAction::~MoveLineAction()
 {}
 
 bool
-MoveLineAction::mergeWithPrevious(Action *pa)
+MoveLineAction::mergeWith(const QUndoCommand *command)
 {
-	MoveLineAction *prevAction = dynamic_cast<MoveLineAction *>(pa);
-	if(!prevAction || &prevAction->m_subtitle != &m_subtitle)
+	const MoveLineAction *currentAction = static_cast<const MoveLineAction *>(command);
+	if(&currentAction->m_subtitle != &m_subtitle)
 		return false;
 
-	Q_ASSERT(pa != this);
+	Q_ASSERT(command != this);
 
-	bool compressed = false;
-
-	if(prevAction->m_toIndex == m_fromIndex) {
-		m_fromIndex = prevAction->m_fromIndex;
-		compressed = true;
-	}
-	// when the distance between fromIndex and toIndex is 1, the action is the same as if the values were swapped
-	else if(m_toIndex - m_fromIndex == 1 || m_fromIndex - m_toIndex == 1) {
-		if(prevAction->m_toIndex == m_toIndex) {
+	// TODO: FIXME: this and currentAction were swapped in new Qt's implementation, so below code is not working
+	// since move is used only when sorting - this will never be called
+	if(currentAction->m_toIndex == m_fromIndex) {
+		m_fromIndex = currentAction->m_fromIndex;
+		return true;
+	} else if(m_toIndex - m_fromIndex == 1 || m_fromIndex - m_toIndex == 1) {
+		if(currentAction->m_toIndex == m_toIndex) {
+			// when the distance between fromIndex and toIndex is 1, the action is the same as if the values were swapped
 			m_toIndex = m_fromIndex;
-			m_fromIndex = prevAction->m_fromIndex;
-			compressed = true;
+			m_fromIndex = currentAction->m_fromIndex;
+			return true;
 		}
-		// same as before, but now we consider inverting the previous action too
-		else if(prevAction->m_toIndex - prevAction->m_fromIndex == 1 || prevAction->m_fromIndex - prevAction->m_toIndex == 1) {
-			if(prevAction->m_fromIndex == m_toIndex) {
+		if(currentAction->m_toIndex - currentAction->m_fromIndex == 1 || currentAction->m_fromIndex - currentAction->m_toIndex == 1) {
+			// same as before, but now we consider inverting the previous action too
+			if(currentAction->m_fromIndex == m_toIndex) {
 				m_toIndex = m_fromIndex;
-				m_fromIndex = prevAction->m_toIndex;
-				compressed = true;
+				m_fromIndex = currentAction->m_toIndex;
+				return true;
 			}
 		}
-	}
-	// again, same as before, but now we consider inverting only the previous action
-	else if(prevAction->m_toIndex - prevAction->m_fromIndex == 1 || prevAction->m_fromIndex - prevAction->m_toIndex == 1) {
-		if(prevAction->m_fromIndex == m_fromIndex) {
-			m_fromIndex = prevAction->m_toIndex;
-			compressed = true;
+	} else if(currentAction->m_toIndex - currentAction->m_fromIndex == 1 || currentAction->m_fromIndex - currentAction->m_toIndex == 1) {
+		// again, same as before, but now we consider inverting only the previous action
+		if(currentAction->m_fromIndex == m_fromIndex) {
+			m_fromIndex = currentAction->m_toIndex;
+			return true;
 		}
 	}
 
-	if(compressed) {
-		prevAction->internalPreUndo();
-	}
-
-	return compressed;
+	return false;
 }
 
 void
-MoveLineAction::internalRedo()
+MoveLineAction::redo()
 {
 	emit m_subtitle.linesAboutToBeRemoved(m_fromIndex, m_fromIndex);
 	SubtitleLine *line = m_subtitle.m_lines.takeAt(m_fromIndex);
@@ -338,7 +295,7 @@ MoveLineAction::internalRedo()
 }
 
 void
-MoveLineAction::internalUndo()
+MoveLineAction::undo()
 {
 	emit m_subtitle.linesAboutToBeRemoved(m_toIndex, m_toIndex);
 	SubtitleLine *line = m_subtitle.m_lines.takeAt(m_toIndex);
@@ -355,11 +312,10 @@ MoveLineAction::internalUndo()
 	emit m_subtitle.linesInserted(m_fromIndex, m_fromIndex);
 }
 
-/// SWAP LINES TEXTS ACTION
-/// =======================
 
+// *** SwapLinesTextsAction
 SwapLinesTextsAction::SwapLinesTextsAction(Subtitle &subtitle, const RangeList &ranges) :
-	SubtitleAction(subtitle, SubtitleAction::Both, i18n("Swap Texts")),
+	SubtitleAction(subtitle, UndoAction::Both, i18n("Swap Texts")),
 	m_ranges(ranges)
 {}
 
@@ -367,34 +323,16 @@ SwapLinesTextsAction::~SwapLinesTextsAction()
 {}
 
 void
-SwapLinesTextsAction::internalRedo()
+SwapLinesTextsAction::redo()
 {
 	for(SubtitleIterator it(m_subtitle, m_ranges); it.current(); ++it) {
 		SubtitleLine *line = it.current();
 		SString aux = line->m_primaryText;
+
 		line->m_secondaryText = line->m_primaryText;
-		line->m_primaryText = aux;
-	}
-}
-
-void
-SwapLinesTextsAction::internalUndo()
-{
-	internalRedo();
-}
-
-void
-SwapLinesTextsAction::internalEmitRedoSignals()
-{
-	for(SubtitleIterator it(m_subtitle, m_ranges); it.current(); ++it) {
-		SubtitleLine *line = it.current();
 		emit line->primaryTextChanged(line->m_primaryText);
+
+		line->m_primaryText = aux;
 		emit line->secondaryTextChanged(line->m_secondaryText);
 	}
-}
-
-void
-SwapLinesTextsAction::internalEmitUndoSignals()
-{
-	internalEmitRedoSignals();
 }

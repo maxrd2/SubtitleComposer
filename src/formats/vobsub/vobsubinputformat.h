@@ -50,7 +50,7 @@ public:
 			return false;
 
 		// show init dialog
-		VobSubInputInitDialog dlgInit(Application::instance()->mainWindow());
+		VobSubInputInitDialog dlgInit(app()->mainWindow());
 		dlgInit.streamListSet(streamList);
 		if(dlgInit.exec() == QDialog::Rejected)
 			return true;
@@ -59,12 +59,12 @@ public:
 			return true;
 
 		// subtitle updates will show in realtime
-		LinesWidget *linesWidget = Application::instance()->linesWidget();
+		LinesWidget *linesWidget = app()->linesWidget();
 		Subtitle *oldSubtitle = linesWidget->model()->subtitle();
 		linesWidget->setSubtitle(&subtitle);
 
 		// show process dialog
-		VobSubInputProcessDialog dlgProc(&subtitle, Application::instance()->mainWindow());
+		VobSubInputProcessDialog dlgProc(&subtitle, app()->mainWindow());
 
 		dlgProc.processFrames(&proc);
 

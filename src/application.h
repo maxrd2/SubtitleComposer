@@ -36,6 +36,8 @@
 #include <sonnet/configwidget.h>
 
 QT_FORWARD_DECLARE_CLASS(QAction)
+QT_FORWARD_DECLARE_CLASS(QUndoStack)
+
 class KComboBox;
 class KToggleAction;
 class KRecentFilesActionExt;
@@ -75,6 +77,8 @@ public:
 
 	Subtitle * subtitle() const;
 
+	inline QUndoStack * undoStack() const { return m_undoStack; }
+
 	MainWindow * mainWindow() const;
 	LinesWidget * linesWidget() const;
 
@@ -98,9 +102,6 @@ public:
 	const QUrl & lastSubtitleDirectory() const;
 
 public slots:
-	void undo();
-	void redo();
-
 	void newSubtitle();
 	void openSubtitle();
 	void reopenSubtitleWithCodec(QTextCodec *codec);
@@ -241,7 +242,6 @@ private:
 
 private slots:
 	void updateTitle();
-	void updateUndoRedoToolTips();
 
 	void onWaveformDoubleClicked(Time time);
 	void onWaveformMiddleMouseDown(Time time);
@@ -313,9 +313,13 @@ private:
 	QUrl m_lastVideoUrl;
 	bool m_linkCurrentLineToPosition;
 	KRecentFilesActionExt *m_recentVideosAction;
+
+	QUndoStack *m_undoStack;
 };
 
-Application * app();
+inline Application * app() { return static_cast<Application *>(QApplication::instance()); }
+
+
 }
 
 #endif
