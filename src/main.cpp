@@ -62,7 +62,7 @@ main(int argc, char **argv)
 	KAboutData aboutData(
 		"subtitlecomposer",
 		i18n("Subtitle Composer"),
-		"0.6.6",
+		"0.7.0",
 		i18n("A KDE subtitle editor."),
 		KAboutLicense::GPL,
 		QStringLiteral("&copy; 2007-2017 Subtitle Composer project"),
