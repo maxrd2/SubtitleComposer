@@ -45,7 +45,6 @@ install(TARGETS gstplayer DESTINATION ${SC_PLUGIN_INSTALL_DIR})
 
 target_include_directories(gstplayer SYSTEM PRIVATE ${videoplayer_gstreamer_INCLUDE_DIR})
 set_target_properties(gstplayer PROPERTIES COMPILE_FLAGS "${videoplayer_gstreamer_DEFS}")
-target_link_libraries(gstplayer ${subtitlecomposer_LIBS} ${videoplayer_gstreamer_LIBS})
-qt5_use_modules(gstplayer Core)
+target_link_libraries(gstplayer ${subtitlecomposer_LIBS} ${videoplayer_gstreamer_LIBS} Qt5::Core)
 
 add_dependencies(gstplayer subtitlecomposer)

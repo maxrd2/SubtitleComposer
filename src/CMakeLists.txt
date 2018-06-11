@@ -100,8 +100,6 @@ ki18n_wrap_ui(subtitlecomposer_SRCS
 
 add_executable(subtitlecomposer ${subtitlecomposer_SRCS})
 
-qt5_use_modules(subtitlecomposer Core Widgets)
-
 # Xine videoplayer plugin needs XInitThreads() call in main
 # optional since Xine will not be built without X11
 find_package(X11 QUIET)
@@ -117,6 +115,8 @@ target_link_libraries(subtitlecomposer
 	${widgets_LIBS}
 	${X11_LIBRARIES}
 	${FFMPEG_LIBRARIES}
+        Qt5::Core
+        Qt5::Widgets
 )
 
 add_definitions(
