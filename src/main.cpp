@@ -49,8 +49,10 @@ main(int argc, char **argv)
 	XInitThreads(); // needed for some VideoPlayer Backends (Xine)
 #endif
 
+#if LIBAVCODEC_VERSION_INT < AV_VERSION_INT(58, 9, 100)
 	av_register_all();
 	avcodec_register_all();
+#endif
 
 	SubtitleComposer::Application app(argc, argv);
 
