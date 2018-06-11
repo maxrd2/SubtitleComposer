@@ -115,8 +115,8 @@ target_link_libraries(subtitlecomposer
 	${widgets_LIBS}
 	${X11_LIBRARIES}
 	${FFMPEG_LIBRARIES}
-        Qt5::Core
-        Qt5::Widgets
+	Qt5::Core
+	Qt5::Widgets
 )
 
 add_definitions(
