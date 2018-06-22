@@ -45,10 +45,6 @@ TextOverlayWidget::TextOverlayWidget(QWidget *parent) :
 	m_textDocument(new QTextDocument()),
 	m_dirty(true)
 {
-	setAttribute(Qt::WA_StaticContents, true);
-	setAttribute(Qt::WA_OpaquePaintEvent, true);
-	setAttribute(Qt::WA_NoSystemBackground, true);
-
 	m_font.setPointSize(15);
 	m_font.setStyleStrategy(m_antialias ? QFont::PreferAntialias : QFont::NoAntialias);
 	m_textDocument->setDefaultFont(m_font);
@@ -323,9 +319,7 @@ TextOverlayWidget::paintEvent(QPaintEvent * /*event */)
 	}
 
 	QPainter painter(this);
-	if(m_text.isEmpty())
-		painter.drawPoint(0, 0);
-	else
+	if(!m_text.isEmpty())
 		painter.drawImage(0, 0, m_bgImage);
 }
 

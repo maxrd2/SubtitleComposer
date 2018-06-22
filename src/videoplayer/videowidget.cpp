@@ -56,14 +56,11 @@ VideoWidget::init(bool setVideoLayerAttributes)
 {
 	if(setVideoLayerAttributes) {
 		m_videoLayer->setFocusPolicy(Qt::NoFocus);
-		m_videoLayer->setAttribute(Qt::WA_StaticContents, true);
-		m_videoLayer->setAttribute(Qt::WA_PaintOnScreen, true);
-		m_videoLayer->setAttribute(Qt::WA_OpaquePaintEvent, true);
-		m_videoLayer->setAttribute(Qt::WA_NoSystemBackground, true);
+		m_videoLayer->setAttribute(Qt::WA_NativeWindow, true);
 	}
 
 	setFocusPolicy(Qt::NoFocus);
-	setAttribute(Qt::WA_StaticContents, true);
+	setAttribute(Qt::WA_NativeWindow, true);
 	QPalette pal(palette());
 	pal.setColor(QPalette::Background, Qt::black);
 	setAutoFillBackground(true);
