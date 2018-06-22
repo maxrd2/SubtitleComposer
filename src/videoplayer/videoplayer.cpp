@@ -591,6 +591,8 @@ VideoPlayer::openFile(const QString &filePath)
 	// FIXME add an option to set the error timeout amount when opening video
 	m_openFileTimer->start(6000);
 
+	m_videoWidget->videoLayer()->show();
+
 	bool playingAfterCall = true;
 	if(!activeBackend()->openFile(fileInfo.absoluteFilePath(), playingAfterCall)) {
 		resetState();
@@ -643,6 +645,8 @@ VideoPlayer::play()
 	if(m_state <= VideoPlayer::Opening || m_state == VideoPlayer::Playing)
 		return false;
 
+	m_videoWidget->videoLayer()->show();
+
 	if(!activeBackend()->play()) {
 		resetState();
 		emit playbacqCritical();
@@ -670,6 +674,8 @@ VideoPlayer::togglePlayPaused()
 {
 	if(m_state <= VideoPlayer::Opening)
 		return false;
+
+	m_videoWidget->videoLayer()->show();
 
 	bool hadError;
 	if(m_state == VideoPlayer::Playing)
