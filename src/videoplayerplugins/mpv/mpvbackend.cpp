@@ -88,7 +88,7 @@ MPVBackend::mpvInit()
 	std::setlocale(LC_NUMERIC, "C");
 
 	if(m_mpv)
-		mpv_terminate_destroy(m_mpv);
+		mpv_detach_destroy(m_mpv);
 
 	m_mpv = mpv_create();
 
@@ -140,7 +140,7 @@ void
 MPVBackend::mpvExit()
 {
 	if(m_mpv) {
-		mpv_terminate_destroy(m_mpv);
+		mpv_detach_destroy(m_mpv);
 		m_mpv = NULL;
 	}
 	m_initialized = false;
@@ -195,7 +195,7 @@ MPVBackend::mpvEventHandle(mpv_event *event)
 		break;
 	}
 	case MPV_EVENT_SHUTDOWN: {
-		mpv_terminate_destroy(m_mpv);
+		mpv_detach_destroy(m_mpv);
 		m_mpv = NULL;
 		setPlayerState(VideoPlayer::Ready);
 		break;
