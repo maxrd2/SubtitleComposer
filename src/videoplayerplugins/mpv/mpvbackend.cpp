@@ -88,7 +88,7 @@ MPVBackend::mpvInit()
 	std::setlocale(LC_NUMERIC, "C");
 
 	if(m_mpv)
-		mpv_detach_destroy(m_mpv);
+		mpv_terminate_destroy(m_mpv);
 
 	m_mpv = mpv_create();
 
@@ -287,8 +287,8 @@ MPVBackend::updateVideoData()
 	double dar, fps, length;
 	if(mpv_get_property(m_mpv, "dwidth", MPV_FORMAT_INT64, &w) >= 0
 			&& mpv_get_property(m_mpv, "dheight", MPV_FORMAT_INT64, &h) >= 0
-			&& mpv_get_property(m_mpv, "video-aspect", MPV_FORMAT_DOUBLE, &dar)
 			&& w > 0 && h > 0) {
+		mpv_get_property(m_mpv, "video-aspect", MPV_FORMAT_DOUBLE, &dar);
 		player()->videoWidget()->setVideoResolution(w, h, dar);
 	}
 	if(mpv_get_property(m_mpv, "estimated-vf-fps", MPV_FORMAT_DOUBLE, &fps) >= 0 && fps > 0)
