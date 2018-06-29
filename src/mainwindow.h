@@ -48,7 +48,7 @@ public slots:
 	void setSubtitle(Subtitle *subtitle = 0);
 
 protected:
-	virtual bool queryClose();
+	bool queryClose() Q_DECL_OVERRIDE;
 
 protected:
 	PlayerWidget *m_playerWidget;

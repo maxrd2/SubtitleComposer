@@ -56,11 +56,11 @@ VideoWidget::init(bool setVideoLayerAttributes)
 {
 	if(setVideoLayerAttributes) {
 		m_videoLayer->setFocusPolicy(Qt::NoFocus);
-		m_videoLayer->setAttribute(Qt::WA_NativeWindow, true);
+		m_videoLayer->setAttribute(Qt::WA_NativeWindow);
 	}
 
 	setFocusPolicy(Qt::NoFocus);
-	setAttribute(Qt::WA_NativeWindow, true);
+	setAttribute(Qt::WA_NativeWindow);
 	QPalette pal(palette());
 	pal.setColor(QPalette::Background, Qt::black);
 	setAutoFillBackground(true);
@@ -98,7 +98,7 @@ void
 VideoWidget::setVideoResolution(int width, int height, double dar)
 {
 	if(width <= 0 || height <= 0) {
-		qWarning() << "invalid video with or height reported";
+		qWarning() << "invalid video width or height reported";
 		return;
 	}
 
