@@ -56,9 +56,11 @@ VideoWidget::init(bool setVideoLayerAttributes)
 {
 	if(setVideoLayerAttributes) {
 		m_videoLayer->setFocusPolicy(Qt::NoFocus);
+		m_videoLayer->setAttribute(Qt::WA_NativeWindow, true);
 	}
 
 	setFocusPolicy(Qt::NoFocus);
+	setAttribute(Qt::WA_NativeWindow, true);
 	QPalette pal(palette());
 	pal.setColor(QPalette::Background, Qt::black);
 	setAutoFillBackground(true);
