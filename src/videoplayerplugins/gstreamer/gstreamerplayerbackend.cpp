@@ -155,7 +155,7 @@ GStreamerPlayerBackend::createAudioSink()
 GstElement *
 GStreamerPlayerBackend::createVideoSink()
 {
-	static QString sinks(" xvimagesink ximagesink gconfvideosink autovideosink");
+	static QString sinks(QStringLiteral(" autovideosink glimagesink xvimagesink ximagesink"));
 
 	if(SCConfig::gstVideoSinkAuto())
 		return GStreamer::createElement(SCConfig::gstVideoSink() + sinks, "videosink");
