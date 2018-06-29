@@ -183,6 +183,9 @@ PlayerWidget::PlayerWidget(QWidget *parent) :
 	m_fullScreenControls->setAutoFillBackground(true);
 	m_layeredWidget->setWidgetMode(m_fullScreenControls, LayeredWidget::IgnoreResize);
 
+	// workaround for bug https://bugs.kde.org/show_bug.cgi?id=395988 - TODO: limit to Qt 5.11.1+ until it gets fixed upstream
+	m_fullScreenControls->setAttribute(Qt::WA_NativeWindow);
+
 	m_fsSeekSlider = new PointingSlider(Qt::Horizontal, m_fullScreenControls);
 	m_fsSeekSlider->setTickPosition(QSlider::NoTicks);
 	m_fsSeekSlider->setTracking(false);
