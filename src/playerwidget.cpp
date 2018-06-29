@@ -459,6 +459,10 @@ PlayerWidget::eventFilter(QObject *object, QEvent *event)
 			// for some reason it doesn't trigger the correct actions automatically
 			// so we process the event and handle the issue ourselves.
 			QKeyEvent *keyEvent = static_cast<QKeyEvent *>(event);
+			if(m_fullScreenMode && keyEvent->key() == Qt::Key_Escape) {
+				app()->action(ACT_TOGGLE_FULL_SCREEN)->trigger();
+				return true;
+			}
 			return app()->triggerAction(QKeySequence((keyEvent->modifiers() & ~Qt::KeypadModifier) + keyEvent->key()));
 		}
 
