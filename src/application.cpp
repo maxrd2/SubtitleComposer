@@ -129,6 +129,8 @@ Application::Application(int &argc, char **argv) :
 	m_lastVideoUrl(QDir::homePath()),
 	m_linkCurrentLineToPosition(false)
 {
+	// workaround for bug https://bugs.kde.org/show_bug.cgi?id=395988 - TODO: limit to Qt 5.11.1+ until it gets fixed upstream
+	setAttribute(Qt::AA_DontCreateNativeWidgetSiblings);
 }
 
 void

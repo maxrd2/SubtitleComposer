@@ -65,6 +65,9 @@ TextOverlayWidget::TextOverlayWidget(QWidget *parent) :
 	updateContents();
 
 	parent->installEventFilter(this);
+
+	// workaround for bug https://bugs.kde.org/show_bug.cgi?id=395988 - TODO: limit to Qt 5.11.1+ until it gets fixed upstream
+	setAttribute(Qt::WA_NativeWindow);
 }
 
 TextOverlayWidget::~TextOverlayWidget()
