@@ -243,9 +243,9 @@ TextOverlayWidget::calculateTextRect() const
 
 	int textHeight = (int)m_textDocument->size().height(), yoffset;
 	if(m_alignment & Qt::AlignBottom)
-		yoffset = parentRect.height() - textHeight;
+		yoffset = parentRect.height() - textHeight - contentsMargins().bottom();
 	else if(m_alignment & Qt::AlignTop)
-		yoffset = 0;
+		yoffset = contentsMargins().top();
 	else // if ( m_alignment & AlignVCenter || m_alignment & AlignCenter )
 		yoffset = (parentRect.height() - textHeight) / 2;
 
@@ -260,9 +260,9 @@ TextOverlayWidget::calculateTextRect() const
 		textWidth = parentRect.width();
 	} else {
 		if(m_alignment & Qt::AlignLeft)
-			xoffset = 0;
+			xoffset = contentsMargins().left();
 		else if(m_alignment & Qt::AlignRight)
-			xoffset = parentRect.width() - textWidth;
+			xoffset = parentRect.width() - textWidth - contentsMargins().right();
 		else // if ( m_alignment & Qt::AlignHCenter || m_alignment & Qt::AlignCenter )
 			xoffset = (parentRect.width() - textWidth) / 2;
 	}

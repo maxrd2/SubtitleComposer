@@ -352,7 +352,7 @@ PlayerWidget::setFullScreenMode(bool fullScreenMode)
 			m_fullScreenControls->attach(m_layeredWidget);
 
 			m_fullScreenTID = startTimer(HIDE_MOUSE_MSECS);
-
+			m_textOverlay->setContentsMargins(0, 0, 0, m_fullScreenControls->height() + 10);
 		} else {
 			if(m_fullScreenTID) {
 				killTimer(m_fullScreenTID);
@@ -360,6 +360,8 @@ PlayerWidget::setFullScreenMode(bool fullScreenMode)
 			}
 
 			decreaseFontSize(18);
+
+			m_textOverlay->setContentsMargins(0, 0, 0, 0);
 
 			m_fullScreenControls->dettach();
 			m_layeredWidget->setMouseTracking(false);
@@ -544,12 +546,14 @@ void
 PlayerWidget::increaseFontSize(int points)
 {
 	SCConfig::setFontPointSize(SCConfig::fontPointSize() + points);
+	m_textOverlay->setPointSize(SCConfig::fontPointSize());
 }
 
 void
 PlayerWidget::decreaseFontSize(int points)
 {
 	SCConfig::setFontPointSize(SCConfig::fontPointSize() - points);
+	m_textOverlay->setPointSize(SCConfig::fontPointSize());
 }
 
 void
