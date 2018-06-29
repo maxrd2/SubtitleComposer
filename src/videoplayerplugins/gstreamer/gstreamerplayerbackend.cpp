@@ -351,18 +351,20 @@ GStreamerPlayerBackend::onPlaybinTimerTimeout()
 		m_currentPosition = time;
 	}
 
-	gboolean muted = false;
-	g_object_get(G_OBJECT(m_pipeline), "mute", &muted, NULL);
-	if(muted != m_muted) {
-		m_muted = muted;
-		setPlayerMuted(muted);
-	}
-	if(!muted) {
-		gdouble volume = -1.0;
-		g_object_get(G_OBJECT(m_pipeline), "volume", &volume, NULL);
-		if(volume != m_volume) {
-			m_volume = volume;
-			setPlayerVolume(qPow(volume / MAX_VOLUME, .33333) * 100.);
+	if(player()->state() >= GST_STATE_PLAYING) {
+		gboolean muted = false;
+		g_object_get(G_OBJECT(m_pipeline), "mute", &muted, NULL);
+		if(muted != m_muted) {
+			m_muted = muted;
+			setPlayerMuted(muted);
+		}
+		if(!muted) {
+			gdouble volume = -1.0;
+			g_object_get(G_OBJECT(m_pipeline), "volume", &volume, NULL);
+			if(volume != m_volume) {
+				m_volume = volume;
+				setPlayerVolume(qPow(volume / MAX_VOLUME, .33333) * 100.);
+			}
 		}
 	}
 
