@@ -1399,7 +1399,7 @@ Subtitle::endCompositeAction()
 void
 Subtitle::updateState()
 {
-	auto updatePrimary = [&](int index){
+	auto updatePrimary = [&](const int index){
 		m_primaryState = index;
 		if(m_primaryState == m_primaryCleanState)
 			emit primaryDirtyStateChanged(false);
@@ -1407,7 +1407,7 @@ Subtitle::updateState()
 			emit primaryDirtyStateChanged(true);
 		emit primaryChanged();
 	};
-	auto updateSecondary = [&](int index){
+	auto updateSecondary = [&](const int index){
 		m_secondaryState = index;
 		if(m_secondaryState == m_secondaryCleanState)
 			emit secondaryDirtyStateChanged(false);
@@ -1416,10 +1416,10 @@ Subtitle::updateState()
 		emit secondaryChanged();
 	};
 
-	QUndoStack *undoStack = app()->undoStack();
-	int index = undoStack->index();
-	const UndoAction *action = static_cast<const UndoAction *>(undoStack->command(index - 1));
-	UndoAction::DirtyMode dirtyMode = action ? action->m_dirtyMode : SubtitleAction::Both;
+	const QUndoStack *undoStack = app()->undoStack();
+	const int index = undoStack->index();
+	const UndoAction *action = index > 0 ? dynamic_cast<const UndoAction *>(undoStack->command(index - 1)) : nullptr;
+	const UndoAction::DirtyMode dirtyMode = action != nullptr ? action->m_dirtyMode : SubtitleAction::Both;
 
 	switch(dirtyMode) {
 	case SubtitleAction::Primary:
