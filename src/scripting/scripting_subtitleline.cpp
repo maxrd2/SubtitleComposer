@@ -418,4 +418,8 @@ Scripting::SubtitleLine::check(int errorFlagsToCheck, int minDuration, int maxDu
 	return m_backend->check(errorFlagsToCheck, minDuration, maxDuration, minDurationPerChar, maxDurationPerChar, maxChars, maxLines, update);
 }
 
-
+bool
+Scripting::SubtitleLine::isRightToLeft() const
+{
+	return m_backend->isRightToLeft();
+}
