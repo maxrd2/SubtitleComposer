@@ -50,7 +50,6 @@ Subtitle::Subtitle(double framesPerSecond)
 	  m_secondaryState(0),
 	  m_secondaryCleanState(0),
 	  m_framesPerSecond(framesPerSecond),
-	  m_lastValidCachedIndex(-1),
 	  m_formatData(nullptr)
 {}
 
@@ -383,9 +382,6 @@ Subtitle::insertLines(const QList<SubtitleLine *> &lines, int index)
 
 	if(index < 0)
 		index = m_lines.count();
-
-	if(m_lastValidCachedIndex >= index)
-		setLastValidCachedIndex(index - 1);
 
 	processAction(new InsertLinesAction(*this, lines, index));
 }
@@ -1438,44 +1434,6 @@ Subtitle::updateState()
 	case SubtitleAction::None:
 		break;
 	}
-}
-
-void
-Subtitle::setLastValidCachedIndex(int lastValidCachedIndex)
-{
-	if(lastValidCachedIndex > m_lastValidCachedIndex) {
-		// It's possible for incrementing m_lastValidCachedIndex to result in some lines having
-		// an m_cachedIndex value lower than lastValidCachedIndex which though previously regarded
-		// as correct, would be incorrect once we change m_lastValidCachedIndex.
-		// We have to invalidate such lines' m_cachedIndex.
-
-		SubtitleLine *line;
-		for(int lineIndex = lastValidCachedIndex + 1, linesCount = m_lines.count(); lineIndex < linesCount; ++linesCount) {
-			line = m_lines.at(lineIndex);
-			if(line->m_cachedIndex < 0 || line->m_cachedIndex > lastValidCachedIndex)
-				break;
-			line->m_cachedIndex = -1;
-		}
-	} else if(lastValidCachedIndex < m_lastValidCachedIndex) {
-		if(m_lines.count() > lastValidCachedIndex + 1)
-			m_lines.at(lastValidCachedIndex + 1)->m_cachedIndex = -1;
-	} else
-		return;
-
-	m_lastValidCachedIndex = lastValidCachedIndex;
-
-/*
-	qDebug() << "last valid cached index" << m_lastValidCachedIndex;
-
-	QStringList cacheIndexList, indexList;
-	for ( int lineIndex = 0, linesCount = m_lines.count(); lineIndex < linesCount; ++lineIndex )
-	cacheIndexList << QString::number( m_lines.at( lineIndex )->m_cachedIndex );
-	qDebug() << "cached indexes:" << cacheIndexList.join( " " );
-
-	for ( int lineIndex = 0, linesCount = m_lines.count(); lineIndex < linesCount; ++lineIndex )
-	indexList << QString::number( m_lines.at( lineIndex )->index() );
-	qDebug() << "indexes:" << indexList.join( " " );
-//*/
 }
 
 /// SUBTITLECOMPOSITEACTIONEXECUTOR

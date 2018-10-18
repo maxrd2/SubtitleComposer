@@ -109,11 +109,8 @@ InsertLinesAction::redo()
 		line = m_lines.takeFirst();
 		lineIndex = m_insertIndex + insertOffset++;
 		m_subtitle.m_lines.insert(lineIndex, line);
-		setLineSubtitle(line, lineIndex);
+		setLineSubtitle(line);
 	}
-
-	if(m_subtitle.m_lastValidCachedIndex >= m_insertIndex || m_insertIndex == 0)
-		m_subtitle.setLastValidCachedIndex(lineIndex);
 
 	emit m_subtitle.linesInserted(m_insertIndex, m_lastIndex);
 }
@@ -128,9 +125,6 @@ InsertLinesAction::undo()
 		clearLineSubtitle(line);
 		m_lines.append(line);
 	}
-
-	if(m_subtitle.m_lastValidCachedIndex >= m_insertIndex)
-		m_subtitle.setLastValidCachedIndex(m_insertIndex - 1);
 
 	emit m_subtitle.linesRemoved(m_insertIndex, m_lastIndex);
 }
@@ -192,9 +186,6 @@ RemoveLinesAction::redo()
 		m_lines.append(line);
 	}
 
-	if(m_subtitle.m_lastValidCachedIndex >= m_firstIndex)
-		m_subtitle.setLastValidCachedIndex(m_firstIndex - 1);
-
 	emit m_subtitle.linesRemoved(m_firstIndex, m_lastIndex);
 }
 
@@ -210,11 +201,8 @@ RemoveLinesAction::undo()
 		SubtitleLine *line = m_lines.takeFirst();
 		lineIndex = m_firstIndex + insertOffset++;
 		m_subtitle.m_lines.insert(lineIndex, line);
-		setLineSubtitle(line, lineIndex);
+		setLineSubtitle(line);
 	}
-
-	if(m_subtitle.m_lastValidCachedIndex >= m_firstIndex || m_firstIndex == 0)
-		m_subtitle.setLastValidCachedIndex(lineIndex);
 
 	emit m_subtitle.linesInserted(m_firstIndex, m_lastIndex);
 }
@@ -282,15 +270,11 @@ MoveLineAction::redo()
 	emit m_subtitle.linesAboutToBeRemoved(m_fromIndex, m_fromIndex);
 	SubtitleLine *line = m_subtitle.m_lines.takeAt(m_fromIndex);
 	clearLineSubtitle(line);
-	if(m_subtitle.m_lastValidCachedIndex >= m_fromIndex)
-		m_subtitle.setLastValidCachedIndex(m_fromIndex - 1);
 	emit m_subtitle.linesRemoved(m_fromIndex, m_fromIndex);
 
 	emit m_subtitle.linesAboutToBeInserted(m_toIndex, m_toIndex);
 	m_subtitle.m_lines.insert(m_toIndex, line);
-	setLineSubtitle(line, m_toIndex);
-	if(m_subtitle.m_lastValidCachedIndex >= m_toIndex || m_toIndex == 0)
-		m_subtitle.setLastValidCachedIndex(m_toIndex);
+	setLineSubtitle(line);
 	emit m_subtitle.linesInserted(m_toIndex, m_toIndex);
 }
 
@@ -300,15 +284,11 @@ MoveLineAction::undo()
 	emit m_subtitle.linesAboutToBeRemoved(m_toIndex, m_toIndex);
 	SubtitleLine *line = m_subtitle.m_lines.takeAt(m_toIndex);
 	clearLineSubtitle(line);
-	if(m_subtitle.m_lastValidCachedIndex >= m_toIndex)
-		m_subtitle.setLastValidCachedIndex(m_toIndex - 1);
 	emit m_subtitle.linesRemoved(m_toIndex, m_toIndex);
 
 	emit m_subtitle.linesAboutToBeInserted(m_fromIndex, m_fromIndex);
 	m_subtitle.m_lines.insert(m_fromIndex, line);
-	setLineSubtitle(line, m_fromIndex);
-	if(m_subtitle.m_lastValidCachedIndex >= m_fromIndex || m_fromIndex == 0)
-		m_subtitle.setLastValidCachedIndex(m_fromIndex);
+	setLineSubtitle(line);
 	emit m_subtitle.linesInserted(m_fromIndex, m_fromIndex);
 }
 

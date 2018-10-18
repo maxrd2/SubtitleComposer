@@ -247,8 +247,6 @@ private:
 	Time m_hideTime;
 	int m_errorFlags;
 
-	int m_cachedIndex;
-
 	FormatData *m_formatData;
 };
 }

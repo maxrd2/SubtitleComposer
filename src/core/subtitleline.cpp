@@ -146,7 +146,6 @@ SubtitleLine::SubtitleLine(const SString &pText, const SString &sText) :
 	m_showTime(),
 	m_hideTime(),
 	m_errorFlags(0),
-	m_cachedIndex(-1),
 	m_formatData(0)
 {}
 
@@ -158,7 +157,6 @@ SubtitleLine::SubtitleLine(const SString &pText, const Time &showTime, const Tim
 	m_showTime(showTime),
 	m_hideTime(hideTime),
 	m_errorFlags(0),
-	m_cachedIndex(-1),
 	m_formatData(0)
 {}
 
@@ -170,7 +168,6 @@ SubtitleLine::SubtitleLine(const SString &pText, const SString &sText, const Tim
 	m_showTime(showTime),
 	m_hideTime(hideTime),
 	m_errorFlags(0),
-	m_cachedIndex(-1),
 	m_formatData(0)
 {}
 
@@ -182,7 +179,6 @@ SubtitleLine::SubtitleLine(const SubtitleLine &line) :
 	m_showTime(line.m_showTime),
 	m_hideTime(line.m_hideTime),
 	m_errorFlags(line.m_errorFlags),
-	m_cachedIndex(-1),
 	m_formatData(0)
 {}
 
@@ -232,20 +228,7 @@ SubtitleLine::index() const
 	if(!m_subtitle)
 		return -1;
 
-	if(m_cachedIndex < 0 || (m_cachedIndex > m_subtitle->m_lastValidCachedIndex)) {
-		SubtitleLine *line;
-		for(int index = m_subtitle->m_lastValidCachedIndex + 1, size = m_subtitle->m_lines.count(); index < size; ++index) {
-			line = m_subtitle->m_lines.at(index);
-			line->m_cachedIndex = index;
-			if(line == this) {
-				m_subtitle->setLastValidCachedIndex(index);
-				break;
-			}
-		}
-//		qDebug() << "searched index" << m_cachedIndex;
-	}
-//	qDebug() << "index" << m_cachedIndex << "| text" << m_primaryText.string();
-	return m_cachedIndex;
+	return m_subtitle->m_lines.indexOf(const_cast<SubtitleLine *>(this));
 }
 
 Subtitle *

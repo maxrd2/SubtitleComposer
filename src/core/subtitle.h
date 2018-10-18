@@ -110,7 +110,7 @@ public:
 	SubtitleLine * lastLine();
 	const SubtitleLine * lastLine() const;
 
-	inline const QList<SubtitleLine *> & allLines() const { return m_lines; }
+	inline const QVector<SubtitleLine *> & allLines() const { return m_lines; }
 
 	inline const QList<const SubtitleLine *> & anchoredLines() const { return m_anchoredLines; }
 
@@ -213,12 +213,8 @@ private:
 	int m_secondaryCleanState;
 
 	double m_framesPerSecond;
-	mutable QList<SubtitleLine *> m_lines;
+	mutable QVector<SubtitleLine *> m_lines;
 	QList<const SubtitleLine *> m_anchoredLines;
-
-	int m_lastValidCachedIndex;             // all SubtitleLines with a m_cachedIndex greater
-// than this value have to recalculate its value
-// when asked about their index() value.
 
 	FormatData *m_formatData;
 

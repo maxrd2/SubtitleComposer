@@ -38,16 +38,14 @@ public:
 	SubtitleAction(Subtitle &subtitle, UndoAction::DirtyMode dirtyMode, const QString &description = QString());
 	virtual ~SubtitleAction();
 
-	inline void setLineSubtitle(SubtitleLine *line, int index)
+	inline void setLineSubtitle(SubtitleLine *line)
 	{
 		line->m_subtitle = &m_subtitle;
-		line->m_cachedIndex = index;
 	}
 
 	inline void clearLineSubtitle(SubtitleLine *line)
 	{
 		line->m_subtitle = 0;
-		line->m_cachedIndex = -1;
 	}
 
 protected:

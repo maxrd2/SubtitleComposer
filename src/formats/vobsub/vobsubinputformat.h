@@ -76,7 +76,7 @@ public:
 
 		// TODO: move all these regexps into separate class that can be reused, make them static and optimize them after init
 		quint32 ppFlags = dlgInit.postProcessingFlags();
-		const QList<SubtitleLine *> lines = subtitle.allLines();
+		const QVector<SubtitleLine *> lines = subtitle.allLines();
 		foreach(SubtitleLine *line, lines) {
 			SString text = line->primaryText();
 			if(ppFlags & VobSubInputInitDialog::APOSTROPHE_TO_QUOTES)
