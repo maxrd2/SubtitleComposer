@@ -23,6 +23,7 @@
 
 #include "core/range.h"
 #include "core/rangelist.h"
+#include "core/subtitle.h"
 
 #include <QObject>
 #include <QList>
@@ -33,7 +34,7 @@ class Subtitle;
 class SubtitleIterator : public QObject
 {
 	Q_OBJECT
-	Q_PROPERTY(int index READ index WRITE toIndex);
+	Q_PROPERTY(int index READ index WRITE toIndex)
 
 public:
 	static const int AfterLast = -1;
@@ -62,8 +63,8 @@ public:
 	inline int firstIndex() { return m_index == Invalid ? -1 : m_ranges.firstIndex(); }
 	inline int lastIndex() { return m_index == Invalid ? -1 : m_ranges.lastIndex(); }
 
-	inline SubtitleLine * current() const { return m_index < 0 ? 0 : *m_linesIterator; }
-	inline operator SubtitleLine *() const { return m_index < 0 ? 0 : *m_linesIterator; }
+	inline SubtitleLine * current() const { return m_index < 0 ? nullptr : const_cast<Subtitle *>(m_subtitle)->line(m_index); }
+	inline operator SubtitleLine *() const { return m_index < 0 ? nullptr : const_cast<Subtitle *>(m_subtitle)->line(m_index); }
 
 	SubtitleIterator & operator++();
 	SubtitleIterator & operator+=(int steps);
@@ -85,8 +86,6 @@ private:
 	bool m_isFullIterator;
 	int m_index;
 	RangeList::ConstIterator m_rangesIterator;
-	QList<SubtitleLine *>::Iterator m_linesIterator;
-	QList<SubtitleLine *>::Iterator m_linesIteratorStart;
 };
 }
 

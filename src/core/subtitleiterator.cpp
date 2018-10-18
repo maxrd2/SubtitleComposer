@@ -29,9 +29,7 @@ SubtitleIterator::SubtitleIterator(const Subtitle &subtitle, const RangeList &ra
 	m_subtitle(&subtitle),
 	m_autoSync(false),
 	m_autoCircle(false),
-	m_ranges(ranges),
-	m_linesIterator(m_subtitle->m_lines.begin()),
-	m_linesIteratorStart(m_subtitle->m_lines.begin())
+	m_ranges(ranges)
 {
 	if(m_subtitle->isEmpty())
 		m_ranges.clear();
@@ -61,9 +59,7 @@ SubtitleIterator::SubtitleIterator(const SubtitleIterator &it) :
 	m_ranges(it.m_ranges),
 	m_isFullIterator(it.m_isFullIterator),
 	m_index(it.m_index),
-	m_rangesIterator(it.m_rangesIterator),
-	m_linesIterator(it.m_linesIterator),
-	m_linesIteratorStart(it.m_linesIteratorStart)
+	m_rangesIterator(it.m_rangesIterator)
 {
 	setAutoSync(it.m_autoSync);
 }
@@ -80,8 +76,6 @@ SubtitleIterator::operator=(const SubtitleIterator &it)
 		m_isFullIterator = it.m_isFullIterator;
 		m_index = it.m_index;
 		m_rangesIterator = it.m_rangesIterator;
-		m_linesIterator = it.m_linesIterator;
-		m_linesIteratorStart = it.m_linesIteratorStart;
 
 		setAutoSync(it.m_autoSync);
 	}
@@ -157,13 +151,7 @@ SubtitleIterator::toFirst()
 
 	m_rangesIterator = m_ranges.begin();
 
-	m_linesIteratorStart = m_subtitle->m_lines.begin();
-
-	m_linesIterator = m_linesIteratorStart;
-
 	m_index = m_ranges.firstIndex();
-	if(m_index)
-		m_linesIterator += m_index; // safe because indexes within m_ranges are all valid lines
 }
 
 void
@@ -175,13 +163,7 @@ SubtitleIterator::toLast()
 	m_rangesIterator = m_ranges.end();
 	m_rangesIterator--;                     // safe because m_ranges is not empty (otherwise m_index would be INVALID).
 
-	m_linesIteratorStart = m_subtitle->m_lines.begin();
-
-	m_linesIterator = m_linesIteratorStart;
-
 	m_index = m_ranges.lastIndex();
-	if(m_index)
-		m_linesIterator += m_index; // safe because indexes within m_ranges are all valid lines
 }
 
 bool
@@ -230,16 +212,14 @@ SubtitleIterator::operator++()
 		toFirst();
 	else {
 		m_index++;
-		++m_linesIterator;
 
 		int currentRangeEnd = (*m_rangesIterator).end();
 		if(m_index > currentRangeEnd) {
 			m_rangesIterator++;
-			if(m_rangesIterator == m_ranges.end())
+			if(m_rangesIterator == m_ranges.end()) {
 				m_index = AfterLast;
-			else {
+			} else {
 				m_index = (*m_rangesIterator).start();
-				m_linesIterator += (m_index - (currentRangeEnd + 1));
 			}
 		}
 	}
@@ -260,16 +240,14 @@ SubtitleIterator::operator--()
 		toLast();
 	else {
 		m_index--;
-		--m_linesIterator;
 
 		int currentRangeStart = (*m_rangesIterator).start();
 		if(m_index < currentRangeStart) {
-			if(m_rangesIterator == m_ranges.begin())
+			if(m_rangesIterator == m_ranges.begin()) {
 				m_index = BehindFirst;
-			else {
+			} else {
 				m_rangesIterator--;
 				m_index = (*m_rangesIterator).end();
-				m_linesIterator -= (currentRangeStart - (m_index + 1));
 			}
 		}
 	}
