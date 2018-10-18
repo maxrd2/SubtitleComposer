@@ -27,15 +27,12 @@ using namespace SubtitleComposer;
 SubtitleIterator::SubtitleIterator(const Subtitle &subtitle, const RangeList &ranges, bool gotoLast) :
 	QObject(0),
 	m_subtitle(&subtitle),
-	m_autoCircle(false),
 	m_ranges(ranges)
 {
 	if(m_subtitle->isEmpty())
 		m_ranges.clear();
 	else
 		m_ranges.trimToIndex(m_subtitle->lastIndex());
-
-	m_isFullIterator = m_ranges.isFullRange(m_subtitle->lastIndex());
 
 	if(m_ranges.isEmpty()) {
 		m_index = Invalid;              // no operations allowed
@@ -53,9 +50,7 @@ SubtitleIterator::SubtitleIterator(const Subtitle &subtitle, const RangeList &ra
 SubtitleIterator::SubtitleIterator(const SubtitleIterator &it) :
 	QObject(0),
 	m_subtitle(it.m_subtitle),
-	m_autoCircle(it.m_autoCircle),
 	m_ranges(it.m_ranges),
-	m_isFullIterator(it.m_isFullIterator),
 	m_index(it.m_index),
 	m_rangesIterator(it.m_rangesIterator)
 {
@@ -67,9 +62,7 @@ SubtitleIterator::operator=(const SubtitleIterator &it)
 	if(&it != this) {
 
 		m_subtitle = it.m_subtitle;
-		m_autoCircle = it.m_autoCircle;
 		m_ranges = it.m_ranges;
-		m_isFullIterator = it.m_isFullIterator;
 		m_index = it.m_index;
 		m_rangesIterator = it.m_rangesIterator;
 	}
@@ -79,31 +72,6 @@ SubtitleIterator::operator=(const SubtitleIterator &it)
 
 SubtitleIterator::~SubtitleIterator()
 {
-}
-
-bool
-SubtitleIterator::isAutoCircle() const
-{
-	return m_autoCircle;
-}
-
-void
-SubtitleIterator::setAutoCircle(bool value)
-{
-	if(m_autoCircle != value) {
-		m_autoCircle = value;
-
-		if(m_index == AfterLast)
-			toFirst();
-		else if(m_index == BehindFirst)
-			toLast();
-	}
-}
-
-bool
-SubtitleIterator::isFullIterator() const
-{
-	return m_isFullIterator;
 }
 
 RangeList
@@ -144,10 +112,6 @@ SubtitleIterator::toIndex(const int index)
 	if(m_index == Invalid)
 		return false;
 
-	bool savedAutoCircle = m_autoCircle;    // auto circling interferes with what we have to do
-
-	m_autoCircle = false;
-
 	if(m_index < index) {
 		while(m_index < index) {
 			operator++();
@@ -165,8 +129,6 @@ SubtitleIterator::toIndex(const int index)
 			}
 		}
 	}
-
-	m_autoCircle = savedAutoCircle;
 
 	return m_index == index;
 }
@@ -193,9 +155,6 @@ SubtitleIterator::operator++()
 		}
 	}
 
-	if(m_autoCircle && m_index == AfterLast)
-		toFirst();
-
 	return *this;
 }
 
@@ -220,9 +179,6 @@ SubtitleIterator::operator--()
 			}
 		}
 	}
-
-	if(m_autoCircle && m_index == BehindFirst)
-		toLast();
 
 	return *this;
 }

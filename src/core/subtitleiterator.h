@@ -46,10 +46,6 @@ public:
 	SubtitleIterator & operator=(const SubtitleIterator &it);
 	virtual ~SubtitleIterator();
 
-	bool isAutoCircle() const;
-	void setAutoCircle(bool value);
-
-	bool isFullIterator() const;
 	RangeList ranges() const;
 
 	void toFirst();
@@ -70,9 +66,7 @@ public:
 
 private:
 	const Subtitle *m_subtitle;
-	bool m_autoCircle;
 	RangeList m_ranges;
-	bool m_isFullIterator;
 	int m_index;
 	RangeList::ConstIterator m_rangesIterator;
 };
