@@ -238,6 +238,7 @@ private:
 	void setFormatData(const FormatData *formatData);
 
 	void processAction(QUndoCommand *action);
+	void processShowTimeSort(const Time &showTime);
 
 private:
 	Subtitle *m_subtitle;

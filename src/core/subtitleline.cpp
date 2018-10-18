@@ -18,9 +18,10 @@
  * Boston, MA 02110-1301, USA.
  */
 
-#include "subtitleline.h"
-#include "subtitlelineactions.h"
+#include "core/subtitleline.h"
+#include "core/subtitlelineactions.h"
 #include "core/subtitle.h"
+#include "core/subtitleactions.h"
 
 #include <QRegExp>
 
@@ -460,6 +461,26 @@ SubtitleLine::simplifyTextWhiteSpace(TextTarget target)
 	}
 }
 
+void
+SubtitleLine::processShowTimeSort(const Time &showTime)
+{
+	if(!m_subtitle)
+		return;
+
+	const int curIndex = index();
+	const int maxIndex = m_subtitle->linesCount() - 1;
+	int newIndex = curIndex;
+
+	while(newIndex < maxIndex && m_subtitle->line(newIndex + 1)->m_showTime < showTime)
+		newIndex++;
+
+	while(newIndex > 0 && m_subtitle->line(newIndex - 1)->m_showTime > showTime)
+		newIndex--;
+
+	if(curIndex != newIndex)
+		processAction(new MoveLineAction(*m_subtitle, curIndex, newIndex));
+}
+
 Time
 SubtitleLine::showTime() const
 {
@@ -472,16 +493,21 @@ SubtitleLine::setShowTime(const Time &showTime, bool safe/*=false*/)
 	if(m_showTime == showTime)
 		return;
 
-	if(m_subtitle && m_subtitle->isLineAnchored(this)) {
+	if(m_subtitle)
 		m_subtitle->beginCompositeAction(i18n("Set Line Show Time"));
+
+	if(m_subtitle && m_subtitle->isLineAnchored(this)) {
 		m_subtitle->shiftAnchoredLine(this, showTime);
-		m_subtitle->endCompositeAction();
 	} else {
+		processShowTimeSort(showTime);
 		if(safe && showTime > m_hideTime)
 			setTimes(showTime, showTime);
 		else
 			processAction(new SetLineShowTimeAction(*this, showTime));
 	}
+
+	if(m_subtitle)
+		m_subtitle->endCompositeAction();
 }
 
 Time
@@ -496,10 +522,16 @@ SubtitleLine::setHideTime(const Time &hideTime, bool safe/*=false*/)
 	if(m_hideTime == hideTime)
 		return;
 
+	if(m_subtitle)
+		m_subtitle->beginCompositeAction(i18n("Set Line Hide Time"));
+
 	if(safe && m_showTime > hideTime)
 		setTimes(hideTime, m_showTime);
 	else
 		processAction(new SetLineHideTimeAction(*this, hideTime));
+
+	if(m_subtitle)
+		m_subtitle->endCompositeAction();
 }
 
 Time
@@ -520,13 +552,18 @@ SubtitleLine::setTimes(const Time &showTime, const Time &hideTime)
 	if(m_showTime == showTime && m_hideTime == hideTime)
 		return;
 
-	if(m_subtitle && m_subtitle->isLineAnchored(this)) {
+	if(m_subtitle)
 		m_subtitle->beginCompositeAction(i18n("Set Line Times"));
+
+	if(m_subtitle && m_subtitle->isLineAnchored(this)) {
 		m_subtitle->shiftAnchoredLine(this, showTime);
-		m_subtitle->endCompositeAction();
 	} else {
-		processAction(new SetLineTimesAction(*this, showTime, hideTime, i18n("Set Line Times")));
+		processShowTimeSort(showTime);
+		processAction(new SetLineTimesAction(*this, showTime, hideTime));
 	}
+
+	if(m_subtitle)
+		m_subtitle->endCompositeAction();
 }
 
 int
