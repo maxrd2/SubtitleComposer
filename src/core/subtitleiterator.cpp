@@ -87,7 +87,6 @@ SubtitleIterator::toFirst()
 		return;
 
 	m_rangesIterator = m_ranges.begin();
-
 	m_index = m_ranges.firstIndex();
 }
 
@@ -98,8 +97,7 @@ SubtitleIterator::toLast()
 		return;
 
 	m_rangesIterator = m_ranges.end();
-	m_rangesIterator--;                     // safe because m_ranges is not empty (otherwise m_index would be INVALID).
-
+	m_rangesIterator--; // safe because m_ranges is not empty (m_index != Invalid)
 	m_index = m_ranges.lastIndex();
 }
 
@@ -129,19 +127,13 @@ SubtitleIterator::operator++()
 	if(m_index == Invalid || m_index == AfterLast)
 		return *this;
 
-	if(m_index == BehindFirst)
+	if(m_index == BehindFirst) {
 		toFirst();
-	else {
+	} else {
 		m_index++;
-
-		int currentRangeEnd = (*m_rangesIterator).end();
-		if(m_index > currentRangeEnd) {
+		if(m_index > m_rangesIterator->end()) {
 			m_rangesIterator++;
-			if(m_rangesIterator == m_ranges.end()) {
-				m_index = AfterLast;
-			} else {
-				m_index = (*m_rangesIterator).start();
-			}
+			m_index = m_rangesIterator == m_ranges.end() ? AfterLast : m_rangesIterator->start();
 		}
 	}
 
@@ -154,19 +146,13 @@ SubtitleIterator::operator--()
 	if(m_index == Invalid || m_index == BehindFirst)
 		return *this;
 
-	if(m_index == AfterLast)
+	if(m_index == AfterLast) {
 		toLast();
-	else {
+	} else {
 		m_index--;
-
-		int currentRangeStart = (*m_rangesIterator).start();
-		if(m_index < currentRangeStart) {
-			if(m_rangesIterator == m_ranges.begin()) {
-				m_index = BehindFirst;
-			} else {
-				m_rangesIterator--;
-				m_index = (*m_rangesIterator).end();
-			}
+		if(m_index < m_rangesIterator->start()) {
+			m_index = m_rangesIterator == m_ranges.begin() ? BehindFirst : m_rangesIterator->end();
+			m_rangesIterator--;
 		}
 	}
 
@@ -176,13 +162,14 @@ SubtitleIterator::operator--()
 SubtitleIterator &
 SubtitleIterator::operator+=(int steps)
 {
-	if(steps > 0) {
-		for(int i = 0; i < steps; ++i)
-			operator++();
-	} else if(steps < 0) {
-		for(int i = 0; i > steps; --i)
-			operator--();
-	}
+	if(steps < 0)
+		return operator-=(-steps);
+
+	if(m_index == Invalid || m_index == AfterLast)
+		return *this;
+
+	while(steps--)
+		operator++();
 
 	return *this;
 }
@@ -190,13 +177,14 @@ SubtitleIterator::operator+=(int steps)
 SubtitleIterator &
 SubtitleIterator::operator-=(int steps)
 {
-	if(steps > 0) {
-		for(int i = 0; i < steps; ++i)
-			operator--();
-	} else if(steps < 0) {
-		for(int i = 0; i > steps; --i)
-			operator++();
-	}
+	if(steps < 0)
+		return operator+=(-steps);
+
+	if(m_index == Invalid || m_index == BehindFirst)
+		return *this;
+
+	while(steps--)
+		operator--();
 
 	return *this;
 }

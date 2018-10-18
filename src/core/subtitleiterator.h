@@ -37,9 +37,11 @@ class SubtitleIterator : public QObject
 	Q_PROPERTY(int index READ index WRITE toIndex)
 
 public:
-	static const int AfterLast = -1;
-	static const int BehindFirst = -2;
-	static const int Invalid = -3;
+	enum {
+		AfterLast = -1,
+		BehindFirst = -2,
+		Invalid = -3
+	};
 
 	explicit SubtitleIterator(const Subtitle &subtitle, const RangeList &ranges = Range::full(), bool toLast = false);
 	SubtitleIterator(const SubtitleIterator &it);
