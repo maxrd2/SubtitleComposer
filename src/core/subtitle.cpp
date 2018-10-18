@@ -799,33 +799,24 @@ Subtitle::sortLines(const Range &range)
 
 	SubtitleIterator it(*this, range);
 	SubtitleLine *line = it.current();
-	++it;
-	int itPositions = 1;
-	for(SubtitleLine *nextLine = it.current(); nextLine; ++it, line = nextLine, nextLine = it.current(), ++itPositions) {
-		if(nextLine->showTime() < line->showTime()) {   // nextLine is not at the right position, we'll move it backwards
-			int fromIndex = it.index();     // nextLine current index
+	SubtitleLine *nextLine = (++it).current();
+	for(; nextLine; ++it, line = nextLine, nextLine = it.current()) {
+//		qDebug() << "sort: test" << nextLine->index();
+		if(line->showTime() < nextLine->showTime()) // already sorted
+			continue;
 
-			// We set the first target index candidate. Note that we can't tell is this is the
-			// correct target index as nextLine my be misplaced by more than one position.
-			// We do now, however, that the new index must be one before fromIndex.
-			int toIndex = (--it).index();
+		SubtitleIterator tmp(it);
+		int fromIndex = tmp.index();
+		int toIndex = -1;
+		while((--tmp).current() && tmp.current()->showTime() > nextLine->showTime())
+			toIndex = tmp.index();
 
-			// we iterate backwards finding the correct position knowing that all previous lines ARE sorted
-			for(; it.current(); --it) {
-				if(it.current()->showTime() < nextLine->showTime()) {
-					toIndex = (++it).index();
-					break;
-				}
-			}
+		Q_ASSERT(toIndex != -1);
 
-//                      qDebug() << "moving from" << fromIndex << "to" << toIndex;
-			processAction(new MoveLineAction(*this, fromIndex, toIndex));
+//		qDebug() << "sort: move" << fromIndex << "to" << toIndex;
+		processAction(new MoveLineAction(*this, fromIndex, toIndex));
 
-			// moving the lines invalidates the iterator so we recreate it and advance it to where it was
-			it = SubtitleIterator(*this, range);
-			it += itPositions;
-			nextLine = it.current();
-		}
+		--it;
 	}
 
 	endCompositeAction();
