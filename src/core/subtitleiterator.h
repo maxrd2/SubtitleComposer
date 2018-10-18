@@ -46,9 +46,6 @@ public:
 	SubtitleIterator & operator=(const SubtitleIterator &it);
 	virtual ~SubtitleIterator();
 
-	bool isAutoSync() const;
-	void setAutoSync(bool value);
-
 	bool isAutoCircle() const;
 	void setAutoCircle(bool value);
 
@@ -71,16 +68,8 @@ public:
 	SubtitleIterator & operator--();
 	SubtitleIterator & operator-=(int steps);
 
-signals:
-	void syncronized(int firstIndex, int lastIndex, bool inserted);
-
-private slots:
-	void onSubtitleLinesInserted(int firstIndex, int lastIndex);
-	void onSubtitleLinesRemoved(int firstIndex, int lastIndex);
-
 private:
 	const Subtitle *m_subtitle;
-	bool m_autoSync;
 	bool m_autoCircle;
 	RangeList m_ranges;
 	bool m_isFullIterator;

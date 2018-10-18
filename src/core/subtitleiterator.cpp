@@ -27,7 +27,6 @@ using namespace SubtitleComposer;
 SubtitleIterator::SubtitleIterator(const Subtitle &subtitle, const RangeList &ranges, bool gotoLast) :
 	QObject(0),
 	m_subtitle(&subtitle),
-	m_autoSync(false),
 	m_autoCircle(false),
 	m_ranges(ranges)
 {
@@ -54,21 +53,18 @@ SubtitleIterator::SubtitleIterator(const Subtitle &subtitle, const RangeList &ra
 SubtitleIterator::SubtitleIterator(const SubtitleIterator &it) :
 	QObject(0),
 	m_subtitle(it.m_subtitle),
-	m_autoSync(false),
 	m_autoCircle(it.m_autoCircle),
 	m_ranges(it.m_ranges),
 	m_isFullIterator(it.m_isFullIterator),
 	m_index(it.m_index),
 	m_rangesIterator(it.m_rangesIterator)
 {
-	setAutoSync(it.m_autoSync);
 }
 
 SubtitleIterator &
 SubtitleIterator::operator=(const SubtitleIterator &it)
 {
 	if(&it != this) {
-		setAutoSync(false);
 
 		m_subtitle = it.m_subtitle;
 		m_autoCircle = it.m_autoCircle;
@@ -76,8 +72,6 @@ SubtitleIterator::operator=(const SubtitleIterator &it)
 		m_isFullIterator = it.m_isFullIterator;
 		m_index = it.m_index;
 		m_rangesIterator = it.m_rangesIterator;
-
-		setAutoSync(it.m_autoSync);
 	}
 
 	return *this;
@@ -85,31 +79,6 @@ SubtitleIterator::operator=(const SubtitleIterator &it)
 
 SubtitleIterator::~SubtitleIterator()
 {
-	setAutoSync(false);
-}
-
-bool
-SubtitleIterator::isAutoSync() const
-{
-	return m_autoSync;
-}
-
-void
-SubtitleIterator::setAutoSync(bool value)
-{
-	if(m_autoSync != value) {
-		if(m_autoSync) {
-			disconnect(m_subtitle, SIGNAL(linesInserted(int, int)), this, SLOT(onSubtitleLinesInserted(int, int)));
-			disconnect(m_subtitle, SIGNAL(linesRemoved(int, int)), this, SLOT(onSubtitleLinesRemoved(int, int)));
-		}
-
-		m_autoSync = value;
-
-		if(m_autoSync) {
-			connect(m_subtitle, SIGNAL(linesInserted(int, int)), this, SLOT(onSubtitleLinesInserted(int, int)));
-			connect(m_subtitle, SIGNAL(linesRemoved(int, int)), this, SLOT(onSubtitleLinesRemoved(int, int)));
-		}
-	}
 }
 
 bool
@@ -285,80 +254,3 @@ SubtitleIterator::operator-=(int steps)
 
 	return *this;
 }
-
-void
-SubtitleIterator::onSubtitleLinesInserted(int firstIndex, int lastIndex)
-{
-	if(m_index == Invalid)
-		return;
-
-	int prevIndex = m_index;
-	Range insertedRange(firstIndex, lastIndex);
-
-	m_ranges.shiftIndexesForwards(firstIndex, insertedRange.length(), true);
-	if(m_isFullIterator)
-		m_ranges << insertedRange;
-
-	m_index = Invalid - 1;          // a non Invalid index (needed only for initialization)
-
-	if(prevIndex == AfterLast) {
-		if(lastIndex == m_ranges.lastIndex()) { // lines were inserted at the end
-			toFirst();                      // restore internal variables to a valid state
-			toIndex(firstIndex);    // point to the first newly inserted item
-		} else {
-			toLast();                       // restore internal variables to a valid state
-			operator++();           // point again to AfterLast
-		}
-	} else if(prevIndex == BehindFirst) {
-		toFirst();                              // restore internal variables to a valid state
-		operator--();                   // point again to BehindFirst
-	} else {
-		toFirst();                              // restore internal variables to a valid state
-		if(prevIndex >= firstIndex)
-			toIndex(prevIndex + insertedRange.length()); // point to the previously pointed line
-		else
-			toIndex(prevIndex); // point to the previously pointed line
-	}
-
-	emit syncronized(firstIndex, lastIndex, true);
-}
-
-void
-SubtitleIterator::onSubtitleLinesRemoved(int firstIndex, int lastIndex)
-{
-	if(m_index == Invalid)
-		return;
-
-	int prevIndex = m_index;
-	Range removedRange(firstIndex, lastIndex);
-
-	qDebug() << "PREV RANGES" << m_ranges.inspect();
-	m_ranges.shiftIndexesBackwards(firstIndex, removedRange.length());
-	qDebug() << "NEW RANGES" << m_ranges.inspect();
-
-	if(m_ranges.isEmpty())
-		m_index = Invalid;
-	else {
-		m_index = Invalid - 1;  // a non Invalid index (needed only for initialization)
-
-		if(prevIndex == AfterLast) {
-			toLast();                       // restore internal variables to a valid state
-			operator++();           // point again to AfterLast
-		} else if(prevIndex == BehindFirst) {
-			toFirst();                      // restore internal variables to a valid state
-			operator--();           // point again to BehindFirst
-		} else {
-			toFirst();                      // restore internal variables to a valid state
-			if(prevIndex < firstIndex)
-				toIndex(prevIndex);
-			else if(m_index > lastIndex)
-				toIndex(prevIndex - removedRange.length());
-			else // prevIndex was one of the removed lines
-				toIndex(firstIndex);
-		}
-	}
-
-	emit syncronized(firstIndex, lastIndex, false);
-}
-
-

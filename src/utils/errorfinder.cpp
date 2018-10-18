@@ -150,9 +150,6 @@ ErrorFinder::find(const RangeList &selectionRanges, int currentIndex, bool findB
 		invalidate();
 		return;
 	}
-	m_iterator->setAutoSync(true);
-
-	connect(m_iterator, SIGNAL(syncronized(int, int, bool)), this, SLOT(onIteratorSynchronized(int, int, bool)));
 
 	if(m_dialog->findFromCurrent())
 		m_iterator->toIndex(currentIndex < 0 ? 0 : currentIndex);

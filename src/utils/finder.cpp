@@ -163,9 +163,6 @@ Finder::find(const RangeList &selectionRanges, int currentIndex, const QString &
 		invalidate();
 		return;
 	}
-	m_iterator->setAutoSync(true);
-
-	connect(m_iterator, SIGNAL(syncronized(int, int, bool)), this, SLOT(onIteratorSynchronized(int, int, bool)));
 
 	if(m_dialog->options() & KFind::FromCursor)
 		m_iterator->toIndex(currentIndex < 0 ? 0 : currentIndex);
