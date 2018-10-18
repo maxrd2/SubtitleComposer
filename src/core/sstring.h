@@ -137,6 +137,9 @@ public:
 	SString simplified() const;
 	SString trimmed() const;
 
+	static void simplifyWhiteSpace(QString &text);
+	void simplifyWhiteSpace();
+
 	bool operator==(const SString &sstring) const;
 	bool operator!=(const SString &sstring) const;
 

@@ -448,31 +448,15 @@ SubtitleLine::unbreakText(TextTarget target)
 QString
 SubtitleLine::simplifyTextWhiteSpace(QString text)
 {
-	static const QRegExp regExp1(" *\n *");
-	static const QRegExp regExp2(" +");
-	static const QRegExp regExp3("\n+");
-
-	text.replace('\t', ' ');
-	text.replace(regExp1, "\n");
-	text.replace(regExp2, " ");
-	text.replace(regExp3, "\n");
-
-	return text.trimmed();
+	SString::simplifyWhiteSpace(text);
+	return text;
 }
 
 SString
 SubtitleLine::simplifyTextWhiteSpace(SString text)
 {
-	static const QRegExp regExp1(" *\n *");
-	static const QRegExp regExp2(" +");
-	static const QRegExp regExp3("\n+");
-
-	text.replace('\t', ' ');
-	text.replace(regExp1, "\n");
-	text.replace(regExp2, " ");
-	text.replace(regExp3, "\n");
-
-	return text.trimmed();
+	text.simplifyWhiteSpace();
+	return text;
 }
 
 void

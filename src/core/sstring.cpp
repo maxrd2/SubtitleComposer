@@ -1318,6 +1318,75 @@ SString::trimmed() const
 	return ret.remove(trimRegExp);
 }
 
+void
+SString::simplifyWhiteSpace(QString &text)
+{
+	int di = 0;
+	bool lastWasSpace = true;
+	bool lastWasLineFeed = true;
+	for(int i = 0, l = text.size(); i < l; i++) {
+		const QChar ch = text.at(i);
+		if(lastWasSpace && (ch == QChar::Space || ch == QChar::Tabulation)) // skip consequtive spaces
+			continue;
+		if(lastWasLineFeed && (ch == QChar::LineFeed || ch == QChar::CarriageReturn)) // skip consequtive newlines
+			continue;
+		if(lastWasSpace && (ch == QChar::LineFeed || ch == QChar::CarriageReturn)) // skip space before newline
+			di--;
+
+		if(ch == QChar::Tabulation) // convert tab to space
+			text[di] = QChar::Space;
+		else if(ch == QChar::CarriageReturn) // convert cr to lf
+			text[di] = QChar::LineFeed;
+		else if(di != i) // copy other chars
+			text[di] = ch;
+
+		lastWasLineFeed = text[di] == QChar::LineFeed;
+		lastWasSpace = lastWasLineFeed || text[di] == QChar::Space;
+
+		di++;
+	}
+	if(lastWasLineFeed)
+		di--;
+	text.truncate(di);
+}
+
+void
+SString::simplifyWhiteSpace()
+{
+	int di = 0;
+	bool lastWasSpace = true;
+	bool lastWasLineFeed = true;
+	for(int i = 0, l = size(); i < l; i++) {
+		const QChar ch = at(i);
+		if(lastWasSpace && (ch == QChar::Space || ch == QChar::Tabulation)) // skip consequtive spaces
+			continue;
+		if(lastWasLineFeed && (ch == QChar::LineFeed || ch == QChar::CarriageReturn)) // skip consequtive newlines
+			continue;
+		if(lastWasSpace && (ch == QChar::LineFeed || ch == QChar::CarriageReturn)) // skip space before newline
+			di--;
+
+		if(ch == QChar::Tabulation) // convert tab to space
+			operator[](di) = QChar::Space;
+		else if(ch == QChar::CarriageReturn) // convert cr to lf
+			operator[](di) = QChar::LineFeed;
+		else if(di != i) // copy other chars
+			operator[](di) = ch;
+
+		if(di != i) {
+			m_styleFlags[di] = m_styleFlags[i];
+			m_styleColors[di] = m_styleColors[i];
+		}
+
+		lastWasLineFeed = at(di) == QChar::LineFeed;
+		lastWasSpace = lastWasLineFeed || at(di) == QChar::Space;
+
+		di++;
+	}
+	if(lastWasLineFeed)
+		di--;
+	truncate(di);
+}
+
 bool
 SString::operator!=(const SString &sstring) const
 {
