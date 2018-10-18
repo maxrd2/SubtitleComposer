@@ -112,25 +112,15 @@ SubtitleIterator::toIndex(const int index)
 	if(m_index == Invalid)
 		return false;
 
-	if(m_index < index) {
-		while(m_index < index) {
-			operator++();
-			if(m_index == AfterLast) {
-				toLast();               // equivalent to operator--() in this case
-				break;
-			}
-		}
-	} else if(m_index > index) {
-		while(m_index > index) {
-			operator--();
-			if(m_index == BehindFirst) {
-				toFirst();              // equivalent to operator++() in this case
-				break;
-			}
+	m_rangesIterator = m_ranges.begin();
+	while(m_rangesIterator != m_ranges.end()) {
+		if(m_rangesIterator->contains(index)) {
+			m_index = index;
+			return true;
 		}
 	}
 
-	return m_index == index;
+	return false;
 }
 
 SubtitleIterator &
