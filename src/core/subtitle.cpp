@@ -551,62 +551,81 @@ Subtitle::swapTexts(const RangeList &ranges)
 void
 Subtitle::splitLines(const RangeList &ranges)
 {
+	auto splitOnSpace = [&](SString &text){
+		int len = text.length();
+		int i = len / 2;
+		int j = i + len % 2;
+		for(; ; i--, j++) {
+			if(text[i] == QChar::Space) {
+				text[i] = QChar::LineFeed;
+				break;
+			}
+			Q_ASSERT(j <= len);
+			if(text[j] == QChar::Space) {
+				text[j] = QChar::LineFeed;
+				break;
+			}
+			if(i == 0) {
+				text.append(QChar::LineFeed);
+				break;
+			}
+		}
+	};
+
 	beginCompositeAction(i18n("Split Lines"));
+
+	bool hasMultipleLines = false;
+	for(SubtitleIterator it(*this, ranges, true); it.current(); --it) {
+		SubtitleLine *line = it.current();
+
+		line->simplifyTextWhiteSpace(SubtitleLine::Both);
+
+		if(line->primaryText().count(QChar::LineFeed) || line->secondaryText().count(QChar::LineFeed)) {
+			hasMultipleLines = true;
+			break;
+		}
+	}
 
 	for(SubtitleIterator it(*this, ranges, true); it.current(); --it) {
 		SubtitleLine *line = it.current();
 
-		line->simplifyTextWhiteSpace(SubtitleLine::Primary);
 		SString primaryText = line->primaryText();
 		if(primaryText.isEmpty())
 			continue;
+		SString secondaryText = line->secondaryText();
 
-		if(line->primaryLines() < 2) {
+		if(!hasMultipleLines) {
 			if(primaryText.count(QChar::Space) == 0)
 				continue;
-			int len = primaryText.length();
-			int i = len / 2;
-			int j = i + len % 2;
-			for(; ; i--, j++) {
-				if(primaryText[i] == QChar::Space) {
-					primaryText[i] = QChar::LineFeed;
-					break;
-				}
-				Q_ASSERT(j <= len);
-				if(primaryText[j] == QChar::Space) {
-					primaryText[j] = QChar::LineFeed;
-					break;
-				}
-				if(i == 0) {
-					primaryText.append(QChar::LineFeed);
-					break;
-				}
-			}
+			splitOnSpace(primaryText);
+			splitOnSpace(secondaryText);
 		}
+
+		SStringList primaryLines = primaryText.split(QChar::LineFeed);
+		SStringList secondaryLines = secondaryText.split(QChar::LineFeed);
 
 		double autoDurationsSum = 0;
 		QList<double> autoDurations;
-		SStringList primaryLines = primaryText.split('\n');
 		for(SStringList::ConstIterator ptIt = primaryLines.begin(), ptEnd = primaryLines.end(); ptIt != ptEnd; ++ptIt) {
 			const Time &autoDuration = SubtitleLine::autoDuration(ptIt->string(), 60, 50, 50);
 			autoDurations.append(autoDuration.toMillis());
 			autoDurationsSum += autoDuration.toMillis();
 		}
 
-		double factor = (line->durationTime().toMillis() + 1.) / autoDurationsSum;
+		double autoDurationFactor = (line->durationTime().toMillis() + 1.) / autoDurationsSum;
 
-		SStringList secondaryLines = line->secondaryText().split('\n');
 		while(secondaryLines.count() < primaryLines.count())
 			secondaryLines.append(SString());
-		while(secondaryLines.count() > primaryLines.count()) {
-			SString lastLine = secondaryLines.last();
-			secondaryLines.pop_back();
-			secondaryLines.last() += '\n';
-			secondaryLines.last() += lastLine;
-		}
+		while(secondaryLines.count() > primaryLines.count())
+			primaryLines.append(SString());
 
-		int subLineIndex = it.index(), splitLineIndex = 0;
-		for(SStringList::ConstIterator ptIt = primaryLines.begin(), ptEnd = primaryLines.end(), stIt = secondaryLines.begin(), stEnd = secondaryLines.end(); ptIt != ptEnd && stIt != stEnd; ++ptIt, ++stIt, ++subLineIndex, ++splitLineIndex) {
+		int subLineIndex = it.index(),
+				splitLineIndex = 0;
+		SStringList::ConstIterator ptIt = primaryLines.begin(),
+				ptEnd = primaryLines.end(),
+				stIt = secondaryLines.begin(),
+				stEnd = secondaryLines.end();
+		for(; ptIt != ptEnd && stIt != stEnd; ++ptIt, ++stIt, ++subLineIndex, ++splitLineIndex) {
 			if(splitLineIndex) {
 				SubtitleLine *newLine = new SubtitleLine();
 				newLine->setShowTime(line->hideTime() + 1.);
@@ -615,7 +634,8 @@ Subtitle::splitLines(const RangeList &ranges)
 			}
 
 			line->setTexts(*ptIt, *stIt);
-			line->setDurationTime(Time((factor * autoDurations[splitLineIndex]) - 1.0));
+			if(primaryLines.count() > 1)
+				line->setDurationTime(Time(autoDurationFactor * autoDurations[splitLineIndex] - 1.));
 		}
 	}
 
@@ -642,15 +662,11 @@ Subtitle::joinLines(const RangeList &ranges)
 		SString primaryText, secondaryText;
 
 		for(SubtitleIterator it(*this, Range(rangeStart, rangeEnd - 1)); it.current(); ++it) {
-			if(!it.current()->primaryText().isEmpty()) {
-				primaryText.append(it.current()->primaryText());
-				primaryText.append("\n");
-			}
+			if(!it.current()->primaryText().isEmpty())
+				primaryText.append(it.current()->primaryText()).append(QChar::LineFeed);
 
-			if(!it.current()->secondaryText().isEmpty()) {
-				secondaryText.append(it.current()->secondaryText());
-				secondaryText.append("\n");
-			}
+			if(!it.current()->secondaryText().isEmpty())
+				secondaryText.append(it.current()->secondaryText()).append(QChar::LineFeed);
 		}
 
 		primaryText.append(lastLine->primaryText());
