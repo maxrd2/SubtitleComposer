@@ -610,7 +610,7 @@ Subtitle::splitLines(const RangeList &ranges)
 		}
 
 		int subLineIndex = it.index(), splitLineIndex = 0;
-		for(SStringList::ConstIterator ptIt = primaryLines.begin(), ptEnd = secondaryLines.end(), stIt = secondaryLines.begin(), stEnd = secondaryLines.end(); ptIt != ptEnd && stIt != stEnd; ++ptIt, ++stIt, ++subLineIndex, ++splitLineIndex) {
+		for(SStringList::ConstIterator ptIt = primaryLines.begin(), ptEnd = primaryLines.end(), stIt = secondaryLines.begin(), stEnd = secondaryLines.end(); ptIt != ptEnd && stIt != stEnd; ++ptIt, ++stIt, ++subLineIndex, ++splitLineIndex) {
 			if(splitLineIndex) {
 				SubtitleLine *newLine = new SubtitleLine();
 				newLine->setShowTime(line->hideTime() + 1.);
