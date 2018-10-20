@@ -46,7 +46,7 @@ MainWindow::MainWindow() :
 	QDockWidget *waveformDock = new QDockWidget(i18n("Waveform"), this);
 	waveformDock->setObjectName(QStringLiteral("waveform_dock"));
 	waveformDock->setAllowedAreas(Qt::AllDockWidgetAreas);
-	waveformDock->setFeatures(QDockWidget::DockWidgetMovable);
+	waveformDock->setFeatures(QDockWidget::DockWidgetMovable | QDockWidget::DockWidgetClosable);
 	waveformDock->setFloating(false);
 
 	m_waveformWidget = new WaveformWidget(waveformDock);
@@ -60,7 +60,7 @@ MainWindow::MainWindow() :
 	QDockWidget *playerDock = new QDockWidget(i18n("Video Player"), this);
 	playerDock->setObjectName(QStringLiteral("player_dock"));
 	playerDock->setAllowedAreas(Qt::AllDockWidgetAreas);
-	playerDock->setFeatures(QDockWidget::DockWidgetMovable | QDockWidget::DockWidgetVerticalTitleBar);
+	playerDock->setFeatures(QDockWidget::DockWidgetMovable | QDockWidget::DockWidgetClosable | QDockWidget::DockWidgetVerticalTitleBar);
 	playerDock->setFloating(false);
 
 	m_playerWidget = new PlayerWidget(playerDock);
