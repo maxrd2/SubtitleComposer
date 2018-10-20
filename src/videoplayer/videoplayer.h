@@ -125,6 +125,8 @@ public:
 	inline int activeAudioStream() const;
 	const QStringList & audioStreams() const;
 
+	bool playOnLoad();
+
 public slots:
 	/**
 	 * @brief setApplicationClosingDown - Used to indicate the active backend that the application is closing down

@@ -514,10 +514,10 @@ void
 VideoPlayer::notifyState(VideoPlayer::State newState)
 {
 	if(m_state == VideoPlayer::Opening) {
-		if(newState == VideoPlayer::Playing) {
+		if(newState > VideoPlayer::Opening) {
 			m_openFileTimer->stop();
 
-			m_state = VideoPlayer::Playing;
+			m_state = newState;
 			m_videoWidget->videoLayer()->show();
 			activeBackend()->setVolume(m_backendVolume);
 
@@ -531,7 +531,19 @@ VideoPlayer::notifyState(VideoPlayer::State newState)
 			emit audioStreamsChanged(m_audioStreams);
 			emit activeAudioStreamChanged(m_activeAudioStream);
 
-			emit playing();
+			switch(m_state) {
+			case VideoPlayer::Playing:
+				emit playing();
+				break;
+			case VideoPlayer::Paused:
+				emit paused();
+				break;
+			case VideoPlayer::Ready:
+				emit stopped();
+				break;
+			default:
+				break;
+			}
 		}
 	} else if(m_state > VideoPlayer::Opening) {
 		if(m_state != newState && newState > VideoPlayer::Opening) {
@@ -574,6 +586,15 @@ VideoPlayer::notifyErrorState(const QString &errorMessage)
 }
 
 bool
+VideoPlayer::playOnLoad()
+{
+	const QWidget *topLevel = m_widgetParent->topLevelWidget();
+	const QWidget *dockWaveform = topLevel->findChild<QWidget *>(QStringLiteral("waveform_dock"));
+	const QWidget *dockVideo = topLevel->findChild<QWidget *>(QStringLiteral("player_dock"));
+	return SCConfig::videoAutoPlay() && (dockVideo->isVisible() || dockWaveform->isVisible());
+}
+
+bool
 VideoPlayer::openFile(const QString &filePath)
 {
 	if(m_state != VideoPlayer::Closed)
@@ -600,8 +621,10 @@ VideoPlayer::openFile(const QString &filePath)
 		return true;
 	}
 
-	if(!playingAfterCall)
+	if(!playingAfterCall && playOnLoad())
 		activeBackend()->play();
+	else if(playingAfterCall && !playOnLoad())
+		activeBackend()->pause();
 
 	return true;
 }
