@@ -111,9 +111,6 @@ MainWindow::~MainWindow()
 void
 MainWindow::loadConfig()
 {
-	// workaround for bug https://bugs.kde.org/show_bug.cgi?id=395988 - TODO: limit to Qt 5.11.1+ until it gets fixed upstream
-	findChild<QDockWidget *>(QStringLiteral("player_dock"), Qt::FindDirectChildrenOnly)->show();
-
 	setCorner(Qt::TopLeftCorner, Qt::TopDockWidgetArea);
 	setCorner(Qt::TopRightCorner, Qt::RightDockWidgetArea);
 	setCorner(Qt::BottomLeftCorner, Qt::LeftDockWidgetArea);
