@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>487</width>
-    <height>563</height>
+    <width>527</width>
+    <height>587</height>
    </rect>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
@@ -17,6 +17,36 @@
       <string>General</string>
      </property>
      <layout class="QGridLayout" name="gridLayout" columnstretch="1,1">
+      <item row="3" column="0" alignment="Qt::AlignRight">
+       <widget class="QLabel" name="label_4">
+        <property name="text">
+         <string>Secods to &amp;jump on seek:</string>
+        </property>
+        <property name="buddy">
+         <cstring>kcfg_SeekJumpLength</cstring>
+        </property>
+       </widget>
+      </item>
+      <item row="4" column="1">
+       <widget class="QSpinBox" name="kcfg_StepJumpLength">
+        <property name="minimum">
+         <number>1</number>
+        </property>
+        <property name="maximum">
+         <number>1000</number>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="1">
+       <widget class="QComboBox" name="kcfg_PlayerBackend"/>
+      </item>
+      <item row="5" column="1">
+       <widget class="QCheckBox" name="kcfg_ShowPositionTimeEdit">
+        <property name="text">
+         <string>Show editable position control</string>
+        </property>
+       </widget>
+      </item>
       <item row="0" column="0" alignment="Qt::AlignRight">
        <widget class="QLabel" name="label_3">
         <property name="text">
@@ -27,17 +57,7 @@
         </property>
        </widget>
       </item>
-      <item row="4" column="1">
-       <widget class="QCheckBox" name="kcfg_ShowPositionTimeEdit">
-        <property name="text">
-         <string>Show editable position control</string>
-        </property>
-       </widget>
-      </item>
-      <item row="0" column="1">
-       <widget class="QComboBox" name="kcfg_PlayerBackend"/>
-      </item>
-      <item row="2" column="1">
+      <item row="3" column="1">
        <widget class="QSpinBox" name="kcfg_SeekJumpLength">
         <property name="minimum">
          <number>1</number>
@@ -47,27 +67,7 @@
         </property>
        </widget>
       </item>
-      <item row="2" column="0" alignment="Qt::AlignRight">
-       <widget class="QLabel" name="label_4">
-        <property name="text">
-         <string>Secods to &amp;jump on seek:</string>
-        </property>
-        <property name="buddy">
-         <cstring>kcfg_SeekJumpLength</cstring>
-        </property>
-       </widget>
-      </item>
-      <item row="3" column="1">
-       <widget class="QSpinBox" name="kcfg_StepJumpLength">
-        <property name="minimum">
-         <number>1</number>
-        </property>
-        <property name="maximum">
-         <number>1000</number>
-        </property>
-       </widget>
-      </item>
-      <item row="3" column="0" alignment="Qt::AlignRight">
+      <item row="4" column="0" alignment="Qt::AlignRight">
        <widget class="QLabel" name="label">
         <property name="text">
          <string>Fra&amp;me step amount:</string>
@@ -81,6 +81,13 @@
        <widget class="QCheckBox" name="kcfg_VideoAutoPlay">
         <property name="text">
          <string>Start playing video when loaded</string>
+        </property>
+       </widget>
+      </item>
+      <item row="2" column="1">
+       <widget class="QCheckBox" name="kcfg_UnpauseOnDoubleClick">
+        <property name="text">
+         <string>Resume playback after line double click</string>
         </property>
        </widget>
       </item>
@@ -241,6 +248,7 @@
  <tabstops>
   <tabstop>kcfg_PlayerBackend</tabstop>
   <tabstop>kcfg_VideoAutoPlay</tabstop>
+  <tabstop>kcfg_UnpauseOnDoubleClick</tabstop>
   <tabstop>kcfg_SeekJumpLength</tabstop>
   <tabstop>kcfg_StepJumpLength</tabstop>
   <tabstop>kcfg_ShowPositionTimeEdit</tabstop>
