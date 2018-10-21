@@ -442,42 +442,45 @@ StreamProcessor::processAudio()
 						timeFrameStart = timeStreamStart + frame->best_effort_timestamp * 1000 * m_avStream->time_base.num / m_avStream->time_base.den;
 				}
 
-				Q_ASSERT(drainResampler == drainDecoder); // TODO: FIXME: drop drainResampler if not needed
-
-				size_t frameSize;
-				if(m_swResample) {
-					ret = swr_convert_frame(m_swResample, frameResampled, drainResampler ? nullptr : frame);
-					if(ret < 0) {
-						av_strerror(ret, errorText, sizeof(errorText));
-						qWarning() << "Error resampling audio frame" << errorText;
-						emit streamError(ret, QStringLiteral("Error resampling audio frame"), QString::fromUtf8(errorText));
-						break;
+				bool drainSampleBuffer = false;
+				do {
+					size_t frameSize;
+					if(m_swResample) {
+						ret = swr_convert_frame(m_swResample, frameResampled, drainSampleBuffer || drainResampler ? nullptr : frame);
+						if(ret < 0) {
+							av_strerror(ret, errorText, sizeof(errorText));
+							qWarning() << "Error resampling audio frame" << errorText;
+							emit streamError(ret, QStringLiteral("Error resampling audio frame"), QString::fromUtf8(errorText));
+							break;
+						}
+						timeResampleDelay = -swr_get_delay(m_swResample, 1000);
+						frameSize = frameResampled->nb_samples * av_get_bytes_per_sample(static_cast<AVSampleFormat>(frameResampled->format));
+						timeFrameDuration = frameResampled->nb_samples * 1000 / frameResampled->sample_rate;
+					} else {
+						frameSize = frame->nb_samples * av_get_bytes_per_sample(static_cast<AVSampleFormat>(frame->format));
+						if(frame->pkt_duration)
+							timeFrameDuration = frame->pkt_duration * 1000 * m_avStream->time_base.num / m_avStream->time_base.den;
 					}
-					timeResampleDelay = -swr_get_delay(m_swResample, 1000);
-					frameSize = frameResampled->nb_samples * av_get_bytes_per_sample(static_cast<AVSampleFormat>(frameResampled->format));
-					timeFrameDuration = frameResampled->nb_samples * 1000 / frameResampled->sample_rate;
-				} else {
-					frameSize = frame->nb_samples * av_get_bytes_per_sample(static_cast<AVSampleFormat>(frame->format));
-					if(frame->pkt_duration)
-						timeFrameDuration = frame->pkt_duration * 1000 * m_avStream->time_base.num / m_avStream->time_base.den;
-				}
-				timeFrameEnd = timeFrameStart + timeFrameDuration;
+					timeFrameEnd = timeFrameStart + timeFrameDuration;
 
-				if(drainResampler && (!frameResampled || frameResampled->nb_samples == 0))
-					break;
+					if(drainResampler && (!frameResampled || frameResampled->nb_samples == 0))
+						break;
 
-				if(!drainResampler) {
-					m_streamPos = timeFrameEnd;
-					emit streamProgress(m_streamPos, m_streamLen);
-				}
+					if(!drainResampler) {
+						m_streamPos = timeFrameEnd;
+						emit streamProgress(m_streamPos, m_streamLen);
+					}
 
-				if(m_swResample) {
-					emit audioDataAvailable(frameResampled->data[0], frameSize * frameResampled->channels,
-						&m_audioStreamFormat, timeFrameStart + timeResampleDelay, timeFrameDuration);
-				} else {
-					emit audioDataAvailable(frame->data[0], frameSize * frame->channels,
-						&m_audioStreamFormat, timeFrameStart, timeFrameDuration);
-				}
+					if(m_swResample) {
+						emit audioDataAvailable(frameResampled->data[0], frameSize * frameResampled->channels,
+							&m_audioStreamFormat, timeFrameStart + timeResampleDelay, timeFrameDuration);
+					} else {
+						emit audioDataAvailable(frame->data[0], frameSize * frame->channels,
+							&m_audioStreamFormat, timeFrameStart, timeFrameDuration);
+					}
+
+					drainSampleBuffer = swr_get_out_samples(m_swResample, 0) > 1000;
+				} while(drainSampleBuffer);
 			}
 		}
 
