@@ -351,7 +351,7 @@ GStreamerPlayerBackend::onPlaybinTimerTimeout()
 		m_currentPosition = time;
 	}
 
-	if(player()->state() >= GST_STATE_PLAYING) {
+	if(player()->state() >= VideoPlayer::Playing) {
 		gboolean muted = false;
 		g_object_get(G_OBJECT(m_pipeline), "mute", &muted, NULL);
 		if(muted != m_muted) {

@@ -102,7 +102,7 @@ public:
 	 */
 	bool isApplicationClosingDown() const;
 
-	inline int state() const;
+	inline State state() const;
 	inline bool isInitialized() const;
 
 	inline VideoWidget * videoWidget();
@@ -268,7 +268,7 @@ private:
 	friend class PlayerBackend;
 };
 
-int
+VideoPlayer::State
 VideoPlayer::state() const
 {
 	return m_state;
