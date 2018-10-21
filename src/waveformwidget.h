@@ -112,6 +112,8 @@ public slots:
 	void setScrollPosition(double milliseconds);
 	void onConfigChanged();
 	void onSubtitleChanged();
+	void setTranslationMode(bool enabled);
+	void setShowTranslation(bool showTranslation);
 
 protected:
 	void resizeEvent(QResizeEvent *event);
@@ -222,6 +224,9 @@ private:
 
 	QPen m_playColor;
 	QPen m_mouseColor;
+
+	bool m_translationMode;
+	bool m_showTranslation;
 };
 }
 #endif

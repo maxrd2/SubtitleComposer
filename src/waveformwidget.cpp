@@ -79,7 +79,9 @@ WaveformWidget::WaveformWidget(QWidget *parent)
 	  m_draggedLine(Q_NULLPTR),
 	  m_draggedPos(DRAG_NONE),
 	  m_draggedTime(0.),
-	  m_widgetLayout(Q_NULLPTR)
+	  m_widgetLayout(Q_NULLPTR),
+	  m_translationMode(false),
+	  m_showTranslation(false)
 {
 	m_vertical = height() > width();
 
@@ -353,6 +355,7 @@ WaveformWidget::setSubtitle(Subtitle *subtitle)
 {
 	if(m_subtitle) {
 		disconnect(m_subtitle, &Subtitle::primaryChanged, this, &WaveformWidget::onSubtitleChanged);
+		disconnect(m_subtitle, &Subtitle::secondaryChanged, this, &WaveformWidget::onSubtitleChanged);
 		disconnect(m_subtitle, &Subtitle::lineAnchorChanged, this, &WaveformWidget::onSubtitleChanged);
 	}
 
@@ -360,6 +363,7 @@ WaveformWidget::setSubtitle(Subtitle *subtitle)
 
 	if(m_subtitle) {
 		connect(m_subtitle, &Subtitle::primaryChanged, this, &WaveformWidget::onSubtitleChanged);
+		connect(m_subtitle, &Subtitle::secondaryChanged, this, &WaveformWidget::onSubtitleChanged);
 		connect(m_subtitle, &Subtitle::lineAnchorChanged, this, &WaveformWidget::onSubtitleChanged);
 	}
 
@@ -629,7 +633,7 @@ WaveformWidget::paintGraphics(QPainter &painter)
 
 			painter.setFont(m_fontText);
 			painter.setPen(m_subTextColor);
-			painter.drawText(box, Qt::AlignCenter, sub->primaryText().string());
+			painter.drawText(box, Qt::AlignCenter, (m_showTranslation ? sub->secondaryText() : sub->primaryText()).string());
 
 			painter.setPen(m_subNumberColor);
 			painter.setFont(m_fontNumber);
@@ -1159,4 +1163,22 @@ WaveformWidget::showContextMenu(QMouseEvent *event)
 		action->setDisabled(currentLine == nullptr);
 
 	menu->exec(event->globalPos());
+}
+
+void
+WaveformWidget::setTranslationMode(bool enabled)
+{
+	m_translationMode = enabled;
+
+	if(!m_translationMode)
+		setShowTranslation(false);
+}
+
+void
+WaveformWidget::setShowTranslation(bool showTranslation)
+{
+	if(m_showTranslation != showTranslation) {
+		m_showTranslation = showTranslation;
+		m_waveformGraphics->update();
+	}
 }

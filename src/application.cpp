@@ -192,7 +192,8 @@ Application::init()
 	}
 
 	listeners.clear();
-	listeners << actionManager << m_playerWidget << m_linesWidget << m_curLineWidget << m_finder << m_replacer << m_errorFinder << m_speller;
+	listeners << actionManager << m_playerWidget << m_mainWindow->m_waveformWidget << m_linesWidget <<
+				 m_curLineWidget << m_finder << m_replacer << m_errorFinder << m_speller;
 	for(QList<QObject *>::ConstIterator it = listeners.begin(), end = listeners.end(); it != end; ++it)
 		connect(this, SIGNAL(translationModeChanged(bool)), *it, SLOT(setTranslationMode(bool)));
 
@@ -2700,6 +2701,7 @@ Application::setActiveSubtitleStream(int subtitleStream)
 	activeSubtitleStreamAction->setCurrentItem(subtitleStream);
 
 	m_playerWidget->setShowTranslation(subtitleStream ? true : false);
+	m_mainWindow->m_waveformWidget->setShowTranslation(subtitleStream ? true : false);
 }
 
 
