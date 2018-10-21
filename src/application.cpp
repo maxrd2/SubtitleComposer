@@ -1132,8 +1132,8 @@ Application::setupActions()
 
 	KSelectAction *setActiveSubtitleStreamAction = new KSelectAction(actionCollection);
 	setActiveSubtitleStreamAction->setIcon(QIcon::fromTheme(QStringLiteral("select_stream")));
-	setActiveSubtitleStreamAction->setText(i18n("Subtitle Streams"));
-	setActiveSubtitleStreamAction->setStatusTip(i18n("Select active subtitle stream"));
+	setActiveSubtitleStreamAction->setText(i18n("Displayed Subtitle Text"));
+	setActiveSubtitleStreamAction->setStatusTip(i18n("Select visible subtitle text"));
 	connect(setActiveSubtitleStreamAction, SIGNAL(triggered(int)), this, SLOT(setActiveSubtitleStream(int)));
 	actionCollection->addAction(ACT_SET_ACTIVE_SUBTITLE_STREAM, setActiveSubtitleStreamAction);
 	actionManager->addAction(setActiveSubtitleStreamAction, UserAction::SubTrOpened);
