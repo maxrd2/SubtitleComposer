@@ -50,6 +50,7 @@ protected:
 	bool reconfigure() Q_DECL_OVERRIDE;
 
 	void waitState(VideoPlayer::State state);
+	void waitState(VideoPlayer::State state1, VideoPlayer::State state2);
 
 	bool openFile(const QString &filePath, bool &playingAfterCall) Q_DECL_OVERRIDE;
 	void closeFile() Q_DECL_OVERRIDE;

@@ -107,6 +107,10 @@ MPVBackend::mpvInit()
 	// Disable subtitles
 	mpv_set_option_string(m_mpv, "sid", "no");
 
+	// Start in paused state
+	int yes = 1;
+	mpv_set_option(m_mpv, "pause", MPV_FORMAT_FLAG, &yes);
+
 	// Disable default bindings
 	mpv_set_option_string(m_mpv, "input-default-bindings", "no");
 	// Disable keyboard input on the X11 window
@@ -150,14 +154,19 @@ MPVBackend::mpvExit()
 void
 MPVBackend::mpvEventHandle(mpv_event *event)
 {
+	const VideoPlayer::State playerState = player()->state();
+
 	switch(event->event_id) {
 	case MPV_EVENT_PROPERTY_CHANGE: {
 		mpv_event_property *prop = (mpv_event_property *)event->data;
 		if(strcmp(prop->name, "time-pos") == 0) {
 			if(prop->format == MPV_FORMAT_DOUBLE) {
 				double time = *(double *)prop->data;
-				if(!player()->isPlaying() && !player()->isPaused())
-					setPlayerState(VideoPlayer::Playing);
+				if(playerState != VideoPlayer::Playing && playerState != VideoPlayer::Paused) {
+					int paused;
+					mpv_get_property(m_mpv, "pause", MPV_FORMAT_FLAG, &paused);
+					setPlayerState(paused ? VideoPlayer::Paused : VideoPlayer::Playing);
+				}
 				setPlayerPosition(time);
 			} else if(prop->format == MPV_FORMAT_NONE) {
 				// property is unavailable, probably means that playback was stopped.
@@ -166,9 +175,9 @@ MPVBackend::mpvEventHandle(mpv_event *event)
 		} else if(strcmp(prop->name, "pause") == 0) {
 			if(prop->format == MPV_FORMAT_FLAG) {
 				int paused = *(int *)prop->data;
-				if(paused && !player()->isPaused()) {
+				if(paused && playerState != VideoPlayer::Paused) {
 					setPlayerState(VideoPlayer::Paused);
-				} else if(!paused && player()->isPaused()) {
+				} else if(!paused && playerState != VideoPlayer::Playing) {
 					setPlayerState(VideoPlayer::Playing);
 				}
 			}
@@ -190,7 +199,7 @@ MPVBackend::mpvEventHandle(mpv_event *event)
 	case MPV_EVENT_LOG_MESSAGE: {
 		struct mpv_event_log_message *msg = (struct mpv_event_log_message *)event->data;
 		qDebug() << "[MPV:" << msg->prefix << "] " << msg->level << ": " << msg->text;
-		if(msg->log_level == MPV_LOG_LEVEL_ERROR && strcmp(msg->prefix, "cplayer") == 0 && player()->state() == VideoPlayer::Opening)
+		if(msg->log_level == MPV_LOG_LEVEL_ERROR && strcmp(msg->prefix, "cplayer") == 0 && playerState == VideoPlayer::Opening)
 			setPlayerErrorState(msg->text);
 		break;
 	}
@@ -327,7 +336,7 @@ MPVBackend::wakeup(void *ctx)
 bool
 MPVBackend::openFile(const QString &filePath, bool &playingAfterCall)
 {
-	playingAfterCall = true;
+	playingAfterCall = false;
 
 	if(!m_mpv && !mpvInit())
 		return false;
@@ -335,10 +344,12 @@ MPVBackend::openFile(const QString &filePath, bool &playingAfterCall)
 	QByteArray filename = filePath.toUtf8();
 	m_currentFilePath = filePath;
 	const char *args[] = { "loadfile", filename.constData(), NULL };
-	mpv_command(m_mpv, args);
+	mpv_command_async(m_mpv, 0, args);
 
 	if(player()->activeAudioStream() >= 0 && player()->audioStreams().count() > 1)
 		mpv_set_option_string(m_mpv, "aid", QString::number(player()->activeAudioStream()).toUtf8().constData());
+
+	waitState(VideoPlayer::Playing, VideoPlayer::Paused);
 
 	return true;
 }
@@ -359,16 +370,17 @@ bool
 MPVBackend::play()
 {
 	if(player()->isStopped()) {
-		QByteArray filename = m_currentFilePath.toUtf8();
-		const char *args[] = { "loadfile", filename.constData(), NULL };
-		mpv_command(m_mpv, args);
+		bool playing = false;
+		if(!openFile(m_currentFilePath, playing))
+			return false;
+	}
 
-		if(player()->activeAudioStream() >= 0 && player()->audioStreams().count() > 1)
-			mpv_set_option_string(m_mpv, "aid", QString::number(player()->activeAudioStream()).toUtf8().constData());
-	} else {
+	if(player()->state() != VideoPlayer::Playing) {
 		const char *args[] = { "cycle", "pause", NULL };
 		mpv_command_async(m_mpv, 0, args);
+		waitState(VideoPlayer::Playing);
 	}
+
 	return true;
 }
 
@@ -436,7 +448,13 @@ MPVBackend::setVolume(double volume)
 void
 MPVBackend::waitState(VideoPlayer::State state)
 {
-	while(m_initialized && m_mpv && player()->state() != state) {
+	waitState(state, state);
+}
+
+void
+MPVBackend::waitState(VideoPlayer::State state1, VideoPlayer::State state2)
+{
+	while(m_initialized && m_mpv && player()->state() != state1 && player()->state() != state2) {
 		mpv_wait_async_requests(m_mpv);
 		QApplication::instance()->processEvents();
 	}
