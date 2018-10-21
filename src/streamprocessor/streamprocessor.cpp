@@ -405,8 +405,9 @@ StreamProcessor::processAudio()
 	int64_t timeFrameEnd = 0;
 	int64_t timeResampleDelay = 0;
 
-	// AVFormatContext *ifmt_ctx = m_avFormat;
-	while(!isInterruptionRequested()) {
+	bool conversionComplete = false;
+
+	while(!conversionComplete && !isInterruptionRequested()) {
 		ret = av_read_frame(m_avFormat, &pkt);
 		bool drainDecoder = ret == AVERROR_EOF;
 		if(ret < 0 && !drainDecoder) {
@@ -426,7 +427,7 @@ StreamProcessor::processAudio()
 				}
 				break;
 			}
-			for(;;) {
+			while(!conversionComplete && !isInterruptionRequested()) {
 				ret = avcodec_receive_frame(m_codecCtx, frame);
 				bool drainResampler = ret == AVERROR_EOF;
 				if(ret < 0 && !drainResampler) {
@@ -463,8 +464,10 @@ StreamProcessor::processAudio()
 					}
 					timeFrameEnd = timeFrameStart + timeFrameDuration;
 
-					if(drainResampler && (!frameResampled || frameResampled->nb_samples == 0))
+					if(drainResampler && (!frameResampled || frameResampled->nb_samples == 0)) {
+						conversionComplete = true;
 						break;
+					}
 
 					if(!drainResampler) {
 						m_streamPos = timeFrameEnd;
@@ -480,7 +483,7 @@ StreamProcessor::processAudio()
 					}
 
 					drainSampleBuffer = swr_get_out_samples(m_swResample, 0) > 1000;
-				} while(drainSampleBuffer);
+				} while(!conversionComplete && !isInterruptionRequested() && drainSampleBuffer);
 			}
 		}
 
