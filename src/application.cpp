@@ -2855,7 +2855,7 @@ Application::onLineDoubleClicked(SubtitleLine *line)
 	m_playerWidget->pauseAfterPlayingLine(nullptr);
 	m_player->seek(mseconds > 0 ? mseconds / 1000.0 : 0.0, true);
 
-	if(m_player->state() == VideoPlayer::Paused && SCConfig::unpauseOnDoubleClick())
+	if(m_player->state() != VideoPlayer::Playing && SCConfig::unpauseOnDoubleClick())
 		m_player->play();
 
 	m_mainWindow->m_waveformWidget->setScrollPosition(line->showTime().toMillis());
