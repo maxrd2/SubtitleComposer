@@ -2700,8 +2700,10 @@ Application::setActiveSubtitleStream(int subtitleStream)
 	KSelectAction *activeSubtitleStreamAction = (KSelectAction *)action(ACT_SET_ACTIVE_SUBTITLE_STREAM);
 	activeSubtitleStreamAction->setCurrentItem(subtitleStream);
 
-	m_playerWidget->setShowTranslation(subtitleStream ? true : false);
-	m_mainWindow->m_waveformWidget->setShowTranslation(subtitleStream ? true : false);
+	const bool translationSelected = bool(subtitleStream);
+	m_playerWidget->setShowTranslation(translationSelected);
+	m_mainWindow->m_waveformWidget->setShowTranslation(translationSelected);
+	m_speller->setUseTranslation(translationSelected);
 }
 
 

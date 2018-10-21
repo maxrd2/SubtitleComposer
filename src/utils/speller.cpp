@@ -36,7 +36,7 @@ Speller::Speller(QWidget *parent) :
 	QObject(parent),
 	m_subtitle(0),
 	m_translationMode(false),
-	m_feedPrimaryNext(true),
+	m_useTranslation(false),
 	m_sonnetDialog(0),
 	m_iterator(0)
 {
@@ -53,8 +53,6 @@ Speller::invalidate()
 {
 	delete m_iterator;
 	m_iterator = 0;
-
-	m_feedPrimaryNext = true;
 }
 
 QWidget *
@@ -76,7 +74,24 @@ Speller::setTranslationMode(bool enabled)
 {
 	m_translationMode = enabled;
 
-	invalidate();
+	if(!enabled)
+		m_useTranslation = false;
+}
+
+void
+Speller::setUseTranslation(bool useTranslation)
+{
+	if(m_useTranslation != useTranslation) {
+		m_useTranslation = useTranslation;
+		updateBuffer();
+	}
+}
+
+void
+Speller::updateBuffer()
+{
+	if(m_iterator)
+		m_sonnetDialog->setBuffer((m_useTranslation ? m_iterator->current()->secondaryText() : m_iterator->current()->primaryText()).string());
 }
 
 void
@@ -101,42 +116,31 @@ Speller::spellCheck(int currentIndex)
 		connect(m_sonnetDialog, SIGNAL(misspelling(const QString &, int)), this, SLOT(onMisspelling(const QString &, int)));
 	}
 
-	m_sonnetDialog->setBuffer(m_iterator->current()->primaryText().string());
+	updateBuffer();
 	m_sonnetDialog->show();
-
-	m_feedPrimaryNext = !m_feedPrimaryNext;
 }
 
 void
 Speller::onBufferDone()
 {
 	// NOTE: not setting the buffer in this slots closes the dialog
-
-	if(advance()) {
-		if(m_translationMode) {
-			m_feedPrimaryNext = !m_feedPrimaryNext;
-			m_sonnetDialog->setBuffer(m_feedPrimaryNext ? m_iterator->current()->secondaryText().string() : m_iterator->current()->primaryText().string());
-		} else {
-			m_sonnetDialog->setBuffer(m_iterator->current()->primaryText().string());
-		}
-	}
+	if(advance())
+		updateBuffer();
 }
 
 bool
 Speller::advance()
 {
-	if(!m_translationMode || m_feedPrimaryNext) {
-		++(*m_iterator);
+	++(*m_iterator);
 
-		if((m_firstIndex == m_iterator->index()) || (m_firstIndex == m_iterator->firstIndex() && m_iterator->index() == SubtitleIterator::AfterLast))
+	if((m_firstIndex == m_iterator->index()) || (m_firstIndex == m_iterator->firstIndex() && m_iterator->index() == SubtitleIterator::AfterLast))
+		return false;
+
+	if(m_iterator->index() < 0) {
+		m_iterator->toFirst();
+
+		if(KMessageBox::Continue != KMessageBox::warningContinueCancel(parentWidget(), i18n("End of subtitle reached.\nContinue from the beginning?"), i18n("Spell Checking")))
 			return false;
-
-		if(m_iterator->index() < 0) {
-			m_iterator->toFirst();
-
-			if(KMessageBox::Continue != KMessageBox::warningContinueCancel(parentWidget(), i18n("End of subtitle reached.\nContinue from the beginning?"), i18n("Spell Checking")))
-				return false;
-		}
 	}
 
 	return true;
@@ -145,9 +149,7 @@ Speller::advance()
 void
 Speller::onMisspelling(const QString &before, int pos)
 {
-	bool primary = !m_translationMode || !m_feedPrimaryNext;
-
-	emit misspelled(m_iterator->current(), primary, pos, pos + before.length() - 1);
+	emit misspelled(m_iterator->current(), !m_useTranslation, pos, pos + before.length() - 1);
 }
 
 void
@@ -156,7 +158,7 @@ Speller::onCorrected(const QString &before, int pos, const QString &after)
 	if(before == after)
 		return;
 
-	if(m_translationMode && m_feedPrimaryNext)
+	if(m_useTranslation)
 		m_iterator->current()->setSecondaryText(SString(m_iterator->current()->secondaryText()).replace(pos, before.length(), after));
 	else
 		m_iterator->current()->setPrimaryText(SString(m_iterator->current()->primaryText()).replace(pos, before.length(), after));
@@ -169,7 +171,7 @@ Speller::onConfigChanged()
 		invalidate();
 
 		m_sonnetDialog->deleteLater();
-		m_sonnetDialog = 0;
+		m_sonnetDialog = nullptr;
 	}
 }
 

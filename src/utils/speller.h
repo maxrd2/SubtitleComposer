@@ -45,6 +45,7 @@ public:
 public slots:
 	void setSubtitle(Subtitle *subtitle = 0);
 	void setTranslationMode(bool enabled);
+	void setUseTranslation(bool useTranslation);
 
 	void spellCheck(int currentIndex);
 
@@ -54,6 +55,7 @@ signals:
 private:
 	void invalidate();
 	bool advance();
+	void updateBuffer();
 
 private slots:
 	void onBufferDone();
@@ -65,7 +67,7 @@ private slots:
 private:
 	Subtitle *m_subtitle;
 	bool m_translationMode;
-	bool m_feedPrimaryNext;
+	bool m_useTranslation;
 
 	Sonnet::Dialog *m_sonnetDialog;
 	SubtitleIterator *m_iterator;
