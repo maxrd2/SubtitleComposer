@@ -1,3 +1,24 @@
+subtitlecomposer (0.6.6-2) unstable; urgency=medium
+
+  * Team upload.
+  * Configure Xvfb so it has a proper depth; it should work also when Qt is
+    built with OpenGL ES.
+
+ -- Pino Toscano <pino@debian.org>  Thu, 15 Feb 2018 08:35:11 +0100
+
+subtitlecomposer (0.6.6-1) unstable; urgency=medium
+
+  * Team upload.
+  * New upstream release.
+  * Add new build dependencies required by the new version: libavcodec-dev,
+    libavformat-dev, libavutil-dev, and libswresample-dev.
+  * Do not fail if cmake does not have policy CMP0071; patch cmake-policy.diff.
+  * Bump Standards-Version to 4.1.3, no changes required.
+  * Update copyright.
+  * Small changes to the description.
+
+ -- Pino Toscano <pino@debian.org>  Thu, 15 Feb 2018 07:49:50 +0100
+
 subtitlecomposer (0.6.5-1) unstable; urgency=medium
 
   * Team upload.
