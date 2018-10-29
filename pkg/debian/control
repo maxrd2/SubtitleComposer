@@ -18,6 +18,10 @@ Build-Depends: debhelper (>= 9), cmake, pkg-kde-tools (>= 0.15.16),
  libkf5textwidgets-dev,
  libkf5widgetsaddons-dev,
  libkf5xmlgui-dev,
+ libavcodec-dev,
+ libavformat-dev,
+ libavutil-dev,
+ libswresample-dev,
  libphonon4qt5-dev, libphonon4qt5experimental-dev,
  pkg-config,
  libgstreamer-plugins-base1.0-dev, libglib2.0-dev,
@@ -27,7 +31,7 @@ Build-Depends: debhelper (>= 9), cmake, pkg-kde-tools (>= 0.15.16),
  libxcb1-dev,
 # for tests:
  xvfb, xauth,
-Standards-Version: 4.1.1
+Standards-Version: 4.1.3
 Homepage: https://github.com/maxrd2/subtitlecomposer
 Vcs-Browser: https://anonscm.debian.org/cgit/pkg-kde/kde-extras/subtitlecomposer.git
 Vcs-Git: https://anonscm.debian.org/git/pkg-kde/kde-extras/subtitlecomposer.git
@@ -36,11 +40,11 @@ Package: subtitlecomposer
 Architecture: any
 Depends: ${shlibs:Depends}, ${misc:Depends}
 Suggests: mplayer
-Description: Subtitles editor for KDE
- A text-based subtitles editor for KDE supporting basic operations (text,
- time and style edition), realtime previewing and spell checking. Other
- fancy features are delaying all subtitles in the current subtitle file,
- checking errors or creating translations.
+Description: text-based subtitle editor
+ A text-based subtitles editor supporting basic operations (text, time and
+ style edition), realtime previewing and spell checking. Other fancy features
+ are delaying all subtitles in the current subtitle file, checking errors or
+ creating translations.
  .
- Different backends (GStreamer, MPlayer, or Phonon) can be used to play
+ Different backends (GStreamer, MPlayer, MPV, or Phonon) can be used to play
  the realtime video preview which helps to synchronize the subtitles.

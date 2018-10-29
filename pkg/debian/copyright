@@ -42,16 +42,10 @@ License: BSD-3-clause
  (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-Files: src/formats/vobsub/mplayer/*
-Copyright: MPlayer
-           2005, Jindrich Makovicka <makovick@gmail.com>
-           2007, Ulion <ulion2002@gmail.com>
-License: GPL-2+
-
 Files: debian/*
 Copyright: 2009, José Manuel Santamaría Lema <panfaust@gmail.com>
            2015, Martin Steghöfer <martin@steghoefer.eu>
-           2016-2017, Pino Toscano <pino@debian.org>
+           2016-2018, Pino Toscano <pino@debian.org>
 License: GPL-2+
 
 License: GPL-2+
