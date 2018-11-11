@@ -2993,7 +2993,7 @@ Application::updateActionTexts()
 	shiftSelectedLinesFwdAction->setStatusTip(i18np("Shift selected lines %2%1 millisecond", "Shift selected lines %2%1 milliseconds", shiftAmount, "+"));
 
 	QAction *shiftSelectedLinesBwdAction = action(ACT_SHIFT_SELECTED_LINES_BACKWARDS);
-	shiftSelectedLinesBwdAction->setText(i18np("Shift %2%1 Millisecond", "Shift %2%1 Milliseconds", shiftAmount, "-"));
+	shiftSelectedLinesBwdAction->setText(i18np("Shift %2%1 millisecond", "Shift %2%1 milliseconds", shiftAmount, "-"));
 	shiftSelectedLinesBwdAction->setStatusTip(i18np("Shift selected lines %2%1 millisecond", "Shift selected lines %2%1 milliseconds", shiftAmount, "-"));
 }
 
