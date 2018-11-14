@@ -135,9 +135,6 @@
          </item>
          <item>
           <widget class="QLabel" name="lab_mpvVolumeAmplification">
-           <property name="text">
-            <string>TextLabel</string>
-           </property>
           </widget>
          </item>
         </layout>
@@ -164,9 +161,6 @@
          </item>
          <item>
           <widget class="QLabel" name="lab_mpvAudioChannels">
-           <property name="text">
-            <string>TextLabel</string>
-           </property>
           </widget>
          </item>
         </layout>

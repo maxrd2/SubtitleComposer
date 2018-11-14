@@ -145,9 +145,6 @@
          </item>
          <item>
           <widget class="QLabel" name="m_volumeAmplificationLabel">
-           <property name="text">
-            <string>TextLabel</string>
-           </property>
           </widget>
          </item>
         </layout>
@@ -174,9 +171,6 @@
          </item>
          <item>
           <widget class="QLabel" name="m_audioChannelsLabel">
-           <property name="text">
-            <string>TextLabel</string>
-           </property>
           </widget>
          </item>
         </layout>
