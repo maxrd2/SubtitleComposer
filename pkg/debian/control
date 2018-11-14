@@ -29,6 +29,10 @@ Build-Depends: debhelper (>= 9), cmake, pkg-kde-tools (>= 0.15.16),
  libicu-dev,
  libmpv-dev,
  libxcb1-dev,
+ libsphinxbase3,
+ libsphinxbase-dev,
+ libpocketsphinx3,
+ libpocketsphinx-dev,
 # for tests:
  xvfb, xauth,
 Standards-Version: 4.1.3
@@ -38,7 +42,7 @@ Vcs-Git: https://anonscm.debian.org/git/pkg-kde/kde-extras/subtitlecomposer.git
 
 Package: subtitlecomposer
 Architecture: any
-Depends: ${shlibs:Depends}, ${misc:Depends}
+Depends: pocketsphinx, pocketsphinx-en-us, ${shlibs:Depends}, ${misc:Depends}
 Suggests: mplayer
 Description: text-based subtitle editor
  A text-based subtitles editor supporting basic operations (text, time and
