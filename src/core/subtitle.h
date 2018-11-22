@@ -110,12 +110,19 @@ public:
 	SubtitleLine * lastLine();
 	const SubtitleLine * lastLine() const;
 
-	inline const QVector<SubtitleLine *> & allLines() const { return m_lines; }
+	inline int count() const { return m_lines.size(); }
+	inline const SubtitleLine * at(const int i) const { return m_lines.at(i).obj(); }
+	inline SubtitleLine * at(const int i) { return m_lines.at(i).obj(); }
+	inline const SubtitleLine * operator[](const int i) const { return m_lines.at(i).obj(); }
+	inline SubtitleLine * operator[](const int i) { return m_lines.at(i).obj(); }
 
-	inline const QList<const SubtitleLine *> & anchoredLines() const { return m_anchoredLines; }
+//	inline const QVector<ObjectRef<SubtitleLine>> & allLines() const { return m_lines; }
 
-	bool isLineAnchored(int index);
-	bool isLineAnchored(const SubtitleLine *line);
+//	inline const QList<const SubtitleLine *> & anchoredLines() const { return m_anchoredLines; }
+
+	bool hasAnchors() const;
+	bool isLineAnchored(int index) const;
+	bool isLineAnchored(const SubtitleLine *line) const;
 	void toggleLineAnchor(int index);
 	void toggleLineAnchor(const SubtitleLine *line);
 	void removeAllAnchors();
@@ -206,6 +213,8 @@ private:
 
 	void setLastValidCachedIndex(int lastValidCachedIndex);
 
+	inline SubtitleLine * takeAt(const int i) { SubtitleLine *s = m_lines.at(i).obj(); m_lines.remove(i); return s; }
+
 private:
 	int m_primaryState;
 	int m_primaryCleanState;
@@ -213,7 +222,7 @@ private:
 	int m_secondaryCleanState;
 
 	double m_framesPerSecond;
-	mutable QVector<SubtitleLine *> m_lines;
+	mutable QVector<ObjectRef<SubtitleLine>> m_lines;
 	QList<const SubtitleLine *> m_anchoredLines;
 
 	FormatData *m_formatData;

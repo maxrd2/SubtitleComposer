@@ -18,9 +18,9 @@
  * Boston, MA 02110-1301, USA.
  */
 
-#include "subtitleactions.h"
-#include "subtitleiterator.h"
-#include "subtitleline.h"
+#include "core/subtitleactions.h"
+#include "core/subtitleiterator.h"
+#include "core/subtitleline.h"
 #include "core/sstring.h"
 
 #include <QObject>
@@ -108,8 +108,8 @@ InsertLinesAction::redo()
 	while(!m_lines.isEmpty()) {
 		line = m_lines.takeFirst();
 		lineIndex = m_insertIndex + insertOffset++;
-		m_subtitle.m_lines.insert(lineIndex, line);
 		setLineSubtitle(line);
+		m_subtitle.m_lines.insert(lineIndex, line);
 	}
 
 	emit m_subtitle.linesInserted(m_insertIndex, m_lastIndex);
@@ -121,7 +121,7 @@ InsertLinesAction::undo()
 	emit m_subtitle.linesAboutToBeRemoved(m_insertIndex, m_lastIndex);
 
 	for(int index = m_insertIndex; index <= m_lastIndex; ++index) {
-		SubtitleLine *line = m_subtitle.m_lines.takeAt(m_insertIndex);
+		SubtitleLine *line = m_subtitle.takeAt(m_insertIndex);
 		clearLineSubtitle(line);
 		m_lines.append(line);
 	}
@@ -181,7 +181,7 @@ RemoveLinesAction::redo()
 	emit m_subtitle.linesAboutToBeRemoved(m_firstIndex, m_lastIndex);
 
 	for(int index = m_firstIndex; index <= m_lastIndex; ++index) {
-		SubtitleLine *line = m_subtitle.m_lines.takeAt(m_firstIndex);
+		SubtitleLine *line = m_subtitle.takeAt(m_firstIndex);
 		clearLineSubtitle(line);
 		m_lines.append(line);
 	}
@@ -200,8 +200,8 @@ RemoveLinesAction::undo()
 	while(!m_lines.isEmpty()) {
 		SubtitleLine *line = m_lines.takeFirst();
 		lineIndex = m_firstIndex + insertOffset++;
-		m_subtitle.m_lines.insert(lineIndex, line);
 		setLineSubtitle(line);
+		m_subtitle.m_lines.insert(lineIndex, line);
 	}
 
 	emit m_subtitle.linesInserted(m_firstIndex, m_lastIndex);
@@ -268,13 +268,13 @@ void
 MoveLineAction::redo()
 {
 	emit m_subtitle.linesAboutToBeRemoved(m_fromIndex, m_fromIndex);
-	SubtitleLine *line = m_subtitle.m_lines.takeAt(m_fromIndex);
+	SubtitleLine *line = m_subtitle.takeAt(m_fromIndex);
 	clearLineSubtitle(line);
 	emit m_subtitle.linesRemoved(m_fromIndex, m_fromIndex);
 
 	emit m_subtitle.linesAboutToBeInserted(m_toIndex, m_toIndex);
-	m_subtitle.m_lines.insert(m_toIndex, line);
 	setLineSubtitle(line);
+	m_subtitle.m_lines.insert(m_toIndex, line);
 	emit m_subtitle.linesInserted(m_toIndex, m_toIndex);
 }
 
@@ -282,13 +282,13 @@ void
 MoveLineAction::undo()
 {
 	emit m_subtitle.linesAboutToBeRemoved(m_toIndex, m_toIndex);
-	SubtitleLine *line = m_subtitle.m_lines.takeAt(m_toIndex);
+	SubtitleLine *line = m_subtitle.takeAt(m_toIndex);
 	clearLineSubtitle(line);
 	emit m_subtitle.linesRemoved(m_toIndex, m_toIndex);
 
 	emit m_subtitle.linesAboutToBeInserted(m_fromIndex, m_fromIndex);
-	m_subtitle.m_lines.insert(m_fromIndex, line);
 	setLineSubtitle(line);
+	m_subtitle.m_lines.insert(m_fromIndex, line);
 	emit m_subtitle.linesInserted(m_fromIndex, m_fromIndex);
 }
 

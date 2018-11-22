@@ -24,7 +24,8 @@
 #include "core/undoaction.h"
 #include "core/sstring.h"
 #include "core/time.h"
-#include "formatdata.h"
+#include "core/formatdata.h"
+#include "helpers/objectref.h"
 
 #include <QObject>
 #include <QString>
@@ -52,6 +53,7 @@ class SubtitleLine : public QObject
 	friend class SetLineErrorsAction;
 	friend class ToggleLineMarkedAction;
 	friend class Format;
+	friend class ObjectRef<SubtitleLine>;
 
 public:
 	typedef enum {
@@ -249,6 +251,9 @@ private:
 	int m_errorFlags;
 
 	FormatData *m_formatData;
+
+	mutable ObjectRef<SubtitleLine> *m_ref = nullptr;
+	const QVector<ObjectRef<SubtitleLine>> * refContainer();
 };
 }
 #endif

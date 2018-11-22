@@ -400,7 +400,7 @@ void
 CurrentLineWidget::onLineAnchorChanged(const SubtitleLine *line, bool anchored)
 {
 	if(m_subtitle && line == m_currentLine)
-		m_showTimeEdit->setEnabled(m_subtitle->anchoredLines().empty() || anchored);
+		m_showTimeEdit->setEnabled(!m_subtitle->hasAnchors() || anchored);
 }
 
 void

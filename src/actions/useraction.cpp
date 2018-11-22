@@ -190,14 +190,13 @@ UserActionManager::setSubtitle(Subtitle *subtitle)
 		if(m_subtitle->linesCount() > 1)
 			newContextFlags |= UserAction::SubHasLines;
 
-		const QList<const SubtitleLine *> &anchors = m_subtitle->anchoredLines();
-		if(anchors.empty()) {
+		if(!m_subtitle->hasAnchors()) {
 			newContextFlags |= UserAction::AnchorsNone;
 			newContextFlags |= UserAction::EditableShowTime;
 		} else {
 			newContextFlags |= UserAction::AnchorsSome;
 			const SubtitleLine *selected = m_subtitle->line(m_linesWidget->firstSelectedIndex());
-			if(anchors.indexOf(selected) != -1)
+			if(m_subtitle->isLineAnchored(selected))
 				newContextFlags |= UserAction::EditableShowTime;
 		}
 	} else {
@@ -275,12 +274,11 @@ UserActionManager::onLinesWidgetSelectionChanged()
 		newContextFlags |= UserAction::HasSelection;
 
 	if(m_subtitle) {
-		const QList<const SubtitleLine *> &anchors = m_subtitle->anchoredLines();
-		if(anchors.empty()) {
+		if(!m_subtitle->hasAnchors()) {
 			newContextFlags |= UserAction::EditableShowTime;
 		} else {
 			const SubtitleLine *line = m_subtitle->line(selectedIndex);
-			if(anchors.indexOf(line) != -1)
+			if(m_subtitle->isLineAnchored(line))
 				newContextFlags |= UserAction::EditableShowTime;
 		}
 	}
@@ -349,14 +347,13 @@ UserActionManager::onSubtitleAnchorsChanged()
 {
 	int newContextFlags = m_contextFlags & ~UserAction::AnchorsMask;
 
-	const QList<const SubtitleLine *> &anchors = m_subtitle->anchoredLines();
-	if(anchors.empty()) {
+	if(!m_subtitle->hasAnchors()) {
 		newContextFlags |= UserAction::AnchorsNone;
 		newContextFlags |= UserAction::EditableShowTime;
 	} else {
 		newContextFlags |= UserAction::AnchorsSome;
 		const SubtitleLine *selected = m_subtitle->line(m_linesWidget->firstSelectedIndex());
-		if(anchors.indexOf(selected) != -1)
+		if(m_subtitle->isLineAnchored(selected))
 			newContextFlags |= UserAction::EditableShowTime;
 	}
 

@@ -45,7 +45,7 @@ public:
 
 	inline void clearLineSubtitle(SubtitleLine *line)
 	{
-		line->m_subtitle = 0;
+		line->m_subtitle = nullptr;
 	}
 
 protected:

@@ -523,7 +523,8 @@ WaveformWidget::updateVisibleLines()
 
 	m_visibleLines.clear();
 
-	foreach(SubtitleLine *sub, m_subtitle->allLines()) {
+	for(int i = 0, n = m_subtitle->count(); i < n; i++) {
+		SubtitleLine *sub = m_subtitle->at(i);
 		if(sub == m_draggedLine || (sub->showTime() <= m_timeEnd && m_timeStart <= sub->hideTime()))
 			m_visibleLines.push_back(sub);
 	}
@@ -574,10 +575,6 @@ WaveformWidget::paintGraphics(QPainter &painter)
 
 	updateVisibleLines();
 
-	QList<const SubtitleLine *> anchoredLines;
-	if(m_subtitle)
-		anchoredLines = m_subtitle->anchoredLines();
-
 	const RangeList &selection = app()->linesWidget()->selectionRanges();
 	foreach(const SubtitleLine *sub, m_visibleLines) {
 		bool selected = selection.contains(sub->index());
@@ -613,8 +610,7 @@ WaveformWidget::paintGraphics(QPainter &painter)
 			else
 				box = QRect(showY + m_subBorderWidth, 2, hideY - showY - 2 * m_subBorderWidth, widgetHeight - 4);
 
-			const bool isAnchored = anchoredLines.contains(sub);
-			if(anchoredLines.isEmpty() || isAnchored)
+			if(!m_subtitle || !m_subtitle->hasAnchors() || m_subtitle->isLineAnchored(sub))
 				painter.setOpacity(1.);
 			else
 				painter.setOpacity(.5);
@@ -642,7 +638,7 @@ WaveformWidget::paintGraphics(QPainter &painter)
 			else
 				painter.drawText(showY + m_fontNumberHeight / 2, m_fontNumberHeight + 2, QString::number(sub->number()));
 
-			if(isAnchored) {
+			if(m_subtitle && m_subtitle->isLineAnchored(sub)) {
 				static QFont fontAnchor("sans-serif", 12);
 				painter.setFont(fontAnchor);
 				if(m_vertical)
@@ -808,7 +804,7 @@ WaveformWidget::eventFilter(QObject *obj, QEvent *event)
 		} else {
 			SubtitleLine *sub = Q_NULLPTR;
 			WaveformWidget::DragPosition res = subtitleAt(y, &sub);
-			if(sub && !m_subtitle->anchoredLines().empty() && m_subtitle->anchoredLines().indexOf(sub) == -1)
+			if(sub && m_subtitle->hasAnchors() && !m_subtitle->isLineAnchored(sub))
 				m_waveformGraphics->setCursor(QCursor(Qt::ForbiddenCursor));
 			else if(res == DRAG_LINE)
 				m_waveformGraphics->setCursor(QCursor(m_vertical ? Qt::SizeVerCursor : Qt::SizeHorCursor));
@@ -849,7 +845,7 @@ WaveformWidget::eventFilter(QObject *obj, QEvent *event)
 			return false;
 
 		m_draggedPos = subtitleAt(y, &m_draggedLine);
-		if(m_draggedLine && !m_subtitle->anchoredLines().empty() && m_subtitle->anchoredLines().indexOf(m_draggedLine) == -1) {
+		if(m_draggedLine && m_subtitle->hasAnchors() && !m_subtitle->isLineAnchored(m_draggedLine)) {
 			m_draggedTime = 0.;
 			m_draggedPos = DRAG_NONE;
 			m_draggedLine = Q_NULLPTR;
@@ -934,7 +930,7 @@ WaveformWidget::subtitleAt(int y, SubtitleLine **result)
 
 	updateVisibleLines();
 
-	bool anchoredLineExists = m_subtitle && !m_subtitle->anchoredLines().empty();
+	bool anchoredLineExists = m_subtitle && m_subtitle->hasAnchors();
 
 	foreach(SubtitleLine *sub, m_visibleLines) {
 		if(sub->showTime() - DRAG_TOLERANCE <= yTime && sub->hideTime() + DRAG_TOLERANCE >= yTime) {
@@ -1100,11 +1096,12 @@ WaveformWidget::showContextMenu(QMouseEvent *event)
 				const Time timeHide = rightMouseLaterTime();
 
 				int insertIndex = 0;
-				foreach(SubtitleLine *sub, m_subtitle->allLines()) {
+				for(int i = 0, n = m_subtitle->count(); i < n; i++) {
+					const SubtitleLine *sub = m_subtitle->at(i);
 					insertIndex++;
 
 					if(sub->showTime() > timeShow) {
-						insertIndex = sub->index();
+						insertIndex = i;
 						break;
 					}
 				}
@@ -1126,12 +1123,13 @@ WaveformWidget::showContextMenu(QMouseEvent *event)
 			int startIndex = -1, endIndex = -1;
 			const Time startTime = rightMouseSoonerTime();
 			const Time endTime = rightMouseLaterTime();
-			foreach(SubtitleLine *sub, m_subtitle->allLines()) {
+			for(int idx = 0, n = m_subtitle->count(); idx < n; idx++) {
+				const SubtitleLine *sub = m_subtitle->at(idx);
 				if(sub->showTime() <= endTime && startTime <= sub->hideTime()) {
-					if(startIndex == -1 || startIndex > sub->index())
-						startIndex = sub->index();
-					if(endIndex == -1 || endIndex < sub->index())
-						endIndex = sub->index();
+					if(startIndex == -1 || startIndex > idx)
+						startIndex = idx;
+					if(endIndex == -1 || endIndex < idx)
+						endIndex = idx;
 				}
 			}
 			if(endIndex >= 0 && startIndex != endIndex)

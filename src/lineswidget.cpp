@@ -230,15 +230,13 @@ LinesModel::data(const QModelIndex &index, int role) const
 	if(!m_subtitle)
 		return QVariant();
 
-	SubtitleLine *line = m_subtitle->line(index.row());
+	SubtitleLine *line = m_subtitle->at(index.row());
 
 	if(role == PlayingLineRole)
 		return line == m_playingLine;
 
-	if(role == AnchoredRole) {
-		const QList<const SubtitleLine *> &anchors = m_subtitle->anchoredLines();
-		return anchors.empty() ? 0 : (anchors.indexOf(line) != -1 ? 1 : -1);
-	}
+	if(role == AnchoredRole)
+		return !m_subtitle->hasAnchors() ? 0 : (m_subtitle->isLineAnchored(line) ? 1 : -1);
 
 	switch(index.column()) {
 	case Number:

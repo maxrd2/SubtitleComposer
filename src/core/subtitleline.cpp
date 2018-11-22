@@ -31,6 +31,7 @@
 
 using namespace SubtitleComposer;
 
+
 /// "magic" code taken from http://tekpool.wordpress.com/category/bit-count/
 int
 SubtitleLine::bitsCount(unsigned int u)
@@ -229,7 +230,26 @@ SubtitleLine::index() const
 	if(!m_subtitle)
 		return -1;
 
-	return m_subtitle->m_lines.indexOf(const_cast<SubtitleLine *>(this));
+	Q_ASSERT(m_ref != nullptr);
+	Q_ASSERT(m_ref->m_obj == this);
+
+	const int index = m_ref - m_subtitle->m_lines.constData();
+
+	if(index < 0 || index >= m_subtitle->count()) {
+		// this should never happen... unless ObjectRef is declared as Q_MOVABLE_TYPE or QVector
+		// decides to stop calling constructors
+		qWarning() << "SubtitleLine::index() WARNING: m_ref doesn't not belong to cotainer.";
+		for(int i = 0, n = m_subtitle->count(); i < n; i++) {
+			if(this == m_subtitle->at(i)) {
+				m_ref = &m_subtitle->m_lines[i];
+				return i;
+			}
+		}
+		qWarning() << "SubtitleLine::index() WARNING: container doesn't contain the line.";
+		return -1;
+	}
+
+	return index;
 }
 
 Subtitle *
@@ -1065,4 +1085,8 @@ SubtitleLine::processAction(QUndoCommand *action)
 	}
 }
 
-
+const QVector<ObjectRef<SubtitleLine>> *
+SubtitleLine::refContainer()
+{
+	return m_subtitle ? &m_subtitle->m_lines : nullptr;
+}

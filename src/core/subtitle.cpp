@@ -22,6 +22,7 @@
 #include "core/subtitleline.h"
 #include "core/subtitleiterator.h"
 #include "core/subtitleactions.h"
+#include "helpers/objectref.h"
 #include "scconfig.h"
 #include "application.h"
 
@@ -280,41 +281,47 @@ Subtitle::lastIndex() const
 SubtitleLine *
 Subtitle::line(int index)
 {
-	return index < 0 ? nullptr : (index < m_lines.count() ? m_lines.at(index) : nullptr);
+	return index < 0 || index >= m_lines.count() ? nullptr : m_lines.at(index).obj();
 }
 
 const SubtitleLine *
 Subtitle::line(int index) const
 {
-	return index < 0 ? nullptr : (index < m_lines.count() ? m_lines.at(index) : nullptr);
+	return index < 0 || index >= m_lines.count() ? nullptr : m_lines.at(index).obj();
 }
 
 SubtitleLine *
 Subtitle::firstLine()
 {
-	return m_lines.isEmpty() ? 0 : m_lines.first();
+	return m_lines.isEmpty() ? 0 : m_lines.first().obj();
 }
 
 const SubtitleLine *
 Subtitle::firstLine() const
 {
-	return m_lines.isEmpty() ? 0 : m_lines.first();
+	return m_lines.isEmpty() ? 0 : m_lines.first().obj();
 }
 
 SubtitleLine *
 Subtitle::lastLine()
 {
-	return m_lines.isEmpty() ? 0 : m_lines.last();
+	return m_lines.isEmpty() ? 0 : m_lines.last().obj();
 }
 
 const SubtitleLine *
 Subtitle::lastLine() const
 {
-	return m_lines.isEmpty() ? 0 : m_lines.last();
+	return m_lines.isEmpty() ? 0 : m_lines.last().obj();
 }
 
 bool
-Subtitle::isLineAnchored(int index)
+Subtitle::hasAnchors() const
+{
+	return !m_anchoredLines.empty();
+}
+
+bool
+Subtitle::isLineAnchored(int index) const
 {
 	if(index < 0 || index >= m_lines.count())
 		return false;
@@ -323,12 +330,12 @@ Subtitle::isLineAnchored(int index)
 }
 
 bool
-Subtitle::isLineAnchored(const SubtitleLine *line)
+Subtitle::isLineAnchored(const SubtitleLine *line) const
 {
 	if(!line)
 		return false;
 
-	return m_anchoredLines.indexOf(line) >= 0;
+	return m_anchoredLines.indexOf(line) != -1;
 }
 
 void
@@ -389,10 +396,10 @@ Subtitle::insertLines(const QList<SubtitleLine *> &lines, int index)
 SubtitleLine *
 Subtitle::insertNewLine(int index, bool insertAfter, TextTarget target)
 {
-	Q_ASSERT(index <= m_lines.count());
+	Q_ASSERT(index <= count());
 
 	if(index < 0)
-		index = m_lines.count();
+		index = count();
 
 	SubtitleLine *newLine = new SubtitleLine();
 	const int newLineIndex = (target == Secondary) ? m_lines.count() : index;
@@ -403,25 +410,25 @@ Subtitle::insertNewLine(int index, bool insertAfter, TextTarget target)
 
 	if(insertAfter) {
 		if(newLineIndex) {              // there is a previous line
-			const SubtitleLine *prevLine = m_lines.value(newLineIndex - 1);
+			const SubtitleLine *prevLine = at(newLineIndex - 1);
 			newLine->setTimes(prevLine->hideTime() + linePause, prevLine->hideTime() + lineDurationAndPause);
-		} else if(newLineIndex < m_lines.count()) {     // there is a next line
-			const SubtitleLine *nextLine = m_lines.value(newLineIndex);
+		} else if(newLineIndex < count()) {     // there is a next line
+			const SubtitleLine *nextLine = at(newLineIndex);
 			newLine->setTimes(nextLine->showTime() - lineDurationAndPause, nextLine->showTime() - linePause);
 		} else
 			newLine->setHideTime(lineDuration);
 	} else {
-		if(newLineIndex < m_lines.count()) {    // there is a next line
-			const SubtitleLine *nextLine = m_lines.at(newLineIndex);
+		if(newLineIndex < count()) {    // there is a next line
+			const SubtitleLine *nextLine = at(newLineIndex);
 			newLine->setTimes(nextLine->showTime() - lineDurationAndPause, nextLine->showTime() - linePause);
 		} else if(newLineIndex) {       // there is a previous line
-			const SubtitleLine *prevLine = m_lines.at(newLineIndex - 1);
+			const SubtitleLine *prevLine = at(newLineIndex - 1);
 			newLine->setTimes(prevLine->hideTime() + linePause, prevLine->hideTime() + lineDurationAndPause);
 		} else
 			newLine->setHideTime(lineDuration);
 	}
 
-	if(target == Both || index == m_lines.count()) {
+	if(target == Both || index == count()) {
 		insertLine(newLine, newLineIndex);
 	} else if(target == Primary) {
 		beginCompositeAction(i18n("Insert Line"));
@@ -510,7 +517,7 @@ Subtitle::removeLines(const RangeList &r, TextTarget target)
 
 		Range lastRange = mutableRanges.last();
 		int lastIndex = lastRange.end() == linesCount - 1 ? lastRange.start() - 1 : linesCount - 1;
-		SubtitleLine *lastLine = lastIndex < linesCount ? m_lines.at(lastIndex) : 0;
+		SubtitleLine *lastLine = lastIndex < linesCount ? at(lastIndex) : 0;
 		Time showTime(lastLine ? lastLine->hideTime() + 100. : Time());
 		Time hideTime(showTime + 1000.);
 
@@ -656,8 +663,8 @@ Subtitle::joinLines(const RangeList &ranges)
 		if(rangeStart >= rangeEnd)
 			continue;
 
-		SubtitleLine *firstLine = m_lines.at(rangeStart);
-		SubtitleLine *lastLine = m_lines.at(rangeEnd);
+		SubtitleLine *firstLine = at(rangeStart);
+		SubtitleLine *lastLine = at(rangeEnd);
 
 		SString primaryText, secondaryText;
 
@@ -702,8 +709,8 @@ Subtitle::shiftAnchoredLine(SubtitleLine *anchoredLine, const Time &newShowTime)
 
 	if(!prevAnchor && !nextAnchor) {
 		double shift = newShowTime.toMillis() - anchoredLine->m_showTime.toMillis();
-		foreach(auto line, m_lines)
-			line->shiftTimes(shift);
+		for(int i = 0, n = count(); i < n; i++)
+			at(i)->shiftTimes(shift);
 	} else {
 		// save times as adjustLines() will modify them, and processing nextAnchor will modify them again
 		Time savedShowTime(anchoredLine->m_showTime);
@@ -774,8 +781,8 @@ Subtitle::adjustLines(const Range &range, long newFirstTime, long newLastTime)
 	if(firstIndex >= lastIndex)
 		return;
 
-	double oldFirstTime = m_lines.at(firstIndex)->showTime().toMillis();
-	double oldLastTime = m_lines.at(lastIndex)->showTime().toMillis();
+	double oldFirstTime = at(firstIndex)->showTime().toMillis();
+	double oldLastTime = at(lastIndex)->showTime().toMillis();
 	double oldDeltaTime = oldLastTime - oldFirstTime;
 
 	double newDeltaTime = newLastTime - newFirstTime;
@@ -983,11 +990,11 @@ Subtitle::fixPunctuation(const RangeList &ranges, bool spaces, bool quotes, bool
 		if(it.index() > 0) {
 			if(target == Primary || target == Both)
 				// Initialize the value of primaryContinues
-				SubtitleLine::fixPunctuation(m_lines.at(it.index() - 1)->primaryText(), spaces, quotes, engI, ellipsis, &primaryContinues);
+				SubtitleLine::fixPunctuation(at(it.index() - 1)->primaryText(), spaces, quotes, engI, ellipsis, &primaryContinues);
 
 			if(target == Secondary || target == Both)
 				// Initialize the value of secondaryContinues
-				SubtitleLine::fixPunctuation(m_lines.at(it.index() - 1)->secondaryText(), spaces, quotes, engI, ellipsis, &secondaryContinues);
+				SubtitleLine::fixPunctuation(at(it.index() - 1)->secondaryText(), spaces, quotes, engI, ellipsis, &secondaryContinues);
 		}
 
 		for(; it.current(); ++it) {
@@ -1123,9 +1130,9 @@ Subtitle::sentenceCase(const RangeList &ranges, bool lowerFirst, TextTarget targ
 
 		if(it.index() > 0) {
 			if(target == Primary || target == Both) // Initialize pCont
-				m_lines.at(it.index() - 1)->primaryText().toSentenceCase(lowerFirst, &pCont);
+				at(it.index() - 1)->primaryText().toSentenceCase(lowerFirst, &pCont);
 			if(target == Secondary || target == Both) // Initialize sCont
-				m_lines.at(it.index() - 1)->secondaryText().toSentenceCase(lowerFirst, &sCont);
+				at(it.index() - 1)->secondaryText().toSentenceCase(lowerFirst, &sCont);
 		}
 
 		switch(target) {
@@ -1194,7 +1201,7 @@ Subtitle::syncWithSubtitle(const Subtitle &refSubtitle)
 void
 Subtitle::appendSubtitle(const Subtitle &srcSubtitle, long shiftMsecsBeforeAppend)
 {
-	if(!srcSubtitle.m_lines.count())
+	if(!srcSubtitle.count())
 		return;
 
 	QList<SubtitleLine *> lines;
@@ -1247,16 +1254,16 @@ Subtitle::splitSubtitle(Subtitle &dstSubtitle, const Time &splitTime, bool shift
 		dstSubtitle.m_formatData = m_formatData ? new FormatData(*m_formatData) : 0;
 
 		dstSubtitle.beginCompositeAction(i18n("Split Subtitles"));
-		if(dstSubtitle.m_lines.count())
+		if(dstSubtitle.count())
 			dstSubtitle.processAction(new RemoveLinesAction(dstSubtitle, 0, -1));
 		dstSubtitle.processAction(new InsertLinesAction(dstSubtitle, lines, 0));
 		dstSubtitle.endCompositeAction();
 
 		beginCompositeAction(i18n("Split Subtitles"));
 		if(splitsLine) {
-			m_lines.at(splitIndex)->setHideTime(splitTime);
+			at(splitIndex)->setHideTime(splitTime);
 			splitIndex++;
-			if(splitIndex < m_lines.size())
+			if(splitIndex < count())
 				processAction(new RemoveLinesAction(*this, splitIndex));
 		} else
 			processAction(new RemoveLinesAction(*this, splitIndex));
