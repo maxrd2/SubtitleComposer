@@ -472,7 +472,7 @@ WaveformWidget::onStreamFinished()
 }
 
 void
-WaveformWidget::onStreamData(const void *buffer, qint32 size, const WaveFormat *waveFormat, const qint64 /*msecStart*/, const qint64 /*msecDuration*/)
+WaveformWidget::onStreamData(const void *buffer, qint32 size, const WaveFormat *waveFormat, const qint64 msecStart, const qint64 /*msecDuration*/)
 {
 	// make sure WaveformWidget::onStreamProgress() signal was processed since we're in different thread
 	while(!m_waveformDuration)
@@ -486,11 +486,6 @@ WaveformWidget::onStreamData(const void *buffer, qint32 size, const WaveFormat *
 			m_waveform[i] = new SAMPLE_TYPE[m_waveformChannelSize];
 	}
 
-	if(m_waveformDataOffset + size >= m_waveformChannelSize * BYTES_PER_SAMPLE * m_waveformChannels) {
-		qWarning() << "WaveformWidget::onStreamData() - stream is longer than advertised.";
-		return; // we got incorrect stream duration
-	}
-
 	Q_ASSERT(waveFormat->bitsPerSample() == BYTES_PER_SAMPLE * 8);
 	Q_ASSERT(waveFormat->sampleRate() == SAMPLE_RATE);
 
@@ -499,6 +494,44 @@ WaveformWidget::onStreamData(const void *buffer, qint32 size, const WaveFormat *
 	Q_ASSERT(size % (BYTES_PER_SAMPLE * m_waveformChannels) == 0);
 
 	const SAMPLE_TYPE *sample = reinterpret_cast<const SAMPLE_TYPE *>(buffer);
+
+	const qint64 msecStartExp = qint64(m_waveformDataOffset) * 1000 / (SAMPLE_RATE * BYTES_PER_SAMPLE * m_waveformChannels);
+	const qint64 msecDiff = msecStart - msecStartExp;
+	if(m_waveformDataOffset == 0)
+		qWarning().nospace() << "WaveformWidget::onStreamData() stream is offset by " << msecDiff << "ms (" << (msecDiff * qint64(SAMPLE_RATE * BYTES_PER_SAMPLE / 1000)) << " bytes/channel) @ 0ms";
+	else if(msecDiff > 10 || msecDiff < -10)
+		qWarning().nospace() << "WaveformWidget::onStreamData() stream is offset by " << msecDiff << "ms (" << (msecDiff * qint64(SAMPLE_RATE * BYTES_PER_SAMPLE / 1000)) << " bytes/channel) @ " << msecStartExp << "ms";
+
+	// audio and video are not perfectly synced in container, calculate the offset and fill the gap if needed
+	const qint64 byteSyncOffset = msecStart * (m_waveformChannels * SAMPLE_RATE * BYTES_PER_SAMPLE / 1000);
+
+	if(byteSyncOffset + size >= qint64(m_waveformChannelSize * BYTES_PER_SAMPLE * m_waveformChannels)) {
+		qWarning() << "WaveformWidget::onStreamData() - stream is longer than advertised.";
+		return;
+	}
+
+	if(byteSyncOffset <= qint64(m_waveformDataOffset)) {
+		// overwrite part of the buffer
+		if(byteSyncOffset < 0) {
+			m_waveformDataOffset = 0;
+			size -= -byteSyncOffset;
+			sample += -byteSyncOffset / sizeof(SAMPLE_TYPE);
+		} else {
+			m_waveformDataOffset = quint32(byteSyncOffset);
+		}
+	} else {
+		// pad hole in the buffer
+		quint32 n = quint32(byteSyncOffset) / BYTES_PER_SAMPLE / m_waveformChannels;
+		for(quint32 i = m_waveformDataOffset / BYTES_PER_SAMPLE / m_waveformChannels; i < n; i++) {
+			for(quint32 c = 0; c < m_waveformChannels; c++)
+				m_waveform[c][i] = qint32(sample[c]) & (BYTES_PER_SAMPLE == 1 ? 0x000000ff : 0x0000ffff);
+		}
+		m_waveformDataOffset = qint32(byteSyncOffset);
+	}
+
+	// assure incoming data is properly aligned
+	Q_ASSERT(m_waveformDataOffset % (BYTES_PER_SAMPLE * m_waveformChannels) == 0);
+
 	int len = size / BYTES_PER_SAMPLE;
 	int i = m_waveformDataOffset / BYTES_PER_SAMPLE / m_waveformChannels;
 	while(len > 0) {
