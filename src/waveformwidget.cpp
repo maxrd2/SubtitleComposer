@@ -45,7 +45,10 @@
 #include <KLocalizedString>
 
 #define MAX_WINDOW_ZOOM 3000
+#define SAMPLE_RATE 8000
+#define SAMPLE_RATE_MILLIS (SAMPLE_RATE / 1000)
 #define DRAG_TOLERANCE (double(10 * m_samplesPerPixel / SAMPLE_RATE_MILLIS))
+#define BYTES_PER_SAMPLE (sizeof(SAMPLE_TYPE))
 
 using namespace SubtitleComposer;
 
@@ -145,7 +148,7 @@ WaveformWidget::WaveformWidget(QWidget *parent)
 	connect(VideoPlayer::instance(), &VideoPlayer::positionChanged, this, &WaveformWidget::onPlayerPositionChanged);
 	connect(m_stream, &StreamProcessor::streamProgress, this, &WaveformWidget::onStreamProgress);
 	connect(m_stream, &StreamProcessor::streamFinished, this, &WaveformWidget::onStreamFinished);
-	// Using Qt::DirectConnection here makes WaveformWidget::onStreamData() to execute in GStreamer's thread
+	// Using Qt::DirectConnection here makes WaveformWidget::onStreamData() to execute in SpeechProcessor's thread
 	connect(m_stream, &StreamProcessor::audioDataAvailable, this, &WaveformWidget::onStreamData, Qt::DirectConnection);
 
 	connect(SCConfig::self(), &SCConfig::configChanged, this, &WaveformWidget::onConfigChanged);
@@ -406,7 +409,7 @@ WaveformWidget::setAudioStream(const QString &mediaFile, int audioStream)
 	m_waveformDuration = 0;
 	m_waveformDataOffset = 0;
 
-	static WaveFormat waveFormat(8000, 0, BYTES_PER_SAMPLE * 8, true);
+	static WaveFormat waveFormat(SAMPLE_RATE, 0, BYTES_PER_SAMPLE * 8, true);
 	if(m_stream->open(mediaFile) && m_stream->initAudio(audioStream, waveFormat))
 		m_stream->start();
 }
@@ -469,7 +472,7 @@ WaveformWidget::onStreamFinished()
 }
 
 void
-WaveformWidget::onStreamData(const void *buffer, const qint32 size, const WaveFormat *waveFormat)
+WaveformWidget::onStreamData(const void *buffer, qint32 size, const WaveFormat *waveFormat, const qint64 /*msecStart*/, const qint64 /*msecDuration*/)
 {
 	// make sure WaveformWidget::onStreamProgress() signal was processed since we're in different thread
 	while(!m_waveformDuration)
@@ -477,26 +480,29 @@ WaveformWidget::onStreamData(const void *buffer, const qint32 size, const WaveFo
 
 	if(!m_waveformChannels) {
 		m_waveformChannels = waveFormat->channels();
-		m_waveformChannelSize = waveFormat->sampleRate() * (m_waveformDuration + 60); // FIXME: added 60sec not to overflow below
+		m_waveformChannelSize = SAMPLE_RATE * (m_waveformDuration + 60); // FIXME: added 60sec not to overflow below
 		m_waveform = new SAMPLE_TYPE *[m_waveformChannels];
 		for(quint32 i = 0; i < m_waveformChannels; i++)
 			m_waveform[i] = new SAMPLE_TYPE[m_waveformChannelSize];
 	}
 
-	if(m_waveformDataOffset + size >= m_waveformChannelSize * BYTES_PER_SAMPLE * m_waveformChannels)
+	if(m_waveformDataOffset + size >= m_waveformChannelSize * BYTES_PER_SAMPLE * m_waveformChannels) {
+		qWarning() << "WaveformWidget::onStreamData() - stream is longer than advertised.";
 		return; // we got incorrect stream duration
+	}
 
-//	Q_ASSERT(m_waveformDataOffset + size < m_waveformChannelSize * BYTES_PER_SAMPLE * m_waveformChannels);
 	Q_ASSERT(waveFormat->bitsPerSample() == BYTES_PER_SAMPLE * 8);
-	Q_ASSERT(waveFormat->sampleRate() == 8000);
-	Q_ASSERT(size % BYTES_PER_SAMPLE == 0);
+	Q_ASSERT(waveFormat->sampleRate() == SAMPLE_RATE);
+
+	// assure incoming data is properly aligned
+	Q_ASSERT(m_waveformDataOffset % (BYTES_PER_SAMPLE * m_waveformChannels) == 0);
+	Q_ASSERT(size % (BYTES_PER_SAMPLE * m_waveformChannels) == 0);
 
 	const SAMPLE_TYPE *sample = reinterpret_cast<const SAMPLE_TYPE *>(buffer);
 	int len = size / BYTES_PER_SAMPLE;
 	int i = m_waveformDataOffset / BYTES_PER_SAMPLE / m_waveformChannels;
-	quint32 c = m_waveformDataOffset / BYTES_PER_SAMPLE % m_waveformChannels;
 	while(len > 0) {
-		for(; len > 0 && c < m_waveformChannels; c++) {
+		for(quint32 c = 0; c < m_waveformChannels; c++) {
 			qint32 val = *sample++;
 			if(i > 0) {
 				// simple lowpass filter
@@ -507,7 +513,6 @@ WaveformWidget::onStreamData(const void *buffer, const qint32 size, const WaveFo
 			len--;
 		}
 		i++;
-		c = 0;
 	}
 	m_waveformDataOffset += size;
 }

@@ -222,7 +222,7 @@ SpeechProcessor::onStreamFinished()
 }
 
 void
-SpeechProcessor::onStreamData(const void *buffer, const qint32 size, const WaveFormat */*waveFormat*/, const quint64 /*msecStart*/, const quint64 /*msecDuration*/)
+SpeechProcessor::onStreamData(const void *buffer, const qint32 size, const WaveFormat */*waveFormat*/, const qint64 /*msecStart*/, const qint64 /*msecDuration*/)
 {
 	// make sure SpeechProcessor::onStreamProgress() signal was processed since we're in different thread
 	while(!m_audioDuration)

@@ -53,7 +53,7 @@ private slots:
 	void onStreamProgress(quint64 msecPos, quint64 msecLength);
 	void onStreamError(int code, const QString &message, const QString &debug);
 	void onStreamFinished();
-	void onStreamData(const void *buffer, const qint32 size, const WaveFormat *waveFormat, const quint64 msecStart, const quint64 msecDuration);
+	void onStreamData(const void *buffer, const qint32 size, const WaveFormat *waveFormat, const qint64 msecStart, const qint64 msecDuration);
 	void onTextRecognized(const QString &text, const double milliShow, const double milliHide);
 
 private:

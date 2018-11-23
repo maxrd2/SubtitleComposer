@@ -42,17 +42,14 @@ QT_FORWARD_DECLARE_CLASS(QBoxLayout)
 
 // FIXME: make sample size configurable or drop this
 /*
-#define BYTES_PER_SAMPLE 2
 #define SAMPLE_TYPE qint16
 #define SIGNED_PAD 0 // 32768
 #define SAMPLE_MAX 32768 // 65535
 /*/
-#define BYTES_PER_SAMPLE 1
 #define SAMPLE_TYPE quint8
 #define SIGNED_PAD -128 // 0
 #define SAMPLE_MAX 128 // 255
 //*/
-#define SAMPLE_RATE_MILLIS (8000 / 1000)
 
 namespace SubtitleComposer {
 class WaveformWidget : public QWidget
@@ -123,7 +120,7 @@ protected:
 
 private slots:
 	void onPlayerPositionChanged(double seconds);
-	void onStreamData(const void *buffer, const qint32 size, const WaveFormat *waveFormat);
+	void onStreamData(const void *buffer, qint32 size, const WaveFormat *waveFormat, const qint64 msecStart, const qint64 msecDuration);
 	void onStreamProgress(quint64 msecPos, quint64 msecLength);
 	void onStreamFinished();
 	void onScrollBarValueChanged(int value);
