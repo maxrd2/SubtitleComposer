@@ -395,7 +395,6 @@ StreamProcessor::processAudio()
 		frameResampled->format = m_audioSampleFormat;
 	}
 
-	const int64_t timeStreamStart = m_avStream->start_time * 1000 * m_avStream->time_base.num / m_avStream->time_base.den;
 	const int64_t streamDuration = m_avStream->duration * 1000 * m_avStream->time_base.num / m_avStream->time_base.den;
 	const int64_t containerDuration = m_avFormat->duration * 1000 / AV_TIME_BASE;
 	m_streamLen = streamDuration > containerDuration ? streamDuration : containerDuration;
@@ -440,7 +439,7 @@ StreamProcessor::processAudio()
 				}
 				if(ret == 0) {
 					if(frame->best_effort_timestamp)
-						timeFrameStart = timeStreamStart + frame->best_effort_timestamp * 1000 * m_avStream->time_base.num / m_avStream->time_base.den;
+						timeFrameStart = frame->best_effort_timestamp * 1000 * m_avStream->time_base.num / m_avStream->time_base.den;
 				}
 
 				bool drainSampleBuffer = false;
@@ -511,7 +510,6 @@ StreamProcessor::processText()
 	pkt.data = nullptr;
 	pkt.size = 0;
 
-	const quint64 timeStreamStart = m_avStream->start_time * 1000 * m_avStream->time_base.num / m_avStream->time_base.den;
 	const quint64 streamDuration = m_avStream->duration * 1000 * m_avStream->time_base.num / m_avStream->time_base.den;
 	const quint64 containerDuration = m_avFormat->duration * 1000 / AV_TIME_BASE;
 	m_streamLen = streamDuration > containerDuration ? streamDuration : containerDuration;
@@ -539,8 +537,8 @@ StreamProcessor::processText()
 			if(!got_sub)
 				continue;
 
-			const quint64 timeFrameStart = timeStreamStart + pkt.pts * 1000 * m_avStream->time_base.num / m_avStream->time_base.den;
-			const quint64 timeFrameEnd = timeFrameStart + pkt.duration * 1000 * m_avStream->time_base.num / m_avStream->time_base.den;
+			const quint64 timeFrameStart = pkt.pts * 1000 * m_avStream->time_base.num / m_avStream->time_base.den;
+			const quint64 timeFrameEnd = pkt.duration * 1000 * m_avStream->time_base.num / m_avStream->time_base.den;
 
 			if(timeFrameStart < timeEnd)
 				timeEnd = timeFrameStart - 10;
