@@ -230,8 +230,11 @@ MPVBackend::updateTextData(const mpv_event_property *prop)
 				const QMap<QString, QVariant> &map = mpv::qt::node_to_variant(&val).toMap();
 
 				if(map[QStringLiteral("type")].toString() != QStringLiteral("sub")
-				|| map[QStringLiteral("codec")].toString() != QStringLiteral("mov_text")
 				|| map[QStringLiteral("external")].toBool() == true)
+					continue;
+
+				const QString &codec = map[QStringLiteral("codec")].toString();
+				if(codec != QStringLiteral("mov_text") && codec != QStringLiteral("subrip"))
 					continue;
 
 				const int &id = map[QStringLiteral("id")].toInt();
