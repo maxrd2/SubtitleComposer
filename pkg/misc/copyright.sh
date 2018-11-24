@@ -1,7 +1,7 @@
 #!/bin/bash
 
 if [ "$1" == "" ]; then
-	echo "Usage: copy.sh <commit>"
+	echo "Usage: copy.sh <all|git [commit]|files>"
 	exit
 fi
 
@@ -24,9 +24,10 @@ text2=' *\
  * Boston, MA 02110-1301, USA.\
  *\//'
 
-for f in `git diff --name-only "$@" | grep -Pe '\.[ch](pp)?$'` ; do
+update_copyright() {
+	f="$1"
 	if [[ ! -f "$f" ]]; then
-		continue
+		return
 	fi
 	echo -e '\e[01;33mProcessing \e[01;39m'$f'\e[01;33m\e[00m'
 	copy=$(perl -pe 'BEGIN{undef $/;} s!^.*?/\*[^/]*?(([\t *]*?Copyright[^\n]*?[\t *]*?\n)+).*?$!$1!sg' "$f" \
@@ -42,5 +43,19 @@ for f in `git diff --name-only "$@" | grep -Pe '\.[ch](pp)?$'` ; do
 		fi
 		sed -r "$text1$copy$text2" --in-place "$f"
 	fi
-done
+}
 
+if [ "$1" == "all" ]; then
+	export -f update_copyright
+	for f in `find . \( -name \*.cpp -or -name \*.h \)`; do
+		update_copyright "$f"
+	done
+elif [ "$1" == "git" ]; then
+	for f in `git diff --name-only "${@:2}" | grep -Pe '\.[ch](pp)?$'`; do
+		update_copyright "$f"
+	done
+else
+	for f in "${@:1}"; do
+		update_copyright "$f"
+	done
+fi

@@ -1,7 +1,7 @@
 #ifndef SPEECHPLUGIN_H
 #define SPEECHPLUGIN_H
 /*
- * Copyright (C) 2010-2017 Mladen Milinkovic <max@smoothware.net>
+ * Copyright (C) 2010-2018 Mladen Milinkovic <max@smoothware.net>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
