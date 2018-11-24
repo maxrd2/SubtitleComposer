@@ -77,21 +77,8 @@ main(int argc, char **argv)
 
 	aboutData.setTranslator(i18nc("NAME OF TRANSLATORS", "Your names"), i18nc("EMAIL OF TRANSLATORS", "Your emails"));
 
-	aboutData.addCredit("Goran Vidovic (gogo)", i18n("Croatian Translator"));
-	aboutData.addCredit("Petar Toushkov", i18n("Bulgarian Translator"));
-	aboutData.addCredit("Petr Gadula (Goliash)", i18n("Translator"));
-	aboutData.addCredit("Thomas Gastine", i18n("Translator"));
-	aboutData.addCredit("Panagiotis Papadopoulos", i18n("Translator"));
-	aboutData.addCredit("Alessandro Polverini", i18n("Translator"));
-	aboutData.addCredit("Tomasz Argasiński", i18n("Translator"));
-	aboutData.addCredit("Marcio P. Moraes", i18n("Translator"));
-	aboutData.addCredit("Alexander Antsev", i18n("Translator"));
-	aboutData.addCredit("Slobodan Simic", i18n("Translator"));
-	aboutData.addCredit("Yuri Chornoivan", i18n("Translator"));
-	aboutData.addCredit("Alexandros Perdikomatis", i18n("Translator"));
-	aboutData.addCredit("Barcza Károly", i18n("Translator"));
 	aboutData.addCredit("Martin Steghöfer", i18n("code contributions"));
-	aboutData.addCredit("Marius Kittler", i18n("code contributions, Arch Linux packaging, German translation"));
+	aboutData.addCredit("Marius Kittler", i18n("code contributions, Arch Linux packaging"));
 
 	aboutData.addCredit(i18n("All people who have contributed and I have forgotten to mention"));
 
