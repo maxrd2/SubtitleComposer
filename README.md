@@ -1,53 +1,59 @@
 ## SubtitleComposer ##
 
-An open source text-based subtitle editor that supports basic operations as well as more advanced ones, aiming to become an improved version of Subtitle Workshop for every platform supported by Plasma Framework.
-
-This is a continuation of Subtitle Composer by Sergio Pistone from sourceforget.net/projects/subcomposer/
+An open source text-based subtitle editor that supports basic and advanced editing operations, aiming to become an improved version of Subtitle Workshop for every platform supported by Plasma Frameworks.
 
 ### FEATURES
- - Open/Save **Text Subtitle Formats**
+  - Open/Save **Text Subtitle Formats**
     - SubRip/SRT, MicroDVD, SSA/ASS, MPlayer, TMPlayer and YouTube captions
- - Open/OCR **Graphics Subtitle Formats**
+  - Open/OCR **Graphics Subtitle Formats**
     - VobSub (.idx/.sub/.rar), formats supported by ffmpeg (DVD/Vob, DVB, XSUB, HDMV-PGS)
- - **Demux/OCR/Import** Graphics/Text Subtitle Formats directly **from video**
+  - **Demux/OCR/Import** Graphics/Text Subtitle Formats directly **from video**
     - SRT, SSA/ASS, MOV text, MicroDVD, Graphic formats supported by ffmpeg (DVD/Vob, DVB, XSUB, HDMV-PGS)
- - **Speech Recognition** from audio/video file using PocketSphinx
- - Smart **language/text encoding** detection
- - Live preview of subtitles in **integrated video player** (GStreamer, MPlayer, MPV, Xine, Phonon) w/ audio stream selection
- - Preview/editing of subtitles on **audio waveform** w/ audio stream selection
- - Quick and **easy subtitle sync**:
+  - **Speech Recognition** from audio/video file using PocketSphinx
+  - Smart **language/text encoding** detection
+  - Live preview of subtitles in **integrated video player** (GStreamer, MPlayer, MPV, Xine, Phonon) w/ audio stream selection
+  - Preview/editing of subtitles on **audio waveform** w/ audio stream selection
+  - Quick and **easy subtitle sync**:
     - Dragging several anchors/graftpoints and stretching timeline
     - Time shifting and scaling, lines duration re-calculation, framerate conversion, etc.
     - Joining and splitting of subtitle files
- - Side by side subtitle **translations**
- - Text **styles** (italic, bold, underline, stroke, color)
- - **Spell** checking
- - Detection of timing errors in subtitles
- - **Scripting** (JavaScript, Python, Ruby and other languages supported by [Kross](http://techbase.kde.org/Development/Tutorials/Kross-Tutorial)).
+  - Side by side subtitle **translations**
+  - Text **styles** (italic, bold, underline, stroke, color)
+  - **Spell** checking
+  - Detection of timing errors in subtitles
+  - **Scripting** (JavaScript, Python, Ruby and other languages supported by [Kross](http://techbase.kde.org/Development/Tutorials/Kross-Tutorial)).
 
 ![Main Window](https://raw.githubusercontent.com/maxrd2/subtitlecomposer/gh-pages/screenshots/screen-main.png)
 
-![Functions](https://raw.githubusercontent.com/maxrd2/subtitlecomposer/gh-pages/screenshots/screen-actions.png)
+### INSTALL
+#### Linux
+  - AppImage - downloadable from [releases](https://github.com/maxrd2/subtitlecomposer/releases) page
+  - Arch
+    - Official [repository](https://wiki.archlinux.org/index.php/unofficial_user_repositories#subtitlecomposer) with subtitlecomposer-git package
+    - AUR stable - package [subtitlecomposer](https://aur.archlinux.org/packages/subtitlecomposer)
+    - AUR git - package [subtitlecomposer-git](https://aur.archlinux.org/packages/subtitlecomposer-git)
+  - Debian
+    - oudated [subtitlecomposer](https://packages.debian.org/subtitlecomposer) package
+  - Ubuntu
+    - oudated [subtitlecomposer](https://packages.ubuntu.com/subtitlecomposer) package
+  - OpenSUSE
+    - oudated [subtitlecomposer](https://software.opensuse.org/package/subtitlecomposer) package
 
-![Settings Window](https://raw.githubusercontent.com/maxrd2/subtitlecomposer/gh-pages/screenshots/screen-settings.png)
-
-### BUILD / INSTALL
-Instructions can be found on ['Building from sources' wiki page](https://github.com/maxrd2/subtitlecomposer/wiki/Building-from-sources)
-
-### BUGS / FEATURES / IDEAS / QUESTIONS
-Please submit bug reports or feature requests to the [issue tracker on GitHub][bugs].  
-If you do not have a GitHub account and feel uncomfortable creating one then feel free to send me an
-email to max at smoothware dot net instead.
-
-### TODO
-Please look at [Milestone list][milestones] and [issue tracker on GitHub][bugs] for todo list.
+### BUILD
+Instructions for building from sources can be found on [wiki page](https://github.com/maxrd2/subtitlecomposer/wiki/Building-from-sources)
 
 ### CONTRIBUTING
-Help and ideas are welcome.   
-If you would like to do some code changes, please check the [coding style doc][coding style].   
+Submit bug reports or feature requests to the [issue tracker on GitHub][bugs].
 
-### AUTHORS / CONTRIBUTORS
-Please look in [AUTHORS file][authors] for (incomplete) list.
+Video tutorials are very welcome as are any kind of documentation/tutorials/examples, please let us know if you make some.
+
+Feedback and/or ideas on how to make Subtitle Composer better are welcome and appreciated.
+
+Pull requests and patches are welcome. Please follow the [coding style](README.CodingStyle.md).
+
+### LICENSE
+
+Subtitle Composer is released under [GNU General Public License v2.0](LICENSE)
 
 
 [bugs]: https://github.com/maxrd2/subtitlecomposer/issues "Issue Tracker"
