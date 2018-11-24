@@ -95,6 +95,4 @@ RangeTest::testOperators()
 	QVERIFY(!(Range(6, 10) <= Range(7, 9)));
 }
 
-QTEST_MAIN(RangeTest);
-
-
+QTEST_GUILESS_MAIN(RangeTest);

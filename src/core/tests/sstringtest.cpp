@@ -297,6 +297,4 @@ SStringTest::testReplace()
 	QVERIFY(sstring.richString() == QLatin1String("b<b>a</b>b"));
 }
 
-QTEST_MAIN(SStringTest);
-
-
+QTEST_GUILESS_MAIN(SStringTest);

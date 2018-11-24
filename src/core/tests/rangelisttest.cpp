@@ -92,6 +92,4 @@ RangeListTest::testJoinAndTrim()
 	QVERIFY(ranges.rangesCount() == 1 && ranges.indexesCount() == 5);
 }
 
-QTEST_MAIN(RangeListTest);
-
-
+QTEST_GUILESS_MAIN(RangeListTest);

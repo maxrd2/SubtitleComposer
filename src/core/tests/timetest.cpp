@@ -119,6 +119,4 @@ TimeTest::testOperators()
 	QVERIFY(Time(3600) > 3599);
 }
 
-QTEST_MAIN(TimeTest);
-
-
+QTEST_GUILESS_MAIN(TimeTest);
