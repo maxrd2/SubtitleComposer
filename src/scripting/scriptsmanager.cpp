@@ -46,6 +46,7 @@
 #include <KRun>
 #include <KActionCollection>
 #include <KLocalizedString>
+#include <kio_version.h>
 
 #include <kross/core/manager.h>
 #include <kross/core/interpreter.h>
@@ -300,7 +301,11 @@ ScriptsManager::editScript(const QString &sN)
 		return;
 	}
 
-	if(!KRun::runUrl(QUrl(m_scripts[scriptName]), "text/plain", app()->mainWindow(), (KRun::RunFlags)0))
+#if KIO_VERSION >= ((5<<16)|(31<<8)|(0))
+	if(!KRun::runUrl(QUrl(m_scripts[scriptName]), "text/plain", app()->mainWindow(), KRun::RunFlags(0)))
+#else
+	if(!KRun::runUrl(QUrl(m_scripts[scriptName]), "text/plain", app()->mainWindow(), false, false))
+#endif
 		KMessageBox::sorry(app()->mainWindow(), i18n("Could not launch external editor.\n"));
 }
 
