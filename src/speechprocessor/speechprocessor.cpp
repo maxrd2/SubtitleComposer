@@ -86,7 +86,7 @@ SpeechProcessor::SpeechProcessor(QWidget *parent)
 		// if application is launched from build directory it will load plugins from build directory
 		pluginLoad(buildPluginPath + QStringLiteral("/pocketsphinx/pocketsphinxasr.so"));
 	} else {
-		QDir pluginsDir(QStringLiteral(SCPLUGIN_PATH));
+		const QDir pluginsDir(QDir(qApp->applicationDirPath()).absoluteFilePath(QDir(QStringLiteral(SC_INSTALL_BIN)).relativeFilePath(QStringLiteral(SC_INSTALL_PLUGIN))));
 		foreach(const QString pluginFile, pluginsDir.entryList(QDir::Files, QDir::Name)) {
 			if(QLibrary::isLibrary(pluginFile))
 				pluginLoad(pluginsDir.filePath(pluginFile));
