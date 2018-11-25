@@ -70,7 +70,7 @@ main(int argc, char **argv)
 		QStringLiteral("&copy; 2007-2017 Subtitle Composer project"),
 		QString(), // Additional text
 		QStringLiteral("https://github.com/maxrd2/subtitlecomposer"),
-		QStringLiteral("maxrd2@smoothware.net"));
+		QStringLiteral("https://github.com/maxrd2/subtitlecomposer/issues"));
 
 	aboutData.addAuthor(i18n("Mladen Milinković"), i18n("Current Author & Maintainer"), "maxrd2@smoothware.net");
 	aboutData.addAuthor(i18n("Sergio Pistone"), i18n("Original Author"), "sergio_pistone@yahoo.com.ar");
