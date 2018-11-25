@@ -83,6 +83,8 @@
 #include <QMenu>
 #include <QThread>
 #include <QStatusBar>
+#include <QMenuBar>
+#include <QDockWidget>
 
 #include <QFileDialog>
 #include <QKeySequence>
@@ -97,6 +99,8 @@
 #include <KActionCollection>
 #include <KMessageBox>
 #include <KComboBox>
+#include <KToolBar>
+#include <kxmlgui_version.h>
 
 #include <QUndoGroup>
 #include <QUndoStack>
@@ -225,6 +229,18 @@ Application::init()
 
 	m_mainWindow->setupGUI();
 	m_mainWindow->m_waveformWidget->updateActions();
+
+	// Workaround for https://phabricator.kde.org/D13808
+	// menubar can't be hidden so always show it
+	m_mainWindow->findChild<QMenuBar *>(QString(), Qt::FindDirectChildrenOnly)->show();
+#if QT_VERSION >= QT_VERSION_CHECK(5, 11, 1) && KXMLGUI_VERSION < ((5<<16)|(49<<8)|(0))
+	// show rest if we're on broken KF5/Qt
+	m_mainWindow->findChild<QStatusBar *>(QString(), Qt::FindDirectChildrenOnly)->show();
+	m_mainWindow->findChild<QDockWidget *>(QStringLiteral("player_dock"), Qt::FindDirectChildrenOnly)->show();
+	m_mainWindow->findChild<QDockWidget *>(QStringLiteral("waveform_dock"), Qt::FindDirectChildrenOnly)->show();
+    foreach(KToolBar *toolbar, m_mainWindow->toolBars())
+		toolbar->show();
+#endif
 
 	m_scriptsManager->reloadScripts();
 
