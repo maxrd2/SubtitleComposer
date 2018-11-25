@@ -126,6 +126,18 @@ void
 MainWindow::setSubtitle(Subtitle */*subtitle*/)
 {}
 
+QMenu *
+MainWindow::createPopupMenu()
+{
+	QMenu *menu = KXmlGuiWindow::createPopupMenu();
+
+	menu->addSeparator();
+	QAction *showStatusBarAction = actionCollection()->action(KStandardAction::name(KStandardAction::ShowStatusbar));
+	menu->addAction(showStatusBarAction);
+
+	return menu;
+}
+
 bool
 MainWindow::queryClose()
 {
