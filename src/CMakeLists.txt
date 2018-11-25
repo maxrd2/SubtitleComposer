@@ -9,8 +9,8 @@ if(CMAKE_COMPILER_IS_GNUCC)
 	set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -Wall -O0 -g")
 	set(CMAKE_C_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} -Wall -O2 -pipe -fstack-protector --param=ssp-buffer-size=4")
 	set(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} -Wall -O2 -pipe -fstack-protector --param=ssp-buffer-size=4")
-	set(CMAKE_C_FLAGS_RELWITHDEBINFO "${CMAKE_C_FLAGS_RELEASE} -g")
-	set(CMAKE_CXX_FLAGS_RELWITHDEBINFO "${CMAKE_CXX_FLAGS_RELEASE} -g")
+	set(CMAKE_C_FLAGS_RELWITHDEBINFO "${CMAKE_C_FLAGS_RELEASE} -g -Wall -O2 -pipe -fstack-protector --param=ssp-buffer-size=4")
+	set(CMAKE_CXX_FLAGS_RELWITHDEBINFO "${CMAKE_CXX_FLAGS_RELEASE} -g -Wall -O2 -pipe -fstack-protector --param=ssp-buffer-size=4")
 endif()
 
 include_directories(
@@ -29,7 +29,7 @@ find_package(FFmpeg REQUIRED)
 # defined in the dependency directory that must be created before the former
 # CMakeLists.txt is processed
 
-set(SC_PLUGIN_INSTALL_DIR ${CMAKE_INSTALL_PREFIX}/${KDE_INSTALL_LIBDIR}/subtitlecomposer CACHE INTERNAL EXPORTEDVARIABLE)
+set(SC_PLUGIN_INSTALL_DIR "${CMAKE_INSTALL_PREFIX}/${KDE_INSTALL_LIBDIR}/subtitlecomposer" CACHE STRING EXPORTEDVARIABLE)
 message(STATUS "Subtitle Composer plugin path: ${SC_PLUGIN_INSTALL_DIR}")
 
 set(subtitlecomposer_LIBS
