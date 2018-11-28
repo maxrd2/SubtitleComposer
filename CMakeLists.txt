@@ -12,7 +12,9 @@ set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} ${ECM_MODULE_PATH} ${ECM_KDE_MODULE_D
 
 cmake_policy(SET CMP0043 NEW)
 cmake_policy(SET CMP0063 NEW)
-cmake_policy(SET CMP0071 NEW)
+if(POLICY CMP0071)
+	cmake_policy(SET CMP0071 NEW)
+endif()
 
 include(KDEInstallDirs)
 include(KDECMakeSettings)
