@@ -165,11 +165,11 @@
 	<group name="VideoPlayer">
 		<entry name="PlayerBackend" type="String">
 			<label>VideoPlayer Backend</label>
-			<default>GStreamer</default>
+			<default>MPV</default>
 		</entry>
 		<entry name="VideoAutoPlay" type="Bool">
 			<label>Start playing video when loaded</label>
-			<default>false</default>
+			<default>true</default>
 		</entry>
 		<entry name="SeekJumpLength" type="Int">
 			<label>Jump length on seek</label>
