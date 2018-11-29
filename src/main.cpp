@@ -29,6 +29,7 @@
 #include <QDir>
 #include <QCommandLineParser>
 #include <QCommandLineOption>
+#include <QProcessEnvironment>
 
 extern "C" {
 #include <libavcodec/avcodec.h>
@@ -56,8 +57,13 @@ main(int argc, char **argv)
 
 	SubtitleComposer::Application app(argc, argv);
 
-	// hack(?) to find custom icons outside kde
-	QIcon::setThemeSearchPaths(QIcon::themeSearchPaths() << QStringLiteral(CUSTOM_ICON_INSTALL_PATH));
+	// find custom icons outside kde
+	QIcon::setThemeSearchPaths(QIcon::themeSearchPaths() << QDir(qApp->applicationDirPath())
+		.absoluteFilePath(QDir(QStringLiteral(SC_INSTALL_BIN)).relativeFilePath(QStringLiteral(CUSTOM_ICON_INSTALL_PATH))));
+
+	// force breeze theme outside kde environment
+	if(QProcessEnvironment::systemEnvironment().value(QStringLiteral("XDG_CURRENT_DESKTOP")).toLower() != QLatin1String("kde"))
+		QIcon::setThemeName("breeze");
 
 	KLocalizedString::setApplicationDomain("subtitlecomposer");
 
