@@ -66,13 +66,7 @@ if [ "$ARTIFACTORY_BASE_URL" != "" ]; then
   # relevant details along with the other artifacts
   tempdir=$(mktemp -d)
   info_file="$tempdir"/build-info.txt
-  cat >"$info_file" <<EOF
-Instructions on using AppImage can be found [here](https://github.com/maxrd2/subtitlecomposer/wiki/AppImage-HOWTO)
-
-This is the latest unstable build, below you can find stable release builds.
-
-Travis CI build log: https://travis-ci.org/$TRAVIS_REPO_SLUG/builds/$TRAVIS_BUILD_ID/
-EOF
+  echo "Travis CI build log: https://travis-ci.org/$TRAVIS_REPO_SLUG/builds/$TRAVIS_BUILD_ID/" >"$info_file"
   files+=("$info_file")
 
   set +x

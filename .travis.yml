@@ -105,6 +105,7 @@ matrix:
             echo "AppImage uploaded to: $url"
           else
             echo 'Publishing release to GitHub...'
+            export UPLOADTOOL_BODY="Instructions on using AppImage can be found [here](https://github.com/maxrd2/subtitlecomposer/wiki/AppImage-HOWTO)\n\nThis is the latest unstable build, below you can find stable release builds.\n\nTravis CI build log: https://travis-ci.org/$TRAVIS_REPO_SLUG/builds/$TRAVIS_BUILD_ID/"
             bash "$TRAVIS_BUILD_DIR/pkg/misc/upload.sh" Subtitle_Composer-x86_64.AppImage*
           fi
 
