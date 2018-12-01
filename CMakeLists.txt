@@ -36,3 +36,5 @@ find_package(KF5 ${KF5_MIN_VERSION} REQUIRED COMPONENTS
 
 add_subdirectory(po)
 add_subdirectory(src)
+
+install(FILES pkg/misc/subtitlecomposer.desktop.appdata.xml DESTINATION ${KDE_INSTALL_METAINFODIR})

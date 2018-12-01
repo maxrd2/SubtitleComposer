@@ -323,8 +323,8 @@ sudo apt-get install -yqq libicu-dev zsync
 # sudo apt-get install -yqq libxine2-dev
 
 # appdir
-#git clone --branch travis --depth 1 https://github.com/maxrd2/subtitlecomposer.git "$builddir/subtitlecomposer"
-git clone --branch travis --depth 1 ssh://max@beeblebrox/home/max/projects/SubtitleComposer "$builddir/subtitlecomposer"
+#git clone --branch master --depth 1 https://github.com/maxrd2/subtitlecomposer.git "$builddir/subtitlecomposer"
+git clone --branch master --depth 1 ssh://max@beeblebrox/home/max/projects/SubtitleComposer "$builddir/subtitlecomposer"
 mkdir -p "$builddir/subtitlecomposer/build"
 (cd "$builddir/subtitlecomposer/build" \
 	&& cmake \
@@ -366,7 +366,9 @@ rm -rf "$appdir/usr/share/icons/"{breeze-dark,Breeze_Snow,breeze_cursors,breeze/
 rm -rf "$appdir/usr/qml"
 rm -rf "$appdir/usr/lib/cmake"
 rm -rf "$appdir/usr/include"
-rm -rf "$appdir/usr/mkspecs/"
+rm -rf "$appdir/usr/mkspecs"
+rm -f "$appdir/usr/bin"/[a-q]*
+rm -f "$appdir/usr/share/metainfo/org.kde.breezedark.desktop.appdata.xml"
 
 # appimage
 cd "$appdir/.."

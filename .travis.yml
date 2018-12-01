@@ -87,7 +87,9 @@ matrix:
           rm -rf "$appdir/usr/qml"
           rm -rf "$appdir/usr/lib/cmake"
           rm -rf "$appdir/usr/include"
-          rm -rf "$appdir/usr/mkspecs/"
+          rm -rf "$appdir/usr/mkspecs"
+          rm -f "$appdir/usr/bin"/[a-q]*
+          rm -f "$appdir/usr/share/metainfo/org.kde.breezedark.desktop.appdata.xml"
         - |- # appimage
           curl -L "https://github.com/probonopd/linuxdeployqt/releases/download/continuous/linuxdeployqt-continuous-x86_64.AppImage" >linuxdeployqt && chmod +x linuxdeployqt
           curl -L "https://github.com/AppImage/AppImageKit/releases/download/continuous/appimagetool-x86_64.AppImage" >appimagetool && chmod +x appimagetool

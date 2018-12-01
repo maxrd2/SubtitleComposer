@@ -23,7 +23,7 @@ An open source text-based subtitle editor that supports basic and advanced editi
   - Detection of timing errors in subtitles
   - **Scripting** (JavaScript, Python, Ruby and other languages supported by [Kross](http://techbase.kde.org/Development/Tutorials/Kross-Tutorial)).
 
-![Main Window](https://raw.githubusercontent.com/maxrd2/subtitlecomposer/gh-pages/screenshots/screen-main.png)
+![Main Window](http://maxrd2.github.io/subtitlecomposer/images/screenshot.png)
 
 ### INSTALL
 #### Linux
