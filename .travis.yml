@@ -92,6 +92,7 @@ matrix:
           execs=("$appdir/usr/lib/subtitlecomposer/"*.so)
           ./linuxdeployqt "$appdir/usr/share/applications/subtitlecomposer.desktop" -bundle-non-qt-libs "${execs[@]/#/-executable=}" -verbose=2 || exit 1
           rm -v "$appdir/AppRun" ; cp -v "$TRAVIS_BUILD_DIR/pkg/misc/subtitlecomposer.sh" "$appdir/AppRun" ; chmod +x "$appdir/AppRun"
+          rm -v "$appdir/usr/lib/libxcb-dri2.so"* "$appdir/usr/lib/libxcb-dri3.so"*
           ./appimagetool "$appdir/" -g
         - |- # publish
           if [[ ("$TRAVIS_BRANCH" != "$RELEASE_BRANCH" && "$TRAVIS_BRANCH" != "$TRAVIS_TAG") || "$TRAVIS_EVENT_TYPE" != "push" ]]; then 

@@ -378,7 +378,10 @@ execs=("$appdir/usr/lib/subtitlecomposer/"*.so)
 #execs+=("$appdir/usr/plugins/styles/"*.so "$appdir/usr/plugins/iconengines/"*.so)
 #plugins=("$appdir/usr/plugins/kf5/kio/"*.so) ; mkdir -p "$appdir/usr/plugins/kf5/kio/" ; cp -ax /usr/plugins/kf5/kio/*.so "$appdir/usr/plugins/kf5/kio/"
 "$downloaddir/linuxdeployqt" "$appdir/usr/share/applications/subtitlecomposer.desktop" -bundle-non-qt-libs "${execs[@]/#/-executable=}" #-extra-plugins="$(IFS=','; echo "${plugins[*]}")"
-rm "$appdir/AppRun" && cp "$builddir/subtitlecomposer/pkg/misc/subtitlecomposer.sh" "$appdir/AppRun" && chmod +x "$appdir/AppRun"
+
+rm -v "$appdir/AppRun" && cp -v "$builddir/subtitlecomposer/pkg/misc/subtitlecomposer.sh" "$appdir/AppRun" && chmod +x "$appdir/AppRun"
+rm -v "$appdir/usr/lib/libxcb-dri2.so"* "$appdir/usr/lib/libxcb-dri3.so"*
+
 "$downloaddir/appimagetool" "$appdir/" -u 'gh-releases-zsync|maxrd2|subtitlecomposer|continuous|Subtitle_Composer-*x86_64.AppImage.zsync'
 
 #[ ! -f Subtitle_Composer*.AppImage.zsync ] && zsyncmake Subtitle_Composer*.AppImage
