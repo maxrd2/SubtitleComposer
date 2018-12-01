@@ -93,10 +93,15 @@ matrix:
           ./linuxdeployqt "$appdir/usr/share/applications/subtitlecomposer.desktop" -bundle-non-qt-libs "${execs[@]/#/-executable=}" -verbose=2 || exit 1
           rm -v "$appdir/AppRun" ; cp -v "$TRAVIS_BUILD_DIR/pkg/misc/subtitlecomposer.sh" "$appdir/AppRun" ; chmod +x "$appdir/AppRun"
           ./appimagetool "$appdir/" -g
-        - if [[ ("$TRAVIS_BRANCH" != "$RELEASE_BRANCH" && "$TRAVIS_BRANCH" != "$TRAVIS_TAG") || "$TRAVIS_EVENT_TYPE" != "push" ]]; then echo 'Skipping publish step...'; exit 0 ; fi
         - |- # publish
-          #curl --upload-file Subtitle_Composer-x86_64.AppImage https://transfer.sh/Subtitle_Composer-x86_64.AppImage || exit 1
-          bash "$TRAVIS_BUILD_DIR/pkg/misc/upload.sh" Subtitle_Composer-x86_64.AppImage* || exit 1
+          if [[ ("$TRAVIS_BRANCH" != "$RELEASE_BRANCH" && "$TRAVIS_BRANCH" != "$TRAVIS_TAG") || "$TRAVIS_EVENT_TYPE" != "push" ]]; then 
+            echo 'Uploading to transfer.sh...'
+            url=$(curl -H "Max-Days: 1" --upload-file Subtitle_Composer-x86_64.AppImage https://transfer.sh/Subtitle_Composer-x86_64.AppImage)
+            echo "AppImage uploaded to: $url"
+          else
+            echo 'Publishing release to GitHub...'
+            bash "$TRAVIS_BUILD_DIR/pkg/misc/upload.sh" Subtitle_Composer-x86_64.AppImage*
+          fi
 
     - os: linux
       dist: xenial
