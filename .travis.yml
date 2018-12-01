@@ -67,6 +67,8 @@ matrix:
         - |- # pocketsphinx
           mkdir -p "$appdir/usr/share/pocketsphinx"
           cp -rf /usr/share/pocketsphinx/model "$appdir/usr/share/pocketsphinx/"
+        - |- # add kio
+          curl -L 'https://www.dropbox.com/sh/elawli9m1p4cugt/AACXz0IwwFr13nJgBWM5X4FBa/kf5-kio-5.52.0-trusty-amd64.tar.xz?dl=1' | tar -xJ -C "$appdir/"
         - |- # add kross
           curl -L 'https://www.dropbox.com/sh/elawli9m1p4cugt/AACv9k1Pp41zCzLGxT0QRAMma/kross-5.52.0-trusty-amd64.tar.xz?dl=1' | tar -xJ -C "$appdir/"
           curl -L 'https://www.dropbox.com/sh/elawli9m1p4cugt/AAB_Iz5gRqzGegg0-cRrmSVea/kross-interpreters-18.08.3-trusty-amd64.tar.xz?dl=1' | tar -xJ -C "$appdir/"
