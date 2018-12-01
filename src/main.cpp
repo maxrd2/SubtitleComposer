@@ -37,19 +37,12 @@ extern "C" {
 }
 
 #ifdef HAVE_CONFIG_H
-# include "config.h"
-# if defined HAVE_XINE && !defined HAVE_XCB
-#  include <X11/Xlib.h>
-# endif
+#include "config.h"
 #endif
 
 int
 main(int argc, char **argv)
 {
-#if defined HAVE_XINE && !defined HAVE_XCB
-	XInitThreads(); // needed for some VideoPlayer Backends (Xine)
-#endif
-
 #if LIBAVCODEC_VERSION_INT < AV_VERSION_INT(58, 9, 100)
 	av_register_all();
 	avcodec_register_all();

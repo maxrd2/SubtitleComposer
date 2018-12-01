@@ -5,15 +5,6 @@
 #define SC_INSTALL_BIN "@CMAKE_INSTALL_PREFIX@/@BIN_INSTALL_DIR@"
 #define SC_INSTALL_PLUGIN "@SC_PLUGIN_INSTALL_DIR@"
 
-// Whether MPV was found
-#cmakedefine HAVE_MPV
-
-// Whether Xine was found
-#cmakedefine HAVE_XINE
-
-// Whether XCB was found
-#cmakedefine HAVE_XCB
-
 // Whether ICU was found
 #cmakedefine HAVE_ICU
 

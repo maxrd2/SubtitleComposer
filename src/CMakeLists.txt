@@ -100,10 +100,6 @@ ki18n_wrap_ui(subtitlecomposer_SRCS
 
 add_executable(subtitlecomposer ${subtitlecomposer_SRCS})
 
-# Xine videoplayer plugin needs XInitThreads() call in main
-# optional since Xine will not be built without X11
-find_package(X11 QUIET)
-
 target_link_libraries(subtitlecomposer
 	${subtitlecomposer_LIBS}
 	${helpers_LIBS}

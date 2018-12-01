@@ -33,11 +33,7 @@
 #include <QWidget>
 
 #include <xine.h>
-#ifdef HAVE_XCB
 #include <xcb/xcb.h>
-#else
-typedef struct _XDisplay Display;
-#endif
 
 QT_FORWARD_DECLARE_CLASS(QEvent)
 
@@ -98,13 +94,8 @@ private:
 	void setSCConfig(SCConfig *scConfig) Q_DECL_OVERRIDE;
 
 private:
-#ifdef HAVE_XCB
 	xcb_connection_t * m_connection;
 	xcb_visual_t m_x11Visual;
-#else
-	Display * m_connection;
-	x11_visual_t m_x11Visual;
-#endif
 
 	xine_t *m_xineEngine;
 	xine_audio_port_t *m_audioDriver;

@@ -23,9 +23,7 @@
 #include <QPaintEvent>
 
 #include <X11/Xlib.h>
-#ifdef HAVE_XCB
 #include <xcb/xcb.h>
-#endif
 
 using namespace SubtitleComposer;
 
@@ -49,7 +47,6 @@ XineVideoLayerWidget::setVideoDriver(xine_video_port_t *videoDriver)
 	m_videoDriver = videoDriver;
 }
 
-#ifdef HAVE_XCB
 void
 XineVideoLayerWidget::paintEvent(QPaintEvent *event)
 {
@@ -68,18 +65,6 @@ XineVideoLayerWidget::paintEvent(QPaintEvent *event)
 
 	QWidget::paintEvent(event);
 }
-
-#else
-bool
-XineVideoLayerWidget::x11Event(XEvent *event)
-{
-	if(m_videoDriver && event->type == Expose && event->xexpose.count == 0)
-		xine_port_send_gui_data(m_videoDriver, XINE_GUI_SEND_EXPOSE_EVENT, event);
-
-	return false;
-}
-
-#endif
 
 void
 XineVideoLayerWidget::resizeEvent(QResizeEvent *event)

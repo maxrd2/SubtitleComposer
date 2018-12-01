@@ -388,13 +388,8 @@ XinePlayerBackend::customEvent(QEvent *event)
 bool
 XinePlayerBackend::initializeXine(WId winId)
 {
-#ifdef HAVE_XCB
 	int screen_nbr = 0;
 	m_connection = xcb_connect(NULL, &screen_nbr);
-#else
-	// XInitThreads() is called from main() otherwise the process can and will crash
-	m_connection = XOpenDisplay(NULL);
-#endif
 
 	if(!m_connection) {
 		qDebug() << "Failed to connect to X-Server!";
@@ -414,7 +409,6 @@ XinePlayerBackend::initializeXine(WId winId)
 
 	m_softwareMixer = (bool)xine_config_register_bool(m_xineEngine, "audio.mixer_software", 1, NULL, NULL, 10, &XinePlayerBackend::audioMixerMethodChangedCallback, this);
 
-#ifdef HAVE_XCB
 	xcb_screen_iterator_t screen_it = xcb_setup_roots_iterator(xcb_get_setup(m_connection));
 	while(screen_it.rem > 1 && screen_nbr > 0) {
 		xcb_screen_next(&screen_it);
@@ -423,11 +417,6 @@ XinePlayerBackend::initializeXine(WId winId)
 	m_x11Visual.connection = m_connection;
 	m_x11Visual.screen = screen_it.data;
 	m_x11Visual.window = winId;
-#else
-	m_x11Visual.display = m_connection;
-	m_x11Visual.screen = DefaultScreen(m_connection);
-	m_x11Visual.d = winId;
-#endif
 //  m_x11Visual.dest_size_cb = &XinePlayerBackend::destSizeCallback;
 	m_x11Visual.frame_output_cb = &XinePlayerBackend::frameOutputCallback;
 	m_x11Visual.user_data = (void *)this;
@@ -449,11 +438,7 @@ XinePlayerBackend::initializeXine(WId winId)
 		}
 
 		m_videoDriver = xine_open_video_driver(m_xineEngine, videoDriver.toLatin1(),
-#ifdef HAVE_XCB
 			XINE_VISUAL_TYPE_XCB,
-#else
-			XINE_VISUAL_TYPE_X11,
-#endif
 			(void *)&(m_x11Visual)
 		);
 
@@ -524,11 +509,7 @@ XinePlayerBackend::finalizeXine()
 	}
 
 	if(m_connection) {
-#ifdef HAVE_XCB
 		xcb_disconnect(m_connection);
-#else
-		XCloseDisplay(m_connection);
-#endif
 		m_connection = NULL;
 	}
 }

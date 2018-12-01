@@ -46,11 +46,7 @@ signals:
 	void geometryChanged();
 
 protected:
-#ifdef HAVE_XCB
 	virtual void paintEvent(QPaintEvent *event);
-#else
-	virtual bool x11Event(XEvent *event);
-#endif
 	virtual void resizeEvent(QResizeEvent *event);
 	virtual void moveEvent(QMoveEvent *event);
 
