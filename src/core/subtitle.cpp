@@ -22,6 +22,7 @@
 #include "core/subtitleline.h"
 #include "core/subtitleiterator.h"
 #include "core/subtitleactions.h"
+#include "core/subtitlelineactions.h"
 #include "helpers/objectref.h"
 #include "scconfig.h"
 #include "application.h"
@@ -253,7 +254,7 @@ Subtitle::changeFramesPerSecond(double toFramesPerSecond, double fromFramesPerSe
 			Time hideTime = it.current()->hideTime();
 			hideTime.adjust(0, scaleFactor);
 
-			it.current()->setTimes(showTime, hideTime);
+			processAction(new SetLineTimesAction(*it, showTime, hideTime));
 		}
 	}
 
