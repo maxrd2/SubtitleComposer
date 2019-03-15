@@ -1114,6 +1114,7 @@ WaveformWidget::showContextMenu(QMouseEvent *event)
 {
 	static QMenu *menu = nullptr;
 	static QList<QAction *> needCurrentLine;
+	static QList<QAction *> needSubtitle;
 
 	const Application *app = SubtitleComposer::app();
 	SubtitleLine *currentLine = subtitleLineAtMousePosition();
@@ -1157,22 +1158,24 @@ WaveformWidget::showContextMenu(QMouseEvent *event)
 					app->linesWidget()->setCurrentLine(selectedLine, true);
 			}));
 		menu->addSeparator();
-		menu->addAction(i18n("Join Lines"), [&](){
-			int startIndex = -1, endIndex = -1;
-			const Time startTime = rightMouseSoonerTime();
-			const Time endTime = rightMouseLaterTime();
-			for(int idx = 0, n = m_subtitle->count(); idx < n; idx++) {
-				const SubtitleLine *sub = m_subtitle->at(idx);
-				if(sub->showTime() <= endTime && startTime <= sub->hideTime()) {
-					if(startIndex == -1 || startIndex > idx)
-						startIndex = idx;
-					if(endIndex == -1 || endIndex < idx)
-						endIndex = idx;
+		needSubtitle.append(
+			menu->addAction(i18n("Join Lines"), [&](){
+				int startIndex = -1, endIndex = -1;
+				const Time startTime = rightMouseSoonerTime();
+				const Time endTime = rightMouseLaterTime();
+				for(int idx = 0, n = m_subtitle->count(); idx < n; idx++) {
+					const SubtitleLine *sub = m_subtitle->at(idx);
+					if(sub->showTime() <= endTime && startTime <= sub->hideTime()) {
+						if(startIndex == -1 || startIndex > idx)
+							startIndex = idx;
+						if(endIndex == -1 || endIndex < idx)
+							endIndex = idx;
+					}
 				}
-			}
-			if(endIndex >= 0 && startIndex != endIndex)
-				m_subtitle->joinLines(RangeList(Range(startIndex, endIndex)));
-		});
+				if(endIndex >= 0 && startIndex != endIndex)
+					m_subtitle->joinLines(RangeList(Range(startIndex, endIndex)));
+			})
+		);
 		needCurrentLine.append(
 			menu->addAction(i18n("Split Line"), [&](){
 				// TODO: split the line at exact waveform mouse position
@@ -1197,6 +1200,8 @@ WaveformWidget::showContextMenu(QMouseEvent *event)
 
 	foreach(QAction *action, needCurrentLine)
 		action->setDisabled(currentLine == nullptr);
+	foreach(QAction *action, needSubtitle)
+		action->setDisabled(m_subtitle == nullptr);
 
 	menu->exec(event->globalPos());
 }
