@@ -519,11 +519,12 @@ SubtitleLine::setShowTime(const Time &showTime, bool safe/*=false*/)
 	if(m_subtitle && m_subtitle->isLineAnchored(this)) {
 		m_subtitle->shiftAnchoredLine(this, showTime);
 	} else {
-		processShowTimeSort(showTime);
-		if(safe && showTime > m_hideTime)
+		if(safe && showTime > m_hideTime) {
 			setTimes(showTime, showTime);
-		else
+		} else {
+			processShowTimeSort(showTime);
 			processAction(new SetLineShowTimeAction(*this, showTime));
+		}
 	}
 
 	if(m_subtitle)
