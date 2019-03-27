@@ -1,0 +1,9 @@
+#!/usr/bin/make -f
+
+export DEB_LDFLAGS_MAINT_APPEND := -Wl,--as-needed
+
+%:
+	dh $@ --parallel --with=kf5
+
+override_dh_auto_test:
+	xvfb-run -a --server-args="-screen 0 1024x768x24+32" dh_auto_test

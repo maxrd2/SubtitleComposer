@@ -1,0 +1,63 @@
+Format: https://www.debian.org/doc/packaging-manuals/copyright-format/1.0/
+Upstream-Name: subtitlecomposer
+Source: https://github.com/maxrd2/subtitlecomposer
+
+Files: *
+Copyright: 2006-2008, Ricardo Villalba <rvm@escomposlinux.org>
+           2007-2009, Sergio Pistone <sergio_pistone@yahoo.com.ar> based on Kaffeine by Jürgen Kofler
+           2007-2009, Sergio Pistone <sergio_pistone@yahoo.com.ar> based on smplayer by Ricardo Villalba
+           2007-2012, Sergio Pistone <sergio_pistone@yahoo.com.ar>
+           2010-2017, Mladen Milinkovic <max@smoothware.net>
+License: GPL-2+
+
+Files: cmake/*
+Copyright: 2006-2008, Laurent Montel <montel@kde.org>
+           2006-2007, Matthias Kretz <kretz@kde.org>
+           2006, Tim Beaulen <tbscope@gmail.com>
+           2008, Helio Chissini de Castro <helio@kde.org>
+           2009, Nokia Corporation
+           2010, Yury G. Kudryashov <urkud@ya.ru>
+           2011, Raphael Kubo da Costa <kubito@gmail.com>
+License: BSD-3-clause
+ Redistribution and use in source and binary forms, with or without
+ modification, are permitted provided that the following conditions
+ are met:
+ .
+ 1. Redistributions of source code must retain the copyright
+    notice, this list of conditions and the following disclaimer.
+ 2. Redistributions in binary form must reproduce the copyright
+    notice, this list of conditions and the following disclaimer in the
+    documentation and/or other materials provided with the distribution.
+ 3. The name of the author may not be used to endorse or promote products
+    derived from this software without specific prior written permission.
+ .
+ THIS SOFTWARE IS PROVIDED BY THE AUTHOR ``AS IS'' AND ANY EXPRESS OR
+ IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES
+ OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED.
+ IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY DIRECT, INDIRECT,
+ INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT
+ NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
+ DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
+ THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+ (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
+ THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+
+Files: debian/*
+Copyright: 2009, José Manuel Santamaría Lema <panfaust@gmail.com>
+           2015, Martin Steghöfer <martin@steghoefer.eu>
+           2016-2018, Pino Toscano <pino@debian.org>
+License: GPL-2+
+
+License: GPL-2+
+ This package is free software; you can redistribute it and/or modify
+ it under the terms of the GNU General Public License as published by
+ the Free Software Foundation; either version 2 of the license, or
+ (at your option) any later version.
+ .
+ This package is distributed in the hope that it will be useful,
+ but WITHOUT ANY WARRANTY; without even the implied warranty of
+ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ GNU General Public License for more details.
+ .
+ The complete text of the GNU General Public License version 2 can be found in
+ the file `/usr/share/common-licenses/GPL-2'.
