@@ -4,7 +4,7 @@ set -e
 ###  awk -F= '/UBUNTU_CODENAME/ {print $2}' /etc/os-release
 ###  cat /etc/os-release | grep '^UBUNTU_CODENAME' | awk -F=  '{ print $2 }'
 . /etc/os-release
-# Radeon profile dependencies repository
+# SubtitleComposer dependencies repository
 #if [ `awk -F= '/UBUNTU_CODENAME/ {print $2}' /etc/os-release` = "xenial" ]
 if [ $UBUNTU_CODENAME = "xenial" ]
     then
