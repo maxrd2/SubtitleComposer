@@ -423,11 +423,21 @@ LinesItemDelegate::setRichTextMode(bool richTextMode)
 			m_textDocument = new QTextDocument();
 			m_textDocument->setDefaultTextOption(defaultTextOption);
 			m_textDocument->setUndoRedoEnabled(false);
-			m_textDocument->setDefaultStyleSheet("p { display:inline; white-space:pre; vertical-align:baseline; margin:0; }");
+			updateStyle();
 		} else {
 			delete m_textDocument;
 			m_textDocument = 0;
 		}
+	}
+}
+
+void
+LinesItemDelegate::updateStyle()
+{
+	if(m_textDocument) {
+		m_textDocument->setDefaultStyleSheet("p { display:inline; white-space:pre; vertical-align:baseline; margin:0; }");
+		const LinesWidget *lw = static_cast<LinesWidget *>(parent());
+		m_textDocument->setDefaultFont(QApplication::font(lw));
 	}
 }
 
@@ -703,18 +713,18 @@ LinesItemDelegate::errorPixmap()
 /// LINES WIDGET
 /// ============
 
-LinesWidget::LinesWidget(QWidget *parent) :
-	TreeView(parent),
-	m_scrollFollowsModel(true),
-	m_translationMode(false),
-	m_showingContextMenu(false)
+LinesWidget::LinesWidget(QWidget *parent)
+	: TreeView(parent),
+	  m_scrollFollowsModel(true),
+	  m_translationMode(false),
+	  m_showingContextMenu(false),
+	  m_plainTextDelegate(new LinesItemDelegate(true, true, false, this)),
+	  m_richTextDelegate(new LinesItemDelegate(true, true, true, this))
 {
 	setModel(new LinesModel(this));
 
-	LinesItemDelegate *plainTextDelegate = new LinesItemDelegate(true, true, false, this);
-	LinesItemDelegate *richTextDelegate = new LinesItemDelegate(true, true, true, this);
 	for(int column = 0, columnCount = model()->columnCount(); column < columnCount; ++column)
-		setItemDelegateForColumn(column, column < LinesModel::Text ? plainTextDelegate : richTextDelegate);
+		setItemDelegateForColumn(column, column < LinesModel::Text ? m_plainTextDelegate : m_richTextDelegate);
 
 	QHeaderView *header = this->header();
 	header->setSectionsClickable(false);
@@ -1213,6 +1223,13 @@ LinesWidget::drawRow(QPainter *painter, const QStyleOptionViewItem &option, cons
 		drawVerticalDotLine(painter, rowRect.left(), rowRect.top(), rowRect.bottom());
 		drawVerticalDotLine(painter, rowRect.right(), rowRect.top(), rowRect.bottom());
 	}
+}
+
+void
+LinesWidget::changeEvent(QEvent *event)
+{
+	if(event->type() == QEvent::FontChange)
+		m_richTextDelegate->updateStyle();
 }
 
 LinesWidgetScrollToModelDetacher::LinesWidgetScrollToModelDetacher(LinesWidget &linesWidget) :

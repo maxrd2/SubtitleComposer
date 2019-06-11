@@ -114,6 +114,8 @@ public:
 	bool richTextMode() const;
 	void setRichTextMode(bool richTextMode);
 
+	void updateStyle();
+
 	virtual QString displayText(const QVariant &value, const QLocale &locale) const;
 
 	static const QIcon & markIcon();
@@ -183,6 +185,9 @@ protected slots:
 	virtual void rowsAboutToBeRemoved(const QModelIndex &parent, int start, int end);
 	virtual void rowsInserted(const QModelIndex &parent, int start, int end);
 
+protected:
+	void changeEvent(QEvent *event) override;
+
 private:
 	virtual void contextMenuEvent(QContextMenuEvent *e);
 	virtual void mouseDoubleClickEvent(QMouseEvent *e);
@@ -203,6 +208,9 @@ private:
 	bool m_showingContextMenu;
 
 	QPen m_gridPen;
+
+	LinesItemDelegate *m_plainTextDelegate;
+	LinesItemDelegate *m_richTextDelegate;
 
 	friend class LinesWidgetScrollToModelDetacher;
 };
