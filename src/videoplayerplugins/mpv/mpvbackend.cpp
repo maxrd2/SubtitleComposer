@@ -144,8 +144,9 @@ void
 MPVBackend::mpvExit()
 {
 	if(m_mpv) {
-		mpv_detach_destroy(m_mpv);
-		m_mpv = NULL;
+		const char *args[] = { "quit", NULL };
+		mpv_command_async(m_mpv, 0, args);
+		mpv_wait_async_requests(m_mpv);
 	}
 	m_initialized = false;
 }
@@ -204,8 +205,10 @@ MPVBackend::mpvEventHandle(mpv_event *event)
 		break;
 	}
 	case MPV_EVENT_SHUTDOWN: {
-		mpv_detach_destroy(m_mpv);
-		m_mpv = NULL;
+		if(m_mpv) {
+			mpv_terminate_destroy(m_mpv);
+			m_mpv = NULL;
+		}
 		setPlayerState(VideoPlayer::Ready);
 		break;
 	}
