@@ -47,12 +47,6 @@
 #include <QMenu>
 #include <QUrl>
 
-#if QT_VERSION >= 0x40500
-#define TEXT_DOCUMENT_CORRECTION 4
-#else
-#define TEXT_DOCUMENT_CORRECTION 2
-#endif
-
 using namespace SubtitleComposer;
 
 /// LINES MODEL
@@ -523,7 +517,7 @@ LinesItemDelegate::drawTextPrimitive(QPainter *painter, const QStyle *style, con
 
 		m_textDocument->setDefaultTextOption(textOption);
 		m_textDocument->setTextWidth(textRect.width() - textMargin);
-		m_textDocument->setHtml("<p>" + text + "</p>");
+		m_textDocument->setHtml(text);
 
 		QPalette palette(option.palette);
 		palette.setColor(QPalette::Text, palette.color(cg, option.state & QStyle::State_Selected ? QPalette::HighlightedText : QPalette::Text));
@@ -531,9 +525,12 @@ LinesItemDelegate::drawTextPrimitive(QPainter *painter, const QStyle *style, con
 		QAbstractTextDocumentLayout::PaintContext context;
 		context.palette = palette;
 
-		painter->translate(textRect.x() - TEXT_DOCUMENT_CORRECTION, textRect.y() - TEXT_DOCUMENT_CORRECTION);
+		const int yOffset = (textRect.height() - m_textDocument->documentLayout()->documentSize().height()) / 2.;
+		textRect.adjust(0, yOffset, 0, yOffset);
+
+		painter->translate(textRect.x(), textRect.y());
 		m_textDocument->documentLayout()->draw(painter, context);
-		painter->translate(-textRect.x() + TEXT_DOCUMENT_CORRECTION, -textRect.y() + TEXT_DOCUMENT_CORRECTION);
+		painter->translate(-textRect.x(), -textRect.y());
 	} else {
 		QColor textColor;
 		if(option.state & QStyle::State_Selected)
