@@ -423,7 +423,7 @@ LinesItemDelegate::setRichTextMode(bool richTextMode)
 			m_textDocument = new QTextDocument();
 			m_textDocument->setDefaultTextOption(defaultTextOption);
 			m_textDocument->setUndoRedoEnabled(false);
-			m_textDocument->setDefaultStyleSheet("p { display: inline; white-space: pre; vertical-align: baseline; margin-bottom: 0px; margin-top: 0px }");
+			m_textDocument->setDefaultStyleSheet("p { display:inline; white-space:pre; vertical-align:baseline; margin:0; }");
 		} else {
 			delete m_textDocument;
 			m_textDocument = 0;
@@ -517,7 +517,7 @@ LinesItemDelegate::drawTextPrimitive(QPainter *painter, const QStyle *style, con
 
 		m_textDocument->setDefaultTextOption(textOption);
 		m_textDocument->setTextWidth(textRect.width() - textMargin);
-		m_textDocument->setHtml(text);
+		m_textDocument->setHtml("<p>" + text + "</p>");
 
 		QPalette palette(option.palette);
 		palette.setColor(QPalette::Text, palette.color(cg, option.state & QStyle::State_Selected ? QPalette::HighlightedText : QPalette::Text));
