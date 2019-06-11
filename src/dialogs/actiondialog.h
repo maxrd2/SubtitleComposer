@@ -38,7 +38,7 @@ public:
 	explicit ActionDialog(const QString &title, QWidget *parent = 0);
 
 public slots:
-	virtual int exec();
+	virtual int exec() override;
 	virtual void show();
 
 protected:

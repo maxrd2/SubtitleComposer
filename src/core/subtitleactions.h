@@ -58,10 +58,10 @@ public:
 	SetFramesPerSecondAction(Subtitle &subtitle, double framesPerSecond);
 	virtual ~SetFramesPerSecondAction();
 
-	inline int id() const Q_DECL_OVERRIDE { return UndoAction::SetFramesPerSecond; }
+	inline int id() const override { return UndoAction::SetFramesPerSecond; }
 
 protected:
-	void redo() Q_DECL_OVERRIDE;
+	void redo() override;
 
 private:
 	double m_framesPerSecond;
@@ -73,12 +73,12 @@ public:
 	InsertLinesAction(Subtitle &subtitle, const QList<SubtitleLine *> &lines, int insertIndex = -1);
 	virtual ~InsertLinesAction();
 
-	inline int id() const Q_DECL_OVERRIDE { return UndoAction::InsertLines; }
-	bool mergeWith(const QUndoCommand *command) Q_DECL_OVERRIDE;
+	inline int id() const override { return UndoAction::InsertLines; }
+	bool mergeWith(const QUndoCommand *command) override;
 
 protected:
-	void redo() Q_DECL_OVERRIDE;
-	void undo() Q_DECL_OVERRIDE;
+	void redo() override;
+	void undo() override;
 
 private:
 	int m_insertIndex;
@@ -92,12 +92,12 @@ public:
 	RemoveLinesAction(Subtitle &subtitle, int firstIndex, int lastIndex = -1);
 	virtual ~RemoveLinesAction();
 
-	inline int id() const Q_DECL_OVERRIDE { return UndoAction::RemoveLines; }
-	bool mergeWith(const QUndoCommand *command) Q_DECL_OVERRIDE;
+	inline int id() const override { return UndoAction::RemoveLines; }
+	bool mergeWith(const QUndoCommand *command) override;
 
 protected:
-	void redo() Q_DECL_OVERRIDE;
-	void undo() Q_DECL_OVERRIDE;
+	void redo() override;
+	void undo() override;
 
 private:
 	int m_firstIndex;
@@ -111,12 +111,12 @@ public:
 	MoveLineAction(Subtitle &subtitle, int fromIndex, int toIndex = -1);
 	virtual ~MoveLineAction();
 
-	inline int id() const Q_DECL_OVERRIDE { return UndoAction::MoveLine; }
-	bool mergeWith(const QUndoCommand *command) Q_DECL_OVERRIDE;
+	inline int id() const override { return UndoAction::MoveLine; }
+	bool mergeWith(const QUndoCommand *command) override;
 
 protected:
-	void redo() Q_DECL_OVERRIDE;
-	void undo() Q_DECL_OVERRIDE;
+	void redo() override;
+	void undo() override;
 
 private:
 	int m_fromIndex;
@@ -129,10 +129,10 @@ public:
 	SwapLinesTextsAction(Subtitle &subtitle, const RangeList &ranges);
 	virtual ~SwapLinesTextsAction();
 
-	inline int id() const Q_DECL_OVERRIDE { return UndoAction::SwapLinesTexts; }
+	inline int id() const override { return UndoAction::SwapLinesTexts; }
 
 protected:
-	void redo() Q_DECL_OVERRIDE;
+	void redo() override;
 
 private:
 	const RangeList m_ranges;

@@ -39,7 +39,7 @@ public:
 	Time splitTime() const;
 	bool shiftNewSubtitle() const;
 
-	virtual void show();
+	virtual void show() override;
 
 private slots:
 	void setSplitTimeFromVideo();

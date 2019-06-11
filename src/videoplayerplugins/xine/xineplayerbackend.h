@@ -48,28 +48,28 @@ public:
 	XinePlayerBackend();
 	virtual ~XinePlayerBackend();
 
-	QWidget * newConfigWidget(QWidget *parent) Q_DECL_OVERRIDE;
+	QWidget * newConfigWidget(QWidget *parent) override;
 
 protected:
-	bool initialize(VideoWidget *videoWidget) Q_DECL_OVERRIDE;
-	void finalize() Q_DECL_OVERRIDE;
+	bool initialize(VideoWidget *videoWidget) override;
+	void finalize() override;
 	void _finalize();
-	bool reconfigure() Q_DECL_OVERRIDE;
+	bool reconfigure() override;
 
-	bool openFile(const QString &filePath, bool &playingAfterCall) Q_DECL_OVERRIDE;
-	void closeFile() Q_DECL_OVERRIDE;
+	bool openFile(const QString &filePath, bool &playingAfterCall) override;
+	void closeFile() override;
 
-	bool play() Q_DECL_OVERRIDE;
-	bool pause() Q_DECL_OVERRIDE;
-	bool seek(double seconds, bool accurate) Q_DECL_OVERRIDE;
-	bool step(int /*frameOffset*/) Q_DECL_OVERRIDE { return false; }
-	bool stop() Q_DECL_OVERRIDE;
+	bool play() override;
+	bool pause() override;
+	bool seek(double seconds, bool accurate) override;
+	bool step(int /*frameOffset*/) override { return false; }
+	bool stop() override;
 
-	void playbackRate(double /*newRate*/) Q_DECL_OVERRIDE {}
+	void playbackRate(double /*newRate*/) override {}
 
-	bool setActiveAudioStream(int audioStream) Q_DECL_OVERRIDE;
+	bool setActiveAudioStream(int audioStream) override;
 
-	bool setVolume(double volume) Q_DECL_OVERRIDE;
+	bool setVolume(double volume) override;
 
 protected:
 	bool initializeXine(WId winId);
@@ -80,7 +80,7 @@ protected:
 	void updateLengthData();
 
 	static void xineEventListener(void *p, const xine_event_t *);
-	void customEvent(QEvent *event) Q_DECL_OVERRIDE;
+	void customEvent(QEvent *event) override;
 
 	static void destSizeCallback(void *p, int video_width, int video_height, double video_aspect, int *dest_width, int *dest_height, double *dest_aspect);
 	static void frameOutputCallback(void *p, int video_width, int video_height, double video_aspect, int *dest_x, int *dest_y, int *dest_width, int *dest_height, double *dest_aspect, int *win_x, int *win_y);
@@ -91,7 +91,7 @@ protected slots:
 	void onVideoLayerGeometryChanged();
 
 private:
-	void setSCConfig(SCConfig *scConfig) Q_DECL_OVERRIDE;
+	void setSCConfig(SCConfig *scConfig) override;
 
 private:
 	xcb_connection_t * m_connection;

@@ -42,7 +42,7 @@ public:
 	Subtitle::TextTarget calculationMode() const;
 
 	bool translationMode() const;
-	void setTranslationMode(bool enabled);
+	void setTranslationMode(bool enabled) override;
 
 private:
 	QSpinBox *m_charMillisSpinBox;

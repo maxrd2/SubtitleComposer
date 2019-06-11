@@ -43,7 +43,7 @@ public:
 	bool isCancellable() const;
 
 protected:
-	virtual void closeEvent(QCloseEvent *event);
+	virtual void closeEvent(QCloseEvent *event) override;
 
 public slots:
 	void setMinimum(int minimum);

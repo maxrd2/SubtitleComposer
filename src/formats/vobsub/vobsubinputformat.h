@@ -34,7 +34,7 @@ class VobSubInputFormat : public InputFormat
 	friend class FormatManager;
 
 public:
-	virtual bool readBinary(Subtitle &subtitle, const QUrl &url)
+	virtual bool readBinary(Subtitle &subtitle, const QUrl &url) override
 	{
 		const QString filename = url.toLocalFile();
 		const int extension = filename.lastIndexOf('.');
@@ -155,7 +155,7 @@ public:
 	}
 
 protected:
-	virtual bool parseSubtitles(Subtitle &, const QString &) const
+	virtual bool parseSubtitles(Subtitle &, const QString &) const override
 	{
 		return false;
 	}

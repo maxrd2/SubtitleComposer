@@ -59,8 +59,8 @@ public:
 	void setTextsTargetEnabled(Subtitle::TextTarget target, bool enabled);
 
 public slots:
-	virtual int exec();
-	virtual void show();
+	virtual int exec() override;
+	virtual void show() override;
 
 protected:
 	explicit ActionWithTargetDialog(const QString &title, QWidget *parent = 0);
@@ -110,7 +110,7 @@ public:
 	ActionWithLinesTargetDialog(const QString &title, const QString &desc, QWidget *parent = 0);
 
 public slots:
-	virtual int exec();
+	virtual int exec() override;
 };
 
 class ActionWithTextsTargetDialog : public ActionWithTargetDialog
@@ -122,7 +122,7 @@ public:
 	ActionWithTextsTargetDialog(const QString &title, const QString &desc, QWidget *parent = 0);
 
 public slots:
-	virtual int exec();
+	virtual int exec() override;
 };
 
 class ActionWithLinesAndTextsTargetDialog : public ActionWithTargetDialog
@@ -134,7 +134,7 @@ public:
 	ActionWithLinesAndTextsTargetDialog(const QString &title, const QString &desc, QWidget *parent = 0);
 
 public slots:
-	virtual int exec();
+	virtual int exec() override;
 };
 }
 #endif

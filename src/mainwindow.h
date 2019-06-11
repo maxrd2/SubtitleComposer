@@ -44,13 +44,13 @@ public:
 	void loadConfig();
 	void saveConfig();
 
-	QMenu *createPopupMenu() Q_DECL_OVERRIDE;
+	QMenu *createPopupMenu() override;
 
 public slots:
 	void setSubtitle(Subtitle *subtitle = 0);
 
 protected:
-	bool queryClose() Q_DECL_OVERRIDE;
+	bool queryClose() override;
 
 protected:
 	PlayerWidget *m_playerWidget;

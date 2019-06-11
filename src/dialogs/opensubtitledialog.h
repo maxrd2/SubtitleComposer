@@ -44,8 +44,8 @@ public:
 	QUrl selectedUrl() const;
 
 protected:
-	virtual void showEvent(QShowEvent *event);
-	virtual void hideEvent(QHideEvent *event);
+	virtual void showEvent(QShowEvent *event) override;
+	virtual void hideEvent(QHideEvent *event) override;
 
 private:
 	QComboBox *m_encodingComboBox;

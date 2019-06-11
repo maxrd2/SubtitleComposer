@@ -91,7 +91,7 @@ protected:
 		return ret;
 	}
 
-	virtual bool parseSubtitles(Subtitle &subtitle, const QString &data) const
+	virtual bool parseSubtitles(Subtitle &subtitle, const QString &data) const override
 	{
 		if(m_scriptInfoRegExp.indexIn(data) == -1)
 			return false;

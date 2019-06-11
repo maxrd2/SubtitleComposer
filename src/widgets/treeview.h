@@ -34,13 +34,13 @@ public:
 	virtual ~TreeView();
 
 public slots:
-	virtual void setModel(QAbstractItemModel *model);
+	virtual void setModel(QAbstractItemModel *model) override;
 
 protected slots:
 	void onRowsAboutToBeInserted(const QModelIndex &parent, int start, int end);
 	void onRowsAboutToBeRemoved(const QModelIndex &parent, int start, int end);
 
-	virtual void updateGeometries();
+	virtual void updateGeometries() override;
 
 	void onUpdateGeometriesTimeout();
 

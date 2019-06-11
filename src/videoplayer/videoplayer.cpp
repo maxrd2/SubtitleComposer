@@ -51,7 +51,7 @@ public:
 
 	virtual ~DummyPlayerBackend() {}
 
-	virtual QWidget * newConfigWidget(QWidget * /*parent */) { return 0; }
+	virtual QWidget * newConfigWidget(QWidget *) override { return 0; }
 
 protected:
 	bool initialize(VideoWidget *videoWidget) Q_DECL_OVERRIDE { videoWidget->setVideoLayer(new QWidget()); return true; }

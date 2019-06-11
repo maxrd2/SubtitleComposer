@@ -55,11 +55,11 @@ public:
 	SetLinePrimaryTextAction(SubtitleLine &line, const SString &primaryText);
 	virtual ~SetLinePrimaryTextAction();
 
-	inline int id() const Q_DECL_OVERRIDE { return UndoAction::SetLinePrimaryText; }
-	bool mergeWith(const QUndoCommand *command) Q_DECL_OVERRIDE;
+	inline int id() const override { return UndoAction::SetLinePrimaryText; }
+	bool mergeWith(const QUndoCommand *command) override;
 
 protected:
-	void redo() Q_DECL_OVERRIDE;
+	void redo() override;
 
 private:
 	SString m_primaryText;
@@ -73,11 +73,11 @@ public:
 	SetLineSecondaryTextAction(SubtitleLine &line, const SString &secondaryText);
 	virtual ~SetLineSecondaryTextAction();
 
-	inline int id() const Q_DECL_OVERRIDE { return UndoAction::SetLineSecondaryText; }
-	bool mergeWith(const QUndoCommand *command) Q_DECL_OVERRIDE;
+	inline int id() const override { return UndoAction::SetLineSecondaryText; }
+	bool mergeWith(const QUndoCommand *command) override;
 
 protected:
-	void redo() Q_DECL_OVERRIDE;
+	void redo() override;
 
 private:
 	SString m_secondaryText;
@@ -90,11 +90,11 @@ public:
 	SetLineTextsAction(SubtitleLine &line, const SString &primaryText, const SString &secondaryText);
 	virtual ~SetLineTextsAction();
 
-	inline int id() const Q_DECL_OVERRIDE { return UndoAction::SetLineTexts; }
-	bool mergeWith(const QUndoCommand *command) Q_DECL_OVERRIDE;
+	inline int id() const override { return UndoAction::SetLineTexts; }
+	bool mergeWith(const QUndoCommand *command) override;
 
 protected:
-	void redo() Q_DECL_OVERRIDE;
+	void redo() override;
 
 private:
 	SString m_primaryText;
@@ -109,11 +109,11 @@ public:
 	SetLineShowTimeAction(SubtitleLine &line, const Time &showTime);
 	virtual ~SetLineShowTimeAction();
 
-	inline int id() const Q_DECL_OVERRIDE { return UndoAction::SetLineShowTime; }
-	bool mergeWith(const QUndoCommand *command) Q_DECL_OVERRIDE;
+	inline int id() const override { return UndoAction::SetLineShowTime; }
+	bool mergeWith(const QUndoCommand *command) override;
 
 protected:
-	void redo() Q_DECL_OVERRIDE;
+	void redo() override;
 
 private:
 	Time m_showTime;
@@ -127,11 +127,11 @@ public:
 	SetLineHideTimeAction(SubtitleLine &line, const Time &hideTime);
 	virtual ~SetLineHideTimeAction();
 
-	inline int id() const Q_DECL_OVERRIDE { return UndoAction::SetLineHideTime; }
-	bool mergeWith(const QUndoCommand *command) Q_DECL_OVERRIDE;
+	inline int id() const override { return UndoAction::SetLineHideTime; }
+	bool mergeWith(const QUndoCommand *command) override;
 
 protected:
-	void redo() Q_DECL_OVERRIDE;
+	void redo() override;
 
 private:
 	Time m_hideTime;
@@ -143,11 +143,11 @@ public:
 	SetLineTimesAction(SubtitleLine &line, const Time &showTime, const Time &hideTime, QString description = QString());
 	virtual ~SetLineTimesAction();
 
-	inline int id() const Q_DECL_OVERRIDE { return UndoAction::SetLineTimes; }
-	bool mergeWith(const QUndoCommand *command) Q_DECL_OVERRIDE;
+	inline int id() const override { return UndoAction::SetLineTimes; }
+	bool mergeWith(const QUndoCommand *command) override;
 
 protected:
-	void redo() Q_DECL_OVERRIDE;
+	void redo() override;
 
 private:
 	typedef enum { ShowTime = 0x1, HideTime = 0x2 } SignalFlags;
@@ -162,11 +162,11 @@ public:
 	SetLineErrorsAction(SubtitleLine &line, int errorFlags);
 	virtual ~SetLineErrorsAction();
 
-	inline int id() const Q_DECL_OVERRIDE { return UndoAction::SetLineErrors; }
-	bool mergeWith(const QUndoCommand *command) Q_DECL_OVERRIDE;
+	inline int id() const override { return UndoAction::SetLineErrors; }
+	bool mergeWith(const QUndoCommand *command) override;
 
 protected:
-	void redo() Q_DECL_OVERRIDE;
+	void redo() override;
 
 private:
 	int m_errorFlags;

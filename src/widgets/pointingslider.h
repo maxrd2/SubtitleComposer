@@ -37,7 +37,7 @@ public:
 	virtual ~PointingSlider();
 
 protected:
-	virtual void mousePressEvent(QMouseEvent *e);
+	virtual void mousePressEvent(QMouseEvent *e) override;
 };
 
 #endif

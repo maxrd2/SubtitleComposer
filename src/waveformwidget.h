@@ -113,9 +113,9 @@ public slots:
 	void setShowTranslation(bool showTranslation);
 
 protected:
-	void resizeEvent(QResizeEvent *event);
-	void leaveEvent(QEvent *event);
-	bool eventFilter(QObject *obj, QEvent *event);
+	void resizeEvent(QResizeEvent *event) override;
+	void leaveEvent(QEvent *event) override;
+	bool eventFilter(QObject *obj, QEvent *event) override;
 	void showContextMenu(QMouseEvent *event);
 
 private slots:

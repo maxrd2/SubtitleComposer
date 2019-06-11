@@ -54,8 +54,8 @@ public:
 	 */
 	void setVideoResolution(int width, int height, double dar = 0.0);
 
-	virtual QSize sizeHint() const;
-	virtual QSize minimumSizeHint() const;
+	virtual QSize sizeHint() const override;
+	virtual QSize minimumSizeHint() const override;
 
 	double desktopAspectRatio();
 	QSize desktopSize();
@@ -75,11 +75,11 @@ signals:
 protected:
 	void init(bool setVideoLayerAttributes);
 
-	virtual void resizeEvent(QResizeEvent *e);
+	virtual void resizeEvent(QResizeEvent *e) override;
 
-	virtual void mouseReleaseEvent(QMouseEvent *e);
-	virtual void mouseDoubleClickEvent(QMouseEvent *e);
-	virtual void wheelEvent(QWheelEvent *e);
+	virtual void mouseReleaseEvent(QMouseEvent *e) override;
+	virtual void mouseDoubleClickEvent(QMouseEvent *e) override;
+	virtual void wheelEvent(QWheelEvent *e) override;
 
 protected:
 	QWidget *m_videoLayer;

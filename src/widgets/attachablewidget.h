@@ -41,7 +41,7 @@ public:
 	bool isAnimated() const;
 	int animStepDuration() const;
 
-	virtual bool eventFilter(QObject *object, QEvent *event);
+	virtual bool eventFilter(QObject *object, QEvent *event) override;
 
 public slots:
 	void attach(QWidget *target);
@@ -52,7 +52,7 @@ public slots:
 	void toggleVisible(bool visible);
 
 protected:
-	virtual void timerEvent(QTimerEvent *event);
+	virtual void timerEvent(QTimerEvent *event) override;
 
 private:
 	void toggleVisible(bool visible, bool force);

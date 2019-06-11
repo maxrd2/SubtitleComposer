@@ -72,7 +72,7 @@ protected:
 	int findStream(int streamType, int streamIndex, bool imageSub);
 	void processAudio();
 	void processText();
-    virtual void run() Q_DECL_OVERRIDE;
+    virtual void run() override;
 
 private:
 	bool m_opened;

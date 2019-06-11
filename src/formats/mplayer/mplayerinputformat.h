@@ -31,7 +31,7 @@ class MPlayerInputFormat : public InputFormat
 	friend class FormatManager;
 
 protected:
-	virtual bool parseSubtitles(Subtitle &subtitle, const QString &data) const
+	virtual bool parseSubtitles(Subtitle &subtitle, const QString &data) const override
 	{
 		double framesPerSecond = subtitle.framesPerSecond();
 

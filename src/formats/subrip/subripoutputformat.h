@@ -30,7 +30,7 @@ class SubRipOutputFormat : public OutputFormat
 	friend class FormatManager;
 
 protected:
-	virtual QString dumpSubtitles(const Subtitle &subtitle, bool primary) const
+	virtual QString dumpSubtitles(const Subtitle &subtitle, bool primary) const override
 	{
 		QString ret;
 

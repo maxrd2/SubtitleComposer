@@ -36,7 +36,7 @@ public:
 	ClearErrorsDialog(QWidget *parent = 0);
 
 protected:
-	virtual void setTranslationMode(bool value);
+	virtual void setTranslationMode(bool value) override;
 };
 }
 #endif

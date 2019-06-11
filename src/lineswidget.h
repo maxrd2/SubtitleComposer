@@ -56,15 +56,15 @@ public:
 	SubtitleLine * playingLine() const;
 	void setPlayingLine(SubtitleLine *line);
 
-	virtual int rowCount(const QModelIndex &parent = QModelIndex()) const;
-	virtual int columnCount(const QModelIndex &parent = QModelIndex()) const;
+	virtual int rowCount(const QModelIndex &parent = QModelIndex()) const override;
+	virtual int columnCount(const QModelIndex &parent = QModelIndex()) const override;
 
-	virtual Qt::ItemFlags flags(const QModelIndex &index) const;
+	virtual Qt::ItemFlags flags(const QModelIndex &index) const override;
 
-	virtual QVariant headerData(int section, Qt::Orientation orientation, int role = Qt::DisplayRole) const;
+	virtual QVariant headerData(int section, Qt::Orientation orientation, int role = Qt::DisplayRole) const override;
 
-	virtual QVariant data(const QModelIndex &index, int role) const;
-	virtual bool setData(const QModelIndex &index, const QVariant &value, int role = Qt::EditRole);
+	virtual QVariant data(const QModelIndex &index, int role) const override;
+	virtual bool setData(const QModelIndex &index, const QVariant &value, int role = Qt::EditRole) override;
 
 private slots:
 	void onLinesInserted(int firstIndex, int lastIndex);
@@ -116,7 +116,7 @@ public:
 
 	void updateStyle();
 
-	virtual QString displayText(const QVariant &value, const QLocale &locale) const;
+	virtual QString displayText(const QVariant &value, const QLocale &locale) const override;
 
 	static const QIcon & markIcon();
 	static const QIcon & errorIcon();
@@ -126,9 +126,9 @@ public:
 	static const QPixmap & errorPixmap();
 
 protected:
-	virtual bool eventFilter(QObject *object, QEvent *event);
+	virtual bool eventFilter(QObject *object, QEvent *event) override;
 
-	virtual void paint(QPainter *painter, const QStyleOptionViewItem &option, const QModelIndex &index) const;
+	virtual void paint(QPainter *painter, const QStyleOptionViewItem &option, const QModelIndex &index) const override;
 
 	void drawBackgroundPrimitive(QPainter *painter, const QStyle *style, const QStyleOptionViewItem &option) const;
 
@@ -164,7 +164,7 @@ public:
 	void loadConfig();
 	void saveConfig();
 
-	virtual bool eventFilter(QObject *object, QEvent *event);
+	virtual bool eventFilter(QObject *object, QEvent *event) override;
 
 public slots:
 	void setSubtitle(Subtitle *subtitle = 0);
@@ -180,22 +180,22 @@ signals:
 	void lineDoubleClicked(SubtitleLine *line);
 
 protected slots:
-	virtual void closeEditor(QWidget *editor, QAbstractItemDelegate::EndEditHint hint);
+	virtual void closeEditor(QWidget *editor, QAbstractItemDelegate::EndEditHint hint) override;
 
-	virtual void rowsAboutToBeRemoved(const QModelIndex &parent, int start, int end);
-	virtual void rowsInserted(const QModelIndex &parent, int start, int end);
+	virtual void rowsAboutToBeRemoved(const QModelIndex &parent, int start, int end) override;
+	virtual void rowsInserted(const QModelIndex &parent, int start, int end) override;
 
 protected:
 	void changeEvent(QEvent *event) override;
 
 private:
-	virtual void contextMenuEvent(QContextMenuEvent *e);
-	virtual void mouseDoubleClickEvent(QMouseEvent *e);
+	virtual void contextMenuEvent(QContextMenuEvent *e) override;
+	virtual void mouseDoubleClickEvent(QMouseEvent *e) override;
 
 	static void drawHorizontalDotLine(QPainter *painter, int x1, int x2, int y);
 	static void drawVerticalDotLine(QPainter *painter, int x, int y1, int y2);
 
-	virtual void drawRow(QPainter *painter, const QStyleOptionViewItem &option, const QModelIndex &index) const;
+	virtual void drawRow(QPainter *painter, const QStyleOptionViewItem &option, const QModelIndex &index) const override;
 
 private slots:
 	void onCurrentRowChanged();

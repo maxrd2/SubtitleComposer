@@ -47,7 +47,7 @@ public:
 	QString currentScriptName() const;
 	QStringList scriptNames() const;
 
-	virtual bool eventFilter(QObject *object, QEvent *event);
+	virtual bool eventFilter(QObject *object, QEvent *event) override;
 
 public slots:
 	void setSubtitle(Subtitle *subtitle = 0);

@@ -48,30 +48,30 @@ public:
 	PhononPlayerBackend();
 	virtual ~PhononPlayerBackend();
 
-	QWidget * newConfigWidget(QWidget *parent) Q_DECL_OVERRIDE;
+	QWidget * newConfigWidget(QWidget *parent) override;
 
 protected:
-	bool doesVolumeCorrection() const Q_DECL_OVERRIDE;
+	bool doesVolumeCorrection() const override;
 
-	bool initialize(VideoWidget *videoWidget) Q_DECL_OVERRIDE;
-	void finalize() Q_DECL_OVERRIDE;
+	bool initialize(VideoWidget *videoWidget) override;
+	void finalize() override;
 	void _finalize();
-	bool reconfigure() Q_DECL_OVERRIDE;
+	bool reconfigure() override;
 
-	bool openFile(const QString &filePath, bool &playingAfterCall) Q_DECL_OVERRIDE;
-	void closeFile() Q_DECL_OVERRIDE;
+	bool openFile(const QString &filePath, bool &playingAfterCall) override;
+	void closeFile() override;
 
-	bool play() Q_DECL_OVERRIDE;
-	bool pause() Q_DECL_OVERRIDE;
-	bool seek(double seconds, bool accurate) Q_DECL_OVERRIDE;
-	bool step(int /*frameOffset*/) Q_DECL_OVERRIDE { return false; }
-	bool stop() Q_DECL_OVERRIDE;
+	bool play() override;
+	bool pause() override;
+	bool seek(double seconds, bool accurate) override;
+	bool step(int /*frameOffset*/) override { return false; }
+	bool stop() override;
 
-	void playbackRate(double /*newRate*/) Q_DECL_OVERRIDE {}
+	void playbackRate(double /*newRate*/) override {}
 
-	bool setActiveAudioStream(int audioStream) Q_DECL_OVERRIDE;
+	bool setActiveAudioStream(int audioStream) override;
 
-	bool setVolume(double volume) Q_DECL_OVERRIDE;
+	bool setVolume(double volume) override;
 
 protected:
 	void initMediaObject();
@@ -86,7 +86,7 @@ protected slots:
 	void onStateChanged(Phonon::State newState, Phonon::State oldState);
 
 private:
-	void setSCConfig(SCConfig *scConfig) Q_DECL_OVERRIDE;
+	void setSCConfig(SCConfig *scConfig) override;
 
 protected:
 	Phonon::MediaObject *m_mediaObject;

@@ -59,7 +59,7 @@ public:
 	virtual QAction * action(int action) const;
 	virtual QList<QAction *> actions() const;
 
-	virtual bool event(QEvent *event);
+	virtual bool event(QEvent *event) override;
 
 public slots:
 	SubtitleComposer::SString richText();
@@ -88,9 +88,9 @@ public slots:
 protected:
 	QMenu * createContextMenu(const QPoint &mousePos);
 
-	virtual void contextMenuEvent(QContextMenuEvent *event);
+	virtual void contextMenuEvent(QContextMenuEvent *event) override;
 
-	virtual void keyPressEvent(QKeyEvent *event);
+	virtual void keyPressEvent(QKeyEvent *event) override;
 
 	void setupWordUnderPositionCursor(const QPoint &globalPos);
 

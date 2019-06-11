@@ -49,9 +49,9 @@ public:
 	int outlineWidth() const;
 	QColor outlineColor() const;
 
-	virtual QSize minimumSizeHint() const;
+	virtual QSize minimumSizeHint() const override;
 
-	virtual bool eventFilter(QObject *object, QEvent *event);
+	virtual bool eventFilter(QObject *object, QEvent *event) override;
 
 public slots:
 	void setText(const QString &text);
@@ -66,8 +66,8 @@ public slots:
 	void setAntialias(bool antialias);
 
 protected:
-	virtual void customEvent(QEvent *event);
-	virtual void paintEvent(QPaintEvent *event);
+	virtual void customEvent(QEvent *event) override;
+	virtual void paintEvent(QPaintEvent *event) override;
 
 	void setDirty(bool updateRichText, bool updateTransColor, bool flickerless = false);
 

@@ -42,7 +42,7 @@ public slots:
 	virtual void setMouseTracking(bool enable);
 
 protected:
-	virtual void resizeEvent(QResizeEvent *e);
+	virtual void resizeEvent(QResizeEvent *e) override;
 
 private:
 	QList<QObject *> m_ignoredWidgets;
