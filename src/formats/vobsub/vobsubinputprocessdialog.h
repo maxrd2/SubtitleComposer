@@ -51,7 +51,7 @@ public:
 	bool symFileOpen(const QString &filename);
 	bool symFileSave(const QString &filename);
 
-	virtual bool eventFilter(QObject *obj, QEvent *event) override;
+	bool eventFilter(QObject *obj, QEvent *event) override;
 
 	void processFrames(StreamProcessor *streamProcessor);
 

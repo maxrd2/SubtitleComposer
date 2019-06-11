@@ -102,7 +102,7 @@ protected:
 		return data.mid(begin, end - begin + 1) + QStringLiteral("\n\n");
 	}
 
-	virtual QString dumpSubtitles(const Subtitle &subtitle, bool primary) const override
+	QString dumpSubtitles(const Subtitle &subtitle, bool primary) const override
 	{
 		FormatData *formatData = this->formatData(subtitle);
 

@@ -30,7 +30,7 @@ class SubViewer1OutputFormat : public OutputFormat
 	friend class FormatManager;
 
 protected:
-	virtual QString dumpSubtitles(const Subtitle &subtitle, bool primary) const override
+	QString dumpSubtitles(const Subtitle &subtitle, bool primary) const override
 	{
 		QString ret(QStringLiteral("[TITLE]\n\n[AUTHOR]\n\n[SOURCE]\n\n[PRG]\n\n[FILEPATH]\n\n[DELAY]\n0\n[CD TRACK]\n0\n[BEGIN]\n" "******** START SCRIPT ********\n"));
 

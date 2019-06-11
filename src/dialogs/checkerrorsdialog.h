@@ -37,7 +37,7 @@ public:
 	bool clearMarks() const;
 
 protected:
-	virtual void setTranslationMode(bool value) override;
+	void setTranslationMode(bool value) override;
 
 private:
 	QCheckBox *m_clearOtherErrorsCheckBox;

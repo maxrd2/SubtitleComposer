@@ -39,10 +39,10 @@ public:
 	void setWidgetMode(QWidget *widget, Mode mode);
 
 public slots:
-	virtual void setMouseTracking(bool enable);
+	void setMouseTracking(bool enable);
 
 protected:
-	virtual void resizeEvent(QResizeEvent *e) override;
+	void resizeEvent(QResizeEvent *e) override;
 
 private:
 	QList<QObject *> m_ignoredWidgets;

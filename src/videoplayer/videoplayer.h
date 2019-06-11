@@ -57,7 +57,7 @@ public:
 	 * @param prefBackendName
 	 * @return false if there was already an initialized backend or none could be initialized; true otherwise
 	 */
-	virtual bool initialize(QWidget *widgetParent, const QString &prefBackendName = QString());
+	bool initialize(QWidget *widgetParent, const QString &prefBackendName = QString());
 
 	/**
 	 * @brief reinitialize - finalizes the active backend and attempts to initialize the one defined by
@@ -66,18 +66,18 @@ public:
 	 * @param prefBackendName
 	 * @return false if there was no initialized backend or none could be initialized; true otherwise
 	 */
-	virtual bool reinitialize(const QString &prefBackendName = QString());
+	bool reinitialize(const QString &prefBackendName = QString());
 
 	/**
 	 * @brief finalize - finalizes the active backend
 	 */
-	virtual void finalize();
+	void finalize();
 
 	/**
 	 * @brief reconfigure - re-read active backend configuration
 	 * @return false if there is no active backend or if error occured
 	 */
-	virtual bool reconfigure();
+	bool reconfigure();
 
 	/**
 	 * @brief dummyBackendName - players should provide a dummy backend (one that implements its
@@ -85,7 +85,7 @@ public:
 	 *  supported backends.
 	 * @return
 	 */
-	virtual QString dummyBackendName() const { return QStringLiteral("Dummy"); }
+	QString dummyBackendName() const { return QStringLiteral("Dummy"); }
 
 	QString activeBackendName() const;
 	QStringList backendNames() const;
@@ -193,14 +193,14 @@ private:
 	 * @param widgetParent
 	 * @return true if backend is the active backend after the call; false if there was already another backend initialized
 	 */
-	virtual bool backendInitialize(PlayerBackend *backend, QWidget *widgetParent);
+	bool backendInitialize(PlayerBackend *backend, QWidget *widgetParent);
 
 	/**
 	 * @brief finalizeBackend - finalizes the active backend, leaving no active backend.
 	 * @param backend
 	 * returns??? the previously initialized backend (or NULL if there was none)
 	 */
-	virtual void backendFinalize(PlayerBackend *backend);
+	void backendFinalize(PlayerBackend *backend);
 
 	PlayerBackend * backendLoad(const QString &pluginPath);
 

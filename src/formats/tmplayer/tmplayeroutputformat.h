@@ -30,7 +30,7 @@ class TMPlayerOutputFormat : public OutputFormat
 	friend class FormatManager;
 
 protected:
-	virtual QString dumpSubtitles(const Subtitle &subtitle, bool primary) const override
+	QString dumpSubtitles(const Subtitle &subtitle, bool primary) const override
 	{
 		QString builder;
 		QString ret;

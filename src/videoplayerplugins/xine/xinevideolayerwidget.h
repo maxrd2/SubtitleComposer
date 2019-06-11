@@ -46,9 +46,9 @@ signals:
 	void geometryChanged();
 
 protected:
-	virtual void paintEvent(QPaintEvent *event) override;
-	virtual void resizeEvent(QResizeEvent *event) override;
-	virtual void moveEvent(QMoveEvent *event) override;
+	void paintEvent(QPaintEvent *event) override;
+	void resizeEvent(QResizeEvent *event) override;
+	void moveEvent(QMoveEvent *event) override;
 
 protected:
 	xine_video_port_t *m_videoDriver;

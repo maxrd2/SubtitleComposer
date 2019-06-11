@@ -60,8 +60,8 @@ public:
 	UndoAction(DirtyMode dirtyMode, Subtitle *subtitle=nullptr, const QString &desc=QString());
 	virtual ~UndoAction();
 
-	virtual void redo() override = 0;
-	virtual void undo() override;
+	void redo() override = 0;
+	void undo() override;
 
 private:
 	const DirtyMode m_dirtyMode;

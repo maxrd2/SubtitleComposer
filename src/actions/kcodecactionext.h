@@ -39,7 +39,7 @@ public:
 	bool setCurrentAutoDetectScript(KEncodingProber::ProberType);
 
 protected Q_SLOTS:
-	virtual void actionTriggered(QAction *) override;
+	void actionTriggered(QAction *) override;
 
 private:
 	void init(bool showDefault);

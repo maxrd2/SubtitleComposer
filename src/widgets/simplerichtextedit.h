@@ -56,10 +56,10 @@ public:
 	bool fontBold();
 	bool fontStrikeOut();
 
-	virtual QAction * action(int action) const;
-	virtual QList<QAction *> actions() const;
+	QAction * action(int action) const;
+	QList<QAction *> actions() const;
 
-	virtual bool event(QEvent *event) override;
+	bool event(QEvent *event) override;
 
 public slots:
 	SubtitleComposer::SString richText();
@@ -88,9 +88,9 @@ public slots:
 protected:
 	QMenu * createContextMenu(const QPoint &mousePos);
 
-	virtual void contextMenuEvent(QContextMenuEvent *event) override;
+	void contextMenuEvent(QContextMenuEvent *event) override;
 
-	virtual void keyPressEvent(QKeyEvent *event) override;
+	void keyPressEvent(QKeyEvent *event) override;
 
 	void setupWordUnderPositionCursor(const QPoint &globalPos);
 

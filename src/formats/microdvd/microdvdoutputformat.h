@@ -34,7 +34,7 @@ public:
 
 protected:
 
-	virtual QString dumpSubtitles(const Subtitle &subtitle, bool primary) const override
+	QString dumpSubtitles(const Subtitle &subtitle, bool primary) const override
 	{
 		QString ret;
 

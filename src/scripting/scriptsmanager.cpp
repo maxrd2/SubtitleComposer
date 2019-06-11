@@ -60,14 +60,14 @@ public:
 
 	virtual ~InstalledScriptsModel() {}
 
-	virtual QVariant headerData(int /*section */, Qt::Orientation orientation, int role) const override
+	QVariant headerData(int /*section */, Qt::Orientation orientation, int role) const override
 	{
 		if(role != Qt::DisplayRole || orientation == Qt::Vertical)
 			return QVariant();
 		return i18n("Installed Scripts");
 	}
 
-	virtual Qt::ItemFlags flags(const QModelIndex &index) const override
+	Qt::ItemFlags flags(const QModelIndex &index) const override
 	{
 		return QAbstractItemModel::flags(index);
 	}

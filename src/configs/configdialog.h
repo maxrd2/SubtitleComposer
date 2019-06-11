@@ -38,10 +38,10 @@ public slots:
 	void widgetChanged();
 
 public:
-	virtual void updateSettings() override;
+	void updateSettings() override;
 
 protected:
-	virtual bool hasChanged() override;
+	bool hasChanged() override;
 
 private:
 	bool m_hasWidgetChanged;

@@ -36,7 +36,7 @@ public:
 
 	int value() const;
 
-	virtual void stepBy(int steps) override;
+	void stepBy(int steps) override;
 
 public slots:
 	void setMSecsStep(int msecs);
@@ -50,8 +50,8 @@ protected slots:
 	void onTimeChanged(const QTime &time);
 
 protected:
-	virtual StepEnabled stepEnabled() const override;
-	virtual void keyPressEvent(QKeyEvent *event) override;
+	StepEnabled stepEnabled() const override;
+	void keyPressEvent(QKeyEvent *event) override;
 
 private:
 	int m_secsStep;

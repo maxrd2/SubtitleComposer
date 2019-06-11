@@ -38,7 +38,7 @@ public:
 
 	Time shiftTime() const;
 
-	virtual void show() override;
+	void show() override;
 
 private slots:
 	void setShiftTimeFromVideo();

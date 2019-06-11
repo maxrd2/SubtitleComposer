@@ -31,7 +31,7 @@ class SubRipInputFormat : public InputFormat
 	friend class FormatManager;
 
 protected:
-	virtual bool parseSubtitles(Subtitle &subtitle, const QString &data) const override
+	bool parseSubtitles(Subtitle &subtitle, const QString &data) const override
 	{
 		if(m_regExp.indexIn(data, 0) == -1)
 			return false; // couldn't find first line

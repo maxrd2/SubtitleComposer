@@ -66,7 +66,7 @@ public:
 	void setFindBackwards(bool value) { m_findBackwards->setChecked(value); }
 
 protected:
-	virtual void setTranslationMode(bool value) override
+	void setTranslationMode(bool value) override
 	{
 		ActionWithErrorTargetsDialog::setTranslationMode(value);
 		createErrorsButtons(true, value);

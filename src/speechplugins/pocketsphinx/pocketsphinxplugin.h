@@ -37,15 +37,15 @@ public:
 	PocketSphinxPlugin();
 
 private:
-	virtual const QString & name() override;
+	const QString & name() override;
 
-	virtual bool init() override;
-	virtual void cleanup() override;
+	bool init() override;
+	void cleanup() override;
 
-	virtual void processSamples(const qint16 *sampleData, qint32 sampleCount) override;
-	virtual void processComplete() override;
+	void processSamples(const qint16 *sampleData, qint32 sampleCount) override;
+	void processComplete() override;
 
-	virtual void setSCConfig(SCConfig *scConfig) override;
+	void setSCConfig(SCConfig *scConfig) override;
 
 	void processUtterance();
 

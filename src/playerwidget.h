@@ -60,7 +60,7 @@ public:
 
 	void plugActions();
 
-	virtual bool eventFilter(QObject *object, QEvent *event) override;
+	bool eventFilter(QObject *object, QEvent *event) override;
 
 	QWidget *infoSidebarWidget();
 
@@ -78,7 +78,7 @@ signals:
 	void playingLineChanged(SubtitleLine *line);
 
 protected:
-	virtual void timerEvent(QTimerEvent *event) override;
+	void timerEvent(QTimerEvent *event) override;
 
 private:
 	static QToolButton * toolButton(QWidget *parent, const char *name);

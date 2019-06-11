@@ -54,8 +54,8 @@ public:
 	 */
 	void setVideoResolution(int width, int height, double dar = 0.0);
 
-	virtual QSize sizeHint() const override;
-	virtual QSize minimumSizeHint() const override;
+	QSize sizeHint() const override;
+	QSize minimumSizeHint() const override;
 
 	double desktopAspectRatio();
 	QSize desktopSize();
@@ -63,7 +63,7 @@ public:
 	void updateVideoLayerGeometry();
 
 public slots:
-	virtual void setMouseTracking(bool enable);
+	void setMouseTracking(bool enable);
 
 signals:
 	void doubleClicked(const QPoint &point);
@@ -75,11 +75,11 @@ signals:
 protected:
 	void init(bool setVideoLayerAttributes);
 
-	virtual void resizeEvent(QResizeEvent *e) override;
+	void resizeEvent(QResizeEvent *e) override;
 
-	virtual void mouseReleaseEvent(QMouseEvent *e) override;
-	virtual void mouseDoubleClickEvent(QMouseEvent *e) override;
-	virtual void wheelEvent(QWheelEvent *e) override;
+	void mouseReleaseEvent(QMouseEvent *e) override;
+	void mouseDoubleClickEvent(QMouseEvent *e) override;
+	void wheelEvent(QWheelEvent *e) override;
 
 protected:
 	QWidget *m_videoLayer;
