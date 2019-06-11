@@ -280,24 +280,14 @@ StreamProcessor::initAudio(int streamIndex, const WaveFormat &waveFormat)
 	}
 
 	// figure channel layout or update stream format
+	if(!m_codecCtx->channel_layout)
+		m_codecCtx->channel_layout = av_get_default_channel_layout(m_codecCtx->channels);;
+
 	if(m_audioStreamFormat.channels() == 0) {
 		m_audioStreamFormat.setChannels(m_codecCtx->channels);
 		m_audioChannelLayout = m_codecCtx->channel_layout;
 	} else {
-		switch(m_audioStreamFormat.channels()) {
-		case 1: m_audioChannelLayout = AV_CH_LAYOUT_MONO; break;
-		case 2: m_audioChannelLayout = AV_CH_LAYOUT_STEREO; break;
-		case 3: m_audioChannelLayout = AV_CH_LAYOUT_2POINT1; break;
-		case 4: m_audioChannelLayout = AV_CH_LAYOUT_4POINT0; break;
-		case 5: m_audioChannelLayout = AV_CH_LAYOUT_4POINT1; break;
-		case 6: m_audioChannelLayout = AV_CH_LAYOUT_6POINT0; break;
-		case 7: m_audioChannelLayout = AV_CH_LAYOUT_7POINT0; break;
-		case 8: m_audioChannelLayout = AV_CH_LAYOUT_7POINT1; break;
-		default:
-			qWarning() << "Invalid wave format requested:" << m_audioStreamFormat.channels() << "channels";
-			emit streamError(AVERROR_BUG, QStringLiteral("Invalid wave format requested"), QString::number(m_audioStreamFormat.channels()) + QStringLiteral(" channels"));
-			return false;
-		}
+		m_audioChannelLayout = av_get_default_channel_layout(m_audioStreamFormat.channels());
 	}
 
 	// setup resampler if needed
@@ -306,19 +296,20 @@ StreamProcessor::initAudio(int streamIndex, const WaveFormat &waveFormat)
 	const bool convSampleFormat = m_codecCtx->sample_fmt != m_audioSampleFormat;
 	if(convChannels || convSampleRate || convSampleFormat) {
 		m_swResample = swr_alloc();
-		if(convChannels) {
-			av_opt_set_channel_layout(m_swResample, "in_channel_layout", m_codecCtx->channel_layout, 0);
-			av_opt_set_channel_layout(m_swResample, "out_channel_layout", m_audioChannelLayout, 0);
+		av_opt_set_channel_layout(m_swResample, "in_channel_layout", m_codecCtx->channel_layout, 0);
+		av_opt_set_channel_layout(m_swResample, "out_channel_layout", m_audioChannelLayout, 0);
+		av_opt_set_int(m_swResample, "in_sample_rate", m_codecCtx->sample_rate, 0);
+		av_opt_set_int(m_swResample, "out_sample_rate", m_audioStreamFormat.sampleRate(), 0);
+		av_opt_set_sample_fmt(m_swResample, "in_sample_fmt", m_codecCtx->sample_fmt, 0);
+		av_opt_set_sample_fmt(m_swResample, "out_sample_fmt", static_cast<AVSampleFormat>(m_audioSampleFormat), 0);
+		int ret = swr_init(m_swResample);
+		if(ret) {
+			char errorText[1024];
+			av_strerror(ret, errorText, sizeof(errorText));
+			qWarning() << "Error intializing resampler:" << errorText;
+			emit streamError(ret, QStringLiteral("Error decoding audio frame"), QString::fromUtf8(errorText));
+			return false;
 		}
-		if(convSampleRate) {
-			av_opt_set_int(m_swResample, "in_sample_rate", m_codecCtx->sample_rate, 0);
-			av_opt_set_int(m_swResample, "out_sample_rate", m_audioStreamFormat.sampleRate(), 0);
-		}
-		if(convSampleFormat) {
-			av_opt_set_sample_fmt(m_swResample, "in_sample_fmt", m_codecCtx->sample_fmt, 0);
-			av_opt_set_sample_fmt(m_swResample, "out_sample_fmt", static_cast<AVSampleFormat>(m_audioSampleFormat), 0);
-		}
-		swr_init(m_swResample);
 	}
 
 	return true;
