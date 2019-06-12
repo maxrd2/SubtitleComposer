@@ -161,8 +161,13 @@ protected:
 	}
 
 	VobSubInputFormat()
-		: InputFormat(QStringLiteral("VobSub"),
-		  QStringList(QStringLiteral("idx")))
+		: InputFormat(QStringLiteral("DVD/BluRay Subpicture"), QStringList{
+					  QStringLiteral("idx"),
+					  QStringLiteral("sup"),
+					  QStringLiteral("m2ts"),
+					  QStringLiteral("vob"),
+					  QStringLiteral("mkv"),
+					  QStringLiteral("mp4")})
 	{}
 
 	QUrl m_url;

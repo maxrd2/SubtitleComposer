@@ -95,7 +95,7 @@
 			<match type="string" value="xx\:xx\:xx=" mask="0x0000ff0000ff0000ff" offset="0"/>
 			<match type="string" value="xx\:xx\:xx\,1=" mask="0x0000ff0000ff0000ffffff" offset="0">
 				<match type="string" value="xx\:xx\:xx\,2=" mask="0x0000ff0000ff0000ffffff" offset="9:256"/>
-			 </match>
+			</match>
 		</magic>
 		<glob pattern="*.sub"/>
 	</mime-type>
@@ -118,5 +118,15 @@
 			<match type="string" value="SubtitleComposer Symbol Matrix v1.0" offset="0"/>
 		</magic>
 		<glob pattern="*.sym"/>
+	</mime-type>
+	
+	<mime-type type="subpicture/x-pgs">
+		<comment>PGS subtitles</comment>
+		<sub-class-of type="application/octet-stream"/>
+		<generic-icon name="text-x-generic"/>
+		<magic priority="50">
+			<match type="big32" value="0x50470000" mask="0xffffff00" offset="0"/>
+		</magic>
+		<glob pattern="*.sup"/>
 	</mime-type>
 </mime-info>
