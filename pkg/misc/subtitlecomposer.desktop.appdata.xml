@@ -6,17 +6,22 @@
 	<name>Subtitle Composer</name>
 	<summary>Video subtitle editor that supports basic and advanced editing operations.</summary>
 	<description>
-		<p>Subtitle Composer is an open source text subtitle editor that supports basic and advanced editing operations. It
-			supports:</p>
+		<p>An open source text-based subtitle editor that supports basic and advanced editing operations, aiming to become an improved version of Subtitle Workshop for every platform supported by Plasma Frameworks.</p>
+		<p>Features</p>
 		<ul>
-			<li>Loading and saving of multiple text subtitle formats - SubRip/SRT, MicroDVD, SSA/ASS, MPlayer, TMPlayer and YouTube captions
-			<li>Importing image subtitle formats - VobSub, DVD/Vob, DVB, XSUB, HDMV-PGS
+			<li>Open/Save Text Subtitle Formats - SubRip/SRT, MicroDVD, SSA/ASS, MPlayer, TMPlayer and YouTube captions
+			<li>Open/OCR Graphics Subtitle Formats - VobSub (.idx/.sub/.rar), BluRay/PGS (*.sup), formats supported by ffmpeg (DVD/Vob, DVB, XSUB, HDMV-PGS)
+			<li>Demux Graphics/Text Subtitle Stream from video file - SRT, SSA/ASS, MOV text, MicroDVD, DVD/Vob, DVB, XSUB, HDMV-PGS
 			<li>Speech recognition from audio/video file using PocketSphinx
-			<li>Live preview of subtitles in integrated video player
-			<li>Preview/editing of subtitles on graphical audio waveform
-			<li>Quick and easy subtitle sync by dragging one or more text lines to correct position
-			<li>Time shifting and scaling, lines duration re-calculation, framerate conversion, etc.
-			<li>Joining and splitting of subtitle files
+			<li>Smart language/text encoding** detection
+			<li>Live preview of subtitles in integrated video player w/ audio stream selection
+			<li>Preview/editing of subtitles on graphical audio waveform w/ audio stream selection
+			<li>Quick and easy subtitle sync:
+				<ul>
+					<li>Dragging several anchors/graftpoints and stretching timeline
+					<li>Time shifting and scaling, lines duration re-calculation, framerate conversion, etc.
+					<li>Joining and splitting of subtitle files
+				</ul>
 			<li>Side by side subtitle translations
 			<li>Text styles (italic, bold, underline, stroke, color)
 			<li>Spell checking

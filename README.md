@@ -1,4 +1,4 @@
-## SubtitleComposer [![TravisCI build](https://travis-ci.org/maxrd2/subtitlecomposer.svg?branch=master)](https://travis-ci.org/maxrd2/subtitlecomposer)
+## Subtitle Composer [![TravisCI build](https://travis-ci.org/maxrd2/subtitlecomposer.svg?branch=master)](https://travis-ci.org/maxrd2/subtitlecomposer)
 
 An open source text-based subtitle editor that supports basic and advanced editing operations, aiming to become an improved version of Subtitle Workshop for every platform supported by Plasma Frameworks.
 
@@ -6,12 +6,12 @@ An open source text-based subtitle editor that supports basic and advanced editi
   - Open/Save **Text Subtitle Formats**
     - SubRip/SRT, MicroDVD, SSA/ASS, MPlayer, TMPlayer and YouTube captions
   - Open/OCR **Graphics Subtitle Formats**
-    - VobSub (.idx/.sub/.rar), formats supported by ffmpeg (DVD/Vob, DVB, XSUB, HDMV-PGS)
-  - **Demux/OCR/Import** Graphics/Text Subtitle Formats directly **from video**
+    - VobSub (.idx/.sub/.rar), BluRay/PGS (*.sup), formats supported by ffmpeg (DVD/Vob, DVB, XSUB, HDMV-PGS)
+  - **Demux Graphics/Text Subtitle Stream** from video file
     - SRT, SSA/ASS, MOV text, MicroDVD, Graphic formats supported by ffmpeg (DVD/Vob, DVB, XSUB, HDMV-PGS)
   - **Speech Recognition** from audio/video file using PocketSphinx
   - Smart **language/text encoding** detection
-  - Live preview of subtitles in **integrated video player** (GStreamer, MPlayer, MPV, Xine, Phonon) w/ audio stream selection
+  - Live preview of subtitles in **integrated video player** (MPV, GStreamer, MPlayer, Xine, Phonon) w/ audio stream selection
   - Preview/editing of subtitles on **audio waveform** w/ audio stream selection
   - Quick and **easy subtitle sync**:
     - Dragging several anchors/graftpoints and stretching timeline
