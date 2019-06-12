@@ -28,6 +28,7 @@
 #include <QVBoxLayout>
 #include <QPushButton>
 #include <QDialogButtonBox>
+#include <QStringBuilder>
 
 #include <KLocalizedString>
 
@@ -83,18 +84,20 @@ OpenSubtitleDialog::inputFormatsFilter()
 	if(filter.isEmpty()) {
 		QString allSupported;
 		QStringList formats = FormatManager::instance().inputNames();
-		for(QStringList::ConstIterator it = formats.begin(), end = formats.end(); it != end; ++it) {
-			const InputFormat *format = FormatManager::instance().input(*it);
-			const QStringList &formatExtensions = format->extensions();
+		for(const QString &fmt : formats) {
+			const InputFormat *format = FormatManager::instance().input(fmt);
 			QString extensions;
-			for(QStringList::ConstIterator extIt = formatExtensions.begin(), extEnd = formatExtensions.end(); extIt != extEnd; ++extIt)
-				extensions += "*." + *extIt + " *." + (*extIt).toUpper();
-			allSupported += ' ' + extensions;
-			filter += '\n' + extensions + '|' + format->name();
+			for(const QString &ext : format->extensions())
+				extensions += QStringLiteral(" *.") % ext % QStringLiteral(" *.") % ext.toUpper();
+			allSupported += extensions;
+			QString name = format->name();
+			name.replace(QChar('/'), QStringLiteral("\\/"));
+			filter += QChar('\n') % extensions.midRef(1) % QChar('|') % name;
 		}
 
-		filter = allSupported + '|' + i18n("All Supported") + filter;
-		filter = filter.trimmed();
+		filter = allSupported.midRef(1) % QChar('|') % i18n("All Supported")
+				% filter
+				% QStringLiteral("\n*|") % i18n("All Files");
 	}
 
 	return filter;

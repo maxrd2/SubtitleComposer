@@ -139,7 +139,8 @@ FormatManager::hasInput(const QString &name) const
 const InputFormat *
 FormatManager::input(const QString &name) const
 {
-	return m_inputFormats.contains(name) ? m_inputFormats[name] : 0;
+	QMap<QString, InputFormat *>::const_iterator it = m_inputFormats.find(name);
+	return it != m_inputFormats.end() ? it.value() : nullptr;
 }
 
 QStringList

@@ -105,7 +105,7 @@
 #include <QUndoGroup>
 #include <QUndoStack>
 
-#define SC_VIDEO_EXTENSIONS "avi flv mkv mov mpg mpeg mp4 wmv ogm ogv rmvb ts vob webm divx"
+#define SC_VIDEO_EXTENSIONS "avi flv mkv mov mpg mpeg mp4 wmv ogm ogv rmvb ts vob webm divx m2ts"
 #define SC_AUDIO_EXTENSIONS "aac ac3 ape flac la m4a mac mp2 mp3 mp4 mp+ mpc mpp ofr oga ogg pac ra spx tta wav wma wv"
 
 using namespace SubtitleComposer;
@@ -405,17 +405,17 @@ Application::buildMediaFilesFilter()
 		QString videoExtensions;
 		const QStringList videoExts(QStringLiteral(SC_VIDEO_EXTENSIONS).split(' '));
 		foreach(const QString ext, videoExts)
-			videoExtensions += " *." % ext;
+			videoExtensions += QStringLiteral(" *.") % ext;
 
 		QString audioExtensions;
 		const QStringList audioExts(QStringLiteral(SC_AUDIO_EXTENSIONS).split(' '));
 		foreach(const QString ext, audioExts)
-			audioExtensions += " *." % ext;
+			audioExtensions += QStringLiteral(" *.") % ext;
 
-		filter = i18n("Media Files") % QStringLiteral(" (") % videoExtensions.midRef(1) % audioExtensions.midRef(1) % QStringLiteral(")\n")
+		filter = i18n("Media Files") % QStringLiteral(" (") % videoExtensions.midRef(1) % audioExtensions % QStringLiteral(")\n")
 			% i18n("Video Files") % QStringLiteral(" (") % videoExtensions.midRef(1) % QStringLiteral(")\n")
 			% i18n("Audio Files") % QStringLiteral(" (") % audioExtensions.midRef(1) % QStringLiteral(")\n")
-			% i18n("All Files") % QStringLiteral(" (*)") ;
+			% i18n("All Files") % QStringLiteral(" (*)");
 	}
 
 	return filter;
