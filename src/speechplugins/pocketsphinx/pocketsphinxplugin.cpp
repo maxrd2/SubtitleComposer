@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2010-2018 Mladen Milinkovic <max@smoothware.net>
+ * Copyright (C) 2010-2019 Mladen Milinkovic <max@smoothware.net>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -20,7 +20,8 @@
 #include "plugin-config.h"
 
 #include "pocketsphinxplugin.h"
-#include "scconfigdummy.h"
+#include "pocketsphinxconfigwidget.h"
+#include "pocketsphinxconfig.h"
 
 #include <pocketsphinx.h>
 
@@ -36,30 +37,35 @@ PocketSphinxPlugin::PocketSphinxPlugin()
 /*virtual*/ const QString &
 PocketSphinxPlugin::name()
 {
-	static const QString name(QStringLiteral("pocketsphinx"));
+	static const QString name(QStringLiteral("PocketSphinx"));
 	return name;
 }
 
 /*virtual*/ bool
 PocketSphinxPlugin::init()
 {
-	m_psConfig = cmd_ln_init(NULL, ps_args(), TRUE,
-				 "-hmm", POCKETSPHINX_MODELDIR "/en-us/en-us",
-				 "-lm", POCKETSPHINX_MODELDIR "/en-us/en-us.lm.bin",
-				 "-dict", POCKETSPHINX_MODELDIR "/en-us/cmudict-en-us.dict",
+	m_psConfig = cmd_ln_init(nullptr, ps_args(), true,
+				 "-hmm", QUrl(PocketSphinxConfig::acousticModelPath()).toLocalFile().toUtf8().constData(),
+				 "-lm", QUrl(PocketSphinxConfig::trigramModelFile()).toLocalFile().toUtf8().constData(),
+				 "-dict", QUrl(PocketSphinxConfig::lexiconFile()).toLocalFile().toUtf8().constData(),
 //				 "-frate", "100",
-				 "-vad_postspeech", "75", //  50 - Num of silence frames to keep after from speech to silence.
-				 "-vad_prespeech", "30", // 20 - Num of speech frames to keep before silence to speech.
-				 "-vad_startspeech", "10", // 10 - Num of speech frames to trigger vad from silence to speech.
-//				 "-vad_threshold", "2.0", // 2.0 - Threshold for decision between noise and silence frames. Log-ratio between signal level and noise level.
-				 NULL);
-	if(m_psConfig == NULL) {
+				 // Num of silence frames to keep after from speech to silence. (pocketsphinx default: 50)
+				 "-vad_postspeech", QByteArray::number(PocketSphinxConfig::vadPostSpeech()).constData(),
+				 // Num of speech frames to keep before silence to speech. (pocketsphinx default: 20)
+				 "-vad_prespeech", QByteArray::number(PocketSphinxConfig::vadPreSpeech()).constData(),
+				 // Num of speech frames to trigger vad from silence to speech. (pocketsphinx default: 10)
+				 "-vad_startspeech", QByteArray::number(PocketSphinxConfig::vadStartSpeech()).constData(),
+				 // Threshold for decision between noise and silence frames.
+				 // Log-ratio between signal level and noise level. (pocketsphinx default: 2.0)
+				 "-vad_threshold", QByteArray::number(PocketSphinxConfig::vadTreshold()).constData(),
+				 nullptr);
+	if(m_psConfig == nullptr) {
 		qWarning() << "Failed to create PocketSphinx config object";
 		return false;
 	}
 
 	m_psDecoder = ps_init(m_psConfig);
-	if(m_psDecoder == NULL) {
+	if(m_psDecoder == nullptr) {
 		qWarning() << "Failed to create PocketSphinx recognizer";
 		return false;
 	}
@@ -97,7 +103,7 @@ PocketSphinxPlugin::processUtterance()
 		return;
 
 	ps_seg_t *iter = ps_seg_iter(m_psDecoder);
-	while(iter != NULL) {
+	while(iter != nullptr) {
 		const char *word = ps_seg_word(iter);
 		int wordIn, wordOut;
 		ps_seg_frames(iter, &wordIn, &wordOut);
@@ -147,7 +153,7 @@ PocketSphinxPlugin::processSamples(const qint16 *sampleData, qint32 sampleCount)
 		m_speechStarted = false;
 	}
 
-	ps_process_raw(m_psDecoder, sampleData, sampleCount, FALSE, FALSE);
+	ps_process_raw(m_psDecoder, sampleData, sampleCount, false, false);
 
 	if(ps_get_in_speech(m_psDecoder)) {
 		m_speechStarted = true;
@@ -171,8 +177,14 @@ PocketSphinxPlugin::processComplete()
 	}
 }
 
-/*virtual*/ void
-PocketSphinxPlugin::setSCConfig(SCConfig *scConfig)
+QWidget *
+PocketSphinxPlugin::newConfigWidget(QWidget *parent)
 {
-	scConfigGlobalSet(scConfig);
+	return new PocketSphinxConfigWidget(parent);
+}
+
+KCoreConfigSkeleton *
+PocketSphinxPlugin::config() const
+{
+	return PocketSphinxConfig::self();
 }

@@ -1,0 +1,225 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>PocketSphinxConfigWidget</class>
+ <widget class="QWidget" name="PocketSphinxConfigWidget">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>377</width>
+    <height>478</height>
+   </rect>
+  </property>
+  <layout class="QVBoxLayout" name="verticalLayout">
+   <property name="sizeConstraint">
+    <enum>QLayout::SetMinimumSize</enum>
+   </property>
+   <item>
+    <widget class="QGroupBox" name="grpModel">
+     <property name="title">
+      <string>Speech Recognition Model</string>
+     </property>
+     <layout class="QGridLayout" name="gridLayout" columnstretch="1,2">
+      <item row="3" column="0" alignment="Qt::AlignRight|Qt::AlignVCenter">
+       <widget class="QLabel" name="label_lexiconFile">
+        <property name="toolTip">
+         <string>Main pronunciation dictionary (lexicon) input file</string>
+        </property>
+        <property name="text">
+         <string>Pronunciation Dictionary (Lexicon)</string>
+        </property>
+        <property name="buddy">
+         <cstring>kcfg_lexiconFile</cstring>
+        </property>
+       </widget>
+      </item>
+      <item row="2" column="0" alignment="Qt::AlignRight|Qt::AlignVCenter">
+       <widget class="QLabel" name="label_trigramModelFile">
+        <property name="toolTip">
+         <string>Word trigram language model input file</string>
+        </property>
+        <property name="text">
+         <string>Trigram Model</string>
+        </property>
+        <property name="buddy">
+         <cstring>kcfg_trigramModelFile</cstring>
+        </property>
+       </widget>
+      </item>
+      <item row="3" column="1">
+       <widget class="KUrlRequester" name="kcfg_lexiconFile"/>
+      </item>
+      <item row="1" column="1">
+       <widget class="KUrlRequester" name="kcfg_acousticModelPath">
+        <property name="mode">
+         <set>KFile::Directory|KFile::ExistingOnly|KFile::LocalOnly</set>
+        </property>
+       </widget>
+      </item>
+      <item row="2" column="1">
+       <widget class="KUrlRequester" name="kcfg_trigramModelFile"/>
+      </item>
+      <item row="1" column="0" alignment="Qt::AlignRight|Qt::AlignVCenter">
+       <widget class="QLabel" name="label_acousticModelPath">
+        <property name="toolTip">
+         <string>Directory containing acoustic model files</string>
+        </property>
+        <property name="text">
+         <string>Acoustic Model</string>
+        </property>
+        <property name="buddy">
+         <cstring>kcfg_acousticModelPath</cstring>
+        </property>
+       </widget>
+      </item>
+      <item row="4" column="0" colspan="2">
+       <widget class="QLabel" name="label_modelInfoText">
+        <property name="text">
+         <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;Acoustic and Language Models can be downloaded from &lt;a href=&quot;https://cmusphinx.github.io/wiki/download/&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#007af4;&quot;&gt;CMU Spinx&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+        </property>
+        <property name="textFormat">
+         <enum>Qt::RichText</enum>
+        </property>
+        <property name="wordWrap">
+         <bool>true</bool>
+        </property>
+        <property name="margin">
+         <number>5</number>
+        </property>
+        <property name="openExternalLinks">
+         <bool>true</bool>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </widget>
+   </item>
+   <item>
+    <widget class="QGroupBox" name="grpVAD">
+     <property name="title">
+      <string>Voice Activity Detection</string>
+     </property>
+     <layout class="QGridLayout" name="gridLayout_2" columnstretch="2,0">
+      <item row="6" column="1">
+       <widget class="QDoubleSpinBox" name="kcfg_vadTreshold">
+        <property name="toolTip">
+         <string>Threshold for decision between noise and silence frames. Log-ratio between signal level and noise leve</string>
+        </property>
+        <property name="maximum">
+         <double>20.000000000000000</double>
+        </property>
+        <property name="singleStep">
+         <double>0.100000000000000</double>
+        </property>
+       </widget>
+      </item>
+      <item row="2" column="1">
+       <widget class="QSpinBox" name="kcfg_vadPreSpeech">
+        <property name="maximum">
+         <number>250</number>
+        </property>
+       </widget>
+      </item>
+      <item row="6" column="0" alignment="Qt::AlignRight|Qt::AlignVCenter">
+       <widget class="QLabel" name="label_vadTreshold">
+        <property name="toolTip">
+         <string>Threshold for decision between noise and silence frames. Log-ratio between signal level and noise leve</string>
+        </property>
+        <property name="text">
+         <string>Noise Treshold</string>
+        </property>
+        <property name="buddy">
+         <cstring>kcfg_vadTreshold</cstring>
+        </property>
+       </widget>
+      </item>
+      <item row="2" column="0" alignment="Qt::AlignRight|Qt::AlignVCenter">
+       <widget class="QLabel" name="label_vadPreSpeech">
+        <property name="toolTip">
+         <string>Num of speech frames to keep before silence to speech</string>
+        </property>
+        <property name="text">
+         <string>Pre Speech Frames</string>
+        </property>
+        <property name="buddy">
+         <cstring>kcfg_vadPreSpeech</cstring>
+        </property>
+       </widget>
+      </item>
+      <item row="3" column="0" alignment="Qt::AlignRight|Qt::AlignVCenter">
+       <widget class="QLabel" name="label_vadPostSpeech">
+        <property name="toolTip">
+         <string>Num of silence frames to keep after from speech to silence</string>
+        </property>
+        <property name="text">
+         <string>Post Speech Frames</string>
+        </property>
+        <property name="buddy">
+         <cstring>kcfg_vadPostSpeech</cstring>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="0" alignment="Qt::AlignRight|Qt::AlignVCenter">
+       <widget class="QLabel" name="label_vadStartSpeech">
+        <property name="toolTip">
+         <string>Num of speech frames to trigger vad from silence to speech</string>
+        </property>
+        <property name="text">
+         <string>Start Speech Frames</string>
+        </property>
+        <property name="buddy">
+         <cstring>kcfg_vadStartSpeech</cstring>
+        </property>
+       </widget>
+      </item>
+      <item row="3" column="1">
+       <widget class="QSpinBox" name="kcfg_vadPostSpeech">
+        <property name="maximum">
+         <number>250</number>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="1">
+       <widget class="QSpinBox" name="kcfg_vadStartSpeech">
+        <property name="maximum">
+         <number>230</number>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </widget>
+   </item>
+   <item>
+    <spacer name="spacer">
+     <property name="orientation">
+      <enum>Qt::Vertical</enum>
+     </property>
+     <property name="sizeHint" stdset="0">
+      <size>
+       <width>20</width>
+       <height>40</height>
+      </size>
+     </property>
+    </spacer>
+   </item>
+  </layout>
+ </widget>
+ <customwidgets>
+  <customwidget>
+   <class>KUrlRequester</class>
+   <extends>QWidget</extends>
+   <header>kurlrequester.h</header>
+  </customwidget>
+ </customwidgets>
+ <tabstops>
+  <tabstop>kcfg_acousticModelPath</tabstop>
+  <tabstop>kcfg_trigramModelFile</tabstop>
+  <tabstop>kcfg_lexiconFile</tabstop>
+  <tabstop>kcfg_vadStartSpeech</tabstop>
+  <tabstop>kcfg_vadPreSpeech</tabstop>
+  <tabstop>kcfg_vadPostSpeech</tabstop>
+  <tabstop>kcfg_vadTreshold</tabstop>
+ </tabstops>
+ <resources/>
+ <connections/>
+</ui>

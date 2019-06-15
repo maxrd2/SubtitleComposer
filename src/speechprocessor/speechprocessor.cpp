@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2010-2018 Mladen Milinkovic <max@smoothware.net>
+ * Copyright (C) 2010-2019 Mladen Milinkovic <max@smoothware.net>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -25,8 +25,6 @@
 #include "speechplugin.h"
 #include "application.h"
 #include "lineswidget.h"
-
-#include "scconfig.h"
 
 #include <QLabel>
 #include <QProgressBar>
@@ -117,8 +115,6 @@ SpeechProcessor::pluginLoad(const QString &pluginPath)
 		return NULL;
 
 	qInfo() << "Loaded SpeechProcessor plugin" << asrPlugin->name() << "from" << realPath;
-
-	asrPlugin->setSCConfig(SCConfig::self());
 
 	pluginAdd(asrPlugin);
 
@@ -237,10 +233,7 @@ SpeechProcessor::onStreamData(const void *buffer, const qint32 size, const WaveF
 void
 SpeechProcessor::onStreamError(int code, const QString &message, const QString &debug)
 {
-	emit onError(i18n("Speech Recognition failed: %2\nCode %1: %3")
-				 .arg(code)
-				 .arg(message)
-				 .arg(debug));
+	emit onError(i18n("Speech Recognition failed: %2\nCode %1: %3", code, message, debug));
 
 	clearAudioStream();
 }

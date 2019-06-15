@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<kcfg xmlns="http://www.kde.org/standards/kcfg/1.0"
+	  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	  xsi:schemaLocation="http://www.kde.org/standards/kcfg/1.0
+						  http://www.kde.org/standards/kcfg/1.0/kcfg.xsd">
+	<kcfgfile name="subtitlecomposerrc"/>
+	<include>plugin-config.h</include>
+
+	<group name="PocketSphinx">
+		<entry name="acousticModelPath" type="Path">
+			<label>Directory containing acoustic model files</label>
+			<default code="true">QStringLiteral("file://" POCKETSPHINX_MODELDIR "/en-us/en-us")</default>
+		</entry>
+		<entry name="trigramModelFile" type="Path">
+			<label>Word trigram language model input file</label>
+			<default code="true">QStringLiteral("file://" POCKETSPHINX_MODELDIR "/en-us/en-us.lm.bin")</default>
+		</entry>
+		<entry name="lexiconFile" type="Path">
+			<label>Main pronunciation dictionary (lexicon) input file</label>
+			<default code="true">QStringLiteral("file://" POCKETSPHINX_MODELDIR "/en-us/cmudict-en-us.dict")</default>
+		</entry>
+
+		<entry name="vadPostSpeech" type="Int">
+			<label>Num of silence frames to keep after from speech to silence</label>
+			<default>75</default>
+		</entry>
+		<entry name="vadPreSpeech" type="Int">
+			<label>Num of speech frames to keep before silence to speech</label>
+			<default>30</default>
+		</entry>
+		<entry name="vadStartSpeech" type="Int">
+			<label>Num of speech frames to trigger vad from silence to speech</label>
+			<default>10</default>
+		</entry>
+		<entry name="vadTreshold" type="Double">
+			<label>Threshold for decision between noise and silence frames. Log-ratio between signal level and noise leve</label>
+			<default>2.0</default>
+		</entry>
+	</group>
+</kcfg>

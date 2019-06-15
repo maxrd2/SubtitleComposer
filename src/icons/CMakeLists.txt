@@ -18,6 +18,7 @@ set(custom_icons
 	48-apps-mplayer.png
 	48-apps-xine.png
 	64-apps-mpv.png
+	64-apps-pocketsphinx.png
 	sc-actions-anchor.svg
 	sc-actions-current_line_follows_video.svg
 	sc-actions-playrate_minus.svg

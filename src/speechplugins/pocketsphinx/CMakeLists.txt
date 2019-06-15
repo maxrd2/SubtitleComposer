@@ -19,9 +19,17 @@ set(speech_pocketsphinx_LIBS
 )
 set(speech_pocketsphinx_SRCS
 	${CMAKE_CURRENT_SOURCE_DIR}/pocketsphinxplugin.cpp
+	${CMAKE_CURRENT_SOURCE_DIR}/pocketsphinxconfigwidget.cpp
 	${speechplugins_SRCS}
 	CACHE INTERNAL EXPORTEDVARIABLE
 )
+ki18n_wrap_ui(speech_pocketsphinx_SRCS
+	${CMAKE_CURRENT_SOURCE_DIR}/pocketsphinxconfigwidget.ui
+)
+kconfig_add_kcfg_files(speech_pocketsphinx_SRCS GENERATE_MOC
+	${CMAKE_CURRENT_SOURCE_DIR}/pocketsphinxconfig.kcfgc
+)
+
 
 add_library(pocketsphinxasr MODULE ${speech_pocketsphinx_SRCS})
 

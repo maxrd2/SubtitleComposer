@@ -1,7 +1,7 @@
 #ifndef POCKETSPHINXPLUGIN_H
 #define POCKETSPHINXPLUGIN_H
 /*
- * Copyright (C) 2010-2018 Mladen Milinkovic <max@smoothware.net>
+ * Copyright (C) 2010-2019 Mladen Milinkovic <max@smoothware.net>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -36,6 +36,9 @@ class PocketSphinxPlugin : public SpeechPlugin
 public:
 	PocketSphinxPlugin();
 
+	QWidget * newConfigWidget(QWidget *parent) override;
+	KCoreConfigSkeleton * config() const override;
+
 private:
 	const QString & name() override;
 
@@ -44,8 +47,6 @@ private:
 
 	void processSamples(const qint16 *sampleData, qint32 sampleCount) override;
 	void processComplete() override;
-
-	void setSCConfig(SCConfig *scConfig) override;
 
 	void processUtterance();
 

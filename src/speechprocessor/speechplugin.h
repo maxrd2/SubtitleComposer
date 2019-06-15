@@ -1,7 +1,7 @@
 #ifndef SPEECHPLUGIN_H
 #define SPEECHPLUGIN_H
 /*
- * Copyright (C) 2010-2018 Mladen Milinkovic <max@smoothware.net>
+ * Copyright (C) 2010-2019 Mladen Milinkovic <max@smoothware.net>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -23,7 +23,7 @@
 
 #define SpeechPlugin_iid "org.kde.SubtitleComposer.SpeechPlugin"
 
-class SCConfig;
+class KCoreConfigSkeleton;
 
 namespace SubtitleComposer {
 class SpeechPlugin : public QObject
@@ -31,9 +31,13 @@ class SpeechPlugin : public QObject
 	Q_OBJECT
 
 	friend class SpeechProcessor;
+	friend class ConfigDialog;
 
 protected:
 	explicit SpeechPlugin();
+
+	virtual QWidget * newConfigWidget(QWidget *parent) = 0;
+	virtual KCoreConfigSkeleton * config() const = 0;
 
 private:
 	virtual const QString & name() = 0;
@@ -43,8 +47,6 @@ private:
 
 	virtual void processSamples(const qint16 *sampleData, qint32 sampleCount) = 0;
 	virtual void processComplete() = 0;
-
-	virtual void setSCConfig(SCConfig *scConfig) = 0;
 
 signals:
 	void error(int code, const QString &message);

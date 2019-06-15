@@ -1,0 +1,4 @@
+File=pocketsphinxconfig.kcfg
+ClassName=PocketSphinxConfig
+Singleton=true
+Mutators=true
