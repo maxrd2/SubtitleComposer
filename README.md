@@ -35,7 +35,7 @@ An open source text-based subtitle editor that supports basic and advanced editi
   - Ubuntu
     - stable - package [subtitlecomposer](https://launchpad.net/~subtitlecomposer/+archive/ubuntu/subtitlecomposer-git-stable)
     - git - package [subtitlecomposer](https://code.launchpad.net/~subtitlecomposer/+archive/ubuntu/subtitlecomposer-git)
-    - oudated - official package [subtitlecomposer](https://packages.ubuntu.com/subtitlecomposer) package
+    - oudated - official [subtitlecomposer](https://packages.ubuntu.com/subtitlecomposer) package
   - Debian
     - oudated [subtitlecomposer](https://packages.debian.org/subtitlecomposer) package
   - OpenSUSE
