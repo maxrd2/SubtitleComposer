@@ -98,10 +98,7 @@ TextDemux::onStreamError(int code, const QString &message, const QString &debug)
 	delete m_subtitleTemp;
 	m_subtitleTemp = nullptr;
 
-	emit onError(i18n("Subtitle demux failed %1: %2\n%3")
-				 .arg(code)
-				 .arg(message)
-				 .arg(debug));
+	emit onError(i18n("Subtitle demux failed %1: %2\n%3", code, message, debug));
 	m_streamProcessor->close();
 	m_progressWidget->hide();
 }
