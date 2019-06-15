@@ -248,13 +248,8 @@ System::newUrl(const QUrl &baseUrl, const QString &fileName, const QString &exte
 /*static*/ QUrl
 System::urlFromPath(const QString &path)
 {
-	QUrl url(path);
-	if(url.isRelative()) {
-		url.setScheme(QStringLiteral("file"));
-		if(path.at(0) != QDir::separator())
-			url.setPath(QDir::currentPath() % QChar('/') % path);
-	}
-	return url;
+	const QUrl url(path);
+	return url.isRelative() ? QUrl::fromLocalFile(QFileInfo(path).absoluteFilePath()) : url;
 }
 
 
