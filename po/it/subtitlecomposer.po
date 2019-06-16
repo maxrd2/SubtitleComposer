@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: subtitlecomposer\n"
 "Report-Msgid-Bugs-To: https://github.com/maxrd2/subtitlecomposer/issues\n"
-"POT-Creation-Date: 2018-06-28 01:04+0200\n"
+"POT-Creation-Date: 2019-06-16 15:39+0200\n"
 "PO-Revision-Date: 2018-06-27 23:33+0200\n"
 "Last-Translator: \n"
 "Language-Team: Italian <kde-i18n-doc@kde.org>\n"
@@ -18,734 +18,737 @@ msgstr ""
 "X-Generator: Lokalize 1.0\n"
 "Plural-Forms:  nplurals=2; plural=(n != 1);\n"
 
-#: ../src/actions/kcodecactionext.cpp:39
-#: ../src/dialogs/opensubtitledialog.cpp:49
-#: ../src/dialogs/opensubtitledialog.cpp:51
-#: ../src/dialogs/selectablesubtitledialog.cpp:64
-#: ../src/dialogs/selectablesubtitledialog.cpp:98
+#: ../../src/actions/kcodecactionext.cpp:39
+#: ../../src/dialogs/opensubtitledialog.cpp:50
+#: ../../src/dialogs/opensubtitledialog.cpp:52
+#: ../../src/dialogs/selectablesubtitledialog.cpp:64
+#: ../../src/dialogs/selectablesubtitledialog.cpp:98
 msgid "Autodetect"
 msgstr "Autodetect"
 
-#: ../src/application.cpp:398
+#: ../../src/application.cpp:415
 msgid "Media Files"
 msgstr "File multimediali"
 
-#: ../src/application.cpp:399
+#: ../../src/application.cpp:416
 msgid "Video Files"
 msgstr "File video"
 
-#: ../src/application.cpp:400
+#: ../../src/application.cpp:417
 msgid "Audio Files"
 msgstr "File audio"
 
-#: ../src/application.cpp:401
+#: ../../src/application.cpp:418 ../../src/dialogs/opensubtitledialog.cpp:100
 msgid "All Files"
 msgstr "Tutti i file"
 
-#: ../src/application.cpp:420
+#: ../../src/application.cpp:437
 msgid "Exit the application"
 msgstr "Esci dall'applicazione"
 
-#: ../src/application.cpp:423
+#: ../../src/application.cpp:440
 msgid "Configure Subtitle Composer"
 msgstr "Configura Subtitle Composer"
 
-#: ../src/application.cpp:427
+#: ../../src/application.cpp:444
 msgctxt "@action:inmenu Create a new subtitle"
 msgid "New"
 msgstr "Nuovo"
 
-#: ../src/application.cpp:428
+#: ../../src/application.cpp:445
 msgid "Create an empty subtitle"
 msgstr "Crear un nuovo file di sottotitoli"
 
-#: ../src/application.cpp:436
+#: ../../src/application.cpp:453
 msgctxt "@action:inmenu Open subtitle file"
 msgid "Open Subtitle..."
 msgstr "Apri sottotitoli..."
 
-#: ../src/application.cpp:437 ../src/application.cpp:455
+#: ../../src/application.cpp:454 ../../src/application.cpp:472
 msgid "Open subtitle file"
 msgstr "Apri file di sottotitoli"
 
-#: ../src/application.cpp:445
+#: ../../src/application.cpp:462
 msgid "Reload As..."
 msgstr "Ricarica come..."
 
-#: ../src/application.cpp:446
+#: ../../src/application.cpp:463
 msgid "Reload opened file with a different encoding"
 msgstr "Ricarica file di sottotitoli con una codifica differente"
 
-#: ../src/application.cpp:454
+#: ../../src/application.cpp:471
 msgctxt "@action:inmenu Open rencently used subtitle file"
 msgid "Open &Recent Subtitle"
 msgstr "Apri sottotitoli &recenti"
 
-#: ../src/application.cpp:461
+#: ../../src/application.cpp:478
 msgid "Save"
 msgstr "Salva"
 
-#: ../src/application.cpp:462
+#: ../../src/application.cpp:479
 msgid "Save opened subtitle"
 msgstr "Salva sottotitoli aperti"
 
-#: ../src/application.cpp:470
+#: ../../src/application.cpp:487
 msgid "Save As..."
 msgstr "Salva come..."
 
-#: ../src/application.cpp:471
+#: ../../src/application.cpp:488
 msgid "Save opened subtitle with different settings"
 msgstr "Salva sottotitoli aperti con diverse impostazioni"
 
-#: ../src/application.cpp:478
+#: ../../src/application.cpp:495
 msgid "Close"
 msgstr "Chiudi"
 
-#: ../src/application.cpp:479
+#: ../../src/application.cpp:496
 msgid "Close opened subtitle"
 msgstr "Chiudi sottotitoli aperti"
 
-#: ../src/application.cpp:487
+#: ../../src/application.cpp:504
 msgid "New Translation"
 msgstr "Nuova traduzione"
 
-#: ../src/application.cpp:488
+#: ../../src/application.cpp:505
 msgid "Create an empty translation subtitle"
 msgstr "Creare una nuova traduzione dei sottotitoli"
 
-#: ../src/application.cpp:496
+#: ../../src/application.cpp:513
 msgid "Open Translation..."
 msgstr "Apri traduzione..."
 
-#: ../src/application.cpp:497 ../src/application.cpp:515
+#: ../../src/application.cpp:514 ../../src/application.cpp:532
 msgid "Open translation subtitle file"
 msgstr "Apri file di traduzione sottotitoli"
 
-#: ../src/application.cpp:505
+#: ../../src/application.cpp:522
 msgid "Reload Translation As..."
 msgstr "Ricarica traduzione come..."
 
-#: ../src/application.cpp:506
+#: ../../src/application.cpp:523
 msgid "Reload opened translation file with a different encoding"
 msgstr "Ricarica file di traduzione sottotitoli con una diversa condifica"
 
-#: ../src/application.cpp:514
+#: ../../src/application.cpp:531
 msgid "Open &Recent Translation"
 msgstr "Apri traduzioni &recenti"
 
-#: ../src/application.cpp:522
+#: ../../src/application.cpp:539
 msgid "Save Translation"
 msgstr "Salva traduzione"
 
-#: ../src/application.cpp:523
+#: ../../src/application.cpp:540
 msgid "Save opened translation subtitle"
 msgstr "Salva traduzione sottotitoli aperta"
 
-#: ../src/application.cpp:531
+#: ../../src/application.cpp:548
 msgid "Save Translation As..."
 msgstr "Salva traduzione come..."
 
-#: ../src/application.cpp:532
+#: ../../src/application.cpp:549
 msgid "Save opened translation subtitle with different settings"
 msgstr "Salva traduzione sottotitoli aperta con impostazioni diverse"
 
-#: ../src/application.cpp:539
+#: ../../src/application.cpp:556
 msgid "Close Translation"
 msgstr "Chiudi traduzione"
 
-#: ../src/application.cpp:540
+#: ../../src/application.cpp:557
 msgid "Close opened translation subtitle"
 msgstr "Chiudi traduzione sottotitoli aperta"
 
-#: ../src/application.cpp:557
+#: ../../src/application.cpp:574
 msgid "Split Subtitle..."
 msgstr "Dividi sottotitolo..."
 
-#: ../src/application.cpp:558
+#: ../../src/application.cpp:575
 msgid "Split the opened subtitle in two parts"
 msgstr "Divide il sottotitolo aperto in due parti"
 
-#: ../src/application.cpp:564
+#: ../../src/application.cpp:581
 msgid "Join Subtitles..."
 msgstr "Unisci sottotitoli..."
 
-#: ../src/application.cpp:565
+#: ../../src/application.cpp:582
 msgid "Append to the opened subtitle another one"
 msgstr "Aggiungere un altro sottotitolo a quello aperto"
 
-#: ../src/application.cpp:572
+#: ../../src/application.cpp:589
 msgid "Insert Before"
 msgstr "Inserisci prima"
 
-#: ../src/application.cpp:573
+#: ../../src/application.cpp:590
 msgid "Insert empty line before current one"
 msgstr "Inserisci una riga vuota prima di quella corrente"
 
-#: ../src/application.cpp:581
+#: ../../src/application.cpp:598
 msgid "Insert After"
 msgstr "Inserisci dopo"
 
-#: ../src/application.cpp:582
+#: ../../src/application.cpp:599
 msgid "Insert empty line after current one"
 msgstr "Inserisci una riga vuota dopo quella corrente"
 
+#. i18n: file: ../../src/scripting/scriptsmanager.ui:62
 #. i18n: ectx: property (text), widget (QPushButton, btnRemove)
-#: ../src/application.cpp:590 ../src/scripting/scriptsmanager.ui:62
+#: ../../src/application.cpp:607 rc.cpp:568
 msgid "Remove"
 msgstr "Rimuovi"
 
-#: ../src/application.cpp:591
+#: ../../src/application.cpp:608
 msgid "Remove selected lines"
 msgstr "Elimina le righe selezionate"
 
-#: ../src/application.cpp:598 ../src/core/subtitle.cpp:558
+#: ../../src/application.cpp:615 ../../src/core/subtitle.cpp:583
 msgid "Split Lines"
 msgstr "Dividi righe"
 
-#: ../src/application.cpp:599
+#: ../../src/application.cpp:616
 msgid "Split selected lines"
 msgstr "Dividi le righe selezionate"
 
-#: ../src/application.cpp:605 ../src/core/subtitle.cpp:632
-#: ../src/waveformwidget.cpp:1121
+#: ../../src/application.cpp:622 ../../src/core/subtitle.cpp:656
+#: ../../src/waveformwidget.cpp:1171
 msgid "Join Lines"
 msgstr "Unisci righe"
 
-#: ../src/application.cpp:606
+#: ../../src/application.cpp:623
 msgid "Join selected lines"
 msgstr "Unisci le righe selezionate"
 
-#: ../src/application.cpp:613
-#: ../src/dialogs/actionwitherrortargetsdialog.cpp:95
-#: ../src/widgets/simplerichtextedit.cpp:110
+#: ../../src/application.cpp:630
+#: ../../src/dialogs/actionwitherrortargetsdialog.cpp:95
+#: ../../src/widgets/simplerichtextedit.cpp:110
 msgid "Select All"
 msgstr "Seleziona tutto"
 
-#: ../src/application.cpp:614
+#: ../../src/application.cpp:631
 msgid "Select all lines"
 msgstr "Seleziona tutte le righe"
 
-#: ../src/application.cpp:621
+#: ../../src/application.cpp:638
 msgid "Go to Line..."
 msgstr "Vai alla riga..."
 
-#: ../src/application.cpp:622
+#: ../../src/application.cpp:639
 msgid "Go to specified line"
 msgstr "Vai alla riga specificata"
 
-#: ../src/application.cpp:630
+#: ../../src/application.cpp:647
 msgid "Find..."
 msgstr "Cerca..."
 
-#: ../src/application.cpp:631
+#: ../../src/application.cpp:648
 msgid "Find occurrences of strings or regular expressions"
 msgstr "Cerca le occorrenze di una stringa o espressione regolare"
 
-#: ../src/application.cpp:639
+#: ../../src/application.cpp:656
 msgid "Find Next"
 msgstr "Cerca occorrenza successiva"
 
-#: ../src/application.cpp:640
+#: ../../src/application.cpp:657
 msgid "Find next occurrence of string or regular expression"
 msgstr "Cerca occorrenza successiva della stringa o espressione regolare"
 
-#: ../src/application.cpp:648
+#: ../../src/application.cpp:665
 msgid "Find Previous"
 msgstr "Cerca occorrenza precedente"
 
-#: ../src/application.cpp:649
+#: ../../src/application.cpp:666
 msgid "Find previous occurrence of string or regular expression"
 msgstr "Cerca occorrenza precedente della stringa o espressione regolare"
 
-#: ../src/application.cpp:656
+#: ../../src/application.cpp:673
 msgid "Replace..."
 msgstr "Sostituiscei..."
 
-#: ../src/application.cpp:657
+#: ../../src/application.cpp:674
 msgid "Replace occurrences of strings or regular expressions"
 msgstr "Sostituisci occorrenze di stringhe o espressioni regolari"
 
-#: ../src/application.cpp:665
+#: ../../src/application.cpp:682
 msgid "Retrocede current line"
 msgstr "Retrocedi riga attiva"
 
-#: ../src/application.cpp:666
+#: ../../src/application.cpp:683
 msgid "Makes the line before the current one active"
 msgstr "Rendi attiva la riga precedente a quella attuale"
 
-#: ../src/application.cpp:674
+#: ../../src/application.cpp:691
 msgid "Advance current line"
 msgstr "Avanza alla riga successiva"
 
-#: ../src/application.cpp:675
+#: ../../src/application.cpp:692
 msgid "Makes the line after the current one active"
 msgstr "Rendi attiva la riga successiva a quella attuale"
 
-#: ../src/application.cpp:682
+#: ../../src/application.cpp:699
 msgid "Check Errors..."
 msgstr "Controlla errori..."
 
-#: ../src/application.cpp:683
+#: ../../src/application.cpp:700
 msgid "Check for errors in the current subtitle"
 msgstr "Controlla errori nei sottotitoli correnti"
 
-#: ../src/application.cpp:690
+#: ../../src/application.cpp:707
 msgid "Clear Errors..."
 msgstr "Pulisci errori..."
 
-#: ../src/application.cpp:691
+#: ../../src/application.cpp:708
 msgid "Clear errors from selected lines"
 msgstr "Pulisci errori nelle righe selezionate"
 
-#: ../src/application.cpp:697
+#: ../../src/application.cpp:714
 msgid "Show Errors..."
 msgstr "Mostra errori..."
 
-#: ../src/application.cpp:698
+#: ../../src/application.cpp:715
 msgid "Show errors information for the current subtitle"
 msgstr "Mostra informazioni sugli errori dei sottotitoli correnti"
 
-#: ../src/application.cpp:706
+#: ../../src/application.cpp:723
 msgid "Find Error..."
 msgstr "Cerca errori..."
 
-#: ../src/application.cpp:707
+#: ../../src/application.cpp:724
 msgid "Find lines with specified errors"
 msgstr "Cerca righe con gli errori specificati"
 
-#: ../src/application.cpp:715
+#: ../../src/application.cpp:732
 msgid "Find Next Error"
 msgstr "Cerca errore successivo"
 
-#: ../src/application.cpp:716
+#: ../../src/application.cpp:733
 msgid "Find next line with specified errors"
 msgstr "Cerca la prossima riga con gli errori specificati"
 
-#: ../src/application.cpp:724
+#: ../../src/application.cpp:741
 msgid "Find Previous Error"
 msgstr "Cerca errore precedente"
 
-#: ../src/application.cpp:725
+#: ../../src/application.cpp:742
 msgid "Find previous line with specified errors"
 msgstr "Cerca riga precedente con gli errori specificati"
 
-#: ../src/application.cpp:733
+#: ../../src/application.cpp:750
 msgid "Spelling..."
 msgstr "Controllo ortografico..."
 
-#: ../src/application.cpp:734
+#: ../../src/application.cpp:751
 msgid "Check lines spelling"
 msgstr "Controllo ortografico sulle righe"
 
-#: ../src/application.cpp:740
+#: ../../src/application.cpp:757
 msgid "Toggle Mark"
 msgstr "Alterna marcatore"
 
-#: ../src/application.cpp:741
+#: ../../src/application.cpp:758
 msgid "Toggle selected lines mark"
 msgstr "Alterna marcatori nelle righe selezionate"
 
-#: ../src/application.cpp:749 ../src/currentlinewidget.cpp:94
+#: ../../src/application.cpp:766 ../../src/currentlinewidget.cpp:94
 msgid "Toggle Bold"
 msgstr "Alterna grassetto"
 
-#: ../src/application.cpp:750
+#: ../../src/application.cpp:767
 msgid "Toggle selected lines bold attribute"
 msgstr "Alterna grassetto nelle righe selezionate"
 
-#: ../src/application.cpp:758 ../src/currentlinewidget.cpp:95
+#: ../../src/application.cpp:775 ../../src/currentlinewidget.cpp:95
 msgid "Toggle Italic"
 msgstr "Alterna italico"
 
-#: ../src/application.cpp:759
+#: ../../src/application.cpp:776
 msgid "Toggle selected lines italic attribute"
 msgstr "Alterna italico nelle righe selezionate"
 
-#: ../src/application.cpp:767 ../src/currentlinewidget.cpp:96
+#: ../../src/application.cpp:784 ../../src/currentlinewidget.cpp:96
 msgid "Toggle Underline"
 msgstr "Alterna sottolineato"
 
-#: ../src/application.cpp:768
+#: ../../src/application.cpp:785
 msgid "Toggle selected lines underline attribute"
 msgstr "Alterna sottolineato nelle righe selezionate"
 
-#: ../src/application.cpp:776 ../src/currentlinewidget.cpp:97
+#: ../../src/application.cpp:793 ../../src/currentlinewidget.cpp:97
 msgid "Toggle Strike Through"
 msgstr "Alterna barrato"
 
-#: ../src/application.cpp:777
+#: ../../src/application.cpp:794
 msgid "Toggle selected lines strike through attribute"
 msgstr "Alterna barrato nelle righe selezionate"
 
-#: ../src/application.cpp:785 ../src/currentlinewidget.cpp:98
+#: ../../src/application.cpp:802 ../../src/currentlinewidget.cpp:98
 msgid "Change Text Color"
 msgstr "Modifica colore del testo"
 
-#: ../src/application.cpp:786
+#: ../../src/application.cpp:803
 msgid "Change text color of selected lines"
 msgstr "Modifica il colore del testo nelle righe selezionate"
 
-#: ../src/application.cpp:793
+#: ../../src/application.cpp:810
 msgid "Shift..."
 msgstr "Sposta..."
 
-#: ../src/application.cpp:794
+#: ../../src/application.cpp:811
 msgid "Shift lines an specified amount of time"
 msgstr "Sposta righe un certo numero di volte"
 
-#: ../src/application.cpp:813
+#: ../../src/application.cpp:830
 msgid "Adjust..."
 msgstr "Aggiusta..."
 
-#: ../src/application.cpp:814
+#: ../../src/application.cpp:831
 msgid "Linearly adjust all lines to a specified interval"
 msgstr "Aggiusta tutte le righe in modo lineare ad uno specifico intervallo"
 
-#: ../src/application.cpp:821
+#: ../../src/application.cpp:838
 msgid "Sort..."
 msgstr "Ordina..."
 
-#: ../src/application.cpp:822
+#: ../../src/application.cpp:839
 msgid "Sort lines based on their show time"
 msgstr "Ordina le righe in base all'ora di visualizzazione"
 
-#: ../src/application.cpp:828
+#: ../../src/application.cpp:845
 msgid "Change Frame Rate..."
 msgstr "Cambia la velocità dei fotogrammi..."
 
-#: ../src/application.cpp:829
+#: ../../src/application.cpp:846
 msgid "Retime subtitle lines by reinterpreting its frame rate"
 msgstr ""
 "Adatta le righe dei sottotitoli in base al numero di fotogrammi al secondo"
 
-#: ../src/application.cpp:835
+#: ../../src/application.cpp:852
 msgid "Enforce Duration Limits..."
 msgstr "Forza i limiti di durata..."
 
-#: ../src/application.cpp:836
+#: ../../src/application.cpp:853
 msgid "Enforce lines minimum and/or maximum duration limits"
 msgstr "Forza minimo e/o massimo limite di durata delle righe"
 
-#: ../src/application.cpp:843
+#: ../../src/application.cpp:860
 msgid "Set Automatic Durations..."
 msgstr "Imposta durata automatica..."
 
-#: ../src/application.cpp:844
+#: ../../src/application.cpp:861
 msgid "Set lines durations based on amount of letters, words and line breaks"
 msgstr ""
 "Imposta la durata della riga in funzione della quantità di lettere, parole e "
 "interruzioni di riga"
 
-#: ../src/application.cpp:850
+#: ../../src/application.cpp:867
 msgid "Maximize Durations..."
 msgstr "Massimizza le durate..."
 
-#: ../src/application.cpp:851
+#: ../../src/application.cpp:868
 msgid "Extend lines durations up to their next lines show time"
 msgstr ""
 "Estendi la durata della riga fino all'ora di visualizzazione delle prossime"
 
-#: ../src/application.cpp:857
+#: ../../src/application.cpp:874
 msgid "Fix Overlapping Times..."
 msgstr "Correggi intervalli sovrapposti..."
 
-#: ../src/application.cpp:858
+#: ../../src/application.cpp:875
 msgid "Fix lines overlapping times"
 msgstr "Correggi intervalli sovrapposti della visualizzazione delle righe"
 
-#: ../src/application.cpp:864
+#: ../../src/application.cpp:881
 msgid "Synchronize with Subtitle..."
 msgstr "Sincronizza con sottotitoli..."
 
-#: ../src/application.cpp:865
+#: ../../src/application.cpp:882
 msgid "Copy timing information from another subtitle"
 msgstr "Copia informazioni di visualizzazione da altri sottotitoli"
 
-#: ../src/application.cpp:871
+#: ../../src/application.cpp:888
 msgid "Break Lines..."
 msgstr "Interrompi righe..."
 
-#: ../src/application.cpp:872
+#: ../../src/application.cpp:889
 msgid "Automatically set line breaks"
 msgstr "Imposta automaticamente le interruzioni di riga"
 
-#: ../src/application.cpp:878
+#: ../../src/application.cpp:895
 msgid "Unbreak Lines..."
 msgstr "Riunisci righe..."
 
-#: ../src/application.cpp:879
+#: ../../src/application.cpp:896
 msgid "Remove line breaks from lines"
 msgstr "Rimuovi le interruzioni di riga dalle righe"
 
-#: ../src/application.cpp:885
+#: ../../src/application.cpp:902
 msgid "Simplify Spaces..."
 msgstr "Semplifica le spaziature..."
 
-#: ../src/application.cpp:886
+#: ../../src/application.cpp:903
 msgid "Remove unneeded spaces from lines"
 msgstr "Elimina spazi non necessari dalle righe"
 
-#: ../src/application.cpp:892
+#: ../../src/application.cpp:909
 msgid "Change Case..."
 msgstr "Cambia maiuscole/minuscole..."
 
-#: ../src/application.cpp:893
+#: ../../src/application.cpp:910
 msgid "Change lines text to upper, lower, title or sentence case"
 msgstr ""
 "Cambia il testo delle righe in maiuscole, minuscole, maiuscole sui titoli o "
 "sulle parole principali"
 
-#: ../src/application.cpp:899
+#: ../../src/application.cpp:916
 msgid "Fix Punctuation..."
 msgstr "Correggi punteggiatura..."
 
-#: ../src/application.cpp:900
+#: ../../src/application.cpp:917
 msgid "Fix punctuation errors in lines"
 msgstr "Correggi errori di punteggiatura nelle righe"
 
-#: ../src/application.cpp:906
+#: ../../src/application.cpp:923
 msgid "Translate..."
 msgstr "Traduci..."
 
-#: ../src/application.cpp:907
+#: ../../src/application.cpp:924
 msgid "Translate lines texts using Google services"
 msgstr "Traduci righe utilizzando i servizi di google"
 
-#: ../src/application.cpp:913
+#: ../../src/application.cpp:930
 msgid "Edit Line in Place"
 msgstr "Modifica riga sul posto"
 
-#: ../src/application.cpp:914
+#: ../../src/application.cpp:931
 msgid "Edit current line text in place"
 msgstr "Modifica riga corrente sul posto"
 
-#: ../src/application.cpp:922
+#: ../../src/application.cpp:939
 msgid "Open Video..."
 msgstr "Apri video..."
 
-#: ../src/application.cpp:923 ../src/application.cpp:930
+#: ../../src/application.cpp:940 ../../src/application.cpp:947
 msgid "Open video file"
 msgstr "Apri file video"
 
-#: ../src/application.cpp:929
+#: ../../src/application.cpp:946
 msgid "Open &Recent Video"
 msgstr "Apri video &recente"
 
-#: ../src/application.cpp:938
+#: ../../src/application.cpp:955
 msgid "Import Subtitle Stream"
 msgstr "Importa traccia di sottotitoli"
 
-#: ../src/application.cpp:939
+#: ../../src/application.cpp:956
 msgid "Import subtitle stream into subtitle editor"
 msgstr "Importa una traccia di sottotitoli nell'editor di sottotitoli"
 
-#: ../src/application.cpp:947
+#: ../../src/application.cpp:964
 msgid "Recognize Speech"
 msgstr "Riconoscimento vocale"
 
-#: ../src/application.cpp:948
+#: ../../src/application.cpp:965
 msgid "Recognize speech in audio stream"
 msgstr "Riconosce il parlato nella traccia audio"
 
-#: ../src/application.cpp:954
+#: ../../src/application.cpp:971
 msgid "Close Video"
 msgstr "Chiudi video"
 
-#: ../src/application.cpp:955
+#: ../../src/application.cpp:972
 msgid "Close video file"
 msgstr "Chiudi file video"
 
-#: ../src/application.cpp:962
+#: ../../src/application.cpp:979
 msgid "Full Screen Mode"
 msgstr "Modalità a schermo intero"
 
-#: ../src/application.cpp:963
+#: ../../src/application.cpp:980
 msgid "Toggle full screen mode"
 msgstr "Alterna modalità a schermo intero"
 
-#: ../src/application.cpp:970
+#: ../../src/application.cpp:987
 msgid "Stop"
 msgstr "Ferma"
 
-#: ../src/application.cpp:971
+#: ../../src/application.cpp:988
 msgid "Stop video playback"
 msgstr "Ferma la riproduzione video"
 
-#: ../src/application.cpp:978 ../src/application.cpp:2921
-#: ../src/application.cpp:2929
+#: ../../src/application.cpp:995 ../../src/application.cpp:2941
+#: ../../src/application.cpp:2949
 msgid "Play"
 msgstr "Riproduci"
 
-#: ../src/application.cpp:979
+#: ../../src/application.cpp:996
 msgid "Toggle video playing/paused"
 msgstr "Alterna riproduzione/pausa vídeo"
 
-#: ../src/application.cpp:987
+#: ../../src/application.cpp:1004
 #, fuzzy
 msgid "Seek Backward"
 msgstr "Indietro veloce"
 
-#: ../src/application.cpp:995
+#: ../../src/application.cpp:1012
 #, fuzzy
 msgid "Seek Forward"
 msgstr "Avanti veloce"
 
-#: ../src/application.cpp:1003
+#: ../../src/application.cpp:1020
 #, fuzzy
 msgid "Frame Step Backward"
 msgstr "Indietro veloce"
 
-#: ../src/application.cpp:1011
+#: ../../src/application.cpp:1028
 #, fuzzy
 msgid "Frame Step Forward"
 msgstr "Avanti veloce"
 
-#: ../src/application.cpp:1019
+#: ../../src/application.cpp:1036
 msgid "Jump to Previous Line"
 msgstr "Salta alla riga precedente"
 
-#: ../src/application.cpp:1020
+#: ../../src/application.cpp:1037
 msgid "Seek to previous subtitle line show time"
 msgstr "Vai al tempo di visualizzazione della riga precedente"
 
-#: ../src/application.cpp:1028
+#: ../../src/application.cpp:1045
 msgid "Increase media play rate"
 msgstr "Incrementa la velocità di riproduzione"
 
-#: ../src/application.cpp:1029
+#: ../../src/application.cpp:1046
 msgid "Increase media playback rate"
 msgstr "Incrementa la velocità di riproduzione del contenuto multimediale"
 
-#: ../src/application.cpp:1036
+#: ../../src/application.cpp:1053
 msgid "Decrease media play rate"
 msgstr "Diminuisci la velocità di riproduzione"
 
-#: ../src/application.cpp:1037
+#: ../../src/application.cpp:1054
 msgid "Decrease media playback rate"
 msgstr "Diminuisci la velocità di riproduzione del contenuto multimediale"
 
-#: ../src/application.cpp:1043
+#: ../../src/application.cpp:1060
 msgid "Play Current Line and Pause"
 msgstr "Riproduci la riga corrente e fermati"
 
-#: ../src/application.cpp:1044
+#: ../../src/application.cpp:1061
 msgid ""
 "Seek to start of current subtitle line show time, play it and then pause"
 msgstr ""
 "Vai all'inizio del tempo di visualizzazione della riga attuale del "
 "sottotitolo, riproducila e quindi fermati"
 
-#: ../src/application.cpp:1052
+#: ../../src/application.cpp:1069
 msgid "Jump to Next Line"
 msgstr "Salta alla riga successiva"
 
-#: ../src/application.cpp:1053
+#: ../../src/application.cpp:1070
 msgid "Seek to next subtitle line show time"
 msgstr "Vai al tempo di visualizzazione della riga successiva"
 
-#: ../src/application.cpp:1061 ../src/waveformwidget.cpp:1147
+#: ../../src/application.cpp:1078 ../../src/waveformwidget.cpp:1199
 msgid "Set Current Line Show Time"
 msgstr "Assegna orario di visualizzazione della riga corrente"
 
-#: ../src/application.cpp:1062
+#: ../../src/application.cpp:1079
 msgid "Set current line show time to video position"
 msgstr ""
 "Assegna orario di visualizzazione della riga corrente in base alla posizione "
 "nel video"
 
-#: ../src/application.cpp:1070 ../src/waveformwidget.cpp:1152
+#: ../../src/application.cpp:1087 ../../src/waveformwidget.cpp:1204
 msgid "Set Current Line Hide Time"
 msgstr "Assegna orario per nascondere la riga corrente"
 
-#: ../src/application.cpp:1071
+#: ../../src/application.cpp:1088
 msgid "Set current line hide time to video position"
 msgstr ""
 "Assegna orario per nascondere la riga corrente in base alla posizione nel "
 "video"
 
-#: ../src/application.cpp:1079
+#: ../../src/application.cpp:1096
 msgid "Current Line Follows Video"
 msgstr "Vincola la riga corrente alla posizione del video"
 
-#: ../src/application.cpp:1080
+#: ../../src/application.cpp:1097
 msgid "Make current line follow the playing video position"
 msgstr ""
 "Vincola la riga corrente a seguire la posizione del video durante la "
 "riproduzione"
 
-#: ../src/application.cpp:1086
+#: ../../src/application.cpp:1103
 msgctxt "@action:inmenu Toggle audio muted"
 msgid "Mute"
 msgstr "Disabilita audio"
 
-#: ../src/application.cpp:1087
+#: ../../src/application.cpp:1104
 msgid "Enable/disable playback sound"
 msgstr "Attiva/Disattiva la riproduzione audio"
 
-#: ../src/application.cpp:1094
+#: ../../src/application.cpp:1111
 msgid "Increase Volume"
 msgstr "Aumenta il volume"
 
-#: ../src/application.cpp:1095
+#: ../../src/application.cpp:1112
 msgid "Increase volume by 5%"
 msgstr "Aumenta il volume del 5%"
 
-#: ../src/application.cpp:1102
+#: ../../src/application.cpp:1119
 msgid "Decrease Volume"
 msgstr "Diminuisci il volume"
 
-#: ../src/application.cpp:1103
+#: ../../src/application.cpp:1120
 msgid "Decrease volume by 5%"
 msgstr "Diminuisci il volume del 5%"
 
-#: ../src/application.cpp:1110
+#: ../../src/application.cpp:1127
 msgid "Audio Streams"
 msgstr "Tracce audio"
 
-#: ../src/application.cpp:1111
+#: ../../src/application.cpp:1128
 msgid "Select active audio stream"
 msgstr "Imposta la traccia audio attiva"
 
-#: ../src/application.cpp:1118
+#: ../../src/application.cpp:1135
 msgid "Increase Font Size"
 msgstr "Aumenta la dimensione dei caratteri"
 
-#: ../src/application.cpp:1119
+#: ../../src/application.cpp:1136
 msgid "Increase subtitles font size by 1 point"
 msgstr "Aumenta di un punto la dimensione dei caratteri dei sottotitoli"
 
-#: ../src/application.cpp:1126
+#: ../../src/application.cpp:1143
 msgid "Decrease Font Size"
 msgstr "Aumenta la dimensione dei caratteri"
 
-#: ../src/application.cpp:1127
+#: ../../src/application.cpp:1144
 msgid "Decrease subtitles font size by 1 point"
 msgstr "Diminuisci di un punto la dimensione dei caratteri dei sottotitoli"
 
-#: ../src/application.cpp:1134
-msgid "Subtitle Streams"
-msgstr "Tracce dei sottotitoli"
+#: ../../src/application.cpp:1151
+#, fuzzy
+msgid "Displayed Subtitle Text"
+msgstr "Colore del testo del sottotitolo"
 
-#: ../src/application.cpp:1135
-msgid "Select active subtitle stream"
+#: ../../src/application.cpp:1152
+#, fuzzy
+msgid "Select visible subtitle text"
 msgstr "Seleziona la traccia dei sottotitoli"
 
-#: ../src/application.cpp:1141
+#: ../../src/application.cpp:1158
 msgid "Shift to Video Position"
 msgstr "Spostati alla posizione del video"
 
-#: ../src/application.cpp:1142
+#: ../../src/application.cpp:1159
 msgid ""
 "Set current line show time to video position by equally shifting all lines"
 msgstr ""
 "Assegna l'orario di visualizzazione della riga attiva alla posizione del "
 "video spostando in maniera analoga tutte le righe"
 
-#: ../src/application.cpp:1149
+#: ../../src/application.cpp:1166
 msgid "Adjust to Video Position (Anchor Last Line)"
 msgstr "Imposta a posizione del video (àncora l'ultima riga)"
 
-#: ../src/application.cpp:1150
+#: ../../src/application.cpp:1167
 msgid ""
 "Set current line to video position by fixing the last line and linearly "
 "adjusting the other ones"
@@ -753,11 +756,11 @@ msgstr ""
 "Assegna la riga attiva alla posizione del video fissando l'ultima riga ed "
 "aggiustando linearmente le altre"
 
-#: ../src/application.cpp:1157
+#: ../../src/application.cpp:1174
 msgid "Adjust to Video Position (Anchor First Line)"
 msgstr "Imposta a posizione del video (àncora la prima riga)"
 
-#: ../src/application.cpp:1158
+#: ../../src/application.cpp:1175
 msgid ""
 "Set current line to video position by fixing the first line and linearly "
 "adjusting the other ones"
@@ -765,50 +768,50 @@ msgstr ""
 "Assegna la riga attiva alla posizione del video fissando la prima riga ed "
 "aggiustando linearmente le altre"
 
-#: ../src/application.cpp:1165 ../src/waveformwidget.cpp:1143
+#: ../../src/application.cpp:1182 ../../src/waveformwidget.cpp:1195
 msgid "Toggle Anchor"
 msgstr "Alterna ancora"
 
-#: ../src/application.cpp:1166
+#: ../../src/application.cpp:1183
 msgid ""
 "(Un)Anchor current line's show time to timeline (Editing anchored line's "
 "show time will stretch/compact the timeline between adjanced anchors)"
 msgstr ""
 
-#: ../src/application.cpp:1173
+#: ../../src/application.cpp:1190
 msgid "Remove All Anchors"
 msgstr "Rimuovi tutte le ancore"
 
-#: ../src/application.cpp:1174
+#: ../../src/application.cpp:1191
 msgid "Unanchor show time from the timeline on all anchored lines"
 msgstr ""
 
-#: ../src/application.cpp:1182
+#: ../../src/application.cpp:1199
 msgctxt "@action:inmenu Manage user scripts"
 msgid "Scripts Manager..."
 msgstr "Gestore degli script..."
 
-#: ../src/application.cpp:1183
+#: ../../src/application.cpp:1200
 msgid "Manage user scripts"
 msgstr "Amministra script utente"
 
-#: ../src/application.cpp:1190 ../src/application.cpp:1191
+#: ../../src/application.cpp:1207 ../../src/application.cpp:1208
 msgid "Waveform Zoom In"
 msgstr ""
 
-#: ../src/application.cpp:1197 ../src/application.cpp:1198
+#: ../../src/application.cpp:1214 ../../src/application.cpp:1215
 msgid "Waveform Zoom Out"
 msgstr ""
 
-#: ../src/application.cpp:1205
+#: ../../src/application.cpp:1222
 msgid "Waveform Auto Scroll"
 msgstr ""
 
-#: ../src/application.cpp:1206
+#: ../../src/application.cpp:1223
 msgid "Waveform display will automatically scroll to video position"
 msgstr ""
 
-#: ../src/application.cpp:1284
+#: ../../src/application.cpp:1301
 msgid ""
 "The requested action would make the subtitle and its translation share the "
 "same file, possibly resulting in loss of information when saving.\n"
@@ -819,12 +822,12 @@ msgstr ""
 "il salvataggio.\n"
 "Sei sicuro di voler continuare?"
 
-#: ../src/application.cpp:1284
+#: ../../src/application.cpp:1301
 msgid "Conflicting Subtitle Files"
 msgstr "File dei sottotitoli in conflitto"
 
-#: ../src/application.cpp:1394 ../src/application.cpp:1422
-#: ../src/application.cpp:1660 ../src/application.cpp:1698
+#: ../../src/application.cpp:1411 ../../src/application.cpp:1439
+#: ../../src/application.cpp:1677 ../../src/application.cpp:1715
 msgid ""
 "<qt>Could not parse the subtitle file.<br/>This may have been caused by "
 "usage of the wrong encoding.</qt>"
@@ -832,11 +835,11 @@ msgstr ""
 "<qt>Non è possibile importare i sottotitoli.<br/>Il problema potrebbe essere "
 "dovuto ad una errata codifica dei caratteri.</qt>"
 
-#: ../src/application.cpp:1503
+#: ../../src/application.cpp:1520
 msgid "There was an error saving the subtitle."
 msgstr "C'è stato un errore durante il salvataggio dei sottotitoli."
 
-#: ../src/application.cpp:1541 ../src/application.cpp:1794
+#: ../../src/application.cpp:1558 ../../src/application.cpp:1811
 msgid ""
 "Currently opened translation subtitle has unsaved changes.\n"
 "Do you want to save them?"
@@ -844,11 +847,11 @@ msgstr ""
 "La traduzione corrente ha delle modifiche non salvate.\n"
 "Vuoi salvare?"
 
-#: ../src/application.cpp:1542 ../src/application.cpp:1795
+#: ../../src/application.cpp:1559 ../../src/application.cpp:1812
 msgid "Close Translation Subtitle"
 msgstr "Chiudi i sottotitoli tradotti"
 
-#: ../src/application.cpp:1552
+#: ../../src/application.cpp:1569
 msgid ""
 "Currently opened subtitle has unsaved changes.\n"
 "Do you want to save them?"
@@ -856,55 +859,55 @@ msgstr ""
 "I sottotitoli correnti hanno delle modifiche non salvate.\n"
 "Vuoi salvare?"
 
-#: ../src/application.cpp:1553
+#: ../../src/application.cpp:1570
 msgid "Close Subtitle"
 msgstr "Chiudi sottotitoli"
 
-#: ../src/application.cpp:1650
+#: ../../src/application.cpp:1667
 msgctxt "@item:inmenu Display primary text in video player"
 msgid "Primary"
 msgstr "Testo primario"
 
-#: ../src/application.cpp:1651
+#: ../../src/application.cpp:1668
 msgctxt "@item:inmenu Display translation text in video player"
 msgid "Translation"
 msgstr "Traduzione"
 
-#: ../src/application.cpp:1756
+#: ../../src/application.cpp:1773
 msgid "There was an error saving the translation subtitle."
 msgstr "C'è stato un errore durante il salvataggio dei sottotitoli tradotti."
 
-#: ../src/application.cpp:1839
+#: ../../src/application.cpp:1856
 msgid "Could not read the subtitle file to append."
 msgstr "Impossibile leggere il file da aggiungere."
 
-#: ../src/application.cpp:1857 ../src/application.cpp:2800
-#: ../src/application.cpp:2806
+#: ../../src/application.cpp:1874 ../../src/application.cpp:2820
+#: ../../src/application.cpp:2826
 msgid "Untitled"
 msgstr "Senza titolo"
 
-#: ../src/application.cpp:1857 ../src/application.cpp:2802
+#: ../../src/application.cpp:1874 ../../src/application.cpp:2822
 msgid "Untitled Translation"
 msgstr "Traduzione senza titolo"
 
-#: ../src/application.cpp:1863
+#: ../../src/application.cpp:1880
 msgctxt "Suffix added to split subtitles"
 msgid "split"
 msgstr "diviso"
 
-#: ../src/application.cpp:1877
+#: ../../src/application.cpp:1894
 msgid "Could not write the split subtitle file."
 msgstr "Impossibile scrivere il file diviso dei sottotitoli."
 
-#: ../src/application.cpp:1877
+#: ../../src/application.cpp:1894
 msgid "Could not write the split subtitle translation file."
 msgstr "Impossibile scrivere il file diviso dei sottotitoli tradotti."
 
-#: ../src/application.cpp:1894
+#: ../../src/application.cpp:1911
 msgid "The specified time does not split the subtitles."
 msgstr "L'orario indicato non divide i sottotitoli."
 
-#: ../src/application.cpp:1929
+#: ../../src/application.cpp:1946
 msgid ""
 "Could not open a new Subtitle Composer window.\n"
 "The split part was saved as %1."
@@ -912,7 +915,7 @@ msgstr ""
 "Impossibile aprire una nuova finestra di Subtitle Composer.\n"
 "La parte divisa è stata salvata come %1."
 
-#: ../src/application.cpp:1930
+#: ../../src/application.cpp:1947
 msgid ""
 "Could not open a new Subtitle Composer window.\n"
 "The split parts were saved as %1 and %2."
@@ -920,69 +923,69 @@ msgstr ""
 "Impossibile aprire una nuova finestra di Subtitle Composer.\n"
 "Le parti divise sono state salvate come %1 e %2."
 
-#: ../src/application.cpp:2020
+#: ../../src/application.cpp:2037
 msgid "Go to Line"
 msgstr "Vai alla riga"
 
-#: ../src/application.cpp:2020
+#: ../../src/application.cpp:2037
 msgid "&Go to line:"
 msgstr "Vai alla ri&ga:"
 
-#: ../src/application.cpp:2111 ../src/core/subtitle.cpp:1360
-#: ../src/core/subtitle.cpp:1372
+#: ../../src/application.cpp:2128 ../../src/core/subtitle.cpp:1371
+#: ../../src/core/subtitle.cpp:1383
 msgid "Check Lines Errors"
 msgstr "Controlla errori delle righe"
 
-#: ../src/application.cpp:2166 ../src/core/subtitle.cpp:1349
+#: ../../src/application.cpp:2183 ../../src/core/subtitle.cpp:1360
 msgid "Clear Lines Errors"
 msgstr "Pulisci errori delle righe"
 
-#: ../src/application.cpp:2286 ../src/core/subtitle.cpp:802
+#: ../../src/application.cpp:2303 ../../src/core/subtitle.cpp:822
 msgid "Sort"
 msgstr "Ordina"
 
-#: ../src/application.cpp:2294
+#: ../../src/application.cpp:2311
 msgid "Can not perform sort on selection with multiple ranges."
 msgstr "Impossibile ordinare una selezione con più intervalli."
 
-#: ../src/application.cpp:2348 ../src/core/subtitle.cpp:883
+#: ../../src/application.cpp:2365 ../../src/core/subtitle.cpp:894
 msgid "Maximize Durations"
 msgstr "Massimizza la durata"
 
-#: ../src/application.cpp:2376
+#: ../../src/application.cpp:2393
 msgid "The reference subtitle must have more than one line to proceed."
 msgstr ""
 "Il sottotitolo di riferimento deve avere più di una riga per poter procedere."
 
-#: ../src/application.cpp:2383
+#: ../../src/application.cpp:2400
 msgid "Could not parse the reference subtitle file."
 msgstr "Impossibile interpretare il file dei sottotitoli di riferimento."
 
-#: ../src/application.cpp:2400 ../src/core/subtitle.cpp:1165
+#: ../../src/application.cpp:2417 ../../src/core/subtitle.cpp:1176
 msgid "Unbreak Lines"
 msgstr "Riunisci righe"
 
-#: ../src/application.cpp:2411 ../src/core/subtitle.cpp:1174
+#: ../../src/application.cpp:2428 ../../src/core/subtitle.cpp:1185
 msgid "Simplify Spaces"
 msgstr "Semplifica spaziature"
 
-#: ../src/application.cpp:2465 ../src/dialogs/translatedialog.cpp:33
+#: ../../src/application.cpp:2482 ../../src/dialogs/translatedialog.cpp:33
 msgid "Translate"
 msgstr "Traduci"
 
-#: ../src/application.cpp:2465
+#: ../../src/application.cpp:2482
 msgid "Translating text (%1 to %2)..."
 msgstr "Traduzione del testo in corso (da %1 a %2)"
 
-#: ../src/application.cpp:2469
+#: ../../src/application.cpp:2486
 msgid "Translating primary text (%1 to %2)..."
 msgstr "Traduzione del testo primario in corso (da %1 a %2)"
 
-#: ../src/application.cpp:2470
+#: ../../src/application.cpp:2487
 msgid "Translating secondary text (%1 to %2)..."
 msgstr "Traduzione del testo secondario in corso (da %1 a %2)"
 
-#: ../src/application.cpp:2498
+#: ../../src/application.cpp:2515
 msgid ""
 "Unable to perform texts synchronization (sent and received lines count do "
 "not match)."
@@ -990,15 +993,15 @@ msgstr ""
 "Impossibile realizzare la sincronizzazione del testo (il numero di righe "
 "inviate e trasmesse non coincide)."
 
-#: ../src/application.cpp:2502
+#: ../../src/application.cpp:2519
 msgid "Translate Primary Text"
 msgstr "Traduci testo primario"
 
-#: ../src/application.cpp:2502
+#: ../../src/application.cpp:2519
 msgid "Translate Secondary Text"
 msgstr "Traduci testo secondario"
 
-#: ../src/application.cpp:2517
+#: ../../src/application.cpp:2534
 msgid ""
 "There was an error performing the translation:\n"
 "\n"
@@ -1007,11 +1010,11 @@ msgstr ""
 "Si è verificato un errore durante la traduzione:\n"
 "%1"
 
-#: ../src/application.cpp:2555
+#: ../../src/application.cpp:2572
 msgid "Open Video"
 msgstr "Apri vídeo"
 
-#: ../src/application.cpp:2749 ../src/application.cpp:2780
+#: ../../src/application.cpp:2769 ../../src/application.cpp:2800
 msgid ""
 "Continuing would result in loss of timing information for some lines.\n"
 "Are you sure you want to continue?"
@@ -1020,637 +1023,367 @@ msgstr ""
 "sincronizzazione per alcune righe.\n"
 "Sei sicuro di voler continuare?"
 
-#: ../src/application.cpp:2797
+#: ../../src/application.cpp:2817
 msgid "modified"
 msgstr "modificato"
 
-#: ../src/application.cpp:2913
+#: ../../src/application.cpp:2933
 msgid "Pause"
 msgstr "Pausa"
 
-#: ../src/application.cpp:2984
+#: ../../src/application.cpp:3004
 msgid "Seek backwards 1 second"
 msgid_plural "Seek backwards %1 seconds"
 msgstr[0] "Retrocedi di un secondo"
 msgstr[1] "Retrocedi di %1 secondi"
 
-#: ../src/application.cpp:2985
+#: ../../src/application.cpp:3005
 msgid "Seek forwards 1 second"
 msgid_plural "Seek forwards %1 seconds"
 msgstr[0] "Avanza di un secondo"
 msgstr[1] "Avanza di %1 secondi"
 
-#: ../src/application.cpp:2988
+#: ../../src/application.cpp:3008 ../../src/application.cpp:3012
 msgid "Shift %2%1 millisecond"
 msgid_plural "Shift %2%1 milliseconds"
 msgstr[0] "Sposta di %2%1 millisecondi"
 msgstr[1] "Sposta di %2%1 millisecondi"
 
-#: ../src/application.cpp:2989 ../src/application.cpp:2993
+#: ../../src/application.cpp:3009 ../../src/application.cpp:3013
 msgid "Shift selected lines %2%1 millisecond"
 msgid_plural "Shift selected lines %2%1 milliseconds"
 msgstr[0] "Sposta le righe selezionate di %2%1 millisecondi"
 msgstr[1] "Sposta le righe selezionate di %2%1 millisecondi"
 
-#: ../src/application.cpp:2992
-msgid "Shift %2%1 Millisecond"
-msgid_plural "Shift %2%1 Milliseconds"
-msgstr[0] "Sposta di %2%1 millisecondi"
-msgstr[1] "Sposta di %2%1 millisecondi"
-
-#: ../src/configs/configdialog.cpp:49
+#: ../../src/configs/configdialog.cpp:54
 msgctxt "@title General settings"
 msgid "General"
 msgstr "Generale"
 
-#: ../src/configs/configdialog.cpp:50
+#: ../../src/configs/configdialog.cpp:55
 msgid "General Settings"
 msgstr "Impostazioni generali"
 
-#: ../src/configs/configdialog.cpp:54
+#: ../../src/configs/configdialog.cpp:59
 msgctxt "@title Error check settings"
 msgid "Error Check"
 msgstr "Controllo errori"
 
-#: ../src/configs/configdialog.cpp:55
+#: ../../src/configs/configdialog.cpp:60
 msgid "Error Check Settings"
 msgstr "Impostazioni del controllo errori"
 
-#: ../src/configs/configdialog.cpp:61
+#: ../../src/configs/configdialog.cpp:66
 msgctxt "@title Spelling settings"
 msgid "Spelling"
 msgstr "Controllo ortografico"
 
-#: ../src/configs/configdialog.cpp:62
+#: ../../src/configs/configdialog.cpp:67
 msgid "Spelling Settings"
 msgstr "Impostazioni del controllo ortografico"
 
-#: ../src/configs/configdialog.cpp:66
+#: ../../src/configs/configdialog.cpp:71
 msgctxt "@title Waveform settings"
 msgid "Waveform"
 msgstr ""
 
-#: ../src/configs/configdialog.cpp:67
+#: ../../src/configs/configdialog.cpp:72
 #, fuzzy
 msgid "Waveform settings"
 msgstr "Impostazioni del riproduttore video"
 
-#: ../src/configs/configdialog.cpp:71
+#: ../../src/configs/configdialog.cpp:76
 msgctxt "@title Video player settings"
 msgid "Video Player"
 msgstr "Riproduttore video"
 
-#: ../src/configs/configdialog.cpp:72
+#: ../../src/configs/configdialog.cpp:77
 msgid "Video Player Settings"
 msgstr "Impostazioni del riproduttore video"
 
-#: ../src/configs/configdialog.cpp:79
+#: ../../src/configs/configdialog.cpp:84
 msgctxt "@title Video player backend settings"
 msgid "%1 backend settings"
 msgstr "Impostazioni del motore %1"
 
-#. i18n: ectx: property (title), widget (QGroupBox, m_grpGeneral)
-#: ../src/configs/errorsconfigwidget.ui:17 ../src/lineswidget.cpp:1101
-msgid "Texts"
-msgstr "Testi"
-
-#. i18n: ectx: property (suffix), widget (QSpinBox, kcfg_MaxCharacters)
-#: ../src/configs/errorsconfigwidget.ui:36
-#: ../src/dialogs/smarttextsadjustdialog.cpp:39
-msgid " characters"
-msgstr " caratteri"
-
-#. i18n: ectx: property (text), widget (QLabel, label)
-#: ../src/configs/errorsconfigwidget.ui:46
-msgid "Maximum number of characters:"
-msgstr "Numero massimo di caratteri:"
-
-#. i18n: ectx: property (text), widget (QLabel, label_4)
-#: ../src/configs/errorsconfigwidget.ui:53
-msgid "Maximum number of lines:"
-msgstr "Numero massimo di righe:"
-
-#. i18n: ectx: property (title), widget (QGroupBox, m_grpQuickActions)
-#: ../src/configs/errorsconfigwidget.ui:63
-msgid "Absolute Durations"
-msgstr "Durate assolute"
-
-#. i18n: ectx: property (text), widget (QLabel, label_8)
-#. i18n: ectx: property (text), widget (QLabel, label_3)
-#: ../src/configs/errorsconfigwidget.ui:92
-#: ../src/configs/errorsconfigwidget.ui:132
-msgid "Maximum duration:"
-msgstr "Durata massima:"
-
-#. i18n: ectx: property (text), widget (QLabel, label_5)
-#. i18n: ectx: property (text), widget (QLabel, label_2)
-#: ../src/configs/errorsconfigwidget.ui:99
-#: ../src/configs/errorsconfigwidget.ui:125
-msgid "Minimum duration:"
-msgstr "Durata minima:"
-
-#. i18n: ectx: property (title), widget (QGroupBox, groupBox)
-#: ../src/configs/errorsconfigwidget.ui:109
-msgid "Relative Durations"
-msgstr "Durate relative"
-
-#. i18n: ectx: property (suffix), widget (QSpinBox, kcfg_MinDurationPerCharacter)
-#. i18n: ectx: property (suffix), widget (QSpinBox, kcfg_MaxDurationPerCharacter)
-#: ../src/configs/errorsconfigwidget.ui:115
-#: ../src/configs/errorsconfigwidget.ui:139
-msgid " msec/char"
-msgstr " msec/carattere"
-
-#. i18n: ectx: property (title), widget (QGroupBox, groupBox_2)
-#: ../src/configs/errorsconfigwidget.ui:152
-msgid "Behavior"
-msgstr "Comportamento"
-
-#. i18n: ectx: property (text), widget (QCheckBox, kcfg_AutoClearFixed)
-#. i18n: ectx: label, entry (AutoClearFixed), group (Error Check)
-#: ../src/configs/errorsconfigwidget.ui:158 ../src/scconfig.kcfg:78
-msgid "Automatically clear fixed errors"
-msgstr "Smarca automatcamente gli errori corretti"
-
-#. i18n: ectx: property (title), widget (QGroupBox, m_grpGeneral)
-#. i18n: ectx: property (title), widget (QGroupBox, grpGeneral)
-#: ../src/configs/generalconfigwidget.ui:17
-#: ../src/configs/playerconfigwidget.ui:17
-#: ../src/videoplayerplugins/mplayer/mplayerconfigwidget.ui:20
-#: ../src/videoplayerplugins/mpv/mpvconfigwidget.ui:20
-msgid "General"
-msgstr "Generale"
-
-#. i18n: ectx: property (text), widget (QLabel, label)
-#: ../src/configs/generalconfigwidget.ui:26
-msgid "Defau&lt subtitles encoding:"
-msgstr "Codifica predefinita per i sottotito&li"
-
-#. i18n: ectx: property (text), widget (QCheckBox, kcfg_UnpauseOnDoubleClick)
-#: ../src/configs/generalconfigwidget.ui:36
-msgid "Resume playback after line double click"
-msgstr "Riprendi la riproduzione dopo un doppio clic sulla riga"
-
-#. i18n: ectx: property (text), widget (QCheckBox, kcfg_AutomaticVideoLoad)
-#: ../src/configs/generalconfigwidget.ui:43
-msgid "Automatically load video file when opening a subtitle"
-msgstr "Carica automaticamente il file video all'apertura dei sottotitoli"
-
-#. i18n: ectx: property (title), widget (QGroupBox, m_grpSubtitleLine)
-#: ../src/configs/generalconfigwidget.ui:53
-msgid "Subtitle Line"
-msgstr "Riga di sottotitolo"
-
-#. i18n: ectx: property (text), widget (QLabel, label_LineDuration)
-#: ../src/configs/generalconfigwidget.ui:59
-msgid "Default subtitle line duration:"
-msgstr "Durata predefinita di una riga di sottotitoli:"
-
-#. i18n: ectx: property (text), widget (QLabel, label_4)
-#: ../src/configs/generalconfigwidget.ui:69
+#: ../../src/configs/configdialog.cpp:95
 #, fuzzy
-msgid "On double click, &jump to show time minus:"
-msgstr ""
-"Doppio click su riga per visualizzare l'orario di visualizzazione meno:"
+msgctxt "@title Speech recognition backend settings"
+msgid "%1 backend settings"
+msgstr "Impostazioni del motore %1"
 
-#. i18n: ectx: property (text), widget (QLabel, label_LinePause)
-#: ../src/configs/generalconfigwidget.ui:79
-msgid "Default pause between subtitle lines:"
-msgstr "Durata predefinita tra righe di sottotitolo:"
-
-#. i18n: ectx: property (suffix), widget (QSpinBox, kcfg_LinePause)
-#. i18n: ectx: property (suffix), widget (QSpinBox, kcfg_LineDuration)
-#. i18n: ectx: property (suffix), widget (QSpinBox, kcfg_JumpLineOffset)
-#: ../src/configs/generalconfigwidget.ui:89
-#: ../src/configs/generalconfigwidget.ui:99
-#: ../src/configs/generalconfigwidget.ui:129
-msgid " msec"
-msgstr " msec"
-
-#. i18n: ectx: property (text), widget (QLabel, label_2)
-#: ../src/configs/generalconfigwidget.ui:119
-#, fuzzy
-msgid "Ju&mp to prev/next line offset:"
-msgstr "Salta alla riga successiva"
-
-#. i18n: ectx: property (title), widget (QGroupBox, m_grpQuickActions)
-#: ../src/configs/generalconfigwidget.ui:142
-msgid "Quick Actions"
-msgstr "Azioni rapide"
-
-#. i18n: ectx: property (text), widget (QLabel, label_8)
-#: ../src/configs/generalconfigwidget.ui:168
-msgid "Compensation for captured &video times:"
-msgstr "Compensazione per acquisizione dei tempi da &video:"
-
-#. i18n: ectx: property (text), widget (QLabel, label_5)
-#: ../src/configs/generalconfigwidget.ui:178
-msgid "Ti&me shift for selected lines:"
-msgstr "Sposta&mento orario per le righe selezionate:"
-
-#: ../src/configs/playerconfigwidget.cpp:39
+#: ../../src/configs/playerconfigwidget.cpp:39
 msgctxt "Text for previewing the subtitles font settings"
 msgid "<p>The Quick Brown Fox<br/>Jumps Over The Lazy Dog</p>"
 msgstr "<p>Ma la volpe col suo balzo<br/>ha raggiunto il quieto Fido</p>"
 
-#. i18n: ectx: property (text), widget (QLabel, label_3)
-#: ../src/configs/playerconfigwidget.ui:23
-msgid "&VideoPlayer backend:"
-msgstr "Motore di riproduzione &video:"
-
-#. i18n: ectx: property (text), widget (QCheckBox, kcfg_ShowPositionTimeEdit)
-#: ../src/configs/playerconfigwidget.ui:33 ../src/playerwidget.cpp:486
-msgid "Show editable position control"
-msgstr "Mostra controllo di modifica posizione"
-
-#. i18n: ectx: property (text), widget (QLabel, label_4)
-#: ../src/configs/playerconfigwidget.ui:53
-msgid "Secods to &jump on seek:"
-msgstr ""
-
-#. i18n: ectx: property (text), widget (QLabel, label)
-#: ../src/configs/playerconfigwidget.ui:73
-msgid "Fra&me step amount:"
-msgstr ""
-
-#. i18n: ectx: property (title), widget (QGroupBox, m_grpSubtitles)
-#: ../src/configs/playerconfigwidget.ui:86
-msgid "Subtitles"
-msgstr "Sottotitoli"
-
-#. i18n: ectx: property (text), widget (QLabel, label_7)
-#: ../src/configs/playerconfigwidget.ui:92
-msgid "Outline color:"
-msgstr "Colore contorno:"
-
-#. i18n: ectx: property (text), widget (QLabel, label_8)
-#: ../src/configs/playerconfigwidget.ui:111
-msgid "Outline width:"
-msgstr "Spessore del contorno:"
-
-#. i18n: ectx: property (text), widget (QLabel, label_6)
-#: ../src/configs/playerconfigwidget.ui:121
-msgid "Te&xt color:"
-msgstr "Colore del te&sto:"
-
-#. i18n: ectx: property (text), widget (QLabel, label_2)
-#: ../src/configs/playerconfigwidget.ui:131
-msgid "Font family:"
-msgstr "Famiglia del tipo di carattere:"
-
-#. i18n: ectx: property (text), widget (QLabel, label_5)
-#: ../src/configs/playerconfigwidget.ui:141
-msgid "Font si&ze:"
-msgstr "&Dimensione carattere:"
-
-#. i18n: ectx: property (text), widget (QCheckBox, kcfg_Antialias)
-#: ../src/configs/playerconfigwidget.ui:168
-msgid "Text Antialiasing"
-msgstr "Antialiasing del testo"
-
-#. i18n: ectx: property (title), widget (QGroupBox, m_grpPreview)
-#: ../src/configs/playerconfigwidget.ui:178
-msgid "Subtitles Preview"
-msgstr "Anteprima dei sottotitoli"
-
-#. i18n: ectx: property (title), widget (QGroupBox, groupBox_3)
-#: ../src/configs/waveformconfigwidget.ui:17
-msgid "Waveform Display"
-msgstr ""
-
-#. i18n: ectx: property (text), widget (QLabel, label_12)
-#: ../src/configs/waveformconfigwidget.ui:61
-msgid "Outer color:"
-msgstr "Colore contorno:"
-
-#. i18n: ectx: property (text), widget (QLabel, label_11)
-#: ../src/configs/waveformconfigwidget.ui:68
-msgid "Inner color:"
-msgstr "Colore principale:"
-
-#. i18n: ectx: property (text), widget (QCheckBox, kcfg_wfSmoothScroll)
-#: ../src/configs/waveformconfigwidget.ui:75
-msgid "Smooth Scrolling"
-msgstr "Scorrimento fluido"
-
-#. i18n: ectx: property (title), widget (QGroupBox, m_grpGeneral)
-#: ../src/configs/waveformconfigwidget.ui:85
-msgid "Subtitle Display"
-msgstr "Visualizzazione sottotitolo"
-
-#. i18n: ectx: property (text), widget (QLabel, label_14)
-#: ../src/configs/waveformconfigwidget.ui:113
-msgid "Subtitle border color:"
-msgstr "Colore del bordo del sottotitolo"
-
-#. i18n: ectx: property (text), widget (QLabel, label_16)
-#: ../src/configs/waveformconfigwidget.ui:120
-msgid "Selected background color:"
-msgstr "Seleziona colore di sfondo:"
-
-#. i18n: ectx: property (text), widget (QLabel, label_15)
-#: ../src/configs/waveformconfigwidget.ui:127
-msgid "Subtitle border width:"
-msgstr "Spessore del bordo del sottotitolo"
-
-#. i18n: ectx: property (text), widget (QLabel, label_13)
-#: ../src/configs/waveformconfigwidget.ui:134
-msgid "Subtitle background color:"
-msgstr "Colore di sfondo del sottotitolo:"
-
-#. i18n: ectx: property (text), widget (QLabel, label_17)
-#: ../src/configs/waveformconfigwidget.ui:160
-msgid "Selected border color:"
-msgstr "Colore del bordo selezionato:"
-
-#. i18n: ectx: property (title), widget (QGroupBox, groupBox)
-#: ../src/configs/waveformconfigwidget.ui:208
-msgid "Text Font and Colors"
-msgstr "Carattere e colori del testo"
-
-#. i18n: ectx: property (text), widget (QLabel, label_21)
-#: ../src/configs/waveformconfigwidget.ui:214
-msgid "Subtitle font family:"
-msgstr "Famiglia di caratteri del sottotitolo:"
-
-#. i18n: ectx: property (text), widget (QLabel, label_22)
-#: ../src/configs/waveformconfigwidget.ui:224
-msgid "Subtitle number font size:"
-msgstr "Dimensione carattere del numero del sottotitolo:"
-
-#. i18n: ectx: property (suffix), widget (QSpinBox, kcfg_wfSubNumberFontSize)
-#. i18n: ectx: property (suffix), widget (QSpinBox, kcfg_wfSubTextFontSize)
-#: ../src/configs/waveformconfigwidget.ui:231
-#: ../src/configs/waveformconfigwidget.ui:271
-msgid " pt"
-msgstr " punti"
-
-#. i18n: ectx: property (text), widget (QLabel, label_23)
-#: ../src/configs/waveformconfigwidget.ui:238
-msgid "Subtitle Number Color"
-msgstr "Colore del numero del sottotitolo"
-
-#. i18n: ectx: property (text), widget (QLabel, label_24)
-#: ../src/configs/waveformconfigwidget.ui:264
-msgid "Subtitle text font size:"
-msgstr "Dimensione carattere del testo del sottotitolo:"
-
-#. i18n: ectx: property (text), widget (QLabel, label_25)
-#: ../src/configs/waveformconfigwidget.ui:278
-msgid "Subtitle Text Color"
-msgstr "Colore del testo del sottotitolo"
-
-#. i18n: ectx: property (title), widget (QGroupBox, groupBox_2)
-#: ../src/configs/waveformconfigwidget.ui:307
-msgid "Line Indicators"
-msgstr "Indicatori di riga"
-
-#. i18n: ectx: property (text), widget (QLabel, label_31)
-#: ../src/configs/waveformconfigwidget.ui:313
-msgid "Player position color:"
-msgstr "Colore della posizione del riproduttore:"
-
-#. i18n: ectx: property (text), widget (QLabel, label_32)
-#: ../src/configs/waveformconfigwidget.ui:320
-msgid "Mouse indicator color:"
-msgstr "Colore dell'indicatore del mouse:"
-
-#: ../src/core/subtitle.cpp:67
-msgid "Set Primary Data"
-msgstr "Imposta dati primari"
-
-#: ../src/core/subtitle.cpp:114
-msgid "Clear Primary Text Data"
-msgstr "Pulisci dati del testo principale"
-
-#: ../src/core/subtitle.cpp:127
-msgid "Set Secondary Data"
-msgstr "Imposta dati secondari"
-
-#: ../src/core/subtitle.cpp:166
-msgid "Clear Secondary Text Data"
-msgstr "Pulisci dati del testo secondario"
-
-#: ../src/core/subtitle.cpp:242 ../src/dialogs/changeframeratedialog.cpp:35
-msgid "Change Frame Rate"
-msgstr "Cambia la velocità dei fotogrammi"
-
-#: ../src/core/subtitle.cpp:431 ../src/core/subtitle.cpp:445
-#: ../src/waveformwidget.cpp:1094
-msgid "Insert Line"
-msgstr "Inserisci riga"
-
-#: ../src/core/subtitle.cpp:478 ../src/core/subtitle.cpp:488
-#: ../src/core/subtitle.cpp:505 ../src/core/subtitleactions.cpp:141
-msgid "Remove Lines"
-msgstr "Inserisci righe"
-
-#: ../src/core/subtitle.cpp:735
-msgid "Shift Lines"
-msgstr "Sposta righe"
-
-#: ../src/core/subtitle.cpp:791
-msgid "Adjust Lines"
-msgstr "Aggiusta righe"
-
-#: ../src/core/subtitle.cpp:844 ../src/dialogs/durationlimitsdialog.cpp:31
-msgid "Enforce Duration Limits"
-msgstr "Forza i limiti di durata"
-
-#: ../src/core/subtitle.cpp:906 ../src/dialogs/autodurationsdialog.cpp:34
-msgid "Set Automatic Durations"
-msgstr "Imposta durata automatica"
-
-#: ../src/core/subtitle.cpp:940 ../src/dialogs/fixoverlappingtimesdialog.cpp:31
-msgid "Fix Overlapping Times"
-msgstr "Correggi tempi sovrapposti"
-
-#: ../src/core/subtitle.cpp:972
-msgid "Fix Lines Punctuation"
-msgstr "Correggi punteggiature righe"
-
-#: ../src/core/subtitle.cpp:1019
-msgid "Lower Case"
-msgstr "Converti in minuscolo"
-
-#: ../src/core/subtitle.cpp:1050
-msgid "Upper Case"
-msgstr "Converti in maiuscolo"
-
-#: ../src/core/subtitle.cpp:1081
-msgid "Title Case"
-msgstr "Iniziali in maiuscolo"
-
-#: ../src/core/subtitle.cpp:1113
-msgid "Sentence Case"
-msgstr "Maiuscola ogni frase"
-
-#: ../src/core/subtitle.cpp:1156 ../src/dialogs/smarttextsadjustdialog.cpp:31
-msgid "Break Lines"
-msgstr "Interrompi righe"
-
-#: ../src/core/subtitle.cpp:1183
-msgid "Synchronize Subtitles"
-msgstr "Sincronizza sottotitoli"
-
-#: ../src/core/subtitle.cpp:1204 ../src/dialogs/joinsubtitlesdialog.cpp:39
-msgid "Join Subtitles"
-msgstr "Unisci sottotitoli"
-
-#: ../src/core/subtitle.cpp:1246 ../src/core/subtitle.cpp:1252
-msgid "Split Subtitles"
-msgstr "Dividi sottotitoli"
-
-#: ../src/core/subtitle.cpp:1267 ../src/core/subtitle.cpp:1282
-msgid "Set Lines Style"
-msgstr "Imposta stile delle righe"
-
-#: ../src/core/subtitle.cpp:1299
-msgid "Toggle Lines Style"
-msgstr "Alterna stile delle righe"
-
-#: ../src/core/subtitle.cpp:1311
-msgid "Change Lines Text Color"
-msgstr "Imposta colore testo delle righe"
-
-#: ../src/core/subtitle.cpp:1324
-msgid "Set Lines Mark"
-msgstr "Imposta marcatori delle righe"
-
-#: ../src/core/subtitle.cpp:1324
-msgid "Clear Lines Mark"
-msgstr "Pulisci marcatori delle righe"
-
-#: ../src/core/subtitle.cpp:1339
-msgid "Toggle Lines Mark"
-msgstr "Alterna marcatori delle righe"
-
-#: ../src/core/subtitleactions.cpp:44
+#: ../../src/core/subtitleactions.cpp:44
 msgid "Set Frame Rate"
 msgstr "Imposta la velocità dei fotogrammi"
 
-#: ../src/core/subtitleactions.cpp:64
+#: ../../src/core/subtitleactions.cpp:64
 msgid "Insert Lines"
 msgstr "Inserisci righe"
 
-#: ../src/core/subtitleactions.cpp:225
+#: ../../src/core/subtitleactions.cpp:135 ../../src/core/subtitle.cpp:482
+#: ../../src/core/subtitle.cpp:492 ../../src/core/subtitle.cpp:509
+msgid "Remove Lines"
+msgstr "Inserisci righe"
+
+#: ../../src/core/subtitleactions.cpp:213
 msgid "Move Line"
 msgstr "Muovi riga"
 
-#: ../src/core/subtitleactions.cpp:318
+#: ../../src/core/subtitleactions.cpp:298
 msgid "Swap Texts"
 msgstr "Scambia testi"
 
-#: ../src/core/subtitleline.cpp:77
+#: ../../src/core/subtitle.cpp:68
+msgid "Set Primary Data"
+msgstr "Imposta dati primari"
+
+#: ../../src/core/subtitle.cpp:115
+msgid "Clear Primary Text Data"
+msgstr "Pulisci dati del testo principale"
+
+#: ../../src/core/subtitle.cpp:128
+msgid "Set Secondary Data"
+msgstr "Imposta dati secondari"
+
+#: ../../src/core/subtitle.cpp:167
+msgid "Clear Secondary Text Data"
+msgstr "Pulisci dati del testo secondario"
+
+#: ../../src/core/subtitle.cpp:243
+#: ../../src/dialogs/changeframeratedialog.cpp:35
+msgid "Change Frame Rate"
+msgstr "Cambia la velocità dei fotogrammi"
+
+#: ../../src/core/subtitle.cpp:435 ../../src/core/subtitle.cpp:449
+#: ../../src/waveformwidget.cpp:1142
+msgid "Insert Line"
+msgstr "Inserisci riga"
+
+#: ../../src/core/subtitle.cpp:755
+msgid "Shift Lines"
+msgstr "Sposta righe"
+
+#: ../../src/core/subtitle.cpp:811
+msgid "Adjust Lines"
+msgstr "Aggiusta righe"
+
+#: ../../src/core/subtitle.cpp:855
+#: ../../src/dialogs/durationlimitsdialog.cpp:31
+msgid "Enforce Duration Limits"
+msgstr "Forza i limiti di durata"
+
+#: ../../src/core/subtitle.cpp:917 ../../src/dialogs/autodurationsdialog.cpp:34
+msgid "Set Automatic Durations"
+msgstr "Imposta durata automatica"
+
+#: ../../src/core/subtitle.cpp:951
+#: ../../src/dialogs/fixoverlappingtimesdialog.cpp:31
+msgid "Fix Overlapping Times"
+msgstr "Correggi tempi sovrapposti"
+
+#: ../../src/core/subtitle.cpp:983
+msgid "Fix Lines Punctuation"
+msgstr "Correggi punteggiature righe"
+
+#: ../../src/core/subtitle.cpp:1030
+msgid "Lower Case"
+msgstr "Converti in minuscolo"
+
+#: ../../src/core/subtitle.cpp:1061
+msgid "Upper Case"
+msgstr "Converti in maiuscolo"
+
+#: ../../src/core/subtitle.cpp:1092
+msgid "Title Case"
+msgstr "Iniziali in maiuscolo"
+
+#: ../../src/core/subtitle.cpp:1124
+msgid "Sentence Case"
+msgstr "Maiuscola ogni frase"
+
+#: ../../src/core/subtitle.cpp:1167
+#: ../../src/dialogs/smarttextsadjustdialog.cpp:31
+msgid "Break Lines"
+msgstr "Interrompi righe"
+
+#: ../../src/core/subtitle.cpp:1194
+msgid "Synchronize Subtitles"
+msgstr "Sincronizza sottotitoli"
+
+#: ../../src/core/subtitle.cpp:1215
+#: ../../src/dialogs/joinsubtitlesdialog.cpp:39
+msgid "Join Subtitles"
+msgstr "Unisci sottotitoli"
+
+#: ../../src/core/subtitle.cpp:1257 ../../src/core/subtitle.cpp:1263
+msgid "Split Subtitles"
+msgstr "Dividi sottotitoli"
+
+#: ../../src/core/subtitle.cpp:1278 ../../src/core/subtitle.cpp:1293
+msgid "Set Lines Style"
+msgstr "Imposta stile delle righe"
+
+#: ../../src/core/subtitle.cpp:1310
+msgid "Toggle Lines Style"
+msgstr "Alterna stile delle righe"
+
+#: ../../src/core/subtitle.cpp:1322
+msgid "Change Lines Text Color"
+msgstr "Imposta colore testo delle righe"
+
+#: ../../src/core/subtitle.cpp:1335
+msgid "Set Lines Mark"
+msgstr "Imposta marcatori delle righe"
+
+#: ../../src/core/subtitle.cpp:1335
+msgid "Clear Lines Mark"
+msgstr "Pulisci marcatori delle righe"
+
+#: ../../src/core/subtitle.cpp:1350
+msgid "Toggle Lines Mark"
+msgstr "Alterna marcatori delle righe"
+
+#: ../../src/core/subtitlelineactions.cpp:42
+msgid "Set Line Text"
+msgstr "Imposta testo riga"
+
+#: ../../src/core/subtitlelineactions.cpp:73
+msgid "Set Line Secondary Text"
+msgstr "Imposta testo secondario di riga"
+
+#: ../../src/core/subtitlelineactions.cpp:104
+msgid "Set Line Texts"
+msgstr "Imposta testi riga"
+
+#: ../../src/core/subtitlelineactions.cpp:150
+#: ../../src/core/subtitleline.cpp:517
+msgid "Set Line Show Time"
+msgstr "Imposta orario visualizzazione riga"
+
+#: ../../src/core/subtitlelineactions.cpp:181
+#: ../../src/core/subtitleline.cpp:547
+msgid "Set Line Hide Time"
+msgstr "Imposta orario per nascondere riga"
+
+#: ../../src/core/subtitlelineactions.cpp:257
+msgid "Set Line Errors"
+msgstr "Imposta errori di riga"
+
+#: ../../src/core/subtitleline.cpp:79
 msgid "Empty text"
 msgstr "Testo vuoto"
 
-#: ../src/core/subtitleline.cpp:79
+#: ../../src/core/subtitleline.cpp:81
 msgid "Too many characters"
 msgstr "Troppi caratteri"
 
-#: ../src/core/subtitleline.cpp:81
+#: ../../src/core/subtitleline.cpp:83
 msgid "Too many lines"
 msgstr "Troppe righe"
 
-#: ../src/core/subtitleline.cpp:83
+#: ../../src/core/subtitleline.cpp:85
 msgid "Unnecessary white space"
 msgstr "Spazi bianchi superflui"
 
-#: ../src/core/subtitleline.cpp:85
+#: ../../src/core/subtitleline.cpp:87
 msgid "Unnecessary dash"
 msgstr "Trattini superflui"
 
-#: ../src/core/subtitleline.cpp:87
+#: ../../src/core/subtitleline.cpp:89
 msgid "Capital letter after continuation ellipsis"
 msgstr "Maiuscola dopo puntini di sospensione"
 
-#: ../src/core/subtitleline.cpp:89
+#: ../../src/core/subtitleline.cpp:91
 msgid "Too long duration per character"
 msgstr "Durata troppo lunga per singolo carattere"
 
-#: ../src/core/subtitleline.cpp:91
+#: ../../src/core/subtitleline.cpp:93
 msgid "Too short duration per character"
 msgstr "Durata troppo breve per singolo carattere"
 
-#: ../src/core/subtitleline.cpp:93
+#: ../../src/core/subtitleline.cpp:95
 msgid "Too long duration"
 msgstr "Durata troppo lunga"
 
-#: ../src/core/subtitleline.cpp:94
+#: ../../src/core/subtitleline.cpp:96
 msgid "Too short duration"
 msgstr "Durata troppo breve"
 
-#: ../src/core/subtitleline.cpp:95
+#: ../../src/core/subtitleline.cpp:97
 msgid "Overlapping times"
 msgstr "Orari sovrapposti"
 
-#: ../src/core/subtitleline.cpp:96
+#: ../../src/core/subtitleline.cpp:98
 msgid "Untranslated text"
 msgstr "Testo non tradotto"
 
-#: ../src/core/subtitleline.cpp:97
+#: ../../src/core/subtitleline.cpp:99
 msgid "User mark"
 msgstr "Marcatore utente"
 
-#: ../src/core/subtitleline.cpp:116
+#: ../../src/core/subtitleline.cpp:118
 msgid "Has no primary text."
 msgstr "Non ha testo principale."
 
-#: ../src/core/subtitleline.cpp:117
+#: ../../src/core/subtitleline.cpp:119
 msgid "Has no translation text."
 msgstr "Non ha testo tradotto."
 
-#: ../src/core/subtitleline.cpp:118
+#: ../../src/core/subtitleline.cpp:120
 msgid "Has too many characters in primary text (1 char)."
 msgid_plural "Has too many characters in primary text (%1 chars)."
 msgstr[0] "Ha troppi caratteri nel testo principale (1 carattere)."
 msgstr[1] "Ha troppi caratteri nel testo principale (%1 caratteri)."
 
-#: ../src/core/subtitleline.cpp:119
+#: ../../src/core/subtitleline.cpp:121
 msgid "Has too many characters in translation text (1 char)."
 msgid_plural "Has too many characters in translation text (%1 chars)."
 msgstr[0] "Ha troppi caratteri nel testo da tradurre (1 carattere)."
 msgstr[1] "Ha troppi caratteri nel testo da tradurre (%1 caratteri)."
 
-#: ../src/core/subtitleline.cpp:120
+#: ../../src/core/subtitleline.cpp:122
 msgid "Has too many lines in primary text (1 line)."
 msgid_plural "Has too many lines in primary text (%1 lines)."
 msgstr[0] "Ha troppe righe nel testo principale (1 riga)."
 msgstr[1] "Ha troppe righe nel testo principale (%1 righe)."
 
-#: ../src/core/subtitleline.cpp:121
+#: ../../src/core/subtitleline.cpp:123
 msgid "Has too many lines in translation text (1 line)."
 msgid_plural "Has too many lines in translation text (%1 lines)."
 msgstr[0] "Ha troppe righe nel testo da tradurre (1 riga)."
 msgstr[1] "Ha troppe righe nel testo da tradurre (%1 righe)."
 
-#: ../src/core/subtitleline.cpp:122
+#: ../../src/core/subtitleline.cpp:124
 msgid "Has unnecessary spaces in primary text."
 msgstr "Ha spazi superflui nel testo principale."
 
-#: ../src/core/subtitleline.cpp:123
+#: ../../src/core/subtitleline.cpp:125
 msgid "Has unnecessary spaces in translation text."
 msgstr "Ha spazi superflui nel testo da tradurre"
 
-#: ../src/core/subtitleline.cpp:124
+#: ../../src/core/subtitleline.cpp:126
 msgid "Has unnecessary dash in primary text."
 msgstr "Ha trattini superflui nel testo principale."
 
-#: ../src/core/subtitleline.cpp:125
+#: ../../src/core/subtitleline.cpp:127
 msgid "Has unnecessary dash in translation text."
 msgstr "Ha trattini superflui nel testo da tradurre."
 
-#: ../src/core/subtitleline.cpp:126
+#: ../../src/core/subtitleline.cpp:128
 msgid "Has capital letter after line continuation ellipsis in primary text."
 msgstr "Ha una maiuscola dopo i puntini di sospensione nel testo principale."
 
-#: ../src/core/subtitleline.cpp:127
+#: ../../src/core/subtitleline.cpp:129
 msgid ""
 "Has capital letter after line continuation ellipsis in translation text."
 msgstr "Ha una maiuscola dopo i puntini di sospensione nel testo da tradurre."
 
-#: ../src/core/subtitleline.cpp:128
+#: ../../src/core/subtitleline.cpp:130
 msgid "Has too long duration per character in primary text (1 msec/char)."
 msgid_plural ""
 "Has too long duration per character in primary text (%1 msecs/char)."
@@ -1661,7 +1394,7 @@ msgstr[1] ""
 "Ha una durata troppo lunga per singolo carattere nel testo principale (%1 "
 "msec/carattere)"
 
-#: ../src/core/subtitleline.cpp:129
+#: ../../src/core/subtitleline.cpp:131
 msgid "Has too long duration per character in translation text (1 msec/char)."
 msgid_plural ""
 "Has too long duration per character in translation text (%1 msecs/char)."
@@ -1672,7 +1405,7 @@ msgstr[1] ""
 "Ha una durata troppo lunga per singolo carattere nel testo da tradurre (%1 "
 "msec/carattere)."
 
-#: ../src/core/subtitleline.cpp:130
+#: ../../src/core/subtitleline.cpp:132
 msgid "Has too short duration per character in primary text (1 msec/char)."
 msgid_plural ""
 "Has too short duration per character in primary text (%1 msecs/char)."
@@ -1683,7 +1416,7 @@ msgstr[1] ""
 "Ha una durata troppo breve per singolo carattere nel testo principale (%1 "
 "msec/carattere)."
 
-#: ../src/core/subtitleline.cpp:131
+#: ../../src/core/subtitleline.cpp:133
 msgid "Has too short duration per character in translation text (1 msec/char)."
 msgid_plural ""
 "Has too short duration per character in translation text (%1 msecs/char)."
@@ -1694,1134 +1427,625 @@ msgstr[1] ""
 "Ha una durata troppo breve per singolo carattere nel testo da tradurre (%1 "
 "msec/carattere)."
 
-#: ../src/core/subtitleline.cpp:132
+#: ../../src/core/subtitleline.cpp:134
 msgid "Has too long duration (1 msec)."
 msgid_plural "Has too long duration (%1 msecs)."
 msgstr[0] "Ha una durata troppo lunga (1 msec)."
 msgstr[1] "Ha una durata troppo lunga (%1 msec)."
 
-#: ../src/core/subtitleline.cpp:133
+#: ../../src/core/subtitleline.cpp:135
 msgid "Has too short duration (1 msec)."
 msgid_plural "Has too short duration (%1 msecs)."
 msgstr[0] "Ha una durata troppo breve (1 msec)."
 msgstr[1] "Ha una durata troppo breve (%1 msec)."
 
-#: ../src/core/subtitleline.cpp:134
+#: ../../src/core/subtitleline.cpp:136
 msgid "Overlaps with next line."
 msgstr "Si sovrappone alla riga successiva."
 
-#: ../src/core/subtitleline.cpp:135
+#: ../../src/core/subtitleline.cpp:137
 msgid "Has untranslated text."
 msgstr "Ha del testo non tradotto."
 
-#: ../src/core/subtitleline.cpp:136
+#: ../../src/core/subtitleline.cpp:138
 msgid "Has user mark."
 msgstr "Ha un segnalibro utente."
 
-#: ../src/core/subtitleline.cpp:509 ../src/core/subtitlelineactions.cpp:150
-msgid "Set Line Show Time"
-msgstr "Imposta orario visualizzazione riga"
-
-#: ../src/core/subtitleline.cpp:557 ../src/core/subtitleline.cpp:561
+#: ../../src/core/subtitleline.cpp:577
 msgid "Set Line Times"
 msgstr "Imposta orari riga"
 
-#: ../src/core/subtitleline.cpp:646
+#: ../../src/core/subtitleline.cpp:671
 msgid "Shift Line Times"
 msgstr "Sposta orari riga"
 
-#: ../src/core/subtitleline.cpp:653
+#: ../../src/core/subtitleline.cpp:678
 msgid "Adjust Line Times"
 msgstr "Aggiusta orari riga"
 
-#: ../src/core/subtitlelineactions.cpp:42
-msgid "Set Line Text"
-msgstr "Imposta testo riga"
-
-#: ../src/core/subtitlelineactions.cpp:73
-msgid "Set Line Secondary Text"
-msgstr "Imposta testo secondario di riga"
-
-#: ../src/core/subtitlelineactions.cpp:104
-msgid "Set Line Texts"
-msgstr "Imposta testi riga"
-
-#: ../src/core/subtitlelineactions.cpp:181
-msgid "Set Line Hide Time"
-msgstr "Imposta orario per nascondere riga"
-
-#: ../src/core/subtitlelineactions.cpp:257
-msgid "Set Line Errors"
-msgstr "Imposta errori di riga"
-
-#: ../src/currentlinewidget.cpp:68
+#: ../../src/currentlinewidget.cpp:68
 msgid "<b>Show</b>"
 msgstr "<b>Visualizza</b>"
 
-#: ../src/currentlinewidget.cpp:73
+#: ../../src/currentlinewidget.cpp:73
 msgid "<b>Hide</b>"
 msgstr "<b>Nascondi</b>"
 
-#: ../src/currentlinewidget.cpp:78
+#: ../../src/currentlinewidget.cpp:78
 msgid "<b>Duration</b>"
 msgstr "<b>Durata</b>"
 
-#: ../src/currentlinewidget.cpp:241 ../src/currentlinewidget.cpp:246
+#: ../../src/currentlinewidget.cpp:241 ../../src/currentlinewidget.cpp:246
 msgid "No current line"
 msgstr "Nessuna riga selezionata"
 
-#: ../src/currentlinewidget.cpp:374
+#: ../../src/currentlinewidget.cpp:374
 msgid "Current line:"
 msgstr "Riga corrente:"
 
-#: ../src/currentlinewidget.cpp:396
+#: ../../src/currentlinewidget.cpp:396
 msgid "1 character"
 msgid_plural "%1 characters"
 msgstr[0] "1 carattere"
 msgstr[1] "%1 caratteri"
 
-#: ../src/dialogs/actionwitherrortargetsdialog.cpp:68
+#: ../../src/dialogs/actionwitherrortargetsdialog.cpp:68
 msgid "Available errors"
 msgstr "Errori risultanti"
 
-#: ../src/dialogs/actionwitherrortargetsdialog.cpp:97
+#: ../../src/dialogs/actionwitherrortargetsdialog.cpp:97
 msgid "Select None"
 msgstr "Nessuna selezione"
 
-#: ../src/dialogs/actionwithtargetdialog.cpp:124
+#: ../../src/dialogs/actionwithtargetdialog.cpp:124
 msgid "Target >>"
 msgstr "Obiettivo >>"
 
-#: ../src/dialogs/actionwithtargetdialog.cpp:124
-#: ../src/dialogs/actionwithtargetdialog.cpp:140
+#: ../../src/dialogs/actionwithtargetdialog.cpp:124
+#: ../../src/dialogs/actionwithtargetdialog.cpp:140
 msgid "Target <<"
 msgstr "Obiettivo <<"
 
-#: ../src/dialogs/actionwithtargetdialog.cpp:154
+#: ../../src/dialogs/actionwithtargetdialog.cpp:154
 msgid "All lines"
 msgstr "Tutte le righe"
 
-#: ../src/dialogs/actionwithtargetdialog.cpp:155
-#: ../src/utils/errorfinder.cpp:45
+#: ../../src/dialogs/actionwithtargetdialog.cpp:155
+#: ../../src/utils/errorfinder.cpp:45
 msgid "Selected lines"
 msgstr "Righe selezionate"
 
-#: ../src/dialogs/actionwithtargetdialog.cpp:156
+#: ../../src/dialogs/actionwithtargetdialog.cpp:156
 msgid "All lines from first selected"
 msgstr "Tutte le righe dalla prima selezionata"
 
-#: ../src/dialogs/actionwithtargetdialog.cpp:157
+#: ../../src/dialogs/actionwithtargetdialog.cpp:157
 msgid "All lines up to last selected"
 msgstr "Tutte le righe fino all'ultima selezionata"
 
-#: ../src/dialogs/actionwithtargetdialog.cpp:245 ../src/utils/finder.cpp:62
-#: ../src/utils/replacer.cpp:63
+#: ../../src/dialogs/actionwithtargetdialog.cpp:245
+#: ../../src/utils/finder.cpp:62 ../../src/utils/replacer.cpp:63
 msgid "Both subtitles"
 msgstr "Entrambi i sottotitoli"
 
-#: ../src/dialogs/actionwithtargetdialog.cpp:248 ../src/utils/finder.cpp:64
-#: ../src/utils/replacer.cpp:65
+#: ../../src/dialogs/actionwithtargetdialog.cpp:248
+#: ../../src/utils/finder.cpp:64 ../../src/utils/replacer.cpp:65
 msgid "Primary subtitle"
 msgstr "Sottotitolo principale"
 
-#: ../src/dialogs/actionwithtargetdialog.cpp:251 ../src/utils/finder.cpp:66
-#: ../src/utils/replacer.cpp:67
+#: ../../src/dialogs/actionwithtargetdialog.cpp:251
+#: ../../src/utils/finder.cpp:66 ../../src/utils/replacer.cpp:67
 msgid "Translation subtitle"
 msgstr "Sottotitolo della traduzione"
 
-#: ../src/dialogs/actionwithtargetdialog.h:71
+#: ../../src/dialogs/actionwithtargetdialog.h:71
 msgid "Apply To"
 msgstr "Applica a"
 
-#: ../src/dialogs/adjusttimesdialog.cpp:33
+#: ../../src/dialogs/adjusttimesdialog.cpp:33
 msgid "Adjust"
 msgstr "Regola"
 
-#: ../src/dialogs/adjusttimesdialog.cpp:35
+#: ../../src/dialogs/adjusttimesdialog.cpp:35
 msgctxt "@title:group"
 msgid "New Times"
 msgstr "Nuova temporizzazione"
 
-#: ../src/dialogs/adjusttimesdialog.cpp:40
+#: ../../src/dialogs/adjusttimesdialog.cpp:40
 msgid "First spoken line:"
 msgstr "Prima riga parlata:"
 
-#: ../src/dialogs/adjusttimesdialog.cpp:46
+#: ../../src/dialogs/adjusttimesdialog.cpp:46
 msgid "Last spoken line:"
 msgstr "Ultima riga parlata:"
 
-#: ../src/dialogs/autodurationsdialog.cpp:37
-#: ../src/dialogs/changeframeratedialog.cpp:37
-#: ../src/dialogs/fixoverlappingtimesdialog.cpp:33
-#: ../src/dialogs/fixpunctuationdialog.cpp:32
-#: ../src/dialogs/smarttextsadjustdialog.cpp:33
-#: ../src/dialogs/splitsubtitledialog.cpp:44
-#: ../src/dialogs/translatedialog.cpp:35
+#: ../../src/dialogs/autodurationsdialog.cpp:37
+#: ../../src/dialogs/changeframeratedialog.cpp:37
+#: ../../src/dialogs/fixoverlappingtimesdialog.cpp:33
+#: ../../src/dialogs/fixpunctuationdialog.cpp:32
+#: ../../src/dialogs/smarttextsadjustdialog.cpp:33
+#: ../../src/dialogs/splitsubtitledialog.cpp:44
+#: ../../src/dialogs/translatedialog.cpp:35
 msgctxt "@title:group"
 msgid "Settings"
 msgstr "Impostazioni"
 
-#: ../src/dialogs/autodurationsdialog.cpp:45
+#: ../../src/dialogs/autodurationsdialog.cpp:45
 msgid "Milliseconds per line:"
 msgstr "Millisecondi per riga:"
 
-#: ../src/dialogs/autodurationsdialog.cpp:54
+#: ../../src/dialogs/autodurationsdialog.cpp:54
 msgid "Milliseconds per word:"
 msgstr "Millisecondi per parola:"
 
-#: ../src/dialogs/autodurationsdialog.cpp:63
+#: ../../src/dialogs/autodurationsdialog.cpp:63
 msgid "Milliseconds per character:"
 msgstr "Millisecondi per carattere:"
 
-#: ../src/dialogs/autodurationsdialog.cpp:67
-#: ../src/dialogs/durationlimitsdialog.cpp:43
+#: ../../src/dialogs/autodurationsdialog.cpp:67
+#: ../../src/dialogs/durationlimitsdialog.cpp:43
 msgid "Prevent overlapping"
 msgstr "Previeni sovrapposizione"
 
-#: ../src/dialogs/autodurationsdialog.cpp:70
+#: ../../src/dialogs/autodurationsdialog.cpp:70
 msgctxt "@title:group"
 msgid "Duration Calculation"
 msgstr "Calcolo della durata"
 
-#: ../src/dialogs/autodurationsdialog.cpp:76
+#: ../../src/dialogs/autodurationsdialog.cpp:76
 msgid "Use primary text"
 msgstr "Usa il testo principale"
 
-#: ../src/dialogs/autodurationsdialog.cpp:77
+#: ../../src/dialogs/autodurationsdialog.cpp:77
 msgid "Use translation text"
 msgstr "Usa il testo della traduzione"
 
-#: ../src/dialogs/autodurationsdialog.cpp:78
+#: ../../src/dialogs/autodurationsdialog.cpp:78
 msgid "Calculate both and use maximum"
 msgstr "Calcola entrambi ed usa il massimo"
 
-#: ../src/dialogs/changeframeratedialog.cpp:46
+#: ../../src/dialogs/changeframeratedialog.cpp:46
 msgid "Current frame rate:"
 msgstr "Velocità dei fotogrammi corrente:"
 
-#: ../src/dialogs/changeframeratedialog.cpp:55
+#: ../../src/dialogs/changeframeratedialog.cpp:55
 msgid "New frame rate:"
 msgstr "Nuova velocità dei fotogrammi:"
 
-#: ../src/dialogs/changetextscasedialog.cpp:32
+#: ../../src/dialogs/changetextscasedialog.cpp:32
 msgid "Change Case"
 msgstr "Modifica maiuscole/minuscole"
 
-#: ../src/dialogs/changetextscasedialog.cpp:34
+#: ../../src/dialogs/changetextscasedialog.cpp:34
 msgctxt "@title:group"
 msgid "Change To"
 msgstr "Modifica in"
 
-#: ../src/dialogs/changetextscasedialog.cpp:38
+#: ../../src/dialogs/changetextscasedialog.cpp:38
 msgid "Lower case"
 msgstr "Minuscolo"
 
-#: ../src/dialogs/changetextscasedialog.cpp:43
+#: ../../src/dialogs/changetextscasedialog.cpp:43
 msgid "Upper case"
 msgstr "Maiuscolo"
 
-#: ../src/dialogs/changetextscasedialog.cpp:47
+#: ../../src/dialogs/changetextscasedialog.cpp:47
 msgid "Title case"
 msgstr "Maiuscolo sulle parole principali"
 
-#: ../src/dialogs/changetextscasedialog.cpp:51
+#: ../../src/dialogs/changetextscasedialog.cpp:51
 msgid "Sentence case"
 msgstr "Maiuscolo sulla frase"
 
-#: ../src/dialogs/changetextscasedialog.cpp:55
+#: ../../src/dialogs/changetextscasedialog.cpp:55
 msgid "Convert to lower case first"
 msgstr "Converti in minuscolo prima"
 
-#: ../src/dialogs/checkerrorsdialog.cpp:30
+#: ../../src/dialogs/checkerrorsdialog.cpp:30
 msgid "Check Errors"
 msgstr "Controllo errori"
 
-#: ../src/dialogs/checkerrorsdialog.cpp:32
+#: ../../src/dialogs/checkerrorsdialog.cpp:32
 msgctxt "@title:group"
 msgid "Errors to Check"
 msgstr "Errori da controllare"
 
-#: ../src/dialogs/checkerrorsdialog.cpp:35
+#: ../../src/dialogs/checkerrorsdialog.cpp:35
 msgctxt "@title:group Miscellaneous settings"
 msgid "Miscellaneous"
 msgstr "Varie"
 
-#: ../src/dialogs/checkerrorsdialog.cpp:38
+#: ../../src/dialogs/checkerrorsdialog.cpp:38
 msgid "Clear other errors"
 msgstr "Pulisci altri errori"
 
-#: ../src/dialogs/checkerrorsdialog.cpp:42
+#: ../../src/dialogs/checkerrorsdialog.cpp:42
 msgid "Clear user marks"
 msgstr "Pulisci marcatori utente"
 
-#: ../src/dialogs/clearerrorsdialog.cpp:31
+#: ../../src/dialogs/clearerrorsdialog.cpp:31
 msgid "Clear Errors"
 msgstr "Pulisci errori"
 
-#: ../src/dialogs/clearerrorsdialog.cpp:33
+#: ../../src/dialogs/clearerrorsdialog.cpp:33
 msgctxt "@title:group"
 msgid "Errors to Clear"
 msgstr "Errori da ripulire"
 
-#: ../src/dialogs/durationlimitsdialog.cpp:33
+#: ../../src/dialogs/durationlimitsdialog.cpp:33
 msgctxt "@title:group"
 msgid "Minimum Duration"
 msgstr "Durata minima"
 
-#: ../src/dialogs/durationlimitsdialog.cpp:39
+#: ../../src/dialogs/durationlimitsdialog.cpp:39
 msgid "Expand duration to:"
 msgstr "Estendi la durata a:"
 
-#: ../src/dialogs/durationlimitsdialog.cpp:46
+#: ../../src/dialogs/durationlimitsdialog.cpp:46
 msgctxt "@title:group"
 msgid "Maximum Duration"
 msgstr "Durata massima"
 
-#: ../src/dialogs/durationlimitsdialog.cpp:52
+#: ../../src/dialogs/durationlimitsdialog.cpp:52
 msgid "Shrink duration to:"
 msgstr "Restringi la durata a:"
 
-#: ../src/dialogs/fixoverlappingtimesdialog.cpp:36
+#: ../../src/dialogs/fixoverlappingtimesdialog.cpp:36
 msgid " msecs"
 msgstr " msec"
 
-#: ../src/dialogs/fixoverlappingtimesdialog.cpp:42
+#: ../../src/dialogs/fixoverlappingtimesdialog.cpp:42
 msgid "Minimum interval between lines:"
 msgstr "Intervallo minimo tra le righe:"
 
-#: ../src/dialogs/fixpunctuationdialog.cpp:30
+#: ../../src/dialogs/fixpunctuationdialog.cpp:30
 msgid "Fix Punctuation"
 msgstr "Correggi la punteggiatura"
 
-#: ../src/dialogs/fixpunctuationdialog.cpp:35
+#: ../../src/dialogs/fixpunctuationdialog.cpp:35
 msgid "Fix and cleanup spaces"
 msgstr "Correggi e pulisci spaziatura"
 
-#: ../src/dialogs/fixpunctuationdialog.cpp:39
+#: ../../src/dialogs/fixpunctuationdialog.cpp:39
 msgid "Fix quotes and double quotes"
 msgstr "Correggi virgolette e doppi apici"
 
-#: ../src/dialogs/fixpunctuationdialog.cpp:43
+#: ../../src/dialogs/fixpunctuationdialog.cpp:43
 msgid "Fix English 'I' pronoun"
 msgstr "Correggi il pronome inglese «I»"
 
-#: ../src/dialogs/fixpunctuationdialog.cpp:47
+#: ../../src/dialogs/fixpunctuationdialog.cpp:47
 msgid "Add ellipisis indicating non finished lines"
 msgstr "Aggiungi puntini di sospensione per indicare le righe non finite"
 
-#: ../src/dialogs/insertlinedialog.cpp:26
+#: ../../src/dialogs/insertlinedialog.cpp:26
 msgid "Insert Line Before Current"
 msgstr "Inserisci riga prima della corrente"
 
-#: ../src/dialogs/insertlinedialog.cpp:26
+#: ../../src/dialogs/insertlinedialog.cpp:26
 msgid "Insert Line After Current"
 msgstr "Inserisci riga dopo la corrente"
 
-#: ../src/dialogs/insertlinedialog.cpp:26
+#: ../../src/dialogs/insertlinedialog.cpp:26
 msgid "Insert Into"
 msgstr "Inserisci in"
 
-#: ../src/dialogs/joinsubtitlesdialog.cpp:44
+#: ../../src/dialogs/joinsubtitlesdialog.cpp:44
 msgid "Shift subtitle forwards before append"
 msgstr "Sposta sottotitoli in avanti prima di aggiungere"
 
-#: ../src/dialogs/joinsubtitlesdialog.cpp:51
-#: ../src/dialogs/splitsubtitledialog.cpp:50
+#: ../../src/dialogs/joinsubtitlesdialog.cpp:51
+#: ../../src/dialogs/splitsubtitledialog.cpp:50
 msgid "Set from video length"
 msgstr "Imposta in base alla lunghezza del video"
 
-#: ../src/dialogs/opensubtitledialog.cpp:42
+#: ../../src/dialogs/opensubtitledialog.cpp:43
 msgid "Open Subtitle"
 msgstr "Apri sottotitoli"
 
-#: ../src/dialogs/opensubtitledialog.cpp:42
+#: ../../src/dialogs/opensubtitledialog.cpp:43
 msgid "Open Translation Subtitle"
 msgstr "Apri traduzione sottotitoli"
 
-#: ../src/dialogs/opensubtitledialog.cpp:54
-#: ../src/dialogs/savesubtitledialog.cpp:91
-#: ../src/dialogs/selectablesubtitledialog.cpp:69
+#: ../../src/dialogs/opensubtitledialog.cpp:55
+#: ../../src/dialogs/savesubtitledialog.cpp:91
+#: ../../src/dialogs/selectablesubtitledialog.cpp:69
 msgid "Encoding:"
 msgstr "Codifica:"
 
-#: ../src/dialogs/opensubtitledialog.cpp:96
+#: ../../src/dialogs/opensubtitledialog.cpp:98
 msgid "All Supported"
 msgstr "Tutti i formati riconosciuti"
 
-#: ../src/dialogs/removelinesdialog.cpp:26
+#: ../../src/dialogs/removelinesdialog.cpp:26
 msgid "Remove Selected Lines"
 msgstr "Rimuovi le righe selezionate"
 
-#: ../src/dialogs/removelinesdialog.cpp:26
+#: ../../src/dialogs/removelinesdialog.cpp:26
 msgid "Remove From"
 msgstr "Rimuovi da"
 
-#: ../src/dialogs/savesubtitledialog.cpp:47
+#: ../../src/dialogs/savesubtitledialog.cpp:47
 msgid "Save Subtitle"
 msgstr "Salva sottotitoli"
 
-#: ../src/dialogs/savesubtitledialog.cpp:47
+#: ../../src/dialogs/savesubtitledialog.cpp:47
 msgid "Save Translation Subtitle"
 msgstr "Salva traduzione sottotitoli"
 
-#: ../src/dialogs/savesubtitledialog.cpp:80
+#: ../../src/dialogs/savesubtitledialog.cpp:80
 msgid "EOL:"
 msgstr "Fine riga:"
 
-#: ../src/dialogs/selectablesubtitledialog.cpp:52
+#: ../../src/dialogs/selectablesubtitledialog.cpp:52
 msgid "Path:"
 msgstr "Percorso:"
 
-#: ../src/dialogs/selectablesubtitledialog.cpp:57
+#: ../../src/dialogs/selectablesubtitledialog.cpp:57
 msgid "Select subtitle"
 msgstr "Seleziona sottotitolo"
 
-#: ../src/dialogs/selectablesubtitledialog.h:45
+#: ../../src/dialogs/selectablesubtitledialog.h:45
 msgid "Subtitle"
 msgstr "Sottotitolo"
 
-#: ../src/dialogs/shifttimesdialog.cpp:32
+#: ../../src/dialogs/shifttimesdialog.cpp:32
 msgid "Shift"
 msgstr "Sposta"
 
-#: ../src/dialogs/shifttimesdialog.cpp:34
+#: ../../src/dialogs/shifttimesdialog.cpp:34
 msgctxt "@title:group"
 msgid "Shifting"
 msgstr "Spostamento"
 
-#: ../src/dialogs/shifttimesdialog.cpp:38
+#: ../../src/dialogs/shifttimesdialog.cpp:38
 msgid "Forwards (+)"
 msgstr "Sposta avanti (+)"
 
-#: ../src/dialogs/shifttimesdialog.cpp:39
+#: ../../src/dialogs/shifttimesdialog.cpp:39
 msgid "Backwards (−)"
 msgstr "Sposta indietro (-)"
 
-#: ../src/dialogs/smarttextsadjustdialog.cpp:42
+#. i18n: file: ../../src/configs/errorsconfigwidget.ui:36
+#. i18n: ectx: property (suffix), widget (QSpinBox, kcfg_MaxCharacters)
+#: ../../src/dialogs/smarttextsadjustdialog.cpp:39 rc.cpp:6
+msgid " characters"
+msgstr " caratteri"
+
+#: ../../src/dialogs/smarttextsadjustdialog.cpp:42
 msgid "Minimum length for line break:"
 msgstr "Lunghezza minima per le interruzioni di riga:"
 
-#: ../src/dialogs/splitsubtitledialog.cpp:42
+#: ../../src/dialogs/splitsubtitledialog.cpp:42
 msgid "Split Subtitle"
 msgstr "Dividi sottotitolo"
 
-#: ../src/dialogs/splitsubtitledialog.cpp:55
+#: ../../src/dialogs/splitsubtitledialog.cpp:55
 msgid "Split time:"
 msgstr "Dividi temporizzazione:"
 
-#: ../src/dialogs/splitsubtitledialog.cpp:59
+#: ../../src/dialogs/splitsubtitledialog.cpp:59
 msgid "Shift new part backwards after split"
 msgstr "Sposta la nuova parte indietro dopo la divisione"
 
-#: ../src/dialogs/syncsubtitlesdialog.cpp:30
+#: ../../src/dialogs/syncsubtitlesdialog.cpp:30
 msgid "Synchronize with Subtitle"
 msgstr "Sincronizza con sottotitolo"
 
-#: ../src/dialogs/syncsubtitlesdialog.cpp:32
+#: ../../src/dialogs/syncsubtitlesdialog.cpp:32
 msgid "Reference Subtitle"
 msgstr "Sottotitolo di riferimento"
 
-#: ../src/dialogs/syncsubtitlesdialog.cpp:34
+#: ../../src/dialogs/syncsubtitlesdialog.cpp:34
 msgctxt "@title:group"
 msgid "Synchronization Mode"
 msgstr "Modalità di sincronizzazione"
 
-#: ../src/dialogs/syncsubtitlesdialog.cpp:37
+#: ../../src/dialogs/syncsubtitlesdialog.cpp:37
 msgid "Adjust to reference's first and last lines"
 msgstr "Regola in base alla prima ed ultima riga di riferimento"
 
-#: ../src/dialogs/syncsubtitlesdialog.cpp:41
+#: ../../src/dialogs/syncsubtitlesdialog.cpp:41
 msgid "Copy timing information from reference line by line"
 msgstr "Copia informazioni temporali riga per riga dal riferimento"
 
-#: ../src/dialogs/translatedialog.cpp:50
+#: ../../src/dialogs/translatedialog.cpp:50
 msgid "Input language:"
 msgstr "Lingua di inserimento:"
 
-#: ../src/dialogs/translatedialog.cpp:66
+#: ../../src/dialogs/translatedialog.cpp:66
 msgid "Output language:"
 msgstr "Lingua di uscita:"
 
-#: ../src/formats/textdemux/textdemux.cpp:44
+#: ../../src/formats/textdemux/textdemux.cpp:44
 msgid "Importing Subtitle Stream"
 msgstr "Importazione traccia di sottotitoli"
 
-#: ../src/formats/textdemux/textdemux.cpp:101
+#: ../../src/formats/textdemux/textdemux.cpp:101
 msgid ""
 "Subtitle demux failed %1: %2\n"
 "%3"
 msgstr ""
 
-#. i18n: ectx: property (windowTitle), widget (QDialog, VobSubInputInitDialog)
-#. i18n: ectx: property (windowTitle), widget (QDialog, VobSubInputProcessDialog)
-#: ../src/formats/vobsub/vobsubinputinitdialog.ui:14
-#: ../src/formats/vobsub/vobsubinputprocessdialog.ui:14
-msgid "VobSub Import"
-msgstr "Importa VobSub"
-
-#. i18n: ectx: property (text), widget (QLabel, labelStream)
-#: ../src/formats/vobsub/vobsubinputinitdialog.ui:20
-msgid "Stream / Language"
-msgstr "Traccia/lingua"
-
-#. i18n: ectx: property (title), widget (QGroupBox, grpPostProc)
-#: ../src/formats/vobsub/vobsubinputinitdialog.ui:53
-msgid "Post Processing"
-msgstr "Post-elaborazione"
-
-#. i18n: ectx: property (text), widget (QCheckBox, ppSpaceNumber)
-#: ../src/formats/vobsub/vobsubinputinitdialog.ui:59
-msgid "Fix space between numbers"
-msgstr "Correggi spazio tra i numeri"
-
-#. i18n: ectx: property (text), widget (QCheckBox, ppSpacePunct)
-#: ../src/formats/vobsub/vobsubinputinitdialog.ui:69
-msgid "Fix space around punctuation (.,;:?!)"
-msgstr "Correggi spazio tra la punteggiatura (.,;:?!)"
-
-#. i18n: ectx: property (text), widget (QCheckBox, ppSpaceParen)
-#: ../src/formats/vobsub/vobsubinputinitdialog.ui:79
-msgid "Fix space around quotes and parentheses (\"()[]{})"
-msgstr "Correggi spazio tra virgolette e parentesi (\"()[]{})"
-
-#. i18n: ectx: property (text), widget (QCheckBox, ppAposQuote)
-#: ../src/formats/vobsub/vobsubinputinitdialog.ui:89
-msgid "Fix double apostrophes/quotes"
-msgstr "Correggi apostrofi/virgolette doppie"
-
-#. i18n: ectx: property (text), widget (QCheckBox, ppCharsOCR)
-#: ../src/formats/vobsub/vobsubinputinitdialog.ui:99
-msgid "Fix i <-> l, 0 <-> O mistakes"
-msgstr "Correggi errori i <-> l, 0 <-> O"
-
-#: ../src/formats/vobsub/vobsubinputprocessdialog.cpp:594
+#: ../../src/formats/vobsub/vobsubinputprocessdialog.cpp:594
 msgid "VobSub Error"
 msgstr "Errori VobSub"
 
-#. i18n: ectx: property (title), widget (QGroupBox, grpText)
-#: ../src/formats/vobsub/vobsubinputprocessdialog.ui:26
-msgid "Enter character(s)"
-msgstr "Inserisci carattere/i"
-
-#. i18n: ectx: property (text), widget (QLabel, symbolLabel)
-#: ../src/formats/vobsub/vobsubinputprocessdialog.ui:35
-msgid "S&ymbols:"
-msgstr "S&imboli:"
-
-#. i18n: ectx: property (toolTip), widget (QSpinBox, symbolCount)
-#: ../src/formats/vobsub/vobsubinputprocessdialog.ui:45
-msgid "Up/Down: change value"
-msgstr "Su/giù: cambia valore"
-
-#. i18n: ectx: property (toolTip), widget (QPushButton, styleBold)
-#: ../src/formats/vobsub/vobsubinputprocessdialog.ui:71
-msgid "Ctrl+B"
-msgstr "Ctrl+B"
-
-#. i18n: ectx: property (toolTip), widget (QPushButton, styleItalic)
-#: ../src/formats/vobsub/vobsubinputprocessdialog.ui:91
-msgid "Ctrl+I"
-msgstr "Ctrl+I"
-
-#. i18n: ectx: property (toolTip), widget (QPushButton, styleUnderline)
-#: ../src/formats/vobsub/vobsubinputprocessdialog.ui:111
-msgid "Ctrl+U"
-msgstr "Ctrl+U"
-
-#. i18n: ectx: property (text), widget (QPushButton, btnOk)
-#: ../src/formats/vobsub/vobsubinputprocessdialog.ui:146
-msgid "OK"
-msgstr "Ok"
-
-#. i18n: ectx: property (toolTip), widget (QPushButton, btnPrevImage)
-#: ../src/formats/vobsub/vobsubinputprocessdialog.ui:202
-msgid "Ctrl+Shift+Left"
-msgstr "Ctrl+Shift+Sinistra"
-
-#. i18n: ectx: property (text), widget (QPushButton, btnPrevImage)
-#: ../src/formats/vobsub/vobsubinputprocessdialog.ui:205
-msgid "Prev Image"
-msgstr "Immagine precedente"
-
-#. i18n: ectx: property (toolTip), widget (QPushButton, btnPrevSymbol)
-#: ../src/formats/vobsub/vobsubinputprocessdialog.ui:219
-msgid "Ctrl+Left"
-msgstr "Ctrl+Sinistra"
-
-#. i18n: ectx: property (text), widget (QPushButton, btnPrevSymbol)
-#: ../src/formats/vobsub/vobsubinputprocessdialog.ui:222
-msgid "Prev Symbol"
-msgstr "Simbolo precedente"
-
-#. i18n: ectx: property (toolTip), widget (QPushButton, btnNextSymbol)
-#: ../src/formats/vobsub/vobsubinputprocessdialog.ui:236
-msgid "Ctrl+Right"
-msgstr "Ctrl+Destra"
-
-#. i18n: ectx: property (text), widget (QPushButton, btnNextSymbol)
-#: ../src/formats/vobsub/vobsubinputprocessdialog.ui:239
-msgid "Next Symbol"
-msgstr "Simbolo successivo"
-
-#. i18n: ectx: property (toolTip), widget (QPushButton, btnNextImage)
-#: ../src/formats/vobsub/vobsubinputprocessdialog.ui:250
-msgid "Ctrl+Shift+Right"
-msgstr "Ctrl+Shift+Destra"
-
-#. i18n: ectx: property (text), widget (QPushButton, btnNextImage)
-#: ../src/formats/vobsub/vobsubinputprocessdialog.ui:253
-msgid "Next Image"
-msgstr "Immagine successiva"
-
-#. i18n: ectx: property (text), widget (QPushButton, btnAbort)
-#: ../src/formats/vobsub/vobsubinputprocessdialog.ui:280
-msgid "Abort"
-msgstr "Interrompi"
-
-#. i18n: ectx: property (title), widget (QGroupBox, grpPreview)
-#: ../src/formats/vobsub/vobsubinputprocessdialog.ui:303
-msgid "Subtitle Image"
-msgstr "Immagine sottotitolo"
-
-#. i18n: ectx: property (format), widget (QProgressBar, progressBar)
-#: ../src/formats/vobsub/vobsubinputprocessdialog.ui:325
-#, no-c-format
-msgid "%v/%m"
-msgstr "%v/%m"
-
-#: ../src/helpers/languagecode.cpp:420
+#: ../../src/helpers/languagecode.cpp:420
 msgid "Unknown"
 msgstr "Sconosciuto"
 
-#: ../src/lineswidget.cpp:191
+#: ../../src/lineswidget.cpp:185
 msgid "<b>Observations:</b>"
 msgstr "<b>Osservazioni:</b>"
 
-#: ../src/lineswidget.cpp:218
+#: ../../src/lineswidget.cpp:212
 msgctxt "@title:column Subtitle line number"
 msgid "Line"
 msgstr "Riga"
 
-#: ../src/lineswidget.cpp:219
+#: ../../src/lineswidget.cpp:213
 msgctxt "@title:column"
 msgid "Show Time"
 msgstr "Orario visualizzazione"
 
-#: ../src/lineswidget.cpp:220
+#: ../../src/lineswidget.cpp:214
 msgctxt "@title:column"
 msgid "Hide Time"
 msgstr "Orario per nascondere"
 
-#: ../src/lineswidget.cpp:221
+#: ../../src/lineswidget.cpp:215
 msgctxt "@title:column Subtitle line (primary) text"
 msgid "Text"
 msgstr "Testo"
 
-#: ../src/lineswidget.cpp:222
+#: ../../src/lineswidget.cpp:216
 msgctxt "@title:column Subtitle line translation text"
 msgid "Translation"
 msgstr "Traduzione"
 
-#: ../src/lineswidget.cpp:1112
+#. i18n: file: ../../src/configs/errorsconfigwidget.ui:17
+#. i18n: ectx: property (title), widget (QGroupBox, m_grpGeneral)
+#: ../../src/lineswidget.cpp:1106 rc.cpp:3
+msgid "Texts"
+msgstr "Testi"
+
+#: ../../src/lineswidget.cpp:1117
 msgid "Styles"
 msgstr "Stili"
 
-#: ../src/lineswidget.cpp:1121
+#: ../../src/lineswidget.cpp:1126
 msgid "Times"
 msgstr "Orari"
 
-#: ../src/lineswidget.cpp:1133
+#: ../../src/lineswidget.cpp:1138
 msgid "Errors"
 msgstr "Errori"
 
-#: ../src/main.cpp:66
+#: ../../src/main.cpp:65
 msgid "Subtitle Composer"
 msgstr "Subtitle Composer"
 
-#: ../src/main.cpp:68
+#: ../../src/main.cpp:67
 msgid "A KDE subtitle editor."
 msgstr "Un editor di sottotitoli basato su tecnologie KDE"
 
-#: ../src/main.cpp:75
+#: ../../src/main.cpp:74
 msgid "Mladen Milinković"
 msgstr "Mladen Milinković"
 
-#: ../src/main.cpp:75
+#: ../../src/main.cpp:74
 msgid "Current Author & Maintainer"
 msgstr "Autore e responsabile attuale"
 
-#: ../src/main.cpp:76
+#: ../../src/main.cpp:75
 msgid "Sergio Pistone"
 msgstr "Sergio Pistone"
 
-#: ../src/main.cpp:76
+#: ../../src/main.cpp:75
 msgid "Original Author"
 msgstr "Autore originale"
 
-#: ../src/main.cpp:78
+#: ../../src/main.cpp:77 rc.cpp:791
 msgctxt "NAME OF TRANSLATORS"
 msgid "Your names"
 msgstr "Luigi Toscano,Alessandro Polverini"
 
-#: ../src/main.cpp:78
+#: ../../src/main.cpp:77 rc.cpp:792
 msgctxt "EMAIL OF TRANSLATORS"
 msgid "Your emails"
 msgstr "luigi.toscano@tiscali.it,alex@nibbles.it"
 
-#: ../src/main.cpp:80
-msgid "Croatian Translator"
-msgstr "Traduttore croato"
-
-#: ../src/main.cpp:81
-msgid "Bulgarian Translator"
-msgstr "Traduttore bulgaro"
-
-#: ../src/main.cpp:82 ../src/main.cpp:83 ../src/main.cpp:84 ../src/main.cpp:85
-#: ../src/main.cpp:86 ../src/main.cpp:87 ../src/main.cpp:88 ../src/main.cpp:89
-#: ../src/main.cpp:90 ../src/main.cpp:91 ../src/main.cpp:92
-msgid "Translator"
-msgstr "Traduttore"
-
-#: ../src/main.cpp:93
+#: ../../src/main.cpp:79
 msgid "code contributions"
 msgstr "contributi al codice"
 
-#: ../src/main.cpp:94
-msgid "code contributions, Arch Linux packaging, German translation"
+#: ../../src/main.cpp:80
+#, fuzzy
+msgid "code contributions, Arch Linux packaging"
 msgstr ""
 "contributi al codice, pacchettizzazione per Arch Linux, traduzione tedesca"
 
-#: ../src/main.cpp:96
+#: ../../src/main.cpp:82
 msgid "All people who have contributed and I have forgotten to mention"
 msgstr "Tutte le persone che hanno contribuito e che ho dimenticato di citare"
 
-#: ../src/main.cpp:114
+#: ../../src/main.cpp:100
 msgid "Open location as primary subtitle"
 msgstr "Apri posizione come sottotitolo principale"
 
-#: ../src/main.cpp:115
+#: ../../src/main.cpp:101
 msgid "Open location as translation subtitle"
 msgstr "Apri posizione come sottotitolo di traduzione"
 
-#: ../src/mainwindow.cpp:46
+#: ../../src/mainwindow.cpp:46
 msgid "Waveform"
 msgstr ""
 
-#: ../src/mainwindow.cpp:60
+#: ../../src/mainwindow.cpp:60
 msgid "Video Player"
 msgstr "Riproduttore video"
 
-#: ../src/playerwidget.cpp:100
+#: ../../src/playerwidget.cpp:100
 msgid "<b>Position</b>"
 msgstr "<b>Posizione</b>"
 
-#: ../src/playerwidget.cpp:108
+#: ../../src/playerwidget.cpp:108
 msgid "<b>Length</b>"
 msgstr "<b>Lunghezza</b>"
 
-#: ../src/playerwidget.cpp:113
+#: ../../src/playerwidget.cpp:113
 msgid "<b>FPS</b>"
 msgstr "<b>FPS</b>"
 
-#: ../src/playerwidget.cpp:119
+#: ../../src/playerwidget.cpp:119
 msgid "<b>Playback Rate</b>"
 msgstr ""
 
-#: ../src/playerwidget.cpp:778 ../src/playerwidget.cpp:779
-#: ../src/playerwidget.cpp:780 ../src/playerwidget.cpp:781
-#: ../src/playerwidget.cpp:861 ../src/playerwidget.cpp:876
-#: ../src/playerwidget.cpp:884 ../src/playerwidget.cpp:890
+#. i18n: file: ../../src/configs/playerconfigwidget.ui:46
+#. i18n: ectx: property (text), widget (QCheckBox, kcfg_ShowPositionTimeEdit)
+#: ../../src/playerwidget.cpp:492 rc.cpp:93
+msgid "Show editable position control"
+msgstr "Mostra controllo di modifica posizione"
+
+#: ../../src/playerwidget.cpp:786 ../../src/playerwidget.cpp:787
+#: ../../src/playerwidget.cpp:788 ../../src/playerwidget.cpp:789
+#: ../../src/playerwidget.cpp:869 ../../src/playerwidget.cpp:884
+#: ../../src/playerwidget.cpp:892 ../../src/playerwidget.cpp:898
 msgid "<i>Unknown</i>"
 msgstr "<i>Sconosciuto</i>"
 
-#: ../src/playerwidget.cpp:791
+#: ../../src/playerwidget.cpp:799
 msgid "<qt>There was an error opening media file %1.</qt>"
 msgstr ""
 "<qt>C'è stato un errrore durante l'apertura del file multimediale %1</qt>"
 
-#: ../src/playerwidget.cpp:823 ../src/playerwidget.cpp:825
+#: ../../src/playerwidget.cpp:831 ../../src/playerwidget.cpp:833
 msgid "Unexpected error when playing file."
 msgstr "Errore inaspettato durante la riproduzione del file."
 
-#: ../src/playerwidget.cpp:823 ../src/playerwidget.cpp:825
+#: ../../src/playerwidget.cpp:831 ../../src/playerwidget.cpp:833
 msgid "Error Playing File"
 msgstr "Errore durante la riproduzione del file"
 
-#. i18n: ectx: label, entry (DefaultSubtitlesEncoding), group (General)
-#: ../src/scconfig.kcfg:10
-msgid "Default Subtitles Encoding"
-msgstr "Codifica predefinita per i sottotitoli"
-
-#. i18n: ectx: label, entry (SeekOffsetOnDoubleClick), group (General)
-#: ../src/scconfig.kcfg:14
-msgid "Seek Offset On Double Click"
-msgstr ""
-
-#. i18n: ectx: label, entry (JumpLineOffset), group (General)
-#: ../src/scconfig.kcfg:18
-#, fuzzy
-msgid "Jump to prev/next line offset"
-msgstr "Salta alla riga successiva"
-
-#. i18n: ectx: label, entry (UnpauseOnDoubleClick), group (General)
-#: ../src/scconfig.kcfg:22
-msgid "Unpause On Double Click"
-msgstr "Annulla la pausa al doppio clic"
-
-#. i18n: ectx: label, entry (AutomaticVideoLoad), group (General)
-#: ../src/scconfig.kcfg:26
-msgid "Automatic Video Load"
-msgstr "Caricamento automatico video"
-
-#. i18n: ectx: label, entry (LinesQuickShiftAmount), group (General)
-#: ../src/scconfig.kcfg:31
-msgid "Lines Quick Shift Amount"
-msgstr ""
-
-#. i18n: ectx: label, entry (GrabbedPositionCompensation), group (General)
-#: ../src/scconfig.kcfg:35
-msgid "Grabbed Position Compensation"
-msgstr ""
-
-#. i18n: ectx: label, entry (LineDuration), group (General)
-#: ../src/scconfig.kcfg:40
-msgid "Default subtitle line duration"
-msgstr "Durata predefinita di una riga di sottotitoli"
-
-#. i18n: ectx: label, entry (LinePause), group (General)
-#: ../src/scconfig.kcfg:44
-msgid "Default duration between subtitle lines"
-msgstr "Durata predefinita tra righe di sottotitolo"
-
-#. i18n: ectx: label, entry (MaxCharacters), group (Error Check)
-#: ../src/scconfig.kcfg:51
-msgid "Maximum number of characters"
-msgstr "Numero massimo di caratteri"
-
-#. i18n: ectx: label, entry (MaxLines), group (Error Check)
-#: ../src/scconfig.kcfg:55
-msgid "Maximum number of lines"
-msgstr "Numero massimo di righe"
-
-#. i18n: ectx: label, entry (MinDuration), group (Error Check)
-#: ../src/scconfig.kcfg:60
-msgid "Minimum duration"
-msgstr "Durata minima"
-
-#. i18n: ectx: label, entry (MaxDuration), group (Error Check)
-#: ../src/scconfig.kcfg:64
-msgid "Maximum duration"
-msgstr "Durata massima"
-
-#. i18n: ectx: label, entry (MinDurationPerCharacter), group (Error Check)
-#: ../src/scconfig.kcfg:69
-msgid "Minimum duration per character"
-msgstr "Durata minima per singolo carattere"
-
-#. i18n: ectx: label, entry (MaxDurationPerCharacter), group (Error Check)
-#: ../src/scconfig.kcfg:73
-msgid "Maximum duration per character"
-msgstr "Durata massima per singolo carattere"
-
-#. i18n: ectx: label, entry (DefaultLanguage), group (Spelling)
-#: ../src/scconfig.kcfg:85
-msgid "Default Language"
-msgstr "Lingua predefinita"
-
-#. i18n: ectx: label, entry (DefaultClient), group (Spelling)
-#: ../src/scconfig.kcfg:89
-msgid "Default client"
-msgstr "Client predefinito"
-
-#. i18n: ectx: label, entry (CheckUppercase), group (Spelling)
-#: ../src/scconfig.kcfg:93
-msgid "Check uppercase"
-msgstr "Controlla maiuscole"
-
-#. i18n: ectx: label, entry (SkipRunTogether), group (Spelling)
-#: ../src/scconfig.kcfg:97
-msgid "Skip Run Together"
-msgstr ""
-
-#. i18n: ectx: label, entry (wfInnerColor), group (Waveform Widget)
-#: ../src/scconfig.kcfg:104
-msgid "Waveform Inner Color"
-msgstr ""
-
-#. i18n: ectx: label, entry (wfOuterColor), group (Waveform Widget)
-#: ../src/scconfig.kcfg:108
-#, fuzzy
-msgid "Waveform Outer Color"
-msgstr "Colore contorno:"
-
-#. i18n: ectx: label, entry (wfSmoothScroll), group (Waveform Widget)
-#: ../src/scconfig.kcfg:112
-#, fuzzy
-msgid "Waveform Smooth Scrolling"
-msgstr "Impostazioni del riproduttore video"
-
-#. i18n: ectx: label, entry (wfSubBackground), group (Waveform Widget)
-#: ../src/scconfig.kcfg:116
-msgid "Waveform Subtitle Background Color"
-msgstr ""
-
-#. i18n: ectx: label, entry (wfSubBorder), group (Waveform Widget)
-#: ../src/scconfig.kcfg:120
-msgid "Waveform Subtitle Border Color"
-msgstr ""
-
-#. i18n: ectx: label, entry (wfSubBorderWidth), group (Waveform Widget)
-#: ../src/scconfig.kcfg:124
-msgid "Waveform Subtitle Border Width"
-msgstr ""
-
-#. i18n: ectx: label, entry (wfSelBackground), group (Waveform Widget)
-#: ../src/scconfig.kcfg:128
-msgid "Waveform Selected Subtitle Background Color"
-msgstr ""
-
-#. i18n: ectx: label, entry (wfSelBorder), group (Waveform Widget)
-#: ../src/scconfig.kcfg:132
-msgid "Waveform Selected Subtitle Border Color"
-msgstr ""
-
-#. i18n: ectx: label, entry (wfFontFamily), group (Waveform Widget)
-#. i18n: ectx: label, entry (FontFamily), group (VideoPlayer)
-#: ../src/scconfig.kcfg:136 ../src/scconfig.kcfg:184
-msgid "Font Family"
-msgstr "Famiglia del tipo di carattere"
-
-#. i18n: ectx: label, entry (wfSubNumberFontSize), group (Waveform Widget)
-#: ../src/scconfig.kcfg:140
-msgid "Subtitle Number Font Size"
-msgstr "Dimensione carattere del numero del sottotitolo"
-
-#. i18n: ectx: label, entry (wfSubNumberColor), group (Waveform Widget)
-#: ../src/scconfig.kcfg:144
-msgid "Subtitle Number Font Color"
-msgstr "Colore caratttere del numero del sottotitolo"
-
-#. i18n: ectx: label, entry (wfSubTextFontSize), group (Waveform Widget)
-#: ../src/scconfig.kcfg:148
-msgid "Subtitle Text Font Size"
-msgstr "Dimensione carattere del testo del sottotitolo"
-
-#. i18n: ectx: label, entry (wfSubTextColor), group (Waveform Widget)
-#: ../src/scconfig.kcfg:152
-msgid "Subtitle Text Font Color"
-msgstr "Colore carattere del testo del sottotitolo"
-
-#. i18n: ectx: label, entry (wfMouseLocation), group (Waveform Widget)
-#: ../src/scconfig.kcfg:156
-msgid "Mouse Location Line Color"
-msgstr "Colore riga alla posizione del mouse"
-
-#. i18n: ectx: label, entry (wfPlayLocation), group (Waveform Widget)
-#: ../src/scconfig.kcfg:160
-msgid "Play Location Line Color"
-msgstr ""
-
-#. i18n: ectx: label, entry (PlayerBackend), group (VideoPlayer)
-#: ../src/scconfig.kcfg:167
-msgid "VideoPlayer Backend"
-msgstr "Motore di riproduzione video"
-
-#. i18n: ectx: label, entry (SeekJumpLength), group (VideoPlayer)
-#: ../src/scconfig.kcfg:171
-msgid "Jump length on seek"
-msgstr "Velocità in avanzamento rapido"
-
-#. i18n: ectx: label, entry (StepJumpLength), group (VideoPlayer)
-#: ../src/scconfig.kcfg:175
-#, fuzzy
-msgid "Jump length on frame step"
-msgstr "Velocità in avanzamento rapido"
-
-#. i18n: ectx: label, entry (ShowPositionTimeEdit), group (VideoPlayer)
-#: ../src/scconfig.kcfg:179
-msgid "Show editable time position"
-msgstr "Mostra controllo di modifica posizione"
-
-#. i18n: ectx: label, entry (FontPointSize), group (VideoPlayer)
-#: ../src/scconfig.kcfg:188
-msgid "Font Size"
-msgstr "Dimensione carattere"
-
-#. i18n: ectx: label, entry (FontColor), group (VideoPlayer)
-#: ../src/scconfig.kcfg:192
-msgid "Font Color"
-msgstr "Colore carattere"
-
-#. i18n: ectx: label, entry (OutlineColor), group (VideoPlayer)
-#: ../src/scconfig.kcfg:196
-msgid "Outline Color"
-msgstr "Colore contorno"
-
-#. i18n: ectx: label, entry (OutlineWidth), group (VideoPlayer)
-#: ../src/scconfig.kcfg:200
-msgid "Outline Width"
-msgstr "Spessore contorno"
-
-#. i18n: ectx: label, entry (Antialias), group (VideoPlayer)
-#: ../src/scconfig.kcfg:204
-msgid "Font Antialiasing"
-msgstr "Antialiasing del carattere"
-
-#. i18n: ectx: label, entry (gstVideoSinkAuto), group (GStreamer)
-#: ../src/scconfig.kcfg:211
-msgid "Auto Video Sink"
-msgstr "Uscita video automatica"
-
-#. i18n: ectx: label, entry (gstVideoSink), group (GStreamer)
-#: ../src/scconfig.kcfg:215
-msgid "Video Sink"
-msgstr "Uscita video"
-
-#. i18n: ectx: label, entry (gstAudioSinkAuto), group (GStreamer)
-#: ../src/scconfig.kcfg:220
-msgid "Auto Audio Sink"
-msgstr "Uscita audio automatica"
-
-#. i18n: ectx: label, entry (gstAudioSink), group (GStreamer)
-#: ../src/scconfig.kcfg:224
-msgid "Audio Sink"
-msgstr "Uscita audio"
-
-#. i18n: ectx: label, entry (mpvCacheEnabled), group (MPV)
-#. i18n: ectx: label, entry (mpCacheEnabled), group (MPlayer)
-#: ../src/scconfig.kcfg:231 ../src/scconfig.kcfg:300
-msgid "Cache Enabled"
-msgstr "Cache abilitata"
-
-#. i18n: ectx: label, entry (mpvCacheSize), group (MPV)
-#. i18n: ectx: label, entry (mpCacheSize), group (MPlayer)
-#: ../src/scconfig.kcfg:235 ../src/scconfig.kcfg:304
-msgid "Cache Size (KB)"
-msgstr "Dimensione cache (KB)"
-
-#. i18n: ectx: label, entry (mpvAutoSyncEnabled), group (MPV)
-#. i18n: ectx: label, entry (mpAutoSyncEnabled), group (MPlayer)
-#: ../src/scconfig.kcfg:239 ../src/scconfig.kcfg:312
-msgid "Auto Sync Enabled"
-msgstr "Sincronizzazione automatica abilitata"
-
-#. i18n: ectx: label, entry (mpvAutoSyncFactor), group (MPV)
-#. i18n: ectx: label, entry (mpAutoSyncFactor), group (MPlayer)
-#: ../src/scconfig.kcfg:243 ../src/scconfig.kcfg:316
-msgid "Auto Sync Factor"
-msgstr "Fattore di sincronizzazione automatica"
-
-#. i18n: ectx: label, entry (mpvVideoOutputEnabled), group (MPV)
-#. i18n: ectx: label, entry (mpVideoOutputEnabled), group (MPlayer)
-#: ../src/scconfig.kcfg:248 ../src/scconfig.kcfg:321
-msgid "Video Output Enabled"
-msgstr "Uscita video abilitata"
-
-#. i18n: ectx: label, entry (mpvVideoOutput), group (MPV)
-#. i18n: ectx: label, entry (mpVideoOutput), group (MPlayer)
-#. i18n: ectx: label, entry (xineVideo), group (Xine)
-#: ../src/scconfig.kcfg:252 ../src/scconfig.kcfg:325 ../src/scconfig.kcfg:377
-msgid "Video Output"
-msgstr "Uscita video"
-
-#. i18n: ectx: label, entry (mpvHwDecodeEnabled), group (MPV)
-#: ../src/scconfig.kcfg:256
-msgid "Hardware Decode Enabled"
-msgstr "Decodifica hardware abilitata"
-
-#. i18n: ectx: label, entry (mpvHwDecode), group (MPV)
-#. i18n: ectx: label, entry (mpVdpau), group (MPlayer)
-#: ../src/scconfig.kcfg:260 ../src/scconfig.kcfg:329
-msgid "Hardware Decode"
-msgstr "Decodifica hardware"
-
-#. i18n: ectx: label, entry (mpvFrameDropping), group (MPV)
-#. i18n: ectx: label, entry (mpFrameDropping), group (MPlayer)
-#: ../src/scconfig.kcfg:264 ../src/scconfig.kcfg:333
-msgid "Frame Dropping"
-msgstr "Perdita di fotogrammi video"
-
-#. i18n: ectx: label, entry (mpvAudioOutputEnabled), group (MPV)
-#. i18n: ectx: label, entry (mpAudioOutputEnabled), group (MPlayer)
-#: ../src/scconfig.kcfg:269 ../src/scconfig.kcfg:342
-msgid "Audio Output Enabled"
-msgstr "Uscita audio abilitata"
-
-#. i18n: ectx: label, entry (mpvAudioOutput), group (MPV)
-#. i18n: ectx: label, entry (mpAudioOutput), group (MPlayer)
-#. i18n: ectx: label, entry (xineAudio), group (Xine)
-#: ../src/scconfig.kcfg:273 ../src/scconfig.kcfg:346 ../src/scconfig.kcfg:386
-msgid "Audio Output"
-msgstr "Uscita audio"
-
-#. i18n: ectx: label, entry (mpvAudioChannelsEnabled), group (MPV)
-#. i18n: ectx: label, entry (mpAudioChannelsEnabled), group (MPlayer)
-#: ../src/scconfig.kcfg:277 ../src/scconfig.kcfg:350
-msgid "Audio Channels Enabled"
-msgstr "Canali audio abilitati"
-
-#. i18n: ectx: label, entry (mpvAudioChannels), group (MPV)
-#. i18n: ectx: label, entry (mpAudioChannels), group (MPlayer)
-#: ../src/scconfig.kcfg:281 ../src/scconfig.kcfg:354
-msgid "Audio Channels"
-msgstr "Canali audio"
-
-#. i18n: ectx: label, entry (mpvVolumeAmplificationEnabled), group (MPV)
-#. i18n: ectx: label, entry (mpVolumeAmplificationEnabled), group (MPlayer)
-#: ../src/scconfig.kcfg:285 ../src/scconfig.kcfg:358
-msgid "Volume Amplification Enabled"
-msgstr "Amplificazione del volume abilitata"
-
-#. i18n: ectx: label, entry (mpvVolumeAmplification), group (MPV)
-#. i18n: ectx: label, entry (mpVolumeAmplification), group (MPlayer)
-#: ../src/scconfig.kcfg:289 ../src/scconfig.kcfg:362
-msgid "Volume Amplification"
-msgstr "Amplificazione del volume"
-
-#. i18n: ectx: label, entry (mpvVolumeNormalization), group (MPV)
-#. i18n: ectx: label, entry (mpVolumeNormalization), group (MPlayer)
-#: ../src/scconfig.kcfg:293 ../src/scconfig.kcfg:366
-msgid "Volume Normalization"
-msgstr "Normalizzazione volume"
-
-#. i18n: ectx: label, entry (mpExecutablePath), group (MPlayer)
-#: ../src/scconfig.kcfg:308
-msgid "mplayer executable path"
-msgstr "Percorso dell'eseguibile mplayer"
-
-#. i18n: ectx: label, entry (mpHardFrameDropping), group (MPlayer)
-#: ../src/scconfig.kcfg:337
-msgid "Hard Frame Dropping"
-msgstr "Perdita forte di fotogrammi video"
-
-#. i18n: ectx: label, entry (xineVideoEnabled), group (Xine)
-#: ../src/scconfig.kcfg:373
-msgid "Video Enabled"
-msgstr "Video abilitato"
-
-#. i18n: ectx: label, entry (xineAudioEnabled), group (Xine)
-#: ../src/scconfig.kcfg:382
-msgid "Audio Enabled"
-msgstr "Audio abilitato"
-
-#: ../src/scripting/scriptsmanager.cpp:66
+#: ../../src/scripting/scriptsmanager.cpp:67
 msgid "Installed Scripts"
 msgstr "Script installati"
 
-#: ../src/scripting/scriptsmanager.cpp:87
+#: ../../src/scripting/scriptsmanager.cpp:88
 msgid "Information"
 msgstr "Informazioni"
 
-#: ../src/scripting/scriptsmanager.cpp:94
+#: ../../src/scripting/scriptsmanager.cpp:95
 msgid "Warning"
 msgstr "Avviso"
 
-#: ../src/scripting/scriptsmanager.cpp:101
+#: ../../src/scripting/scriptsmanager.cpp:102
 msgid "Error"
 msgstr "Errore"
 
-#: ../src/scripting/scriptsmanager.cpp:164
-#: ../src/scripting/scriptsmanager.cpp:241
+#: ../../src/scripting/scriptsmanager.cpp:165
+#: ../../src/scripting/scriptsmanager.cpp:242
 msgid ""
 "You must enter an unused name to continue.\n"
 "Would you like to enter another name?"
@@ -2829,142 +2053,82 @@ msgstr ""
 "Devi inserire un nome inutilizzato per continuare.\n"
 "Vuoi scegliere un altro nome?"
 
-#: ../src/scripting/scriptsmanager.cpp:165
-#: ../src/scripting/scriptsmanager.cpp:242
+#: ../../src/scripting/scriptsmanager.cpp:166
+#: ../../src/scripting/scriptsmanager.cpp:243
 msgid "Name Already Used"
 msgstr "Nome già utilizzato"
 
-#: ../src/scripting/scriptsmanager.cpp:168
+#: ../../src/scripting/scriptsmanager.cpp:169
 msgid "Create New Script"
 msgstr "Crea nuovo script"
 
-#: ../src/scripting/scriptsmanager.cpp:168
-#: ../src/scripting/scriptsmanager.cpp:245
+#: ../../src/scripting/scriptsmanager.cpp:169
+#: ../../src/scripting/scriptsmanager.cpp:246
 msgid "Script name:"
 msgstr "Nome script:"
 
-#: ../src/scripting/scriptsmanager.cpp:181
+#: ../../src/scripting/scriptsmanager.cpp:182
 msgid "There was an error creating the file <b>%1</b>."
 msgstr "Si è verificato un errore durante la creazione del file <b>%1</b>."
 
-#: ../src/scripting/scriptsmanager.cpp:224
+#: ../../src/scripting/scriptsmanager.cpp:225
 msgid "Select Existing Script"
 msgstr "Seleziona uno script esistente"
 
-#: ../src/scripting/scriptsmanager.cpp:245
+#: ../../src/scripting/scriptsmanager.cpp:246
 msgid "Rename Script"
 msgstr "Rinomina script"
 
-#: ../src/scripting/scriptsmanager.cpp:259
+#: ../../src/scripting/scriptsmanager.cpp:260
 msgid "There was an error opening the file <b>%1</b>."
 msgstr "Si è verificato un errore aprendo il file <br/>%1</qt>"
 
-#: ../src/scripting/scriptsmanager.cpp:267
+#: ../../src/scripting/scriptsmanager.cpp:268
 msgid "There was an error copying the file to <b>%1</b>."
 msgstr "Si è verificato un errore copiando il file <br/>%1</qt>"
 
-#: ../src/scripting/scriptsmanager.cpp:283
+#: ../../src/scripting/scriptsmanager.cpp:284
 msgid "Do you really want to send file <b>%1</b> to the trash?"
 msgstr "Vuoi veramente cestinare il file <b>%1</b>?"
 
-#: ../src/scripting/scriptsmanager.cpp:283
+#: ../../src/scripting/scriptsmanager.cpp:284
 msgid "Move to Trash"
 msgstr "Cestina"
 
-#: ../src/scripting/scriptsmanager.cpp:287
+#: ../../src/scripting/scriptsmanager.cpp:288
 msgid "There was an error removing the file <b>%1</b>."
 msgstr "Si è verificato un errore cancellando il file <br/>%1</qt>"
 
-#: ../src/scripting/scriptsmanager.cpp:304
+#: ../../src/scripting/scriptsmanager.cpp:311
 msgid "Could not launch external editor.\n"
 msgstr "Impossibile lanciare l'editor esterno.\n"
 
-#: ../src/scripting/scriptsmanager.cpp:364
-#: ../src/scripting/scriptsmanager.cpp:366
+#: ../../src/scripting/scriptsmanager.cpp:372
+#: ../../src/scripting/scriptsmanager.cpp:374
 msgid "Error Running Script"
 msgstr "Errore durante l'esecuzione dello script"
 
-#: ../src/scripting/scriptsmanager.cpp:378
+#: ../../src/scripting/scriptsmanager.cpp:386
 msgid "Tools"
 msgstr "Strumenti"
 
-#. i18n: ectx: property (windowTitle), widget (QDialog, ScriptsManager)
-#: ../src/scripting/scriptsmanager.ui:14
-msgid "Scripts Manager"
-msgstr "Gestore degli script"
-
-#. i18n: ectx: property (whatsThis), widget (QPushButton, btnCreate)
-#: ../src/scripting/scriptsmanager.ui:29
-msgid "Creates a new script file."
-msgstr "Crea un nuovo file di script."
-
-#. i18n: ectx: property (text), widget (QPushButton, btnCreate)
-#: ../src/scripting/scriptsmanager.ui:32
-msgid "Create..."
-msgstr "Crea..."
-
-#. i18n: ectx: property (whatsThis), widget (QPushButton, btnAdd)
-#: ../src/scripting/scriptsmanager.ui:44
-msgid "Copies an existing script from a specified location."
-msgstr "Copia uno script esistente da una posizione specificata."
-
-#. i18n: ectx: property (text), widget (QPushButton, btnAdd)
-#: ../src/scripting/scriptsmanager.ui:47
-msgid "Add..."
-msgstr "Aggiungi..."
-
-#. i18n: ectx: property (whatsThis), widget (QPushButton, btnRemove)
-#: ../src/scripting/scriptsmanager.ui:59
-msgid "Sends the selected script to the trash."
-msgstr "Cestina lo script selezionato."
-
-#. i18n: ectx: property (whatsThis), widget (QPushButton, btnEdit)
-#: ../src/scripting/scriptsmanager.ui:74
-msgid "Opens the selected script with an external editor."
-msgstr "Apri lo script selezionato con un editor esterno."
-
-#. i18n: ectx: property (text), widget (QPushButton, btnEdit)
-#: ../src/scripting/scriptsmanager.ui:77
-msgid "Edit"
-msgstr "Modifica"
-
-#. i18n: ectx: property (whatsThis), widget (QPushButton, btnRun)
-#: ../src/scripting/scriptsmanager.ui:105
-msgid "Executes the selected script."
-msgstr "Esegue lo script selezionato."
-
-#. i18n: ectx: property (text), widget (QPushButton, btnRun)
-#: ../src/scripting/scriptsmanager.ui:108
-msgid "Run"
-msgstr "Esegui"
-
-#. i18n: ectx: property (whatsThis), widget (QPushButton, btnRefresh)
-#: ../src/scripting/scriptsmanager.ui:136
-msgid "Reloads the installed scripts list."
-msgstr "Ricarica la lista degli script installati."
-
-#. i18n: ectx: property (text), widget (QPushButton, btnRefresh)
-#: ../src/scripting/scriptsmanager.ui:139
-msgid "Refresh"
-msgstr "Aggiorna"
-
-#: ../src/speechprocessor/speechprocessor.cpp:60
+#: ../../src/speechprocessor/speechprocessor.cpp:58
 msgid "Recognizing speech"
 msgstr "Riconoscimento vocale"
 
-#: ../src/speechprocessor/speechprocessor.cpp:68
+#: ../../src/speechprocessor/speechprocessor.cpp:66
 msgid "Abort speech recognition"
 msgstr "Interrompi il riconoscimento vocale"
 
-#: ../src/speechprocessor/speechprocessor.cpp:165
+#: ../../src/speechprocessor/speechprocessor.cpp:161
 msgid "No speech recognition plugins available"
 msgstr "Nessuna estensione disponibile per il riconoscimento vocale"
 
-#: ../src/speechprocessor/speechprocessor.cpp:170
+#: ../../src/speechprocessor/speechprocessor.cpp:166
 msgid "Initialization of speech recognition plugin failed"
 msgstr "Inizializzazione non riuscita dell'estensione di riconoscimento vocale"
 
-#: ../src/speechprocessor/speechprocessor.cpp:240
+#: ../../src/speechprocessor/speechprocessor.cpp:236
 msgid ""
 "Speech Recognition failed: %2\n"
 "Code %1: %3"
@@ -2972,86 +2136,31 @@ msgstr ""
 "Riconoscimento vocale non riuscito: %2\n"
 "Codice %1: %3"
 
-#. i18n: ectx: Menu (file)
-#: ../src/subtitlecomposerui.rc:5
-msgid "&File"
-msgstr "&File"
-
-#. i18n: ectx: Menu (translation)
-#: ../src/subtitlecomposerui.rc:20
-msgid "Translation"
-msgstr "Traduzione"
-
-#. i18n: ectx: Menu (edit)
-#: ../src/subtitlecomposerui.rc:33
-msgid "&Edit"
-msgstr "&Modifica"
-
-#. i18n: ectx: Menu (texts)
-#: ../src/subtitlecomposerui.rc:56
-msgid "&Texts"
-msgstr "&Testi"
-
-#. i18n: ectx: Menu (styles)
-#: ../src/subtitlecomposerui.rc:67
-msgid "St&yles"
-msgstr "&Stili"
-
-#. i18n: ectx: Menu (times)
-#: ../src/subtitlecomposerui.rc:75
-msgid "T&imes"
-msgstr "T&emporizzazioni"
-
-#. i18n: ectx: Menu (errors)
-#: ../src/subtitlecomposerui.rc:100
-msgid "E&rrors"
-msgstr "E&rrori"
-
-#. i18n: ectx: Menu (video)
-#: ../src/subtitlecomposerui.rc:113
-msgid "&Video"
-msgstr "&Vídeo"
-
-#. i18n: ectx: Menu (tools)
-#: ../src/subtitlecomposerui.rc:147
-msgid "T&ools"
-msgstr "Strument&i"
-
-#. i18n: ectx: ToolBar (mainToolBar)
-#: ../src/subtitlecomposerui.rc:152
-msgid "Main Toolbar"
-msgstr "Barra degli strumenti principale"
-
-#. i18n: ectx: ToolBar (editToolBar)
-#: ../src/subtitlecomposerui.rc:163
-msgid "Edit Toolbar"
-msgstr "Barra strumenti di modifica"
-
-#: ../src/utils/errorfinder.cpp:37 ../src/utils/errorfinder.cpp:209
-#: ../src/utils/errorfinder.cpp:223
+#: ../../src/utils/errorfinder.cpp:37 ../../src/utils/errorfinder.cpp:206
+#: ../../src/utils/errorfinder.cpp:220
 msgid "Find Error"
 msgstr "Cerca errore"
 
-#: ../src/utils/errorfinder.cpp:39
+#: ../../src/utils/errorfinder.cpp:39
 msgid "Errors to Find"
 msgstr "Errori da cercare"
 
+#. i18n: file: ../../src/videoplayerplugins/gstreamer/gstreamerconfigwidget.ui:20
 #. i18n: ectx: property (title), widget (QGroupBox, grpOptions)
-#: ../src/utils/errorfinder.cpp:42
-#: ../src/videoplayerplugins/gstreamer/gstreamerconfigwidget.ui:20
+#: ../../src/utils/errorfinder.cpp:42 rc.cpp:700
 msgid "Options"
 msgstr "Opzioni"
 
-#: ../src/utils/errorfinder.cpp:48
+#: ../../src/utils/errorfinder.cpp:48
 msgid "From current line"
 msgstr "Dalla riga corrente"
 
-#: ../src/utils/errorfinder.cpp:52
+#: ../../src/utils/errorfinder.cpp:52
 msgid "Find backwards"
 msgstr "Cerca all'indietro"
 
-#: ../src/utils/errorfinder.cpp:209 ../src/utils/finder.cpp:268
-#: ../src/utils/replacer.cpp:233
+#: ../../src/utils/errorfinder.cpp:206 ../../src/utils/finder.cpp:265
+#: ../../src/utils/replacer.cpp:233
 msgid ""
 "Beginning of selection reached.\n"
 "Continue from the end?"
@@ -3059,8 +2168,8 @@ msgstr ""
 "Raggiunto l'inizio della selezione.\n"
 "Continuare dalla fine?"
 
-#: ../src/utils/errorfinder.cpp:209 ../src/utils/finder.cpp:268
-#: ../src/utils/replacer.cpp:233
+#: ../../src/utils/errorfinder.cpp:206 ../../src/utils/finder.cpp:265
+#: ../../src/utils/replacer.cpp:233
 msgid ""
 "Beginning of subtitle reached.\n"
 "Continue from the end?"
@@ -3068,8 +2177,8 @@ msgstr ""
 "Raggiunto l'inizio dei sottotitoli.\n"
 "Continuare dalla fine?"
 
-#: ../src/utils/errorfinder.cpp:209 ../src/utils/finder.cpp:268
-#: ../src/utils/replacer.cpp:233
+#: ../../src/utils/errorfinder.cpp:206 ../../src/utils/finder.cpp:265
+#: ../../src/utils/replacer.cpp:233
 msgid ""
 "End of selection reached.\n"
 "Continue from the beginning?"
@@ -3077,8 +2186,8 @@ msgstr ""
 "Raggiunta la fine della selezione.\n"
 "Continuare dall'inizio?"
 
-#: ../src/utils/errorfinder.cpp:209 ../src/utils/finder.cpp:268
-#: ../src/utils/replacer.cpp:233 ../src/utils/speller.cpp:137
+#: ../../src/utils/errorfinder.cpp:206 ../../src/utils/finder.cpp:265
+#: ../../src/utils/replacer.cpp:233 ../../src/utils/speller.cpp:142
 msgid ""
 "End of subtitle reached.\n"
 "Continue from the beginning?"
@@ -3086,286 +2195,1559 @@ msgstr ""
 "Raggiunta la fine dei sottotitoli.\n"
 "Continuare dall'inizio?"
 
-#: ../src/utils/errorfinder.cpp:223
+#: ../../src/utils/errorfinder.cpp:220
 msgid "No errors matching given criteria found!"
 msgstr "Nessun errore trovato con i criteri specificati."
 
-#: ../src/utils/finder.cpp:54
+#: ../../src/utils/finder.cpp:54
 msgid "Find In"
 msgstr "Cerca in"
 
-#: ../src/utils/finder.cpp:254 ../src/utils/replacer.cpp:216
+#: ../../src/utils/finder.cpp:251 ../../src/utils/replacer.cpp:216
 msgid "No instances of '%1' found!"
 msgstr "Nessuna occorreza di «%1»"
 
-#: ../src/utils/finder.cpp:254 ../src/utils/finder.cpp:268
+#: ../../src/utils/finder.cpp:251 ../../src/utils/finder.cpp:265
 msgid "Find"
 msgstr "Cerca"
 
-#: ../src/utils/language.cpp:128
+#: ../../src/utils/language.cpp:128
 msgid "Automatic"
 msgstr "Automatico"
 
-#: ../src/utils/language.cpp:135
+#: ../../src/utils/language.cpp:135
 msgctxt "Official language of the Philippines, aka Filipino"
 msgid "Tagalog"
 msgstr "Tagalog"
 
-#: ../src/utils/replacer.cpp:55
+#: ../../src/utils/replacer.cpp:55
 msgid "Find/Replace In"
 msgstr "Cerca/Sostituisci in"
 
-#: ../src/utils/replacer.cpp:173 ../src/utils/replacer.cpp:213
-#: ../src/utils/replacer.cpp:216 ../src/utils/replacer.cpp:233
+#: ../../src/utils/replacer.cpp:173 ../../src/utils/replacer.cpp:213
+#: ../../src/utils/replacer.cpp:216 ../../src/utils/replacer.cpp:233
 msgid "Replace"
 msgstr "Sostituisci"
 
-#: ../src/utils/replacer.cpp:213 ../src/utils/replacer.cpp:233
+#: ../../src/utils/replacer.cpp:213 ../../src/utils/replacer.cpp:233
 msgid "1 replacement done."
 msgid_plural "%1 replacements done."
 msgstr[0] "1 sostituzione effettuata."
 msgstr[1] "%1 sostituzioni effettuate."
 
-#: ../src/utils/speller.cpp:137
+#: ../../src/utils/speller.cpp:142
 msgid "Spell Checking"
 msgstr "Controllo ortografico"
 
-#: ../src/utils/translator.cpp:176
+#: ../../src/utils/translator.cpp:176
 msgid "Operation cancelled by user"
 msgstr "Operazione annullata dall'utente"
 
-#: ../src/utils/translator.cpp:276 ../src/utils/translator.cpp:285
+#: ../../src/utils/translator.cpp:276 ../../src/utils/translator.cpp:285
 msgid "Unexpected contents received from translation service"
 msgstr "Ricevuto contenuto non previsto dal servizio di traduzione"
 
-#: ../src/videoplayer/videoplayer.cpp:584
-msgid "File does not exist."
-msgstr "Il file non esiste."
-
-#. i18n: ectx: property (text), widget (QCheckBox, kcfg_gstVideoSinkAuto)
-#: ../src/videoplayerplugins/gstreamer/gstreamerconfigwidget.ui:26
-msgid "Video sink:"
-msgstr "Uscita vídeo:"
-
-#. i18n: ectx: property (text), widget (QCheckBox, kcfg_gstAudioSinkAuto)
-#: ../src/videoplayerplugins/gstreamer/gstreamerconfigwidget.ui:40
-msgid "Audio sink:"
-msgstr "Uscita audio:"
-
-#: ../src/videoplayerplugins/gstreamer/gstreamerplayerbackend.cpp:442
-#: ../src/videoplayerplugins/mpv/mpvbackend.cpp:232
+#: ../../src/videoplayerplugins/gstreamer/gstreamerplayerbackend.cpp:444
+#: ../../src/videoplayerplugins/mpv/mpvbackend.cpp:247
 msgid "Text Stream #%1"
 msgstr "Traccia di testo #%1"
 
-#: ../src/videoplayerplugins/gstreamer/gstreamerplayerbackend.cpp:478
-#: ../src/videoplayerplugins/mplayer/mplayerplayerbackend.cpp:250
-#: ../src/videoplayerplugins/mpv/mpvbackend.cpp:267
-#: ../src/videoplayerplugins/xine/xineplayerbackend.cpp:289
+#: ../../src/videoplayerplugins/gstreamer/gstreamerplayerbackend.cpp:480
+#: ../../src/videoplayerplugins/mplayer/mplayerplayerbackend.cpp:250
+#: ../../src/videoplayerplugins/mpv/mpvbackend.cpp:282
+#: ../../src/videoplayerplugins/xine/xineplayerbackend.cpp:289
 msgid "Audio Stream #%1"
 msgstr "Traccia audio #%1"
 
-#. i18n: ectx: property (text), widget (QLabel, label)
-#: ../src/videoplayerplugins/mplayer/mplayerconfigwidget.ui:29
-msgid "Executable path:"
-msgstr "Percorso dell'eseguibile:"
+#: ../../src/videoplayer/videoplayer.cpp:605
+msgid "File does not exist."
+msgstr "Il file non esiste."
 
-#. i18n: ectx: property (text), widget (QCheckBox, kcfg_mpAutoSyncEnabled)
-#. i18n: ectx: property (text), widget (QCheckBox, kcfg_mpvAutoSyncEnabled)
-#: ../src/videoplayerplugins/mplayer/mplayerconfigwidget.ui:43
-#: ../src/videoplayerplugins/mpv/mpvconfigwidget.ui:26
-msgid "A/V synchronization factor:"
-msgstr "Fattore di sincronizzazione A/V:"
-
-#. i18n: ectx: property (title), widget (QGroupBox, grpVideo)
-#: ../src/videoplayerplugins/mplayer/mplayerconfigwidget.ui:53
-#: ../src/videoplayerplugins/mpv/mpvconfigwidget.ui:43
-#: ../src/videoplayerplugins/xine/xineconfigwidget.ui:20
-msgid "Video"
-msgstr "Vídeo"
-
-#. i18n: ectx: property (text), widget (QCheckBox, kcfg_mpVideoOutputEnabled)
-#. i18n: ectx: property (text), widget (QCheckBox, kcfg_mpvVideoOutputEnabled)
-#: ../src/videoplayerplugins/mplayer/mplayerconfigwidget.ui:66
-#: ../src/videoplayerplugins/mpv/mpvconfigwidget.ui:70
-msgid "Video output driver:"
-msgstr "Driver visualizzazione video:"
-
-#. i18n: ectx: property (text), widget (QCheckBox, kcfg_mpVdpau)
-#: ../src/videoplayerplugins/mplayer/mplayerconfigwidget.ui:73
-msgid "Enable VDPAU for DivX/XviD"
-msgstr "Abilita VDPAU per DivX/XviD"
-
-#. i18n: ectx: property (text), widget (QCheckBox, kcfg_mpFrameDropping)
-#. i18n: ectx: property (text), widget (QCheckBox, kcfg_mpvFrameDropping)
-#: ../src/videoplayerplugins/mplayer/mplayerconfigwidget.ui:80
-#: ../src/videoplayerplugins/mpv/mpvconfigwidget.ui:77
-msgid "Allow frame dropping"
-msgstr "Permetti la perdita di fotogrammi video"
-
-#. i18n: ectx: property (text), widget (QCheckBox, kcfg_mpHardFrameDropping)
-#: ../src/videoplayerplugins/mplayer/mplayerconfigwidget.ui:87
-msgid "Allow hard frame dropping"
-msgstr "Permetti una forte perdita di fotogrammi video"
-
-#. i18n: ectx: property (title), widget (QGroupBox, grpAudio)
-#: ../src/videoplayerplugins/mplayer/mplayerconfigwidget.ui:97
-#: ../src/videoplayerplugins/mpv/mpvconfigwidget.ui:87
-#: ../src/videoplayerplugins/xine/xineconfigwidget.ui:43
-msgid "Audio"
-msgstr "Audio"
-
-#. i18n: ectx: property (text), widget (QCheckBox, kcfg_mpAudioOutputEnabled)
-#. i18n: ectx: property (text), widget (QCheckBox, kcfg_mpvAudioOutputEnabled)
-#: ../src/videoplayerplugins/mplayer/mplayerconfigwidget.ui:103
-#: ../src/videoplayerplugins/mpv/mpvconfigwidget.ui:107
-msgid "Audio output driver:"
-msgstr "Driver uscita audio:"
-
-#. i18n: ectx: property (text), widget (QCheckBox, kcfg_mpAudioChannelsEnabled)
-#. i18n: ectx: property (text), widget (QCheckBox, kcfg_mpvAudioChannelsEnabled)
-#: ../src/videoplayerplugins/mplayer/mplayerconfigwidget.ui:110
-#: ../src/videoplayerplugins/mpv/mpvconfigwidget.ui:100
-msgid "Audio channels:"
-msgstr "Canali audio:"
-
-#. i18n: ectx: property (text), widget (QCheckBox, kcfg_mpVolumeAmplificationEnabled)
-#. i18n: ectx: property (text), widget (QCheckBox, kcfg_mpvVolumeAmplificationEnabled)
-#: ../src/videoplayerplugins/mplayer/mplayerconfigwidget.ui:117
-#: ../src/videoplayerplugins/mpv/mpvconfigwidget.ui:93
-msgid "Volume amplification:"
-msgstr "Amplificazione del volume:"
-
-#. i18n: ectx: property (text), widget (QLabel, m_volumeAmplificationLabel)
-#. i18n: ectx: property (text), widget (QLabel, m_audioChannelsLabel)
-#. i18n: ectx: property (text), widget (QLabel, lab_mpvVolumeAmplification)
-#. i18n: ectx: property (text), widget (QLabel, lab_mpvAudioChannels)
-#: ../src/videoplayerplugins/mplayer/mplayerconfigwidget.ui:149
-#: ../src/videoplayerplugins/mplayer/mplayerconfigwidget.ui:178
-#: ../src/videoplayerplugins/mpv/mpvconfigwidget.ui:139
-#: ../src/videoplayerplugins/mpv/mpvconfigwidget.ui:168
-#, fuzzy
-msgid "TextLabel"
-msgstr "Testo"
-
-#. i18n: ectx: property (text), widget (QCheckBox, kcfg_mpVolumeNormalization)
-#. i18n: ectx: property (text), widget (QCheckBox, kcfg_mpvVolumeNormalization)
-#: ../src/videoplayerplugins/mplayer/mplayerconfigwidget.ui:195
-#: ../src/videoplayerplugins/mpv/mpvconfigwidget.ui:185
-msgid "Volume normalization"
-msgstr "Normalizzazione volume"
-
-#. i18n: ectx: property (text), widget (QCheckBox, kcfg_mpvHwDecodeEnabled)
-#: ../src/videoplayerplugins/mpv/mpvconfigwidget.ui:56
-msgid "Hardware video decoding:"
-msgstr "Decodifica video hardware:"
-
-#. i18n: ectx: property (text), widget (QCheckBox, kcfg_xineVideoEnabled)
-#: ../src/videoplayerplugins/xine/xineconfigwidget.ui:33
-msgid "Video driver:"
-msgstr "Driver video:"
-
-#. i18n: ectx: property (text), widget (QCheckBox, kcfg_xineAudioEnabled)
-#: ../src/videoplayerplugins/xine/xineconfigwidget.ui:49
-msgid "Audio driver:"
-msgstr "Driver audio:"
-
-#: ../src/waveformwidget.cpp:129
+#: ../../src/waveformwidget.cpp:135
 msgid "Generating waveform"
 msgstr ""
 
-#: ../src/waveformwidget.cpp:1089
+#: ../../src/waveformwidget.cpp:1137
 msgid "Select Line"
 msgstr "Seleziona riga"
 
-#: ../src/waveformwidget.cpp:1115
+#: ../../src/waveformwidget.cpp:1164
 msgid "Remove Line"
 msgstr "Rimuovi riga"
 
-#: ../src/waveformwidget.cpp:1137
+#: ../../src/waveformwidget.cpp:1189
 msgid "Split Line"
 msgstr "Dividi riga"
 
-#: ../src/widgets/simplerichtextedit.cpp:67
+#: ../../src/widgets/simplerichtextedit.cpp:67
 msgid "Undo"
 msgstr "Annulla"
 
-#: ../src/widgets/simplerichtextedit.cpp:73
+#: ../../src/widgets/simplerichtextedit.cpp:73
 msgid "Redo"
 msgstr "Ripeti"
 
-#: ../src/widgets/simplerichtextedit.cpp:79
+#: ../../src/widgets/simplerichtextedit.cpp:79
 msgid "Cut"
 msgstr "Taglia"
 
-#: ../src/widgets/simplerichtextedit.cpp:85
+#: ../../src/widgets/simplerichtextedit.cpp:85
 msgid "Copy"
 msgstr "Copia"
 
-#: ../src/widgets/simplerichtextedit.cpp:92
+#: ../../src/widgets/simplerichtextedit.cpp:92
 msgid "Paste"
 msgstr "Incolla"
 
-#: ../src/widgets/simplerichtextedit.cpp:99
+#: ../../src/widgets/simplerichtextedit.cpp:99
 msgid "Delete"
 msgstr "Elimina"
 
-#: ../src/widgets/simplerichtextedit.cpp:105
+#: ../../src/widgets/simplerichtextedit.cpp:105
 msgctxt "@action:inmenu Clear all text"
 msgid "Clear"
 msgstr "Svuota"
 
-#: ../src/widgets/simplerichtextedit.cpp:116
+#: ../../src/widgets/simplerichtextedit.cpp:116
 msgctxt "@action:inmenu Toggle bold style"
 msgid "Bold"
 msgstr "Grassetto"
 
-#: ../src/widgets/simplerichtextedit.cpp:122
+#: ../../src/widgets/simplerichtextedit.cpp:122
 msgctxt "@action:inmenu Toggle italic style"
 msgid "Italic"
 msgstr "Italico"
 
-#: ../src/widgets/simplerichtextedit.cpp:128
+#: ../../src/widgets/simplerichtextedit.cpp:128
 msgctxt "@action:inmenu Toggle underline style"
 msgid "Underline"
 msgstr "Sottolineato"
 
-#: ../src/widgets/simplerichtextedit.cpp:134
+#: ../../src/widgets/simplerichtextedit.cpp:134
 msgctxt "@action:inmenu Toggle strike through style"
 msgid "Strike Through"
 msgstr "Barrato"
 
-#: ../src/widgets/simplerichtextedit.cpp:140
+#: ../../src/widgets/simplerichtextedit.cpp:140
 msgctxt "@action:inmenu Change Text Color"
 msgid "Text Color"
 msgstr "Colore testo"
 
-#: ../src/widgets/simplerichtextedit.cpp:146
+#: ../../src/widgets/simplerichtextedit.cpp:146
 msgid "Check Spelling..."
 msgstr "Controllo ortografico..."
 
-#: ../src/widgets/simplerichtextedit.cpp:150
+#: ../../src/widgets/simplerichtextedit.cpp:150
 msgid "Auto Spell Check"
 msgstr "Controllo ortografico automatico..."
 
-#: ../src/widgets/simplerichtextedit.cpp:155
+#: ../../src/widgets/simplerichtextedit.cpp:155
 msgid "Allow Tabulations"
 msgstr "Permetti le tabulazioni"
 
-#: ../src/widgets/simplerichtextedit.cpp:542
+#: ../../src/widgets/simplerichtextedit.cpp:542
 msgid "Suggestions"
 msgstr "Suggerimenti"
 
-#: ../src/widgets/simplerichtextedit.cpp:543
+#: ../../src/widgets/simplerichtextedit.cpp:543
 msgid "Ignore"
 msgstr "Ignora"
 
-#: ../src/widgets/simplerichtextedit.cpp:544
+#: ../../src/widgets/simplerichtextedit.cpp:544
 msgid "Add to Dictionary"
 msgstr "Aggiungi al dizionario"
 
-#: ../src/widgets/simplerichtextedit.cpp:548
+#: ../../src/widgets/simplerichtextedit.cpp:548
 msgid "No suggestions"
 msgstr "Nessun suggerimento"
+
+#. i18n: file: ../../src/configs/errorsconfigwidget.ui:46
+#. i18n: ectx: property (text), widget (QLabel, label)
+#: rc.cpp:9
+msgid "Maximum number of characters:"
+msgstr "Numero massimo di caratteri:"
+
+#. i18n: file: ../../src/configs/errorsconfigwidget.ui:53
+#. i18n: ectx: property (text), widget (QLabel, label_4)
+#: rc.cpp:12
+msgid "Maximum number of lines:"
+msgstr "Numero massimo di righe:"
+
+#. i18n: file: ../../src/configs/errorsconfigwidget.ui:63
+#. i18n: ectx: property (title), widget (QGroupBox, m_grpQuickActions)
+#: rc.cpp:15
+msgid "Absolute Durations"
+msgstr "Durate assolute"
+
+#. i18n: file: ../../src/configs/errorsconfigwidget.ui:92
+#. i18n: ectx: property (text), widget (QLabel, label_8)
+#. i18n: file: ../../src/configs/errorsconfigwidget.ui:132
+#. i18n: ectx: property (text), widget (QLabel, label_3)
+#: rc.cpp:18 rc.cpp:33
+msgid "Maximum duration:"
+msgstr "Durata massima:"
+
+#. i18n: file: ../../src/configs/errorsconfigwidget.ui:99
+#. i18n: ectx: property (text), widget (QLabel, label_5)
+#. i18n: file: ../../src/configs/errorsconfigwidget.ui:125
+#. i18n: ectx: property (text), widget (QLabel, label_2)
+#: rc.cpp:21 rc.cpp:30
+msgid "Minimum duration:"
+msgstr "Durata minima:"
+
+#. i18n: file: ../../src/configs/errorsconfigwidget.ui:109
+#. i18n: ectx: property (title), widget (QGroupBox, groupBox)
+#: rc.cpp:24
+msgid "Relative Durations"
+msgstr "Durate relative"
+
+#. i18n: file: ../../src/configs/errorsconfigwidget.ui:115
+#. i18n: ectx: property (suffix), widget (QSpinBox, kcfg_MinDurationPerCharacter)
+#. i18n: file: ../../src/configs/errorsconfigwidget.ui:139
+#. i18n: ectx: property (suffix), widget (QSpinBox, kcfg_MaxDurationPerCharacter)
+#: rc.cpp:27 rc.cpp:36
+msgid " msec/char"
+msgstr " msec/carattere"
+
+#. i18n: file: ../../src/configs/errorsconfigwidget.ui:152
+#. i18n: ectx: property (title), widget (QGroupBox, groupBox_2)
+#: rc.cpp:39
+msgid "Behavior"
+msgstr "Comportamento"
+
+#. i18n: file: ../../src/configs/errorsconfigwidget.ui:158
+#. i18n: ectx: property (text), widget (QCheckBox, kcfg_AutoClearFixed)
+#. i18n: file: ../../src/scconfig.kcfg:78
+#. i18n: ectx: label, entry (AutoClearFixed), group (Error Check)
+#: rc.cpp:42 rc.cpp:328
+msgid "Automatically clear fixed errors"
+msgstr "Smarca automatcamente gli errori corretti"
+
+#. i18n: file: ../../src/configs/generalconfigwidget.ui:17
+#. i18n: ectx: property (title), widget (QGroupBox, m_grpGeneral)
+#. i18n: file: ../../src/configs/playerconfigwidget.ui:17
+#. i18n: ectx: property (title), widget (QGroupBox, m_grpGeneral)
+#. i18n: file: ../../src/videoplayerplugins/mplayer/mplayerconfigwidget.ui:20
+#. i18n: ectx: property (title), widget (QGroupBox, grpGeneral)
+#. i18n: file: ../../src/videoplayerplugins/mpv/mpvconfigwidget.ui:20
+#. i18n: ectx: property (title), widget (QGroupBox, grpGeneral)
+#: rc.cpp:45 rc.cpp:87 rc.cpp:709 rc.cpp:748
+msgid "General"
+msgstr "Generale"
+
+#. i18n: file: ../../src/configs/generalconfigwidget.ui:26
+#. i18n: ectx: property (text), widget (QCheckBox, kcfg_AutomaticVideoLoad)
+#: rc.cpp:48
+msgid "Automatically load video file when opening a subtitle"
+msgstr "Carica automaticamente il file video all'apertura dei sottotitoli"
+
+#. i18n: file: ../../src/configs/generalconfigwidget.ui:33
+#. i18n: ectx: property (text), widget (QLabel, label)
+#: rc.cpp:51
+msgid "Defau&lt subtitles encoding:"
+msgstr "Codifica predefinita per i sottotito&li"
+
+#. i18n: file: ../../src/configs/generalconfigwidget.ui:46
+#. i18n: ectx: property (title), widget (QGroupBox, m_grpSubtitleLine)
+#: rc.cpp:54
+msgid "Subtitle Line"
+msgstr "Riga di sottotitolo"
+
+#. i18n: file: ../../src/configs/generalconfigwidget.ui:52
+#. i18n: ectx: property (text), widget (QLabel, label_LineDuration)
+#: rc.cpp:57
+msgid "Default subtitle line duration:"
+msgstr "Durata predefinita di una riga di sottotitoli:"
+
+#. i18n: file: ../../src/configs/generalconfigwidget.ui:62
+#. i18n: ectx: property (text), widget (QLabel, label_4)
+#: rc.cpp:60
+#, fuzzy
+msgid "On double click, &jump to show time minus:"
+msgstr ""
+"Doppio click su riga per visualizzare l'orario di visualizzazione meno:"
+
+#. i18n: file: ../../src/configs/generalconfigwidget.ui:72
+#. i18n: ectx: property (text), widget (QLabel, label_LinePause)
+#: rc.cpp:63
+msgid "Default pause between subtitle lines:"
+msgstr "Durata predefinita tra righe di sottotitolo:"
+
+#. i18n: file: ../../src/configs/generalconfigwidget.ui:82
+#. i18n: ectx: property (suffix), widget (QSpinBox, kcfg_LinePause)
+#. i18n: file: ../../src/configs/generalconfigwidget.ui:92
+#. i18n: ectx: property (suffix), widget (QSpinBox, kcfg_LineDuration)
+#. i18n: file: ../../src/configs/generalconfigwidget.ui:122
+#. i18n: ectx: property (suffix), widget (QSpinBox, kcfg_JumpLineOffset)
+#: rc.cpp:66 rc.cpp:69 rc.cpp:75
+msgid " msec"
+msgstr " msec"
+
+#. i18n: file: ../../src/configs/generalconfigwidget.ui:112
+#. i18n: ectx: property (text), widget (QLabel, label_2)
+#: rc.cpp:72
+#, fuzzy
+msgid "Ju&mp to prev/next line offset:"
+msgstr "Salta alla riga successiva"
+
+#. i18n: file: ../../src/configs/generalconfigwidget.ui:135
+#. i18n: ectx: property (title), widget (QGroupBox, m_grpQuickActions)
+#: rc.cpp:78
+msgid "Quick Actions"
+msgstr "Azioni rapide"
+
+#. i18n: file: ../../src/configs/generalconfigwidget.ui:161
+#. i18n: ectx: property (text), widget (QLabel, label_8)
+#: rc.cpp:81
+msgid "Compensation for captured &video times:"
+msgstr "Compensazione per acquisizione dei tempi da &video:"
+
+#. i18n: file: ../../src/configs/generalconfigwidget.ui:171
+#. i18n: ectx: property (text), widget (QLabel, label_5)
+#: rc.cpp:84
+msgid "Ti&me shift for selected lines:"
+msgstr "Sposta&mento orario per le righe selezionate:"
+
+#. i18n: file: ../../src/configs/playerconfigwidget.ui:23
+#. i18n: ectx: property (text), widget (QLabel, label_4)
+#: rc.cpp:90
+msgid "Seconds to &jump on seek:"
+msgstr ""
+
+#. i18n: file: ../../src/configs/playerconfigwidget.ui:53
+#. i18n: ectx: property (text), widget (QLabel, label_3)
+#: rc.cpp:96
+msgid "&VideoPlayer backend:"
+msgstr "Motore di riproduzione &video:"
+
+#. i18n: file: ../../src/configs/playerconfigwidget.ui:73
+#. i18n: ectx: property (text), widget (QLabel, label)
+#: rc.cpp:99
+msgid "Fra&me step amount:"
+msgstr ""
+
+#. i18n: file: ../../src/configs/playerconfigwidget.ui:83
+#. i18n: ectx: property (text), widget (QCheckBox, kcfg_VideoAutoPlay)
+#. i18n: file: ../../src/scconfig.kcfg:176
+#. i18n: ectx: label, entry (VideoAutoPlay), group (VideoPlayer)
+#: rc.cpp:102 rc.cpp:397
+msgid "Start playing video when loaded"
+msgstr ""
+
+#. i18n: file: ../../src/configs/playerconfigwidget.ui:90
+#. i18n: ectx: property (text), widget (QCheckBox, kcfg_UnpauseOnDoubleClick)
+#: rc.cpp:105
+msgid "Resume playback after line double click"
+msgstr "Riprendi la riproduzione dopo un doppio clic sulla riga"
+
+#. i18n: file: ../../src/configs/playerconfigwidget.ui:100
+#. i18n: ectx: property (title), widget (QGroupBox, m_grpSubtitles)
+#: rc.cpp:108
+msgid "Subtitles"
+msgstr "Sottotitoli"
+
+#. i18n: file: ../../src/configs/playerconfigwidget.ui:106
+#. i18n: ectx: property (text), widget (QLabel, label_7)
+#: rc.cpp:111
+msgid "Outline color:"
+msgstr "Colore contorno:"
+
+#. i18n: file: ../../src/configs/playerconfigwidget.ui:125
+#. i18n: ectx: property (text), widget (QLabel, label_8)
+#: rc.cpp:114
+msgid "Outline width:"
+msgstr "Spessore del contorno:"
+
+#. i18n: file: ../../src/configs/playerconfigwidget.ui:135
+#. i18n: ectx: property (text), widget (QLabel, label_6)
+#: rc.cpp:117
+msgid "Te&xt color:"
+msgstr "Colore del te&sto:"
+
+#. i18n: file: ../../src/configs/playerconfigwidget.ui:145
+#. i18n: ectx: property (text), widget (QLabel, label_2)
+#: rc.cpp:120
+msgid "Font family:"
+msgstr "Famiglia del tipo di carattere:"
+
+#. i18n: file: ../../src/configs/playerconfigwidget.ui:155
+#. i18n: ectx: property (text), widget (QLabel, label_5)
+#: rc.cpp:123
+msgid "Font si&ze:"
+msgstr "&Dimensione carattere:"
+
+#. i18n: file: ../../src/configs/playerconfigwidget.ui:182
+#. i18n: ectx: property (text), widget (QCheckBox, kcfg_Antialias)
+#: rc.cpp:126
+msgid "Text Antialiasing"
+msgstr "Antialiasing del testo"
+
+#. i18n: file: ../../src/configs/playerconfigwidget.ui:192
+#. i18n: ectx: property (title), widget (QGroupBox, m_grpPreview)
+#: rc.cpp:129
+msgid "Subtitles Preview"
+msgstr "Anteprima dei sottotitoli"
+
+#. i18n: file: ../../src/configs/waveformconfigwidget.ui:17
+#. i18n: ectx: property (title), widget (QGroupBox, groupBox_3)
+#: rc.cpp:132
+msgid "Waveform Display"
+msgstr ""
+
+#. i18n: file: ../../src/configs/waveformconfigwidget.ui:23
+#. i18n: ectx: property (text), widget (QCheckBox, kcfg_wfSmoothScroll)
+#: rc.cpp:135
+msgid "Smooth Scrolling"
+msgstr "Scorrimento fluido"
+
+#. i18n: file: ../../src/configs/waveformconfigwidget.ui:49
+#. i18n: ectx: property (text), widget (QLabel, label_12)
+#: rc.cpp:138
+msgid "Outer color:"
+msgstr "Colore contorno:"
+
+#. i18n: file: ../../src/configs/waveformconfigwidget.ui:78
+#. i18n: ectx: property (text), widget (QLabel, label_11)
+#: rc.cpp:141
+msgid "Inner color:"
+msgstr "Colore principale:"
+
+#. i18n: file: ../../src/configs/waveformconfigwidget.ui:104
+#. i18n: ectx: property (toolTip), widget (QLabel, label_wfAutoscrollPadding)
+#: rc.cpp:144
+msgid ""
+"Autoscroll page when play position reaches ScrollPadding distance "
+"(percentage) from page border"
+msgstr ""
+
+#. i18n: file: ../../src/configs/waveformconfigwidget.ui:107
+#. i18n: ectx: property (text), widget (QLabel, label_wfAutoscrollPadding)
+#: rc.cpp:147
+#, fuzzy
+msgid "Auto Scroll Padding:"
+msgstr "Scorrimento fluido"
+
+#. i18n: file: ../../src/configs/waveformconfigwidget.ui:120
+#. i18n: ectx: property (title), widget (QGroupBox, m_grpGeneral)
+#: rc.cpp:150
+msgid "Subtitle Display"
+msgstr "Visualizzazione sottotitolo"
+
+#. i18n: file: ../../src/configs/waveformconfigwidget.ui:148
+#. i18n: ectx: property (text), widget (QLabel, label_14)
+#: rc.cpp:153
+msgid "Subtitle border color:"
+msgstr "Colore del bordo del sottotitolo"
+
+#. i18n: file: ../../src/configs/waveformconfigwidget.ui:158
+#. i18n: ectx: property (text), widget (QLabel, label_16)
+#: rc.cpp:156
+msgid "Selected background color:"
+msgstr "Seleziona colore di sfondo:"
+
+#. i18n: file: ../../src/configs/waveformconfigwidget.ui:168
+#. i18n: ectx: property (text), widget (QLabel, label_15)
+#: rc.cpp:159
+msgid "Subtitle border width:"
+msgstr "Spessore del bordo del sottotitolo"
+
+#. i18n: file: ../../src/configs/waveformconfigwidget.ui:178
+#. i18n: ectx: property (text), widget (QLabel, label_13)
+#: rc.cpp:162
+msgid "Subtitle background color:"
+msgstr "Colore di sfondo del sottotitolo:"
+
+#. i18n: file: ../../src/configs/waveformconfigwidget.ui:207
+#. i18n: ectx: property (text), widget (QLabel, label_17)
+#: rc.cpp:165
+msgid "Selected border color:"
+msgstr "Colore del bordo selezionato:"
+
+#. i18n: file: ../../src/configs/waveformconfigwidget.ui:258
+#. i18n: ectx: property (title), widget (QGroupBox, groupBox)
+#: rc.cpp:168
+msgid "Text Font and Colors"
+msgstr "Carattere e colori del testo"
+
+#. i18n: file: ../../src/configs/waveformconfigwidget.ui:264
+#. i18n: ectx: property (text), widget (QLabel, label_21)
+#: rc.cpp:171
+msgid "Subtitle font family:"
+msgstr "Famiglia di caratteri del sottotitolo:"
+
+#. i18n: file: ../../src/configs/waveformconfigwidget.ui:277
+#. i18n: ectx: property (text), widget (QLabel, label_22)
+#: rc.cpp:174
+msgid "Subtitle number font size:"
+msgstr "Dimensione carattere del numero del sottotitolo:"
+
+#. i18n: file: ../../src/configs/waveformconfigwidget.ui:287
+#. i18n: ectx: property (suffix), widget (QSpinBox, kcfg_wfSubNumberFontSize)
+#. i18n: file: ../../src/configs/waveformconfigwidget.ui:333
+#. i18n: ectx: property (suffix), widget (QSpinBox, kcfg_wfSubTextFontSize)
+#: rc.cpp:177 rc.cpp:186
+msgid " pt"
+msgstr " punti"
+
+#. i18n: file: ../../src/configs/waveformconfigwidget.ui:294
+#. i18n: ectx: property (text), widget (QLabel, label_23)
+#: rc.cpp:180
+msgid "Subtitle Number Color"
+msgstr "Colore del numero del sottotitolo"
+
+#. i18n: file: ../../src/configs/waveformconfigwidget.ui:323
+#. i18n: ectx: property (text), widget (QLabel, label_24)
+#: rc.cpp:183
+msgid "Subtitle text font size:"
+msgstr "Dimensione carattere del testo del sottotitolo:"
+
+#. i18n: file: ../../src/configs/waveformconfigwidget.ui:340
+#. i18n: ectx: property (text), widget (QLabel, label_25)
+#: rc.cpp:189
+#, fuzzy
+msgid "Subtitle Text Color:"
+msgstr "Colore del testo del sottotitolo"
+
+#. i18n: file: ../../src/configs/waveformconfigwidget.ui:372
+#. i18n: ectx: property (title), widget (QGroupBox, groupBox_2)
+#: rc.cpp:192
+msgid "Line Indicators"
+msgstr "Indicatori di riga"
+
+#. i18n: file: ../../src/configs/waveformconfigwidget.ui:378
+#. i18n: ectx: property (text), widget (QLabel, label_31)
+#: rc.cpp:195
+msgid "Player position color:"
+msgstr "Colore della posizione del riproduttore:"
+
+#. i18n: file: ../../src/configs/waveformconfigwidget.ui:388
+#. i18n: ectx: property (text), widget (QLabel, label_32)
+#: rc.cpp:198
+msgid "Mouse indicator color:"
+msgstr "Colore dell'indicatore del mouse:"
+
+#. i18n: file: ../../src/formats/vobsub/vobsubinputinitdialog.ui:14
+#. i18n: ectx: property (windowTitle), widget (QDialog, VobSubInputInitDialog)
+#. i18n: file: ../../src/formats/vobsub/vobsubinputprocessdialog.ui:14
+#. i18n: ectx: property (windowTitle), widget (QDialog, VobSubInputProcessDialog)
+#: rc.cpp:201 rc.cpp:225
+msgid "VobSub Import"
+msgstr "Importa VobSub"
+
+#. i18n: file: ../../src/formats/vobsub/vobsubinputinitdialog.ui:20
+#. i18n: ectx: property (text), widget (QLabel, labelStream)
+#: rc.cpp:204
+msgid "Stream / Language"
+msgstr "Traccia/lingua"
+
+#. i18n: file: ../../src/formats/vobsub/vobsubinputinitdialog.ui:53
+#. i18n: ectx: property (title), widget (QGroupBox, grpPostProc)
+#: rc.cpp:207
+msgid "Post Processing"
+msgstr "Post-elaborazione"
+
+#. i18n: file: ../../src/formats/vobsub/vobsubinputinitdialog.ui:59
+#. i18n: ectx: property (text), widget (QCheckBox, ppSpaceNumber)
+#: rc.cpp:210
+msgid "Fix space between numbers"
+msgstr "Correggi spazio tra i numeri"
+
+#. i18n: file: ../../src/formats/vobsub/vobsubinputinitdialog.ui:69
+#. i18n: ectx: property (text), widget (QCheckBox, ppSpacePunct)
+#: rc.cpp:213
+msgid "Fix space around punctuation (.,;:?!)"
+msgstr "Correggi spazio tra la punteggiatura (.,;:?!)"
+
+#. i18n: file: ../../src/formats/vobsub/vobsubinputinitdialog.ui:79
+#. i18n: ectx: property (text), widget (QCheckBox, ppSpaceParen)
+#: rc.cpp:216
+msgid "Fix space around quotes and parentheses (\"()[]{})"
+msgstr "Correggi spazio tra virgolette e parentesi (\"()[]{})"
+
+#. i18n: file: ../../src/formats/vobsub/vobsubinputinitdialog.ui:89
+#. i18n: ectx: property (text), widget (QCheckBox, ppAposQuote)
+#: rc.cpp:219
+msgid "Fix double apostrophes/quotes"
+msgstr "Correggi apostrofi/virgolette doppie"
+
+#. i18n: file: ../../src/formats/vobsub/vobsubinputinitdialog.ui:99
+#. i18n: ectx: property (text), widget (QCheckBox, ppCharsOCR)
+#: rc.cpp:222
+msgid "Fix i <-> l, 0 <-> O mistakes"
+msgstr "Correggi errori i <-> l, 0 <-> O"
+
+#. i18n: file: ../../src/formats/vobsub/vobsubinputprocessdialog.ui:26
+#. i18n: ectx: property (title), widget (QGroupBox, grpText)
+#: rc.cpp:228
+msgid "Enter character(s)"
+msgstr "Inserisci carattere/i"
+
+#. i18n: file: ../../src/formats/vobsub/vobsubinputprocessdialog.ui:35
+#. i18n: ectx: property (text), widget (QLabel, symbolLabel)
+#: rc.cpp:231
+msgid "S&ymbols:"
+msgstr "S&imboli:"
+
+#. i18n: file: ../../src/formats/vobsub/vobsubinputprocessdialog.ui:45
+#. i18n: ectx: property (toolTip), widget (QSpinBox, symbolCount)
+#: rc.cpp:234
+msgid "Up/Down: change value"
+msgstr "Su/giù: cambia valore"
+
+#. i18n: file: ../../src/formats/vobsub/vobsubinputprocessdialog.ui:71
+#. i18n: ectx: property (toolTip), widget (QPushButton, styleBold)
+#: rc.cpp:237
+msgid "Ctrl+B"
+msgstr "Ctrl+B"
+
+#. i18n: file: ../../src/formats/vobsub/vobsubinputprocessdialog.ui:91
+#. i18n: ectx: property (toolTip), widget (QPushButton, styleItalic)
+#: rc.cpp:240
+msgid "Ctrl+I"
+msgstr "Ctrl+I"
+
+#. i18n: file: ../../src/formats/vobsub/vobsubinputprocessdialog.ui:111
+#. i18n: ectx: property (toolTip), widget (QPushButton, styleUnderline)
+#: rc.cpp:243
+msgid "Ctrl+U"
+msgstr "Ctrl+U"
+
+#. i18n: file: ../../src/formats/vobsub/vobsubinputprocessdialog.ui:146
+#. i18n: ectx: property (text), widget (QPushButton, btnOk)
+#: rc.cpp:246
+msgid "OK"
+msgstr "Ok"
+
+#. i18n: file: ../../src/formats/vobsub/vobsubinputprocessdialog.ui:202
+#. i18n: ectx: property (toolTip), widget (QPushButton, btnPrevImage)
+#: rc.cpp:249
+msgid "Ctrl+Shift+Left"
+msgstr "Ctrl+Shift+Sinistra"
+
+#. i18n: file: ../../src/formats/vobsub/vobsubinputprocessdialog.ui:205
+#. i18n: ectx: property (text), widget (QPushButton, btnPrevImage)
+#: rc.cpp:252
+msgid "Prev Image"
+msgstr "Immagine precedente"
+
+#. i18n: file: ../../src/formats/vobsub/vobsubinputprocessdialog.ui:219
+#. i18n: ectx: property (toolTip), widget (QPushButton, btnPrevSymbol)
+#: rc.cpp:255
+msgid "Ctrl+Left"
+msgstr "Ctrl+Sinistra"
+
+#. i18n: file: ../../src/formats/vobsub/vobsubinputprocessdialog.ui:222
+#. i18n: ectx: property (text), widget (QPushButton, btnPrevSymbol)
+#: rc.cpp:258
+msgid "Prev Symbol"
+msgstr "Simbolo precedente"
+
+#. i18n: file: ../../src/formats/vobsub/vobsubinputprocessdialog.ui:236
+#. i18n: ectx: property (toolTip), widget (QPushButton, btnNextSymbol)
+#: rc.cpp:261
+msgid "Ctrl+Right"
+msgstr "Ctrl+Destra"
+
+#. i18n: file: ../../src/formats/vobsub/vobsubinputprocessdialog.ui:239
+#. i18n: ectx: property (text), widget (QPushButton, btnNextSymbol)
+#: rc.cpp:264
+msgid "Next Symbol"
+msgstr "Simbolo successivo"
+
+#. i18n: file: ../../src/formats/vobsub/vobsubinputprocessdialog.ui:250
+#. i18n: ectx: property (toolTip), widget (QPushButton, btnNextImage)
+#: rc.cpp:267
+msgid "Ctrl+Shift+Right"
+msgstr "Ctrl+Shift+Destra"
+
+#. i18n: file: ../../src/formats/vobsub/vobsubinputprocessdialog.ui:253
+#. i18n: ectx: property (text), widget (QPushButton, btnNextImage)
+#: rc.cpp:270
+msgid "Next Image"
+msgstr "Immagine successiva"
+
+#. i18n: file: ../../src/formats/vobsub/vobsubinputprocessdialog.ui:280
+#. i18n: ectx: property (text), widget (QPushButton, btnAbort)
+#: rc.cpp:273
+msgid "Abort"
+msgstr "Interrompi"
+
+#. i18n: file: ../../src/formats/vobsub/vobsubinputprocessdialog.ui:303
+#. i18n: ectx: property (title), widget (QGroupBox, grpPreview)
+#: rc.cpp:276
+msgid "Subtitle Image"
+msgstr "Immagine sottotitolo"
+
+#. i18n: file: ../../src/formats/vobsub/vobsubinputprocessdialog.ui:325
+#. i18n: ectx: property (format), widget (QProgressBar, progressBar)
+#: rc.cpp:280
+#, no-c-format
+msgid "%v/%m"
+msgstr "%v/%m"
+
+#. i18n: file: ../../src/scconfig.kcfg:10
+#. i18n: ectx: label, entry (DefaultSubtitlesEncoding), group (General)
+#: rc.cpp:283
+msgid "Default Subtitles Encoding"
+msgstr "Codifica predefinita per i sottotitoli"
+
+#. i18n: file: ../../src/scconfig.kcfg:14
+#. i18n: ectx: label, entry (SeekOffsetOnDoubleClick), group (General)
+#: rc.cpp:286
+msgid "Seek Offset On Double Click"
+msgstr ""
+
+#. i18n: file: ../../src/scconfig.kcfg:18
+#. i18n: ectx: label, entry (JumpLineOffset), group (General)
+#: rc.cpp:289
+#, fuzzy
+msgid "Jump to prev/next line offset"
+msgstr "Salta alla riga successiva"
+
+#. i18n: file: ../../src/scconfig.kcfg:22
+#. i18n: ectx: label, entry (UnpauseOnDoubleClick), group (General)
+#: rc.cpp:292
+msgid "Unpause On Double Click"
+msgstr "Annulla la pausa al doppio clic"
+
+#. i18n: file: ../../src/scconfig.kcfg:26
+#. i18n: ectx: label, entry (AutomaticVideoLoad), group (General)
+#: rc.cpp:295
+msgid "Automatic Video Load"
+msgstr "Caricamento automatico video"
+
+#. i18n: file: ../../src/scconfig.kcfg:31
+#. i18n: ectx: label, entry (LinesQuickShiftAmount), group (General)
+#: rc.cpp:298
+msgid "Lines Quick Shift Amount"
+msgstr ""
+
+#. i18n: file: ../../src/scconfig.kcfg:35
+#. i18n: ectx: label, entry (GrabbedPositionCompensation), group (General)
+#: rc.cpp:301
+msgid "Grabbed Position Compensation"
+msgstr ""
+
+#. i18n: file: ../../src/scconfig.kcfg:40
+#. i18n: ectx: label, entry (LineDuration), group (General)
+#: rc.cpp:304
+msgid "Default subtitle line duration"
+msgstr "Durata predefinita di una riga di sottotitoli"
+
+#. i18n: file: ../../src/scconfig.kcfg:44
+#. i18n: ectx: label, entry (LinePause), group (General)
+#: rc.cpp:307
+msgid "Default duration between subtitle lines"
+msgstr "Durata predefinita tra righe di sottotitolo"
+
+#. i18n: file: ../../src/scconfig.kcfg:51
+#. i18n: ectx: label, entry (MaxCharacters), group (Error Check)
+#: rc.cpp:310
+msgid "Maximum number of characters"
+msgstr "Numero massimo di caratteri"
+
+#. i18n: file: ../../src/scconfig.kcfg:55
+#. i18n: ectx: label, entry (MaxLines), group (Error Check)
+#: rc.cpp:313
+msgid "Maximum number of lines"
+msgstr "Numero massimo di righe"
+
+#. i18n: file: ../../src/scconfig.kcfg:60
+#. i18n: ectx: label, entry (MinDuration), group (Error Check)
+#: rc.cpp:316
+msgid "Minimum duration"
+msgstr "Durata minima"
+
+#. i18n: file: ../../src/scconfig.kcfg:64
+#. i18n: ectx: label, entry (MaxDuration), group (Error Check)
+#: rc.cpp:319
+msgid "Maximum duration"
+msgstr "Durata massima"
+
+#. i18n: file: ../../src/scconfig.kcfg:69
+#. i18n: ectx: label, entry (MinDurationPerCharacter), group (Error Check)
+#: rc.cpp:322
+msgid "Minimum duration per character"
+msgstr "Durata minima per singolo carattere"
+
+#. i18n: file: ../../src/scconfig.kcfg:73
+#. i18n: ectx: label, entry (MaxDurationPerCharacter), group (Error Check)
+#: rc.cpp:325
+msgid "Maximum duration per character"
+msgstr "Durata massima per singolo carattere"
+
+#. i18n: file: ../../src/scconfig.kcfg:85
+#. i18n: ectx: label, entry (DefaultLanguage), group (Spelling)
+#: rc.cpp:331
+msgid "Default Language"
+msgstr "Lingua predefinita"
+
+#. i18n: file: ../../src/scconfig.kcfg:89
+#. i18n: ectx: label, entry (DefaultClient), group (Spelling)
+#: rc.cpp:334
+msgid "Default client"
+msgstr "Client predefinito"
+
+#. i18n: file: ../../src/scconfig.kcfg:93
+#. i18n: ectx: label, entry (CheckUppercase), group (Spelling)
+#: rc.cpp:337
+msgid "Check uppercase"
+msgstr "Controlla maiuscole"
+
+#. i18n: file: ../../src/scconfig.kcfg:97
+#. i18n: ectx: label, entry (SkipRunTogether), group (Spelling)
+#: rc.cpp:340
+msgid "Skip Run Together"
+msgstr ""
+
+#. i18n: file: ../../src/scconfig.kcfg:104
+#. i18n: ectx: label, entry (wfInnerColor), group (Waveform Widget)
+#: rc.cpp:343
+msgid "Waveform Inner Color"
+msgstr ""
+
+#. i18n: file: ../../src/scconfig.kcfg:108
+#. i18n: ectx: label, entry (wfOuterColor), group (Waveform Widget)
+#: rc.cpp:346
+#, fuzzy
+msgid "Waveform Outer Color"
+msgstr "Colore contorno:"
+
+#. i18n: file: ../../src/scconfig.kcfg:112
+#. i18n: ectx: label, entry (wfSmoothScroll), group (Waveform Widget)
+#: rc.cpp:349
+#, fuzzy
+msgid "Waveform Smooth Scrolling"
+msgstr "Impostazioni del riproduttore video"
+
+#. i18n: file: ../../src/scconfig.kcfg:116
+#. i18n: ectx: label, entry (wfAutoscrollPadding), group (Waveform Widget)
+#: rc.cpp:352
+msgid "Autoscroll Padding"
+msgstr ""
+
+#. i18n: file: ../../src/scconfig.kcfg:118
+#. i18n: ectx: whatsthis, entry (wfAutoscrollPadding), group (Waveform Widget)
+#: rc.cpp:355
+msgid ""
+"Autoscroll page when play position reaches ScrollPadding distance "
+"(percentage) from page border."
+msgstr ""
+
+#. i18n: file: ../../src/scconfig.kcfg:121
+#. i18n: ectx: label, entry (wfSubBackground), group (Waveform Widget)
+#: rc.cpp:358
+msgid "Waveform Subtitle Background Color"
+msgstr ""
+
+#. i18n: file: ../../src/scconfig.kcfg:125
+#. i18n: ectx: label, entry (wfSubBorder), group (Waveform Widget)
+#: rc.cpp:361
+msgid "Waveform Subtitle Border Color"
+msgstr ""
+
+#. i18n: file: ../../src/scconfig.kcfg:129
+#. i18n: ectx: label, entry (wfSubBorderWidth), group (Waveform Widget)
+#: rc.cpp:364
+msgid "Waveform Subtitle Border Width"
+msgstr ""
+
+#. i18n: file: ../../src/scconfig.kcfg:133
+#. i18n: ectx: label, entry (wfSelBackground), group (Waveform Widget)
+#: rc.cpp:367
+msgid "Waveform Selected Subtitle Background Color"
+msgstr ""
+
+#. i18n: file: ../../src/scconfig.kcfg:137
+#. i18n: ectx: label, entry (wfSelBorder), group (Waveform Widget)
+#: rc.cpp:370
+msgid "Waveform Selected Subtitle Border Color"
+msgstr ""
+
+#. i18n: file: ../../src/scconfig.kcfg:141
+#. i18n: ectx: label, entry (wfFontFamily), group (Waveform Widget)
+#. i18n: file: ../../src/scconfig.kcfg:193
+#. i18n: ectx: label, entry (FontFamily), group (VideoPlayer)
+#: rc.cpp:373 rc.cpp:409
+msgid "Font Family"
+msgstr "Famiglia del tipo di carattere"
+
+#. i18n: file: ../../src/scconfig.kcfg:145
+#. i18n: ectx: label, entry (wfSubNumberFontSize), group (Waveform Widget)
+#: rc.cpp:376
+msgid "Subtitle Number Font Size"
+msgstr "Dimensione carattere del numero del sottotitolo"
+
+#. i18n: file: ../../src/scconfig.kcfg:149
+#. i18n: ectx: label, entry (wfSubNumberColor), group (Waveform Widget)
+#: rc.cpp:379
+msgid "Subtitle Number Font Color"
+msgstr "Colore caratttere del numero del sottotitolo"
+
+#. i18n: file: ../../src/scconfig.kcfg:153
+#. i18n: ectx: label, entry (wfSubTextFontSize), group (Waveform Widget)
+#: rc.cpp:382
+msgid "Subtitle Text Font Size"
+msgstr "Dimensione carattere del testo del sottotitolo"
+
+#. i18n: file: ../../src/scconfig.kcfg:157
+#. i18n: ectx: label, entry (wfSubTextColor), group (Waveform Widget)
+#: rc.cpp:385
+msgid "Subtitle Text Font Color"
+msgstr "Colore carattere del testo del sottotitolo"
+
+#. i18n: file: ../../src/scconfig.kcfg:161
+#. i18n: ectx: label, entry (wfMouseLocation), group (Waveform Widget)
+#: rc.cpp:388
+msgid "Mouse Location Line Color"
+msgstr "Colore riga alla posizione del mouse"
+
+#. i18n: file: ../../src/scconfig.kcfg:165
+#. i18n: ectx: label, entry (wfPlayLocation), group (Waveform Widget)
+#: rc.cpp:391
+msgid "Play Location Line Color"
+msgstr ""
+
+#. i18n: file: ../../src/scconfig.kcfg:172
+#. i18n: ectx: label, entry (PlayerBackend), group (VideoPlayer)
+#: rc.cpp:394
+msgid "VideoPlayer Backend"
+msgstr "Motore di riproduzione video"
+
+#. i18n: file: ../../src/scconfig.kcfg:180
+#. i18n: ectx: label, entry (SeekJumpLength), group (VideoPlayer)
+#: rc.cpp:400
+msgid "Jump length on seek"
+msgstr "Velocità in avanzamento rapido"
+
+#. i18n: file: ../../src/scconfig.kcfg:184
+#. i18n: ectx: label, entry (StepJumpLength), group (VideoPlayer)
+#: rc.cpp:403
+#, fuzzy
+msgid "Jump length on frame step"
+msgstr "Velocità in avanzamento rapido"
+
+#. i18n: file: ../../src/scconfig.kcfg:188
+#. i18n: ectx: label, entry (ShowPositionTimeEdit), group (VideoPlayer)
+#: rc.cpp:406
+msgid "Show editable time position"
+msgstr "Mostra controllo di modifica posizione"
+
+#. i18n: file: ../../src/scconfig.kcfg:197
+#. i18n: ectx: label, entry (FontPointSize), group (VideoPlayer)
+#: rc.cpp:412
+msgid "Font Size"
+msgstr "Dimensione carattere"
+
+#. i18n: file: ../../src/scconfig.kcfg:201
+#. i18n: ectx: label, entry (FontColor), group (VideoPlayer)
+#: rc.cpp:415
+msgid "Font Color"
+msgstr "Colore carattere"
+
+#. i18n: file: ../../src/scconfig.kcfg:205
+#. i18n: ectx: label, entry (OutlineColor), group (VideoPlayer)
+#: rc.cpp:418
+msgid "Outline Color"
+msgstr "Colore contorno"
+
+#. i18n: file: ../../src/scconfig.kcfg:209
+#. i18n: ectx: label, entry (OutlineWidth), group (VideoPlayer)
+#: rc.cpp:421
+msgid "Outline Width"
+msgstr "Spessore contorno"
+
+#. i18n: file: ../../src/scconfig.kcfg:213
+#. i18n: ectx: label, entry (Antialias), group (VideoPlayer)
+#: rc.cpp:424
+msgid "Font Antialiasing"
+msgstr "Antialiasing del carattere"
+
+#. i18n: file: ../../src/scconfig.kcfg:220
+#. i18n: ectx: label, entry (gstVideoSinkAuto), group (GStreamer)
+#: rc.cpp:427
+msgid "Auto Video Sink"
+msgstr "Uscita video automatica"
+
+#. i18n: file: ../../src/scconfig.kcfg:224
+#. i18n: ectx: label, entry (gstVideoSink), group (GStreamer)
+#: rc.cpp:430
+msgid "Video Sink"
+msgstr "Uscita video"
+
+#. i18n: file: ../../src/scconfig.kcfg:229
+#. i18n: ectx: label, entry (gstAudioSinkAuto), group (GStreamer)
+#: rc.cpp:433
+msgid "Auto Audio Sink"
+msgstr "Uscita audio automatica"
+
+#. i18n: file: ../../src/scconfig.kcfg:233
+#. i18n: ectx: label, entry (gstAudioSink), group (GStreamer)
+#: rc.cpp:436
+msgid "Audio Sink"
+msgstr "Uscita audio"
+
+#. i18n: file: ../../src/scconfig.kcfg:240
+#. i18n: ectx: label, entry (mpvCacheEnabled), group (MPV)
+#. i18n: file: ../../src/scconfig.kcfg:309
+#. i18n: ectx: label, entry (mpCacheEnabled), group (MPlayer)
+#: rc.cpp:439 rc.cpp:487
+msgid "Cache Enabled"
+msgstr "Cache abilitata"
+
+#. i18n: file: ../../src/scconfig.kcfg:244
+#. i18n: ectx: label, entry (mpvCacheSize), group (MPV)
+#. i18n: file: ../../src/scconfig.kcfg:313
+#. i18n: ectx: label, entry (mpCacheSize), group (MPlayer)
+#: rc.cpp:442 rc.cpp:490
+msgid "Cache Size (KB)"
+msgstr "Dimensione cache (KB)"
+
+#. i18n: file: ../../src/scconfig.kcfg:248
+#. i18n: ectx: label, entry (mpvAutoSyncEnabled), group (MPV)
+#. i18n: file: ../../src/scconfig.kcfg:321
+#. i18n: ectx: label, entry (mpAutoSyncEnabled), group (MPlayer)
+#: rc.cpp:445 rc.cpp:496
+msgid "Auto Sync Enabled"
+msgstr "Sincronizzazione automatica abilitata"
+
+#. i18n: file: ../../src/scconfig.kcfg:252
+#. i18n: ectx: label, entry (mpvAutoSyncFactor), group (MPV)
+#. i18n: file: ../../src/scconfig.kcfg:325
+#. i18n: ectx: label, entry (mpAutoSyncFactor), group (MPlayer)
+#: rc.cpp:448 rc.cpp:499
+msgid "Auto Sync Factor"
+msgstr "Fattore di sincronizzazione automatica"
+
+#. i18n: file: ../../src/scconfig.kcfg:257
+#. i18n: ectx: label, entry (mpvVideoOutputEnabled), group (MPV)
+#. i18n: file: ../../src/scconfig.kcfg:330
+#. i18n: ectx: label, entry (mpVideoOutputEnabled), group (MPlayer)
+#: rc.cpp:451 rc.cpp:502
+msgid "Video Output Enabled"
+msgstr "Uscita video abilitata"
+
+#. i18n: file: ../../src/scconfig.kcfg:261
+#. i18n: ectx: label, entry (mpvVideoOutput), group (MPV)
+#. i18n: file: ../../src/scconfig.kcfg:334
+#. i18n: ectx: label, entry (mpVideoOutput), group (MPlayer)
+#. i18n: file: ../../src/scconfig.kcfg:386
+#. i18n: ectx: label, entry (xineVideo), group (Xine)
+#: rc.cpp:454 rc.cpp:505 rc.cpp:541
+msgid "Video Output"
+msgstr "Uscita video"
+
+#. i18n: file: ../../src/scconfig.kcfg:265
+#. i18n: ectx: label, entry (mpvHwDecodeEnabled), group (MPV)
+#: rc.cpp:457
+msgid "Hardware Decode Enabled"
+msgstr "Decodifica hardware abilitata"
+
+#. i18n: file: ../../src/scconfig.kcfg:269
+#. i18n: ectx: label, entry (mpvHwDecode), group (MPV)
+#. i18n: file: ../../src/scconfig.kcfg:338
+#. i18n: ectx: label, entry (mpVdpau), group (MPlayer)
+#: rc.cpp:460 rc.cpp:508
+msgid "Hardware Decode"
+msgstr "Decodifica hardware"
+
+#. i18n: file: ../../src/scconfig.kcfg:273
+#. i18n: ectx: label, entry (mpvFrameDropping), group (MPV)
+#. i18n: file: ../../src/scconfig.kcfg:342
+#. i18n: ectx: label, entry (mpFrameDropping), group (MPlayer)
+#: rc.cpp:463 rc.cpp:511
+msgid "Frame Dropping"
+msgstr "Perdita di fotogrammi video"
+
+#. i18n: file: ../../src/scconfig.kcfg:278
+#. i18n: ectx: label, entry (mpvAudioOutputEnabled), group (MPV)
+#. i18n: file: ../../src/scconfig.kcfg:351
+#. i18n: ectx: label, entry (mpAudioOutputEnabled), group (MPlayer)
+#: rc.cpp:466 rc.cpp:517
+msgid "Audio Output Enabled"
+msgstr "Uscita audio abilitata"
+
+#. i18n: file: ../../src/scconfig.kcfg:282
+#. i18n: ectx: label, entry (mpvAudioOutput), group (MPV)
+#. i18n: file: ../../src/scconfig.kcfg:355
+#. i18n: ectx: label, entry (mpAudioOutput), group (MPlayer)
+#. i18n: file: ../../src/scconfig.kcfg:395
+#. i18n: ectx: label, entry (xineAudio), group (Xine)
+#: rc.cpp:469 rc.cpp:520 rc.cpp:547
+msgid "Audio Output"
+msgstr "Uscita audio"
+
+#. i18n: file: ../../src/scconfig.kcfg:286
+#. i18n: ectx: label, entry (mpvAudioChannelsEnabled), group (MPV)
+#. i18n: file: ../../src/scconfig.kcfg:359
+#. i18n: ectx: label, entry (mpAudioChannelsEnabled), group (MPlayer)
+#: rc.cpp:472 rc.cpp:523
+msgid "Audio Channels Enabled"
+msgstr "Canali audio abilitati"
+
+#. i18n: file: ../../src/scconfig.kcfg:290
+#. i18n: ectx: label, entry (mpvAudioChannels), group (MPV)
+#. i18n: file: ../../src/scconfig.kcfg:363
+#. i18n: ectx: label, entry (mpAudioChannels), group (MPlayer)
+#: rc.cpp:475 rc.cpp:526
+msgid "Audio Channels"
+msgstr "Canali audio"
+
+#. i18n: file: ../../src/scconfig.kcfg:294
+#. i18n: ectx: label, entry (mpvVolumeAmplificationEnabled), group (MPV)
+#. i18n: file: ../../src/scconfig.kcfg:367
+#. i18n: ectx: label, entry (mpVolumeAmplificationEnabled), group (MPlayer)
+#: rc.cpp:478 rc.cpp:529
+msgid "Volume Amplification Enabled"
+msgstr "Amplificazione del volume abilitata"
+
+#. i18n: file: ../../src/scconfig.kcfg:298
+#. i18n: ectx: label, entry (mpvVolumeAmplification), group (MPV)
+#. i18n: file: ../../src/scconfig.kcfg:371
+#. i18n: ectx: label, entry (mpVolumeAmplification), group (MPlayer)
+#: rc.cpp:481 rc.cpp:532
+msgid "Volume Amplification"
+msgstr "Amplificazione del volume"
+
+#. i18n: file: ../../src/scconfig.kcfg:302
+#. i18n: ectx: label, entry (mpvVolumeNormalization), group (MPV)
+#. i18n: file: ../../src/scconfig.kcfg:375
+#. i18n: ectx: label, entry (mpVolumeNormalization), group (MPlayer)
+#: rc.cpp:484 rc.cpp:535
+msgid "Volume Normalization"
+msgstr "Normalizzazione volume"
+
+#. i18n: file: ../../src/scconfig.kcfg:317
+#. i18n: ectx: label, entry (mpExecutablePath), group (MPlayer)
+#: rc.cpp:493
+msgid "mplayer executable path"
+msgstr "Percorso dell'eseguibile mplayer"
+
+#. i18n: file: ../../src/scconfig.kcfg:346
+#. i18n: ectx: label, entry (mpHardFrameDropping), group (MPlayer)
+#: rc.cpp:514
+msgid "Hard Frame Dropping"
+msgstr "Perdita forte di fotogrammi video"
+
+#. i18n: file: ../../src/scconfig.kcfg:382
+#. i18n: ectx: label, entry (xineVideoEnabled), group (Xine)
+#: rc.cpp:538
+msgid "Video Enabled"
+msgstr "Video abilitato"
+
+#. i18n: file: ../../src/scconfig.kcfg:391
+#. i18n: ectx: label, entry (xineAudioEnabled), group (Xine)
+#: rc.cpp:544
+msgid "Audio Enabled"
+msgstr "Audio abilitato"
+
+#. i18n: file: ../../src/scripting/scriptsmanager.ui:14
+#. i18n: ectx: property (windowTitle), widget (QDialog, ScriptsManager)
+#: rc.cpp:550
+msgid "Scripts Manager"
+msgstr "Gestore degli script"
+
+#. i18n: file: ../../src/scripting/scriptsmanager.ui:29
+#. i18n: ectx: property (whatsThis), widget (QPushButton, btnCreate)
+#: rc.cpp:553
+msgid "Creates a new script file."
+msgstr "Crea un nuovo file di script."
+
+#. i18n: file: ../../src/scripting/scriptsmanager.ui:32
+#. i18n: ectx: property (text), widget (QPushButton, btnCreate)
+#: rc.cpp:556
+msgid "Create..."
+msgstr "Crea..."
+
+#. i18n: file: ../../src/scripting/scriptsmanager.ui:44
+#. i18n: ectx: property (whatsThis), widget (QPushButton, btnAdd)
+#: rc.cpp:559
+msgid "Copies an existing script from a specified location."
+msgstr "Copia uno script esistente da una posizione specificata."
+
+#. i18n: file: ../../src/scripting/scriptsmanager.ui:47
+#. i18n: ectx: property (text), widget (QPushButton, btnAdd)
+#: rc.cpp:562
+msgid "Add..."
+msgstr "Aggiungi..."
+
+#. i18n: file: ../../src/scripting/scriptsmanager.ui:59
+#. i18n: ectx: property (whatsThis), widget (QPushButton, btnRemove)
+#: rc.cpp:565
+msgid "Sends the selected script to the trash."
+msgstr "Cestina lo script selezionato."
+
+#. i18n: file: ../../src/scripting/scriptsmanager.ui:74
+#. i18n: ectx: property (whatsThis), widget (QPushButton, btnEdit)
+#: rc.cpp:571
+msgid "Opens the selected script with an external editor."
+msgstr "Apri lo script selezionato con un editor esterno."
+
+#. i18n: file: ../../src/scripting/scriptsmanager.ui:77
+#. i18n: ectx: property (text), widget (QPushButton, btnEdit)
+#: rc.cpp:574
+msgid "Edit"
+msgstr "Modifica"
+
+#. i18n: file: ../../src/scripting/scriptsmanager.ui:105
+#. i18n: ectx: property (whatsThis), widget (QPushButton, btnRun)
+#: rc.cpp:577
+msgid "Executes the selected script."
+msgstr "Esegue lo script selezionato."
+
+#. i18n: file: ../../src/scripting/scriptsmanager.ui:108
+#. i18n: ectx: property (text), widget (QPushButton, btnRun)
+#: rc.cpp:580
+msgid "Run"
+msgstr "Esegui"
+
+#. i18n: file: ../../src/scripting/scriptsmanager.ui:136
+#. i18n: ectx: property (whatsThis), widget (QPushButton, btnRefresh)
+#: rc.cpp:583
+msgid "Reloads the installed scripts list."
+msgstr "Ricarica la lista degli script installati."
+
+#. i18n: file: ../../src/scripting/scriptsmanager.ui:139
+#. i18n: ectx: property (text), widget (QPushButton, btnRefresh)
+#: rc.cpp:586
+msgid "Refresh"
+msgstr "Aggiorna"
+
+#. i18n: file: ../../src/speechplugins/pocketsphinx/pocketsphinxconfig.kcfg:11
+#. i18n: ectx: label, entry (acousticModelPath), group (PocketSphinx)
+#. i18n: file: ../../src/speechplugins/pocketsphinx/pocketsphinxconfigwidget.ui:65
+#. i18n: ectx: property (toolTip), widget (QLabel, label_acousticModelPath)
+#: rc.cpp:589 rc.cpp:628
+msgid "Directory containing acoustic model files"
+msgstr ""
+
+#. i18n: file: ../../src/speechplugins/pocketsphinx/pocketsphinxconfig.kcfg:15
+#. i18n: ectx: label, entry (trigramModelFile), group (PocketSphinx)
+#. i18n: file: ../../src/speechplugins/pocketsphinx/pocketsphinxconfigwidget.ui:39
+#. i18n: ectx: property (toolTip), widget (QLabel, label_trigramModelFile)
+#: rc.cpp:592 rc.cpp:622
+msgid "Word trigram language model input file"
+msgstr ""
+
+#. i18n: file: ../../src/speechplugins/pocketsphinx/pocketsphinxconfig.kcfg:19
+#. i18n: ectx: label, entry (lexiconFile), group (PocketSphinx)
+#. i18n: file: ../../src/speechplugins/pocketsphinx/pocketsphinxconfigwidget.ui:26
+#. i18n: ectx: property (toolTip), widget (QLabel, label_lexiconFile)
+#: rc.cpp:595 rc.cpp:616
+msgid "Main pronunciation dictionary (lexicon) input file"
+msgstr ""
+
+#. i18n: file: ../../src/speechplugins/pocketsphinx/pocketsphinxconfig.kcfg:24
+#. i18n: ectx: label, entry (vadPostSpeech), group (PocketSphinx)
+#. i18n: file: ../../src/speechplugins/pocketsphinx/pocketsphinxconfigwidget.ui:152
+#. i18n: ectx: property (toolTip), widget (QLabel, label_vadPostSpeech)
+#: rc.cpp:598 rc.cpp:655
+msgid "Num of silence frames to keep after from speech to silence"
+msgstr ""
+
+#. i18n: file: ../../src/speechplugins/pocketsphinx/pocketsphinxconfig.kcfg:28
+#. i18n: ectx: label, entry (vadPreSpeech), group (PocketSphinx)
+#. i18n: file: ../../src/speechplugins/pocketsphinx/pocketsphinxconfigwidget.ui:139
+#. i18n: ectx: property (toolTip), widget (QLabel, label_vadPreSpeech)
+#: rc.cpp:601 rc.cpp:649
+msgid "Num of speech frames to keep before silence to speech"
+msgstr ""
+
+#. i18n: file: ../../src/speechplugins/pocketsphinx/pocketsphinxconfig.kcfg:32
+#. i18n: ectx: label, entry (vadStartSpeech), group (PocketSphinx)
+#. i18n: file: ../../src/speechplugins/pocketsphinx/pocketsphinxconfigwidget.ui:165
+#. i18n: ectx: property (toolTip), widget (QLabel, label_vadStartSpeech)
+#: rc.cpp:604 rc.cpp:661
+msgid "Num of speech frames to trigger vad from silence to speech"
+msgstr ""
+
+#. i18n: file: ../../src/speechplugins/pocketsphinx/pocketsphinxconfig.kcfg:36
+#. i18n: ectx: label, entry (vadTreshold), group (PocketSphinx)
+#. i18n: file: ../../src/speechplugins/pocketsphinx/pocketsphinxconfigwidget.ui:106
+#. i18n: ectx: property (toolTip), widget (QDoubleSpinBox, kcfg_vadTreshold)
+#. i18n: file: ../../src/speechplugins/pocketsphinx/pocketsphinxconfigwidget.ui:126
+#. i18n: ectx: property (toolTip), widget (QLabel, label_vadTreshold)
+#: rc.cpp:607 rc.cpp:640 rc.cpp:643
+msgid ""
+"Threshold for decision between noise and silence frames. Log-ratio between "
+"signal level and noise leve"
+msgstr ""
+
+#. i18n: file: ../../src/speechplugins/pocketsphinx/pocketsphinxconfigwidget.ui:20
+#. i18n: ectx: property (title), widget (QGroupBox, grpModel)
+#: rc.cpp:613
+#, fuzzy
+msgid "Speech Recognition Model"
+msgstr "Modalità di sincronizzazione"
+
+#. i18n: file: ../../src/speechplugins/pocketsphinx/pocketsphinxconfigwidget.ui:29
+#. i18n: ectx: property (text), widget (QLabel, label_lexiconFile)
+#: rc.cpp:619
+msgid "Pronunciation Dictionary (Lexicon)"
+msgstr ""
+
+#. i18n: file: ../../src/speechplugins/pocketsphinx/pocketsphinxconfigwidget.ui:42
+#. i18n: ectx: property (text), widget (QLabel, label_trigramModelFile)
+#: rc.cpp:625
+msgid "Trigram Model"
+msgstr ""
+
+#. i18n: file: ../../src/speechplugins/pocketsphinx/pocketsphinxconfigwidget.ui:68
+#. i18n: ectx: property (text), widget (QLabel, label_acousticModelPath)
+#: rc.cpp:631
+msgid "Acoustic Model"
+msgstr ""
+
+#. i18n: file: ../../src/speechplugins/pocketsphinx/pocketsphinxconfigwidget.ui:78
+#. i18n: ectx: property (text), widget (QLabel, label_modelInfoText)
+#: rc.cpp:634
+msgid ""
+"<html><head/><body><p align=\"center\">Acoustic and Language Models can be "
+"downloaded from <a href=\"https://cmusphinx.github.io/wiki/download/\"><span "
+"style=\" text-decoration: underline; color:#007af4;\">CMU Spinx</span></a></"
+"p></body></html>"
+msgstr ""
+
+#. i18n: file: ../../src/speechplugins/pocketsphinx/pocketsphinxconfigwidget.ui:100
+#. i18n: ectx: property (title), widget (QGroupBox, grpVAD)
+#: rc.cpp:637
+msgid "Voice Activity Detection"
+msgstr ""
+
+#. i18n: file: ../../src/speechplugins/pocketsphinx/pocketsphinxconfigwidget.ui:129
+#. i18n: ectx: property (text), widget (QLabel, label_vadTreshold)
+#: rc.cpp:646
+msgid "Noise Treshold"
+msgstr ""
+
+#. i18n: file: ../../src/speechplugins/pocketsphinx/pocketsphinxconfigwidget.ui:142
+#. i18n: ectx: property (text), widget (QLabel, label_vadPreSpeech)
+#: rc.cpp:652
+msgid "Pre Speech Frames"
+msgstr ""
+
+#. i18n: file: ../../src/speechplugins/pocketsphinx/pocketsphinxconfigwidget.ui:155
+#. i18n: ectx: property (text), widget (QLabel, label_vadPostSpeech)
+#: rc.cpp:658
+msgid "Post Speech Frames"
+msgstr ""
+
+#. i18n: file: ../../src/speechplugins/pocketsphinx/pocketsphinxconfigwidget.ui:168
+#. i18n: ectx: property (text), widget (QLabel, label_vadStartSpeech)
+#: rc.cpp:664
+msgid "Start Speech Frames"
+msgstr ""
+
+#. i18n: file: ../../src/subtitlecomposerui.rc:5
+#. i18n: ectx: Menu (file)
+#: rc.cpp:667
+msgid "&File"
+msgstr "&File"
+
+#. i18n: file: ../../src/subtitlecomposerui.rc:20
+#. i18n: ectx: Menu (translation)
+#: rc.cpp:670
+msgid "Translation"
+msgstr "Traduzione"
+
+#. i18n: file: ../../src/subtitlecomposerui.rc:33
+#. i18n: ectx: Menu (edit)
+#: rc.cpp:673
+msgid "&Edit"
+msgstr "&Modifica"
+
+#. i18n: file: ../../src/subtitlecomposerui.rc:56
+#. i18n: ectx: Menu (texts)
+#: rc.cpp:676
+msgid "&Texts"
+msgstr "&Testi"
+
+#. i18n: file: ../../src/subtitlecomposerui.rc:67
+#. i18n: ectx: Menu (styles)
+#: rc.cpp:679
+msgid "St&yles"
+msgstr "&Stili"
+
+#. i18n: file: ../../src/subtitlecomposerui.rc:75
+#. i18n: ectx: Menu (times)
+#: rc.cpp:682
+msgid "T&imes"
+msgstr "T&emporizzazioni"
+
+#. i18n: file: ../../src/subtitlecomposerui.rc:100
+#. i18n: ectx: Menu (errors)
+#: rc.cpp:685
+msgid "E&rrors"
+msgstr "E&rrori"
+
+#. i18n: file: ../../src/subtitlecomposerui.rc:113
+#. i18n: ectx: Menu (video)
+#: rc.cpp:688
+msgid "&Video"
+msgstr "&Vídeo"
+
+#. i18n: file: ../../src/subtitlecomposerui.rc:147
+#. i18n: ectx: Menu (tools)
+#: rc.cpp:691
+msgid "T&ools"
+msgstr "Strument&i"
+
+#. i18n: file: ../../src/subtitlecomposerui.rc:152
+#. i18n: ectx: ToolBar (mainToolBar)
+#: rc.cpp:694
+msgid "Main Toolbar"
+msgstr "Barra degli strumenti principale"
+
+#. i18n: file: ../../src/subtitlecomposerui.rc:163
+#. i18n: ectx: ToolBar (editToolBar)
+#: rc.cpp:697
+msgid "Edit Toolbar"
+msgstr "Barra strumenti di modifica"
+
+#. i18n: file: ../../src/videoplayerplugins/gstreamer/gstreamerconfigwidget.ui:26
+#. i18n: ectx: property (text), widget (QCheckBox, kcfg_gstVideoSinkAuto)
+#: rc.cpp:703
+msgid "Video sink:"
+msgstr "Uscita vídeo:"
+
+#. i18n: file: ../../src/videoplayerplugins/gstreamer/gstreamerconfigwidget.ui:40
+#. i18n: ectx: property (text), widget (QCheckBox, kcfg_gstAudioSinkAuto)
+#: rc.cpp:706
+msgid "Audio sink:"
+msgstr "Uscita audio:"
+
+#. i18n: file: ../../src/videoplayerplugins/mplayer/mplayerconfigwidget.ui:29
+#. i18n: ectx: property (text), widget (QLabel, label)
+#: rc.cpp:712
+msgid "Executable path:"
+msgstr "Percorso dell'eseguibile:"
+
+#. i18n: file: ../../src/videoplayerplugins/mplayer/mplayerconfigwidget.ui:43
+#. i18n: ectx: property (text), widget (QCheckBox, kcfg_mpAutoSyncEnabled)
+#. i18n: file: ../../src/videoplayerplugins/mpv/mpvconfigwidget.ui:26
+#. i18n: ectx: property (text), widget (QCheckBox, kcfg_mpvAutoSyncEnabled)
+#: rc.cpp:715 rc.cpp:751
+msgid "A/V synchronization factor:"
+msgstr "Fattore di sincronizzazione A/V:"
+
+#. i18n: file: ../../src/videoplayerplugins/mplayer/mplayerconfigwidget.ui:53
+#. i18n: ectx: property (title), widget (QGroupBox, grpVideo)
+#. i18n: file: ../../src/videoplayerplugins/mpv/mpvconfigwidget.ui:43
+#. i18n: ectx: property (title), widget (QGroupBox, grpVideo)
+#. i18n: file: ../../src/videoplayerplugins/xine/xineconfigwidget.ui:20
+#. i18n: ectx: property (title), widget (QGroupBox, grpVideo)
+#: rc.cpp:718 rc.cpp:754 rc.cpp:781
+msgid "Video"
+msgstr "Vídeo"
+
+#. i18n: file: ../../src/videoplayerplugins/mplayer/mplayerconfigwidget.ui:66
+#. i18n: ectx: property (text), widget (QCheckBox, kcfg_mpVideoOutputEnabled)
+#. i18n: file: ../../src/videoplayerplugins/mpv/mpvconfigwidget.ui:70
+#. i18n: ectx: property (text), widget (QCheckBox, kcfg_mpvVideoOutputEnabled)
+#: rc.cpp:721 rc.cpp:760
+msgid "Video output driver:"
+msgstr "Driver visualizzazione video:"
+
+#. i18n: file: ../../src/videoplayerplugins/mplayer/mplayerconfigwidget.ui:73
+#. i18n: ectx: property (text), widget (QCheckBox, kcfg_mpVdpau)
+#: rc.cpp:724
+msgid "Enable VDPAU for DivX/XviD"
+msgstr "Abilita VDPAU per DivX/XviD"
+
+#. i18n: file: ../../src/videoplayerplugins/mplayer/mplayerconfigwidget.ui:80
+#. i18n: ectx: property (text), widget (QCheckBox, kcfg_mpFrameDropping)
+#. i18n: file: ../../src/videoplayerplugins/mpv/mpvconfigwidget.ui:77
+#. i18n: ectx: property (text), widget (QCheckBox, kcfg_mpvFrameDropping)
+#: rc.cpp:727 rc.cpp:763
+msgid "Allow frame dropping"
+msgstr "Permetti la perdita di fotogrammi video"
+
+#. i18n: file: ../../src/videoplayerplugins/mplayer/mplayerconfigwidget.ui:87
+#. i18n: ectx: property (text), widget (QCheckBox, kcfg_mpHardFrameDropping)
+#: rc.cpp:730
+msgid "Allow hard frame dropping"
+msgstr "Permetti una forte perdita di fotogrammi video"
+
+#. i18n: file: ../../src/videoplayerplugins/mplayer/mplayerconfigwidget.ui:97
+#. i18n: ectx: property (title), widget (QGroupBox, grpAudio)
+#. i18n: file: ../../src/videoplayerplugins/mpv/mpvconfigwidget.ui:87
+#. i18n: ectx: property (title), widget (QGroupBox, grpAudio)
+#. i18n: file: ../../src/videoplayerplugins/xine/xineconfigwidget.ui:43
+#. i18n: ectx: property (title), widget (QGroupBox, grpAudio)
+#: rc.cpp:733 rc.cpp:766 rc.cpp:787
+msgid "Audio"
+msgstr "Audio"
+
+#. i18n: file: ../../src/videoplayerplugins/mplayer/mplayerconfigwidget.ui:103
+#. i18n: ectx: property (text), widget (QCheckBox, kcfg_mpAudioOutputEnabled)
+#. i18n: file: ../../src/videoplayerplugins/mpv/mpvconfigwidget.ui:107
+#. i18n: ectx: property (text), widget (QCheckBox, kcfg_mpvAudioOutputEnabled)
+#: rc.cpp:736 rc.cpp:775
+msgid "Audio output driver:"
+msgstr "Driver uscita audio:"
+
+#. i18n: file: ../../src/videoplayerplugins/mplayer/mplayerconfigwidget.ui:110
+#. i18n: ectx: property (text), widget (QCheckBox, kcfg_mpAudioChannelsEnabled)
+#. i18n: file: ../../src/videoplayerplugins/mpv/mpvconfigwidget.ui:100
+#. i18n: ectx: property (text), widget (QCheckBox, kcfg_mpvAudioChannelsEnabled)
+#: rc.cpp:739 rc.cpp:772
+msgid "Audio channels:"
+msgstr "Canali audio:"
+
+#. i18n: file: ../../src/videoplayerplugins/mplayer/mplayerconfigwidget.ui:117
+#. i18n: ectx: property (text), widget (QCheckBox, kcfg_mpVolumeAmplificationEnabled)
+#. i18n: file: ../../src/videoplayerplugins/mpv/mpvconfigwidget.ui:93
+#. i18n: ectx: property (text), widget (QCheckBox, kcfg_mpvVolumeAmplificationEnabled)
+#: rc.cpp:742 rc.cpp:769
+msgid "Volume amplification:"
+msgstr "Amplificazione del volume:"
+
+#. i18n: file: ../../src/videoplayerplugins/mplayer/mplayerconfigwidget.ui:189
+#. i18n: ectx: property (text), widget (QCheckBox, kcfg_mpVolumeNormalization)
+#. i18n: file: ../../src/videoplayerplugins/mpv/mpvconfigwidget.ui:179
+#. i18n: ectx: property (text), widget (QCheckBox, kcfg_mpvVolumeNormalization)
+#: rc.cpp:745 rc.cpp:778
+msgid "Volume normalization"
+msgstr "Normalizzazione volume"
+
+#. i18n: file: ../../src/videoplayerplugins/mpv/mpvconfigwidget.ui:56
+#. i18n: ectx: property (text), widget (QCheckBox, kcfg_mpvHwDecodeEnabled)
+#: rc.cpp:757
+msgid "Hardware video decoding:"
+msgstr "Decodifica video hardware:"
+
+#. i18n: file: ../../src/videoplayerplugins/xine/xineconfigwidget.ui:33
+#. i18n: ectx: property (text), widget (QCheckBox, kcfg_xineVideoEnabled)
+#: rc.cpp:784
+msgid "Video driver:"
+msgstr "Driver video:"
+
+#. i18n: file: ../../src/videoplayerplugins/xine/xineconfigwidget.ui:49
+#. i18n: ectx: property (text), widget (QCheckBox, kcfg_xineAudioEnabled)
+#: rc.cpp:790
+msgid "Audio driver:"
+msgstr "Driver audio:"
+
+#~ msgid "Subtitle Streams"
+#~ msgstr "Tracce dei sottotitoli"
+
+#~ msgid "Shift %2%1 Millisecond"
+#~ msgid_plural "Shift %2%1 Milliseconds"
+#~ msgstr[0] "Sposta di %2%1 millisecondi"
+#~ msgstr[1] "Sposta di %2%1 millisecondi"
+
+#~ msgid "Croatian Translator"
+#~ msgstr "Traduttore croato"
+
+#~ msgid "Bulgarian Translator"
+#~ msgstr "Traduttore bulgaro"
+
+#~ msgid "Translator"
+#~ msgstr "Traduttore"
+
+#, fuzzy
+#~ msgid "TextLabel"
+#~ msgstr "Testo"
 
 #~ msgid "Jump length on seek:"
 #~ msgstr "Velocità in avanzamento rapido:"

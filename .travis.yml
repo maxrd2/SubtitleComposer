@@ -3,6 +3,7 @@ language: cpp
 branches:
   except:
     - /^(?i:continuous)$/
+    - l10n_master
 
 env:
   global:
