@@ -1,0 +1,10 @@
+commit_message: "Updated %language% translations from Crowdin"                
+append_commit_message: false
+files:
+  - source: /po/*.pot
+    translation: /po/%two_letters_code%/%file_name%.po
+    languages_mapping:
+      two_letters_code:
+        sr-CS: sr@latin
+        pt-BR: pt_BR
+        

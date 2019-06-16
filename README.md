@@ -1,4 +1,4 @@
-## Subtitle Composer [![TravisCI build](https://travis-ci.org/maxrd2/subtitlecomposer.svg?branch=master)](https://travis-ci.org/maxrd2/subtitlecomposer)
+## Subtitle Composer [![TravisCI build](https://travis-ci.org/maxrd2/subtitlecomposer.svg?branch=master)](https://travis-ci.org/maxrd2/subtitlecomposer) [![Crowdin](https://d322cqt584bo4o.cloudfront.net/subtitlecomposer/localized.svg)](https://crowdin.com/project/subtitlecomposer)
 
 An open source text-based subtitle editor that supports basic and advanced editing operations, aiming to become an improved version of Subtitle Workshop for every platform supported by Plasma Frameworks.
 

@@ -30,11 +30,11 @@ echo "Done extracting messages"
 
 
 echo "Merging translations"
+sed -r -i -e 's/\.\.\/src\//..\/..\/src\//g' "$podir/$project.pot"
 for cat in `find "$podir" -name '*.po'`; do
 	echo "$cat"
 	msgmerge -o "$cat.new" "$cat" "$podir/$project.pot"
 	mv "$cat.new" "$cat"
-	sed -r -i -e 's/\.\.\/src\//..\/..\/src\//g' "$cat"
 done
 echo "Done merging translations"
 
