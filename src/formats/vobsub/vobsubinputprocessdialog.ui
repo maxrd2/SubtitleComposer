@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>459</width>
-    <height>322</height>
+    <height>330</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -68,7 +68,7 @@
          <item>
           <widget class="QPushButton" name="styleBold">
            <property name="toolTip">
-            <string>Ctrl+B</string>
+            <string notr="true">Ctrl+B</string>
            </property>
            <property name="icon">
             <iconset theme="format-text-bold">
@@ -88,7 +88,7 @@
          <item>
           <widget class="QPushButton" name="styleItalic">
            <property name="toolTip">
-            <string>Ctrl+I</string>
+            <string notr="true">Ctrl+I</string>
            </property>
            <property name="icon">
             <iconset theme="format-text-italic">
@@ -108,7 +108,7 @@
          <item>
           <widget class="QPushButton" name="styleUnderline">
            <property name="toolTip">
-            <string>Ctrl+U</string>
+            <string notr="true">Ctrl+U</string>
            </property>
            <property name="icon">
             <iconset theme="format-text-underline">
@@ -199,7 +199,7 @@
          <item>
           <widget class="QPushButton" name="btnPrevImage">
            <property name="toolTip">
-            <string>Ctrl+Shift+Left</string>
+            <string notr="true">Ctrl+Shift+Left</string>
            </property>
            <property name="text">
             <string>Prev Image</string>
@@ -216,7 +216,7 @@
          <item>
           <widget class="QPushButton" name="btnPrevSymbol">
            <property name="toolTip">
-            <string>Ctrl+Left</string>
+            <string notr="true">Ctrl+Left</string>
            </property>
            <property name="text">
             <string>Prev Symbol</string>
@@ -233,7 +233,7 @@
          <item>
           <widget class="QPushButton" name="btnNextSymbol">
            <property name="toolTip">
-            <string>Ctrl+Right</string>
+            <string notr="true">Ctrl+Right</string>
            </property>
            <property name="text">
             <string>Next Symbol</string>
@@ -247,7 +247,7 @@
          <item>
           <widget class="QPushButton" name="btnNextImage">
            <property name="toolTip">
-            <string>Ctrl+Shift+Right</string>
+            <string notr="true">Ctrl+Shift+Right</string>
            </property>
            <property name="text">
             <string>Next Image</string>
@@ -322,7 +322,7 @@
       <item row="0" column="0">
        <widget class="QProgressBar" name="progressBar">
         <property name="format">
-         <string>%v/%m</string>
+         <string notr="true">%v/%m</string>
         </property>
        </widget>
       </item>

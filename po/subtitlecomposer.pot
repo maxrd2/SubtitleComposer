@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: https://github.com/maxrd2/subtitlecomposer/issues\n"
-"POT-Creation-Date: 2019-06-16 15:39+0200\n"
+"POT-Creation-Date: 2019-06-17 01:28+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -191,7 +191,7 @@ msgstr ""
 
 #. i18n: file: ../../src/scripting/scriptsmanager.ui:62
 #. i18n: ectx: property (text), widget (QPushButton, btnRemove)
-#: ../../src/application.cpp:607 rc.cpp:568
+#: ../../src/application.cpp:607 rc.cpp:543
 msgid "Remove"
 msgstr ""
 
@@ -1873,12 +1873,12 @@ msgstr ""
 msgid "Original Author"
 msgstr ""
 
-#: ../../src/main.cpp:77 rc.cpp:791
+#: ../../src/main.cpp:77 rc.cpp:766
 msgctxt "NAME OF TRANSLATORS"
 msgid "Your names"
 msgstr ""
 
-#: ../../src/main.cpp:77 rc.cpp:792
+#: ../../src/main.cpp:77 rc.cpp:767
 msgctxt "EMAIL OF TRANSLATORS"
 msgid "Your emails"
 msgstr ""
@@ -2067,7 +2067,7 @@ msgstr ""
 
 #. i18n: file: ../../src/videoplayerplugins/gstreamer/gstreamerconfigwidget.ui:20
 #. i18n: ectx: property (title), widget (QGroupBox, grpOptions)
-#: ../../src/utils/errorfinder.cpp:42 rc.cpp:700
+#: ../../src/utils/errorfinder.cpp:42 rc.cpp:675
 msgid "Options"
 msgstr ""
 
@@ -2331,7 +2331,7 @@ msgstr ""
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_AutoClearFixed)
 #. i18n: file: ../../src/scconfig.kcfg:78
 #. i18n: ectx: label, entry (AutoClearFixed), group (Error Check)
-#: rc.cpp:42 rc.cpp:328
+#: rc.cpp:42 rc.cpp:303
 msgid "Automatically clear fixed errors"
 msgstr ""
 
@@ -2343,7 +2343,7 @@ msgstr ""
 #. i18n: ectx: property (title), widget (QGroupBox, grpGeneral)
 #. i18n: file: ../../src/videoplayerplugins/mpv/mpvconfigwidget.ui:20
 #. i18n: ectx: property (title), widget (QGroupBox, grpGeneral)
-#: rc.cpp:45 rc.cpp:87 rc.cpp:709 rc.cpp:748
+#: rc.cpp:45 rc.cpp:87 rc.cpp:684 rc.cpp:723
 msgid "General"
 msgstr ""
 
@@ -2439,7 +2439,7 @@ msgstr ""
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_VideoAutoPlay)
 #. i18n: file: ../../src/scconfig.kcfg:176
 #. i18n: ectx: label, entry (VideoAutoPlay), group (VideoPlayer)
-#: rc.cpp:102 rc.cpp:397
+#: rc.cpp:102 rc.cpp:372
 msgid "Start playing video when loaded"
 msgstr ""
 
@@ -2701,238 +2701,189 @@ msgstr ""
 msgid "Up/Down: change value"
 msgstr ""
 
-#. i18n: file: ../../src/formats/vobsub/vobsubinputprocessdialog.ui:71
-#. i18n: ectx: property (toolTip), widget (QPushButton, styleBold)
-#: rc.cpp:237
-msgid "Ctrl+B"
-msgstr ""
-
-#. i18n: file: ../../src/formats/vobsub/vobsubinputprocessdialog.ui:91
-#. i18n: ectx: property (toolTip), widget (QPushButton, styleItalic)
-#: rc.cpp:240
-msgid "Ctrl+I"
-msgstr ""
-
-#. i18n: file: ../../src/formats/vobsub/vobsubinputprocessdialog.ui:111
-#. i18n: ectx: property (toolTip), widget (QPushButton, styleUnderline)
-#: rc.cpp:243
-msgid "Ctrl+U"
-msgstr ""
-
 #. i18n: file: ../../src/formats/vobsub/vobsubinputprocessdialog.ui:146
 #. i18n: ectx: property (text), widget (QPushButton, btnOk)
-#: rc.cpp:246
+#: rc.cpp:237
 msgid "OK"
-msgstr ""
-
-#. i18n: file: ../../src/formats/vobsub/vobsubinputprocessdialog.ui:202
-#. i18n: ectx: property (toolTip), widget (QPushButton, btnPrevImage)
-#: rc.cpp:249
-msgid "Ctrl+Shift+Left"
 msgstr ""
 
 #. i18n: file: ../../src/formats/vobsub/vobsubinputprocessdialog.ui:205
 #. i18n: ectx: property (text), widget (QPushButton, btnPrevImage)
-#: rc.cpp:252
+#: rc.cpp:240
 msgid "Prev Image"
-msgstr ""
-
-#. i18n: file: ../../src/formats/vobsub/vobsubinputprocessdialog.ui:219
-#. i18n: ectx: property (toolTip), widget (QPushButton, btnPrevSymbol)
-#: rc.cpp:255
-msgid "Ctrl+Left"
 msgstr ""
 
 #. i18n: file: ../../src/formats/vobsub/vobsubinputprocessdialog.ui:222
 #. i18n: ectx: property (text), widget (QPushButton, btnPrevSymbol)
-#: rc.cpp:258
+#: rc.cpp:243
 msgid "Prev Symbol"
-msgstr ""
-
-#. i18n: file: ../../src/formats/vobsub/vobsubinputprocessdialog.ui:236
-#. i18n: ectx: property (toolTip), widget (QPushButton, btnNextSymbol)
-#: rc.cpp:261
-msgid "Ctrl+Right"
 msgstr ""
 
 #. i18n: file: ../../src/formats/vobsub/vobsubinputprocessdialog.ui:239
 #. i18n: ectx: property (text), widget (QPushButton, btnNextSymbol)
-#: rc.cpp:264
+#: rc.cpp:246
 msgid "Next Symbol"
-msgstr ""
-
-#. i18n: file: ../../src/formats/vobsub/vobsubinputprocessdialog.ui:250
-#. i18n: ectx: property (toolTip), widget (QPushButton, btnNextImage)
-#: rc.cpp:267
-msgid "Ctrl+Shift+Right"
 msgstr ""
 
 #. i18n: file: ../../src/formats/vobsub/vobsubinputprocessdialog.ui:253
 #. i18n: ectx: property (text), widget (QPushButton, btnNextImage)
-#: rc.cpp:270
+#: rc.cpp:249
 msgid "Next Image"
 msgstr ""
 
 #. i18n: file: ../../src/formats/vobsub/vobsubinputprocessdialog.ui:280
 #. i18n: ectx: property (text), widget (QPushButton, btnAbort)
-#: rc.cpp:273
+#: rc.cpp:252
 msgid "Abort"
 msgstr ""
 
 #. i18n: file: ../../src/formats/vobsub/vobsubinputprocessdialog.ui:303
 #. i18n: ectx: property (title), widget (QGroupBox, grpPreview)
-#: rc.cpp:276
+#: rc.cpp:255
 msgid "Subtitle Image"
-msgstr ""
-
-#. i18n: file: ../../src/formats/vobsub/vobsubinputprocessdialog.ui:325
-#. i18n: ectx: property (format), widget (QProgressBar, progressBar)
-#: rc.cpp:280
-#, no-c-format
-msgid "%v/%m"
 msgstr ""
 
 #. i18n: file: ../../src/scconfig.kcfg:10
 #. i18n: ectx: label, entry (DefaultSubtitlesEncoding), group (General)
-#: rc.cpp:283
+#: rc.cpp:258
 msgid "Default Subtitles Encoding"
 msgstr ""
 
 #. i18n: file: ../../src/scconfig.kcfg:14
 #. i18n: ectx: label, entry (SeekOffsetOnDoubleClick), group (General)
-#: rc.cpp:286
+#: rc.cpp:261
 msgid "Seek Offset On Double Click"
 msgstr ""
 
 #. i18n: file: ../../src/scconfig.kcfg:18
 #. i18n: ectx: label, entry (JumpLineOffset), group (General)
-#: rc.cpp:289
+#: rc.cpp:264
 msgid "Jump to prev/next line offset"
 msgstr ""
 
 #. i18n: file: ../../src/scconfig.kcfg:22
 #. i18n: ectx: label, entry (UnpauseOnDoubleClick), group (General)
-#: rc.cpp:292
+#: rc.cpp:267
 msgid "Unpause On Double Click"
 msgstr ""
 
 #. i18n: file: ../../src/scconfig.kcfg:26
 #. i18n: ectx: label, entry (AutomaticVideoLoad), group (General)
-#: rc.cpp:295
+#: rc.cpp:270
 msgid "Automatic Video Load"
 msgstr ""
 
 #. i18n: file: ../../src/scconfig.kcfg:31
 #. i18n: ectx: label, entry (LinesQuickShiftAmount), group (General)
-#: rc.cpp:298
+#: rc.cpp:273
 msgid "Lines Quick Shift Amount"
 msgstr ""
 
 #. i18n: file: ../../src/scconfig.kcfg:35
 #. i18n: ectx: label, entry (GrabbedPositionCompensation), group (General)
-#: rc.cpp:301
+#: rc.cpp:276
 msgid "Grabbed Position Compensation"
 msgstr ""
 
 #. i18n: file: ../../src/scconfig.kcfg:40
 #. i18n: ectx: label, entry (LineDuration), group (General)
-#: rc.cpp:304
+#: rc.cpp:279
 msgid "Default subtitle line duration"
 msgstr ""
 
 #. i18n: file: ../../src/scconfig.kcfg:44
 #. i18n: ectx: label, entry (LinePause), group (General)
-#: rc.cpp:307
+#: rc.cpp:282
 msgid "Default duration between subtitle lines"
 msgstr ""
 
 #. i18n: file: ../../src/scconfig.kcfg:51
 #. i18n: ectx: label, entry (MaxCharacters), group (Error Check)
-#: rc.cpp:310
+#: rc.cpp:285
 msgid "Maximum number of characters"
 msgstr ""
 
 #. i18n: file: ../../src/scconfig.kcfg:55
 #. i18n: ectx: label, entry (MaxLines), group (Error Check)
-#: rc.cpp:313
+#: rc.cpp:288
 msgid "Maximum number of lines"
 msgstr ""
 
 #. i18n: file: ../../src/scconfig.kcfg:60
 #. i18n: ectx: label, entry (MinDuration), group (Error Check)
-#: rc.cpp:316
+#: rc.cpp:291
 msgid "Minimum duration"
 msgstr ""
 
 #. i18n: file: ../../src/scconfig.kcfg:64
 #. i18n: ectx: label, entry (MaxDuration), group (Error Check)
-#: rc.cpp:319
+#: rc.cpp:294
 msgid "Maximum duration"
 msgstr ""
 
 #. i18n: file: ../../src/scconfig.kcfg:69
 #. i18n: ectx: label, entry (MinDurationPerCharacter), group (Error Check)
-#: rc.cpp:322
+#: rc.cpp:297
 msgid "Minimum duration per character"
 msgstr ""
 
 #. i18n: file: ../../src/scconfig.kcfg:73
 #. i18n: ectx: label, entry (MaxDurationPerCharacter), group (Error Check)
-#: rc.cpp:325
+#: rc.cpp:300
 msgid "Maximum duration per character"
 msgstr ""
 
 #. i18n: file: ../../src/scconfig.kcfg:85
 #. i18n: ectx: label, entry (DefaultLanguage), group (Spelling)
-#: rc.cpp:331
+#: rc.cpp:306
 msgid "Default Language"
 msgstr ""
 
 #. i18n: file: ../../src/scconfig.kcfg:89
 #. i18n: ectx: label, entry (DefaultClient), group (Spelling)
-#: rc.cpp:334
+#: rc.cpp:309
 msgid "Default client"
 msgstr ""
 
 #. i18n: file: ../../src/scconfig.kcfg:93
 #. i18n: ectx: label, entry (CheckUppercase), group (Spelling)
-#: rc.cpp:337
+#: rc.cpp:312
 msgid "Check uppercase"
 msgstr ""
 
 #. i18n: file: ../../src/scconfig.kcfg:97
 #. i18n: ectx: label, entry (SkipRunTogether), group (Spelling)
-#: rc.cpp:340
+#: rc.cpp:315
 msgid "Skip Run Together"
 msgstr ""
 
 #. i18n: file: ../../src/scconfig.kcfg:104
 #. i18n: ectx: label, entry (wfInnerColor), group (Waveform Widget)
-#: rc.cpp:343
+#: rc.cpp:318
 msgid "Waveform Inner Color"
 msgstr ""
 
 #. i18n: file: ../../src/scconfig.kcfg:108
 #. i18n: ectx: label, entry (wfOuterColor), group (Waveform Widget)
-#: rc.cpp:346
+#: rc.cpp:321
 msgid "Waveform Outer Color"
 msgstr ""
 
 #. i18n: file: ../../src/scconfig.kcfg:112
 #. i18n: ectx: label, entry (wfSmoothScroll), group (Waveform Widget)
-#: rc.cpp:349
+#: rc.cpp:324
 msgid "Waveform Smooth Scrolling"
 msgstr ""
 
 #. i18n: file: ../../src/scconfig.kcfg:116
 #. i18n: ectx: label, entry (wfAutoscrollPadding), group (Waveform Widget)
-#: rc.cpp:352
+#: rc.cpp:327
 msgid "Autoscroll Padding"
 msgstr ""
 
 #. i18n: file: ../../src/scconfig.kcfg:118
 #. i18n: ectx: whatsthis, entry (wfAutoscrollPadding), group (Waveform Widget)
-#: rc.cpp:355
+#: rc.cpp:330
 msgid ""
 "Autoscroll page when play position reaches ScrollPadding distance "
 "(percentage) from page border."
@@ -2940,31 +2891,31 @@ msgstr ""
 
 #. i18n: file: ../../src/scconfig.kcfg:121
 #. i18n: ectx: label, entry (wfSubBackground), group (Waveform Widget)
-#: rc.cpp:358
+#: rc.cpp:333
 msgid "Waveform Subtitle Background Color"
 msgstr ""
 
 #. i18n: file: ../../src/scconfig.kcfg:125
 #. i18n: ectx: label, entry (wfSubBorder), group (Waveform Widget)
-#: rc.cpp:361
+#: rc.cpp:336
 msgid "Waveform Subtitle Border Color"
 msgstr ""
 
 #. i18n: file: ../../src/scconfig.kcfg:129
 #. i18n: ectx: label, entry (wfSubBorderWidth), group (Waveform Widget)
-#: rc.cpp:364
+#: rc.cpp:339
 msgid "Waveform Subtitle Border Width"
 msgstr ""
 
 #. i18n: file: ../../src/scconfig.kcfg:133
 #. i18n: ectx: label, entry (wfSelBackground), group (Waveform Widget)
-#: rc.cpp:367
+#: rc.cpp:342
 msgid "Waveform Selected Subtitle Background Color"
 msgstr ""
 
 #. i18n: file: ../../src/scconfig.kcfg:137
 #. i18n: ectx: label, entry (wfSelBorder), group (Waveform Widget)
-#: rc.cpp:370
+#: rc.cpp:345
 msgid "Waveform Selected Subtitle Border Color"
 msgstr ""
 
@@ -2972,121 +2923,121 @@ msgstr ""
 #. i18n: ectx: label, entry (wfFontFamily), group (Waveform Widget)
 #. i18n: file: ../../src/scconfig.kcfg:193
 #. i18n: ectx: label, entry (FontFamily), group (VideoPlayer)
-#: rc.cpp:373 rc.cpp:409
+#: rc.cpp:348 rc.cpp:384
 msgid "Font Family"
 msgstr ""
 
 #. i18n: file: ../../src/scconfig.kcfg:145
 #. i18n: ectx: label, entry (wfSubNumberFontSize), group (Waveform Widget)
-#: rc.cpp:376
+#: rc.cpp:351
 msgid "Subtitle Number Font Size"
 msgstr ""
 
 #. i18n: file: ../../src/scconfig.kcfg:149
 #. i18n: ectx: label, entry (wfSubNumberColor), group (Waveform Widget)
-#: rc.cpp:379
+#: rc.cpp:354
 msgid "Subtitle Number Font Color"
 msgstr ""
 
 #. i18n: file: ../../src/scconfig.kcfg:153
 #. i18n: ectx: label, entry (wfSubTextFontSize), group (Waveform Widget)
-#: rc.cpp:382
+#: rc.cpp:357
 msgid "Subtitle Text Font Size"
 msgstr ""
 
 #. i18n: file: ../../src/scconfig.kcfg:157
 #. i18n: ectx: label, entry (wfSubTextColor), group (Waveform Widget)
-#: rc.cpp:385
+#: rc.cpp:360
 msgid "Subtitle Text Font Color"
 msgstr ""
 
 #. i18n: file: ../../src/scconfig.kcfg:161
 #. i18n: ectx: label, entry (wfMouseLocation), group (Waveform Widget)
-#: rc.cpp:388
+#: rc.cpp:363
 msgid "Mouse Location Line Color"
 msgstr ""
 
 #. i18n: file: ../../src/scconfig.kcfg:165
 #. i18n: ectx: label, entry (wfPlayLocation), group (Waveform Widget)
-#: rc.cpp:391
+#: rc.cpp:366
 msgid "Play Location Line Color"
 msgstr ""
 
 #. i18n: file: ../../src/scconfig.kcfg:172
 #. i18n: ectx: label, entry (PlayerBackend), group (VideoPlayer)
-#: rc.cpp:394
+#: rc.cpp:369
 msgid "VideoPlayer Backend"
 msgstr ""
 
 #. i18n: file: ../../src/scconfig.kcfg:180
 #. i18n: ectx: label, entry (SeekJumpLength), group (VideoPlayer)
-#: rc.cpp:400
+#: rc.cpp:375
 msgid "Jump length on seek"
 msgstr ""
 
 #. i18n: file: ../../src/scconfig.kcfg:184
 #. i18n: ectx: label, entry (StepJumpLength), group (VideoPlayer)
-#: rc.cpp:403
+#: rc.cpp:378
 msgid "Jump length on frame step"
 msgstr ""
 
 #. i18n: file: ../../src/scconfig.kcfg:188
 #. i18n: ectx: label, entry (ShowPositionTimeEdit), group (VideoPlayer)
-#: rc.cpp:406
+#: rc.cpp:381
 msgid "Show editable time position"
 msgstr ""
 
 #. i18n: file: ../../src/scconfig.kcfg:197
 #. i18n: ectx: label, entry (FontPointSize), group (VideoPlayer)
-#: rc.cpp:412
+#: rc.cpp:387
 msgid "Font Size"
 msgstr ""
 
 #. i18n: file: ../../src/scconfig.kcfg:201
 #. i18n: ectx: label, entry (FontColor), group (VideoPlayer)
-#: rc.cpp:415
+#: rc.cpp:390
 msgid "Font Color"
 msgstr ""
 
 #. i18n: file: ../../src/scconfig.kcfg:205
 #. i18n: ectx: label, entry (OutlineColor), group (VideoPlayer)
-#: rc.cpp:418
+#: rc.cpp:393
 msgid "Outline Color"
 msgstr ""
 
 #. i18n: file: ../../src/scconfig.kcfg:209
 #. i18n: ectx: label, entry (OutlineWidth), group (VideoPlayer)
-#: rc.cpp:421
+#: rc.cpp:396
 msgid "Outline Width"
 msgstr ""
 
 #. i18n: file: ../../src/scconfig.kcfg:213
 #. i18n: ectx: label, entry (Antialias), group (VideoPlayer)
-#: rc.cpp:424
+#: rc.cpp:399
 msgid "Font Antialiasing"
 msgstr ""
 
 #. i18n: file: ../../src/scconfig.kcfg:220
 #. i18n: ectx: label, entry (gstVideoSinkAuto), group (GStreamer)
-#: rc.cpp:427
+#: rc.cpp:402
 msgid "Auto Video Sink"
 msgstr ""
 
 #. i18n: file: ../../src/scconfig.kcfg:224
 #. i18n: ectx: label, entry (gstVideoSink), group (GStreamer)
-#: rc.cpp:430
+#: rc.cpp:405
 msgid "Video Sink"
 msgstr ""
 
 #. i18n: file: ../../src/scconfig.kcfg:229
 #. i18n: ectx: label, entry (gstAudioSinkAuto), group (GStreamer)
-#: rc.cpp:433
+#: rc.cpp:408
 msgid "Auto Audio Sink"
 msgstr ""
 
 #. i18n: file: ../../src/scconfig.kcfg:233
 #. i18n: ectx: label, entry (gstAudioSink), group (GStreamer)
-#: rc.cpp:436
+#: rc.cpp:411
 msgid "Audio Sink"
 msgstr ""
 
@@ -3094,7 +3045,7 @@ msgstr ""
 #. i18n: ectx: label, entry (mpvCacheEnabled), group (MPV)
 #. i18n: file: ../../src/scconfig.kcfg:309
 #. i18n: ectx: label, entry (mpCacheEnabled), group (MPlayer)
-#: rc.cpp:439 rc.cpp:487
+#: rc.cpp:414 rc.cpp:462
 msgid "Cache Enabled"
 msgstr ""
 
@@ -3102,7 +3053,7 @@ msgstr ""
 #. i18n: ectx: label, entry (mpvCacheSize), group (MPV)
 #. i18n: file: ../../src/scconfig.kcfg:313
 #. i18n: ectx: label, entry (mpCacheSize), group (MPlayer)
-#: rc.cpp:442 rc.cpp:490
+#: rc.cpp:417 rc.cpp:465
 msgid "Cache Size (KB)"
 msgstr ""
 
@@ -3110,7 +3061,7 @@ msgstr ""
 #. i18n: ectx: label, entry (mpvAutoSyncEnabled), group (MPV)
 #. i18n: file: ../../src/scconfig.kcfg:321
 #. i18n: ectx: label, entry (mpAutoSyncEnabled), group (MPlayer)
-#: rc.cpp:445 rc.cpp:496
+#: rc.cpp:420 rc.cpp:471
 msgid "Auto Sync Enabled"
 msgstr ""
 
@@ -3118,7 +3069,7 @@ msgstr ""
 #. i18n: ectx: label, entry (mpvAutoSyncFactor), group (MPV)
 #. i18n: file: ../../src/scconfig.kcfg:325
 #. i18n: ectx: label, entry (mpAutoSyncFactor), group (MPlayer)
-#: rc.cpp:448 rc.cpp:499
+#: rc.cpp:423 rc.cpp:474
 msgid "Auto Sync Factor"
 msgstr ""
 
@@ -3126,7 +3077,7 @@ msgstr ""
 #. i18n: ectx: label, entry (mpvVideoOutputEnabled), group (MPV)
 #. i18n: file: ../../src/scconfig.kcfg:330
 #. i18n: ectx: label, entry (mpVideoOutputEnabled), group (MPlayer)
-#: rc.cpp:451 rc.cpp:502
+#: rc.cpp:426 rc.cpp:477
 msgid "Video Output Enabled"
 msgstr ""
 
@@ -3136,13 +3087,13 @@ msgstr ""
 #. i18n: ectx: label, entry (mpVideoOutput), group (MPlayer)
 #. i18n: file: ../../src/scconfig.kcfg:386
 #. i18n: ectx: label, entry (xineVideo), group (Xine)
-#: rc.cpp:454 rc.cpp:505 rc.cpp:541
+#: rc.cpp:429 rc.cpp:480 rc.cpp:516
 msgid "Video Output"
 msgstr ""
 
 #. i18n: file: ../../src/scconfig.kcfg:265
 #. i18n: ectx: label, entry (mpvHwDecodeEnabled), group (MPV)
-#: rc.cpp:457
+#: rc.cpp:432
 msgid "Hardware Decode Enabled"
 msgstr ""
 
@@ -3150,7 +3101,7 @@ msgstr ""
 #. i18n: ectx: label, entry (mpvHwDecode), group (MPV)
 #. i18n: file: ../../src/scconfig.kcfg:338
 #. i18n: ectx: label, entry (mpVdpau), group (MPlayer)
-#: rc.cpp:460 rc.cpp:508
+#: rc.cpp:435 rc.cpp:483
 msgid "Hardware Decode"
 msgstr ""
 
@@ -3158,7 +3109,7 @@ msgstr ""
 #. i18n: ectx: label, entry (mpvFrameDropping), group (MPV)
 #. i18n: file: ../../src/scconfig.kcfg:342
 #. i18n: ectx: label, entry (mpFrameDropping), group (MPlayer)
-#: rc.cpp:463 rc.cpp:511
+#: rc.cpp:438 rc.cpp:486
 msgid "Frame Dropping"
 msgstr ""
 
@@ -3166,7 +3117,7 @@ msgstr ""
 #. i18n: ectx: label, entry (mpvAudioOutputEnabled), group (MPV)
 #. i18n: file: ../../src/scconfig.kcfg:351
 #. i18n: ectx: label, entry (mpAudioOutputEnabled), group (MPlayer)
-#: rc.cpp:466 rc.cpp:517
+#: rc.cpp:441 rc.cpp:492
 msgid "Audio Output Enabled"
 msgstr ""
 
@@ -3176,7 +3127,7 @@ msgstr ""
 #. i18n: ectx: label, entry (mpAudioOutput), group (MPlayer)
 #. i18n: file: ../../src/scconfig.kcfg:395
 #. i18n: ectx: label, entry (xineAudio), group (Xine)
-#: rc.cpp:469 rc.cpp:520 rc.cpp:547
+#: rc.cpp:444 rc.cpp:495 rc.cpp:522
 msgid "Audio Output"
 msgstr ""
 
@@ -3184,7 +3135,7 @@ msgstr ""
 #. i18n: ectx: label, entry (mpvAudioChannelsEnabled), group (MPV)
 #. i18n: file: ../../src/scconfig.kcfg:359
 #. i18n: ectx: label, entry (mpAudioChannelsEnabled), group (MPlayer)
-#: rc.cpp:472 rc.cpp:523
+#: rc.cpp:447 rc.cpp:498
 msgid "Audio Channels Enabled"
 msgstr ""
 
@@ -3192,7 +3143,7 @@ msgstr ""
 #. i18n: ectx: label, entry (mpvAudioChannels), group (MPV)
 #. i18n: file: ../../src/scconfig.kcfg:363
 #. i18n: ectx: label, entry (mpAudioChannels), group (MPlayer)
-#: rc.cpp:475 rc.cpp:526
+#: rc.cpp:450 rc.cpp:501
 msgid "Audio Channels"
 msgstr ""
 
@@ -3200,7 +3151,7 @@ msgstr ""
 #. i18n: ectx: label, entry (mpvVolumeAmplificationEnabled), group (MPV)
 #. i18n: file: ../../src/scconfig.kcfg:367
 #. i18n: ectx: label, entry (mpVolumeAmplificationEnabled), group (MPlayer)
-#: rc.cpp:478 rc.cpp:529
+#: rc.cpp:453 rc.cpp:504
 msgid "Volume Amplification Enabled"
 msgstr ""
 
@@ -3208,7 +3159,7 @@ msgstr ""
 #. i18n: ectx: label, entry (mpvVolumeAmplification), group (MPV)
 #. i18n: file: ../../src/scconfig.kcfg:371
 #. i18n: ectx: label, entry (mpVolumeAmplification), group (MPlayer)
-#: rc.cpp:481 rc.cpp:532
+#: rc.cpp:456 rc.cpp:507
 msgid "Volume Amplification"
 msgstr ""
 
@@ -3216,103 +3167,103 @@ msgstr ""
 #. i18n: ectx: label, entry (mpvVolumeNormalization), group (MPV)
 #. i18n: file: ../../src/scconfig.kcfg:375
 #. i18n: ectx: label, entry (mpVolumeNormalization), group (MPlayer)
-#: rc.cpp:484 rc.cpp:535
+#: rc.cpp:459 rc.cpp:510
 msgid "Volume Normalization"
 msgstr ""
 
 #. i18n: file: ../../src/scconfig.kcfg:317
 #. i18n: ectx: label, entry (mpExecutablePath), group (MPlayer)
-#: rc.cpp:493
+#: rc.cpp:468
 msgid "mplayer executable path"
 msgstr ""
 
 #. i18n: file: ../../src/scconfig.kcfg:346
 #. i18n: ectx: label, entry (mpHardFrameDropping), group (MPlayer)
-#: rc.cpp:514
+#: rc.cpp:489
 msgid "Hard Frame Dropping"
 msgstr ""
 
 #. i18n: file: ../../src/scconfig.kcfg:382
 #. i18n: ectx: label, entry (xineVideoEnabled), group (Xine)
-#: rc.cpp:538
+#: rc.cpp:513
 msgid "Video Enabled"
 msgstr ""
 
 #. i18n: file: ../../src/scconfig.kcfg:391
 #. i18n: ectx: label, entry (xineAudioEnabled), group (Xine)
-#: rc.cpp:544
+#: rc.cpp:519
 msgid "Audio Enabled"
 msgstr ""
 
 #. i18n: file: ../../src/scripting/scriptsmanager.ui:14
 #. i18n: ectx: property (windowTitle), widget (QDialog, ScriptsManager)
-#: rc.cpp:550
+#: rc.cpp:525
 msgid "Scripts Manager"
 msgstr ""
 
 #. i18n: file: ../../src/scripting/scriptsmanager.ui:29
 #. i18n: ectx: property (whatsThis), widget (QPushButton, btnCreate)
-#: rc.cpp:553
+#: rc.cpp:528
 msgid "Creates a new script file."
 msgstr ""
 
 #. i18n: file: ../../src/scripting/scriptsmanager.ui:32
 #. i18n: ectx: property (text), widget (QPushButton, btnCreate)
-#: rc.cpp:556
+#: rc.cpp:531
 msgid "Create..."
 msgstr ""
 
 #. i18n: file: ../../src/scripting/scriptsmanager.ui:44
 #. i18n: ectx: property (whatsThis), widget (QPushButton, btnAdd)
-#: rc.cpp:559
+#: rc.cpp:534
 msgid "Copies an existing script from a specified location."
 msgstr ""
 
 #. i18n: file: ../../src/scripting/scriptsmanager.ui:47
 #. i18n: ectx: property (text), widget (QPushButton, btnAdd)
-#: rc.cpp:562
+#: rc.cpp:537
 msgid "Add..."
 msgstr ""
 
 #. i18n: file: ../../src/scripting/scriptsmanager.ui:59
 #. i18n: ectx: property (whatsThis), widget (QPushButton, btnRemove)
-#: rc.cpp:565
+#: rc.cpp:540
 msgid "Sends the selected script to the trash."
 msgstr ""
 
 #. i18n: file: ../../src/scripting/scriptsmanager.ui:74
 #. i18n: ectx: property (whatsThis), widget (QPushButton, btnEdit)
-#: rc.cpp:571
+#: rc.cpp:546
 msgid "Opens the selected script with an external editor."
 msgstr ""
 
 #. i18n: file: ../../src/scripting/scriptsmanager.ui:77
 #. i18n: ectx: property (text), widget (QPushButton, btnEdit)
-#: rc.cpp:574
+#: rc.cpp:549
 msgid "Edit"
 msgstr ""
 
 #. i18n: file: ../../src/scripting/scriptsmanager.ui:105
 #. i18n: ectx: property (whatsThis), widget (QPushButton, btnRun)
-#: rc.cpp:577
+#: rc.cpp:552
 msgid "Executes the selected script."
 msgstr ""
 
 #. i18n: file: ../../src/scripting/scriptsmanager.ui:108
 #. i18n: ectx: property (text), widget (QPushButton, btnRun)
-#: rc.cpp:580
+#: rc.cpp:555
 msgid "Run"
 msgstr ""
 
 #. i18n: file: ../../src/scripting/scriptsmanager.ui:136
 #. i18n: ectx: property (whatsThis), widget (QPushButton, btnRefresh)
-#: rc.cpp:583
+#: rc.cpp:558
 msgid "Reloads the installed scripts list."
 msgstr ""
 
 #. i18n: file: ../../src/scripting/scriptsmanager.ui:139
 #. i18n: ectx: property (text), widget (QPushButton, btnRefresh)
-#: rc.cpp:586
+#: rc.cpp:561
 msgid "Refresh"
 msgstr ""
 
@@ -3320,7 +3271,7 @@ msgstr ""
 #. i18n: ectx: label, entry (acousticModelPath), group (PocketSphinx)
 #. i18n: file: ../../src/speechplugins/pocketsphinx/pocketsphinxconfigwidget.ui:65
 #. i18n: ectx: property (toolTip), widget (QLabel, label_acousticModelPath)
-#: rc.cpp:589 rc.cpp:628
+#: rc.cpp:564 rc.cpp:603
 msgid "Directory containing acoustic model files"
 msgstr ""
 
@@ -3328,7 +3279,7 @@ msgstr ""
 #. i18n: ectx: label, entry (trigramModelFile), group (PocketSphinx)
 #. i18n: file: ../../src/speechplugins/pocketsphinx/pocketsphinxconfigwidget.ui:39
 #. i18n: ectx: property (toolTip), widget (QLabel, label_trigramModelFile)
-#: rc.cpp:592 rc.cpp:622
+#: rc.cpp:567 rc.cpp:597
 msgid "Word trigram language model input file"
 msgstr ""
 
@@ -3336,7 +3287,7 @@ msgstr ""
 #. i18n: ectx: label, entry (lexiconFile), group (PocketSphinx)
 #. i18n: file: ../../src/speechplugins/pocketsphinx/pocketsphinxconfigwidget.ui:26
 #. i18n: ectx: property (toolTip), widget (QLabel, label_lexiconFile)
-#: rc.cpp:595 rc.cpp:616
+#: rc.cpp:570 rc.cpp:591
 msgid "Main pronunciation dictionary (lexicon) input file"
 msgstr ""
 
@@ -3344,7 +3295,7 @@ msgstr ""
 #. i18n: ectx: label, entry (vadPostSpeech), group (PocketSphinx)
 #. i18n: file: ../../src/speechplugins/pocketsphinx/pocketsphinxconfigwidget.ui:152
 #. i18n: ectx: property (toolTip), widget (QLabel, label_vadPostSpeech)
-#: rc.cpp:598 rc.cpp:655
+#: rc.cpp:573 rc.cpp:630
 msgid "Num of silence frames to keep after from speech to silence"
 msgstr ""
 
@@ -3352,7 +3303,7 @@ msgstr ""
 #. i18n: ectx: label, entry (vadPreSpeech), group (PocketSphinx)
 #. i18n: file: ../../src/speechplugins/pocketsphinx/pocketsphinxconfigwidget.ui:139
 #. i18n: ectx: property (toolTip), widget (QLabel, label_vadPreSpeech)
-#: rc.cpp:601 rc.cpp:649
+#: rc.cpp:576 rc.cpp:624
 msgid "Num of speech frames to keep before silence to speech"
 msgstr ""
 
@@ -3360,7 +3311,7 @@ msgstr ""
 #. i18n: ectx: label, entry (vadStartSpeech), group (PocketSphinx)
 #. i18n: file: ../../src/speechplugins/pocketsphinx/pocketsphinxconfigwidget.ui:165
 #. i18n: ectx: property (toolTip), widget (QLabel, label_vadStartSpeech)
-#: rc.cpp:604 rc.cpp:661
+#: rc.cpp:579 rc.cpp:636
 msgid "Num of speech frames to trigger vad from silence to speech"
 msgstr ""
 
@@ -3370,7 +3321,7 @@ msgstr ""
 #. i18n: ectx: property (toolTip), widget (QDoubleSpinBox, kcfg_vadTreshold)
 #. i18n: file: ../../src/speechplugins/pocketsphinx/pocketsphinxconfigwidget.ui:126
 #. i18n: ectx: property (toolTip), widget (QLabel, label_vadTreshold)
-#: rc.cpp:607 rc.cpp:640 rc.cpp:643
+#: rc.cpp:582 rc.cpp:615 rc.cpp:618
 msgid ""
 "Threshold for decision between noise and silence frames. Log-ratio between "
 "signal level and noise leve"
@@ -3378,31 +3329,31 @@ msgstr ""
 
 #. i18n: file: ../../src/speechplugins/pocketsphinx/pocketsphinxconfigwidget.ui:20
 #. i18n: ectx: property (title), widget (QGroupBox, grpModel)
-#: rc.cpp:613
+#: rc.cpp:588
 msgid "Speech Recognition Model"
 msgstr ""
 
 #. i18n: file: ../../src/speechplugins/pocketsphinx/pocketsphinxconfigwidget.ui:29
 #. i18n: ectx: property (text), widget (QLabel, label_lexiconFile)
-#: rc.cpp:619
+#: rc.cpp:594
 msgid "Pronunciation Dictionary (Lexicon)"
 msgstr ""
 
 #. i18n: file: ../../src/speechplugins/pocketsphinx/pocketsphinxconfigwidget.ui:42
 #. i18n: ectx: property (text), widget (QLabel, label_trigramModelFile)
-#: rc.cpp:625
+#: rc.cpp:600
 msgid "Trigram Model"
 msgstr ""
 
 #. i18n: file: ../../src/speechplugins/pocketsphinx/pocketsphinxconfigwidget.ui:68
 #. i18n: ectx: property (text), widget (QLabel, label_acousticModelPath)
-#: rc.cpp:631
+#: rc.cpp:606
 msgid "Acoustic Model"
 msgstr ""
 
 #. i18n: file: ../../src/speechplugins/pocketsphinx/pocketsphinxconfigwidget.ui:78
 #. i18n: ectx: property (text), widget (QLabel, label_modelInfoText)
-#: rc.cpp:634
+#: rc.cpp:609
 msgid ""
 "<html><head/><body><p align=\"center\">Acoustic and Language Models can be "
 "downloaded from <a href=\"https://cmusphinx.github.io/wiki/download/\"><span "
@@ -3412,115 +3363,115 @@ msgstr ""
 
 #. i18n: file: ../../src/speechplugins/pocketsphinx/pocketsphinxconfigwidget.ui:100
 #. i18n: ectx: property (title), widget (QGroupBox, grpVAD)
-#: rc.cpp:637
+#: rc.cpp:612
 msgid "Voice Activity Detection"
 msgstr ""
 
 #. i18n: file: ../../src/speechplugins/pocketsphinx/pocketsphinxconfigwidget.ui:129
 #. i18n: ectx: property (text), widget (QLabel, label_vadTreshold)
-#: rc.cpp:646
+#: rc.cpp:621
 msgid "Noise Treshold"
 msgstr ""
 
 #. i18n: file: ../../src/speechplugins/pocketsphinx/pocketsphinxconfigwidget.ui:142
 #. i18n: ectx: property (text), widget (QLabel, label_vadPreSpeech)
-#: rc.cpp:652
+#: rc.cpp:627
 msgid "Pre Speech Frames"
 msgstr ""
 
 #. i18n: file: ../../src/speechplugins/pocketsphinx/pocketsphinxconfigwidget.ui:155
 #. i18n: ectx: property (text), widget (QLabel, label_vadPostSpeech)
-#: rc.cpp:658
+#: rc.cpp:633
 msgid "Post Speech Frames"
 msgstr ""
 
 #. i18n: file: ../../src/speechplugins/pocketsphinx/pocketsphinxconfigwidget.ui:168
 #. i18n: ectx: property (text), widget (QLabel, label_vadStartSpeech)
-#: rc.cpp:664
+#: rc.cpp:639
 msgid "Start Speech Frames"
 msgstr ""
 
 #. i18n: file: ../../src/subtitlecomposerui.rc:5
 #. i18n: ectx: Menu (file)
-#: rc.cpp:667
+#: rc.cpp:642
 msgid "&File"
 msgstr ""
 
 #. i18n: file: ../../src/subtitlecomposerui.rc:20
 #. i18n: ectx: Menu (translation)
-#: rc.cpp:670
+#: rc.cpp:645
 msgid "Translation"
 msgstr ""
 
 #. i18n: file: ../../src/subtitlecomposerui.rc:33
 #. i18n: ectx: Menu (edit)
-#: rc.cpp:673
+#: rc.cpp:648
 msgid "&Edit"
 msgstr ""
 
 #. i18n: file: ../../src/subtitlecomposerui.rc:56
 #. i18n: ectx: Menu (texts)
-#: rc.cpp:676
+#: rc.cpp:651
 msgid "&Texts"
 msgstr ""
 
 #. i18n: file: ../../src/subtitlecomposerui.rc:67
 #. i18n: ectx: Menu (styles)
-#: rc.cpp:679
+#: rc.cpp:654
 msgid "St&yles"
 msgstr ""
 
 #. i18n: file: ../../src/subtitlecomposerui.rc:75
 #. i18n: ectx: Menu (times)
-#: rc.cpp:682
+#: rc.cpp:657
 msgid "T&imes"
 msgstr ""
 
 #. i18n: file: ../../src/subtitlecomposerui.rc:100
 #. i18n: ectx: Menu (errors)
-#: rc.cpp:685
+#: rc.cpp:660
 msgid "E&rrors"
 msgstr ""
 
 #. i18n: file: ../../src/subtitlecomposerui.rc:113
 #. i18n: ectx: Menu (video)
-#: rc.cpp:688
+#: rc.cpp:663
 msgid "&Video"
 msgstr ""
 
 #. i18n: file: ../../src/subtitlecomposerui.rc:147
 #. i18n: ectx: Menu (tools)
-#: rc.cpp:691
+#: rc.cpp:666
 msgid "T&ools"
 msgstr ""
 
 #. i18n: file: ../../src/subtitlecomposerui.rc:152
 #. i18n: ectx: ToolBar (mainToolBar)
-#: rc.cpp:694
+#: rc.cpp:669
 msgid "Main Toolbar"
 msgstr ""
 
 #. i18n: file: ../../src/subtitlecomposerui.rc:163
 #. i18n: ectx: ToolBar (editToolBar)
-#: rc.cpp:697
+#: rc.cpp:672
 msgid "Edit Toolbar"
 msgstr ""
 
 #. i18n: file: ../../src/videoplayerplugins/gstreamer/gstreamerconfigwidget.ui:26
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_gstVideoSinkAuto)
-#: rc.cpp:703
+#: rc.cpp:678
 msgid "Video sink:"
 msgstr ""
 
 #. i18n: file: ../../src/videoplayerplugins/gstreamer/gstreamerconfigwidget.ui:40
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_gstAudioSinkAuto)
-#: rc.cpp:706
+#: rc.cpp:681
 msgid "Audio sink:"
 msgstr ""
 
 #. i18n: file: ../../src/videoplayerplugins/mplayer/mplayerconfigwidget.ui:29
 #. i18n: ectx: property (text), widget (QLabel, label)
-#: rc.cpp:712
+#: rc.cpp:687
 msgid "Executable path:"
 msgstr ""
 
@@ -3528,7 +3479,7 @@ msgstr ""
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_mpAutoSyncEnabled)
 #. i18n: file: ../../src/videoplayerplugins/mpv/mpvconfigwidget.ui:26
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_mpvAutoSyncEnabled)
-#: rc.cpp:715 rc.cpp:751
+#: rc.cpp:690 rc.cpp:726
 msgid "A/V synchronization factor:"
 msgstr ""
 
@@ -3538,7 +3489,7 @@ msgstr ""
 #. i18n: ectx: property (title), widget (QGroupBox, grpVideo)
 #. i18n: file: ../../src/videoplayerplugins/xine/xineconfigwidget.ui:20
 #. i18n: ectx: property (title), widget (QGroupBox, grpVideo)
-#: rc.cpp:718 rc.cpp:754 rc.cpp:781
+#: rc.cpp:693 rc.cpp:729 rc.cpp:756
 msgid "Video"
 msgstr ""
 
@@ -3546,13 +3497,13 @@ msgstr ""
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_mpVideoOutputEnabled)
 #. i18n: file: ../../src/videoplayerplugins/mpv/mpvconfigwidget.ui:70
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_mpvVideoOutputEnabled)
-#: rc.cpp:721 rc.cpp:760
+#: rc.cpp:696 rc.cpp:735
 msgid "Video output driver:"
 msgstr ""
 
 #. i18n: file: ../../src/videoplayerplugins/mplayer/mplayerconfigwidget.ui:73
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_mpVdpau)
-#: rc.cpp:724
+#: rc.cpp:699
 msgid "Enable VDPAU for DivX/XviD"
 msgstr ""
 
@@ -3560,13 +3511,13 @@ msgstr ""
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_mpFrameDropping)
 #. i18n: file: ../../src/videoplayerplugins/mpv/mpvconfigwidget.ui:77
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_mpvFrameDropping)
-#: rc.cpp:727 rc.cpp:763
+#: rc.cpp:702 rc.cpp:738
 msgid "Allow frame dropping"
 msgstr ""
 
 #. i18n: file: ../../src/videoplayerplugins/mplayer/mplayerconfigwidget.ui:87
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_mpHardFrameDropping)
-#: rc.cpp:730
+#: rc.cpp:705
 msgid "Allow hard frame dropping"
 msgstr ""
 
@@ -3576,7 +3527,7 @@ msgstr ""
 #. i18n: ectx: property (title), widget (QGroupBox, grpAudio)
 #. i18n: file: ../../src/videoplayerplugins/xine/xineconfigwidget.ui:43
 #. i18n: ectx: property (title), widget (QGroupBox, grpAudio)
-#: rc.cpp:733 rc.cpp:766 rc.cpp:787
+#: rc.cpp:708 rc.cpp:741 rc.cpp:762
 msgid "Audio"
 msgstr ""
 
@@ -3584,7 +3535,7 @@ msgstr ""
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_mpAudioOutputEnabled)
 #. i18n: file: ../../src/videoplayerplugins/mpv/mpvconfigwidget.ui:107
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_mpvAudioOutputEnabled)
-#: rc.cpp:736 rc.cpp:775
+#: rc.cpp:711 rc.cpp:750
 msgid "Audio output driver:"
 msgstr ""
 
@@ -3592,7 +3543,7 @@ msgstr ""
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_mpAudioChannelsEnabled)
 #. i18n: file: ../../src/videoplayerplugins/mpv/mpvconfigwidget.ui:100
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_mpvAudioChannelsEnabled)
-#: rc.cpp:739 rc.cpp:772
+#: rc.cpp:714 rc.cpp:747
 msgid "Audio channels:"
 msgstr ""
 
@@ -3600,7 +3551,7 @@ msgstr ""
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_mpVolumeAmplificationEnabled)
 #. i18n: file: ../../src/videoplayerplugins/mpv/mpvconfigwidget.ui:93
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_mpvVolumeAmplificationEnabled)
-#: rc.cpp:742 rc.cpp:769
+#: rc.cpp:717 rc.cpp:744
 msgid "Volume amplification:"
 msgstr ""
 
@@ -3608,24 +3559,24 @@ msgstr ""
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_mpVolumeNormalization)
 #. i18n: file: ../../src/videoplayerplugins/mpv/mpvconfigwidget.ui:179
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_mpvVolumeNormalization)
-#: rc.cpp:745 rc.cpp:778
+#: rc.cpp:720 rc.cpp:753
 msgid "Volume normalization"
 msgstr ""
 
 #. i18n: file: ../../src/videoplayerplugins/mpv/mpvconfigwidget.ui:56
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_mpvHwDecodeEnabled)
-#: rc.cpp:757
+#: rc.cpp:732
 msgid "Hardware video decoding:"
 msgstr ""
 
 #. i18n: file: ../../src/videoplayerplugins/xine/xineconfigwidget.ui:33
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_xineVideoEnabled)
-#: rc.cpp:784
+#: rc.cpp:759
 msgid "Video driver:"
 msgstr ""
 
 #. i18n: file: ../../src/videoplayerplugins/xine/xineconfigwidget.ui:49
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_xineAudioEnabled)
-#: rc.cpp:790
+#: rc.cpp:765
 msgid "Audio driver:"
 msgstr ""
