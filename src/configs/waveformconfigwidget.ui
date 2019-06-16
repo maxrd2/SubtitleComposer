@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>487</width>
-    <height>717</height>
+    <height>759</height>
    </rect>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout1">
@@ -16,23 +16,11 @@
      <property name="title">
       <string>Waveform Display</string>
      </property>
-     <layout class="QGridLayout" name="gridLayout1">
-      <item row="1" column="1">
-       <widget class="KColorButton" name="kcfg_wfOuterColor">
-        <property name="sizePolicy">
-         <sizepolicy hsizetype="Minimum" vsizetype="MinimumExpanding">
-          <horstretch>0</horstretch>
-          <verstretch>0</verstretch>
-         </sizepolicy>
-        </property>
-        <property name="minimumSize">
-         <size>
-          <width>0</width>
-          <height>31</height>
-         </size>
-        </property>
-        <property name="alphaChannelEnabled">
-         <bool>true</bool>
+     <layout class="QGridLayout" name="gridLayout1" columnstretch="1,1">
+      <item row="2" column="1">
+       <widget class="QCheckBox" name="kcfg_wfSmoothScroll">
+        <property name="text">
+         <string>Smooth Scrolling</string>
         </property>
        </widget>
       </item>
@@ -60,6 +48,28 @@
         <property name="text">
          <string>Outer color:</string>
         </property>
+        <property name="buddy">
+         <cstring>kcfg_wfOuterColor</cstring>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="1">
+       <widget class="KColorButton" name="kcfg_wfOuterColor">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Minimum" vsizetype="MinimumExpanding">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="minimumSize">
+         <size>
+          <width>0</width>
+          <height>31</height>
+         </size>
+        </property>
+        <property name="alphaChannelEnabled">
+         <bool>true</bool>
+        </property>
        </widget>
       </item>
       <item row="0" column="0" alignment="Qt::AlignRight">
@@ -67,12 +77,37 @@
         <property name="text">
          <string>Inner color:</string>
         </property>
+        <property name="buddy">
+         <cstring>kcfg_wfInnerColor</cstring>
+        </property>
        </widget>
       </item>
-      <item row="2" column="1">
-       <widget class="QCheckBox" name="kcfg_wfSmoothScroll">
+      <item row="3" column="1">
+       <widget class="QSlider" name="kcfg_wfAutoscrollPadding">
+        <property name="maximum">
+         <number>50</number>
+        </property>
+        <property name="orientation">
+         <enum>Qt::Horizontal</enum>
+        </property>
+        <property name="tickPosition">
+         <enum>QSlider::TicksAbove</enum>
+        </property>
+        <property name="tickInterval">
+         <number>4</number>
+        </property>
+       </widget>
+      </item>
+      <item row="3" column="0" alignment="Qt::AlignRight|Qt::AlignVCenter">
+       <widget class="QLabel" name="label_wfAutoscrollPadding">
+        <property name="toolTip">
+         <string>Autoscroll page when play position reaches ScrollPadding distance (percentage) from page border</string>
+        </property>
         <property name="text">
-         <string>Smooth Scrolling</string>
+         <string>Auto Scroll Padding:</string>
+        </property>
+        <property name="buddy">
+         <cstring>kcfg_wfAutoscrollPadding</cstring>
         </property>
        </widget>
       </item>
@@ -112,12 +147,18 @@
         <property name="text">
          <string>Subtitle border color:</string>
         </property>
+        <property name="buddy">
+         <cstring>kcfg_wfSubBorder</cstring>
+        </property>
        </widget>
       </item>
       <item row="6" column="0" alignment="Qt::AlignRight">
        <widget class="QLabel" name="label_16">
         <property name="text">
          <string>Selected background color:</string>
+        </property>
+        <property name="buddy">
+         <cstring>kcfg_wfSelBackground</cstring>
         </property>
        </widget>
       </item>
@@ -126,12 +167,18 @@
         <property name="text">
          <string>Subtitle border width:</string>
         </property>
+        <property name="buddy">
+         <cstring>kcfg_wfSubBorderWidth</cstring>
+        </property>
        </widget>
       </item>
       <item row="3" column="0" alignment="Qt::AlignRight">
        <widget class="QLabel" name="label_13">
         <property name="text">
          <string>Subtitle background color:</string>
+        </property>
+        <property name="buddy">
+         <cstring>kcfg_wfSubBackground</cstring>
         </property>
        </widget>
       </item>
@@ -158,6 +205,9 @@
        <widget class="QLabel" name="label_17">
         <property name="text">
          <string>Selected border color:</string>
+        </property>
+        <property name="buddy">
+         <cstring>kcfg_wfSelBorder</cstring>
         </property>
        </widget>
       </item>
@@ -213,6 +263,9 @@
         <property name="text">
          <string>Subtitle font family:</string>
         </property>
+        <property name="buddy">
+         <cstring>kcfg_wfFontFamily</cstring>
+        </property>
        </widget>
       </item>
       <item row="1" column="1">
@@ -222,6 +275,9 @@
        <widget class="QLabel" name="label_22">
         <property name="text">
          <string>Subtitle number font size:</string>
+        </property>
+        <property name="buddy">
+         <cstring>kcfg_wfSubNumberFontSize</cstring>
         </property>
        </widget>
       </item>
@@ -236,6 +292,9 @@
        <widget class="QLabel" name="label_23">
         <property name="text">
          <string>Subtitle Number Color</string>
+        </property>
+        <property name="buddy">
+         <cstring>kcfg_wfSubNumberColor</cstring>
         </property>
        </widget>
       </item>
@@ -263,6 +322,9 @@
         <property name="text">
          <string>Subtitle text font size:</string>
         </property>
+        <property name="buddy">
+         <cstring>kcfg_wfSubTextFontSize</cstring>
+        </property>
        </widget>
       </item>
       <item row="4" column="1">
@@ -275,7 +337,10 @@
       <item row="5" column="0" alignment="Qt::AlignRight">
        <widget class="QLabel" name="label_25">
         <property name="text">
-         <string>Subtitle Text Color</string>
+         <string>Subtitle Text Color:</string>
+        </property>
+        <property name="buddy">
+         <cstring>kcfg_wfSubTextColor</cstring>
         </property>
        </widget>
       </item>
@@ -312,12 +377,18 @@
         <property name="text">
          <string>Player position color:</string>
         </property>
+        <property name="buddy">
+         <cstring>kcfg_wfPlayLocation</cstring>
+        </property>
        </widget>
       </item>
       <item row="1" column="0" alignment="Qt::AlignRight|Qt::AlignVCenter">
        <widget class="QLabel" name="label_32">
         <property name="text">
          <string>Mouse indicator color:</string>
+        </property>
+        <property name="buddy">
+         <cstring>kcfg_wfMouseLocation</cstring>
         </property>
        </widget>
       </item>
@@ -388,6 +459,7 @@
   <tabstop>kcfg_wfInnerColor</tabstop>
   <tabstop>kcfg_wfOuterColor</tabstop>
   <tabstop>kcfg_wfSmoothScroll</tabstop>
+  <tabstop>kcfg_wfAutoscrollPadding</tabstop>
   <tabstop>kcfg_wfSubBackground</tabstop>
   <tabstop>kcfg_wfSubBorder</tabstop>
   <tabstop>kcfg_wfSubBorderWidth</tabstop>

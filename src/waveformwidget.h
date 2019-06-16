@@ -70,7 +70,9 @@ public:
 
 	void updateActions();
 
-	double windowSize() const;
+	inline double windowSize() const { return (m_timeEnd - m_timeStart).toMillis(); }
+	double windowSizeInner(double *autoScrollPadding = nullptr) const;
+
 	void setWindowSize(const double size);
 
 	QWidget *progressWidget();

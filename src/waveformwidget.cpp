@@ -95,6 +95,7 @@ WaveformWidget::WaveformWidget(QWidget *parent)
 	m_waveformGraphics->installEventFilter(this);
 
 	m_scrollBar = new QScrollBar(Qt::Vertical, this);
+
 	m_scrollBar->setPageStep(windowSize());
 	m_scrollBar->setRange(0, windowSize());
 	m_scrollBar->installEventFilter(this);
@@ -209,9 +210,14 @@ WaveformWidget::~WaveformWidget()
 }
 
 double
-WaveformWidget::windowSize() const
+WaveformWidget::windowSizeInner(double *autoScrollPadding) const
 {
-	return (m_timeEnd - m_timeStart).toMillis();
+	const double winSize = windowSize();
+	const double scrollPad = winSize * double(SCConfig::wfAutoscrollPadding()) / 100.;
+	if(autoScrollPadding)
+		*autoScrollPadding = scrollPad;
+	const double innerSize = winSize - 2. * scrollPad;
+	return innerSize > 1. ? innerSize : 1.;
 }
 
 void
@@ -223,8 +229,9 @@ WaveformWidget::setWindowSize(const double size)
 		m_visibleLinesDirty = true;
 		updateZoomData();
 		m_waveformGraphics->update();
-		m_scrollBar->setPageStep(size);
-		m_scrollBar->setRange(0, m_waveformDuration * 1000 - windowSize());
+		const int ws = windowSizeInner();
+		m_scrollBar->setPageStep(ws);
+		m_scrollBar->setRange(0, m_waveformDuration * 1000 - ws);
 	}
 }
 
@@ -459,7 +466,7 @@ WaveformWidget::onStreamProgress(quint64 msecPos, quint64 msecLength)
 		m_waveformDuration = msecLength / 1000;
 		m_progressBar->setRange(0, m_waveformDuration);
 		m_progressWidget->show();
-		m_scrollBar->setRange(0, m_waveformDuration * 1000 - windowSize());
+		m_scrollBar->setRange(0, m_waveformDuration * 1000 - windowSizeInner());
 	}
 	m_progressBar->setValue(msecPos / 1000);
 }
@@ -1038,13 +1045,13 @@ WaveformWidget::onHoverScrollTimeout()
 bool
 WaveformWidget::scrollToTime(const Time &time, bool scrollToPage)
 {
-	const double windowSize = this->windowSize();
-	const double windowPadding = windowSize / 8.; // autoscroll when we reach padding
-	const int windowSizePad = windowSize - 2. * windowPadding;
+	double windowPadding;
+	const double windowSize = windowSizeInner(&windowPadding);
+	if(m_draggedLine || m_RMBDown || m_MMBDown)
+		windowPadding = this->windowSize() / 3.;
 
 	const double topPadding = m_timeStart.toMillis() + windowPadding;
 	const double bottomPadding = m_timeEnd.toMillis() - windowPadding;
-
 	if(time <= bottomPadding && time >= topPadding) {
 		if(!scrollToPage) {
 			m_hoverScrollAmount = .0;
@@ -1054,7 +1061,7 @@ WaveformWidget::scrollToTime(const Time &time, bool scrollToPage)
 	}
 
 	if(scrollToPage) {
-		const int scrollPosition = (int(time.toMillis() + 0.5) / windowSizePad) * windowSizePad;
+		const int scrollPosition = int(time.toMillis() / windowSize) * windowSize - windowPadding;
 		if(SCConfig::wfSmoothScroll()) {
 			m_scrollAnimation->stop();
 			m_scrollAnimation->setStartValue(m_scrollBar->value());
@@ -1064,6 +1071,8 @@ WaveformWidget::scrollToTime(const Time &time, bool scrollToPage)
 			m_scrollBar->setValue(scrollPosition);
 		}
 	} else {
+		const double topPadding = m_timeStart.toMillis() + windowPadding;
+		const double bottomPadding = m_timeEnd.toMillis() - windowPadding;
 		if(time < topPadding)
 			m_hoverScrollAmount = time.toMillis() - topPadding;
 		else
