@@ -1,0 +1,3 @@
+files:
+  - source: /po/*.pot
+    translation: /po/%two_letters_code%/%file_name%.po
