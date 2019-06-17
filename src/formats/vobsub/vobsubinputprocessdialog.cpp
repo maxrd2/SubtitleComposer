@@ -53,6 +53,7 @@ public:
 	Time subShowTime;
 	Time subHideTime;
 	QList<PiecePtr> pieces;
+	bool rtl;
 };
 
 class VobSubInputProcessDialog::Piece : public QSharedData
@@ -88,6 +89,7 @@ public:
 	}
 
 	inline bool operator<(const Piece &other) const;
+	inline bool operator>(const Piece &other) const;
 	inline bool operator==(const Piece &other) const;
 	inline Piece & operator+=(const Piece &other);
 
@@ -235,14 +237,16 @@ VobSubInputProcessDialog::Frame::processPieces()
 	}
 
 	// sort pieces, line by line, left to right, comparison is done in Piece::operator<()
-	std::sort(pieces.begin(), pieces.end(), [](const PiecePtr &a, const PiecePtr &b)->bool{
-		return *a < *b;
-	});
+	auto sortCb = rtl
+			? [](const PiecePtr &a, const PiecePtr &b)->bool{ return *a > *b; }
+			: [](const PiecePtr &a, const PiecePtr &b)->bool{ return *a < *b; };
+	std::sort(pieces.begin(), pieces.end(), sortCb);
 
 	PiecePtr prevPiece;
 	foreach(piece, pieces) {
 		if(prevPiece && prevPiece->line == piece->line) {
-			spaceStats[piece->left - prevPiece->right]++;
+			const int spaceWidth = rtl ? prevPiece->left - piece->right : piece->left - prevPiece->right;
+			spaceStats[spaceWidth]++;
 			spaceCount++;
 		}
 		prevPiece = piece;
@@ -263,6 +267,16 @@ VobSubInputProcessDialog::Piece::operator<(const Piece &other) const
 	if(line->top < other.line->top)
 		return true;
 	if(line->intersects(other.line) && left < other.left)
+		return true;
+	return false;
+}
+
+inline bool
+VobSubInputProcessDialog::Piece::operator>(const Piece &other) const
+{
+	if(line->top < other.line->top)
+		return true;
+	if(line->intersects(other.line) && left > other.left)
 		return true;
 	return false;
 }
@@ -576,6 +590,7 @@ VobSubInputProcessDialog::onStreamData(const QPixmap &pixmap, quint64 msecStart,
 	frame->subShowTime.setMillisTime(double(msecStart));
 	frame->subHideTime.setMillisTime(double(msecStart + msecDuration));
 	frame->subPixmap = pixmap;
+	frame->rtl = m_isRTL;
 
 	ui->subtitleView->setPixmap(frame->subPixmap);
 	QCoreApplication::processEvents();
@@ -678,10 +693,13 @@ VobSubInputProcessDialog::processNextPiece()
 		PiecePtr piecePrev;
 		foreach(PiecePtr piece, m_pieces) {
 			if(piecePrev) {
-				if(!piecePrev->line->intersects(piece->line))
+				if(!piecePrev->line->intersects(piece->line)) {
 					subText.append(QChar(QChar::LineFeed));
-				else if(piece->left - piecePrev->right > m_spaceWidth)
-					subText.append(QChar(QChar::Space));
+				} else {
+					const int spaceWidth = m_isRTL ? piecePrev->left - piece->right : piece->left - piecePrev->right;
+					if(spaceWidth > m_spaceWidth)
+						subText.append(QChar(QChar::Space));
+				}
 			}
 
 			subText += piece->text;

@@ -103,6 +103,13 @@
         </property>
        </widget>
       </item>
+      <item>
+       <widget class="QCheckBox" name="isRTL">
+        <property name="text">
+         <string>Subtitle is using RTL script</string>
+        </property>
+       </widget>
+      </item>
      </layout>
     </widget>
    </item>
@@ -117,8 +124,8 @@
    <slot>accept()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>248</x>
-     <y>254</y>
+     <x>254</x>
+     <y>293</y>
     </hint>
     <hint type="destinationlabel">
      <x>157</x>

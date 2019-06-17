@@ -67,6 +67,7 @@ public:
 		VobSubInputProcessDialog dlgProc(&subtitle, app()->mainWindow());
 
 		dlgProc.processFrames(&proc);
+		dlgProc.setRTL(dlgInit.isRTL());
 
 		QByteArray symFile(filebase + ".sym");
 

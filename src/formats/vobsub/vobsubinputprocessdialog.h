@@ -51,6 +51,8 @@ public:
 	bool symFileOpen(const QString &filename);
 	bool symFileSave(const QString &filename);
 
+	inline void setRTL(bool rtl) { m_isRTL = rtl; }
+
 	bool eventFilter(QObject *obj, QEvent *event) override;
 
 	void processFrames(StreamProcessor *streamProcessor);
@@ -88,6 +90,7 @@ private:
 	Subtitle *m_subtitle;
 
 	qint32 m_spaceWidth;
+	bool m_isRTL;
 
 	QList<PiecePtr> m_pieces;
 	QList<PiecePtr>::iterator m_pieceCurrent;

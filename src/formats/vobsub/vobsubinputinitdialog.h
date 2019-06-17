@@ -45,6 +45,7 @@ public:
 
 	void streamListSet(const QStringList streams);
 	int streamIndex() const;
+	bool isRTL() const;
 
 	quint32 postProcessingFlags() const;
 

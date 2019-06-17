@@ -46,6 +46,12 @@ VobSubInputInitDialog::streamIndex() const
 	return ui->comboStream->currentIndex();
 }
 
+bool
+VobSubInputInitDialog::isRTL() const
+{
+	return ui->isRTL->isChecked();
+}
+
 quint32
 VobSubInputInitDialog::postProcessingFlags() const
 {
