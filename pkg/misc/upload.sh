@@ -31,23 +31,17 @@ fi
 # builds for other branches.
 # If this build was triggered by a tag, call the result a Release
 if [ ! -z "$UPLOADTOOL_SUFFIX" ] ; then
-  if [ "$UPLOADTOOL_SUFFIX" = "$TRAVIS_TAG" ] ; then
-    RELEASE_NAME="$TRAVIS_TAG"
-    RELEASE_TITLE="Release ($TRAVIS_TAG)"
-    is_prerelease="false"
-  else
-    RELEASE_NAME="continuous-$UPLOADTOOL_SUFFIX"
-    RELEASE_TITLE="Latest git ($UPLOADTOOL_SUFFIX)"
-    is_prerelease="true"
-  fi
+  RELEASE_NAME="testing-$UPLOADTOOL_SUFFIX"
+  RELEASE_TITLE="Experimental Build - $UPLOADTOOL_SUFFIX branch"
+  is_prerelease="true"
 else
   if [ "$TRAVIS_TAG" != "" ]; then
     RELEASE_NAME="$TRAVIS_TAG"
-    RELEASE_TITLE="Release build ($TRAVIS_TAG)"
+    RELEASE_TITLE="Release Build - $TRAVIS_TAG"
     is_prerelease="false"
   else
     RELEASE_NAME="continuous" # Do not use "latest" as it is reserved by GitHub
-    RELEASE_TITLE="Latest git master"
+    RELEASE_TITLE="Latest Development Build - git master"
     is_prerelease="true"
   fi
 fi

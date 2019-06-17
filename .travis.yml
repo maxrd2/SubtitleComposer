@@ -2,7 +2,8 @@ language: cpp
 
 branches:
   except:
-    - /^(?i:continuous)$/
+    - /^(?i:testing-)/
+    - /^(?i:continuous)/
     - l10n_master
 
 env:
@@ -102,12 +103,19 @@ matrix:
           ./appimagetool "$appdir/" -g
         - |- # publish
           if [[ ("$TRAVIS_BRANCH" != "$RELEASE_BRANCH" && "$TRAVIS_BRANCH" != "$TRAVIS_TAG") || "$TRAVIS_EVENT_TYPE" != "push" ]]; then 
-            echo 'Uploading to transfer.sh...'
-            url=$(curl -H "Max-Days: 1" --upload-file Subtitle_Composer-x86_64.AppImage https://transfer.sh/Subtitle_Composer-x86_64.AppImage)
-            echo "AppImage uploaded to: $url"
+            #echo 'Uploading to transfer.sh...'
+            #url=$(curl -H "Max-Days: 1" --upload-file Subtitle_Composer-x86_64.AppImage https://transfer.sh/Subtitle_Composer-x86_64.AppImage)
+            #echo "AppImage uploaded to: $url"
+            export UPLOADTOOL_SUFFIX="$TRAVIS_BRANCH"
+            export UPLOADTOOL_BODY="Instructions on using AppImage can be found [here](https://github.com/maxrd2/subtitlecomposer/wiki/AppImage-HOWTO)\n\nThis is the ***$UPLOADTOOL_SUFFIX experimental build*** for testing new features.\n\nTravis CI build log: https://travis-ci.org/$TRAVIS_REPO_SLUG/builds/$TRAVIS_BUILD_ID/"
+            bash "$TRAVIS_BUILD_DIR/pkg/misc/upload.sh" Subtitle_Composer-x86_64.AppImage*
+          elif [[ "$TRAVIS_BRANCH" != "$TRAVIS_TAG" ]]; then
+            echo 'Publishing release to GitHub...'
+            export UPLOADTOOL_BODY="Instructions on using AppImage can be found [here](https://github.com/maxrd2/subtitlecomposer/wiki/AppImage-HOWTO)\n\nThis is the ***latest development build***, below you can find stable release builds.\n\nTravis CI build log: https://travis-ci.org/$TRAVIS_REPO_SLUG/builds/$TRAVIS_BUILD_ID/"
+            bash "$TRAVIS_BUILD_DIR/pkg/misc/upload.sh" Subtitle_Composer-x86_64.AppImage*
           else
             echo 'Publishing release to GitHub...'
-            export UPLOADTOOL_BODY="Instructions on using AppImage can be found [here](https://github.com/maxrd2/subtitlecomposer/wiki/AppImage-HOWTO)\n\nThis is the latest unstable build, below you can find stable release builds.\n\nTravis CI build log: https://travis-ci.org/$TRAVIS_REPO_SLUG/builds/$TRAVIS_BUILD_ID/"
+            export UPLOADTOOL_BODY="Instructions on using AppImage can be found [here](https://github.com/maxrd2/subtitlecomposer/wiki/AppImage-HOWTO)\n\nThis is the ***release $TRAVIS_TAG stable build***.\n\nTravis CI build log: https://travis-ci.org/$TRAVIS_REPO_SLUG/builds/$TRAVIS_BUILD_ID/"
             bash "$TRAVIS_BUILD_DIR/pkg/misc/upload.sh" Subtitle_Composer-x86_64.AppImage*
           fi
 
