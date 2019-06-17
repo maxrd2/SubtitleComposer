@@ -103,7 +103,7 @@
       <item row="6" column="1">
        <widget class="QDoubleSpinBox" name="kcfg_vadTreshold">
         <property name="toolTip">
-         <string>Threshold for decision between noise and silence frames. Log-ratio between signal level and noise leve</string>
+         <string>Threshold for decision between noise and silence frames. Log-ratio between signal level and noise level</string>
         </property>
         <property name="maximum">
          <double>20.000000000000000</double>
@@ -123,7 +123,7 @@
       <item row="6" column="0" alignment="Qt::AlignRight|Qt::AlignVCenter">
        <widget class="QLabel" name="label_vadTreshold">
         <property name="toolTip">
-         <string>Threshold for decision between noise and silence frames. Log-ratio between signal level and noise leve</string>
+         <string>Threshold for decision between noise and silence frames. Log-ratio between signal level and noise level</string>
         </property>
         <property name="text">
          <string>Noise Treshold</string>
@@ -136,7 +136,7 @@
       <item row="2" column="0" alignment="Qt::AlignRight|Qt::AlignVCenter">
        <widget class="QLabel" name="label_vadPreSpeech">
         <property name="toolTip">
-         <string>Num of speech frames to keep before silence to speech</string>
+         <string>Num of speech frames to keep before silence to speech transition</string>
         </property>
         <property name="text">
          <string>Pre Speech Frames</string>
@@ -149,7 +149,7 @@
       <item row="3" column="0" alignment="Qt::AlignRight|Qt::AlignVCenter">
        <widget class="QLabel" name="label_vadPostSpeech">
         <property name="toolTip">
-         <string>Num of silence frames to keep after from speech to silence</string>
+         <string>Num of silence frames to keep after speech to silence transition</string>
         </property>
         <property name="text">
          <string>Post Speech Frames</string>
@@ -162,7 +162,7 @@
       <item row="1" column="0" alignment="Qt::AlignRight|Qt::AlignVCenter">
        <widget class="QLabel" name="label_vadStartSpeech">
         <property name="toolTip">
-         <string>Num of speech frames to trigger vad from silence to speech</string>
+         <string>Num of speech frames to trigger VAD from silence to speech</string>
         </property>
         <property name="text">
          <string>Start Speech Frames</string>

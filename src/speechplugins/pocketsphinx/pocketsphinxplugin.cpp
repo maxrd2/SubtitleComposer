@@ -49,11 +49,11 @@ PocketSphinxPlugin::init()
 				 "-lm", QUrl(PocketSphinxConfig::trigramModelFile()).toLocalFile().toUtf8().constData(),
 				 "-dict", QUrl(PocketSphinxConfig::lexiconFile()).toLocalFile().toUtf8().constData(),
 //				 "-frate", "100",
-				 // Num of silence frames to keep after from speech to silence. (pocketsphinx default: 50)
+				 // Num of silence frames to keep after speech to silence transition. (pocketsphinx default: 50)
 				 "-vad_postspeech", QByteArray::number(PocketSphinxConfig::vadPostSpeech()).constData(),
-				 // Num of speech frames to keep before silence to speech. (pocketsphinx default: 20)
+				 // Num of speech frames to keep before silence to speech transition. (pocketsphinx default: 20)
 				 "-vad_prespeech", QByteArray::number(PocketSphinxConfig::vadPreSpeech()).constData(),
-				 // Num of speech frames to trigger vad from silence to speech. (pocketsphinx default: 10)
+				 // Num of speech frames to trigger VAD from silence to speech. (pocketsphinx default: 10)
 				 "-vad_startspeech", QByteArray::number(PocketSphinxConfig::vadStartSpeech()).constData(),
 				 // Threshold for decision between noise and silence frames.
 				 // Log-ratio between signal level and noise level. (pocketsphinx default: 2.0)

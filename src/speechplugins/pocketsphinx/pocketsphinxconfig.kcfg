@@ -21,19 +21,19 @@
 		</entry>
 
 		<entry name="vadPostSpeech" type="Int">
-			<label>Num of silence frames to keep after from speech to silence</label>
+			<label>Num of silence frames to keep after speech to silence transition</label>
 			<default>75</default>
 		</entry>
 		<entry name="vadPreSpeech" type="Int">
-			<label>Num of speech frames to keep before silence to speech</label>
+			<label>Num of speech frames to keep before silence to speech transition</label>
 			<default>30</default>
 		</entry>
 		<entry name="vadStartSpeech" type="Int">
-			<label>Num of speech frames to trigger vad from silence to speech</label>
+			<label>Num of speech frames to trigger VAD from silence to speech</label>
 			<default>10</default>
 		</entry>
 		<entry name="vadTreshold" type="Double">
-			<label>Threshold for decision between noise and silence frames. Log-ratio between signal level and noise leve</label>
+			<label>Threshold for decision between noise and silence frames. Log-ratio between signal level and noise level</label>
 			<default>2.0</default>
 		</entry>
 	</group>

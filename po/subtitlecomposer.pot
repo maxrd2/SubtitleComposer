@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: https://github.com/maxrd2/subtitlecomposer/issues\n"
-"POT-Creation-Date: 2019-06-17 01:28+0200\n"
+"POT-Creation-Date: 2019-06-18 01:50+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -3296,7 +3296,7 @@ msgstr ""
 #. i18n: file: ../../src/speechplugins/pocketsphinx/pocketsphinxconfigwidget.ui:152
 #. i18n: ectx: property (toolTip), widget (QLabel, label_vadPostSpeech)
 #: rc.cpp:573 rc.cpp:630
-msgid "Num of silence frames to keep after from speech to silence"
+msgid "Num of silence frames to keep after speech to silence transition"
 msgstr ""
 
 #. i18n: file: ../../src/speechplugins/pocketsphinx/pocketsphinxconfig.kcfg:28
@@ -3304,15 +3304,13 @@ msgstr ""
 #. i18n: file: ../../src/speechplugins/pocketsphinx/pocketsphinxconfigwidget.ui:139
 #. i18n: ectx: property (toolTip), widget (QLabel, label_vadPreSpeech)
 #: rc.cpp:576 rc.cpp:624
-msgid "Num of speech frames to keep before silence to speech"
+msgid "Num of speech frames to keep before silence to speech transition"
 msgstr ""
 
 #. i18n: file: ../../src/speechplugins/pocketsphinx/pocketsphinxconfig.kcfg:32
 #. i18n: ectx: label, entry (vadStartSpeech), group (PocketSphinx)
-#. i18n: file: ../../src/speechplugins/pocketsphinx/pocketsphinxconfigwidget.ui:165
-#. i18n: ectx: property (toolTip), widget (QLabel, label_vadStartSpeech)
-#: rc.cpp:579 rc.cpp:636
-msgid "Num of speech frames to trigger vad from silence to speech"
+#: rc.cpp:579
+msgid "Num of speech frames to trigger VAD from silence to speech"
 msgstr ""
 
 #. i18n: file: ../../src/speechplugins/pocketsphinx/pocketsphinxconfig.kcfg:36
@@ -3324,7 +3322,7 @@ msgstr ""
 #: rc.cpp:582 rc.cpp:615 rc.cpp:618
 msgid ""
 "Threshold for decision between noise and silence frames. Log-ratio between "
-"signal level and noise leve"
+"signal level and noise level"
 msgstr ""
 
 #. i18n: file: ../../src/speechplugins/pocketsphinx/pocketsphinxconfigwidget.ui:20
@@ -3383,6 +3381,12 @@ msgstr ""
 #. i18n: ectx: property (text), widget (QLabel, label_vadPostSpeech)
 #: rc.cpp:633
 msgid "Post Speech Frames"
+msgstr ""
+
+#. i18n: file: ../../src/speechplugins/pocketsphinx/pocketsphinxconfigwidget.ui:165
+#. i18n: ectx: property (toolTip), widget (QLabel, label_vadStartSpeech)
+#: rc.cpp:636
+msgid "Num of speech frames to trigger vad from silence to speech"
 msgstr ""
 
 #. i18n: file: ../../src/speechplugins/pocketsphinx/pocketsphinxconfigwidget.ui:168
