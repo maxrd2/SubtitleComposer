@@ -1,32 +1,28 @@
-# translation of subtitlecomposer.po to Serbian
-# This file is put in the public domain.
-#
-# Slobodan Simic <simicsl@verat.net>, 2008, 2009.
-# Sergio Pistone <sergio_pistone@yahoo,com.ar>, 2009.
 msgid ""
 msgstr ""
 "Project-Id-Version: subtitlecomposer\n"
 "Report-Msgid-Bugs-To: https://github.com/maxrd2/subtitlecomposer/issues\n"
-"POT-Creation-Date: 2019-06-16 15:39+0200\n"
-"PO-Revision-Date: 2009-05-24 17:03-0300\n"
-"Last-Translator: Sergio Pistone <sergio_pistone@yahoo,com.ar>\n"
-"Language-Team: American English <kde-i18n-doc@kde.org>\n"
-"Language: \n"
+"POT-Creation-Date: 2019-06-18 01:50+0200\n"
+"PO-Revision-Date: 2019-06-18 00:54\n"
+"Last-Translator: Mladen Milinkovic (maxrd2)\n"
+"Language-Team: Serbian (Cyrillic)\n"
+"Language: sr_SP\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Lokalize 0.3\n"
-"Plural-Forms: nplurals=4; plural=n==1 ? 3 : n%10==1 && n%100!=11 ? 0 : n"
-"%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+"X-Generator: crowdin.com\n"
+"X-Crowdin-Project: subtitlecomposer\n"
+"X-Crowdin-Language: sr\n"
+"X-Crowdin-File: subtitlecomposer.pot\n"
 
 #: ../../src/actions/kcodecactionext.cpp:39
 #: ../../src/dialogs/opensubtitledialog.cpp:50
 #: ../../src/dialogs/opensubtitledialog.cpp:52
 #: ../../src/dialogs/selectablesubtitledialog.cpp:64
 #: ../../src/dialogs/selectablesubtitledialog.cpp:98
-#, fuzzy
 msgid "Autodetect"
-msgstr "Аутоматски"
+msgstr ""
 
 #: ../../src/application.cpp:415
 msgid "Media Files"
@@ -62,10 +58,9 @@ msgid "Create an empty subtitle"
 msgstr "Направи празан титл"
 
 #: ../../src/application.cpp:453
-#, fuzzy
 msgctxt "@action:inmenu Open subtitle file"
 msgid "Open Subtitle..."
-msgstr "Отвори титл"
+msgstr ""
 
 #: ../../src/application.cpp:454 ../../src/application.cpp:472
 msgid "Open subtitle file"
@@ -80,10 +75,9 @@ msgid "Reload opened file with a different encoding"
 msgstr "Поново учитај отворени титл са другачијим кодирањем"
 
 #: ../../src/application.cpp:471
-#, fuzzy
 msgctxt "@action:inmenu Open rencently used subtitle file"
 msgid "Open &Recent Subtitle"
-msgstr "Отвори ско&рашњи видео"
+msgstr ""
 
 #: ../../src/application.cpp:478
 msgid "Save"
@@ -126,14 +120,12 @@ msgid "Open translation subtitle file"
 msgstr "Отвори фајл преведеног титла"
 
 #: ../../src/application.cpp:522
-#, fuzzy
 msgid "Reload Translation As..."
-msgstr "Сачувај превод као..."
+msgstr ""
 
 #: ../../src/application.cpp:523
-#, fuzzy
 msgid "Reload opened translation file with a different encoding"
-msgstr "Поново учитај отворени титл са другачијим кодирањем"
+msgstr ""
 
 #: ../../src/application.cpp:531
 msgid "Open &Recent Translation"
@@ -197,7 +189,7 @@ msgstr "Уметни празан ред након текућег"
 
 #. i18n: file: ../../src/scripting/scriptsmanager.ui:62
 #. i18n: ectx: property (text), widget (QPushButton, btnRemove)
-#: ../../src/application.cpp:607 rc.cpp:568
+#: ../../src/application.cpp:607 rc.cpp:543
 msgid "Remove"
 msgstr "Уклони"
 
@@ -385,14 +377,12 @@ msgid "Toggle selected lines strike through attribute"
 msgstr "Укључује или искључује прецртани испис изабраних редова"
 
 #: ../../src/application.cpp:802 ../../src/currentlinewidget.cpp:98
-#, fuzzy
 msgid "Change Text Color"
-msgstr "Промени у"
+msgstr ""
 
 #: ../../src/application.cpp:803
-#, fuzzy
 msgid "Change text color of selected lines"
-msgstr "Очисти грешке из изабраних редова"
+msgstr ""
 
 #: ../../src/application.cpp:810
 msgid "Shift..."
@@ -535,23 +525,20 @@ msgid "Open &Recent Video"
 msgstr "Отвори ско&рашњи видео"
 
 #: ../../src/application.cpp:955
-#, fuzzy
 msgid "Import Subtitle Stream"
-msgstr "Токови титла"
+msgstr ""
 
 #: ../../src/application.cpp:956
-#, fuzzy
 msgid "Import subtitle stream into subtitle editor"
-msgstr "Токови титла"
+msgstr ""
 
 #: ../../src/application.cpp:964
 msgid "Recognize Speech"
 msgstr ""
 
 #: ../../src/application.cpp:965
-#, fuzzy
 msgid "Recognize speech in audio stream"
-msgstr "Изабери активни аудио ток"
+msgstr ""
 
 #: ../../src/application.cpp:971
 msgid "Close Video"
@@ -587,24 +574,20 @@ msgid "Toggle video playing/paused"
 msgstr "Пуштам/Паузирано"
 
 #: ../../src/application.cpp:1004
-#, fuzzy
 msgid "Seek Backward"
-msgstr "Тражи уназад"
+msgstr ""
 
 #: ../../src/application.cpp:1012
-#, fuzzy
 msgid "Seek Forward"
-msgstr "Тражи унапред"
+msgstr ""
 
 #: ../../src/application.cpp:1020
-#, fuzzy
 msgid "Frame Step Backward"
-msgstr "Тражи уназад"
+msgstr ""
 
 #: ../../src/application.cpp:1028
-#, fuzzy
 msgid "Frame Step Forward"
-msgstr "Тражи унапред"
+msgstr ""
 
 #: ../../src/application.cpp:1036
 msgid "Jump to Previous Line"
@@ -615,33 +598,28 @@ msgid "Seek to previous subtitle line show time"
 msgstr "Иди на време приказа претходног реда"
 
 #: ../../src/application.cpp:1045
-#, fuzzy
 msgid "Increase media play rate"
-msgstr "Повећај јачину за 5%"
+msgstr ""
 
 #: ../../src/application.cpp:1046
 msgid "Increase media playback rate"
 msgstr ""
 
 #: ../../src/application.cpp:1053
-#, fuzzy
 msgid "Decrease media play rate"
-msgstr "Смањи јачину за 5%"
+msgstr ""
 
 #: ../../src/application.cpp:1054
 msgid "Decrease media playback rate"
 msgstr ""
 
 #: ../../src/application.cpp:1060
-#, fuzzy
 msgid "Play Current Line and Pause"
-msgstr "Постави време нестајања текућег реда"
+msgstr ""
 
 #: ../../src/application.cpp:1061
-#, fuzzy
-msgid ""
-"Seek to start of current subtitle line show time, play it and then pause"
-msgstr "Иди на време приказа следећег реда"
+msgid "Seek to start of current subtitle line show time, play it and then pause"
+msgstr ""
 
 #: ../../src/application.cpp:1069
 msgid "Jump to Next Line"
@@ -725,65 +703,48 @@ msgid "Decrease subtitles font size by 1 point"
 msgstr "Смањи величину фонта титла за 1 тачку"
 
 #: ../../src/application.cpp:1151
-#, fuzzy
 msgid "Displayed Subtitle Text"
-msgstr "Састављач титла (Subtitle Composer)"
+msgstr ""
 
 #: ../../src/application.cpp:1152
-#, fuzzy
 msgid "Select visible subtitle text"
-msgstr "Изабери активни ток титла"
+msgstr ""
 
 #: ../../src/application.cpp:1158
 msgid "Shift to Video Position"
 msgstr "Померај на позицију видеа"
 
 #: ../../src/application.cpp:1159
-msgid ""
-"Set current line show time to video position by equally shifting all lines"
-msgstr ""
-"Поставља време приказа текућег реда на позицију видеа једнако померајући све "
-"линије"
+msgid "Set current line show time to video position by equally shifting all lines"
+msgstr "Поставља време приказа текућег реда на позицију видеа једнако померајући све линије"
 
 #: ../../src/application.cpp:1166
 msgid "Adjust to Video Position (Anchor Last Line)"
 msgstr "Подеси на позицију видеа (усидри последњи ред)"
 
 #: ../../src/application.cpp:1167
-msgid ""
-"Set current line to video position by fixing the last line and linearly "
-"adjusting the other ones"
-msgstr ""
-"Поставља текући ред на позицију видеа фиксирајући последњи ред и линеарно "
-"подешавајући остале"
+msgid "Set current line to video position by fixing the last line and linearly adjusting the other ones"
+msgstr "Поставља текући ред на позицију видеа фиксирајући последњи ред и линеарно подешавајући остале"
 
 #: ../../src/application.cpp:1174
 msgid "Adjust to Video Position (Anchor First Line)"
 msgstr "Подеси на позицију видеа (усидри први ред)"
 
 #: ../../src/application.cpp:1175
-msgid ""
-"Set current line to video position by fixing the first line and linearly "
-"adjusting the other ones"
-msgstr ""
-"Поставља текући ред на позицију видеа фиксирајући први ред и линеарно "
-"подешавајући остале"
+msgid "Set current line to video position by fixing the first line and linearly adjusting the other ones"
+msgstr "Поставља текући ред на позицију видеа фиксирајући први ред и линеарно подешавајући остале"
 
 #: ../../src/application.cpp:1182 ../../src/waveformwidget.cpp:1195
-#, fuzzy
 msgid "Toggle Anchor"
-msgstr "Маркирано"
+msgstr ""
 
 #: ../../src/application.cpp:1183
-msgid ""
-"(Un)Anchor current line's show time to timeline (Editing anchored line's "
-"show time will stretch/compact the timeline between adjanced anchors)"
+msgid "(Un)Anchor current line's show time to timeline (Editing anchored line's show time will stretch/compact the timeline between adjanced anchors)"
 msgstr ""
 
 #: ../../src/application.cpp:1190
-#, fuzzy
 msgid "Remove All Anchors"
-msgstr "Уклони редове"
+msgstr ""
 
 #: ../../src/application.cpp:1191
 msgid "Unanchor show time from the timeline on all anchored lines"
@@ -815,13 +776,9 @@ msgid "Waveform display will automatically scroll to video position"
 msgstr ""
 
 #: ../../src/application.cpp:1301
-msgid ""
-"The requested action would make the subtitle and its translation share the "
-"same file, possibly resulting in loss of information when saving.\n"
+msgid "The requested action would make the subtitle and its translation share the same file, possibly resulting in loss of information when saving.\n"
 "Are you sure you want to continue?"
-msgstr ""
-"Тражена радња ће учинити да титл и његов превод деле исти фајл, што може "
-"довести до губитка података при снимању.\n"
+msgstr "Тражена радња ће учинити да титл и његов превод деле исти фајл, што може довести до губитка података при снимању.\n"
 "Желите ли да наставите?"
 
 #: ../../src/application.cpp:1301
@@ -830,23 +787,17 @@ msgstr "Конфликтни фајлови титла"
 
 #: ../../src/application.cpp:1411 ../../src/application.cpp:1439
 #: ../../src/application.cpp:1677 ../../src/application.cpp:1715
-msgid ""
-"<qt>Could not parse the subtitle file.<br/>This may have been caused by "
-"usage of the wrong encoding.</qt>"
-msgstr ""
-"<qt>Не могу да рашчланим фајл титла.<br/>То може бити проузроковано "
-"коришћењем погрешног кодирања.</qt>"
+msgid "<qt>Could not parse the subtitle file.<br/>This may have been caused by usage of the wrong encoding.</qt>"
+msgstr "<qt>Не могу да рашчланим фајл титла.<br/>То може бити проузроковано коришћењем погрешног кодирања.</qt>"
 
 #: ../../src/application.cpp:1520
 msgid "There was an error saving the subtitle."
 msgstr "Дошло је до грешке при снимању титла."
 
 #: ../../src/application.cpp:1558 ../../src/application.cpp:1811
-msgid ""
-"Currently opened translation subtitle has unsaved changes.\n"
+msgid "Currently opened translation subtitle has unsaved changes.\n"
 "Do you want to save them?"
-msgstr ""
-"Тренутно отворени преведени титл има несачуване измене.\n"
+msgstr "Тренутно отворени преведени титл има несачуване измене.\n"
 "Желите ли да их сачувате?"
 
 #: ../../src/application.cpp:1559 ../../src/application.cpp:1812
@@ -854,11 +805,9 @@ msgid "Close Translation Subtitle"
 msgstr "Затвори преведени титл"
 
 #: ../../src/application.cpp:1569
-msgid ""
-"Currently opened subtitle has unsaved changes.\n"
+msgid "Currently opened subtitle has unsaved changes.\n"
 "Do you want to save them?"
-msgstr ""
-"Тренутно отворени титл има несачуване измене.\n"
+msgstr "Тренутно отворени титл има несачуване измене.\n"
 "Желите ли да их сачувате?"
 
 #: ../../src/application.cpp:1570
@@ -898,36 +847,26 @@ msgid "split"
 msgstr ""
 
 #: ../../src/application.cpp:1894
-#, fuzzy
 msgid "Could not write the split subtitle file."
-msgstr "Не могу да упишем подељени фајл титла."
+msgstr ""
 
 #: ../../src/application.cpp:1894
-#, fuzzy
 msgid "Could not write the split subtitle translation file."
-msgstr "Не могу да упишем подељени фајл преведеног титла."
+msgstr ""
 
 #: ../../src/application.cpp:1911
 msgid "The specified time does not split the subtitles."
 msgstr "Наведено време не дели титлове."
 
 #: ../../src/application.cpp:1946
-#, fuzzy
-msgid ""
-"Could not open a new Subtitle Composer window.\n"
+msgid "Could not open a new Subtitle Composer window.\n"
 "The split part was saved as %1."
 msgstr ""
-"Не могу да отворим нови прозор „Уређивача титла“.\n"
-"Подељени део је сачуван као %1."
 
 #: ../../src/application.cpp:1947
-#, fuzzy
-msgid ""
-"Could not open a new Subtitle Composer window.\n"
+msgid "Could not open a new Subtitle Composer window.\n"
 "The split parts were saved as %1 and %2."
 msgstr ""
-"Не могу да отворим нови прозор „Уређивача титла“.\n"
-"Подељени делови су сачувани као %1 и %2."
 
 #: ../../src/application.cpp:2037
 msgid "Go to Line"
@@ -991,12 +930,8 @@ msgid "Translating secondary text (%1 to %2)..."
 msgstr "Преводим секундарни текст (%1 у %2)..."
 
 #: ../../src/application.cpp:2515
-msgid ""
-"Unable to perform texts synchronization (sent and received lines count do "
-"not match)."
-msgstr ""
-"Не могу да урадим усклађивање текстова (број послатих и примљених редова "
-"није исти)."
+msgid "Unable to perform texts synchronization (sent and received lines count do not match)."
+msgstr "Не могу да урадим усклађивање текстова (број послатих и примљених редова није исти)."
 
 #: ../../src/application.cpp:2519
 msgid "Translate Primary Text"
@@ -1007,13 +942,9 @@ msgid "Translate Secondary Text"
 msgstr "Преведи секундарни текст"
 
 #: ../../src/application.cpp:2534
-msgid ""
-"There was an error performing the translation:\n"
-"\n"
+msgid "There was an error performing the translation:\n\n"
 "%1"
-msgstr ""
-"Грешка током превођења:\n"
-"\n"
+msgstr "Грешка током превођења:\n\n"
 "%1"
 
 #: ../../src/application.cpp:2572
@@ -1021,11 +952,9 @@ msgid "Open Video"
 msgstr "Отвори видео"
 
 #: ../../src/application.cpp:2769 ../../src/application.cpp:2800
-msgid ""
-"Continuing would result in loss of timing information for some lines.\n"
+msgid "Continuing would result in loss of timing information for some lines.\n"
 "Are you sure you want to continue?"
-msgstr ""
-"Настављање ће довести до губитка времена на неким редовима.\n"
+msgstr "Настављање ће довести до губитка времена на неким редовима.\n"
 "Желите ли да наставите?"
 
 #: ../../src/application.cpp:2817
@@ -1042,7 +971,6 @@ msgid_plural "Seek backwards %1 seconds"
 msgstr[0] "Тражи уназад %1 секунду"
 msgstr[1] "Тражи уназад %1 секунде"
 msgstr[2] "Тражи уназад %1 секунди"
-msgstr[3] "Тражи уназад 1 секунду"
 
 #: ../../src/application.cpp:3005
 msgid "Seek forwards 1 second"
@@ -1050,25 +978,20 @@ msgid_plural "Seek forwards %1 seconds"
 msgstr[0] "Тражи унапред %1 секунду"
 msgstr[1] "Тражи унапред %1 секунде"
 msgstr[2] "Тражи унапред %1 секунди"
-msgstr[3] "Тражи унапред 1 секунду"
 
 #: ../../src/application.cpp:3008 ../../src/application.cpp:3012
-#, fuzzy
 msgid "Shift %2%1 millisecond"
 msgid_plural "Shift %2%1 milliseconds"
-msgstr[0] "Помери %21 милисекунду"
-msgstr[1] "Помери %2%1 милисекунде"
-msgstr[2] "Помери %2%1 милисекунди"
-msgstr[3] "Помери %2%1 милисекунду"
+msgstr[0] ""
+msgstr[1] ""
+msgstr[2] ""
 
 #: ../../src/application.cpp:3009 ../../src/application.cpp:3013
-#, fuzzy
 msgid "Shift selected lines %2%1 millisecond"
 msgid_plural "Shift selected lines %2%1 milliseconds"
-msgstr[0] "Померај изабраних редова %21 милисекунду"
-msgstr[1] "Померај изабраних редова %2%1 милисекунде"
-msgstr[2] "Померај изабраних редова %2%1 милисекунди"
-msgstr[3] "Померај изабраних редова %2%1 милисекунду"
+msgstr[0] ""
+msgstr[1] ""
+msgstr[2] ""
 
 #: ../../src/configs/configdialog.cpp:54
 msgctxt "@title General settings"
@@ -1080,21 +1003,18 @@ msgid "General Settings"
 msgstr "Опште поставке"
 
 #: ../../src/configs/configdialog.cpp:59
-#, fuzzy
 msgctxt "@title Error check settings"
 msgid "Error Check"
-msgstr "Провере грешака"
+msgstr ""
 
 #: ../../src/configs/configdialog.cpp:60
-#, fuzzy
 msgid "Error Check Settings"
-msgstr "Поставке провере грешака"
+msgstr ""
 
 #: ../../src/configs/configdialog.cpp:66
-#, fuzzy
 msgctxt "@title Spelling settings"
 msgid "Spelling"
-msgstr "Правопис"
+msgstr ""
 
 #: ../../src/configs/configdialog.cpp:67
 msgid "Spelling Settings"
@@ -1106,32 +1026,27 @@ msgid "Waveform"
 msgstr ""
 
 #: ../../src/configs/configdialog.cpp:72
-#, fuzzy
 msgid "Waveform settings"
-msgstr "Поставке плејера"
+msgstr ""
 
 #: ../../src/configs/configdialog.cpp:76
-#, fuzzy
 msgctxt "@title Video player settings"
 msgid "Video Player"
-msgstr "Плејер"
+msgstr ""
 
 #: ../../src/configs/configdialog.cpp:77
-#, fuzzy
 msgid "Video Player Settings"
-msgstr "Поставке плејера"
+msgstr ""
 
 #: ../../src/configs/configdialog.cpp:84
-#, fuzzy
 msgctxt "@title Video player backend settings"
 msgid "%1 backend settings"
-msgstr "%1 поставке"
+msgstr ""
 
 #: ../../src/configs/configdialog.cpp:95
-#, fuzzy
 msgctxt "@title Speech recognition backend settings"
 msgid "%1 backend settings"
-msgstr "%1 поставке"
+msgstr ""
 
 #: ../../src/configs/playerconfigwidget.cpp:39
 msgctxt "Text for previewing the subtitles font settings"
@@ -1175,8 +1090,7 @@ msgstr "Постави секундарне податке"
 msgid "Clear Secondary Text Data"
 msgstr "Очисти податке секундарног текста"
 
-#: ../../src/core/subtitle.cpp:243
-#: ../../src/dialogs/changeframeratedialog.cpp:35
+#: ../../src/core/subtitle.cpp:243 ../../src/dialogs/changeframeratedialog.cpp:35
 msgid "Change Frame Rate"
 msgstr "Измени број кадрова"
 
@@ -1193,8 +1107,7 @@ msgstr "Помери редове"
 msgid "Adjust Lines"
 msgstr "Подеси редове"
 
-#: ../../src/core/subtitle.cpp:855
-#: ../../src/dialogs/durationlimitsdialog.cpp:31
+#: ../../src/core/subtitle.cpp:855 ../../src/dialogs/durationlimitsdialog.cpp:31
 msgid "Enforce Duration Limits"
 msgstr "Присили ограничења трајања"
 
@@ -1202,8 +1115,7 @@ msgstr "Присили ограничења трајања"
 msgid "Set Automatic Durations"
 msgstr "Постави аутоматска трајања"
 
-#: ../../src/core/subtitle.cpp:951
-#: ../../src/dialogs/fixoverlappingtimesdialog.cpp:31
+#: ../../src/core/subtitle.cpp:951 ../../src/dialogs/fixoverlappingtimesdialog.cpp:31
 msgid "Fix Overlapping Times"
 msgstr "Среди преклапајућа времена"
 
@@ -1227,8 +1139,7 @@ msgstr "Величина наслова"
 msgid "Sentence Case"
 msgstr "Величина реченица"
 
-#: ../../src/core/subtitle.cpp:1167
-#: ../../src/dialogs/smarttextsadjustdialog.cpp:31
+#: ../../src/core/subtitle.cpp:1167 ../../src/dialogs/smarttextsadjustdialog.cpp:31
 msgid "Break Lines"
 msgstr "Преломи редове"
 
@@ -1236,8 +1147,7 @@ msgstr "Преломи редове"
 msgid "Synchronize Subtitles"
 msgstr "Синхронизуј титлове"
 
-#: ../../src/core/subtitle.cpp:1215
-#: ../../src/dialogs/joinsubtitlesdialog.cpp:39
+#: ../../src/core/subtitle.cpp:1215 ../../src/dialogs/joinsubtitlesdialog.cpp:39
 msgid "Join Subtitles"
 msgstr "Састави титлове"
 
@@ -1254,9 +1164,8 @@ msgid "Toggle Lines Style"
 msgstr "Укљ/искљ. стил реда"
 
 #: ../../src/core/subtitle.cpp:1322
-#, fuzzy
 msgid "Change Lines Text Color"
-msgstr "Постави текст реда"
+msgstr ""
 
 #: ../../src/core/subtitle.cpp:1335
 msgid "Set Lines Mark"
@@ -1282,13 +1191,11 @@ msgstr "Постави секундарни текст реда"
 msgid "Set Line Texts"
 msgstr "Постави текст реда"
 
-#: ../../src/core/subtitlelineactions.cpp:150
-#: ../../src/core/subtitleline.cpp:517
+#: ../../src/core/subtitlelineactions.cpp:150 ../../src/core/subtitleline.cpp:517
 msgid "Set Line Show Time"
 msgstr "Постави време приказивања реда"
 
-#: ../../src/core/subtitlelineactions.cpp:181
-#: ../../src/core/subtitleline.cpp:547
+#: ../../src/core/subtitlelineactions.cpp:181 ../../src/core/subtitleline.cpp:547
 msgid "Set Line Hide Time"
 msgstr "Постави време нестајања реда"
 
@@ -1362,7 +1269,6 @@ msgid_plural "Has too many characters in primary text (%1 chars)."
 msgstr[0] "Има превише знакова у главном тексту (%1 знак)."
 msgstr[1] "Има превише знакова у главном тексту (%1 знака)."
 msgstr[2] "Има превише знакова у главном тексту (%1 знакова)."
-msgstr[3] "Има превише знакова у главном тексту (1 знак)."
 
 #: ../../src/core/subtitleline.cpp:121
 msgid "Has too many characters in translation text (1 char)."
@@ -1370,7 +1276,6 @@ msgid_plural "Has too many characters in translation text (%1 chars)."
 msgstr[0] "Има превише знакова у преведеном тексту (%1 знак)."
 msgstr[1] "Има превише знакова у преведеном тексту (%1 знака)."
 msgstr[2] "Има превише знакова у преведеном тексту (%1 знакова)."
-msgstr[3] "Има превише знакова у преведеном тексту (1 знак)."
 
 #: ../../src/core/subtitleline.cpp:122
 msgid "Has too many lines in primary text (1 line)."
@@ -1378,7 +1283,6 @@ msgid_plural "Has too many lines in primary text (%1 lines)."
 msgstr[0] "Има превише редова у главном тексту (%1 ред)."
 msgstr[1] "Има превише редова у главном тексту (%1 реда)."
 msgstr[2] "Има превише редова у главном тексту (%1 редова)."
-msgstr[3] "Има превише редова у главном тексту (1 ред)."
 
 #: ../../src/core/subtitleline.cpp:123
 msgid "Has too many lines in translation text (1 line)."
@@ -1386,7 +1290,6 @@ msgid_plural "Has too many lines in translation text (%1 lines)."
 msgstr[0] "Има превише редова у преведеном тексту (%1 ред)."
 msgstr[1] "Има превише редова у преведеном тексту (%1 реда)."
 msgstr[2] "Има превише редова у преведеном тексту (%1 редова)."
-msgstr[3] "Има превише редова у преведеном тексту (1 ред)."
 
 #: ../../src/core/subtitleline.cpp:124
 msgid "Has unnecessary spaces in primary text."
@@ -1409,45 +1312,36 @@ msgid "Has capital letter after line continuation ellipsis in primary text."
 msgstr "Има велико слово након цртице за нови ред у главном тексту."
 
 #: ../../src/core/subtitleline.cpp:129
-msgid ""
-"Has capital letter after line continuation ellipsis in translation text."
+msgid "Has capital letter after line continuation ellipsis in translation text."
 msgstr "Има велико слово након цртице за нови ред у преведеном тексту."
 
 #: ../../src/core/subtitleline.cpp:130
 msgid "Has too long duration per character in primary text (1 msec/char)."
-msgid_plural ""
-"Has too long duration per character in primary text (%1 msecs/char)."
+msgid_plural "Has too long duration per character in primary text (%1 msecs/char)."
 msgstr[0] "Има предуго трајање по знаку у главном тексту (%1 ms/знаку)."
 msgstr[1] "Има предуго трајање по знаку у главном тексту (%1 ms/знаку)."
 msgstr[2] "Има предуго трајање по знаку у главном тексту (%1 ms/знаку)."
-msgstr[3] "Има предуго трајање по знаку у главном тексту (1 ms/знаку)."
 
 #: ../../src/core/subtitleline.cpp:131
 msgid "Has too long duration per character in translation text (1 msec/char)."
-msgid_plural ""
-"Has too long duration per character in translation text (%1 msecs/char)."
+msgid_plural "Has too long duration per character in translation text (%1 msecs/char)."
 msgstr[0] "Има предуго трајање по знаку у преведеном тексту (%1 ms/знаку)."
 msgstr[1] "Има предуго трајање по знаку у преведеном тексту (%1 ms/знаку)."
 msgstr[2] "Има предуго трајање по знаку у преведеном тексту (%1 ms/знаку)."
-msgstr[3] "Има предуго трајање по знаку у преведеном тексту (1 ms/знаку)."
 
 #: ../../src/core/subtitleline.cpp:132
 msgid "Has too short duration per character in primary text (1 msec/char)."
-msgid_plural ""
-"Has too short duration per character in primary text (%1 msecs/char)."
+msgid_plural "Has too short duration per character in primary text (%1 msecs/char)."
 msgstr[0] "Има прекратко трајање по знаку у главном тексту (%1 ms/знаку)."
 msgstr[1] "Има прекратко трајање по знаку у главном тексту (%1 ms/знаку)."
 msgstr[2] "Има прекратко трајање по знаку у главном тексту (%1 ms/знаку)."
-msgstr[3] "Има прекратко трајање по знаку у главном тексту (1 ms/знаку)."
 
 #: ../../src/core/subtitleline.cpp:133
 msgid "Has too short duration per character in translation text (1 msec/char)."
-msgid_plural ""
-"Has too short duration per character in translation text (%1 msecs/char)."
+msgid_plural "Has too short duration per character in translation text (%1 msecs/char)."
 msgstr[0] "Има прекратко трајање по знаку у преведеном тексту (%1 ms/знаку)."
 msgstr[1] "Има прекратко трајање по знаку у преведеном тексту (%1 ms/знаку)."
 msgstr[2] "Има прекратко трајање по знаку у преведеном тексту (%1 ms/знаку)."
-msgstr[3] "Има прекратко трајање по знаку у преведеном тексту (1 ms/знаку)."
 
 #: ../../src/core/subtitleline.cpp:134
 msgid "Has too long duration (1 msec)."
@@ -1455,7 +1349,6 @@ msgid_plural "Has too long duration (%1 msecs)."
 msgstr[0] "Има предуго трајање (%1 ms)."
 msgstr[1] "Има предуго трајање (%1 ms)."
 msgstr[2] "Има предуго трајање (%1 ms)."
-msgstr[3] "Има предуго трајање (1 ms)."
 
 #: ../../src/core/subtitleline.cpp:135
 msgid "Has too short duration (1 msec)."
@@ -1463,7 +1356,6 @@ msgid_plural "Has too short duration (%1 msecs)."
 msgstr[0] "Има прекратко трајање (%1 ms)."
 msgstr[1] "Има прекратко трајање (%1 ms)."
 msgstr[2] "Има прекратко трајање (%1 ms)."
-msgstr[3] "Има прекратко трајање (1 ms)."
 
 #: ../../src/core/subtitleline.cpp:136
 msgid "Overlaps with next line."
@@ -1515,7 +1407,6 @@ msgid_plural "%1 characters"
 msgstr[0] "%1 знак"
 msgstr[1] "%1 знака"
 msgstr[2] "%1 знакова"
-msgstr[3] "1 знак"
 
 #: ../../src/dialogs/actionwitherrortargetsdialog.cpp:68
 msgid "Available errors"
@@ -1551,18 +1442,18 @@ msgstr "Сви редови од првог означеног"
 msgid "All lines up to last selected"
 msgstr "Сви редови до последњег означеног"
 
-#: ../../src/dialogs/actionwithtargetdialog.cpp:245
-#: ../../src/utils/finder.cpp:62 ../../src/utils/replacer.cpp:63
+#: ../../src/dialogs/actionwithtargetdialog.cpp:245 ../../src/utils/finder.cpp:62
+#: ../../src/utils/replacer.cpp:63
 msgid "Both subtitles"
 msgstr "Оба титла"
 
-#: ../../src/dialogs/actionwithtargetdialog.cpp:248
-#: ../../src/utils/finder.cpp:64 ../../src/utils/replacer.cpp:65
+#: ../../src/dialogs/actionwithtargetdialog.cpp:248 ../../src/utils/finder.cpp:64
+#: ../../src/utils/replacer.cpp:65
 msgid "Primary subtitle"
 msgstr "Главни титл"
 
-#: ../../src/dialogs/actionwithtargetdialog.cpp:251
-#: ../../src/utils/finder.cpp:66 ../../src/utils/replacer.cpp:67
+#: ../../src/dialogs/actionwithtargetdialog.cpp:251 ../../src/utils/finder.cpp:66
+#: ../../src/utils/replacer.cpp:67
 msgid "Translation subtitle"
 msgstr "Преведени титл"
 
@@ -1831,9 +1722,8 @@ msgid "Forwards (+)"
 msgstr "Унапред (+)"
 
 #: ../../src/dialogs/shifttimesdialog.cpp:39
-#, fuzzy
 msgid "Backwards (−)"
-msgstr "Уназад (-)"
+msgstr ""
 
 #. i18n: file: ../../src/configs/errorsconfigwidget.ui:36
 #. i18n: ectx: property (suffix), widget (QSpinBox, kcfg_MaxCharacters)
@@ -1887,25 +1777,21 @@ msgid "Output language:"
 msgstr "Излазни језик:"
 
 #: ../../src/formats/textdemux/textdemux.cpp:44
-#, fuzzy
 msgid "Importing Subtitle Stream"
-msgstr "Токови титла"
+msgstr ""
 
 #: ../../src/formats/textdemux/textdemux.cpp:101
-msgid ""
-"Subtitle demux failed %1: %2\n"
+msgid "Subtitle demux failed %1: %2\n"
 "%3"
 msgstr ""
 
 #: ../../src/formats/vobsub/vobsubinputprocessdialog.cpp:594
-#, fuzzy
 msgid "VobSub Error"
-msgstr "Грешке титла"
+msgstr ""
 
 #: ../../src/helpers/languagecode.cpp:420
-#, fuzzy
 msgid "Unknown"
-msgstr "<i>Непознат</i>"
+msgstr ""
 
 #: ../../src/lineswidget.cpp:185
 msgid "<b>Observations:</b>"
@@ -1967,9 +1853,8 @@ msgid "Mladen Milinković"
 msgstr ""
 
 #: ../../src/main.cpp:74
-#, fuzzy
 msgid "Current Author & Maintainer"
-msgstr "Аутор и одржавалац"
+msgstr ""
 
 #: ../../src/main.cpp:75
 msgid "Sergio Pistone"
@@ -1979,12 +1864,12 @@ msgstr "Серђо Пистоне (Sergio Pistone)"
 msgid "Original Author"
 msgstr ""
 
-#: ../../src/main.cpp:77 rc.cpp:791
+#: ../../src/main.cpp:77 rc.cpp:766
 msgctxt "NAME OF TRANSLATORS"
 msgid "Your names"
 msgstr "Слободан Симић"
 
-#: ../../src/main.cpp:77 rc.cpp:792
+#: ../../src/main.cpp:77 rc.cpp:767
 msgctxt "EMAIL OF TRANSLATORS"
 msgid "Your emails"
 msgstr "simicsl@verat.net"
@@ -2014,9 +1899,8 @@ msgid "Waveform"
 msgstr ""
 
 #: ../../src/mainwindow.cpp:60
-#, fuzzy
 msgid "Video Player"
-msgstr "Плејер"
+msgstr ""
 
 #: ../../src/playerwidget.cpp:100
 msgid "<b>Position</b>"
@@ -2048,14 +1932,12 @@ msgid "<i>Unknown</i>"
 msgstr "<i>Непознат</i>"
 
 #: ../../src/playerwidget.cpp:799
-#, fuzzy
 msgid "<qt>There was an error opening media file %1.</qt>"
-msgstr "<qt>Дошло је до грешке при отварању фајла<br/>%1</qt>"
+msgstr ""
 
 #: ../../src/playerwidget.cpp:831 ../../src/playerwidget.cpp:833
-#, fuzzy
 msgid "Unexpected error when playing file."
-msgstr "Неочекивана грешка при пуштању фајла."
+msgstr ""
 
 #: ../../src/playerwidget.cpp:831 ../../src/playerwidget.cpp:833
 msgid "Error Playing File"
@@ -2074,17 +1956,14 @@ msgid "Warning"
 msgstr ""
 
 #: ../../src/scripting/scriptsmanager.cpp:102
-#, fuzzy
 msgid "Error"
-msgstr "Грешке"
+msgstr ""
 
 #: ../../src/scripting/scriptsmanager.cpp:165
 #: ../../src/scripting/scriptsmanager.cpp:242
-msgid ""
-"You must enter an unused name to continue.\n"
+msgid "You must enter an unused name to continue.\n"
 "Would you like to enter another name?"
-msgstr ""
-"Морате унети име које није већ у употреби.\n"
+msgstr "Морате унети име које није већ у употреби.\n"
 "Желите ли да унесете друго име?"
 
 #: ../../src/scripting/scriptsmanager.cpp:166
@@ -2163,8 +2042,7 @@ msgid "Initialization of speech recognition plugin failed"
 msgstr ""
 
 #: ../../src/speechprocessor/speechprocessor.cpp:236
-msgid ""
-"Speech Recognition failed: %2\n"
+msgid "Speech Recognition failed: %2\n"
 "Code %1: %3"
 msgstr ""
 
@@ -2179,7 +2057,7 @@ msgstr "Грешке за налажење"
 
 #. i18n: file: ../../src/videoplayerplugins/gstreamer/gstreamerconfigwidget.ui:20
 #. i18n: ectx: property (title), widget (QGroupBox, grpOptions)
-#: ../../src/utils/errorfinder.cpp:42 rc.cpp:700
+#: ../../src/utils/errorfinder.cpp:42 rc.cpp:675
 msgid "Options"
 msgstr "Опције"
 
@@ -2193,38 +2071,30 @@ msgstr "Тражи уназад"
 
 #: ../../src/utils/errorfinder.cpp:206 ../../src/utils/finder.cpp:265
 #: ../../src/utils/replacer.cpp:233
-msgid ""
-"Beginning of selection reached.\n"
+msgid "Beginning of selection reached.\n"
 "Continue from the end?"
-msgstr ""
-"Дошао сам до почетка избора.\n"
+msgstr "Дошао сам до почетка избора.\n"
 "Да наставим од краја?"
 
 #: ../../src/utils/errorfinder.cpp:206 ../../src/utils/finder.cpp:265
 #: ../../src/utils/replacer.cpp:233
-msgid ""
-"Beginning of subtitle reached.\n"
+msgid "Beginning of subtitle reached.\n"
 "Continue from the end?"
-msgstr ""
-"Дошао сам до почетка титла.\n"
+msgstr "Дошао сам до почетка титла.\n"
 "Да наставим од краја?"
 
 #: ../../src/utils/errorfinder.cpp:206 ../../src/utils/finder.cpp:265
 #: ../../src/utils/replacer.cpp:233
-msgid ""
-"End of selection reached.\n"
+msgid "End of selection reached.\n"
 "Continue from the beginning?"
-msgstr ""
-"Дошао сам до краја избора.\n"
+msgstr "Дошао сам до краја избора.\n"
 "Да наставим од почетка?"
 
 #: ../../src/utils/errorfinder.cpp:206 ../../src/utils/finder.cpp:265
 #: ../../src/utils/replacer.cpp:233 ../../src/utils/speller.cpp:142
-msgid ""
-"End of subtitle reached.\n"
+msgid "End of subtitle reached.\n"
 "Continue from the beginning?"
-msgstr ""
-"Дошао сам до краја титла.\n"
+msgstr "Дошао сам до краја титла.\n"
 "Да наставим од почетка?"
 
 #: ../../src/utils/errorfinder.cpp:220
@@ -2267,7 +2137,6 @@ msgid_plural "%1 replacements done."
 msgstr[0] "Учињена је %1 замена."
 msgstr[1] "Учињене су %1 замене."
 msgstr[2] "Учињено је %1 замена."
-msgstr[3] "Учињена је једна замена."
 
 #: ../../src/utils/speller.cpp:142
 msgid "Spell Checking"
@@ -2283,9 +2152,8 @@ msgstr "Неочекиван садржај је примљен од серви�
 
 #: ../../src/videoplayerplugins/gstreamer/gstreamerplayerbackend.cpp:444
 #: ../../src/videoplayerplugins/mpv/mpvbackend.cpp:247
-#, fuzzy
 msgid "Text Stream #%1"
-msgstr "Аудио ток #%1"
+msgstr ""
 
 #: ../../src/videoplayerplugins/gstreamer/gstreamerplayerbackend.cpp:480
 #: ../../src/videoplayerplugins/mplayer/mplayerplayerbackend.cpp:250
@@ -2303,19 +2171,16 @@ msgid "Generating waveform"
 msgstr ""
 
 #: ../../src/waveformwidget.cpp:1137
-#, fuzzy
 msgid "Select Line"
-msgstr "Ништа изабрано"
+msgstr ""
 
 #: ../../src/waveformwidget.cpp:1164
-#, fuzzy
 msgid "Remove Line"
-msgstr "Уклони редове"
+msgstr ""
 
 #: ../../src/waveformwidget.cpp:1189
-#, fuzzy
 msgid "Split Line"
-msgstr "Раздвоји редове"
+msgstr ""
 
 #: ../../src/widgets/simplerichtextedit.cpp:67
 msgid "Undo"
@@ -2367,10 +2232,9 @@ msgid "Strike Through"
 msgstr "Прецртано"
 
 #: ../../src/widgets/simplerichtextedit.cpp:140
-#, fuzzy
 msgctxt "@action:inmenu Change Text Color"
 msgid "Text Color"
-msgstr "Промени у"
+msgstr ""
 
 #: ../../src/widgets/simplerichtextedit.cpp:146
 msgid "Check Spelling..."
@@ -2415,9 +2279,8 @@ msgstr "Максималан број редова:"
 #. i18n: file: ../../src/configs/errorsconfigwidget.ui:63
 #. i18n: ectx: property (title), widget (QGroupBox, m_grpQuickActions)
 #: rc.cpp:15
-#, fuzzy
 msgid "Absolute Durations"
-msgstr "Апсолутна трајања"
+msgstr ""
 
 #. i18n: file: ../../src/configs/errorsconfigwidget.ui:92
 #. i18n: ectx: property (text), widget (QLabel, label_8)
@@ -2438,31 +2301,28 @@ msgstr "Минимално трајање:"
 #. i18n: file: ../../src/configs/errorsconfigwidget.ui:109
 #. i18n: ectx: property (title), widget (QGroupBox, groupBox)
 #: rc.cpp:24
-#, fuzzy
 msgid "Relative Durations"
-msgstr "Релативна трајања"
+msgstr ""
 
 #. i18n: file: ../../src/configs/errorsconfigwidget.ui:115
 #. i18n: ectx: property (suffix), widget (QSpinBox, kcfg_MinDurationPerCharacter)
 #. i18n: file: ../../src/configs/errorsconfigwidget.ui:139
 #. i18n: ectx: property (suffix), widget (QSpinBox, kcfg_MaxDurationPerCharacter)
 #: rc.cpp:27 rc.cpp:36
-#, fuzzy
 msgid " msec/char"
-msgstr " ms/знаку"
+msgstr ""
 
 #. i18n: file: ../../src/configs/errorsconfigwidget.ui:152
 #. i18n: ectx: property (title), widget (QGroupBox, groupBox_2)
 #: rc.cpp:39
-#, fuzzy
 msgid "Behavior"
-msgstr "Понашање"
+msgstr ""
 
 #. i18n: file: ../../src/configs/errorsconfigwidget.ui:158
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_AutoClearFixed)
 #. i18n: file: ../../src/scconfig.kcfg:78
 #. i18n: ectx: label, entry (AutoClearFixed), group (Error Check)
-#: rc.cpp:42 rc.cpp:328
+#: rc.cpp:42 rc.cpp:303
 msgid "Automatically clear fixed errors"
 msgstr "Аутоматски очисти сређене грешке"
 
@@ -2474,17 +2334,15 @@ msgstr "Аутоматски очисти сређене грешке"
 #. i18n: ectx: property (title), widget (QGroupBox, grpGeneral)
 #. i18n: file: ../../src/videoplayerplugins/mpv/mpvconfigwidget.ui:20
 #. i18n: ectx: property (title), widget (QGroupBox, grpGeneral)
-#: rc.cpp:45 rc.cpp:87 rc.cpp:709 rc.cpp:748
-#, fuzzy
+#: rc.cpp:45 rc.cpp:87 rc.cpp:684 rc.cpp:723
 msgid "General"
-msgstr "Општа"
+msgstr ""
 
 #. i18n: file: ../../src/configs/generalconfigwidget.ui:26
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_AutomaticVideoLoad)
 #: rc.cpp:48
-#, fuzzy
 msgid "Automatically load video file when opening a subtitle"
-msgstr "Аутоматски учитај видео фајл при отварању титла"
+msgstr ""
 
 #. i18n: file: ../../src/configs/generalconfigwidget.ui:33
 #. i18n: ectx: property (text), widget (QLabel, label)
@@ -2495,9 +2353,8 @@ msgstr ""
 #. i18n: file: ../../src/configs/generalconfigwidget.ui:46
 #. i18n: ectx: property (title), widget (QGroupBox, m_grpSubtitleLine)
 #: rc.cpp:54
-#, fuzzy
 msgid "Subtitle Line"
-msgstr "Титл"
+msgstr ""
 
 #. i18n: file: ../../src/configs/generalconfigwidget.ui:52
 #. i18n: ectx: property (text), widget (QLabel, label_LineDuration)
@@ -2508,16 +2365,14 @@ msgstr ""
 #. i18n: file: ../../src/configs/generalconfigwidget.ui:62
 #. i18n: ectx: property (text), widget (QLabel, label_4)
 #: rc.cpp:60
-#, fuzzy
 msgid "On double click, &jump to show time minus:"
-msgstr "При двоклику на ред, скочи на време приказа минус:"
+msgstr ""
 
 #. i18n: file: ../../src/configs/generalconfigwidget.ui:72
 #. i18n: ectx: property (text), widget (QLabel, label_LinePause)
 #: rc.cpp:63
-#, fuzzy
 msgid "Default pause between subtitle lines:"
-msgstr "Не могу да рашчланим фајл титла."
+msgstr ""
 
 #. i18n: file: ../../src/configs/generalconfigwidget.ui:82
 #. i18n: ectx: property (suffix), widget (QSpinBox, kcfg_LinePause)
@@ -2526,37 +2381,32 @@ msgstr "Не могу да рашчланим фајл титла."
 #. i18n: file: ../../src/configs/generalconfigwidget.ui:122
 #. i18n: ectx: property (suffix), widget (QSpinBox, kcfg_JumpLineOffset)
 #: rc.cpp:66 rc.cpp:69 rc.cpp:75
-#, fuzzy
 msgid " msec"
-msgstr " ms"
+msgstr ""
 
 #. i18n: file: ../../src/configs/generalconfigwidget.ui:112
 #. i18n: ectx: property (text), widget (QLabel, label_2)
 #: rc.cpp:72
-#, fuzzy
 msgid "Ju&mp to prev/next line offset:"
-msgstr "Скочи на следећи ред"
+msgstr ""
 
 #. i18n: file: ../../src/configs/generalconfigwidget.ui:135
 #. i18n: ectx: property (title), widget (QGroupBox, m_grpQuickActions)
 #: rc.cpp:78
-#, fuzzy
 msgid "Quick Actions"
-msgstr "Брзе радње"
+msgstr ""
 
 #. i18n: file: ../../src/configs/generalconfigwidget.ui:161
 #. i18n: ectx: property (text), widget (QLabel, label_8)
 #: rc.cpp:81
-#, fuzzy
 msgid "Compensation for captured &video times:"
-msgstr "Компензација за ухваћена времена видеа:"
+msgstr ""
 
 #. i18n: file: ../../src/configs/generalconfigwidget.ui:171
 #. i18n: ectx: property (text), widget (QLabel, label_5)
 #: rc.cpp:84
-#, fuzzy
 msgid "Ti&me shift for selected lines:"
-msgstr "Померај времена за изабране редове:"
+msgstr ""
 
 #. i18n: file: ../../src/configs/playerconfigwidget.ui:23
 #. i18n: ectx: property (text), widget (QLabel, label_4)
@@ -2567,9 +2417,8 @@ msgstr ""
 #. i18n: file: ../../src/configs/playerconfigwidget.ui:53
 #. i18n: ectx: property (text), widget (QLabel, label_3)
 #: rc.cpp:96
-#, fuzzy
 msgid "&VideoPlayer backend:"
-msgstr "Програм плејера:"
+msgstr ""
 
 #. i18n: file: ../../src/configs/playerconfigwidget.ui:73
 #. i18n: ectx: property (text), widget (QLabel, label)
@@ -2581,7 +2430,7 @@ msgstr ""
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_VideoAutoPlay)
 #. i18n: file: ../../src/scconfig.kcfg:176
 #. i18n: ectx: label, entry (VideoAutoPlay), group (VideoPlayer)
-#: rc.cpp:102 rc.cpp:397
+#: rc.cpp:102 rc.cpp:372
 msgid "Start playing video when loaded"
 msgstr ""
 
@@ -2594,44 +2443,38 @@ msgstr ""
 #. i18n: file: ../../src/configs/playerconfigwidget.ui:100
 #. i18n: ectx: property (title), widget (QGroupBox, m_grpSubtitles)
 #: rc.cpp:108
-#, fuzzy
 msgid "Subtitles"
-msgstr "Титлови"
+msgstr ""
 
 #. i18n: file: ../../src/configs/playerconfigwidget.ui:106
 #. i18n: ectx: property (text), widget (QLabel, label_7)
 #: rc.cpp:111
-#, fuzzy
 msgid "Outline color:"
-msgstr "Боја оивичења:"
+msgstr ""
 
 #. i18n: file: ../../src/configs/playerconfigwidget.ui:125
 #. i18n: ectx: property (text), widget (QLabel, label_8)
 #: rc.cpp:114
-#, fuzzy
 msgid "Outline width:"
-msgstr "Ширина оивичења:"
+msgstr ""
 
 #. i18n: file: ../../src/configs/playerconfigwidget.ui:135
 #. i18n: ectx: property (text), widget (QLabel, label_6)
 #: rc.cpp:117
-#, fuzzy
 msgid "Te&xt color:"
-msgstr "Промени у"
+msgstr ""
 
 #. i18n: file: ../../src/configs/playerconfigwidget.ui:145
 #. i18n: ectx: property (text), widget (QLabel, label_2)
 #: rc.cpp:120
-#, fuzzy
 msgid "Font family:"
-msgstr "Фонт:"
+msgstr ""
 
 #. i18n: file: ../../src/configs/playerconfigwidget.ui:155
 #. i18n: ectx: property (text), widget (QLabel, label_5)
 #: rc.cpp:123
-#, fuzzy
 msgid "Font si&ze:"
-msgstr "Величина:"
+msgstr ""
 
 #. i18n: file: ../../src/configs/playerconfigwidget.ui:182
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_Antialias)
@@ -2642,9 +2485,8 @@ msgstr ""
 #. i18n: file: ../../src/configs/playerconfigwidget.ui:192
 #. i18n: ectx: property (title), widget (QGroupBox, m_grpPreview)
 #: rc.cpp:129
-#, fuzzy
 msgid "Subtitles Preview"
-msgstr "Преглед титлова"
+msgstr ""
 
 #. i18n: file: ../../src/configs/waveformconfigwidget.ui:17
 #. i18n: ectx: property (title), widget (QGroupBox, groupBox_3)
@@ -2661,23 +2503,19 @@ msgstr ""
 #. i18n: file: ../../src/configs/waveformconfigwidget.ui:49
 #. i18n: ectx: property (text), widget (QLabel, label_12)
 #: rc.cpp:138
-#, fuzzy
 msgid "Outer color:"
-msgstr "Боја оивичења:"
+msgstr ""
 
 #. i18n: file: ../../src/configs/waveformconfigwidget.ui:78
 #. i18n: ectx: property (text), widget (QLabel, label_11)
 #: rc.cpp:141
-#, fuzzy
 msgid "Inner color:"
-msgstr "Главна боја:"
+msgstr ""
 
 #. i18n: file: ../../src/configs/waveformconfigwidget.ui:104
 #. i18n: ectx: property (toolTip), widget (QLabel, label_wfAutoscrollPadding)
 #: rc.cpp:144
-msgid ""
-"Autoscroll page when play position reaches ScrollPadding distance "
-"(percentage) from page border"
+msgid "Autoscroll page when play position reaches ScrollPadding distance (percentage) from page border"
 msgstr ""
 
 #. i18n: file: ../../src/configs/waveformconfigwidget.ui:107
@@ -2689,16 +2527,14 @@ msgstr ""
 #. i18n: file: ../../src/configs/waveformconfigwidget.ui:120
 #. i18n: ectx: property (title), widget (QGroupBox, m_grpGeneral)
 #: rc.cpp:150
-#, fuzzy
 msgid "Subtitle Display"
-msgstr "Титлови"
+msgstr ""
 
 #. i18n: file: ../../src/configs/waveformconfigwidget.ui:148
 #. i18n: ectx: property (text), widget (QLabel, label_14)
 #: rc.cpp:153
-#, fuzzy
 msgid "Subtitle border color:"
-msgstr "Грешке титла"
+msgstr ""
 
 #. i18n: file: ../../src/configs/waveformconfigwidget.ui:158
 #. i18n: ectx: property (text), widget (QLabel, label_16)
@@ -2709,9 +2545,8 @@ msgstr ""
 #. i18n: file: ../../src/configs/waveformconfigwidget.ui:168
 #. i18n: ectx: property (text), widget (QLabel, label_15)
 #: rc.cpp:159
-#, fuzzy
 msgid "Subtitle border width:"
-msgstr "Састављач титла (Subtitle Composer)"
+msgstr ""
 
 #. i18n: file: ../../src/configs/waveformconfigwidget.ui:178
 #. i18n: ectx: property (text), widget (QLabel, label_13)
@@ -2722,67 +2557,58 @@ msgstr ""
 #. i18n: file: ../../src/configs/waveformconfigwidget.ui:207
 #. i18n: ectx: property (text), widget (QLabel, label_17)
 #: rc.cpp:165
-#, fuzzy
 msgid "Selected border color:"
-msgstr "Очисти изабране грешке"
+msgstr ""
 
 #. i18n: file: ../../src/configs/waveformconfigwidget.ui:258
 #. i18n: ectx: property (title), widget (QGroupBox, groupBox)
 #: rc.cpp:168
-#, fuzzy
 msgid "Text Font and Colors"
-msgstr "Промени у"
+msgstr ""
 
 #. i18n: file: ../../src/configs/waveformconfigwidget.ui:264
 #. i18n: ectx: property (text), widget (QLabel, label_21)
 #: rc.cpp:171
-#, fuzzy
 msgid "Subtitle font family:"
-msgstr "Фонт титлова"
+msgstr ""
 
 #. i18n: file: ../../src/configs/waveformconfigwidget.ui:277
 #. i18n: ectx: property (text), widget (QLabel, label_22)
 #: rc.cpp:174
-#, fuzzy
 msgid "Subtitle number font size:"
-msgstr "Фонт титлова"
+msgstr ""
 
 #. i18n: file: ../../src/configs/waveformconfigwidget.ui:287
 #. i18n: ectx: property (suffix), widget (QSpinBox, kcfg_wfSubNumberFontSize)
 #. i18n: file: ../../src/configs/waveformconfigwidget.ui:333
 #. i18n: ectx: property (suffix), widget (QSpinBox, kcfg_wfSubTextFontSize)
 #: rc.cpp:177 rc.cpp:186
-#, fuzzy
 msgid " pt"
-msgstr " тачака"
+msgstr ""
 
 #. i18n: file: ../../src/configs/waveformconfigwidget.ui:294
 #. i18n: ectx: property (text), widget (QLabel, label_23)
 #: rc.cpp:180
-#, fuzzy
 msgid "Subtitle Number Color"
-msgstr "Састављач титла (Subtitle Composer)"
+msgstr ""
 
 #. i18n: file: ../../src/configs/waveformconfigwidget.ui:323
 #. i18n: ectx: property (text), widget (QLabel, label_24)
 #: rc.cpp:183
-#, fuzzy
 msgid "Subtitle text font size:"
-msgstr "Фонт титлова"
+msgstr ""
 
 #. i18n: file: ../../src/configs/waveformconfigwidget.ui:340
 #. i18n: ectx: property (text), widget (QLabel, label_25)
 #: rc.cpp:189
-#, fuzzy
 msgid "Subtitle Text Color:"
-msgstr "Састављач титла (Subtitle Composer)"
+msgstr ""
 
 #. i18n: file: ../../src/configs/waveformconfigwidget.ui:372
 #. i18n: ectx: property (title), widget (QGroupBox, groupBox_2)
 #: rc.cpp:192
-#, fuzzy
 msgid "Line Indicators"
-msgstr "Грешке реда"
+msgstr ""
 
 #. i18n: file: ../../src/configs/waveformconfigwidget.ui:378
 #. i18n: ectx: property (text), widget (QLabel, label_31)
@@ -2807,9 +2633,8 @@ msgstr ""
 #. i18n: file: ../../src/formats/vobsub/vobsubinputinitdialog.ui:20
 #. i18n: ectx: property (text), widget (QLabel, labelStream)
 #: rc.cpp:204
-#, fuzzy
 msgid "Stream / Language"
-msgstr "Улазни језик:"
+msgstr ""
 
 #. i18n: file: ../../src/formats/vobsub/vobsubinputinitdialog.ui:53
 #. i18n: ectx: property (title), widget (QGroupBox, grpPostProc)
@@ -2850,9 +2675,8 @@ msgstr ""
 #. i18n: file: ../../src/formats/vobsub/vobsubinputprocessdialog.ui:26
 #. i18n: ectx: property (title), widget (QGroupBox, grpText)
 #: rc.cpp:228
-#, fuzzy
 msgid "Enter character(s)"
-msgstr " знакова"
+msgstr ""
 
 #. i18n: file: ../../src/formats/vobsub/vobsubinputprocessdialog.ui:35
 #. i18n: ectx: property (text), widget (QLabel, symbolLabel)
@@ -2866,285 +2690,219 @@ msgstr ""
 msgid "Up/Down: change value"
 msgstr ""
 
-#. i18n: file: ../../src/formats/vobsub/vobsubinputprocessdialog.ui:71
-#. i18n: ectx: property (toolTip), widget (QPushButton, styleBold)
-#: rc.cpp:237
-msgid "Ctrl+B"
-msgstr ""
-
-#. i18n: file: ../../src/formats/vobsub/vobsubinputprocessdialog.ui:91
-#. i18n: ectx: property (toolTip), widget (QPushButton, styleItalic)
-#: rc.cpp:240
-msgid "Ctrl+I"
-msgstr ""
-
-#. i18n: file: ../../src/formats/vobsub/vobsubinputprocessdialog.ui:111
-#. i18n: ectx: property (toolTip), widget (QPushButton, styleUnderline)
-#: rc.cpp:243
-msgid "Ctrl+U"
-msgstr ""
-
 #. i18n: file: ../../src/formats/vobsub/vobsubinputprocessdialog.ui:146
 #. i18n: ectx: property (text), widget (QPushButton, btnOk)
-#: rc.cpp:246
+#: rc.cpp:237
 msgid "OK"
-msgstr ""
-
-#. i18n: file: ../../src/formats/vobsub/vobsubinputprocessdialog.ui:202
-#. i18n: ectx: property (toolTip), widget (QPushButton, btnPrevImage)
-#: rc.cpp:249
-msgid "Ctrl+Shift+Left"
 msgstr ""
 
 #. i18n: file: ../../src/formats/vobsub/vobsubinputprocessdialog.ui:205
 #. i18n: ectx: property (text), widget (QPushButton, btnPrevImage)
-#: rc.cpp:252
+#: rc.cpp:240
 msgid "Prev Image"
-msgstr ""
-
-#. i18n: file: ../../src/formats/vobsub/vobsubinputprocessdialog.ui:219
-#. i18n: ectx: property (toolTip), widget (QPushButton, btnPrevSymbol)
-#: rc.cpp:255
-msgid "Ctrl+Left"
 msgstr ""
 
 #. i18n: file: ../../src/formats/vobsub/vobsubinputprocessdialog.ui:222
 #. i18n: ectx: property (text), widget (QPushButton, btnPrevSymbol)
-#: rc.cpp:258
+#: rc.cpp:243
 msgid "Prev Symbol"
-msgstr ""
-
-#. i18n: file: ../../src/formats/vobsub/vobsubinputprocessdialog.ui:236
-#. i18n: ectx: property (toolTip), widget (QPushButton, btnNextSymbol)
-#: rc.cpp:261
-msgid "Ctrl+Right"
 msgstr ""
 
 #. i18n: file: ../../src/formats/vobsub/vobsubinputprocessdialog.ui:239
 #. i18n: ectx: property (text), widget (QPushButton, btnNextSymbol)
-#: rc.cpp:264
+#: rc.cpp:246
 msgid "Next Symbol"
-msgstr ""
-
-#. i18n: file: ../../src/formats/vobsub/vobsubinputprocessdialog.ui:250
-#. i18n: ectx: property (toolTip), widget (QPushButton, btnNextImage)
-#: rc.cpp:267
-msgid "Ctrl+Shift+Right"
 msgstr ""
 
 #. i18n: file: ../../src/formats/vobsub/vobsubinputprocessdialog.ui:253
 #. i18n: ectx: property (text), widget (QPushButton, btnNextImage)
-#: rc.cpp:270
+#: rc.cpp:249
 msgid "Next Image"
 msgstr ""
 
 #. i18n: file: ../../src/formats/vobsub/vobsubinputprocessdialog.ui:280
 #. i18n: ectx: property (text), widget (QPushButton, btnAbort)
-#: rc.cpp:273
+#: rc.cpp:252
 msgid "Abort"
 msgstr ""
 
 #. i18n: file: ../../src/formats/vobsub/vobsubinputprocessdialog.ui:303
 #. i18n: ectx: property (title), widget (QGroupBox, grpPreview)
-#: rc.cpp:276
-#, fuzzy
+#: rc.cpp:255
 msgid "Subtitle Image"
-msgstr "Титл"
-
-#. i18n: file: ../../src/formats/vobsub/vobsubinputprocessdialog.ui:325
-#. i18n: ectx: property (format), widget (QProgressBar, progressBar)
-#: rc.cpp:280
-#, no-c-format
-msgid "%v/%m"
 msgstr ""
 
 #. i18n: file: ../../src/scconfig.kcfg:10
 #. i18n: ectx: label, entry (DefaultSubtitlesEncoding), group (General)
-#: rc.cpp:283
+#: rc.cpp:258
 msgid "Default Subtitles Encoding"
 msgstr ""
 
 #. i18n: file: ../../src/scconfig.kcfg:14
 #. i18n: ectx: label, entry (SeekOffsetOnDoubleClick), group (General)
-#: rc.cpp:286
+#: rc.cpp:261
 msgid "Seek Offset On Double Click"
 msgstr ""
 
 #. i18n: file: ../../src/scconfig.kcfg:18
 #. i18n: ectx: label, entry (JumpLineOffset), group (General)
-#: rc.cpp:289
-#, fuzzy
+#: rc.cpp:264
 msgid "Jump to prev/next line offset"
-msgstr "Скочи на следећи ред"
+msgstr ""
 
 #. i18n: file: ../../src/scconfig.kcfg:22
 #. i18n: ectx: label, entry (UnpauseOnDoubleClick), group (General)
-#: rc.cpp:292
+#: rc.cpp:267
 msgid "Unpause On Double Click"
 msgstr ""
 
 #. i18n: file: ../../src/scconfig.kcfg:26
 #. i18n: ectx: label, entry (AutomaticVideoLoad), group (General)
-#: rc.cpp:295
-#, fuzzy
+#: rc.cpp:270
 msgid "Automatic Video Load"
-msgstr "Аутоматски"
+msgstr ""
 
 #. i18n: file: ../../src/scconfig.kcfg:31
 #. i18n: ectx: label, entry (LinesQuickShiftAmount), group (General)
-#: rc.cpp:298
+#: rc.cpp:273
 msgid "Lines Quick Shift Amount"
 msgstr ""
 
 #. i18n: file: ../../src/scconfig.kcfg:35
 #. i18n: ectx: label, entry (GrabbedPositionCompensation), group (General)
-#: rc.cpp:301
+#: rc.cpp:276
 msgid "Grabbed Position Compensation"
 msgstr ""
 
 #. i18n: file: ../../src/scconfig.kcfg:40
 #. i18n: ectx: label, entry (LineDuration), group (General)
-#: rc.cpp:304
+#: rc.cpp:279
 msgid "Default subtitle line duration"
 msgstr ""
 
 #. i18n: file: ../../src/scconfig.kcfg:44
 #. i18n: ectx: label, entry (LinePause), group (General)
-#: rc.cpp:307
-#, fuzzy
+#: rc.cpp:282
 msgid "Default duration between subtitle lines"
-msgstr "Подразумевано кодирање код отварања титла:"
+msgstr ""
 
 #. i18n: file: ../../src/scconfig.kcfg:51
 #. i18n: ectx: label, entry (MaxCharacters), group (Error Check)
-#: rc.cpp:310
-#, fuzzy
+#: rc.cpp:285
 msgid "Maximum number of characters"
-msgstr "Максималан број знакова:"
+msgstr ""
 
 #. i18n: file: ../../src/scconfig.kcfg:55
 #. i18n: ectx: label, entry (MaxLines), group (Error Check)
-#: rc.cpp:313
-#, fuzzy
+#: rc.cpp:288
 msgid "Maximum number of lines"
-msgstr "Максималан број редова:"
+msgstr ""
 
 #. i18n: file: ../../src/scconfig.kcfg:60
 #. i18n: ectx: label, entry (MinDuration), group (Error Check)
-#: rc.cpp:316
-#, fuzzy
+#: rc.cpp:291
 msgid "Minimum duration"
-msgstr "Минимално трајање:"
+msgstr ""
 
 #. i18n: file: ../../src/scconfig.kcfg:64
 #. i18n: ectx: label, entry (MaxDuration), group (Error Check)
-#: rc.cpp:319
-#, fuzzy
+#: rc.cpp:294
 msgid "Maximum duration"
-msgstr "Максимално трајање:"
+msgstr ""
 
 #. i18n: file: ../../src/scconfig.kcfg:69
 #. i18n: ectx: label, entry (MinDurationPerCharacter), group (Error Check)
-#: rc.cpp:322
-#, fuzzy
+#: rc.cpp:297
 msgid "Minimum duration per character"
-msgstr "Предуго трајање по знаку"
+msgstr ""
 
 #. i18n: file: ../../src/scconfig.kcfg:73
 #. i18n: ectx: label, entry (MaxDurationPerCharacter), group (Error Check)
-#: rc.cpp:325
-#, fuzzy
+#: rc.cpp:300
 msgid "Maximum duration per character"
-msgstr "Предуго трајање по знаку"
+msgstr ""
 
 #. i18n: file: ../../src/scconfig.kcfg:85
 #. i18n: ectx: label, entry (DefaultLanguage), group (Spelling)
-#: rc.cpp:331
-#, fuzzy
+#: rc.cpp:306
 msgid "Default Language"
-msgstr "Улазни језик:"
+msgstr ""
 
 #. i18n: file: ../../src/scconfig.kcfg:89
 #. i18n: ectx: label, entry (DefaultClient), group (Spelling)
-#: rc.cpp:334
-#, fuzzy
+#: rc.cpp:309
 msgid "Default client"
-msgstr "Улазни језик:"
+msgstr ""
 
 #. i18n: file: ../../src/scconfig.kcfg:93
 #. i18n: ectx: label, entry (CheckUppercase), group (Spelling)
-#: rc.cpp:337
-#, fuzzy
+#: rc.cpp:312
 msgid "Check uppercase"
-msgstr "Велика слова"
+msgstr ""
 
 #. i18n: file: ../../src/scconfig.kcfg:97
 #. i18n: ectx: label, entry (SkipRunTogether), group (Spelling)
-#: rc.cpp:340
+#: rc.cpp:315
 msgid "Skip Run Together"
 msgstr ""
 
 #. i18n: file: ../../src/scconfig.kcfg:104
 #. i18n: ectx: label, entry (wfInnerColor), group (Waveform Widget)
-#: rc.cpp:343
+#: rc.cpp:318
 msgid "Waveform Inner Color"
 msgstr ""
 
 #. i18n: file: ../../src/scconfig.kcfg:108
 #. i18n: ectx: label, entry (wfOuterColor), group (Waveform Widget)
-#: rc.cpp:346
-#, fuzzy
+#: rc.cpp:321
 msgid "Waveform Outer Color"
-msgstr "Боја оивичења:"
+msgstr ""
 
 #. i18n: file: ../../src/scconfig.kcfg:112
 #. i18n: ectx: label, entry (wfSmoothScroll), group (Waveform Widget)
-#: rc.cpp:349
-#, fuzzy
+#: rc.cpp:324
 msgid "Waveform Smooth Scrolling"
-msgstr "Поставке плејера"
+msgstr ""
 
 #. i18n: file: ../../src/scconfig.kcfg:116
 #. i18n: ectx: label, entry (wfAutoscrollPadding), group (Waveform Widget)
-#: rc.cpp:352
+#: rc.cpp:327
 msgid "Autoscroll Padding"
 msgstr ""
 
 #. i18n: file: ../../src/scconfig.kcfg:118
 #. i18n: ectx: whatsthis, entry (wfAutoscrollPadding), group (Waveform Widget)
-#: rc.cpp:355
-msgid ""
-"Autoscroll page when play position reaches ScrollPadding distance "
-"(percentage) from page border."
+#: rc.cpp:330
+msgid "Autoscroll page when play position reaches ScrollPadding distance (percentage) from page border."
 msgstr ""
 
 #. i18n: file: ../../src/scconfig.kcfg:121
 #. i18n: ectx: label, entry (wfSubBackground), group (Waveform Widget)
-#: rc.cpp:358
+#: rc.cpp:333
 msgid "Waveform Subtitle Background Color"
 msgstr ""
 
 #. i18n: file: ../../src/scconfig.kcfg:125
 #. i18n: ectx: label, entry (wfSubBorder), group (Waveform Widget)
-#: rc.cpp:361
+#: rc.cpp:336
 msgid "Waveform Subtitle Border Color"
 msgstr ""
 
 #. i18n: file: ../../src/scconfig.kcfg:129
 #. i18n: ectx: label, entry (wfSubBorderWidth), group (Waveform Widget)
-#: rc.cpp:364
+#: rc.cpp:339
 msgid "Waveform Subtitle Border Width"
 msgstr ""
 
 #. i18n: file: ../../src/scconfig.kcfg:133
 #. i18n: ectx: label, entry (wfSelBackground), group (Waveform Widget)
-#: rc.cpp:367
+#: rc.cpp:342
 msgid "Waveform Selected Subtitle Background Color"
 msgstr ""
 
 #. i18n: file: ../../src/scconfig.kcfg:137
 #. i18n: ectx: label, entry (wfSelBorder), group (Waveform Widget)
-#: rc.cpp:370
+#: rc.cpp:345
 msgid "Waveform Selected Subtitle Border Color"
 msgstr ""
 
@@ -3152,155 +2910,137 @@ msgstr ""
 #. i18n: ectx: label, entry (wfFontFamily), group (Waveform Widget)
 #. i18n: file: ../../src/scconfig.kcfg:193
 #. i18n: ectx: label, entry (FontFamily), group (VideoPlayer)
-#: rc.cpp:373 rc.cpp:409
-#, fuzzy
+#: rc.cpp:348 rc.cpp:384
 msgid "Font Family"
-msgstr "Фонт:"
+msgstr ""
 
 #. i18n: file: ../../src/scconfig.kcfg:145
 #. i18n: ectx: label, entry (wfSubNumberFontSize), group (Waveform Widget)
-#: rc.cpp:376
-#, fuzzy
+#: rc.cpp:351
 msgid "Subtitle Number Font Size"
-msgstr "Фонт титлова"
+msgstr ""
 
 #. i18n: file: ../../src/scconfig.kcfg:149
 #. i18n: ectx: label, entry (wfSubNumberColor), group (Waveform Widget)
-#: rc.cpp:379
-#, fuzzy
+#: rc.cpp:354
 msgid "Subtitle Number Font Color"
-msgstr "Састављач титла (Subtitle Composer)"
+msgstr ""
 
 #. i18n: file: ../../src/scconfig.kcfg:153
 #. i18n: ectx: label, entry (wfSubTextFontSize), group (Waveform Widget)
-#: rc.cpp:382
-#, fuzzy
+#: rc.cpp:357
 msgid "Subtitle Text Font Size"
-msgstr "Фонт титлова"
+msgstr ""
 
 #. i18n: file: ../../src/scconfig.kcfg:157
 #. i18n: ectx: label, entry (wfSubTextColor), group (Waveform Widget)
-#: rc.cpp:385
-#, fuzzy
+#: rc.cpp:360
 msgid "Subtitle Text Font Color"
-msgstr "Састављач титла (Subtitle Composer)"
+msgstr ""
 
 #. i18n: file: ../../src/scconfig.kcfg:161
 #. i18n: ectx: label, entry (wfMouseLocation), group (Waveform Widget)
-#: rc.cpp:388
+#: rc.cpp:363
 msgid "Mouse Location Line Color"
 msgstr ""
 
 #. i18n: file: ../../src/scconfig.kcfg:165
 #. i18n: ectx: label, entry (wfPlayLocation), group (Waveform Widget)
-#: rc.cpp:391
+#: rc.cpp:366
 msgid "Play Location Line Color"
 msgstr ""
 
 #. i18n: file: ../../src/scconfig.kcfg:172
 #. i18n: ectx: label, entry (PlayerBackend), group (VideoPlayer)
-#: rc.cpp:394
-#, fuzzy
+#: rc.cpp:369
 msgid "VideoPlayer Backend"
-msgstr "Програм плејера:"
+msgstr ""
 
 #. i18n: file: ../../src/scconfig.kcfg:180
 #. i18n: ectx: label, entry (SeekJumpLength), group (VideoPlayer)
-#: rc.cpp:400
-#, fuzzy
+#: rc.cpp:375
 msgid "Jump length on seek"
-msgstr "Скок при премотавању:"
+msgstr ""
 
 #. i18n: file: ../../src/scconfig.kcfg:184
 #. i18n: ectx: label, entry (StepJumpLength), group (VideoPlayer)
-#: rc.cpp:403
-#, fuzzy
+#: rc.cpp:378
 msgid "Jump length on frame step"
-msgstr "Скок при премотавању:"
+msgstr ""
 
 #. i18n: file: ../../src/scconfig.kcfg:188
 #. i18n: ectx: label, entry (ShowPositionTimeEdit), group (VideoPlayer)
-#: rc.cpp:406
-#, fuzzy
+#: rc.cpp:381
 msgid "Show editable time position"
-msgstr "Прикажи измењиву контролу позиције"
+msgstr ""
 
 #. i18n: file: ../../src/scconfig.kcfg:197
 #. i18n: ectx: label, entry (FontPointSize), group (VideoPlayer)
-#: rc.cpp:412
-#, fuzzy
+#: rc.cpp:387
 msgid "Font Size"
-msgstr "Величина:"
+msgstr ""
 
 #. i18n: file: ../../src/scconfig.kcfg:201
 #. i18n: ectx: label, entry (FontColor), group (VideoPlayer)
-#: rc.cpp:415
-#, fuzzy
+#: rc.cpp:390
 msgid "Font Color"
-msgstr "Промени у"
+msgstr ""
 
 #. i18n: file: ../../src/scconfig.kcfg:205
 #. i18n: ectx: label, entry (OutlineColor), group (VideoPlayer)
-#: rc.cpp:418
-#, fuzzy
+#: rc.cpp:393
 msgid "Outline Color"
-msgstr "Боја оивичења:"
+msgstr ""
 
 #. i18n: file: ../../src/scconfig.kcfg:209
 #. i18n: ectx: label, entry (OutlineWidth), group (VideoPlayer)
-#: rc.cpp:421
-#, fuzzy
+#: rc.cpp:396
 msgid "Outline Width"
-msgstr "Ширина оивичења:"
+msgstr ""
 
 #. i18n: file: ../../src/scconfig.kcfg:213
 #. i18n: ectx: label, entry (Antialias), group (VideoPlayer)
-#: rc.cpp:424
+#: rc.cpp:399
 msgid "Font Antialiasing"
 msgstr ""
 
 #. i18n: file: ../../src/scconfig.kcfg:220
 #. i18n: ectx: label, entry (gstVideoSinkAuto), group (GStreamer)
-#: rc.cpp:427
-#, fuzzy
+#: rc.cpp:402
 msgid "Auto Video Sink"
-msgstr "Видео сливник:"
+msgstr ""
 
 #. i18n: file: ../../src/scconfig.kcfg:224
 #. i18n: ectx: label, entry (gstVideoSink), group (GStreamer)
-#: rc.cpp:430
-#, fuzzy
+#: rc.cpp:405
 msgid "Video Sink"
-msgstr "Видео сливник:"
+msgstr ""
 
 #. i18n: file: ../../src/scconfig.kcfg:229
 #. i18n: ectx: label, entry (gstAudioSinkAuto), group (GStreamer)
-#: rc.cpp:433
-#, fuzzy
+#: rc.cpp:408
 msgid "Auto Audio Sink"
-msgstr "Аудио сливник:"
+msgstr ""
 
 #. i18n: file: ../../src/scconfig.kcfg:233
 #. i18n: ectx: label, entry (gstAudioSink), group (GStreamer)
-#: rc.cpp:436
-#, fuzzy
+#: rc.cpp:411
 msgid "Audio Sink"
-msgstr "Аудио сливник:"
+msgstr ""
 
 #. i18n: file: ../../src/scconfig.kcfg:240
 #. i18n: ectx: label, entry (mpvCacheEnabled), group (MPV)
 #. i18n: file: ../../src/scconfig.kcfg:309
 #. i18n: ectx: label, entry (mpCacheEnabled), group (MPlayer)
-#: rc.cpp:439 rc.cpp:487
-#, fuzzy
+#: rc.cpp:414 rc.cpp:462
 msgid "Cache Enabled"
-msgstr "Видео фајлови"
+msgstr ""
 
 #. i18n: file: ../../src/scconfig.kcfg:244
 #. i18n: ectx: label, entry (mpvCacheSize), group (MPV)
 #. i18n: file: ../../src/scconfig.kcfg:313
 #. i18n: ectx: label, entry (mpCacheSize), group (MPlayer)
-#: rc.cpp:442 rc.cpp:490
+#: rc.cpp:417 rc.cpp:465
 msgid "Cache Size (KB)"
 msgstr ""
 
@@ -3308,16 +3048,15 @@ msgstr ""
 #. i18n: ectx: label, entry (mpvAutoSyncEnabled), group (MPV)
 #. i18n: file: ../../src/scconfig.kcfg:321
 #. i18n: ectx: label, entry (mpAutoSyncEnabled), group (MPlayer)
-#: rc.cpp:445 rc.cpp:496
-#, fuzzy
+#: rc.cpp:420 rc.cpp:471
 msgid "Auto Sync Enabled"
-msgstr "Аудио фајлови"
+msgstr ""
 
 #. i18n: file: ../../src/scconfig.kcfg:252
 #. i18n: ectx: label, entry (mpvAutoSyncFactor), group (MPV)
 #. i18n: file: ../../src/scconfig.kcfg:325
 #. i18n: ectx: label, entry (mpAutoSyncFactor), group (MPlayer)
-#: rc.cpp:448 rc.cpp:499
+#: rc.cpp:423 rc.cpp:474
 msgid "Auto Sync Factor"
 msgstr ""
 
@@ -3325,10 +3064,9 @@ msgstr ""
 #. i18n: ectx: label, entry (mpvVideoOutputEnabled), group (MPV)
 #. i18n: file: ../../src/scconfig.kcfg:330
 #. i18n: ectx: label, entry (mpVideoOutputEnabled), group (MPlayer)
-#: rc.cpp:451 rc.cpp:502
-#, fuzzy
+#: rc.cpp:426 rc.cpp:477
 msgid "Video Output Enabled"
-msgstr "Драјвер видео излаза:"
+msgstr ""
 
 #. i18n: file: ../../src/scconfig.kcfg:261
 #. i18n: ectx: label, entry (mpvVideoOutput), group (MPV)
@@ -3336,23 +3074,21 @@ msgstr "Драјвер видео излаза:"
 #. i18n: ectx: label, entry (mpVideoOutput), group (MPlayer)
 #. i18n: file: ../../src/scconfig.kcfg:386
 #. i18n: ectx: label, entry (xineVideo), group (Xine)
-#: rc.cpp:454 rc.cpp:505 rc.cpp:541
-#, fuzzy
+#: rc.cpp:429 rc.cpp:480 rc.cpp:516
 msgid "Video Output"
-msgstr "Драјвер видео излаза:"
+msgstr ""
 
 #. i18n: file: ../../src/scconfig.kcfg:265
 #. i18n: ectx: label, entry (mpvHwDecodeEnabled), group (MPV)
-#: rc.cpp:457
-#, fuzzy
+#: rc.cpp:432
 msgid "Hardware Decode Enabled"
-msgstr "Видео фајлови"
+msgstr ""
 
 #. i18n: file: ../../src/scconfig.kcfg:269
 #. i18n: ectx: label, entry (mpvHwDecode), group (MPV)
 #. i18n: file: ../../src/scconfig.kcfg:338
 #. i18n: ectx: label, entry (mpVdpau), group (MPlayer)
-#: rc.cpp:460 rc.cpp:508
+#: rc.cpp:435 rc.cpp:483
 msgid "Hardware Decode"
 msgstr ""
 
@@ -3360,19 +3096,17 @@ msgstr ""
 #. i18n: ectx: label, entry (mpvFrameDropping), group (MPV)
 #. i18n: file: ../../src/scconfig.kcfg:342
 #. i18n: ectx: label, entry (mpFrameDropping), group (MPlayer)
-#: rc.cpp:463 rc.cpp:511
-#, fuzzy
+#: rc.cpp:438 rc.cpp:486
 msgid "Frame Dropping"
-msgstr "Дозволи испуштање кадрова"
+msgstr ""
 
 #. i18n: file: ../../src/scconfig.kcfg:278
 #. i18n: ectx: label, entry (mpvAudioOutputEnabled), group (MPV)
 #. i18n: file: ../../src/scconfig.kcfg:351
 #. i18n: ectx: label, entry (mpAudioOutputEnabled), group (MPlayer)
-#: rc.cpp:466 rc.cpp:517
-#, fuzzy
+#: rc.cpp:441 rc.cpp:492
 msgid "Audio Output Enabled"
-msgstr "Драјвер аудио излаза:"
+msgstr ""
 
 #. i18n: file: ../../src/scconfig.kcfg:282
 #. i18n: ectx: label, entry (mpvAudioOutput), group (MPV)
@@ -3380,153 +3114,143 @@ msgstr "Драјвер аудио излаза:"
 #. i18n: ectx: label, entry (mpAudioOutput), group (MPlayer)
 #. i18n: file: ../../src/scconfig.kcfg:395
 #. i18n: ectx: label, entry (xineAudio), group (Xine)
-#: rc.cpp:469 rc.cpp:520 rc.cpp:547
-#, fuzzy
+#: rc.cpp:444 rc.cpp:495 rc.cpp:522
 msgid "Audio Output"
-msgstr "Драјвер аудио излаза:"
+msgstr ""
 
 #. i18n: file: ../../src/scconfig.kcfg:286
 #. i18n: ectx: label, entry (mpvAudioChannelsEnabled), group (MPV)
 #. i18n: file: ../../src/scconfig.kcfg:359
 #. i18n: ectx: label, entry (mpAudioChannelsEnabled), group (MPlayer)
-#: rc.cpp:472 rc.cpp:523
-#, fuzzy
+#: rc.cpp:447 rc.cpp:498
 msgid "Audio Channels Enabled"
-msgstr "&Аудио нивои"
+msgstr ""
 
 #. i18n: file: ../../src/scconfig.kcfg:290
 #. i18n: ectx: label, entry (mpvAudioChannels), group (MPV)
 #. i18n: file: ../../src/scconfig.kcfg:363
 #. i18n: ectx: label, entry (mpAudioChannels), group (MPlayer)
-#: rc.cpp:475 rc.cpp:526
-#, fuzzy
+#: rc.cpp:450 rc.cpp:501
 msgid "Audio Channels"
-msgstr "&Аудио нивои"
+msgstr ""
 
 #. i18n: file: ../../src/scconfig.kcfg:294
 #. i18n: ectx: label, entry (mpvVolumeAmplificationEnabled), group (MPV)
 #. i18n: file: ../../src/scconfig.kcfg:367
 #. i18n: ectx: label, entry (mpVolumeAmplificationEnabled), group (MPlayer)
-#: rc.cpp:478 rc.cpp:529
-#, fuzzy
+#: rc.cpp:453 rc.cpp:504
 msgid "Volume Amplification Enabled"
-msgstr "Нормализација јачине"
+msgstr ""
 
 #. i18n: file: ../../src/scconfig.kcfg:298
 #. i18n: ectx: label, entry (mpvVolumeAmplification), group (MPV)
 #. i18n: file: ../../src/scconfig.kcfg:371
 #. i18n: ectx: label, entry (mpVolumeAmplification), group (MPlayer)
-#: rc.cpp:481 rc.cpp:532
-#, fuzzy
+#: rc.cpp:456 rc.cpp:507
 msgid "Volume Amplification"
-msgstr "Нормализација јачине"
+msgstr ""
 
 #. i18n: file: ../../src/scconfig.kcfg:302
 #. i18n: ectx: label, entry (mpvVolumeNormalization), group (MPV)
 #. i18n: file: ../../src/scconfig.kcfg:375
 #. i18n: ectx: label, entry (mpVolumeNormalization), group (MPlayer)
-#: rc.cpp:484 rc.cpp:535
-#, fuzzy
+#: rc.cpp:459 rc.cpp:510
 msgid "Volume Normalization"
-msgstr "Нормализација јачине"
+msgstr ""
 
 #. i18n: file: ../../src/scconfig.kcfg:317
 #. i18n: ectx: label, entry (mpExecutablePath), group (MPlayer)
-#: rc.cpp:493
-#, fuzzy
+#: rc.cpp:468
 msgid "mplayer executable path"
-msgstr "Извршна путања:"
+msgstr ""
 
 #. i18n: file: ../../src/scconfig.kcfg:346
 #. i18n: ectx: label, entry (mpHardFrameDropping), group (MPlayer)
-#: rc.cpp:514
-#, fuzzy
+#: rc.cpp:489
 msgid "Hard Frame Dropping"
-msgstr "Дозволи јако испуштање кадрова"
+msgstr ""
 
 #. i18n: file: ../../src/scconfig.kcfg:382
 #. i18n: ectx: label, entry (xineVideoEnabled), group (Xine)
-#: rc.cpp:538
-#, fuzzy
+#: rc.cpp:513
 msgid "Video Enabled"
-msgstr "Видео фајлови"
+msgstr ""
 
 #. i18n: file: ../../src/scconfig.kcfg:391
 #. i18n: ectx: label, entry (xineAudioEnabled), group (Xine)
-#: rc.cpp:544
-#, fuzzy
+#: rc.cpp:519
 msgid "Audio Enabled"
-msgstr "Аудио фајлови"
+msgstr ""
 
 #. i18n: file: ../../src/scripting/scriptsmanager.ui:14
 #. i18n: ectx: property (windowTitle), widget (QDialog, ScriptsManager)
-#: rc.cpp:550
+#: rc.cpp:525
 msgid "Scripts Manager"
 msgstr "Менаџер скрипти"
 
 #. i18n: file: ../../src/scripting/scriptsmanager.ui:29
 #. i18n: ectx: property (whatsThis), widget (QPushButton, btnCreate)
-#: rc.cpp:553
+#: rc.cpp:528
 msgid "Creates a new script file."
 msgstr "Прави нови фајл скрипте."
 
 #. i18n: file: ../../src/scripting/scriptsmanager.ui:32
 #. i18n: ectx: property (text), widget (QPushButton, btnCreate)
-#: rc.cpp:556
+#: rc.cpp:531
 msgid "Create..."
 msgstr "Направи..."
 
 #. i18n: file: ../../src/scripting/scriptsmanager.ui:44
 #. i18n: ectx: property (whatsThis), widget (QPushButton, btnAdd)
-#: rc.cpp:559
+#: rc.cpp:534
 msgid "Copies an existing script from a specified location."
 msgstr "Копира постојећу скрипту са наведене локације."
 
 #. i18n: file: ../../src/scripting/scriptsmanager.ui:47
 #. i18n: ectx: property (text), widget (QPushButton, btnAdd)
-#: rc.cpp:562
+#: rc.cpp:537
 msgid "Add..."
 msgstr "Додај..."
 
 #. i18n: file: ../../src/scripting/scriptsmanager.ui:59
 #. i18n: ectx: property (whatsThis), widget (QPushButton, btnRemove)
-#: rc.cpp:565
+#: rc.cpp:540
 msgid "Sends the selected script to the trash."
 msgstr "Шаље изабрану скрипту у смеће."
 
 #. i18n: file: ../../src/scripting/scriptsmanager.ui:74
 #. i18n: ectx: property (whatsThis), widget (QPushButton, btnEdit)
-#: rc.cpp:571
+#: rc.cpp:546
 msgid "Opens the selected script with an external editor."
 msgstr "Отвара изабрану скрипту у спољашњем уређивачу."
 
 #. i18n: file: ../../src/scripting/scriptsmanager.ui:77
 #. i18n: ectx: property (text), widget (QPushButton, btnEdit)
-#: rc.cpp:574
+#: rc.cpp:549
 msgid "Edit"
 msgstr "Уреди"
 
 #. i18n: file: ../../src/scripting/scriptsmanager.ui:105
 #. i18n: ectx: property (whatsThis), widget (QPushButton, btnRun)
-#: rc.cpp:577
+#: rc.cpp:552
 msgid "Executes the selected script."
 msgstr "Извршава изабрану скрипту."
 
 #. i18n: file: ../../src/scripting/scriptsmanager.ui:108
 #. i18n: ectx: property (text), widget (QPushButton, btnRun)
-#: rc.cpp:580
+#: rc.cpp:555
 msgid "Run"
 msgstr "Покрени"
 
 #. i18n: file: ../../src/scripting/scriptsmanager.ui:136
 #. i18n: ectx: property (whatsThis), widget (QPushButton, btnRefresh)
-#: rc.cpp:583
+#: rc.cpp:558
 msgid "Reloads the installed scripts list."
 msgstr "Освежава списак инсталираних скрипти."
 
 #. i18n: file: ../../src/scripting/scriptsmanager.ui:139
 #. i18n: ectx: property (text), widget (QPushButton, btnRefresh)
-#: rc.cpp:586
+#: rc.cpp:561
 msgid "Refresh"
 msgstr "Освежи"
 
@@ -3534,7 +3258,7 @@ msgstr "Освежи"
 #. i18n: ectx: label, entry (acousticModelPath), group (PocketSphinx)
 #. i18n: file: ../../src/speechplugins/pocketsphinx/pocketsphinxconfigwidget.ui:65
 #. i18n: ectx: property (toolTip), widget (QLabel, label_acousticModelPath)
-#: rc.cpp:589 rc.cpp:628
+#: rc.cpp:564 rc.cpp:603
 msgid "Directory containing acoustic model files"
 msgstr ""
 
@@ -3542,7 +3266,7 @@ msgstr ""
 #. i18n: ectx: label, entry (trigramModelFile), group (PocketSphinx)
 #. i18n: file: ../../src/speechplugins/pocketsphinx/pocketsphinxconfigwidget.ui:39
 #. i18n: ectx: property (toolTip), widget (QLabel, label_trigramModelFile)
-#: rc.cpp:592 rc.cpp:622
+#: rc.cpp:567 rc.cpp:597
 msgid "Word trigram language model input file"
 msgstr ""
 
@@ -3550,7 +3274,7 @@ msgstr ""
 #. i18n: ectx: label, entry (lexiconFile), group (PocketSphinx)
 #. i18n: file: ../../src/speechplugins/pocketsphinx/pocketsphinxconfigwidget.ui:26
 #. i18n: ectx: property (toolTip), widget (QLabel, label_lexiconFile)
-#: rc.cpp:595 rc.cpp:616
+#: rc.cpp:570 rc.cpp:591
 msgid "Main pronunciation dictionary (lexicon) input file"
 msgstr ""
 
@@ -3558,24 +3282,22 @@ msgstr ""
 #. i18n: ectx: label, entry (vadPostSpeech), group (PocketSphinx)
 #. i18n: file: ../../src/speechplugins/pocketsphinx/pocketsphinxconfigwidget.ui:152
 #. i18n: ectx: property (toolTip), widget (QLabel, label_vadPostSpeech)
-#: rc.cpp:598 rc.cpp:655
-msgid "Num of silence frames to keep after from speech to silence"
+#: rc.cpp:573 rc.cpp:630
+msgid "Num of silence frames to keep after speech to silence transition"
 msgstr ""
 
 #. i18n: file: ../../src/speechplugins/pocketsphinx/pocketsphinxconfig.kcfg:28
 #. i18n: ectx: label, entry (vadPreSpeech), group (PocketSphinx)
 #. i18n: file: ../../src/speechplugins/pocketsphinx/pocketsphinxconfigwidget.ui:139
 #. i18n: ectx: property (toolTip), widget (QLabel, label_vadPreSpeech)
-#: rc.cpp:601 rc.cpp:649
-msgid "Num of speech frames to keep before silence to speech"
+#: rc.cpp:576 rc.cpp:624
+msgid "Num of speech frames to keep before silence to speech transition"
 msgstr ""
 
 #. i18n: file: ../../src/speechplugins/pocketsphinx/pocketsphinxconfig.kcfg:32
 #. i18n: ectx: label, entry (vadStartSpeech), group (PocketSphinx)
-#. i18n: file: ../../src/speechplugins/pocketsphinx/pocketsphinxconfigwidget.ui:165
-#. i18n: ectx: property (toolTip), widget (QLabel, label_vadStartSpeech)
-#: rc.cpp:604 rc.cpp:661
-msgid "Num of speech frames to trigger vad from silence to speech"
+#: rc.cpp:579
+msgid "Num of speech frames to trigger VAD from silence to speech"
 msgstr ""
 
 #. i18n: file: ../../src/speechplugins/pocketsphinx/pocketsphinxconfig.kcfg:36
@@ -3584,160 +3306,157 @@ msgstr ""
 #. i18n: ectx: property (toolTip), widget (QDoubleSpinBox, kcfg_vadTreshold)
 #. i18n: file: ../../src/speechplugins/pocketsphinx/pocketsphinxconfigwidget.ui:126
 #. i18n: ectx: property (toolTip), widget (QLabel, label_vadTreshold)
-#: rc.cpp:607 rc.cpp:640 rc.cpp:643
-msgid ""
-"Threshold for decision between noise and silence frames. Log-ratio between "
-"signal level and noise leve"
+#: rc.cpp:582 rc.cpp:615 rc.cpp:618
+msgid "Threshold for decision between noise and silence frames. Log-ratio between signal level and noise level"
 msgstr ""
 
 #. i18n: file: ../../src/speechplugins/pocketsphinx/pocketsphinxconfigwidget.ui:20
 #. i18n: ectx: property (title), widget (QGroupBox, grpModel)
-#: rc.cpp:613
-#, fuzzy
+#: rc.cpp:588
 msgid "Speech Recognition Model"
-msgstr "Режим синхронизације"
+msgstr ""
 
 #. i18n: file: ../../src/speechplugins/pocketsphinx/pocketsphinxconfigwidget.ui:29
 #. i18n: ectx: property (text), widget (QLabel, label_lexiconFile)
-#: rc.cpp:619
+#: rc.cpp:594
 msgid "Pronunciation Dictionary (Lexicon)"
 msgstr ""
 
 #. i18n: file: ../../src/speechplugins/pocketsphinx/pocketsphinxconfigwidget.ui:42
 #. i18n: ectx: property (text), widget (QLabel, label_trigramModelFile)
-#: rc.cpp:625
+#: rc.cpp:600
 msgid "Trigram Model"
 msgstr ""
 
 #. i18n: file: ../../src/speechplugins/pocketsphinx/pocketsphinxconfigwidget.ui:68
 #. i18n: ectx: property (text), widget (QLabel, label_acousticModelPath)
-#: rc.cpp:631
+#: rc.cpp:606
 msgid "Acoustic Model"
 msgstr ""
 
 #. i18n: file: ../../src/speechplugins/pocketsphinx/pocketsphinxconfigwidget.ui:78
 #. i18n: ectx: property (text), widget (QLabel, label_modelInfoText)
-#: rc.cpp:634
-msgid ""
-"<html><head/><body><p align=\"center\">Acoustic and Language Models can be "
-"downloaded from <a href=\"https://cmusphinx.github.io/wiki/download/\"><span "
-"style=\" text-decoration: underline; color:#007af4;\">CMU Spinx</span></a></"
-"p></body></html>"
+#: rc.cpp:609
+msgid "<html><head/><body><p align=\"center\">Acoustic and Language Models can be downloaded from <a href=\"https://cmusphinx.github.io/wiki/download/\"><span style=\" text-decoration: underline; color:#007af4;\">CMU Spinx</span></a></p></body></html>"
 msgstr ""
 
 #. i18n: file: ../../src/speechplugins/pocketsphinx/pocketsphinxconfigwidget.ui:100
 #. i18n: ectx: property (title), widget (QGroupBox, grpVAD)
-#: rc.cpp:637
+#: rc.cpp:612
 msgid "Voice Activity Detection"
 msgstr ""
 
 #. i18n: file: ../../src/speechplugins/pocketsphinx/pocketsphinxconfigwidget.ui:129
 #. i18n: ectx: property (text), widget (QLabel, label_vadTreshold)
-#: rc.cpp:646
+#: rc.cpp:621
 msgid "Noise Treshold"
 msgstr ""
 
 #. i18n: file: ../../src/speechplugins/pocketsphinx/pocketsphinxconfigwidget.ui:142
 #. i18n: ectx: property (text), widget (QLabel, label_vadPreSpeech)
-#: rc.cpp:652
+#: rc.cpp:627
 msgid "Pre Speech Frames"
 msgstr ""
 
 #. i18n: file: ../../src/speechplugins/pocketsphinx/pocketsphinxconfigwidget.ui:155
 #. i18n: ectx: property (text), widget (QLabel, label_vadPostSpeech)
-#: rc.cpp:658
+#: rc.cpp:633
 msgid "Post Speech Frames"
+msgstr ""
+
+#. i18n: file: ../../src/speechplugins/pocketsphinx/pocketsphinxconfigwidget.ui:165
+#. i18n: ectx: property (toolTip), widget (QLabel, label_vadStartSpeech)
+#: rc.cpp:636
+msgid "Num of speech frames to trigger vad from silence to speech"
 msgstr ""
 
 #. i18n: file: ../../src/speechplugins/pocketsphinx/pocketsphinxconfigwidget.ui:168
 #. i18n: ectx: property (text), widget (QLabel, label_vadStartSpeech)
-#: rc.cpp:664
+#: rc.cpp:639
 msgid "Start Speech Frames"
 msgstr ""
 
 #. i18n: file: ../../src/subtitlecomposerui.rc:5
 #. i18n: ectx: Menu (file)
-#: rc.cpp:667
+#: rc.cpp:642
 msgid "&File"
 msgstr "&Фајл"
 
 #. i18n: file: ../../src/subtitlecomposerui.rc:20
 #. i18n: ectx: Menu (translation)
-#: rc.cpp:670
-#, fuzzy
+#: rc.cpp:645
 msgid "Translation"
-msgstr "Превод"
+msgstr ""
 
 #. i18n: file: ../../src/subtitlecomposerui.rc:33
 #. i18n: ectx: Menu (edit)
-#: rc.cpp:673
+#: rc.cpp:648
 msgid "&Edit"
 msgstr "&Уређивање"
 
 #. i18n: file: ../../src/subtitlecomposerui.rc:56
 #. i18n: ectx: Menu (texts)
-#: rc.cpp:676
+#: rc.cpp:651
 msgid "&Texts"
 msgstr "&Текстови"
 
 #. i18n: file: ../../src/subtitlecomposerui.rc:67
 #. i18n: ectx: Menu (styles)
-#: rc.cpp:679
+#: rc.cpp:654
 msgid "St&yles"
 msgstr "&Стилови"
 
 #. i18n: file: ../../src/subtitlecomposerui.rc:75
 #. i18n: ectx: Menu (times)
-#: rc.cpp:682
+#: rc.cpp:657
 msgid "T&imes"
 msgstr "В&ремена"
 
 #. i18n: file: ../../src/subtitlecomposerui.rc:100
 #. i18n: ectx: Menu (errors)
-#: rc.cpp:685
+#: rc.cpp:660
 msgid "E&rrors"
 msgstr "&Грешке"
 
 #. i18n: file: ../../src/subtitlecomposerui.rc:113
 #. i18n: ectx: Menu (video)
-#: rc.cpp:688
+#: rc.cpp:663
 msgid "&Video"
 msgstr "&Видео"
 
 #. i18n: file: ../../src/subtitlecomposerui.rc:147
 #. i18n: ectx: Menu (tools)
-#: rc.cpp:691
+#: rc.cpp:666
 msgid "T&ools"
 msgstr "А&латке"
 
 #. i18n: file: ../../src/subtitlecomposerui.rc:152
 #. i18n: ectx: ToolBar (mainToolBar)
-#: rc.cpp:694
+#: rc.cpp:669
 msgid "Main Toolbar"
 msgstr "Главна трака алатки"
 
 #. i18n: file: ../../src/subtitlecomposerui.rc:163
 #. i18n: ectx: ToolBar (editToolBar)
-#: rc.cpp:697
-#, fuzzy
+#: rc.cpp:672
 msgid "Edit Toolbar"
-msgstr "Трака за уређивање"
+msgstr ""
 
 #. i18n: file: ../../src/videoplayerplugins/gstreamer/gstreamerconfigwidget.ui:26
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_gstVideoSinkAuto)
-#: rc.cpp:703
+#: rc.cpp:678
 msgid "Video sink:"
 msgstr "Видео сливник:"
 
 #. i18n: file: ../../src/videoplayerplugins/gstreamer/gstreamerconfigwidget.ui:40
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_gstAudioSinkAuto)
-#: rc.cpp:706
+#: rc.cpp:681
 msgid "Audio sink:"
 msgstr "Аудио сливник:"
 
 #. i18n: file: ../../src/videoplayerplugins/mplayer/mplayerconfigwidget.ui:29
 #. i18n: ectx: property (text), widget (QLabel, label)
-#: rc.cpp:712
+#: rc.cpp:687
 msgid "Executable path:"
 msgstr "Извршна путања:"
 
@@ -3745,7 +3464,7 @@ msgstr "Извршна путања:"
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_mpAutoSyncEnabled)
 #. i18n: file: ../../src/videoplayerplugins/mpv/mpvconfigwidget.ui:26
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_mpvAutoSyncEnabled)
-#: rc.cpp:715 rc.cpp:751
+#: rc.cpp:690 rc.cpp:726
 msgid "A/V synchronization factor:"
 msgstr "Фактор A/V синхронизације:"
 
@@ -3755,22 +3474,21 @@ msgstr "Фактор A/V синхронизације:"
 #. i18n: ectx: property (title), widget (QGroupBox, grpVideo)
 #. i18n: file: ../../src/videoplayerplugins/xine/xineconfigwidget.ui:20
 #. i18n: ectx: property (title), widget (QGroupBox, grpVideo)
-#: rc.cpp:718 rc.cpp:754 rc.cpp:781
-#, fuzzy
+#: rc.cpp:693 rc.cpp:729 rc.cpp:756
 msgid "Video"
-msgstr "Видео"
+msgstr ""
 
 #. i18n: file: ../../src/videoplayerplugins/mplayer/mplayerconfigwidget.ui:66
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_mpVideoOutputEnabled)
 #. i18n: file: ../../src/videoplayerplugins/mpv/mpvconfigwidget.ui:70
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_mpvVideoOutputEnabled)
-#: rc.cpp:721 rc.cpp:760
+#: rc.cpp:696 rc.cpp:735
 msgid "Video output driver:"
 msgstr "Драјвер видео излаза:"
 
 #. i18n: file: ../../src/videoplayerplugins/mplayer/mplayerconfigwidget.ui:73
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_mpVdpau)
-#: rc.cpp:724
+#: rc.cpp:699
 msgid "Enable VDPAU for DivX/XviD"
 msgstr ""
 
@@ -3778,13 +3496,13 @@ msgstr ""
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_mpFrameDropping)
 #. i18n: file: ../../src/videoplayerplugins/mpv/mpvconfigwidget.ui:77
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_mpvFrameDropping)
-#: rc.cpp:727 rc.cpp:763
+#: rc.cpp:702 rc.cpp:738
 msgid "Allow frame dropping"
 msgstr "Дозволи испуштање кадрова"
 
 #. i18n: file: ../../src/videoplayerplugins/mplayer/mplayerconfigwidget.ui:87
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_mpHardFrameDropping)
-#: rc.cpp:730
+#: rc.cpp:705
 msgid "Allow hard frame dropping"
 msgstr "Дозволи јако испуштање кадрова"
 
@@ -3794,16 +3512,15 @@ msgstr "Дозволи јако испуштање кадрова"
 #. i18n: ectx: property (title), widget (QGroupBox, grpAudio)
 #. i18n: file: ../../src/videoplayerplugins/xine/xineconfigwidget.ui:43
 #. i18n: ectx: property (title), widget (QGroupBox, grpAudio)
-#: rc.cpp:733 rc.cpp:766 rc.cpp:787
-#, fuzzy
+#: rc.cpp:708 rc.cpp:741 rc.cpp:762
 msgid "Audio"
-msgstr "Аудио"
+msgstr ""
 
 #. i18n: file: ../../src/videoplayerplugins/mplayer/mplayerconfigwidget.ui:103
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_mpAudioOutputEnabled)
 #. i18n: file: ../../src/videoplayerplugins/mpv/mpvconfigwidget.ui:107
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_mpvAudioOutputEnabled)
-#: rc.cpp:736 rc.cpp:775
+#: rc.cpp:711 rc.cpp:750
 msgid "Audio output driver:"
 msgstr "Драјвер аудио излаза:"
 
@@ -3811,340 +3528,41 @@ msgstr "Драјвер аудио излаза:"
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_mpAudioChannelsEnabled)
 #. i18n: file: ../../src/videoplayerplugins/mpv/mpvconfigwidget.ui:100
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_mpvAudioChannelsEnabled)
-#: rc.cpp:739 rc.cpp:772
-#, fuzzy
+#: rc.cpp:714 rc.cpp:747
 msgid "Audio channels:"
-msgstr "&Аудио нивои"
+msgstr ""
 
 #. i18n: file: ../../src/videoplayerplugins/mplayer/mplayerconfigwidget.ui:117
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_mpVolumeAmplificationEnabled)
 #. i18n: file: ../../src/videoplayerplugins/mpv/mpvconfigwidget.ui:93
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_mpvVolumeAmplificationEnabled)
-#: rc.cpp:742 rc.cpp:769
-#, fuzzy
+#: rc.cpp:717 rc.cpp:744
 msgid "Volume amplification:"
-msgstr "Нормализација јачине"
+msgstr ""
 
 #. i18n: file: ../../src/videoplayerplugins/mplayer/mplayerconfigwidget.ui:189
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_mpVolumeNormalization)
 #. i18n: file: ../../src/videoplayerplugins/mpv/mpvconfigwidget.ui:179
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_mpvVolumeNormalization)
-#: rc.cpp:745 rc.cpp:778
+#: rc.cpp:720 rc.cpp:753
 msgid "Volume normalization"
 msgstr "Нормализација јачине"
 
 #. i18n: file: ../../src/videoplayerplugins/mpv/mpvconfigwidget.ui:56
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_mpvHwDecodeEnabled)
-#: rc.cpp:757
+#: rc.cpp:732
 msgid "Hardware video decoding:"
 msgstr ""
 
 #. i18n: file: ../../src/videoplayerplugins/xine/xineconfigwidget.ui:33
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_xineVideoEnabled)
-#: rc.cpp:784
+#: rc.cpp:759
 msgid "Video driver:"
 msgstr "Видео драјвер:"
 
 #. i18n: file: ../../src/videoplayerplugins/xine/xineconfigwidget.ui:49
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_xineAudioEnabled)
-#: rc.cpp:790
+#: rc.cpp:765
 msgid "Audio driver:"
 msgstr "Аудио драјвер:"
 
-#~ msgid "Subtitle Streams"
-#~ msgstr "Токови титла"
-
-#, fuzzy
-#~ msgid "Shift %2%1 Millisecond"
-#~ msgid_plural "Shift %2%1 Milliseconds"
-#~ msgstr[0] "Помери %21 милисекунду"
-#~ msgstr[1] "Помери %2%1 милисекунде"
-#~ msgstr[2] "Помери %2%1 милисекунди"
-#~ msgstr[3] "Помери %2%1 милисекунду"
-
-#, fuzzy
-#~ msgid "Croatian Translator"
-#~ msgstr "Затвори превод"
-
-#, fuzzy
-#~ msgid "Bulgarian Translator"
-#~ msgstr "Сачувај превод"
-
-#, fuzzy
-#~ msgid "Translator"
-#~ msgstr "Превод"
-
-#, fuzzy
-#~ msgid "TextLabel"
-#~ msgstr "Текст"
-
-#~ msgctxt "@action:inmenu Open subtitle file"
-#~ msgid "Open..."
-#~ msgstr "Отвори..."
-
-#~ msgctxt "@action:inmenu Open rencently used subtitle file"
-#~ msgid "Open &Recent"
-#~ msgstr "Отвори ско&рашњи"
-
-#, fuzzy
-#~ msgid "Set current line show time to waveform mouse position"
-#~ msgstr "Постави време приказа текућег реда на позицију видеа"
-
-#, fuzzy
-#~ msgid "Set current line hide time to waveform mouse position"
-#~ msgstr "Постави време нестајања текућег реда на позицију видеа"
-
-#, fuzzy
-#~ msgid "Insert empty line at waveform mouse position(s)"
-#~ msgstr "Уметни празан ред након текућег"
-
-#~ msgid "Clear Fixed Errors"
-#~ msgstr "Очисти сређене грешке"
-
-#~ msgid "Settings..."
-#~ msgstr "Поставке..."
-
-#~ msgid "Showing 1 line with errors"
-#~ msgid_plural "Showing %1 lines with errors"
-#~ msgstr[0] "Приказујем %1 ред са грешкама"
-#~ msgstr[1] "Приказујем %1 реда са грешкама"
-#~ msgstr[2] "Приказујем %1 редова са грешкама"
-#~ msgstr[3] "Приказујем ред са грешкама"
-
-#~ msgid "1 total error"
-#~ msgid_plural "%1 total errors"
-#~ msgstr[0] "%1 грешка"
-#~ msgstr[1] "%1 грешке"
-#~ msgstr[2] "%1 грешака"
-#~ msgstr[3] "1 грешка"
-
-#~ msgid "1 user mark"
-#~ msgid_plural "%1 user marks"
-#~ msgstr[0] "%1 кориснички маркер"
-#~ msgstr[1] "%1 корисничка маркера"
-#~ msgstr[2] "%1 корисничких маркера"
-#~ msgstr[3] "1 кориснички маркер"
-
-#~ msgid "Line Errors"
-#~ msgstr "Грешке реда"
-
-#~ msgid "Count"
-#~ msgstr "Број"
-
-#~ msgid "Marked"
-#~ msgstr "Маркирано"
-
-#~ msgid "yes"
-#~ msgstr "да"
-
-#~ msgid "no"
-#~ msgstr "не"
-
-#~ msgid "Line <numid>%1</numid>"
-#~ msgstr "Ред <numid>%1</numid>"
-
-#~ msgid "Expand All"
-#~ msgstr "Рашири све"
-
-#~ msgid "Collapse All"
-#~ msgstr "Сажми све"
-
-#~ msgid "Clear Selected Marks"
-#~ msgstr "Очисти изабране маркере"
-
-#~ msgid "Clear Selected Errors"
-#~ msgstr "Очисти изабране грешке"
-
-#~ msgid "Clear Fixed Selection"
-#~ msgstr "Очисти сређени избор"
-
-#~ msgid "Shift +%1 Milliseconds"
-#~ msgstr "Помери +%1 милисекунди"
-
-#, fuzzy
-#~ msgid "Shift −%1 Milliseconds"
-#~ msgstr "Помери +%1 милисекунди"
-
-#~ msgid "Mark"
-#~ msgstr "Маркирај"
-
-#~ msgid "Jump length on seek:"
-#~ msgstr "Скок при премотавању:"
-
-#, fuzzy
-#~ msgid "Decoder Backend"
-#~ msgstr "Програм плејера:"
-
-#, fuzzy
-#~ msgid "Clear List"
-#~ msgstr "Очисти историјат"
-
-#~ msgid "Audio Levels Files"
-#~ msgstr "Фајлови аудио нивоа"
-
-#, fuzzy
-#~ msgid "Extract video's active audio stream"
-#~ msgstr "Изабери активни аудио ток"
-
-#, fuzzy
-#~ msgid "<qt>There was an error opening file %1 for audio extraction.</qt>"
-#~ msgstr "<qt>Дошло је до грешке при отварању фајла<br/>%1</qt>"
-
-#, fuzzy
-#~ msgid "Unexpected error when extracting audio."
-#~ msgstr "Неочекивана грешка при пуштању фајла."
-
-#, fuzzy
-#~ msgid "There was an error converting audio data to output format."
-#~ msgstr "Дошло је до грешке при снимању преведеног титла."
-
-#~ msgid "Configure"
-#~ msgstr "Подешавања"
-
-#~ msgctxt "@title:group"
-#~ msgid "Texts"
-#~ msgstr "Текстови"
-
-#~ msgid " lines"
-#~ msgstr " редова"
-
-#~ msgctxt "@title:group General settings"
-#~ msgid "General"
-#~ msgstr "Опште"
-
-#~ msgid " secs"
-#~ msgstr " секунди"
-
-#~ msgid " pixels"
-#~ msgstr " тачака"
-
-#~ msgid "&All"
-#~ msgstr "&Све"
-
-#~ msgid "&Skip"
-#~ msgstr "&Прескочи"
-
-#~ msgid "Replace '%1' with '%2'?"
-#~ msgstr "Заменити „%1“ са „%2“?"
-
-#~ msgid "No text was replaced."
-#~ msgstr "Ништа није замењено."
-
-#~ msgid "Beginning of document reached."
-#~ msgstr "Дошао сам до почетка документа."
-
-#~ msgid "End of document reached."
-#~ msgstr "Дошао сам до краја документа."
-
-#~ msgid "Do you want to restart search from the end?"
-#~ msgstr "Желите ли да поновите тражење са краја?"
-
-#~ msgid "Do you want to restart search at the beginning?"
-#~ msgstr "Желите ли да поновите тражење од почетка?"
-
-#~ msgid "Restart"
-#~ msgstr "Поново покрени"
-
-#, fuzzy
-#~ msgctxt "@title:group GStreamer settings"
-#~ msgid "Options"
-#~ msgstr "Опције"
-
-#~ msgid "Select the MPlayer executable"
-#~ msgstr "Изаберите MPlayer програм"
-
-#, fuzzy
-#~ msgctxt "@title:group Xine settings"
-#~ msgid "Options"
-#~ msgstr "Опције"
-
-#~ msgid "&Audio Levels"
-#~ msgstr "&Аудио нивои"
-
-#~ msgid "Shift -%1 Milliseconds"
-#~ msgstr "Помери -%1 милисекунди"
-
-#~ msgid "(C) 2007-2009 Sergio Pistone"
-#~ msgstr "© 2007-2009 Серђо Пистоне (Sergio Pistone)"
-
-#~ msgid "Open AudioLevels"
-#~ msgstr "Отвори аудио нивое"
-
-#~ msgid "Quick Reload As..."
-#~ msgstr "Брзо учитај као..."
-
-#~ msgid ""
-#~ "A file named \"%1\" already exists. Are you sure you want to overwrite it?"
-#~ msgstr "Фајл по имену „%1“ већ постоји. Желите ли заиста да га пребришете?"
-
-#~ msgid "Overwrite File?"
-#~ msgstr "Пребрисати фајл?"
-
-#~ msgid "Overwrite"
-#~ msgstr "Пребриши"
-
-#~ msgctxt "@title:group GStreamer sinks settings"
-#~ msgid "Sinks"
-#~ msgstr "Сливници"
-
-#~ msgctxt "@title:group Xine drivers settings"
-#~ msgid "Drivers"
-#~ msgstr "Драјвери"
-
-#~ msgid "There was an error opening the audiolevels."
-#~ msgstr "Дошло је до грешке при отварању аудио нивоа."
-
-#~ msgid "Save AudioLevels"
-#~ msgstr "Сачувај аудио нивое"
-
-#~ msgid "There was an error saving the audiolevels."
-#~ msgstr "Дошло је до грешке при снимању аудио нивоа."
-
-#~ msgid "Toggle Line Mark"
-#~ msgstr "Мењај означеност линије"
-
-#~ msgid "Size:"
-#~ msgstr "Величина:"
-
-#~ msgid "Append to"
-#~ msgstr "Додај у"
-
-#~ msgid "1 mark"
-#~ msgid_plural "%1 marks"
-#~ msgstr[0] "%1 маркер"
-#~ msgstr[1] "%1 маркера"
-#~ msgstr[2] "%1 маркера"
-#~ msgstr[3] "1 маркер"
-
-#~ msgid "Line Issues"
-#~ msgstr "Проблеми са редом"
-
-#~ msgid "Marks"
-#~ msgstr "Маркери"
-
-#~ msgid "No line with errors found!"
-#~ msgstr "Нема линија са грешкама!"
-
-#~ msgid "Sort Lines"
-#~ msgstr "Поређај линије"
-
-#~ msgid "Apply Duration Limits"
-#~ msgstr "Примени ограничења трајања"
-
-#~ msgid "Smart Lines Adjust"
-#~ msgstr "Паметно подешавање линија"
-
-#~ msgid "Shift selected lines -%1 milliseconds"
-#~ msgstr "Померај изабраних линија -%1 милисекунди"
-
-#~ msgid "Automatic Durations..."
-#~ msgstr "Аутоматска трајања..."
-
-#~ msgid "Smart Lines Adjust..."
-#~ msgstr "Паметно подешавање линије..."
-
-#~ msgid "Adjust Subtitles"
-#~ msgstr "Подеси титлове"
-
-#~ msgid "Shift Subtitles"
-#~ msgstr "Померај титлова"

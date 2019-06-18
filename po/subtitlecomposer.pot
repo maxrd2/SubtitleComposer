@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: https://github.com/maxrd2/subtitlecomposer/issues\n"
-"POT-Creation-Date: 2019-06-18 01:50+0200\n"
+"POT-Creation-Date: 2019-06-18 03:27+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -3309,7 +3309,9 @@ msgstr ""
 
 #. i18n: file: ../../src/speechplugins/pocketsphinx/pocketsphinxconfig.kcfg:32
 #. i18n: ectx: label, entry (vadStartSpeech), group (PocketSphinx)
-#: rc.cpp:579
+#. i18n: file: ../../src/speechplugins/pocketsphinx/pocketsphinxconfigwidget.ui:165
+#. i18n: ectx: property (toolTip), widget (QLabel, label_vadStartSpeech)
+#: rc.cpp:579 rc.cpp:636
 msgid "Num of speech frames to trigger VAD from silence to speech"
 msgstr ""
 
@@ -3381,12 +3383,6 @@ msgstr ""
 #. i18n: ectx: property (text), widget (QLabel, label_vadPostSpeech)
 #: rc.cpp:633
 msgid "Post Speech Frames"
-msgstr ""
-
-#. i18n: file: ../../src/speechplugins/pocketsphinx/pocketsphinxconfigwidget.ui:165
-#. i18n: ectx: property (toolTip), widget (QLabel, label_vadStartSpeech)
-#: rc.cpp:636
-msgid "Num of speech frames to trigger vad from silence to speech"
 msgstr ""
 
 #. i18n: file: ../../src/speechplugins/pocketsphinx/pocketsphinxconfigwidget.ui:168
