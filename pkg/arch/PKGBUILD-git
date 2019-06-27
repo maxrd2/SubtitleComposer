@@ -11,9 +11,9 @@
 # All my PKGBUILDs are managed at https://github.com/Martchus/PKGBUILDs where
 # you also find the URL of (another) binary repository (i686 and x86_64).
 
-_name=subtitlecomposer
-pkgname=${_name}-git
-pkgver=0.6.4
+_name=SubtitleComposer
+pkgname=${_name,,}-git
+pkgver=0.7.0
 pkgrel=1
 pkgdesc="A KDE subtitle editor (git version)"
 arch=('i686' 'x86_64')
@@ -21,29 +21,33 @@ url="https://github.com/maxrd2/${_name}"
 license=('GPL')
 depends=('kcoreaddons' 'sonnet' 'kcodecs' 'kross' 'kxmlgui' 'ki18n' 'ffmpeg')
 makedepends=('extra-cmake-modules' 'git')
+
 # Comment/uncomment the following dependencies to disable/enable
-# building of plugins for MPV and Xine player backends.
+# building the plugins for MPV and Xine player backends and pocketsphinx
 makedepends+=('xine-lib')
 makedepends+=('mpv')
-#makedepends+=('pocketsphinx')
-conflicts=(${_name})
-optdepends=('gstreamer: for GStreamer videoplayer backend'
-            'mpv: for MPV videoplayer backend'
-            'mplayer: for MPlayer videoplayer backend'
-            'phonon-qt5: for Phonon videoplayer backend'
-            'xine-lib: for Xine videoplayer backend'
-            'pocketsphinx: for speech recognition backend'
-            'kross-interpreters: for ruby and python scripting support'
-            'ruby: for scripting'
-            'python: for scripting')
+makedepends+=('pocketsphinx')
+
+# For consistency, also enable/disable the corresponding optdepends
+optdepends=('gstreamer: GStreamer videoplayer backend'
+            'mpv: MPV videoplayer backend'
+            'mplayer: MPlayer videoplayer backend'
+            'phonon-qt5: Phonon videoplayer backend'
+            'xine-lib: Xine videoplayer backend'
+            'pocketsphinx: Pocketsphinx speech recognition backend'
+            'kross-interpreters: Ruby and Python scripting support'
+            'ruby: scripting'
+            'python: scripting')
+
+conflicts=(${_name,,})
+provides=(${_name,,})
+
 source=("git+https://github.com/maxrd2/${_name}.git")
-#source=("git+https://github.com/Martchus/${_name}.git")
 sha256sums=('SKIP')
 
 pkgver() {
-  export APP_VER=${pkgver}
   cd ${srcdir}/${_name}
-  git describe --always | sed 's|-|.|g' | sed -e 's/^v//g'
+  git describe --always --abbrev=8 | sed 's/-g/./;s/-/./;s/^v//g'
 }
 
 build() {
@@ -53,7 +57,8 @@ build() {
     -DCMAKE_INSTALL_PREFIX=/usr \
     -DKDE_INSTALL_LIBDIR=lib \
     -DKDE_INSTALL_USE_QT_SYS_PATHS=ON \
-    -DBUILD_TESTING=OFF
+    -DBUILD_TESTING=OFF \
+    -DAPP_VERSION="${pkgver}"
   make
 }
 
