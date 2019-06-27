@@ -41,7 +41,7 @@ optdepends=('gstreamer: GStreamer videoplayer backend'
 
 source=("https://github.com/maxrd2/${pkgname}/archive/v${pkgver}.tar.gz"
         '0001-Use-target_link_libraries-instead-of-qt5_use_modules.patch::https://github.com/Martchus/subtitlecomposer/commit/cca0ff13c5bab516c073f9457277bdbf5fe1fd9a.patch')
-sha256sums=('8c957db7078676636f05e798219ff1052a52014ce7593dc660c345196f803ae4'
+sha256sums=('90dee806df0ee57f4098d417f62014b4533dbf5598d5535c9da1066536c1ed41'
             '8952257e4798ba009e721a1a8b5f929b03de8e733dbfa201b20fd8edd83cea99')
 
 #prepare() {
