@@ -1,4 +1,27 @@
-﻿Version 0.6.6
+﻿Version 0.7.0
+ - Fixed parsing of absolute paths containing '#' character
+ - Fixed open dialogs not showing all supported files
+ - Fixed subtitle text not respecting system font configuration
+ - Fixed waveform not rendering correctly/completely on some formats
+ - Fixed waveform displaying subtitles at wrong times
+ - Fixed waveform not working with some
+ - Fixes to MPV, GStreamer and Xine video player backends
+ - Waveform scrolling is configurable
+ - PocketSphinx language models and VAD are configurable
+ - Added show status bar action to main window popup menu
+ - Improved (scripting) performance
+ - Spell checker will use translation text when it is selected
+ - Waveform and video docks can be hidden
+ - Split lines won't split text on spaces while there are multiple lines
+ - Subtitle lines will always stay sorted by their time
+ - Improved fullscreen video player
+ - Added ability to step by frame
+ - Added play rate controls to video menu
+ - Updated Croatian translation - thanks @muzena
+ - Updated Italian translation - thanks Luigi Toscano @tosky
+ - Updated Russian translation - thanks Nick Shaforostoff @shaforostoff
+
+Version 0.6.6
  - Fixed open video dialog filters
  - Fixed "Insert Line" on waveform adding at the wrong index - thanks @qsniyg
  - Added MMB seeking on waveform - thanks @qsniyg
