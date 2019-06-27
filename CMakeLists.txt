@@ -34,6 +34,13 @@ find_package(KF5 ${KF5_MIN_VERSION} REQUIRED COMPONENTS
 	Auth Config ConfigWidgets CoreAddons I18n KIO XmlGui
 	Sonnet Kross Codecs TextWidgets WidgetsAddons)
 
+if(APP_VERSION)
+	message(STATUS "Building as custom version ${APP_VERSION}")
+	set(APP_VERSION ${APP_VERSION} CACHE INTERNAL EXPORTEDVARIABLE)
+else()
+	set(APP_VERSION 0.7.0 CACHE INTERNAL EXPORTEDVARIABLE)
+endif()
+
 add_subdirectory(po)
 add_subdirectory(src)
 

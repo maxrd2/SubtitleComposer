@@ -5,6 +5,9 @@
 #define SC_INSTALL_BIN "@CMAKE_INSTALL_PREFIX@/@BIN_INSTALL_DIR@"
 #define SC_INSTALL_PLUGIN "@SC_PLUGIN_INSTALL_DIR@"
 
+// Application version
+#define APP_VERSION "@APP_VERSION@"
+
 // Whether ICU was found
 #cmakedefine HAVE_ICU
 
