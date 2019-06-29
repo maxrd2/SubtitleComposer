@@ -54,12 +54,14 @@ matrix:
       script:
         - |-
           mkdir build && cd build
+          ver="$(git describe --always --abbrev=8 | sed 's/-g/./;s/-/./;s/^v//g')"
           cmake \
             -DCMAKE_BUILD_TYPE=Release \
             -DCMAKE_INSTALL_PREFIX=/usr \
             -DKDE_INSTALL_LIBDIR=lib \
             -DKDE_INSTALL_USE_QT_SYS_PATHS=ON \
             -DBUILD_TESTING=OFF \
+            -DAPP_VERSION="$ver" \
             .. || (cat /home/travis/build/maxrd2/subtitlecomposer/build/CMakeFiles/CMakeOutput.log ; exit 1) || exit 1
           make -j$(nproc) || exit 1
       after_success:
