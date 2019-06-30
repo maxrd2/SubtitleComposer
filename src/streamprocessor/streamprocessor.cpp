@@ -26,6 +26,8 @@
 #include <QImage>
 #include <QRegularExpression>
 
+#include <cinttypes>
+
 extern "C" {
 #include <libavcodec/avcodec.h>
 #include <libavformat/avformat.h>
