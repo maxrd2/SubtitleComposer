@@ -82,7 +82,7 @@ SpeechProcessor::SpeechProcessor(QWidget *parent)
 	const QString buildPluginPath(qApp->applicationDirPath() + QStringLiteral("/speechplugins"));
 	if(QDir(buildPluginPath).exists()) {
 		// if application is launched from build directory it will load plugins from build directory
-		pluginLoad(buildPluginPath + QStringLiteral("/pocketsphinx/pocketsphinxasr.so"));
+		pluginLoad(buildPluginPath + QStringLiteral("/pocketsphinx/pocketsphinxasr"));
 	} else {
 		const QDir pluginsDir(QDir(qApp->applicationDirPath()).absoluteFilePath(QDir(QStringLiteral(SC_INSTALL_BIN)).relativeFilePath(QStringLiteral(SC_INSTALL_PLUGIN))));
 		foreach(const QString pluginFile, pluginsDir.entryList(QDir::Files, QDir::Name)) {
@@ -101,20 +101,16 @@ SpeechProcessor::~SpeechProcessor()
 SpeechPlugin *
 SpeechProcessor::pluginLoad(const QString &pluginPath)
 {
-	const QString realPath = QDir(pluginPath).canonicalPath();
-	if(realPath.isEmpty())
-		return NULL;
-
-	QPluginLoader loader(realPath);
+	QPluginLoader loader(pluginPath);
 	QObject *plugin = loader.instance();
 	if(!plugin)
-		return NULL;
+		return nullptr;
 
 	SpeechPlugin *asrPlugin = qobject_cast<SpeechPlugin *>(plugin);
 	if(!asrPlugin)
-		return NULL;
+		return nullptr;
 
-	qInfo() << "Loaded SpeechProcessor plugin" << asrPlugin->name() << "from" << realPath;
+	qInfo() << "Loaded SpeechProcessor plugin" << asrPlugin->name() << "from" << loader.fileName();
 
 	pluginAdd(asrPlugin);
 

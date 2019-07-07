@@ -113,11 +113,11 @@ VideoPlayer::VideoPlayer() :
 	const QString buildPluginPath(qApp->applicationDirPath() + QStringLiteral("/videoplayerplugins"));
 	if(QDir(buildPluginPath).exists()) {
 		// if application is launched from build directory it will load plugins from build directory
-		backendLoad(buildPluginPath + QStringLiteral("/gstreamer/gstplayer.so"));
-		backendLoad(buildPluginPath + QStringLiteral("/mplayer/mplayer.so"));
-		backendLoad(buildPluginPath + QStringLiteral("/mpv/mpvplayer.so"));
-		backendLoad(buildPluginPath + QStringLiteral("/phonon/phononplayer.so"));
-		backendLoad(buildPluginPath + QStringLiteral("/xine/xineplayer.so"));
+		backendLoad(buildPluginPath + QStringLiteral("/gstreamer/gstplayer"));
+		backendLoad(buildPluginPath + QStringLiteral("/mplayer/mplayer"));
+		backendLoad(buildPluginPath + QStringLiteral("/mpv/mpvplayer"));
+		backendLoad(buildPluginPath + QStringLiteral("/phonon/phononplayer"));
+		backendLoad(buildPluginPath + QStringLiteral("/xine/xineplayer"));
 	} else {
 		const QDir pluginsDir(QDir(qApp->applicationDirPath()).absoluteFilePath(QDir(QStringLiteral(SC_INSTALL_BIN)).relativeFilePath(QStringLiteral(SC_INSTALL_PLUGIN))));
 		foreach(const QString pluginFile, pluginsDir.entryList(QDir::Files, QDir::Name)) {
@@ -231,20 +231,16 @@ VideoPlayer::reconfigure()
 PlayerBackend *
 VideoPlayer::backendLoad(const QString &pluginPath)
 {
-	const QString realPath = QDir(pluginPath).canonicalPath();
-	if(realPath.isEmpty())
-		return NULL;
-
-	QPluginLoader loader(realPath);
+	QPluginLoader loader(pluginPath);
 	QObject *plugin = loader.instance();
 	if(!plugin)
-		return NULL;
+		return nullptr;
 
 	PlayerBackend *backend = qobject_cast<PlayerBackend *>(plugin);
 	if(!backend)
-		return NULL;
+		return nullptr;
 
-	qInfo() << "Loaded VideoPlayer plugin" << backend->name() << "from" << realPath;
+	qInfo() << "Loaded VideoPlayer plugin" << backend->name() << "from" << loader.fileName();
 
 	backend->setSCConfig(SCConfig::self());
 
