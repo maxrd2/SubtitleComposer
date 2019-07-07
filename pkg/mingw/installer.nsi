@@ -30,7 +30,7 @@ RequestExecutionLevel admin
 ; Installer
 Section "StartMenu" SecStartMenu
 	CreateDirectory "$SMPROGRAMS\Subtitle Composer"
-	CreateShortcut "$SMPROGRAMS\Subtitle Composer\Subtitle Composer.lnk" "$INSTDIR\SubtitleComposer.exe"
+	CreateShortcut "$SMPROGRAMS\Subtitle Composer\Subtitle Composer.lnk" "$INSTDIR\bin\SubtitleComposer.exe"
 	CreateShortcut "$SMPROGRAMS\Subtitle Composer\Uninstall.lnk" "$INSTDIR\Uninstall.exe"
 SectionEnd
 

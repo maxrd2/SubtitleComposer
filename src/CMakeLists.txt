@@ -19,7 +19,7 @@ include_directories(
 	${Qt5Core_INCLUDE_DIRS} ${Qt5Widgets_INCLUDE_DIRS} ${Qt5Gui_INCLUDE_DIRS}
 )
 
-add_definitions(${QT_DEFINITIONS} -fexceptions -DHAVE_CONFIG_H)
+add_definitions(${QT_DEFINITIONS} -DHAVE_CONFIG_H)
 add_definitions(-D_DEFAULT_SOURCE)
 
 find_package(FFmpeg REQUIRED)
@@ -51,7 +51,6 @@ add_subdirectory(speechprocessor)
 
 add_subdirectory(configs)
 add_subdirectory(dialogs)
-add_subdirectory(icons)
 add_subdirectory(actions)
 add_subdirectory(utils)
 add_subdirectory(scripting)
@@ -90,6 +89,13 @@ set(subtitlecomposer_SRCS
 	CACHE INTERNAL EXPORTEDVARIABLE
 )
 
+if(MINGW)
+	qt5_add_resources(subtitlecomposer_SRCS subtitlecomposer.qrc)
+	list(APPEND subtitlecomposer_SRCS ${CMAKE_CURRENT_SOURCE_DIR}/subtitlecomposer.rc)
+else()
+	add_subdirectory(icons)
+endif()
+
 kconfig_add_kcfg_files(subtitlecomposer_SRCS GENERATE_MOC ${CMAKE_CURRENT_SOURCE_DIR}/scconfig.kcfgc)
 
 ki18n_wrap_ui(subtitlecomposer_SRCS
@@ -98,7 +104,7 @@ ki18n_wrap_ui(subtitlecomposer_SRCS
 	${main_dialogs_UIS}
 	${main_scripting_UIS})
 
-add_executable(subtitlecomposer ${subtitlecomposer_SRCS})
+add_executable(subtitlecomposer WIN32 ${subtitlecomposer_SRCS})
 
 target_link_libraries(subtitlecomposer
 	${subtitlecomposer_LIBS}

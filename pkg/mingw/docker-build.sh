@@ -11,8 +11,11 @@ rm -rf build && mkdir -p build/nsis
 
 sudo docker run --rm -v "$PWD":/home/devel -it maxrd2/arch-mingw /bin/bash -c '\
 	sudo pacman -Sy --noconfirm --needed \
-		mingw-w64-kinit mingw-w64-gst-libav mingw-w64-pango mingw-w64-libvisual \
-		mingw-w64-aspell mingw-w64-hunspell kconfig kcoreaddons && \
+		mingw-w64-kinit mingw-w64-pango mingw-w64-libvisual \
+		mingw-w64-aspell mingw-w64-hunspell mingw-w64-icu \
+		kconfig kcoreaddons breeze-icons \
+		mingw-w64-mpv \
+		mingw-w64-gst-libav mingw-w64-gst-plugins-good && \
 	cd build && \
 	i686-w64-mingw32-cmake \
 		-DCMAKE_BUILD_TYPE=Release \
@@ -24,11 +27,5 @@ sudo docker run --rm -v "$PWD":/home/devel -it maxrd2/arch-mingw /bin/bash -c '\
 		-DTARGETSFILE=/usr/lib/cmake/KF5CoreAddons/KF5CoreAddonsToolingTargets.cmake \
 		-DAPP_VERSION='$appver' \
 		.. && \
-	make -j$(nproc) \
+	make -j$(nproc) && \
 	make DESTDIR="$PWD/nsis" nsis'
-
-
-mkdir -p build/nsis && \
-cd build && \
-make -j$(nproc) && \
-make DESTDIR="$PWD/nsis" VERBOSE=1 nsis

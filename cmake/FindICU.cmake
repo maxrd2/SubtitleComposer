@@ -25,12 +25,12 @@ FIND_PATH(
 
 MARK_AS_ADVANCED( ICU_INCLUDE_DIR )
 
-# EXECUTE_PROCESS(
-# 	WORKING_DIRECTORY .
-# 	COMMAND icu-config --ldflags-libsonly
-# 	RESULT_VARIABLE ret_var
-# 	OUTPUT_VARIABLE ICU_LIBRARY
-# )
+EXECUTE_PROCESS(
+	COMMAND icu-config --ldflags
+	RESULT_VARIABLE ret_var
+	OUTPUT_VARIABLE ICU_LIBRARY
+)
+string(STRIP "${ICU_LIBRARY}" ICU_LIBRARY)
 
 # FIND_LIBRARY(
 # 	ICU_LIBRARY
@@ -39,7 +39,7 @@ MARK_AS_ADVANCED( ICU_INCLUDE_DIR )
 # 	DOC "Libraries to link against for the common parts of ICU"
 # )
 
-SET( ICU_LIBRARY -L/usr/lib -licui18n -licuuc -licudata )
+#SET( ICU_LIBRARY -L/usr/lib -licui18n -licuuc -licudata )
 
 MARK_AS_ADVANCED( ICU_LIBRARIES )
 

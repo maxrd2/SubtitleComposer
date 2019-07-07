@@ -12,10 +12,13 @@ for f in "${files[@]}"; do [[ ! -f "$f" ]] && echo -e "ERROR: File '$f' doesn't 
 processed=()
 exclude=(
 	advapi32.dll
+	avicap32.dll
+	avrt.dll
 	bcrypt.dll
 	comdlg32.dll
 	crypt32.dll
 	dnsapi.dll
+	dsound.dll
 	dwmapi.dll
 	gdi32.dll
 	imm32.dll
