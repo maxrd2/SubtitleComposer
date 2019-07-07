@@ -16,17 +16,13 @@
 
 FIND_PACKAGE(PkgConfig REQUIRED)
 
-IF (NOT WIN32)
-	# don't make this check required - otherwise you can't use macro_optional_find_package on this one
-	PKG_CHECK_MODULES( PKG_GSTREAMER_PLUGINSBASE QUIET gstreamer-plugins-base-1.0 )
-ENDIF (NOT WIN32)
+# don't make this check required - otherwise you can't use macro_optional_find_package on this one
+PKG_CHECK_MODULES( PKG_GSTREAMER_PLUGINSBASE QUIET gstreamer-plugins-base-1.0 )
 
 MACRO(MACRO_FIND_GSTREAMER_PLUGIN _plugin _header)
 	STRING(TOUPPER ${_plugin} _upper)
-	IF (NOT WIN32)
-		# don't make this check required - otherwise you can't use macro_optional_find_package on this one
-		PKG_CHECK_MODULES( PKG_GSTREAMER_${_upper} QUIET gstreamer-${_plugin}-1.0 )
-	ENDIF (NOT WIN32)
+	# don't make this check required - otherwise you can't use macro_optional_find_package on this one
+	PKG_CHECK_MODULES( PKG_GSTREAMER_${_upper} QUIET gstreamer-${_plugin}-1.0 )
 
 	FIND_LIBRARY(GSTREAMER_PLUGIN_${_upper}_LIBRARY NAMES gst${_plugin}-1.0
 		PATHS
@@ -35,11 +31,11 @@ MACRO(MACRO_FIND_GSTREAMER_PLUGIN _plugin _header)
 		)
 
 	FIND_PATH(GSTREAMER_PLUGIN_${_upper}_INCLUDE_DIR
-			NAMES gst/${_plugin}/${_header}
-			PATHS
-			${PKG_GSTREAMER_PLUGINSBASE_INCLUDE_DIRS}
-			${PKG_GSTREAMER_${_upper}_INCLUDE_DIRS}
-			)
+		NAMES gst/${_plugin}/${_header}
+		PATHS
+		${PKG_GSTREAMER_PLUGINSBASE_INCLUDE_DIRS}
+		${PKG_GSTREAMER_${_upper}_INCLUDE_DIRS}
+		)
 
 	IF(GSTREAMER_PLUGIN_${_upper}_LIBRARY AND GSTREAMER_PLUGIN_${_upper}_INCLUDE_DIR)
 		SET(GSTREAMER_PLUGIN_${_upper}_FOUND TRUE)
