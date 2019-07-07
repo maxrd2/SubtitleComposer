@@ -68,19 +68,19 @@ FileSaveHelper::open()
 		return false;
 
 	if(m_url.isLocalFile()) {
-		m_file = new QSaveFile(m_url.path());
+		m_file = new QSaveFile(m_url.toLocalFile());
 		if(!m_file->open(QIODevice::WriteOnly | QIODevice::Truncate)) {
-			qDebug() << "couldn't open output file" << m_file->fileName();
+			qDebug() << "Couldn't open output file" << m_file->fileName();
 			delete m_file;
-			m_file = 0;
+			m_file = nullptr;
 			return false;
 		}
 	} else {
 		m_file = new QTemporaryFile();
 		if(!static_cast<QTemporaryFile *>(m_file)->open()) {
-			qDebug() << "couldn't open output file" << m_file->fileName();
+			qDebug() << "Couldn't open output file" << m_file->fileName();
 			delete m_file;
-			m_file = 0;
+			m_file = nullptr;
 			return false;
 		}
 	}
@@ -96,14 +96,14 @@ FileSaveHelper::close()
 	if(m_url.isLocalFile()) {
 		static_cast<QSaveFile*>(m_file)->commit();
 		delete m_file;
-		m_file = 0;
+		m_file = nullptr;
 		return true;
 	} else {
 		m_file->close();
 		KIO::Job *job = KIO::file_copy(QUrl::fromLocalFile(m_file->fileName()), m_url, -1, m_overwrite ? KIO::Overwrite : KIO::DefaultFlags);
 		bool success = job->exec();
 		delete m_file;
-		m_file = 0;
+		m_file = nullptr;
 
 		return success;
 	}

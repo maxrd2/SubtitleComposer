@@ -1383,7 +1383,7 @@ Application::openSubtitle(const QUrl &url, bool warnClashingUrls)
 		if(m_subtitleUrl.isLocalFile() && SCConfig::automaticVideoLoad()) {
 			static const QStringList videoExtensions(QStringLiteral(SC_VIDEO_EXTENSIONS).split(' '));
 
-			QFileInfo subtitleFileInfo(m_subtitleUrl.path());
+			QFileInfo subtitleFileInfo(m_subtitleUrl.toLocalFile());
 
 			QString subtitleFileName = m_subtitleFileName.toLower();
 			QString videoFileName = QFileInfo(m_player->filePath()).completeBaseName().toLower();
@@ -2563,7 +2563,7 @@ Application::openVideo(const QUrl &url)
 
 	m_player->closeFile();
 
-	m_player->openFile(url.path());
+	m_player->openFile(url.toLocalFile());
 }
 
 void
@@ -2823,7 +2823,7 @@ Application::updateTitle()
 									 .arg(m_subtitle->isSecondaryDirty() ? modified : QString()), false);
 		} else {
 			m_mainWindow->setCaption(
-						m_subtitleUrl.isEmpty() ? i18n("Untitled") : (m_subtitleUrl.isLocalFile() ? m_subtitleUrl.path() : m_subtitleUrl.toString(QUrl::PreferLocalFile)),
+						m_subtitleUrl.isEmpty() ? i18n("Untitled") : (m_subtitleUrl.isLocalFile() ? m_subtitleUrl.toLocalFile() : m_subtitleUrl.toString(QUrl::PreferLocalFile)),
 						m_subtitle->isPrimaryDirty());
 		}
 	} else {

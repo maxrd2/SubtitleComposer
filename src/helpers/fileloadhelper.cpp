@@ -56,29 +56,31 @@ FileLoadHelper::open()
 	if(m_file)
 		return false;
 
-	KIO::Job *job = KIO::stat(m_url, KIO::StatJob::SourceSide, 2);
-	if(!job->exec())
-		return false;
-
 	if(m_url.isLocalFile()) {
-		m_file = new QFile(m_url.path());
+		m_file = new QFile(m_url.toLocalFile());
 		if(!m_file->open(QIODevice::ReadOnly)) {
-			qDebug() << "couldn't open input file" << static_cast<QFile *>(m_file)->fileName();
+			qDebug() << "Couldn't open file" << static_cast<QFile *>(m_file)->fileName();
 			delete m_file;
-			m_file = 0;
+			m_file = nullptr;
 			return false;
 		}
 	} else {
-		KIO::StoredTransferJob *xjob = KIO::storedGet(m_url);
-		connect(xjob, SIGNAL(result(KJob *job)), this, SLOT(downloadComplete(KJob *job)));
-		if(!xjob) {
-			qDebug() << "couldn't get input url:" << m_url;
-			qDebug() << xjob->errorString();
+		KIO::Job *job = KIO::stat(m_url, KIO::StatJob::SourceSide, 2);
+		if(!job->exec()) {
+			qDebug() << "Failed to start KIO::stat job" << m_url;
 			return false;
 		}
 
+		KIO::StoredTransferJob *xjob = KIO::storedGet(m_url);
+		if(!xjob) {
+			qDebug() << "Couldn't open url" << m_url;
+			qDebug() << xjob->errorString();
+			return false;
+		}
+		connect(xjob, &KIO::StoredTransferJob::result, this, &FileLoadHelper::downloadComplete);
 		m_file = new QBuffer(&m_data);
 	}
+
 	return true;
 }
 
@@ -89,7 +91,7 @@ FileLoadHelper::close()
 		return false;
 
 	delete m_file;
-	m_file = 0;
+	m_file = nullptr;
 
 	return true;
 }
