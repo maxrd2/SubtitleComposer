@@ -23,7 +23,7 @@
 
 #include "videoplayer/playerbackend.h"
 
-#include <mpv/qthelper.hpp>
+#include <mpv/client.h>
 
 #include <QWidget>
 #include <QString>
@@ -76,14 +76,10 @@ signals:
 protected slots:
 	void onMPVEvents();
 
-protected:
-	void setupProcessArgs(const QString &filePath);
-
+private:
 	void mpvEventHandle(mpv_event *event);
-
 	static void wakeup(void *ctx);
 
-private:
 	void updateTextData(const mpv_event_property *prop);
 	void updateAudioData(const mpv_event_property *prop);
 	void updateVideoData();

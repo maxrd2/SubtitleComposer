@@ -23,6 +23,8 @@
 
 #include "ui_mpvconfigwidget.h"
 
+#include <mpv/client.h>
+
 namespace SubtitleComposer {
 class MPVConfigWidget : public QWidget, private Ui::MPVConfigWidget
 {
@@ -31,6 +33,12 @@ class MPVConfigWidget : public QWidget, private Ui::MPVConfigWidget
 public:
 	explicit MPVConfigWidget(QWidget *parent = 0);
 	virtual ~MPVConfigWidget();
+
+private:
+	const QStringList getHelpResponse();
+
+private:
+	mpv_handle *m_mpv;
 };
 }
 
