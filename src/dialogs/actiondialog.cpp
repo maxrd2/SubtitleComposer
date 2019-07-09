@@ -39,8 +39,6 @@ ActionDialog::ActionDialog(const QString &title, QWidget *parent)
 
 	QVBoxLayout *layout = new QVBoxLayout(this);
 	layout->setAlignment(Qt::AlignTop);
-	layout->setContentsMargins(0, 0, 0, 0);
-	layout->setSpacing(5);
 
 	layout->addWidget(m_mainWidget);
 	layout->addWidget(m_buttonBox);
