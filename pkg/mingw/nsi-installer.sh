@@ -55,10 +55,21 @@ done
 
 install $_v -d "$_destdir/share/dbus-1"
 cp $_v -rf "/usr/$_arch/share/dbus-1" "$_destdir/share/"
-#install $_v -d "$_destdir/bin/data/icons/breeze"
-#cp $_v -rf "/usr/share/icons/breeze/index.theme" "$_destdir/bin/data/icons/breeze"
-#cp $_v -rf "/usr/share/icons/breeze/actions" "$_destdir/bin/data/icons/breeze"
 rm $_v -rf "$_destdir/bin/data/icons" "$_destdir/bin/data/subtitlecomposer/icons"
+
+localedest="$_destdir/bin/data/locale/"
+localefiles=(
+	kauth5_qt.qm kbookmarks5_qt.qm kcodecs5_qt.qm kcompletion5_qt.qm kconfig5_qt.qm kconfigwidgets5.mo
+	kcoreaddons5_qt.qm kglobalaccel5_qt.qm kitemviews5_qt.qm kjobwidgets5_qt.qm knotifications5_qt.qm
+	kross5.mo ktextwidgets5.mo kwidgetsaddons5_qt.qm kwindowsystem5_qt.qm kxmlgui5.mo libc.mo
+	solid5_qt.qm sonnet5_qt.qm
+)
+for lang in "$localedest/"*; do
+	lang="${lang##*/}"
+	for loc in "${localefiles[@]}"; do
+		cp $_v "/usr/share/locale/$lang/LC_MESSAGES/$loc" "$localedest/$lang/LC_MESSAGES/" || true
+	done
+done
 
 sed -e "s|{BUILD_PATH}|$_destdir|g" "$sdir/installer.nsi" > installer.nsi
 makensis -V4 installer.nsi

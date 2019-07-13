@@ -16,6 +16,10 @@ sudo docker run --rm -v "$PWD":/home/devel -it maxrd2/arch-mingw /bin/bash -c '\
 		kconfig kcoreaddons breeze-icons \
 		mingw-w64-mpv \
 		mingw-w64-gst-libav mingw-w64-gst-plugins-good && \
+	sudo pacman -Sdd --noconfirm --needed kauth kbookmarks kcodecs kcompletion \
+		kconfig kconfigwidgets kcoreaddons kglobalaccel kitemviews kjobwidgets \
+		knotifications kross ktextwidgets kwidgetsaddons kwindowsystem kxmlgui \
+		solid sonnet && \
 	cd build && \
 	i686-w64-mingw32-cmake \
 		-DCMAKE_BUILD_TYPE=Release \
