@@ -142,9 +142,12 @@ VideoPlayer::~VideoPlayer()
 VideoPlayer *
 VideoPlayer::instance()
 {
-	static VideoPlayer player;
-
-	return &player;
+	static VideoPlayer *player = nullptr;
+	if(!player) {
+		player = new VideoPlayer();
+		player->setParent(QApplication::instance());
+	}
+	return player;
 }
 
 bool
