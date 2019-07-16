@@ -1392,19 +1392,24 @@ Subtitle::rechecqCriticals(const RangeList &ranges, int minDurationMsecs, int ma
 void
 Subtitle::processAction(QUndoCommand *action)
 {
-	app()->undoStack()->push(action);
+	if(app()->subtitle() == this)
+		app()->undoStack()->push(action);
+	else
+		action->redo();
 }
 
 void
 Subtitle::beginCompositeAction(const QString &title)
 {
-	app()->undoStack()->beginMacro(title);
+	if(app()->subtitle() == this)
+		app()->undoStack()->beginMacro(title);
 }
 
 void
 Subtitle::endCompositeAction()
 {
-	app()->undoStack()->endMacro();
+	if(app()->subtitle() == this)
+		app()->undoStack()->endMacro();
 }
 
 void
