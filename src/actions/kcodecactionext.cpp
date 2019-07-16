@@ -20,76 +20,81 @@
 
 #include "kcodecactionext.h"
 
-#include <QVariant>
-#include <QTextCodec>
 #include <QMenu>
-#include <QDebug>
+#include <QStringBuilder>
+#include <QTextCodec>
+#include <QVariant>
 
-#include <KCharsets>
 #include <KActionCollection>
+#include <KCharsets>
 #include <KEncodingProber>
 #include <KLocalizedString>
 
 #include "application.h"
+#include "scconfig.h"
 
 void
-KCodecActionExt::init(bool showDefault)
+KCodecActionExt::init()
 {
-	m_autodetectAction = new QAction(parent());
-	m_autodetectAction->setText(i18n("Autodetect"));
-	m_autodetectAction->setCheckable(true);
-	SubtitleComposer::app()->mainWindow()->actionCollection()->setShortcutsConfigurable(m_autodetectAction, false);
-	m_autodetectAction->setData(QVariant((uint)KEncodingProber::Universal));
-	m_autodetectAction->setActionGroup(selectableActionGroup());
-	menu()->insertAction(action(0), m_autodetectAction);
+	m_defaultAction = action(0);
+	m_defaultAction->setCheckable(false);
+	m_defaultAction->setText(m_defaultAction->text() + ": " + SCConfig::defaultSubtitlesEncoding());
+
+	if(m_showAutoDetect) {
+		m_autodetectAction = new QAction(parent());
+		m_autodetectAction->setText(i18n("Autodetect"));
+		m_autodetectAction->setData(QVariant(KEncodingProber::Universal));
+		m_autodetectAction->setActionGroup(selectableActionGroup());
+		SubtitleComposer::app()->mainWindow()->actionCollection()->setShortcutsConfigurable(m_autodetectAction, false);
+		menu()->insertAction(m_defaultAction, m_autodetectAction);
+	}
+
 	menu()->insertSeparator(action(1));
 
-	bool encodingFound;
-	foreach(QAction * action, actions()) {
+	for(QAction *action: actions()) {
 		KSelectAction *groupAction = qobject_cast<KSelectAction *>(action);
 		if(groupAction) {
-			foreach(QAction * subAction, groupAction->actions()) {
-				if(subAction->data().isNull()) {
-					QTextCodec *codec = KCharsets::charsets()->codecForName(subAction->text().remove("&"), encodingFound);
-					subAction->setText(encodingFound ? QString(codec->name()).toUpper() : subAction->text().toUpper());
-				}
-			}
+			for(QAction *subAction: groupAction->actions())
+				subAction->setText(subAction->text().toUpper());
 		}
 	}
 
-	m_showDefault = showDefault;
 	if(!m_showDefault)
-		menu()->removeAction(this->action(0));
+		menu()->removeAction(m_defaultAction);
 }
 
-KCodecActionExt::KCodecActionExt(QObject *parent, bool showAutoOptions, bool showDefault) :
-	KCodecAction(parent, showAutoOptions)
+KCodecActionExt::KCodecActionExt(QObject *parent, bool showAutoDetect, bool showDefault)
+	: KCodecAction(parent, false),
+	  m_showDefault(showDefault),
+	  m_showAutoDetect(showAutoDetect)
 {
-	init(showDefault);
+	init();
 }
 
-KCodecActionExt::KCodecActionExt(const QString &text, QObject *parent, bool showAutoOptions, bool showDefault) :
-	KCodecAction(text, parent, showAutoOptions)
+KCodecActionExt::KCodecActionExt(const QString &text, QObject *parent, bool showAutoDetect, bool showDefault)
+	: KCodecAction(text, parent, false),
+	  m_showDefault(showDefault),
+	  m_showAutoDetect(showAutoDetect)
 {
-	init(showDefault);
+	init();
 }
 
-KCodecActionExt::KCodecActionExt(const QIcon &icon, const QString &text, QObject *parent, bool showAutoOptions, bool showDefault) :
-	KCodecAction(icon, text, parent, showAutoOptions)
+KCodecActionExt::KCodecActionExt(const QIcon &icon, const QString &text, QObject *parent, bool showAutoDetect, bool showDefault)
+	: KCodecAction(icon, text, parent, false),
+	  m_showDefault(showDefault),
+	  m_showAutoDetect(showAutoDetect)
 {
-	init(showDefault);
+	init();
 }
 
 void
 KCodecActionExt::actionTriggered(QAction *action)
 {
-	// we don't want to emit any signals from top-level items
-	// except for the default and autodetect ones
-	if(action == m_autodetectAction) {
+	// do not emit signals from top-level action menus
+	if(action == m_autodetectAction)
 		emit triggered(KEncodingProber::Universal);
-	} else if(m_showDefault && action == this->action(0)) {
+	else if(action == m_defaultAction)
 		emit defaultItemTriggered();
-	}
 }
 
 

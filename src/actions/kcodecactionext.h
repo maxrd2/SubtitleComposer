@@ -30,9 +30,9 @@ class KCodecActionExt : public KCodecAction
 	Q_OBJECT
 
 public:
-	explicit KCodecActionExt(QObject *parent, bool showAutoOptions = false, bool showDefault = false);
-	KCodecActionExt(const QString &text, QObject *parent, bool showAutoOptions = false, bool showDefault = false);
-	KCodecActionExt(const QIcon &icon, const QString &text, QObject *parent, bool showAutoOptions = false, bool showDefault = false);
+	explicit KCodecActionExt(QObject *parent, bool showAutoDetect = false, bool showDefault = false);
+	KCodecActionExt(const QString &text, QObject *parent, bool showAutoDetect = false, bool showDefault = false);
+	KCodecActionExt(const QIcon &icon, const QString &text, QObject *parent, bool showAutoDetect = false, bool showDefault = false);
 
 public:
 	KEncodingProber::ProberType currentAutoDetectScript() const;
@@ -42,9 +42,11 @@ protected Q_SLOTS:
 	void actionTriggered(QAction *) override;
 
 private:
-	void init(bool showDefault);
+	void init();
 
 	bool m_showDefault;
+	bool m_showAutoDetect;
+	QAction *m_defaultAction;
 	QAction *m_autodetectAction;
 };
 
