@@ -43,14 +43,16 @@ public:
 	const InputFormat * input(const QString &name) const;
 	QStringList inputNames() const;
 
-	bool readSubtitle(Subtitle &subtitle, bool primary, const QUrl &url, QTextCodec **codec, Format::NewLine *newLine = 0, QString *format = 0) const;
+	bool readSubtitle(Subtitle &subtitle, bool primary, const QUrl &url,
+					  QTextCodec **codec, QString *format = nullptr) const;
 
 	bool hasOutput(const QString &name) const;
 	const OutputFormat * output(const QString &name) const;
 	const OutputFormat * defaultOutput() const;
 	QStringList outputNames() const;
 
-	bool writeSubtitle(const Subtitle &subtitle, bool primary, const QUrl &url, QTextCodec *codec, Format::NewLine newLine, const QString &format, bool overwrite) const;
+	bool writeSubtitle(const Subtitle &subtitle, bool primary, const QUrl &url,
+					   QTextCodec *codec, const QString &format, bool overwrite) const;
 
 protected:
 	FormatManager();

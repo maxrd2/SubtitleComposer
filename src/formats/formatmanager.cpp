@@ -150,7 +150,8 @@ FormatManager::inputNames() const
 }
 
 bool
-FormatManager::readSubtitle(Subtitle &subtitle, bool primary, const QUrl &url, QTextCodec **codec, Format::NewLine *newLine, QString *formatName) const
+FormatManager::readSubtitle(Subtitle &subtitle, bool primary, const QUrl &url,
+							QTextCodec **codec, QString *formatName) const
 {
 	// attempt to load binary subtitle
 	Subtitle newSubtitle;
@@ -208,17 +209,6 @@ FormatManager::readSubtitle(Subtitle &subtitle, bool primary, const QUrl &url, Q
 		stringData = textStream.readAll();
 	}
 
-	if(newLine) {
-		if(stringData.indexOf(QLatin1String("\r\n")) != -1)
-			*newLine = Format::Windows;
-		else if(stringData.indexOf('\r') != -1)
-			*newLine = Format::Macintosh;
-		else if(stringData.indexOf('\n') != -1)
-			*newLine = Format::UNIX;
-		else
-			*newLine = Format::CurrentOS;
-	}
-
 	stringData.replace(QLatin1String("\r\n"), QLatin1String("\n"));
 	stringData.replace('\r', '\n');
 
@@ -274,7 +264,8 @@ FormatManager::outputNames() const
 }
 
 bool
-FormatManager::writeSubtitle(const Subtitle &subtitle, bool primary, const QUrl &url, QTextCodec *codec, Format::NewLine newLine, const QString &formatName, bool overwrite) const
+FormatManager::writeSubtitle(const Subtitle &subtitle, bool primary, const QUrl &url,
+							 QTextCodec *codec, const QString &formatName, bool overwrite) const
 {
 	const OutputFormat *format = output(formatName);
 	if(format == 0) {
@@ -294,12 +285,7 @@ FormatManager::writeSubtitle(const Subtitle &subtitle, bool primary, const QUrl 
 	if(!fileSaveHelper.open())
 		return false;
 
-	QString data = format->writeSubtitle(subtitle, primary);
-	if(newLine == Format::Windows)
-		data.replace(QLatin1String("\n"), QLatin1String("\r\n"));
-	else if(newLine == Format::Macintosh)
-		data.replace('\n', '\r');
-
+	const QString data = format->writeSubtitle(subtitle, primary);
 	QTextStream stream(fileSaveHelper.file());
 	stream.setCodec(codec);
 	stream.setGenerateByteOrderMark(true);

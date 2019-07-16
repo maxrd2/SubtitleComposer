@@ -276,14 +276,12 @@ private:
 	QUrl m_subtitleUrl;
 	QString m_subtitleFileName;
 	QString m_subtitleEncoding;
-	Format::NewLine m_subtitleEOL;
 	QString m_subtitleFormat;
 
 	bool m_translationMode;
 	QUrl m_subtitleTrUrl;
 	QString m_subtitleTrFileName;
 	QString m_subtitleTrEncoding;
-	Format::NewLine m_subtitleTrEOL;
 	QString m_subtitleTrFormat;
 
 	VideoPlayer *m_player;

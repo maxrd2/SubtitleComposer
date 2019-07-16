@@ -196,7 +196,7 @@ Application::openSubtitle(const QUrl &url, bool warnClashingUrls)
 
 	m_subtitle = new Subtitle();
 
-	if(FormatManager::instance().readSubtitle(*m_subtitle, true, fileUrl, &codec, &m_subtitleEOL, &m_subtitleFormat)) {
+	if(FormatManager::instance().readSubtitle(*m_subtitle, true, fileUrl, &codec, &m_subtitleFormat)) {
 		// The loading of the subtitle shouldn't be an undoable action as there's no state before it
 		m_undoStack->clear();
 		m_subtitle->clearPrimaryDirty();
@@ -259,10 +259,9 @@ Application::reopenSubtitleWithCodecOrDetectScript(QTextCodec *codec)
 		return;
 
 	Subtitle *subtitle = new Subtitle();
-	Format::NewLine subtitleEOL;
 	QString subtitleFormat;
 
-	if(!FormatManager::instance().readSubtitle(*subtitle, true, m_subtitleUrl, &codec, &subtitleEOL, &subtitleFormat)) {
+	if(!FormatManager::instance().readSubtitle(*subtitle, true, m_subtitleUrl, &codec, &subtitleFormat)) {
 		delete subtitle;
 		KMessageBox::sorry(m_mainWindow, i18n("<qt>Could not parse the subtitle file.<br/>This may have been caused by usage of the wrong encoding.</qt>"));
 		return;
@@ -285,7 +284,6 @@ Application::reopenSubtitleWithCodecOrDetectScript(QTextCodec *codec)
 	emit subtitleOpened(m_subtitle);
 
 	m_subtitleEncoding = codec->name();
-	m_subtitleEOL = subtitleEOL;
 	m_subtitleFormat = subtitleFormat;
 
 	m_reopenSubtitleAsAction->setCurrentCodec(codec);
@@ -332,7 +330,7 @@ Application::saveSubtitle()
 	if(!codecFound)
 		codec = QTextCodec::codecForLocale();
 
-	if(FormatManager::instance().writeSubtitle(*m_subtitle, true, m_subtitleUrl, codec, m_subtitleEOL, m_subtitleFormat, true)) {
+	if(FormatManager::instance().writeSubtitle(*m_subtitle, true, m_subtitleUrl, codec, m_subtitleFormat, true)) {
 		m_subtitle->clearPrimaryDirty();
 
 		QUrl recentUrl = m_subtitleUrl;
@@ -357,7 +355,7 @@ Application::saveSubtitleAs()
 		true,
 		m_subtitleUrl,
 		m_subtitleEncoding.isEmpty() ? SCConfig::defaultSubtitlesEncoding() : m_subtitleEncoding,
-		m_subtitleEOL,
+		Format::CurrentOS,
 		m_subtitleFormat,
 		m_mainWindow);
 
@@ -369,7 +367,6 @@ Application::saveSubtitleAs()
 		m_subtitleFileName = QFileInfo(m_subtitleUrl.path()).completeBaseName();
 		m_subtitleEncoding = saveDlg.selectedEncoding();
 		m_subtitleFormat = saveDlg.selectedFormat();
-		m_subtitleEOL = saveDlg.selectedNewLine();
 
 		return saveSubtitle();
 	}
@@ -483,7 +480,7 @@ Application::openSubtitleTr(const QUrl &url, bool warnClashingUrls)
 	QUrl fileUrl = url;
 	fileUrl.setQuery(QString());
 
-	if(FormatManager::instance().readSubtitle(*m_subtitle, false, fileUrl, &codec, &m_subtitleTrEOL, &m_subtitleTrFormat)) {
+	if(FormatManager::instance().readSubtitle(*m_subtitle, false, fileUrl, &codec, &m_subtitleTrFormat)) {
 		m_subtitleTrUrl = fileUrl;
 		m_subtitleTrFileName = QFileInfo(m_subtitleTrUrl.path()).fileName();
 		m_subtitleTrEncoding = codec->name();
@@ -523,10 +520,9 @@ Application::reopenSubtitleTrWithCodecOrDetectScript(QTextCodec *codec)
 		return;
 
 	Subtitle *subtitleTr = new Subtitle();
-	Format::NewLine subtitleTrEOL;
 	QString subtitleTrFormat;
 
-	if(!FormatManager::instance().readSubtitle(*subtitleTr, false, m_subtitleTrUrl, &codec, &subtitleTrEOL, &subtitleTrFormat)) {
+	if(!FormatManager::instance().readSubtitle(*subtitleTr, false, m_subtitleTrUrl, &codec, &subtitleTrFormat)) {
 		delete subtitleTr;
 		KMessageBox::sorry(m_mainWindow, i18n("<qt>Could not parse the subtitle file.<br/>This may have been caused by usage of the wrong encoding.</qt>"));
 		return;
@@ -551,7 +547,6 @@ Application::reopenSubtitleTrWithCodecOrDetectScript(QTextCodec *codec)
 	emit subtitleOpened(m_subtitle);
 
 	m_subtitleTrEncoding = codec->name();
-	m_subtitleTrEOL = subtitleTrEOL;
 	m_subtitleTrFormat = subtitleTrFormat;
 
 	m_reopenSubtitleTrAsAction->setCurrentCodec(codec);
@@ -575,7 +570,7 @@ Application::saveSubtitleTr()
 	if(!codecFound)
 		codec = QTextCodec::codecForLocale();
 
-	if(FormatManager::instance().writeSubtitle(*m_subtitle, false, m_subtitleTrUrl, codec, m_subtitleTrEOL, m_subtitleTrFormat, true)) {
+	if(FormatManager::instance().writeSubtitle(*m_subtitle, false, m_subtitleTrUrl, codec, m_subtitleTrFormat, true)) {
 		m_subtitle->clearSecondaryDirty();
 
 		QUrl recentUrl = m_subtitleTrUrl;
@@ -598,7 +593,7 @@ Application::saveSubtitleTrAs()
 		false,
 		m_subtitleTrUrl,
 		m_subtitleTrEncoding.isEmpty() ? SCConfig::defaultSubtitlesEncoding() : m_subtitleTrEncoding,
-		m_subtitleTrEOL,
+		Format::CurrentOS,
 		m_subtitleTrFormat,
 		m_mainWindow);
 
@@ -610,7 +605,6 @@ Application::saveSubtitleTrAs()
 		m_subtitleTrFileName = QFileInfo(m_subtitleTrUrl.path()).completeBaseName();
 		m_subtitleTrEncoding = saveDlg.selectedEncoding();
 		m_subtitleTrFormat = saveDlg.selectedFormat();
-		m_subtitleTrEOL = saveDlg.selectedNewLine();
 
 		return saveSubtitleTr();
 	}
@@ -680,7 +674,7 @@ Application::saveSplitSubtitle(const Subtitle &subtitle, const QUrl &srcUrl, QSt
 		if(!codecFound)
 			codec = QTextCodec::codecForLocale();
 
-		if(FormatManager::instance().writeSubtitle(subtitle, primary, dstUrl, codec, primary ? m_subtitleEOL : m_subtitleTrEOL, format, false))
+		if(FormatManager::instance().writeSubtitle(subtitle, primary, dstUrl, codec, format, false))
 			dstUrl.setQuery("encoding=" + codec->name());
 		else
 			dstUrl = QUrl();
