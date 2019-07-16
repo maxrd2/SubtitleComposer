@@ -47,6 +47,8 @@ public:
 	SStringList(const QList<QString> &list);
 
 	SString join(const SString &sep) const;
+
+	SStringList& operator=(const SStringList& other) = default;
 };
 
 class SString : public QString

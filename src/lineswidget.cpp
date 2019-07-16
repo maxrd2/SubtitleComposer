@@ -237,7 +237,7 @@ LinesModel::data(const QModelIndex &index, int role) const
 		if(role == Qt::DisplayRole)
 			return index.row() + 1;
 		if(role == Qt::SizeHintRole)
-			return QSize(QFontMetrics(QFont()).width(QString::number(index.row() + 1)) + 28, 0);
+			return QSize(QFontMetrics(QFont()).horizontalAdvance(QString::number(index.row() + 1)) + 28, 0);
 		break;
 
 	case ShowTime:
@@ -749,7 +749,7 @@ LinesWidget::LinesWidget(QWidget *parent)
 	setSelectionMode(QAbstractItemView::ExtendedSelection);
 	setSelectionBehavior(QAbstractItemView::SelectRows);
 
-	m_gridPen.setColor(palette().mid().color().light(120));
+	m_gridPen.setColor(palette().mid().color().lighter(120));
 
 	setAcceptDrops(true);
 	viewport()->installEventFilter(this);
@@ -1215,7 +1215,7 @@ LinesWidget::drawRow(QPainter *painter, const QStyleOptionViewItem &option, cons
 		drawVerticalDotLine(painter, cellRect.right(), rowRect.top(), rowRect.bottom());
 	}
 	if(index.row() == currentIndex().row()) {
-		painter->setPen(palette.foreground().color());
+		painter->setPen(palette.windowText().color());
 
 		drawHorizontalDotLine(painter, rowRect.left(), rowRect.right(), rowRect.top());
 		drawHorizontalDotLine(painter, rowRect.left(), rowRect.right(), rowRect.bottom());
