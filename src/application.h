@@ -106,8 +106,8 @@ public:
 public slots:
 	void newSubtitle();
 	void openSubtitle();
-	void reopenSubtitleWithCodec(QTextCodec *codec);
-	void reopenSubtitleWithDetectScript();
+	inline void reopenSubtitleWithCodec(QTextCodec *codec) { reopenSubtitleWithCodecOrDetectScript(codec); }
+	inline void reopenSubtitleWithDetectScript() { reopenSubtitleWithCodecOrDetectScript(nullptr); }
 	void reopenSubtitleWithCodecOrDetectScript(QTextCodec *codec);
 	void demuxTextStream(int textStreamIndex);
 	void openSubtitle(const QUrl &url, bool warnClashingUrls = true);
@@ -119,8 +119,8 @@ public slots:
 
 	void newSubtitleTr();
 	void openSubtitleTr();
-	void reopenSubtitleTrWithCodec(QTextCodec *codec);
-	void reopenSubtitleTrWithDetectScript();
+	inline void reopenSubtitleTrWithCodec(QTextCodec *codec) { reopenSubtitleTrWithCodecOrDetectScript(codec); }
+	inline void reopenSubtitleTrWithDetectScript() { reopenSubtitleTrWithCodecOrDetectScript(nullptr); }
 	void reopenSubtitleTrWithCodecOrDetectScript(QTextCodec *codec);
 
 	void openSubtitleTr(const QUrl &url, bool warnClashingUrls = true);

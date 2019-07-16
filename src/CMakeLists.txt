@@ -80,6 +80,7 @@ set(subtitlecomposer_SRCS
 	${main_utils_SRCS}
 	${main_scripting_SRCS}
 	${CMAKE_CURRENT_SOURCE_DIR}/application.cpp
+	${CMAKE_CURRENT_SOURCE_DIR}/application_subtitle.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/currentlinewidget.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/lineswidget.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/main.cpp
