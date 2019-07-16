@@ -127,36 +127,36 @@ Subtitle::setSecondaryData(const Subtitle &from, bool usePrimaryData)
 {
 	beginCompositeAction(i18n("Set Secondary Data"));
 
-	SubtitleIterator fromIt(from, Range::full());
-	SubtitleIterator thisIt(*this, Range::full());
+	const int srcErrors = usePrimaryData ? SubtitleLine::PrimaryOnlyErrors : SubtitleLine::SecondaryOnlyErrors;
+	const int dstErrors = SubtitleLine::PrimaryOnlyErrors | SubtitleLine::SharedErrors;
 
-	// the errors that we are going to take from 'from':
-	const int fromErrors = usePrimaryData ? SubtitleLine::PrimaryOnlyErrors : SubtitleLine::SecondaryOnlyErrors;
-	// the errors that we are going to keep:
-	const int thisErrors = SubtitleLine::PrimaryOnlyErrors | SubtitleLine::SharedErrors;
-
-	for(SubtitleLine *fromLine = fromIt.current(), *thisLine = thisIt.current(); fromLine && thisLine; ++fromIt, ++thisIt, fromLine = fromIt.current(), thisLine = thisIt.current()) {
-		thisLine->setSecondaryText(usePrimaryData ? fromLine->primaryText() : fromLine->secondaryText());
-		thisLine->setErrorFlags((thisLine->errorFlags() & thisErrors) | (fromLine->errorFlags() & fromErrors));
+	for(int i = 0, n = m_lines.size(); i < n; i++) {
+		const SubtitleLine *srcLine = from.m_lines.at(i).obj();
+		SubtitleLine *dstLine = m_lines.at(i).obj();
+		dstLine->setSecondaryText(usePrimaryData ? srcLine->primaryText() : srcLine->secondaryText());
+		dstLine->setErrorFlags((dstLine->errorFlags() & dstErrors) | (srcLine->errorFlags() & srcErrors));
 	}
 
-	if(fromIt.current()) {          // from subtitle had more lines than *this
-		QList<SubtitleLine *> lines;
-		for(; fromIt.current(); ++fromIt) {
-			SubtitleLine *thisLine = new SubtitleLine(*fromIt.current());
-			if(usePrimaryData)
-				thisLine->setSecondaryText(thisLine->primaryText());
-			thisLine->setPrimaryText(SString());
-			thisLine->setErrorFlags(SubtitleLine::PrimaryOnlyErrors, false);
-			lines.append(thisLine);
-		}
-		processAction(new InsertLinesAction(*this, lines));
-	} else if(thisIt.current()) {   // *this had more lines than from subtitle
-		for(SubtitleLine *thisLine = thisIt.current(); thisLine; ++thisIt, thisLine = thisIt.current()) {
-			thisLine->setSecondaryText(SString());
-			thisLine->setErrorFlags(SubtitleLine::SecondaryOnlyErrors, false);
-		}
+	// clear remaining local translations
+	for(int i = from.m_lines.size(), n = m_lines.size(); i < n; i++) {
+		SubtitleLine *dstLine = m_lines.at(i).obj();
+		dstLine->setSecondaryText(SString());
+		dstLine->setErrorFlags(SubtitleLine::SecondaryOnlyErrors, false);
 	}
+
+	// insert remaining source translations
+	QList<SubtitleLine *> newLines;
+	for(int i = m_lines.size(), n = from.m_lines.size(); i < n; i++) {
+		const SubtitleLine *srcLine = from.m_lines.at(i).obj();
+		SubtitleLine *dstLine = new SubtitleLine(*srcLine);
+		if(usePrimaryData)
+			dstLine->setSecondaryText(dstLine->primaryText());
+		dstLine->setPrimaryText(SString());
+		dstLine->setErrorFlags(SubtitleLine::PrimaryOnlyErrors, false);
+		newLines.append(dstLine);
+	}
+	if(!newLines.isEmpty())
+		processAction(new InsertLinesAction(*this, newLines));
 
 	endCompositeAction();
 }
