@@ -81,50 +81,15 @@ Application::buildMediaFilesFilter()
 }
 
 QTextCodec *
-Application::codecForUrl(const QUrl &url, bool useRecentFiles, bool useDefault)
+Application::codecForEncoding(const QString &encoding)
 {
-	static const QRegExp rx("encoding=([^&]*)");
-	QString encoding;
+	if(encoding.isEmpty())
+		return nullptr;
 
-	if(rx.indexIn(url.query()) >= 0)
-		encoding = rx.cap(1);
-
-	if(useRecentFiles) {
-		if(encoding.isEmpty())
-			encoding = m_recentSubtitlesAction->encodingForUrl(url);
-		if(encoding.isEmpty())
-			encoding = m_recentSubtitlesTrAction->encodingForUrl(url);
-	}
-
-	QTextCodec *codec = 0;
-
-	if(!encoding.isEmpty()) {
-		bool codecFound = false;
-		codec = KCharsets::charsets()->codecForName(encoding, codecFound);
-		if(!codecFound)
-			codec = 0;
-	}
-
-	if(!codec && useDefault)
-		codec = QTextCodec::codecForName(SCConfig::defaultSubtitlesEncoding().toLatin1());
-
-	return codec;
-}
-
-QTextCodec *
-Application::codecForEncoding(const QString &encoding, bool useDefault)
-{
-	QTextCodec *codec = 0;
-
-	if(!encoding.isEmpty()) {
-		bool codecFound = false;
-		codec = KCharsets::charsets()->codecForName(encoding, codecFound);
-		if(!codecFound)
-			codec = 0;
-	}
-
-	if(!codec && useDefault)
-		codec = QTextCodec::codecForName(SCConfig::defaultSubtitlesEncoding().toLatin1());
+	bool codecFound = false;
+	QTextCodec *codec = KCharsets::charsets()->codecForName(encoding, codecFound);
+	if(!codecFound)
+		return nullptr;
 
 	return codec;
 }
@@ -132,16 +97,15 @@ Application::codecForEncoding(const QString &encoding, bool useDefault)
 bool
 Application::acceptClashingUrls(const QUrl &subtitleUrl, const QUrl &subtitleTrUrl)
 {
-	QUrl url(subtitleUrl);
-	url.setQuery(QString());
-	QUrl trUrl(subtitleTrUrl);
-	trUrl.setQuery(QString());
-
-	if(url != trUrl || url.isEmpty() || trUrl.isEmpty())
+	if(subtitleUrl != subtitleTrUrl || subtitleUrl.isEmpty() || subtitleTrUrl.isEmpty())
 		return true;
 
-	return KMessageBox::Continue == KMessageBox::warningContinueCancel(m_mainWindow, i18n("The requested action would make the subtitle and its translation share the same file, possibly resulting in loss of information when saving.\nAre you sure you want to continue?"), i18n("Conflicting Subtitle Files")
-																	   );
+	return KMessageBox::Continue == KMessageBox::warningContinueCancel(
+		m_mainWindow,
+		i18n("The requested action would make the subtitle and its translation share the same file, "
+			 "possibly resulting in loss of information when saving.\n"
+			 "Are you sure you want to continue?"),
+		i18n("Conflicting Subtitle Files"));
 }
 
 void
@@ -173,10 +137,8 @@ Application::openSubtitle()
 			return;
 
 		m_lastSubtitleUrl = openDlg.selectedUrl();
-
-		QUrl fileUrl = m_lastSubtitleUrl;
-		fileUrl.setQuery("encoding=" + openDlg.selectedEncoding());
-		openSubtitle(fileUrl);
+		m_recentSubtitlesAction->addUrl(m_lastSubtitleUrl, openDlg.selectedEncoding());
+		openSubtitle(m_lastSubtitleUrl);
 	}
 }
 
@@ -189,14 +151,11 @@ Application::openSubtitle(const QUrl &url, bool warnClashingUrls)
 	if(!closeSubtitle())
 		return;
 
-	QTextCodec *codec = codecForUrl(url, true, false);
-
-	QUrl fileUrl = url;
-	fileUrl.setQuery(QString());
+	QTextCodec *codec = codecForEncoding(KRecentFilesActionExt::encodingForUrl(url));
 
 	m_subtitle = new Subtitle();
 
-	if(FormatManager::instance().readSubtitle(*m_subtitle, true, fileUrl, &codec, &m_subtitleFormat)) {
+	if(FormatManager::instance().readSubtitle(*m_subtitle, true, url, &codec, &m_subtitleFormat)) {
 		// The loading of the subtitle shouldn't be an undoable action as there's no state before it
 		m_undoStack->clear();
 		m_subtitle->clearPrimaryDirty();
@@ -204,18 +163,17 @@ Application::openSubtitle(const QUrl &url, bool warnClashingUrls)
 
 		emit subtitleOpened(m_subtitle);
 
-		m_subtitleUrl = fileUrl;
+		m_subtitleUrl = url;
 		m_subtitleFileName = QFileInfo(m_subtitleUrl.path()).fileName();
 
 		if(codec) {
 			m_subtitleEncoding = codec->name();
-			fileUrl.setQuery("encoding=" + codec->name());
 			m_reopenSubtitleAsAction->setCurrentCodec(codec);
 		} else {
-			m_subtitleEncoding = $("binary");
+			m_subtitleEncoding = SCConfig::defaultSubtitlesEncoding();
 		}
 
-		m_recentSubtitlesAction->addUrl(fileUrl);
+		m_recentSubtitlesAction->addUrl(url, m_subtitleEncoding);
 
 		connect(m_subtitle, SIGNAL(primaryDirtyStateChanged(bool)), this, SLOT(updateTitle()));
 		connect(m_subtitle, SIGNAL(secondaryDirtyStateChanged(bool)), this, SLOT(updateTitle()));
@@ -288,9 +246,7 @@ Application::reopenSubtitleWithCodecOrDetectScript(QTextCodec *codec)
 
 	m_reopenSubtitleAsAction->setCurrentCodec(codec);
 
-	QUrl fileUrl = m_subtitleUrl;
-	fileUrl.setQuery("encoding=" + codec->name());
-	m_recentSubtitlesAction->addUrl(fileUrl);
+	m_recentSubtitlesAction->addUrl(m_subtitleUrl, m_subtitleEncoding);
 
 	connect(m_subtitle, SIGNAL(primaryDirtyStateChanged(bool)), this, SLOT(updateTitle()));
 	connect(m_subtitle, SIGNAL(secondaryDirtyStateChanged(bool)), this, SLOT(updateTitle()));
@@ -333,11 +289,8 @@ Application::saveSubtitle()
 	if(FormatManager::instance().writeSubtitle(*m_subtitle, true, m_subtitleUrl, codec, m_subtitleFormat, true)) {
 		m_subtitle->clearPrimaryDirty();
 
-		QUrl recentUrl = m_subtitleUrl;
-		recentUrl.setQuery("encoding=" + codec->name());
-		m_recentSubtitlesAction->addUrl(recentUrl);
-
 		m_reopenSubtitleAsAction->setCurrentCodec(codec);
+		m_recentSubtitlesAction->addUrl(m_subtitleUrl, codec->name());
 
 		updateTitle();
 
@@ -379,9 +332,9 @@ Application::closeSubtitle()
 {
 	if(m_subtitle) {
 		if(m_translationMode && m_subtitle->isSecondaryDirty()) {
-			int result = KMessageBox::warningYesNoCancel(0,
-														 i18n("Currently opened translation subtitle has unsaved changes.\nDo you want to save them?"),
-														 i18n("Close Translation Subtitle") + " - SubtitleComposer");
+			int result = KMessageBox::warningYesNoCancel(nullptr,
+							i18n("Currently opened translation subtitle has unsaved changes.\nDo you want to save them?"),
+							i18n("Close Translation Subtitle") + " - SubtitleComposer");
 			if(result == KMessageBox::Cancel)
 				return false;
 			else if(result == KMessageBox::Yes)
@@ -390,9 +343,9 @@ Application::closeSubtitle()
 		}
 
 		if(m_subtitle->isPrimaryDirty()) {
-			int result = KMessageBox::warningYesNoCancel(0,
-														 i18n("Currently opened subtitle has unsaved changes.\nDo you want to save them?"),
-														 i18n("Close Subtitle") + " - SubtitleComposer");
+			int result = KMessageBox::warningYesNoCancel(nullptr,
+							i18n("Currently opened subtitle has unsaved changes.\nDo you want to save them?"),
+							i18n("Close Subtitle") + " - SubtitleComposer");
 			if(result == KMessageBox::Cancel)
 				return false;
 			else if(result == KMessageBox::Yes)
@@ -456,10 +409,8 @@ Application::openSubtitleTr()
 			return;
 
 		m_lastSubtitleUrl = openDlg.selectedUrl();
-
-		QUrl fileUrl = m_lastSubtitleUrl;
-		fileUrl.setQuery("encoding=" + openDlg.selectedEncoding());
-		openSubtitleTr(fileUrl);
+		m_recentSubtitlesTrAction->addUrl(m_lastSubtitleUrl, openDlg.selectedEncoding());
+		openSubtitleTr(m_lastSubtitleUrl);
 	}
 }
 
@@ -475,18 +426,14 @@ Application::openSubtitleTr(const QUrl &url, bool warnClashingUrls)
 	if(!closeSubtitleTr())
 		return;
 
-	QTextCodec *codec = codecForUrl(url, true, false);
+	QTextCodec *codec = codecForEncoding(KRecentFilesActionExt::encodingForUrl(url));
 
-	QUrl fileUrl = url;
-	fileUrl.setQuery(QString());
-
-	if(FormatManager::instance().readSubtitle(*m_subtitle, false, fileUrl, &codec, &m_subtitleTrFormat)) {
-		m_subtitleTrUrl = fileUrl;
+	if(FormatManager::instance().readSubtitle(*m_subtitle, false, url, &codec, &m_subtitleTrFormat)) {
+		m_subtitleTrUrl = url;
 		m_subtitleTrFileName = QFileInfo(m_subtitleTrUrl.path()).fileName();
 		m_subtitleTrEncoding = codec->name();
 
-		fileUrl.setQuery("encoding=" + codec->name());
-		m_recentSubtitlesTrAction->addUrl(fileUrl);
+		m_recentSubtitlesTrAction->addUrl(m_subtitleTrUrl, m_subtitleTrEncoding);
 
 		QStringList subtitleStreams;
 		subtitleStreams.append(i18nc("@item:inmenu Display primary text in video player", "Primary"));
@@ -551,9 +498,7 @@ Application::reopenSubtitleTrWithCodecOrDetectScript(QTextCodec *codec)
 
 	m_reopenSubtitleTrAsAction->setCurrentCodec(codec);
 
-	QUrl fileUrl = m_subtitleTrUrl;
-	fileUrl.setQuery("encoding=" + codec->name());
-	m_recentSubtitlesTrAction->addUrl(fileUrl);
+	m_recentSubtitlesTrAction->addUrl(m_subtitleTrUrl, m_subtitleTrEncoding);
 
 	connect(m_subtitle, SIGNAL(primaryDirtyStateChanged(bool)), this, SLOT(updateTitle()));
 	connect(m_subtitle, SIGNAL(secondaryDirtyStateChanged(bool)), this, SLOT(updateTitle()));
@@ -573,9 +518,7 @@ Application::saveSubtitleTr()
 	if(FormatManager::instance().writeSubtitle(*m_subtitle, false, m_subtitleTrUrl, codec, m_subtitleTrFormat, true)) {
 		m_subtitle->clearSecondaryDirty();
 
-		QUrl recentUrl = m_subtitleTrUrl;
-		recentUrl.setQuery("encoding=" + codec->name());
-		m_recentSubtitlesTrAction->addUrl(recentUrl);
+		m_recentSubtitlesTrAction->addUrl(m_subtitleTrUrl, codec->name());
 
 		updateTitle();
 
@@ -617,9 +560,9 @@ Application::closeSubtitleTr()
 {
 	if(m_subtitle && m_translationMode) {
 		if(m_translationMode && m_subtitle->isSecondaryDirty()) {
-			int result = KMessageBox::warningYesNoCancel(0,
-														 i18n("Currently opened translation subtitle has unsaved changes.\nDo you want to save them?"),
-														 i18n("Close Translation Subtitle") + " - SubtitleComposer");
+			int result = KMessageBox::warningYesNoCancel(nullptr,
+					i18n("Currently opened translation subtitle has unsaved changes.\nDo you want to save them?"),
+					i18n("Close Translation Subtitle") + " - SubtitleComposer");
 			if(result == KMessageBox::Cancel)
 				return false;
 			else if(result == KMessageBox::Yes)
@@ -674,10 +617,14 @@ Application::saveSplitSubtitle(const Subtitle &subtitle, const QUrl &srcUrl, QSt
 		if(!codecFound)
 			codec = QTextCodec::codecForLocale();
 
-		if(FormatManager::instance().writeSubtitle(subtitle, primary, dstUrl, codec, format, false))
-			dstUrl.setQuery("encoding=" + codec->name());
-		else
-			dstUrl = QUrl();
+		if(FormatManager::instance().writeSubtitle(subtitle, primary, dstUrl, codec, format, false)) {
+			if(primary)
+				m_recentSubtitlesAction->addUrl(dstUrl, codec->name());
+			else
+				m_recentSubtitlesTrAction->addUrl(dstUrl, codec->name());
+		} else {
+			dstUrl.clear();
+		}
 	}
 
 	if(dstUrl.path().isEmpty()) {

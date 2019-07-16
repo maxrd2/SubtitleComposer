@@ -20,7 +20,9 @@
  * Boston, MA 02110-1301, USA.
  */
 
+#include <QMap>
 #include <QUrl>
+
 #include <KRecentFilesAction>
 
 class KRecentFilesActionExt : public KRecentFilesAction
@@ -31,7 +33,15 @@ public:
 	explicit KRecentFilesActionExt(QObject *parent);
 	virtual ~KRecentFilesActionExt();
 
-	QString encodingForUrl(const QUrl &url) const;
+	static QString encodingForUrl(const QUrl &url);
+
+	void loadEntries(const KConfigGroup &configGroup);
+	void saveEntries(const KConfigGroup &configGroup);
+
+	void addUrl(const QUrl &url, const QString &encoding, const QString &name = QString());
+
+private:
+	using KRecentFilesAction::addUrl;
 };
 
 #endif

@@ -40,6 +40,7 @@ QT_FORWARD_DECLARE_CLASS(QUndoStack)
 
 class KComboBox;
 class KToggleAction;
+class KRecentFilesAction;
 class KRecentFilesActionExt;
 class KCodecActionExt;
 
@@ -227,8 +228,7 @@ signals:
 	void fullScreenModeChanged(bool value);
 
 private:
-	QTextCodec * codecForUrl(const QUrl &url, bool useRecentFiles, bool useDefault);
-	QTextCodec * codecForEncoding(const QString &encoding, bool useDefault);
+	QTextCodec * codecForEncoding(const QString &encoding);
 
 	bool acceptClashingUrls(const QUrl &subtitleUrl, const QUrl &subtitleTrUrl);
 
@@ -314,7 +314,7 @@ private:
 
 	QUrl m_lastVideoUrl;
 	bool m_linkCurrentLineToPosition;
-	KRecentFilesActionExt *m_recentVideosAction;
+	KRecentFilesAction *m_recentVideosAction;
 
 	QUndoStack *m_undoStack;
 };

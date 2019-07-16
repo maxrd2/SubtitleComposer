@@ -1213,7 +1213,7 @@ Application::joinSubtitles()
 	static JoinSubtitlesDialog *dlg = new JoinSubtitlesDialog(m_mainWindow);
 
 	if(dlg->exec() == QDialog::Accepted) {
-		QTextCodec *codec = codecForEncoding(dlg->subtitleEncoding(), false);
+		QTextCodec *codec = codecForEncoding(dlg->subtitleEncoding());
 
 		Subtitle secondSubtitle;
 		bool primary = dlg->selectedTextsTarget() != Subtitle::Secondary;
@@ -1714,7 +1714,7 @@ Application::syncWithSubtitle()
 	static SyncSubtitlesDialog *dlg = new SyncSubtitlesDialog(m_mainWindow);
 
 	if(dlg->exec() == QDialog::Accepted) {
-		QTextCodec *codec = codecForEncoding(dlg->subtitleEncoding(), false);
+		QTextCodec *codec = codecForEncoding(dlg->subtitleEncoding());
 
 		Subtitle referenceSubtitle;
 		if(FormatManager::instance().readSubtitle(referenceSubtitle, true, dlg->subtitleUrl(), &codec)) {
