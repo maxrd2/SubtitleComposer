@@ -22,6 +22,7 @@
  */
 
 #include "format.h"
+#include "formatmanager.h"
 
 namespace SubtitleComposer {
 class InputFormat : public Format
@@ -42,10 +43,8 @@ public:
 		return true;
 	}
 
-	virtual bool readBinary(Subtitle &, const QUrl &)
-	{
-		return false;
-	}
+	virtual bool isBinary() const { return false; }
+	virtual FormatManager::Status readBinary(Subtitle &, const QUrl &) { return FormatManager::ERROR; }
 
 protected:
 	virtual bool parseSubtitles(Subtitle &subtitle, const QString &data) const = 0;

@@ -67,15 +67,15 @@ include_directories(
 )
 
 set(subtitlecomposer_SRCS
-	${helpers_SRCS}
 	${core_SRCS}
+	${dialogs_SRCS}
 	${formats_SRCS}
-	${videoplayer_SRCS}
-	${streamprocessor_SRCS}
+	${helpers_SRCS}
 	${speechprocessor_SRCS}
+	${streamprocessor_SRCS}
+	${videoplayer_SRCS}
 	${widgets_SRCS}
 	${main_configs_SRCS}
-	${main_dialogs_SRCS}
 	${main_actions_SRCS}
 	${main_utils_SRCS}
 	${main_scripting_SRCS}
@@ -100,9 +100,9 @@ endif()
 kconfig_add_kcfg_files(subtitlecomposer_SRCS GENERATE_MOC ${CMAKE_CURRENT_SOURCE_DIR}/scconfig.kcfgc)
 
 ki18n_wrap_ui(subtitlecomposer_SRCS
+	${dialogs_UIS}
 	${formats_UIS}
 	${main_configs_UIS}
-	${main_dialogs_UIS}
 	${main_scripting_UIS})
 
 add_executable(subtitlecomposer WIN32 ${subtitlecomposer_SRCS})

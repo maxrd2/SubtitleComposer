@@ -21,32 +21,35 @@
  * Boston, MA 02110-1301, USA.
  */
 
-#include <kcodecaction.h>
+#include <KSelectAction>
 
 #include <QIcon>
 
-class KCodecActionExt : public KCodecAction
+class KCodecActionExt : public KSelectAction
 {
 	Q_OBJECT
 
 public:
-	explicit KCodecActionExt(QObject *parent, bool showAutoDetect = false, bool showDefault = false);
-	KCodecActionExt(const QString &text, QObject *parent, bool showAutoDetect = false, bool showDefault = false);
-	KCodecActionExt(const QIcon &icon, const QString &text, QObject *parent, bool showAutoDetect = false, bool showDefault = false);
+	enum Mode { Open, Save };
+	explicit KCodecActionExt(QObject *parent, Mode mode);
+	KCodecActionExt(const QString &text, QObject *parent, Mode mode);
+	KCodecActionExt(const QIcon &icon, const QString &text, QObject *parent, Mode mode);
 
 public:
-	KEncodingProber::ProberType currentAutoDetectScript() const;
-	bool setCurrentAutoDetectScript(KEncodingProber::ProberType);
+	bool setCurrentCodec(QTextCodec *codec);
+
+Q_SIGNALS:
+	void triggered(QTextCodec *codec);
 
 protected Q_SLOTS:
-	void actionTriggered(QAction *) override;
+	void actionTriggered(QAction *) override {}
 
 private:
 	void init();
 
-	bool m_showDefault;
-	bool m_showAutoDetect;
-	QAction *m_defaultAction;
+	Mode m_mode;
+	QAction *m_defaultCodecAction;
+	QAction *m_currentCodecAction;
 	QAction *m_autodetectAction;
 };
 

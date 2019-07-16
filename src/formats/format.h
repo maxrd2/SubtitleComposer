@@ -26,6 +26,7 @@
 #include "core/subtitleline.h"
 
 #include <QString>
+#include <QStringBuilder>
 #include <QStringList>
 
 namespace SubtitleComposer {
@@ -58,6 +59,13 @@ public:
 
 	const QString & name() const { return m_name; }
 	const QStringList & extensions() const { return m_extensions; }
+	const QString dialogFilter() const
+	{
+		QString extensions;
+		for(const QString &ext : m_extensions)
+			extensions += QStringLiteral(" *.") % ext;
+		return m_name % QStringLiteral(" (") % extensions.midRef(1) % QChar(')');
+	}
 
 	bool knowsExtension(const QString &extension) const
 	{

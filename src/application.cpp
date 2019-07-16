@@ -426,12 +426,11 @@ Application::setupActions()
 	actionCollection->addAction(ACT_OPEN_SUBTITLE, openSubtitleAction);
 	actionManager->addAction(openSubtitleAction, 0);
 
-	m_reopenSubtitleAsAction = new KCodecActionExt(actionCollection, true);
+	m_reopenSubtitleAsAction = new KCodecActionExt(actionCollection, KCodecActionExt::Open);
 	m_reopenSubtitleAsAction->setIcon(QIcon::fromTheme("view-refresh"));
 	m_reopenSubtitleAsAction->setText(i18n("Reload As..."));
 	m_reopenSubtitleAsAction->setStatusTip(i18n("Reload opened file with a different encoding"));
-	connect(m_reopenSubtitleAsAction, SIGNAL(triggered(QTextCodec *)), this, SLOT(reopenSubtitleWithCodec(QTextCodec *)));
-	connect(m_reopenSubtitleAsAction, SIGNAL(triggered(KEncodingProber::ProberType)), this, SLOT(reopenSubtitleWithDetectScript()));
+	connect(m_reopenSubtitleAsAction, &KCodecActionExt::triggered, this, &Application::reopenSubtitleWithCodec);
 	actionCollection->addAction(ACT_REOPEN_SUBTITLE_AS, m_reopenSubtitleAsAction);
 	actionManager->addAction(m_reopenSubtitleAsAction, UserAction::SubOpened | UserAction::SubPClean | UserAction::FullScreenOff);
 
@@ -447,17 +446,20 @@ Application::setupActions()
 	saveSubtitleAction->setText(i18n("Save"));
 	saveSubtitleAction->setStatusTip(i18n("Save opened subtitle"));
 	actionCollection->setDefaultShortcuts(saveSubtitleAction, KStandardShortcut::save());
-	connect(saveSubtitleAction, SIGNAL(triggered()), this, SLOT(saveSubtitle()));
+	connect(saveSubtitleAction, &QAction::triggered, [&](){
+		saveSubtitle(KCharsets::charsets()->codecForName(m_subtitleEncoding));
+	});
 	actionCollection->addAction(ACT_SAVE_SUBTITLE, saveSubtitleAction);
 	actionManager->addAction(saveSubtitleAction, UserAction::SubPDirty | UserAction::FullScreenOff);
 
-	QAction *saveSubtitleAsAction = new QAction(actionCollection);
-	saveSubtitleAsAction->setIcon(QIcon::fromTheme("document-save-as"));
-	saveSubtitleAsAction->setText(i18n("Save As..."));
-	saveSubtitleAsAction->setStatusTip(i18n("Save opened subtitle with different settings"));
-	connect(saveSubtitleAsAction, SIGNAL(triggered()), this, SLOT(saveSubtitleAs()));
-	actionCollection->addAction(ACT_SAVE_SUBTITLE_AS, saveSubtitleAsAction);
-	actionManager->addAction(saveSubtitleAsAction, UserAction::SubOpened | UserAction::FullScreenOff);
+	m_saveSubtitleAsAction = new KCodecActionExt(actionCollection, KCodecActionExt::Save);
+	m_saveSubtitleAsAction->setIcon(QIcon::fromTheme("document-save-as"));
+	m_saveSubtitleAsAction->setText(i18n("Save As..."));
+	m_saveSubtitleAsAction->setStatusTip(i18n("Save opened subtitle with different settings"));
+	connect(m_saveSubtitleAsAction, &KCodecActionExt::triggered, this, &Application::saveSubtitleAs);
+	connect(m_saveSubtitleAsAction, &QAction::triggered, this, [&](){ saveSubtitleAs(); });
+	actionCollection->addAction(ACT_SAVE_SUBTITLE_AS, m_saveSubtitleAsAction);
+	actionManager->addAction(m_saveSubtitleAsAction, UserAction::SubOpened | UserAction::FullScreenOff);
 
 	QAction *closeSubtitleAction = new QAction(actionCollection);
 	closeSubtitleAction->setIcon(QIcon::fromTheme("window-close"));
@@ -486,12 +488,11 @@ Application::setupActions()
 	actionCollection->addAction(ACT_OPEN_SUBTITLE_TR, openSubtitleTrAction);
 	actionManager->addAction(openSubtitleTrAction, UserAction::SubOpened);
 
-	m_reopenSubtitleTrAsAction = new KCodecActionExt(actionCollection, true);
+	m_reopenSubtitleTrAsAction = new KCodecActionExt(actionCollection, KCodecActionExt::Open);
 	m_reopenSubtitleTrAsAction->setIcon(QIcon::fromTheme("view-refresh"));
 	m_reopenSubtitleTrAsAction->setText(i18n("Reload Translation As..."));
 	m_reopenSubtitleTrAsAction->setStatusTip(i18n("Reload opened translation file with a different encoding"));
-	connect(m_reopenSubtitleTrAsAction, SIGNAL(triggered(QTextCodec *)), this, SLOT(reopenSubtitleTrWithCodec(QTextCodec *)));
-	connect(m_reopenSubtitleTrAsAction, SIGNAL(triggered(KEncodingProber::ProberType)), this, SLOT(reopenSubtitleTrWithDetectScript()));
+	connect(m_reopenSubtitleTrAsAction, &KCodecActionExt::triggered, this, &Application::reopenSubtitleTrWithCodec);
 	actionCollection->addAction(ACT_REOPEN_SUBTITLE_TR_AS, m_reopenSubtitleTrAsAction);
 	actionManager->addAction(m_reopenSubtitleTrAsAction, UserAction::SubTrOpened | UserAction::SubSClean | UserAction::FullScreenOff);
 
@@ -508,17 +509,20 @@ Application::setupActions()
 	saveSubtitleTrAction->setText(i18n("Save Translation"));
 	saveSubtitleTrAction->setStatusTip(i18n("Save opened translation subtitle"));
 	actionCollection->setDefaultShortcut(saveSubtitleTrAction, QKeySequence("Ctrl+Shift+S"));
-	connect(saveSubtitleTrAction, SIGNAL(triggered()), this, SLOT(saveSubtitleTr()));
+	connect(saveSubtitleTrAction, &QAction::triggered, [&](){
+		saveSubtitleTr(KCharsets::charsets()->codecForName(m_subtitleTrEncoding));
+	});
 	actionCollection->addAction(ACT_SAVE_SUBTITLE_TR, saveSubtitleTrAction);
 	actionManager->addAction(saveSubtitleTrAction, UserAction::SubSDirty | UserAction::FullScreenOff);
 
-	QAction *saveSubtitleTrAsAction = new QAction(actionCollection);
-	saveSubtitleTrAsAction->setIcon(QIcon::fromTheme("document-save-as"));
-	saveSubtitleTrAsAction->setText(i18n("Save Translation As..."));
-	saveSubtitleTrAsAction->setStatusTip(i18n("Save opened translation subtitle with different settings"));
-	connect(saveSubtitleTrAsAction, SIGNAL(triggered()), this, SLOT(saveSubtitleTrAs()));
-	actionCollection->addAction(ACT_SAVE_SUBTITLE_TR_AS, saveSubtitleTrAsAction);
-	actionManager->addAction(saveSubtitleTrAsAction, UserAction::SubTrOpened | UserAction::FullScreenOff);
+	m_saveSubtitleTrAsAction = new KCodecActionExt(actionCollection, KCodecActionExt::Save);
+	m_saveSubtitleTrAsAction->setIcon(QIcon::fromTheme("document-save-as"));
+	m_saveSubtitleTrAsAction->setText(i18n("Save Translation As..."));
+	m_saveSubtitleTrAsAction->setStatusTip(i18n("Save opened translation subtitle with different settings"));
+	connect(m_saveSubtitleTrAsAction, &KCodecActionExt::triggered, this, &Application::saveSubtitleTrAs);
+	connect(m_saveSubtitleTrAsAction, &QAction::triggered, this, [&](){ saveSubtitleTrAs(); });
+	actionCollection->addAction(ACT_SAVE_SUBTITLE_TR_AS, m_saveSubtitleTrAsAction);
+	actionManager->addAction(m_saveSubtitleTrAsAction, UserAction::SubTrOpened | UserAction::FullScreenOff);
 
 	QAction *closeSubtitleTrAction = new QAction(actionCollection);
 	closeSubtitleTrAction->setIcon(QIcon::fromTheme("window-close"));

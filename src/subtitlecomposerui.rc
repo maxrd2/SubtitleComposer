@@ -5,6 +5,7 @@
 			<text>&amp;File</text>
 			<Action name="new_subtitle" />
 			<Action name="open_subtitle" />
+			<Action name="reopen_subtitle_as" />
 			<Action name="recent_subtitles" />
 			<Separator />
 			<Action name="open_video" />
@@ -12,7 +13,6 @@
 			<Separator />
 			<Action name="save_subtitle" />
 			<Action name="save_subtitle_as" />
-			<Action name="reopen_subtitle_as" />
 			<Separator />
 			<Action name="close_subtitle" />
 			<Separator />
@@ -20,11 +20,11 @@
 				<text>Translation</text>
 				<Action name="new_subtitle_tr" />
 				<Action name="open_subtitle_tr" />
+				<Action name="reopen_subtitle_tr_as" />
 				<Action name="recent_subtitles_tr" />
 				<Separator />
 				<Action name="save_subtitle_tr" />
 				<Action name="save_subtitle_tr_as" />
-				<Action name="reopen_subtitle_tr_as" />
 				<Separator />
 				<Action name="close_subtitle_tr" />
 			</Menu>

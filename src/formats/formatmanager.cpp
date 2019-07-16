@@ -25,6 +25,7 @@
 #include "application.h"
 #include "helpers/fileloadhelper.h"
 #include "helpers/filesavehelper.h"
+#include "dialogs/encodingdetectdialog.h"
 
 #include "microdvd/microdvdinputformat.h"
 #include "microdvd/microdvdoutputformat.h"
@@ -70,55 +71,24 @@ FormatManager::instance()
 	return instance;
 }
 
+#define INPUT_FORMAT(fmt) { InputFormat *f = new fmt##InputFormat(); m_inputFormats[f->name()] = f; }
+#define OUTPUT_FORMAT(fmt) { OutputFormat *f = new fmt##OutputFormat(); m_outputFormats[f->name()] = f; }
+#define IN_OUT_FORMAT(fmt) INPUT_FORMAT(fmt) OUTPUT_FORMAT(fmt)
+
 FormatManager::FormatManager()
 {
-	/*foreach( const QStringList &encodingsForScript, KCharsets::charsets()->encodingsByScript() )
-	   {
-	   KEncodingDetector::AutoDetectScript scri = KEncodingDetector::scriptForName( encodingsForScript.at( 0 ) );
-	   if ( KEncodingDetector::hasAutoDetectionForScript( scri ) )
-	   qDebug() << encodingsForScript.at( 0 ) << "[autodetect available]";
-	   else
-	   qDebug() << encodingsForScript.at( 0 );
-	   for ( int i=1; i < encodingsForScript.size(); ++i )
-	   qDebug() << "-" << encodingsForScript.at( i );
-	   } */
-
-	InputFormat *inputFormats[] = {
-		new SubRipInputFormat(),
-		new MicroDVDInputFormat(),
-		new MPlayerInputFormat(),
-		new MPlayer2InputFormat(),
-		new SubStationAlphaInputFormat(),
-		new AdvancedSubStationAlphaInputFormat(),
-		new SubViewer1InputFormat(),
-		new SubViewer2InputFormat(),
-		new TMPlayerInputFormat(),
-		new TMPlayerPlusInputFormat(),
-		new YouTubeCaptionsInputFormat(),
-		new VobSubInputFormat(),
-	};
-
-	for(int index = 0, count = sizeof(inputFormats) / sizeof(*(inputFormats)); index < count; ++index) {
-		m_inputFormats[inputFormats[index]->name()] = inputFormats[index];
-	}
-
-	OutputFormat *outputFormats[] = {
-		new SubRipOutputFormat(),
-		new MicroDVDOutputFormat(),
-		new MPlayerOutputFormat(),
-		new MPlayer2OutputFormat(),
-		new SubStationAlphaOutputFormat(),
-		new AdvancedSubStationAlphaOutputFormat(),
-		new SubViewer1OutputFormat(),
-		new SubViewer2OutputFormat(),
-		new TMPlayerOutputFormat(),
-		new TMPlayerPlusOutputFormat(),
-		new YouTubeCaptionsOutputFormat(),
-	};
-
-	for(int index = 0, count = sizeof(outputFormats) / sizeof(*(outputFormats)); index < count; ++index) {
-		m_outputFormats[outputFormats[index]->name()] = outputFormats[index];
-	}
+	IN_OUT_FORMAT(SubRip)
+	IN_OUT_FORMAT(MicroDVD)
+	IN_OUT_FORMAT(MPlayer)
+	IN_OUT_FORMAT(MPlayer2)
+	IN_OUT_FORMAT(SubStationAlpha)
+	IN_OUT_FORMAT(AdvancedSubStationAlpha)
+	IN_OUT_FORMAT(SubViewer1)
+	IN_OUT_FORMAT(SubViewer2)
+	IN_OUT_FORMAT(TMPlayer)
+	IN_OUT_FORMAT(TMPlayerPlus)
+	IN_OUT_FORMAT(YouTubeCaptions)
+	INPUT_FORMAT(VobSub)
 }
 
 FormatManager::~FormatManager()
@@ -149,63 +119,94 @@ FormatManager::inputNames() const
 	return m_inputFormats.keys();
 }
 
-bool
-FormatManager::readSubtitle(Subtitle &subtitle, bool primary, const QUrl &url,
-							QTextCodec **codec, QString *formatName) const
+inline static QTextCodec *
+detectEncoding(const QByteArray &byteData)
 {
-	// attempt to load binary subtitle
-	Subtitle newSubtitle;
+	EncodingDetectDialog dlg(byteData);
+
+#ifdef HAVE_ICU
+	UErrorCode status = U_ZERO_ERROR;
+	UCharsetDetector *csd = ucsdet_open(&status);
+	ucsdet_setText(csd, byteData.data(), byteData.length(), &status);
+	int32_t matchesFound = 0;
+	const UCharsetMatch **ucms = ucsdet_detectAll(csd, &matchesFound, &status);
+	for(int index = 0; index < matchesFound; ++index) {
+		int confidence = ucsdet_getConfidence(ucms[index], &status);
+		bool encodingFound;
+		QTextCodec *codec = KCharsets::charsets()->codecForName(ucsdet_getName(ucms[index], &status), encodingFound);
+		if(encodingFound) {
+			if(confidence == 100)
+				return codec;
+			dlg.addEncoding(codec->name(), confidence);
+		}
+	}
+	ucsdet_close(csd);
+#else
+	KEncodingProber prober(KEncodingProber::Universal);
+	prober.feed(byteData);
+	bool encodingFound;
+	QTextCodec *codec = KCharsets::charsets()->codecForName(prober.encoding(), encodingFound);
+	if(encodingFound) {
+		if(prober.confidence() >= 1.)
+			return codec;
+		dlg.addEncoding(codec->name(), prober.confidence() * 100.);
+	}
+#endif
+
+	if(dlg.exec() == QDialog::Accepted) {
+		bool encodingFound;
+		return KCharsets::charsets()->codecForName(dlg.selectedEncoding(), encodingFound);
+	}
+
+	return nullptr;
+}
+
+
+FormatManager::Status
+FormatManager::readBinary(Subtitle &subtitle, const QUrl &url, bool primary,
+						  QTextCodec **codec, QString *formatName) const
+{
 	foreach(InputFormat *format, m_inputFormats) {
-		if(format->readBinary(newSubtitle, url)) {
+		Subtitle newSubtitle;
+		Status res = format->readBinary(newSubtitle, url);
+		if(res == ERROR)
+			continue;
+		if(res == SUCCESS) {
 			if(formatName)
 				*formatName = format->name();
+			*codec = KCharsets::charsets()->codecForName(SCConfig::defaultSubtitlesEncoding());
 			if(primary)
 				subtitle.setPrimaryData(newSubtitle, true);
 			else
 				subtitle.setSecondaryData(newSubtitle, true);
-			return true;
 		}
+		return res;
 	}
+	return ERROR;
+}
 
-	// attempt to load text subtitle
+FormatManager::Status
+FormatManager::readText(Subtitle &subtitle, const QUrl &url, bool primary,
+						QTextCodec **codec, QString *formatName) const
+{
 	FileLoadHelper fileLoadHelper(url);
 	if(!fileLoadHelper.open())
-		return false;
+		return ERROR;
+	// WARNING: only 1MB of text subtitle is being read here
 	QByteArray byteData = fileLoadHelper.file()->read(1024 * 1024);
 	fileLoadHelper.close();
 
 	QString stringData;
-
-#ifdef HAVE_ICU
 	if(!*codec) {
-		UErrorCode status = U_ZERO_ERROR;
-		UCharsetDetector *csd = ucsdet_open(&status);
-		ucsdet_setText(csd, byteData.data(), byteData.length(), &status);
-		int32_t matchesFound = 0;
-		const UCharsetMatch **ucms = ucsdet_detectAll(csd, &matchesFound, &status);
-		for(int index = 0; index < matchesFound; ++index) {
-			int32_t confidence = ucsdet_getConfidence(ucms[index], &status);
-			const char *name = ucsdet_getName(ucms[index], &status);
-			qDebug() << "encoding" << name << "confidence" << confidence;
-			bool encodingFound;
-			*codec = KCharsets::charsets()->codecForName(name, encodingFound);
-			if(encodingFound)
-				break;
-			else
-				*codec = 0;
-		}
-		ucsdet_close(csd);
-	}
-#endif
-	if(!*codec) {
-		KEncodingProber prober(KEncodingProber::Universal);
-		prober.feed(byteData);
-		bool encodingFound;
-		*codec = KCharsets::charsets()->codecForName(prober.encoding(), encodingFound);
+		QTextCodec *c = detectEncoding(byteData);
+		if(!c)
+			return CANCEL;
+		*codec = c;
 	}
 	if(*codec) {
 		QTextStream textStream(byteData);
 		textStream.setCodec(*codec);
+		textStream.setAutoDetectUnicode(false);
 		stringData = textStream.readAll();
 	}
 
@@ -220,23 +221,34 @@ FormatManager::readSubtitle(Subtitle &subtitle, bool primary, const QUrl &url,
 			if(it.value()->readSubtitle(subtitle, primary, stringData)) {
 				if(formatName)
 					*formatName = it.value()->name();
-				return true;
+				return SUCCESS;
 			}
 		}
 	}
 
-	// that didn't worked, attempt to parse subtitles based on content
+	// attempt to parse subtitles based on content
 	for(QMap<QString, InputFormat *>::ConstIterator it = m_inputFormats.begin(), end = m_inputFormats.end(); it != end; ++it) {
 		if(!it.value()->knowsExtension(extension)) {
 			if(it.value()->readSubtitle(subtitle, primary, stringData)) {
 				if(formatName)
 					*formatName = it.value()->name();
-				return true;
+				return SUCCESS;
 			}
 		}
 	}
 
-	return false;
+	return ERROR;
+}
+
+FormatManager::Status
+FormatManager::readSubtitle(Subtitle &subtitle, bool primary, const QUrl &url,
+							QTextCodec **codec, QString *formatName) const
+{
+	Status res = readBinary(subtitle, url, primary, codec, formatName);
+	if(res != ERROR) // when SUCCESS or CANCEL no need to try text formats
+		return res;
+
+	return readText(subtitle, url, primary, codec, formatName);
 }
 
 bool
@@ -268,7 +280,7 @@ FormatManager::writeSubtitle(const Subtitle &subtitle, bool primary, const QUrl 
 							 QTextCodec *codec, const QString &formatName, bool overwrite) const
 {
 	const OutputFormat *format = output(formatName);
-	if(format == 0) {
+	if(format == nullptr) {
 		QString extension = QFileInfo(url.path()).suffix();
 		// attempt find format based on extension information
 		for(QMap<QString, OutputFormat *>::ConstIterator it = m_outputFormats.begin(), end = m_outputFormats.end(); it != end; ++it)
@@ -278,7 +290,7 @@ FormatManager::writeSubtitle(const Subtitle &subtitle, bool primary, const QUrl 
 			}
 	}
 
-	if(format == 0)
+	if(format == nullptr)
 		return false;
 
 	FileSaveHelper fileSaveHelper(url, overwrite);

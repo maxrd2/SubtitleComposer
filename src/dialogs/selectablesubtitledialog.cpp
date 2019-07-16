@@ -19,7 +19,6 @@
  */
 
 #include "selectablesubtitledialog.h"
-#include "opensubtitledialog.h"
 #include "application.h"
 
 #include <QTextCodec>
@@ -90,6 +89,7 @@ SelectableSubtitleDialog::createSubtitleGroupBox(const QString &title, bool addT
 void
 SelectableSubtitleDialog::selectSubtitle()
 {
+	/*
 	OpenSubtitleDialog openDlg(true, subtitleUrl().isEmpty() ? app()->lastSubtitleDirectory() : subtitleUrl(), subtitleEncoding());
 
 	if(openDlg.exec() == QDialog::Accepted) {
@@ -98,7 +98,7 @@ SelectableSubtitleDialog::selectSubtitle()
 			m_subtitleEncodingComboBox->setCurrentItem(i18n("Autodetect"));
 		else
 			m_subtitleEncodingComboBox->setCurrentItem(openDlg.selectedEncoding().toUpper());
-	}
+	}*/
 }
 
 QUrl

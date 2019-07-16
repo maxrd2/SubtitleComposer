@@ -107,26 +107,22 @@ public:
 public slots:
 	void newSubtitle();
 	void openSubtitle();
-	inline void reopenSubtitleWithCodec(QTextCodec *codec) { reopenSubtitleWithCodecOrDetectScript(codec); }
-	inline void reopenSubtitleWithDetectScript() { reopenSubtitleWithCodecOrDetectScript(nullptr); }
-	void reopenSubtitleWithCodecOrDetectScript(QTextCodec *codec);
+	void reopenSubtitleWithCodec(QTextCodec *codec = nullptr);
 	void demuxTextStream(int textStreamIndex);
 	void openSubtitle(const QUrl &url, bool warnClashingUrls = true);
-	bool saveSubtitle();
-	bool saveSubtitleAs();
+	bool saveSubtitle(QTextCodec *codec = nullptr);
+	bool saveSubtitleAs(QTextCodec *codec = nullptr);
 	bool closeSubtitle();
 
 	void speechImportAudioStream(int audioStreamIndex);
 
 	void newSubtitleTr();
 	void openSubtitleTr();
-	inline void reopenSubtitleTrWithCodec(QTextCodec *codec) { reopenSubtitleTrWithCodecOrDetectScript(codec); }
-	inline void reopenSubtitleTrWithDetectScript() { reopenSubtitleTrWithCodecOrDetectScript(nullptr); }
-	void reopenSubtitleTrWithCodecOrDetectScript(QTextCodec *codec);
+	void reopenSubtitleTrWithCodec(QTextCodec *codec = nullptr);
 
 	void openSubtitleTr(const QUrl &url, bool warnClashingUrls = true);
-	bool saveSubtitleTr();
-	bool saveSubtitleTrAs();
+	bool saveSubtitleTr(QTextCodec *codec = nullptr);
+	bool saveSubtitleTrAs(QTextCodec *codec = nullptr);
 	bool closeSubtitleTr();
 
 	void joinSubtitles();
@@ -228,6 +224,9 @@ signals:
 	void fullScreenModeChanged(bool value);
 
 private:
+	void processSubtitleOpened(QTextCodec *codec, const QString &subtitleFormat);
+	void processTranslationOpened(QTextCodec *codec, const QString &subtitleFormat);
+
 	QTextCodec * codecForEncoding(const QString &encoding);
 
 	bool acceptClashingUrls(const QUrl &subtitleUrl, const QUrl &subtitleTrUrl);
@@ -238,6 +237,7 @@ private:
 
 	Time videoPosition(bool compensate = false);
 
+	static const QString & buildSubtitleFilesFilter(bool openFileFilter = true);
 	static const QString & buildMediaFilesFilter();
 
 	bool applyTranslation(RangeList ranges, bool primary, int inputLanguage, int outputLanguage, int textTargets);
@@ -301,7 +301,9 @@ private:
 	KRecentFilesActionExt *m_recentSubtitlesTrAction;
 
 	KCodecActionExt *m_reopenSubtitleAsAction;
+	KCodecActionExt *m_saveSubtitleAsAction;
 	KCodecActionExt *m_reopenSubtitleTrAsAction;
+	KCodecActionExt *m_saveSubtitleTrAsAction;
 
 	Finder *m_finder;
 	Replacer *m_replacer;

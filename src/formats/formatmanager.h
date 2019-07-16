@@ -37,14 +37,19 @@ class Subtitle;
 class FormatManager
 {
 public:
+	enum Status {
+		SUCCESS = 1,
+		CANCEL = 0,
+		ERROR = -1
+	};
 	static FormatManager & instance();
 
 	bool hasInput(const QString &name) const;
 	const InputFormat * input(const QString &name) const;
 	QStringList inputNames() const;
 
-	bool readSubtitle(Subtitle &subtitle, bool primary, const QUrl &url,
-					  QTextCodec **codec, QString *format = nullptr) const;
+	Status readSubtitle(Subtitle &subtitle, bool primary, const QUrl &url,
+						QTextCodec **codec, QString *format = nullptr) const;
 
 	bool hasOutput(const QString &name) const;
 	const OutputFormat * output(const QString &name) const;
@@ -57,6 +62,11 @@ public:
 protected:
 	FormatManager();
 	~FormatManager();
+
+	Status readBinary(Subtitle &subtitle, const QUrl &url, bool primary,
+					  QTextCodec **codec, QString *format) const;
+	Status readText(Subtitle &subtitle, const QUrl &url, bool primary,
+					QTextCodec **codec, QString *formatName) const;
 
 	QMap<QString, InputFormat *> m_inputFormats;
 	QMap<QString, OutputFormat *> m_outputFormats;

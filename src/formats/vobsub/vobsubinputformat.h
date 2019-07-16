@@ -34,7 +34,9 @@ class VobSubInputFormat : public InputFormat
 	friend class FormatManager;
 
 public:
-	bool readBinary(Subtitle &subtitle, const QUrl &url) override
+	bool isBinary() const override { return true; }
+
+	FormatManager::Status readBinary(Subtitle &subtitle, const QUrl &url) override
 	{
 		const QString filename = url.toLocalFile();
 		const int extension = filename.lastIndexOf('.');
@@ -43,20 +45,20 @@ public:
 		// open the sub/idx subtitles
 		StreamProcessor proc;
 		if(!proc.open(filename))
-			return false;
+			return FormatManager::ERROR;
 
 		QStringList streamList = proc.listImage();
 		if(streamList.empty())
-			return false;
+			return FormatManager::ERROR;
 
 		// show init dialog
 		VobSubInputInitDialog dlgInit(app()->mainWindow());
 		dlgInit.streamListSet(streamList);
 		if(dlgInit.exec() == QDialog::Rejected)
-			return true;
+			return FormatManager::ERROR;
 
 		if(!proc.initImage(dlgInit.streamIndex()))
-			return true;
+			return FormatManager::ERROR;
 
 		// subtitle updates will show in realtime
 		LinesWidget *linesWidget = app()->linesWidget();
@@ -71,15 +73,17 @@ public:
 		QByteArray symFile(filebase + ".sym");
 
 		dlgProc.symFileOpen(symFile);
-		dlgProc.exec();
+		if(dlgProc.exec() == QDialog::Rejected) {
+			// restore original subtitle
+			linesWidget->setSubtitle(oldSubtitle);
+			return FormatManager::CANCEL;
+		}
 		dlgProc.symFileSave(symFile);
 
 		// TODO: move all these regexps into separate class that can be reused, make them static and optimize them after init
 		quint32 ppFlags = dlgInit.postProcessingFlags();
 		for(int i = 0, n = subtitle.count(); i < n; i++) {
 			SubtitleLine *line = subtitle.at(i);
-//		const QVector<ObjectRef<SubtitleLine>> &lines = subtitle.allLines();
-//		foreach(SubtitleLine *line, lines) {
 			SString text = line->primaryText();
 			if(ppFlags & VobSubInputInitDialog::APOSTROPHE_TO_QUOTES)
 				text
@@ -151,7 +155,7 @@ public:
 		// restore original subtitle
 		linesWidget->setSubtitle(oldSubtitle);
 
-		return true;
+		return FormatManager::SUCCESS;
 	}
 
 protected:

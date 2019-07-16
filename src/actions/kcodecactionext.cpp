@@ -36,65 +36,88 @@
 void
 KCodecActionExt::init()
 {
-	m_defaultAction = action(0);
-	m_defaultAction->setCheckable(false);
-	m_defaultAction->setText(m_defaultAction->text() + ": " + SCConfig::defaultSubtitlesEncoding());
+	setToolBarMode(MenuMode);
 
-	if(m_showAutoDetect) {
-		m_autodetectAction = new QAction(parent());
-		m_autodetectAction->setText(i18n("Autodetect"));
-		m_autodetectAction->setData(QVariant(KEncodingProber::Universal));
-		m_autodetectAction->setActionGroup(selectableActionGroup());
-		SubtitleComposer::app()->mainWindow()->actionCollection()->setShortcutsConfigurable(m_autodetectAction, false);
-		menu()->insertAction(m_defaultAction, m_autodetectAction);
+	if(m_mode == Save) {
+		m_defaultCodecAction = addAction(i18nc("Encodings menu", "Default: %1", SCConfig::defaultSubtitlesEncoding()));
+		m_defaultCodecAction->setCheckable(false);
+		connect(m_defaultCodecAction, &QAction::triggered, this, [&](bool){
+			emit triggered(KCharsets::charsets()->codecForName(SCConfig::defaultSubtitlesEncoding()));
+		});
+
+		m_currentCodecAction = addAction(i18nc("Encodings menu", "Current: %1", SCConfig::defaultSubtitlesEncoding()));
+		m_currentCodecAction->setCheckable(false);
+		connect(m_currentCodecAction, &QAction::triggered, this, [&](bool){
+			emit triggered(nullptr);
+		});
+	} else {
+		m_autodetectAction = addAction(i18nc("Encodings menu", "Autodetect"));
+		m_autodetectAction->setCheckable(false);
+		connect(m_autodetectAction, &QAction::triggered, this, [&](bool){
+			emit triggered(nullptr);
+		});
 	}
 
-	menu()->insertSeparator(action(1));
+	menu()->addSeparator();
 
-	for(QAction *action: actions()) {
-		KSelectAction *groupAction = qobject_cast<KSelectAction *>(action);
-		if(groupAction) {
-			for(QAction *subAction: groupAction->actions())
-				subAction->setText(subAction->text().toUpper());
+	const auto encodings = KCharsets::charsets()->encodingsByScript();
+	for(const QStringList &encodingsForScript: encodings) {
+		KSelectAction *group = new KSelectAction(encodingsForScript.at(0), this);
+		for(int i = 1; i < encodingsForScript.size(); ++i)
+			group->addAction(encodingsForScript.at(i))->setCheckable(m_mode == Open);
+		connect(group, QOverload<QAction *>::of(&KSelectAction::triggered), this, [=](QAction *a){
+			emit triggered(KCharsets::charsets()->codecForName(a->text()));
+		});
+		group->setCheckable(m_mode == Open);
+		addAction(group);
+	}
+	setCurrentItem(0);
+}
+
+bool
+KCodecActionExt::setCurrentCodec(QTextCodec *codec)
+{
+	if(!codec)
+		codec = KCharsets::charsets()->codecForName(SCConfig::defaultSubtitlesEncoding());
+
+	for(int i = 0, m = actions().size(); i < m; i++) {
+		KSelectAction *menuAction = qobject_cast<KSelectAction *>(actions().at(i));
+		if(!menuAction)
+			continue;
+		const QMenu *menu = menuAction->menu();
+		for(int j = 0, n = menu->actions().size(); j < n; j++) {
+			QAction *action = menu->actions().at(j);
+			if(codec == KCharsets::charsets()->codecForName(action->text())) {
+				if(m_mode == Save)
+					m_currentCodecAction->setText(i18nc("Encodings menu", "Current: %1", action->text()));
+				if(action->isCheckable()) {
+					setCurrentAction(menuAction);
+					menuAction->setCurrentAction(action);
+				}
+				return true;
+			}
 		}
 	}
-
-	if(!m_showDefault)
-		menu()->removeAction(m_defaultAction);
+	return false;
 }
 
-KCodecActionExt::KCodecActionExt(QObject *parent, bool showAutoDetect, bool showDefault)
-	: KCodecAction(parent, false),
-	  m_showDefault(showDefault),
-	  m_showAutoDetect(showAutoDetect)
+KCodecActionExt::KCodecActionExt(QObject *parent, Mode mode)
+	: KSelectAction(parent),
+	  m_mode(mode)
 {
 	init();
 }
 
-KCodecActionExt::KCodecActionExt(const QString &text, QObject *parent, bool showAutoDetect, bool showDefault)
-	: KCodecAction(text, parent, false),
-	  m_showDefault(showDefault),
-	  m_showAutoDetect(showAutoDetect)
+KCodecActionExt::KCodecActionExt(const QString &text, QObject *parent, Mode mode)
+	: KSelectAction(text, parent),
+	  m_mode(mode)
 {
 	init();
 }
 
-KCodecActionExt::KCodecActionExt(const QIcon &icon, const QString &text, QObject *parent, bool showAutoDetect, bool showDefault)
-	: KCodecAction(icon, text, parent, false),
-	  m_showDefault(showDefault),
-	  m_showAutoDetect(showAutoDetect)
+KCodecActionExt::KCodecActionExt(const QIcon &icon, const QString &text, QObject *parent, Mode mode)
+	: KSelectAction(icon, text, parent),
+	  m_mode(mode)
 {
 	init();
 }
-
-void
-KCodecActionExt::actionTriggered(QAction *action)
-{
-	// do not emit signals from top-level action menus
-	if(action == m_autodetectAction)
-		emit triggered(KEncodingProber::Universal);
-	else if(action == m_defaultAction)
-		emit defaultItemTriggered();
-}
-
-
