@@ -38,10 +38,8 @@ public:
 	void loadEntries(const KConfigGroup &configGroup);
 	void saveEntries(const KConfigGroup &configGroup);
 
-	void addUrl(const QUrl &url, const QString &encoding, const QString &name = QString());
-
-private:
-	using KRecentFilesAction::addUrl;
+	void addUrl(const QUrl &url, const QString &encoding, const QString &name);
+	inline void addUrl(const QUrl &url, const QString &encoding) { addUrl(url, encoding, QString()); }
 };
 
 #endif
