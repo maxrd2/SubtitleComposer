@@ -47,6 +47,10 @@
 #include <QMenu>
 #include <QUrl>
 
+#if QT_VERSION < QT_VERSION_CHECK(5, 11, 0)
+#define horizontalAdvance width
+#endif
+
 using namespace SubtitleComposer;
 
 /// LINES MODEL
