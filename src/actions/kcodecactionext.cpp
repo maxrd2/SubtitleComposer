@@ -71,7 +71,6 @@ KCodecActionExt::init()
 		group->setCheckable(m_mode == Open);
 		addAction(group);
 	}
-	setCurrentItem(0);
 }
 
 bool
