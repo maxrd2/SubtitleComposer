@@ -107,7 +107,24 @@ matrix:
           ./appimagetool "$appdir/" -g
         - |- # publish
           echo 'Publishing release to GitHub...'
-          bash "$TRAVIS_BUILD_DIR/pkg/misc/github-release.sh" linux $PWD/Subtitle_Composer-x86_64.AppImage*
+          bash "$TRAVIS_BUILD_DIR/pkg/misc/github-release.sh" linux "$PWD/Subtitle_Composer-x86_64.AppImage"*
+
+    - os: linux
+      dist: trusty
+      sudo: required
+      compiler: gcc
+      before_install:
+        - docker pull maxrd2/arch-mingw
+      script:
+        - |-
+          mkdir build && chmod 0777 build
+          docker run -v "$PWD":/home/devel -it maxrd2/arch-mingw /bin/bash pkg/mingw/build.sh || exit 1
+      after_success:
+        - |- # do not create release of funky stuff
+          [[ "$TRAVIS_EVENT_TYPE" != "push" ]] && exit
+        - |- # publish
+          echo 'Publishing release to GitHub...'
+          bash "$TRAVIS_BUILD_DIR/pkg/misc/github-release.sh" win32 "$PWD/build/SubtitleComposerSetup.exe"
 
     - os: linux
       dist: xenial

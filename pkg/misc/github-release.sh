@@ -40,8 +40,8 @@ release_update() {
 	local ght_appimage="Instructions on using AppImage can be found [here](https://github.com/maxrd2/subtitlecomposer/wiki/AppImage-HOWTO)"
 	if [[ $gh_is_tag -eq 1 ]]; then
 		local gh_tag="$gh_branch"
-		local gh_rel_name="Latest Development Build - git master"
-		local gh_rel_body="$ght_appimage\n\nThis is ***stable release $TRAVIS_TAG build***."
+		local gh_rel_name="Release $gh_tag"
+		local gh_rel_body="$ght_appimage\n\nThis is ***stable release $gh_tag build***."
 		local gh_prerelease='false'
 		echo -e "Processing '\e[1;39m$gh_tag\e[m' release from tag '\e[1;39m$gh_tag\e[m'..."
 	else
@@ -73,16 +73,18 @@ release_update() {
 	local id="$(jq -r .id .github_release)"
 	if [[ -z "$id" || "$id" = "null" ]]; then
 		# create new release
-		[[ ! -z "$TRAVIS_BUILD_ID" ]] && gh_rel_body="$gh_rel_body\n\n$ght_travis: https://travis-ci.org/$TRAVIS_REPO_SLUG/builds/$TRAVIS_BUILD_ID/"
+		[[ ! -z "$TRAVIS_JOB_ID" ]] && gh_rel_body="$gh_rel_body\n\n$ght_travis: https://travis-ci.org/$TRAVIS_REPO_SLUG/jobs/$TRAVIS_JOB_ID"
 		echo -e "Creating release '\e[1;39m$gh_tag\e[m'..."
 		"${curl[@]}" -s -XPOST "$api_url/releases" --data '{"tag_name":"'"$gh_tag"'", "name":"'"$gh_rel_name"'", "body":"'"$gh_rel_body"'", "draft":false, "prerelease":'$gh_prerelease'}' >.github_release
 	else
 		# update existing release with new build log
-		gh_rel_body="$(jq -r .body .github_release | grep -v "$ght_travis" | sed -e ':a;N;$!ba;s/\n/\\n/g')"
-		[[ ! -z "$TRAVIS_BUILD_ID" ]] && gh_rel_body="$gh_rel_body\n$ght_travis: https://travis-ci.org/$TRAVIS_REPO_SLUG/builds/$TRAVIS_BUILD_ID/"
+		gh_rel_body="$(jq -r .body .github_release | grep -v "$ght_travis" | sed -e 's|\r||g' -e ':a;N;$!ba;s/\n/\\n/g;s/\r//g')"
+		[[ ! -z "$TRAVIS_JOB_ID" ]] && gh_rel_body="$gh_rel_body\n$ght_travis: https://travis-ci.org/$TRAVIS_REPO_SLUG/jobs/$TRAVIS_JOB_ID"
 		echo -e "Updating release '\e[1;39m$gh_tag\e[m'..."
 		"${curl[@]}" -s -XPOST "$api_url/releases/$id" --data '{"tag_name":"'"$gh_tag"'", "name":"'"$gh_rel_name"'", "body":"'"$gh_rel_body"'", "draft":false, "prerelease":'$gh_prerelease'}' >.github_release
 	fi
+	id="$(jq -r .id .github_release)"
+	[[ -z "$id" || "$id" = "null" ]] && echo -e "\e[1;31mERROR:\e[m unable to update/create release '\e[1;39m$gh_tag\e[m'." && exit 1 || true
 }
 
 asset_exists() {
