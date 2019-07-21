@@ -64,7 +64,7 @@ KCodecActionExt::init()
 	for(const QStringList &encodingsForScript: encodings) {
 		KSelectAction *group = new KSelectAction(encodingsForScript.at(0), this);
 		for(int i = 1; i < encodingsForScript.size(); ++i)
-			group->addAction(encodingsForScript.at(i))->setCheckable(m_mode == Open);
+			group->addAction(encodingsForScript.at(i).toUpper())->setCheckable(m_mode == Open);
 		connect(group, QOverload<QAction *>::of(&KSelectAction::triggered), this, [=](QAction *a){
 			emit triggered(KCharsets::charsets()->codecForName(a->text()));
 		});
