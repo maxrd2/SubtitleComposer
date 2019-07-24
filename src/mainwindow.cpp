@@ -100,12 +100,6 @@ MainWindow::MainWindow() :
 MainWindow::~MainWindow()
 {
 	app()->saveConfig();
-
-	// We must disconnect the player when closing down, otherwise signal handlers
-	// could be called with the some object destroyed, crashing the application
-	VideoPlayer::instance()->disconnect();
-
-	VideoPlayer::instance()->setApplicationClosingDown();
 }
 
 void
@@ -141,7 +135,11 @@ MainWindow::createPopupMenu()
 bool
 MainWindow::queryClose()
 {
-	return app()->closeSubtitle();
+	if(app()->closeSubtitle()) {
+		VideoPlayer::instance()->finalize();
+		return true;
+	}
+	return false;
 }
 
 
