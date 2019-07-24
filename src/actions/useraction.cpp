@@ -24,6 +24,8 @@
 #include "lineswidget.h"
 #include "currentlinewidget.h"
 
+#include <QApplication>
+
 using namespace SubtitleComposer;
 
 UserAction::UserAction(QAction *action, int enableFlags) :
@@ -120,9 +122,12 @@ UserActionManager::UserActionManager() :
 UserActionManager *
 UserActionManager::instance()
 {
-	static UserActionManager actionManager;
-
-	return &actionManager;
+	static UserActionManager *actionManager = nullptr;
+	if(!actionManager) {
+		actionManager = new UserActionManager();
+		actionManager->setParent(QApplication::instance());
+	}
+	return actionManager;
 }
 
 void
