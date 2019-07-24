@@ -22,9 +22,9 @@
 # include "config.h"
 #endif
 
+#include "helpers/pluginhelper.h"
 #include "videoplayer.h"
 #include "playerbackend.h"
-
 #include "scconfig.h"
 
 #include <math.h>
@@ -33,57 +33,12 @@
 #include <QFileInfo>
 #include <QApplication>
 #include <QEvent>
-#include <QPluginLoader>
-#include <QDir>
-#include <QFile>
 
 #include <QDebug>
 
 #include <KLocalizedString>
 
 #define DEFAULT_MIN_POSITION_DELTA 0.02
-
-namespace SubtitleComposer {
-class DummyPlayerBackend : public PlayerBackend
-{
-public:
-	DummyPlayerBackend() : PlayerBackend() { m_name = QStringLiteral("Dummy"); }
-
-	virtual ~DummyPlayerBackend() {}
-
-	QWidget * newConfigWidget(QWidget *) override { return 0; }
-
-protected:
-	bool initialize(VideoWidget *videoWidget) Q_DECL_OVERRIDE { videoWidget->setVideoLayer(new QWidget()); return true; }
-
-	void finalize() Q_DECL_OVERRIDE {}
-
-	bool openFile(const QString &/*filePath*/, bool &/*playingAfterCall*/) Q_DECL_OVERRIDE { return false; }
-
-	void closeFile() Q_DECL_OVERRIDE {}
-
-	bool play() Q_DECL_OVERRIDE { return false; }
-
-	bool pause() Q_DECL_OVERRIDE { return false; }
-
-	bool seek(double /*seconds*/, bool /*accurate*/) Q_DECL_OVERRIDE { return false; }
-
-	bool step(int /*frameOffset*/) Q_DECL_OVERRIDE { return false; }
-
-	bool stop() Q_DECL_OVERRIDE { return false; }
-
-	void playbackRate(double /*newRate*/) Q_DECL_OVERRIDE { }
-
-	bool setActiveAudioStream(int /*audioStream*/) Q_DECL_OVERRIDE { return false; }
-
-	bool setVolume(double /*volume*/) Q_DECL_OVERRIDE { return false; }
-
-	bool reconfigure() Q_DECL_OVERRIDE { return false; }
-
-private:
-	void setSCConfig(SCConfig */*scConfig*/) Q_DECL_OVERRIDE {}
-};
-}
 
 using namespace SubtitleComposer;
 
@@ -108,22 +63,11 @@ VideoPlayer::VideoPlayer() :
 	m_backendVolume(100.0),
 	m_openFileTimer(new QTimer(this))
 {
-	backendAdd(new DummyPlayerBackend());
-
-	const QString buildPluginPath(qApp->applicationDirPath() + QStringLiteral("/videoplayerplugins"));
-	if(QDir(buildPluginPath).exists()) {
-		// if application is launched from build directory it will load plugins from build directory
-		backendLoad(buildPluginPath + QStringLiteral("/gstreamer/gstplayer"));
-		backendLoad(buildPluginPath + QStringLiteral("/mplayer/mplayer"));
-		backendLoad(buildPluginPath + QStringLiteral("/mpv/mpvplayer"));
-		backendLoad(buildPluginPath + QStringLiteral("/phonon/phononplayer"));
-		backendLoad(buildPluginPath + QStringLiteral("/xine/xineplayer"));
-	} else {
-		const QDir pluginsDir(QDir(qApp->applicationDirPath()).absoluteFilePath(QDir(QStringLiteral(SC_INSTALL_BIN)).relativeFilePath(QStringLiteral(SC_INSTALL_PLUGIN))));
-		foreach(const QString pluginFile, pluginsDir.entryList(QDir::Files, QDir::Name)) {
-			if(QLibrary::isLibrary(pluginFile))
-				backendLoad(pluginsDir.filePath(pluginFile));
-		}
+	PluginHelper<VideoPlayer, PlayerBackend> ph(this);
+	ph.loadAll(QStringLiteral("videoplayerplugins"));
+	for(auto p: m_plugins) {
+		p->setSCConfig(SCConfig::self());
+		p->setPlayer(this);
 	}
 
 	// the timeout might seem too much, but it only matters when the file couldn't be
@@ -160,13 +104,13 @@ VideoPlayer::initialize(QWidget *widgetParent, const QString &prefBackendName)
 
 	m_widgetParent = widgetParent;
 
-	if(m_backends.contains(prefBackendName)) {
+	if(m_plugins.contains(prefBackendName)) {
 		// we first try to set the requested backend as active
-		backendInitializePrivate(m_backends[prefBackendName]);
+		backendInitializePrivate(m_plugins[prefBackendName]);
 	}
 	// if that fails, we set the first available backend as active
 	if(!m_activeBackend) {
-		for(QMap<QString, PlayerBackend *>::ConstIterator it = m_backends.begin(), end = m_backends.end(); it != end; ++it)
+		for(QMap<QString, PlayerBackend *>::ConstIterator it = m_plugins.begin(), end = m_plugins.end(); it != end; ++it)
 			if(backendInitializePrivate(it.value()))
 				break;
 	}
@@ -185,12 +129,12 @@ VideoPlayer::reinitialize(const QString &prefBackendName)
 
 	QString currentFile = m_filePath;
 
-	PlayerBackend *targetBackend = m_backends.contains(prefBackendName) ? m_backends[prefBackendName] : m_activeBackend;
+	PlayerBackend *targetBackend = m_plugins.contains(prefBackendName) ? m_plugins[prefBackendName] : m_activeBackend;
 
 	finalize();
 
 	if(!backendInitializePrivate(targetBackend)) {
-		for(QMap<QString, PlayerBackend *>::ConstIterator it = m_backends.begin(), end = m_backends.end(); it != end; ++it)
+		for(QMap<QString, PlayerBackend *>::ConstIterator it = m_plugins.begin(), end = m_plugins.end(); it != end; ++it)
 			if(backendInitializePrivate(it.value()))
 				break;
 	}
@@ -217,7 +161,7 @@ VideoPlayer::finalize()
 	backendFinalize(m_activeBackend);
 
 	m_state = VideoPlayer::Uninitialized;
-	m_activeBackend = 0;
+	m_activeBackend = nullptr;
 
 	emit backendFinalized(wasActiveBackend);
 }
@@ -229,27 +173,6 @@ VideoPlayer::reconfigure()
 		return false;
 
 	return m_activeBackend->reconfigure();
-}
-
-PlayerBackend *
-VideoPlayer::backendLoad(const QString &pluginPath)
-{
-	QPluginLoader loader(pluginPath);
-	QObject *plugin = loader.instance();
-	if(!plugin)
-		return nullptr;
-
-	PlayerBackend *backend = qobject_cast<PlayerBackend *>(plugin);
-	if(!backend)
-		return nullptr;
-
-	qInfo() << "Loaded VideoPlayer plugin" << backend->name() << "from" << loader.fileName();
-
-	backend->setSCConfig(SCConfig::self());
-
-	backendAdd(backend);
-
-	return backend;
 }
 
 bool
@@ -285,7 +208,7 @@ VideoPlayer::setApplicationClosingDown()
 QString
 VideoPlayer::activeBackendName() const
 {
-	for(QMap<QString, PlayerBackend *>::ConstIterator it = m_backends.begin(), end = m_backends.end(); it != end; ++it)
+	for(QMap<QString, PlayerBackend *>::ConstIterator it = m_plugins.begin(), end = m_plugins.end(); it != end; ++it)
 		if(it.value() == m_activeBackend)
 			return it.key();
 	return QString();
@@ -294,21 +217,7 @@ VideoPlayer::activeBackendName() const
 QStringList
 VideoPlayer::backendNames() const
 {
-	return m_backends.keys();
-}
-
-void
-VideoPlayer::backendAdd(PlayerBackend *backend)
-{
-	backend->setParent(this); // VideoPlayer will delete *backend
-
-	if(m_backends.contains(backend->name())) {
-		qCritical() << "Attempted to insert duplicate VideoPlayer backend" << backend->name();
-		return;
-	}
-
-	m_backends[backend->name()] = backend;
-	backend->setPlayer(this);
+	return m_plugins.keys();
 }
 
 bool

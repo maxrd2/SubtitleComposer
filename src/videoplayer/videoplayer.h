@@ -37,6 +37,9 @@ class VideoPlayer : public QObject
 {
 	Q_OBJECT
 
+	template <class C, class T> friend class PluginHelper;
+	friend class PlayerBackend;
+
 public:
 	typedef enum {
 		Uninitialized = 0,
@@ -204,8 +207,6 @@ private:
 
 	PlayerBackend * backendLoad(const QString &pluginPath);
 
-	void backendAdd(PlayerBackend *backend);
-
 	bool backendInitializePrivate(PlayerBackend *backend);
 
 	static double logarithmicVolume(double percentage);
@@ -237,7 +238,7 @@ private slots:
 	void onOpenFileTimeout(const QString &reason = QString());
 
 private:
-	QMap<QString, PlayerBackend *> m_backends;
+	QMap<QString, PlayerBackend *> m_plugins;
 	PlayerBackend *m_activeBackend;
 	QWidget *m_widgetParent;
 
@@ -264,8 +265,6 @@ private:
 	double m_backendVolume;
 
 	QTimer *m_openFileTimer;
-
-	friend class PlayerBackend;
 };
 
 VideoPlayer::State
@@ -289,7 +288,7 @@ VideoPlayer::activeBackend() const
 PlayerBackend *
 VideoPlayer::backend(const QString &backendName) const
 {
-	return m_backends.contains(backendName) ? m_backends[backendName] : 0;
+	return m_plugins.contains(backendName) ? m_plugins[backendName] : nullptr;
 }
 
 bool

@@ -21,6 +21,7 @@
 # include "config.h"
 #endif
 
+#include "helpers/pluginhelper.h"
 #include "speechprocessor.h"
 #include "speechplugin.h"
 #include "application.h"
@@ -29,12 +30,7 @@
 #include <QLabel>
 #include <QProgressBar>
 #include <QBoxLayout>
-#include <QThread>
 #include <QToolButton>
-
-#include <QPluginLoader>
-#include <QDir>
-#include <QFile>
 
 #include <QDebug>
 
@@ -79,55 +75,13 @@ SpeechProcessor::SpeechProcessor(QWidget *parent)
 	// Using Qt::DirectConnection here makes SpeechProcessor::onStreamData() to execute in SpeechProcessor's thread
 	connect(m_stream, &StreamProcessor::audioDataAvailable, this, &SpeechProcessor::onStreamData, Qt::DirectConnection);
 
-	const QString buildPluginPath(qApp->applicationDirPath() + QStringLiteral("/speechplugins"));
-	if(QDir(buildPluginPath).exists()) {
-		// if application is launched from build directory it will load plugins from build directory
-		pluginLoad(buildPluginPath + QStringLiteral("/pocketsphinx/pocketsphinxasr"));
-	} else {
-		const QDir pluginsDir(QDir(qApp->applicationDirPath()).absoluteFilePath(QDir(QStringLiteral(SC_INSTALL_BIN)).relativeFilePath(QStringLiteral(SC_INSTALL_PLUGIN))));
-		foreach(const QString pluginFile, pluginsDir.entryList(QDir::Files, QDir::Name)) {
-			if(QLibrary::isLibrary(pluginFile))
-				pluginLoad(pluginsDir.filePath(pluginFile));
-		}
-	}
+	PluginHelper<SpeechProcessor, SpeechPlugin>(this).loadAll(QStringLiteral("speechplugins"));
 }
 
 SpeechProcessor::~SpeechProcessor()
 {
 	m_progressWidget = NULL;
 	clearAudioStream();
-}
-
-SpeechPlugin *
-SpeechProcessor::pluginLoad(const QString &pluginPath)
-{
-	QPluginLoader loader(pluginPath);
-	QObject *plugin = loader.instance();
-	if(!plugin)
-		return nullptr;
-
-	SpeechPlugin *asrPlugin = qobject_cast<SpeechPlugin *>(plugin);
-	if(!asrPlugin)
-		return nullptr;
-
-	qInfo() << "Loaded SpeechProcessor plugin" << asrPlugin->name() << "from" << loader.fileName();
-
-	pluginAdd(asrPlugin);
-
-	return asrPlugin;
-}
-
-void
-SpeechProcessor::pluginAdd(SpeechPlugin *plugin)
-{
-	plugin->setParent(this); // SpeechProcessor will delete *plugin
-
-	if(m_plugins.contains(plugin->name())) {
-		qCritical() << "Attempted to insert duplicate SpeechProcessor plugin" << plugin->name();
-		return;
-	}
-
-	m_plugins[plugin->name()] = plugin;
 }
 
 void

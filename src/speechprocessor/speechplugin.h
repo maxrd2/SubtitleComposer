@@ -32,6 +32,7 @@ class SpeechPlugin : public QObject
 
 	friend class SpeechProcessor;
 	friend class ConfigDialog;
+	template <class C, class T> friend class PluginHelper;
 
 protected:
 	explicit SpeechPlugin();

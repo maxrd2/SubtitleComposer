@@ -35,6 +35,8 @@ class SpeechProcessor : public QObject
 {
 	Q_OBJECT
 
+	template <class C, class T> friend class PluginHelper;
+
 public:
 	explicit SpeechProcessor(QWidget *parent = NULL);
 	virtual ~SpeechProcessor();
@@ -57,10 +59,6 @@ private slots:
 	void onStreamFinished();
 	void onStreamData(const void *buffer, const qint32 size, const WaveFormat *waveFormat, const qint64 msecStart, const qint64 msecDuration);
 	void onTextRecognized(const QString &text, const double milliShow, const double milliHide);
-
-private:
-	SpeechPlugin * pluginLoad(const QString &pluginPath);
-	void pluginAdd(SpeechPlugin *plugin);
 
 private:
 	QString m_mediaFile;
