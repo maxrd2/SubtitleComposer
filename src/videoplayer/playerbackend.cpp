@@ -26,59 +26,9 @@
 using namespace SubtitleComposer;
 
 PlayerBackend::PlayerBackend()
-	: QObject(NULL),
-	m_player(NULL)
-{}
-
-PlayerBackend::~PlayerBackend()
-{}
-
-bool
-PlayerBackend::isInitialized() const
+	: QObject(nullptr)
 {
-	return m_player->activeBackend() == this;
+
 }
 
-bool
-PlayerBackend::isActiveBackend() const
-{
-	return m_player->activeBackend() == this;
-}
-
-void
-PlayerBackend::setConfig()
-{
-	if(isActiveBackend())
-		m_player->reinitialize();
-}
-
-bool
-PlayerBackend::isDummy() const
-{
-	return m_name == m_player->dummyBackendName();
-}
-
-bool
-PlayerBackend::doesVolumeCorrection() const
-{
-	return false;
-}
-
-bool
-PlayerBackend::supportsChangingAudioStream(bool *onTheFly) const
-{
-	if(onTheFly)
-		*onTheFly = true;
-
-	return true;
-}
-
-void
-PlayerBackend::playbackRateNotify(double newRate)
-{
-	if(m_player->m_playbackRate != newRate) {
-		m_player->m_playbackRate = newRate;
-		emit m_player->playbackRateChanged(newRate);
-	}
-}
 

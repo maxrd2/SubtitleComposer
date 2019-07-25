@@ -24,9 +24,11 @@ set(videoplayer_mpv_SRCS
 	${videoplayerplugins_SRCS}
 	CACHE INTERNAL EXPORTEDVARIABLE
 )
-
 ki18n_wrap_ui(videoplayer_mpv_SRCS
 	${CMAKE_CURRENT_SOURCE_DIR}/mpvconfigwidget.ui
+)
+kconfig_add_kcfg_files(videoplayer_mpv_SRCS GENERATE_MOC
+	${CMAKE_CURRENT_SOURCE_DIR}/mpvconfig.kcfgc
 )
 
 add_library(mpvplayer MODULE ${videoplayer_mpv_SRCS})

@@ -1,0 +1,4 @@
+File=mpvconfig.kcfg
+ClassName=MPVConfig
+Singleton=true
+Mutators=true

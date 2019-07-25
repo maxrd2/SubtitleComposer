@@ -36,9 +36,11 @@ set(videoplayer_xine_SRCS
 	${videoplayerplugins_SRCS}
 	CACHE INTERNAL EXPORTEDVARIABLE
 )
-
 ki18n_wrap_ui(videoplayer_xine_SRCS
 	${CMAKE_CURRENT_SOURCE_DIR}/xineconfigwidget.ui
+)
+kconfig_add_kcfg_files(videoplayer_xine_SRCS GENERATE_MOC
+	${CMAKE_CURRENT_SOURCE_DIR}/xineconfig.kcfgc
 )
 
 message(STATUS "Found XCB: ${XCB_LIBRARIES} (version ${XCB_VERSION})")

@@ -136,7 +136,7 @@ bool
 MainWindow::queryClose()
 {
 	if(app()->closeSubtitle()) {
-		VideoPlayer::instance()->finalize();
+		VideoPlayer::instance()->cleanup();
 		return true;
 	}
 	return false;

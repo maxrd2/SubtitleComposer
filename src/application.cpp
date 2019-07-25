@@ -1099,7 +1099,7 @@ Application::setupActions()
 	setActiveAudioStreamAction->setIcon(QIcon::fromTheme(QStringLiteral("select_stream")));
 	setActiveAudioStreamAction->setText(i18n("Audio Streams"));
 	setActiveAudioStreamAction->setStatusTip(i18n("Select active audio stream"));
-	connect(setActiveAudioStreamAction, SIGNAL(triggered(int)), m_player, SLOT(setActiveAudioStream(int)));
+	connect(setActiveAudioStreamAction, QOverload<int>::of(&KSelectAction::triggered), m_player, &VideoPlayer::selectAudioStream);
 	actionCollection->addAction(ACT_SET_ACTIVE_AUDIO_STREAM, setActiveAudioStreamAction);
 	actionManager->addAction(setActiveAudioStreamAction, UserAction::VideoOpened);
 
@@ -1938,7 +1938,7 @@ Application::seekBackward()
 {
 	double position = m_player->position() - SCConfig::seekJumpLength();
 	m_playerWidget->pauseAfterPlayingLine(nullptr);
-	m_player->seek(position > 0.0 ? position : 0.0, false);
+	m_player->seek(position > 0.0 ? position : 0.0);
 }
 
 void
@@ -1946,7 +1946,7 @@ Application::seekForward()
 {
 	double position = m_player->position() + SCConfig::seekJumpLength();
 	m_playerWidget->pauseAfterPlayingLine(nullptr);
-	m_player->seek(position <= m_player->length() ? position : m_player->length(), false);
+	m_player->seek(position <= m_player->length() ? position : m_player->length());
 }
 
 void
@@ -1972,7 +1972,7 @@ Application::seekToPrevLine()
 		SubtitleLine *prevLine = currentLine->prevLine();
 		if(prevLine) {
 			m_playerWidget->pauseAfterPlayingLine(nullptr);
-			m_player->seek(prevLine->showTime().toSeconds() - SCConfig::jumpLineOffset() / 1000.0, true);
+			m_player->seek(prevLine->showTime().toSeconds() - SCConfig::jumpLineOffset() / 1000.0);
 			m_linesWidget->setCurrentLine(prevLine);
 			m_curLineWidget->setCurrentLine(prevLine);
 		}
@@ -1989,7 +1989,7 @@ Application::playOnlyCurrentLine()
 	if(currentLine) {
 		if(!m_player->isPlaying())
 			m_player->play();
-		m_player->seek(currentLine->showTime().toSeconds() - SCConfig::jumpLineOffset() / 1000.0, true);
+		m_player->seek(currentLine->showTime().toSeconds() - SCConfig::jumpLineOffset() / 1000.0);
 		m_playerWidget->pauseAfterPlayingLine(currentLine);
 	}
 }
@@ -2005,7 +2005,7 @@ Application::seekToNextLine()
 		SubtitleLine *nextLine = currentLine->nextLine();
 		if(nextLine) {
 			m_playerWidget->pauseAfterPlayingLine(nullptr);
-			m_player->seek(nextLine->showTime().toSeconds() - SCConfig::jumpLineOffset() / 1000.0, true);
+			m_player->seek(nextLine->showTime().toSeconds() - SCConfig::jumpLineOffset() / 1000.0);
 			m_linesWidget->setCurrentLine(nextLine);
 			m_curLineWidget->setCurrentLine(nextLine);
 		}
@@ -2172,7 +2172,7 @@ Application::onWaveformDoubleClicked(Time time)
 		m_player->play();
 
 	m_playerWidget->pauseAfterPlayingLine(nullptr);
-	m_player->seek(time.toSeconds(), true);
+	m_player->seek(time.toSeconds());
 }
 
 void
@@ -2186,7 +2186,7 @@ Application::onWaveformMiddleMouseDown(Time time)
 	}
 
 	m_playerWidget->pauseAfterPlayingLine(nullptr);
-	m_player->seek(time.toSeconds(), true);
+	m_player->seek(time.toSeconds());
 }
 
 void
@@ -2203,7 +2203,7 @@ Application::onLineDoubleClicked(SubtitleLine *line)
 
 	int mseconds = line->showTime().toMillis() - SCConfig::seekOffsetOnDoubleClick();
 	m_playerWidget->pauseAfterPlayingLine(nullptr);
-	m_player->seek(mseconds > 0 ? mseconds / 1000.0 : 0.0, true);
+	m_player->seek(mseconds > 0 ? mseconds / 1000.0 : 0.0);
 
 	if(m_player->state() != VideoPlayer::Playing && SCConfig::unpauseOnDoubleClick())
 		m_player->play();
@@ -2219,7 +2219,7 @@ Application::onHighlightLine(SubtitleLine *line, bool primary, int firstIndex, i
 			m_lastFoundLine = line;
 
 			m_playerWidget->pauseAfterPlayingLine(nullptr);
-			m_player->seek(line->showTime().toSeconds(), true);
+			m_player->seek(line->showTime().toSeconds());
 		}
 	} else {
 		m_linesWidget->setCurrentLine(line, true);

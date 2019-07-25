@@ -38,6 +38,7 @@
 QT_FORWARD_DECLARE_CLASS(QEvent)
 
 namespace SubtitleComposer {
+class XineVideoLayerWidget;
 class XinePlayerBackend : public PlayerBackend
 {
 	Q_OBJECT
@@ -49,29 +50,32 @@ public:
 	virtual ~XinePlayerBackend();
 
 	QWidget * newConfigWidget(QWidget *parent) override;
+	KCoreConfigSkeleton * config() const override;
 
 protected:
-	bool initialize(VideoWidget *videoWidget) override;
-	void finalize() override;
-	void _finalize();
-	bool reconfigure() override;
+	bool init(QWidget *videoWidget) override;
+	void cleanup() override;
 
-	bool openFile(const QString &filePath, bool &playingAfterCall) override;
-	void closeFile() override;
+	bool openFile(const QString &filePath) override;
+	bool closeFile() override;
 
 	bool play() override;
 	bool pause() override;
-	bool seek(double seconds, bool accurate) override;
+	bool seek(double seconds) override;
 	bool step(int /*frameOffset*/) override { return false; }
 	bool stop() override;
 
-	void playbackRate(double /*newRate*/) override {}
+	bool playbackRate(double /*newRate*/) override { return false; }
 
-	bool setActiveAudioStream(int audioStream) override;
+	bool selectAudioStream(int streamIndex) override;
 
 	bool setVolume(double volume) override;
 
-protected:
+protected slots:
+	void updatePosition();
+	void onVideoLayerGeometryChanged();
+
+private:
 	bool initializeXine(WId winId);
 	void finalizeXine();
 
@@ -86,15 +90,10 @@ protected:
 	static void frameOutputCallback(void *p, int video_width, int video_height, double video_aspect, int *dest_x, int *dest_y, int *dest_width, int *dest_height, double *dest_aspect, int *win_x, int *win_y);
 	static void audioMixerMethodChangedCallback(void *p, xine_cfg_entry_t *entry);
 
-protected slots:
-	void updatePosition();
-	void onVideoLayerGeometryChanged();
+	enum PlayState { STOPPED, PAUSED, PLAYING } m_state;
+	void setState(PlayState state);
 
-private:
-	void setSCConfig(SCConfig *scConfig) override;
-
-private:
-	xcb_connection_t * m_connection;
+	xcb_connection_t *m_connection;
 	xcb_visual_t m_x11Visual;
 
 	xine_t *m_xineEngine;
@@ -102,6 +101,8 @@ private:
 	xine_video_port_t *m_videoDriver;
 	xine_stream_t *m_xineStream;
 	xine_event_queue_t *m_eventQueue;
+
+	XineVideoLayerWidget *m_videoLayer;
 
 	bool m_updatePosition;
 	bool m_softwareMixer;

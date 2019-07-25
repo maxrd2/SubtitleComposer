@@ -19,11 +19,10 @@
  */
 
 #include "mpvconfigwidget.h"
+#include "mpvconfig.h"
 
 #include <locale>
 #include <mpv/client.h>
-
-#include "scconfig.h"
 
 using namespace SubtitleComposer;
 
@@ -56,30 +55,30 @@ MPVConfigWidget::MPVConfigWidget(QWidget *parent)
 			if(bad.contains(name))
 				continue;
 			row.insert(pos, "\t-");
-			if(SCConfig::mpvVideoOutput() == name)
-				kcfg_mpvVideoOutput->setCurrentIndex(kcfg_mpvHwDecode->count());
-			kcfg_mpvVideoOutput->addItem(row, name);
+			if(MPVConfig::videoOutput() == name)
+				kcfg_videoOutput->setCurrentIndex(kcfg_hwDecode->count());
+			kcfg_videoOutput->addItem(row, name);
 		}
-		kcfg_mpvVideoOutput->setProperty("kcfg_property", QByteArray("currentData"));
+		kcfg_videoOutput->setProperty("kcfg_property", QByteArray("currentData"));
 
 		mpv_set_property_string(m_mpv, "hwdec", "help");
-		kcfg_mpvHwDecode->addItem(QStringLiteral("auto\t- Choose best HW decoder"), QStringLiteral("auto"));
+		kcfg_hwDecode->addItem(QStringLiteral("auto\t- Choose best HW decoder"), QStringLiteral("auto"));
 		for(QString row : getHelpResponse()) {
 			int pos = row.indexOf(QChar(' '));
 			if(pos == -1)
 				continue;
 			const QString name = row.left(pos);
-			const QString lastName = kcfg_mpvHwDecode->itemData(kcfg_mpvHwDecode->count() - 1).toString();
+			const QString lastName = kcfg_hwDecode->itemData(kcfg_hwDecode->count() - 1).toString();
 			if(lastName == name || bad.contains(name))
 				continue;
-			if(SCConfig::mpvHwDecode() == name)
-				kcfg_mpvHwDecode->setCurrentIndex(kcfg_mpvHwDecode->count());
-			kcfg_mpvHwDecode->addItem(name, name);
+			if(MPVConfig::hwDecode() == name)
+				kcfg_hwDecode->setCurrentIndex(kcfg_hwDecode->count());
+			kcfg_hwDecode->addItem(name, name);
 		}
-		kcfg_mpvHwDecode->setProperty("kcfg_property", QByteArray("currentData"));
+		kcfg_hwDecode->setProperty("kcfg_property", QByteArray("currentData"));
 
 		mpv_set_property_string(m_mpv, "ao", "help");
-		for(QString row : getHelpResponse()) {
+		for(QString row: getHelpResponse()) {
 			int pos = row.indexOf(QChar(' '));
 			if(pos == -1)
 				continue;
@@ -87,22 +86,22 @@ MPVConfigWidget::MPVConfigWidget(QWidget *parent)
 			if(bad.contains(name))
 				continue;
 			row.insert(pos, "\t-");
-			if(SCConfig::mpvAudioOutput() == name)
-				kcfg_mpvAudioOutput->setCurrentIndex(kcfg_mpvHwDecode->count());
-			kcfg_mpvAudioOutput->addItem(row, name);
+			if(MPVConfig::audioOutput() == name)
+				kcfg_audioOutput->setCurrentIndex(kcfg_audioOutput->count());
+			kcfg_audioOutput->addItem(row, name);
 		}
-		kcfg_mpvAudioOutput->setProperty("kcfg_property", QByteArray("currentData"));
+		kcfg_audioOutput->setProperty("kcfg_property", QByteArray("currentData"));
 
 		mpv_detach_destroy(m_mpv);
 	} else {
-		kcfg_mpvVideoOutput->addItems(QString("vdpau vaapi opengl opengl-hq sdl xv wayland x11 null").split(' '));
-		kcfg_mpvVideoOutput->setProperty("kcfg_property", QByteArray("currentText"));
+		kcfg_videoOutput->addItems(QString("vdpau vaapi opengl opengl-hq sdl xv wayland x11 null").split(' '));
+		kcfg_videoOutput->setProperty("kcfg_property", QByteArray("currentText"));
 
-		kcfg_mpvHwDecode->addItems(QString("auto vdpau vaapi vaapi-copy").split(' '));
-		kcfg_mpvHwDecode->setProperty("kcfg_property", QByteArray("currentText"));
+		kcfg_hwDecode->addItems(QString("auto vdpau vaapi vaapi-copy").split(' '));
+		kcfg_hwDecode->setProperty("kcfg_property", QByteArray("currentText"));
 
-		kcfg_mpvAudioOutput->addItems(QString("pulse alsa oss portaudio jack null").split(' '));
-		kcfg_mpvAudioOutput->setProperty("kcfg_property", QByteArray("currentText"));
+		kcfg_audioOutput->addItems(QString("pulse alsa oss portaudio jack null").split(' '));
+		kcfg_audioOutput->setProperty("kcfg_property", QByteArray("currentText"));
 	}
 }
 

@@ -78,7 +78,7 @@ GStreamer::createElement(const QStringList &types, const char *name)
 }
 
 GstStateChangeReturn
-GStreamer::setElementState(GstElement *element, int state, unsigned timeout)
+GStreamer::setElementState(GstElement *element, int state, GstClockTime timeout)
 {
 	GstStateChangeReturn ret = gst_element_set_state(element, (GstState)state);
 	if(ret == GST_STATE_CHANGE_SUCCESS)
@@ -96,7 +96,7 @@ GStreamer::setElementState(GstElement *element, int state, unsigned timeout)
 		return GST_STATE_CHANGE_ASYNC;
 
 	// wait for state change or timeout
-	if(gst_element_get_state(element, NULL, NULL, timeout * GST_MSECOND) != GST_STATE_CHANGE_SUCCESS) {
+	if(gst_element_get_state(element, NULL, NULL, timeout) != GST_STATE_CHANGE_SUCCESS) {
 #if defined(VERBOSE) || !defined(NDEBUG)
 		qDebug() << "error setting element" << gst_element_get_name(element) << "state to" << state;
 #endif

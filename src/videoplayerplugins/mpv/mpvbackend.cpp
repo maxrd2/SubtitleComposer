@@ -20,9 +20,7 @@
 
 #include "mpvbackend.h"
 #include "mpvconfigwidget.h"
-
-#include "scconfigdummy.h"
-
+#include "mpvconfig.h"
 
 #include <KLocalizedString>
 
@@ -36,41 +34,43 @@ using namespace SubtitleComposer;
 
 MPVBackend::MPVBackend()
 	: PlayerBackend(),
-	m_mpv(NULL),
-	m_initialized(false)
+	  m_state(STOPPED),
+	  m_nativeWindow(nullptr),
+	  m_mpv(nullptr),
+	  m_initialized(false)
 {
 	m_name = QStringLiteral("MPV");
+	connect(MPVConfig::self(), &MPVConfig::configChanged, this, &MPVBackend::reconfigure);
 }
 
 MPVBackend::~MPVBackend()
 {
-	if(isInitialized())
-		_finalize();
-}
-
-void
-MPVBackend::setSCConfig(SCConfig *scConfig)
-{
-	scConfigGlobalSet(scConfig);
+	cleanup();
 }
 
 bool
-MPVBackend::initialize(VideoWidget *videoWidget)
+MPVBackend::init(QWidget *videoWidget)
 {
-	videoWidget->setVideoLayer(new QWidget());
+	if(!m_nativeWindow) {
+		m_nativeWindow = new QWidget(videoWidget);
+		m_nativeWindow->setAttribute(Qt::WA_DontCreateNativeAncestors);
+		m_nativeWindow->setAttribute(Qt::WA_NativeWindow);
+		connect(m_nativeWindow, &QWidget::destroyed, [&](){ m_nativeWindow = nullptr; });
+	} else {
+		m_nativeWindow->setParent(videoWidget);
+	}
 	return true;
 }
 
 void
-MPVBackend::finalize()
+MPVBackend::cleanup()
 {
-	_finalize();
-}
-
-void
-MPVBackend::_finalize()
-{
-	mpvExit();
+	if(m_mpv) {
+		mpv_terminate_destroy(m_mpv);
+		m_mpv = nullptr;
+		m_initialized = false;
+		m_state = STOPPED;
+	}
 }
 
 QWidget *
@@ -79,8 +79,14 @@ MPVBackend::newConfigWidget(QWidget *parent)
 	return new MPVConfigWidget(parent);
 }
 
+KCoreConfigSkeleton *
+MPVBackend::config() const
+{
+	return MPVConfig::self();
+}
+
 bool
-MPVBackend::mpvInit()
+MPVBackend::setup()
 {
 	// FIXME: libmpv requires LC_NUMERIC category to be set to "C".. is there some nicer way to do this?
 	std::setlocale(LC_NUMERIC, "C");
@@ -96,7 +102,7 @@ MPVBackend::mpvInit()
 	reconfigure();
 
 	// window id
-	int64_t winId = player()->videoWidget()->videoLayer()->winId();
+	int64_t winId = m_nativeWindow->winId();
 	mpv_set_option(m_mpv, "wid", MPV_FORMAT_INT64, &winId);
 
 	// no OSD
@@ -120,6 +126,8 @@ MPVBackend::mpvInit()
 	// Receive property change events with MPV_EVENT_PROPERTY_CHANGE
 	mpv_observe_property(m_mpv, 0, "time-pos", MPV_FORMAT_DOUBLE);
 	mpv_observe_property(m_mpv, 0, "speed", MPV_FORMAT_DOUBLE);
+	mpv_observe_property(m_mpv, 0, "volume", MPV_FORMAT_DOUBLE);
+	mpv_observe_property(m_mpv, 0, "mute", MPV_FORMAT_FLAG);
 	mpv_observe_property(m_mpv, 0, "pause", MPV_FORMAT_FLAG);
 	mpv_observe_property(m_mpv, 0, "length", MPV_FORMAT_DOUBLE);
 	mpv_observe_property(m_mpv, 0, "track-list", MPV_FORMAT_NODE);
@@ -131,89 +139,313 @@ MPVBackend::mpvInit()
 	// From this point on, the wakeup function will be called. The callback
 	// can come from any thread, so we use the QueuedConnection mechanism to
 	// relay the wakeup in a thread-safe way.
-	connect(this, SIGNAL(mpvEvents()), this, SLOT(onMPVEvents()), Qt::QueuedConnection);
-	mpv_set_wakeup_callback(m_mpv, wakeup, this);
+	mpv_set_wakeup_callback(m_mpv, [](void *ctx){
+		QMetaObject::invokeMethod(
+					reinterpret_cast<MPVBackend *>(ctx),
+					&MPVBackend::processEvents, Qt::QueuedConnection);
+	}, this);
 
 	m_initialized = mpv_initialize(m_mpv) >= 0;
+	m_state = STOPPED;
 	return m_initialized;
 }
 
 void
-MPVBackend::mpvExit()
+MPVBackend::setState(PlayState state)
 {
-	if(m_mpv) {
-		const char *args[] = { "quit", NULL };
-		mpv_command_async(m_mpv, 0, args);
-		mpv_wait_async_requests(m_mpv);
-	}
-	m_initialized = false;
+	static VideoPlayer::State vpState[] = { VideoPlayer::Ready, VideoPlayer::Paused, VideoPlayer::Playing };
+	if(m_state == state)
+		return;
+	m_state = state;
+	emit stateChanged(vpState[state]);
 }
 
-
 void
-MPVBackend::mpvEventHandle(mpv_event *event)
+MPVBackend::handleEvent(mpv_event *event)
 {
-	const VideoPlayer::State playerState = player()->state();
-
 	switch(event->event_id) {
 	case MPV_EVENT_PROPERTY_CHANGE: {
 		mpv_event_property *prop = (mpv_event_property *)event->data;
-		if(strcmp(prop->name, "time-pos") == 0) {
+		const QByteArray name = prop->name;
+		if(name == "time-pos") {
 			if(prop->format == MPV_FORMAT_DOUBLE) {
-				double time = *(double *)prop->data;
-				if(playerState != VideoPlayer::Playing && playerState != VideoPlayer::Paused) {
+				const double time = *reinterpret_cast<double *>(prop->data);
+				if(m_state == STOPPED) {
 					int paused;
 					mpv_get_property(m_mpv, "pause", MPV_FORMAT_FLAG, &paused);
-					setPlayerState(paused ? VideoPlayer::Paused : VideoPlayer::Playing);
+					setState(paused ? PAUSED : PLAYING);
 				}
-				setPlayerPosition(time);
-			} else if(prop->format == MPV_FORMAT_NONE) {
+				emit positionChanged(time);
+				return;
+			}
+			if(prop->format == MPV_FORMAT_NONE) {
 				// property is unavailable, probably means that playback was stopped.
-				setPlayerState(VideoPlayer::Ready);
-			}
-		} else if(strcmp(prop->name, "pause") == 0) {
-			if(prop->format == MPV_FORMAT_FLAG) {
-				int paused = *(int *)prop->data;
-				if(paused && playerState != VideoPlayer::Paused) {
-					setPlayerState(VideoPlayer::Paused);
-				} else if(!paused && playerState != VideoPlayer::Playing) {
-					setPlayerState(VideoPlayer::Playing);
-				}
-			}
-		} else if(strcmp(prop->name, "track-list") == 0) {
-			updateAudioData(prop);
-			updateTextData(prop);
-		} else if(strcmp(prop->name, "speed") == 0) {
-			if(prop->format == MPV_FORMAT_DOUBLE) {
-				double rate = *(double *)prop->data;
-				playbackRateNotify(rate);
+				setState(STOPPED);
+				return;
 			}
 		}
-		break;
+		if(name == "pause") {
+			Q_ASSERT(prop->format == MPV_FORMAT_FLAG);
+			const int paused = *reinterpret_cast<int *>(prop->data);
+			setState(paused ? PAUSED : PLAYING);
+			return;
+		}
+		if(name == "track-list") {
+			notifyAudioStreams(prop);
+			notifyTextStreams(prop);
+			return;
+		}
+		if(name == "speed") {
+			Q_ASSERT(prop->format == MPV_FORMAT_DOUBLE);
+			double rate = *(double *)prop->data;
+			emit speedChanged(rate);
+			return;
+		}
+		if(name == "volume") {
+			double volumeMax = 100.;
+			mpv_get_property(m_mpv, "volume-max", MPV_FORMAT_DOUBLE, &volumeMax);
+			Q_ASSERT(prop->format == MPV_FORMAT_DOUBLE);
+			double volume = *(double *)prop->data;
+			emit volumeChanged(volume * 100. / volumeMax);
+			return;
+		}
+		if(name == "mute") {
+			Q_ASSERT(prop->format == MPV_FORMAT_FLAG);
+			const int muted = *reinterpret_cast<int *>(prop->data);
+			emit muteChanged(muted);
+			return;
+		}
+		return;
 	}
 	case MPV_EVENT_VIDEO_RECONFIG:
-		updateVideoData();
-		break;
+		notifyVideoInfo();
+		return;
 
 	case MPV_EVENT_LOG_MESSAGE: {
 		struct mpv_event_log_message *msg = (struct mpv_event_log_message *)event->data;
-		qDebug() << "[MPV:" << msg->prefix << "] " << msg->level << ": " << msg->text;
-		if(msg->log_level == MPV_LOG_LEVEL_ERROR && strcmp(msg->prefix, "cplayer") == 0 && playerState == VideoPlayer::Opening)
-			setPlayerErrorState(msg->text);
-		break;
+		qDebug("[MPV: %s] %s: %s", msg->prefix, msg->level, QByteArray(msg->text).trimmed().constData());
+		if(msg->log_level == MPV_LOG_LEVEL_ERROR && strcmp(msg->prefix, "cplayer") == 0)
+			emit errorOccured(QString::fromUtf8(msg->text));
+		return;
 	}
 	case MPV_EVENT_SHUTDOWN: {
 		if(m_mpv) {
 			mpv_terminate_destroy(m_mpv);
-			m_mpv = NULL;
+			m_mpv = nullptr;
+			m_initialized = false;
 		}
-		setPlayerState(VideoPlayer::Ready);
-		break;
+		setState(STOPPED);
+		return;
 	}
 	default:
 		// Ignore uninteresting or unknown events.
-		break;
+		return;
 	}
+}
+
+void
+MPVBackend::processEvents()
+{
+	// Process all events, until the event queue is empty.
+	while(m_mpv) {
+		mpv_event *event = mpv_wait_event(m_mpv, 0);
+		if(event->event_id == MPV_EVENT_NONE)
+			break;
+		handleEvent(event);
+	}
+}
+
+bool
+MPVBackend::openFile(const QString &path)
+{
+	if(!m_mpv && !setup())
+		return false;
+
+	m_currentFilePath = path;
+	const QByteArray &filename = m_currentFilePath.toUtf8();
+	const char *args[] = { "loadfile", filename.constData(), nullptr };
+	mpv_command(m_mpv, args);
+
+	return true;
+}
+
+bool
+MPVBackend::closeFile()
+{
+	stop();
+	m_currentFilePath.clear();
+	return true;
+}
+
+bool
+MPVBackend::stop()
+{
+	const char *args[] = { "stop", nullptr };
+	mpv_command(m_mpv, args);
+	return true;
+}
+
+bool
+MPVBackend::play()
+{
+	if(m_initialized == false || m_state == STOPPED) {
+		if(!openFile(m_currentFilePath))
+			return false;
+	}
+
+	if(m_state != PLAYING) {
+		const char *args[] = { "cycle", "pause", nullptr };
+		mpv_command(m_mpv, args);
+	}
+
+	return true;
+}
+
+bool
+MPVBackend::pause()
+{
+	const char *args[] = { "cycle", "pause", nullptr };
+	mpv_command(m_mpv, args);
+	return true;
+}
+
+bool
+MPVBackend::seek(double seconds)
+{
+	const QByteArray &timeOffset = QByteArray::number(seconds);
+//	const char *args[] = { "seek", timeOffset.constData(), "absolute", "keyframes", nullptr };
+	const char *args[] = { "seek", timeOffset.constData(), "absolute", "exact", nullptr };
+	mpv_command_async(m_mpv, 0, args);
+	return true;
+}
+
+bool
+MPVBackend::step(int frameOffset)
+{
+	const char *cmd = frameOffset > 0 ? "frame-step" : "frame-back-step";
+	const char *args[] = { cmd, nullptr };
+	for(int i = 0, n = qAbs(frameOffset); i < n; i++)
+		mpv_command_async(m_mpv, 0, args);
+	return true;
+}
+
+bool
+MPVBackend::playbackRate(double newRate)
+{
+	if(newRate > 1.) // without frame dropping we might go out of sync
+		mpv_set_option_string(m_mpv, "framedrop", "vo");
+	else
+		mpv_set_option_string(m_mpv, "framedrop", MPVConfig::frameDropping() ? "vo" : "no");
+	mpv_set_option(m_mpv, "speed", MPV_FORMAT_DOUBLE, &newRate);
+	return true;
+}
+
+bool
+MPVBackend::selectAudioStream(int streamIndex)
+{
+	const QByteArray &strIndex = QByteArray::number(streamIndex);
+	const char *args[] = { "aid", strIndex.constData(), nullptr };
+	mpv_command_async(m_mpv, 0, args);
+	return true;
+}
+
+bool
+MPVBackend::setVolume(double volume)
+{
+	double volumeMax = 100.;
+	mpv_get_property(m_mpv, "volume-max", MPV_FORMAT_DOUBLE, &volumeMax);
+	const QByteArray &strVolume = QByteArray::number(volumeMax * volume / 100.);
+	const char *args[] = { "set", "volume", strVolume.constData(), nullptr };
+	mpv_command_async(m_mpv, 0, args);
+	return true;
+}
+
+bool
+MPVBackend::reconfigure()
+{
+	if(!m_mpv)
+		return false;
+
+	if(MPVConfig::videoOutputEnabled()) {
+#if MPV_CLIENT_API_VERSION >= MPV_MAKE_VERSION(1, 21)
+		if(MPVConfig::videoOutput() == QStringLiteral("opengl-hq")) {
+			mpv_set_option_string(m_mpv, "vo", "opengl");
+			mpv_set_option_string(m_mpv, "profile", "opengl-hq");
+		} else {
+			mpv_set_option_string(m_mpv, "vo", MPVConfig::videoOutput().toUtf8().constData());
+		}
+#else
+		mpv_set_option_string(m_mpv, "vo", MPVConfig::videoOutput().toUtf8().constData());
+#endif
+	}
+
+	mpv_set_option_string(m_mpv, "hwdec", MPVConfig::hwDecodeEnabled() ? MPVConfig::hwDecode().toUtf8().constData() : "no");
+
+	if(MPVConfig::audioOutputEnabled())
+		mpv_set_option_string(m_mpv, "ao", MPVConfig::audioOutput().toUtf8().constData());
+
+	mpv_set_option_string(m_mpv, "audio-channels", MPVConfig::audioChannelsEnabled() ? QByteArray::number(MPVConfig::audioChannels()).constData() : "auto");
+
+	mpv_set_option_string(m_mpv, "framedrop", MPVConfig::frameDropping() ? "vo" : "no");
+
+	if(MPVConfig::autoSyncEnabled())
+		mpv_set_option_string(m_mpv, "autosync", QByteArray::number(MPVConfig::autoSyncFactor()).constData());
+
+	if(MPVConfig::cacheEnabled()) {
+		mpv_set_option_string(m_mpv, "cache", QByteArray::number(MPVConfig::cacheSize()).constData());
+//		mpv_set_option_string(m_mpv, "cache-min", "99");
+//		mpv_set_option_string(m_mpv, "cache-seek-min", "99");
+	} else {
+		mpv_set_option_string(m_mpv, "cache", "auto");
+	}
+
+	if(MPVConfig::volumeNormalization())
+		mpv_set_option_string(m_mpv, "drc", "1:0.25");
+
+	if(MPVConfig::volumeAmplificationEnabled()) {
+#if MPV_CLIENT_API_VERSION >= MPV_MAKE_VERSION(1, 22)
+		mpv_set_option_string(m_mpv, "volume-max", QByteArray::number(MPVConfig::volumeAmplification()).constData());
+#else
+		mpv_set_option_string(m_mpv, "softvol", "yes");
+		mpv_set_option_string(m_mpv, "softvol-max", QByteArray::number(MPVConfig::volumeAmplification()).constData());
+	} else {
+		mpv_set_option_string(m_mpv, "softvol", "no");
+#endif
+	}
+
+	// restart playing
+	if(m_initialized && m_state != STOPPED) {
+		bool wasPaused = m_state == PAUSED;
+		double oldPosition;
+		mpv_get_property(m_mpv, "time-pos", MPV_FORMAT_DOUBLE, &oldPosition);
+
+		stop();
+		play();
+		seek(oldPosition);
+		if(wasPaused)
+			pause();
+	}
+
+	return true;
+}
+
+void
+MPVBackend::notifyVideoInfo()
+{
+	int64_t w, h;
+	double dar, fps, length;
+	if(mpv_get_property(m_mpv, "dwidth", MPV_FORMAT_INT64, &w) >= 0
+			&& mpv_get_property(m_mpv, "dheight", MPV_FORMAT_INT64, &h) >= 0
+			&& w > 0 && h > 0) {
+		mpv_get_property(m_mpv, "video-aspect", MPV_FORMAT_DOUBLE, &dar);
+		emit resolutionChanged(w, h, dar);
+	}
+	if(mpv_get_property(m_mpv, "estimated-vf-fps", MPV_FORMAT_DOUBLE, &fps) >= 0 && fps > 0)
+		emit fpsChanged(fps);
+	else if(mpv_get_property(m_mpv, "container-fps", MPV_FORMAT_DOUBLE, &fps) >= 0 && fps > 0)
+		emit fpsChanged(fps);
+	if(mpv_get_property(m_mpv, "duration", MPV_FORMAT_DOUBLE, &length) >= 0 && length > 0)
+		emit lengthChanged(length);
 }
 
 static QVariant
@@ -248,7 +480,7 @@ node_to_variant(const mpv_node *node)
 }
 
 void
-MPVBackend::updateTextData(const mpv_event_property *prop)
+MPVBackend::notifyTextStreams(const mpv_event_property *prop)
 {
 	QStringList textStreams;
 	if(prop->format == MPV_FORMAT_NODE) {
@@ -283,11 +515,11 @@ MPVBackend::updateTextData(const mpv_event_property *prop)
 			}
 		}
 	}
-	setPlayerTextStreams(textStreams);
+	emit textStreamsChanged(textStreams);
 }
 
 void
-MPVBackend::updateAudioData(const mpv_event_property *prop)
+MPVBackend::notifyAudioStreams(const mpv_event_property *prop)
 {
 	QStringList audioStreams;
 	if(prop->format == MPV_FORMAT_NODE) {
@@ -320,248 +552,5 @@ MPVBackend::updateAudioData(const mpv_event_property *prop)
 			}
 		}
 	}
-	setPlayerAudioStreams(audioStreams, audioStreams.isEmpty() ? -1 : 0);
-}
-
-void
-MPVBackend::updateVideoData()
-{
-	// Retrieve the new video size.
-	int64_t w, h;
-	double dar, fps, length;
-	if(mpv_get_property(m_mpv, "dwidth", MPV_FORMAT_INT64, &w) >= 0
-			&& mpv_get_property(m_mpv, "dheight", MPV_FORMAT_INT64, &h) >= 0
-			&& w > 0 && h > 0) {
-		mpv_get_property(m_mpv, "video-aspect", MPV_FORMAT_DOUBLE, &dar);
-		player()->videoWidget()->setVideoResolution(w, h, dar);
-	}
-	if(mpv_get_property(m_mpv, "estimated-vf-fps", MPV_FORMAT_DOUBLE, &fps) >= 0 && fps > 0)
-		setPlayerFramesPerSecond(fps);
-	else if(mpv_get_property(m_mpv, "container-fps", MPV_FORMAT_DOUBLE, &fps) >= 0 && fps > 0)
-		setPlayerFramesPerSecond(fps);
-	if(mpv_get_property(m_mpv, "duration", MPV_FORMAT_DOUBLE, &length) >= 0 && length > 0)
-		setPlayerLength(length);
-}
-
-
-// This slot is invoked by wakeup() (through the mpv_events signal).
-void
-MPVBackend::onMPVEvents()
-{
-	// Process all events, until the event queue is empty.
-	while(m_mpv) {
-		mpv_event *event = mpv_wait_event(m_mpv, 0);
-		if(event->event_id == MPV_EVENT_NONE)
-			break;
-		mpvEventHandle(event);
-	}
-}
-
-/*static*/ void
-MPVBackend::wakeup(void *ctx)
-{
-	// This callback is invoked from any mpv thread (but possibly also
-	// recursively from a thread that is calling the mpv API). Just notify
-	// the Qt GUI thread to wake up (so that it can process events with
-	// mpv_wait_event()), and return as quickly as possible.
-	MPVBackend *me = (MPVBackend *)ctx;
-	emit me->mpvEvents();
-}
-
-bool
-MPVBackend::openFile(const QString &filePath, bool &playingAfterCall)
-{
-	playingAfterCall = false;
-
-	if(!m_mpv && !mpvInit())
-		return false;
-
-	QByteArray filename = filePath.toUtf8();
-	m_currentFilePath = filePath;
-	const char *args[] = { "loadfile", filename.constData(), NULL };
-	mpv_command_async(m_mpv, 0, args);
-
-	if(player()->activeAudioStream() >= 0 && player()->audioStreams().count() > 1)
-		mpv_set_option_string(m_mpv, "aid", QString::number(player()->activeAudioStream()).toUtf8().constData());
-
-	waitState(VideoPlayer::Playing, VideoPlayer::Paused);
-
-	return true;
-}
-
-void
-MPVBackend::closeFile()
-{}
-
-bool
-MPVBackend::stop()
-{
-	const char *args[] = { "stop", NULL };
-	mpv_command_async(m_mpv, 0, args);
-	return true;
-}
-
-bool
-MPVBackend::play()
-{
-	if(player()->isStopped()) {
-		bool playing = false;
-		if(!openFile(m_currentFilePath, playing))
-			return false;
-	}
-
-	if(player()->state() != VideoPlayer::Playing) {
-		const char *args[] = { "cycle", "pause", NULL };
-		mpv_command_async(m_mpv, 0, args);
-		waitState(VideoPlayer::Playing);
-	}
-
-	return true;
-}
-
-bool
-MPVBackend::pause()
-{
-	const char *args[] = { "cycle", "pause", NULL };
-	mpv_command_async(m_mpv, 0, args);
-	return true;
-}
-
-bool
-MPVBackend::seek(double seconds, bool accurate)
-{
-	QByteArray strVal = QByteArray::number(seconds);
-	if(accurate) {
-		const char *args[] = { "seek", strVal.constData(), "absolute", "exact", NULL };
-		mpv_command_async(m_mpv, 0, args);
-	} else {
-		const char *args[] = { "seek", strVal.constData(), "absolute", "keyframes", NULL };
-		mpv_command_async(m_mpv, 0, args);
-	}
-	return true;
-}
-
-bool
-MPVBackend::step(int frameOffset)
-{
-	QByteArray strVal = QByteArray::number(frameOffset);
-	const char *cmd = frameOffset > 0 ? "frame-step" : "frame-back-step";
-	const char *args[] = { cmd, nullptr };
-	for(int i = 0, n = qAbs(frameOffset); i < n; i++)
-		mpv_command_async(m_mpv, 0, args);
-	return true;
-}
-
-void
-MPVBackend::playbackRate(double newRate)
-{
-	if(newRate > 1.) // without frame dropping we might go out of sync
-		mpv_set_option_string(m_mpv, "framedrop", "vo");
-	else
-		mpv_set_option_string(m_mpv, "framedrop", SCConfig::mpvFrameDropping() ? "vo" : "no");
-	mpv_set_option(m_mpv, "speed", MPV_FORMAT_DOUBLE, &newRate);
-}
-
-bool
-MPVBackend::setActiveAudioStream(int audioStream)
-{
-	QByteArray strVal = QByteArray::number(audioStream);
-	const char *args[] = { "aid", strVal.constData(), NULL };
-	mpv_command_async(m_mpv, 0, args);
-	return true;
-}
-
-bool
-MPVBackend::setVolume(double volume)
-{
-	QByteArray strVal = QByteArray::number(volume);
-	const char *args[] = { "set", "volume", strVal.constData(), NULL };
-	mpv_command_async(m_mpv, 0, args);
-	return true;
-}
-
-void
-MPVBackend::waitState(VideoPlayer::State state)
-{
-	waitState(state, state);
-}
-
-void
-MPVBackend::waitState(VideoPlayer::State state1, VideoPlayer::State state2)
-{
-	while(m_initialized && m_mpv && player()->state() != state1 && player()->state() != state2) {
-		mpv_wait_async_requests(m_mpv);
-		QApplication::instance()->processEvents();
-	}
-}
-
-bool
-MPVBackend::reconfigure()
-{
-	if(!m_mpv)
-		return false;
-
-	if(SCConfig::mpvVideoOutputEnabled()) {
-#if MPV_CLIENT_API_VERSION >= MPV_MAKE_VERSION(1, 21)
-		if(SCConfig::mpvVideoOutput() == QStringLiteral("opengl-hq")) {
-			mpv_set_option_string(m_mpv, "vo", "opengl");
-			mpv_set_option_string(m_mpv, "profile", "opengl-hq");
-		} else {
-			mpv_set_option_string(m_mpv, "vo", SCConfig::mpvVideoOutput().toUtf8().constData());
-		}
-#else
-		mpv_set_option_string(m_mpv, "vo", SCConfig::mpvVideoOutput().toUtf8().constData());
-#endif
-	}
-
-	mpv_set_option_string(m_mpv, "hwdec", SCConfig::mpvHwDecodeEnabled() ? SCConfig::mpvHwDecode().toUtf8().constData() : "no");
-
-	if(SCConfig::mpvAudioOutputEnabled())
-		mpv_set_option_string(m_mpv, "ao", SCConfig::mpvAudioOutput().toUtf8().constData());
-
-	mpv_set_option_string(m_mpv, "audio-channels", SCConfig::mpvAudioChannelsEnabled() ? QString::number(SCConfig::mpvAudioChannels()).toUtf8().constData() : "auto");
-
-	mpv_set_option_string(m_mpv, "framedrop", SCConfig::mpvFrameDropping() ? "vo" : "no");
-
-	if(SCConfig::mpvAutoSyncEnabled())
-		mpv_set_option_string(m_mpv, "autosync", QString::number(SCConfig::mpvAutoSyncFactor()).toUtf8().constData());
-
-	if(SCConfig::mpvCacheEnabled()) {
-		mpv_set_option_string(m_mpv, "cache", QString::number(SCConfig::mpvCacheSize()).toUtf8().constData());
-//		mpv_set_option_string(m_mpv, "cache-min", "99");
-//		mpv_set_option_string(m_mpv, "cache-seek-min", "99");
-	} else {
-		mpv_set_option_string(m_mpv, "cache", "auto");
-	}
-
-	if(SCConfig::mpvVolumeNormalization())
-		mpv_set_option_string(m_mpv, "drc", "1:0.25");
-
-	if(SCConfig::mpvVolumeAmplificationEnabled()) {
-#if MPV_CLIENT_API_VERSION >= MPV_MAKE_VERSION(1, 22)
-		mpv_set_option_string(m_mpv, "volume-max", QString::number(SCConfig::mpvVolumeAmplification()).toUtf8().constData());
-#else
-		mpv_set_option_string(m_mpv, "softvol", "yes");
-		mpv_set_option_string(m_mpv, "softvol-max", QString::number(SCConfig::mpvVolumeAmplification()).toUtf8().constData());
-	} else {
-		mpv_set_option_string(m_mpv, "softvol", "no");
-#endif
-	}
-
-	// restart playing
-	if(m_initialized && (player()->isPlaying() || player()->isPaused())) {
-		bool wasPaused = player()->isPaused();
-		double oldPosition;
-		mpv_get_property(m_mpv, "time-pos", MPV_FORMAT_DOUBLE, &oldPosition);
-
-		stop();
-		waitState(VideoPlayer::Ready);
-		play();
-		waitState(VideoPlayer::Playing);
-		seek(oldPosition, true);
-		if(wasPaused)
-			pause();
-	}
-
-	return true;
+	emit audioStreamsChanged(audioStreams, audioStreams.isEmpty() ? -1 : 0);
 }

@@ -6,9 +6,11 @@ set(videoplayer_mplayer_SRCS
 	${videoplayerplugins_SRCS}
 	CACHE INTERNAL EXPORTEDVARIABLE
 )
-
 ki18n_wrap_ui(videoplayer_mplayer_SRCS
 	${CMAKE_CURRENT_SOURCE_DIR}/mplayerconfigwidget.ui
+)
+kconfig_add_kcfg_files(videoplayer_mplayer_SRCS GENERATE_MOC
+	${CMAKE_CURRENT_SOURCE_DIR}/mplayerconfig.kcfgc
 )
 
 add_library(mplayer MODULE ${videoplayer_mplayer_SRCS})

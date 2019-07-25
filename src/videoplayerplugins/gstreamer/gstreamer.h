@@ -31,7 +31,7 @@
 namespace SubtitleComposer {
 class GStreamer
 {
-	friend class GStreamerPlayerBackend;
+	friend class GStreamerBackend;
 	friend class StreamProcessor;
 
 private:
@@ -41,7 +41,7 @@ private:
 	static GstElement * createElement(const QString &types, const char *name);
 	static GstElement * createElement(const QStringList &types, const char *name);
 
-	static GstStateChangeReturn setElementState(GstElement *element, int state, unsigned timeout = 0);
+	static GstStateChangeReturn setElementState(GstElement *element, int state, GstClockTime timeout = 0);
 
 	static WaveFormat formatFromAudioCaps(GstCaps *caps);
 	static GstCaps * audioCapsFromFormat(const WaveFormat &format, bool addSampleRate = true);

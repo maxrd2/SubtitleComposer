@@ -21,20 +21,30 @@
 #include "mplayerplayerbackend.h"
 #include "mplayerplayerprocess.h"
 #include "mplayerconfigwidget.h"
+#include "mplayerconfig.h"
 #include "mediadata.h"
-#include "scconfigdummy.h"
 
 #include <QDebug>
 
 #include <KLocalizedString>
 
+#define waitState(condition) \
+	while(m_process->state() != QProcess::NotRunning && !(condition)) { \
+		QCoreApplication::processEvents(); \
+		QCoreApplication::sendPostedEvents(); \
+	}
+
 using namespace SubtitleComposer;
 
-MPlayerPlayerBackend::MPlayerPlayerBackend()
+MPlayerBackend::MPlayerBackend()
 	: PlayerBackend(),
-	m_process(new MPlayerPlayerProcess(this)),
-	m_position(0.0),
-	m_reportUpdates(true)
+	  m_state(STOPPED),
+	  m_initialized(false),
+	  m_muted(false),
+	  m_process(new MPlayerProcess(this)),
+	  m_nativeWindow(nullptr),
+	  m_position(0.0),
+	  m_reportUpdates(true)
 {
 	m_name = QStringLiteral("MPlayer");
 	connect(m_process, SIGNAL(mediaDataLoaded()), this, SLOT(onMediaDataLoaded()));
@@ -44,67 +54,82 @@ MPlayerPlayerBackend::MPlayerPlayerBackend()
 	connect(m_process, SIGNAL(processExited()), this, SLOT(onProcessExited()));
 }
 
-MPlayerPlayerBackend::~MPlayerPlayerBackend()
+MPlayerBackend::~MPlayerBackend()
 {
-	if(isInitialized())
-		_finalize();
 }
 
 void
-MPlayerPlayerBackend::setSCConfig(SCConfig *scConfig)
+MPlayerBackend::setState(PlayState state)
 {
-	scConfigGlobalSet(scConfig);
+	static VideoPlayer::State vpState[] = { VideoPlayer::Ready, VideoPlayer::Paused, VideoPlayer::Playing };
+	if(m_state == state)
+		return;
+	m_state = state;
+	emit stateChanged(vpState[state]);
 }
 
 bool
-MPlayerPlayerBackend::initialize(VideoWidget *videoWidget)
+MPlayerBackend::init(QWidget *videoWidget)
 {
-	videoWidget->setVideoLayer(new QWidget());
+	if(!m_nativeWindow) {
+		m_nativeWindow = new QWidget(videoWidget);
+		m_nativeWindow->setAttribute(Qt::WA_DontCreateNativeAncestors);
+		m_nativeWindow->setAttribute(Qt::WA_NativeWindow);
+		connect(m_nativeWindow, &QWidget::destroyed, [&](){ m_nativeWindow = nullptr; });
+	} else {
+		m_nativeWindow->setParent(videoWidget);
+	}
 	return true;
 }
 
 void
-MPlayerPlayerBackend::finalize()
+MPlayerBackend::cleanup()
 {
-	_finalize();
-}
-
-void
-MPlayerPlayerBackend::_finalize()
-{
-
 }
 
 QWidget *
-MPlayerPlayerBackend::newConfigWidget(QWidget *parent)
+MPlayerBackend::newConfigWidget(QWidget *parent)
 {
 	return new MPlayerConfigWidget(parent);
 }
 
+KCoreConfigSkeleton *
+MPlayerBackend::config() const
+{
+	return MPlayerConfig::self();
+}
+
 bool
-MPlayerPlayerBackend::openFile(const QString &filePath, bool &playingAfterCall)
+MPlayerBackend::openFile(const QString &path)
 {
 	m_position = 0.0;
 
-	playingAfterCall = true;
-
-	if(!m_process->start(filePath, player()->videoWidget()->videoLayer()->winId(), player()->activeAudioStream(), player()->audioStreams().count()))
+	m_currentFilePath = path;
+	m_initialized = false;
+	m_state = STOPPED;
+	m_muted = false;
+	if(!m_process->start(path, m_nativeWindow->winId()))
 		return false;
 
+	waitState(m_initialized && m_state == PAUSED);
+
+	return m_state != STOPPED;
+}
+
+bool
+MPlayerBackend::closeFile()
+{
+	m_currentFilePath.clear();
 	return true;
 }
 
-void
-MPlayerPlayerBackend::closeFile()
-{}
-
 bool
-MPlayerPlayerBackend::stop()
+MPlayerBackend::stop()
 {
 	if(m_process->state() == QProcess::NotRunning)
 		return true;
 
-	if(!player()->isApplicationClosingDown()) {
+	if(!QApplication::closingDown()) {
 		// NOTE the quit message is not processed when the application
 		// is closing down so we don't even send it because it would
 		// just be a waste of 3 seconds.
@@ -126,12 +151,12 @@ MPlayerPlayerBackend::stop()
 }
 
 bool
-MPlayerPlayerBackend::play()
+MPlayerBackend::play()
 {
 	if(m_process->state() == QProcess::NotRunning) { // player state was Ready
 		m_position = 0.0;
 
-		if(!m_process->start(player()->filePath(), (int)player()->videoWidget()->videoLayer()->winId(), player()->activeAudioStream(), player()->audioStreams().count()))
+		if(!m_process->start(m_currentFilePath, m_nativeWindow->winId()))
 			return false;
 
 		if(m_process->state() == QProcess::NotRunning)
@@ -143,12 +168,12 @@ MPlayerPlayerBackend::play()
 }
 
 bool
-MPlayerPlayerBackend::pause()
+MPlayerBackend::pause()
 {
 	if(m_process->state() == QProcess::NotRunning) { // player state was Ready
 		m_position = 0.0;
 
-		if(!m_process->start(player()->filePath(), (int)player()->videoWidget()->videoLayer()->winId(), player()->activeAudioStream(), player()->audioStreams().count()))
+		if(!m_process->start(m_currentFilePath, m_nativeWindow->winId()))
 			return false;
 
 		if(m_process->state() == QProcess::NotRunning)
@@ -162,58 +187,71 @@ MPlayerPlayerBackend::pause()
 }
 
 bool
-MPlayerPlayerBackend::seek(double seconds, bool accurate)
+MPlayerBackend::seek(double seconds)
 {
-	if(accurate) {
-		bool wasPaused = player()->isPaused();
-		bool wasMuted = player()->isMuted();
+	const bool wasPaused = m_state == PAUSED;
+	const bool wasMuted = m_muted;
 
-		m_reportUpdates = false;
+	m_reportUpdates = false;
 
-		if(m_process->version() == 1) {
-			if(!wasPaused)
-				m_process->sendTogglePause();
+	if(m_process->version() == 1) {
+		if(!wasPaused)
+			m_process->sendTogglePause();
 
-			if(!wasMuted)
-				m_process->sendToggleMute();
-		}
+		if(!wasMuted)
+			m_process->sendToggleMute();
+	}
 
-		double seekPosition = seconds;
-		do {
-			m_process->sendSeek(seekPosition);
+	double seekPosition = seconds;
+	do {
+		m_process->sendSeek(seekPosition);
 
-			if(seekPosition > 0.0) {
-				seekPosition -= 1.0;
-				if(seekPosition < 0.0)
-					seekPosition = 0.0;
-			} else
-				break;
-		} while(m_position > seconds);
+		if(seekPosition > 0.0) {
+			seekPosition -= 1.0;
+			if(seekPosition < 0.0)
+				seekPosition = 0.0;
+		} else
+			break;
+	} while(m_position > seconds);
 
-		if(m_process->version() == 1) {
-			if(!wasMuted)
-				m_process->sendToggleMute();
+	if(m_process->version() == 1) {
+		if(!wasMuted)
+			m_process->sendToggleMute();
 
-			if(!wasPaused)
-				m_process->sendTogglePause();
-		}
+		if(!wasPaused)
+			m_process->sendTogglePause();
+	}
 
-		m_reportUpdates = true;
+	m_reportUpdates = true;
 
-		setPlayerPosition(m_position);
-	} else
-		m_process->sendFastSeek(seconds);
+	emit positionChanged(m_position);
 
 	return true;
 }
 
 bool
-MPlayerPlayerBackend::setActiveAudioStream(int audioStream)
+MPlayerBackend::step(int frameOffset)
+{
+	// TODO: handle backward stepping somehow
+	for(int i = 0; i < frameOffset; i++)
+		m_process->sendFrameStep();
+	return true;
+}
+
+bool
+MPlayerBackend::playbackRate(double newRate)
+{
+	m_process->sendSpeedSet(newRate);
+	return true;
+}
+
+bool
+MPlayerBackend::selectAudioStream(int streamIndex)
 {
 	if(m_process->state() != QProcess::NotRunning) {
-		bool wasMuted = player()->isMuted();
-		m_process->sendAudioStream(m_process->mediaData().idForIndex(audioStream));
-		m_process->sendVolume(player()->volume());
+		const bool wasMuted = m_muted;
+		m_process->sendAudioStream(m_process->mediaData().idForIndex(streamIndex));
+//		m_process->sendVolume(player()->volume());
 		if(wasMuted)
 			m_process->sendToggleMute();
 	}
@@ -222,14 +260,14 @@ MPlayerPlayerBackend::setActiveAudioStream(int audioStream)
 }
 
 bool
-MPlayerPlayerBackend::setVolume(double volume)
+MPlayerBackend::setVolume(double volume)
 {
 	m_process->sendVolume(volume);
 	return true;
 }
 
 void
-MPlayerPlayerBackend::onMediaDataLoaded()
+MPlayerBackend::onMediaDataLoaded()
 {
 	const MediaData &mediaData = m_process->mediaData();
 
@@ -251,71 +289,69 @@ MPlayerPlayerBackend::onMediaDataLoaded()
 		audioStreams << audioStreamName;
 	}
 
-	if(mediaData.videoWidth && mediaData.videoHeight) {
-		player()->videoWidget()->setVideoResolution(mediaData.videoWidth, mediaData.videoHeight, mediaData.videoDAR);
-	}
+	if(mediaData.videoWidth && mediaData.videoHeight)
+		emit resolutionChanged(mediaData.videoWidth, mediaData.videoHeight, mediaData.videoDAR);
 
-	setPlayerAudioStreams(audioStreams, audioStreams.isEmpty() ? -1 : 0);
+	emit audioStreamsChanged(audioStreams, audioStreams.isEmpty() ? -1 : 0);
 
 	if(mediaData.duration)
-		setPlayerLength(mediaData.duration);
+		emit lengthChanged(mediaData.duration);
 
 	if(mediaData.videoFPS)
-		setPlayerFramesPerSecond(mediaData.videoFPS);
+		emit fpsChanged(mediaData.videoFPS);
+
+	m_initialized = true;
 }
 
 void
-MPlayerPlayerBackend::onPlayingReceived()
+MPlayerBackend::onPlayingReceived()
 {
 	if(!m_reportUpdates)
 		return;
 
-	setPlayerState(VideoPlayer::Playing);
+	setState(PLAYING);
 }
 
 void
-MPlayerPlayerBackend::onPausedReceived()
+MPlayerBackend::onPausedReceived()
 {
 	if(!m_reportUpdates)
 		return;
 
-	setPlayerState(VideoPlayer::Paused);
+	setState(PAUSED);
 }
 
 void
-MPlayerPlayerBackend::onPositionReceived(double seconds)
+MPlayerBackend::onPositionReceived(double seconds)
 {
 	m_position = seconds;
 
 	if(!m_reportUpdates)
 		return;
 
-	if(!player()->isPlaying())
-		setPlayerState(VideoPlayer::Playing);
-
-	setPlayerPosition(seconds);
+	emit positionChanged(seconds);
 }
 
 void
-MPlayerPlayerBackend::onProcessExited()
+MPlayerBackend::onProcessExited()
 {
-	setPlayerState(VideoPlayer::Ready);
+	setState(STOPPED);
 }
 
 bool
-MPlayerPlayerBackend::reconfigure()
+MPlayerBackend::reconfigure()
 {
-	if(!player()->isPlaying() && !player()->isPaused())
+	if(m_state != STOPPED)
 		return true;
 
-	double oldPosition = m_position;
-	bool wasPaused = player()->isPaused();
+	const double oldPosition = m_position;
+	const bool wasPaused = m_state == PAUSED;
 
 	stop();
 	play();
 	if(wasPaused)
 		pause();
-	seek(oldPosition, true);
+	seek(oldPosition);
 
 	return true;
 }

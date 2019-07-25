@@ -19,7 +19,6 @@
  */
 
 #include "phononplayerbackend.h"
-#include "scconfigdummy.h"
 
 #include <Phonon/MediaObject>
 #include <Phonon/MediaController>
@@ -31,30 +30,18 @@ using namespace SubtitleComposer;
 
 PhononPlayerBackend::PhononPlayerBackend()
 	: PlayerBackend(),
-	m_mediaObject(0),
-	m_mediaController(0),
-	m_audioOutput(0),
-	m_videoOutput(0)
+	  m_state(STOPPED),
+	  m_mediaObject(nullptr),
+	  m_mediaController(nullptr),
+	  m_audioOutput(nullptr),
+	  m_videoOutput(nullptr)
 {
 	m_name = QStringLiteral("Phonon");
 }
 
 PhononPlayerBackend::~PhononPlayerBackend()
 {
-	if(isInitialized())
-		_finalize();
-}
-
-void
-PhononPlayerBackend::setSCConfig(SCConfig *scConfig)
-{
-	scConfigGlobalSet(scConfig);
-}
-
-bool
-PhononPlayerBackend::doesVolumeCorrection() const
-{
-	return true;
+	cleanup();
 }
 
 void
@@ -79,12 +66,16 @@ PhononPlayerBackend::initMediaObject()
 }
 
 bool
-PhononPlayerBackend::initialize(VideoWidget *videoWidget)
+PhononPlayerBackend::init(QWidget *videoWidget)
 {
-	m_videoOutput = new Phonon::VideoWidget(0);
-	m_audioOutput = new Phonon::AudioOutput(Phonon::VideoCategory);
+	if(!m_videoOutput) {
+		m_videoOutput = new Phonon::VideoWidget(videoWidget);
+		connect(m_videoOutput, &QWidget::destroyed, [&](){ m_videoOutput = nullptr; });
+	} else {
+		m_videoOutput->setParent(videoWidget);
+	}
 
-	videoWidget->setVideoLayer(m_videoOutput);
+	m_audioOutput = new Phonon::AudioOutput(Phonon::VideoCategory);
 
 	initMediaObject();
 
@@ -92,51 +83,29 @@ PhononPlayerBackend::initialize(VideoWidget *videoWidget)
 }
 
 void
-PhononPlayerBackend::finalize()
+PhononPlayerBackend::cleanup()
 {
-	return _finalize();
-}
-
-void
-PhononPlayerBackend::_finalize()
-{
-//	delete m_mediaController;
-//	m_mediaController = 0;
-
-//	delete m_mediaObject;
-//	m_mediaObject = 0;
-
-//	delete m_audioOutput;
-//	m_audioOutput = 0;
-
 	m_mediaController->disconnect();
 	m_mediaController->deleteLater();
-	m_mediaController = 0;
+	m_mediaController = nullptr;
 
 	m_mediaObject->disconnect();
 	m_mediaObject->deleteLater();
-	m_mediaObject = 0;
+	m_mediaObject = nullptr;
 
 	m_audioOutput->disconnect();
 	m_audioOutput->deleteLater();
-	m_audioOutput = 0;
+	m_audioOutput = nullptr;
 
 	// no need to delete the m_videoOutput as is deleted with the player's videoWidget()
-	m_videoOutput = 0;
-}
+	m_videoOutput = nullptr;
 
-QWidget *
-PhononPlayerBackend::newConfigWidget(QWidget * /*parent */)
-{
-	return NULL;                                       // no settings ATM
-//	return new PhononConfigWidget( parent );
+	m_state = STOPPED;
 }
 
 bool
-PhononPlayerBackend::openFile(const QString &filePath, bool &playingAfterCall)
+PhononPlayerBackend::openFile(const QString &filePath)
 {
-	playingAfterCall = true;
-
 	Phonon::MediaSource mediaSource(QUrl::fromLocalFile(filePath));
 
 	if(mediaSource.type() == Phonon::MediaSource::Invalid)
@@ -156,18 +125,18 @@ PhononPlayerBackend::openFile(const QString &filePath, bool &playingAfterCall)
 	return true;
 }
 
-void
+bool
 PhononPlayerBackend::closeFile()
 {
 	// when can't open a file, the m_mediaObject stops working correctly
 	// so it's best to just destroy the old one and create a new one.
 
 	delete m_mediaObject;
-	m_mediaObject = 0;
+	m_mediaObject = nullptr;
 	initMediaObject();
 
-	if(player()->videoWidget())
-		player()->videoWidget()->videoLayer()->hide();
+	m_videoOutput->hide();
+	return true;
 }
 
 bool
@@ -185,10 +154,10 @@ PhononPlayerBackend::pause()
 }
 
 bool
-PhononPlayerBackend::seek(double seconds, bool /*accurate */)
+PhononPlayerBackend::seek(double seconds)
 {
 	if(m_mediaObject->isSeekable())
-		m_mediaObject->seek((qint64)(seconds * 1000));
+		m_mediaObject->seek(qint64(seconds * 1000));
 	return true;
 }
 
@@ -201,11 +170,11 @@ PhononPlayerBackend::stop()
 }
 
 bool
-PhononPlayerBackend::setActiveAudioStream(int audioStream)
+PhononPlayerBackend::selectAudioStream(int streamIndex)
 {
 	QList<Phonon::AudioChannelDescription> audioChannels = m_mediaController->availableAudioChannels();
-	if(audioChannels.length() > audioStream && audioStream >= 0) {
-		m_mediaController->setCurrentAudioChannel(audioChannels[audioStream]);
+	if(audioChannels.length() > streamIndex && streamIndex >= 0) {
+		m_mediaController->setCurrentAudioChannel(audioChannels[streamIndex]);
 		return true;
 	}
 	return false;
@@ -230,19 +199,19 @@ PhononPlayerBackend::onHasVideoChanged(bool /*hasVideo */)
 void
 PhononPlayerBackend::onFinished()
 {
-	setPlayerState(VideoPlayer::Ready);
+	setState(STOPPED);
 }
 
 void
 PhononPlayerBackend::onTick(qint64 currentTime)
 {
-	setPlayerPosition(currentTime / 1000.0);
+	emit positionChanged(currentTime / 1000.0);
 }
 
 void
 PhononPlayerBackend::onTotalTimeChanged(qint64 newTotalTime)
 {
-	setPlayerLength(newTotalTime / 1000.0);
+	emit lengthChanged(newTotalTime / 1000.0);
 	// FIXME: update frame rate and set tick interval to frame rate
 	// can't be done with what Phonon provides ATM
 }
@@ -261,7 +230,7 @@ PhononPlayerBackend::onAvailableAudioChannelsChanged()
 		i++;
 	}
 
-	setPlayerAudioStreams(audioStreams, idx);
+	emit audioStreamsChanged(audioStreams, idx);
 }
 
 void
@@ -275,31 +244,28 @@ PhononPlayerBackend::onAvailableSubtitlesChanged()
 void
 PhononPlayerBackend::onStateChanged(Phonon::State newState, Phonon::State /*oldState*/)
 {
-	if(!isInitialized())
-		return;
-
 	switch(newState) {
 	case Phonon::StoppedState:
-		setPlayerState(VideoPlayer::Ready);
+	case Phonon::ErrorState:
+		setState(STOPPED);
 		break;
 	case Phonon::LoadingState:
 	case Phonon::PlayingState:
-		setPlayerState(VideoPlayer::Playing);
+		setState(PLAYING);
 		break;
 	case Phonon::PausedState:
-		setPlayerState(VideoPlayer::Paused);
-		break;
-	case Phonon::ErrorState:
-		setPlayerErrorState();
-		break;
-	default:
+	case Phonon::BufferingState:
+		setState(PAUSED);
 		break;
 	}
 }
 
-bool
-PhononPlayerBackend::reconfigure()
+void
+PhononPlayerBackend::setState(PlayState state)
 {
-	// FIXME: add support for reconfigure
-	return false;
+	static VideoPlayer::State vpState[] = { VideoPlayer::Ready, VideoPlayer::Paused, VideoPlayer::Playing };
+	if(m_state == state)
+		return;
+	m_state = state;
+	emit stateChanged(vpState[state]);
 }

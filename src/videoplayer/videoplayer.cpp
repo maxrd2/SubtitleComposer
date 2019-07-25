@@ -43,16 +43,14 @@
 using namespace SubtitleComposer;
 
 VideoPlayer::VideoPlayer() :
-	m_activeBackend(0),
-	m_widgetParent(0),
-	m_applicationClosingDown(false),
+	m_backend(nullptr),
+	m_videoContainer(nullptr),
 	m_state(VideoPlayer::Uninitialized),
-	m_videoWidget(NULL),
+	m_videoWidget(nullptr),
 	m_filePath(),
 	m_position(-1.0),
-	m_savedPosition(-1.0),
 	m_length(-1.0),
-	m_framesPerSecond(-1.0),
+	m_fps(-1.0),
 	m_playbackRate(.0),
 	m_minPositionDelta(DEFAULT_MIN_POSITION_DELTA),
 	m_textStreams(),
@@ -60,23 +58,9 @@ VideoPlayer::VideoPlayer() :
 	m_audioStreams(),
 	m_muted(false),
 	m_volume(100.0),
-	m_backendVolume(100.0),
-	m_openFileTimer(new QTimer(this))
+	m_backendVolume(100.0)
 {
-	PluginHelper<VideoPlayer, PlayerBackend> ph(this);
-	ph.loadAll(QStringLiteral("videoplayerplugins"));
-	for(auto p: m_plugins) {
-		p->setSCConfig(SCConfig::self());
-		p->setPlayer(this);
-	}
-
-	// the timeout might seem too much, but it only matters when the file couldn't be
-	// opened, and it's better to have the user wait a bit in that case than showing
-	// an error when there's nothing wrong with the file (a longer time might be needed
-	// for example if the computer is under heavy load or is just slow)
-	m_openFileTimer->setSingleShot(true);
-
-	connect(m_openFileTimer, SIGNAL(timeout()), this, SLOT(onOpenFileTimeout()));
+	PluginHelper<VideoPlayer, PlayerBackend>(this).loadAll(QStringLiteral("videoplayerplugins"));
 }
 
 VideoPlayer::~VideoPlayer()
@@ -95,51 +79,54 @@ VideoPlayer::instance()
 }
 
 bool
-VideoPlayer::initialize(QWidget *widgetParent, const QString &prefBackendName)
+VideoPlayer::init(QWidget *widgetParent, const QString &backendName)
 {
 	if(isInitialized()) {
 		qCritical() << "VideoPlayer has already been initialized";
 		return false;
 	}
 
-	m_widgetParent = widgetParent;
+	m_videoContainer = widgetParent;
 
-	if(m_plugins.contains(prefBackendName)) {
+	if(m_plugins.contains(backendName)) {
 		// we first try to set the requested backend as active
-		backendInitializePrivate(m_plugins[prefBackendName]);
+		backendInit(m_plugins[backendName]);
 	}
 	// if that fails, we set the first available backend as active
-	if(!m_activeBackend) {
+	if(!m_backend) {
 		for(QMap<QString, PlayerBackend *>::ConstIterator it = m_plugins.begin(), end = m_plugins.end(); it != end; ++it)
-			if(backendInitializePrivate(it.value()))
+			if(backendInit(it.value()))
 				break;
 	}
 
-	if(!m_activeBackend)
+	if(!m_backend)
 		qCritical() << "Failed to initialize a player backend";
 
-	return m_activeBackend;
+	return m_backend;
 }
 
 bool
-VideoPlayer::reinitialize(const QString &prefBackendName)
+VideoPlayer::switchBackend(const QString &backendName)
 {
 	if(!isInitialized())
 		return false;
 
+	if(backendName == m_backend->name())
+		return true;
+
 	QString currentFile = m_filePath;
 
-	PlayerBackend *targetBackend = m_plugins.contains(prefBackendName) ? m_plugins[prefBackendName] : m_activeBackend;
+	Q_ASSERT(m_plugins.contains(backendName));
 
-	finalize();
+	cleanup();
 
-	if(!backendInitializePrivate(targetBackend)) {
+	if(!backendInit(m_plugins[backendName])) {
 		for(QMap<QString, PlayerBackend *>::ConstIterator it = m_plugins.begin(), end = m_plugins.end(); it != end; ++it)
-			if(backendInitializePrivate(it.value()))
+			if(backendInit(it.value()))
 				break;
 	}
 
-	if(!m_activeBackend) {
+	if(!m_backend) {
 		qCritical() << "Failed to initialize a player backend";
 		return false;
 	}
@@ -151,165 +138,100 @@ VideoPlayer::reinitialize(const QString &prefBackendName)
 }
 
 void
-VideoPlayer::finalize()
+VideoPlayer::cleanup()
 {
 	if(!isInitialized())
 		return;
 
-	PlayerBackend *wasActiveBackend = m_activeBackend;
+	PlayerBackend *wasActiveBackend = m_backend;
 
-	backendFinalize(m_activeBackend);
+	backendCleanup();
 
 	m_state = VideoPlayer::Uninitialized;
-	m_activeBackend = nullptr;
 
 	emit backendFinalized(wasActiveBackend);
 }
 
-/*virtual*/ bool
-VideoPlayer::reconfigure()
-{
-	if(!isInitialized() || !m_activeBackend)
-		return false;
-
-	return m_activeBackend->reconfigure();
-}
-
 bool
-VideoPlayer::backendInitializePrivate(PlayerBackend *backend)
+VideoPlayer::backendInit(PlayerBackend *backend)
 {
-	if(m_activeBackend == backend)
+	if(m_backend == backend)
 		return true;
 
-	if(m_activeBackend)
+	if(m_backend)
 		return false;
 
-	if(backendInitialize(backend, m_widgetParent)) {
-		m_state = VideoPlayer::Initialized;
-		m_activeBackend = backend;
-		emit backendInitialized(backend);
-	}
+	Q_ASSERT(m_videoWidget == nullptr);
 
-	return m_activeBackend == backend;
-}
+	m_videoWidget = new VideoWidget(m_videoContainer);
+	QWidget layer(m_videoWidget); // FIXME: ugly to have extra widget?
+	if(!backend->init(&layer))
+		return false;
 
-bool
-VideoPlayer::isApplicationClosingDown() const
-{
-	return m_applicationClosingDown;
-}
+	m_videoWidget->setVideoLayer(layer.findChild<QWidget *>());
 
-void
-VideoPlayer::setApplicationClosingDown()
-{
-	m_applicationClosingDown = true;
-}
-
-QString
-VideoPlayer::activeBackendName() const
-{
-	for(QMap<QString, PlayerBackend *>::ConstIterator it = m_plugins.begin(), end = m_plugins.end(); it != end; ++it)
-		if(it.value() == m_activeBackend)
-			return it.key();
-	return QString();
-}
-
-QStringList
-VideoPlayer::backendNames() const
-{
-	return m_plugins.keys();
-}
-
-bool
-VideoPlayer::backendInitialize(PlayerBackend *backend, QWidget *widgetParent)
-{
-	Q_ASSERT(m_videoWidget == NULL);
-
-	m_videoWidget = new VideoWidget(widgetParent);
-	backend->initialize(m_videoWidget);
-
-	connect(m_videoWidget, SIGNAL(destroyed()), this, SLOT(onVideoWidgetDestroyed()));
-	connect(m_videoWidget, SIGNAL(doubleClicked(const QPoint &)), this, SIGNAL(doubleClicked(const QPoint &)));
-	connect(m_videoWidget, SIGNAL(leftClicked(const QPoint &)), this, SIGNAL(leftClicked(const QPoint &)));
-	connect(m_videoWidget, SIGNAL(rightClicked(const QPoint &)), this, SIGNAL(rightClicked(const QPoint &)));
-	connect(m_videoWidget, SIGNAL(wheelUp()), this, SIGNAL(wheelUp()));
-	connect(m_videoWidget, SIGNAL(wheelDown()), this, SIGNAL(wheelDown()));
+	connect(m_videoWidget, &VideoWidget::destroyed, this, [&](){
+		Q_ASSERT(m_state == VideoPlayer::Uninitialized);
+		m_videoWidget = nullptr;
+		cleanup();
+	});
+	connect(m_videoWidget, &VideoWidget::doubleClicked, this, &VideoPlayer::doubleClicked);
+	connect(m_videoWidget, &VideoWidget::leftClicked, this, &VideoPlayer::leftClicked);
+	connect(m_videoWidget, &VideoWidget::rightClicked, this, &VideoPlayer::rightClicked);
+	connect(m_videoWidget, &VideoWidget::wheelUp, this, &VideoPlayer::wheelUp);
+	connect(m_videoWidget, &VideoWidget::wheelDown, this, &VideoPlayer::wheelDown);
 
 	m_videoWidget->show();
 	m_videoWidget->videoLayer()->hide();
 
 	// NOTE: next is used to make videoWidgetParent update it's geometry
-	QRect geometry = widgetParent->geometry();
+	QRect geometry = m_videoContainer->geometry();
 	geometry.setHeight(geometry.height() + 1);
-	widgetParent->setGeometry(geometry);
+	m_videoContainer->setGeometry(geometry);
 
+	m_state = VideoPlayer::Initialized;
+	m_backend = backend;
+	connect(m_backend, &PlayerBackend::resolutionChanged, this, &VideoPlayer::changeResolution);
+	connect(m_backend, &PlayerBackend::fpsChanged, this, &VideoPlayer::changeFPS);
+	connect(m_backend, &PlayerBackend::textStreamsChanged, this, &VideoPlayer::updateTextStreams);
+	connect(m_backend, &PlayerBackend::audioStreamsChanged, this, &VideoPlayer::updateAudioStreams);
+	connect(m_backend, &PlayerBackend::errorOccured, this, &VideoPlayer::onError);
+
+	connect(m_backend, &PlayerBackend::stateChanged, this, &VideoPlayer::changeState);
+	connect(m_backend, &PlayerBackend::positionChanged, this, &VideoPlayer::changePosition);
+	connect(m_backend, &PlayerBackend::lengthChanged, this, &VideoPlayer::changeLength);
+	connect(m_backend, &PlayerBackend::speedChanged, this, &VideoPlayer::changePlaySpeed);
+	connect(m_backend, &PlayerBackend::volumeChanged, this, &VideoPlayer::changeVolume);
+	connect(m_backend, &PlayerBackend::muteChanged, this, &VideoPlayer::changeMute);
+
+	emit backendInitialized(backend);
 	return true;
 }
 
 void
-VideoPlayer::backendFinalize(PlayerBackend *backend)
+VideoPlayer::backendCleanup()
 {
 	closeFile();
 
-	backend->finalize();
+	m_backend->cleanup();
+	m_backend = nullptr;
 
 	if(m_videoWidget) {
 		m_videoWidget->disconnect();
 		m_videoWidget->hide();
 		m_videoWidget->deleteLater();
-		m_videoWidget = NULL;
+		m_videoWidget = nullptr;
 	}
-}
-
-void
-VideoPlayer::onVideoWidgetDestroyed()
-{
-	Q_ASSERT(m_state == VideoPlayer::Uninitialized);
-
-	m_videoWidget = 0;
-
-	finalize();
-}
-
-double
-VideoPlayer::logarithmicVolume(double volume)
-{
-	static const double base = 4.0;
-	static const double power = 1.0;
-	static const double divisor = pow(base, power);
-
-	double scaledVol = volume * power * power / 100.0;
-	double factor = pow(base, scaledVol / power);
-
-	return (scaledVol * factor / divisor) * (100.0 / (power * power));
-}
-
-const QStringList &
-VideoPlayer::textStreams() const
-{
-	return m_textStreams;
-}
-
-const QStringList &
-VideoPlayer::audioStreams() const
-{
-	static const QStringList emptyList;
-
-	return m_state <= VideoPlayer::Opening ? emptyList : m_audioStreams;
 }
 
 void
 VideoPlayer::resetState()
 {
-	if(m_openFileTimer->isActive())
-		m_openFileTimer->stop();
-
 	m_filePath.clear();
 
 	m_position = -1.0;
-	m_savedPosition = -1.0;
 	m_length = -1.0;
-	m_framesPerSecond = -1.0;
+	m_fps = -1.0;
 	m_minPositionDelta = DEFAULT_MIN_POSITION_DELTA;
 
 	m_activeAudioStream = -1;
@@ -323,85 +245,33 @@ VideoPlayer::resetState()
 }
 
 void
-VideoPlayer::notifyVolume(double volume)
+VideoPlayer::changeResolution(int width, int height, double aspectRatio)
 {
-	if(volume < 0.0)
-		volume = 0.0;
-	else if(volume > 100.0)
-		volume = 100.0;
-
-	if(m_volume != volume) {
-		m_volume = volume;
-		emit volumeChanged(m_volume);
-	}
+	videoWidget()->setVideoResolution(width, height, aspectRatio);
 }
 
 void
-VideoPlayer::notifyMute(bool muted)
-{
-	if(m_muted != muted) {
-		m_muted = muted;
-		emit muteChanged(m_muted);
-	}
-}
-
-void
-VideoPlayer::notifyPosition(double position)
+VideoPlayer::changeFPS(double fps)
 {
 	if(m_state <= VideoPlayer::Closed)
 		return;
 
-	if(position > m_length && m_length > 0)
-		notifyLength(position);
-
-	if(m_position != position) {
-		if(m_position <= 0 || m_minPositionDelta <= 0.0) {
-			m_position = position;
-			emit positionChanged(position);
-		} else {
-			double positionDelta = m_position - position;
-			if(positionDelta >= m_minPositionDelta || -positionDelta >= m_minPositionDelta) {
-				m_position = position;
-				emit positionChanged(position);
-			}
-		}
+	if(fps > 0 && m_fps != fps) {
+		m_fps = fps;
+		m_minPositionDelta = 1.0 / fps;
+		emit framesPerSecondChanged(fps);
 	}
 }
 
 void
-VideoPlayer::notifyLength(double length)
-{
-	if(m_state <= VideoPlayer::Closed)
-		return;
-
-	if(length >= 0 && m_length != length) {
-		m_length = length;
-		emit lengthChanged(length);
-	}
-}
-
-void
-VideoPlayer::notifyFramesPerSecond(double framesPerSecond)
-{
-	if(m_state <= VideoPlayer::Closed)
-		return;
-
-	if(framesPerSecond > 0 && m_framesPerSecond != framesPerSecond) {
-		m_framesPerSecond = framesPerSecond;
-		m_minPositionDelta = 1.0 / framesPerSecond;
-		emit framesPerSecondChanged(framesPerSecond);
-	}
-}
-
-void
-VideoPlayer::notifyTextStreams(const QStringList &textStreams)
+VideoPlayer::updateTextStreams(const QStringList &textStreams)
 {
 	m_textStreams = textStreams;
 	emit textStreamsChanged(m_textStreams);
 }
 
 void
-VideoPlayer::notifyAudioStreams(const QStringList &audioStreams, int activeAudioStream)
+VideoPlayer::updateAudioStreams(const QStringList &audioStreams, int activeAudioStream)
 {
 	if(m_state <= VideoPlayer::Closed)
 		return;
@@ -419,21 +289,36 @@ VideoPlayer::notifyAudioStreams(const QStringList &audioStreams, int activeAudio
 }
 
 void
-VideoPlayer::notifyState(VideoPlayer::State newState)
+VideoPlayer::onError(const QString &message)
+{
+	if(m_state < VideoPlayer::Opening)
+		return;
+
+	if(m_state == VideoPlayer::Opening) {
+		resetState();
+		emit fileOpenError(m_filePath, message);
+	} else {
+		m_backend->stop();
+		m_state = VideoPlayer::Ready;
+		emit playbackError(message);
+		emit stopped();
+	}
+}
+
+void
+VideoPlayer::changeState(VideoPlayer::State newState)
 {
 	if(m_state == VideoPlayer::Opening) {
 		if(newState > VideoPlayer::Opening) {
-			m_openFileTimer->stop();
-
 			m_state = newState;
 			m_videoWidget->videoLayer()->show();
-			activeBackend()->setVolume(m_backendVolume);
+			m_backend->setVolume(m_backendVolume);
 
 			emit fileOpened(m_filePath);
 
 			// we emit this signals in case their values were already set
 			emit lengthChanged(m_length);
-			emit framesPerSecondChanged(m_framesPerSecond);
+			emit framesPerSecondChanged(m_fps);
 			emit playbackRateChanged(m_playbackRate);
 			emit textStreamsChanged(m_textStreams);
 			emit audioStreamsChanged(m_audioStreams);
@@ -459,7 +344,7 @@ VideoPlayer::notifyState(VideoPlayer::State newState)
 			switch(m_state) {
 			case VideoPlayer::Playing:
 				m_videoWidget->videoLayer()->show();
-				activeBackend()->setVolume(m_backendVolume);
+				m_backend->setVolume(m_backendVolume);
 				emit playing();
 				break;
 			case VideoPlayer::Paused:
@@ -477,26 +362,80 @@ VideoPlayer::notifyState(VideoPlayer::State newState)
 }
 
 void
-VideoPlayer::notifyErrorState(const QString &errorMessage)
+VideoPlayer::changePosition(double position)
 {
-	if(m_state < VideoPlayer::Opening)
+	if(m_state <= VideoPlayer::Closed)
 		return;
 
-	if(m_state == VideoPlayer::Opening) {
-		resetState();
-		emit fileOpenError(m_filePath, errorMessage);
-	} else {
-		activeBackend()->stop();
-		m_state = VideoPlayer::Ready;
-		emit playbacqCritical(errorMessage);
-		emit stopped();
+	if(position > m_length && m_length > 0)
+		changeLength(position);
+
+	if(m_position != position) {
+		if(m_position <= 0 || m_minPositionDelta <= 0.0) {
+			m_position = position;
+			emit positionChanged(position);
+		} else {
+			double positionDelta = m_position - position;
+			if(positionDelta >= m_minPositionDelta || -positionDelta >= m_minPositionDelta) {
+				m_position = position;
+				emit positionChanged(position);
+			}
+		}
 	}
 }
+
+void
+VideoPlayer::changeLength(double length)
+{
+	if(m_state <= VideoPlayer::Closed)
+		return;
+
+	if(length >= 0 && m_length != length) {
+		m_length = length;
+		emit lengthChanged(length);
+	}
+}
+
+void
+VideoPlayer::changePlaySpeed(double playbackRate)
+{
+	if(m_playbackRate != playbackRate) {
+		m_playbackRate = playbackRate;
+		emit playbackRateChanged(m_playbackRate);
+	}
+}
+
+void
+VideoPlayer::changeVolume(double volume)
+{
+	if(m_muted)
+		return;
+
+	if(volume < 0.0)
+		volume = 0.0;
+	else if(volume > 100.0)
+		volume = 100.0;
+
+	if(m_volume != volume) {
+		m_volume = volume;
+		emit volumeChanged(m_volume);
+	}
+}
+
+void
+VideoPlayer::changeMute(bool muted)
+{
+	if(m_muted != muted) {
+		m_muted = muted;
+		emit muteChanged(m_muted);
+	}
+}
+
 
 bool
 VideoPlayer::playOnLoad()
 {
-	const QWidget *topLevel = m_widgetParent->topLevelWidget();
+	const QWidget *topLevel = m_videoContainer->topLevelWidget();
 	const QWidget *dockWaveform = topLevel->findChild<QWidget *>(QStringLiteral("waveform_dock"));
 	const QWidget *dockVideo = topLevel->findChild<QWidget *>(QStringLiteral("player_dock"));
 	return SCConfig::videoAutoPlay() && (dockVideo->isVisible() || dockWaveform->isVisible());
@@ -517,35 +456,20 @@ VideoPlayer::openFile(const QString &filePath)
 	m_filePath = filePath;
 	m_state = VideoPlayer::Opening;
 
-	// FIXME add an option to set the error timeout amount when opening video
-	m_openFileTimer->start(6000);
-
 	m_videoWidget->videoLayer()->show();
 
-	bool playingAfterCall = true;
-	if(!activeBackend()->openFile(fileInfo.absoluteFilePath(), playingAfterCall)) {
+	if(!m_backend->openFile(fileInfo.absoluteFilePath())) {
 		resetState();
 		emit fileOpenError(filePath, QString());
 		return true;
 	}
 
-	if(!playingAfterCall && playOnLoad())
-		activeBackend()->play();
-	else if(playingAfterCall && !playOnLoad())
-		activeBackend()->pause();
+	if(m_state != VideoPlayer::Playing && playOnLoad())
+		m_backend->play();
+	else if(m_state != VideoPlayer::Paused && !playOnLoad())
+		m_backend->pause();
 
 	return true;
-}
-
-void
-VideoPlayer::onOpenFileTimeout(const QString &reason)
-{
-	activeBackend()->stop();
-	activeBackend()->closeFile();
-
-	resetState();
-
-	emit fileOpenError(m_filePath, reason);
 }
 
 bool
@@ -556,9 +480,9 @@ VideoPlayer::closeFile()
 
 	bool stop = m_state != VideoPlayer::Ready;
 	if(stop)
-		activeBackend()->stop(); // we can safely ignore the stop() return value here as we're about to close the file
+		m_backend->stop(); // we can safely ignore the stop() return value here as we're about to close the file
 
-	activeBackend()->closeFile();
+	m_backend->closeFile();
 
 	resetState();
 
@@ -578,9 +502,9 @@ VideoPlayer::play()
 
 	m_videoWidget->videoLayer()->show();
 
-	if(!activeBackend()->play()) {
+	if(!m_backend->play()) {
 		resetState();
-		emit playbacqCritical();
+		emit playbackError();
 	}
 
 	return true;
@@ -592,9 +516,9 @@ VideoPlayer::pause()
 	if(m_state <= VideoPlayer::Opening || m_state == VideoPlayer::Paused)
 		return false;
 
-	if(!activeBackend()->pause()) {
+	if(!m_backend->pause()) {
 		resetState();
-		emit playbacqCritical();
+		emit playbackError();
 	}
 
 	return true;
@@ -610,20 +534,20 @@ VideoPlayer::togglePlayPaused()
 
 	bool hadError;
 	if(m_state == VideoPlayer::Playing)
-		hadError = !activeBackend()->pause();
+		hadError = !m_backend->pause();
 	else
-		hadError = !activeBackend()->play();
+		hadError = !m_backend->play();
 
 	if(hadError) {
 		resetState();
-		emit playbacqCritical();
+		emit playbackError();
 	}
 
 	return true;
 }
 
 bool
-VideoPlayer::seek(double seconds, bool accurate)
+VideoPlayer::seek(double seconds)
 {
 	if((m_state != VideoPlayer::Playing && m_state != VideoPlayer::Paused) || seconds < 0 || seconds > m_length)
 		return false;
@@ -631,9 +555,9 @@ VideoPlayer::seek(double seconds, bool accurate)
 	if(seconds == m_position)
 		return true;
 
-	if(!activeBackend()->seek(seconds, accurate)) {
+	if(!m_backend->seek(seconds)) {
 		resetState();
-		emit playbacqCritical();
+		emit playbackError();
 	}
 
 	return true;
@@ -645,21 +569,12 @@ VideoPlayer::step(int frameOffset)
 	if(m_state != VideoPlayer::Playing && m_state != VideoPlayer::Paused)
 		return false;
 
-	if(!activeBackend()->step(frameOffset)) {
+	if(!m_backend->step(frameOffset)) {
 		resetState();
-		emit playbacqCritical();
+		emit playbackError();
 	}
 
 	return true;
-}
-
-void
-VideoPlayer::seekToSavedPosition()
-{
-	if(m_savedPosition >= 0.0) {
-		seek(m_savedPosition, true);
-		m_savedPosition = -1.0;
-	}
 }
 
 bool
@@ -668,9 +583,9 @@ VideoPlayer::stop()
 	if(m_state <= VideoPlayer::Opening || m_state == VideoPlayer::Ready)
 		return false;
 
-	if(!activeBackend()->stop()) {
+	if(!m_backend->stop()) {
 		resetState();
-		emit playbacqCritical();
+		emit playbackError();
 		return true;
 	}
 
@@ -678,7 +593,7 @@ VideoPlayer::stop()
 }
 
 bool
-VideoPlayer::setActiveAudioStream(int audioStreamIndex)
+VideoPlayer::selectAudioStream(int audioStreamIndex)
 {
 	if(m_state <= VideoPlayer::Opening || m_audioStreams.size() <= 1)
 		return false;
@@ -686,38 +601,13 @@ VideoPlayer::setActiveAudioStream(int audioStreamIndex)
 	if(m_activeAudioStream == audioStreamIndex || audioStreamIndex < 0 || audioStreamIndex >= m_audioStreams.size())
 		return false;
 
-	bool onTheFly;
-	if(!activeBackend()->supportsChangingAudioStream(&onTheFly))
-		return true;
-
 	m_activeAudioStream = audioStreamIndex;
 
 	if(m_state != VideoPlayer::Ready) {
-		double savedPosition = m_position;
-
-		if(!activeBackend()->setActiveAudioStream(audioStreamIndex)) {
+		if(!m_backend->selectAudioStream(audioStreamIndex)) {
 			resetState();
-			emit playbacqCritical();
+			emit playbackError();
 			return true;
-		}
-
-		if(!onTheFly) {
-			if(!activeBackend()->stop()) {
-				resetState();
-				emit playbacqCritical();
-				return true;
-			}
-
-			if(savedPosition > 0.0) {
-				if(!activeBackend()->play()) {
-					resetState();
-					emit playbacqCritical();
-					return true;
-				}
-
-				m_savedPosition = savedPosition;
-				QTimer::singleShot(500, this, SLOT(seekToSavedPosition()));
-			}
 		}
 	}
 
@@ -731,7 +621,7 @@ VideoPlayer::playbackRate(double newRate)
 	if(m_state != VideoPlayer::Playing || newRate < .125 || newRate > 128)
 		return;
 
-	activeBackend()->playbackRate(newRate);
+	m_backend->playbackRate(newRate);
 }
 
 void
@@ -758,12 +648,12 @@ VideoPlayer::setVolume(double volume)
 	if(m_volume != volume) {
 		m_volume = volume;
 
-		m_backendVolume = m_muted ? 0 : (activeBackend()->doesVolumeCorrection() ? m_volume : logarithmicVolume(m_volume));
+		m_backendVolume = m_muted ? 0 : m_volume; //(m_backend->doesVolumeCorrection() ? m_volume : logarithmicVolume(m_volume));
 
 		if(!m_muted && m_state == VideoPlayer::Playing) {
-			if(!activeBackend()->setVolume(m_backendVolume)) {
+			if(!m_backend->setVolume(m_backendVolume)) {
 				resetState();
-				emit playbacqCritical();
+				emit playbackError();
 				return;
 			}
 		}
@@ -778,12 +668,12 @@ VideoPlayer::setMuted(bool muted)
 	if(m_muted != muted) {
 		m_muted = muted;
 
-		m_backendVolume = m_muted ? 0 : (activeBackend()->doesVolumeCorrection() ? m_volume : logarithmicVolume(m_volume));
+		m_backendVolume = m_muted ? 0 : m_volume;//(m_backend->doesVolumeCorrection() ? m_volume : logarithmicVolume(m_volume));
 
 		if(m_state == VideoPlayer::Playing) {
-			if(!activeBackend()->setVolume(m_backendVolume)) {
+			if(!m_backend->setVolume(m_backendVolume)) {
 				resetState();
-				emit playbacqCritical();
+				emit playbackError();
 				return;
 			}
 		}

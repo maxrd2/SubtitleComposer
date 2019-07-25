@@ -18,9 +18,9 @@
  * Boston, MA 02110-1301, USA.
  */
 
-#include "gstreamerplayerbackend.h"
+#include "gstreamerbackend.h"
 #include "gstreamerconfigwidget.h"
-#include "scconfigdummy.h"
+#include "gstreamerconfig.h"
 #include "gstreamer.h"
 #include "helpers/languagecode.h"
 
@@ -38,8 +38,6 @@
 
 #define MESSAGE_UPDATE_AUDIO_DATA 0
 #define MESSAGE_UPDATE_VIDEO_DATA 1
-
-#define INFINITE_WAIT 60000
 
 #define MAX_VOLUME 3.548
 
@@ -83,89 +81,96 @@ typedef enum {
 } GstPlayFlags;
 #endif /* __GST_PLAY_ENUM_H__ */
 
-GStreamerPlayerBackend::GStreamerPlayerBackend()
+GStreamerBackend::GStreamerBackend()
 	: PlayerBackend(),
-	m_pipeline(NULL),
-	m_pipelineBus(NULL),
-	m_pipelineTimer(new QTimer(this)),
-	m_lengthInformed(false),
-	m_playbackRate(1.),
-	m_volume(.0),
-	m_muted(true)
+	  m_nativeWindow(nullptr),
+	  m_pipeline(nullptr),
+	  m_pipelineBus(nullptr),
+	  m_pipelineTimer(new QTimer(this)),
+	  m_lengthInformed(false),
+	  m_playbackRate(1.),
+	  m_volume(.0),
+	  m_muted(true)
 {
 	m_name = QStringLiteral("GStreamer");
 	connect(m_pipelineTimer, SIGNAL(timeout()), this, SLOT(onPlaybinTimerTimeout()));
+	connect(GStreamerConfig::self(), &GStreamerConfig::configChanged, this, &GStreamerBackend::reconfigure);
 }
 
-GStreamerPlayerBackend::~GStreamerPlayerBackend()
+GStreamerBackend::~GStreamerBackend()
 {
-	if(isInitialized())
-		GStreamer::deinit();
-}
-
-void
-GStreamerPlayerBackend::setSCConfig(SCConfig *scConfig)
-{
-	scConfigGlobalSet(scConfig);
+	GStreamer::deinit();
 }
 
 bool
-GStreamerPlayerBackend::initialize(VideoWidget *videoWidget)
+GStreamerBackend::init(QWidget *videoWidget)
 {
 	if(!GStreamer::init())
 		return false;
 
-	QWidget *videoLayer = new QWidget();
-	videoWidget->setVideoLayer(videoLayer);
-	videoLayer->installEventFilter(this);
+	if(!m_nativeWindow) {
+		m_nativeWindow = new QWidget(videoWidget);
+		m_nativeWindow->setAttribute(Qt::WA_DontCreateNativeAncestors);
+		m_nativeWindow->setAttribute(Qt::WA_NativeWindow);
+		connect(m_nativeWindow, &QWidget::destroyed, [&](){ m_nativeWindow = nullptr; });
+	} else {
+		m_nativeWindow->setParent(videoWidget);
+	}
+
+	m_nativeWindow->installEventFilter(this);
 	onPlaybinTimerTimeout();
 	return true;
 }
 
 void
-GStreamerPlayerBackend::finalize()
+GStreamerBackend::cleanup()
 {
 	return GStreamer::deinit();
 }
 
 QWidget *
-GStreamerPlayerBackend::newConfigWidget(QWidget *parent)
+GStreamerBackend::newConfigWidget(QWidget *parent)
 {
 	return new GStreamerConfigWidget(parent);
 }
 
+KCoreConfigSkeleton *
+GStreamerBackend::config() const
+{
+	return GStreamerConfig::self();
+}
+
 
 void
-GStreamerPlayerBackend::setupVideoOverlay()
+GStreamerBackend::setupVideoOverlay()
 {
-	gst_video_overlay_set_window_handle(GST_VIDEO_OVERLAY(m_pipeline), player()->videoWidget()->videoLayer()->winId());
+	gst_video_overlay_set_window_handle(GST_VIDEO_OVERLAY(m_pipeline), m_nativeWindow->winId());
 	gst_video_overlay_expose(GST_VIDEO_OVERLAY(m_pipeline));
 }
 
 GstElement *
-GStreamerPlayerBackend::createAudioSink()
+GStreamerBackend::createAudioSink()
 {
-	static QString sinks(" pulsesink alsasink osssink gconfaudiosink artsdsink autoaudiosink");
+	static const QString sinks(QStringLiteral(" pulsesink alsasink osssink gconfaudiosink artsdsink autoaudiosink"));
 
-	if(SCConfig::gstAudioSinkAuto())
-		return GStreamer::createElement(SCConfig::gstAudioSink() + sinks, "audiosink");
+	if(GStreamerConfig::audioSinkAuto())
+		return GStreamer::createElement(GStreamerConfig::audioSink() + sinks, "audiosink");
 	return GStreamer::createElement(sinks, "audiosink");
 }
 
 GstElement *
-GStreamerPlayerBackend::createVideoSink()
+GStreamerBackend::createVideoSink()
 {
-	static QString sinks(QStringLiteral(" autovideosink glimagesink xvimagesink ximagesink"));
+	static const QString sinks(QStringLiteral(" autovideosink glimagesink xvimagesink ximagesink"));
 
-	if(SCConfig::gstVideoSinkAuto())
-		return GStreamer::createElement(SCConfig::gstVideoSink() + sinks, "videosink");
+	if(GStreamerConfig::videoSinkAuto())
+		return GStreamer::createElement(GStreamerConfig::videoSink() + sinks, "videosink");
 	return GStreamer::createElement(sinks, "videosink");
 }
 
 bool
-GStreamerPlayerBackend::openFile(const QString &filePath, bool &playingAfterCall)
+GStreamerBackend::openFile(const QString &path)
 {
-	playingAfterCall = true;
 	m_lengthInformed = false;
 
 	m_pipeline = GST_PIPELINE(gst_element_factory_make("playbin", "playbin"));
@@ -180,12 +185,12 @@ GStreamerPlayerBackend::openFile(const QString &filePath, bool &playingAfterCall
 	bool audiobin_ok = false;
 
 	if(audiobin && scaletempo && convert && resample && audiosink) {
-		GstPad *padSink = NULL;
-		gst_bin_add_many(GST_BIN(audiobin), scaletempo, convert, resample, audiosink, NULL);
+		GstPad *padSink = nullptr;
+		gst_bin_add_many(GST_BIN(audiobin), scaletempo, convert, resample, audiosink, nullptr);
 		audiobin_ok = gst_element_link(scaletempo, convert)
 			&& gst_element_link(convert, resample)
 			&& gst_element_link(resample, audiosink)
-			&& (padSink = gst_element_get_static_pad(scaletempo, "sink")) != NULL
+			&& (padSink = gst_element_get_static_pad(scaletempo, "sink")) != nullptr
 			&& gst_element_add_pad(audiobin, gst_ghost_pad_new("sink", padSink));
 
 		if(padSink)
@@ -212,70 +217,71 @@ GStreamerPlayerBackend::openFile(const QString &filePath, bool &playingAfterCall
 			gst_object_unref(GST_OBJECT(videosink));
 		if(m_pipeline)
 			gst_object_unref(GST_OBJECT(m_pipeline));
-		m_pipeline = 0;
+		m_pipeline = nullptr;
 		return false;
 	}
 
 	QUrl fileUrl;
 	fileUrl.setScheme("file");
-	fileUrl.setPath(filePath);
+	fileUrl.setPath(path);
 
-	g_object_set(G_OBJECT(m_pipeline), "uri", fileUrl.url().toUtf8().constData(), NULL);
-	g_object_set(G_OBJECT(m_pipeline), "suburi", 0, NULL);
+	g_object_set(G_OBJECT(m_pipeline), "uri", fileUrl.url().toUtf8().constData(), nullptr);
+	g_object_set(G_OBJECT(m_pipeline), "suburi", 0, nullptr);
 
 	// disable embedded subtitles
 	gint flags = 0;
-	g_object_get(G_OBJECT(m_pipeline), "flags", &flags, NULL);
-	g_object_set(G_OBJECT(m_pipeline), "flags", flags & ~GST_PLAY_FLAG_TEXT, NULL);
+	g_object_get(G_OBJECT(m_pipeline), "flags", &flags, nullptr);
+	g_object_set(G_OBJECT(m_pipeline), "flags", flags & ~GST_PLAY_FLAG_TEXT, nullptr);
 
 	// the volume is adjusted when file playback starts and it's best if it's initially at 0
-	g_object_set(G_OBJECT(m_pipeline), "volume", (gdouble)0.0, NULL);
+	g_object_set(G_OBJECT(m_pipeline), "volume", (gdouble)0.0, nullptr);
 
-	g_object_set(G_OBJECT(m_pipeline), "audio-sink", audiobin, NULL);
-	g_object_set(G_OBJECT(m_pipeline), "video-sink", videosink, NULL);
+	g_object_set(G_OBJECT(m_pipeline), "audio-sink", audiobin, nullptr);
+	g_object_set(G_OBJECT(m_pipeline), "video-sink", videosink, nullptr);
 
 	m_pipelineBus = gst_pipeline_get_bus(GST_PIPELINE(m_pipeline));
 	m_pipelineTimer->start(20);
 
 	setupVideoOverlay();
 
-	GStreamer::setElementState(GST_ELEMENT(m_pipeline), GST_STATE_PLAYING, 0);
+	GStreamer::setElementState(GST_ELEMENT(m_pipeline), GST_STATE_PLAYING, GST_CLOCK_TIME_NONE);
 
 	return true;
 }
 
-void
-GStreamerPlayerBackend::closeFile()
+bool
+GStreamerBackend::closeFile()
 {
 	if(m_pipeline) {
 		m_pipelineTimer->stop();
-		GStreamer::setElementState(GST_ELEMENT(m_pipeline), GST_STATE_NULL, INFINITE_WAIT);
+		GStreamer::setElementState(GST_ELEMENT(m_pipeline), GST_STATE_NULL, GST_CLOCK_TIME_NONE);
 		GStreamer::freePipeline(&m_pipeline, &m_pipelineBus);
 	}
+	return true;
 }
 
 bool
-GStreamerPlayerBackend::play()
+GStreamerBackend::play()
 {
 	setupVideoOverlay();
-	GStreamer::setElementState(GST_ELEMENT(m_pipeline), GST_STATE_PLAYING, 0);
+	GStreamer::setElementState(GST_ELEMENT(m_pipeline), GST_STATE_PLAYING, GST_CLOCK_TIME_NONE);
 
 	return true;
 }
 
 bool
-GStreamerPlayerBackend::pause()
+GStreamerBackend::pause()
 {
-	GStreamer::setElementState(GST_ELEMENT(m_pipeline), GST_STATE_PAUSED, 0);
+	GStreamer::setElementState(GST_ELEMENT(m_pipeline), GST_STATE_PAUSED, GST_CLOCK_TIME_NONE);
 
 	return true;
 }
 
 bool
-GStreamerPlayerBackend::seek(double seconds, bool accurate)
+GStreamerBackend::seek(double seconds)
 {
 	gst_element_seek(GST_ELEMENT(m_pipeline), m_playbackRate,
-		GST_FORMAT_TIME, (GstSeekFlags)(GST_SEEK_FLAG_FLUSH | (accurate ? GST_SEEK_FLAG_ACCURATE : GST_SEEK_FLAG_KEY_UNIT)),
+		GST_FORMAT_TIME, (GstSeekFlags)(GST_SEEK_FLAG_FLUSH | GST_SEEK_FLAG_ACCURATE),
 		GST_SEEK_TYPE_SET, (gint64)(seconds * GST_SECOND),
 		GST_SEEK_TYPE_NONE, GST_CLOCK_TIME_NONE);
 
@@ -283,9 +289,12 @@ GStreamerPlayerBackend::seek(double seconds, bool accurate)
 }
 
 bool
-GStreamerPlayerBackend::step(int frameOffset)
+GStreamerBackend::step(int frameOffset)
 {
-	if(player()->state() != VideoPlayer::Paused)
+	GstState currentState = GST_STATE_VOID_PENDING, pendingState = GST_STATE_VOID_PENDING;
+	gst_element_get_state(GST_ELEMENT(m_pipeline), &currentState, &pendingState, GST_CLOCK_TIME_NONE);
+
+	if(currentState != GST_STATE_PAUSED && pendingState != GST_STATE_PAUSED)
 		GStreamer::setElementState(GST_ELEMENT(m_pipeline), GST_STATE_PAUSED, 0);
 	return gst_element_seek(GST_ELEMENT(m_pipeline), m_playbackRate,
 		GST_FORMAT_TIME, GstSeekFlags(GST_SEEK_FLAG_FLUSH | GST_SEEK_FLAG_ACCURATE),
@@ -293,85 +302,85 @@ GStreamerPlayerBackend::step(int frameOffset)
 		GST_SEEK_TYPE_NONE, GST_CLOCK_TIME_NONE);
 }
 
-void
-GStreamerPlayerBackend::playbackRate(double newRate)
+bool
+GStreamerBackend::playbackRate(double newRate)
 {
 	m_playbackRate = newRate;
 
 	gint64 time;
 	if(gst_element_query_position(GST_ELEMENT(m_pipeline), GST_FORMAT_TIME, &time)) {
-		setPlayerPosition((double)time / GST_SECOND);
+		emit positionChanged((double)time / GST_SECOND);
 
 		gst_element_seek(GST_ELEMENT(m_pipeline), newRate,
 			GST_FORMAT_TIME, (GstSeekFlags)(GST_SEEK_FLAG_FLUSH | GST_SEEK_FLAG_ACCURATE),
 			GST_SEEK_TYPE_SET, time, // we need to set the time otherwise playback will jump
 			GST_SEEK_TYPE_NONE, GST_CLOCK_TIME_NONE);
+		return true;
 	}
+	return false;
 }
 
 bool
-GStreamerPlayerBackend::stop()
+GStreamerBackend::stop()
 {
-	GStreamer::setElementState(GST_ELEMENT(m_pipeline), GST_STATE_READY, 0);
-
+	GStreamer::setElementState(GST_ELEMENT(m_pipeline), GST_STATE_READY, GST_CLOCK_TIME_NONE);
 	return true;
 }
 
 bool
-GStreamerPlayerBackend::setActiveAudioStream(int audioStream)
+GStreamerBackend::selectAudioStream(int streamIndex)
 {
-	g_object_set(G_OBJECT(m_pipeline), "current-audio", (gint)audioStream, NULL);
-
+	g_object_set(G_OBJECT(m_pipeline), "current-audio", (gint)streamIndex, nullptr);
 	return true;
 }
 
 bool
-GStreamerPlayerBackend::setVolume(double volume)
+GStreamerBackend::setVolume(double volume)
 {
-	g_object_set(G_OBJECT(m_pipeline), "volume", (gdouble)(qPow(volume / 100., 3.) * MAX_VOLUME), NULL);
-	g_object_get(G_OBJECT(m_pipeline), "volume", &m_volume, NULL); // fix volume jumping around when changing it from gui
-
+	g_object_set(G_OBJECT(m_pipeline), "volume", (gdouble)(qPow(volume / 100., 3.) * MAX_VOLUME), nullptr);
+	g_object_get(G_OBJECT(m_pipeline), "volume", &m_volume, nullptr); // fix volume jumping around when changing it from gui
 	return true;
 }
 
 void
-GStreamerPlayerBackend::onPlaybinTimerTimeout()
+GStreamerBackend::onPlaybinTimerTimeout()
 {
-	if(!isInitialized() || !m_pipeline || !m_pipelineBus)
+	if(!m_pipeline || !m_pipelineBus)
 		return;
-
 
 	gint64 time;
 	if(!m_lengthInformed && gst_element_query_duration(GST_ELEMENT(m_pipeline), GST_FORMAT_TIME, &time) && GST_CLOCK_TIME_IS_VALID(time)) {
-		setPlayerLength((double)time / GST_SECOND);
+		emit lengthChanged((double)time / GST_SECOND);
 		m_lengthInformed = true;
 	}
 	if(gst_element_query_position(GST_ELEMENT(m_pipeline), GST_FORMAT_TIME, &time)) {
-		setPlayerPosition((double)time / GST_SECOND);
+		emit positionChanged((double)time / GST_SECOND);
 		m_currentPosition = time;
 	}
 
-	if(player()->state() >= VideoPlayer::Playing) {
+	GstState currentState = GST_STATE_VOID_PENDING;
+	gst_element_get_state(GST_ELEMENT(m_pipeline), &currentState, nullptr, GST_CLOCK_TIME_NONE);
+	if(currentState >= GST_STATE_READY) {
 		gboolean muted = false;
-		g_object_get(G_OBJECT(m_pipeline), "mute", &muted, NULL);
+		g_object_get(G_OBJECT(m_pipeline), "mute", &muted, nullptr);
 		if(muted != m_muted) {
 			m_muted = muted;
-			setPlayerMuted(muted);
+			emit muteChanged(muted);
 		}
 		if(!muted) {
 			gdouble volume = -1.0;
-			g_object_get(G_OBJECT(m_pipeline), "volume", &volume, NULL);
+			g_object_get(G_OBJECT(m_pipeline), "volume", &volume, nullptr);
 			if(volume != m_volume) {
 				m_volume = volume;
-				setPlayerVolume(qPow(volume / MAX_VOLUME, .33333) * 100.);
+				emit volumeChanged(qPow(volume / MAX_VOLUME, .33333) * 100.);
 			}
 		}
 	}
 
 	GstQuery *rateQuery = gst_query_new_segment(GST_FORMAT_DEFAULT);
 	if(gst_element_query(GST_ELEMENT(m_pipeline), rateQuery)) {
-		gst_query_parse_segment(rateQuery, &m_playbackRate, NULL, NULL, NULL);
-		playbackRateNotify(m_playbackRate);
+		gst_query_parse_segment(rateQuery, &m_playbackRate, nullptr, nullptr, nullptr);
+		emit speedChanged(m_playbackRate);
 	}
 	gst_query_unref(rateQuery);
 
@@ -395,11 +404,11 @@ GStreamerPlayerBackend::onPlaybinTimerTimeout()
 			gst_message_parse_state_changed(msg, &old, &current, &target);
 
 			if(current == GST_STATE_PAUSED)
-				setPlayerState(VideoPlayer::Paused);
+				emit stateChanged(VideoPlayer::Paused);
 			else if(current == GST_STATE_PLAYING)
-				setPlayerState(VideoPlayer::Playing);
+				emit stateChanged(VideoPlayer::Playing);
 			else if(current == GST_STATE_READY)
-				setPlayerState(VideoPlayer::Ready);
+				emit stateChanged(VideoPlayer::Ready);
 
 			if(old == GST_STATE_READY) {
 				updateTextData();
@@ -410,10 +419,10 @@ GStreamerPlayerBackend::onPlaybinTimerTimeout()
 		}
 
 		case GST_MESSAGE_ERROR: {
-			gchar *debug = NULL;
-			GError *error = NULL;
+			gchar *debug = nullptr;
+			GError *error = nullptr;
 			gst_message_parse_error(msg, &error, &debug);
-			setPlayerErrorState(QString(error->message));
+			emit errorOccured(QString::fromUtf8(error->message));
 			//setPlayerErrorState(QString(debug));
 			g_error_free(error);
 			g_free(debug);
@@ -429,15 +438,15 @@ GStreamerPlayerBackend::onPlaybinTimerTimeout()
 }
 
 void
-GStreamerPlayerBackend::updateTextData()
+GStreamerBackend::updateTextData()
 {
 	QStringList textStreams;
 
 	gint n;
-	g_object_get(m_pipeline, "n-text", &n, NULL);
+	g_object_get(m_pipeline, "n-text", &n, nullptr);
 	for(gint i = 0; i < n; i++) {
 		QString textStreamName;
-		GstTagList *tags = NULL;
+		GstTagList *tags = nullptr;
 		gchar *str;
 		g_signal_emit_by_name(m_pipeline, "get-text-tags", i, &tags);
 		if(tags) {
@@ -459,20 +468,20 @@ GStreamerPlayerBackend::updateTextData()
 		}
 	}
 
-	setPlayerTextStreams(textStreams);
+	emit textStreamsChanged(textStreams);
 }
 
 void
-GStreamerPlayerBackend::updateAudioData()
+GStreamerBackend::updateAudioData()
 {
 	QStringList audioStreams;
 	gint activeAudioStream;
 
 	gint n;
-	g_object_get(m_pipeline, "n-audio", &n, NULL);
+	g_object_get(m_pipeline, "n-audio", &n, nullptr);
 	for(gint i = 0; i < n; i++) {
 		QString audioStreamName;
-		GstTagList *tags = NULL;
+		GstTagList *tags = nullptr;
 		guint rate;
 		gchar *str;
 		g_signal_emit_by_name(m_pipeline, "get-audio-tags", i, &tags);
@@ -495,16 +504,16 @@ GStreamerPlayerBackend::updateAudioData()
 		}
 	}
 
-	g_object_get(m_pipeline, "current-audio", &activeAudioStream, NULL);
+	g_object_get(m_pipeline, "current-audio", &activeAudioStream, nullptr);
 
-	setPlayerAudioStreams(audioStreams, activeAudioStream);
+	emit audioStreamsChanged(audioStreams, activeAudioStream);
 }
 
 void
-GStreamerPlayerBackend::updateVideoData()
+GStreamerBackend::updateVideoData()
 {
 	GstElement *videosink;
-	g_object_get(m_pipeline, "video-sink", &videosink, NULL);
+	g_object_get(m_pipeline, "video-sink", &videosink, nullptr);
 
 	GstPad *videopad = gst_element_get_static_pad(GST_ELEMENT(videosink), "sink");
 	if(!videopad)
@@ -529,13 +538,13 @@ GStreamerPlayerBackend::updateVideoData()
 		dar = dar * width / height;
 	}
 
-	player()->videoWidget()->setVideoResolution(width, height, dar);
+	emit resolutionChanged(width, height, dar);
 
 	const GValue *fps;
 	if((fps = gst_structure_get_value(capsStruct, "framerate"))) {
 		int num = gst_value_get_fraction_numerator(fps);
 		int den = gst_value_get_fraction_denominator(fps);
-		setPlayerFramesPerSecond((double)num / den);
+		emit fpsChanged((double)num / den);
 		m_frameDuration = gint64(den) * GST_SECOND / gint64(num);
 	}
 
@@ -544,7 +553,7 @@ GStreamerPlayerBackend::updateVideoData()
 }
 
 bool
-GStreamerPlayerBackend::eventFilter(QObject *obj, QEvent *event)
+GStreamerBackend::eventFilter(QObject *obj, QEvent *event)
 {
 	bool res = QObject::eventFilter(obj, event);
 
@@ -561,27 +570,27 @@ GStreamerPlayerBackend::eventFilter(QObject *obj, QEvent *event)
 }
 
 bool
-GStreamerPlayerBackend::reconfigure()
+GStreamerBackend::reconfigure()
 {
 	if(!m_pipeline || !GST_IS_PIPELINE(m_pipeline))
 		return false;
 
-	GstElement *oldsink = NULL, *newsink;
+	GstElement *oldsink = nullptr, *newsink;
 
 	// replace video sink
-	g_object_get(G_OBJECT(m_pipeline), "video-sink", &oldsink, NULL);
+	g_object_get(G_OBJECT(m_pipeline), "video-sink", &oldsink, nullptr);
 	if(!oldsink || !GST_IS_ELEMENT(oldsink))
 		return false;
 	newsink = createVideoSink();
-	g_object_set(G_OBJECT(m_pipeline), "video-sink", newsink, NULL);
+	g_object_set(G_OBJECT(m_pipeline), "video-sink", newsink, nullptr);
 	g_object_unref(oldsink);
 
 	// replace audio sink
-	g_object_get(G_OBJECT(m_pipeline), "audio-sink", &oldsink, NULL);
+	g_object_get(G_OBJECT(m_pipeline), "audio-sink", &oldsink, nullptr);
 	if(!oldsink || !GST_IS_ELEMENT(oldsink))
 		return false;
 	newsink = createAudioSink();
-	g_object_set(G_OBJECT(m_pipeline), "audio-sink", newsink, NULL);
+	g_object_set(G_OBJECT(m_pipeline), "audio-sink", newsink, nullptr);
 	g_object_unref(oldsink);
 
 	// current position
@@ -589,14 +598,14 @@ GStreamerPlayerBackend::reconfigure()
 	gst_element_query_position(GST_ELEMENT(m_pipeline), GST_FORMAT_TIME, &time);
 
 	GstState state = GST_STATE_VOID_PENDING;
-	gst_element_get_state(GST_ELEMENT(m_pipeline), &state, NULL, INFINITE_WAIT);
-	GStreamer::setElementState(GST_ELEMENT(m_pipeline), GST_STATE_NULL, INFINITE_WAIT);
+	gst_element_get_state(GST_ELEMENT(m_pipeline), &state, nullptr, GST_CLOCK_TIME_NONE);
+	GStreamer::setElementState(GST_ELEMENT(m_pipeline), GST_STATE_NULL, GST_CLOCK_TIME_NONE);
 	if(state == GST_STATE_PLAYING || state == GST_STATE_PAUSED) {
-		GStreamer::setElementState(GST_ELEMENT(m_pipeline), GST_STATE_PLAYING, INFINITE_WAIT);
+		GStreamer::setElementState(GST_ELEMENT(m_pipeline), GST_STATE_PLAYING, GST_CLOCK_TIME_NONE);
 		onPlaybinTimerTimeout();
-		seek((double)time / GST_SECOND, true);
+		seek((double)time / GST_SECOND);
 		if(state == GST_STATE_PAUSED)
-			GStreamer::setElementState(GST_ELEMENT(m_pipeline), GST_STATE_PAUSED, INFINITE_WAIT);
+			GStreamer::setElementState(GST_ELEMENT(m_pipeline), GST_STATE_PAUSED, GST_CLOCK_TIME_NONE);
 	}
 
 	return true;

@@ -106,7 +106,7 @@ private slots:
 	void onPlayerFileOpened(const QString &filePath);
 	void onPlayerFileOpenError(const QString &filePath, const QString &reason);
 	void onPlayerFileClosed();
-	void onPlayerPlaybacqCritical(const QString &errorMessage);
+	void onPlayerPlaybackError(const QString &errorMessage);
 	void onPlayerPlaying();
 	void onPlayerStopped();
 	void onPlayerPositionChanged(double seconds);
@@ -118,8 +118,6 @@ private slots:
 	void onPlayerLeftClicked(const QPoint &point);
 	void onPlayerRightClicked(const QPoint &point);
 	void onPlayerDoubleClicked(const QPoint &point);
-
-	void onPlayerBackendInitialized();
 
 private:
 	Subtitle *m_subtitle;

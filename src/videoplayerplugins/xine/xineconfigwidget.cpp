@@ -26,16 +26,16 @@
 
 using namespace SubtitleComposer;
 
-XineConfigWidget::XineConfigWidget(QWidget *parent) :
-	QWidget(parent)
+XineConfigWidget::XineConfigWidget(QWidget *parent)
+	: QWidget(parent)
 {
 	setupUi(this);
 
-	kcfg_xineAudio->addItems(QStringLiteral("auto alsa oss jack pulseaudio esd").split(' '));
-	kcfg_xineAudio->setProperty("kcfg_property", QByteArray("currentText"));
+	kcfg_audio->addItems(QStringLiteral("auto alsa oss jack pulseaudio esd").split(' '));
+	kcfg_audio->setProperty("kcfg_property", QByteArray("currentText"));
 
-	kcfg_xineVideo->addItems(QStringLiteral("auto xv xvmc opengl xxmc sdl xshm fb XDirectFB DirectFB").split(' '));
-	kcfg_xineVideo->setProperty("kcfg_property", QByteArray("currentText"));
+	kcfg_video->addItems(QStringLiteral("auto xv xvmc opengl xxmc sdl xshm fb XDirectFB DirectFB").split(' '));
+	kcfg_video->setProperty("kcfg_property", QByteArray("currentText"));
 }
 
 XineConfigWidget::~XineConfigWidget()

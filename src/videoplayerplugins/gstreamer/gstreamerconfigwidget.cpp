@@ -31,11 +31,11 @@ GStreamerConfigWidget::GStreamerConfigWidget(QWidget *parent)
 {
 	setupUi(this);
 
-	kcfg_gstAudioSink->addItems(QStringLiteral("autoaudiosink alsasink osssink esdsink gconfaudiosink pulsesink fakesink").split(' '));
-	kcfg_gstAudioSink->setProperty("kcfg_property", QByteArray("currentText"));
+	kcfg_audioSink->addItems(QStringLiteral("autoaudiosink alsasink osssink esdsink gconfaudiosink pulsesink fakesink").split(' '));
+	kcfg_audioSink->setProperty("kcfg_property", QByteArray("currentText"));
 
-	kcfg_gstVideoSink->addItems(QStringLiteral("autovideosink glimagesink xvimagesink ximagesink fakesink").split(' '));
-	kcfg_gstVideoSink->setProperty("kcfg_property", QByteArray("currentText"));
+	kcfg_videoSink->addItems(QStringLiteral("autovideosink glimagesink xvimagesink ximagesink fakesink").split(' '));
+	kcfg_videoSink->setProperty("kcfg_property", QByteArray("currentText"));
 }
 
 GStreamerConfigWidget::~GStreamerConfigWidget()

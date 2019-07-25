@@ -31,169 +31,128 @@ class SCConfig;
 
 #define PlayerBackend_iid "org.kde.SubtitleComposer.PlayerBackend"
 
+class KCoreConfigSkeleton;
+
 namespace SubtitleComposer {
 class PlayerBackend : public QObject
 {
 	Q_OBJECT
 
 	friend class VideoPlayer;
+	friend class ConfigDialog;
 
 public:
-// FIXME: there should be a way for backends to abort on error
-
-	virtual ~PlayerBackend();
-
 	inline const QString & name() const { return m_name; }
 
-// If possible (i.e., configs are compatible), copies the config object into
-// the player backend config. Ownership of config object it's not transferred.
-	void setConfig();
-	virtual QWidget * newConfigWidget(QWidget *parent) = 0;
-
-	bool isDummy() const;
-
 protected:
-	/// ownership of the config object is transferred to this object
-	PlayerBackend();
+	explicit PlayerBackend();
+
+	virtual QWidget * newConfigWidget(QWidget *parent) = 0;
+	virtual KCoreConfigSkeleton * config() const = 0;
 
 	/**
-	 * @brief isInitialized - There can only be one initialized backend at the time (the active
-	 *  backend). Since the active backend is also guaranteed to be initialized, this
-	 *  return the same as isActiveBackend() method.
-	 * @return true if initialize() has been successful on this backend; false otherwise
+	 * @brief init - Perform any required initialization
+	 * @param videoWidget - widget in which video must be rendered
+	 * @return true on success
 	 */
-	bool isInitialized() const;
-	bool isActiveBackend() const;
+	virtual bool init(QWidget *videoWidget) = 0;
 
 	/**
-	 * @brief initialize - Perform any required initialization
-	 * @param widgetParent
-	 * @return
+	 * @brief cleanup - Cleanup anything that's in use or have been initalized
 	 */
-	virtual bool initialize(VideoWidget *videoWidget) = 0;
+	virtual void cleanup() = 0;
 
-	/**
-	 * @brief finalize - Cleanup anything that has been initialized by initialize(), excluding the
-	 *  videoWidget() which is destroyed after calling fninalize() (all references to it must be
-	 *  cleaned up, however)
+	/*
+	 * IMPORTANT: methods that are described as synchronous must emit state
+	 * change before returning - e.g. openFile() should emit stateChanged signal
+	 * before returning, other signals like resolutionChanged, positionChanged
+	 * can probably be emitted at later time
 	 */
-	virtual void finalize() = 0;
-
-	virtual bool reconfigure() = 0;
-
-	inline VideoPlayer * player() const { return m_player; }
-
-	virtual bool doesVolumeCorrection() const;
-	virtual bool supportsChangingAudioStream(bool *onTheFly) const;
 
 	/**
-	 * @brief openFile - If the player is not left in a state where is about
-	 *  to start playing after the call, it must set the content of playingAfterCall
-	 *  to false; otherwise it's content must be set to true.
-	 *  The function doesn't need to block until playback is actually started
-	 * @param filePath
-	 * @param playingAfterCall
-	 * @return false if there is an error and the opening of the file must be aborted; true (all internal cleanup must be done before returning)
+	 * @brief openFile - open video file, this function must be synchronous
+	 * @param path - full path to video file
+	 * @return false if error occurred
 	 */
-	virtual bool openFile(const QString &filePath, bool &playingAfterCall) = 0;
+	virtual bool openFile(const QString &path) = 0;
 
 	/**
-	 * @brief closeFile - Cleanup any internal structures associated with the opened file.
-	 *  This function is called with the player already stopped.
-	 *  videoWidget() might be NULL when this function is called.
+	 * @brief closeFile - close current video file - this function must be synchronous
+	 * @return false if error occurred
 	 */
-	virtual void closeFile() = 0;
+	virtual bool closeFile() = 0;
 
 	/**
-	 * @brief play
-	 * @return false if there is an error and playback must be aborted; true (all internal cleanup must be done before returning).
+	 * @brief play - start playing - this function must be synchronous
+	 * @return false if error occurred
 	 */
 	virtual bool play() = 0;
 
 	/**
-	 * @brief pause
-	 * @return false if there is an error and playback must be aborted; true (all internal cleanup must be done before returning).
+	 * @brief pause - pause playing - this function must be synchronous
+	 * @return false if error occurred
 	 */
 	virtual bool pause() = 0;
 
 	/**
-	 * @brief seek
-	 * @param seconds
-	 * @param accurate
-	 * @return false if there is an error and playback must be aborted; true (all internal cleanup must be done before returning).
+	 * @brief seek - jump to some play time - this function should be async
+	 * @param seconds - play position from video start in seconds
+	 * @return false if error occurred
 	 */
-	virtual bool seek(double seconds, bool accurate) = 0;
+	virtual bool seek(double seconds) = 0;
 
 	/**
-	 * @brief step
-	 * @param frameOffset
-	 * @return false if there is an error and playback must be aborted; true (all internal cleanup must be done before returning).
+	 * @brief step - skip amount of frames backwars/forwards - this function should be async
+	 * @param frameOffset - count of frames to step
+	 * @return false if error occurred
 	 */
 	virtual bool step(int frameOffset) = 0;
 
 	/**
-	 * @brief stop
-	 * @return false if there is an error and playback must be aborted; true (all internal cleanup must be done before returning).
+	 * @brief stop - stop playing - this function must be synchronous
+	 * @return false if error occurred
 	 */
 	virtual bool stop() = 0;
 
 	/**
-	 * @brief playbackRateNotify
-	 * @param new playback rate
+	 * @brief playbackRate - change playback rate - this function can be async
+	 * @param newRate - new play speed multiplier
+	 * @return false if error occurred
 	 */
-	void playbackRateNotify(double newRate);
+	virtual bool playbackRate(double newRate) = 0;
 
 	/**
-	 * @brief playbackRate
-	 * @param new playback rate
+	 * @brief selectAudioStream - change active audio stream - this function can be async
+	 * @param streamIndex - audio stream index as notified by textStreamsChanged()
+	 * @return false if error occurred
 	 */
-	virtual void playbackRate(double newRate) = 0;
+	virtual bool selectAudioStream(int streamIndex) = 0;
 
 	/**
-	 * @brief setActiveAudioStream
-	 * @param audioStream
-	 * @return false if there is an error and playback must be aborted; true (all internal cleanup must be done before returning).
-	 */
-	virtual bool setActiveAudioStream(int audioStream) = 0;
-
-	/**
-	 * @brief setVolume
-	 * @param volume
-	 * @return false if there is an error and playback must be aborted; true (all internal cleanup must be done before returning).
+	 * @brief setVolume - change audio volume - this function can be async
+	 * @param volume - value from 0. - 100.
+	 * @return false if error occurred
 	 */
 	virtual bool setVolume(double volume) = 0;
 
-	inline void setPlayerVolume(double volume) { player()->notifyVolume(volume); }
-	inline void setPlayerMuted(bool muted) { player()->notifyMute(muted); }
+signals:
+	// notify application of state changes
+	void resolutionChanged(int width, int height, double aspectRatio);
+	void fpsChanged(double framesPerSecond);
 
-	/**
-	 * @brief setPlayerPosition
-	 * @param position value in seconds
-	 */
-	inline void setPlayerPosition(double position) { player()->notifyPosition(position); }
+	void stateChanged(VideoPlayer::State state);
+	void errorOccured(const QString &errorMessage);
 
-	/**
-	 * @brief setPlayerLength
-	 * @param length value in seconds
-	 */
-	inline void setPlayerLength(double length) { player()->notifyLength(length); }
+	void positionChanged(double position); // play position in seconds
+	void lengthChanged(double length); // media length in seconds
 
-	inline void setPlayerState(VideoPlayer::State state) { player()->notifyState(state); }
+	void speedChanged(double speedMultiplier);
 
-	inline void setPlayerErrorState(const QString &errorMessage = QString()) { player()->notifyErrorState(errorMessage); }
+	void volumeChanged(double volume); // audio volume 0. - 100.
+	void muteChanged(bool muted);
 
-	inline void setPlayerFramesPerSecond(double framesPerSecond) { player()->notifyFramesPerSecond(framesPerSecond); }
-
-	inline void setPlayerTextStreams(const QStringList &textStreams) { player()->notifyTextStreams(textStreams); }
-
-	inline void setPlayerAudioStreams(const QStringList &audioStreams, int activeAudioStream) { player()->notifyAudioStreams(audioStreams, activeAudioStream); }
-
-private:
-	inline void setPlayer(VideoPlayer *player) { m_player = player; }
-	virtual void setSCConfig(SCConfig *scConfig) = 0;
-
-private:
-	VideoPlayer *m_player;
+	void textStreamsChanged(const QStringList &textStreams);
+	void audioStreamsChanged(const QStringList &audioStreams, int activeAudioStream);
 
 protected:
 	QString m_name;

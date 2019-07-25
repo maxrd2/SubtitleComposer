@@ -45,9 +45,7 @@ PlayerConfigWidget::PlayerConfigWidget(QWidget *parent)
 	m_textOverlayWidget->setOutlineColor(SCConfig::outlineColor());
 	m_textOverlayWidget->setAntialias(SCConfig::antialias());
 
-	QStringList backends = VideoPlayer::instance()->backendNames();
-	backends.removeOne(VideoPlayer::instance()->dummyBackendName());
-	kcfg_PlayerBackend->addItems(backends);
+	kcfg_PlayerBackend->addItems(VideoPlayer::instance()->plugins().keys());
 	kcfg_PlayerBackend->setProperty("kcfg_property", QByteArray("currentText"));
 
 	kcfg_FontFamily->setProperty("kcfg_property", QByteArray("currentText"));

@@ -1,5 +1,5 @@
-#ifndef MPLAYERPLAYERBACKEND_H
-#define MPLAYERPLAYERBACKEND_H
+#ifndef MPLAYERBACKEND_H
+#define MPLAYERBACKEND_H
 
 /*
  * Copyright (C) 2007-2009 Sergio Pistone <sergio_pistone@yahoo.com.ar>
@@ -24,42 +24,40 @@
 #include "videoplayer/playerbackend.h"
 
 #include <QWidget>
-
-QT_FORWARD_DECLARE_CLASS(QString)
+#include <QString>
 
 namespace SubtitleComposer {
-class MPlayerPlayerProcess;
+class MPlayerProcess;
 
-class MPlayerPlayerBackend : public PlayerBackend
+class MPlayerBackend : public PlayerBackend
 {
 	Q_OBJECT
 	Q_PLUGIN_METADATA(IID PlayerBackend_iid)
 	Q_INTERFACES(SubtitleComposer::PlayerBackend)
 
 public:
-	MPlayerPlayerBackend();
-	virtual ~MPlayerPlayerBackend();
+	MPlayerBackend();
+	virtual ~MPlayerBackend();
 
 	QWidget * newConfigWidget(QWidget *parent) override;
+	KCoreConfigSkeleton * config() const override;
 
 protected:
-	bool initialize(VideoWidget *videoWidget) override;
-	void finalize() override;
-	void _finalize();
-	bool reconfigure() override;
+	bool init(QWidget *videoWidget) override;
+	void cleanup() override;
 
-	bool openFile(const QString &filePath, bool &playingAfterCall) override;
-	void closeFile() override;
+	bool openFile(const QString &path) override;
+	bool closeFile() override;
 
 	bool play() override;
 	bool pause() override;
-	bool seek(double seconds, bool accurate) override;
-	bool step(int /*frameOffset*/) override { return false; }
+	bool seek(double seconds) override;
+	bool step(int frameOffset) override;
 	bool stop() override;
 
-	void playbackRate(double /*newRate*/) override {}
+	bool playbackRate(double newRate) override;
 
-	bool setActiveAudioStream(int audioStream) override;
+	bool selectAudioStream(int streamIndex) override;
 
 	bool setVolume(double volume) override;
 
@@ -74,14 +72,19 @@ protected:
 	void setupProcessArgs(const QString &filePath);
 
 private:
-	void setSCConfig(SCConfig *scConfig) override;
+	bool reconfigure();
 
-protected:
-	MPlayerPlayerProcess *m_process;
+	enum PlayState { STOPPED, PAUSED, PLAYING } m_state;
+	void setState(PlayState state);
 
+	bool m_initialized;
+	bool m_muted;
+	MPlayerProcess *m_process;
+	QWidget *m_nativeWindow;
 	double m_position;
 	bool m_reportUpdates;
+	QString m_currentFilePath;
 };
 }
 
-#endif
+#endif // MPLAYERBACKEND_H

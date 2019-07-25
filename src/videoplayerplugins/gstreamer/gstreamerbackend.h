@@ -1,5 +1,5 @@
-#ifndef GSTREAMERPLAYERBACKEND2_H
-#define GSTREAMERPLAYERBACKEND2_H
+#ifndef GSTREAMERBACKEND_H
+#define GSTREAMERBACKEND_H
 
 /*
  * Copyright (C) 2007-2009 Sergio Pistone <sergio_pistone@yahoo.com.ar>
@@ -23,66 +23,63 @@
 
 #include "videoplayer/playerbackend.h"
 
+#include <gst/gst.h>
+
 #include <QWidget>
 #include <QString>
-
-#include <gst/gst.h>
 
 QT_FORWARD_DECLARE_CLASS(QTimer)
 
 namespace SubtitleComposer {
-class GStreamerPlayerBackend : public PlayerBackend
+class GStreamerBackend : public PlayerBackend
 {
 	Q_OBJECT
 	Q_PLUGIN_METADATA(IID PlayerBackend_iid)
 	Q_INTERFACES(SubtitleComposer::PlayerBackend)
 
 public:
-	GStreamerPlayerBackend();
-	virtual ~GStreamerPlayerBackend();
+	GStreamerBackend();
+	virtual ~GStreamerBackend();
 
 	QWidget * newConfigWidget(QWidget *parent) override;
+	KCoreConfigSkeleton * config() const override;
 
 protected:
-	bool initialize(VideoWidget *videoWidget) override;
-	void finalize() override;
-	bool reconfigure() override;
+	bool init(QWidget *videoWidget) override;
+	void cleanup() override;
 
-	bool doesVolumeCorrection() const override { return true; }
-
-	static GstElement * createAudioSink();
-	static GstElement * createVideoSink();
-
-	bool openFile(const QString &filePath, bool &playingAfterCall) override;
-	void closeFile() override;
+	bool openFile(const QString &path) override;
+	bool closeFile() override;
 
 	bool play() override;
 	bool pause() override;
-	bool seek(double seconds, bool accurate) override;
+	bool seek(double seconds) override;
 	bool step(int frameOffset) override;
 	bool stop() override;
 
-	void playbackRate(double newRate) override;
+	bool playbackRate(double newRate) override;
 
-	bool setActiveAudioStream(int audioStream) override;
+	bool selectAudioStream(int streamIndex) override;
 
 	bool setVolume(double volume) override;
-
-	bool eventFilter(QObject *obj, QEvent *event) override;
 
 protected slots:
 	void onPlaybinTimerTimeout();
 
 private:
+	bool eventFilter(QObject *obj, QEvent *event) override;
+
+	bool reconfigure();
+	static GstElement * createAudioSink();
+	static GstElement * createVideoSink();
+
 	void setupVideoOverlay();
 
 	void updateTextData();
 	void updateAudioData();
 	void updateVideoData();
 
-	void setSCConfig(SCConfig *scConfig) override;
-
-private:
+	QWidget *m_nativeWindow;
 	GstPipeline *m_pipeline;
 	GstBus *m_pipelineBus;
 	QTimer *m_pipelineTimer;
@@ -95,4 +92,4 @@ private:
 };
 }
 
-#endif
+#endif // GSTREAMERBACKEND_H

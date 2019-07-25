@@ -23,6 +23,7 @@
 #include "actions/useractionnames.h"
 #include "helpers/commondefs.h"
 #include "core/subtitleiterator.h"
+#include "videoplayer/playerbackend.h"
 #include "videoplayer/videoplayer.h"
 #include "widgets/layeredwidget.h"
 #include "widgets/textoverlaywidget.h"
@@ -78,8 +79,12 @@ PlayerWidget::PlayerWidget(QWidget *parent) :
 	m_layeredWidget->installEventFilter(this);
 	m_layeredWidget->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
 
-	m_player->initialize(m_layeredWidget, SCConfig::playerBackend());
-	connect(m_player, SIGNAL(backendInitialized(PlayerBackend *)), this, SLOT(onPlayerBackendInitialized()));
+	m_player->init(m_layeredWidget, SCConfig::playerBackend());
+	connect(m_player, &VideoPlayer::backendInitialized, this, [&](){
+		// when the player backend is initialized the video widget is created in front
+		// of the text overlay, so we have to raise it to make it visible again
+		m_textOverlay->raise();
+	});
 
 	m_textOverlay = new TextOverlayWidget(m_layeredWidget);
 	m_textOverlay->setAlignment(Qt::AlignHCenter | Qt::AlignBottom);
@@ -251,21 +256,23 @@ PlayerWidget::PlayerWidget(QWidget *parent) :
 
 	connect(SCConfig::self(), SIGNAL(configChanged()), this, SLOT(onConfigChanged()));
 
-	connect(m_player, SIGNAL(fileOpened(const QString &)), this, SLOT(onPlayerFileOpened(const QString &)));
-	connect(m_player, SIGNAL(fileOpenError(QString,QString)), this, SLOT(onPlayerFileOpenError(QString,QString)));
-	connect(m_player, SIGNAL(fileClosed()), this, SLOT(onPlayerFileClosed()));
-	connect(m_player, SIGNAL(playbacqCritical(const QString &)), this, SLOT(onPlayerPlaybacqCritical(const QString &)));
-	connect(m_player, SIGNAL(playing()), this, SLOT(onPlayerPlaying()));
-	connect(m_player, SIGNAL(stopped()), this, SLOT(onPlayerStopped()));
-	connect(m_player, SIGNAL(positionChanged(double)), this, SLOT(onPlayerPositionChanged(double)));
-	connect(m_player, SIGNAL(lengthChanged(double)), this, SLOT(onPlayerLengthChanged(double)));
-	connect(m_player, SIGNAL(framesPerSecondChanged(double)), this, SLOT(onPlayerFramesPerSecondChanged(double)));
-	connect(m_player, SIGNAL(playbackRateChanged(double)), this, SLOT(onPlayerPlaybackRateChanged(double)));
-	connect(m_player, SIGNAL(volumeChanged(double)), this, SLOT(onPlayerVolumeChanged(double)));
+	connect(m_player, &VideoPlayer::fileOpened, this, &PlayerWidget::onPlayerFileOpened);
+	connect(m_player, &VideoPlayer::fileOpenError, this, &PlayerWidget::onPlayerFileOpenError);
+	connect(m_player, &VideoPlayer::fileClosed, this, &PlayerWidget::onPlayerFileClosed);
+	connect(m_player, &VideoPlayer::playbackError, this, &PlayerWidget::onPlayerPlaybackError);
+	connect(m_player, &VideoPlayer::playing, this, &PlayerWidget::onPlayerPlaying);
+	connect(m_player, &VideoPlayer::stopped, this, &PlayerWidget::onPlayerStopped);
+	connect(m_player, &VideoPlayer::positionChanged, this, &PlayerWidget::onPlayerPositionChanged);
+	connect(m_player, &VideoPlayer::lengthChanged, this, &PlayerWidget::onPlayerLengthChanged);
+	connect(m_player, &VideoPlayer::framesPerSecondChanged, this, &PlayerWidget::onPlayerFramesPerSecondChanged);
+	connect(m_player, &VideoPlayer::playbackRateChanged, this, &PlayerWidget::onPlayerPlaybackRateChanged);
+	connect(m_player, &VideoPlayer::volumeChanged, this, &PlayerWidget::onPlayerVolumeChanged);
+	connect(m_player, &VideoPlayer::muteChanged, m_fsVolumeSlider, &QWidget::setDisabled);
+	connect(m_player, &VideoPlayer::muteChanged, m_volumeSlider, &QWidget::setDisabled);
 
-	connect(m_player, SIGNAL(leftClicked(const QPoint &)), this, SLOT(onPlayerLeftClicked(const QPoint &)));
-	connect(m_player, SIGNAL(rightClicked(const QPoint &)), this, SLOT(onPlayerRightClicked(const QPoint &)));
-	connect(m_player, SIGNAL(doubleClicked(const QPoint &)), this, SLOT(onPlayerDoubleClicked(const QPoint &)));
+	connect(m_player, &VideoPlayer::leftClicked, this, &PlayerWidget::onPlayerLeftClicked);
+	connect(m_player, &VideoPlayer::rightClicked, this, &PlayerWidget::onPlayerRightClicked);
+	connect(m_player, &VideoPlayer::doubleClicked, this, &PlayerWidget::onPlayerDoubleClicked);
 
 	setOverlayLine(0);
 	onPlayerFileClosed();
@@ -274,7 +281,7 @@ PlayerWidget::PlayerWidget(QWidget *parent) :
 
 PlayerWidget::~PlayerWidget()
 {
-	m_player->finalize();
+	m_player->cleanup();
 
 	m_fullScreenControls->deleteLater();
 }
@@ -610,14 +617,6 @@ PlayerWidget::updatePlayingLine(const Time &videoPosition)
 	if(m_playingLine && videoPosition <= m_playingLine->hideTime() && videoPosition >= m_playingLine->showTime())
 		return;
 
-	// pause if requested
-	if(m_pauseAfterPlayingLine && videoPosition >= m_pauseAfterPlayingLine->hideTime()) {
-		m_player->pause();
-		setPlayingLine(const_cast<SubtitleLine *>(m_pauseAfterPlayingLine));
-		m_pauseAfterPlayingLine = nullptr;
-		return;
-	}
-
 	// overlay line is playing line
 	if(m_overlayLine && videoPosition <= m_overlayLine->hideTime() && videoPosition >= m_overlayLine->showTime()) {
 		setPlayingLine(m_overlayLine);
@@ -726,7 +725,7 @@ PlayerWidget::onSeekSliderValueChanged(int value)
 	if(m_updateVideoPosition) {
 		m_updatePositionControls = MAGIC_NUMBER;
 		pauseAfterPlayingLine(nullptr);
-		m_player->seek(m_player->length() * value / 1000.0, true);
+		m_player->seek(m_player->length() * value / 1000.0);
 	}
 }
 
@@ -734,7 +733,7 @@ void
 PlayerWidget::onSeekSliderMoved(int value)
 {
 	pauseAfterPlayingLine(nullptr);
-	m_player->seek(m_player->length() * value / 1000.0, false);
+	m_player->seek(m_player->length() * value / 1000.0);
 
 	Time time((long)(m_player->length() * value));
 
@@ -751,17 +750,14 @@ PlayerWidget::onPositionEditValueChanged(int position)
 	if(m_positionEdit->hasFocus()) {
 		m_updatePositionControls = MAGIC_NUMBER;
 		pauseAfterPlayingLine(nullptr);
-		m_player->seek(position / 1000.0, true);
+		m_player->seek(position / 1000.0);
 	}
 }
 
 void
 PlayerWidget::onConfigChanged()
 {
-	if(m_player->backend(SCConfig::playerBackend()) != m_player->activeBackend())
-		m_player->reinitialize(SCConfig::playerBackend());
-	else
-		m_player->reconfigure();
+	m_player->switchBackend(SCConfig::playerBackend());
 
 	if(m_showPositionTimeEdit != SCConfig::showPositionTimeEdit()) {
 		m_showPositionTimeEdit = SCConfig::showPositionTimeEdit();
@@ -825,7 +821,7 @@ PlayerWidget::onPlayerFileClosed()
 }
 
 void
-PlayerWidget::onPlayerPlaybacqCritical(const QString &errorMessage)
+PlayerWidget::onPlayerPlaybackError(const QString &errorMessage)
 {
 	if(errorMessage.isEmpty())
 		KMessageBox::error(this, i18n("Unexpected error when playing file."), i18n("Error Playing File"));
@@ -848,7 +844,18 @@ PlayerWidget::onPlayerPositionChanged(double seconds)
 {
 	if(m_updatePositionControls > 0) {
 		if(seconds >= 0) {
-			Time videoPosition(seconds * 1000.);
+			const Time videoPosition(seconds * 1000.);
+
+			// pause if requested
+			if(m_pauseAfterPlayingLine) {
+				const Time &pauseTime = m_pauseAfterPlayingLine->hideTime();
+				if(videoPosition >= pauseTime) {
+					m_pauseAfterPlayingLine = nullptr;
+					m_player->pause();
+					m_player->seek(pauseTime.toSeconds());
+					return;
+				}
+			}
 
 			m_positionLabel->setText(videoPosition.toString());
 			m_fsPositionLabel->setText(videoPosition.toString(false) + m_lengthString);
@@ -859,7 +866,7 @@ PlayerWidget::onPlayerPositionChanged(double seconds)
 			updateOverlayLine(videoPosition);
 			updatePlayingLine(videoPosition);
 
-			int sliderValue = (int)((seconds / m_player->length()) * 1000);
+			int sliderValue = int((seconds / m_player->length()) * 1000);
 
 			m_updateVideoPosition = false;
 			m_seekSlider->setValue(sliderValue);
@@ -986,14 +993,3 @@ PlayerWidget::onPlayerDoubleClicked(const QPoint & /*point */)
 {
 	app()->toggleFullScreenMode();
 }
-
-void
-PlayerWidget::onPlayerBackendInitialized()
-{
-	// NOTE when the player backend is initialized the video widget
-	// is created in front of the text overlay, so we have to raise
-	// it to make it visible again
-	m_textOverlay->raise();
-}
-
-

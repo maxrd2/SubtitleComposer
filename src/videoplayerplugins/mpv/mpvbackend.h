@@ -29,8 +29,6 @@
 #include <QString>
 
 namespace SubtitleComposer {
-class MPVProcess;
-
 class MPVBackend : public PlayerBackend
 {
 	Q_OBJECT
@@ -42,55 +40,46 @@ public:
 	virtual ~MPVBackend();
 
 	QWidget * newConfigWidget(QWidget *parent) override;
+	KCoreConfigSkeleton * config() const override;
 
 protected:
-	bool initialize(VideoWidget *videoWidgetParent) override;
-	void finalize() override;
-	void _finalize();
-	bool reconfigure() override;
+	bool init(QWidget *videoWidget) override;
+	void cleanup() override;
 
-	void waitState(VideoPlayer::State state);
-	void waitState(VideoPlayer::State state1, VideoPlayer::State state2);
-
-	bool openFile(const QString &filePath, bool &playingAfterCall) override;
-	void closeFile() override;
+	bool openFile(const QString &path) override;
+	bool closeFile() override;
 
 	bool play() override;
 	bool pause() override;
-	bool seek(double seconds, bool accurate) override;
+	bool seek(double seconds) override;
 	bool step(int frameOffset) override;
 	bool stop() override;
 
-	void playbackRate(double newRate) override;
+	bool playbackRate(double newRate) override;
 
-	bool setActiveAudioStream(int audioStream) override;
+	bool selectAudioStream(int streamIndex) override;
 
 	bool setVolume(double volume) override;
 
-	bool mpvInit();
-	void mpvExit();
-
-signals:
-	void mpvEvents();
-
-protected slots:
-	void onMPVEvents();
-
 private:
-	void mpvEventHandle(mpv_event *event);
-	static void wakeup(void *ctx);
+	void processEvents();
+	void handleEvent(mpv_event *event);
 
-	void updateTextData(const mpv_event_property *prop);
-	void updateAudioData(const mpv_event_property *prop);
-	void updateVideoData();
+	void notifyTextStreams(const mpv_event_property *prop);
+	void notifyAudioStreams(const mpv_event_property *prop);
+	void notifyVideoInfo();
 
-	void setSCConfig(SCConfig *scConfig) override;
+	bool setup();
+	bool reconfigure();
 
-protected:
+	enum PlayState { STOPPED, PAUSED, PLAYING } m_state;
+	void setState(PlayState state);
+
+	QWidget *m_nativeWindow;
 	mpv_handle *m_mpv;
 	bool m_initialized;
 	QString m_currentFilePath;
 };
 }
 
-#endif
+#endif // MPVBACKEND_H

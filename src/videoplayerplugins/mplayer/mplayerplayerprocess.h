@@ -33,13 +33,13 @@
 #include <QWindow>
 
 namespace SubtitleComposer {
-class MPlayerPlayerProcess : public QProcess
+class MPlayerProcess : public QProcess
 {
 	Q_OBJECT
 
 public:
-	explicit MPlayerPlayerProcess(QObject *parent = 0);
-	virtual ~MPlayerPlayerProcess();
+	explicit MPlayerProcess(QObject *parent = 0);
+	virtual ~MPlayerProcess();
 
 	const MediaData & mediaData();
 
@@ -56,6 +56,9 @@ public:
 	void sendTogglePause();
 	void sendSeek(double seconds);
 	void sendFastSeek(double seconds);
+	void sendFrameStep();
+
+	void sendSpeedSet(double speed);
 
 	void sendToggleMute();
 	void sendVolume(double volume);

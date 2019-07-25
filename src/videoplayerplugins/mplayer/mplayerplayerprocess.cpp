@@ -19,9 +19,7 @@
  */
 
 #include "mplayerplayerprocess.h"
-
-#include "scconfigdummy.h"
-
+#include "mplayerconfig.h"
 
 #include <QApplication>
 #include <QStandardPaths>
@@ -37,7 +35,7 @@ using namespace std;
 
 #define MAX_VOLUME 1000
 
-MPlayerPlayerProcess::MPlayerPlayerProcess(QObject *parent)
+MPlayerProcess::MPlayerProcess(QObject *parent)
 	: QProcess(parent),
 	m_mediaData(),
 	m_incompleteLine(),
@@ -59,25 +57,25 @@ MPlayerPlayerProcess::MPlayerPlayerProcess(QObject *parent)
 	connect(this, SIGNAL(stateChanged(QProcess::ProcessState)), this, SLOT(onStateChanged(QProcess::ProcessState)));
 }
 
-MPlayerPlayerProcess::~MPlayerPlayerProcess()
+MPlayerProcess::~MPlayerProcess()
 {}
 
 const MediaData &
-MPlayerPlayerProcess::mediaData()
+MPlayerProcess::mediaData()
 {
 	return m_mediaData;
 }
 
 bool
-MPlayerPlayerProcess::start(const QString &filePath, WId winId, int audioStream, int audioStreamCount)
+MPlayerProcess::start(const QString &filePath, WId winId, int audioStream, int audioStreamCount)
 {
-	QString exePath = QStandardPaths::findExecutable(QUrl(SCConfig::mpExecutablePath()).toLocalFile());
+	QString exePath = QStandardPaths::findExecutable(QUrl(MPlayerConfig::executablePath()).toLocalFile());
 	if(exePath.isEmpty())
 		return false;
 
 	m_mediaData.reset();
 	m_isMediaDataLoaded = false;
-	m_isPaused = false;
+	m_isPaused = true;
 	m_emitPlaying = false;
 	m_incompleteLine.clear();
 
@@ -92,11 +90,11 @@ MPlayerPlayerProcess::start(const QString &filePath, WId winId, int audioStream,
 	args << "-slave"; // enable slave mode so we can send commands to mplayer process
 	args << "-input" << "nodefault-bindings:conf=/dev/null"; // disable mplayer input handling
 
-	if(SCConfig::mpVideoOutputEnabled()) {
-		args << "-vo" << SCConfig::mpVideoOutput();
-		if(SCConfig::mpVideoOutput() == QLatin1String("vdpau")) {
+	if(MPlayerConfig::videoOutputEnabled()) {
+		args << "-vo" << MPlayerConfig::videoOutput();
+		if(MPlayerConfig::videoOutput() == QLatin1String("vdpau")) {
 			args << "-vc";
-			if(SCConfig::mpVdpau()) {
+			if(MPlayerConfig::vdpau()) {
 				args << "ffh264vdpau,ffmpeg12vdpau,ffwmv3vdpau,ffvc1vdpau,ffodivxvdpau,";
 			} else {
 				args << "ffh264vdpau,ffmpeg12vdpau,ffwmv3vdpau,ffvc1vdpau,";
@@ -104,46 +102,46 @@ MPlayerPlayerProcess::start(const QString &filePath, WId winId, int audioStream,
 		}
 	}
 
-	if(SCConfig::mpAudioOutputEnabled())
-		args << "-ao" << SCConfig::mpAudioOutput();
+	if(MPlayerConfig::audioOutputEnabled())
+		args << "-ao" << MPlayerConfig::audioOutput();
 
-	if(SCConfig::mpAudioChannelsEnabled())
-		args << "-channels" << QString::number(SCConfig::mpAudioChannels());
+	if(MPlayerConfig::audioChannelsEnabled())
+		args << "-channels" << QString::number(MPlayerConfig::audioChannels());
 
 	args << "-zoom";                        // allow software scaling where hardware scaling is unavaliable
 	args << "-nokeepaspect";        // do not keep window aspect ratio when resizing windows
 
-	if(SCConfig::mpFrameDropping())
+	if(MPlayerConfig::frameDropping())
 		args << "-framedrop";
 
-	if(SCConfig::mpHardFrameDropping())
+	if(MPlayerConfig::hardFrameDropping())
 		args << "-hardframedrop";
 
-	if(SCConfig::mpAutoSyncEnabled())
-		args << "-autosync" << QString::number(SCConfig::mpAutoSyncFactor());
+	if(MPlayerConfig::autoSyncEnabled())
+		args << "-autosync" << QString::number(MPlayerConfig::autoSyncFactor());
 
 	args << "-wid" << QString::number(winId);       // set window id so that it gets embedded in our window
 	args << "-noautosub";           // turn off automatic subtitle file loading
 
-	if(SCConfig::mpCacheEnabled()) {
-		args << "-cache" << QString::number(SCConfig::mpCacheSize());
+	if(MPlayerConfig::cacheEnabled()) {
+		args << "-cache" << QString::number(MPlayerConfig::cacheSize());
 		args << "-cache-min" << QString::number(99);
 		args << "-cache-seek-min" << QString::number(99);
 	}
 
 	args << "-osdlevel" << QString::number(0);      // no OSD
 
-	if(SCConfig::mpVolumeNormalization())
+	if(MPlayerConfig::volumeNormalization())
 		args << "-af" << "volnorm=2"; // set volume normalization
 
 	args << "-softvol";
 
-	if(SCConfig::mpVolumeAmplificationEnabled())
-		args << "-softvol-max" << QString::number(SCConfig::mpVolumeAmplification());
+	if(MPlayerConfig::volumeAmplificationEnabled())
+		args << "-softvol-max" << QString::number(MPlayerConfig::volumeAmplification());
 
 	args << filePath;
 
-//  qDebug() << KStandardDirs::findExe( SCConfig::executablePath() ) << " " << args.join(" ");
+//  qDebug() << KStandardDirs::findExe( MPlayerConfig::executablePath() ) << " " << args.join(" ");
 
 	setProcessChannelMode(QProcess::MergedChannels);
 	QProcess::start(exePath, args);
@@ -151,7 +149,7 @@ MPlayerPlayerProcess::start(const QString &filePath, WId winId, int audioStream,
 }
 
 void
-MPlayerPlayerProcess::sendTogglePause()
+MPlayerProcess::sendTogglePause()
 {
 	if(m_isPaused) // set playing
 		sendCommand("pause", Playing, false);
@@ -160,13 +158,13 @@ MPlayerPlayerProcess::sendTogglePause()
 }
 
 void
-MPlayerPlayerProcess::sendSeek(double seconds)
+MPlayerProcess::sendSeek(double seconds)
 {
 	sendCommand(QByteArray("seek % 2").replace('%', QByteArray::number(seconds)), PausingKeep, true);
 }
 
 void
-MPlayerPlayerProcess::sendFastSeek(double seconds)
+MPlayerProcess::sendFastSeek(double seconds)
 {
 	const QByteArray seek("seek");
 
@@ -181,37 +179,58 @@ MPlayerPlayerProcess::sendFastSeek(double seconds)
 }
 
 void
-MPlayerPlayerProcess::sendToggleMute()
+MPlayerProcess::sendFrameStep()
+{
+	queueCommand("framestep", PausingKeep);
+}
+
+void
+MPlayerProcess::sendSpeedSet(double speed)
+{
+	const QByteArray seek("speed_set");
+
+	for(QList<QByteArray>::Iterator it = m_commandsQueue.begin(), end = m_commandsQueue.end(); it != end;) {
+		if((*it).contains(seek))
+			it = m_commandsQueue.erase(it);
+		else
+			++it;
+	}
+
+	queueCommand(QByteArray("seek ").append(QByteArray::number(speed)), PausingKeep);
+}
+
+void
+MPlayerProcess::sendToggleMute()
 {
 	sendCommand("mute", PausingKeep, true);
 }
 
 void
-MPlayerPlayerProcess::sendVolume(double volume)
+MPlayerProcess::sendVolume(double volume)
 {
-	sendCommand(QByteArray("volume % 1").replace('%', QByteArray::number(volume * (SCConfig::mpVolumeAmplification() / 100.0))), PausingKeep, false);
+	sendCommand(QByteArray("volume % 1").replace('%', QByteArray::number(volume * (MPlayerConfig::volumeAmplification() / 100.0))), PausingKeep, false);
 }
 
 void
-MPlayerPlayerProcess::sendAudioStream(int audioStream)
+MPlayerProcess::sendAudioStream(int audioStream)
 {
 	sendCommand(QByteArray("switch_audio %").replace('%', QByteArray::number(audioStream)), PausingKeep, false);
 }
 
 void
-MPlayerPlayerProcess::sendQuit()
+MPlayerProcess::sendQuit()
 {
 	sendCommand("quit", PausingKeep, false);
 }
 
 void
-MPlayerPlayerProcess::sendCommand(const char *cmd, MPlayerPlayerProcess::CommandMode mode, bool block)
+MPlayerProcess::sendCommand(const char *cmd, MPlayerProcess::CommandMode mode, bool block)
 {
 	sendCommand(QByteArray(cmd), mode, block);
 }
 
 void
-MPlayerPlayerProcess::sendCommand(const QByteArray &cmd, MPlayerPlayerProcess::CommandMode mode, bool block)
+MPlayerProcess::sendCommand(const QByteArray &cmd, MPlayerProcess::CommandMode mode, bool block)
 {
 	static int count = 0;
 
@@ -231,7 +250,7 @@ MPlayerPlayerProcess::sendCommand(const QByteArray &cmd, MPlayerPlayerProcess::C
 		if(block) {
 			QEventLoop loop;
 			QTimer::singleShot(5000, Qt::VeryCoarseTimer, &loop, bind(&QEventLoop::exit, ref(loop), -1));
-			connect(this, &MPlayerPlayerProcess::pausedReceived, &loop, &QEventLoop::quit);
+			connect(this, &MPlayerProcess::pausedReceived, &loop, &QEventLoop::quit);
 			write("pausing " + cmd + '\n');
 //			qDebug() << "WAITING";
 			if(loop.exec() != 0)
@@ -247,7 +266,7 @@ MPlayerPlayerProcess::sendCommand(const QByteArray &cmd, MPlayerPlayerProcess::C
 		if(block) {
 			QEventLoop loop;
 			QTimer::singleShot(5000, Qt::VeryCoarseTimer, bind(&QEventLoop::exit, ref(loop), -1));
-			connect(this, &MPlayerPlayerProcess::playingReceived, &loop, &QEventLoop::quit);
+			connect(this, &MPlayerProcess::playingReceived, &loop, &QEventLoop::quit);
 			m_emitPlaying = true;   // to make the playingReceived() signal be emmited again
 			write(cmd + '\n');
 //			qDebug() << "WAITING";
@@ -263,13 +282,13 @@ MPlayerPlayerProcess::sendCommand(const QByteArray &cmd, MPlayerPlayerProcess::C
 }
 
 void
-MPlayerPlayerProcess::queueCommand(const char *cmd, CommandMode mode)
+MPlayerProcess::queueCommand(const char *cmd, CommandMode mode)
 {
 	queueCommand(QByteArray(cmd), mode);
 }
 
 void
-MPlayerPlayerProcess::queueCommand(const QByteArray &cmd, MPlayerPlayerProcess::CommandMode mode)
+MPlayerProcess::queueCommand(const QByteArray &cmd, MPlayerProcess::CommandMode mode)
 {
 	switch(mode) {
 	case Pausing:
@@ -288,7 +307,7 @@ MPlayerPlayerProcess::queueCommand(const QByteArray &cmd, MPlayerPlayerProcess::
 }
 
 void
-MPlayerPlayerProcess::onReadyReadStandardOutput()
+MPlayerProcess::onReadyReadStandardOutput()
 {
 	QByteArray newData = readAllStandardOutput();
 	if(!newData.size())
@@ -304,7 +323,7 @@ MPlayerPlayerProcess::onReadyReadStandardOutput()
 }
 
 void
-MPlayerPlayerProcess::onWroteToStdin()
+MPlayerProcess::onWroteToStdin()
 {
 	if(m_commandsQueue.empty())
 		return;
@@ -313,7 +332,7 @@ MPlayerPlayerProcess::onWroteToStdin()
 }
 
 void
-MPlayerPlayerProcess::onTimeout()
+MPlayerProcess::onTimeout()
 {
 	if(!m_commandsQueue.empty())
 		write(m_commandsQueue.first());
@@ -322,19 +341,19 @@ MPlayerPlayerProcess::onTimeout()
 }
 
 void
-MPlayerPlayerProcess::onStateChanged(QProcess::ProcessState newState)
+MPlayerProcess::onStateChanged(QProcess::ProcessState newState)
 {
 	if(newState == QProcess::NotRunning)
 		emit processExited();
 }
 
 void
-MPlayerPlayerProcess::parseLine(const QString &line)
+MPlayerProcess::parseLine(const QString &line)
 {
 	if(line.isEmpty())
 		return;
 
-//	qDebug() << line;
+//	qDebug() << "MP STDOUT:" << line;
 
 	if(m_mediaData.videoFPS != 0.0 && m_videoFrameRegExp.indexIn(line) > -1) {
 		// try to parse the position from the reported frame number

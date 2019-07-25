@@ -27,11 +27,11 @@ MPlayerConfigWidget::MPlayerConfigWidget(QWidget *parent) :
 {
 	setupUi(this);
 
-	kcfg_mpVideoOutput->addItems(QStringLiteral("vdpau xv gl_nosw x11 xover sdl gl gl_tiled gl2 dga fbdev fbdev2 matrixview caca v4l2 xvidix xvmc mpegpes tdfxfb s3fb ggi bl directfb dfbmga null").split(' '));
-	kcfg_mpVideoOutput->setProperty("kcfg_property", QByteArray("currentText"));
+	kcfg_videoOutput->addItems(QStringLiteral("vdpau xv gl_nosw x11 xover sdl gl gl_tiled gl2 dga fbdev fbdev2 matrixview caca v4l2 xvidix xvmc mpegpes tdfxfb s3fb ggi bl directfb dfbmga null").split(' '));
+	kcfg_videoOutput->setProperty("kcfg_property", QByteArray("currentText"));
 
-	kcfg_mpAudioOutput->addItems(QStringLiteral("pulse alsa oss esd jack nas sdl openal v4l2 null").split(' '));
-	kcfg_mpAudioOutput->setProperty("kcfg_property", QByteArray("currentText"));
+	kcfg_audioOutput->addItems(QStringLiteral("pulse alsa oss esd jack nas sdl openal v4l2 null").split(' '));
+	kcfg_audioOutput->setProperty("kcfg_property", QByteArray("currentText"));
 }
 
 MPlayerConfigWidget::~MPlayerConfigWidget()

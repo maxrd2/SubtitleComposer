@@ -77,23 +77,27 @@ ConfigDialog::ConfigDialog(QWidget *parent, const QString &name, KCoreConfigSkel
 	item->setHeader(i18n("Video Player Settings"));
 	item->setIcon(QIcon::fromTheme(QStringLiteral("mediaplayer")));
 
-	// VideoPlayer plugin pages
-	for(const QString backendName : VideoPlayer::instance()->backendNames()) {
-		if(QWidget *configWidget = VideoPlayer::instance()->backend(backendName)->newConfigWidget(nullptr)) {
-			item = addPage(configWidget, backendName);
-			item->setHeader(i18nc("@title Video player backend settings", "%1 backend settings", backendName));
-			item->setIcon(QIcon::fromTheme(backendName.toLower()));
+	{ // VideoPlayer plugin pages
+		const VideoPlayer *videoPlayer = VideoPlayer::instance();
+		const QMap<QString, PlayerBackend *> plugins = videoPlayer->plugins();
+		for(auto it = plugins.cbegin(); it != plugins.cend(); ++it) {
+			if(QWidget *configWidget = it.value()->newConfigWidget(nullptr)) {
+				item = addPage(configWidget, it.value()->config(), it.key());
+				item->setHeader(i18nc("@title Video player backend settings", "%1 backend settings", it.key()));
+				item->setIcon(QIcon::fromTheme(it.key().toLower()));
+			}
 		}
 	}
 
-	// SpeechProcessor plugin pages
-	const SpeechProcessor *speechProcessor = app()->speechProcessor();
-	const QMap<QString, SpeechPlugin *> plugins = speechProcessor->plugins();
-	for(auto it = plugins.cbegin(); it != plugins.cend(); ++it) {
-		if(QWidget *configWidget = it.value()->newConfigWidget(nullptr)) {
-			item = addPage(configWidget, it.value()->config(), it.key());
-			item->setHeader(i18nc("@title Speech recognition backend settings", "%1 backend settings", it.key()));
-			item->setIcon(QIcon::fromTheme(it.key().toLower()));
+	{ // SpeechProcessor plugin pages
+		const SpeechProcessor *speechProcessor = app()->speechProcessor();
+		const QMap<QString, SpeechPlugin *> plugins = speechProcessor->plugins();
+		for(auto it = plugins.cbegin(); it != plugins.cend(); ++it) {
+			if(QWidget *configWidget = it.value()->newConfigWidget(nullptr)) {
+				item = addPage(configWidget, it.value()->config(), it.key());
+				item->setHeader(i18nc("@title Speech recognition backend settings", "%1 backend settings", it.key()));
+				item->setIcon(QIcon::fromTheme(it.key().toLower()));
+			}
 		}
 	}
 

@@ -27,16 +27,18 @@ set(videoplayer_gstreamer_LIBS
 	CACHE INTERNAL EXPORTEDVARIABLE
 )
 set(videoplayer_gstreamer_SRCS
-	${CMAKE_CURRENT_SOURCE_DIR}/gstreamerplayerbackend.cpp
+	${CMAKE_CURRENT_SOURCE_DIR}/gstreamerbackend.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/gstreamerconfigwidget.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/gstreamer.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/../../helpers/languagecode.cpp
 	${videoplayerplugins_SRCS}
 	CACHE INTERNAL EXPORTEDVARIABLE
 )
-
 ki18n_wrap_ui(videoplayer_gstreamer_SRCS
 	${CMAKE_CURRENT_SOURCE_DIR}/gstreamerconfigwidget.ui
+)
+kconfig_add_kcfg_files(videoplayer_gstreamer_SRCS GENERATE_MOC
+	${CMAKE_CURRENT_SOURCE_DIR}/gstreamerconfig.kcfgc
 )
 
 add_library(gstplayer MODULE ${videoplayer_gstreamer_SRCS})

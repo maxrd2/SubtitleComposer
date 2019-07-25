@@ -48,33 +48,27 @@ public:
 	PhononPlayerBackend();
 	virtual ~PhononPlayerBackend();
 
-	QWidget * newConfigWidget(QWidget *parent) override;
+	QWidget * newConfigWidget(QWidget */*parent*/) override { return nullptr; }
+	KCoreConfigSkeleton * config() const override { return nullptr; }
 
 protected:
-	bool doesVolumeCorrection() const override;
+	bool init(QWidget *videoWidget) override;
+	void cleanup() override;
 
-	bool initialize(VideoWidget *videoWidget) override;
-	void finalize() override;
-	void _finalize();
-	bool reconfigure() override;
-
-	bool openFile(const QString &filePath, bool &playingAfterCall) override;
-	void closeFile() override;
+	bool openFile(const QString &filePath) override;
+	bool closeFile() override;
 
 	bool play() override;
 	bool pause() override;
-	bool seek(double seconds, bool accurate) override;
+	bool seek(double seconds) override;
 	bool step(int /*frameOffset*/) override { return false; }
 	bool stop() override;
 
-	void playbackRate(double /*newRate*/) override {}
+	bool playbackRate(double /*newRate*/) override { return false; }
 
-	bool setActiveAudioStream(int audioStream) override;
+	bool selectAudioStream(int streamIndex) override;
 
 	bool setVolume(double volume) override;
-
-protected:
-	void initMediaObject();
 
 protected slots:
 	void onHasVideoChanged(bool hasVideo);
@@ -86,9 +80,10 @@ protected slots:
 	void onStateChanged(Phonon::State newState, Phonon::State oldState);
 
 private:
-	void setSCConfig(SCConfig *scConfig) override;
+	void initMediaObject();
+	enum PlayState { STOPPED, PAUSED, PLAYING } m_state;
+	void setState(PlayState state);
 
-protected:
 	Phonon::MediaObject *m_mediaObject;
 	Phonon::MediaController *m_mediaController;
 	Phonon::AudioOutput *m_audioOutput;
