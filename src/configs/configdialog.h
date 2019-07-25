@@ -3,7 +3,7 @@
 
 /*
  * Copyright (C) 2015 Martin Steghöfer <martin@steghoefer.eu>
- * Copyright (C) 2015-2018 Mladen Milinkovic <max@smoothware.net>
+ * Copyright (C) 2015-2019 Mladen Milinkovic <max@smoothware.net>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
