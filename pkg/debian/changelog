@@ -1,3 +1,9 @@
+subtitlecomposer (0.7.0-0) unstable; urgency=emergency
+
+  * New release
+
+ -- Pino Toscano <pino@debian.org>  Thu, 15 Feb 2018 08:35:11 +0100
+
 subtitlecomposer (0.6.6-2) unstable; urgency=emergency
 
   * Team upload.
