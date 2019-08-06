@@ -62,7 +62,7 @@ protected:
 	bool setVolume(double volume) override;
 
 private:
-	void processEvents();
+	Q_INVOKABLE void processEvents();
 	void handleEvent(mpv_event *event);
 
 	void notifyTextStreams(const mpv_event_property *prop);

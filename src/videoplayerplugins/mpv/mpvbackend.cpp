@@ -142,7 +142,7 @@ MPVBackend::setup()
 	mpv_set_wakeup_callback(m_mpv, [](void *ctx){
 		QMetaObject::invokeMethod(
 					reinterpret_cast<MPVBackend *>(ctx),
-					&MPVBackend::processEvents, Qt::QueuedConnection);
+					"processEvents", Qt::QueuedConnection);
 	}, this);
 
 	m_initialized = mpv_initialize(m_mpv) >= 0;
