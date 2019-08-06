@@ -482,8 +482,11 @@ void
 WaveformWidget::onStreamData(const void *buffer, qint32 size, const WaveFormat *waveFormat, const qint64 msecStart, const qint64 /*msecDuration*/)
 {
 	// make sure WaveformWidget::onStreamProgress() signal was processed since we're in different thread
-	while(!m_waveformDuration)
+	while(!m_waveformDuration) {
 		QThread::yieldCurrentThread();
+		if(m_stream->isInterruptionRequested())
+			return;
+	}
 
 	if(!m_waveformChannels) {
 		m_waveformChannels = waveFormat->channels();
