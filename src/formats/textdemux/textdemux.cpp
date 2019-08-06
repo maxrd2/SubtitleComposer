@@ -110,7 +110,6 @@ TextDemux::onStreamFinished()
 	delete m_subtitleTemp;
 	m_subtitleTemp = nullptr;
 
-	m_streamProcessor->close();
 	m_progressWidget->hide();
 }
 

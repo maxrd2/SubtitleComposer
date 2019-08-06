@@ -20,6 +20,7 @@
 #include "streamprocessor.h"
 #include "helpers/languagecode.h"
 
+#include <QApplication>
 #include <QDebug>
 #include <QThread>
 #include <QPixmap>
@@ -99,8 +100,10 @@ StreamProcessor::open(const QString &filename)
 void
 StreamProcessor::close()
 {
-	requestInterruption();
-	wait();
+	if(isRunning()) {
+		requestInterruption();
+		wait();
+	}
 
 	if(m_swResample)
 		swr_free(&m_swResample);
@@ -113,6 +116,8 @@ StreamProcessor::close()
 	m_audioReady = false;
 	m_imageReady = false;
 	m_textReady = false;
+
+	QApplication::processEvents();
 }
 
 static inline bool

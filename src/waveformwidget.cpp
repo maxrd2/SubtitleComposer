@@ -475,7 +475,6 @@ void
 WaveformWidget::onStreamFinished()
 {
 	m_progressWidget->hide();
-	m_stream->close();
 }
 
 void
