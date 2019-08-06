@@ -297,21 +297,12 @@ StreamProcessor::initAudio(int streamIndex, const WaveFormat &waveFormat)
 	const bool convSampleRate = m_codecCtx->sample_rate != m_audioStreamFormat.sampleRate();
 	const bool convSampleFormat = m_codecCtx->sample_fmt != m_audioSampleFormat;
 	if(convChannels || convSampleRate || convSampleFormat) {
-		m_swResample = swr_alloc();
-		av_opt_set_channel_layout(m_swResample, "in_channel_layout", m_codecCtx->channel_layout, 0);
-		av_opt_set_channel_layout(m_swResample, "out_channel_layout", m_audioChannelLayout, 0);
-		av_opt_set_int(m_swResample, "in_sample_rate", m_codecCtx->sample_rate, 0);
-		av_opt_set_int(m_swResample, "out_sample_rate", m_audioStreamFormat.sampleRate(), 0);
-		av_opt_set_sample_fmt(m_swResample, "in_sample_fmt", m_codecCtx->sample_fmt, 0);
-		av_opt_set_sample_fmt(m_swResample, "out_sample_fmt", static_cast<AVSampleFormat>(m_audioSampleFormat), 0);
-		int ret = swr_init(m_swResample);
-		if(ret) {
-			char errorText[1024];
-			av_strerror(ret, errorText, sizeof(errorText));
-			qWarning() << "Error intializing resampler:" << errorText;
-			emit streamError(ret, QStringLiteral("Error decoding audio frame"), QString::fromUtf8(errorText));
-			return false;
-		}
+		m_swResample = swr_alloc_set_opts(nullptr,
+			m_audioChannelLayout, static_cast<AVSampleFormat>(m_audioSampleFormat), m_audioStreamFormat.sampleRate(),
+			m_codecCtx->channel_layout, m_codecCtx->sample_fmt, m_codecCtx->sample_rate,
+			0, nullptr);
+		// NOTE: swr_convert_frame() will call swr_init() and swr_config_frame() which is better as it seems m_codecCtx can
+		// end up with different config that what is actually in the stream
 	}
 
 	return true;
