@@ -56,9 +56,9 @@ MPVConfigWidget::MPVConfigWidget(QWidget *parent)
 			const QString lastName = kcfg_hwDecode->itemData(kcfg_hwDecode->count() - 1).toString();
 			if(lastName == name || bad.contains(name))
 				continue;
-			if(MPVConfig::hwDecode() == name)
-				kcfg_hwDecode->setCurrentIndex(kcfg_hwDecode->count());
 			kcfg_hwDecode->addItem(name, name);
+			if(MPVConfig::hwDecode() == name)
+				kcfg_hwDecode->setCurrentIndex(kcfg_hwDecode->count() - 1);
 		}
 		kcfg_hwDecode->setProperty("kcfg_property", QByteArray("currentData"));
 
@@ -71,9 +71,9 @@ MPVConfigWidget::MPVConfigWidget(QWidget *parent)
 			if(bad.contains(name))
 				continue;
 			row.insert(pos, "\t-");
-			if(MPVConfig::audioOutput() == name)
-				kcfg_audioOutput->setCurrentIndex(kcfg_audioOutput->count());
 			kcfg_audioOutput->addItem(row, name);
+			if(MPVConfig::audioOutput() == name)
+				kcfg_audioOutput->setCurrentIndex(kcfg_audioOutput->count() - 1);
 		}
 		kcfg_audioOutput->setProperty("kcfg_property", QByteArray("currentData"));
 
