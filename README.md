@@ -29,17 +29,18 @@ An open source text-based subtitle editor that supports basic and advanced editi
 #### Linux
   - AppImage - downloadable from [releases](https://github.com/maxrd2/subtitlecomposer/releases) page
   - Arch
-    - Official [repository](https://wiki.archlinux.org/index.php/unofficial_user_repositories#subtitlecomposer) with subtitlecomposer-git package
-    - AUR stable - package [subtitlecomposer](https://aur.archlinux.org/packages/subtitlecomposer)
-    - AUR git - package [subtitlecomposer-git](https://aur.archlinux.org/packages/subtitlecomposer-git)
+    - unofficial [repository](https://wiki.archlinux.org/index.php/unofficial_user_repositories#subtitlecomposer) with [subtitlecomposer-git](https://smoothware.net/subtitlecomposer/x86_64/) package
+    - AUR - packages [subtitlecomposer](https://aur.archlinux.org/packages/subtitlecomposer) or [subtitlecomposer-git](https://aur.archlinux.org/packages/subtitlecomposer-git)
   - Ubuntu
-    - stable - package [subtitlecomposer](https://launchpad.net/~subtitlecomposer/+archive/ubuntu/subtitlecomposer-git-stable)
-    - git - package [subtitlecomposer](https://code.launchpad.net/~subtitlecomposer/+archive/ubuntu/subtitlecomposer-git)
-    - oudated - official [subtitlecomposer](https://packages.ubuntu.com/subtitlecomposer) package
+    - official [subtitlecomposer](https://packages.ubuntu.com/subtitlecomposer) package
+    - unofficial [repository](https://launchpad.net/~subtitlecomposer) - packages [subtitlecomposer](https://launchpad.net/~subtitlecomposer/+archive/ubuntu/subtitlecomposer-git-stable) or [subtitlecomposer-git](https://code.launchpad.net/~subtitlecomposer/+archive/ubuntu/subtitlecomposer-git)
   - Debian
-    - oudated [subtitlecomposer](https://packages.debian.org/subtitlecomposer) package
+    - official [subtitlecomposer](https://packages.debian.org/subtitlecomposer) package
   - OpenSUSE
-    - oudated [subtitlecomposer](https://software.opensuse.org/package/subtitlecomposer) package
+    - official [subtitlecomposer](https://software.opensuse.org/package/subtitlecomposer) package
+
+#### Windows
+  - Installer downloadable from [releases](https://github.com/maxrd2/subtitlecomposer/releases) page
 
 ### BUILD
 Instructions for building from sources can be found on [wiki page](https://github.com/maxrd2/subtitlecomposer/wiki/Building-from-sources)
