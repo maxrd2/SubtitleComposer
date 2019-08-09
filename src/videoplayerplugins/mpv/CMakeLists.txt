@@ -1,6 +1,6 @@
-find_package(MPV 1.14)
+find_package(MPV 1.27)
 if(NOT MPV_FOUND)
-	message(STATUS "Have NOT Found LibMPV v1.14 - MPV videoplayer plugin will not be built")
+	message(STATUS "Have NOT Found LibMPV v1.27 (0.29) - MPV videoplayer plugin will not be built")
 	return()
 endif(NOT MPV_FOUND)
 

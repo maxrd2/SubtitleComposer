@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>325</width>
+    <width>376</width>
     <height>431</height>
    </rect>
   </property>
@@ -42,39 +42,25 @@
      <property name="title">
       <string>Video</string>
      </property>
-     <layout class="QGridLayout" name="gridLayout_2" columnstretch="1,1">
+     <layout class="QGridLayout" name="gridLayout_2" columnstretch="1,0">
       <item row="0" column="1">
-       <widget class="QComboBox" name="kcfg_videoOutput">
-        <property name="enabled">
-         <bool>false</bool>
-        </property>
-       </widget>
-      </item>
-      <item row="1" column="0" alignment="Qt::AlignRight|Qt::AlignVCenter">
-       <widget class="QCheckBox" name="kcfg_hwDecodeEnabled">
-        <property name="text">
-         <string>Hardware video decoding:</string>
-        </property>
-       </widget>
-      </item>
-      <item row="1" column="1">
        <widget class="QComboBox" name="kcfg_hwDecode">
         <property name="enabled">
          <bool>false</bool>
         </property>
        </widget>
       </item>
-      <item row="0" column="0" alignment="Qt::AlignRight|Qt::AlignVCenter">
-       <widget class="QCheckBox" name="kcfg_videoOutputEnabled">
-        <property name="text">
-         <string>Video output driver:</string>
-        </property>
-       </widget>
-      </item>
-      <item row="2" column="1">
+      <item row="1" column="1">
        <widget class="QCheckBox" name="kcfg_frameDropping">
         <property name="text">
          <string>Allow frame dropping</string>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="0" alignment="Qt::AlignRight|Qt::AlignVCenter">
+       <widget class="QCheckBox" name="kcfg_hwDecodeEnabled">
+        <property name="text">
+         <string>Hardware video decoding:</string>
         </property>
        </widget>
       </item>
@@ -134,8 +120,7 @@
           </widget>
          </item>
          <item>
-          <widget class="QLabel" name="lab_volumeAmplification">
-          </widget>
+          <widget class="QLabel" name="lab_volumeAmplification"/>
          </item>
         </layout>
        </widget>
@@ -160,8 +145,7 @@
           </widget>
          </item>
          <item>
-          <widget class="QLabel" name="lab_audioChannels">
-          </widget>
+          <widget class="QLabel" name="lab_audioChannels"/>
          </item>
         </layout>
        </widget>
@@ -201,32 +185,19 @@
  <tabstops>
   <tabstop>kcfg_autoSyncEnabled</tabstop>
   <tabstop>kcfg_autoSyncFactor</tabstop>
-  <tabstop>kcfg_videoOutputEnabled</tabstop>
-  <tabstop>kcfg_videoOutput</tabstop>
   <tabstop>kcfg_hwDecodeEnabled</tabstop>
   <tabstop>kcfg_hwDecode</tabstop>
+  <tabstop>kcfg_frameDropping</tabstop>
   <tabstop>kcfg_audioOutputEnabled</tabstop>
+  <tabstop>kcfg_audioOutput</tabstop>
   <tabstop>kcfg_audioChannelsEnabled</tabstop>
+  <tabstop>kcfg_audioChannels</tabstop>
   <tabstop>kcfg_volumeAmplificationEnabled</tabstop>
+  <tabstop>kcfg_volumeAmplification</tabstop>
+  <tabstop>kcfg_volumeNormalization</tabstop>
  </tabstops>
  <resources/>
  <connections>
-  <connection>
-   <sender>kcfg_videoOutputEnabled</sender>
-   <signal>toggled(bool)</signal>
-   <receiver>kcfg_videoOutput</receiver>
-   <slot>setEnabled(bool)</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>193</x>
-     <y>142</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>273</x>
-     <y>147</y>
-    </hint>
-   </hints>
-  </connection>
   <connection>
    <sender>kcfg_hwDecodeEnabled</sender>
    <signal>toggled(bool)</signal>
@@ -234,12 +205,12 @@
    <slot>setEnabled(bool)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>82</x>
-     <y>179</y>
+     <x>96</x>
+     <y>146</y>
     </hint>
     <hint type="destinationlabel">
-     <x>273</x>
-     <y>184</y>
+     <x>361</x>
+     <y>151</y>
     </hint>
    </hints>
   </connection>
@@ -250,12 +221,12 @@
    <slot>setEnabled(bool)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>133</x>
-     <y>284</y>
+     <x>169</x>
+     <y>254</y>
     </hint>
     <hint type="destinationlabel">
-     <x>213</x>
-     <y>289</y>
+     <x>361</x>
+     <y>259</y>
     </hint>
    </hints>
   </connection>
@@ -266,12 +237,12 @@
    <slot>setEnabled(bool)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>133</x>
-     <y>316</y>
+     <x>184</x>
+     <y>292</y>
     </hint>
     <hint type="destinationlabel">
-     <x>213</x>
-     <y>315</y>
+     <x>341</x>
+     <y>291</y>
     </hint>
    </hints>
   </connection>
@@ -282,12 +253,12 @@
    <slot>setEnabled(bool)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>133</x>
-     <y>343</y>
+     <x>160</x>
+     <y>330</y>
     </hint>
     <hint type="destinationlabel">
-     <x>213</x>
-     <y>342</y>
+     <x>341</x>
+     <y>329</y>
     </hint>
    </hints>
   </connection>
@@ -314,12 +285,12 @@
    <slot>setNum(int)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>244</x>
-     <y>321</y>
+     <x>341</x>
+     <y>291</y>
     </hint>
     <hint type="destinationlabel">
-     <x>304</x>
-     <y>321</y>
+     <x>355</x>
+     <y>291</y>
     </hint>
    </hints>
   </connection>
@@ -330,12 +301,12 @@
    <slot>setNum(int)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>244</x>
-     <y>359</y>
+     <x>341</x>
+     <y>329</y>
     </hint>
     <hint type="destinationlabel">
-     <x>304</x>
-     <y>359</y>
+     <x>355</x>
+     <y>329</y>
     </hint>
    </hints>
   </connection>

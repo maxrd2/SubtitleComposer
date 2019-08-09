@@ -25,12 +25,132 @@
 #include <KLocalizedString>
 
 #include <QDebug>
+#include <QOpenGLContext>
+#include <QOpenGLWidget>
 
 #include <locale>
 
-#include <KMessageBox>
+#include <mpv/render.h>
+#include <mpv/render_gl.h>
 
 using namespace SubtitleComposer;
+
+
+namespace SubtitleComposer {
+class MPVGLWidget Q_DECL_FINAL : public QOpenGLWidget {
+	Q_OBJECT
+
+public:
+	MPVGLWidget(QWidget *parent = nullptr)
+		: QOpenGLWidget(parent),
+		  m_rctx(nullptr)
+	{ }
+
+	virtual ~MPVGLWidget() {
+		cleanup();
+	}
+
+	void cleanup() {
+		if(m_rctx) {
+			makeCurrent();
+			disconnect(this, &QOpenGLWidget::frameSwapped, nullptr, nullptr);
+			mpv_render_context_free(m_rctx);
+			m_rctx = nullptr;
+			doneCurrent();
+		}
+	}
+
+	void init(mpv_handle *mpv) {
+		cleanup();
+
+		mpv_opengl_init_params glPars = {
+			[](void *, const char *name)->void* {
+				QOpenGLContext *glctx = QOpenGLContext::currentContext();
+				if(!glctx)
+					return nullptr;
+				return reinterpret_cast<void *>(glctx->getProcAddress(name));
+			},
+			this,
+			nullptr
+		};
+		static int one = 1;
+		mpv_render_param rendPars[] = {
+			{MPV_RENDER_PARAM_API_TYPE, const_cast<char *>(MPV_RENDER_API_TYPE_OPENGL)},
+			{MPV_RENDER_PARAM_OPENGL_INIT_PARAMS, &glPars},
+			{MPV_RENDER_PARAM_ADVANCED_CONTROL, &one},
+			{MPV_RENDER_PARAM_INVALID, nullptr} // terminate array
+		};
+
+		makeCurrent();
+		if(mpv_render_context_create(&m_rctx, mpv, rendPars) < 0 || m_rctx == nullptr) {
+			qWarning() << "MPVBackend: failed to initialize mpv GL context";
+			int64_t winId = this->winId();
+			mpv_set_option(mpv, "wid", MPV_FORMAT_INT64, &winId);
+		} else {
+			connect(this, &QOpenGLWidget::frameSwapped, this, [&](){
+				mpv_render_context_report_swap(m_rctx);
+			});
+			mpv_render_context_set_update_callback(m_rctx, [](void *ctx){
+				QMetaObject::invokeMethod(reinterpret_cast<MPVGLWidget *>(ctx), "updateProc");
+			}, this);
+		}
+		doneCurrent();
+	}
+
+signals:
+	void restartMPV();
+
+protected:
+	void initializeGL() override {
+		if(m_rctx) {
+			// setParent() or something changed GL context, since mpv doesn't seem to allow just
+			// changing/reconfiguring video output we have to restart whole mpv client
+			emit restartMPV();
+		}
+	}
+	void paintGL() override {
+		if(!m_rctx)
+			return;
+
+		static int one = 1;
+		mpv_opengl_fbo fbo = {int(defaultFramebufferObject()), width(), height(), int(textureFormat())};
+		mpv_render_param params[] = {
+			{MPV_RENDER_PARAM_OPENGL_FBO, &fbo},
+			{MPV_RENDER_PARAM_FLIP_Y, &one}, // flip rendering due to flipped GL coordinate system
+			{MPV_RENDER_PARAM_INVALID, nullptr} // terminate array
+		};
+		mpv_render_context_render(m_rctx, params);
+	}
+
+private:
+	Q_INVOKABLE void updateProc() {
+		if(!m_rctx)
+			return;
+
+		uint64_t flags = mpv_render_context_update(m_rctx);
+		if((flags & MPV_RENDER_UPDATE_FRAME) == 0)
+			return;
+
+		if(!updatesEnabled() || !isVisible() || window()->isMinimized()) {
+			// If the Qt window is not visible, Qt's update() will just skip rendering.
+			// This confuses mpv's API, and may lead to small occasional freezes due to
+			// video rendering timing out. Handle this by manually redrawing.
+			// NOTE: Qt doesn't seem to provide a way to query whether update() will
+			//       be skipped and the following code still won't get executed in
+			//       some cases
+			makeCurrent();
+			paintGL();
+			context()->swapBuffers(context()->surface());
+			mpv_render_context_report_swap(m_rctx);
+			doneCurrent();
+		} else {
+			update();
+		}
+	}
+
+	mpv_render_context *m_rctx;
+};
+}
 
 MPVBackend::MPVBackend()
 	: PlayerBackend(),
@@ -52,10 +172,11 @@ bool
 MPVBackend::init(QWidget *videoWidget)
 {
 	if(!m_nativeWindow) {
-		m_nativeWindow = new QWidget(videoWidget);
+		m_nativeWindow = new MPVGLWidget(videoWidget);
 		m_nativeWindow->setAttribute(Qt::WA_DontCreateNativeAncestors);
 		m_nativeWindow->setAttribute(Qt::WA_NativeWindow);
 		connect(m_nativeWindow, &QWidget::destroyed, [&](){ m_nativeWindow = nullptr; });
+		connect(m_nativeWindow, &MPVGLWidget::restartMPV, this, &MPVBackend::reconfigure, Qt::QueuedConnection);
 	} else {
 		m_nativeWindow->setParent(videoWidget);
 	}
@@ -65,6 +186,8 @@ MPVBackend::init(QWidget *videoWidget)
 void
 MPVBackend::cleanup()
 {
+	if(m_nativeWindow)
+		m_nativeWindow->cleanup();
 	if(m_mpv) {
 		mpv_terminate_destroy(m_mpv);
 		m_mpv = nullptr;
@@ -92,7 +215,7 @@ MPVBackend::setup()
 	std::setlocale(LC_NUMERIC, "C");
 
 	if(m_mpv)
-		mpv_detach_destroy(m_mpv);
+		cleanup();
 
 	m_mpv = mpv_create();
 
@@ -101,9 +224,7 @@ MPVBackend::setup()
 
 	reconfigure();
 
-	// window id
-	int64_t winId = m_nativeWindow->winId();
-	mpv_set_option(m_mpv, "wid", MPV_FORMAT_INT64, &winId);
+	m_nativeWindow->init(m_mpv);
 
 	// no OSD
 	mpv_set_option_string(m_mpv, "osd-level", "0");
@@ -112,7 +233,7 @@ MPVBackend::setup()
 	mpv_set_option_string(m_mpv, "sid", "no");
 
 	// Start in paused state
-	int yes = 1;
+	static int yes = 1;
 	mpv_set_option(m_mpv, "pause", MPV_FORMAT_FLAG, &yes);
 
 	// Disable default bindings
@@ -229,6 +350,8 @@ MPVBackend::handleEvent(mpv_event *event)
 		return;
 	}
 	case MPV_EVENT_SHUTDOWN: {
+		if(m_nativeWindow)
+			m_nativeWindow->cleanup();
 		if(m_mpv) {
 			mpv_terminate_destroy(m_mpv);
 			m_mpv = nullptr;
@@ -293,9 +416,10 @@ MPVBackend::play()
 			return false;
 	}
 
-	if(m_state != PLAYING) {
+	while(m_state != PLAYING) {
 		const char *args[] = { "cycle", "pause", nullptr };
 		mpv_command(m_mpv, args);
+		QApplication::processEvents();
 	}
 
 	return true;
@@ -313,7 +437,6 @@ bool
 MPVBackend::seek(double seconds)
 {
 	const QByteArray &timeOffset = QByteArray::number(seconds);
-//	const char *args[] = { "seek", timeOffset.constData(), "absolute", "keyframes", nullptr };
 	const char *args[] = { "seek", timeOffset.constData(), "absolute", "exact", nullptr };
 	mpv_command_async(m_mpv, 0, args);
 	return true;
@@ -366,19 +489,6 @@ MPVBackend::reconfigure()
 	if(!m_mpv)
 		return false;
 
-	if(MPVConfig::videoOutputEnabled()) {
-#if MPV_CLIENT_API_VERSION >= MPV_MAKE_VERSION(1, 21)
-		if(MPVConfig::videoOutput() == QStringLiteral("opengl-hq")) {
-			mpv_set_option_string(m_mpv, "vo", "opengl");
-			mpv_set_option_string(m_mpv, "profile", "opengl-hq");
-		} else {
-			mpv_set_option_string(m_mpv, "vo", MPVConfig::videoOutput().toUtf8().constData());
-		}
-#else
-		mpv_set_option_string(m_mpv, "vo", MPVConfig::videoOutput().toUtf8().constData());
-#endif
-	}
-
 	mpv_set_option_string(m_mpv, "hwdec", MPVConfig::hwDecodeEnabled() ? MPVConfig::hwDecode().toUtf8().constData() : "no");
 
 	if(MPVConfig::audioOutputEnabled())
@@ -419,7 +529,7 @@ MPVBackend::reconfigure()
 		double oldPosition;
 		mpv_get_property(m_mpv, "time-pos", MPV_FORMAT_DOUBLE, &oldPosition);
 
-		stop();
+		setup();
 		play();
 		seek(oldPosition);
 		if(wasPaused)
@@ -554,3 +664,5 @@ MPVBackend::notifyAudioStreams(const mpv_event_property *prop)
 	}
 	emit audioStreamsChanged(audioStreams, audioStreams.isEmpty() ? -1 : 0);
 }
+
+#include "mpvbackend.moc"

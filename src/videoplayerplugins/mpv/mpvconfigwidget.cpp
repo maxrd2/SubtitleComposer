@@ -46,21 +46,6 @@ MPVConfigWidget::MPVConfigWidget(QWidget *parent)
 			QStringLiteral("pcm"),
 		};
 
-		mpv_set_property_string(m_mpv, "vo", "help");
-		for(QString row : getHelpResponse()) {
-			int pos = row.indexOf(QChar(' '));
-			if(pos == -1)
-				continue;
-			const QString name = row.left(pos);
-			if(bad.contains(name))
-				continue;
-			row.insert(pos, "\t-");
-			if(MPVConfig::videoOutput() == name)
-				kcfg_videoOutput->setCurrentIndex(kcfg_hwDecode->count());
-			kcfg_videoOutput->addItem(row, name);
-		}
-		kcfg_videoOutput->setProperty("kcfg_property", QByteArray("currentData"));
-
 		mpv_set_property_string(m_mpv, "hwdec", "help");
 		kcfg_hwDecode->addItem(QStringLiteral("auto\t- Choose best HW decoder"), QStringLiteral("auto"));
 		for(QString row : getHelpResponse()) {
@@ -94,9 +79,6 @@ MPVConfigWidget::MPVConfigWidget(QWidget *parent)
 
 		mpv_detach_destroy(m_mpv);
 	} else {
-		kcfg_videoOutput->addItems(QString("vdpau vaapi opengl opengl-hq sdl xv wayland x11 null").split(' '));
-		kcfg_videoOutput->setProperty("kcfg_property", QByteArray("currentText"));
-
 		kcfg_hwDecode->addItems(QString("auto vdpau vaapi vaapi-copy").split(' '));
 		kcfg_hwDecode->setProperty("kcfg_property", QByteArray("currentText"));
 

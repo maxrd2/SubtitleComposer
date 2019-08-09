@@ -23,14 +23,6 @@
 			<default>0</default>
 		</entry>
 
-		<entry name="videoOutputEnabled" type="Bool">
-			<label>Video Output Enabled</label>
-			<default>false</default>
-		</entry>
-		<entry name="videoOutput" type="String">
-			<label>Video Output</label>
-			<default></default>
-		</entry>
 		<entry name="hwDecodeEnabled" type="Bool">
 			<label>Hardware Decode Enabled</label>
 			<default>false</default>
