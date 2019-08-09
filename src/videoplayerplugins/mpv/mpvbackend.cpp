@@ -311,7 +311,7 @@ MPVBackend::handleEvent(mpv_event *event)
 			setState(paused ? PAUSED : PLAYING);
 			return;
 		}
-		if(name == "track-list") {
+		if(name == "track-list" && m_state != STOPPED) {
 			notifyAudioStreams(prop);
 			notifyTextStreams(prop);
 			return;

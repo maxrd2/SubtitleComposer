@@ -40,6 +40,17 @@
 
 #define DEFAULT_MIN_POSITION_DELTA 0.02
 
+enum ValidData {
+	FILENAME = 1 << 0,
+	POSITION = 1 << 1,
+	LENGTH = 1 << 2,
+	FPS = 1 << 3,
+	PLAYRATE = 1 << 4,
+	TEXT_STREAMS = 1 << 5,
+	AUDIO_STREAMS = 1 << 6,
+	ACTIVE_AUDIO = 1 << 7
+};
+
 using namespace SubtitleComposer;
 
 VideoPlayer::VideoPlayer() :
@@ -54,7 +65,7 @@ VideoPlayer::VideoPlayer() :
 	m_playbackRate(.0),
 	m_minPositionDelta(DEFAULT_MIN_POSITION_DELTA),
 	m_textStreams(),
-	m_activeAudioStream(-1),
+	m_activeAudioStream(-2),
 	m_audioStreams(),
 	m_muted(false),
 	m_volume(100.0),
@@ -234,7 +245,7 @@ VideoPlayer::resetState()
 	m_fps = -1.0;
 	m_minPositionDelta = DEFAULT_MIN_POSITION_DELTA;
 
-	m_activeAudioStream = -1;
+	m_activeAudioStream = -2;
 	m_textStreams.clear();
 	m_audioStreams.clear();
 
@@ -253,19 +264,18 @@ VideoPlayer::changeResolution(int width, int height, double aspectRatio)
 void
 VideoPlayer::changeFPS(double fps)
 {
-	if(m_state <= VideoPlayer::Closed)
+	if(fps == 0 || m_fps == fps)
 		return;
-
-	if(fps > 0 && m_fps != fps) {
-		m_fps = fps;
-		m_minPositionDelta = 1.0 / fps;
-		emit framesPerSecondChanged(fps);
-	}
+	m_fps = fps;
+	m_minPositionDelta = 1.0 / fps;
+	emit framesPerSecondChanged(fps);
 }
 
 void
 VideoPlayer::updateTextStreams(const QStringList &textStreams)
 {
+	if(m_textStreams == textStreams)
+		return;
 	m_textStreams = textStreams;
 	emit textStreamsChanged(m_textStreams);
 }
@@ -273,19 +283,92 @@ VideoPlayer::updateTextStreams(const QStringList &textStreams)
 void
 VideoPlayer::updateAudioStreams(const QStringList &audioStreams, int activeAudioStream)
 {
-	if(m_state <= VideoPlayer::Closed)
+	Q_ASSERT(audioStreams.isEmpty() ? activeAudioStream == -1 : activeAudioStream >= 0 && activeAudioStream < audioStreams.count());
+
+	if(m_audioStreams != audioStreams) {
+		m_audioStreams = audioStreams;
+		emit audioStreamsChanged(m_audioStreams);
+	}
+
+	if(m_activeAudioStream != activeAudioStream) {
+		m_activeAudioStream = activeAudioStream;
+		if(m_length >= .0) // we want video duration before notifying activeAudioStreamChanged
+			emit activeAudioStreamChanged(m_activeAudioStream);
+	}
+}
+
+void
+VideoPlayer::changePosition(double position)
+{
+	if(m_position == position)
 		return;
 
-	m_audioStreams = audioStreams;
+	if(position > m_length && m_length > 0)
+		changeLength(position);
 
-	emit audioStreamsChanged(m_audioStreams);
+	if(m_position <= 0 || m_minPositionDelta <= .0) {
+		m_position = position;
+		emit positionChanged(position);
+	} else if(qAbs(m_position - position) >= m_minPositionDelta) {
+		m_position = position;
+		emit positionChanged(position);
+	}
+}
 
-	if(audioStreams.isEmpty())
-		m_activeAudioStream = -1;
-	else
-		m_activeAudioStream = (activeAudioStream >= 0 && activeAudioStream < audioStreams.count()) ? activeAudioStream : 0;
+void
+VideoPlayer::changeLength(double length)
+{
+	Q_ASSERT(length >= 0);
 
-	emit activeAudioStreamChanged(m_activeAudioStream);
+	if(m_length == length)
+		return;
+
+	// we want video duration before notifying activeAudioStreamChanged
+	const bool notifyStreamChange = m_length < .0 && m_activeAudioStream != -2;
+
+	m_length = length;
+	emit lengthChanged(length);
+
+	if(notifyStreamChange)
+		emit activeAudioStreamChanged(m_activeAudioStream);
+}
+
+void
+VideoPlayer::changePlaySpeed(double playbackRate)
+{
+	if(m_playbackRate == playbackRate)
+		return;
+
+	m_playbackRate = playbackRate;
+	emit playbackRateChanged(m_playbackRate);
+}
+
+void
+VideoPlayer::changeVolume(double volume)
+{
+	if(m_muted)
+		return;
+
+	if(volume < 0.0)
+		volume = 0.0;
+	else if(volume > 100.0)
+		volume = 100.0;
+
+	if(m_volume == volume)
+		return;
+
+	m_volume = volume;
+	emit volumeChanged(m_volume);
+}
+
+void
+VideoPlayer::changeMute(bool muted)
+{
+	if(m_muted == muted)
+		return;
+
+	m_muted = muted;
+	emit muteChanged(m_muted);
 }
 
 void
@@ -315,14 +398,6 @@ VideoPlayer::changeState(VideoPlayer::State newState)
 			m_backend->setVolume(m_backendVolume);
 
 			emit fileOpened(m_filePath);
-
-			// we emit this signals in case their values were already set
-			emit lengthChanged(m_length);
-			emit framesPerSecondChanged(m_fps);
-			emit playbackRateChanged(m_playbackRate);
-			emit textStreamsChanged(m_textStreams);
-			emit audioStreamsChanged(m_audioStreams);
-			emit activeAudioStreamChanged(m_activeAudioStream);
 
 			switch(m_state) {
 			case VideoPlayer::Playing:
@@ -360,77 +435,6 @@ VideoPlayer::changeState(VideoPlayer::State newState)
 		}
 	}
 }
-
-void
-VideoPlayer::changePosition(double position)
-{
-	if(m_state <= VideoPlayer::Closed)
-		return;
-
-	if(position > m_length && m_length > 0)
-		changeLength(position);
-
-	if(m_position != position) {
-		if(m_position <= 0 || m_minPositionDelta <= 0.0) {
-			m_position = position;
-			emit positionChanged(position);
-		} else {
-			double positionDelta = m_position - position;
-			if(positionDelta >= m_minPositionDelta || -positionDelta >= m_minPositionDelta) {
-				m_position = position;
-				emit positionChanged(position);
-			}
-		}
-	}
-}
-
-void
-VideoPlayer::changeLength(double length)
-{
-	if(m_state <= VideoPlayer::Closed)
-		return;
-
-	if(length >= 0 && m_length != length) {
-		m_length = length;
-		emit lengthChanged(length);
-	}
-}
-
-void
-VideoPlayer::changePlaySpeed(double playbackRate)
-{
-	if(m_playbackRate != playbackRate) {
-		m_playbackRate = playbackRate;
-		emit playbackRateChanged(m_playbackRate);
-	}
-}
-
-void
-VideoPlayer::changeVolume(double volume)
-{
-	if(m_muted)
-		return;
-
-	if(volume < 0.0)
-		volume = 0.0;
-	else if(volume > 100.0)
-		volume = 100.0;
-
-	if(m_volume != volume) {
-		m_volume = volume;
-		emit volumeChanged(m_volume);
-	}
-}
-
-void
-VideoPlayer::changeMute(bool muted)
-{
-	if(m_muted != muted) {
-		m_muted = muted;
-		emit muteChanged(m_muted);
-	}
-}
-
 
 bool
 VideoPlayer::playOnLoad()
@@ -595,23 +599,22 @@ VideoPlayer::stop()
 bool
 VideoPlayer::selectAudioStream(int audioStreamIndex)
 {
-	if(m_state <= VideoPlayer::Opening || m_audioStreams.size() <= 1)
+	if(m_state <= VideoPlayer::Opening || m_audioStreams.size() <= 0)
 		return false;
 
-	if(m_activeAudioStream == audioStreamIndex || audioStreamIndex < 0 || audioStreamIndex >= m_audioStreams.size())
+	if(audioStreamIndex < 0 || audioStreamIndex >= m_audioStreams.size())
 		return false;
 
-	m_activeAudioStream = audioStreamIndex;
-
-	if(m_state != VideoPlayer::Ready) {
-		if(!m_backend->selectAudioStream(audioStreamIndex)) {
-			resetState();
-			emit playbackError();
-			return true;
-		}
+	if(!m_backend->selectAudioStream(audioStreamIndex)) {
+		resetState();
+		emit playbackError();
+		return false;
 	}
 
-	emit activeAudioStreamChanged(audioStreamIndex);
+	if(m_activeAudioStream != audioStreamIndex) {
+		m_activeAudioStream = audioStreamIndex;
+		emit activeAudioStreamChanged(audioStreamIndex);
+	}
 	return true;
 }
 
