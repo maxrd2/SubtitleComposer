@@ -466,8 +466,8 @@ MPVBackend::playbackRate(double newRate)
 bool
 MPVBackend::selectAudioStream(int streamIndex)
 {
-	const QByteArray &strIndex = QByteArray::number(streamIndex);
-	const char *args[] = { "aid", strIndex.constData(), nullptr };
+	const QByteArray &strIndex = QByteArray::number(streamIndex + 1);
+	const char *args[] = { "set", "aid", strIndex.constData(), nullptr };
 	mpv_command_async(m_mpv, 0, args);
 	return true;
 }
