@@ -38,6 +38,7 @@ release_from_repo() {
 
 release_update() {
 	local ght_appimage="Instructions on using AppImage can be found [here](https://github.com/maxrd2/subtitlecomposer/wiki/AppImage-HOWTO)"
+	local delete_release=
 	if [[ $gh_is_tag -eq 1 ]]; then
 		local gh_tag="$gh_branch"
 		local gh_rel_name="Release $gh_tag"
@@ -61,9 +62,15 @@ release_update() {
 
 		# create/point release tag to branch head
 		sha="$("${curl[@]}" -s -XGET "$api_url/git/refs/heads/$gh_branch" | jq -r .object.sha)"
-		http=$("${curl[@]}" -s -XPATCH "$api_url/git/refs/tags/$gh_tag" --data '{"sha":"'"$sha"'"}' --output /dev/null --write-out '%{http_code}')
-		[[ $http -lt 200 || $http -ge 300 ]] && http=$("${curl[@]}" -s -XPOST "$api_url/git/refs" --data '{"ref":"refs/tags/'"$gh_tag"'", "sha":"'"$sha"'"}' --output /dev/null --write-out '%{http_code}')
-		[[ $http -lt 200 || $http -ge 300 ]] && echo -e "\e[1;31mERROR:\e[m unable to update/create tag '\e[1;39m$gh_tag\e[m'." && exit 1
+		sha_tag="$("${curl[@]}" -s -XGET "$api_url/git/refs/tags/$gh_tag" | jq -r .object.sha)"
+		if [[ "$sha_tag" == "null" ]]; then
+			http=$("${curl[@]}" -s -XPOST "$api_url/git/refs" --data '{"ref":"refs/tags/'"$gh_tag"'", "sha":"'"$sha"'"}' --output /dev/null --write-out '%{http_code}')
+			[[ $http -lt 200 || $http -ge 300 ]] && echo -e "\e[1;31mERROR:\e[m unable to update/create tag '\e[1;39m$gh_tag\e[m'." && exit 1
+		elif [[ "$sha_tag" != "$sha" ]]; then
+			delete_release=1
+			http=$("${curl[@]}" -s -XPATCH "$api_url/git/refs/tags/$gh_tag" --data '{"sha":"'"$sha"'"}' --output /dev/null --write-out '%{http_code}')
+			[[ $http -lt 200 || $http -ge 300 ]] && echo -e "\e[1;31mERROR:\e[m unable to update/create tag '\e[1;39m$gh_tag\e[m'." && exit 1
+		fi
 	fi
 
 	local ght_travis="Travis CI $gh_platform build log"
@@ -71,7 +78,8 @@ release_update() {
 	echo -e "Getting release info from '\e[1;39m$url\e[m'..."
 	"${curl[@]}" -s -XGET "${url}" | jq . >.github_release
 	local id="$(jq -r .id .github_release)"
-	if [[ -z "$id" || "$id" = "null" ]]; then
+	if [[ -z "$id" || "$id" = "null" || ! -z "$delete_release" ]]; then
+		[[ ! -z "$id" && "$id" != "null" ]] && "${curl[@]}" -s -XDELETE "$api_url/releases/$id"
 		# create new release
 		[[ ! -z "$TRAVIS_JOB_ID" ]] && gh_rel_body="$gh_rel_body\n\n$ght_travis: https://travis-ci.org/$TRAVIS_REPO_SLUG/jobs/$TRAVIS_JOB_ID"
 		echo -e "Creating release '\e[1;39m$gh_tag\e[m'..."
