@@ -131,9 +131,9 @@ bool
 VobSubInputProcessDialog::Frame::processPieces()
 {
 	QImage pieceBitmap = subImage.convertToFormat(QImage::Format_RGB32);
-	int width = pieceBitmap.width();
-	int height = pieceBitmap.height();
-	int bgColor = qGray(pieceBitmap.pixel(0, 0));
+	const int width = pieceBitmap.width();
+	const int height = pieceBitmap.height();
+	const int bgColor = qGray(pieceBitmap.pixel(0, 0));
 	int color;
 	const int colorOffset = 127;
 	PiecePtr piece;

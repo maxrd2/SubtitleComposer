@@ -27,6 +27,7 @@
 #include "streamprocessor/streamprocessor.h"
 
 #include <QUrl>
+#include <QFile>
 
 namespace SubtitleComposer {
 class VobSubInputFormat : public InputFormat
@@ -38,9 +39,15 @@ public:
 
 	FormatManager::Status readBinary(Subtitle &subtitle, const QUrl &url) override
 	{
-		const QString filename = url.toLocalFile();
+		QString filename = url.toLocalFile();
 		const int extension = filename.lastIndexOf('.');
 		const QByteArray filebase = filename.left(extension).toUtf8();
+
+		if(filename.midRef(extension + 1) == QStringLiteral("sub")) {
+			const QString filenameIdx = filebase + ".idx";
+			if(QFile(filenameIdx).exists())
+				filename = filenameIdx;
+		}
 
 		// open the sub/idx subtitles
 		StreamProcessor proc;
