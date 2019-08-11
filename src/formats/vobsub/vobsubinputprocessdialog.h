@@ -64,7 +64,7 @@ private slots:
 	void onNextSymbolClicked();
 	void onSymbolCountChanged(int symbolCount);
 
-	void onStreamData(const QPixmap &pixmap, quint64 msecStart, quint64 msecDuration);
+	void onStreamData(const QImage &image, quint64 msecStart, quint64 msecDuration);
 	void onStreamError(int code, const QString &message, const QString &debug);
 	void onStreamFinished();
 

@@ -507,7 +507,7 @@ StreamProcessor::processText()
 	QString text;
 	quint64 timeStart = 0;
 	quint64 timeEnd = 0;
-	QPixmap pixmap;
+	QImage image;
 	bool pixmapIsValid = false;
 
 	const int streamIndex = m_textReady ? m_textStreamCurrent : m_imageStreamCurrent;
@@ -536,7 +536,7 @@ StreamProcessor::processText()
 				text.clear();
 			}
 			if(pixmapIsValid) {
-				emit imageDataAvailable(pixmap, timeStart, timeEnd - timeStart);
+				emit imageDataAvailable(image, timeStart, timeEnd - timeStart);
 				pixmapIsValid = false;
 			}
 
@@ -608,12 +608,12 @@ StreamProcessor::processText()
 				case SUBTITLE_BITMAP: {
 					const uint32_t *palette = reinterpret_cast<const uint32_t *>(sub->data[1]);
 
-					QImage img(sub->data[0], sub->w, sub->h, sub->linesize[0], QImage::Format_Indexed8);
-					img.setColorCount(sub->nb_colors);
+					image = QImage(const_cast<const uchar *>(sub->data[0]), sub->w, sub->h, sub->linesize[0], QImage::Format_Indexed8);
+					image.setColorCount(sub->nb_colors);
 					for(int i = 0; i < sub->nb_colors; i++)
-						img.setColor(i, static_cast<QRgb>(palette[i]));
+						image.setColor(i, static_cast<QRgb>(palette[i]));
+					image.detach();
 
-					pixmap.convertFromImage(img);
 					pixmapIsValid = true;
 					break;
 				}

@@ -48,7 +48,7 @@ public:
 	static QMap<qint32, qint32> spaceStats;
 
 	quint32 index;
-	QPixmap subPixmap;
+	QImage subImage;
 	Time subShowTime;
 	Time subHideTime;
 	QList<PiecePtr> pieces;
@@ -130,7 +130,7 @@ QMap<qint32, qint32> VobSubInputProcessDialog::Frame::spaceStats;
 bool
 VobSubInputProcessDialog::Frame::processPieces()
 {
-	QImage pieceBitmap = subPixmap.toImage();
+	QImage pieceBitmap = subImage.convertToFormat(QImage::Format_RGB32);
 	int width = pieceBitmap.width();
 	int height = pieceBitmap.height();
 	int bgColor = qGray(pieceBitmap.pixel(0, 0));
@@ -565,14 +565,14 @@ VobSubInputProcessDialog::processFrames(StreamProcessor *streamProcessor)
 }
 
 void
-VobSubInputProcessDialog::onStreamData(const QPixmap &pixmap, quint64 msecStart, quint64 msecDuration)
+VobSubInputProcessDialog::onStreamData(const QImage &image, quint64 msecStart, quint64 msecDuration)
 {
 	FramePtr frame(new Frame());
 	frame->subShowTime.setMillisTime(double(msecStart));
 	frame->subHideTime.setMillisTime(double(msecStart + msecDuration));
-	frame->subPixmap = pixmap;
+	frame->subImage = image;
 
-	ui->subtitleView->setPixmap(frame->subPixmap);
+	ui->subtitleView->setPixmap(QPixmap::fromImage(frame->subImage));
 	QCoreApplication::processEvents();
 
 	if(frame->processPieces()) {
@@ -638,7 +638,7 @@ VobSubInputProcessDialog::processNextImage()
 
 	ui->progressBar->setValue((*m_frameCurrent)->index + 1);
 
-	ui->subtitleView->setPixmap((*m_frameCurrent)->subPixmap);
+	ui->subtitleView->setPixmap(QPixmap::fromImage((*m_frameCurrent)->subImage));
 
 	m_pieces = (*m_frameCurrent)->pieces;
 	m_pieceCurrent = m_pieces.begin();
@@ -655,7 +655,7 @@ VobSubInputProcessDialog::processCurrentPiece()
 	ui->grpText->setDisabled(false);
 	ui->grpNavButtons->setDisabled(false);
 
-	QPixmap pixmap((*m_frameCurrent)->subPixmap);
+	QPixmap pixmap = QPixmap::fromImage((*m_frameCurrent)->subImage);
 	QPainter p(&pixmap);
 
 	QList<PiecePtr>::iterator i = m_pieceCurrent;
