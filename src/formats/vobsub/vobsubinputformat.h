@@ -80,12 +80,13 @@ public:
 		QByteArray symFile(filebase + ".sym");
 
 		dlgProc.symFileOpen(symFile);
-		if(dlgProc.exec() == QDialog::Rejected) {
+		const int dlgRes = dlgProc.exec();
+		dlgProc.symFileSave(symFile);
+		if(dlgRes == QDialog::Rejected) {
 			// restore original subtitle
 			linesWidget->setSubtitle(oldSubtitle);
 			return FormatManager::CANCEL;
 		}
-		dlgProc.symFileSave(symFile);
 
 		// TODO: move all these regexps into separate class that can be reused, make them static and optimize them after init
 		quint32 ppFlags = dlgInit.postProcessingFlags();
