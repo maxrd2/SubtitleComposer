@@ -46,7 +46,6 @@ public:
 	bool processPieces();
 
 	static QMap<qint32, qint32> spaceStats;
-	static unsigned spaceCount;
 
 	quint32 index;
 	QPixmap subPixmap;
@@ -127,7 +126,6 @@ public:
 };
 
 QMap<qint32, qint32> VobSubInputProcessDialog::Frame::spaceStats;
-unsigned VobSubInputProcessDialog::Frame::spaceCount;
 
 bool
 VobSubInputProcessDialog::Frame::processPieces()
@@ -241,10 +239,8 @@ VobSubInputProcessDialog::Frame::processPieces()
 
 	PiecePtr prevPiece;
 	foreach(piece, pieces) {
-		if(prevPiece && prevPiece->line == piece->line) {
+		if(prevPiece && prevPiece->line == piece->line)
 			spaceStats[piece->left - prevPiece->right]++;
-			spaceCount++;
-		}
 		prevPiece = piece;
 	}
 
@@ -559,7 +555,6 @@ VobSubInputProcessDialog::processFrames(StreamProcessor *streamProcessor)
 
 	streamProcessor->start();
 
-	Frame::spaceCount = 0;
 	Frame::spaceStats.clear();
 
 	ui->progressBar->setMinimum(0);
@@ -599,14 +594,33 @@ VobSubInputProcessDialog::onStreamFinished()
 {
 	m_frameCurrent = m_frames.begin() - 1;
 
-	m_spaceWidth = 100;
 	// average word length in english is 5.1 chars
-	qint32 wordCount = Frame::spaceCount / 5;
-	for(auto it = Frame::spaceStats.end() - 1; it != Frame::spaceStats.begin(); --it) {
-		wordCount -= it.value();
-		if(wordCount <= 0)
-			break;
-		m_spaceWidth = it.key();
+	const double avgWordLength = 4;
+
+	if(!Frame::spaceStats.empty()) {
+		auto itChar = Frame::spaceStats.begin(); // shorter spaces on start
+		auto itWord = Frame::spaceStats.end() - 1; // longer spaces near end
+		qint64 charSpacingSum = itChar.key() * itChar.value();
+		quint64 charSpacingCount = itChar.value();
+		qint64 wordSpacingSum = itWord.key() * itWord.value();
+		quint64 wordSpacingCount = itWord.value();
+
+		while(itChar != itWord) {
+			if(charSpacingCount < avgWordLength * wordSpacingCount) {
+				// sum up chars
+				++itChar;
+				charSpacingSum += itChar.key() * itChar.value();
+				charSpacingCount += itChar.value();
+			} else {
+				// sum up words
+				--itWord;
+				wordSpacingSum += itWord.key() * itWord.value();
+				wordSpacingCount += itWord.value();
+			}
+		}
+		m_spaceWidth = wordSpacingSum / wordSpacingCount;
+	} else {
+		m_spaceWidth = 100;
 	}
 
 	ui->grpText->setDisabled(true);
