@@ -130,13 +130,19 @@ QMap<qint32, qint32> VobSubInputProcessDialog::Frame::spaceStats;
 bool
 VobSubInputProcessDialog::Frame::processPieces()
 {
-	QImage pieceBitmap = subImage.convertToFormat(QImage::Format_RGB32);
+	QImage pieceBitmap = subImage;
 	const int width = pieceBitmap.width();
 	const int height = pieceBitmap.height();
-	const int bgColor = qGray(pieceBitmap.pixel(0, 0));
-	int color;
-	const int colorOffset = 127;
 	PiecePtr piece;
+
+	QVector<int> ignoredColors = {pieceBitmap.pixelIndex(0, 0)};
+	for(int i = 0; i < pieceBitmap.colorCount(); i++) {
+		if(i == ignoredColors.at(0))
+			continue;
+		const QRgb color = pieceBitmap.color(i);
+		if(qAlpha(color) < 255 || qGray(color) <= 127)
+			ignoredColors.append(i);
+	}
 
 	pieces.clear();
 
@@ -154,23 +160,22 @@ VobSubInputProcessDialog::Frame::processPieces()
 			piece->right = x;
 
 		piece->pixels.append(QPoint(x, y));
-		pieceBitmap.setPixel(x, y, bgColor);
+		pieceBitmap.setPixel(x, y, ignoredColors.at(0));
 
-		if(x < width - 1 && qGray(pieceBitmap.pixel(x + 1, y)) > colorOffset)
+		if(x < width - 1 && !ignoredColors.contains(pieceBitmap.pixelIndex(x + 1, y)))
 			cutPiece(x + 1, y);
-		if(x > 0 && qGray(pieceBitmap.pixel(x - 1, y)) > colorOffset)
+		if(x > 0 && !ignoredColors.contains(pieceBitmap.pixelIndex(x - 1, y)))
 			cutPiece(x - 1, y);
-		if(y < height - 1 && qGray(pieceBitmap.pixel(x, y + 1)) > colorOffset)
+		if(y < height - 1 && !ignoredColors.contains(pieceBitmap.pixelIndex(x, y + 1)))
 			cutPiece(x, y + 1);
-		if(y > 0 && qGray(pieceBitmap.pixel(x, y - 1)) > colorOffset)
+		if(y > 0 && !ignoredColors.contains(pieceBitmap.pixelIndex(x, y - 1)))
 			cutPiece(x, y - 1);
 	};
 
 	// search pieces from top left
 	for(int y = 0; y < height; y++) {
 		for(int x = 0; x < width; x++) {
-			color = qGray(pieceBitmap.pixel(x, y));
-			if(color > colorOffset && color != bgColor) {
+			if(!ignoredColors.contains(pieceBitmap.pixelIndex(x, y))) {
 				piece = new Piece(x, y);
 				cutPiece(x, y);
 				pieces.append(piece);
