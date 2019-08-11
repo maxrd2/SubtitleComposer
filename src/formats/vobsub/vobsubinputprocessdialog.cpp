@@ -723,6 +723,8 @@ VobSubInputProcessDialog::recognizePiece()
 {
 	for(int len = m_recognizedPiecesMaxSymbolLength; len > 0; len--) {
 		PiecePtr normal = currentNormalizedPiece(len);
+		if(len != normal->symbolCount)
+			continue;
 		if(m_recognizedPieces.contains(*normal)) {
 			const SString text = m_recognizedPieces.value(*normal);
 			(*m_pieceCurrent)->text = text;
@@ -752,10 +754,11 @@ VobSubInputProcessDialog::PiecePtr
 VobSubInputProcessDialog::currentNormalizedPiece(int symbolCount)
 {
 	PiecePtr normal(new Piece(**m_pieceCurrent));
-	normal->symbolCount = symbolCount;
-
-	for(auto piece = m_pieceCurrent; --symbolCount && ++piece != m_pieces.end(); )
+	normal->symbolCount = 1;
+	for(auto piece = m_pieceCurrent; --symbolCount && ++piece != m_pieces.end(); ) {
 		*normal += **piece;
+		normal->symbolCount++;
+	}
 
 	normal->normalize();
 
