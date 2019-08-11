@@ -55,7 +55,7 @@ public:
 		VobSubInputInitDialog dlgInit(app()->mainWindow());
 		dlgInit.streamListSet(streamList);
 		if(dlgInit.exec() == QDialog::Rejected)
-			return FormatManager::ERROR;
+			return FormatManager::CANCEL;
 
 		if(!proc.initImage(dlgInit.streamIndex()))
 			return FormatManager::ERROR;
