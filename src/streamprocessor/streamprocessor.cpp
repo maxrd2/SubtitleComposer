@@ -527,9 +527,9 @@ StreamProcessor::processText()
 				continue;
 
 			const quint64 timeFrameStart = pkt.pts * 1000 * m_avStream->time_base.num / m_avStream->time_base.den;
-			const quint64 timeFrameEnd = pkt.duration * 1000 * m_avStream->time_base.num / m_avStream->time_base.den;
+			const quint64 timeFrameEnd = timeFrameStart + pkt.duration * 1000 * m_avStream->time_base.num / m_avStream->time_base.den;
 
-			if(timeFrameStart < timeEnd)
+			if(timeFrameStart < timeEnd) // correct overlapping titles
 				timeEnd = timeFrameStart - 10;
 			if(!text.isEmpty()) {
 				emit textDataAvailable(text.trimmed(), timeStart, timeEnd - timeStart);
@@ -540,8 +540,11 @@ StreamProcessor::processText()
 				pixmapIsValid = false;
 			}
 
-			timeStart = timeFrameStart + subtitle.start_display_time;// * 1000 * m_avStream->time_base.num / m_avStream->time_base.den;
-			timeEnd = timeFrameEnd + subtitle.end_display_time;// * 1000 * m_avStream->time_base.num / m_avStream->time_base.den;
+			timeStart = timeFrameStart + subtitle.start_display_time;
+			if(subtitle.end_display_time) // end_display_time is relative to pkt.pts (timeFrameStart)
+				timeEnd = timeFrameStart + subtitle.end_display_time;
+			else
+				timeEnd = timeFrameEnd;
 
 			for(unsigned int i = 0; i < subtitle.num_rects; i++) {
 				const AVSubtitleRect *sub = subtitle.rects[i];
