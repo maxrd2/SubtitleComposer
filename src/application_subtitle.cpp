@@ -343,7 +343,9 @@ Application::saveSubtitleAs(QTextCodec *codec)
 	saveDlg.selectNameFilter(FormatManager::instance().defaultOutput()->dialogFilter());
 	if(!m_subtitleUrl.isEmpty()) {
 		saveDlg.selectUrl(m_subtitleUrl);
-		saveDlg.selectNameFilter(FormatManager::instance().output(m_subtitleFormat)->dialogFilter());
+		const OutputFormat *fmt = FormatManager::instance().output(m_subtitleFormat);
+		if(fmt)
+			saveDlg.selectNameFilter(fmt->dialogFilter());
 	}
 
 	if(saveDlg.exec() == QDialog::Accepted) {
