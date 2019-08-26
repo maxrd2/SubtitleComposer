@@ -7,14 +7,14 @@ msgstr ""
 "PO-Revision-Date: 2019-08-26 20:44+0100\n"
 "Last-Translator: Hugo Carvalho <hugokarvalho@hotmail.com>\n"
 "Language-Team: Portuguese <kde-i18n-doc@kde.org>\n"
-"Language: pt_BR\n"
+"Language: pt_PT\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Generator: Lokalize 19.08.0\n"
 "X-Crowdin-Project: subtitlecomposer\n"
-"X-Crowdin-Language: pt-BR\n"
+"X-Crowdin-Language: pt-PT\n"
 "X-Crowdin-File: subtitlecomposer.pot\n"
 
 #: ../../src/actions/kcodecactionext.cpp:39
@@ -73,7 +73,7 @@ msgstr "Recarregar Como..."
 
 #: ../../src/application.cpp:463
 msgid "Reload opened file with a different encoding"
-msgstr "Recarregar arquivo abeto com uma codificação diferente"
+msgstr "Recarregar ficheiro aberto com uma codificação diferente"
 
 #: ../../src/application.cpp:471
 msgctxt "@action:inmenu Open rencently used subtitle file"
