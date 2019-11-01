@@ -127,12 +127,10 @@ VideoPlayer::switchBackend(const QString &backendName)
 
 	QString currentFile = m_filePath;
 
-	Q_ASSERT(m_plugins.contains(backendName));
-
 	cleanup();
 
-	if(!backendInit(m_plugins[backendName])) {
-		for(QMap<QString, PlayerBackend *>::ConstIterator it = m_plugins.begin(), end = m_plugins.end(); it != end; ++it)
+	if(!m_plugins.contains(backendName) || !backendInit(m_plugins[backendName])) {
+		for(QMap<QString, PlayerBackend *>::const_iterator it = m_plugins.begin(), end = m_plugins.end(); it != end; ++it)
 			if(backendInit(it.value()))
 				break;
 	}
