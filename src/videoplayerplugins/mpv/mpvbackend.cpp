@@ -113,7 +113,14 @@ protected:
 			return;
 
 		static int one = 1;
-		mpv_opengl_fbo fbo = {int(defaultFramebufferObject()), width(), height(), int(textureFormat())};
+		mpv_opengl_fbo fbo = {
+			int(defaultFramebufferObject()), width(), height(),
+#if QT_VERSION >= QT_VERSION_CHECK(5, 10, 0)
+			int(textureFormat())
+#else
+			0
+#endif
+		};
 		mpv_render_param params[] = {
 			{MPV_RENDER_PARAM_OPENGL_FBO, &fbo},
 			{MPV_RENDER_PARAM_FLIP_Y, &one}, // flip rendering due to flipped GL coordinate system
