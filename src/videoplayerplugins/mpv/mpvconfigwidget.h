@@ -25,6 +25,10 @@
 
 #include <mpv/client.h>
 
+#if MPV_CLIENT_API_VERSION >= MPV_MAKE_VERSION(1, 27)
+	#define MPV_HAS_RENDER_API
+#endif
+
 namespace SubtitleComposer {
 class MPVConfigWidget : public QWidget, private Ui::MPVConfigWidget
 {

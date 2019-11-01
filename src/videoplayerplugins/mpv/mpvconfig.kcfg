@@ -6,6 +6,11 @@
 	<kcfgfile name="subtitlecomposerrc"/>
 
 	<group name="MPV">
+		<entry name="renderMethod" type="Int">
+			<label>RenderMethod</label>
+			<default>0</default>
+		</entry>
+
 		<entry name="cacheEnabled" type="Bool">
 			<label>Cache Enabled</label>
 			<default>false</default>
@@ -14,6 +19,7 @@
 			<label>Cache Size (KB)</label>
 			<default>5120</default>
 		</entry>
+
 		<entry name="autoSyncEnabled" type="Bool">
 			<label>Auto Sync Enabled</label>
 			<default>false</default>

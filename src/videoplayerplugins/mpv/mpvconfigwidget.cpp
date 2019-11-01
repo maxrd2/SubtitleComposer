@@ -85,6 +85,11 @@ MPVConfigWidget::MPVConfigWidget(QWidget *parent)
 		kcfg_audioOutput->addItems(QString("pulse alsa oss portaudio jack null").split(' '));
 		kcfg_audioOutput->setProperty("kcfg_property", QByteArray("currentText"));
 	}
+
+#ifndef MPV_HAS_RENDER_API
+	kcfg_renderMethod->setCurrentIndex(0);
+	kcfg_renderMethod->setEnabled(false);
+#endif
 }
 
 const QStringList

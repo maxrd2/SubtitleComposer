@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>376</width>
+    <width>412</width>
     <height>431</height>
    </rect>
   </property>
@@ -43,24 +43,51 @@
       <string>Video</string>
      </property>
      <layout class="QGridLayout" name="gridLayout_2" columnstretch="1,0">
-      <item row="0" column="1">
+      <item row="1" column="0" alignment="Qt::AlignRight|Qt::AlignVCenter">
+       <widget class="QCheckBox" name="kcfg_hwDecodeEnabled">
+        <property name="text">
+         <string>Hardware video decoding:</string>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="1">
        <widget class="QComboBox" name="kcfg_hwDecode">
         <property name="enabled">
          <bool>false</bool>
         </property>
        </widget>
       </item>
-      <item row="1" column="1">
+      <item row="2" column="1">
        <widget class="QCheckBox" name="kcfg_frameDropping">
         <property name="text">
          <string>Allow frame dropping</string>
         </property>
        </widget>
       </item>
+      <item row="0" column="1">
+       <widget class="QComboBox" name="kcfg_renderMethod">
+        <property name="currentIndex">
+         <number>0</number>
+        </property>
+        <item>
+         <property name="text">
+          <string>Native window embedding</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>OpenGL render API</string>
+         </property>
+        </item>
+       </widget>
+      </item>
       <item row="0" column="0" alignment="Qt::AlignRight|Qt::AlignVCenter">
-       <widget class="QCheckBox" name="kcfg_hwDecodeEnabled">
+       <widget class="QLabel" name="label_renderMethod">
         <property name="text">
-         <string>Hardware video decoding:</string>
+         <string>Video rendering method</string>
+        </property>
+        <property name="buddy">
+         <cstring>kcfg_renderMethod</cstring>
         </property>
        </widget>
       </item>
@@ -185,6 +212,7 @@
  <tabstops>
   <tabstop>kcfg_autoSyncEnabled</tabstop>
   <tabstop>kcfg_autoSyncFactor</tabstop>
+  <tabstop>kcfg_renderMethod</tabstop>
   <tabstop>kcfg_hwDecodeEnabled</tabstop>
   <tabstop>kcfg_hwDecode</tabstop>
   <tabstop>kcfg_frameDropping</tabstop>

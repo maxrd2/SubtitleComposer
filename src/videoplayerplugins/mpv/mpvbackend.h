@@ -25,10 +25,10 @@
 
 #include <mpv/client.h>
 
+#include <QWidget>
 #include <QString>
 
 namespace SubtitleComposer {
-class MPVGLWidget;
 class MPVBackend : public PlayerBackend
 {
 	Q_OBJECT
@@ -75,7 +75,9 @@ private:
 	enum PlayState { STOPPED, PAUSED, PLAYING } m_state;
 	void setState(PlayState state);
 
-	MPVGLWidget *m_nativeWindow;
+	int renderMethod();
+
+	QWidget *m_nativeWindow;
 	mpv_handle *m_mpv;
 	bool m_initialized;
 	QString m_currentFilePath;
