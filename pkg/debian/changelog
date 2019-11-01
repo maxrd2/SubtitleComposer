@@ -1,4 +1,22 @@
-subtitlecomposer (0.6.6-2) unstable; urgency=emergency
+subtitlecomposer (0.7.0-1) unstable; urgency=medium
+
+  * Team upload.
+  * New upstream release.
+  * Update the patches:
+    - cmake-policy.diff: drop, fixed upstream
+  * Switch Vcs-* fields to salsa.debian.org.
+  * Bump the debhelper compatibility to 11:
+    - bump the debhelper build dependency to 11~
+    - bump compat to 11
+    - remove --parallel for dh, as now done by default
+  * Remove the libx11-dev build dependency, no more needed now.
+  * Bump Standards-Version to 4.4.0, no changes required.
+  * Stop installing the AUTHORS file, as it does not exist anymore.
+  * Avoid installing the appstream XML file for now, as it seems not valid.
+
+ -- Pino Toscano <pino@debian.org>  Mon, 08 Jul 2019 21:50:51 +0200
+
+subtitlecomposer (0.6.6-2) unstable; urgency=medium
 
   * Team upload.
   * Configure Xvfb so it has a proper depth; it should work also when Qt is
