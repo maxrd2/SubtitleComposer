@@ -136,11 +136,17 @@ VobSubInputProcessDialog::Frame::processPieces()
 	PiecePtr piece;
 
 	QVector<int> ignoredColors = {pieceBitmap.pixelIndex(0, 0)};
+	int maxAlpha = 0;
+	for(int i = 0; i < pieceBitmap.colorCount(); i++) {
+		const int alpha = qAlpha(pieceBitmap.color(i));
+		if(maxAlpha < alpha)
+			maxAlpha = alpha;
+	}
 	for(int i = 0; i < pieceBitmap.colorCount(); i++) {
 		if(i == ignoredColors.at(0))
 			continue;
 		const QRgb color = pieceBitmap.color(i);
-		if(qAlpha(color) < 255 || qGray(color) <= 127)
+		if(qAlpha(color) < maxAlpha || qGray(color) <= 127)
 			ignoredColors.append(i);
 	}
 
