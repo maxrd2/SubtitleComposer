@@ -710,4 +710,6 @@ MPVBackend::notifyAudioStreams(const mpv_event_property *prop)
 	emit audioStreamsChanged(audioStreams, audioStreams.isEmpty() ? -1 : 0);
 }
 
+#ifdef MPV_HAS_RENDER_API
 #include "mpvbackend.moc"
+#endif
