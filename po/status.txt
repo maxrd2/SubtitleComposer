@@ -5,8 +5,8 @@ French					currently unmaintained (contributed by Thomas Gastine <thomas.gastine
 German:					currently unmaintained (contributed by Panagiotis Papadopoulos <pano_90@gmx.net>)
 Italian:				currently unmaintained (contributed by Alessandro Polverini <alex@nibbles.it>)
 Polish:					currently unmaintained (contributed by Tomasz Argasiński <targasinski@o2.pl>)
-Portuguese (Brazilian):	        currently unmaintained (contributed by Marcio P. Moraes <marciopanto@gmail.com>)
-Portuguese (Portugal):          currently maintained by Hugo Carvalho (hugok) <hugokarvalho@hotmail.com>
+Portuguese (Brazilian):	              currently unmaintained (contributed by Marcio P. Moraes <marciopanto@gmail.com>)
+Portuguese (Portugal):                currently maintained by Hugo Carvalho (hugok) <hugokarvalho@hotmail.com>
 Russian:				currently unmaintained (contributed by Alexander Antsev <kagami@crossplatform.ru>)
 Serbian:				currently unmaintained (contributed by Slobodan Simic <simicsl@verat.net>)
 Spanish:				currently unmaintained (contributed by Sergio Pistone <sergio_pistone@yahoo.com.ar>)
