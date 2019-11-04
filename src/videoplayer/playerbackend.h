@@ -154,6 +154,8 @@ signals:
 	void textStreamsChanged(const QStringList &textStreams);
 	void audioStreamsChanged(const QStringList &audioStreams, int activeAudioStream);
 
+	void restartRequested();
+
 protected:
 	QString m_name;
 };

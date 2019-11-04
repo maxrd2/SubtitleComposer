@@ -30,12 +30,17 @@
 
 #include <locale>
 
-#include <mpv/render.h>
-#include <mpv/render_gl.h>
+#define RENDER_NATIVE 0
+#define RENDER_API_GL 1
+
+#ifdef MPV_HAS_RENDER_API
+	#include <mpv/render.h>
+	#include <mpv/render_gl.h>
+#endif
 
 using namespace SubtitleComposer;
 
-
+#ifdef MPV_HAS_RENDER_API
 namespace SubtitleComposer {
 class MPVGLWidget Q_DECL_FINAL : public QOpenGLWidget {
 	Q_OBJECT
@@ -113,7 +118,14 @@ protected:
 			return;
 
 		static int one = 1;
-		mpv_opengl_fbo fbo = {int(defaultFramebufferObject()), width(), height(), int(textureFormat())};
+		mpv_opengl_fbo fbo = {
+			int(defaultFramebufferObject()), width(), height(),
+#if QT_VERSION >= QT_VERSION_CHECK(5, 10, 0)
+			int(textureFormat())
+#else
+			0
+#endif
+		};
 		mpv_render_param params[] = {
 			{MPV_RENDER_PARAM_OPENGL_FBO, &fbo},
 			{MPV_RENDER_PARAM_FLIP_Y, &one}, // flip rendering due to flipped GL coordinate system
@@ -151,6 +163,7 @@ private:
 	mpv_render_context *m_rctx;
 };
 }
+#endif
 
 MPVBackend::MPVBackend()
 	: PlayerBackend(),
@@ -172,11 +185,18 @@ bool
 MPVBackend::init(QWidget *videoWidget)
 {
 	if(!m_nativeWindow) {
-		m_nativeWindow = new MPVGLWidget(videoWidget);
+		m_nativeWindow =
+#ifdef MPV_HAS_RENDER_API
+			renderMethod() == RENDER_API_GL ? new MPVGLWidget(videoWidget) :
+#endif
+			new QWidget(videoWidget);
 		m_nativeWindow->setAttribute(Qt::WA_DontCreateNativeAncestors);
 		m_nativeWindow->setAttribute(Qt::WA_NativeWindow);
-		connect(m_nativeWindow, &QWidget::destroyed, [&](){ m_nativeWindow = nullptr; });
-		connect(m_nativeWindow, &MPVGLWidget::restartMPV, this, &MPVBackend::reconfigure, Qt::QueuedConnection);
+		connect(m_nativeWindow, &QWidget::destroyed, this, [&](){ m_nativeWindow = nullptr; });
+#ifdef MPV_HAS_RENDER_API
+		connect(static_cast<MPVGLWidget *>(m_nativeWindow), &MPVGLWidget::restartMPV, this, &MPVBackend::reconfigure, Qt::QueuedConnection);
+		qDebug() << "MPV video output using" << (renderMethod() == RENDER_API_GL ? "OpenGL Render API" : "Native Window Embedding");
+#endif
 	} else {
 		m_nativeWindow->setParent(videoWidget);
 	}
@@ -186,14 +206,16 @@ MPVBackend::init(QWidget *videoWidget)
 void
 MPVBackend::cleanup()
 {
-	if(m_nativeWindow)
-		m_nativeWindow->cleanup();
+#ifdef MPV_HAS_RENDER_API
+	if(m_nativeWindow && renderMethod() == RENDER_API_GL)
+		static_cast<MPVGLWidget *>(m_nativeWindow)->cleanup();
+#endif
 	if(m_mpv) {
 		mpv_terminate_destroy(m_mpv);
 		m_mpv = nullptr;
 		m_initialized = false;
-		m_state = STOPPED;
 	}
+	setState(STOPPED);
 }
 
 QWidget *
@@ -224,7 +246,16 @@ MPVBackend::setup()
 
 	reconfigure();
 
-	m_nativeWindow->init(m_mpv);
+#ifdef MPV_HAS_RENDER_API
+	if(renderMethod() == RENDER_API_GL) {
+		static_cast<MPVGLWidget *>(m_nativeWindow)->init(m_mpv);
+	} else
+#endif
+	{
+		// window id
+		int64_t winId = m_nativeWindow->winId();
+		mpv_set_option(m_mpv, "wid", MPV_FORMAT_INT64, &winId);
+	}
 
 	// no OSD
 	mpv_set_option_string(m_mpv, "osd-level", "0");
@@ -350,14 +381,7 @@ MPVBackend::handleEvent(mpv_event *event)
 		return;
 	}
 	case MPV_EVENT_SHUTDOWN: {
-		if(m_nativeWindow)
-			m_nativeWindow->cleanup();
-		if(m_mpv) {
-			mpv_terminate_destroy(m_mpv);
-			m_mpv = nullptr;
-			m_initialized = false;
-		}
-		setState(STOPPED);
+		cleanup();
 		return;
 	}
 	default:
@@ -483,9 +507,30 @@ MPVBackend::setVolume(double volume)
 	return true;
 }
 
+int
+MPVBackend::renderMethod()
+{
+#ifdef MPV_HAS_RENDER_API
+	if(m_nativeWindow)
+		return qobject_cast<MPVGLWidget *>(m_nativeWindow) != nullptr ? RENDER_API_GL : RENDER_NATIVE;
+	return MPVConfig::renderMethod();
+#else
+	return RENDER_NATIVE;
+#endif
+}
+
 bool
 MPVBackend::reconfigure()
 {
+#ifdef MPV_HAS_RENDER_API
+	if(renderMethod() != MPVConfig::renderMethod()) {
+		disconnect(m_nativeWindow, &QWidget::destroyed, this, nullptr);
+		m_nativeWindow = nullptr;
+		emit restartRequested();
+		return false;
+	}
+#endif
+
 	if(!m_mpv)
 		return false;
 
@@ -665,4 +710,6 @@ MPVBackend::notifyAudioStreams(const mpv_event_property *prop)
 	emit audioStreamsChanged(audioStreams, audioStreams.isEmpty() ? -1 : 0);
 }
 
+#ifdef MPV_HAS_RENDER_API
 #include "mpvbackend.moc"
+#endif

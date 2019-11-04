@@ -349,7 +349,7 @@ Application::saveSubtitleAs(QTextCodec *codec)
 	}
 
 	if(saveDlg.exec() == QDialog::Accepted) {
-		const QUrl &url = saveDlg.selectedUrls().first();
+		const QUrl url = saveDlg.selectedUrls().first();
 		if(!acceptClashingUrls(url, m_subtitleTrUrl))
 			return false;
 
@@ -581,7 +581,7 @@ Application::saveSubtitleTrAs(QTextCodec *codec)
 	}
 
 	if(saveDlg.exec() == QDialog::Accepted) {
-		const QUrl &url = saveDlg.selectedUrls().first();
+		const QUrl url = saveDlg.selectedUrls().first();
 		if(!acceptClashingUrls(m_subtitleUrl, url))
 			return false;
 

@@ -125,14 +125,12 @@ VideoPlayer::switchBackend(const QString &backendName)
 	if(backendName == m_backend->name())
 		return true;
 
-	QString currentFile = m_filePath;
-
-	Q_ASSERT(m_plugins.contains(backendName));
+	const QString currentFile = m_filePath;
 
 	cleanup();
 
-	if(!backendInit(m_plugins[backendName])) {
-		for(QMap<QString, PlayerBackend *>::ConstIterator it = m_plugins.begin(), end = m_plugins.end(); it != end; ++it)
+	if(!m_plugins.contains(backendName) || !backendInit(m_plugins[backendName])) {
+		for(QMap<QString, PlayerBackend *>::const_iterator it = m_plugins.begin(), end = m_plugins.end(); it != end; ++it)
 			if(backendInit(it.value()))
 				break;
 	}
@@ -215,6 +213,8 @@ VideoPlayer::backendInit(PlayerBackend *backend)
 	connect(m_backend, &PlayerBackend::volumeChanged, this, &VideoPlayer::changeVolume);
 	connect(m_backend, &PlayerBackend::muteChanged, this, &VideoPlayer::changeMute);
 
+	connect(m_backend, &PlayerBackend::restartRequested, this, &VideoPlayer::backendRestart);
+
 	emit backendInitialized(backend);
 	return true;
 }
@@ -233,6 +233,38 @@ VideoPlayer::backendCleanup()
 		m_videoWidget->deleteLater();
 		m_videoWidget = nullptr;
 	}
+}
+
+void
+VideoPlayer::backendRestart()
+{
+	if(!isInitialized())
+		return;
+
+	cleanup();
+	QApplication::processEvents(); // make sure video widget gets deleted
+	init(m_videoContainer, SCConfig::playerBackend());
+
+	const QString currentFile = m_filePath;
+	const QString backendName = SCConfig::playerBackend();
+
+	cleanup();
+
+	QApplication::processEvents(); // make sure video widget gets deleted
+
+	if(!m_plugins.contains(backendName) || !backendInit(m_plugins[backendName])) {
+		for(QMap<QString, PlayerBackend *>::const_iterator it = m_plugins.begin(), end = m_plugins.end(); it != end; ++it)
+			if(backendInit(it.value()))
+				break;
+	}
+
+	if(!m_backend) {
+		qCritical() << "Failed to initialize a player backend";
+		return;
+	}
+
+	if(!currentFile.isEmpty())
+		openFile(currentFile);
 }
 
 void

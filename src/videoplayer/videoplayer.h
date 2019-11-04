@@ -157,6 +157,7 @@ private:
 
 	bool backendInit(PlayerBackend *backend);
 	void backendCleanup();
+	void backendRestart();
 
 	PlayerBackend * backendLoad(const QString &pluginPath);
 

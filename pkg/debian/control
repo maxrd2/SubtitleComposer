@@ -3,7 +3,7 @@ Section: kde
 Priority: optional
 Maintainer: Debian KDE Extras Team <pkg-kde-extras@lists.alioth.debian.org>
 Uploaders: Maximiliano Curia <maxy@debian.org>
-Build-Depends: debhelper (>= 9), cmake, pkg-kde-tools (>= 0.15.16),
+Build-Depends: debhelper (>= 11~), cmake, pkg-kde-tools (>= 0.15.16),
  qtbase5-dev,
  extra-cmake-modules (>= 1.2.0),
  libkf5auth-dev,
@@ -34,10 +34,10 @@ Build-Depends: debhelper (>= 9), cmake, pkg-kde-tools (>= 0.15.16),
  libpocketsphinx-dev,
 # for tests:
  xvfb, xauth,
-Standards-Version: 4.1.3
+Standards-Version: 4.4.0
 Homepage: https://github.com/maxrd2/subtitlecomposer
-Vcs-Browser: https://anonscm.debian.org/cgit/pkg-kde/kde-extras/subtitlecomposer.git
-Vcs-Git: https://anonscm.debian.org/git/pkg-kde/kde-extras/subtitlecomposer.git
+Vcs-Browser: https://salsa.debian.org/qt-kde-team/extras/subtitlecomposer
+Vcs-Git: https://salsa.debian.org/qt-kde-team/extras/subtitlecomposer.git
 
 Package: subtitlecomposer
 Architecture: any
