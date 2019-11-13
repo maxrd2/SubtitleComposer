@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: subtitlecomposer\n"
 "Report-Msgid-Bugs-To: https://github.com/maxrd2/subtitlecomposer/issues\n"
-"POT-Creation-Date: 2019-09-02 10:47+0200\n"
+"POT-Creation-Date: 2019-11-13 16:28+0100\n"
 "PO-Revision-Date: 2019-11-04 14:21+0000\n"
 "Last-Translator: Hugo Carvalho <hugokarvalho@hotmail.com>\n"
 "Language-Team: Portuguese\n"
@@ -406,7 +406,9 @@ msgstr "Mudar Velocidade do Frame..."
 
 #: ../../src/application.cpp:819
 msgid "Retime subtitle lines by reinterpreting its frame rate"
-msgstr "Voltar a temporizar as linhas da legenda pela reinterpretação das velocidades do frame"
+msgstr ""
+"Voltar a temporizar as linhas da legenda pela reinterpretação das "
+"velocidades do frame"
 
 #: ../../src/application.cpp:825
 msgid "Enforce Duration Limits..."
@@ -422,7 +424,9 @@ msgstr "Definir Durações Automáticas..."
 
 #: ../../src/application.cpp:834
 msgid "Set lines durations based on amount of letters, words and line breaks"
-msgstr "Definir duração das linhas baseadas na quantidade de letras, palavras e quebras de linha"
+msgstr ""
+"Definir duração das linhas baseadas na quantidade de letras, palavras e "
+"quebras de linha"
 
 #: ../../src/application.cpp:840
 msgid "Maximize Durations..."
@@ -478,7 +482,8 @@ msgstr "Mudar maiúsculas/minúsculas..."
 
 #: ../../src/application.cpp:883
 msgid "Change lines text to upper, lower, title or sentence case"
-msgstr "Mudar linhas do texto para maiúsculas, minúsculas, título ou mudar iniciais"
+msgstr ""
+"Mudar linhas do texto para maiúsculas, minúsculas, título ou mudar iniciais"
 
 #: ../../src/application.cpp:889
 msgid "Fix Punctuation..."
@@ -610,8 +615,11 @@ msgid "Play Current Line and Pause"
 msgstr "Reproduzir linha atual e pausar"
 
 #: ../../src/application.cpp:1034
-msgid "Seek to start of current subtitle line show time, play it and then pause"
-msgstr "Procure o início da hora da linha de legenda atual, reproduza-a e em seguida pause"
+msgid ""
+"Seek to start of current subtitle line show time, play it and then pause"
+msgstr ""
+"Procure o início da hora da linha de legenda atual, reproduza-a e em seguida "
+"pause"
 
 #: ../../src/application.cpp:1042
 msgid "Jump to Next Line"
@@ -627,7 +635,8 @@ msgstr "Definir Tempo de Exibição da Linha Atual"
 
 #: ../../src/application.cpp:1052
 msgid "Set current line show time to video position"
-msgstr "Definir o tempo de exibição da linha atual a partir da posição do vídeo"
+msgstr ""
+"Definir o tempo de exibição da linha atual a partir da posição do vídeo"
 
 #: ../../src/application.cpp:1060 ../../src/waveformwidget.cpp:1206
 msgid "Set Current Line Hide Time"
@@ -635,7 +644,8 @@ msgstr "Definir Tempo de Ocultamento da Linha Atual"
 
 #: ../../src/application.cpp:1061
 msgid "Set current line hide time to video position"
-msgstr "Definir o tempo de ocultamento da linha atual a partir da posição do vídeo"
+msgstr ""
+"Definir o tempo de ocultamento da linha atual a partir da posição do vídeo"
 
 #: ../../src/application.cpp:1069
 msgid "Current Line Follows Video"
@@ -707,7 +717,8 @@ msgid "Shift to Video Position"
 msgstr "Mover a Posição do Vídeo"
 
 #: ../../src/application.cpp:1132
-msgid "Set current line show time to video position by equally shifting all lines"
+msgid ""
+"Set current line show time to video position by equally shifting all lines"
 msgstr "Definir o tempo de exibição da linha para a posição do vídeo  igualmente passando para todas as linhas"
 
 #: ../../src/application.cpp:1139
@@ -715,24 +726,35 @@ msgid "Adjust to Video Position (Anchor Last Line)"
 msgstr "Ajustar a Posição do Vídeo (Ancorar Última Linha)"
 
 #: ../../src/application.cpp:1140
-msgid "Set current line to video position by fixing the last line and linearly adjusting the other ones"
-msgstr "Definir a linha atual para a posição do vídeo corrigindo a última linha e  ajustando linearmente as outras"
+msgid ""
+"Set current line to video position by fixing the last line and linearly "
+"adjusting the other ones"
+msgstr ""
+"Definir a linha atual para a posição do vídeo corrigindo a última linha e  ajustando linearmente as outras"
 
 #: ../../src/application.cpp:1147
 msgid "Adjust to Video Position (Anchor First Line)"
 msgstr "Ajustar a Posição do Vídeo (Ancorar Primera Linha)"
 
 #: ../../src/application.cpp:1148
-msgid "Set current line to video position by fixing the first line and linearly adjusting the other ones"
-msgstr "Definir a linha atual para a posição do vídeo corrigindo a primeira linha e  ajustando linearmente as demais"
+msgid ""
+"Set current line to video position by fixing the first line and linearly "
+"adjusting the other ones"
+msgstr ""
+"Definir a linha atual para a posição do vídeo corrigindo a primeira linha e  ajustando linearmente as demais"
 
 #: ../../src/application.cpp:1155 ../../src/waveformwidget.cpp:1197
 msgid "Toggle Anchor"
 msgstr "Alternar referência"
 
 #: ../../src/application.cpp:1156
-msgid "(Un)Anchor current line's show time to timeline (Editing anchored line's show time will stretch/compact the timeline between adjanced anchors)"
-msgstr "(Desmarcar)Referência do tempo de exibição da linha atual até a linha do tempo(Editar o tempo de exibição da linha de referência irá esticar/compactar a linha de tempo entre referências adjacentes)"
+msgid ""
+"(Un)Anchor current line's show time to timeline (Editing anchored line's "
+"show time will stretch/compact the timeline between adjanced anchors)"
+msgstr ""
+"(Desmarcar)Referência do tempo de exibição da linha atual até a linha do "
+"tempo(Editar o tempo de exibição da linha de referência irá esticar/"
+"compactar a linha de tempo entre referências adjacentes)"
 
 #: ../../src/application.cpp:1163
 msgid "Remove All Anchors"
@@ -740,7 +762,8 @@ msgstr "Remover todos as referências"
 
 #: ../../src/application.cpp:1164
 msgid "Unanchor show time from the timeline on all anchored lines"
-msgstr "Cancelar tempo de exibição da linha do tempo em todas as linhas de referência"
+msgstr ""
+"Cancelar tempo de exibição da linha do tempo em todas as linhas de referência"
 
 #: ../../src/application.cpp:1172
 msgctxt "@action:inmenu Manage user scripts"
@@ -765,7 +788,8 @@ msgstr "Rodagem automática de forma de onda"
 
 #: ../../src/application.cpp:1196
 msgid "Waveform display will automatically scroll to video position"
-msgstr "A exibição da forma de onda desliza automaticamente para a posição de vídeo"
+msgstr ""
+"A exibição da forma de onda desliza automaticamente para a posição de vídeo"
 
 #: ../../src/application.cpp:1230
 msgid "Could not read the subtitle file to append."
@@ -853,8 +877,12 @@ msgid "Translating secondary text (%1 to %2)..."
 msgstr "A traduzir texto secundário (%1 para %2)..."
 
 #: ../../src/application.cpp:1849
-msgid "Unable to perform texts synchronization (sent and received lines count do not match)."
-msgstr "Não foi possível executar a sincronização de textos (o número de linhas enviadas e recebidas não corresponde)."
+msgid ""
+"Unable to perform texts synchronization (sent and received lines count do "
+"not match)."
+msgstr ""
+"Não foi possível executar a sincronização de textos (o número de linhas "
+"enviadas e recebidas não corresponde)."
 
 #: ../../src/application.cpp:1853
 msgid "Translate Primary Text"
@@ -883,7 +911,8 @@ msgid ""
 "Continuing would result in loss of timing information for some lines.\n"
 "Are you sure you want to continue?"
 msgstr ""
-"Continuar pode resultar em perda de informação de temporização de algumas linhas.\n"
+"Continuar pode resultar em perda de informação de temporização de algumas "
+"linhas.\n"
 "Tem certeza de que deseja continuar?"
 
 #: ../../src/application.cpp:2151
@@ -953,10 +982,12 @@ msgstr "Ficheiros de Áudio"
 
 #: ../../src/application_subtitle.cpp:136
 msgid ""
-"The requested action would make the subtitle and its translation share the same file, possibly resulting in loss of information when saving.\n"
+"The requested action would make the subtitle and its translation share the "
+"same file, possibly resulting in loss of information when saving.\n"
 "Are you sure you want to continue?"
 msgstr ""
-"A ação solicitada faria a legenda e a sua tradução compartilharem o mesmo ficheiro, possivelmente resultando perda de informação ao guardar.\n"
+"A ação solicitada faria a legenda e a sua tradução compartilharem o mesmo "
+"ficheiro, possivelmente resultando perda de informação ao guardar.\n"
 "Tem certeza de que deseja continuar?"
 
 #: ../../src/application_subtitle.cpp:139
@@ -971,8 +1002,12 @@ msgstr "Abrir Legenda"
 #: ../../src/application_subtitle.cpp:234
 #: ../../src/application_subtitle.cpp:470
 #: ../../src/application_subtitle.cpp:495
-msgid "<qt>Could not parse the subtitle file.<br/>This may have been caused by usage of the wrong encoding.</qt>"
-msgstr "<qt>Não foi possível analisar o ficheiro da legenda.<br/>Isto pode ser devido à utilização incorrecta de uma codificação de caracteres.</qt>"
+msgid ""
+"<qt>Could not parse the subtitle file.<br/>This may have been caused by "
+"usage of the wrong encoding.</qt>"
+msgstr ""
+"<qt>Não foi possível analisar o ficheiro da legenda.<br/>Isto pode ser "
+"devido à utilização incorrecta de uma codificação de caracteres.</qt>"
 
 #: ../../src/application_subtitle.cpp:330
 msgid "There was an error saving the subtitle."
@@ -1362,35 +1397,58 @@ msgstr "Há um traço desnecessário no texto traduzido."
 
 #: ../../src/core/subtitleline.cpp:128
 msgid "Has capital letter after line continuation ellipsis in primary text."
-msgstr "Há uma letra maiúscula depois da elipse da continuação dalinha no texto primário."
+msgstr ""
+"Há uma letra maiúscula depois da elipse da continuação dalinha no texto "
+"primário."
 
 #: ../../src/core/subtitleline.cpp:129
-msgid "Has capital letter after line continuation ellipsis in translation text."
-msgstr "Há uma letra maiúscula depois da elipse da continuação dalinha no texto traduzido."
+msgid ""
+"Has capital letter after line continuation ellipsis in translation text."
+msgstr ""
+"Há uma letra maiúscula depois da elipse da continuação dalinha no texto "
+"traduzido."
 
 #: ../../src/core/subtitleline.cpp:130
 msgid "Has too long duration per character in primary text (1 msec/char)."
-msgid_plural "Has too long duration per character in primary text (%1 msecs/char)."
-msgstr[0] "Duração excessivamente longo por caracter no texto primário(1 mseg/caracter)."
-msgstr[1] "Duração excessivamente longo por caracter no texto primário(%1 msegs/caracter)."
+msgid_plural ""
+"Has too long duration per character in primary text (%1 msecs/char)."
+msgstr[0] ""
+"Duração excessivamente longo por caracter no texto primário(1 mseg/caracter)."
+msgstr[1] ""
+"Duração excessivamente longo por caracter no texto primário(%1 msegs/"
+"caracter)."
 
 #: ../../src/core/subtitleline.cpp:131
 msgid "Has too long duration per character in translation text (1 msec/char)."
-msgid_plural "Has too long duration per character in translation text (%1 msecs/char)."
-msgstr[0] "Duração excessivamente longo por caracter no texto traduzido(1 mseg/caracter)."
-msgstr[1] "Duração excessivamente longo por caracter no texto traduzido(%1 msegs/caracter)."
+msgid_plural ""
+"Has too long duration per character in translation text (%1 msecs/char)."
+msgstr[0] ""
+"Duração excessivamente longo por caracter no texto traduzido(1 mseg/"
+"caracter)."
+msgstr[1] ""
+"Duração excessivamente longo por caracter no texto traduzido(%1 msegs/"
+"caracter)."
 
 #: ../../src/core/subtitleline.cpp:132
 msgid "Has too short duration per character in primary text (1 msec/char)."
-msgid_plural "Has too short duration per character in primary text (%1 msecs/char)."
-msgstr[0] "Duração excessivamente curto por caracter no texto primário(1 mseg/caracter)."
-msgstr[1] "Duração excessivamente curto por caracter no texto primário(%1 msegs/caracter)."
+msgid_plural ""
+"Has too short duration per character in primary text (%1 msecs/char)."
+msgstr[0] ""
+"Duração excessivamente curto por caracter no texto primário(1 mseg/caracter)."
+msgstr[1] ""
+"Duração excessivamente curto por caracter no texto primário(%1 msegs/"
+"caracter)."
 
 #: ../../src/core/subtitleline.cpp:133
 msgid "Has too short duration per character in translation text (1 msec/char)."
-msgid_plural "Has too short duration per character in translation text (%1 msecs/char)."
-msgstr[0] "Duração excessivamente curto por caracter no texto traduzido(1 mseg/caracter)."
-msgstr[1] "Duração excessivamente curto por caracter no texto traduzido(%1 msegs/caracter)."
+msgid_plural ""
+"Has too short duration per character in translation text (%1 msecs/char)."
+msgstr[0] ""
+"Duração excessivamente curto por caracter no texto traduzido(1 mseg/"
+"caracter)."
+msgstr[1] ""
+"Duração excessivamente curto por caracter no texto traduzido(%1 msegs/"
+"caracter)."
 
 #: ../../src/core/subtitleline.cpp:134
 msgid "Has too long duration (1 msec)."
@@ -1821,7 +1879,7 @@ msgstr ""
 "Demux da legenda falhou %1: %2\n"
 "%3"
 
-#: ../../src/formats/vobsub/vobsubinputprocessdialog.cpp:594
+#: ../../src/formats/vobsub/vobsubinputprocessdialog.cpp:600
 msgid "VobSub Error"
 msgstr "Erro no VobSub"
 
@@ -1900,12 +1958,12 @@ msgstr "Sergio Pistone"
 msgid "Original Author"
 msgstr "Autor original"
 
-#: ../../src/main.cpp:77 rc.cpp:766
+#: ../../src/main.cpp:77 rc.cpp:778
 msgctxt "NAME OF TRANSLATORS"
 msgid "Your names"
 msgstr "Márcio P. Moraes"
 
-#: ../../src/main.cpp:77 rc.cpp:767
+#: ../../src/main.cpp:77 rc.cpp:779
 msgctxt "EMAIL OF TRANSLATORS"
 msgid "Your emails"
 msgstr "<hugokarvalho@hotmail.com>"
@@ -2199,18 +2257,18 @@ msgid "Unexpected contents received from translation service"
 msgstr "Conteúdos inesperados recebidos do serviço de tradução"
 
 #: ../../src/videoplayerplugins/gstreamer/gstreamerbackend.cpp:453
-#: ../../src/videoplayerplugins/mpv/mpvbackend.cpp:618
+#: ../../src/videoplayerplugins/mpv/mpvbackend.cpp:663
 msgid "Text Stream #%1"
 msgstr "Transmissão de texto #%1"
 
 #: ../../src/videoplayerplugins/gstreamer/gstreamerbackend.cpp:489
 #: ../../src/videoplayerplugins/mplayer/mplayerplayerbackend.cpp:288
-#: ../../src/videoplayerplugins/mpv/mpvbackend.cpp:653
+#: ../../src/videoplayerplugins/mpv/mpvbackend.cpp:698
 #: ../../src/videoplayerplugins/xine/xineplayerbackend.cpp:287
 msgid "Audio Stream #%1"
 msgstr "Fluxo de áudio #%1"
 
-#: ../../src/videoplayer/videoplayer.cpp:456
+#: ../../src/videoplayer/videoplayer.cpp:488
 msgid "File does not exist."
 msgstr "O ficheiro não existe."
 
@@ -2382,7 +2440,7 @@ msgstr "Limpar automaticamente os erros corrigidos"
 #. i18n: ectx: property (title), widget (QGroupBox, grpGeneral)
 #. i18n: file: ../../src/videoplayerplugins/mpv/mpvconfigwidget.ui:20
 #. i18n: ectx: property (title), widget (QGroupBox, grpGeneral)
-#: rc.cpp:45 rc.cpp:87 rc.cpp:633 rc.cpp:714
+#: rc.cpp:45 rc.cpp:87 rc.cpp:633 rc.cpp:717
 msgid "General"
 msgstr "Geral"
 
@@ -2563,8 +2621,12 @@ msgstr "Cor do interior:"
 #. i18n: file: ../../src/configs/waveformconfigwidget.ui:104
 #. i18n: ectx: property (toolTip), widget (QLabel, label_wfAutoscrollPadding)
 #: rc.cpp:144
-msgid "Autoscroll page when play position reaches ScrollPadding distance (percentage) from page border"
-msgstr "Página de deslizamento automático quando a posição de reprodução atingir distância (percentagem) da borda da página"
+msgid ""
+"Autoscroll page when play position reaches ScrollPadding distance "
+"(percentage) from page border"
+msgstr ""
+"Página de deslizamento automático quando a posição de reprodução atingir "
+"distância (percentagem) da borda da página"
 
 #. i18n: file: ../../src/configs/waveformconfigwidget.ui:107
 #. i18n: ectx: property (text), widget (QLabel, label_wfAutoscrollPadding)
@@ -2939,8 +3001,12 @@ msgstr "Auto deslizamento de preenchimento"
 #. i18n: file: ../../src/scconfig.kcfg:118
 #. i18n: ectx: whatsthis, entry (wfAutoscrollPadding), group (Waveform Widget)
 #: rc.cpp:339
-msgid "Autoscroll page when play position reaches ScrollPadding distance (percentage) from page border."
-msgstr "Página de deslizamento automático quando a posição de reprodução atingir distância (percentagem) da borda da página."
+msgid ""
+"Autoscroll page when play position reaches ScrollPadding distance "
+"(percentage) from page border."
+msgstr ""
+"Página de deslizamento automático quando a posição de reprodução atingir "
+"distância (percentagem) da borda da página."
 
 #. i18n: file: ../../src/scconfig.kcfg:121
 #. i18n: ectx: label, entry (wfSubBackground), group (Waveform Widget)
@@ -3172,7 +3238,9 @@ msgstr "Ficheiro de entrada do dicionário de pronúncia principal (lexicon)"
 #. i18n: ectx: property (toolTip), widget (QLabel, label_vadPostSpeech)
 #: rc.cpp:459 rc.cpp:516
 msgid "Num of silence frames to keep after speech to silence transition"
-msgstr "Número de frames de silêncio para manter após a fala para silenciar a transição"
+msgstr ""
+"Número de frames de silêncio para manter após a fala para silenciar a "
+"transição"
 
 #. i18n: file: ../../src/speechplugins/pocketsphinx/pocketsphinxconfig.kcfg:28
 #. i18n: ectx: label, entry (vadPreSpeech), group (PocketSphinx)
@@ -3180,7 +3248,8 @@ msgstr "Número de frames de silêncio para manter após a fala para silenciar a
 #. i18n: ectx: property (toolTip), widget (QLabel, label_vadPreSpeech)
 #: rc.cpp:462 rc.cpp:510
 msgid "Num of speech frames to keep before silence to speech transition"
-msgstr "Número de frames de fala para manter antes do silêncio na transição de fala"
+msgstr ""
+"Número de frames de fala para manter antes do silêncio na transição de fala"
 
 #. i18n: file: ../../src/speechplugins/pocketsphinx/pocketsphinxconfig.kcfg:32
 #. i18n: ectx: label, entry (vadStartSpeech), group (PocketSphinx)
@@ -3197,8 +3266,12 @@ msgstr "Número de frames de fala para acionar o VAD do silêncio para fala"
 #. i18n: file: ../../src/speechplugins/pocketsphinx/pocketsphinxconfigwidget.ui:126
 #. i18n: ectx: property (toolTip), widget (QLabel, label_vadTreshold)
 #: rc.cpp:468 rc.cpp:501 rc.cpp:504
-msgid "Threshold for decision between noise and silence frames. Log-ratio between signal level and noise level"
-msgstr "Limiar para a decisão entre ruído e frames de silêncio. Relação de registo entre nível de sinal e nível de ruído"
+msgid ""
+"Threshold for decision between noise and silence frames. Log-ratio between "
+"signal level and noise level"
+msgstr ""
+"Limiar para a decisão entre ruído e frames de silêncio. Relação de registo "
+"entre nível de sinal e nível de ruído"
 
 #. i18n: file: ../../src/speechplugins/pocketsphinx/pocketsphinxconfigwidget.ui:20
 #. i18n: ectx: property (title), widget (QGroupBox, grpModel)
@@ -3227,8 +3300,16 @@ msgstr "Modelo de acústico"
 #. i18n: file: ../../src/speechplugins/pocketsphinx/pocketsphinxconfigwidget.ui:78
 #. i18n: ectx: property (text), widget (QLabel, label_modelInfoText)
 #: rc.cpp:495
-msgid "<html><head/><body><p align=\"center\">Acoustic and Language Models can be downloaded from <a href=\"https://cmusphinx.github.io/wiki/download/\"><span style=\" text-decoration: underline; color:#007af4;\">CMU Spinx</span></a></p></body></html>"
-msgstr "<html><head/><body><p align=\"center\">Modelos acústicos e de linguagem podem ser transferidos de <a href=\"https://cmusphinx.github.io/wiki/download/\"><span style=\" text-decoration: underline; color:#007af4;\">CMU Spinx</span></a></p></body></html>"
+msgid ""
+"<html><head/><body><p align=\"center\">Acoustic and Language Models can be "
+"downloaded from <a href=\"https://cmusphinx.github.io/wiki/download/\"><span "
+"style=\" text-decoration: underline; color:#007af4;\">CMU Spinx</span></a></"
+"p></body></html>"
+msgstr ""
+"<html><head/><body><p align=\"center\">Modelos acústicos e de linguagem "
+"podem ser transferidos de <a href=\"https://cmusphinx.github.io/wiki/"
+"download/\"><span style=\" text-decoration: underline; color:#007af4;\">CMU "
+"Spinx</span></a></p></body></html>"
 
 #. i18n: file: ../../src/speechplugins/pocketsphinx/pocketsphinxconfigwidget.ui:100
 #. i18n: ectx: property (title), widget (QGroupBox, grpVAD)
@@ -3364,17 +3445,17 @@ msgstr "Saída de áudio:"
 
 #. i18n: file: ../../src/videoplayerplugins/mplayer/mplayerconfig.kcfg:10
 #. i18n: ectx: label, entry (cacheEnabled), group (MPlayer)
-#. i18n: file: ../../src/videoplayerplugins/mpv/mpvconfig.kcfg:10
+#. i18n: file: ../../src/videoplayerplugins/mpv/mpvconfig.kcfg:15
 #. i18n: ectx: label, entry (cacheEnabled), group (MPV)
-#: rc.cpp:582 rc.cpp:672
+#: rc.cpp:582 rc.cpp:675
 msgid "Cache Enabled"
 msgstr "Cache ativada"
 
 #. i18n: file: ../../src/videoplayerplugins/mplayer/mplayerconfig.kcfg:14
 #. i18n: ectx: label, entry (cacheSize), group (MPlayer)
-#. i18n: file: ../../src/videoplayerplugins/mpv/mpvconfig.kcfg:14
+#. i18n: file: ../../src/videoplayerplugins/mpv/mpvconfig.kcfg:19
 #. i18n: ectx: label, entry (cacheSize), group (MPV)
-#: rc.cpp:585 rc.cpp:675
+#: rc.cpp:585 rc.cpp:678
 msgid "Cache Size (KB)"
 msgstr "Tamanho da cache (KB)"
 
@@ -3386,17 +3467,17 @@ msgstr "caminho executável do mplayer"
 
 #. i18n: file: ../../src/videoplayerplugins/mplayer/mplayerconfig.kcfg:22
 #. i18n: ectx: label, entry (autoSyncEnabled), group (MPlayer)
-#. i18n: file: ../../src/videoplayerplugins/mpv/mpvconfig.kcfg:18
+#. i18n: file: ../../src/videoplayerplugins/mpv/mpvconfig.kcfg:24
 #. i18n: ectx: label, entry (autoSyncEnabled), group (MPV)
-#: rc.cpp:591 rc.cpp:678
+#: rc.cpp:591 rc.cpp:681
 msgid "Auto Sync Enabled"
 msgstr "Sincronização automática ativada"
 
 #. i18n: file: ../../src/videoplayerplugins/mplayer/mplayerconfig.kcfg:26
 #. i18n: ectx: label, entry (autoSyncFactor), group (MPlayer)
-#. i18n: file: ../../src/videoplayerplugins/mpv/mpvconfig.kcfg:22
+#. i18n: file: ../../src/videoplayerplugins/mpv/mpvconfig.kcfg:28
 #. i18n: ectx: label, entry (autoSyncFactor), group (MPV)
-#: rc.cpp:594 rc.cpp:681
+#: rc.cpp:594 rc.cpp:684
 msgid "Auto Sync Factor"
 msgstr "Factor de sincronização automático"
 
@@ -3410,23 +3491,23 @@ msgstr "Saída de vídeo ativada"
 #. i18n: ectx: label, entry (videoOutput), group (MPlayer)
 #. i18n: file: ../../src/videoplayerplugins/xine/xineconfig.kcfg:14
 #. i18n: ectx: label, entry (video), group (Xine)
-#: rc.cpp:600 rc.cpp:747
+#: rc.cpp:600 rc.cpp:759
 msgid "Video Output"
 msgstr "Saída de vídeo"
 
 #. i18n: file: ../../src/videoplayerplugins/mplayer/mplayerconfig.kcfg:39
 #. i18n: ectx: label, entry (vdpau), group (MPlayer)
-#. i18n: file: ../../src/videoplayerplugins/mpv/mpvconfig.kcfg:31
+#. i18n: file: ../../src/videoplayerplugins/mpv/mpvconfig.kcfg:37
 #. i18n: ectx: label, entry (hwDecode), group (MPV)
-#: rc.cpp:603 rc.cpp:687
+#: rc.cpp:603 rc.cpp:690
 msgid "Hardware Decode"
 msgstr "Descodificação de hardware"
 
 #. i18n: file: ../../src/videoplayerplugins/mplayer/mplayerconfig.kcfg:43
 #. i18n: ectx: label, entry (frameDropping), group (MPlayer)
-#. i18n: file: ../../src/videoplayerplugins/mpv/mpvconfig.kcfg:35
+#. i18n: file: ../../src/videoplayerplugins/mpv/mpvconfig.kcfg:41
 #. i18n: ectx: label, entry (frameDropping), group (MPV)
-#: rc.cpp:606 rc.cpp:690
+#: rc.cpp:606 rc.cpp:693
 msgid "Frame Dropping"
 msgstr "Perda de frames"
 
@@ -3438,59 +3519,59 @@ msgstr "Queda de frames rígidos"
 
 #. i18n: file: ../../src/videoplayerplugins/mplayer/mplayerconfig.kcfg:52
 #. i18n: ectx: label, entry (audioOutputEnabled), group (MPlayer)
-#. i18n: file: ../../src/videoplayerplugins/mpv/mpvconfig.kcfg:40
+#. i18n: file: ../../src/videoplayerplugins/mpv/mpvconfig.kcfg:46
 #. i18n: ectx: label, entry (audioOutputEnabled), group (MPV)
-#: rc.cpp:612 rc.cpp:693
+#: rc.cpp:612 rc.cpp:696
 msgid "Audio Output Enabled"
 msgstr "Saída de áudio ativada"
 
 #. i18n: file: ../../src/videoplayerplugins/mplayer/mplayerconfig.kcfg:56
 #. i18n: ectx: label, entry (audioOutput), group (MPlayer)
-#. i18n: file: ../../src/videoplayerplugins/mpv/mpvconfig.kcfg:44
+#. i18n: file: ../../src/videoplayerplugins/mpv/mpvconfig.kcfg:50
 #. i18n: ectx: label, entry (audioOutput), group (MPV)
 #. i18n: file: ../../src/videoplayerplugins/xine/xineconfig.kcfg:23
 #. i18n: ectx: label, entry (audio), group (Xine)
-#: rc.cpp:615 rc.cpp:696 rc.cpp:753
+#: rc.cpp:615 rc.cpp:699 rc.cpp:765
 msgid "Audio Output"
 msgstr "Saída de áudio"
 
 #. i18n: file: ../../src/videoplayerplugins/mplayer/mplayerconfig.kcfg:60
 #. i18n: ectx: label, entry (audioChannelsEnabled), group (MPlayer)
-#. i18n: file: ../../src/videoplayerplugins/mpv/mpvconfig.kcfg:48
+#. i18n: file: ../../src/videoplayerplugins/mpv/mpvconfig.kcfg:54
 #. i18n: ectx: label, entry (audioChannelsEnabled), group (MPV)
-#: rc.cpp:618 rc.cpp:699
+#: rc.cpp:618 rc.cpp:702
 msgid "Audio Channels Enabled"
 msgstr "Canais de Áudio ativados"
 
 #. i18n: file: ../../src/videoplayerplugins/mplayer/mplayerconfig.kcfg:64
 #. i18n: ectx: label, entry (audioChannels), group (MPlayer)
-#. i18n: file: ../../src/videoplayerplugins/mpv/mpvconfig.kcfg:52
+#. i18n: file: ../../src/videoplayerplugins/mpv/mpvconfig.kcfg:58
 #. i18n: ectx: label, entry (audioChannels), group (MPV)
-#: rc.cpp:621 rc.cpp:702
+#: rc.cpp:621 rc.cpp:705
 msgid "Audio Channels"
 msgstr "Canais de áudio"
 
 #. i18n: file: ../../src/videoplayerplugins/mplayer/mplayerconfig.kcfg:68
 #. i18n: ectx: label, entry (volumeAmplificationEnabled), group (MPlayer)
-#. i18n: file: ../../src/videoplayerplugins/mpv/mpvconfig.kcfg:56
+#. i18n: file: ../../src/videoplayerplugins/mpv/mpvconfig.kcfg:62
 #. i18n: ectx: label, entry (volumeAmplificationEnabled), group (MPV)
-#: rc.cpp:624 rc.cpp:705
+#: rc.cpp:624 rc.cpp:708
 msgid "Volume Amplification Enabled"
 msgstr "Amplificação do volume ativada"
 
 #. i18n: file: ../../src/videoplayerplugins/mplayer/mplayerconfig.kcfg:72
 #. i18n: ectx: label, entry (volumeAmplification), group (MPlayer)
-#. i18n: file: ../../src/videoplayerplugins/mpv/mpvconfig.kcfg:60
+#. i18n: file: ../../src/videoplayerplugins/mpv/mpvconfig.kcfg:66
 #. i18n: ectx: label, entry (volumeAmplification), group (MPV)
-#: rc.cpp:627 rc.cpp:708
+#: rc.cpp:627 rc.cpp:711
 msgid "Volume Amplification"
 msgstr "Amplificação do volume"
 
 #. i18n: file: ../../src/videoplayerplugins/mplayer/mplayerconfig.kcfg:76
 #. i18n: ectx: label, entry (volumeNormalization), group (MPlayer)
-#. i18n: file: ../../src/videoplayerplugins/mpv/mpvconfig.kcfg:64
+#. i18n: file: ../../src/videoplayerplugins/mpv/mpvconfig.kcfg:70
 #. i18n: ectx: label, entry (volumeNormalization), group (MPV)
-#: rc.cpp:630 rc.cpp:711
+#: rc.cpp:630 rc.cpp:714
 msgid "Volume Normalization"
 msgstr "Normalização do volume"
 
@@ -3504,7 +3585,7 @@ msgstr "Caminho do ficheiro executável:"
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_autoSyncEnabled)
 #. i18n: file: ../../src/videoplayerplugins/mpv/mpvconfigwidget.ui:26
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_autoSyncEnabled)
-#: rc.cpp:639 rc.cpp:717
+#: rc.cpp:639 rc.cpp:720
 msgid "A/V synchronization factor:"
 msgstr "Fator de sincronização A/V:"
 
@@ -3514,7 +3595,7 @@ msgstr "Fator de sincronização A/V:"
 #. i18n: ectx: property (title), widget (QGroupBox, grpVideo)
 #. i18n: file: ../../src/videoplayerplugins/xine/xineconfigwidget.ui:20
 #. i18n: ectx: property (title), widget (QGroupBox, grpVideo)
-#: rc.cpp:642 rc.cpp:720 rc.cpp:756
+#: rc.cpp:642 rc.cpp:723 rc.cpp:768
 msgid "Video"
 msgstr "Vídeo"
 
@@ -3532,9 +3613,9 @@ msgstr "Ativar o VDPAU para DivX/XviD"
 
 #. i18n: file: ../../src/videoplayerplugins/mplayer/mplayerconfigwidget.ui:80
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_frameDropping)
-#. i18n: file: ../../src/videoplayerplugins/mpv/mpvconfigwidget.ui:56
+#. i18n: file: ../../src/videoplayerplugins/mpv/mpvconfigwidget.ui:63
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_frameDropping)
-#: rc.cpp:651 rc.cpp:723
+#: rc.cpp:651 rc.cpp:729
 msgid "Allow frame dropping"
 msgstr "Permitir perda de quadros"
 
@@ -3546,78 +3627,102 @@ msgstr "Permitir perda de quadros pronunciada"
 
 #. i18n: file: ../../src/videoplayerplugins/mplayer/mplayerconfigwidget.ui:97
 #. i18n: ectx: property (title), widget (QGroupBox, grpAudio)
-#. i18n: file: ../../src/videoplayerplugins/mpv/mpvconfigwidget.ui:73
+#. i18n: file: ../../src/videoplayerplugins/mpv/mpvconfigwidget.ui:100
 #. i18n: ectx: property (title), widget (QGroupBox, grpAudio)
 #. i18n: file: ../../src/videoplayerplugins/xine/xineconfigwidget.ui:43
 #. i18n: ectx: property (title), widget (QGroupBox, grpAudio)
-#: rc.cpp:657 rc.cpp:729 rc.cpp:762
+#: rc.cpp:657 rc.cpp:741 rc.cpp:774
 msgid "Audio"
 msgstr "Áudio"
 
 #. i18n: file: ../../src/videoplayerplugins/mplayer/mplayerconfigwidget.ui:103
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_audioOutputEnabled)
-#. i18n: file: ../../src/videoplayerplugins/mpv/mpvconfigwidget.ui:93
+#. i18n: file: ../../src/videoplayerplugins/mpv/mpvconfigwidget.ui:120
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_audioOutputEnabled)
-#: rc.cpp:660 rc.cpp:738
+#: rc.cpp:660 rc.cpp:750
 msgid "Audio output driver:"
 msgstr "Driver de saída de áudio:"
 
 #. i18n: file: ../../src/videoplayerplugins/mplayer/mplayerconfigwidget.ui:110
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_audioChannelsEnabled)
-#. i18n: file: ../../src/videoplayerplugins/mpv/mpvconfigwidget.ui:86
+#. i18n: file: ../../src/videoplayerplugins/mpv/mpvconfigwidget.ui:113
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_audioChannelsEnabled)
-#: rc.cpp:663 rc.cpp:735
+#: rc.cpp:663 rc.cpp:747
 msgid "Audio channels:"
 msgstr "Canais de áudio:"
 
 #. i18n: file: ../../src/videoplayerplugins/mplayer/mplayerconfigwidget.ui:117
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_volumeAmplificationEnabled)
-#. i18n: file: ../../src/videoplayerplugins/mpv/mpvconfigwidget.ui:79
+#. i18n: file: ../../src/videoplayerplugins/mpv/mpvconfigwidget.ui:106
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_volumeAmplificationEnabled)
-#: rc.cpp:666 rc.cpp:732
+#: rc.cpp:666 rc.cpp:744
 msgid "Volume amplification:"
 msgstr "Amplificação de volume:"
 
 #. i18n: file: ../../src/videoplayerplugins/mplayer/mplayerconfigwidget.ui:189
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_volumeNormalization)
-#. i18n: file: ../../src/videoplayerplugins/mpv/mpvconfigwidget.ui:163
+#. i18n: file: ../../src/videoplayerplugins/mpv/mpvconfigwidget.ui:190
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_volumeNormalization)
-#: rc.cpp:669 rc.cpp:741
+#: rc.cpp:669 rc.cpp:753
 msgid "Volume normalization"
 msgstr "Normalização de volume"
 
-#. i18n: file: ../../src/videoplayerplugins/mpv/mpvconfig.kcfg:27
+#. i18n: file: ../../src/videoplayerplugins/mpv/mpvconfig.kcfg:10
+#. i18n: ectx: label, entry (renderMethod), group (MPV)
+#: rc.cpp:672
+msgid "RenderMethod"
+msgstr ""
+
+#. i18n: file: ../../src/videoplayerplugins/mpv/mpvconfig.kcfg:33
 #. i18n: ectx: label, entry (hwDecodeEnabled), group (MPV)
-#: rc.cpp:684
+#: rc.cpp:687
 msgid "Hardware Decode Enabled"
 msgstr "Descodificação de Hardware ativada"
 
-#. i18n: file: ../../src/videoplayerplugins/mpv/mpvconfigwidget.ui:63
+#. i18n: file: ../../src/videoplayerplugins/mpv/mpvconfigwidget.ui:49
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_hwDecodeEnabled)
 #: rc.cpp:726
 msgid "Hardware video decoding:"
 msgstr "Descodificação de vídeo do hardware:"
 
+#. i18n: file: ../../src/videoplayerplugins/mpv/mpvconfigwidget.ui:74
+#. i18n: ectx: property (text), item, widget (QComboBox, kcfg_renderMethod)
+#: rc.cpp:732
+msgid "Native window embedding"
+msgstr ""
+
+#. i18n: file: ../../src/videoplayerplugins/mpv/mpvconfigwidget.ui:79
+#. i18n: ectx: property (text), item, widget (QComboBox, kcfg_renderMethod)
+#: rc.cpp:735
+msgid "OpenGL render API"
+msgstr ""
+
+#. i18n: file: ../../src/videoplayerplugins/mpv/mpvconfigwidget.ui:87
+#. i18n: ectx: property (text), widget (QLabel, label_renderMethod)
+#: rc.cpp:738
+msgid "Video rendering method"
+msgstr ""
+
 #. i18n: file: ../../src/videoplayerplugins/xine/xineconfig.kcfg:10
 #. i18n: ectx: label, entry (videoEnabled), group (Xine)
-#: rc.cpp:744
+#: rc.cpp:756
 msgid "Video Enabled"
 msgstr "Vídeo ativado"
 
 #. i18n: file: ../../src/videoplayerplugins/xine/xineconfig.kcfg:19
 #. i18n: ectx: label, entry (audioEnabled), group (Xine)
-#: rc.cpp:750
+#: rc.cpp:762
 msgid "Audio Enabled"
 msgstr "Áudio ativado"
 
 #. i18n: file: ../../src/videoplayerplugins/xine/xineconfigwidget.ui:33
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_videoEnabled)
-#: rc.cpp:759
+#: rc.cpp:771
 msgid "Video driver:"
 msgstr "Driver de Vídeo:"
 
 #. i18n: file: ../../src/videoplayerplugins/xine/xineconfigwidget.ui:49
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_audioEnabled)
-#: rc.cpp:765
+#: rc.cpp:777
 msgid "Audio driver:"
 msgstr "Driver de Áudio:"
