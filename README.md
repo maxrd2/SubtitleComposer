@@ -43,10 +43,10 @@ An open source text-based subtitle editor that supports basic and advanced editi
   - Installer downloadable from [releases](https://github.com/maxrd2/subtitlecomposer/releases) page
 
 ### BUILD
-Instructions for building from sources can be found on [wiki page](https://github.com/maxrd2/subtitlecomposer/wiki/Building-from-sources)
+Instructions for building from sources can be found on [wiki page][build instructions]
 
 ### CONTRIBUTING
-Submit bug reports or feature requests to the [issue tracker on GitHub][bugs].
+Submit bug reports or feature requests to the [official issue tracker][bugs].
 
 Video tutorials are very welcome as are any kind of documentation/tutorials/examples, please let us know if you make some.
 
@@ -59,7 +59,7 @@ Pull requests and patches are welcome. Please follow the [coding style](README.C
 Subtitle Composer is released under [GNU General Public License v2.0](LICENSE)
 
 
-[bugs]: https://github.com/maxrd2/subtitlecomposer/issues "Issue Tracker"
-[milestones]: https://github.com/maxrd2/subtitlecomposer/milestones "Milestones"
-[coding style]: https://github.com/maxrd2/subtitlecomposer/blob/master/README.CodingStyle.md "Coding Style"
-[authors]: https://github.com/maxrd2/subtitlecomposer/blob/master/AUTHORS "Authors / Contributors"
+[bugs]: https://invent.kde.org/kde/subtitlecomposer/issues "Issue Tracker"
+[milestones]: https://invent.kde.org/kde/subtitlecomposer/-/milestones "Milestones"
+[coding style]: https://invent.kde.org/kde/subtitlecomposer/blob/master/README.CodingStyle.md "Coding Style"
+[build instructions]: https://invent.kde.org/kde/subtitlecomposer/wikis/Building-from-sources "Build Instructions"

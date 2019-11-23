@@ -61,15 +61,15 @@ main(int argc, char **argv)
 	KLocalizedString::setApplicationDomain("subtitlecomposer");
 
 	KAboutData aboutData(
-		"subtitlecomposer",
+		QStringLiteral("subtitlecomposer"),
 		i18n("Subtitle Composer"),
 		APP_VERSION,
 		i18n("A KDE subtitle editor."),
-		KAboutLicense::GPL,
+		KAboutLicense::GPL_V2,
 		QStringLiteral("&copy; 2007-2017 Subtitle Composer project"),
 		QString(), // Additional text
-		QStringLiteral("https://github.com/maxrd2/subtitlecomposer"),
-		QStringLiteral("https://github.com/maxrd2/subtitlecomposer/issues"));
+		QStringLiteral("https://invent.kde.org/kde/subtitlecomposer"),
+		QStringLiteral("https://invent.kde.org/kde/subtitlecomposer/issues"));
 
 	aboutData.addAuthor(i18n("Mladen Milinković"), i18n("Current Author & Maintainer"), "maxrd2@smoothware.net");
 	aboutData.addAuthor(i18n("Sergio Pistone"), i18n("Original Author"), "sergio_pistone@yahoo.com.ar");
