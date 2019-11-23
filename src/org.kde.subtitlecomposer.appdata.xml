@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <component type="desktop-application">
-	<id>subtitlecomposer</id>
+	<id>org.kde.subtitlecomposer</id>
 	<metadata_license>CC0-1.0</metadata_license>
 	<project_license>GPL-2.0+</project_license>
 	<name>Subtitle Composer</name>
@@ -29,19 +29,47 @@
 			<li>Scripting (JavaScript, Python, Ruby and other languages supported by Kross).
 		</ul>
 	</description>
-	<launchable type="desktop-id">subtitlecomposer.desktop</launchable>
-	<url type="homepage">https://github.com/maxrd2/subtitlecomposer</url>
+	<launchable type="desktop-id">org.kde.subtitlecomposer.desktop</launchable>
+	<url type="homepage">https://invent.kde.org/kde/subtitlecomposer</url>
 	<screenshots>
 		<screenshot type="default">
 			<caption>Main application window</caption>
-			<image>http://maxrd2.github.io/subtitlecomposer/images/screenshot.png</image>
+			<image>https://cdn.kde.org/screenshots/subtitlecomposer/mainwindow.png</image>
 		</screenshot>
 	</screenshots>
 	<provides>
-		<id>subtitlecomposer.desktop</id>
+		<id>org.kde.subtitlecomposer.desktop</id>
 		<binary>subtitlecomposer</binary>
 	</provides>
+	<project_group>KDE</project_group>
 	<releases>
+		<release date="2019-06-27" version="0.7.0">
+			<description>
+				<ul>
+					<li>Fixed parsing of absolute paths containing '#' character
+					<li>Fixed open dialogs not showing all supported files
+					<li>Fixed subtitle text not respecting system font configuration
+					<li>Fixed waveform not rendering correctly/completely on some formats
+					<li>Fixed waveform displaying subtitles at wrong times
+					<li>Fixed waveform not working with some
+					<li>Fixes to MPV, GStreamer and Xine video player backends
+					<li>Waveform scrolling is configurable
+					<li>PocketSphinx language models and VAD are configurable
+					<li>Added show status bar action to main window popup menu
+					<li>Improved (scripting) performance
+					<li>Spell checker will use translation text when it is selected
+					<li>Waveform and video docks can be hidden
+					<li>Split lines won't split text on spaces while there are multiple lines
+					<li>Subtitle lines will always stay sorted by their time
+					<li>Improved fullscreen video player
+					<li>Added ability to step by frame
+					<li>Added play rate controls to video menu
+					<li>Updated Croatian translation - thanks @muzena
+					<li>Updated Italian translation - thanks Luigi Toscano @tosky
+					<li>Updated Russian translation - thanks Nick Shaforostoff @shaforostoff
+				</ul>
+			</description>
+		</release>
 		<release date="2018-02-11" version="0.6.6">
 			<description>
 				<ul>

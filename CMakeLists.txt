@@ -44,6 +44,4 @@ endif()
 add_subdirectory(po)
 add_subdirectory(src)
 
-install(FILES pkg/misc/subtitlecomposer.desktop.appdata.xml DESTINATION ${KDE_INSTALL_METAINFODIR})
-
 add_custom_target(nsis COMMAND "${CMAKE_CURRENT_SOURCE_DIR}/pkg/mingw/nsi-installer.sh" `${CMAKE_C_COMPILER} -dumpmachine`)
