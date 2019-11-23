@@ -1,4 +1,5 @@
-project(subtitlecomposer)
+cmake_policy(SET CMP0048 NEW)
+project(subtitlecomposer VERSION "0.7.0")
 
 cmake_minimum_required(VERSION 3.3 FATAL_ERROR)
 set(QT_MIN_VERSION "5.3.0")
@@ -21,7 +22,7 @@ include(KDECMakeSettings)
 include(KDECompilerSettings)
 
 include(ECMInstallIcons)
-
+include(ECMSetupVersion)
 include(ECMAddTests) # build tests
 
 include(FeatureSummary)
@@ -33,13 +34,6 @@ find_package(Qt5 ${QT_MIN_VERSION} CONFIG REQUIRED COMPONENTS
 find_package(KF5 ${KF5_MIN_VERSION} REQUIRED COMPONENTS
 	Auth Config ConfigWidgets CoreAddons I18n KIO XmlGui
 	Sonnet Kross Codecs TextWidgets WidgetsAddons)
-
-if(APP_VERSION)
-	message(STATUS "Building as custom version ${APP_VERSION}")
-	set(APP_VERSION ${APP_VERSION} CACHE INTERNAL EXPORTEDVARIABLE)
-else()
-	set(APP_VERSION 0.7.0 CACHE INTERNAL EXPORTEDVARIABLE)
-endif()
 
 add_subdirectory(po)
 add_subdirectory(src)

@@ -36,6 +36,7 @@ extern "C" {
 #include <libavformat/avformat.h>
 }
 
+#include "config-subtitlecomposer.h"
 #ifdef HAVE_CONFIG_H
 #include "config.h"
 #endif
@@ -63,7 +64,7 @@ main(int argc, char **argv)
 	KAboutData aboutData(
 		QStringLiteral("subtitlecomposer"),
 		i18n("Subtitle Composer"),
-		APP_VERSION,
+		SUBTITLECOMPOSER_VERSION_STRING,
 		i18n("A KDE subtitle editor."),
 		KAboutLicense::GPL_V2,
 		QStringLiteral("&copy; 2007-2017 Subtitle Composer project"),
@@ -80,8 +81,6 @@ main(int argc, char **argv)
 	aboutData.addCredit("Marius Kittler", i18n("code contributions, Arch Linux packaging"));
 
 	aboutData.addCredit(i18n("All people who have contributed and I have forgotten to mention"));
-
-	aboutData.setDesktopFileName(QStringLiteral("subtitlecomposer"));
 
 	// register about data
 	KAboutData::setApplicationData(aboutData);

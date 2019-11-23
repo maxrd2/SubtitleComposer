@@ -19,6 +19,12 @@ include_directories(
 	${Qt5Core_INCLUDE_DIRS} ${Qt5Widgets_INCLUDE_DIRS} ${Qt5Gui_INCLUDE_DIRS}
 )
 
+ecm_setup_version(${PROJECT_VERSION}
+	VARIABLE_PREFIX SUBTITLECOMPOSER
+	SOVERSION ${PROJECT_VERSION_MAJOR}
+	VERSION_HEADER "${CMAKE_CURRENT_BINARY_DIR}/config-subtitlecomposer.h"
+)
+
 add_definitions(${QT_DEFINITIONS} -DHAVE_CONFIG_H)
 add_definitions(-D_DEFAULT_SOURCE)
 

@@ -27,7 +27,6 @@ i686-w64-mingw32-cmake \
 	-DKF5_HOST_TOOLING=/usr/lib/cmake \
 	-DKCONFIGCOMPILER_PATH=/usr/lib/cmake/KF5Config/KF5ConfigCompilerTargets.cmake \
 	-DTARGETSFILE=/usr/lib/cmake/KF5CoreAddons/KF5CoreAddonsToolingTargets.cmake \
-	-DAPP_VERSION="$appver" \
 	..
 make -j$(nproc)
 make DESTDIR="$PWD/nsis" nsis
