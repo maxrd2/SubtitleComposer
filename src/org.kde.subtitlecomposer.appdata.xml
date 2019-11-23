@@ -5,7 +5,7 @@
 	<project_license>GPL-2.0+</project_license>
 	<name>Subtitle Composer</name>
 	<summary>Video subtitle editor that supports basic and advanced editing operations.</summary>
-	<description>
+	<description><![CDATA[
 		<p>An open source text-based subtitle editor that supports basic and advanced editing operations, aiming to become an improved version of Subtitle Workshop for every platform supported by Plasma Frameworks.</p>
 		<p>Features</p>
 		<ul>
@@ -28,7 +28,7 @@
 			<li>Detection of timing errors in subtitles
 			<li>Scripting (JavaScript, Python, Ruby and other languages supported by Kross).
 		</ul>
-	</description>
+	]]></description>
 	<launchable type="desktop-id">org.kde.subtitlecomposer.desktop</launchable>
 	<url type="homepage">https://invent.kde.org/kde/subtitlecomposer</url>
 	<screenshots>
@@ -44,7 +44,7 @@
 	<project_group>KDE</project_group>
 	<releases>
 		<release date="2019-06-27" version="0.7.0">
-			<description>
+			<description><![CDATA[
 				<ul>
 					<li>Fixed parsing of absolute paths containing '#' character
 					<li>Fixed open dialogs not showing all supported files
@@ -68,10 +68,10 @@
 					<li>Updated Italian translation - thanks Luigi Toscano @tosky
 					<li>Updated Russian translation - thanks Nick Shaforostoff @shaforostoff
 				</ul>
-			</description>
+			]]></description>
 		</release>
 		<release date="2018-02-11" version="0.6.6">
-			<description>
+			<description><![CDATA[
 				<ul>
 					<li>Fixed open video dialog filters
 					<li>Fixed "Insert Line" on waveform adding at the wrong index - thanks @qsniyg
@@ -92,10 +92,10 @@
 					<li>Fixed some crashes, memory leaks and overall code cleanups
 					<li>Cleaned up settings widget and texts
 				</ul>
-			</description>
+			]]></description>
 		</release>
 		<release date="2017-09-18" version="0.6.5">
-			<description>
+			<description><![CDATA[
 				<ul>
 					<li>ADD: Added support for binary subtitle formats
 					<li>ADD: fine control video playback speed
@@ -124,7 +124,7 @@
 					<li>FIX: compilation without xine - thanks @pinotree
 					<li>FIX: ASS parsing - thanks @Martchus
 				</ul>
-			</description>
+			]]></description>
 		</release>
 		<release date="2016-05-07" version="0.6.4" />
 		<release date="2016-04-03" version="0.6.3" />
