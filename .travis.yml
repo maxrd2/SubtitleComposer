@@ -99,7 +99,7 @@ matrix:
           #curl -L "https://github.com/AppImage/AppImageKit/releases/download/continuous/appimagetool-x86_64.AppImage" >appimagetool && chmod +x appimagetool
           curl -L "https://github.com/AppImage/AppImageKit/releases/download/11/appimagetool-x86_64.AppImage" >appimagetool && chmod +x appimagetool
           execs=("$appdir/usr/lib/subtitlecomposer/"*.so)
-          ./linuxdeployqt "$appdir/usr/share/applications/subtitlecomposer.desktop" -bundle-non-qt-libs "${execs[@]/#/-executable=}" -verbose=2 || exit 1
+          ./linuxdeployqt "$appdir/usr/share/applications/org.kde.subtitlecomposer.desktop" -bundle-non-qt-libs "${execs[@]/#/-executable=}" -verbose=2 || exit 1
           rm -v "$appdir/AppRun" ; cp -v "$TRAVIS_BUILD_DIR/pkg/misc/subtitlecomposer.sh" "$appdir/AppRun" ; chmod +x "$appdir/AppRun"
           rm -v "$appdir/usr/lib/libxcb-dri2.so"* "$appdir/usr/lib/libxcb-dri3.so"*
           ./appimagetool "$appdir/" -g
