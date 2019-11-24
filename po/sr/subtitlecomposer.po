@@ -1,11 +1,16 @@
+# translation of subtitlecomposer.po to Serbian
+# This file is put in the public domain.
+#
+# Slobodan Simic <simicsl@verat.net>, 2008, 2009.
+# Sergio Pistone <sergio_pistone@yahoo,com.ar>, 2009.
 msgid ""
 msgstr ""
 "Project-Id-Version: subtitlecomposer\n"
 "Report-Msgid-Bugs-To: https://github.com/maxrd2/subtitlecomposer/issues\n"
 "POT-Creation-Date: 2019-11-13 16:28+0100\n"
 "PO-Revision-Date: 2019-10-27 09:15\n"
-"Last-Translator: Mladen Milinkovic (maxrd2)\n"
-"Language-Team: Serbian (Cyrillic)\n"
+"Last-Translator: Sergio Pistone <sergio_pistone@yahoo,com.ar>\n"
+"Language-Team: American English <kde-i18n-doc@kde.org>\n"
 "Language: sr_SP\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"

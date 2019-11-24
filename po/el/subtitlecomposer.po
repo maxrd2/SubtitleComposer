@@ -1,11 +1,16 @@
+# translation of subtitlecomposer.po to ΕΛΛΗΝΙΚΑ
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+#
+# Alexandros Perdikomatis <atanasia.kalampaka@ontelecoms.gr>, 2008.
 msgid ""
 msgstr ""
 "Project-Id-Version: subtitlecomposer\n"
 "Report-Msgid-Bugs-To: https://github.com/maxrd2/subtitlecomposer/issues\n"
 "POT-Creation-Date: 2019-11-13 16:28+0100\n"
 "PO-Revision-Date: 2019-10-27 09:15\n"
-"Last-Translator: Mladen Milinkovic (maxrd2)\n"
-"Language-Team: Greek\n"
+"Last-Translator: Alexandros Perdikomatis <atanasia.kalampaka@ontelecoms.gr>\n"
+"Language-Team: ΕΛΛΗΝΙΚΑ <el@li.org>\n"
 "Language: el_GR\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
