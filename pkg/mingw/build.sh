@@ -6,12 +6,13 @@ appver="$(git describe --always --abbrev=8 | sed 's/-g/./;s/-/./;s/^v//g')"
 rm -rf build &>/dev/null || true
 mkdir -p build/nsis
 
-sudo pacman -Sy --noconfirm --needed \
+sudo pacman -Syu --noconfirm
+sudo pacman -S --noconfirm --needed \
 	mingw-w64-toolchain mingw-w64-cmake mingw-w64-configure mingw-w64-pkg-config \
 	mingw-w64-ffmpeg mingw-w64-qt5 mingw-w64-kf5 nsis \
 	mingw-w64-kinit mingw-w64-pango mingw-w64-libvisual \
 	mingw-w64-aspell mingw-w64-hunspell mingw-w64-icu \
-	kconfig kcoreaddons breeze-icons \
+	kconfig kcoreaddons breeze-icons icu \
 	mingw-w64-mpv \
 	mingw-w64-gst-libav mingw-w64-gst-plugins-good
 sudo pacman -Sdd --noconfirm --needed kauth kbookmarks kcodecs kcompletion \
