@@ -614,7 +614,7 @@ Subtitle::splitLines(const RangeList &ranges)
 
 		double autoDurationsSum = 0;
 		QList<double> autoDurations;
-		for(SStringList::ConstIterator ptIt = primaryLines.begin(), ptEnd = primaryLines.end(); ptIt != ptEnd; ++ptIt) {
+		for(SStringList::ConstIterator ptIt = primaryLines.constBegin(), ptEnd = primaryLines.constEnd(); ptIt != ptEnd; ++ptIt) {
 			const Time &autoDuration = SubtitleLine::autoDuration(ptIt->string(), 60, 50, 50);
 			autoDurations.append(autoDuration.toMillis());
 			autoDurationsSum += autoDuration.toMillis();
@@ -629,10 +629,10 @@ Subtitle::splitLines(const RangeList &ranges)
 
 		int subLineIndex = it.index(),
 				splitLineIndex = 0;
-		SStringList::ConstIterator ptIt = primaryLines.begin(),
-				ptEnd = primaryLines.end(),
-				stIt = secondaryLines.begin(),
-				stEnd = secondaryLines.end();
+		SStringList::ConstIterator ptIt = primaryLines.constBegin(),
+                                ptEnd = primaryLines.constEnd(),
+                                stIt = secondaryLines.constBegin(),
+                                stEnd = secondaryLines.constEnd();
 		for(; ptIt != ptEnd && stIt != stEnd; ++ptIt, ++stIt, ++subLineIndex, ++splitLineIndex) {
 			if(splitLineIndex) {
 				SubtitleLine *newLine = new SubtitleLine();

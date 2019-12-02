@@ -52,7 +52,7 @@ protected:
 
 			QString commands(cmdRegExp.cap(1));
 			QStringList commandsList(commands.split('\\'));
-			for(QStringList::ConstIterator it = commandsList.begin(), end = commandsList.end(); it != end; ++it) {
+			for(QStringList::ConstIterator it = commandsList.constBegin(), end = commandsList.constEnd(); it != end; ++it) {
 				if(it->isEmpty()) {
 					continue;
 				} else if(*it == QLatin1String("i0")) {

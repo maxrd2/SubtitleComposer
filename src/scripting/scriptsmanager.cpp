@@ -204,9 +204,9 @@ ScriptsManager::mimeTypes()
 
 	if(mimeTypes.isEmpty()) {
 		QHash<QString, Kross::InterpreterInfo *> infos = Kross::Manager::self().interpreterInfos();
-		for(QHash<QString, Kross::InterpreterInfo *>::ConstIterator it = infos.begin(), end = infos.end(); it != end; ++it) {
+		for(QHash<QString, Kross::InterpreterInfo *>::ConstIterator it = infos.constBegin(), end = infos.constEnd(); it != end; ++it) {
 			QStringList intMimeTypes = it.value()->mimeTypes();
-			for(QStringList::ConstIterator it = intMimeTypes.begin(), end = intMimeTypes.end(); it != end; ++it)
+			for(QStringList::ConstIterator it = intMimeTypes.constBegin(), end = intMimeTypes.constEnd(); it != end; ++it)
 				mimeTypes << *it;
 		}
 		if(!mimeTypes.contains("application/javascript") && !mimeTypes.contains("text/javascript") && !mimeTypes.contains("application/x-javascript"))

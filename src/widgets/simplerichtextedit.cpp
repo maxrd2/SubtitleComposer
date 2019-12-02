@@ -547,7 +547,7 @@ SimpleRichTextEdit::createContextMenu(const QPoint &mouseGlobalPos)
 				if(suggestions.empty())
 					suggestionsMenu->addAction(i18n("No suggestions"))->setEnabled(false);
 				else {
-					for(QStringList::ConstIterator it = suggestions.begin(), end = suggestions.end(); it != end; ++it)
+					for(QStringList::ConstIterator it = suggestions.constBegin(), end = suggestions.constEnd(); it != end; ++it) 
 						suggestionsMenu->addAction(*it, this, SLOT(replaceWithSuggestion()));
 				}
 			}

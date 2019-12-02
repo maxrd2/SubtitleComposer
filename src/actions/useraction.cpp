@@ -411,7 +411,7 @@ UserActionManager::updateActionsContext(int contextFlags)
 
 	if(m_contextFlags != contextFlags) {
 		m_contextFlags = contextFlags;
-		for(QList<UserAction *>::ConstIterator it = m_actionSpecs.begin(), end = m_actionSpecs.end(); it != end; ++it)
+		for(QList<UserAction *>::ConstIterator it = m_actionSpecs.constBegin(), end = m_actionSpecs.constEnd(); it != end; ++it)
 			(*it)->setContextFlags(m_contextFlags);
 	}
 }

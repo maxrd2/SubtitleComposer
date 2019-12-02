@@ -345,7 +345,7 @@ Application::triggerAction(const QKeySequence &keySequence)
 {
 	QList<QAction *> actions = m_mainWindow->actionCollection()->actions();
 
-	for(QList<QAction *>::ConstIterator it = actions.begin(), end = actions.end(); it != end; ++it) {
+	for(QList<QAction *>::ConstIterator it = actions.constBegin(), end = actions.constEnd(); it != end; ++it) {
 		if((*it)->isEnabled()) {
 			if(QAction * action = qobject_cast<QAction *>(*it)) {
 				QKeySequence shortcut = action->shortcut();

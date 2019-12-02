@@ -267,7 +267,7 @@ Scripting::SString::split(const QString &sep, bool regExp, bool caseSensitive) c
 	Scripting::SString *parent = const_cast<Scripting::SString *>(this);
 
 	QList<QObject *> list;
-	for(SStringList::ConstIterator it = tokens.begin(), end = tokens.end(); it != end; ++it)
+	for(SStringList::ConstIterator it = tokens.constBegin(), end = tokens.constEnd(); it != end; ++it)
 		list.append(new Scripting::SString(*it, parent));
 
 	return new Scripting::List(list, Scripting::SString::staticMetaObject.className(), parent);

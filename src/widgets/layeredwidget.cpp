@@ -42,7 +42,7 @@ LayeredWidget::setMouseTracking(bool enable)
 	// propagates to our children and our children children's
 	QWidget::setMouseTracking(enable);
 	QList<QWidget *> children = findChildren<QWidget *>();
-	for(QList<QWidget *>::ConstIterator it = children.begin(), end = children.end(); it != end; ++it)
+	for(QList<QWidget *>::ConstIterator it = children.constBegin(), end = children.constEnd(); it != end; ++it)
 		(*it)->setMouseTracking(enable);
 }
 

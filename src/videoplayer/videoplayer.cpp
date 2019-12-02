@@ -105,7 +105,7 @@ VideoPlayer::init(QWidget *widgetParent, const QString &backendName)
 	}
 	// if that fails, we set the first available backend as active
 	if(!m_backend) {
-		for(QMap<QString, PlayerBackend *>::ConstIterator it = m_plugins.begin(), end = m_plugins.end(); it != end; ++it)
+		for(QMap<QString, PlayerBackend *>::ConstIterator it = m_plugins.constBegin(), end = m_plugins.constEnd(); it != end; ++it)
 			if(backendInit(it.value()))
 				break;
 	}
@@ -130,7 +130,7 @@ VideoPlayer::switchBackend(const QString &backendName)
 	cleanup();
 
 	if(!m_plugins.contains(backendName) || !backendInit(m_plugins[backendName])) {
-		for(QMap<QString, PlayerBackend *>::const_iterator it = m_plugins.begin(), end = m_plugins.end(); it != end; ++it)
+		for(QMap<QString, PlayerBackend *>::const_iterator it = m_plugins.constBegin(), end = m_plugins.constEnd(); it != end; ++it)
 			if(backendInit(it.value()))
 				break;
 	}
@@ -253,7 +253,7 @@ VideoPlayer::backendRestart()
 	QApplication::processEvents(); // make sure video widget gets deleted
 
 	if(!m_plugins.contains(backendName) || !backendInit(m_plugins[backendName])) {
-		for(QMap<QString, PlayerBackend *>::const_iterator it = m_plugins.begin(), end = m_plugins.end(); it != end; ++it)
+		for(QMap<QString, PlayerBackend *>::const_iterator it = m_plugins.constBegin(), end = m_plugins.constEnd(); it != end; ++it)
 			if(backendInit(it.value()))
 				break;
 	}

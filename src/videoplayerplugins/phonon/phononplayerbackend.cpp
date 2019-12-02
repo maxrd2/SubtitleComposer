@@ -223,7 +223,7 @@ PhononPlayerBackend::onAvailableAudioChannelsChanged()
 
 	QList<Phonon::AudioChannelDescription> audioChannels = m_mediaController->availableAudioChannels();
 	int idx = -1, i = 0;
-	for(QList<Phonon::AudioChannelDescription>::ConstIterator it = audioChannels.begin(), end = audioChannels.end(); it != end; ++it) {
+	for(QList<Phonon::AudioChannelDescription>::ConstIterator it = audioChannels.constBegin(), end = audioChannels.constEnd(); it != end; ++it) {
 		audioStreams << (*it).name();
 		if(it->index() == m_mediaController->currentAudioChannel().index())
 			idx = i;

@@ -971,7 +971,7 @@ LinesWidget::loadConfig()
 
 	QByteArray state;
 	QStringList strState = group.readXdgListEntry("Columns State", QStringList() << QString());
-	for(QStringList::ConstIterator it = strState.begin(), end = strState.end(); it != end; ++it)
+	for(QStringList::ConstIterator it = strState.constBegin(), end = strState.constEnd(); it != end; ++it)
 		state.append((char)(*it).toInt());
 	header()->restoreState(state);
 }

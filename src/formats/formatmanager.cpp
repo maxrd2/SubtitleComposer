@@ -93,10 +93,10 @@ FormatManager::FormatManager()
 
 FormatManager::~FormatManager()
 {
-	for(QMap<QString, InputFormat *>::ConstIterator it = m_inputFormats.begin(), end = m_inputFormats.end(); it != end; ++it)
+	for(QMap<QString, InputFormat *>::ConstIterator it = m_inputFormats.constBegin(), end = m_inputFormats.constEnd(); it != end; ++it)
 		delete it.value();
 
-	for(QMap<QString, OutputFormat *>::ConstIterator it = m_outputFormats.begin(), end = m_outputFormats.end(); it != end; ++it)
+	for(QMap<QString, OutputFormat *>::ConstIterator it = m_outputFormats.constBegin(), end = m_outputFormats.constEnd(); it != end; ++it)
 		delete it.value();
 }
 

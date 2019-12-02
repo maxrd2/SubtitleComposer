@@ -62,7 +62,7 @@ ActionWithErrorTargetsDialog::createErrorsButtons(bool showUserMarks, bool showM
 			delete child;
 
 		QList<QWidget *> children = m_errorsGroupBox->findChildren<QWidget *>();
-		for(QList<QWidget *>::ConstIterator it = children.begin(), end = children.end(); it != end; ++it)
+		for(QList<QWidget *>::ConstIterator it = children.constBegin(), end = children.constEnd(); it != end; ++it)
 			delete *it;
 	} else
 		createErrorsGroupBox(i18n("Available errors"));

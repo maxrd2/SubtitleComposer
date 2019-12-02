@@ -190,7 +190,7 @@ Application::openSubtitle(const QUrl &url, bool warnClashingUrls)
 
 			if(videoFileName.isEmpty() || subtitleFileName.indexOf(videoFileName) != 0) {
 				QStringList subtitleDirFiles = subtitleFileInfo.dir().entryList(QDir::Files | QDir::Readable);
-				for(QStringList::ConstIterator it = subtitleDirFiles.begin(), end = subtitleDirFiles.end(); it != end; ++it) {
+				for(QStringList::ConstIterator it = subtitleDirFiles.constBegin(), end = subtitleDirFiles.constEnd(); it != end; ++it) {
 					QFileInfo fileInfo(*it);
 					if(videoExtensionList.contains(fileInfo.suffix().toLower())) {
 						if(subtitleFileName.indexOf(fileInfo.completeBaseName().toLower()) == 0) {
