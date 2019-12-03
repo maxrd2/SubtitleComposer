@@ -28,7 +28,7 @@
 #include <QOpenGLContext>
 #include <QOpenGLWidget>
 
-#include <locale>
+#include <clocale>
 
 #define RENDER_NATIVE 0
 #define RENDER_API_GL 1

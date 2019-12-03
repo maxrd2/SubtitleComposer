@@ -21,7 +21,7 @@
 #include "mpvconfigwidget.h"
 #include "mpvconfig.h"
 
-#include <locale>
+#include <clocale>
 #include <mpv/client.h>
 
 using namespace SubtitleComposer;
