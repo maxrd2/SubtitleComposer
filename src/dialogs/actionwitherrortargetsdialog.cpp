@@ -143,16 +143,16 @@ ActionWithErrorTargetsDialog::selectedErrorFlags() const
 			errorFlags |= SubtitleLine::errorFlag((SubtitleLine::ErrorID)errorId);
 
 	switch(selectedTextsTarget()) {
-	case SubtitleLine::Primary: {
+	case Subtitle::Primary:
 		return errorFlags;
-	} case SubtitleLine::Secondary: {
-		int secondaryErrorFlags = (errorFlags &SubtitleLine::PrimaryOnlyErrors) << 1;
+	case Subtitle::Secondary: {
+		const int secondaryErrorFlags = (errorFlags &SubtitleLine::PrimaryOnlyErrors) << 1;
 		errorFlags = errorFlags & ~SubtitleLine::PrimaryOnlyErrors;
 		return errorFlags | secondaryErrorFlags;
 	}
-	case SubtitleLine::Both:
+	case Subtitle::Both:
 	default: {
-		int secondaryErrorFlags = (errorFlags &SubtitleLine::PrimaryOnlyErrors) << 1;
+		const int secondaryErrorFlags = (errorFlags &SubtitleLine::PrimaryOnlyErrors) << 1;
 		return errorFlags | secondaryErrorFlags;
 	}
 	}
