@@ -30,7 +30,7 @@ set(POCKETSPHINX_INCLUDE_DIRS ${POCKETSPHINX_INCLUDE_DIR})
 
 include(FindPackageHandleStandardArgs)
 # handle the QUIETLY and REQUIRED arguments and set POCKETSPHINX_FOUND to TRUE if all listed variables are TRUE
-find_package_handle_standard_args(POCKETSPHINX
+find_package_handle_standard_args(PocketSphinx
 	REQUIRED_VARS POCKETSPHINX_LIBRARIES POCKETSPHINX_INCLUDE_DIR
 	VERSION_VAR POCKETSPHINX_VERSION)
 
