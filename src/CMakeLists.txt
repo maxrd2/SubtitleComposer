@@ -28,7 +28,7 @@ ecm_setup_version(${PROJECT_VERSION}
 add_definitions(${QT_DEFINITIONS} -DHAVE_CONFIG_H)
 add_definitions(-D_DEFAULT_SOURCE)
 
-find_package(FFmpeg REQUIRED)
+find_package(FFmpeg 57.83.100 REQUIRED)
 
 # the subdirs must be added in a specific order
 # if one dir uses code from another, its CMakeLists.txt will reference variables
