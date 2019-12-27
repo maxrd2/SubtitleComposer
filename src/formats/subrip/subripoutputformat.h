@@ -39,7 +39,7 @@ protected:
 
 			Time showTime = line->showTime();
 			Time hideTime = line->hideTime();
-			ret += m_timeBuilder.sprintf("%d\n%02d:%02d:%02d,%03d --> %02d:%02d:%02d,%03d\n", it.index() + 1, showTime.hours(), showTime.minutes(), showTime.seconds(), showTime.mseconds(), hideTime.hours(), hideTime.minutes(), hideTime.seconds(), hideTime.mseconds());
+			ret += QString::asprintf("%d\n%02d:%02d:%02d,%03d --> %02d:%02d:%02d,%03d\n", it.index() + 1, showTime.hours(), showTime.minutes(), showTime.seconds(), showTime.mseconds(), hideTime.hours(), hideTime.minutes(), hideTime.seconds(), hideTime.mseconds());
 
 			const SString &text = primary ? line->primaryText() : line->secondaryText();
 
@@ -56,7 +56,6 @@ protected:
 	{}
 
 	const QString m_dialogueBuilder;
-	mutable QString m_timeBuilder;
 };
 }
 

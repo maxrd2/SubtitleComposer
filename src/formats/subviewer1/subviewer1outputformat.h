@@ -38,13 +38,13 @@ protected:
 			const SubtitleLine *line = it.current();
 
 			Time showTime = line->showTime();
-			ret += m_builder.sprintf("[%02d:%02d:%02d]\n", showTime.hours(), showTime.minutes(), showTime.seconds());
+			ret += QString::asprintf("[%02d:%02d:%02d]\n", showTime.hours(), showTime.minutes(), showTime.seconds());
 
 			const SString &text = primary ? line->primaryText() : line->secondaryText();
 			ret += text.string().replace('\n', '|');
 
 			Time hideTime = line->hideTime();
-			ret += m_builder.sprintf("\n[%02d:%02d:%02d]\n\n", hideTime.hours(), hideTime.minutes(), hideTime.seconds());
+			ret += QString::asprintf("\n[%02d:%02d:%02d]\n\n", hideTime.hours(), hideTime.minutes(), hideTime.seconds());
 		}
 		ret += "[END]\n" "******** END SCRIPT ********\n";
 
@@ -54,8 +54,6 @@ protected:
 	SubViewer1OutputFormat() :
 		OutputFormat(QStringLiteral("SubViewer 1.0"), QStringList(QStringLiteral("sub")))
 	{}
-
-	mutable QString m_builder;
 };
 }
 

@@ -62,17 +62,15 @@ Time::setMillisTime(double mseconds)
 QString
 Time::toString(bool showMillis) const
 {
-	static QString builder;
-
-	int msec = m_mseconds + 0.5;
-	int hours = msec / 3600000;
-	int minutes = (msec % 3600000) / 60000;
-	int seconds = (msec % 60000) / 1000;
+	const int msec = m_mseconds + 0.5;
+	const int hours = msec / 3600000;
+	const int minutes = (msec % 3600000) / 60000;
+	const int seconds = (msec % 60000) / 1000;
 
 	if(showMillis)
-		return builder.sprintf("%02d:%02d:%02d.%03d", hours, minutes, seconds, msec % 1000);
+		return QString::asprintf("%02d:%02d:%02d.%03d", hours, minutes, seconds, msec % 1000);
 
-	return builder.sprintf("%02d:%02d:%02d", hours, minutes, seconds);
+	return QString::asprintf("%02d:%02d:%02d", hours, minutes, seconds);
 }
 
 int

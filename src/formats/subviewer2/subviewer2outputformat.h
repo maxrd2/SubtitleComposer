@@ -39,7 +39,7 @@ protected:
 
 			Time showTime = line->showTime();
 			Time hideTime = line->hideTime();
-			ret += m_builder.sprintf("%02d:%02d:%02d.%02d,%02d:%02d:%02d.%02d\n", showTime.hours(), showTime.minutes(), showTime.seconds(), (showTime.mseconds() + 5) / 10, hideTime.hours(), hideTime.minutes(), hideTime.seconds(), (hideTime.mseconds() + 5) / 10);
+			ret += QString::asprintf("%02d:%02d:%02d.%02d,%02d:%02d:%02d.%02d\n", showTime.hours(), showTime.minutes(), showTime.seconds(), (showTime.mseconds() + 5) / 10, hideTime.hours(), hideTime.minutes(), hideTime.seconds(), (hideTime.mseconds() + 5) / 10);
 
 			const SString &text = primary ? line->primaryText() : line->secondaryText();
 			ret += m_stylesMap[text.cummulativeStyleFlags()];
@@ -63,7 +63,6 @@ protected:
 		m_stylesMap[SString::Bold | SString::Italic | SString::Underline] = QStringLiteral("{Y:ubi}");
 	}
 
-	mutable QString m_builder;
 	mutable QMap<int, QString> m_stylesMap;
 };
 }

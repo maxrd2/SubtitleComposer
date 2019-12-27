@@ -112,17 +112,16 @@ protected:
 
 		for(SubtitleIterator it(subtitle); it.current(); ++it) {
 			const SubtitleLine *line = it.current();
-			QString showTimeArg, hideTimeArg;
 
-			Time showTime = line->showTime();
-			showTimeArg.sprintf("%01d:%02d:%02d.%02d",
+			const Time showTime = line->showTime();
+			const QString showTimeArg = QString::asprintf("%01d:%02d:%02d.%02d",
 												  showTime.hours(),
 												  showTime.minutes(),
 												  showTime.seconds(),
 												  (showTime.mseconds() + 5) / 10);
 
-			Time hideTime = line->hideTime();
-			hideTimeArg.sprintf("%01d:%02d:%02d.%02d",
+			const Time hideTime = line->hideTime();
+			const QString hideTimeArg = QString::asprintf("%01d:%02d:%02d.%02d",
 												  hideTime.hours(),
 												  hideTime.minutes(),
 												  hideTime.seconds(),

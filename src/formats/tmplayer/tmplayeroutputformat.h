@@ -32,14 +32,13 @@ class TMPlayerOutputFormat : public OutputFormat
 protected:
 	QString dumpSubtitles(const Subtitle &subtitle, bool primary) const override
 	{
-		QString builder;
 		QString ret;
 
 		for(SubtitleIterator it(subtitle); it.current(); ++it) {
 			const SubtitleLine *line = it.current();
 
 			Time showTime = line->showTime();
-			ret += builder.sprintf(m_timeFormat, showTime.hours(), showTime.minutes(), showTime.seconds());
+			ret += QString::asprintf(m_timeFormat, showTime.hours(), showTime.minutes(), showTime.seconds());
 
 			const SString &text = primary ? line->primaryText() : line->secondaryText();
 			ret += text.string().replace('\n', '|');
@@ -48,7 +47,7 @@ protected:
 			// We behave like Subtitle Workshop here: to compensate for the lack of hide time
 			// indication provisions in the format we add an empty line with the hide time.
 			Time hideTime = line->hideTime();
-			ret += builder.sprintf(m_timeFormat, hideTime.hours(), hideTime.minutes(), hideTime.seconds());
+			ret += QString::asprintf(m_timeFormat, hideTime.hours(), hideTime.minutes(), hideTime.seconds());
 
 			ret += '\n';
 		}

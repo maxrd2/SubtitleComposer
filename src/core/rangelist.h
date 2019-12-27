@@ -377,7 +377,7 @@ public:
 	{
 		QStringList ranges;
 		for(int index = 0, count = m_ranges.count(); index < count; ++index)
-			ranges += QString().sprintf("[%d,%d]", m_ranges.at(index).m_start, m_ranges.at(index).m_end);
+			ranges += QString::asprintf("[%d,%d]", m_ranges.at(index).m_start, m_ranges.at(index).m_end);
 		return ranges.join(", ");
 	}
 
