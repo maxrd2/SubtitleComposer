@@ -70,6 +70,9 @@ private slots:
 	void onLinesInserted(int firstIndex, int lastIndex);
 	void onLinesRemoved(int firstIndex, int lastIndex);
 
+	void onCompositeActionStart();
+	void onCompositeActionEnd();
+
 	void onLineChanged(const SubtitleLine *line);
 	void emitDataChanged();
 
@@ -83,6 +86,7 @@ private:
 	int m_minChangedLineIndex;
 	int m_maxChangedLineIndex;
 	QList<Subtitle *> m_graftPoints;
+	bool m_resettingModel;
 };
 
 class LinesWidget;

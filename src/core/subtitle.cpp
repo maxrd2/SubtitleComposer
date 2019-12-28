@@ -1401,15 +1401,25 @@ Subtitle::processAction(QUndoCommand *action)
 void
 Subtitle::beginCompositeAction(const QString &title)
 {
-	if(app()->subtitle() == this)
-		app()->undoStack()->beginMacro(title);
+	QUndoStack *undoStack = app()->undoStack();
+	if(app()->subtitle() == this) {
+		undoStack->beginMacro(title);
+		undoStack->push(new CompositeActionStart(*this));
+	} else {
+		CompositeActionStart(*this).redo();
+	}
 }
 
 void
 Subtitle::endCompositeAction()
 {
-	if(app()->subtitle() == this)
-		app()->undoStack()->endMacro();
+	QUndoStack *undoStack = app()->undoStack();
+	if(app()->subtitle() == this) {
+		undoStack->push(new CompositeActionEnd(*this));
+		undoStack->endMacro();
+	} else {
+		CompositeActionEnd(*this).redo();
+	}
 }
 
 void

@@ -30,7 +30,6 @@
 #include <QList>
 
 namespace SubtitleComposer {
-class CompositeAction;
 
 class SubtitleAction : public UndoAction
 {
@@ -103,6 +102,26 @@ private:
 	int m_firstIndex;
 	int m_lastIndex;
 	QList<SubtitleLine *> m_lines;
+};
+
+class CompositeActionStart : public SubtitleAction
+{
+public:
+	CompositeActionStart(Subtitle &subtitle);
+	virtual ~CompositeActionStart();
+
+	void redo() override;
+	void undo() override;
+};
+
+class CompositeActionEnd : public SubtitleAction
+{
+public:
+	CompositeActionEnd(Subtitle &subtitle);
+	virtual ~CompositeActionEnd();
+
+	void redo() override;
+	void undo() override;
 };
 
 class MoveLineAction : public SubtitleAction

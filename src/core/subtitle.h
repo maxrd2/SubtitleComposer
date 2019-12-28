@@ -189,6 +189,9 @@ signals:
 	void linesAboutToBeRemoved(int firstIndex, int lastIndex);
 	void linesRemoved(int firstIndex, int lastIndex);
 
+	void compositeActionStart();
+	void compositeActionEnd();
+
 	void lineAnchorChanged(const SubtitleLine *line, bool anchored);
 
 /// forwarded line signals

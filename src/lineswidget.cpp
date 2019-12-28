@@ -63,7 +63,8 @@ LinesModel::LinesModel(QObject *parent) :
 	m_dataChangedTimer(new QTimer(this)),
 	m_minChangedLineIndex(-1),
 	m_maxChangedLineIndex(-1),
-	m_graftPoints(QList<Subtitle *>())
+	m_graftPoints(QList<Subtitle *>()),
+	m_resettingModel(false)
 {
 	m_dataChangedTimer->setInterval(0);
 	m_dataChangedTimer->setSingleShot(true);
@@ -84,8 +85,10 @@ LinesModel::setSubtitle(Subtitle *subtitle)
 		m_playingLine = 0;
 
 		if(m_subtitle) {
-			disconnect(m_subtitle, SIGNAL(linesInserted(int, int)), this, SLOT(onLinesInserted(int, int)));
-			disconnect(m_subtitle, SIGNAL(linesRemoved(int, int)), this, SLOT(onLinesRemoved(int, int)));
+			disconnect(m_subtitle, &Subtitle::linesInserted, this, &LinesModel::onLinesInserted);
+			disconnect(m_subtitle, &Subtitle::linesRemoved, this, &LinesModel::onLinesRemoved);
+			disconnect(m_subtitle, &Subtitle::compositeActionStart, this, &LinesModel::onCompositeActionStart);
+			disconnect(m_subtitle, &Subtitle::compositeActionEnd, this, &LinesModel::onCompositeActionEnd);
 
 			disconnect(m_subtitle, &Subtitle::lineAnchorChanged, this, &LinesModel::onLineChanged);
 			disconnect(m_subtitle, &Subtitle::lineErrorFlagsChanged, this, &LinesModel::onLineChanged);
@@ -106,8 +109,10 @@ LinesModel::setSubtitle(Subtitle *subtitle)
 				onLinesInserted(0, m_subtitle->linesCount() - 1);
 			}
 
-			connect(m_subtitle, SIGNAL(linesInserted(int, int)), this, SLOT(onLinesInserted(int, int)));
-			connect(m_subtitle, SIGNAL(linesRemoved(int, int)), this, SLOT(onLinesRemoved(int, int)));
+			connect(m_subtitle, &Subtitle::linesInserted, this, &LinesModel::onLinesInserted);
+			connect(m_subtitle, &Subtitle::linesRemoved, this, &LinesModel::onLinesRemoved);
+			connect(m_subtitle, &Subtitle::compositeActionStart, this, &LinesModel::onCompositeActionStart);
+			connect(m_subtitle, &Subtitle::compositeActionEnd, this, &LinesModel::onCompositeActionEnd);
 
 			connect(m_subtitle, &Subtitle::lineAnchorChanged, this, &LinesModel::onLineChanged);
 			connect(m_subtitle, &Subtitle::lineErrorFlagsChanged, this, &LinesModel::onLineChanged);
@@ -325,6 +330,9 @@ LinesModel::setData(const QModelIndex &index, const QVariant &value, int role)
 void
 LinesModel::onLinesInserted(int firstIndex, int lastIndex)
 {
+	if(m_resettingModel)
+		return;
+
 	static const QModelIndex rootIndex;
 
 	beginInsertRows(rootIndex, firstIndex, lastIndex);
@@ -334,10 +342,27 @@ LinesModel::onLinesInserted(int firstIndex, int lastIndex)
 void
 LinesModel::onLinesRemoved(int firstIndex, int lastIndex)
 {
+	if(m_resettingModel)
+		return;
+
 	static const QModelIndex rootIndex;
 
 	beginRemoveRows(rootIndex, firstIndex, lastIndex);
 	endRemoveRows();
+}
+
+void
+LinesModel::onCompositeActionStart()
+{
+	m_resettingModel = true;
+	beginResetModel();
+}
+
+void
+LinesModel::onCompositeActionEnd()
+{
+	endResetModel();
+	m_resettingModel = false;
 }
 
 void
