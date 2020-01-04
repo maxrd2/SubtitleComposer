@@ -34,7 +34,7 @@ public:
 	bool spaces() const;
 	bool quotes() const;
 	bool englishI() const;
-	bool ellipisis() const;
+	bool ellipsis() const;
 
 private:
 	QCheckBox *m_spacesCheckBox;

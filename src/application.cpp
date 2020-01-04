@@ -1153,7 +1153,7 @@ Application::setupActions()
 
 	QAction *toggleAnchor = new QAction(actionCollection);
 	toggleAnchor->setText(i18n("Toggle Anchor"));
-	toggleAnchor->setStatusTip(i18n("(Un)Anchor current line's show time to timeline (Editing anchored line's show time will stretch/compact the timeline between adjanced anchors)"));
+	toggleAnchor->setStatusTip(i18n("(Un)Anchor current line's show time to timeline (Editing anchored line's show time will stretch/compact the timeline between adjacent anchors)"));
 	actionCollection->setDefaultShortcut(toggleAnchor, QKeySequence("Alt+A"));
 	connect(toggleAnchor, SIGNAL(triggered()), this, SLOT(anchorToggle()));
 	actionCollection->addAction(ACT_ANCHOR_TOGGLE, toggleAnchor);
@@ -1800,7 +1800,7 @@ Application::fixPunctuation()
 	static FixPunctuationDialog *dlg = new FixPunctuationDialog(m_mainWindow);
 
 	if(dlg->exec() == QDialog::Accepted) {
-		m_subtitle->fixPunctuation(m_linesWidget->targetRanges(dlg->selectedLinesTarget()), dlg->spaces(), dlg->quotes(), dlg->englishI(), dlg->ellipisis(), dlg->selectedTextsTarget()
+		m_subtitle->fixPunctuation(m_linesWidget->targetRanges(dlg->selectedLinesTarget()), dlg->spaces(), dlg->quotes(), dlg->englishI(), dlg->ellipsis(), dlg->selectedTextsTarget()
 								   );
 	}
 }
