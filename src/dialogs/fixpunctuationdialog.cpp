@@ -44,7 +44,7 @@ FixPunctuationDialog::FixPunctuationDialog(QWidget *parent) :
 	m_englishICheckBox->setChecked(true);
 
 	m_ellipsisCheckBox = new QCheckBox(settingsGroupBox);
-	m_ellipsisCheckBox->setText(i18n("Add ellipisis indicating non finished lines"));
+	m_ellipsisCheckBox->setText(i18n("Add ellipsis indicating non finished lines"));
 	m_ellipsisCheckBox->setChecked(true);
 
 	createLineTargetsButtonGroup();
@@ -76,7 +76,7 @@ FixPunctuationDialog::englishI() const
 }
 
 bool
-FixPunctuationDialog::ellipisis() const
+FixPunctuationDialog::ellipsis() const
 {
 	return m_ellipsisCheckBox->isChecked();
 }

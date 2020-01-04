@@ -58,7 +58,7 @@ protected:
 	virtual bool init(QWidget *videoWidget) = 0;
 
 	/**
-	 * @brief cleanup - Cleanup anything that's in use or have been initalized
+	 * @brief cleanup - Cleanup anything that's in use or have been initialized
 	 */
 	virtual void cleanup() = 0;
 
@@ -102,7 +102,7 @@ protected:
 	virtual bool seek(double seconds) = 0;
 
 	/**
-	 * @brief step - skip amount of frames backwars/forwards - this function should be async
+	 * @brief step - skip amount of frames backwards/forwards - this function should be async
 	 * @param frameOffset - count of frames to step
 	 * @return false if error occurred
 	 */

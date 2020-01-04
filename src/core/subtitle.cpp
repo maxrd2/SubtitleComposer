@@ -788,7 +788,7 @@ Subtitle::adjustLines(const Range &range, long newFirstTime, long newLastTime)
 
 	double newDeltaTime = newLastTime - newFirstTime;
 
-	// special case in which we can't procede as there's no way to
+	// special case in which we can't proceed as there's no way to
 	// linearly transform the same time into two different ones...
 	if(!oldDeltaTime && newDeltaTime)
 		return;

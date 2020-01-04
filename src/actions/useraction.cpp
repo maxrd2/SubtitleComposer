@@ -45,7 +45,7 @@ UserAction::onActionChanged()
 {
 	if(!m_ignoreActionEnabledSignal) {
 		if(m_action->isEnabled() != isEnabled()) {
-			// qDebug() << "enabled state externaly changed for" << m_action->objectName();
+			// qDebug() << "enabled state externally changed for" << m_action->objectName();
 
 			m_actionEnabled = m_action->isEnabled();
 			updateEnabledState();

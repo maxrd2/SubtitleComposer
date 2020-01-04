@@ -126,7 +126,7 @@
          <string>Threshold for decision between noise and silence frames. Log-ratio between signal level and noise level</string>
         </property>
         <property name="text">
-         <string>Noise Treshold</string>
+         <string>Noise Threshold</string>
         </property>
         <property name="buddy">
          <cstring>kcfg_vadTreshold</cstring>

@@ -485,7 +485,7 @@ VideoPlayer::openFile(const QString &filePath)
 
 	QFileInfo fileInfo(filePath);
 	if(!fileInfo.exists() || !fileInfo.isFile() || !fileInfo.isReadable()) {
-		emit fileOpenError(filePath, i18n("File does not exist."));   // operation will never succed
+		emit fileOpenError(filePath, i18n("File does not exist."));   // operation will never succeed
 		return true;
 	}
 

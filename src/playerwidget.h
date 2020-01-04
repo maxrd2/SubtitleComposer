@@ -161,7 +161,7 @@ private:
 	QLabel *m_fpsLabel;
 	QLabel *m_rateLabel;
 
-	QPoint m_savedCursorPos;                // for hidding the mouse on full screen mode
+	QPoint m_savedCursorPos;                // for hiding the mouse on full screen mode
 	QPoint m_currentCursorPos;
 };
 }

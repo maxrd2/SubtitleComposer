@@ -152,7 +152,7 @@ VobSubInputProcessDialog::Frame::processPieces()
 
 	pieces.clear();
 
-	// build piece by searching non-diagonal adjanced pixels, assigned pixels are
+	// build piece by searching non-diagonal adjacent pixels, assigned pixels are
 	// removed from pieceBitmap
 	std::function<void(int,int)> cutPiece = [&](int x, int y){
 		if(piece->top > y)

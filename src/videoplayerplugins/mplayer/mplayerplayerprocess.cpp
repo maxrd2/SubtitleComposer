@@ -108,7 +108,7 @@ MPlayerProcess::start(const QString &filePath, WId winId, int audioStream, int a
 	if(MPlayerConfig::audioChannelsEnabled())
 		args << "-channels" << QString::number(MPlayerConfig::audioChannels());
 
-	args << "-zoom";                        // allow software scaling where hardware scaling is unavaliable
+	args << "-zoom";                        // allow software scaling where hardware scaling is unavailable
 	args << "-nokeepaspect";        // do not keep window aspect ratio when resizing windows
 
 	if(MPlayerConfig::frameDropping())
@@ -267,7 +267,7 @@ MPlayerProcess::sendCommand(const QByteArray &cmd, MPlayerProcess::CommandMode m
 			QEventLoop loop;
 			QTimer::singleShot(5000, Qt::VeryCoarseTimer, bind(&QEventLoop::exit, ref(loop), -1));
 			connect(this, &MPlayerProcess::playingReceived, &loop, &QEventLoop::quit);
-			m_emitPlaying = true;   // to make the playingReceived() signal be emmited again
+			m_emitPlaying = true;   // to make the playingReceived() signal be emitted again
 			write(cmd + '\n');
 //			qDebug() << "WAITING";
 			if(loop.exec() != 0)

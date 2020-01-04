@@ -93,8 +93,8 @@ Finder::invalidate()
 
 	m_feedingPrimary = false;
 
-	// NOTE a line shoudn't be deleted before being removed from the subtitle
-	// so there's no risk of being left with an invalid referece as this
+	// NOTE a line shouldn't be deleted before being removed from the subtitle
+	// so there's no risk of being left with an invalid reference as this
 	// method is called when a line is removed from the subtitle and before
 	// anyone has a chance to delete the line.
 	if(m_dataLine) {
