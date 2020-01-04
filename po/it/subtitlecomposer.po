@@ -1,5 +1,6 @@
-# translation of subtitlecomposer.po to Italian
-# This file is put in the public domain.
+# Italian translations for PACKAGE package.
+# Copyright (C) 2020 THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
 #
 # Alessandro Polverini <dusty@nibbles.it>, 2010.
 # Luigi Toscano <luigi.toscano@tiscali.it>, 2018.
