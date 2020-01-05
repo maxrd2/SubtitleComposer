@@ -216,6 +216,9 @@ public slots:
 	void adjustToVideoPositionAnchorLast();
 	void adjustToVideoPositionAnchorFirst();
 
+	static const QString & buildSubtitleFilesFilter(bool openFileFilter = true);
+	static const QString & buildMediaFilesFilter();
+
 signals:
 	void subtitleOpened(Subtitle *subtitle);
 	void subtitleClosed();
@@ -236,9 +239,6 @@ private:
 	void setupActions();
 
 	Time videoPosition(bool compensate = false);
-
-	static const QString & buildSubtitleFilesFilter(bool openFileFilter = true);
-	static const QString & buildMediaFilesFilter();
 
 	bool applyTranslation(RangeList ranges, bool primary, int inputLanguage, int outputLanguage, int textTargets);
 

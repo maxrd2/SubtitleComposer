@@ -28,7 +28,6 @@
 QT_FORWARD_DECLARE_CLASS(QGridLayout)
 QT_FORWARD_DECLARE_CLASS(QGroupBox)
 class KLineEdit;
-class KComboBox;
 
 namespace SubtitleComposer {
 class SelectableSubtitleDialog : public ActionWithTargetDialog
@@ -39,7 +38,6 @@ public:
 	SelectableSubtitleDialog(const QString &title, QWidget *parent = 0);
 
 	QUrl subtitleUrl() const;
-	QString subtitleEncoding() const;
 
 protected:
 	QGroupBox * createSubtitleGroupBox(const QString &title = i18n("Subtitle"), bool addToLayout = true);
@@ -52,7 +50,6 @@ protected:
 	QGridLayout *m_subtitleLayout;
 
 	KLineEdit *m_subtitleUrlLineEdit;
-	KComboBox *m_subtitleEncodingComboBox;
 };
 }
 #endif

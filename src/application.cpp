@@ -26,8 +26,6 @@
 #include "configs/configdialog.h"
 #include "core/subtitleiterator.h"
 #include "currentlinewidget.h"
-#include "dialogs/joinsubtitlesdialog.h"
-#include "dialogs/splitsubtitledialog.h"
 #include "dialogs/actionwithtargetdialog.h"
 #include "dialogs/shifttimesdialog.h"
 #include "dialogs/adjusttimesdialog.h"
@@ -39,7 +37,6 @@
 #include "dialogs/translatedialog.h"
 #include "dialogs/smarttextsadjustdialog.h"
 #include "dialogs/changeframeratedialog.h"
-#include "dialogs/syncsubtitlesdialog.h"
 #include "dialogs/checkerrorsdialog.h"
 #include "dialogs/clearerrorsdialog.h"
 #include "dialogs/insertlinedialog.h"
@@ -81,7 +78,6 @@
 #include <QKeySequence>
 #include <QMenu>
 #include <QMenuBar>
-#include <QProcess>
 #include <QStatusBar>
 #include <QStringBuilder>
 #include <QTextCodec>
@@ -1212,77 +1208,6 @@ Application::videoPosition(bool compensate)
 }
 
 void
-Application::joinSubtitles()
-{
-	static JoinSubtitlesDialog *dlg = new JoinSubtitlesDialog(m_mainWindow);
-
-	if(dlg->exec() == QDialog::Accepted) {
-		QTextCodec *codec = codecForEncoding(dlg->subtitleEncoding());
-
-		Subtitle secondSubtitle;
-		bool primary = dlg->selectedTextsTarget() != Subtitle::Secondary;
-		if(FormatManager::instance().readSubtitle(secondSubtitle, primary, dlg->subtitleUrl(), &codec)) {
-			if(dlg->selectedTextsTarget() == Subtitle::Both)
-				secondSubtitle.setSecondaryData(secondSubtitle, true);
-
-			m_subtitle->appendSubtitle(secondSubtitle, dlg->shiftTime().toMillis());
-		} else
-			KMessageBox::sorry(m_mainWindow, i18n("Could not read the subtitle file to append."));
-	}
-}
-
-void
-Application::splitSubtitle()
-{
-	static SplitSubtitleDialog *dlg = new SplitSubtitleDialog(m_mainWindow);
-
-	if(dlg->exec() != QDialog::Accepted)
-		return;
-
-	Subtitle newSubtitle;
-	m_subtitle->splitSubtitle(newSubtitle, dlg->splitTime().toMillis(), dlg->shiftNewSubtitle());
-	if(!newSubtitle.linesCount()) {
-		KMessageBox::information(m_mainWindow, i18n("The specified time does not split the subtitles."));
-		return;
-	}
-
-	QUrl splitUrl = saveSplitSubtitle(
-		newSubtitle,
-		m_subtitleUrl,
-		m_subtitleEncoding,
-		m_subtitleFormat,
-		true);
-
-	if(splitUrl.path().isEmpty()) {
-		// there was an error saving the split part, undo the splitting of m_subtitle
-		m_undoStack->undo();
-		return;
-	}
-
-	QUrl splitTrUrl;
-	if(m_translationMode) {
-		splitTrUrl = saveSplitSubtitle(newSubtitle, m_subtitleTrUrl, m_subtitleTrEncoding, m_subtitleTrFormat, false);
-
-		if(splitTrUrl.path().isEmpty()) {
-			// there was an error saving the split part, undo the splitting of m_subtitle
-			m_undoStack->undo();
-			return;
-		}
-	}
-
-	QStringList args;
-	args << splitUrl.toString(QUrl::PreferLocalFile);
-	if(m_translationMode)
-		args << splitTrUrl.toString(QUrl::PreferLocalFile);
-
-	if(!QProcess::startDetached(applicationName(), args)) {
-		KMessageBox::sorry(m_mainWindow, m_translationMode
-			? i18n("Could not open a new Subtitle Composer window.\n" "The split part was saved as %1.", splitUrl.path())
-			: i18n("Could not open a new Subtitle Composer window.\n" "The split parts were saved as %1 and %2.", splitUrl.path(), splitTrUrl.path()));
-	}
-}
-
-void
 Application::insertBeforeCurrentLine()
 {
 	static InsertLineDialog *dlg = new InsertLineDialog(true, m_mainWindow);
@@ -1710,29 +1635,6 @@ Application::fixOverlappingLines()
 
 	if(dlg->exec() == QDialog::Accepted)
 		m_subtitle->fixOverlappingLines(m_linesWidget->targetRanges(dlg->selectedLinesTarget()), dlg->minimumInterval());
-}
-
-void
-Application::syncWithSubtitle()
-{
-	static SyncSubtitlesDialog *dlg = new SyncSubtitlesDialog(m_mainWindow);
-
-	if(dlg->exec() == QDialog::Accepted) {
-		QTextCodec *codec = codecForEncoding(dlg->subtitleEncoding());
-
-		Subtitle referenceSubtitle;
-		if(FormatManager::instance().readSubtitle(referenceSubtitle, true, dlg->subtitleUrl(), &codec)) {
-			if(dlg->adjustToReferenceSubtitle()) {
-				if(referenceSubtitle.linesCount() <= 1)
-					KMessageBox::sorry(m_mainWindow, i18n("The reference subtitle must have more than one line to proceed."));
-				else
-					m_subtitle->adjustLines(Range::full(), referenceSubtitle.firstLine()->showTime().toMillis(), referenceSubtitle.lastLine()->showTime().toMillis()
-											);
-			} else // if ( dlg->synchronizeToReferenceTimes() )
-				m_subtitle->syncWithSubtitle(referenceSubtitle);
-		} else
-			KMessageBox::sorry(m_mainWindow, i18n("Could not parse the reference subtitle file."));
-	}
 }
 
 void

@@ -197,17 +197,22 @@ FormatManager::readText(Subtitle &subtitle, const QUrl &url, bool primary,
 	fileLoadHelper.close();
 
 	QString stringData;
-	if(!*codec) {
-		QTextCodec *c = detectEncoding(byteData);
-		if(!c)
-			return CANCEL;
-		*codec = c;
-	}
-	if(*codec) {
-		QTextStream textStream(byteData);
-		textStream.setCodec(*codec);
-		textStream.setAutoDetectUnicode(false);
-		stringData = textStream.readAll();
+	if(!codec) {
+		// don't care about text nor text encoding
+		stringData = QString::fromLatin1(byteData);
+	} else {
+		if(!*codec) {
+			QTextCodec *c = detectEncoding(byteData);
+			if(!c)
+				return CANCEL;
+			*codec = c;
+		}
+		if(*codec) {
+			QTextStream textStream(byteData);
+			textStream.setCodec(*codec);
+			textStream.setAutoDetectUnicode(false);
+			stringData = textStream.readAll();
+		}
 	}
 
 	stringData.replace(QLatin1String("\r\n"), QLatin1String("\n"));

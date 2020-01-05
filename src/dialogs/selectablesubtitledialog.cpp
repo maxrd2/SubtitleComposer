@@ -21,6 +21,7 @@
 #include "selectablesubtitledialog.h"
 #include "application.h"
 
+#include <QFileDialog>
 #include <QTextCodec>
 #include <QLabel>
 #include <QGroupBox>
@@ -59,29 +60,14 @@ SelectableSubtitleDialog::createSubtitleGroupBox(const QString &title, bool addT
 
 	connect(subtitleButton, SIGNAL(clicked()), SLOT(selectSubtitle()));
 
-	m_subtitleEncodingComboBox = new KComboBox(m_subtitleGroupBox);
-	m_subtitleEncodingComboBox->addItem(i18n("Autodetect"));
-	m_subtitleEncodingComboBox->addItems(app()->availableEncodingNames());
-	m_subtitleEncodingComboBox->setCurrentIndex(0);
-
-	QLabel *subtitleEncodingLabel = new QLabel(m_subtitleGroupBox);
-	subtitleEncodingLabel->setText(i18n("Encoding:"));
-	subtitleEncodingLabel->setBuddy(m_subtitleEncodingComboBox);
-
 	QHBoxLayout *subtitlePathLayout = new QHBoxLayout();
 	subtitlePathLayout->addWidget(m_subtitleUrlLineEdit, 2);
 	subtitlePathLayout->addWidget(subtitleButton);
-
-	QHBoxLayout *subtitleEncodingLayout = new QHBoxLayout();
-	subtitleEncodingLayout->addWidget(m_subtitleEncodingComboBox);
-	subtitleEncodingLayout->addItem(new QSpacerItem(1, 1, QSizePolicy::Expanding, QSizePolicy::Minimum));
 
 	m_subtitleLayout = createLayout(m_subtitleGroupBox);
 	m_subtitleLayout->setColumnStretch(1, 2);
 	m_subtitleLayout->addWidget(subtitlePathLabel, 0, 0, Qt::AlignRight | Qt::AlignVCenter);
 	m_subtitleLayout->addLayout(subtitlePathLayout, 0, 1, 1, 2);
-	m_subtitleLayout->addWidget(subtitleEncodingLabel, 1, 0, Qt::AlignRight | Qt::AlignVCenter);
-	m_subtitleLayout->addLayout(subtitleEncodingLayout, 1, 1);
 
 	return m_subtitleGroupBox;
 }
@@ -89,31 +75,16 @@ SelectableSubtitleDialog::createSubtitleGroupBox(const QString &title, bool addT
 void
 SelectableSubtitleDialog::selectSubtitle()
 {
-	/*
-	OpenSubtitleDialog openDlg(true, subtitleUrl().isEmpty() ? app()->lastSubtitleDirectory() : subtitleUrl(), subtitleEncoding());
+	QFileDialog openDlg(app()->mainWindow(), i18n("Open Subtitle"), QString(), Application::buildSubtitleFilesFilter());
+	openDlg.setModal(true);
+	openDlg.selectUrl(subtitleUrl().isEmpty() ? app()->lastSubtitleDirectory() : subtitleUrl());
 
-	if(openDlg.exec() == QDialog::Accepted) {
-		m_subtitleUrlLineEdit->setText(openDlg.selectedUrl().toLocalFile());
-		if(openDlg.selectedEncoding().isEmpty())
-			m_subtitleEncodingComboBox->setCurrentItem(i18n("Autodetect"));
-		else
-			m_subtitleEncodingComboBox->setCurrentItem(openDlg.selectedEncoding().toUpper());
-	}*/
+	if(openDlg.exec() == QDialog::Accepted)
+		m_subtitleUrlLineEdit->setText(openDlg.selectedUrls().first().toLocalFile());
 }
 
 QUrl
 SelectableSubtitleDialog::subtitleUrl() const
 {
-	return QUrl(m_subtitleUrlLineEdit->text());
+	return QUrl::fromLocalFile(m_subtitleUrlLineEdit->text());
 }
-
-QString
-SelectableSubtitleDialog::subtitleEncoding() const
-{
-	if(m_subtitleEncodingComboBox->currentIndex() == 0)
-		return QString();
-	else
-		return m_subtitleEncodingComboBox->currentText();
-}
-
-
