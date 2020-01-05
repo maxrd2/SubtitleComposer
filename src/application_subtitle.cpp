@@ -642,14 +642,15 @@ Application::saveSplitSubtitle(const Subtitle &subtitle, const QUrl &srcUrl, QSt
 			encoding = "UTF-8";
 
 		if(format.isEmpty())
-			format = "SubRip";
+			format = FormatManager::instance().defaultOutput()->name();
 
-		QFileInfo dstFileInfo(srcUrl.path());
-		if(srcUrl.isEmpty()) {
+		QFileInfo dstFileInfo;
+		if(srcUrl.isEmpty() || !srcUrl.isLocalFile()) {
 			QString baseName = primary ? i18n("Untitled") : i18n("Untitled Translation");
-			QFileInfo(QDir(System::tempDir()), baseName + FormatManager::instance().defaultOutput()->extensions().first());
+			dstFileInfo = QFileInfo(QDir(System::tempDir()), baseName + FormatManager::instance().output(format)->extensions().first());
+		} else {
+			dstFileInfo = QFileInfo(srcUrl.toLocalFile());
 		}
-
 		dstUrl = srcUrl;
 		dstUrl.setPath(dstFileInfo.path());
 		dstUrl = System::newUrl(dstUrl, dstFileInfo.completeBaseName() + " - " + i18nc("Suffix added to split subtitles", "split"), dstFileInfo.suffix());

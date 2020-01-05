@@ -180,7 +180,8 @@ QString
 System::tempDir()
 {
 	QString tempDir = QStandardPaths::writableLocation(QStandardPaths::TempLocation);
-	tempDir.remove(QRegExp(QStringLiteral("[\\/]+$")));
+	while(tempDir.endsWith(QDir::separator()))
+		tempDir.chop(1);
 	return tempDir;
 }
 
@@ -198,51 +199,43 @@ System::newUrl(const QUrl &baseUrl, const QString &fileName, const QString &exte
 	}
 
 	QString newFileDir = baseUrl.path();
-	newFileDir.remove(QRegExp(QStringLiteral("[\\/]+$")));
-	newFileDir += '/';
+	if(!newFileDir.endsWith(QDir::separator()))
+		newFileDir += QDir::separator();
+
+	int i = 2;
+	retries += i;
 
 	if(baseUrl.isLocalFile()) {
 		QFileInfo dirInfo(newFileDir);
 		if(dirInfo.isDir() && dirInfo.isWritable()) {
 			QString newFilePath = newFileDir + newFileName;
-			if(!QFile::exists(newFilePath))
-				return QUrl(newFilePath);
-
-			for(int i = 2, limit = retries + i; i < limit; ++i) {
-				newFilePath = newFileDir + newFileNameBuilder.arg(i);
-				if(!QFile::exists(newFilePath))
-					return QUrl(newFilePath);
-			}
+			while(i < retries && QFile::exists(newFilePath))
+				newFilePath = newFileDir + newFileNameBuilder.arg(i++);
+			if(i < retries)
+				return QUrl::fromLocalFile(newFilePath);
 		}
 	} else {
 		QUrl newUrl = baseUrl;
-
 		newUrl.setPath(newFileDir + newFileName);
-		KIO::Job *job = KIO::stat(newUrl, KIO::StatJob::DestinationSide, 2);
-		if(!job->exec())
-			return newUrl;
-
-		for(int i = 2, limit = retries + i; i < limit; ++i) {
-			newUrl.setPath(newFileDir + newFileNameBuilder.arg(i));
-			job = KIO::stat(newUrl, KIO::StatJob::DestinationSide, 2);
+		for(;;) {
+			KIO::Job *job = KIO::stat(newUrl, KIO::StatJob::DestinationSide, 2);
 			if(!job->exec())
 				return newUrl;
+			if(i >= retries)
+				break;
+			newUrl.setPath(newFileDir + newFileNameBuilder.arg(i++));
 		}
 	}
 
 	// could not return a writable url in baseUrl so we return one in the temp dir
-	newFileDir = tempDir() + '/';
+	newFileDir = tempDir() + QDir::separator();
 
+	i = 2;
 	QString newFilePath = newFileDir + newFileName;
-	if(!QFile::exists(newFilePath))
-		return QUrl(newFilePath);
-
-	int i = 2;
-	do {
+	while(QFile::exists(newFilePath))
 		newFilePath = newFileDir + newFileNameBuilder.arg(i++);
-	} while(QFile::exists(newFilePath));
 
-	return QUrl(newFilePath);
+	return QUrl::fromLocalFile(newFilePath);
 }
 
 /*static*/ QUrl
