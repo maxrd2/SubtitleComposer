@@ -1,134 +1,199 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <component type="desktop-application">
-	<id>org.kde.subtitlecomposer</id>
-	<metadata_license>CC0-1.0</metadata_license>
-	<project_license>GPL-2.0+</project_license>
-	<name>Subtitle Composer</name>
-	<summary>Video subtitle editor that supports basic and advanced editing operations</summary>
-	<description>
-		<p>Subtitle Composer is an open source text-based subtitle editor that supports basic and advanced editing operations.</p>
-		<p>Features</p>
-		<ul>
-			<li>Open/Save Text Subtitle Formats - SubRip/SRT, MicroDVD, SSA/ASS, MPlayer, TMPlayer and YouTube captions</li>
-			<li>Open/OCR Graphics Subtitle Formats - VobSub (.idx/.sub/.rar), BluRay/PGS (*.sup), formats supported by ffmpeg (DVD/Vob, DVB, XSUB, HDMV-PGS)</li>
-			<li>Demux Graphics/Text Subtitle Stream from video file - SRT, SSA/ASS, MOV text, MicroDVD, DVD/Vob, DVB, XSUB, HDMV-PGS</li>
-			<li>Speech recognition from audio/video file using PocketSphinx</li>
-			<li>Smart language/text encoding** detection</li>
-			<li>Live preview of subtitles in integrated video player w/ audio stream selection</li>
-			<li>Preview/editing of subtitles on graphical audio waveform w/ audio stream selection</li>
-			<li>Sync by dragging several anchors/graftpoints and stretching timeline</li>
-			<li>Time shifting and scaling, lines duration re-calculation, framerate conversion, etc.</li>
-			<li>Joining and splitting of subtitle files</li>
-			<li>Side by side subtitle translations</li>
-			<li>Text styles (italic, bold, underline, stroke, color)</li>
-			<li>Spell checking</li>
-			<li>Detection of timing errors in subtitles</li>
-			<li>Scripting (JavaScript, Python, Ruby and other languages supported by Kross).</li>
-		</ul>
-	</description>
-	<launchable type="desktop-id">org.kde.subtitlecomposer.desktop</launchable>
-	<url type="homepage">https://invent.kde.org/kde/subtitlecomposer</url>
-	<screenshots>
-		<screenshot type="default">
-			<caption>Main application window</caption>
-			<image>https://cdn.kde.org/screenshots/subtitlecomposer/mainwindow.png</image>
-		</screenshot>
-	</screenshots>
-	<provides>
-		<id>org.kde.subtitlecomposer.desktop</id>
-		<binary>subtitlecomposer</binary>
-	</provides>
-	<project_group>KDE</project_group>
-	<releases>
-		<release date="2019-06-27" version="0.7.0">
-			<description>
-				<ul>
-					<li>Fixed parsing of absolute paths containing '#' character</li>
-					<li>Fixed open dialogs not showing all supported files</li>
-					<li>Fixed subtitle text not respecting system font configuration</li>
-					<li>Fixed waveform not rendering correctly/completely on some formats</li>
-					<li>Fixed waveform displaying subtitles at wrong times</li>
-					<li>Fixed waveform not working with some</li>
-					<li>Fixes to MPV, GStreamer and Xine video player backends</li>
-					<li>Waveform scrolling is configurable</li>
-					<li>PocketSphinx language models and VAD are configurable</li>
-					<li>Added show status bar action to main window popup menu</li>
-					<li>Improved (scripting) performance</li>
-					<li>Spell checker will use translation text when it is selected</li>
-					<li>Waveform and video docks can be hidden</li>
-					<li>Split lines won't split text on spaces while there are multiple lines</li>
-					<li>Subtitle lines will always stay sorted by their time</li>
-					<li>Improved fullscreen video player</li>
-					<li>Added ability to step by frame</li>
-					<li>Added play rate controls to video menu</li>
-					<li>Updated Croatian translation - thanks @muzena</li>
-					<li>Updated Italian translation - thanks Luigi Toscano @tosky</li>
-					<li>Updated Russian translation - thanks Nick Shaforostoff @shaforostoff</li>
-				</ul>
-			</description>
-		</release>
-		<release date="2018-02-11" version="0.6.6">
-			<description>
-				<ul>
-					<li>Fixed open video dialog filters</li>
-					<li>Fixed "Insert Line" on waveform adding at the wrong index - thanks @qsniyg</li>
-					<li>Added MMB seeking on waveform - thanks @qsniyg</li>
-					<li>Fixed some compilation issues</li>
-					<li>Updated translations - thanks @gogogogi, @muzena</li>
-					<li>Fixed vobsub when opening from video file and symbol cache filename</li>
-					<li>Fixed subtitle loading times of huge files</li>
-					<li>Improved vobsub text detection</li>
-					<li>Fixed ASS rich text parsing on import subtitle stream action</li>
-					<li>Replaced buggy mplayer vobsub import code with ffmpeg</li>
-					<li>Fixed memory leaks/usage of WaveformWidget's scroll animation</li>
-					<li>Optimized import subtitle stream from video action</li>
-					<li>Replaced gstreamer with ffmpeg libraries in application core usage</li>
-					<li>Added abort button to speech recognition</li>
-					<li>Waveform smooth scrolling</li>
-					<li>Added join/split lines actions to waveform context menu</li>
-					<li>Fixed some crashes, memory leaks and overall code cleanups</li>
-					<li>Cleaned up settings widget and texts</li>
-				</ul>
-			</description>
-		</release>
-		<release date="2017-09-18" version="0.6.5">
-			<description>
-				<ul>
-					<li>ADD: Added support for binary subtitle formats</li>
-					<li>ADD: fine control video playback speed</li>
-					<li>ADD: controls for video playback speed</li>
-					<li>MOD: GStreamer backend audio improvements.</li>
-					<li>MOD: Moved open video actions under File menu</li>
-					<li>MOD: More tolerant parsing of SubRip subtitles</li>
-					<li>MOD: Improved split lines command</li>
-					<li>MOD: Updated Czech translation - thanks @goliashcz</li>
-					<li>MOD: Updated Croatian translations - thanks @muzena</li>
-					<li>FIX: Waveform widget dragging and speed improvements, fixed buffer overflow</li>
-					<li>FIX: WaveformWidget: zoom out wasn't working on movies without audio</li>
-					<li>FIX: Fixed cases where subtitle hide time would end up before show time</li>
-					<li>FIX: Improved context menus</li>
-					<li>FIX: Fixed moving of anchored lines</li>
-					<li>FIX: Open subtitle wouldn't autoload video in some cases</li>
-					<li>FIX: Open video now includes .divx and .webm extensions</li>
-					<li>FIX: Tools menu scripts are filtered based on installed kross interpreters</li>
-					<li>FIX: Moved custom icons to more standard location, using QIcon::fromTheme()</li>
-					<li>FIX: Error Check > Absolute Duration config fields were changing incorrect values</li>
-					<li>FIX: MPV Backend: fixed deprecated options, updated vo devices - thanks @luzfcb</li>
-					<li>FIX: better rendering on high DPI screens</li>
-					<li>FIX: MPV Backend: framerate/video length wasn't reported to subtitle composer anymore</li>
-					<li>FIX: detection/handling of current playing line</li>
-					<li>FIX: Parsing text containing &lt;font&gt; without color attribute</li>
-					<li>FIX: compilation without xine - thanks @pinotree</li>
-					<li>FIX: ASS parsing - thanks @Martchus</li>
-				</ul>
-			</description>
-		</release>
-		<release date="2016-05-07" version="0.6.4" />
-		<release date="2016-04-03" version="0.6.3" />
-		<release date="2016-03-25" version="0.6.2" />
-		<release date="2016-03-15" version="0.6.1" />
-		<release date="2016-03-15" version="0.6.0" />
-		<release date="2016-02-08" version="0.5.9" />
-		<release date="2016-02-07" version="0.5.8" />
-	</releases>
+  <id>org.kde.subtitlecomposer</id>
+  <metadata_license>CC0-1.0</metadata_license>
+  <project_license>GPL-2.0+</project_license>
+  <name>Subtitle Composer</name>
+  <name xml:lang="ca">Subtitle Composer</name>
+  <name xml:lang="nl">Samensteller van ondertitels</name>
+  <name xml:lang="uk">Редактор субтитрів</name>
+  <name xml:lang="x-test">xxSubtitle Composerxx</name>
+  <summary>Video subtitle editor that supports basic and advanced editing operations</summary>
+  <summary xml:lang="ca">Editor de subtítols de vídeo que admet operacions d'edició bàsiques i avançades</summary>
+  <summary xml:lang="uk">Текстовий редактор субтитрів до відео, у якому передбачено базові і розширені можливості з редагування</summary>
+  <summary xml:lang="x-test">xxVideo subtitle editor that supports basic and advanced editing operationsxx</summary>
+  <description>
+    <p>Subtitle Composer is an open source text-based subtitle editor that supports basic and advanced editing operations.</p>
+    <p xml:lang="ca">El Subtitle Composer és un editor de subtítols de codi obert basat en text que admet operacions d'edició bàsiques i avançades.</p>
+    <p xml:lang="uk">«Редактор субтитрів» — текстовий редактор субтитрів із відкритим кодом, у якому передбачено базові і розширені можливості з редагування.</p>
+    <p xml:lang="x-test">xxSubtitle Composer is an open source text-based subtitle editor that supports basic and advanced editing operations.xx</p>
+    <p>Features</p>
+    <p xml:lang="ca">Característiques</p>
+    <p xml:lang="nl">Mogelijkheden</p>
+    <p xml:lang="uk">Можливості</p>
+    <p xml:lang="x-test">xxFeaturesxx</p>
+    <ul>
+      <li>Open/Save Text Subtitle Formats - SubRip/SRT, MicroDVD, SSA/ASS, MPlayer, TMPlayer and YouTube captions</li>
+      <li xml:lang="ca">Obre/Desa els formats de subtítols de text: SubRip/SRT, MicroDVD, SSA/ASS, MPlayer, TMPlayer i llegendes de YouTube</li>
+      <li xml:lang="uk">Відкриття/Збереження даних у текстових форматах субтитрів — SubRip/SRT, MicroDVD, SSA/ASS, MPlayer, TMPlayer та субтитрів YouTube</li>
+      <li xml:lang="x-test">xxOpen/Save Text Subtitle Formats - SubRip/SRT, MicroDVD, SSA/ASS, MPlayer, TMPlayer and YouTube captionsxx</li>
+      <li>Open/OCR Graphics Subtitle Formats - VobSub (.idx/.sub/.rar), BluRay/PGS (*.sup), formats supported by ffmpeg (DVD/Vob, DVB, XSUB, HDMV-PGS)</li>
+      <li xml:lang="ca">Obre/Formats de subtítols gràfics OCR: VobSub (.idx/.sub/.rar), BluRay/PGS (*.sup), formats admesos per ffmpeg (DVD/Vob, DVB, XSUB, HDMV-PGS)</li>
+      <li xml:lang="uk">Відкриті/Розпізнані графічні формати субтитрів — VobSub (.idx/.sub/.rar), BluRay/PGS (*.sup), формати, підтримку яких передбачено у ffmpeg (DVD/Vob, DVB, XSUB, HDMV-PGS)</li>
+      <li xml:lang="x-test">xxOpen/OCR Graphics Subtitle Formats - VobSub (.idx/.sub/.rar), BluRay/PGS (*.sup), formats supported by ffmpeg (DVD/Vob, DVB, XSUB, HDMV-PGS)xx</li>
+      <li>Demux Graphics/Text Subtitle Stream from video file - SRT, SSA/ASS, MOV text, MicroDVD, DVD/Vob, DVB, XSUB, HDMV-PGS</li>
+      <li xml:lang="ca">Desmultiplexa el flux de subtítols gràfics/de text des d'un fitxer de vídeo: SRT, SSA/ASS, text MOV, MicroDVD, DVD/Vob, DVB, XSUB, HDMV-PGS</li>
+      <li xml:lang="uk">Демультиплексовані графічні або текстові потоки субтитрів з відеофайлів — SRT, SSA/ASS, MOV text, MicroDVD, DVD/Vob, DVB, XSUB, HDMV-PGS</li>
+      <li xml:lang="x-test">xxDemux Graphics/Text Subtitle Stream from video file - SRT, SSA/ASS, MOV text, MicroDVD, DVD/Vob, DVB, XSUB, HDMV-PGSxx</li>
+      <li>Speech recognition from audio/video file using PocketSphinx</li>
+      <li xml:lang="ca">Reconeixement de la veu des de fitxers d'àudio/vídeo emprant PocketSphinx</li>
+      <li xml:lang="nl">Spraakherkenning uit audio/video bestand met gebruik van PocketSphinx</li>
+      <li xml:lang="uk">Розпізнавання голосових даних зі звукових і відеофайлів за допомогою PocketSphinx</li>
+      <li xml:lang="x-test">xxSpeech recognition from audio/video file using PocketSphinxxx</li>
+      <li>Smart language/text encoding** detection</li>
+      <li xml:lang="ca">Detecció** intel·ligent de la codificació d'idioma/text</li>
+      <li xml:lang="uk">Автоматичне визначення мови і кодування тексту</li>
+      <li xml:lang="x-test">xxSmart language/text encoding** detectionxx</li>
+      <li>Live preview of subtitles in integrated video player w/ audio stream selection</li>
+      <li xml:lang="ca">Vista prèvia en viu dels subtítols en el reproductor de vídeo integrat amb selecció del flux d'àudio</li>
+      <li xml:lang="uk">Інтерактивний перегляд субтитрів у інтегрованому відеопрогравачі із можливістю вибору потоку звукових даних</li>
+      <li xml:lang="x-test">xxLive preview of subtitles in integrated video player w/ audio stream selectionxx</li>
+      <li>Preview/editing of subtitles on graphical audio waveform w/ audio stream selection</li>
+      <li xml:lang="ca">Vista prèvia/edició dels subtítols en forma d'ona d'àudio gràfica amb selecció del flux d'àudio</li>
+      <li xml:lang="uk">Попередній перегляд і редагування субтитрів із показом графічного представлення звукових даних і можливістю вибору потоку звукових даних</li>
+      <li xml:lang="x-test">xxPreview/editing of subtitles on graphical audio waveform w/ audio stream selectionxx</li>
+      <li>Sync by dragging several anchors/graftpoints and stretching timeline</li>
+      <li xml:lang="ca">Sincronització arrossegant diversos ancoratges/punts d'empelt i estirant la línia de temps</li>
+      <li xml:lang="uk">Синхронізація за допомогою перетягування точок прив'язки та розтягування монтажного столу</li>
+      <li xml:lang="x-test">xxSync by dragging several anchors/graftpoints and stretching timelinexx</li>
+      <li>Time shifting and scaling, lines duration re-calculation, framerate conversion, etc.</li>
+      <li xml:lang="ca">Desplaçament i escalat del temps, recàlcul de la durada de les línies, conversió de la velocitat dels fotogrames, etc.</li>
+      <li xml:lang="uk">Зсування та масштабування за часом, переобчислення тривалості показу рядків, перетворення за частотою кадрів тощо</li>
+      <li xml:lang="x-test">xxTime shifting and scaling, lines duration re-calculation, framerate conversion, etc.xx</li>
+      <li>Joining and splitting of subtitle files</li>
+      <li xml:lang="ca">Unir i dividir fitxers de subtítols</li>
+      <li xml:lang="nl">Samenvoegen en splitsen van bestanden met ondertitels</li>
+      <li xml:lang="uk">Можливість об'єднання та поділу файлів субтитрів</li>
+      <li xml:lang="x-test">xxJoining and splitting of subtitle filesxx</li>
+      <li>Side by side subtitle translations</li>
+      <li xml:lang="ca">Traducció dels subtítols costat a costat</li>
+      <li xml:lang="uk">Синхронний переклад субтитрів</li>
+      <li xml:lang="x-test">xxSide by side subtitle translationsxx</li>
+      <li>Text styles (italic, bold, underline, stroke, color)</li>
+      <li xml:lang="ca">Estils de text (cursiva, negreta, subratllat, ratllat, color)</li>
+      <li xml:lang="uk">Можливість визначення стилю тексту (курсив, напівжирний, підкреслення, закреслення, колір)</li>
+      <li xml:lang="x-test">xxText styles (italic, bold, underline, stroke, color)xx</li>
+      <li>Spell checking</li>
+      <li xml:lang="ca">Verificació ortogràfica</li>
+      <li xml:lang="nl">Spellingcontrole</li>
+      <li xml:lang="uk">Перевірка правопису</li>
+      <li xml:lang="x-test">xxSpell checkingxx</li>
+      <li>Detection of timing errors in subtitles</li>
+      <li xml:lang="ca">Detecció dels errors de temps en els subtítols</li>
+      <li xml:lang="uk">Виявлення часової розсинхронізації у субтитрах</li>
+      <li xml:lang="x-test">xxDetection of timing errors in subtitlesxx</li>
+      <li>Scripting (JavaScript, Python, Ruby and other languages supported by Kross).</li>
+      <li xml:lang="ca">Creació de scripts (JavaScript, Python, Ruby i altres llenguatges admesos pel Kross).</li>
+      <li xml:lang="uk">Керування за допомогою скриптів (передбачено підтримку JavaScript, Python, Ruby та інших мов, підтримку яких передбачено у Kross).</li>
+      <li xml:lang="x-test">xxScripting (JavaScript, Python, Ruby and other languages supported by Kross).xx</li>
+    </ul>
+  </description>
+  <launchable type="desktop-id">org.kde.subtitlecomposer.desktop</launchable>
+  <url type="homepage">https://invent.kde.org/kde/subtitlecomposer</url>
+  <screenshots>
+    <screenshot type="default">
+      <caption>Main application window</caption>
+      <caption xml:lang="ca">Finestra principal de l'aplicació</caption>
+      <caption xml:lang="uk">Основне вікно програми</caption>
+      <caption xml:lang="x-test">xxMain application windowxx</caption>
+      <image>https://cdn.kde.org/screenshots/subtitlecomposer/mainwindow.png</image>
+    </screenshot>
+  </screenshots>
+  <provides>
+    <id>org.kde.subtitlecomposer.desktop</id>
+    <binary>subtitlecomposer</binary>
+  </provides>
+  <project_group>KDE</project_group>
+  <releases>
+    <release date="2019-06-27" version="0.7.0">
+      <description>
+        <ul>
+          <li>Fixed parsing of absolute paths containing '#' character</li>
+          <li>Fixed open dialogs not showing all supported files</li>
+          <li>Fixed subtitle text not respecting system font configuration</li>
+          <li>Fixed waveform not rendering correctly/completely on some formats</li>
+          <li>Fixed waveform displaying subtitles at wrong times</li>
+          <li>Fixed waveform not working with some</li>
+          <li>Fixes to MPV, GStreamer and Xine video player backends</li>
+          <li>Waveform scrolling is configurable</li>
+          <li>PocketSphinx language models and VAD are configurable</li>
+          <li>Added show status bar action to main window popup menu</li>
+          <li>Improved (scripting) performance</li>
+          <li>Spell checker will use translation text when it is selected</li>
+          <li>Waveform and video docks can be hidden</li>
+          <li>Split lines won't split text on spaces while there are multiple lines</li>
+          <li>Subtitle lines will always stay sorted by their time</li>
+          <li>Improved fullscreen video player</li>
+          <li>Added ability to step by frame</li>
+          <li>Added play rate controls to video menu</li>
+          <li>Updated Croatian translation - thanks @muzena</li>
+          <li>Updated Italian translation - thanks Luigi Toscano @tosky</li>
+          <li>Updated Russian translation - thanks Nick Shaforostoff @shaforostoff</li>
+        </ul>
+      </description>
+    </release>
+    <release date="2018-02-11" version="0.6.6">
+      <description>
+        <ul>
+          <li>Fixed open video dialog filters</li>
+          <li>Fixed "Insert Line" on waveform adding at the wrong index - thanks @qsniyg</li>
+          <li>Added MMB seeking on waveform - thanks @qsniyg</li>
+          <li>Fixed some compilation issues</li>
+          <li>Updated translations - thanks @gogogogi, @muzena</li>
+          <li>Fixed vobsub when opening from video file and symbol cache filename</li>
+          <li>Fixed subtitle loading times of huge files</li>
+          <li>Improved vobsub text detection</li>
+          <li>Fixed ASS rich text parsing on import subtitle stream action</li>
+          <li>Replaced buggy mplayer vobsub import code with ffmpeg</li>
+          <li>Fixed memory leaks/usage of WaveformWidget's scroll animation</li>
+          <li>Optimized import subtitle stream from video action</li>
+          <li>Replaced gstreamer with ffmpeg libraries in application core usage</li>
+          <li>Added abort button to speech recognition</li>
+          <li>Waveform smooth scrolling</li>
+          <li>Added join/split lines actions to waveform context menu</li>
+          <li>Fixed some crashes, memory leaks and overall code cleanups</li>
+          <li>Cleaned up settings widget and texts</li>
+        </ul>
+      </description>
+    </release>
+    <release date="2017-09-18" version="0.6.5">
+      <description>
+        <ul>
+          <li>ADD: Added support for binary subtitle formats</li>
+          <li>ADD: fine control video playback speed</li>
+          <li>ADD: controls for video playback speed</li>
+          <li>MOD: GStreamer backend audio improvements.</li>
+          <li>MOD: Moved open video actions under File menu</li>
+          <li>MOD: More tolerant parsing of SubRip subtitles</li>
+          <li>MOD: Improved split lines command</li>
+          <li>MOD: Updated Czech translation - thanks @goliashcz</li>
+          <li>MOD: Updated Croatian translations - thanks @muzena</li>
+          <li>FIX: Waveform widget dragging and speed improvements, fixed buffer overflow</li>
+          <li>FIX: WaveformWidget: zoom out wasn't working on movies without audio</li>
+          <li>FIX: Fixed cases where subtitle hide time would end up before show time</li>
+          <li>FIX: Improved context menus</li>
+          <li>FIX: Fixed moving of anchored lines</li>
+          <li>FIX: Open subtitle wouldn't autoload video in some cases</li>
+          <li>FIX: Open video now includes .divx and .webm extensions</li>
+          <li>FIX: Tools menu scripts are filtered based on installed kross interpreters</li>
+          <li>FIX: Moved custom icons to more standard location, using QIcon::fromTheme()</li>
+          <li>FIX: Error Check &gt; Absolute Duration config fields were changing incorrect values</li>
+          <li>FIX: MPV Backend: fixed deprecated options, updated vo devices - thanks @luzfcb</li>
+          <li>FIX: better rendering on high DPI screens</li>
+          <li>FIX: MPV Backend: framerate/video length wasn't reported to subtitle composer anymore</li>
+          <li>FIX: detection/handling of current playing line</li>
+          <li>FIX: Parsing text containing &lt;font&gt; without color attribute</li>
+          <li>FIX: compilation without xine - thanks @pinotree</li>
+          <li>FIX: ASS parsing - thanks @Martchus</li>
+        </ul>
+      </description>
+    </release>
+    <release date="2016-05-07" version="0.6.4"/>
+    <release date="2016-04-03" version="0.6.3"/>
+    <release date="2016-03-25" version="0.6.2"/>
+    <release date="2016-03-15" version="0.6.1"/>
+    <release date="2016-03-15" version="0.6.0"/>
+    <release date="2016-02-08" version="0.5.9"/>
+    <release date="2016-02-07" version="0.5.8"/>
+  </releases>
 </component>
