@@ -270,15 +270,15 @@ Scripting::Subtitle::clearErrors(const QObject *ranges, int errorFlags)
 }
 
 void
-Scripting::Subtitle::checqCriticals(const QObject *ranges, int errorFlags, int minDuration, int maxDuration, int minDurationPerChar, int maxDurationPerChar, int maxChars, int maxLines)
+Scripting::Subtitle::checkErrors(const QObject *ranges, int errorFlags, int minDuration, int maxDuration, int minDurationPerChar, int maxDurationPerChar, int maxChars, int maxLines)
 {
-	m_backend->checqCriticals(toRangesList(ranges), errorFlags, minDuration, maxDuration, minDurationPerChar, maxDurationPerChar, maxChars, maxLines);
+	m_backend->checkErrors(toRangesList(ranges), errorFlags, minDuration, maxDuration, minDurationPerChar, maxDurationPerChar, maxChars, maxLines);
 }
 
 void
-Scripting::Subtitle::rechecqCriticals(const QObject *ranges, int minDuration, int maxDuration, int minDurationPerChar, int maxDurationPerChar, int maxChars, int maxLines)
+Scripting::Subtitle::recheckErrors(const QObject *ranges, int minDuration, int maxDuration, int minDurationPerChar, int maxDurationPerChar, int maxChars, int maxLines)
 {
-	m_backend->rechecqCriticals(toRangesList(ranges), minDuration, maxDuration, minDurationPerChar, maxDurationPerChar, maxChars, maxLines);
+	m_backend->recheckErrors(toRangesList(ranges), minDuration, maxDuration, minDurationPerChar, maxDurationPerChar, maxChars, maxLines);
 }
 
 

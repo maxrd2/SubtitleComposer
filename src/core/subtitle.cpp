@@ -1367,7 +1367,7 @@ Subtitle::clearErrors(const RangeList &ranges, int errorFlags)
 }
 
 void
-Subtitle::checqCriticals(const RangeList &ranges, int errorFlags, int minDurationMsecs, int maxDurationMsecs, int minMsecsPerChar, int maxMsecsPerChar, int maxChars, int maxLines)
+Subtitle::checkErrors(const RangeList &ranges, int errorFlags, int minDurationMsecs, int maxDurationMsecs, int minMsecsPerChar, int maxMsecsPerChar, int maxChars, int maxLines)
 {
 	beginCompositeAction(i18n("Check Lines Errors"));
 
@@ -1379,7 +1379,7 @@ Subtitle::checqCriticals(const RangeList &ranges, int errorFlags, int minDuratio
 }
 
 void
-Subtitle::rechecqCriticals(const RangeList &ranges, int minDurationMsecs, int maxDurationMsecs, int minMsecsPerChar, int maxMsecsPerChar, int maxChars, int maxLines)
+Subtitle::recheckErrors(const RangeList &ranges, int minDurationMsecs, int maxDurationMsecs, int minMsecsPerChar, int maxMsecsPerChar, int maxChars, int maxLines)
 {
 	beginCompositeAction(i18n("Check Lines Errors"));
 

@@ -664,13 +664,13 @@ Application::setupActions()
 	actionCollection->addAction(ACT_ADVANCE_CURRENT_LINE, advanceCurrentLineAction);
 	actionManager->addAction(advanceCurrentLineAction, UserAction::SubHasLines | UserAction::HasSelection);
 
-	QAction *checqCriticalsAction = new QAction(actionCollection);
-	checqCriticalsAction->setText(i18n("Check Errors..."));
-	checqCriticalsAction->setStatusTip(i18n("Check for errors in the current subtitle"));
-	actionCollection->setDefaultShortcut(checqCriticalsAction, QKeySequence("Ctrl+E"));
-	connect(checqCriticalsAction, SIGNAL(triggered()), this, SLOT(checqCriticals()));
-	actionCollection->addAction(ACT_CHECK_ERRORS, checqCriticalsAction);
-	actionManager->addAction(checqCriticalsAction, UserAction::HasSelection | UserAction::FullScreenOff);
+	QAction *checkErrorsAction = new QAction(actionCollection);
+	checkErrorsAction->setText(i18n("Check Errors..."));
+	checkErrorsAction->setStatusTip(i18n("Check for errors in the current subtitle"));
+	actionCollection->setDefaultShortcut(checkErrorsAction, QKeySequence("Ctrl+E"));
+	connect(checkErrorsAction, &QAction::triggered, this, &Application::checkErrors);
+	actionCollection->addAction(ACT_CHECK_ERRORS, checkErrorsAction);
+	actionManager->addAction(checkErrorsAction, UserAction::HasSelection | UserAction::FullScreenOff);
 
 	QAction *clearErrorsAction = new QAction(actionCollection);
 	clearErrorsAction->setText(i18n("Clear Errors..."));
@@ -1379,9 +1379,9 @@ Application::advanceCurrentLine()
 }
 
 void
-Application::checqCriticals()
+Application::checkErrors()
 {
-	static ChecqCriticalsDialog *dlg = new ChecqCriticalsDialog(m_mainWindow);
+	static CheckErrorsDialog *dlg = new CheckErrorsDialog(m_mainWindow);
 
 	if(dlg->exec() == QDialog::Accepted) {
 		SubtitleCompositeActionExecutor executor(*m_subtitle, i18n("Check Lines Errors"));
@@ -1396,7 +1396,7 @@ Application::checqCriticals()
 		if(dlg->clearMarks())
 			m_subtitle->setMarked(targetRanges, false);
 
-		m_subtitle->checqCriticals(targetRanges,
+		m_subtitle->checkErrors(targetRanges,
 								   dlg->selectedErrorFlags(),
 								   SCConfig::minDuration(),
 								   SCConfig::maxDuration(),
@@ -1410,7 +1410,7 @@ Application::checqCriticals()
 void
 Application::recheckAllErrors()
 {
-	m_subtitle->rechecqCriticals(Range::full(),
+	m_subtitle->recheckErrors(Range::full(),
 								 SCConfig::minDuration(),
 								 SCConfig::maxDuration(),
 								 SCConfig::minDurationPerCharacter(),
@@ -1422,7 +1422,7 @@ Application::recheckAllErrors()
 void
 Application::recheckSelectedErrors()
 {
-	// NOTE we can't just use Subtitle::rechecqCriticals() with the selected lines ranges
+	// NOTE we can't just use Subtitle::recheckErrors() with the selected lines ranges
 	// because this slots handles the error dialog action where the user can not only
 	// select lines but can also select (or unselect) specific errors
 // FIXME:

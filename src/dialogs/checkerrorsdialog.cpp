@@ -26,7 +26,7 @@
 
 using namespace SubtitleComposer;
 
-ChecqCriticalsDialog::ChecqCriticalsDialog(QWidget *parent) :
+CheckErrorsDialog::CheckErrorsDialog(QWidget *parent) :
 	ActionWithErrorTargetsDialog(i18n("Check Errors"), parent)
 {
 	createErrorsGroupBox(i18nc("@title:group", "Errors to Check"));
@@ -51,20 +51,20 @@ ChecqCriticalsDialog::ChecqCriticalsDialog(QWidget *parent) :
 }
 
 void
-ChecqCriticalsDialog::setTranslationMode(bool value)
+CheckErrorsDialog::setTranslationMode(bool value)
 {
 	ActionWithErrorTargetsDialog::setTranslationMode(value);
 	createErrorsButtons(false, value);
 }
 
 bool
-ChecqCriticalsDialog::clearOtherErrors() const
+CheckErrorsDialog::clearOtherErrors() const
 {
 	return m_clearOtherErrorsCheckBox->isChecked();
 }
 
 bool
-ChecqCriticalsDialog::clearMarks() const
+CheckErrorsDialog::clearMarks() const
 {
 	return m_clearMarksCheckBox->isChecked();
 }

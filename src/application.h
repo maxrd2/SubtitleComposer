@@ -152,7 +152,7 @@ public slots:
 	void retrocedeCurrentLine();
 	void advanceCurrentLine();
 
-	void checqCriticals();
+	void checkErrors();
 	void recheckAllErrors();
 	void recheckSelectedErrors();
 	void clearErrors();

@@ -85,9 +85,9 @@ public slots:
 
 	void clearErrors(const QObject *ranges, int errorFlags);
 
-	void checqCriticals(const QObject *ranges, int errorFlags, int minDuration, int maxDuration, int minDurationPerChar, int maxDurationPerChar, int maxChars, int maxLines);
+	void checkErrors(const QObject *ranges, int errorFlags, int minDuration, int maxDuration, int minDurationPerChar, int maxDurationPerChar, int maxChars, int maxLines);
 
-	void rechecqCriticals(const QObject *ranges, int minDuration, int maxDuration, int minDurationPerChar, int maxDurationPerChar, int maxChars, int maxLines);
+	void recheckErrors(const QObject *ranges, int minDuration, int maxDuration, int minDurationPerChar, int maxDurationPerChar, int maxChars, int maxLines);
 
 private:
 	static SubtitleComposer::RangeList toRangesList(const QObject *object);

@@ -26,12 +26,12 @@
 QT_FORWARD_DECLARE_CLASS(QCheckBox)
 
 namespace SubtitleComposer {
-class ChecqCriticalsDialog : public ActionWithErrorTargetsDialog
+class CheckErrorsDialog : public ActionWithErrorTargetsDialog
 {
 	Q_OBJECT
 
 public:
-	ChecqCriticalsDialog(QWidget *parent = 0);
+	CheckErrorsDialog(QWidget *parent = 0);
 
 	bool clearOtherErrors() const;
 	bool clearMarks() const;
