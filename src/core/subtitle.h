@@ -236,11 +236,12 @@ private:
 class SubtitleCompositeActionExecutor
 {
 public:
-	SubtitleCompositeActionExecutor(Subtitle &subtitle, const QString &title);
+	SubtitleCompositeActionExecutor(Subtitle &subtitle, const QString &title, bool interactive=false);
 	~SubtitleCompositeActionExecutor();
 
 private:
 	Subtitle &m_subtitle;
+	bool m_interactive;
 };
 }
 #endif

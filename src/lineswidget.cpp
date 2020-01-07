@@ -64,7 +64,8 @@ LinesModel::LinesModel(QObject *parent) :
 	m_minChangedLineIndex(-1),
 	m_maxChangedLineIndex(-1),
 	m_graftPoints(QList<Subtitle *>()),
-	m_resettingModel(false)
+	m_allowModelReset(true),
+	m_resettingModel(0)
 {
 	m_dataChangedTimer->setInterval(0);
 	m_dataChangedTimer->setSingleShot(true);
@@ -354,15 +355,50 @@ LinesModel::onLinesRemoved(int firstIndex, int lastIndex)
 void
 LinesModel::onCompositeActionStart()
 {
-	m_resettingModel = true;
-	beginResetModel();
+	if(!m_allowModelReset)
+		return;
+
+	if(m_resettingModel++ == 0) {
+		// preserve selection as beginResetModel() will invalidate all current/selected item(s)
+		QItemSelectionModel *sm = static_cast<LinesWidget *>(parent())->selectionModel();
+		QModelIndexList sel = sm->selectedIndexes();
+		while(!sel.empty())
+			m_selectionBackup.push_back(m_subtitle->at(sel.takeLast().row()));
+		QModelIndex cur = sm->currentIndex();
+		m_selectionBackup.push_back(cur.isValid() ? m_subtitle->at(cur.row()) : nullptr);
+
+		beginResetModel();
+	}
 }
 
 void
 LinesModel::onCompositeActionEnd()
 {
-	endResetModel();
-	m_resettingModel = false;
+	if(!m_allowModelReset) {
+		Q_ASSERT(m_resettingModel == 0);
+		return;
+	}
+
+	Q_ASSERT(m_resettingModel > 0);
+	if(--m_resettingModel == 0) {
+		endResetModel();
+
+		// restore selection
+		const LinesWidget *widget = static_cast<LinesWidget *>(parent());
+		const LinesModel *model = widget->model();
+		QItemSelectionModel *sm = widget->selectionModel();
+		const int lastCol = model->columnCount() - 1;
+		while(!m_selectionBackup.empty()) {
+			const SubtitleLine *line = m_selectionBackup.takeFirst();
+			if(line && line->subtitle() == m_subtitle) {
+				const int i = line->index();
+				if(m_selectionBackup.empty())
+					sm->setCurrentIndex(model->index(i), QItemSelectionModel::Current);
+				else
+					sm->select(QItemSelection(model->index(i), model->index(i, lastCol)), QItemSelectionModel::Select);
+			}
+		}
+	}
 }
 
 void
@@ -1043,9 +1079,12 @@ LinesWidget::setTranslationMode(bool enabled)
 void
 LinesWidget::setCurrentLine(SubtitleLine *line, bool clearSelection)
 {
-	if(line) {
-		selectionModel()->setCurrentIndex(model()->index(line->index(), 0), clearSelection ? QItemSelectionModel::Select | QItemSelectionModel::Rows | QItemSelectionModel::Clear : QItemSelectionModel::Select | QItemSelectionModel::Rows);
-	}
+	if(!line)
+		return;
+
+	selectionModel()->setCurrentIndex(model()->index(line->index(), 0),
+									  QItemSelectionModel::Select | QItemSelectionModel::Rows
+									  | (clearSelection ? QItemSelectionModel::Clear : QItemSelectionModel::NoUpdate));
 }
 
 void
@@ -1090,6 +1129,12 @@ LinesWidget::eventFilter(QObject *object, QEvent *event)
 	}
 	// standard event processing
 	return TreeView::eventFilter(object, event);
+}
+
+void
+LinesWidget::disableModelReset(bool disable)
+{
+	model()->m_allowModelReset = !disable;
 }
 
 void

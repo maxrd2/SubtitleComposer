@@ -110,6 +110,9 @@ public:
 	CompositeActionStart(Subtitle &subtitle);
 	virtual ~CompositeActionStart();
 
+	inline int id() const override { return UndoAction::CompositeAction; }
+	bool mergeWith(const QUndoCommand *) override { setObsolete(true); return true; }
+
 	void redo() override;
 	void undo() override;
 };
@@ -119,6 +122,9 @@ class CompositeActionEnd : public SubtitleAction
 public:
 	CompositeActionEnd(Subtitle &subtitle);
 	virtual ~CompositeActionEnd();
+
+	inline int id() const override { return UndoAction::CompositeAction; }
+	bool mergeWith(const QUndoCommand *) override { setObsolete(true); return true; }
 
 	void redo() override;
 	void undo() override;

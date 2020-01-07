@@ -86,7 +86,11 @@ private:
 	int m_minChangedLineIndex;
 	int m_maxChangedLineIndex;
 	QList<Subtitle *> m_graftPoints;
-	bool m_resettingModel;
+	bool m_allowModelReset;
+	int m_resettingModel;
+	QList<SubtitleLine *> m_selectionBackup;
+
+	friend class LinesWidget;
 };
 
 class LinesWidget;
@@ -169,6 +173,13 @@ public:
 	void saveConfig();
 
 	bool eventFilter(QObject *object, QEvent *event) override;
+
+	/**
+	 * @brief Disable calls to begin/endModelReset() during QUndoStack composite action processing.
+	 * Disabling model reset will decrease performance but will keep LinesWidget interactive.
+	 * @param disable - true to disable
+	 */
+	void disableModelReset(bool disable);
 
 public slots:
 	void setSubtitle(Subtitle *subtitle = 0);

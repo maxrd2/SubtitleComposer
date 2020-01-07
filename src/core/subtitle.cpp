@@ -26,6 +26,7 @@
 #include "helpers/objectref.h"
 #include "scconfig.h"
 #include "application.h"
+#include "lineswidget.h"
 
 #include <KLocalizedString>
 #include <QUndoStack>
@@ -1468,13 +1469,20 @@ Subtitle::updateState()
 
 /// SUBTITLECOMPOSITEACTIONEXECUTOR
 
-SubtitleCompositeActionExecutor::SubtitleCompositeActionExecutor(Subtitle &subtitle, const QString &title) :
-	m_subtitle(subtitle)
+SubtitleCompositeActionExecutor::SubtitleCompositeActionExecutor(Subtitle &subtitle, const QString &title, bool interactive)
+	: m_subtitle(subtitle),
+	  m_interactive(interactive)
 {
+	if(m_interactive)
+		app()->linesWidget()->disableModelReset(true);
+
 	m_subtitle.beginCompositeAction(title);
 }
 
 SubtitleCompositeActionExecutor::~SubtitleCompositeActionExecutor()
 {
 	m_subtitle.endCompositeAction();
+
+	if(m_interactive)
+		app()->linesWidget()->disableModelReset(false);
 }
