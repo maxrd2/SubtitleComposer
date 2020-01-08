@@ -1,5 +1,5 @@
-#ifndef ERRORTRACKER_H
-#define ERRORTRACKER_H
+#ifndef ERRORFINDER_H
+#define ERRORFINDER_H
 
 /*
  * Copyright (C) 2007-2009 Sergio Pistone <sergio_pistone@yahoo.com.ar>
@@ -23,45 +23,47 @@
 
 #include "core/subtitle.h"
 
-namespace SubtitleComposer {
-class SubtitleLine;
+#include <QObject>
 
-class ErrorTracker : public QObject
+namespace SubtitleComposer {
+class FindErrorsDialog;
+class SubtitleIterator;
+
+class ErrorFinder : public QObject
 {
 	Q_OBJECT
 
 public:
-	explicit ErrorTracker(QObject *parent = 0);
-	virtual ~ErrorTracker();
+	explicit ErrorFinder(QWidget *parent = 0);
+	virtual ~ErrorFinder();
 
-	bool isTracking() const;
+	QWidget * parentWidget();
 
 public slots:
 	void setSubtitle(Subtitle *subtitle = 0);
+	void setTranslationMode(bool enabled);
+
+	void find(int searchFromIndex, bool findBackwards = false);
+	bool findNext(int fromIndex = -1);
+	bool findPrevious(int fromIndex = -1);
+
+signals:
+	void found(SubtitleLine *line);
 
 private:
-	void connectSlots();
-	void disconnectSlots();
-
-	void updateLineErrors(SubtitleLine *line, int errorFlags) const;
+	void advance(bool advanceIteratorOnFirstStep);
 
 private slots:
-	void onLinePrimaryTextChanged(SubtitleLine *line);
-	void onLineSecondaryTextChanged(SubtitleLine *line);
-	void onLineTimesChanged(SubtitleLine *line);
-
-	void onConfigChanged();
+	void invalidate();
 
 private:
 	Subtitle *m_subtitle;
+	FindErrorsDialog *m_dialog;
+	bool m_translationMode;
 
-	bool m_autoClearFixed;
-	int m_minDuration;
-	int m_maxDuration;
-	int m_minDurationPerChar;
-	int m_maxDurationPerChar;
-	int m_maxCharacters;
-	int m_maxLines;
+	int m_targetErrorFlags;
+	bool m_findBackwards;
+	SubtitleIterator *m_iterator;
 };
 }
 #endif

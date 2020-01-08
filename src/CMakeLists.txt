@@ -57,6 +57,7 @@ add_subdirectory(speechprocessor)
 
 add_subdirectory(configs)
 add_subdirectory(dialogs)
+add_subdirectory(errors)
 add_subdirectory(actions)
 add_subdirectory(utils)
 add_subdirectory(scripting)
@@ -75,6 +76,7 @@ include_directories(
 set(subtitlecomposer_SRCS
 	${core_SRCS}
 	${dialogs_SRCS}
+	${errors_SRCS}
 	${formats_SRCS}
 	${helpers_SRCS}
 	${speechprocessor_SRCS}
@@ -86,6 +88,7 @@ set(subtitlecomposer_SRCS
 	${main_utils_SRCS}
 	${main_scripting_SRCS}
 	${CMAKE_CURRENT_SOURCE_DIR}/application.cpp
+	${CMAKE_CURRENT_SOURCE_DIR}/application_errorcheck.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/application_subtitle.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/currentlinewidget.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/lineswidget.cpp

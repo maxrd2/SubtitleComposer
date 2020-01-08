@@ -96,16 +96,12 @@
 			<Action name="adjust_to_video_position_anchor_last" />
 			<Action name="adjust_to_video_position_anchor_first" />
 		</Menu>
-		<Menu name="errors" >
+		<Menu name="errors">
 			<text>E&amp;rrors</text>
-			<Action name="check_errors" />
+			<Action name="detect_errors" />
 			<Action name="clear_errors" />
-			<Separator />
-			<Action name="show_errors" />
-			<Separator />
-			<Action name="find_error" />
-			<Action name="find_next_error" />
-			<Action name="find_previous_error" />
+			<Action name="select_next_error" />
+			<Action name="select_previous_error" />
 			<Separator />
 			<Action name="toggle_selected_lines_mark" />
 		</Menu>

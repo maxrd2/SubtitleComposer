@@ -22,6 +22,7 @@
 #include "core/subtitlelineactions.h"
 #include "core/subtitle.h"
 #include "core/subtitleactions.h"
+#include "scconfig.h"
 
 #include <QRegExp>
 
@@ -975,7 +976,7 @@ SubtitleLine::checkSecondaryUnneededDash(bool update)
 }
 
 int
-SubtitleLine::check(int errorFlagsToCheck, int minDurationMsecs, int maxDurationMsecs, int minMsecsPerChar, int maxMsecsPerChar, int maxChars, int maxLines, bool update)
+SubtitleLine::check(int errorFlagsToCheck, bool update)
 {
 	int lineErrorFlags = m_errorFlags & ~errorFlagsToCheck; // clear the flags we're going to (re)check
 
@@ -996,47 +997,43 @@ SubtitleLine::check(int errorFlagsToCheck, int minDurationMsecs, int maxDuration
 			lineErrorFlags |= UntranslatedText;
 
 	if(errorFlagsToCheck & MaxDuration)
-		if(checkMaxDuration(maxDurationMsecs, false))
+		if(checkMaxDuration(SCConfig::maxDuration(), false))
 			lineErrorFlags |= MaxDuration;
 
 	if(errorFlagsToCheck & MinDuration)
-		if(checkMinDuration(minDurationMsecs, false))
+		if(checkMinDuration(SCConfig::minDuration(), false))
 			lineErrorFlags |= MinDuration;
 
 	if(errorFlagsToCheck & MaxDurationPerPrimaryChar)
-		if(checkMaxDurationPerPrimaryChar(maxMsecsPerChar, false))
+		if(checkMaxDurationPerPrimaryChar(SCConfig::maxDurationPerCharacter(), false))
 			lineErrorFlags |= MaxDurationPerPrimaryChar;
 
 	if(errorFlagsToCheck & MaxDurationPerSecondaryChar)
-		if(checkMaxDurationPerSecondaryChar(maxMsecsPerChar, false))
+		if(checkMaxDurationPerSecondaryChar(SCConfig::maxDurationPerCharacter(), false))
 			lineErrorFlags |= MaxDurationPerSecondaryChar;
 
 	if(errorFlagsToCheck & MinDurationPerPrimaryChar)
-		if(checkMinDurationPerPrimaryChar(minMsecsPerChar, false))
+		if(checkMinDurationPerPrimaryChar(SCConfig::minDurationPerCharacter(), false))
 			lineErrorFlags |= MinDurationPerPrimaryChar;
 
 	if(errorFlagsToCheck & MinDurationPerSecondaryChar)
-		if(checkMinDurationPerSecondaryChar(minMsecsPerChar, false))
+		if(checkMinDurationPerSecondaryChar(SCConfig::minDurationPerCharacter(), false))
 			lineErrorFlags |= MinDurationPerSecondaryChar;
 
 	if(errorFlagsToCheck & MaxPrimaryChars)
-		if(checkMaxPrimaryChars(maxChars, false))
+		if(checkMaxPrimaryChars(SCConfig::maxCharacters(), false))
 			lineErrorFlags |= MaxPrimaryChars;
 
 	if(errorFlagsToCheck & MaxSecondaryChars)
-		if(checkMaxSecondaryChars(maxChars, false))
+		if(checkMaxSecondaryChars(SCConfig::maxCharacters(), false))
 			lineErrorFlags |= MaxSecondaryChars;
 
 	if(errorFlagsToCheck & MaxPrimaryLines)
-		if(checkMaxPrimaryLines(maxLines, false))
+		if(checkMaxPrimaryLines(SCConfig::maxLines(), false))
 			lineErrorFlags |= MaxPrimaryLines;
 
 	if(errorFlagsToCheck & MaxSecondaryLines)
-		if(checkMaxSecondaryLines(maxLines, false))
-			lineErrorFlags |= MaxSecondaryLines;
-
-	if(errorFlagsToCheck & MaxSecondaryLines)
-		if(checkMaxSecondaryLines(maxLines, false))
+		if(checkMaxSecondaryLines(SCConfig::maxLines(), false))
 			lineErrorFlags |= MaxSecondaryLines;
 
 	if(errorFlagsToCheck & PrimaryUnneededSpaces)

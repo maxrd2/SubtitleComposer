@@ -58,8 +58,8 @@ public:
 	inline int firstIndex() { return m_index == Invalid ? -1 : m_ranges.firstIndex(); }
 	inline int lastIndex() { return m_index == Invalid ? -1 : m_ranges.lastIndex(); }
 
-	inline SubtitleLine * current() const { return m_index < 0 ? nullptr : const_cast<Subtitle *>(m_subtitle)->line(m_index); }
-	inline operator SubtitleLine *() const { return m_index < 0 ? nullptr : const_cast<Subtitle *>(m_subtitle)->line(m_index); }
+	inline SubtitleLine * current() const { return const_cast<Subtitle *>(m_subtitle)->line(m_index); }
+	inline operator SubtitleLine *() const { return const_cast<Subtitle *>(m_subtitle)->line(m_index); }
 
 	SubtitleIterator & operator++();
 	SubtitleIterator & operator+=(int steps);

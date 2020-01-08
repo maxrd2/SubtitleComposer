@@ -1358,7 +1358,7 @@ Subtitle::toggleMarked(const RangeList &ranges)
 void
 Subtitle::clearErrors(const RangeList &ranges, int errorFlags)
 {
-	beginCompositeAction(i18n("Clear Lines Errors"));
+	beginCompositeAction(i18n("Clear Line Errors"));
 
 	for(SubtitleIterator it(*this, ranges); it.current(); ++it)
 		it.current()->setErrorFlags(errorFlags, false);
@@ -1367,25 +1367,23 @@ Subtitle::clearErrors(const RangeList &ranges, int errorFlags)
 }
 
 void
-Subtitle::checkErrors(const RangeList &ranges, int errorFlags, int minDurationMsecs, int maxDurationMsecs, int minMsecsPerChar, int maxMsecsPerChar, int maxChars, int maxLines)
+Subtitle::checkErrors(const RangeList &ranges, int errorFlags)
 {
 	beginCompositeAction(i18n("Check Lines Errors"));
 
-	for(SubtitleIterator it(*this, ranges); it.current(); ++it) {
-		it.current()->check(errorFlags, minDurationMsecs, maxDurationMsecs, minMsecsPerChar, maxMsecsPerChar, maxChars, maxLines);
-	}
+	for(SubtitleIterator it(*this, ranges); it.current(); ++it)
+		it.current()->check(errorFlags);
 
 	endCompositeAction();
 }
 
 void
-Subtitle::recheckErrors(const RangeList &ranges, int minDurationMsecs, int maxDurationMsecs, int minMsecsPerChar, int maxMsecsPerChar, int maxChars, int maxLines)
+Subtitle::recheckErrors(const RangeList &ranges)
 {
 	beginCompositeAction(i18n("Check Lines Errors"));
 
-	for(SubtitleIterator it(*this, ranges); it.current(); ++it) {
-		it.current()->check(it.current()->errorFlags(), minDurationMsecs, maxDurationMsecs, minMsecsPerChar, maxMsecsPerChar, maxChars, maxLines);
-	}
+	for(SubtitleIterator it(*this, ranges); it.current(); ++it)
+		it.current()->check(it.current()->errorFlags());
 
 	endCompositeAction();
 }

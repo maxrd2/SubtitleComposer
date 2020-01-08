@@ -1,6 +1,6 @@
 /*
  * Copyright (C) 2007-2009 Sergio Pistone <sergio_pistone@yahoo.com.ar>
- * Copyright (C) 2010-2018 Mladen Milinkovic <max@smoothware.net>
+ * Copyright (C) 2010-2020 Mladen Milinkovic <max@smoothware.net>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,29 +18,58 @@
  * Boston, MA 02110-1301, USA.
  */
 
-#include "actionwitherrortargetsdialog.h"
+#include "finderrorsdialog.h"
 
 #include <QCheckBox>
-#include <QGroupBox>
 #include <QGridLayout>
-#include <QPushButton>
+#include <QGroupBox>
 
 using namespace SubtitleComposer;
 
-ActionWithErrorTargetsDialog::ActionWithErrorTargetsDialog(const QString &title, QWidget *parent) :
-	ActionWithTargetDialog(title, parent),
-	m_errorsGroupBox(0),
-	m_errorsCheckBox(0),
-	m_errorsLayout(0)
-{}
+FindErrorsDialog::FindErrorsDialog(QWidget *parent)
+	: ActionWithTargetDialog(i18n("Find Error"), parent),
+	  m_errorsGroupBox(nullptr),
+	  m_errorsCheckBox(nullptr),
+	  m_errorsLayout(nullptr)
+{
+	createErrorsGroupBox(i18nc("@title:group", "Errors to Find"));
+	createErrorsButtons(true, translationMode());
 
-ActionWithErrorTargetsDialog::~ActionWithErrorTargetsDialog()
+
+
+
+	QGroupBox *miscGroupBox = createGroupBox(i18nc("@title:group Miscellaneous settings", "Miscellaneous"));
+
+	m_clearOtherErrorsCheckBox = new QCheckBox(miscGroupBox);
+	m_clearOtherErrorsCheckBox->setText(i18n("Clear other errors"));
+	m_clearOtherErrorsCheckBox->setChecked(true);
+
+	m_clearMarksCheckBox = new QCheckBox(miscGroupBox);
+	m_clearMarksCheckBox->setText(i18n("Clear user marks"));
+	m_clearMarksCheckBox->setChecked(false);
+
+	QGridLayout *miscLayout = createLayout(miscGroupBox);
+	miscLayout->addWidget(m_clearOtherErrorsCheckBox, 0, 0);
+	miscLayout->addWidget(m_clearMarksCheckBox, 1, 0);
+
+	createTargetsGroupBox("Find In");
+	createLineTargetsButtonGroup();
+	createTextTargetsButtonGroup();
+}
+
+FindErrorsDialog::~FindErrorsDialog()
 {
 	delete[] m_errorsCheckBox;
 }
 
+void
+FindErrorsDialog::setTranslationMode(bool value)
+{
+	ActionWithTargetDialog::setTranslationMode(value);
+	createErrorsButtons(true, value);
+}
 QGroupBox *
-ActionWithErrorTargetsDialog::createErrorsGroupBox(const QString &title)
+FindErrorsDialog::createErrorsGroupBox(const QString &title)
 {
 	m_errorsGroupBox = createGroupBox(title);
 	m_errorsLayout = createLayout(m_errorsGroupBox);
@@ -48,14 +77,16 @@ ActionWithErrorTargetsDialog::createErrorsGroupBox(const QString &title)
 }
 
 void
-ActionWithErrorTargetsDialog::createErrorsButtons(bool showUserMarks, bool showMissingTranslation)
+FindErrorsDialog::createErrorsButtons(bool showUserMarks, bool showMissingTranslation)
 {
 	if(m_errorsCheckBox) {
 		// no need to recreate everything if the configuration to show has not changed
-		if((m_errorsCheckBox[SubtitleLine::UserMarkID] != 0) == showUserMarks && (m_errorsCheckBox[SubtitleLine::UntranslatedTextID] != 0) == showMissingTranslation)
+		if((m_errorsCheckBox[SubtitleLine::UserMarkID] != nullptr) == showUserMarks
+		&& (m_errorsCheckBox[SubtitleLine::UntranslatedTextID] != nullptr) == showMissingTranslation)
 			return;
-	} else
+	} else {
 		m_errorsCheckBox = new QCheckBox *[SubtitleLine::ErrorSIZE];
+	}
 
 	if(m_errorsGroupBox) {
 		for(QLayoutItem *child = m_errorsLayout->takeAt(0); child != 0; child = m_errorsLayout->takeAt(0))
@@ -64,8 +95,9 @@ ActionWithErrorTargetsDialog::createErrorsButtons(bool showUserMarks, bool showM
 		QList<QWidget *> children = m_errorsGroupBox->findChildren<QWidget *>();
 		for(QList<QWidget *>::ConstIterator it = children.constBegin(), end = children.constEnd(); it != end; ++it)
 			delete *it;
-	} else
+	} else {
 		createErrorsGroupBox(i18n("Available errors"));
+	}
 
 	int excludedErrorFlags = SubtitleLine::SecondaryOnlyErrors;
 
@@ -118,8 +150,9 @@ ActionWithErrorTargetsDialog::createErrorsButtons(bool showUserMarks, bool showM
 	m_errorsLayout->addLayout(buttonsLayout, errorCount / 2 + 1, 0, 1, 2);
 }
 
+
 void
-ActionWithErrorTargetsDialog::selectAllErrorFlags()
+FindErrorsDialog::selectAllErrorFlags()
 {
 	for(int errorId = 0; errorId < SubtitleLine::ErrorSIZE; ++errorId)
 		if(m_errorsCheckBox[errorId])
@@ -127,7 +160,7 @@ ActionWithErrorTargetsDialog::selectAllErrorFlags()
 }
 
 void
-ActionWithErrorTargetsDialog::deselectAllErrorFlags()
+FindErrorsDialog::deselectAllErrorFlags()
 {
 	for(int errorId = 0; errorId < SubtitleLine::ErrorSIZE; ++errorId)
 		if(m_errorsCheckBox[errorId])
@@ -135,7 +168,7 @@ ActionWithErrorTargetsDialog::deselectAllErrorFlags()
 }
 
 int
-ActionWithErrorTargetsDialog::selectedErrorFlags() const
+FindErrorsDialog::selectedErrorFlags() const
 {
 	int errorFlags = 0;
 	for(int errorId = 0; errorId < SubtitleLine::ErrorSIZE; ++errorId)
@@ -157,5 +190,3 @@ ActionWithErrorTargetsDialog::selectedErrorFlags() const
 	}
 	}
 }
-
-

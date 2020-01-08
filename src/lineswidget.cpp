@@ -1201,7 +1201,7 @@ LinesWidget::contextMenuEvent(QContextMenuEvent *e)
 	QMenu errorsMenu(i18n("Errors"));
 	errorsMenu.addAction(appAction(ACT_TOGGLE_SELECTED_LINES_MARK, true, referenceLine->errorFlags() & SubtitleLine::UserMark));
 	errorsMenu.addSeparator();
-	errorsMenu.addAction(appAction(ACT_CHECK_ERRORS));
+	errorsMenu.addAction(appAction(ACT_DETECT_ERRORS));
 	errorsMenu.addAction(appAction(ACT_CLEAR_ERRORS));
 	errorsMenu.addSeparator();
 	errorsMenu.addAction(appAction(ACT_SHOW_ERRORS));

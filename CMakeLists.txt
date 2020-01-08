@@ -35,6 +35,7 @@ find_package(KF5 ${KF5_MIN_VERSION} REQUIRED COMPONENTS
 	Auth Config ConfigWidgets CoreAddons I18n KIO XmlGui
 	Sonnet Kross Codecs TextWidgets WidgetsAddons)
 
+#PO_SUBDIR
 add_subdirectory(src)
 
 add_custom_target(nsis COMMAND "${CMAKE_CURRENT_SOURCE_DIR}/pkg/mingw/nsi-installer.sh" `${CMAKE_C_COMPILER} -dumpmachine`)

@@ -224,7 +224,7 @@ public:
 	bool checkPrimaryUnneededDash(bool update = true);
 	bool checkSecondaryUnneededDash(bool update = true);
 
-	int check(int errorFlagsToCheck, int minDurationMsecs, int maxDurationMsecs, int minMsecsPerChar, int maxMsecsPerChar, int maxChars, int maxLines, bool update = true);
+	int check(int errorFlagsToCheck, bool update = true);
 
 	bool isRightToLeft() const;
 

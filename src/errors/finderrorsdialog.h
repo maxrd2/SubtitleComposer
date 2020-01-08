@@ -1,9 +1,9 @@
-#ifndef ACTIONWITHERRORTARGETSDIALOG_H
-#define ACTIONWITHERRORTARGETSDIALOG_H
+#ifndef FINDERRORSDIALOG_H
+#define FINDERRORSDIALOG_H
 
 /*
  * Copyright (C) 2007-2009 Sergio Pistone <sergio_pistone@yahoo.com.ar>
- * Copyright (C) 2010-2018 Mladen Milinkovic <max@smoothware.net>
+ * Copyright (C) 2010-2020 Mladen Milinkovic <max@smoothware.net>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -21,26 +21,29 @@
  * Boston, MA 02110-1301, USA.
  */
 
-#include "actionwithtargetdialog.h"
-#include "core/subtitleline.h"
+#include "dialogs/actionwithtargetdialog.h"
+
+#include <QCheckBox>
 
 QT_FORWARD_DECLARE_CLASS(QGroupBox)
-QT_FORWARD_DECLARE_CLASS(QCheckBox)
 QT_FORWARD_DECLARE_CLASS(QGridLayout)
 
 namespace SubtitleComposer {
-class ActionWithErrorTargetsDialog : public ActionWithTargetDialog
+class FindErrorsDialog : public ActionWithTargetDialog
 {
 	Q_OBJECT
 
 public:
-	~ActionWithErrorTargetsDialog();
+	FindErrorsDialog(QWidget *parent);
+	virtual ~FindErrorsDialog();
+
+	inline bool clearOtherErrors() const { return m_clearOtherErrorsCheckBox->isChecked(); }
+	inline bool clearMarks() const { return m_clearMarksCheckBox->isChecked(); }
 
 	int selectedErrorFlags() const;
 
 protected:
-	explicit ActionWithErrorTargetsDialog(const QString &title, QWidget *parent = 0);
-
+	void setTranslationMode(bool value) override;
 	QGroupBox * createErrorsGroupBox(const QString &title);
 	void createErrorsButtons(bool showUserMarks, bool showMissingTranslation);
 
@@ -52,6 +55,9 @@ private:
 	QGroupBox *m_errorsGroupBox;
 	QCheckBox **m_errorsCheckBox;
 	QGridLayout *m_errorsLayout;
+	QCheckBox *m_clearOtherErrorsCheckBox;
+	QCheckBox *m_clearMarksCheckBox;
 };
 }
-#endif
+
+#endif // FINDERRORSDIALOG_H

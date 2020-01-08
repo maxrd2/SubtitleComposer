@@ -173,8 +173,8 @@ public:
 	void toggleMarked(const RangeList &ranges);
 
 	void clearErrors(const RangeList &ranges, int errorFlags);
-	void checkErrors(const RangeList &ranges, int errorFlags, int minDurationMsecs, int maxDurationMsecs, int minMsecsPerChar, int maxMsecsPerChar, int maxChars, int maxLines);
-	void recheckErrors(const RangeList &ranges, int minDurationMsecs, int maxDurationMsecs, int minMsecsPerChar, int maxMsecsPerChar, int maxChars, int maxLines);
+	void checkErrors(const RangeList &ranges, int errorFlags);
+	void recheckErrors(const RangeList &ranges);
 
 signals:
 	void primaryChanged();

@@ -1,9 +1,9 @@
-#ifndef CHECKERRORSDIALOG_H
-#define CHECKERRORSDIALOG_H
+#ifndef ERRORTRACKER_H
+#define ERRORTRACKER_H
 
 /*
  * Copyright (C) 2007-2009 Sergio Pistone <sergio_pistone@yahoo.com.ar>
- * Copyright (C) 2010-2019 Mladen Milinkovic <max@smoothware.net>
+ * Copyright (C) 2010-2018 Mladen Milinkovic <max@smoothware.net>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -21,27 +21,40 @@
  * Boston, MA 02110-1301, USA.
  */
 
-#include "actionwitherrortargetsdialog.h"
-
-QT_FORWARD_DECLARE_CLASS(QCheckBox)
+#include "core/subtitle.h"
 
 namespace SubtitleComposer {
-class CheckErrorsDialog : public ActionWithErrorTargetsDialog
+class SubtitleLine;
+
+class ErrorTracker : public QObject
 {
 	Q_OBJECT
 
 public:
-	CheckErrorsDialog(QWidget *parent = 0);
+	explicit ErrorTracker(QObject *parent = 0);
+	virtual ~ErrorTracker();
 
-	bool clearOtherErrors() const;
-	bool clearMarks() const;
+	bool isTracking() const;
 
-protected:
-	void setTranslationMode(bool value) override;
+public slots:
+	void setSubtitle(Subtitle *subtitle = 0);
 
 private:
-	QCheckBox *m_clearOtherErrorsCheckBox;
-	QCheckBox *m_clearMarksCheckBox;
+	void connectSlots();
+	void disconnectSlots();
+
+	void updateLineErrors(SubtitleLine *line, int errorFlags) const;
+
+private slots:
+	void onLinePrimaryTextChanged(SubtitleLine *line);
+	void onLineSecondaryTextChanged(SubtitleLine *line);
+	void onLineTimesChanged(SubtitleLine *line);
+
+	void onConfigChanged();
+
+private:
+	Subtitle *m_subtitle;
+	bool m_autoClearFixed;
 };
 }
 #endif

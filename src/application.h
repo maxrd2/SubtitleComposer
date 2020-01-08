@@ -145,21 +145,13 @@ public slots:
 
 	void spellCheck();
 
-	void findError();
-	void findNextError();
-	void findPreviousError();
+	void detectErrors();
+	void clearErrors();
+	void selectNextError();
+	void selectPreviousError();
 
 	void retrocedeCurrentLine();
 	void advanceCurrentLine();
-
-	void checkErrors();
-	void recheckAllErrors();
-	void recheckSelectedErrors();
-	void clearErrors();
-	void clearSelectedErrors(bool includeMarks = false);
-	void clearSelectedMarks();
-
-	void showErrors();
 
 	void toggleSelectedLinesMark();
 	void toggleSelectedLinesBold();

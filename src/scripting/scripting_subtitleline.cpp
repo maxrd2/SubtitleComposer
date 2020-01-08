@@ -414,9 +414,9 @@ Scripting::SubtitleLine::checkSecondaryUnneededDash(bool update)
 }
 
 int
-Scripting::SubtitleLine::check(int errorFlagsToCheck, int minDuration, int maxDuration, int minDurationPerChar, int maxDurationPerChar, int maxChars, int maxLines, bool update)
+Scripting::SubtitleLine::check(int errorFlagsToCheck, bool update)
 {
-	return m_backend->check(errorFlagsToCheck, minDuration, maxDuration, minDurationPerChar, maxDurationPerChar, maxChars, maxLines, update);
+	return m_backend->check(errorFlagsToCheck, update);
 }
 
 bool

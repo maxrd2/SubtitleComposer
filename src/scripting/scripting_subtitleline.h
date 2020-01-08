@@ -116,7 +116,7 @@ public slots:
 	bool checkPrimaryUnneededDash(bool update = true);
 	bool checkSecondaryUnneededDash(bool update = true);
 
-	int check(int errorFlagsToCheck, int minDuration, int maxDuration, int minDurationPerChar, int maxDurationPerChar, int maxChars, int maxLines, bool update = true);
+	int check(int errorFlagsToCheck, bool update = true);
 
 	bool isRightToLeft() const;
 

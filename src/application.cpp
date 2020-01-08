@@ -37,12 +37,12 @@
 #include "dialogs/translatedialog.h"
 #include "dialogs/smarttextsadjustdialog.h"
 #include "dialogs/changeframeratedialog.h"
-#include "dialogs/checkerrorsdialog.h"
-#include "dialogs/clearerrorsdialog.h"
 #include "dialogs/insertlinedialog.h"
 #include "dialogs/removelinesdialog.h"
 #include "dialogs/intinputdialog.h"
 #include "dialogs/subtitlecolordialog.h"
+#include "errors/errorfinder.h"
+#include "errors/errortracker.h"
 #include "formats/formatmanager.h"
 #include "formats/outputformat.h"
 #include "formats/textdemux/textdemux.h"
@@ -57,9 +57,7 @@
 #include "speechprocessor/speechprocessor.h"
 #include "utils/finder.h"
 #include "utils/replacer.h"
-#include "utils/errorfinder.h"
 #include "utils/speller.h"
-#include "utils/errortracker.h"
 #include "utils/translator.h"
 #include "videoplayer/videoplayer.h"
 #include "videoplayer/playerbackend.h"
@@ -112,10 +110,10 @@ Application::Application(int &argc, char **argv) :
 	m_subtitleTrEncoding(),
 	m_subtitleTrFormat(),
 	m_player(VideoPlayer::instance()),
-	m_textDemux(NULL),
-	m_speechProcessor(NULL),
-	m_lastFoundLine(0),
-	m_mainWindow(0),
+	m_textDemux(nullptr),
+	m_speechProcessor(nullptr),
+	m_lastFoundLine(nullptr),
+	m_mainWindow(nullptr),
 	m_lastSubtitleUrl(QDir::homePath()),
 	m_lastVideoUrl(QDir::homePath()),
 	m_linkCurrentLineToPosition(false)
@@ -197,9 +195,6 @@ Application::init()
 
 	connect(m_linesWidget, SIGNAL(currentLineChanged(SubtitleLine *)), m_curLineWidget, SLOT(setCurrentLine(SubtitleLine *)));
 	connect(m_linesWidget, SIGNAL(lineDoubleClicked(SubtitleLine *)), this, SLOT(onLineDoubleClicked(SubtitleLine *)));
-//	connect(m_linesWidget, SIGNAL(currentLineChanged(SubtitleLine *)), m_errorsWidget, SLOT(setCurrentLine(SubtitleLine *)));
-
-//	connect(m_errorsWidget, SIGNAL(lineDoubleClicked(SubtitleLine *)), m_linesWidget, SLOT(setCurrentLine(SubtitleLine *)));
 
 	connect(m_playerWidget, SIGNAL(playingLineChanged(SubtitleLine *)), this, SLOT(onPlayingLineChanged(SubtitleLine *)));
 
@@ -664,55 +659,40 @@ Application::setupActions()
 	actionCollection->addAction(ACT_ADVANCE_CURRENT_LINE, advanceCurrentLineAction);
 	actionManager->addAction(advanceCurrentLineAction, UserAction::SubHasLines | UserAction::HasSelection);
 
-	QAction *checkErrorsAction = new QAction(actionCollection);
-	checkErrorsAction->setText(i18n("Check Errors..."));
-	checkErrorsAction->setStatusTip(i18n("Check for errors in the current subtitle"));
-	actionCollection->setDefaultShortcut(checkErrorsAction, QKeySequence("Ctrl+E"));
-	connect(checkErrorsAction, &QAction::triggered, this, &Application::checkErrors);
-	actionCollection->addAction(ACT_CHECK_ERRORS, checkErrorsAction);
-	actionManager->addAction(checkErrorsAction, UserAction::HasSelection | UserAction::FullScreenOff);
+	QAction *detectErrorsAction = new QAction(actionCollection);
+	detectErrorsAction->setIcon(QIcon::fromTheme("edit-find"));
+	detectErrorsAction->setText(i18n("Detect Errors..."));
+	detectErrorsAction->setStatusTip(i18n("Detect errors in the current subtitle"));
+	actionCollection->setDefaultShortcut(detectErrorsAction, QKeySequence("Ctrl+E"));
+	connect(detectErrorsAction, &QAction::triggered, this, &Application::detectErrors);
+	actionCollection->addAction(ACT_DETECT_ERRORS, detectErrorsAction);
+	actionManager->addAction(detectErrorsAction, UserAction::HasSelection | UserAction::FullScreenOff);
 
 	QAction *clearErrorsAction = new QAction(actionCollection);
-	clearErrorsAction->setText(i18n("Clear Errors..."));
-	clearErrorsAction->setStatusTip(i18n("Clear errors from selected lines"));
-	connect(clearErrorsAction, SIGNAL(triggered()), this, SLOT(clearErrors()));
+	clearErrorsAction->setText(i18n("Clear Errors/Marks"));
+	clearErrorsAction->setStatusTip(i18n("Clear detected errors and marks in the current subtitle"));
+	actionCollection->setDefaultShortcut(clearErrorsAction, QKeySequence("Ctrl+Shift+E"));
+	connect(clearErrorsAction, &QAction::triggered, this, &Application::clearErrors);
 	actionCollection->addAction(ACT_CLEAR_ERRORS, clearErrorsAction);
 	actionManager->addAction(clearErrorsAction, UserAction::HasSelection | UserAction::FullScreenOff);
 
-	QAction *showErrorsAction = new QAction(actionCollection);
-	showErrorsAction->setText(i18n("Show Errors..."));
-	showErrorsAction->setStatusTip(i18n("Show errors information for the current subtitle"));
-	actionCollection->setDefaultShortcut(showErrorsAction, QKeySequence("Shift+E"));
-	connect(showErrorsAction, SIGNAL(triggered()), this, SLOT(showErrors()));
-	actionCollection->addAction(ACT_SHOW_ERRORS, showErrorsAction);
-	actionManager->addAction(showErrorsAction, UserAction::SubHasLine | UserAction::FullScreenOff);
+	QAction *nextErrorAction = new QAction(actionCollection);
+	nextErrorAction->setIcon(QIcon::fromTheme("go-down-search"));
+	nextErrorAction->setText(i18n("Select Next Error/Mark"));
+	nextErrorAction->setStatusTip(i18n("Select next line with error or mark"));
+	actionCollection->setDefaultShortcut(nextErrorAction, QKeySequence("F4"));
+	connect(nextErrorAction, &QAction::triggered, this, &Application::selectNextError);
+	actionCollection->addAction(ACT_SELECT_NEXT_ERROR, nextErrorAction);
+	actionManager->addAction(nextErrorAction, UserAction::SubHasLine);
 
-	QAction *findErrorAction = new QAction(actionCollection);
-	findErrorAction->setIcon(QIcon::fromTheme("edit-find"));
-	findErrorAction->setText(i18n("Find Error..."));
-	findErrorAction->setStatusTip(i18n("Find lines with specified errors"));
-	actionCollection->setDefaultShortcut(findErrorAction, QKeySequence("Ctrl+Shift+E"));
-	connect(findErrorAction, SIGNAL(triggered()), this, SLOT(findError()));
-	actionCollection->addAction(ACT_FIND_ERROR, findErrorAction);
-	actionManager->addAction(findErrorAction, UserAction::SubHasLine);
-
-	QAction *findNextErrorAction = new QAction(actionCollection);
-	findNextErrorAction->setIcon(QIcon::fromTheme("go-down-search"));
-	findNextErrorAction->setText(i18n("Find Next Error"));
-	findNextErrorAction->setStatusTip(i18n("Find next line with specified errors"));
-	actionCollection->setDefaultShortcut(findNextErrorAction, QKeySequence("F4"));
-	connect(findNextErrorAction, SIGNAL(triggered()), this, SLOT(findNextError()));
-	actionCollection->addAction(ACT_FIND_NEXT_ERROR, findNextErrorAction);
-	actionManager->addAction(findNextErrorAction, UserAction::SubHasLine);
-
-	QAction *findPreviousErrorAction = new QAction(actionCollection);
-	findPreviousErrorAction->setIcon(QIcon::fromTheme("go-up-search"));
-	findPreviousErrorAction->setText(i18n("Find Previous Error"));
-	findPreviousErrorAction->setStatusTip(i18n("Find previous line with specified errors"));
-	actionCollection->setDefaultShortcut(findPreviousErrorAction, QKeySequence("Shift+F4"));
-	connect(findPreviousErrorAction, SIGNAL(triggered()), this, SLOT(findPreviousError()));
-	actionCollection->addAction(ACT_FIND_PREVIOUS_ERROR, findPreviousErrorAction);
-	actionManager->addAction(findPreviousErrorAction, UserAction::SubHasLine);
+	QAction *prevErrorAction = new QAction(actionCollection);
+	prevErrorAction->setIcon(QIcon::fromTheme("go-up-search"));
+	prevErrorAction->setText(i18n("Select Previous Error/Mark"));
+	prevErrorAction->setStatusTip(i18n("Select previous line with error or mark"));
+	actionCollection->setDefaultShortcut(prevErrorAction, QKeySequence("Shift+F4"));
+	connect(prevErrorAction, &QAction::triggered, this, &Application::selectPreviousError);
+	actionCollection->addAction(ACT_SELECT_PREVIOUS_ERROR, prevErrorAction);
+	actionManager->addAction(prevErrorAction, UserAction::SubHasLine);
 
 	QAction *spellCheckAction = new QAction(actionCollection);
 	spellCheckAction->setIcon(QIcon::fromTheme("tools-check-spelling"));
@@ -724,7 +704,7 @@ Application::setupActions()
 
 	QAction *toggleSelectedLinesMarkAction = new QAction(actionCollection);
 	toggleSelectedLinesMarkAction->setText(i18n("Toggle Mark"));
-	toggleSelectedLinesMarkAction->setStatusTip(i18n("Toggle selected lines mark"));
+	toggleSelectedLinesMarkAction->setStatusTip(i18n("Toggle mark on selected lines"));
 	actionCollection->setDefaultShortcut(toggleSelectedLinesMarkAction, QKeySequence("Ctrl+M"));
 	connect(toggleSelectedLinesMarkAction, SIGNAL(triggered()), this, SLOT(toggleSelectedLinesMark()));
 	actionCollection->addAction(ACT_TOGGLE_SELECTED_LINES_MARK, toggleSelectedLinesMarkAction);
@@ -1302,7 +1282,7 @@ Application::gotoLine()
 void
 Application::find()
 {
-	m_lastFoundLine = 0;
+	m_lastFoundLine = nullptr;
 	m_finder->find(m_linesWidget->selectionRanges(), m_linesWidget->currentLineIndex(), m_curLineWidget->focusedText(), false);
 }
 
@@ -1310,7 +1290,7 @@ void
 Application::findNext()
 {
 	if(!m_finder->findNext()) {
-		m_lastFoundLine = 0;
+		m_lastFoundLine = nullptr;
 		m_finder->find(m_linesWidget->selectionRanges(), m_linesWidget->currentLineIndex(), m_curLineWidget->focusedText(), false);
 	}
 }
@@ -1319,7 +1299,7 @@ void
 Application::findPrevious()
 {
 	if(!m_finder->findPrevious()) {
-		m_lastFoundLine = 0;
+		m_lastFoundLine = nullptr;
 		m_finder->find(m_linesWidget->selectionRanges(), m_linesWidget->currentLineIndex(), m_curLineWidget->focusedText(), true);
 	}
 }
@@ -1338,31 +1318,6 @@ Application::spellCheck()
 }
 
 void
-Application::findError()
-{
-	m_lastFoundLine = 0;
-	m_errorFinder->find(m_linesWidget->selectionRanges(), m_linesWidget->currentLineIndex(), false);
-}
-
-void
-Application::findNextError()
-{
-	if(!m_errorFinder->findNext()) {
-		m_lastFoundLine = 0;
-		m_errorFinder->find(m_linesWidget->selectionRanges(), m_linesWidget->currentLineIndex(), false);
-	}
-}
-
-void
-Application::findPreviousError()
-{
-	if(!m_errorFinder->findPrevious()) {
-		m_lastFoundLine = 0;
-		m_errorFinder->find(m_linesWidget->selectionRanges(), m_linesWidget->currentLineIndex(), true);
-	}
-}
-
-void
 Application::retrocedeCurrentLine()
 {
 	SubtitleLine *currentLine = m_linesWidget->currentLine();
@@ -1376,110 +1331,6 @@ Application::advanceCurrentLine()
 	SubtitleLine *currentLine = m_linesWidget->currentLine();
 	if(currentLine && currentLine->nextLine())
 		m_linesWidget->setCurrentLine(currentLine->nextLine(), true);
-}
-
-void
-Application::checkErrors()
-{
-	static CheckErrorsDialog *dlg = new CheckErrorsDialog(m_mainWindow);
-
-	if(dlg->exec() == QDialog::Accepted) {
-		SubtitleCompositeActionExecutor executor(*m_subtitle, i18n("Check Lines Errors"));
-
-		RangeList targetRanges(m_linesWidget->targetRanges(dlg->selectedLinesTarget()));
-
-		if(dlg->clearOtherErrors()) {
-			int flagsToClear = SubtitleLine::AllErrors & (~dlg->selectedErrorFlags() & ~SubtitleLine::UserMark);
-			m_subtitle->clearErrors(targetRanges, flagsToClear);
-		}
-
-		if(dlg->clearMarks())
-			m_subtitle->setMarked(targetRanges, false);
-
-		m_subtitle->checkErrors(targetRanges,
-								   dlg->selectedErrorFlags(),
-								   SCConfig::minDuration(),
-								   SCConfig::maxDuration(),
-								   SCConfig::minDurationPerCharacter(),
-								   SCConfig::maxDurationPerCharacter(),
-								   SCConfig::maxCharacters(),
-								   SCConfig::maxLines());
-	}
-}
-
-void
-Application::recheckAllErrors()
-{
-	m_subtitle->recheckErrors(Range::full(),
-								 SCConfig::minDuration(),
-								 SCConfig::maxDuration(),
-								 SCConfig::minDurationPerCharacter(),
-								 SCConfig::maxDurationPerCharacter(),
-								 SCConfig::maxCharacters(),
-								 SCConfig::maxLines());
-}
-
-void
-Application::recheckSelectedErrors()
-{
-	// NOTE we can't just use Subtitle::recheckErrors() with the selected lines ranges
-	// because this slots handles the error dialog action where the user can not only
-	// select lines but can also select (or unselect) specific errors
-// FIXME:
-//	SubtitleCompositeActionExecutor executor(*m_subtitle, i18n("Check Lines Errors"));
-
-//	for(SubtitleIterator it(*m_subtitle, m_errorsWidget->selectionRanges()); it.current(); ++it) {
-//		it.current()->check(m_errorsWidget->lineSelectedErrorFlags(it.current()->index()), SCConfig::minDuration(), SCConfig::maxDuration(), SCConfig::minDurationPerChar(), SCConfig::maxDurationPerChar(), SCConfig::maxCharacters(), SCConfig::maxLines());
-//	}
-}
-
-void
-Application::clearErrors()
-{
-	static ClearErrorsDialog *dlg = new ClearErrorsDialog(m_mainWindow);
-
-	if(dlg->exec() == QDialog::Accepted) {
-		SubtitleCompositeActionExecutor executor(*m_subtitle, i18n("Clear Lines Errors"));
-
-		RangeList targetRanges(m_linesWidget->targetRanges(dlg->selectedLinesTarget()));
-
-		m_subtitle->clearErrors(targetRanges, dlg->selectedErrorFlags());
-	}
-}
-
-void
-Application::clearSelectedErrors(bool /*includeMarks*/)
-{
-//	SubtitleCompositeActionExecutor executor(*m_subtitle, i18n("Clear Lines Errors"));
-
-//	for(SubtitleIterator it(*m_subtitle, m_errorsWidget->selectionRanges()); it.current(); ++it) {
-//		SubtitleLine *line = it.current();
-//		int errorFlags = m_errorsWidget->lineSelectedErrorFlags(line->index());
-
-//		if(!includeMarks)
-//			errorFlags = errorFlags & ~SubtitleLine::UserMark;
-
-//		line->setErrorFlags(errorFlags, false);
-//	}
-}
-
-void
-Application::clearSelectedMarks()
-{
-//	m_subtitle->setMarked(m_errorsWidget->selectionRanges(), false);
-}
-
-void
-Application::showErrors()
-{
-//	if(m_errorsDialog->isHidden())
-//		m_errorsDialog->show();
-}
-
-void
-Application::toggleSelectedLinesMark()
-{
-	m_subtitle->toggleMarked(m_linesWidget->selectionRanges());
 }
 
 void
