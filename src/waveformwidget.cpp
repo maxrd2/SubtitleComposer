@@ -39,7 +39,7 @@
 #include <QToolButton>
 #include <QScrollBar>
 #include <QPropertyAnimation>
-
+#include <QtMath>
 #include <QDebug>
 
 #include <KLocalizedString>
@@ -299,23 +299,22 @@ WaveformWidget::updateZoomData()
 	auto updateZoomDataRange = [&](const quint32 iMin, const quint32 iMax){
 		Q_ASSERT(iMax <= (m_waveformZoomedSize - 1) * m_samplesPerPixel);
 
-		qint32 xMin = 65535, xMax = -65535;
+		qint32 xMax = -65535, xSum = 0;
 
 		for(quint32 ch = 0; ch < m_waveformChannels; ch++) {
 			for(quint32 i = iMin; i < iMax; i++) {
-				qint32 val = (qint32)m_waveform[ch][i] + SIGNED_PAD;
-				if(xMin > val)
-					xMin = val;
+				qint32 val = qAbs(qint32(m_waveform[ch][i]) - SAMPLE_MIN - (SAMPLE_MAX - SAMPLE_MIN) / 2);
 				if(xMax < val)
 					xMax = val;
+				xSum += val;
 
 				if(i % m_samplesPerPixel == m_samplesPerPixel - 1) {
 					const int zi = i / m_samplesPerPixel;
-					m_waveformZoomed[ch][zi].min = xMin;
+					m_waveformZoomed[ch][zi].min = xSum / m_samplesPerPixel;
 					m_waveformZoomed[ch][zi].max = xMax;
 
-					xMin = 65535;
 					xMax = -65535;
+					xSum = 0;
 				}
 			}
 		}
@@ -533,7 +532,7 @@ WaveformWidget::onStreamData(const void *buffer, qint32 size, const WaveFormat *
 		quint32 n = quint32(byteSyncOffset) / BYTES_PER_SAMPLE / m_waveformChannels;
 		for(quint32 i = m_waveformDataOffset / BYTES_PER_SAMPLE / m_waveformChannels; i < n; i++) {
 			for(quint32 c = 0; c < m_waveformChannels; c++)
-				m_waveform[c][i] = qint32(sample[c]) & (BYTES_PER_SAMPLE == 1 ? 0x000000ff : 0x0000ffff);
+				m_waveform[c][i] = qint32(sample[c]);
 		}
 		m_waveformDataOffset = qint32(byteSyncOffset);
 	}
@@ -546,11 +545,6 @@ WaveformWidget::onStreamData(const void *buffer, qint32 size, const WaveFormat *
 	while(len > 0) {
 		for(quint32 c = 0; c < m_waveformChannels; c++) {
 			qint32 val = *sample++;
-			if(i > 0) {
-				// simple lowpass filter
-				val = (val + m_waveform[c][i - 1]) / 2;
-			}
-			val &= BYTES_PER_SAMPLE == 1 ? 0x000000ff : 0x0000ffff;
 			m_waveform[c][i] = val;
 			len--;
 		}
@@ -587,22 +581,22 @@ WaveformWidget::paintGraphics(QPainter &painter)
 
 	updateZoomData();
 
-	// FIXME: make visualization types configurable? Min/Max/Avg/RMS
 	if(m_waveformZoomed) {
-		quint32 yMin = SAMPLE_RATE_MILLIS * m_timeStart.toMillis() / m_samplesPerPixel;
-		quint32 yMax = SAMPLE_RATE_MILLIS * m_timeEnd.toMillis() / m_samplesPerPixel;
+		const quint32 yMin = SAMPLE_RATE_MILLIS * m_timeStart.toMillis() / m_samplesPerPixel;
+		const quint32 yMax = SAMPLE_RATE_MILLIS * m_timeEnd.toMillis() / m_samplesPerPixel;
 		qint32 xMin, xMax;
 
-		qint32 chHalfWidth = (m_vertical ? widgetWidth : widgetHeight) / m_waveformChannels / 2;
+		const qint32 chHalfWidth = (m_vertical ? widgetWidth : widgetHeight) / m_waveformChannels / 2;
+		static const qreal valMax = qSqrt(qreal(SAMPLE_MAX - SAMPLE_MIN) / 2.);
 
 		for(quint32 ch = 0; ch < m_waveformChannels; ch++) {
-			qint32 chCenter = (ch * 2 + 1) * chHalfWidth;
+			const qint32 chCenter = (ch * 2 + 1) * chHalfWidth;
 			for(quint32 i = yMin; i < yMax; i++) {
 				if(i >= m_waveformZoomedOffsetMax) {
 					xMin = xMax = 0;
 				} else {
-					xMin = m_waveformZoomed[ch][i].min * 9 / 5 * chHalfWidth / SAMPLE_MAX;
-					xMax = m_waveformZoomed[ch][i].max * 9 / 5 * chHalfWidth / SAMPLE_MAX;
+					xMin = qMax(0., qSqrt(m_waveformZoomed[ch][i].min) * 1.1 - valMax * .1) * chHalfWidth / valMax;
+					xMax = qMax(0., qSqrt(m_waveformZoomed[ch][i].max) * 1.1 - valMax * .1) * chHalfWidth / valMax;
 				}
 
 				int y = i - yMin;

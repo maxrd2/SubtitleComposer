@@ -41,14 +41,14 @@ QT_FORWARD_DECLARE_CLASS(QToolButton)
 QT_FORWARD_DECLARE_CLASS(QBoxLayout)
 
 // FIXME: make sample size configurable or drop this
-/*
+//*
 #define SAMPLE_TYPE qint16
-#define SIGNED_PAD 0 // 32768
-#define SAMPLE_MAX 32768 // 65535
+#define SAMPLE_MIN -32768
+#define SAMPLE_MAX 32767
 /*/
 #define SAMPLE_TYPE quint8
-#define SIGNED_PAD -128 // 0
-#define SAMPLE_MAX 128 // 255
+#define SAMPLE_MIN 0
+#define SAMPLE_MAX 255
 //*/
 
 namespace SubtitleComposer {
