@@ -168,8 +168,6 @@ Replacer::replace(const RangeList &selectionRanges, int currentIndex, const QStr
 void
 Replacer::onFindNext()
 {
-	SubtitleCompositeActionExecutor executor(*m_subtitle, i18n("Replace"));
-
 	KFind::Result res = KFind::NoMatch;
 
 	const bool backwards = m_replace->options() & KFind::FindBackwards;
@@ -256,6 +254,8 @@ Replacer::onHighlight(const QString &, int matchingIndex, int matchedLength)
 void
 Replacer::onReplace(const QString &text, int replacementIndex, int replacedLength, int matchedLength)
 {
+	SubtitleCompositeActionExecutor executor(*m_subtitle, i18n("Replace"));
+
 	if(m_feedingPrimary) {
 		SString stext = m_iterator->current()->primaryText();
 		stext.replace(replacementIndex, matchedLength, text.mid(replacementIndex, replacedLength));
