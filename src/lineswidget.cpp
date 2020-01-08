@@ -58,8 +58,8 @@ using namespace SubtitleComposer;
 
 LinesModel::LinesModel(QObject *parent) :
 	QAbstractListModel(parent),
-	m_subtitle(NULL),
-	m_playingLine(NULL),
+	m_subtitle(nullptr),
+	m_playingLine(nullptr),
 	m_dataChangedTimer(new QTimer(this)),
 	m_minChangedLineIndex(-1),
 	m_maxChangedLineIndex(-1),
@@ -70,7 +70,7 @@ LinesModel::LinesModel(QObject *parent) :
 	m_dataChangedTimer->setInterval(0);
 	m_dataChangedTimer->setSingleShot(true);
 
-	connect(m_dataChangedTimer, SIGNAL(timeout()), this, SLOT(emitDataChanged()));
+	connect(m_dataChangedTimer, &QTimer::timeout, this, &LinesModel::emitDataChanged);
 }
 
 Subtitle *
@@ -83,7 +83,7 @@ void
 LinesModel::setSubtitle(Subtitle *subtitle)
 {
 	if(m_subtitle != subtitle) {
-		m_playingLine = 0;
+		m_playingLine = nullptr;
 
 		if(m_subtitle) {
 			disconnect(m_subtitle, &Subtitle::linesInserted, this, &LinesModel::onLinesInserted);
@@ -143,7 +143,7 @@ LinesModel::setPlayingLine(SubtitleLine *line)
 	if(m_playingLine != line) {
 		if(m_playingLine) {
 			int row = m_playingLine->index();
-			m_playingLine = 0;
+			m_playingLine = nullptr;
 			emit dataChanged(index(row, 0), index(row, ColumnCount));
 		}
 
@@ -157,14 +157,16 @@ LinesModel::setPlayingLine(SubtitleLine *line)
 }
 
 int
-LinesModel::rowCount(const QModelIndex & /*parent */) const
+LinesModel::rowCount(const QModelIndex &parent) const
 {
+	Q_UNUSED(parent);
 	return m_subtitle ? m_subtitle->linesCount() : 0;
 }
 
 int
-LinesModel::columnCount(const QModelIndex & /*parent */) const
+LinesModel::columnCount(const QModelIndex &parent) const
 {
+	Q_UNUSED(parent);
 	return ColumnCount;
 }
 
@@ -404,16 +406,17 @@ LinesModel::onCompositeActionEnd()
 void
 LinesModel::onLineChanged(const SubtitleLine *line)
 {
-	int lineIndex = line->index();
+	const int lineIndex = line->index();
 
 	if(m_minChangedLineIndex < 0) {
 		m_minChangedLineIndex = lineIndex;
 		m_maxChangedLineIndex = lineIndex;
 		m_dataChangedTimer->start();
-	} else if(lineIndex < m_minChangedLineIndex)
+	} else if(lineIndex < m_minChangedLineIndex) {
 		m_minChangedLineIndex = lineIndex;
-	else if(lineIndex > m_maxChangedLineIndex)
+	} else if(lineIndex > m_maxChangedLineIndex) {
 		m_maxChangedLineIndex = lineIndex;
+	}
 }
 
 void
@@ -437,7 +440,7 @@ LinesItemDelegate::LinesItemDelegate(bool useStyle, bool singleLineMode, bool ri
 	QStyledItemDelegate(parent),
 	m_useStyle(useStyle),
 	m_singleLineMode(singleLineMode),
-	m_textDocument(0)
+	m_textDocument(nullptr)
 {
 	setRichTextMode(richTextMode);
 }
@@ -474,13 +477,13 @@ LinesItemDelegate::setSingleLineMode(bool singleLineMode)
 bool
 LinesItemDelegate::richTextMode() const
 {
-	return m_textDocument != 0;
+	return m_textDocument != nullptr;
 }
 
 void
 LinesItemDelegate::setRichTextMode(bool richTextMode)
 {
-	if(richTextMode != (m_textDocument != 0)) {
+	if(richTextMode != (m_textDocument != nullptr)) {
 		if(richTextMode) {
 			QTextOption defaultTextOption;
 			defaultTextOption.setWrapMode(QTextOption::NoWrap);
@@ -491,7 +494,7 @@ LinesItemDelegate::setRichTextMode(bool richTextMode)
 			updateStyle();
 		} else {
 			delete m_textDocument;
-			m_textDocument = 0;
+			m_textDocument = nullptr;
 		}
 	}
 }
@@ -575,7 +578,7 @@ LinesItemDelegate::drawBackgroundPrimitive(QPainter *painter, const QStyle *styl
 void
 LinesItemDelegate::drawTextPrimitive(QPainter *painter, const QStyle *style, const QStyleOptionViewItem &option, const QRect &rect, QPalette::ColorGroup cg, const QModelIndex &index) const
 {
-	const int textMargin = style->pixelMetric(QStyle::PM_FocusFrameHMargin, 0, option.widget) + 1;
+	const int textMargin = style->pixelMetric(QStyle::PM_FocusFrameHMargin, nullptr, option.widget) + 1;
 	const int alignment = QStyle::visualAlignment(option.direction, option.displayAlignment);
 
 	QRect textRect = rect.adjusted(textMargin, 0, -textMargin, 0);  // remove width padding
@@ -733,46 +736,28 @@ LinesItemDelegate::displayText(const QVariant &value, const QLocale &locale) con
 const QIcon &
 LinesItemDelegate::markIcon()
 {
-	static QIcon markIcon;
-	if(markIcon.isNull())
-		markIcon = QIcon::fromTheme("dialog-warning");
-	return markIcon;
+	static QIcon icon;
+	if(icon.isNull())
+		icon = QIcon::fromTheme(QStringLiteral("dialog-warning"));
+	return icon;
 }
 
 const QIcon &
 LinesItemDelegate::errorIcon()
 {
-	static QIcon errorIcon;
-	if(errorIcon.isNull())
-		errorIcon = QIcon::fromTheme("dialog-error");
-	return errorIcon;
+	static QIcon icon;
+	if(icon.isNull())
+		icon = QIcon::fromTheme(QStringLiteral("dialog-error"));
+	return icon;
 }
 
 const QIcon &
 LinesItemDelegate::anchorIcon()
 {
-	static QIcon anchorIcon;
-	if(anchorIcon.isNull())
-		anchorIcon = QIcon::fromTheme(QStringLiteral("anchor"));
-	return anchorIcon;
-}
-
-const QPixmap &
-LinesItemDelegate::markPixmap()
-{
-	static QPixmap markPixmap;
-	if(markPixmap.isNull())
-		markPixmap = markIcon().pixmap(13, 13);
-	return markPixmap;
-}
-
-const QPixmap &
-LinesItemDelegate::errorPixmap()
-{
-	static QPixmap errorPixmap;
-	if(errorPixmap.isNull())
-		errorPixmap = errorIcon().pixmap(13, 13);
-	return errorPixmap;
+	static QIcon icon;
+	if(icon.isNull())
+		icon = QIcon::fromTheme(QStringLiteral("anchor"));
+	return icon;
 }
 
 /// LINES WIDGET
@@ -876,11 +861,11 @@ LinesWidget::rowsAboutToBeRemoved(const QModelIndex &parent, int start, int end)
 {
 	TreeView::rowsAboutToBeRemoved(parent, start, end);
 
-	selectionModel()->select(model()->index(end + 1, 0, parent), QItemSelectionModel::Rows | QItemSelectionModel::ClearAndSelect | QItemSelectionModel::Current);
+	selectionModel()->select(model()->index(end + 1, 0, parent),
+							 QItemSelectionModel::Rows | QItemSelectionModel::ClearAndSelect | QItemSelectionModel::Current);
 
-	if(m_scrollFollowsModel) {
+	if(m_scrollFollowsModel)
 		scrollTo(model()->index(end + 1, 0, parent), QAbstractItemView::EnsureVisible);
-	}
 }
 
 void
@@ -889,15 +874,16 @@ LinesWidget::rowsInserted(const QModelIndex &parent, int start, int end)
 	TreeView::rowsInserted(parent, start, end);
 
 	if(model()->rowCount() != (end - start + 1)) {  // there were other rows previously
-		selectionModel()->select(QItemSelection(model()->index(start, 0, parent), model()->index(end, 0, parent)), QItemSelectionModel::Rows | QItemSelectionModel::ClearAndSelect);
+		selectionModel()->select(QItemSelection(model()->index(start, 0, parent), model()->index(end, 0, parent)),
+								 QItemSelectionModel::Rows | QItemSelectionModel::ClearAndSelect);
 
-		if(m_scrollFollowsModel) {
+		if(m_scrollFollowsModel)
 			scrollTo(model()->index(start, 0, parent), QAbstractItemView::EnsureVisible);
-		}
 	}
 
 	if(m_scrollFollowsModel) {
-		selectionModel()->setCurrentIndex(model()->index(start, 0, parent), QItemSelectionModel::Rows | QItemSelectionModel::SelectCurrent);
+		selectionModel()->setCurrentIndex(model()->index(start, 0, parent),
+										  QItemSelectionModel::Rows | QItemSelectionModel::SelectCurrent);
 	}
 }
 
@@ -906,7 +892,8 @@ LinesWidget::editCurrentLineInPlace(bool primaryText)
 {
 	QModelIndex currentIndex = this->currentIndex();
 	if(currentIndex.isValid()) {
-		currentIndex = model()->index(currentIndex.row(), primaryText || !m_translationMode ? LinesModel::Text : LinesModel::Translation);
+		currentIndex = model()->index(currentIndex.row(),
+									  primaryText || !m_translationMode ? LinesModel::Text : LinesModel::Translation);
 
 		setCurrentIndex(currentIndex);
 
@@ -923,15 +910,15 @@ LinesWidget::showingContextMenu()
 SubtitleLine *
 LinesWidget::currentLine() const
 {
-	QModelIndex currentIndex = this->currentIndex();
-	return currentIndex.isValid() ? model()->subtitle()->line(currentIndex.row()) : 0;
+	const QModelIndex idx = currentIndex();
+	return idx.isValid() ? model()->subtitle()->line(idx.row()) : nullptr;
 }
 
 int
 LinesWidget::currentLineIndex() const
 {
-	QModelIndex currentIndex = this->currentIndex();
-	return currentIndex.isValid() ? currentIndex.row() : -1;
+	const QModelIndex idx = currentIndex();
+	return idx.isValid() ? idx.row() : -1;
 }
 
 int
@@ -1016,7 +1003,8 @@ LinesWidget::targetRanges(int target) const
 	case ActionWithTargetDialog::FromSelected: {
 		int index = firstSelectedIndex();
 		return index < 0 ? RangeList() : Range::upper(index);
-	} case ActionWithTargetDialog::UpToSelected: {
+	}
+	case ActionWithTargetDialog::UpToSelected: {
 		int index = lastSelectedIndex();
 		return index < 0 ? RangeList() : Range::lower(index);
 	}
@@ -1140,7 +1128,7 @@ LinesWidget::disableModelReset(bool disable)
 void
 LinesWidget::contextMenuEvent(QContextMenuEvent *e)
 {
-	SubtitleLine *referenceLine = 0;
+	SubtitleLine *referenceLine = nullptr;
 	QItemSelectionModel *selection = selectionModel();
 	for(int row = 0, rowCount = model()->rowCount(); row < rowCount; ++row) {
 		if(selection->isSelected(model()->index(row, 0))) {
@@ -1234,7 +1222,7 @@ void
 LinesWidget::onCurrentRowChanged()
 {
 	QModelIndex current = this->currentIndex();
-	emit currentLineChanged(current.isValid() ? model()->subtitle()->line(current.row()) : 0);
+	emit currentLineChanged(current.isValid() ? model()->subtitle()->line(current.row()) : nullptr);
 }
 
 void
@@ -1277,8 +1265,7 @@ LinesWidget::drawRow(QPainter *painter, const QStyleOptionViewItem &option, cons
 	const bool rowSelected = selectionModel()->isSelected(index);
 	const QPalette palette = this->palette();
 	const QRect rowRect = QRect(visualRect(model()->index(row, 0)).topLeft(),
-								visualRect(model()->index(row, visibleColumns - 1)).bottomRight()
-								);
+								visualRect(model()->index(row, visibleColumns - 1)).bottomRight());
 
 	// draw row grid
 	painter->setPen(m_gridPen);

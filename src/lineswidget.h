@@ -130,9 +130,6 @@ public:
 	static const QIcon & errorIcon();
 	static const QIcon & anchorIcon();
 
-	static const QPixmap & markPixmap();
-	static const QPixmap & errorPixmap();
-
 protected:
 	bool eventFilter(QObject *object, QEvent *event) override;
 
