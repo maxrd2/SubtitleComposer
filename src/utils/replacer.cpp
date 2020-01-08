@@ -20,28 +20,26 @@
 
 #include "replacer.h"
 #include "core/subtitleiterator.h"
-#include "kreplace.h"
 
 #include <QGroupBox>
 #include <QRadioButton>
 #include <QGridLayout>
-#include <QDebug>
 #include <QDialog>
 
 #include <KFind>
-#include <KMessageBox>
+#include <KReplace>
 #include <KReplaceDialog>
 #include <KLocalizedString>
 
 using namespace SubtitleComposer;
 
-Replacer::Replacer(QWidget *parent) :
-	QObject(parent),
-	m_subtitle(0),
-	m_translationMode(false),
-	m_feedingPrimary(false),
-	m_replace(0),
-	m_iterator(0)
+Replacer::Replacer(QWidget *parent)
+	: QObject(parent),
+	  m_subtitle(nullptr),
+	  m_translationMode(false),
+	  m_feedingPrimary(false),
+	  m_replace(nullptr),
+	  m_iterator(nullptr)
 {
 	m_dialog = new KReplaceDialog(parent);
 	m_dialog->setHasSelection(true);
@@ -78,17 +76,17 @@ Replacer::~Replacer()
 {
 	delete m_dialog;
 
-	setSubtitle(0);
+	setSubtitle(nullptr);
 }
 
 void
 Replacer::invalidate()
 {
 	delete m_replace;
-	m_replace = 0;
+	m_replace = nullptr;
 
 	delete m_iterator;
-	m_iterator = 0;
+	m_iterator = nullptr;
 
 	m_feedingPrimary = false;
 }
@@ -143,41 +141,42 @@ Replacer::replace(const RangeList &selectionRanges, int currentIndex, const QStr
 	m_replace = new KReplace(m_dialog->pattern(), m_dialog->replacement(), m_dialog->options(), 0);
 
 	// Connect findNext signal - called when pressing the button in the dialog
-	connect(m_replace, SIGNAL(findNext()), this, SLOT(advance()));
+	connect(m_replace, &KReplace::findNext, this, &Replacer::onFindNext);
 
-	// Connect signals to code which handles highlighting of found text, and on-the-fly replacement.
-	connect(m_replace, SIGNAL(highlight(const QString &, int, int)), this, SLOT(onHighlight(const QString &, int, int)));
+	// Connect signals to code which handles highlighting of found text, and on-the-fly replacement
+	connect(m_replace, QOverload<const QString &,int,int>::of(&KReplace::highlight), this, &Replacer::onHighlight);
 
 	// Connect replace signal - called when doing a replacement
-	connect(m_replace, SIGNAL(replace(const QString &, int, int, int)), this, SLOT(onReplace(const QString &, int, int, int)));
+	connect(m_replace, QOverload<const QString &,int,int,int>::of(&KReplace::replace), this, &Replacer::onReplace);
 
 	if(m_dialog->options() & KFind::SelectedText) {
 		m_iterator = new SubtitleIterator(*m_subtitle, selectionRanges);
 		if(m_iterator->index() < 0) // Invalid index means no lines in selectionRanges
 			return;
-	} else
+	} else {
 		m_iterator = new SubtitleIterator(*m_subtitle);
+	}
 
 	if(m_dialog->options() & KFind::FromCursor)
 		m_iterator->toIndex(currentIndex < 0 ? 0 : currentIndex);
 
 	m_firstIndex = m_iterator->index();
-	m_instancesFound = false;
 
-	advance();
+	onFindNext();
 }
 
 void
-Replacer::advance()
+Replacer::onFindNext()
 {
 	SubtitleCompositeActionExecutor executor(*m_subtitle, i18n("Replace"));
 
 	KFind::Result res = KFind::NoMatch;
 
-	bool selection = m_replace->options() & KFind::SelectedText;
-	bool backwards = m_replace->options() & KFind::FindBackwards;
+	const bool backwards = m_replace->options() & KFind::FindBackwards;
+	const int startIndex = backwards ? m_iterator->lastIndex() : m_iterator->firstIndex();
+	const int finalIndex = backwards ? SubtitleIterator::BehindFirst : SubtitleIterator::AfterLast;
 
-	QDialog *replaceNextDialog = this->replaceNextDialog(); // creates the dialog if it didn't existed before
+	QDialog *replaceNextDialog = this->replaceNextDialog(); // creates the dialog if it didn't exist before
 
 	do {
 		if(m_replace->needData()) {
@@ -190,8 +189,8 @@ Replacer::advance()
 				} else if(m_targetRadioButtons[SubtitleLine::Secondary]->isChecked()) {
 					m_feedingPrimary = false;
 					m_replace->setData(dataLine->secondaryText().string());
-				} else {                // m_translationMode && m_targetRadioButtons[SubtitleLine::Both]->isChecked()
-					m_feedingPrimary = !m_feedingPrimary;   // we alternate the source of data
+				} else { // m_translationMode && m_targetRadioButtons[SubtitleLine::Both]->isChecked()
+					m_feedingPrimary = !m_feedingPrimary;   // alternate the data source
 					m_replace->setData((m_feedingPrimary ? dataLine->primaryText() : dataLine->secondaryText()).string());
 				}
 			}
@@ -205,17 +204,11 @@ Replacer::advance()
 			else
 				++(*m_iterator);
 
-			if(m_firstIndex == m_iterator->index() || (backwards ? (m_firstIndex == m_iterator->lastIndex() && m_iterator->index() == SubtitleIterator::BehindFirst) : (m_firstIndex == m_iterator->firstIndex() && m_iterator->index() == SubtitleIterator::AfterLast))) {
+			if(m_firstIndex == m_iterator->index() || (m_firstIndex == startIndex && m_iterator->index() == finalIndex)) {
 				if(replaceNextDialog)
 					replaceNextDialog->hide();
 
-				if(m_instancesFound && m_replace->numReplacements())
-					KMessageBox::information(parentWidget(), i18np("1 replacement done.", "%1 replacements done.", m_replace->numReplacements()), i18n("Replace")
-											 );
-				else // special case
-					KMessageBox::sorry(parentWidget(), i18n("No instances of '%1' found!", m_replace->pattern()), i18n("Replace")
-									   );
-
+				m_replace->displayFinalDialog();
 				m_replace->resetCounts();
 				break;
 			}
@@ -226,15 +219,11 @@ Replacer::advance()
 				else
 					m_iterator->toFirst();
 
-				int numReplacements = m_replace->numReplacements();
-
-				m_replace->resetCounts();
-
-				if(KMessageBox::warningContinueCancel(parentWidget(), i18np("1 replacement done.", "%1 replacements done.", numReplacements) + "\n\n" + (backwards ? (selection ? i18n("Beginning of selection reached.\nContinue from the end?") : i18n("Beginning of subtitle reached.\nContinue from the end?")) : (selection ? i18n("End of selection reached.\nContinue from the beginning?") : i18n("End of subtitle reached.\nContinue from the beginning?"))), i18n("Replace")
-													  ) != KMessageBox::Continue)
-				{
+				if(!m_replace->shouldRestart()) {
 					if(replaceNextDialog)
 						replaceNextDialog->hide();
+
+					m_replace->resetCounts();
 					break;
 				}
 			}
@@ -246,31 +235,27 @@ QDialog *
 Replacer::replaceNextDialog()
 {
 	if(!m_replace)
-		return 0;
+		return nullptr;
 
-	QDialog *replaceNextDialog = m_replace->replaceNextDialog(false);
+	QDialog *dlg = m_replace->replaceNextDialog(false);
 
-	if(!replaceNextDialog && m_replace->options() & KReplaceDialog::PromptOnReplace) {
-		replaceNextDialog = m_replace->replaceNextDialog(true);
-		replaceNextDialog->setModal(true);
+	if(!dlg && m_replace->options() & KReplaceDialog::PromptOnReplace) {
+		dlg = m_replace->replaceNextDialog(true);
+		dlg->setModal(true);
 	}
 
-	return replaceNextDialog;
+	return dlg;
 }
 
 void
 Replacer::onHighlight(const QString &, int matchingIndex, int matchedLength)
 {
-	m_instancesFound = true;
-
 	emit found(m_iterator->current(), m_feedingPrimary, matchingIndex, matchingIndex + matchedLength - 1);
 }
 
 void
 Replacer::onReplace(const QString &text, int replacementIndex, int replacedLength, int matchedLength)
 {
-	m_instancesFound = true;
-
 	if(m_feedingPrimary) {
 		SString stext = m_iterator->current()->primaryText();
 		stext.replace(replacementIndex, matchedLength, text.mid(replacementIndex, replacedLength));

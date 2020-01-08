@@ -3,7 +3,7 @@
 
 /*
  * Copyright (C) 2007-2009 Sergio Pistone <sergio_pistone@yahoo.com.ar>
- * Copyright (C) 2010-2018 Mladen Milinkovic <max@smoothware.net>
+ * Copyright (C) 2010-2020 Mladen Milinkovic <max@smoothware.net>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -61,7 +61,7 @@ private:
 	QDialog * replaceNextDialog();
 
 private slots:
-	void advance();
+	void onFindNext();
 	void onHighlight(const QString &text, int matchingIndex, int matchedLength);
 	void onReplace(const QString &text, int replacementIndex, int replacedLength, int matchedLength);
 
@@ -75,7 +75,6 @@ private:
 	QGroupBox *m_targetGroupBox;
 	QRadioButton *m_targetRadioButtons[SubtitleLine::TextTargetSIZE];
 	SubtitleIterator *m_iterator;
-	bool m_instancesFound;
 	int m_firstIndex;
 };
 }
