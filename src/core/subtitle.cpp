@@ -827,7 +827,7 @@ Subtitle::sortLines(const Range &range)
 	SubtitleLine *nextLine = (++it).current();
 	for(; nextLine; ++it, line = nextLine, nextLine = it.current()) {
 //		qDebug() << "sort: test" << nextLine->index();
-		if(line->showTime() < nextLine->showTime()) // already sorted
+		if(line->showTime() <= nextLine->showTime()) // already sorted
 			continue;
 
 		SubtitleIterator tmp(it);
