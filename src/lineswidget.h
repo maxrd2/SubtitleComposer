@@ -225,6 +225,7 @@ private:
 	LinesItemDelegate *m_richTextDelegate;
 
 	friend class LinesWidgetScrollToModelDetacher;
+	friend class LinesModel;
 };
 
 class LinesWidgetScrollToModelDetacher

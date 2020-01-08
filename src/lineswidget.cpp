@@ -366,8 +366,6 @@ LinesModel::onCompositeActionStart()
 		QModelIndexList sel = sm->selectedIndexes();
 		while(!sel.empty())
 			m_selectionBackup.push_back(m_subtitle->at(sel.takeLast().row()));
-		QModelIndex cur = sm->currentIndex();
-		m_selectionBackup.push_back(cur.isValid() ? m_subtitle->at(cur.row()) : nullptr);
 
 		beginResetModel();
 	}
@@ -394,10 +392,7 @@ LinesModel::onCompositeActionEnd()
 			const SubtitleLine *line = m_selectionBackup.takeFirst();
 			if(line && line->subtitle() == m_subtitle) {
 				const int i = line->index();
-				if(m_selectionBackup.empty())
-					sm->setCurrentIndex(model->index(i), QItemSelectionModel::Current);
-				else
-					sm->select(QItemSelection(model->index(i), model->index(i, lastCol)), QItemSelectionModel::Select);
+				sm->select(QItemSelection(model->index(i), model->index(i, lastCol)), QItemSelectionModel::Select);
 			}
 		}
 	}
@@ -417,6 +412,12 @@ LinesModel::onLineChanged(const SubtitleLine *line)
 	} else if(lineIndex > m_maxChangedLineIndex) {
 		m_maxChangedLineIndex = lineIndex;
 	}
+
+	LinesWidget *w = static_cast<LinesWidget *>(parent());
+	const QModelIndex idx = w->model()->index(lineIndex);
+	w->selectionModel()->setCurrentIndex(idx, QItemSelectionModel::Current);
+	if(w->m_scrollFollowsModel)
+		w->scrollTo(idx, QAbstractItemView::EnsureVisible);
 }
 
 void
