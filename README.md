@@ -1,4 +1,6 @@
-## Subtitle Composer [![TravisCI build](https://travis-ci.org/maxrd2/subtitlecomposer.svg?branch=master)](https://travis-ci.org/maxrd2/subtitlecomposer) [![Crowdin](https://d322cqt584bo4o.cloudfront.net/subtitlecomposer/localized.svg)](https://crowdin.com/project/subtitlecomposer)
+## Subtitle Composer
+[![Build Status](https://build.kde.org/job/Extragear/job/subtitlecomposer/job/kf5-qt5%20SUSEQt5.12/badge/icon)](https://build.kde.org/job/Extragear/job/subtitlecomposer/)
+[![Localization](https://d322cqt584bo4o.cloudfront.net/subtitlecomposer/localized.svg)](https://l10n.kde.org/stats/gui/trunk-kf5/po/subtitlecomposer.po/)
 
 An open source text-based subtitle editor that supports basic and advanced editing operations, aiming to become an improved version of Subtitle Workshop for every platform supported by Plasma Frameworks.
 
