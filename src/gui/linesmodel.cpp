@@ -40,16 +40,19 @@ LinesModel::LinesModel(QObject *parent)
 	  m_subtitle(nullptr),
 	  m_playingLine(nullptr),
 	  m_dataChangedTimer(new QTimer(this)),
+	  m_resetModelTimer(new QTimer(this)),
+	  m_resetModelSelection(nullptr, nullptr),
 	  m_minChangedLineIndex(-1),
 	  m_maxChangedLineIndex(-1),
-	  m_graftPoints(QList<Subtitle *>()),
-	  m_allowModelReset(true),
-	  m_resettingModel(0)
+	  m_graftPoints(QList<Subtitle *>())
 {
 	m_dataChangedTimer->setInterval(0);
 	m_dataChangedTimer->setSingleShot(true);
-
 	connect(m_dataChangedTimer, &QTimer::timeout, this, &LinesModel::emitDataChanged);
+
+	m_resetModelTimer->setInterval(0);
+	m_resetModelTimer->setSingleShot(true);
+	connect(m_resetModelTimer, &QTimer::timeout, this, &LinesModel::onModelReset);
 }
 
 Subtitle *
@@ -66,9 +69,8 @@ LinesModel::setSubtitle(Subtitle *subtitle)
 
 		if(m_subtitle) {
 			disconnect(m_subtitle, &Subtitle::linesInserted, this, &LinesModel::onLinesInserted);
+			disconnect(m_subtitle, &Subtitle::linesAboutToBeRemoved, this, &LinesModel::onLinesAboutToRemove);
 			disconnect(m_subtitle, &Subtitle::linesRemoved, this, &LinesModel::onLinesRemoved);
-			disconnect(m_subtitle, &Subtitle::compositeActionStart, this, &LinesModel::onCompositeActionStart);
-			disconnect(m_subtitle, &Subtitle::compositeActionEnd, this, &LinesModel::onCompositeActionEnd);
 
 			disconnect(m_subtitle, &Subtitle::lineAnchorChanged, this, &LinesModel::onLineChanged);
 			disconnect(m_subtitle, &Subtitle::lineErrorFlagsChanged, this, &LinesModel::onLineChanged);
@@ -78,6 +80,7 @@ LinesModel::setSubtitle(Subtitle *subtitle)
 			disconnect(m_subtitle, &Subtitle::lineHideTimeChanged, this, &LinesModel::onLineChanged);
 
 			if(m_subtitle->linesCount()) {
+				onLinesAboutToRemove(0, m_subtitle->linesCount() - 1);
 				onLinesRemoved(0, m_subtitle->linesCount() - 1);
 			}
 		}
@@ -90,9 +93,8 @@ LinesModel::setSubtitle(Subtitle *subtitle)
 			}
 
 			connect(m_subtitle, &Subtitle::linesInserted, this, &LinesModel::onLinesInserted);
+			connect(m_subtitle, &Subtitle::linesAboutToBeRemoved, this, &LinesModel::onLinesAboutToRemove);
 			connect(m_subtitle, &Subtitle::linesRemoved, this, &LinesModel::onLinesRemoved);
-			connect(m_subtitle, &Subtitle::compositeActionStart, this, &LinesModel::onCompositeActionStart);
-			connect(m_subtitle, &Subtitle::compositeActionEnd, this, &LinesModel::onCompositeActionEnd);
 
 			connect(m_subtitle, &Subtitle::lineAnchorChanged, this, &LinesModel::onLineChanged);
 			connect(m_subtitle, &Subtitle::lineErrorFlagsChanged, this, &LinesModel::onLineChanged);
@@ -312,69 +314,45 @@ LinesModel::setData(const QModelIndex &index, const QVariant &value, int role)
 void
 LinesModel::onLinesInserted(int firstIndex, int lastIndex)
 {
-	if(m_resettingModel)
-		return;
+	m_resetModelSelection.first = m_subtitle->at(firstIndex);
+	m_resetModelSelection.second = m_subtitle->at(lastIndex);
+	m_resetModelTimer->start();
+}
 
-	static const QModelIndex rootIndex;
-
-	beginInsertRows(rootIndex, firstIndex, lastIndex);
-	endInsertRows();                        // ridiculously costly operation
+void
+LinesModel::onLinesAboutToRemove(int firstIndex, int lastIndex)
+{
+	const int index = lastIndex == rowCount() - 1 ? firstIndex - 1 : lastIndex + 1;
+	m_resetModelSelection.first = m_resetModelSelection.second = m_subtitle->line(index);
 }
 
 void
 LinesModel::onLinesRemoved(int firstIndex, int lastIndex)
 {
-	if(m_resettingModel)
-		return;
-
-	static const QModelIndex rootIndex;
-
-	beginRemoveRows(rootIndex, firstIndex, lastIndex);
-	endRemoveRows();
+	Q_UNUSED(firstIndex);
+	Q_UNUSED(lastIndex);
+	m_resetModelTimer->start();
 }
 
 void
-LinesModel::onCompositeActionStart()
+LinesModel::onModelReset()
 {
-	if(!m_allowModelReset)
+	beginResetModel();
+	endResetModel();
+
+	if(!m_resetModelSelection.first || !m_resetModelSelection.second)
 		return;
 
-	if(m_resettingModel++ == 0) {
-		// preserve selection as beginResetModel() will invalidate all current/selected item(s)
-		QItemSelectionModel *sm = static_cast<LinesWidget *>(parent())->selectionModel();
-		QModelIndexList sel = sm->selectedIndexes();
-		while(!sel.empty())
-			m_selectionBackup.push_back(m_subtitle->at(sel.takeLast().row()));
+	LinesWidget *w = static_cast<LinesWidget *>(parent());
+	const QModelIndex first = index(m_resetModelSelection.first->index(), 0, QModelIndex());
+	const QModelIndex last = index(m_resetModelSelection.second->index(), columnCount() - 1, QModelIndex());
 
-		beginResetModel();
-	}
-}
+	if(m_resetModelSelection.first != m_subtitle->firstLine() && m_resetModelSelection.second != m_subtitle->lastLine())
+		w->selectionModel()->select(QItemSelection(first, last), QItemSelectionModel::ClearAndSelect);
 
-void
-LinesModel::onCompositeActionEnd()
-{
-	if(!m_allowModelReset) {
-		Q_ASSERT(m_resettingModel == 0);
-		return;
-	}
-
-	Q_ASSERT(m_resettingModel > 0);
-	if(--m_resettingModel == 0) {
-		endResetModel();
-
-		// restore selection
-		const LinesWidget *widget = static_cast<LinesWidget *>(parent());
-		const LinesModel *model = widget->model();
-		QItemSelectionModel *sm = widget->selectionModel();
-		const int lastCol = model->columnCount() - 1;
-		while(!m_selectionBackup.empty()) {
-			const SubtitleLine *line = m_selectionBackup.takeFirst();
-			if(line && line->subtitle() == m_subtitle) {
-				const int i = line->index();
-				sm->select(QItemSelection(model->index(i), model->index(i, lastCol)), QItemSelectionModel::Select);
-			}
-		}
-	}
+	w->selectionModel()->setCurrentIndex(first, QItemSelectionModel::Rows);
+	if(w->m_scrollFollowsModel)
+		w->scrollTo(first, QAbstractItemView::EnsureVisible);
 }
 
 void
@@ -393,7 +371,7 @@ LinesModel::onLineChanged(const SubtitleLine *line)
 	}
 
 	LinesWidget *w = static_cast<LinesWidget *>(parent());
-	const QModelIndex idx = w->model()->index(lineIndex);
+	const QModelIndex idx = index(lineIndex);
 	w->selectionModel()->setCurrentIndex(idx, QItemSelectionModel::Current);
 	if(w->m_scrollFollowsModel)
 		w->scrollTo(idx, QAbstractItemView::EnsureVisible);

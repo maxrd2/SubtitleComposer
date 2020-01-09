@@ -23,6 +23,9 @@
 #include "actions/useractionnames.h"
 #include "dialogs/actionwithtargetdialog.h"
 #include "gui/linesitemdelegate.h"
+#ifdef USE_PERSISTENT_SELECTION_MODEL
+#include "gui/linesselectionmodel.h"
+#endif
 
 #include <QHeaderView>
 #include <QMenu>
@@ -44,6 +47,10 @@ LinesWidget::LinesWidget(QWidget *parent)
 	  m_richTextDelegate(new LinesItemDelegate(true, true, true, this))
 {
 	setModel(new LinesModel(this));
+#ifdef USE_PERSISTENT_SELECTION_MODEL
+	selectionModel()->deleteLater();
+	setSelectionModel(new LinesSelectionModel(model()));
+#endif
 
 	for(int column = 0, columnCount = model()->columnCount(); column < columnCount; ++column)
 		setItemDelegateForColumn(column, column < LinesModel::Text ? m_plainTextDelegate : m_richTextDelegate);
@@ -128,46 +135,13 @@ LinesWidget::closeEditor(QWidget *editor, QAbstractItemDelegate::EndEditHint hin
 }
 
 void
-LinesWidget::rowsAboutToBeRemoved(const QModelIndex &parent, int start, int end)
-{
-	TreeView::rowsAboutToBeRemoved(parent, start, end);
-
-	selectionModel()->select(model()->index(end + 1, 0, parent),
-							 QItemSelectionModel::Rows | QItemSelectionModel::ClearAndSelect | QItemSelectionModel::Current);
-
-	if(m_scrollFollowsModel)
-		scrollTo(model()->index(end + 1, 0, parent), QAbstractItemView::EnsureVisible);
-}
-
-void
-LinesWidget::rowsInserted(const QModelIndex &parent, int start, int end)
-{
-	TreeView::rowsInserted(parent, start, end);
-
-	if(model()->rowCount() != (end - start + 1)) {  // there were other rows previously
-		selectionModel()->select(QItemSelection(model()->index(start, 0, parent), model()->index(end, 0, parent)),
-								 QItemSelectionModel::Rows | QItemSelectionModel::ClearAndSelect);
-
-		if(m_scrollFollowsModel)
-			scrollTo(model()->index(start, 0, parent), QAbstractItemView::EnsureVisible);
-	}
-
-	if(m_scrollFollowsModel) {
-		selectionModel()->setCurrentIndex(model()->index(start, 0, parent),
-										  QItemSelectionModel::Rows | QItemSelectionModel::SelectCurrent);
-	}
-}
-
-void
 LinesWidget::editCurrentLineInPlace(bool primaryText)
 {
 	QModelIndex currentIndex = this->currentIndex();
 	if(currentIndex.isValid()) {
-		currentIndex = model()->index(currentIndex.row(),
-									  primaryText || !m_translationMode ? LinesModel::Text : LinesModel::Translation);
-
+		const int col = primaryText || !m_translationMode ? LinesModel::Text : LinesModel::Translation;
+		currentIndex = model()->index(currentIndex.row(), col);
 		setCurrentIndex(currentIndex);
-
 		edit(currentIndex);
 	}
 }
@@ -388,12 +362,6 @@ LinesWidget::eventFilter(QObject *object, QEvent *event)
 	}
 	// standard event processing
 	return TreeView::eventFilter(object, event);
-}
-
-void
-LinesWidget::disableModelReset(bool disable)
-{
-	model()->m_allowModelReset = !disable;
 }
 
 void

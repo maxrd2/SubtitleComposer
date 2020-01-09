@@ -56,13 +56,6 @@ public:
 
 	bool eventFilter(QObject *object, QEvent *event) override;
 
-	/**
-	 * @brief Disable calls to begin/endModelReset() during QUndoStack composite action processing.
-	 * Disabling model reset will decrease performance but will keep LinesWidget interactive.
-	 * @param disable - true to disable
-	 */
-	void disableModelReset(bool disable);
-
 public slots:
 	void setSubtitle(Subtitle *subtitle = 0);
 	void setTranslationMode(bool enabled);
@@ -78,9 +71,6 @@ signals:
 
 protected slots:
 	void closeEditor(QWidget *editor, QAbstractItemDelegate::EndEditHint hint) override;
-
-	void rowsAboutToBeRemoved(const QModelIndex &parent, int start, int end) override;
-	void rowsInserted(const QModelIndex &parent, int start, int end) override;
 
 protected:
 	void changeEvent(QEvent *event) override;

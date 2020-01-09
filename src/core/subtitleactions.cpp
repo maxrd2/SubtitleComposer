@@ -207,50 +207,6 @@ RemoveLinesAction::undo()
 	emit m_subtitle.linesInserted(m_firstIndex, m_lastIndex);
 }
 
-// *** CompositeActionStart
-CompositeActionStart::CompositeActionStart(Subtitle &subtitle)
-	: SubtitleAction(subtitle, UndoAction::Both, QString())
-{
-}
-
-CompositeActionStart::~CompositeActionStart()
-{
-}
-
-void
-CompositeActionStart::redo()
-{
-	emit m_subtitle.compositeActionStart();
-}
-
-void
-CompositeActionStart::undo()
-{
-	emit m_subtitle.compositeActionEnd();
-}
-
-// *** CompositeActionEnd
-CompositeActionEnd::CompositeActionEnd(Subtitle &subtitle)
-	: SubtitleAction(subtitle, UndoAction::Both, QString())
-{
-}
-
-CompositeActionEnd::~CompositeActionEnd()
-{
-}
-
-void
-CompositeActionEnd::redo()
-{
-	emit m_subtitle.compositeActionEnd();
-}
-
-void
-CompositeActionEnd::undo()
-{
-	emit m_subtitle.compositeActionStart();
-}
-
 
 // *** MoveLineAction
 MoveLineAction::MoveLineAction(Subtitle &subtitle, int fromIndex, int toIndex) :

@@ -1400,25 +1400,15 @@ Subtitle::processAction(QUndoCommand *action)
 void
 Subtitle::beginCompositeAction(const QString &title)
 {
-	QUndoStack *undoStack = app()->undoStack();
-	if(app()->subtitle() == this) {
-		undoStack->beginMacro(title);
-		undoStack->push(new CompositeActionStart(*this));
-	} else {
-		CompositeActionStart(*this).redo();
-	}
+	if(app()->subtitle() == this)
+		app()->undoStack()->beginMacro(title);
 }
 
 void
 Subtitle::endCompositeAction()
 {
-	QUndoStack *undoStack = app()->undoStack();
-	if(app()->subtitle() == this) {
-		undoStack->push(new CompositeActionEnd(*this));
-		undoStack->endMacro();
-	} else {
-		CompositeActionEnd(*this).redo();
-	}
+	if(app()->subtitle() == this)
+		app()->undoStack()->endMacro();
 }
 
 void
@@ -1467,20 +1457,13 @@ Subtitle::updateState()
 
 /// SUBTITLECOMPOSITEACTIONEXECUTOR
 
-SubtitleCompositeActionExecutor::SubtitleCompositeActionExecutor(Subtitle &subtitle, const QString &title, bool interactive)
-	: m_subtitle(subtitle),
-	  m_interactive(interactive)
+SubtitleCompositeActionExecutor::SubtitleCompositeActionExecutor(Subtitle &subtitle, const QString &title)
+	: m_subtitle(subtitle)
 {
-	if(m_interactive)
-		app()->linesWidget()->disableModelReset(true);
-
 	m_subtitle.beginCompositeAction(title);
 }
 
 SubtitleCompositeActionExecutor::~SubtitleCompositeActionExecutor()
 {
 	m_subtitle.endCompositeAction();
-
-	if(m_interactive)
-		app()->linesWidget()->disableModelReset(false);
 }

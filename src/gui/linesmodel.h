@@ -60,10 +60,9 @@ public:
 
 private slots:
 	void onLinesInserted(int firstIndex, int lastIndex);
+	void onLinesAboutToRemove(int firstIndex, int lastIndex);
 	void onLinesRemoved(int firstIndex, int lastIndex);
-
-	void onCompositeActionStart();
-	void onCompositeActionEnd();
+	void onModelReset();
 
 	void onLineChanged(const SubtitleLine *line);
 	void emitDataChanged();
@@ -75,12 +74,11 @@ private:
 	Subtitle *m_subtitle;
 	SubtitleLine *m_playingLine;
 	QTimer *m_dataChangedTimer;
+	QTimer *m_resetModelTimer;
+	std::pair<const SubtitleLine *, const SubtitleLine *> m_resetModelSelection;
 	int m_minChangedLineIndex;
 	int m_maxChangedLineIndex;
 	QList<Subtitle *> m_graftPoints;
-	bool m_allowModelReset;
-	int m_resettingModel;
-	QList<SubtitleLine *> m_selectionBackup;
 
 	friend class LinesWidget;
 };
