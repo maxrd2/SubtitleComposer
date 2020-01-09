@@ -6,98 +6,117 @@
   <name>Subtitle Composer</name>
   <name xml:lang="ca">Subtitle Composer</name>
   <name xml:lang="nl">Samensteller van ondertitels</name>
+  <name xml:lang="pt">Criador de Legenda</name>
   <name xml:lang="uk">Редактор субтитрів</name>
   <name xml:lang="x-test">xxSubtitle Composerxx</name>
   <summary>Video subtitle editor that supports basic and advanced editing operations</summary>
   <summary xml:lang="ca">Editor de subtítols de vídeo que admet operacions d'edició bàsiques i avançades</summary>
   <summary xml:lang="nl">Bewerker van ondertitels van video die basis en geavanceerde bewerkingshandelingen ondersteunt</summary>
+  <summary xml:lang="pt">Editor de legendas de vídeo que suporta as operações básicas e avançadas de edição</summary>
   <summary xml:lang="uk">Текстовий редактор субтитрів до відео, у якому передбачено базові і розширені можливості з редагування</summary>
   <summary xml:lang="x-test">xxVideo subtitle editor that supports basic and advanced editing operationsxx</summary>
   <description>
     <p>Subtitle Composer is an open source text-based subtitle editor that supports basic and advanced editing operations.</p>
     <p xml:lang="ca">El Subtitle Composer és un editor de subtítols de codi obert basat en text que admet operacions d'edició bàsiques i avançades.</p>
     <p xml:lang="nl">Subtitle Composer is een op opensource gebaseerde bewerker van ondertitels van video die basis en geavanceerde bewerkingshandelingen ondersteunt.</p>
+    <p xml:lang="pt">O Compositor de Legendas é um editor de legendas baseadas em texto de código aberto, suportando um conjunto de operações básicas e avançadas de edição.</p>
     <p xml:lang="uk">«Редактор субтитрів» — текстовий редактор субтитрів із відкритим кодом, у якому передбачено базові і розширені можливості з редагування.</p>
     <p xml:lang="x-test">xxSubtitle Composer is an open source text-based subtitle editor that supports basic and advanced editing operations.xx</p>
     <p>Features</p>
     <p xml:lang="ca">Característiques</p>
     <p xml:lang="nl">Mogelijkheden</p>
+    <p xml:lang="pt">Características</p>
     <p xml:lang="uk">Можливості</p>
     <p xml:lang="x-test">xxFeaturesxx</p>
     <ul>
       <li>Open/Save Text Subtitle Formats - SubRip/SRT, MicroDVD, SSA/ASS, MPlayer, TMPlayer and YouTube captions</li>
       <li xml:lang="ca">Obre/Desa els formats de subtítols de text: SubRip/SRT, MicroDVD, SSA/ASS, MPlayer, TMPlayer i llegendes de YouTube</li>
       <li xml:lang="nl">Tekstondertitelingsformaten openen/opslaan - SubRip/SRT, MicroDVD, SSA/ASS, MPlayer, TMPlayer en YouTube opschriften</li>
+      <li xml:lang="pt">Formatos para Abrir/Gravar as Legendas de Texto - legendas em SubRip/SRT, MicroDVD, SSA/ASS, MPlayer, TMPlayer e YouTube</li>
       <li xml:lang="uk">Відкриття/Збереження даних у текстових форматах субтитрів — SubRip/SRT, MicroDVD, SSA/ASS, MPlayer, TMPlayer та субтитрів YouTube</li>
       <li xml:lang="x-test">xxOpen/Save Text Subtitle Formats - SubRip/SRT, MicroDVD, SSA/ASS, MPlayer, TMPlayer and YouTube captionsxx</li>
       <li>Open/OCR Graphics Subtitle Formats - VobSub (.idx/.sub/.rar), BluRay/PGS (*.sup), formats supported by ffmpeg (DVD/Vob, DVB, XSUB, HDMV-PGS)</li>
       <li xml:lang="ca">Obre/Formats de subtítols gràfics OCR: VobSub (.idx/.sub/.rar), BluRay/PGS (*.sup), formats admesos per ffmpeg (DVD/Vob, DVB, XSUB, HDMV-PGS)</li>
       <li xml:lang="nl">Open/OCR grafische ondertitelingsformaten - VobSub (.idx/.sub/.rar), BluRay/PGS (*.sup), formaten ondersteunt door ffmpeg (DVD/Vob, DVB, XSUB, HDMV-PGS)</li>
+      <li xml:lang="pt">Formatos de Legengas Gráficas Abertas/OCR - VobSub (.idx/.sub/.rar), BluRay/PGS (*.sup), formatos suportados pelo ffmpeg (DVD/Vob, DVB, XSUB, HDMV-PGS)</li>
       <li xml:lang="uk">Відкриті/Розпізнані графічні формати субтитрів — VobSub (.idx/.sub/.rar), BluRay/PGS (*.sup), формати, підтримку яких передбачено у ffmpeg (DVD/Vob, DVB, XSUB, HDMV-PGS)</li>
       <li xml:lang="x-test">xxOpen/OCR Graphics Subtitle Formats - VobSub (.idx/.sub/.rar), BluRay/PGS (*.sup), formats supported by ffmpeg (DVD/Vob, DVB, XSUB, HDMV-PGS)xx</li>
       <li>Demux Graphics/Text Subtitle Stream from video file - SRT, SSA/ASS, MOV text, MicroDVD, DVD/Vob, DVB, XSUB, HDMV-PGS</li>
       <li xml:lang="ca">Desmultiplexa el flux de subtítols gràfics/de text des d'un fitxer de vídeo: SRT, SSA/ASS, text MOV, MicroDVD, DVD/Vob, DVB, XSUB, HDMV-PGS</li>
       <li xml:lang="nl">Demux Graphics/Tekst ondertitelingsstream uit videobestand - SRT, SSA/ASS, MOV tekst, MicroDVD, DVD/Vob, DVB, XSUB, HDMV-PGS</li>
+      <li xml:lang="pt">Transmissões de legendas de texto/gráficas desmultiplexadas do ficheiro de vídeo - SRT, SSA/ASS, texto MOV, MicroDVD, DVD/Vob, DVB, XSUB, HDMV-PGS</li>
       <li xml:lang="uk">Демультиплексовані графічні або текстові потоки субтитрів з відеофайлів — SRT, SSA/ASS, MOV text, MicroDVD, DVD/Vob, DVB, XSUB, HDMV-PGS</li>
       <li xml:lang="x-test">xxDemux Graphics/Text Subtitle Stream from video file - SRT, SSA/ASS, MOV text, MicroDVD, DVD/Vob, DVB, XSUB, HDMV-PGSxx</li>
       <li>Speech recognition from audio/video file using PocketSphinx</li>
       <li xml:lang="ca">Reconeixement de la veu des de fitxers d'àudio/vídeo emprant PocketSphinx</li>
       <li xml:lang="nl">Spraakherkenning uit audio/video bestand met gebruik van PocketSphinx</li>
+      <li xml:lang="pt">Reconhecimento de fala a partir do ficheiro de áudio/vídeo, usando o PocketSphinx</li>
       <li xml:lang="uk">Розпізнавання голосових даних зі звукових і відеофайлів за допомогою PocketSphinx</li>
       <li xml:lang="x-test">xxSpeech recognition from audio/video file using PocketSphinxxx</li>
       <li>Smart language/text encoding** detection</li>
       <li xml:lang="ca">Detecció** intel·ligent de la codificació d'idioma/text</li>
       <li xml:lang="nl">Slimme taal/tekst detectie van codering**</li>
+      <li xml:lang="pt">Detecção inteligente da codificação da língua/texto**</li>
       <li xml:lang="uk">Автоматичне визначення мови і кодування тексту</li>
       <li xml:lang="x-test">xxSmart language/text encoding** detectionxx</li>
       <li>Live preview of subtitles in integrated video player w/ audio stream selection</li>
       <li xml:lang="ca">Vista prèvia en viu dels subtítols en el reproductor de vídeo integrat amb selecció del flux d'àudio</li>
       <li xml:lang="nl">Live-voorbeeld van ondertitels in geïntegreerde videospeler met audiostream selectie</li>
+      <li xml:lang="pt">Antevisão em directo das legendas no reprodutor de vídeo integrado com a selecção da sequência de áudio</li>
       <li xml:lang="uk">Інтерактивний перегляд субтитрів у інтегрованому відеопрогравачі із можливістю вибору потоку звукових даних</li>
       <li xml:lang="x-test">xxLive preview of subtitles in integrated video player w/ audio stream selectionxx</li>
       <li>Preview/editing of subtitles on graphical audio waveform w/ audio stream selection</li>
       <li xml:lang="ca">Vista prèvia/edició dels subtítols en forma d'ona d'àudio gràfica amb selecció del flux d'àudio</li>
       <li xml:lang="nl">Voorvertoning/bewerking van ondertitels op grafische audiogolfvorm met audiostream selectie</li>
+      <li xml:lang="pt">Antevisão/edição das legendas da forma de onda gráfica do áudio com a selecção da sequência de áudio</li>
       <li xml:lang="uk">Попередній перегляд і редагування субтитрів із показом графічного представлення звукових даних і можливістю вибору потоку звукових даних</li>
       <li xml:lang="x-test">xxPreview/editing of subtitles on graphical audio waveform w/ audio stream selectionxx</li>
       <li>Sync by dragging several anchors/graftpoints and stretching timeline</li>
       <li xml:lang="ca">Sincronització arrossegant diversos ancoratges/punts d'empelt i estirant la línia de temps</li>
       <li xml:lang="nl">Synchroniseren door slepen van verschillende ankers/grafiekpunten en uitrekken van tijdlijn</li>
+      <li xml:lang="pt">Sincronização através do arrastamento de várias âncoras/pontos de pega e por esticamento da linha temporal</li>
       <li xml:lang="uk">Синхронізація за допомогою перетягування точок прив'язки та розтягування монтажного столу</li>
       <li xml:lang="x-test">xxSync by dragging several anchors/graftpoints and stretching timelinexx</li>
       <li>Time shifting and scaling, lines duration re-calculation, framerate conversion, etc.</li>
       <li xml:lang="ca">Desplaçament i escalat del temps, recàlcul de la durada de les línies, conversió de la velocitat dels fotogrames, etc.</li>
       <li xml:lang="nl">Tijdverschuiving en schalen, lijnduur herberekening, framerate conversie, etc.</li>
+      <li xml:lang="pt">Deslocamento e escala do tempo, actualização da duração das linhas, conversão da taxa de imagens, etc.</li>
       <li xml:lang="uk">Зсування та масштабування за часом, переобчислення тривалості показу рядків, перетворення за частотою кадрів тощо</li>
       <li xml:lang="x-test">xxTime shifting and scaling, lines duration re-calculation, framerate conversion, etc.xx</li>
       <li>Joining and splitting of subtitle files</li>
       <li xml:lang="ca">Unir i dividir fitxers de subtítols</li>
       <li xml:lang="nl">Samenvoegen en splitsen van bestanden met ondertitels</li>
+      <li xml:lang="pt">Junção e separação de ficheiros de legendas</li>
       <li xml:lang="uk">Можливість об'єднання та поділу файлів субтитрів</li>
       <li xml:lang="x-test">xxJoining and splitting of subtitle filesxx</li>
       <li>Side by side subtitle translations</li>
       <li xml:lang="ca">Traducció dels subtítols costat a costat</li>
       <li xml:lang="nl">Naast elkaar vertalen van ondertitels</li>
+      <li xml:lang="pt">Traduções de legendas lado-a-lado</li>
       <li xml:lang="uk">Синхронний переклад субтитрів</li>
       <li xml:lang="x-test">xxSide by side subtitle translationsxx</li>
       <li>Text styles (italic, bold, underline, stroke, color)</li>
       <li xml:lang="ca">Estils de text (cursiva, negreta, subratllat, ratllat, color)</li>
       <li xml:lang="nl">Tekststijlen (cursief, vet, onderstrepen, streek, kleur)</li>
+      <li xml:lang="pt">Estilos de texto (itálico, negrito, sublinhado, tradução, colorido)</li>
       <li xml:lang="uk">Можливість визначення стилю тексту (курсив, напівжирний, підкреслення, закреслення, колір)</li>
       <li xml:lang="x-test">xxText styles (italic, bold, underline, stroke, color)xx</li>
       <li>Spell checking</li>
       <li xml:lang="ca">Verificació ortogràfica</li>
       <li xml:lang="nl">Spellingcontrole</li>
+      <li xml:lang="pt">Verificação ortográfica</li>
       <li xml:lang="uk">Перевірка правопису</li>
       <li xml:lang="x-test">xxSpell checkingxx</li>
       <li>Detection of timing errors in subtitles</li>
       <li xml:lang="ca">Detecció dels errors de temps en els subtítols</li>
       <li xml:lang="nl">Detectie van fouten in timing in ondertitels</li>
+      <li xml:lang="pt">Detecção de erros de temporização nas legendas</li>
       <li xml:lang="uk">Виявлення часової розсинхронізації у субтитрах</li>
       <li xml:lang="x-test">xxDetection of timing errors in subtitlesxx</li>
       <li>Scripting (JavaScript, Python, Ruby and other languages supported by Kross).</li>
       <li xml:lang="ca">Creació de scripts (JavaScript, Python, Ruby i altres llenguatges admesos pel Kross).</li>
       <li xml:lang="nl">Scripting (JavaScript, Python, Ruby en andere talen ondersteund door Kross).</li>
+      <li xml:lang="pt">Programação (JavaScript, Python, Ruby e outras linguagens suportadas pelo Kross).</li>
       <li xml:lang="uk">Керування за допомогою скриптів (передбачено підтримку JavaScript, Python, Ruby та інших мов, підтримку яких передбачено у Kross).</li>
       <li xml:lang="x-test">xxScripting (JavaScript, Python, Ruby and other languages supported by Kross).xx</li>
     </ul>
@@ -109,6 +128,7 @@
       <caption>Main application window</caption>
       <caption xml:lang="ca">Finestra principal de l'aplicació</caption>
       <caption xml:lang="nl">Hoofdvenster van toepassing</caption>
+      <caption xml:lang="pt">Janela principal da aplicação</caption>
       <caption xml:lang="uk">Основне вікно програми</caption>
       <caption xml:lang="x-test">xxMain application windowxx</caption>
       <image>https://cdn.kde.org/screenshots/subtitlecomposer/mainwindow.png</image>
