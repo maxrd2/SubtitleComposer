@@ -21,7 +21,7 @@
 #include "core/subtitleiterator.h"
 #include "errors/finderrorsdialog.h"
 #include "errors/errorfinder.h"
-#include "lineswidget.h"
+#include "gui/lineswidget.h"
 
 #ifdef HAVE_CONFIG_H
 # include <config.h>

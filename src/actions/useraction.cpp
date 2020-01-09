@@ -21,8 +21,8 @@
 #include "useraction.h"
 #include "core/subtitle.h"
 #include "videoplayer/videoplayer.h"
-#include "lineswidget.h"
-#include "currentlinewidget.h"
+#include "gui/lineswidget.h"
+#include "gui/currentlinewidget.h"
 
 #include <QApplication>
 

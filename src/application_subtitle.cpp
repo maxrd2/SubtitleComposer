@@ -29,7 +29,7 @@
 #include "formats/textdemux/textdemux.h"
 #include "formats/outputformat.h"
 #include "helpers/commondefs.h"
-#include "lineswidget.h"
+#include "gui/lineswidget.h"
 #include "speechprocessor/speechprocessor.h"
 #include "videoplayer/videoplayer.h"
 

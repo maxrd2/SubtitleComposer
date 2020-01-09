@@ -25,7 +25,7 @@
 #include "actions/krecentfilesactionext.h"
 #include "configs/configdialog.h"
 #include "core/subtitleiterator.h"
-#include "currentlinewidget.h"
+#include "gui/currentlinewidget.h"
 #include "dialogs/actionwithtargetdialog.h"
 #include "dialogs/shifttimesdialog.h"
 #include "dialogs/adjusttimesdialog.h"
@@ -49,9 +49,9 @@
 #include "helpers/commondefs.h"
 #include "helpers/fileloadhelper.h"
 #include "helpers/filesavehelper.h"
-#include "lineswidget.h"
+#include "gui/lineswidget.h"
 #include "mainwindow.h"
-#include "playerwidget.h"
+#include "gui/playerwidget.h"
 #include "profiler.h"
 #include "scripting/scriptsmanager.h"
 #include "speechprocessor/speechprocessor.h"
@@ -61,7 +61,7 @@
 #include "utils/translator.h"
 #include "videoplayer/videoplayer.h"
 #include "videoplayer/playerbackend.h"
-#include "waveformwidget.h"
+#include "gui/waveformwidget.h"
 
 #ifdef HAVE_CONFIG_H
 # include <config.h>

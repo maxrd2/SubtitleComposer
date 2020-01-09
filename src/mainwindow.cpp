@@ -20,11 +20,11 @@
 
 #include "mainwindow.h"
 #include "application.h"
-#include "playerwidget.h"
-#include "lineswidget.h"
-#include "currentlinewidget.h"
+#include "gui/playerwidget.h"
+#include "gui/lineswidget.h"
+#include "gui/currentlinewidget.h"
 #include "videoplayer/videoplayer.h"
-#include "waveformwidget.h"
+#include "gui/waveformwidget.h"
 
 #include <QGridLayout>
 #include <QDockWidget>

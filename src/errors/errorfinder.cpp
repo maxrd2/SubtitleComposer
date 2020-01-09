@@ -22,7 +22,7 @@
 #include "application.h"
 #include "core/subtitleiterator.h"
 #include "errors/finderrorsdialog.h"
-#include "lineswidget.h"
+#include "gui/lineswidget.h"
 
 #include <QCheckBox>
 #include <QGroupBox>

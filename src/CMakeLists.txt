@@ -49,6 +49,7 @@ set(subtitlecomposer_LIBS
 
 add_subdirectory(helpers)
 add_subdirectory(core)
+add_subdirectory(gui)
 add_subdirectory(formats)
 add_subdirectory(widgets)
 add_subdirectory(videoplayer)
@@ -75,6 +76,7 @@ include_directories(
 
 set(subtitlecomposer_SRCS
 	${core_SRCS}
+	${gui_SRCS}
 	${dialogs_SRCS}
 	${errors_SRCS}
 	${formats_SRCS}
@@ -90,12 +92,8 @@ set(subtitlecomposer_SRCS
 	${CMAKE_CURRENT_SOURCE_DIR}/application.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/application_errorcheck.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/application_subtitle.cpp
-	${CMAKE_CURRENT_SOURCE_DIR}/currentlinewidget.cpp
-	${CMAKE_CURRENT_SOURCE_DIR}/lineswidget.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/main.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/mainwindow.cpp
-	${CMAKE_CURRENT_SOURCE_DIR}/playerwidget.cpp
-	${CMAKE_CURRENT_SOURCE_DIR}/waveformwidget.cpp
 	CACHE INTERNAL EXPORTEDVARIABLE
 )
 

@@ -22,7 +22,7 @@
 #include "scripting_rangelist.h"
 #include "scripting_range.h"
 #include "application.h"
-#include "lineswidget.h"
+#include "gui/lineswidget.h"
 
 using namespace SubtitleComposer;
 

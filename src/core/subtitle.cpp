@@ -26,7 +26,7 @@
 #include "helpers/objectref.h"
 #include "scconfig.h"
 #include "application.h"
-#include "lineswidget.h"
+#include "gui/lineswidget.h"
 
 #include <KLocalizedString>
 #include <QUndoStack>
