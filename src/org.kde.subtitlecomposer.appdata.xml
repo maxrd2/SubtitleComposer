@@ -26,6 +26,7 @@
     <p xml:lang="ca">Característiques</p>
     <p xml:lang="nl">Mogelijkheden</p>
     <p xml:lang="pt">Características</p>
+    <p xml:lang="sk">Funkcie</p>
     <p xml:lang="uk">Можливості</p>
     <p xml:lang="x-test">xxFeaturesxx</p>
     <ul>
@@ -105,6 +106,7 @@
       <li xml:lang="ca">Verificació ortogràfica</li>
       <li xml:lang="nl">Spellingcontrole</li>
       <li xml:lang="pt">Verificação ortográfica</li>
+      <li xml:lang="sk">Kontrola pravopisu</li>
       <li xml:lang="uk">Перевірка правопису</li>
       <li xml:lang="x-test">xxSpell checkingxx</li>
       <li>Detection of timing errors in subtitles</li>
