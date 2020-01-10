@@ -1066,12 +1066,6 @@ SubtitleLine::check(int errorFlagsToCheck, bool update)
 	return lineErrorFlags;
 }
 
-bool
-SubtitleLine::isRightToLeft() const
-{
-	return m_primaryText.string().isRightToLeft();
-}
-
 void
 SubtitleLine::processAction(QUndoCommand *action)
 {

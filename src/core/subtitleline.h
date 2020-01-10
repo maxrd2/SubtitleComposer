@@ -226,8 +226,6 @@ public:
 
 	int check(int errorFlagsToCheck, bool update = true);
 
-	bool isRightToLeft() const;
-
 signals:
 	void primaryTextChanged(const SString &text);
 	void secondaryTextChanged(const SString &text);

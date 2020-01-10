@@ -422,5 +422,5 @@ Scripting::SubtitleLine::check(int errorFlagsToCheck, bool update)
 bool
 Scripting::SubtitleLine::isRightToLeft() const
 {
-	return m_backend->isRightToLeft();
+	return m_backend->primaryText().isRightToLeft();
 }
