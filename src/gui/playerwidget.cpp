@@ -778,15 +778,6 @@ PlayerWidget::onPlayerFileOpened(const QString & /*filePath */)
 	m_infoControlsGroupBox->setEnabled(true);
 
 	updatePositionEditVisibility();
-
-	m_positionLabel->setText(i18n("<i>Unknown</i>"));
-	m_lengthLabel->setText(i18n("<i>Unknown</i>"));
-	m_fpsLabel->setText(i18n("<i>Unknown</i>"));
-	m_rateLabel->setText(i18n("<i>Unknown</i>"));
-
-	m_lengthString = UNKNOWN_LENGTH_STRING;
-
-	m_fsPositionLabel->setText(Time().toString(false) + m_lengthString);
 }
 
 void
@@ -808,12 +799,12 @@ PlayerWidget::onPlayerFileClosed()
 	updatePositionEditVisibility();
 	m_positionEdit->setValue(0);
 
-	m_positionLabel->setText(QString());
-	m_lengthLabel->setText(QString());
-	m_fpsLabel->setText(QString());
+	m_positionLabel->setText(i18n("<i>Unknown</i>"));
+	m_lengthLabel->setText(i18n("<i>Unknown</i>"));
+	m_fpsLabel->setText(i18n("<i>Unknown</i>"));
+	m_rateLabel->setText(i18n("<i>Unknown</i>"));
 
 	m_lengthString = UNKNOWN_LENGTH_STRING;
-
 	m_fsPositionLabel->setText(Time().toString(false) + m_lengthString);
 
 	m_seekSlider->setEnabled(false);
