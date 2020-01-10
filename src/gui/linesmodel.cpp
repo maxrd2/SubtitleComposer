@@ -43,8 +43,7 @@ LinesModel::LinesModel(QObject *parent)
 	  m_resetModelTimer(new QTimer(this)),
 	  m_resetModelSelection(nullptr, nullptr),
 	  m_minChangedLineIndex(-1),
-	  m_maxChangedLineIndex(-1),
-	  m_graftPoints(QList<Subtitle *>())
+	  m_maxChangedLineIndex(-1)
 {
 	m_dataChangedTimer->setInterval(0);
 	m_dataChangedTimer->setSingleShot(true);
@@ -104,12 +103,6 @@ LinesModel::setSubtitle(Subtitle *subtitle)
 			connect(m_subtitle, &Subtitle::lineHideTimeChanged, this, &LinesModel::onLineChanged);
 		}
 	}
-}
-
-const QList<Subtitle *> &
-LinesModel::graftPoints() const
-{
-	return m_graftPoints;
 }
 
 SubtitleLine *

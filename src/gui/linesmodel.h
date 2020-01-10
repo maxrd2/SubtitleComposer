@@ -43,8 +43,6 @@ public:
 	Subtitle * subtitle() const;
 	void setSubtitle(Subtitle *subtitle);
 
-	const QList<Subtitle *> & graftPoints() const;
-
 	SubtitleLine * playingLine() const;
 	void setPlayingLine(SubtitleLine *line);
 
@@ -78,7 +76,6 @@ private:
 	std::pair<const SubtitleLine *, const SubtitleLine *> m_resetModelSelection;
 	int m_minChangedLineIndex;
 	int m_maxChangedLineIndex;
-	QList<Subtitle *> m_graftPoints;
 
 	friend class LinesWidget;
 };
