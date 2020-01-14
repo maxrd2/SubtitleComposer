@@ -561,7 +561,7 @@ StreamProcessor::processText()
 							c--;
 					}
 #else
-					const char *assText = "This is {\\b100}bold{\\b0} {\\b1\\i1}bolditalic{\\b0\\i0}\\N{\\u1}underline{\\u0} {\\s1}striked{\\s0}\\n"
+					const char *assText = "This is {\\b100}bold{\\b0} {\\b1\\i1}bolditalic{\\b0\\i0}\\N{\\u1}underline{\\u0} {\\s1}stricken{\\s0}\\n"
 										  "{\\c&H0000ff&}red {\\c&H00ff00&}green {\\c&Hff0000&}blue{\\r}\\n"
 										  "Another {\\b100}bold\\h{\\i1}bolditalic{\\b0\\i0} some{\\anidfsd} unsupported tag";
 #endif

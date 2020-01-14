@@ -224,7 +224,7 @@ Translator::startChunkDownload(int chunkNumber)
 	// QByteArray postData = prepareMultipartData( params );
 	QByteArray postData = prepareUrlEncodedData(params);
 
-	m_currentTransferJob = KIO::http_post(QUrl("http://translate.google.com/translate_t"), postData, KIO::HideProgressInfo);
+	m_currentTransferJob = KIO::http_post(QUrl("https://translate.google.com/translate_t"), postData, KIO::HideProgressInfo);
 
 //  m_currentTransferJob->addMetaData( "content-type", "Content-Type: multipart/form-data; boundary=" MULTIPART_DATA_BOUNDARY );
 	m_currentTransferJob->addMetaData("content-type", "Content-Type: application/x-www-form-urlencoded");

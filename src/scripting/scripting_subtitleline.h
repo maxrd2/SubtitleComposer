@@ -36,7 +36,7 @@ class SubtitleLine : public QObject
 
 public slots:
 /// NOTE: target defaults to an invalid value, which means using and operation
-/// defined default value, generaly dependant on translationMode value.
+/// defined default value, generally dependent on translationMode value.
 /// Also, setSecondaryText is a noop is ! translationMode
 	int number() const;
 	int index() const;

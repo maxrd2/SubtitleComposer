@@ -37,7 +37,7 @@ class Subtitle : public QObject
 
 public slots:
 /// NOTE: target defaults to an invalid value, which means using and operation
-/// defined default value, generaly dependant on translationMode value.
+/// defined default value, generally dependent on translationMode value.
 	double framesPerSecond() const;
 	void setFramesPerSecond(double framesPerSecond);
 

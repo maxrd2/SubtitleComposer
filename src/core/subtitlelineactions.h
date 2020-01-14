@@ -24,7 +24,6 @@
 #include "core/undoaction.h"
 #include "core/time.h"
 #include "core/sstring.h"
-#include "core/undoaction.h"
 #include "core/subtitleline.h"
 
 #include <QString>

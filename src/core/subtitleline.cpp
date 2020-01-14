@@ -33,7 +33,7 @@
 using namespace SubtitleComposer;
 
 
-/// "magic" code taken from http://tekpool.wordpress.com/category/bit-count/
+/// "magic" code taken from https://tekpool.wordpress.com/category/bit-count/
 int
 SubtitleLine::bitsCount(unsigned int u)
 {

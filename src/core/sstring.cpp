@@ -1326,9 +1326,9 @@ SString::simplifyWhiteSpace(QString &text)
 	bool lastWasLineFeed = true;
 	for(int i = 0, l = text.size(); i < l; i++) {
 		const QChar ch = text.at(i);
-		if(lastWasSpace && (ch == QChar::Space || ch == QChar::Tabulation)) // skip consequtive spaces
+		if(lastWasSpace && (ch == QChar::Space || ch == QChar::Tabulation)) // skip consecutive spaces
 			continue;
-		if(lastWasLineFeed && (ch == QChar::LineFeed || ch == QChar::CarriageReturn)) // skip consequtive newlines
+		if(lastWasLineFeed && (ch == QChar::LineFeed || ch == QChar::CarriageReturn)) // skip consecutive newlines
 			continue;
 		if(lastWasSpace && (ch == QChar::LineFeed || ch == QChar::CarriageReturn)) // skip space before newline
 			di--;
@@ -1358,9 +1358,9 @@ SString::simplifyWhiteSpace()
 	bool lastWasLineFeed = true;
 	for(int i = 0, l = size(); i < l; i++) {
 		const QChar ch = at(i);
-		if(lastWasSpace && (ch == QChar::Space || ch == QChar::Tabulation)) // skip consequtive spaces
+		if(lastWasSpace && (ch == QChar::Space || ch == QChar::Tabulation)) // skip consecutive spaces
 			continue;
-		if(lastWasLineFeed && (ch == QChar::LineFeed || ch == QChar::CarriageReturn)) // skip consequtive newlines
+		if(lastWasLineFeed && (ch == QChar::LineFeed || ch == QChar::CarriageReturn)) // skip consecutive newlines
 			continue;
 		if(lastWasSpace && (ch == QChar::LineFeed || ch == QChar::CarriageReturn)) // skip space before newline
 			di--;
