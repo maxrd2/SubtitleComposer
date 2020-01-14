@@ -5,12 +5,14 @@
   <project_license>GPL-2.0+</project_license>
   <name>Subtitle Composer</name>
   <name xml:lang="ca">Subtitle Composer</name>
+  <name xml:lang="it">Subtitle Composer</name>
   <name xml:lang="nl">Samensteller van ondertitels</name>
   <name xml:lang="pt">Compositor de Legendas</name>
   <name xml:lang="uk">Редактор субтитрів</name>
   <name xml:lang="x-test">xxSubtitle Composerxx</name>
   <summary>Video subtitle editor that supports basic and advanced editing operations</summary>
   <summary xml:lang="ca">Editor de subtítols de vídeo que admet operacions d'edició bàsiques i avançades</summary>
+  <summary xml:lang="it">Editor di sottotitoli video che supporta operazioni di modifica di base ed avanzate</summary>
   <summary xml:lang="nl">Bewerker van ondertitels van video die basis en geavanceerde bewerkingshandelingen ondersteunt</summary>
   <summary xml:lang="pt">Editor de legendas de vídeo que suporta as operações básicas e avançadas de edição</summary>
   <summary xml:lang="uk">Текстовий редактор субтитрів до відео, у якому передбачено базові і розширені можливості з редагування</summary>
@@ -24,6 +26,7 @@
     <p xml:lang="x-test">xxSubtitle Composer is an open source text-based subtitle editor that supports basic and advanced editing operations.xx</p>
     <p>Features</p>
     <p xml:lang="ca">Característiques</p>
+    <p xml:lang="it">Caratteristiche</p>
     <p xml:lang="nl">Mogelijkheden</p>
     <p xml:lang="pt">Características</p>
     <p xml:lang="sk">Funkcie</p>
@@ -32,6 +35,7 @@
     <ul>
       <li>Open/Save Text Subtitle Formats - SubRip/SRT, MicroDVD, SSA/ASS, MPlayer, TMPlayer and YouTube captions</li>
       <li xml:lang="ca">Obre/Desa els formats de subtítols de text: SubRip/SRT, MicroDVD, SSA/ASS, MPlayer, TMPlayer i llegendes de YouTube</li>
+      <li xml:lang="it">Apertura/salvataggio di formati di sottotitoli di testo - SubRip/SRT, MicroDVD, SSA/ASS, MPlayer, TMPlayer e sottotitoli YouTube</li>
       <li xml:lang="nl">Tekstondertitelingsformaten openen/opslaan - SubRip/SRT, MicroDVD, SSA/ASS, MPlayer, TMPlayer en YouTube opschriften</li>
       <li xml:lang="pt">Formatos para Abrir/Gravar as Legendas de Texto - legendas em SubRip/SRT, MicroDVD, SSA/ASS, MPlayer, TMPlayer e YouTube</li>
       <li xml:lang="uk">Відкриття/Збереження даних у текстових форматах субтитрів — SubRip/SRT, MicroDVD, SSA/ASS, MPlayer, TMPlayer та субтитрів YouTube</li>
@@ -50,12 +54,14 @@
       <li xml:lang="x-test">xxDemux Graphics/Text Subtitle Stream from video file - SRT, SSA/ASS, MOV text, MicroDVD, DVD/Vob, DVB, XSUB, HDMV-PGSxx</li>
       <li>Speech recognition from audio/video file using PocketSphinx</li>
       <li xml:lang="ca">Reconeixement de la veu des de fitxers d'àudio/vídeo emprant PocketSphinx</li>
+      <li xml:lang="it">Riconoscimento della voce da file audio/video tramite PocketSphinx</li>
       <li xml:lang="nl">Spraakherkenning uit audio/video bestand met gebruik van PocketSphinx</li>
       <li xml:lang="pt">Reconhecimento de fala a partir do ficheiro de áudio/vídeo, usando o PocketSphinx</li>
       <li xml:lang="uk">Розпізнавання голосових даних зі звукових і відеофайлів за допомогою PocketSphinx</li>
       <li xml:lang="x-test">xxSpeech recognition from audio/video file using PocketSphinxxx</li>
       <li>Smart language/text encoding** detection</li>
       <li xml:lang="ca">Detecció** intel·ligent de la codificació d'idioma/text</li>
+      <li xml:lang="it">Riconoscimento intelligente di linguaggio/codifica del testo**</li>
       <li xml:lang="nl">Slimme taal/tekst detectie van codering**</li>
       <li xml:lang="pt">Detecção inteligente da codificação da língua/texto**</li>
       <li xml:lang="uk">Автоматичне визначення мови і кодування тексту</li>
@@ -98,12 +104,14 @@
       <li xml:lang="x-test">xxSide by side subtitle translationsxx</li>
       <li>Text styles (italic, bold, underline, stroke, color)</li>
       <li xml:lang="ca">Estils de text (cursiva, negreta, subratllat, ratllat, color)</li>
+      <li xml:lang="it">Stili di testo (corsivo, grassetto, sottolineato, barrato, colorato)</li>
       <li xml:lang="nl">Tekststijlen (cursief, vet, onderstrepen, streek, kleur)</li>
       <li xml:lang="pt">Estilos de texto (itálico, negrito, sublinhado, tradução, colorido)</li>
       <li xml:lang="uk">Можливість визначення стилю тексту (курсив, напівжирний, підкреслення, закреслення, колір)</li>
       <li xml:lang="x-test">xxText styles (italic, bold, underline, stroke, color)xx</li>
       <li>Spell checking</li>
       <li xml:lang="ca">Verificació ortogràfica</li>
+      <li xml:lang="it">Controllo ortografico</li>
       <li xml:lang="nl">Spellingcontrole</li>
       <li xml:lang="pt">Verificação ortográfica</li>
       <li xml:lang="sk">Kontrola pravopisu</li>
@@ -111,6 +119,7 @@
       <li xml:lang="x-test">xxSpell checkingxx</li>
       <li>Detection of timing errors in subtitles</li>
       <li xml:lang="ca">Detecció dels errors de temps en els subtítols</li>
+      <li xml:lang="it">Rilevamento di errori temporali nei sottotitoli</li>
       <li xml:lang="nl">Detectie van fouten in timing in ondertitels</li>
       <li xml:lang="pt">Detecção de erros de temporização nas legendas</li>
       <li xml:lang="uk">Виявлення часової розсинхронізації у субтитрах</li>
@@ -129,6 +138,7 @@
     <screenshot type="default">
       <caption>Main application window</caption>
       <caption xml:lang="ca">Finestra principal de l'aplicació</caption>
+      <caption xml:lang="it">Finestra principale dell'applicazione</caption>
       <caption xml:lang="nl">Hoofdvenster van toepassing</caption>
       <caption xml:lang="pt">Janela principal da aplicação</caption>
       <caption xml:lang="uk">Основне вікно програми</caption>
