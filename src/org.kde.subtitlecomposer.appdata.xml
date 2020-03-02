@@ -154,6 +154,7 @@
       <li xml:lang="ca-valencia">Unir i dividir fitxers de subtítols</li>
       <li xml:lang="es">Fusión y división de archivos de subtítulos</li>
       <li xml:lang="et">Subtiitrifailide ühendamine ja tükeldamine</li>
+      <li xml:lang="it">Unione e divisione di file di sottotitoli</li>
       <li xml:lang="nl">Samenvoegen en splitsen van bestanden met ondertitels</li>
       <li xml:lang="pt">Junção e separação de ficheiros de legendas</li>
       <li xml:lang="sv">Sammanfoga och dela textningsfiler</li>
@@ -164,6 +165,7 @@
       <li xml:lang="ca-valencia">Traducció dels subtítols costat a costat</li>
       <li xml:lang="es">Traducciones de subtítulos lado a lado</li>
       <li xml:lang="et">Subtiitrite kahes veerus tõlkimine</li>
+      <li xml:lang="it">Traduzione sottotitoli fianco a fianco</li>
       <li xml:lang="nl">Naast elkaar vertalen van ondertitels</li>
       <li xml:lang="pt">Traduções de legendas lado-a-lado</li>
       <li xml:lang="sv">Översättning av textning sida vid sida</li>
@@ -211,6 +213,7 @@
       <li xml:lang="ca-valencia">Creació de scripts (JavaScript, Python, Ruby i altres llenguatges admesos pel Kross).</li>
       <li xml:lang="es">Guiones (JavaScript, Python, Ruby y otros lenguajes permitidos por Kross).</li>
       <li xml:lang="et">Skriptide kasutamise võimalus (JavaScript, Python, Ruby ja teised Krossi toetatud keeled).</li>
+      <li xml:lang="it">Scripting (JavaScript, Python, Ruby ed altri linguaggi supportati da Kross).</li>
       <li xml:lang="nl">Scripting (JavaScript, Python, Ruby en andere talen ondersteund door Kross).</li>
       <li xml:lang="pt">Programação (JavaScript, Python, Ruby e outras linguagens suportadas pelo Kross).</li>
       <li xml:lang="sv">Skript (JavaScript, Python, Ruby och andra språk som stöds av Kross).</li>
