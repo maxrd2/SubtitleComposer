@@ -3,6 +3,7 @@ set(videoplayerplugins_SRCS
 	CACHE INTERNAL EXPORTEDVARIABLE
 )
 
+add_subdirectory(qtav)
 add_subdirectory(gstreamer)
 add_subdirectory(mpv)
 add_subdirectory(mplayer)
