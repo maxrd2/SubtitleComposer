@@ -1,4 +1,0 @@
-File=gstreamerconfig.kcfg
-ClassName=GStreamerConfig
-Singleton=true
-Mutators=true

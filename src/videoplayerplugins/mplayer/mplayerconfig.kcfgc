@@ -1,4 +1,0 @@
-File=mplayerconfig.kcfg
-ClassName=MPlayerConfig
-Singleton=true
-Mutators=true

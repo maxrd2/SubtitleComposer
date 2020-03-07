@@ -4,8 +4,3 @@ set(videoplayerplugins_SRCS
 )
 
 add_subdirectory(qtav)
-add_subdirectory(gstreamer)
-add_subdirectory(mpv)
-add_subdirectory(mplayer)
-add_subdirectory(phonon)
-add_subdirectory(xine)

@@ -1,4 +1,0 @@
-File=xineconfig.kcfg
-ClassName=XineConfig
-Singleton=true
-Mutators=true
