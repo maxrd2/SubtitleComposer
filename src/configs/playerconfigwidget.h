@@ -40,7 +40,6 @@ private slots:
 	void onPrimaryColorChanged(const QColor &color);
 	void onOutlineColorChanged(const QColor &color);
 	void onOutlineWidthChanged(int width);
-	void onAntialiasChanged(bool antialias);
 };
 }
 

@@ -37,16 +37,11 @@ PlayerConfigWidget::PlayerConfigWidget(QWidget *parent)
 	setupUi(this);
 
 	m_textOverlayWidget->setText(i18nc("Text for previewing the subtitles font settings", "<p>The Quick Brown Fox<br/>Jumps Over The Lazy Dog</p>"));
-	m_textOverlayWidget->setAlignment(Qt::AlignCenter | Qt::AlignVCenter);
 	m_textOverlayWidget->setFamily(SCConfig::fontFamily());
 	m_textOverlayWidget->setPointSize(SCConfig::fontPointSize());
 	m_textOverlayWidget->setPrimaryColor(SCConfig::fontColor());
 	m_textOverlayWidget->setOutlineWidth(SCConfig::outlineWidth());
 	m_textOverlayWidget->setOutlineColor(SCConfig::outlineColor());
-	m_textOverlayWidget->setAntialias(SCConfig::antialias());
-
-	kcfg_PlayerBackend->addItems(VideoPlayer::instance()->plugins().keys());
-	kcfg_PlayerBackend->setProperty("kcfg_property", QByteArray("currentText"));
 
 	kcfg_FontFamily->setProperty("kcfg_property", QByteArray("currentText"));
 
@@ -55,8 +50,6 @@ PlayerConfigWidget::PlayerConfigWidget(QWidget *parent)
 	connect(kcfg_FontColor, SIGNAL(activated(const QColor &)), this, SLOT(onPrimaryColorChanged(const QColor &)));
 	connect(kcfg_OutlineColor, SIGNAL(activated(const QColor &)), this, SLOT(onOutlineColorChanged(const QColor &)));
 	connect(kcfg_OutlineWidth, SIGNAL(valueChanged(int)), this, SLOT(onOutlineWidthChanged(int)));
-	connect(kcfg_Antialias, SIGNAL(toggled(bool)), this, SLOT(onAntialiasChanged(bool)));
-
 }
 
 PlayerConfigWidget::~PlayerConfigWidget()
@@ -91,10 +84,4 @@ void
 PlayerConfigWidget::onOutlineWidthChanged(int width)
 {
 	m_textOverlayWidget->setOutlineWidth(width);
-}
-
-void
-PlayerConfigWidget::onAntialiasChanged(bool antialias)
-{
-	m_textOverlayWidget->setAntialias(antialias);
 }

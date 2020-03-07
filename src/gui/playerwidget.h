@@ -34,11 +34,11 @@ QT_FORWARD_DECLARE_CLASS(QToolButton)
 QT_FORWARD_DECLARE_CLASS(QSlider)
 
 class LayeredWidget;
-class TextOverlayWidget;
 class AttachableWidget;
 class TimeEdit;
 
 namespace SubtitleComposer {
+class TextOverlayWidget;
 class VideoPlayer;
 
 class PlayerWidget : public QWidget

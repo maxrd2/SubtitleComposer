@@ -87,7 +87,6 @@ PlayerWidget::PlayerWidget(QWidget *parent) :
 	});
 
 	m_textOverlay = new TextOverlayWidget(m_layeredWidget);
-	m_textOverlay->setAlignment(Qt::AlignHCenter | Qt::AlignBottom);
 
 	m_seekSlider = new PointingSlider(Qt::Horizontal, this);
 	m_seekSlider->setTickPosition(QSlider::NoTicks);
@@ -769,7 +768,6 @@ PlayerWidget::onConfigChanged()
 	m_textOverlay->setPointSize(SCConfig::fontPointSize());
 	m_textOverlay->setOutlineColor(SCConfig::outlineColor());
 	m_textOverlay->setOutlineWidth(SCConfig::outlineWidth());
-	m_textOverlay->setAntialias(SCConfig::antialias());
 }
 
 void

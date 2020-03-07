@@ -29,7 +29,7 @@ using namespace SubtitleComposer;
 QtAVBackend::QtAVBackend()
 	: PlayerBackend(),
 	  m_state(STOPPED),
-	  m_renderer(new QtAV::VideoOutput(QtAV::VideoRendererId_GLWidget2, this)),
+	  m_renderer(new QtAV::VideoOutput(QtAV::VideoRendererId_Widget/*VideoRendererId_GLWidget2*/, this)),
 	  m_player(new QtAV::AVPlayer(this))
 {
 	m_name = QStringLiteral("QtAV");

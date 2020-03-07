@@ -3,7 +3,7 @@
 
 /*
  * Copyright (C) 2007-2009 Sergio Pistone <sergio_pistone@yahoo.com.ar>
- * Copyright (C) 2010-2019 Mladen Milinkovic <max@smoothware.net>
+ * Copyright (C) 2010-2020 Mladen Milinkovic <max@smoothware.net>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -28,8 +28,11 @@
 #include <QImage>
 #include <QBitmap>
 
+#include "videoplayer/subtitletextoverlay.h"
+
 QT_FORWARD_DECLARE_CLASS(QTextDocument)
 
+namespace SubtitleComposer {
 class TextOverlayWidget : public QWidget
 {
 	Q_OBJECT
@@ -38,68 +41,37 @@ public:
 	TextOverlayWidget(QWidget *parent = 0);
 	virtual ~TextOverlayWidget();
 
-	QString text() const;
+	QString text() const { return m_overlay.text(); }
 
-	int alignment() const;
-	int pointSize() const;
-	qreal pointSizeF() const;
-	int pixelSize() const;
-	QString family() const;
-	QColor primaryColor() const;
-	int outlineWidth() const;
-	QColor outlineColor() const;
+	int alignment() const { return 0; }
+	int pointSize() const { return m_overlay.fontSizePt(); }
+	qreal pointSizeF() const { return m_overlay.fontSizePtF(); }
+	int pixelSize() const { return m_overlay.fontSizePx(); }
+	QString family() const { return m_overlay.fontFamily(); }
+	QColor primaryColor() const { return m_overlay.textColor(); }
+	int outlineWidth() const { return m_overlay.outlineWidth(); }
+	QColor outlineColor() const { return m_overlay.outlineColor(); }
 
 	QSize minimumSizeHint() const override;
 
 	bool eventFilter(QObject *object, QEvent *event) override;
 
 public slots:
-	void setText(const QString &text);
-	void setAlignment(int alignment);
-	void setPointSize(int pointSize);
-	void setPointSizeF(qreal pointSizeF);
-	void setPixelSize(int pixelSize);
-	void setFamily(const QString &family);
-	void setPrimaryColor(const QColor &color);
-	void setOutlineWidth(int width);
-	void setOutlineColor(const QColor &color);
-	void setAntialias(bool antialias);
+	void setText(const QString &text) { m_overlay.setText(text); update(); }
+	void setPointSize(int pointSize) { m_overlay.setFontSizePt(pointSize); update(); }
+	void setPointSizeF(qreal pointSizeF) { m_overlay.setFontSizePtF(pointSizeF); update(); }
+	void setPixelSize(int pixelSize) { m_overlay.setFontSizePx(pixelSize); update(); }
+	void setFamily(const QString &family) { m_overlay.setFontFamily(family); update(); }
+	void setPrimaryColor(const QColor &color) { m_overlay.setTextColor(color); update(); }
+	void setOutlineWidth(int width) { m_overlay.setOutlineWidth(width); update(); }
+	void setOutlineColor(const QColor &color) { m_overlay.setOutlineColor(color); update(); }
 
 protected:
-	void customEvent(QEvent *event) override;
 	void paintEvent(QPaintEvent *event) override;
 
-	void setDirty(bool updateRichText, bool updateTransColor, bool flickerless = false);
-
-	void updateColors();
-	void updateContents();
-
-	QRect calculateTextRect() const;
-	void setMonoMask();
-	void setOutline();
-
 private:
-	QString m_text;
-	bool m_antialias;
-
-	int m_alignment;
-	QFont m_font;                           // font family and size are stored here
-	QColor m_primaryColor;
-	QRgb m_primaryRGB;
-
-	int m_outlineWidth;
-	QColor m_outlineColor;
-	QRgb m_outlineRGB;
-
-	QColor m_transColor;
-	QRgb m_transRGB;
-
-	QTextDocument *m_textDocument;
-
-	QBitmap m_noTextMask;
-	QImage m_bgImage;
-
-	bool m_dirty;
+	mutable SubtitleTextOverlay m_overlay;
 };
+}
 
 #endif

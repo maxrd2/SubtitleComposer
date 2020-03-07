@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>527</width>
-    <height>587</height>
+    <height>632</height>
    </rect>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
@@ -99,7 +99,17 @@
      <property name="title">
       <string>Subtitles</string>
      </property>
-     <layout class="QGridLayout" name="gridLayout_2" columnstretch="1,1">
+     <layout class="QGridLayout" name="gridLayout_2" columnstretch="1,0">
+      <item row="4" column="1">
+       <widget class="QSpinBox" name="kcfg_OutlineWidth">
+        <property name="suffix">
+         <string notr="true"> px</string>
+        </property>
+        <property name="maximum">
+         <number>10</number>
+        </property>
+       </widget>
+      </item>
       <item row="3" column="0" alignment="Qt::AlignRight">
        <widget class="QLabel" name="label_7">
         <property name="text">
@@ -110,24 +120,8 @@
         </property>
        </widget>
       </item>
-      <item row="2" column="1">
-       <widget class="KColorCombo" name="kcfg_FontColor"/>
-      </item>
-      <item row="0" column="1">
-       <widget class="QFontComboBox" name="kcfg_FontFamily"/>
-      </item>
       <item row="3" column="1">
        <widget class="KColorCombo" name="kcfg_OutlineColor"/>
-      </item>
-      <item row="4" column="0" alignment="Qt::AlignRight">
-       <widget class="QLabel" name="label_8">
-        <property name="text">
-         <string>Outline width:</string>
-        </property>
-        <property name="buddy">
-         <cstring>kcfg_OutlineWidth</cstring>
-        </property>
-       </widget>
       </item>
       <item row="2" column="0" alignment="Qt::AlignRight">
        <widget class="QLabel" name="label_6">
@@ -139,6 +133,9 @@
         </property>
        </widget>
       </item>
+      <item row="2" column="1">
+       <widget class="KColorCombo" name="kcfg_FontColor"/>
+      </item>
       <item row="0" column="0" alignment="Qt::AlignRight">
        <widget class="QLabel" name="label_2">
         <property name="text">
@@ -146,6 +143,19 @@
         </property>
         <property name="buddy">
          <cstring>kcfg_FontFamily</cstring>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="1">
+       <widget class="QFontComboBox" name="kcfg_FontFamily"/>
+      </item>
+      <item row="4" column="0" alignment="Qt::AlignRight">
+       <widget class="QLabel" name="label_8">
+        <property name="text">
+         <string>Outline width:</string>
+        </property>
+        <property name="buddy">
+         <cstring>kcfg_OutlineWidth</cstring>
         </property>
        </widget>
       </item>
@@ -159,27 +169,10 @@
         </property>
        </widget>
       </item>
-      <item row="4" column="1">
-       <widget class="QSpinBox" name="kcfg_OutlineWidth">
-        <property name="suffix">
-         <string notr="true"> px</string>
-        </property>
-        <property name="maximum">
-         <number>5</number>
-        </property>
-       </widget>
-      </item>
       <item row="1" column="1">
        <widget class="QSpinBox" name="kcfg_FontPointSize">
         <property name="suffix">
          <string notr="true"> px</string>
-        </property>
-       </widget>
-      </item>
-      <item row="5" column="1">
-       <widget class="QCheckBox" name="kcfg_Antialias">
-        <property name="text">
-         <string>Text Antialiasing</string>
         </property>
        </widget>
       </item>
@@ -196,7 +189,7 @@
        <widget class="QWidget" name="m_layeredWidget" native="true">
         <layout class="QGridLayout" name="gridLayout_4">
          <item row="0" column="0">
-          <widget class="TextOverlayWidget" name="m_textOverlayWidget" native="true">
+          <widget class="SubtitleComposer::TextOverlayWidget" name="m_textOverlayWidget" native="true">
            <property name="sizePolicy">
             <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
              <horstretch>0</horstretch>
@@ -206,7 +199,7 @@
            <property name="minimumSize">
             <size>
              <width>0</width>
-             <height>60</height>
+             <height>100</height>
             </size>
            </property>
           </widget>
@@ -239,7 +232,7 @@
    <header>kcolorcombo.h</header>
   </customwidget>
   <customwidget>
-   <class>TextOverlayWidget</class>
+   <class>SubtitleComposer::TextOverlayWidget</class>
    <extends>QWidget</extends>
    <header>textoverlaywidget.h</header>
    <container>1</container>
@@ -257,7 +250,6 @@
   <tabstop>kcfg_FontColor</tabstop>
   <tabstop>kcfg_OutlineColor</tabstop>
   <tabstop>kcfg_OutlineWidth</tabstop>
-  <tabstop>kcfg_Antialias</tabstop>
  </tabstops>
  <resources/>
  <connections/>

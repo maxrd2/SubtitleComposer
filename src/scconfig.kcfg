@@ -209,9 +209,5 @@
 			<label>Outline Width</label>
 			<default>1</default>
 		</entry>
-		<entry name="Antialias" type="Bool">
-			<label>Font Antialiasing</label>
-			<default>true</default>
-		</entry>
 	</group>
 </kcfg>
