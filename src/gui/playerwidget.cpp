@@ -23,7 +23,6 @@
 #include "actions/useractionnames.h"
 #include "helpers/commondefs.h"
 #include "core/subtitleiterator.h"
-#include "videoplayer/playerbackend.h"
 #include "videoplayer/videoplayer.h"
 #include "widgets/layeredwidget.h"
 #include "widgets/textoverlaywidget.h"
@@ -79,14 +78,7 @@ PlayerWidget::PlayerWidget(QWidget *parent) :
 	m_layeredWidget->installEventFilter(this);
 	m_layeredWidget->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
 
-	m_player->init(m_layeredWidget, SCConfig::playerBackend());
-	connect(m_player, &VideoPlayer::backendInitialized, this, [&](){
-		// when the player backend is initialized the video widget is created in front
-		// of the text overlay, so we have to raise it to make it visible again
-		m_textOverlay->raise();
-	});
-
-	m_textOverlay = new TextOverlayWidget(m_layeredWidget);
+	m_player->init(m_layeredWidget);
 
 	m_seekSlider = new PointingSlider(Qt::Horizontal, this);
 	m_seekSlider->setTickPosition(QSlider::NoTicks);
@@ -355,7 +347,6 @@ PlayerWidget::setFullScreenMode(bool fullScreenMode)
 			m_fullScreenControls->attach(m_layeredWidget);
 
 			m_fullScreenTID = startTimer(HIDE_MOUSE_MSECS);
-			m_textOverlay->setContentsMargins(0, 0, 0, m_fullScreenControls->height() + 10);
 		} else {
 			if(m_fullScreenTID) {
 				killTimer(m_fullScreenTID);
@@ -363,8 +354,6 @@ PlayerWidget::setFullScreenMode(bool fullScreenMode)
 			}
 
 			decreaseFontSize(18);
-
-			m_textOverlay->setContentsMargins(0, 0, 0, 0);
 
 			m_fullScreenControls->dettach();
 			m_layeredWidget->setMouseTracking(false);
@@ -553,14 +542,14 @@ void
 PlayerWidget::increaseFontSize(int points)
 {
 	SCConfig::setFontPointSize(SCConfig::fontPointSize() + points);
-	m_textOverlay->setPointSize(SCConfig::fontPointSize());
+	m_player->subtitleOverlay().setFontSizePt(SCConfig::fontPointSize());
 }
 
 void
 PlayerWidget::decreaseFontSize(int points)
 {
 	SCConfig::setFontPointSize(SCConfig::fontPointSize() - points);
-	m_textOverlay->setPointSize(SCConfig::fontPointSize());
+	m_player->subtitleOverlay().setFontSizePt(SCConfig::fontPointSize());
 }
 
 void
@@ -577,14 +566,14 @@ PlayerWidget::updateOverlayLine(const Time &videoPosition)
 			// m_overlayLine is the line to show or the next line to show
 			if(videoPosition >= m_overlayLine->showTime()) { // m_overlayLine is the line to show
 				const SString &text = m_showTranslation ? m_overlayLine->secondaryText() : m_overlayLine->primaryText();
-				m_textOverlay->setText(text.richString(SString::Verbose));
+				m_player->subtitleOverlay().setText(text.richString(SString::Verbose));
 			}
 			return;
 		} else {
 			// m_overlayLine is no longer the line to show nor the next line to show
-			m_textOverlay->setText(QString());
+			m_player->subtitleOverlay().setText(QString());
 
-			setOverlayLine(0);
+			setOverlayLine(nullptr);
 		}
 	}
 
@@ -598,7 +587,7 @@ PlayerWidget::updateOverlayLine(const Time &videoPosition)
 
 				if(m_overlayLine->showTime() <= videoPosition && videoPosition <= m_overlayLine->hideTime()) {
 					const SString &text = m_showTranslation ? m_overlayLine->secondaryText() : m_overlayLine->primaryText();
-					m_textOverlay->setText(text.richString(SString::Verbose));
+					m_player->subtitleOverlay().setText(text.richString(SString::Verbose));
 				}
 				return;
 			}
@@ -644,7 +633,7 @@ PlayerWidget::pauseAfterPlayingLine(const SubtitleLine *line)
 void
 PlayerWidget::invalidateOverlayLine()
 {
-	m_textOverlay->setText(QString());
+	m_player->subtitleOverlay().setText(QString());
 
 	setOverlayLine(0);
 
@@ -681,7 +670,7 @@ PlayerWidget::setPlayingLine(SubtitleLine *line)
 void
 PlayerWidget::updatePositionEditVisibility()
 {
-	if(m_showPositionTimeEdit && (m_player->state() == VideoPlayer::Playing || m_player->state() == VideoPlayer::Paused))
+	if(m_showPositionTimeEdit && m_player->state() >= VideoPlayer::Playing)
 		m_positionEdit->show();
 	else
 		m_positionEdit->hide();
@@ -724,7 +713,7 @@ PlayerWidget::onSeekSliderValueChanged(int value)
 	if(m_updateVideoPosition) {
 		m_updatePositionControls = MAGIC_NUMBER;
 		pauseAfterPlayingLine(nullptr);
-		m_player->seek(m_player->length() * value / 1000.0);
+		m_player->seek(m_player->duration() * value / 1000.0);
 	}
 }
 
@@ -732,9 +721,9 @@ void
 PlayerWidget::onSeekSliderMoved(int value)
 {
 	pauseAfterPlayingLine(nullptr);
-	m_player->seek(m_player->length() * value / 1000.0);
+	m_player->seek(m_player->duration() * value / 1000.0);
 
-	Time time((long)(m_player->length() * value));
+	Time time((long)(m_player->duration() * value));
 
 	m_positionLabel->setText(time.toString());
 	m_fsPositionLabel->setText(time.toString(false) + m_lengthString);
@@ -756,18 +745,16 @@ PlayerWidget::onPositionEditValueChanged(int position)
 void
 PlayerWidget::onConfigChanged()
 {
-	m_player->switchBackend(SCConfig::playerBackend());
-
 	if(m_showPositionTimeEdit != SCConfig::showPositionTimeEdit()) {
 		m_showPositionTimeEdit = SCConfig::showPositionTimeEdit();
 		updatePositionEditVisibility();
 	}
 
-	m_textOverlay->setPrimaryColor(SCConfig::fontColor());
-	m_textOverlay->setFamily(SCConfig::fontFamily());
-	m_textOverlay->setPointSize(SCConfig::fontPointSize());
-	m_textOverlay->setOutlineColor(SCConfig::outlineColor());
-	m_textOverlay->setOutlineWidth(SCConfig::outlineWidth());
+	m_player->subtitleOverlay().setTextColor(SCConfig::fontColor());
+	m_player->subtitleOverlay().setFontFamily(SCConfig::fontFamily());
+	m_player->subtitleOverlay().setFontSizePt(SCConfig::fontPointSize());
+	m_player->subtitleOverlay().setOutlineColor(SCConfig::outlineColor());
+	m_player->subtitleOverlay().setOutlineWidth(SCConfig::outlineWidth());
 }
 
 void
@@ -855,7 +842,7 @@ PlayerWidget::onPlayerPositionChanged(double seconds)
 			updateOverlayLine(videoPosition);
 			updatePlayingLine(videoPosition);
 
-			int sliderValue = int((seconds / m_player->length()) * 1000);
+			int sliderValue = int((seconds / m_player->duration()) * 1000);
 
 			m_updateVideoPosition = false;
 			m_seekSlider->setValue(sliderValue);

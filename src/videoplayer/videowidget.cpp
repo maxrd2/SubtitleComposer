@@ -1,6 +1,6 @@
 /*
  * Copyright (C) 2007-2009 Sergio Pistone <sergio_pistone@yahoo.com.ar>
- * Copyright (C) 2010-2019 Mladen Milinkovic <max@smoothware.net>
+ * Copyright (C) 2010-2020 Mladen Milinkovic <max@smoothware.net>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -33,35 +33,14 @@
 
 using namespace SubtitleComposer;
 
-VideoWidget::VideoWidget(QWidget *parent) :
-	QWidget(parent),
-	m_videoLayer(NULL),
-	m_videoWidth(0),
-	m_videoHeight(0),
-	m_videoDAR(0)
+VideoWidget::VideoWidget(QWidget *parent)
+	: QWidget(parent),
+	  m_videoLayer(nullptr),
+	  m_videoWidth(0),
+	  m_videoHeight(0),
+	  m_videoDAR(0)
 {
-}
-
-void
-VideoWidget::setVideoLayer(QWidget *videoLayer)
-{
-	m_videoLayer = videoLayer;
-	m_videoLayer->setParent(this);
-	m_videoLayer->hide();
-
-	init(true);
-}
-
-void
-VideoWidget::init(bool setVideoLayerAttributes)
-{
-	if(setVideoLayerAttributes) {
-		m_videoLayer->setFocusPolicy(Qt::NoFocus);
-		m_videoLayer->setAttribute(Qt::WA_NativeWindow);
-	}
-
 	setFocusPolicy(Qt::NoFocus);
-	setAttribute(Qt::WA_NativeWindow);
 	QPalette pal(palette());
 	pal.setColor(QPalette::Background, Qt::black);
 	setAutoFillBackground(true);
@@ -70,6 +49,14 @@ VideoWidget::init(bool setVideoLayerAttributes)
 
 VideoWidget::~VideoWidget()
 {}
+
+void
+VideoWidget::setVideoLayer(QWidget *videoLayer)
+{
+	m_videoLayer = videoLayer;
+	m_videoLayer->setParent(this);
+	m_videoLayer->hide();
+}
 
 QWidget *
 VideoWidget::videoLayer() const
@@ -127,6 +114,7 @@ void
 VideoWidget::mouseReleaseEvent(QMouseEvent *e)
 {
 	// FIXME: ignore doubleclicks
+	assert(e->type() != QEvent::MouseButtonDblClick);
 	if(e->button() == Qt::LeftButton) {
 		e->accept();
 		emit leftClicked(e->globalPos());

@@ -168,10 +168,6 @@
 	</group>
 
 	<group name="VideoPlayer">
-		<entry name="PlayerBackend" type="String">
-			<label>VideoPlayer Backend</label>
-			<default>MPV</default>
-		</entry>
 		<entry name="VideoAutoPlay" type="Bool">
 			<label>Start playing video when loaded</label>
 			<default>true</default>

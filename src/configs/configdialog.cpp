@@ -26,7 +26,6 @@
 #include "configs/playerconfigwidget.h"
 
 #include "videoplayer/videoplayer.h"
-#include "videoplayer/playerbackend.h"
 
 #include "speechprocessor/speechprocessor.h"
 #include "speechprocessor/speechplugin.h"
@@ -76,18 +75,6 @@ ConfigDialog::ConfigDialog(QWidget *parent, const QString &name, KCoreConfigSkel
 	item = addPage(new PlayerConfigWidget(nullptr), i18nc("@title Video player settings", "Video Player"));
 	item->setHeader(i18n("Video Player Settings"));
 	item->setIcon(QIcon::fromTheme(QStringLiteral("mediaplayer")));
-
-	{ // VideoPlayer plugin pages
-		const VideoPlayer *videoPlayer = VideoPlayer::instance();
-		const QMap<QString, PlayerBackend *> plugins = videoPlayer->plugins();
-		for(auto it = plugins.cbegin(); it != plugins.cend(); ++it) {
-			if(QWidget *configWidget = it.value()->newConfigWidget(nullptr)) {
-				item = addPage(configWidget, it.value()->config(), it.key());
-				item->setHeader(i18nc("@title Video player backend settings", "%1 backend settings", it.key()));
-				item->setIcon(QIcon::fromTheme(it.key().toLower()));
-			}
-		}
-	}
 
 	{ // SpeechProcessor plugin pages
 		const SpeechProcessor *speechProcessor = app()->speechProcessor();

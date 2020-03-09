@@ -27,81 +27,53 @@
 #include <QStringList>
 #include <QMap>
 #include <QWidget>
+#include <QtAV>
 
 QT_FORWARD_DECLARE_CLASS(QTimer)
 
 namespace SubtitleComposer {
-class PlayerBackend;
+class VideoPlayerSubtitleOverlay;
+class SubtitleTextOverlay;
 
 class VideoPlayer : public QObject
 {
 	Q_OBJECT
 
-	template <class C, class T> friend class PluginHelper;
-	friend class PlayerBackend;
-
 public:
-	typedef enum {
-		Uninitialized = 0,
+	enum State {
 		Initialized,
-		Closed = Initialized,
 		Opening,
-		// Opened, same as >Opening
+		Stopped,
 		Playing,
-		Paused,
-		Ready                                   // same as Stopped or Finished
-	} State;
+		Paused
+	};
 
 	static VideoPlayer * instance();
 
-	/**
-	 * @brief initialize - attempts to initialize the backend defined by prefBackendName; if that fails, attempts to initialize any other.
-	 * @param videoContainer
-	 * @param backendName
-	 * @return false if there was already an initialized backend or none could be initialized; true otherwise
-	 */
-	bool init(QWidget *videoContainer, const QString &backendName = QString());
-
-	/**
-	 * @brief reinitialize - finalizes the active backend and attempts to initialize the one defined by
-	 *  prefBackendName (or the active one if is not valid a valid name); if that fails, attempts to
-	 *  initialize any other backend.
-	 * @param backendName
-	 * @return false if there was no initialized backend or none could be initialized; true otherwise
-	 */
-	bool switchBackend(const QString &backendName = QString());
-
-	/**
-	 * @brief finalize - finalizes the active backend
-	 */
+	bool init(QWidget *videoContainer);
 	void cleanup();
 
-	inline const PlayerBackend *backend() const { return m_backend; }
-	inline const QMap<QString, PlayerBackend *> & plugins() const { return m_plugins; }
-
 	inline State state() const { return m_state; }
-	inline bool isInitialized() const { return m_state >= VideoPlayer::Initialized; }
-
 	inline VideoWidget * videoWidget() { return m_videoWidget; }
-
 	inline const QString & filePath() const { return m_filePath; }
 
-
-	inline bool isPlaying() const { return m_state == VideoPlayer::Playing; }
-	inline bool isPaused() const { return m_state == VideoPlayer::Paused; }
-	inline double position() const { return m_state <= VideoPlayer::Opening ? -1.0 : (m_state == VideoPlayer::Ready ? 0.0 : m_position); }
-	inline double length() const { return m_state <= VideoPlayer::Opening ? -1.0 : m_length; }
-	inline double framesPerSecond() const { return m_state <= VideoPlayer::Opening ? -1.0 : m_fps; }
-	inline double playbackRate() const { return m_state != VideoPlayer::Playing ? .0 : m_playbackRate; }
-	inline bool isStopped() const { return m_state == VideoPlayer::Ready; }
+	inline bool isPlaying() const { return m_state == Playing; }
+	inline bool isPaused() const { return m_state == Paused; }
+	inline bool isStopped() const { return m_state == Stopped; }
+	inline double position() const { return m_position; }
+	inline double duration() const { return m_duration; }
+	inline double framesPerSecond() const { return m_fps; }
+	inline double playbackRate() const { return m_playbackRate; }
 	inline double volume() const { return m_volume; }
 	inline bool isMuted() const { return m_muted; }
-	inline int selectedAudioStream() const { return m_state <= VideoPlayer::Opening ? -1 : m_activeAudioStream; }
+	inline int selectedAudioStream() const { return m_activeAudioStream; }
 
 	void playbackRate(double newRate);
 
 	inline const QStringList & textStreams() const { return m_textStreams; }
 	inline const QStringList & audioStreams() const { return m_audioStreams; }
+
+	SubtitleTextOverlay & subtitleOverlay();
 
 	bool playOnLoad();
 
@@ -123,9 +95,6 @@ public slots:
 	void setMuted(bool mute);
 
 signals:
-	void backendInitialized(PlayerBackend *playerBackend);
-	void backendFinalized(PlayerBackend *playerBackend);
-
 	void fileOpenError(const QString &filePath, const QString &reason);
 	void fileOpened(const QString &filePath);
 	void fileClosed();
@@ -155,33 +124,22 @@ private:
 	VideoPlayer();
 	virtual ~VideoPlayer();
 
-	bool backendInit(PlayerBackend *backend);
-	void backendCleanup();
-	void backendRestart();
-
-	PlayerBackend * backendLoad(const QString &pluginPath);
-
-	void resetState();
+	void reset();
 
 private slots:
-	// PlayerPlugins update player state with these
-	void changeResolution(int width, int height, double aspectRatio);
-	void changeFPS(double fps);
-	void updateTextStreams(const QStringList &textStreams);
-	void updateAudioStreams(const QStringList &audioStreams, int selectedAudioStream);
-	void onError(const QString &message = QString());
-
-	void changeState(VideoPlayer::State state);
-	void changePosition(double position);
-	void changeLength(double length);
-	void changePlaySpeed(double playbackRate);
-	void changeVolume(double volume);
-	void changeMute(bool muted);
+	// QtAV player state notifications
+	void onMediaLoaded();
+	void onResolutionChange();
+	void onStateChange(QtAV::AVPlayer::State state);
+	void onPositionChange(qint64 position);
+	void onDurationChange(qint64 duration);
+	void onSpeedChange(double speed);
+	void onVolumeChange(double volume);
+	void onMuteChange(bool muted);
 
 private:
-	QMap<QString, PlayerBackend *> m_plugins;
-	PlayerBackend *m_backend;
-	QWidget *m_videoContainer; // layered widget containing video and subtitle overlay
+	QtAV::VideoOutput *m_renderer;
+	QtAV::AVPlayer *m_player;
 
 	State m_state;
 
@@ -190,7 +148,7 @@ private:
 	QString m_filePath;
 
 	double m_position;
-	double m_length;
+	double m_duration;
 	double m_fps;
 	double m_playbackRate;
 	double m_minPositionDelta;
@@ -200,7 +158,8 @@ private:
 
 	bool m_muted;
 	double m_volume;
-	double m_backendVolume;
+
+	VideoPlayerSubtitleOverlay *m_overlay;
 };
 }
 #endif

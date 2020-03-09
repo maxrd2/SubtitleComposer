@@ -74,7 +74,7 @@ SplitSubtitleDialog::SplitSubtitleDialog(QWidget *parent) :
 void
 SplitSubtitleDialog::setSplitTimeFromVideo()
 {
-	m_splitTimeEdit->setValue(static_cast<int>(VideoPlayer::instance()->length() * 1000 + 0.5));
+	m_splitTimeEdit->setValue(static_cast<int>(VideoPlayer::instance()->duration() * 1000 + 0.5));
 }
 
 Time

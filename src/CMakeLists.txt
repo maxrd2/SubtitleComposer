@@ -147,8 +147,6 @@ install(FILES org.kde.subtitlecomposer.desktop DESTINATION ${XDG_APPS_INSTALL_DI
 install(FILES org.kde.subtitlecomposer.appdata.xml DESTINATION ${KDE_INSTALL_METAINFODIR})
 install(FILES subtitlecomposer.xml DESTINATION ${XDG_MIME_INSTALL_DIR})
 
-add_subdirectory(videoplayerplugins)
-
 add_subdirectory(speechplugins)
 
 # do the configuration of config.h at the end, so all the necessary variables have been set

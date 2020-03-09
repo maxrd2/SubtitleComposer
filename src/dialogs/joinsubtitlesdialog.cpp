@@ -71,7 +71,7 @@ JoinSubtitlesDialog::JoinSubtitlesDialog(QWidget *parent) :
 void
 JoinSubtitlesDialog::setShiftTimeFromVideo()
 {
-	m_shiftTimeEdit->setValue((int)(VideoPlayer::instance()->length() * 1000 + 0.5));
+	m_shiftTimeEdit->setValue((int)(VideoPlayer::instance()->duration() * 1000 + 0.5));
 }
 
 Time

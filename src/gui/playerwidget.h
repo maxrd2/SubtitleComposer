@@ -138,7 +138,6 @@ private:
 	QGridLayout *m_mainLayout;
 
 	LayeredWidget *m_layeredWidget;
-	TextOverlayWidget *m_textOverlay;
 	AttachableWidget *m_fullScreenControls;
 
 	QSlider *m_seekSlider;

@@ -60,7 +60,6 @@
 #include "utils/speller.h"
 #include "utils/translator.h"
 #include "videoplayer/videoplayer.h"
-#include "videoplayer/playerbackend.h"
 #include "gui/waveformwidget.h"
 
 #ifdef HAVE_CONFIG_H
@@ -1699,7 +1698,7 @@ Application::seekForward()
 {
 	double position = m_player->position() + SCConfig::seekJumpLength();
 	m_playerWidget->pauseAfterPlayingLine(nullptr);
-	m_player->seek(position <= m_player->length() ? position : m_player->length());
+	m_player->seek(position <= m_player->duration() ? position : m_player->duration());
 }
 
 void
@@ -1921,7 +1920,7 @@ Application::updateTitle()
 void
 Application::onWaveformDoubleClicked(Time time)
 {
-	if(m_player->state() == VideoPlayer::Ready)
+	if(m_player->state() == VideoPlayer::Stopped)
 		m_player->play();
 
 	m_playerWidget->pauseAfterPlayingLine(nullptr);
@@ -1931,7 +1930,7 @@ Application::onWaveformDoubleClicked(Time time)
 void
 Application::onWaveformMiddleMouseDown(Time time)
 {
-	if(m_player->state() == VideoPlayer::Ready) {
+	if(m_player->state() == VideoPlayer::Stopped) {
 		m_player->play();
 		m_player->pause();
 	} else if(m_player->state() != VideoPlayer::Paused) {
@@ -1951,7 +1950,7 @@ Application::onWaveformMiddleMouseUp(Time /*time*/)
 void
 Application::onLineDoubleClicked(SubtitleLine *line)
 {
-	if(m_player->state() == VideoPlayer::Ready)
+	if(m_player->state() == VideoPlayer::Stopped)
 		m_player->play();
 
 	int mseconds = line->showTime().toMillis() - SCConfig::seekOffsetOnDoubleClick();
@@ -2071,7 +2070,7 @@ Application::onPlayerActiveAudioStreamChanged(int audioStream)
 		activeAudioStreamAction->setCurrentItem(audioStream);
 		m_mainWindow->m_waveformWidget->setAudioStream(m_player->filePath(), audioStream);
 	} else {
-		m_mainWindow->m_waveformWidget->setNullAudioStream(m_player->length() * 1000);
+		m_mainWindow->m_waveformWidget->setNullAudioStream(m_player->duration() * 1000);
 	}
 }
 

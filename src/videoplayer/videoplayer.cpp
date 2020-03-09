@@ -22,9 +22,8 @@
 # include "config.h"
 #endif
 
-#include "helpers/pluginhelper.h"
 #include "videoplayer.h"
-#include "playerbackend.h"
+#include "subtitletextoverlay.h"
 #include "scconfig.h"
 
 #include <math.h>
@@ -36,46 +35,248 @@
 
 #include <QDebug>
 
+#include <QtAVWidgets>
+
 #include <KLocalizedString>
 
 #define DEFAULT_MIN_POSITION_DELTA 0.02
 
-enum ValidData {
-	FILENAME = 1 << 0,
-	POSITION = 1 << 1,
-	LENGTH = 1 << 2,
-	FPS = 1 << 3,
-	PLAYRATE = 1 << 4,
-	TEXT_STREAMS = 1 << 5,
-	AUDIO_STREAMS = 1 << 6,
-	ACTIVE_AUDIO = 1 << 7
-};
-
 using namespace SubtitleComposer;
 
-VideoPlayer::VideoPlayer() :
-	m_backend(nullptr),
-	m_videoContainer(nullptr),
-	m_state(VideoPlayer::Uninitialized),
-	m_videoWidget(nullptr),
-	m_filePath(),
-	m_position(-1.0),
-	m_length(-1.0),
-	m_fps(-1.0),
-	m_playbackRate(.0),
-	m_minPositionDelta(DEFAULT_MIN_POSITION_DELTA),
-	m_textStreams(),
-	m_activeAudioStream(-2),
-	m_audioStreams(),
-	m_muted(false),
-	m_volume(100.0),
-	m_backendVolume(100.0)
+namespace SubtitleComposer {
+class VideoPlayerSubtitleOverlay : public QtAV::VideoFilter
 {
-	PluginHelper<VideoPlayer, PlayerBackend>(this).loadAll(QStringLiteral("videoplayerplugins"));
+    Q_OBJECT
+
+public:
+	VideoPlayerSubtitleOverlay(QWidget *parent = nullptr) : QtAV::VideoFilter(parent) {
+		parent->installEventFilter(this);
+	}
+	virtual ~VideoPlayerSubtitleOverlay() {}
+
+	bool isSupported(QtAV::VideoFilterContext::Type ct) const override {
+		return ct == QtAV::VideoFilterContext::QtPainter || ct == QtAV::VideoFilterContext::X11;
+	}
+
+	bool eventFilter(QObject *object, QEvent *event) override {
+		if(object == parent() && event->type() == QEvent::Resize)
+			m_overlay.setImageSize(reinterpret_cast<QWidget *>(parent())->size());
+
+		return QObject::eventFilter(object, event);
+	}
+
+protected:
+    void process(QtAV::Statistics *statistics, QtAV::VideoFrame *frame) override {
+		Q_UNUSED(statistics)
+		Q_UNUSED(frame)
+		if(!isEnabled())
+			return;
+
+		const QWidget *widget = reinterpret_cast<QWidget *>(parent());
+		const QImage &img = m_overlay.image();
+		const QSizeF imgSize(widget->width(), m_overlay.textSize().height());
+		const qreal offY = widget->height() - widget->contentsMargins().bottom() - imgSize.height();
+		context()->drawImage(QPointF(0, offY), img, QRectF(QPointF(), imgSize));
+	}
+
+private:
+	friend class VideoPlayer;
+	SubtitleTextOverlay m_overlay;
+};
+}
+
+
+
+VideoPlayer::VideoPlayer()
+	: m_renderer(new QtAV::VideoOutput(QtAV::VideoRendererId_Widget, this)),
+	  m_player(new QtAV::AVPlayer(this)),
+	  m_state(Initialized),
+	  m_videoWidget(nullptr),
+	  m_filePath(),
+	  m_position(-1.0),
+	  m_duration(-1.0),
+	  m_fps(-1.0),
+	  m_playbackRate(.0),
+	  m_minPositionDelta(DEFAULT_MIN_POSITION_DELTA),
+	  m_textStreams(),
+	  m_activeAudioStream(-2),
+	  m_audioStreams(),
+	  m_muted(false),
+	  m_volume(100.0),
+	  m_overlay(nullptr)
+{
+	m_player->setRenderer(m_renderer);
+	m_player->setNotifyInterval(10);
+	m_player->setMediaEndAction(QtAV::MediaEndAction_Pause);
+
+	connect(m_renderer, &QtAV::VideoOutput::videoFrameSizeChanged, this, &VideoPlayer::onResolutionChange);
+	connect(m_player, &QtAV::AVPlayer::loaded, this, &VideoPlayer::onMediaLoaded);
+	connect(m_player->audio(), &QtAV::AudioOutput::volumeChanged, this, &VideoPlayer::onVolumeChange);
+	connect(m_player->audio(), &QtAV::AudioOutput::muteChanged, this, &VideoPlayer::onMuteChange);
+	connect(m_player, &QtAV::AVPlayer::seekFinished, this, &VideoPlayer::onPositionChange);
+	connect(m_player, &QtAV::AVPlayer::positionChanged, this, &VideoPlayer::onPositionChange);
+	connect(m_player, &QtAV::AVPlayer::durationChanged, this, &VideoPlayer::onDurationChange);
+	connect(m_player, &QtAV::AVPlayer::speedChanged, this, &VideoPlayer::onSpeedChange);
+	connect(m_player, &QtAV::AVPlayer::stateChanged, this, &VideoPlayer::onStateChange);
+
+	m_overlay = new VideoPlayerSubtitleOverlay(m_renderer->widget());
+	m_renderer->installFilter(m_overlay);
+}
+
+void
+VideoPlayer::onMediaLoaded()
+{
+	emit fileOpened(m_filePath);
+
+	m_fps = m_player->statistics().video.frame_rate;
+	m_minPositionDelta = 1.0 / m_fps;
+	emit framesPerSecondChanged(m_fps);
+
+	m_audioStreams.clear();
+	const QVariantList &audioTracks = m_player->internalAudioTracks();
+	for(auto i = audioTracks.cbegin(); i != audioTracks.cend(); ++i) {
+		const QVariantMap &trk = i->toMap();
+		QString audioStreamName = i18n("Audio Stream #%1", trk[QStringLiteral("id")].toInt());
+		if(trk.contains(QStringLiteral("lang")))
+			audioStreamName += QStringLiteral(": ") + trk[QStringLiteral("lang")].toString();
+		if(trk.contains(QStringLiteral("title")))
+			audioStreamName += QStringLiteral(": ") + trk[QStringLiteral("title")].toString();
+		if(trk.contains(QStringLiteral("codec")))
+			audioStreamName += QStringLiteral(" [") + trk[QStringLiteral("codec")].toString() + QStringLiteral("]");
+		assert(m_audioStreams.size() == trk["id"]);
+		m_audioStreams.append(audioStreamName);
+	}
+	emit audioStreamsChanged(m_audioStreams);
+
+	if(m_duration <= 0) // we need video duration before notifying activeAudioStreamChanged
+		VideoPlayer::onDurationChange(m_player->duration());
+	m_activeAudioStream = m_player->currentAudioStream();
+	emit activeAudioStreamChanged(m_activeAudioStream);
+
+	m_textStreams.clear();
+	const QVariantList &subTracks = m_player->internalSubtitleTracks();
+	for(auto i = subTracks.cbegin(); i != subTracks.cend(); ++i) {
+		const QVariantMap &trk = i->toMap();
+
+		const QString &codec = trk[QStringLiteral("codec")].toString();
+		if(codec != QStringLiteral("mov_text") && codec != QStringLiteral("subrip"))
+			continue;
+
+		QString textStreamName = i18n("Text Stream #%1", trk[QStringLiteral("id")].toInt());
+		if(trk.contains(QStringLiteral("lang")))
+			textStreamName += QStringLiteral(": ") + trk[QStringLiteral("lang")].toString();
+		if(trk.contains(QStringLiteral("title")))
+			textStreamName += QStringLiteral(": ") + trk[QStringLiteral("title")].toString();
+
+		assert(m_textStreams.size() == trk["id"]);
+		m_textStreams.append(textStreamName);
+	}
+	emit textStreamsChanged(m_textStreams);
+}
+
+void
+VideoPlayer::onResolutionChange()
+{
+	const QSize fs = m_renderer->videoFrameSize();
+	m_videoWidget->setVideoResolution(fs.width(), fs.height(), m_renderer->sourceAspectRatio());
+}
+
+void
+VideoPlayer::onStateChange(QtAV::AVPlayer::State state)
+{
+	switch(state) {
+	case QtAV::AVPlayer::StoppedState:
+		if(m_state != Stopped) {
+			m_state = Stopped;
+			onSpeedChange(0.);
+			emit stopped();
+		}
+		break;
+	case QtAV::AVPlayer::PlayingState:
+		if(m_state != Playing) {
+			m_state = Playing;
+			onSpeedChange(m_player->speed());
+			emit playing();
+		}
+		break;
+	case QtAV::AVPlayer::PausedState:
+		if(m_state != Paused) {
+			m_state = Paused;
+			emit paused();
+		}
+		break;
+	}
+}
+
+void
+VideoPlayer::onPositionChange(qint64 position)
+{
+	const double pos = double(position) / 1000.;
+	if(m_position == pos)
+		return;
+
+	assert(pos < m_duration);
+
+	if(m_position <= 0 || m_minPositionDelta <= .0) {
+		m_position = pos;
+		emit positionChanged(pos);
+	} else if(qAbs(m_position - pos) >= m_minPositionDelta) {
+		m_position = pos;
+		emit positionChanged(pos);
+	}
+}
+
+void
+VideoPlayer::onDurationChange(qint64 duration)
+{
+	const double dur = double(duration) / 1000.;
+	if(m_duration == dur)
+		return;
+
+	m_duration = dur;
+	emit lengthChanged(dur);
+}
+
+void
+VideoPlayer::onSpeedChange(double speed)
+{
+	if(m_playbackRate == speed)
+		return;
+
+	m_playbackRate = speed;
+	emit playbackRateChanged(m_playbackRate);
+}
+
+void
+VideoPlayer::onVolumeChange(double volume)
+{
+	if(m_muted)
+		return;
+
+	assert(volume >= 0. && volume <= 1.);
+	volume *= 100.;
+
+	if(m_volume == volume)
+		return;
+
+	m_volume = volume;
+	emit volumeChanged(m_volume);
+
+}
+
+void
+VideoPlayer::onMuteChange(bool muted)
+{
+	if(m_muted == muted)
+		return;
+
+	m_muted = muted;
+	emit muteChanged(m_muted);
 }
 
 VideoPlayer::~VideoPlayer()
 {
+	cleanup();
 }
 
 VideoPlayer *
@@ -90,58 +291,22 @@ VideoPlayer::instance()
 }
 
 bool
-VideoPlayer::init(QWidget *widgetParent, const QString &backendName)
+VideoPlayer::init(QWidget *videoContainer)
 {
-	if(isInitialized()) {
-		qCritical() << "VideoPlayer has already been initialized";
-		return false;
+	// TODO: drop init() and reparent videoWidget elsewhere
+	if(!m_videoWidget) {
+		m_videoWidget = new VideoWidget(videoContainer);
+		m_videoWidget->setVideoLayer(m_renderer->widget());
+
+		connect(m_videoWidget, &VideoWidget::doubleClicked, this, &VideoPlayer::doubleClicked);
+		connect(m_videoWidget, &VideoWidget::rightClicked, this, &VideoPlayer::rightClicked);
+		connect(m_videoWidget, &VideoWidget::leftClicked, this, &VideoPlayer::leftClicked);
+		connect(m_videoWidget, &VideoWidget::wheelUp, this, &VideoPlayer::wheelUp);
+		connect(m_videoWidget, &VideoWidget::wheelDown, this, &VideoPlayer::wheelDown);
+	} else {
+		m_videoWidget->setParent(videoContainer);
 	}
-
-	m_videoContainer = widgetParent;
-
-	if(m_plugins.contains(backendName)) {
-		// we first try to set the requested backend as active
-		backendInit(m_plugins[backendName]);
-	}
-	// if that fails, we set the first available backend as active
-	if(!m_backend) {
-		for(QMap<QString, PlayerBackend *>::ConstIterator it = m_plugins.constBegin(), end = m_plugins.constEnd(); it != end; ++it)
-			if(backendInit(it.value()))
-				break;
-	}
-
-	if(!m_backend)
-		qCritical() << "Failed to initialize a player backend";
-
-	return m_backend;
-}
-
-bool
-VideoPlayer::switchBackend(const QString &backendName)
-{
-	if(!isInitialized())
-		return false;
-
-	if(backendName == m_backend->name())
-		return true;
-
-	const QString currentFile = m_filePath;
-
-	cleanup();
-
-	if(!m_plugins.contains(backendName) || !backendInit(m_plugins[backendName])) {
-		for(QMap<QString, PlayerBackend *>::const_iterator it = m_plugins.constBegin(), end = m_plugins.constEnd(); it != end; ++it)
-			if(backendInit(it.value()))
-				break;
-	}
-
-	if(!m_backend) {
-		qCritical() << "Failed to initialize a player backend";
-		return false;
-	}
-
-	if(!currentFile.isEmpty())
-		openFile(currentFile);
+	reset();
 
 	return true;
 }
@@ -149,131 +314,16 @@ VideoPlayer::switchBackend(const QString &backendName)
 void
 VideoPlayer::cleanup()
 {
-	if(!isInitialized())
-		return;
-
-	PlayerBackend *wasActiveBackend = m_backend;
-
-	backendCleanup();
-
-	m_state = VideoPlayer::Uninitialized;
-
-	emit backendFinalized(wasActiveBackend);
-}
-
-bool
-VideoPlayer::backendInit(PlayerBackend *backend)
-{
-	if(m_backend == backend)
-		return true;
-
-	if(m_backend)
-		return false;
-
-	Q_ASSERT(m_videoWidget == nullptr);
-
-	m_videoWidget = new VideoWidget(m_videoContainer);
-	QWidget layer(m_videoWidget); // FIXME: ugly to have extra widget?
-	if(!backend->init(&layer))
-		return false;
-
-	m_videoWidget->setVideoLayer(layer.findChild<QWidget *>());
-
-	connect(m_videoWidget, &VideoWidget::destroyed, this, [&](){
-		Q_ASSERT(m_state == VideoPlayer::Uninitialized);
-		m_videoWidget = nullptr;
-		cleanup();
-	});
-	connect(m_videoWidget, &VideoWidget::doubleClicked, this, &VideoPlayer::doubleClicked);
-	connect(m_videoWidget, &VideoWidget::leftClicked, this, &VideoPlayer::leftClicked);
-	connect(m_videoWidget, &VideoWidget::rightClicked, this, &VideoPlayer::rightClicked);
-	connect(m_videoWidget, &VideoWidget::wheelUp, this, &VideoPlayer::wheelUp);
-	connect(m_videoWidget, &VideoWidget::wheelDown, this, &VideoPlayer::wheelDown);
-
-	m_videoWidget->show();
-	m_videoWidget->videoLayer()->hide();
-
-	// NOTE: next is used to make videoWidgetParent update it's geometry
-	QRect geometry = m_videoContainer->geometry();
-	geometry.setHeight(geometry.height() + 1);
-	m_videoContainer->setGeometry(geometry);
-
-	m_state = VideoPlayer::Initialized;
-	m_backend = backend;
-	connect(m_backend, &PlayerBackend::resolutionChanged, this, &VideoPlayer::changeResolution);
-	connect(m_backend, &PlayerBackend::fpsChanged, this, &VideoPlayer::changeFPS);
-	connect(m_backend, &PlayerBackend::textStreamsChanged, this, &VideoPlayer::updateTextStreams);
-	connect(m_backend, &PlayerBackend::audioStreamsChanged, this, &VideoPlayer::updateAudioStreams);
-	connect(m_backend, &PlayerBackend::errorOccured, this, &VideoPlayer::onError);
-
-	connect(m_backend, &PlayerBackend::stateChanged, this, &VideoPlayer::changeState);
-	connect(m_backend, &PlayerBackend::positionChanged, this, &VideoPlayer::changePosition);
-	connect(m_backend, &PlayerBackend::lengthChanged, this, &VideoPlayer::changeLength);
-	connect(m_backend, &PlayerBackend::speedChanged, this, &VideoPlayer::changePlaySpeed);
-	connect(m_backend, &PlayerBackend::volumeChanged, this, &VideoPlayer::changeVolume);
-	connect(m_backend, &PlayerBackend::muteChanged, this, &VideoPlayer::changeMute);
-
-	connect(m_backend, &PlayerBackend::restartRequested, this, &VideoPlayer::backendRestart);
-
-	emit backendInitialized(backend);
-	return true;
+	m_renderer->widget()->setParent(nullptr);
 }
 
 void
-VideoPlayer::backendCleanup()
-{
-	closeFile();
-
-	m_backend->cleanup();
-	m_backend = nullptr;
-
-	if(m_videoWidget) {
-		m_videoWidget->disconnect();
-		m_videoWidget->hide();
-		m_videoWidget->deleteLater();
-		m_videoWidget = nullptr;
-	}
-}
-
-void
-VideoPlayer::backendRestart()
-{
-	if(!isInitialized())
-		return;
-
-	cleanup();
-	QApplication::processEvents(); // make sure video widget gets deleted
-	init(m_videoContainer, SCConfig::playerBackend());
-
-	const QString currentFile = m_filePath;
-	const QString backendName = SCConfig::playerBackend();
-
-	cleanup();
-
-	QApplication::processEvents(); // make sure video widget gets deleted
-
-	if(!m_plugins.contains(backendName) || !backendInit(m_plugins[backendName])) {
-		for(QMap<QString, PlayerBackend *>::const_iterator it = m_plugins.constBegin(), end = m_plugins.constEnd(); it != end; ++it)
-			if(backendInit(it.value()))
-				break;
-	}
-
-	if(!m_backend) {
-		qCritical() << "Failed to initialize a player backend";
-		return;
-	}
-
-	if(!currentFile.isEmpty())
-		openFile(currentFile);
-}
-
-void
-VideoPlayer::resetState()
+VideoPlayer::reset()
 {
 	m_filePath.clear();
 
 	m_position = -1.0;
-	m_length = -1.0;
+	m_duration = -1.0;
 	m_fps = -1.0;
 	m_minPositionDelta = DEFAULT_MIN_POSITION_DELTA;
 
@@ -281,197 +331,16 @@ VideoPlayer::resetState()
 	m_textStreams.clear();
 	m_audioStreams.clear();
 
-	m_state = VideoPlayer::Closed;
+	m_state = Initialized;
 
 	if(m_videoWidget)
 		m_videoWidget->videoLayer()->hide();
 }
 
-void
-VideoPlayer::changeResolution(int width, int height, double aspectRatio)
-{
-	videoWidget()->setVideoResolution(width, height, aspectRatio);
-}
-
-void
-VideoPlayer::changeFPS(double fps)
-{
-	if(fps == 0 || m_fps == fps)
-		return;
-	m_fps = fps;
-	m_minPositionDelta = 1.0 / fps;
-	emit framesPerSecondChanged(fps);
-}
-
-void
-VideoPlayer::updateTextStreams(const QStringList &textStreams)
-{
-	if(m_textStreams == textStreams)
-		return;
-	m_textStreams = textStreams;
-	emit textStreamsChanged(m_textStreams);
-}
-
-void
-VideoPlayer::updateAudioStreams(const QStringList &audioStreams, int activeAudioStream)
-{
-	Q_ASSERT(audioStreams.isEmpty() ? activeAudioStream == -1 : activeAudioStream >= 0 && activeAudioStream < audioStreams.count());
-
-	if(m_audioStreams != audioStreams) {
-		m_audioStreams = audioStreams;
-		emit audioStreamsChanged(m_audioStreams);
-	}
-
-	if(m_activeAudioStream != activeAudioStream) {
-		m_activeAudioStream = activeAudioStream;
-		if(m_length >= .0) // we want video duration before notifying activeAudioStreamChanged
-			emit activeAudioStreamChanged(m_activeAudioStream);
-	}
-}
-
-void
-VideoPlayer::changePosition(double position)
-{
-	if(m_position == position)
-		return;
-
-	if(position > m_length && m_length > 0)
-		changeLength(position);
-
-	if(m_position <= 0 || m_minPositionDelta <= .0) {
-		m_position = position;
-		emit positionChanged(position);
-	} else if(qAbs(m_position - position) >= m_minPositionDelta) {
-		m_position = position;
-		emit positionChanged(position);
-	}
-}
-
-void
-VideoPlayer::changeLength(double length)
-{
-	Q_ASSERT(length >= 0);
-
-	if(m_length == length)
-		return;
-
-	// we want video duration before notifying activeAudioStreamChanged
-	const bool notifyStreamChange = m_length < .0 && m_activeAudioStream != -2;
-
-	m_length = length;
-	emit lengthChanged(length);
-
-	if(notifyStreamChange)
-		emit activeAudioStreamChanged(m_activeAudioStream);
-}
-
-void
-VideoPlayer::changePlaySpeed(double playbackRate)
-{
-	if(m_playbackRate == playbackRate)
-		return;
-
-	m_playbackRate = playbackRate;
-	emit playbackRateChanged(m_playbackRate);
-}
-
-void
-VideoPlayer::changeVolume(double volume)
-{
-	if(m_muted)
-		return;
-
-	if(volume < 0.0)
-		volume = 0.0;
-	else if(volume > 100.0)
-		volume = 100.0;
-
-	if(m_volume == volume)
-		return;
-
-	m_volume = volume;
-	emit volumeChanged(m_volume);
-}
-
-void
-VideoPlayer::changeMute(bool muted)
-{
-	if(m_muted == muted)
-		return;
-
-	m_muted = muted;
-	emit muteChanged(m_muted);
-}
-
-void
-VideoPlayer::onError(const QString &message)
-{
-	if(m_state < VideoPlayer::Opening)
-		return;
-
-	if(m_state == VideoPlayer::Opening) {
-		resetState();
-		emit fileOpenError(m_filePath, message);
-	} else {
-		m_backend->stop();
-		m_state = VideoPlayer::Ready;
-		emit playbackError(message);
-		emit stopped();
-	}
-}
-
-void
-VideoPlayer::changeState(VideoPlayer::State newState)
-{
-	if(m_state == VideoPlayer::Opening) {
-		if(newState > VideoPlayer::Opening) {
-			m_state = newState;
-			m_videoWidget->videoLayer()->show();
-			m_backend->setVolume(m_backendVolume);
-
-			emit fileOpened(m_filePath);
-
-			switch(m_state) {
-			case VideoPlayer::Playing:
-				emit playing();
-				break;
-			case VideoPlayer::Paused:
-				emit paused();
-				break;
-			case VideoPlayer::Ready:
-				emit stopped();
-				break;
-			default:
-				break;
-			}
-		}
-	} else if(m_state > VideoPlayer::Opening) {
-		if(m_state != newState && newState > VideoPlayer::Opening) {
-			m_state = newState;
-			switch(m_state) {
-			case VideoPlayer::Playing:
-				m_videoWidget->videoLayer()->show();
-				m_backend->setVolume(m_backendVolume);
-				emit playing();
-				break;
-			case VideoPlayer::Paused:
-				emit paused();
-				break;
-			case VideoPlayer::Ready:
-				m_videoWidget->videoLayer()->hide();
-				emit stopped();
-				break;
-			default:
-				break;
-			}
-		}
-	}
-}
-
 bool
 VideoPlayer::playOnLoad()
 {
-	const QWidget *topLevel = m_videoContainer->topLevelWidget();
+	const QWidget *topLevel = m_videoWidget->topLevelWidget();
 	const QWidget *dockWaveform = topLevel->findChild<QWidget *>(QStringLiteral("waveform_dock"));
 	const QWidget *dockVideo = topLevel->findChild<QWidget *>(QStringLiteral("player_dock"));
 	return SCConfig::videoAutoPlay() && (dockVideo->isVisible() || dockWaveform->isVisible());
@@ -480,8 +349,7 @@ VideoPlayer::playOnLoad()
 bool
 VideoPlayer::openFile(const QString &filePath)
 {
-	if(m_state != VideoPlayer::Closed)
-		return false;
+	assert(m_state == Initialized);
 
 	QFileInfo fileInfo(filePath);
 	if(!fileInfo.exists() || !fileInfo.isFile() || !fileInfo.isReadable()) {
@@ -490,20 +358,16 @@ VideoPlayer::openFile(const QString &filePath)
 	}
 
 	m_filePath = filePath;
-	m_state = VideoPlayer::Opening;
+	m_state = Opening;
 
 	m_videoWidget->videoLayer()->show();
 
-	if(!m_backend->openFile(fileInfo.absoluteFilePath())) {
-		resetState();
-		emit fileOpenError(filePath, QString());
-		return true;
-	}
+	m_player->setFile(fileInfo.absoluteFilePath());
 
-	if(m_state != VideoPlayer::Playing && playOnLoad())
-		m_backend->play();
-	else if(m_state != VideoPlayer::Paused && !playOnLoad())
-		m_backend->pause();
+	if(playOnLoad())
+		m_player->play();
+	else
+		m_player->load();
 
 	return true;
 }
@@ -511,19 +375,13 @@ VideoPlayer::openFile(const QString &filePath)
 bool
 VideoPlayer::closeFile()
 {
-	if(m_state <= VideoPlayer::Closed)
+	if(m_state < Opening)
 		return false;
 
-	bool stop = m_state != VideoPlayer::Ready;
-	if(stop)
-		m_backend->stop(); // we can safely ignore the stop() return value here as we're about to close the file
+	if(m_state != Stopped)
+		m_player->stop();
 
-	m_backend->closeFile();
-
-	resetState();
-
-	if(stop)
-		emit stopped();
+	reset();
 
 	emit fileClosed();
 
@@ -533,15 +391,15 @@ VideoPlayer::closeFile()
 bool
 VideoPlayer::play()
 {
-	if(m_state <= VideoPlayer::Opening || m_state == VideoPlayer::Playing)
+	if(m_state <= Opening || m_state == Playing)
 		return false;
 
 	m_videoWidget->videoLayer()->show();
 
-	if(!m_backend->play()) {
-		resetState();
-		emit playbackError();
-	}
+	if(m_state == Paused)
+		m_player->togglePause();
+	else
+		m_player->play();
 
 	return true;
 }
@@ -549,13 +407,10 @@ VideoPlayer::play()
 bool
 VideoPlayer::pause()
 {
-	if(m_state <= VideoPlayer::Opening || m_state == VideoPlayer::Paused)
+	if(m_state <= Opening || m_state == Paused)
 		return false;
 
-	if(!m_backend->pause()) {
-		resetState();
-		emit playbackError();
-	}
+	m_player->togglePause();
 
 	return true;
 }
@@ -563,67 +418,53 @@ VideoPlayer::pause()
 bool
 VideoPlayer::togglePlayPaused()
 {
-	if(m_state <= VideoPlayer::Opening)
+	if(m_state <= Opening)
 		return false;
-
-	m_videoWidget->videoLayer()->show();
-
-	bool hadError;
-	if(m_state == VideoPlayer::Playing)
-		hadError = !m_backend->pause();
-	else
-		hadError = !m_backend->play();
-
-	if(hadError) {
-		resetState();
-		emit playbackError();
-	}
-
-	return true;
+	return m_state == Playing ? pause() : play();
 }
 
 bool
 VideoPlayer::seek(double seconds)
 {
-	if((m_state != VideoPlayer::Playing && m_state != VideoPlayer::Paused) || seconds < 0 || seconds > m_length)
+	if(m_state <= Stopped || seconds < 0. || seconds > m_duration)
 		return false;
 
 	if(seconds == m_position)
 		return true;
 
-	if(!m_backend->seek(seconds)) {
-		resetState();
-		emit playbackError();
-	}
-
+	m_player->setPosition(seconds * 1000.);
 	return true;
 }
 
 bool
 VideoPlayer::step(int frameOffset)
 {
-	if(m_state != VideoPlayer::Playing && m_state != VideoPlayer::Paused)
+	if(m_state <= Stopped)
 		return false;
 
-	if(!m_backend->step(frameOffset)) {
-		resetState();
-		emit playbackError();
-	}
+	// m_player->stepForward()/stepBackward() are not working well, so we'll seek()
 
+	if(m_state != Paused)
+		m_player->pause();
+
+	seek(m_position + double(frameOffset) / m_fps);
 	return true;
 }
 
 bool
 VideoPlayer::stop()
 {
-	if(m_state <= VideoPlayer::Opening || m_state == VideoPlayer::Ready)
+	if(m_state <= Stopped)
 		return false;
 
-	if(!m_backend->stop()) {
-		resetState();
-		emit playbackError();
-		return true;
-	}
+	m_player->stop();
+
+	// there is a bug in QtAV... without this position time will stop updating
+	// see https://github.com/wang-bin/QtAV/issues/1110
+	QFileInfo fileInfo(m_filePath);
+	m_state = Opening;
+	m_player->setFile(fileInfo.absoluteFilePath());
+	m_player->load();
 
 	return true;
 }
@@ -637,14 +478,9 @@ VideoPlayer::selectAudioStream(int audioStreamIndex)
 	if(audioStreamIndex < 0 || audioStreamIndex >= m_audioStreams.size())
 		return false;
 
-	if(!m_backend->selectAudioStream(audioStreamIndex)) {
-		resetState();
-		emit playbackError();
-		return false;
-	}
-
 	if(m_activeAudioStream != audioStreamIndex) {
 		m_activeAudioStream = audioStreamIndex;
+		m_player->setAudioStream(audioStreamIndex);
 		emit activeAudioStreamChanged(audioStreamIndex);
 	}
 	return true;
@@ -653,10 +489,16 @@ VideoPlayer::selectAudioStream(int audioStreamIndex)
 void
 VideoPlayer::playbackRate(double newRate)
 {
-	if(m_state != VideoPlayer::Playing || newRate < .125 || newRate > 128)
+	if(m_state <= Opening || newRate < .125 || newRate > 128)
 		return;
 
-	m_backend->playbackRate(newRate);
+	m_player->setSpeed(newRate);
+}
+
+SubtitleTextOverlay &
+VideoPlayer::subtitleOverlay()
+{
+	return m_overlay->m_overlay;
 }
 
 void
@@ -680,39 +522,27 @@ VideoPlayer::setVolume(double volume)
 	else if(volume > 100.0)
 		volume = 100.0;
 
-	if(m_volume != volume) {
-		m_volume = volume;
+	if(m_volume == volume)
+		return;
 
-		m_backendVolume = m_muted ? 0 : m_volume; //(m_backend->doesVolumeCorrection() ? m_volume : logarithmicVolume(m_volume));
+	m_volume = volume;
 
-		if(!m_muted && m_state == VideoPlayer::Playing) {
-			if(!m_backend->setVolume(m_backendVolume)) {
-				resetState();
-				emit playbackError();
-				return;
-			}
-		}
+	m_player->audio()->setVolume(volume / 100.);
 
-		emit volumeChanged(m_volume);
-	}
+	emit volumeChanged(m_volume);
 }
 
 void
 VideoPlayer::setMuted(bool muted)
 {
-	if(m_muted != muted) {
-		m_muted = muted;
+	if(m_muted == muted)
+		return;
 
-		m_backendVolume = m_muted ? 0 : m_volume;//(m_backend->doesVolumeCorrection() ? m_volume : logarithmicVolume(m_volume));
+	m_muted = muted;
 
-		if(m_state == VideoPlayer::Playing) {
-			if(!m_backend->setVolume(m_backendVolume)) {
-				resetState();
-				emit playbackError();
-				return;
-			}
-		}
-
-		emit muteChanged(m_muted);
-	}
+	m_player->audio()->setMute(muted);
+	emit muteChanged(m_muted);
 }
+
+
+#include "videoplayer.moc"
