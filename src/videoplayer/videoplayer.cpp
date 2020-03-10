@@ -109,12 +109,13 @@ VideoPlayer::VideoPlayer()
 	m_player->setNotifyInterval(10);
 	m_player->setMediaEndAction(QtAV::MediaEndAction_Pause);
 
+	// NOTE: Qt::QueuedConnection is used to avoid racing conditions in QtAV which cause position to stop updating
 	connect(m_renderer, &QtAV::VideoOutput::videoFrameSizeChanged, this, &VideoPlayer::onResolutionChange);
-	connect(m_player, &QtAV::AVPlayer::loaded, this, &VideoPlayer::onMediaLoaded);
+	connect(m_player, &QtAV::AVPlayer::loaded, this, &VideoPlayer::onMediaLoaded, Qt::QueuedConnection);
 	connect(m_player->audio(), &QtAV::AudioOutput::volumeChanged, this, &VideoPlayer::onVolumeChange);
 	connect(m_player->audio(), &QtAV::AudioOutput::muteChanged, this, &VideoPlayer::onMuteChange);
-	connect(m_player, &QtAV::AVPlayer::seekFinished, this, &VideoPlayer::onPositionChange);
-	connect(m_player, &QtAV::AVPlayer::positionChanged, this, &VideoPlayer::onPositionChange);
+	connect(m_player, &QtAV::AVPlayer::seekFinished, this, &VideoPlayer::onPositionChange, Qt::QueuedConnection);
+	connect(m_player, &QtAV::AVPlayer::positionChanged, this, &VideoPlayer::onPositionChange, Qt::QueuedConnection);
 	connect(m_player, &QtAV::AVPlayer::durationChanged, this, &VideoPlayer::onDurationChange);
 	connect(m_player, &QtAV::AVPlayer::speedChanged, this, &VideoPlayer::onSpeedChange);
 	connect(m_player, &QtAV::AVPlayer::stateChanged, this, &VideoPlayer::onStateChange);
@@ -212,10 +213,8 @@ void
 VideoPlayer::onPositionChange(qint64 position)
 {
 	const double pos = double(position) / 1000.;
-	if(m_position == pos)
+	if(m_position == pos || pos >= m_duration)
 		return;
-
-	assert(pos < m_duration);
 
 	if(m_position <= 0 || m_minPositionDelta <= .0) {
 		m_position = pos;
@@ -458,13 +457,6 @@ VideoPlayer::stop()
 		return false;
 
 	m_player->stop();
-
-	// there is a bug in QtAV... without this position time will stop updating
-	// see https://github.com/wang-bin/QtAV/issues/1110
-	QFileInfo fileInfo(m_filePath);
-	m_state = Opening;
-	m_player->setFile(fileInfo.absoluteFilePath());
-	m_player->load();
 
 	return true;
 }
