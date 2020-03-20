@@ -42,6 +42,7 @@
     <p>Features</p>
     <p xml:lang="ca">Característiques</p>
     <p xml:lang="ca-valencia">Característiques</p>
+    <p xml:lang="cs">Vlastnosti</p>
     <p xml:lang="es">Funcionalidades</p>
     <p xml:lang="et">Omadused</p>
     <p xml:lang="it">Caratteristiche</p>
@@ -186,6 +187,7 @@
       <li>Spell checking</li>
       <li xml:lang="ca">Verificació ortogràfica</li>
       <li xml:lang="ca-valencia">Verificació ortogràfica</li>
+      <li xml:lang="cs">Kontrola pravopisu</li>
       <li xml:lang="es">Comprobación ortográfica</li>
       <li xml:lang="et">Õigekirja kontroll</li>
       <li xml:lang="it">Controllo ortografico</li>
