@@ -33,6 +33,7 @@
     <p xml:lang="ca-valencia">El Subtitle Composer és un editor de subtítols de codi obert basat en text que admet operacions d'edició bàsiques i avançades.</p>
     <p xml:lang="es">Subtitle Composer es un editor de subtítulos de código abierto basado en texto que permite operaciones de edición básicas y avanzadas.</p>
     <p xml:lang="et">Subtiitriredaktor on avatud lähtekoodiga tekstipõhine subtiitrite redaktor, mis toetab nii põhilisi kui ka spetsiifilisemaid muutmistoiminguid.</p>
+    <p xml:lang="it">Subtitle Composer è un editor di sottotitoli open source basato sul testo che supporta operazioni di modifica di base ed avanzate.</p>
     <p xml:lang="nl">Subtitle Composer is een op opensource gebaseerde bewerker van ondertitels van video die basis en geavanceerde bewerkingshandelingen ondersteunt.</p>
     <p xml:lang="pt">O Compositor de Legendas é um editor de legendas baseadas em texto de código aberto, suportando um conjunto de operações básicas e avançadas de edição.</p>
     <p xml:lang="sv">Textningsskapare är en textbaserad textningseditor med öppen källkod som stöder grundläggande och avancerade redigeringsåtgärder.</p>
@@ -71,6 +72,7 @@
       <li xml:lang="ca-valencia">Obri/Formats de subtítols gràfics OCR: VobSub (.idx/.sub/.rar), BluRay/PGS (*.sup), formats admesos per ffmpeg (DVD/Vob, DVB, XSUB, HDMV-PGS)</li>
       <li xml:lang="es">Abrir y OCR de formatos de subtítulos gráficos: VobSub (.idx/.sub/.rar), BluRay/PGS (*.sup), formatos permitidos por ffmpeg (DVD/Vob, DVB, XSUB, HDMV-PGS)</li>
       <li xml:lang="et">Subtiitrite graafikavormingute - VobSub (.idx/.sub/.rar), BluRay/PGS (*.sup), ffmpeg toetatud vormingud (DVD/Vob, DVB, XSUB, HDMV-PGS) - avamine ja optiline märgituvastus</li>
+      <li xml:lang="it">Apertura di formati di sottotitoli grafici aperti/OCR - VobSub (.idx/.sub/.rar), BluRay/PGS (*.sup), formati supportati da ffmpeg (DVD/Vob, DVB, XSUB, HDMV-PGS)</li>
       <li xml:lang="nl">Open/OCR grafische ondertitelingsformaten - VobSub (.idx/.sub/.rar), BluRay/PGS (*.sup), formaten ondersteunt door ffmpeg (DVD/Vob, DVB, XSUB, HDMV-PGS)</li>
       <li xml:lang="pt">Formatos de Legengas Gráficas Abertas/OCR - VobSub (.idx/.sub/.rar), BluRay/PGS (*.sup), formatos suportados pelo ffmpeg (DVD/Vob, DVB, XSUB, HDMV-PGS)</li>
       <li xml:lang="sv">Öppna och OCR grafiska textningsformat - VobSub (.idx/.sub/.rar), BluRay/PGS (*.sup), format som stöds av ffmpeg (DVD/Vob, DVB, XSUB, HDMV-PGS)</li>
@@ -82,6 +84,7 @@
       <li xml:lang="ca-valencia">Desmultiplexa el flux de subtítols gràfics/de text des d'un fitxer de vídeo: SRT, SSA/ASS, text MOV, MicroDVD, DVD/Vob, DVB, XSUB, HDMV-PGS</li>
       <li xml:lang="es">Demultiplexar emisiones de subtítulos gráficos y de texto de archivos de vídeo: SRT, SSA/ASS, texto MOV, MicroDVD, DVD/Vob, DVB, XSUB, HDMV-PGS</li>
       <li xml:lang="et">Graafilise või tekstisubtiitri voo demultipleksimine videofailist - SRT, SSA/ASS, MOV text, MicroDVD, DVD/Vob, DVB, XSUB, HDMV-PGS</li>
+      <li xml:lang="it">Demultiplazione di flussi di sottotitoli grafici/di testo - SRT, SSA/ASS, testo MOV, MicroDVD, DVD/Vob, DVB, XSUB, HDMV-PGS</li>
       <li xml:lang="nl">Demux Graphics/Tekst ondertitelingsstream uit videobestand - SRT, SSA/ASS, MOV tekst, MicroDVD, DVD/Vob, DVB, XSUB, HDMV-PGS</li>
       <li xml:lang="pt">Transmissões de legendas de texto/gráficas desmultiplexadas do ficheiro de vídeo - SRT, SSA/ASS, texto MOV, MicroDVD, DVD/Vob, DVB, XSUB, HDMV-PGS</li>
       <li xml:lang="sv">Avmultiplex av grafik- eller textningsström från videofil - SRT, SSA/ASS, MOV text, MicroDVD, DVD/Vob, DVB, XSUB, HDMV-PGS</li>
@@ -115,6 +118,7 @@
       <li xml:lang="ca-valencia">Vista prèvia en viu dels subtítols en el reproductor de vídeo integrat amb selecció del flux d'àudio</li>
       <li xml:lang="es">Vista previa instantánea de subtítulos en reproductores de vídeo integrados con selección de la fuente de sonido</li>
       <li xml:lang="et">Subtiitrite reaalajas eelvaatlus lõimitud videomängijas võimalusega valida helivoog</li>
+      <li xml:lang="it">Anteprima dal vivo dei sottotitoli nel riproduttore multimediale integrato con selezione del flusso audio</li>
       <li xml:lang="nl">Live-voorbeeld van ondertitels in geïntegreerde videospeler met audiostream selectie</li>
       <li xml:lang="pt">Antevisão em directo das legendas no reprodutor de vídeo integrado com a selecção da sequência de áudio</li>
       <li xml:lang="sv">Direkt förhandsgranskning av textning i integrerad videospelare med val av ljudspår</li>
@@ -125,6 +129,7 @@
       <li xml:lang="ca-valencia">Vista prèvia/edició dels subtítols en forma d'ona d'àudio gràfica amb selecció del flux d'àudio</li>
       <li xml:lang="es">Vista previa y edición de subtítulos en formas de ondas gráficas con selección de la fuente de sonido</li>
       <li xml:lang="et">Subtiitrite eelvaatlus/muutmine graafilist helilainet töödeldes võimalusega valida helivoog</li>
+      <li xml:lang="it">Anteprima/modifica di sottotitoli su forme d'onda audio grafiche con selezione del flusso audio</li>
       <li xml:lang="nl">Voorvertoning/bewerking van ondertitels op grafische audiogolfvorm met audiostream selectie</li>
       <li xml:lang="pt">Antevisão/edição das legendas da forma de onda gráfica do áudio com a selecção da sequência de áudio</li>
       <li xml:lang="sv">Förhandsgranskning och redigering av textning på grafisk ljudvågform med val av ljudspår</li>
@@ -135,6 +140,7 @@
       <li xml:lang="ca-valencia">Sincronització arrossegant diversos ancoratges/punts d'empelt i estirant la línia de temps</li>
       <li xml:lang="es">Sincronización mediante el arrastre de diversos anclajes o puntos gráficos y ajuste de la línea de tiempos</li>
       <li xml:lang="et">Sünkroonimine ankruid/kinnispunkte lohistades ja ajatelge venitades</li>
+      <li xml:lang="it">Sincronizza trascinando varie ancore/punti di aggancio e allungando la linea temporale</li>
       <li xml:lang="nl">Synchroniseren door slepen van verschillende ankers/grafiekpunten en uitrekken van tijdlijn</li>
       <li xml:lang="pt">Sincronização através do arrastamento de várias âncoras/pontos de pega e por esticamento da linha temporal</li>
       <li xml:lang="sv">Synkronisering genom att dra flera grepp eller ympningsställen och utsträckning av tidslinjen</li>
@@ -145,6 +151,7 @@
       <li xml:lang="ca-valencia">Desplaçament i escalat del temps, recàlcul de la durada de les línies, conversió de la velocitat dels fotogrames, etc.</li>
       <li xml:lang="es">Desplazamiento de tiempos y escalado, cálculo automático de la duración de las líneas, conversión de tasa de fotogramas, etc.</li>
       <li xml:lang="et">Aja nihutamine ja skaleerimine, ridade kestuse ümberarvutamine, kaadrisageduse teisendused jms.</li>
+      <li xml:lang="it">Differita e scalatura, ricalcolo della durata delle linee, conversione della frequenza dei fotogrammi, ecc.</li>
       <li xml:lang="nl">Tijdverschuiving en schalen, lijnduur herberekening, framerate conversie, etc.</li>
       <li xml:lang="pt">Deslocamento e escala do tempo, actualização da duração das linhas, conversão da taxa de imagens, etc.</li>
       <li xml:lang="sv">Tidsskift och skalning, omräkning av tidslängd för rader, bildfrekvenskonvertering, etc.</li>
