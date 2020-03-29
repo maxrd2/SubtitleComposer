@@ -23,13 +23,13 @@
 #include "core/subtitleiterator.h"
 #include "core/subtitleactions.h"
 #include "core/subtitlelineactions.h"
+#include "core/undostack.h"
 #include "helpers/objectref.h"
 #include "scconfig.h"
 #include "application.h"
 #include "gui/lineswidget.h"
 
 #include <KLocalizedString>
-#include <QUndoStack>
 
 using namespace SubtitleComposer;
 
@@ -1431,7 +1431,7 @@ Subtitle::updateState()
 		emit secondaryChanged();
 	};
 
-	const QUndoStack *undoStack = app()->undoStack();
+	const UndoStack *undoStack = app()->undoStack();
 	const int index = undoStack->index();
 	const UndoAction *action = index > 0 ? dynamic_cast<const UndoAction *>(undoStack->command(index - 1)) : nullptr;
 	const UndoAction::DirtyMode dirtyMode = action != nullptr ? action->m_dirtyMode : SubtitleAction::Both;

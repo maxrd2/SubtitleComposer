@@ -21,6 +21,7 @@
 #include "actions/kcodecactionext.h"
 #include "actions/krecentfilesactionext.h"
 #include "actions/useractionnames.h"
+#include "core/undostack.h"
 #include "dialogs/joinsubtitlesdialog.h"
 #include "dialogs/splitsubtitledialog.h"
 #include "dialogs/syncsubtitlesdialog.h"

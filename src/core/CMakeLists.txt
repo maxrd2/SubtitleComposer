@@ -10,6 +10,7 @@ set(core_SRCS
 	${CMAKE_CURRENT_SOURCE_DIR}/subtitleline.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/subtitlelineactions.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/undoaction.cpp
+	${CMAKE_CURRENT_SOURCE_DIR}/undostack.cpp
 	CACHE INTERNAL EXPORTEDVARIABLE
 )
 

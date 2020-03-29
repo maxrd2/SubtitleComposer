@@ -25,6 +25,7 @@
 #include "actions/krecentfilesactionext.h"
 #include "configs/configdialog.h"
 #include "core/subtitleiterator.h"
+#include "core/undostack.h"
 #include "gui/currentlinewidget.h"
 #include "dialogs/actionwithtargetdialog.h"
 #include "dialogs/shifttimesdialog.h"
@@ -145,7 +146,7 @@ Application::init()
 
 	m_scriptsManager = new ScriptsManager(this);
 
-	m_undoStack = new QUndoStack(m_mainWindow);
+	m_undoStack = new UndoStack(m_mainWindow);
 
 	UserActionManager *actionManager = UserActionManager::instance();
 	actionManager->setLinesWidget(m_linesWidget);
@@ -154,10 +155,10 @@ Application::init()
 
 	setupActions();
 
-	connect(m_undoStack, &QUndoStack::undoTextChanged, [&](const QString &text){ static QAction *a = action(ACT_UNDO); a->setToolTip(text); });
-	connect(m_undoStack, &QUndoStack::redoTextChanged, [&](const QString &text){ static QAction *a = action(ACT_REDO); a->setToolTip(text); });
-	connect(m_undoStack, &QUndoStack::indexChanged, [&](int){ if(m_subtitle) m_subtitle->updateState(); });
-	connect(m_undoStack, &QUndoStack::cleanChanged, [&](bool){ if(m_subtitle) m_subtitle->updateState(); });
+	connect(m_undoStack, &UndoStack::undoTextChanged, [&](const QString &text){ static QAction *a = action(ACT_UNDO); a->setToolTip(text); });
+	connect(m_undoStack, &UndoStack::redoTextChanged, [&](const QString &text){ static QAction *a = action(ACT_REDO); a->setToolTip(text); });
+	connect(m_undoStack, &UndoStack::indexChanged, [&](int){ if(m_subtitle) m_subtitle->updateState(); });
+	connect(m_undoStack, &UndoStack::cleanChanged, [&](bool){ if(m_subtitle) m_subtitle->updateState(); });
 
 	connect(SCConfig::self(), SIGNAL(configChanged()), this, SLOT(onConfigChanged()));
 
@@ -250,12 +251,6 @@ MainWindow *
 Application::mainWindow() const
 {
 	return m_mainWindow;
-}
-
-LinesWidget *
-Application::linesWidget() const
-{
-	return m_linesWidget;
 }
 
 bool

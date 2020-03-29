@@ -23,9 +23,7 @@
 #include "actions/useractionnames.h"
 #include "dialogs/actionwithtargetdialog.h"
 #include "gui/linesitemdelegate.h"
-#ifdef USE_PERSISTENT_SELECTION_MODEL
 #include "gui/linesselectionmodel.h"
-#endif
 
 #include <QHeaderView>
 #include <QMenu>
@@ -47,10 +45,8 @@ LinesWidget::LinesWidget(QWidget *parent)
 	  m_richTextDelegate(new LinesItemDelegate(true, true, true, this))
 {
 	setModel(new LinesModel(this));
-#ifdef USE_PERSISTENT_SELECTION_MODEL
 	selectionModel()->deleteLater();
 	setSelectionModel(new LinesSelectionModel(model()));
-#endif
 
 	for(int column = 0, columnCount = model()->columnCount(); column < columnCount; ++column)
 		setItemDelegateForColumn(column, column < LinesModel::Text ? m_plainTextDelegate : m_richTextDelegate);
@@ -81,7 +77,7 @@ LinesWidget::LinesWidget(QWidget *parent)
 	setAcceptDrops(true);
 	viewport()->installEventFilter(this);
 
-	connect(selectionModel(), SIGNAL(currentRowChanged(const QModelIndex &, const QModelIndex &)), this, SLOT(onCurrentRowChanged()));
+	connect(selectionModel(), &QItemSelectionModel::currentRowChanged, this, &LinesWidget::onCurrentRowChanged);
 }
 
 LinesWidget::~LinesWidget()
@@ -432,7 +428,7 @@ LinesWidget::contextMenuEvent(QContextMenuEvent *e)
 void
 LinesWidget::onCurrentRowChanged()
 {
-	QModelIndex current = this->currentIndex();
+	QModelIndex current = currentIndex();
 	emit currentLineChanged(current.isValid() ? model()->subtitle()->line(current.row()) : nullptr);
 }
 

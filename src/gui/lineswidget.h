@@ -50,6 +50,7 @@ public:
 	RangeList targetRanges(int target) const;
 
 	inline LinesModel * model() const { return static_cast<LinesModel *>(TreeView::model()); }
+	inline bool scrollFollowsModel() const { return m_scrollFollowsModel; }
 
 	void loadConfig();
 	void saveConfig();

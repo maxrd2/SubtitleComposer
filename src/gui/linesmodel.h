@@ -72,10 +72,10 @@ private:
 	Subtitle *m_subtitle;
 	SubtitleLine *m_playingLine;
 	QTimer *m_dataChangedTimer;
-	QTimer *m_resetModelTimer;
-	std::pair<const SubtitleLine *, const SubtitleLine *> m_resetModelSelection;
 	int m_minChangedLineIndex;
 	int m_maxChangedLineIndex;
+	QTimer *m_resetModelTimer;
+	std::pair<const SubtitleLine *, const SubtitleLine *> m_resetModelSelection;
 
 	friend class LinesWidget;
 };

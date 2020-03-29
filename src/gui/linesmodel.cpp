@@ -18,8 +18,8 @@
  * Boston, MA 02110-1301, USA.
  */
 
-#include "linesmodel.h"
 #include "core/subtitle.h"
+#include "gui/linesmodel.h"
 #include "gui/lineswidget.h"
 
 #include <QFont>
@@ -40,10 +40,10 @@ LinesModel::LinesModel(QObject *parent)
 	  m_subtitle(nullptr),
 	  m_playingLine(nullptr),
 	  m_dataChangedTimer(new QTimer(this)),
-	  m_resetModelTimer(new QTimer(this)),
-	  m_resetModelSelection(nullptr, nullptr),
 	  m_minChangedLineIndex(-1),
-	  m_maxChangedLineIndex(-1)
+	  m_maxChangedLineIndex(-1),
+	  m_resetModelTimer(new QTimer(this)),
+	  m_resetModelSelection(nullptr, nullptr)
 {
 	m_dataChangedTimer->setInterval(0);
 	m_dataChangedTimer->setSingleShot(true);
@@ -309,6 +309,7 @@ LinesModel::onLinesInserted(int firstIndex, int lastIndex)
 {
 	m_resetModelSelection.first = m_subtitle->at(firstIndex);
 	m_resetModelSelection.second = m_subtitle->at(lastIndex);
+	static_cast<LinesWidget *>(parent())->selectionModel()->clear();
 	m_resetModelTimer->start();
 }
 
@@ -333,19 +334,25 @@ LinesModel::onModelReset()
 	beginResetModel();
 	endResetModel();
 
-	if(!m_resetModelSelection.first || !m_resetModelSelection.second)
-		return;
-
 	LinesWidget *w = static_cast<LinesWidget *>(parent());
-	const QModelIndex first = index(m_resetModelSelection.first->index(), 0, QModelIndex());
-	const QModelIndex last = index(m_resetModelSelection.second->index(), columnCount() - 1, QModelIndex());
+	QItemSelectionModel *sm = w->selectionModel();
 
-	if(m_resetModelSelection.first != m_subtitle->firstLine() && m_resetModelSelection.second != m_subtitle->lastLine())
-		w->selectionModel()->select(QItemSelection(first, last), QItemSelectionModel::ClearAndSelect);
+	if(sm->hasSelection()) {
+		if(!sm->currentIndex().isValid()) {
+			const QModelIndex idx = index(sm->selection().first().top());
+			sm->setCurrentIndex(idx, QItemSelectionModel::Rows);
+		}
+	} else if(m_resetModelSelection.first) {
+		const QModelIndex first = index(m_resetModelSelection.first->index(), 0, QModelIndex());
+		if(m_resetModelSelection.first != m_subtitle->firstLine() && m_resetModelSelection.second != m_subtitle->lastLine()) {
+			const QModelIndex last = index(m_resetModelSelection.second->index(), columnCount() - 1, QModelIndex());
+			sm->select(QItemSelection(first, last), QItemSelectionModel::ClearAndSelect);
+		}
+		sm->setCurrentIndex(first, QItemSelectionModel::Rows);
+	}
 
-	w->selectionModel()->setCurrentIndex(first, QItemSelectionModel::Rows);
-	if(w->m_scrollFollowsModel)
-		w->scrollTo(first, QAbstractItemView::EnsureVisible);
+	if(w->scrollFollowsModel())
+		w->scrollTo(sm->currentIndex(), QAbstractItemView::EnsureVisible);
 }
 
 void
@@ -362,12 +369,6 @@ LinesModel::onLineChanged(const SubtitleLine *line)
 	} else if(lineIndex > m_maxChangedLineIndex) {
 		m_maxChangedLineIndex = lineIndex;
 	}
-
-	LinesWidget *w = static_cast<LinesWidget *>(parent());
-	const QModelIndex idx = index(lineIndex);
-	w->selectionModel()->setCurrentIndex(idx, QItemSelectionModel::Current);
-	if(w->m_scrollFollowsModel)
-		w->scrollTo(idx, QAbstractItemView::EnsureVisible);
 }
 
 void

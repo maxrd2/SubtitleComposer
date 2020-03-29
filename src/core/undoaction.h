@@ -54,9 +54,6 @@ public:
 		SetLineHideTime,
 		SetLineTimes,
 		SetLineErrors,
-
-		// special
-		CompositeAction
 	} ActionID;
 
 

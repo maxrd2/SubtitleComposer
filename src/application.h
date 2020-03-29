@@ -64,6 +64,8 @@ class ErrorTracker;
 
 class ScriptsManager;
 
+class UndoStack;
+
 class Application : public QApplication
 {
 	Q_OBJECT
@@ -78,10 +80,11 @@ public:
 
 	Subtitle * subtitle() const;
 
-	inline QUndoStack * undoStack() const { return m_undoStack; }
+	inline UndoStack * undoStack() const { return m_undoStack; }
 
 	MainWindow * mainWindow() const;
-	LinesWidget * linesWidget() const;
+	inline LinesWidget * linesWidget() const { return m_linesWidget; }
+
 
 	bool translationMode() const;
 	bool showingLinesContextMenu() const;
@@ -310,7 +313,7 @@ private:
 	bool m_linkCurrentLineToPosition;
 	KRecentFilesAction *m_recentVideosAction;
 
-	QUndoStack *m_undoStack;
+	UndoStack *m_undoStack;
 };
 
 inline Application * app() { return static_cast<Application *>(QApplication::instance()); }
