@@ -169,47 +169,32 @@ LinesWidget::currentLineIndex() const
 int
 LinesWidget::firstSelectedIndex() const
 {
-	QItemSelectionModel *selection = selectionModel();
-	for(int row = 0, rowCount = model()->rowCount(); row < rowCount; ++row)
-		if(selection->isSelected(model()->index(row, 0)))
-			return row;
-	return -1;
+	int row = -1;
+	const QItemSelection &selection = selectionModel()->selection();
+	for(const QItemSelectionRange &r : selection) {
+		if(row == -1 || r.top() < row)
+			row = r.top();
+	}
+	return row;
 }
 
 int
 LinesWidget::lastSelectedIndex() const
 {
-	QItemSelectionModel *selection = selectionModel();
-	for(int row = model()->rowCount() - 1; row >= 0; --row)
-		if(selection->isSelected(model()->index(row, 0)))
-			return row;
-	return -1;
+	int row = -1;
+	const QItemSelection &selection = selectionModel()->selection();
+	for(const QItemSelectionRange &r : selection) {
+		if(r.bottom() > row)
+			row = r.bottom();
+	}
+	return row;
 }
 
 bool
 LinesWidget::selectionHasMultipleRanges() const
 {
-	int selectionRanges = 0;
-
-	QItemSelectionModel *selection = selectionModel();
-
-	int rangeFirstRow = -1, row = 0;
-	for(int rowCount = model()->rowCount(); row < rowCount; ++row) {
-		if(selection->isSelected(model()->index(row, 0))) {
-			if(rangeFirstRow == -1) { // mark start of selected range
-				rangeFirstRow = row;
-
-				selectionRanges++;
-				if(selectionRanges > 1)
-					break;
-			}
-		} else {
-			if(rangeFirstRow != -1)
-				rangeFirstRow = -1;
-		}
-	}
-
-	return selectionRanges > 1;
+	const QItemSelection &selection = selectionModel()->selection();
+	return selection.size() > 1;
 }
 
 RangeList
@@ -217,23 +202,10 @@ LinesWidget::selectionRanges() const
 {
 	RangeList ranges;
 
-	QItemSelectionModel *selection = selectionModel();
-
-	int rangeFirstRow = -1, row = 0;
-	for(const int rowCount = model()->rowCount(); row < rowCount; ++row) {
-		if(selection->isSelected(model()->index(row, 0))) {
-			if(rangeFirstRow == -1) // mark start of selected range
-				rangeFirstRow = row;
-		} else {
-			if(rangeFirstRow != -1) {
-				ranges << Range(rangeFirstRow, row - 1);
-				rangeFirstRow = -1;
-			}
-		}
+	const QItemSelection &selection = selectionModel()->selection();
+	for(const QItemSelectionRange &r : selection) {
+		ranges << Range(r.top(), r.bottom());
 	}
-
-	if(rangeFirstRow != -1)
-		ranges << Range(rangeFirstRow, row - 1);
 
 	return ranges;
 }
