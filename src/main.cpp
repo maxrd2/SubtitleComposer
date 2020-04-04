@@ -117,15 +117,11 @@ main(int argc, char **argv)
 	QCommandLineParser parser;
 	aboutData.setupCommandLine(&parser);
 	parser.setApplicationDescription(aboutData.shortDescription());
-	parser.addHelpOption();
-	parser.addVersionOption();
 	parser.addPositionalArgument("primary-url", i18n("Open location as primary subtitle"), "[primary-url]");
 	parser.addPositionalArgument("translation-url", i18n("Open location as translation subtitle"), "[translation-url]");
 
-	// do the command line parsing
+	// Parse command line
 	parser.process(app);
-
-	// handle standard options
 	aboutData.processCommandLine(&parser);
 
 	app.init();
