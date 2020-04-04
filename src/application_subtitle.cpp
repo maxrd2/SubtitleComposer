@@ -44,6 +44,8 @@
 #include <KLocalizedString>
 #include <KMessageBox>
 
+#undef ERROR
+
 #define $(x) QStringLiteral(x)
 
 using namespace SubtitleComposer;
