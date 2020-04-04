@@ -30,6 +30,7 @@
 #include <QCommandLineParser>
 #include <QCommandLineOption>
 #include <QProcessEnvironment>
+#include <QResource>
 
 extern "C" {
 #include <libavcodec/avcodec.h>
@@ -58,6 +59,26 @@ main(int argc, char **argv)
 	// force breeze theme outside kde environment
 	if(QProcessEnvironment::systemEnvironment().value(QStringLiteral("XDG_CURRENT_DESKTOP")).toLower() != QLatin1String("kde"))
 		QIcon::setThemeName("breeze");
+
+#ifdef Q_OS_WIN
+	const QStringList themes {"/icons/breeze/breeze-icons.rcc", "/icons/breeze-dark/breeze-icons-dark.rcc"};
+	for(const QString theme : themes) {
+		const QString themePath = QStandardPaths::locate(QStandardPaths::AppDataLocation, theme);
+		if(!themePath.isEmpty()) {
+			const QString iconSubdir = theme.left(theme.lastIndexOf('/'));
+			if(QResource::registerResource(themePath, iconSubdir)) {
+				if(QFileInfo::exists(QLatin1Char(':') + iconSubdir + QStringLiteral("/index.theme"))) {
+					qDebug() << "Loaded icon theme:" << theme;
+				} else {
+					qWarning() << "No index.theme found in" << theme;
+					QResource::unregisterResource(themePath, iconSubdir);
+				}
+			} else {
+				qWarning() << "Invalid rcc file" << theme;
+			}
+		}
+	}
+#endif
 
 	KLocalizedString::setApplicationDomain("subtitlecomposer");
 
