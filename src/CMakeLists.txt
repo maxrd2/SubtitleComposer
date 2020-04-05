@@ -71,7 +71,7 @@ include_directories(
 	${streamprocessor_INCLUDE_DIR}
 	${speechprocessor_INCLUDE_DIR}
 	${widgets_INCLUDE_DIR}
-	${FFMPEG_INCLUDE_DIR}
+	${FFMPEG_INCLUDE_DIRS}
 )
 
 set(subtitlecomposer_SRCS

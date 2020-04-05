@@ -1,65 +1,56 @@
-# - Try to find FFmpeg libraries
+# Tries to find FFmpeg libraries
 # Once done this will define
+#
 #  FFMPEG_FOUND - System has FFmpeg
-#  FFMPEG_INCLUDE_DIRS - The FFmpeg include directories
-#  FFMPEG_LIBRARIES - The libraries needed to use FFmpeg
+#  FFMPEG_VERSION - FFmpeg version (it's actually libavformat version)
+#  FFMPEG_INCLUDE_DIRS - FFmpeg include directories
+#  FFMPEG_LIBRARIES - FFmpeg libraries
+#
+set(_avmodules AVCODEC AVFORMAT AVUTIL SWRESAMPLE)
+#  FFMPEG_(avmodule)_VERSION - module version
+#  FFMPEG_(avmodule)_INCLUDE_DIR - module include directory
+#  FFMPEG_(avmodule)_LIBRARY - module library
 
 find_package(PkgConfig REQUIRED)
-pkg_check_modules(PC_FFMPEG_AVCODEC QUIET libavcodec)
-pkg_check_modules(PC_FFMPEG_AVFORMAT QUIET libavformat)
-pkg_check_modules(PC_FFMPEG_AVUTIL QUIET libavutil)
-pkg_check_modules(PC_FFMPEG_SWRESAMPLE QUIET libswresample)
-set(FFMPEG_AVCODEC_VERSION ${PC_FFMPEG_AVCODEC_VERSION})
-set(FFMPEG_AVFORMAT_VERSION ${PC_FFMPEG_AVFORMAT_VERSION})
-set(FFMPEG_AVUTIL_VERSION ${PC_FFMPEG_AVUTIL_VERSION})
-set(FFMPEG_SWRESAMPLE_VERSION ${PC_FFMPEG_SWRESAMPLE_VERSION})
 
-find_path(FFMPEG_INCLUDE_DIR libavcodec/avcodec.h
-	HINTS
-		${PC_FFMPEG_AVCODEC_INCLUDEDIR} ${PC_FFMPEG_AVCODEC_INCLUDE_DIRS}
-		${PC_FFMPEG_AVFORMAT_INCLUDEDIR} ${PC_FFMPEG_AVFORMAT_INCLUDE_DIRS}
-		${PC_FFMPEG_AVUTIL_INCLUDEDIR} ${PC_FFMPEG_AVUTIL_INCLUDE_DIRS}
-	PATH_SUFFIXES ffmpeg)
+foreach(MODULE ${_avmodules})
+	string(TOLOWER ${MODULE} module)
 
-find_library(FFMPEG_AVCODEC_LIBRARY
-	NAMES avcodec
-	HINTS
-		${PC_FFMPEG_AVCODEC_LIBDIR} ${PC_FFMPEG_AVCODEC_LIBRARY_DIRS})
+	pkg_check_modules(PC_FFMPEG_${MODULE} QUIET lib${module})
+	set(FFMPEG_${MODULE}_VERSION ${PC_FFMPEG_${MODULE}_VERSION})
 
-find_library(FFMPEG_AVFORMAT_LIBRARY
-	NAMES avformat
-	HINTS
-		${PC_FFMPEG_AVFORMAT_LIBDIR} ${PC_FFMPEG_AVFORMAT_LIBRARY_DIRS})
+	find_path(FFMPEG_${MODULE}_INCLUDE_DIR lib${module}/${module}.h
+		HINTS
+			${PC_FFMPEG_${MODULE}_INCLUDEDIR} ${PC_FFMPEG_${MODULE}_INCLUDE_DIRS}
+		PATH_SUFFIXES ffmpeg)
+	list(APPEND _required_vars FFMPEG_${MODULE}_INCLUDE_DIR)
+	list(APPEND FFMPEG_INCLUDE_DIRS ${FFMPEG_${MODULE}_INCLUDE_DIR})
 
-find_library(FFMPEG_AVUTIL_LIBRARY
-	NAMES avutil
-	HINTS
-		${PC_FFMPEG_AVUTIL_LIBDIR} ${PC_FFMPEG_AVUTIL_LIBRARY_DIRS})
+	find_library(FFMPEG_${MODULE}_LIBRARY
+		NAMES ${module}
+		HINTS
+			${PC_FFMPEG_${MODULE}_LIBDIR} ${PC_FFMPEG_${MODULE}_LIBRARY_DIRS})
+	list(APPEND _required_vars FFMPEG_${MODULE}_LIBRARY)
+	list(APPEND FFMPEG_LIBRARIES ${FFMPEG_${MODULE}_LIBRARY})
+endforeach()
+list(REMOVE_DUPLICATES FFMPEG_INCLUDE_DIRS)
 
-find_library(FFMPEG_SWRESAMPLE_LIBRARY
-	NAMES swresample
-	HINTS
-		${PC_FFMPEG_SWRESAMPLE_LIBDIR} ${PC_FFMPEG_SWRESAMPLE_LIBRARY_DIRS})
-
-set(FFMPEG_LIBRARIES ${FFMPEG_AVCODEC_LIBRARY} ${FFMPEG_AVFORMAT_LIBRARY} ${FFMPEG_AVUTIL_LIBRARY} ${FFMPEG_SWRESAMPLE_LIBRARY})
-set(FFMPEG_INCLUDE_DIRS ${FFMPEG_INCLUDE_DIR})
+set(_message "\n\tincludes: ${FFMPEG_INCLUDE_DIRS}\n\tlibs:")
+foreach(MODULE ${_avmodules})
+	set(_message "${_message}\t${FFMPEG_${MODULE}_LIBRARY} (version ${FFMPEG_${MODULE}_VERSION})\n\t")
+endforeach()
 
 include(FindPackageHandleStandardArgs)
 # handle the QUIETLY and REQUIRED arguments and set FFMPEG_FOUND to TRUE if all listed variables are TRUE
 find_package_handle_standard_args(FFmpeg
-	REQUIRED_VARS
-		FFMPEG_AVFORMAT_LIBRARY FFMPEG_AVCODEC_LIBRARY FFMPEG_AVUTIL_LIBRARY FFMPEG_SWRESAMPLE_LIBRARY FFMPEG_INCLUDE_DIR
+	REQUIRED_VARS _message ${_required_vars}
 	VERSION_VAR FFMPEG_AVFORMAT_VERSION)
 
-if(FFMPEG_FOUND)
-	if(NOT FFmpeg_FIND_QUIETLY)
-		message(STATUS "Found FFmpeg: "
-			"\n\tinclude dir: ${FFMPEG_INCLUDE_DIR}"
-			"\n\t${FFMPEG_AVCODEC_LIBRARY} (version ${PC_FFMPEG_AVCODEC_VERSION})"
-			"\n\t${FFMPEG_AVFORMAT_LIBRARY} (version ${PC_FFMPEG_AVFORMAT_VERSION})"
-			"\n\t${FFMPEG_AVUTIL_LIBRARY} (version ${PC_FFMPEG_AVUTIL_VERSION})"
-			"\n\t${FFMPEG_SWRESAMPLE_LIBRARY} (version ${PC_FFMPEG_SWRESAMPLE_VERSION})")
-	endif(NOT FFmpeg_FIND_QUIETLY)
-endif()
+#if(FFMPEG_FOUND AND NOT FFmpeg_FIND_QUIETLY)
+#	message(STATUS "Found FFmpeg:\n\tinclude dir: ${FFMPEG_INCLUDE_DIRS}")
+#	foreach(MODULE ${_avmodules})
+#		message(STATUS "\t${FFMPEG_${MODULE}_LIBRARY} (version ${FFMPEG_${MODULE}_VERSION})")
+#	endforeach()
+#endif()
 
-mark_as_advanced(FFMPEG_INCLUDE_DIR FFMPEG_LIBRARY)
+mark_as_advanced(FFMPEG_INCLUDE_DIRS FFMPEG_LIBRARIES ${_required_vars})
