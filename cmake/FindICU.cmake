@@ -1,57 +1,40 @@
 # Tries to find ICU library
 # Once done this will define
 #
-#  ICU_FOUND - system has ICU library
+#  ICU_FOUND - System has ICU library
+#  ICU_VERSION - ICU library version
 #  ICU_LIBRARIES - Link these to use ICU library
-#  ICU_INCLUDE_DIRS - the ICU library include dirs
+#  ICU_INCLUDE_DIRS - ICU library include dirs
 #  ICU_DEFINITIONS - compiler switches required for using ICU library
 
-IF ( ICU_INCLUDE_DIR AND ICU_LIBRARIES ) # in cache already
-	SET( ICU_FIND_QUIETLY TRUE )
-ENDIF ( ICU_INCLUDE_DIR AND ICU_LIBRARIES )
+find_package(PkgConfig REQUIRED)
 
-# EXECUTE_PROCESS(
-# 	WORKING_DIRECTORY .
-# 	COMMAND icu-config --cppflags-searchpath
-# 	RESULT_VARIABLE ret_var
-# 	OUTPUT_VARIABLE ICU_INCLUDE_DIR
-# )
+pkg_check_modules(PC_ICU QUIET icu-i18n)
 
-FIND_PATH(
-	ICU_INCLUDE_DIR
-	NAMES unicode/utypes.h
-	DOC "Include directory for the ICU library"
-)
+find_path(ICU_INCLUDE_DIRS
+	unicode/utypes.h
+	HINTS ${PC_ICU_INCLUDEDIR} ${PC_ICU_INCLUDE_DIRS}
+	DOC "Include directory for the ICU library")
+set(_required_vars ICU_INCLUDE_DIRS)
 
-MARK_AS_ADVANCED( ICU_INCLUDE_DIR )
+foreach(_lib ${PC_ICU_LIBRARIES})
+	find_library(_lib_${_lib}
+		NAMES ${_lib}
+		HINTS ${PC_ICU_LIBDIR} ${PC_ICU_LIBRARY_DIRS})
+	list(APPEND ICU_LIBRARIES ${_lib_${_lib}})
+	list(APPEND _required_vars _lib_${_lib})
+endforeach()
 
-EXECUTE_PROCESS(
-	COMMAND icu-config --ldflags
-	RESULT_VARIABLE ret_var
-	OUTPUT_VARIABLE ICU_LIBRARY
-)
-string(STRIP "${ICU_LIBRARY}" ICU_LIBRARY)
+set(_message "\n\tincludes: ${ICU_INCLUDE_DIRS}\n\tlibs: ${ICU_LIBRARIES}\n\t")
 
-# FIND_LIBRARY(
-# 	ICU_LIBRARY
-# #	NAMES icuuc cygicuuc cygicuuc32
-# 	NAMES icuuc icui18n icudata
-# 	DOC "Libraries to link against for the common parts of ICU"
-# )
+include(FindPackageHandleStandardArgs)
+# handle the QUIETLY and REQUIRED arguments and set FFMPEG_FOUND to TRUE if all listed variables are TRUE
+find_package_handle_standard_args(ICU
+	REQUIRED_VARS _message ${_required_vars}
+	VERSION_VAR PC_ICU_VERSION)
 
-#SET( ICU_LIBRARY -L/usr/lib -licui18n -licuuc -licudata )
+if(ICU_FOUND)
+	set(ICU_DEFINITIONS -D_REENTRANT)
+endif()
 
-MARK_AS_ADVANCED( ICU_LIBRARIES )
-
-IF( ICU_INCLUDE_DIR AND ICU_LIBRARY )
-	MESSAGE( STATUS "Found ICU library: ${ICU_INCLUDE_DIR}" )
-	SET( ICU_FOUND 1 )
-	SET( ICU_LIBRARIES ${ICU_LIBRARY} )
-	SET( ICU_INCLUDE_DIRS ${ICU_INCLUDE_DIR} )
-	SET( ICU_DEFINITIONS -D_REENTRANT )
-ELSE( ICU_INCLUDE_DIR AND ICU_LIBRARY )
-	SET( ICU_FOUND 0 )
-	SET( ICU_LIBRARIES )
-	SET( ICU_INCLUDE_DIRS )
-	SET( ICU_DEFINITIONS )
-ENDIF( ICU_INCLUDE_DIR AND ICU_LIBRARY )
+mark_as_advanced(ICU_INCLUDE_DIRS ICU_LIBRARIES ICU_DEFINITIONS)
