@@ -114,7 +114,7 @@ void
 VideoWidget::mouseReleaseEvent(QMouseEvent *e)
 {
 	// FIXME: ignore doubleclicks
-	assert(e->type() != QEvent::MouseButtonDblClick);
+	Q_ASSERT(e->type() != QEvent::MouseButtonDblClick);
 	if(e->button() == Qt::LeftButton) {
 		e->accept();
 		emit leftClicked(e->globalPos());

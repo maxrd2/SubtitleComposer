@@ -144,7 +144,7 @@ VideoPlayer::onMediaLoaded()
 			audioStreamName += QStringLiteral(": ") + trk[QStringLiteral("title")].toString();
 		if(trk.contains(QStringLiteral("codec")))
 			audioStreamName += QStringLiteral(" [") + trk[QStringLiteral("codec")].toString() + QStringLiteral("]");
-		assert(m_audioStreams.size() == trk["id"]);
+		Q_ASSERT(m_audioStreams.size() == trk["id"]);
 		m_audioStreams.append(audioStreamName);
 	}
 	emit audioStreamsChanged(m_audioStreams);
@@ -169,7 +169,7 @@ VideoPlayer::onMediaLoaded()
 		if(trk.contains(QStringLiteral("title")))
 			textStreamName += QStringLiteral(": ") + trk[QStringLiteral("title")].toString();
 
-		assert(m_textStreams.size() == trk["id"]);
+		Q_ASSERT(m_textStreams.size() == trk["id"]);
 		m_textStreams.append(textStreamName);
 	}
 	emit textStreamsChanged(m_textStreams);
@@ -252,7 +252,7 @@ VideoPlayer::onVolumeChange(double volume)
 	if(m_muted)
 		return;
 
-	assert(volume >= 0. && volume <= 1.);
+	Q_ASSERT(volume >= 0. && volume <= 1.);
 	volume *= 100.;
 
 	if(m_volume == volume)
@@ -348,7 +348,7 @@ VideoPlayer::playOnLoad()
 bool
 VideoPlayer::openFile(const QString &filePath)
 {
-	assert(m_state == Initialized);
+	Q_ASSERT(m_state == Initialized);
 
 	QFileInfo fileInfo(filePath);
 	if(!fileInfo.exists() || !fileInfo.isFile() || !fileInfo.isReadable()) {
