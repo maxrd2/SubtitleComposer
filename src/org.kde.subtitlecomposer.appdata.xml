@@ -6,6 +6,7 @@
   <name>Subtitle Composer</name>
   <name xml:lang="ca">Subtitle Composer</name>
   <name xml:lang="ca-valencia">Subtitle Composer</name>
+  <name xml:lang="en-GB">Subtitle Composer</name>
   <name xml:lang="es">Subtitle Composer</name>
   <name xml:lang="et">Subtiitriredaktor</name>
   <name xml:lang="fr">Subtitle Composer</name>
@@ -21,6 +22,7 @@
   <summary>Video subtitle editor that supports basic and advanced editing operations</summary>
   <summary xml:lang="ca">Editor de subtítols de vídeo que admet operacions d'edició bàsiques i avançades</summary>
   <summary xml:lang="ca-valencia">Editor de subtítols de vídeo que admet operacions d'edició bàsiques i avançades</summary>
+  <summary xml:lang="en-GB">Video subtitle editor that supports basic and advanced editing operations</summary>
   <summary xml:lang="es">Editor de subtítulos de vídeo que permite operaciones de edición básicas y avanzadas</summary>
   <summary xml:lang="et">Videosubtiitrite redaktor, mis toetab nii põhilisi ja kui ka spetsiifilisemaid muutmistoiminguid</summary>
   <summary xml:lang="fr">Éditeur de sous-titres vidéo prenant en charge des opérations d'édition basiques et avancées</summary>
@@ -37,6 +39,7 @@
     <p>Subtitle Composer is an open source text-based subtitle editor that supports basic and advanced editing operations.</p>
     <p xml:lang="ca">El Subtitle Composer és un editor de subtítols de codi obert basat en text que admet operacions d'edició bàsiques i avançades.</p>
     <p xml:lang="ca-valencia">El Subtitle Composer és un editor de subtítols de codi obert basat en text que admet operacions d'edició bàsiques i avançades.</p>
+    <p xml:lang="en-GB">Subtitle Composer is an open source text-based subtitle editor that supports basic and advanced editing operations.</p>
     <p xml:lang="es">Subtitle Composer es un editor de subtítulos de código abierto basado en texto que permite operaciones de edición básicas y avanzadas.</p>
     <p xml:lang="et">Subtiitriredaktor on avatud lähtekoodiga tekstipõhine subtiitrite redaktor, mis toetab nii põhilisi kui ka spetsiifilisemaid muutmistoiminguid.</p>
     <p xml:lang="fr">Subtitle Composer est un éditeur de sous-titres textes libre prenant en charge des opérations d'édition basiques et avancées.</p>
@@ -53,6 +56,7 @@
     <p xml:lang="ca">Característiques</p>
     <p xml:lang="ca-valencia">Característiques</p>
     <p xml:lang="cs">Vlastnosti</p>
+    <p xml:lang="en-GB">Features</p>
     <p xml:lang="es">Funcionalidades</p>
     <p xml:lang="et">Omadused</p>
     <p xml:lang="fr">Fonctionnalités</p>
@@ -71,6 +75,7 @@
       <li>Open/Save Text Subtitle Formats - SubRip/SRT, MicroDVD, SSA/ASS, MPlayer, TMPlayer and YouTube captions</li>
       <li xml:lang="ca">Obre/Desa els formats de subtítols de text: SubRip/SRT, MicroDVD, SSA/ASS, MPlayer, TMPlayer i llegendes de YouTube</li>
       <li xml:lang="ca-valencia">Obri/Guarda els formats de subtítols de text: SubRip/SRT, MicroDVD, SSA/ASS, MPlayer, TMPlayer i llegendes de YouTube</li>
+      <li xml:lang="en-GB">Open/Save Text Subtitle Formats - SubRip/SRT, MicroDVD, SSA/ASS, MPlayer, TMPlayer and YouTube captions</li>
       <li xml:lang="es">Abrir y guardar formatos de subtítulos de texto: SubRip/SRT, MicroDVD, SSA/ASS, MPlayer, TMPlayer y subtítulos de YouTube</li>
       <li xml:lang="et">Subtiitrite tekstivormingute - SubRip/SRT, MicroDVD, SSA/ASS, MPlayer, TMPlayer ja YouTube - avamine ja salvestamine</li>
       <li xml:lang="fr">Ouverture et enregistrement de formats de sous-titres texte - SubRip / SRT, MicroDVD, SSA / ASS, MPlayer, TMPlayer et YouTube</li>
@@ -86,6 +91,7 @@
       <li>Open/OCR Graphics Subtitle Formats - VobSub (.idx/.sub/.rar), BluRay/PGS (*.sup), formats supported by ffmpeg (DVD/Vob, DVB, XSUB, HDMV-PGS)</li>
       <li xml:lang="ca">Obre/Formats de subtítols gràfics OCR: VobSub (.idx/.sub/.rar), BluRay/PGS (*.sup), formats admesos per ffmpeg (DVD/Vob, DVB, XSUB, HDMV-PGS)</li>
       <li xml:lang="ca-valencia">Obri/Formats de subtítols gràfics OCR: VobSub (.idx/.sub/.rar), BluRay/PGS (*.sup), formats admesos per ffmpeg (DVD/Vob, DVB, XSUB, HDMV-PGS)</li>
+      <li xml:lang="en-GB">Open/OCR Graphics Subtitle Formats - VobSub (.idx/.sub/.rar), BluRay/PGS (*.sup), formats supported by ffmpeg (DVD/Vob, DVB, XSUB, HDMV-PGS)</li>
       <li xml:lang="es">Abrir y OCR de formatos de subtítulos gráficos: VobSub (.idx/.sub/.rar), BluRay/PGS (*.sup), formatos permitidos por ffmpeg (DVD/Vob, DVB, XSUB, HDMV-PGS)</li>
       <li xml:lang="et">Subtiitrite graafikavormingute - VobSub (.idx/.sub/.rar), BluRay/PGS (*.sup), ffmpeg toetatud vormingud (DVD/Vob, DVB, XSUB, HDMV-PGS) - avamine ja optiline märgituvastus</li>
       <li xml:lang="fr">Ouverture et reconnaissance de caractères de formats de sous-titres graphiques - VobSub (.idx/.sub/.rar), BluRay/PGS (*.sup), formats pris en charge par ffmpeg (DVD/Vob, DVB, XSUB, HDMV-PGS)</li>
@@ -101,6 +107,7 @@
       <li>Demux Graphics/Text Subtitle Stream from video file - SRT, SSA/ASS, MOV text, MicroDVD, DVD/Vob, DVB, XSUB, HDMV-PGS</li>
       <li xml:lang="ca">Desmultiplexa el flux de subtítols gràfics/de text des d'un fitxer de vídeo: SRT, SSA/ASS, text MOV, MicroDVD, DVD/Vob, DVB, XSUB, HDMV-PGS</li>
       <li xml:lang="ca-valencia">Desmultiplexa el flux de subtítols gràfics/de text des d'un fitxer de vídeo: SRT, SSA/ASS, text MOV, MicroDVD, DVD/Vob, DVB, XSUB, HDMV-PGS</li>
+      <li xml:lang="en-GB">Demux Graphics/Text Subtitle Stream from video file - SRT, SSA/ASS, MOV text, MicroDVD, DVD/Vob, DVB, XSUB, HDMV-PGS</li>
       <li xml:lang="es">Demultiplexar emisiones de subtítulos gráficos y de texto de archivos de vídeo: SRT, SSA/ASS, texto MOV, MicroDVD, DVD/Vob, DVB, XSUB, HDMV-PGS</li>
       <li xml:lang="et">Graafilise või tekstisubtiitri voo demultipleksimine videofailist - SRT, SSA/ASS, MOV text, MicroDVD, DVD/Vob, DVB, XSUB, HDMV-PGS</li>
       <li xml:lang="fr">Démultiplexage du flux de sous-titres graphiques / texte depuis un fichier vidéo - SRT, SSA / ASS, MOV text, MicroDVD, DVD / Vob, DVB, XSUB, HDMV-PGS</li>
@@ -115,6 +122,7 @@
       <li>Speech recognition from audio/video file using PocketSphinx</li>
       <li xml:lang="ca">Reconeixement de la veu des de fitxers d'àudio/vídeo emprant PocketSphinx</li>
       <li xml:lang="ca-valencia">Reconeixement de la veu des de fitxers d'àudio/vídeo emprant PocketSphinx</li>
+      <li xml:lang="en-GB">Speech recognition from audio/video file using PocketSphinx</li>
       <li xml:lang="es">Reconocimiento de habla de archivos de sonido y de vídeo mediante el uso de PocketSphinx</li>
       <li xml:lang="et">Kõne tuvastamine heli/videofailist PocketSphinxi abil</li>
       <li xml:lang="fr">Reconnaissance vocale des fichiers audio / vidéo grâce à PocketSphinx</li>
@@ -129,6 +137,7 @@
       <li>Smart language/text encoding** detection</li>
       <li xml:lang="ca">Detecció** intel·ligent de la codificació d'idioma/text</li>
       <li xml:lang="ca-valencia">Detecció** intel·ligent de la codificació d'idioma/text</li>
+      <li xml:lang="en-GB">Smart language/text encoding** detection</li>
       <li xml:lang="es">Detección inteligente de codificación** de idioma y de texto</li>
       <li xml:lang="et">Nutikas keele/tekstikodeeringu** tuvastamine</li>
       <li xml:lang="fr">Détection intelligente de la langue et de l'encodage du texte**</li>
@@ -144,6 +153,7 @@
       <li>Live preview of subtitles in integrated video player w/ audio stream selection</li>
       <li xml:lang="ca">Vista prèvia en viu dels subtítols en el reproductor de vídeo integrat amb selecció del flux d'àudio</li>
       <li xml:lang="ca-valencia">Vista prèvia en viu dels subtítols en el reproductor de vídeo integrat amb selecció del flux d'àudio</li>
+      <li xml:lang="en-GB">Live preview of subtitles in integrated video player w/ audio stream selection</li>
       <li xml:lang="es">Vista previa instantánea de subtítulos en reproductores de vídeo integrados con selección de la fuente de sonido</li>
       <li xml:lang="et">Subtiitrite reaalajas eelvaatlus lõimitud videomängijas võimalusega valida helivoog</li>
       <li xml:lang="fr">Aperçu en direct des sous-titres dans le lecteur vidéo intégré avec sélection du flux audio</li>
@@ -158,6 +168,7 @@
       <li>Preview/editing of subtitles on graphical audio waveform w/ audio stream selection</li>
       <li xml:lang="ca">Vista prèvia/edició dels subtítols en forma d'ona d'àudio gràfica amb selecció del flux d'àudio</li>
       <li xml:lang="ca-valencia">Vista prèvia/edició dels subtítols en forma d'ona d'àudio gràfica amb selecció del flux d'àudio</li>
+      <li xml:lang="en-GB">Preview/editing of subtitles on graphical audio waveform w/ audio stream selection</li>
       <li xml:lang="es">Vista previa y edición de subtítulos en formas de ondas gráficas con selección de la fuente de sonido</li>
       <li xml:lang="et">Subtiitrite eelvaatlus/muutmine graafilist helilainet töödeldes võimalusega valida helivoog</li>
       <li xml:lang="fr">Aperçu et édition des sous-titres sur un graphique de forme d'onde avec sélection du flux audio</li>
@@ -172,6 +183,7 @@
       <li>Sync by dragging several anchors/graftpoints and stretching timeline</li>
       <li xml:lang="ca">Sincronització arrossegant diversos ancoratges/punts d'empelt i estirant la línia de temps</li>
       <li xml:lang="ca-valencia">Sincronització arrossegant diversos ancoratges/punts d'empelt i estirant la línia de temps</li>
+      <li xml:lang="en-GB">Sync by dragging several anchors/graftpoints and stretching timeline</li>
       <li xml:lang="es">Sincronización mediante el arrastre de diversos anclajes o puntos gráficos y ajuste de la línea de tiempos</li>
       <li xml:lang="et">Sünkroonimine ankruid/kinnispunkte lohistades ja ajatelge venitades</li>
       <li xml:lang="fr">Synchronisation en faisant glisser des ancres ou des points de greffe et en étirant la chronologie</li>
@@ -186,6 +198,7 @@
       <li>Time shifting and scaling, lines duration re-calculation, framerate conversion, etc.</li>
       <li xml:lang="ca">Desplaçament i escalat del temps, recàlcul de la durada de les línies, conversió de la velocitat dels fotogrames, etc.</li>
       <li xml:lang="ca-valencia">Desplaçament i escalat del temps, recàlcul de la durada de les línies, conversió de la velocitat dels fotogrames, etc.</li>
+      <li xml:lang="en-GB">Time shifting and scaling, lines duration re-calculation, framerate conversion, etc.</li>
       <li xml:lang="es">Desplazamiento de tiempos y escalado, cálculo automático de la duración de las líneas, conversión de tasa de fotogramas, etc.</li>
       <li xml:lang="et">Aja nihutamine ja skaleerimine, ridade kestuse ümberarvutamine, kaadrisageduse teisendused jms.</li>
       <li xml:lang="fr">Décalage et mise à l'échelle temporelle, recalcul de la durée des lignes, conversion du nombre d'images par seconde, etc.</li>
@@ -200,6 +213,7 @@
       <li>Joining and splitting of subtitle files</li>
       <li xml:lang="ca">Unir i dividir fitxers de subtítols</li>
       <li xml:lang="ca-valencia">Unir i dividir fitxers de subtítols</li>
+      <li xml:lang="en-GB">Joining and splitting of subtitle files</li>
       <li xml:lang="es">Fusión y división de archivos de subtítulos</li>
       <li xml:lang="et">Subtiitrifailide ühendamine ja tükeldamine</li>
       <li xml:lang="fr">Fusion et fractionnement de fichiers de sous-titres</li>
@@ -214,6 +228,7 @@
       <li>Side by side subtitle translations</li>
       <li xml:lang="ca">Traducció dels subtítols costat a costat</li>
       <li xml:lang="ca-valencia">Traducció dels subtítols costat a costat</li>
+      <li xml:lang="en-GB">Side by side subtitle translations</li>
       <li xml:lang="es">Traducciones de subtítulos lado a lado</li>
       <li xml:lang="et">Subtiitrite kahes veerus tõlkimine</li>
       <li xml:lang="fr">Traductions de sous-titres côte à côte</li>
@@ -228,6 +243,7 @@
       <li>Text styles (italic, bold, underline, stroke, color)</li>
       <li xml:lang="ca">Estils de text (cursiva, negreta, subratllat, ratllat, color)</li>
       <li xml:lang="ca-valencia">Estils de text (cursiva, negreta, subratllat, ratllat, color)</li>
+      <li xml:lang="en-GB">Text styles (italic, bold, underline, stroke, colour)</li>
       <li xml:lang="es">Estilos de texto (cursiva, negrita, subrayado, tachado, color)</li>
       <li xml:lang="et">Tekstistiilid (kaldkiri, rasvane kiri, allajoonimine, läbikriipsutamine, värv)</li>
       <li xml:lang="fr">Styles de texte (italique, gras, souligné, barré, couleur)</li>
@@ -244,6 +260,7 @@
       <li xml:lang="ca">Verificació ortogràfica</li>
       <li xml:lang="ca-valencia">Verificació ortogràfica</li>
       <li xml:lang="cs">Kontrola pravopisu</li>
+      <li xml:lang="en-GB">Spell checking</li>
       <li xml:lang="es">Comprobación ortográfica</li>
       <li xml:lang="et">Õigekirja kontroll</li>
       <li xml:lang="fr">Vérification orthographique</li>
@@ -260,6 +277,7 @@
       <li>Detection of timing errors in subtitles</li>
       <li xml:lang="ca">Detecció dels errors de temps en els subtítols</li>
       <li xml:lang="ca-valencia">Detecció dels errors de temps en els subtítols</li>
+      <li xml:lang="en-GB">Detection of timing errors in subtitles</li>
       <li xml:lang="es">Detección de errores de desfase de tiempo en subtítulos</li>
       <li xml:lang="et">Ajastamisvigade tuvastamine subtiitrites</li>
       <li xml:lang="fr">Détection des erreurs de minutage des sous-titres</li>
@@ -275,6 +293,7 @@
       <li>Scripting (JavaScript, Python, Ruby and other languages supported by Kross).</li>
       <li xml:lang="ca">Creació de scripts (JavaScript, Python, Ruby i altres llenguatges admesos pel Kross).</li>
       <li xml:lang="ca-valencia">Creació de scripts (JavaScript, Python, Ruby i altres llenguatges admesos pel Kross).</li>
+      <li xml:lang="en-GB">Scripting (JavaScript, Python, Ruby and other languages supported by Kross).</li>
       <li xml:lang="es">Guiones (JavaScript, Python, Ruby y otros lenguajes permitidos por Kross).</li>
       <li xml:lang="et">Skriptide kasutamise võimalus (JavaScript, Python, Ruby ja teised Krossi toetatud keeled).</li>
       <li xml:lang="fr">Scripts (JavaScript, Python, Ruby et autres langages pris en charge par Kross).</li>
@@ -296,6 +315,7 @@
       <caption>Main application window</caption>
       <caption xml:lang="ca">Finestra principal de l'aplicació</caption>
       <caption xml:lang="ca-valencia">Finestra principal de l'aplicació</caption>
+      <caption xml:lang="en-GB">Main application window</caption>
       <caption xml:lang="es">Ventana principal de la aplicación</caption>
       <caption xml:lang="et">Rakenduse peaaken</caption>
       <caption xml:lang="fr">Fenêtre principale de l'application</caption>
