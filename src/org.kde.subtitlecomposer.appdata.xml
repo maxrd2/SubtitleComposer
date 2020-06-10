@@ -309,7 +309,7 @@
     </ul>
   </description>
   <launchable type="desktop-id">org.kde.subtitlecomposer.desktop</launchable>
-  <url type="homepage">https://invent.kde.org/kde/subtitlecomposer</url>
+  <url type="homepage">https://invent.kde.org/multimedia/subtitlecomposer</url>
   <screenshots>
     <screenshot type="default">
       <caption>Main application window</caption>
