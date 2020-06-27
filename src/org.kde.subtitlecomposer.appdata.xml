@@ -34,6 +34,7 @@
   <summary xml:lang="nl">Bewerker van ondertitels van video die basis en geavanceerde bewerkingshandelingen ondersteunt</summary>
   <summary xml:lang="pt">Editor de legendas de vídeo que suporta as operações básicas e avançadas de edição</summary>
   <summary xml:lang="pt-BR">Um editor de legendas de vídeo com suporte a operações de edição básicas e avançadas</summary>
+  <summary xml:lang="sl">Urejevalnik video podnapisov, ki podpira osnovne in napredne postopke urejanja</summary>
   <summary xml:lang="sv">Textningseditor för videor som stöder grundläggande och avancerade redigeringsåtgärder</summary>
   <summary xml:lang="uk">Текстовий редактор субтитрів до відео, у якому передбачено базові і розширені можливості з редагування</summary>
   <summary xml:lang="x-test">xxVideo subtitle editor that supports basic and advanced editing operationsxx</summary>
@@ -52,6 +53,7 @@
     <p xml:lang="nl">Subtitle Composer is een op opensource gebaseerde bewerker van ondertitels van video die basis en geavanceerde bewerkingshandelingen ondersteunt.</p>
     <p xml:lang="pt">O Compositor de Legendas é um editor de legendas baseadas em texto de código aberto, suportando um conjunto de operações básicas e avançadas de edição.</p>
     <p xml:lang="pt-BR">O Criador de Legendas é um editor de legendas textuais de código aberto com suporte a operações de edição básicas e avançadas.</p>
+    <p xml:lang="sl">Subtitle Composer je odprtokodni urejevalnik podnapisov, ki podpira besedilo osnovne in napredne operacije urejanja.</p>
     <p xml:lang="sv">Textningsskapare är en textbaserad textningseditor med öppen källkod som stöder grundläggande och avancerade redigeringsåtgärder.</p>
     <p xml:lang="uk">«Редактор субтитрів» — текстовий редактор субтитрів із відкритим кодом, у якому передбачено базові і розширені можливості з редагування.</p>
     <p xml:lang="x-test">xxSubtitle Composer is an open source text-based subtitle editor that supports basic and advanced editing operations.xx</p>
@@ -72,6 +74,7 @@
     <p xml:lang="pt-BR">Funcionalidades</p>
     <p xml:lang="ru">Возможности</p>
     <p xml:lang="sk">Funkcie</p>
+    <p xml:lang="sl">Zmožnosti</p>
     <p xml:lang="sv">Funktioner</p>
     <p xml:lang="uk">Можливості</p>
     <p xml:lang="x-test">xxFeaturesxx</p>
@@ -90,6 +93,7 @@
       <li xml:lang="nl">Tekstondertitelingsformaten openen/opslaan - SubRip/SRT, MicroDVD, SSA/ASS, MPlayer, TMPlayer en YouTube opschriften</li>
       <li xml:lang="pt">Formatos para Abrir/Gravar as Legendas de Texto - legendas em SubRip/SRT, MicroDVD, SSA/ASS, MPlayer, TMPlayer e YouTube</li>
       <li xml:lang="pt-BR">Abrir/Salvar nos formatos de legenda textuais: SubRip/SRT, MicroDVD, SSA/ASS, MPlayer, TMPlayer e legendas do YouTube</li>
+      <li xml:lang="sl">Odpri / shrani oblike besedil podnapisov - SubRip/SRT, MicroDVD, SSA/ASS, MPlayer, TMPlayer in YouTube</li>
       <li xml:lang="sv">Öppna eller spara textningsformat - SubRip/SRT-, MicroDVD-, SSA/ASS-, MPlayer-, TMPlayer- och YouTube-textning</li>
       <li xml:lang="uk">Відкриття/Збереження даних у текстових форматах субтитрів — SubRip/SRT, MicroDVD, SSA/ASS, MPlayer, TMPlayer та субтитрів YouTube</li>
       <li xml:lang="x-test">xxOpen/Save Text Subtitle Formats - SubRip/SRT, MicroDVD, SSA/ASS, MPlayer, TMPlayer and YouTube captionsxx</li>
@@ -107,6 +111,7 @@
       <li xml:lang="nl">Open/OCR grafische ondertitelingsformaten - VobSub (.idx/.sub/.rar), BluRay/PGS (*.sup), formaten ondersteunt door ffmpeg (DVD/Vob, DVB, XSUB, HDMV-PGS)</li>
       <li xml:lang="pt">Formatos de Legengas Gráficas Abertas/OCR - VobSub (.idx/.sub/.rar), BluRay/PGS (*.sup), formatos suportados pelo ffmpeg (DVD/Vob, DVB, XSUB, HDMV-PGS)</li>
       <li xml:lang="pt-BR">Formatos de legenda abertos ou em OCR: VobSub (.idx/.sub/.rar), BluRay/PGS (*.sup), formatos suportados pelo ffmpeg (DVD/Vob, DVB, XSUB, HDMV-PGS)</li>
+      <li xml:lang="sl">Formati podnapisov Open/OCR Grafike - VobSub (.idx/.sub/.rar), BluRay/PGS (*.sup), formati, ki jih podpira ffmpeg (DVD/Vob, DVB, XSUB, HDMV-PGS)</li>
       <li xml:lang="sv">Öppna och OCR grafiska textningsformat - VobSub (.idx/.sub/.rar), BluRay/PGS (*.sup), format som stöds av ffmpeg (DVD/Vob, DVB, XSUB, HDMV-PGS)</li>
       <li xml:lang="uk">Відкриті/Розпізнані графічні формати субтитрів — VobSub (.idx/.sub/.rar), BluRay/PGS (*.sup), формати, підтримку яких передбачено у ffmpeg (DVD/Vob, DVB, XSUB, HDMV-PGS)</li>
       <li xml:lang="x-test">xxOpen/OCR Graphics Subtitle Formats - VobSub (.idx/.sub/.rar), BluRay/PGS (*.sup), formats supported by ffmpeg (DVD/Vob, DVB, XSUB, HDMV-PGS)xx</li>
@@ -124,6 +129,7 @@
       <li xml:lang="nl">Demux Graphics/Tekst ondertitelingsstream uit videobestand - SRT, SSA/ASS, MOV tekst, MicroDVD, DVD/Vob, DVB, XSUB, HDMV-PGS</li>
       <li xml:lang="pt">Transmissões de legendas de texto/gráficas desmultiplexadas do ficheiro de vídeo - SRT, SSA/ASS, texto MOV, MicroDVD, DVD/Vob, DVB, XSUB, HDMV-PGS</li>
       <li xml:lang="pt-BR">Demultiplexador de gráficos/fluxo de legenda de texto a partir de arquivo de vídeo: SRT, SSA/ASS, MOV text, MicroDVD, DVD/Vob, DVB, XSUB, HDMV-PGS</li>
+      <li xml:lang="sl">Tokovi podnapisov iz datoteke videa Demux Graphics/Text - SRT, SSA/ASS, MOV text, MicroDVD, DVD/Vob, DVB, XSUB, HDMV-PGS</li>
       <li xml:lang="sv">Avmultiplex av grafik- eller textningsström från videofil - SRT, SSA/ASS, MOV text, MicroDVD, DVD/Vob, DVB, XSUB, HDMV-PGS</li>
       <li xml:lang="uk">Демультиплексовані графічні або текстові потоки субтитрів з відеофайлів — SRT, SSA/ASS, MOV text, MicroDVD, DVD/Vob, DVB, XSUB, HDMV-PGS</li>
       <li xml:lang="x-test">xxDemux Graphics/Text Subtitle Stream from video file - SRT, SSA/ASS, MOV text, MicroDVD, DVD/Vob, DVB, XSUB, HDMV-PGSxx</li>
@@ -140,6 +146,7 @@
       <li xml:lang="nl">Spraakherkenning uit audio/video bestand met gebruik van PocketSphinx</li>
       <li xml:lang="pt">Reconhecimento de fala a partir do ficheiro de áudio/vídeo, usando o PocketSphinx</li>
       <li xml:lang="pt-BR">Reconhecimento de voz do arquivo de áudio/vídeo usando o PocketSphinx</li>
+      <li xml:lang="sl">Prepoznavanje govora iz avdio/video datoteke s pomočjo PocketSphinx</li>
       <li xml:lang="sv">Taligenkänning från ljud- eller videofil med användning av PocketSphinx</li>
       <li xml:lang="uk">Розпізнавання голосових даних зі звукових і відеофайлів за допомогою PocketSphinx</li>
       <li xml:lang="x-test">xxSpeech recognition from audio/video file using PocketSphinxxx</li>
@@ -156,6 +163,7 @@
       <li xml:lang="nl">Slimme taal/tekst detectie van codering**</li>
       <li xml:lang="pt">Detecção inteligente da codificação da língua/texto**</li>
       <li xml:lang="pt-BR">Detecção inteligente de codificação** de idioma/texto</li>
+      <li xml:lang="sl">Pametno odkrivanje jezika /kodiranja besedila**</li>
       <li xml:lang="sv">Smart detektering av språk och textkodning**</li>
       <li xml:lang="uk">Автоматичне визначення мови і кодування тексту</li>
       <li xml:lang="x-test">xxSmart language/text encoding** detectionxx</li>
@@ -173,6 +181,7 @@
       <li xml:lang="nl">Live-voorbeeld van ondertitels in geïntegreerde videospeler met audiostream selectie</li>
       <li xml:lang="pt">Antevisão em directo das legendas no reprodutor de vídeo integrado com a selecção da sequência de áudio</li>
       <li xml:lang="pt-BR">Pré-visualização em tempo real de legendas no reprodutor de vídeo com seleção de fluxo de áudio</li>
+      <li xml:lang="sl">Predogled podnapisov v živo v integriranem video predvajalniku w/audio z izborom tokaizbor</li>
       <li xml:lang="sv">Direkt förhandsgranskning av textning i integrerad videospelare med val av ljudspår</li>
       <li xml:lang="uk">Інтерактивний перегляд субтитрів у інтегрованому відеопрогравачі із можливістю вибору потоку звукових даних</li>
       <li xml:lang="x-test">xxLive preview of subtitles in integrated video player w/ audio stream selectionxx</li>
@@ -189,6 +198,7 @@
       <li xml:lang="nl">Voorvertoning/bewerking van ondertitels op grafische audiogolfvorm met audiostream selectie</li>
       <li xml:lang="pt">Antevisão/edição das legendas da forma de onda gráfica do áudio com a selecção da sequência de áudio</li>
       <li xml:lang="pt-BR">Pré-visualização/edição de legendas com ondas de áudio e seleção de fluxo de áudio</li>
+      <li xml:lang="sl">Predogled/urejanje podnapisov v grafični zvočni valovni obliki z izborom w/avdio toka</li>
       <li xml:lang="sv">Förhandsgranskning och redigering av textning på grafisk ljudvågform med val av ljudspår</li>
       <li xml:lang="uk">Попередній перегляд і редагування субтитрів із показом графічного представлення звукових даних і можливістю вибору потоку звукових даних</li>
       <li xml:lang="x-test">xxPreview/editing of subtitles on graphical audio waveform w/ audio stream selectionxx</li>
@@ -205,6 +215,7 @@
       <li xml:lang="nl">Synchroniseren door slepen van verschillende ankers/grafiekpunten en uitrekken van tijdlijn</li>
       <li xml:lang="pt">Sincronização através do arrastamento de várias âncoras/pontos de pega e por esticamento da linha temporal</li>
       <li xml:lang="pt-BR">Sincronização arrastando várias âncoras e esticando a linha do tempo</li>
+      <li xml:lang="sl">Usklajujete tako, da povlečete več sidrišč/točk grafov in raztegnete časovnico</li>
       <li xml:lang="sv">Synkronisering genom att dra flera grepp eller ympningsställen och utsträckning av tidslinjen</li>
       <li xml:lang="uk">Синхронізація за допомогою перетягування точок прив'язки та розтягування монтажного столу</li>
       <li xml:lang="x-test">xxSync by dragging several anchors/graftpoints and stretching timelinexx</li>
@@ -221,6 +232,7 @@
       <li xml:lang="nl">Tijdverschuiving en schalen, lijnduur herberekening, framerate conversie, etc.</li>
       <li xml:lang="pt">Deslocamento e escala do tempo, actualização da duração das linhas, conversão da taxa de imagens, etc.</li>
       <li xml:lang="pt-BR">Deslocamento de tempo e escala, calibração de duração de linhas, conversão de taxa de quadros, etc.</li>
+      <li xml:lang="sl">Časovno premikanje in spremembe meril, ponovni izračun trajanja linij, pretvorbe hitrosti sličic itd.</li>
       <li xml:lang="sv">Tidsskift och skalning, omräkning av tidslängd för rader, bildfrekvenskonvertering, etc.</li>
       <li xml:lang="uk">Зсування та масштабування за часом, переобчислення тривалості показу рядків, перетворення за частотою кадрів тощо</li>
       <li xml:lang="x-test">xxTime shifting and scaling, lines duration re-calculation, framerate conversion, etc.xx</li>
@@ -237,6 +249,7 @@
       <li xml:lang="nl">Samenvoegen en splitsen van bestanden met ondertitels</li>
       <li xml:lang="pt">Junção e separação de ficheiros de legendas</li>
       <li xml:lang="pt-BR">Unir e separar arquivos de legenda</li>
+      <li xml:lang="sl">Zlivanje in razcepljanje datotek s podnapisi</li>
       <li xml:lang="sv">Sammanfoga och dela textningsfiler</li>
       <li xml:lang="uk">Можливість об'єднання та поділу файлів субтитрів</li>
       <li xml:lang="x-test">xxJoining and splitting of subtitle filesxx</li>
@@ -253,6 +266,7 @@
       <li xml:lang="nl">Naast elkaar vertalen van ondertitels</li>
       <li xml:lang="pt">Traduções de legendas lado-a-lado</li>
       <li xml:lang="pt-BR">Tradução de legendas lado a lado</li>
+      <li xml:lang="sl">Prevodi podnapisov eden poleg drugega</li>
       <li xml:lang="sv">Översättning av textning sida vid sida</li>
       <li xml:lang="uk">Синхронний переклад субтитрів</li>
       <li xml:lang="x-test">xxSide by side subtitle translationsxx</li>
@@ -269,6 +283,7 @@
       <li xml:lang="nl">Tekststijlen (cursief, vet, onderstrepen, streek, kleur)</li>
       <li xml:lang="pt">Estilos de texto (itálico, negrito, sublinhado, tradução, colorido)</li>
       <li xml:lang="pt-BR">Estilos de texto (itálico, negrito, sobrescrito, traçado, cor)</li>
+      <li xml:lang="sl">Slogi besedila (poševno, krepko, podčrtano, poteze, barva)</li>
       <li xml:lang="sv">Textstilar (kursiv, fetstil, understreck, överstreck, färg)</li>
       <li xml:lang="uk">Можливість визначення стилю тексту (курсив, напівжирний, підкреслення, закреслення, колір)</li>
       <li xml:lang="x-test">xxText styles (italic, bold, underline, stroke, color)xx</li>
@@ -288,6 +303,7 @@
       <li xml:lang="pt">Verificação ortográfica</li>
       <li xml:lang="pt-BR">Verificação ortográfica</li>
       <li xml:lang="sk">Kontrola pravopisu</li>
+      <li xml:lang="sl">Besedilnik</li>
       <li xml:lang="sv">Stavningskontroll</li>
       <li xml:lang="uk">Перевірка правопису</li>
       <li xml:lang="x-test">xxSpell checkingxx</li>
@@ -305,6 +321,7 @@
       <li xml:lang="nl">Detectie van fouten in timing in ondertitels</li>
       <li xml:lang="pt">Detecção de erros de temporização nas legendas</li>
       <li xml:lang="pt-BR">Detecção de erros de temporização nas legendas</li>
+      <li xml:lang="sl">Zaznavanje časovnih napak v podnapisih</li>
       <li xml:lang="sv">Detektering av tidsfel i textning</li>
       <li xml:lang="uk">Виявлення часової розсинхронізації у субтитрах</li>
       <li xml:lang="x-test">xxDetection of timing errors in subtitlesxx</li>
@@ -322,6 +339,7 @@
       <li xml:lang="nl">Scripting (JavaScript, Python, Ruby en andere talen ondersteund door Kross).</li>
       <li xml:lang="pt">Programação (JavaScript, Python, Ruby e outras linguagens suportadas pelo Kross).</li>
       <li xml:lang="pt-BR">Criação de scripts JavaScript, Python, Ruby e outras linguagens suportadas pelo Kross).</li>
+      <li xml:lang="sl">Izdelava skriptov (JavaScript, Python, Ruby in drugi jeziki, ki jih podpira Kross).</li>
       <li xml:lang="sv">Skript (JavaScript, Python, Ruby och andra språk som stöds av Kross).</li>
       <li xml:lang="uk">Керування за допомогою скриптів (передбачено підтримку JavaScript, Python, Ruby та інших мов, підтримку яких передбачено у Kross).</li>
       <li xml:lang="x-test">xxScripting (JavaScript, Python, Ruby and other languages supported by Kross).xx</li>
@@ -345,6 +363,7 @@
       <caption xml:lang="nl">Hoofdvenster van toepassing</caption>
       <caption xml:lang="pt">Janela principal da aplicação</caption>
       <caption xml:lang="pt-BR">Janela principal do aplicativo</caption>
+      <caption xml:lang="sl">Glavno okno aplikacije</caption>
       <caption xml:lang="sv">Programmets huvudfönster</caption>
       <caption xml:lang="uk">Основне вікно програми</caption>
       <caption xml:lang="x-test">xxMain application windowxx</caption>
