@@ -173,7 +173,7 @@ Translator::abort()
 	if(m_currentTransferJob) {
 		m_currentTransferJob->kill();   // deletes the job
 		m_aborted = true;
-		m_errorMessage = i18n("Operation cancelled by user");
+		m_errorMessage = i18n("Operation canceled by user");
 		emit finishedWithError(m_errorMessage);
 	}
 }
