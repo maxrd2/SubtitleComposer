@@ -137,7 +137,7 @@ void
 VideoWidget::wheelEvent(QWheelEvent *e)
 {
 	e->accept();
-	if(e->delta() >= 0)
+	if(e->angleDelta().y() >= 0)
 		emit wheelUp();
 	else
 		emit wheelDown();
