@@ -47,6 +47,10 @@
 #include <KActionCollection>
 #include <KLocalizedString>
 #include <kio_version.h>
+#if KIO_VERSION >= QT_VERSION_CHECK(5, 71, 0)
+#include <KIO/OpenUrlJob>
+#include <KIO/JobUiDelegate>
+#endif
 
 #include <kross/core/manager.h>
 #include <kross/core/interpreter.h>
@@ -301,8 +305,12 @@ ScriptsManager::editScript(const QString &sN)
 		return;
 	}
 
-	const QUrl script(m_scripts[scriptName]);
-#if KIO_VERSION >= ((5<<16)|(31<<8)|(0))
+	const QUrl script = QUrl::fromLocalFile(m_scripts[scriptName]);
+#if KIO_VERSION >= QT_VERSION_CHECK(5, 71, 0)
+	KIO::OpenUrlJob *job = new KIO::OpenUrlJob(script);
+	job->setUiDelegate(new KIO::JobUiDelegate(KJobUiDelegate::AutoHandlingEnabled, app()->mainWindow()));
+	if(!job->exec()) {
+#elif KIO_VERSION >= QT_VERSION_CHECK(5, 31, 0)
 	if(!KRun::runUrl(script, "text/plain", app()->mainWindow(), KRun::RunFlags())) {
 #else
 	if(!KRun::runUrl(script, "text/plain", app()->mainWindow(), false, false)) {
