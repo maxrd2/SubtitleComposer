@@ -32,7 +32,7 @@ public:
 	explicit SubtitleColorDialog(const QColor &initial, QWidget *parent = 0);
 	~SubtitleColorDialog();
 
-	static QColor getColor(const QColor &initial, QWidget *parent, const QString &title, ColorDialogOptions options = 0);
+	static QColor getColor(const QColor &initial, QWidget *parent, const QString &title, ColorDialogOptions options = ColorDialogOptions());
 	static QColor getColor(const QColor &initial = Qt::white, QWidget *parent = 0);
 
 protected:

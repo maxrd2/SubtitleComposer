@@ -32,7 +32,7 @@
 using namespace SubtitleComposer;
 
 TextOverlayWidget::TextOverlayWidget(QWidget *parent) :
-	QWidget(parent, 0)
+	QWidget(parent)
 {
 	m_overlay.setFontSizePt(15);
 	m_overlay.setTextColor(Qt::yellow);

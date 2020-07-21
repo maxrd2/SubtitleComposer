@@ -303,7 +303,7 @@ ScriptsManager::editScript(const QString &sN)
 
 	const QUrl script(m_scripts[scriptName]);
 #if KIO_VERSION >= ((5<<16)|(31<<8)|(0))
-	if(!KRun::runUrl(script, "text/plain", app()->mainWindow(), KRun::RunFlags(0))) {
+	if(!KRun::runUrl(script, "text/plain", app()->mainWindow(), KRun::RunFlags())) {
 #else
 	if(!KRun::runUrl(script, "text/plain", app()->mainWindow(), false, false)) {
 #endif

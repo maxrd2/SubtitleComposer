@@ -58,7 +58,7 @@ SubtitleColorDialog::getColor(const QColor &initial, QWidget *parent, const QStr
 /*static*/ QColor
 SubtitleColorDialog::getColor(const QColor &initial /* = Qt::white*/, QWidget *parent /* = 0*/)
 {
-	return getColor(initial, parent, QString(), ColorDialogOptions(0));
+	return getColor(initial, parent, QString(), ColorDialogOptions());
 }
 
 void

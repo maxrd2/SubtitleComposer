@@ -34,7 +34,7 @@ class LayeredWidget : public QWidget
 public:
 	typedef enum { HandleResize, IgnoreResize } Mode;
 
-	explicit LayeredWidget(QWidget *parent = 0, Qt::WindowFlags f = 0);
+	explicit LayeredWidget(QWidget *parent = 0, Qt::WindowFlags f = Qt::WindowFlags());
 
 	void setWidgetMode(QWidget *widget, Mode mode);
 
