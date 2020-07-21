@@ -33,7 +33,7 @@
 
 #ifdef PROFILING
 
-#include <QtCore/QTime>
+#include <QElapsedTimer>
 #include <QDebug>
 
 class Profiler
@@ -42,12 +42,12 @@ public:
 	Profiler(const char *description = 0) :
 		m_description(description)
 	{
-		m_time.start();
+		m_timer.start();
 	}
 
 	~Profiler()
 	{
-		int elapsed = m_time.elapsed();
+		int elapsed = m_timer.elapsed();
 		if(m_description)
 			qDebug() << m_description << " took" << elapsed << "msecs";
 		else
@@ -56,7 +56,7 @@ public:
 
 private:
 	const char *m_description;
-	QTime m_time;
+	QElapsedTimer m_timer;
 };
 
 #define PROFILE() Profiler _p_r_o_f_i_l_e_r_(Q_FUNC_INFO)
