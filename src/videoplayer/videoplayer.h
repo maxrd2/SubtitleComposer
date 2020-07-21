@@ -23,6 +23,7 @@
 
 #include "videowidget.h"
 
+#include <QPainterPath>
 #include <QString>
 #include <QStringList>
 #include <QMap>
