@@ -65,7 +65,7 @@ FileLoadHelper::open()
 			return false;
 		}
 	} else {
-		KIO::Job *job = KIO::stat(m_url, KIO::StatJob::SourceSide, 2);
+		KIO::Job *job = KIO::statDetails(m_url, KIO::StatJob::SourceSide, KIO::StatDefaultDetails, KIO::HideProgressInfo);
 		if(!job->exec()) {
 			qDebug() << "Failed to start KIO::stat job" << m_url;
 			return false;
@@ -99,7 +99,7 @@ FileLoadHelper::close()
 bool
 FileLoadHelper::exists(const QUrl &url)
 {
-	KIO::Job *job = KIO::stat(url, KIO::StatJob::SourceSide, 2);
+	KIO::Job *job = KIO::statDetails(url, KIO::StatJob::SourceSide, KIO::StatDefaultDetails, KIO::HideProgressInfo);
 	return job->exec();
 }
 

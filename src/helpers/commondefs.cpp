@@ -218,7 +218,7 @@ System::newUrl(const QUrl &baseUrl, const QString &fileName, const QString &exte
 		QUrl newUrl = baseUrl;
 		newUrl.setPath(newFileDir + newFileName);
 		for(;;) {
-			KIO::Job *job = KIO::stat(newUrl, KIO::StatJob::DestinationSide, 2);
+			KIO::Job *job = KIO::statDetails(newUrl, KIO::StatJob::DestinationSide, KIO::StatDefaultDetails, KIO::HideProgressInfo);
 			if(!job->exec())
 				return newUrl;
 			if(i >= retries)

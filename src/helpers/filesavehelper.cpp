@@ -112,6 +112,6 @@ FileSaveHelper::close()
 bool
 FileSaveHelper::exists(const QUrl &url)
 {
-	KIO::Job *job = KIO::stat(url, KIO::StatJob::DestinationSide, 2);
+	KIO::Job *job = KIO::statDetails(url, KIO::StatJob::DestinationSide, KIO::StatDefaultDetails, KIO::HideProgressInfo);
 	return job->exec();
 }
