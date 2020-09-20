@@ -160,16 +160,16 @@ Application::init()
 	connect(m_undoStack, &UndoStack::indexChanged, [&](int){ if(m_subtitle) m_subtitle->updateState(); });
 	connect(m_undoStack, &UndoStack::cleanChanged, [&](bool){ if(m_subtitle) m_subtitle->updateState(); });
 
-	connect(SCConfig::self(), SIGNAL(configChanged()), this, SLOT(onConfigChanged()));
+	connect(SCConfig::self(), &KCoreConfigSkeleton::configChanged, this, &Application::onConfigChanged);
 
-	connect(m_player, SIGNAL(fileOpened(const QString &)), this, SLOT(onPlayerFileOpened(const QString &)));
-	connect(m_player, SIGNAL(playing()), this, SLOT(onPlayerPlaying()));
-	connect(m_player, SIGNAL(paused()), this, SLOT(onPlayerPaused()));
-	connect(m_player, SIGNAL(stopped()), this, SLOT(onPlayerStopped()));
-	connect(m_player, SIGNAL(audioStreamsChanged(const QStringList &)), this, SLOT(onPlayerAudioStreamsChanged(const QStringList &)));
-	connect(m_player, SIGNAL(textStreamsChanged(const QStringList &)), this, SLOT(onPlayerTextStreamsChanged(const QStringList &)));
-	connect(m_player, SIGNAL(activeAudioStreamChanged(int)), this, SLOT(onPlayerActiveAudioStreamChanged(int)));
-	connect(m_player, SIGNAL(muteChanged(bool)), this, SLOT(onPlayerMuteChanged(bool)));
+	connect(m_player, &VideoPlayer::fileOpened, this, &Application::onPlayerFileOpened);
+	connect(m_player, &VideoPlayer::playing, this, &Application::onPlayerPlaying);
+	connect(m_player, &VideoPlayer::paused, this, &Application::onPlayerPaused);
+	connect(m_player, &VideoPlayer::stopped, this, &Application::onPlayerStopped);
+	connect(m_player, &VideoPlayer::audioStreamsChanged, this, &Application::onPlayerAudioStreamsChanged);
+	connect(m_player, &VideoPlayer::textStreamsChanged, this, &Application::onPlayerTextStreamsChanged);
+	connect(m_player, &VideoPlayer::activeAudioStreamChanged, this, &Application::onPlayerActiveAudioStreamChanged);
+	connect(m_player, &VideoPlayer::muteChanged, this, &Application::onPlayerMuteChanged);
 
 	const QList<const QObject *> subListeners = {
 		actionManager, m_mainWindow, m_playerWidget, m_linesWidget, m_curLineWidget, m_finder, m_replacer, m_errorFinder, m_speller,
@@ -187,21 +187,21 @@ Application::init()
 	for(auto obj: transListeners)
 		connect(this, SIGNAL(translationModeChanged(bool)), obj, SLOT(setTranslationMode(bool)));
 
-	connect(this, SIGNAL(fullScreenModeChanged(bool)), actionManager, SLOT(setFullScreenMode(bool)));
+	connect(this, &Application::fullScreenModeChanged, actionManager, &UserActionManager::setFullScreenMode);
 
 	connect(m_mainWindow->m_waveformWidget, &WaveformWidget::doubleClick, this, &Application::onWaveformDoubleClicked);
 	connect(m_mainWindow->m_waveformWidget, &WaveformWidget::middleMouseDown, this, &Application::onWaveformMiddleMouseDown);
 	connect(m_mainWindow->m_waveformWidget, &WaveformWidget::middleMouseUp, this, &Application::onWaveformMiddleMouseUp);
 
-	connect(m_linesWidget, SIGNAL(currentLineChanged(SubtitleLine *)), m_curLineWidget, SLOT(setCurrentLine(SubtitleLine *)));
-	connect(m_linesWidget, SIGNAL(lineDoubleClicked(SubtitleLine *)), this, SLOT(onLineDoubleClicked(SubtitleLine *)));
+	connect(m_linesWidget, &LinesWidget::currentLineChanged, m_curLineWidget, &CurrentLineWidget::setCurrentLine);
+	connect(m_linesWidget, &LinesWidget::lineDoubleClicked, this, &Application::onLineDoubleClicked);
 
-	connect(m_playerWidget, SIGNAL(playingLineChanged(SubtitleLine *)), this, SLOT(onPlayingLineChanged(SubtitleLine *)));
+	connect(m_playerWidget, &PlayerWidget::playingLineChanged, this, &Application::onPlayingLineChanged);
 
-	connect(m_finder, SIGNAL(found(SubtitleLine *, bool, int, int)), this, SLOT(onHighlightLine(SubtitleLine *, bool, int, int)));
-	connect(m_replacer, SIGNAL(found(SubtitleLine *, bool, int, int)), this, SLOT(onHighlightLine(SubtitleLine *, bool, int, int)));
+	connect(m_finder, &Finder::found, this, &Application::onHighlightLine);
+	connect(m_replacer, &Replacer::found, this, &Application::onHighlightLine);
 	connect(m_errorFinder, SIGNAL(found(SubtitleLine *)), this, SLOT(onHighlightLine(SubtitleLine *)));
-	connect(m_speller, SIGNAL(misspelled(SubtitleLine *, bool, int, int)), this, SLOT(onHighlightLine(SubtitleLine *, bool, int, int)));
+	connect(m_speller, &Speller::misspelled, this, &Application::onHighlightLine);
 
 	connect(m_textDemux, &TextDemux::onError, [&](const QString &message){ KMessageBox::sorry(m_mainWindow, message); });
 
@@ -398,7 +398,7 @@ Application::setupActions()
 	newSubtitleAction->setText(i18nc("@action:inmenu Create a new subtitle", "New"));
 	newSubtitleAction->setStatusTip(i18n("Create an empty subtitle"));
 	actionCollection->setDefaultShortcuts(newSubtitleAction, KStandardShortcut::openNew());
-	connect(newSubtitleAction, SIGNAL(triggered()), this, SLOT(newSubtitle()));
+	connect(newSubtitleAction, &QAction::triggered, this, &Application::newSubtitle);
 	actionCollection->addAction(ACT_NEW_SUBTITLE, newSubtitleAction);
 	actionManager->addAction(newSubtitleAction, UserAction::FullScreenOff);
 
@@ -451,7 +451,7 @@ Application::setupActions()
 	closeSubtitleAction->setText(i18n("Close"));
 	closeSubtitleAction->setStatusTip(i18n("Close opened subtitle"));
 	actionCollection->setDefaultShortcuts(closeSubtitleAction, KStandardShortcut::close());
-	connect(closeSubtitleAction, SIGNAL(triggered()), this, SLOT(closeSubtitle()));
+	connect(closeSubtitleAction, &QAction::triggered, this, &Application::closeSubtitle);
 	actionCollection->addAction(ACT_CLOSE_SUBTITLE, closeSubtitleAction);
 	actionManager->addAction(closeSubtitleAction, UserAction::SubOpened | UserAction::FullScreenOff);
 
@@ -460,7 +460,7 @@ Application::setupActions()
 	newSubtitleTrAction->setText(i18n("New Translation"));
 	newSubtitleTrAction->setStatusTip(i18n("Create an empty translation subtitle"));
 	actionCollection->setDefaultShortcut(newSubtitleTrAction, QKeySequence("Ctrl+Shift+N"));
-	connect(newSubtitleTrAction, SIGNAL(triggered()), this, SLOT(newSubtitleTr()));
+	connect(newSubtitleTrAction, &QAction::triggered, this, &Application::newSubtitleTr);
 	actionCollection->addAction(ACT_NEW_SUBTITLE_TR, newSubtitleTrAction);
 	actionManager->addAction(newSubtitleTrAction, UserAction::SubOpened | UserAction::FullScreenOff);
 
@@ -514,7 +514,7 @@ Application::setupActions()
 	closeSubtitleTrAction->setText(i18n("Close Translation"));
 	closeSubtitleTrAction->setStatusTip(i18n("Close opened translation subtitle"));
 	actionCollection->setDefaultShortcut(closeSubtitleTrAction, QKeySequence("Ctrl+Shift+F4; Ctrl+Shift+W"));
-	connect(closeSubtitleTrAction, SIGNAL(triggered()), this, SLOT(closeSubtitleTr()));
+	connect(closeSubtitleTrAction, &QAction::triggered, this, &Application::closeSubtitleTr);
 	actionCollection->addAction(ACT_CLOSE_SUBTITLE_TR, closeSubtitleTrAction);
 	actionManager->addAction(closeSubtitleTrAction, UserAction::SubTrOpened | UserAction::FullScreenOff);
 
@@ -531,14 +531,14 @@ Application::setupActions()
 	QAction *splitSubtitleAction = new QAction(actionCollection);
 	splitSubtitleAction->setText(i18n("Split Subtitle..."));
 	splitSubtitleAction->setStatusTip(i18n("Split the opened subtitle in two parts"));
-	connect(splitSubtitleAction, SIGNAL(triggered()), this, SLOT(splitSubtitle()));
+	connect(splitSubtitleAction, &QAction::triggered, this, &Application::splitSubtitle);
 	actionCollection->addAction(ACT_SPLIT_SUBTITLE, splitSubtitleAction);
 	actionManager->addAction(splitSubtitleAction, UserAction::SubHasLine | UserAction::FullScreenOff);
 
 	QAction *joinSubtitlesAction = new QAction(actionCollection);
 	joinSubtitlesAction->setText(i18n("Join Subtitles..."));
 	joinSubtitlesAction->setStatusTip(i18n("Append to the opened subtitle another one"));
-	connect(joinSubtitlesAction, SIGNAL(triggered()), this, SLOT(joinSubtitles()));
+	connect(joinSubtitlesAction, &QAction::triggered, this, &Application::joinSubtitles);
 	actionCollection->addAction(ACT_JOIN_SUBTITLES, joinSubtitlesAction);
 	actionManager->addAction(joinSubtitlesAction, UserAction::SubOpened | UserAction::FullScreenOff);
 
@@ -547,7 +547,7 @@ Application::setupActions()
 	insertBeforeCurrentLineAction->setText(i18n("Insert Before"));
 	insertBeforeCurrentLineAction->setStatusTip(i18n("Insert empty line before current one"));
 	actionCollection->setDefaultShortcut(insertBeforeCurrentLineAction, QKeySequence("Ctrl+Insert"));
-	connect(insertBeforeCurrentLineAction, SIGNAL(triggered()), this, SLOT(insertBeforeCurrentLine()));
+	connect(insertBeforeCurrentLineAction, &QAction::triggered, this, &Application::insertBeforeCurrentLine);
 	actionCollection->addAction(ACT_INSERT_BEFORE_CURRENT_LINE, insertBeforeCurrentLineAction);
 	actionManager->addAction(insertBeforeCurrentLineAction, UserAction::SubOpened | UserAction::FullScreenOff);
 
@@ -556,7 +556,7 @@ Application::setupActions()
 	insertAfterCurrentLineAction->setText(i18n("Insert After"));
 	insertAfterCurrentLineAction->setStatusTip(i18n("Insert empty line after current one"));
 	actionCollection->setDefaultShortcut(insertAfterCurrentLineAction, QKeySequence("Insert"));
-	connect(insertAfterCurrentLineAction, SIGNAL(triggered()), this, SLOT(insertAfterCurrentLine()));
+	connect(insertAfterCurrentLineAction, &QAction::triggered, this, &Application::insertAfterCurrentLine);
 	actionCollection->addAction(ACT_INSERT_AFTER_CURRENT_LINE, insertAfterCurrentLineAction);
 	actionManager->addAction(insertAfterCurrentLineAction, UserAction::SubOpened | UserAction::FullScreenOff);
 
@@ -565,21 +565,21 @@ Application::setupActions()
 	removeSelectedLinesAction->setText(i18n("Remove"));
 	removeSelectedLinesAction->setStatusTip(i18n("Remove selected lines"));
 	actionCollection->setDefaultShortcut(removeSelectedLinesAction, QKeySequence("Delete"));
-	connect(removeSelectedLinesAction, SIGNAL(triggered()), this, SLOT(removeSelectedLines()));
+	connect(removeSelectedLinesAction, &QAction::triggered, this, &Application::removeSelectedLines);
 	actionCollection->addAction(ACT_REMOVE_SELECTED_LINES, removeSelectedLinesAction);
 	actionManager->addAction(removeSelectedLinesAction, UserAction::HasSelection | UserAction::FullScreenOff);
 
 	QAction *splitSelectedLinesAction = new QAction(actionCollection);
 	splitSelectedLinesAction->setText(i18n("Split Lines"));
 	splitSelectedLinesAction->setStatusTip(i18n("Split selected lines"));
-	connect(splitSelectedLinesAction, SIGNAL(triggered()), this, SLOT(splitSelectedLines()));
+	connect(splitSelectedLinesAction, &QAction::triggered, this, &Application::splitSelectedLines);
 	actionCollection->addAction(ACT_SPLIT_SELECTED_LINES, splitSelectedLinesAction);
 	actionManager->addAction(splitSelectedLinesAction, UserAction::HasSelection | UserAction::FullScreenOff);
 
 	QAction *joinSelectedLinesAction = new QAction(actionCollection);
 	joinSelectedLinesAction->setText(i18n("Join Lines"));
 	joinSelectedLinesAction->setStatusTip(i18n("Join selected lines"));
-	connect(joinSelectedLinesAction, SIGNAL(triggered()), this, SLOT(joinSelectedLines()));
+	connect(joinSelectedLinesAction, &QAction::triggered, this, &Application::joinSelectedLines);
 	actionCollection->addAction(ACT_JOIN_SELECTED_LINES, joinSelectedLinesAction);
 	actionManager->addAction(joinSelectedLinesAction, UserAction::HasSelection | UserAction::FullScreenOff);
 
@@ -588,7 +588,7 @@ Application::setupActions()
 	selectAllLinesAction->setText(i18n("Select All"));
 	selectAllLinesAction->setStatusTip(i18n("Select all lines"));
 	actionCollection->setDefaultShortcuts(selectAllLinesAction, KStandardShortcut::selectAll());
-	connect(selectAllLinesAction, SIGNAL(triggered()), this, SLOT(selectAllLines()));
+	connect(selectAllLinesAction, &QAction::triggered, this, &Application::selectAllLines);
 	actionCollection->addAction(ACT_SELECT_ALL_LINES, selectAllLinesAction);
 	actionManager->addAction(selectAllLinesAction, UserAction::SubHasLine | UserAction::FullScreenOff);
 
@@ -596,7 +596,7 @@ Application::setupActions()
 	gotoLineAction->setText(i18n("Go to Line..."));
 	gotoLineAction->setStatusTip(i18n("Go to specified line"));
 	actionCollection->setDefaultShortcuts(gotoLineAction, KStandardShortcut::gotoLine());
-	connect(gotoLineAction, SIGNAL(triggered()), this, SLOT(gotoLine()));
+	connect(gotoLineAction, &QAction::triggered, this, &Application::gotoLine);
 	actionCollection->addAction(ACT_GOTO_LINE, gotoLineAction);
 	actionManager->addAction(gotoLineAction, UserAction::SubHasLines);
 
@@ -605,7 +605,7 @@ Application::setupActions()
 	findAction->setText(i18n("Find..."));
 	findAction->setStatusTip(i18n("Find occurrences of strings or regular expressions"));
 	actionCollection->setDefaultShortcuts(findAction, KStandardShortcut::find());
-	connect(findAction, SIGNAL(triggered()), this, SLOT(find()));
+	connect(findAction, &QAction::triggered, this, &Application::find);
 	actionCollection->addAction(ACT_FIND, findAction);
 	actionManager->addAction(findAction, UserAction::SubHasLine);
 
@@ -614,7 +614,7 @@ Application::setupActions()
 	findNextAction->setText(i18n("Find Next"));
 	findNextAction->setStatusTip(i18n("Find next occurrence of string or regular expression"));
 	actionCollection->setDefaultShortcuts(findNextAction, KStandardShortcut::findNext());
-	connect(findNextAction, SIGNAL(triggered()), this, SLOT(findNext()));
+	connect(findNextAction, &QAction::triggered, this, &Application::findNext);
 	actionCollection->addAction(ACT_FIND_NEXT, findNextAction);
 	actionManager->addAction(findNextAction, UserAction::SubHasLine);
 
@@ -623,7 +623,7 @@ Application::setupActions()
 	findPreviousAction->setText(i18n("Find Previous"));
 	findPreviousAction->setStatusTip(i18n("Find previous occurrence of string or regular expression"));
 	actionCollection->setDefaultShortcuts(findPreviousAction, KStandardShortcut::findPrev());
-	connect(findPreviousAction, SIGNAL(triggered()), this, SLOT(findPrevious()));
+	connect(findPreviousAction, &QAction::triggered, this, &Application::findPrevious);
 	actionCollection->addAction(ACT_FIND_PREVIOUS, findPreviousAction);
 	actionManager->addAction(findPreviousAction, UserAction::SubHasLine);
 
@@ -631,7 +631,7 @@ Application::setupActions()
 	replaceAction->setText(i18n("Replace..."));
 	replaceAction->setStatusTip(i18n("Replace occurrences of strings or regular expressions"));
 	actionCollection->setDefaultShortcuts(replaceAction, KStandardShortcut::replace());
-	connect(replaceAction, SIGNAL(triggered()), this, SLOT(replace()));
+	connect(replaceAction, &QAction::triggered, this, &Application::replace);
 	actionCollection->addAction(ACT_REPLACE, replaceAction);
 	actionManager->addAction(replaceAction, UserAction::SubHasLine | UserAction::FullScreenOff);
 
@@ -640,7 +640,7 @@ Application::setupActions()
 	retrocedeCurrentLineAction->setText(i18n("Retrocede current line"));
 	retrocedeCurrentLineAction->setStatusTip(i18n("Makes the line before the current one active"));
 	actionCollection->setDefaultShortcut(retrocedeCurrentLineAction, QKeySequence("Alt+Up"));
-	connect(retrocedeCurrentLineAction, SIGNAL(triggered()), this, SLOT(retrocedeCurrentLine()));
+	connect(retrocedeCurrentLineAction, &QAction::triggered, this, &Application::retrocedeCurrentLine);
 	actionCollection->addAction(ACT_RETROCEDE_CURRENT_LINE, retrocedeCurrentLineAction);
 	actionManager->addAction(retrocedeCurrentLineAction, UserAction::SubHasLines | UserAction::HasSelection);
 
@@ -649,7 +649,7 @@ Application::setupActions()
 	advanceCurrentLineAction->setText(i18n("Advance current line"));
 	advanceCurrentLineAction->setStatusTip(i18n("Makes the line after the current one active"));
 	actionCollection->setDefaultShortcut(advanceCurrentLineAction, QKeySequence("Alt+Down"));
-	connect(advanceCurrentLineAction, SIGNAL(triggered()), this, SLOT(advanceCurrentLine()));
+	connect(advanceCurrentLineAction, &QAction::triggered, this, &Application::advanceCurrentLine);
 	actionCollection->addAction(ACT_ADVANCE_CURRENT_LINE, advanceCurrentLineAction);
 	actionManager->addAction(advanceCurrentLineAction, UserAction::SubHasLines | UserAction::HasSelection);
 
@@ -692,7 +692,7 @@ Application::setupActions()
 	spellCheckAction->setIcon(QIcon::fromTheme("tools-check-spelling"));
 	spellCheckAction->setText(i18n("Spelling..."));
 	spellCheckAction->setStatusTip(i18n("Check lines spelling"));
-	connect(spellCheckAction, SIGNAL(triggered()), this, SLOT(spellCheck()));
+	connect(spellCheckAction, &QAction::triggered, this, &Application::spellCheck);
 	actionCollection->addAction(ACT_SPELL_CHECK, spellCheckAction);
 	actionManager->addAction(spellCheckAction, UserAction::SubHasLine | UserAction::FullScreenOff);
 
@@ -700,7 +700,7 @@ Application::setupActions()
 	toggleSelectedLinesMarkAction->setText(i18n("Toggle Mark"));
 	toggleSelectedLinesMarkAction->setStatusTip(i18n("Toggle mark on selected lines"));
 	actionCollection->setDefaultShortcut(toggleSelectedLinesMarkAction, QKeySequence("Ctrl+M"));
-	connect(toggleSelectedLinesMarkAction, SIGNAL(triggered()), this, SLOT(toggleSelectedLinesMark()));
+	connect(toggleSelectedLinesMarkAction, &QAction::triggered, this, &Application::toggleSelectedLinesMark);
 	actionCollection->addAction(ACT_TOGGLE_SELECTED_LINES_MARK, toggleSelectedLinesMarkAction);
 	actionManager->addAction(toggleSelectedLinesMarkAction, UserAction::HasSelection | UserAction::FullScreenOff);
 
@@ -709,7 +709,7 @@ Application::setupActions()
 	toggleSelectedLinesBoldAction->setText(i18n("Toggle Bold"));
 	toggleSelectedLinesBoldAction->setStatusTip(i18n("Toggle selected lines bold attribute"));
 	actionCollection->setDefaultShortcut(toggleSelectedLinesBoldAction, QKeySequence("Ctrl+B"));
-	connect(toggleSelectedLinesBoldAction, SIGNAL(triggered()), this, SLOT(toggleSelectedLinesBold()));
+	connect(toggleSelectedLinesBoldAction, &QAction::triggered, this, &Application::toggleSelectedLinesBold);
 	actionCollection->addAction(ACT_TOGGLE_SELECTED_LINES_BOLD, toggleSelectedLinesBoldAction);
 	actionManager->addAction(toggleSelectedLinesBoldAction, UserAction::HasSelection | UserAction::FullScreenOff);
 
@@ -718,7 +718,7 @@ Application::setupActions()
 	toggleSelectedLinesItalicAction->setText(i18n("Toggle Italic"));
 	toggleSelectedLinesItalicAction->setStatusTip(i18n("Toggle selected lines italic attribute"));
 	actionCollection->setDefaultShortcut(toggleSelectedLinesItalicAction, QKeySequence("Ctrl+I"));
-	connect(toggleSelectedLinesItalicAction, SIGNAL(triggered()), this, SLOT(toggleSelectedLinesItalic()));
+	connect(toggleSelectedLinesItalicAction, &QAction::triggered, this, &Application::toggleSelectedLinesItalic);
 	actionCollection->addAction(ACT_TOGGLE_SELECTED_LINES_ITALIC, toggleSelectedLinesItalicAction);
 	actionManager->addAction(toggleSelectedLinesItalicAction, UserAction::HasSelection | UserAction::FullScreenOff);
 
@@ -727,7 +727,7 @@ Application::setupActions()
 	toggleSelectedLinesUnderlineAction->setText(i18n("Toggle Underline"));
 	toggleSelectedLinesUnderlineAction->setStatusTip(i18n("Toggle selected lines underline attribute"));
 	actionCollection->setDefaultShortcut(toggleSelectedLinesUnderlineAction, QKeySequence("Ctrl+U"));
-	connect(toggleSelectedLinesUnderlineAction, SIGNAL(triggered()), this, SLOT(toggleSelectedLinesUnderline()));
+	connect(toggleSelectedLinesUnderlineAction, &QAction::triggered, this, &Application::toggleSelectedLinesUnderline);
 	actionCollection->addAction(ACT_TOGGLE_SELECTED_LINES_UNDERLINE, toggleSelectedLinesUnderlineAction);
 	actionManager->addAction(toggleSelectedLinesUnderlineAction, UserAction::HasSelection | UserAction::FullScreenOff);
 
@@ -736,7 +736,7 @@ Application::setupActions()
 	toggleSelectedLinesStrikeThroughAction->setText(i18n("Toggle Strike Through"));
 	toggleSelectedLinesStrikeThroughAction->setStatusTip(i18n("Toggle selected lines strike through attribute"));
 	actionCollection->setDefaultShortcut(toggleSelectedLinesStrikeThroughAction, QKeySequence("Ctrl+T"));
-	connect(toggleSelectedLinesStrikeThroughAction, SIGNAL(triggered()), this, SLOT(toggleSelectedLinesStrikeThrough()));
+	connect(toggleSelectedLinesStrikeThroughAction, &QAction::triggered, this, &Application::toggleSelectedLinesStrikeThrough);
 	actionCollection->addAction(ACT_TOGGLE_SELECTED_LINES_STRIKETHROUGH, toggleSelectedLinesStrikeThroughAction);
 	actionManager->addAction(toggleSelectedLinesStrikeThroughAction, UserAction::HasSelection | UserAction::FullScreenOff);
 
@@ -745,7 +745,7 @@ Application::setupActions()
 	changeSelectedLinesColorAction->setText(i18n("Change Text Color"));
 	changeSelectedLinesColorAction->setStatusTip(i18n("Change text color of selected lines"));
 	actionCollection->setDefaultShortcut(changeSelectedLinesColorAction, QKeySequence("Ctrl+Shift+C"));
-	connect(changeSelectedLinesColorAction, SIGNAL(triggered()), this, SLOT(changeSelectedLinesColor()));
+	connect(changeSelectedLinesColorAction, &QAction::triggered, this, &Application::changeSelectedLinesColor);
 	actionCollection->addAction(ACT_CHANGE_SELECTED_LINES_TEXT_COLOR, changeSelectedLinesColorAction);
 	actionManager->addAction(changeSelectedLinesColorAction, UserAction::HasSelection | UserAction::FullScreenOff);
 
@@ -753,19 +753,19 @@ Application::setupActions()
 	shiftAction->setText(i18n("Shift..."));
 	shiftAction->setStatusTip(i18n("Shift lines an specified amount of time"));
 	actionCollection->setDefaultShortcut(shiftAction, QKeySequence("Ctrl+D"));
-	connect(shiftAction, SIGNAL(triggered()), this, SLOT(shiftLines()));
+	connect(shiftAction, &QAction::triggered, this, &Application::shiftLines);
 	actionCollection->addAction(ACT_SHIFT, shiftAction);
 	actionManager->addAction(shiftAction, UserAction::SubHasLine | UserAction::FullScreenOff | UserAction::AnchorsNone);
 
 	QAction *shiftSelectedLinesFwdAction = new QAction(actionCollection);
 	actionCollection->setDefaultShortcut(shiftSelectedLinesFwdAction, QKeySequence("Shift++"));
-	connect(shiftSelectedLinesFwdAction, SIGNAL(triggered()), this, SLOT(shiftSelectedLinesForwards()));
+	connect(shiftSelectedLinesFwdAction, &QAction::triggered, this, &Application::shiftSelectedLinesForwards);
 	actionCollection->addAction(ACT_SHIFT_SELECTED_LINES_FORWARDS, shiftSelectedLinesFwdAction);
 	actionManager->addAction(shiftSelectedLinesFwdAction, UserAction::HasSelection | UserAction::FullScreenOff | UserAction::EditableShowTime);
 
 	QAction *shiftSelectedLinesBwdAction = new QAction(actionCollection);
 	actionCollection->setDefaultShortcut(shiftSelectedLinesBwdAction, QKeySequence("Shift+-"));
-	connect(shiftSelectedLinesBwdAction, SIGNAL(triggered()), this, SLOT(shiftSelectedLinesBackwards()));
+	connect(shiftSelectedLinesBwdAction, &QAction::triggered, this, &Application::shiftSelectedLinesBackwards);
 	actionCollection->addAction(ACT_SHIFT_SELECTED_LINES_BACKWARDS, shiftSelectedLinesBwdAction);
 	actionManager->addAction(shiftSelectedLinesBwdAction, UserAction::HasSelection | UserAction::FullScreenOff | UserAction::EditableShowTime);
 
@@ -773,21 +773,21 @@ Application::setupActions()
 	adjustAction->setText(i18n("Adjust..."));
 	adjustAction->setStatusTip(i18n("Linearly adjust all lines to a specified interval"));
 	actionCollection->setDefaultShortcut(adjustAction, QKeySequence("Ctrl+J"));
-	connect(adjustAction, SIGNAL(triggered()), this, SLOT(adjustLines()));
+	connect(adjustAction, &QAction::triggered, this, &Application::adjustLines);
 	actionCollection->addAction(ACT_ADJUST, adjustAction);
 	actionManager->addAction(adjustAction, UserAction::SubHasLines | UserAction::FullScreenOff | UserAction::AnchorsNone);
 
 	QAction *sortLinesAction = new QAction(actionCollection);
 	sortLinesAction->setText(i18n("Sort..."));
 	sortLinesAction->setStatusTip(i18n("Sort lines based on their show time"));
-	connect(sortLinesAction, SIGNAL(triggered()), this, SLOT(sortLines()));
+	connect(sortLinesAction, &QAction::triggered, this, &Application::sortLines);
 	actionCollection->addAction(ACT_SORT_LINES, sortLinesAction);
 	actionManager->addAction(sortLinesAction, UserAction::SubHasLines | UserAction::FullScreenOff);
 
 	QAction *changeFrameRateAction = new QAction(actionCollection);
 	changeFrameRateAction->setText(i18n("Change Frame Rate..."));
 	changeFrameRateAction->setStatusTip(i18n("Retime subtitle lines by reinterpreting its frame rate"));
-	connect(changeFrameRateAction, SIGNAL(triggered()), this, SLOT(changeFrameRate()));
+	connect(changeFrameRateAction, &QAction::triggered, this, &Application::changeFrameRate);
 	actionCollection->addAction(ACT_CHANGE_FRAME_RATE, changeFrameRateAction);
 	actionManager->addAction(changeFrameRateAction, UserAction::SubOpened | UserAction::FullScreenOff | UserAction::AnchorsNone);
 
@@ -795,70 +795,70 @@ Application::setupActions()
 	durationLimitsAction->setText(i18n("Enforce Duration Limits..."));
 	durationLimitsAction->setStatusTip(i18n("Enforce lines minimum and/or maximum duration limits"));
 	actionCollection->setDefaultShortcut(durationLimitsAction, QKeySequence("Ctrl+L"));
-	connect(durationLimitsAction, SIGNAL(triggered()), this, SLOT(enforceDurationLimits()));
+	connect(durationLimitsAction, &QAction::triggered, this, &Application::enforceDurationLimits);
 	actionCollection->addAction(ACT_DURATION_LIMITS, durationLimitsAction);
 	actionManager->addAction(durationLimitsAction, UserAction::SubHasLine | UserAction::FullScreenOff);
 
 	QAction *autoDurationsAction = new QAction(actionCollection);
 	autoDurationsAction->setText(i18n("Set Automatic Durations..."));
 	autoDurationsAction->setStatusTip(i18n("Set lines durations based on amount of letters, words and line breaks"));
-	connect(autoDurationsAction, SIGNAL(triggered()), this, SLOT(setAutoDurations()));
+	connect(autoDurationsAction, &QAction::triggered, this, &Application::setAutoDurations);
 	actionCollection->addAction(ACT_AUTOMATIC_DURATIONS, autoDurationsAction);
 	actionManager->addAction(autoDurationsAction, UserAction::SubHasLine | UserAction::FullScreenOff);
 
 	QAction *maximizeDurationsAction = new QAction(actionCollection);
 	maximizeDurationsAction->setText(i18n("Maximize Durations..."));
 	maximizeDurationsAction->setStatusTip(i18n("Extend lines durations up to their next lines show time"));
-	connect(maximizeDurationsAction, SIGNAL(triggered()), this, SLOT(maximizeDurations()));
+	connect(maximizeDurationsAction, &QAction::triggered, this, &Application::maximizeDurations);
 	actionCollection->addAction(ACT_MAXIMIZE_DURATIONS, maximizeDurationsAction);
 	actionManager->addAction(maximizeDurationsAction, UserAction::SubHasLine | UserAction::FullScreenOff);
 
 	QAction *fixOverlappingLinesAction = new QAction(actionCollection);
 	fixOverlappingLinesAction->setText(i18n("Fix Overlapping Times..."));
 	fixOverlappingLinesAction->setStatusTip(i18n("Fix lines overlapping times"));
-	connect(fixOverlappingLinesAction, SIGNAL(triggered()), this, SLOT(fixOverlappingLines()));
+	connect(fixOverlappingLinesAction, &QAction::triggered, this, &Application::fixOverlappingLines);
 	actionCollection->addAction(ACT_FIX_OVERLAPPING_LINES, fixOverlappingLinesAction);
 	actionManager->addAction(fixOverlappingLinesAction, UserAction::SubHasLine | UserAction::FullScreenOff);
 
 	QAction *syncWithSubtitleAction = new QAction(actionCollection);
 	syncWithSubtitleAction->setText(i18n("Synchronize with Subtitle..."));
 	syncWithSubtitleAction->setStatusTip(i18n("Copy timing information from another subtitle"));
-	connect(syncWithSubtitleAction, SIGNAL(triggered()), this, SLOT(syncWithSubtitle()));
+	connect(syncWithSubtitleAction, &QAction::triggered, this, &Application::syncWithSubtitle);
 	actionCollection->addAction(ACT_SYNC_WITH_SUBTITLE, syncWithSubtitleAction);
 	actionManager->addAction(syncWithSubtitleAction, UserAction::SubHasLine | UserAction::FullScreenOff | UserAction::AnchorsNone);
 
 	QAction *breakLinesAction = new QAction(actionCollection);
 	breakLinesAction->setText(i18n("Break Lines..."));
 	breakLinesAction->setStatusTip(i18n("Automatically set line breaks"));
-	connect(breakLinesAction, SIGNAL(triggered()), this, SLOT(breakLines()));
+	connect(breakLinesAction, &QAction::triggered, this, &Application::breakLines);
 	actionCollection->addAction(ACT_ADJUST_TEXTS, breakLinesAction);
 	actionManager->addAction(breakLinesAction, UserAction::SubHasLine | UserAction::FullScreenOff);
 
 	QAction *unbreakTextsAction = new QAction(actionCollection);
 	unbreakTextsAction->setText(i18n("Unbreak Lines..."));
 	unbreakTextsAction->setStatusTip(i18n("Remove line breaks from lines"));
-	connect(unbreakTextsAction, SIGNAL(triggered()), this, SLOT(unbreakTexts()));
+	connect(unbreakTextsAction, &QAction::triggered, this, &Application::unbreakTexts);
 	actionCollection->addAction(ACT_UNBREAK_TEXTS, unbreakTextsAction);
 	actionManager->addAction(unbreakTextsAction, UserAction::SubHasLine | UserAction::FullScreenOff);
 
 	QAction *simplifySpacesAction = new QAction(actionCollection);
 	simplifySpacesAction->setText(i18n("Simplify Spaces..."));
 	simplifySpacesAction->setStatusTip(i18n("Remove unneeded spaces from lines"));
-	connect(simplifySpacesAction, SIGNAL(triggered()), this, SLOT(simplifySpaces()));
+	connect(simplifySpacesAction, &QAction::triggered, this, &Application::simplifySpaces);
 	actionCollection->addAction(ACT_SIMPLIFY_SPACES, simplifySpacesAction);
 	actionManager->addAction(simplifySpacesAction, UserAction::SubHasLine | UserAction::FullScreenOff);
 
 	QAction *changeCaseAction = new QAction(actionCollection);
 	changeCaseAction->setText(i18n("Change Case..."));
 	changeCaseAction->setStatusTip(i18n("Change lines text to upper, lower, title or sentence case"));
-	connect(changeCaseAction, SIGNAL(triggered()), this, SLOT(changeCase()));
+	connect(changeCaseAction, &QAction::triggered, this, &Application::changeCase);
 	actionCollection->addAction(ACT_CHANGE_CASE, changeCaseAction);
 	actionManager->addAction(changeCaseAction, UserAction::SubHasLine | UserAction::FullScreenOff);
 
 	QAction *fixPunctuationAction = new QAction(actionCollection);
 	fixPunctuationAction->setText(i18n("Fix Punctuation..."));
 	fixPunctuationAction->setStatusTip(i18n("Fix punctuation errors in lines"));
-	connect(fixPunctuationAction, SIGNAL(triggered()), this, SLOT(fixPunctuation()));
+	connect(fixPunctuationAction, &QAction::triggered, this, &Application::fixPunctuation);
 	actionCollection->addAction(ACT_FIX_PUNCTUATION, fixPunctuationAction);
 	actionManager->addAction(fixPunctuationAction, UserAction::SubHasLine | UserAction::FullScreenOff);
 
@@ -873,7 +873,7 @@ Application::setupActions()
 	editCurrentLineInPlaceAction->setText(i18n("Edit Line in Place"));
 	editCurrentLineInPlaceAction->setStatusTip(i18n("Edit current line text in place"));
 	actionCollection->setDefaultShortcut(editCurrentLineInPlaceAction, QKeySequence("F2"));
-	connect(editCurrentLineInPlaceAction, SIGNAL(triggered()), m_linesWidget, SLOT(editCurrentLineInPlace()));
+	connect(editCurrentLineInPlaceAction, &QAction::triggered, m_linesWidget, &LinesWidget::editCurrentLineInPlace);
 	actionCollection->addAction(ACT_EDIT_CURRENT_LINE_IN_PLACE, editCurrentLineInPlaceAction);
 	actionManager->addAction(editCurrentLineInPlaceAction, UserAction::HasSelection | UserAction::FullScreenOff);
 
@@ -913,7 +913,7 @@ Application::setupActions()
 	closeVideoAction->setIcon(QIcon::fromTheme("window-close"));
 	closeVideoAction->setText(i18n("Close Video"));
 	closeVideoAction->setStatusTip(i18n("Close video file"));
-	connect(closeVideoAction, SIGNAL(triggered()), m_player, SLOT(closeFile()));
+	connect(closeVideoAction, &QAction::triggered, m_player, &VideoPlayer::closeFile);
 	actionCollection->addAction(ACT_CLOSE_VIDEO, closeVideoAction);
 	actionManager->addAction(closeVideoAction, UserAction::VideoOpened);
 
@@ -922,14 +922,14 @@ Application::setupActions()
 	fullScreenAction->setText(i18n("Full Screen Mode"));
 	fullScreenAction->setStatusTip(i18n("Toggle full screen mode"));
 	actionCollection->setDefaultShortcuts(fullScreenAction, KStandardShortcut::fullScreen());
-	connect(fullScreenAction, SIGNAL(toggled(bool)), this, SLOT(setFullScreenMode(bool)));
+	connect(fullScreenAction, &QAction::toggled, this, &Application::setFullScreenMode);
 	actionCollection->addAction(ACT_TOGGLE_FULL_SCREEN, fullScreenAction);
 
 	QAction *stopAction = new QAction(actionCollection);
 	stopAction->setIcon(QIcon::fromTheme("media-playback-stop"));
 	stopAction->setText(i18n("Stop"));
 	stopAction->setStatusTip(i18n("Stop video playback"));
-	connect(stopAction, SIGNAL(triggered()), m_player, SLOT(stop()));
+	connect(stopAction, &QAction::triggered, m_player, &VideoPlayer::stop);
 	actionCollection->addAction(ACT_STOP, stopAction);
 	actionManager->addAction(stopAction, UserAction::VideoPlaying);
 
@@ -938,7 +938,7 @@ Application::setupActions()
 	playPauseAction->setText(i18n("Play"));
 	playPauseAction->setStatusTip(i18n("Toggle video playing/paused"));
 	actionCollection->setDefaultShortcut(playPauseAction, QKeySequence("Ctrl+Space"));
-	connect(playPauseAction, SIGNAL(triggered()), m_player, SLOT(togglePlayPaused()));
+	connect(playPauseAction, &QAction::triggered, m_player, &VideoPlayer::togglePlayPaused);
 	actionCollection->addAction(ACT_PLAY_PAUSE, playPauseAction);
 	actionManager->addAction(playPauseAction, UserAction::VideoOpened);
 
@@ -946,7 +946,7 @@ Application::setupActions()
 	seekBackwardAction->setIcon(QIcon::fromTheme("media-seek-backward"));
 	seekBackwardAction->setText(i18n("Seek Backward"));
 	actionCollection->setDefaultShortcut(seekBackwardAction, QKeySequence("Left"));
-	connect(seekBackwardAction, SIGNAL(triggered()), this, SLOT(seekBackward()));
+	connect(seekBackwardAction, &QAction::triggered, this, &Application::seekBackward);
 	actionCollection->addAction(ACT_SEEK_BACKWARD, seekBackwardAction);
 	actionManager->addAction(seekBackwardAction, UserAction::VideoPlaying);
 
@@ -954,7 +954,7 @@ Application::setupActions()
 	seekForwardAction->setIcon(QIcon::fromTheme("media-seek-forward"));
 	seekForwardAction->setText(i18n("Seek Forward"));
 	actionCollection->setDefaultShortcut(seekForwardAction, QKeySequence("Right"));
-	connect(seekForwardAction, SIGNAL(triggered()), this, SLOT(seekForward()));
+	connect(seekForwardAction, &QAction::triggered, this, &Application::seekForward);
 	actionCollection->addAction(ACT_SEEK_FORWARD, seekForwardAction);
 	actionManager->addAction(seekForwardAction, UserAction::VideoPlaying);
 
@@ -962,7 +962,7 @@ Application::setupActions()
 	stepFrameBackwardAction->setIcon(QIcon::fromTheme("media-step-backward"));
 	stepFrameBackwardAction->setText(i18n("Frame Step Backward"));
 	actionCollection->setDefaultShortcut(stepFrameBackwardAction, QKeySequence("Ctrl+Left"));
-	connect(stepFrameBackwardAction, SIGNAL(triggered()), this, SLOT(stepBackward()));
+	connect(stepFrameBackwardAction, &QAction::triggered, this, &Application::stepBackward);
 	actionCollection->addAction(ACT_STEP_FRAME_BACKWARD, stepFrameBackwardAction);
 	actionManager->addAction(stepFrameBackwardAction, UserAction::VideoPlaying);
 
@@ -970,7 +970,7 @@ Application::setupActions()
 	stepFrameForwardAction->setIcon(QIcon::fromTheme("media-step-forward"));
 	stepFrameForwardAction->setText(i18n("Frame Step Forward"));
 	actionCollection->setDefaultShortcut(stepFrameForwardAction, QKeySequence("Ctrl+Right"));
-	connect(stepFrameForwardAction, SIGNAL(triggered()), this, SLOT(stepForward()));
+	connect(stepFrameForwardAction, &QAction::triggered, this, &Application::stepForward);
 	actionCollection->addAction(ACT_STEP_FRAME_FORWARD, stepFrameForwardAction);
 	actionManager->addAction(stepFrameForwardAction, UserAction::VideoPlaying);
 
@@ -979,7 +979,7 @@ Application::setupActions()
 	seekToPrevLineAction->setText(i18n("Jump to Previous Line"));
 	seekToPrevLineAction->setStatusTip(i18n("Seek to previous subtitle line show time"));
 	actionCollection->setDefaultShortcut(seekToPrevLineAction, QKeySequence("Shift+Left"));
-	connect(seekToPrevLineAction, SIGNAL(triggered()), this, SLOT(seekToPrevLine()));
+	connect(seekToPrevLineAction, &QAction::triggered, this, &Application::seekToPrevLine);
 	actionCollection->addAction(ACT_SEEK_TO_PREVIOUS_LINE, seekToPrevLineAction);
 	actionManager->addAction(seekToPrevLineAction, UserAction::SubHasLine | UserAction::VideoPlaying);
 
@@ -987,7 +987,7 @@ Application::setupActions()
 	playrateIncreaseAction->setIcon(QIcon::fromTheme(QStringLiteral("playrate_plus")));
 	playrateIncreaseAction->setText(i18n("Increase media play rate"));
 	playrateIncreaseAction->setStatusTip(i18n("Increase media playback rate"));
-	connect(playrateIncreaseAction, SIGNAL(triggered()), this, SLOT(playrateIncrease()));
+	connect(playrateIncreaseAction, &QAction::triggered, this, &Application::playrateIncrease);
 	actionCollection->addAction(ACT_PLAY_RATE_INCREASE, playrateIncreaseAction);
 	actionManager->addAction(playrateIncreaseAction, UserAction::VideoPlaying);
 
@@ -995,7 +995,7 @@ Application::setupActions()
 	playrateDecreaseAction->setIcon(QIcon::fromTheme(QStringLiteral("playrate_minus")));
 	playrateDecreaseAction->setText(i18n("Decrease media play rate"));
 	playrateDecreaseAction->setStatusTip(i18n("Decrease media playback rate"));
-	connect(playrateDecreaseAction, SIGNAL(triggered()), this, SLOT(playrateDecrease()));
+	connect(playrateDecreaseAction, &QAction::triggered, this, &Application::playrateDecrease);
 	actionCollection->addAction(ACT_PLAY_RATE_DECREASE, playrateDecreaseAction);
 	actionManager->addAction(playrateDecreaseAction, UserAction::VideoPlaying);
 
@@ -1003,7 +1003,7 @@ Application::setupActions()
 	playCurrentLineAndPauseAction->setText(i18n("Play Current Line and Pause"));
 	playCurrentLineAndPauseAction->setStatusTip(i18n("Seek to start of current subtitle line show time, play it and then pause"));
 	actionCollection->setDefaultShortcut(playCurrentLineAndPauseAction, QKeySequence("Ctrl+Shift+Left"));
-	connect(playCurrentLineAndPauseAction, SIGNAL(triggered()), this, SLOT(playOnlyCurrentLine()));
+	connect(playCurrentLineAndPauseAction, &QAction::triggered, this, &Application::playOnlyCurrentLine);
 	actionCollection->addAction(ACT_PLAY_CURRENT_LINE_AND_PAUSE, playCurrentLineAndPauseAction);
 	actionManager->addAction(playCurrentLineAndPauseAction, UserAction::SubHasLine | UserAction::VideoPlaying);
 
@@ -1012,7 +1012,7 @@ Application::setupActions()
 	seekToNextLineAction->setText(i18n("Jump to Next Line"));
 	seekToNextLineAction->setStatusTip(i18n("Seek to next subtitle line show time"));
 	actionCollection->setDefaultShortcut(seekToNextLineAction, QKeySequence("Shift+Right"));
-	connect(seekToNextLineAction, SIGNAL(triggered()), this, SLOT(seekToNextLine()));
+	connect(seekToNextLineAction, &QAction::triggered, this, &Application::seekToNextLine);
 	actionCollection->addAction(ACT_SEEK_TO_NEXT_LINE, seekToNextLineAction);
 	actionManager->addAction(seekToNextLineAction, UserAction::SubHasLine | UserAction::VideoPlaying);
 
@@ -1021,7 +1021,7 @@ Application::setupActions()
 	setCurrentLineShowTimeFromVideoAction->setText(i18n("Set Current Line Show Time"));
 	setCurrentLineShowTimeFromVideoAction->setStatusTip(i18n("Set current line show time to video position"));
 	actionCollection->setDefaultShortcut(setCurrentLineShowTimeFromVideoAction, QKeySequence("Shift+Z"));
-	connect(setCurrentLineShowTimeFromVideoAction, SIGNAL(triggered()), this, SLOT(setCurrentLineShowTimeFromVideo()));
+	connect(setCurrentLineShowTimeFromVideoAction, &QAction::triggered, this, &Application::setCurrentLineShowTimeFromVideo);
 	actionCollection->addAction(ACT_SET_CURRENT_LINE_SHOW_TIME, setCurrentLineShowTimeFromVideoAction);
 	actionManager->addAction(setCurrentLineShowTimeFromVideoAction, UserAction::HasSelection | UserAction::VideoPlaying | UserAction::EditableShowTime);
 
@@ -1030,7 +1030,7 @@ Application::setupActions()
 	setCurrentLineHideTimeFromVideoAction->setText(i18n("Set Current Line Hide Time"));
 	setCurrentLineHideTimeFromVideoAction->setStatusTip(i18n("Set current line hide time to video position"));
 	actionCollection->setDefaultShortcut(setCurrentLineHideTimeFromVideoAction, QKeySequence("Shift+X"));
-	connect(setCurrentLineHideTimeFromVideoAction, SIGNAL(triggered()), this, SLOT(setCurrentLineHideTimeFromVideo()));
+	connect(setCurrentLineHideTimeFromVideoAction, &QAction::triggered, this, &Application::setCurrentLineHideTimeFromVideo);
 	actionCollection->addAction(ACT_SET_CURRENT_LINE_HIDE_TIME, setCurrentLineHideTimeFromVideoAction);
 	actionManager->addAction(setCurrentLineHideTimeFromVideoAction, UserAction::HasSelection | UserAction::VideoPlaying | UserAction::EditableShowTime);
 
@@ -1038,7 +1038,7 @@ Application::setupActions()
 	currentLineFollowsVideoAction->setIcon(QIcon::fromTheme(QStringLiteral("current_line_follows_video")));
 	currentLineFollowsVideoAction->setText(i18n("Current Line Follows Video"));
 	currentLineFollowsVideoAction->setStatusTip(i18n("Make current line follow the playing video position"));
-	connect(currentLineFollowsVideoAction, SIGNAL(toggled(bool)), this, SLOT(onLinkCurrentLineToVideoToggled(bool)));
+	connect(currentLineFollowsVideoAction, &QAction::toggled, this, &Application::onLinkCurrentLineToVideoToggled);
 	actionCollection->addAction(ACT_CURRENT_LINE_FOLLOWS_VIDEO, currentLineFollowsVideoAction);
 
 	KToggleAction *toggleMuteAction = new KToggleAction(actionCollection);
@@ -1046,7 +1046,7 @@ Application::setupActions()
 	toggleMuteAction->setText(i18nc("@action:inmenu Toggle audio muted", "Mute"));
 	toggleMuteAction->setStatusTip(i18n("Enable/disable playback sound"));
 	actionCollection->setDefaultShortcut(toggleMuteAction, QKeySequence("/"));
-	connect(toggleMuteAction, SIGNAL(toggled(bool)), m_player, SLOT(setMuted(bool)));
+	connect(toggleMuteAction, &QAction::toggled, m_player, &VideoPlayer::setMuted);
 	actionCollection->addAction(ACT_TOGGLE_MUTED, toggleMuteAction);
 
 	QAction *increaseVolumeAction = new QAction(actionCollection);
@@ -1078,7 +1078,7 @@ Application::setupActions()
 	increaseSubtitleFontAction->setText(i18n("Increase Font Size"));
 	increaseSubtitleFontAction->setStatusTip(i18n("Increase subtitles font size by 1 point"));
 	actionCollection->setDefaultShortcut(increaseSubtitleFontAction, QKeySequence("Alt++"));
-	connect(increaseSubtitleFontAction, SIGNAL(triggered()), m_playerWidget, SLOT(increaseFontSize()));
+	connect(increaseSubtitleFontAction, &QAction::triggered, m_playerWidget, &PlayerWidget::increaseFontSize);
 	actionCollection->addAction(ACT_INCREASE_SUBTITLE_FONT, increaseSubtitleFontAction);
 
 	QAction *decreaseSubtitleFontAction = new QAction(actionCollection);
@@ -1086,7 +1086,7 @@ Application::setupActions()
 	decreaseSubtitleFontAction->setText(i18n("Decrease Font Size"));
 	decreaseSubtitleFontAction->setStatusTip(i18n("Decrease subtitles font size by 1 point"));
 	actionCollection->setDefaultShortcut(decreaseSubtitleFontAction, QKeySequence("Alt+-"));
-	connect(decreaseSubtitleFontAction, SIGNAL(triggered()), m_playerWidget, SLOT(decreaseFontSize()));
+	connect(decreaseSubtitleFontAction, &QAction::triggered, m_playerWidget, &PlayerWidget::decreaseFontSize);
 	actionCollection->addAction(ACT_DECREASE_SUBTITLE_FONT, decreaseSubtitleFontAction);
 
 	KSelectAction *setActiveSubtitleStreamAction = new KSelectAction(actionCollection);
@@ -1101,7 +1101,7 @@ Application::setupActions()
 	shiftToVideoPositionAction->setText(i18n("Shift to Video Position"));
 	shiftToVideoPositionAction->setStatusTip(i18n("Set current line show time to video position by equally shifting all lines"));
 	actionCollection->setDefaultShortcut(shiftToVideoPositionAction, QKeySequence("Shift+A"));
-	connect(shiftToVideoPositionAction, SIGNAL(triggered()), this, SLOT(shiftToVideoPosition()));
+	connect(shiftToVideoPositionAction, &QAction::triggered, this, &Application::shiftToVideoPosition);
 	actionCollection->addAction(ACT_SHIFT_TO_VIDEO_POSITION, shiftToVideoPositionAction);
 	actionManager->addAction(shiftToVideoPositionAction, UserAction::HasSelection | UserAction::VideoPlaying | UserAction::FullScreenOff | UserAction::EditableShowTime);
 
@@ -1109,7 +1109,7 @@ Application::setupActions()
 	adjustToVideoPositionAnchorLastAction->setText(i18n("Adjust to Video Position (Anchor Last Line)"));
 	adjustToVideoPositionAnchorLastAction->setStatusTip(i18n("Set current line to video position by fixing the last line and linearly adjusting the other ones"));
 	actionCollection->setDefaultShortcut(adjustToVideoPositionAnchorLastAction, QKeySequence("Alt+Z"));
-	connect(adjustToVideoPositionAnchorLastAction, SIGNAL(triggered()), this, SLOT(adjustToVideoPositionAnchorLast()));
+	connect(adjustToVideoPositionAnchorLastAction, &QAction::triggered, this, &Application::adjustToVideoPositionAnchorLast);
 	actionCollection->addAction(ACT_ADJUST_TO_VIDEO_POSITION_A_L, adjustToVideoPositionAnchorLastAction);
 	actionManager->addAction(adjustToVideoPositionAnchorLastAction, UserAction::HasSelection | UserAction::VideoPlaying | UserAction::FullScreenOff | UserAction::AnchorsNone);
 
@@ -1117,7 +1117,7 @@ Application::setupActions()
 	adjustToVideoPositionAnchorFirstAction->setText(i18n("Adjust to Video Position (Anchor First Line)"));
 	adjustToVideoPositionAnchorFirstAction->setStatusTip(i18n("Set current line to video position by fixing the first line and linearly adjusting the other ones"));
 	actionCollection->setDefaultShortcut(adjustToVideoPositionAnchorFirstAction, QKeySequence("Alt+X"));
-	connect(adjustToVideoPositionAnchorFirstAction, SIGNAL(triggered()), this, SLOT(adjustToVideoPositionAnchorFirst()));
+	connect(adjustToVideoPositionAnchorFirstAction, &QAction::triggered, this, &Application::adjustToVideoPositionAnchorFirst);
 	actionCollection->addAction(ACT_ADJUST_TO_VIDEO_POSITION_A_F, adjustToVideoPositionAnchorFirstAction);
 	actionManager->addAction(adjustToVideoPositionAnchorFirstAction, UserAction::HasSelection | UserAction::VideoPlaying | UserAction::FullScreenOff | UserAction::AnchorsNone);
 
@@ -1125,7 +1125,7 @@ Application::setupActions()
 	toggleAnchor->setText(i18n("Toggle Anchor"));
 	toggleAnchor->setStatusTip(i18n("(Un)Anchor current line's show time to timeline (Editing anchored line's show time will stretch/compact the timeline between adjacent anchors)"));
 	actionCollection->setDefaultShortcut(toggleAnchor, QKeySequence("Alt+A"));
-	connect(toggleAnchor, SIGNAL(triggered()), this, SLOT(anchorToggle()));
+	connect(toggleAnchor, &QAction::triggered, this, &Application::anchorToggle);
 	actionCollection->addAction(ACT_ANCHOR_TOGGLE, toggleAnchor);
 	actionManager->addAction(toggleAnchor, UserAction::HasSelection | UserAction::FullScreenOff);
 
@@ -1133,7 +1133,7 @@ Application::setupActions()
 	removeAllAnchors->setText(i18n("Remove All Anchors"));
 	removeAllAnchors->setStatusTip(i18n("Unanchor show time from the timeline on all anchored lines"));
 	actionCollection->setDefaultShortcut(removeAllAnchors, QKeySequence("Alt+Shift+A"));
-	connect(removeAllAnchors, SIGNAL(triggered()), this, SLOT(anchorRemoveAll()));
+	connect(removeAllAnchors, &QAction::triggered, this, &Application::anchorRemoveAll);
 	actionCollection->addAction(ACT_ANCHOR_REMOVE_ALL, removeAllAnchors);
 	actionManager->addAction(removeAllAnchors, UserAction::HasSelection | UserAction::FullScreenOff | UserAction::AnchorsSome);
 
@@ -1141,7 +1141,7 @@ Application::setupActions()
 	scriptsManagerAction->setIcon(QIcon::fromTheme("folder-development"));
 	scriptsManagerAction->setText(i18nc("@action:inmenu Manage user scripts", "Scripts Manager..."));
 	scriptsManagerAction->setStatusTip(i18n("Manage user scripts"));
-	connect(scriptsManagerAction, SIGNAL(triggered()), m_scriptsManager, SLOT(showDialog()));
+	connect(scriptsManagerAction, &QAction::triggered, m_scriptsManager, &ScriptsManager::showDialog);
 	actionCollection->addAction(ACT_SCRIPTS_MANAGER, scriptsManagerAction);
 	actionManager->addAction(scriptsManagerAction, UserAction::FullScreenOff);
 
@@ -1149,14 +1149,14 @@ Application::setupActions()
 	waveformZoomInAction->setIcon(QIcon::fromTheme("zoom-in"));
 	waveformZoomInAction->setText(i18n("Waveform Zoom In"));
 	waveformZoomInAction->setStatusTip(i18n("Waveform Zoom In"));
-	connect(waveformZoomInAction, SIGNAL(triggered()), m_mainWindow->m_waveformWidget, SLOT(zoomIn()));
+	connect(waveformZoomInAction, &QAction::triggered, m_mainWindow->m_waveformWidget, &WaveformWidget::zoomIn);
 	actionCollection->addAction(ACT_WAVEFORM_ZOOM_IN, waveformZoomInAction);
 
 	QAction *waveformZoomOutAction = new QAction(actionCollection);
 	waveformZoomOutAction->setIcon(QIcon::fromTheme("zoom-out"));
 	waveformZoomOutAction->setText(i18n("Waveform Zoom Out"));
 	waveformZoomOutAction->setStatusTip(i18n("Waveform Zoom Out"));
-	connect(waveformZoomOutAction, SIGNAL(triggered()), m_mainWindow->m_waveformWidget, SLOT(zoomOut()));
+	connect(waveformZoomOutAction, &QAction::triggered, m_mainWindow->m_waveformWidget, &WaveformWidget::zoomOut);
 	actionCollection->addAction(ACT_WAVEFORM_ZOOM_OUT, waveformZoomOutAction);
 
 	QAction *waveformAutoScrollAction = new QAction(actionCollection);
@@ -1164,7 +1164,7 @@ Application::setupActions()
 	waveformAutoScrollAction->setIcon(QIcon::fromTheme(QStringLiteral("current_line_follows_video")));
 	waveformAutoScrollAction->setText(i18n("Waveform Auto Scroll"));
 	waveformAutoScrollAction->setStatusTip(i18n("Waveform display will automatically scroll to video position"));
-	connect(waveformAutoScrollAction, SIGNAL(toggled(bool)), m_mainWindow->m_waveformWidget, SLOT(setAutoscroll(bool)));
+	connect(waveformAutoScrollAction, &QAction::toggled, m_mainWindow->m_waveformWidget, &WaveformWidget::setAutoscroll);
 	actionCollection->addAction(ACT_WAVEFORM_AUTOSCROLL, waveformAutoScrollAction);
 
 	updateActionTexts();

@@ -55,8 +55,8 @@ ChangeFrameRateDialog::ChangeFrameRateDialog(double fromFramesPerSecond, QWidget
 	toFramesPerSecondLabel->setText(i18n("New frame rate:"));
 	toFramesPerSecondLabel->setBuddy(m_toFramesPerSecondComboBox);
 
-	connect(m_fromFramesPerSecondComboBox, SIGNAL(editTextChanged(const QString &)), this, SLOT(onTextChanged()));
-	connect(m_toFramesPerSecondComboBox, SIGNAL(editTextChanged(const QString &)), this, SLOT(onTextChanged()));
+	connect(m_fromFramesPerSecondComboBox, &QComboBox::editTextChanged, this, &ChangeFrameRateDialog::onTextChanged);
+	connect(m_toFramesPerSecondComboBox, &QComboBox::editTextChanged, this, &ChangeFrameRateDialog::onTextChanged);
 
 	QGridLayout *settingsLayout = createLayout(settingsGroupBox);
 	settingsLayout->addWidget(fromFramesPerSecondLabel, 0, 0, Qt::AlignRight | Qt::AlignVCenter);

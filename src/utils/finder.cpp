@@ -98,8 +98,8 @@ Finder::invalidate()
 	// method is called when a line is removed from the subtitle and before
 	// anyone has a chance to delete the line.
 	if(m_dataLine) {
-		disconnect(m_dataLine, SIGNAL(primaryTextChanged(const SString &)), this, SLOT(onLinePrimaryTextChanged(const SString &)));
-		disconnect(m_dataLine, SIGNAL(secondaryTextChanged(const SString &)), this, SLOT(onLineSecondaryTextChanged(const SString &)));
+		disconnect(m_dataLine, &SubtitleLine::primaryTextChanged, this, &Finder::onLinePrimaryTextChanged);
+		disconnect(m_dataLine, &SubtitleLine::secondaryTextChanged, this, &Finder::onLineSecondaryTextChanged);
 		m_dataLine = 0;
 	}
 }
@@ -212,8 +212,8 @@ Finder::advance()
 	do {
 		if(m_find->needData()) {
 			if(m_dataLine) {
-				disconnect(m_dataLine, SIGNAL(primaryTextChanged(const SString &)), this, SLOT(onLinePrimaryTextChanged(const SString &)));
-				disconnect(m_dataLine, SIGNAL(secondaryTextChanged(const SString &)), this, SLOT(onLineSecondaryTextChanged(const SString &)));
+				disconnect(m_dataLine, &SubtitleLine::primaryTextChanged, this, &Finder::onLinePrimaryTextChanged);
+				disconnect(m_dataLine, &SubtitleLine::secondaryTextChanged, this, &Finder::onLineSecondaryTextChanged);
 			}
 
 			m_dataLine = m_iterator->current();
@@ -230,9 +230,9 @@ Finder::advance()
 					m_find->setData((m_feedingPrimary ? m_dataLine->primaryText() : m_dataLine->secondaryText()).string());
 				}
 
-				connect(m_dataLine, SIGNAL(primaryTextChanged(const SString &)), this, SLOT(onLinePrimaryTextChanged(const SString &)));
+				connect(m_dataLine, &SubtitleLine::primaryTextChanged, this, &Finder::onLinePrimaryTextChanged);
 
-				connect(m_dataLine, SIGNAL(secondaryTextChanged(const SString &)), this, SLOT(onLineSecondaryTextChanged(const SString &)));
+				connect(m_dataLine, &SubtitleLine::secondaryTextChanged, this, &Finder::onLineSecondaryTextChanged);
 			}
 		}
 

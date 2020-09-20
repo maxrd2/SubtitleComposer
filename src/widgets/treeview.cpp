@@ -43,7 +43,7 @@ TreeView::TreeView(QWidget *parent) :
 	m_updateGeometriesTimer->setInterval(200);
 	m_updateGeometriesTimer->setSingleShot(true);
 
-	connect(m_updateGeometriesTimer, SIGNAL(timeout()), this, SLOT(onUpdateGeometriesTimeout()));
+	connect(m_updateGeometriesTimer, &QTimer::timeout, this, &TreeView::onUpdateGeometriesTimeout);
 }
 
 TreeView::~TreeView()
@@ -56,8 +56,8 @@ TreeView::setModel(QAbstractItemModel *model)
 		if(this->model()->metaObject()->indexOfSignal("dataChanged()") != -1)
 			disconnect(this->model(), SIGNAL(dataChanged()), this->viewport(), SLOT(update()));
 
-		disconnect(this->model(), SIGNAL(rowsAboutToBeInserted(const QModelIndex &, int, int)), this, SLOT(onRowsAboutToBeInserted(const QModelIndex &, int, int)));
-		disconnect(this->model(), SIGNAL(rowsAboutToBeRemoved(const QModelIndex &, int, int)), this, SLOT(onRowsAboutToBeRemoved(const QModelIndex &, int, int)));
+		disconnect(this->model(), &QAbstractItemModel::rowsAboutToBeInserted, this, &TreeView::onRowsAboutToBeInserted);
+		disconnect(this->model(), &QAbstractItemModel::rowsAboutToBeRemoved, this, &TreeView::onRowsAboutToBeRemoved);
 	}
 
 	QTreeView::setModel(model);
@@ -68,8 +68,8 @@ TreeView::setModel(QAbstractItemModel *model)
 		if(model->metaObject()->indexOfSignal("dataChanged()") != -1)
 			connect(model, SIGNAL(dataChanged()), this->viewport(), SLOT(update()));
 
-		connect(this->model(), SIGNAL(rowsAboutToBeInserted(const QModelIndex &, int, int)), this, SLOT(onRowsAboutToBeInserted(const QModelIndex &, int, int)));
-		connect(this->model(), SIGNAL(rowsAboutToBeRemoved(const QModelIndex &, int, int)), this, SLOT(onRowsAboutToBeRemoved(const QModelIndex &, int, int)));
+		connect(this->model(), &QAbstractItemModel::rowsAboutToBeInserted, this, &TreeView::onRowsAboutToBeInserted);
+		connect(this->model(), &QAbstractItemModel::rowsAboutToBeRemoved, this, &TreeView::onRowsAboutToBeRemoved);
 	} else
 		m_currentModelRows = -1;
 }

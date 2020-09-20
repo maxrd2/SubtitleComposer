@@ -52,9 +52,9 @@ JoinSubtitlesDialog::JoinSubtitlesDialog(QWidget *parent) :
 
 	m_shiftTimeEdit = new TimeEdit(m_subtitleGroupBox);
 
-	connect(m_shiftTimeFromVideoButton, SIGNAL(clicked()), SLOT(setShiftTimeFromVideo()));
-	connect(m_shiftSubtitleCheckBox, SIGNAL(toggled(bool)), m_shiftTimeFromVideoButton, SLOT(setEnabled(bool)));
-	connect(m_shiftSubtitleCheckBox, SIGNAL(toggled(bool)), m_shiftTimeEdit, SLOT(setEnabled(bool)));
+	connect(m_shiftTimeFromVideoButton, &QAbstractButton::clicked, this, &JoinSubtitlesDialog::setShiftTimeFromVideo);
+	connect(m_shiftSubtitleCheckBox, &QAbstractButton::toggled, m_shiftTimeFromVideoButton, &QWidget::setEnabled);
+	connect(m_shiftSubtitleCheckBox, &QAbstractButton::toggled, m_shiftTimeEdit, &QWidget::setEnabled);
 
 	createTargetsGroupBox();
 	createTextTargetsButtonGroup();

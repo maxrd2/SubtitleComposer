@@ -61,7 +61,7 @@ ConfigDialog::ConfigDialog(QWidget *parent, const QString &name, KCoreConfigSkel
 
 	// Spelling page
 	m_sonnetConfigWidget = new Sonnet::ConfigWidget(nullptr);
-	connect(m_sonnetConfigWidget, SIGNAL(configChanged()), this, SLOT(widgetChanged()));
+	connect(m_sonnetConfigWidget, &Sonnet::ConfigWidget::configChanged, this, &ConfigDialog::widgetChanged);
 	item = addPage(m_sonnetConfigWidget, i18nc("@title Spelling settings", "Spelling"));
 	item->setHeader(i18n("Spelling Settings"));
 	item->setIcon(QIcon::fromTheme(QStringLiteral("tools-check-spelling")));

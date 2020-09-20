@@ -109,7 +109,7 @@ bool
 Translator::syncTranslate(const QString &text, Language::Value inputLang, Language::Value outputLang, ProgressDialog *progressDialog)
 {
 	if(progressDialog) {
-		connect(this, SIGNAL(progress(int)), progressDialog, SLOT(setValue(int)));
+		connect(this, &Translator::progress, progressDialog, &ProgressDialog::setValue);
 		connect(progressDialog, SIGNAL(cancelClicked()), this, SLOT(abort()));
 
 		progressDialog->setMinimum(0);
@@ -231,8 +231,8 @@ Translator::startChunkDownload(int chunkNumber)
 	m_currentTransferJob->setTotalSize(postData.length());
 
 	connect(m_currentTransferJob, SIGNAL(percent(KJob *, unsigned long)), this, SLOT(onTransferJobProgress(KJob *, unsigned long)));
-	connect(m_currentTransferJob, SIGNAL(result(KJob *)), this, SLOT(onTransferJobResult(KJob *)));
-	connect(m_currentTransferJob, SIGNAL(data(KIO::Job *, const QByteArray &)), this, SLOT(onTransferJobData(KIO::Job *, const QByteArray &)));
+	connect(m_currentTransferJob, &KJob::result, this, &Translator::onTransferJobResult);
+	connect(m_currentTransferJob, &KIO::TransferJob::data, this, &Translator::onTransferJobData);
 
 	m_currentTransferData.clear();
 

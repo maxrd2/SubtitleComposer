@@ -36,8 +36,8 @@ ProgressDialog::ProgressDialog(const QString &caption, const QString &descriptio
 	setModal(true);
 
 	m_buttonBox = new QDialogButtonBox(allowCancel ? QDialogButtonBox::Cancel : QDialogButtonBox::NoButton, this);
-	connect(m_buttonBox, SIGNAL(accepted()), this, SLOT(accept()));
-	connect(m_buttonBox, SIGNAL(rejected()), this, SLOT(reject()));
+	connect(m_buttonBox, &QDialogButtonBox::accepted, this, &QDialog::accept);
+	connect(m_buttonBox, &QDialogButtonBox::rejected, this, &QDialog::reject);
 
 	m_label = new QLabel(this);
 	m_label->setText(description);

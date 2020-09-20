@@ -38,7 +38,7 @@ TimeEdit::TimeEdit(QWidget *parent) :
 	setCorrectionMode(QAbstractSpinBox::CorrectToNearestValue);
 	setCurrentSection(QDateTimeEdit::MSecSection);
 
-	connect(this, SIGNAL(timeChanged(const QTime &)), this, SLOT(onTimeChanged(const QTime &)));
+	connect(this, &QDateTimeEdit::timeChanged, this, &TimeEdit::onTimeChanged);
 }
 
 int

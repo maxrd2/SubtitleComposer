@@ -144,24 +144,24 @@ CurrentLineWidget::CurrentLineWidget(QWidget *parent) :
 	m_textEdits[1]->setSizePolicy(QSizePolicy::Minimum, QSizePolicy::Expanding);
 	setSizePolicy(QSizePolicy::Minimum, QSizePolicy::Expanding);
 
-	connect(m_textEdits[0], SIGNAL(selectionChanged()), this, SLOT(onPrimaryTextEditSelectionChanged()));
-	connect(m_textEdits[0], SIGNAL(cursorPositionChanged()), this, SLOT(onPrimaryTextEditSelectionChanged()));
-	connect(m_textEdits[0], SIGNAL(textChanged()), this, SLOT(onPrimaryTextEditChanged()));
-	connect(m_textEdits[1], SIGNAL(selectionChanged()), this, SLOT(onSecondaryTextEditSelectionChanged()));
-	connect(m_textEdits[1], SIGNAL(cursorPositionChanged()), this, SLOT(onSecondaryTextEditSelectionChanged()));
-	connect(m_textEdits[1], SIGNAL(textChanged()), this, SLOT(onSecondaryTextEditChanged()));
-	connect(m_showTimeEdit, SIGNAL(valueChanged(int)), this, SLOT(onShowTimeEditChanged(int)));
-	connect(m_hideTimeEdit, SIGNAL(valueChanged(int)), this, SLOT(onHideTimeEditChanged(int)));
-	connect(m_durationTimeEdit, SIGNAL(valueChanged(int)), this, SLOT(onDurationTimeEditChanged(int)));
+	connect(m_textEdits[0], &QTextEdit::selectionChanged, this, &CurrentLineWidget::onPrimaryTextEditSelectionChanged);
+	connect(m_textEdits[0], &QTextEdit::cursorPositionChanged, this, &CurrentLineWidget::onPrimaryTextEditSelectionChanged);
+	connect(m_textEdits[0], &QTextEdit::textChanged, this, &CurrentLineWidget::onPrimaryTextEditChanged);
+	connect(m_textEdits[1], &QTextEdit::selectionChanged, this, &CurrentLineWidget::onSecondaryTextEditSelectionChanged);
+	connect(m_textEdits[1], &QTextEdit::cursorPositionChanged, this, &CurrentLineWidget::onSecondaryTextEditSelectionChanged);
+	connect(m_textEdits[1], &QTextEdit::textChanged, this, &CurrentLineWidget::onSecondaryTextEditChanged);
+	connect(m_showTimeEdit, &TimeEdit::valueChanged, this, &CurrentLineWidget::onShowTimeEditChanged);
+	connect(m_hideTimeEdit, &TimeEdit::valueChanged, this, &CurrentLineWidget::onHideTimeEditChanged);
+	connect(m_durationTimeEdit, &TimeEdit::valueChanged, this, &CurrentLineWidget::onDurationTimeEditChanged);
 
 	setTranslationMode(m_translationMode);
 
 	m_updateShorcutsTimer->setInterval(1000);
 	m_updateShorcutsTimer->setSingleShot(true);
 
-	connect(m_updateShorcutsTimer, SIGNAL(timeout()), this, SLOT(updateShortcuts()));
+	connect(m_updateShorcutsTimer, &QTimer::timeout, this, &CurrentLineWidget::updateShortcuts);
 
-	connect(SCConfig::self(), SIGNAL(configChanged()), this, SLOT(onConfigChanged()));
+	connect(SCConfig::self(), &KCoreConfigSkeleton::configChanged, this, &CurrentLineWidget::onConfigChanged);
 }
 
 CurrentLineWidget::~CurrentLineWidget()
@@ -198,12 +198,12 @@ void
 CurrentLineWidget::setSubtitle(Subtitle *subtitle)
 {
 	if(m_subtitle)
-		disconnect(m_subtitle, SIGNAL(lineAnchorChanged(const SubtitleLine*,bool)), this, SLOT(onLineAnchorChanged(const SubtitleLine*,bool)));
+		disconnect(m_subtitle, &Subtitle::lineAnchorChanged, this, &CurrentLineWidget::onLineAnchorChanged);
 
 	m_subtitle = subtitle;
 
 	if(subtitle)
-		connect(m_subtitle, SIGNAL(lineAnchorChanged(const SubtitleLine*,bool)), this, SLOT(onLineAnchorChanged(const SubtitleLine*,bool)));
+		connect(m_subtitle, &Subtitle::lineAnchorChanged, this, &CurrentLineWidget::onLineAnchorChanged);
 	else
 		setCurrentLine(NULL);
 }
@@ -212,19 +212,19 @@ void
 CurrentLineWidget::setCurrentLine(SubtitleLine *line)
 {
 	if(m_currentLine) {
-		disconnect(m_currentLine, SIGNAL(primaryTextChanged(const SString &)), this, SLOT(onLinePrimaryTextChanged(const SString &)));
-		disconnect(m_currentLine, SIGNAL(secondaryTextChanged(const SString &)), this, SLOT(onLineSecondaryTextChanged(const SString &)));
-		disconnect(m_currentLine, SIGNAL(showTimeChanged(const Time &)), this, SLOT(onLineShowTimeChanged(const Time &)));
-		disconnect(m_currentLine, SIGNAL(hideTimeChanged(const Time &)), this, SLOT(onLineHideTimeChanged(const Time &)));
+		disconnect(m_currentLine, &SubtitleLine::primaryTextChanged, this, &CurrentLineWidget::onLinePrimaryTextChanged);
+		disconnect(m_currentLine, &SubtitleLine::secondaryTextChanged, this, &CurrentLineWidget::onLineSecondaryTextChanged);
+		disconnect(m_currentLine, &SubtitleLine::showTimeChanged, this, &CurrentLineWidget::onLineShowTimeChanged);
+		disconnect(m_currentLine, &SubtitleLine::hideTimeChanged, this, &CurrentLineWidget::onLineHideTimeChanged);
 	}
 
 	m_currentLine = line;
 
 	if(m_currentLine) {
-		connect(m_currentLine, SIGNAL(primaryTextChanged(const SString &)), this, SLOT(onLinePrimaryTextChanged(const SString &)));
-		connect(m_currentLine, SIGNAL(secondaryTextChanged(const SString &)), this, SLOT(onLineSecondaryTextChanged(const SString &)));
-		connect(m_currentLine, SIGNAL(showTimeChanged(const Time &)), this, SLOT(onLineShowTimeChanged(const Time &)));
-		connect(m_currentLine, SIGNAL(hideTimeChanged(const Time &)), this, SLOT(onLineHideTimeChanged(const Time &)));
+		connect(m_currentLine, &SubtitleLine::primaryTextChanged, this, &CurrentLineWidget::onLinePrimaryTextChanged);
+		connect(m_currentLine, &SubtitleLine::secondaryTextChanged, this, &CurrentLineWidget::onLineSecondaryTextChanged);
+		connect(m_currentLine, &SubtitleLine::showTimeChanged, this, &CurrentLineWidget::onLineShowTimeChanged);
+		connect(m_currentLine, &SubtitleLine::hideTimeChanged, this, &CurrentLineWidget::onLineHideTimeChanged);
 	}
 
 	onLineShowTimeChanged(m_currentLine ? m_currentLine->showTime() : Time());
@@ -477,17 +477,17 @@ CurrentLineWidget::setupActions()
 	for(int index = 0; index < 2; ++index) {
 		QAction *spellingAction = m_textEdits[index]->action(SimpleRichTextEdit::CheckSpelling);
 		spellingAction->disconnect();
-		connect(spellingAction, SIGNAL(triggered()), app(), SLOT(spellCheck()));
+		connect(spellingAction, &QAction::triggered, app(), &Application::spellCheck);
 	}
 
-	connect(app()->action(ACT_UNDO), SIGNAL(changed()), this, SLOT(markUpdateShortcuts()));
-	connect(app()->action(ACT_REDO), SIGNAL(changed()), this, SLOT(markUpdateShortcuts()));
-	connect(app()->action(ACT_SELECT_ALL_LINES), SIGNAL(changed()), this, SLOT(markUpdateShortcuts()));
-	connect(app()->action(ACT_TOGGLE_SELECTED_LINES_BOLD), SIGNAL(changed()), this, SLOT(markUpdateShortcuts()));
-	connect(app()->action(ACT_TOGGLE_SELECTED_LINES_ITALIC), SIGNAL(changed()), this, SLOT(markUpdateShortcuts()));
-	connect(app()->action(ACT_TOGGLE_SELECTED_LINES_UNDERLINE), SIGNAL(changed()), this, SLOT(markUpdateShortcuts()));
-	connect(app()->action(ACT_TOGGLE_SELECTED_LINES_STRIKETHROUGH), SIGNAL(changed()), this, SLOT(markUpdateShortcuts()));
-	connect(app()->action(ACT_CHANGE_SELECTED_LINES_TEXT_COLOR), SIGNAL(changed()), this, SLOT(markUpdateShortcuts()));
+	connect(app()->action(ACT_UNDO), &QAction::changed, this, &CurrentLineWidget::markUpdateShortcuts);
+	connect(app()->action(ACT_REDO), &QAction::changed, this, &CurrentLineWidget::markUpdateShortcuts);
+	connect(app()->action(ACT_SELECT_ALL_LINES), &QAction::changed, this, &CurrentLineWidget::markUpdateShortcuts);
+	connect(app()->action(ACT_TOGGLE_SELECTED_LINES_BOLD), &QAction::changed, this, &CurrentLineWidget::markUpdateShortcuts);
+	connect(app()->action(ACT_TOGGLE_SELECTED_LINES_ITALIC), &QAction::changed, this, &CurrentLineWidget::markUpdateShortcuts);
+	connect(app()->action(ACT_TOGGLE_SELECTED_LINES_UNDERLINE), &QAction::changed, this, &CurrentLineWidget::markUpdateShortcuts);
+	connect(app()->action(ACT_TOGGLE_SELECTED_LINES_STRIKETHROUGH), &QAction::changed, this, &CurrentLineWidget::markUpdateShortcuts);
+	connect(app()->action(ACT_CHANGE_SELECTED_LINES_TEXT_COLOR), &QAction::changed, this, &CurrentLineWidget::markUpdateShortcuts);
 }
 
 void

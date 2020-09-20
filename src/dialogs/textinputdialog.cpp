@@ -55,7 +55,7 @@ TextInputDialog::init(const QString &caption, const QString &labelText, const QS
 
 	resize(300, 10);
 
-	connect(lineEdit, SIGNAL(textChanged(const QString &)), this, SLOT(onLineEditTextChanged(const QString &)));
+	connect(lineEdit, &QLineEdit::textChanged, this, &TextInputDialog::onLineEditTextChanged);
 }
 
 const QString

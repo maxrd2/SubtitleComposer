@@ -40,7 +40,7 @@ Speller::Speller(QWidget *parent) :
 	m_sonnetDialog(0),
 	m_iterator(0)
 {
-	connect(SCConfig::self(), SIGNAL(configChanged()), this, SLOT(onConfigChanged()));
+	connect(SCConfig::self(), &KCoreConfigSkeleton::configChanged, this, &Speller::onConfigChanged);
 }
 
 Speller::~Speller()
@@ -111,9 +111,9 @@ Speller::spellCheck(int currentIndex)
 
 		connect(m_sonnetDialog, SIGNAL(done(const QString &)), this, SLOT(onBufferDone()));
 
-		connect(m_sonnetDialog, SIGNAL(replace(const QString &, int, const QString &)), this, SLOT(onCorrected(const QString &, int, const QString &)));
+		connect(m_sonnetDialog, &Sonnet::Dialog::replace, this, &Speller::onCorrected);
 
-		connect(m_sonnetDialog, SIGNAL(misspelling(const QString &, int)), this, SLOT(onMisspelling(const QString &, int)));
+		connect(m_sonnetDialog, &Sonnet::Dialog::misspelling, this, &Speller::onMisspelling);
 	}
 
 	updateBuffer();

@@ -34,7 +34,7 @@ SubtitleColorDialog::SubtitleColorDialog(QWidget *parent /* = 0*/) :
 	QDialogButtonBox *buttons = findChild<QDialogButtonBox *>();
 
 	QPushButton *defaultColor = buttons->addButton("Default Color", QDialogButtonBox::AcceptRole);
-	connect(defaultColor, SIGNAL(clicked()), this, SLOT(acceptDefaultColor()));
+	connect(defaultColor, &QAbstractButton::clicked, this, &SubtitleColorDialog::acceptDefaultColor);
 
 	setOption(DontUseNativeDialog, true);
 }

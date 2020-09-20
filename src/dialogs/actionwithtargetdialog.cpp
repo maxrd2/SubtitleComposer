@@ -139,7 +139,7 @@ ActionWithTargetDialog::createLineTargetsButtonGroup()
 	btnDefault->setIcon(QIcon());
 	btnDefault->setText(i18n("Target <<"));
 	btnDefault->setToolTip(QString());
-	connect(btnDefault, SIGNAL(clicked()), this, SLOT(onDefaultButtonClicked()));
+	connect(btnDefault, &QAbstractButton::clicked, this, &ActionWithTargetDialog::onDefaultButtonClicked);
 
 	createTargetsGroupBox();
 

@@ -68,7 +68,7 @@ SplitSubtitleDialog::SplitSubtitleDialog(QWidget *parent) :
 	settingsLayout->addLayout(splitTimeLayout, 0, 1);
 	settingsLayout->addWidget(m_shiftNewSubtitleCheckBox, 1, 0, 1, 2);
 
-	connect(m_splitTimeFromVideoButton, SIGNAL(clicked()), SLOT(setSplitTimeFromVideo()));
+	connect(m_splitTimeFromVideoButton, &QAbstractButton::clicked, this, &SplitSubtitleDialog::setSplitTimeFromVideo);
 }
 
 void

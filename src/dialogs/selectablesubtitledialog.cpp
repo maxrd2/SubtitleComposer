@@ -58,7 +58,7 @@ SelectableSubtitleDialog::createSubtitleGroupBox(const QString &title, bool addT
 	int buttonSize = subtitleButton->sizeHint().height();
 	subtitleButton->setFixedSize(buttonSize, buttonSize);
 
-	connect(subtitleButton, SIGNAL(clicked()), SLOT(selectSubtitle()));
+	connect(subtitleButton, &QAbstractButton::clicked, this, &SelectableSubtitleDialog::selectSubtitle);
 
 	QHBoxLayout *subtitlePathLayout = new QHBoxLayout();
 	subtitlePathLayout->addWidget(m_subtitleUrlLineEdit, 2);

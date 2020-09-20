@@ -63,15 +63,15 @@ DurationLimitsDialog::DurationLimitsDialog(const Time &minDuration, const Time &
 	maxLayout->addWidget(maxDurationLabel, 0, 0, Qt::AlignRight | Qt::AlignVCenter);
 	maxLayout->addWidget(m_maxDurationTimeEdit, 0, 1);
 
-	connect(m_maxGroupBox, SIGNAL(toggled(bool)), maxDurationLabel, SLOT(setEnabled(bool)));
-	connect(m_maxGroupBox, SIGNAL(toggled(bool)), m_maxDurationTimeEdit, SLOT(setEnabled(bool)));
+	connect(m_maxGroupBox, &QGroupBox::toggled, maxDurationLabel, &QWidget::setEnabled);
+	connect(m_maxGroupBox, &QGroupBox::toggled, m_maxDurationTimeEdit, &QWidget::setEnabled);
 
-	connect(m_minGroupBox, SIGNAL(toggled(bool)), m_preventOverlapCheckBox, SLOT(setEnabled(bool)));
-	connect(m_minGroupBox, SIGNAL(toggled(bool)), minDurationLabel, SLOT(setEnabled(bool)));
-	connect(m_minGroupBox, SIGNAL(toggled(bool)), m_minDurationTimeEdit, SLOT(setEnabled(bool)));
+	connect(m_minGroupBox, &QGroupBox::toggled, m_preventOverlapCheckBox, &QWidget::setEnabled);
+	connect(m_minGroupBox, &QGroupBox::toggled, minDurationLabel, &QWidget::setEnabled);
+	connect(m_minGroupBox, &QGroupBox::toggled, m_minDurationTimeEdit, &QWidget::setEnabled);
 
-	connect(m_maxDurationTimeEdit, SIGNAL(valueChanged(int)), this, SLOT(onMaxDurationValueChanged(int)));
-	connect(m_minDurationTimeEdit, SIGNAL(valueChanged(int)), this, SLOT(onMinDurationValueChanged(int)));
+	connect(m_maxDurationTimeEdit, &TimeEdit::valueChanged, this, &DurationLimitsDialog::onMaxDurationValueChanged);
+	connect(m_minDurationTimeEdit, &TimeEdit::valueChanged, this, &DurationLimitsDialog::onMinDurationValueChanged);
 
 	m_maxDurationTimeEdit->setValue(maxDuration.toMillis());
 	m_minDurationTimeEdit->setValue(minDuration.toMillis());

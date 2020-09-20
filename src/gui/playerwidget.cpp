@@ -230,22 +230,22 @@ PlayerWidget::PlayerWidget(QWidget *parent) :
 	fullScreenControlsLayout->addWidget(createToolButton(m_fullScreenControls, ACT_TOGGLE_FULL_SCREEN, FS_BUTTON_SIZE));
 	m_fullScreenControls->adjustSize();
 
-	connect(m_volumeSlider, SIGNAL(valueChanged(int)), this, SLOT(onVolumeSliderValueChanged(int)));
-	connect(m_fsVolumeSlider, SIGNAL(valueChanged(int)), this, SLOT(onVolumeSliderValueChanged(int)));
+	connect(m_volumeSlider, &QAbstractSlider::valueChanged, this, &PlayerWidget::onVolumeSliderValueChanged);
+	connect(m_fsVolumeSlider, &QAbstractSlider::valueChanged, this, &PlayerWidget::onVolumeSliderValueChanged);
 
-	connect(m_seekSlider, SIGNAL(valueChanged(int)), this, SLOT(onSeekSliderValueChanged(int)));
-	connect(m_seekSlider, SIGNAL(sliderMoved(int)), this, SLOT(onSeekSliderMoved(int)));
-	connect(m_seekSlider, SIGNAL(sliderPressed()), this, SLOT(onSeekSliderPressed()));
-	connect(m_seekSlider, SIGNAL(sliderReleased()), this, SLOT(onSeekSliderReleased()));
-	connect(m_fsSeekSlider, SIGNAL(valueChanged(int)), this, SLOT(onSeekSliderValueChanged(int)));
-	connect(m_fsSeekSlider, SIGNAL(sliderMoved(int)), this, SLOT(onSeekSliderMoved(int)));
-	connect(m_fsSeekSlider, SIGNAL(sliderPressed()), this, SLOT(onSeekSliderPressed()));
-	connect(m_fsSeekSlider, SIGNAL(sliderReleased()), this, SLOT(onSeekSliderReleased()));
+	connect(m_seekSlider, &QAbstractSlider::valueChanged, this, &PlayerWidget::onSeekSliderValueChanged);
+	connect(m_seekSlider, &QAbstractSlider::sliderMoved, this, &PlayerWidget::onSeekSliderMoved);
+	connect(m_seekSlider, &QAbstractSlider::sliderPressed, this, &PlayerWidget::onSeekSliderPressed);
+	connect(m_seekSlider, &QAbstractSlider::sliderReleased, this, &PlayerWidget::onSeekSliderReleased);
+	connect(m_fsSeekSlider, &QAbstractSlider::valueChanged, this, &PlayerWidget::onSeekSliderValueChanged);
+	connect(m_fsSeekSlider, &QAbstractSlider::sliderMoved, this, &PlayerWidget::onSeekSliderMoved);
+	connect(m_fsSeekSlider, &QAbstractSlider::sliderPressed, this, &PlayerWidget::onSeekSliderPressed);
+	connect(m_fsSeekSlider, &QAbstractSlider::sliderReleased, this, &PlayerWidget::onSeekSliderReleased);
 
-	connect(m_positionEdit, SIGNAL(valueChanged(int)), this, SLOT(onPositionEditValueChanged(int)));
-	connect(m_positionEdit, SIGNAL(valueEntered(int)), this, SLOT(onPositionEditValueChanged(int)));
+	connect(m_positionEdit, &TimeEdit::valueChanged, this, &PlayerWidget::onPositionEditValueChanged);
+	connect(m_positionEdit, &TimeEdit::valueEntered, this, &PlayerWidget::onPositionEditValueChanged);
 
-	connect(SCConfig::self(), SIGNAL(configChanged()), this, SLOT(onConfigChanged()));
+	connect(SCConfig::self(), &KCoreConfigSkeleton::configChanged, this, &PlayerWidget::onConfigChanged);
 
 	connect(m_player, &VideoPlayer::fileOpened, this, &PlayerWidget::onPlayerFileOpened);
 	connect(m_player, &VideoPlayer::fileOpenError, this, &PlayerWidget::onPlayerFileOpenError);
@@ -501,8 +501,8 @@ void
 PlayerWidget::setSubtitle(Subtitle *subtitle)
 {
 	if(m_subtitle) {
-		disconnect(m_subtitle, SIGNAL(linesInserted(int, int)), this, SLOT(invalidateOverlayLine()));
-		disconnect(m_subtitle, SIGNAL(linesRemoved(int, int)), this, SLOT(invalidateOverlayLine()));
+		disconnect(m_subtitle, &Subtitle::linesInserted, this, &PlayerWidget::invalidateOverlayLine);
+		disconnect(m_subtitle, &Subtitle::linesRemoved, this, &PlayerWidget::invalidateOverlayLine);
 
 		m_subtitle = 0;                 // has to be set to 0 for invalidateOverlayLine
 
@@ -513,8 +513,8 @@ PlayerWidget::setSubtitle(Subtitle *subtitle)
 	m_subtitle = subtitle;
 
 	if(m_subtitle) {
-		connect(m_subtitle, SIGNAL(linesInserted(int, int)), this, SLOT(invalidateOverlayLine()));
-		connect(m_subtitle, SIGNAL(linesRemoved(int, int)), this, SLOT(invalidateOverlayLine()));
+		connect(m_subtitle, &Subtitle::linesInserted, this, &PlayerWidget::invalidateOverlayLine);
+		connect(m_subtitle, &Subtitle::linesRemoved, this, &PlayerWidget::invalidateOverlayLine);
 	}
 }
 
@@ -645,15 +645,15 @@ void
 PlayerWidget::setOverlayLine(SubtitleLine *line)
 {
 	if(m_overlayLine) {
-		disconnect(m_overlayLine, SIGNAL(showTimeChanged(const Time &)), this, SLOT(invalidateOverlayLine()));
-		disconnect(m_overlayLine, SIGNAL(hideTimeChanged(const Time &)), this, SLOT(invalidateOverlayLine()));
+		disconnect(m_overlayLine, &SubtitleLine::showTimeChanged, this, &PlayerWidget::invalidateOverlayLine);
+		disconnect(m_overlayLine, &SubtitleLine::hideTimeChanged, this, &PlayerWidget::invalidateOverlayLine);
 	}
 
 	m_overlayLine = line;
 
 	if(m_overlayLine) {
-		connect(m_overlayLine, SIGNAL(showTimeChanged(const Time &)), this, SLOT(invalidateOverlayLine()));
-		connect(m_overlayLine, SIGNAL(hideTimeChanged(const Time &)), this, SLOT(invalidateOverlayLine()));
+		connect(m_overlayLine, &SubtitleLine::showTimeChanged, this, &PlayerWidget::invalidateOverlayLine);
+		connect(m_overlayLine, &SubtitleLine::hideTimeChanged, this, &PlayerWidget::invalidateOverlayLine);
 	} else
 		m_lastSearchedLineToShowTime = Time::MaxMseconds;
 }

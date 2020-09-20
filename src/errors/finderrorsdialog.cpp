@@ -128,8 +128,8 @@ FindErrorsDialog::createErrorsButtons(bool showUserMarks, bool showMissingTransl
 	QPushButton *selectNoneButton = new QPushButton(m_errorsGroupBox);
 	selectNoneButton->setText(i18n("Select None"));
 
-	connect(selectAllButton, SIGNAL(clicked()), this, SLOT(selectAllErrorFlags()));
-	connect(selectNoneButton, SIGNAL(clicked()), this, SLOT(deselectAllErrorFlags()));
+	connect(selectAllButton, &QAbstractButton::clicked, this, &FindErrorsDialog::selectAllErrorFlags);
+	connect(selectNoneButton, &QAbstractButton::clicked, this, &FindErrorsDialog::deselectAllErrorFlags);
 
 	int row = 0, col = 0;
 	for(int errorId = 0; errorId < SubtitleLine::ErrorSIZE; ++errorId) {

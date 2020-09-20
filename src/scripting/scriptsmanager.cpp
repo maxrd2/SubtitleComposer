@@ -123,7 +123,7 @@ ScriptsManager::ScriptsManager(QObject *parent)
 	connect(btnRemove, SIGNAL(clicked()), this, SLOT(removeScript()));
 	connect(btnEdit, SIGNAL(clicked()), this, SLOT(editScript()));
 	connect(btnRun, SIGNAL(clicked()), this, SLOT(runScript()));
-	connect(btnRefresh, SIGNAL(clicked()), this, SLOT(reloadScripts()));
+	connect(btnRefresh, &QAbstractButton::clicked, this, &ScriptsManager::reloadScripts);
 
 //	m_dialog->resize(350, 10);
 }
@@ -394,7 +394,7 @@ ScriptsManager::toolsMenu()
 			toolsMenu = app()->mainWindow()->menuBar()->addMenu(i18n("Tools"));
 			toolsMenu->setObjectName("tools");
 		}
-		connect(toolsMenu, SIGNAL(triggered(QAction *)), this, SLOT(onToolsMenuActionTriggered(QAction *)));
+		connect(toolsMenu, &QMenu::triggered, this, &ScriptsManager::onToolsMenuActionTriggered);
 	}
 
 	return toolsMenu;
