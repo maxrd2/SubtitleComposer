@@ -111,7 +111,7 @@ System::recursiveMakeDir(const QString &path, QStringList *createdDirsList)
 	QStringList tokens = path.split(QChar('/'), Qt::SkipEmptyParts);
 	for(QStringList::ConstIterator it = tokens.constBegin(), end = tokens.constEnd(); it != end; ++it) {
 		parcialPath.setPath(parcialPath.path() + '/' + *it);
-		if(!QFileInfo(parcialPath.path()).exists()) {
+		if(!QFileInfo::exists(parcialPath.path())) {
 			if(!QDir().mkdir(parcialPath.path()))
 				return false;
 			if(createdDirsList)

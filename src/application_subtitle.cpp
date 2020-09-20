@@ -70,7 +70,7 @@ Application::buildSubtitleFilesFilter(bool openFileFilter)
 	if(filterSave.isEmpty()) {
 		QString textExtensions;
 		QString imageExtensions;
-		QStringList formats = FormatManager::instance().inputNames();
+		const QStringList formats = FormatManager::instance().inputNames();
 		for(const QString &fmt : formats) {
 			const InputFormat *format = FormatManager::instance().input(fmt);
 			QString extensions;

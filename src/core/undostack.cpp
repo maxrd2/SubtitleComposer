@@ -57,7 +57,7 @@ restoreSelection(int current, const QList<std::pair<int, int>> &selection)
 	// restore selected ranges
 	QItemSelection itemSel;
 	const int lastCol = lm->columnCount() - 1;
-	for(const std::pair<int, int> r : selection)
+	for(const std::pair<int, int> &r : selection)
 		itemSel.push_back(QItemSelectionRange(lm->index(r.first), lm->index(r.second, lastCol)));
 	sm->select(itemSel, QItemSelectionModel::ClearAndSelect);
 

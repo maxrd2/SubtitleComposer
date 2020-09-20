@@ -130,9 +130,7 @@ protected:
 			formatData = this->formatData(line);
 
 			ret += QString(formatData ? formatData->value(QStringLiteral("Dialogue")) : m_dialogueBuilder)
-					.arg(showTimeArg)
-					.arg(hideTimeArg)
-					.arg(fromSString(primary ? line->primaryText() : line->secondaryText()));
+					.arg(showTimeArg, hideTimeArg, fromSString(primary ? line->primaryText() : line->secondaryText()));
 		}
 		return ret;
 	}

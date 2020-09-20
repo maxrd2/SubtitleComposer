@@ -114,13 +114,13 @@ public:
 					// remove space before/between, add it after punctuation
 					.replace(QRegularExpression(QStringLiteral(" *(?:([\\.,?!;:]) *)+")), QStringLiteral("\\1 "))
 					// ?. => ?, !. => !, :. => :
-					.replace(QRegularExpression(QStringLiteral("(?<=[?!:])\\.")), QStringLiteral(""))
+					.replace(QRegularExpression(QStringLiteral("(?<=[?!:])\\.")), QString())
 					// ,, => ...; -- => ...
 					.replace(QRegularExpression(QStringLiteral("(?:,{2,}|-{2,})")), QStringLiteral("..."));
 
 			if(ppFlags & VobSubInputInitDialog::SPACE_NUMBERS)
 				text
-					.replace(QRegularExpression(QStringLiteral("\\d[\\d,.]*\\K +(?=[\\d,.])")), QStringLiteral("")); // remove space between numbers
+					.replace(QRegularExpression(QStringLiteral("\\d[\\d,.]*\\K +(?=[\\d,.])")), QString()); // remove space between numbers
 
 			if(ppFlags & VobSubInputInitDialog::CHARS_OCR)
 				text

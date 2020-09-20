@@ -583,7 +583,7 @@ StreamProcessor::processText()
 							break;
 						QString repl("<%1%2>");
 						assChunk.insert(match.capturedEnd(0), repl
-									.arg(match.captured(2) == QStringLiteral("0") ? QStringLiteral("/") : QStringLiteral(""))
+									.arg(match.captured(2) == QStringLiteral("0") ? QStringLiteral("/") : QString())
 									.arg(match.captured(1)));
 						assChunk.remove(match.capturedStart(1), match.capturedLength(2) + 1);
 					}

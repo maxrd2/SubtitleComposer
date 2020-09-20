@@ -80,7 +80,7 @@ SelectableSubtitleDialog::selectSubtitle()
 	openDlg.selectUrl(subtitleUrl().isEmpty() ? app()->lastSubtitleDirectory() : subtitleUrl());
 
 	if(openDlg.exec() == QDialog::Accepted)
-		m_subtitleUrlLineEdit->setText(openDlg.selectedUrls().first().toLocalFile());
+		m_subtitleUrlLineEdit->setText(openDlg.selectedUrls().constFirst().toLocalFile());
 }
 
 QUrl
