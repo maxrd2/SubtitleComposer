@@ -24,7 +24,7 @@
 #include <QThread>
 
 namespace SubtitleComposer {
-struct VideoState;
+class VideoState;
 class FFPlayer;
 
 class StreamDemuxer : public QThread

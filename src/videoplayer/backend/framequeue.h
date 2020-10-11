@@ -36,7 +36,7 @@ QT_FORWARD_DECLARE_CLASS(QWaitCondition)
 #define FRAME_QUEUE_SIZE FFMAX(SAMPLE_QUEUE_SIZE, FFMAX(VIDEO_PICTURE_QUEUE_SIZE, SUBPICTURE_QUEUE_SIZE))
 
 namespace SubtitleComposer {
-struct PacketQueue;
+class PacketQueue;
 
 struct Frame {
 	AVFrame *frame;
