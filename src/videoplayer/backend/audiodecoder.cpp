@@ -494,7 +494,7 @@ AudioDecoder::queueFrame(Frame *af)
 	if(!m_audioBuf || m_vs->demuxer->paused()) {
 		uint8_t *silence = new uint8_t[m_bufSize]();
 		queueBuffer(silence, m_bufSize);
-		delete silence;
+		delete[] silence;
 	} else {
 		queueBuffer((uint8_t *)m_audioBuf, audioSize);
 	}
