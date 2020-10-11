@@ -23,18 +23,17 @@
 
 #include "videowidget.h"
 
+#include "videoplayer/backend/glrenderer.h"
+#include "videoplayer/subtitletextoverlay.h"
+
 #include <QPainterPath>
 #include <QString>
 #include <QStringList>
 #include <QMap>
 #include <QWidget>
-#include <QtAV>
-
-QT_FORWARD_DECLARE_CLASS(QTimer)
 
 namespace SubtitleComposer {
-class VideoPlayerSubtitleOverlay;
-class SubtitleTextOverlay;
+class FFPlayer;
 
 class VideoPlayer : public QObject
 {
@@ -60,39 +59,39 @@ public:
 
 	inline bool isPlaying() const { return m_state == Playing; }
 	inline bool isPaused() const { return m_state == Paused; }
-	inline bool isStopped() const { return m_state == Stopped; }
+	inline bool isStopped() const { return m_state <= Stopped; }
 	inline double position() const { return m_position; }
 	inline double duration() const { return m_duration; }
-	inline double framesPerSecond() const { return m_fps; }
-	inline double playbackRate() const { return m_playbackRate; }
+	inline double fps() const { return m_fps; }
+	inline double playSpeed() const { return m_playSpeed; }
 	inline double volume() const { return m_volume; }
 	inline bool isMuted() const { return m_muted; }
 	inline int selectedAudioStream() const { return m_activeAudioStream; }
 
-	void playbackRate(double newRate);
+	void playSpeed(double newRate);
 
 	inline const QStringList & textStreams() const { return m_textStreams; }
 	inline const QStringList & audioStreams() const { return m_audioStreams; }
 
-	SubtitleTextOverlay & subtitleOverlay();
+	inline SubtitleTextOverlay & subtitleOverlay() { return m_subOverlay; }
 
 	bool playOnLoad();
 
 public slots:
 	bool openFile(const QString &filePath);
-	bool closeFile();
+	void closeFile();
 
-	bool play();
-	bool pause();
-	bool togglePlayPaused();
+	void play();
+	void pause();
+	void togglePlayPaused();
 	bool seek(double seconds);
 	bool step(int frameOffset);
 	bool stop();
-	bool selectAudioStream(int audioStreamIndex);
+	bool selectAudioStream(int streamIndex);
 
 	void increaseVolume(double amount = 3.0);
 	void decreaseVolume(double amount = 3.0);
-	void setVolume(double volume);          // value from 0.0 to 100.0 (inclusive)
+	void setVolume(double volume); // [0.0 - 100.0]
 	void setMuted(bool mute);
 
 signals:
@@ -103,9 +102,9 @@ signals:
 	void playbackError(const QString &errorMessage = QString());
 	void playing();
 	void positionChanged(double seconds);
-	void lengthChanged(double seconds);
-	void framesPerSecondChanged(double fps);
-	void playbackRateChanged(double rate);
+	void durationChanged(double seconds);
+	void fpsChanged(double fps);
+	void playSpeedChanged(double rate);
 	void paused();
 	void stopped();
 	void textStreamsChanged(const QStringList &textStreams);
@@ -126,32 +125,20 @@ private:
 	virtual ~VideoPlayer();
 
 	void reset();
-
-private slots:
-	// QtAV player state notifications
-	void onMediaLoaded();
-	void onResolutionChange();
-	void onStateChange(QtAV::AVPlayer::State state);
-	void onPositionChange(qint64 position);
-	void onDurationChange(qint64 duration);
-	void onSpeedChange(double speed);
-	void onVolumeChange(double volume);
-	void onMuteChange(bool muted);
+	void setupNotifications();
 
 private:
-	QtAV::VideoOutput *m_renderer;
-	QtAV::AVPlayer *m_player;
-
-	State m_state;
-
+	FFPlayer *m_player;
+	GLRenderer *m_renderer;
 	VideoWidget *m_videoWidget;
-
+	SubtitleTextOverlay m_subOverlay;
 	QString m_filePath;
 
+	State m_state;
 	double m_position;
 	double m_duration;
 	double m_fps;
-	double m_playbackRate;
+	double m_playSpeed;
 	double m_minPositionDelta;
 	QStringList m_textStreams;
 	int m_activeAudioStream;
@@ -159,8 +146,6 @@ private:
 
 	bool m_muted;
 	double m_volume;
-
-	VideoPlayerSubtitleOverlay *m_overlay;
 };
 }
 #endif

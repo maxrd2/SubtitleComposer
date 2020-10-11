@@ -71,8 +71,8 @@ public slots:
 	void setTranslationMode(bool enabled);
 	void setShowTranslation(bool showTranslation);
 
-	void increaseFontSize(int points = 1);
-	void decreaseFontSize(int points = 1);
+	void increaseFontSize(int size = 1);
+	void decreaseFontSize(int size = 1);
 
 signals:
 	void playingLineChanged(SubtitleLine *line);

@@ -1,15 +1,3 @@
-set(streamprocessor_INCLUDE_DIR
-	CACHE INTERNAL EXPORTEDVARIABLE
-)
-
-set(streamprocessor_DEFS
-	CACHE INTERNAL EXPORTEDVARIABLE
-)
-
-set(streamprocessor_LIBS
-	CACHE INTERNAL EXPORTEDVARIABLE
-)
-
 set(streamprocessor_SRCS
 	${CMAKE_CURRENT_SOURCE_DIR}/streamprocessor.cpp
 	CACHE INTERNAL EXPORTEDVARIABLE

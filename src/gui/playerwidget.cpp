@@ -60,7 +60,7 @@ PlayerWidget::PlayerWidget(QWidget *parent) :
 	m_subtitle(0),
 	m_translationMode(false),
 	m_showTranslation(false),
-	m_overlayLine(0),
+	m_overlayLine(nullptr),
 	m_playingLine(nullptr),
 	m_pauseAfterPlayingLine(nullptr),
 	m_fullScreenTID(0),
@@ -254,9 +254,9 @@ PlayerWidget::PlayerWidget(QWidget *parent) :
 	connect(m_player, &VideoPlayer::playing, this, &PlayerWidget::onPlayerPlaying);
 	connect(m_player, &VideoPlayer::stopped, this, &PlayerWidget::onPlayerStopped);
 	connect(m_player, &VideoPlayer::positionChanged, this, &PlayerWidget::onPlayerPositionChanged);
-	connect(m_player, &VideoPlayer::lengthChanged, this, &PlayerWidget::onPlayerLengthChanged);
-	connect(m_player, &VideoPlayer::framesPerSecondChanged, this, &PlayerWidget::onPlayerFramesPerSecondChanged);
-	connect(m_player, &VideoPlayer::playbackRateChanged, this, &PlayerWidget::onPlayerPlaybackRateChanged);
+	connect(m_player, &VideoPlayer::durationChanged, this, &PlayerWidget::onPlayerLengthChanged);
+	connect(m_player, &VideoPlayer::fpsChanged, this, &PlayerWidget::onPlayerFramesPerSecondChanged);
+	connect(m_player, &VideoPlayer::playSpeedChanged, this, &PlayerWidget::onPlayerPlaybackRateChanged);
 	connect(m_player, &VideoPlayer::volumeChanged, this, &PlayerWidget::onPlayerVolumeChanged);
 	connect(m_player, &VideoPlayer::muteChanged, m_fsVolumeSlider, &QWidget::setDisabled);
 	connect(m_player, &VideoPlayer::muteChanged, m_volumeSlider, &QWidget::setDisabled);
@@ -265,9 +265,10 @@ PlayerWidget::PlayerWidget(QWidget *parent) :
 	connect(m_player, &VideoPlayer::rightClicked, this, &PlayerWidget::onPlayerRightClicked);
 	connect(m_player, &VideoPlayer::doubleClicked, this, &PlayerWidget::onPlayerDoubleClicked);
 
-	setOverlayLine(0);
 	onPlayerFileClosed();
 	onConfigChanged();    // initializes the font
+
+	setFullScreenMode(m_fullScreenMode);
 }
 
 PlayerWidget::~PlayerWidget()
@@ -320,53 +321,52 @@ PlayerWidget::fullScreenMode() const
 void
 PlayerWidget::setFullScreenMode(bool fullScreenMode)
 {
-	if(m_fullScreenMode != fullScreenMode) {
-		m_fullScreenMode = fullScreenMode;
+	m_player->subtitleOverlay().setRenderScale(fullScreenMode ? 1.0 : 1.2);
 
-		if(m_fullScreenMode) {
-			increaseFontSize(18);
+	if(m_fullScreenMode == fullScreenMode)
+		return;
 
-			window()->hide();
+	m_fullScreenMode = fullScreenMode;
 
-			// Move m_layeredWidget to a temporary widget which will be
-			// displayed in full screen mode.
-			// Can not call showFullScreen() on m_layeredWidget directly
-			// because restoring the previous state is buggy under
-			// some desktop environments / window managers.
+	if(m_fullScreenMode) {
+		window()->hide();
 
-			auto *fullScreenWidget = new QWidget;
-			auto *fullScreenLayout = new QHBoxLayout;
-			fullScreenLayout->setMargin(0);
-			fullScreenWidget->setLayout(fullScreenLayout);
-			m_layeredWidget->setParent(fullScreenWidget);
-			fullScreenLayout->addWidget(m_layeredWidget);
-			fullScreenWidget->showFullScreen();
+		// Move m_layeredWidget to a temporary widget which will be
+		// displayed in full screen mode.
+		// Can not call showFullScreen() on m_layeredWidget directly
+		// because restoring the previous state is buggy under
+		// some desktop environments / window managers.
 
-			m_layeredWidget->unsetCursor();
-			m_layeredWidget->setMouseTracking(true);
-			m_fullScreenControls->attach(m_layeredWidget);
+		auto *fullScreenWidget = new QWidget;
+		auto *fullScreenLayout = new QHBoxLayout;
+		fullScreenLayout->setMargin(0);
+		fullScreenWidget->setLayout(fullScreenLayout);
+		m_layeredWidget->setParent(fullScreenWidget);
+		fullScreenLayout->addWidget(m_layeredWidget);
+		fullScreenWidget->showFullScreen();
 
-			m_fullScreenTID = startTimer(HIDE_MOUSE_MSECS);
-		} else {
-			if(m_fullScreenTID) {
-				killTimer(m_fullScreenTID);
-				m_fullScreenTID = 0;
-			}
+		m_layeredWidget->unsetCursor();
+		m_layeredWidget->setMouseTracking(true);
+		m_fullScreenControls->attach(m_layeredWidget);
 
-			decreaseFontSize(18);
-
-			m_fullScreenControls->dettach();
-			m_layeredWidget->setMouseTracking(false);
-			m_layeredWidget->unsetCursor();
-
-			// delete temporary parent widget later and set this as parent again
-			m_layeredWidget->parent()->deleteLater();
-			m_layeredWidget->setParent(this);
-
-			m_mainLayout->addWidget(m_layeredWidget, 0, 1);
-
-			window()->show();
+		m_fullScreenTID = startTimer(HIDE_MOUSE_MSECS);
+	} else {
+		if(m_fullScreenTID) {
+			killTimer(m_fullScreenTID);
+			m_fullScreenTID = 0;
 		}
+
+		m_fullScreenControls->dettach();
+		m_layeredWidget->setMouseTracking(false);
+		m_layeredWidget->unsetCursor();
+
+		// delete temporary parent widget later and set this as parent again
+		m_layeredWidget->parent()->deleteLater();
+		m_layeredWidget->setParent(this);
+
+		m_mainLayout->addWidget(m_layeredWidget, 0, 1);
+
+		window()->show();
 	}
 }
 
@@ -539,17 +539,17 @@ PlayerWidget::setShowTranslation(bool showTranslation)
 }
 
 void
-PlayerWidget::increaseFontSize(int points)
+PlayerWidget::increaseFontSize(int size)
 {
-	SCConfig::setFontPointSize(SCConfig::fontPointSize() + points);
-	m_player->subtitleOverlay().setFontSizePt(SCConfig::fontPointSize());
+	SCConfig::setFontSize(SCConfig::fontSize() + size);
+	m_player->subtitleOverlay().setFontSize(SCConfig::fontSize());
 }
 
 void
-PlayerWidget::decreaseFontSize(int points)
+PlayerWidget::decreaseFontSize(int size)
 {
-	SCConfig::setFontPointSize(SCConfig::fontPointSize() - points);
-	m_player->subtitleOverlay().setFontSizePt(SCConfig::fontPointSize());
+	SCConfig::setFontSize(SCConfig::fontSize() - size);
+	m_player->subtitleOverlay().setFontSize(SCConfig::fontSize());
 }
 
 void
@@ -635,7 +635,7 @@ PlayerWidget::invalidateOverlayLine()
 {
 	m_player->subtitleOverlay().setText(QString());
 
-	setOverlayLine(0);
+	setOverlayLine(nullptr);
 
 	if(m_player->position() >= 0.0)
 		updateOverlayLine((long)(m_player->position() * 1000));
@@ -752,7 +752,7 @@ PlayerWidget::onConfigChanged()
 
 	m_player->subtitleOverlay().setTextColor(SCConfig::fontColor());
 	m_player->subtitleOverlay().setFontFamily(SCConfig::fontFamily());
-	m_player->subtitleOverlay().setFontSizePt(SCConfig::fontPointSize());
+	m_player->subtitleOverlay().setFontSize(SCConfig::fontSize());
 	m_player->subtitleOverlay().setOutlineColor(SCConfig::outlineColor());
 	m_player->subtitleOverlay().setOutlineWidth(SCConfig::outlineWidth());
 }
@@ -777,6 +777,8 @@ PlayerWidget::onPlayerFileOpenError(const QString &filePath, const QString &reas
 void
 PlayerWidget::onPlayerFileClosed()
 {
+	invalidateOverlayLine();
+
 	m_lastCheckedTime = 0;
 
 	m_infoControlsGroupBox->setEnabled(false);

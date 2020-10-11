@@ -189,7 +189,7 @@
 			<label>Font Family</label>
 			<default>Sans Serif</default>
 		</entry>
-		<entry name="FontPointSize" type="Int">
+		<entry name="FontSize" type="Int">
 			<label>Font Size</label>
 			<default>15</default>
 		</entry>

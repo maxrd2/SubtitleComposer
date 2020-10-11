@@ -26,21 +26,11 @@
 #include <QAbstractTextDocumentLayout>
 #include <QResizeEvent>
 
-#include "profiler.h"
-#include <QDebug>
-
 using namespace SubtitleComposer;
 
-TextOverlayWidget::TextOverlayWidget(QWidget *parent) :
-	QWidget(parent)
+TextOverlayWidget::TextOverlayWidget(QWidget *parent)
+	: QWidget(parent)
 {
-	m_overlay.setFontSizePt(15);
-	m_overlay.setTextColor(Qt::yellow);
-	m_overlay.setOutlineWidth(1);
-	m_overlay.setOutlineColor(Qt::black);
-
-	m_overlay.setImageSize(size());
-
 	parent->installEventFilter(this);
 }
 

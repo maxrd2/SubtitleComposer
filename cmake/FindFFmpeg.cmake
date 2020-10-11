@@ -6,7 +6,8 @@
 #  FFMPEG_INCLUDE_DIRS - FFmpeg include directories
 #  FFMPEG_LIBRARIES - FFmpeg libraries
 #
-set(_avmodules AVCODEC AVFORMAT AVUTIL SWRESAMPLE)
+# disabled: AVDEVICE POSTPROC AVFILTER
+set(_avmodules AVFORMAT AVCODEC SWRESAMPLE SWSCALE AVUTIL)
 #  FFMPEG_(avmodule)_VERSION - module version
 #  FFMPEG_(avmodule)_INCLUDE_DIR - module include directory
 #  FFMPEG_(avmodule)_LIBRARY - module library
@@ -19,7 +20,7 @@ foreach(MODULE ${_avmodules})
 	pkg_check_modules(PC_FFMPEG_${MODULE} QUIET lib${module})
 	set(FFMPEG_${MODULE}_VERSION ${PC_FFMPEG_${MODULE}_VERSION})
 
-	find_path(FFMPEG_${MODULE}_INCLUDE_DIR lib${module}/${module}.h
+	find_path(FFMPEG_${MODULE}_INCLUDE_DIR lib${module}/version.h
 		HINTS
 			${PC_FFMPEG_${MODULE}_INCLUDEDIR} ${PC_FFMPEG_${MODULE}_INCLUDE_DIRS}
 		PATH_SUFFIXES ffmpeg)

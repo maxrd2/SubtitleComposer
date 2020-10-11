@@ -72,7 +72,7 @@ StreamProcessor::open(const QString &filename)
 #if defined(VERBOSE) || !defined(NDEBUG)
 	av_log_set_level(AV_LOG_VERBOSE);
 #else
-	av_log_set_level(AV_LOG_WARNING);
+	av_log_set_level(AV_LOG_INFO);
 #endif
 
 	int ret;

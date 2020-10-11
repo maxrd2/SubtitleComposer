@@ -10,7 +10,3 @@ set(formats_vobsub_UIS
 	${CMAKE_CURRENT_SOURCE_DIR}/vobsubinputprocessdialog.ui
 	CACHE INTERNAL EXPORTEDVARIABLE
 )
-
-set(formats_vobsub_LIBS
-	CACHE INTERNAL EXPORTEDVARIABLE
-)

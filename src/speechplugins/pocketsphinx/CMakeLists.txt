@@ -4,19 +4,6 @@ if(NOT POCKETSPHINX_FOUND)
 	return()
 endif()
 
-set(speech_pocketsphinx_INCLUDE_DIRS
-	${CMAKE_CURRENT_BINARY_DIR} # so files can find plugin-config.h
-	${POCKETSPHINX_INCLUDE_DIRS}
-	CACHE INTERNAL EXPORTEDVARIABLE
-)
-set(speech_pocketsphinx_DEFS
-	${POCKETSPHINX_DEFINITIONS}
-	CACHE INTERNAL EXPORTEDVARIABLE
-)
-set(speech_pocketsphinx_LIBS
-	${POCKETSPHINX_LIBRARIES}
-	CACHE INTERNAL EXPORTEDVARIABLE
-)
 set(speech_pocketsphinx_SRCS
 	${CMAKE_CURRENT_SOURCE_DIR}/pocketsphinxplugin.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/pocketsphinxconfigwidget.cpp
@@ -30,14 +17,18 @@ kconfig_add_kcfg_files(speech_pocketsphinx_SRCS GENERATE_MOC
 	${CMAKE_CURRENT_SOURCE_DIR}/pocketsphinxconfig.kcfgc
 )
 
-
 add_library(pocketsphinxasr MODULE ${speech_pocketsphinx_SRCS})
 
 install(TARGETS pocketsphinxasr DESTINATION ${SC_PLUGIN_INSTALL_DIR})
 
-target_include_directories(pocketsphinxasr SYSTEM PRIVATE ${speech_pocketsphinx_INCLUDE_DIRS})
-set_target_properties(pocketsphinxasr PROPERTIES COMPILE_FLAGS "${speech_pocketsphinx_DEFS}")
-target_link_libraries(pocketsphinxasr ${subtitlecomposer_LIBS} ${speech_pocketsphinx_LIBS} Qt5::Core)
+target_include_directories(pocketsphinxasr SYSTEM PRIVATE
+	${CMAKE_CURRENT_BINARY_DIR} # so files can find plugin-config.h
+	${POCKETSPHINX_INCLUDE_DIRS})
+target_link_libraries(pocketsphinxasr
+	Qt5::Core Qt5::Widgets Qt5::Gui
+	KF5::I18n
+	KF5::KIOCore KF5::KIOFileWidgets KF5::KIOWidgets KF5::KIONTLM
+	${POCKETSPHINX_LIBRARIES})
 
 add_dependencies(pocketsphinxasr subtitlecomposer)
 

@@ -1762,13 +1762,15 @@ Application::seekToNextLine()
 void
 Application::playrateIncrease()
 {
-	m_player->playbackRate(m_player->playbackRate() + 0.1);
+	const double speed = m_player->playSpeed();
+	m_player->playSpeed(speed + (speed >= 2.0 ? .5 : .1));
 }
 
 void
 Application::playrateDecrease()
 {
-	m_player->playbackRate(m_player->playbackRate() - 0.1);
+	const double speed = m_player->playSpeed();
+	m_player->playSpeed(speed - (speed > 2.0 ? .5 : .1));
 }
 
 void

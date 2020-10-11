@@ -18,12 +18,8 @@
  * Boston, MA 02110-1301, USA.
  */
 
-#if HAVE_CONFIG_H
-# include "config.h"
-#endif
-
 #include "videoplayer.h"
-#include "subtitletextoverlay.h"
+#include "videoplayer/backend/ffplayer.h"
 #include "scconfig.h"
 
 #include <math.h>
@@ -35,247 +31,41 @@
 
 #include <QDebug>
 
-#include <QtAVWidgets>
-
 #include <KLocalizedString>
 
 #define DEFAULT_MIN_POSITION_DELTA 0.02
+#define VOLUME_MULTIPLIER 6.
 
 using namespace SubtitleComposer;
 
-namespace SubtitleComposer {
-class VideoPlayerSubtitleOverlay : public QtAV::VideoFilter
-{
-    Q_OBJECT
-
-public:
-	VideoPlayerSubtitleOverlay(QWidget *parent = nullptr) : QtAV::VideoFilter(parent) {
-		parent->installEventFilter(this);
-	}
-	virtual ~VideoPlayerSubtitleOverlay() {}
-
-	bool isSupported(QtAV::VideoFilterContext::Type ct) const override {
-		return ct == QtAV::VideoFilterContext::QtPainter || ct == QtAV::VideoFilterContext::X11;
-	}
-
-	bool eventFilter(QObject *object, QEvent *event) override {
-		if(object == parent() && event->type() == QEvent::Resize)
-			m_overlay.setImageSize(reinterpret_cast<QWidget *>(parent())->size());
-
-		return QObject::eventFilter(object, event);
-	}
-
-protected:
-    void process(QtAV::Statistics *statistics, QtAV::VideoFrame *frame) override {
-		Q_UNUSED(statistics)
-		Q_UNUSED(frame)
-		if(!isEnabled())
-			return;
-
-		const QWidget *widget = reinterpret_cast<QWidget *>(parent());
-		const QImage &img = m_overlay.image();
-		const QSizeF imgSize(widget->width(), m_overlay.textSize().height());
-		const qreal offY = widget->height() - widget->contentsMargins().bottom() - imgSize.height();
-		context()->drawImage(QPointF(0, offY), img, QRectF(QPointF(), imgSize));
-	}
-
-private:
-	friend class VideoPlayer;
-	SubtitleTextOverlay m_overlay;
-};
-}
-
-
 
 VideoPlayer::VideoPlayer()
-	: m_renderer(new QtAV::VideoOutput(QtAV::VideoRendererId_Widget, this)),
-	  m_player(new QtAV::AVPlayer(this)),
-	  m_state(Initialized),
+	: m_player(new FFPlayer()),
+	  m_renderer(new GLRenderer()),
 	  m_videoWidget(nullptr),
 	  m_filePath(),
+	  m_state(Initialized),
 	  m_position(-1.0),
 	  m_duration(-1.0),
 	  m_fps(-1.0),
-	  m_playbackRate(.0),
+	  m_playSpeed(.0),
 	  m_minPositionDelta(DEFAULT_MIN_POSITION_DELTA),
 	  m_textStreams(),
 	  m_activeAudioStream(-2),
 	  m_audioStreams(),
 	  m_muted(false),
-	  m_volume(100.0),
-	  m_overlay(nullptr)
+	  m_volume(100.0)
 {
-	m_player->setRenderer(m_renderer);
-	m_player->setNotifyInterval(10);
-	m_player->setMediaEndAction(QtAV::MediaEndAction_Pause);
+	m_renderer->setOverlay(&m_subOverlay);
+	m_player->init(m_renderer);
 
-	// NOTE: Qt::QueuedConnection is used to avoid racing conditions in QtAV which cause position to stop updating
-	connect(m_renderer, &QtAV::VideoOutput::videoFrameSizeChanged, this, &VideoPlayer::onResolutionChange);
-	connect(m_player, &QtAV::AVPlayer::loaded, this, &VideoPlayer::onMediaLoaded, Qt::QueuedConnection);
-	connect(m_player->audio(), &QtAV::AudioOutput::volumeChanged, this, &VideoPlayer::onVolumeChange);
-	connect(m_player->audio(), &QtAV::AudioOutput::muteChanged, this, &VideoPlayer::onMuteChange);
-	connect(m_player, &QtAV::AVPlayer::seekFinished, this, &VideoPlayer::onPositionChange, Qt::QueuedConnection);
-	connect(m_player, &QtAV::AVPlayer::positionChanged, this, &VideoPlayer::onPositionChange, Qt::QueuedConnection);
-	connect(m_player, &QtAV::AVPlayer::durationChanged, this, &VideoPlayer::onDurationChange);
-	connect(m_player, &QtAV::AVPlayer::speedChanged, this, &VideoPlayer::onSpeedChange);
-	connect(m_player, &QtAV::AVPlayer::stateChanged, this, &VideoPlayer::onStateChange);
-
-	m_overlay = new VideoPlayerSubtitleOverlay(m_renderer->widget());
-	m_renderer->installFilter(m_overlay);
-}
-
-void
-VideoPlayer::onMediaLoaded()
-{
-	emit fileOpened(m_filePath);
-
-	m_fps = m_player->statistics().video.frame_rate;
-	m_minPositionDelta = 1.0 / m_fps;
-	emit framesPerSecondChanged(m_fps);
-
-	m_audioStreams.clear();
-	const QVariantList &audioTracks = m_player->internalAudioTracks();
-	for(auto i = audioTracks.cbegin(); i != audioTracks.cend(); ++i) {
-		const QVariantMap &trk = i->toMap();
-		QString audioStreamName = i18n("Audio Stream #%1", trk[QStringLiteral("id")].toInt());
-		if(trk.contains(QStringLiteral("lang")))
-			audioStreamName += QStringLiteral(": ") + trk[QStringLiteral("lang")].toString();
-		if(trk.contains(QStringLiteral("title")))
-			audioStreamName += QStringLiteral(": ") + trk[QStringLiteral("title")].toString();
-		if(trk.contains(QStringLiteral("codec")))
-			audioStreamName += QStringLiteral(" [") + trk[QStringLiteral("codec")].toString() + QStringLiteral("]");
-		Q_ASSERT(m_audioStreams.size() == trk["id"]);
-		m_audioStreams.append(audioStreamName);
-	}
-	emit audioStreamsChanged(m_audioStreams);
-
-	if(m_duration <= 0) // we need video duration before notifying activeAudioStreamChanged
-		VideoPlayer::onDurationChange(m_player->duration());
-	m_activeAudioStream = m_player->currentAudioStream();
-	emit activeAudioStreamChanged(m_activeAudioStream);
-
-	m_textStreams.clear();
-	const QVariantList &subTracks = m_player->internalSubtitleTracks();
-	for(auto i = subTracks.cbegin(); i != subTracks.cend(); ++i) {
-		const QVariantMap &trk = i->toMap();
-
-		const QString &codec = trk[QStringLiteral("codec")].toString();
-		if(codec != QStringLiteral("mov_text") && codec != QStringLiteral("subrip"))
-			continue;
-
-		QString textStreamName = i18n("Text Stream #%1", trk[QStringLiteral("id")].toInt());
-		if(trk.contains(QStringLiteral("lang")))
-			textStreamName += QStringLiteral(": ") + trk[QStringLiteral("lang")].toString();
-		if(trk.contains(QStringLiteral("title")))
-			textStreamName += QStringLiteral(": ") + trk[QStringLiteral("title")].toString();
-
-		Q_ASSERT(m_textStreams.size() == trk["id"]);
-		m_textStreams.append(textStreamName);
-	}
-	emit textStreamsChanged(m_textStreams);
-}
-
-void
-VideoPlayer::onResolutionChange()
-{
-	const QSize fs = m_renderer->videoFrameSize();
-	m_videoWidget->setVideoResolution(fs.width(), fs.height(), m_renderer->sourceAspectRatio());
-}
-
-void
-VideoPlayer::onStateChange(QtAV::AVPlayer::State state)
-{
-	switch(state) {
-	case QtAV::AVPlayer::StoppedState:
-		if(m_state != Stopped) {
-			m_state = Stopped;
-			onSpeedChange(0.);
-			emit stopped();
-		}
-		break;
-	case QtAV::AVPlayer::PlayingState:
-		if(m_state != Playing) {
-			m_state = Playing;
-			onSpeedChange(m_player->speed());
-			emit playing();
-		}
-		break;
-	case QtAV::AVPlayer::PausedState:
-		if(m_state != Paused) {
-			m_state = Paused;
-			emit paused();
-		}
-		break;
-	}
-}
-
-void
-VideoPlayer::onPositionChange(qint64 position)
-{
-	const double pos = double(position) / 1000.;
-	if(m_position == pos || pos >= m_duration)
-		return;
-
-	if(m_position <= 0 || m_minPositionDelta <= .0) {
-		m_position = pos;
-		emit positionChanged(pos);
-	} else if(qAbs(m_position - pos) >= m_minPositionDelta) {
-		m_position = pos;
-		emit positionChanged(pos);
-	}
-}
-
-void
-VideoPlayer::onDurationChange(qint64 duration)
-{
-	const double dur = double(duration) / 1000.;
-	if(m_duration == dur)
-		return;
-
-	m_duration = dur;
-	emit lengthChanged(dur);
-}
-
-void
-VideoPlayer::onSpeedChange(double speed)
-{
-	if(m_playbackRate == speed)
-		return;
-
-	m_playbackRate = speed;
-	emit playbackRateChanged(m_playbackRate);
-}
-
-void
-VideoPlayer::onVolumeChange(double volume)
-{
-	if(m_muted)
-		return;
-
-	Q_ASSERT(volume >= 0. && volume <= 1.);
-	volume *= 100.;
-
-	if(m_volume == volume)
-		return;
-
-	m_volume = volume;
-	emit volumeChanged(m_volume);
-
-}
-
-void
-VideoPlayer::onMuteChange(bool muted)
-{
-	if(m_muted == muted)
-		return;
-
-	m_muted = muted;
-	emit muteChanged(m_muted);
+	setupNotifications();
 }
 
 VideoPlayer::~VideoPlayer()
 {
 	cleanup();
+	delete m_player;
 }
 
 VideoPlayer *
@@ -292,10 +82,9 @@ VideoPlayer::instance()
 bool
 VideoPlayer::init(QWidget *videoContainer)
 {
-	// TODO: drop init() and reparent videoWidget elsewhere
 	if(!m_videoWidget) {
 		m_videoWidget = new VideoWidget(videoContainer);
-		m_videoWidget->setVideoLayer(m_renderer->widget());
+		m_videoWidget->setVideoLayer(m_renderer);
 
 		connect(m_videoWidget, &VideoWidget::doubleClicked, this, &VideoPlayer::doubleClicked);
 		connect(m_videoWidget, &VideoWidget::rightClicked, this, &VideoPlayer::rightClicked);
@@ -313,7 +102,7 @@ VideoPlayer::init(QWidget *videoContainer)
 void
 VideoPlayer::cleanup()
 {
-	m_renderer->widget()->setParent(nullptr);
+	m_player->cleanup();
 }
 
 void
@@ -348,90 +137,71 @@ VideoPlayer::playOnLoad()
 bool
 VideoPlayer::openFile(const QString &filePath)
 {
-	Q_ASSERT(m_state == Initialized);
+	Q_ASSERT(m_state == Initialized || m_state == Stopped);
 
 	QFileInfo fileInfo(filePath);
 	if(!fileInfo.exists() || !fileInfo.isFile() || !fileInfo.isReadable()) {
 		emit fileOpenError(filePath, i18n("File does not exist."));   // operation will never succeed
-		return true;
+		return false;
 	}
 
 	m_filePath = filePath;
 	m_state = Opening;
 
-	m_videoWidget->videoLayer()->show();
+	if(!m_player->open(fileInfo.absoluteFilePath().toUtf8()))
+		return false;
 
-	m_player->setFile(fileInfo.absoluteFilePath());
-
-	if(playOnLoad())
-		m_player->play();
-	else
-		m_player->load();
+	if(m_player->paused() == playOnLoad())
+		m_player->pauseToggle();
 
 	return true;
 }
 
-bool
+void
 VideoPlayer::closeFile()
 {
 	if(m_state < Opening)
-		return false;
-
-	if(m_state != Stopped)
-		m_player->stop();
-
+		return;
+	m_player->close();
 	reset();
-
 	emit fileClosed();
-
-	return true;
 }
 
-bool
+void
 VideoPlayer::play()
 {
 	if(m_state <= Opening || m_state == Playing)
-		return false;
-
+		return;
 	m_videoWidget->videoLayer()->show();
-
+	if(m_state < Playing)
+		openFile(m_filePath);
 	if(m_state == Paused)
-		m_player->togglePause();
-	else
-		m_player->play();
-
-	return true;
+		m_player->pauseToggle();
 }
 
-bool
+void
 VideoPlayer::pause()
 {
 	if(m_state <= Opening || m_state == Paused)
-		return false;
-
-	m_player->togglePause();
-
-	return true;
+		return;
+	m_player->pauseToggle();
 }
 
-bool
+void
 VideoPlayer::togglePlayPaused()
 {
-	if(m_state <= Opening)
-		return false;
-	return m_state == Playing ? pause() : play();
+	if(m_state == Playing)
+		pause();
+	else if(m_state > Opening)
+		play();
 }
 
 bool
 VideoPlayer::seek(double seconds)
 {
-	if(m_state <= Stopped || seconds < 0. || seconds > m_duration)
+	if(m_state <= Stopped)
 		return false;
-
-	if(seconds == m_position)
-		return true;
-
-	m_player->setPosition(seconds * 1000.);
+	m_player->seek(qBound(0., seconds, m_duration));
 	return true;
 }
 
@@ -440,13 +210,7 @@ VideoPlayer::step(int frameOffset)
 {
 	if(m_state <= Stopped)
 		return false;
-
-	// m_player->stepForward()/stepBackward() are not working well, so we'll seek()
-
-	if(m_state != Paused)
-		m_player->pause();
-
-	seek(m_position + double(frameOffset) / m_fps);
+	m_player->stepFrame(frameOffset);
 	return true;
 }
 
@@ -455,42 +219,31 @@ VideoPlayer::stop()
 {
 	if(m_state <= Stopped)
 		return false;
-
-	m_player->stop();
-
+	m_player->close();
 	return true;
 }
 
 bool
-VideoPlayer::selectAudioStream(int audioStreamIndex)
+VideoPlayer::selectAudioStream(int streamIndex)
 {
-	if(m_state <= VideoPlayer::Opening || m_audioStreams.size() <= 0)
+	if(m_state <= VideoPlayer::Opening || streamIndex < 0 || streamIndex >= m_audioStreams.size())
 		return false;
 
-	if(audioStreamIndex < 0 || audioStreamIndex >= m_audioStreams.size())
-		return false;
-
-	if(m_activeAudioStream != audioStreamIndex) {
-		m_activeAudioStream = audioStreamIndex;
-		m_player->setAudioStream(audioStreamIndex);
-		emit activeAudioStreamChanged(audioStreamIndex);
+	if(m_activeAudioStream != streamIndex) {
+		m_activeAudioStream = streamIndex;
+		m_player->activeAudioStream(streamIndex);
+		emit activeAudioStreamChanged(streamIndex);
 	}
 	return true;
 }
 
 void
-VideoPlayer::playbackRate(double newRate)
+VideoPlayer::playSpeed(double newRate)
 {
-	if(m_state <= Opening || newRate < .125 || newRate > 128)
+	if(m_state <= Opening || newRate < .05 || newRate > 8.)
 		return;
 
 	m_player->setSpeed(newRate);
-}
-
-SubtitleTextOverlay &
-VideoPlayer::subtitleOverlay()
-{
-	return m_overlay->m_overlay;
 }
 
 void
@@ -509,32 +262,79 @@ VideoPlayer::decreaseVolume(double amount)
 void
 VideoPlayer::setVolume(double volume)
 {
-	if(volume < 0.0)
-		volume = 0.0;
-	else if(volume > 100.0)
-		volume = 100.0;
+	volume = qBound(0., volume, 100.);
+	m_player->setVolume(VOLUME_MULTIPLIER * volume / 100.);
 
-	if(m_volume == volume)
-		return;
-
-	m_volume = volume;
-
-	m_player->audio()->setVolume(volume / 100.);
-
-	emit volumeChanged(m_volume);
+	if(m_volume != volume)
+		emit volumeChanged(m_volume = volume);
 }
 
 void
 VideoPlayer::setMuted(bool muted)
 {
+	m_player->setMuted(muted);
+
 	if(m_muted == muted)
 		return;
 
 	m_muted = muted;
 
-	m_player->audio()->setMute(muted);
 	emit muteChanged(m_muted);
 }
 
+void
+VideoPlayer::setupNotifications()
+{
+	connect(m_player, &FFPlayer::mediaLoaded, this, [this](){
+		emit fileOpened(m_filePath);
+		m_fps = m_player->videoFPS();
+		m_minPositionDelta = m_fps > 0. ? 1. / m_fps : .02;
+		emit fpsChanged(m_fps);
+	});
+	connect(m_player, &FFPlayer::stateChanged, this, [this](FFPlayer::State ffs){
+		static const QMap<FFPlayer::State, State> stateMap
+			{{ FFPlayer::Stopped, Stopped }, { FFPlayer::Playing, Playing }, { FFPlayer::Paused, Paused }};
+		const State state = stateMap[ffs];
+		if(m_state != state) switch(m_state = state) {
+		case Stopped: emit stopped(); break;
+		case Playing: emit playing(); break;
+		case Paused: emit paused(); break;
+		default: break; // not possible
+		}
+	});
+	connect(m_renderer, &GLRenderer::resolutionChanged, this, [this](){
+		m_videoWidget->setVideoResolution(m_player->videoWidth(), m_player->videoHeight(), m_player->videoSAR());
+		m_videoWidget->videoLayer()->show();
+	});
 
-#include "videoplayer.moc"
+	connect(m_player, &FFPlayer::positionChanged, this, [this](double pos){
+		if(m_position != (pos = qBound(0., pos, m_duration))
+		&& (m_position <= 0. || m_minPositionDelta <= 0. || qAbs(m_position - pos) >= m_minPositionDelta))
+			emit positionChanged(m_position = pos);
+	});
+	connect(m_player, &FFPlayer::durationChanged, this, [this](double dur){
+		if(m_duration != dur) emit durationChanged(m_duration = dur);
+	});
+	connect(m_player, &FFPlayer::speedChanged, this, [this](double speed){
+		if(m_playSpeed != speed) emit playSpeedChanged(m_playSpeed = speed);
+	});
+
+	connect(m_player, &FFPlayer::volumeChanged, this, [this](double volume){
+		if(m_volume != (volume = volume * 100. / VOLUME_MULTIPLIER)) {
+			m_volume = volume;
+			if(!m_muted) emit volumeChanged(m_volume);
+		}
+	});
+	connect(m_player, &FFPlayer::muteChanged, this, [this](bool muted){
+		if(m_muted != muted) emit muteChanged(m_muted = muted);
+	});
+
+	//connect(m_player, &FFPlayer::videoStreamsChanged, this, [this](const QStringList &streams){});
+	connect(m_player, &FFPlayer::audioStreamsChanged, this, [this](const QStringList &streams){
+		emit audioStreamsChanged(m_audioStreams = streams);
+		emit activeAudioStreamChanged(m_activeAudioStream = m_player->activeAudioStream());
+	});
+	connect(m_player, &FFPlayer::subtitleStreamsChanged, this, [this](const QStringList &streams){
+		emit textStreamsChanged(m_textStreams = streams);
+	});
+}

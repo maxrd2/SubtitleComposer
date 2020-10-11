@@ -1,7 +1,3 @@
-set(widgets_INCLUDE_DIR
-	${CMAKE_CURRENT_SOURCE_DIR}/
-	CACHE INTERNAL EXPORTEDVARIABLE)
-
 set(widgets_SRCS
 	${CMAKE_CURRENT_SOURCE_DIR}/attachablewidget.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/layeredwidget.cpp

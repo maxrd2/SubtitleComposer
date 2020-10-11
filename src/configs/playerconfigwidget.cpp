@@ -38,7 +38,7 @@ PlayerConfigWidget::PlayerConfigWidget(QWidget *parent)
 
 	m_textOverlayWidget->setText(i18nc("Text for previewing the subtitles font settings", "<p>The Quick Brown Fox<br/>Jumps Over The Lazy Dog</p>"));
 	m_textOverlayWidget->setFamily(SCConfig::fontFamily());
-	m_textOverlayWidget->setPointSize(SCConfig::fontPointSize());
+	m_textOverlayWidget->setFontSize(SCConfig::fontSize());
 	m_textOverlayWidget->setPrimaryColor(SCConfig::fontColor());
 	m_textOverlayWidget->setOutlineWidth(SCConfig::outlineWidth());
 	m_textOverlayWidget->setOutlineColor(SCConfig::outlineColor());
@@ -46,7 +46,7 @@ PlayerConfigWidget::PlayerConfigWidget(QWidget *parent)
 	kcfg_FontFamily->setProperty("kcfg_property", QByteArray("currentText"));
 
 	connect(kcfg_FontFamily, SIGNAL(activated(const QString &)), this, SLOT(onFamilyChanged(const QString &)));
-	connect(kcfg_FontPointSize, SIGNAL(valueChanged(int)), this, SLOT(onSizeChanged(int)));
+	connect(kcfg_FontSize, SIGNAL(valueChanged(int)), this, SLOT(onSizeChanged(int)));
 	connect(kcfg_FontColor, SIGNAL(activated(const QColor &)), this, SLOT(onPrimaryColorChanged(const QColor &)));
 	connect(kcfg_OutlineColor, SIGNAL(activated(const QColor &)), this, SLOT(onOutlineColorChanged(const QColor &)));
 	connect(kcfg_OutlineWidth, SIGNAL(valueChanged(int)), this, SLOT(onOutlineWidthChanged(int)));
@@ -65,7 +65,7 @@ PlayerConfigWidget::onFamilyChanged(const QString &family)
 void
 PlayerConfigWidget::onSizeChanged(int size)
 {
-	m_textOverlayWidget->setPointSize(size);
+	m_textOverlayWidget->setFontSize(size);
 }
 
 void

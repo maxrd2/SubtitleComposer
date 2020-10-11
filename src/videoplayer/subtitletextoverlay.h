@@ -33,15 +33,15 @@ public:
 
 	inline QString text() const { return m_text; }
 	inline QString fontFamily() const { return m_font.family(); }
-	inline int fontSizePt() const { return m_font.pointSize(); }
-	inline qreal fontSizePtF() const { return m_font.pointSizeF(); }
-	inline int fontSizePx() const { return m_font.pixelSize(); }
+	inline int fontSize() const { return m_fontSize; }
 	inline QColor textColor() const { return m_textColor; }
 	inline QColor outlineColor() const { return m_textOutline.color(); }
 	inline int outlineWidth() const { return m_textOutline.width(); }
 
 	const QImage & image();
 	const QSize & textSize();
+	inline bool isDirty() const { return m_dirty; }
+	inline double renderScale() const { return m_renderScale; }
 
 private:
 	void drawImage();
@@ -51,21 +51,23 @@ public slots:
 	void setImageSize(QSize size);
 	void setText(const QString &text);
 	void setFontFamily(const QString &family);
-	void setFontSizePt(int pointSize);
-	void setFontSizePtF(qreal pointSizeF);
-	void setFontSizePx(int pixelSize);
+	void setFontSize(int fontSize);
 	void setTextColor(const QColor &color);
 	void setOutlineColor(const QColor &color);
 	void setOutlineWidth(int width);
+	inline void setRenderScale(double scale) { m_renderScale = scale; }
 
 private:
 	QString m_text;
 	QFont m_font;
+	int m_fontSize;
+	int m_outlineWidth;
 	QColor m_textColor;
 	QPen m_textOutline;
 
 	QImage m_image;
 	QSize m_textSize;
+	double m_renderScale;
 
 	bool m_dirty;
 };

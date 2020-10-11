@@ -44,9 +44,7 @@ public:
 	QString text() const { return m_overlay.text(); }
 
 	int alignment() const { return 0; }
-	int pointSize() const { return m_overlay.fontSizePt(); }
-	qreal pointSizeF() const { return m_overlay.fontSizePtF(); }
-	int pixelSize() const { return m_overlay.fontSizePx(); }
+	int fontSize() const { return m_overlay.fontSize(); }
 	QString family() const { return m_overlay.fontFamily(); }
 	QColor primaryColor() const { return m_overlay.textColor(); }
 	int outlineWidth() const { return m_overlay.outlineWidth(); }
@@ -58,9 +56,7 @@ public:
 
 public slots:
 	void setText(const QString &text) { m_overlay.setText(text); update(); }
-	void setPointSize(int pointSize) { m_overlay.setFontSizePt(pointSize); update(); }
-	void setPointSizeF(qreal pointSizeF) { m_overlay.setFontSizePtF(pointSizeF); update(); }
-	void setPixelSize(int pixelSize) { m_overlay.setFontSizePx(pixelSize); update(); }
+	void setFontSize(int fontSize) { m_overlay.setFontSize(fontSize); update(); }
 	void setFamily(const QString &family) { m_overlay.setFontFamily(family); update(); }
 	void setPrimaryColor(const QColor &color) { m_overlay.setTextColor(color); update(); }
 	void setOutlineWidth(int width) { m_overlay.setOutlineWidth(width); update(); }

@@ -13,12 +13,6 @@ if(CMAKE_COMPILER_IS_GNUCC)
 	set(CMAKE_CXX_FLAGS_RELWITHDEBINFO "${CMAKE_CXX_FLAGS_RELEASE} -Wall -O3 -g")
 endif()
 
-include_directories(
-	${CMAKE_CURRENT_BINARY_DIR} # so files can find config.h
-	${CMAKE_CURRENT_SOURCE_DIR} # so that we can refer to our files starting at src dir
-	${Qt5Core_INCLUDE_DIRS} ${Qt5Widgets_INCLUDE_DIRS} ${Qt5Gui_INCLUDE_DIRS}
-)
-
 ecm_setup_version(${PROJECT_VERSION}
 	VARIABLE_PREFIX SUBTITLECOMPOSER
 	SOVERSION ${PROJECT_VERSION_MAJOR}
@@ -29,6 +23,8 @@ add_definitions(${QT_DEFINITIONS} -DHAVE_CONFIG_H)
 add_definitions(-D_DEFAULT_SOURCE)
 
 find_package(FFmpeg 57.83.100 REQUIRED)
+find_package(OpenAL REQUIRED)
+find_package(ICU)
 
 # the subdirs must be added in a specific order
 # if one dir uses code from another, its CMakeLists.txt will reference variables
@@ -38,13 +34,14 @@ find_package(FFmpeg 57.83.100 REQUIRED)
 set(SC_PLUGIN_INSTALL_DIR "${CMAKE_INSTALL_PREFIX}/${KDE_INSTALL_LIBDIR}/subtitlecomposer" CACHE STRING EXPORTEDVARIABLE)
 message(STATUS "Subtitle Composer plugin path: ${SC_PLUGIN_INSTALL_DIR}")
 
-set(subtitlecomposer_LIBS
-	Qt5::Core Qt5::Widgets Qt5::Gui
-	KF5::CoreAddons KF5::WidgetsAddons KF5::TextWidgets KF5::Codecs
-	KF5::SonnetCore KF5::SonnetUi
-	KF5::KIOCore KF5::KIOFileWidgets KF5::KIOWidgets KF5::KIONTLM
-	KF5::KrossCore KF5::KrossUi KF5::XmlGui KF5::I18n
-	CACHE INTERNAL EXPORTEDVARIABLE
+include_directories(
+	${CMAKE_CURRENT_SOURCE_DIR} # so that we can refer to our files starting at src dir
+	${CMAKE_CURRENT_SOURCE_DIR}/widgets # needed for .ui files to access custom widgets
+	${Qt5Core_INCLUDE_DIRS}
+	${Qt5Widgets_INCLUDE_DIRS}
+	${Qt5Gui_INCLUDE_DIRS}
+	${OPENAL_INCLUDE_DIR}
+	${FFMPEG_INCLUDE_DIRS}
 )
 
 add_subdirectory(helpers)
@@ -62,17 +59,6 @@ add_subdirectory(errors)
 add_subdirectory(actions)
 add_subdirectory(utils)
 add_subdirectory(scripting)
-
-include_directories(
-	${helpers_INCLUDE_DIR}
-	${core_INCLUDE_DIR}
-	${formats_INCLUDE_DIR}
-	${videoplayer_INCLUDE_DIR}
-	${streamprocessor_INCLUDE_DIR}
-	${speechprocessor_INCLUDE_DIR}
-	${widgets_INCLUDE_DIR}
-	${FFMPEG_INCLUDE_DIRS}
-)
 
 set(subtitlecomposer_SRCS
 	${core_SRCS}
@@ -114,29 +100,23 @@ ki18n_wrap_ui(subtitlecomposer_SRCS
 
 add_executable(subtitlecomposer WIN32 ${subtitlecomposer_SRCS})
 
-target_link_libraries(subtitlecomposer
-	${subtitlecomposer_LIBS}
-	${helpers_LIBS}
-	${core_LIBS}
-	${formats_LIBS}
-	${videoplayer_LIBS}
-	${streamprocessor_LIBS}
-	${speechprocessor_LIBS}
-	${widgets_LIBS}
-	${X11_LIBRARIES}
-	${FFMPEG_LIBRARIES}
-	Qt5::Core
-	Qt5::Widgets
-)
+if(ICU_FOUND)
+	message(STATUS "ICU Library will be used for charset detection.")
+	set(HAVE_ICU 1 CACHE INTERNAL EXPORTEDVARIABLE)
+	include_directories(${ICU_INCLUDE_DIRS})
+else()
+	message(STATUS "ICU Library not found. KEncodingProber fallback will be used for charset detection.")
+endif()
 
-add_definitions(
-	${helpers_DEFS}
-	${core_DEFS}
-	${formats_DEFS}
-	${videoplayer_DEFS}
-	${streamprocessor_DEFS}
-	${speechprocessor_DEFS}
-	${widgets_DEFS}
+target_link_libraries(subtitlecomposer
+	Qt5::Core Qt5::Widgets Qt5::Gui
+	KF5::CoreAddons KF5::WidgetsAddons KF5::TextWidgets KF5::Codecs
+	KF5::SonnetCore KF5::SonnetUi
+	KF5::KIOCore KF5::KIOFileWidgets KF5::KIOWidgets KF5::KIONTLM
+	KF5::KrossCore KF5::KrossUi KF5::XmlGui KF5::I18n
+	${FFMPEG_LIBRARIES}
+	${OPENAL_LIBRARY}
+	${ICU_LIBRARIES}
 )
 
 install(TARGETS subtitlecomposer DESTINATION ${BIN_INSTALL_DIR})

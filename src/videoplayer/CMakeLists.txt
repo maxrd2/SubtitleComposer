@@ -1,20 +1,20 @@
-find_package(QtAV REQUIRED)
-
 set(videoplayer_SRCS
 	${CMAKE_CURRENT_SOURCE_DIR}/videoplayer.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/videowidget.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/waveformat.h
 	${CMAKE_CURRENT_SOURCE_DIR}/subtitletextoverlay.cpp
-	CACHE INTERNAL EXPORTEDVARIABLE
-)
-
-set(videoplayer_INCLUDE_DIR
-	${QTAV_INCLUDE_DIRS}
-	${QTAVWIDGETS_INCLUDE_DIRS}
-	CACHE INTERNAL EXPORTEDVARIABLE
-)
-set(videoplayer_LIBS
-	${QTAV_LIBRARIES}
-	${QTAVWIDGETS_LIBRARIES}
+	${CMAKE_CURRENT_SOURCE_DIR}/backend/glrenderer.cpp
+	${CMAKE_CURRENT_SOURCE_DIR}/backend/ffplayer.cpp
+	${CMAKE_CURRENT_SOURCE_DIR}/backend/framequeue.cpp
+	${CMAKE_CURRENT_SOURCE_DIR}/backend/packetqueue.cpp
+	${CMAKE_CURRENT_SOURCE_DIR}/backend/decoder.cpp
+	${CMAKE_CURRENT_SOURCE_DIR}/backend/audiodecoder.cpp
+	${CMAKE_CURRENT_SOURCE_DIR}/backend/videodecoder.cpp
+	${CMAKE_CURRENT_SOURCE_DIR}/backend/subtitledecoder.cpp
+	${CMAKE_CURRENT_SOURCE_DIR}/backend/clock.cpp
+	${CMAKE_CURRENT_SOURCE_DIR}/backend/streamdemuxer.cpp
+	${CMAKE_CURRENT_SOURCE_DIR}/backend/renderthread.cpp
+	${CMAKE_CURRENT_SOURCE_DIR}/backend/videostate.cpp
+	${CMAKE_CURRENT_SOURCE_DIR}/backend/pixelformat.cpp
 	CACHE INTERNAL EXPORTEDVARIABLE
 )

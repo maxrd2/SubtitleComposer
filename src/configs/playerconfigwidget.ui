@@ -90,7 +90,7 @@
       <item row="4" column="1">
        <widget class="QSpinBox" name="kcfg_OutlineWidth">
         <property name="suffix">
-         <string notr="true"> px</string>
+         <string notr="true"/>
         </property>
         <property name="maximum">
          <number>10</number>
@@ -152,16 +152,12 @@
          <string>Font si&amp;ze:</string>
         </property>
         <property name="buddy">
-         <cstring>kcfg_FontPointSize</cstring>
+         <cstring>kcfg_FontSize</cstring>
         </property>
        </widget>
       </item>
       <item row="1" column="1">
-       <widget class="QSpinBox" name="kcfg_FontPointSize">
-        <property name="suffix">
-         <string notr="true"> px</string>
-        </property>
-       </widget>
+       <widget class="QSpinBox" name="kcfg_FontSize"/>
       </item>
      </layout>
     </widget>
@@ -232,7 +228,7 @@
   <tabstop>kcfg_StepJumpLength</tabstop>
   <tabstop>kcfg_ShowPositionTimeEdit</tabstop>
   <tabstop>kcfg_FontFamily</tabstop>
-  <tabstop>kcfg_FontPointSize</tabstop>
+  <tabstop>kcfg_FontSize</tabstop>
   <tabstop>kcfg_FontColor</tabstop>
   <tabstop>kcfg_OutlineColor</tabstop>
   <tabstop>kcfg_OutlineWidth</tabstop>

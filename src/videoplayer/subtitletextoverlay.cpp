@@ -24,10 +24,14 @@
 #include <QTextCharFormat>
 #include <QTextDocument>
 
+#include "scconfig.h"
+
 using namespace SubtitleComposer;
 
 SubtitleTextOverlay::SubtitleTextOverlay()
-	: m_dirty(true)
+	: m_fontSize(SCConfig::fontSize()),
+	  m_renderScale(1.0),
+	  m_dirty(true)
 {
 	m_font.setStyleStrategy(QFont::PreferAntialias);
 }
@@ -61,8 +65,12 @@ SubtitleTextOverlay::drawImage()
 
 	QTextCharFormat fmt;
 
+	// fix top outline being cut
+	const int topOffset = m_textOutline.width() / 2;
+	painter.translate(0, topOffset);
+
 	// text shadow
-//	painter.translate(5, 5);
+//	painter.translate(5, 5 + topOffset);
 //	{
 //		const QColor shadowColor(0, 0, 0, 100);
 //		const QPen shadowOutline(QBrush(shadowColor), m_textOutline.widthF());
@@ -98,7 +106,7 @@ SubtitleTextOverlay::drawImage()
 
 	doc.documentLayout()->draw(&painter, context);
 
-	m_textSize = QSize(doc.idealWidth(), doc.size().height());
+	m_textSize = QSize(doc.idealWidth(), doc.size().height() + topOffset);
 
 	painter.end();
 
@@ -134,6 +142,9 @@ SubtitleTextOverlay::setImageSize(int width, int height)
 
 	m_image = QImage(width, height, QImage::Format_ARGB32);
 	m_dirty = true;
+
+	setFontSize(m_fontSize);
+	setOutlineWidth(m_outlineWidth);
 }
 
 void
@@ -145,6 +156,8 @@ SubtitleTextOverlay::setImageSize(QSize size)
 void
 SubtitleTextOverlay::setText(const QString &text)
 {
+	if(m_text == text)
+		return;
 	m_text = text;
 	m_dirty = true;
 }
@@ -152,27 +165,19 @@ SubtitleTextOverlay::setText(const QString &text)
 void
 SubtitleTextOverlay::setFontFamily(const QString &family)
 {
+	if(m_font.family() == family)
+		return;
 	m_font.setFamily(family);
 	m_dirty = true;
 }
 
 void
-SubtitleTextOverlay::setFontSizePt(int pointSize)
+SubtitleTextOverlay::setFontSize(int fontSize)
 {
-	m_font.setPointSize(pointSize);
-	m_dirty = true;
-}
-
-void
-SubtitleTextOverlay::setFontSizePtF(qreal pointSizeF)
-{
-	m_font.setPointSizeF(pointSizeF);
-	m_dirty = true;
-}
-
-void
-SubtitleTextOverlay::setFontSizePx(int pixelSize)
-{
+	m_fontSize = fontSize;
+	const int pixelSize = m_fontSize * m_image.height() / 300;
+	if(pixelSize == m_font.pixelSize())
+		return;
 	m_font.setPixelSize(pixelSize);
 	m_dirty = true;
 }
@@ -180,6 +185,8 @@ SubtitleTextOverlay::setFontSizePx(int pixelSize)
 void
 SubtitleTextOverlay::setTextColor(const QColor &color)
 {
+	if(m_textColor == color)
+		return;
 	m_textColor = color;
 	m_dirty = true;
 }
@@ -187,6 +194,8 @@ SubtitleTextOverlay::setTextColor(const QColor &color)
 void
 SubtitleTextOverlay::setOutlineColor(const QColor &color)
 {
+	if(m_textOutline.color() == color)
+		return;
 	m_textOutline.setColor(color);
 	m_dirty = true;
 }
@@ -194,7 +203,11 @@ SubtitleTextOverlay::setOutlineColor(const QColor &color)
 void
 SubtitleTextOverlay::setOutlineWidth(int width)
 {
-	m_textOutline.setWidth(width);
+	m_outlineWidth = width;
+	const int pixelWidth = m_outlineWidth * m_image.height() / 300;
+	if(m_textOutline.width() == pixelWidth)
+		return;
+	m_textOutline.setWidth(pixelWidth);
 	m_dirty = true;
 }
 
