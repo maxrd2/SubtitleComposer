@@ -487,7 +487,7 @@ AudioDecoder::queueFrame(Frame *af)
 		m_bufSize = (AUDIO_MIN_BUFFER_SIZE / m_fmtTgt.frameSize) * m_fmtTgt.frameSize;
 	} else {
 		if(m_vs->showMode != SHOW_MODE_VIDEO)
-			m_vs->renderThread->updateSampleDisplay((int16_t *)m_audioBuf, audioSize);
+			m_vs->renderThread->updateSampleDisplay((int16_t *)(void *)m_audioBuf, audioSize);
 		m_bufSize = audioSize;
 	}
 
