@@ -43,7 +43,7 @@
 
 extern "C" {
 #include "libavformat/avformat.h"
-#include "libavcodec/packet.h"
+#include "libavcodec/avcodec.h"
 }
 
 using namespace SubtitleComposer;

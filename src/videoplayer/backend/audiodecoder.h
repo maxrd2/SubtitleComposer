@@ -22,11 +22,10 @@
 #define AUDIODECODER_H
 
 #include "videoplayer/backend/decoder.h"
+#include <AL/alc.h>
 
 
 struct SwrContext;
-struct ALCdevice;
-struct ALCcontext;
 
 namespace SubtitleComposer {
 class VideoState;
