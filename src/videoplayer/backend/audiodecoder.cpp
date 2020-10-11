@@ -439,7 +439,7 @@ AudioDecoder::decodeFrame(Frame *af)
 	}
 
 	av_unused double audioClock0 = m_clock;
-	/* update the audio clock with the pts */
+	// update the audio clock with the pts
 	if(!isnan(af->pts))
 		m_clock = af->pts + (double)af->frame->nb_samples / af->frame->sample_rate;
 	else
@@ -447,11 +447,9 @@ AudioDecoder::decodeFrame(Frame *af)
 	m_clockSerial = af->serial;
 #ifdef DEBUG
 	{
-		static double last_clock;
-		printf("audio: delay=%0.3f clock=%0.3f clock0=%0.3f\n",
-			   m_audio_clock - last_clock,
-			   m_audio_clock, audio_clock0);
-		last_clock = m_audio_clock;
+		static double lastClock;
+		printf("audio: delay=%0.3f clock=%0.3f clock0=%0.3f\n", m_clock - lastClock, m_clock, audioClock0);
+		lastClock = m_clock;
 	}
 #endif
 	return resampledDataSize;
