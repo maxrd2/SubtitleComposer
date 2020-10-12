@@ -33,7 +33,7 @@
 
 #include <KLocalizedString>
 
-#define VOLUME_MULTIPLIER 6.
+#define VOLUME_MULTIPLIER (double(qMax(1, SCConfig::volumeAmplification())) / 3.)
 
 using namespace SubtitleComposer;
 

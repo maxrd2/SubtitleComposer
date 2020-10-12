@@ -31,7 +31,7 @@ class PlayerConfigWidget : public QWidget, private Ui::PlayerConfigWidget
 	friend class ConfigDialog;
 
 public:
-	explicit PlayerConfigWidget(QWidget *parent=NULL);
+	explicit PlayerConfigWidget(QWidget *parent=nullptr);
 	virtual ~PlayerConfigWidget();
 
 private slots:

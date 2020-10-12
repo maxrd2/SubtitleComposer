@@ -50,29 +50,29 @@ ConfigDialog::ConfigDialog(QWidget *parent, const QString &name, KCoreConfigSkel
 	KPageWidgetItem *item;
 
 	// General page
-	item = addPage(new GeneralConfigWidget(nullptr), i18nc("@title General settings", "General"));
+	item = addPage(new GeneralConfigWidget(this), i18nc("@title General settings", "General"));
 	item->setHeader(i18n("General Settings"));
 	item->setIcon(QIcon::fromTheme(QStringLiteral("preferences-other")));
 
 	// Error Check page
-	item = addPage(new ErrorsConfigWidget(nullptr), i18nc("@title Error check settings", "Error Check"));
+	item = addPage(new ErrorsConfigWidget(this), i18nc("@title Error check settings", "Error Check"));
 	item->setHeader(i18n("Error Check Settings"));
 	item->setIcon(QIcon::fromTheme(QStringLiteral("games-endturn")));
 
 	// Spelling page
-	m_sonnetConfigWidget = new Sonnet::ConfigWidget(nullptr);
+	m_sonnetConfigWidget = new Sonnet::ConfigWidget(this);
 	connect(m_sonnetConfigWidget, &Sonnet::ConfigWidget::configChanged, this, &ConfigDialog::widgetChanged);
 	item = addPage(m_sonnetConfigWidget, i18nc("@title Spelling settings", "Spelling"));
 	item->setHeader(i18n("Spelling Settings"));
 	item->setIcon(QIcon::fromTheme(QStringLiteral("tools-check-spelling")));
 
 	// Waveform page
-	item = addPage(new WaveformConfigWidget(nullptr), i18nc("@title Waveform settings", "Waveform"));
+	item = addPage(new WaveformConfigWidget(this), i18nc("@title Waveform settings", "Waveform"));
 	item->setHeader(i18n("Waveform settings"));
 	item->setIcon(QIcon::fromTheme(QStringLiteral("waveform")));
 
 	// VideoPlayer page
-	item = addPage(new PlayerConfigWidget(nullptr), i18nc("@title Video player settings", "Video Player"));
+	item = addPage(new PlayerConfigWidget(this), i18nc("@title Video player settings", "Video Player"));
 	item->setHeader(i18n("Video Player Settings"));
 	item->setIcon(QIcon::fromTheme(QStringLiteral("mediaplayer")));
 

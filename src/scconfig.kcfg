@@ -184,6 +184,10 @@
 			<label>Show editable time position</label>
 			<default>false</default>
 		</entry>
+		<entry name="VolumeAmplification" type="Int">
+			<label>Volume Amplification</label>
+			<default>6</default>
+		</entry>
 
 		<entry name="FontFamily" type="String">
 			<label>Font Family</label>

@@ -21,13 +21,14 @@
 #include "playerconfigwidget.h"
 
 #include "videoplayer/videoplayer.h"
-
 #include "widgets/layeredwidget.h"
 #include "widgets/textoverlaywidget.h"
 
 #include "application.h"
 
+#include <KConfigDialog>
 #include <KLocalizedString>
+#include <QtGlobal>
 
 using namespace SubtitleComposer;
 
@@ -45,11 +46,19 @@ PlayerConfigWidget::PlayerConfigWidget(QWidget *parent)
 
 	kcfg_FontFamily->setProperty("kcfg_property", QByteArray("currentText"));
 
-	connect(kcfg_FontFamily, SIGNAL(activated(const QString &)), this, SLOT(onFamilyChanged(const QString &)));
-	connect(kcfg_FontSize, SIGNAL(valueChanged(int)), this, SLOT(onSizeChanged(int)));
-	connect(kcfg_FontColor, SIGNAL(activated(const QColor &)), this, SLOT(onPrimaryColorChanged(const QColor &)));
-	connect(kcfg_OutlineColor, SIGNAL(activated(const QColor &)), this, SLOT(onOutlineColorChanged(const QColor &)));
-	connect(kcfg_OutlineWidth, SIGNAL(valueChanged(int)), this, SLOT(onOutlineWidthChanged(int)));
+#if (QT_VERSION >= QT_VERSION_CHECK(5, 15, 0))
+	connect(kcfg_FontFamily, &QFontComboBox::textActivated, this, &PlayerConfigWidget::onFamilyChanged);
+#else
+	connect(kcfg_FontFamily, QOverload<const QString &>::of(&QFontComboBox::activated), this, &PlayerConfigWidget::onFamilyChanged);
+#endif
+	connect(kcfg_FontSize, QOverload<int>::of(&QSpinBox::valueChanged), this, &PlayerConfigWidget::onSizeChanged);
+	connect(kcfg_FontColor, &KColorCombo::activated, this, &PlayerConfigWidget::onPrimaryColorChanged);
+	connect(kcfg_OutlineColor, &KColorCombo::activated, this, &PlayerConfigWidget::onOutlineColorChanged);
+	connect(kcfg_OutlineWidth, QOverload<int>::of(&QSpinBox::valueChanged), this, &PlayerConfigWidget::onOutlineWidthChanged);
+
+	connect(static_cast<KConfigDialog *>(parent), &KConfigDialog::settingsChanged, this, [](const QString &){
+		VideoPlayer::instance()->setVolume(VideoPlayer::instance()->volume());
+	});
 }
 
 PlayerConfigWidget::~PlayerConfigWidget()
