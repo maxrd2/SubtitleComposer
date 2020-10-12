@@ -165,7 +165,9 @@ CurrentLineWidget::CurrentLineWidget(QWidget *parent) :
 }
 
 CurrentLineWidget::~CurrentLineWidget()
-{}
+{
+	m_updateShorcutsTimer->stop();
+}
 
 QString
 CurrentLineWidget::focusedText() const
