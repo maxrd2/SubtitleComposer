@@ -79,9 +79,6 @@ private:
 	unsigned int m_bufSize; // in bytes
 	uint8_t *m_audioBuf1;
 	unsigned int m_buf1Size;
-	double m_clock;
-	int m_clockSerial;
-	int64_t m_callbackTime;
 
 	double m_diffCum; /* used for AV difference average computation */
 	double m_diffAvgCoef;

@@ -336,8 +336,8 @@ AudioDecoder::syncAudio(int nbSamples)
 					maxNbSamples = ((nbSamples * (100 + SAMPLE_CORRECTION_PERCENT_MAX) / 100));
 					wantedNbSamples = av_clip(wantedNbSamples, minNbSamples, maxNbSamples);
 				}
-				av_log(nullptr, AV_LOG_TRACE, "diff=%f adiff=%f sample_diff=%d apts=%0.3f\n",
-					   diff, avgDiff, wantedNbSamples - nbSamples, m_clock);
+				av_log(nullptr, AV_LOG_TRACE, "diff=%f adiff=%f sample_diff=%d\n",
+					   diff, avgDiff, wantedNbSamples - nbSamples);
 			}
 		} else {
 			// too big difference : may be initial PTS errors, so reset A-V filter
@@ -436,20 +436,6 @@ AudioDecoder::decodeFrame(Frame *af)
 		resampledDataSize = dataSize;
 	}
 
-	av_unused double audioClock0 = m_clock;
-	// update the audio clock with the pts
-	if(!isnan(af->pts))
-		m_clock = af->pts + (double)af->frame->nb_samples / af->frame->sample_rate;
-	else
-		m_clock = NAN;
-	m_clockSerial = af->serial;
-#ifdef DEBUG
-	{
-		static double lastClock;
-		printf("audio: delay=%0.3f clock=%0.3f clock0=%0.3f\n", m_clock - lastClock, m_clock, audioClock0);
-		lastClock = m_clock;
-	}
-#endif
 	return resampledDataSize;
 }
 
@@ -474,7 +460,15 @@ AudioDecoder::getFrame(AVFrame *frame)
 void
 AudioDecoder::queueFrame(Frame *af)
 {
-	m_callbackTime = av_gettime_relative();
+	if(!isnan(af->pts)) {
+		ALint hwBufOffset = 0;
+		alGetSourcei(m_alSrc, AL_BYTE_OFFSET, &hwBufOffset);
+		m_vs->audClk.setAt(
+					 af->pts - double(m_hwBufQueueSize - hwBufOffset) / m_fmtTgt.bytesPerSec,
+					 af->serial,
+					 av_gettime_relative() / double(AV_TIME_BASE));
+		m_vs->extClk.syncTo(&m_vs->audClk);
+	}
 
 	int audioSize = decodeFrame(af);
 	if(audioSize < 0) {
@@ -494,16 +488,6 @@ AudioDecoder::queueFrame(Frame *af)
 	} else {
 		queueBuffer((uint8_t *)m_audioBuf, audioSize);
 	}
-
-	ALint hwBufOffset = 0;
-	alGetSourcei(m_alSrc, AL_BYTE_OFFSET, &hwBufOffset);
-	if(!isnan(m_clock)) {
-		m_vs->audClk.setAt(
-					 m_clock - double(m_hwBufQueueSize - hwBufOffset) / m_fmtTgt.bytesPerSec,
-					 m_clockSerial,
-					 m_callbackTime / double(AV_TIME_BASE));
-		m_vs->extClk.syncTo(&m_vs->audClk);
-	}
 }
 
 void
@@ -515,8 +499,6 @@ AudioDecoder::run()
 	if(!frame)
 		return;
 
-	m_clockSerial = -1;
-
 	for(;;) {
 		const int got_frame = getFrame(frame);
 		Q_ASSERT(got_frame != AVERROR(EAGAIN));
@@ -525,22 +507,20 @@ AudioDecoder::run()
 			break;
 
 		if(got_frame) {
-			AVRational tb = { 1, frame->sample_rate };
-
 			if(!(af->frame = av_frame_alloc()))
 				break;
 
-			af->pts = (frame->pts == AV_NOPTS_VALUE) ? NAN : frame->pts * av_q2d(tb);
+			af->pts = frame->pts == AV_NOPTS_VALUE ? NAN : double(frame->pts) / frame->sample_rate;
 			af->pos = frame->pkt_pos;
 			af->serial = m_pktSerial;
-			af->duration = av_q2d(AVRational{ frame->nb_samples, frame->sample_rate });
+			af->duration = double(frame->nb_samples) / frame->sample_rate;
 
 			av_frame_move_ref(af->frame, frame);
 
 			// time to unqueue one sample in microseconds (AV_TIME_BASE)
-			const int64_t sleepTime = int64_t(double(AUDIO_MIN_BUFFER_SIZE / m_fmtTgt.frameSize) / m_fmtTgt.freq * AV_TIME_BASE);
+			const int64_t sleepTime = int64_t(double(AUDIO_MIN_BUFFER_SIZE / m_fmtTgt.frameSize) / (m_fmtTgt.freq * m_vs->audClk.speed()) * AV_TIME_BASE);
 			// bytes needed for 100ms of audio
-			const ALint hwMinBytes = m_fmtTgt.bytesPerSec / 10;
+			const ALint hwMinBytes = m_vs->audClk.speed() * m_fmtTgt.bytesPerSec * .100;
 
 			while(!m_vs->abortRequested) {
 				ALint bufReady = 0;
