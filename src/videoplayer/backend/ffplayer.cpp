@@ -83,12 +83,13 @@ FFPlayer::pauseToggle()
 {
 	m_vs->demuxer->pauseToggle();
 	m_vs->step = 0;
+	m_vs->notifyState();
 }
 
 bool
 FFPlayer::paused()
 {
-	return m_vs->demuxer->paused();
+	return m_vs->paused || m_vs->step;
 }
 
 void
@@ -121,6 +122,7 @@ FFPlayer::stepFrame(int frameCnt)
 		m_vs->forceRefresh = true;
 		m_vs->demuxer->stepFrame();
 	}
+	m_vs->notifyState();
 }
 
 //#define FFMPEG_QT_LOGGING

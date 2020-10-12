@@ -35,7 +35,6 @@ public:
 	static VideoState * open(const char *filename);
 	static void close(VideoState *vs);
 	void pauseToggle();
-	bool paused();
 	void seek(qint64 time);
 	void stepFrame();
 	bool abortRequested();

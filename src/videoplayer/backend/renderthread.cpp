@@ -62,7 +62,7 @@ RenderThread::videoRefresh(double *remainingTime)
 {
 	double time = 0.0;
 
-	if(!m_vs->demuxer->paused() && m_vs->masterSyncType() == AV_SYNC_EXTERNAL_CLOCK && m_vs->realTime)
+	if(!m_vs->paused && m_vs->masterSyncType() == AV_SYNC_EXTERNAL_CLOCK && m_vs->realTime)
 		m_vs->checkExternalClockSpeed();
 
 #ifdef AUDIO_VISUALIZATION

@@ -139,7 +139,6 @@ private:
 	double m_duration;
 	double m_fps;
 	double m_playSpeed;
-	double m_minPositionDelta;
 	QStringList m_textStreams;
 	int m_activeAudioStream;
 	QStringList m_audioStreams;

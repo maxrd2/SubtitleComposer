@@ -200,13 +200,6 @@ StreamDemuxer::pauseToggle()
 	m_vs->audClk.pause(m_vs->paused);
 	m_vs->vidClk.pause(m_vs->paused);
 	m_vs->extClk.pause(m_vs->paused);
-	m_vs->notifyState();
-}
-
-bool
-StreamDemuxer::paused()
-{
-	return m_vs->paused || m_vs->step;
 }
 
 void
@@ -666,6 +659,7 @@ StreamDemuxer::run()
 		if(!m_vs->paused && m_vs->reachedEOF()) {
 			m_vs->step = 0;
 			pauseToggle();
+			m_vs->notifyState();
 		}
 		ret = av_read_frame(ic, pkt);
 		if(ret < 0) {

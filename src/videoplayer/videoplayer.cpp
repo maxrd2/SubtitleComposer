@@ -33,7 +33,6 @@
 
 #include <KLocalizedString>
 
-#define DEFAULT_MIN_POSITION_DELTA 0.02
 #define VOLUME_MULTIPLIER 6.
 
 using namespace SubtitleComposer;
@@ -49,7 +48,6 @@ VideoPlayer::VideoPlayer()
 	  m_duration(-1.0),
 	  m_fps(-1.0),
 	  m_playSpeed(.0),
-	  m_minPositionDelta(DEFAULT_MIN_POSITION_DELTA),
 	  m_textStreams(),
 	  m_activeAudioStream(-2),
 	  m_audioStreams(),
@@ -113,7 +111,6 @@ VideoPlayer::reset()
 	m_position = -1.0;
 	m_duration = -1.0;
 	m_fps = -1.0;
-	m_minPositionDelta = DEFAULT_MIN_POSITION_DELTA;
 
 	m_activeAudioStream = -2;
 	m_textStreams.clear();
@@ -288,7 +285,6 @@ VideoPlayer::setupNotifications()
 	connect(m_player, &FFPlayer::mediaLoaded, this, [this](){
 		emit fileOpened(m_filePath);
 		m_fps = m_player->videoFPS();
-		m_minPositionDelta = m_fps > 0. ? 1. / m_fps : .02;
 		emit fpsChanged(m_fps);
 	});
 	connect(m_player, &FFPlayer::stateChanged, this, [this](FFPlayer::State ffs){
@@ -308,8 +304,7 @@ VideoPlayer::setupNotifications()
 	});
 
 	connect(m_player, &FFPlayer::positionChanged, this, [this](double pos){
-		if(m_position != (pos = qBound(0., pos, m_duration))
-		&& (m_position <= 0. || m_minPositionDelta <= 0. || qAbs(m_position - pos) >= m_minPositionDelta))
+		if(m_position != (pos = qBound(0., pos, m_duration)))
 			emit positionChanged(m_position = pos);
 	});
 	connect(m_player, &FFPlayer::durationChanged, this, [this](double dur){

@@ -305,8 +305,11 @@ AudioDecoder::queueBuffer(uint8_t *data, int len)
 	}
 
 	// start playing
-	if(state != AL_PLAYING)
-		alSourcePlay(m_alSrc);
+	if(state != AL_PLAYING) {
+		play();
+		if(m_vs->paused || m_vs->step)
+			pause();
+	}
 }
 
 /* return the wanted number of samples to get better sync if sync_type is video
@@ -359,9 +362,6 @@ AudioDecoder::syncAudio(int nbSamples)
 int
 AudioDecoder::decodeFrame(Frame *af)
 {
-	if(m_vs->paused)
-		return -1;
-
 	if(af->serial != m_queue->serial())
 		return -1;
 
@@ -460,16 +460,6 @@ AudioDecoder::getFrame(AVFrame *frame)
 void
 AudioDecoder::queueFrame(Frame *af)
 {
-	if(!isnan(af->pts)) {
-		ALint hwBufOffset = 0;
-		alGetSourcei(m_alSrc, AL_BYTE_OFFSET, &hwBufOffset);
-		m_vs->audClk.setAt(
-					 af->pts - double(m_hwBufQueueSize - hwBufOffset) / m_fmtTgt.bytesPerSec,
-					 af->serial,
-					 av_gettime_relative() / double(AV_TIME_BASE));
-		m_vs->extClk.syncTo(&m_vs->audClk);
-	}
-
 	int audioSize = decodeFrame(af);
 	if(audioSize < 0) {
 		// if error, just output silence
@@ -481,7 +471,7 @@ AudioDecoder::queueFrame(Frame *af)
 		m_bufSize = audioSize;
 	}
 
-	if(!m_audioBuf || m_vs->demuxer->paused()) {
+	if(!m_audioBuf) {
 		uint8_t *silence = new uint8_t[m_bufSize]();
 		queueBuffer(silence, m_bufSize);
 		delete[] silence;
@@ -523,15 +513,25 @@ AudioDecoder::run()
 			const ALint hwMinBytes = m_vs->audClk.speed() * m_fmtTgt.bytesPerSec * .100;
 
 			while(!m_vs->abortRequested) {
-				ALint bufReady = 0;
-				alGetSourcei(m_alSrc, AL_BUFFERS_PROCESSED, &bufReady);
-				if(bufReady > 0)
-					break;
-
 				ALint hwBufOffset = 0;
 				alGetSourcei(m_alSrc, AL_BYTE_OFFSET, &hwBufOffset);
-				if(m_hwBufQueueSize - hwBufOffset < hwMinBytes)
-					break;
+				if(!isnan(af->pts)) {
+					m_vs->audClk.setAt(
+								 af->pts - double(m_hwBufQueueSize - hwBufOffset) / m_fmtTgt.bytesPerSec,
+								 af->serial,
+								 av_gettime_relative() / double(AV_TIME_BASE));
+					m_vs->extClk.syncTo(&m_vs->audClk);
+				}
+
+				if(!m_vs->paused) {
+					if(m_hwBufQueueSize - hwBufOffset < hwMinBytes)
+						break;
+
+					ALint bufReady = 0;
+					alGetSourcei(m_alSrc, AL_BUFFERS_PROCESSED, &bufReady);
+					if(bufReady > 0)
+						break;
+				}
 
 				av_usleep(sleepTime);
 			}
