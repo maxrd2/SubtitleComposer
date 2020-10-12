@@ -539,13 +539,23 @@ AudioDecoder::run()
 
 			av_frame_move_ref(af->frame, frame);
 
+			// time to unqueue one sample in microseconds (AV_TIME_BASE)
+			const int64_t sleepTime = int64_t(double(AUDIO_MIN_BUFFER_SIZE / m_fmtTgt.frameSize) / m_fmtTgt.freq * AV_TIME_BASE);
+			// bytes needed for 100ms of audio
+			const ALint hwMinBytes = m_fmtTgt.bytesPerSec / 10;
+
 			while(!m_vs->abortRequested) {
-				ALint bufQueued = 0, bufReady = 0;
-				alGetSourcei(m_alSrc, AL_BUFFERS_QUEUED, &bufQueued);
+				ALint bufReady = 0;
 				alGetSourcei(m_alSrc, AL_BUFFERS_PROCESSED, &bufReady);
-				if(bufQueued < SAMPLE_QUEUE_SIZE || bufReady > 0)
+				if(bufReady > 0)
 					break;
-				av_usleep(m_fmtTgt.freq / AUDIO_MIN_BUFFER_SIZE);
+
+				ALint hwBufOffset = 0;
+				alGetSourcei(m_alSrc, AL_BYTE_OFFSET, &hwBufOffset);
+				if(m_hwBufQueueSize - hwBufOffset < hwMinBytes)
+					break;
+
+				av_usleep(sleepTime);
 			}
 
 			queueFrame(af);
