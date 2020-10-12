@@ -25,6 +25,7 @@
 
 struct SwsContext;
 struct AVFrame;
+struct AVPixFmtDescriptor;
 
 namespace SubtitleComposer {
 class VideoState;
@@ -49,12 +50,16 @@ private:
 	double computeTargetDelay(double delay);
 	void updateSampleDisplay(short *samples, int samplesSize);
 	void toggleAudioDisplay();
+	bool validTextureFormat(const AVPixFmtDescriptor *fd);
 	int uploadTexture(AVFrame *frame);
 	void videoImageDisplay();
 	void videoAudioDisplay();
 
 private:
 	VideoState *m_vs;
+	int m_lastFormat;
+	bool m_isYUV;
+	bool m_isPlanar;
 };
 }
 

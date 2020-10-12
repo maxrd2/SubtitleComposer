@@ -38,6 +38,8 @@ GLRenderer::GLRenderer(QWidget *parent)
 	  m_bufSize(0),
 	  m_bufWidth(0),
 	  m_bufHeight(0),
+	  m_crWidth(0),
+	  m_crHeight(0),
 	  m_vertShader(nullptr),
 	  m_fragShader(nullptr),
 	  m_shaderProg(nullptr),
@@ -58,27 +60,38 @@ GLRenderer::setOverlay(SubtitleTextOverlay *overlay)
 }
 
 void
-GLRenderer::displayVideoFrame(unsigned char *yuvBuf, int width, int height)
+GLRenderer::setFrameFormat(int width, int height, int compBits, int crWidthShift, int crHeightShift)
 {
-	setFrameSize(width, height);
-	memcpy(m_bufYUV, yuvBuf, m_bufSize);
-	update();
-}
+	const quint8 compBytes = compBits > 8 ? 2 : 1;
+	const GLsizei crWidth = AV_CEIL_RSHIFT(width, crWidthShift);
+	const GLsizei crHeight = AV_CEIL_RSHIFT(height, crHeightShift);
+	const quint32 bufSize = width * height * compBytes + 2 * crWidth * crHeight * compBytes;
 
-void
-GLRenderer::setFrameSize(int width, int height)
-{
-	if(m_bufWidth == width && m_bufHeight == height)
+	if(m_bufWidth == width && m_bufHeight == height
+	&& m_bufSize == bufSize && m_crWidth == crWidth && m_crHeight == crHeight)
 		return;
 
 	m_bufWidth = width;
 	m_bufHeight = height;
+	m_crWidth = crWidth;
+	m_crHeight = crHeight;
+
+	m_glType = compBytes == 1 ? GL_UNSIGNED_BYTE : GL_UNSIGNED_SHORT;
+	m_glFormat = compBytes == 1 ? GL_R8 : GL_R16;
+	m_pixMult = double(1 << (compBytes << 3)) / double(1 << compBits);
 
 	delete[] m_bufYUV;
-	m_bufSize = width * height * 3 / 2;
+	m_bufSize = bufSize;
 	m_bufYUV = new quint8[m_bufSize];
 
 	m_overlay->setImageSize(width, height);
+
+	m_pitch[0] = m_bufWidth * compBytes;
+	m_pitch[1] = m_pitch[2] = m_crWidth * compBytes;
+
+	m_pixels[0] = m_bufYUV;
+	m_pixels[1] = m_pixels[0] + m_pitch[0] * m_bufHeight;
+	m_pixels[2] = m_pixels[1] + m_pitch[1] * m_crHeight;
 
 	m_texNeedInit = true;
 
@@ -86,58 +99,47 @@ GLRenderer::setFrameSize(int width, int height)
 }
 
 void
-GLRenderer::getFrameYUV(quint8 **pixels, quint32 *pitch)
-{
-	// Y buffer
-	quint8 *data = m_bufYUV;
-	*pixels++ = data;
-	*pitch++ = m_bufWidth;
-
-	// U buffer
-	data += m_bufWidth * m_bufHeight;
-	*pixels++ = data;
-	*pitch++ = m_bufWidth / 2;
-
-	// V buffer
-	data += m_bufWidth * m_bufHeight / 4;
-	*pixels++ = data;
-	*pitch++ = m_bufWidth / 2;
-
-	// no alpha
-	*pixels++ = nullptr;
-	*pitch++ = 0;
-}
-
-void
 GLRenderer::setFrameY(quint8 *buf, quint32 pitch)
 {
-	quint8 *dbuf = m_bufYUV;
-	for(int i = 0; i < m_bufHeight; i++) {
-		memcpy(dbuf, buf, m_bufWidth);
-		dbuf += m_bufWidth;
-		buf += pitch;
+	if(pitch == m_pitch[0]) {
+		memcpy(m_pixels[0], buf, pitch * m_bufHeight);
+	} else {
+		quint8 *dbuf = m_pixels[0];
+		for(int i = 0; i < m_bufHeight; i++) {
+			memcpy(dbuf, buf, m_pitch[0]);
+			dbuf += m_pitch[0];
+			buf += pitch;
+		}
 	}
 }
 
 void
 GLRenderer::setFrameU(quint8 *buf, quint32 pitch)
 {
-	quint8 *dbuf = m_bufYUV + m_bufWidth * m_bufHeight;
-	for(int i = 0; i < m_bufHeight; i += 2) {
-		memcpy(dbuf, buf, m_bufWidth / 2);
-		dbuf += m_bufWidth / 2;
-		buf += pitch;
+	if(pitch == m_pitch[1]) {
+		memcpy(m_pixels[1], buf, pitch * m_crHeight);
+	} else {
+		quint8 *dbuf = m_pixels[1];
+		for(int i = 0; i < m_crHeight; i++) {
+			memcpy(dbuf, buf, m_pitch[1]);
+			dbuf += m_pitch[1];
+			buf += pitch;
+		}
 	}
 }
 
 void
 GLRenderer::setFrameV(quint8 *buf, quint32 pitch)
 {
-	quint8 *dbuf = m_bufYUV + m_bufWidth * m_bufHeight * 5 / 4;
-	for(int i = 0; i < m_bufHeight; i += 2) {
-		memcpy(dbuf, buf, m_bufWidth / 2);
-		dbuf += m_bufWidth / 2;
-		buf += pitch;
+	if(pitch == m_pitch[2]) {
+		memcpy(m_pixels[2], buf, pitch * m_crHeight);
+	} else {
+		quint8 *dbuf = m_pixels[2];
+		for(int i = 0; i < m_crHeight; i++) {
+			memcpy(dbuf, buf, m_pitch[2]);
+			dbuf += m_pitch[2];
+			buf += pitch;
+		}
 	}
 }
 
@@ -180,11 +182,12 @@ GLRenderer::initializeGL()
 		"uniform sampler2D texU;"
 		"uniform sampler2D texV;"
 		"uniform sampler2D texOvr;"
+		"uniform float pixMult;"
 		"void main(void) {"
 			"vec3 yuv;"
-			"yuv.x = texture2D(texY, vfVidTex).r;"
-			"yuv.y = texture2D(texU, vfVidTex).r - 0.5;"
-			"yuv.z = texture2D(texV, vfVidTex).r - 0.5;"
+			"yuv.x = texture2D(texY, vfVidTex).r * pixMult;"
+			"yuv.y = texture2D(texU, vfVidTex).r * pixMult - 0.5;"
+			"yuv.z = texture2D(texV, vfVidTex).r * pixMult - 0.5;"
 			"vec3 rgb = mat3(1, 1, 1,"
 							"0, -0.39465, 2.03211,"
 							"1.13983, -0.58060, 0) * yuv;"
@@ -211,6 +214,7 @@ GLRenderer::initializeGL()
 	m_texU = m_shaderProg->uniformLocation("texU");
 	m_texV = m_shaderProg->uniformLocation("texV");
 	m_texOvr = m_shaderProg->uniformLocation("texOvr");
+	m_pixMultLoc = m_shaderProg->uniformLocation("pixMult");
 
 	{
 		static const GLfloat v[] = {
@@ -272,14 +276,15 @@ GLRenderer::paintGL()
 void
 GLRenderer::uploadYUV()
 {
-	const quint8 *yuvData = m_bufYUV;
+	if(m_texNeedInit)
+		glUniform1f(m_pixMultLoc, m_pixMult);
 
 	// load Y data
 	glActiveTexture(GL_TEXTURE0);
 	glBindTexture(GL_TEXTURE_2D, m_idY);
 
 	if(m_texNeedInit) {
-		glTexImage2D(GL_TEXTURE_2D, 0, GL_LUMINANCE, m_bufWidth, m_bufHeight, 0, GL_LUMINANCE, GL_UNSIGNED_BYTE, yuvData);
+		glTexImage2D(GL_TEXTURE_2D, 0, m_glFormat, m_bufWidth, m_bufHeight, 0, GL_RED, m_glType, m_pixels[0]);
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
@@ -287,18 +292,15 @@ GLRenderer::uploadYUV()
 
 		glUniform1i(m_texY, 0); // GL_TEXTURE0
 	} else {
-		glTexSubImage2D(GL_TEXTURE_2D, 0, 0, 0, m_bufWidth, m_bufHeight, GL_LUMINANCE, GL_UNSIGNED_BYTE, yuvData);
+		glTexSubImage2D(GL_TEXTURE_2D, 0, 0, 0, m_bufWidth, m_bufHeight, GL_RED, m_glType, m_pixels[0]);
 	}
-
-	// skip Y data
-	yuvData += m_bufWidth * m_bufHeight;
 
 	// load U data
 	glActiveTexture(GL_TEXTURE1);
 	glBindTexture(GL_TEXTURE_2D, m_idU);
 
 	if(m_texNeedInit) {
-		glTexImage2D(GL_TEXTURE_2D, 0, GL_LUMINANCE, m_bufWidth / 2, m_bufHeight / 2, 0, GL_LUMINANCE, GL_UNSIGNED_BYTE, yuvData);
+		glTexImage2D(GL_TEXTURE_2D, 0, m_glFormat, m_crWidth, m_crHeight, 0, GL_RED, m_glType, m_pixels[1]);
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
@@ -306,18 +308,15 @@ GLRenderer::uploadYUV()
 
 		glUniform1i(m_texU, 1); // GL_TEXTURE1
 	} else {
-		glTexSubImage2D(GL_TEXTURE_2D, 0, 0, 0, m_bufWidth / 2, m_bufHeight / 2, GL_LUMINANCE, GL_UNSIGNED_BYTE, yuvData);
+		glTexSubImage2D(GL_TEXTURE_2D, 0, 0, 0, m_crWidth, m_crHeight, GL_RED, m_glType, m_pixels[1]);
 	}
-
-	// skip U data
-	yuvData += m_bufWidth * m_bufHeight / 4;
 
 	// load V data
 	glActiveTexture(GL_TEXTURE2);
 	glBindTexture(GL_TEXTURE_2D, m_idV);
 
 	if(m_texNeedInit) {
-		glTexImage2D(GL_TEXTURE_2D, 0, GL_LUMINANCE, m_bufWidth / 2, m_bufHeight / 2, 0, GL_LUMINANCE, GL_UNSIGNED_BYTE, yuvData);
+		glTexImage2D(GL_TEXTURE_2D, 0, m_glFormat, m_crWidth, m_crHeight, 0, GL_RED, m_glType, m_pixels[2]);
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
@@ -325,7 +324,7 @@ GLRenderer::uploadYUV()
 
 		glUniform1i(m_texV, 2); // GL_TEXTURE2
 	} else {
-		glTexSubImage2D(GL_TEXTURE_2D, 0, 0, 0, m_bufWidth / 2, m_bufHeight / 2, GL_LUMINANCE, GL_UNSIGNED_BYTE, yuvData);
+		glTexSubImage2D(GL_TEXTURE_2D, 0, 0, 0, m_crWidth, m_crHeight, GL_RED, m_glType, m_pixels[2]);
 	}
 }
 

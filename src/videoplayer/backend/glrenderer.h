@@ -38,13 +38,10 @@ public:
     explicit GLRenderer(QWidget *parent = nullptr);
     ~GLRenderer();
 
-    void displayVideoFrame(unsigned char *yuvBuf, int width, int height);
-	void setFrameSize(int width, int height);
+	void setFrameFormat(int width, int height, int compBits, int crWidthShift, int crHeightShift);
 	void setFrameY(quint8 *buf, quint32 pitch);
 	void setFrameU(quint8 *buf, quint32 pitch);
 	void setFrameV(quint8 *buf, quint32 pitch);
-	void getFrameYUV(quint8 **pixels, quint32 *pitch);
-
 	void setOverlay(SubtitleTextOverlay *overlay);
 
 signals:
@@ -66,6 +63,9 @@ private:
 	quint8 *m_bufYUV;
 	quint32 m_bufSize;
 	GLsizei m_bufWidth, m_bufHeight;
+	GLsizei m_crWidth, m_crHeight;
+	quint8 *m_pixels[3];
+	quint32 m_pitch[3];
 
 	QOpenGLShader *m_vertShader;
 	QOpenGLShader *m_fragShader;
@@ -73,7 +73,10 @@ private:
 
 	bool m_texNeedInit;
 	GLuint m_idY, m_idU, m_idV, m_idOvr;
-	int m_texY, m_texU, m_texV, m_texOvr;
+	int m_texY, m_texU, m_texV, m_texOvr, m_pixMultLoc;
+
+	GLenum m_glType, m_glFormat;
+	GLfloat m_pixMult;
 };
 }
 

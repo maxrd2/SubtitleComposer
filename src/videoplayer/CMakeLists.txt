@@ -15,6 +15,5 @@ set(videoplayer_SRCS
 	${CMAKE_CURRENT_SOURCE_DIR}/backend/streamdemuxer.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/backend/renderthread.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/backend/videostate.cpp
-	${CMAKE_CURRENT_SOURCE_DIR}/backend/pixelformat.cpp
 	CACHE INTERNAL EXPORTEDVARIABLE
 )
