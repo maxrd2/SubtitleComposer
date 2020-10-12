@@ -284,7 +284,8 @@ GLRenderer::paintGL()
 {
 	QMutexLocker l(&m_texMutex);
 
-	Q_ASSERT(m_bufYUV);
+	if(!m_bufYUV)
+		return;
 
 	uploadYUV();
 	uploadSubtitle();
