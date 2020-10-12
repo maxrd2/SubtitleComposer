@@ -23,6 +23,7 @@
 
 #include <QOpenGLWidget>
 #include <QOpenGLFunctions>
+#include <QMutex>
 
 QT_FORWARD_DECLARE_CLASS(QOpenGLShader)
 QT_FORWARD_DECLARE_CLASS(QOpenGLShaderProgram)
@@ -43,6 +44,8 @@ public:
 	void setFrameU(quint8 *buf, quint32 pitch);
 	void setFrameV(quint8 *buf, quint32 pitch);
 	void setOverlay(SubtitleTextOverlay *overlay);
+
+	inline QMutex * mutex() { return &m_texMutex; }
 
 signals:
 	void resolutionChanged();
@@ -66,14 +69,16 @@ private:
 	GLsizei m_crWidth, m_crHeight;
 	quint8 *m_pixels[3];
 	quint32 m_pitch[3];
+	QMutex m_texMutex;
 
 	QOpenGLShader *m_vertShader;
 	QOpenGLShader *m_fragShader;
 	QOpenGLShaderProgram *m_shaderProg;
 
 	bool m_texNeedInit;
-	GLuint m_idY, m_idU, m_idV, m_idOvr;
 	int m_texY, m_texU, m_texV, m_texOvr, m_pixMultLoc;
+	GLuint *m_idTex;
+	GLuint *m_vaBuf;
 
 	GLenum m_glType, m_glFormat;
 	GLfloat m_pixMult;

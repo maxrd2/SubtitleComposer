@@ -565,6 +565,8 @@ RenderThread::uploadTexture(AVFrame *frame)
 			return -1;
 		}
 
+		QMutexLocker l(m_vs->glRenderer->mutex());
+
 		m_vs->glRenderer->setFrameFormat(frame->width, frame->height,
 			fd->comp[0].depth, fd->log2_chroma_w, fd->log2_chroma_h);
 

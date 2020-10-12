@@ -20,16 +20,16 @@
 #include "glrenderer.h"
 
 #include <QOpenGLShader>
+#include <QMutexLocker>
 
 #include "videoplayer/backend/ffplayer.h"
 #include "videoplayer/videoplayer.h"
 #include "videoplayer/subtitletextoverlay.h"
 
-#define ATTR_VIDEO_VPOS 0
-#define ATTR_VIDEO_VCOL 1
-#define ATTR_SUBTITLE_VCOL 2
-
 using namespace SubtitleComposer;
+
+enum { ID_Y, ID_U, ID_V, ID_OVR, ID_SIZE };
+enum { AV_POS, AV_VIDTEX, AV_OVRTEX, A_SIZE };
 
 GLRenderer::GLRenderer(QWidget *parent)
 	: QOpenGLWidget(parent),
@@ -43,13 +43,23 @@ GLRenderer::GLRenderer(QWidget *parent)
 	  m_vertShader(nullptr),
 	  m_fragShader(nullptr),
 	  m_shaderProg(nullptr),
-	  m_texNeedInit(true)
+	  m_texNeedInit(true),
+	  m_idTex(nullptr),
+	  m_vaBuf(nullptr)
 {
 	setUpdateBehavior(NoPartialUpdate);
 }
 
 GLRenderer::~GLRenderer()
 {
+	if(m_idTex) {
+		glDeleteTextures(ID_SIZE, m_idTex);
+		delete[] m_idTex;
+	}
+	if(m_vaBuf) {
+		glDeleteBuffers(A_SIZE, m_vaBuf);
+		delete[] m_vaBuf;
+	}
 	delete[] m_bufYUV;
 }
 
@@ -146,7 +156,7 @@ GLRenderer::setFrameV(quint8 *buf, quint32 pitch)
 void
 GLRenderer::initializeGL()
 {
-	Q_ASSERT(m_bufYUV);
+	QMutexLocker l(&m_texMutex);
 
 	initializeOpenGLFunctions();
 
@@ -204,9 +214,9 @@ GLRenderer::initializeGL()
 	m_shaderProg->addShader(m_fragShader);
 	m_shaderProg->addShader(m_vertShader);
 
-	m_shaderProg->bindAttributeLocation("vPos", ATTR_VIDEO_VPOS);
-	m_shaderProg->bindAttributeLocation("vVidTex", ATTR_VIDEO_VCOL);
-	m_shaderProg->bindAttributeLocation("vOvrTex", ATTR_SUBTITLE_VCOL);
+	m_shaderProg->bindAttributeLocation("vPos", AV_POS);
+	m_shaderProg->bindAttributeLocation("vVidTex", AV_VIDTEX);
+	m_shaderProg->bindAttributeLocation("vOvrTex", AV_OVRTEX);
 	m_shaderProg->link();
 	m_shaderProg->bind();
 
@@ -216,6 +226,10 @@ GLRenderer::initializeGL()
 	m_texOvr = m_shaderProg->uniformLocation("texOvr");
 	m_pixMultLoc = m_shaderProg->uniformLocation("pixMult");
 
+	delete[] m_vaBuf;
+	m_vaBuf = new GLuint[A_SIZE];
+	glGenBuffers(A_SIZE, m_vaBuf);
+
 	{
 		static const GLfloat v[] = {
 			-1.0f, 1.0f,
@@ -223,9 +237,11 @@ GLRenderer::initializeGL()
 			-1.0f, -1.0f,
 			1.0f, -1.0f,
 		};
-		glVertexAttribPointer(ATTR_VIDEO_VPOS, 2, GL_FLOAT, 0, 0, v);
+		glBindBuffer(GL_ARRAY_BUFFER, m_vaBuf[AV_POS]);
+		glBufferData(GL_ARRAY_BUFFER, sizeof(v), v, GL_STATIC_DRAW);
+		glEnableVertexAttribArray(AV_POS);
+		glVertexAttribPointer(AV_POS, 2, GL_FLOAT, GL_FALSE, 0, nullptr);
 	}
-	glEnableVertexAttribArray(ATTR_VIDEO_VPOS);
 
 	{
 		static const GLfloat v[] = {
@@ -234,21 +250,22 @@ GLRenderer::initializeGL()
 			0.0f,  1.0f,
 			1.0f,  1.0f,
 		};
-		glVertexAttribPointer(ATTR_VIDEO_VCOL, 2, GL_FLOAT, 0, 0, v);
+		glBindBuffer(GL_ARRAY_BUFFER, m_vaBuf[AV_VIDTEX]);
+		glBufferData(GL_ARRAY_BUFFER, sizeof(v), v, GL_STATIC_DRAW);
+		glEnableVertexAttribArray(AV_VIDTEX);
+		glVertexAttribPointer(AV_VIDTEX, 2, GL_FLOAT, GL_FALSE, 0, nullptr);
 	}
-	glEnableVertexAttribArray(ATTR_VIDEO_VCOL);
 
-	glVertexAttribPointer(ATTR_SUBTITLE_VCOL, 2, GL_FLOAT, 0, 0, m_overlayPos);
-	glEnableVertexAttribArray(ATTR_SUBTITLE_VCOL);
+	glBindBuffer(GL_ARRAY_BUFFER, m_vaBuf[AV_OVRTEX]);
+	glBufferData(GL_ARRAY_BUFFER, sizeof(m_overlayPos), m_overlayPos, GL_STATIC_DRAW);
+	glEnableVertexAttribArray(AV_OVRTEX);
+	glVertexAttribPointer(AV_OVRTEX, 2, GL_FLOAT, GL_FALSE, 0, nullptr);
 
-	glGenTextures(1, &m_idY);
-	glGenTextures(1, &m_idU);
-	glGenTextures(1, &m_idV);
-	glGenTextures(1, &m_idOvr);
+	delete[] m_idTex;
+	m_idTex = new GLuint[ID_SIZE];
+	glGenTextures(ID_SIZE, m_idTex);
 
 	glClearColor(.0f, .0f, .0f, .0f); // background color
-
-	glPixelStorei(GL_UNPACK_ALIGNMENT, m_bufWidth % 4 == 0 ? 4 : 1);
 
 	m_texNeedInit = true;
 }
@@ -256,13 +273,17 @@ GLRenderer::initializeGL()
 void
 GLRenderer::resizeGL(int width, int height)
 {
+	QMutexLocker l(&m_texMutex);
 	glViewport(0, 0, width, height);
+	m_texNeedInit = true;
 	update();
 }
 
 void
 GLRenderer::paintGL()
 {
+	QMutexLocker l(&m_texMutex);
+
 	Q_ASSERT(m_bufYUV);
 
 	uploadYUV();
@@ -276,53 +297,49 @@ GLRenderer::paintGL()
 void
 GLRenderer::uploadYUV()
 {
-	if(m_texNeedInit)
+	if(m_texNeedInit) {
 		glUniform1f(m_pixMultLoc, m_pixMult);
+		glPixelStorei(GL_UNPACK_ALIGNMENT, m_bufWidth % 4 == 0 ? 4 : 1);
+	}
 
 	// load Y data
-	glActiveTexture(GL_TEXTURE0);
-	glBindTexture(GL_TEXTURE_2D, m_idY);
-
+	glActiveTexture(GL_TEXTURE0 + ID_Y);
+	glBindTexture(GL_TEXTURE_2D, m_idTex[ID_Y]);
 	if(m_texNeedInit) {
 		glTexImage2D(GL_TEXTURE_2D, 0, m_glFormat, m_bufWidth, m_bufHeight, 0, GL_RED, m_glType, m_pixels[0]);
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
-
-		glUniform1i(m_texY, 0); // GL_TEXTURE0
+		glUniform1i(m_texY, ID_Y);
 	} else {
 		glTexSubImage2D(GL_TEXTURE_2D, 0, 0, 0, m_bufWidth, m_bufHeight, GL_RED, m_glType, m_pixels[0]);
 	}
 
 	// load U data
-	glActiveTexture(GL_TEXTURE1);
-	glBindTexture(GL_TEXTURE_2D, m_idU);
-
+	glActiveTexture(GL_TEXTURE0 + ID_U);
+	glBindTexture(GL_TEXTURE_2D, m_idTex[ID_U]);
 	if(m_texNeedInit) {
 		glTexImage2D(GL_TEXTURE_2D, 0, m_glFormat, m_crWidth, m_crHeight, 0, GL_RED, m_glType, m_pixels[1]);
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
-
-		glUniform1i(m_texU, 1); // GL_TEXTURE1
+		glUniform1i(m_texU, ID_U);
 	} else {
 		glTexSubImage2D(GL_TEXTURE_2D, 0, 0, 0, m_crWidth, m_crHeight, GL_RED, m_glType, m_pixels[1]);
 	}
 
 	// load V data
-	glActiveTexture(GL_TEXTURE2);
-	glBindTexture(GL_TEXTURE_2D, m_idV);
-
+	glActiveTexture(GL_TEXTURE0 + ID_V);
+	glBindTexture(GL_TEXTURE_2D, m_idTex[ID_V]);
 	if(m_texNeedInit) {
 		glTexImage2D(GL_TEXTURE_2D, 0, m_glFormat, m_crWidth, m_crHeight, 0, GL_RED, m_glType, m_pixels[2]);
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
-
-		glUniform1i(m_texV, 2); // GL_TEXTURE2
+		glUniform1i(m_texV, ID_V);
 	} else {
 		glTexSubImage2D(GL_TEXTURE_2D, 0, 0, 0, m_crWidth, m_crHeight, GL_RED, m_glType, m_pixels[2]);
 	}
@@ -351,9 +368,8 @@ GLRenderer::uploadSubtitle()
 	m_overlayPos[5] = m_overlayPos[7] = hr;
 
 	// overlay
-	glActiveTexture(GL_TEXTURE3);
-    glBindTexture(GL_TEXTURE_2D, m_idOvr);
-
+	glActiveTexture(GL_TEXTURE0 + ID_OVR);
+	glBindTexture(GL_TEXTURE_2D, m_idTex[ID_OVR]);
 	if(m_texNeedInit) {
 		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA8, img.width(), img.height(), 0, GL_BGRA, GL_UNSIGNED_BYTE, img.bits());
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
@@ -362,8 +378,7 @@ GLRenderer::uploadSubtitle()
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_BORDER);
 		static const float borderColor[] = { .0f, .0f, .0f, .0f };
 		glTexParameterfv(GL_TEXTURE_2D, GL_TEXTURE_BORDER_COLOR, borderColor);
-
-		glUniform1i(m_texOvr, 3); // GL_TEXTURE3
+		glUniform1i(m_texOvr, ID_OVR);
 	} else {
 		glTexSubImage2D(GL_TEXTURE_2D, 0, 0, 0, img.width(), img.height(), GL_BGRA, GL_UNSIGNED_BYTE, img.bits());
 	}

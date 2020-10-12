@@ -169,7 +169,6 @@ VideoPlayer::play()
 {
 	if(m_state <= Opening || m_state == Playing)
 		return;
-	m_videoWidget->videoLayer()->show();
 	if(m_state < Playing)
 		openFile(m_filePath);
 	if(m_state == Paused)
@@ -286,6 +285,7 @@ VideoPlayer::setupNotifications()
 		emit fileOpened(m_filePath);
 		m_fps = m_player->videoFPS();
 		emit fpsChanged(m_fps);
+		m_videoWidget->videoLayer()->show();
 	});
 	connect(m_player, &FFPlayer::stateChanged, this, [this](FFPlayer::State ffs){
 		static const QMap<FFPlayer::State, State> stateMap
