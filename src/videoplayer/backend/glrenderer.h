@@ -23,7 +23,13 @@
 
 #include <QOpenGLWidget>
 #include <QOpenGLFunctions>
+#include <QOpenGLVertexArrayObject>
+#include <QMatrix4x4>
 #include <QMutex>
+
+extern "C" {
+#include <libavutil/frame.h>
+}
 
 QT_FORWARD_DECLARE_CLASS(QOpenGLShader)
 QT_FORWARD_DECLARE_CLASS(QOpenGLShaderProgram)
@@ -39,7 +45,11 @@ public:
     explicit GLRenderer(QWidget *parent = nullptr);
     ~GLRenderer();
 
+	static void setupProfile();
+	void reset();
+
 	void setFrameFormat(int width, int height, int compBits, int crWidthShift, int crHeightShift);
+	void setColorspace(const AVFrame *frame);
 	void setFrameY(quint8 *buf, quint32 pitch);
 	void setFrameU(quint8 *buf, quint32 pitch);
 	void setFrameV(quint8 *buf, quint32 pitch);
@@ -52,6 +62,7 @@ signals:
 
 protected:
     void initializeGL() override;
+	void initShader();
     void resizeGL(int width, int height) override;
     void paintGL() override;
 
@@ -63,6 +74,8 @@ private:
 	SubtitleTextOverlay *m_overlay;
 	GLfloat m_overlayPos[8];
 
+	QOpenGLVertexArrayObject m_vao;
+
 	quint8 *m_bufYUV;
 	quint32 m_bufSize;
 	GLsizei m_bufWidth, m_bufHeight;
@@ -71,17 +84,20 @@ private:
 	quint32 m_pitch[3];
 	QMutex m_texMutex;
 
+	bool m_csNeedInit;
+	QString m_ctfOut, m_ctfIn;
+	QMatrix4x4 m_csCM;
+
 	QOpenGLShader *m_vertShader;
 	QOpenGLShader *m_fragShader;
 	QOpenGLShaderProgram *m_shaderProg;
 
 	bool m_texNeedInit;
-	int m_texY, m_texU, m_texV, m_texOvr, m_pixMultLoc;
+	int m_texY, m_texU, m_texV, m_texOvr;
 	GLuint *m_idTex;
 	GLuint *m_vaBuf;
 
 	GLenum m_glType, m_glFormat;
-	GLfloat m_pixMult;
 };
 }
 

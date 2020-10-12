@@ -282,6 +282,7 @@ void
 VideoPlayer::setupNotifications()
 {
 	connect(m_player, &FFPlayer::mediaLoaded, this, [this](){
+		m_renderer->reset();
 		emit fileOpened(m_filePath);
 		m_fps = m_player->videoFPS();
 		emit fpsChanged(m_fps);

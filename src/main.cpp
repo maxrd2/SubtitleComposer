@@ -21,6 +21,7 @@
 #include "application.h"
 #include "mainwindow.h"
 #include "helpers/commondefs.h"
+#include "videoplayer/backend/glrenderer.h"
 
 #include <KAboutData>
 #include <KLocalizedString>
@@ -42,9 +43,13 @@ extern "C" {
 #include "config.h"
 #endif
 
+using namespace SubtitleComposer;
+
 int
 main(int argc, char **argv)
 {
+	GLRenderer::setupProfile();
+
 #if LIBAVCODEC_VERSION_INT < AV_VERSION_INT(58, 9, 100)
 	av_register_all();
 	avcodec_register_all();

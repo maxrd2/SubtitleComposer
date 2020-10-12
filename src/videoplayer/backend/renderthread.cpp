@@ -515,32 +515,32 @@ RenderThread::validTextureFormat(const AVPixFmtDescriptor *fd)
 	if(m_isPlanar && m_isYUV) {
 		const quint8 b = fd->comp[0].depth > 8 ? 2 : 1;
 		if(fd->comp[0].step != b || fd->comp[1].step != b || fd->comp[2].step != b) {
-			qCritical("uploadTexture() failed: unsupported plane step [%d, %d, %d] %s",
+			qCritical("validTextureFormat() failed: unsupported plane step [%d, %d, %d] %s",
 				   fd->comp[0].step, fd->comp[1].step, fd->comp[2].step, fd->name);
 			return false;
 		}
 		if(fd->comp[0].offset || fd->comp[1].offset || fd->comp[2].offset) {
-			qCritical("uploadTexture() failed: unsupported plane offset [%d, %d, %d] %s",
+			qCritical("validTextureFormat() failed: unsupported plane offset [%d, %d, %d] %s",
 				   fd->comp[0].offset, fd->comp[1].offset, fd->comp[2].offset, fd->name);
 			return false;
 		}
 		if(fd->comp[0].shift || fd->comp[1].shift || fd->comp[2].shift) {
-			qCritical("uploadTexture() failed: unsupported plane shift [%d, %d, %d] %s",
+			qCritical("validTextureFormat() failed: unsupported plane shift [%d, %d, %d] %s",
 				   fd->comp[0].shift, fd->comp[1].shift, fd->comp[2].shift, fd->name);
 			return false;
 		}
 		if(fd->comp[0].depth != fd->comp[1].depth || fd->comp[0].depth != fd->comp[2].depth) {
-			qCritical("uploadTexture() failed: unsupported plane depths [%d, %d, %d] %s",
+			qCritical("validTextureFormat() failed: unsupported plane depths [%d, %d, %d] %s",
 				   fd->comp[0].depth, fd->comp[1].depth, fd->comp[2].depth, fd->name);
 			return false;
 		}
 		if(fd->nb_components < 3) {
-			qCritical("uploadTexture() failed: unsupported plane count [%d] %s",
+			qCritical("validTextureFormat() failed: unsupported plane count [%d] %s",
 					  fd->nb_components, fd->name);
 			return false;
 		}
 	} else {
-		qCritical("uploadTexture() failed: unsupported frame format [%s]", fd->name);
+		qCritical("validTextureFormat() failed: unsupported frame format [%s]", fd->name);
 		return false;
 	}
 	return true;
@@ -569,6 +569,8 @@ RenderThread::uploadTexture(AVFrame *frame)
 
 		m_vs->glRenderer->setFrameFormat(frame->width, frame->height,
 			fd->comp[0].depth, fd->log2_chroma_w, fd->log2_chroma_h);
+
+		m_vs->glRenderer->setColorspace(frame);
 
 		if(frame->linesize[0] > 0)
 			m_vs->glRenderer->setFrameY(frame->data[0], frame->linesize[0]);

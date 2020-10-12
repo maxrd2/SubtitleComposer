@@ -21,10 +21,31 @@
 
 #include <QOpenGLShader>
 #include <QMutexLocker>
+#include <QStringBuilder>
 
 #include "videoplayer/backend/ffplayer.h"
 #include "videoplayer/videoplayer.h"
 #include "videoplayer/subtitletextoverlay.h"
+#include "videoplayer/backend/glcolorspace.h"
+
+extern "C" {
+#include "libavutil/pixdesc.h"
+}
+
+#define DEBUG_YUV 0
+#define DEBUG_GL 0
+#define OPENGL_CORE 0
+#define OPENGL_VER 2,0
+
+#if DEBUG_GL
+#define asGL(glCall) glCall; {\
+    GLenum __glErr__ = glGetError(); \
+    if(__glErr__ != GL_NO_ERROR) \
+        qCritical("GL error 0x%04x during %s line %d in @%s", __glErr__, #glCall, __LINE__, __PRETTY_FUNCTION__); \
+}
+#else
+#define asGL(glCall) glCall
+#endif
 
 using namespace SubtitleComposer;
 
@@ -40,6 +61,7 @@ GLRenderer::GLRenderer(QWidget *parent)
 	  m_bufHeight(0),
 	  m_crWidth(0),
 	  m_crHeight(0),
+	  m_csNeedInit(true),
 	  m_vertShader(nullptr),
 	  m_fragShader(nullptr),
 	  m_shaderProg(nullptr),
@@ -52,21 +74,45 @@ GLRenderer::GLRenderer(QWidget *parent)
 
 GLRenderer::~GLRenderer()
 {
+	makeCurrent();
 	if(m_idTex) {
-		glDeleteTextures(ID_SIZE, m_idTex);
+		asGL(glDeleteTextures(ID_SIZE, m_idTex));
 		delete[] m_idTex;
 	}
 	if(m_vaBuf) {
-		glDeleteBuffers(A_SIZE, m_vaBuf);
+		asGL(glDeleteBuffers(A_SIZE, m_vaBuf));
 		delete[] m_vaBuf;
 	}
+	m_vao.destroy();
+	doneCurrent();
 	delete[] m_bufYUV;
+}
+
+void
+GLRenderer::setupProfile()
+{
+	QSurfaceFormat format(QSurfaceFormat::defaultFormat());
+	format.setVersion(OPENGL_VER);
+#if DEBUG_GL
+	format.setOption(QSurfaceFormat::DebugContext);
+#endif
+#if OPENGL_CORE
+	format.setProfile(QSurfaceFormat::CoreProfile);
+#endif
+	QSurfaceFormat::setDefaultFormat(format);
 }
 
 void
 GLRenderer::setOverlay(SubtitleTextOverlay *overlay)
 {
 	m_overlay = overlay;
+}
+
+void
+GLRenderer::reset()
+{
+	m_csNeedInit = true;
+	m_texNeedInit = true;
 }
 
 void
@@ -88,7 +134,6 @@ GLRenderer::setFrameFormat(int width, int height, int compBits, int crWidthShift
 
 	m_glType = compBytes == 1 ? GL_UNSIGNED_BYTE : GL_UNSIGNED_SHORT;
 	m_glFormat = compBytes == 1 ? GL_R8 : GL_R16;
-	m_pixMult = double(1 << (compBytes << 3)) / double(1 << compBits);
 
 	delete[] m_bufYUV;
 	m_bufSize = bufSize;
@@ -104,13 +149,90 @@ GLRenderer::setFrameFormat(int width, int height, int compBits, int crWidthShift
 	m_pixels[2] = m_pixels[1] + m_pitch[1] * m_crHeight;
 
 	m_texNeedInit = true;
+	m_csNeedInit = true;
 
 	emit resolutionChanged();
 }
 
 void
+GLRenderer::setColorspace(const AVFrame *frame)
+{
+	if(!m_csNeedInit)
+		return;
+
+	const AVPixFmtDescriptor *fd = av_pix_fmt_desc_get(AVPixelFormat(frame->format));
+	const quint8 compBits = fd->comp[0].depth;
+	const quint8 compBytes = compBits > 8 ? 2 : 1;
+	const bool isYUV = ~fd->flags & AV_PIX_FMT_FLAG_RGB;
+
+	qDebug("Color range: %s(%d); primaries: %s(%d); xfer: %s(%d); space: %s(%d); depth: %d",
+		   av_color_range_name(frame->color_range), frame->color_range,
+		   av_color_primaries_name(frame->color_primaries), frame->color_primaries,
+		   av_color_transfer_name(frame->color_trc), frame->color_trc,
+		   av_color_space_name(frame->colorspace), frame->colorspace,
+		   compBits);
+
+	// gamma/transfer function
+	auto ctfit = _ctfi.constFind(frame->color_trc);
+	if(ctfit == _ctfi.constEnd())
+		ctfit = _ctfi.constFind(AVCOL_TRC_BT709);
+	Q_ASSERT(ctfit != _ctfi.constEnd());
+	m_ctfIn = ctfit.value();
+
+	ctfit = _ctf.constFind(AVCOL_TRC_IEC61966_2_1); // sRGB
+	Q_ASSERT(ctfit != _ctf.constEnd());
+	m_ctfOut = ctfit.value();
+
+	// colorspace conversion
+	QMap<int, QVector<GLfloat>>::const_iterator cs;
+	if((cs = _csm.constFind(frame->color_primaries)) != _csm.constEnd()) {
+		m_csCM = QMatrix4x4(cs.value().constData(), 3, 3);
+	} else if((cs = _csc.constFind(frame->colorspace)) != _csc.constEnd()) {
+		m_csCM = QMatrix4x4(cs.value().constData(), 3, 3);
+	} else if(isYUV) {
+		cs = _csm.constFind(AVCOL_PRI_BT709);
+		m_csCM = QMatrix4x4(cs.value().constData(), 3, 3);
+	} else {
+		m_csCM = QMatrix4x4();
+	}
+
+	if(isYUV) {
+		if(frame->color_range == AVCOL_RANGE_MPEG || frame->color_range == AVCOL_RANGE_UNSPECIFIED) {
+			// convert to full range and offset UV channels
+			m_csCM.scale(255.0f / (219.0f + 16.0f), 255.0f / 224.0f, 255.0f / 224.0f);
+			m_csCM.translate(-16.0f / 255.0f, -128.0f / 255.0f, -128.0f / 255.0f);
+		} else {
+			// offset signed UV channels
+			m_csCM.translate(0.0f, -128.0f / 255.0f, -128.0f / 255.0f);
+		}
+	}
+
+	// scale to full range when some bits are unused
+	const float pixMult = double(1 << (compBytes << 3)) / double(1 << compBits);
+	m_csCM.scale(pixMult, pixMult, pixMult);
+}
+
+void
 GLRenderer::setFrameY(quint8 *buf, quint32 pitch)
 {
+#if DEBUG_YUV
+	static quint32 cnt = 0;
+	static double min = 100., max = -100.;
+
+	quint16 *test = (quint16 *)buf;
+	quint32 n = pitch * m_bufHeight / sizeof(quint16);
+	while(n--) {
+		const double val = double(*test++) / quint16(1 << 10);
+		min = qMin(min, val);
+		max = qMax(max, val);
+		if(++cnt == 10000000) {
+			qDebug("Y min:%f max:%f", min, max);
+			cnt = 0;
+			min = 100.;
+			max = -100.;
+		}
+	}
+#endif
 	if(pitch == m_pitch[0]) {
 		memcpy(m_pixels[0], buf, pitch * m_bufHeight);
 	} else {
@@ -126,6 +248,24 @@ GLRenderer::setFrameY(quint8 *buf, quint32 pitch)
 void
 GLRenderer::setFrameU(quint8 *buf, quint32 pitch)
 {
+#if DEBUG_YUV
+	static quint32 cnt = 0;
+	static double min = 100., max = -100.;
+
+	quint16 *test = (quint16 *)buf;
+	quint32 n = pitch * m_crHeight / sizeof(quint16);
+	while(n--) {
+		const double val = double(*test++) / quint16(1 << 10);
+		min = qMin(min, val);
+		max = qMax(max, val);
+		if(++cnt == 10000000) {
+			qDebug("U min:%f max:%f", min, max);
+			cnt = 0;
+			min = 100.;
+			max = -100.;
+		}
+	}
+#endif
 	if(pitch == m_pitch[1]) {
 		memcpy(m_pixels[1], buf, pitch * m_crHeight);
 	} else {
@@ -141,6 +281,24 @@ GLRenderer::setFrameU(quint8 *buf, quint32 pitch)
 void
 GLRenderer::setFrameV(quint8 *buf, quint32 pitch)
 {
+#if DEBUG_YUV
+	static quint32 cnt = 0;
+	static double min = 100., max = -100.;
+
+	quint16 *test = (quint16 *)buf;
+	quint32 n = pitch * m_crHeight / sizeof(quint16);
+	while(n--) {
+		const double val = double(*test++) / quint16(1 << 10);
+		min = qMin(min, val);
+		max = qMax(max, val);
+		if(++cnt == 10000000) {
+			qDebug("V min:%f max:%f", min, max);
+			cnt = 0;
+			min = 100.;
+			max = -100.;
+		}
+	}
+#endif
 	if(pitch == m_pitch[2]) {
 		memcpy(m_pixels[2], buf, pitch * m_crHeight);
 	} else {
@@ -154,17 +312,12 @@ GLRenderer::setFrameV(quint8 *buf, quint32 pitch)
 }
 
 void
-GLRenderer::initializeGL()
+GLRenderer::initShader()
 {
-	QMutexLocker l(&m_texMutex);
-
-	initializeOpenGLFunctions();
-
-	glEnable(GL_DEPTH_TEST);
-
 	delete m_vertShader;
 	m_vertShader = new QOpenGLShader(QOpenGLShader::Vertex, this);
 	bool success = m_vertShader->compileSourceCode(
+		"#version 120\n"
 		"attribute vec4 vPos;"
 		"attribute vec2 vVidTex;"
 		"attribute vec2 vOvrTex;"
@@ -176,36 +329,50 @@ GLRenderer::initializeGL()
 			"vfOvrTex = vOvrTex;"
 		"}");
 	if(!success) {
-		qWarning() << "Failed compiling vertex shader code";
+		qCritical() << "GLRenderer: vertex shader compilation failed";
 		return;
 	}
 
 	delete m_fragShader;
 	m_fragShader = new QOpenGLShader(QOpenGLShader::Fragment, this);
-	success = m_fragShader->compileSourceCode(
-#ifdef QT_OPENGL_ES_2
-		"precision mediump float;"
-#endif
+//	asGL(glUniformMatrix4fv(m_texCSLoc, 1, GL_FALSE, m_csCM.constData()));
+
+	const float *csm = m_csCM.constData();
+	QString csms;
+	for(int i = 0; i < 16; i++) {
+		if(i) csms.append(QLatin1Char(','));
+		csms.append(QString::number(csm[i], 'g', 10));
+	}
+
+	success = m_fragShader->compileSourceCode(QStringLiteral("#version 120\n"
 		"varying vec2 vfVidTex;"
 		"varying vec2 vfOvrTex;"
 		"uniform sampler2D texY;"
 		"uniform sampler2D texU;"
 		"uniform sampler2D texV;"
 		"uniform sampler2D texOvr;"
-		"uniform float pixMult;"
+		"float toLinear(float vExp) {") % m_ctfIn % QStringLiteral("}"
+		"float toDisplay(float vLin) {") % m_ctfOut % QStringLiteral("}"
 		"void main(void) {"
 			"vec3 yuv;"
-			"yuv.x = texture2D(texY, vfVidTex).r * pixMult;"
-			"yuv.y = texture2D(texU, vfVidTex).r * pixMult - 0.5;"
-			"yuv.z = texture2D(texV, vfVidTex).r * pixMult - 0.5;"
-			"vec3 rgb = mat3(1, 1, 1,"
-							"0, -0.39465, 2.03211,"
-							"1.13983, -0.58060, 0) * yuv;"
+			"yuv.x = texture2D(texY, vfVidTex).r;"
+			"yuv.y = texture2D(texU, vfVidTex).r;"
+			"yuv.z = texture2D(texV, vfVidTex).r;"
+			"mat4 texCS = mat4(") % csms % QStringLiteral(");"
+			"vec3 rgb = (texCS * vec4(yuv, 1)).xyz;"
+			// ideally gamma would be applied to Y, but video signals apply to RGB so we do the same
+			"rgb.r = toLinear(rgb.r);"
+			"rgb.g = toLinear(rgb.g);"
+			"rgb.b = toLinear(rgb.b);"
+			// apply display (sRGB) gamma transfer
+			"rgb.r = toDisplay(rgb.r);"
+			"rgb.g = toDisplay(rgb.g);"
+			"rgb.b = toDisplay(rgb.b);"
 			"vec4 o = texture2D(texOvr, vfOvrTex);"
 			"gl_FragColor = vec4(mix(rgb, o.rgb, o.w), 1);"
-		"}");
+		"}"));
 	if(!success) {
-		qWarning() << "Failed compiling fragment shader code";
+		qCritical() << "GLRenderer: fragment shader compilation failed";
 		return;
 	}
 
@@ -217,18 +384,39 @@ GLRenderer::initializeGL()
 	m_shaderProg->bindAttributeLocation("vPos", AV_POS);
 	m_shaderProg->bindAttributeLocation("vVidTex", AV_VIDTEX);
 	m_shaderProg->bindAttributeLocation("vOvrTex", AV_OVRTEX);
-	m_shaderProg->link();
+	if(!m_shaderProg->link()) {
+		qCritical() << "GLRenderer: shader linking failed:" << m_shaderProg->log();
+		return;
+	}
 	m_shaderProg->bind();
 
 	m_texY = m_shaderProg->uniformLocation("texY");
 	m_texU = m_shaderProg->uniformLocation("texU");
 	m_texV = m_shaderProg->uniformLocation("texV");
 	m_texOvr = m_shaderProg->uniformLocation("texOvr");
-	m_pixMultLoc = m_shaderProg->uniformLocation("pixMult");
 
-	delete[] m_vaBuf;
+	m_csNeedInit = true;
+}
+
+void
+GLRenderer::initializeGL()
+{
+	QMutexLocker l(&m_texMutex);
+
+	initializeOpenGLFunctions();
+	qDebug() << "OpenGL version: " << reinterpret_cast<const char *>(glGetString(GL_VERSION));
+	qDebug() << "GSLS version: " << reinterpret_cast<const char *>(glGetString(GL_SHADING_LANGUAGE_VERSION));
+
+	if(m_vao.create())
+		m_vao.bind();
+
+	if(m_vaBuf) {
+		asGL(glDeleteBuffers(A_SIZE, m_vaBuf));
+	} else {
+		delete[] m_vaBuf;
+	}
 	m_vaBuf = new GLuint[A_SIZE];
-	glGenBuffers(A_SIZE, m_vaBuf);
+	asGL(glGenBuffers(A_SIZE, m_vaBuf));
 
 	{
 		static const GLfloat v[] = {
@@ -237,10 +425,10 @@ GLRenderer::initializeGL()
 			-1.0f, -1.0f,
 			1.0f, -1.0f,
 		};
-		glBindBuffer(GL_ARRAY_BUFFER, m_vaBuf[AV_POS]);
-		glBufferData(GL_ARRAY_BUFFER, sizeof(v), v, GL_STATIC_DRAW);
-		glEnableVertexAttribArray(AV_POS);
-		glVertexAttribPointer(AV_POS, 2, GL_FLOAT, GL_FALSE, 0, nullptr);
+		asGL(glBindBuffer(GL_ARRAY_BUFFER, m_vaBuf[AV_POS]));
+		asGL(glBufferData(GL_ARRAY_BUFFER, sizeof(v), v, GL_STATIC_DRAW));
+		asGL(glVertexAttribPointer(AV_POS, 2, GL_FLOAT, GL_FALSE, 0, nullptr));
+		asGL(glEnableVertexAttribArray(AV_POS));
 	}
 
 	{
@@ -250,31 +438,36 @@ GLRenderer::initializeGL()
 			0.0f,  1.0f,
 			1.0f,  1.0f,
 		};
-		glBindBuffer(GL_ARRAY_BUFFER, m_vaBuf[AV_VIDTEX]);
-		glBufferData(GL_ARRAY_BUFFER, sizeof(v), v, GL_STATIC_DRAW);
-		glEnableVertexAttribArray(AV_VIDTEX);
-		glVertexAttribPointer(AV_VIDTEX, 2, GL_FLOAT, GL_FALSE, 0, nullptr);
+		asGL(glBindBuffer(GL_ARRAY_BUFFER, m_vaBuf[AV_VIDTEX]));
+		asGL(glBufferData(GL_ARRAY_BUFFER, sizeof(v), v, GL_STATIC_DRAW));
+		asGL(glVertexAttribPointer(AV_VIDTEX, 2, GL_FLOAT, GL_FALSE, 0, nullptr));
+		asGL(glEnableVertexAttribArray(AV_VIDTEX));
 	}
 
-	glBindBuffer(GL_ARRAY_BUFFER, m_vaBuf[AV_OVRTEX]);
-	glBufferData(GL_ARRAY_BUFFER, sizeof(m_overlayPos), m_overlayPos, GL_STATIC_DRAW);
-	glEnableVertexAttribArray(AV_OVRTEX);
-	glVertexAttribPointer(AV_OVRTEX, 2, GL_FLOAT, GL_FALSE, 0, nullptr);
+	asGL(glBindBuffer(GL_ARRAY_BUFFER, m_vaBuf[AV_OVRTEX]));
+	asGL(glVertexAttribPointer(AV_OVRTEX, 2, GL_FLOAT, GL_FALSE, 0, nullptr));
+	asGL(glEnableVertexAttribArray(AV_OVRTEX));
 
-	delete[] m_idTex;
-	m_idTex = new GLuint[ID_SIZE];
-	glGenTextures(ID_SIZE, m_idTex);
+	if(m_idTex) {
+		asGL(glDeleteTextures(ID_SIZE, m_idTex));
+	} else {
+		m_idTex = new GLuint[ID_SIZE];
+	}
+	asGL(glGenTextures(ID_SIZE, m_idTex));
 
-	glClearColor(.0f, .0f, .0f, .0f); // background color
+	asGL(glClearColor(.0f, .0f, .0f, .0f)); // background color
+
+	asGL(glDisable(GL_DEPTH_TEST));
 
 	m_texNeedInit = true;
+	m_csNeedInit = true;
 }
 
 void
 GLRenderer::resizeGL(int width, int height)
 {
 	QMutexLocker l(&m_texMutex);
-	glViewport(0, 0, width, height);
+	asGL(glViewport(0, 0, width, height));
 	m_texNeedInit = true;
 	update();
 }
@@ -284,65 +477,69 @@ GLRenderer::paintGL()
 {
 	QMutexLocker l(&m_texMutex);
 
+	glClear(GL_COLOR_BUFFER_BIT);
+
 	if(!m_bufYUV)
 		return;
+
+	if(m_texNeedInit) {
+		asGL(glPixelStorei(GL_UNPACK_ALIGNMENT, m_bufWidth % 4 == 0 ? 4 : 1));
+	}
+	if(m_csNeedInit)
+		initShader();
 
 	uploadYUV();
 	uploadSubtitle();
 
-	glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
+	asGL(glDrawArrays(GL_TRIANGLE_STRIP, 0, 4));
 
 	m_texNeedInit = false;
+	m_csNeedInit = false;
 }
 
 void
 GLRenderer::uploadYUV()
 {
-	if(m_texNeedInit) {
-		glUniform1f(m_pixMultLoc, m_pixMult);
-		glPixelStorei(GL_UNPACK_ALIGNMENT, m_bufWidth % 4 == 0 ? 4 : 1);
-	}
-
 	// load Y data
-	glActiveTexture(GL_TEXTURE0 + ID_Y);
-	glBindTexture(GL_TEXTURE_2D, m_idTex[ID_Y]);
+	asGL(glActiveTexture(GL_TEXTURE0 + ID_Y));
+	asGL(glBindTexture(GL_TEXTURE_2D, m_idTex[ID_Y]));
 	if(m_texNeedInit) {
-		glTexImage2D(GL_TEXTURE_2D, 0, m_glFormat, m_bufWidth, m_bufHeight, 0, GL_RED, m_glType, m_pixels[0]);
-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
-		glUniform1i(m_texY, ID_Y);
+		asGL(glTexImage2D(GL_TEXTURE_2D, 0, m_glFormat, m_bufWidth, m_bufHeight, 0, GL_RED, m_glType, m_pixels[0]));
+		asGL(glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR));
+		asGL(glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR));
+		asGL(glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE));
+		asGL(glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE));
+		asGL(glUniform1i(m_texY, ID_Y));
 	} else {
-		glTexSubImage2D(GL_TEXTURE_2D, 0, 0, 0, m_bufWidth, m_bufHeight, GL_RED, m_glType, m_pixels[0]);
+		asGL(glTexSubImage2D(GL_TEXTURE_2D, 0, 0, 0, m_bufWidth, m_bufHeight, GL_RED, m_glType, m_pixels[0]));
 	}
 
 	// load U data
-	glActiveTexture(GL_TEXTURE0 + ID_U);
-	glBindTexture(GL_TEXTURE_2D, m_idTex[ID_U]);
+	asGL(glActiveTexture(GL_TEXTURE0 + ID_U));
+	asGL(glBindTexture(GL_TEXTURE_2D, m_idTex[ID_U]));
 	if(m_texNeedInit) {
-		glTexImage2D(GL_TEXTURE_2D, 0, m_glFormat, m_crWidth, m_crHeight, 0, GL_RED, m_glType, m_pixels[1]);
-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
-		glUniform1i(m_texU, ID_U);
+		asGL(glTexImage2D(GL_TEXTURE_2D, 0, m_glFormat, m_crWidth, m_crHeight, 0, GL_RED, m_glType, m_pixels[1]));
+		asGL(glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR));
+		asGL(glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR));
+		asGL(glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE));
+		asGL(glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE));
+		asGL(glUniform1i(m_texU, ID_U));
 	} else {
-		glTexSubImage2D(GL_TEXTURE_2D, 0, 0, 0, m_crWidth, m_crHeight, GL_RED, m_glType, m_pixels[1]);
+		asGL(glTexSubImage2D(GL_TEXTURE_2D, 0, 0, 0, m_crWidth, m_crHeight, GL_RED, m_glType, m_pixels[1]));
 	}
 
 	// load V data
-	glActiveTexture(GL_TEXTURE0 + ID_V);
-	glBindTexture(GL_TEXTURE_2D, m_idTex[ID_V]);
+	asGL(glActiveTexture(GL_TEXTURE0 + ID_V));
+	asGL(glBindTexture(GL_TEXTURE_2D, m_idTex[ID_V]));
 	if(m_texNeedInit) {
-		glTexImage2D(GL_TEXTURE_2D, 0, m_glFormat, m_crWidth, m_crHeight, 0, GL_RED, m_glType, m_pixels[2]);
-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
-		glUniform1i(m_texV, ID_V);
+		asGL(glTexImage2D(GL_TEXTURE_2D, 0, m_glFormat, m_crWidth, m_crHeight, 0, GL_RED, m_glType, m_pixels[2]));
+		asGL(glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR));
+		asGL(glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR));
+		asGL(glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE));
+		asGL(glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE));
+		asGL(glUniform1i(m_texV, ID_V));
 	} else {
-		glTexSubImage2D(GL_TEXTURE_2D, 0, 0, 0, m_crWidth, m_crHeight, GL_RED, m_glType, m_pixels[2]);
+		asGL(glTexSubImage2D(GL_TEXTURE_2D, 0, 0, 0, m_crWidth, m_crHeight, GL_RED, m_glType, m_pixels[2]));
 	}
 }
 
@@ -368,19 +565,23 @@ GLRenderer::uploadSubtitle()
 	m_overlayPos[1] = m_overlayPos[3] = -1.0f + hr + scaleV;
 	m_overlayPos[5] = m_overlayPos[7] = hr;
 
+	asGL(glBindBuffer(GL_ARRAY_BUFFER, m_vaBuf[AV_OVRTEX]));
+	asGL(glBufferData(GL_ARRAY_BUFFER, sizeof(m_overlayPos), m_overlayPos, GL_DYNAMIC_DRAW));
+	asGL(glBindBuffer(GL_ARRAY_BUFFER, 0));
+
 	// overlay
-	glActiveTexture(GL_TEXTURE0 + ID_OVR);
-	glBindTexture(GL_TEXTURE_2D, m_idTex[ID_OVR]);
+	asGL(glActiveTexture(GL_TEXTURE0 + ID_OVR));
+	asGL(glBindTexture(GL_TEXTURE_2D, m_idTex[ID_OVR]));
 	if(m_texNeedInit) {
-		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA8, img.width(), img.height(), 0, GL_BGRA, GL_UNSIGNED_BYTE, img.bits());
-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_BORDER);
-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_BORDER);
+		asGL(glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA8, img.width(), img.height(), 0, GL_BGRA, GL_UNSIGNED_BYTE, img.bits()));
+		asGL(glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR));
+		asGL(glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR));
+		asGL(glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_BORDER));
+		asGL(glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_BORDER));
 		static const float borderColor[] = { .0f, .0f, .0f, .0f };
-		glTexParameterfv(GL_TEXTURE_2D, GL_TEXTURE_BORDER_COLOR, borderColor);
-		glUniform1i(m_texOvr, ID_OVR);
+		asGL(glTexParameterfv(GL_TEXTURE_2D, GL_TEXTURE_BORDER_COLOR, borderColor));
+		asGL(glUniform1i(m_texOvr, ID_OVR));
 	} else {
-		glTexSubImage2D(GL_TEXTURE_2D, 0, 0, 0, img.width(), img.height(), GL_BGRA, GL_UNSIGNED_BYTE, img.bits());
+		asGL(glTexSubImage2D(GL_TEXTURE_2D, 0, 0, 0, img.width(), img.height(), GL_BGRA, GL_UNSIGNED_BYTE, img.bits()));
 	}
 }
