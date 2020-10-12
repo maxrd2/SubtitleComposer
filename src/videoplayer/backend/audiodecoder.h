@@ -51,7 +51,7 @@ private:
 	struct Params {
 		int freq;
 		int channels;
-		int64_t channelLayout;
+		uint64_t channelLayout;
 		AVSampleFormat fmt;
 		int frameSize;
 		int bytesPerSec;

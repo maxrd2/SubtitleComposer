@@ -370,7 +370,7 @@ AudioDecoder::decodeFrame(Frame *af)
 										   (AVSampleFormat)af->frame->format, 1);
 	int resampledDataSize;
 
-	int64_t decChannelLayout =
+	uint64_t decChannelLayout =
 		(af->frame->channel_layout &&
 		 af->frame->channels == av_get_channel_layout_nb_channels(af->frame->channel_layout)) ?
 		af->frame->channel_layout : av_get_default_channel_layout(af->frame->channels);
@@ -401,11 +401,8 @@ AudioDecoder::decodeFrame(Frame *af)
 	}
 
 	if(m_swrCtx) {
-		const uint8_t **in = (const uint8_t **)af->frame->extended_data;
-		uint8_t **out = &m_audioBuf1;
-		int outCount = (int64_t)wantedNbSamples * m_fmtTgt.freq / af->frame->sample_rate + 256;
-		int outSize = av_samples_get_buffer_size(nullptr, m_fmtTgt.channels, outCount, m_fmtTgt.fmt, 0);
-		int len2;
+		const int outCount = (int64_t)wantedNbSamples * m_fmtTgt.freq / af->frame->sample_rate + 256;
+		const int outSize = av_samples_get_buffer_size(nullptr, m_fmtTgt.channels, outCount, m_fmtTgt.fmt, 0);
 		if(outSize < 0) {
 			av_log(nullptr, AV_LOG_ERROR, "av_samples_get_buffer_size() failed\n");
 			return -1;
@@ -421,18 +418,19 @@ AudioDecoder::decodeFrame(Frame *af)
 		av_fast_malloc(&m_audioBuf1, &m_buf1Size, outSize);
 		if(!m_audioBuf1)
 			return AVERROR(ENOMEM);
-		len2 = swr_convert(m_swrCtx, out, outCount, in, af->frame->nb_samples);
-		if(len2 < 0) {
+		const int outSamplesPerChannel = swr_convert(m_swrCtx, &m_audioBuf1, outCount,
+						   (const uint8_t **)af->frame->extended_data, af->frame->nb_samples);
+		if(outSamplesPerChannel < 0) {
 			av_log(nullptr, AV_LOG_ERROR, "swr_convert() failed\n");
 			return -1;
 		}
-		if(len2 == outCount) {
+		if(outSamplesPerChannel == outCount) {
 			av_log(nullptr, AV_LOG_WARNING, "audio buffer is probably too small\n");
 			if(swr_init(m_swrCtx) < 0)
 				swr_free(&m_swrCtx);
 		}
 		m_audioBuf = m_audioBuf1;
-		resampledDataSize = len2 * m_fmtTgt.channels * av_get_bytes_per_sample(m_fmtTgt.fmt);
+		resampledDataSize = outSamplesPerChannel * m_fmtTgt.channels * av_get_bytes_per_sample(m_fmtTgt.fmt);
 	} else {
 		m_audioBuf = af->frame->data[0];
 		resampledDataSize = dataSize;
@@ -521,8 +519,8 @@ AudioDecoder::run()
 
 	for(;;) {
 		const int got_frame = getFrame(frame);
-		assert(got_frame != AVERROR(EAGAIN));
-		assert(got_frame != AVERROR_EOF);
+		Q_ASSERT(got_frame != AVERROR(EAGAIN));
+		Q_ASSERT(got_frame != AVERROR_EOF);
 		if(got_frame < 0)
 			break;
 
