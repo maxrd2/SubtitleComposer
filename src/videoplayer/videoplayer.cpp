@@ -19,7 +19,6 @@
  */
 
 #include "videoplayer.h"
-#include "videoplayer/backend/ffplayer.h"
 #include "scconfig.h"
 
 #include <math.h>
@@ -44,7 +43,6 @@ VideoPlayer::VideoPlayer()
 	  m_videoWidget(nullptr),
 	  m_filePath(),
 	  m_state(Initialized),
-	  m_position(-1.0),
 	  m_duration(-1.0),
 	  m_fps(-1.0),
 	  m_playSpeed(.0),
@@ -108,7 +106,6 @@ VideoPlayer::reset()
 {
 	m_filePath.clear();
 
-	m_position = -1.0;
 	m_duration = -1.0;
 	m_fps = -1.0;
 
@@ -304,10 +301,8 @@ VideoPlayer::setupNotifications()
 		m_videoWidget->videoLayer()->show();
 	});
 
-	connect(m_player, &FFPlayer::positionChanged, this, [this](double pos){
-		if(m_position != (pos = qBound(0., pos, m_duration)))
-			emit positionChanged(m_position = pos);
-	});
+	connect(m_player, &FFPlayer::positionChanged, this, &VideoPlayer::positionChanged);
+
 	connect(m_player, &FFPlayer::durationChanged, this, [this](double dur){
 		if(m_duration != dur) emit durationChanged(m_duration = dur);
 	});

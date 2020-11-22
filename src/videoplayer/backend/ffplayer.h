@@ -29,9 +29,11 @@
 #include "videoplayer/backend/packetqueue.h"
 #include "videoplayer/backend/clock.h"
 #include "videoplayer/backend/streamdemuxer.h"
+#include "videoplayer/backend/videostate.h"
 
 #include <QtGlobal>
 #include <QObject>
+#include <QTimer>
 
 extern "C" {
 #include "libavformat/avformat.h"
@@ -58,6 +60,8 @@ public:
 
 	bool open(const char *filename);
 	void close();
+
+	inline double position() { return m_vs == nullptr ? 0.0 : m_vs->position(); }
 
 	void pauseToggle();
 	bool paused();
@@ -104,6 +108,7 @@ private:
 	bool m_muted;
 	double m_volume;
 
+	QTimer m_positionTimer;
 	VideoState *m_vs;
 	GLRenderer *m_renderer;
 };

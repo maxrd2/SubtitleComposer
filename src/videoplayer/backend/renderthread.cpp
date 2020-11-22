@@ -173,7 +173,6 @@ display:
 			videoDisplay();
 	}
 	m_vs->forceRefresh = false;
-	m_vs->notifyPosition();
 }
 
 // display the current picture, if any

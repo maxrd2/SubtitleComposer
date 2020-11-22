@@ -28,7 +28,6 @@
 #include "videoplayer/backend/packetqueue.h"
 #include "videoplayer/backend/streamdemuxer.h"
 #include "videoplayer/backend/clock.h"
-#include "videoplayer/backend/ffplayer.h"
 
 #include <QString>
 #include <QWaitCondition>
@@ -71,6 +70,7 @@ extern "C" {
 
 namespace SubtitleComposer {
 class RenderThread;
+class GLRenderer;
 
 enum {
 	AV_SYNC_AUDIO_MASTER,
@@ -120,13 +120,17 @@ private:
 			&& (!vidStream || (vidDec.finished() == vidPQ.serial() && vidFQ.nbRemaining() == 0));
 	}
 
+	inline double position() {
+		const double pos = masterTime();
+		return isnan(pos) ? double(seekPos) / AV_TIME_BASE : pos;
+	}
+
 	int masterSyncType();
 	Clock * masterClock();
 	double masterTime();
 	void checkExternalClockSpeed();
 
 	void notifyLoaded();
-	void notifyPosition();
 	void notifySpeed();
 	void notifyState();
 

@@ -38,7 +38,6 @@
 #include "videoplayer/backend/framequeue.h"
 #include "videoplayer/backend/packetqueue.h"
 #include "videoplayer/backend/decoder.h"
-#include "videoplayer/backend/videostate.h"
 #include "videoplayer/backend/renderthread.h"
 
 extern "C" {
@@ -56,6 +55,7 @@ FFPlayer::FFPlayer(QObject *parent)
 	  m_renderer(nullptr)
 {
 	qRegisterMetaType<FFPlayer::State>("FFPlayer::State");
+	connect(&m_positionTimer, &QTimer::timeout, this, [this](){ emit positionChanged(position()); });
 }
 
 const AVPacket *
@@ -213,6 +213,8 @@ FFPlayer::open(const char *filename)
 	m_vs->renderThread = new RenderThread(m_vs);
 	m_vs->renderThread->start();
 
+	m_positionTimer.start(100);
+
 	return true;
 }
 
@@ -220,6 +222,8 @@ void
 FFPlayer::close()
 {
 	if(m_vs) {
+		m_positionTimer.stop();
+
 		if(m_vs->renderThread) {
 			m_vs->renderThread->requestInterruption();
 			m_vs->renderThread->wait();

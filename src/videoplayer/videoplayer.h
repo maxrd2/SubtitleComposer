@@ -23,6 +23,7 @@
 
 #include "videowidget.h"
 
+#include "videoplayer/backend/ffplayer.h"
 #include "videoplayer/backend/glrenderer.h"
 #include "videoplayer/subtitletextoverlay.h"
 
@@ -33,7 +34,6 @@
 #include <QWidget>
 
 namespace SubtitleComposer {
-class FFPlayer;
 
 class VideoPlayer : public QObject
 {
@@ -60,7 +60,7 @@ public:
 	inline bool isPlaying() const { return m_state == Playing; }
 	inline bool isPaused() const { return m_state == Paused; }
 	inline bool isStopped() const { return m_state <= Stopped; }
-	inline double position() const { return m_position; }
+	inline double position() const { return m_player->position(); }
 	inline double duration() const { return m_duration; }
 	inline double fps() const { return m_fps; }
 	inline double playSpeed() const { return m_playSpeed; }
@@ -135,7 +135,6 @@ private:
 	QString m_filePath;
 
 	State m_state;
-	double m_position;
 	double m_duration;
 	double m_fps;
 	double m_playSpeed;

@@ -22,6 +22,7 @@
 
 #include <KLocalizedString>
 #include "helpers/languagecode.h"
+#include "videoplayer/backend/ffplayer.h"
 
 using namespace SubtitleComposer;
 
@@ -76,16 +77,6 @@ VideoState::checkExternalClockSpeed()
 		if(speed != 1.0)
 			extClk.setSpeed(speed + EXTERNAL_CLOCK_SPEED_STEP * (1.0 - speed) / fabs(1.0 - speed));
 	}
-}
-
-void
-VideoState::notifyPosition()
-{
-	double pos = masterTime();
-	if(isnan(pos))
-		pos = double(seekPos) / AV_TIME_BASE;
-
-	emit player->positionChanged(pos);
 }
 
 void
