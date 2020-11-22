@@ -52,11 +52,11 @@ public:
 	void loadConfig();
 	void saveConfig();
 
-	bool fullScreenMode() const;
+	inline bool fullScreenMode() const { return m_fullScreenMode; }
 	void setFullScreenMode(bool fullScreenMode);
 
-	SubtitleLine * playingLine();
-	SubtitleLine * overlayLine();
+	inline SubtitleLine * playingLine() { return m_playingLine; }
+	inline SubtitleLine * overlayLine() { return m_overlayLine; }
 
 	void plugActions();
 
@@ -94,11 +94,8 @@ private:
 private slots:
 	void invalidateOverlayLine();
 
-	void onVolumeSliderValueChanged(int value);
-	void onSeekSliderValueChanged(int value);
+	void onVolumeSliderMoved(int value);
 	void onSeekSliderMoved(int value);
-	void onSeekSliderPressed();
-	void onSeekSliderReleased();
 	void onPositionEditValueChanged(int position);
 
 	void onConfigChanged();
@@ -144,13 +141,9 @@ private:
 	QSlider *m_fsSeekSlider;
 	QLabel *m_fsPositionLabel;
 	QString m_lengthString;
-	int m_updatePositionControls;           // "true" when >0
-	bool m_updateVideoPosition;
 
 	QSlider *m_volumeSlider;
 	QSlider *m_fsVolumeSlider;
-	bool m_updateVolumeControls;
-	bool m_updatePlayerVolume;
 
 	QWidget *m_infoControlsGroupBox;
 	QLabel *m_positionLabel;

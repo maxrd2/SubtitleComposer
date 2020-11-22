@@ -50,8 +50,6 @@
 
 using namespace SubtitleComposer;
 
-// FIXME WTF is this!??
-#define MAGIC_NUMBER -1
 #define HIDE_MOUSE_MSECS 1000
 #define UNKNOWN_LENGTH_STRING (" / " + Time().toString(false) + ' ')
 
@@ -67,10 +65,6 @@ PlayerWidget::PlayerWidget(QWidget *parent) :
 	m_fullScreenMode(false),
 	m_player(VideoPlayer::instance()),
 	m_lengthString(UNKNOWN_LENGTH_STRING),
-	m_updatePositionControls(1),
-	m_updateVideoPosition(false),
-	m_updateVolumeControls(true),
-	m_updatePlayerVolume(false),
 	m_showPositionTimeEdit(SCConfig::showPositionTimeEdit())
 {
 	m_layeredWidget = new LayeredWidget(this);
@@ -230,17 +224,11 @@ PlayerWidget::PlayerWidget(QWidget *parent) :
 	fullScreenControlsLayout->addWidget(createToolButton(m_fullScreenControls, ACT_TOGGLE_FULL_SCREEN, FS_BUTTON_SIZE));
 	m_fullScreenControls->adjustSize();
 
-	connect(m_volumeSlider, &QAbstractSlider::valueChanged, this, &PlayerWidget::onVolumeSliderValueChanged);
-	connect(m_fsVolumeSlider, &QAbstractSlider::valueChanged, this, &PlayerWidget::onVolumeSliderValueChanged);
+	connect(m_volumeSlider, &QAbstractSlider::sliderMoved, this, &PlayerWidget::onVolumeSliderMoved);
+	connect(m_fsVolumeSlider, &QAbstractSlider::sliderMoved, this, &PlayerWidget::onVolumeSliderMoved);
 
-	connect(m_seekSlider, &QAbstractSlider::valueChanged, this, &PlayerWidget::onSeekSliderValueChanged);
 	connect(m_seekSlider, &QAbstractSlider::sliderMoved, this, &PlayerWidget::onSeekSliderMoved);
-	connect(m_seekSlider, &QAbstractSlider::sliderPressed, this, &PlayerWidget::onSeekSliderPressed);
-	connect(m_seekSlider, &QAbstractSlider::sliderReleased, this, &PlayerWidget::onSeekSliderReleased);
-	connect(m_fsSeekSlider, &QAbstractSlider::valueChanged, this, &PlayerWidget::onSeekSliderValueChanged);
 	connect(m_fsSeekSlider, &QAbstractSlider::sliderMoved, this, &PlayerWidget::onSeekSliderMoved);
-	connect(m_fsSeekSlider, &QAbstractSlider::sliderPressed, this, &PlayerWidget::onSeekSliderPressed);
-	connect(m_fsSeekSlider, &QAbstractSlider::sliderReleased, this, &PlayerWidget::onSeekSliderReleased);
 
 	connect(m_positionEdit, &TimeEdit::valueChanged, this, &PlayerWidget::onPositionEditValueChanged);
 	connect(m_positionEdit, &TimeEdit::valueEntered, this, &PlayerWidget::onPositionEditValueChanged);
@@ -312,12 +300,6 @@ void
 PlayerWidget::saveConfig()
 {}
 
-bool
-PlayerWidget::fullScreenMode() const
-{
-	return m_fullScreenMode;
-}
-
 void
 PlayerWidget::setFullScreenMode(bool fullScreenMode)
 {
@@ -368,18 +350,6 @@ PlayerWidget::setFullScreenMode(bool fullScreenMode)
 
 		window()->show();
 	}
-}
-
-SubtitleLine *
-PlayerWidget::playingLine()
-{
-	return m_playingLine;
-}
-
-SubtitleLine *
-PlayerWidget::overlayLine()
-{
-	return m_overlayLine;
 }
 
 void
@@ -677,44 +647,14 @@ PlayerWidget::updatePositionEditVisibility()
 }
 
 void
-PlayerWidget::onVolumeSliderValueChanged(int value)
+PlayerWidget::onVolumeSliderMoved(int value)
 {
-	if(m_updatePlayerVolume) {
-		m_updatePlayerVolume = false;
-		m_updateVolumeControls = false;
+	if(sender() == m_fsVolumeSlider)
+		m_volumeSlider->setValue(value);
+	else
+		m_fsVolumeSlider->setValue(value);
 
-		if(sender() == m_fsVolumeSlider)
-			m_volumeSlider->setValue(value);
-		else
-			m_fsVolumeSlider->setValue(value);
-
-		m_player->setVolume(value);
-
-		m_updateVolumeControls = true;
-		m_updatePlayerVolume = true;
-	}
-}
-
-void
-PlayerWidget::onSeekSliderPressed()
-{
-	m_updatePositionControls = 0;
-}
-
-void
-PlayerWidget::onSeekSliderReleased()
-{
-	m_updatePositionControls = MAGIC_NUMBER;
-}
-
-void
-PlayerWidget::onSeekSliderValueChanged(int value)
-{
-	if(m_updateVideoPosition) {
-		m_updatePositionControls = MAGIC_NUMBER;
-		pauseAfterPlayingLine(nullptr);
-		m_player->seek(m_player->duration() * value / 1000.0);
-	}
+	m_player->setVolume(value);
 }
 
 void
@@ -736,7 +676,6 @@ void
 PlayerWidget::onPositionEditValueChanged(int position)
 {
 	if(m_positionEdit->hasFocus()) {
-		m_updatePositionControls = MAGIC_NUMBER;
 		pauseAfterPlayingLine(nullptr);
 		m_player->seek(position / 1000.0);
 	}
@@ -820,43 +759,31 @@ PlayerWidget::onPlayerPlaying()
 void
 PlayerWidget::onPlayerPositionChanged(double seconds)
 {
-	if(m_updatePositionControls > 0) {
-		if(seconds >= 0) {
-			const Time videoPosition(seconds * 1000.);
+	const Time videoPosition(seconds * 1000.);
 
-			// pause if requested
-			if(m_pauseAfterPlayingLine) {
-				const Time &pauseTime = m_pauseAfterPlayingLine->hideTime();
-				if(videoPosition >= pauseTime) {
-					m_pauseAfterPlayingLine = nullptr;
-					m_player->pause();
-					m_player->seek(pauseTime.toSeconds());
-					return;
-				}
-			}
-
-			m_positionLabel->setText(videoPosition.toString());
-			m_fsPositionLabel->setText(videoPosition.toString(false) + m_lengthString);
-
-			if(m_showPositionTimeEdit && !m_positionEdit->hasFocus())
-				m_positionEdit->setValue(videoPosition.toMillis());
-
-			updateOverlayLine(videoPosition);
-			updatePlayingLine(videoPosition);
-
-			int sliderValue = int((seconds / m_player->duration()) * 1000);
-
-			m_updateVideoPosition = false;
-			m_seekSlider->setValue(sliderValue);
-			m_fsSeekSlider->setValue(sliderValue);
-			m_updateVideoPosition = true;
-		} else {
-			m_positionLabel->setText(i18n("<i>Unknown</i>"));
-			m_fsPositionLabel->setText(Time().toString(false) + m_lengthString);
+	// pause if requested
+	if(m_pauseAfterPlayingLine) {
+		const Time &pauseTime = m_pauseAfterPlayingLine->hideTime();
+		if(videoPosition >= pauseTime) {
+			m_pauseAfterPlayingLine = nullptr;
+			m_player->pause();
+			m_player->seek(pauseTime.toSeconds());
+			return;
 		}
-	} else if(m_updatePositionControls < 0) {
-		m_updatePositionControls += 2;
 	}
+
+	m_positionLabel->setText(videoPosition.toString());
+	m_fsPositionLabel->setText(videoPosition.toString(false) + m_lengthString);
+
+	if(m_showPositionTimeEdit && !m_positionEdit->hasFocus())
+		m_positionEdit->setValue(videoPosition.toMillis());
+
+	updateOverlayLine(videoPosition);
+	updatePlayingLine(videoPosition);
+
+	const int sliderValue = int((seconds / m_player->duration()) * 1000.0);
+	m_seekSlider->setValue(sliderValue);
+	m_fsSeekSlider->setValue(sliderValue);
 }
 
 void
@@ -899,12 +826,8 @@ PlayerWidget::onPlayerStopped()
 void
 PlayerWidget::onPlayerVolumeChanged(double volume)
 {
-	if(m_updateVolumeControls) {
-		m_updatePlayerVolume = false;
-		m_volumeSlider->setValue((int)(volume + 0.5));
-		m_fsVolumeSlider->setValue((int)(volume + 0.5));
-		m_updatePlayerVolume = true;
-	}
+	m_volumeSlider->setValue(int(volume + 0.5));
+	m_fsVolumeSlider->setValue(int(volume + 0.5));
 }
 
 void
