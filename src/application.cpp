@@ -241,30 +241,6 @@ Application::~Application()
 	delete m_subtitle;
 }
 
-Subtitle *
-Application::subtitle() const
-{
-	return m_subtitle;
-}
-
-MainWindow *
-Application::mainWindow() const
-{
-	return m_mainWindow;
-}
-
-bool
-Application::translationMode() const
-{
-	return m_translationMode;
-}
-
-bool
-Application::showingLinesContextMenu() const
-{
-	return m_linesWidget->showingContextMenu();
-}
-
 void
 Application::loadConfig()
 {
@@ -319,12 +295,6 @@ Application::saveConfig()
 	m_curLineWidget->saveConfig();
 }
 
-QAction *
-Application::action(const char *actionName) const
-{
-	return m_mainWindow->actionCollection()->action(actionName);
-}
-
 bool
 Application::triggerAction(const QKeySequence &keySequence)
 {
@@ -367,12 +337,6 @@ Application::availableEncodingNames() const
 	}
 
 	return encodingNames;
-}
-
-const QUrl &
-Application::lastSubtitleDirectory() const
-{
-	return m_lastSubtitleUrl;
 }
 
 void

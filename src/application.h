@@ -24,16 +24,19 @@
 #include "mainwindow.h"
 #include "core/subtitle.h"
 #include "formats/format.h"
+#include "gui/lineswidget.h"
 #include "scconfig.h"
-
-#include <QMap>
-#include <QString>
-#include <QKeySequence>
 
 #include <QApplication>
 #include <QAction>
+#include <QMap>
+#include <QString>
+#include <QKeySequence>
 #include <QUrl>
+
 #include <sonnet/configwidget.h>
+
+#include <KActionCollection>
 
 QT_FORWARD_DECLARE_CLASS(QAction)
 QT_FORWARD_DECLARE_CLASS(QUndoStack)
@@ -50,7 +53,6 @@ class TextDemux;
 class SpeechProcessor;
 
 class PlayerWidget;
-class LinesWidget;
 class CurrentLineWidget;
 class StatusBar2;
 
@@ -76,23 +78,21 @@ public:
 
 	void init();
 
-	static Application * instance();
-
-	Subtitle * subtitle() const;
-
+	inline Subtitle * subtitle() const { return m_subtitle; }
 	inline UndoStack * undoStack() const { return m_undoStack; }
-
-	MainWindow * mainWindow() const;
+	inline MainWindow * mainWindow() const { return m_mainWindow; }
 	inline LinesWidget * linesWidget() const { return m_linesWidget; }
+	inline const SpeechProcessor * speechProcessor() const { return m_speechProcessor; }
 
-
-	bool translationMode() const;
-	bool showingLinesContextMenu() const;
+	inline bool translationMode() const { return m_translationMode; }
+	inline bool showingLinesContextMenu() const { return m_linesWidget->showingContextMenu(); }
 
 	void loadConfig();
 	void saveConfig();
 
-	QAction * action(const char *actionName) const;
+	inline QAction * action(const char *actionName) const {
+		return m_mainWindow->actionCollection()->action(actionName);
+	}
 
 	/**
 	 * @brief triggerAction
@@ -101,11 +101,11 @@ public:
 	 */
 	bool triggerAction(const QKeySequence &keySequence);
 
+	inline const QUrl & lastSubtitleDirectory() const { return m_lastSubtitleUrl; }
+
 	const QStringList & availableEncodingNames() const;
-
-	const QUrl & lastSubtitleDirectory() const;
-
-	inline const SpeechProcessor * speechProcessor() const { return m_speechProcessor; }
+	static const QString & buildSubtitleFilesFilter(bool openFileFilter = true);
+	static const QString & buildMediaFilesFilter();
 
 public slots:
 	void newSubtitle();
@@ -210,9 +210,6 @@ public slots:
 	void shiftToVideoPosition();
 	void adjustToVideoPositionAnchorLast();
 	void adjustToVideoPositionAnchorFirst();
-
-	static const QString & buildSubtitleFilesFilter(bool openFileFilter = true);
-	static const QString & buildMediaFilesFilter();
 
 signals:
 	void subtitleOpened(Subtitle *subtitle);
