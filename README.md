@@ -13,7 +13,7 @@ An open source text-based subtitle editor that supports basic and advanced editi
     - SRT, SSA/ASS, MOV text, MicroDVD, Graphic formats supported by ffmpeg (DVD/Vob, DVB, XSUB, HDMV-PGS)
   - **Speech Recognition** from audio/video file using PocketSphinx
   - Smart **language/text encoding** detection
-  - Live preview of subtitles in **integrated video player** (MPV, GStreamer, MPlayer, Xine, Phonon) w/ audio stream selection
+  - Live preview of subtitles in **integrated video player** (FFmpeg) w/ audio stream selection
   - Preview/editing of subtitles on **audio waveform** w/ audio stream selection
   - Quick and **easy subtitle sync**:
     - Dragging several anchors/graftpoints and stretching timeline
