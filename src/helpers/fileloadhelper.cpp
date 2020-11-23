@@ -24,6 +24,7 @@
 #include <QBuffer>
 #include <QDebug>
 
+#include <kio_version.h>
 #include <kio/statjob.h>
 #include <kio/storedtransferjob.h>
 
@@ -65,7 +66,11 @@ FileLoadHelper::open()
 			return false;
 		}
 	} else {
+#if KIO_VERSION < QT_VERSION_CHECK(5, 69, 0)
+		KIO::Job *job = KIO::stat(m_url, KIO::StatJob::SourceSide, 2);
+#else
 		KIO::Job *job = KIO::statDetails(m_url, KIO::StatJob::SourceSide, KIO::StatDefaultDetails, KIO::HideProgressInfo);
+#endif
 		if(!job->exec()) {
 			qDebug() << "Failed to start KIO::stat job" << m_url;
 			return false;
@@ -99,7 +104,11 @@ FileLoadHelper::close()
 bool
 FileLoadHelper::exists(const QUrl &url)
 {
+#if KIO_VERSION < QT_VERSION_CHECK(5, 69, 0)
+	KIO::Job *job = KIO::stat(url, KIO::StatJob::SourceSide, 2);
+#else
 	KIO::Job *job = KIO::statDetails(url, KIO::StatJob::SourceSide, KIO::StatDefaultDetails, KIO::HideProgressInfo);
+#endif
 	return job->exec();
 }
 

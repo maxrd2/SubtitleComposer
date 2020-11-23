@@ -31,6 +31,7 @@
 #include <QDebug>
 #include <QStandardPaths>
 
+#include <kio_version.h>
 #include <kio/statjob.h>
 
 #ifndef Q_WS_WIN
@@ -108,7 +109,12 @@ System::recursiveMakeDir(const QString &path, QStringList *createdDirsList)
 		createdDirsList->clear();
 
 	QDir parcialPath(QStringLiteral("/"));
+#if QT_VERSION < QT_VERSION_CHECK(5, 14, 0)
+	QStringList tokens = path.split(QChar('/'), QString::SkipEmptyParts);
+#else
 	QStringList tokens = path.split(QChar('/'), Qt::SkipEmptyParts);
+#endif
+
 	for(QStringList::ConstIterator it = tokens.constBegin(), end = tokens.constEnd(); it != end; ++it) {
 		parcialPath.setPath(parcialPath.path() + '/' + *it);
 		if(!QFileInfo::exists(parcialPath.path())) {
@@ -218,7 +224,11 @@ System::newUrl(const QUrl &baseUrl, const QString &fileName, const QString &exte
 		QUrl newUrl = baseUrl;
 		newUrl.setPath(newFileDir + newFileName);
 		for(;;) {
+#if KIO_VERSION < QT_VERSION_CHECK(5, 69, 0)
+			KIO::Job *job = KIO::stat(newUrl, KIO::StatJob::DestinationSide, 2);
+#else
 			KIO::Job *job = KIO::statDetails(newUrl, KIO::StatJob::DestinationSide, KIO::StatDefaultDetails, KIO::HideProgressInfo);
+#endif
 			if(!job->exec())
 				return newUrl;
 			if(i >= retries)

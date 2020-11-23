@@ -25,6 +25,7 @@
 #include <QTemporaryFile>
 #include <QFileDevice>
 
+#include <kio_version.h>
 #include <kio/filecopyjob.h>
 #include <kio/statjob.h>
 
@@ -112,6 +113,10 @@ FileSaveHelper::close()
 bool
 FileSaveHelper::exists(const QUrl &url)
 {
+#if KIO_VERSION < QT_VERSION_CHECK(5, 69, 0)
+	KIO::Job *job = KIO::stat(url, KIO::StatJob::DestinationSide, 2);
+#else
 	KIO::Job *job = KIO::statDetails(url, KIO::StatJob::DestinationSide, KIO::StatDefaultDetails, KIO::HideProgressInfo);
+#endif
 	return job->exec();
 }
