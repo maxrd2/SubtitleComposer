@@ -39,6 +39,10 @@ sed -E -i \\
 #(mount /cdrom || exit 0)
 #/usr/bin/apt-cdrom add --no-auto-detect -d /cdrom'
 
+# add apt mount
+[ "$(grep /apt /etc/fstab)" == "" ] && sudo bash -c 'echo -e "\napt /var/cache/apt/archives 9p trans=virtio,version=9p2000.L,posixacl,msize=104857600 0 0" >>/etc/fstab
+mount /var/cache/apt/archives'
+
 # update apt
 sudo apt-get update
 sudo apt-get dist-upgrade -y

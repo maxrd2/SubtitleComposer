@@ -35,13 +35,12 @@ matrix:
             libxcb-shape0-dev libxcb-shm0-dev libxcb-sync-dev libxcb-xfixes0-dev libxcb-xkb-dev libxcomposite-dev libxcursor-dev libxdamage-dev libxft-dev \
             libxinerama-dev libxkbcommon-dev libxkbcommon-x11-dev libxrandr-dev libxshmfence-dev libxtst-dev libxxf86vm-dev mesa-common-dev x11proto-composite-dev \
             x11proto-damage-dev x11proto-dri2-dev x11proto-gl-dev x11proto-randr-dev x11proto-record-dev x11proto-xf86vidmode-dev x11proto-xinerama-dev libegl1-mesa-drivers \
-            libglapi-mesa libicu-dev gperf flex libattr1-dev libcanberra-dev libxslt1-dev libboost1.55-all-dev libfftw3-dev libicu-dev zsync
+            libglapi-mesa libicu-dev gperf flex libattr1-dev libcanberra-dev libxslt1-dev libboost1.55-all-dev libfftw3-dev libicu-dev libopenal-dev zsync
         - |- # hack: remove installed wayland package files, but keep package marked as installed :-/
           (sudo rm $(dpkg -L libwayland-client0 libwayland-cursor0 libwayland-server0 libwayland-dev) &>/dev/null || exit 0)
         # install prebuilt binaries from https://www.dropbox.com/sh/elawli9m1p4cugt/AABwOOOi0aj0yR9909t1ZX8ta?dl=0&lst=
         - curl -L 'https://www.dropbox.com/sh/elawli9m1p4cugt/AADHSpMJQiwnAyWy1NTJ2ltqa/wayland-1.16.0-trusty-amd64.tar.xz?dl=1' | sudo tar -xJ -C /
         - curl -L 'https://www.dropbox.com/sh/elawli9m1p4cugt/AAAXBYD9IpzyfHtaWwLZ-n8Xa/ffmpeg-20181127-trusty-amd64.tar.xz?dl=1' | sudo tar -xJ -C /
-        - curl -L 'https://www.dropbox.com/sh/elawli9m1p4cugt/AADxawEPVpneV5zW5lgG4FEYa/libmpv-0.29.1-trusty-amd64.tar.xz?dl=1' | sudo tar -xJ -C /
         - curl -L 'https://www.dropbox.com/sh/elawli9m1p4cugt/AADYKhzI7OGdpKgR3Cmiuicoa/cmake-3.11.0-trusty-amd64.tar.xz?dl=1' | sudo tar -xJ -C /
         - curl -L 'https://www.dropbox.com/sh/elawli9m1p4cugt/AAAuwxMJcyvNr5kieUKoL5mRa/qt5-bundle-5.11.2-trusty-amd64.tar.xz?dl=1' | sudo tar -xJ -C /
         - curl -L 'https://www.dropbox.com/sh/elawli9m1p4cugt/AADY4uj1mPkxbpy9atOB4oHNa/kf5-bundle-5.52.0-trusty-amd64.tar.xz?dl=1' | sudo tar -xJ -C /
@@ -129,13 +128,12 @@ matrix:
       sudo: required
       compiler: clang
       before_install: |-
-        sudo add-apt-repository -y 'ppa:mc3man/xerus-media' # ffmpeg3, libmpv
+        sudo add-apt-repository -y 'ppa:mc3man/xerus-media' # ffmpeg3
         sudo add-apt-repository -y 'ppa:beineri/opt-qt596-xenial' # Qt 5.9 LTS
         sudo apt-get update -qq
       install:
         - |- # dependencies
-         sudo apt-get install -yqq curl cmake make extra-cmake-modules kross-dev libavformat-dev libgstreamer1.0-dev libgstreamer-plugins-good1.0-dev \
-                                  libgstreamer-plugins-base1.0-dev libmpv-dev libxine2-dev libphonon4qt5-dev libphonon4qt5experimental-dev breeze \
+         sudo apt-get install -yqq curl cmake make extra-cmake-modules kross-dev libavformat-dev libswscale-dev libopenal-dev breeze \
                                   qt59-meta-minimal clang
         - |- # qt5 environment
           source /opt/qt5*/bin/qt5*-env.sh || exit 1
