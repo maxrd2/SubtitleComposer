@@ -6,7 +6,8 @@ appver="$(git describe --always --abbrev=8 | sed 's/-g/./;s/-/./;s/^v//g')"
 rm -rf build &>/dev/null || true
 mkdir -p build/nsis
 
-sudo pacman -Syu --noconfirm
+sudo pacman -Sy --noconfirm --needed archlinux-keyring
+sudo pacman -Su --noconfirm
 sudo pacman -S --noconfirm --needed \
 	mingw-w64-toolchain mingw-w64-cmake mingw-w64-configure mingw-w64-pkg-config \
 	mingw-w64-ffmpeg mingw-w64-qt5 mingw-w64-kf5 nsis \
