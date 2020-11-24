@@ -122,7 +122,7 @@ private:
 
 	inline double position() {
 		const double pos = masterTime();
-		return isnan(pos) ? double(seekPos) / AV_TIME_BASE : pos;
+		return std::isnan(pos) ? double(seekPos) / AV_TIME_BASE : pos;
 	}
 
 	int masterSyncType();

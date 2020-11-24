@@ -48,14 +48,14 @@ VideoDecoder::getVideoFrame(AVFrame *frame)
 
 	if(frame->pts != AV_NOPTS_VALUE) {
 		const double dPts = m_timeBase * frame->pts;
-		if(m_vs->seekDecoder > 0. && !isnan(dPts) && m_vs->seekDecoder > dPts) {
+		if(m_vs->seekDecoder > 0. && !std::isnan(dPts) && m_vs->seekDecoder > dPts) {
 			m_frameDropsEarly++;
 			av_frame_unref(frame);
 			return 0;
 		}
 		if(m_vs->framedrop > 0 || (m_vs->framedrop && m_vs->masterSyncType() != AV_SYNC_VIDEO_MASTER)) {
 			const double diff = dPts - m_vs->masterTime();
-			if(!isnan(diff) && diff < 0 && fabs(diff) < AV_NOSYNC_THRESHOLD
+			if(!std::isnan(diff) && diff < 0 && fabs(diff) < AV_NOSYNC_THRESHOLD
 			&& pktSerial() == m_vs->vidClk.serial() && m_queue->nbPackets()) {
 				m_frameDropsEarly++;
 				av_frame_unref(frame);

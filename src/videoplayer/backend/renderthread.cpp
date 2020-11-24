@@ -114,7 +114,7 @@ retry:
 				m_vs->frameTimer = time;
 
 			m_vs->vidFQ.m_mutex->lock();
-			if(!isnan(vp->pts))
+			if(!std::isnan(vp->pts))
 				updateVideoPts(vp->pts, vp->pos, vp->serial);
 			m_vs->vidFQ.m_mutex->unlock();
 
@@ -193,7 +193,7 @@ RenderThread::vpDuration(Frame *vp, Frame *nextvp)
 {
 	if(vp->serial == nextvp->serial) {
 		double duration = nextvp->pts - vp->pts;
-		if(isnan(duration) || duration <= 0 || duration > m_vs->maxFrameDuration)
+		if(std::isnan(duration) || duration <= 0 || duration > m_vs->maxFrameDuration)
 			return vp->duration;
 		else
 			return duration;
@@ -223,7 +223,7 @@ RenderThread::computeTargetDelay(double delay)
 		// skip or repeat frame. We take into account the delay to compute the threshold.
 		// I still don't know if it is the best guess
 		sync_threshold = FFMAX(AV_SYNC_THRESHOLD_MIN, FFMIN(AV_SYNC_THRESHOLD_MAX, delay));
-		if(!isnan(diff) && fabs(diff) < m_vs->maxFrameDuration) {
+		if(!std::isnan(diff) && fabs(diff) < m_vs->maxFrameDuration) {
 			if(diff <= -sync_threshold)
 				delay = FFMAX(0, delay + diff);
 			else if(diff >= sync_threshold && delay > AV_SYNC_FRAMEDUP_THRESHOLD)

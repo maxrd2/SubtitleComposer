@@ -93,6 +93,6 @@ Clock::syncTo(Clock *other)
 {
 	double clock = get();
 	double otherClock = other->get();
-	if(!isnan(otherClock) && (isnan(clock) || fabs(clock - otherClock) > AV_NOSYNC_THRESHOLD))
+	if(!std::isnan(otherClock) && (std::isnan(clock) || fabs(clock - otherClock) > AV_NOSYNC_THRESHOLD))
 		set(otherClock, other->m_serial);
 }

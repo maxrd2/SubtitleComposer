@@ -325,7 +325,7 @@ AudioDecoder::syncAudio(int nbSamples)
 
 		double diff = m_vs->audClk.get() - m_vs->masterTime();
 
-		if(!isnan(diff) && fabs(diff) < AV_NOSYNC_THRESHOLD) {
+		if(!std::isnan(diff) && fabs(diff) < AV_NOSYNC_THRESHOLD) {
 			m_diffCum = diff + m_diffAvgCoef * m_diffCum;
 			if(m_diffAvgCount < AUDIO_DIFF_AVG_NB) {
 				// not enough measures to have a correct estimate
@@ -449,7 +449,7 @@ AudioDecoder::getFrame(AVFrame *frame)
 
 	const double dPts = double(frame->pts) / frame->sample_rate;
 
-	if(!isnan(dPts) && m_vs->seekDecoder > 0. && m_vs->seekDecoder > dPts) {
+	if(!std::isnan(dPts) && m_vs->seekDecoder > 0. && m_vs->seekDecoder > dPts) {
 		av_frame_unref(frame);
 		return 0;
 	}
@@ -515,7 +515,7 @@ AudioDecoder::run()
 			while(!m_vs->abortRequested) {
 				ALint hwBufOffset = 0;
 				alGetSourcei(m_alSrc, AL_BYTE_OFFSET, &hwBufOffset);
-				if(!isnan(af->pts)) {
+				if(!std::isnan(af->pts)) {
 					m_vs->audClk.setAt(
 								 af->pts - double(m_hwBufQueueSize - hwBufOffset) / m_fmtTgt.bytesPerSec,
 								 af->serial,

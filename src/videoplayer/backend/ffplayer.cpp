@@ -114,7 +114,7 @@ FFPlayer::stepFrame(int frameCnt)
 
 		// TODO: FIXME: backward stepping is broken
 		double seek_seconds = m_vs->vidClk.pts(); // maxrd2: was m_vs->extclk.pts
-		if(isnan(seek_seconds))
+		if(std::isnan(seek_seconds))
 			return; // maxrd2: was seek_seconds = m_vs->extclk.pts;
 		seek_seconds += double(frameCnt - 1) / av_q2d(st->r_frame_rate);
 		seek(seek_seconds);
