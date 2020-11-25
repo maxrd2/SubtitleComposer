@@ -47,12 +47,18 @@ print_error(const char *filename, int err)
 	av_log(nullptr, AV_LOG_ERROR, "%s: %s\n", filename, errbuf_ptr);
 }
 
+
 static bool
 isRealTime(AVFormatContext *s)
 {
 	if(!strcmp(s->iformat->name, "rtp") || !strcmp(s->iformat->name, "rtsp") || !strcmp(s->iformat->name, "sdp"))
 		return 1;
-	if(s->pb && (!strncmp(s->url, "rtp:", 4) || !strncmp(s->url, "udp:", 4)))
+#if LIBAVFORMAT_VERSION_MAJOR < 58
+	const char *url = s->filename;
+#else
+	const char *url = s->url;
+#endif
+	if(s->pb && (!strncmp(url, "rtp:", 4) || !strncmp(url, "udp:", 4)))
 		return 1;
 	return 0;
 }
@@ -609,7 +615,13 @@ StreamDemuxer::run()
 			ret = av_seek_frame(m_vs->fmtContext, -1, seekTarget, m_vs->seekFlags | AVSEEK_FLAG_BACKWARD);
 			if(ret < 0) {
 				m_vs->seekDecoder = 0.;
-				av_log(nullptr, AV_LOG_ERROR, "%s: error while seeking\n", m_vs->fmtContext->url);
+				av_log(nullptr, AV_LOG_ERROR, "%s: error while seeking\n",
+#if LIBAVFORMAT_VERSION_MAJOR < 58
+					   m_vs->fmtContext->filename
+#else
+					   m_vs->fmtContext->url
+#endif
+					   );
 			} else {
 				if(m_vs->audStreamIdx >= 0) {
 					m_vs->audPQ.flush();
