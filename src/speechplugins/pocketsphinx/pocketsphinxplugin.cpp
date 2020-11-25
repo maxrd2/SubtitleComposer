@@ -102,7 +102,11 @@ PocketSphinxPlugin::processUtterance()
 	if(!hyp || !*hyp)
 		return;
 
+#ifdef HAS_NEW_PS_SEG_ITER
 	ps_seg_t *iter = ps_seg_iter(m_psDecoder);
+#else
+	ps_seg_t *iter = ps_seg_iter(m_psDecoder, nullptr);
+#endif
 	while(iter != nullptr) {
 		const char *word = ps_seg_word(iter);
 		int wordIn, wordOut;

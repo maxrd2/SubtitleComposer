@@ -34,3 +34,9 @@ add_dependencies(pocketsphinxasr subtitlecomposer)
 
 configure_file(${CMAKE_CURRENT_SOURCE_DIR}/plugin-config.h.cmake ${CMAKE_CURRENT_BINARY_DIR}/plugin-config.h)
 
+set(CMAKE_REQUIRED_INCLUDES ${POCKETSPHINX_INCLUDE_DIRS})
+set(CMAKE_REQUIRED_LIBRARIES ${POCKETSPHINX_LIBRARIES})
+check_cxx_source_compiles("#include <pocketsphinx.h>\nint main(){ ps_seg_iter(nullptr); return 0; }" PocketSphinx_NEW_ps_seg_iter)
+if(PocketSphinx_NEW_ps_seg_iter)
+	target_compile_definitions(pocketsphinxasr PRIVATE HAS_NEW_PS_SEG_ITER=1)
+endif()
