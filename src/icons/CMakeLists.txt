@@ -13,11 +13,7 @@ set(custom_icons
 	16-actions-select_stream.png
 	16-actions-time_from_video.png
 	48-actions-audio_extract.png
-	48-apps-gstreamer.png
 	48-apps-mediaplayer.png
-	48-apps-mplayer.png
-	48-apps-xine.png
-	64-apps-mpv.png
 	64-apps-pocketsphinx.png
 	sc-actions-anchor.svg
 	sc-actions-current_line_follows_video.svg

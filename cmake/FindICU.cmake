@@ -7,6 +7,11 @@
 #  ICU_INCLUDE_DIRS - ICU library include dirs
 #  ICU_DEFINITIONS - compiler switches required for using ICU library
 
+# Copyright (C) 2010-2019 Mladen Milinkovic <maxrd2@smoothware.net>
+#
+# Redistribution and use is allowed according to the terms of the BSD license.
+# For details see the accompanying COPYING-CMAKE-SCRIPTS file.
+
 find_package(PkgConfig REQUIRED)
 
 pkg_check_modules(PC_ICU QUIET icu-i18n)

@@ -12,6 +12,11 @@ set(_avmodules AVFORMAT AVCODEC SWRESAMPLE SWSCALE AVUTIL)
 #  FFMPEG_(avmodule)_INCLUDE_DIR - module include directory
 #  FFMPEG_(avmodule)_LIBRARY - module library
 
+# Copyright (C) 2010-2019 Mladen Milinkovic <maxrd2@smoothware.net>
+#
+# Redistribution and use is allowed according to the terms of the BSD license.
+# For details see the accompanying COPYING-CMAKE-SCRIPTS file.
+
 find_package(PkgConfig REQUIRED)
 
 foreach(MODULE ${_avmodules})

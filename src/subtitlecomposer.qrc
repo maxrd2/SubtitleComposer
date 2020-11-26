@@ -2,10 +2,7 @@
     <qresource prefix="/icons/breeze">
         <file alias="actions/22/anchor.svg">icons/sc-actions-anchor.svg</file>
         <file alias="actions/22/current_line_follows_video.svg">icons/sc-actions-current_line_follows_video.svg</file>
-        <file alias="actions/22/gstreamer.png">icons/48-apps-gstreamer.png</file>
         <file alias="actions/22/mediaplayer.png">icons/48-apps-mediaplayer.png</file>
-        <file alias="actions/22/mplayer.png">icons/48-apps-mplayer.png</file>
-        <file alias="actions/22/mpv.png">icons/64-apps-mpv.png</file>
         <file alias="actions/22/playrate_minus.svg">icons/sc-actions-playrate_minus.svg</file>
         <file alias="actions/22/playrate_plus.svg">icons/sc-actions-playrate_plus.svg</file>
         <file alias="actions/22/pocketsphinx.png">icons/64-apps-pocketsphinx.png</file>
@@ -16,6 +13,5 @@
         <file alias="actions/22/subtitlecomposer.png">icons/128-apps-subtitlecomposer.png</file>
         <file alias="actions/22/time_from_video.png">icons/16-actions-time_from_video.png</file>
         <file alias="actions/22/waveform.png">icons/128-categories-waveform.png</file>
-        <file alias="actions/22/xine.png">icons/48-apps-xine.png</file>
     </qresource>
 </RCC>
