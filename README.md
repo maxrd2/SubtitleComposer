@@ -4,6 +4,8 @@
 
 An open source text-based subtitle editor that supports basic and advanced editing operations, aiming to become an improved version of Subtitle Workshop for every platform supported by Plasma Frameworks.
 
+[Homepage](https://subtitlecomposer.kde.org/) - [Downloads](https://subtitlecomposer.kde.org/download.html)
+
 ### FEATURES
   - Open/Save **Text Subtitle Formats**
     - SubRip/SRT, MicroDVD, SSA/ASS, MPlayer, TMPlayer and YouTube captions
