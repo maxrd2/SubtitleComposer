@@ -13,22 +13,20 @@ sudo pacman -S --noconfirm --needed \
 	mingw-w64-ffmpeg mingw-w64-qt5 mingw-w64-kf5 nsis \
 	mingw-w64-kinit mingw-w64-pango mingw-w64-libvisual \
 	mingw-w64-aspell mingw-w64-hunspell mingw-w64-icu \
-	kconfig kcoreaddons breeze-icons icu \
-	mingw-w64-mpv \
-	mingw-w64-gst-libav mingw-w64-gst-plugins-good
+	mingw-w64-libidn2 mingw-w64-openal \
+	kconfig kcoreaddons breeze-icons icu
 sudo pacman -Sdd --noconfirm --needed kauth kbookmarks kcodecs kcompletion \
 	kconfig kconfigwidgets kcoreaddons kglobalaccel kitemviews kjobwidgets \
 	knotifications kross ktextwidgets kwidgetsaddons kwindowsystem kxmlgui \
 	solid sonnet
-cd build
-i686-w64-mingw32-cmake \
+
+i686-w64-mingw32-cmake -B build \
 	-DCMAKE_BUILD_TYPE=Release \
 	-DKDE_INSTALL_LIBDIR=lib \
 	-DKDE_INSTALL_USE_QT_SYS_PATHS=ON \
 	-DBUILD_TESTING=OFF \
 	-DKF5_HOST_TOOLING=/usr/lib/cmake \
 	-DKCONFIGCOMPILER_PATH=/usr/lib/cmake/KF5Config/KF5ConfigCompilerTargets.cmake \
-	-DTARGETSFILE=/usr/lib/cmake/KF5CoreAddons/KF5CoreAddonsToolingTargets.cmake \
-	..
-make -j$(nproc)
-make DESTDIR="$PWD/nsis" nsis
+	-DTARGETSFILE=/usr/lib/cmake/KF5CoreAddons/KF5CoreAddonsToolingTargets.cmake
+cmake --build build -j$(nproc)
+DESTDIR="$PWD/build/nsis" cmake --build build --target nsis

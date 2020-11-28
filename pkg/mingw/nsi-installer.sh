@@ -34,18 +34,12 @@ deps=(
 	"/usr/$_arch/bin/kwrapper5.exe"
 	"/usr/$_arch/bin/klauncher.exe"
 	"/usr/$_arch/bin/kiod5.exe"
-	"/usr/$_arch/bin/kioslave.exe"
-	# GStreamer is not playing videos
-	"/usr/$_arch/bin/libgst"*.dll
-	"/usr/$_arch/lib/gstreamer-1.0/"*.dll
-	"/usr/$_arch/lib/gstreamer-1.0/"*.exe # remove this
-	"/usr/$_arch/bin/"*gst*.exe # remove this
-	"/usr/$_arch/bin/mpv.exe" "/usr/$_arch/bin/mpv.com" # remove this
+	"/usr/$_arch/bin/kioslave5.exe"
 )
 
 dlls=(
 	"${deps[@]}"
-	`"$sdir/deps-find.sh" "$_arch" "$_destdir/bin/subtitlecomposer.exe" "$_destdir/lib/subtitlecomposer"/*.dll "${deps[@]}"`
+	`"$sdir/deps-find.sh" "$_arch" "$_destdir/bin/subtitlecomposer.exe" "${deps[@]}"`
 )
 
 for dll in "${dlls[@]}"; do
