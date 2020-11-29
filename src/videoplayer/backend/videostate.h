@@ -21,6 +21,8 @@
 #ifndef VIDEOSTATE_H
 #define VIDEOSTATE_H
 
+#include <cmath>
+
 #include "videoplayer/backend/videodecoder.h"
 #include "videoplayer/backend/audiodecoder.h"
 #include "videoplayer/backend/subtitledecoder.h"
