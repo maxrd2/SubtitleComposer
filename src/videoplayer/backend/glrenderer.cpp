@@ -32,7 +32,6 @@ extern "C" {
 #include "libavutil/pixdesc.h"
 }
 
-#define DEBUG_YUV 0
 #define DEBUG_GL 0
 #define OPENGL_CORE 0
 #define OPENGL_VER 2,0
@@ -215,24 +214,6 @@ GLRenderer::setColorspace(const AVFrame *frame)
 void
 GLRenderer::setFrameY(quint8 *buf, quint32 pitch)
 {
-#if DEBUG_YUV
-	static quint32 cnt = 0;
-	static double min = 100., max = -100.;
-
-	quint16 *test = (quint16 *)buf;
-	quint32 n = pitch * m_bufHeight / sizeof(quint16);
-	while(n--) {
-		const double val = double(*test++) / quint16(1 << 10);
-		min = qMin(min, val);
-		max = qMax(max, val);
-		if(++cnt == 10000000) {
-			qDebug("Y min:%f max:%f", min, max);
-			cnt = 0;
-			min = 100.;
-			max = -100.;
-		}
-	}
-#endif
 	if(pitch == m_pitch[0]) {
 		memcpy(m_pixels[0], buf, pitch * m_bufHeight);
 	} else {
@@ -248,24 +229,6 @@ GLRenderer::setFrameY(quint8 *buf, quint32 pitch)
 void
 GLRenderer::setFrameU(quint8 *buf, quint32 pitch)
 {
-#if DEBUG_YUV
-	static quint32 cnt = 0;
-	static double min = 100., max = -100.;
-
-	quint16 *test = (quint16 *)buf;
-	quint32 n = pitch * m_crHeight / sizeof(quint16);
-	while(n--) {
-		const double val = double(*test++) / quint16(1 << 10);
-		min = qMin(min, val);
-		max = qMax(max, val);
-		if(++cnt == 10000000) {
-			qDebug("U min:%f max:%f", min, max);
-			cnt = 0;
-			min = 100.;
-			max = -100.;
-		}
-	}
-#endif
 	if(pitch == m_pitch[1]) {
 		memcpy(m_pixels[1], buf, pitch * m_crHeight);
 	} else {
@@ -281,24 +244,6 @@ GLRenderer::setFrameU(quint8 *buf, quint32 pitch)
 void
 GLRenderer::setFrameV(quint8 *buf, quint32 pitch)
 {
-#if DEBUG_YUV
-	static quint32 cnt = 0;
-	static double min = 100., max = -100.;
-
-	quint16 *test = (quint16 *)buf;
-	quint32 n = pitch * m_crHeight / sizeof(quint16);
-	while(n--) {
-		const double val = double(*test++) / quint16(1 << 10);
-		min = qMin(min, val);
-		max = qMax(max, val);
-		if(++cnt == 10000000) {
-			qDebug("V min:%f max:%f", min, max);
-			cnt = 0;
-			min = 100.;
-			max = -100.;
-		}
-	}
-#endif
 	if(pitch == m_pitch[2]) {
 		memcpy(m_pixels[2], buf, pitch * m_crHeight);
 	} else {
@@ -405,7 +350,7 @@ GLRenderer::initializeGL()
 
 	initializeOpenGLFunctions();
 	qDebug() << "OpenGL version: " << reinterpret_cast<const char *>(glGetString(GL_VERSION));
-	qDebug() << "GSLS version: " << reinterpret_cast<const char *>(glGetString(GL_SHADING_LANGUAGE_VERSION));
+	qDebug() << "GLSL version: " << reinterpret_cast<const char *>(glGetString(GL_SHADING_LANGUAGE_VERSION));
 
 	if(m_vao.create())
 		m_vao.bind();
