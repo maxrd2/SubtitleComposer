@@ -465,8 +465,6 @@ GLRenderer::uploadMM(int texWidth, int texHeight, T *texBuf, const T *texSrc)
 			} else { // D == 4
 				asGL(glTexImage2D(GL_TEXTURE_2D, level, GL_RGBA8, texWidth, texHeight, 0, GL_BGRA, GL_UNSIGNED_BYTE, texSrc));
 			}
-			asGL(glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR));
-			asGL(glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR));
 		} else {
 			if(D == 1) {
 				asGL(glTexSubImage2D(GL_TEXTURE_2D, level, 0, 0, texWidth, texHeight, GL_RED, m_glType, texSrc));
@@ -481,6 +479,8 @@ GLRenderer::uploadMM(int texWidth, int texHeight, T *texBuf, const T *texSrc)
 		texHeight >>= 1;
 		if(texWidth < m_vpWidth && texHeight < m_vpHeight) {
 			if(m_texNeedInit) {
+				asGL(glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR));
+				asGL(glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR));
 				asGL(glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_BASE_LEVEL, 0));
 				asGL(glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAX_LEVEL, level));
 			}
