@@ -54,7 +54,9 @@ enum { AV_POS, AV_VIDTEX, AV_OVRTEX, A_SIZE };
 GLRenderer::GLRenderer(QWidget *parent)
 	: QOpenGLWidget(parent),
 	  m_overlay(nullptr),
+	  m_mmOvr(nullptr),
 	  m_bufYUV(nullptr),
+	  m_mmYUV(nullptr),
 	  m_bufSize(0),
 	  m_bufWidth(0),
 	  m_bufHeight(0),
@@ -85,6 +87,8 @@ GLRenderer::~GLRenderer()
 	m_vao.destroy();
 	doneCurrent();
 	delete[] m_bufYUV;
+	delete[] m_mmYUV;
+	delete[] m_mmOvr;
 }
 
 void
@@ -138,7 +142,12 @@ GLRenderer::setFrameFormat(int width, int height, int compBits, int crWidthShift
 	m_bufSize = bufSize;
 	m_bufYUV = new quint8[m_bufSize];
 
+	delete[] m_mmYUV;
+	m_mmYUV = new quint8[(m_bufWidth >> 1) * (m_bufHeight >> 1) * compBytes];
+
 	m_overlay->setImageSize(width, height);
+	delete[] m_mmOvr;
+	m_mmOvr = new quint8[(m_overlay->width() >> 1) * (m_overlay->height() >> 1) * 4];
 
 	m_pitch[0] = m_bufWidth * compBytes;
 	m_pitch[1] = m_pitch[2] = m_crWidth * compBytes;
@@ -413,6 +422,8 @@ GLRenderer::resizeGL(int width, int height)
 {
 	QMutexLocker l(&m_texMutex);
 	asGL(glViewport(0, 0, width, height));
+	m_vpWidth = width;
+	m_vpHeight = height;
 	m_texNeedInit = true;
 	update();
 }
@@ -442,49 +453,106 @@ GLRenderer::paintGL()
 	m_csNeedInit = false;
 }
 
+template<class T, int D>
+void
+GLRenderer::uploadMM(int texWidth, int texHeight, T *texBuf, const T *texSrc)
+{
+	int level = 0;
+	for(;;) {
+		if(m_texNeedInit) {
+			if(D == 1) {
+				asGL(glTexImage2D(GL_TEXTURE_2D, level, m_glFormat, texWidth, texHeight, 0, GL_RED, m_glType, texSrc));
+			} else { // D == 4
+				asGL(glTexImage2D(GL_TEXTURE_2D, level, GL_RGBA8, texWidth, texHeight, 0, GL_BGRA, GL_UNSIGNED_BYTE, texSrc));
+			}
+			asGL(glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR));
+			asGL(glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR));
+		} else {
+			if(D == 1) {
+				asGL(glTexSubImage2D(GL_TEXTURE_2D, level, 0, 0, texWidth, texHeight, GL_RED, m_glType, texSrc));
+			} else { // D == 4
+				asGL(glTexSubImage2D(GL_TEXTURE_2D, level, 0, 0, texWidth, texHeight, GL_BGRA, GL_UNSIGNED_BYTE, texSrc));
+			}
+		}
+
+		const int srcStride = texWidth * D;
+		const int srcStridePD = srcStride + D;
+		texWidth >>= 1;
+		texHeight >>= 1;
+		if(texWidth < m_vpWidth && texHeight < m_vpHeight) {
+			if(m_texNeedInit) {
+				asGL(glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_BASE_LEVEL, 0));
+				asGL(glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAX_LEVEL, level));
+			}
+			break;
+		}
+		level++;
+
+		T *dst = texBuf;
+		const int texStride = texWidth * D;
+		for(int y = 0; y < texHeight; y++) {
+			const T *dstEnd = dst + texStride;
+			while(dst != dstEnd) {
+				if(D == 1) { // if should get optimized away
+					*dst++ = (texSrc[0] + texSrc[D] + texSrc[srcStride] + texSrc[srcStridePD]) >> 2;
+					texSrc += 2;
+				} else {
+					*dst++ = (texSrc[0] + texSrc[D] + texSrc[srcStride] + texSrc[srcStridePD]) >> 2;
+					texSrc++;
+					*dst++ = (texSrc[0] + texSrc[D] + texSrc[srcStride] + texSrc[srcStridePD]) >> 2;
+					texSrc++;
+					*dst++ = (texSrc[0] + texSrc[D] + texSrc[srcStride] + texSrc[srcStridePD]) >> 2;
+					texSrc++;
+					*dst++ = (texSrc[0] + texSrc[D] + texSrc[srcStride] + texSrc[srcStridePD]) >> 2;
+					texSrc += D + 1;
+				}
+			}
+			texSrc += srcStride;
+		}
+		texSrc = texBuf;
+	}
+}
+
 void
 GLRenderer::uploadYUV()
 {
 	// load Y data
 	asGL(glActiveTexture(GL_TEXTURE0 + ID_Y));
 	asGL(glBindTexture(GL_TEXTURE_2D, m_idTex[ID_Y]));
+	if(m_glType == GL_UNSIGNED_BYTE)
+		uploadMM<quint8, 1>(m_bufWidth, m_bufHeight, m_mmYUV, m_pixels[0]);
+	else
+		uploadMM<quint16, 1>(m_bufWidth, m_bufHeight, reinterpret_cast<quint16 *>(m_mmYUV), reinterpret_cast<quint16 *>(m_pixels[0]));
 	if(m_texNeedInit) {
-		asGL(glTexImage2D(GL_TEXTURE_2D, 0, m_glFormat, m_bufWidth, m_bufHeight, 0, GL_RED, m_glType, m_pixels[0]));
-		asGL(glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR));
-		asGL(glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR));
 		asGL(glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE));
 		asGL(glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE));
 		asGL(glUniform1i(m_texY, ID_Y));
-	} else {
-		asGL(glTexSubImage2D(GL_TEXTURE_2D, 0, 0, 0, m_bufWidth, m_bufHeight, GL_RED, m_glType, m_pixels[0]));
 	}
 
 	// load U data
 	asGL(glActiveTexture(GL_TEXTURE0 + ID_U));
 	asGL(glBindTexture(GL_TEXTURE_2D, m_idTex[ID_U]));
+	if(m_glType == GL_UNSIGNED_BYTE)
+		uploadMM<quint8, 1>(m_crWidth, m_crHeight, m_mmYUV, m_pixels[1]);
+	else
+		uploadMM<quint16, 1>(m_crWidth, m_crHeight, reinterpret_cast<quint16 *>(m_mmYUV), reinterpret_cast<quint16 *>(m_pixels[1]));
 	if(m_texNeedInit) {
-		asGL(glTexImage2D(GL_TEXTURE_2D, 0, m_glFormat, m_crWidth, m_crHeight, 0, GL_RED, m_glType, m_pixels[1]));
-		asGL(glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR));
-		asGL(glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR));
 		asGL(glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE));
 		asGL(glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE));
 		asGL(glUniform1i(m_texU, ID_U));
-	} else {
-		asGL(glTexSubImage2D(GL_TEXTURE_2D, 0, 0, 0, m_crWidth, m_crHeight, GL_RED, m_glType, m_pixels[1]));
 	}
 
 	// load V data
 	asGL(glActiveTexture(GL_TEXTURE0 + ID_V));
 	asGL(glBindTexture(GL_TEXTURE_2D, m_idTex[ID_V]));
+	if(m_glType == GL_UNSIGNED_BYTE)
+		uploadMM<quint8, 1>(m_crWidth, m_crHeight, m_mmYUV, m_pixels[2]);
+	else
+		uploadMM<quint16, 1>(m_crWidth, m_crHeight, reinterpret_cast<quint16 *>(m_mmYUV), reinterpret_cast<quint16 *>(m_pixels[2]));
 	if(m_texNeedInit) {
-		asGL(glTexImage2D(GL_TEXTURE_2D, 0, m_glFormat, m_crWidth, m_crHeight, 0, GL_RED, m_glType, m_pixels[2]));
-		asGL(glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR));
-		asGL(glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR));
 		asGL(glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE));
 		asGL(glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE));
 		asGL(glUniform1i(m_texV, ID_V));
-	} else {
-		asGL(glTexSubImage2D(GL_TEXTURE_2D, 0, 0, 0, m_crWidth, m_crHeight, GL_RED, m_glType, m_pixels[2]));
 	}
 }
 
@@ -517,16 +585,12 @@ GLRenderer::uploadSubtitle()
 	// overlay
 	asGL(glActiveTexture(GL_TEXTURE0 + ID_OVR));
 	asGL(glBindTexture(GL_TEXTURE_2D, m_idTex[ID_OVR]));
+	uploadMM<quint8, 4>(img.width(), img.height(), m_mmOvr, img.bits());
 	if(m_texNeedInit) {
-		asGL(glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA8, img.width(), img.height(), 0, GL_BGRA, GL_UNSIGNED_BYTE, img.bits()));
-		asGL(glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR));
-		asGL(glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR));
 		asGL(glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_BORDER));
 		asGL(glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_BORDER));
 		static const float borderColor[] = { .0f, .0f, .0f, .0f };
 		asGL(glTexParameterfv(GL_TEXTURE_2D, GL_TEXTURE_BORDER_COLOR, borderColor));
 		asGL(glUniform1i(m_texOvr, ID_OVR));
-	} else {
-		asGL(glTexSubImage2D(GL_TEXTURE_2D, 0, 0, 0, img.width(), img.height(), GL_BGRA, GL_UNSIGNED_BYTE, img.bits()));
 	}
 }

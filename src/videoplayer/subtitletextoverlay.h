@@ -38,6 +38,9 @@ public:
 	inline QColor outlineColor() const { return m_textOutline.color(); }
 	inline int outlineWidth() const { return m_textOutline.width(); }
 
+	inline int width() const { return m_image.width(); }
+	inline int height() const { return m_image.height(); }
+
 	const QImage & image();
 	const QSize & textSize();
 	inline bool isDirty() const { return m_dirty; }

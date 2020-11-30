@@ -67,16 +67,18 @@ protected:
     void paintGL() override;
 
 private:
+	template<class T, int D> void uploadMM(int texWidth, int texHeight, T *texBuf, const T *texSrc);
 	void uploadYUV();
 	void uploadSubtitle();
 
 private:
 	SubtitleTextOverlay *m_overlay;
 	GLfloat m_overlayPos[8];
+	quint8 *m_mmOvr;
 
 	QOpenGLVertexArrayObject m_vao;
 
-	quint8 *m_bufYUV;
+	quint8 *m_bufYUV, *m_mmYUV;
 	quint32 m_bufSize;
 	GLsizei m_bufWidth, m_bufHeight;
 	GLsizei m_crWidth, m_crHeight;
@@ -93,6 +95,7 @@ private:
 	QOpenGLShaderProgram *m_shaderProg;
 
 	bool m_texNeedInit;
+	int m_vpWidth, m_vpHeight;
 	int m_texY, m_texU, m_texV, m_texOvr;
 	GLuint *m_idTex;
 	GLuint *m_vaBuf;
