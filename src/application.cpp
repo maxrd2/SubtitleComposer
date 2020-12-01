@@ -74,6 +74,7 @@
 #include <QFileInfo>
 #include <QGridLayout>
 #include <QKeySequence>
+#include <QLabel>
 #include <QMenu>
 #include <QMenuBar>
 #include <QStatusBar>
@@ -99,7 +100,7 @@ using namespace SubtitleComposer;
 
 Application::Application(int &argc, char **argv) :
 	QApplication(argc, argv),
-	m_subtitle(0),
+	m_subtitle(nullptr),
 	m_subtitleUrl(),
 	m_subtitleFileName(),
 	m_subtitleEncoding(),
@@ -138,11 +139,22 @@ Application::init()
 
 	m_errorTracker = new ErrorTracker(this);
 
+	QStatusBar *statusBar = m_mainWindow->statusBar();
+	QMargins m = statusBar->contentsMargins();
+	m.setRight(m.left() + 5);
+	statusBar->setContentsMargins(m);
+
+	m_labSubFormat = new QLabel();
+	statusBar->addPermanentWidget(m_labSubFormat);
+
+	m_labSubEncoding = new QLabel();
+	statusBar->addPermanentWidget(m_labSubEncoding);
+
 	m_textDemux = new TextDemux(m_mainWindow);
-	m_mainWindow->statusBar()->addPermanentWidget(m_textDemux->progressWidget());
+	statusBar->addPermanentWidget(m_textDemux->progressWidget());
 
 	m_speechProcessor = new SpeechProcessor(m_mainWindow);
-	m_mainWindow->statusBar()->addPermanentWidget(m_speechProcessor->progressWidget());
+	statusBar->addPermanentWidget(m_speechProcessor->progressWidget());
 
 	m_scriptsManager = new ScriptsManager(this);
 

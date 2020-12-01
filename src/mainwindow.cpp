@@ -81,8 +81,8 @@ MainWindow::MainWindow() :
 	m_curLineWidget->setMaximumHeight(m_curLineWidget->minimumSizeHint().height());
 
 	QLayout *mainWidgetLayout = new QBoxLayout(QBoxLayout::TopToBottom, mainWidget);
-	mainWidgetLayout->setContentsMargins(5, 1, 5, 2);
-	mainWidgetLayout->setSpacing(5);
+	mainWidgetLayout->setContentsMargins(0, 1, 0, 0);
+	mainWidgetLayout->setSpacing(2);
 	mainWidgetLayout->addWidget(m_linesWidget);
 	mainWidgetLayout->addWidget(m_curLineWidget);
 

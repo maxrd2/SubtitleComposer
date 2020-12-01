@@ -40,6 +40,7 @@
 
 QT_FORWARD_DECLARE_CLASS(QAction)
 QT_FORWARD_DECLARE_CLASS(QUndoStack)
+QT_FORWARD_DECLARE_CLASS(QLabel)
 
 class KComboBox;
 class KToggleAction;
@@ -303,6 +304,9 @@ private:
 	Speller *m_speller;
 
 	ErrorTracker *m_errorTracker;
+
+	QLabel *m_labSubFormat = nullptr;
+	QLabel *m_labSubEncoding = nullptr;
 
 	ScriptsManager *m_scriptsManager;
 

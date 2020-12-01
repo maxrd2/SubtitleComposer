@@ -35,6 +35,7 @@
 #include "videoplayer/videoplayer.h"
 
 #include <QFileDialog>
+#include <QLabel>
 #include <QProcess>
 #include <QStringBuilder>
 #include <QTextCodec>
@@ -284,6 +285,9 @@ Application::processSubtitleOpened(QTextCodec *codec, const QString &subtitleFor
 	connect(m_subtitle, SIGNAL(primaryDirtyStateChanged(bool)), this, SLOT(updateTitle()));
 	connect(m_subtitle, SIGNAL(secondaryDirtyStateChanged(bool)), this, SLOT(updateTitle()));
 	updateTitle();
+
+	m_labSubFormat->setText(i18n("Format: %1", m_subtitleFormat));
+	m_labSubEncoding->setText(i18n("Encoding: %1", m_subtitleEncoding));
 }
 
 void
@@ -408,6 +412,9 @@ Application::closeSubtitle()
 
 		delete m_subtitle;
 		m_subtitle = nullptr;
+
+		m_labSubFormat->setText(QString());
+		m_labSubEncoding->setText(QString());
 
 		m_subtitleUrl.clear();
 		m_subtitleFileName.clear();
