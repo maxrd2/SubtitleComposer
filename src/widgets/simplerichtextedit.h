@@ -50,11 +50,11 @@ public:
 	explicit SimpleRichTextEdit(QWidget *parent = 0);
 	virtual ~SimpleRichTextEdit();
 
-	bool hasSelection() const;
-	QString selectedText() const;
+	inline bool hasSelection() const { return textCursor().hasSelection(); }
+	inline QString selectedText() const { return textCursor().selectedText(); }
 
-	bool fontBold();
-	bool fontStrikeOut();
+	inline bool fontBold() { return fontWeight() == QFont::Bold; }
+	inline bool fontStrikeOut() { return currentFont().strikeOut(); }
 
 	QAction * action(int action) const;
 	QList<QAction *> actions() const;
@@ -68,22 +68,20 @@ public slots:
 	void setSelection(int startIndex, int endIndex);
 	void clearSelection();
 
-	void setFontBold(bool enabled);
-	void setFontStrikeOut(bool enabled);
+	inline void setFontBold(bool enabled) { setFontWeight(enabled ? QFont::Bold : QFont::Normal); }
+	inline void setFontStrikeOut(bool enabled) { QTextCharFormat f; f.setFontStrikeOut(enabled); textCursor().mergeCharFormat(f); }
 
-	void toggleFontBold();
-	void toggleFontItalic();
-	void toggleFontUnderline();
-	void toggleFontStrikeOut();
+	inline void toggleFontBold() { setFontBold(!fontBold()); }
+	inline void toggleFontItalic() { setFontItalic(!fontItalic()); }
+	inline void toggleFontUnderline() { setFontUnderline(!fontUnderline()); }
+	inline void toggleFontStrikeOut() { setFontStrikeOut(!fontStrikeOut()); }
 	void changeTextColor();
 
 	void deleteText();
 	void undoableClear();
 
-	void clearUndoRedoHistory();
-
-	void toggleTabChangesFocus();
-	void toggleAutoSpellChecking();
+	inline void toggleTabChangesFocus() { setTabChangesFocus(!tabChangesFocus()); }
+	inline void toggleAutoSpellChecking() { setCheckSpellingEnabled(!checkSpellingEnabled()); }
 
 protected:
 	QMenu * createContextMenu(const QPoint &mousePos);

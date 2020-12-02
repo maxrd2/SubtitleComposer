@@ -38,117 +38,62 @@
 
 using namespace SubtitleComposer;
 
-QToolButton *
-CurrentLineWidget::createToolButton(const QString &text, const char *icon, QObject *receiver, const char *slot, bool checkable /* = true*/)
-{
-	QToolButton *toolButton = new QToolButton(this);
-	toolButton->setToolTip(text);
-	toolButton->setIcon(QIcon::fromTheme(icon));
-	toolButton->setMinimumSize(20, 20);
-	toolButton->setMaximumSize(20, 20);
-	toolButton->setCheckable(checkable);
-	toolButton->setAutoRaise(true);
-	toolButton->setFocusPolicy(Qt::NoFocus);
-	connect(toolButton, SIGNAL(clicked()), receiver, slot);
-	return toolButton;
-}
+enum { COL_TIME, COL_PRIMARY, COL_SECONDARY };
 
-CurrentLineWidget::CurrentLineWidget(QWidget *parent) :
-	QWidget(parent),
-	m_subtitle(NULL),
-	m_currentLine(NULL),
-	m_translationMode(false),
-	m_updateCurrentLine(true),
-	m_updateControls(true),
-	m_updateShorcutsTimer(new QTimer(this))
+CurrentLineWidget::CurrentLineWidget(QWidget *parent)
+	: QWidget(parent),
+	  m_subtitle(nullptr),
+	  m_currentLine(nullptr),
+	  m_translationMode(false)
 {
+	QGridLayout *mainLayout = new QGridLayout(this);
+	mainLayout->setMargin(0);
+	mainLayout->setSpacing(0);
+
 	QGroupBox *timesControlsGroupBox = new QGroupBox(this);
+	{
+		QGridLayout *timesControlsLayout = new QGridLayout(timesControlsGroupBox);
+		timesControlsLayout->setContentsMargins(5, 4, 4, 4);
+		timesControlsLayout->setHorizontalSpacing(5);
+		timesControlsLayout->setVerticalSpacing(2);
 
-	QLabel *showTimeLabel = new QLabel(timesControlsGroupBox);
-	showTimeLabel->setText(i18n("<b>Show</b>"));
-	m_showTimeEdit = new TimeEdit(timesControlsGroupBox);
-	m_showTimeEdit->setFocusPolicy(Qt::ClickFocus);
+		QLabel *showTimeLabel = new QLabel(timesControlsGroupBox);
+		showTimeLabel->setText(i18n("<b>Show</b>"));
+		timesControlsLayout->addWidget(showTimeLabel, 0, 0);
 
-	QLabel *hideTimeLabel = new QLabel(timesControlsGroupBox);
-	hideTimeLabel->setText(i18n("<b>Hide</b>"));
-	m_hideTimeEdit = new TimeEdit(timesControlsGroupBox);
-	m_hideTimeEdit->setFocusPolicy(Qt::ClickFocus);
+		m_showTimeEdit = new TimeEdit(timesControlsGroupBox);
+		m_showTimeEdit->setFocusPolicy(Qt::ClickFocus);
+		timesControlsLayout->addWidget(m_showTimeEdit, 0, 1);
 
-	QLabel *durationTimeLabel = new QLabel(timesControlsGroupBox);
-	durationTimeLabel->setText(i18n("<b>Duration</b>"));
-	m_durationTimeEdit = new TimeEdit(timesControlsGroupBox);
-	m_durationTimeEdit->setFocusPolicy(Qt::ClickFocus);
+		QLabel *hideTimeLabel = new QLabel(timesControlsGroupBox);
+		hideTimeLabel->setText(i18n("<b>Hide</b>"));
+		timesControlsLayout->addWidget(hideTimeLabel, 1, 0);
 
-	QGridLayout *buttonsLayouts[2];
+		m_hideTimeEdit = new TimeEdit(timesControlsGroupBox);
+		m_hideTimeEdit->setFocusPolicy(Qt::ClickFocus);
+		timesControlsLayout->addWidget(m_hideTimeEdit, 1, 1);
 
-	for(int index = 0; index < 2; ++index) {
-		m_textLabels[index] = new QLabel(this);
-		m_textLabels[index]->setAlignment(Qt::AlignLeft | Qt::AlignVCenter);
-		m_textLabels[index]->setTextFormat(Qt::PlainText);
-		m_textLabels[index]->setWordWrap(true);
+		QLabel *durationTimeLabel = new QLabel(timesControlsGroupBox);
+		durationTimeLabel->setText(i18n("<b>Duration</b>"));
+		timesControlsLayout->addWidget(durationTimeLabel, 2, 0);
 
-		m_textEdits[index] = new SimpleRichTextEdit(this);
-		m_textEdits[index]->setTabChangesFocus(true);
-		m_textEdits[index]->installEventFilter(this);
-
-		m_boldButtons[index] = createToolButton(i18n("Toggle Bold"), "format-text-bold", m_textEdits[index], SLOT(toggleFontBold()));
-		m_italicButtons[index] = createToolButton(i18n("Toggle Italic"), "format-text-italic", m_textEdits[index], SLOT(toggleFontItalic()));
-		m_underlineButtons[index] = createToolButton(i18n("Toggle Underline"), "format-text-underline", m_textEdits[index], SLOT(toggleFontUnderline()));
-		m_strikeThroughButtons[index] = createToolButton(i18n("Toggle Strike Through"), "format-text-strikethrough", m_textEdits[index], SLOT(toggleFontStrikeOut()));
-		m_textColorButtons[index] = createToolButton(i18n("Change Text Color"), "format-text-color", m_textEdits[index], SLOT(changeTextColor()), false);
-
-		buttonsLayouts[index] = new QGridLayout();
-		buttonsLayouts[index]->setContentsMargins(0, 0, 5, 0);
-		buttonsLayouts[index]->addWidget(m_boldButtons[index], 0, 0, Qt::AlignBottom);
-		buttonsLayouts[index]->addWidget(m_italicButtons[index], 0, 1, Qt::AlignBottom);
-		buttonsLayouts[index]->addWidget(m_underlineButtons[index], 0, 2, Qt::AlignBottom);
-		buttonsLayouts[index]->addWidget(m_strikeThroughButtons[index], 0, 3, Qt::AlignBottom);
-		buttonsLayouts[index]->addWidget(m_textColorButtons[index], 0, 4, Qt::AlignBottom);
+		m_durationTimeEdit = new TimeEdit(timesControlsGroupBox);
+		m_durationTimeEdit->setFocusPolicy(Qt::ClickFocus);
+		timesControlsLayout->addWidget(m_durationTimeEdit, 2, 1);
 	}
-
-	QFont font = m_textLabels[0]->font();
-	font.setPointSize(font.pointSize() - 1);
-	m_textLabels[0]->setFont(font);
-	m_textLabels[1]->setFont(font);
-
-	QGridLayout *timesControlsLayout = new QGridLayout(timesControlsGroupBox);
-	timesControlsLayout->addWidget(showTimeLabel, 0, 0);
-	timesControlsLayout->addWidget(m_showTimeEdit, 0, 1);
-	timesControlsLayout->addWidget(hideTimeLabel, 1, 0);
-	timesControlsLayout->addWidget(m_hideTimeEdit, 1, 1);
-	timesControlsLayout->addWidget(durationTimeLabel, 2, 0);
-	timesControlsLayout->addWidget(m_durationTimeEdit, 2, 1);
-
-	m_mainLayout = new QGridLayout(this);
-	m_mainLayout->setMargin(0);
-	m_mainLayout->setSpacing(0);
-	m_mainLayout->setColumnMinimumWidth(1, 5);
-	m_mainLayout->setColumnMinimumWidth(4, 0);
-
-	m_mainLayout->setColumnStretch(2, 1);
-
-	m_mainLayout->addWidget(timesControlsGroupBox, 0, 0, 2, 1);
-	m_mainLayout->addWidget(m_textLabels[0], 0, 2);
-	m_mainLayout->addLayout(buttonsLayouts[0], 0, 3);
-	m_mainLayout->addWidget(m_textEdits[0], 1, 2, 1, 2);
-	m_mainLayout->addWidget(m_textLabels[1], 0, 5);
-	m_mainLayout->addLayout(buttonsLayouts[1], 0, 6);
-	m_mainLayout->addWidget(m_textEdits[1], 1, 5, 1, 2);
-
-	int maxTextHeight = timesControlsGroupBox->minimumSizeHint().height() - m_boldButtons[0]->minimumSizeHint().height() + 4;
-	m_textEdits[0]->setMaximumHeight(maxTextHeight);
-	m_textEdits[1]->setMaximumHeight(maxTextHeight);
-
 	timesControlsGroupBox->setSizePolicy(QSizePolicy::Minimum, QSizePolicy::Minimum);
-	m_textEdits[0]->setSizePolicy(QSizePolicy::Minimum, QSizePolicy::Expanding);
-	m_textEdits[1]->setSizePolicy(QSizePolicy::Minimum, QSizePolicy::Expanding);
+	mainLayout->addWidget(timesControlsGroupBox, 0, COL_TIME);
+
+	m_boxPrimary = createLineWidgetBox(0);
+	mainLayout->setColumnStretch(COL_PRIMARY, 1);
+	mainLayout->addWidget(m_boxPrimary, 0, COL_PRIMARY);
+
+	m_boxTranslation = createLineWidgetBox(1);
+	mainLayout->addWidget(m_boxTranslation, 0, COL_SECONDARY);
+
 	setSizePolicy(QSizePolicy::Minimum, QSizePolicy::Expanding);
 
-	connect(m_textEdits[0], &QTextEdit::selectionChanged, this, &CurrentLineWidget::onPrimaryTextEditSelectionChanged);
-	connect(m_textEdits[0], &QTextEdit::cursorPositionChanged, this, &CurrentLineWidget::onPrimaryTextEditSelectionChanged);
 	connect(m_textEdits[0], &QTextEdit::textChanged, this, &CurrentLineWidget::onPrimaryTextEditChanged);
-	connect(m_textEdits[1], &QTextEdit::selectionChanged, this, &CurrentLineWidget::onSecondaryTextEditSelectionChanged);
-	connect(m_textEdits[1], &QTextEdit::cursorPositionChanged, this, &CurrentLineWidget::onSecondaryTextEditSelectionChanged);
 	connect(m_textEdits[1], &QTextEdit::textChanged, this, &CurrentLineWidget::onSecondaryTextEditChanged);
 	connect(m_showTimeEdit, &TimeEdit::valueChanged, this, &CurrentLineWidget::onShowTimeEditChanged);
 	connect(m_hideTimeEdit, &TimeEdit::valueChanged, this, &CurrentLineWidget::onHideTimeEditChanged);
@@ -156,25 +101,91 @@ CurrentLineWidget::CurrentLineWidget(QWidget *parent) :
 
 	setTranslationMode(m_translationMode);
 
-	m_updateShorcutsTimer->setInterval(1000);
-	m_updateShorcutsTimer->setSingleShot(true);
-
-	connect(m_updateShorcutsTimer, &QTimer::timeout, this, &CurrentLineWidget::updateShortcuts);
-
 	connect(SCConfig::self(), &KCoreConfigSkeleton::configChanged, this, &CurrentLineWidget::onConfigChanged);
 }
 
 CurrentLineWidget::~CurrentLineWidget()
 {
-	m_updateShorcutsTimer->stop();
+}
+
+QToolButton *
+CurrentLineWidget::createToolButton(const QString &text, const char *icon, bool checkable)
+{
+	QToolButton *btn = new QToolButton(this);
+	btn->setToolTip(text);
+	btn->setIcon(QIcon::fromTheme(icon));
+	btn->setMinimumSize(20, 20);
+	btn->setMaximumSize(20, 20);
+	btn->setCheckable(checkable);
+	btn->setAutoRaise(true);
+	btn->setFocusPolicy(Qt::NoFocus);
+	return btn;
+}
+
+QWidget *
+CurrentLineWidget::createLineWidgetBox(int index)
+{
+	QGridLayout *layout = new QGridLayout();
+	layout->setContentsMargins(2, 3, 1, 0);
+	layout->setHorizontalSpacing(4);
+	layout->setVerticalSpacing(2);
+
+	QLabel *textLabel = new QLabel(this);
+	textLabel->setAlignment(Qt::AlignLeft | Qt::AlignTop);
+	textLabel->setTextFormat(Qt::PlainText);
+	textLabel->setIndent(3);
+	textLabel->setWordWrap(true);
+	QFont f = textLabel->font();
+	f.setPointSize(f.pointSize() - 1);
+	textLabel->setFont(f);
+	layout->addWidget(textLabel, 0, 0);
+	m_textLabels[index] = textLabel;
+
+	SimpleRichTextEdit *textEdit = new SimpleRichTextEdit(this);
+	textEdit->setTabChangesFocus(true);
+	textEdit->setSizePolicy(QSizePolicy::Minimum, QSizePolicy::Expanding);
+	layout->addWidget(textEdit, 1, 0, 1, 7);
+	m_textEdits[index] = textEdit;
+
+	QToolButton *btnBold = createToolButton(i18n("Toggle Bold"), "format-text-bold");
+	connect(btnBold, &QToolButton::clicked, textEdit, &SimpleRichTextEdit::toggleFontBold);
+	layout->addWidget(btnBold, 0, 2, Qt::AlignBottom);
+
+	QToolButton *btnItalic = createToolButton(i18n("Toggle Italic"), "format-text-italic");
+	connect(btnItalic, &QToolButton::clicked, textEdit, &SimpleRichTextEdit::toggleFontItalic);
+	layout->addWidget(btnItalic, 0, 3, Qt::AlignBottom);
+
+	QToolButton *btnUnderline = createToolButton(i18n("Toggle Underline"), "format-text-underline");
+	connect(btnUnderline, &QToolButton::clicked, textEdit, &SimpleRichTextEdit::toggleFontUnderline);
+	layout->addWidget(btnUnderline, 0, 4, Qt::AlignBottom);
+
+	QToolButton *btnStrike = createToolButton(i18n("Toggle Strike Through"), "format-text-strikethrough");
+	connect(btnStrike, &QToolButton::clicked, textEdit, &SimpleRichTextEdit::toggleFontStrikeOut);
+	layout->addWidget(btnStrike, 0, 5, Qt::AlignBottom);
+
+	QToolButton *btnColor = createToolButton(i18n("Change Text Color"), "format-text-color", false);
+	connect(btnColor, &QToolButton::clicked, textEdit, &SimpleRichTextEdit::changeTextColor);
+	layout->addWidget(btnColor, 0, 6, Qt::AlignBottom);
+
+	connect(textEdit, &SimpleRichTextEdit::cursorPositionChanged, [=](){
+		btnBold->setChecked(textEdit->fontBold());
+		btnItalic->setChecked(textEdit->fontItalic());
+		btnUnderline->setChecked(textEdit->fontUnderline());
+		btnStrike->setChecked(textEdit->fontStrikeOut());
+	});
+
+	QWidget *cont = new QWidget(this);
+	cont->setLayout(layout);
+	return cont;
 }
 
 QString
 CurrentLineWidget::focusedText() const
 {
-	for(int index = 0; index < 2; ++index)
+	for(int index = 0; index < 2; ++index) {
 		if(m_textEdits[index]->hasFocus() && m_textEdits[index]->hasSelection())
 			return m_textEdits[index]->selectedText();
+	}
 	return QString();
 }
 
@@ -182,7 +193,6 @@ void
 CurrentLineWidget::loadConfig()
 {
 	KConfigGroup group(KSharedConfig::openConfig()->group("Current Line Settings"));
-
 	m_textEdits[0]->setCheckSpellingEnabled(group.readEntry<bool>("PrimaryCheckSpelling", false));
 	m_textEdits[1]->setCheckSpellingEnabled(group.readEntry<bool>("TranslationCheckSpelling", false));
 }
@@ -191,7 +201,6 @@ void
 CurrentLineWidget::saveConfig()
 {
 	KConfigGroup group(KSharedConfig::openConfig()->group("Current Line Settings"));
-
 	group.writeEntry("PrimaryCheckSpelling", m_textEdits[0]->checkSpellingEnabled());
 	group.writeEntry("TranslationCheckSpelling", m_textEdits[1]->checkSpellingEnabled());
 }
@@ -207,7 +216,7 @@ CurrentLineWidget::setSubtitle(Subtitle *subtitle)
 	if(subtitle)
 		connect(m_subtitle, &Subtitle::lineAnchorChanged, this, &CurrentLineWidget::onLineAnchorChanged);
 	else
-		setCurrentLine(NULL);
+		setCurrentLine(nullptr);
 }
 
 void
@@ -238,22 +247,20 @@ CurrentLineWidget::setCurrentLine(SubtitleLine *line)
 		if(m_subtitle)
 			onLineAnchorChanged(m_currentLine, m_subtitle->isLineAnchored(m_currentLine));
 	} else {
-		m_updateCurrentLine = false;
+		m_userChangingText++;
 
 		m_textLabels[0]->setText(i18n("No current line"));
 		m_textEdits[0]->setRichText(SString());
-		onPrimaryTextEditSelectionChanged();
 
 		if(m_translationMode) {
 			m_textLabels[1]->setText(i18n("No current line"));
 			m_textEdits[1]->setRichText(SString());
-			onSecondaryTextEditSelectionChanged();
 		}
 
-		m_updateCurrentLine = true;
+		m_userChangingText--;
 	}
 
-	setEnabled(m_currentLine != 0);
+	setEnabled(m_currentLine != nullptr);
 }
 
 void
@@ -261,113 +268,89 @@ CurrentLineWidget::setTranslationMode(bool enabled)
 {
 	m_translationMode = enabled;
 
+	QGridLayout *mainLayout = static_cast<QGridLayout *>(layout());
 	if(m_translationMode) {
-		m_textLabels[1]->show();
-		m_textEdits[1]->show();
-
-		m_boldButtons[1]->show();
-		m_italicButtons[1]->show();
-		m_underlineButtons[1]->show();
-		m_strikeThroughButtons[1]->show();
-		m_textColorButtons[1]->show();
-
-		m_mainLayout->setColumnMinimumWidth(4, 5);
-		m_mainLayout->setColumnStretch(5, 1);
+		mainLayout->setColumnStretch(COL_SECONDARY, 1);
+		m_boxTranslation->show();
 	} else {
-		m_textLabels[1]->hide();
-		m_textEdits[1]->hide();
-
-		m_boldButtons[1]->hide();
-		m_italicButtons[1]->hide();
-		m_underlineButtons[1]->hide();
-		m_strikeThroughButtons[1]->hide();
-		m_textColorButtons[1]->hide();
-
-		m_mainLayout->setColumnMinimumWidth(4, 0);
-		m_mainLayout->setColumnStretch(5, 0);
+		mainLayout->setColumnStretch(COL_SECONDARY, 0);
+		m_boxTranslation->hide();
 	}
 
 	setCurrentLine(m_currentLine);
 }
 
 void
-CurrentLineWidget::onPrimaryTextEditSelectionChanged()
-{
-	m_boldButtons[0]->setChecked(m_textEdits[0]->fontBold());
-	m_italicButtons[0]->setChecked(m_textEdits[0]->fontItalic());
-	m_underlineButtons[0]->setChecked(m_textEdits[0]->fontUnderline());
-	m_strikeThroughButtons[0]->setChecked(m_textEdits[0]->fontStrikeOut());
-}
-
-void
-CurrentLineWidget::onSecondaryTextEditSelectionChanged()
-{
-	m_boldButtons[1]->setChecked(m_textEdits[1]->fontBold());
-	m_italicButtons[1]->setChecked(m_textEdits[1]->fontItalic());
-	m_underlineButtons[1]->setChecked(m_textEdits[1]->fontUnderline());
-	m_strikeThroughButtons[1]->setChecked(m_textEdits[1]->fontStrikeOut());
-}
-
-void
 CurrentLineWidget::onPrimaryTextEditChanged()
 {
-	if(m_updateCurrentLine) {
-		m_updateControls = false;
+	if(m_userChangingText)
+		return;
 
-		SString text(m_textEdits[0]->richText());
-		m_currentLine->setPrimaryText(text);
-		m_textLabels[0]->setText(buildTextDescription(text.string()));
+	m_userChangingTime++;
 
-		m_updateControls = true;
-	}
+	SString text(m_textEdits[0]->richText());
+	m_currentLine->setPrimaryText(text);
+	m_textLabels[0]->setText(buildTextDescription(text.string()));
+
+	m_userChangingTime--;
 }
 
 void
 CurrentLineWidget::onSecondaryTextEditChanged()
 {
-	if(m_updateCurrentLine) {
-		m_updateControls = false;
+	if(m_userChangingText)
+		return;
 
-		SString text(m_textEdits[1]->richText());
-		m_currentLine->setSecondaryText(text);
-		m_textLabels[1]->setText(buildTextDescription(text.string()));
+	m_userChangingTime++;
 
-		m_updateControls = true;
-	}
+	SString text(m_textEdits[1]->richText());
+	m_currentLine->setSecondaryText(text);
+	m_textLabels[1]->setText(buildTextDescription(text.string()));
+
+	m_userChangingTime--;
 }
 
 void
 CurrentLineWidget::onShowTimeEditChanged(int showTime)
 {
-	if(m_updateCurrentLine) {
-		m_updateControls = false;
-		m_currentLine->setShowTime(showTime, true);
-		m_hideTimeEdit->setValue(m_currentLine->hideTime().toMillis());
-		m_durationTimeEdit->setValue(m_hideTimeEdit->value() - showTime);
-		m_updateControls = true;
-	}
+	if(m_userChangingText)
+		return;
+
+	m_userChangingTime++;
+
+	m_currentLine->setShowTime(showTime, true);
+	m_hideTimeEdit->setValue(m_currentLine->hideTime().toMillis());
+	m_durationTimeEdit->setValue(m_hideTimeEdit->value() - showTime);
+
+	m_userChangingTime--;
 }
 
 void
 CurrentLineWidget::onHideTimeEditChanged(int hideTime)
 {
-	if(m_updateCurrentLine) {
-		m_updateControls = false;
-		m_currentLine->setHideTime(hideTime);
-		m_durationTimeEdit->setValue(hideTime - m_showTimeEdit->value());
-		m_updateControls = true;
-	}
+	if(m_userChangingText)
+		return;
+
+	m_userChangingTime++;
+
+	m_currentLine->setHideTime(hideTime);
+	m_durationTimeEdit->setValue(hideTime - m_showTimeEdit->value());
+
+	m_userChangingTime--;
 }
 
 void
 CurrentLineWidget::onDurationTimeEditChanged(int durationTime)
 {
-	if(m_updateCurrentLine) {
-		m_updateControls = false;
-		m_currentLine->setDurationTime(durationTime);
-		m_hideTimeEdit->setValue(m_showTimeEdit->value() + durationTime);
-		m_updateControls = true;
-	}
+	if(m_userChangingText)
+		return;
+
+	m_userChangingTime++;
+
+	m_currentLine->setDurationTime(durationTime);
+	m_hideTimeEdit->setValue(m_showTimeEdit->value() + durationTime);
+
+	m_userChangingTime--;
 }
 
 QString
@@ -408,57 +391,61 @@ CurrentLineWidget::onLineAnchorChanged(const SubtitleLine *line, bool anchored)
 void
 CurrentLineWidget::onLinePrimaryTextChanged(const SString &primaryText)
 {
-	if(m_updateControls) {
-		m_updateCurrentLine = false;
+	if(m_userChangingTime)
+		return;
 
-		m_textLabels[0]->setText(buildTextDescription(primaryText.string()));
-		m_textEdits[0]->setRichText(primaryText);
+	m_userChangingText++;
 
-		onPrimaryTextEditSelectionChanged();
+	m_textLabels[0]->setText(buildTextDescription(primaryText.string()));
+	m_textEdits[0]->setRichText(primaryText);
 
-		m_updateCurrentLine = true;
-	}
+	m_userChangingText--;
 }
 
 void
 CurrentLineWidget::onLineSecondaryTextChanged(const SString &secondaryText)
 {
-	if(m_updateControls && m_translationMode) {
-		m_updateCurrentLine = false;
+	if(m_userChangingTime || !m_translationMode)
+		return;
 
-		m_textLabels[1]->setText(buildTextDescription(secondaryText.string()));
-		m_textEdits[1]->setRichText(secondaryText);
+	m_userChangingText++;
 
-		onSecondaryTextEditSelectionChanged();
+	m_textLabels[1]->setText(buildTextDescription(secondaryText.string()));
+	m_textEdits[1]->setRichText(secondaryText);
 
-		m_updateCurrentLine = true;
-	}
+	m_userChangingText--;
 }
 
 void
 CurrentLineWidget::onLineShowTimeChanged(const Time &showTime)
 {
-	if(m_updateControls) {
-		m_updateCurrentLine = false;
-		m_showTimeEdit->setValue(showTime.toMillis());
-		m_hideTimeEdit->setMinimumTime(QTime(0, 0, 0, 0).addMSecs(showTime.toMillis()));
-		m_updateCurrentLine = true;
-	}
+	if(m_userChangingTime)
+		return;
+
+	m_userChangingText++;
+
+	m_showTimeEdit->setValue(showTime.toMillis());
+	m_hideTimeEdit->setMinimumTime(QTime(0, 0, 0, 0).addMSecs(showTime.toMillis()));
+
+	m_userChangingText--;
 }
 
 void
 CurrentLineWidget::onLineHideTimeChanged(const Time &hideTime)
 {
-	if(m_updateControls) {
-		m_updateCurrentLine = false;
-		m_hideTimeEdit->setValue(hideTime.toMillis());
-		m_durationTimeEdit->setValue(m_hideTimeEdit->value() - m_showTimeEdit->value());
-		m_updateCurrentLine = true;
-	}
+	if(m_userChangingTime)
+		return;
+
+	m_userChangingText++;
+
+	m_hideTimeEdit->setValue(hideTime.toMillis());
+	m_durationTimeEdit->setValue(m_hideTimeEdit->value() - m_showTimeEdit->value());
+
+	m_userChangingText--;
 }
 
 void
-CurrentLineWidget::highlightPrimary(int startIndex, int endIndex)
+CurrentLineWidget::selectPrimaryText(int startIndex, int endIndex)
 {
 	m_textEdits[1]->clearSelection();
 	m_textEdits[0]->setSelection(startIndex, endIndex);
@@ -466,11 +453,25 @@ CurrentLineWidget::highlightPrimary(int startIndex, int endIndex)
 }
 
 void
-CurrentLineWidget::highlightSecondary(int startIndex, int endIndex)
+CurrentLineWidget::selectTranslationText(int startIndex, int endIndex)
 {
 	m_textEdits[0]->clearSelection();
 	m_textEdits[1]->setSelection(startIndex, endIndex);
 	m_textEdits[1]->setFocus();
+}
+
+void
+CurrentLineWidget::setupShortcut(int teActionId, const char *appActionId)
+{
+	QAction *appAction = qobject_cast<QAction *>(app()->action(appActionId));
+	QAction *teAction1 = m_textEdits[0]->action(teActionId);
+	QAction *teAction2 = m_textEdits[1]->action(teActionId);
+	connect(appAction, &QAction::changed, [teAction1, teAction2, appAction](){
+		teAction1->setShortcut(appAction->shortcut());
+		teAction2->setShortcut(appAction->shortcut());
+	});
+	teAction1->setShortcut(appAction->shortcut());
+	teAction2->setShortcut(appAction->shortcut());
 }
 
 void
@@ -482,105 +483,19 @@ CurrentLineWidget::setupActions()
 		connect(spellingAction, &QAction::triggered, app(), &Application::spellCheck);
 	}
 
-	connect(app()->action(ACT_UNDO), &QAction::changed, this, &CurrentLineWidget::markUpdateShortcuts);
-	connect(app()->action(ACT_REDO), &QAction::changed, this, &CurrentLineWidget::markUpdateShortcuts);
-	connect(app()->action(ACT_SELECT_ALL_LINES), &QAction::changed, this, &CurrentLineWidget::markUpdateShortcuts);
-	connect(app()->action(ACT_TOGGLE_SELECTED_LINES_BOLD), &QAction::changed, this, &CurrentLineWidget::markUpdateShortcuts);
-	connect(app()->action(ACT_TOGGLE_SELECTED_LINES_ITALIC), &QAction::changed, this, &CurrentLineWidget::markUpdateShortcuts);
-	connect(app()->action(ACT_TOGGLE_SELECTED_LINES_UNDERLINE), &QAction::changed, this, &CurrentLineWidget::markUpdateShortcuts);
-	connect(app()->action(ACT_TOGGLE_SELECTED_LINES_STRIKETHROUGH), &QAction::changed, this, &CurrentLineWidget::markUpdateShortcuts);
-	connect(app()->action(ACT_CHANGE_SELECTED_LINES_TEXT_COLOR), &QAction::changed, this, &CurrentLineWidget::markUpdateShortcuts);
-}
-
-void
-CurrentLineWidget::markUpdateShortcuts()
-{
-	if(!m_updateShorcutsTimer->isActive())
-		m_updateShorcutsTimer->start();
-}
-
-static void
-mapShortcuts(SimpleRichTextEdit *textEdit, int textEditActionID, const char *appActionID)
-{
-	QAction *textEditAction = textEdit->action(textEditActionID);
-	QAction *appAction = static_cast<QAction *>(app()->action(appActionID));
-	if(textEditAction && appAction)
-		textEditAction->setShortcut(appAction->shortcut());
+	setupShortcut(SimpleRichTextEdit::Undo, ACT_UNDO);
+	setupShortcut(SimpleRichTextEdit::Redo, ACT_REDO);
+	setupShortcut(SimpleRichTextEdit::SelectAll, ACT_SELECT_ALL_LINES);
+	setupShortcut(SimpleRichTextEdit::ToggleBold, ACT_TOGGLE_SELECTED_LINES_BOLD);
+	setupShortcut(SimpleRichTextEdit::ToggleItalic, ACT_TOGGLE_SELECTED_LINES_ITALIC);
+	setupShortcut(SimpleRichTextEdit::ToggleUnderline, ACT_TOGGLE_SELECTED_LINES_UNDERLINE);
+	setupShortcut(SimpleRichTextEdit::ToggleStrikeOut, ACT_TOGGLE_SELECTED_LINES_STRIKETHROUGH);
+	setupShortcut(SimpleRichTextEdit::ChangeTextColor, ACT_CHANGE_SELECTED_LINES_TEXT_COLOR);
 }
 
 void
 CurrentLineWidget::onConfigChanged()
 {
-//	if(option == SpellingConfig::keyDefaultLanguage()) {
-		m_textEdits[0]->setSpellCheckingLanguage(SCConfig::defaultLanguage());
-		m_textEdits[1]->setSpellCheckingLanguage(SCConfig::defaultLanguage());
-//	}
+	m_textEdits[0]->setSpellCheckingLanguage(SCConfig::defaultLanguage());
+	m_textEdits[1]->setSpellCheckingLanguage(SCConfig::defaultLanguage());
 }
-
-#include <KStandardShortcut>
-
-void
-CurrentLineWidget::updateShortcuts()
-{
-	for(int index = 0; index < 2; ++index) {
-		mapShortcuts(m_textEdits[index], SimpleRichTextEdit::Undo, ACT_UNDO);
-		mapShortcuts(m_textEdits[index], SimpleRichTextEdit::Redo, ACT_REDO);
-		mapShortcuts(m_textEdits[index], SimpleRichTextEdit::SelectAll, ACT_SELECT_ALL_LINES);
-//      m_textEdits[index]->action( SimpleRichTextEdit::SelectAll )->setShortcut( KStandardShortcut::selectAll() );
-		mapShortcuts(m_textEdits[index], SimpleRichTextEdit::ToggleBold, ACT_TOGGLE_SELECTED_LINES_BOLD);
-		mapShortcuts(m_textEdits[index], SimpleRichTextEdit::ToggleItalic, ACT_TOGGLE_SELECTED_LINES_ITALIC);
-		mapShortcuts(m_textEdits[index], SimpleRichTextEdit::ToggleUnderline, ACT_TOGGLE_SELECTED_LINES_UNDERLINE);
-		mapShortcuts(m_textEdits[index], SimpleRichTextEdit::ToggleStrikeOut, ACT_TOGGLE_SELECTED_LINES_STRIKETHROUGH);
-		mapShortcuts(m_textEdits[index], SimpleRichTextEdit::ChangeTextColor, ACT_CHANGE_SELECTED_LINES_TEXT_COLOR);
-	}
-}
-
-bool
-CurrentLineWidget::eventFilter(QObject *object, QEvent *event)
-{
-	if(object == m_textEdits[0] || object == m_textEdits[1]) {
-		if(event->type() == QEvent::KeyPress) {
-			// NOTE: for some reason, application actions are not triggered when the text edits
-			// have the focus so we have to intercept the event and handle issue ourselves.
-			// When doing so, we must take care of not triggering application actions for key
-			// sequences that have a special meaning in the text edit context.
-
-			QKeyEvent *keyEvent = static_cast<QKeyEvent *>(event);
-
-			if(!keyEvent->modifiers() || keyEvent->modifiers() & (Qt::ShiftModifier | Qt::KeypadModifier)) {
-				if(!keyEvent->text().isEmpty())
-					return QWidget::eventFilter(object, event);
-
-				switch(keyEvent->key()) {
-				case Qt::Key_Left:
-				case Qt::Key_Right:
-				case Qt::Key_Up:
-				case Qt::Key_Down:
-
-				case Qt::Key_Home:
-				case Qt::Key_End:
-				case Qt::Key_PageUp:
-				case Qt::Key_PageDown:
-				case Qt::Key_Insert:
-				case Qt::Key_Delete:
-
-					return QWidget::eventFilter(object, event);
-				}
-			}
-
-			QKeySequence keySequence((keyEvent->modifiers() & ~Qt::KeypadModifier) + keyEvent->key());
-
-			QAction *action;
-			foreach(action, m_textEdits[0]->actions()) {
-				if(action->shortcut().matches(keySequence) == QKeySequence::ExactMatch)
-					return QWidget::eventFilter(object, event);
-			}
-
-			return app()->triggerAction(keySequence);
-		}
-	}
-
-	return QWidget::eventFilter(object, event);
-}
-
-

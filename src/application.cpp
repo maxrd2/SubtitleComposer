@@ -1951,9 +1951,9 @@ Application::onHighlightLine(SubtitleLine *line, bool primary, int firstIndex, i
 
 		if(firstIndex >= 0 && lastIndex >= 0) {
 			if(primary)
-				m_curLineWidget->highlightPrimary(firstIndex, lastIndex);
+				m_curLineWidget->selectPrimaryText(firstIndex, lastIndex);
 			else
-				m_curLineWidget->highlightSecondary(firstIndex, lastIndex);
+				m_curLineWidget->selectTranslationText(firstIndex, lastIndex);
 		}
 	}
 }

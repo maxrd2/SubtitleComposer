@@ -231,6 +231,9 @@ SimpleRichTextEdit::richText()
 void
 SimpleRichTextEdit::setRichText(const SubtitleComposer::SString &richText)
 {
+	const bool undoEnabled = isUndoRedoEnabled();
+	setUndoRedoEnabled(false);
+
 	setPlainText(richText.string());
 
 	QTextCursor cursor = textCursor();
@@ -240,9 +243,11 @@ SimpleRichTextEdit::setRichText(const SubtitleComposer::SString &richText)
 	QRgb currentStyleColor = 0;
 	QTextCharFormat format;
 	for(int position = 0, size = richText.length(); position < size; ++position) {
-		if(currentStyleFlags != richText.styleFlagsAt(position) || ((richText.styleFlagsAt(position) & SubtitleComposer::SString::Color) && currentStyleColor != richText.styleColorAt(position))) {
-			currentStyleFlags = richText.styleFlagsAt(position);
-			currentStyleColor = richText.styleColorAt(position);
+		const int posFlags = richText.styleFlagsAt(position);
+		const QRgb posColor = richText.styleColorAt(position);
+		if(currentStyleFlags != posFlags || ((posFlags & SubtitleComposer::SString::Color) && currentStyleColor != posColor)) {
+			currentStyleFlags = posFlags;
+			currentStyleColor = posColor;
 			format.setFontWeight(currentStyleFlags & SubtitleComposer::SString::Bold ? QFont::Bold : QFont::Normal);
 			format.setFontItalic(currentStyleFlags & SubtitleComposer::SString::Italic);
 			format.setFontUnderline(currentStyleFlags & SubtitleComposer::SString::Underline);
@@ -258,70 +263,7 @@ SimpleRichTextEdit::setRichText(const SubtitleComposer::SString &richText)
 		cursor.setPosition(position + 1);
 	}
 
-	clearUndoRedoHistory();
-}
-
-bool
-SimpleRichTextEdit::hasSelection() const
-{
-	return textCursor().hasSelection();
-}
-
-QString
-SimpleRichTextEdit::selectedText() const
-{
-	return textCursor().selectedText();
-}
-
-void
-SimpleRichTextEdit::toggleFontItalic()
-{
-	setFontItalic(!fontItalic());
-}
-
-bool
-SimpleRichTextEdit::fontBold()
-{
-	return fontWeight() == QFont::Bold;
-}
-
-void
-SimpleRichTextEdit::setFontBold(bool enabled)
-{
-	setFontWeight(enabled ? QFont::Bold : QFont::Normal);
-}
-
-void
-SimpleRichTextEdit::toggleFontBold()
-{
-	setFontBold(!fontBold());
-}
-
-void
-SimpleRichTextEdit::toggleFontUnderline()
-{
-	setFontUnderline(!fontUnderline());
-}
-
-bool
-SimpleRichTextEdit::fontStrikeOut()
-{
-	return currentFont().strikeOut();
-}
-
-void
-SimpleRichTextEdit::setFontStrikeOut(bool enabled)
-{
-	QTextCursor cursor(textCursor());
-	QTextCharFormat format;
-	format.setFontStrikeOut(enabled);
-	cursor.mergeCharFormat(format);
-}
-
-void
-SimpleRichTextEdit::toggleFontStrikeOut()
-{
-	setFontStrikeOut(!fontStrikeOut());
+	setUndoRedoEnabled(undoEnabled);
 }
 
 void
@@ -354,22 +296,11 @@ SimpleRichTextEdit::deleteText()
 void
 SimpleRichTextEdit::undoableClear()
 {
-	// Taken from KTextEdit
 	QTextCursor cursor = textCursor();
 	cursor.beginEditBlock();
-	cursor.movePosition(QTextCursor::Start);
-	cursor.movePosition(QTextCursor::End, QTextCursor::KeepAnchor);
+	cursor.select(QTextCursor::Document);
 	cursor.removeSelectedText();
 	cursor.endEditBlock();
-}
-
-void
-SimpleRichTextEdit::clearUndoRedoHistory()
-{
-	if(isUndoRedoEnabled()) {
-		setUndoRedoEnabled(false);      // clears the undo/redo history
-		setUndoRedoEnabled(true);
-	}
 }
 
 void
@@ -387,18 +318,6 @@ SimpleRichTextEdit::clearSelection()
 	QTextCursor cursor(textCursor());
 	cursor.clearSelection();
 	setTextCursor(cursor);
-}
-
-void
-SimpleRichTextEdit::toggleTabChangesFocus()
-{
-	setTabChangesFocus(!tabChangesFocus());
-}
-
-void
-SimpleRichTextEdit::toggleAutoSpellChecking()
-{
-	setCheckSpellingEnabled(!checkSpellingEnabled());
 }
 
 void

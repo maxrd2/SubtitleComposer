@@ -40,8 +40,8 @@
 
 using namespace SubtitleComposer;
 
-MainWindow::MainWindow() :
-	KXmlGuiWindow(0)
+MainWindow::MainWindow()
+	: KXmlGuiWindow(nullptr)
 {
 	QDockWidget *waveformDock = new QDockWidget(i18n("Waveform"), this);
 	waveformDock->setObjectName(QStringLiteral("waveform_dock"));

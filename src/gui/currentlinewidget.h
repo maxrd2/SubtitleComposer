@@ -27,7 +27,6 @@
 #include <QWidget>
 
 QT_FORWARD_DECLARE_CLASS(QTimer)
-QT_FORWARD_DECLARE_CLASS(QGridLayout)
 QT_FORWARD_DECLARE_CLASS(QLabel)
 QT_FORWARD_DECLARE_CLASS(QToolButton)
 class TimeEdit;
@@ -49,21 +48,16 @@ public:
 
 	void setupActions();
 
-	bool eventFilter(QObject *object, QEvent *event) override;
-
 public slots:
-	void setSubtitle(Subtitle *subtitle = NULL);
+	void setSubtitle(Subtitle *subtitle = nullptr);
 	void setCurrentLine(SubtitleLine *line);
 
 	void setTranslationMode(bool enabled);
 
-	void highlightPrimary(int startIndex, int endIndex);
-	void highlightSecondary(int startIndex, int endIndex);
+	void selectPrimaryText(int startIndex, int endIndex);
+	void selectTranslationText(int startIndex, int endIndex);
 
 protected slots:
-	void onPrimaryTextEditSelectionChanged();
-	void onSecondaryTextEditSelectionChanged();
-
 	void onPrimaryTextEditChanged();
 	void onSecondaryTextEditChanged();
 	void onShowTimeEditChanged(int showTime);
@@ -79,37 +73,31 @@ protected slots:
 
 	void onConfigChanged();
 
-	void markUpdateShortcuts();
-	void updateShortcuts();
-
 private:
-	QToolButton * createToolButton(const QString &text, const char *icon, QObject *receiver, const char *slot, bool checkable = true);
+	QToolButton * createToolButton(const QString &text, const char *icon, bool checkable=true);
+	QWidget * createLineWidgetBox(int index);
 
 	QString buildTextDescription(const QString &text);
+	void setupShortcut(int teActionId, const char *appActionId);
 
 protected:
 	Subtitle *m_subtitle;
 	SubtitleLine *m_currentLine;
 	bool m_translationMode;
 
-	bool m_updateCurrentLine;
-	bool m_updateControls;
+	int m_userChangingText = 0;
+	int m_userChangingTime = 0;
 
 	TimeEdit *m_showTimeEdit;
 	TimeEdit *m_hideTimeEdit;
 	TimeEdit *m_durationTimeEdit;
 
-	QLabel *m_textLabels[2];
-	SimpleRichTextEdit *m_textEdits[2];
-	QToolButton *m_italicButtons[2];
-	QToolButton *m_boldButtons[2];
-	QToolButton *m_underlineButtons[2];
-	QToolButton *m_strikeThroughButtons[2];
-	QToolButton *m_textColorButtons[2];
+	QWidget *m_boxPrimary = nullptr;
+	QWidget *m_boxTranslation = nullptr;
+	SimpleRichTextEdit *m_textEdits[2] = {0};
+	QLabel *m_textLabels[2] = {0};
 
-	QGridLayout *m_mainLayout;
-
-	QTimer *m_updateShorcutsTimer;
+//	QTimer *m_updateShorcutsTimer;
 };
 }
 #endif
