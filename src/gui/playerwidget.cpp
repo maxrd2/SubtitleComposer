@@ -76,7 +76,6 @@ PlayerWidget::PlayerWidget(QWidget *parent) :
 
 	m_seekSlider = new PointingSlider(Qt::Horizontal, this);
 	m_seekSlider->setTickPosition(QSlider::NoTicks);
-	m_seekSlider->setTracking(false);
 	m_seekSlider->setMinimum(0);
 	m_seekSlider->setMaximum(1000);
 	m_seekSlider->setPageStep(10);
@@ -113,8 +112,6 @@ PlayerWidget::PlayerWidget(QWidget *parent) :
 	m_volumeSlider = new PointingSlider(Qt::Vertical, this);
 	m_volumeSlider->setFocusPolicy(Qt::NoFocus);
 	m_volumeSlider->setTickPosition(QSlider::NoTicks);
-//  m_volumeSlider->setInvertedAppearance( true );
-	m_volumeSlider->setTracking(true);
 	m_volumeSlider->setPageStep(5);
 	m_volumeSlider->setMinimum(0);
 	m_volumeSlider->setMaximum(100);
@@ -175,7 +172,6 @@ PlayerWidget::PlayerWidget(QWidget *parent) :
 
 	m_fsSeekSlider = new PointingSlider(Qt::Horizontal, m_fullScreenControls);
 	m_fsSeekSlider->setTickPosition(QSlider::NoTicks);
-	m_fsSeekSlider->setTracking(false);
 	m_fsSeekSlider->setMinimum(0);
 	m_fsSeekSlider->setMaximum(1000);
 	m_fsSeekSlider->setPageStep(10);
@@ -183,7 +179,6 @@ PlayerWidget::PlayerWidget(QWidget *parent) :
 	m_fsVolumeSlider = new PointingSlider(Qt::Horizontal, m_fullScreenControls);
 	m_fsVolumeSlider->setFocusPolicy(Qt::NoFocus);
 	m_fsVolumeSlider->setTickPosition(QSlider::NoTicks);
-	m_fsVolumeSlider->setTracking(true);
 	m_fsVolumeSlider->setPageStep(5);
 	m_fsVolumeSlider->setMinimum(0);
 	m_fsVolumeSlider->setMaximum(100);
@@ -217,18 +212,17 @@ PlayerWidget::PlayerWidget(QWidget *parent) :
 	fullScreenControlsLayout->addWidget(createToolButton(m_fullScreenControls, ACT_PLAY_RATE_INCREASE, FS_BUTTON_SIZE));
 	fullScreenControlsLayout->addSpacing(3);
 	fullScreenControlsLayout->addWidget(m_fsSeekSlider, 9);
-//  fullScreenControlsLayout->addSpacing( 1 );
 	fullScreenControlsLayout->addWidget(m_fsPositionLabel);
 	fullScreenControlsLayout->addWidget(m_fsVolumeSlider, 2);
 	fullScreenControlsLayout->addWidget(createToolButton(m_fullScreenControls, ACT_TOGGLE_MUTED, FS_BUTTON_SIZE));
 	fullScreenControlsLayout->addWidget(createToolButton(m_fullScreenControls, ACT_TOGGLE_FULL_SCREEN, FS_BUTTON_SIZE));
 	m_fullScreenControls->adjustSize();
 
-	connect(m_volumeSlider, &QAbstractSlider::sliderMoved, this, &PlayerWidget::onVolumeSliderMoved);
-	connect(m_fsVolumeSlider, &QAbstractSlider::sliderMoved, this, &PlayerWidget::onVolumeSliderMoved);
+	connect(m_volumeSlider, &QAbstractSlider::valueChanged, this, &PlayerWidget::onVolumeSliderMoved);
+	connect(m_fsVolumeSlider, &QAbstractSlider::valueChanged, this, &PlayerWidget::onVolumeSliderMoved);
 
-	connect(m_seekSlider, &QAbstractSlider::sliderMoved, this, &PlayerWidget::onSeekSliderMoved);
-	connect(m_fsSeekSlider, &QAbstractSlider::sliderMoved, this, &PlayerWidget::onSeekSliderMoved);
+	connect(m_seekSlider, &QAbstractSlider::valueChanged, this, &PlayerWidget::onSeekSliderMoved);
+	connect(m_fsSeekSlider, &QAbstractSlider::valueChanged, this, &PlayerWidget::onSeekSliderMoved);
 
 	connect(m_positionEdit, &TimeEdit::valueChanged, this, &PlayerWidget::onPositionEditValueChanged);
 	connect(m_positionEdit, &TimeEdit::valueEntered, this, &PlayerWidget::onPositionEditValueChanged);
@@ -649,17 +643,15 @@ PlayerWidget::updatePositionEditVisibility()
 void
 PlayerWidget::onVolumeSliderMoved(int value)
 {
-	if(sender() == m_fsVolumeSlider)
-		m_volumeSlider->setValue(value);
-	else
-		m_fsVolumeSlider->setValue(value);
-
+	QSignalBlocker s(m_player);
 	m_player->setVolume(value);
 }
 
 void
 PlayerWidget::onSeekSliderMoved(int value)
 {
+	QSignalBlocker s(m_player);
+
 	pauseAfterPlayingLine(nullptr);
 	m_player->seek(m_player->duration() * value / 1000.0);
 
@@ -781,6 +773,7 @@ PlayerWidget::onPlayerPositionChanged(double seconds)
 	updateOverlayLine(videoPosition);
 	updatePlayingLine(videoPosition);
 
+	QSignalBlocker s1(m_seekSlider), s2(m_fsSeekSlider);
 	const int sliderValue = int((seconds / m_player->duration()) * 1000.0);
 	m_seekSlider->setValue(sliderValue);
 	m_fsSeekSlider->setValue(sliderValue);
@@ -826,6 +819,7 @@ PlayerWidget::onPlayerStopped()
 void
 PlayerWidget::onPlayerVolumeChanged(double volume)
 {
+	QSignalBlocker s1(m_volumeSlider), s2(m_fsVolumeSlider);
 	m_volumeSlider->setValue(int(volume + 0.5));
 	m_fsVolumeSlider->setValue(int(volume + 0.5));
 }
