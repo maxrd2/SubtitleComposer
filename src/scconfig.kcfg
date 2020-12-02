@@ -172,12 +172,12 @@
 			<label>Start playing video when loaded</label>
 			<default>true</default>
 		</entry>
-		<entry name="SeekJumpLength" type="Int">
+		<entry name="SeekJumpLength" type="Double">
 			<label>Jump length on seek</label>
-			<default>15</default>
+			<default>5.0</default>
 		</entry>
 		<entry name="StepJumpLength" type="Int">
-			<label>Jump length on frame step</label>
+			<label>Amount of frames to skip when stepping</label>
 			<default>2</default>
 		</entry>
 		<entry name="ShowPositionTimeEdit" type="Bool">
