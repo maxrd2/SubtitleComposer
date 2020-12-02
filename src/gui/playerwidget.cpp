@@ -643,15 +643,12 @@ PlayerWidget::updatePositionEditVisibility()
 void
 PlayerWidget::onVolumeSliderMoved(int value)
 {
-	QSignalBlocker s(m_player);
 	m_player->setVolume(value);
 }
 
 void
 PlayerWidget::onSeekSliderMoved(int value)
 {
-	QSignalBlocker s(m_player);
-
 	pauseAfterPlayingLine(nullptr);
 	m_player->seek(m_player->duration() * value / 1000.0);
 
