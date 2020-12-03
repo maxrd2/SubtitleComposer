@@ -251,6 +251,33 @@ PlayerWidget::PlayerWidget(QWidget *parent) :
 	onConfigChanged();    // initializes the font
 
 	setFullScreenMode(m_fullScreenMode);
+
+	connect(app(), &Application::actionsReady, [this](){
+		toolButton(this, ACT_STOP)->setDefaultAction(app()->action(ACT_STOP));
+		toolButton(this, ACT_PLAY_PAUSE)->setDefaultAction(app()->action(ACT_PLAY_PAUSE));
+		toolButton(this, ACT_SEEK_BACKWARD)->setDefaultAction(app()->action(ACT_SEEK_BACKWARD));
+		toolButton(this, ACT_SEEK_FORWARD)->setDefaultAction(app()->action(ACT_SEEK_FORWARD));
+		toolButton(this, ACT_SEEK_TO_PREVIOUS_LINE)->setDefaultAction(app()->action(ACT_SEEK_TO_PREVIOUS_LINE));
+		toolButton(this, ACT_SEEK_TO_NEXT_LINE)->setDefaultAction(app()->action(ACT_SEEK_TO_NEXT_LINE));
+		toolButton(this, ACT_SET_CURRENT_LINE_SHOW_TIME)->setDefaultAction(app()->action(ACT_SET_CURRENT_LINE_SHOW_TIME));
+		toolButton(this, ACT_SET_CURRENT_LINE_HIDE_TIME)->setDefaultAction(app()->action(ACT_SET_CURRENT_LINE_HIDE_TIME));
+		toolButton(this, ACT_CURRENT_LINE_FOLLOWS_VIDEO)->setDefaultAction(app()->action(ACT_CURRENT_LINE_FOLLOWS_VIDEO));
+		toolButton(this, ACT_TOGGLE_MUTED)->setDefaultAction(app()->action(ACT_TOGGLE_MUTED));
+		toolButton(this, ACT_TOGGLE_FULL_SCREEN)->setDefaultAction(app()->action(ACT_TOGGLE_FULL_SCREEN));
+		toolButton(this, ACT_PLAY_RATE_DECREASE)->setDefaultAction(app()->action(ACT_PLAY_RATE_DECREASE));
+		toolButton(this, ACT_PLAY_RATE_INCREASE)->setDefaultAction(app()->action(ACT_PLAY_RATE_INCREASE));
+
+		toolButton(m_fullScreenControls, ACT_STOP)->setDefaultAction(app()->action(ACT_STOP));
+		toolButton(m_fullScreenControls, ACT_PLAY_PAUSE)->setDefaultAction(app()->action(ACT_PLAY_PAUSE));
+		toolButton(m_fullScreenControls, ACT_SEEK_BACKWARD)->setDefaultAction(app()->action(ACT_SEEK_BACKWARD));
+		toolButton(m_fullScreenControls, ACT_SEEK_FORWARD)->setDefaultAction(app()->action(ACT_SEEK_FORWARD));
+		toolButton(m_fullScreenControls, ACT_SEEK_TO_PREVIOUS_LINE)->setDefaultAction(app()->action(ACT_SEEK_TO_PREVIOUS_LINE));
+		toolButton(m_fullScreenControls, ACT_SEEK_TO_NEXT_LINE)->setDefaultAction(app()->action(ACT_SEEK_TO_NEXT_LINE));
+		toolButton(m_fullScreenControls, ACT_TOGGLE_MUTED)->setDefaultAction(app()->action(ACT_TOGGLE_MUTED));
+		toolButton(m_fullScreenControls, ACT_TOGGLE_FULL_SCREEN)->setDefaultAction(app()->action(ACT_TOGGLE_FULL_SCREEN));
+		toolButton(m_fullScreenControls, ACT_PLAY_RATE_DECREASE)->setDefaultAction(app()->action(ACT_PLAY_RATE_DECREASE));
+		toolButton(m_fullScreenControls, ACT_PLAY_RATE_INCREASE)->setDefaultAction(app()->action(ACT_PLAY_RATE_INCREASE));
+	});
 }
 
 PlayerWidget::~PlayerWidget()
@@ -344,35 +371,6 @@ PlayerWidget::setFullScreenMode(bool fullScreenMode)
 
 		window()->show();
 	}
-}
-
-void
-PlayerWidget::plugActions()
-{
-	toolButton(this, ACT_STOP)->setDefaultAction(app()->action(ACT_STOP));
-	toolButton(this, ACT_PLAY_PAUSE)->setDefaultAction(app()->action(ACT_PLAY_PAUSE));
-	toolButton(this, ACT_SEEK_BACKWARD)->setDefaultAction(app()->action(ACT_SEEK_BACKWARD));
-	toolButton(this, ACT_SEEK_FORWARD)->setDefaultAction(app()->action(ACT_SEEK_FORWARD));
-	toolButton(this, ACT_SEEK_TO_PREVIOUS_LINE)->setDefaultAction(app()->action(ACT_SEEK_TO_PREVIOUS_LINE));
-	toolButton(this, ACT_SEEK_TO_NEXT_LINE)->setDefaultAction(app()->action(ACT_SEEK_TO_NEXT_LINE));
-	toolButton(this, ACT_SET_CURRENT_LINE_SHOW_TIME)->setDefaultAction(app()->action(ACT_SET_CURRENT_LINE_SHOW_TIME));
-	toolButton(this, ACT_SET_CURRENT_LINE_HIDE_TIME)->setDefaultAction(app()->action(ACT_SET_CURRENT_LINE_HIDE_TIME));
-	toolButton(this, ACT_CURRENT_LINE_FOLLOWS_VIDEO)->setDefaultAction(app()->action(ACT_CURRENT_LINE_FOLLOWS_VIDEO));
-	toolButton(this, ACT_TOGGLE_MUTED)->setDefaultAction(app()->action(ACT_TOGGLE_MUTED));
-	toolButton(this, ACT_TOGGLE_FULL_SCREEN)->setDefaultAction(app()->action(ACT_TOGGLE_FULL_SCREEN));
-	toolButton(this, ACT_PLAY_RATE_DECREASE)->setDefaultAction(app()->action(ACT_PLAY_RATE_DECREASE));
-	toolButton(this, ACT_PLAY_RATE_INCREASE)->setDefaultAction(app()->action(ACT_PLAY_RATE_INCREASE));
-
-	toolButton(m_fullScreenControls, ACT_STOP)->setDefaultAction(app()->action(ACT_STOP));
-	toolButton(m_fullScreenControls, ACT_PLAY_PAUSE)->setDefaultAction(app()->action(ACT_PLAY_PAUSE));
-	toolButton(m_fullScreenControls, ACT_SEEK_BACKWARD)->setDefaultAction(app()->action(ACT_SEEK_BACKWARD));
-	toolButton(m_fullScreenControls, ACT_SEEK_FORWARD)->setDefaultAction(app()->action(ACT_SEEK_FORWARD));
-	toolButton(m_fullScreenControls, ACT_SEEK_TO_PREVIOUS_LINE)->setDefaultAction(app()->action(ACT_SEEK_TO_PREVIOUS_LINE));
-	toolButton(m_fullScreenControls, ACT_SEEK_TO_NEXT_LINE)->setDefaultAction(app()->action(ACT_SEEK_TO_NEXT_LINE));
-	toolButton(m_fullScreenControls, ACT_TOGGLE_MUTED)->setDefaultAction(app()->action(ACT_TOGGLE_MUTED));
-	toolButton(m_fullScreenControls, ACT_TOGGLE_FULL_SCREEN)->setDefaultAction(app()->action(ACT_TOGGLE_FULL_SCREEN));
-	toolButton(m_fullScreenControls, ACT_PLAY_RATE_DECREASE)->setDefaultAction(app()->action(ACT_PLAY_RATE_DECREASE));
-	toolButton(m_fullScreenControls, ACT_PLAY_RATE_INCREASE)->setDefaultAction(app()->action(ACT_PLAY_RATE_INCREASE));
 }
 
 void

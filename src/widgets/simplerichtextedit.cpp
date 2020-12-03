@@ -20,6 +20,9 @@
 
 #include "simplerichtextedit.h"
 
+#include "application.h"
+#include "actions/useractionnames.h"
+#include "core/undo/undostack.h"
 #include "dialogs/subtitlecolordialog.h"
 
 #include <QRegExp>
@@ -36,9 +39,12 @@
 #include <KStandardShortcut>
 #include <KLocalizedString>
 
+using namespace SubtitleComposer;
+
 SimpleRichTextEdit::SimpleRichTextEdit(QWidget *parent)
 	: KTextEdit(parent)
 {
+	setUndoRedoEnabled(false);
 	enableFindReplace(false);
 	setCheckSpellingEnabled(true);
 
@@ -56,103 +62,12 @@ SimpleRichTextEdit::SimpleRichTextEdit(QWidget *parent)
 	defaultFont.setPointSize(defaultFont.pointSize() + 2);
 	textDocument->setDefaultFont(defaultFont);
 
-	QString styleSheet("p {" "   display: block;" "   white-space: pre;" "   margin-top: 0px;" "   margin-bottom: 0px;" "}");
+	QString styleSheet("p { display:block; white-space:pre; margin-top:0; margin-bottom:0; }");
 	textDocument->setDefaultStyleSheet(styleSheet);
 
 	setTextInteractionFlags(Qt::TextEditorInteraction);
 
-	m_actions[Undo] = new QAction(this);
-	m_actions[Undo]->setIcon(QIcon::fromTheme("edit-undo"));
-	m_actions[Undo]->setText(i18n("Undo"));
-	m_actions[Undo]->setShortcuts(KStandardShortcut::undo());
-	connect(m_actions[Undo], &QAction::triggered, this, &QTextEdit::undo);
-
-	m_actions[Redo] = new QAction(this);
-	m_actions[Redo]->setIcon(QIcon::fromTheme("edit-redo"));
-	m_actions[Redo]->setText(i18n("Redo"));
-	m_actions[Redo]->setShortcuts(KStandardShortcut::redo());
-	connect(m_actions[Redo], &QAction::triggered, this, &QTextEdit::redo);
-
-	m_actions[Cut] = new QAction(this);
-	m_actions[Cut]->setIcon(QIcon::fromTheme("edit-cut"));
-	m_actions[Cut]->setText(i18n("Cut"));
-	m_actions[Cut]->setShortcuts(KStandardShortcut::cut());
-	connect(m_actions[Cut], &QAction::triggered, this, &QTextEdit::cut);
-
-	m_actions[Copy] = new QAction(this);
-	m_actions[Copy]->setIcon(QIcon::fromTheme("edit-copy"));
-	m_actions[Copy]->setText(i18n("Copy"));
-	m_actions[Copy]->setShortcuts(KStandardShortcut::copy());
-	connect(m_actions[Copy], &QAction::triggered, this, &QTextEdit::copy);
-
-#if !defined(QT_NO_CLIPBOARD)
-	m_actions[Paste] = new QAction(this);
-	m_actions[Paste]->setIcon(QIcon::fromTheme("edit-paste"));
-	m_actions[Paste]->setText(i18n("Paste"));
-	m_actions[Paste]->setShortcuts(KStandardShortcut::paste());
-	connect(m_actions[Paste], &QAction::triggered, this, &QTextEdit::paste);
-#endif
-
-	m_actions[Delete] = new QAction(this);
-	m_actions[Delete]->setIcon(QIcon::fromTheme("edit-delete"));
-	m_actions[Delete]->setText(i18n("Delete"));
-	m_actions[Delete]->setShortcut(QKeySequence::Delete);
-	connect(m_actions[Delete], &QAction::triggered, this, &SimpleRichTextEdit::deleteText);
-
-	m_actions[Clear] = new QAction(this);
-	m_actions[Clear]->setIcon(QIcon::fromTheme("edit-clear"));
-	m_actions[Clear]->setText(i18nc("@action:inmenu Clear all text", "Clear"));
-	connect(m_actions[Clear], &QAction::triggered, this, &SimpleRichTextEdit::undoableClear);
-
-	m_actions[SelectAll] = new QAction(this);
-	m_actions[SelectAll]->setIcon(QIcon::fromTheme("edit-select-all"));
-	m_actions[SelectAll]->setText(i18n("Select All"));
-	m_actions[SelectAll]->setShortcut(QKeySequence::SelectAll);
-	connect(m_actions[SelectAll], &QAction::triggered, this, &QTextEdit::selectAll);
-
-	m_actions[ToggleBold] = new QAction(this);
-	m_actions[ToggleBold]->setIcon(QIcon::fromTheme("format-text-bold"));
-	m_actions[ToggleBold]->setText(i18nc("@action:inmenu Toggle bold style", "Bold"));
-	m_actions[ToggleBold]->setShortcut(QKeySequence("Ctrl+B"));
-	connect(m_actions[ToggleBold], &QAction::triggered, this, &SimpleRichTextEdit::toggleFontBold);
-
-	m_actions[ToggleItalic] = new QAction(this);
-	m_actions[ToggleItalic]->setIcon(QIcon::fromTheme("format-text-italic"));
-	m_actions[ToggleItalic]->setText(i18nc("@action:inmenu Toggle italic style", "Italic"));
-	m_actions[ToggleItalic]->setShortcut(QKeySequence("Ctrl+I"));
-	connect(m_actions[ToggleItalic], &QAction::triggered, this, &SimpleRichTextEdit::toggleFontItalic);
-
-	m_actions[ToggleUnderline] = new QAction(this);
-	m_actions[ToggleUnderline]->setIcon(QIcon::fromTheme("format-text-underline"));
-	m_actions[ToggleUnderline]->setText(i18nc("@action:inmenu Toggle underline style", "Underline"));
-	m_actions[ToggleUnderline]->setShortcut(QKeySequence("Ctrl+U"));
-	connect(m_actions[ToggleUnderline], &QAction::triggered, this, &SimpleRichTextEdit::toggleFontUnderline);
-
-	m_actions[ToggleStrikeOut] = new QAction(this);
-	m_actions[ToggleStrikeOut]->setIcon(QIcon::fromTheme("format-text-strikethrough"));
-	m_actions[ToggleStrikeOut]->setText(i18nc("@action:inmenu Toggle strike through style", "Strike Through"));
-	m_actions[ToggleStrikeOut]->setShortcut(QKeySequence("Ctrl+T"));
-	connect(m_actions[ToggleStrikeOut], &QAction::triggered, this, &SimpleRichTextEdit::toggleFontStrikeOut);
-
-	m_actions[ChangeTextColor] = new QAction(this);
-	m_actions[ChangeTextColor]->setIcon(QIcon::fromTheme("format-text-color"));
-	m_actions[ChangeTextColor]->setText(i18nc("@action:inmenu Change Text Color", "Text Color"));
-	m_actions[ChangeTextColor]->setShortcut(QKeySequence("Ctrl+Shift+C"));
-	connect(m_actions[ChangeTextColor], &QAction::triggered, this, &SimpleRichTextEdit::changeTextColor);
-
-	m_actions[CheckSpelling] = new QAction(this);
-	m_actions[CheckSpelling]->setIcon(QIcon::fromTheme("tools-check-spelling"));
-	m_actions[CheckSpelling]->setText(i18n("Check Spelling..."));
-	connect(m_actions[CheckSpelling], &QAction::triggered, this, &KTextEdit::checkSpelling);
-
-	m_actions[ToggleAutoSpellChecking] = new QAction(this);
-	m_actions[ToggleAutoSpellChecking]->setText(i18n("Auto Spell Check"));
-	m_actions[ToggleAutoSpellChecking]->setCheckable(true);
-	connect(m_actions[ToggleAutoSpellChecking], &QAction::triggered, this, &SimpleRichTextEdit::toggleAutoSpellChecking);
-
-	m_actions[AllowTabulations] = new QAction(this);
-	m_actions[AllowTabulations]->setText(i18n("Allow Tabulations"));
-	connect(m_actions[AllowTabulations], &QAction::triggered, this, &SimpleRichTextEdit::toggleTabChangesFocus);
+	connect(app(), &Application::actionsReady, this, &SimpleRichTextEdit::setupActions);
 
 	QMenu *menu = createStandardContextMenu();
 	menu->setParent(this);
@@ -174,20 +89,6 @@ SimpleRichTextEdit::~SimpleRichTextEdit()
 {
 	if(m_insertUnicodeControlCharMenu)
 		delete m_insertUnicodeControlCharMenu->parent();
-}
-
-QAction *
-SimpleRichTextEdit::action(int action) const
-{
-	return action >= 0 && action < ActionCount ? m_actions[action] : 0;
-}
-
-QList<QAction *> SimpleRichTextEdit::actions() const
-{
-	QList<QAction *> actions;
-	for(int index = 0; index < ActionCount; ++index)
-		actions.append(m_actions[index]);
-	return actions;
 }
 
 SubtitleComposer::SString
@@ -382,10 +283,10 @@ SimpleRichTextEdit::createContextMenu(const QPoint &mouseGlobalPos)
 	QMenu *menu = new QMenu(this);
 
 	if(interactionFlags & Qt::TextEditable) {
-		m_actions[Undo]->setEnabled(document->isUndoAvailable());
+		m_actions[Undo]->setEnabled(app()->undoStack()->canUndo());
 		menu->addAction(m_actions[Undo]);
 
-		m_actions[Redo]->setEnabled(document->isRedoAvailable());
+		m_actions[Redo]->setEnabled(app()->undoStack()->canRedo());
 		menu->addAction(m_actions[Redo]);
 
 		menu->addSeparator();
@@ -426,19 +327,15 @@ SimpleRichTextEdit::createContextMenu(const QPoint &mouseGlobalPos)
 	if(interactionFlags & Qt::TextEditable) {
 		menu->addSeparator();
 
-		m_actions[ToggleBold]->setCheckable(true);
 		m_actions[ToggleBold]->setChecked(fontBold());
 		menu->addAction(m_actions[ToggleBold]);
 
-		m_actions[ToggleItalic]->setCheckable(true);
 		m_actions[ToggleItalic]->setChecked(fontItalic());
 		menu->addAction(m_actions[ToggleItalic]);
 
-		m_actions[ToggleUnderline]->setCheckable(true);
 		m_actions[ToggleUnderline]->setChecked(fontUnderline());
 		menu->addAction(m_actions[ToggleUnderline]);
 
-		m_actions[ToggleStrikeOut]->setCheckable(true);
 		m_actions[ToggleStrikeOut]->setChecked(fontStrikeOut());
 		menu->addAction(m_actions[ToggleStrikeOut]);
 
@@ -473,7 +370,6 @@ SimpleRichTextEdit::createContextMenu(const QPoint &mouseGlobalPos)
 
 		menu->addSeparator();
 
-		m_actions[AllowTabulations]->setCheckable(true);
 		m_actions[AllowTabulations]->setChecked(!tabChangesFocus());
 		menu->addAction(m_actions[AllowTabulations]);
 	}
@@ -485,12 +381,7 @@ void
 SimpleRichTextEdit::contextMenuEvent(QContextMenuEvent *event)
 {
 	QMenu *menu = createContextMenu(event->globalPos());
-
 	menu->exec(event->globalPos());
-
-	for(int index = 0; index < ActionCount; ++index)
-		m_actions[index]->setEnabled(true);
-
 	delete menu;
 }
 
@@ -498,14 +389,11 @@ bool
 SimpleRichTextEdit::event(QEvent *event)
 {
 	if(event->type() == QEvent::ShortcutOverride) {
-		// Stop our actions shorcuts from being propagated
-		// to other actions when we have the focus.
+		const QKeyEvent *keyEvent = static_cast<QKeyEvent *>(event);
+		const QKeySequence key(keyEvent->modifiers() + keyEvent->key());
 
-		QKeyEvent *keyEvent = static_cast<QKeyEvent *>(event);
-		QKeySequence key(keyEvent->modifiers() + keyEvent->key());
-
-		for(int index = 0; index < ActionCount; ++index) {
-			if(m_actions[index]->shortcut().matches(key) == QKeySequence::ExactMatch) {
+		for(int i = 0; i < ActionCount; i++) {
+			if(m_actions.at(i)->shortcuts().contains(key)) {
 				event->accept();
 				return true;
 			}
@@ -518,11 +406,11 @@ SimpleRichTextEdit::event(QEvent *event)
 void
 SimpleRichTextEdit::keyPressEvent(QKeyEvent *event)
 {
-	QKeySequence key(event->modifiers() + event->key());
+	const QKeySequence key(event->modifiers() + event->key());
 
-	for(int index = 0; index < ActionCount; ++index) {
-		if(m_actions[index]->shortcut().matches(key) == QKeySequence::ExactMatch) {
-			m_actions[index]->trigger();
+	for(int i = 0; i < ActionCount; i++) {
+		if(m_actions.at(i)->shortcuts().contains(key)) {
+			m_actions.at(i)->trigger();
 			return;
 		}
 	}
@@ -530,4 +418,104 @@ SimpleRichTextEdit::keyPressEvent(QKeyEvent *event)
 	KTextEdit::keyPressEvent(event);
 }
 
+static void
+setupActionCommon(QAction *act, const char *appActionId)
+{
+	QAction *appAction = qobject_cast<QAction *>(app()->action(appActionId));
+	QObject::connect(appAction, &QAction::changed, [act, appAction](){ act->setShortcut(appAction->shortcut()); });
+	act->setShortcuts(appAction->shortcuts());
+}
+
+void
+SimpleRichTextEdit::setupActions()
+{
+	m_actions[Undo] = app()->action(ACT_UNDO);
+	m_actions[Redo] = app()->action(ACT_REDO);
+
+	QAction *act = m_actions[Cut] = new QAction(this);
+	act->setIcon(QIcon::fromTheme("edit-cut"));
+	act->setText(i18n("Cut"));
+	act->setShortcuts(KStandardShortcut::cut());
+	connect(act, &QAction::triggered, this, &QTextEdit::cut);
+
+	act = m_actions[Copy] = new QAction(this);
+	act->setIcon(QIcon::fromTheme("edit-copy"));
+	act->setText(i18n("Copy"));
+	act->setShortcuts(KStandardShortcut::copy());
+	connect(act, &QAction::triggered, this, &QTextEdit::copy);
+
+#if !defined(QT_NO_CLIPBOARD)
+	act = m_actions[Paste] = new QAction(this);
+	act->setIcon(QIcon::fromTheme("edit-paste"));
+	act->setText(i18n("Paste"));
+	act->setShortcuts(KStandardShortcut::paste());
+	connect(act, &QAction::triggered, this, &QTextEdit::paste);
+#endif
+
+	act = m_actions[Delete] = new QAction(this);
+	act->setIcon(QIcon::fromTheme("edit-delete"));
+	act->setText(i18n("Delete"));
+	act->setShortcut(QKeySequence::Delete);
+	connect(act, &QAction::triggered, this, &SimpleRichTextEdit::deleteText);
+
+	act = m_actions[Clear] = new QAction(this);
+	act->setIcon(QIcon::fromTheme("edit-clear"));
+	act->setText(i18nc("@action:inmenu Clear all text", "Clear"));
+	connect(act, &QAction::triggered, this, &SimpleRichTextEdit::undoableClear);
+
+	act = m_actions[SelectAll] = new QAction(this);
+	act->setIcon(QIcon::fromTheme("edit-select-all"));
+	act->setText(i18n("Select All"));
+	setupActionCommon(act, ACT_SELECT_ALL_LINES);
+	connect(act, &QAction::triggered, this, &QTextEdit::selectAll);
+
+	act = m_actions[ToggleBold] = new QAction(this);
+	act->setIcon(QIcon::fromTheme("format-text-bold"));
+	act->setText(i18nc("@action:inmenu Toggle bold style", "Bold"));
+	act->setCheckable(true);
+	setupActionCommon(act, ACT_TOGGLE_SELECTED_LINES_BOLD);
+	connect(act, &QAction::triggered, this, &SimpleRichTextEdit::toggleFontBold);
+
+	act = m_actions[ToggleItalic] = new QAction(this);
+	act->setIcon(QIcon::fromTheme("format-text-italic"));
+	act->setText(i18nc("@action:inmenu Toggle italic style", "Italic"));
+	act->setCheckable(true);
+	setupActionCommon(act, ACT_TOGGLE_SELECTED_LINES_ITALIC);
+	connect(act, &QAction::triggered, this, &SimpleRichTextEdit::toggleFontItalic);
+
+	act = m_actions[ToggleUnderline] = new QAction(this);
+	act->setIcon(QIcon::fromTheme("format-text-underline"));
+	act->setText(i18nc("@action:inmenu Toggle underline style", "Underline"));
+	act->setCheckable(true);
+	setupActionCommon(act, ACT_TOGGLE_SELECTED_LINES_UNDERLINE);
+	connect(act, &QAction::triggered, this, &SimpleRichTextEdit::toggleFontUnderline);
+
+	act = m_actions[ToggleStrikeOut] = new QAction(this);
+	act->setIcon(QIcon::fromTheme("format-text-strikethrough"));
+	act->setText(i18nc("@action:inmenu Toggle strike through style", "Strike Through"));
+	act->setCheckable(true);
+	setupActionCommon(act, ACT_TOGGLE_SELECTED_LINES_STRIKETHROUGH);
+	connect(act, &QAction::triggered, this, &SimpleRichTextEdit::toggleFontStrikeOut);
+
+	act = m_actions[ChangeTextColor] = new QAction(this);
+	act->setIcon(QIcon::fromTheme("format-text-color"));
+	act->setText(i18nc("@action:inmenu Change Text Color", "Text Color"));
+	setupActionCommon(act, ACT_CHANGE_SELECTED_LINES_TEXT_COLOR);
+	connect(act, &QAction::triggered, this, &SimpleRichTextEdit::changeTextColor);
+
+	act = m_actions[CheckSpelling] = new QAction(this);
+	act->setIcon(QIcon::fromTheme("tools-check-spelling"));
+	act->setText(i18n("Check Spelling..."));
+	connect(act, &QAction::triggered, app(), &Application::spellCheck);
+	connect(act, &QAction::triggered, this, &KTextEdit::checkSpelling);
+
+	act = m_actions[ToggleAutoSpellChecking] = new QAction(this);
+	act->setText(i18n("Auto Spell Check"));
+	act->setCheckable(true);
+	connect(act, &QAction::triggered, this, &SimpleRichTextEdit::toggleAutoSpellChecking);
+
+	act = m_actions[AllowTabulations] = new QAction(this);
+	act->setText(i18n("Allow Tabulations"));
+	connect(act, &QAction::triggered, this, &SimpleRichTextEdit::toggleTabChangesFocus);
+}
 

@@ -26,12 +26,15 @@
 #include <KTextEdit>
 
 #include <QKeySequence>
+#include <QVector>
+#include <QAction>
 
 QT_FORWARD_DECLARE_CLASS(QEvent)
 QT_FORWARD_DECLARE_CLASS(QKeyEvent)
 QT_FORWARD_DECLARE_CLASS(QFocusEvent)
-QT_FORWARD_DECLARE_CLASS(QAction)
 QT_FORWARD_DECLARE_CLASS(QMenu)
+
+namespace SubtitleComposer {
 
 class SimpleRichTextEdit : public KTextEdit
 {
@@ -56,8 +59,8 @@ public:
 	inline bool fontBold() { return fontWeight() == QFont::Bold; }
 	inline bool fontStrikeOut() { return currentFont().strikeOut(); }
 
-	QAction * action(int action) const;
-	QList<QAction *> actions() const;
+	inline QAction * action(int action) const { return action >= 0 && action < ActionCount ? m_actions[action] : nullptr; }
+	inline QList<QAction *> actions() const { return m_actions.toList(); }
 
 	bool event(QEvent *event) override;
 
@@ -84,10 +87,10 @@ public slots:
 	inline void toggleAutoSpellChecking() { setCheckSpellingEnabled(!checkSpellingEnabled()); }
 
 protected:
+	void setupActions();
 	QMenu * createContextMenu(const QPoint &mousePos);
 
 	void contextMenuEvent(QContextMenuEvent *event) override;
-
 	void keyPressEvent(QKeyEvent *event) override;
 
 	void setupWordUnderPositionCursor(const QPoint &globalPos);
@@ -98,9 +101,11 @@ protected slots:
 	void replaceWithSuggestion();
 
 protected:
-	QAction *m_actions[ActionCount];
+	QVector<QAction *> m_actions = QVector<QAction *>(ActionCount, nullptr);
 	QMenu *m_insertUnicodeControlCharMenu;
 	QTextCursor m_selectedWordCursor;
 };
+
+}
 
 #endif

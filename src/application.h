@@ -219,6 +219,8 @@ signals:
 	void translationModeChanged(bool value);
 	void fullScreenModeChanged(bool value);
 
+	void actionsReady();
+
 private:
 	void processSubtitleOpened(QTextCodec *codec, const QString &subtitleFormat);
 	void processTranslationOpened(QTextCodec *codec, const QString &subtitleFormat);

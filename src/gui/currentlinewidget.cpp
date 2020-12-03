@@ -20,7 +20,6 @@
 
 #include "currentlinewidget.h"
 #include "application.h"
-#include "actions/useractionnames.h"
 #include "widgets/timeedit.h"
 #include "widgets/simplerichtextedit.h"
 
@@ -405,39 +404,6 @@ CurrentLineWidget::selectTranslationText(int startIndex, int endIndex)
 	m_textEdits[0]->clearSelection();
 	m_textEdits[1]->setSelection(startIndex, endIndex);
 	m_textEdits[1]->setFocus();
-}
-
-void
-CurrentLineWidget::setupShortcut(int teActionId, const char *appActionId)
-{
-	QAction *appAction = qobject_cast<QAction *>(app()->action(appActionId));
-	QAction *teAction1 = m_textEdits[0]->action(teActionId);
-	QAction *teAction2 = m_textEdits[1]->action(teActionId);
-	connect(appAction, &QAction::changed, [teAction1, teAction2, appAction](){
-		teAction1->setShortcut(appAction->shortcut());
-		teAction2->setShortcut(appAction->shortcut());
-	});
-	teAction1->setShortcut(appAction->shortcut());
-	teAction2->setShortcut(appAction->shortcut());
-}
-
-void
-CurrentLineWidget::setupActions()
-{
-	for(int index = 0; index < 2; ++index) {
-		QAction *spellingAction = m_textEdits[index]->action(SimpleRichTextEdit::CheckSpelling);
-		spellingAction->disconnect();
-		connect(spellingAction, &QAction::triggered, app(), &Application::spellCheck);
-	}
-
-	setupShortcut(SimpleRichTextEdit::Undo, ACT_UNDO);
-	setupShortcut(SimpleRichTextEdit::Redo, ACT_REDO);
-	setupShortcut(SimpleRichTextEdit::SelectAll, ACT_SELECT_ALL_LINES);
-	setupShortcut(SimpleRichTextEdit::ToggleBold, ACT_TOGGLE_SELECTED_LINES_BOLD);
-	setupShortcut(SimpleRichTextEdit::ToggleItalic, ACT_TOGGLE_SELECTED_LINES_ITALIC);
-	setupShortcut(SimpleRichTextEdit::ToggleUnderline, ACT_TOGGLE_SELECTED_LINES_UNDERLINE);
-	setupShortcut(SimpleRichTextEdit::ToggleStrikeOut, ACT_TOGGLE_SELECTED_LINES_STRIKETHROUGH);
-	setupShortcut(SimpleRichTextEdit::ChangeTextColor, ACT_CHANGE_SELECTED_LINES_TEXT_COLOR);
 }
 
 void

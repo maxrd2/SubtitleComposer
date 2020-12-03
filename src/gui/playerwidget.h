@@ -58,8 +58,6 @@ public:
 	inline SubtitleLine * playingLine() { return m_playingLine; }
 	inline SubtitleLine * overlayLine() { return m_overlayLine; }
 
-	void plugActions();
-
 	bool eventFilter(QObject *object, QEvent *event) override;
 
 	QWidget *infoSidebarWidget();

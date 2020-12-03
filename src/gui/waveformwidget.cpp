@@ -158,6 +158,8 @@ WaveformWidget::WaveformWidget(QWidget *parent)
 	m_hoverScrollTimer.setInterval(50);
 	m_hoverScrollTimer.setSingleShot(false);
 	connect(&m_hoverScrollTimer, &QTimer::timeout, this, &WaveformWidget::onHoverScrollTimeout);
+
+	connect(app(), &Application::actionsReady, this, &WaveformWidget::updateActions);
 }
 
 void

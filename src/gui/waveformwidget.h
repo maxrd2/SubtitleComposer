@@ -68,8 +68,6 @@ public:
 	WaveformWidget(QWidget *parent);
 	virtual ~WaveformWidget();
 
-	void updateActions();
-
 	inline double windowSize() const { return (m_timeEnd - m_timeStart).toMillis(); }
 	double windowSizeInner(double *autoScrollPadding = nullptr) const;
 
@@ -131,6 +129,7 @@ private slots:
 private:
 	void paintGraphics(QPainter &painter);
 	QToolButton * createToolButton(const QString &actionName, int iconSize=16);
+	void updateActions();
 	void updateZoomData();
 	void updateVisibleLines();
 	Time timeAt(int y);

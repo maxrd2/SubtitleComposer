@@ -30,9 +30,10 @@ QT_FORWARD_DECLARE_CLASS(QTimer)
 QT_FORWARD_DECLARE_CLASS(QLabel)
 QT_FORWARD_DECLARE_CLASS(QToolButton)
 class TimeEdit;
-class SimpleRichTextEdit;
 
 namespace SubtitleComposer {
+class SimpleRichTextEdit;
+
 class CurrentLineWidget : public QWidget
 {
 	Q_OBJECT
@@ -45,8 +46,6 @@ public:
 
 	void loadConfig();
 	void saveConfig();
-
-	void setupActions();
 
 public slots:
 	void setSubtitle(Subtitle *subtitle = nullptr);
@@ -78,7 +77,6 @@ private:
 	QWidget * createLineWidgetBox(int index);
 
 	QString buildTextDescription(const QString &text);
-	void setupShortcut(int teActionId, const char *appActionId);
 
 protected:
 	Subtitle *m_subtitle;
