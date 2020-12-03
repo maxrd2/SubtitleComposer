@@ -86,7 +86,6 @@ protected:
 	bool m_translationMode;
 
 	int m_userChangingText = 0;
-	int m_userChangingTime = 0;
 
 	TimeEdit *m_showTimeEdit;
 	TimeEdit *m_hideTimeEdit;

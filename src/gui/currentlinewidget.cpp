@@ -236,31 +236,27 @@ CurrentLineWidget::setCurrentLine(SubtitleLine *line)
 		connect(m_currentLine, &SubtitleLine::secondaryTextChanged, this, &CurrentLineWidget::onLineSecondaryTextChanged);
 		connect(m_currentLine, &SubtitleLine::showTimeChanged, this, &CurrentLineWidget::onLineShowTimeChanged);
 		connect(m_currentLine, &SubtitleLine::hideTimeChanged, this, &CurrentLineWidget::onLineHideTimeChanged);
-	}
 
-	onLineShowTimeChanged(m_currentLine ? m_currentLine->showTime() : Time());
-	onLineHideTimeChanged(m_currentLine ? m_currentLine->hideTime() : Time());
-
-	if(m_currentLine) {
 		onLinePrimaryTextChanged(m_currentLine->primaryText());
 		onLineSecondaryTextChanged(m_currentLine->secondaryText());
+		onLineShowTimeChanged(m_currentLine->showTime());
+		onLineHideTimeChanged(m_currentLine->hideTime());
+
 		if(m_subtitle)
 			onLineAnchorChanged(m_currentLine, m_subtitle->isLineAnchored(m_currentLine));
-	} else {
-		m_userChangingText++;
 
+		setEnabled(true);
+	} else {
+		QSignalBlocker s1(m_textEdits[0]), s2(m_textEdits[1]);
 		m_textLabels[0]->setText(i18n("No current line"));
 		m_textEdits[0]->setRichText(SString());
+		m_textLabels[1]->setText(i18n("No current line"));
+		m_textEdits[1]->setRichText(SString());
+		onLineShowTimeChanged(Time());
+		onLineHideTimeChanged(Time());
 
-		if(m_translationMode) {
-			m_textLabels[1]->setText(i18n("No current line"));
-			m_textEdits[1]->setRichText(SString());
-		}
-
-		m_userChangingText--;
+		setEnabled(false);
 	}
-
-	setEnabled(m_currentLine != nullptr);
 }
 
 void
@@ -283,76 +279,45 @@ CurrentLineWidget::setTranslationMode(bool enabled)
 void
 CurrentLineWidget::onPrimaryTextEditChanged()
 {
-	if(m_userChangingText)
-		return;
-
-	m_userChangingTime++;
-
+	m_userChangingText++;
 	SString text(m_textEdits[0]->richText());
 	if(m_currentLine)
 		m_currentLine->setPrimaryText(text);
 	m_textLabels[0]->setText(buildTextDescription(text.string()));
-
-	m_userChangingTime--;
+	m_userChangingText--;
 }
 
 void
 CurrentLineWidget::onSecondaryTextEditChanged()
 {
-	if(m_userChangingText)
-		return;
-
-	m_userChangingTime++;
-
+	m_userChangingText++;
 	SString text(m_textEdits[1]->richText());
 	if(m_currentLine)
 		m_currentLine->setSecondaryText(text);
 	m_textLabels[1]->setText(buildTextDescription(text.string()));
-
-	m_userChangingTime--;
+	m_userChangingText--;
 }
 
 void
 CurrentLineWidget::onShowTimeEditChanged(int showTime)
 {
-	if(m_userChangingText)
-		return;
-
-	m_userChangingTime++;
-
 	m_currentLine->setShowTime(showTime, true);
 	m_hideTimeEdit->setValue(m_currentLine->hideTime().toMillis());
 	m_durationTimeEdit->setValue(m_hideTimeEdit->value() - showTime);
-
-	m_userChangingTime--;
 }
 
 void
 CurrentLineWidget::onHideTimeEditChanged(int hideTime)
 {
-	if(m_userChangingText)
-		return;
-
-	m_userChangingTime++;
-
 	m_currentLine->setHideTime(hideTime);
 	m_durationTimeEdit->setValue(hideTime - m_showTimeEdit->value());
-
-	m_userChangingTime--;
 }
 
 void
 CurrentLineWidget::onDurationTimeEditChanged(int durationTime)
 {
-	if(m_userChangingText)
-		return;
-
-	m_userChangingTime++;
-
 	m_currentLine->setDurationTime(durationTime);
 	m_hideTimeEdit->setValue(m_showTimeEdit->value() + durationTime);
-
-	m_userChangingTime--;
 }
 
 QString
@@ -393,57 +358,37 @@ CurrentLineWidget::onLineAnchorChanged(const SubtitleLine *line, bool anchored)
 void
 CurrentLineWidget::onLinePrimaryTextChanged(const SString &primaryText)
 {
-	if(m_userChangingTime)
+	if(m_userChangingText)
 		return;
-
-	m_userChangingText++;
-
+	QSignalBlocker s(m_textEdits[0]);
 	m_textLabels[0]->setText(buildTextDescription(primaryText.string()));
 	m_textEdits[0]->setRichText(primaryText);
-
-	m_userChangingText--;
 }
 
 void
 CurrentLineWidget::onLineSecondaryTextChanged(const SString &secondaryText)
 {
-	if(m_userChangingTime || !m_translationMode)
+	if(m_userChangingText)
 		return;
-
-	m_userChangingText++;
-
+	QSignalBlocker s(m_textEdits[1]);
 	m_textLabels[1]->setText(buildTextDescription(secondaryText.string()));
 	m_textEdits[1]->setRichText(secondaryText);
-
-	m_userChangingText--;
 }
 
 void
 CurrentLineWidget::onLineShowTimeChanged(const Time &showTime)
 {
-	if(m_userChangingTime)
-		return;
-
-	m_userChangingText++;
-
+	QSignalBlocker s1(m_showTimeEdit), s2(m_hideTimeEdit), s3(m_durationTimeEdit);
 	m_showTimeEdit->setValue(showTime.toMillis());
 	m_hideTimeEdit->setMinimumTime(QTime(0, 0, 0, 0).addMSecs(showTime.toMillis()));
-
-	m_userChangingText--;
 }
 
 void
 CurrentLineWidget::onLineHideTimeChanged(const Time &hideTime)
 {
-	if(m_userChangingTime)
-		return;
-
-	m_userChangingText++;
-
+	QSignalBlocker s1(m_showTimeEdit), s2(m_hideTimeEdit), s3(m_durationTimeEdit);
 	m_hideTimeEdit->setValue(hideTime.toMillis());
 	m_durationTimeEdit->setValue(m_hideTimeEdit->value() - m_showTimeEdit->value());
-
-	m_userChangingText--;
 }
 
 void
