@@ -47,8 +47,9 @@ set(subtitlecomposer_SRCS
 	#[[ main ]] application.cpp application_actions.cpp application_errorcheck.cpp application_subtitle.cpp main.cpp mainwindow.cpp
 	#[[ actions ]] actions/useraction.cpp actions/useractionnames.h actions/kcodecactionext.cpp actions/krecentfilesactionext.cpp
 	#[[ configs ]] configs/configdialog.cpp configs/errorsconfigwidget.cpp configs/generalconfigwidget.cpp configs/playerconfigwidget.cpp configs/waveformconfigwidget.cpp
-	#[[ core ]] core/formatdata.h core/range.h core/rangelist.h core/time.cpp core/sstring.cpp core/subtitle.cpp core/subtitleiterator.cpp
-	core/subtitleline.cpp core/undo/subtitleactions.cpp core/undo/subtitlelineactions.cpp core/undo/undoaction.cpp core/undo/undostack.cpp
+	#[[ core ]] core/formatdata.h core/range.h core/rangelist.h core/time.cpp core/richdocument.cpp core/richdocumenteditor.cpp core/sstring.cpp
+	core/subtitle.cpp core/subtitleiterator.cpp core/subtitleline.cpp core/undo/subtitleactions.cpp core/undo/subtitlelineactions.cpp
+	core/undo/undoaction.cpp core/undo/undostack.cpp
 	#[[ dialogs ]] dialogs/actiondialog.cpp #[[dialogs/actionwitherrortargetsdialog.cpp]] dialogs/actionwithtargetdialog.cpp dialogs/adjusttimesdialog.cpp
 	dialogs/autodurationsdialog.cpp dialogs/changeframeratedialog.cpp dialogs/changetextscasedialog.cpp dialogs/durationlimitsdialog.cpp
 	dialogs/encodingdetectdialog.cpp dialogs/fixoverlappingtimesdialog.cpp dialogs/fixpunctuationdialog.cpp dialogs/insertlinedialog.cpp
@@ -125,7 +126,7 @@ else()
 endif()
 
 target_link_libraries(subtitlecomposer
-	Qt5::Core Qt5::Widgets Qt5::Gui
+	Qt5::Core Qt5::Widgets Qt5::WidgetsPrivate Qt5::Gui
 	KF5::CoreAddons KF5::WidgetsAddons KF5::TextWidgets KF5::Codecs
 	KF5::SonnetCore KF5::SonnetUi
 	KF5::KIOCore KF5::KIOFileWidgets KF5::KIOWidgets KF5::KIONTLM

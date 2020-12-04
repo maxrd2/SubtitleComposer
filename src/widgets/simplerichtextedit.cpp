@@ -23,6 +23,7 @@
 #include "application.h"
 #include "actions/useractionnames.h"
 #include "core/undo/undostack.h"
+#include "core/richdocument.h"
 #include "dialogs/subtitlecolordialog.h"
 
 #include <QRegExp>
@@ -48,22 +49,8 @@ SimpleRichTextEdit::SimpleRichTextEdit(QWidget *parent)
 	enableFindReplace(false);
 	setCheckSpellingEnabled(true);
 
-	setAutoFormatting(KTextEdit::AutoNone);
+	setAutoFormatting(AutoNone);
 	setWordWrapMode(QTextOption::WrapAtWordBoundaryOrAnywhere);
-
-	QTextDocument *textDocument = document();
-
-	QTextOption textOption;
-	textOption.setAlignment(Qt::AlignCenter);
-	textOption.setWrapMode(QTextOption::NoWrap);
-	textDocument->setDefaultTextOption(textOption);
-
-	QFont defaultFont = font();
-	defaultFont.setPointSize(defaultFont.pointSize() + 2);
-	textDocument->setDefaultFont(defaultFont);
-
-	QString styleSheet("p { display:block; white-space:pre; margin-top:0; margin-bottom:0; }");
-	textDocument->setDefaultStyleSheet(styleSheet);
 
 	setTextInteractionFlags(Qt::TextEditorInteraction);
 
@@ -411,6 +398,11 @@ SimpleRichTextEdit::keyPressEvent(QKeyEvent *event)
 	for(int i = 0; i < ActionCount; i++) {
 		if(m_actions.at(i)->shortcuts().contains(key)) {
 			m_actions.at(i)->trigger();
+			if(i == Undo || i == Redo) {
+				RichDocument *doc = qobject_cast<RichDocument *>(document());
+				if(doc)
+					setTextCursor(*doc->undoableCursor());
+			}
 			return;
 		}
 	}
@@ -422,7 +414,7 @@ static void
 setupActionCommon(QAction *act, const char *appActionId)
 {
 	QAction *appAction = qobject_cast<QAction *>(app()->action(appActionId));
-	QObject::connect(appAction, &QAction::changed, [act, appAction](){ act->setShortcut(appAction->shortcut()); });
+	QObject::connect(appAction, &QAction::changed, act, [act, appAction](){ act->setShortcut(appAction->shortcut()); });
 	act->setShortcuts(appAction->shortcuts());
 }
 
@@ -444,7 +436,7 @@ SimpleRichTextEdit::setupActions()
 	act->setShortcuts(KStandardShortcut::copy());
 	connect(act, &QAction::triggered, this, &QTextEdit::copy);
 
-#if !defined(QT_NO_CLIPBOARD)
+#ifndef QT_NO_CLIPBOARD
 	act = m_actions[Paste] = new QAction(this);
 	act->setIcon(QIcon::fromTheme("edit-paste"));
 	act->setText(i18n("Paste"));
