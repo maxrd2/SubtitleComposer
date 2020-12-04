@@ -22,8 +22,8 @@
 
 using namespace SubtitleComposer;
 
-RemoveLinesDialog::RemoveLinesDialog(QWidget *parent) :
-	ActionWithTextsTargetDialog(i18n("Remove Selected Lines"), i18n("Remove From"), parent)
+RemoveLinesDialog::RemoveLinesDialog(QWidget *parent)
+	: ActionWithTextsTargetDialog(i18n("Remove Selected Lines"), i18n("Remove From"), parent)
 {
-	setNonTranslationModeTarget(Subtitle::Both);
+	setNonTranslationModeTarget(Both);
 }

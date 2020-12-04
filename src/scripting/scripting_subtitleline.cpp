@@ -21,17 +21,18 @@
 #include "scripting_subtitleline.h"
 #include "scripting_sstring.h"
 #include "application.h"
+#include "core/subtitletarget.h"
 
 #include <QDebug>
 
 using namespace SubtitleComposer;
 
-static SubtitleComposer::SubtitleLine::TextTarget
+static SubtitleTarget
 toTextTarget(int value, int opDefault)
 {
-	if(value < SubtitleComposer::SubtitleLine::Primary || value >= SubtitleComposer::SubtitleLine::TextTargetSIZE)
-		return (SubtitleComposer::SubtitleLine::TextTarget)opDefault;
-	return (SubtitleComposer::SubtitleLine::TextTarget)value;
+	if(value < Primary || value >= SubtitleTargetSize)
+		return SubtitleTarget(opDefault);
+	return SubtitleTarget(value);
 }
 
 Scripting::SubtitleLine::SubtitleLine(SubtitleComposer::SubtitleLine *backend, QObject *parent) :
@@ -191,7 +192,7 @@ Scripting::SubtitleLine::setRichSecondaryText(const QString &richText)
 void
 Scripting::SubtitleLine::breakText(int minLengthForBreak, int target)
 {
-	const int opDefault = app()->translationMode() ? SubtitleComposer::SubtitleLine::Both : SubtitleComposer::SubtitleLine::Primary;
+	const int opDefault = app()->translationMode() ? Both : Primary;
 
 	m_backend->breakText(minLengthForBreak, toTextTarget(target, opDefault));
 }
@@ -199,7 +200,7 @@ Scripting::SubtitleLine::breakText(int minLengthForBreak, int target)
 void
 Scripting::SubtitleLine::unbreakText(int target)
 {
-	const int opDefault = app()->translationMode() ? SubtitleComposer::SubtitleLine::Both : SubtitleComposer::SubtitleLine::Primary;
+	const int opDefault = app()->translationMode() ? Both : Primary;
 
 	m_backend->unbreakText(toTextTarget(target, opDefault));
 }
@@ -207,7 +208,7 @@ Scripting::SubtitleLine::unbreakText(int target)
 void
 Scripting::SubtitleLine::simplifyTextWhiteSpace(int target)
 {
-	const int opDefault = app()->translationMode() ? SubtitleComposer::SubtitleLine::Both : SubtitleComposer::SubtitleLine::Primary;
+	const int opDefault = app()->translationMode() ? Both : Primary;
 
 	m_backend->simplifyTextWhiteSpace(toTextTarget(target, opDefault));
 }
@@ -251,10 +252,9 @@ Scripting::SubtitleLine::setDurationTime(int durationTime)
 int
 Scripting::SubtitleLine::autoDuration(int msecsPerChar, int msecsPerWord, int msecsPerLine, int calculationTarget)
 {
-	const int opDefault = app()->translationMode() ? SubtitleComposer::SubtitleLine::Both : SubtitleComposer::SubtitleLine::Primary;
+	const int opDefault = app()->translationMode() ? Both : Primary;
 
-	return m_backend->autoDuration(msecsPerChar, msecsPerWord, msecsPerLine, toTextTarget(calculationTarget, opDefault)
-	                               ).toMillis();
+	return m_backend->autoDuration(msecsPerChar, msecsPerWord, msecsPerLine, toTextTarget(calculationTarget, opDefault)).toMillis();
 }
 
 void

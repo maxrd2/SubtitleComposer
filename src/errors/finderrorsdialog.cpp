@@ -176,14 +176,14 @@ FindErrorsDialog::selectedErrorFlags() const
 			errorFlags |= SubtitleLine::errorFlag((SubtitleLine::ErrorID)errorId);
 
 	switch(selectedTextsTarget()) {
-	case Subtitle::Primary:
+	case Primary:
 		return errorFlags;
-	case Subtitle::Secondary: {
+	case Secondary: {
 		const int secondaryErrorFlags = (errorFlags &SubtitleLine::PrimaryOnlyErrors) << 1;
 		errorFlags = errorFlags & ~SubtitleLine::PrimaryOnlyErrors;
 		return errorFlags | secondaryErrorFlags;
 	}
-	case Subtitle::Both:
+	case Both:
 	default: {
 		const int secondaryErrorFlags = (errorFlags &SubtitleLine::PrimaryOnlyErrors) << 1;
 		return errorFlags | secondaryErrorFlags;

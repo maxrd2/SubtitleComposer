@@ -76,7 +76,7 @@ private:
 	KFind *m_find;
 	KFindDialog *m_dialog;
 	QGroupBox *m_targetGroupBox;
-	QRadioButton *m_targetRadioButtons[SubtitleLine::TextTargetSIZE];
+	QRadioButton *m_targetRadioButtons[SubtitleTargetSize];
 	SubtitleIterator *m_iterator;
 	SubtitleLine *m_dataLine;
 	bool m_instancesFound;

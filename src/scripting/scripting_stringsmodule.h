@@ -36,12 +36,7 @@ class StringsModule : public QObject
 	Q_ENUMS(StyleFlag)
 
 public:
-	typedef enum {
-		Bold = SubtitleComposer::SString::Bold,
-		Italic = SubtitleComposer::SString::Italic,
-		Underline = SubtitleComposer::SString::Underline,
-		StrikeThrough = SubtitleComposer::SString::StrikeThrough,
-	} StyleFlag;
+	using StyleFlag = SubtitleComposer::SString::StyleFlag;
 
 	StringsModule(QObject *parent = 0);
 

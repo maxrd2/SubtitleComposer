@@ -1158,7 +1158,7 @@ WaveformWidget::showContextMenu(QMouseEvent *event)
 			UserAction::SubOpened);
 		needCurrentLine.append(
 			menu->addAction(QIcon::fromTheme(QStringLiteral("list-remove")), i18n("Remove Line"), [&](){
-				m_subtitle->removeLines(RangeList(Range(currentLine->index())), Subtitle::Both);
+				m_subtitle->removeLines(RangeList(Range(currentLine->index())), Both);
 				if(selectedLine != currentLine)
 					app->linesWidget()->setCurrentLine(selectedLine, true);
 			}));

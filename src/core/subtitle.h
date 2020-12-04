@@ -26,6 +26,7 @@
 #include "core/time.h"
 #include "core/sstring.h"
 #include "subtitleline.h"
+#include "core/subtitletarget.h"
 #include "formatdata.h"
 
 #include <QObject>
@@ -68,13 +69,6 @@ class Subtitle : public QObject
 	friend class InputFormat;
 
 public:
-	typedef enum {
-		Primary = SubtitleLine::Primary,
-		Secondary = SubtitleLine::Secondary,
-		Both = SubtitleLine::Both,
-		TextTargetSIZE = SubtitleLine::TextTargetSIZE
-	} TextTarget;
-
 	static double defaultFramesPerSecond();
 	static void setDefaultFramesPerSecond(double framesPerSecond);
 
@@ -129,8 +123,8 @@ public:
 
 	void insertLine(SubtitleLine *line, int index = -1);
 	void insertLines(const QList<SubtitleLine *> &lines, int index = -1);
-	SubtitleLine * insertNewLine(int index, bool timeAfter, TextTarget target);
-	void removeLines(const RangeList &ranges, TextTarget target);
+	SubtitleLine * insertNewLine(int index, bool timeAfter, SubtitleTarget target);
+	void removeLines(const RangeList &ranges, SubtitleTarget target);
 
 	void swapTexts(const RangeList &ranges);
 
@@ -145,20 +139,20 @@ public:
 
 	void applyDurationLimits(const RangeList &ranges, const Time &minDuration, const Time &maxDuration, bool canOverlap);
 	void setMaximumDurations(const RangeList &ranges);
-	void setAutoDurations(const RangeList &ranges, int msecsPerChar, int msecsPerWord, int msecsPerLine, bool canOverlap, TextTarget calculationTarget);
+	void setAutoDurations(const RangeList &ranges, int msecsPerChar, int msecsPerWord, int msecsPerLine, bool canOverlap, SubtitleTarget calculationTarget);
 
 	void fixOverlappingLines(const RangeList &ranges, const Time &minInterval = 100);
 
-	void fixPunctuation(const RangeList &ranges, bool spaces, bool quotes, bool englishI, bool ellipsis, TextTarget target);
+	void fixPunctuation(const RangeList &ranges, bool spaces, bool quotes, bool englishI, bool ellipsis, SubtitleTarget target);
 
-	void lowerCase(const RangeList &ranges, TextTarget target);
-	void upperCase(const RangeList &ranges, TextTarget target);
-	void titleCase(const RangeList &ranges, bool lowerFirst, TextTarget target);
-	void sentenceCase(const RangeList &ranges, bool lowerFirst, TextTarget target);
+	void lowerCase(const RangeList &ranges, SubtitleTarget target);
+	void upperCase(const RangeList &ranges, SubtitleTarget target);
+	void titleCase(const RangeList &ranges, bool lowerFirst, SubtitleTarget target);
+	void sentenceCase(const RangeList &ranges, bool lowerFirst, SubtitleTarget target);
 
-	void breakLines(const RangeList &ranges, unsigned minLengthForLineBreak, TextTarget target);
-	void unbreakTexts(const RangeList &ranges, TextTarget target);
-	void simplifyTextWhiteSpace(const RangeList &ranges, TextTarget target);
+	void breakLines(const RangeList &ranges, unsigned minLengthForLineBreak, SubtitleTarget target);
+	void unbreakTexts(const RangeList &ranges, SubtitleTarget target);
+	void simplifyTextWhiteSpace(const RangeList &ranges, SubtitleTarget target);
 
 	void syncWithSubtitle(const Subtitle &refSubtitle);
 	void appendSubtitle(const Subtitle &srcSubtitle, long shiftMsecsBeforeAppend);

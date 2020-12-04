@@ -73,7 +73,7 @@ private:
 	KReplace *m_replace;
 	KReplaceDialog *m_dialog;
 	QGroupBox *m_targetGroupBox;
-	QRadioButton *m_targetRadioButtons[SubtitleLine::TextTargetSIZE];
+	QRadioButton *m_targetRadioButtons[SubtitleTargetSize];
 	SubtitleIterator *m_iterator;
 	int m_firstIndex;
 };

@@ -103,12 +103,12 @@ Scripting::Subtitle::toRangesList(const QObject *object)
 	return SubtitleComposer::RangeList();
 }
 
-static SubtitleComposer::Subtitle::TextTarget
+static SubtitleTarget
 toTextTarget(int value, int opDefault)
 {
-	if(value < SubtitleComposer::Subtitle::Primary || value >= SubtitleComposer::Subtitle::TextTargetSIZE)
-		return (SubtitleComposer::Subtitle::TextTarget)opDefault;
-	return (SubtitleComposer::Subtitle::TextTarget)value;
+	if(value < Primary || value >= SubtitleTargetSize)
+		return (SubtitleTarget)opDefault;
+	return (SubtitleTarget)value;
 }
 
 Scripting::SubtitleLine *
@@ -116,7 +116,7 @@ Scripting::Subtitle::insertNewLine(int index, bool timeAfter, int target)
 {
 	if(index > m_backend->linesCount())
 		return 0;
-	static const int opDefault = SubtitleComposer::Subtitle::Both;
+	static const int opDefault = Both;
 	return new Scripting::SubtitleLine(m_backend->insertNewLine(index, timeAfter, toTextTarget(target, opDefault)), this);
 }
 
@@ -125,14 +125,14 @@ Scripting::Subtitle::removeLine(int index, int target)
 {
 	if(index < 0 || index >= m_backend->linesCount())
 		return;
-	static const int opDefault = SubtitleComposer::Subtitle::Both;
+	static const int opDefault = Both;
 	m_backend->removeLines(SubtitleComposer::Range(index), toTextTarget(target, opDefault));
 }
 
 void
 Scripting::Subtitle::removeLines(const QObject *ranges, int target)
 {
-	static const int opDefault = SubtitleComposer::Subtitle::Both;
+	static const int opDefault = Both;
 	m_backend->removeLines(toRangesList(ranges), toTextTarget(target, opDefault));
 }
 
@@ -189,10 +189,9 @@ Scripting::Subtitle::setMaximumDurations(const QObject *ranges)
 void
 Scripting::Subtitle::setAutoDurations(const QObject *ranges, int msecsPerChar, int msecsPerWord, int msecsPerLine, bool canOverlap, int calculationTarget)
 {
-	const int opDefault = app()->translationMode() ? SubtitleComposer::Subtitle::Both : SubtitleComposer::Subtitle::Primary;
+	const int opDefault = app()->translationMode() ? Both : Primary;
 
-	m_backend->setAutoDurations(toRangesList(ranges), msecsPerChar, msecsPerWord, msecsPerLine, canOverlap, toTextTarget(calculationTarget, opDefault)
-	                            );
+	m_backend->setAutoDurations(toRangesList(ranges), msecsPerChar, msecsPerWord, msecsPerLine, canOverlap, toTextTarget(calculationTarget, opDefault));
 }
 
 void
@@ -204,56 +203,56 @@ Scripting::Subtitle::fixOverlappingLines(const QObject *ranges, int minInterval)
 void
 Scripting::Subtitle::fixPunctuation(const QObject *ranges, bool spaces, bool quotes, bool englishI, bool ellipsis, int target)
 {
-	const int opDefault = app()->translationMode() ? SubtitleComposer::Subtitle::Both : SubtitleComposer::Subtitle::Primary;
+	const int opDefault = app()->translationMode() ? Both : Primary;
 	m_backend->fixPunctuation(toRangesList(ranges), spaces, quotes, englishI, ellipsis, toTextTarget(target, opDefault));
 }
 
 void
 Scripting::Subtitle::lowerCase(const QObject *ranges, int target)
 {
-	const int opDefault = app()->translationMode() ? SubtitleComposer::Subtitle::Both : SubtitleComposer::Subtitle::Primary;
+	const int opDefault = app()->translationMode() ? Both : Primary;
 	m_backend->lowerCase(toRangesList(ranges), toTextTarget(target, opDefault));
 }
 
 void
 Scripting::Subtitle::upperCase(const QObject *ranges, int target)
 {
-	const int opDefault = app()->translationMode() ? SubtitleComposer::Subtitle::Both : SubtitleComposer::Subtitle::Primary;
+	const int opDefault = app()->translationMode() ? Both : Primary;
 	m_backend->upperCase(toRangesList(ranges), toTextTarget(target, opDefault));
 }
 
 void
 Scripting::Subtitle::titleCase(const QObject *ranges, bool lowerFirst, int target)
 {
-	const int opDefault = app()->translationMode() ? SubtitleComposer::Subtitle::Both : SubtitleComposer::Subtitle::Primary;
+	const int opDefault = app()->translationMode() ? Both : Primary;
 	m_backend->titleCase(toRangesList(ranges), lowerFirst, toTextTarget(target, opDefault));
 }
 
 void
 Scripting::Subtitle::sentenceCase(const QObject *ranges, bool lowerFirst, int target)
 {
-	const int opDefault = app()->translationMode() ? SubtitleComposer::Subtitle::Both : SubtitleComposer::Subtitle::Primary;
+	const int opDefault = app()->translationMode() ? Both : Primary;
 	m_backend->sentenceCase(toRangesList(ranges), lowerFirst, toTextTarget(target, opDefault));
 }
 
 void
 Scripting::Subtitle::breakLines(const QObject *ranges, int minLengthForLineBreak, int target)
 {
-	const int opDefault = app()->translationMode() ? SubtitleComposer::Subtitle::Both : SubtitleComposer::Subtitle::Primary;
+	const int opDefault = app()->translationMode() ? Both : Primary;
 	m_backend->breakLines(toRangesList(ranges), minLengthForLineBreak, toTextTarget(target, opDefault));
 }
 
 void
 Scripting::Subtitle::unbreakTexts(const QObject *ranges, int target)
 {
-	const int opDefault = app()->translationMode() ? SubtitleComposer::Subtitle::Both : SubtitleComposer::Subtitle::Primary;
+	const int opDefault = app()->translationMode() ? Both : Primary;
 	m_backend->unbreakTexts(toRangesList(ranges), toTextTarget(target, opDefault));
 }
 
 void
 Scripting::Subtitle::simplifyTextWhiteSpace(const QObject *ranges, int target)
 {
-	const int opDefault = app()->translationMode() ? SubtitleComposer::Subtitle::Both : SubtitleComposer::Subtitle::Primary;
+	const int opDefault = app()->translationMode() ? Both : Primary;
 	m_backend->simplifyTextWhiteSpace(toRangesList(ranges), toTextTarget(target, opDefault));
 }
 

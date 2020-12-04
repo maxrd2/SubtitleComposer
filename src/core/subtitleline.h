@@ -24,7 +24,7 @@
 #include "core/sstring.h"
 #include "core/time.h"
 #include "core/formatdata.h"
-#include "core/undo/undoaction.h"
+#include "core/subtitletarget.h"
 #include "helpers/objectref.h"
 
 #include <QObject>
@@ -56,13 +56,6 @@ class SubtitleLine : public QObject
 	friend class ObjectRef<SubtitleLine>;
 
 public:
-	typedef enum {
-		Primary = 0,
-		Secondary,
-		Both,
-		TextTargetSIZE
-	} TextTarget;
-
 	typedef enum {
 		EmptyPrimaryTextID = 0,         // Empty primary text
 		EmptySecondaryTextID,           // Empty secondary text
@@ -165,9 +158,9 @@ public:
 	static QString simplifyTextWhiteSpace(QString text);
 	static SString simplifyTextWhiteSpace(SString text);
 
-	void breakText(int minLengthForBreak, TextTarget target);
-	void unbreakText(TextTarget target);
-	void simplifyTextWhiteSpace(TextTarget target);
+	void breakText(int minLengthForBreak, SubtitleTarget target);
+	void unbreakText(SubtitleTarget target);
+	void simplifyTextWhiteSpace(SubtitleTarget target);
 
 	Time showTime() const;
 	void setShowTime(const Time &showTime, bool safe=false);
@@ -189,7 +182,7 @@ public:
 	int secondaryLines() const;
 
 	static Time autoDuration(const QString &text, int msecsPerChar, int msecsPerWord, int msecsPerLine);
-	Time autoDuration(int msecsPerChar, int msecsPerWord, int msecsPerLine, TextTarget calculationTarget);
+	Time autoDuration(int msecsPerChar, int msecsPerWord, int msecsPerLine, SubtitleTarget calculationTarget);
 
 	void shiftTimes(long mseconds);
 	void adjustTimes(double shiftMseconds, double scaleFactor);

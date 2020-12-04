@@ -49,14 +49,14 @@ public:
 
 /// TEXTS TARGET
 // the active text target when translationMode is false
-	Subtitle::TextTarget nonTranslationModeTarget() const;
-	void setNonTranslationModeTarget(Subtitle::TextTarget target);
+	SubtitleTarget nonTranslationModeTarget() const;
+	void setNonTranslationModeTarget(SubtitleTarget target);
 
-	Subtitle::TextTarget selectedTextsTarget() const;
-	void setSelectedTextsTarget(Subtitle::TextTarget target);
+	SubtitleTarget selectedTextsTarget() const;
+	void setSelectedTextsTarget(SubtitleTarget target);
 
-	bool isTextsTargetEnabled(Subtitle::TextTarget target) const;
-	void setTextsTargetEnabled(Subtitle::TextTarget target, bool enabled);
+	bool isTextsTargetEnabled(SubtitleTarget target) const;
+	void setTextsTargetEnabled(SubtitleTarget target, bool enabled);
 
 public slots:
 	int exec() override;
@@ -98,7 +98,7 @@ private:
 	bool m_selectionTargetWasChecked;
 
 	bool m_translationMode;
-	Subtitle::TextTarget m_nonTranslationModeTarget;
+	SubtitleTarget m_nonTranslationModeTarget;
 };
 
 class ActionWithLinesTargetDialog : public ActionWithTargetDialog

@@ -21,6 +21,7 @@
 #include "scripting_subtitlemodule.h"
 #include "scripting_subtitle.h"
 #include "application.h"
+#include "core/subtitletarget.h"
 
 using namespace SubtitleComposer;
 

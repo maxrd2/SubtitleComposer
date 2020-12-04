@@ -70,12 +70,12 @@ AutoDurationsDialog::AutoDurationsDialog(unsigned charMillis, unsigned wordMilli
 	QGroupBox *calculationGroupBox = createGroupBox(i18nc("@title:group", "Duration Calculation"));
 
 	m_calculationButtonGroup = new QButtonGroup(this);
-	for(int index = 0; index < SubtitleLine::TextTargetSIZE; ++index)
+	for(int index = 0; index < SubtitleTargetSize; ++index)
 		m_calculationButtonGroup->addButton(new QRadioButton(calculationGroupBox), index);
 
-	m_calculationButtonGroup->button(SubtitleLine::Primary)->setText(i18n("Use primary text"));
-	m_calculationButtonGroup->button(SubtitleLine::Secondary)->setText(i18n("Use translation text"));
-	m_calculationButtonGroup->button(SubtitleLine::Both)->setText(i18n("Calculate both and use maximum"));
+	m_calculationButtonGroup->button(Primary)->setText(i18n("Use primary text"));
+	m_calculationButtonGroup->button(Secondary)->setText(i18n("Use translation text"));
+	m_calculationButtonGroup->button(Both)->setText(i18n("Calculate both and use maximum"));
 
 	createLineTargetsButtonGroup();
 
@@ -89,7 +89,7 @@ AutoDurationsDialog::AutoDurationsDialog(unsigned charMillis, unsigned wordMilli
 	settingsGroupBoxLayout->addWidget(m_preventOverlapCheckBox, 3, 0, 1, 2);
 
 	QGridLayout *calculationLayout = createLayout(calculationGroupBox);
-	for(int index = 0; index < SubtitleLine::TextTargetSIZE; ++index)
+	for(int index = 0; index < SubtitleTargetSize; ++index)
 		calculationLayout->addWidget(m_calculationButtonGroup->button(index), index, 0);
 }
 
@@ -130,13 +130,13 @@ AutoDurationsDialog::setTranslationMode(bool enabled)
 		m_translationMode = enabled;
 
 		if(m_translationMode) {
-			QAbstractButton *radioButton = m_calculationButtonGroup->button(SubtitleLine::Both);
+			QAbstractButton *radioButton = m_calculationButtonGroup->button(Both);
 			radioButton->setEnabled(true);
 			radioButton->setChecked(true);
 
 			radioButton->parentWidget()->show();
 		} else {
-			QAbstractButton *radioButton = m_calculationButtonGroup->button(SubtitleLine::Primary);
+			QAbstractButton *radioButton = m_calculationButtonGroup->button(Primary);
 
 			radioButton->setEnabled(true);
 			radioButton->setChecked(true);
@@ -146,9 +146,9 @@ AutoDurationsDialog::setTranslationMode(bool enabled)
 	}
 }
 
-Subtitle::TextTarget
+SubtitleTarget
 AutoDurationsDialog::calculationMode() const
 {
 	int checkedId = m_calculationButtonGroup->checkedId();
-	return checkedId == -1 ? Subtitle::TextTargetSIZE : (Subtitle::TextTarget)checkedId;
+	return checkedId == -1 ? SubtitleTargetSize : SubtitleTarget(checkedId);
 }

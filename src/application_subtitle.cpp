@@ -700,11 +700,11 @@ Application::joinSubtitles()
 
 		const QUrl url = dlg->subtitleUrl();
 		QTextCodec *codec = codecForEncoding(KRecentFilesActionExt::encodingForUrl(url));
-		const bool primary = dlg->selectedTextsTarget() != Subtitle::Secondary;
+		const bool primary = dlg->selectedTextsTarget() != Secondary;
 
 		FormatManager::Status res = FormatManager::instance().readSubtitle(secondSubtitle, primary, url, &codec, nullptr);
 		if(res == FormatManager::SUCCESS) {
-			if(dlg->selectedTextsTarget() == Subtitle::Both)
+			if(dlg->selectedTextsTarget() == Both)
 				secondSubtitle.setSecondaryData(secondSubtitle, true);
 
 			m_subtitle->appendSubtitle(secondSubtitle, dlg->shiftTime().toMillis());

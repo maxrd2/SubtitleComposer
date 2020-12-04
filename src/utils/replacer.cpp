@@ -56,17 +56,17 @@ Replacer::Replacer(QWidget *parent)
 	targetLayout->setAlignment(Qt::AlignTop);
 	targetLayout->setSpacing(5);
 
-	m_targetRadioButtons[SubtitleLine::Both] = new QRadioButton(m_targetGroupBox);
-	m_targetRadioButtons[SubtitleLine::Both]->setChecked(true);
-	m_targetRadioButtons[SubtitleLine::Both]->setText(i18n("Both subtitles"));
-	m_targetRadioButtons[SubtitleLine::Primary] = new QRadioButton(m_targetGroupBox);
-	m_targetRadioButtons[SubtitleLine::Primary]->setText(i18n("Primary subtitle"));
-	m_targetRadioButtons[SubtitleLine::Secondary] = new QRadioButton(m_targetGroupBox);
-	m_targetRadioButtons[SubtitleLine::Secondary]->setText(i18n("Translation subtitle"));
+	m_targetRadioButtons[Both] = new QRadioButton(m_targetGroupBox);
+	m_targetRadioButtons[Both]->setChecked(true);
+	m_targetRadioButtons[Both]->setText(i18n("Both subtitles"));
+	m_targetRadioButtons[Primary] = new QRadioButton(m_targetGroupBox);
+	m_targetRadioButtons[Primary]->setText(i18n("Primary subtitle"));
+	m_targetRadioButtons[Secondary] = new QRadioButton(m_targetGroupBox);
+	m_targetRadioButtons[Secondary]->setText(i18n("Translation subtitle"));
 
-	targetLayout->addWidget(m_targetRadioButtons[SubtitleLine::Both], 0, 0);
-	targetLayout->addWidget(m_targetRadioButtons[SubtitleLine::Primary], 1, 0);
-	targetLayout->addWidget(m_targetRadioButtons[SubtitleLine::Secondary], 2, 0);
+	targetLayout->addWidget(m_targetRadioButtons[Both], 0, 0);
+	targetLayout->addWidget(m_targetRadioButtons[Primary], 1, 0);
+	targetLayout->addWidget(m_targetRadioButtons[Secondary], 2, 0);
 
 	mainLayout->addWidget(m_targetGroupBox);
 	m_targetGroupBox->hide();
@@ -181,10 +181,10 @@ Replacer::onFindNext()
 			SubtitleLine *dataLine = m_iterator->current();
 
 			if(dataLine) {
-				if(!m_translationMode || m_targetRadioButtons[SubtitleLine::Primary]->isChecked()) {
+				if(!m_translationMode || m_targetRadioButtons[Primary]->isChecked()) {
 					m_feedingPrimary = true;
 					m_replace->setData(dataLine->primaryText().string());
-				} else if(m_targetRadioButtons[SubtitleLine::Secondary]->isChecked()) {
+				} else if(m_targetRadioButtons[Secondary]->isChecked()) {
 					m_feedingPrimary = false;
 					m_replace->setData(dataLine->secondaryText().string());
 				} else { // m_translationMode && m_targetRadioButtons[SubtitleLine::Both]->isChecked()
@@ -196,7 +196,7 @@ Replacer::onFindNext()
 
 		res = m_replace->replace();
 
-		if(res == KFind::NoMatch && (!m_translationMode || !m_targetRadioButtons[SubtitleLine::Both]->isChecked() || !m_feedingPrimary)) {
+		if(res == KFind::NoMatch && (!m_translationMode || !m_targetRadioButtons[Both]->isChecked() || !m_feedingPrimary)) {
 			if(backwards)
 				--(*m_iterator);
 			else

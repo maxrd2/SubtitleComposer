@@ -1,9 +1,8 @@
-#ifndef SCRIPTING_SUBTITLELINEMODULE_H
-#define SCRIPTING_SUBTITLELINEMODULE_H
+#ifndef SUBTITLETARGET_H
+#define SUBTITLETARGET_H
 
 /*
- * Copyright (C) 2007-2009 Sergio Pistone <sergio_pistone@yahoo.com.ar>
- * Copyright (C) 2010-2018 Mladen Milinkovic <max@smoothware.net>
+ * Copyright (C) 2020 Mladen Milinkovic <max@smoothware.net>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -21,26 +20,15 @@
  * Boston, MA 02110-1301, USA.
  */
 
-#include "core/subtitleline.h"
-#include "core/subtitletarget.h"
-
-#include <QObject>
-
 namespace SubtitleComposer {
-namespace Scripting {
-class SubtitleLineModule : public QObject
-{
-	Q_OBJECT
 
-	Q_ENUMS(TextTarget)
-	Q_ENUMS(ErrorFlag)
-
-public:
-	using TextTarget = SubtitleComposer::SubtitleTarget;
-	using ErrorFlag = SubtitleComposer::SubtitleLine::ErrorFlag;
-
-	SubtitleLineModule(QObject *parent = 0);
+enum SubtitleTarget {
+	Primary = 0,
+	Secondary,
+	Both,
+	SubtitleTargetSize
 };
+
 }
-}
-#endif
+
+#endif // SUBTITLETARGET_H

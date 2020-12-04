@@ -824,7 +824,7 @@ VobSubInputProcessDialog::onPrevImageClicked()
 
 	--m_frameCurrent;
 	if(m_subtitle->lastIndex() >= 0)
-		m_subtitle->removeLines(RangeList(Range(m_subtitle->lastIndex())), Subtitle::Both);
+		m_subtitle->removeLines(RangeList(Range(m_subtitle->lastIndex())), Both);
 
 	ui->progressBar->setValue((*m_frameCurrent)->index + 1);
 

@@ -415,7 +415,7 @@ SubtitleLine::breakText(const SString &t, int minLengthForBreak)
 }
 
 void
-SubtitleLine::breakText(int minLengthForBreak, TextTarget target)
+SubtitleLine::breakText(int minLengthForBreak, SubtitleTarget target)
 {
 	switch(target) {
 	case Primary:
@@ -433,7 +433,7 @@ SubtitleLine::breakText(int minLengthForBreak, TextTarget target)
 }
 
 void
-SubtitleLine::unbreakText(TextTarget target)
+SubtitleLine::unbreakText(SubtitleTarget target)
 {
 	switch(target) {
 	case Primary:
@@ -465,7 +465,7 @@ SubtitleLine::simplifyTextWhiteSpace(SString text)
 }
 
 void
-SubtitleLine::simplifyTextWhiteSpace(TextTarget target)
+SubtitleLine::simplifyTextWhiteSpace(SubtitleTarget target)
 {
 	switch(target) {
 	case Primary:
@@ -647,7 +647,7 @@ SubtitleLine::autoDuration(const QString &t, int msecsPerChar, int msecsPerWord,
 }
 
 Time
-SubtitleLine::autoDuration(int msecsPerChar, int msecsPerWord, int msecsPerLine, TextTarget calculationTarget)
+SubtitleLine::autoDuration(int msecsPerChar, int msecsPerWord, int msecsPerLine, SubtitleTarget calculationTarget)
 {
 	switch(calculationTarget) {
 	case Secondary:

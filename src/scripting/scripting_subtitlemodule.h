@@ -21,9 +21,9 @@
  * Boston, MA 02110-1301, USA.
  */
 
-#include <QObject>
+#include "core/subtitletarget.h"
 
-#include "core/subtitle.h"
+#include <QObject>
 
 namespace SubtitleComposer {
 namespace Scripting {
@@ -34,13 +34,9 @@ class SubtitleModule : public QObject
 	Q_ENUMS(TextTarget)
 
 public:
-	typedef enum {
-		Primary = SubtitleComposer::Subtitle::Primary,
-		Secondary = SubtitleComposer::Subtitle::Secondary,
-		Both = SubtitleComposer::Subtitle::Both,
-	} TextTarget;
-
 	SubtitleModule(QObject *parent = 0);
+
+	using TextTarget = SubtitleComposer::SubtitleTarget;
 
 public slots:
 	QObject * instance();

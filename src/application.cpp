@@ -1553,7 +1553,7 @@ Application::applyTranslation(RangeList ranges, bool primary, int inputLanguage,
 
 	ProgressDialog progressDialog(i18n("Translate"), i18n("Translating text (%1 to %2)...", inputLanguageName, outputLanguageName), true, m_mainWindow);
 
-	if(textTargets == SubtitleLine::Both) {
+	if(textTargets == Both) {
 		progressDialog.setDescription(primary
 									  ? i18n("Translating primary text (%1 to %2)...", inputLanguageName, outputLanguageName)
 									  : i18n("Translating secondary text (%1 to %2)...", inputLanguageName, outputLanguageName));
@@ -1615,12 +1615,12 @@ Application::translate()
 	static TranslateDialog *dlg = new TranslateDialog(m_mainWindow);
 
 	if(dlg->exec() == QDialog::Accepted) {
-		if(dlg->selectedTextsTarget() == Subtitle::Primary || dlg->selectedTextsTarget() == Subtitle::Both) {
+		if(dlg->selectedTextsTarget() == Primary || dlg->selectedTextsTarget() == Both) {
 			if(!applyTranslation(m_linesWidget->targetRanges(dlg->selectedLinesTarget()), true, dlg->inputLanguage(), dlg->outputLanguage(), dlg->selectedTextsTarget()))
 				return;
 		}
 
-		if(dlg->selectedTextsTarget() == Subtitle::Secondary || dlg->selectedTextsTarget() == Subtitle::Both) {
+		if(dlg->selectedTextsTarget() == Secondary || dlg->selectedTextsTarget() == Both) {
 			if(!applyTranslation(m_linesWidget->targetRanges(dlg->selectedLinesTarget()), false, dlg->inputLanguage(), dlg->outputLanguage(), dlg->selectedTextsTarget()))
 				return;
 		}

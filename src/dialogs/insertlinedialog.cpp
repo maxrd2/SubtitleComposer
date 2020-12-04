@@ -22,8 +22,8 @@
 
 using namespace SubtitleComposer;
 
-InsertLineDialog::InsertLineDialog(bool insertBefore, QWidget *parent) :
-	ActionWithTextsTargetDialog(insertBefore ? i18n("Insert Line Before Current") : i18n("Insert Line After Current"), i18n("Insert Into"), parent)
+InsertLineDialog::InsertLineDialog(bool insertBefore, QWidget *parent)
+	: ActionWithTextsTargetDialog(insertBefore ? i18n("Insert Line Before Current") : i18n("Insert Line After Current"), i18n("Insert Into"), parent)
 {
-	setNonTranslationModeTarget(Subtitle::Both);
+	setNonTranslationModeTarget(Both);
 }

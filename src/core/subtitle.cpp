@@ -396,7 +396,7 @@ Subtitle::insertLines(const QList<SubtitleLine *> &lines, int index)
 }
 
 SubtitleLine *
-Subtitle::insertNewLine(int index, bool insertAfter, TextTarget target)
+Subtitle::insertNewLine(int index, bool insertAfter, SubtitleTarget target)
 {
 	Q_ASSERT(index <= count());
 
@@ -468,7 +468,7 @@ Subtitle::insertNewLine(int index, bool insertAfter, TextTarget target)
 }
 
 void
-Subtitle::removeLines(const RangeList &r, TextTarget target)
+Subtitle::removeLines(const RangeList &r, SubtitleTarget target)
 {
 	if(m_lines.isEmpty())
 		return;
@@ -587,7 +587,7 @@ Subtitle::splitLines(const RangeList &ranges)
 	for(SubtitleIterator it(*this, ranges, true); it.current(); --it) {
 		SubtitleLine *line = it.current();
 
-		line->simplifyTextWhiteSpace(SubtitleLine::Both);
+		line->simplifyTextWhiteSpace(Both);
 
 		if(line->primaryText().count(QChar::LineFeed) || line->secondaryText().count(QChar::LineFeed)) {
 			hasMultipleLines = true;
@@ -631,9 +631,9 @@ Subtitle::splitLines(const RangeList &ranges)
 		int subLineIndex = it.index(),
 				splitLineIndex = 0;
 		SStringList::ConstIterator ptIt = primaryLines.constBegin(),
-                                ptEnd = primaryLines.constEnd(),
-                                stIt = secondaryLines.constBegin(),
-                                stEnd = secondaryLines.constEnd();
+				ptEnd = primaryLines.constEnd(),
+				stIt = secondaryLines.constBegin(),
+				stEnd = secondaryLines.constEnd();
 		for(; ptIt != ptEnd && stIt != stEnd; ++ptIt, ++stIt, ++subLineIndex, ++splitLineIndex) {
 			if(splitLineIndex) {
 				SubtitleLine *newLine = new SubtitleLine();
@@ -910,7 +910,7 @@ Subtitle::setMaximumDurations(const RangeList &ranges)
 }
 
 void
-Subtitle::setAutoDurations(const RangeList &ranges, int msecsPerChar, int msecsPerWord, int msecsPerLine, bool canOverlap, TextTarget calculationTarget)
+Subtitle::setAutoDurations(const RangeList &ranges, int msecsPerChar, int msecsPerWord, int msecsPerLine, bool canOverlap, SubtitleTarget calculationTarget)
 {
 	if(m_lines.isEmpty())
 		return;
@@ -926,8 +926,7 @@ Subtitle::setAutoDurations(const RangeList &ranges, int msecsPerChar, int msecsP
 		SubtitleLine *nextLine = it.current();
 
 		for(; line; ++it, line = nextLine, nextLine = it.current()) {
-			autoDuration = line->autoDuration(msecsPerChar, msecsPerWord, msecsPerLine, (SubtitleLine::TextTarget)
-											  calculationTarget);
+			autoDuration = line->autoDuration(msecsPerChar, msecsPerWord, msecsPerLine, calculationTarget);
 
 			if(!nextLine) // the last line doesn't have risk of overlapping
 				line->setDurationTime(autoDuration);
@@ -975,10 +974,10 @@ Subtitle::fixOverlappingLines(const RangeList &ranges, const Time &minInterval)
 }
 
 void
-Subtitle::fixPunctuation(const RangeList &ranges, bool spaces, bool quotes, bool engI, bool ellipsis, TextTarget target)
+Subtitle::fixPunctuation(const RangeList &ranges, bool spaces, bool quotes, bool engI, bool ellipsis, SubtitleTarget target)
 {
 	if(m_lines.isEmpty() || (!spaces && !quotes && !engI && !ellipsis)
-	   || target >= TextTargetSIZE)
+	   || target >= SubtitleTargetSize)
 		return;
 
 	beginCompositeAction(i18n("Fix Lines Punctuation"));
@@ -1023,9 +1022,9 @@ Subtitle::fixPunctuation(const RangeList &ranges, bool spaces, bool quotes, bool
 }
 
 void
-Subtitle::lowerCase(const RangeList &ranges, TextTarget target)
+Subtitle::lowerCase(const RangeList &ranges, SubtitleTarget target)
 {
-	if(m_lines.isEmpty() || target >= TextTargetSIZE)
+	if(m_lines.isEmpty() || target >= SubtitleTargetSize)
 		return;
 
 	beginCompositeAction(i18n("Lower Case"));
@@ -1054,9 +1053,9 @@ Subtitle::lowerCase(const RangeList &ranges, TextTarget target)
 }
 
 void
-Subtitle::upperCase(const RangeList &ranges, TextTarget target)
+Subtitle::upperCase(const RangeList &ranges, SubtitleTarget target)
 {
-	if(m_lines.isEmpty() || target >= TextTargetSIZE)
+	if(m_lines.isEmpty() || target >= SubtitleTargetSize)
 		return;
 
 	beginCompositeAction(i18n("Upper Case"));
@@ -1085,9 +1084,9 @@ Subtitle::upperCase(const RangeList &ranges, TextTarget target)
 }
 
 void
-Subtitle::titleCase(const RangeList &ranges, bool lowerFirst, TextTarget target)
+Subtitle::titleCase(const RangeList &ranges, bool lowerFirst, SubtitleTarget target)
 {
-	if(m_lines.isEmpty() || target >= TextTargetSIZE)
+	if(m_lines.isEmpty() || target >= SubtitleTargetSize)
 		return;
 
 	beginCompositeAction(i18n("Title Case"));
@@ -1117,9 +1116,9 @@ Subtitle::titleCase(const RangeList &ranges, bool lowerFirst, TextTarget target)
 }
 
 void
-Subtitle::sentenceCase(const RangeList &ranges, bool lowerFirst, TextTarget target)
+Subtitle::sentenceCase(const RangeList &ranges, bool lowerFirst, SubtitleTarget target)
 {
-	if(m_lines.isEmpty() || target >= TextTargetSIZE)
+	if(m_lines.isEmpty() || target >= SubtitleTargetSize)
 		return;
 
 	beginCompositeAction(i18n("Sentence Case"));
@@ -1163,30 +1162,30 @@ Subtitle::sentenceCase(const RangeList &ranges, bool lowerFirst, TextTarget targ
 }
 
 void
-Subtitle::breakLines(const RangeList &ranges, unsigned minLengthForLineBreak, TextTarget target)
+Subtitle::breakLines(const RangeList &ranges, unsigned minLengthForLineBreak, SubtitleTarget target)
 {
 	SubtitleCompositeActionExecutor executor(*this, i18n("Break Lines"));
 
 	for(SubtitleIterator it(*this, ranges); it.current(); ++it)
-		it.current()->breakText(minLengthForLineBreak, (SubtitleLine::TextTarget)target);
+		it.current()->breakText(minLengthForLineBreak, target);
 }
 
 void
-Subtitle::unbreakTexts(const RangeList &ranges, TextTarget target)
+Subtitle::unbreakTexts(const RangeList &ranges, SubtitleTarget target)
 {
 	SubtitleCompositeActionExecutor executor(*this, i18n("Unbreak Lines"));
 
 	for(SubtitleIterator it(*this, ranges); it.current(); ++it)
-		it.current()->unbreakText((SubtitleLine::TextTarget)target);
+		it.current()->unbreakText(target);
 }
 
 void
-Subtitle::simplifyTextWhiteSpace(const RangeList &ranges, TextTarget target)
+Subtitle::simplifyTextWhiteSpace(const RangeList &ranges, SubtitleTarget target)
 {
 	SubtitleCompositeActionExecutor executor(*this, i18n("Simplify Spaces"));
 
 	for(SubtitleIterator it(*this, ranges); it.current(); ++it)
-		it.current()->simplifyTextWhiteSpace((SubtitleLine::TextTarget)target);
+		it.current()->simplifyTextWhiteSpace(target);
 }
 
 void

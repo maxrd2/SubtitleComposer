@@ -40,7 +40,7 @@ ActionWithTargetDialog::ActionWithTargetDialog(const QString &title, QWidget *pa
 	m_selectionTargetOnlyMode(false),
 	m_selectionTargetWasChecked(false),
 	m_translationMode(false),
-	m_nonTranslationModeTarget(Subtitle::Primary)
+	m_nonTranslationModeTarget(Primary)
 {
 }
 
@@ -237,31 +237,31 @@ ActionWithTargetDialog::createTextTargetsButtonGroup()
 
 	m_textTargetsButtonGroup = new QButtonGroup(this);
 
-	for(int index = 0; index < Subtitle::TextTargetSIZE; ++index) {
+	for(int index = 0; index < SubtitleTargetSize; ++index) {
 		QRadioButton *radioButton = new QRadioButton(m_targetGroupBox);
 		m_textTargetsButtonGroup->addButton(radioButton, index);
 	}
 
-	m_textTargetsButtonGroup->button(SubtitleLine::Both)->setText(i18n("Both subtitles"));
-	m_targetLayout->addWidget(m_textTargetsButtonGroup->button(SubtitleLine::Both), 0, 1);
+	m_textTargetsButtonGroup->button(Both)->setText(i18n("Both subtitles"));
+	m_targetLayout->addWidget(m_textTargetsButtonGroup->button(Both), 0, 1);
 
-	m_textTargetsButtonGroup->button(SubtitleLine::Primary)->setText(i18n("Primary subtitle"));
-	m_targetLayout->addWidget(m_textTargetsButtonGroup->button(SubtitleLine::Primary), 1, 1);
+	m_textTargetsButtonGroup->button(Primary)->setText(i18n("Primary subtitle"));
+	m_targetLayout->addWidget(m_textTargetsButtonGroup->button(Primary), 1, 1);
 
-	m_textTargetsButtonGroup->button(SubtitleLine::Secondary)->setText(i18n("Translation subtitle"));
-	m_targetLayout->addWidget(m_textTargetsButtonGroup->button(SubtitleLine::Secondary), 2, 1);
+	m_textTargetsButtonGroup->button(Secondary)->setText(i18n("Translation subtitle"));
+	m_targetLayout->addWidget(m_textTargetsButtonGroup->button(Secondary), 2, 1);
 
 	_setTranslationMode(m_translationMode, true);
 }
 
-Subtitle::TextTarget
+SubtitleTarget
 ActionWithTargetDialog::nonTranslationModeTarget() const
 {
 	return m_nonTranslationModeTarget;
 }
 
 void
-ActionWithTargetDialog::setNonTranslationModeTarget(Subtitle::TextTarget target)
+ActionWithTargetDialog::setNonTranslationModeTarget(SubtitleTarget target)
 {
 	if(m_nonTranslationModeTarget != target) {
 		if(!m_translationMode && m_textTargetsButtonGroup) {
@@ -273,31 +273,31 @@ ActionWithTargetDialog::setNonTranslationModeTarget(Subtitle::TextTarget target)
 	}
 }
 
-Subtitle::TextTarget
+SubtitleTarget
 ActionWithTargetDialog::selectedTextsTarget() const
 {
 	if(!m_textTargetsButtonGroup) // texts target was not created
-		return Subtitle::TextTargetSIZE;
+		return SubtitleTargetSize;
 
 	int checkedId = m_textTargetsButtonGroup->checkedId();
-	return checkedId == -1 ? Subtitle::TextTargetSIZE : (Subtitle::TextTarget)checkedId;
+	return checkedId == -1 ? SubtitleTargetSize : SubtitleTarget(checkedId);
 }
 
 void
-ActionWithTargetDialog::setSelectedTextsTarget(Subtitle::TextTarget target)
+ActionWithTargetDialog::setSelectedTextsTarget(SubtitleTarget target)
 {
 	if(m_textTargetsButtonGroup && m_textTargetsButtonGroup->button(target))
 		m_textTargetsButtonGroup->button(target)->setChecked(true);
 }
 
 bool
-ActionWithTargetDialog::isTextsTargetEnabled(Subtitle::TextTarget target) const
+ActionWithTargetDialog::isTextsTargetEnabled(SubtitleTarget target) const
 {
 	return m_textTargetsButtonGroup && m_textTargetsButtonGroup->button(target) && m_textTargetsButtonGroup->button(target)->isEnabled();
 }
 
 void
-ActionWithTargetDialog::setTextsTargetEnabled(Subtitle::TextTarget target, bool enabled)
+ActionWithTargetDialog::setTextsTargetEnabled(SubtitleTarget target, bool enabled)
 {
 	if(m_textTargetsButtonGroup && m_textTargetsButtonGroup->button(target))
 		m_textTargetsButtonGroup->button(target)->setEnabled(enabled);

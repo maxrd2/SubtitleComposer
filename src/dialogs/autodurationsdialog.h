@@ -39,7 +39,7 @@ public:
 
 	bool preventOverlap() const;
 
-	Subtitle::TextTarget calculationMode() const;
+	SubtitleTarget calculationMode() const;
 
 	bool translationMode() const;
 	void setTranslationMode(bool enabled) override;
