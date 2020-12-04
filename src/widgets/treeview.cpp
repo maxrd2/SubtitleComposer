@@ -50,28 +50,24 @@ TreeView::~TreeView()
 {}
 
 void
-TreeView::setModel(QAbstractItemModel *model)
+TreeView::setModel(QAbstractItemModel *newModel)
 {
-	if(this->model()) {
-		if(this->model()->metaObject()->indexOfSignal("dataChanged()") != -1)
-			disconnect(this->model(), SIGNAL(dataChanged()), this->viewport(), SLOT(update()));
-
-		disconnect(this->model(), &QAbstractItemModel::rowsAboutToBeInserted, this, &TreeView::onRowsAboutToBeInserted);
-		disconnect(this->model(), &QAbstractItemModel::rowsAboutToBeRemoved, this, &TreeView::onRowsAboutToBeRemoved);
+	if(model()) {
+		disconnect(model(), &QAbstractItemModel::dataChanged, viewport(), QOverload<>::of(&QWidget::update));
+		disconnect(model(), &QAbstractItemModel::rowsAboutToBeInserted, this, &TreeView::onRowsAboutToBeInserted);
+		disconnect(model(), &QAbstractItemModel::rowsAboutToBeRemoved, this, &TreeView::onRowsAboutToBeRemoved);
 	}
 
-	QTreeView::setModel(model);
+	QTreeView::setModel(newModel);
 
-	if(model) {
-		m_currentModelRows = model->rowCount();
-
-		if(model->metaObject()->indexOfSignal("dataChanged()") != -1)
-			connect(model, SIGNAL(dataChanged()), this->viewport(), SLOT(update()));
-
-		connect(this->model(), &QAbstractItemModel::rowsAboutToBeInserted, this, &TreeView::onRowsAboutToBeInserted);
-		connect(this->model(), &QAbstractItemModel::rowsAboutToBeRemoved, this, &TreeView::onRowsAboutToBeRemoved);
-	} else
+	if(newModel) {
+		m_currentModelRows = newModel->rowCount();
+		connect(newModel, &QAbstractItemModel::dataChanged, viewport(), QOverload<>::of(&QWidget::update));
+		connect(newModel, &QAbstractItemModel::rowsAboutToBeInserted, this, &TreeView::onRowsAboutToBeInserted);
+		connect(newModel, &QAbstractItemModel::rowsAboutToBeRemoved, this, &TreeView::onRowsAboutToBeRemoved);
+	} else {
 		m_currentModelRows = -1;
+	}
 }
 
 void

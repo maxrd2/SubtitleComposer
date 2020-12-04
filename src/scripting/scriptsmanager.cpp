@@ -118,12 +118,12 @@ ScriptsManager::ScriptsManager(QObject *parent)
 	scriptsView->setRootIsDecorated(false);
 	scriptsView->setSortingEnabled(false);
 
-	connect(btnCreate, SIGNAL(clicked()), this, SLOT(createScript()));
-	connect(btnAdd, SIGNAL(clicked()), this, SLOT(addScript()));
-	connect(btnRemove, SIGNAL(clicked()), this, SLOT(removeScript()));
-	connect(btnEdit, SIGNAL(clicked()), this, SLOT(editScript()));
-	connect(btnRun, SIGNAL(clicked()), this, SLOT(runScript()));
-	connect(btnRefresh, &QAbstractButton::clicked, this, &ScriptsManager::reloadScripts);
+	connect(btnCreate, &QPushButton::clicked, [this](){ createScript(); });
+	connect(btnAdd, &QPushButton::clicked, [this](){ addScript(); });
+	connect(btnRemove, &QPushButton::clicked, [this](){ removeScript(); });
+	connect(btnEdit, &QPushButton::clicked, [this](){ editScript(); });
+	connect(btnRun, &QPushButton::clicked, [this](){ runScript(); });
+	connect(btnRefresh, &QAbstractButton::clicked, [this](){ reloadScripts(); });
 
 //	m_dialog->resize(350, 10);
 }

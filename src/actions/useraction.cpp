@@ -19,6 +19,7 @@
  */
 
 #include "useraction.h"
+#include "application.h"
 #include "core/subtitle.h"
 #include "videoplayer/videoplayer.h"
 #include "gui/lineswidget.h"
@@ -37,7 +38,7 @@ UserAction::UserAction(QAction *action, int enableFlags) :
 {
 	updateEnabledState();
 
-	connect(action, SIGNAL(changed()), this, SLOT(onActionChanged()));
+	connect(action, &QAction::changed, this, &UserAction::onActionChanged);
 }
 
 void
@@ -150,13 +151,13 @@ void
 UserActionManager::setSubtitle(Subtitle *subtitle)
 {
 	if(m_subtitle) {
-		disconnect(m_subtitle, SIGNAL(linesRemoved(int, int)), this, SLOT(onSubtitleLinesChanged()));
-		disconnect(m_subtitle, SIGNAL(linesInserted(int, int)), this, SLOT(onSubtitleLinesChanged()));
+		disconnect(m_subtitle, &Subtitle::linesRemoved, this, &UserActionManager::onSubtitleLinesChanged);
+		disconnect(m_subtitle, &Subtitle::linesInserted, this, &UserActionManager::onSubtitleLinesChanged);
 
-		disconnect(m_subtitle, SIGNAL(primaryDirtyStateChanged(bool)), this, SLOT(onPrimaryDirtyStateChanged(bool)));
-		disconnect(m_subtitle, SIGNAL(secondaryDirtyStateChanged(bool)), this, SLOT(onSecondaryDirtyStateChanged(bool)));
+		disconnect(m_subtitle, &Subtitle::primaryDirtyStateChanged, this, &UserActionManager::onPrimaryDirtyStateChanged);
+		disconnect(m_subtitle, &Subtitle::secondaryDirtyStateChanged, this, &UserActionManager::onSecondaryDirtyStateChanged);
 
-		disconnect(m_subtitle, SIGNAL(lineAnchorChanged(const SubtitleLine*,bool)), this, SLOT(onSubtitleAnchorsChanged()));
+		disconnect(m_subtitle, &Subtitle::lineAnchorChanged, this, &UserActionManager::onSubtitleAnchorsChanged);
 	}
 
 	m_subtitle = subtitle;
@@ -164,13 +165,13 @@ UserActionManager::setSubtitle(Subtitle *subtitle)
 	int newContextFlags = m_contextFlags & ~UserAction::SubtitleMask;
 
 	if(m_subtitle) {
-		connect(m_subtitle, SIGNAL(linesRemoved(int, int)), this, SLOT(onSubtitleLinesChanged()));
-		connect(m_subtitle, SIGNAL(linesInserted(int, int)), this, SLOT(onSubtitleLinesChanged()));
+		connect(m_subtitle, &Subtitle::linesRemoved, this, &UserActionManager::onSubtitleLinesChanged);
+		connect(m_subtitle, &Subtitle::linesInserted, this, &UserActionManager::onSubtitleLinesChanged);
 
-		connect(m_subtitle, SIGNAL(primaryDirtyStateChanged(bool)), this, SLOT(onPrimaryDirtyStateChanged(bool)));
-		connect(m_subtitle, SIGNAL(secondaryDirtyStateChanged(bool)), this, SLOT(onSecondaryDirtyStateChanged(bool)));
+		connect(m_subtitle, &Subtitle::primaryDirtyStateChanged, this, &UserActionManager::onPrimaryDirtyStateChanged);
+		connect(m_subtitle, &Subtitle::secondaryDirtyStateChanged, this, &UserActionManager::onSecondaryDirtyStateChanged);
 
-		connect(m_subtitle, SIGNAL(lineAnchorChanged(const SubtitleLine*,bool)), this, SLOT(onSubtitleAnchorsChanged()));
+		connect(m_subtitle, &Subtitle::lineAnchorChanged, this, &UserActionManager::onSubtitleAnchorsChanged);
 
 		newContextFlags |= UserAction::SubOpened;
 
@@ -258,12 +259,12 @@ void
 UserActionManager::setLinesWidget(LinesWidget *linesWidget)
 {
 	if(m_linesWidget)
-		disconnect(m_linesWidget->selectionModel(), SIGNAL(selectionChanged(const QItemSelection &, const QItemSelection &)), this, SLOT(onLinesWidgetSelectionChanged()));
+		disconnect(m_linesWidget->selectionModel(), &QItemSelectionModel::selectionChanged, this, &UserActionManager::onLinesWidgetSelectionChanged);
 
 	m_linesWidget = linesWidget;
 
 	if(m_linesWidget) {
-		connect(m_linesWidget->selectionModel(), SIGNAL(selectionChanged(const QItemSelection &, const QItemSelection &)), this, SLOT(onLinesWidgetSelectionChanged()));
+		connect(m_linesWidget->selectionModel(), &QItemSelectionModel::selectionChanged, this, &UserActionManager::onLinesWidgetSelectionChanged);
 		onLinesWidgetSelectionChanged();
 	}
 }
@@ -295,11 +296,11 @@ void
 UserActionManager::setPlayer(VideoPlayer *player)
 {
 	if(m_player) {
-		disconnect(m_player, SIGNAL(fileOpened(const QString &)), this, SLOT(onPlayerStateChanged()));
-		disconnect(m_player, SIGNAL(fileClosed()), this, SLOT(onPlayerStateChanged()));
-		disconnect(m_player, SIGNAL(playing()), this, SLOT(onPlayerStateChanged()));
-		disconnect(m_player, SIGNAL(paused()), this, SLOT(onPlayerStateChanged()));
-		disconnect(m_player, SIGNAL(stopped()), this, SLOT(onPlayerStateChanged()));
+		disconnect(m_player, &VideoPlayer::fileOpened, this, &UserActionManager::onPlayerStateChanged);
+		disconnect(m_player, &VideoPlayer::fileClosed, this, &UserActionManager::onPlayerStateChanged);
+		disconnect(m_player, &VideoPlayer::playing, this, &UserActionManager::onPlayerStateChanged);
+		disconnect(m_player, &VideoPlayer::paused, this, &UserActionManager::onPlayerStateChanged);
+		disconnect(m_player, &VideoPlayer::stopped, this, &UserActionManager::onPlayerStateChanged);
 	}
 
 	m_player = player;
@@ -307,11 +308,11 @@ UserActionManager::setPlayer(VideoPlayer *player)
 	int newContextFlags = m_contextFlags & ~UserAction::VideoMask;
 
 	if(m_player) {
-		connect(m_player, SIGNAL(fileOpened(const QString &)), this, SLOT(onPlayerStateChanged()));
-		connect(m_player, SIGNAL(fileClosed()), this, SLOT(onPlayerStateChanged()));
-		connect(m_player, SIGNAL(playing()), this, SLOT(onPlayerStateChanged()));
-		connect(m_player, SIGNAL(paused()), this, SLOT(onPlayerStateChanged()));
-		connect(m_player, SIGNAL(stopped()), this, SLOT(onPlayerStateChanged()));
+		connect(m_player, &VideoPlayer::fileOpened, this, &UserActionManager::onPlayerStateChanged);
+		connect(m_player, &VideoPlayer::fileClosed, this, &UserActionManager::onPlayerStateChanged);
+		connect(m_player, &VideoPlayer::playing, this, &UserActionManager::onPlayerStateChanged);
+		connect(m_player, &VideoPlayer::paused, this, &UserActionManager::onPlayerStateChanged);
+		connect(m_player, &VideoPlayer::stopped, this, &UserActionManager::onPlayerStateChanged);
 
 		int state = m_player->state();
 		if(state > VideoPlayer::Opening) {

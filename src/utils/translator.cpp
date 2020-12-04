@@ -44,8 +44,8 @@ Translator::Translator(QObject *parent) :
 	m_outputLanguage(Language::INVALID),
 	m_lastReceivedChunk(0)
 {
-	connect(this, SIGNAL(finished(const QString &)), this, SIGNAL(finished()));
-	connect(this, SIGNAL(finishedWithError(const QString &)), this, SIGNAL(finished()));
+	connect(this, QOverload<const QString &>::of(&Translator::finished), this, QOverload<>::of(&Translator::finished));
+	connect(this, QOverload<const QString &>::of(&Translator::finishedWithError), this, QOverload<>::of(&Translator::finished));
 }
 
 Translator::~Translator()
@@ -110,7 +110,7 @@ Translator::syncTranslate(const QString &text, Language::Value inputLang, Langua
 {
 	if(progressDialog) {
 		connect(this, &Translator::progress, progressDialog, &ProgressDialog::setValue);
-		connect(progressDialog, SIGNAL(cancelClicked()), this, SLOT(abort()));
+		connect(progressDialog, &ProgressDialog::rejected, this, &Translator::abort);
 
 		progressDialog->setMinimum(0);
 		progressDialog->setMaximum(100);
@@ -226,11 +226,10 @@ Translator::startChunkDownload(int chunkNumber)
 
 	m_currentTransferJob = KIO::http_post(QUrl("https://translate.google.com/translate_t"), postData, KIO::HideProgressInfo);
 
-//  m_currentTransferJob->addMetaData( "content-type", "Content-Type: multipart/form-data; boundary=" MULTIPART_DATA_BOUNDARY );
 	m_currentTransferJob->addMetaData("content-type", "Content-Type: application/x-www-form-urlencoded");
 	m_currentTransferJob->setTotalSize(postData.length());
 
-	connect(m_currentTransferJob, SIGNAL(percent(KJob *, unsigned long)), this, SLOT(onTransferJobProgress(KJob *, unsigned long)));
+	connect(m_currentTransferJob, QOverload<KJob *, unsigned long>::of(&KIO::TransferJob::percent), this, &Translator::onTransferJobProgress);
 	connect(m_currentTransferJob, &KJob::result, this, &Translator::onTransferJobResult);
 	connect(m_currentTransferJob, &KIO::TransferJob::data, this, &Translator::onTransferJobData);
 

@@ -55,7 +55,11 @@ ChangeTextsCaseDialog::ChangeTextsCaseDialog(QWidget *parent) :
 	m_lowerFirstCheckBox->setText(i18n("Convert to lower case first"));
 	m_lowerFirstCheckBox->setEnabled(false);
 
-	connect(caseButtonGroup, SIGNAL(buttonClicked(int)), this, SLOT(onCaseButtonGroupClicked(int)));
+#if QT_VERSION < QT_VERSION_CHECK(5, 15, 0)
+	connect(caseButtonGroup, QOverload<int>::of(&QButtonGroup::buttonClicked), this, &ChangeTextsCaseDialog::onCaseButtonGroupClicked);
+#else
+	connect(caseButtonGroup, &QButtonGroup::idClicked, this, &ChangeTextsCaseDialog::onCaseButtonGroupClicked);
+#endif
 
 	createLineTargetsButtonGroup();
 	createTextTargetsButtonGroup();

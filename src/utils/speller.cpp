@@ -27,6 +27,7 @@
 #include <KMessageBox>
 #include <KLocalizedString>
 
+#include <sonnet_version.h>
 #include <sonnet/dialog.h>
 #include <sonnet/backgroundchecker.h>
 
@@ -109,7 +110,11 @@ Speller::spellCheck(int currentIndex)
 	if(!m_sonnetDialog) {
 		m_sonnetDialog = new Sonnet::Dialog(new Sonnet::BackgroundChecker(this), parentWidget());
 
-		connect(m_sonnetDialog, SIGNAL(done(const QString &)), this, SLOT(onBufferDone()));
+#if SONNET_VERSION < QT_VERSION_CHECK(5, 65, 0)
+		connect(m_sonnetDialog, QOverload<const QString &>::of(&Sonnet::Dialog::done), this, &Speller::onBufferDone);
+#else
+		connect(m_sonnetDialog, &Sonnet::Dialog::spellCheckDone, this, &Speller::onBufferDone);
+#endif
 
 		connect(m_sonnetDialog, &Sonnet::Dialog::replace, this, &Speller::onCorrected);
 

@@ -156,7 +156,7 @@ Finder::find(const RangeList &selectionRanges, int currentIndex, const QString &
 	m_find = new KFind(m_dialog->pattern(), m_dialog->options(), 0);
 	m_find->closeFindNextDialog();
 
-	connect(m_find, SIGNAL(highlight(const QString &, int, int)), this, SLOT(onHighlight(const QString &, int, int)));
+	connect(m_find, QOverload<const QString &, int, int>::of(&KFind::highlight), this, &Finder::onHighlight);
 
 	m_iterator = new SubtitleIterator(*m_subtitle, m_dialog->options() & KFind::SelectedText ? selectionRanges : Range::full());
 	if(m_iterator->index() == SubtitleIterator::Invalid) {
@@ -312,7 +312,7 @@ Finder::onIteratorSynchronized(int firstIndex, int lastIndex, bool inserted)
 			delete m_find;
 			m_find = new KFind(pattern, options, 0);
 			m_find->closeFindNextDialog();
-			connect(m_find, SIGNAL(highlight(const QString &, int, int)), this, SLOT(onHighlight(const QString &, int, int)));
+			connect(m_find, QOverload<const QString &, int, int>::of(&KFind::highlight), this, &Finder::onHighlight);
 		}
 
 		if(m_allSearchedIndex > lastIndex)

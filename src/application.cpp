@@ -183,21 +183,36 @@ Application::init()
 	connect(m_player, &VideoPlayer::activeAudioStreamChanged, this, &Application::onPlayerActiveAudioStreamChanged);
 	connect(m_player, &VideoPlayer::muteChanged, this, &Application::onPlayerMuteChanged);
 
-	const QList<const QObject *> subListeners = {
-		actionManager, m_mainWindow, m_playerWidget, m_linesWidget, m_curLineWidget, m_finder, m_replacer, m_errorFinder, m_speller,
-		m_errorTracker, m_scriptsManager, m_mainWindow->m_waveformWidget, m_speechProcessor
-	};
-	for(auto obj: subListeners) {
-		connect(this, SIGNAL(subtitleOpened(Subtitle *)), obj, SLOT(setSubtitle(Subtitle *)));
-		connect(this, SIGNAL(subtitleClosed()), obj, SLOT(setSubtitle()));
-	}
+#define CONNECT_SUB(c, x) \
+	connect(this, &Application::subtitleOpened, x, &c::setSubtitle); \
+	connect(this, &Application::subtitleClosed, x, [this](){ x->setSubtitle(nullptr); });
 
-	const QList<const QObject *> transListeners = {
-		actionManager, m_playerWidget, m_mainWindow->m_waveformWidget, m_linesWidget, m_curLineWidget, m_finder, m_replacer,
-		m_errorFinder, m_speller
-	};
-	for(auto obj: transListeners)
-		connect(this, SIGNAL(translationModeChanged(bool)), obj, SLOT(setTranslationMode(bool)));
+	CONNECT_SUB(UserActionManager, UserActionManager::instance());
+	CONNECT_SUB(MainWindow, m_mainWindow);
+	CONNECT_SUB(PlayerWidget, m_playerWidget);
+	CONNECT_SUB(LinesWidget, m_linesWidget);
+	CONNECT_SUB(CurrentLineWidget, m_curLineWidget);
+	CONNECT_SUB(Finder, m_finder);
+	CONNECT_SUB(Replacer, m_replacer);
+	CONNECT_SUB(ErrorFinder, m_errorFinder);
+	CONNECT_SUB(Speller, m_speller);
+	CONNECT_SUB(ErrorTracker, m_errorTracker);
+	CONNECT_SUB(ScriptsManager, m_scriptsManager);
+	CONNECT_SUB(WaveformWidget, m_mainWindow->m_waveformWidget);
+	CONNECT_SUB(SpeechProcessor, m_speechProcessor);
+
+#define CONNECT_TRANS(c, x) \
+	connect(this, &Application::translationModeChanged, x, &c::setTranslationMode);
+
+	CONNECT_TRANS(UserActionManager, UserActionManager::instance());
+	CONNECT_TRANS(PlayerWidget, m_playerWidget);
+	CONNECT_TRANS(WaveformWidget, m_mainWindow->m_waveformWidget);
+	CONNECT_TRANS(LinesWidget, m_linesWidget);
+	CONNECT_TRANS(CurrentLineWidget, m_curLineWidget);
+	CONNECT_TRANS(Finder, m_finder);
+	CONNECT_TRANS(Replacer, m_replacer);
+	CONNECT_TRANS(ErrorFinder, m_errorFinder);
+	CONNECT_TRANS(Speller, m_speller);
 
 	connect(this, &Application::fullScreenModeChanged, actionManager, &UserActionManager::setFullScreenMode);
 
@@ -212,7 +227,7 @@ Application::init()
 
 	connect(m_finder, &Finder::found, this, &Application::onHighlightLine);
 	connect(m_replacer, &Replacer::found, this, &Application::onHighlightLine);
-	connect(m_errorFinder, SIGNAL(found(SubtitleLine *)), this, SLOT(onHighlightLine(SubtitleLine *)));
+	connect(m_errorFinder, &ErrorFinder::found, [this](SubtitleLine *l){ onHighlightLine(l); });
 	connect(m_speller, &Speller::misspelled, this, &Application::onHighlightLine);
 
 	connect(m_textDemux, &TextDemux::onError, [&](const QString &message){ KMessageBox::sorry(m_mainWindow, message); });
@@ -233,7 +248,7 @@ Application::init()
 	m_mainWindow->findChild<QStatusBar *>(QString(), Qt::FindDirectChildrenOnly)->show();
 	m_mainWindow->findChild<QDockWidget *>(QStringLiteral("player_dock"), Qt::FindDirectChildrenOnly)->show();
 	m_mainWindow->findChild<QDockWidget *>(QStringLiteral("waveform_dock"), Qt::FindDirectChildrenOnly)->show();
-    foreach(KToolBar *toolbar, m_mainWindow->toolBars())
+	foreach(KToolBar *toolbar, m_mainWindow->toolBars())
 		toolbar->show();
 #endif
 

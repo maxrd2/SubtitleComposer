@@ -282,8 +282,8 @@ Application::processSubtitleOpened(QTextCodec *codec, const QString &subtitleFor
 	m_reopenSubtitleAsAction->setCurrentCodec(codec);
 	m_saveSubtitleAsAction->setCurrentCodec(codec);
 
-	connect(m_subtitle, SIGNAL(primaryDirtyStateChanged(bool)), this, SLOT(updateTitle()));
-	connect(m_subtitle, SIGNAL(secondaryDirtyStateChanged(bool)), this, SLOT(updateTitle()));
+	connect(m_subtitle, &Subtitle::primaryDirtyStateChanged, this, &Application::updateTitle);
+	connect(m_subtitle, &Subtitle::secondaryDirtyStateChanged, this, &Application::updateTitle);
 	updateTitle();
 
 	m_labSubFormat->setText(i18n("Format: %1", m_subtitleFormat));
