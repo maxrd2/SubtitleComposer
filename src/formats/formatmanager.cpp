@@ -21,7 +21,7 @@
 #include "formatmanager.h"
 #include "inputformat.h"
 #include "outputformat.h"
-#include "gui/lineswidget.h"
+#include "gui/treeview/lineswidget.h"
 #include "application.h"
 #include "helpers/fileloadhelper.h"
 #include "helpers/filesavehelper.h"

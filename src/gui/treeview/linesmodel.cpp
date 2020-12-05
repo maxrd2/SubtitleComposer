@@ -19,8 +19,8 @@
  */
 
 #include "core/subtitle.h"
-#include "gui/linesmodel.h"
-#include "gui/lineswidget.h"
+#include "gui/treeview/linesmodel.h"
+#include "gui/treeview/lineswidget.h"
 
 #include <QFont>
 #include <QFontMetrics>

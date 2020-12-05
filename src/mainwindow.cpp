@@ -21,7 +21,7 @@
 #include "mainwindow.h"
 #include "application.h"
 #include "gui/playerwidget.h"
-#include "gui/lineswidget.h"
+#include "gui/treeview/lineswidget.h"
 #include "gui/currentlinewidget.h"
 #include "videoplayer/videoplayer.h"
 #include "gui/waveformwidget.h"

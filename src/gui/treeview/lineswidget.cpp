@@ -22,8 +22,8 @@
 #include "application.h"
 #include "actions/useractionnames.h"
 #include "dialogs/actionwithtargetdialog.h"
-#include "gui/linesitemdelegate.h"
-#include "gui/linesselectionmodel.h"
+#include "gui/treeview/linesitemdelegate.h"
+#include "gui/treeview/linesselectionmodel.h"
 
 #include <QHeaderView>
 #include <QMenu>

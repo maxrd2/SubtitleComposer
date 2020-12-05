@@ -23,7 +23,7 @@
 
 #include "core/range.h"
 #include "core/rangelist.h"
-#include "core/undoaction.h"
+#include "core/undo/undoaction.h"
 #include "core/subtitle.h"
 
 #include <QString>

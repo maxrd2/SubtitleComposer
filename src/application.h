@@ -24,7 +24,7 @@
 #include "mainwindow.h"
 #include "core/subtitle.h"
 #include "formats/format.h"
-#include "gui/lineswidget.h"
+#include "gui/treeview/lineswidget.h"
 #include "scconfig.h"
 
 #include <QApplication>

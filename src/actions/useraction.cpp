@@ -22,7 +22,7 @@
 #include "application.h"
 #include "core/subtitle.h"
 #include "videoplayer/videoplayer.h"
-#include "gui/lineswidget.h"
+#include "gui/treeview/lineswidget.h"
 #include "gui/currentlinewidget.h"
 
 #include <QApplication>

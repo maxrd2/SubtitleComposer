@@ -38,8 +38,8 @@ public:
 public slots:
 	void setCurrentIndex(const QModelIndex &index, QItemSelectionModel::SelectionFlags command) override;
 	void select(const QModelIndex &index, QItemSelectionModel::SelectionFlags command) override;
-    void select(const QItemSelection &selection, QItemSelectionModel::SelectionFlags command) override;
-    void clear() override;
+	void select(const QItemSelection &selection, QItemSelectionModel::SelectionFlags command) override;
+	void clear() override;
 	void reset() override;
 
 private:

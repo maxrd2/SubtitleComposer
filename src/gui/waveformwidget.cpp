@@ -23,7 +23,7 @@
 #include "application.h"
 #include "actions/useraction.h"
 #include "actions/useractionnames.h"
-#include "lineswidget.h"
+#include "gui/treeview/lineswidget.h"
 
 #include <QRect>
 #include <QPainter>

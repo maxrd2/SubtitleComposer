@@ -17,7 +17,7 @@
  * Boston, MA 02110-1301, USA.
  */
 
-#include "core/undoaction.h"
+#include "core/undo/undoaction.h"
 #include "core/subtitle.h"
 
 using namespace SubtitleComposer;

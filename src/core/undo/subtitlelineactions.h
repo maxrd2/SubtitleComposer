@@ -21,7 +21,7 @@
  * Boston, MA 02110-1301, USA.
  */
 
-#include "core/undoaction.h"
+#include "core/undo/undoaction.h"
 #include "core/time.h"
 #include "core/sstring.h"
 #include "core/subtitleline.h"

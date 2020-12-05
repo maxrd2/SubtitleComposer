@@ -18,9 +18,9 @@
  */
 
 #include "application.h"
-#include "core/undostack.h"
-#include "gui/lineswidget.h"
-#include "gui/linesmodel.h"
+#include "core/undo/undostack.h"
+#include "gui/treeview/lineswidget.h"
+#include "gui/treeview/linesmodel.h"
 
 using namespace SubtitleComposer;
 

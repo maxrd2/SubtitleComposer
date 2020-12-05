@@ -46,14 +46,14 @@ public:
 	virtual ~UndoStack();
 
 	void clear();
-    void push(QUndoCommand *cmd);
+	void push(QUndoCommand *cmd);
 
 	void beginMacro(const QString &text);
-    void endMacro();
+	void endMacro();
 
 public slots:
-    void undo();
-    void redo();
+	void undo();
+	void redo();
 
 private:
 	void levelIncrease(int idx);

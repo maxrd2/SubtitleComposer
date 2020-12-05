@@ -21,13 +21,13 @@
 #include "core/subtitle.h"
 #include "core/subtitleline.h"
 #include "core/subtitleiterator.h"
-#include "core/subtitleactions.h"
-#include "core/subtitlelineactions.h"
-#include "core/undostack.h"
+#include "core/undo/subtitleactions.h"
+#include "core/undo/subtitlelineactions.h"
+#include "core/undo/undostack.h"
 #include "helpers/objectref.h"
 #include "scconfig.h"
 #include "application.h"
-#include "gui/lineswidget.h"
+#include "gui/treeview/lineswidget.h"
 
 #include <KLocalizedString>
 

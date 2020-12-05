@@ -19,9 +19,9 @@
  */
 
 #include "core/subtitleline.h"
-#include "core/subtitlelineactions.h"
 #include "core/subtitle.h"
-#include "core/subtitleactions.h"
+#include "core/undo/subtitlelineactions.h"
+#include "core/undo/subtitleactions.h"
 #include "scconfig.h"
 
 #include <QRegExp>

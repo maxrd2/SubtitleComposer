@@ -31,7 +31,7 @@
 #include "dialogs/textinputdialog.h"
 #include "helpers/fileloadhelper.h"
 #include "helpers/filetrasher.h"
-#include "widgets/treeview.h"
+#include "gui/treeview/treeview.h"
 
 #include <QStringListModel>
 #include <QStandardPaths>

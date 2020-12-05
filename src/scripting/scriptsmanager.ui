@@ -166,7 +166,7 @@
   <customwidget>
    <class>TreeView</class>
    <extends>QTreeView</extends>
-   <header>treeview.h</header>
+   <header>gui/treeview/treeview.h</header>
   </customwidget>
  </customwidgets>
  <resources/>

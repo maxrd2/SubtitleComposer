@@ -21,10 +21,10 @@
  * Boston, MA 02110-1301, USA.
  */
 
-#include "core/undoaction.h"
 #include "core/sstring.h"
 #include "core/time.h"
 #include "core/formatdata.h"
+#include "core/undo/undoaction.h"
 #include "helpers/objectref.h"
 
 #include <QObject>

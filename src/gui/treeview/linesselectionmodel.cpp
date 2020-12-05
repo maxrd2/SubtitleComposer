@@ -21,7 +21,7 @@
 #include "linesselectionmodel.h"
 #include "core/subtitle.h"
 #include "core/subtitleline.h"
-#include "gui/linesmodel.h"
+#include "gui/treeview/linesmodel.h"
 
 #include <QDebug>
 #include <QSignalBlocker>
@@ -94,9 +94,9 @@ LinesSelectionModel::clear()
 void
 LinesSelectionModel::reset()
 {
-    m_resetInProgress = true;
+	m_resetInProgress = true;
 	QItemSelectionModel::reset();
-    m_resetInProgress = false;
+	m_resetInProgress = false;
 
 	if(m_currentLine)
 		QItemSelectionModel::setCurrentIndex(model()->index(m_currentLine->index(), 0), QItemSelectionModel::Current);

@@ -25,7 +25,7 @@
 #include "speechprocessor.h"
 #include "speechplugin.h"
 #include "application.h"
-#include "gui/lineswidget.h"
+#include "gui/treeview/lineswidget.h"
 
 #include <QLabel>
 #include <QProgressBar>

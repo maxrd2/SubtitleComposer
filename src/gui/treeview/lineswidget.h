@@ -22,8 +22,8 @@
  */
 
 #include "core/subtitle.h"
-#include "gui/linesmodel.h"
-#include "widgets/treeview.h"
+#include "gui/treeview/linesmodel.h"
+#include "gui/treeview/treeview.h"
 
 #include <QPen>
 

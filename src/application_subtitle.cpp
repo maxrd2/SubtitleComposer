@@ -21,7 +21,7 @@
 #include "actions/kcodecactionext.h"
 #include "actions/krecentfilesactionext.h"
 #include "actions/useractionnames.h"
-#include "core/undostack.h"
+#include "core/undo/undostack.h"
 #include "dialogs/joinsubtitlesdialog.h"
 #include "dialogs/splitsubtitledialog.h"
 #include "dialogs/syncsubtitlesdialog.h"
@@ -30,7 +30,7 @@
 #include "formats/textdemux/textdemux.h"
 #include "formats/outputformat.h"
 #include "helpers/commondefs.h"
-#include "gui/lineswidget.h"
+#include "gui/treeview/lineswidget.h"
 #include "speechprocessor/speechprocessor.h"
 #include "videoplayer/videoplayer.h"
 

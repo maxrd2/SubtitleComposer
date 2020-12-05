@@ -19,7 +19,7 @@
  */
 
 #include "linesitemdelegate.h"
-#include "gui/lineswidget.h"
+#include "gui/treeview/lineswidget.h"
 
 #include <QApplication>
 #include <QAbstractTextDocumentLayout>
