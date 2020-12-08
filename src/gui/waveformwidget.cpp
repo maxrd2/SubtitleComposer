@@ -574,6 +574,59 @@ WaveformWidget::updateVisibleLines()
 	}
 }
 
+static QTextLayout textLayout;
+
+void
+WaveformWidget::paintSubText(QPainter &painter, const QRect &box, RichDocument *doc)
+{
+	QFontMetrics fontMetrics(m_fontText, painter.device());
+
+	painter.save();
+	painter.setClipRect(box);
+	painter.translate(box.center());
+	if(!m_vertical) // TODO: make rotation configurable
+		painter.rotate(-45.);
+	painter.setFont(m_fontText);
+	painter.setPen(m_subTextColor);
+
+	qreal height = 0., heightTotal = -1.;
+	int nLines = doc->blockCount();
+
+	for(QTextBlock bi = doc->begin(); bi != doc->end(); bi = bi.next()) {
+		QString text;
+		QVector<QTextLayout::FormatRange> ranges;
+		for(QTextBlock::iterator it = bi.begin(); !it.atEnd(); ++it) {
+			if(!it.fragment().isValid())
+				continue;
+			const QString &t = it.fragment().text();
+			ranges.push_back(QTextLayout::FormatRange{text.length(), t.length(), it.fragment().charFormat()});
+			text.append(t);
+		}
+
+		textLayout.setText(text);
+		textLayout.setFormats(ranges);
+
+		const qreal lineStart = height;
+		textLayout.beginLayout();
+		QTextLine line = textLayout.createLine();
+		line.setLineWidth(m_vertical ? box.width() : box.height());
+		height += fontMetrics.leading();
+		line.setPosition(QPointF(0., height));
+		height += line.height();
+		textLayout.endLayout();
+
+		if(heightTotal < 0.)
+			heightTotal = nLines * height;
+
+		QRectF br = textLayout.boundingRect();
+		br.setBottom(br.top() + heightTotal);
+		QPointF textTL = -br.center();
+		textTL.ry() += lineStart;
+		textLayout.draw(&painter, textTL);
+	}
+	painter.restore();
+}
+
 void
 WaveformWidget::paintGraphics(QPainter &painter)
 {
@@ -618,6 +671,13 @@ WaveformWidget::paintGraphics(QPainter &painter)
 	}
 
 	updateVisibleLines();
+
+	textLayout.setFont(m_fontText);
+	QTextOption layoutTextOption;
+	layoutTextOption.setWrapMode(QTextOption::NoWrap);
+	layoutTextOption.setAlignment(Qt::AlignCenter);
+	textLayout.setTextOption(layoutTextOption);
+	textLayout.setCacheEnabled(true);
 
 	const RangeList &selection = app()->linesWidget()->selectionRanges();
 	foreach(const SubtitleLine *sub, m_visibleLines) {
@@ -671,9 +731,7 @@ WaveformWidget::paintGraphics(QPainter &painter)
 				}
 			}
 
-			painter.setFont(m_fontText);
-			painter.setPen(m_subTextColor);
-			painter.drawText(box, Qt::AlignCenter, (m_showTranslation ? sub->secondaryDoc() : sub->primaryDoc())->toPlainText());
+			paintSubText(painter, box, m_showTranslation ? sub->secondaryDoc() : sub->primaryDoc());
 
 			painter.setPen(m_subNumberColor);
 			painter.setFont(m_fontNumber);

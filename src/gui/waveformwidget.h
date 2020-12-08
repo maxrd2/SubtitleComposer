@@ -128,6 +128,7 @@ private slots:
 
 private:
 	void paintGraphics(QPainter &painter);
+	void paintSubText(QPainter &painter, const QRect &box, RichDocument *doc);
 	QToolButton * createToolButton(const QString &actionName, int iconSize=16);
 	void updateActions();
 	void updateZoomData();
