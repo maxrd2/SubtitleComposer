@@ -1,21 +1,14 @@
-add_subdirectory(examples)
+FILE(GLOB ruby_examples examples/*.rb)
+FILE(GLOB python_examples examples/*.py)
+FILE(GLOB javascript_examples examples/*.js)
+FILE(GLOB header_files scripting_*.h)
 
-set(main_scripting_SRCS
-	${CMAKE_CURRENT_SOURCE_DIR}/scripting_rangesmodule.cpp
-	${CMAKE_CURRENT_SOURCE_DIR}/scripting_stringsmodule.cpp
-	${CMAKE_CURRENT_SOURCE_DIR}/scripting_subtitlemodule.cpp
-	${CMAKE_CURRENT_SOURCE_DIR}/scripting_subtitlelinemodule.cpp
-	${CMAKE_CURRENT_SOURCE_DIR}/scripting_list.cpp
-	${CMAKE_CURRENT_SOURCE_DIR}/scripting_range.cpp
-	${CMAKE_CURRENT_SOURCE_DIR}/scripting_rangelist.cpp
-	${CMAKE_CURRENT_SOURCE_DIR}/scripting_sstring.cpp
-	${CMAKE_CURRENT_SOURCE_DIR}/scripting_subtitle.cpp
-	${CMAKE_CURRENT_SOURCE_DIR}/scripting_subtitleline.cpp
-	${CMAKE_CURRENT_SOURCE_DIR}/scriptsmanager.cpp
-	CACHE INTERNAL EXPORTEDVARIABLE
+INSTALL(FILES
+	${ruby_examples} ${python_examples} ${javascript_examples} examples/README
+	DESTINATION ${DATA_INSTALL_DIR}/subtitlecomposer/scripts
 )
 
-set(main_scripting_UIS
-	${CMAKE_CURRENT_SOURCE_DIR}/scriptsmanager.ui
-	CACHE INTERNAL EXPORTEDVARIABLE
+INSTALL(FILES
+	${header_files}
+	DESTINATION ${DATA_INSTALL_DIR}/subtitlecomposer/scripts/api
 )

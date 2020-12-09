@@ -5,13 +5,13 @@ if(NOT POCKETSPHINX_FOUND)
 endif()
 
 set(speech_pocketsphinx_SRCS
-	${CMAKE_CURRENT_SOURCE_DIR}/pocketsphinxplugin.cpp
-	${CMAKE_CURRENT_SOURCE_DIR}/pocketsphinxconfigwidget.cpp
-	${speechplugins_SRCS}
+	../../speechprocessor/speechplugin.cpp
+	pocketsphinxplugin.cpp
+	pocketsphinxconfigwidget.cpp
 	CACHE INTERNAL EXPORTEDVARIABLE
 )
 ki18n_wrap_ui(speech_pocketsphinx_SRCS
-	${CMAKE_CURRENT_SOURCE_DIR}/pocketsphinxconfigwidget.ui
+	pocketsphinxconfigwidget.ui
 )
 kconfig_add_kcfg_files(speech_pocketsphinx_SRCS GENERATE_MOC
 	${CMAKE_CURRENT_SOURCE_DIR}/pocketsphinxconfig.kcfgc

@@ -26,11 +26,6 @@ find_package(FFmpeg 57.83.100 REQUIRED)
 find_package(OpenAL REQUIRED)
 find_package(ICU)
 
-# the subdirs must be added in a specific order
-# if one dir uses code from another, its CMakeLists.txt will reference variables
-# defined in the dependency directory that must be created before the former
-# CMakeLists.txt is processed
-
 set(SC_PLUGIN_INSTALL_DIR "${CMAKE_INSTALL_PREFIX}/${KDE_INSTALL_LIBDIR}/subtitlecomposer" CACHE STRING EXPORTEDVARIABLE)
 message(STATUS "Subtitle Composer plugin path: ${SC_PLUGIN_INSTALL_DIR}")
 
@@ -44,59 +39,80 @@ include_directories(
 	${FFMPEG_INCLUDE_DIRS}
 )
 
-add_subdirectory(helpers)
-add_subdirectory(core)
-add_subdirectory(gui)
-add_subdirectory(formats)
-add_subdirectory(widgets)
-add_subdirectory(videoplayer)
-add_subdirectory(streamprocessor)
-add_subdirectory(speechprocessor)
+add_subdirectory(tests)
 
-add_subdirectory(configs)
-add_subdirectory(dialogs)
-add_subdirectory(errors)
-add_subdirectory(actions)
-add_subdirectory(utils)
 add_subdirectory(scripting)
 
 set(subtitlecomposer_SRCS
-	${core_SRCS}
-	${gui_SRCS}
-	${dialogs_SRCS}
-	${errors_SRCS}
-	${formats_SRCS}
-	${helpers_SRCS}
-	${speechprocessor_SRCS}
-	${streamprocessor_SRCS}
-	${videoplayer_SRCS}
-	${widgets_SRCS}
-	${main_configs_SRCS}
-	${main_actions_SRCS}
-	${main_utils_SRCS}
-	${main_scripting_SRCS}
-	${CMAKE_CURRENT_SOURCE_DIR}/application.cpp
-	${CMAKE_CURRENT_SOURCE_DIR}/application_errorcheck.cpp
-	${CMAKE_CURRENT_SOURCE_DIR}/application_subtitle.cpp
-	${CMAKE_CURRENT_SOURCE_DIR}/main.cpp
-	${CMAKE_CURRENT_SOURCE_DIR}/mainwindow.cpp
+	#[[ main ]] application.cpp application_errorcheck.cpp application_subtitle.cpp main.cpp mainwindow.cpp
+	#[[ actions ]] actions/useraction.cpp actions/useractionnames.h actions/kcodecactionext.cpp actions/krecentfilesactionext.cpp
+	#[[ configs ]] configs/configdialog.cpp configs/errorsconfigwidget.cpp configs/generalconfigwidget.cpp configs/playerconfigwidget.cpp configs/waveformconfigwidget.cpp
+	#[[ core ]] core/formatdata.h core/range.h core/rangelist.h core/time.cpp core/sstring.cpp core/subtitle.cpp core/subtitleiterator.cpp
+	core/subtitleline.cpp core/undo/subtitleactions.cpp core/undo/subtitlelineactions.cpp core/undo/undoaction.cpp core/undo/undostack.cpp
+	#[[ dialogs ]] dialogs/actiondialog.cpp #[[dialogs/actionwitherrortargetsdialog.cpp]] dialogs/actionwithtargetdialog.cpp dialogs/adjusttimesdialog.cpp
+	dialogs/autodurationsdialog.cpp dialogs/changeframeratedialog.cpp dialogs/changetextscasedialog.cpp dialogs/durationlimitsdialog.cpp
+	dialogs/encodingdetectdialog.cpp dialogs/fixoverlappingtimesdialog.cpp dialogs/fixpunctuationdialog.cpp dialogs/insertlinedialog.cpp
+	dialogs/intinputdialog.cpp dialogs/joinsubtitlesdialog.cpp dialogs/progressdialog.cpp dialogs/removelinesdialog.cpp dialogs/selectablesubtitledialog.cpp
+	dialogs/shifttimesdialog.cpp dialogs/smarttextsadjustdialog.cpp dialogs/splitsubtitledialog.cpp dialogs/subtitlecolordialog.cpp
+	dialogs/syncsubtitlesdialog.cpp dialogs/textinputdialog.cpp dialogs/translatedialog.cpp
+	#[[ errors ]] errors/errorfinder.cpp errors/errortracker.cpp errors/finderrorsdialog.cpp
+	#[[ formats ]] formats/format.h formats/formatmanager.h formats/inputformat.h formats/outputformat.h formats/formatmanager.cpp
+	formats/microdvd/microdvdinputformat.h formats/microdvd/microdvdoutputformat.h
+	formats/mplayer/mplayerinputformat.h formats/mplayer/mplayeroutputformat.h
+	formats/mplayer2/mplayer2inputformat.h formats/mplayer2/mplayer2outputformat.h
+	formats/subrip/subripinputformat.h formats/subrip/subripoutputformat.h
+	formats/substationalpha/substationalphainputformat.h formats/substationalpha/substationalphaoutputformat.h
+	formats/subviewer1/subviewer1inputformat.h formats/subviewer1/subviewer1outputformat.h
+	formats/subviewer2/subviewer2inputformat.h formats/subviewer2/subviewer2outputformat.h
+	formats/textdemux/textdemux.cpp
+	formats/tmplayer/tmplayerinputformat.h formats/tmplayer/tmplayeroutputformat.h
+	formats/vobsub/vobsubinputformat.h formats/vobsub/vobsubinputinitdialog.cpp formats/vobsub/vobsubinputprocessdialog.cpp
+	formats/youtubecaptions/youtubecaptionsinputformat.h formats/youtubecaptions/youtubecaptionsoutputformat.h
+	#[[ gui ]] gui/currentlinewidget.cpp gui/playerwidget.cpp gui/waveformwidget.cpp
+	gui/treeview/linesitemdelegate.cpp gui/treeview/linesmodel.cpp gui/treeview/linesselectionmodel.cpp gui/treeview/lineswidget.cpp gui/treeview/treeview.cpp
+	#[[ helpers ]] helpers/commondefs.cpp helpers/fileloadhelper.cpp helpers/filesavehelper.cpp helpers/filetrasher.cpp helpers/languagecode.cpp helpers/pluginhelper.h
+	#[[ scripting ]] scripting/scriptsmanager.cpp
+	scripting/scripting_rangesmodule.cpp scripting/scripting_stringsmodule.cpp scripting/scripting_subtitlemodule.cpp scripting/scripting_subtitlelinemodule.cpp
+	scripting/scripting_list.cpp scripting/scripting_range.cpp scripting/scripting_rangelist.cpp scripting/scripting_sstring.cpp scripting/scripting_subtitle.cpp
+	scripting/scripting_subtitleline.cpp
+	#[[ speechprocessor ]] speechprocessor/speechprocessor.cpp speechprocessor/speechplugin.cpp
+	#[[ streamprocessor ]] streamprocessor/streamprocessor.cpp
+	#[[ utils ]] utils/finder.cpp utils/replacer.cpp utils/speller.cpp utils/translator.cpp utils/language.cpp
+	#[[ videoplayer ]]
+	videoplayer/videoplayer.cpp videoplayer/videowidget.cpp videoplayer/waveformat.h videoplayer/subtitletextoverlay.cpp
+	videoplayer/backend/glrenderer.cpp videoplayer/backend/ffplayer.cpp videoplayer/backend/framequeue.cpp videoplayer/backend/packetqueue.cpp
+	videoplayer/backend/decoder.cpp videoplayer/backend/audiodecoder.cpp videoplayer/backend/videodecoder.cpp videoplayer/backend/subtitledecoder.cpp
+	videoplayer/backend/clock.cpp videoplayer/backend/streamdemuxer.cpp videoplayer/backend/renderthread.cpp videoplayer/backend/videostate.cpp
+	#[[ widgets ]] widgets/attachablewidget.cpp widgets/layeredwidget.cpp widgets/pointingslider.cpp widgets/simplerichtextedit.cpp
+	widgets/textoverlaywidget.cpp widgets/timeedit.cpp widgets/timevalidator.cpp
 	CACHE INTERNAL EXPORTEDVARIABLE
-)
+	)
 
 if(MINGW)
 	qt5_add_resources(subtitlecomposer_SRCS subtitlecomposer.qrc)
-	list(APPEND subtitlecomposer_SRCS ${CMAKE_CURRENT_SOURCE_DIR}/subtitlecomposer.rc)
+	list(APPEND subtitlecomposer_SRCS subtitlecomposer.rc)
 else()
-	add_subdirectory(icons)
+	ecm_install_icons(ICONS
+		icons/16-apps-subtitlecomposer.png icons/32-apps-subtitlecomposer.png icons/128-apps-subtitlecomposer.png icons/256-apps-subtitlecomposer.png
+		DESTINATION ${ICON_INSTALL_DIR}
+		THEME hicolor)
+
+	ecm_install_icons(ICONS
+		icons/128-categories-waveform.png icons/16-actions-select_stream.png icons/16-actions-time_from_video.png icons/48-actions-audio_extract.png
+		icons/48-apps-mediaplayer.png icons/64-apps-pocketsphinx.png icons/sc-actions-anchor.svg icons/sc-actions-current_line_follows_video.svg
+		icons/sc-actions-playrate_minus.svg icons/sc-actions-playrate_plus.svg icons/sc-actions-set_hide_time.svg icons/sc-actions-set_show_time.svg
+		DESTINATION ${DATA_INSTALL_DIR}/subtitlecomposer/icons
+		THEME hicolor)
 endif()
 
-kconfig_add_kcfg_files(subtitlecomposer_SRCS GENERATE_MOC ${CMAKE_CURRENT_SOURCE_DIR}/scconfig.kcfgc)
+kconfig_add_kcfg_files(subtitlecomposer_SRCS GENERATE_MOC scconfig.kcfgc)
 
 ki18n_wrap_ui(subtitlecomposer_SRCS
-	${dialogs_UIS}
-	${formats_UIS}
-	${main_configs_UIS}
-	${main_scripting_UIS})
+	#[[ configs ]] configs/errorsconfigwidget.ui configs/generalconfigwidget.ui configs/playerconfigwidget.ui configs/waveformconfigwidget.ui
+	#[[ dialogs ]] dialogs/encodingdetectdialog.ui dialogs/intinputdialog.ui dialogs/textinputdialog.ui
+	#[[ formats ]] formats/vobsub/vobsubinputinitdialog.ui formats/vobsub/vobsubinputprocessdialog.ui
+	#[[ scripting ]] scripting/scriptsmanager.ui
+	)
 
 add_executable(subtitlecomposer WIN32 ${subtitlecomposer_SRCS})
 
@@ -127,8 +143,9 @@ install(FILES org.kde.subtitlecomposer.desktop DESTINATION ${XDG_APPS_INSTALL_DI
 install(FILES org.kde.subtitlecomposer.appdata.xml DESTINATION ${KDE_INSTALL_METAINFODIR})
 install(FILES subtitlecomposer.xml DESTINATION ${XDG_MIME_INSTALL_DIR})
 
-add_subdirectory(speechplugins)
+# build plugins
+add_subdirectory(speechplugins/pocketsphinx)
 
 # do the configuration of config.h at the end, so all the necessary variables have been set
-configure_file(${CMAKE_CURRENT_SOURCE_DIR}/config.h.cmake ${CMAKE_CURRENT_BINARY_DIR}/config.h)
+configure_file(config.h.cmake ${CMAKE_CURRENT_BINARY_DIR}/config.h)
 
