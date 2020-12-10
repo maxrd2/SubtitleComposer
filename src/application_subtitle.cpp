@@ -30,6 +30,7 @@
 #include "formats/textdemux/textdemux.h"
 #include "formats/outputformat.h"
 #include "helpers/commondefs.h"
+#include "helpers/common.h"
 #include "gui/treeview/lineswidget.h"
 #include "speechprocessor/speechprocessor.h"
 #include "videoplayer/videoplayer.h"
@@ -46,8 +47,6 @@
 #include <KMessageBox>
 
 #undef ERROR
-
-#define $(x) QStringLiteral(x)
 
 using namespace SubtitleComposer;
 
