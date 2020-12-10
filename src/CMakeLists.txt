@@ -70,7 +70,8 @@ set(subtitlecomposer_SRCS
 	formats/vobsub/vobsubinputformat.h formats/vobsub/vobsubinputinitdialog.cpp formats/vobsub/vobsubinputprocessdialog.cpp
 	formats/youtubecaptions/youtubecaptionsinputformat.h formats/youtubecaptions/youtubecaptionsoutputformat.h
 	#[[ gui ]] gui/currentlinewidget.cpp gui/playerwidget.cpp gui/waveformwidget.cpp
-	gui/treeview/linesitemdelegate.cpp gui/treeview/linesmodel.cpp gui/treeview/linesselectionmodel.cpp gui/treeview/lineswidget.cpp gui/treeview/treeview.cpp
+	gui/treeview/linesitemdelegate.cpp gui/treeview/linesmodel.cpp gui/treeview/linesselectionmodel.cpp gui/treeview/lineswidget.cpp
+	gui/treeview/richlineedit.cpp gui/treeview/richdocumentptr.cpp gui/treeview/treeview.cpp
 	#[[ helpers ]] helpers/commondefs.cpp helpers/fileloadhelper.cpp helpers/filesavehelper.cpp helpers/filetrasher.cpp helpers/languagecode.cpp helpers/pluginhelper.h
 	#[[ scripting ]] scripting/scriptsmanager.cpp
 	scripting/scripting_rangesmodule.cpp scripting/scripting_stringsmodule.cpp scripting/scripting_subtitlemodule.cpp scripting/scripting_subtitlelinemodule.cpp

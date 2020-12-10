@@ -22,6 +22,7 @@
 #include "core/subtitle.h"
 #include "gui/treeview/linesmodel.h"
 #include "gui/treeview/lineswidget.h"
+#include "gui/treeview/richdocumentptr.h"
 #include "helpers/common.h"
 
 #include <QFont>
@@ -243,29 +244,25 @@ LinesModel::data(const QModelIndex &index, int role) const
 		break;
 
 	case Text:
-		if(role == Qt::DisplayRole)
-			return line->primaryDoc()->toHtml().replace($("<br>\n"), $("|"));
+		if(role == Qt::DisplayRole || role == Qt::EditRole)
+			return QVariant::fromValue(RichDocumentPtr(line->primaryDoc()));
 		if(role == MarkedRole)
 			return line->errorFlags() & SubtitleLine::UserMark;
 		if(role == ErrorRole)
 			return line->errorFlags() & ((SubtitleLine::SharedErrors | SubtitleLine::PrimaryOnlyErrors) & ~SubtitleLine::UserMark);
 		if(role == Qt::ToolTipRole)
 			return buildToolTip(line, true);
-		if(role == Qt::EditRole)
-			return line->primaryDoc()->toHtml().replace($("<br>\n"), $("|"));
 		break;
 
 	case Translation:
-		if(role == Qt::DisplayRole)
-			return line->secondaryDoc()->toHtml().replace($("<br>\n"), $("|"));
+		if(role == Qt::DisplayRole || role == Qt::EditRole)
+			return QVariant::fromValue(RichDocumentPtr(line->secondaryDoc()));
 		if(role == MarkedRole)
 			return line->errorFlags() & SubtitleLine::UserMark;
 		if(role == ErrorRole)
 			return line->errorFlags() & ((SubtitleLine::SharedErrors | SubtitleLine::SecondaryOnlyErrors) & ~SubtitleLine::UserMark);
 		if(role == Qt::ToolTipRole)
 			return buildToolTip(line, false);
-		if(role == Qt::EditRole)
-			return line->secondaryDoc()->toHtml().replace($("<br>\n"), $("|"));
 		break;
 
 	default:
@@ -277,26 +274,14 @@ LinesModel::data(const QModelIndex &index, int role) const
 bool
 LinesModel::setData(const QModelIndex &index, const QVariant &value, int role)
 {
+	Q_UNUSED(value);
+
 	if(!m_subtitle || !index.isValid())
 		return false;
 
-	switch(index.column()) {
-	case Text:
-		if(role == Qt::EditRole) {
-			m_subtitle->line(index.row())->primaryDoc()->setHtml(value.toString().replace($("|"), $("<br>")));
-			emit dataChanged(index, index);
-			return true;
-		}
-		break;
-	case Translation:
-		if(role == Qt::EditRole) {
-			m_subtitle->line(index.row())->secondaryDoc()->setHtml(value.toString().replace($("|"), $("<br>")));
-			emit dataChanged(index, index);
-			return true;
-		}
-		break;
-	default:
-		break;
+	if(role == Qt::EditRole && (index.column() == Text || index.column() == Translation)) {
+		emit dataChanged(index, index);
+		return true;
 	}
 
 	return false;

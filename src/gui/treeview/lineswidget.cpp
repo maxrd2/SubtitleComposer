@@ -42,15 +42,14 @@ LinesWidget::LinesWidget(QWidget *parent)
 	  m_scrollFollowsModel(true),
 	  m_translationMode(false),
 	  m_showingContextMenu(false),
-	  m_plainTextDelegate(new LinesItemDelegate(true, true, false, this)),
-	  m_richTextDelegate(new LinesItemDelegate(true, true, true, this))
+	  m_itemsDelegate(new LinesItemDelegate(this))
 {
 	setModel(new LinesModel(this));
 	selectionModel()->deleteLater();
 	setSelectionModel(new LinesSelectionModel(model()));
 
 	for(int column = 0, columnCount = model()->columnCount(); column < columnCount; ++column)
-		setItemDelegateForColumn(column, column < LinesModel::Text ? m_plainTextDelegate : m_richTextDelegate);
+		setItemDelegateForColumn(column, m_itemsDelegate);
 
 	QHeaderView *header = this->header();
 	header->setSectionsClickable(false);
@@ -88,58 +87,80 @@ LinesWidget::~LinesWidget()
 void
 LinesWidget::closeEditor(QWidget *editor, QAbstractItemDelegate::EndEditHint hint)
 {
-	LinesItemDelegate::ExtendedEditHint ehint = (LinesItemDelegate::ExtendedEditHint)hint;
-	QModelIndex editorIndex = currentIndex();
-
-	if(ehint == LinesItemDelegate::EditUpperItem)
-		TreeView::closeEditor(editor, QAbstractItemDelegate::EditPreviousItem);
-	else if(ehint == LinesItemDelegate::EditLowerItem)
-		TreeView::closeEditor(editor, QAbstractItemDelegate::EditNextItem);
-	else if(m_translationMode) {
-		if(ehint == LinesItemDelegate::EditNextItem)
-			TreeView::closeEditor(editor, editorIndex.column() != LinesModel::Text ? QAbstractItemDelegate::EditNextItem : QAbstractItemDelegate::NoHint);
-		else if(ehint == LinesItemDelegate::EditPreviousItem)
-			TreeView::closeEditor(editor, editorIndex.column() == LinesModel::Text ? QAbstractItemDelegate::EditPreviousItem : QAbstractItemDelegate::NoHint);
-		else
-			TreeView::closeEditor(editor, hint);
-	} else
+	auto ehint = LinesItemDelegate::ExtendedEditHint(hint);
+	if(ehint == LinesItemDelegate::NoHint || ehint == LinesItemDelegate::SubmitModelCache || ehint == LinesItemDelegate::RevertModelCache) {
 		TreeView::closeEditor(editor, hint);
+	} else {
+		QModelIndex index = currentIndex();
 
-	switch(ehint) {
-	case LinesItemDelegate::NoHint:
-	case LinesItemDelegate::SubmitModelCache:
-	case LinesItemDelegate::RevertModelCache:
-		break;
-	case LinesItemDelegate::EditUpperItem:
-		if(editorIndex.row() > 0)
-			editCurrentLineInPlace(editorIndex.column() == LinesModel::Text);
-		break;
-	case LinesItemDelegate::EditLowerItem:
-		if(editorIndex.row() < model()->rowCount() - 1)
-			editCurrentLineInPlace(editorIndex.column() == LinesModel::Text);
-		break;
+		switch(ehint) {
+		case LinesItemDelegate::EditPreviousItem:
+			if(m_translationMode) {
+				if(index.column() == LinesModel::Translation)
+					index = index.sibling(index.row(), LinesModel::Text);
+				else if(index.row())
+#if QT_VERSION < QT_VERSION_CHECK(5, 11, 0)
+					index = index.sibling(moveCursor(MoveUp, Qt::NoModifier).row(), LinesModel::Translation);
+#else
+					index = moveCursor(MoveUp, Qt::NoModifier).siblingAtColumn(LinesModel::Translation);
+#endif
+				break;
+			}
+			// fallthrough
+		case LinesItemDelegate::EditUpperItem:
+			index = moveCursor(MoveUp, Qt::NoModifier);
+			break;
+		case LinesItemDelegate::EditNextItem:
+			if(m_translationMode) {
+				if(index.column() == LinesModel::Text)
+					index = index.sibling(index.row(), LinesModel::Translation);
+				else if(index.row() < model()->rowCount() - 1)
+#if QT_VERSION < QT_VERSION_CHECK(5, 11, 0)
+					index = index.sibling(moveCursor(MoveDown, Qt::NoModifier).row(), LinesModel::Text);
+#else
+					index = moveCursor(MoveDown, Qt::NoModifier).siblingAtColumn(LinesModel::Text);
+#endif
+				break;
+			}
+			// fallthrough
+		case LinesItemDelegate::EditLowerItem:
+			index = moveCursor(MoveDown, Qt::NoModifier);
+			break;
+		default: break;
+		}
 
-	case LinesItemDelegate::EditPreviousItem:
-		if(editorIndex.row() > 0 || (m_translationMode && editorIndex.column() == LinesModel::Translation))
-			editCurrentLineInPlace(editorIndex.column() != LinesModel::Text);
-		break;
+		QItemSelectionModel::SelectionFlags flags = QItemSelectionModel::NoUpdate;
+		if(selectionMode() != NoSelection) {
+			flags = QItemSelectionModel::ClearAndSelect;
+			switch(selectionBehavior()) {
+			case SelectItems: break;
+			case SelectRows: flags |= QItemSelectionModel::Rows; break;
+			case SelectColumns: flags |= QItemSelectionModel::Columns; break;
+			}
+		}
 
-	case LinesItemDelegate::EditNextItem:
-		if(editorIndex.row() < model()->rowCount() - 1 || (m_translationMode && editorIndex.column() == LinesModel::Text))
-			editCurrentLineInPlace(editorIndex.column() != LinesModel::Text);
-		break;
+		TreeView::closeEditor(editor, QAbstractItemDelegate::NoHint);
+
+		QPersistentModelIndex persistent(index);
+		selectionModel()->setCurrentIndex(persistent, flags);
+
+		// currentChanged signal would have already started editing
+		if((index.flags() & Qt::ItemIsEditable) && !(editTriggers() & QAbstractItemView::CurrentChanged))
+			edit(persistent);
 	}
 }
 
 void
 LinesWidget::editCurrentLineInPlace(bool primaryText)
 {
-	QModelIndex currentIndex = this->currentIndex();
-	if(currentIndex.isValid()) {
+	QModelIndex curIdx = currentIndex();
+	if(curIdx.isValid()) {
 		const int col = primaryText || !m_translationMode ? LinesModel::Text : LinesModel::Translation;
-		currentIndex = model()->index(currentIndex.row(), col);
-		setCurrentIndex(currentIndex);
-		edit(currentIndex);
+		if(col != curIdx.column()) {
+			curIdx = model()->index(curIdx.row(), col);
+			setCurrentIndex(curIdx);
+		}
+		edit(curIdx);
 	}
 }
 
@@ -492,11 +513,4 @@ LinesWidget::drawRow(QPainter *painter, const QStyleOptionViewItem &option, cons
 		drawVerticalDotLine(painter, rowRect.left(), rowRect.top(), rowRect.bottom());
 		drawVerticalDotLine(painter, rowRect.right(), rowRect.top(), rowRect.bottom());
 	}
-}
-
-void
-LinesWidget::changeEvent(QEvent *event)
-{
-	if(event->type() == QEvent::FontChange)
-		m_richTextDelegate->updateStyle();
 }

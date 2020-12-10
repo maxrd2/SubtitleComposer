@@ -20,87 +20,24 @@
 
 #include "linesitemdelegate.h"
 #include "gui/treeview/lineswidget.h"
+#include "gui/treeview/richdocumentptr.h"
+#include "gui/treeview/richlineedit.h"
 
 #include <QApplication>
-#include <QAbstractTextDocumentLayout>
 #include <QKeyEvent>
 #include <QPainter>
-#include <QTextDocument>
 #include <QTextOption>
+#include <QTextBlock>
 
 using namespace SubtitleComposer;
 
-LinesItemDelegate::LinesItemDelegate(bool useStyle, bool singleLineMode, bool richTextMode, LinesWidget *parent)
-	: QStyledItemDelegate(parent),
-	  m_useStyle(useStyle),
-	  m_singleLineMode(singleLineMode),
-	  m_textDocument(nullptr)
+LinesItemDelegate::LinesItemDelegate(LinesWidget *parent)
+	: QStyledItemDelegate(parent)
 {
-	setRichTextMode(richTextMode);
 }
 
 LinesItemDelegate::~LinesItemDelegate()
 {
-	delete m_textDocument;
-}
-
-bool
-LinesItemDelegate::useStyle() const
-{
-	return m_useStyle;
-}
-
-void
-LinesItemDelegate::setUseStyle(bool useStyle)
-{
-	m_useStyle = useStyle;
-}
-
-bool
-LinesItemDelegate::singleLineMode() const
-{
-	return m_singleLineMode;
-}
-
-void
-LinesItemDelegate::setSingleLineMode(bool singleLineMode)
-{
-	m_singleLineMode = singleLineMode;
-}
-
-bool
-LinesItemDelegate::richTextMode() const
-{
-	return m_textDocument != nullptr;
-}
-
-void
-LinesItemDelegate::setRichTextMode(bool richTextMode)
-{
-	if(richTextMode != (m_textDocument != nullptr)) {
-		if(richTextMode) {
-			QTextOption defaultTextOption;
-			defaultTextOption.setWrapMode(QTextOption::NoWrap);
-
-			m_textDocument = new QTextDocument();
-			m_textDocument->setDefaultTextOption(defaultTextOption);
-			m_textDocument->setUndoRedoEnabled(false);
-			updateStyle();
-		} else {
-			delete m_textDocument;
-			m_textDocument = nullptr;
-		}
-	}
-}
-
-void
-LinesItemDelegate::updateStyle()
-{
-	if(m_textDocument) {
-		m_textDocument->setDefaultStyleSheet("p { display:inline; white-space:pre; vertical-align:baseline; margin:0; }");
-		const LinesWidget *lw = static_cast<LinesWidget *>(parent());
-		m_textDocument->setDefaultFont(QApplication::font(lw));
-	}
 }
 
 bool
@@ -124,13 +61,24 @@ LinesItemDelegate::eventFilter(QObject *object, QEvent *event)
 
 		case Qt::Key_Up:
 			emit commitData(editor);
-			emit closeEditor(editor, (QAbstractItemDelegate::EndEditHint)EditUpperItem);
+			emit closeEditor(editor, QAbstractItemDelegate::EndEditHint(EditUpperItem));
 			return true;
 
 		case Qt::Key_Down:
 			emit commitData(editor);
-			emit closeEditor(editor, (QAbstractItemDelegate::EndEditHint)EditLowerItem);
+			emit closeEditor(editor, QAbstractItemDelegate::EndEditHint(EditLowerItem));
 			return true;
+
+		case Qt::Key_Enter:
+		case Qt::Key_Return:
+			if(static_cast<QKeyEvent *>(event)->modifiers()) {
+				emit commitData(editor);
+				emit closeEditor(editor, QAbstractItemDelegate::EndEditHint(EditLowerItem));
+				return true;
+			}
+			if(qobject_cast<RichLineEdit *>(object))
+				return false;
+			break;
 
 		default:
 			break;
@@ -140,99 +88,107 @@ LinesItemDelegate::eventFilter(QObject *object, QEvent *event)
 	return QStyledItemDelegate::eventFilter(object, event);
 }
 
-void
-LinesItemDelegate::drawBackgroundPrimitive(QPainter *painter, const QStyle *style, const QStyleOptionViewItem &option) const
-{
-	if(m_useStyle) {
-		style->drawPrimitive(QStyle::PE_PanelItemViewItem, &option, painter, option.widget);
-	} else {
-		QPalette::ColorGroup cg = option.state & QStyle::State_Enabled ? QPalette::Normal : QPalette::Disabled;
+static const QIcon & markIcon() { static QIcon icon = QIcon::fromTheme(QStringLiteral("dialog-warning")); return icon; }
+static const QIcon & errorIcon() { static QIcon icon = QIcon::fromTheme(QStringLiteral("dialog-error")); return icon; }
+static const QIcon & anchorIcon() { static QIcon icon = QIcon::fromTheme(QStringLiteral("anchor")); return icon; }
 
-		if(cg == QPalette::Normal && !(option.state & QStyle::State_Active))
-			cg = QPalette::Inactive;
+inline static bool isRichDoc(const QModelIndex &index) { return index.column() >= LinesModel::Text; }
 
-		if(option.showDecorationSelected && (option.state & QStyle::State_Selected)) {
-			painter->fillRect(option.rect, option.palette.brush(cg, QPalette::Highlight));
-		} else {
-			if(option.backgroundBrush.style() != Qt::NoBrush) {
-				QPointF oldBO = painter->brushOrigin();
-				painter->setBrushOrigin(option.rect.topLeft());
-				painter->fillRect(option.rect, option.backgroundBrush);
-				painter->setBrushOrigin(oldBO);
-			}
-
-			if(option.state & QStyle::State_Selected) {
-				QRect textRect = style->subElementRect(QStyle::SE_ItemViewItemText, &option, option.widget);
-				painter->fillRect(textRect, option.palette.brush(cg, QPalette::Highlight));
-			}
-		}
-	}
-}
-
-void
-LinesItemDelegate::drawTextPrimitive(QPainter *painter, const QStyle *style, const QStyleOptionViewItem &option, const QRect &rect, QPalette::ColorGroup cg, const QModelIndex &index) const
+static void
+drawTextPrimitive(QPainter *painter, const QStyle *style, const QStyleOptionViewItem &option, const QRect &rect, QPalette::ColorGroup cg, const QModelIndex &index)
 {
 	const int textMargin = style->pixelMetric(QStyle::PM_FocusFrameHMargin, nullptr, option.widget) + 1;
-	const int alignment = QStyle::visualAlignment(option.direction, option.displayAlignment);
+	Qt::Alignment alignment = QStyle::visualAlignment(option.direction, option.displayAlignment);
 
 	QRect textRect = rect.adjusted(textMargin, 0, -textMargin, 0);  // remove width padding
 
-	QString text = QString(option.text);
+	if(index.column() == LinesModel::ShowTime && index.data(LinesModel::AnchoredRole).toInt() == -1)
+		cg = QPalette::Disabled;
 
-	QFontMetrics fm = painter->fontMetrics();
-	text = fm.elidedText(option.text, option.textElideMode, textRect.width());
+	QColor textColor;
+	if(option.state & QStyle::State_Selected)
+		textColor = option.palette.color(cg, QPalette::HighlightedText);
+	else
+		textColor = option.palette.color(cg, QPalette::Text);
 
-	if(m_textDocument) {
-		QTextOption textOption;
-		textOption.setTextDirection(option.direction);
-		textOption.setAlignment((Qt::Alignment)alignment);
+	painter->setPen(textColor);
 
-		m_textDocument->setDefaultTextOption(textOption);
-		m_textDocument->setTextWidth(textRect.width() - textMargin);
-		m_textDocument->setHtml("<p>" + text + "</p>");
+	QString text = option.fontMetrics.elidedText(option.text, option.textElideMode, textRect.width());
 
-		QPalette palette(option.palette);
-		palette.setColor(QPalette::Text, palette.color(cg, option.state & QStyle::State_Selected ? QPalette::HighlightedText : QPalette::Text));
+	if(index.column() == LinesModel::Number && index.data(LinesModel::AnchoredRole).toInt() == 1) {
+		int iconSize = qMin(textRect.width(), textRect.height()) - 3;
+		QRect iconRect = QRect(textRect.right() - iconSize - 2, textRect.y() + 1, iconSize, iconSize);
 
-		QAbstractTextDocumentLayout::PaintContext context;
-		context.palette = palette;
+		QIcon::Mode mode = QIcon::Normal;
+		if(!(option.state & QStyle::State_Enabled))
+			mode = QIcon::Disabled;
+		else if(option.state & QStyle::State_Selected)
+			mode = QIcon::Selected;
+		QIcon::State state = option.state & QStyle::State_Open ? QIcon::On : QIcon::Off;
 
-		const int yOffset = (textRect.height() - m_textDocument->documentLayout()->documentSize().height()) / 2.;
-		textRect.adjust(0, yOffset, 0, yOffset);
+		textRect.setRight(textRect.right() - iconSize);
 
-		painter->translate(textRect.x(), textRect.y());
-		m_textDocument->documentLayout()->draw(painter, context);
-		painter->translate(-textRect.x(), -textRect.y());
-	} else {
-		QColor textColor;
-		if(option.state & QStyle::State_Selected)
-			textColor = option.palette.color(cg, QPalette::HighlightedText);
-		else
-			textColor = option.palette.color(cg, QPalette::Text);
-
-		if(index.column() == LinesModel::ShowTime && index.data(LinesModel::AnchoredRole).toInt() == -1)
-			textColor.setAlpha(50);
-
-		painter->setPen(textColor);
-
-		if(index.column() == LinesModel::Number && index.data(LinesModel::AnchoredRole).toInt() == 1) {
-			int iconSize = qMin(textRect.width(), textRect.height()) - 3;
-			QRect iconRect = QRect(textRect.right() - iconSize - 2, textRect.y() + 1, iconSize, iconSize);
-
-			QIcon::Mode mode = QIcon::Normal;
-			if(!(option.state & QStyle::State_Enabled))
-				mode = QIcon::Disabled;
-			else if(option.state & QStyle::State_Selected)
-				mode = QIcon::Selected;
-			QIcon::State state = option.state & QStyle::State_Open ? QIcon::On : QIcon::Off;
-
-			textRect.setRight(textRect.right() - iconSize);
-
-			anchorIcon().paint(painter, iconRect, option.decorationAlignment, mode, state);
-		}
-
-		painter->drawText(textRect, alignment, text);
+		anchorIcon().paint(painter, iconRect, option.decorationAlignment, mode, state);
 	}
+
+	painter->drawText(textRect, alignment, text);
+}
+
+static void
+drawRichText(QPainter *painter, const QStyleOptionViewItem &option, const QRect &rect)
+{
+	const RichDocument *doc = option.index.data(Qt::DisplayRole).value<RichDocumentPtr>();
+
+	QPalette::ColorGroup cg = option.state & QStyle::State_Enabled ? QPalette::Normal : QPalette::Disabled;
+	if(cg == QPalette::Normal && !(option.state & QStyle::State_Active))
+		cg = QPalette::Inactive;
+	painter->setPen(option.palette.color(cg, (option.state & QStyle::State_Selected) ? QPalette::HighlightedText : QPalette::Text));
+
+	const QStyle *style = option.widget ? option.widget->style() : QApplication::style();
+	int textMargin = style->pixelMetric(QStyle::PM_FocusFrameHMargin, nullptr, option.widget) + 1;
+
+	QTextLayout layout;
+	layout.setFont(option.font);
+	layout.setCacheEnabled(true);
+
+	QTextOption textOption;
+	textOption.setAlignment(QStyle::visualAlignment(option.direction, option.displayAlignment));
+	textOption.setWrapMode(QTextOption::NoWrap);
+	textOption.setTextDirection(option.direction);
+	layout.setTextOption(textOption);
+
+	QString text;
+	QVector<QTextLayout::FormatRange> ranges;
+	for(QTextBlock bi = doc->begin(); bi != doc->end(); bi = bi.next()) {
+		if(bi != doc->begin()) {
+			QTextCharFormat fmt;
+			fmt.setTextOutline(QPen(option.palette.color(cg, QPalette::Link), .75));
+			ranges.push_back(QTextLayout::FormatRange{text.length(), 1, fmt});
+			text.append(QChar(0x299a));
+		}
+		for(QTextBlock::iterator it = bi.begin(); !it.atEnd(); ++it) {
+			if(!it.fragment().isValid())
+				continue;
+			const QString &t = it.fragment().text();
+			ranges.push_back(QTextLayout::FormatRange{text.length(), t.length(), it.fragment().charFormat()});
+			text.append(t);
+		}
+	}
+
+	layout.setText(text);
+	layout.setFormats(ranges);
+
+	const QRect textRect = rect.adjusted(textMargin, 0, -textMargin, 0);
+	QPointF textPos(textRect.topLeft());
+
+	layout.beginLayout();
+	QTextLine line = layout.createLine();
+	line.setPosition(QPointF(0.0, option.fontMetrics.leading()));
+	line.setLineWidth(textRect.width());
+	textPos.ry() += (qreal(textRect.height()) - line.height()) / 2.;
+	layout.endLayout();
+
+	layout.draw(painter, textPos);
 }
 
 void
@@ -262,11 +218,11 @@ LinesItemDelegate::paint(QPainter *painter, const QStyleOptionViewItem &opt, con
 			option.backgroundBrush = option.palette.highlight().color().lighter(165);
 		}
 	}
-	drawBackgroundPrimitive(painter, style, option);
+	style->drawPrimitive(QStyle::PE_PanelItemViewItem, &option, painter, option.widget);
 
 	// draw the icon(s)
-	bool showMarkedIcon = index.data(LinesModel::MarkedRole).toBool();
-	bool showErrorIcon = index.data(LinesModel::ErrorRole).toBool();
+	const bool showMarkedIcon = index.data(LinesModel::MarkedRole).toBool();
+	const bool showErrorIcon = index.data(LinesModel::ErrorRole).toBool();
 
 	if(showMarkedIcon || showErrorIcon) {
 		int iconSize = qMin(textRect.width(), textRect.height()) - 3;
@@ -292,13 +248,15 @@ LinesItemDelegate::paint(QPainter *painter, const QStyleOptionViewItem &opt, con
 		}
 	}
 	// draw the text
-	if(!option.text.isEmpty()) {
+	if(isRichDoc(index) || !option.text.isEmpty()) {
 		if(option.state & QStyle::State_Editing) {
 			painter->setPen(option.palette.color(cg, QPalette::Text));
 			painter->drawRect(textRect.adjusted(0, 0, -1, -1));
+		} else if(isRichDoc(index)) {
+			drawRichText(painter, option, textRect);
+		} else {
+			drawTextPrimitive(painter, style, option, textRect, cg, index);
 		}
-
-		drawTextPrimitive(painter, style, option, textRect, cg, index);
 	}
 	// draw the focus rect
 	if(option.state & QStyle::State_HasFocus) {
@@ -318,38 +276,31 @@ LinesItemDelegate::paint(QPainter *painter, const QStyleOptionViewItem &opt, con
 QString
 LinesItemDelegate::displayText(const QVariant &value, const QLocale &locale) const
 {
-	static const QChar pipeChar('|');
-	static const QChar newLineChar(QChar::LineSeparator);
-
-	if(value.type() == QVariant::String)
-		return value.toString().replace('\n', m_singleLineMode ? pipeChar : newLineChar);
-	else
-		return QStyledItemDelegate::displayText(value, locale);
+	if(value.userType() == qMetaTypeId<RichDocumentPtr>())
+		return QString();
+	return QStyledItemDelegate::displayText(value, locale);
 }
 
-const QIcon &
-LinesItemDelegate::markIcon()
+QWidget *
+LinesItemDelegate::createEditor(QWidget *parent, const QStyleOptionViewItem &option, const QModelIndex &index) const
 {
-	static QIcon icon;
-	if(icon.isNull())
-		icon = QIcon::fromTheme(QStringLiteral("dialog-warning"));
-	return icon;
+	if(isRichDoc(index)) {
+		RichLineEdit *ed = new RichLineEdit(parent);
+		ed->setLineEditStyle(option);
+		return ed;
+	}
+	return QStyledItemDelegate::createEditor(parent, option, index);
 }
 
-const QIcon &
-LinesItemDelegate::errorIcon()
+void
+LinesItemDelegate::setEditorData(QWidget *editor, const QModelIndex &index) const
 {
-	static QIcon icon;
-	if(icon.isNull())
-		icon = QIcon::fromTheme(QStringLiteral("dialog-error"));
-	return icon;
-}
-
-const QIcon &
-LinesItemDelegate::anchorIcon()
-{
-	static QIcon icon;
-	if(icon.isNull())
-		icon = QIcon::fromTheme(QStringLiteral("anchor"));
-	return icon;
+	if(isRichDoc(index)) {
+		RichDocument *doc = index.data(Qt::EditRole).value<RichDocumentPtr>();
+		RichLineEdit *edit = static_cast<RichLineEdit *>(editor);
+		if(edit->document() != doc)
+			edit->setDocument(doc);
+	} else {
+		QStyledItemDelegate::setEditorData(editor, index);
+	}
 }

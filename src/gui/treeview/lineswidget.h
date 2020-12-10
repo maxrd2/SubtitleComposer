@@ -73,9 +73,6 @@ signals:
 protected slots:
 	void closeEditor(QWidget *editor, QAbstractItemDelegate::EndEditHint hint) override;
 
-protected:
-	void changeEvent(QEvent *event) override;
-
 private:
 	void contextMenuEvent(QContextMenuEvent *e) override;
 	void mouseDoubleClickEvent(QMouseEvent *e) override;
@@ -97,8 +94,7 @@ private:
 
 	QPen m_gridPen;
 
-	LinesItemDelegate *m_plainTextDelegate;
-	LinesItemDelegate *m_richTextDelegate;
+	LinesItemDelegate *m_itemsDelegate;
 
 	friend class LinesWidgetScrollToModelDetacher;
 	friend class LinesModel;

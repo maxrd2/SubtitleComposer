@@ -41,41 +41,19 @@ public:
 		EditLowerItem,
 	} ExtendedEditHint;
 
-	LinesItemDelegate(bool useStyle, bool singleLineMode, bool richTextMode, LinesWidget *parent);
+	LinesItemDelegate(LinesWidget *parent);
 	virtual ~LinesItemDelegate();
 
 	inline LinesWidget * linesWidget() const { return qobject_cast<LinesWidget *>(parent()); }
 
-	bool useStyle() const;
-	void setUseStyle(bool useStyle);
-
-	bool singleLineMode() const;
-	void setSingleLineMode(bool singleLineMode);
-
-	bool richTextMode() const;
-	void setRichTextMode(bool richTextMode);
-
-	void updateStyle();
-
 	QString displayText(const QVariant &value, const QLocale &locale) const override;
-
-	static const QIcon & markIcon();
-	static const QIcon & errorIcon();
-	static const QIcon & anchorIcon();
+	QWidget * createEditor(QWidget *parent, const QStyleOptionViewItem &option, const QModelIndex &index) const override;
+	void setEditorData(QWidget *editor, const QModelIndex &index) const override;
 
 protected:
 	bool eventFilter(QObject *object, QEvent *event) override;
 
 	void paint(QPainter *painter, const QStyleOptionViewItem &option, const QModelIndex &index) const override;
-
-	void drawBackgroundPrimitive(QPainter *painter, const QStyle *style, const QStyleOptionViewItem &option) const;
-
-	void drawTextPrimitive(QPainter *painter, const QStyle *style, const QStyleOptionViewItem &option, const QRect &rect, QPalette::ColorGroup cg, const QModelIndex &index) const;
-
-private:
-	bool m_useStyle;
-	bool m_singleLineMode;
-	QTextDocument *m_textDocument;
 };
 }
 
