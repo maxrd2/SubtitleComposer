@@ -19,6 +19,7 @@
 
 #include "waveformwidget.h"
 #include "core/subtitleline.h"
+#include "core/richdocument.h"
 #include "videoplayer/videoplayer.h"
 #include "application.h"
 #include "actions/useraction.h"
@@ -672,7 +673,7 @@ WaveformWidget::paintGraphics(QPainter &painter)
 
 			painter.setFont(m_fontText);
 			painter.setPen(m_subTextColor);
-			painter.drawText(box, Qt::AlignCenter, (m_showTranslation ? sub->secondaryText() : sub->primaryText()).string());
+			painter.drawText(box, Qt::AlignCenter, (m_showTranslation ? sub->secondaryDoc() : sub->primaryDoc())->toPlainText());
 
 			painter.setPen(m_subNumberColor);
 			painter.setFont(m_fontNumber);
@@ -1152,7 +1153,7 @@ WaveformWidget::showContextMenu(QMouseEvent *event)
 					}
 				}
 
-				SubtitleLine *newLine = new SubtitleLine(SString(), timeShow,
+				SubtitleLine *newLine = new SubtitleLine(timeShow,
 					timeHide.toMillis() - timeShow.toMillis() > SCConfig::minDuration() ? timeHide : timeShow + SCConfig::minDuration());
 				m_subtitle->insertLine(newLine, insertIndex);
 				app->linesWidget()->setCurrentLine(newLine, true);
@@ -1160,7 +1161,7 @@ WaveformWidget::showContextMenu(QMouseEvent *event)
 			UserAction::SubOpened);
 		needCurrentLine.append(
 			menu->addAction(QIcon::fromTheme(QStringLiteral("list-remove")), i18n("Remove Line"), [&](){
-				m_subtitle->removeLines(RangeList(Range(currentLine->index())), Both);
+				m_subtitle->removeLines(RangeList(Range(currentLine->index())), SubtitleTarget::Both);
 				if(selectedLine != currentLine)
 					app->linesWidget()->setCurrentLine(selectedLine, true);
 			}));

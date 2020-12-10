@@ -22,6 +22,7 @@
  */
 
 #include "formats/outputformat.h"
+#include "core/richdocument.h"
 #include "core/subtitleiterator.h"
 
 namespace SubtitleComposer {
@@ -37,11 +38,11 @@ protected:
 		for(SubtitleIterator it(subtitle); it.current(); ++it) {
 			const SubtitleLine *line = it.current();
 
-			const SString &text = primary ? line->primaryText() : line->secondaryText();
+			QString text = (primary ? line->primaryDoc() : line->secondaryDoc())->toPlainText();
 
 			ret += m_lineBuilder.arg(static_cast<long>((line->showTime().toMillis() / 100.0) + 0.5))
 					.arg(static_cast<long>((line->hideTime().toMillis() / 100.0) + 0.5))
-					.arg(text.string().replace('\n', '|'));
+					.arg(text.replace('\n', '|'));
 		}
 		return ret;
 	}

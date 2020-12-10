@@ -21,6 +21,7 @@
 # include "config.h"
 #endif
 
+#include "core/richdocument.h"
 #include "helpers/pluginhelper.h"
 #include "speechprocessor.h"
 #include "speechplugin.h"
@@ -195,6 +196,8 @@ SpeechProcessor::onTextRecognized(const QString &text, const double milliShow, c
 		return;
 
 	LinesWidgetScrollToModelDetacher detacher(*app()->linesWidget());
-	m_subtitle->insertLine(new SubtitleLine(SString(text), milliShow, milliHide));
+	SubtitleLine *line = new SubtitleLine(milliShow, milliHide);
+	line->primaryDoc()->setPlainText(text);
+	m_subtitle->insertLine(line);
 }
 

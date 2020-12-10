@@ -21,6 +21,7 @@
  * Boston, MA 02110-1301, USA.
  */
 
+#include "core/richdocument.h"
 #include "formats/inputformat.h"
 
 #include <QRegExp>
@@ -51,7 +52,9 @@ protected:
 			// To compensate for the format deficiencies, Subtitle Composer writes empty lines
 			// indicating that way the line hide time. We do the same.
 			if(!previousText.isEmpty()) {
-				subtitle.insertLine(new SubtitleLine(previousText, previousShowTime, showTime));
+				SubtitleLine *l = new SubtitleLine(previousShowTime, showTime);
+				l->primaryDoc()->setPlainText(previousText);
+				subtitle.insertLine(l);
 
 				readLines++;
 			}
@@ -60,7 +63,9 @@ protected:
 			previousShowTime = showTime;
 		}
 		if(!previousText.isEmpty()) {
-			subtitle.insertLine(new SubtitleLine(previousText, previousShowTime, previousShowTime + 2000));
+			SubtitleLine *l = new SubtitleLine(previousShowTime, previousShowTime + 2000);
+			l->primaryDoc()->setPlainText(previousText);
+			subtitle.insertLine(l);
 
 			readLines++;
 		}

@@ -25,8 +25,8 @@
 #include "core/rangelist.h"
 #include "core/time.h"
 #include "core/sstring.h"
-#include "subtitleline.h"
 #include "core/subtitletarget.h"
+#include "helpers/objectref.h"
 #include "formatdata.h"
 
 #include <QObject>
@@ -34,7 +34,11 @@
 #include <QStringList>
 #include <QList>
 
+QT_FORWARD_DECLARE_CLASS(QUndoCommand)
+
 namespace SubtitleComposer {
+class RichDocument;
+class SubtitleLine;
 
 class Subtitle : public QObject
 {
@@ -155,11 +159,9 @@ public:
 	void simplifyTextWhiteSpace(const RangeList &ranges, SubtitleTarget target);
 
 	void syncWithSubtitle(const Subtitle &refSubtitle);
-	void appendSubtitle(const Subtitle &srcSubtitle, long shiftMsecsBeforeAppend);
+	void appendSubtitle(const Subtitle &srcSubtitle, double shiftMsecsBeforeAppend);
 	void splitSubtitle(Subtitle &dstSubtitle, const Time &splitTime, bool shiftSplitLines);
 
-	void setStyleFlags(const RangeList &ranges, int styleFlags);
-	void setStyleFlags(const RangeList &ranges, int styleFlags, bool on);
 	void toggleStyleFlag(const RangeList &ranges, SString::StyleFlag styleFlag);
 	void changeTextColor(const RangeList &ranges, QRgb color);
 
@@ -189,12 +191,12 @@ signals:
 	void lineAnchorChanged(const SubtitleLine *line, bool anchored);
 
 /// forwarded line signals
-	void linePrimaryTextChanged(SubtitleLine *line, const SString &text);
-	void lineSecondaryTextChanged(SubtitleLine *line, const SString &text);
-	void lineShowTimeChanged(SubtitleLine *line, const Time &showTime);
-	void lineHideTimeChanged(SubtitleLine *line, const Time &hideTime);
-	void lineErrorFlagsChanged(SubtitleLine *line, int errorFlags);
-	void lineMarkChanged(SubtitleLine *line, bool marked);
+	void linePrimaryTextChanged(SubtitleLine *line);
+	void lineSecondaryTextChanged(SubtitleLine *line);
+	void lineShowTimeChanged(SubtitleLine *line);
+	void lineHideTimeChanged(SubtitleLine *line);
+	void lineErrorFlagsChanged(SubtitleLine *line);
+	void lineMarkChanged(SubtitleLine *line);
 
 private:
 	FormatData * formatData() const;
@@ -237,4 +239,7 @@ private:
 	Subtitle &m_subtitle;
 };
 }
+
+#include "subtitleline.h"
+
 #endif

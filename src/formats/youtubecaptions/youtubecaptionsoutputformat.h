@@ -22,6 +22,7 @@
  */
 
 #include "formats/outputformat.h"
+#include "core/richdocument.h"
 #include "core/subtitleiterator.h"
 
 namespace SubtitleComposer {
@@ -50,7 +51,7 @@ protected:
 										 hideTime.mseconds()
 										 );
 
-			const SString &text = primary ? line->primaryText() : line->secondaryText();
+			const SString text = (primary ? line->primaryDoc() : line->secondaryDoc())->toRichText();
 
 			// TODO does the format actually supports styled text?
 			// if so, does it use standard HTML style tags?

@@ -19,6 +19,7 @@
  */
 
 #include "replacer.h"
+#include "core/richdocument.h"
 #include "core/subtitleiterator.h"
 
 #include <QGroupBox>
@@ -183,13 +184,13 @@ Replacer::onFindNext()
 			if(dataLine) {
 				if(!m_translationMode || m_targetRadioButtons[Primary]->isChecked()) {
 					m_feedingPrimary = true;
-					m_replace->setData(dataLine->primaryText().string());
+					m_replace->setData(dataLine->primaryDoc()->toPlainText());
 				} else if(m_targetRadioButtons[Secondary]->isChecked()) {
 					m_feedingPrimary = false;
-					m_replace->setData(dataLine->secondaryText().string());
+					m_replace->setData(dataLine->secondaryDoc()->toPlainText());
 				} else { // m_translationMode && m_targetRadioButtons[SubtitleLine::Both]->isChecked()
 					m_feedingPrimary = !m_feedingPrimary;   // alternate the data source
-					m_replace->setData((m_feedingPrimary ? dataLine->primaryText() : dataLine->secondaryText()).string());
+					m_replace->setData((m_feedingPrimary ? dataLine->primaryDoc() : dataLine->secondaryDoc())->toPlainText());
 				}
 			}
 		}
@@ -254,17 +255,10 @@ Replacer::onHighlight(const QString &, int matchingIndex, int matchedLength)
 void
 Replacer::onReplace(const QString &text, int replacementIndex, int replacedLength, int matchedLength)
 {
-	SubtitleCompositeActionExecutor executor(*m_subtitle, i18n("Replace"));
+	SubtitleCompositeActionExecutor(*m_subtitle, i18n("Replace"));
 
-	if(m_feedingPrimary) {
-		SString stext = m_iterator->current()->primaryText();
-		stext.replace(replacementIndex, matchedLength, text.mid(replacementIndex, replacedLength));
-		m_iterator->current()->setPrimaryText(stext);
-	} else {
-		SString stext = m_iterator->current()->secondaryText();
-		stext.replace(replacementIndex, matchedLength, text.mid(replacementIndex, replacedLength));
-		m_iterator->current()->setSecondaryText(stext);
-	}
+	RichDocument *doc = m_feedingPrimary
+			? m_iterator->current()->primaryDoc()
+			: m_iterator->current()->secondaryDoc();
+	doc->replace(replacementIndex, matchedLength, text.mid(replacementIndex, replacedLength));
 }
-
-

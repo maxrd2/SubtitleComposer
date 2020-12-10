@@ -21,6 +21,7 @@
 
 #include "errortracker.h"
 #include "application.h"
+#include "core/richdocument.h"
 #include "core/subtitleline.h"
 
 using namespace SubtitleComposer;

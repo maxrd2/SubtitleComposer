@@ -18,9 +18,11 @@
  * Boston, MA 02110-1301, USA.
  */
 
+#include "core/richdocument.h"
 #include "core/subtitle.h"
 #include "gui/treeview/linesmodel.h"
 #include "gui/treeview/lineswidget.h"
+#include "helpers/common.h"
 
 #include <QFont>
 #include <QFontMetrics>
@@ -162,10 +164,10 @@ LinesModel::buildToolTip(SubtitleLine *line, bool primary)
 	else
 		errorFlags &= ~SubtitleLine::PrimaryOnlyErrors;
 
-	const SString &text = primary ? line->primaryText() : line->secondaryText();
+	const RichDocument *text = primary ? line->primaryDoc() : line->secondaryDoc();
 
 	if(errorFlags) {
-		QString toolTip = "<p style='white-space:pre;margin-bottom:6px;'>" + text.richString() + "</p><p style='white-space:pre;margin-top:0px;'>";
+		QString toolTip = "<p style='white-space:pre;margin-bottom:6px;'>" + text->toHtml() + "</p><p style='white-space:pre;margin-top:0px;'>";
 
 		if(errorFlags) {
 			toolTip += i18n("<b>Observations:</b>");
@@ -185,7 +187,7 @@ LinesModel::buildToolTip(SubtitleLine *line, bool primary)
 		return toolTip;
 	}
 
-	return text.richString();
+	return text->toHtml();
 }
 
 QVariant
@@ -242,28 +244,28 @@ LinesModel::data(const QModelIndex &index, int role) const
 
 	case Text:
 		if(role == Qt::DisplayRole)
-			return line->primaryText().richString();
+			return line->primaryDoc()->toHtml().replace($("<br>\n"), $("|"));
 		if(role == MarkedRole)
 			return line->errorFlags() & SubtitleLine::UserMark;
 		if(role == ErrorRole)
 			return line->errorFlags() & ((SubtitleLine::SharedErrors | SubtitleLine::PrimaryOnlyErrors) & ~SubtitleLine::UserMark);
 		if(role == Qt::ToolTipRole)
-			return buildToolTip(m_subtitle->line(index.row()), true);
+			return buildToolTip(line, true);
 		if(role == Qt::EditRole)
-			return m_subtitle->line(index.row())->primaryText().richString().replace('\n', '|');
+			return line->primaryDoc()->toHtml().replace($("<br>\n"), $("|"));
 		break;
 
 	case Translation:
 		if(role == Qt::DisplayRole)
-			return m_subtitle->line(index.row())->secondaryText().richString();
+			return line->secondaryDoc()->toHtml().replace($("<br>\n"), $("|"));
 		if(role == MarkedRole)
 			return line->errorFlags() & SubtitleLine::UserMark;
 		if(role == ErrorRole)
 			return line->errorFlags() & ((SubtitleLine::SharedErrors | SubtitleLine::SecondaryOnlyErrors) & ~SubtitleLine::UserMark);
 		if(role == Qt::ToolTipRole)
-			return buildToolTip(m_subtitle->line(index.row()), false);
+			return buildToolTip(line, false);
 		if(role == Qt::EditRole)
-			return m_subtitle->line(index.row())->secondaryText().richString().replace('\n', '|');
+			return line->secondaryDoc()->toHtml().replace($("<br>\n"), $("|"));
 		break;
 
 	default:
@@ -281,18 +283,14 @@ LinesModel::setData(const QModelIndex &index, const QVariant &value, int role)
 	switch(index.column()) {
 	case Text:
 		if(role == Qt::EditRole) {
-			SString sstring;
-			sstring.setRichString(value.toString().replace('|', '\n'));
-			m_subtitle->line(index.row())->setPrimaryText(sstring);
+			m_subtitle->line(index.row())->primaryDoc()->setHtml(value.toString().replace($("|"), $("<br>")));
 			emit dataChanged(index, index);
 			return true;
 		}
 		break;
 	case Translation:
 		if(role == Qt::EditRole) {
-			SString sstring;
-			sstring.setRichString(value.toString().replace('|', '\n'));
-			m_subtitle->line(index.row())->setSecondaryText(sstring);
+			m_subtitle->line(index.row())->secondaryDoc()->setHtml(value.toString().replace($("|"), $("<br>")));
 			emit dataChanged(index, index);
 			return true;
 		}

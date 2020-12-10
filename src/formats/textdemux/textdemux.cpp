@@ -19,6 +19,7 @@
 
 #include "textdemux.h"
 
+#include "core/richdocument.h"
 #include "core/subtitle.h"
 #include "streamprocessor/streamprocessor.h"
 
@@ -81,7 +82,9 @@ TextDemux::onStreamData(const QString &text, quint64 msecStart, quint64 msecDura
 	SString stxt;
 	stxt.setRichString(text);
 
-	m_subtitleTemp->insertLine(new SubtitleLine(stxt, Time(double(msecStart)), Time(double(msecStart) + double(msecDuration))));
+	SubtitleLine *line = new SubtitleLine(Time(double(msecStart)), Time(double(msecStart) + double(msecDuration)));
+	line->primaryDoc()->setPlainText(stxt);
+	m_subtitleTemp->insertLine(line);
 }
 
 void

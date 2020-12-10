@@ -22,6 +22,7 @@
  */
 
 #include "formats/outputformat.h"
+#include "core/richdocument.h"
 #include "core/subtitleiterator.h"
 
 namespace SubtitleComposer {
@@ -40,8 +41,8 @@ protected:
 			Time showTime = line->showTime();
 			ret += QString::asprintf("[%02d:%02d:%02d]\n", showTime.hours(), showTime.minutes(), showTime.seconds());
 
-			const SString &text = primary ? line->primaryText() : line->secondaryText();
-			ret += text.string().replace('\n', '|');
+			QString text = (primary ? line->primaryDoc() : line->secondaryDoc())->toPlainText();
+			ret += text.replace('\n', '|');
 
 			Time hideTime = line->hideTime();
 			ret += QString::asprintf("\n[%02d:%02d:%02d]\n\n", hideTime.hours(), hideTime.minutes(), hideTime.seconds());

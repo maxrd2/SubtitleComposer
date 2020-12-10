@@ -51,17 +51,19 @@ class SetLinePrimaryTextAction : public SubtitleLineAction
 	friend class SetLineTextsAction;
 
 public:
-	SetLinePrimaryTextAction(SubtitleLine &line, const SString &primaryText);
+	SetLinePrimaryTextAction(SubtitleLine &line, RichDocument *primaryDoc);
 	virtual ~SetLinePrimaryTextAction();
 
 	inline int id() const override { return UndoAction::SetLinePrimaryText; }
 	bool mergeWith(const QUndoCommand *command) override;
 
 protected:
+	void undo() override;
 	void redo() override;
 
 private:
-	SString m_primaryText;
+	RichDocument *m_primaryDoc;
+	int m_primaryDocState = -1;
 };
 
 class SetLineSecondaryTextAction : public SubtitleLineAction
@@ -69,35 +71,19 @@ class SetLineSecondaryTextAction : public SubtitleLineAction
 	friend class SetLineTextsAction;
 
 public:
-	SetLineSecondaryTextAction(SubtitleLine &line, const SString &secondaryText);
+	SetLineSecondaryTextAction(SubtitleLine &line, RichDocument *secondaryDoc);
 	virtual ~SetLineSecondaryTextAction();
 
 	inline int id() const override { return UndoAction::SetLineSecondaryText; }
 	bool mergeWith(const QUndoCommand *command) override;
 
 protected:
+	void undo() override;
 	void redo() override;
 
 private:
-	SString m_secondaryText;
-};
-
-class SetLineTextsAction : public SubtitleLineAction
-{
-public:
-
-	SetLineTextsAction(SubtitleLine &line, const SString &primaryText, const SString &secondaryText);
-	virtual ~SetLineTextsAction();
-
-	inline int id() const override { return UndoAction::SetLineTexts; }
-	bool mergeWith(const QUndoCommand *command) override;
-
-protected:
-	void redo() override;
-
-private:
-	SString m_primaryText;
-	SString m_secondaryText;
+	RichDocument *m_secondaryDoc;
+	int m_secondaryDocState = -1;
 };
 
 class SetLineShowTimeAction : public SubtitleLineAction

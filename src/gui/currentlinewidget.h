@@ -29,6 +29,7 @@
 QT_FORWARD_DECLARE_CLASS(QTimer)
 QT_FORWARD_DECLARE_CLASS(QLabel)
 QT_FORWARD_DECLARE_CLASS(QToolButton)
+QT_FORWARD_DECLARE_CLASS(QTextDocument)
 class TimeEdit;
 
 namespace SubtitleComposer {
@@ -57,16 +58,12 @@ public slots:
 	void selectTranslationText(int startIndex, int endIndex);
 
 protected slots:
-	void onPrimaryTextEditChanged();
-	void onSecondaryTextEditChanged();
 	void onShowTimeEditChanged(int showTime);
 	void onHideTimeEditChanged(int hideTime);
 	void onDurationTimeEditChanged(int durationTime);
 
 	void onLineAnchorChanged(const SubtitleLine *line, bool anchored);
 
-	void onLinePrimaryTextChanged(const SString &primaryText);
-	void onLineSecondaryTextChanged(const SString &secondaryText);
 	void onLineShowTimeChanged(const Time &showTime);
 	void onLineHideTimeChanged(const Time &hideTime);
 
@@ -78,12 +75,12 @@ private:
 
 	QString buildTextDescription(const QString &text);
 
-protected:
+private:
 	Subtitle *m_subtitle;
 	SubtitleLine *m_currentLine;
 	bool m_translationMode;
 
-	int m_userChangingText = 0;
+	static QTextDocument m_blankDoc;
 
 	TimeEdit *m_showTimeEdit;
 	TimeEdit *m_hideTimeEdit;
@@ -93,8 +90,6 @@ protected:
 	QWidget *m_boxTranslation = nullptr;
 	SimpleRichTextEdit *m_textEdits[2] = {0};
 	QLabel *m_textLabels[2] = {0};
-
-//	QTimer *m_updateShorcutsTimer;
 };
 }
 #endif

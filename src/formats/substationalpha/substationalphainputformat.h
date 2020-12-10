@@ -21,6 +21,7 @@
  * Boston, MA 02110-1301, USA.
  */
 
+#include "core/richdocument.h"
 #include "formats/inputformat.h"
 
 #include <QRegExp>
@@ -128,7 +129,8 @@ protected:
 				continue;
 			Time hideTime(m_timeRegExp.cap(1).toInt(), m_timeRegExp.cap(2).toInt(), m_timeRegExp.cap(3).toInt(), m_timeRegExp.cap(4).toInt() * 10);
 
-			SubtitleLine *line = new SubtitleLine(toSString(m_dialogueRegExp.cap(3)), showTime, hideTime);
+			SubtitleLine *line = new SubtitleLine(showTime, hideTime);
+			line->primaryDoc()->setRichText(toSString(m_dialogueRegExp.cap(3)), true);
 
 			formatData.setValue(QStringLiteral("Dialogue"), m_dialogueRegExp.cap(0).replace(m_dialogueDataRegExp, QStringLiteral("\\1%1\\2%2\\3%3\n")));
 			setFormatData(line, formatData);

@@ -20,6 +20,7 @@
 
 #include "speller.h"
 #include "application.h"
+#include "core/richdocument.h"
 #include "core/subtitleiterator.h"
 
 #include <QDebug>
@@ -92,7 +93,7 @@ void
 Speller::updateBuffer()
 {
 	if(m_iterator)
-		m_sonnetDialog->setBuffer((m_useTranslation ? m_iterator->current()->secondaryText() : m_iterator->current()->primaryText()).string());
+		m_sonnetDialog->setBuffer((m_useTranslation ? m_iterator->current()->secondaryDoc() : m_iterator->current()->primaryDoc())->toPlainText());
 }
 
 void
@@ -164,9 +165,9 @@ Speller::onCorrected(const QString &before, int pos, const QString &after)
 		return;
 
 	if(m_useTranslation)
-		m_iterator->current()->setSecondaryText(SString(m_iterator->current()->secondaryText()).replace(pos, before.length(), after));
+		m_iterator->current()->secondaryDoc()->replace(pos, before.length(), after);
 	else
-		m_iterator->current()->setPrimaryText(SString(m_iterator->current()->primaryText()).replace(pos, before.length(), after));
+		m_iterator->current()->primaryDoc()->replace(pos, before.length(), after);
 }
 
 void

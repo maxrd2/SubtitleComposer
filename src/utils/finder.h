@@ -58,8 +58,8 @@ signals:
 private slots:
 	void invalidate();
 
-	void onLinePrimaryTextChanged(const SString &text);
-	void onLineSecondaryTextChanged(const SString &text);
+	void onLinePrimaryTextChanged();
+	void onLineSecondaryTextChanged();
 
 	void onHighlight(const QString &text, int matchingIndex, int matchedLength);
 

@@ -21,6 +21,7 @@
 #include "scripting_subtitleline.h"
 #include "scripting_sstring.h"
 #include "application.h"
+#include "core/richdocument.h"
 #include "core/subtitletarget.h"
 
 #include <QDebug>
@@ -89,7 +90,7 @@ Scripting::SubtitleLine::primaryLines() const
 QObject *
 Scripting::SubtitleLine::primaryText() const
 {
-	return new Scripting::SString(m_backend->primaryText(), const_cast<Scripting::SubtitleLine *>(this));
+	return new Scripting::SString(m_backend->primaryDoc()->toRichText(), const_cast<Scripting::SubtitleLine *>(this));
 }
 
 void
@@ -97,25 +98,25 @@ Scripting::SubtitleLine::setPrimaryText(const QObject *object)
 {
 	const Scripting::SString *string = qobject_cast<const Scripting::SString *>(object);
 	if(string)
-		m_backend->setPrimaryText(string->m_backend);
+		m_backend->primaryDoc()->setRichText(string->m_backend);
 }
 
 QString
 Scripting::SubtitleLine::plainPrimaryText() const
 {
-	return m_backend->primaryText().string();
+	return m_backend->primaryDoc()->toPlainText();
 }
 
 void
 Scripting::SubtitleLine::setPlainPrimaryText(const QString &plainText)
 {
-	m_backend->setPrimaryText(plainText);
+	m_backend->primaryDoc()->setPlainText(plainText);
 }
 
 QString
 Scripting::SubtitleLine::richPrimaryText() const
 {
-	return m_backend->primaryText().richString();
+	return m_backend->primaryDoc()->toRichText();
 }
 
 void
@@ -123,7 +124,7 @@ Scripting::SubtitleLine::setRichPrimaryText(const QString &richText)
 {
 	SubtitleComposer::SString text;
 	text.setRichString(richText);
-	m_backend->setPrimaryText(text);
+	m_backend->primaryDoc()->setRichText(text);
 }
 
 int
@@ -147,7 +148,7 @@ Scripting::SubtitleLine::secondaryLines() const
 QObject *
 Scripting::SubtitleLine::secondaryText() const
 {
-	return new Scripting::SString(m_backend->secondaryText(), const_cast<Scripting::SubtitleLine *>(this));
+	return new Scripting::SString(m_backend->secondaryDoc()->toRichText(), const_cast<Scripting::SubtitleLine *>(this));
 }
 
 void
@@ -156,27 +157,27 @@ Scripting::SubtitleLine::setSecondaryText(const QObject *object)
 	if(app()->translationMode()) {
 		const Scripting::SString *string = qobject_cast<const Scripting::SString *>(object);
 		if(string)
-			m_backend->setSecondaryText(string->m_backend);
+			m_backend->secondaryDoc()->setRichText(string->m_backend);
 	}
 }
 
 QString
 Scripting::SubtitleLine::plainSecondaryText() const
 {
-	return m_backend->secondaryText().string();
+	return m_backend->secondaryDoc()->toPlainText();
 }
 
 void
 Scripting::SubtitleLine::setPlainSecondaryText(const QString &plainText)
 {
 	if(app()->translationMode())
-		m_backend->setSecondaryText(plainText);
+		m_backend->secondaryDoc()->setPlainText(plainText);
 }
 
 QString
 Scripting::SubtitleLine::richSecondaryText() const
 {
-	return m_backend->secondaryText().richString();
+	return m_backend->secondaryDoc()->toRichText();
 }
 
 void
@@ -185,7 +186,7 @@ Scripting::SubtitleLine::setRichSecondaryText(const QString &richText)
 	if(app()->translationMode()) {
 		SubtitleComposer::SString text;
 		text.setRichString(richText);
-		m_backend->setSecondaryText(text);
+		m_backend->secondaryDoc()->setRichText(text);
 	}
 }
 
@@ -422,5 +423,5 @@ Scripting::SubtitleLine::check(int errorFlagsToCheck, bool update)
 bool
 Scripting::SubtitleLine::isRightToLeft() const
 {
-	return m_backend->primaryText().isRightToLeft();
+	return m_backend->primaryDoc()->toPlainText().isRightToLeft();
 }

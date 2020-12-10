@@ -18,6 +18,7 @@
  * Boston, MA 02110-1301, USA.
  */
 
+#include "core/richdocument.h"
 #include "core/subtitle.h"
 #include "core/subtitleline.h"
 #include "core/subtitleiterator.h"
@@ -28,6 +29,8 @@
 #include "scconfig.h"
 #include "application.h"
 #include "gui/treeview/lineswidget.h"
+
+#include <QTextDocumentFragment>
 
 #include <KLocalizedString>
 
@@ -81,27 +84,26 @@ Subtitle::setPrimaryData(const Subtitle &from, bool usePrimaryData)
 	const int thisErrors = SubtitleLine::SecondaryOnlyErrors;
 
 	for(SubtitleLine *fromLine = fromIt.current(), *thisLine = thisIt.current(); fromLine && thisLine; ++fromIt, ++thisIt, fromLine = fromIt.current(), thisLine = thisIt.current()) {
-		thisLine->setPrimaryText(usePrimaryData ? fromLine->primaryText() : fromLine->secondaryText());
+		thisLine->setPrimaryDoc(usePrimaryData ? fromLine->primaryDoc() : fromLine->secondaryDoc());
 		thisLine->setTimes(fromLine->showTime(), fromLine->hideTime());
 		thisLine->setErrorFlags((fromLine->errorFlags() & fromErrors) | (thisLine->errorFlags() & thisErrors));
 		thisLine->setFormatData(fromLine->formatData());
 	}
 
-	if(fromIt.current()) {          // 'from' had more lines than '*this'
+	if(fromIt.current()) { // from has more lines
 		QList<SubtitleLine *> lines;
 		for(; fromIt.current(); ++fromIt) {
-			SubtitleLine *thisLine = new SubtitleLine(*fromIt.current());
-			if(!usePrimaryData)
-				thisLine->setPrimaryText(thisLine->secondaryText());
-			thisLine->setSecondaryText(SString());
+			const SubtitleLine *cur = fromIt.current();
+			SubtitleLine *thisLine = new SubtitleLine(cur->showTime(), cur->hideTime());
+			thisLine->setPrimaryDoc(usePrimaryData ? cur->primaryDoc() : cur->secondaryDoc());
 			thisLine->setErrorFlags(SubtitleLine::SecondaryOnlyErrors, false);
-			thisLine->setFormatData(fromIt.current()->formatData());
+			thisLine->setFormatData(cur->formatData());
 			lines.append(thisLine);
 		}
 		processAction(new InsertLinesAction(*this, lines));
-	} else if(thisIt.current()) {   // '*this'  had more lines than 'from'
+	} else if(thisIt.current()) { // this has more lines
 		for(SubtitleLine *thisLine = thisIt.current(); thisLine; ++thisIt, thisLine = thisIt.current()) {
-			thisLine->setPrimaryText(SString());
+			thisLine->primaryDoc()->clear();
 			thisLine->setErrorFlags(SubtitleLine::PrimaryOnlyErrors, false);
 			thisLine->setFormatData(0);
 		}
@@ -116,7 +118,7 @@ Subtitle::clearPrimaryTextData()
 	beginCompositeAction(i18n("Clear Primary Text Data"));
 
 	for(SubtitleIterator it(*this); it.current(); ++it) {
-		it.current()->setPrimaryText(SString());
+		it.current()->primaryDoc()->clear();
 		it.current()->setErrorFlags(SubtitleLine::PrimaryOnlyErrors, false);
 	}
 
@@ -134,14 +136,14 @@ Subtitle::setSecondaryData(const Subtitle &from, bool usePrimaryData)
 	for(int i = 0, n = m_lines.size(); i < n; i++) {
 		const SubtitleLine *srcLine = from.m_lines.at(i).obj();
 		SubtitleLine *dstLine = m_lines.at(i).obj();
-		dstLine->setSecondaryText(usePrimaryData ? srcLine->primaryText() : srcLine->secondaryText());
+		dstLine->setSecondaryDoc(usePrimaryData ? srcLine->primaryDoc() : srcLine->secondaryDoc());
 		dstLine->setErrorFlags((dstLine->errorFlags() & dstErrors) | (srcLine->errorFlags() & srcErrors));
 	}
 
 	// clear remaining local translations
 	for(int i = from.m_lines.size(), n = m_lines.size(); i < n; i++) {
 		SubtitleLine *dstLine = m_lines.at(i).obj();
-		dstLine->setSecondaryText(SString());
+		dstLine->secondaryDoc()->clear();
 		dstLine->setErrorFlags(SubtitleLine::SecondaryOnlyErrors, false);
 	}
 
@@ -149,10 +151,8 @@ Subtitle::setSecondaryData(const Subtitle &from, bool usePrimaryData)
 	QList<SubtitleLine *> newLines;
 	for(int i = m_lines.size(), n = from.m_lines.size(); i < n; i++) {
 		const SubtitleLine *srcLine = from.m_lines.at(i).obj();
-		SubtitleLine *dstLine = new SubtitleLine(*srcLine);
-		if(usePrimaryData)
-			dstLine->setSecondaryText(dstLine->primaryText());
-		dstLine->setPrimaryText(SString());
+		SubtitleLine *dstLine = new SubtitleLine(srcLine->showTime(), srcLine->hideTime());
+		dstLine->setSecondaryDoc(usePrimaryData ? srcLine->primaryDoc() : srcLine->secondaryDoc());
 		dstLine->setErrorFlags(SubtitleLine::PrimaryOnlyErrors, false);
 		newLines.append(dstLine);
 	}
@@ -168,7 +168,7 @@ Subtitle::clearSecondaryTextData()
 	beginCompositeAction(i18n("Clear Secondary Text Data"));
 
 	for(SubtitleIterator it(*this); it.current(); ++it) {
-		it.current()->setSecondaryText(SString());
+		it.current()->secondaryDoc()->clear();
 		it.current()->setErrorFlags(SubtitleLine::SecondaryOnlyErrors, false);
 	}
 
@@ -440,10 +440,10 @@ Subtitle::insertNewLine(int index, bool insertAfter, SubtitleTarget target)
 		SubtitleLine *line = newLine;
 		SubtitleIterator it(*this, Range::full(), false);
 		for(it.toIndex(newLineIndex + 1); it.current(); ++it) {
-			line->setSecondaryText(it.current()->secondaryText());
+			line->setSecondaryDoc(it.current()->secondaryDoc());
 			line = it.current();
 		}
-		line->setSecondaryText(SString());
+		line->secondaryDoc()->clear();
 
 		endCompositeAction();
 	} else if(target == Secondary) {
@@ -454,10 +454,10 @@ Subtitle::insertNewLine(int index, bool insertAfter, SubtitleTarget target)
 		SubtitleIterator it(*this, Range::full(), true);
 		SubtitleLine *line = it.current();
 		for(--it; it.index() >= index; --it) {
-			line->setSecondaryText(it.current()->secondaryText());
+			line->setSecondaryDoc(it.current()->secondaryDoc());
 			line = it.current();
 		}
-		line->setSecondaryText(SString());
+		line->secondaryDoc()->clear();
 
 		newLine = line;
 
@@ -499,11 +499,11 @@ Subtitle::removeLines(const RangeList &r, SubtitleTarget target)
 		SubtitleIterator srcIt(*this, rangesComplement);
 		SubtitleIterator dstIt(*this, Range::upper(ranges.firstIndex()));
 		for(; srcIt.current() && dstIt.current(); ++srcIt, ++dstIt)
-			dstIt.current()->setSecondaryText(srcIt.current()->secondaryText());
+			dstIt.current()->setSecondaryDoc(srcIt.current()->secondaryDoc());
 
 		// the remaining lines secondary text must be cleared
 		for(; dstIt.current(); ++dstIt)
-			dstIt.current()->setSecondaryText(SString());
+			dstIt.current()->secondaryDoc()->clear();
 
 		endCompositeAction();
 	} else { // target == Primary
@@ -525,7 +525,7 @@ Subtitle::removeLines(const RangeList &r, SubtitleTarget target)
 
 		QList<SubtitleLine *> lines;
 		for(int index = 0, size = ranges.indexesCount(); index < size; ++index) {
-			lines.append(new SubtitleLine(SString(), SString(), showTime, hideTime));
+			lines.append(new SubtitleLine(showTime, hideTime));
 			showTime.shift(1100.);
 			hideTime.shift(1100.);
 		}
@@ -538,7 +538,7 @@ Subtitle::removeLines(const RangeList &r, SubtitleTarget target)
 		SubtitleIterator srcIt(*this, Range(ranges.firstIndex(), m_lines.count() - lines.count() - 1), true);
 		SubtitleIterator dstIt(*this, rangesComplement, true);
 		for(; srcIt.current() && dstIt.current(); --srcIt, --dstIt)
-			dstIt.current()->setSecondaryText(srcIt.current()->secondaryText());
+			dstIt.current()->setSecondaryDoc(srcIt.current()->secondaryDoc());
 
 		// finally, we can remove the specified lines
 		RangeList::ConstIterator rangesIt = ranges.end(), begin = ranges.begin();
@@ -560,91 +560,111 @@ Subtitle::swapTexts(const RangeList &ranges)
 void
 Subtitle::splitLines(const RangeList &ranges)
 {
-	auto splitOnSpace = [&](SString &text){
+	auto splitOnSpace = [&](RichDocument *doc)->bool{
+		if(doc->isEmpty())
+			return false;
+		const QString &text = doc->toPlainText();
+		QTextCursor *c = doc->undoableCursor();
 		int len = text.length();
 		int i = len / 2;
 		int j = i + len % 2;
 		for(; ; i--, j++) {
-			if(text[i] == QChar::Space) {
-				text[i] = QChar::LineFeed;
-				break;
+			if(text.at(i) == QChar::Space) {
+				c->movePosition(QTextCursor::Start);
+				c->movePosition(QTextCursor::NextCharacter, QTextCursor::MoveAnchor, i);
+				c->movePosition(QTextCursor::NextCharacter, QTextCursor::KeepAnchor);
+				c->insertText(QString(QChar::LineFeed));
+				return true;
 			}
-			Q_ASSERT(j <= len);
-			if(text[j] == QChar::Space) {
-				text[j] = QChar::LineFeed;
-				break;
+			if(text.at(j) == QChar::Space) {
+				c->movePosition(QTextCursor::Start);
+				c->movePosition(QTextCursor::NextCharacter, QTextCursor::MoveAnchor, j);
+				c->movePosition(QTextCursor::NextCharacter, QTextCursor::KeepAnchor);
+				c->insertText(QString(QChar::LineFeed));
+				return true;
 			}
 			if(i == 0) {
-				text.append(QChar::LineFeed);
-				break;
+				c->movePosition(QTextCursor::End, QTextCursor::MoveAnchor);
+				c->insertText(QString(QChar::LineFeed));
+				return true;
 			}
 		}
+		return false;
 	};
 
 	beginCompositeAction(i18n("Split Lines"));
 
 	bool hasMultipleLines = false;
+
 	for(SubtitleIterator it(*this, ranges, true); it.current(); --it) {
-		SubtitleLine *line = it.current();
-
-		line->simplifyTextWhiteSpace(Both);
-
-		if(line->primaryText().count(QChar::LineFeed) || line->secondaryText().count(QChar::LineFeed)) {
+		SubtitleLine *ln = it.current();
+		ln->simplifyTextWhiteSpace(Both);
+		if(!hasMultipleLines && (ln->primaryDoc()->lineCount() > 1 || ln->secondaryDoc()->lineCount() > 1))
 			hasMultipleLines = true;
-			break;
-		}
 	}
 
 	for(SubtitleIterator it(*this, ranges, true); it.current(); --it) {
 		SubtitleLine *line = it.current();
 
-		SString primaryText = line->primaryText();
-		if(primaryText.isEmpty())
+		if(line->primaryDoc()->isEmpty())
 			continue;
-		SString secondaryText = line->secondaryText();
 
 		if(!hasMultipleLines) {
-			if(primaryText.count(QChar::Space) == 0)
+			if(splitOnSpace(line->primaryDoc()))
+				splitOnSpace(line->secondaryDoc());
+			else
 				continue;
-			splitOnSpace(primaryText);
-			splitOnSpace(secondaryText);
 		}
 
-		SStringList primaryLines = primaryText.split(QChar::LineFeed);
-		SStringList secondaryLines = secondaryText.split(QChar::LineFeed);
+		QTextCursor c1(line->primaryDoc());
+		QTextCursor c2(line->secondaryDoc());
 
-		double autoDurationsSum = 0;
-		QList<double> autoDurations;
-		for(SStringList::ConstIterator ptIt = primaryLines.constBegin(), ptEnd = primaryLines.constEnd(); ptIt != ptEnd; ++ptIt) {
-			const Time &autoDuration = SubtitleLine::autoDuration(ptIt->string(), 60, 50, 50);
-			autoDurations.append(autoDuration.toMillis());
-			autoDurationsSum += autoDuration.toMillis();
+		c1.movePosition(QTextCursor::EndOfBlock, QTextCursor::KeepAnchor);
+		QVector<double> dur;
+		dur.push_back(SubtitleLine::autoDuration(c1.selectedText(), 60, 50, 50).toMillis());
+		double totalDuration = dur.back();
+
+		QVector<SubtitleLine *> newLines;
+		for(;;) {
+			if(!c1.movePosition(QTextCursor::NextBlock))
+				c1.movePosition(QTextCursor::EndOfBlock);
+			if(!c2.movePosition(QTextCursor::NextBlock))
+				c2.movePosition(QTextCursor::EndOfBlock);
+			if(c1.atEnd() && c2.atEnd())
+				break;
+
+			c1.movePosition(QTextCursor::EndOfBlock, QTextCursor::KeepAnchor);
+			c2.movePosition(QTextCursor::EndOfBlock, QTextCursor::KeepAnchor);
+
+			dur.push_back(SubtitleLine::autoDuration(c1.selectedText(), 60, 50, 50).toMillis());
+			totalDuration += dur.back();
+
+			SubtitleLine *nl = new SubtitleLine();
+			QTextCursor(nl->primaryDoc()).insertFragment(c1.selection());
+			QTextCursor(nl->secondaryDoc()).insertFragment(c2.selection());
+			newLines.push_back(nl);
 		}
 
-		double autoDurationFactor = (line->durationTime().toMillis() + 1.) / autoDurationsSum;
+		c1.movePosition(QTextCursor::Start);
+		c1.movePosition(QTextCursor::EndOfBlock);
+		c1.movePosition(QTextCursor::End, QTextCursor::KeepAnchor);
+		c1.removeSelectedText();
 
-		while(secondaryLines.count() < primaryLines.count())
-			secondaryLines.append(SString());
-		while(secondaryLines.count() > primaryLines.count())
-			primaryLines.append(SString());
+		c2.movePosition(QTextCursor::Start);
+		c2.movePosition(QTextCursor::EndOfBlock);
+		c2.movePosition(QTextCursor::End, QTextCursor::KeepAnchor);
+		c2.removeSelectedText();
 
-		int subLineIndex = it.index(),
-				splitLineIndex = 0;
-		SStringList::ConstIterator ptIt = primaryLines.constBegin(),
-				ptEnd = primaryLines.constEnd(),
-				stIt = secondaryLines.constBegin(),
-				stEnd = secondaryLines.constEnd();
-		for(; ptIt != ptEnd && stIt != stEnd; ++ptIt, ++stIt, ++subLineIndex, ++splitLineIndex) {
-			if(splitLineIndex) {
-				SubtitleLine *newLine = new SubtitleLine();
-				newLine->setShowTime(line->hideTime() + 1.);
-				insertLine(newLine, subLineIndex);
-				line = newLine;
-			}
-
-			line->setTexts(*ptIt, *stIt);
-			if(primaryLines.count() > 1)
-				line->setDurationTime(Time(autoDurationFactor * autoDurations[splitLineIndex] - 1.));
+		const double lineDur = line->durationTime().toMillis();
+		SubtitleLine *pl = line;
+		auto duri = dur.begin();
+		pl->setDurationTime(lineDur * *duri / totalDuration);
+		for(SubtitleLine *nl: newLines) {
+			++duri;
+			const Time st = pl->hideTime() + 1.;
+			nl->setTimes(st, qMax(st, pl->hideTime() + lineDur * *duri / totalDuration));
+			insertLine(nl, pl->index() + 1);
+			pl = nl;
 		}
 	}
 
@@ -656,7 +676,7 @@ Subtitle::joinLines(const RangeList &ranges)
 {
 	beginCompositeAction(i18n("Join Lines"));
 
-	RangeList obsoletedRanges;
+	RangeList deleteRanges;
 
 	for(RangeList::ConstIterator rangesIt = ranges.begin(), end = ranges.end(); rangesIt != end; ++rangesIt) {
 		int rangeStart = (*rangesIt).start();
@@ -665,29 +685,28 @@ Subtitle::joinLines(const RangeList &ranges)
 		if(rangeStart >= rangeEnd)
 			continue;
 
-		SubtitleLine *firstLine = at(rangeStart);
-		SubtitleLine *lastLine = at(rangeEnd);
-
-		SString primaryText, secondaryText;
-
-		for(SubtitleIterator it(*this, Range(rangeStart, rangeEnd - 1)); it.current(); ++it) {
-			if(!it.current()->primaryText().isEmpty())
-				primaryText.append(it.current()->primaryText()).append(QChar::LineFeed);
-
-			if(!it.current()->secondaryText().isEmpty())
-				secondaryText.append(it.current()->secondaryText()).append(QChar::LineFeed);
+		SubtitleLine *line = at(rangeStart);
+		line->setHideTime(at(rangeEnd)->hideTime());
+		Range postLines(rangeStart + 1, rangeEnd);
+		for(SubtitleIterator it(*this, postLines); it.current(); ++it) {
+			SubtitleLine *ln = it.current();
+			if(!ln->primaryDoc()->isEmpty()) {
+				QTextCursor *c = line->primaryDoc()->undoableCursor();
+				c->movePosition(QTextCursor::End);
+				c->insertBlock();
+				c->insertFragment(QTextDocumentFragment(ln->primaryDoc()));
+			}
+			if(!ln->secondaryDoc()->isEmpty()) {
+				QTextCursor *c = line->secondaryDoc()->undoableCursor();
+				c->movePosition(QTextCursor::End);
+				c->insertBlock();
+				c->insertFragment(QTextDocumentFragment(ln->secondaryDoc()));
+			}
 		}
-
-		primaryText.append(lastLine->primaryText());
-		secondaryText.append(lastLine->secondaryText());
-
-		firstLine->setTexts(primaryText, secondaryText);
-		firstLine->setHideTime(lastLine->hideTime());
-
-		obsoletedRanges << Range(rangeStart + 1, rangeEnd);
+		deleteRanges << postLines;
 	}
 
-	removeLines(obsoletedRanges, Both);
+	removeLines(deleteRanges, Both);
 
 	endCompositeAction();
 }
@@ -976,8 +995,7 @@ Subtitle::fixOverlappingLines(const RangeList &ranges, const Time &minInterval)
 void
 Subtitle::fixPunctuation(const RangeList &ranges, bool spaces, bool quotes, bool engI, bool ellipsis, SubtitleTarget target)
 {
-	if(m_lines.isEmpty() || (!spaces && !quotes && !engI && !ellipsis)
-	   || target >= SubtitleTargetSize)
+	if(m_lines.isEmpty() || (!spaces && !quotes && !engI && !ellipsis) || target >= SubtitleTargetSize)
 		return;
 
 	beginCompositeAction(i18n("Fix Lines Punctuation"));
@@ -989,28 +1007,23 @@ Subtitle::fixPunctuation(const RangeList &ranges, bool spaces, bool quotes, bool
 		bool secondaryContinues = false;
 
 		if(it.index() > 0) {
-			if(target == Primary || target == Both)
-				// Initialize the value of primaryContinues
-				SubtitleLine::fixPunctuation(at(it.index() - 1)->primaryText(), spaces, quotes, engI, ellipsis, &primaryContinues);
-
-			if(target == Secondary || target == Both)
-				// Initialize the value of secondaryContinues
-				SubtitleLine::fixPunctuation(at(it.index() - 1)->secondaryText(), spaces, quotes, engI, ellipsis, &secondaryContinues);
+			if(target == Primary || target == Both) // init primaryContinues
+				at(it.index() - 1)->primaryDoc()->fixPunctuation(spaces, quotes, engI, ellipsis, &primaryContinues, true);
+			if(target == Secondary || target == Both) // init secondaryContinues
+				at(it.index() - 1)->secondaryDoc()->fixPunctuation(spaces, quotes, engI, ellipsis, &secondaryContinues, true);
 		}
 
 		for(; it.current(); ++it) {
 			switch(target) {
 			case Primary:
-				it.current()->setPrimaryText(SubtitleLine::fixPunctuation(it.current()->primaryText(), spaces, quotes, engI, ellipsis, &primaryContinues)
-											 );
+				it.current()->primaryDoc()->fixPunctuation(spaces, quotes, engI, ellipsis, &primaryContinues);
 				break;
 			case Secondary:
-				it.current()->setSecondaryText(SubtitleLine::fixPunctuation(it.current()->secondaryText(), spaces, quotes, engI, ellipsis, &secondaryContinues)
-											   );
+				it.current()->secondaryDoc()->fixPunctuation(spaces, quotes, engI, ellipsis, &secondaryContinues);
 				break;
 			case Both:
-				it.current()->setTexts(SubtitleLine::fixPunctuation(it.current()->primaryText(), spaces, quotes, engI, ellipsis, &primaryContinues), SubtitleLine::fixPunctuation(it.current()->secondaryText(), spaces, quotes, engI, ellipsis, &secondaryContinues)
-									   );
+				it.current()->primaryDoc()->fixPunctuation(spaces, quotes, engI, ellipsis, &primaryContinues);
+				it.current()->secondaryDoc()->fixPunctuation(spaces, quotes, engI, ellipsis, &secondaryContinues);
 				break;
 			default:
 				break;
@@ -1030,21 +1043,20 @@ Subtitle::lowerCase(const RangeList &ranges, SubtitleTarget target)
 	beginCompositeAction(i18n("Lower Case"));
 
 	switch(target) {
-	case Primary: {
+	case Primary:
 		for(SubtitleIterator it(*this, ranges); it.current(); ++it)
-			it.current()->setPrimaryText(it.current()->primaryText().toLower());
+			it.current()->primaryDoc()->toLower();
 		break;
-	}
-	case Secondary: {
+	case Secondary:
 		for(SubtitleIterator it(*this, ranges); it.current(); ++it)
-			it.current()->setSecondaryText(it.current()->secondaryText().toLower());
+			it.current()->secondaryDoc()->toLower();
 		break;
-	}
-	case Both: {
-		for(SubtitleIterator it(*this, ranges); it.current(); ++it)
-			it.current()->setTexts(it.current()->primaryText().toLower(), it.current()->secondaryText().toLower());
+	case Both:
+		for(SubtitleIterator it(*this, ranges); it.current(); ++it) {
+			it.current()->primaryDoc()->toLower();
+			it.current()->secondaryDoc()->toLower();
+		}
 		break;
-	}
 	default:
 		break;
 	}
@@ -1061,21 +1073,20 @@ Subtitle::upperCase(const RangeList &ranges, SubtitleTarget target)
 	beginCompositeAction(i18n("Upper Case"));
 
 	switch(target) {
-	case Primary: {
+	case Primary:
 		for(SubtitleIterator it(*this, ranges); it.current(); ++it)
-			it.current()->setPrimaryText(it.current()->primaryText().toUpper());
+			it.current()->primaryDoc()->toUpper();
 		break;
-	}
-	case Secondary: {
+	case Secondary:
 		for(SubtitleIterator it(*this, ranges); it.current(); ++it)
-			it.current()->setSecondaryText(it.current()->secondaryText().toUpper());
+			it.current()->secondaryDoc()->toUpper();
 		break;
-	}
-	case Both: {
-		for(SubtitleIterator it(*this, ranges); it.current(); ++it)
-			it.current()->setTexts(it.current()->primaryText().toUpper(), it.current()->secondaryText().toUpper());
+	case Both:
+		for(SubtitleIterator it(*this, ranges); it.current(); ++it) {
+			it.current()->primaryDoc()->toUpper();
+			it.current()->secondaryDoc()->toUpper();
+		}
 		break;
-	}
 	default:
 		break;
 	}
@@ -1094,18 +1105,19 @@ Subtitle::titleCase(const RangeList &ranges, bool lowerFirst, SubtitleTarget tar
 	switch(target) {
 	case Primary: {
 		for(SubtitleIterator it(*this, ranges); it.current(); ++it)
-			it.current()->setPrimaryText(it.current()->primaryText().toTitleCase(lowerFirst));
+			it.current()->primaryDoc()->toSentenceCase(nullptr, lowerFirst, true);
 		break;
 	}
 	case Secondary: {
 		for(SubtitleIterator it(*this, ranges); it.current(); ++it)
-			it.current()->setSecondaryText(it.current()->secondaryText().toTitleCase(lowerFirst));
+			it.current()->secondaryDoc()->toSentenceCase(nullptr, lowerFirst, true);
 		break;
 	}
 	case Both: {
-		for(SubtitleIterator it(*this, ranges); it.current(); ++it)
-			it.current()->setTexts(it.current()->primaryText().toTitleCase(lowerFirst), it.current()->secondaryText().toTitleCase(lowerFirst)
-								   );
+		for(SubtitleIterator it(*this, ranges); it.current(); ++it) {
+			it.current()->primaryDoc()->toSentenceCase(nullptr, lowerFirst, true);
+			it.current()->secondaryDoc()->toSentenceCase(nullptr, lowerFirst, true);
+		}
 		break;
 	}
 	default:
@@ -1130,27 +1142,28 @@ Subtitle::sentenceCase(const RangeList &ranges, bool lowerFirst, SubtitleTarget 
 		bool sCont = false;
 
 		if(it.index() > 0) {
-			if(target == Primary || target == Both) // Initialize pCont
-				at(it.index() - 1)->primaryText().toSentenceCase(lowerFirst, &pCont);
-			if(target == Secondary || target == Both) // Initialize sCont
-				at(it.index() - 1)->secondaryText().toSentenceCase(lowerFirst, &sCont);
+			if(target == Primary || target == Both)
+				at(it.index() - 1)->primaryDoc()->toSentenceCase(&pCont, lowerFirst, false, true);
+			if(target == Secondary || target == Both)
+				at(it.index() - 1)->secondaryDoc()->toSentenceCase(&sCont, lowerFirst, false, true);
 		}
 
 		switch(target) {
 		case Primary: {
 			for(; it.current(); ++it)
-				it.current()->setPrimaryText(it.current()->primaryText().toSentenceCase(lowerFirst, &pCont));
+				it.current()->primaryDoc()->toSentenceCase(&pCont, lowerFirst);
 			break;
 		}
 		case Secondary: {
 			for(; it.current(); ++it)
-				it.current()->setSecondaryText(it.current()->secondaryText().toSentenceCase(lowerFirst, &sCont));
+				it.current()->secondaryDoc()->toSentenceCase(&sCont, lowerFirst);
 			break;
 		}
 		case Both: {
-			for(; it.current(); ++it)
-				it.current()->setTexts(it.current()->primaryText().toSentenceCase(lowerFirst, &pCont), it.current()->secondaryText().toSentenceCase(lowerFirst, &sCont)
-									   );
+			for(; it.current(); ++it) {
+				it.current()->primaryDoc()->toSentenceCase(&pCont, lowerFirst);
+				it.current()->secondaryDoc()->toSentenceCase(&sCont, lowerFirst);
+			}
 			break;
 		}
 		default:
@@ -1200,15 +1213,17 @@ Subtitle::syncWithSubtitle(const Subtitle &refSubtitle)
 }
 
 void
-Subtitle::appendSubtitle(const Subtitle &srcSubtitle, long shiftMsecsBeforeAppend)
+Subtitle::appendSubtitle(const Subtitle &srcSubtitle, double shiftMsecsBeforeAppend)
 {
 	if(!srcSubtitle.count())
 		return;
 
 	QList<SubtitleLine *> lines;
 	for(SubtitleIterator it(srcSubtitle); it.current(); ++it) {
-		SubtitleLine *newLine = new SubtitleLine(*(it.current()));
-		newLine->shiftTimes(shiftMsecsBeforeAppend);
+		SubtitleLine *ln = it.current();
+		SubtitleLine *newLine = new SubtitleLine(ln->showTime() + shiftMsecsBeforeAppend, ln->hideTime() + shiftMsecsBeforeAppend);
+		newLine->primaryDoc()->setDocument(ln->primaryDoc());
+		newLine->secondaryDoc()->setDocument(ln->secondaryDoc());
 		lines.append(newLine);
 	}
 
@@ -1225,27 +1240,29 @@ Subtitle::splitSubtitle(Subtitle &dstSubtitle, const Time &splitTime, bool shift
 	if(!m_lines.count())
 		return;
 
-	int splitIndex = -1;            // the index of the first line to move (or copy) to dstSub
-	bool splitsLine = false;        // splitTime falls in within a line's time
+	int splitIndex = -1; // the index of the first line to move (or copy) to dstSub
+	bool splitsLine = false; // splitTime falls in within a line's time
+	const double shiftTime = shiftSplitLines ? -splitTime.toMillis() : 0.;
+	const double dstSplitTime = splitTime.toMillis() + shiftTime;
 
 	QList<SubtitleLine *> lines;
 	for(SubtitleIterator it(*this, Range::full()); it.current(); ++it) {
 		if(splitTime <= it.current()->hideTime()) {
-			SubtitleLine *newLine = new SubtitleLine(*(it.current()));
+			SubtitleLine *ln = it.current();
+			double newShowTime = ln->showTime().toMillis() + shiftTime;
 
-			if(splitIndex < 0) {    // the first line of the new subtitle
+			if(splitIndex < 0) { // first line of the new subtitle
 				splitIndex = it.index();
-				splitsLine = splitTime > newLine->showTime();
-
+				splitsLine = dstSplitTime > newShowTime;
 				if(splitsLine)
-					newLine->setShowTime(splitTime);
+					newShowTime = dstSplitTime;
 			}
 
-			if(it.current()->m_formatData)
-				newLine->m_formatData = new FormatData(*(it.current()->m_formatData));
-
-			if(shiftSplitLines)
-				newLine->shiftTimes(-splitTime.toMillis());
+			SubtitleLine *newLine = new SubtitleLine(newShowTime, ln->hideTime() + shiftTime);
+			newLine->primaryDoc()->setDocument(ln->primaryDoc());
+			newLine->secondaryDoc()->setDocument(ln->secondaryDoc());
+			if(ln->m_formatData)
+				newLine->m_formatData = new FormatData(*ln->m_formatData);
 
 			lines.append(newLine);
 		}
@@ -1273,34 +1290,6 @@ Subtitle::splitSubtitle(Subtitle &dstSubtitle, const Time &splitTime, bool shift
 }
 
 void
-Subtitle::setStyleFlags(const RangeList &ranges, int styleFlags)
-{
-	beginCompositeAction(i18n("Set Lines Style"));
-
-	for(SubtitleIterator it(*this, ranges); it.current(); ++it) {
-		qDebug() << it.current()->primaryText().string();
-
-		it.current()->setPrimaryText(SString(it.current()->primaryText()).setStyleFlags(0, -1, styleFlags));
-		it.current()->setSecondaryText(SString(it.current()->secondaryText()).setStyleFlags(0, -1, styleFlags));
-	}
-
-	endCompositeAction();
-}
-
-void
-Subtitle::setStyleFlags(const RangeList &ranges, int styleFlags, bool on)
-{
-	beginCompositeAction(i18n("Set Lines Style"));
-
-	for(SubtitleIterator it(*this, ranges); it.current(); ++it) {
-		it.current()->setPrimaryText(SString(it.current()->primaryText()).setStyleFlags(0, -1, styleFlags, on));
-		it.current()->setSecondaryText(SString(it.current()->secondaryText()).setStyleFlags(0, -1, styleFlags, on));
-	}
-
-	endCompositeAction();
-}
-
-void
 Subtitle::toggleStyleFlag(const RangeList &ranges, SString::StyleFlag styleFlag)
 {
 	SubtitleIterator it(*this, ranges);
@@ -1309,9 +1298,37 @@ Subtitle::toggleStyleFlag(const RangeList &ranges, SString::StyleFlag styleFlag)
 
 	beginCompositeAction(i18n("Toggle Lines Style"));
 
-	bool isOn = it.current()->primaryText().hasStyleFlags(styleFlag) || it.current()->secondaryText().hasStyleFlags(styleFlag);
+	QTextCharFormat fmtPri, fmtSec;
+	switch(styleFlag) {
+	case SString::Bold:
+		fmtPri.setFontWeight(QTextCursor(it.current()->primaryDoc()).charFormat().fontWeight() == QFont::Bold ? QFont::Normal : QFont::Bold);
+		fmtSec.setFontWeight(QTextCursor(it.current()->secondaryDoc()).charFormat().fontWeight() == QFont::Bold ? QFont::Normal : QFont::Bold);
+		break;
+	case SString::Italic:
+		fmtPri.setFontItalic(!QTextCursor(it.current()->primaryDoc()).charFormat().fontItalic());
+		fmtSec.setFontItalic(!QTextCursor(it.current()->secondaryDoc()).charFormat().fontItalic());
+		break;
+	case SString::Underline:
+		fmtPri.setFontUnderline(!QTextCursor(it.current()->primaryDoc()).charFormat().fontUnderline());
+		fmtSec.setFontUnderline(!QTextCursor(it.current()->secondaryDoc()).charFormat().fontUnderline());
+		break;
+	case SString::StrikeThrough:
+		fmtPri.setFontStrikeOut(!QTextCursor(it.current()->primaryDoc()).charFormat().fontStrikeOut());
+		fmtSec.setFontStrikeOut(!QTextCursor(it.current()->secondaryDoc()).charFormat().fontStrikeOut());
+		break;
+	default:
+		Q_ASSERT_X(false, "Subtitle::toggleStyleFlag", "Unsupported format");
+		break;
+	}
 
-	setStyleFlags(ranges, styleFlag, !isOn);
+	for(; it.current(); ++it) {
+		QTextCursor cp(it.current()->primaryDoc());
+		cp.select(QTextCursor::Document);
+		cp.mergeCharFormat(fmtPri);
+		QTextCursor cs(it.current()->secondaryDoc());
+		cs.select(QTextCursor::Document);
+		cs.mergeCharFormat(fmtPri);
+	}
 
 	endCompositeAction();
 }
@@ -1319,11 +1336,22 @@ Subtitle::toggleStyleFlag(const RangeList &ranges, SString::StyleFlag styleFlag)
 void
 Subtitle::changeTextColor(const RangeList &ranges, QRgb color)
 {
+	SubtitleIterator it(*this, ranges);
+	if(!it.current())
+		return;
+
 	beginCompositeAction(i18n("Change Lines Text Color"));
 
-	for(SubtitleIterator it(*this, ranges); it.current(); ++it) {
-		it.current()->setPrimaryText(SString(it.current()->primaryText()).setStyleColor(0, -1, color));
-		it.current()->setSecondaryText(SString(it.current()->secondaryText()).setStyleColor(0, -1, color));
+	QTextCharFormat fmt;
+	fmt.setForeground(color ? QBrush(QColor(color)) : QBrush());
+
+	for(; it.current(); ++it) {
+		QTextCursor cp(it.current()->primaryDoc());
+		cp.select(QTextCursor::Document);
+		cp.mergeCharFormat(fmt);
+		QTextCursor cs(it.current()->secondaryDoc());
+		cs.select(QTextCursor::Document);
+		cs.mergeCharFormat(fmt);
 	}
 
 	endCompositeAction();

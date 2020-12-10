@@ -19,6 +19,7 @@
  */
 
 #include "finder.h"
+#include "core/richdocument.h"
 #include "core/subtitleiterator.h"
 
 #include <QGroupBox>
@@ -221,13 +222,13 @@ Finder::advance()
 			if(m_dataLine) {
 				if(!m_translationMode || m_targetRadioButtons[Primary]->isChecked()) {
 					m_feedingPrimary = true;
-					m_find->setData(m_dataLine->primaryText().string());
+					m_find->setData(m_dataLine->primaryDoc()->toPlainText());
 				} else if(m_targetRadioButtons[Secondary]->isChecked()) {
 					m_feedingPrimary = false;
-					m_find->setData(m_dataLine->secondaryText().string());
+					m_find->setData(m_dataLine->secondaryDoc()->toPlainText());
 				} else {                // m_translationMode && m_targetRadioButtons[SubtitleLine::Both]->isChecked()
 					m_feedingPrimary = !m_feedingPrimary;   // we alternate the source of data
-					m_find->setData((m_feedingPrimary ? m_dataLine->primaryText() : m_dataLine->secondaryText()).string());
+					m_find->setData((m_feedingPrimary ? m_dataLine->primaryDoc() : m_dataLine->secondaryDoc())->toPlainText());
 				}
 
 				connect(m_dataLine, &SubtitleLine::primaryTextChanged, this, &Finder::onLinePrimaryTextChanged);
@@ -279,17 +280,17 @@ Finder::onHighlight(const QString &, int matchingIndex, int matchedLength)
 }
 
 void
-Finder::onLinePrimaryTextChanged(const SString &text)
+Finder::onLinePrimaryTextChanged()
 {
 	if(m_feedingPrimary)
-		m_find->setData(text.string());
+		m_find->setData(m_dataLine->primaryDoc()->toPlainText());
 }
 
 void
-Finder::onLineSecondaryTextChanged(const SString &text)
+Finder::onLineSecondaryTextChanged()
 {
 	if(!m_feedingPrimary)
-		m_find->setData(text.string());
+		m_find->setData(m_dataLine->secondaryDoc()->toPlainText());
 }
 
 void

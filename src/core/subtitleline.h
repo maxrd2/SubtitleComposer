@@ -21,7 +21,6 @@
  * Boston, MA 02110-1301, USA.
  */
 
-#include "core/sstring.h"
 #include "core/time.h"
 #include "core/formatdata.h"
 #include "core/subtitletarget.h"
@@ -34,6 +33,8 @@ class QUndoCommand;
 
 namespace SubtitleComposer {
 class Subtitle;
+class SString;
+class RichDocument;
 
 class SubtitleLine : public QObject
 {
@@ -129,47 +130,36 @@ public:
 	QString fullErrorText(SubtitleLine::ErrorFlag errorFlag) const;
 	QString fullErrorText(SubtitleLine::ErrorID errorID) const;
 
-	explicit SubtitleLine(const SString &pText = SString(), const SString &sText = SString());
-	SubtitleLine(const SString &pText, const Time &showTime, const Time &hideTime);
-	SubtitleLine(const SString &pText, const SString &sText, const Time &showTime, const Time &hideTime);
-	SubtitleLine(const SubtitleLine &line);
-	SubtitleLine & operator=(const SubtitleLine &line);
+	SubtitleLine();
+	SubtitleLine(const Time &showTime, const Time &hideTime);
+	SubtitleLine(const SubtitleLine &line) = delete;
+	SubtitleLine & operator=(const SubtitleLine &line) = delete;
 	virtual ~SubtitleLine();
 
 	int number() const;
 	int index() const;
 
-	Subtitle * subtitle();
-	const Subtitle * subtitle() const;
+	inline Subtitle * subtitle() { return m_subtitle; }
+	inline const Subtitle * subtitle() const { return m_subtitle; }
 
-	SubtitleLine * prevLine();
-	SubtitleLine * nextLine();
+	inline SubtitleLine * prevLine();
+	inline SubtitleLine * nextLine();
 
-	const SString & primaryText() const;
-	void setPrimaryText(const SString &pText);
+	inline RichDocument * primaryDoc() const { return m_primaryDoc; }
+	inline RichDocument * secondaryDoc() const { return m_secondaryDoc; }
 
-	const SString & secondaryText() const;
-	void setSecondaryText(const SString &sText);
-
-	void setTexts(const SString &pText, const SString &sText);
-
-	static SString fixPunctuation(const SString &text, bool spaces, bool quotes, bool englishI, bool ellipsis, bool *cont);
-	static SString breakText(const SString &text, int minLengthForBreak);
-	static QString simplifyTextWhiteSpace(QString text);
-	static SString simplifyTextWhiteSpace(SString text);
-
-	void breakText(int minLengthForBreak, SubtitleTarget target);
+	void breakText(int minBreakLength, SubtitleTarget target);
 	void unbreakText(SubtitleTarget target);
 	void simplifyTextWhiteSpace(SubtitleTarget target);
 
-	Time showTime() const;
+	inline Time showTime() const { return m_showTime; }
 	void setShowTime(const Time &showTime, bool safe=false);
 
-	Time hideTime() const;
+	inline Time hideTime() const { return m_hideTime; }
 	void setHideTime(const Time &hideTime, bool safe=false);
 
-	Time durationTime() const;
-	void setDurationTime(const Time &durationTime);
+	inline Time durationTime() const { return Time(m_hideTime.toMillis() - m_showTime.toMillis()); }
+	inline void setDurationTime(const Time &durationTime) { setHideTime(m_showTime + durationTime); }
 
 	void setTimes(const Time &showTime, const Time &hideTime);
 
@@ -220,8 +210,8 @@ public:
 	int check(int errorFlagsToCheck, bool update = true);
 
 signals:
-	void primaryTextChanged(const SString &text);
-	void secondaryTextChanged(const SString &text);
+	void primaryTextChanged();
+	void secondaryTextChanged();
 	void showTimeChanged(const Time &showTime);
 	void hideTimeChanged(const Time &hideTime);
 	void errorFlagsChanged(int errorFlags);
@@ -233,10 +223,16 @@ private:
 	void processAction(QUndoCommand *action);
 	void processShowTimeSort(const Time &showTime);
 
+	void setPrimaryDoc(RichDocument *doc);
+	void setSecondaryDoc(RichDocument *doc);
+	void setTexts(RichDocument *pText, RichDocument *sText);
+	void primaryDocumentChanged();
+	void secondaryDocumentChanged();
+
 private:
 	Subtitle *m_subtitle;
-	SString m_primaryText;
-	SString m_secondaryText;
+	RichDocument *m_primaryDoc;
+	RichDocument *m_secondaryDoc;
 	Time m_showTime;
 	Time m_hideTime;
 	int m_errorFlags;
@@ -247,4 +243,21 @@ private:
 	const QVector<ObjectRef<SubtitleLine>> * refContainer();
 };
 }
+
+#include "core/subtitle.h"
+
+namespace SubtitleComposer {
+
+inline SubtitleLine *
+SubtitleLine::prevLine()
+{
+	return m_subtitle ? m_subtitle->line(index() - 1) : nullptr;
+}
+inline SubtitleLine *
+SubtitleLine::nextLine() {
+	return m_subtitle ? m_subtitle->line(index() + 1) : nullptr;
+}
+
+}
+
 #endif

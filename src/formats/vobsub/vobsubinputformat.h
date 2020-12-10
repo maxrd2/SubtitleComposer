@@ -21,6 +21,7 @@
  */
 
 #include "application.h"
+#include "core/richdocument.h"
 #include "formats/inputformat.h"
 #include "vobsubinputinitdialog.h"
 #include "vobsubinputprocessdialog.h"
@@ -92,7 +93,7 @@ public:
 		quint32 ppFlags = dlgInit.postProcessingFlags();
 		for(int i = 0, n = subtitle.count(); i < n; i++) {
 			SubtitleLine *line = subtitle.at(i);
-			SString text = line->primaryText();
+			SString text = line->primaryDoc()->toRichText();
 			if(ppFlags & VobSubInputInitDialog::APOSTROPHE_TO_QUOTES)
 				text
 					.replace(QRegularExpression(QStringLiteral("(?:"
@@ -157,7 +158,7 @@ public:
 
 			// cleanup whitespace
 			text.replace(QRegularExpression(QStringLiteral("(?: *(?=\\n)|(?<=\\n) *|^ *| *$| *(?= )|(?<= ) *)")), QStringLiteral(""));
-			line->setPrimaryText(text);
+			line->primaryDoc()->setRichText(text, true);
 		}
 
 		// restore original subtitle

@@ -18,13 +18,14 @@
  * Boston, MA 02110-1301, USA.
  */
 
+#include "core/richdocument.h"
 #include "core/subtitleline.h"
-#include "core/subtitle.h"
 #include "core/undo/subtitlelineactions.h"
 #include "core/undo/subtitleactions.h"
+#include "helpers/common.h"
 #include "scconfig.h"
 
-#include <QRegExp>
+#include <QRegularExpression>
 
 #include <KLocalizedString>
 
@@ -141,64 +142,74 @@ SubtitleLine::fullErrorText(SubtitleLine::ErrorID errorID) const
 	}
 }
 
-SubtitleLine::SubtitleLine(const SString &pText, const SString &sText) :
-	QObject(),
-	m_subtitle(0),
-	m_primaryText(pText),
-	m_secondaryText(sText),
-	m_showTime(),
-	m_hideTime(),
-	m_errorFlags(0),
-	m_formatData(0)
-{}
-
-SubtitleLine::SubtitleLine(const SString &pText, const Time &showTime, const Time &hideTime) :
-	QObject(),
-	m_subtitle(0),
-	m_primaryText(pText),
-	m_secondaryText(QString()),
-	m_showTime(showTime),
-	m_hideTime(hideTime),
-	m_errorFlags(0),
-	m_formatData(0)
-{}
-
-SubtitleLine::SubtitleLine(const SString &pText, const SString &sText, const Time &showTime, const Time &hideTime) :
-	QObject(),
-	m_subtitle(0),
-	m_primaryText(pText),
-	m_secondaryText(sText),
-	m_showTime(showTime),
-	m_hideTime(hideTime),
-	m_errorFlags(0),
-	m_formatData(0)
-{}
-
-SubtitleLine::SubtitleLine(const SubtitleLine &line) :
-	QObject(),
-	m_subtitle(0),
-	m_primaryText(line.m_primaryText),
-	m_secondaryText(line.m_secondaryText),
-	m_showTime(line.m_showTime),
-	m_hideTime(line.m_hideTime),
-	m_errorFlags(line.m_errorFlags),
-	m_formatData(0)
-{}
-
-SubtitleLine &
-SubtitleLine::operator=(const SubtitleLine &line)
+inline static void
+setupSignals(SubtitleLine *line)
 {
-	if(this == &line)
-		return *this;
-
-	m_primaryText = line.m_primaryText;
-	m_secondaryText = line.m_secondaryText;
-	m_showTime = line.m_showTime;
-	m_hideTime = line.m_hideTime;
-	m_errorFlags = line.m_errorFlags;
-
-	return *this;
+	QObject::connect(line, &SubtitleLine::primaryTextChanged, [line](){
+		if(line->subtitle()) emit line->subtitle()->linePrimaryTextChanged(line);
+	});
+	QObject::connect(line, &SubtitleLine::secondaryTextChanged, [line](){
+		if(line->subtitle()) emit line->subtitle()->lineSecondaryTextChanged(line);
+	});
+	QObject::connect(line, &SubtitleLine::showTimeChanged, [line](){
+		if(line->subtitle()) emit line->subtitle()->lineShowTimeChanged(line);
+	});
+	QObject::connect(line, &SubtitleLine::hideTimeChanged, [line](){
+		if(line->subtitle()) emit line->subtitle()->lineHideTimeChanged(line);
+	});
 }
+
+SubtitleLine::SubtitleLine()
+	: QObject(),
+	  m_subtitle(nullptr),
+	  m_primaryDoc(new RichDocument(this)),
+	  m_secondaryDoc(new RichDocument(this)),
+	  m_showTime(0.0),
+	  m_hideTime(0.0),
+	  m_errorFlags(0),
+	  m_formatData(nullptr)
+{
+	setupSignals(this);
+}
+
+SubtitleLine::SubtitleLine(const Time &showTime, const Time &hideTime)
+	: QObject(),
+	  m_subtitle(nullptr),
+	  m_primaryDoc(new RichDocument(this)),
+	  m_secondaryDoc(new RichDocument(this)),
+	  m_showTime(showTime),
+	  m_hideTime(hideTime),
+	  m_errorFlags(0),
+	  m_formatData(nullptr)
+{
+	setupSignals(this);
+}
+
+//SubtitleLine::SubtitleLine(const SubtitleLine &line)
+//	: QObject(),
+//	  m_subtitle(nullptr),
+//	  m_primaryText(line.m_primaryText),
+//	  m_secondaryText(line.m_secondaryText),
+//	  m_showTime(line.m_showTime),
+//	  m_hideTime(line.m_hideTime),
+//	  m_errorFlags(line.m_errorFlags),
+//	  m_formatData(nullptr)
+//{}
+
+//SubtitleLine &
+//SubtitleLine::operator=(const SubtitleLine &line)
+//{
+//	if(this == &line)
+//		return *this;
+
+//	m_primaryText = line.m_primaryText;
+//	m_secondaryText = line.m_secondaryText;
+//	m_showTime = line.m_showTime;
+//	m_hideTime = line.m_hideTime;
+//	m_errorFlags = line.m_errorFlags;
+
+//	return *this;
+//}
 
 SubtitleLine::~SubtitleLine()
 {
@@ -253,179 +264,58 @@ SubtitleLine::index() const
 	return index;
 }
 
-Subtitle *
-SubtitleLine::subtitle()
+void
+SubtitleLine::primaryDocumentChanged()
 {
-	return m_subtitle;
-}
-
-const Subtitle *
-SubtitleLine::subtitle() const
-{
-	return m_subtitle;
-}
-
-SubtitleLine *
-SubtitleLine::prevLine()
-{
-	return m_subtitle ? m_subtitle->line(index() - 1) : NULL;
-}
-
-SubtitleLine *
-SubtitleLine::nextLine()
-{
-	return m_subtitle ? m_subtitle->line(index() + 1) : NULL;
-}
-
-const SString &
-SubtitleLine::primaryText() const
-{
-	return m_primaryText;
+	processAction(new SetLinePrimaryTextAction(*this, m_primaryDoc));
 }
 
 void
-SubtitleLine::setPrimaryText(const SString &pText)
+SubtitleLine::secondaryDocumentChanged()
 {
-	if(m_primaryText != pText)
-		processAction(new SetLinePrimaryTextAction(*this, pText));
-}
-
-const SString &
-SubtitleLine::secondaryText() const
-{
-	return m_secondaryText;
+	processAction(new SetLineSecondaryTextAction(*this, m_secondaryDoc));
 }
 
 void
-SubtitleLine::setSecondaryText(const SString &sText)
+SubtitleLine::setPrimaryDoc(RichDocument *doc)
 {
-	if(m_secondaryText != sText)
-		processAction(new SetLineSecondaryTextAction(*this, sText));
+	if(m_primaryDoc)
+		disconnect(m_primaryDoc, &RichDocument::contentsChanged, this, &SubtitleLine::primaryDocumentChanged);
+	m_primaryDoc = doc;
+	m_primaryDoc->setParent(this);
+	connect(m_primaryDoc, &RichDocument::contentsChanged, this, &SubtitleLine::primaryDocumentChanged);
 }
 
 void
-SubtitleLine::setTexts(const SString &pText, const SString &sText)
+SubtitleLine::setSecondaryDoc(RichDocument *doc)
 {
-	if(m_primaryText != pText || m_secondaryText != sText)
-		processAction(new SetLineTextsAction(*this, pText, sText));
-}
-
-SString
-SubtitleLine::fixPunctuation(const SString &t, bool spaces, bool quotes, bool englishI, bool ellipsis, bool *cont)
-{
-	if(!t.length())
-		return t;
-
-	SString text(t);
-
-	if(spaces) {
-		text = simplifyTextWhiteSpace(text);
-
-		// remove spaces after " or ' at the beginning of line
-		text.replace(QRegExp("^([\"'])\\s"), "\\1");
-
-		// remove space before " or ' at the end of line
-		text.replace(QRegExp("\\s([\"'])$"), "\\1");
-
-		// if not present, add space after '?', '!', ',', ';', ':', ')' and ']'
-		text.replace(QRegExp("([\\?!,;:\\)\\]])([^\\s\"'])"), "\\1 \\2");
-
-		// if not present, add space after '.'
-		text.replace(QRegExp("(\\.)([^\\s\\.\"'])"), "\\1 \\2");
-
-		// remove space after '¿', '¡', '(' and '['
-		text.replace(QRegExp("([¿¡\\(\\[])\\s"), "\\1");
-
-		// remove space before '?', '!', ',', ';', ':', '.', ')' and ']'
-		text.replace(QRegExp("\\s([\\?!,;:\\.\\)\\]])"), "\\1");
-
-		// remove space after ... at the beginning of sentence
-		text.replace(QRegExp("^\\.\\.\\.?\\s"), "...");
-	}
-
-	if(quotes) { // quotes and double quotes
-		text.replace(QRegExp("`|´|"), "'");
-		text.replace(QRegExp("''|«|»"), "\"");
-	}
-
-	if(englishI) // fix english I pronoun capitalization
-		text.replace(QRegExp("([\\s\"'\\(\\[])i([\\s'\",;:\\.\\?!\\]\\)]|$)"), "\\1I\\2");
-
-	if(ellipsis) {                          // fix ellipsis
-		text.replace(QRegExp("[,;]?\\.{2,}"), "...");
-		text.replace(QRegExp("[,;]\\s*$"), "...");
-
-		if(text.indexOf(QRegExp("[\\.:?!\\)\\]'\\\"]$")) == -1)
-			text.append("...");
-
-		if(cont) {
-			if(*cont && text.indexOf(QRegExp("^\\s*\\.{3}[^\\.]?")) == -1)
-				text.replace(QRegExp("^\\s*\\.*\\s*"), "...");
-
-			*cont = text.indexOf(QRegExp("\\.{3,3}\\s*$")) != -1;
-		}
-	} else {
-		if(cont) {
-			*cont = text.indexOf(QRegExp("[?!\\)\\]'\\\"]\\s*$")) == -1;
-
-			if(!*cont)
-				*cont = text.indexOf(QRegExp("[^\\.]?\\.\\s*$")) == -1;
-		}
-	}
-
-	return text;
-}
-
-SString
-SubtitleLine::breakText(const SString &t, int minLengthForBreak)
-{
-	Q_ASSERT(minLengthForBreak >= 0);
-
-	SString text(t);
-	text.replace('\n', ' ');
-
-	if(text.length() <= minLengthForBreak)
-		return text;
-
-	static const QRegExp spaceRegExp("[^ \t\n][ \t\n]");
-
-	// this is a fricking test case
-	// this is a fri|cking test case    IDEAL: 13
-	// this is a| fricking test case    LOWER: 10 <--
-	// this is a fricking| test case    UPPER: 18
-
-	int position = text.length() / 2;
-	int lowerPosition = text.lastIndexOf(spaceRegExp, position);
-	int upperPosition = text.indexOf(spaceRegExp, position);
-
-	if((lowerPosition == -1 || lowerPosition == 0) && (upperPosition == -1 || upperPosition == (text.length() - 1)))
-		return text;
-	else if(position - lowerPosition <= upperPosition - position)
-		position = lowerPosition;
-	else
-		position = upperPosition;
-
-	position++;
-	text.insert(position, "\n");
-	position++;
-	while(text.at(position).isSpace() && position < text.length())
-		text.remove(position, 1);
-
-	return text;
+	if(m_secondaryDoc)
+		disconnect(m_secondaryDoc, &RichDocument::contentsChanged, this, &SubtitleLine::secondaryDocumentChanged);
+	m_secondaryDoc = doc;
+	m_secondaryDoc->setParent(this);
+	connect(m_secondaryDoc, &RichDocument::contentsChanged, this, &SubtitleLine::secondaryDocumentChanged);
 }
 
 void
-SubtitleLine::breakText(int minLengthForBreak, SubtitleTarget target)
+SubtitleLine::setTexts(RichDocument *pText, RichDocument *sText)
+{
+	setPrimaryDoc(pText);
+	setSecondaryDoc(sText);
+}
+
+void
+SubtitleLine::breakText(int minBreakLength, SubtitleTarget target)
 {
 	switch(target) {
 	case Primary:
-		setPrimaryText(breakText(m_primaryText, minLengthForBreak));
+		m_primaryDoc->breakText(minBreakLength);
 		break;
 	case Secondary:
-		setSecondaryText(breakText(m_secondaryText, minLengthForBreak));
+		m_secondaryDoc->breakText(minBreakLength);
 		break;
 	case Both:
-		setTexts(breakText(m_primaryText, minLengthForBreak), breakText(m_secondaryText, minLengthForBreak));
+		m_primaryDoc->breakText(minBreakLength);
+		m_secondaryDoc->breakText(minBreakLength);
 		break;
 	default:
 		break;
@@ -437,31 +327,18 @@ SubtitleLine::unbreakText(SubtitleTarget target)
 {
 	switch(target) {
 	case Primary:
-		setPrimaryText(SString(primaryText()).replace('\n', ' '));
+		m_primaryDoc->replace('\n', ' ');
 		break;
 	case Secondary:
-		setSecondaryText(SString(secondaryText()).replace('\n', ' '));
+		m_secondaryDoc->replace('\n', ' ');
 		break;
 	case Both:
-		setTexts(SString(primaryText()).replace('\n', ' '), SString(secondaryText()).replace('\n', ' '));
+		m_primaryDoc->replace('\n', ' ');
+		m_secondaryDoc->replace('\n', ' ');
 		break;
 	default:
 		break;
 	}
-}
-
-QString
-SubtitleLine::simplifyTextWhiteSpace(QString text)
-{
-	SString::simplifyWhiteSpace(text);
-	return text;
-}
-
-SString
-SubtitleLine::simplifyTextWhiteSpace(SString text)
-{
-	text.simplifyWhiteSpace();
-	return text;
 }
 
 void
@@ -469,13 +346,14 @@ SubtitleLine::simplifyTextWhiteSpace(SubtitleTarget target)
 {
 	switch(target) {
 	case Primary:
-		setPrimaryText(simplifyTextWhiteSpace(m_primaryText));
+		m_primaryDoc->cleanupSpaces();
 		break;
 	case Secondary:
-		setSecondaryText(simplifyTextWhiteSpace(m_secondaryText));
+		m_secondaryDoc->cleanupSpaces();
 		break;
 	case Both:
-		setTexts(simplifyTextWhiteSpace(m_primaryText), simplifyTextWhiteSpace(m_secondaryText));
+		m_primaryDoc->cleanupSpaces();
+		m_secondaryDoc->cleanupSpaces();
 		break;
 	default:
 		break;
@@ -502,12 +380,6 @@ SubtitleLine::processShowTimeSort(const Time &showTime)
 		processAction(new MoveLineAction(*m_subtitle, curIndex, newIndex));
 }
 
-Time
-SubtitleLine::showTime() const
-{
-	return m_showTime;
-}
-
 void
 SubtitleLine::setShowTime(const Time &showTime, bool safe/*=false*/)
 {
@@ -532,12 +404,6 @@ SubtitleLine::setShowTime(const Time &showTime, bool safe/*=false*/)
 		m_subtitle->endCompositeAction();
 }
 
-Time
-SubtitleLine::hideTime() const
-{
-	return m_hideTime;
-}
-
 void
 SubtitleLine::setHideTime(const Time &hideTime, bool safe/*=false*/)
 {
@@ -554,18 +420,6 @@ SubtitleLine::setHideTime(const Time &hideTime, bool safe/*=false*/)
 
 	if(m_subtitle)
 		m_subtitle->endCompositeAction();
-}
-
-Time
-SubtitleLine::durationTime() const
-{
-	return Time(m_hideTime.toMillis() - m_showTime.toMillis());
-}
-
-void
-SubtitleLine::setDurationTime(const Time &durationTime)
-{
-	setHideTime(m_showTime + durationTime);
 }
 
 void
@@ -591,41 +445,43 @@ SubtitleLine::setTimes(const Time &showTime, const Time &hideTime)
 int
 SubtitleLine::primaryCharacters() const
 {
-	return m_primaryText.string().simplified().length();
+	return m_primaryDoc->toPlainText().simplified().length();
 }
 
 int
 SubtitleLine::primaryWords() const
 {
-	QString text(m_primaryText.string().simplified());
+	QString text(m_primaryDoc->toPlainText().simplified());
 	return text.length() ? text.count(' ') + 1 : 0;
 }
 
 int
 SubtitleLine::primaryLines() const
 {
-	QString text(simplifyTextWhiteSpace(m_primaryText.string()));
-	return text.length() ? text.count('\n') + 1 : 0;
+	SString text(m_primaryDoc->toPlainText());
+	text.simplifyWhiteSpace();
+	return text.isEmpty() ? 0 : text.count('\n') + 1;
 }
 
 int
 SubtitleLine::secondaryCharacters() const
 {
-	return m_secondaryText.string().simplified().length();
+	return m_secondaryDoc->toPlainText().simplified().length();
 }
 
 int
 SubtitleLine::secondaryWords() const
 {
-	QString text(m_secondaryText.string().simplified());
+	QString text(m_secondaryDoc->toPlainText().simplified());
 	return text.length() ? text.count(' ') + 1 : 0;
 }
 
 int
 SubtitleLine::secondaryLines() const
 {
-	QString text(simplifyTextWhiteSpace(m_secondaryText.string()));
-	return text.length() ? text.count('\n') + 1 : 0;
+	SString text(m_secondaryDoc->toPlainText());
+	text.simplifyWhiteSpace();
+	return text.isEmpty() ? 0 : text.count('\n') + 1;
 }
 
 Time
@@ -635,8 +491,9 @@ SubtitleLine::autoDuration(const QString &t, int msecsPerChar, int msecsPerWord,
 	Q_ASSERT(msecsPerWord >= 0);
 	Q_ASSERT(msecsPerLine >= 0);
 
-	QString text(simplifyTextWhiteSpace(t));
-	if(!text.length())
+	SString text(t);
+	text.simplifyWhiteSpace();
+	if(text.isEmpty())
 		return 0;
 
 	int chars = text.length();
@@ -651,15 +508,15 @@ SubtitleLine::autoDuration(int msecsPerChar, int msecsPerWord, int msecsPerLine,
 {
 	switch(calculationTarget) {
 	case Secondary:
-		return autoDuration(m_secondaryText.string(), msecsPerChar, msecsPerWord, msecsPerLine);
+		return autoDuration(m_secondaryDoc->toPlainText(), msecsPerChar, msecsPerWord, msecsPerLine);
 	case Both: {
-		Time primary = autoDuration(m_primaryText.string(), msecsPerChar, msecsPerWord, msecsPerLine);
-		Time secondary = autoDuration(m_secondaryText.string(), msecsPerChar, msecsPerWord, msecsPerLine);
+		Time primary = autoDuration(m_primaryDoc->toPlainText(), msecsPerChar, msecsPerWord, msecsPerLine);
+		Time secondary = autoDuration(m_secondaryDoc->toPlainText(), msecsPerChar, msecsPerWord, msecsPerLine);
 		return primary > secondary ? primary : secondary;
 	}
 	case Primary:
 	default:
-		return autoDuration(m_primaryText.string(), msecsPerChar, msecsPerWord, msecsPerLine);
+		return autoDuration(m_primaryDoc->toPlainText(), msecsPerChar, msecsPerWord, msecsPerLine);
 	}
 }
 
@@ -711,7 +568,7 @@ SubtitleLine::checkEmptyPrimaryText(bool update)
 {
 	static const QRegExp emptyTextRegExp("^\\s*$");
 
-	bool error = m_primaryText.isEmpty() || m_primaryText.indexOf(emptyTextRegExp) != -1;
+	bool error = m_primaryDoc->isEmpty() || m_primaryDoc->toPlainText().indexOf(emptyTextRegExp) != -1;
 
 	if(update)
 		setErrorFlags(EmptyPrimaryText, error);
@@ -724,7 +581,7 @@ SubtitleLine::checkEmptySecondaryText(bool update)
 {
 	static const QRegExp emptyTextRegExp("^\\s*$");
 
-	bool error = m_secondaryText.isEmpty() || m_secondaryText.indexOf(emptyTextRegExp) != -1;
+	bool error = m_secondaryDoc->isEmpty() || m_secondaryDoc->toPlainText().indexOf(emptyTextRegExp) != -1;
 
 	if(update)
 		setErrorFlags(EmptySecondaryText, error);
@@ -735,7 +592,7 @@ SubtitleLine::checkEmptySecondaryText(bool update)
 bool
 SubtitleLine::checkUntranslatedText(bool update)
 {
-	bool error = m_primaryText.string() == m_secondaryText.string();
+	bool error = m_primaryDoc->toPlainText() == m_secondaryDoc->toPlainText();
 
 	if(update)
 		setErrorFlags(UntranslatedText, error);
@@ -892,9 +749,9 @@ SubtitleLine::checkMaxSecondaryLines(int maxLines, bool update)
 bool
 SubtitleLine::checkPrimaryUnneededSpaces(bool update)
 {
-	static const QRegExp unneededSpaceRegExp("(^\\s|\\s$|¿\\s|¡\\s|\\s\\s|\\s!|\\s\\?|\\s:|\\s;|\\s,|\\s\\.)");
+	static const QRegularExpression unneededSpaceRegExp("(^\\s|\\s$|¿\\s|¡\\s|\\s\\s|\\s!|\\s\\?|\\s:|\\s;|\\s,|\\s\\.)");
 
-	bool error = m_primaryText.indexOf(unneededSpaceRegExp) != -1;
+	bool error = m_primaryDoc->indexOf(unneededSpaceRegExp) != -1;
 
 	if(update)
 		setErrorFlags(PrimaryUnneededSpaces, error);
@@ -905,9 +762,9 @@ SubtitleLine::checkPrimaryUnneededSpaces(bool update)
 bool
 SubtitleLine::checkSecondaryUnneededSpaces(bool update)
 {
-	static const QRegExp unneededSpaceRegExp("(^\\s|\\s$|¿\\s|¡\\s|\\s\\s|\\s!|\\s\\?|\\s:|\\s;|\\s,|\\s\\.)");
+	static const QRegularExpression unneededSpaceRegExp("(^\\s|\\s$|¿\\s|¡\\s|\\s\\s|\\s!|\\s\\?|\\s:|\\s;|\\s,|\\s\\.)");
 
-	bool error = m_secondaryText.indexOf(unneededSpaceRegExp) != -1;
+	bool error = m_secondaryDoc->indexOf(unneededSpaceRegExp) != -1;
 
 	if(update)
 		setErrorFlags(SecondaryUnneededSpaces, error);
@@ -918,11 +775,12 @@ SubtitleLine::checkSecondaryUnneededSpaces(bool update)
 bool
 SubtitleLine::checkPrimaryCapitalAfterEllipsis(bool update)
 {
-	QRegExp capitalAfterEllipsisRegExp("^\\s*\\.\\.\\.[¡¿\\.,;\\(\\[\\{\"'\\s]*");
+	static const QRegExp capitalAfterEllipsisRegExp("^\\s*\\.\\.\\.[¡¿\\.,;\\(\\[\\{\"'\\s]*");
 
-	bool error = capitalAfterEllipsisRegExp.indexIn(m_primaryText.string(), QRegExp::CaretAtZero) != -1;
+	const QString text = m_primaryDoc->toPlainText();
+	bool error = capitalAfterEllipsisRegExp.indexIn(text, QRegExp::CaretAtZero) != -1;
 	if(error) {
-		QChar chr = m_primaryText.at(capitalAfterEllipsisRegExp.matchedLength());
+		QChar chr = text.at(capitalAfterEllipsisRegExp.matchedLength());
 		error = chr.isLetter() && chr == chr.toUpper();
 	}
 
@@ -935,11 +793,12 @@ SubtitleLine::checkPrimaryCapitalAfterEllipsis(bool update)
 bool
 SubtitleLine::checkSecondaryCapitalAfterEllipsis(bool update)
 {
-	QRegExp capitalAfterEllipsisRegExp("^\\s*\\.\\.\\.[¡¿\\.,;\\(\\[\\{\"'\\s]*");
+	static const QRegExp capitalAfterEllipsisRegExp("^\\s*\\.\\.\\.[¡¿\\.,;\\(\\[\\{\"'\\s]*");
 
-	bool error = capitalAfterEllipsisRegExp.indexIn(m_secondaryText.string(), QRegExp::CaretAtZero) != -1;
+	const QString text = m_secondaryDoc->toPlainText();
+	bool error = capitalAfterEllipsisRegExp.indexIn(text, QRegExp::CaretAtZero) != -1;
 	if(error) {
-		QChar chr = m_secondaryText.at(capitalAfterEllipsisRegExp.matchedLength());
+		QChar chr = text.at(capitalAfterEllipsisRegExp.matchedLength());
 		error = chr.isLetter() && chr == chr.toUpper();
 	}
 
@@ -954,7 +813,7 @@ SubtitleLine::checkPrimaryUnneededDash(bool update)
 {
 	static const QRegExp unneededDashRegExp("(^|\n)\\s*-[^-]");
 
-	bool error = m_primaryText.count(unneededDashRegExp) == 1;
+	bool error = m_primaryDoc->toPlainText().count(unneededDashRegExp) == 1;
 
 	if(update)
 		setErrorFlags(PrimaryUnneededDash, error);
@@ -967,7 +826,7 @@ SubtitleLine::checkSecondaryUnneededDash(bool update)
 {
 	static const QRegExp unneededDashRegExp("(^|\n)\\s*-[^-]");
 
-	bool error = m_secondaryText.count(unneededDashRegExp) == 1;
+	bool error = m_secondaryDoc->toPlainText().count(unneededDashRegExp) == 1;
 
 	if(update)
 		setErrorFlags(SecondaryUnneededDash, error);

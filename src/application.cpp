@@ -23,9 +23,11 @@
 #include "actions/useraction.h"
 #include "actions/useractionnames.h"
 #include "configs/configdialog.h"
+#include "core/richdocument.h"
 #include "core/subtitleiterator.h"
 #include "core/undo/undostack.h"
 #include "gui/currentlinewidget.h"
+#include "helpers/common.h"
 #include "dialogs/actionwithtargetdialog.h"
 #include "dialogs/shifttimesdialog.h"
 #include "dialogs/adjusttimesdialog.h"
@@ -555,7 +557,7 @@ Application::changeSelectedLinesColor()
 	if(!it.current())
 		return;
 
-	QColor color = SubtitleColorDialog::getColor(QColor(it.current()->primaryText().styleColorAt(0)), m_mainWindow);
+	QColor color = SubtitleColorDialog::getColor(QColor(it.current()->primaryDoc()->styleColorAt(0)), m_mainWindow);
 	if(color.isValid())
 		m_subtitle->changeTextColor(range, color.rgba());
 }
@@ -767,8 +769,8 @@ Application::applyTranslation(RangeList ranges, bool primary, int inputLanguage,
 	QString inputText;
 	QRegExp dialogCueRegExp2("-([^-])");
 	for(SubtitleIterator it(*m_subtitle, ranges); it.current(); ++it) {
-		QString lineText = it.current()->primaryText().richString();
-		lineText.replace('\n', ' ').replace("--", "---").replace(dialogCueRegExp2, "- \\1");
+		QString lineText = it.current()->primaryDoc()->toHtml();
+		lineText.replace($("\n"), QString()).replace("--", "---").replace(dialogCueRegExp2, "- \\1");
 		inputText += lineText + "\n()() ";
 	}
 
@@ -805,7 +807,7 @@ Application::applyTranslation(RangeList ranges, bool primary, int inputLanguage,
 			line.replace(dialogCueRegExp, "\n-");
 			SString text;
 			text.setRichString(line);
-			it.current()->setPrimaryText(text.trimmed());
+			it.current()->primaryDoc()->setRichText(text.trimmed());
 		}
 	} else {
 		KMessageBox::sorry(m_mainWindow, i18n("There was an error performing the translation:\n\n%1", errorMessage));

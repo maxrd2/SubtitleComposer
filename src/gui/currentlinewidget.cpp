@@ -20,6 +20,7 @@
 
 #include "currentlinewidget.h"
 #include "application.h"
+#include "core/richdocument.h"
 #include "widgets/timeedit.h"
 #include "widgets/simplerichtextedit.h"
 
@@ -31,6 +32,7 @@
 #include <QKeyEvent>
 #include <QDebug>
 #include <QIcon>
+#include <QTextDocument>
 
 #include <KConfigGroup>
 #include <KLocalizedString>
@@ -38,6 +40,8 @@
 using namespace SubtitleComposer;
 
 enum { COL_TIME, COL_PRIMARY, COL_SECONDARY };
+
+QTextDocument CurrentLineWidget::m_blankDoc;
 
 CurrentLineWidget::CurrentLineWidget(QWidget *parent)
 	: QWidget(parent),
@@ -92,8 +96,6 @@ CurrentLineWidget::CurrentLineWidget(QWidget *parent)
 
 	setSizePolicy(QSizePolicy::Minimum, QSizePolicy::Expanding);
 
-	connect(m_textEdits[0], &QTextEdit::textChanged, this, &CurrentLineWidget::onPrimaryTextEditChanged);
-	connect(m_textEdits[1], &QTextEdit::textChanged, this, &CurrentLineWidget::onSecondaryTextEditChanged);
 	connect(m_showTimeEdit, &TimeEdit::valueChanged, this, &CurrentLineWidget::onShowTimeEditChanged);
 	connect(m_hideTimeEdit, &TimeEdit::valueChanged, this, &CurrentLineWidget::onHideTimeEditChanged);
 	connect(m_durationTimeEdit, &TimeEdit::valueChanged, this, &CurrentLineWidget::onDurationTimeEditChanged);
@@ -141,10 +143,14 @@ CurrentLineWidget::createLineWidgetBox(int index)
 	m_textLabels[index] = textLabel;
 
 	SimpleRichTextEdit *textEdit = new SimpleRichTextEdit(this);
+	textEdit->setDocument(&m_blankDoc);
 	textEdit->setTabChangesFocus(true);
 	textEdit->setSizePolicy(QSizePolicy::Minimum, QSizePolicy::Expanding);
 	layout->addWidget(textEdit, 1, 0, 1, 7);
 	m_textEdits[index] = textEdit;
+	connect(textEdit, &SimpleRichTextEdit::textChanged, [this, textEdit, textLabel](){
+		textLabel->setText(buildTextDescription(textEdit->toPlainText()));
+	});
 
 	QToolButton *btnBold = createToolButton(i18n("Toggle Bold"), "format-text-bold");
 	connect(btnBold, &QToolButton::clicked, textEdit, &SimpleRichTextEdit::toggleFontBold);
@@ -222,8 +228,6 @@ void
 CurrentLineWidget::setCurrentLine(SubtitleLine *line)
 {
 	if(m_currentLine) {
-		disconnect(m_currentLine, &SubtitleLine::primaryTextChanged, this, &CurrentLineWidget::onLinePrimaryTextChanged);
-		disconnect(m_currentLine, &SubtitleLine::secondaryTextChanged, this, &CurrentLineWidget::onLineSecondaryTextChanged);
 		disconnect(m_currentLine, &SubtitleLine::showTimeChanged, this, &CurrentLineWidget::onLineShowTimeChanged);
 		disconnect(m_currentLine, &SubtitleLine::hideTimeChanged, this, &CurrentLineWidget::onLineHideTimeChanged);
 	}
@@ -231,15 +235,19 @@ CurrentLineWidget::setCurrentLine(SubtitleLine *line)
 	m_currentLine = line;
 
 	if(m_currentLine) {
-		connect(m_currentLine, &SubtitleLine::primaryTextChanged, this, &CurrentLineWidget::onLinePrimaryTextChanged);
-		connect(m_currentLine, &SubtitleLine::secondaryTextChanged, this, &CurrentLineWidget::onLineSecondaryTextChanged);
 		connect(m_currentLine, &SubtitleLine::showTimeChanged, this, &CurrentLineWidget::onLineShowTimeChanged);
 		connect(m_currentLine, &SubtitleLine::hideTimeChanged, this, &CurrentLineWidget::onLineHideTimeChanged);
 
-		onLinePrimaryTextChanged(m_currentLine->primaryText());
-		onLineSecondaryTextChanged(m_currentLine->secondaryText());
 		onLineShowTimeChanged(m_currentLine->showTime());
 		onLineHideTimeChanged(m_currentLine->hideTime());
+
+		if(m_textEdits[0]->isReadOnly())
+			m_textEdits[0]->setReadOnly(false);
+		m_textEdits[0]->setDocument(m_currentLine->primaryDoc());
+
+		if(m_textEdits[1]->isReadOnly())
+			m_textEdits[1]->setReadOnly(false);
+		m_textEdits[1]->setDocument(m_currentLine->secondaryDoc());
 
 		if(m_subtitle)
 			onLineAnchorChanged(m_currentLine, m_subtitle->isLineAnchored(m_currentLine));
@@ -248,9 +256,11 @@ CurrentLineWidget::setCurrentLine(SubtitleLine *line)
 	} else {
 		QSignalBlocker s1(m_textEdits[0]), s2(m_textEdits[1]);
 		m_textLabels[0]->setText(i18n("No current line"));
-		m_textEdits[0]->setRichText(SString());
+		m_textEdits[0]->setDocument(&m_blankDoc);
+		m_textEdits[0]->setReadOnly(true);
 		m_textLabels[1]->setText(i18n("No current line"));
-		m_textEdits[1]->setRichText(SString());
+		m_textEdits[1]->setDocument(&m_blankDoc);
+		m_textEdits[1]->setReadOnly(true);
 		onLineShowTimeChanged(Time());
 		onLineHideTimeChanged(Time());
 
@@ -273,28 +283,6 @@ CurrentLineWidget::setTranslationMode(bool enabled)
 	}
 
 	setCurrentLine(m_currentLine);
-}
-
-void
-CurrentLineWidget::onPrimaryTextEditChanged()
-{
-	m_userChangingText++;
-	SString text(m_textEdits[0]->richText());
-	if(m_currentLine)
-		m_currentLine->setPrimaryText(text);
-	m_textLabels[0]->setText(buildTextDescription(text.string()));
-	m_userChangingText--;
-}
-
-void
-CurrentLineWidget::onSecondaryTextEditChanged()
-{
-	m_userChangingText++;
-	SString text(m_textEdits[1]->richText());
-	if(m_currentLine)
-		m_currentLine->setSecondaryText(text);
-	m_textLabels[1]->setText(buildTextDescription(text.string()));
-	m_userChangingText--;
 }
 
 void
@@ -352,26 +340,6 @@ CurrentLineWidget::onLineAnchorChanged(const SubtitleLine *line, bool anchored)
 {
 	if(m_subtitle && line == m_currentLine)
 		m_showTimeEdit->setEnabled(!m_subtitle->hasAnchors() || anchored);
-}
-
-void
-CurrentLineWidget::onLinePrimaryTextChanged(const SString &primaryText)
-{
-	if(m_userChangingText)
-		return;
-	QSignalBlocker s(m_textEdits[0]);
-	m_textLabels[0]->setText(buildTextDescription(primaryText.string()));
-	m_textEdits[0]->setRichText(primaryText);
-}
-
-void
-CurrentLineWidget::onLineSecondaryTextChanged(const SString &secondaryText)
-{
-	if(m_userChangingText)
-		return;
-	QSignalBlocker s(m_textEdits[1]);
-	m_textLabels[1]->setText(buildTextDescription(secondaryText.string()));
-	m_textEdits[1]->setRichText(secondaryText);
 }
 
 void

@@ -65,9 +65,6 @@ public:
 	bool event(QEvent *event) override;
 
 public slots:
-	SubtitleComposer::SString richText();
-	void setRichText(const SubtitleComposer::SString &richText);
-
 	void setSelection(int startIndex, int endIndex);
 	void clearSelection();
 
@@ -104,6 +101,7 @@ protected:
 	QVector<QAction *> m_actions = QVector<QAction *>(ActionCount, nullptr);
 	QMenu *m_insertUnicodeControlCharMenu;
 	QTextCursor m_selectedWordCursor;
+	bool m_ignoreTextUpdate = false;
 };
 
 }

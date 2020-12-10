@@ -21,6 +21,7 @@
  * Boston, MA 02110-1301, USA.
  */
 
+#include "core/richdocument.h"
 #include "formats/inputformat.h"
 
 #include <QRegExp>
@@ -54,7 +55,9 @@ protected:
 				text.remove(m_styleRegExp);
 			}
 
-			subtitle.insertLine(new SubtitleLine(SString(text, styleFlags), showTime, hideTime));
+			SubtitleLine *l = new SubtitleLine(showTime, hideTime);
+			l->primaryDoc()->setRichText(SString(text, styleFlags), true);
+			subtitle.insertLine(l);
 
 			readLines++;
 		}

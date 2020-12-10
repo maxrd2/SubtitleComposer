@@ -23,6 +23,7 @@
 
 #include "formats/outputformat.h"
 #include "core/formatdata.h"
+#include "core/richdocument.h"
 #include "core/subtitleiterator.h"
 
 namespace SubtitleComposer {
@@ -129,8 +130,9 @@ protected:
 
 			formatData = this->formatData(line);
 
+			SString stext = (primary ? line->primaryDoc() : line->secondaryDoc())->toRichText();
 			ret += QString(formatData ? formatData->value(QStringLiteral("Dialogue")) : m_dialogueBuilder)
-					.arg(showTimeArg, hideTimeArg, fromSString(primary ? line->primaryText() : line->secondaryText()));
+					.arg(showTimeArg, hideTimeArg, fromSString(stext));
 		}
 		return ret;
 	}

@@ -20,6 +20,7 @@
 
 #include "lineswidget.h"
 #include "application.h"
+#include "core/richdocument.h"
 #include "actions/useractionnames.h"
 #include "dialogs/actionwithtargetdialog.h"
 #include "gui/treeview/linesitemdelegate.h"
@@ -384,7 +385,7 @@ LinesWidget::contextMenuEvent(QContextMenuEvent *e)
 	menu.addMenu(&textsMenu);
 
 	QMenu stylesMenu(i18n("Styles"));
-	const int styleFlags = referenceLine->primaryText().cummulativeStyleFlags() | referenceLine->secondaryText().cummulativeStyleFlags();
+	const int styleFlags = referenceLine->primaryDoc()->cummulativeStyleFlags() | referenceLine->secondaryDoc()->cummulativeStyleFlags();
 	stylesMenu.addAction(appAction(ACT_TOGGLE_SELECTED_LINES_BOLD, true, styleFlags & SString::Bold));
 	stylesMenu.addAction(appAction(ACT_TOGGLE_SELECTED_LINES_ITALIC, true, styleFlags & SString::Italic));
 	stylesMenu.addAction(appAction(ACT_TOGGLE_SELECTED_LINES_UNDERLINE, true, styleFlags & SString::Underline));

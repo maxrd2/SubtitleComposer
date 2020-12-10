@@ -21,6 +21,7 @@
  * Boston, MA 02110-1301, USA.
  */
 
+#include "core/richdocument.h"
 #include "formats/inputformat.h"
 
 #include <QRegExp>
@@ -40,7 +41,9 @@ protected:
 			Time hideTime(m_lineRegExp.cap(2).toInt() * 100);
 			QString text(m_lineRegExp.cap(3).replace('|', '\n'));
 
-			subtitle.insertLine(new SubtitleLine(text, showTime, hideTime));
+			SubtitleLine *line = new SubtitleLine(showTime, hideTime);
+			line->primaryDoc()->setPlainText(text);
+			subtitle.insertLine(line);
 
 			readLines++;
 		}

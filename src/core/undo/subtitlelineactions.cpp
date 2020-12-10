@@ -19,9 +19,8 @@
  */
 
 #include "subtitlelineactions.h"
+#include "core/richdocument.h"
 #include "core/subtitle.h"
-
-#define PROPAGATE_LINE_SIGNALS
 
 #include <KLocalizedString>
 
@@ -38,9 +37,10 @@ SubtitleLineAction::~SubtitleLineAction()
 
 
 // *** SetLinePrimaryTextAction
-SetLinePrimaryTextAction::SetLinePrimaryTextAction(SubtitleLine &line, const SString &primaryText)
+SetLinePrimaryTextAction::SetLinePrimaryTextAction(SubtitleLine &line, RichDocument *primaryDoc)
 	: SubtitleLineAction(line, UndoAction::Primary, i18n("Set Line Text")),
-	  m_primaryText(primaryText)
+	  m_primaryDoc(primaryDoc),
+	  m_primaryDocState(primaryDoc->availableUndoSteps())
 {}
 
 SetLinePrimaryTextAction::~SetLinePrimaryTextAction()
@@ -49,29 +49,34 @@ SetLinePrimaryTextAction::~SetLinePrimaryTextAction()
 bool
 SetLinePrimaryTextAction::mergeWith(const QUndoCommand *command)
 {
-	const SetLinePrimaryTextAction *currentAction = static_cast<const SetLinePrimaryTextAction *>(command);
-	return &currentAction->m_line == &m_line;
+	const SetLinePrimaryTextAction *cur = static_cast<const SetLinePrimaryTextAction *>(command);
+	return cur->m_primaryDoc == m_primaryDoc && cur->m_primaryDocState == m_primaryDocState;
+}
+
+void
+SetLinePrimaryTextAction::undo()
+{
+	QSignalBlocker s(m_primaryDoc);
+	while(m_primaryDoc->isUndoAvailable() && m_primaryDoc->availableUndoSteps() >= m_primaryDocState)
+		m_primaryDoc->undo();
+	emit m_line.primaryTextChanged();
 }
 
 void
 SetLinePrimaryTextAction::redo()
 {
-	SString tmp = m_line.m_primaryText;
-	m_line.m_primaryText = m_primaryText;
-	m_primaryText = tmp;
-
-	emit m_line.primaryTextChanged(m_line.m_primaryText);
-#ifdef PROPAGATE_LINE_SIGNALS
-	if(m_line.m_subtitle)
-		emit m_line.m_subtitle->linePrimaryTextChanged(&m_line, m_line.m_primaryText);
-#endif
+	QSignalBlocker s(m_primaryDoc);
+	while(m_primaryDoc->isRedoAvailable() && m_primaryDoc->availableUndoSteps() < m_primaryDocState)
+		m_primaryDoc->redo();
+	emit m_line.primaryTextChanged();
 }
 
 
 // *** SetLineSecondaryTextAction
-SetLineSecondaryTextAction::SetLineSecondaryTextAction(SubtitleLine &line, const SString &secondaryText)
+SetLineSecondaryTextAction::SetLineSecondaryTextAction(SubtitleLine &line, RichDocument *secondaryDoc)
 	: SubtitleLineAction(line, UndoAction::Secondary, i18n("Set Line Secondary Text")),
-	  m_secondaryText(secondaryText)
+	  m_secondaryDoc(secondaryDoc),
+	  m_secondaryDocState(secondaryDoc->availableUndoSteps())
 {}
 
 SetLineSecondaryTextAction::~SetLineSecondaryTextAction()
@@ -80,69 +85,28 @@ SetLineSecondaryTextAction::~SetLineSecondaryTextAction()
 bool
 SetLineSecondaryTextAction::mergeWith(const QUndoCommand *command)
 {
-	const SetLineSecondaryTextAction *currentAction = static_cast<const SetLineSecondaryTextAction *>(command);
-	return &currentAction->m_line == &m_line;
+	const SetLineSecondaryTextAction *cur = static_cast<const SetLineSecondaryTextAction *>(command);
+	return cur->m_secondaryDoc == m_secondaryDoc && cur->m_secondaryDocState == m_secondaryDocState;
+}
+
+void
+SetLineSecondaryTextAction::undo()
+{
+	QSignalBlocker s(m_secondaryDoc);
+	while(m_secondaryDoc->isUndoAvailable() && m_secondaryDoc->availableUndoSteps() >= m_secondaryDocState)
+		m_secondaryDoc->undo();
+	emit m_line.secondaryTextChanged();
 }
 
 void
 SetLineSecondaryTextAction::redo()
 {
-	SString tmp = m_line.m_secondaryText;
-	m_line.m_secondaryText = m_secondaryText;
-	m_secondaryText = tmp;
-
-	emit m_line.secondaryTextChanged(m_line.m_secondaryText);
-#ifdef PROPAGATE_LINE_SIGNALS
-	if(m_line.m_subtitle)
-		emit m_line.m_subtitle->lineSecondaryTextChanged(&m_line, m_line.m_secondaryText);
-#endif
+	QSignalBlocker s(m_secondaryDoc);
+	while(m_secondaryDoc->isRedoAvailable() && m_secondaryDoc->availableUndoSteps() < m_secondaryDocState)
+		m_secondaryDoc->redo();
+	emit m_line.secondaryTextChanged();
 }
 
-
-// *** SetLineTextsAction
-SetLineTextsAction::SetLineTextsAction(SubtitleLine &line, const SString &primaryText, const SString &secondaryText)
-	: SubtitleLineAction(line, UndoAction::Both, i18n("Set Line Texts")),
-	  m_primaryText(primaryText),
-	  m_secondaryText(secondaryText)
-{}
-
-SetLineTextsAction::~SetLineTextsAction()
-{}
-
-bool
-SetLineTextsAction::mergeWith(const QUndoCommand *command)
-{
-	const SetLineTextsAction *currentAction = static_cast<const SetLineTextsAction *>(command);
-	return &currentAction->m_line == &m_line;
-}
-
-void
-SetLineTextsAction::redo()
-{
-	if(m_line.m_primaryText != m_primaryText) {
-		SString tmp = m_line.m_primaryText;
-		m_line.m_primaryText = m_primaryText;
-		m_primaryText = tmp;
-
-		emit m_line.primaryTextChanged(m_line.m_primaryText);
-#ifdef PROPAGATE_LINE_SIGNALS
-		if(m_line.m_subtitle)
-			emit m_line.m_subtitle->linePrimaryTextChanged(&m_line, m_line.m_primaryText);
-#endif
-	}
-
-	if(m_line.m_secondaryText != m_secondaryText) {
-		SString tmp = m_line.m_secondaryText;
-		m_line.m_secondaryText = m_secondaryText;
-		m_secondaryText = tmp;
-
-		emit m_line.secondaryTextChanged(m_line.m_secondaryText);
-#ifdef PROPAGATE_LINE_SIGNALS
-		if(m_line.m_subtitle)
-			emit m_line.m_subtitle->lineSecondaryTextChanged(&m_line, m_line.m_secondaryText);
-#endif
-	}
-}
 
 
 // *** SetLineShowTimeAction
@@ -169,10 +133,6 @@ SetLineShowTimeAction::redo()
 	m_showTime = tmp;
 
 	emit m_line.showTimeChanged(m_line.m_showTime);
-#ifdef PROPAGATE_LINE_SIGNALS
-	if(m_line.m_subtitle)
-		emit m_line.m_subtitle->lineShowTimeChanged(&m_line, m_line.m_showTime);
-#endif
 }
 
 
@@ -200,10 +160,6 @@ SetLineHideTimeAction::redo()
 	m_hideTime = tmp;
 
 	emit m_line.hideTimeChanged(m_line.m_hideTime);
-#ifdef PROPAGATE_LINE_SIGNALS
-	if(m_line.m_subtitle)
-		emit m_line.m_subtitle->lineHideTimeChanged(&m_line, m_line.m_hideTime);
-#endif
 }
 
 
@@ -233,10 +189,6 @@ SetLineTimesAction::redo()
 		m_showTime = tmp;
 
 		emit m_line.showTimeChanged(m_line.m_showTime);
-#ifdef PROPAGATE_LINE_SIGNALS
-		if(m_line.m_subtitle)
-			emit m_line.m_subtitle->lineShowTimeChanged(&m_line, m_line.m_showTime);
-#endif
 	}
 
 	if(m_line.m_hideTime != m_hideTime) {
@@ -245,10 +197,6 @@ SetLineTimesAction::redo()
 		m_hideTime = tmp;
 
 		emit m_line.hideTimeChanged(m_line.m_hideTime);
-#ifdef PROPAGATE_LINE_SIGNALS
-		if(m_line.m_subtitle)
-			emit m_line.m_subtitle->lineHideTimeChanged(&m_line, m_line.m_hideTime);
-#endif
 	}
 }
 
@@ -276,8 +224,4 @@ SetLineErrorsAction::redo()
 	m_errorFlags = tmp;
 
 	emit m_line.errorFlagsChanged(m_line.m_errorFlags);
-#ifdef PROPAGATE_LINE_SIGNALS
-	if(m_line.m_subtitle)
-		emit m_line.m_subtitle->lineErrorFlagsChanged(&m_line, m_line.m_errorFlags);
-#endif
 }

@@ -22,6 +22,7 @@
 #include "application.h"
 #include "actions/useractionnames.h"
 #include "helpers/commondefs.h"
+#include "core/richdocument.h"
 #include "core/subtitleiterator.h"
 #include "videoplayer/videoplayer.h"
 #include "widgets/layeredwidget.h"
@@ -527,8 +528,8 @@ PlayerWidget::updateOverlayLine(const Time &videoPosition)
 		if(!seekedBackwards && videoPosition <= m_overlayLine->hideTime()) {
 			// m_overlayLine is the line to show or the next line to show
 			if(videoPosition >= m_overlayLine->showTime()) { // m_overlayLine is the line to show
-				const SString &text = m_showTranslation ? m_overlayLine->secondaryText() : m_overlayLine->primaryText();
-				m_player->subtitleOverlay().setText(text.richString(SString::Verbose));
+				const RichDocument *doc = m_showTranslation ? m_overlayLine->secondaryDoc() : m_overlayLine->primaryDoc();
+				m_player->subtitleOverlay().setText(doc->toHtml());
 			}
 			return;
 		} else {
@@ -548,8 +549,8 @@ PlayerWidget::updateOverlayLine(const Time &videoPosition)
 				setOverlayLine(it.current());
 
 				if(m_overlayLine->showTime() <= videoPosition && videoPosition <= m_overlayLine->hideTime()) {
-					const SString &text = m_showTranslation ? m_overlayLine->secondaryText() : m_overlayLine->primaryText();
-					m_player->subtitleOverlay().setText(text.richString(SString::Verbose));
+					const RichDocument *doc = m_showTranslation ? m_overlayLine->secondaryDoc() : m_overlayLine->primaryDoc();
+					m_player->subtitleOverlay().setText(doc->toHtml());
 				}
 				return;
 			}

@@ -45,7 +45,6 @@ using namespace SubtitleComposer;
 SimpleRichTextEdit::SimpleRichTextEdit(QWidget *parent)
 	: KTextEdit(parent)
 {
-	setUndoRedoEnabled(false);
 	enableFindReplace(false);
 	setCheckSpellingEnabled(true);
 
@@ -76,82 +75,6 @@ SimpleRichTextEdit::~SimpleRichTextEdit()
 {
 	if(m_insertUnicodeControlCharMenu)
 		delete m_insertUnicodeControlCharMenu->parent();
-}
-
-SubtitleComposer::SString
-SimpleRichTextEdit::richText()
-{
-	SubtitleComposer::SString richText(toPlainText());
-
-	if(richText.length()) {
-		QTextCursor cursor = textCursor();
-		QTextCharFormat format;
-		int styleFlags;
-		QRgb styleColor;
-		for(int position = 1, size = richText.length(); position <= size; ++position) {
-			cursor.setPosition(position);
-			format = cursor.charFormat();
-
-			styleFlags = 0;
-			if(format.fontWeight() == QFont::Bold)
-				styleFlags |= SubtitleComposer::SString::Bold;
-			if(format.fontItalic())
-				styleFlags |= SubtitleComposer::SString::Italic;
-			if(format.fontUnderline())
-				styleFlags |= SubtitleComposer::SString::Underline;
-			if(format.fontStrikeOut())
-				styleFlags |= SubtitleComposer::SString::StrikeThrough;
-			if(format.foreground().style() != Qt::NoBrush) {
-				styleFlags |= SubtitleComposer::SString::Color;
-				styleColor = format.foreground().color().toRgb().rgb();
-			} else {
-				styleColor = 0;
-			}
-
-			richText.setStyleFlagsAt(position - 1, styleFlags);
-			richText.setStyleColorAt(position - 1, styleColor);
-		}
-	}
-
-	return richText;
-}
-
-void
-SimpleRichTextEdit::setRichText(const SubtitleComposer::SString &richText)
-{
-	const bool undoEnabled = isUndoRedoEnabled();
-	setUndoRedoEnabled(false);
-
-	setPlainText(richText.string());
-
-	QTextCursor cursor = textCursor();
-	cursor.setPosition(0);
-
-	int currentStyleFlags = -1;
-	QRgb currentStyleColor = 0;
-	QTextCharFormat format;
-	for(int position = 0, size = richText.length(); position < size; ++position) {
-		const int posFlags = richText.styleFlagsAt(position);
-		const QRgb posColor = richText.styleColorAt(position);
-		if(currentStyleFlags != posFlags || ((posFlags & SubtitleComposer::SString::Color) && currentStyleColor != posColor)) {
-			currentStyleFlags = posFlags;
-			currentStyleColor = posColor;
-			format.setFontWeight(currentStyleFlags & SubtitleComposer::SString::Bold ? QFont::Bold : QFont::Normal);
-			format.setFontItalic(currentStyleFlags & SubtitleComposer::SString::Italic);
-			format.setFontUnderline(currentStyleFlags & SubtitleComposer::SString::Underline);
-			format.setFontStrikeOut(currentStyleFlags & SubtitleComposer::SString::StrikeThrough);
-			if((currentStyleFlags &SubtitleComposer::SString::Color) == 0)
-				format.setForeground(QBrush());
-			else
-				format.setForeground(QBrush(QColor(currentStyleColor)));
-		}
-
-		cursor.movePosition(QTextCursor::NextCharacter, QTextCursor::KeepAnchor, 1);
-		cursor.mergeCharFormat(format);
-		cursor.setPosition(position + 1);
-	}
-
-	setUndoRedoEnabled(undoEnabled);
 }
 
 void
@@ -194,8 +117,8 @@ SimpleRichTextEdit::undoableClear()
 void
 SimpleRichTextEdit::setSelection(int startIndex, int endIndex)
 {
-	QTextCursor cursor(textCursor());
-	cursor.setPosition(startIndex);
+	QTextCursor cursor(document());
+	cursor.movePosition(QTextCursor::NextCharacter, QTextCursor::MoveAnchor, startIndex);
 	cursor.movePosition(QTextCursor::NextCharacter, QTextCursor::KeepAnchor, endIndex - startIndex + 1);
 	setTextCursor(cursor);
 }

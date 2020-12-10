@@ -20,6 +20,8 @@
 #include "vobsubinputprocessdialog.h"
 #include "ui_vobsubinputprocessdialog.h"
 
+#include "core/richdocument.h"
+
 #include <functional>
 
 #include <QDebug>
@@ -699,7 +701,7 @@ VobSubInputProcessDialog::processNextPiece()
 	ui->symbolCount->setValue(1);
 
 	if(m_pieceCurrent == m_pieces.end()) {
-		SString subText;
+		QString subText;
 		PiecePtr piecePrev;
 		foreach(PiecePtr piece, m_pieces) {
 			if(piecePrev) {
@@ -713,7 +715,9 @@ VobSubInputProcessDialog::processNextPiece()
 			piecePrev = piece;
 		}
 
-		m_subtitle->insertLine(new SubtitleLine(subText, (*m_frameCurrent)->subShowTime, (*m_frameCurrent)->subHideTime));
+		SubtitleLine *l = new SubtitleLine((*m_frameCurrent)->subShowTime, (*m_frameCurrent)->subHideTime);
+		l->primaryDoc()->setPlainText(subText);
+		m_subtitle->insertLine(l);
 
 		ui->grpText->setDisabled(true);
 		ui->grpNavButtons->setDisabled(true);

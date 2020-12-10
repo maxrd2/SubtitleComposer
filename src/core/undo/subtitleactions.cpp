@@ -156,16 +156,16 @@ RemoveLinesAction::mergeWith(const QUndoCommand *command)
 	if(&currentAction->m_subtitle != &m_subtitle)
 		return false;
 
-	if(m_firstIndex == currentAction->m_firstIndex) {
-		// currentAction removed lines immediately below those removed by this
-		m_lastIndex += currentAction->m_lines.count();
+	if(m_lastIndex + 1 == currentAction->m_firstIndex) {
+		// currentAction removed lines immediately after ours
+		m_lastIndex = currentAction->m_lastIndex;
 		while(!currentAction->m_lines.isEmpty())
 			m_lines.append(const_cast<RemoveLinesAction *>(currentAction)->m_lines.takeFirst());
 		return true;
 	}
 
 	if(currentAction->m_lastIndex + 1 == m_firstIndex) {
-		// currentAction removed lines immediately above those removed by this
+		// currentAction removed lines immediately before ours
 		m_firstIndex = currentAction->m_firstIndex;
 		while(!currentAction->m_lines.isEmpty())
 			m_lines.prepend(const_cast<RemoveLinesAction *>(currentAction)->m_lines.takeLast());
@@ -307,12 +307,10 @@ SwapLinesTextsAction::redo()
 {
 	for(SubtitleIterator it(m_subtitle, m_ranges); it.current(); ++it) {
 		SubtitleLine *line = it.current();
-		SString aux = line->m_primaryText;
-
-		line->m_secondaryText = line->m_primaryText;
-		emit line->primaryTextChanged(line->m_primaryText);
-
-		line->m_primaryText = aux;
-		emit line->secondaryTextChanged(line->m_secondaryText);
+		RichDocument *tmp = line->m_primaryDoc;
+		line->m_primaryDoc = line->m_secondaryDoc;
+		line->m_secondaryDoc = tmp;
+		emit line->primaryTextChanged();
+		emit line->secondaryTextChanged();
 	}
 }
