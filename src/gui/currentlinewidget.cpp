@@ -289,7 +289,8 @@ CurrentLineWidget::onPrimaryTextEditChanged()
 	m_userChangingTime++;
 
 	SString text(m_textEdits[0]->richText());
-	m_currentLine->setPrimaryText(text);
+	if(m_currentLine)
+		m_currentLine->setPrimaryText(text);
 	m_textLabels[0]->setText(buildTextDescription(text.string()));
 
 	m_userChangingTime--;
@@ -304,7 +305,8 @@ CurrentLineWidget::onSecondaryTextEditChanged()
 	m_userChangingTime++;
 
 	SString text(m_textEdits[1]->richText());
-	m_currentLine->setSecondaryText(text);
+	if(m_currentLine)
+		m_currentLine->setSecondaryText(text);
 	m_textLabels[1]->setText(buildTextDescription(text.string()));
 
 	m_userChangingTime--;
