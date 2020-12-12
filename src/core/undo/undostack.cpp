@@ -48,32 +48,38 @@ UndoStack::clear()
 inline static void
 restoreSelection(int current, const QList<std::pair<int, int>> &selection)
 {
-	QCoreApplication::processEvents(); // queued stuff in LinesModel that will alter selection
-
 	LinesWidget *lw = app()->linesWidget();
+	LinesModel *lm = lw->model();
 	QItemSelectionModel *sm = lw->selectionModel();
-	const LinesModel *lm = lw->model();
+
+	// make sure that selection has valid iterators
+	lm->processSelectionUpdate();
 
 	// restore selected ranges
 	QItemSelection itemSel;
 	const int lastCol = lm->columnCount() - 1;
 	for(const std::pair<int, int> &r : selection)
 		itemSel.push_back(QItemSelectionRange(lm->index(r.first), lm->index(r.second, lastCol)));
-	sm->select(itemSel, QItemSelectionModel::ClearAndSelect);
+	if(sm->selection() != itemSel)
+		sm->select(itemSel, QItemSelectionModel::ClearAndSelect);
 
 	// restore current item
 	const QModelIndex idx = lm->index(current);
-	sm->setCurrentIndex(idx, QItemSelectionModel::Rows);
-	if(lw->scrollFollowsModel())
-		lw->scrollTo(idx, QAbstractItemView::EnsureVisible);
+	if(sm->currentIndex().row() != idx.row()) {
+		sm->setCurrentIndex(idx, QItemSelectionModel::Rows);
+		if(lw->scrollFollowsModel())
+			lw->scrollTo(idx, QAbstractItemView::EnsureVisible);
+	}
 }
 
 inline static void
 saveSelection(int *current, QList<std::pair<int, int>> *selection)
 {
-	QCoreApplication::processEvents(); // queued stuff in LinesModel that will alter selection
+	LinesWidget *lw = app()->linesWidget();
+	const QItemSelectionModel *sm = lw->selectionModel();
 
-	const QItemSelectionModel *sm = app()->linesWidget()->selectionModel();
+	// make sure that selection has valid iterators
+	lw->model()->processSelectionUpdate();
 
 	*current = sm->currentIndex().row();
 

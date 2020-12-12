@@ -23,8 +23,7 @@
 
 #include <QAbstractListModel>
 #include <QList>
-
-QT_FORWARD_DECLARE_CLASS(QTimer)
+#include <QTimer>
 
 namespace SubtitleComposer {
 class Subtitle;
@@ -55,6 +54,13 @@ public:
 
 	QVariant data(const QModelIndex &index, int role) const override;
 	bool setData(const QModelIndex &index, const QVariant &value, int role = Qt::EditRole) override;
+
+	inline void processSelectionUpdate() {
+		if(!m_resetModelTimer->isActive())
+			return;
+		m_resetModelTimer->stop();
+		onModelReset();
+	}
 
 private slots:
 	void onLinesInserted(int firstIndex, int lastIndex);
