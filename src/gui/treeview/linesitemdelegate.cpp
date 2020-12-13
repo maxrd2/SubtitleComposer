@@ -287,6 +287,11 @@ LinesItemDelegate::createEditor(QWidget *parent, const QStyleOptionViewItem &opt
 	if(isRichDoc(index)) {
 		RichLineEdit *ed = new RichLineEdit(parent);
 		ed->setLineEditStyle(option);
+		linesWidget()->m_inlineEditor = ed;
+		connect(ed, &QObject::destroyed, this, [this, ed](){
+			if(linesWidget()->m_inlineEditor == ed)
+				linesWidget()->m_inlineEditor = nullptr;
+		});
 		return ed;
 	}
 	return QStyledItemDelegate::createEditor(parent, option, index);

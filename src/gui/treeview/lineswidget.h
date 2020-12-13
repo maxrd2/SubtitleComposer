@@ -52,6 +52,8 @@ public:
 	inline LinesModel * model() const { return static_cast<LinesModel *>(TreeView::model()); }
 	inline bool scrollFollowsModel() const { return m_scrollFollowsModel; }
 
+	inline bool isEditing() { return m_inlineEditor != nullptr; }
+
 	void loadConfig();
 	void saveConfig();
 
@@ -95,9 +97,11 @@ private:
 	QPen m_gridPen;
 
 	LinesItemDelegate *m_itemsDelegate;
+	QWidget *m_inlineEditor;
 
 	friend class LinesWidgetScrollToModelDetacher;
 	friend class LinesModel;
+	friend class LinesItemDelegate;
 };
 
 class LinesWidgetScrollToModelDetacher

@@ -82,6 +82,7 @@ private:
 	int m_maxChangedLineIndex;
 	QTimer *m_resetModelTimer;
 	std::pair<const SubtitleLine *, const SubtitleLine *> m_resetModelSelection;
+	bool m_resetModelResumeEditing;
 
 	friend class LinesWidget;
 };

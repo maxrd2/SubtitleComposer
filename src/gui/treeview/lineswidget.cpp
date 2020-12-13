@@ -42,7 +42,8 @@ LinesWidget::LinesWidget(QWidget *parent)
 	  m_scrollFollowsModel(true),
 	  m_translationMode(false),
 	  m_showingContextMenu(false),
-	  m_itemsDelegate(new LinesItemDelegate(this))
+	  m_itemsDelegate(new LinesItemDelegate(this)),
+	  m_inlineEditor(nullptr)
 {
 	setModel(new LinesModel(this));
 	selectionModel()->deleteLater();

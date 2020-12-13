@@ -280,7 +280,9 @@ LinesModel::onLinesInserted(int firstIndex, int lastIndex)
 {
 	m_resetModelSelection.first = m_subtitle->at(firstIndex);
 	m_resetModelSelection.second = m_subtitle->at(lastIndex);
-	static_cast<LinesWidget *>(parent())->selectionModel()->clear();
+	LinesWidget *lw = static_cast<LinesWidget *>(parent());
+	m_resetModelResumeEditing = lw->isEditing();
+	lw->selectionModel()->clear();
 	m_resetModelTimer->start();
 }
 
@@ -324,6 +326,9 @@ LinesModel::onModelReset()
 
 	if(w->scrollFollowsModel())
 		w->scrollTo(sm->currentIndex(), QAbstractItemView::EnsureVisible);
+
+	if(m_resetModelResumeEditing)
+		QMetaObject::invokeMethod(w, [w](){ if(!w->isEditing()) w->editCurrentLineInPlace(); }, Qt::QueuedConnection);
 }
 
 void
