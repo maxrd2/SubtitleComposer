@@ -57,12 +57,6 @@ LinesModel::LinesModel(QObject *parent)
 	connect(m_resetModelTimer, &QTimer::timeout, this, &LinesModel::onModelReset);
 }
 
-Subtitle *
-LinesModel::subtitle() const
-{
-	return m_subtitle;
-}
-
 void
 LinesModel::setSubtitle(Subtitle *subtitle)
 {
@@ -106,12 +100,6 @@ LinesModel::setSubtitle(Subtitle *subtitle)
 			connect(m_subtitle, &Subtitle::lineHideTimeChanged, this, &LinesModel::onLineChanged);
 		}
 	}
-}
-
-SubtitleLine *
-LinesModel::playingLine() const
-{
-	return m_playingLine;
 }
 
 void

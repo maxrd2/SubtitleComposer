@@ -39,10 +39,10 @@ public:
 
 	explicit LinesModel(QObject *parent = nullptr);
 
-	Subtitle * subtitle() const;
+	inline Subtitle * subtitle() const { return m_subtitle; }
 	void setSubtitle(Subtitle *subtitle);
 
-	SubtitleLine * playingLine() const;
+	inline SubtitleLine * playingLine() const { return m_playingLine; }
 	void setPlayingLine(SubtitleLine *line);
 
 	int rowCount(const QModelIndex &parent = QModelIndex()) const override;

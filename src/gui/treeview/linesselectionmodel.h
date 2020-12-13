@@ -35,6 +35,8 @@ class LinesSelectionModel : public QItemSelectionModel
 public:
 	LinesSelectionModel(LinesModel *model = nullptr);
 
+	inline SubtitleLine * currentLine() { return m_currentLine; }
+
 public slots:
 	void setCurrentIndex(const QModelIndex &index, QItemSelectionModel::SelectionFlags command) override;
 	void select(const QModelIndex &index, QItemSelectionModel::SelectionFlags command) override;
@@ -44,7 +46,7 @@ public slots:
 
 private:
 	bool m_resetInProgress;
-	const SubtitleLine *m_currentLine;
+	SubtitleLine *m_currentLine;
 	QSet<const SubtitleLine *> m_selection;
 };
 }

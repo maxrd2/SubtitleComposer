@@ -41,9 +41,7 @@ LinesSelectionModel::LinesSelectionModel(LinesModel *model)
 void
 LinesSelectionModel::setCurrentIndex(const QModelIndex &index, QItemSelectionModel::SelectionFlags command)
 {
-	const Subtitle *subtitle = static_cast<LinesModel *>(model())->subtitle();
-	m_currentLine = subtitle->line(index.row());
-
+	m_currentLine = static_cast<LinesModel *>(model())->subtitle()->line(index.row());
 	QItemSelectionModel::setCurrentIndex(index, command);
 }
 

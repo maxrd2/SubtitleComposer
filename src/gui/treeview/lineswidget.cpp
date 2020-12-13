@@ -173,8 +173,7 @@ LinesWidget::showingContextMenu()
 SubtitleLine *
 LinesWidget::currentLine() const
 {
-	const QModelIndex idx = currentIndex();
-	return idx.isValid() ? model()->subtitle()->line(idx.row()) : nullptr;
+	return qobject_cast<LinesSelectionModel *>(selectionModel())->currentLine();
 }
 
 int
@@ -450,8 +449,8 @@ LinesWidget::contextMenuEvent(QContextMenuEvent *e)
 void
 LinesWidget::onCurrentRowChanged()
 {
-	QModelIndex current = currentIndex();
-	emit currentLineChanged(current.isValid() ? model()->subtitle()->line(current.row()) : nullptr);
+	auto sm = qobject_cast<LinesSelectionModel *>(selectionModel());
+	emit currentLineChanged(sm->currentLine());
 }
 
 void
