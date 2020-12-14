@@ -209,8 +209,6 @@ public slots:
 	void anchorRemoveAll();
 
 	void shiftToVideoPosition();
-	void adjustToVideoPositionAnchorLast();
-	void adjustToVideoPositionAnchorFirst();
 
 signals:
 	void subtitleOpened(Subtitle *subtitle);

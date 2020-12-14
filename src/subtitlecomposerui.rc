@@ -93,8 +93,6 @@
 			<Action name="anchor_remove_all" />
 			<Separator />
 			<Action name="shift_to_video_position" />
-			<Action name="adjust_to_video_position_anchor_last" />
-			<Action name="adjust_to_video_position_anchor_first" />
 		</Menu>
 		<Menu name="errors">
 			<text>E&amp;rrors</text>

@@ -1021,71 +1021,8 @@ void
 Application::shiftToVideoPosition()
 {
 	SubtitleLine *currentLine = m_linesWidget->currentLine();
-	if(currentLine) {
+	if(currentLine)
 		m_subtitle->shiftLines(Range::full(), videoPosition(true).toMillis() - currentLine->showTime().toMillis());
-	}
-}
-
-void
-Application::adjustToVideoPositionAnchorLast()
-{
-	SubtitleLine *currentLine = m_linesWidget->currentLine();
-	if(currentLine) {
-		long lastLineTime = m_subtitle->lastLine()->showTime().toMillis();
-
-		long oldCurrentLineTime = currentLine->showTime().toMillis();
-		long oldDeltaTime = lastLineTime - oldCurrentLineTime;
-
-		if(!oldDeltaTime)
-			return;
-
-		long newCurrentLineTime = videoPosition(true).toMillis();
-		long newDeltaTime = lastLineTime - newCurrentLineTime;
-
-		double scaleFactor = (double)newDeltaTime / oldDeltaTime;
-		long shiftTime = (long)(newCurrentLineTime - scaleFactor * oldCurrentLineTime);
-
-		long newFirstLineTime = (long)(shiftTime + m_subtitle->firstLine()->showTime().toMillis() * scaleFactor);
-
-		if(newFirstLineTime < 0) {
-			if(KMessageBox::warningContinueCancel(m_mainWindow, i18n("Continuing would result in loss of timing information for some lines.\nAre you sure you want to continue?")) != KMessageBox::Continue)
-				return;
-		}
-
-		m_subtitle->adjustLines(Range::full(), newFirstLineTime, lastLineTime);
-	}
-}
-
-void
-Application::adjustToVideoPositionAnchorFirst()
-{
-	SubtitleLine *currentLine = m_linesWidget->currentLine();
-	if(currentLine) {
-		long firstLineTime = m_subtitle->firstLine()->showTime().toMillis();
-
-		long oldCurrentLineTime = currentLine->showTime().toMillis();
-		long oldDeltaTime = oldCurrentLineTime - firstLineTime;
-
-		if(!oldDeltaTime)
-			return;
-
-		long newCurrentLineTime = videoPosition(true).toMillis();
-		long newDeltaTime = newCurrentLineTime - firstLineTime;
-
-		double scaleFactor = (double)newDeltaTime / oldDeltaTime;
-		long shiftTime = (long)(firstLineTime - scaleFactor * firstLineTime);
-
-		long newLastLineTime = (long)(shiftTime + m_subtitle->lastLine()->showTime().toMillis() * scaleFactor);
-
-		if(newLastLineTime > Time::MaxMseconds) {
-			if(KMessageBox::warningContinueCancel(m_mainWindow,
-					i18n("Continuing would result in loss of timing information for some lines.\n"
-						 "Are you sure you want to continue?")) != KMessageBox::Continue)
-				return;
-		}
-
-		m_subtitle->adjustLines(Range::full(), firstLineTime, newLastLineTime);
-	}
 }
 
 /// END ACTION HANDLERS

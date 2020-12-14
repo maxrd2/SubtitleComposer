@@ -742,22 +742,6 @@ Application::setupActions()
 	actionCollection->addAction(ACT_SHIFT_TO_VIDEO_POSITION, shiftToVideoPositionAction);
 	actionManager->addAction(shiftToVideoPositionAction, UserAction::HasSelection | UserAction::VideoPlaying | UserAction::FullScreenOff | UserAction::EditableShowTime);
 
-	QAction *adjustToVideoPositionAnchorLastAction = new QAction(actionCollection);
-	adjustToVideoPositionAnchorLastAction->setText(i18n("Adjust to Video Position (Anchor Last Line)"));
-	adjustToVideoPositionAnchorLastAction->setStatusTip(i18n("Set current line to video position by fixing the last line and linearly adjusting the other ones"));
-	actionCollection->setDefaultShortcut(adjustToVideoPositionAnchorLastAction, QKeySequence("Alt+Z"));
-	connect(adjustToVideoPositionAnchorLastAction, &QAction::triggered, this, &Application::adjustToVideoPositionAnchorLast);
-	actionCollection->addAction(ACT_ADJUST_TO_VIDEO_POSITION_A_L, adjustToVideoPositionAnchorLastAction);
-	actionManager->addAction(adjustToVideoPositionAnchorLastAction, UserAction::HasSelection | UserAction::VideoPlaying | UserAction::FullScreenOff | UserAction::AnchorsNone);
-
-	QAction *adjustToVideoPositionAnchorFirstAction = new QAction(actionCollection);
-	adjustToVideoPositionAnchorFirstAction->setText(i18n("Adjust to Video Position (Anchor First Line)"));
-	adjustToVideoPositionAnchorFirstAction->setStatusTip(i18n("Set current line to video position by fixing the first line and linearly adjusting the other ones"));
-	actionCollection->setDefaultShortcut(adjustToVideoPositionAnchorFirstAction, QKeySequence("Alt+X"));
-	connect(adjustToVideoPositionAnchorFirstAction, &QAction::triggered, this, &Application::adjustToVideoPositionAnchorFirst);
-	actionCollection->addAction(ACT_ADJUST_TO_VIDEO_POSITION_A_F, adjustToVideoPositionAnchorFirstAction);
-	actionManager->addAction(adjustToVideoPositionAnchorFirstAction, UserAction::HasSelection | UserAction::VideoPlaying | UserAction::FullScreenOff | UserAction::AnchorsNone);
-
 	QAction *toggleAnchor = new QAction(actionCollection);
 	toggleAnchor->setText(i18n("Toggle Anchor"));
 	toggleAnchor->setStatusTip(i18n("(Un)Anchor current line's show time to timeline (Editing anchored line's show time will stretch/compact the timeline between adjacent anchors)"));
