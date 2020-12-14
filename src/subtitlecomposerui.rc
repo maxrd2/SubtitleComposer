@@ -88,11 +88,10 @@
 			<Separator />
 			<Action name="set_current_line_show_time" />
 			<Action name="set_current_line_hide_time" />
+			<Action name="shift_to_video_position" />
 			<Separator />
 			<Action name="anchor_toggle" />
 			<Action name="anchor_remove_all" />
-			<Separator />
-			<Action name="shift_to_video_position" />
 		</Menu>
 		<Menu name="errors">
 			<text>E&amp;rrors</text>

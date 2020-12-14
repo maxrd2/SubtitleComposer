@@ -655,7 +655,7 @@ Application::setupActions()
 
 	QAction *setCurrentLineShowTimeFromVideoAction = new QAction(actionCollection);
 	setCurrentLineShowTimeFromVideoAction->setIcon(QIcon::fromTheme(QStringLiteral("set_show_time")));
-	setCurrentLineShowTimeFromVideoAction->setText(i18n("Set Current Line Show Time"));
+	setCurrentLineShowTimeFromVideoAction->setText(i18n("Set Line Show Time to Video Position"));
 	setCurrentLineShowTimeFromVideoAction->setStatusTip(i18n("Set current line show time to video position"));
 	actionCollection->setDefaultShortcut(setCurrentLineShowTimeFromVideoAction, QKeySequence("Shift+Z"));
 	connect(setCurrentLineShowTimeFromVideoAction, &QAction::triggered, this, &Application::setCurrentLineShowTimeFromVideo);
@@ -664,12 +664,20 @@ Application::setupActions()
 
 	QAction *setCurrentLineHideTimeFromVideoAction = new QAction(actionCollection);
 	setCurrentLineHideTimeFromVideoAction->setIcon(QIcon::fromTheme(QStringLiteral("set_hide_time")));
-	setCurrentLineHideTimeFromVideoAction->setText(i18n("Set Current Line Hide Time"));
+	setCurrentLineHideTimeFromVideoAction->setText(i18n("Set Line Hide Time to Video Position"));
 	setCurrentLineHideTimeFromVideoAction->setStatusTip(i18n("Set current line hide time to video position"));
 	actionCollection->setDefaultShortcut(setCurrentLineHideTimeFromVideoAction, QKeySequence("Shift+X"));
 	connect(setCurrentLineHideTimeFromVideoAction, &QAction::triggered, this, &Application::setCurrentLineHideTimeFromVideo);
 	actionCollection->addAction(ACT_SET_CURRENT_LINE_HIDE_TIME, setCurrentLineHideTimeFromVideoAction);
 	actionManager->addAction(setCurrentLineHideTimeFromVideoAction, UserAction::HasSelection | UserAction::VideoPlaying | UserAction::EditableShowTime);
+
+	QAction *shiftToVideoPositionAction = new QAction(actionCollection);
+	shiftToVideoPositionAction->setText(i18n("Shift Current Line to Video Position"));
+	shiftToVideoPositionAction->setStatusTip(i18n("Set current line show time to video position by equally shifting all lines"));
+	actionCollection->setDefaultShortcut(shiftToVideoPositionAction, QKeySequence("Shift+A"));
+	connect(shiftToVideoPositionAction, &QAction::triggered, this, &Application::shiftToVideoPosition);
+	actionCollection->addAction(ACT_SHIFT_TO_VIDEO_POSITION, shiftToVideoPositionAction);
+	actionManager->addAction(shiftToVideoPositionAction, UserAction::HasSelection | UserAction::VideoPlaying | UserAction::FullScreenOff | UserAction::EditableShowTime);
 
 	KToggleAction *currentLineFollowsVideoAction = new KToggleAction(actionCollection);
 	currentLineFollowsVideoAction->setIcon(QIcon::fromTheme(QStringLiteral("current_line_follows_video")));
@@ -733,14 +741,6 @@ Application::setupActions()
 	connect(setActiveSubtitleStreamAction, QOverload<int>::of(&KSelectAction::triggered), this, &Application::setActiveSubtitleStream);
 	actionCollection->addAction(ACT_SET_ACTIVE_SUBTITLE_STREAM, setActiveSubtitleStreamAction);
 	actionManager->addAction(setActiveSubtitleStreamAction, UserAction::SubTrOpened);
-
-	QAction *shiftToVideoPositionAction = new QAction(actionCollection);
-	shiftToVideoPositionAction->setText(i18n("Shift to Video Position"));
-	shiftToVideoPositionAction->setStatusTip(i18n("Set current line show time to video position by equally shifting all lines"));
-	actionCollection->setDefaultShortcut(shiftToVideoPositionAction, QKeySequence("Shift+A"));
-	connect(shiftToVideoPositionAction, &QAction::triggered, this, &Application::shiftToVideoPosition);
-	actionCollection->addAction(ACT_SHIFT_TO_VIDEO_POSITION, shiftToVideoPositionAction);
-	actionManager->addAction(shiftToVideoPositionAction, UserAction::HasSelection | UserAction::VideoPlaying | UserAction::FullScreenOff | UserAction::EditableShowTime);
 
 	QAction *toggleAnchor = new QAction(actionCollection);
 	toggleAnchor->setText(i18n("Toggle Anchor"));

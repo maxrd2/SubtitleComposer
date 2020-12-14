@@ -984,12 +984,8 @@ void
 Application::setCurrentLineHideTimeFromVideo()
 {
 	SubtitleLine *currentLine = m_linesWidget->currentLine();
-	if(currentLine) {
+	if(currentLine)
 		currentLine->setHideTime(videoPosition(true), true);
-		SubtitleLine *nextLine = currentLine->nextLine();
-		if(nextLine)
-			m_linesWidget->setCurrentLine(nextLine, true);
-	}
 }
 
 void
