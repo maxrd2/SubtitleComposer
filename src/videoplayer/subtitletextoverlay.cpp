@@ -19,28 +19,26 @@
 
 #include "subtitletextoverlay.h"
 
+#include "core/richdocument.h"
+
 #include <QAbstractTextDocumentLayout>
 #include <QPainter>
 #include <QTextCharFormat>
-#include <QTextDocument>
+#include <QTextLayout>
 
 #include "scconfig.h"
 
 using namespace SubtitleComposer;
 
 SubtitleTextOverlay::SubtitleTextOverlay()
-	: m_fontSize(SCConfig::fontSize()),
-	  m_renderScale(1.0),
-	  m_dirty(true)
+	: m_fontSize(SCConfig::fontSize())
 {
 	m_font.setStyleStrategy(QFont::PreferAntialias);
 }
 
 void
-SubtitleTextOverlay::drawImage()
+SubtitleTextOverlay::drawText()
 {
-	m_image.fill(Qt::transparent);
-
 	QTextDocument doc;
 	doc.setDefaultStyleSheet(QStringLiteral("p { margin:0; padding:0; display:block; white-space:pre; }"));
 	doc.setTextWidth(m_image.width());
@@ -109,6 +107,91 @@ SubtitleTextOverlay::drawImage()
 	m_textSize = QSize(doc.idealWidth(), doc.size().height() + topOffset);
 
 	painter.end();
+}
+
+void
+SubtitleTextOverlay::drawDoc()
+{
+	QPainter painter(&m_image);
+	painter.setRenderHints(QPainter::Antialiasing | QPainter::TextAntialiasing | QPainter::SmoothPixmapTransform
+						   | QPainter::HighQualityAntialiasing | QPainter::NonCosmeticDefaultPen, true);
+
+	QTextLayout textLayout(QString(), m_font, painter.device());
+	QTextOption layoutTextOption;
+	layoutTextOption.setWrapMode(QTextOption::NoWrap);
+	layoutTextOption.setAlignment(Qt::AlignHCenter);
+	textLayout.setTextOption(layoutTextOption);
+	textLayout.setCacheEnabled(true);
+
+	painter.setFont(m_font);
+	painter.setPen(m_textColor);
+	const QFontMetrics &fontMetrics = painter.fontMetrics();
+
+	qreal height = 0., heightOutline = 0.;
+	qreal maxLineWidth = 0;
+
+	for(QTextBlock bi = m_doc->begin(); bi != m_doc->end(); bi = bi.next()) {
+		QString text;
+		QVector<QTextLayout::FormatRange> fmtNormal, fmtOutline;
+
+		for(QTextBlock::iterator it = bi.begin(); !it.atEnd(); ++it) {
+			if(!it.fragment().isValid())
+				continue;
+			const QString &t = it.fragment().text();
+			QTextCharFormat fmt = it.fragment().charFormat();
+			fmtNormal.push_back(QTextLayout::FormatRange{text.length(), t.length(), fmt});
+			if(m_textOutline.width()) {
+				fmt.setTextOutline(m_textOutline);
+				fmtOutline.push_back(QTextLayout::FormatRange{text.length(), t.length(), fmt});
+			}
+			text.append(t);
+		}
+
+		textLayout.setText(text);
+
+		if(m_textOutline.width()) {
+			textLayout.setFormats(fmtOutline);
+
+			textLayout.beginLayout();
+			QTextLine line = textLayout.createLine();
+			line.setLineWidth(m_image.width());
+			heightOutline += fontMetrics.leading();
+			line.setPosition(QPointF(0., heightOutline));
+			heightOutline += line.height();
+			maxLineWidth = qMax(maxLineWidth, line.naturalTextWidth());
+			textLayout.endLayout();
+
+			textLayout.draw(&painter, QPointF());
+		}
+
+		textLayout.setFormats(fmtNormal);
+
+		textLayout.beginLayout();
+		QTextLine line = textLayout.createLine();
+		line.setLineWidth(m_image.width());
+		height += fontMetrics.leading();
+		line.setPosition(QPointF(0., height));
+		height += line.height();
+		maxLineWidth = qMax(maxLineWidth, line.naturalTextWidth());
+		textLayout.endLayout();
+
+		textLayout.draw(&painter, QPointF());
+	}
+
+	m_textSize = QSize(maxLineWidth, qMax(height, heightOutline));
+
+	painter.end();
+}
+
+void
+SubtitleTextOverlay::drawImage()
+{
+	m_image.fill(Qt::transparent);
+
+	if(m_doc && !m_doc->isEmpty())
+		drawDoc();
+	else if(!m_text.isEmpty())
+		drawText();
 
 	m_dirty = false;
 }
@@ -159,6 +242,17 @@ SubtitleTextOverlay::setText(const QString &text)
 	if(m_text == text)
 		return;
 	m_text = text;
+	m_doc = nullptr;
+	m_dirty = true;
+}
+
+void
+SubtitleTextOverlay::setDoc(const RichDocument *doc)
+{
+	if(m_doc == doc)
+		return;
+	m_doc = doc;
+	m_text.clear();
 	m_dirty = true;
 }
 

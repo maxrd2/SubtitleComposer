@@ -529,7 +529,7 @@ PlayerWidget::updateOverlayLine(const Time &videoPosition)
 			// m_overlayLine is the line to show or the next line to show
 			if(videoPosition >= m_overlayLine->showTime()) { // m_overlayLine is the line to show
 				const RichDocument *doc = m_showTranslation ? m_overlayLine->secondaryDoc() : m_overlayLine->primaryDoc();
-				m_player->subtitleOverlay().setText(doc->toHtml());
+				m_player->subtitleOverlay().setDoc(doc);
 			}
 			return;
 		} else {
@@ -550,7 +550,7 @@ PlayerWidget::updateOverlayLine(const Time &videoPosition)
 
 				if(m_overlayLine->showTime() <= videoPosition && videoPosition <= m_overlayLine->hideTime()) {
 					const RichDocument *doc = m_showTranslation ? m_overlayLine->secondaryDoc() : m_overlayLine->primaryDoc();
-					m_player->subtitleOverlay().setText(doc->toHtml());
+					m_player->subtitleOverlay().setDoc(doc);
 				}
 				return;
 			}

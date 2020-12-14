@@ -26,6 +26,8 @@
 #include <QImage>
 
 namespace SubtitleComposer {
+class RichDocument;
+
 class SubtitleTextOverlay
 {
 public:
@@ -48,11 +50,14 @@ public:
 
 private:
 	void drawImage();
+	void drawText();
+	void drawDoc();
 
 public slots:
 	void setImageSize(int width, int height);
 	void setImageSize(QSize size);
 	void setText(const QString &text);
+	void setDoc(const RichDocument *doc);
 	void setFontFamily(const QString &family);
 	void setFontSize(int fontSize);
 	void setTextColor(const QColor &color);
@@ -62,6 +67,7 @@ public slots:
 
 private:
 	QString m_text;
+	const RichDocument *m_doc = nullptr;
 	QFont m_font;
 	int m_fontSize;
 	int m_outlineWidth;
@@ -70,9 +76,9 @@ private:
 
 	QImage m_image;
 	QSize m_textSize;
-	double m_renderScale;
+	double m_renderScale = 1.0;
 
-	bool m_dirty;
+	bool m_dirty = true;
 };
 }
 
