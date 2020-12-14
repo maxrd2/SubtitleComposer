@@ -21,6 +21,7 @@
 #include "currentlinewidget.h"
 #include "application.h"
 #include "core/richdocument.h"
+#include "helpers/common.h"
 #include "widgets/timeedit.h"
 #include "widgets/simplerichtextedit.h"
 
@@ -133,7 +134,7 @@ CurrentLineWidget::createLineWidgetBox(int index)
 
 	QLabel *textLabel = new QLabel(this);
 	textLabel->setAlignment(Qt::AlignLeft | Qt::AlignTop);
-	textLabel->setTextFormat(Qt::PlainText);
+	textLabel->setTextFormat(Qt::RichText);
 	textLabel->setIndent(3);
 	textLabel->setWordWrap(true);
 	QFont f = textLabel->font();
@@ -148,9 +149,6 @@ CurrentLineWidget::createLineWidgetBox(int index)
 	textEdit->setSizePolicy(QSizePolicy::Minimum, QSizePolicy::Expanding);
 	layout->addWidget(textEdit, 1, 0, 1, 7);
 	m_textEdits[index] = textEdit;
-	connect(textEdit, &SimpleRichTextEdit::textChanged, [this, textEdit, textLabel](){
-		textLabel->setText(buildTextDescription(textEdit->toPlainText()));
-	});
 
 	QToolButton *btnBold = createToolButton(i18n("Toggle Bold"), "format-text-bold");
 	connect(btnBold, &QToolButton::clicked, textEdit, &SimpleRichTextEdit::toggleFontBold);
@@ -225,11 +223,22 @@ CurrentLineWidget::setSubtitle(Subtitle *subtitle)
 }
 
 void
+CurrentLineWidget::updateLabels()
+{
+	if(!m_currentLine)
+		return;
+
+	m_textLabels[0]->setText(buildTextDescription(true));
+	m_textLabels[1]->setText(buildTextDescription(false));
+}
+
+void
 CurrentLineWidget::setCurrentLine(SubtitleLine *line)
 {
 	if(m_currentLine) {
-		disconnect(m_currentLine, &SubtitleLine::showTimeChanged, this, &CurrentLineWidget::onLineShowTimeChanged);
-		disconnect(m_currentLine, &SubtitleLine::hideTimeChanged, this, &CurrentLineWidget::onLineHideTimeChanged);
+		disconnect(m_currentLine, &SubtitleLine::showTimeChanged, this, nullptr);
+		disconnect(m_currentLine, &SubtitleLine::hideTimeChanged, this, nullptr);
+		disconnect(m_currentLine, &SubtitleLine::primaryTextChanged, this, nullptr);
 	}
 
 	m_currentLine = line;
@@ -241,13 +250,19 @@ CurrentLineWidget::setCurrentLine(SubtitleLine *line)
 		onLineShowTimeChanged(m_currentLine->showTime());
 		onLineHideTimeChanged(m_currentLine->hideTime());
 
+		RichDocument *doc = m_currentLine->primaryDoc();
 		if(m_textEdits[0]->isReadOnly())
 			m_textEdits[0]->setReadOnly(false);
-		m_textEdits[0]->setDocument(m_currentLine->primaryDoc());
+		m_textEdits[0]->setDocument(doc);
+		connect(m_currentLine, &SubtitleLine::primaryTextChanged, this, &CurrentLineWidget::updateLabels);
 
+		doc = m_currentLine->secondaryDoc();
 		if(m_textEdits[1]->isReadOnly())
 			m_textEdits[1]->setReadOnly(false);
-		m_textEdits[1]->setDocument(m_currentLine->secondaryDoc());
+		m_textEdits[1]->setDocument(doc);
+		connect(m_currentLine, &SubtitleLine::secondaryTextChanged, this, &CurrentLineWidget::updateLabels);
+
+		updateLabels();
 
 		if(m_subtitle)
 			onLineAnchorChanged(m_currentLine, m_subtitle->isLineAnchored(m_currentLine));
@@ -308,31 +323,42 @@ CurrentLineWidget::onDurationTimeEditChanged(int durationTime)
 }
 
 QString
-CurrentLineWidget::buildTextDescription(const QString &text)
+CurrentLineWidget::buildTextDescription(bool primary)
 {
-	static const QString currentLineText(i18n("Current line:"));
-	QString expressionText(' ');
+	static const QString blkSep = $(" <b>\u299a</b> ");
+	static const QString colorTagBlank = $("<font>");
+	static const QString colorTagRed = $("<font color=\"#ff0000\">");
+	static const QString colorTagEnd = $("</font>");
+	const QString &text = m_textEdits[primary ? 0 : 1]->toPlainText();
+	QString res;
 
-	int characters = 0;
-
-	QStringList lines = text.split('\n');
-	if(!lines.empty()) {
-		characters += lines.first().length();
-
-		if(lines.size() > 1) {
-			static const QString plus(" + ");
-			static const QString equals(" = ");
-
-			expressionText += QString::number(lines.first().length());
-			for(int index = 1, count = lines.size(); index < count; ++index) {
-				characters += lines[index].length();
-				expressionText += plus + QString::number(lines[index].length());
-			}
-			expressionText += equals;
-		}
+	// character count
+	QStringList lines = text.split(QLatin1Char('\n'));
+	res += text.length() > SCConfig::maxCharacters() ? colorTagRed : colorTagBlank;
+	for(int i = 0; i < lines.length(); i++) {
+		if(i >= SCConfig::maxLines())
+			res += colorTagRed;
+		if(i)
+			res += $(" + ");
+		res += QString::number(lines.at(i).length());
 	}
+	if(lines.length() > SCConfig::maxLines())
+		res += colorTagEnd;
+	if(lines.length() > 1)
+		res += $(" = ") % QString::number(text.length() - lines.length() + 1);
+	res += colorTagEnd % QLatin1Char(' ') % i18n("chars");
 
-	return currentLineText + expressionText + i18np("1 character", "%1 characters", characters);
+	res += blkSep;
+
+	// characters/duration
+	const QColor textColor = m_currentLine->durationColor(m_textLabels[0]->palette().color(QPalette::WindowText), primary);
+	const QString colorDur = $("<font color=\"#%1\">").arg(textColor.rgb(), 6, 16, QLatin1Char(' '));
+	const double chrDur = m_currentLine->durationTime().toMillis() / text.length();
+	res += colorDur % QString::number(chrDur, 'f', 1) % colorTagEnd % QLatin1Char(' ') % i18n("ms/ch")
+		% blkSep
+		% colorDur % QString::number(1000. / chrDur, 'f', 1) % colorTagEnd % QLatin1Char(' ') % i18n("ch/sec");
+
+	return res;
 }
 
 void
@@ -348,6 +374,7 @@ CurrentLineWidget::onLineShowTimeChanged(const Time &showTime)
 	QSignalBlocker s1(m_showTimeEdit), s2(m_hideTimeEdit), s3(m_durationTimeEdit);
 	m_showTimeEdit->setValue(showTime.toMillis());
 	m_hideTimeEdit->setMinimumTime(QTime(0, 0, 0, 0).addMSecs(showTime.toMillis()));
+	updateLabels();
 }
 
 void
@@ -356,6 +383,7 @@ CurrentLineWidget::onLineHideTimeChanged(const Time &hideTime)
 	QSignalBlocker s1(m_showTimeEdit), s2(m_hideTimeEdit), s3(m_durationTimeEdit);
 	m_hideTimeEdit->setValue(hideTime.toMillis());
 	m_durationTimeEdit->setValue(m_hideTimeEdit->value() - m_showTimeEdit->value());
+	updateLabels();
 }
 
 void

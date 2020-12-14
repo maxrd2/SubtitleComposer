@@ -73,7 +73,8 @@ private:
 	QToolButton * createToolButton(const QString &text, const char *icon, bool checkable=true);
 	QWidget * createLineWidgetBox(int index);
 
-	QString buildTextDescription(const QString &text);
+	QString buildTextDescription(bool primary);
+	void updateLabels();
 
 private:
 	Subtitle *m_subtitle;
