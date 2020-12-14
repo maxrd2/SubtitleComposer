@@ -21,12 +21,31 @@
 #include "errorsconfigwidget.h"
 #include "widgets/timeedit.h"
 
+#include <QSignalBlocker>
+
 using namespace SubtitleComposer;
 
 ErrorsConfigWidget::ErrorsConfigWidget(QWidget *parent)
 	: QWidget(parent)
 {
 	setupUi(this);
+
+	connect(kcfg_MinDurationPerCharacter, QOverload<int>::of(&QSpinBox::valueChanged), [this](int val){
+		QSignalBlocker b(alt_MinDurationPerCharacter);
+		alt_MinDurationPerCharacter->setValue(1000 / val);
+	});
+	connect(alt_MinDurationPerCharacter, QOverload<int>::of(&QSpinBox::valueChanged), [this](int val){
+		QSignalBlocker b(kcfg_MinDurationPerCharacter);
+		kcfg_MinDurationPerCharacter->setValue(1000 / val);
+	});
+	connect(kcfg_MaxDurationPerCharacter, QOverload<int>::of(&QSpinBox::valueChanged), [this](int val){
+		QSignalBlocker b(alt_MaxDurationPerCharacter);
+		alt_MaxDurationPerCharacter->setValue(1000 / val);
+	});
+	connect(alt_MaxDurationPerCharacter, QOverload<int>::of(&QSpinBox::valueChanged), [this](int val){
+		QSignalBlocker b(kcfg_MaxDurationPerCharacter);
+		kcfg_MaxDurationPerCharacter->setValue(1000 / val);
+	});
 }
 
 ErrorsConfigWidget::~ErrorsConfigWidget()

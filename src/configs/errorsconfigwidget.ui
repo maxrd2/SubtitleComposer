@@ -108,11 +108,21 @@
      <property name="title">
       <string>Relative Durations</string>
      </property>
-     <layout class="QGridLayout" name="gridLayout_3" columnstretch="1,1">
+     <layout class="QGridLayout" name="gridLayout_3" columnstretch="2,1,1,0">
+      <item row="1" column="1">
+       <widget class="QSpinBox" name="kcfg_MaxDurationPerCharacter">
+        <property name="suffix">
+         <string> ms/char</string>
+        </property>
+        <property name="maximum">
+         <number>500</number>
+        </property>
+       </widget>
+      </item>
       <item row="0" column="1">
        <widget class="QSpinBox" name="kcfg_MinDurationPerCharacter">
         <property name="suffix">
-         <string> msec/char</string>
+         <string> ms/char</string>
         </property>
         <property name="maximum">
          <number>100</number>
@@ -120,26 +130,36 @@
        </widget>
       </item>
       <item row="0" column="0" alignment="Qt::AlignRight|Qt::AlignVCenter">
-       <widget class="QLabel" name="label_2">
+       <widget class="QLabel" name="lab_MinDurationPerCharacter">
         <property name="text">
          <string>Minimum duration:</string>
         </property>
        </widget>
       </item>
       <item row="1" column="0" alignment="Qt::AlignRight|Qt::AlignVCenter">
-       <widget class="QLabel" name="label_3">
+       <widget class="QLabel" name="lab_MaxDurationPerCharacter">
         <property name="text">
          <string>Maximum duration:</string>
         </property>
        </widget>
       </item>
-      <item row="1" column="1">
-       <widget class="QSpinBox" name="kcfg_MaxDurationPerCharacter">
+      <item row="0" column="2">
+       <widget class="QSpinBox" name="alt_MinDurationPerCharacter">
         <property name="suffix">
-         <string> msec/char</string>
+         <string> ch/sec</string>
         </property>
         <property name="maximum">
-         <number>500</number>
+         <number>300</number>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="2">
+       <widget class="QSpinBox" name="alt_MaxDurationPerCharacter">
+        <property name="suffix">
+         <string> ch/sec</string>
+        </property>
+        <property name="maximum">
+         <number>300</number>
         </property>
        </widget>
       </item>
