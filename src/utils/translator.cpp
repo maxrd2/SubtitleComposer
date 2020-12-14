@@ -229,7 +229,8 @@ Translator::startChunkDownload(int chunkNumber)
 	m_currentTransferJob->addMetaData("content-type", "Content-Type: application/x-www-form-urlencoded");
 	m_currentTransferJob->setTotalSize(postData.length());
 
-	connect(m_currentTransferJob, QOverload<KJob *, unsigned long>::of(&KIO::TransferJob::percent), this, &Translator::onTransferJobProgress);
+	// FIXME: KIO::TransferJob::percent is private signal... amd translator doesn't work anyways
+//	connect(m_currentTransferJob, QOverload<KJob *, unsigned long>::of(&KIO::TransferJob::percent), this, &Translator::onTransferJobProgress);
 	connect(m_currentTransferJob, &KJob::result, this, &Translator::onTransferJobResult);
 	connect(m_currentTransferJob, &KIO::TransferJob::data, this, &Translator::onTransferJobData);
 
