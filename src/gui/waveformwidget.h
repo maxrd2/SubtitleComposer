@@ -94,6 +94,7 @@ public:
 signals:
 	void doubleClick(Time time);
 	void middleMouseDown(Time time);
+	void middleMouseMove(Time time);
 	void middleMouseUp(Time time);
 	void dragStart(SubtitleLine *line, DragPosition dragPosition);
 	void dragEnd(SubtitleLine *line, DragPosition dragPosition);

@@ -217,8 +217,9 @@ Application::init()
 	connect(this, &Application::fullScreenModeChanged, actionManager, &UserActionManager::setFullScreenMode);
 
 	connect(m_mainWindow->m_waveformWidget, &WaveformWidget::doubleClick, this, &Application::onWaveformDoubleClicked);
-	connect(m_mainWindow->m_waveformWidget, &WaveformWidget::middleMouseDown, this, &Application::onWaveformMiddleMouseDown);
-	connect(m_mainWindow->m_waveformWidget, &WaveformWidget::middleMouseUp, this, &Application::onWaveformMiddleMouseUp);
+	connect(m_mainWindow->m_waveformWidget, &WaveformWidget::middleMouseDown, this, &Application::onWaveformMiddleMouse);
+	connect(m_mainWindow->m_waveformWidget, &WaveformWidget::middleMouseMove, this, &Application::onWaveformMiddleMouse);
+	connect(m_mainWindow->m_waveformWidget, &WaveformWidget::middleMouseUp, this, &Application::onWaveformMiddleMouse);
 
 	connect(m_linesWidget, &LinesWidget::currentLineChanged, m_curLineWidget, &CurrentLineWidget::setCurrentLine);
 	connect(m_linesWidget, &LinesWidget::lineDoubleClicked, this, &Application::onLineDoubleClicked);
@@ -1123,23 +1124,10 @@ Application::onWaveformDoubleClicked(Time time)
 }
 
 void
-Application::onWaveformMiddleMouseDown(Time time)
+Application::onWaveformMiddleMouse(Time time)
 {
-	if(m_player->state() == VideoPlayer::Stopped) {
-		m_player->play();
-		m_player->pause();
-	} else if(m_player->state() != VideoPlayer::Paused) {
-		m_player->pause();
-	}
-
 	m_playerWidget->pauseAfterPlayingLine(nullptr);
 	m_player->seek(time.toSeconds());
-}
-
-void
-Application::onWaveformMiddleMouseUp(Time /*time*/)
-{
-	m_player->play();
 }
 
 void

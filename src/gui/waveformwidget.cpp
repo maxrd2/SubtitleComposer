@@ -897,7 +897,7 @@ WaveformWidget::eventFilter(QObject *obj, QEvent *event)
 
 		if(m_MMBDown) {
 			scrollToTime(m_pointerTime, false);
-			emit middleMouseDown(m_pointerTime);
+			emit middleMouseMove(m_pointerTime);
 		}
 
 		if(m_draggedLine) {
@@ -1146,9 +1146,6 @@ WaveformWidget::scrollToTime(const Time &time, bool scrollToPage)
 void
 WaveformWidget::onPlayerPositionChanged(double seconds)
 {
-	if(m_MMBDown)
-		return;
-
 	Time playingPosition;
 	playingPosition.setSecondsTime(seconds);
 
