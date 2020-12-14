@@ -35,6 +35,9 @@
 #include <KConfigGroup>
 #include <KSharedConfig>
 
+
+#define RESTORE_STATE false
+
 using namespace SubtitleComposer;
 
 LinesWidget::LinesWidget(QWidget *parent)
@@ -52,15 +55,10 @@ LinesWidget::LinesWidget(QWidget *parent)
 	for(int column = 0, columnCount = model()->columnCount(); column < columnCount; ++column)
 		setItemDelegateForColumn(column, m_itemsDelegate);
 
-	QHeaderView *header = this->header();
-	header->setSectionsClickable(false);
-	header->setSectionsMovable(false);
-	header->setSectionResizeMode(LinesModel::Number, QHeaderView::ResizeToContents);
-	header->setSectionResizeMode(LinesModel::ShowTime, QHeaderView::ResizeToContents);
-	header->setSectionResizeMode(LinesModel::HideTime, QHeaderView::ResizeToContents);
-	header->setSectionResizeMode(LinesModel::Text, QHeaderView::Interactive);
-	header->setSectionResizeMode(LinesModel::Translation, QHeaderView::Interactive);
-	header->setSectionHidden(LinesModel::Translation, true);
+	QHeaderView *hdr = header();
+	hdr->setSectionsClickable(false);
+	hdr->setSectionsMovable(false);
+	updateHeader();
 
 	setUniformRowHeights(true);
 	setItemsExpandable(false);
@@ -69,6 +67,7 @@ LinesWidget::LinesWidget(QWidget *parent)
 	setRootIsDecorated(false);
 	setAllColumnsShowFocus(true);
 	setSortingEnabled(false);
+	setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Expanding);
 
 	setSelectionMode(QAbstractItemView::ExtendedSelection);
 	setSelectionBehavior(QAbstractItemView::SelectRows);
@@ -83,6 +82,33 @@ LinesWidget::LinesWidget(QWidget *parent)
 
 LinesWidget::~LinesWidget()
 {
+}
+
+void
+LinesWidget::updateHeader()
+{
+	QHeaderView *hdr = header();
+	for(int i = 0; i < LinesModel::ColumnCount; i++) {
+		switch(i) {
+		case LinesModel::Text:
+			hdr->setSectionResizeMode(i, QHeaderView::Stretch);
+			hdr->setSectionHidden(i, false);
+			break;
+		case LinesModel::Translation:
+			hdr->setSectionResizeMode(i, QHeaderView::Stretch);
+			hdr->setSectionHidden(i, !m_translationMode);
+			break;
+		default:
+			hdr->setSectionResizeMode(i, QHeaderView::ResizeToContents);
+			hdr->setSectionHidden(i, false);
+			break;
+		}
+	}
+	// do this last so columns get autosized
+	hdr->setSectionResizeMode(LinesModel::Text, QHeaderView::Interactive);
+	hdr->setSectionResizeMode(LinesModel::Translation, QHeaderView::Interactive);
+	// give some small size to last column, it will stretch anyways
+	hdr->resizeSection(LinesModel::Translation, 100);
 }
 
 void
@@ -251,6 +277,7 @@ LinesWidget::targetRanges(int target) const
 void
 LinesWidget::loadConfig()
 {
+#if RESTORE_STATE
 	KConfigGroup group(KSharedConfig::openConfig()->group("LinesWidget Settings"));
 
 	QByteArray state;
@@ -258,6 +285,7 @@ LinesWidget::loadConfig()
 	for(QStringList::ConstIterator it = strState.constBegin(), end = strState.constEnd(); it != end; ++it)
 		state.append((char)(*it).toInt());
 	header()->restoreState(state);
+#endif
 }
 
 void
@@ -281,22 +309,11 @@ LinesWidget::setSubtitle(Subtitle *subtitle)
 void
 LinesWidget::setTranslationMode(bool enabled)
 {
-	if(m_translationMode != enabled) {
-		m_translationMode = enabled;
+	if(m_translationMode == enabled)
+		return;
 
-		QHeaderView *header = this->header();
-		if(m_translationMode) {
-			int textColumnWidth = header->sectionSize(LinesModel::Text);
-			header->resizeSection(LinesModel::Text, textColumnWidth / 2);
-			header->setSectionHidden(LinesModel::Translation, false);
-			header->resizeSection(LinesModel::Translation, textColumnWidth / 2);
-		} else {
-			int textColumnWidth = header->sectionSize(LinesModel::Text);
-			int translationColumnSize = header->sectionSize(LinesModel::Translation);
-			header->setSectionHidden(LinesModel::Translation, true);
-			header->resizeSection(LinesModel::Text, textColumnWidth + translationColumnSize);
-		}
-	}
+	m_translationMode = enabled;
+	updateHeader();
 }
 
 void

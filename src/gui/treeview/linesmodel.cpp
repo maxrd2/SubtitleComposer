@@ -25,6 +25,8 @@
 #include "gui/treeview/richdocumentptr.h"
 #include "helpers/common.h"
 
+#include "scconfig.h"
+
 #include <QFont>
 #include <QFontMetrics>
 #include <QItemSelectionModel>
@@ -187,8 +189,10 @@ LinesModel::headerData(int section, Qt::Orientation orientation, int role) const
 
 	switch(section) {
 	case Number: return i18nc("@title:column Subtitle line number", "Line");
+	case PauseTime: return i18nc("@title:column", "Pause");
 	case ShowTime: return i18nc("@title:column", "Show Time");
 	case HideTime: return i18nc("@title:column", "Hide Time");
+	case Duration: return i18nc("@title:column", "Duration");
 	case Text: return i18nc("@title:column Subtitle line (primary) text", "Text");
 	case Translation: return i18nc("@title:column Subtitle line translation text", "Translation");
 	default: return QVariant();
@@ -217,6 +221,13 @@ LinesModel::data(const QModelIndex &index, int role) const
 			return QSize(QFontMetrics(QFont()).horizontalAdvance(QString::number(index.row() + 1)) + 28, 0);
 		break;
 
+	case PauseTime:
+		if(role == Qt::DisplayRole)
+			return line->pauseTime().toString(true, false);
+		if(role == Qt::TextAlignmentRole)
+			return Qt::AlignCenter;
+		break;
+
 	case ShowTime:
 		if(role == Qt::DisplayRole)
 			return line->showTime().toString();
@@ -229,6 +240,18 @@ LinesModel::data(const QModelIndex &index, int role) const
 			return line->hideTime().toString();
 		if(role == Qt::TextAlignmentRole)
 			return Qt::AlignCenter;
+		break;
+
+	case Duration:
+		if(role == Qt::DisplayRole)
+			return line->durationTime().toString(true, false);
+		if(role == Qt::TextAlignmentRole)
+			return Qt::AlignCenter;
+		if(role == Qt::ForegroundRole) {
+			const QPalette &pal = static_cast<LinesWidget *>(parent())->palette();
+			QColor fg = pal.color(QPalette::WindowText);
+			return line->durationColor(fg);
+		}
 		break;
 
 	case Text:

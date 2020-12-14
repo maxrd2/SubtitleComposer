@@ -142,8 +142,8 @@ public:
 	inline Subtitle * subtitle() { return m_subtitle; }
 	inline const Subtitle * subtitle() const { return m_subtitle; }
 
-	inline SubtitleLine * prevLine();
-	inline SubtitleLine * nextLine();
+	inline SubtitleLine * prevLine() const;
+	inline SubtitleLine * nextLine() const;
 
 	inline RichDocument * primaryDoc() const { return m_primaryDoc; }
 	inline RichDocument * secondaryDoc() const { return m_secondaryDoc; }
@@ -160,6 +160,9 @@ public:
 
 	inline Time durationTime() const { return Time(m_hideTime.toMillis() - m_showTime.toMillis()); }
 	inline void setDurationTime(const Time &durationTime) { setHideTime(m_showTime + durationTime); }
+	QColor durationColor(const QColor &textColor, bool usePrimary=true);
+
+	inline Time pauseTime() const { const SubtitleLine *p = prevLine(); return Time(showTime().toMillis() - (p ? p->hideTime().toMillis() : 0.)); }
 
 	void setTimes(const Time &showTime, const Time &hideTime);
 
@@ -249,12 +252,14 @@ private:
 namespace SubtitleComposer {
 
 inline SubtitleLine *
-SubtitleLine::prevLine()
+SubtitleLine::prevLine() const
 {
 	return m_subtitle ? m_subtitle->line(index() - 1) : nullptr;
 }
+
 inline SubtitleLine *
-SubtitleLine::nextLine() {
+SubtitleLine::nextLine() const
+{
 	return m_subtitle ? m_subtitle->line(index() + 1) : nullptr;
 }
 

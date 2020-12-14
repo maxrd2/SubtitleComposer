@@ -422,6 +422,35 @@ SubtitleLine::setHideTime(const Time &hideTime, bool safe/*=false*/)
 		m_subtitle->endCompositeAction();
 }
 
+QColor
+SubtitleLine::durationColor(const QColor &textColor, bool usePrimary)
+{
+	const int textLen = (usePrimary ? primaryDoc() : secondaryDoc())->length();
+	const int minD = textLen * SCConfig::minDurationPerCharacter();
+	const int maxD = textLen * SCConfig::maxDurationPerCharacter();
+	const int avgD = (minD + maxD) / 2;
+	const int curD = durationTime().toMillis();
+	if(curD < avgD) {
+		// duration is too short - mix red
+		const int r = qMin(255, 255 * (curD - avgD) / (minD - avgD));
+		return QColor(
+			textColor.red() * (255 - r) / 255 + r,
+			textColor.green() * (255 - r) / 255,
+			textColor.blue() * (255 - r) / 255,
+			textColor.alpha());
+	}
+	if(curD > avgD) {
+		// duration is too long - mix blue
+		const int r = qMin(255, 255 * (curD - avgD) / (maxD - avgD));
+		return QColor(
+			textColor.red() * (255 - r) / 255,
+			textColor.green() * (255 - r) / 255,
+			textColor.blue() * (255 - r) / 255 + r,
+			textColor.alpha());
+	}
+	return textColor;
+}
+
 void
 SubtitleLine::setTimes(const Time &showTime, const Time &hideTime)
 {

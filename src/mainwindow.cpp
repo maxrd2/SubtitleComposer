@@ -75,7 +75,6 @@ MainWindow::MainWindow()
 	mainWidget->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
 
 	m_linesWidget = new LinesWidget(mainWidget);
-	m_linesWidget->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
 
 	m_curLineWidget = new CurrentLineWidget(mainWidget);
 	m_curLineWidget->setMaximumHeight(m_curLineWidget->minimumSizeHint().height());

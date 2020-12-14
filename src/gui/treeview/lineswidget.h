@@ -81,6 +81,7 @@ private:
 
 	static void drawHorizontalDotLine(QPainter *painter, int x1, int x2, int y);
 	static void drawVerticalDotLine(QPainter *painter, int x, int y1, int y2);
+	void updateHeader();
 
 	void drawRow(QPainter *painter, const QStyleOptionViewItem &option, const QModelIndex &index) const override;
 
@@ -89,11 +90,8 @@ private slots:
 
 private:
 	bool m_scrollFollowsModel;
-
 	bool m_translationMode;
-
 	bool m_showingContextMenu;
-
 	QPen m_gridPen;
 
 	LinesItemDelegate *m_itemsDelegate;

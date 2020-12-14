@@ -29,6 +29,10 @@
 #include <QTextOption>
 #include <QTextBlock>
 
+#if QT_VERSION < QT_VERSION_CHECK(5, 11, 0)
+#define horizontalAdvance width
+#endif
+
 using namespace SubtitleComposer;
 
 LinesItemDelegate::LinesItemDelegate(LinesWidget *parent)
@@ -131,6 +135,43 @@ drawTextPrimitive(QPainter *painter, const QStyle *style, const QStyleOptionView
 		anchorIcon().paint(painter, iconRect, option.decorationAlignment, mode, state);
 	}
 
+	if(index.column() && index.column() < LinesModel::Text) {
+		int o = 0;
+		// find start of non zero time
+		for(int i = 0; ; i++) {
+			if(i == text.length()) {
+				o = i;
+				break;
+			}
+			const QChar &ch = text.at(i);
+			if(ch != QChar('0')) {
+				if(ch != QChar(':') && ch != QChar('.'))
+					break;
+				o = i + 1;
+			}
+		}
+		if(o) {
+			// fix rect based on alignment
+			if(alignment & Qt::AlignRight) {
+				alignment = (alignment & ~Qt::AlignRight) | Qt::AlignLeft;
+				textRect.setLeft(textRect.right() - painter->fontMetrics().horizontalAdvance(text));
+			} else if(alignment & Qt::AlignHCenter) {
+				alignment = (alignment & ~Qt::AlignHCenter) | Qt::AlignLeft;
+				const int w = painter->fontMetrics().horizontalAdvance(text);
+				textRect.setLeft(textRect.left() + (textRect.width() - w) / 2);
+				textRect.setRight(textRect.left() + w);
+			}
+			// draw zero time semi-transparent
+			const QString sub = text.left(o);
+			text.remove(0, o);
+			QColor altColor = textColor;
+			altColor.setAlpha(textColor.alpha() * 2 / 5);
+			painter->setPen(altColor);
+			painter->drawText(textRect, alignment, sub);
+			painter->setPen(textColor);
+			textRect.setLeft(textRect.left() + painter->fontMetrics().horizontalAdvance(sub));
+		}
+	}
 	painter->drawText(textRect, alignment, text);
 }
 

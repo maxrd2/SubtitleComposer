@@ -34,7 +34,7 @@ class LinesModel : public QAbstractListModel
 	Q_OBJECT
 
 public:
-	enum { Number = 0, ShowTime, HideTime, Text, Translation, ColumnCount };
+	enum { Number = 0, PauseTime, ShowTime, HideTime, Duration, Text, Translation, ColumnCount };
 	enum { PlayingLineRole = Qt::UserRole, MarkedRole, ErrorRole, AnchoredRole };
 
 	explicit LinesModel(QObject *parent = nullptr);
