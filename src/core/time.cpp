@@ -60,17 +60,48 @@ Time::setMillisTime(double mseconds)
 }
 
 QString
-Time::toString(bool showMillis) const
+Time::toString(bool showMillis, bool showHours) const
 {
-	const int msec = m_mseconds + 0.5;
-	const int hours = msec / 3600000;
-	const int minutes = (msec % 3600000) / 60000;
-	const int seconds = (msec % 60000) / 1000;
+	int time = m_mseconds + 0.5;
 
-	if(showMillis)
-		return QString::asprintf("%02d:%02d:%02d.%03d", hours, minutes, seconds, msec % 1000);
+	int i = 14;
+	QChar data[15];
 
-	return QString::asprintf("%02d:%02d:%02d", hours, minutes, seconds);
+#define APPPEND_DIGIT(base) { \
+	data[i--] = QLatin1Char('0' + time % base); \
+	time /= base; \
+}
+
+	// terminator
+	data[i--] = QChar::Null;
+
+	// milliseconds
+	if(showMillis) {
+		APPPEND_DIGIT(10);
+		APPPEND_DIGIT(10);
+		APPPEND_DIGIT(10);
+		data[i--] = QLatin1Char('.');
+	} else {
+		time /= 1000;
+	}
+
+	// seconds
+	APPPEND_DIGIT(10);
+	APPPEND_DIGIT(6);
+	data[i--] = QLatin1Char(':');
+
+	// minutes
+	APPPEND_DIGIT(10);
+	APPPEND_DIGIT(6);
+
+	if(time || showHours) {
+		data[i--] = QLatin1Char(':');
+		for(int n = 0; i >= 0 && (n < 2 || time); n++)
+			APPPEND_DIGIT(10);
+
+	}
+
+	return QString(data + i + 1);
 }
 
 int

@@ -39,7 +39,7 @@ public:
 
 	inline double toMillis() const { return m_mseconds; }
 	inline double toSeconds() const { return m_mseconds / 1000.0; }
-	QString toString(bool showMillis = true) const;
+	QString toString(bool showMillis=true, bool showHours=true) const;
 
 	int hours() const;
 	bool setHours(int hours);
