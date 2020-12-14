@@ -351,7 +351,11 @@ LinesModel::onModelReset()
 		w->scrollTo(sm->currentIndex(), QAbstractItemView::EnsureVisible);
 
 	if(m_resetModelResumeEditing)
+#if QT_VERSION < QT_VERSION_CHECK(5, 10, 0)
+		QMetaObject::invokeMethod(w, "editCurrentLineInPlace", Qt::QueuedConnection);
+#else
 		QMetaObject::invokeMethod(w, [w](){ if(!w->isEditing()) w->editCurrentLineInPlace(); }, Qt::QueuedConnection);
+#endif
 }
 
 void

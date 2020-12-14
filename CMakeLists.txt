@@ -1,9 +1,9 @@
 cmake_policy(SET CMP0048 NEW)
 project(subtitlecomposer VERSION "0.7.0")
 
-cmake_minimum_required(VERSION 3.3 FATAL_ERROR)
-set(QT_MIN_VERSION "5.5.0")
-set(KF5_MIN_VERSION "5.2.0")
+cmake_minimum_required(VERSION 3.4 FATAL_ERROR)
+set(QT_MIN_VERSION "5.9.0")
+set(KF5_MIN_VERSION "5.44.0")
 
 set(CMAKE_CXX_STANDARD 11)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
