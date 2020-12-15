@@ -28,8 +28,7 @@ include(ECMAddTests) # build tests
 include(FeatureSummary)
 
 find_package(Qt5 ${QT_MIN_VERSION} CONFIG REQUIRED COMPONENTS
-	Core Widgets Gui Test
-)
+	Core Widgets Gui Test)
 
 find_package(KF5 ${KF5_MIN_VERSION} REQUIRED COMPONENTS
 	Auth Config ConfigWidgets CoreAddons I18n KIO XmlGui

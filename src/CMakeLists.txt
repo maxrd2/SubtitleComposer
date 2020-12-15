@@ -33,8 +33,8 @@ include_directories(
 	${CMAKE_CURRENT_SOURCE_DIR} # so that we can refer to our files starting at src dir
 	${CMAKE_CURRENT_SOURCE_DIR}/widgets # needed for .ui files to access custom widgets
 	${Qt5Core_INCLUDE_DIRS}
-	${Qt5Widgets_INCLUDE_DIRS}
-	${Qt5Gui_INCLUDE_DIRS}
+	${Qt5Widgets_INCLUDE_DIRS} ${Qt5Widgets_PRIVATE_INCLUDE_DIRS}
+	${Qt5Gui_INCLUDE_DIRS} ${Qt5Gui_PRIVATE_INCLUDE_DIRS}
 	${OPENAL_INCLUDE_DIR}
 	${FFMPEG_INCLUDE_DIRS}
 )

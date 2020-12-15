@@ -124,25 +124,17 @@ matrix:
           bash "$TRAVIS_BUILD_DIR/pkg/misc/github-release.sh" win32 "$PWD/build/SubtitleComposerSetup.exe"
 
     - os: linux
-      dist: xenial
+      dist: bionic
       sudo: required
       compiler: clang
       before_install: |-
-        sudo add-apt-repository -y 'ppa:mc3man/xerus-media' # ffmpeg3
-        sudo add-apt-repository -y 'ppa:beineri/opt-qt596-xenial' # Qt 5.9 LTS
         sudo apt-get update -qq
       install:
         - |- # dependencies
-         sudo apt-get install -yqq curl cmake make extra-cmake-modules kross-dev libavformat-dev libswscale-dev libopenal-dev breeze \
-                                  qt59-meta-minimal clang
-        - |- # qt5 environment
-          source /opt/qt5*/bin/qt5*-env.sh || exit 1
-        - |- # sphinxbase
-          if [ ! -f $TRAVIS_BUILD_DIR/sphinxbase-master/autogen.sh ]; then curl -L 'https://github.com/cmusphinx/sphinxbase/archive/master.tar.gz' | tar -xz -C $TRAVIS_BUILD_DIR sphinxbase-master && NOCONFIGURE=1 $TRAVIS_BUILD_DIR/sphinxbase-master/autogen.sh; fi
-          (cd sphinxbase-master && ./configure --prefix=/usr --without-python && make -j$(nproc) && sudo make install) || exit 1
-        - |- # pocketsphinx
-          if [ ! -f pocketsphinx-master/autogen.sh ]; then curl -L 'https://github.com/cmusphinx/pocketsphinx/archive/master.tar.gz' | tar -xz -C $TRAVIS_BUILD_DIR pocketsphinx-master && NOCONFIGURE=1 $TRAVIS_BUILD_DIR/pocketsphinx-master/autogen.sh; fi
-          (cd pocketsphinx-master && ./configure --prefix=/usr --without-python && make -j$(nproc) && sudo make install) || exit 1 
+         sudo apt-get install -yqq curl cmake make extra-cmake-modules kross-dev libavformat-dev libswscale-dev libopenal-dev breeze clang \
+                                  qtbase5-dev qtbase5-private-dev clang libkf5auth-dev libkf5codecs-dev libkf5config-dev libkf5configwidgets-dev \
+                                  libkf5coreaddons-dev libkf5i18n-dev libkf5kio-dev kross-dev libkf5sonnet-dev libkf5textwidgets-dev \
+                                  libkf5widgetsaddons-dev libkf5xmlgui-dev libicu-dev libsphinxbase-dev libpocketsphinx-dev
       script:
         - |-
           mkdir build && cd build
