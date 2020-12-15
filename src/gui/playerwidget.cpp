@@ -534,7 +534,7 @@ PlayerWidget::updateOverlayLine(const Time &videoPosition)
 			return;
 		} else {
 			// m_overlayLine is no longer the line to show nor the next line to show
-			m_player->subtitleOverlay().setText(QString());
+			m_player->subtitleOverlay().setDoc(nullptr);
 
 			setOverlayLine(nullptr);
 		}
