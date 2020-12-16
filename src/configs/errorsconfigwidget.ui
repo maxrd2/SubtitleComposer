@@ -108,14 +108,30 @@
      <property name="title">
       <string>Relative Durations</string>
      </property>
-     <layout class="QGridLayout" name="gridLayout_3" columnstretch="2,1,1,0">
-      <item row="1" column="1">
+     <layout class="QGridLayout" name="gridLayout_3" columnstretch="2,1,1">
+      <item row="2" column="1">
        <widget class="QSpinBox" name="kcfg_MaxDurationPerCharacter">
         <property name="suffix">
          <string> ms/char</string>
         </property>
+        <property name="minimum">
+         <number>1</number>
+        </property>
         <property name="maximum">
-         <number>500</number>
+         <number>1000</number>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="2">
+       <widget class="QSpinBox" name="alt_MinDurationPerCharacter">
+        <property name="suffix">
+         <string> ch/sec</string>
+        </property>
+        <property name="minimum">
+         <number>1</number>
+        </property>
+        <property name="maximum">
+         <number>1000</number>
         </property>
        </widget>
       </item>
@@ -124,8 +140,11 @@
         <property name="suffix">
          <string> ms/char</string>
         </property>
+        <property name="minimum">
+         <number>1</number>
+        </property>
         <property name="maximum">
-         <number>100</number>
+         <number>1000</number>
         </property>
        </widget>
       </item>
@@ -136,30 +155,56 @@
         </property>
        </widget>
       </item>
-      <item row="1" column="0" alignment="Qt::AlignRight|Qt::AlignVCenter">
+      <item row="2" column="2">
+       <widget class="QSpinBox" name="alt_MaxDurationPerCharacter">
+        <property name="suffix">
+         <string> ch/sec</string>
+        </property>
+        <property name="minimum">
+         <number>1</number>
+        </property>
+        <property name="maximum">
+         <number>1000</number>
+        </property>
+       </widget>
+      </item>
+      <item row="2" column="0" alignment="Qt::AlignRight|Qt::AlignVCenter">
        <widget class="QLabel" name="lab_MaxDurationPerCharacter">
         <property name="text">
          <string>Maximum duration:</string>
         </property>
        </widget>
       </item>
-      <item row="0" column="2">
-       <widget class="QSpinBox" name="alt_MinDurationPerCharacter">
+      <item row="1" column="0" alignment="Qt::AlignRight|Qt::AlignVCenter">
+       <widget class="QLabel" name="lab_IdealDurationPerCharacter">
+        <property name="text">
+         <string>Ideal duration:</string>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="1">
+       <widget class="QSpinBox" name="kcfg_IdealDurationPerCharacter">
         <property name="suffix">
-         <string> ch/sec</string>
+         <string> ms/char</string>
+        </property>
+        <property name="minimum">
+         <number>1</number>
         </property>
         <property name="maximum">
-         <number>300</number>
+         <number>1000</number>
         </property>
        </widget>
       </item>
       <item row="1" column="2">
-       <widget class="QSpinBox" name="alt_MaxDurationPerCharacter">
+       <widget class="QSpinBox" name="alt_IdealDurationPerCharacter">
         <property name="suffix">
          <string> ch/sec</string>
         </property>
+        <property name="minimum">
+         <number>1</number>
+        </property>
         <property name="maximum">
-         <number>300</number>
+         <number>1000</number>
         </property>
        </widget>
       </item>

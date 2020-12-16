@@ -69,6 +69,10 @@
 			<label>Minimum duration per character</label>
 			<default>30</default>
 		</entry>
+		<entry name="IdealDurationPerCharacter" type="Int">
+			<label>Ideal duration per character</label>
+			<default>50</default>
+		</entry>
 		<entry name="MaxDurationPerCharacter" type="Int">
 			<label>Maximum duration per character</label>
 			<default>185</default>

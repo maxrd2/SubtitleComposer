@@ -428,11 +428,11 @@ SubtitleLine::durationColor(const QColor &textColor, bool usePrimary)
 	const int textLen = (usePrimary ? primaryDoc() : secondaryDoc())->length();
 	const int minD = textLen * SCConfig::minDurationPerCharacter();
 	const int maxD = textLen * SCConfig::maxDurationPerCharacter();
-	const int avgD = (minD + maxD) / 2;
+	const int avgD = textLen * SCConfig::idealDurationPerCharacter();
 	const int curD = durationTime().toMillis();
 	if(curD < avgD) {
 		// duration is too short - mix red
-		const int r = qMin(255, 255 * (curD - avgD) / (minD - avgD));
+		const int r = qMin(255, 255 * (curD - avgD) / qMin(minD - avgD, -1));
 		return QColor(
 			textColor.red() * (255 - r) / 255 + r,
 			textColor.green() * (255 - r) / 255,
@@ -441,7 +441,7 @@ SubtitleLine::durationColor(const QColor &textColor, bool usePrimary)
 	}
 	if(curD > avgD) {
 		// duration is too long - mix blue
-		const int r = qMin(255, 255 * (curD - avgD) / (maxD - avgD));
+		const int r = qMin(255, 255 * (curD - avgD) / qMax(maxD - avgD, 1));
 		return QColor(
 			textColor.red() * (255 - r) / 255,
 			textColor.green() * (255 - r) / 255,
