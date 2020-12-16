@@ -467,7 +467,7 @@ PlayerWidget::setSubtitle(Subtitle *subtitle)
 		disconnect(m_subtitle, &Subtitle::linesInserted, this, &PlayerWidget::invalidateOverlayLine);
 		disconnect(m_subtitle, &Subtitle::linesRemoved, this, &PlayerWidget::invalidateOverlayLine);
 
-		m_subtitle = 0;                 // has to be set to 0 for invalidateOverlayLine
+		m_subtitle = nullptr;
 
 		invalidateOverlayLine();
 		setPlayingLine(nullptr);
@@ -596,7 +596,7 @@ PlayerWidget::pauseAfterPlayingLine(const SubtitleLine *line)
 void
 PlayerWidget::invalidateOverlayLine()
 {
-	m_player->subtitleOverlay().setText(QString());
+	m_player->subtitleOverlay().setDoc(nullptr);
 
 	setOverlayLine(nullptr);
 
@@ -617,8 +617,9 @@ PlayerWidget::setOverlayLine(SubtitleLine *line)
 	if(m_overlayLine) {
 		connect(m_overlayLine, &SubtitleLine::showTimeChanged, this, &PlayerWidget::invalidateOverlayLine);
 		connect(m_overlayLine, &SubtitleLine::hideTimeChanged, this, &PlayerWidget::invalidateOverlayLine);
-	} else
+	} else {
 		m_lastSearchedLineToShowTime = Time::MaxMseconds;
+	}
 }
 
 void
@@ -732,7 +733,6 @@ PlayerWidget::onPlayerPlaybackError(const QString &errorMessage)
 		KMessageBox::error(this, i18n("Unexpected error when playing file."), i18n("Error Playing File"));
 	else
 		KMessageBox::detailedError(this, i18n("Unexpected error when playing file."), errorMessage, i18n("Error Playing File"));
-	// onPlayerFileClosed();
 }
 
 void
