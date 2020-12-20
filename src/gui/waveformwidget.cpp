@@ -67,7 +67,7 @@ WaveformWidget::WaveformWidget(QWidget *parent)
 	  m_scrollBar(Q_NULLPTR),
 	  m_scrollAnimation(nullptr),
 	  m_autoScroll(true),
-	  m_userScroll(false),
+	  m_autoScrollPause(false),
 	  m_hoverScrollAmount(.0),
 	  m_waveformDuration(0),
 	  m_waveformChannels(0),
@@ -837,8 +837,9 @@ WaveformWidget::leaveEvent(QEvent */*event*/)
 {
 	m_pointerTime.setMillisTime(Time::MaxMseconds);
 
-	if(m_userScroll) {
-		m_userScroll = false;
+	if(m_autoScrollPause) {
+		if(!m_RMBDown) // re-enable auto scroll if popup menu isn't opened
+			m_autoScrollPause = false;
 		if(m_autoScroll)
 			onPlayerPositionChanged(m_timeCurrent.toSeconds());
 	} else {
@@ -860,13 +861,13 @@ WaveformWidget::eventFilter(QObject *obj, QEvent *event)
 		if(delta.isNull())
 			return false;
 
-		m_userScroll = true;
+		m_autoScrollPause = true;
 
 		m_scrollBar->setValue(m_timeStart.shifted(-4 * double(delta.ry()) * windowSize() / m_waveformGraphics->height()).toMillis());
 		return true;
 	}
 	case QEvent::MouseButtonPress:
-		m_userScroll = true;
+		m_autoScrollPause = true;
 		break; // do not capture mouse presses
 
 	default:
@@ -1152,7 +1153,7 @@ WaveformWidget::onPlayerPositionChanged(double seconds)
 	if(m_timeCurrent != playingPosition) {
 		m_timeCurrent = playingPosition;
 
-		if(m_autoScroll && !m_draggedLine && !m_userScroll)
+		if(m_autoScroll && !m_draggedLine && !m_autoScrollPause)
 			scrollToTime(m_timeCurrent, true);
 
 		m_visibleLinesDirty = true;

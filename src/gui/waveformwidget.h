@@ -159,7 +159,7 @@ private:
 	QScrollBar *m_scrollBar;
 	QPropertyAnimation *m_scrollAnimation;
 	bool m_autoScroll;
-	bool m_userScroll;
+	bool m_autoScrollPause;
 	double m_hoverScrollAmount;
 	QTimer m_hoverScrollTimer;
 
