@@ -1106,7 +1106,7 @@ WaveformWidget::scrollToTime(const Time &time, bool scrollToPage)
 	double windowPadding;
 	const double windowSize = windowSizeInner(&windowPadding);
 	if(m_draggedLine || m_RMBDown || m_MMBDown)
-		windowPadding = this->windowSize() / 3.;
+		windowPadding = this->windowSize() / 5.;
 
 	const double topPadding = m_timeStart.toMillis() + windowPadding;
 	const double bottomPadding = m_timeEnd.toMillis() - windowPadding;
@@ -1129,14 +1129,8 @@ WaveformWidget::scrollToTime(const Time &time, bool scrollToPage)
 			m_scrollBar->setValue(scrollPosition);
 		}
 	} else {
-		const double topPadding = m_timeStart.toMillis() + windowPadding;
-		const double bottomPadding = m_timeEnd.toMillis() - windowPadding;
-		if(time < topPadding)
-			m_hoverScrollAmount = time.toMillis() - topPadding;
-		else
-			m_hoverScrollAmount = time.toMillis() - bottomPadding;
-		m_hoverScrollAmount = m_hoverScrollAmount * m_hoverScrollAmount * m_hoverScrollAmount /
-				(3. * windowPadding * windowPadding);
+		const double bd = time.toMillis() - (time < topPadding ? topPadding : bottomPadding);
+		m_hoverScrollAmount = bd * bd * bd / (3. * windowPadding * windowPadding);
 		if(!m_hoverScrollTimer.isActive())
 			m_hoverScrollTimer.start();
 	}
