@@ -56,7 +56,6 @@ public:
 	void setFullScreenMode(bool fullScreenMode);
 
 	inline SubtitleLine * playingLine() { return m_playingLine; }
-	inline SubtitleLine * overlayLine() { return m_overlayLine; }
 
 	bool eventFilter(QObject *object, QEvent *event) override;
 
@@ -82,15 +81,13 @@ private:
 	static QToolButton * toolButton(QWidget *parent, const char *name);
 	static QToolButton * createToolButton(QWidget *parent, const char *name, int size);
 
-	void updateOverlayLine(const Time &videoPosition);
 	void updatePlayingLine(const Time &videoPosition);
-	void setOverlayLine(SubtitleLine *line);
 	void setPlayingLine(SubtitleLine *line);
 
 	void updatePositionEditVisibility();
 
 private slots:
-	void invalidateOverlayLine();
+	void setPlayingLineFromVideo();
 
 	void onVolumeSliderMoved(int value);
 	void onSeekSliderMoved(int value);
@@ -118,17 +115,15 @@ private:
 	Subtitle *m_subtitle;
 	bool m_translationMode;
 	bool m_showTranslation;
-	SubtitleLine *m_overlayLine;            // the line being shown or to be shown next
-	SubtitleLine *m_playingLine;            // the line being shown or the last one shown
+	SubtitleLine *m_playingLine = nullptr;
+	SubtitleLine *m_prevLine = nullptr;
+	SubtitleLine *m_nextLine = nullptr;
 
 	const SubtitleLine *m_pauseAfterPlayingLine;
 
 	int m_fullScreenTID;
 	bool m_fullScreenMode;
 	VideoPlayer *m_player;
-
-	Time m_lastSearchedLineToShowTime;
-	Time m_lastCheckedTime;
 
 	QGridLayout *m_mainLayout;
 

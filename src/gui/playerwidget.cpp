@@ -59,8 +59,6 @@ PlayerWidget::PlayerWidget(QWidget *parent) :
 	m_subtitle(0),
 	m_translationMode(false),
 	m_showTranslation(false),
-	m_overlayLine(nullptr),
-	m_playingLine(nullptr),
 	m_pauseAfterPlayingLine(nullptr),
 	m_fullScreenTID(0),
 	m_fullScreenMode(false),
@@ -464,20 +462,19 @@ void
 PlayerWidget::setSubtitle(Subtitle *subtitle)
 {
 	if(m_subtitle) {
-		disconnect(m_subtitle, &Subtitle::linesInserted, this, &PlayerWidget::invalidateOverlayLine);
-		disconnect(m_subtitle, &Subtitle::linesRemoved, this, &PlayerWidget::invalidateOverlayLine);
+		disconnect(m_subtitle, &Subtitle::linesInserted, this, &PlayerWidget::setPlayingLineFromVideo);
+		disconnect(m_subtitle, &Subtitle::linesRemoved, this, &PlayerWidget::setPlayingLineFromVideo);
 
 		m_subtitle = nullptr;
 
-		invalidateOverlayLine();
 		setPlayingLine(nullptr);
 	}
 
 	m_subtitle = subtitle;
 
 	if(m_subtitle) {
-		connect(m_subtitle, &Subtitle::linesInserted, this, &PlayerWidget::invalidateOverlayLine);
-		connect(m_subtitle, &Subtitle::linesRemoved, this, &PlayerWidget::invalidateOverlayLine);
+		connect(m_subtitle, &Subtitle::linesInserted, this, &PlayerWidget::setPlayingLineFromVideo);
+		connect(m_subtitle, &Subtitle::linesRemoved, this, &PlayerWidget::setPlayingLineFromVideo);
 	}
 }
 
@@ -493,12 +490,13 @@ PlayerWidget::setTranslationMode(bool enabled)
 void
 PlayerWidget::setShowTranslation(bool showTranslation)
 {
-	if(m_showTranslation != showTranslation) {
-		m_showTranslation = showTranslation;
+	if(m_showTranslation == showTranslation)
+		return;
 
-		invalidateOverlayLine();
-		setPlayingLine(nullptr);
-	}
+	m_showTranslation = showTranslation;
+
+	setPlayingLine(nullptr);
+	setPlayingLineFromVideo();
 }
 
 void
@@ -516,75 +514,52 @@ PlayerWidget::decreaseFontSize(int size)
 }
 
 void
-PlayerWidget::updateOverlayLine(const Time &videoPosition)
-{
-	if(!m_subtitle)
-		return;
-
-	bool seekedBackwards = m_lastCheckedTime > videoPosition;
-	m_lastCheckedTime = videoPosition;
-
-	if(m_overlayLine) {
-		if(!seekedBackwards && videoPosition <= m_overlayLine->hideTime()) {
-			// m_overlayLine is the line to show or the next line to show
-			if(videoPosition >= m_overlayLine->showTime()) { // m_overlayLine is the line to show
-				const RichDocument *doc = m_showTranslation ? m_overlayLine->secondaryDoc() : m_overlayLine->primaryDoc();
-				m_player->subtitleOverlay().setDoc(doc);
-			}
-			return;
-		} else {
-			// m_overlayLine is no longer the line to show nor the next line to show
-			m_player->subtitleOverlay().setDoc(nullptr);
-
-			setOverlayLine(nullptr);
-		}
-	}
-
-	if(seekedBackwards || m_lastSearchedLineToShowTime > videoPosition) {
-		// search the next line to show
-		for(SubtitleIterator it(*m_subtitle); it.current(); ++it) {
-			if(videoPosition <= it.current()->hideTime()) {
-				m_lastSearchedLineToShowTime = videoPosition;
-
-				setOverlayLine(it.current());
-
-				if(m_overlayLine->showTime() <= videoPosition && videoPosition <= m_overlayLine->hideTime()) {
-					const RichDocument *doc = m_showTranslation ? m_overlayLine->secondaryDoc() : m_overlayLine->primaryDoc();
-					m_player->subtitleOverlay().setDoc(doc);
-				}
-				return;
-			}
-		}
-	}
-}
-
-void
 PlayerWidget::updatePlayingLine(const Time &videoPosition)
 {
 	if(!m_subtitle)
 		return;
 
-	// playing line is already correct
-	if(m_playingLine && videoPosition <= m_playingLine->hideTime() && videoPosition >= m_playingLine->showTime())
-		return;
+	if(m_playingLine && m_playingLine->showTime() <= videoPosition && videoPosition <= m_playingLine->hideTime())
+		return; // playing line is still valid
 
-	// overlay line is playing line
-	if(m_overlayLine && videoPosition <= m_overlayLine->hideTime() && videoPosition >= m_overlayLine->showTime()) {
-		setPlayingLine(m_overlayLine);
-		return;
-	}
+	SubtitleLine *firstLine = m_subtitle->firstLine();
+	SubtitleLine *lastLine = m_subtitle->lastLine();
+	bool pnValid = true;
+	if(m_prevLine ? videoPosition < m_prevLine->showTime() : m_nextLine != firstLine)
+		pnValid = false;
+	else if(m_nextLine ? videoPosition > m_nextLine->hideTime() : m_prevLine != lastLine)
+		pnValid = false;
 
-	// iterate through all lines and find the playing line
-	SubtitleIterator it(*m_subtitle);
-	while(it.current()) {
-		if(videoPosition <= it.current()->hideTime() && videoPosition >= it.current()->showTime()) {
-			setPlayingLine(it.current());
-			return;
+	if(!pnValid) {
+		// prev/next line are invalid
+		m_prevLine = m_nextLine = nullptr;
+		int first = 0;
+		int last = m_subtitle->lastIndex();
+		if(videoPosition < firstLine->showTime()) {
+			m_nextLine = firstLine;
+		} else if(videoPosition > lastLine->hideTime()) {
+			m_prevLine = lastLine;
+		} else {
+			while(last - first > 1) {
+				// log2 search lines
+				int mid = (first + last) / 2;
+				SubtitleLine *line = m_subtitle->at(mid);
+				if(videoPosition <= line->hideTime())
+					last = mid;
+				if(videoPosition >= line->showTime())
+					first = mid;
+			}
+			m_prevLine = m_subtitle->at(first);
+			m_nextLine = m_subtitle->at(last);
 		}
-		++it;
 	}
 
-	setPlayingLine(nullptr);
+	if(m_prevLine && m_prevLine->containsTime(videoPosition))
+		setPlayingLine(m_prevLine);
+	else if(m_nextLine && m_nextLine->containsTime(videoPosition))
+		setPlayingLine(m_nextLine);
+	else
+		setPlayingLine(nullptr);
 }
 
 void
@@ -594,40 +569,31 @@ PlayerWidget::pauseAfterPlayingLine(const SubtitleLine *line)
 }
 
 void
-PlayerWidget::invalidateOverlayLine()
+PlayerWidget::setPlayingLineFromVideo()
 {
-	m_player->subtitleOverlay().setDoc(nullptr);
-
-	setOverlayLine(nullptr);
-
-	if(m_player->position() >= 0.0)
-		updateOverlayLine((long)(m_player->position() * 1000));
-}
-
-void
-PlayerWidget::setOverlayLine(SubtitleLine *line)
-{
-	if(m_overlayLine) {
-		disconnect(m_overlayLine, &SubtitleLine::showTimeChanged, this, &PlayerWidget::invalidateOverlayLine);
-		disconnect(m_overlayLine, &SubtitleLine::hideTimeChanged, this, &PlayerWidget::invalidateOverlayLine);
-	}
-
-	m_overlayLine = line;
-
-	if(m_overlayLine) {
-		connect(m_overlayLine, &SubtitleLine::showTimeChanged, this, &PlayerWidget::invalidateOverlayLine);
-		connect(m_overlayLine, &SubtitleLine::hideTimeChanged, this, &PlayerWidget::invalidateOverlayLine);
-	} else {
-		m_lastSearchedLineToShowTime = Time::MaxMseconds;
-	}
+	updatePlayingLine(m_player->position() * 1000.);
 }
 
 void
 PlayerWidget::setPlayingLine(SubtitleLine *line)
 {
-	if(!line || m_playingLine != line) {
-		m_playingLine = line;
-		emit playingLineChanged(m_playingLine);
+	if(m_playingLine == line)
+		return;
+
+	if(m_playingLine) {
+		disconnect(m_playingLine, &SubtitleLine::showTimeChanged, this, &PlayerWidget::setPlayingLineFromVideo);
+		disconnect(m_playingLine, &SubtitleLine::hideTimeChanged, this, &PlayerWidget::setPlayingLineFromVideo);
+	}
+
+	emit playingLineChanged(m_playingLine = line);
+	qDebug("*** play line %d", m_playingLine ? m_playingLine->index() : -1);
+
+	if(m_playingLine) {
+		connect(m_playingLine, &SubtitleLine::showTimeChanged, this, &PlayerWidget::setPlayingLineFromVideo);
+		connect(m_playingLine, &SubtitleLine::hideTimeChanged, this, &PlayerWidget::setPlayingLineFromVideo);
+		m_player->subtitleOverlay().setDoc(m_showTranslation ? m_playingLine->secondaryDoc() : m_playingLine->primaryDoc());
+	} else {
+		m_player->subtitleOverlay().setDoc(nullptr);
 	}
 }
 
@@ -705,9 +671,7 @@ PlayerWidget::onPlayerFileOpenError(const QString &filePath, const QString &reas
 void
 PlayerWidget::onPlayerFileClosed()
 {
-	invalidateOverlayLine();
-
-	m_lastCheckedTime = 0;
+	setPlayingLine(nullptr);
 
 	m_infoControlsGroupBox->setEnabled(false);
 
@@ -766,7 +730,6 @@ PlayerWidget::onPlayerPositionChanged(double seconds)
 	if(m_showPositionTimeEdit && !m_positionEdit->hasFocus())
 		m_positionEdit->setValue(videoPosition.toMillis());
 
-	updateOverlayLine(videoPosition);
 	updatePlayingLine(videoPosition);
 
 	QSignalBlocker s1(m_seekSlider), s2(m_fsSeekSlider);

@@ -166,6 +166,8 @@ public:
 
 	void setTimes(const Time &showTime, const Time &hideTime);
 
+	inline bool containsTime(const Time &time) { return m_showTime <= time && time <= m_hideTime; }
+
 	int primaryCharacters() const;
 	int primaryWords() const;
 	int primaryLines() const;
