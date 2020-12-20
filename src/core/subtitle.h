@@ -97,16 +97,18 @@ public:
 	void setFramesPerSecond(double framesPerSecond);
 	void changeFramesPerSecond(double toFramesPerSecond, double fromFramesPerSecond = -1.0);
 
-	bool isEmpty() const;
-	int linesCount() const;
-	int lastIndex() const;
+	bool isEmpty() const { return m_lines.empty(); }
+	int linesCount() const { return m_lines.count(); }
+	int lastIndex() const { return m_lines.count() - 1; }
 
 	SubtitleLine * line(int index);
 	const SubtitleLine * line(int index) const;
-	SubtitleLine * firstLine();
-	const SubtitleLine * firstLine() const;
-	SubtitleLine * lastLine();
-	const SubtitleLine * lastLine() const;
+
+	inline SubtitleLine * firstLine() { return m_lines.isEmpty() ? nullptr : m_lines.first().obj(); }
+	inline const SubtitleLine * firstLine() const { return m_lines.isEmpty() ? nullptr : m_lines.first().obj(); }
+
+	inline SubtitleLine * lastLine() { return m_lines.isEmpty() ? nullptr : m_lines.last().obj(); }
+	inline const SubtitleLine * lastLine() const { return m_lines.isEmpty() ? nullptr : m_lines.last().obj(); }
 
 	inline int count() const { return m_lines.size(); }
 	inline const SubtitleLine * at(const int i) const { return m_lines.at(i).obj(); }

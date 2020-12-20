@@ -262,24 +262,6 @@ Subtitle::changeFramesPerSecond(double toFramesPerSecond, double fromFramesPerSe
 	endCompositeAction();
 }
 
-bool
-Subtitle::isEmpty() const
-{
-	return m_lines.empty();
-}
-
-int
-Subtitle::linesCount() const
-{
-	return m_lines.count();
-}
-
-int
-Subtitle::lastIndex() const
-{
-	return m_lines.count() - 1;
-}
-
 SubtitleLine *
 Subtitle::line(int index)
 {
@@ -291,31 +273,6 @@ Subtitle::line(int index) const
 {
 	return index < 0 || index >= m_lines.count() ? nullptr : m_lines.at(index).obj();
 }
-
-SubtitleLine *
-Subtitle::firstLine()
-{
-	return m_lines.isEmpty() ? 0 : m_lines.first().obj();
-}
-
-const SubtitleLine *
-Subtitle::firstLine() const
-{
-	return m_lines.isEmpty() ? 0 : m_lines.first().obj();
-}
-
-SubtitleLine *
-Subtitle::lastLine()
-{
-	return m_lines.isEmpty() ? 0 : m_lines.last().obj();
-}
-
-const SubtitleLine *
-Subtitle::lastLine() const
-{
-	return m_lines.isEmpty() ? 0 : m_lines.last().obj();
-}
-
 bool
 Subtitle::hasAnchors() const
 {
