@@ -332,6 +332,9 @@ Application::saveSubtitle(QTextCodec *codec)
 		m_reopenSubtitleAsAction->setCurrentCodec(codec);
 		m_saveSubtitleAsAction->setCurrentCodec(codec);
 		m_recentSubtitlesAction->addUrl(m_subtitleUrl, codec->name());
+		m_subtitleEncoding = codec->name();
+		m_labSubFormat->setText(i18n("Format: %1", m_subtitleFormat));
+		m_labSubEncoding->setText(i18n("Encoding: %1", m_subtitleEncoding));
 
 		updateTitle();
 
