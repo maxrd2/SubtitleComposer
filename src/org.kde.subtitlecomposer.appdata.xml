@@ -124,7 +124,7 @@
       <li xml:lang="es">Demultiplexar emisiones de subtítulos gráficos y de texto de archivos de vídeo: SRT, SSA/ASS, texto MOV, MicroDVD, DVD/Vob, DVB, XSUB, HDMV-PGS</li>
       <li xml:lang="et">Graafilise või tekstisubtiitri voo demultipleksimine videofailist - SRT, SSA/ASS, MOV text, MicroDVD, DVD/Vob, DVB, XSUB, HDMV-PGS</li>
       <li xml:lang="fi">Graafisten tai tekstimuotoisten tekstitysten demuksaus videotiedostosta: SRT, SSA/ASS, MOV, MicroDVD, DVD/Vob, DVB, XSUB, HDMV-PGS</li>
-      <li xml:lang="fr">Démultiplexage du flux de sous-titres graphiques / texte depuis un fichier vidéo - SRT, SSA / ASS, MOV text, MicroDVD, DVD / Vob, DVB, XSUB, HDMV-PGS</li>
+      <li xml:lang="fr">Démultiplexage du flux de sous-titres graphiques / texte depuis un fichier vidéo - SRT, SSA / ASS, MOV texte, MicroDVD, DVD / Vob, DVB, XSUB, HDMV-PGS</li>
       <li xml:lang="it">Demultiplazione di flussi di sottotitoli grafici/di testo - SRT, SSA/ASS, testo MOV, MicroDVD, DVD/Vob, DVB, XSUB, HDMV-PGS</li>
       <li xml:lang="ko">동영상 파일에서 그래픽/텍스트 자막 스트림 디먹스 - SRT, SSA/ASS, MOV 텍스트, MicroDVD, DVD/Vob, DVB, XSUB, HDMV-PGS</li>
       <li xml:lang="nl">Demux Graphics/Tekst ondertitelingsstream uit videobestand - SRT, SSA/ASS, MOV tekst, MicroDVD, DVD/Vob, DVB, XSUB, HDMV-PGS</li>
@@ -227,7 +227,7 @@
       <li xml:lang="es">Desplazamiento de tiempos y escalado, cálculo automático de la duración de las líneas, conversión de tasa de fotogramas, etc.</li>
       <li xml:lang="et">Aja nihutamine ja skaleerimine, ridade kestuse ümberarvutamine, kaadrisageduse teisendused jms.</li>
       <li xml:lang="fi">Ajansiirto ja -skaalaus, rivien keston laskenta, kuvanopeusmuunnokset ym.</li>
-      <li xml:lang="fr">Décalage et mise à l'échelle temporelle, recalcul de la durée des lignes, conversion du nombre d'images par seconde, etc.</li>
+      <li xml:lang="fr">Décalage et mise à l'échelle temporelle, re-calcul de la durée des lignes, conversion du nombre d'images par seconde, etc.</li>
       <li xml:lang="it">Differita e scalatura, ricalcolo della durata delle linee, conversione della frequenza dei fotogrammi, ecc.</li>
       <li xml:lang="ko">타임시프트 및 속도 조절, 각각 대사 시간 재계산, 프레임 레이트 변환 등.</li>
       <li xml:lang="nl">Tijdverschuiving en schalen, lijnduur herberekening, framerate conversie, etc.</li>
