@@ -20,7 +20,7 @@
       <item row="1" column="1">
        <widget class="QSpinBox" name="kcfg_MaxLines">
         <property name="suffix">
-         <string notr="true"> lines</string>
+         <string> lines</string>
         </property>
         <property name="minimum">
          <number>1</number>
@@ -66,7 +66,7 @@
       <item row="0" column="1">
        <widget class="QSpinBox" name="kcfg_MinDuration">
         <property name="suffix">
-         <string notr="true"> msec</string>
+         <string> msec</string>
         </property>
         <property name="maximum">
          <number>2000</number>
@@ -76,7 +76,7 @@
       <item row="1" column="1">
        <widget class="QSpinBox" name="kcfg_MaxDuration">
         <property name="suffix">
-         <string notr="true"> msec</string>
+         <string> msec</string>
         </property>
         <property name="minimum">
          <number>2000</number>

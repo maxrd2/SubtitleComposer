@@ -199,7 +199,7 @@
          <item>
           <widget class="QPushButton" name="btnPrevImage">
            <property name="toolTip">
-            <string notr="true">Ctrl+Shift+Left</string>
+            <string>Ctrl+Shift+Left</string>
            </property>
            <property name="text">
             <string>Prev Image</string>
@@ -216,7 +216,7 @@
          <item>
           <widget class="QPushButton" name="btnPrevSymbol">
            <property name="toolTip">
-            <string notr="true">Ctrl+Left</string>
+            <string>Ctrl+Left</string>
            </property>
            <property name="text">
             <string>Prev Symbol</string>
@@ -233,7 +233,7 @@
          <item>
           <widget class="QPushButton" name="btnNextSymbol">
            <property name="toolTip">
-            <string notr="true">Ctrl+Right</string>
+            <string>Ctrl+Right</string>
            </property>
            <property name="text">
             <string>Next Symbol</string>
@@ -247,7 +247,7 @@
          <item>
           <widget class="QPushButton" name="btnNextImage">
            <property name="toolTip">
-            <string notr="true">Ctrl+Shift+Right</string>
+            <string>Ctrl+Shift+Right</string>
            </property>
            <property name="text">
             <string>Next Image</string>
