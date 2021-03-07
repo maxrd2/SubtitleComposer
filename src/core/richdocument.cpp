@@ -259,6 +259,8 @@ RichDocument::toRichText() const
 	SubtitleComposer::SString richText;
 
 	for(QTextBlock bi = begin(); bi != end(); bi = bi.next()) {
+		if(bi != begin())
+			richText.append(QChar::LineFeed);
 		for(QTextBlock::iterator it = bi.begin(); !it.atEnd(); ++it) {
 			if(!it.fragment().isValid())
 				continue;
@@ -282,7 +284,6 @@ RichDocument::toRichText() const
 
 			richText.append(SString(it.fragment().text(), styleFlags, styleColor));
 		}
-		richText.append(QChar::LineFeed);
 	}
 	return richText;
 }
