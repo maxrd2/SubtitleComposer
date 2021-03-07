@@ -613,7 +613,7 @@ Application::setupActions()
 
 	QAction *seekToPrevLineAction = new QAction(actionCollection);
 	seekToPrevLineAction->setIcon(QIcon::fromTheme("media-skip-backward"));
-	seekToPrevLineAction->setText(i18n("Jump to Previous Line"));
+	seekToPrevLineAction->setText(i18n("Seek to Previous Line"));
 	seekToPrevLineAction->setStatusTip(i18n("Seek to previous subtitle line show time"));
 	actionCollection->setDefaultShortcut(seekToPrevLineAction, QKeySequence("Shift+Left"));
 	connect(seekToPrevLineAction, &QAction::triggered, this, &Application::seekToPrevLine);
@@ -638,15 +638,22 @@ Application::setupActions()
 
 	QAction *playCurrentLineAndPauseAction = new QAction(actionCollection);
 	playCurrentLineAndPauseAction->setText(i18n("Play Current Line and Pause"));
-	playCurrentLineAndPauseAction->setStatusTip(i18n("Seek to start of current subtitle line show time, play it and then pause"));
+	playCurrentLineAndPauseAction->setStatusTip(i18n("Seek to selected subtitle line show time, play it and then pause"));
 	actionCollection->setDefaultShortcut(playCurrentLineAndPauseAction, QKeySequence("Ctrl+Shift+Left"));
 	connect(playCurrentLineAndPauseAction, &QAction::triggered, this, &Application::playOnlyCurrentLine);
 	actionCollection->addAction(ACT_PLAY_CURRENT_LINE_AND_PAUSE, playCurrentLineAndPauseAction);
 	actionManager->addAction(playCurrentLineAndPauseAction, UserAction::SubHasLine | UserAction::VideoPlaying);
 
+	QAction *seekCurrentLineAction = new QAction(actionCollection);
+	seekCurrentLineAction->setText(i18n("Seek to Current Line"));
+	seekCurrentLineAction->setStatusTip(i18n("Seek to selected subtitle line show time"));
+	connect(seekCurrentLineAction, &QAction::triggered, this, &Application::seekToCurrentLine);
+	actionCollection->addAction(ACT_SEEK_TO_CURRENT_LINE, seekCurrentLineAction);
+	actionManager->addAction(seekCurrentLineAction, UserAction::SubHasLine | UserAction::VideoPlaying);
+
 	QAction *seekToNextLineAction = new QAction(actionCollection);
 	seekToNextLineAction->setIcon(QIcon::fromTheme("media-skip-forward"));
-	seekToNextLineAction->setText(i18n("Jump to Next Line"));
+	seekToNextLineAction->setText(i18n("Seek to Next Line"));
 	seekToNextLineAction->setStatusTip(i18n("Seek to next subtitle line show time"));
 	actionCollection->setDefaultShortcut(seekToNextLineAction, QKeySequence("Shift+Right"));
 	connect(seekToNextLineAction, &QAction::triggered, this, &Application::seekToNextLine);

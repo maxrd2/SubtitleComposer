@@ -122,6 +122,7 @@
 			<Action name="playrate_decrease" />
 			<Separator />
 			<Action name="seek_to_previous_line" />
+			<Action name="seek_to_current_line" />
 			<Action name="play_current_line_and_pause" />
 			<Action name="seek_to_next_line" />
 			<Separator />

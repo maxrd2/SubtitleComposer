@@ -197,6 +197,7 @@ public slots:
 	void stepForward();
 	void playOnlyCurrentLine();
 	void seekToPrevLine();
+	void seekToCurrentLine();
 	void seekToNextLine();
 
 	void playrateIncrease();

@@ -941,6 +941,19 @@ Application::playOnlyCurrentLine()
 }
 
 void
+Application::seekToCurrentLine()
+{
+	int selectedIndex = m_linesWidget->firstSelectedIndex();
+	if(selectedIndex < 0)
+		return;
+	SubtitleLine *currentLine = m_subtitle->line(selectedIndex);
+	if(currentLine) {
+		m_playerWidget->pauseAfterPlayingLine(nullptr);
+		m_player->seek(currentLine->showTime().toSeconds() - SCConfig::jumpLineOffset() / 1000.0);
+	}
+}
+
+void
 Application::seekToNextLine()
 {
 	int selectedIndex = m_linesWidget->firstSelectedIndex();

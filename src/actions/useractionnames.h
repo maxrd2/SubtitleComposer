@@ -91,6 +91,7 @@
 #define ACT_PLAY_PAUSE "play_pause"
 #define ACT_SEEK_BACKWARD "seek_backward"
 #define ACT_SEEK_FORWARD "seek_forward"
+#define ACT_SEEK_TO_CURRENT_LINE "seek_to_current_line"
 #define ACT_SEEK_TO_NEXT_LINE "seek_to_next_line"
 #define ACT_SEEK_TO_PREVIOUS_LINE "seek_to_previous_line"
 #define ACT_PLAY_CURRENT_LINE_AND_PAUSE "play_current_line_and_pause"
