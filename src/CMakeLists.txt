@@ -19,7 +19,7 @@ ecm_setup_version(${PROJECT_VERSION}
 	VERSION_HEADER "${CMAKE_CURRENT_BINARY_DIR}/config-subtitlecomposer.h"
 )
 
-add_definitions(${QT_DEFINITIONS} -DHAVE_CONFIG_H)
+add_definitions(-DHAVE_CONFIG_H)
 add_definitions(-D_DEFAULT_SOURCE)
 
 find_package(FFmpeg 57.83.100 REQUIRED)
