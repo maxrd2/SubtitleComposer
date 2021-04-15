@@ -329,7 +329,7 @@ CurrentLineWidget::onDurationTimeEditChanged(int durationTime)
 QString
 CurrentLineWidget::buildTextDescription(bool primary)
 {
-	static const QString blkSep = $(" <b>\u299a</b> ");
+	static const QString blkSep = $(" <b>\u2014</b> ");
 	static const QString colorTagBlank = $("<font>");
 	static const QString colorTagRed = $("<font color=\"#ff0000\">");
 	static const QString colorTagEnd = $("</font>");
@@ -358,9 +358,9 @@ CurrentLineWidget::buildTextDescription(bool primary)
 	const QColor textColor = m_currentLine->durationColor(m_textLabels[0]->palette().color(QPalette::WindowText), primary);
 	const QString colorDur = $("<font color=\"#%1\">").arg(textColor.rgb(), 6, 16, QLatin1Char(' '));
 	const double chrDur = m_currentLine->durationTime().toMillis() / text.length();
-	res += colorDur % QString::number(chrDur, 'f', 1) % colorTagEnd % QLatin1Char(' ') % i18n("ms/ch")
+	res += colorDur % QString::number(chrDur, 'f', 1) % colorTagEnd % QLatin1Char(' ') % i18n("ms/char")
 		% blkSep
-		% colorDur % QString::number(1000. / chrDur, 'f', 1) % colorTagEnd % QLatin1Char(' ') % i18n("ch/sec");
+		% colorDur % QString::number(1000. / chrDur, 'f', 1) % colorTagEnd % QLatin1Char(' ') % i18n("chars/sec");
 
 	return res;
 }
