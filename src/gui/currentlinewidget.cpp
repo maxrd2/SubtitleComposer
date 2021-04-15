@@ -131,6 +131,7 @@ CurrentLineWidget::createLineWidgetBox(int index)
 	layout->setContentsMargins(2, 3, 1, 0);
 	layout->setHorizontalSpacing(4);
 	layout->setVerticalSpacing(2);
+	layout->setColumnStretch(0, 1);
 
 	QLabel *textLabel = new QLabel(this);
 	textLabel->setAlignment(Qt::AlignLeft | Qt::AlignTop);
