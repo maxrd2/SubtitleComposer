@@ -639,7 +639,7 @@ Application::setupActions()
 	QAction *playCurrentLineAndPauseAction = new QAction(actionCollection);
 	playCurrentLineAndPauseAction->setText(i18n("Play Current Line and Pause"));
 	playCurrentLineAndPauseAction->setStatusTip(i18n("Seek to selected subtitle line show time, play it and then pause"));
-	actionCollection->setDefaultShortcut(playCurrentLineAndPauseAction, QKeySequence("Ctrl+Shift+Left"));
+	actionCollection->setDefaultShortcut(playCurrentLineAndPauseAction, QKeySequence("Ctrl+Return"));
 	connect(playCurrentLineAndPauseAction, &QAction::triggered, this, &Application::playOnlyCurrentLine);
 	actionCollection->addAction(ACT_PLAY_CURRENT_LINE_AND_PAUSE, playCurrentLineAndPauseAction);
 	actionManager->addAction(playCurrentLineAndPauseAction, UserAction::SubHasLine | UserAction::VideoPlaying);
