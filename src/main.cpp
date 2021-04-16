@@ -32,6 +32,7 @@
 #include <QCommandLineOption>
 #include <QProcessEnvironment>
 #include <QResource>
+#include <QMimeDatabase>
 
 extern "C" {
 #include <libavcodec/avcodec.h>
@@ -44,6 +45,113 @@ extern "C" {
 #endif
 
 using namespace SubtitleComposer;
+
+static bool
+mimeIsMedia(const QMimeType &mime)
+{
+	const static QStringList mimeList = {
+		"video/webm", "video/x-msvideo", "video/mp2t", "application/x-matroska",
+		"video/x-matroska", "video/mp4", "video/mpeg", "video/ogg"
+	};
+	for(const QString &m: mimeList) {
+		if(mime.inherits(m))
+			return true;
+	}
+	return false;
+}
+
+static bool
+mimeIsSubtitle(const QMimeType &mime)
+{
+	const static QStringList mimeList = {
+		"application/x-subrip", "text/x-ssa", "text/x-ass","text/x-microdvd",
+		"text/x-mpsub", "text/x-subviewer", "text/x-mplsub", "text/x-tmplayer",
+		"text/x-tmplayer+", "application/x-vobsub"
+	};
+	for(const QString &m: mimeList) {
+		if(mime.inherits(m))
+			return true;
+	}
+	return false;
+}
+
+void
+handleCommandLine(SubtitleComposer::Application &app, KAboutData &aboutData)
+{
+	QCommandLineParser parser;
+	aboutData.setupCommandLine(&parser);
+	parser.setApplicationDescription(aboutData.shortDescription());
+
+	QCommandLineOption subtitleOption("subtitle",
+		i18n("The primary subtitle to be edited."),
+		"file name");
+	parser.addOption(subtitleOption);
+
+	QCommandLineOption videoOption("video",
+		i18n("The video to be subtitled."),
+		"file name");
+	parser.addOption(videoOption);
+
+	QCommandLineOption translationOption("translation",
+		i18n("The translation subtitle to be edited.\n"
+			"If included, a second pane gets added to the right of the primary subtitle "
+			"for side-by-side translation."),
+		"file name");
+	parser.addOption(translationOption);
+
+	// parse command line
+	parser.process(app);
+	aboutData.processCommandLine(&parser);
+
+	app.init();
+
+	app.mainWindow()->show();
+
+	QString fileSub;
+	QString fileTrans;
+	QString fileVideo;
+
+	// load files by specific options
+	if(parser.isSet(subtitleOption))
+		fileSub = parser.value(subtitleOption);
+	if(parser.isSet(videoOption))
+		fileVideo = parser.value(videoOption);
+	if(parser.isSet(translationOption))
+		fileTrans = parser.value(translationOption);
+
+	// load sub/video if positional param is provided
+	const QStringList args = parser.positionalArguments();
+	for(const QString &arg: args) {
+		const QMimeType mime = QMimeDatabase().mimeTypeForFile(arg);
+		if(mimeIsSubtitle(mime)) {
+			// try to open primary subtitle if not already opened
+			if(fileSub.isEmpty()) {
+				fileSub = arg;
+				continue;
+			}
+			// try to open translation if not already opened
+			if(fileTrans.isEmpty()) {
+				fileTrans = arg;
+				continue;
+			}
+		} else if(mimeIsMedia(mime)) {
+			// try to open video if not already opened
+			if(fileVideo.isEmpty()) {
+				fileVideo = arg;
+				continue;
+			}
+		}
+	}
+
+	if(!fileSub.isEmpty())
+		app.openSubtitle(System::urlFromPath(fileSub));
+	else if(!fileTrans.isEmpty())
+		app.newSubtitle();
+	if(!fileTrans.isEmpty())
+		app.openSubtitleTr(System::urlFromPath(fileTrans));
+	if(!fileVideo.isEmpty())
+		app.openVideo(System::urlFromPath(fileVideo));
+}
 
 int
 main(int argc, char **argv)
@@ -118,27 +226,7 @@ main(int argc, char **argv)
 	app.setApplicationDisplayName(aboutData.displayName());
 	app.setWindowIcon(QIcon::fromTheme(aboutData.componentName()));
 
-	// Initialize command line args
-	QCommandLineParser parser;
-	aboutData.setupCommandLine(&parser);
-	parser.setApplicationDescription(aboutData.shortDescription());
-	parser.addPositionalArgument("primary-url", i18n("Open location as primary subtitle"), "[primary-url]");
-	parser.addPositionalArgument("translation-url", i18n("Open location as translation subtitle"), "[translation-url]");
-
-	// Parse command line
-	parser.process(app);
-	aboutData.processCommandLine(&parser);
-
-	app.init();
-
-	app.mainWindow()->show();
-
-	// load files
-	const QStringList args = parser.positionalArguments();
-	if(args.length() > 0)
-		app.openSubtitle(System::urlFromPath(args[0]));
-	if(args.length() > 1)
-		app.openSubtitleTr(System::urlFromPath(args[1]));
+	handleCommandLine(app, aboutData);
 
 	return app.exec();
 }
