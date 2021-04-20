@@ -6,6 +6,7 @@
   <name>Subtitle Composer</name>
   <name xml:lang="ca">Subtitle Composer</name>
   <name xml:lang="ca-valencia">Subtitle Composer</name>
+  <name xml:lang="de">Subtitle Composer</name>
   <name xml:lang="en-GB">Subtitle Composer</name>
   <name xml:lang="es">Subtitle Composer</name>
   <name xml:lang="et">Subtiitriredaktor</name>
@@ -151,6 +152,7 @@
       <li>Speech recognition from audio/video file using PocketSphinx</li>
       <li xml:lang="ca">Reconeixement de la veu des de fitxers d'àudio/vídeo emprant PocketSphinx</li>
       <li xml:lang="ca-valencia">Reconeixement de la veu des de fitxers d'àudio/vídeo emprant PocketSphinx</li>
+      <li xml:lang="de">Spracherkennung von Audio-/Videodateien mit PocketSphinx</li>
       <li xml:lang="en-GB">Speech recognition from audio/video file using PocketSphinx</li>
       <li xml:lang="es">Reconocimiento de habla de archivos de sonido y de vídeo mediante el uso de PocketSphinx</li>
       <li xml:lang="et">Kõne tuvastamine heli/videofailist PocketSphinxi abil</li>
@@ -266,6 +268,7 @@
       <li>Joining and splitting of subtitle files</li>
       <li xml:lang="ca">Unir i dividir fitxers de subtítols</li>
       <li xml:lang="ca-valencia">Unir i dividir fitxers de subtítols</li>
+      <li xml:lang="de">Zusammenführen und Teilen von Untertitel-Dateien</li>
       <li xml:lang="en-GB">Joining and splitting of subtitle files</li>
       <li xml:lang="es">Fusión y división de archivos de subtítulos</li>
       <li xml:lang="et">Subtiitrifailide ühendamine ja tükeldamine</li>
@@ -325,6 +328,7 @@
       <li xml:lang="ca">Verificació ortogràfica</li>
       <li xml:lang="ca-valencia">Verificació ortogràfica</li>
       <li xml:lang="cs">Kontrola pravopisu</li>
+      <li xml:lang="de">Rechtschreibprüfung</li>
       <li xml:lang="en-GB">Spell checking</li>
       <li xml:lang="es">Comprobación ortográfica</li>
       <li xml:lang="et">Õigekirja kontroll</li>
@@ -392,6 +396,7 @@
       <caption>Main application window</caption>
       <caption xml:lang="ca">Finestra principal de l'aplicació</caption>
       <caption xml:lang="ca-valencia">Finestra principal de l'aplicació</caption>
+      <caption xml:lang="de">Programm-Hauptfenster</caption>
       <caption xml:lang="en-GB">Main application window</caption>
       <caption xml:lang="es">Ventana principal de la aplicación</caption>
       <caption xml:lang="et">Rakenduse peaaken</caption>
