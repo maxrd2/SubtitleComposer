@@ -234,6 +234,8 @@ private:
 	void primaryDocumentChanged();
 	void secondaryDocumentChanged();
 
+	void setupSignals();
+
 private:
 	Subtitle *m_subtitle;
 	RichDocument *m_primaryDoc;

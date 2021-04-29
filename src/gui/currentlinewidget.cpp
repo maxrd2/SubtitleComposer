@@ -239,6 +239,7 @@ CurrentLineWidget::setCurrentLine(SubtitleLine *line)
 		disconnect(m_currentLine, &SubtitleLine::showTimeChanged, this, nullptr);
 		disconnect(m_currentLine, &SubtitleLine::hideTimeChanged, this, nullptr);
 		disconnect(m_currentLine, &SubtitleLine::primaryTextChanged, this, nullptr);
+		disconnect(m_currentLine, &SubtitleLine::secondaryTextChanged, this, nullptr);
 	}
 
 	m_currentLine = line;

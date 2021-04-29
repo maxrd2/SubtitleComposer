@@ -142,20 +142,23 @@ SubtitleLine::fullErrorText(SubtitleLine::ErrorID errorID) const
 	}
 }
 
-inline static void
-setupSignals(SubtitleLine *line)
+void
+SubtitleLine::setupSignals()
 {
-	QObject::connect(line, &SubtitleLine::primaryTextChanged, [line](){
-		if(line->subtitle()) emit line->subtitle()->linePrimaryTextChanged(line);
+	connect(m_primaryDoc, &RichDocument::contentsChanged, this, &SubtitleLine::primaryDocumentChanged);
+	connect(m_secondaryDoc, &RichDocument::contentsChanged, this, &SubtitleLine::secondaryDocumentChanged);
+
+	QObject::connect(this, &SubtitleLine::primaryTextChanged, [this](){
+		if(subtitle()) emit subtitle()->linePrimaryTextChanged(this);
 	});
-	QObject::connect(line, &SubtitleLine::secondaryTextChanged, [line](){
-		if(line->subtitle()) emit line->subtitle()->lineSecondaryTextChanged(line);
+	QObject::connect(this, &SubtitleLine::secondaryTextChanged, [this](){
+		if(subtitle()) emit subtitle()->lineSecondaryTextChanged(this);
 	});
-	QObject::connect(line, &SubtitleLine::showTimeChanged, [line](){
-		if(line->subtitle()) emit line->subtitle()->lineShowTimeChanged(line);
+	QObject::connect(this, &SubtitleLine::showTimeChanged, [this](){
+		if(subtitle()) emit subtitle()->lineShowTimeChanged(this);
 	});
-	QObject::connect(line, &SubtitleLine::hideTimeChanged, [line](){
-		if(line->subtitle()) emit line->subtitle()->lineHideTimeChanged(line);
+	QObject::connect(this, &SubtitleLine::hideTimeChanged, [this](){
+		if(subtitle()) emit subtitle()->lineHideTimeChanged(this);
 	});
 }
 
@@ -169,7 +172,7 @@ SubtitleLine::SubtitleLine()
 	  m_errorFlags(0),
 	  m_formatData(nullptr)
 {
-	setupSignals(this);
+	setupSignals();
 }
 
 SubtitleLine::SubtitleLine(const Time &showTime, const Time &hideTime)
@@ -182,7 +185,7 @@ SubtitleLine::SubtitleLine(const Time &showTime, const Time &hideTime)
 	  m_errorFlags(0),
 	  m_formatData(nullptr)
 {
-	setupSignals(this);
+	setupSignals();
 }
 
 //SubtitleLine::SubtitleLine(const SubtitleLine &line)
