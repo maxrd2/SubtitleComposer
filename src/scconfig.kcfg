@@ -10,6 +10,10 @@
 			<label>Default Subtitles Encoding</label>
 			<default>UTF-8</default>
 		</entry>
+		<entry name="TextLineBreak" type="Int">
+			<label>Line Break Character</label>
+			<default>0</default>
+		</entry>
 		<entry name="SeekOffsetOnDoubleClick" type="Int">
 			<label>Seek Offset On Double Click</label>
 			<default>1500</default>

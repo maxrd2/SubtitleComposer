@@ -26,6 +26,7 @@
 #include "helpers/fileloadhelper.h"
 #include "helpers/filesavehelper.h"
 #include "dialogs/encodingdetectdialog.h"
+#include "scconfig.h"
 
 #include "microdvd/microdvdinputformat.h"
 #include "microdvd/microdvdoutputformat.h"
@@ -302,11 +303,22 @@ FormatManager::writeSubtitle(const Subtitle &subtitle, bool primary, const QUrl 
 	if(!fileSaveHelper.open())
 		return false;
 
-	const QString data = format->writeSubtitle(subtitle, primary);
 	QTextStream stream(fileSaveHelper.file());
 	stream.setCodec(codec);
 	stream.setGenerateByteOrderMark(true);
-	stream << data;
+
+	QString data = format->writeSubtitle(subtitle, primary);
+	switch(SCConfig::textLineBreak()) {
+	case 1: // CRLF
+		stream << data.replace(QChar::LineFeed, QLatin1String("\r\n"));
+		break;
+	case 2: // CR
+		stream << data.replace(QChar::LineFeed, QChar::CarriageReturn);
+		break;
+	default: // LF
+		stream << data;
+		break;
+	}
 
 	return fileSaveHelper.close();
 }

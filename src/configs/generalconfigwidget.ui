@@ -28,12 +28,44 @@
        </widget>
       </item>
       <item row="0" column="0" alignment="Qt::AlignRight">
-       <widget class="QLabel" name="label">
+       <widget class="QLabel" name="lab_DefaultSubtitlesEncoding">
         <property name="text">
          <string>Defau&amp;lt subtitles encoding:</string>
         </property>
         <property name="buddy">
          <cstring>kcfg_DefaultSubtitlesEncoding</cstring>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="1">
+       <widget class="QComboBox" name="kcfg_TextLineBreak">
+        <property name="currentText">
+         <string>UNIX (LF)</string>
+        </property>
+        <item>
+         <property name="text">
+          <string>UNIX (LF)</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>Windows (CRLF)</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>Macintosh (CR)</string>
+         </property>
+        </item>
+       </widget>
+      </item>
+      <item row="1" column="0" alignment="Qt::AlignRight">
+       <widget class="QLabel" name="lab_TextLineBreak">
+        <property name="text">
+         <string>Line break character:</string>
+        </property>
+        <property name="buddy">
+         <cstring>kcfg_TextLineBreak</cstring>
         </property>
        </widget>
       </item>
@@ -195,6 +227,7 @@
  </widget>
  <tabstops>
   <tabstop>kcfg_DefaultSubtitlesEncoding</tabstop>
+  <tabstop>kcfg_TextLineBreak</tabstop>
   <tabstop>kcfg_AutomaticVideoLoad</tabstop>
   <tabstop>kcfg_LineDuration</tabstop>
   <tabstop>kcfg_LinePause</tabstop>
