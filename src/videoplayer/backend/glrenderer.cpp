@@ -108,7 +108,10 @@ GLRenderer::setupProfile()
 void
 GLRenderer::setOverlay(SubtitleTextOverlay *overlay)
 {
+	if(m_overlay)
+		disconnect(m_overlay, nullptr, this, nullptr);
 	m_overlay = overlay;
+	connect(m_overlay, &SubtitleTextOverlay::repaintNeeded, this, QOverload<>::of(&GLRenderer::update));
 }
 
 void

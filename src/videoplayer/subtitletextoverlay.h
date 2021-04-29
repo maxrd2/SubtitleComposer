@@ -28,8 +28,10 @@
 namespace SubtitleComposer {
 class RichDocument;
 
-class SubtitleTextOverlay
+class SubtitleTextOverlay : public QObject
 {
+	Q_OBJECT
+
 public:
 	SubtitleTextOverlay();
 
@@ -52,6 +54,10 @@ private:
 	void drawImage();
 	void drawText();
 	void drawDoc();
+	void setDirty();
+
+signals:
+	void repaintNeeded();
 
 public slots:
 	void setImageSize(int width, int height);

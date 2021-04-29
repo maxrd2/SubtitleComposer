@@ -224,7 +224,7 @@ SubtitleTextOverlay::setImageSize(int width, int height)
 		return;
 
 	m_image = QImage(width, height, QImage::Format_ARGB32);
-	m_dirty = true;
+	setDirty();
 
 	setFontSize(m_fontSize);
 	setOutlineWidth(m_outlineWidth);
@@ -237,13 +237,23 @@ SubtitleTextOverlay::setImageSize(QSize size)
 }
 
 void
+SubtitleTextOverlay::setDirty()
+{
+	m_dirty = true;
+	emit repaintNeeded();
+}
+
+void
 SubtitleTextOverlay::setText(const QString &text)
 {
 	if(m_text == text)
 		return;
 	m_text = text;
-	m_doc = nullptr;
-	m_dirty = true;
+	if(m_doc) {
+		disconnect(m_doc, nullptr, this, nullptr);
+		m_doc = nullptr;
+	}
+	setDirty();
 }
 
 void
@@ -251,9 +261,13 @@ SubtitleTextOverlay::setDoc(const RichDocument *doc)
 {
 	if(m_doc == doc)
 		return;
+	if(m_doc)
+		disconnect(m_doc, nullptr, this, nullptr);
 	m_doc = doc;
+	if(m_doc)
+		connect(m_doc, &RichDocument::contentsChanged, this, &SubtitleTextOverlay::setDirty);
 	m_text.clear();
-	m_dirty = true;
+	setDirty();
 }
 
 void
@@ -262,7 +276,7 @@ SubtitleTextOverlay::setFontFamily(const QString &family)
 	if(m_font.family() == family)
 		return;
 	m_font.setFamily(family);
-	m_dirty = true;
+	setDirty();
 }
 
 void
@@ -273,7 +287,7 @@ SubtitleTextOverlay::setFontSize(int fontSize)
 	if(pixelSize == m_font.pixelSize())
 		return;
 	m_font.setPixelSize(pixelSize);
-	m_dirty = true;
+	setDirty();
 }
 
 void
@@ -282,7 +296,7 @@ SubtitleTextOverlay::setTextColor(const QColor &color)
 	if(m_textColor == color)
 		return;
 	m_textColor = color;
-	m_dirty = true;
+	setDirty();
 }
 
 void
@@ -291,7 +305,7 @@ SubtitleTextOverlay::setOutlineColor(const QColor &color)
 	if(m_textOutline.color() == color)
 		return;
 	m_textOutline.setColor(color);
-	m_dirty = true;
+	setDirty();
 }
 
 void
@@ -302,6 +316,6 @@ SubtitleTextOverlay::setOutlineWidth(int width)
 	if(m_textOutline.width() == pixelWidth)
 		return;
 	m_textOutline.setWidth(pixelWidth);
-	m_dirty = true;
+	setDirty();
 }
 
