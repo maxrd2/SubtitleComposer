@@ -72,10 +72,6 @@ RichDocument::RichDocument(QObject *parent)
 	textOption.setWrapMode(QTextOption::NoWrap);
 	setDefaultTextOption(textOption);
 
-	QFont font = defaultFont();
-	font.setPointSize(font.pointSize() + 2);
-	setDefaultFont(font);
-
 	setDefaultStyleSheet($("p { display:block; white-space:pre; margin-top:0; margin-bottom:0; }"));
 }
 

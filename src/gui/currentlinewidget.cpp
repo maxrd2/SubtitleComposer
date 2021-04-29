@@ -254,12 +254,14 @@ CurrentLineWidget::setCurrentLine(SubtitleLine *line)
 		RichDocument *doc = m_currentLine->primaryDoc();
 		if(m_textEdits[0]->isReadOnly())
 			m_textEdits[0]->setReadOnly(false);
+		doc->setDefaultFont(QFont());
 		m_textEdits[0]->setDocument(doc);
 		connect(m_currentLine, &SubtitleLine::primaryTextChanged, this, &CurrentLineWidget::updateLabels);
 
 		doc = m_currentLine->secondaryDoc();
 		if(m_textEdits[1]->isReadOnly())
 			m_textEdits[1]->setReadOnly(false);
+		doc->setDefaultFont(QFont());
 		m_textEdits[1]->setDocument(doc);
 		connect(m_currentLine, &SubtitleLine::secondaryTextChanged, this, &CurrentLineWidget::updateLabels);
 
