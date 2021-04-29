@@ -270,12 +270,16 @@ SubtitleLine::index() const
 void
 SubtitleLine::primaryDocumentChanged()
 {
+	if(m_ignoreDocChanges)
+		return;
 	processAction(new SetLinePrimaryTextAction(*this, m_primaryDoc));
 }
 
 void
 SubtitleLine::secondaryDocumentChanged()
 {
+	if(m_ignoreDocChanges)
+		return;
 	processAction(new SetLineSecondaryTextAction(*this, m_secondaryDoc));
 }
 

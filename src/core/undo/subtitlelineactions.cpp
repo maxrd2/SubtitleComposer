@@ -56,18 +56,20 @@ SetLinePrimaryTextAction::mergeWith(const QUndoCommand *command)
 void
 SetLinePrimaryTextAction::undo()
 {
-	QSignalBlocker s(m_primaryDoc);
+	const bool prev = m_line.ignoreDocChanges(true);
 	while(m_primaryDoc->isUndoAvailable() && m_primaryDoc->availableUndoSteps() >= m_primaryDocState)
 		m_primaryDoc->undo();
+	m_line.ignoreDocChanges(prev);
 	emit m_line.primaryTextChanged();
 }
 
 void
 SetLinePrimaryTextAction::redo()
 {
-	QSignalBlocker s(m_primaryDoc);
+	const bool prev = m_line.ignoreDocChanges(true);
 	while(m_primaryDoc->isRedoAvailable() && m_primaryDoc->availableUndoSteps() < m_primaryDocState)
 		m_primaryDoc->redo();
+	m_line.ignoreDocChanges(prev);
 	emit m_line.primaryTextChanged();
 }
 
@@ -92,18 +94,20 @@ SetLineSecondaryTextAction::mergeWith(const QUndoCommand *command)
 void
 SetLineSecondaryTextAction::undo()
 {
-	QSignalBlocker s(m_secondaryDoc);
+	const bool prev = m_line.ignoreDocChanges(true);
 	while(m_secondaryDoc->isUndoAvailable() && m_secondaryDoc->availableUndoSteps() >= m_secondaryDocState)
 		m_secondaryDoc->undo();
+	m_line.ignoreDocChanges(prev);
 	emit m_line.secondaryTextChanged();
 }
 
 void
 SetLineSecondaryTextAction::redo()
 {
-	QSignalBlocker s(m_secondaryDoc);
+	const bool prev = m_line.ignoreDocChanges(true);
 	while(m_secondaryDoc->isRedoAvailable() && m_secondaryDoc->availableUndoSteps() < m_secondaryDocState)
 		m_secondaryDoc->redo();
+	m_line.ignoreDocChanges(prev);
 	emit m_line.secondaryTextChanged();
 }
 

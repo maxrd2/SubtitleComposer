@@ -236,6 +236,12 @@ private:
 
 	void setupSignals();
 
+	inline bool ignoreDocChanges(bool ignore) {
+		bool r = m_ignoreDocChanges;
+		m_ignoreDocChanges = ignore;
+		return r;
+	}
+
 private:
 	Subtitle *m_subtitle;
 	RichDocument *m_primaryDoc;
@@ -243,6 +249,7 @@ private:
 	Time m_showTime;
 	Time m_hideTime;
 	int m_errorFlags;
+	bool m_ignoreDocChanges = false;
 
 	FormatData *m_formatData;
 
