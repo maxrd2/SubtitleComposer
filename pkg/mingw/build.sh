@@ -20,6 +20,9 @@ sudo pacman -Sdd --noconfirm --needed kauth kbookmarks kcodecs kcompletion \
 	knotifications kross ktextwidgets kwidgetsaddons kwindowsystem kxmlgui \
 	solid sonnet
 
+# package icons into .qrc
+pkg/mingw/icons-find.sh > src/subtitlecomposer.qrc
+
 i686-w64-mingw32-cmake -B build \
 	-DCMAKE_BUILD_TYPE=Release \
 	-DKDE_INSTALL_LIBDIR=lib \

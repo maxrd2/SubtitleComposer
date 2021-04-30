@@ -8,14 +8,9 @@ icons=(`grep -hr QIcon::fromTheme "$_rt/src" \
 	| sed -n -E -e '/.*QIcon::fromTheme\((QStringLiteral\()?"([^"]+)"\)?\).*/ s|.*QIcon::fromTheme\((QStringLiteral\()?"([^"]+)"\)?\).*|\2| p'`)
 icons+=(
 	subtitlecomposer
-	gstreamer
-	mpv
 	waveform
-	subtitlecomposer
 	mediaplayer
 	pocketsphinx
-	mplayer
-	xine
 )
 icons=(`(for i in "${icons[@]}" ; do echo $i ; done) | sort -u`)
 
@@ -30,7 +25,7 @@ for icon in "${icons[@]}"; do
 	[[ ! -f "$file" ]] && file="/usr/share/icons/breeze/actions/24/$icon.svg"
 	[[ ! -f "$file" ]] && file="/usr/share/icons/breeze/status/22/$icon.svg"
 	[[ ! -f "$file" ]] && file="/usr/share/icons/breeze/places/22/$icon.svg"
-	[[ ! -f "$file" ]] && echo "MISSING: $file" 1>&2 && find /usr/share/icons/ -name "$icon*" -printf "\tCANDIDATE: %p" 1>&2 || iconfiles+=("\n<file alias=\"actions/22/$icon.${file##*.}\">$(echo "$file" | sed -Ee "s|$_rt/src/||")</file>")
+	[[ ! -f "$file" ]] && echo "MISSING: $file" 1>&2 && find /usr/share/icons/ -name "$icon*" -printf "\tCANDIDATE: %p\n" 1>&2 || iconfiles+=("\n<file alias=\"actions/22/$icon.${file##*.}\">$(echo "$file" | sed -Ee "s|$_rt/src/||")</file>")
 done
 echo '<!DOCTYPE RCC><RCC version="1.0">'
 echo '<qresource prefix="/icons/breeze">'

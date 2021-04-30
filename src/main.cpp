@@ -169,10 +169,6 @@ main(int argc, char **argv)
 	QIcon::setThemeSearchPaths(QIcon::themeSearchPaths() << QDir(qApp->applicationDirPath())
 		.absoluteFilePath(QDir(QStringLiteral(SC_INSTALL_BIN)).relativeFilePath(QStringLiteral(CUSTOM_ICON_INSTALL_PATH))));
 
-	// force breeze theme outside kde environment
-	if(QProcessEnvironment::systemEnvironment().value(QStringLiteral("XDG_CURRENT_DESKTOP")).toLower() != QLatin1String("kde"))
-		QIcon::setThemeName("breeze");
-
 #ifdef Q_OS_WIN
 	const QStringList themes {"/icons/breeze/breeze-icons.rcc", "/icons/breeze-dark/breeze-icons-dark.rcc"};
 	for(const QString theme : themes) {
@@ -192,6 +188,10 @@ main(int argc, char **argv)
 		}
 	}
 #endif
+
+	// force breeze theme outside kde environment
+	if(QProcessEnvironment::systemEnvironment().value(QStringLiteral("XDG_CURRENT_DESKTOP")).toLower() != QLatin1String("kde"))
+		QIcon::setThemeName("breeze");
 
 	KLocalizedString::setApplicationDomain("subtitlecomposer");
 
