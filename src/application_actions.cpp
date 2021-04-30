@@ -596,7 +596,6 @@ Application::setupActions()
 	actionManager->addAction(seekForwardAction, UserAction::VideoPlaying);
 
 	QAction *stepFrameBackwardAction = new QAction(actionCollection);
-	stepFrameBackwardAction->setIcon(QIcon::fromTheme("media-step-backward"));
 	stepFrameBackwardAction->setText(i18n("Frame Step Backward"));
 	actionCollection->setDefaultShortcut(stepFrameBackwardAction, QKeySequence("Ctrl+Left"));
 	connect(stepFrameBackwardAction, &QAction::triggered, this, &Application::stepBackward);
@@ -604,7 +603,6 @@ Application::setupActions()
 	actionManager->addAction(stepFrameBackwardAction, UserAction::VideoPlaying);
 
 	QAction *stepFrameForwardAction = new QAction(actionCollection);
-	stepFrameForwardAction->setIcon(QIcon::fromTheme("media-step-forward"));
 	stepFrameForwardAction->setText(i18n("Frame Step Forward"));
 	actionCollection->setDefaultShortcut(stepFrameForwardAction, QKeySequence("Ctrl+Right"));
 	connect(stepFrameForwardAction, &QAction::triggered, this, &Application::stepForward);
