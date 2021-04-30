@@ -133,7 +133,7 @@ Subtitle::setSecondaryData(const Subtitle &from, bool usePrimaryData)
 	const int srcErrors = usePrimaryData ? SubtitleLine::PrimaryOnlyErrors : SubtitleLine::SecondaryOnlyErrors;
 	const int dstErrors = SubtitleLine::PrimaryOnlyErrors | SubtitleLine::SharedErrors;
 
-	for(int i = 0, n = m_lines.size(); i < n; i++) {
+	for(int i = 0, n = qMin(m_lines.size(), from.m_lines.size()); i < n; i++) {
 		const SubtitleLine *srcLine = from.m_lines.at(i).obj();
 		SubtitleLine *dstLine = m_lines.at(i).obj();
 		dstLine->setSecondaryDoc(usePrimaryData ? srcLine->primaryDoc() : srcLine->secondaryDoc());
