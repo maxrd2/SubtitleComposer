@@ -201,18 +201,19 @@ main(int argc, char **argv)
 		SUBTITLECOMPOSER_VERSION_STRING,
 		i18n("A KDE subtitle editor."),
 		KAboutLicense::GPL_V2,
-		QStringLiteral("&copy; 2007-2017 Subtitle Composer project"),
+		QStringLiteral("&copy; 2007-2021 The Subtitle Composer Authors"),
 		QString(), // Additional text
-		QStringLiteral("https://invent.kde.org/kde/subtitlecomposer"),
+		QStringLiteral("https://subtitlecomposer.kde.org/"),
 		QStringLiteral("https://invent.kde.org/kde/subtitlecomposer/issues"));
 
-	aboutData.addAuthor(i18n("Mladen Milinković"), i18n("Current Author & Maintainer"), "maxrd2@smoothware.net");
-	aboutData.addAuthor(i18n("Sergio Pistone"), i18n("Original Author"), "sergio_pistone@yahoo.com.ar");
+	aboutData.addAuthor(QStringLiteral("Mladen Milinković"), i18n("Maintainer"), "maxrd2@smoothware.net");
+	aboutData.addAuthor(QStringLiteral("Sergio Pistone"), i18n("Former Maintainer"), "sergio_pistone@yahoo.com.ar");
+	aboutData.addAuthor(QStringLiteral("Thiago Sueto"), i18n("Patches and Website"), "herzenschein@gmail.com");
 
 	aboutData.setTranslator(i18nc("NAME OF TRANSLATORS", "Your names"), i18nc("EMAIL OF TRANSLATORS", "Your emails"));
 
-	aboutData.addCredit("Martin Steghöfer", i18n("code contributions"));
-	aboutData.addCredit("Marius Kittler", i18n("code contributions, Arch Linux packaging"));
+	aboutData.addCredit(QStringLiteral("Martin Steghöfer"), i18n("code contributions"));
+	aboutData.addCredit(QStringLiteral("Marius Kittler"), i18n("code contributions, Arch Linux packaging"));
 
 	aboutData.addCredit(i18n("All people who have contributed and I have forgotten to mention"));
 
