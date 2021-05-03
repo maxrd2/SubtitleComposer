@@ -1,0 +1,119 @@
+app: SubtitleComposer
+
+build:
+  packages:
+    - linuxdeployqt # this one is segfaulting
+    - libfuse2 # needed by linuxdeployqt AppImage
+    - libudev-devel
+    - cmake >= 3.10
+    - extra-cmake-modules
+    - pkgconfig
+    - update-desktop-files
+    - cmake(KF5Auth)
+    - cmake(KF5Codecs)
+    - cmake(KF5Config)
+    - cmake(KF5ConfigWidgets)
+    - cmake(KF5CoreAddons)
+    - cmake(KF5I18n)
+    - cmake(KF5KIO)
+    - cmake(KF5Kross)
+    - cmake(KF5Sonnet)
+    - cmake(KF5TextWidgets)
+    - cmake(KF5WidgetsAddons)
+    - cmake(KF5XmlGui)
+    - cmake(Qt5Core) >= 5.6
+    - cmake(Qt5Gui)
+    - cmake(Qt5Widgets)
+    - libqt5-qtbase-private-headers-devel
+    - pkgconfig(icu-i18n)
+    - pkgconfig(icu-uc)
+    - pkgconfig(openal)
+    - breeze5-icons
+    - sphinxbase5-devel
+    - pocketsphinx5-devel
+    - ffmpeg-devel >= 4.4
+    - sonnet-voikko
+    #- kross-ruby # crashes
+    #- kross-python # crashes
+    - plasma5-integration-plugin # plasma theme support
+    - breeze # plasma theme support
+    - oxygen5 # plasma theme support
+    - adwaita-icon-theme # gnome theme support
+    - gdk-pixbuf-loader-rsvg # gnome theme support
+    - libqt5-qtstyleplugins-platformtheme-gtk2 # gnome theme support
+    - libqt5-qtbase-platformtheme-gtk3 # gnome theme support
+    - adwaita-qt5 # qt5 theme/style plugin
+    - qt5ct # qt5 theme/style plugin
+    - qtcurve-qt5 # qt5 theme/style plugin
+
+script:
+  - ### common vars
+  - rpm -ql kio kio-core | grep libexec
+  - app_version="0.7.0-1+test"
+  - tar_file="$BUILD_SOURCE_DIR/subtitlecomposer-${app_version}.tar.xz"
+  - src_dir="$BUILD_SOURCE_DIR/src"
+  - build_dir="$BUILD_SOURCE_DIR/build"
+  -
+  - ### linuxdeployqt
+  - linuxdeployqt="$BUILD_SOURCE_DIR/linuxdeployqt-continuous-x86_64.AppImage"
+  - chmod +x "$linuxdeployqt"
+  -
+  - ### extract sources
+  - mkdir -p "$src_dir" "$build_dir"
+  - tar -xf "$tar_file" --strip-components=1 -C "$src_dir"
+  - sed -i '/content_rating/d' "$src_dir/src/org.kde.subtitlecomposer.appdata.xml" # otherwise appstreamcli's validation fails
+  -
+  - ### build
+  - cd "$build_dir"
+  - cmake \
+  -   -DAPPIMAGE=1 \
+  -   -DCMAKE_BUILD_TYPE=Release \
+  -   -DCMAKE_INSTALL_PREFIX=/usr \
+  -   -DKDE_INSTALL_LIBDIR=lib \
+  -   -DKDE_INSTALL_USE_QT_SYS_PATHS=ON \
+  -   -DBUILD_TESTING=OFF \
+  -   "$src_dir"
+  - make
+  -
+  - ### install to AppDir
+  - make DESTDIR="$BUILD_APPDIR" install
+  - ldqtpars=(
+  -   "$BUILD_APPDIR/usr/share/applications/org.kde.subtitlecomposer.desktop"
+  -   -bundle-non-qt-libs
+  -   -verbose=2
+  - )
+  - # --- subtitle composer plugins
+  - plugin_path="$BUILD_APPDIR/usr/lib/subtitlecomposer"
+  - ldqtpars+=(`[ ! -d "$plugin_path" ] || find "$plugin_path" -name \*.so -printf '-executable=%p'`)
+  - # --- qt5 plugins
+  - ldqtplugins=(
+  -   platformthemes/libqgtk2.so
+  -   platformthemes/libqgtk3.so
+  -   platformthemes/KDEPlasmaPlatformTheme.so
+  -   platformthemes/libqt5ct.so
+  -   styles
+  -   kf5/kwindowsystem
+  -   kf5/sonnet
+  -   kf5/kio
+  - )
+  - # --- kross support
+  - ldqtplugins+=(
+  -   script/krossqtsplugin.so
+  -   krossmoduleforms.so
+  -   krossmodulekdetranslation.so
+  -   krossqts.so
+  -   #krossruby.so # crashes
+  -   #krosspython.so # crashes
+  - )
+  - #install -m 0755 /usr/bin/kdeinit5 -D -T "$BUILD_APPDIR/usr/bin"
+  - #install -m 0755 /usr/lib64/libexec/kf5/kioslave5 -D -T "$BUILD_APPDIR/usr/libexec/kf5/kioslave5"
+  - #ldqtpars+=("-executable=$BUILD_APPDIR/usr/libexec/kf5/kioslave5")
+  - # --- process AppDir
+  - unset QTDIR; unset QT_PLUGIN_PATH ; unset LD_LIBRARY_PATH
+  - $linuxdeployqt "${ldqtpars[@]}" -extra-plugins="$(IFS=, ; echo "${ldqtplugins[*]}")"
+  - # --- cleanup AppDir
+  - rm -fv $BUILD_APPDIR/usr/lib/libxcb-dri[23].so*
+  - install -m 0755 "$src_dir/pkg/misc/subtitlecomposer.sh" -T "$BUILD_APPDIR/AppRun"
+  - # --- debug info
+  - echo "*** AppImage plugins:" && find "$BUILD_APPDIR/usr/plugins"
+  - echo "*** System plugins:" && find "/usr/lib64/qt5/plugins"

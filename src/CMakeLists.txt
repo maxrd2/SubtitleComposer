@@ -22,6 +22,7 @@ ecm_setup_version(${PROJECT_VERSION}
 add_definitions(-DHAVE_CONFIG_H)
 add_definitions(-D_DEFAULT_SOURCE)
 if(APPIMAGE)
+	message(STATUS "AppImage build enabled")
 	set(SC_APPIMAGE 1 CACHE INTERNAL EXPORTEDVARIABLE)
 endif()
 
