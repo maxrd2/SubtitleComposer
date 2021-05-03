@@ -29,7 +29,7 @@ deps=(
 	"/usr/$_arch/lib/qt/plugins/kf5/kio/"*.dll
 	"/usr/$_arch/lib/qt/plugins/kf5/kiod/"*.dll
 	"/usr/$_arch/lib/qt/plugins/kf5/sonnet/"*.dll
-	"/usr/$_arch/bin/dbus-daemon.exe"
+#	"/usr/$_arch/bin/dbus-daemon.exe" # causes the app to hang on exit?
 	"/usr/$_arch/bin/kdeinit5.exe"
 	"/usr/$_arch/bin/kwrapper5.exe"
 	"/usr/$_arch/bin/klauncher.exe"
