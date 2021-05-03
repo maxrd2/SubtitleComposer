@@ -75,7 +75,7 @@ mimeIsSubtitle(const QMimeType &mime)
 	return false;
 }
 
-void
+static void
 handleCommandLine(SubtitleComposer::Application &app, KAboutData &aboutData)
 {
 	QCommandLineParser parser;
@@ -153,6 +153,29 @@ handleCommandLine(SubtitleComposer::Application &app, KAboutData &aboutData)
 		app.openVideo(System::urlFromPath(fileVideo));
 }
 
+static void
+setupIconTheme()
+{
+#ifdef SC_BUNDLE_SYSTEM_THEME
+	QIcon::setThemeSearchPaths(QIcon::themeSearchPaths() << QStringLiteral(":/icons"));
+#endif
+	if(QIcon::themeName().isEmpty())
+		QIcon::setThemeName(QStringLiteral("breeze"));
+
+	QIcon::setFallbackSearchPaths(QIcon::fallbackSearchPaths()
+			// access the icons through breeze theme path
+			<< QStringLiteral(":/icons-fallback")
+			// or directly as fallback
+			<< QStringLiteral(":/icons-fallback/breeze/actions/22")
+			<< QStringLiteral(":/icons-fallback/breeze/apps/256")
+			<< QStringLiteral(":/icons-fallback/breeze/apps/128")
+			<< QStringLiteral(":/icons-fallback/breeze/apps/48")
+			<< QStringLiteral(":/icons-fallback/breeze/apps/32")
+			<< QStringLiteral(":/icons-fallback/breeze/apps/16"));
+	if(QIcon::fallbackThemeName().isEmpty())
+		QIcon::setFallbackThemeName(QStringLiteral("breeze"));
+}
+
 int
 main(int argc, char **argv)
 {
@@ -165,33 +188,7 @@ main(int argc, char **argv)
 
 	SubtitleComposer::Application app(argc, argv);
 
-	// find custom icons outside kde
-	QIcon::setThemeSearchPaths(QIcon::themeSearchPaths() << QDir(qApp->applicationDirPath())
-		.absoluteFilePath(QDir(QStringLiteral(SC_INSTALL_BIN)).relativeFilePath(QStringLiteral(CUSTOM_ICON_INSTALL_PATH))));
-
-#ifdef Q_OS_WIN
-	const QStringList themes {"/icons/breeze/breeze-icons.rcc", "/icons/breeze-dark/breeze-icons-dark.rcc"};
-	for(const QString theme : themes) {
-		const QString themePath = QStandardPaths::locate(QStandardPaths::AppDataLocation, theme);
-		if(!themePath.isEmpty()) {
-			const QString iconSubdir = theme.left(theme.lastIndexOf('/'));
-			if(QResource::registerResource(themePath, iconSubdir)) {
-				if(QFileInfo::exists(QLatin1Char(':') + iconSubdir + QStringLiteral("/index.theme"))) {
-					qDebug() << "Loaded icon theme:" << theme;
-				} else {
-					qWarning() << "No index.theme found in" << theme;
-					QResource::unregisterResource(themePath, iconSubdir);
-				}
-			} else {
-				qWarning() << "Invalid rcc file" << theme;
-			}
-		}
-	}
-#endif
-
-	// force breeze theme outside kde environment
-	if(QProcessEnvironment::systemEnvironment().value(QStringLiteral("XDG_CURRENT_DESKTOP")).toLower() != QLatin1String("kde"))
-		QIcon::setThemeName("breeze");
+	setupIconTheme();
 
 	KLocalizedString::setApplicationDomain("subtitlecomposer");
 

@@ -5,6 +5,12 @@
 #define SC_INSTALL_BIN "@CMAKE_INSTALL_PREFIX@/@BIN_INSTALL_DIR@"
 #define SC_INSTALL_PLUGIN "@SC_PLUGIN_INSTALL_DIR@"
 
+// Building AppImage distro
+#cmakedefine SC_APPIMAGE
+
+// Whether system icon theme is bundled
+#cmakedefine SC_BUNDLE_SYSTEM_THEME
+
 // Whether ICU was found
 #cmakedefine HAVE_ICU
 

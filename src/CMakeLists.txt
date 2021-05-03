@@ -21,6 +21,9 @@ ecm_setup_version(${PROJECT_VERSION}
 
 add_definitions(-DHAVE_CONFIG_H)
 add_definitions(-D_DEFAULT_SOURCE)
+if(APPIMAGE)
+	set(SC_APPIMAGE 1 CACHE INTERNAL EXPORTEDVARIABLE)
+endif()
 
 find_package(FFmpeg 57.83.100 REQUIRED)
 find_package(OpenAL REQUIRED)
@@ -90,22 +93,7 @@ set(subtitlecomposer_SRCS
 	CACHE INTERNAL EXPORTEDVARIABLE
 	)
 
-if(MINGW)
-	qt5_add_resources(subtitlecomposer_SRCS subtitlecomposer.qrc)
-	list(APPEND subtitlecomposer_SRCS subtitlecomposer.rc)
-else()
-	ecm_install_icons(ICONS
-		icons/16-apps-subtitlecomposer.png icons/32-apps-subtitlecomposer.png icons/128-apps-subtitlecomposer.png icons/256-apps-subtitlecomposer.png
-		DESTINATION ${ICON_INSTALL_DIR}
-		THEME hicolor)
-
-	ecm_install_icons(ICONS
-		icons/128-categories-waveform.png icons/16-actions-select_stream.png icons/16-actions-time_from_video.png icons/48-actions-audio_extract.png
-		icons/48-apps-mediaplayer.png icons/64-apps-pocketsphinx.png icons/sc-actions-anchor.svg icons/sc-actions-current_line_follows_video.svg
-		icons/sc-actions-playrate_minus.svg icons/sc-actions-playrate_plus.svg icons/sc-actions-set_hide_time.svg icons/sc-actions-set_show_time.svg
-		DESTINATION ${DATA_INSTALL_DIR}/subtitlecomposer/icons
-		THEME hicolor)
-endif()
+add_subdirectory(icons)
 
 kconfig_add_kcfg_files(subtitlecomposer_SRCS GENERATE_MOC scconfig.kcfgc)
 
@@ -115,6 +103,8 @@ ki18n_wrap_ui(subtitlecomposer_SRCS
 	#[[ formats ]] formats/vobsub/vobsubinputinitdialog.ui formats/vobsub/vobsubinputprocessdialog.ui
 	#[[ scripting ]] scripting/scriptsmanager.ui
 	)
+
+qt5_add_resources(subtitlecomposer_SRCS ${subtitlecomposer_RES})
 
 add_executable(subtitlecomposer WIN32 ${subtitlecomposer_SRCS})
 

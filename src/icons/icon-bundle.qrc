@@ -1,0 +1,27 @@
+<!DOCTYPE RCC>
+<RCC version="1.0">
+<qresource prefix="/icons-fallback/breeze">
+	<file alias="index.theme">breeze.theme</file> 
+</qresource>
+<qresource prefix="/icons-fallback/breeze/apps">
+	<file alias="16/subtitlecomposer.png">16-apps-subtitlecomposer.png</file>
+	<file alias="32/subtitlecomposer.png">32-apps-subtitlecomposer.png</file>
+	<file alias="48/subtitlecomposer.png">48-apps-subtitlecomposer.png</file>
+	<file alias="128/subtitlecomposer.png">128-apps-subtitlecomposer.png</file>
+	<file alias="256/subtitlecomposer.png">256-apps-subtitlecomposer.png</file>
+	<file alias="48/pocketsphinx.png">apps/pocketsphinx.png</file>
+	<file alias="32/mediaplayer.png">apps/mediaplayer.png</file>
+</qresource>
+<qresource prefix="/icons-fallback/breeze/actions/22">
+	<file alias="anchor.svg">actions/anchor.svg</file>
+	<file alias="audio_extract.png">actions/audio-extract.png</file>
+	<file alias="current_line_follows_video.svg">actions/curline-follows-video.svg</file>
+	<file alias="playrate_minus.svg">actions/playrate-minus.svg</file>
+	<file alias="playrate_plus.svg">actions/playrate-plus.svg</file>
+	<file alias="select_stream.png">actions/select-stream.png</file>
+	<file alias="set_hide_time.svg">actions/set-hide-time.svg</file>
+	<file alias="set_show_time.svg">actions/set-show-time.svg</file>
+	<file alias="time_from_video.png">actions/time-from-video.png</file>
+	<file alias="waveform.png">actions/waveform.png</file>
+</qresource>
+</RCC>

@@ -540,7 +540,7 @@ Application::setupActions()
 	QAction *speechImportStreamAction = new KSelectAction(actionCollection);
 	QMenu *speechImportStreamActionMenu = new QMenu(m_mainWindow);
 	speechImportStreamAction->setMenu(speechImportStreamActionMenu);
-	speechImportStreamAction->setIcon(QIcon::fromTheme("select-stream"));
+	speechImportStreamAction->setIcon(QIcon::fromTheme("select_stream"));
 	speechImportStreamAction->setText(i18n("Recognize Speech"));
 	speechImportStreamAction->setStatusTip(i18n("Recognize speech in audio stream"));
 	connect(speechImportStreamActionMenu, &QMenu::triggered, [this](QAction *action){ speechImportAudioStream(action->data().value<int>()); });
@@ -716,7 +716,7 @@ Application::setupActions()
 	actionCollection->addAction(ACT_DECREASE_VOLUME, decreaseVolumeAction);
 
 	KSelectAction *setActiveAudioStreamAction = new KSelectAction(actionCollection);
-	setActiveAudioStreamAction->setIcon(QIcon::fromTheme(QStringLiteral("select_stream")));
+	setActiveAudioStreamAction->setIcon(QIcon::fromTheme(QStringLiteral("languages")));
 	setActiveAudioStreamAction->setText(i18n("Audio Streams"));
 	setActiveAudioStreamAction->setStatusTip(i18n("Select active audio stream"));
 	connect(setActiveAudioStreamAction, QOverload<int>::of(&KSelectAction::triggered), m_player, &VideoPlayer::selectAudioStream);
@@ -740,7 +740,7 @@ Application::setupActions()
 	actionCollection->addAction(ACT_DECREASE_SUBTITLE_FONT, decreaseSubtitleFontAction);
 
 	KSelectAction *setActiveSubtitleStreamAction = new KSelectAction(actionCollection);
-	setActiveSubtitleStreamAction->setIcon(QIcon::fromTheme(QStringLiteral("select_stream")));
+	setActiveSubtitleStreamAction->setIcon(QIcon::fromTheme(QStringLiteral("languages")));
 	setActiveSubtitleStreamAction->setText(i18n("Displayed Subtitle Text"));
 	setActiveSubtitleStreamAction->setStatusTip(i18n("Select visible subtitle text"));
 	connect(setActiveSubtitleStreamAction, QOverload<int>::of(&KSelectAction::triggered), this, &Application::setActiveSubtitleStream);
@@ -748,6 +748,7 @@ Application::setupActions()
 	actionManager->addAction(setActiveSubtitleStreamAction, UserAction::SubTrOpened);
 
 	QAction *toggleAnchor = new QAction(actionCollection);
+	toggleAnchor->setIcon(QIcon::fromTheme(QStringLiteral("anchor")));
 	toggleAnchor->setText(i18n("Toggle Anchor"));
 	toggleAnchor->setStatusTip(i18n("(Un)Anchor current line's show time to timeline (Editing anchored line's show time will stretch/compact the timeline between adjacent anchors)"));
 	actionCollection->setDefaultShortcut(toggleAnchor, QKeySequence("Alt+A"));

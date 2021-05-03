@@ -2,6 +2,9 @@
 
 set -e
 
+_pr="$(readlink -f "$(dirname "$0")/../..")"
+cd "$_pr"
+
 appver="$(git describe --always --abbrev=8 | sed 's/-g/./;s/-/./;s/^v//g')"
 rm -rf build &>/dev/null || true
 mkdir -p build/nsis
@@ -20,9 +23,6 @@ sudo pacman -Sdd --noconfirm --needed kauth kbookmarks kcodecs kcompletion \
 	knotifications kross ktextwidgets kwidgetsaddons kwindowsystem kxmlgui \
 	solid sonnet
 
-# package icons into .qrc
-pkg/mingw/icons-find.sh > src/subtitlecomposer.qrc
-
 i686-w64-mingw32-cmake -B build \
 	-DCMAKE_BUILD_TYPE=Release \
 	-DKDE_INSTALL_LIBDIR=lib \
@@ -32,4 +32,4 @@ i686-w64-mingw32-cmake -B build \
 	-DKCONFIGCOMPILER_PATH=/usr/lib/cmake/KF5Config/KF5ConfigCompilerTargets.cmake \
 	-DTARGETSFILE=/usr/lib/cmake/KF5CoreAddons/KF5CoreAddonsToolingTargets.cmake
 cmake --build build -j$(nproc)
-DESTDIR="$PWD/build/nsis" cmake --build build --target nsis
+DESTDIR="$_pr/build/nsis" cmake --build build --target nsis
