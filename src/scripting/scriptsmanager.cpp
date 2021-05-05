@@ -19,6 +19,10 @@
  * Boston, MA 02110-1301, USA.
  */
 
+#ifdef HAVE_CONFIG_H
+# include <config.h>
+#endif
+
 #include "scriptsmanager.h"
 #include "scripting_rangesmodule.h"
 #include "scripting_stringsmodule.h"
@@ -306,7 +310,9 @@ ScriptsManager::editScript(const QString &sN)
 	}
 
 	const QUrl script = QUrl::fromLocalFile(m_scripts[scriptName]);
-#if KIO_VERSION >= QT_VERSION_CHECK(5, 71, 0)
+#ifdef SC_APPIMAGE
+	{
+#elif KIO_VERSION >= QT_VERSION_CHECK(5, 71, 0)
 	KIO::OpenUrlJob *job = new KIO::OpenUrlJob(script);
 	job->setUiDelegate(new KIO::JobUiDelegate(KJobUiDelegate::AutoHandlingEnabled, app()->mainWindow()));
 	if(!job->exec()) {
