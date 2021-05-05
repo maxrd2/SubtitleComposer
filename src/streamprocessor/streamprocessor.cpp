@@ -142,10 +142,10 @@ StreamProcessor::listAudio()
 			continue;
 
 		AVDictionaryEntry *lang = av_dict_get(stream->metadata, "lang", nullptr, AV_DICT_IGNORE_SUFFIX);
-		streamList.append(QString("#%1 audio - %2 (%3)")
-						  .arg(stream->id)
-						  .arg(lang ? LanguageCode::nameFromIso(lang->value) : QStringLiteral("Unknown"))
-						  .arg(lang ? lang->value : "--"));
+		streamList.append(QString("#%1 audio - %2 (%3)").arg(
+					QString::number(stream->id),
+					lang ? LanguageCode::nameFromIso(lang->value) : QStringLiteral("Unknown"),
+					lang ? QString(lang->value) : QStringLiteral("--")));
 	}
 
 	return streamList;
@@ -162,10 +162,10 @@ StreamProcessor::listText()
 			continue;
 
 		AVDictionaryEntry *lang = av_dict_get(stream->metadata, "lang", nullptr, AV_DICT_IGNORE_SUFFIX);
-		streamList.append(QString("#%1 text - %2 (%3)")
-						  .arg(stream->id)
-						  .arg(lang ? LanguageCode::nameFromIso(lang->value) : QStringLiteral("Unknown"))
-						  .arg(lang ? lang->value : "--"));
+		streamList.append(QString("#%1 text - %2 (%3)").arg(
+					QString::number(stream->id),
+					lang ? LanguageCode::nameFromIso(lang->value) : QStringLiteral("Unknown"),
+					lang ? QString(lang->value) : QStringLiteral("--")));
 	}
 
 	return streamList;
@@ -182,12 +182,12 @@ StreamProcessor::listImage()
 			continue;
 
 		AVDictionaryEntry *lang = av_dict_get(stream->metadata, "lang", nullptr, AV_DICT_IGNORE_SUFFIX);
-		streamList.append(QString("#%1 image - %2 (%3) - %4x%5")
-						  .arg(stream->id)
-						  .arg(lang ? LanguageCode::nameFromIso(lang->value) : QStringLiteral("Unknown"))
-						  .arg(lang ? lang->value : "--")
-						  .arg(stream->codecpar->width)
-						  .arg(stream->codecpar->height));
+		streamList.append(QString("#%1 image - %2 (%3) - %4x%5").arg(
+					QString::number(stream->id),
+					lang ? LanguageCode::nameFromIso(lang->value) : QStringLiteral("Unknown"),
+					lang ? QString(lang->value) : QStringLiteral("--"),
+					QString::number(stream->codecpar->width),
+					QString::number(stream->codecpar->height)));
 	}
 
 	return streamList;
@@ -367,11 +367,8 @@ StreamProcessor::processAudio()
 {
 	int ret;
 	char errorText[1024];
-	AVPacket pkt;
-	av_init_packet(&pkt);
-	pkt.data = nullptr;
-	pkt.size = 0;
-
+	AVPacket *pkt = av_packet_alloc();
+	Q_ASSERT(pkt != nullptr);
 	AVFrame *frame = av_frame_alloc();
 	Q_ASSERT(frame != nullptr);
 	AVFrame *frameResampled = nullptr;
@@ -396,7 +393,7 @@ StreamProcessor::processAudio()
 	bool conversionComplete = false;
 
 	while(!conversionComplete && !isInterruptionRequested()) {
-		ret = av_read_frame(m_avFormat, &pkt);
+		ret = av_read_frame(m_avFormat, pkt);
 		bool drainDecoder = ret == AVERROR_EOF;
 		if(ret < 0 && !drainDecoder) {
 			av_strerror(ret, errorText, sizeof(errorText));
@@ -405,8 +402,8 @@ StreamProcessor::processAudio()
 			break;
 		}
 
-		if(pkt.stream_index == m_audioStreamCurrent || drainDecoder) {
-			ret = avcodec_send_packet(m_codecCtx, &pkt);
+		if(pkt->stream_index == m_audioStreamCurrent || drainDecoder) {
+			ret = avcodec_send_packet(m_codecCtx, pkt);
 			if(ret < 0) {
 				if(ret != AVERROR(EAGAIN)) {
 					av_strerror(ret, errorText, sizeof(errorText));
@@ -463,6 +460,7 @@ StreamProcessor::processAudio()
 					}
 
 					if(m_swResample) {
+						Q_ASSERT(frameResampled != nullptr);
 						emit audioDataAvailable(frameResampled->data[0], frameSize * frameResampled->channels,
 							&m_audioStreamFormat, qint64(timeFrameStart + timeResampleDelay), qint64(timeFrameDuration));
 					} else {
@@ -475,15 +473,17 @@ StreamProcessor::processAudio()
 			}
 		}
 
-		av_packet_unref(&pkt);
-
 		if(drainDecoder)
 			break;
+
+		av_packet_unref(pkt);
 	}
 
 	av_frame_free(&frame);
 	if(frameResampled)
 		av_frame_free(&frameResampled);
+
+	av_packet_free(&pkt);
 
 	emit streamFinished();
 	QMetaObject::invokeMethod(this, "close", Qt::QueuedConnection);
@@ -494,16 +494,14 @@ StreamProcessor::processText()
 {
 	int ret;
 	char errorText[1024];
-	AVPacket pkt;
-	av_init_packet(&pkt);
-	pkt.data = nullptr;
-	pkt.size = 0;
+	AVPacket *pkt = av_packet_alloc();
+	Q_ASSERT(pkt != nullptr);
 
 	const quint64 streamDuration = m_avStream->duration * 1000 * m_avStream->time_base.num / m_avStream->time_base.den;
 	const quint64 containerDuration = m_avFormat->duration * 1000 / AV_TIME_BASE;
 	m_streamLen = streamDuration > containerDuration ? streamDuration : containerDuration;
 
-    AVSubtitle subtitle;
+	AVSubtitle subtitle;
 	QString text;
 	quint64 timeStart = 0;
 	quint64 timeEnd = 0;
@@ -512,10 +510,10 @@ StreamProcessor::processText()
 
 	const int streamIndex = m_textReady ? m_textStreamCurrent : m_imageStreamCurrent;
 
-	while(av_read_frame(m_avFormat, &pkt) >= 0) {
-		if(pkt.stream_index == streamIndex) {
+	while(av_read_frame(m_avFormat, pkt) >= 0) {
+		if(pkt->stream_index == streamIndex) {
 			int got_sub = 0;
-			ret = avcodec_decode_subtitle2(m_codecCtx, &subtitle, &got_sub, &pkt);
+			ret = avcodec_decode_subtitle2(m_codecCtx, &subtitle, &got_sub, pkt);
 			if(ret < 0) {
 				av_strerror(ret, errorText, sizeof(errorText));
 				qWarning() << "Failed to decode subtitle:" << errorText;
@@ -526,8 +524,8 @@ StreamProcessor::processText()
 			if(!got_sub)
 				continue;
 
-			const quint64 timeFrameStart = pkt.pts * 1000 * m_avStream->time_base.num / m_avStream->time_base.den;
-			const quint64 timeFrameEnd = timeFrameStart + pkt.duration * 1000 * m_avStream->time_base.num / m_avStream->time_base.den;
+			const quint64 timeFrameStart = pkt->pts * 1000 * m_avStream->time_base.num / m_avStream->time_base.den;
+			const quint64 timeFrameEnd = timeFrameStart + pkt->duration * 1000 * m_avStream->time_base.num / m_avStream->time_base.den;
 
 			if(timeFrameStart < timeEnd) // correct overlapping titles
 				timeEnd = timeFrameStart - 10;
@@ -581,10 +579,8 @@ StreamProcessor::processText()
 						QRegularExpressionMatch match = reStyle.match(assChunk);
 						if(!match.hasMatch())
 							break;
-						QString repl("<%1%2>");
-						assChunk.insert(match.capturedEnd(0), repl
-									.arg(match.captured(2) == QStringLiteral("0") ? QStringLiteral("/") : QString())
-									.arg(match.captured(1)));
+						assChunk.insert(match.capturedEnd(0), QString("<%1%2>")
+									.arg(match.captured(2) == QStringLiteral("0") ? QStringLiteral("/") : QString(), match.captured(1)));
 						assChunk.remove(match.capturedStart(1), match.capturedLength(2) + 1);
 					}
 
@@ -633,8 +629,10 @@ StreamProcessor::processText()
 			avsubtitle_free(&subtitle);
 		}
 
-		av_packet_unref(&pkt);
-    }
+		av_packet_unref(pkt);
+	}
+
+	av_packet_free(&pkt);
 
 	if(!text.isEmpty())
 		emit textDataAvailable(text.trimmed(), timeStart, timeEnd - timeStart);

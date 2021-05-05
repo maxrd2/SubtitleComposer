@@ -53,7 +53,7 @@ class FFPlayer : public QObject {
 public:
 	FFPlayer(QObject *parent=nullptr);
 
-	static const AVPacket *flushPkt();
+	static uint8_t *flushPkt();
 
 	void init(GLRenderer *renderer);
 	void cleanup();

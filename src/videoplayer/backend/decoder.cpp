@@ -32,12 +32,12 @@ using namespace SubtitleComposer;
 Decoder::Decoder(QObject *parent)
 	: QThread(parent),
 	  m_reorderPts(-1),
+	  m_pkt(nullptr),
 	  m_queue(nullptr),
 	  m_frameQueue(nullptr),
 	  m_avCtx(nullptr),
 	  m_pktSerial(0),
 	  m_finished(0),
-	  m_packetPending(false),
 	  m_emptyQueueCond(nullptr),
 	  m_startPts(0)
 {
@@ -52,7 +52,7 @@ Decoder::init(AVCodecContext *avctx, PacketQueue *pq, FrameQueue *fq, QWaitCondi
 	m_avCtx = avctx;
 	m_pktSerial = -1;
 	m_finished = 0;
-	m_packetPending = false;
+	av_packet_free(&m_pkt);
 	m_emptyQueueCond = emptyQueueCond;
 	m_startPts = AV_NOPTS_VALUE;
 }
@@ -70,8 +70,6 @@ Decoder::decodeFrame(AVFrame *frame, AVSubtitle *sub)
 	int ret = AVERROR(EAGAIN);
 
 	for(;;) {
-		AVPacket pkt;
-
 		if(m_queue->m_serial == m_pktSerial) {
 			do {
 				if(m_queue->m_abortRequest)
@@ -114,55 +112,53 @@ Decoder::decodeFrame(AVFrame *frame, AVSubtitle *sub)
 			} while(ret != AVERROR(EAGAIN));
 		}
 
+		AVPacket *pkt = nullptr;
 		for(;;) {
 			if(m_queue->m_nbPackets == 0)
 				m_emptyQueueCond->wakeOne();
-			if(m_packetPending) {
-				av_packet_move_ref(&pkt, &m_pkt);
-				m_packetPending = false;
-			} else {
-				if(m_queue->get(&pkt, 1, &m_pktSerial) < 0)
-					return -1;
+			if(m_pkt) {
+				pkt = m_pkt;
+				m_pkt = nullptr;
+			} else if(m_queue->get(&pkt, 1, &m_pktSerial) < 0) {
+				return -1;
 			}
 			if(m_queue->m_serial == m_pktSerial)
 				break;
-			av_packet_unref(&pkt);
+			av_packet_free(&pkt);
 		}
 
-		if(pkt.data == FFPlayer::flushPkt()->data) {
+		if(pkt->data == FFPlayer::flushPkt()) {
 			avcodec_flush_buffers(m_avCtx);
 			m_finished = 0;
 			m_nextPts = m_startPts;
 			m_nextPtsTb = m_startPtsTb;
-		} else {
-			if(m_avCtx->codec_type == AVMEDIA_TYPE_SUBTITLE) {
-				int gotFrame = 0;
-				ret = avcodec_decode_subtitle2(m_avCtx, sub, &gotFrame, &pkt);
-				if(ret < 0) {
-					ret = AVERROR(EAGAIN);
-				} else {
-					if(gotFrame && !pkt.data) {
-						m_packetPending = true;
-						av_packet_move_ref(&m_pkt, &pkt);
-					}
-					ret = gotFrame ? 0 : (pkt.data ? AVERROR(EAGAIN) : AVERROR_EOF);
+		} else if(m_avCtx->codec_type == AVMEDIA_TYPE_SUBTITLE) {
+			int gotFrame = 0;
+			ret = avcodec_decode_subtitle2(m_avCtx, sub, &gotFrame, pkt);
+			if(ret < 0) {
+				ret = AVERROR(EAGAIN);
+			} else if(gotFrame) {
+				ret = 0;
+				if(!pkt->data) {
+					m_pkt = pkt;
+					pkt = nullptr;
 				}
 			} else {
-				if(avcodec_send_packet(m_avCtx, &pkt) == AVERROR(EAGAIN)) {
-					av_log(m_avCtx, AV_LOG_ERROR, "Receive_frame and send_packet both returned EAGAIN, which is an API violation.\n");
-					m_packetPending = true;
-					av_packet_move_ref(&m_pkt, &pkt);
-				}
+				ret = pkt->data ? AVERROR(EAGAIN) : AVERROR_EOF;
 			}
-			av_packet_unref(&pkt);
+		} else if(avcodec_send_packet(m_avCtx, pkt) == AVERROR(EAGAIN)) {
+			av_log(m_avCtx, AV_LOG_ERROR, "Receive_frame and send_packet both returned EAGAIN, which is an API violation.\n");
+			m_pkt = pkt;
+			pkt = nullptr;
 		}
+		av_packet_free(&pkt);
 	}
 }
 
 void
 Decoder::destroy()
 {
-	av_packet_unref(&m_pkt);
+	av_packet_free(&m_pkt);
 	avcodec_free_context(&m_avCtx);
 }
 

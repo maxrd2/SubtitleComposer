@@ -487,10 +487,10 @@ void
 StreamDemuxer::run()
 {
 	AVFormatContext *ic = nullptr;
-	int err, i, ret;
+	int err, i;
 	int strIndex[AVMEDIA_TYPE_NB];
-	AVPacket pkt1, *pkt = &pkt1;
 	QMutex wait_mutex;
+	AVPacket *pkt = nullptr;
 
 	memset(strIndex, -1, sizeof(strIndex));
 	m_vs->eof = false;
@@ -498,7 +498,6 @@ StreamDemuxer::run()
 	ic = avformat_alloc_context();
 	if(!ic) {
 		av_log(nullptr, AV_LOG_FATAL, "Could not allocate context.\n");
-		ret = AVERROR(ENOMEM);
 		goto cleanup;
 	}
 	ic->interrupt_callback.opaque = m_vs;
@@ -509,7 +508,6 @@ StreamDemuxer::run()
 	err = avformat_open_input(&ic, m_vs->filename.toUtf8(), nullptr, nullptr/*&format_opts*/);
 	if(err < 0) {
 		print_error(m_vs->filename.toUtf8(), err);
-		ret = -1;
 		goto cleanup;
 	}
 	m_vs->fmtContext = ic;
@@ -535,7 +533,6 @@ StreamDemuxer::run()
 
 		if(err < 0) {
 			av_log(nullptr, AV_LOG_WARNING, "%s: could not find codec parameters\n", m_vs->filename.toUtf8().data());
-			ret = -1;
 			goto cleanup;
 		}
 	}
@@ -554,8 +551,7 @@ StreamDemuxer::run()
 		// add the stream start time
 		if(ic->start_time != AV_NOPTS_VALUE)
 			timestamp += ic->start_time;
-		ret = avformat_seek_file(ic, -1, INT64_MIN, timestamp, INT64_MAX, 0);
-		if(ret < 0)
+		if(avformat_seek_file(ic, -1, INT64_MIN, timestamp, INT64_MAX, 0) < 0)
 			av_log(nullptr, AV_LOG_WARNING, "%s: could not seek to position %0.3f\n", m_vs->filename.toUtf8().data(), double(timestamp) / AV_TIME_BASE);
 	}
 
@@ -573,23 +569,22 @@ StreamDemuxer::run()
 	if(strIndex[AVMEDIA_TYPE_AUDIO] >= 0)
 		componentOpen(strIndex[AVMEDIA_TYPE_AUDIO]);
 
-	ret = -1;
-	if(strIndex[AVMEDIA_TYPE_VIDEO] >= 0)
-		ret = componentOpen(strIndex[AVMEDIA_TYPE_VIDEO]);
-	m_vs->showMode = ret >= 0 ? SHOW_MODE_VIDEO :
+	{
+		const int vidMode = strIndex[AVMEDIA_TYPE_VIDEO] >= 0 ? componentOpen(strIndex[AVMEDIA_TYPE_VIDEO]) : -1;
+		m_vs->showMode = vidMode >= 0 ? SHOW_MODE_VIDEO :
 #ifdef AUDIO_VISUALIZATION
 								SHOW_MODE_RDFT
 #else
 								SHOW_MODE_NB
 #endif
 								;
+	}
 
 	if(strIndex[AVMEDIA_TYPE_SUBTITLE] >= 0)
 		componentOpen(strIndex[AVMEDIA_TYPE_SUBTITLE]);
 
 	if(m_vs->vidStreamIdx < 0 && m_vs->audStreamIdx < 0) {
 		av_log(nullptr, AV_LOG_FATAL, "Failed to open file '%s'\n", m_vs->filename.toUtf8().data());
-		ret = -1;
 		goto cleanup;
 	}
 
@@ -612,8 +607,7 @@ StreamDemuxer::run()
 			const int64_t seekTarget = m_vs->seekPos;
 			// seeks are inaccurate so seek to previous keyframe and then retrive/decode frames until is->seek_pos
 			m_vs->seekDecoder = seekTarget / double(AV_TIME_BASE);
-			ret = av_seek_frame(m_vs->fmtContext, -1, seekTarget, m_vs->seekFlags | AVSEEK_FLAG_BACKWARD);
-			if(ret < 0) {
+			if(av_seek_frame(m_vs->fmtContext, -1, seekTarget, m_vs->seekFlags | AVSEEK_FLAG_BACKWARD) < 0) {
 				m_vs->seekDecoder = 0.;
 				av_log(nullptr, AV_LOG_ERROR, "%s: error while seeking\n",
 #if LIBAVFORMAT_VERSION_MAJOR < 58
@@ -651,9 +645,11 @@ StreamDemuxer::run()
 		}
 		if(m_vs->queueAttachmentsReq) {
 			if(m_vs->vidStream && m_vs->vidStream->disposition & AV_DISPOSITION_ATTACHED_PIC) {
-				AVPacket copy;
-				if((ret = av_packet_ref(&copy, &m_vs->vidStream->attached_pic)) < 0)
+				AVPacket *copy = av_packet_alloc();
+				if(av_packet_ref(copy, &m_vs->vidStream->attached_pic) < 0) {
+					av_packet_free(&copy);
 					goto cleanup;
+				}
 				m_vs->vidPQ.put(&copy);
 				m_vs->vidPQ.putNullPacket(m_vs->vidStreamIdx);
 			}
@@ -673,8 +669,9 @@ StreamDemuxer::run()
 			pauseToggle();
 			m_vs->notifyState();
 		}
-		ret = av_read_frame(ic, pkt);
-		if(ret < 0) {
+		if(!pkt)
+			pkt = av_packet_alloc();
+		if(int ret = av_read_frame(ic, pkt) < 0) {
 			if((ret == AVERROR_EOF || avio_feof(ic->pb)) && !m_vs->eof) {
 				if(m_vs->vidStreamIdx >= 0)
 					m_vs->vidPQ.putNullPacket(m_vs->vidStreamIdx);
@@ -694,19 +691,17 @@ StreamDemuxer::run()
 			m_vs->eof = false;
 		}
 		if(pkt->stream_index == m_vs->audStreamIdx) {
-			m_vs->audPQ.put(pkt);
-		} else if(pkt->stream_index == m_vs->vidStreamIdx
-				&& !(m_vs->vidStream->disposition & AV_DISPOSITION_ATTACHED_PIC)) {
-			m_vs->vidPQ.put(pkt);
+			m_vs->audPQ.put(&pkt);
+		} else if(pkt->stream_index == m_vs->vidStreamIdx && m_vs->vidStream && !(m_vs->vidStream->disposition & AV_DISPOSITION_ATTACHED_PIC)) {
+			m_vs->vidPQ.put(&pkt);
 		} else if(pkt->stream_index == m_vs->subStreamIdx) {
-			m_vs->subPQ.put(pkt);
+			m_vs->subPQ.put(&pkt);
 		} else {
 			av_packet_unref(pkt);
 		}
 	}
 	m_vs->notifyState();
 
-	ret = 0;
 cleanup:
 	if(ic && !m_vs->fmtContext)
 		avformat_close_input(&ic);

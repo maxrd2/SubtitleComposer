@@ -58,16 +58,11 @@ FFPlayer::FFPlayer(QObject *parent)
 	connect(&m_positionTimer, &QTimer::timeout, this, [this](){ emit positionChanged(position()); });
 }
 
-const AVPacket *
+uint8_t *
 FFPlayer::flushPkt()
 {
-	static bool initialized = false;
-	static AVPacket pkt;
-	if(!initialized) {
-		av_init_packet(&pkt);
-		pkt.data = reinterpret_cast<uint8_t *>(&pkt);
-	}
-	return &pkt;
+	static uint8_t pktData;
+	return &pktData;
 }
 
 void

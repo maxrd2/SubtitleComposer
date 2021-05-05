@@ -41,19 +41,21 @@ PacketQueue::PacketQueue()
 }
 
 int
-PacketQueue::put_private(const AVPacket *pkt)
+PacketQueue::put_private(AVPacket **pkt)
 {
-	PacketList *pkt1;
-
-	if(m_abortRequest)
+	if(m_abortRequest) {
+		if((*pkt)->data == FFPlayer::flushPkt())
+			(*pkt)->data = nullptr;
+		av_packet_free(pkt);
 		return -1;
+	}
 
-	pkt1 = (PacketList *)av_malloc(sizeof(PacketList));
-	if(!pkt1)
-		return -1;
+	PacketList *pkt1 = new PacketList();
 	pkt1->pkt = *pkt;
+	*pkt = nullptr;
+
 	pkt1->next = nullptr;
-	if(pkt == FFPlayer::flushPkt())
+	if(pkt1->pkt->data == FFPlayer::flushPkt())
 		m_serial++;
 	pkt1->serial = m_serial;
 
@@ -63,9 +65,9 @@ PacketQueue::put_private(const AVPacket *pkt)
 		m_lastPkt->next = pkt1;
 	m_lastPkt = pkt1;
 	m_nbPackets++;
-	m_size += pkt1->pkt.size + sizeof(*pkt1);
-	m_duration += pkt1->pkt.duration;
-	/* XXX: should duplicate packet data in DV case */
+	m_size += pkt1->pkt->size + sizeof(*pkt1);
+	m_duration += pkt1->pkt->duration;
+	// XXX: should duplicate packet data in DV case
 	m_cond->wakeOne();
 	return 0;
 }
@@ -74,30 +76,25 @@ int
 PacketQueue::putFlushPacket()
 {
 	QMutexLocker l(m_mutex);
-	return put_private(FFPlayer::flushPkt());
+	AVPacket *pkt = av_packet_alloc();
+	Q_ASSERT(pkt != nullptr);
+	pkt->data = FFPlayer::flushPkt();
+	return put_private(&pkt);
 }
 
 int
-PacketQueue::put(AVPacket *pkt)
+PacketQueue::put(AVPacket **pkt)
 {
 	QMutexLocker l(m_mutex);
-
-	int ret = put_private(pkt);
-
-	if(pkt != FFPlayer::flushPkt() && ret < 0)
-		av_packet_unref(pkt);
-
-	return ret;
+	return put_private(pkt);
 }
 
 int
-PacketQueue::putNullPacket(int stream_index)
+PacketQueue::putNullPacket(int streamIndex)
 {
-	AVPacket pkt;
-	av_init_packet(&pkt);
-	pkt.data = nullptr;
-	pkt.size = 0;
-	pkt.stream_index = stream_index;
+	AVPacket *pkt = av_packet_alloc();
+	Q_ASSERT(pkt != nullptr);
+	pkt->stream_index = streamIndex;
 	return put(&pkt);
 }
 
@@ -120,8 +117,8 @@ PacketQueue::flush()
 	PacketList *pkt, *pkt1;
 	for(pkt = m_firstPkt; pkt; pkt = pkt1) {
 		pkt1 = pkt->next;
-		av_packet_unref(&pkt->pkt);
-		av_freep(&pkt);
+		av_packet_free(&pkt->pkt);
+		delete pkt;
 	}
 	m_lastPkt = nullptr;
 	m_firstPkt = nullptr;
@@ -151,11 +148,14 @@ PacketQueue::start()
 {
 	QMutexLocker l(m_mutex);
 	m_abortRequest = false;
-	put_private(FFPlayer::flushPkt());
+	AVPacket *pkt = av_packet_alloc();
+	Q_ASSERT(pkt != nullptr);
+	pkt->data = FFPlayer::flushPkt();
+	put_private(&pkt);
 }
 
 int
-PacketQueue::get(AVPacket *pkt, int block, int *serial)
+PacketQueue::get(AVPacket **pkt, int block, int *serial)
 {
 	QMutexLocker l(m_mutex);
 
@@ -169,12 +169,12 @@ PacketQueue::get(AVPacket *pkt, int block, int *serial)
 			if(!m_firstPkt)
 				m_lastPkt = nullptr;
 			m_nbPackets--;
-			m_size -= pkt1->pkt.size + sizeof(*pkt1);
-			m_duration -= pkt1->pkt.duration;
+			m_size -= pkt1->pkt->size + sizeof(*pkt1);
+			m_duration -= pkt1->pkt->duration;
 			*pkt = pkt1->pkt;
 			if(serial)
 				*serial = pkt1->serial;
-			av_free(pkt1);
+			delete pkt1;
 			return 1;
 		}
 

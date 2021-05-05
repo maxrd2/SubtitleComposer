@@ -36,16 +36,27 @@ class PacketQueue
 public:
 	PacketQueue();
 
-	int put(AVPacket *pkt);
+	/**
+	 * @brief enqueue a packet
+	 * @param pkt packet allocated with av_packet_alloc(), pkt will be set to nullptr
+	 * @return 0 if successful; <0 otherwise
+	 */
+	int put(AVPacket **pkt);
 	int putFlushPacket();
-	int putNullPacket(int stream_index);
+	int putNullPacket(int streamIndex);
 	int init();
 	void flush();
 	void destroy();
 	void abort();
 	void start();
-	// return < 0 if aborted, 0 if no packet and > 0 if packet.
-	int get(AVPacket *pkt, int block, int *serial);
+	/**
+	 * @brief dequeue a packet
+	 * @param pkt will be set to packet which must be freed with av_packet_free()
+	 * @param block
+	 * @param serial
+	 * @return <0 if aborted, 0 if no packet and >0 if packet
+	 */
+	int get(AVPacket **pkt, int block, int *serial);
 
 	inline int nbPackets() const { return m_nbPackets; }
 	inline int size() const { return m_size; }
@@ -54,12 +65,12 @@ public:
 	inline int serial() const { return m_serial; }
 
 private:
-	int put_private(const AVPacket *pkt);
+	int put_private(AVPacket **pkt);
 
 private:
 	struct PacketList {
-		AVPacket pkt;
-		struct PacketList *next;
+		AVPacket *pkt;
+		PacketList *next;
 		int serial;
 	};
 

@@ -56,13 +56,12 @@ public:
 
 protected:
 	int m_reorderPts;
-	AVPacket m_pkt;
+	AVPacket *m_pkt;
 	PacketQueue *m_queue;
 	FrameQueue *m_frameQueue;
 	AVCodecContext *m_avCtx;
 	int m_pktSerial;
 	int m_finished;
-	bool m_packetPending;
 	QWaitCondition *m_emptyQueueCond;
 	int64_t m_startPts;
 	AVRational m_startPtsTb;
