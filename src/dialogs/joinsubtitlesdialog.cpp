@@ -18,14 +18,12 @@
  * Boston, MA 02110-1301, USA.
  */
 
+#include "config.h"
+
 #include "joinsubtitlesdialog.h"
 #include "helpers/commondefs.h"
 #include "videoplayer/videoplayer.h"
 #include "widgets/timeedit.h"
-
-#ifdef HAVE_CONFIG_H
-# include "config.h"
-#endif
 
 #include <QIcon>
 #include <QGridLayout>

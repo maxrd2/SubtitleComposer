@@ -18,6 +18,9 @@
  * Boston, MA 02110-1301, USA.
  */
 
+#include "config.h"
+#include "config-subtitlecomposer.h"
+
 #include "application.h"
 #include "mainwindow.h"
 #include "helpers/commondefs.h"
@@ -38,11 +41,6 @@ extern "C" {
 #include <libavcodec/avcodec.h>
 #include <libavformat/avformat.h>
 }
-
-#include "config-subtitlecomposer.h"
-#ifdef HAVE_CONFIG_H
-#include "config.h"
-#endif
 
 using namespace SubtitleComposer;
 

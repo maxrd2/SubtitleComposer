@@ -18,6 +18,8 @@
  * Boston, MA 02110-1301, USA.
  */
 
+#include "config.h"
+
 #include "application.h"
 #include "actions/krecentfilesactionext.h"
 #include "actions/useraction.h"
@@ -63,10 +65,6 @@
 #include "utils/translator.h"
 #include "videoplayer/videoplayer.h"
 #include "gui/waveformwidget.h"
-
-#ifdef HAVE_CONFIG_H
-# include <config.h>
-#endif
 
 #include <QAction>
 #include <QDir>

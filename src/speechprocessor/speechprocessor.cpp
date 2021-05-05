@@ -17,9 +17,7 @@
  * Boston, MA 02110-1301, USA.
  */
 
-#if HAVE_CONFIG_H
-# include "config.h"
-#endif
+#include "config.h"
 
 #include "core/richdocument.h"
 #include "helpers/pluginhelper.h"

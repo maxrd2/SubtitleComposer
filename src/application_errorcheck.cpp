@@ -17,15 +17,13 @@
  * Boston, MA 02110-1301, USA.
  */
 
+#include "config.h"
+
 #include "application.h"
 #include "core/subtitleiterator.h"
 #include "errors/finderrorsdialog.h"
 #include "errors/errorfinder.h"
 #include "gui/treeview/lineswidget.h"
-
-#ifdef HAVE_CONFIG_H
-# include <config.h>
-#endif
 
 using namespace SubtitleComposer;
 

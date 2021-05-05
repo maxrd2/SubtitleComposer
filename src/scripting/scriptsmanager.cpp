@@ -1,4 +1,3 @@
-
 /*
  * Copyright (C) 2007-2009 Sergio Pistone <sergio_pistone@yahoo.com.ar>
  * Copyright (C) 2010-2019 Mladen Milinkovic <max@smoothware.net>
@@ -19,9 +18,7 @@
  * Boston, MA 02110-1301, USA.
  */
 
-#ifdef HAVE_CONFIG_H
-# include <config.h>
-#endif
+#include "config.h"
 
 #include "scriptsmanager.h"
 #include "scripting_rangesmodule.h"

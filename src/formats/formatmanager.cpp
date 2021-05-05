@@ -18,6 +18,8 @@
  * Boston, MA 02110-1301, USA.
  */
 
+#include "config.h"
+
 #include "formatmanager.h"
 #include "inputformat.h"
 #include "outputformat.h"
@@ -56,11 +58,8 @@
 #include <KCharsets>
 #include <QUrl>
 
-#ifdef HAVE_CONFIG_H
-# include <config.h>
-# ifdef HAVE_ICU
-#  include <unicode/ucsdet.h>
-# endif
+#ifdef HAVE_ICU
+#	include <unicode/ucsdet.h>
 #endif
 
 using namespace SubtitleComposer;

@@ -18,6 +18,8 @@
  * Boston, MA 02110-1301, USA.
  */
 
+#include "config.h"
+
 #include "configs/configdialog.h"
 
 #include "configs/generalconfigwidget.h"
@@ -31,10 +33,6 @@
 #include "speechprocessor/speechplugin.h"
 
 #include "application.h"
-
-#ifdef HAVE_CONFIG_H
-# include "config.h"
-#endif
 
 #include <KConfigDialog>
 #include <KLocalizedString>

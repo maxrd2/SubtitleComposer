@@ -19,7 +19,6 @@ ecm_setup_version(${PROJECT_VERSION}
 	VERSION_HEADER "${CMAKE_CURRENT_BINARY_DIR}/config-subtitlecomposer.h"
 )
 
-add_definitions(-DHAVE_CONFIG_H)
 add_definitions(-D_DEFAULT_SOURCE)
 if(APPIMAGE)
 	message(STATUS "AppImage build enabled")
@@ -141,4 +140,3 @@ add_subdirectory(speechplugins/pocketsphinx)
 
 # do the configuration of config.h at the end, so all the necessary variables have been set
 configure_file(config.h.cmake ${CMAKE_CURRENT_BINARY_DIR}/config.h)
-
