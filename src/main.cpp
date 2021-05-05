@@ -160,7 +160,11 @@ setupIconTheme()
 	if(QIcon::themeName().isEmpty())
 		QIcon::setThemeName(QStringLiteral("breeze"));
 
+#if QT_VERSION >= QT_VERSION_CHECK(5, 11, 0)
 	QIcon::setFallbackSearchPaths(QIcon::fallbackSearchPaths()
+#else
+	QIcon::setThemeSearchPaths(QIcon::themeSearchPaths()
+#endif
 			// access the icons through breeze theme path
 			<< QStringLiteral(":/icons-fallback")
 			// or directly as fallback
@@ -170,8 +174,11 @@ setupIconTheme()
 			<< QStringLiteral(":/icons-fallback/breeze/apps/48")
 			<< QStringLiteral(":/icons-fallback/breeze/apps/32")
 			<< QStringLiteral(":/icons-fallback/breeze/apps/16"));
+
+#if QT_VERSION >= QT_VERSION_CHECK(5, 12, 0)
 	if(QIcon::fallbackThemeName().isEmpty())
 		QIcon::setFallbackThemeName(QStringLiteral("breeze"));
+#endif
 }
 
 int
