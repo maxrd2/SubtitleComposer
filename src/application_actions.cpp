@@ -16,6 +16,7 @@
 
 #include <KCharsets>
 #include <KLocalizedString>
+#include <kwidgetsaddons_version.h>
 
 
 using namespace SubtitleComposer;
@@ -719,7 +720,11 @@ Application::setupActions()
 	setActiveAudioStreamAction->setIcon(QIcon::fromTheme(QStringLiteral("languages")));
 	setActiveAudioStreamAction->setText(i18n("Audio Streams"));
 	setActiveAudioStreamAction->setStatusTip(i18n("Select active audio stream"));
+#if KWIDGETSADDONS_VERSION < QT_VERSION_CHECK(5, 78, 0)
 	connect(setActiveAudioStreamAction, QOverload<int>::of(&KSelectAction::triggered), m_player, &VideoPlayer::selectAudioStream);
+#else
+	connect(setActiveAudioStreamAction, &KSelectAction::indexTriggered, m_player, &VideoPlayer::selectAudioStream);
+#endif
 	actionCollection->addAction(ACT_SET_ACTIVE_AUDIO_STREAM, setActiveAudioStreamAction);
 	actionManager->addAction(setActiveAudioStreamAction, UserAction::VideoOpened);
 
@@ -743,7 +748,11 @@ Application::setupActions()
 	setActiveSubtitleStreamAction->setIcon(QIcon::fromTheme(QStringLiteral("languages")));
 	setActiveSubtitleStreamAction->setText(i18n("Displayed Subtitle Text"));
 	setActiveSubtitleStreamAction->setStatusTip(i18n("Select visible subtitle text"));
+#if KWIDGETSADDONS_VERSION < QT_VERSION_CHECK(5, 78, 0)
 	connect(setActiveSubtitleStreamAction, QOverload<int>::of(&KSelectAction::triggered), this, &Application::setActiveSubtitleStream);
+#else
+	connect(setActiveSubtitleStreamAction, &KSelectAction::indexTriggered, this, &Application::setActiveSubtitleStream);
+#endif
 	actionCollection->addAction(ACT_SET_ACTIVE_SUBTITLE_STREAM, setActiveSubtitleStreamAction);
 	actionManager->addAction(setActiveSubtitleStreamAction, UserAction::SubTrOpened);
 

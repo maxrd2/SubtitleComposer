@@ -32,6 +32,8 @@
 #include <KReplaceDialog>
 #include <KLocalizedString>
 
+#include <ktextwidgets_version.h>
+
 using namespace SubtitleComposer;
 
 Replacer::Replacer(QWidget *parent)
@@ -145,8 +147,11 @@ Replacer::replace(const RangeList &selectionRanges, int currentIndex, const QStr
 	connect(m_replace, &KReplace::findNext, this, &Replacer::onFindNext);
 
 	// Connect signals to code which handles highlighting of found text, and on-the-fly replacement
+#if KTEXTWIDGETS_VERSION < QT_VERSION_CHECK(5, 81, 0)
 	connect(m_replace, QOverload<const QString &,int,int>::of(&KReplace::highlight), this, &Replacer::onHighlight);
-
+#else
+	connect(m_replace, &KReplace::textFound, this, &Replacer::onHighlight);
+#endif
 	// Connect replace signal - called when doing a replacement
 	connect(m_replace, QOverload<const QString &,int,int,int>::of(&KReplace::replace), this, &Replacer::onReplace);
 

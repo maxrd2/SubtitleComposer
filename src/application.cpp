@@ -238,7 +238,7 @@ Application::init()
 	// Workaround for https://phabricator.kde.org/D13808
 	// menubar can't be hidden so always show it
 	m_mainWindow->findChild<QMenuBar *>(QString(), Qt::FindDirectChildrenOnly)->show();
-#if QT_VERSION >= QT_VERSION_CHECK(5, 11, 1) && KXMLGUI_VERSION < ((5<<16)|(49<<8)|(0))
+#if QT_VERSION >= QT_VERSION_CHECK(5, 11, 1) && KXMLGUI_VERSION < QT_VERSION_CHECK(5, 49, 0)
 	// show rest if we're on broken KF5/Qt
 	m_mainWindow->findChild<QStatusBar *>(QString(), Qt::FindDirectChildrenOnly)->show();
 	m_mainWindow->findChild<QDockWidget *>(QStringLiteral("player_dock"), Qt::FindDirectChildrenOnly)->show();

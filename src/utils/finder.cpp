@@ -32,6 +32,9 @@
 #include <KFindDialog>
 #include <KLocalizedString>
 
+#include <ktextwidgets_version.h>
+
+
 using namespace SubtitleComposer;
 
 Finder::Finder(QWidget *parent) :
@@ -157,7 +160,11 @@ Finder::find(const RangeList &selectionRanges, int currentIndex, const QString &
 	m_find = new KFind(m_dialog->pattern(), m_dialog->options(), 0);
 	m_find->closeFindNextDialog();
 
+#if KTEXTWIDGETS_VERSION < QT_VERSION_CHECK(5, 81, 0)
 	connect(m_find, QOverload<const QString &, int, int>::of(&KFind::highlight), this, &Finder::onHighlight);
+#else
+	connect(m_find, &KFind::textFound, this, &Finder::onHighlight);
+#endif
 
 	m_iterator = new SubtitleIterator(*m_subtitle, m_dialog->options() & KFind::SelectedText ? selectionRanges : Range::full());
 	if(m_iterator->index() == SubtitleIterator::Invalid) {
@@ -313,7 +320,11 @@ Finder::onIteratorSynchronized(int firstIndex, int lastIndex, bool inserted)
 			delete m_find;
 			m_find = new KFind(pattern, options, 0);
 			m_find->closeFindNextDialog();
+#if KTEXTWIDGETS_VERSION < QT_VERSION_CHECK(5, 81, 0)
 			connect(m_find, QOverload<const QString &, int, int>::of(&KFind::highlight), this, &Finder::onHighlight);
+#else
+			connect(m_find, &KFind::textFound, this, &Finder::onHighlight);
+#endif
 		}
 
 		if(m_allSearchedIndex > lastIndex)
