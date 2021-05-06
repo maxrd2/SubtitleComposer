@@ -10,120 +10,10 @@ env:
   global:
     - RELEASE_BRANCH="master"
 
-#      - mingw-w64
-
 matrix:
   include:
-    - os: linux
-      dist: trusty
-      sudo: required
-      compiler: gcc
-      before_install:
-        - sudo apt-get update -qq
-      install:
-        #- sudo apt-get dist-upgrade -y
-        - sudo apt-get autoremove -yqq libqt5core5a libavformat54 cmake
-        - |-
-          sudo apt-get install -yqq build-essential bison autoconf curl wget cmake make git libffi-dev libwayland-dev libass-dev libfreetype6-dev libsdl2-dev libtool \
-            libva-dev libvdpau-dev libvorbis-dev libxcb1-dev libxcb-shm0-dev libxcb-xfixes0-dev zlib1g-dev nasm pkgconf libglu1-mesa-dev libva-glx1 libglu1-mesa \
-            libgbm-dev libfontconfig1-dev libfreetype6-dev libx11-dev libxext-dev libxfixes-dev libxi-dev libxrender-dev libxcb1-dev libx11-xcb-dev libxcb-glx0-dev \
-            fontconfig libasound2-dev libatk1.0-dev libatspi2.0-dev libavahi-client-dev libavahi-common-dev libcairo2-dev libdbus-1-dev libdbus-glib-1-dev libdrm-dev \
-            libgbm-dev libgcrypt11-dev libgl1-mesa-dev libgl1-mesa-glx libgles2-mesa-dev libglu1-mesa-dev libgnutls-dev libgpg-error-dev libwayland-dev \
-            libharfbuzz-dev libice-dev libjpeg-dev libjpeg-turbo8-dev libjpeg8-dev libkrb5-dev libltdl-dev libopenvg1-mesa-dev libp11-kit-dev \
-            libpango1.0-dev libpixman-1-dev libpq-dev libprotobuf-dev libpulse-dev libsm-dev libxcb-xinerama0-dev libssl-dev libtasn1-6-dev libudev-dev \
-            libxcb-dri2-0-dev libxcb-icccm4-dev libxcb-image0-dev libxcb-keysyms1-dev libxcb-present-dev libxcb-randr0-dev libxcb-render-util0-dev libxcb-render0-dev \
-            libxcb-shape0-dev libxcb-shm0-dev libxcb-sync-dev libxcb-xfixes0-dev libxcb-xkb-dev libxcomposite-dev libxcursor-dev libxdamage-dev libxft-dev \
-            libxinerama-dev libxkbcommon-dev libxkbcommon-x11-dev libxrandr-dev libxshmfence-dev libxtst-dev libxxf86vm-dev mesa-common-dev x11proto-composite-dev \
-            x11proto-damage-dev x11proto-dri2-dev x11proto-gl-dev x11proto-randr-dev x11proto-record-dev x11proto-xf86vidmode-dev x11proto-xinerama-dev libegl1-mesa-drivers \
-            libglapi-mesa libicu-dev gperf flex libattr1-dev libcanberra-dev libxslt1-dev libboost1.55-all-dev libfftw3-dev libicu-dev libopenal-dev zsync
-        - |- # hack: remove installed wayland package files, but keep package marked as installed :-/
-          (sudo rm $(dpkg -L libwayland-client0 libwayland-cursor0 libwayland-server0 libwayland-dev) &>/dev/null || exit 0)
-        # install prebuilt binaries from https://www.dropbox.com/sh/elawli9m1p4cugt/AABwOOOi0aj0yR9909t1ZX8ta?dl=0&lst=
-        - curl -L 'https://www.dropbox.com/sh/elawli9m1p4cugt/AADHSpMJQiwnAyWy1NTJ2ltqa/wayland-1.16.0-trusty-amd64.tar.xz?dl=1' | sudo tar -xJ -C /
-        - curl -L 'https://www.dropbox.com/sh/elawli9m1p4cugt/AAAXBYD9IpzyfHtaWwLZ-n8Xa/ffmpeg-20181127-trusty-amd64.tar.xz?dl=1' | sudo tar -xJ -C /
-        - curl -L 'https://www.dropbox.com/sh/elawli9m1p4cugt/AADYKhzI7OGdpKgR3Cmiuicoa/cmake-3.11.0-trusty-amd64.tar.xz?dl=1' | sudo tar -xJ -C /
-        - curl -L 'https://www.dropbox.com/sh/elawli9m1p4cugt/AAAuwxMJcyvNr5kieUKoL5mRa/qt5-bundle-5.11.2-trusty-amd64.tar.xz?dl=1' | sudo tar -xJ -C /
-        - curl -L 'https://www.dropbox.com/sh/elawli9m1p4cugt/AADY4uj1mPkxbpy9atOB4oHNa/kf5-bundle-5.52.0-trusty-amd64.tar.xz?dl=1' | sudo tar -xJ -C /
-        - curl -L 'https://www.dropbox.com/sh/elawli9m1p4cugt/AACv9k1Pp41zCzLGxT0QRAMma/kross-5.52.0-trusty-amd64.tar.xz?dl=1' | sudo tar -xJ -C /
-        - curl -L 'https://www.dropbox.com/sh/elawli9m1p4cugt/AAB_Iz5gRqzGegg0-cRrmSVea/kross-interpreters-18.08.3-trusty-amd64.tar.xz?dl=1' | sudo tar -xJ -C /
-        - curl -L 'https://www.dropbox.com/sh/elawli9m1p4cugt/AAAWEZziRPxz5bnEnI4ht-8ja/plasma-bundle-5.14.4-trusty-amd64.tar.xz?dl=1' | sudo tar -xJ -C /
-        - curl -L 'https://www.dropbox.com/sh/elawli9m1p4cugt/AACYFiU2BBkakKZ2UmN6YpBda/sphinxbase-20181128-trusty-amd64.tar.xz?dl=1' | sudo tar -xJ -C /
-        - curl -L 'https://www.dropbox.com/sh/elawli9m1p4cugt/AACTJYkV98Ygyo2aiYgIMYena/pocketsphinx-20181127-trusty-amd64.tar.xz?dl=1' | sudo tar -xJ -C /
-        - sudo ldconfig
-      script:
-        - |-
-          mkdir build && cd build
-          cmake \
-            -DCMAKE_BUILD_TYPE=Release \
-            -DCMAKE_INSTALL_PREFIX=/usr \
-            -DKDE_INSTALL_LIBDIR=lib \
-            -DKDE_INSTALL_USE_QT_SYS_PATHS=ON \
-            -DBUILD_TESTING=OFF \
-            .. || (cat /home/travis/build/maxrd2/subtitlecomposer/build/CMakeFiles/CMakeOutput.log ; exit 1) || exit 1
-          make -j$(nproc) || exit 1
-      after_success:
-        - |- # do not create appimage/release of funky stuff
-          [[ "$TRAVIS_EVENT_TYPE" != "push" ]] && exit
-        - |- # appdir
-          appdir="$HOME/appdir"
-          (cd $TRAVIS_BUILD_DIR/build && make DESTDIR="$appdir" install) || exit 1
-        - |- # pocketsphinx
-          mkdir -p "$appdir/usr/share/pocketsphinx"
-          cp -rf /usr/share/pocketsphinx/model "$appdir/usr/share/pocketsphinx/"
-        - |- # add kio
-          curl -L 'https://www.dropbox.com/sh/elawli9m1p4cugt/AACXz0IwwFr13nJgBWM5X4FBa/kf5-kio-5.52.0-trusty-amd64.tar.xz?dl=1' | tar -xJ -C "$appdir/"
-        - |- # add kross
-          curl -L 'https://www.dropbox.com/sh/elawli9m1p4cugt/AACv9k1Pp41zCzLGxT0QRAMma/kross-5.52.0-trusty-amd64.tar.xz?dl=1' | tar -xJ -C "$appdir/"
-          curl -L 'https://www.dropbox.com/sh/elawli9m1p4cugt/AAB_Iz5gRqzGegg0-cRrmSVea/kross-interpreters-18.08.3-trusty-amd64.tar.xz?dl=1' | tar -xJ -C "$appdir/"
-          [ -f "$appdir/usr/plugins/krossruby.so" ] && rm "$appdir/usr/plugins/krossruby.so"
-          rm "$appdir/usr/share/subtitlecomposer/scripts"/*.rb
-        - |- # icons
-          curl -L 'https://www.dropbox.com/sh/elawli9m1p4cugt/AACKPxQFRUm69ANzJxTN4pFHa/kf5-breeze-icons-5.52.0-trusty-amd64.tar.xz?dl=1' | tar -xJ -C "$appdir/"
-        - |- # style
-          curl -L 'https://www.dropbox.com/sh/elawli9m1p4cugt/AADCZeV9cdcX49Y5wGc2dp8la/plasma-breeze-5.14.4-trusty-amd64.tar.xz?dl=1' | tar -xJ -C "$appdir/"
-        - |- # relocate x64 binaries from arch specific directory as required for appimages
-          [ -d "$appdir/usr/lib/x86_64-linux-gnu" ] && mv "$appdir/usr/lib/x86_64-linux-gnu"/* "$appdir/usr/lib" && rm -rf "$appdir/usr/lib/x86_64-linux-gnu"
-          [ -d "$appdir/usr/lib/libexec" ] && mv "$appdir/usr/lib/libexec" "$appdir/usr/libexec" && mv "$appdir/usr/libexec/kf5"/* "$appdir/usr/libexec" && rmdir "$appdir/usr/libexec/kf5"
-        - |- # delete useless stuff
-          rm -rf "$appdir/usr/share/wallpapers"
-          rm -rf "$appdir/usr/share/icons/"{breeze-dark,Breeze_Snow,breeze_cursors,breeze/breeze-icons.rcc}
-          rm -rf "$appdir/usr/qml"
-          rm -rf "$appdir/usr/lib/cmake"
-          rm -rf "$appdir/usr/include"
-          rm -rf "$appdir/usr/mkspecs"
-          rm -f "$appdir/usr/bin"/[a-q]*
-          rm -f "$appdir/usr/share/metainfo/org.kde.breezedark.desktop.appdata.xml"
-        - |- # appimage
-          curl -L "https://github.com/probonopd/linuxdeployqt/releases/download/continuous/linuxdeployqt-continuous-x86_64.AppImage" >linuxdeployqt && chmod +x linuxdeployqt
-          #curl -L "https://github.com/AppImage/AppImageKit/releases/download/continuous/appimagetool-x86_64.AppImage" >appimagetool && chmod +x appimagetool
-          curl -L "https://github.com/AppImage/AppImageKit/releases/download/11/appimagetool-x86_64.AppImage" >appimagetool && chmod +x appimagetool
-          execs=("$appdir/usr/lib/subtitlecomposer/"*.so)
-          ./linuxdeployqt "$appdir/usr/share/applications/org.kde.subtitlecomposer.desktop" -bundle-non-qt-libs "${execs[@]/#/-executable=}" -verbose=2 || exit 1
-          rm -v "$appdir/AppRun" ; cp -v "$TRAVIS_BUILD_DIR/pkg/misc/subtitlecomposer.sh" "$appdir/AppRun" ; chmod +x "$appdir/AppRun"
-          rm -v "$appdir/usr/lib/libxcb-dri2.so"* "$appdir/usr/lib/libxcb-dri3.so"*
-          ./appimagetool "$appdir/" -g
-        - |- # publish
-          echo 'Publishing release to GitHub...'
-          bash "$TRAVIS_BUILD_DIR/pkg/misc/github-release.sh" linux "$PWD/Subtitle_Composer-x86_64.AppImage"*
-
-    - os: linux
-      dist: trusty
-      sudo: required
-      compiler: gcc
-      before_install:
-        - docker pull maxrd2/arch-mingw
-      script:
-        - |-
-          mkdir build && chmod 0777 build
-          docker run -v "$PWD":/home/devel -it maxrd2/arch-mingw /bin/bash pkg/mingw/build.sh || exit 1
-      after_success:
-        - |- # do not create release of funky stuff
-          [[ "$TRAVIS_EVENT_TYPE" != "push" ]] && exit
-        - |- # publish
-          echo 'Publishing release to GitHub...'
-          bash "$TRAVIS_BUILD_DIR/pkg/misc/github-release.sh" win32 "$PWD/build/SubtitleComposerSetup.exe"
-
-    - os: linux
+    - name: "Ubuntu 18.04 Bionic - CLang"
+      os: linux
       dist: bionic
       sudo: required
       compiler: clang
@@ -131,8 +21,91 @@ matrix:
         sudo apt-get update -qq
       install:
         - |- # dependencies
-         sudo apt-get install -yqq curl cmake make extra-cmake-modules kross-dev libavformat-dev libswscale-dev libopenal-dev breeze clang \
-                                  qtbase5-dev qtbase5-private-dev clang libkf5auth-dev libkf5codecs-dev libkf5config-dev libkf5configwidgets-dev \
+         sudo apt-get install -yqq curl cmake make extra-cmake-modules kross-dev libavformat-dev libswscale-dev libopenal-dev breeze \
+                                  qtbase5-dev qtbase5-private-dev libkf5auth-dev libkf5codecs-dev libkf5config-dev libkf5configwidgets-dev \
+                                  libkf5coreaddons-dev libkf5i18n-dev libkf5kio-dev kross-dev libkf5sonnet-dev libkf5textwidgets-dev \
+                                  libkf5widgetsaddons-dev libkf5xmlgui-dev libicu-dev libsphinxbase-dev libpocketsphinx-dev
+      script:
+        - |-
+          mkdir build && cd build
+          cmake \
+            -DCMAKE_BUILD_TYPE=Debug \
+            -DCMAKE_INSTALL_PREFIX=/usr \
+            -DKDE_INSTALL_LIBDIR=lib \
+            -DKDE_INSTALL_USE_QT_SYS_PATHS=ON \
+            .. || exit 1
+          make -j$(nproc) || exit 1
+          make test || (cat Testing/Temporary/LastTest.log ; exit 1) || exit 1
+
+    - name: "Ubuntu 18.04 Bionic - GCC"
+      os: linux
+      dist: bionic
+      sudo: required
+      compiler: gcc
+      before_install: |-
+        sudo apt-get update -qq
+      install:
+        - |- # dependencies
+         sudo apt-get install -yqq curl cmake make extra-cmake-modules kross-dev libavformat-dev libswscale-dev libopenal-dev breeze \
+                                  qtbase5-dev qtbase5-private-dev libkf5auth-dev libkf5codecs-dev libkf5config-dev libkf5configwidgets-dev \
+                                  libkf5coreaddons-dev libkf5i18n-dev libkf5kio-dev kross-dev libkf5sonnet-dev libkf5textwidgets-dev \
+                                  libkf5widgetsaddons-dev libkf5xmlgui-dev libicu-dev libsphinxbase-dev libpocketsphinx-dev
+      script:
+        - |-
+          mkdir build && cd build
+          cmake \
+            -DCMAKE_BUILD_TYPE=Debug \
+            -DCMAKE_INSTALL_PREFIX=/usr \
+            -DKDE_INSTALL_LIBDIR=lib \
+            -DKDE_INSTALL_USE_QT_SYS_PATHS=ON \
+            .. || exit 1
+          make -j$(nproc) || exit 1
+          make test || (cat Testing/Temporary/LastTest.log ; exit 1) || exit 1
+
+    - name: "Ubuntu 20.04 Focal - CLang"
+      os: linux
+      dist: focal
+      sudo: required
+      compiler: clang
+      sources:
+        - sourceline: universe
+        - sourceline: restricted
+        - sourceline: multiverse
+      before_install: |-
+        sudo apt-get update -qq
+      install:
+        - |- # dependencies
+         sudo apt-get install -yq curl cmake make extra-cmake-modules kross-dev libavformat-dev libswscale-dev libopenal-dev breeze \
+                                  qtbase5-dev qtbase5-private-dev libkf5auth-dev libkf5codecs-dev libkf5config-dev libkf5configwidgets-dev \
+                                  libkf5coreaddons-dev libkf5i18n-dev libkf5kio-dev kross-dev libkf5sonnet-dev libkf5textwidgets-dev \
+                                  libkf5widgetsaddons-dev libkf5xmlgui-dev libicu-dev libsphinxbase-dev libpocketsphinx-dev
+      script:
+        - |-
+          mkdir build && cd build
+          cmake \
+            -DCMAKE_BUILD_TYPE=Debug \
+            -DCMAKE_INSTALL_PREFIX=/usr \
+            -DKDE_INSTALL_LIBDIR=lib \
+            -DKDE_INSTALL_USE_QT_SYS_PATHS=ON \
+            .. || exit 1
+          make -j$(nproc) || exit 1
+          make test || (cat Testing/Temporary/LastTest.log ; exit 1) || exit 1
+
+    - name: "Ubuntu 20.04 Focal - GCC"
+      os: linux
+      dist: focal
+      sudo: required
+      compiler: gcc
+      sources:
+        - sourceline: universe
+        - sourceline: restricted
+        - sourceline: multiverse
+      before_install: |-
+        sudo apt-get update -qq
+      install:
+        - |- # dependencies
+         sudo apt-get install -yq curl cmake make extra-cmake-modules kross-dev libavformat-dev libswscale-dev libopenal-dev breeze \
+                                  qtbase5-dev qtbase5-private-dev libkf5auth-dev libkf5codecs-dev libkf5config-dev libkf5configwidgets-dev \
                                   libkf5coreaddons-dev libkf5i18n-dev libkf5kio-dev kross-dev libkf5sonnet-dev libkf5textwidgets-dev \
                                   libkf5widgetsaddons-dev libkf5xmlgui-dev libicu-dev libsphinxbase-dev libpocketsphinx-dev
       script:
