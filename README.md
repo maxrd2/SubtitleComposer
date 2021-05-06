@@ -1,10 +1,12 @@
 ## Subtitle Composer
-[![Build Status](https://build.kde.org/job/Extragear/job/subtitlecomposer/job/kf5-qt5%20SUSEQt5.12/badge/icon)](https://build.kde.org/job/Extragear/job/subtitlecomposer/)
+[![Linux Build](https://subtitlecomposer.smoothware.net/badge.php?p=job/kf5-qt5&os=suse&t=Linux+Build)](https://build.kde.org/job/Extragear/job/subtitlecomposer/)
+[![FreeBSD Build](https://subtitlecomposer.smoothware.net/badge.php?p=job/kf5-qt5&os=bsd&t=FreeBSD+Build)](https://build.kde.org/job/Extragear/job/subtitlecomposer/)
+[![TravisCI Build](https://img.shields.io/travis/maxrd2/subtitlecomposer/master.svg?label=Travis+Builds)](https://travis-ci.org/maxrd2/subtitlecomposer)
 [![Localization](https://d322cqt584bo4o.cloudfront.net/subtitlecomposer/localized.svg)](https://l10n.kde.org/stats/gui/trunk-kf5/po/subtitlecomposer.po/)
 
 An open source text-based subtitle editor that supports basic and advanced editing operations, aiming to become an improved version of Subtitle Workshop for every platform supported by Plasma Frameworks.
 
-[Homepage](https://subtitlecomposer.kde.org/) - [Downloads](https://subtitlecomposer.kde.org/download.html)
+[Homepage][homepage] - [Downloads][downloads]
 
 ### FEATURES
   - Open/Save **Text Subtitle Formats**
@@ -30,40 +32,29 @@ An open source text-based subtitle editor that supports basic and advanced editi
 ![Main Window](https://cdn.kde.org/screenshots/subtitlecomposer/mainwindow.png)
 
 ### INSTALL
-#### Linux
-  - AppImage - downloadable from [releases](https://github.com/maxrd2/subtitlecomposer/releases) page
-  - Arch
-    - unofficial [repository](https://wiki.archlinux.org/index.php/unofficial_user_repositories#subtitlecomposer) with [subtitlecomposer-git](https://smoothware.net/subtitlecomposer/x86_64/) package
-    - AUR - packages [subtitlecomposer](https://aur.archlinux.org/packages/subtitlecomposer) or [subtitlecomposer-git](https://aur.archlinux.org/packages/subtitlecomposer-git)
-  - Ubuntu
-    - official [subtitlecomposer](https://packages.ubuntu.com/subtitlecomposer) package
-    - unofficial [repository](https://launchpad.net/~subtitlecomposer) - packages [subtitlecomposer](https://launchpad.net/~subtitlecomposer/+archive/ubuntu/subtitlecomposer-git-stable) or [subtitlecomposer-git](https://code.launchpad.net/~subtitlecomposer/+archive/ubuntu/subtitlecomposer-git)
-  - Debian
-    - official [subtitlecomposer](https://packages.debian.org/subtitlecomposer) package
-  - OpenSUSE
-    - official [subtitlecomposer](https://software.opensuse.org/package/subtitlecomposer) package
-
-#### Windows
-  - Installer downloadable from [releases](https://github.com/maxrd2/subtitlecomposer/releases) page
+Linux and Windows binaries downloadable from [downloads page][downloads]
 
 ### BUILD
 Instructions for building from sources can be found on [wiki page][build instructions]
 
 ### CONTRIBUTING
+Join friendly Matrix chat room [#subtitlecomposer][matrix-chat] and say hello or ask for help.
+
+Feedback and ideas on how to make Subtitle Composer better are welcome and appreciated!
+Let us know in [#subtitlecomposer chat][matrix-chat].
+
 Submit bug reports or feature requests to the [official issue tracker][bugs].
 
-Video tutorials are very welcome as are any kind of documentation/tutorials/examples, please let us know if you make some.
-
-Feedback and/or ideas on how to make Subtitle Composer better are welcome and appreciated.
-
-Pull requests and patches are welcome. Please follow the [coding style](README.CodingStyle.md).
+Pull requests and patches are welcome. Please follow the [coding style][coding style].
 
 ### LICENSE
 
 Subtitle Composer is released under [GNU General Public License v2.0](LICENSE)
 
-
+[homepage]: https://subtitlecomposer.kde.org/
+[matrix-chat]: https://webchat.kde.org/#/room/#subtitlecomposer:kde.org
 [bugs]: https://invent.kde.org/kde/subtitlecomposer/issues "Issue Tracker"
 [milestones]: https://invent.kde.org/kde/subtitlecomposer/-/milestones "Milestones"
 [coding style]: https://invent.kde.org/kde/subtitlecomposer/blob/master/README.CodingStyle.md "Coding Style"
 [build instructions]: https://invent.kde.org/kde/subtitlecomposer/wikis/Building-from-sources "Build Instructions"
+[downloads]: https://subtitlecomposer.kde.org/download.html

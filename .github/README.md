@@ -1,4 +1,9 @@
-## Subtitle Composer [![TravisCI build](https://travis-ci.org/maxrd2/subtitlecomposer.svg?branch=master)](https://travis-ci.org/maxrd2/subtitlecomposer) [![Localization](https://d322cqt584bo4o.cloudfront.net/subtitlecomposer/localized.svg)](https://l10n.kde.org/stats/gui/trunk-kf5/po/subtitlecomposer.po/)
+## Subtitle Composer
+[![Linux Build](https://subtitlecomposer.smoothware.net/badge.php?p=job/kf5-qt5&os=suse&t=Linux+Build)](https://build.kde.org/job/Extragear/job/subtitlecomposer/)
+[![FreeBSD Build](https://subtitlecomposer.smoothware.net/badge.php?p=job/kf5-qt5&os=bsd&t=FreeBSD+Build)](https://build.kde.org/job/Extragear/job/subtitlecomposer/)
+[![TravisCI Build](https://img.shields.io/travis/maxrd2/subtitlecomposer/master.svg?label=Travis+Builds)](https://travis-ci.org/maxrd2/subtitlecomposer)
+[![Localization](https://d322cqt584bo4o.cloudfront.net/subtitlecomposer/localized.svg)](https://l10n.kde.org/stats/gui/trunk-kf5/po/subtitlecomposer.po/)
+
 
 **IMPORTANT**: The development of Subtitle Composer has moved to KDE.
 This repository is only a mirror and might not be up-to-date.
