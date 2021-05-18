@@ -152,13 +152,22 @@ handleCommandLine(SubtitleComposer::Application &app, KAboutData &aboutData)
 }
 
 static void
-setupIconTheme()
+setupIconTheme(int argc, char **argv)
 {
 #ifdef SC_BUNDLE_SYSTEM_THEME
 	QIcon::setThemeSearchPaths(QIcon::themeSearchPaths() << QStringLiteral(":/icons"));
 #endif
 	if(QIcon::themeName().isEmpty())
 		QIcon::setThemeName(QStringLiteral("breeze"));
+
+	const QStringList fallbackPaths = {
+		QStringLiteral(":/icons-fallback/breeze/actions/22"),
+		QStringLiteral(":/icons-fallback/breeze/apps/256"),
+		QStringLiteral(":/icons-fallback/breeze/apps/128"),
+		QStringLiteral(":/icons-fallback/breeze/apps/48"),
+		QStringLiteral(":/icons-fallback/breeze/apps/32"),
+		QStringLiteral(":/icons-fallback/breeze/apps/16"),
+	};
 
 #if QT_VERSION >= QT_VERSION_CHECK(5, 11, 0)
 	QIcon::setFallbackSearchPaths(QIcon::fallbackSearchPaths()
@@ -168,16 +177,25 @@ setupIconTheme()
 			// access the icons through breeze theme path
 			<< QStringLiteral(":/icons-fallback")
 			// or directly as fallback
-			<< QStringLiteral(":/icons-fallback/breeze/actions/22")
-			<< QStringLiteral(":/icons-fallback/breeze/apps/256")
-			<< QStringLiteral(":/icons-fallback/breeze/apps/128")
-			<< QStringLiteral(":/icons-fallback/breeze/apps/48")
-			<< QStringLiteral(":/icons-fallback/breeze/apps/32")
-			<< QStringLiteral(":/icons-fallback/breeze/apps/16"));
+			<< fallbackPaths);
 
 #if QT_VERSION >= QT_VERSION_CHECK(5, 12, 0)
 	if(QIcon::fallbackThemeName().isEmpty())
 		QIcon::setFallbackThemeName(QStringLiteral("breeze"));
+#endif
+
+#if QT_VERSION >= QT_VERSION_CHECK(5, 11, 0)
+	// LXQt just ignores QIcon::fallbackSearchPaths()
+	QString platformThemeName = QString::fromLocal8Bit(qgetenv("QT_QPA_PLATFORMTHEME"));
+	for(int i = 0; i < argc; i++) {
+		if(strcmp(argv[i], "-platformtheme") == 0 && ++i < argc) {
+			platformThemeName = QString::fromLocal8Bit(argv[i]);
+			break;
+		}
+	}
+
+	if(platformThemeName == QStringLiteral("lxqt"))
+		QIcon::setThemeSearchPaths(QIcon::themeSearchPaths() << fallbackPaths);
 #endif
 }
 
@@ -193,7 +211,7 @@ main(int argc, char **argv)
 
 	SubtitleComposer::Application app(argc, argv);
 
-	setupIconTheme();
+	setupIconTheme(argc, argv);
 
 	KLocalizedString::setApplicationDomain("subtitlecomposer");
 
