@@ -165,9 +165,6 @@ Application::init()
 
 	setupActions();
 
-	connect(m_undoStack, &UndoStack::undoTextChanged, action(ACT_UNDO), &QAction::setToolTip);
-	connect(m_undoStack, &UndoStack::redoTextChanged, action(ACT_REDO), &QAction::setToolTip);
-
 	connect(SCConfig::self(), &KCoreConfigSkeleton::configChanged, this, &Application::onConfigChanged);
 
 	VideoPlayer *videoPlayer = VideoPlayer::instance();

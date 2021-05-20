@@ -35,6 +35,7 @@ namespace SubtitleComposer {
 class Subtitle;
 class SString;
 class RichDocument;
+class UndoAction;
 
 class SubtitleLine : public QObject
 {
@@ -227,7 +228,7 @@ private:
 	FormatData * formatData() const;
 	void setFormatData(const FormatData *formatData);
 
-	void processAction(QUndoCommand *action);
+	void processAction(UndoAction *action);
 	void processShowTimeSort(const Time &showTime);
 
 	void setPrimaryDoc(RichDocument *doc);

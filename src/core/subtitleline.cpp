@@ -965,7 +965,7 @@ SubtitleLine::check(int errorFlagsToCheck, bool update)
 }
 
 void
-SubtitleLine::processAction(QUndoCommand *action)
+SubtitleLine::processAction(UndoAction *action)
 {
 	if(m_subtitle) {
 		m_subtitle->processAction(action);

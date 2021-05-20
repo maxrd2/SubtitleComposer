@@ -18,6 +18,8 @@
  */
 
 #include "application.h"
+#include "actions/useractionnames.h"
+#include "core/undo/undoaction.h"
 #include "core/undo/undostack.h"
 #include "gui/treeview/lineswidget.h"
 #include "gui/treeview/linesmodel.h"
@@ -29,6 +31,11 @@ UndoStack::UndoStack(QObject *parent)
 	  m_level(0)
 {
 	m_selectionStack.push(Selection(app()->linesWidget()->selectionModel()));
+
+	connect(this, &UndoStack::undoTextChanged, app()->action(ACT_UNDO), &QAction::setToolTip);
+	connect(this, &UndoStack::redoTextChanged, app()->action(ACT_REDO), &QAction::setToolTip);
+	connect(this, &UndoStack::indexChanged, parent, [](){ if(Subtitle *s = app()->subtitle()) s->updateState(); });
+	connect(this, &UndoStack::cleanChanged, parent, [](){ if(Subtitle *s = app()->subtitle()) s->updateState(); });
 }
 
 UndoStack::~UndoStack()
@@ -110,7 +117,7 @@ UndoStack::levelDecrease(int idx)
 }
 
 void
-UndoStack::push(QUndoCommand *cmd)
+UndoStack::push(UndoAction *cmd)
 {
 	const int idx = index() + 1;
 	levelIncrease(idx);

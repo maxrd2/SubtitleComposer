@@ -39,12 +39,13 @@ QT_FORWARD_DECLARE_CLASS(QUndoCommand)
 namespace SubtitleComposer {
 class RichDocument;
 class SubtitleLine;
+class UndoAction;
 
 class Subtitle : public QObject
 {
 	Q_OBJECT
 
-	friend class Application;
+	friend class UndoStack;
 
 	friend class SubtitleLine;
 	friend class SubtitleIterator;
@@ -206,7 +207,7 @@ private:
 
 	void beginCompositeAction(const QString &title);
 	void endCompositeAction();
-	void processAction(QUndoCommand *action);
+	void processAction(UndoAction *action);
 
 	void updateState();
 

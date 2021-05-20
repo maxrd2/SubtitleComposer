@@ -184,7 +184,7 @@ Subtitle::isPrimaryDirty() const
 void
 Subtitle::clearPrimaryDirty()
 {
-	if(m_primaryCleanState != m_primaryState) {
+	if(isPrimaryDirty()) {
 		m_primaryCleanState = m_primaryState;
 		emit primaryDirtyStateChanged(false);
 	}
@@ -199,7 +199,7 @@ Subtitle::isSecondaryDirty() const
 void
 Subtitle::clearSecondaryDirty()
 {
-	if(m_secondaryCleanState != m_secondaryState) {
+	if(isSecondaryDirty()) {
 		m_secondaryCleanState = m_secondaryState;
 		emit secondaryDirtyStateChanged(false);
 	}
@@ -1373,7 +1373,7 @@ Subtitle::recheckErrors(const RangeList &ranges)
 }
 
 void
-Subtitle::processAction(QUndoCommand *action)
+Subtitle::processAction(UndoAction *action)
 {
 	if(app()->subtitle() == this)
 		app()->undoStack()->push(action);

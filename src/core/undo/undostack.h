@@ -27,8 +27,9 @@
 QT_FORWARD_DECLARE_CLASS(QItemSelectionModel)
 
 namespace SubtitleComposer {
+class UndoAction;
 
-class UndoStack : public QUndoStack
+class UndoStack : private QUndoStack
 {
 	Q_OBJECT
 
@@ -46,10 +47,32 @@ public:
 	virtual ~UndoStack();
 
 	void clear();
-	void push(QUndoCommand *cmd);
+	void push(UndoAction *cmd);
 
 	void beginMacro(const QString &text);
 	void endMacro();
+
+	using QUndoStack::canUndo;
+	using QUndoStack::canRedo;
+	using QUndoStack::undoText;
+	using QUndoStack::redoText;
+
+	using QUndoStack::count;
+	using QUndoStack::index;
+	using QUndoStack::text;
+
+	using QUndoStack::createUndoAction;
+	using QUndoStack::createRedoAction;
+
+	// Subtitle handles/implements these
+//	using QUndoStack::isActive;
+//	using QUndoStack::isClean;
+//	using QUndoStack::cleanIndex;
+
+	using QUndoStack::beginMacro;
+	using QUndoStack::endMacro;
+
+	using QUndoStack::command;
 
 public slots:
 	void undo();
