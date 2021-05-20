@@ -827,7 +827,6 @@ WaveformWidget::resizeEvent(QResizeEvent *event)
 	}
 
 	m_visibleLinesDirty = true;
-	updateZoomData();
 
 	m_waveformGraphics->update();
 }
