@@ -726,8 +726,10 @@ PlayerWidget::onPlayerPositionChanged(double seconds)
 	m_positionLabel->setText(videoPosition.toString());
 	m_fsPositionLabel->setText(videoPosition.toString(false) + m_lengthString);
 
-	if(m_showPositionTimeEdit && !m_positionEdit->hasFocus())
+	if(m_showPositionTimeEdit && !m_positionEdit->hasFocus()) {
+		QSignalBlocker sb(m_positionEdit);
 		m_positionEdit->setValue(videoPosition.toMillis());
+	}
 
 	updatePlayingLine(videoPosition);
 
