@@ -491,7 +491,7 @@ WaveformWidget::onStreamData(const void *buffer, qint32 size, const WaveFormat *
 
 	if(!m_waveformChannels) {
 		m_waveformChannels = waveFormat->channels();
-		m_waveformChannelSize = SAMPLE_RATE * (m_waveformDuration + 60); // FIXME: added 60sec not to overflow below
+		m_waveformChannelSize = SAMPLE_RATE * (m_waveformDuration + 60); // added 60sec as duration might be wrong
 		m_waveform = new SAMPLE_TYPE *[m_waveformChannels];
 		for(quint32 i = 0; i < m_waveformChannels; i++)
 			m_waveform[i] = new SAMPLE_TYPE[m_waveformChannelSize];
@@ -545,6 +545,8 @@ WaveformWidget::onStreamData(const void *buffer, qint32 size, const WaveFormat *
 
 	int len = size / BYTES_PER_SAMPLE;
 	int i = m_waveformDataOffset / BYTES_PER_SAMPLE / m_waveformChannels;
+	if(i + len >= m_waveformChannelSize) // make sure we don't overflow
+		len = m_waveformChannelSize - i;
 	while(len > 0) {
 		for(quint32 c = 0; c < m_waveformChannels; c++) {
 			qint32 val = *sample++;
