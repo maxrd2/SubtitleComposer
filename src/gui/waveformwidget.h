@@ -65,7 +65,7 @@ private:
 	};
 
 public:
-	WaveformWidget(QWidget *parent);
+	explicit WaveformWidget(QWidget *parent = nullptr);
 	virtual ~WaveformWidget();
 
 	inline double windowSize() const { return (m_timeEnd - m_timeStart).toMillis(); }
