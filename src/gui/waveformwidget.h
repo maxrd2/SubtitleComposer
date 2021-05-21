@@ -164,8 +164,7 @@ private:
 	QTimer m_hoverScrollTimer;
 
 	quint32 m_waveformDuration;
-	quint32 m_waveformDataOffset;
-	quint32 m_waveformChannels;
+	quint16 m_waveformChannels;
 	quint32 m_waveformChannelSize;
 	SAMPLE_TYPE **m_waveform;
 
@@ -227,6 +226,13 @@ private:
 
 	bool m_translationMode;
 	bool m_showTranslation;
+
+	quint32 SAMPLE_RATE_MILLIS;
+	quint32 SAMPLE_RATE_REMOTE;
+	quint32 SAMPLE_RATE_LOCAL;
+	quint32 REMOTE_TO_LOCAL;
+
+	struct WaveformFrame *m_wfFrame;
 };
 }
 #endif

@@ -45,11 +45,32 @@
 
 #include <KLocalizedString>
 
-#define MAX_WINDOW_ZOOM 3000
-#define SAMPLE_RATE 8000
-#define SAMPLE_RATE_MILLIS (SAMPLE_RATE / 1000)
-#define DRAG_TOLERANCE (double(10 * m_samplesPerPixel / SAMPLE_RATE_MILLIS))
-#define BYTES_PER_SAMPLE (sizeof(SAMPLE_TYPE))
+#define MAX_WINDOW_ZOOM 3000 // TODO: calculate this when receiving stream data and do sample rate conversion
+//#define SAMPLE_RATE 8000
+//#define SAMPLE_RATE_MILLIS (SAMPLE_RATE / 1000)
+//#define DRAG_TOLERANCE (double(10 * m_samplesPerPixel / SAMPLE_RATE_MILLIS))
+
+namespace SubtitleComposer {
+struct WaveformFrame {
+	explicit WaveformFrame(quint16 sampleRatio, quint8 channels)
+		: offset(0),
+		  frameSize(sampleRatio * channels),
+		  overflow(0),
+		  val(new qint32[channels])
+	{
+	}
+
+	~WaveformFrame() {
+		delete[] val;
+	}
+
+	quint32 offset;
+	quint16 frameSize;
+	quint16 overflow;
+	qint32 *val;
+};
+}
+
 
 using namespace SubtitleComposer;
 
@@ -85,7 +106,9 @@ WaveformWidget::WaveformWidget(QWidget *parent)
 	  m_draggedTime(0.),
 	  m_widgetLayout(nullptr),
 	  m_translationMode(false),
-	  m_showTranslation(false)
+	  m_showTranslation(false),
+	  SAMPLE_RATE_MILLIS(0),
+	  m_wfFrame(nullptr)
 {
 	m_vertical = height() > width();
 
@@ -196,10 +219,10 @@ WaveformWidget::updateActions()
 	const quint32 size = windowSize();
 
 	m_btnZoomIn->setDefaultAction(app->action(ACT_WAVEFORM_ZOOM_IN));
-	m_btnZoomIn->setEnabled(m_waveformDuration > 0 && size > MAX_WINDOW_ZOOM);
+	m_btnZoomIn->setEnabled(SAMPLE_RATE_MILLIS > 0 && size > MAX_WINDOW_ZOOM);
 
 	m_btnZoomOut->setDefaultAction(app->action(ACT_WAVEFORM_ZOOM_OUT));
-	m_btnZoomOut->setEnabled(m_waveformDuration > 0 && size < m_waveformChannelSize / SAMPLE_RATE_MILLIS);
+	m_btnZoomOut->setEnabled(SAMPLE_RATE_MILLIS > 0 && size < m_waveformChannelSize / SAMPLE_RATE_MILLIS);
 
 	QAction *action = app->action(ACT_WAVEFORM_AUTOSCROLL);
 	action->setChecked(m_autoScroll);
@@ -337,7 +360,7 @@ WaveformWidget::updateZoomData()
 			updateActions();
 		}
 
-		const int dataMaxPossible = m_waveformDataOffset / BYTES_PER_SAMPLE / m_waveformChannels;
+		const int dataMaxPossible = m_wfFrame ? m_wfFrame->offset : m_waveformChannelSize;
 		int dataRangeMin = SAMPLE_RATE_MILLIS * (m_timeStart.toMillis() - 2 * windowSize());
 		int dataRangeMax = SAMPLE_RATE_MILLIS * (m_timeEnd.toMillis() + 2 * windowSize());
 		if(dataRangeMin < 0)
@@ -416,9 +439,8 @@ WaveformWidget::setAudioStream(const QString &mediaFile, int audioStream)
 	m_streamIndex = audioStream;
 
 	m_waveformDuration = 0;
-	m_waveformDataOffset = 0;
 
-	static WaveFormat waveFormat(SAMPLE_RATE, 0, BYTES_PER_SAMPLE * 8, true);
+	static WaveFormat waveFormat(0, 0, sizeof(SAMPLE_TYPE) * 8, true);
 	if(m_stream->open(mediaFile) && m_stream->initAudio(audioStream, waveFormat))
 		m_stream->start();
 }
@@ -459,6 +481,7 @@ WaveformWidget::clearAudioStream()
 	}
 
 	m_waveformChannels = 0;
+	SAMPLE_RATE_MILLIS = 0;
 }
 
 void
@@ -477,6 +500,11 @@ void
 WaveformWidget::onStreamFinished()
 {
 	m_progressWidget->hide();
+	if(m_wfFrame) {
+		m_waveformChannelSize = m_wfFrame->offset;
+		delete m_wfFrame;
+		m_wfFrame = nullptr;
+	}
 }
 
 void
@@ -490,72 +518,84 @@ WaveformWidget::onStreamData(const void *buffer, qint32 size, const WaveFormat *
 	}
 
 	if(!m_waveformChannels) {
+		SAMPLE_RATE_LOCAL = SAMPLE_RATE_REMOTE = waveFormat->sampleRate();
+		while(SAMPLE_RATE_LOCAL > MAX_WINDOW_ZOOM)
+			SAMPLE_RATE_LOCAL >>= 1;
+		REMOTE_TO_LOCAL = SAMPLE_RATE_REMOTE / SAMPLE_RATE_LOCAL;
+		SAMPLE_RATE_MILLIS = SAMPLE_RATE_LOCAL / 1000;
 		m_waveformChannels = waveFormat->channels();
-		m_waveformChannelSize = SAMPLE_RATE * (m_waveformDuration + 60); // added 60sec as duration might be wrong
+		m_waveformChannelSize = SAMPLE_RATE_LOCAL * (m_waveformDuration + 60); // added 60sec as duration might be wrong
 		m_waveform = new SAMPLE_TYPE *[m_waveformChannels];
 		for(quint32 i = 0; i < m_waveformChannels; i++)
 			m_waveform[i] = new SAMPLE_TYPE[m_waveformChannelSize];
+
+		m_wfFrame = new WaveformFrame(REMOTE_TO_LOCAL, m_waveformChannels);
 	}
 
-	Q_ASSERT(waveFormat->bitsPerSample() == BYTES_PER_SAMPLE * 8);
-	Q_ASSERT(waveFormat->sampleRate() == SAMPLE_RATE);
-
-	// assure incoming data is properly aligned
-	Q_ASSERT(m_waveformDataOffset % (BYTES_PER_SAMPLE * m_waveformChannels) == 0);
-	Q_ASSERT(size % (BYTES_PER_SAMPLE * m_waveformChannels) == 0);
+	Q_ASSERT(waveFormat->bitsPerSample() == sizeof(SAMPLE_TYPE) * 8);
 
 	const SAMPLE_TYPE *sample = reinterpret_cast<const SAMPLE_TYPE *>(buffer);
 
-	const qint64 msecStartExp = qint64(m_waveformDataOffset) * 1000 / (SAMPLE_RATE * BYTES_PER_SAMPLE * m_waveformChannels);
-	const qint64 msecDiff = msecStart - msecStartExp;
-	if(m_waveformDataOffset == 0)
-		qWarning().nospace() << "WaveformWidget::onStreamData() stream is offset by " << msecDiff << "ms (" << (msecDiff * qint64(SAMPLE_RATE * BYTES_PER_SAMPLE / 1000)) << " bytes/channel) @ 0ms";
-	else if(msecDiff > 10 || msecDiff < -10)
-		qWarning().nospace() << "WaveformWidget::onStreamData() stream is offset by " << msecDiff << "ms (" << (msecDiff * qint64(SAMPLE_RATE * BYTES_PER_SAMPLE / 1000)) << " bytes/channel) @ " << msecStartExp << "ms";
-
-	// audio and video are not perfectly synced in container, calculate the offset and fill the gap if needed
-	const qint64 byteSyncOffset = msecStart * (m_waveformChannels * SAMPLE_RATE * BYTES_PER_SAMPLE / 1000);
-
-	if(byteSyncOffset + size >= qint64(m_waveformChannelSize * BYTES_PER_SAMPLE * m_waveformChannels)) {
-		qWarning() << "WaveformWidget::onStreamData() - stream is longer than advertised.";
-		return;
+	{ // handle overlaps and holes between buffers (tested streams had ~2ms error - might be useless)
+		Q_ASSERT(msecStart >= 0);
+		const quint32 inStartOffset = msecStart * SAMPLE_RATE_LOCAL / 1000;
+		if(inStartOffset < m_wfFrame->offset) {
+			// overwrite part of local buffer
+			m_wfFrame->offset = inStartOffset;
+		} else if(inStartOffset > m_wfFrame->offset) {
+			// pad hole in local buffer
+			quint32 i = m_wfFrame->offset;
+			if(i > 0) {
+				for(; i < inStartOffset; i++) {
+					for(quint32 c = 0; c < m_waveformChannels; c++)
+						m_waveform[c][i] = m_waveform[c][i - 1];
+				}
+			} else {
+				for(quint32 c = 0; c < m_waveformChannels; c++)
+					memset(m_waveform[c], 0, inStartOffset * sizeof(SAMPLE_TYPE));
+			}
+			m_wfFrame->offset = inStartOffset;
+		}
 	}
 
-	if(byteSyncOffset <= qint64(m_waveformDataOffset)) {
-		// overwrite part of the buffer
-		if(byteSyncOffset < 0) {
-			m_waveformDataOffset = 0;
-			size -= -byteSyncOffset;
-			sample += -byteSyncOffset / sizeof(SAMPLE_TYPE);
-		} else {
-			m_waveformDataOffset = quint32(byteSyncOffset);
+	quint32 len = size / sizeof(SAMPLE_TYPE);
+
+	if(m_wfFrame->overflow) {
+		const quint32 overflowFrameSize = qMin(m_wfFrame->overflow + len, quint32(m_wfFrame->frameSize));
+
+		quint32 c = m_wfFrame->overflow;
+		for(; c < m_waveformChannels; c++)
+			m_wfFrame->val[c] = *sample++;
+		for(; c < overflowFrameSize; c++)
+			m_wfFrame->val[c % m_waveformChannels] += *sample++;
+		for(c = 0; c < m_waveformChannels; c++)
+			m_waveform[c][m_wfFrame->offset] = m_wfFrame->val[c] / REMOTE_TO_LOCAL;
+
+		len -= overflowFrameSize - m_wfFrame->overflow;
+		if(overflowFrameSize < m_wfFrame->frameSize) {
+			// no more data
+			Q_ASSERT(len == 0);
+			m_wfFrame->overflow = overflowFrameSize;
+			return;
 		}
-	} else {
-		// pad hole in the buffer
-		quint32 n = quint32(byteSyncOffset) / BYTES_PER_SAMPLE / m_waveformChannels;
-		for(quint32 i = m_waveformDataOffset / BYTES_PER_SAMPLE / m_waveformChannels; i < n; i++) {
-			for(quint32 c = 0; c < m_waveformChannels; c++)
-				m_waveform[c][i] = qint32(sample[c]);
-		}
-		m_waveformDataOffset = qint32(byteSyncOffset);
+		m_wfFrame->offset++;
 	}
 
-	// assure incoming data is properly aligned
-	Q_ASSERT(m_waveformDataOffset % (BYTES_PER_SAMPLE * m_waveformChannels) == 0);
+	if(m_wfFrame->offset + len / REMOTE_TO_LOCAL >= m_waveformChannelSize) // make sure we don't overflow
+		len = (m_waveformChannelSize - m_wfFrame->offset - 1) * REMOTE_TO_LOCAL;
 
-	int len = size / BYTES_PER_SAMPLE;
-	int i = m_waveformDataOffset / BYTES_PER_SAMPLE / m_waveformChannels;
-	if(i + len >= m_waveformChannelSize) // make sure we don't overflow
-		len = m_waveformChannelSize - i;
-	while(len > 0) {
-		for(quint32 c = 0; c < m_waveformChannels; c++) {
-			qint32 val = *sample++;
-			m_waveform[c][i] = val;
-			len--;
-		}
-		i++;
+	while(len > m_wfFrame->frameSize) {
+		quint32 c = 0;
+		for(; c < m_waveformChannels; c++)
+			m_wfFrame->val[c] = *sample++;
+		for(; c < m_wfFrame->frameSize; c++)
+			m_wfFrame->val[c % m_waveformChannels] += *sample++;
+		for(c = 0; c < m_waveformChannels; c++)
+			m_waveform[c][m_wfFrame->offset] = m_wfFrame->val[c] / REMOTE_TO_LOCAL;
+		len -= m_wfFrame->frameSize;
+		m_wfFrame->offset++;
 	}
-	m_waveformDataOffset += size;
+	m_wfFrame->overflow = len;
 }
 
 
@@ -1026,11 +1066,15 @@ WaveformWidget::timeAt(int y)
 WaveformWidget::DragPosition
 WaveformWidget::subtitleAt(int y, SubtitleLine **result)
 {
-	double yTime = timeAt(y).toMillis();
-	double closestDistance = DRAG_TOLERANCE, currentDistance;
-	WaveformWidget::DragPosition closestDrag = DRAG_NONE;
 	if(result)
 		*result = nullptr;
+	if(!SAMPLE_RATE_MILLIS)
+		return DRAG_NONE;
+	double yTime = timeAt(y).toMillis();
+	const double DRAG_TOLERANCE = double(10 /* ms */ * m_samplesPerPixel / SAMPLE_RATE_MILLIS); // in px/ms (spl/px)/(spl/ms)
+	double closestDistance = DRAG_TOLERANCE;
+	double currentDistance;
+	WaveformWidget::DragPosition closestDrag = DRAG_NONE;
 
 	updateVisibleLines();
 
