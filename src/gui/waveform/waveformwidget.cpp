@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2010-2019 Mladen Milinkovic <max@smoothware.net>
+ * Copyright (C) 2010-2021 Mladen Milinkovic <max@smoothware.net>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -26,6 +26,7 @@
 #include "actions/useractionnames.h"
 #include "gui/treeview/lineswidget.h"
 #include "gui/waveform/wavebuffer.h"
+#include "gui/waveform/zoombuffer.h"
 
 #include <QRect>
 #include <QPainter>
@@ -41,7 +42,6 @@
 #include <QToolButton>
 #include <QScrollBar>
 #include <QPropertyAnimation>
-#include <QtMath>
 #include <QDebug>
 
 #include <KLocalizedString>
@@ -69,14 +69,13 @@ WaveformWidget::WaveformWidget(QWidget *parent)
 	  m_draggedLine(nullptr),
 	  m_draggedPos(DRAG_NONE),
 	  m_draggedTime(0.),
+	  m_vertical(false),
 	  m_widgetLayout(nullptr),
 	  m_translationMode(false),
 	  m_showTranslation(false),
 	  m_wfBuffer(new WaveBuffer(this)),
 	  m_zoomData(nullptr)
 {
-	m_vertical = height() > width();
-
 	m_waveformGraphics->setAttribute(Qt::WA_OpaquePaintEvent, true);
 	m_waveformGraphics->setAttribute(Qt::WA_NoSystemBackground, true);
 	m_waveformGraphics->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
@@ -220,7 +219,7 @@ WaveformWidget::setWindowSize(const double size)
 	const quint32 height = m_vertical ? m_waveformGraphics->height() : m_waveformGraphics->width();
 	if(height) {
 		const quint32 samplesPerPixel = m_wfBuffer->sampleRateMillis() * quint32(windowSize()) / height;
-		m_wfBuffer->setZoomScale(samplesPerPixel);
+		m_wfBuffer->zoomBuffer()->setZoomScale(samplesPerPixel);
 	}
 	m_waveformGraphics->update();
 	const int ws = windowSizeInner();
@@ -423,25 +422,22 @@ WaveformWidget::paintWaveform(QPainter &painter, quint32 msWindowSize, quint32 w
 		return;
 
 	const quint32 samplesPerPixel = msWindowSize * m_wfBuffer->sampleRateMillis() / widgetSpan;
-	m_wfBuffer->setZoomScale(samplesPerPixel);
+	m_wfBuffer->zoomBuffer()->setZoomScale(samplesPerPixel);
 
 	if(!m_zoomData)
 		m_zoomData = new WaveZoomData *[chans];
 
-	const quint32 bufSize = m_wfBuffer->zoomedBuffer(m_timeStart.toMillis(), m_timeEnd.toMillis(), m_zoomData);
+	const quint32 bufSize = m_wfBuffer->zoomBuffer()->zoomedBuffer(m_timeStart.toMillis(), m_timeEnd.toMillis(), m_zoomData);
 	if(!bufSize)
 		return;
 
-	qint32 xMin, xMax;
-
-	const qint32 chHalfWidth = (m_vertical ? widgetWidth : widgetHeight) / m_wfBuffer->channels() / 2;
-	static const qreal valMax = qSqrt(qreal(SAMPLE_MAX - SAMPLE_MIN) / 2.);
+	const quint32 chHalfWidth = (m_vertical ? widgetWidth : widgetHeight) / chans / 2;
 
 	for(quint16 ch = 0; ch < chans; ch++) {
 		const qint32 chCenter = (ch * 2 + 1) * chHalfWidth;
 		for(quint32 y = 0; y < bufSize; y++) {
-			xMin = qMax(0., qSqrt(m_zoomData[ch][y].min) * 1.1 - valMax * .1) * chHalfWidth / valMax;
-			xMax = qMax(0., qSqrt(m_zoomData[ch][y].max) * 1.1 - valMax * .1) * chHalfWidth / valMax;
+			const qint32 xMin = m_zoomData[ch][y].min * chHalfWidth / SAMPLE_MAX;
+			const qint32 xMax = m_zoomData[ch][y].max * chHalfWidth / SAMPLE_MAX;
 
 			painter.setPen(m_waveOuter);
 			if(m_vertical)
@@ -453,18 +449,6 @@ WaveformWidget::paintWaveform(QPainter &painter, quint32 msWindowSize, quint32 w
 				painter.drawLine(chCenter - xMin, y, chCenter + xMin, y);
 			else
 				painter.drawLine(y, chCenter - xMin, y, chCenter + xMin);
-		}
-		if(bufSize < widgetSpan) {
-			painter.setPen(m_waveOuter);
-			if(m_vertical)
-				painter.drawLine(chCenter, bufSize, chCenter, widgetSpan);
-			else
-				painter.drawLine(bufSize, chCenter, widgetSpan, chCenter);
-			painter.setPen(m_waveInner);
-			if(m_vertical)
-				painter.drawLine(chCenter, bufSize, chCenter, widgetSpan);
-			else
-				painter.drawLine(bufSize, chCenter, widgetSpan, chCenter);
 		}
 	}
 }

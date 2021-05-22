@@ -1,7 +1,27 @@
+/*
+ * Copyright (C) 2010-2021 Mladen Milinkovic <max@smoothware.net>
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the
+ * Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor,
+ * Boston, MA 02110-1301, USA.
+ */
+
 #include "wavebuffer.h"
 
 #include "application.h"
 #include "gui/waveform/waveformwidget.h"
+#include "gui/waveform/zoombuffer.h"
 
 #include <QProgressBar>
 #include <QScrollBar>
@@ -24,7 +44,7 @@ struct WaveformFrame {
 	{
 	}
 
-	~WaveformFrame() {
+	virtual ~WaveformFrame() {
 		delete[] val;
 	}
 
@@ -45,14 +65,11 @@ WaveBuffer::WaveBuffer(WaveformWidget *parent)
 	  m_stream(new StreamProcessor(this)),
 	  m_waveformDuration(0),
 	  m_waveformChannels(0),
+	  m_waveformChannelSize(0),
 	  m_waveform(nullptr),
 	  m_samplesMsec(0),
 	  m_wfFrame(nullptr),
-	  m_samplesPerPixel(0),
-	  m_waveformZoomed(nullptr),
-	  m_waveformZoomedSize(0),
-	  m_waveformZoomedOffsetMin(0),
-	  m_waveformZoomedOffsetMax(0)
+	  m_zoomBuffer(new ZoomBuffer(this))
 {
 	connect(m_stream, &StreamProcessor::streamProgress, this, &WaveBuffer::onStreamProgress);
 	connect(m_stream, &StreamProcessor::streamFinished, this, &WaveBuffer::onStreamFinished);
@@ -63,7 +80,7 @@ WaveBuffer::WaveBuffer(WaveformWidget *parent)
 quint32
 WaveBuffer::millisPerPixel() const
 {
-	return m_samplesPerPixel / m_samplesMsec;
+	return m_zoomBuffer->m_samplesPerPixel / m_samplesMsec;
 }
 
 quint32
@@ -97,14 +114,8 @@ WaveBuffer::clearAudioStream()
 {
 	m_stream->close();
 
-	if(m_waveformZoomed) {
-		for(quint32 i = 0; i < m_waveformChannels; i++)
-			delete[] m_waveformZoomed[i];
-		delete[] m_waveformZoomed;
-		m_waveformZoomed = nullptr;
-	}
-
 	if(m_waveform) {
+		m_zoomBuffer->setWaveform(nullptr);
 		for(quint32 i = 0; i < m_waveformChannels; i++)
 			delete[] m_waveform[i];
 		delete[] m_waveform;
@@ -171,12 +182,16 @@ WaveBuffer::onStreamData(const void *buffer, qint32 size, const WaveFormat *wave
 
 		m_wfFrame = new WaveformFrame(sampleShift, m_waveformChannels);
 
+		m_zoomBuffer->setWaveform(m_waveform);
+
 		emit waveformUpdated();
 	}
 
 	Q_ASSERT(waveFormat->bitsPerSample() == sizeof(SAMPLE_TYPE) * 8);
 
 	const SAMPLE_TYPE *sample = reinterpret_cast<const SAMPLE_TYPE *>(buffer);
+
+	const quint32 offsetStart = m_wfFrame->offset;
 
 	{ // handle overlaps and holes between buffers (tested streams had ~2ms error - might be useless)
 		Q_ASSERT(msecStart >= 0);
@@ -199,6 +214,8 @@ WaveBuffer::onStreamData(const void *buffer, qint32 size, const WaveFormat *wave
 			m_wfFrame->offset = inStartOffset;
 		}
 	}
+
+	Q_ASSERT(m_waveformChannels > 0);
 
 	quint32 len = size / sizeof(SAMPLE_TYPE);
 
@@ -238,97 +255,6 @@ WaveBuffer::onStreamData(const void *buffer, qint32 size, const WaveFormat *wave
 		m_wfFrame->offset++;
 	}
 	m_wfFrame->overflow = len;
-}
 
-
-void
-WaveBuffer::setZoomScale(quint32 samplesPerPixel)
-{
-	if(m_samplesPerPixel == samplesPerPixel)
-		return;
-
-	m_samplesPerPixel = samplesPerPixel;
-	m_waveformZoomedOffsetMin = m_waveformZoomedOffsetMax = 0;
-	m_waveformZoomedSize = 0;
-	if(m_waveformZoomed) {
-		for(quint16 ch = 0; ch < m_waveformChannels; ch++)
-			delete[] m_waveformZoomed[ch];
-		delete[] m_waveformZoomed;
-		m_waveformZoomed = nullptr;
-	}
-
-	// FIXME: start generating data in worker thread
-}
-
-void
-WaveBuffer::updateZoomDataRange(quint32 iMin, quint32 iMax)
-{
-	Q_ASSERT(iMax / m_samplesPerPixel < m_waveformZoomedSize);
-
-	qDebug() << "updateZoomData [" << iMin << "," << iMax << "] on " << (thread() == app()->thread() ? "app" : "some") << " thread";
-
-	qint32 xMax = -65535, xSum = 0;
-
-	for(quint16 ch = 0; ch < m_waveformChannels; ch++) {
-		for(quint32 i = iMin; i < iMax; i++) {
-			qint32 val = qAbs(qint32(m_waveform[ch][i]) - SAMPLE_MIN - (SAMPLE_MAX - SAMPLE_MIN) / 2);
-			if(xMax < val)
-				xMax = val;
-			xSum += val;
-
-			if(i % m_samplesPerPixel == m_samplesPerPixel - 1) {
-				const int zi = i / m_samplesPerPixel;
-				m_waveformZoomed[ch][zi].min = xSum / m_samplesPerPixel;
-				m_waveformZoomed[ch][zi].max = xMax;
-
-				xMax = -65535;
-				xSum = 0;
-			}
-		}
-	}
-}
-
-quint32
-WaveBuffer::zoomedBuffer(quint32 timeStart, quint32 timeEnd, WaveZoomData **buffers)
-{
-	if(!m_waveformChannels || !m_waveform || !m_samplesPerPixel)
-		return 0;
-
-	if(!m_waveformZoomed) {
-		// alloc memory for zoomed pixel data
-		m_waveformZoomedOffsetMin = m_waveformZoomedOffsetMax = 0;
-		m_waveformZoomedSize = m_waveformChannelSize / m_samplesPerPixel;
-		if(m_waveformChannelSize % m_samplesPerPixel)
-			m_waveformZoomedSize++;
-		m_waveformZoomed = new WaveZoomData *[m_waveformChannels];
-		for(quint32 i = 0; i < m_waveformChannels; i++)
-			m_waveformZoomed[i] = new WaveZoomData[m_waveformZoomedSize];
-	}
-
-	const quint32 samplesAvailable = m_wfFrame ? m_wfFrame->offset : m_waveformChannelSize;
-	Q_ASSERT(samplesAvailable <= m_waveformChannelSize);
-	const quint32 sampleStart = timeStart * m_samplesMsec;
-	const quint32 sampleEnd = qMin(timeEnd * m_samplesMsec, samplesAvailable);
-	const quint32 zoomStart = sampleStart / m_samplesPerPixel;
-	const quint32 zoomEnd = sampleEnd / m_samplesPerPixel;
-
-	if(m_waveformZoomedOffsetMin == m_waveformZoomedOffsetMax) {
-		updateZoomDataRange(sampleStart, sampleEnd);
-		m_waveformZoomedOffsetMin = zoomStart;
-		m_waveformZoomedOffsetMax = zoomEnd;
-	} else {
-		if(zoomStart < m_waveformZoomedOffsetMin) {
-			updateZoomDataRange(sampleStart, m_waveformZoomedOffsetMin * m_samplesPerPixel);
-			m_waveformZoomedOffsetMin = zoomStart;
-		}
-		if(zoomEnd > m_waveformZoomedOffsetMax) {
-			updateZoomDataRange(m_waveformZoomedOffsetMax * m_samplesPerPixel, sampleEnd);
-			m_waveformZoomedOffsetMax = zoomEnd;
-		}
-	}
-
-	for(quint16 ch = 0; ch < m_waveformChannels; ch++)
-		buffers[ch] = &m_waveformZoomed[ch][zoomStart];
-
-	return zoomEnd - zoomStart;
+	m_zoomBuffer->addRange(offsetStart, m_wfFrame->offset);
 }

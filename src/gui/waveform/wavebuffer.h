@@ -36,10 +36,11 @@
 
 namespace SubtitleComposer {
 class WaveformWidget;
+class ZoomBuffer;
 
 struct WaveZoomData {
-	qint32 min;
-	qint32 max;
+	quint32 min;
+	quint32 max;
 };
 
 class WaveBuffer : public QObject
@@ -80,9 +81,7 @@ public:
 	void setNullAudioStream(quint64 msecVideoLength);
 	void clearAudioStream();
 
-	void setZoomScale(quint32 samplesPerPixel);
-
-	quint32 zoomedBuffer(quint32 timeStart, quint32 timeEnd, WaveZoomData **buffers);
+	inline ZoomBuffer * zoomBuffer() const { return m_zoomBuffer; }
 
 signals:
 	void waveformUpdated();
@@ -91,8 +90,6 @@ private:
 	void onStreamData(const void *buffer, qint32 size, const WaveFormat *waveFormat, const qint64 msecStart, const qint64 msecDuration);
 	void onStreamProgress(quint64 msecPos, quint64 msecLength);
 	void onStreamFinished();
-
-	void updateZoomDataRange(quint32 iMin, quint32 iMax);
 
 private:
 	WaveformWidget *m_wfWidget;
@@ -109,11 +106,7 @@ private:
 
 	struct WaveformFrame *m_wfFrame;
 
-	quint32 m_samplesPerPixel;
-	WaveZoomData **m_waveformZoomed;
-	quint32 m_waveformZoomedSize;
-	quint32 m_waveformZoomedOffsetMin;
-	quint32 m_waveformZoomedOffsetMax;
+	ZoomBuffer *m_zoomBuffer;
 };
 }
 

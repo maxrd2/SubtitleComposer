@@ -72,7 +72,7 @@ set(subtitlecomposer_SRCS
 	formats/tmplayer/tmplayerinputformat.h formats/tmplayer/tmplayeroutputformat.h
 	formats/vobsub/vobsubinputformat.h formats/vobsub/vobsubinputinitdialog.cpp formats/vobsub/vobsubinputprocessdialog.cpp
 	formats/youtubecaptions/youtubecaptionsinputformat.h formats/youtubecaptions/youtubecaptionsoutputformat.h
-	#[[ gui ]] gui/currentlinewidget.cpp gui/playerwidget.cpp gui/waveform/waveformwidget.cpp gui/waveform/wavebuffer.cpp
+	#[[ gui ]] gui/currentlinewidget.cpp gui/playerwidget.cpp gui/waveform/waveformwidget.cpp gui/waveform/wavebuffer.cpp gui/waveform/zoombuffer.cpp
 	gui/treeview/linesitemdelegate.cpp gui/treeview/linesmodel.cpp gui/treeview/linesselectionmodel.cpp gui/treeview/lineswidget.cpp
 	gui/treeview/richlineedit.cpp gui/treeview/richdocumentptr.cpp gui/treeview/treeview.cpp
 	#[[ helpers ]] helpers/commondefs.cpp helpers/fileloadhelper.cpp helpers/filesavehelper.cpp helpers/filetrasher.cpp helpers/languagecode.cpp helpers/pluginhelper.h
