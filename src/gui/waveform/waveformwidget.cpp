@@ -25,6 +25,7 @@
 #include "actions/useraction.h"
 #include "actions/useractionnames.h"
 #include "gui/treeview/lineswidget.h"
+#include "gui/waveform/wavebuffer.h"
 
 #include <QRect>
 #include <QPainter>
@@ -45,44 +46,16 @@
 
 #include <KLocalizedString>
 
-#define MAX_WINDOW_ZOOM 3000 // TODO: calculate this when receiving stream data and do sample rate conversion
-//#define SAMPLE_RATE 8000
-//#define SAMPLE_RATE_MILLIS (SAMPLE_RATE / 1000)
-//#define DRAG_TOLERANCE (double(10 * m_samplesPerPixel / SAMPLE_RATE_MILLIS))
-
-namespace SubtitleComposer {
-struct WaveformFrame {
-	explicit WaveformFrame(quint16 sampleRatio, quint8 channels)
-		: offset(0),
-		  frameSize(sampleRatio * channels),
-		  overflow(0),
-		  val(new qint32[channels])
-	{
-	}
-
-	~WaveformFrame() {
-		delete[] val;
-	}
-
-	quint32 offset;
-	quint16 frameSize;
-	quint16 overflow;
-	qint32 *val;
-};
-}
-
-
 using namespace SubtitleComposer;
 
 WaveformWidget::WaveformWidget(QWidget *parent)
 	: QWidget(parent),
 	  m_mediaFile(QString()),
 	  m_streamIndex(-1),
-	  m_stream(new StreamProcessor(this)),
 	  m_subtitle(nullptr),
 	  m_timeStart(0.),
 	  m_timeCurrent(0.),
-	  m_timeEnd(MAX_WINDOW_ZOOM),
+	  m_timeEnd(WaveBuffer::MAX_WINDOW_ZOOM()),
 	  m_RMBDown(false),
 	  m_MMBDown(false),
 	  m_scrollBar(nullptr),
@@ -90,16 +63,8 @@ WaveformWidget::WaveformWidget(QWidget *parent)
 	  m_autoScroll(true),
 	  m_autoScrollPause(false),
 	  m_hoverScrollAmount(.0),
-	  m_waveformDuration(0),
-	  m_waveformChannels(0),
-	  m_waveform(nullptr),
 	  m_waveformGraphics(new QWidget(this)),
 	  m_progressWidget(new QWidget(this)),
-	  m_samplesPerPixel(0),
-	  m_waveformZoomed(nullptr),
-	  m_waveformZoomedSize(0),
-	  m_waveformZoomedOffsetMin(0),
-	  m_waveformZoomedOffsetMax(0),
 	  m_visibleLinesDirty(true),
 	  m_draggedLine(nullptr),
 	  m_draggedPos(DRAG_NONE),
@@ -107,8 +72,8 @@ WaveformWidget::WaveformWidget(QWidget *parent)
 	  m_widgetLayout(nullptr),
 	  m_translationMode(false),
 	  m_showTranslation(false),
-	  SAMPLE_RATE_MILLIS(0),
-	  m_wfFrame(nullptr)
+	  m_wfBuffer(new WaveBuffer(this)),
+	  m_zoomData(nullptr)
 {
 	m_vertical = height() > width();
 
@@ -171,10 +136,6 @@ WaveformWidget::WaveformWidget(QWidget *parent)
 	connect(m_scrollBar, &QScrollBar::valueChanged, this, &WaveformWidget::onScrollBarValueChanged);
 
 	connect(VideoPlayer::instance(), &VideoPlayer::positionChanged, this, &WaveformWidget::onPlayerPositionChanged);
-	connect(m_stream, &StreamProcessor::streamProgress, this, &WaveformWidget::onStreamProgress);
-	connect(m_stream, &StreamProcessor::streamFinished, this, &WaveformWidget::onStreamFinished);
-	// Using Qt::DirectConnection here makes WaveformWidget::onStreamData() to execute in SpeechProcessor's thread
-	connect(m_stream, &StreamProcessor::audioDataAvailable, this, &WaveformWidget::onStreamData, Qt::DirectConnection);
 
 	connect(SCConfig::self(), &SCConfig::configChanged, this, &WaveformWidget::onConfigChanged);
 	onConfigChanged();
@@ -184,6 +145,7 @@ WaveformWidget::WaveformWidget(QWidget *parent)
 	connect(&m_hoverScrollTimer, &QTimer::timeout, this, &WaveformWidget::onHoverScrollTimeout);
 
 	connect(app(), &Application::actionsReady, this, &WaveformWidget::updateActions);
+	connect(m_wfBuffer, &WaveBuffer::waveformUpdated, this, &WaveformWidget::updateActions);
 }
 
 void
@@ -219,15 +181,15 @@ WaveformWidget::updateActions()
 	const quint32 size = windowSize();
 
 	m_btnZoomIn->setDefaultAction(app->action(ACT_WAVEFORM_ZOOM_IN));
-	m_btnZoomIn->setEnabled(SAMPLE_RATE_MILLIS > 0 && size > MAX_WINDOW_ZOOM);
+	m_btnZoomIn->setEnabled(size > WaveBuffer::MAX_WINDOW_ZOOM());
 
 	m_btnZoomOut->setDefaultAction(app->action(ACT_WAVEFORM_ZOOM_OUT));
-	m_btnZoomOut->setEnabled(SAMPLE_RATE_MILLIS > 0 && size < m_waveformChannelSize / SAMPLE_RATE_MILLIS);
+	m_btnZoomOut->setEnabled(m_wfBuffer->sampleRateMillis() && size < m_wfBuffer->lengthMillis());
 
 	QAction *action = app->action(ACT_WAVEFORM_AUTOSCROLL);
 	action->setChecked(m_autoScroll);
 	m_btnAutoScroll->setDefaultAction(action);
-	m_btnAutoScroll->setEnabled(m_waveformDuration > 0);
+	m_btnAutoScroll->setEnabled(m_wfBuffer->waveformDuration() > 0);
 }
 
 WaveformWidget::~WaveformWidget()
@@ -249,23 +211,28 @@ WaveformWidget::windowSizeInner(double *autoScrollPadding) const
 void
 WaveformWidget::setWindowSize(const double size)
 {
-	if(size != windowSize()) {
-		m_timeEnd = m_timeStart.shifted(size);
-		updateActions();
-		m_visibleLinesDirty = true;
-		updateZoomData();
-		m_waveformGraphics->update();
-		const int ws = windowSizeInner();
-		m_scrollBar->setPageStep(ws);
-		m_scrollBar->setRange(0, m_waveformDuration * 1000 - ws);
+	if(size == windowSize())
+		return;
+
+	m_timeEnd = m_timeStart.shifted(size);
+	updateActions();
+	m_visibleLinesDirty = true;
+	const quint32 height = m_vertical ? m_waveformGraphics->height() : m_waveformGraphics->width();
+	if(height) {
+		const quint32 samplesPerPixel = m_wfBuffer->sampleRateMillis() * quint32(windowSize()) / height;
+		m_wfBuffer->setZoomScale(samplesPerPixel);
 	}
+	m_waveformGraphics->update();
+	const int ws = windowSizeInner();
+	m_scrollBar->setPageStep(ws);
+	m_scrollBar->setRange(0, m_wfBuffer->waveformDuration() * 1000 - ws);
 }
 
 void
 WaveformWidget::zoomIn()
 {
 	const double winSize = windowSize();
-	if(winSize <= MAX_WINDOW_ZOOM)
+	if(winSize <= WaveBuffer::MAX_WINDOW_ZOOM())
 		return;
 	m_scrollBar->setValue(m_timeStart.toMillis() + winSize / 4);
 	setWindowSize(winSize / 2);
@@ -275,7 +242,7 @@ void
 WaveformWidget::zoomOut()
 {
 	const double winSize = windowSize();
-	const quint32 totalLength = m_waveformChannelSize / SAMPLE_RATE_MILLIS;
+	const quint32 totalLength = m_wfBuffer->lengthMillis();
 	if(winSize >= totalLength)
 		return;
 	m_scrollBar->setValue(m_timeStart.toMillis() - winSize / 2);
@@ -298,91 +265,6 @@ WaveformWidget::onScrollBarValueChanged(int value)
 
 	m_visibleLinesDirty = true;
 	m_waveformGraphics->update();
-}
-
-void
-WaveformWidget::updateZoomData()
-{
-	int height = m_vertical ? m_waveformGraphics->height() : m_waveformGraphics->width();
-	if(!height)
-		return;
-
-	const quint32 samplesPerPixel = qMax(1U, SAMPLE_RATE_MILLIS * quint32(windowSize()) / height);
-
-	if(m_samplesPerPixel != samplesPerPixel) {
-		// free memory if samples per pixel changed
-		m_samplesPerPixel = samplesPerPixel;
-		m_waveformZoomedOffsetMin = m_waveformZoomedOffsetMax = 0;
-		m_waveformZoomedSize = 0;
-		if(m_waveformZoomed) {
-			for(quint32 i = 0; i < m_waveformChannels; i++)
-				delete[] m_waveformZoomed[i];
-			delete[] m_waveformZoomed;
-			m_waveformZoomed = nullptr;
-		}
-	}
-
-	auto updateZoomDataRange = [&](const quint32 iMin, const quint32 iMax){
-		Q_ASSERT(iMax <= (m_waveformZoomedSize - 1) * m_samplesPerPixel);
-
-		qint32 xMax = -65535, xSum = 0;
-
-		for(quint32 ch = 0; ch < m_waveformChannels; ch++) {
-			for(quint32 i = iMin; i < iMax; i++) {
-				qint32 val = qAbs(qint32(m_waveform[ch][i]) - SAMPLE_MIN - (SAMPLE_MAX - SAMPLE_MIN) / 2);
-				if(xMax < val)
-					xMax = val;
-				xSum += val;
-
-				if(i % m_samplesPerPixel == m_samplesPerPixel - 1) {
-					const int zi = i / m_samplesPerPixel;
-					m_waveformZoomed[ch][zi].min = xSum / m_samplesPerPixel;
-					m_waveformZoomed[ch][zi].max = xMax;
-
-					xMax = -65535;
-					xSum = 0;
-				}
-			}
-		}
-	};
-
-	if(m_waveformChannels && m_waveform) {
-		if(!m_waveformZoomed) {
-			// alloc memory for zoomed pixel data
-			m_waveformZoomedOffsetMin = m_waveformZoomedOffsetMax = 0;
-			m_waveformZoomedSize = m_waveformChannelSize / m_samplesPerPixel;
-			if(m_waveformChannelSize % m_samplesPerPixel)
-				m_waveformZoomedSize++;
-			m_waveformZoomed = new ZoomData *[m_waveformChannels];
-			for(quint32 i = 0; i < m_waveformChannels; i++)
-				m_waveformZoomed[i] = new ZoomData[m_waveformZoomedSize];
-
-			updateActions();
-		}
-
-		const int dataMaxPossible = m_wfFrame ? m_wfFrame->offset : m_waveformChannelSize;
-		int dataRangeMin = SAMPLE_RATE_MILLIS * (m_timeStart.toMillis() - 2 * windowSize());
-		int dataRangeMax = SAMPLE_RATE_MILLIS * (m_timeEnd.toMillis() + 2 * windowSize());
-		if(dataRangeMin < 0)
-			dataRangeMin = 0;
-		if(dataRangeMax > dataMaxPossible)
-			dataRangeMax = dataMaxPossible;
-
-		if(m_waveformZoomedOffsetMin == m_waveformZoomedOffsetMax) {
-			updateZoomDataRange(dataRangeMin, dataRangeMax);
-			m_waveformZoomedOffsetMin = dataRangeMin / m_samplesPerPixel;
-			m_waveformZoomedOffsetMax = dataRangeMax / m_samplesPerPixel;
-		} else {
-			if(dataRangeMin / m_samplesPerPixel < m_waveformZoomedOffsetMin) {
-				updateZoomDataRange(dataRangeMin, m_waveformZoomedOffsetMin * m_samplesPerPixel);
-				m_waveformZoomedOffsetMin = dataRangeMin / m_samplesPerPixel;
-			}
-			if(dataRangeMax / m_samplesPerPixel > m_waveformZoomedOffsetMax) {
-				updateZoomDataRange(m_waveformZoomedOffsetMax * m_samplesPerPixel, dataRangeMax);
-				m_waveformZoomedOffsetMax = dataRangeMax / m_samplesPerPixel;
-			}
-		}
-	}
 }
 
 void
@@ -438,11 +320,7 @@ WaveformWidget::setAudioStream(const QString &mediaFile, int audioStream)
 	m_mediaFile = mediaFile;
 	m_streamIndex = audioStream;
 
-	m_waveformDuration = 0;
-
-	static WaveFormat waveFormat(0, 0, sizeof(SAMPLE_TYPE) * 8, true);
-	if(m_stream->open(mediaFile) && m_stream->initAudio(audioStream, waveFormat))
-		m_stream->start();
+	m_wfBuffer->setAudioStream(m_mediaFile, m_streamIndex);
 }
 
 void
@@ -450,154 +328,22 @@ WaveformWidget::setNullAudioStream(quint64 msecVideoLength)
 {
 	clearAudioStream();
 
-	m_waveformDuration = msecVideoLength / 1000;
-	m_scrollBar->setRange(0, m_waveformDuration * 1000 - windowSize());
+	m_wfBuffer->setNullAudioStream(msecVideoLength);
 
-	m_waveformChannelSize = SAMPLE_RATE_MILLIS * msecVideoLength;
-
-	updateActions();
+	m_scrollBar->setRange(0, m_wfBuffer->waveformDuration() * 1000 - windowSize());
 }
 
 void
 WaveformWidget::clearAudioStream()
 {
-	m_stream->close();
+	m_wfBuffer->clearAudioStream();
 
 	m_mediaFile.clear();
 	m_streamIndex = -1;
 
-	if(m_waveformZoomed) {
-		for(quint32 i = 0; i < m_waveformChannels; i++)
-			delete[] m_waveformZoomed[i];
-		delete[] m_waveformZoomed;
-		m_waveformZoomed = nullptr;
-	}
-
-	if(m_waveform) {
-		for(quint32 i = 0; i < m_waveformChannels; i++)
-			delete[] m_waveform[i];
-		delete[] m_waveform;
-		m_waveform = nullptr;
-	}
-
-	m_waveformChannels = 0;
-	SAMPLE_RATE_MILLIS = 0;
+	delete[] m_zoomData;
+	m_zoomData = nullptr;
 }
-
-void
-WaveformWidget::onStreamProgress(quint64 msecPos, quint64 msecLength)
-{
-	if(!m_waveformDuration) {
-		m_waveformDuration = msecLength / 1000;
-		m_progressBar->setRange(0, m_waveformDuration);
-		m_progressWidget->show();
-		m_scrollBar->setRange(0, m_waveformDuration * 1000 - windowSizeInner());
-	}
-	m_progressBar->setValue(msecPos / 1000);
-}
-
-void
-WaveformWidget::onStreamFinished()
-{
-	m_progressWidget->hide();
-	if(m_wfFrame) {
-		m_waveformChannelSize = m_wfFrame->offset;
-		delete m_wfFrame;
-		m_wfFrame = nullptr;
-	}
-}
-
-void
-WaveformWidget::onStreamData(const void *buffer, qint32 size, const WaveFormat *waveFormat, const qint64 msecStart, const qint64 /*msecDuration*/)
-{
-	// make sure WaveformWidget::onStreamProgress() signal was processed since we're in different thread
-	while(!m_waveformDuration) {
-		QThread::yieldCurrentThread();
-		if(m_stream->isInterruptionRequested())
-			return;
-	}
-
-	if(!m_waveformChannels) {
-		SAMPLE_RATE_LOCAL = SAMPLE_RATE_REMOTE = waveFormat->sampleRate();
-		while(SAMPLE_RATE_LOCAL > MAX_WINDOW_ZOOM)
-			SAMPLE_RATE_LOCAL >>= 1;
-		REMOTE_TO_LOCAL = SAMPLE_RATE_REMOTE / SAMPLE_RATE_LOCAL;
-		SAMPLE_RATE_MILLIS = SAMPLE_RATE_LOCAL / 1000;
-		m_waveformChannels = waveFormat->channels();
-		m_waveformChannelSize = SAMPLE_RATE_LOCAL * (m_waveformDuration + 60); // added 60sec as duration might be wrong
-		m_waveform = new SAMPLE_TYPE *[m_waveformChannels];
-		for(quint32 i = 0; i < m_waveformChannels; i++)
-			m_waveform[i] = new SAMPLE_TYPE[m_waveformChannelSize];
-
-		m_wfFrame = new WaveformFrame(REMOTE_TO_LOCAL, m_waveformChannels);
-	}
-
-	Q_ASSERT(waveFormat->bitsPerSample() == sizeof(SAMPLE_TYPE) * 8);
-
-	const SAMPLE_TYPE *sample = reinterpret_cast<const SAMPLE_TYPE *>(buffer);
-
-	{ // handle overlaps and holes between buffers (tested streams had ~2ms error - might be useless)
-		Q_ASSERT(msecStart >= 0);
-		const quint32 inStartOffset = msecStart * SAMPLE_RATE_LOCAL / 1000;
-		if(inStartOffset < m_wfFrame->offset) {
-			// overwrite part of local buffer
-			m_wfFrame->offset = inStartOffset;
-		} else if(inStartOffset > m_wfFrame->offset) {
-			// pad hole in local buffer
-			quint32 i = m_wfFrame->offset;
-			if(i > 0) {
-				for(; i < inStartOffset; i++) {
-					for(quint32 c = 0; c < m_waveformChannels; c++)
-						m_waveform[c][i] = m_waveform[c][i - 1];
-				}
-			} else {
-				for(quint32 c = 0; c < m_waveformChannels; c++)
-					memset(m_waveform[c], 0, inStartOffset * sizeof(SAMPLE_TYPE));
-			}
-			m_wfFrame->offset = inStartOffset;
-		}
-	}
-
-	quint32 len = size / sizeof(SAMPLE_TYPE);
-
-	if(m_wfFrame->overflow) {
-		const quint32 overflowFrameSize = qMin(m_wfFrame->overflow + len, quint32(m_wfFrame->frameSize));
-
-		quint32 c = m_wfFrame->overflow;
-		for(; c < m_waveformChannels; c++)
-			m_wfFrame->val[c] = *sample++;
-		for(; c < overflowFrameSize; c++)
-			m_wfFrame->val[c % m_waveformChannels] += *sample++;
-		for(c = 0; c < m_waveformChannels; c++)
-			m_waveform[c][m_wfFrame->offset] = m_wfFrame->val[c] / REMOTE_TO_LOCAL;
-
-		len -= overflowFrameSize - m_wfFrame->overflow;
-		if(overflowFrameSize < m_wfFrame->frameSize) {
-			// no more data
-			Q_ASSERT(len == 0);
-			m_wfFrame->overflow = overflowFrameSize;
-			return;
-		}
-		m_wfFrame->offset++;
-	}
-
-	if(m_wfFrame->offset + len / REMOTE_TO_LOCAL >= m_waveformChannelSize) // make sure we don't overflow
-		len = (m_waveformChannelSize - m_wfFrame->offset - 1) * REMOTE_TO_LOCAL;
-
-	while(len > m_wfFrame->frameSize) {
-		quint32 c = 0;
-		for(; c < m_waveformChannels; c++)
-			m_wfFrame->val[c] = *sample++;
-		for(; c < m_wfFrame->frameSize; c++)
-			m_wfFrame->val[c % m_waveformChannels] += *sample++;
-		for(c = 0; c < m_waveformChannels; c++)
-			m_waveform[c][m_wfFrame->offset] = m_wfFrame->val[c] / REMOTE_TO_LOCAL;
-		len -= m_wfFrame->frameSize;
-		m_wfFrame->offset++;
-	}
-	m_wfFrame->overflow = len;
-}
-
 
 void
 WaveformWidget::updateVisibleLines()
@@ -670,47 +416,69 @@ WaveformWidget::paintSubText(QPainter &painter, const QRect &box, RichDocument *
 }
 
 void
-WaveformWidget::paintGraphics(QPainter &painter)
+WaveformWidget::paintWaveform(QPainter &painter, quint32 msWindowSize, quint32 widgetHeight, quint32 widgetWidth, quint32 widgetSpan)
 {
-	quint32 msWindowSize = windowSize();
-	int widgetHeight = m_waveformGraphics->height();
-	int widgetWidth = m_waveformGraphics->width();
-	int widgetSpan = m_vertical ? widgetHeight : widgetWidth;
+	const quint16 chans = m_wfBuffer->channels();
+	if(!chans)
+		return;
 
-	updateZoomData();
+	const quint32 samplesPerPixel = msWindowSize * m_wfBuffer->sampleRateMillis() / widgetSpan;
+	m_wfBuffer->setZoomScale(samplesPerPixel);
 
-	if(m_waveformZoomed) {
-		const quint32 yMin = SAMPLE_RATE_MILLIS * m_timeStart.toMillis() / m_samplesPerPixel;
-		const quint32 yMax = SAMPLE_RATE_MILLIS * m_timeEnd.toMillis() / m_samplesPerPixel;
-		qint32 xMin, xMax;
+	if(!m_zoomData)
+		m_zoomData = new WaveZoomData *[chans];
 
-		const qint32 chHalfWidth = (m_vertical ? widgetWidth : widgetHeight) / m_waveformChannels / 2;
-		static const qreal valMax = qSqrt(qreal(SAMPLE_MAX - SAMPLE_MIN) / 2.);
+	const quint32 bufSize = m_wfBuffer->zoomedBuffer(m_timeStart.toMillis(), m_timeEnd.toMillis(), m_zoomData);
+	if(!bufSize)
+		return;
 
-		for(quint32 ch = 0; ch < m_waveformChannels; ch++) {
-			const qint32 chCenter = (ch * 2 + 1) * chHalfWidth;
-			for(quint32 i = yMin; i < yMax; i++) {
-				if(i >= m_waveformZoomedOffsetMax) {
-					xMin = xMax = 0;
-				} else {
-					xMin = qMax(0., qSqrt(m_waveformZoomed[ch][i].min) * 1.1 - valMax * .1) * chHalfWidth / valMax;
-					xMax = qMax(0., qSqrt(m_waveformZoomed[ch][i].max) * 1.1 - valMax * .1) * chHalfWidth / valMax;
-				}
+	qint32 xMin, xMax;
 
-				int y = i - yMin;
-				painter.setPen(m_waveOuter);
-				if(m_vertical)
-					painter.drawLine(chCenter - xMax, y, chCenter + xMax, y);
-				else
-					painter.drawLine(y, chCenter - xMax, y, chCenter + xMax);
-				painter.setPen(m_waveInner);
-				if(m_vertical)
-					painter.drawLine(chCenter - xMin, y, chCenter + xMin, y);
-				else
-					painter.drawLine(y, chCenter - xMin, y, chCenter + xMin);
-			}
+	const qint32 chHalfWidth = (m_vertical ? widgetWidth : widgetHeight) / m_wfBuffer->channels() / 2;
+	static const qreal valMax = qSqrt(qreal(SAMPLE_MAX - SAMPLE_MIN) / 2.);
+
+	for(quint16 ch = 0; ch < chans; ch++) {
+		const qint32 chCenter = (ch * 2 + 1) * chHalfWidth;
+		for(quint32 y = 0; y < bufSize; y++) {
+			xMin = qMax(0., qSqrt(m_zoomData[ch][y].min) * 1.1 - valMax * .1) * chHalfWidth / valMax;
+			xMax = qMax(0., qSqrt(m_zoomData[ch][y].max) * 1.1 - valMax * .1) * chHalfWidth / valMax;
+
+			painter.setPen(m_waveOuter);
+			if(m_vertical)
+				painter.drawLine(chCenter - xMax, y, chCenter + xMax, y);
+			else
+				painter.drawLine(y, chCenter - xMax, y, chCenter + xMax);
+			painter.setPen(m_waveInner);
+			if(m_vertical)
+				painter.drawLine(chCenter - xMin, y, chCenter + xMin, y);
+			else
+				painter.drawLine(y, chCenter - xMin, y, chCenter + xMin);
+		}
+		if(bufSize < widgetSpan) {
+			painter.setPen(m_waveOuter);
+			if(m_vertical)
+				painter.drawLine(chCenter, bufSize, chCenter, widgetSpan);
+			else
+				painter.drawLine(bufSize, chCenter, widgetSpan, chCenter);
+			painter.setPen(m_waveInner);
+			if(m_vertical)
+				painter.drawLine(chCenter, bufSize, chCenter, widgetSpan);
+			else
+				painter.drawLine(bufSize, chCenter, widgetSpan, chCenter);
 		}
 	}
+}
+
+void
+WaveformWidget::paintGraphics(QPainter &painter)
+{
+	const quint32 msWindowSize = windowSize();
+	const quint32 widgetHeight = m_waveformGraphics->height();
+	const quint32 widgetWidth = m_waveformGraphics->width();
+	const quint32 widgetSpan = m_vertical ? widgetHeight : widgetWidth;
+
+	if(widgetSpan)
+		paintWaveform(painter, msWindowSize, widgetHeight, widgetWidth, widgetSpan);
 
 	updateVisibleLines();
 
@@ -1068,10 +836,10 @@ WaveformWidget::subtitleAt(int y, SubtitleLine **result)
 {
 	if(result)
 		*result = nullptr;
-	if(!SAMPLE_RATE_MILLIS)
+	if(!m_wfBuffer->sampleRateMillis())
 		return DRAG_NONE;
 	double yTime = timeAt(y).toMillis();
-	const double DRAG_TOLERANCE = double(10 /* ms */ * m_samplesPerPixel / SAMPLE_RATE_MILLIS); // in px/ms (spl/px)/(spl/ms)
+	const double DRAG_TOLERANCE = double(10 * m_wfBuffer->millisPerPixel());
 	double closestDistance = DRAG_TOLERANCE;
 	double currentDistance;
 	WaveformWidget::DragPosition closestDrag = DRAG_NONE;

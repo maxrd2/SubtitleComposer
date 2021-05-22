@@ -6,7 +6,7 @@
 #include "actions/useractionnames.h"
 #include "core/undo/undostack.h"
 #include "gui/playerwidget.h"
-#include "gui/waveformwidget.h"
+#include "gui/waveform/waveformwidget.h"
 #include "scripting/scriptsmanager.h"
 #include "videoplayer/videoplayer.h"
 

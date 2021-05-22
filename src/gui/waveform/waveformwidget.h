@@ -1,7 +1,7 @@
 #ifndef WAVEFORMWIDGET_H
 #define WAVEFORMWIDGET_H
 /*
- * Copyright (C) 2010-2019 Mladen Milinkovic <max@smoothware.net>
+ * Copyright (C) 2010-2021 Mladen Milinkovic <max@smoothware.net>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -22,7 +22,6 @@
 #include "core/time.h"
 #include "core/subtitle.h"
 #include "videoplayer/waveformat.h"
-#include "streamprocessor/streamprocessor.h"
 
 #include <QWidget>
 #include <QList>
@@ -40,18 +39,10 @@ QT_FORWARD_DECLARE_CLASS(QPropertyAnimation)
 QT_FORWARD_DECLARE_CLASS(QToolButton)
 QT_FORWARD_DECLARE_CLASS(QBoxLayout)
 
-// FIXME: make sample size configurable or drop this
-//*
-#define SAMPLE_TYPE qint16
-#define SAMPLE_MIN -32768
-#define SAMPLE_MAX 32767
-/*/
-#define SAMPLE_TYPE quint8
-#define SAMPLE_MIN 0
-#define SAMPLE_MAX 255
-//*/
-
 namespace SubtitleComposer {
+class WaveBuffer;
+struct WaveZoomData;
+
 class WaveformWidget : public QWidget
 {
 	Q_OBJECT
@@ -121,18 +112,15 @@ protected:
 
 private slots:
 	void onPlayerPositionChanged(double seconds);
-	void onStreamData(const void *buffer, qint32 size, const WaveFormat *waveFormat, const qint64 msecStart, const qint64 msecDuration);
-	void onStreamProgress(quint64 msecPos, quint64 msecLength);
-	void onStreamFinished();
 	void onScrollBarValueChanged(int value);
 	void onHoverScrollTimeout();
 
 private:
 	void paintGraphics(QPainter &painter);
+	void paintWaveform(QPainter &painter, quint32 msWindowSize, quint32 widgetHeight, quint32 widgetWidth, quint32 widgetSpan);
 	void paintSubText(QPainter &painter, const QRect &box, RichDocument *doc);
 	QToolButton * createToolButton(const QString &actionName, int iconSize=16);
 	void updateActions();
-	void updateZoomData();
 	void updateVisibleLines();
 	Time timeAt(int y);
 	WaveformWidget::DragPosition subtitleAt(int y, SubtitleLine **result);
@@ -142,8 +130,6 @@ private:
 private:
 	QString m_mediaFile;
 	int m_streamIndex;
-
-	StreamProcessor *m_stream;
 	Subtitle *m_subtitle;
 
 	Time m_timeStart;
@@ -163,27 +149,12 @@ private:
 	double m_hoverScrollAmount;
 	QTimer m_hoverScrollTimer;
 
-	quint32 m_waveformDuration;
-	quint16 m_waveformChannels;
-	quint32 m_waveformChannelSize;
-	SAMPLE_TYPE **m_waveform;
-
 	QWidget *m_toolbar;
 
 	QWidget *m_waveformGraphics;
 
 	QWidget *m_progressWidget;
 	QProgressBar *m_progressBar;
-
-	struct ZoomData {
-		qint32 min;
-		qint32 max;
-	};
-	quint32 m_samplesPerPixel;
-	ZoomData **m_waveformZoomed;
-	quint32 m_waveformZoomedSize;
-	quint32 m_waveformZoomedOffsetMin;
-	quint32 m_waveformZoomedOffsetMax;
 
 	QList<SubtitleLine *> m_visibleLines;
 	bool m_visibleLinesDirty;
@@ -227,12 +198,10 @@ private:
 	bool m_translationMode;
 	bool m_showTranslation;
 
-	quint32 SAMPLE_RATE_MILLIS;
-	quint32 SAMPLE_RATE_REMOTE;
-	quint32 SAMPLE_RATE_LOCAL;
-	quint32 REMOTE_TO_LOCAL;
+	friend class WaveBuffer;
+	WaveBuffer *m_wfBuffer;
 
-	struct WaveformFrame *m_wfFrame;
+	WaveZoomData **m_zoomData;
 };
 }
 #endif

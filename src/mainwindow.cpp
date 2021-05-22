@@ -24,7 +24,7 @@
 #include "gui/treeview/lineswidget.h"
 #include "gui/currentlinewidget.h"
 #include "videoplayer/videoplayer.h"
-#include "gui/waveformwidget.h"
+#include "gui/waveform/waveformwidget.h"
 
 #include <QGridLayout>
 #include <QDockWidget>
