@@ -586,7 +586,6 @@ PlayerWidget::setPlayingLine(SubtitleLine *line)
 	}
 
 	emit playingLineChanged(m_playingLine = line);
-	qDebug("*** play line %d", m_playingLine ? m_playingLine->index() : -1);
 
 	if(m_playingLine) {
 		connect(m_playingLine, &SubtitleLine::showTimeChanged, this, &PlayerWidget::setPlayingLineFromVideo);
