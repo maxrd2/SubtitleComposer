@@ -23,12 +23,9 @@
 #include "core/subtitle.h"
 #include "videoplayer/waveformat.h"
 
-#include <QWidget>
 #include <QList>
-#include <QPen>
-#include <QColor>
-#include <QFont>
 #include <QTimer>
+#include <QWidget>
 
 QT_FORWARD_DECLARE_CLASS(QRegion)
 QT_FORWARD_DECLARE_CLASS(QPolygon)
@@ -41,6 +38,7 @@ QT_FORWARD_DECLARE_CLASS(QBoxLayout)
 
 namespace SubtitleComposer {
 class WaveBuffer;
+class WaveRenderer;
 struct WaveZoomData;
 
 class WaveformWidget : public QWidget
@@ -99,16 +97,14 @@ public slots:
 	void zoomOut();
 	void setAutoscroll(bool autoscroll);
 	void setScrollPosition(double milliseconds);
-	void onConfigChanged();
 	void onSubtitleChanged();
 	void setTranslationMode(bool enabled);
 	void setShowTranslation(bool showTranslation);
 
 protected:
-	void resizeEvent(QResizeEvent *event) override;
 	void leaveEvent(QEvent *event) override;
 	bool eventFilter(QObject *obj, QEvent *event) override;
-	void showContextMenu(QMouseEvent *event);
+	void showContextMenu(QPoint pos);
 
 private slots:
 	void onPlayerPositionChanged(double seconds);
@@ -116,16 +112,16 @@ private slots:
 	void onHoverScrollTimeout();
 
 private:
-	void paintGraphics(QPainter &painter);
-	void paintWaveform(QPainter &painter, quint32 msWindowSize, quint32 widgetHeight, quint32 widgetWidth, quint32 widgetSpan);
-	void paintSubText(QPainter &painter, const QRect &box, RichDocument *doc);
 	QToolButton * createToolButton(const QString &actionName, int iconSize=16);
 	void updateActions();
 	void updateVisibleLines();
 	Time timeAt(int y);
 	WaveformWidget::DragPosition subtitleAt(int y, SubtitleLine **result);
-	void setupScrollBar();
 	bool scrollToTime(const Time &time, bool scrollToPage);
+
+	void updatePointerTime(int pos);
+	bool mousePress(int pos, Qt::MouseButton button);
+	bool mouseRelease(int pos, Qt::MouseButton button, QPoint globalPos);
 
 private:
 	QString m_mediaFile;
@@ -151,7 +147,7 @@ private:
 
 	QWidget *m_toolbar;
 
-	QWidget *m_waveformGraphics;
+	WaveRenderer *m_waveformGraphics;
 
 	QWidget *m_progressWidget;
 	QProgressBar *m_progressBar;
@@ -164,8 +160,6 @@ private:
 	Time m_draggedTime;
 	double m_draggedOffset;
 
-	bool m_vertical;
-	QBoxLayout *m_mainLayout;
 	QBoxLayout *m_widgetLayout;
 
 	Time m_pointerTime;
@@ -174,27 +168,6 @@ private:
 	QToolButton *m_btnZoomOut;
 	QToolButton *m_btnAutoScroll;
 
-	QFont m_fontNumber;
-	int m_fontNumberHeight;
-	QFont m_fontText;
-
-	int m_subBorderWidth;
-
-	QPen m_subNumberColor;
-	QPen m_subTextColor;
-
-	QPen m_waveInner;
-	QPen m_waveOuter;
-
-	QColor m_subtitleBack;
-	QColor m_subtitleBorder;
-
-	QColor m_selectedBack;
-	QColor m_selectedBorder;
-
-	QPen m_playColor;
-	QPen m_mouseColor;
-
 	bool m_translationMode;
 	bool m_showTranslation;
 
@@ -202,6 +175,8 @@ private:
 	WaveBuffer *m_wfBuffer;
 
 	WaveZoomData **m_zoomData;
+
+	friend class WaveRenderer;
 };
 }
 #endif

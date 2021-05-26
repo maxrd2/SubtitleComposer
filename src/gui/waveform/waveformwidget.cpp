@@ -19,13 +19,13 @@
 
 #include "waveformwidget.h"
 #include "core/subtitleline.h"
-#include "core/richdocument.h"
 #include "videoplayer/videoplayer.h"
 #include "application.h"
 #include "actions/useraction.h"
 #include "actions/useractionnames.h"
 #include "gui/treeview/lineswidget.h"
 #include "gui/waveform/wavebuffer.h"
+#include "gui/waveform/waverenderer.h"
 #include "gui/waveform/zoombuffer.h"
 
 #include <QRect>
@@ -63,30 +63,30 @@ WaveformWidget::WaveformWidget(QWidget *parent)
 	  m_autoScroll(true),
 	  m_autoScrollPause(false),
 	  m_hoverScrollAmount(.0),
-	  m_waveformGraphics(new QWidget(this)),
+	  m_waveformGraphics(new WaveRenderer(this)),
 	  m_progressWidget(new QWidget(this)),
 	  m_visibleLinesDirty(true),
 	  m_draggedLine(nullptr),
 	  m_draggedPos(DRAG_NONE),
 	  m_draggedTime(0.),
-	  m_vertical(false),
 	  m_widgetLayout(nullptr),
 	  m_translationMode(false),
 	  m_showTranslation(false),
 	  m_wfBuffer(new WaveBuffer(this)),
 	  m_zoomData(nullptr)
 {
-	m_waveformGraphics->setAttribute(Qt::WA_OpaquePaintEvent, true);
-	m_waveformGraphics->setAttribute(Qt::WA_NoSystemBackground, true);
-	m_waveformGraphics->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
-	m_waveformGraphics->setMouseTracking(true);
+	m_widgetLayout = new QBoxLayout(QBoxLayout::LeftToRight, this);
+	m_widgetLayout->setMargin(0);
+	m_widgetLayout->setSpacing(0);
+
 	m_waveformGraphics->installEventFilter(this);
+	m_widgetLayout->addWidget(m_waveformGraphics);
 
 	m_scrollBar = new QScrollBar(Qt::Vertical, this);
-
 	m_scrollBar->setPageStep(windowSize());
 	m_scrollBar->setRange(0, windowSize());
 	m_scrollBar->installEventFilter(this);
+	m_widgetLayout->addWidget(m_scrollBar);
 
 	m_scrollAnimation = new QPropertyAnimation(m_scrollBar, "value", this);
 	m_scrollAnimation->setDuration(150);
@@ -107,12 +107,11 @@ WaveformWidget::WaveformWidget(QWidget *parent)
 	m_toolbar = new QWidget(this);
 	m_toolbar->setLayout(toolbarLayout);
 
-	m_mainLayout = new QVBoxLayout(this);
-	m_mainLayout->setMargin(0);
-	m_mainLayout->setSpacing(5);
-	m_mainLayout->addWidget(m_toolbar);
-
-	setupScrollBar();
+	QBoxLayout *mainLayout = new QVBoxLayout(this);
+	mainLayout->setMargin(0);
+	mainLayout->setSpacing(5);
+	mainLayout->addWidget(m_toolbar);
+	mainLayout->addLayout(m_widgetLayout);
 
 	setMinimumWidth(300);
 
@@ -136,41 +135,12 @@ WaveformWidget::WaveformWidget(QWidget *parent)
 
 	connect(VideoPlayer::instance(), &VideoPlayer::positionChanged, this, &WaveformWidget::onPlayerPositionChanged);
 
-	connect(SCConfig::self(), &SCConfig::configChanged, this, &WaveformWidget::onConfigChanged);
-	onConfigChanged();
-
 	m_hoverScrollTimer.setInterval(50);
 	m_hoverScrollTimer.setSingleShot(false);
 	connect(&m_hoverScrollTimer, &QTimer::timeout, this, &WaveformWidget::onHoverScrollTimeout);
 
 	connect(app(), &Application::actionsReady, this, &WaveformWidget::updateActions);
 	connect(m_wfBuffer, &WaveBuffer::waveformUpdated, this, &WaveformWidget::updateActions);
-}
-
-void
-WaveformWidget::onConfigChanged()
-{
-	m_fontNumber = QFont(SCConfig::wfFontFamily(), SCConfig::wfSubNumberFontSize());
-	m_fontNumberHeight = QFontMetrics(m_fontNumber).height();
-	m_fontText = QFont(SCConfig::wfFontFamily(), SCConfig::wfSubTextFontSize());
-
-	m_subBorderWidth = SCConfig::wfSubBorderWidth();
-
-	m_subNumberColor = QPen(QColor(SCConfig::wfSubNumberColor()), 0, Qt::SolidLine);
-	m_subTextColor = QPen(QColor(SCConfig::wfSubTextColor()), 0, Qt::SolidLine);
-
-	// FIXME: instead of using devicePixelRatioF() for pen width we should draw waveform in higher resolution
-	m_waveInner = QPen(QColor(SCConfig::wfInnerColor()), devicePixelRatioF(), Qt::SolidLine);
-	m_waveOuter = QPen(QColor(SCConfig::wfOuterColor()), devicePixelRatioF(), Qt::SolidLine);
-
-	m_subtitleBack = QColor(SCConfig::wfSubBackground());
-	m_subtitleBorder = QColor(SCConfig::wfSubBorder());
-
-	m_selectedBack = QColor(SCConfig::wfSelBackground());
-	m_selectedBorder = QColor(SCConfig::wfSelBorder());
-
-	m_playColor = QPen(QColor(SCConfig::wfPlayLocation()), 0, Qt::SolidLine);
-	m_mouseColor = QPen(QColor(SCConfig::wfMouseLocation()), 0, Qt::DotLine);
 }
 
 void
@@ -216,9 +186,9 @@ WaveformWidget::setWindowSize(const double size)
 	m_timeEnd = m_timeStart.shifted(size);
 	updateActions();
 	m_visibleLinesDirty = true;
-	const quint32 height = m_vertical ? m_waveformGraphics->height() : m_waveformGraphics->width();
-	if(height) {
-		const quint32 samplesPerPixel = m_wfBuffer->sampleRateMillis() * quint32(windowSize()) / height;
+	const quint32 span = m_waveformGraphics->span();
+	if(span) {
+		const quint32 samplesPerPixel = m_wfBuffer->sampleRateMillis() * quint32(windowSize()) / span;
 		m_wfBuffer->zoomBuffer()->setZoomScale(samplesPerPixel);
 	}
 	m_waveformGraphics->update();
@@ -361,271 +331,7 @@ WaveformWidget::updateVisibleLines()
 	}
 }
 
-static QTextLayout textLayout;
-
 void
-WaveformWidget::paintSubText(QPainter &painter, const QRect &box, RichDocument *doc)
-{
-	QFontMetrics fontMetrics(m_fontText, painter.device());
-
-	painter.save();
-	painter.setClipRect(box);
-	painter.translate(box.center());
-	if(!m_vertical) // TODO: make rotation configurable
-		painter.rotate(-45.);
-	painter.setFont(m_fontText);
-	painter.setPen(m_subTextColor);
-
-	qreal height = 0., heightTotal = -1.;
-	int nLines = doc->blockCount();
-
-	for(QTextBlock bi = doc->begin(); bi != doc->end(); bi = bi.next()) {
-		QString text;
-		QVector<QTextLayout::FormatRange> ranges;
-		for(QTextBlock::iterator it = bi.begin(); !it.atEnd(); ++it) {
-			if(!it.fragment().isValid())
-				continue;
-			const QString &t = it.fragment().text();
-			ranges.push_back(QTextLayout::FormatRange{text.length(), t.length(), it.fragment().charFormat()});
-			text.append(t);
-		}
-
-		textLayout.setText(text);
-		textLayout.setFormats(ranges);
-
-		const qreal lineStart = height;
-		textLayout.beginLayout();
-		QTextLine line = textLayout.createLine();
-		line.setLineWidth(m_vertical ? box.width() : box.height());
-		height += fontMetrics.leading();
-		line.setPosition(QPointF(0., height));
-		height += line.height();
-		textLayout.endLayout();
-
-		if(heightTotal < 0.)
-			heightTotal = nLines * height;
-
-		QRectF br = textLayout.boundingRect();
-		br.setBottom(br.top() + heightTotal);
-		QPointF textTL = -br.center();
-		textTL.ry() += lineStart;
-		textLayout.draw(&painter, textTL);
-	}
-	painter.restore();
-}
-
-void
-WaveformWidget::paintWaveform(QPainter &painter, quint32 msWindowSize, quint32 widgetHeight, quint32 widgetWidth, quint32 widgetSpan)
-{
-	const quint16 chans = m_wfBuffer->channels();
-	if(!chans)
-		return;
-
-	const quint32 samplesPerPixel = msWindowSize * m_wfBuffer->sampleRateMillis() / widgetSpan;
-	m_wfBuffer->zoomBuffer()->setZoomScale(samplesPerPixel);
-
-	if(!m_zoomData)
-		m_zoomData = new WaveZoomData *[chans];
-
-	const quint32 bufSize = m_wfBuffer->zoomBuffer()->zoomedBuffer(m_timeStart.toMillis(), m_timeEnd.toMillis(), m_zoomData);
-	if(!bufSize)
-		return;
-
-	const quint32 chHalfWidth = (m_vertical ? widgetWidth : widgetHeight) / chans / 2;
-
-	for(quint16 ch = 0; ch < chans; ch++) {
-		const qint32 chCenter = (ch * 2 + 1) * chHalfWidth;
-		for(quint32 y = 0; y < bufSize; y++) {
-			const qint32 xMin = m_zoomData[ch][y].min * chHalfWidth / SAMPLE_MAX;
-			const qint32 xMax = m_zoomData[ch][y].max * chHalfWidth / SAMPLE_MAX;
-
-			painter.setPen(m_waveOuter);
-			if(m_vertical)
-				painter.drawLine(chCenter - xMax, y, chCenter + xMax, y);
-			else
-				painter.drawLine(y, chCenter - xMax, y, chCenter + xMax);
-			painter.setPen(m_waveInner);
-			if(m_vertical)
-				painter.drawLine(chCenter - xMin, y, chCenter + xMin, y);
-			else
-				painter.drawLine(y, chCenter - xMin, y, chCenter + xMin);
-		}
-	}
-}
-
-void
-WaveformWidget::paintGraphics(QPainter &painter)
-{
-	const quint32 msWindowSize = windowSize();
-	const quint32 widgetHeight = m_waveformGraphics->height();
-	const quint32 widgetWidth = m_waveformGraphics->width();
-	const quint32 widgetSpan = m_vertical ? widgetHeight : widgetWidth;
-
-	if(widgetSpan)
-		paintWaveform(painter, msWindowSize, widgetHeight, widgetWidth, widgetSpan);
-
-	updateVisibleLines();
-
-	textLayout.setFont(m_fontText);
-	QTextOption layoutTextOption;
-	layoutTextOption.setWrapMode(QTextOption::NoWrap);
-	layoutTextOption.setAlignment(Qt::AlignCenter);
-	textLayout.setTextOption(layoutTextOption);
-	textLayout.setCacheEnabled(true);
-
-	const RangeList &selection = app()->linesWidget()->selectionRanges();
-	foreach(const SubtitleLine *sub, m_visibleLines) {
-		bool selected = selection.contains(sub->index());
-		Time timeShow = sub->showTime();
-		Time timeHide = sub->hideTime();
-		if(sub == m_draggedLine) {
-			Time newTime = m_draggedTime - m_draggedOffset;
-			if(m_draggedPos == DRAG_LINE) {
-				timeShow = newTime;
-				timeHide = timeShow + sub->durationTime();
-			} else if(m_draggedPos == DRAG_SHOW) {
-				if(newTime > timeHide) {
-					timeShow = timeHide;
-					timeHide = newTime;
-				} else {
-					timeShow = newTime;
-				}
-			} else if(m_draggedPos == DRAG_HIDE) {
-				if(timeShow > newTime) {
-					timeHide = timeShow;
-					timeShow = newTime;
-				} else {
-					timeHide = newTime;
-				}
-			}
-		}
-		if(timeShow <= m_timeEnd && m_timeStart <= timeHide) {
-			int showY = widgetSpan * (timeShow.toMillis() - m_timeStart.toMillis()) / msWindowSize;
-			int hideY = widgetSpan * (timeHide.toMillis() - m_timeStart.toMillis()) / msWindowSize;
-			QRect box;
-			if(m_vertical)
-				box = QRect(2, showY + m_subBorderWidth, widgetWidth - 4, hideY - showY - 2 * m_subBorderWidth);
-			else
-				box = QRect(showY + m_subBorderWidth, 2, hideY - showY - 2 * m_subBorderWidth, widgetHeight - 4);
-
-			if(!m_subtitle || !m_subtitle->hasAnchors() || m_subtitle->isLineAnchored(sub))
-				painter.setOpacity(1.);
-			else
-				painter.setOpacity(.5);
-
-			painter.fillRect(box, selected ? m_selectedBack : m_subtitleBack);
-
-			if(m_subBorderWidth) {
-				if(m_vertical) {
-					painter.fillRect(0, showY, widgetWidth, m_subBorderWidth, selected ? m_selectedBorder : m_subtitleBorder);
-					painter.fillRect(0, hideY - m_subBorderWidth, widgetWidth, m_subBorderWidth, selected ? m_selectedBorder : m_subtitleBorder);
-				} else {
-					painter.fillRect(showY, 0, m_subBorderWidth, widgetHeight, selected ? m_selectedBorder : m_subtitleBorder);
-					painter.fillRect(hideY - m_subBorderWidth, 0, m_subBorderWidth, widgetHeight, selected ? m_selectedBorder : m_subtitleBorder);
-				}
-			}
-
-			paintSubText(painter, box, m_showTranslation ? sub->secondaryDoc() : sub->primaryDoc());
-
-			painter.setPen(m_subNumberColor);
-			painter.setFont(m_fontNumber);
-			if(m_vertical)
-				painter.drawText(m_fontNumberHeight / 2, showY + m_fontNumberHeight + 2, QString::number(sub->number()));
-			else
-				painter.drawText(showY + m_fontNumberHeight / 2, m_fontNumberHeight + 2, QString::number(sub->number()));
-
-			if(m_subtitle && m_subtitle->isLineAnchored(sub)) {
-				static QFont fontAnchor("sans-serif", 12);
-				painter.setFont(fontAnchor);
-				if(m_vertical)
-					painter.drawText(box, Qt::AlignTop | Qt::AlignRight, QStringLiteral("\u2693"));
-				else
-					painter.drawText(box, Qt::AlignBottom | Qt::AlignLeft, QStringLiteral("\u2693"));
-			}
-		}
-	}
-
-	if(m_RMBDown) {
-		int showY = widgetSpan * (m_timeRMBPress.toMillis() - m_timeStart.toMillis()) / msWindowSize;
-		int hideY = widgetSpan * (m_timeRMBRelease.toMillis() - m_timeStart.toMillis()) / msWindowSize;
-
-		QRect box;
-		if(m_vertical)
-			box = QRect(0, showY + m_subBorderWidth, widgetWidth, hideY - showY - 2 * m_subBorderWidth);
-		else
-			box = QRect(showY + m_subBorderWidth, 0, hideY - showY - 2 * m_subBorderWidth, widgetHeight);
-
-		painter.fillRect(box, m_selectedBack);
-	}
-
-	int playY = widgetSpan * (m_timeCurrent - m_timeStart).toMillis() / msWindowSize;
-	painter.setPen(m_playColor);
-	if(m_vertical)
-		painter.drawLine(0, playY, widgetWidth, playY);
-	else
-		painter.drawLine(playY, 0, playY, widgetHeight);
-
-	painter.setPen(m_subTextColor);
-	painter.setFont(m_fontText);
-	if(m_vertical) {
-		QRect textRect(6, 4, widgetWidth - 12, widgetHeight - 8);
-		painter.drawText(textRect, Qt::AlignRight | Qt::AlignTop, m_timeStart.toString());
-		painter.drawText(textRect, Qt::AlignRight | Qt::AlignBottom, m_timeEnd.toString());
-	} else {
-		QRect textRect(4, 6, widgetWidth - 8, widgetHeight - 12);
-		painter.drawText(textRect, Qt::AlignLeft | Qt::AlignTop, m_timeStart.toString());
-		painter.drawText(textRect, Qt::AlignRight | Qt::AlignTop, m_timeEnd.toString());
-	}
-
-	painter.setPen(m_mouseColor);
-	playY = widgetSpan * (m_pointerTime - m_timeStart).toMillis() / msWindowSize;
-	if(m_vertical)
-		painter.drawLine(0, playY, widgetWidth, playY);
-	else
-		painter.drawLine(playY, 0, playY, widgetHeight);
-}
-
-void
-WaveformWidget::setupScrollBar()
-{
-	if(m_widgetLayout)
-		m_widgetLayout->deleteLater();
-
-	if(m_vertical) {
-		m_widgetLayout = new QHBoxLayout();
-		m_scrollBar->setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Expanding);
-		m_scrollBar->setOrientation(Qt::Vertical);
-	} else {
-		m_widgetLayout = new QVBoxLayout();
-		m_scrollBar->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Preferred);
-		m_scrollBar->setOrientation(Qt::Horizontal);
-	}
-
-	m_widgetLayout->setMargin(0);
-	m_widgetLayout->setSpacing(0);
-	m_widgetLayout->addWidget(m_waveformGraphics);
-	m_widgetLayout->addWidget(m_scrollBar);
-
-	m_mainLayout->insertLayout(0, m_widgetLayout);
-}
-
-/*virtual*/ void
-WaveformWidget::resizeEvent(QResizeEvent *event)
-{
-	QWidget::resizeEvent(event);
-
-	bool vertical = height() > width();
-	if(m_vertical != vertical) {
-		m_vertical = vertical;
-		setupScrollBar();
-	}
-
-	m_visibleLinesDirty = true;
-
-	m_waveformGraphics->update();
-}
-
-/*virtual*/ void
 WaveformWidget::leaveEvent(QEvent */*event*/)
 {
 	m_pointerTime.setMillisTime(Time::MaxMseconds);
@@ -640,9 +346,10 @@ WaveformWidget::leaveEvent(QEvent */*event*/)
 	}
 }
 
-/*virtual*/ bool
+bool
 WaveformWidget::eventFilter(QObject *obj, QEvent *event)
 {
+	Q_ASSERT(obj == m_scrollBar || obj == m_waveformGraphics);
 	if(obj != m_scrollBar && obj != m_waveformGraphics)
 		return false;
 
@@ -661,146 +368,7 @@ WaveformWidget::eventFilter(QObject *obj, QEvent *event)
 	}
 	case QEvent::MouseButtonPress:
 		m_autoScrollPause = true;
-		break; // do not capture mouse presses
-
-	default:
-		break;
-	}
-
-	if(obj != m_waveformGraphics)
-		return false;
-
-	switch(event->type()) {
-	case QEvent::Paint: {
-		QPainter painter(m_waveformGraphics);
-		painter.fillRect(static_cast<QPaintEvent *>(event)->rect(), Qt::black);
-		paintGraphics(painter);
-		return true;
-	}
-
-	case QEvent::MouseMove: {
-		QMouseEvent *mouse = static_cast<QMouseEvent *>(event);
-		int y = m_vertical ? mouse->y() : mouse->x();
-
-		m_pointerTime = timeAt(y);
-
-		if(m_RMBDown) {
-			m_timeRMBRelease = m_pointerTime;
-			scrollToTime(m_pointerTime, false);
-		}
-
-		if(m_MMBDown) {
-			scrollToTime(m_pointerTime, false);
-			emit middleMouseMove(m_pointerTime);
-		}
-
-		if(m_draggedLine) {
-			m_draggedTime = m_pointerTime;
-			scrollToTime(m_pointerTime, false);
-		} else {
-			SubtitleLine *sub = nullptr;
-			WaveformWidget::DragPosition res = subtitleAt(y, &sub);
-			if(sub && m_subtitle->hasAnchors() && !m_subtitle->isLineAnchored(sub))
-				m_waveformGraphics->setCursor(QCursor(Qt::ForbiddenCursor));
-			else if(res == DRAG_LINE)
-				m_waveformGraphics->setCursor(QCursor(m_vertical ? Qt::SizeVerCursor : Qt::SizeHorCursor));
-			else if(res == DRAG_SHOW || res == DRAG_HIDE)
-				m_waveformGraphics->setCursor(QCursor(m_vertical ? Qt::SplitVCursor : Qt::SplitHCursor));
-			else
-				m_waveformGraphics->unsetCursor();
-		}
-
-		m_waveformGraphics->update();
-
-		return true;
-	}
-
-	case QEvent::MouseButtonDblClick: {
-		QMouseEvent *mouse = static_cast<QMouseEvent *>(event);
-		emit doubleClick(timeAt(m_vertical ? mouse->y() : mouse->x()));
-		return true;
-	}
-
-	case QEvent::MouseButtonPress: {
-		QMouseEvent *mouse = static_cast<QMouseEvent *>(event);
-		int y = m_vertical ? mouse->y() : mouse->x();
-
-		if(mouse->button() == Qt::RightButton) {
-			m_timeRMBPress = m_timeRMBRelease = timeAt(y);
-			m_RMBDown = true;
-			return false;
-		}
-
-		if(mouse->button() == Qt::MiddleButton) {
-			m_MMBDown = true;
-			emit middleMouseDown(timeAt(y));
-			return false;
-		}
-
-		if(mouse->button() != Qt::LeftButton)
-			return false;
-
-		m_draggedPos = subtitleAt(y, &m_draggedLine);
-		if(m_draggedLine && m_subtitle->hasAnchors() && !m_subtitle->isLineAnchored(m_draggedLine)) {
-			m_draggedTime = 0.;
-			m_draggedPos = DRAG_NONE;
-			m_draggedLine = nullptr;
-		} else {
-			m_pointerTime = timeAt(y);
-			m_draggedTime = m_pointerTime;
-			if(m_draggedPos == DRAG_LINE || m_draggedPos == DRAG_SHOW)
-				m_draggedOffset = m_pointerTime.toMillis() - m_draggedLine->showTime().toMillis();
-			else if(m_draggedPos == DRAG_HIDE)
-				m_draggedOffset = m_pointerTime.toMillis() - m_draggedLine->hideTime().toMillis();
-		}
-
-		if(m_draggedLine)
-			emit dragStart(m_draggedLine, m_draggedPos);
-
-		return true;
-	}
-
-	case QEvent::MouseButtonRelease: {
-		QMouseEvent *mouse = static_cast<QMouseEvent *>(event);
-		int y = m_vertical ? mouse->y() : mouse->x();
-
-		if(mouse->button() == Qt::RightButton) {
-			m_timeRMBRelease = timeAt(y);
-			m_hoverScrollTimer.stop();
-			showContextMenu(mouse);
-			m_RMBDown = false;
-			return false;
-		}
-
-		if(mouse->button() == Qt::MiddleButton) {
-			emit middleMouseUp(timeAt(y));
-			m_hoverScrollTimer.stop();
-			m_MMBDown = false;
-			return true;
-		}
-
-		if(mouse->button() != Qt::LeftButton)
-			return false;
-
-		if(m_draggedLine) {
-			m_draggedTime = timeAt(y);
-			if(m_draggedPos == DRAG_LINE) {
-				m_draggedLine->setTimes(m_draggedTime - m_draggedOffset, m_draggedTime - m_draggedOffset + m_draggedLine->durationTime());
-			} else if(m_draggedPos == DRAG_SHOW) {
-				Time newTime = m_draggedTime - m_draggedOffset;
-				m_draggedLine->setShowTime(newTime, true);
-			} else if(m_draggedPos == DRAG_HIDE) {
-				Time newTime = m_draggedTime - m_draggedOffset;
-				m_draggedLine->setHideTime(newTime, true);
-			}
-
-			emit dragEnd(m_draggedLine, m_draggedPos);
-		}
-		m_draggedLine = nullptr;
-		m_draggedPos = DRAG_NONE;
-		m_draggedTime = 0.;
-		return true;
-	}
+		return false; // do not capture mouse presses
 
 	default:
 		return false;
@@ -810,9 +378,7 @@ WaveformWidget::eventFilter(QObject *obj, QEvent *event)
 Time
 WaveformWidget::timeAt(int y)
 {
-	int height = m_vertical ? m_waveformGraphics->height() : m_waveformGraphics->width();
-//	return m_timeStart + double(y) * m_samplesPerPixel / SAMPLE_RATE_MILIS;
-	return m_timeStart + double(y * qint32(windowSize()) / height);
+	return m_timeStart + double(y * qint32(windowSize()) / m_waveformGraphics->span());
 }
 
 WaveformWidget::DragPosition
@@ -889,12 +455,123 @@ WaveformWidget::onHoverScrollTimeout()
 	if(m_hoverScrollAmount == .0)
 		return;
 
-	m_pointerTime += m_hoverScrollAmount;
+	const Time ptrTime(m_pointerTime.toMillis() + m_hoverScrollAmount);
 	if(m_draggedLine)
-		m_draggedTime = m_pointerTime;
+		m_draggedTime = ptrTime;
 	if(m_RMBDown)
-		m_timeRMBRelease = m_pointerTime;
+		m_timeRMBRelease = ptrTime;
 	m_scrollBar->setValue(m_timeStart.toMillis() + m_hoverScrollAmount);
+}
+
+void
+WaveformWidget::updatePointerTime(int pos)
+{
+	m_pointerTime = timeAt(pos);
+
+	if(m_RMBDown) {
+		m_timeRMBRelease = m_pointerTime;
+		scrollToTime(m_pointerTime, false);
+	}
+
+	if(m_MMBDown) {
+		scrollToTime(m_pointerTime, false);
+		emit middleMouseMove(m_pointerTime);
+	}
+
+	if(m_draggedLine) {
+		m_draggedTime = m_pointerTime;
+		scrollToTime(m_pointerTime, false);
+	} else {
+		SubtitleLine *sub = nullptr;
+		WaveformWidget::DragPosition res = subtitleAt(pos, &sub);
+		if(sub && m_subtitle->hasAnchors() && !m_subtitle->isLineAnchored(sub))
+			m_waveformGraphics->setCursor(QCursor(Qt::ForbiddenCursor));
+		else if(res == DRAG_LINE)
+			m_waveformGraphics->setCursor(QCursor(m_waveformGraphics->vertical() ? Qt::SizeVerCursor : Qt::SizeHorCursor));
+		else if(res == DRAG_SHOW || res == DRAG_HIDE)
+			m_waveformGraphics->setCursor(QCursor(m_waveformGraphics->vertical() ? Qt::SplitVCursor : Qt::SplitHCursor));
+		else
+			m_waveformGraphics->unsetCursor();
+	}
+}
+
+bool
+WaveformWidget::mousePress(int pos, Qt::MouseButton button)
+{
+	if(button == Qt::RightButton) {
+		m_timeRMBPress = m_timeRMBRelease = timeAt(pos);
+		m_RMBDown = true;
+		return false;
+	}
+
+	if(button == Qt::MiddleButton) {
+		m_MMBDown = true;
+		emit middleMouseDown(timeAt(pos));
+		return false;
+	}
+
+	if(button != Qt::LeftButton)
+		return false;
+
+	m_draggedPos = subtitleAt(pos, &m_draggedLine);
+	if(m_draggedLine && m_subtitle->hasAnchors() && !m_subtitle->isLineAnchored(m_draggedLine)) {
+		m_draggedTime = 0.;
+		m_draggedPos = DRAG_NONE;
+		m_draggedLine = nullptr;
+	} else {
+		m_pointerTime = timeAt(pos);
+		m_draggedTime = m_pointerTime;
+		if(m_draggedPos == DRAG_LINE || m_draggedPos == DRAG_SHOW)
+			m_draggedOffset = m_pointerTime.toMillis() - m_draggedLine->showTime().toMillis();
+		else if(m_draggedPos == DRAG_HIDE)
+			m_draggedOffset = m_pointerTime.toMillis() - m_draggedLine->hideTime().toMillis();
+	}
+
+	if(m_draggedLine)
+		emit dragStart(m_draggedLine, m_draggedPos);
+
+	return true;
+}
+
+bool
+WaveformWidget::mouseRelease(int pos, Qt::MouseButton button, QPoint globalPos)
+{
+	if(button == Qt::RightButton) {
+		m_timeRMBRelease = timeAt(pos);
+		m_hoverScrollTimer.stop();
+		showContextMenu(globalPos);
+		m_RMBDown = false;
+		return false;
+	}
+
+	if(button == Qt::MiddleButton) {
+		emit middleMouseUp(timeAt(pos));
+		m_hoverScrollTimer.stop();
+		m_MMBDown = false;
+		return true;
+	}
+
+	if(button != Qt::LeftButton)
+		return false;
+
+	if(m_draggedLine) {
+		m_draggedTime = timeAt(pos);
+		if(m_draggedPos == DRAG_LINE) {
+			m_draggedLine->setTimes(m_draggedTime - m_draggedOffset, m_draggedTime - m_draggedOffset + m_draggedLine->durationTime());
+		} else if(m_draggedPos == DRAG_SHOW) {
+			Time newTime = m_draggedTime - m_draggedOffset;
+			m_draggedLine->setShowTime(newTime, true);
+		} else if(m_draggedPos == DRAG_HIDE) {
+			Time newTime = m_draggedTime - m_draggedOffset;
+			m_draggedLine->setHideTime(newTime, true);
+		}
+
+		emit dragEnd(m_draggedLine, m_draggedPos);
+	}
+	m_draggedLine = nullptr;
+	m_draggedPos = DRAG_NONE;
+	m_draggedTime = 0.;
+	return true;
 }
 
 bool
@@ -965,7 +642,7 @@ WaveformWidget::createToolButton(const QString &actionName, int iconSize)
 }
 
 void
-WaveformWidget::showContextMenu(QMouseEvent *event)
+WaveformWidget::showContextMenu(QPoint pos)
 {
 	static QMenu *menu = nullptr;
 	static QList<QAction *> needCurrentLine;
@@ -1058,7 +735,7 @@ WaveformWidget::showContextMenu(QMouseEvent *event)
 	foreach(QAction *action, needSubtitle)
 		action->setDisabled(m_subtitle == nullptr);
 
-	menu->exec(event->globalPos());
+	menu->exec(pos);
 }
 
 void
