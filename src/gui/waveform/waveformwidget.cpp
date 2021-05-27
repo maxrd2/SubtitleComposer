@@ -148,8 +148,6 @@ WaveformWidget::WaveformWidget(QWidget *parent)
 	connect(app(), &Application::actionsReady, this, &WaveformWidget::updateActions);
 	connect(m_wfBuffer, &WaveBuffer::waveformUpdated, this, [this]() {
 		onWaveformResize(m_waveformGraphics->span());
-		updateActions();
-		updateZoomBuffer();
 	});
 }
 
@@ -206,11 +204,6 @@ WaveformWidget::setZoom(quint32 val)
 
 	m_wfBuffer->zoomBuffer()->setZoomScale(val);
 
-	QSignalBlocker s(m_scrollBar);
-	const int ws = windowSizeInner();
-	m_scrollBar->setPageStep(ws);
-	m_scrollBar->setRange(0, m_wfBuffer->waveformDuration() * 1000 - ws);
-
 	const quint32 samMS = m_wfBuffer->sampleRateMillis();
 	if(samMS) {
 		const qint32 msSpanOld = m_zoom * span / samMS;
@@ -219,14 +212,37 @@ WaveformWidget::setZoom(quint32 val)
 		const quint32 msSpanNew = val * span / samMS;
 		m_timeStart.shift((msSpanOld - qint32(msSpanNew)) / 2);
 		m_timeEnd = m_timeStart.shifted(msSpanNew);
-
-		m_scrollBar->setValue(m_timeStart.toMillis());
-		updateZoomBuffer();
+		handleTimeUpdate(msSpanNew);
 	} else {
 		m_zoom = val;
 	}
 
 	updateActions();
+}
+
+void
+WaveformWidget::handleTimeUpdate(quint32 msSpan)
+{
+	// make sure start time is good
+	const quint32 msDuration = m_wfBuffer->waveformDuration() * 1000;
+	const quint32 maxTime = msDuration < msSpan ? 0 : msDuration - msSpan;
+	if(m_timeStart.toMillis() > maxTime) {
+		m_timeStart.setMillisTime(maxTime);
+		m_timeEnd.setMillisTime(maxTime + msSpan);
+	}
+
+	QSignalBlocker s(m_scrollBar);
+	m_scrollBar->setPageStep(msSpan);
+	m_scrollBar->setRange(0, maxTime);
+	m_scrollBar->setValue(m_timeStart.toMillis());
+
+	const quint16 chans = m_wfBuffer->channels();
+	if(chans) {
+		m_wfBuffer->zoomBuffer()->setZoomScale(m_zoom);
+		if(!m_zoomData)
+			m_zoomData = new WaveZoomData *[chans];
+		m_wfBuffer->zoomBuffer()->zoomedBuffer(m_timeStart.toMillis(), m_timeEnd.toMillis(), m_zoomData, &m_zoomDataLen);
+	}
 
 	m_visibleLinesDirty = true;
 	m_waveformGraphics->update();
@@ -235,11 +251,16 @@ WaveformWidget::setZoom(quint32 val)
 void
 WaveformWidget::onWaveformResize(quint32 span)
 {
-	m_visibleLinesDirty = true;
-
 	const quint32 samMS = m_wfBuffer->sampleRateMillis();
-	if(samMS)
-		m_timeEnd = m_timeStart.shifted(m_zoom * span / samMS);
+	if(samMS) {
+		const double windowSize = m_zoom * span / samMS;
+		m_timeEnd = m_timeStart.shifted(windowSize);
+		handleTimeUpdate(windowSize);
+		updateActions();
+	} else {
+		m_visibleLinesDirty = true;
+		m_waveformGraphics->update();
+	}
 }
 
 void
@@ -260,7 +281,7 @@ void
 WaveformWidget::setAutoscroll(bool autoscroll)
 {
 	m_autoScroll = autoscroll;
-	updateActions();
+	app()->action(ACT_WAVEFORM_AUTOSCROLL)->setChecked(m_autoScroll);
 }
 
 void
@@ -269,26 +290,7 @@ WaveformWidget::onScrollBarValueChanged(int value)
 	double winSize = windowSize();
 	m_timeStart = value;
 	m_timeEnd = m_timeStart.shifted(winSize);
-
-	updateZoomBuffer();
-
-	m_visibleLinesDirty = true;
-	m_waveformGraphics->update();
-}
-
-void
-WaveformWidget::updateZoomBuffer()
-{
-	const quint16 chans = m_wfBuffer->channels();
-	if(!chans)
-		return;
-
-	m_wfBuffer->zoomBuffer()->setZoomScale(m_zoom);
-
-	if(!m_zoomData)
-		m_zoomData = new WaveZoomData *[chans];
-
-	m_wfBuffer->zoomBuffer()->zoomedBuffer(m_timeStart.toMillis(), m_timeEnd.toMillis(), m_zoomData, &m_zoomDataLen);
+	handleTimeUpdate(winSize);
 }
 
 void
@@ -352,9 +354,10 @@ WaveformWidget::setNullAudioStream(quint64 msecVideoLength)
 {
 	clearAudioStream();
 
+	m_timeStart.setMillisTime(0.);
+	m_timeStart.setMillisTime(msecVideoLength);
+	// will do onTimeUpdated() during event from m_wfBuffer->setNullAudioStream()
 	m_wfBuffer->setNullAudioStream(msecVideoLength);
-
-	m_scrollBar->setRange(0, m_wfBuffer->waveformDuration() * 1000 - windowSize());
 }
 
 void

@@ -117,7 +117,7 @@ private:
 	void onWaveformResize(quint32 span);
 	void onWaveformRotate(bool vertical);
 
-	void updateZoomBuffer();
+	void handleTimeUpdate(quint32 msSpan);
 
 	QToolButton * createToolButton(const QString &actionName, int iconSize=16);
 	void updateActions();
