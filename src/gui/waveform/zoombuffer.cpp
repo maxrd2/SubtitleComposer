@@ -91,7 +91,14 @@ ZoomBuffer::run()
 
 		m_rangeMutex.lock();
 
-		while(range != m_ranges.end()) {
+		for(;;) {
+			if(range == m_ranges.end()) {
+				msleep(25); // wait a bit to get more samples and avoid thread restart
+				const quint32 lastAvailable = m_waveBuffer->samplesAvailable() / m_samplesPerPixel;
+				if(last != lastAvailable)
+					m_ranges.push_back(DataRange{last, lastAvailable});
+				break;
+			}
 			if(range->end <= last) {
 				// whole range was processed
 				if(range == m_requestedRange)
@@ -137,27 +144,12 @@ ZoomBuffer::setZoomScale(quint32 samplesPerPixel)
 }
 
 void
-ZoomBuffer::addRange(quint32 sampleStart, quint32 sampleEnd)
+ZoomBuffer::resume()
 {
 	QMutexLocker l(&m_publicMutex);
 
-	if(!m_samplesPerPixel)
-		return;
-
-	sampleStart /= m_samplesPerPixel;
-	sampleEnd /= m_samplesPerPixel;
-
-	m_rangeMutex.lock();
-
-	if(!m_ranges.empty() && sampleStart <= m_ranges.back().end)
-		m_ranges.back().end = sampleEnd;
-	else
-		m_ranges.push_back(DataRange{sampleStart, sampleEnd});
-
-	if(m_waveform)
+	if(m_samplesPerPixel && m_waveform)
 		start();
-
-	m_rangeMutex.unlock();
 }
 
 quint32

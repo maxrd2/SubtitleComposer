@@ -191,8 +191,6 @@ WaveBuffer::onStreamData(const void *buffer, qint32 size, const WaveFormat *wave
 
 	const SAMPLE_TYPE *sample = reinterpret_cast<const SAMPLE_TYPE *>(buffer);
 
-	const quint32 offsetStart = m_wfFrame->offset;
-
 	{ // handle overlaps and holes between buffers (tested streams had ~2ms error - might be useless)
 		Q_ASSERT(msecStart >= 0);
 		const quint32 inStartOffset = msecStart * m_samplesSec / 1000;
@@ -256,5 +254,5 @@ WaveBuffer::onStreamData(const void *buffer, qint32 size, const WaveFormat *wave
 	}
 	m_wfFrame->overflow = len;
 
-	m_zoomBuffer->addRange(offsetStart, m_wfFrame->offset);
+	m_zoomBuffer->resume();
 }

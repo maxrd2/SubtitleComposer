@@ -36,7 +36,7 @@ private:
 	explicit ZoomBuffer(WaveBuffer *parent);
 	virtual ~ZoomBuffer();
 
-	void addRange(quint32 sampleStart, quint32 sampleEnd);
+	void resume();
 	void run() override;
 	void setWaveform(const SAMPLE_TYPE * const *waveform);
 	quint32 updateZoomRange(quint32 start, quint32 end);
