@@ -81,17 +81,9 @@ WaveRenderer::event(QEvent *evt)
 		bool vertical = height() > width();
 		if(m_vertical != vertical) {
 			m_vertical = vertical;
-			if(vertical) {
-				m_wfw->m_widgetLayout->setDirection(QBoxLayout::LeftToRight);
-				m_wfw->m_scrollBar->setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Expanding);
-				m_wfw->m_scrollBar->setOrientation(Qt::Vertical);
-			} else {
-				m_wfw->m_widgetLayout->setDirection(QBoxLayout::TopToBottom);
-				m_wfw->m_scrollBar->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Preferred);
-				m_wfw->m_scrollBar->setOrientation(Qt::Horizontal);
-			}
+			m_wfw->onWaveformRotate(m_vertical);
 		}
-		m_wfw->m_visibleLinesDirty = true;
+		m_wfw->onWaveformResize(span());
 		break;
 	}
 
@@ -188,14 +180,14 @@ WaveRenderer::paintSubText(QPainter &painter, const QRect &box, RichDocument *do
 }
 
 void
-WaveRenderer::paintWaveform(QPainter &painter, quint32 msWindowSize, quint32 widgetHeight, quint32 widgetWidth, quint32 widgetSpan)
+WaveRenderer::paintWaveform(QPainter &painter, quint32 widgetWidth, quint32 widgetHeight)
 {
 	const quint16 chans = m_wfw->m_wfBuffer->channels();
 	if(!chans)
 		return;
 
-	const quint32 samplesPerPixel = msWindowSize * m_wfw->m_wfBuffer->sampleRateMillis() / widgetSpan;
-	m_wfw->m_wfBuffer->zoomBuffer()->setZoomScale(samplesPerPixel);
+	// FIXME: not here.... set zoom scale sooner... after waveform is opened/ready
+	m_wfw->m_wfBuffer->zoomBuffer()->setZoomScale(m_wfw->m_zoom);
 
 	if(!m_wfw->m_zoomData)
 		m_wfw->m_zoomData = new WaveZoomData *[chans];
@@ -235,7 +227,7 @@ WaveRenderer::paintGraphics(QPainter &painter)
 	const quint32 widgetSpan = m_vertical ? widgetHeight : widgetWidth;
 
 	if(widgetSpan)
-		paintWaveform(painter, msWindowSize, widgetHeight, widgetWidth, widgetSpan);
+		paintWaveform(painter, widgetWidth, widgetHeight);
 
 	m_wfw->updateVisibleLines();
 

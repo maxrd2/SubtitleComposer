@@ -44,7 +44,7 @@ private:
 	bool event(QEvent *evt) override;
 
 	void paintGraphics(QPainter &painter);
-	void paintWaveform(QPainter &painter, quint32 msWindowSize, quint32 widgetHeight, quint32 widgetWidth, quint32 widgetSpan);
+	void paintWaveform(QPainter &painter, quint32 widgetWidth, quint32 widgetHeight);
 	void paintSubText(QPainter &painter, const QRect &box, RichDocument *doc);
 
 	void onConfigChanged();

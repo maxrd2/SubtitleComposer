@@ -56,6 +56,7 @@ WaveformWidget::WaveformWidget(QWidget *parent)
 	  m_timeStart(0.),
 	  m_timeCurrent(0.),
 	  m_timeEnd(WaveBuffer::MAX_WINDOW_ZOOM()),
+	  m_zoom(1),
 	  m_RMBDown(false),
 	  m_MMBDown(false),
 	  m_scrollBar(nullptr),
@@ -147,13 +148,15 @@ void
 WaveformWidget::updateActions()
 {
 	const Application *app = SubtitleComposer::app();
-	const quint32 size = windowSize();
+
+	const quint32 span = m_waveformGraphics->span();
+	const quint32 maxZoom = span ? m_wfBuffer->lengthSamples() / span : 0;
 
 	m_btnZoomIn->setDefaultAction(app->action(ACT_WAVEFORM_ZOOM_IN));
-	m_btnZoomIn->setEnabled(size > WaveBuffer::MAX_WINDOW_ZOOM());
+	m_btnZoomIn->setEnabled(m_zoom > 1);
 
 	m_btnZoomOut->setDefaultAction(app->action(ACT_WAVEFORM_ZOOM_OUT));
-	m_btnZoomOut->setEnabled(m_wfBuffer->sampleRateMillis() && size < m_wfBuffer->lengthMillis());
+	m_btnZoomOut->setEnabled(m_zoom < maxZoom);
 
 	QAction *action = app->action(ACT_WAVEFORM_AUTOSCROLL);
 	action->setChecked(m_autoScroll);
@@ -174,48 +177,87 @@ WaveformWidget::windowSizeInner(double *autoScrollPadding) const
 	if(autoScrollPadding)
 		*autoScrollPadding = scrollPad;
 	const double innerSize = winSize - 2. * scrollPad;
-	return innerSize > 1. ? innerSize : 1.;
+	return qMax(innerSize, 1.);
 }
 
 void
-WaveformWidget::setWindowSize(const double size)
+WaveformWidget::setZoom(quint32 val)
 {
-	if(size == windowSize())
+	const quint32 span = m_waveformGraphics->span();
+	if(!span)
+		return;
+	const quint32 maxZoom = m_wfBuffer->lengthSamples() / span;
+	if(val > maxZoom)
+		val = maxZoom;
+	if(val < 1)
+		val = 1;
+
+	if(m_zoom == val)
 		return;
 
-	m_timeEnd = m_timeStart.shifted(size);
-	updateActions();
-	m_visibleLinesDirty = true;
-	const quint32 span = m_waveformGraphics->span();
-	if(span) {
-		const quint32 samplesPerPixel = m_wfBuffer->sampleRateMillis() * quint32(windowSize()) / span;
-		m_wfBuffer->zoomBuffer()->setZoomScale(samplesPerPixel);
-	}
-	m_waveformGraphics->update();
+	m_wfBuffer->zoomBuffer()->setZoomScale(val);
+
+	QSignalBlocker s(m_scrollBar);
 	const int ws = windowSizeInner();
 	m_scrollBar->setPageStep(ws);
 	m_scrollBar->setRange(0, m_wfBuffer->waveformDuration() * 1000 - ws);
+
+	const quint32 samMS = m_wfBuffer->sampleRateMillis();
+	if(samMS) {
+		const quint32 msSpanNew = val * span / samMS;
+		m_timeStart.shift((qint32(m_zoom * span / samMS) - qint32(msSpanNew)) / 2);
+		m_timeEnd = m_timeStart.shifted(msSpanNew);
+		m_scrollBar->setValue(m_timeStart.toMillis());
+	}
+	m_zoom = val;
+
+	updateActions();
+
+	m_visibleLinesDirty = true;
+	m_waveformGraphics->update();
+}
+
+void
+WaveformWidget::onWaveformResize(quint32 span)
+{
+	m_visibleLinesDirty = true;
+
+	const quint32 samMS = m_wfBuffer->sampleRateMillis();
+	if(samMS)
+		m_timeEnd = m_timeStart.shifted(m_zoom * span / samMS);
+}
+
+void
+WaveformWidget::onWaveformRotate(bool vertical)
+{
+	if(vertical) {
+		m_widgetLayout->setDirection(QBoxLayout::LeftToRight);
+		m_scrollBar->setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Expanding);
+		m_scrollBar->setOrientation(Qt::Vertical);
+	} else {
+		m_widgetLayout->setDirection(QBoxLayout::TopToBottom);
+		m_scrollBar->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Preferred);
+		m_scrollBar->setOrientation(Qt::Horizontal);
+	}
 }
 
 void
 WaveformWidget::zoomIn()
 {
-	const double winSize = windowSize();
-	if(winSize <= WaveBuffer::MAX_WINDOW_ZOOM())
+	const quint32 z = zoom();
+	if(z <= 1)
 		return;
-	m_scrollBar->setValue(m_timeStart.toMillis() + winSize / 4);
-	setWindowSize(winSize / 2);
+	setZoom(z / 2);
 }
 
 void
 WaveformWidget::zoomOut()
 {
-	const double winSize = windowSize();
+	const quint32 z = zoom();
 	const quint32 totalLength = m_wfBuffer->lengthMillis();
-	if(winSize >= totalLength)
+	if(z >= totalLength)
 		return;
-	m_scrollBar->setValue(m_timeStart.toMillis() - winSize / 2);
-	setWindowSize(winSize * 2);
+	setZoom(z * 2);
 }
 
 void
@@ -363,7 +405,7 @@ WaveformWidget::eventFilter(QObject *obj, QEvent *event)
 
 		m_autoScrollPause = true;
 
-		m_scrollBar->setValue(m_timeStart.shifted(-4 * double(delta.ry()) * windowSize() / m_waveformGraphics->height()).toMillis());
+		m_scrollBar->setValue(m_timeStart.shifted(-4 * double(delta.ry()) * windowSize() / m_waveformGraphics->span()).toMillis());
 		return true;
 	}
 	case QEvent::MouseButtonPress:

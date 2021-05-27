@@ -57,10 +57,11 @@ public:
 	explicit WaveformWidget(QWidget *parent = nullptr);
 	virtual ~WaveformWidget();
 
+	void setZoom(quint32 val);
+	inline quint32 zoom() const { return m_zoom; }
+
 	inline double windowSize() const { return (m_timeEnd - m_timeStart).toMillis(); }
 	double windowSizeInner(double *autoScrollPadding = nullptr) const;
-
-	void setWindowSize(const double size);
 
 	QWidget *progressWidget();
 
@@ -112,6 +113,9 @@ private slots:
 	void onHoverScrollTimeout();
 
 private:
+	void onWaveformResize(quint32 span);
+	void onWaveformRotate(bool vertical);
+
 	QToolButton * createToolButton(const QString &actionName, int iconSize=16);
 	void updateActions();
 	void updateVisibleLines();
@@ -131,6 +135,7 @@ private:
 	Time m_timeStart;
 	Time m_timeCurrent;
 	Time m_timeEnd;
+	quint32 m_zoom; // reflects samples/pixel
 
 	Time m_timeRMBPress;
 	Time m_timeRMBRelease;
