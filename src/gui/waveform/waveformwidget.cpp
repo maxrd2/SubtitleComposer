@@ -48,6 +48,8 @@
 
 using namespace SubtitleComposer;
 
+#define ZOOM_MIN (1 << 3)
+
 WaveformWidget::WaveformWidget(QWidget *parent)
 	: QWidget(parent),
 	  m_mediaFile(QString()),
@@ -74,7 +76,8 @@ WaveformWidget::WaveformWidget(QWidget *parent)
 	  m_translationMode(false),
 	  m_showTranslation(false),
 	  m_wfBuffer(new WaveBuffer(this)),
-	  m_zoomData(nullptr)
+	  m_zoomData(nullptr),
+	  m_zoomDataLen(0)
 {
 	m_widgetLayout = new QBoxLayout(QBoxLayout::LeftToRight, this);
 	m_widgetLayout->setMargin(0);
@@ -82,6 +85,8 @@ WaveformWidget::WaveformWidget(QWidget *parent)
 
 	m_waveformGraphics->installEventFilter(this);
 	m_widgetLayout->addWidget(m_waveformGraphics);
+
+	connect(m_wfBuffer->zoomBuffer(), &ZoomBuffer::zoomedBufferReady, m_waveformGraphics, QOverload<>::of(&QWidget::update));
 
 	m_scrollBar = new QScrollBar(Qt::Vertical, this);
 	m_scrollBar->setPageStep(windowSize());
@@ -141,7 +146,11 @@ WaveformWidget::WaveformWidget(QWidget *parent)
 	connect(&m_hoverScrollTimer, &QTimer::timeout, this, &WaveformWidget::onHoverScrollTimeout);
 
 	connect(app(), &Application::actionsReady, this, &WaveformWidget::updateActions);
-	connect(m_wfBuffer, &WaveBuffer::waveformUpdated, this, &WaveformWidget::updateActions);
+	connect(m_wfBuffer, &WaveBuffer::waveformUpdated, this, [this]() {
+		onWaveformResize(m_waveformGraphics->span());
+		updateActions();
+		updateZoomBuffer();
+	});
 }
 
 void
@@ -153,7 +162,7 @@ WaveformWidget::updateActions()
 	const quint32 maxZoom = span ? m_wfBuffer->lengthSamples() / span : 0;
 
 	m_btnZoomIn->setDefaultAction(app->action(ACT_WAVEFORM_ZOOM_IN));
-	m_btnZoomIn->setEnabled(m_zoom > 1);
+	m_btnZoomIn->setEnabled(m_zoom > ZOOM_MIN);
 
 	m_btnZoomOut->setDefaultAction(app->action(ACT_WAVEFORM_ZOOM_OUT));
 	m_btnZoomOut->setEnabled(m_zoom < maxZoom);
@@ -184,13 +193,13 @@ void
 WaveformWidget::setZoom(quint32 val)
 {
 	const quint32 span = m_waveformGraphics->span();
-	if(!span)
-		return;
-	const quint32 maxZoom = m_wfBuffer->lengthSamples() / span;
-	if(val > maxZoom)
-		val = maxZoom;
-	if(val < 1)
-		val = 1;
+	if(span) {
+		const quint32 maxZoom = m_wfBuffer->lengthSamples() / span;
+		if(maxZoom && val > maxZoom)
+			val = maxZoom;
+	}
+	if(val < ZOOM_MIN)
+		val = ZOOM_MIN;
 
 	if(m_zoom == val)
 		return;
@@ -204,12 +213,18 @@ WaveformWidget::setZoom(quint32 val)
 
 	const quint32 samMS = m_wfBuffer->sampleRateMillis();
 	if(samMS) {
+		const qint32 msSpanOld = m_zoom * span / samMS;
+		m_zoom = val;
+
 		const quint32 msSpanNew = val * span / samMS;
-		m_timeStart.shift((qint32(m_zoom * span / samMS) - qint32(msSpanNew)) / 2);
+		m_timeStart.shift((msSpanOld - qint32(msSpanNew)) / 2);
 		m_timeEnd = m_timeStart.shifted(msSpanNew);
+
 		m_scrollBar->setValue(m_timeStart.toMillis());
+		updateZoomBuffer();
+	} else {
+		m_zoom = val;
 	}
-	m_zoom = val;
 
 	updateActions();
 
@@ -242,25 +257,6 @@ WaveformWidget::onWaveformRotate(bool vertical)
 }
 
 void
-WaveformWidget::zoomIn()
-{
-	const quint32 z = zoom();
-	if(z <= 1)
-		return;
-	setZoom(z / 2);
-}
-
-void
-WaveformWidget::zoomOut()
-{
-	const quint32 z = zoom();
-	const quint32 totalLength = m_wfBuffer->lengthMillis();
-	if(z >= totalLength)
-		return;
-	setZoom(z * 2);
-}
-
-void
 WaveformWidget::setAutoscroll(bool autoscroll)
 {
 	m_autoScroll = autoscroll;
@@ -274,8 +270,25 @@ WaveformWidget::onScrollBarValueChanged(int value)
 	m_timeStart = value;
 	m_timeEnd = m_timeStart.shifted(winSize);
 
+	updateZoomBuffer();
+
 	m_visibleLinesDirty = true;
 	m_waveformGraphics->update();
+}
+
+void
+WaveformWidget::updateZoomBuffer()
+{
+	const quint16 chans = m_wfBuffer->channels();
+	if(!chans)
+		return;
+
+	m_wfBuffer->zoomBuffer()->setZoomScale(m_zoom);
+
+	if(!m_zoomData)
+		m_zoomData = new WaveZoomData *[chans];
+
+	m_wfBuffer->zoomBuffer()->zoomedBuffer(m_timeStart.toMillis(), m_timeEnd.toMillis(), m_zoomData, &m_zoomDataLen);
 }
 
 void
@@ -354,6 +367,7 @@ WaveformWidget::clearAudioStream()
 
 	delete[] m_zoomData;
 	m_zoomData = nullptr;
+	m_zoomDataLen = 0;
 }
 
 void

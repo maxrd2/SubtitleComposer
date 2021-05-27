@@ -183,24 +183,14 @@ void
 WaveRenderer::paintWaveform(QPainter &painter, quint32 widgetWidth, quint32 widgetHeight)
 {
 	const quint16 chans = m_wfw->m_wfBuffer->channels();
-	if(!chans)
-		return;
-
-	// FIXME: not here.... set zoom scale sooner... after waveform is opened/ready
-	m_wfw->m_wfBuffer->zoomBuffer()->setZoomScale(m_wfw->m_zoom);
-
-	if(!m_wfw->m_zoomData)
-		m_wfw->m_zoomData = new WaveZoomData *[chans];
-
-	const quint32 bufSize = m_wfw->m_wfBuffer->zoomBuffer()->zoomedBuffer(m_wfw->m_timeStart.toMillis(), m_wfw->m_timeEnd.toMillis(), m_wfw->m_zoomData);
-	if(!bufSize)
+	if(!chans || !m_wfw->m_zoomDataLen)
 		return;
 
 	const quint32 chHalfWidth = (m_vertical ? widgetWidth : widgetHeight) / chans / 2;
 
 	for(quint16 ch = 0; ch < chans; ch++) {
 		const qint32 chCenter = (ch * 2 + 1) * chHalfWidth;
-		for(quint32 y = 0; y < bufSize; y++) {
+		for(quint32 y = 0; y < m_wfw->m_zoomDataLen; y++) {
 			const qint32 xMin = m_wfw->m_zoomData[ch][y].min * chHalfWidth / SAMPLE_MAX;
 			const qint32 xMax = m_wfw->m_zoomData[ch][y].max * chHalfWidth / SAMPLE_MAX;
 

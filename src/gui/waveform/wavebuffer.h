@@ -69,6 +69,8 @@ public:
 
 	inline quint16 channels() const { return m_waveformChannels; }
 
+	inline bool isDecoding() const { return m_wfFrame != nullptr; }
+
 	/**
 	 * @brief MAX_WINDOW_ZOOM
 	 * @return FIXME:

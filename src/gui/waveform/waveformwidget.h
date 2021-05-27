@@ -81,6 +81,9 @@ public:
 		return m_timeRMBPress > m_timeRMBRelease ? m_timeRMBPress : m_timeRMBRelease;
 	}
 
+	inline void zoomIn() { setZoom(zoom() / 2); }
+	inline void zoomOut() { setZoom(zoom() * 2); }
+
 signals:
 	void doubleClick(Time time);
 	void middleMouseDown(Time time);
@@ -94,8 +97,6 @@ public slots:
 	void setAudioStream(const QString &mediaFile, int audioStream);
 	void setNullAudioStream(quint64 msecVideoLength);
 	void clearAudioStream();
-	void zoomIn();
-	void zoomOut();
 	void setAutoscroll(bool autoscroll);
 	void setScrollPosition(double milliseconds);
 	void onSubtitleChanged();
@@ -115,6 +116,8 @@ private slots:
 private:
 	void onWaveformResize(quint32 span);
 	void onWaveformRotate(bool vertical);
+
+	void updateZoomBuffer();
 
 	QToolButton * createToolButton(const QString &actionName, int iconSize=16);
 	void updateActions();
@@ -180,6 +183,7 @@ private:
 	WaveBuffer *m_wfBuffer;
 
 	WaveZoomData **m_zoomData;
+	quint32 m_zoomDataLen;
 
 	friend class WaveRenderer;
 };

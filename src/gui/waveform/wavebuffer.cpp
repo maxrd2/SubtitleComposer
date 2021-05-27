@@ -80,7 +80,7 @@ WaveBuffer::WaveBuffer(WaveformWidget *parent)
 quint32
 WaveBuffer::millisPerPixel() const
 {
-	return m_zoomBuffer->m_samplesPerPixel / m_samplesMsec;
+	return m_zoomBuffer->samplesPerPixel() / m_samplesMsec;
 }
 
 quint32
@@ -253,6 +253,4 @@ WaveBuffer::onStreamData(const void *buffer, qint32 size, const WaveFormat *wave
 		m_wfFrame->offset++;
 	}
 	m_wfFrame->overflow = len;
-
-	m_zoomBuffer->resume();
 }

@@ -20,7 +20,6 @@
 #ifndef ZOOMBUFFER_H
 #define ZOOMBUFFER_H
 
-#include <list>
 #include <QMutex>
 #include <QThread>
 #include <QWaitCondition>
@@ -32,19 +31,24 @@ class ZoomBuffer : public QThread
 {
 	Q_OBJECT
 
-private:
+public:
 	explicit ZoomBuffer(WaveBuffer *parent);
 	virtual ~ZoomBuffer();
 
-	void resume();
-	void run() override;
 	void setWaveform(const SAMPLE_TYPE * const *waveform);
-	quint32 updateZoomRange(quint32 start, quint32 end);
-	void stopAndClear();
-
-public:
 	void setZoomScale(quint32 samplesPerPixel);
-	quint32 zoomedBuffer(quint32 timeStart, quint32 timeEnd, WaveZoomData **buffers);
+	void zoomedBuffer(quint32 timeStart, quint32 timeEnd, WaveZoomData **buffers, quint32 *bufLen);
+
+	inline quint32 samplesPerPixel() const { return m_samplesPerPixel; }
+
+private:
+	void run() override;
+	void updateZoomRange(quint32 *start, quint32 end);
+	void stopAndClear();
+	void start();
+
+signals:
+	void zoomedBufferReady();
 
 private:
 	WaveBuffer *m_waveBuffer;
@@ -56,16 +60,12 @@ private:
 
 	QMutex m_publicMutex;
 
-	struct DataRange {
-		quint32 start;
-		quint32 end;
-	};
-	QMutex m_rangeMutex;
-	std::list<DataRange> m_ranges;
-	std::list<DataRange>::iterator m_requestedRange = m_ranges.end();
 	bool m_restartProcessing;
 
-	friend class WaveBuffer;
+	QMutex m_reqMutex;
+	quint32 m_reqStart = 0;
+	quint32 m_reqEnd = 0;
+	quint32 *m_reqLen = nullptr;
 };
 }
 
