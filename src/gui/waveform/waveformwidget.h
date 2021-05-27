@@ -103,17 +103,16 @@ public slots:
 	void setTranslationMode(bool enabled);
 	void setShowTranslation(bool showTranslation);
 
-protected:
-	void leaveEvent(QEvent *event) override;
-	bool eventFilter(QObject *obj, QEvent *event) override;
-	void showContextMenu(QPoint pos);
-
 private slots:
 	void onPlayerPositionChanged(double seconds);
 	void onScrollBarValueChanged(int value);
 	void onHoverScrollTimeout();
 
 private:
+	void leaveEvent(QEvent *event) override;
+	bool eventFilter(QObject *obj, QEvent *event) override;
+	void showContextMenu(QPoint pos);
+
 	void onWaveformResize(quint32 span);
 	void onWaveformRotate(bool vertical);
 

@@ -18,9 +18,11 @@
  */
 
 #include "waveformwidget.h"
+
+#include "application.h"
+#include "scconfig.h"
 #include "core/subtitleline.h"
 #include "videoplayer/videoplayer.h"
-#include "application.h"
 #include "actions/useraction.h"
 #include "actions/useractionnames.h"
 #include "gui/treeview/lineswidget.h"
@@ -94,7 +96,7 @@ WaveformWidget::WaveformWidget(QWidget *parent)
 	m_scrollBar->installEventFilter(this);
 	m_widgetLayout->addWidget(m_scrollBar);
 
-	m_scrollAnimation = new QPropertyAnimation(m_scrollBar, "value", this);
+	m_scrollAnimation = new QPropertyAnimation(m_scrollBar, QByteArrayLiteral("value"), this);
 	m_scrollAnimation->setDuration(150);
 
 	m_btnZoomOut = createToolButton(QStringLiteral(ACT_WAVEFORM_ZOOM_OUT));
@@ -396,22 +398,18 @@ WaveformWidget::leaveEvent(QEvent */*event*/)
 	m_pointerTime.setMillisTime(Time::MaxMseconds);
 
 	if(m_autoScrollPause) {
-		if(!m_RMBDown) // re-enable auto scroll if popup menu isn't opened
+		if(!m_RMBDown)
 			m_autoScrollPause = false;
-		if(m_autoScroll)
-			onPlayerPositionChanged(m_timeCurrent.toSeconds());
-	} else {
-		m_waveformGraphics->update();
+		if(m_autoScroll && !m_draggedLine && !m_autoScrollPause)
+			scrollToTime(m_timeCurrent, true);
 	}
+
+	m_waveformGraphics->update();
 }
 
 bool
-WaveformWidget::eventFilter(QObject *obj, QEvent *event)
+WaveformWidget::eventFilter(QObject */*obj*/, QEvent *event)
 {
-	Q_ASSERT(obj == m_scrollBar || obj == m_waveformGraphics);
-	if(obj != m_scrollBar && obj != m_waveformGraphics)
-		return false;
-
 	switch(event->type()) {
 	case QEvent::Wheel: {
 		QPoint delta = static_cast<QWheelEvent *>(event)->angleDelta() / 8;
@@ -423,11 +421,11 @@ WaveformWidget::eventFilter(QObject *obj, QEvent *event)
 		m_autoScrollPause = true;
 
 		m_scrollBar->setValue(m_timeStart.shifted(-4 * double(delta.ry()) * windowSize() / m_waveformGraphics->span()).toMillis());
-		return true;
+		return true; // stop wheel events from propagating
 	}
 	case QEvent::MouseButtonPress:
 		m_autoScrollPause = true;
-		return false; // do not capture mouse presses
+		return false;
 
 	default:
 		return false;
@@ -654,8 +652,6 @@ WaveformWidget::scrollToTime(const Time &time, bool scrollToPage)
 	if(scrollToPage) {
 		const int scrollPosition = int(time.toMillis() / windowSize) * windowSize - windowPadding;
 		if(SCConfig::wfSmoothScroll()) {
-			m_scrollAnimation->stop();
-			m_scrollAnimation->setStartValue(m_scrollBar->value());
 			m_scrollAnimation->setEndValue(scrollPosition);
 			m_scrollAnimation->start();
 		} else {

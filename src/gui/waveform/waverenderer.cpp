@@ -98,7 +98,7 @@ WaveRenderer::event(QEvent *evt)
 		QMouseEvent *mouse = static_cast<QMouseEvent *>(evt);
 		m_wfw->updatePointerTime(m_vertical ? mouse->y() : mouse->x());
 		update();
-		return true;
+		break;
 	}
 
 	case QEvent::MouseButtonDblClick: {
@@ -110,13 +110,17 @@ WaveRenderer::event(QEvent *evt)
 	case QEvent::MouseButtonPress: {
 		QMouseEvent *mouse = static_cast<QMouseEvent *>(evt);
 		int y = m_vertical ? mouse->y() : mouse->x();
-		return m_wfw->mousePress(y, mouse->button());
+		if(m_wfw->mousePress(y, mouse->button()))
+			return true;
+		break;
 	}
 
 	case QEvent::MouseButtonRelease: {
 		QMouseEvent *mouse = static_cast<QMouseEvent *>(evt);
 		int y = m_vertical ? mouse->y() : mouse->x();
-		return m_wfw->mouseRelease(y, mouse->button(), mouse->globalPos());
+		if(m_wfw->mouseRelease(y, mouse->button(), mouse->globalPos()))
+			return true;
+		break;
 	}
 
 	default:
