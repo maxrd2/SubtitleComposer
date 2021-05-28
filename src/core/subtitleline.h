@@ -153,10 +153,10 @@ public:
 	void simplifyTextWhiteSpace(SubtitleTarget target);
 
 	inline Time showTime() const { return m_showTime; }
-	void setShowTime(const Time &showTime, bool safe=false);
+	void setShowTime(const Time &showTime);
 
 	inline Time hideTime() const { return m_hideTime; }
-	void setHideTime(const Time &hideTime, bool safe=false);
+	void setHideTime(const Time &hideTime);
 
 	inline double duration() const { return m_hideTime.toMillis() - m_showTime.toMillis(); }
 	inline Time durationTime() const { return Time(duration()); }

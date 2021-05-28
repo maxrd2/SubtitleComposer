@@ -388,7 +388,7 @@ SubtitleLine::processShowTimeSort(const Time &showTime)
 }
 
 void
-SubtitleLine::setShowTime(const Time &showTime, bool safe/*=false*/)
+SubtitleLine::setShowTime(const Time &showTime)
 {
 	if(m_showTime == showTime)
 		return;
@@ -399,8 +399,8 @@ SubtitleLine::setShowTime(const Time &showTime, bool safe/*=false*/)
 	if(m_subtitle && m_subtitle->isLineAnchored(this)) {
 		m_subtitle->shiftAnchoredLine(this, showTime);
 	} else {
-		if(safe && showTime > m_hideTime) {
-			setTimes(showTime, showTime);
+		if(showTime > m_hideTime) {
+			setTimes(m_hideTime, showTime);
 		} else {
 			processShowTimeSort(showTime);
 			processAction(new SetLineShowTimeAction(*this, showTime));
@@ -412,7 +412,7 @@ SubtitleLine::setShowTime(const Time &showTime, bool safe/*=false*/)
 }
 
 void
-SubtitleLine::setHideTime(const Time &hideTime, bool safe/*=false*/)
+SubtitleLine::setHideTime(const Time &hideTime)
 {
 	if(m_hideTime == hideTime)
 		return;
@@ -420,7 +420,7 @@ SubtitleLine::setHideTime(const Time &hideTime, bool safe/*=false*/)
 	if(m_subtitle)
 		m_subtitle->beginCompositeAction(i18n("Set Line Hide Time"));
 
-	if(safe && m_showTime > hideTime)
+	if(m_showTime > hideTime)
 		setTimes(hideTime, m_showTime);
 	else
 		processAction(new SetLineHideTimeAction(*this, hideTime));

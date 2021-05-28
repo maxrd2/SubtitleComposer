@@ -775,12 +775,12 @@ WaveformWidget::showContextMenu(QPoint pos)
 		menu->addSeparator();
 		actionManager->addAction(
 			menu->addAction(QIcon::fromTheme(QStringLiteral("set_show_time")), i18n("Set Current Line Show Time"), [&](){
-				selectedLine->setShowTime(m_timeRMBRelease, true);
+				selectedLine->setShowTime(m_timeRMBRelease);
 			}),
 			UserAction::HasSelection | UserAction::EditableShowTime);
 		actionManager->addAction(
 			menu->addAction(QIcon::fromTheme(QStringLiteral("set_hide_time")), i18n("Set Current Line Hide Time"), [&](){
-				selectedLine->setHideTime(m_timeRMBRelease, true);
+				selectedLine->setHideTime(m_timeRMBRelease);
 			}),
 			UserAction::HasSelection | UserAction::EditableShowTime);
 	}
