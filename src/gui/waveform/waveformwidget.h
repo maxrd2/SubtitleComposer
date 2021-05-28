@@ -21,6 +21,7 @@
 
 #include "core/time.h"
 #include "core/subtitle.h"
+#include "gui/waveform/wavesubtitle.h"
 #include "videoplayer/waveformat.h"
 
 #include <QList>
@@ -44,14 +45,6 @@ struct WaveZoomData;
 class WaveformWidget : public QWidget
 {
 	Q_OBJECT
-
-private:
-	enum DragPosition {
-		DRAG_NONE = 0,
-		DRAG_SHOW,
-		DRAG_LINE,
-		DRAG_HIDE
-	};
 
 public:
 	explicit WaveformWidget(QWidget *parent = nullptr);
@@ -122,7 +115,7 @@ private:
 	void updateActions();
 	void updateVisibleLines();
 	Time timeAt(int y);
-	WaveformWidget::DragPosition subtitleAt(int y, SubtitleLine **result);
+	DragPosition draggableAt(double posTime, WaveSubtitle **result);
 	bool scrollToTime(const Time &time, bool scrollToPage);
 
 	void updatePointerTime(int pos);
@@ -159,13 +152,10 @@ private:
 	QWidget *m_progressWidget;
 	QProgressBar *m_progressBar;
 
-	QList<SubtitleLine *> m_visibleLines;
+	QList<WaveSubtitle *> m_visibleLines;
 	bool m_visibleLinesDirty;
 
-	SubtitleLine *m_draggedLine;
-	DragPosition m_draggedPos;
-	Time m_draggedTime;
-	double m_draggedOffset;
+	WaveSubtitle *m_draggedLine;
 
 	QBoxLayout *m_widgetLayout;
 

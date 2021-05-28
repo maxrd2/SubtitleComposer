@@ -33,8 +33,8 @@
 #include <QRect>
 #include <QPainter>
 #include <QPaintEvent>
-#include <QRegion>
 #include <QPolygon>
+#include <QRegion>
 #include <QThread>
 
 #include <QProgressBar>
@@ -72,8 +72,6 @@ WaveformWidget::WaveformWidget(QWidget *parent)
 	  m_progressWidget(new QWidget(this)),
 	  m_visibleLinesDirty(true),
 	  m_draggedLine(nullptr),
-	  m_draggedPos(DRAG_NONE),
-	  m_draggedTime(0.),
 	  m_widgetLayout(nullptr),
 	  m_translationMode(false),
 	  m_showTranslation(false),
@@ -383,12 +381,21 @@ WaveformWidget::updateVisibleLines()
 
 	m_visibleLinesDirty = false;
 
+	auto it = m_visibleLines.begin();
+	while(it != m_visibleLines.end()) {
+		if(*it != m_draggedLine)
+			delete *it;
+		++it;
+	}
 	m_visibleLines.clear();
 
+	const SubtitleLine *dragged = m_draggedLine ? m_draggedLine->line() : nullptr;
 	for(int i = 0, n = m_subtitle->count(); i < n; i++) {
 		SubtitleLine *sub = m_subtitle->at(i);
-		if(sub == m_draggedLine || (sub->showTime() <= m_timeEnd && m_timeStart <= sub->hideTime()))
-			m_visibleLines.push_back(sub);
+		if(sub == dragged)
+			m_visibleLines.push_back(m_draggedLine);
+		else if(sub->intersectsTimespan(m_timeStart, m_timeEnd))
+			m_visibleLines.push_back(new WaveSubtitle(sub, m_waveformGraphics));
 	}
 }
 
@@ -438,54 +445,37 @@ WaveformWidget::timeAt(int y)
 	return m_timeStart + double(y * qint32(windowSize()) / m_waveformGraphics->span());
 }
 
-WaveformWidget::DragPosition
-WaveformWidget::subtitleAt(int y, SubtitleLine **result)
+DragPosition
+WaveformWidget::draggableAt(double posTime, WaveSubtitle **result)
 {
 	if(result)
 		*result = nullptr;
+
 	if(!m_wfBuffer->sampleRateMillis())
 		return DRAG_NONE;
-	double yTime = timeAt(y).toMillis();
-	const double DRAG_TOLERANCE = double(10 * m_wfBuffer->millisPerPixel());
-	double closestDistance = DRAG_TOLERANCE;
-	double currentDistance;
-	WaveformWidget::DragPosition closestDrag = DRAG_NONE;
 
-	updateVisibleLines();
+	double msTolerance = double(10 * m_wfBuffer->millisPerPixel());
 
-	bool anchoredLineExists = m_subtitle && m_subtitle->hasAnchors();
-
-	foreach(SubtitleLine *sub, m_visibleLines) {
-		if(sub->showTime() - DRAG_TOLERANCE <= yTime && sub->hideTime() + DRAG_TOLERANCE >= yTime) {
-			if(closestDistance > (currentDistance = qAbs(sub->showTime().toMillis() - yTime))) {
-				closestDistance = currentDistance;
-				closestDrag = anchoredLineExists ? DRAG_LINE : DRAG_SHOW;
-				if(result)
-					*result = sub;
-			} else if(closestDistance > (currentDistance = qAbs(sub->hideTime().toMillis() - yTime))) {
-				closestDistance = currentDistance;
-				closestDrag = anchoredLineExists ? DRAG_LINE : DRAG_HIDE;
-				if(result)
-					*result = sub;
-			} else if(closestDrag == DRAG_NONE) {
-				closestDistance = DRAG_TOLERANCE;
-				closestDrag = DRAG_LINE;
-				if(result)
-					*result = sub;
-			}
+	DragPosition dragMode = DRAG_NONE;
+	foreach(WaveSubtitle *sub, m_visibleLines) {
+		DragPosition dm = sub->draggableAt(posTime, &msTolerance);
+		if(dm > DRAG_FORBIDDEN || dragMode == DRAG_NONE) {
+			dragMode = dm;
+			if(result && dm > DRAG_FORBIDDEN)
+				*result = sub;
 		}
 	}
 
-	return closestDrag;
+	return dragMode;
 }
 
 SubtitleLine *
 WaveformWidget::subtitleLineAtMousePosition() const
 {
 	const Time mouseTime = m_RMBDown ? m_timeRMBRelease : m_pointerTime;
-	foreach(SubtitleLine *sub, m_visibleLines) {
-		if(sub->showTime() <= mouseTime && sub->hideTime() >= mouseTime)
-			return sub;
+	foreach(WaveSubtitle *sub, m_visibleLines) {
+		if(sub->line()->containsTime(mouseTime))
+			return sub->line();
 	}
 	return nullptr;
 }
@@ -514,7 +504,7 @@ WaveformWidget::onHoverScrollTimeout()
 
 	const Time ptrTime(m_pointerTime.toMillis() + m_hoverScrollAmount);
 	if(m_draggedLine)
-		m_draggedTime = ptrTime;
+		m_draggedLine->dragUpdate(ptrTime.toMillis());
 	if(m_RMBDown)
 		m_timeRMBRelease = ptrTime;
 	m_scrollBar->setValue(m_timeStart.toMillis() + m_hoverScrollAmount);
@@ -536,12 +526,12 @@ WaveformWidget::updatePointerTime(int pos)
 	}
 
 	if(m_draggedLine) {
-		m_draggedTime = m_pointerTime;
+		m_draggedLine->dragUpdate(m_pointerTime.toMillis());
 		scrollToTime(m_pointerTime, false);
 	} else {
-		SubtitleLine *sub = nullptr;
-		WaveformWidget::DragPosition res = subtitleAt(pos, &sub);
-		if(sub && m_subtitle->hasAnchors() && !m_subtitle->isLineAnchored(sub))
+		const double posTime = timeAt(pos).toMillis();
+		DragPosition res = draggableAt(posTime, nullptr);
+		if(res == DRAG_FORBIDDEN)
 			m_waveformGraphics->setCursor(QCursor(Qt::ForbiddenCursor));
 		else if(res == DRAG_LINE)
 			m_waveformGraphics->setCursor(QCursor(m_waveformGraphics->vertical() ? Qt::SizeVerCursor : Qt::SizeHorCursor));
@@ -570,22 +560,13 @@ WaveformWidget::mousePress(int pos, Qt::MouseButton button)
 	if(button != Qt::LeftButton)
 		return false;
 
-	m_draggedPos = subtitleAt(pos, &m_draggedLine);
-	if(m_draggedLine && m_subtitle->hasAnchors() && !m_subtitle->isLineAnchored(m_draggedLine)) {
-		m_draggedTime = 0.;
-		m_draggedPos = DRAG_NONE;
-		m_draggedLine = nullptr;
-	} else {
-		m_pointerTime = timeAt(pos);
-		m_draggedTime = m_pointerTime;
-		if(m_draggedPos == DRAG_LINE || m_draggedPos == DRAG_SHOW)
-			m_draggedOffset = m_pointerTime.toMillis() - m_draggedLine->showTime().toMillis();
-		else if(m_draggedPos == DRAG_HIDE)
-			m_draggedOffset = m_pointerTime.toMillis() - m_draggedLine->hideTime().toMillis();
+	const double posTime = timeAt(pos).toMillis();
+	DragPosition dragMode = draggableAt(posTime, &m_draggedLine);
+	if(m_draggedLine) {
+		m_pointerTime.setMillisTime(posTime);
+		m_draggedLine->dragStart(dragMode, posTime);
+		emit dragStart(m_draggedLine->line(), dragMode);
 	}
-
-	if(m_draggedLine)
-		emit dragStart(m_draggedLine, m_draggedPos);
 
 	return true;
 }
@@ -612,22 +593,10 @@ WaveformWidget::mouseRelease(int pos, Qt::MouseButton button, QPoint globalPos)
 		return false;
 
 	if(m_draggedLine) {
-		m_draggedTime = timeAt(pos);
-		if(m_draggedPos == DRAG_LINE) {
-			m_draggedLine->setTimes(m_draggedTime - m_draggedOffset, m_draggedTime - m_draggedOffset + m_draggedLine->durationTime());
-		} else if(m_draggedPos == DRAG_SHOW) {
-			Time newTime = m_draggedTime - m_draggedOffset;
-			m_draggedLine->setShowTime(newTime, true);
-		} else if(m_draggedPos == DRAG_HIDE) {
-			Time newTime = m_draggedTime - m_draggedOffset;
-			m_draggedLine->setHideTime(newTime, true);
-		}
-
-		emit dragEnd(m_draggedLine, m_draggedPos);
+		DragPosition mode = m_draggedLine->dragEnd(timeAt(pos).toMillis());
+		emit dragEnd(m_draggedLine->line(), mode);
+		m_draggedLine = nullptr;
 	}
-	m_draggedLine = nullptr;
-	m_draggedPos = DRAG_NONE;
-	m_draggedTime = 0.;
 	return true;
 }
 
@@ -752,7 +721,7 @@ WaveformWidget::showContextMenu(QPoint pos)
 				const Time endTime = rightMouseLaterTime();
 				for(int idx = 0, n = m_subtitle->count(); idx < n; idx++) {
 					const SubtitleLine *sub = m_subtitle->at(idx);
-					if(sub->showTime() <= endTime && startTime <= sub->hideTime()) {
+					if(sub->intersectsTimespan(startTime, endTime)) {
 						if(startIndex == -1 || startIndex > idx)
 							startIndex = idx;
 						if(endIndex == -1 || endIndex < idx)

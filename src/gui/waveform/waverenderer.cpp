@@ -24,6 +24,7 @@
 #include "core/richdocument.h"
 #include "gui/waveform/wavebuffer.h"
 #include "gui/waveform/waveformwidget.h"
+#include "gui/waveform/wavesubtitle.h"
 #include "gui/waveform/zoombuffer.h"
 
 #include <QBoxLayout>
@@ -45,6 +46,12 @@ WaveRenderer::WaveRenderer(WaveformWidget *parent)
 
 	connect(SCConfig::self(), &SCConfig::configChanged, this, &WaveRenderer::onConfigChanged);
 	onConfigChanged();
+}
+
+bool
+WaveRenderer::showTranslation() const
+{
+	return m_wfw->m_showTranslation;
 }
 
 void
@@ -130,59 +137,6 @@ WaveRenderer::event(QEvent *evt)
 	return QWidget::event(evt);
 }
 
-static QTextLayout textLayout;
-
-void
-WaveRenderer::paintSubText(QPainter &painter, const QRect &box, RichDocument *doc)
-{
-	QFontMetrics fontMetrics(m_fontText, painter.device());
-
-	painter.save();
-	painter.setClipRect(box);
-	painter.translate(box.center());
-	if(!m_vertical) // TODO: make rotation configurable
-		painter.rotate(-45.);
-	painter.setFont(m_fontText);
-	painter.setPen(m_subTextColor);
-
-	qreal height = 0., heightTotal = -1.;
-	int nLines = doc->blockCount();
-
-	for(QTextBlock bi = doc->begin(); bi != doc->end(); bi = bi.next()) {
-		QString text;
-		QVector<QTextLayout::FormatRange> ranges;
-		for(QTextBlock::iterator it = bi.begin(); !it.atEnd(); ++it) {
-			if(!it.fragment().isValid())
-				continue;
-			const QString &t = it.fragment().text();
-			ranges.push_back(QTextLayout::FormatRange{text.length(), t.length(), it.fragment().charFormat()});
-			text.append(t);
-		}
-
-		textLayout.setText(text);
-		textLayout.setFormats(ranges);
-
-		const qreal lineStart = height;
-		textLayout.beginLayout();
-		QTextLine line = textLayout.createLine();
-		line.setLineWidth(m_vertical ? box.width() : box.height());
-		height += fontMetrics.leading();
-		line.setPosition(QPointF(0., height));
-		height += line.height();
-		textLayout.endLayout();
-
-		if(heightTotal < 0.)
-			heightTotal = nLines * height;
-
-		QRectF br = textLayout.boundingRect();
-		br.setBottom(br.top() + heightTotal);
-		QPointF textTL = -br.center();
-		textTL.ry() += lineStart;
-		textLayout.draw(&painter, textTL);
-	}
-	painter.restore();
-}
-
 void
 WaveRenderer::paintWaveform(QPainter &painter, quint32 widgetWidth, quint32 widgetHeight)
 {
@@ -220,87 +174,75 @@ WaveRenderer::paintGraphics(QPainter &painter)
 	const quint32 widgetWidth = width();
 	const quint32 widgetSpan = m_vertical ? widgetHeight : widgetWidth;
 
+	painter.setRenderHints(QPainter::Antialiasing | QPainter::TextAntialiasing | QPainter::SmoothPixmapTransform);
+
 	if(widgetSpan)
 		paintWaveform(painter, widgetWidth, widgetHeight);
 
 	m_wfw->updateVisibleLines();
 
-	textLayout.setFont(m_fontText);
-	QTextOption layoutTextOption;
-	layoutTextOption.setWrapMode(QTextOption::NoWrap);
-	layoutTextOption.setAlignment(Qt::AlignCenter);
-	textLayout.setTextOption(layoutTextOption);
-	textLayout.setCacheEnabled(true);
-
 	const RangeList &selection = app()->linesWidget()->selectionRanges();
-	foreach(const SubtitleLine *sub, m_wfw->m_visibleLines) {
-		bool selected = selection.contains(sub->index());
-		Time timeShow = sub->showTime();
-		Time timeHide = sub->hideTime();
-		if(sub == m_wfw->m_draggedLine) {
-			Time newTime = m_wfw->m_draggedTime - m_wfw->m_draggedOffset;
-			if(m_wfw->m_draggedPos == WaveformWidget::DRAG_LINE) {
-				timeShow = newTime;
-				timeHide = timeShow + sub->durationTime();
-			} else if(m_wfw->m_draggedPos == WaveformWidget::DRAG_SHOW) {
-				if(newTime > timeHide) {
-					timeShow = timeHide;
-					timeHide = newTime;
-				} else {
-					timeShow = newTime;
-				}
-			} else if(m_wfw->m_draggedPos == WaveformWidget::DRAG_HIDE) {
-				if(timeShow > newTime) {
-					timeHide = timeShow;
-					timeShow = newTime;
-				} else {
-					timeHide = newTime;
-				}
+	foreach(WaveSubtitle *sub, m_wfw->m_visibleLines) {
+		const Time timeShow = sub->showTime();
+		const Time timeHide = sub->hideTime();
+		if(timeShow > m_wfw->m_timeEnd || m_wfw->m_timeStart > timeHide)
+			continue;
+
+		const bool selected = selection.contains(sub->line()->index());
+		const int showY = widgetSpan * (timeShow.toMillis() - m_wfw->m_timeStart.toMillis()) / msWindowSize;
+		const int hideY = widgetSpan * (timeHide.toMillis() - m_wfw->m_timeStart.toMillis()) / msWindowSize;
+		QRect box;
+
+		// draw background
+		if(m_vertical)
+			box = QRect(2, showY + m_subBorderWidth, widgetWidth - 4, hideY - showY - 2 * m_subBorderWidth);
+		else
+			box = QRect(showY + m_subBorderWidth, 2, hideY - showY - 2 * m_subBorderWidth, widgetHeight - 4);
+
+		if(!m_wfw->m_subtitle || !m_wfw->m_subtitle->hasAnchors() || m_wfw->m_subtitle->isLineAnchored(sub->line()))
+			painter.setOpacity(1.);
+		else
+			painter.setOpacity(.5);
+
+		painter.fillRect(box, selected ? m_selectedBack : m_subtitleBack);
+
+		// draw border lines
+		if(m_subBorderWidth) {
+			if(m_vertical) {
+				painter.fillRect(0, showY, widgetWidth, m_subBorderWidth, selected ? m_selectedBorder : m_subtitleBorder);
+				painter.fillRect(0, hideY - m_subBorderWidth, widgetWidth, m_subBorderWidth, selected ? m_selectedBorder : m_subtitleBorder);
+			} else {
+				painter.fillRect(showY, 0, m_subBorderWidth, widgetHeight, selected ? m_selectedBorder : m_subtitleBorder);
+				painter.fillRect(hideY - m_subBorderWidth, 0, m_subBorderWidth, widgetHeight, selected ? m_selectedBorder : m_subtitleBorder);
 			}
 		}
-		if(timeShow <= m_wfw->m_timeEnd && m_wfw->m_timeStart <= timeHide) {
-			int showY = widgetSpan * (timeShow.toMillis() - m_wfw->m_timeStart.toMillis()) / msWindowSize;
-			int hideY = widgetSpan * (timeHide.toMillis() - m_wfw->m_timeStart.toMillis()) / msWindowSize;
-			QRect box;
+
+		// draw text
+		painter.save();
+		painter.setClipRect(box);
+		painter.translate(box.center());
+		if(!m_vertical) // TODO: make rotation angle configurable
+			painter.rotate(-45.);
+		const QImage &st = sub->image();
+		painter.drawImage(st.width() / -2, st.height() / -2, st, 0, 0, -1, -1);
+		painter.restore();
+
+		// draw subtitle index
+		painter.setPen(m_subNumberColor);
+		painter.setFont(m_fontNumber);
+		if(m_vertical)
+			painter.drawText(m_fontNumberHeight / 2, showY + m_fontNumberHeight + 2, QString::number(sub->line()->number()));
+		else
+			painter.drawText(showY + m_fontNumberHeight / 2, m_fontNumberHeight + 2, QString::number(sub->line()->number()));
+
+		// draw anchor icon
+		if(m_wfw->m_subtitle && m_wfw->m_subtitle->isLineAnchored(sub->line())) {
+			static QFont fontAnchor("sans-serif", 12);
+			painter.setFont(fontAnchor);
 			if(m_vertical)
-				box = QRect(2, showY + m_subBorderWidth, widgetWidth - 4, hideY - showY - 2 * m_subBorderWidth);
+				painter.drawText(box, Qt::AlignTop | Qt::AlignRight, QStringLiteral("\u2693"));
 			else
-				box = QRect(showY + m_subBorderWidth, 2, hideY - showY - 2 * m_subBorderWidth, widgetHeight - 4);
-
-			if(!m_wfw->m_subtitle || !m_wfw->m_subtitle->hasAnchors() || m_wfw->m_subtitle->isLineAnchored(sub))
-				painter.setOpacity(1.);
-			else
-				painter.setOpacity(.5);
-
-			painter.fillRect(box, selected ? m_selectedBack : m_subtitleBack);
-
-			if(m_subBorderWidth) {
-				if(m_vertical) {
-					painter.fillRect(0, showY, widgetWidth, m_subBorderWidth, selected ? m_selectedBorder : m_subtitleBorder);
-					painter.fillRect(0, hideY - m_subBorderWidth, widgetWidth, m_subBorderWidth, selected ? m_selectedBorder : m_subtitleBorder);
-				} else {
-					painter.fillRect(showY, 0, m_subBorderWidth, widgetHeight, selected ? m_selectedBorder : m_subtitleBorder);
-					painter.fillRect(hideY - m_subBorderWidth, 0, m_subBorderWidth, widgetHeight, selected ? m_selectedBorder : m_subtitleBorder);
-				}
-			}
-
-			paintSubText(painter, box, m_wfw->m_showTranslation ? sub->secondaryDoc() : sub->primaryDoc());
-
-			painter.setPen(m_subNumberColor);
-			painter.setFont(m_fontNumber);
-			if(m_vertical)
-				painter.drawText(m_fontNumberHeight / 2, showY + m_fontNumberHeight + 2, QString::number(sub->number()));
-			else
-				painter.drawText(showY + m_fontNumberHeight / 2, m_fontNumberHeight + 2, QString::number(sub->number()));
-
-			if(m_wfw->m_subtitle && m_wfw->m_subtitle->isLineAnchored(sub)) {
-				static QFont fontAnchor("sans-serif", 12);
-				painter.setFont(fontAnchor);
-				if(m_vertical)
-					painter.drawText(box, Qt::AlignTop | Qt::AlignRight, QStringLiteral("\u2693"));
-				else
-					painter.drawText(box, Qt::AlignBottom | Qt::AlignLeft, QStringLiteral("\u2693"));
-			}
+				painter.drawText(box, Qt::AlignBottom | Qt::AlignLeft, QStringLiteral("\u2693"));
 		}
 	}
 

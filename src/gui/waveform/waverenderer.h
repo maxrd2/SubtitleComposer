@@ -40,12 +40,16 @@ public:
 	inline int span() const { return m_vertical ? height() : width(); }
 	inline bool vertical() const { return m_vertical; }
 
+	inline const QFont & fontText() const { return m_fontText; }
+	inline const QPen & subTextColor() const { return m_subTextColor; }
+
+	bool showTranslation() const;
+
 private:
 	bool event(QEvent *evt) override;
 
 	void paintGraphics(QPainter &painter);
 	void paintWaveform(QPainter &painter, quint32 widgetWidth, quint32 widgetHeight);
-	void paintSubText(QPainter &painter, const QRect &box, RichDocument *doc);
 
 	void onConfigChanged();
 

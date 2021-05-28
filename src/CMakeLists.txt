@@ -72,9 +72,11 @@ set(subtitlecomposer_SRCS
 	formats/tmplayer/tmplayerinputformat.h formats/tmplayer/tmplayeroutputformat.h
 	formats/vobsub/vobsubinputformat.h formats/vobsub/vobsubinputinitdialog.cpp formats/vobsub/vobsubinputprocessdialog.cpp
 	formats/youtubecaptions/youtubecaptionsinputformat.h formats/youtubecaptions/youtubecaptionsoutputformat.h
-	#[[ gui ]] gui/currentlinewidget.cpp gui/playerwidget.cpp gui/waveform/waveformwidget.cpp gui/waveform/wavebuffer.cpp gui/waveform/zoombuffer.cpp
-	gui/treeview/linesitemdelegate.cpp gui/treeview/linesmodel.cpp gui/treeview/linesselectionmodel.cpp gui/treeview/lineswidget.cpp
-	gui/treeview/richlineedit.cpp gui/treeview/richdocumentptr.cpp gui/treeview/treeview.cpp gui/waveform/waverenderer.cpp
+	#[[ gui ]] gui/currentlinewidget.cpp gui/playerwidget.cpp
+	#[[ gui/waveform ]] gui/waveform/waveformwidget.cpp gui/waveform/wavebuffer.cpp gui/waveform/zoombuffer.cpp gui/waveform/waverenderer.cpp
+	gui/waveform/wavesubtitle.cpp
+	#[[ gui/treeview ]] gui/treeview/linesitemdelegate.cpp gui/treeview/linesmodel.cpp gui/treeview/linesselectionmodel.cpp gui/treeview/lineswidget.cpp
+	gui/treeview/richlineedit.cpp gui/treeview/richdocumentptr.cpp gui/treeview/treeview.cpp
 	#[[ helpers ]] helpers/commondefs.cpp helpers/fileloadhelper.cpp helpers/filesavehelper.cpp helpers/filetrasher.cpp helpers/languagecode.cpp helpers/pluginhelper.h
 	#[[ scripting ]] scripting/scriptsmanager.cpp
 	scripting/scripting_rangesmodule.cpp scripting/scripting_stringsmodule.cpp scripting/scripting_subtitlemodule.cpp scripting/scripting_subtitlelinemodule.cpp
@@ -83,8 +85,7 @@ set(subtitlecomposer_SRCS
 	#[[ speechprocessor ]] speechprocessor/speechprocessor.cpp speechprocessor/speechplugin.cpp
 	#[[ streamprocessor ]] streamprocessor/streamprocessor.cpp
 	#[[ utils ]] utils/finder.cpp utils/replacer.cpp utils/speller.cpp utils/translator.cpp utils/language.cpp
-	#[[ videoplayer ]]
-	videoplayer/videoplayer.cpp videoplayer/videowidget.cpp videoplayer/waveformat.h videoplayer/subtitletextoverlay.cpp
+	#[[ videoplayer ]] videoplayer/videoplayer.cpp videoplayer/videowidget.cpp videoplayer/waveformat.h videoplayer/subtitletextoverlay.cpp
 	videoplayer/backend/glrenderer.cpp videoplayer/backend/ffplayer.cpp videoplayer/backend/framequeue.cpp videoplayer/backend/packetqueue.cpp
 	videoplayer/backend/decoder.cpp videoplayer/backend/audiodecoder.cpp videoplayer/backend/videodecoder.cpp videoplayer/backend/subtitledecoder.cpp
 	videoplayer/backend/clock.cpp videoplayer/backend/streamdemuxer.cpp videoplayer/backend/renderthread.cpp videoplayer/backend/videostate.cpp
