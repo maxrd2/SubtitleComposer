@@ -158,7 +158,8 @@ public:
 	inline Time hideTime() const { return m_hideTime; }
 	void setHideTime(const Time &hideTime, bool safe=false);
 
-	inline Time durationTime() const { return Time(m_hideTime.toMillis() - m_showTime.toMillis()); }
+	inline double duration() const { return m_hideTime.toMillis() - m_showTime.toMillis(); }
+	inline Time durationTime() const { return Time(duration()); }
 	inline void setDurationTime(const Time &durationTime) { setHideTime(m_showTime + durationTime); }
 	QColor durationColor(const QColor &textColor, bool usePrimary=true);
 
@@ -166,7 +167,8 @@ public:
 
 	void setTimes(const Time &showTime, const Time &hideTime);
 
-	inline bool containsTime(const Time &time) { return m_showTime <= time && time <= m_hideTime; }
+	inline bool containsTime(const Time &time) const { return m_showTime <= time && time <= m_hideTime; }
+	inline bool intersectsTimespan(const Time &start, const Time &end) const { return m_showTime <= end && start <= m_hideTime; }
 
 	int primaryCharacters() const;
 	int primaryWords() const;
