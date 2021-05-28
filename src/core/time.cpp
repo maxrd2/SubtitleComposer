@@ -22,13 +22,14 @@
 
 using namespace SubtitleComposer;
 
+
 Time::Time(double mseconds)
 {
 	setMillisTime(mseconds);
 }
 
 Time::Time(int hours, int minutes, int seconds, int mseconds)
-	: m_mseconds(0)
+	: m_millis(0)
 {
 	setHours(hours);
 	setMinutes(minutes);
@@ -37,32 +38,15 @@ Time::Time(int hours, int minutes, int seconds, int mseconds)
 }
 
 Time::Time(const Time &time)
-	: m_mseconds(time.m_mseconds)
+	: m_millis(time.m_millis)
 {
 
-}
-
-void
-Time::setSecondsTime(double seconds)
-{
-	setMillisTime(seconds * 1000);
-}
-
-void
-Time::setMillisTime(double mseconds)
-{
-	if(mseconds < 0.0)
-		m_mseconds = 0.0;
-	else if(mseconds > MaxMseconds)
-		m_mseconds = MaxMseconds;
-	else
-		m_mseconds = mseconds;
 }
 
 QString
 Time::toString(bool showMillis, bool showHours) const
 {
-	int time = m_mseconds + 0.5;
+	int time = m_millis + 0.5;
 
 	int i = 14;
 	QChar data[15];
@@ -98,16 +82,10 @@ Time::toString(bool showMillis, bool showHours) const
 		data[i--] = QLatin1Char(':');
 		for(int n = 0; i >= 0 && (n < 2 || time); n++)
 			APPPEND_DIGIT(10);
-
 	}
+#undef APPPEND_DIGIT
 
 	return QString(data + i + 1);
-}
-
-int
-Time::hours() const
-{
-	return int(m_mseconds + 0.5) / 3600000;
 }
 
 bool
@@ -116,15 +94,9 @@ Time::setHours(int hours)
 	if(hours < 0 || hours > 23)
 		return false;
 
-	m_mseconds += (hours - this->hours()) * 3600000;
+	m_millis += (hours - this->hours()) * 3600000;
 
 	return true;
-}
-
-int
-Time::minutes() const
-{
-	return (int(m_mseconds + 0.5) % 3600000) / 60000;
 }
 
 bool
@@ -133,15 +105,9 @@ Time::setMinutes(int minutes)
 	if(minutes < 0 || minutes > 59)
 		return false;
 
-	m_mseconds += (minutes - this->minutes()) * 60000;
+	m_millis += (minutes - this->minutes()) * 60000;
 
 	return true;
-}
-
-int
-Time::seconds() const
-{
-	return (int(m_mseconds + 0.5) % 60000) / 1000;
 }
 
 bool
@@ -150,191 +116,18 @@ Time::setSeconds(int seconds)
 	if(seconds < 0 || seconds > 59)
 		return false;
 
-	m_mseconds += (seconds - this->seconds()) * 1000;
+	m_millis += (seconds - this->seconds()) * 1000;
 
 	return true;
 }
 
-int
-Time::mseconds() const
-{
-	return int(m_mseconds + 0.5) % 1000;
-}
-
 bool
-Time::setMseconds(int mseconds)
+Time::setMillis(int millis)
 {
-	if(mseconds < 0 || mseconds > 999)
+	if(millis < 0 || millis > 999)
 		return false;
 
-	m_mseconds += mseconds - this->mseconds();
+	m_millis += millis - this->mseconds();
 
 	return true;
-}
-
-void
-Time::shift(double mseconds)
-{
-	setMillisTime(m_mseconds + mseconds);
-}
-
-Time
-Time::shifted(double mseconds) const
-{
-	return Time(m_mseconds + mseconds);
-}
-
-void
-Time::adjust(double shiftMseconds, double scaleFactor)
-{
-	setMillisTime(shiftMseconds + m_mseconds * scaleFactor);
-}
-
-Time
-Time::adjusted(double shiftMseconds, double scaleFactor) const
-{
-	return Time(shiftMseconds + m_mseconds * scaleFactor);
-}
-
-Time &
-Time::operator=(const Time &time)
-{
-	if(this == &time)
-		return *this;
-
-	m_mseconds = time.m_mseconds;
-
-	return *this;
-}
-
-Time &
-Time::operator=(double mseconds)
-{
-	setMillisTime(mseconds);
-
-	return *this;
-}
-
-Time
-Time::operator+(const Time &time) const
-{
-	return Time(m_mseconds + time.m_mseconds);
-}
-
-Time
-Time::operator+(double mseconds) const
-{
-	return Time(m_mseconds + mseconds);
-}
-
-Time &
-Time::operator+=(const Time &time)
-{
-	setMillisTime(m_mseconds + time.m_mseconds);
-	return *this;
-}
-
-Time &
-Time::operator+=(double mseconds)
-{
-	setMillisTime(m_mseconds + mseconds);
-	return *this;
-}
-
-Time
-Time::operator-(const Time &time) const
-{
-	return Time(m_mseconds - time.m_mseconds);
-}
-
-Time
-Time::operator-(double mseconds) const
-{
-	return Time(m_mseconds - mseconds);
-}
-
-Time &
-Time::operator-=(const Time &time)
-{
-	setMillisTime(m_mseconds - time.m_mseconds);
-	return *this;
-}
-
-Time &
-Time::operator-=(double mseconds)
-{
-	setMillisTime(m_mseconds - mseconds);
-	return *this;
-}
-
-bool
-Time::operator==(const Time &time) const
-{
-	return m_mseconds == time.m_mseconds;
-}
-
-bool
-Time::operator==(double mseconds) const
-{
-	return m_mseconds == mseconds;
-}
-
-bool
-Time::operator!=(const Time &time) const
-{
-	return m_mseconds != time.m_mseconds;
-}
-
-bool
-Time::operator!=(double mseconds) const
-{
-	return m_mseconds != mseconds;
-}
-
-bool
-Time::operator<(const Time &time) const
-{
-	return m_mseconds < time.m_mseconds;
-}
-
-bool
-Time::operator<(double mseconds) const
-{
-	return m_mseconds < mseconds;
-}
-
-bool
-Time::operator<=(const Time &time) const
-{
-	return m_mseconds <= time.m_mseconds;
-}
-
-bool
-Time::operator<=(double mseconds) const
-{
-	return m_mseconds <= mseconds;
-}
-
-bool
-Time::operator>(const Time &time) const
-{
-	return m_mseconds > time.m_mseconds;
-}
-
-bool
-Time::operator>(double mseconds) const
-{
-	return m_mseconds > mseconds;
-}
-
-bool
-Time::operator>=(const Time &time) const
-{
-	return m_mseconds >= time.m_mseconds;
-}
-
-bool
-Time::operator>=(double mseconds) const
-{
-	return m_mseconds >= mseconds;
 }
