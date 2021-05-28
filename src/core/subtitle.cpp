@@ -250,10 +250,10 @@ Subtitle::changeFramesPerSecond(double toFramesPerSecond, double fromFramesPerSe
 	if(scaleFactor != 1.0) {
 		for(SubtitleIterator it(*this, Range::full()); it.current(); ++it) {
 			Time showTime = it.current()->showTime();
-			showTime.adjust(0, scaleFactor);
+			showTime *= scaleFactor;
 
 			Time hideTime = it.current()->hideTime();
-			hideTime.adjust(0, scaleFactor);
+			hideTime *= scaleFactor;
 
 			processAction(new SetLineTimesAction(*it, showTime, hideTime));
 		}

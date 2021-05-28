@@ -34,13 +34,12 @@ Time::Time(int hours, int minutes, int seconds, int mseconds)
 	setHours(hours);
 	setMinutes(minutes);
 	setSeconds(seconds);
-	setMseconds(mseconds);
+	setMillis(mseconds);
 }
 
 Time::Time(const Time &time)
 	: m_millis(time.m_millis)
 {
-
 }
 
 QString
@@ -91,7 +90,7 @@ Time::toString(bool showMillis, bool showHours) const
 bool
 Time::setHours(int hours)
 {
-	if(hours < 0 || hours > 23)
+	if(hours < 0)
 		return false;
 
 	m_millis += (hours - this->hours()) * 3600000;
@@ -127,7 +126,7 @@ Time::setMillis(int millis)
 	if(millis < 0 || millis > 999)
 		return false;
 
-	m_millis += millis - this->mseconds();
+	m_millis += millis - this->millis();
 
 	return true;
 }

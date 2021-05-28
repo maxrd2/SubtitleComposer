@@ -119,14 +119,14 @@ protected:
 												  showTime.hours(),
 												  showTime.minutes(),
 												  showTime.seconds(),
-												  (showTime.mseconds() + 5) / 10);
+												  (showTime.millis() + 5) / 10);
 
 			const Time hideTime = line->hideTime();
 			const QString hideTimeArg = QString::asprintf("%01d:%02d:%02d.%02d",
 												  hideTime.hours(),
 												  hideTime.minutes(),
 												  hideTime.seconds(),
-												  (hideTime.mseconds() + 5) / 10);
+												  (hideTime.millis() + 5) / 10);
 
 			formatData = this->formatData(line);
 

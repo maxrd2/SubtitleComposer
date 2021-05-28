@@ -395,7 +395,7 @@ WaveformWidget::updateVisibleLines()
 void
 WaveformWidget::leaveEvent(QEvent */*event*/)
 {
-	m_pointerTime.setMillisTime(Time::MaxMseconds);
+	m_pointerTime.setMillisTime(std::numeric_limits<double>::max());
 
 	if(m_autoScrollPause) {
 		if(!m_RMBDown)

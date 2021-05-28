@@ -66,6 +66,8 @@
 #include "videoplayer/videoplayer.h"
 #include "gui/waveform/waveformwidget.h"
 
+#include <limits>
+
 #include <QAction>
 #include <QDir>
 #include <QDockWidget>
@@ -645,7 +647,10 @@ Application::enforceDurationLimits()
 																m_mainWindow);
 
 	if(dlg->exec() == QDialog::Accepted) {
-		m_subtitle->applyDurationLimits(m_linesWidget->targetRanges(dlg->selectedLinesTarget()), dlg->enforceMinDuration() ? dlg->minDuration() : Time(), dlg->enforceMaxDuration() ? dlg->maxDuration() : Time(Time::MaxMseconds), !dlg->preventOverlap());
+		m_subtitle->applyDurationLimits(m_linesWidget->targetRanges(dlg->selectedLinesTarget()),
+			dlg->enforceMinDuration() ? dlg->minDuration() : Time(),
+			dlg->enforceMaxDuration() ? dlg->maxDuration() : Time(std::numeric_limits<double>::max()),
+			!dlg->preventOverlap());
 	}
 }
 

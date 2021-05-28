@@ -40,7 +40,7 @@ protected:
 
 			Time showTime = line->showTime();
 			Time hideTime = line->hideTime();
-			ret += QString::asprintf("%02d:%02d:%02d.%02d,%02d:%02d:%02d.%02d\n", showTime.hours(), showTime.minutes(), showTime.seconds(), (showTime.mseconds() + 5) / 10, hideTime.hours(), hideTime.minutes(), hideTime.seconds(), (hideTime.mseconds() + 5) / 10);
+			ret += QString::asprintf("%02d:%02d:%02d.%02d,%02d:%02d:%02d.%02d\n", showTime.hours(), showTime.minutes(), showTime.seconds(), (showTime.millis() + 5) / 10, hideTime.hours(), hideTime.minutes(), hideTime.seconds(), (hideTime.millis() + 5) / 10);
 
 			const SString text = (primary ? line->primaryDoc() : line->secondaryDoc())->toRichText();
 			ret += m_stylesMap[text.cummulativeStyleFlags()];

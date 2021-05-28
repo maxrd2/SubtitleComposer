@@ -44,11 +44,11 @@ protected:
 										 it.index() + 1, showTime.hours(),
 										 showTime.minutes(),
 										 showTime.seconds(),
-										 showTime.mseconds(),
+										 showTime.millis(),
 										 hideTime.hours(),
 										 hideTime.minutes(),
 										 hideTime.seconds(),
-										 hideTime.mseconds()
+										 hideTime.millis()
 										 );
 
 			const SString text = (primary ? line->primaryDoc() : line->secondaryDoc())->toRichText();

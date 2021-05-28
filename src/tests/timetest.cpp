@@ -31,9 +31,6 @@ TimeTest::testConstructors()
 	Time time;
 	QVERIFY(time.toMillis() == 0);
 
-	Time time5(Time::MaxMseconds + 55);
-	QVERIFY(time5.toMillis() == Time::MaxMseconds);
-
 	Time time6(-55);
 	QVERIFY(time6.toMillis() == 0);
 
@@ -59,13 +56,13 @@ TimeTest::testSetters()
 	QVERIFY(time.toMillis() == 64563);
 
 	// the following setters should all fail:
-	QVERIFY(!time.setHours(24) && !time.setHours(-5) && !time.setHours(25));
+	QVERIFY(!time.setHours(-5));
 	QVERIFY(time.toMillis() == 64563);
 	QVERIFY(!time.setMinutes(60) && !time.setMinutes(-5) && !time.setMinutes(61));
 	QVERIFY(time.toMillis() == 64563);
 	QVERIFY(!time.setSeconds(60) && !time.setSeconds(-5) && !time.setSeconds(61));
 	QVERIFY(time.toMillis() == 64563);
-	QVERIFY(!time.setMseconds(1000) && !time.setMseconds(-5) && !time.setMseconds(1001));
+	QVERIFY(!time.setMillis(1000) && !time.setMillis(-5) && !time.setMillis(1001));
 	QVERIFY(time.toMillis() == 64563);
 
 	// the following setters should all succeed:
@@ -76,26 +73,15 @@ TimeTest::testSetters()
 	QVERIFY(time.toMillis() == 83640000);
 	QVERIFY(time.setSeconds(33));
 	QVERIFY(time.toMillis() == 83673000);
-	QVERIFY(time.setMseconds(356));
+	QVERIFY(time.setMillis(356));
 	QVERIFY(time.toMillis() == 83673356);
 
-	time.shift(Time::MaxMseconds + 100);
-	QVERIFY(time.toMillis() == Time::MaxMseconds);
-	time.shift(-(Time::MaxMseconds + 500));
+	time.setMillisTime(-500);
 	QVERIFY(time.toMillis() == 0);
 	time.shift(150);
 	QVERIFY(time.toMillis() == 150);
 	time.shift(-130);
 	QVERIFY(time.toMillis() == 20);
-
-	time.adjust(-500, 1.0);
-	QVERIFY(time.toMillis() == 0);
-	time.adjust(+500, 1.44);
-	QVERIFY(time.toMillis() == 500);
-	time.adjust(10, 2.0);
-	QVERIFY(time.toMillis() == 1010);
-	time.adjust(100, -1.1);
-	QVERIFY(time.toMillis() == 0);
 }
 
 void

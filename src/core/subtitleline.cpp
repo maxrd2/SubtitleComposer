@@ -569,7 +569,10 @@ void
 SubtitleLine::adjustTimes(double shiftMseconds, double scaleFactor)
 {
 	if(shiftMseconds || scaleFactor != 1.0)
-		processAction(new SetLineTimesAction(*this, m_showTime.adjusted(shiftMseconds, scaleFactor), m_hideTime.adjusted(shiftMseconds, scaleFactor), i18n("Adjust Line Times")));
+		processAction(new SetLineTimesAction(*this,
+			Time(m_showTime.toMillis() * scaleFactor + shiftMseconds),
+			Time(m_hideTime.toMillis() * scaleFactor + shiftMseconds),
+			i18n("Adjust Line Times")));
 }
 
 /// ERRORS
