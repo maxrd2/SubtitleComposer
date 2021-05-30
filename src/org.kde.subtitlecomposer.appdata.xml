@@ -27,6 +27,7 @@
   <summary>Video subtitle editor that supports basic and advanced editing operations</summary>
   <summary xml:lang="ca">Editor de subtítols de vídeo que admet operacions d'edició bàsiques i avançades</summary>
   <summary xml:lang="ca-valencia">Editor de subtítols de vídeo que admet operacions d'edició bàsiques i avançades</summary>
+  <summary xml:lang="de">Editor für Video-Untertitel mit einfachen und erweiterten Bearbeitungsfunktionen</summary>
   <summary xml:lang="en-GB">Video subtitle editor that supports basic and advanced editing operations</summary>
   <summary xml:lang="es">Editor de subtítulos de vídeo que permite operaciones de edición básicas y avanzadas</summary>
   <summary xml:lang="et">Videosubtiitrite redaktor, mis toetab nii põhilisi ja kui ka spetsiifilisemaid muutmistoiminguid</summary>
@@ -48,6 +49,7 @@
     <p>Subtitle Composer is an open source text-based subtitle editor that supports basic and advanced editing operations.</p>
     <p xml:lang="ca">El Subtitle Composer és un editor de subtítols de codi obert basat en text que admet operacions d'edició bàsiques i avançades.</p>
     <p xml:lang="ca-valencia">El Subtitle Composer és un editor de subtítols de codi obert basat en text que admet operacions d'edició bàsiques i avançades.</p>
+    <p xml:lang="de">Subtitle Composer ist ein quelloffener, textbasierter Untertitel-Editor, der grundlegende und erweiterte Bearbeitungsfunktionen unterstützt.</p>
     <p xml:lang="en-GB">Subtitle Composer is an open source text-based subtitle editor that supports basic and advanced editing operations.</p>
     <p xml:lang="es">Subtitle Composer es un editor de subtítulos de código abierto basado en texto que permite operaciones de edición básicas y avanzadas.</p>
     <p xml:lang="et">Subtiitriredaktor on avatud lähtekoodiga tekstipõhine subtiitrite redaktor, mis toetab nii põhilisi kui ka spetsiifilisemaid muutmistoiminguid.</p>
@@ -172,6 +174,7 @@
       <li>Smart language/text encoding** detection</li>
       <li xml:lang="ca">Detecció** intel·ligent de la codificació d'idioma/text</li>
       <li xml:lang="ca-valencia">Detecció** intel·ligent de la codificació d'idioma/text</li>
+      <li xml:lang="de">Intelligente Erkennung von Sprach- und Textkodierung</li>
       <li xml:lang="en-GB">Smart language/text encoding** detection</li>
       <li xml:lang="es">Detección inteligente de codificación** de idioma y de texto</li>
       <li xml:lang="et">Nutikas keele/tekstikodeeringu** tuvastamine</li>
@@ -192,6 +195,7 @@
       <li>Live preview of subtitles in integrated video player w/ audio stream selection</li>
       <li xml:lang="ca">Vista prèvia en viu dels subtítols en el reproductor de vídeo integrat amb selecció del flux d'àudio</li>
       <li xml:lang="ca-valencia">Vista prèvia en viu dels subtítols en el reproductor de vídeo integrat amb selecció del flux d'àudio</li>
+      <li xml:lang="de">Live-Vorschau von Untertiteln im integrierten Videoplayer mit Auswahl des Audio-Streams</li>
       <li xml:lang="en-GB">Live preview of subtitles in integrated video player w/ audio stream selection</li>
       <li xml:lang="es">Vista previa instantánea de subtítulos en reproductores de vídeo integrados con selección de la fuente de sonido</li>
       <li xml:lang="et">Subtiitrite reaalajas eelvaatlus lõimitud videomängijas võimalusega valida helivoog</li>
@@ -211,6 +215,7 @@
       <li>Preview/editing of subtitles on graphical audio waveform w/ audio stream selection</li>
       <li xml:lang="ca">Vista prèvia/edició dels subtítols en forma d'ona d'àudio gràfica amb selecció del flux d'àudio</li>
       <li xml:lang="ca-valencia">Vista prèvia/edició dels subtítols en forma d'ona d'àudio gràfica amb selecció del flux d'àudio</li>
+      <li xml:lang="de">Vorschau/Bearbeitung von Untertiteln auf grafischer Audiowellenform mit Auswahl des Audio-Streams</li>
       <li xml:lang="en-GB">Preview/editing of subtitles on graphical audio waveform w/ audio stream selection</li>
       <li xml:lang="es">Vista previa y edición de subtítulos en formas de ondas gráficas con selección de la fuente de sonido</li>
       <li xml:lang="et">Subtiitrite eelvaatlus/muutmine graafilist helilainet töödeldes võimalusega valida helivoog</li>
@@ -230,6 +235,7 @@
       <li>Sync by dragging several anchors/graftpoints and stretching timeline</li>
       <li xml:lang="ca">Sincronització arrossegant diversos ancoratges/punts d'empelt i estirant la línia de temps</li>
       <li xml:lang="ca-valencia">Sincronització arrossegant diversos ancoratges/punts d'empelt i estirant la línia de temps</li>
+      <li xml:lang="de">Synchronisieren durch Ziehen mehrerer Anker/Anfasspunkte und Dehnen der Zeitleiste</li>
       <li xml:lang="en-GB">Sync by dragging several anchors/graftpoints and stretching timeline</li>
       <li xml:lang="es">Sincronización mediante el arrastre de diversos anclajes o puntos gráficos y ajuste de la línea de tiempos</li>
       <li xml:lang="et">Sünkroonimine ankruid/kinnispunkte lohistades ja ajatelge venitades</li>
@@ -249,6 +255,7 @@
       <li>Time shifting and scaling, lines duration re-calculation, framerate conversion, etc.</li>
       <li xml:lang="ca">Desplaçament i escalat del temps, recàlcul de la durada de les línies, conversió de la velocitat dels fotogrames, etc.</li>
       <li xml:lang="ca-valencia">Desplaçament i escalat del temps, recàlcul de la durada de les línies, conversió de la velocitat dels fotogrames, etc.</li>
+      <li xml:lang="de">Zeitverschiebung und Skalierung, Neuberechnung der Zeilendauer, Bildfrequenzkonvertierung usw.</li>
       <li xml:lang="en-GB">Time shifting and scaling, lines duration re-calculation, framerate conversion, etc.</li>
       <li xml:lang="es">Desplazamiento de tiempos y escalado, cálculo automático de la duración de las líneas, conversión de tasa de fotogramas, etc.</li>
       <li xml:lang="et">Aja nihutamine ja skaleerimine, ridade kestuse ümberarvutamine, kaadrisageduse teisendused jms.</li>
@@ -288,6 +295,7 @@
       <li>Side by side subtitle translations</li>
       <li xml:lang="ca">Traducció dels subtítols en paral·lel</li>
       <li xml:lang="ca-valencia">Traducció dels subtítols en paral·lel</li>
+      <li xml:lang="de">Übersetzungen von Untertiteln in einer nebeneinander angeordneten Ansicht</li>
       <li xml:lang="en-GB">Side by side subtitle translations</li>
       <li xml:lang="es">Traducciones de subtítulos lado a lado</li>
       <li xml:lang="et">Subtiitrite kahes veerus tõlkimine</li>
@@ -307,6 +315,7 @@
       <li>Text styles (italic, bold, underline, stroke, color)</li>
       <li xml:lang="ca">Estils de text (cursiva, negreta, subratllat, ratllat, color)</li>
       <li xml:lang="ca-valencia">Estils de text (cursiva, negreta, subratllat, ratllat, color)</li>
+      <li xml:lang="de">Textstile (kursiv, fett, unterstrichen, durchgestrichen, Farbeb)</li>
       <li xml:lang="en-GB">Text styles (italic, bold, underline, stroke, colour)</li>
       <li xml:lang="es">Estilos de texto (cursiva, negrita, subrayado, tachado, color)</li>
       <li xml:lang="et">Tekstistiilid (kaldkiri, rasvane kiri, allajoonimine, läbikriipsutamine, värv)</li>
@@ -350,6 +359,7 @@
       <li>Detection of timing errors in subtitles</li>
       <li xml:lang="ca">Detecció dels errors de temps en els subtítols</li>
       <li xml:lang="ca-valencia">Detecció dels errors de temps en els subtítols</li>
+      <li xml:lang="de">Erkennung von Synchronisationsfehlern in Untertiteln</li>
       <li xml:lang="en-GB">Detection of timing errors in subtitles</li>
       <li xml:lang="es">Detección de errores de desfase de tiempo en subtítulos</li>
       <li xml:lang="et">Ajastamisvigade tuvastamine subtiitrites</li>
@@ -370,6 +380,7 @@
       <li>Scripting (JavaScript, Python, Ruby and other languages supported by Kross).</li>
       <li xml:lang="ca">Creació de scripts (JavaScript, Python, Ruby i altres llenguatges admesos pel Kross).</li>
       <li xml:lang="ca-valencia">Creació de scripts (JavaScript, Python, Ruby i altres llenguatges admesos pel Kross).</li>
+      <li xml:lang="de"> Skripte in den Programmsprachen JavaScript, Python, Ruby und anderen von Kross unterstützten Sprachen. </li>
       <li xml:lang="en-GB">Scripting (JavaScript, Python, Ruby and other languages supported by Kross).</li>
       <li xml:lang="es">Guiones (JavaScript, Python, Ruby y otros lenguajes permitidos por Kross).</li>
       <li xml:lang="et">Skriptide kasutamise võimalus (JavaScript, Python, Ruby ja teised Krossi toetatud keeled).</li>
