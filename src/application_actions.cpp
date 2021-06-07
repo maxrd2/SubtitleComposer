@@ -705,7 +705,7 @@ Application::setupActions()
 	increaseVolumeAction->setText(i18n("Increase Volume"));
 	increaseVolumeAction->setStatusTip(i18n("Increase volume by 5%"));
 	actionCollection->setDefaultShortcut(increaseVolumeAction, Qt::Key_Plus);
-	connect(increaseVolumeAction, &QAction::triggered, [this](){ m_player->increaseVolume(); });
+	connect(increaseVolumeAction, &QAction::triggered, m_player, &VideoPlayer::increaseVolume);
 	actionCollection->addAction(ACT_INCREASE_VOLUME, increaseVolumeAction);
 
 	QAction *decreaseVolumeAction = new QAction(actionCollection);
@@ -713,7 +713,7 @@ Application::setupActions()
 	decreaseVolumeAction->setText(i18n("Decrease Volume"));
 	decreaseVolumeAction->setStatusTip(i18n("Decrease volume by 5%"));
 	actionCollection->setDefaultShortcut(decreaseVolumeAction, Qt::Key_Minus);
-	connect(decreaseVolumeAction, &QAction::triggered, [this](){ m_player->decreaseVolume(); });
+	connect(decreaseVolumeAction, &QAction::triggered, m_player, &VideoPlayer::decreaseVolume);
 	actionCollection->addAction(ACT_DECREASE_VOLUME, decreaseVolumeAction);
 
 	KSelectAction *setActiveAudioStreamAction = new KSelectAction(actionCollection);

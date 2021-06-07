@@ -167,10 +167,8 @@ Application::init()
 
 	setupActions();
 
-	connect(m_undoStack, &UndoStack::undoTextChanged, [&](const QString &text){ static QAction *a = action(ACT_UNDO); a->setToolTip(text); });
-	connect(m_undoStack, &UndoStack::redoTextChanged, [&](const QString &text){ static QAction *a = action(ACT_REDO); a->setToolTip(text); });
-	connect(m_undoStack, &UndoStack::indexChanged, [&](int){ if(m_subtitle) m_subtitle->updateState(); });
-	connect(m_undoStack, &UndoStack::cleanChanged, [&](bool){ if(m_subtitle) m_subtitle->updateState(); });
+	connect(m_undoStack, &UndoStack::undoTextChanged, action(ACT_UNDO), &QAction::setToolTip);
+	connect(m_undoStack, &UndoStack::redoTextChanged, action(ACT_REDO), &QAction::setToolTip);
 
 	connect(SCConfig::self(), &KCoreConfigSkeleton::configChanged, this, &Application::onConfigChanged);
 
@@ -228,12 +226,12 @@ Application::init()
 
 	connect(m_finder, &Finder::found, this, &Application::onHighlightLine);
 	connect(m_replacer, &Replacer::found, this, &Application::onHighlightLine);
-	connect(m_errorFinder, &ErrorFinder::found, [this](SubtitleLine *l){ onHighlightLine(l); });
+	connect(m_errorFinder, &ErrorFinder::found, this, [this](SubtitleLine *l){ onHighlightLine(l); });
 	connect(m_speller, &Speller::misspelled, this, &Application::onHighlightLine);
 
-	connect(m_textDemux, &TextDemux::onError, [&](const QString &message){ KMessageBox::sorry(m_mainWindow, message); });
+	connect(m_textDemux, &TextDemux::onError, this, [&](const QString &message){ KMessageBox::sorry(m_mainWindow, message); });
 
-	connect(m_speechProcessor, &SpeechProcessor::onError, [&](const QString &message){ KMessageBox::sorry(m_mainWindow, message); });
+	connect(m_speechProcessor, &SpeechProcessor::onError, this, [&](const QString &message){ KMessageBox::sorry(m_mainWindow, message); });
 
 	m_mainWindow->setupGUI();
 
