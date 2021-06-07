@@ -193,7 +193,7 @@ Application::openSubtitle(const QUrl &url, bool warnClashingUrls)
 			QFileInfo subtitleFileInfo(m_subtitleUrl.toLocalFile());
 
 			QString subtitleFileName = m_subtitleFileName.toLower();
-			QString videoFileName = QFileInfo(m_player->filePath()).completeBaseName().toLower();
+			QString videoFileName = QFileInfo(VideoPlayer::instance()->filePath()).completeBaseName().toLower();
 
 			if(videoFileName.isEmpty() || subtitleFileName.indexOf(videoFileName) != 0) {
 				QStringList subtitleDirFiles = subtitleFileInfo.dir().entryList(QDir::Files | QDir::Readable);
@@ -299,7 +299,7 @@ Application::demuxTextStream(int textStreamIndex)
 
 	newSubtitle();
 
-	m_textDemux->demuxFile(m_subtitle, m_player->filePath(), textStreamIndex);
+	m_textDemux->demuxFile(m_subtitle, VideoPlayer::instance()->filePath(), textStreamIndex);
 }
 
 void
@@ -311,7 +311,7 @@ Application::speechImportAudioStream(int audioStreamIndex)
 	newSubtitle();
 
 	m_speechProcessor->setSubtitle(m_subtitle);
-	m_speechProcessor->setAudioStream(m_player->filePath(), audioStreamIndex);
+	m_speechProcessor->setAudioStream(VideoPlayer::instance()->filePath(), audioStreamIndex);
 }
 
 bool

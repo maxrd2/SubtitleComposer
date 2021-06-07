@@ -26,6 +26,7 @@ Application::setupActions()
 {
 	KActionCollection *actionCollection = m_mainWindow->actionCollection();
 	UserActionManager *actionManager = UserActionManager::instance();
+	VideoPlayer *videoPlayer = VideoPlayer::instance();
 
 	QAction *quitAction = KStandardAction::quit(m_mainWindow, &MainWindow::close, actionCollection);
 	quitAction->setStatusTip(i18n("Exit the application"));
@@ -551,7 +552,7 @@ Application::setupActions()
 	closeVideoAction->setIcon(QIcon::fromTheme("window-close"));
 	closeVideoAction->setText(i18n("Close Video"));
 	closeVideoAction->setStatusTip(i18n("Close video file"));
-	connect(closeVideoAction, &QAction::triggered, m_player, &VideoPlayer::closeFile);
+	connect(closeVideoAction, &QAction::triggered, videoPlayer, &VideoPlayer::closeFile);
 	actionCollection->addAction(ACT_CLOSE_VIDEO, closeVideoAction);
 	actionManager->addAction(closeVideoAction, UserAction::VideoOpened);
 
@@ -567,7 +568,7 @@ Application::setupActions()
 	stopAction->setIcon(QIcon::fromTheme("media-playback-stop"));
 	stopAction->setText(i18n("Stop"));
 	stopAction->setStatusTip(i18n("Stop video playback"));
-	connect(stopAction, &QAction::triggered, m_player, &VideoPlayer::stop);
+	connect(stopAction, &QAction::triggered, videoPlayer, &VideoPlayer::stop);
 	actionCollection->addAction(ACT_STOP, stopAction);
 	actionManager->addAction(stopAction, UserAction::VideoPlaying);
 
@@ -576,7 +577,7 @@ Application::setupActions()
 	playPauseAction->setText(i18n("Play"));
 	playPauseAction->setStatusTip(i18n("Toggle video playing/paused"));
 	actionCollection->setDefaultShortcut(playPauseAction, QKeySequence("Ctrl+Space"));
-	connect(playPauseAction, &QAction::triggered, m_player, &VideoPlayer::togglePlayPaused);
+	connect(playPauseAction, &QAction::triggered, videoPlayer, &VideoPlayer::togglePlayPaused);
 	actionCollection->addAction(ACT_PLAY_PAUSE, playPauseAction);
 	actionManager->addAction(playPauseAction, UserAction::VideoOpened);
 
@@ -697,7 +698,7 @@ Application::setupActions()
 	toggleMuteAction->setText(i18nc("@action:inmenu Toggle audio muted", "Mute"));
 	toggleMuteAction->setStatusTip(i18n("Enable/disable playback sound"));
 	actionCollection->setDefaultShortcut(toggleMuteAction, QKeySequence("/"));
-	connect(toggleMuteAction, &QAction::toggled, m_player, &VideoPlayer::setMuted);
+	connect(toggleMuteAction, &QAction::toggled, videoPlayer, &VideoPlayer::setMuted);
 	actionCollection->addAction(ACT_TOGGLE_MUTED, toggleMuteAction);
 
 	QAction *increaseVolumeAction = new QAction(actionCollection);
@@ -705,7 +706,7 @@ Application::setupActions()
 	increaseVolumeAction->setText(i18n("Increase Volume"));
 	increaseVolumeAction->setStatusTip(i18n("Increase volume by 5%"));
 	actionCollection->setDefaultShortcut(increaseVolumeAction, Qt::Key_Plus);
-	connect(increaseVolumeAction, &QAction::triggered, m_player, &VideoPlayer::increaseVolume);
+	connect(increaseVolumeAction, &QAction::triggered, videoPlayer, &VideoPlayer::increaseVolume);
 	actionCollection->addAction(ACT_INCREASE_VOLUME, increaseVolumeAction);
 
 	QAction *decreaseVolumeAction = new QAction(actionCollection);
@@ -713,7 +714,7 @@ Application::setupActions()
 	decreaseVolumeAction->setText(i18n("Decrease Volume"));
 	decreaseVolumeAction->setStatusTip(i18n("Decrease volume by 5%"));
 	actionCollection->setDefaultShortcut(decreaseVolumeAction, Qt::Key_Minus);
-	connect(decreaseVolumeAction, &QAction::triggered, m_player, &VideoPlayer::decreaseVolume);
+	connect(decreaseVolumeAction, &QAction::triggered, videoPlayer, &VideoPlayer::decreaseVolume);
 	actionCollection->addAction(ACT_DECREASE_VOLUME, decreaseVolumeAction);
 
 	KSelectAction *setActiveAudioStreamAction = new KSelectAction(actionCollection);
@@ -721,9 +722,9 @@ Application::setupActions()
 	setActiveAudioStreamAction->setText(i18n("Audio Streams"));
 	setActiveAudioStreamAction->setStatusTip(i18n("Select active audio stream"));
 #if KWIDGETSADDONS_VERSION < QT_VERSION_CHECK(5, 78, 0)
-	connect(setActiveAudioStreamAction, QOverload<int>::of(&KSelectAction::triggered), m_player, &VideoPlayer::selectAudioStream);
+	connect(setActiveAudioStreamAction, QOverload<int>::of(&KSelectAction::triggered), videoPlayer, &VideoPlayer::selectAudioStream);
 #else
-	connect(setActiveAudioStreamAction, &KSelectAction::indexTriggered, m_player, &VideoPlayer::selectAudioStream);
+	connect(setActiveAudioStreamAction, &KSelectAction::indexTriggered, videoPlayer, &VideoPlayer::selectAudioStream);
 #endif
 	actionCollection->addAction(ACT_SET_ACTIVE_AUDIO_STREAM, setActiveAudioStreamAction);
 	actionManager->addAction(setActiveAudioStreamAction, UserAction::VideoOpened);

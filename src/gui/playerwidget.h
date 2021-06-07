@@ -39,7 +39,6 @@ class TimeEdit;
 
 namespace SubtitleComposer {
 class TextOverlayWidget;
-class VideoPlayer;
 
 class PlayerWidget : public QWidget
 {
@@ -123,7 +122,6 @@ private:
 
 	int m_fullScreenTID;
 	bool m_fullScreenMode;
-	VideoPlayer *m_player;
 
 	QGridLayout *m_mainLayout;
 

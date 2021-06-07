@@ -90,8 +90,6 @@ private:
 	bool m_ignoreActionEnabledSignal;
 };
 
-class VideoPlayer;
-
 class UserActionManager : public QObject
 {
 	Q_OBJECT
@@ -106,7 +104,6 @@ public:
 public slots:
 	void setSubtitle(Subtitle *subtitle = 0);
 	void setLinesWidget(LinesWidget *linesWidget = 0);
-	void setPlayer(VideoPlayer *player = 0);
 	void setTranslationMode(bool translationMode);
 	void setFullScreenMode(bool fullScreenMode);
 
@@ -128,7 +125,6 @@ private:
 
 	const Subtitle *m_subtitle;
 	const LinesWidget *m_linesWidget;
-	const VideoPlayer *m_player;
 	bool m_translationMode;
 
 	int m_contextFlags;

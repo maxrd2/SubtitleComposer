@@ -111,14 +111,21 @@ UserAction::updateEnabledState()
 
 /// USER ACTION MANAGER
 
-UserActionManager::UserActionManager() :
-	m_actionSpecs(),
-	m_subtitle(0),
-	m_linesWidget(0),
-	m_player(0),
-	m_translationMode(false),
-	m_contextFlags(UserAction::SubClosed | UserAction::SubTrClosed | UserAction::VideoClosed | UserAction::FullScreenOff | UserAction::AnchorsNone)
-{}
+UserActionManager::UserActionManager()
+	: m_actionSpecs(),
+	  m_subtitle(nullptr),
+	  m_linesWidget(nullptr),
+	  m_translationMode(false),
+	  m_contextFlags(UserAction::SubClosed | UserAction::SubTrClosed | UserAction::VideoClosed | UserAction::FullScreenOff | UserAction::AnchorsNone)
+{
+	VideoPlayer *videoPlayer = VideoPlayer::instance();
+	connect(videoPlayer, &VideoPlayer::fileOpened, this, &UserActionManager::onPlayerStateChanged);
+	connect(videoPlayer, &VideoPlayer::fileClosed, this, &UserActionManager::onPlayerStateChanged);
+	connect(videoPlayer, &VideoPlayer::playing, this, &UserActionManager::onPlayerStateChanged);
+	connect(videoPlayer, &VideoPlayer::paused, this, &UserActionManager::onPlayerStateChanged);
+	connect(videoPlayer, &VideoPlayer::stopped, this, &UserActionManager::onPlayerStateChanged);
+	onPlayerStateChanged();
+}
 
 UserActionManager *
 UserActionManager::instance()
@@ -293,51 +300,14 @@ UserActionManager::onLinesWidgetSelectionChanged()
 }
 
 void
-UserActionManager::setPlayer(VideoPlayer *player)
-{
-	if(m_player) {
-		disconnect(m_player, &VideoPlayer::fileOpened, this, &UserActionManager::onPlayerStateChanged);
-		disconnect(m_player, &VideoPlayer::fileClosed, this, &UserActionManager::onPlayerStateChanged);
-		disconnect(m_player, &VideoPlayer::playing, this, &UserActionManager::onPlayerStateChanged);
-		disconnect(m_player, &VideoPlayer::paused, this, &UserActionManager::onPlayerStateChanged);
-		disconnect(m_player, &VideoPlayer::stopped, this, &UserActionManager::onPlayerStateChanged);
-	}
-
-	m_player = player;
-
-	int newContextFlags = m_contextFlags & ~UserAction::VideoMask;
-
-	if(m_player) {
-		connect(m_player, &VideoPlayer::fileOpened, this, &UserActionManager::onPlayerStateChanged);
-		connect(m_player, &VideoPlayer::fileClosed, this, &UserActionManager::onPlayerStateChanged);
-		connect(m_player, &VideoPlayer::playing, this, &UserActionManager::onPlayerStateChanged);
-		connect(m_player, &VideoPlayer::paused, this, &UserActionManager::onPlayerStateChanged);
-		connect(m_player, &VideoPlayer::stopped, this, &UserActionManager::onPlayerStateChanged);
-
-		int state = m_player->state();
-		if(state > VideoPlayer::Opening) {
-			newContextFlags |= UserAction::VideoOpened;
-			if(state > VideoPlayer::Paused)
-				newContextFlags |= UserAction::VideoStopped;
-			else
-				newContextFlags |= UserAction::VideoPlaying;
-		} else {
-			newContextFlags |= UserAction::VideoClosed;
-		}
-	}
-
-	updateActionsContext(newContextFlags);
-}
-
-void
 UserActionManager::onPlayerStateChanged()
 {
 	int newContextFlags = m_contextFlags & ~UserAction::VideoMask;
 
-	int state = m_player->state();
+	const int state = VideoPlayer::instance()->state();
 	if(state > VideoPlayer::Opening) {
 		newContextFlags |= UserAction::VideoOpened;
-		if(state > VideoPlayer::Paused)
+		if(state < VideoPlayer::Playing)
 			newContextFlags |= UserAction::VideoStopped;
 		else
 			newContextFlags |= UserAction::VideoPlaying;

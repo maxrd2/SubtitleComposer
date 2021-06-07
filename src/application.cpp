@@ -110,7 +110,6 @@ Application::Application(int &argc, char **argv) :
 	m_subtitleTrFileName(),
 	m_subtitleTrEncoding(),
 	m_subtitleTrFormat(),
-	m_player(VideoPlayer::instance()),
 	m_textDemux(nullptr),
 	m_speechProcessor(nullptr),
 	m_lastFoundLine(nullptr),
@@ -162,7 +161,6 @@ Application::init()
 
 	UserActionManager *actionManager = UserActionManager::instance();
 	actionManager->setLinesWidget(m_linesWidget);
-	actionManager->setPlayer(m_player);
 	actionManager->setFullScreenMode(false);
 
 	setupActions();
@@ -172,14 +170,15 @@ Application::init()
 
 	connect(SCConfig::self(), &KCoreConfigSkeleton::configChanged, this, &Application::onConfigChanged);
 
-	connect(m_player, &VideoPlayer::fileOpened, this, &Application::onPlayerFileOpened);
-	connect(m_player, &VideoPlayer::playing, this, &Application::onPlayerPlaying);
-	connect(m_player, &VideoPlayer::paused, this, &Application::onPlayerPaused);
-	connect(m_player, &VideoPlayer::stopped, this, &Application::onPlayerStopped);
-	connect(m_player, &VideoPlayer::audioStreamsChanged, this, &Application::onPlayerAudioStreamsChanged);
-	connect(m_player, &VideoPlayer::textStreamsChanged, this, &Application::onPlayerTextStreamsChanged);
-	connect(m_player, &VideoPlayer::activeAudioStreamChanged, this, &Application::onPlayerActiveAudioStreamChanged);
-	connect(m_player, &VideoPlayer::muteChanged, this, &Application::onPlayerMuteChanged);
+	VideoPlayer *videoPlayer = VideoPlayer::instance();
+	connect(videoPlayer, &VideoPlayer::fileOpened, this, &Application::onPlayerFileOpened);
+	connect(videoPlayer, &VideoPlayer::playing, this, &Application::onPlayerPlaying);
+	connect(videoPlayer, &VideoPlayer::paused, this, &Application::onPlayerPaused);
+	connect(videoPlayer, &VideoPlayer::stopped, this, &Application::onPlayerStopped);
+	connect(videoPlayer, &VideoPlayer::audioStreamsChanged, this, &Application::onPlayerAudioStreamsChanged);
+	connect(videoPlayer, &VideoPlayer::textStreamsChanged, this, &Application::onPlayerTextStreamsChanged);
+	connect(videoPlayer, &VideoPlayer::activeAudioStreamChanged, this, &Application::onPlayerActiveAudioStreamChanged);
+	connect(videoPlayer, &VideoPlayer::muteChanged, this, &Application::onPlayerMuteChanged);
 
 #define CONNECT_SUB(c, x) \
 	connect(this, &Application::subtitleOpened, x, &c::setSubtitle); \
@@ -276,10 +275,11 @@ Application::loadConfig()
 	m_lastVideoUrl = QUrl(group.readPathEntry("LastVideoUrl", QDir::homePath()));
 	m_recentVideosAction->loadEntries(config->group("Recent Videos"));
 
-	m_player->setMuted(group.readEntry<bool>("Muted", false));
-	m_player->setVolume(group.readEntry<double>("Volume", 100.0));
+	VideoPlayer *videoPlayer = VideoPlayer::instance();
+	videoPlayer->setMuted(group.readEntry<bool>("Muted", false));
+	videoPlayer->setVolume(group.readEntry<double>("Volume", 100.0));
 
-	((KToggleAction *)action(ACT_TOGGLE_MUTED))->setChecked(m_player->isMuted());
+	((KToggleAction *)action(ACT_TOGGLE_MUTED))->setChecked(videoPlayer->isMuted());
 
 	KConfigGroup wfGroup(config->group("Waveform Widget"));
 	action(ACT_WAVEFORM_AUTOSCROLL)->setChecked(wfGroup.readEntry<bool>("AutoScroll", true));
@@ -304,8 +304,9 @@ Application::saveConfig()
 	group.writePathEntry("LastVideoUrl", m_lastVideoUrl.toString());
 	m_recentVideosAction->saveEntries(config->group("Recent Videos"));
 
-	group.writeEntry("Muted", m_player->isMuted());
-	group.writeEntry("Volume", m_player->volume());
+	VideoPlayer *videoPlayer = VideoPlayer::instance();
+	group.writeEntry("Muted", videoPlayer->isMuted());
+	group.writeEntry("Volume", videoPlayer->volume());
 
 	KConfigGroup wfGroup(config->group("Waveform Widget"));
 	wfGroup.writeEntry("AutoScroll", m_mainWindow->m_waveformWidget->autoScroll());
@@ -372,10 +373,11 @@ Application::showPreferences()
 Time
 Application::videoPosition(bool compensate)
 {
-	if(compensate && !m_player->isPaused())
-		return Time(double(m_player->position()) * 1000. - SCConfig::grabbedPositionCompensation());
+	VideoPlayer *videoPlayer = VideoPlayer::instance();
+	if(compensate && !videoPlayer->isPaused())
+		return Time(double(videoPlayer->position()) * 1000. - SCConfig::grabbedPositionCompensation());
 	else
-		return Time(double(m_player->position()) * 1000.);
+		return Time(double(videoPlayer->position()) * 1000.);
 }
 
 void
@@ -842,9 +844,9 @@ Application::openVideo(const QUrl &url)
 	if(url.scheme() != QStringLiteral("file"))
 		return;
 
-	m_player->closeFile();
-
-	m_player->openFile(url.toLocalFile());
+	VideoPlayer *videoPlayer = VideoPlayer::instance();
+	videoPlayer->closeFile();
+	videoPlayer->openFile(url.toLocalFile());
 }
 
 void
@@ -883,29 +885,31 @@ Application::setFullScreenMode(bool enabled)
 void
 Application::seekBackward()
 {
-	double position = m_player->position() - SCConfig::seekJumpLength();
+	VideoPlayer *videoPlayer = VideoPlayer::instance();
+	double position = videoPlayer->position() - SCConfig::seekJumpLength();
 	m_playerWidget->pauseAfterPlayingLine(nullptr);
-	m_player->seek(position > 0.0 ? position : 0.0);
+	videoPlayer->seek(position > 0.0 ? position : 0.0);
 }
 
 void
 Application::seekForward()
 {
-	double position = m_player->position() + SCConfig::seekJumpLength();
+	VideoPlayer *videoPlayer = VideoPlayer::instance();
+	double position = videoPlayer->position() + SCConfig::seekJumpLength();
 	m_playerWidget->pauseAfterPlayingLine(nullptr);
-	m_player->seek(position <= m_player->duration() ? position : m_player->duration());
+	videoPlayer->seek(position <= videoPlayer->duration() ? position : videoPlayer->duration());
 }
 
 void
 Application::stepBackward()
 {
-	m_player->step(-SCConfig::stepJumpLength());
+	VideoPlayer::instance()->step(-SCConfig::stepJumpLength());
 }
 
 void
 Application::stepForward()
 {
-	m_player->step(SCConfig::stepJumpLength());
+	VideoPlayer::instance()->step(SCConfig::stepJumpLength());
 }
 
 void
@@ -919,7 +923,7 @@ Application::seekToPrevLine()
 		SubtitleLine *prevLine = currentLine->prevLine();
 		if(prevLine) {
 			m_playerWidget->pauseAfterPlayingLine(nullptr);
-			m_player->seek(prevLine->showTime().toSeconds() - SCConfig::jumpLineOffset() / 1000.0);
+			VideoPlayer::instance()->seek(prevLine->showTime().toSeconds() - SCConfig::jumpLineOffset() / 1000.0);
 			m_linesWidget->setCurrentLine(prevLine);
 			m_curLineWidget->setCurrentLine(prevLine);
 		}
@@ -934,9 +938,10 @@ Application::playOnlyCurrentLine()
 		return;
 	SubtitleLine *currentLine = m_subtitle->line(selectedIndex);
 	if(currentLine) {
-		if(!m_player->isPlaying())
-			m_player->play();
-		m_player->seek(currentLine->showTime().toSeconds() - SCConfig::jumpLineOffset() / 1000.0);
+		VideoPlayer *videoPlayer = VideoPlayer::instance();
+		if(!videoPlayer->isPlaying())
+			videoPlayer->play();
+		videoPlayer->seek(currentLine->showTime().toSeconds() - SCConfig::jumpLineOffset() / 1000.0);
 		m_playerWidget->pauseAfterPlayingLine(currentLine);
 	}
 }
@@ -950,7 +955,7 @@ Application::seekToCurrentLine()
 	SubtitleLine *currentLine = m_subtitle->line(selectedIndex);
 	if(currentLine) {
 		m_playerWidget->pauseAfterPlayingLine(nullptr);
-		m_player->seek(currentLine->showTime().toSeconds() - SCConfig::jumpLineOffset() / 1000.0);
+		VideoPlayer::instance()->seek(currentLine->showTime().toSeconds() - SCConfig::jumpLineOffset() / 1000.0);
 	}
 }
 
@@ -965,7 +970,7 @@ Application::seekToNextLine()
 		SubtitleLine *nextLine = currentLine->nextLine();
 		if(nextLine) {
 			m_playerWidget->pauseAfterPlayingLine(nullptr);
-			m_player->seek(nextLine->showTime().toSeconds() - SCConfig::jumpLineOffset() / 1000.0);
+			VideoPlayer::instance()->seek(nextLine->showTime().toSeconds() - SCConfig::jumpLineOffset() / 1000.0);
 			m_linesWidget->setCurrentLine(nextLine);
 			m_curLineWidget->setCurrentLine(nextLine);
 		}
@@ -975,15 +980,17 @@ Application::seekToNextLine()
 void
 Application::playrateIncrease()
 {
-	const double speed = m_player->playSpeed();
-	m_player->playSpeed(speed + (speed >= 2.0 ? .5 : .1));
+	VideoPlayer *videoPlayer = VideoPlayer::instance();
+	const double speed = videoPlayer->playSpeed();
+	videoPlayer->playSpeed(speed + (speed >= 2.0 ? .5 : .1));
 }
 
 void
 Application::playrateDecrease()
 {
-	const double speed = m_player->playSpeed();
-	m_player->playSpeed(speed - (speed > 2.0 ? .5 : .1));
+	VideoPlayer *videoPlayer = VideoPlayer::instance();
+	const double speed = videoPlayer->playSpeed();
+	videoPlayer->playSpeed(speed - (speed > 2.0 ? .5 : .1));
 }
 
 void
@@ -1063,32 +1070,34 @@ Application::updateTitle()
 void
 Application::onWaveformDoubleClicked(Time time)
 {
-	if(m_player->state() == VideoPlayer::Stopped)
-		m_player->play();
+	VideoPlayer *videoPlayer = VideoPlayer::instance();
+	if(videoPlayer->state() == VideoPlayer::Stopped)
+		videoPlayer->play();
 
 	m_playerWidget->pauseAfterPlayingLine(nullptr);
-	m_player->seek(time.toSeconds());
+	videoPlayer->seek(time.toSeconds());
 }
 
 void
 Application::onWaveformMiddleMouse(Time time)
 {
 	m_playerWidget->pauseAfterPlayingLine(nullptr);
-	m_player->seek(time.toSeconds());
+	VideoPlayer::instance()->seek(time.toSeconds());
 }
 
 void
 Application::onLineDoubleClicked(SubtitleLine *line)
 {
-	if(m_player->state() == VideoPlayer::Stopped)
-		m_player->play();
+	VideoPlayer *videoPlayer = VideoPlayer::instance();
+	if(videoPlayer->state() == VideoPlayer::Stopped)
+		videoPlayer->play();
 
 	int mseconds = line->showTime().toMillis() - SCConfig::seekOffsetOnDoubleClick();
 	m_playerWidget->pauseAfterPlayingLine(nullptr);
-	m_player->seek(mseconds > 0 ? mseconds / 1000.0 : 0.0);
+	videoPlayer->seek(mseconds > 0 ? mseconds / 1000.0 : 0.0);
 
-	if(m_player->state() != VideoPlayer::Playing && SCConfig::unpauseOnDoubleClick())
-		m_player->play();
+	if(videoPlayer->state() != VideoPlayer::Playing && SCConfig::unpauseOnDoubleClick())
+		videoPlayer->play();
 
 	m_mainWindow->m_waveformWidget->setScrollPosition(line->showTime().toMillis());
 }
@@ -1101,7 +1110,7 @@ Application::onHighlightLine(SubtitleLine *line, bool primary, int firstIndex, i
 			m_lastFoundLine = line;
 
 			m_playerWidget->pauseAfterPlayingLine(nullptr);
-			m_player->seek(line->showTime().toSeconds());
+			VideoPlayer::instance()->seek(line->showTime().toSeconds());
 		}
 	} else {
 		m_linesWidget->setCurrentLine(line, true);
@@ -1160,6 +1169,10 @@ Application::onPlayerPaused()
 void
 Application::onPlayerStopped()
 {
+	Q_ASSERT(m_mainWindow != nullptr);
+	KActionCollection *ac = m_mainWindow->actionCollection();
+	Q_ASSERT(ac != nullptr);
+
 	QAction *playPauseAction = action(ACT_PLAY_PAUSE);
 	playPauseAction->setIcon(QIcon::fromTheme(QStringLiteral("media-playback-start")));
 	playPauseAction->setText(i18n("Play"));
@@ -1198,9 +1211,9 @@ Application::onPlayerActiveAudioStreamChanged(int audioStream)
 	KSelectAction *activeAudioStreamAction = (KSelectAction *)action(ACT_SET_ACTIVE_AUDIO_STREAM);
 	if(audioStream >= 0) {
 		activeAudioStreamAction->setCurrentItem(audioStream);
-		m_mainWindow->m_waveformWidget->setAudioStream(m_player->filePath(), audioStream);
+		m_mainWindow->m_waveformWidget->setAudioStream(VideoPlayer::instance()->filePath(), audioStream);
 	} else {
-		m_mainWindow->m_waveformWidget->setNullAudioStream(m_player->duration() * 1000);
+		m_mainWindow->m_waveformWidget->setNullAudioStream(VideoPlayer::instance()->duration() * 1000);
 	}
 }
 

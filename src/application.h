@@ -277,8 +277,6 @@ private:
 	QString m_subtitleTrEncoding;
 	QString m_subtitleTrFormat;
 
-	VideoPlayer *m_player;
-
 	TextDemux *m_textDemux;
 	SpeechProcessor *m_speechProcessor;
 
