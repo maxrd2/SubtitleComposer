@@ -43,6 +43,8 @@ using namespace SubtitleComposer;
 MainWindow::MainWindow()
 	: KXmlGuiWindow(nullptr)
 {
+	VideoPlayer::instance()->setParent(this);
+
 	QDockWidget *waveformDock = new QDockWidget(i18n("Waveform"), this);
 	waveformDock->setObjectName(QStringLiteral("waveform_dock"));
 	waveformDock->setAllowedAreas(Qt::AllDockWidgetAreas);
@@ -134,11 +136,5 @@ MainWindow::createPopupMenu()
 bool
 MainWindow::queryClose()
 {
-	if(app()->closeSubtitle()) {
-		VideoPlayer::instance()->cleanup();
-		return true;
-	}
-	return false;
+	return app()->closeSubtitle();
 }
-
-

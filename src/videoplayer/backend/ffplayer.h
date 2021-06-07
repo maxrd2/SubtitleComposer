@@ -52,11 +52,9 @@ class FFPlayer : public QObject {
 
 public:
 	FFPlayer(QObject *parent=nullptr);
+	virtual ~FFPlayer();
 
 	static uint8_t *flushPkt();
-
-	void init(GLRenderer *renderer);
-	void cleanup();
 
 	bool open(const char *filename);
 	void close();
@@ -88,6 +86,8 @@ public:
 
 	enum State { Stopped, Playing, Paused };
 	Q_ENUM(FFPlayer::State)
+
+	inline GLRenderer * renderer() const { return m_renderer; }
 
 signals:
 	void mediaLoaded();

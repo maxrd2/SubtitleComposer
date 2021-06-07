@@ -21,6 +21,8 @@
 #include "videoplayer.h"
 #include "scconfig.h"
 
+#include "videoplayer/backend/glrenderer.h"
+
 #include <math.h>
 
 #include <QTimer>
@@ -38,8 +40,7 @@ using namespace SubtitleComposer;
 
 
 VideoPlayer::VideoPlayer()
-	: m_player(new FFPlayer()),
-	  m_renderer(new GLRenderer()),
+	: m_player(new FFPlayer(this)),
 	  m_videoWidget(nullptr),
 	  m_filePath(),
 	  m_state(Initialized),
@@ -52,26 +53,21 @@ VideoPlayer::VideoPlayer()
 	  m_muted(false),
 	  m_volume(100.0)
 {
-	m_renderer->setOverlay(&m_subOverlay);
-	m_player->init(m_renderer);
+	m_player->renderer()->setOverlay(&m_subOverlay);
 
 	setupNotifications();
 }
 
 VideoPlayer::~VideoPlayer()
 {
-	cleanup();
-	delete m_player;
 }
 
 VideoPlayer *
 VideoPlayer::instance()
 {
 	static VideoPlayer *player = nullptr;
-	if(!player) {
+	if(!player)
 		player = new VideoPlayer();
-		player->setParent(QApplication::instance());
-	}
 	return player;
 }
 
@@ -80,7 +76,7 @@ VideoPlayer::init(QWidget *videoContainer)
 {
 	if(!m_videoWidget) {
 		m_videoWidget = new VideoWidget(videoContainer);
-		m_videoWidget->setVideoLayer(m_renderer);
+		m_videoWidget->setVideoLayer(m_player->renderer());
 
 		connect(m_videoWidget, &VideoWidget::doubleClicked, this, &VideoPlayer::doubleClicked);
 		connect(m_videoWidget, &VideoWidget::rightClicked, this, &VideoPlayer::rightClicked);
@@ -93,12 +89,6 @@ VideoPlayer::init(QWidget *videoContainer)
 	reset();
 
 	return true;
-}
-
-void
-VideoPlayer::cleanup()
-{
-	m_player->cleanup();
 }
 
 void
@@ -279,7 +269,7 @@ void
 VideoPlayer::setupNotifications()
 {
 	connect(m_player, &FFPlayer::mediaLoaded, this, [this](){
-		m_renderer->reset();
+		m_player->renderer()->reset();
 		emit fileOpened(m_filePath);
 		m_fps = m_player->videoFPS();
 		emit fpsChanged(m_fps);
@@ -296,7 +286,7 @@ VideoPlayer::setupNotifications()
 		default: break; // not possible
 		}
 	});
-	connect(m_renderer, &GLRenderer::resolutionChanged, this, [this](){
+	connect(m_player->renderer(), &GLRenderer::resolutionChanged, this, [this](){
 		m_videoWidget->setVideoResolution(m_player->videoWidth(), m_player->videoHeight(), m_player->videoSAR());
 		m_videoWidget->videoLayer()->show();
 	});

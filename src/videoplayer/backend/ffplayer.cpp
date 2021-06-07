@@ -35,9 +35,10 @@
 #include <csignal>
 #include <cstdint>
 
-#include "videoplayer/backend/framequeue.h"
-#include "videoplayer/backend/packetqueue.h"
 #include "videoplayer/backend/decoder.h"
+#include "videoplayer/backend/framequeue.h"
+#include "videoplayer/backend/glrenderer.h"
+#include "videoplayer/backend/packetqueue.h"
 #include "videoplayer/backend/renderthread.h"
 
 extern "C" {
@@ -52,10 +53,38 @@ FFPlayer::FFPlayer(QObject *parent)
 	  m_muted(false),
 	  m_volume(1.0),
 	  m_vs(nullptr),
-	  m_renderer(nullptr)
+	  m_renderer(new GLRenderer(nullptr))
 {
+	connect(m_renderer, &QObject::destroyed, this, [&](){
+		close();
+		m_renderer = nullptr;
+	});
+
 	qRegisterMetaType<FFPlayer::State>("FFPlayer::State");
 	connect(&m_positionTimer, &QTimer::timeout, this, [this](){ emit positionChanged(position()); });
+
+	av_log_set_flags(AV_LOG_SKIP_REPEATED);
+#ifndef NDEBUG
+	av_log_set_level(AV_LOG_VERBOSE);
+#else
+	av_log_set_level(AV_LOG_INFO);
+#endif
+#ifdef FFMPEG_QT_LOGGING
+	av_log_set_callback(av_log_callback);
+#endif // FFMPEG_QT_LOGGING
+
+	// register all codecs, demux and protocols
+	avformat_network_init();
+}
+
+FFPlayer::~FFPlayer()
+{
+	if(m_renderer)
+		m_renderer->deleteLater();
+
+	close();
+	avformat_network_deinit();
+	av_log(nullptr, AV_LOG_QUIET, "%s", "");
 }
 
 uint8_t *
@@ -63,14 +92,6 @@ FFPlayer::flushPkt()
 {
 	static uint8_t pktData;
 	return &pktData;
-}
-
-void
-FFPlayer::cleanup()
-{
-	close();
-	avformat_network_deinit();
-	av_log(nullptr, AV_LOG_QUIET, "%s", "");
 }
 
 void
@@ -171,25 +192,6 @@ av_log_callback(void *ptr, int severity, const char *format, va_list args)
 }
 #endif // FFMPEG_QT_LOGGING
 
-void
-FFPlayer::init(GLRenderer *renderer)
-{
-	m_renderer = renderer;
-
-	av_log_set_flags(AV_LOG_SKIP_REPEATED);
-#ifndef NDEBUG
-	av_log_set_level(AV_LOG_VERBOSE);
-#else
-	av_log_set_level(AV_LOG_INFO);
-#endif
-#ifdef FFMPEG_QT_LOGGING
-	av_log_set_callback(av_log_callback);
-#endif // FFMPEG_QT_LOGGING
-
-	// register all codecs, demux and protocols
-	avformat_network_init();
-}
-
 bool
 FFPlayer::open(const char *filename)
 {
@@ -198,7 +200,7 @@ FFPlayer::open(const char *filename)
 	m_vs = StreamDemuxer::open(filename);
 	if(!m_vs) {
 		av_log(nullptr, AV_LOG_FATAL, "Failed to initialize VideoState!\n");
-		cleanup();
+		close();
 		return false;
 	}
 	m_vs->player = this;

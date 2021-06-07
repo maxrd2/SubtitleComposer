@@ -49,8 +49,7 @@ struct Frame {
 	int height;
 	int format;
 	AVRational sar;
-	int uploaded;
-	int flip_v;
+	bool uploaded;
 };
 
 class FrameQueue

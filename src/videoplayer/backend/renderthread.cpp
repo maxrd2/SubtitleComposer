@@ -175,13 +175,9 @@ display:
 	m_vs->forceRefresh = false;
 }
 
-// display the current picture, if any
 void
 RenderThread::videoDisplay()
 {
-	m_vs->videoWidth = m_vs->glRenderer->width();
-	m_vs->videoHeight = m_vs->glRenderer->height();
-
 	if(m_vs->audStream && m_vs->showMode != SHOW_MODE_VIDEO)
 		videoAudioDisplay();
 	else if(m_vs->vidStream)
@@ -431,8 +427,7 @@ RenderThread::videoImageDisplay()
 	if(!vp->uploaded) {
 		if(uploadTexture(vp->frame) < 0)
 			return;
-		vp->uploaded = 1;
-		vp->flip_v = vp->frame->linesize[0] < 0;
+		vp->uploaded = true;
 	}
 
 #ifdef VIDEO_SUBTITLE

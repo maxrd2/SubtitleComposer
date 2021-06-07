@@ -79,7 +79,7 @@ VideoDecoder::queuePicture(AVFrame *srcFrame, double pts, double duration, int64
 		return -1;
 
 	vp->sar = srcFrame->sample_aspect_ratio;
-	vp->uploaded = 0;
+	vp->uploaded = false;
 
 	vp->width = srcFrame->width;
 	vp->height = srcFrame->height;

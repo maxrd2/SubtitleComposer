@@ -41,9 +41,12 @@ class GLRenderer : public QOpenGLWidget, private QOpenGLFunctions
 {
 	Q_OBJECT
 
+	friend class FFPlayer;
+
+	explicit GLRenderer(QWidget *parent = nullptr);
+
 public:
-    explicit GLRenderer(QWidget *parent = nullptr);
-    ~GLRenderer();
+	~GLRenderer();
 
 	static void setupProfile();
 	void reset();

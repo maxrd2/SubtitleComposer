@@ -24,7 +24,6 @@
 #include "videowidget.h"
 
 #include "videoplayer/backend/ffplayer.h"
-#include "videoplayer/backend/glrenderer.h"
 #include "videoplayer/subtitletextoverlay.h"
 
 #include <QPainterPath>
@@ -51,7 +50,6 @@ public:
 	static VideoPlayer * instance();
 
 	bool init(QWidget *videoContainer);
-	void cleanup();
 
 	inline State state() const { return m_state; }
 	inline VideoWidget * videoWidget() { return m_videoWidget; }
@@ -129,7 +127,6 @@ private:
 
 private:
 	FFPlayer *m_player;
-	GLRenderer *m_renderer;
 	VideoWidget *m_videoWidget;
 	SubtitleTextOverlay m_subOverlay;
 	QString m_filePath;

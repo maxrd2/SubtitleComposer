@@ -649,7 +649,8 @@ WaveformWidget::onPlayerPositionChanged(double seconds)
 			scrollToTime(m_timeCurrent, true);
 
 		m_visibleLinesDirty = true;
-		m_waveformGraphics->update();
+		if(m_waveformGraphics)
+			m_waveformGraphics->update();
 	}
 }
 

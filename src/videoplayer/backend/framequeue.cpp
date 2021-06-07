@@ -119,7 +119,7 @@ FrameQueue::peekWritable()
 Frame *
 FrameQueue::peekReadable()
 {
-	// wait until we have a readable a new frame
+	// wait until we have a new readable frame
 	m_mutex->lock();
 	while(m_size - m_rIndexShown <= 0 && !m_pktQ->m_abortRequest)
 		m_cond->wait(m_mutex);

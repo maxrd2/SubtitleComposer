@@ -114,7 +114,7 @@ Application::Application(int &argc, char **argv) :
 	m_textDemux(nullptr),
 	m_speechProcessor(nullptr),
 	m_lastFoundLine(nullptr),
-	m_mainWindow(nullptr),
+	m_mainWindow(new MainWindow()),
 	m_lastSubtitleUrl(QDir::homePath()),
 	m_lastVideoUrl(QDir::homePath()),
 	m_linkCurrentLineToPosition(false)
@@ -126,7 +126,7 @@ Application::init()
 {
 	setAttribute(Qt::AA_UseHighDpiPixmaps, true);
 
-	m_mainWindow = new MainWindow();
+	connect(m_mainWindow, &QObject::destroyed, this, [&](){ m_mainWindow = nullptr; });
 
 	m_playerWidget = m_mainWindow->m_playerWidget;
 	m_linesWidget = m_mainWindow->m_linesWidget;

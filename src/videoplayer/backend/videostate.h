@@ -169,8 +169,6 @@ private:
 
 	ShowMode showMode = SHOW_MODE_NONE;
 	bool forceRefresh = true;
-	int videoWidth = 0;
-	int videoHeight = 0;
 
 	Clock audClk;
 	AudioDecoder audDec;

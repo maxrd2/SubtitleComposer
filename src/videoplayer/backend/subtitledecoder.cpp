@@ -51,7 +51,7 @@ SubtitleDecoder::run()
 			sp->serial = pktSerial();
 			sp->width = width();
 			sp->height = height();
-			sp->uploaded = 0;
+			sp->uploaded = false;
 
 			// now we can update the picture count
 			m_frameQueue->push();

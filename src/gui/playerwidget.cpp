@@ -281,8 +281,6 @@ PlayerWidget::PlayerWidget(QWidget *parent) :
 
 PlayerWidget::~PlayerWidget()
 {
-	m_player->cleanup();
-
 	m_fullScreenControls->deleteLater();
 }
 
