@@ -192,8 +192,7 @@ WaveBuffer::onStreamData(const void *buffer, qint32 size, const WaveFormat *wave
 	const SAMPLE_TYPE *sample = reinterpret_cast<const SAMPLE_TYPE *>(buffer);
 
 	{ // handle overlaps and holes between buffers (tested streams had ~2ms error - might be useless)
-		Q_ASSERT(msecStart >= 0);
-		const quint32 inStartOffset = msecStart * m_samplesSec / 1000;
+		const quint32 inStartOffset = qMax(0LL, msecStart) * m_samplesSec / 1000;
 		if(inStartOffset < m_wfFrame->offset) {
 			// overwrite part of local buffer
 			m_wfFrame->offset = inStartOffset;
