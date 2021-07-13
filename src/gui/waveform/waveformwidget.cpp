@@ -79,7 +79,7 @@ WaveformWidget::WaveformWidget(QWidget *parent)
 	  m_zoomData(nullptr),
 	  m_zoomDataLen(0)
 {
-	m_widgetLayout = new QBoxLayout(QBoxLayout::LeftToRight, this);
+	m_widgetLayout = new QBoxLayout(QBoxLayout::LeftToRight);
 	m_widgetLayout->setMargin(0);
 	m_widgetLayout->setSpacing(0);
 
