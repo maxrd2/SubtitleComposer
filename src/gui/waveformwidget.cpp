@@ -284,7 +284,7 @@ WaveformWidget::updateZoomData()
 	if(!height)
 		return;
 
-	const quint32 samplesPerPixel = double(SAMPLE_RATE_MILLIS * windowSize()) / height;
+	const quint32 samplesPerPixel = qMax(1U, SAMPLE_RATE_MILLIS * quint32(windowSize()) / height);
 
 	if(m_samplesPerPixel != samplesPerPixel) {
 		// free memory if samples per pixel changed
