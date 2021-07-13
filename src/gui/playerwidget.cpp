@@ -519,7 +519,7 @@ PlayerWidget::updatePlayingLine(const Time &videoPosition)
 	if(!m_subtitle)
 		return;
 
-	if(m_playingLine && m_playingLine->showTime() <= videoPosition && videoPosition <= m_playingLine->hideTime())
+	if(m_playingLine && m_playingLine->containsTime(videoPosition))
 		return; // playing line is still valid
 
 	SubtitleLine *firstLine = m_subtitle->firstLine();
@@ -577,6 +577,9 @@ PlayerWidget::setPlayingLineFromVideo()
 void
 PlayerWidget::setPlayingLine(SubtitleLine *line)
 {
+	if(m_subtitle && line && m_subtitle != line->subtitle())
+		line = nullptr;
+
 	if(m_playingLine == line)
 		return;
 
