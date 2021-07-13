@@ -79,7 +79,6 @@ FileLoadHelper::open()
 		KIO::StoredTransferJob *xjob = KIO::storedGet(m_url);
 		if(!xjob) {
 			qDebug() << "Couldn't open url" << m_url;
-			qDebug() << xjob->errorString();
 			return false;
 		}
 		connect(xjob, &KIO::StoredTransferJob::result, this, &FileLoadHelper::downloadComplete);
