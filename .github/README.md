@@ -1,7 +1,7 @@
 ## Subtitle Composer
 [![Linux Build](https://subtitlecomposer.smoothware.net/badge.php?p=job/kf5-qt5&os=suse&t=Linux+Build)](https://build.kde.org/job/Extragear/job/subtitlecomposer/)
 [![FreeBSD Build](https://subtitlecomposer.smoothware.net/badge.php?p=job/kf5-qt5&os=bsd&t=FreeBSD+Build)](https://build.kde.org/job/Extragear/job/subtitlecomposer/)
-[![TravisCI Build](https://img.shields.io/travis/maxrd2/subtitlecomposer/master.svg?label=Travis+Builds)](https://travis-ci.org/maxrd2/subtitlecomposer)
+[![TravisCI Build](https://img.shields.io/travis/com/maxrd2/subtitlecomposer/master.svg?label=Travis+Builds)](https://travis-ci.com/maxrd2/subtitlecomposer)
 [![Localization](https://d322cqt584bo4o.cloudfront.net/subtitlecomposer/localized.svg)](https://l10n.kde.org/stats/gui/trunk-kf5/po/subtitlecomposer.po/)
 
 
