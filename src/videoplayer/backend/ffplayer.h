@@ -109,6 +109,7 @@ private:
 	double m_volume;
 
 	QTimer m_positionTimer;
+	qint32 m_postitionLast;
 	VideoState *m_vs;
 	GLRenderer *m_renderer;
 };

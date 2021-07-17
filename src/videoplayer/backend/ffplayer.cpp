@@ -61,7 +61,14 @@ FFPlayer::FFPlayer(QObject *parent)
 	});
 
 	qRegisterMetaType<FFPlayer::State>("FFPlayer::State");
-	connect(&m_positionTimer, &QTimer::timeout, this, [this](){ emit positionChanged(position()); });
+	connect(&m_positionTimer, &QTimer::timeout, this, [this](){
+		const double pf = position();
+		const qint32 p = pf * 1000.;
+		if(m_postitionLast != p) {
+			m_postitionLast = p;
+			emit positionChanged(pf);
+		}
+	});
 
 	av_log_set_flags(AV_LOG_SKIP_REPEATED);
 #ifndef NDEBUG
@@ -210,6 +217,7 @@ FFPlayer::open(const char *filename)
 	m_vs->renderThread = new RenderThread(m_vs);
 	m_vs->renderThread->start();
 
+	m_postitionLast = -1;
 	m_positionTimer.start(100);
 
 	return true;
