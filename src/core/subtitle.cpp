@@ -577,9 +577,9 @@ Subtitle::splitLines(const RangeList &ranges)
 		QTextCursor c2(line->secondaryDoc());
 
 		c1.movePosition(QTextCursor::EndOfBlock, QTextCursor::KeepAnchor);
-		QVector<double> dur;
-		dur.push_back(SubtitleLine::autoDuration(c1.selectedText(), 60, 50, 50).toMillis());
-		double totalDuration = dur.back();
+		QVector<quint32> dur;
+		dur.push_back(c1.selectedText().size());
+		quint32 totalDuration = dur.back();
 
 		QVector<SubtitleLine *> newLines;
 		for(;;) {
@@ -593,7 +593,7 @@ Subtitle::splitLines(const RangeList &ranges)
 			c1.movePosition(QTextCursor::EndOfBlock, QTextCursor::KeepAnchor);
 			c2.movePosition(QTextCursor::EndOfBlock, QTextCursor::KeepAnchor);
 
-			dur.push_back(SubtitleLine::autoDuration(c1.selectedText(), 60, 50, 50).toMillis());
+			dur.push_back(c1.selectedText().size());
 			totalDuration += dur.back();
 
 			SubtitleLine *nl = new SubtitleLine();
