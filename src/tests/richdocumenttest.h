@@ -36,6 +36,9 @@ private slots:
 	void testRegExpReplace_data();
 	void testRegExpReplace();
 
+	void testIndexReplace_data();
+	void testIndexReplace();
+
 	void testCleanupSpaces_data();
 	void testCleanupSpaces();
 

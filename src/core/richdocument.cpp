@@ -766,6 +766,7 @@ RichDocument::replace(int index, int len, const QString &replacement)
 	m_undoableCursor.beginEditBlock();
 	m_undoableCursor.movePosition(QTextCursor::Start);
 	m_undoableCursor.movePosition(QTextCursor::Right, QTextCursor::MoveAnchor, index);
+	m_undoableCursor.movePosition(QTextCursor::Right, QTextCursor::KeepAnchor, len);
 	m_undoableCursor.insertText(replacement);
 	m_undoableCursor.endEditBlock();
 }

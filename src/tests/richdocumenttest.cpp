@@ -196,6 +196,64 @@ RichDocumentTest::testRegExpReplace()
 }
 
 void
+RichDocumentTest::testIndexReplace_data()
+{
+	QTest::addColumn<Format>("inType");
+	QTest::addColumn<QString>("input");
+	QTest::addColumn<int>("index");
+	QTest::addColumn<int>("length");
+	QTest::addColumn<Format>("repType");
+	QTest::addColumn<QString>("replacement");
+	QTest::addColumn<QString>("expected");
+
+	QTest::newRow("start")
+			<< Plain << $("xx12xx345xx6xx7xx")
+			<< 0 << 4
+			<< Plain << $("YYY")
+			<< $("YYYxx345xx6xx7xx");
+	QTest::newRow("middle")
+			<< Plain << $("xx12xx345xx6xx7xx")
+			<< 6 << 3
+			<< Plain << $("YYY")
+			<< $("xx12xxYYYxx6xx7xx");
+	QTest::newRow("end")
+			<< Plain << $("xx12xx345xx6xx7xx")
+			<< 12 << 5
+			<< Plain << $("YYY")
+			<< $("xx12xx345xx6YYY");
+}
+
+void
+RichDocumentTest::testIndexReplace()
+{
+	QFETCH(Format, inType);
+	QFETCH(QString, input);
+	QFETCH(int, index);
+	QFETCH(int, length);
+	QFETCH(Format, repType);
+	QFETCH(QString, replacement);
+	QFETCH(QString, expected);
+
+	if(inType == Plain)
+		doc.setPlainText(input, true);
+	else
+		doc.setHtml(input, true);
+
+	if(expected.isEmpty())
+		expected = QString(input).replace(index, length, replacement);
+
+	if(inType == Plain && repType == Plain) {
+		doc.replace(index, length, replacement);
+		QCOMPARE(doc.toPlainText(), expected);
+	}
+
+	doc.undo();
+	doc.replace(index, length, replacement);
+	QString docOut = inType == Plain && repType == Plain ? doc.toPlainText() : doc.toHtml();
+	QCOMPARE(docOut, expected);
+}
+
+void
 RichDocumentTest::testCleanupSpaces_data()
 {
 	QTest::addColumn<Format>("inType");
