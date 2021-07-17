@@ -514,8 +514,10 @@ PlayerWidget::decreaseFontSize(int size)
 void
 PlayerWidget::updatePlayingLine(const Time &videoPosition)
 {
-	if(!m_subtitle)
+	if(!m_subtitle || m_subtitle->isEmpty()) {
+		setPlayingLine(nullptr);
 		return;
+	}
 
 	if(m_playingLine && m_playingLine->containsTime(videoPosition))
 		return; // playing line is still valid
