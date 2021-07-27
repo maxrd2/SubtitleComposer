@@ -252,12 +252,16 @@ LinesItemDelegate::paint(QPainter *painter, const QStyleOptionViewItem &opt, con
 
 	// draw the background
 	if(index.data(LinesModel::PlayingLineRole).toBool()) {
-		if(option.state & QStyle::State_Selected) {
-			option.backgroundBrush = option.palette.highlight().color().lighter(125);
-			option.palette.setBrush(cg, QPalette::Highlight, option.backgroundBrush);
-		} else {
-			option.backgroundBrush = option.palette.highlight().color().lighter(165);
-		}
+		const bool sel = option.state & QStyle::State_Selected;
+		QColor bg = option.palette.color(cg, sel ? QPalette::Highlight : QPalette::Base);
+		QColor fg = option.palette.color(cg, sel ? QPalette::HighlightedText : QPalette::Text);
+		const int ld = fg.value() - bg.value();
+		if(ld > 0)
+			bg = bg.lighter(100 + ld / 2);
+		else
+			bg = bg.darker(100 + ld / -9);
+		option.palette.setColor(cg, QPalette::Highlight, bg);
+		option.state |= QStyle::State_Selected;
 	}
 	style->drawPrimitive(QStyle::PE_PanelItemViewItem, &option, painter, option.widget);
 
