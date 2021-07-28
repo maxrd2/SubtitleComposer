@@ -88,10 +88,10 @@ public:
 	void setSecondaryData(const Subtitle &from, bool usePrimaryData);
 	void clearSecondaryTextData();
 
-	bool isPrimaryDirty() const;
+	inline bool isPrimaryDirty() const { return m_primaryDirtyState; }
 	void clearPrimaryDirty();
 
-	bool isSecondaryDirty() const;
+	inline bool isSecondaryDirty() const { return m_secondaryDirtyState; }
 	void clearSecondaryDirty();
 
 	double framesPerSecond() const;
@@ -209,6 +209,8 @@ private:
 	void endCompositeAction();
 	void processAction(UndoAction *action);
 
+	bool isPrimaryDirty(int index) const;
+	bool isSecondaryDirty(int index) const;
 	void updateState();
 
 	inline int normalizeRangeIndex(int index) const { return index >= m_lines.count() ? m_lines.count() - 1 : index; }
@@ -218,10 +220,10 @@ private:
 	inline SubtitleLine * takeAt(const int i) { SubtitleLine *s = m_lines.at(i).obj(); m_lines.remove(i); return s; }
 
 private:
-	int m_primaryState;
-	int m_primaryCleanState;
-	int m_secondaryState;
-	int m_secondaryCleanState;
+	bool m_primaryDirtyState;
+	int m_primaryCleanIndex;
+	bool m_secondaryDirtyState;
+	int m_secondaryCleanIndex;
 
 	double m_framesPerSecond;
 	mutable QVector<ObjectRef<SubtitleLine>> m_lines;

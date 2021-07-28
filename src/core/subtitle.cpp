@@ -51,10 +51,10 @@ Subtitle::setDefaultFramesPerSecond(double framesPerSecond)
 }
 
 Subtitle::Subtitle(double framesPerSecond)
-	: m_primaryState(0),
-	  m_primaryCleanState(0),
-	  m_secondaryState(0),
-	  m_secondaryCleanState(0),
+	: m_primaryDirtyState(false),
+	  m_primaryCleanIndex(0),
+	  m_secondaryDirtyState(false),
+	  m_secondaryCleanIndex(0),
 	  m_framesPerSecond(framesPerSecond),
 	  m_formatData(nullptr)
 {}
@@ -175,34 +175,26 @@ Subtitle::clearSecondaryTextData()
 	endCompositeAction();
 }
 
-bool
-Subtitle::isPrimaryDirty() const
-{
-	return m_primaryState != m_primaryCleanState;
-}
-
 void
 Subtitle::clearPrimaryDirty()
 {
-	if(isPrimaryDirty()) {
-		m_primaryCleanState = m_primaryState;
-		emit primaryDirtyStateChanged(false);
-	}
-}
+	if(!m_primaryDirtyState)
+		return;
 
-bool
-Subtitle::isSecondaryDirty() const
-{
-	return m_secondaryState != m_secondaryCleanState;
+	m_primaryDirtyState = false;
+	m_primaryCleanIndex = app()->undoStack()->index();
+	emit primaryDirtyStateChanged(false);
 }
 
 void
 Subtitle::clearSecondaryDirty()
 {
-	if(isSecondaryDirty()) {
-		m_secondaryCleanState = m_secondaryState;
-		emit secondaryDirtyStateChanged(false);
-	}
+	if(!m_secondaryDirtyState)
+		return;
+
+	m_secondaryDirtyState = false;
+	m_secondaryCleanIndex = app()->undoStack()->index();
+	emit secondaryDirtyStateChanged(false);
 }
 
 FormatData *
@@ -1395,48 +1387,67 @@ Subtitle::endCompositeAction()
 		app()->undoStack()->endMacro();
 }
 
+bool
+Subtitle::isPrimaryDirty(int index) const
+{
+	const UndoStack *undoStack = app()->undoStack();
+
+	int i = m_primaryCleanIndex;
+	const int d = i > index ? -1 : 1;
+	for(;;) {
+		if(i < 0)
+			return m_primaryCleanIndex >= 0;
+		const UndoAction *action = i > 0 ? dynamic_cast<const UndoAction *>(undoStack->command(i - 1)) : nullptr;
+		const UndoAction::DirtyMode dirtyMode = action ? action->m_dirtyMode : UndoAction::None;
+		if(i != m_primaryCleanIndex && (dirtyMode == UndoAction::Both || dirtyMode == UndoAction::Primary))
+			return true;
+		if(i == index)
+			return false;
+		i += d;
+	}
+}
+
+bool
+Subtitle::isSecondaryDirty(int index) const
+{
+	const UndoStack *undoStack = app()->undoStack();
+
+	int i = m_secondaryCleanIndex;
+	const int d = i > index ? -1 : 1;
+	for(;;) {
+		if(i < 0)
+			return m_secondaryCleanIndex >= 0;
+		const UndoAction *action = i > 0 ? dynamic_cast<const UndoAction *>(undoStack->command(i - 1)) : nullptr;
+		const UndoAction::DirtyMode dirtyMode = action ? action->m_dirtyMode : UndoAction::None;
+		if(i != m_secondaryCleanIndex && (dirtyMode == UndoAction::Both || dirtyMode == UndoAction::Secondary))
+			return true;
+		if(i == index)
+			return false;
+		i += d;
+	}
+}
+
 void
 Subtitle::updateState()
 {
-	auto updatePrimary = [&](const int index){
-		m_primaryState = index;
-		if(m_primaryState == m_primaryCleanState)
-			emit primaryDirtyStateChanged(false);
-		else
-			emit primaryDirtyStateChanged(true);
-		emit primaryChanged();
-	};
-	auto updateSecondary = [&](const int index){
-		m_secondaryState = index;
-		if(m_secondaryState == m_secondaryCleanState)
-			emit secondaryDirtyStateChanged(false);
-		else
-			emit secondaryDirtyStateChanged(true);
-		emit secondaryChanged();
-	};
-
 	const UndoStack *undoStack = app()->undoStack();
 	const int index = undoStack->index();
 	const UndoAction *action = index > 0 ? dynamic_cast<const UndoAction *>(undoStack->command(index - 1)) : nullptr;
-	const UndoAction::DirtyMode dirtyMode = action != nullptr ? action->m_dirtyMode : SubtitleAction::Both;
+	const UndoAction::DirtyMode dirtyMode = action != nullptr ? action->m_dirtyMode : UndoAction::Both;
 
-	switch(dirtyMode) {
-	case SubtitleAction::Primary:
-		updatePrimary(index);
-		break;
-
-	case SubtitleAction::Secondary:
-		updateSecondary(index);
-		break;
-
-	case SubtitleAction::Both:
-		updatePrimary(index);
-		updateSecondary(index);
-		break;
-
-	case SubtitleAction::None:
-		break;
+	if(m_primaryDirtyState != isPrimaryDirty(index)) {
+		m_primaryDirtyState = !m_primaryDirtyState;
+		emit primaryDirtyStateChanged(m_primaryDirtyState);
 	}
+	if(dirtyMode == UndoAction::Both || dirtyMode == UndoAction::Primary)
+		emit primaryChanged();
+
+	if(m_secondaryDirtyState != isSecondaryDirty(index)) {
+		m_secondaryDirtyState = !m_secondaryDirtyState;
+		emit secondaryDirtyStateChanged(m_secondaryDirtyState);
+	}
+	if(dirtyMode == UndoAction::Both || dirtyMode == UndoAction::Secondary)
+		emit secondaryChanged();
 }
 
 /// SUBTITLECOMPOSITEACTIONEXECUTOR

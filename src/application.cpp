@@ -1046,14 +1046,12 @@ Application::updateTitle()
 {
 	if(m_subtitle) {
 		if(m_translationMode) {
-			static const QString titleBuilder(QStringLiteral("%1%2 | %3%4"));
-			static const QString modified = QStringLiteral(" [") % i18n("modified") % QStringLiteral("]");
-
-			m_mainWindow->setCaption(titleBuilder
-									 .arg(m_subtitleUrl.isEmpty() ? i18n("Untitled") : m_subtitleFileName)
-									 .arg(m_subtitle->isPrimaryDirty() ? modified : QString())
-									 .arg(m_subtitleTrUrl.isEmpty() ? i18n("Untitled Translation") : m_subtitleTrFileName)
-									 .arg(m_subtitle->isSecondaryDirty() ? modified : QString()), false);
+			const QString caption = QStringLiteral("%1%2 | %3").arg(
+				m_subtitleUrl.isEmpty() ? i18n("Untitled") : m_subtitleFileName,
+				m_subtitle->isPrimaryDirty() ? $(" *") : QString(),
+				m_subtitleTrUrl.isEmpty() ? i18n("Untitled Translation") : m_subtitleTrFileName
+			);
+			m_mainWindow->setCaption(caption, m_subtitle->isSecondaryDirty());
 		} else {
 			m_mainWindow->setCaption(
 						m_subtitleUrl.isEmpty() ? i18n("Untitled") : (m_subtitleUrl.isLocalFile() ? m_subtitleUrl.toLocalFile() : m_subtitleUrl.toString(QUrl::PreferLocalFile)),
