@@ -1,4 +1,26 @@
-﻿Version 0.7.0
+﻿Version 0.7.1
+- Fixed script edititing on AppImage
+- Fixed AppImage/Windows builds, themes and look
+- Fixed theme/icons/look outside KDE environment
+- Fixed opening files on windows
+- Fixed various bugs and rare crashes
+- Fixed Undo stack and improved text editing undo
+- Improved/replaced Video player(s) (performance, Wayland support, OpenGL/FFmpeg)
+- Improved Waveform performance
+- Improved LinesWidget/Model performance
+- Improved Wayland support
+- Improved open/save file dialogs to use native dialogs
+- Improved text charsets/encodings/end-of-line selection, detection and handling
+- Improved VobSub support
+- Improved inline editor to support text styles
+- Improved subtitle style rendering
+- Improved character/sec support and added coloring
+- Improvide command line - ability to open all subtitle/media files
+- Added Pause/Duration columns to list view
+- Removed invalid subpicture/x-pgs mime
+- Updated/added many translations - thanks to KDE community
+
+Version 0.7.0
  - Fixed parsing of absolute paths containing '#' character
  - Fixed open dialogs not showing all supported files
  - Fixed subtitle text not respecting system font configuration
