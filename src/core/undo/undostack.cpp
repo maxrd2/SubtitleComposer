@@ -18,6 +18,7 @@
  */
 
 #include "application.h"
+#include "actions/useraction.h"
 #include "actions/useractionnames.h"
 #include "core/undo/undoaction.h"
 #include "core/undo/undostack.h"
@@ -28,12 +29,14 @@ using namespace SubtitleComposer;
 
 UndoStack::UndoStack(QObject *parent)
 	: QUndoStack(parent),
-	  m_level(0)
+	  m_level(0),
+	  m_undoAction(QUndoStack::createUndoAction(UserActionManager::instance())),
+	  m_redoAction(QUndoStack::createRedoAction(UserActionManager::instance()))
 {
 	m_selectionStack.push(Selection(app()->linesWidget()->selectionModel()));
 
-	connect(this, &UndoStack::undoTextChanged, app()->action(ACT_UNDO), &QAction::setToolTip);
-	connect(this, &UndoStack::redoTextChanged, app()->action(ACT_REDO), &QAction::setToolTip);
+	connect(this, &UndoStack::undoTextChanged, undoAction(), &QAction::setToolTip);
+	connect(this, &UndoStack::redoTextChanged, redoAction(), &QAction::setToolTip);
 	connect(this, &UndoStack::indexChanged, parent, [](){ if(Subtitle *s = app()->subtitle()) s->updateState(); });
 	connect(this, &UndoStack::cleanChanged, parent, [](){ if(Subtitle *s = app()->subtitle()) s->updateState(); });
 }

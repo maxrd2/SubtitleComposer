@@ -61,8 +61,8 @@ public:
 	using QUndoStack::index;
 	using QUndoStack::text;
 
-	using QUndoStack::createUndoAction;
-	using QUndoStack::createRedoAction;
+	inline QAction *undoAction() const { return m_undoAction; }
+	inline QAction *redoAction() const { return m_redoAction; }
 
 	// Subtitle handles/implements these
 //	using QUndoStack::isActive;
@@ -85,6 +85,8 @@ private:
 private:
 	int m_level;
 	QStack<Selection> m_selectionStack;
+	QAction *m_undoAction;
+	QAction *m_redoAction;
 };
 
 }

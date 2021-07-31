@@ -157,12 +157,12 @@ Application::setupActions()
 	actionCollection->addAction(ACT_CLOSE_SUBTITLE_TR, closeSubtitleTrAction);
 	actionManager->addAction(closeSubtitleTrAction, UserAction::SubTrOpened | UserAction::FullScreenOff);
 
-	QAction *undoAction = m_undoStack->createUndoAction(actionManager);
+	QAction *undoAction = m_undoStack->undoAction();
 	undoAction->setIcon(QIcon::fromTheme("edit-undo"));
 	actionCollection->setDefaultShortcuts(undoAction, KStandardShortcut::undo());
 	actionCollection->addAction(ACT_UNDO, undoAction);
 
-	QAction *redoAction = m_undoStack->createRedoAction(actionManager);
+	QAction *redoAction = m_undoStack->redoAction();
 	redoAction->setIcon(QIcon::fromTheme("edit-redo"));
 	actionCollection->setDefaultShortcuts(redoAction, KStandardShortcut::redo());
 	actionCollection->addAction(ACT_REDO, redoAction);
