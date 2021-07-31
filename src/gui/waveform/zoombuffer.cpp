@@ -86,6 +86,8 @@ ZoomBuffer::run()
 	Q_ASSERT(m_samplesPerPixel > 0);
 	Q_ASSERT(m_waveBuffer->lengthSamples() > 0);
 
+	m_restartProcessing = false;
+
 	RangeList ranges;
 	quint32 lastProcessed = 0;
 	RangeList::iterator range = ranges.end();
