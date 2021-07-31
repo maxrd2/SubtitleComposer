@@ -367,7 +367,7 @@ ScriptsManager::runScript(const QString &sN)
 
 	{
 		// everything done by the script will be undoable in a single step
-		SubtitleCompositeActionExecutor executor(*(app()->subtitle()), scriptName);
+		SubtitleCompositeActionExecutor executor(app()->subtitle(), scriptName);
 		// execute the script file
 		krossAction.trigger();
 	}

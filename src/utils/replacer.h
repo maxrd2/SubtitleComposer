@@ -25,6 +25,7 @@
 #include "core/subtitle.h"
 #include "core/subtitleline.h"
 
+#include <QExplicitlySharedDataPointer>
 #include <QObject>
 
 QT_FORWARD_DECLARE_CLASS(QGroupBox)
@@ -66,7 +67,7 @@ private slots:
 	void onReplace(const QString &text, int replacementIndex, int replacedLength, int matchedLength);
 
 private:
-	Subtitle *m_subtitle;
+	QExplicitlySharedDataPointer<const Subtitle> m_subtitle;
 	bool m_translationMode;
 	bool m_feedingPrimary;
 

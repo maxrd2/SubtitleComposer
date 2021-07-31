@@ -92,7 +92,7 @@ ErrorFinder::find(int searchFromIndex, bool findBackwards)
 	const RangeList targetRanges = app()->linesWidget()->targetRanges(m_dialog->selectedLinesTarget());
 
 	{
-		SubtitleCompositeActionExecutor executor(*m_subtitle, i18n("Check Lines Errors"));
+		SubtitleCompositeActionExecutor executor(m_subtitle.constData(), i18n("Check Lines Errors"));
 
 		if(m_dialog->clearOtherErrors())
 			m_subtitle->clearErrors(targetRanges, SubtitleLine::AllErrors & ~SubtitleLine::UserMark);

@@ -213,12 +213,12 @@ void
 CurrentLineWidget::setSubtitle(Subtitle *subtitle)
 {
 	if(m_subtitle)
-		disconnect(m_subtitle, &Subtitle::lineAnchorChanged, this, &CurrentLineWidget::onLineAnchorChanged);
+		disconnect(m_subtitle.constData(), &Subtitle::lineAnchorChanged, this, &CurrentLineWidget::onLineAnchorChanged);
 
 	m_subtitle = subtitle;
 
 	if(subtitle)
-		connect(m_subtitle, &Subtitle::lineAnchorChanged, this, &CurrentLineWidget::onLineAnchorChanged);
+		connect(m_subtitle.constData(), &Subtitle::lineAnchorChanged, this, &CurrentLineWidget::onLineAnchorChanged);
 	else
 		setCurrentLine(nullptr);
 }

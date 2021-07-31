@@ -378,7 +378,7 @@ SubtitleLine::processShowTimeSort(const Time &showTime)
 	if(curIndex < newIndex)
 		newIndex--;
 	if(curIndex != newIndex)
-		processAction(new MoveLineAction(*m_subtitle, curIndex, newIndex));
+		processAction(new MoveLineAction(m_subtitle.data(), curIndex, newIndex));
 }
 
 void

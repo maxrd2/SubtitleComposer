@@ -24,6 +24,7 @@
 #include <QList>
 
 #include <QAction>
+#include <QExplicitlySharedDataPointer>
 
 namespace SubtitleComposer {
 class Subtitle;
@@ -102,8 +103,8 @@ public:
 	void removeAction(UserAction *actionSpec);
 
 public slots:
-	void setSubtitle(Subtitle *subtitle = 0);
-	void setLinesWidget(LinesWidget *linesWidget = 0);
+	void setSubtitle(const Subtitle *subtitle = nullptr);
+	void setLinesWidget(LinesWidget *linesWidget = nullptr);
 	void setTranslationMode(bool translationMode);
 	void setFullScreenMode(bool fullScreenMode);
 
@@ -123,7 +124,7 @@ private slots:
 private:
 	QList<UserAction *> m_actionSpecs;
 
-	const Subtitle *m_subtitle;
+	QExplicitlySharedDataPointer<const Subtitle> m_subtitle;
 	const LinesWidget *m_linesWidget;
 	bool m_translationMode;
 

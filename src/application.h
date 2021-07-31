@@ -29,6 +29,7 @@
 
 #include <QApplication>
 #include <QAction>
+#include <QExplicitlySharedDataPointer>
 #include <QMap>
 #include <QString>
 #include <QKeySequence>
@@ -79,7 +80,7 @@ public:
 
 	void init();
 
-	inline Subtitle * subtitle() const { return m_subtitle; }
+	inline Subtitle * subtitle() const { return m_subtitle.data(); }
 	inline UndoStack * undoStack() const { return m_undoStack; }
 	inline MainWindow * mainWindow() const { return m_mainWindow; }
 	inline LinesWidget * linesWidget() const { return m_linesWidget; }
@@ -265,7 +266,7 @@ private slots:
 	void showPreferences();
 
 private:
-	Subtitle *m_subtitle;
+	QExplicitlySharedDataPointer<Subtitle> m_subtitle;
 	QUrl m_subtitleUrl;
 	QString m_subtitleFileName;
 	QString m_subtitleEncoding;

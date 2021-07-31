@@ -260,7 +260,7 @@ Replacer::onHighlight(const QString &, int matchingIndex, int matchedLength)
 void
 Replacer::onReplace(const QString &text, int replacementIndex, int replacedLength, int matchedLength)
 {
-	SubtitleCompositeActionExecutor(*m_subtitle, i18n("Replace"));
+	SubtitleCompositeActionExecutor(m_subtitle.constData(), i18n("Replace"));
 
 	RichDocument *doc = m_feedingPrimary
 			? m_iterator->current()->primaryDoc()

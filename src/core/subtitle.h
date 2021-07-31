@@ -41,7 +41,7 @@ class RichDocument;
 class SubtitleLine;
 class UndoAction;
 
-class Subtitle : public QObject
+class Subtitle : public QObject, public QSharedData
 {
 	Q_OBJECT
 
@@ -208,9 +208,9 @@ private:
 	FormatData * formatData() const;
 	void setFormatData(const FormatData *formatData);
 
-	void beginCompositeAction(const QString &title);
-	void endCompositeAction();
-	void processAction(UndoAction *action);
+	void beginCompositeAction(const QString &title) const;
+	void endCompositeAction() const;
+	void processAction(UndoAction *action) const;
 
 	bool isPrimaryDirty(int index) const;
 	bool isSecondaryDirty(int index) const;
@@ -240,11 +240,11 @@ private:
 class SubtitleCompositeActionExecutor
 {
 public:
-	SubtitleCompositeActionExecutor(Subtitle &subtitle, const QString &title);
+	SubtitleCompositeActionExecutor(const Subtitle *subtitle, const QString &title);
 	~SubtitleCompositeActionExecutor();
 
 private:
-	Subtitle &m_subtitle;
+	const Subtitle *m_subtitle;
 };
 }
 

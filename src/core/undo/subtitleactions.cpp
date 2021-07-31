@@ -30,9 +30,8 @@
 using namespace SubtitleComposer;
 
 // *** SubtitleAction
-SubtitleAction::SubtitleAction(Subtitle &subtitle, SubtitleAction::DirtyMode dirtyMode, const QString &description)
-	: UndoAction(dirtyMode, &subtitle, description),
-	  m_subtitle(subtitle)
+SubtitleAction::SubtitleAction(Subtitle *subtitle, SubtitleAction::DirtyMode dirtyMode, const QString &description)
+	: UndoAction(dirtyMode, subtitle, description)
 {}
 
 SubtitleAction::~SubtitleAction()
@@ -40,7 +39,7 @@ SubtitleAction::~SubtitleAction()
 
 
 // *** SetFramesPerSecondAction
-SetFramesPerSecondAction::SetFramesPerSecondAction(Subtitle &subtitle, double framesPerSecond)
+SetFramesPerSecondAction::SetFramesPerSecondAction(Subtitle *subtitle, double framesPerSecond)
 	: SubtitleAction(subtitle, UndoAction::Both, i18n("Set Frame Rate")),
 	  m_framesPerSecond(framesPerSecond)
 {}
@@ -51,23 +50,22 @@ SetFramesPerSecondAction::~SetFramesPerSecondAction()
 void
 SetFramesPerSecondAction::redo()
 {
-	double tmp = m_subtitle.m_framesPerSecond;
-	m_subtitle.m_framesPerSecond = m_framesPerSecond;
+	double tmp = m_subtitle->m_framesPerSecond;
+	m_subtitle->m_framesPerSecond = m_framesPerSecond;
 	m_framesPerSecond = tmp;
 
-	emit m_subtitle.framesPerSecondChanged(m_subtitle.m_framesPerSecond);
+	emit m_subtitle->framesPerSecondChanged(m_subtitle->m_framesPerSecond);
 }
 
 
 // *** InsertLinesAction
-InsertLinesAction::InsertLinesAction(Subtitle &subtitle, const QList<SubtitleLine *> &lines, int insertIndex)
+InsertLinesAction::InsertLinesAction(Subtitle *subtitle, const QList<SubtitleLine *> &lines, int insertIndex)
 	: SubtitleAction(subtitle, UndoAction::Both, i18n("Insert Lines")),
-	  m_insertIndex(insertIndex < 0 ? subtitle.linesCount() : insertIndex),
+	  m_insertIndex(insertIndex < 0 ? subtitle->linesCount() : insertIndex),
 	  m_lastIndex(m_insertIndex + lines.count() - 1),
 	  m_lines(lines)
 {
-	Q_ASSERT(m_insertIndex >= 0);
-	Q_ASSERT(m_insertIndex <= m_subtitle.linesCount());
+	Q_ASSERT(m_insertIndex >= 0 && m_insertIndex <= m_subtitle->linesCount());
 	Q_ASSERT(m_lastIndex >= 0);
 	Q_ASSERT(m_insertIndex <= m_lastIndex);
 }
@@ -99,7 +97,7 @@ InsertLinesAction::mergeWith(const QUndoCommand *command)
 void
 InsertLinesAction::redo()
 {
-	emit m_subtitle.linesAboutToBeInserted(m_insertIndex, m_lastIndex);
+	emit m_subtitle->linesAboutToBeInserted(m_insertIndex, m_lastIndex);
 
 	SubtitleLine *line;
 	int insertOffset = 0;
@@ -109,38 +107,38 @@ InsertLinesAction::redo()
 		line = m_lines.takeFirst();
 		lineIndex = m_insertIndex + insertOffset++;
 		setLineSubtitle(line);
-		m_subtitle.m_lines.insert(lineIndex, line);
+		m_subtitle->m_lines.insert(lineIndex, line);
 	}
 
-	emit m_subtitle.linesInserted(m_insertIndex, m_lastIndex);
+	emit m_subtitle->linesInserted(m_insertIndex, m_lastIndex);
 }
 
 void
 InsertLinesAction::undo()
 {
-	emit m_subtitle.linesAboutToBeRemoved(m_insertIndex, m_lastIndex);
+	emit m_subtitle->linesAboutToBeRemoved(m_insertIndex, m_lastIndex);
 
 	for(int index = m_insertIndex; index <= m_lastIndex; ++index) {
-		SubtitleLine *line = m_subtitle.takeAt(m_insertIndex);
+		SubtitleLine *line = m_subtitle->takeAt(m_insertIndex);
 		clearLineSubtitle(line);
 		m_lines.append(line);
 	}
 
-	emit m_subtitle.linesRemoved(m_insertIndex, m_lastIndex);
+	emit m_subtitle->linesRemoved(m_insertIndex, m_lastIndex);
 }
 
 
 // *** RemoveLinesAction
-RemoveLinesAction::RemoveLinesAction(Subtitle &subtitle, int firstIndex, int lastIndex)
+RemoveLinesAction::RemoveLinesAction(Subtitle *subtitle, int firstIndex, int lastIndex)
 	: SubtitleAction(subtitle, UndoAction::Both, i18n("Remove Lines")),
 	  m_firstIndex(firstIndex),
-	  m_lastIndex(lastIndex < 0 ? subtitle.lastIndex() : lastIndex),
+	  m_lastIndex(lastIndex < 0 ? subtitle->lastIndex() : lastIndex),
 	  m_lines()
 {
 	Q_ASSERT(m_firstIndex >= 0);
-	Q_ASSERT(m_firstIndex <= m_subtitle.linesCount());
+	Q_ASSERT(m_firstIndex <= m_subtitle->linesCount());
 	Q_ASSERT(m_lastIndex >= 0);
-	Q_ASSERT(m_lastIndex <= m_subtitle.linesCount());
+	Q_ASSERT(m_lastIndex <= m_subtitle->linesCount());
 	Q_ASSERT(m_firstIndex <= m_lastIndex);
 }
 
@@ -178,21 +176,21 @@ RemoveLinesAction::mergeWith(const QUndoCommand *command)
 void
 RemoveLinesAction::redo()
 {
-	emit m_subtitle.linesAboutToBeRemoved(m_firstIndex, m_lastIndex);
+	emit m_subtitle->linesAboutToBeRemoved(m_firstIndex, m_lastIndex);
 
 	for(int index = m_firstIndex; index <= m_lastIndex; ++index) {
-		SubtitleLine *line = m_subtitle.takeAt(m_firstIndex);
+		SubtitleLine *line = m_subtitle->takeAt(m_firstIndex);
 		clearLineSubtitle(line);
 		m_lines.append(line);
 	}
 
-	emit m_subtitle.linesRemoved(m_firstIndex, m_lastIndex);
+	emit m_subtitle->linesRemoved(m_firstIndex, m_lastIndex);
 }
 
 void
 RemoveLinesAction::undo()
 {
-	emit m_subtitle.linesAboutToBeInserted(m_firstIndex, m_lastIndex);
+	emit m_subtitle->linesAboutToBeInserted(m_firstIndex, m_lastIndex);
 
 	int insertOffset = 0;
 	int lineIndex = -1;
@@ -201,23 +199,23 @@ RemoveLinesAction::undo()
 		SubtitleLine *line = m_lines.takeFirst();
 		lineIndex = m_firstIndex + insertOffset++;
 		setLineSubtitle(line);
-		m_subtitle.m_lines.insert(lineIndex, line);
+		m_subtitle->m_lines.insert(lineIndex, line);
 	}
 
-	emit m_subtitle.linesInserted(m_firstIndex, m_lastIndex);
+	emit m_subtitle->linesInserted(m_firstIndex, m_lastIndex);
 }
 
 
 // *** MoveLineAction
-MoveLineAction::MoveLineAction(Subtitle &subtitle, int fromIndex, int toIndex) :
+MoveLineAction::MoveLineAction(Subtitle *subtitle, int fromIndex, int toIndex) :
 	SubtitleAction(subtitle, UndoAction::Both, i18n("Move Line")),
 	m_fromIndex(fromIndex),
-	m_toIndex(toIndex < 0 ? subtitle.lastIndex() : toIndex)
+	m_toIndex(toIndex < 0 ? subtitle->lastIndex() : toIndex)
 {
 	Q_ASSERT(m_fromIndex >= 0);
-	Q_ASSERT(m_fromIndex <= m_subtitle.linesCount());
+	Q_ASSERT(m_fromIndex <= m_subtitle->linesCount());
 	Q_ASSERT(m_toIndex >= 0);
-	Q_ASSERT(m_toIndex <= m_subtitle.linesCount());
+	Q_ASSERT(m_toIndex <= m_subtitle->linesCount());
 	Q_ASSERT(m_fromIndex != m_toIndex);
 }
 
@@ -267,34 +265,34 @@ MoveLineAction::mergeWith(const QUndoCommand *command)
 void
 MoveLineAction::redo()
 {
-	emit m_subtitle.linesAboutToBeRemoved(m_fromIndex, m_fromIndex);
-	SubtitleLine *line = m_subtitle.takeAt(m_fromIndex);
+	emit m_subtitle->linesAboutToBeRemoved(m_fromIndex, m_fromIndex);
+	SubtitleLine *line = m_subtitle->takeAt(m_fromIndex);
 	clearLineSubtitle(line);
-	emit m_subtitle.linesRemoved(m_fromIndex, m_fromIndex);
+	emit m_subtitle->linesRemoved(m_fromIndex, m_fromIndex);
 
-	emit m_subtitle.linesAboutToBeInserted(m_toIndex, m_toIndex);
+	emit m_subtitle->linesAboutToBeInserted(m_toIndex, m_toIndex);
 	setLineSubtitle(line);
-	m_subtitle.m_lines.insert(m_toIndex, line);
-	emit m_subtitle.linesInserted(m_toIndex, m_toIndex);
+	m_subtitle->m_lines.insert(m_toIndex, line);
+	emit m_subtitle->linesInserted(m_toIndex, m_toIndex);
 }
 
 void
 MoveLineAction::undo()
 {
-	emit m_subtitle.linesAboutToBeRemoved(m_toIndex, m_toIndex);
-	SubtitleLine *line = m_subtitle.takeAt(m_toIndex);
+	emit m_subtitle->linesAboutToBeRemoved(m_toIndex, m_toIndex);
+	SubtitleLine *line = m_subtitle->takeAt(m_toIndex);
 	clearLineSubtitle(line);
-	emit m_subtitle.linesRemoved(m_toIndex, m_toIndex);
+	emit m_subtitle->linesRemoved(m_toIndex, m_toIndex);
 
-	emit m_subtitle.linesAboutToBeInserted(m_fromIndex, m_fromIndex);
+	emit m_subtitle->linesAboutToBeInserted(m_fromIndex, m_fromIndex);
 	setLineSubtitle(line);
-	m_subtitle.m_lines.insert(m_fromIndex, line);
-	emit m_subtitle.linesInserted(m_fromIndex, m_fromIndex);
+	m_subtitle->m_lines.insert(m_fromIndex, line);
+	emit m_subtitle->linesInserted(m_fromIndex, m_fromIndex);
 }
 
 
 // *** SwapLinesTextsAction
-SwapLinesTextsAction::SwapLinesTextsAction(Subtitle &subtitle, const RangeList &ranges) :
+SwapLinesTextsAction::SwapLinesTextsAction(Subtitle *subtitle, const RangeList &ranges) :
 	SubtitleAction(subtitle, UndoAction::Both, i18n("Swap Texts")),
 	m_ranges(ranges)
 {}
@@ -305,7 +303,7 @@ SwapLinesTextsAction::~SwapLinesTextsAction()
 void
 SwapLinesTextsAction::redo()
 {
-	for(SubtitleIterator it(m_subtitle, m_ranges); it.current(); ++it) {
+	for(SubtitleIterator it(*m_subtitle, m_ranges); it.current(); ++it) {
 		SubtitleLine *line = it.current();
 		RichDocument *tmp = line->m_primaryDoc;
 		line->m_primaryDoc = line->m_secondaryDoc;

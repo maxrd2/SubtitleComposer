@@ -20,6 +20,7 @@
  * Boston, MA 02110-1301, USA.
  */
 
+#include <QExplicitlySharedDataPointer>
 #include <QUndoCommand>
 
 namespace SubtitleComposer {
@@ -63,9 +64,9 @@ public:
 	void redo() override = 0;
 	void undo() override;
 
-private:
+protected:
 	const DirtyMode m_dirtyMode;
-	Subtitle *m_subtitle;
+	QExplicitlySharedDataPointer<Subtitle> m_subtitle;
 };
 
 }

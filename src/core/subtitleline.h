@@ -26,6 +26,7 @@
 #include "core/subtitletarget.h"
 #include "helpers/objectref.h"
 
+#include <QExplicitlySharedDataPointer>
 #include <QObject>
 #include <QString>
 
@@ -140,8 +141,8 @@ public:
 	int number() const;
 	int index() const;
 
-	inline Subtitle * subtitle() { return m_subtitle; }
-	inline const Subtitle * subtitle() const { return m_subtitle; }
+	inline Subtitle * subtitle() { return m_subtitle.data(); }
+	inline const Subtitle * subtitle() const { return m_subtitle.constData(); }
 
 	inline SubtitleLine * prevLine() const;
 	inline SubtitleLine * nextLine() const;
@@ -246,7 +247,7 @@ private:
 	}
 
 private:
-	Subtitle *m_subtitle;
+	QExplicitlySharedDataPointer<Subtitle> m_subtitle;
 	RichDocument *m_primaryDoc;
 	RichDocument *m_secondaryDoc;
 	Time m_showTime;

@@ -255,8 +255,6 @@ Application::~Application()
 	// pretty much anything) at this point.
 
 	// delete m_mainWindow; the window is destroyed when it's closed
-
-	delete m_subtitle;
 }
 
 void
@@ -796,7 +794,7 @@ Application::applyTranslation(RangeList ranges, bool primary, int inputLanguage,
 	}
 
 	if(errorMessage.isEmpty()) {
-		SubtitleCompositeActionExecutor executor(*m_subtitle, primary ? i18n("Translate Primary Text") : i18n("Translate Secondary Text"));
+		SubtitleCompositeActionExecutor executor(m_subtitle.constData(), primary ? i18n("Translate Primary Text") : i18n("Translate Secondary Text"));
 
 		int index = -1;
 		QRegExp ellipsisRegExp("\\s+\\.\\.\\.");

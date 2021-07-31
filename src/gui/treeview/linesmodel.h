@@ -22,6 +22,7 @@
  */
 
 #include <QAbstractListModel>
+#include <QExplicitlySharedDataPointer>
 #include <QList>
 #include <QTimer>
 
@@ -39,7 +40,7 @@ public:
 
 	explicit LinesModel(QObject *parent = nullptr);
 
-	inline Subtitle * subtitle() const { return m_subtitle; }
+	inline Subtitle * subtitle() const { return m_subtitle.data(); }
 	void setSubtitle(Subtitle *subtitle);
 
 	inline SubtitleLine * playingLine() const { return m_playingLine; }
@@ -75,7 +76,7 @@ private:
 	static QString buildToolTip(SubtitleLine *line, bool primary);
 
 private:
-	Subtitle *m_subtitle;
+	QExplicitlySharedDataPointer<Subtitle> m_subtitle;
 	SubtitleLine *m_playingLine;
 	QTimer *m_dataChangedTimer;
 	int m_minChangedLineIndex;

@@ -25,8 +25,8 @@
 #include "streamprocessor/streamprocessor.h"
 
 #include <QDialog>
-#include <QHash>
 #include <QExplicitlySharedDataPointer>
+#include <QHash>
 
 namespace Ui {
 class VobSubInputProcessDialog;
@@ -85,7 +85,7 @@ private:
 	QList<FramePtr> m_frames;
 	QList<FramePtr>::iterator m_frameCurrent;
 
-	Subtitle *m_subtitle;
+	QExplicitlySharedDataPointer<Subtitle> m_subtitle;
 
 	qint32 m_spaceWidth;
 

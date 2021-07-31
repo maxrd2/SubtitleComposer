@@ -24,6 +24,7 @@
 #include "core/subtitle.h"
 #include "core/subtitleline.h"
 
+#include <QExplicitlySharedDataPointer>
 #include <QWidget>
 
 QT_FORWARD_DECLARE_CLASS(QTimer)
@@ -77,7 +78,7 @@ private:
 	void updateLabels();
 
 private:
-	Subtitle *m_subtitle;
+	QExplicitlySharedDataPointer<const Subtitle> m_subtitle;
 	SubtitleLine *m_currentLine;
 	bool m_translationMode;
 

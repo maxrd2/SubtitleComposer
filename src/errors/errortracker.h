@@ -53,7 +53,7 @@ private slots:
 	void onConfigChanged();
 
 private:
-	Subtitle *m_subtitle;
+	QExplicitlySharedDataPointer<const Subtitle> m_subtitle;
 	bool m_autoClearFixed;
 };
 }

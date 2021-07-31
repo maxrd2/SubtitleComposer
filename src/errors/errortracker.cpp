@@ -56,16 +56,16 @@ ErrorTracker::setSubtitle(Subtitle *subtitle)
 void
 ErrorTracker::connectSlots()
 {
-	connect(m_subtitle, &Subtitle::linePrimaryTextChanged, this, &ErrorTracker::onLinePrimaryTextChanged);
-	connect(m_subtitle, &Subtitle::lineSecondaryTextChanged, this, &ErrorTracker::onLineSecondaryTextChanged);
-	connect(m_subtitle, &Subtitle::lineShowTimeChanged, this, &ErrorTracker::onLineTimesChanged);
-	connect(m_subtitle, &Subtitle::lineHideTimeChanged, this, &ErrorTracker::onLineTimesChanged);
+	connect(m_subtitle.constData(), &Subtitle::linePrimaryTextChanged, this, &ErrorTracker::onLinePrimaryTextChanged);
+	connect(m_subtitle.constData(), &Subtitle::lineSecondaryTextChanged, this, &ErrorTracker::onLineSecondaryTextChanged);
+	connect(m_subtitle.constData(), &Subtitle::lineShowTimeChanged, this, &ErrorTracker::onLineTimesChanged);
+	connect(m_subtitle.constData(), &Subtitle::lineHideTimeChanged, this, &ErrorTracker::onLineTimesChanged);
 }
 
 void
 ErrorTracker::disconnectSlots()
 {
-	disconnect(m_subtitle, nullptr, this, nullptr);
+	disconnect(m_subtitle.constData(), nullptr, this, nullptr);
 }
 
 void

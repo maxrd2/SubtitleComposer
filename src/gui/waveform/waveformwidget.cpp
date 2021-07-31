@@ -297,17 +297,17 @@ void
 WaveformWidget::setSubtitle(Subtitle *subtitle)
 {
 	if(m_subtitle) {
-		disconnect(m_subtitle, &Subtitle::primaryChanged, this, &WaveformWidget::onSubtitleChanged);
-		disconnect(m_subtitle, &Subtitle::secondaryChanged, this, &WaveformWidget::onSubtitleChanged);
-		disconnect(m_subtitle, &Subtitle::lineAnchorChanged, this, &WaveformWidget::onSubtitleChanged);
+		disconnect(m_subtitle.constData(), &Subtitle::primaryChanged, this, &WaveformWidget::onSubtitleChanged);
+		disconnect(m_subtitle.constData(), &Subtitle::secondaryChanged, this, &WaveformWidget::onSubtitleChanged);
+		disconnect(m_subtitle.constData(), &Subtitle::lineAnchorChanged, this, &WaveformWidget::onSubtitleChanged);
 	}
 
 	m_subtitle = subtitle;
 
 	if(m_subtitle) {
-		connect(m_subtitle, &Subtitle::primaryChanged, this, &WaveformWidget::onSubtitleChanged);
-		connect(m_subtitle, &Subtitle::secondaryChanged, this, &WaveformWidget::onSubtitleChanged);
-		connect(m_subtitle, &Subtitle::lineAnchorChanged, this, &WaveformWidget::onSubtitleChanged);
+		connect(m_subtitle.constData(), &Subtitle::primaryChanged, this, &WaveformWidget::onSubtitleChanged);
+		connect(m_subtitle.constData(), &Subtitle::secondaryChanged, this, &WaveformWidget::onSubtitleChanged);
+		connect(m_subtitle.constData(), &Subtitle::lineAnchorChanged, this, &WaveformWidget::onSubtitleChanged);
 	}
 
 	m_visibleLines.clear();

@@ -25,6 +25,7 @@
 #include "core/subtitle.h"
 #include "core/subtitleline.h"
 
+#include <QExplicitlySharedDataPointer>
 #include <QPoint>
 #include <QWidget>
 
@@ -111,7 +112,7 @@ private slots:
 	void onPlayerDoubleClicked(const QPoint &point);
 
 private:
-	Subtitle *m_subtitle;
+	QExplicitlySharedDataPointer<Subtitle> m_subtitle;
 	bool m_translationMode;
 	bool m_showTranslation;
 	SubtitleLine *m_playingLine = nullptr;

@@ -24,6 +24,7 @@
 #include "gui/waveform/wavesubtitle.h"
 #include "videoplayer/waveformat.h"
 
+#include <QExplicitlySharedDataPointer>
 #include <QList>
 #include <QTimer>
 #include <QWidget>
@@ -125,7 +126,7 @@ private:
 private:
 	QString m_mediaFile;
 	int m_streamIndex;
-	Subtitle *m_subtitle;
+	QExplicitlySharedDataPointer<Subtitle> m_subtitle;
 
 	Time m_timeStart;
 	Time m_timeCurrent;

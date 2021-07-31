@@ -24,6 +24,7 @@
 #include "videoplayer/waveformat.h"
 #include "streamprocessor/streamprocessor.h"
 
+#include <QExplicitlySharedDataPointer>
 #include <QList>
 
 QT_FORWARD_DECLARE_CLASS(QWidget)
@@ -65,7 +66,7 @@ private:
 	int m_streamIndex;
 
 	StreamProcessor *m_stream;
-	Subtitle *m_subtitle;
+	QExplicitlySharedDataPointer<Subtitle> m_subtitle;
 
 	quint32 m_audioDuration;
 

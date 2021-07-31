@@ -100,7 +100,7 @@ Subtitle::setPrimaryData(const Subtitle &from, bool usePrimaryData)
 			thisLine->setFormatData(cur->formatData());
 			lines.append(thisLine);
 		}
-		processAction(new InsertLinesAction(*this, lines));
+		processAction(new InsertLinesAction(this, lines));
 	} else if(thisIt.current()) { // this has more lines
 		for(SubtitleLine *thisLine = thisIt.current(); thisLine; ++thisIt, thisLine = thisIt.current()) {
 			thisLine->primaryDoc()->clear();
@@ -157,7 +157,7 @@ Subtitle::setSecondaryData(const Subtitle &from, bool usePrimaryData)
 		newLines.append(dstLine);
 	}
 	if(!newLines.isEmpty())
-		processAction(new InsertLinesAction(*this, newLines));
+		processAction(new InsertLinesAction(this, newLines));
 
 	endCompositeAction();
 }
@@ -221,7 +221,7 @@ void
 Subtitle::setFramesPerSecond(double framesPerSecond)
 {
 	if(qAbs(m_framesPerSecond - framesPerSecond) > 1e-6)
-		processAction(new SetFramesPerSecondAction(*this, framesPerSecond));
+		processAction(new SetFramesPerSecondAction(this, framesPerSecond));
 }
 
 void
@@ -317,9 +317,9 @@ Subtitle::toggleLineAnchor(const SubtitleLine *line)
 void
 Subtitle::removeAllAnchors()
 {
-	QList<const SubtitleLine *> anchoredLines = m_anchoredLines;
+	QList<const SubtitleLine *> anchoredLines;
 
-	m_anchoredLines.clear();
+	m_anchoredLines.swap(anchoredLines);
 
 	foreach(auto line, anchoredLines)
 		emit lineAnchorChanged(line, false);
@@ -345,7 +345,7 @@ Subtitle::insertLine(SubtitleLine *line)
 {
 	QList<SubtitleLine *> lines;
 	lines.append(line);
-	processAction(new InsertLinesAction(*this, lines, insertIndex(line->showTime())));
+	processAction(new InsertLinesAction(this, lines, insertIndex(line->showTime())));
 }
 
 void
@@ -354,7 +354,7 @@ Subtitle::insertLine(SubtitleLine *line, int index)
 	Q_ASSERT(index >= 0 && index <= m_lines.count());
 	QList<SubtitleLine *> lines;
 	lines.append(line);
-	processAction(new InsertLinesAction(*this, lines, index));
+	processAction(new InsertLinesAction(this, lines, index));
 }
 
 SubtitleLine *
@@ -447,7 +447,7 @@ Subtitle::removeLines(const RangeList &r, SubtitleTarget target)
 		RangeList::ConstIterator rangesIt = ranges.end(), begin = ranges.begin();
 		do {
 			rangesIt--;
-			processAction(new RemoveLinesAction(*this, (*rangesIt).start(), (*rangesIt).end()));
+			processAction(new RemoveLinesAction(this, (*rangesIt).start(), (*rangesIt).end()));
 		} while(rangesIt != begin);
 
 		endCompositeAction();
@@ -492,7 +492,7 @@ Subtitle::removeLines(const RangeList &r, SubtitleTarget target)
 			hideTime.shift(1100.);
 		}
 
-		processAction(new InsertLinesAction(*this, lines));
+		processAction(new InsertLinesAction(this, lines));
 
 		// then, we move the secondary texts down (we need to iterate from bottom to top for that)
 		RangeList rangesComplement = mutableRanges.complement();
@@ -506,7 +506,7 @@ Subtitle::removeLines(const RangeList &r, SubtitleTarget target)
 		RangeList::ConstIterator rangesIt = ranges.end(), begin = ranges.begin();
 		do {
 			rangesIt--;
-			processAction(new RemoveLinesAction(*this, (*rangesIt).start(), (*rangesIt).end()));
+			processAction(new RemoveLinesAction(this, (*rangesIt).start(), (*rangesIt).end()));
 		} while(rangesIt != begin);
 
 		endCompositeAction();
@@ -516,7 +516,7 @@ Subtitle::removeLines(const RangeList &r, SubtitleTarget target)
 void
 Subtitle::swapTexts(const RangeList &ranges)
 {
-	processAction(new SwapLinesTextsAction(*this, ranges));
+	processAction(new SwapLinesTextsAction(this, ranges));
 }
 
 void
@@ -820,7 +820,7 @@ Subtitle::sortLines(const Range &range)
 		Q_ASSERT(toIndex != -1);
 
 //		qDebug() << "sort: move" << fromIndex << "to" << toIndex;
-		processAction(new MoveLineAction(*this, fromIndex, toIndex));
+		processAction(new MoveLineAction(this, fromIndex, toIndex));
 
 		--it;
 	}
@@ -1139,7 +1139,7 @@ Subtitle::sentenceCase(const RangeList &ranges, bool lowerFirst, SubtitleTarget 
 void
 Subtitle::breakLines(const RangeList &ranges, unsigned minLengthForLineBreak, SubtitleTarget target)
 {
-	SubtitleCompositeActionExecutor executor(*this, i18n("Break Lines"));
+	SubtitleCompositeActionExecutor executor(this, i18n("Break Lines"));
 
 	for(SubtitleIterator it(*this, ranges); it.current(); ++it)
 		it.current()->breakText(minLengthForLineBreak, target);
@@ -1148,7 +1148,7 @@ Subtitle::breakLines(const RangeList &ranges, unsigned minLengthForLineBreak, Su
 void
 Subtitle::unbreakTexts(const RangeList &ranges, SubtitleTarget target)
 {
-	SubtitleCompositeActionExecutor executor(*this, i18n("Unbreak Lines"));
+	SubtitleCompositeActionExecutor executor(this, i18n("Unbreak Lines"));
 
 	for(SubtitleIterator it(*this, ranges); it.current(); ++it)
 		it.current()->unbreakText(target);
@@ -1157,7 +1157,7 @@ Subtitle::unbreakTexts(const RangeList &ranges, SubtitleTarget target)
 void
 Subtitle::simplifyTextWhiteSpace(const RangeList &ranges, SubtitleTarget target)
 {
-	SubtitleCompositeActionExecutor executor(*this, i18n("Simplify Spaces"));
+	SubtitleCompositeActionExecutor executor(this, i18n("Simplify Spaces"));
 
 	for(SubtitleIterator it(*this, ranges); it.current(); ++it)
 		it.current()->simplifyTextWhiteSpace(target);
@@ -1193,7 +1193,7 @@ Subtitle::appendSubtitle(const Subtitle &srcSubtitle, double shiftMsecsBeforeApp
 
 	beginCompositeAction(i18n("Join Subtitles"));
 
-	processAction(new InsertLinesAction(*this, lines));
+	processAction(new InsertLinesAction(this, lines));
 
 	endCompositeAction();
 }
@@ -1237,8 +1237,8 @@ Subtitle::splitSubtitle(Subtitle &dstSubtitle, const Time &splitTime, bool shift
 
 		dstSubtitle.beginCompositeAction(i18n("Split Subtitles"));
 		if(dstSubtitle.count())
-			dstSubtitle.processAction(new RemoveLinesAction(dstSubtitle, 0, -1));
-		dstSubtitle.processAction(new InsertLinesAction(dstSubtitle, lines, 0));
+			dstSubtitle.processAction(new RemoveLinesAction(&dstSubtitle, 0, -1));
+		dstSubtitle.processAction(new InsertLinesAction(&dstSubtitle, lines, 0));
 		dstSubtitle.endCompositeAction();
 
 		beginCompositeAction(i18n("Split Subtitles"));
@@ -1246,9 +1246,9 @@ Subtitle::splitSubtitle(Subtitle &dstSubtitle, const Time &splitTime, bool shift
 			at(splitIndex)->setHideTime(splitTime);
 			splitIndex++;
 			if(splitIndex < count())
-				processAction(new RemoveLinesAction(*this, splitIndex));
+				processAction(new RemoveLinesAction(this, splitIndex));
 		} else
-			processAction(new RemoveLinesAction(*this, splitIndex));
+			processAction(new RemoveLinesAction(this, splitIndex));
 		endCompositeAction();
 	}
 }
@@ -1380,7 +1380,7 @@ Subtitle::recheckErrors(const RangeList &ranges)
 }
 
 void
-Subtitle::processAction(UndoAction *action)
+Subtitle::processAction(UndoAction *action) const
 {
 	if(app()->subtitle() == this)
 		app()->undoStack()->push(action);
@@ -1389,14 +1389,14 @@ Subtitle::processAction(UndoAction *action)
 }
 
 void
-Subtitle::beginCompositeAction(const QString &title)
+Subtitle::beginCompositeAction(const QString &title) const
 {
 	if(app()->subtitle() == this)
 		app()->undoStack()->beginMacro(title);
 }
 
 void
-Subtitle::endCompositeAction()
+Subtitle::endCompositeAction() const
 {
 	if(app()->subtitle() == this)
 		app()->undoStack()->endMacro();
@@ -1467,13 +1467,13 @@ Subtitle::updateState()
 
 /// SUBTITLECOMPOSITEACTIONEXECUTOR
 
-SubtitleCompositeActionExecutor::SubtitleCompositeActionExecutor(Subtitle &subtitle, const QString &title)
+SubtitleCompositeActionExecutor::SubtitleCompositeActionExecutor(const Subtitle *subtitle, const QString &title)
 	: m_subtitle(subtitle)
 {
-	m_subtitle.beginCompositeAction(title);
+	m_subtitle->beginCompositeAction(title);
 }
 
 SubtitleCompositeActionExecutor::~SubtitleCompositeActionExecutor()
 {
-	m_subtitle.endCompositeAction();
+	m_subtitle->endCompositeAction();
 }

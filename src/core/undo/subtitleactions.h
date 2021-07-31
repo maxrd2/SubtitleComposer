@@ -34,27 +34,24 @@ namespace SubtitleComposer {
 class SubtitleAction : public UndoAction
 {
 public:
-	SubtitleAction(Subtitle &subtitle, UndoAction::DirtyMode dirtyMode, const QString &description = QString());
+	SubtitleAction(Subtitle *subtitle, UndoAction::DirtyMode dirtyMode, const QString &description = QString());
 	virtual ~SubtitleAction();
 
 	inline void setLineSubtitle(SubtitleLine *line)
 	{
-		line->m_subtitle = &m_subtitle;
+		line->m_subtitle = m_subtitle;
 	}
 
 	inline void clearLineSubtitle(SubtitleLine *line)
 	{
 		line->m_subtitle = nullptr;
 	}
-
-protected:
-	Subtitle &m_subtitle;
 };
 
 class SetFramesPerSecondAction : public SubtitleAction
 {
 public:
-	SetFramesPerSecondAction(Subtitle &subtitle, double framesPerSecond);
+	SetFramesPerSecondAction(Subtitle *subtitle, double framesPerSecond);
 	virtual ~SetFramesPerSecondAction();
 
 	inline int id() const override { return UndoAction::SetFramesPerSecond; }
@@ -69,7 +66,7 @@ private:
 class InsertLinesAction : public SubtitleAction
 {
 public:
-	InsertLinesAction(Subtitle &subtitle, const QList<SubtitleLine *> &lines, int insertIndex = -1);
+	InsertLinesAction(Subtitle *subtitle, const QList<SubtitleLine *> &lines, int insertIndex = -1);
 	virtual ~InsertLinesAction();
 
 	inline int id() const override { return UndoAction::InsertLines; }
@@ -88,7 +85,7 @@ private:
 class RemoveLinesAction : public SubtitleAction
 {
 public:
-	RemoveLinesAction(Subtitle &subtitle, int firstIndex, int lastIndex = -1);
+	RemoveLinesAction(Subtitle *subtitle, int firstIndex, int lastIndex = -1);
 	virtual ~RemoveLinesAction();
 
 	inline int id() const override { return UndoAction::RemoveLines; }
@@ -107,7 +104,7 @@ private:
 class MoveLineAction : public SubtitleAction
 {
 public:
-	MoveLineAction(Subtitle &subtitle, int fromIndex, int toIndex = -1);
+	MoveLineAction(Subtitle *subtitle, int fromIndex, int toIndex = -1);
 	virtual ~MoveLineAction();
 
 	inline int id() const override { return UndoAction::MoveLine; }
@@ -125,7 +122,7 @@ private:
 class SwapLinesTextsAction : public SubtitleAction
 {
 public:
-	SwapLinesTextsAction(Subtitle &subtitle, const RangeList &ranges);
+	SwapLinesTextsAction(Subtitle *subtitle, const RangeList &ranges);
 	virtual ~SwapLinesTextsAction();
 
 	inline int id() const override { return UndoAction::SwapLinesTexts; }

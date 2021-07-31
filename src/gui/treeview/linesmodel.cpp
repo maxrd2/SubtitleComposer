@@ -66,16 +66,16 @@ LinesModel::setSubtitle(Subtitle *subtitle)
 		m_playingLine = nullptr;
 
 		if(m_subtitle) {
-			disconnect(m_subtitle, &Subtitle::linesInserted, this, &LinesModel::onLinesInserted);
-			disconnect(m_subtitle, &Subtitle::linesAboutToBeRemoved, this, &LinesModel::onLinesAboutToRemove);
-			disconnect(m_subtitle, &Subtitle::linesRemoved, this, &LinesModel::onLinesRemoved);
+			disconnect(m_subtitle.constData(), &Subtitle::linesInserted, this, &LinesModel::onLinesInserted);
+			disconnect(m_subtitle.constData(), &Subtitle::linesAboutToBeRemoved, this, &LinesModel::onLinesAboutToRemove);
+			disconnect(m_subtitle.constData(), &Subtitle::linesRemoved, this, &LinesModel::onLinesRemoved);
 
-			disconnect(m_subtitle, &Subtitle::lineAnchorChanged, this, &LinesModel::onLineChanged);
-			disconnect(m_subtitle, &Subtitle::lineErrorFlagsChanged, this, &LinesModel::onLineChanged);
-			disconnect(m_subtitle, &Subtitle::linePrimaryTextChanged, this, &LinesModel::onLineChanged);
-			disconnect(m_subtitle, &Subtitle::lineSecondaryTextChanged, this, &LinesModel::onLineChanged);
-			disconnect(m_subtitle, &Subtitle::lineShowTimeChanged, this, &LinesModel::onLineChanged);
-			disconnect(m_subtitle, &Subtitle::lineHideTimeChanged, this, &LinesModel::onLineChanged);
+			disconnect(m_subtitle.constData(), &Subtitle::lineAnchorChanged, this, &LinesModel::onLineChanged);
+			disconnect(m_subtitle.constData(), &Subtitle::lineErrorFlagsChanged, this, &LinesModel::onLineChanged);
+			disconnect(m_subtitle.constData(), &Subtitle::linePrimaryTextChanged, this, &LinesModel::onLineChanged);
+			disconnect(m_subtitle.constData(), &Subtitle::lineSecondaryTextChanged, this, &LinesModel::onLineChanged);
+			disconnect(m_subtitle.constData(), &Subtitle::lineShowTimeChanged, this, &LinesModel::onLineChanged);
+			disconnect(m_subtitle.constData(), &Subtitle::lineHideTimeChanged, this, &LinesModel::onLineChanged);
 
 			if(m_subtitle->linesCount()) {
 				onLinesAboutToRemove(0, m_subtitle->linesCount() - 1);
@@ -90,16 +90,16 @@ LinesModel::setSubtitle(Subtitle *subtitle)
 				onLinesInserted(0, m_subtitle->linesCount() - 1);
 			}
 
-			connect(m_subtitle, &Subtitle::linesInserted, this, &LinesModel::onLinesInserted);
-			connect(m_subtitle, &Subtitle::linesAboutToBeRemoved, this, &LinesModel::onLinesAboutToRemove);
-			connect(m_subtitle, &Subtitle::linesRemoved, this, &LinesModel::onLinesRemoved);
+			connect(m_subtitle.constData(), &Subtitle::linesInserted, this, &LinesModel::onLinesInserted);
+			connect(m_subtitle.constData(), &Subtitle::linesAboutToBeRemoved, this, &LinesModel::onLinesAboutToRemove);
+			connect(m_subtitle.constData(), &Subtitle::linesRemoved, this, &LinesModel::onLinesRemoved);
 
-			connect(m_subtitle, &Subtitle::lineAnchorChanged, this, &LinesModel::onLineChanged);
-			connect(m_subtitle, &Subtitle::lineErrorFlagsChanged, this, &LinesModel::onLineChanged);
-			connect(m_subtitle, &Subtitle::linePrimaryTextChanged, this, &LinesModel::onLineChanged);
-			connect(m_subtitle, &Subtitle::lineSecondaryTextChanged, this, &LinesModel::onLineChanged);
-			connect(m_subtitle, &Subtitle::lineShowTimeChanged, this, &LinesModel::onLineChanged);
-			connect(m_subtitle, &Subtitle::lineHideTimeChanged, this, &LinesModel::onLineChanged);
+			connect(m_subtitle.constData(), &Subtitle::lineAnchorChanged, this, &LinesModel::onLineChanged);
+			connect(m_subtitle.constData(), &Subtitle::lineErrorFlagsChanged, this, &LinesModel::onLineChanged);
+			connect(m_subtitle.constData(), &Subtitle::linePrimaryTextChanged, this, &LinesModel::onLineChanged);
+			connect(m_subtitle.constData(), &Subtitle::lineSecondaryTextChanged, this, &LinesModel::onLineChanged);
+			connect(m_subtitle.constData(), &Subtitle::lineShowTimeChanged, this, &LinesModel::onLineChanged);
+			connect(m_subtitle.constData(), &Subtitle::lineHideTimeChanged, this, &LinesModel::onLineChanged);
 		}
 	}
 }

@@ -155,16 +155,16 @@ UserActionManager::addAction(UserAction *actionSpec)
 }
 
 void
-UserActionManager::setSubtitle(Subtitle *subtitle)
+UserActionManager::setSubtitle(const Subtitle *subtitle)
 {
 	if(m_subtitle) {
-		disconnect(m_subtitle, &Subtitle::linesRemoved, this, &UserActionManager::onSubtitleLinesChanged);
-		disconnect(m_subtitle, &Subtitle::linesInserted, this, &UserActionManager::onSubtitleLinesChanged);
+		disconnect(m_subtitle.constData(), &Subtitle::linesRemoved, this, &UserActionManager::onSubtitleLinesChanged);
+		disconnect(m_subtitle.constData(), &Subtitle::linesInserted, this, &UserActionManager::onSubtitleLinesChanged);
 
-		disconnect(m_subtitle, &Subtitle::primaryDirtyStateChanged, this, &UserActionManager::onPrimaryDirtyStateChanged);
-		disconnect(m_subtitle, &Subtitle::secondaryDirtyStateChanged, this, &UserActionManager::onSecondaryDirtyStateChanged);
+		disconnect(m_subtitle.constData(), &Subtitle::primaryDirtyStateChanged, this, &UserActionManager::onPrimaryDirtyStateChanged);
+		disconnect(m_subtitle.constData(), &Subtitle::secondaryDirtyStateChanged, this, &UserActionManager::onSecondaryDirtyStateChanged);
 
-		disconnect(m_subtitle, &Subtitle::lineAnchorChanged, this, &UserActionManager::onSubtitleAnchorsChanged);
+		disconnect(m_subtitle.constData(), &Subtitle::lineAnchorChanged, this, &UserActionManager::onSubtitleAnchorsChanged);
 	}
 
 	m_subtitle = subtitle;
@@ -172,13 +172,13 @@ UserActionManager::setSubtitle(Subtitle *subtitle)
 	int newContextFlags = m_contextFlags & ~UserAction::SubtitleMask;
 
 	if(m_subtitle) {
-		connect(m_subtitle, &Subtitle::linesRemoved, this, &UserActionManager::onSubtitleLinesChanged);
-		connect(m_subtitle, &Subtitle::linesInserted, this, &UserActionManager::onSubtitleLinesChanged);
+		connect(m_subtitle.constData(), &Subtitle::linesRemoved, this, &UserActionManager::onSubtitleLinesChanged);
+		connect(m_subtitle.constData(), &Subtitle::linesInserted, this, &UserActionManager::onSubtitleLinesChanged);
 
-		connect(m_subtitle, &Subtitle::primaryDirtyStateChanged, this, &UserActionManager::onPrimaryDirtyStateChanged);
-		connect(m_subtitle, &Subtitle::secondaryDirtyStateChanged, this, &UserActionManager::onSecondaryDirtyStateChanged);
+		connect(m_subtitle.constData(), &Subtitle::primaryDirtyStateChanged, this, &UserActionManager::onPrimaryDirtyStateChanged);
+		connect(m_subtitle.constData(), &Subtitle::secondaryDirtyStateChanged, this, &UserActionManager::onSecondaryDirtyStateChanged);
 
-		connect(m_subtitle, &Subtitle::lineAnchorChanged, this, &UserActionManager::onSubtitleAnchorsChanged);
+		connect(m_subtitle.constData(), &Subtitle::lineAnchorChanged, this, &UserActionManager::onSubtitleAnchorsChanged);
 
 		newContextFlags |= UserAction::SubOpened;
 

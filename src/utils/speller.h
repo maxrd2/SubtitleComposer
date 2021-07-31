@@ -24,6 +24,7 @@
 #include "core/subtitle.h"
 #include "core/subtitleline.h"
 
+#include <QExplicitlySharedDataPointer>
 #include <QObject>
 
 namespace Sonnet {
@@ -65,7 +66,7 @@ private slots:
 	void onConfigChanged();
 
 private:
-	Subtitle *m_subtitle;
+	QExplicitlySharedDataPointer<const Subtitle> m_subtitle;
 	bool m_translationMode;
 	bool m_useTranslation;
 

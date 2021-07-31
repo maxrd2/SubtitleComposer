@@ -20,6 +20,7 @@
  * Boston, MA 02110-1301, USA.
  */
 
+#include <QExplicitlySharedDataPointer>
 #include <QObject>
 
 QT_FORWARD_DECLARE_CLASS(QWidget)
@@ -50,8 +51,8 @@ private slots:
 	void onStreamFinished();
 
 private:
-	Subtitle *m_subtitle;
-	Subtitle *m_subtitleTemp;
+	QExplicitlySharedDataPointer<Subtitle> m_subtitle;
+	QExplicitlySharedDataPointer<Subtitle> m_subtitleTemp;
 	StreamProcessor *m_streamProcessor;
 
 	QWidget *m_progressWidget;

@@ -57,7 +57,7 @@ private slots:
 	void invalidate();
 
 private:
-	Subtitle *m_subtitle;
+	QExplicitlySharedDataPointer<Subtitle> m_subtitle;
 	FindErrorsDialog *m_dialog;
 	bool m_translationMode;
 

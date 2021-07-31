@@ -460,8 +460,8 @@ void
 PlayerWidget::setSubtitle(Subtitle *subtitle)
 {
 	if(m_subtitle) {
-		disconnect(m_subtitle, &Subtitle::linesInserted, this, &PlayerWidget::setPlayingLineFromVideo);
-		disconnect(m_subtitle, &Subtitle::linesRemoved, this, &PlayerWidget::setPlayingLineFromVideo);
+		disconnect(m_subtitle.constData(), &Subtitle::linesInserted, this, &PlayerWidget::setPlayingLineFromVideo);
+		disconnect(m_subtitle.constData(), &Subtitle::linesRemoved, this, &PlayerWidget::setPlayingLineFromVideo);
 
 		m_subtitle = nullptr;
 
@@ -471,8 +471,8 @@ PlayerWidget::setSubtitle(Subtitle *subtitle)
 	m_subtitle = subtitle;
 
 	if(m_subtitle) {
-		connect(m_subtitle, &Subtitle::linesInserted, this, &PlayerWidget::setPlayingLineFromVideo);
-		connect(m_subtitle, &Subtitle::linesRemoved, this, &PlayerWidget::setPlayingLineFromVideo);
+		connect(m_subtitle.constData(), &Subtitle::linesInserted, this, &PlayerWidget::setPlayingLineFromVideo);
+		connect(m_subtitle.constData(), &Subtitle::linesRemoved, this, &PlayerWidget::setPlayingLineFromVideo);
 	}
 }
 

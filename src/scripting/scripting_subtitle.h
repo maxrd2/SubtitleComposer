@@ -25,6 +25,7 @@
 #include "core/subtitle.h"
 #include "core/rangelist.h"
 
+#include <QExplicitlySharedDataPointer>
 #include <QObject>
 
 namespace SubtitleComposer {
@@ -96,7 +97,7 @@ private:
 
 	Subtitle(SubtitleComposer::Subtitle *backend, QObject *parent);
 
-	SubtitleComposer::Subtitle *m_backend;
+	QExplicitlySharedDataPointer<SubtitleComposer::Subtitle> m_backend;
 };
 }
 }

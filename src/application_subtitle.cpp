@@ -212,8 +212,7 @@ Application::openSubtitle(const QUrl &url, bool warnClashingUrls)
 			}
 		}
 	} else {
-		delete m_subtitle;
-		m_subtitle = nullptr;
+		m_subtitle.reset();
 
 		if(res == FormatManager::ERROR) {
 			KMessageBox::sorry(
@@ -250,7 +249,6 @@ Application::reopenSubtitleWithCodec(QTextCodec *codec)
 	if(m_translationMode)
 		subtitle->setSecondaryData(*m_subtitle, false);
 
-	delete m_subtitle;
 	m_subtitle = subtitle;
 
 	processSubtitleOpened(codec, subtitleFormat);
@@ -264,7 +262,7 @@ Application::processSubtitleOpened(QTextCodec *codec, const QString &subtitleFor
 	m_subtitle->clearPrimaryDirty();
 	m_subtitle->clearSecondaryDirty();
 
-	emit subtitleOpened(m_subtitle);
+	emit subtitleOpened(m_subtitle.data());
 
 	m_subtitleFormat = subtitleFormat;
 
@@ -281,8 +279,8 @@ Application::processSubtitleOpened(QTextCodec *codec, const QString &subtitleFor
 	m_reopenSubtitleAsAction->setCurrentCodec(codec);
 	m_saveSubtitleAsAction->setCurrentCodec(codec);
 
-	connect(m_subtitle, &Subtitle::primaryDirtyStateChanged, this, &Application::updateTitle);
-	connect(m_subtitle, &Subtitle::secondaryDirtyStateChanged, this, &Application::updateTitle);
+	connect(m_subtitle.constData(), &Subtitle::primaryDirtyStateChanged, this, &Application::updateTitle);
+	connect(m_subtitle.constData(), &Subtitle::secondaryDirtyStateChanged, this, &Application::updateTitle);
 	updateTitle();
 
 	m_labSubFormat->setText(i18n("Format: %1", m_subtitleFormat));
@@ -297,7 +295,7 @@ Application::demuxTextStream(int textStreamIndex)
 
 	newSubtitle();
 
-	m_textDemux->demuxFile(m_subtitle, VideoPlayer::instance()->filePath(), textStreamIndex);
+	m_textDemux->demuxFile(m_subtitle.data(), VideoPlayer::instance()->filePath(), textStreamIndex);
 }
 
 void
@@ -308,7 +306,7 @@ Application::speechImportAudioStream(int audioStreamIndex)
 
 	newSubtitle();
 
-	m_speechProcessor->setSubtitle(m_subtitle);
+	m_speechProcessor->setSubtitle(m_subtitle.data());
 	m_speechProcessor->setAudioStream(VideoPlayer::instance()->filePath(), audioStreamIndex);
 }
 
@@ -412,8 +410,7 @@ Application::closeSubtitle()
 
 		emit subtitleClosed();
 
-		delete m_subtitle;
-		m_subtitle = nullptr;
+		m_subtitle.reset();
 
 		m_labSubFormat->setText(QString());
 		m_labSubEncoding->setText(QString());
