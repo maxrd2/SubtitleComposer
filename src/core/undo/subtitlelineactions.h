@@ -32,11 +32,11 @@ namespace SubtitleComposer {
 class SubtitleLineAction : public UndoAction
 {
 public:
-	SubtitleLineAction(SubtitleLine &line, UndoAction::DirtyMode dirtyMode, const QString &desc = QString());
+	SubtitleLineAction(SubtitleLine *line, UndoAction::DirtyMode dirtyMode, const QString &desc = QString());
 	virtual ~SubtitleLineAction();
 
 protected:
-	SubtitleLine &m_line;
+	SubtitleLine *m_line;
 
 	template<class T>
 	const T * tryCastToThisLineAction(const QUndoCommand *prevAction)
@@ -51,7 +51,7 @@ class SetLinePrimaryTextAction : public SubtitleLineAction
 	friend class SetLineTextsAction;
 
 public:
-	SetLinePrimaryTextAction(SubtitleLine &line, RichDocument *primaryDoc);
+	SetLinePrimaryTextAction(SubtitleLine *line, RichDocument *primaryDoc);
 	virtual ~SetLinePrimaryTextAction();
 
 	inline int id() const override { return UndoAction::SetLinePrimaryText; }
@@ -71,7 +71,7 @@ class SetLineSecondaryTextAction : public SubtitleLineAction
 	friend class SetLineTextsAction;
 
 public:
-	SetLineSecondaryTextAction(SubtitleLine &line, RichDocument *secondaryDoc);
+	SetLineSecondaryTextAction(SubtitleLine *line, RichDocument *secondaryDoc);
 	virtual ~SetLineSecondaryTextAction();
 
 	inline int id() const override { return UndoAction::SetLineSecondaryText; }
@@ -91,7 +91,7 @@ class SetLineShowTimeAction : public SubtitleLineAction
 	friend class SetLineTimesAction;
 
 public:
-	SetLineShowTimeAction(SubtitleLine &line, const Time &showTime);
+	SetLineShowTimeAction(SubtitleLine *line, const Time &showTime);
 	virtual ~SetLineShowTimeAction();
 
 	inline int id() const override { return UndoAction::SetLineShowTime; }
@@ -109,7 +109,7 @@ class SetLineHideTimeAction : public SubtitleLineAction
 	friend class SetLineTimesAction;
 
 public:
-	SetLineHideTimeAction(SubtitleLine &line, const Time &hideTime);
+	SetLineHideTimeAction(SubtitleLine *line, const Time &hideTime);
 	virtual ~SetLineHideTimeAction();
 
 	inline int id() const override { return UndoAction::SetLineHideTime; }
@@ -125,7 +125,7 @@ private:
 class SetLineTimesAction : public SubtitleLineAction
 {
 public:
-	SetLineTimesAction(SubtitleLine &line, const Time &showTime, const Time &hideTime, QString description = QString());
+	SetLineTimesAction(SubtitleLine *line, const Time &showTime, const Time &hideTime, QString description = QString());
 	virtual ~SetLineTimesAction();
 
 	inline int id() const override { return UndoAction::SetLineTimes; }
@@ -144,7 +144,7 @@ private:
 class SetLineErrorsAction : public SubtitleLineAction
 {
 public:
-	SetLineErrorsAction(SubtitleLine &line, int errorFlags);
+	SetLineErrorsAction(SubtitleLine *line, int errorFlags);
 	virtual ~SetLineErrorsAction();
 
 	inline int id() const override { return UndoAction::SetLineErrors; }

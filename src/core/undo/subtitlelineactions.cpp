@@ -27,8 +27,8 @@
 using namespace SubtitleComposer;
 
 // *** SubtitleLineAction
-SubtitleLineAction::SubtitleLineAction(SubtitleLine &line, UndoAction::DirtyMode dirtyMode, const QString &description)
-	: UndoAction(dirtyMode, line.subtitle(), description),
+SubtitleLineAction::SubtitleLineAction(SubtitleLine *line, UndoAction::DirtyMode dirtyMode, const QString &description)
+	: UndoAction(dirtyMode, line->subtitle(), description),
 	  m_line(line)
 {}
 
@@ -37,7 +37,7 @@ SubtitleLineAction::~SubtitleLineAction()
 
 
 // *** SetLinePrimaryTextAction
-SetLinePrimaryTextAction::SetLinePrimaryTextAction(SubtitleLine &line, RichDocument *primaryDoc)
+SetLinePrimaryTextAction::SetLinePrimaryTextAction(SubtitleLine *line, RichDocument *primaryDoc)
 	: SubtitleLineAction(line, UndoAction::Primary, i18n("Set Line Text")),
 	  m_primaryDoc(primaryDoc),
 	  m_primaryDocState(primaryDoc->availableUndoSteps())
@@ -56,26 +56,26 @@ SetLinePrimaryTextAction::mergeWith(const QUndoCommand *command)
 void
 SetLinePrimaryTextAction::undo()
 {
-	const bool prev = m_line.ignoreDocChanges(true);
+	const bool prev = m_line->ignoreDocChanges(true);
 	while(m_primaryDoc->isUndoAvailable() && m_primaryDoc->availableUndoSteps() >= m_primaryDocState)
 		m_primaryDoc->undo();
-	m_line.ignoreDocChanges(prev);
-	emit m_line.primaryTextChanged();
+	m_line->ignoreDocChanges(prev);
+	emit m_line->primaryTextChanged();
 }
 
 void
 SetLinePrimaryTextAction::redo()
 {
-	const bool prev = m_line.ignoreDocChanges(true);
+	const bool prev = m_line->ignoreDocChanges(true);
 	while(m_primaryDoc->isRedoAvailable() && m_primaryDoc->availableUndoSteps() < m_primaryDocState)
 		m_primaryDoc->redo();
-	m_line.ignoreDocChanges(prev);
-	emit m_line.primaryTextChanged();
+	m_line->ignoreDocChanges(prev);
+	emit m_line->primaryTextChanged();
 }
 
 
 // *** SetLineSecondaryTextAction
-SetLineSecondaryTextAction::SetLineSecondaryTextAction(SubtitleLine &line, RichDocument *secondaryDoc)
+SetLineSecondaryTextAction::SetLineSecondaryTextAction(SubtitleLine *line, RichDocument *secondaryDoc)
 	: SubtitleLineAction(line, UndoAction::Secondary, i18n("Set Line Secondary Text")),
 	  m_secondaryDoc(secondaryDoc),
 	  m_secondaryDocState(secondaryDoc->availableUndoSteps())
@@ -94,27 +94,27 @@ SetLineSecondaryTextAction::mergeWith(const QUndoCommand *command)
 void
 SetLineSecondaryTextAction::undo()
 {
-	const bool prev = m_line.ignoreDocChanges(true);
+	const bool prev = m_line->ignoreDocChanges(true);
 	while(m_secondaryDoc->isUndoAvailable() && m_secondaryDoc->availableUndoSteps() >= m_secondaryDocState)
 		m_secondaryDoc->undo();
-	m_line.ignoreDocChanges(prev);
-	emit m_line.secondaryTextChanged();
+	m_line->ignoreDocChanges(prev);
+	emit m_line->secondaryTextChanged();
 }
 
 void
 SetLineSecondaryTextAction::redo()
 {
-	const bool prev = m_line.ignoreDocChanges(true);
+	const bool prev = m_line->ignoreDocChanges(true);
 	while(m_secondaryDoc->isRedoAvailable() && m_secondaryDoc->availableUndoSteps() < m_secondaryDocState)
 		m_secondaryDoc->redo();
-	m_line.ignoreDocChanges(prev);
-	emit m_line.secondaryTextChanged();
+	m_line->ignoreDocChanges(prev);
+	emit m_line->secondaryTextChanged();
 }
 
 
 
 // *** SetLineShowTimeAction
-SetLineShowTimeAction::SetLineShowTimeAction(SubtitleLine &line, const Time &showTime)
+SetLineShowTimeAction::SetLineShowTimeAction(SubtitleLine *line, const Time &showTime)
 	: SubtitleLineAction(line, UndoAction::Both, i18n("Set Line Show Time")),
 	  m_showTime(showTime)
 {}
@@ -132,16 +132,16 @@ SetLineShowTimeAction::mergeWith(const QUndoCommand *command)
 void
 SetLineShowTimeAction::redo()
 {
-	Time tmp = m_line.m_showTime;
-	m_line.m_showTime = m_showTime;
+	Time tmp = m_line->m_showTime;
+	m_line->m_showTime = m_showTime;
 	m_showTime = tmp;
 
-	emit m_line.showTimeChanged(m_line.m_showTime);
+	emit m_line->showTimeChanged(m_line->m_showTime);
 }
 
 
 // *** SetLineHideTimeAction
-SetLineHideTimeAction::SetLineHideTimeAction(SubtitleLine &line, const Time &hideTime)
+SetLineHideTimeAction::SetLineHideTimeAction(SubtitleLine *line, const Time &hideTime)
 	: SubtitleLineAction(line, UndoAction::Both, i18n("Set Line Hide Time")),
 	  m_hideTime(hideTime)
 {}
@@ -159,16 +159,16 @@ SetLineHideTimeAction::mergeWith(const QUndoCommand *command)
 void
 SetLineHideTimeAction::redo()
 {
-	Time tmp = m_line.m_hideTime;
-	m_line.m_hideTime = m_hideTime;
+	Time tmp = m_line->m_hideTime;
+	m_line->m_hideTime = m_hideTime;
 	m_hideTime = tmp;
 
-	emit m_line.hideTimeChanged(m_line.m_hideTime);
+	emit m_line->hideTimeChanged(m_line->m_hideTime);
 }
 
 
 // *** SetLineTimesAction
-SetLineTimesAction::SetLineTimesAction(SubtitleLine &line, const Time &showTime, const Time &hideTime, QString description)
+SetLineTimesAction::SetLineTimesAction(SubtitleLine *line, const Time &showTime, const Time &hideTime, QString description)
 	: SubtitleLineAction(line, UndoAction::Both, description),
 	  m_showTime(showTime),
 	  m_hideTime(hideTime)
@@ -187,25 +187,25 @@ SetLineTimesAction::mergeWith(const QUndoCommand *command)
 void
 SetLineTimesAction::redo()
 {
-	if(m_line.m_showTime != m_showTime) {
-		Time tmp = m_line.m_showTime;
-		m_line.m_showTime = m_showTime;
+	if(m_line->m_showTime != m_showTime) {
+		Time tmp = m_line->m_showTime;
+		m_line->m_showTime = m_showTime;
 		m_showTime = tmp;
 
-		emit m_line.showTimeChanged(m_line.m_showTime);
+		emit m_line->showTimeChanged(m_line->m_showTime);
 	}
 
-	if(m_line.m_hideTime != m_hideTime) {
-		Time tmp = m_line.m_hideTime;
-		m_line.m_hideTime = m_hideTime;
+	if(m_line->m_hideTime != m_hideTime) {
+		Time tmp = m_line->m_hideTime;
+		m_line->m_hideTime = m_hideTime;
 		m_hideTime = tmp;
 
-		emit m_line.hideTimeChanged(m_line.m_hideTime);
+		emit m_line->hideTimeChanged(m_line->m_hideTime);
 	}
 }
 
 // *** SetLineErrorsAction
-SetLineErrorsAction::SetLineErrorsAction(SubtitleLine &line, int errorFlags)
+SetLineErrorsAction::SetLineErrorsAction(SubtitleLine *line, int errorFlags)
 	: SubtitleLineAction(line, UndoAction::None, i18n("Set Line Errors")),
 	  m_errorFlags(errorFlags)
 {}
@@ -223,9 +223,9 @@ SetLineErrorsAction::mergeWith(const QUndoCommand *command)
 void
 SetLineErrorsAction::redo()
 {
-	int tmp = m_line.m_errorFlags;
-	m_line.m_errorFlags = m_errorFlags;
+	int tmp = m_line->m_errorFlags;
+	m_line->m_errorFlags = m_errorFlags;
 	m_errorFlags = tmp;
 
-	emit m_line.errorFlagsChanged(m_line.m_errorFlags);
+	emit m_line->errorFlagsChanged(m_line->m_errorFlags);
 }

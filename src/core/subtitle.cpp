@@ -247,7 +247,7 @@ Subtitle::changeFramesPerSecond(double toFramesPerSecond, double fromFramesPerSe
 			Time hideTime = it.current()->hideTime();
 			hideTime *= scaleFactor;
 
-			processAction(new SetLineTimesAction(*it, showTime, hideTime));
+			processAction(new SetLineTimesAction(it, showTime, hideTime));
 		}
 	}
 

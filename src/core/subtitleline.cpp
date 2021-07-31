@@ -272,7 +272,7 @@ SubtitleLine::primaryDocumentChanged()
 {
 	if(m_ignoreDocChanges)
 		return;
-	processAction(new SetLinePrimaryTextAction(*this, m_primaryDoc));
+	processAction(new SetLinePrimaryTextAction(this, m_primaryDoc));
 }
 
 void
@@ -280,7 +280,7 @@ SubtitleLine::secondaryDocumentChanged()
 {
 	if(m_ignoreDocChanges)
 		return;
-	processAction(new SetLineSecondaryTextAction(*this, m_secondaryDoc));
+	processAction(new SetLineSecondaryTextAction(this, m_secondaryDoc));
 }
 
 void
@@ -397,7 +397,7 @@ SubtitleLine::setShowTime(const Time &showTime)
 			setTimes(m_hideTime, showTime);
 		} else {
 			processShowTimeSort(showTime);
-			processAction(new SetLineShowTimeAction(*this, showTime));
+			processAction(new SetLineShowTimeAction(this, showTime));
 		}
 	}
 
@@ -417,7 +417,7 @@ SubtitleLine::setHideTime(const Time &hideTime)
 	if(m_showTime > hideTime)
 		setTimes(hideTime, m_showTime);
 	else
-		processAction(new SetLineHideTimeAction(*this, hideTime));
+		processAction(new SetLineHideTimeAction(this, hideTime));
 
 	if(m_subtitle)
 		m_subtitle->endCompositeAction();
@@ -465,7 +465,7 @@ SubtitleLine::setTimes(const Time &showTime, const Time &hideTime)
 		m_subtitle->shiftAnchoredLine(this, showTime);
 	} else {
 		processShowTimeSort(showTime);
-		processAction(new SetLineTimesAction(*this, showTime, hideTime));
+		processAction(new SetLineTimesAction(this, showTime, hideTime));
 	}
 
 	if(m_subtitle)
@@ -556,14 +556,14 @@ SubtitleLine::shiftTimes(long mseconds)
 	if(!mseconds)
 		return;
 
-	processAction(new SetLineTimesAction(*this, m_showTime.shifted(mseconds), m_hideTime.shifted(mseconds), i18n("Shift Line Times")));
+	processAction(new SetLineTimesAction(this, m_showTime.shifted(mseconds), m_hideTime.shifted(mseconds), i18n("Shift Line Times")));
 }
 
 void
 SubtitleLine::adjustTimes(double shiftMseconds, double scaleFactor)
 {
 	if(shiftMseconds || scaleFactor != 1.0)
-		processAction(new SetLineTimesAction(*this,
+		processAction(new SetLineTimesAction(this,
 			Time(m_showTime.toMillis() * scaleFactor + shiftMseconds),
 			Time(m_hideTime.toMillis() * scaleFactor + shiftMseconds),
 			i18n("Adjust Line Times")));
@@ -587,7 +587,7 @@ void
 SubtitleLine::setErrorFlags(int errorFlags)
 {
 	if(m_errorFlags != errorFlags)
-		processAction(new SetLineErrorsAction(*this, errorFlags));
+		processAction(new SetLineErrorsAction(this, errorFlags));
 }
 
 void
