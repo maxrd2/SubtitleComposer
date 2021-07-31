@@ -128,8 +128,7 @@ public:
 	void toggleLineAnchor(const SubtitleLine *line);
 	void removeAllAnchors();
 
-	void insertLine(SubtitleLine *line, int index = -1);
-	void insertLines(const QList<SubtitleLine *> &lines, int index = -1);
+	void insertLine(SubtitleLine *line);
 	SubtitleLine * insertNewLine(int index, bool timeAfter, SubtitleTarget target);
 	void removeLines(const RangeList &ranges, SubtitleTarget target);
 
@@ -204,6 +203,7 @@ signals:
 private:
 	inline int insertIndex(const Time &showTime) const { return insertIndex(showTime, 0, m_lines.isEmpty() ? 0 : m_lines.count() - 1); }
 	int insertIndex(const Time &showTime, int start, int end) const;
+	void insertLine(SubtitleLine *line, int index);
 
 	FormatData * formatData() const;
 	void setFormatData(const FormatData *formatData);

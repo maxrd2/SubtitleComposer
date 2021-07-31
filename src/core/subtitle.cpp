@@ -341,21 +341,19 @@ Subtitle::insertIndex(const Time &showTime, int start, int end) const
 }
 
 void
-Subtitle::insertLine(SubtitleLine *line, int index)
+Subtitle::insertLine(SubtitleLine *line)
 {
 	QList<SubtitleLine *> lines;
 	lines.append(line);
-	insertLines(lines, index);
+	processAction(new InsertLinesAction(*this, lines, insertIndex(line->showTime())));
 }
 
 void
-Subtitle::insertLines(const QList<SubtitleLine *> &lines, int index)
+Subtitle::insertLine(SubtitleLine *line, int index)
 {
-	Q_ASSERT(index <= m_lines.count());
-
-	if(index < 0)
-		index = m_lines.count();
-
+	Q_ASSERT(index >= 0 && index <= m_lines.count());
+	QList<SubtitleLine *> lines;
+	lines.append(line);
 	processAction(new InsertLinesAction(*this, lines, index));
 }
 
@@ -1171,7 +1169,9 @@ Subtitle::syncWithSubtitle(const Subtitle &refSubtitle)
 	beginCompositeAction(i18n("Synchronize Subtitles"));
 
 	for(SubtitleIterator it(*this, Range::full()), refIt(refSubtitle, Range::full()); it.current() && refIt.current(); ++it, ++refIt)
-		it.current()->setTimes(refIt.current()->showTime(), refIt.current()->hideTime());
+		processAction(new SetLineTimesAction(it.current(), refIt.current()->showTime(), refIt.current()->hideTime()));
+
+	sortLines(Range::full());
 
 	endCompositeAction();
 }
