@@ -325,6 +325,21 @@ Subtitle::removeAllAnchors()
 		emit lineAnchorChanged(line, false);
 }
 
+int
+Subtitle::insertIndex(const Time &showTime, int start, int end) const
+{
+	while(end - start > 1) {
+		const int mid = (start + end) / 2;
+		if(showTime < m_lines.at(mid)->showTime())
+			end = mid - 1;
+		else
+			start = mid;
+	}
+	if(m_lines.empty() || showTime < m_lines.at(start)->showTime())
+		return start;
+	return showTime < m_lines.at(end)->showTime() ? end : end + 1;
+}
+
 void
 Subtitle::insertLine(SubtitleLine *line, int index)
 {

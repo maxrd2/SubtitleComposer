@@ -370,19 +370,13 @@ SubtitleLine::simplifyTextWhiteSpace(SubtitleTarget target)
 void
 SubtitleLine::processShowTimeSort(const Time &showTime)
 {
-	if(!m_subtitle)
+	const int curIndex = index();
+	if(curIndex < 0)
 		return;
 
-	const int curIndex = index();
-	const int maxIndex = m_subtitle->linesCount() - 1;
-	int newIndex = curIndex;
-
-	while(newIndex < maxIndex && m_subtitle->line(newIndex + 1)->m_showTime < showTime)
-		newIndex++;
-
-	while(newIndex > 0 && m_subtitle->line(newIndex - 1)->m_showTime > showTime)
+	int newIndex = m_subtitle->insertIndex(showTime);
+	if(curIndex < newIndex)
 		newIndex--;
-
 	if(curIndex != newIndex)
 		processAction(new MoveLineAction(*m_subtitle, curIndex, newIndex));
 }

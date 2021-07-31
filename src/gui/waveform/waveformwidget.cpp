@@ -690,21 +690,9 @@ WaveformWidget::showContextMenu(QPoint pos)
 			menu->addAction(QIcon::fromTheme(QStringLiteral("list-add")), i18n("Insert Line"), [&](){
 				const Time timeShow = rightMouseSoonerTime();
 				const Time timeHide = rightMouseLaterTime();
-
-				int insertIndex = 0;
-				for(int i = 0, n = m_subtitle->count(); i < n; i++) {
-					const SubtitleLine *sub = m_subtitle->at(i);
-					insertIndex++;
-
-					if(sub->showTime() > timeShow) {
-						insertIndex = i;
-						break;
-					}
-				}
-
 				SubtitleLine *newLine = new SubtitleLine(timeShow,
 					timeHide.toMillis() - timeShow.toMillis() > SCConfig::minDuration() ? timeHide : timeShow + SCConfig::minDuration());
-				m_subtitle->insertLine(newLine, insertIndex);
+				m_subtitle->insertLine(newLine);
 				app->linesWidget()->setCurrentLine(newLine, true);
 			}),
 			UserAction::SubOpened);

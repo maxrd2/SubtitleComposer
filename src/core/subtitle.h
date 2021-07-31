@@ -202,6 +202,9 @@ signals:
 	void lineMarkChanged(SubtitleLine *line);
 
 private:
+	inline int insertIndex(const Time &showTime) const { return insertIndex(showTime, 0, m_lines.isEmpty() ? 0 : m_lines.count() - 1); }
+	int insertIndex(const Time &showTime, int start, int end) const;
+
 	FormatData * formatData() const;
 	void setFormatData(const FormatData *formatData);
 
