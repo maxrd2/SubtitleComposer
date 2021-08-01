@@ -447,7 +447,7 @@ Subtitle::removeLines(const RangeList &r, SubtitleTarget target)
 		RangeList::ConstIterator rangesIt = ranges.end(), begin = ranges.begin();
 		do {
 			rangesIt--;
-			processAction(new RemoveLinesAction(this, (*rangesIt).start(), (*rangesIt).end()));
+			processAction(new RemoveLinesAction(this, rangesIt->start(), rangesIt->end()));
 		} while(rangesIt != begin);
 
 		endCompositeAction();
@@ -506,7 +506,7 @@ Subtitle::removeLines(const RangeList &r, SubtitleTarget target)
 		RangeList::ConstIterator rangesIt = ranges.end(), begin = ranges.begin();
 		do {
 			rangesIt--;
-			processAction(new RemoveLinesAction(this, (*rangesIt).start(), (*rangesIt).end()));
+			processAction(new RemoveLinesAction(this, rangesIt->start(), rangesIt->end()));
 		} while(rangesIt != begin);
 
 		endCompositeAction();
@@ -641,8 +641,8 @@ Subtitle::joinLines(const RangeList &ranges)
 	RangeList deleteRanges;
 
 	for(RangeList::ConstIterator rangesIt = ranges.begin(), end = ranges.end(); rangesIt != end; ++rangesIt) {
-		int rangeStart = (*rangesIt).start();
-		int rangeEnd = normalizeRangeIndex((*rangesIt).end());
+		int rangeStart = rangesIt->start();
+		int rangeEnd = normalizeRangeIndex(rangesIt->end());
 
 		if(rangeStart >= rangeEnd)
 			continue;
@@ -932,8 +932,8 @@ Subtitle::fixOverlappingLines(const RangeList &ranges, const Time &minInterval)
 	beginCompositeAction(i18n("Fix Overlapping Times"));
 
 	for(RangeList::ConstIterator rangesIt = ranges.begin(), end = ranges.end(); rangesIt != end; ++rangesIt) {
-		int rangeStart = (*rangesIt).start();
-		int rangeEnd = normalizeRangeIndex((*rangesIt).end() + 1);
+		int rangeStart = rangesIt->start();
+		int rangeEnd = normalizeRangeIndex(rangesIt->end() + 1);
 
 		if(rangeStart >= rangeEnd)
 			break;

@@ -40,7 +40,7 @@ showRanges(const RangeList &ranges)
 {
 	QString aux;
 	for(RangeList::ConstIterator it = ranges.begin(), end = ranges.end(); it != end; ++it)
-		aux += QString(" [%1,%2]").arg((*it).start()).arg((*it).end());
+		aux += QString(" [%1,%2]").arg(it->start()).arg(it->end());
 
 	qDebug() << QString("Showing ranges: %1").arg(aux.trimmed());
 }

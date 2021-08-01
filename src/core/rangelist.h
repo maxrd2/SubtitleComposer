@@ -80,14 +80,14 @@ public:
 
 		QList<Range>::ConstIterator it = m_ranges.begin();
 
-		if((*it).m_start > 0)
-			ret << Range(0, (*it).m_start - 1);
+		if(it->m_start > 0)
+			ret << Range(0, it->m_start - 1);
 
-		int lastEnd = (*it).m_end;
+		int lastEnd = it->m_end;
 		++it;
 		for(QList<Range>::ConstIterator end = m_ranges.end(); it != end; ++it) {
-			ret << Range(lastEnd + 1, (*it).m_start - 1);
-			lastEnd = (*it).m_end;
+			ret << Range(lastEnd + 1, it->m_start - 1);
+			lastEnd = it->m_end;
 		}
 		if(lastEnd < Range::MaxIndex)
 			ret << Range(lastEnd + 1, Range::MaxIndex);
@@ -100,7 +100,7 @@ public:
 	bool contains(int index) const
 	{
 		for(QList<Range>::ConstIterator it = m_ranges.begin(), end2 = m_ranges.end(); it != end2; ++it)
-			if((*it).contains(index))
+			if(it->contains(index))
 				return true;
 
 		return false;
@@ -129,7 +129,7 @@ public:
 		int count = m_ranges.count();
 
 		for(QList<Range>::ConstIterator it = m_ranges.begin(), end2 = m_ranges.end(); it != end2; ++it)
-			count += (*it).m_end - (*it).m_start;
+			count += it->m_end - it->m_start;
 
 		return count;
 	}

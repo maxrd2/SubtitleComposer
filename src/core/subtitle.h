@@ -218,8 +218,6 @@ private:
 
 	inline int normalizeRangeIndex(int index) const { return index >= m_lines.count() ? m_lines.count() - 1 : index; }
 
-	void setLastValidCachedIndex(int lastValidCachedIndex);
-
 	inline SubtitleLine * takeAt(const int i) { SubtitleLine *s = m_lines.at(i).obj(); m_lines.remove(i); return s; }
 
 private:
