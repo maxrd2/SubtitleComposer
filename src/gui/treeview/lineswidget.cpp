@@ -436,7 +436,6 @@ LinesWidget::contextMenuEvent(QContextMenuEvent *e)
 	timesMenu.addAction(appAction(ACT_SHIFT_SELECTED_LINES_BACKWARDS));
 	timesMenu.addSeparator();
 	timesMenu.addAction(appAction(ACT_SHIFT));
-	timesMenu.addAction(appAction(ACT_SORT_LINES));
 	timesMenu.addAction(appAction(ACT_DURATION_LIMITS));
 	timesMenu.addAction(appAction(ACT_AUTOMATIC_DURATIONS));
 	timesMenu.addAction(appAction(ACT_MAXIMIZE_DURATIONS));

@@ -416,13 +416,6 @@ Application::setupActions()
 	actionCollection->addAction(ACT_ADJUST, adjustAction);
 	actionManager->addAction(adjustAction, UserAction::SubHasLines | UserAction::FullScreenOff | UserAction::AnchorsNone);
 
-	QAction *sortLinesAction = new QAction(actionCollection);
-	sortLinesAction->setText(i18n("Sort..."));
-	sortLinesAction->setStatusTip(i18n("Sort lines based on their show time"));
-	connect(sortLinesAction, &QAction::triggered, this, &Application::sortLines);
-	actionCollection->addAction(ACT_SORT_LINES, sortLinesAction);
-	actionManager->addAction(sortLinesAction, UserAction::SubHasLines | UserAction::FullScreenOff);
-
 	QAction *changeFrameRateAction = new QAction(actionCollection);
 	changeFrameRateAction->setText(i18n("Change Frame Rate..."));
 	changeFrameRateAction->setStatusTip(i18n("Retime subtitle lines by reinterpreting its frame rate"));

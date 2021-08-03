@@ -75,7 +75,6 @@
 			<text>T&amp;imes</text>
 			<Action name="shift" />
 			<Action name="adjust" />
-			<Action name="sort_lines" />
 			<Action name="change_frame_rate" />
 			<Action name="duration_limits" />
 			<Action name="automatic_durations" />

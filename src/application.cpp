@@ -56,7 +56,6 @@
 #include "gui/treeview/lineswidget.h"
 #include "mainwindow.h"
 #include "gui/playerwidget.h"
-#include "profiler.h"
 #include "scripting/scriptsmanager.h"
 #include "speechprocessor/speechprocessor.h"
 #include "utils/finder.h"
@@ -592,33 +591,6 @@ Application::adjustLines()
 
 	if(dlg->exec() == QDialog::Accepted) {
 		m_subtitle->adjustLines(Range::full(), dlg->firstLineTime().toMillis(), dlg->lastLineTime().toMillis());
-	}
-}
-
-void
-Application::sortLines()
-{
-	static ActionWithLinesTargetDialog *dlg = new ActionWithLinesTargetDialog(i18n("Sort"), m_mainWindow);
-
-	PROFILE();
-
-	dlg->setLinesTargetEnabled(ActionWithTargetDialog::Selection, true);
-
-	if(m_linesWidget->selectionHasMultipleRanges()) {
-		if(m_linesWidget->showingContextMenu()) {
-			KMessageBox::sorry(m_mainWindow, i18n("Can not perform sort on selection with multiple ranges."));
-			return;
-		} else {
-			dlg->setLinesTargetEnabled(ActionWithTargetDialog::Selection, false);
-			dlg->setSelectedLinesTarget(ActionWithTargetDialog::AllLines);
-		}
-	}
-
-	if(dlg->exec() == QDialog::Accepted) {
-		RangeList targetRanges(m_linesWidget->targetRanges(dlg->selectedLinesTarget()));
-		if(!targetRanges.isEmpty()) {
-			m_subtitle->sortLines(*targetRanges.begin());
-		}
 	}
 }
 

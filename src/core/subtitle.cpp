@@ -807,10 +807,10 @@ Subtitle::sortLines(const Range &range)
 	SubtitleLine *line = it.current();
 	SubtitleLine *nextLine = (++it).current();
 	for(; nextLine; ++it, line = nextLine, nextLine = it.current()) {
-//		qDebug() << "sort: test" << nextLine->index();
 		if(line->showTime() <= nextLine->showTime()) // already sorted
 			continue;
 
+		// TODO: could be improved by using insertIndex()
 		SubtitleIterator tmp(it);
 		int fromIndex = tmp.index();
 		int toIndex = -1;
@@ -819,7 +819,6 @@ Subtitle::sortLines(const Range &range)
 
 		Q_ASSERT(toIndex != -1);
 
-//		qDebug() << "sort: move" << fromIndex << "to" << toIndex;
 		processAction(new MoveLineAction(this, fromIndex, toIndex));
 
 		--it;

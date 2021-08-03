@@ -69,7 +69,6 @@
 #define ACT_SHIFT_SELECTED_LINES_FORWARDS "shift_selected_lines_forwards"
 #define ACT_SHIFT_SELECTED_LINES_BACKWARDS "shift_selected_lines_backwards"
 #define ACT_ADJUST "adjust"
-#define ACT_SORT_LINES "sort_lines"
 #define ACT_CHANGE_FRAME_RATE "change_frame_rate"
 #define ACT_DURATION_LIMITS "duration_limits"
 #define ACT_AUTOMATIC_DURATIONS "automatic_durations"

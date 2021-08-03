@@ -170,8 +170,6 @@ public slots:
 	void shiftSelectedLinesBackwards();
 	void adjustLines();
 
-	void sortLines();
-
 	void changeFrameRate();
 	void enforceDurationLimits();
 	void setAutoDurations();
