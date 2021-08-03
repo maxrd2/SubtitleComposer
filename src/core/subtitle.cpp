@@ -159,7 +159,7 @@ Subtitle::setSecondaryData(const Subtitle &from, bool usePrimaryData)
 	if(!newLines.isEmpty())
 		processAction(new InsertLinesAction(this, newLines));
 
-	endCompositeAction();
+	endCompositeAction(UndoStack::Secondary);
 }
 
 void
@@ -1396,10 +1396,10 @@ Subtitle::beginCompositeAction(const QString &title) const
 }
 
 void
-Subtitle::endCompositeAction() const
+Subtitle::endCompositeAction(UndoStack::DirtyMode dirtyOverride) const
 {
 	if(app()->subtitle() == this)
-		app()->undoStack()->endMacro();
+		app()->undoStack()->endMacro(dirtyOverride);
 }
 
 bool
@@ -1412,9 +1412,8 @@ Subtitle::isPrimaryDirty(int index) const
 	for(;;) {
 		if(i < 0)
 			return m_primaryCleanIndex >= 0;
-		const UndoAction *action = i > 0 ? dynamic_cast<const UndoAction *>(undoStack->command(i - 1)) : nullptr;
-		const UndoAction::DirtyMode dirtyMode = action ? action->m_dirtyMode : UndoAction::None;
-		if(i != m_primaryCleanIndex && (dirtyMode == UndoAction::Both || dirtyMode == UndoAction::Primary))
+		const UndoStack::DirtyMode dirtyMode = i > 0 ? undoStack->dirtyMode(i - 1) : UndoStack::None;
+		if(i != m_primaryCleanIndex && (dirtyMode & UndoStack::Primary))
 			return true;
 		if(i == index)
 			return false;
@@ -1432,9 +1431,8 @@ Subtitle::isSecondaryDirty(int index) const
 	for(;;) {
 		if(i < 0)
 			return m_secondaryCleanIndex >= 0;
-		const UndoAction *action = i > 0 ? dynamic_cast<const UndoAction *>(undoStack->command(i - 1)) : nullptr;
-		const UndoAction::DirtyMode dirtyMode = action ? action->m_dirtyMode : UndoAction::None;
-		if(i != m_secondaryCleanIndex && (dirtyMode == UndoAction::Both || dirtyMode == UndoAction::Secondary))
+		const UndoStack::DirtyMode dirtyMode = i > 0 ? undoStack->dirtyMode(i - 1) : UndoStack::None;
+		if(i != m_secondaryCleanIndex && (dirtyMode & UndoStack::Secondary))
 			return true;
 		if(i == index)
 			return false;
@@ -1447,21 +1445,20 @@ Subtitle::updateState()
 {
 	const UndoStack *undoStack = app()->undoStack();
 	const int index = undoStack->index();
-	const UndoAction *action = index > 0 ? dynamic_cast<const UndoAction *>(undoStack->command(index - 1)) : nullptr;
-	const UndoAction::DirtyMode dirtyMode = action != nullptr ? action->m_dirtyMode : UndoAction::Both;
+	const UndoStack::DirtyMode dirtyMode = index > 0 ? undoStack->dirtyMode(index - 1) : UndoStack::Both;
 
 	if(m_primaryDirtyState != isPrimaryDirty(index)) {
 		m_primaryDirtyState = !m_primaryDirtyState;
 		emit primaryDirtyStateChanged(m_primaryDirtyState);
 	}
-	if(dirtyMode == UndoAction::Both || dirtyMode == UndoAction::Primary)
+	if(dirtyMode & UndoStack::Primary)
 		emit primaryChanged();
 
 	if(m_secondaryDirtyState != isSecondaryDirty(index)) {
 		m_secondaryDirtyState = !m_secondaryDirtyState;
 		emit secondaryDirtyStateChanged(m_secondaryDirtyState);
 	}
-	if(dirtyMode == UndoAction::Both || dirtyMode == UndoAction::Secondary)
+	if(dirtyMode & UndoStack::Secondary)
 		emit secondaryChanged();
 }
 

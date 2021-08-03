@@ -27,7 +27,7 @@
 using namespace SubtitleComposer;
 
 // *** SubtitleLineAction
-SubtitleLineAction::SubtitleLineAction(SubtitleLine *line, UndoAction::DirtyMode dirtyMode, const QString &description)
+SubtitleLineAction::SubtitleLineAction(SubtitleLine *line, UndoStack::DirtyMode dirtyMode, const QString &description)
 	: UndoAction(dirtyMode, line->subtitle(), description),
 	  m_line(line)
 {}
@@ -38,7 +38,7 @@ SubtitleLineAction::~SubtitleLineAction()
 
 // *** SetLinePrimaryTextAction
 SetLinePrimaryTextAction::SetLinePrimaryTextAction(SubtitleLine *line, RichDocument *primaryDoc)
-	: SubtitleLineAction(line, UndoAction::Primary, i18n("Set Line Text")),
+	: SubtitleLineAction(line, UndoStack::Primary, i18n("Set Line Text")),
 	  m_primaryDoc(primaryDoc),
 	  m_primaryDocState(primaryDoc->availableUndoSteps())
 {}
@@ -76,7 +76,7 @@ SetLinePrimaryTextAction::redo()
 
 // *** SetLineSecondaryTextAction
 SetLineSecondaryTextAction::SetLineSecondaryTextAction(SubtitleLine *line, RichDocument *secondaryDoc)
-	: SubtitleLineAction(line, UndoAction::Secondary, i18n("Set Line Secondary Text")),
+	: SubtitleLineAction(line, UndoStack::Secondary, i18n("Set Line Secondary Text")),
 	  m_secondaryDoc(secondaryDoc),
 	  m_secondaryDocState(secondaryDoc->availableUndoSteps())
 {}
@@ -115,7 +115,7 @@ SetLineSecondaryTextAction::redo()
 
 // *** SetLineShowTimeAction
 SetLineShowTimeAction::SetLineShowTimeAction(SubtitleLine *line, const Time &showTime)
-	: SubtitleLineAction(line, UndoAction::Both, i18n("Set Line Show Time")),
+	: SubtitleLineAction(line, UndoStack::Both, i18n("Set Line Show Time")),
 	  m_showTime(showTime)
 {}
 
@@ -142,7 +142,7 @@ SetLineShowTimeAction::redo()
 
 // *** SetLineHideTimeAction
 SetLineHideTimeAction::SetLineHideTimeAction(SubtitleLine *line, const Time &hideTime)
-	: SubtitleLineAction(line, UndoAction::Both, i18n("Set Line Hide Time")),
+	: SubtitleLineAction(line, UndoStack::Both, i18n("Set Line Hide Time")),
 	  m_hideTime(hideTime)
 {}
 
@@ -169,7 +169,7 @@ SetLineHideTimeAction::redo()
 
 // *** SetLineTimesAction
 SetLineTimesAction::SetLineTimesAction(SubtitleLine *line, const Time &showTime, const Time &hideTime, QString description)
-	: SubtitleLineAction(line, UndoAction::Both, description),
+	: SubtitleLineAction(line, UndoStack::Both, description),
 	  m_showTime(showTime),
 	  m_hideTime(hideTime)
 {}
@@ -206,7 +206,7 @@ SetLineTimesAction::redo()
 
 // *** SetLineErrorsAction
 SetLineErrorsAction::SetLineErrorsAction(SubtitleLine *line, int errorFlags)
-	: SubtitleLineAction(line, UndoAction::None, i18n("Set Line Errors")),
+	: SubtitleLineAction(line, UndoStack::None, i18n("Set Line Errors")),
 	  m_errorFlags(errorFlags)
 {}
 

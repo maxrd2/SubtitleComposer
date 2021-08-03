@@ -43,6 +43,14 @@ class UndoStack : private QUndoStack
 	};
 
 public:
+	typedef enum {
+		None = 0,
+		Primary = 1,
+		Secondary = 2,
+		Both = Primary | Secondary,
+		Invalid = -1
+	} DirtyMode;
+
 	explicit UndoStack(QObject *parent = nullptr);
 	virtual ~UndoStack();
 
@@ -50,7 +58,7 @@ public:
 	void push(UndoAction *cmd);
 
 	void beginMacro(const QString &text);
-	void endMacro();
+	void endMacro(DirtyMode dirtyOverride = Invalid);
 
 	using QUndoStack::canUndo;
 	using QUndoStack::canRedo;
@@ -72,6 +80,7 @@ public:
 	using QUndoStack::beginMacro;
 	using QUndoStack::endMacro;
 
+	inline DirtyMode dirtyMode(int index) const { return m_dirtyStack.at(index); }
 	using QUndoStack::command;
 
 public slots:
@@ -85,6 +94,7 @@ private:
 private:
 	int m_level;
 	QStack<Selection> m_selectionStack;
+	QStack<DirtyMode> m_dirtyStack;
 	QAction *m_undoAction;
 	QAction *m_redoAction;
 };

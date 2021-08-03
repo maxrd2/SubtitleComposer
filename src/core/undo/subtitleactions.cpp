@@ -30,7 +30,7 @@
 using namespace SubtitleComposer;
 
 // *** SubtitleAction
-SubtitleAction::SubtitleAction(Subtitle *subtitle, SubtitleAction::DirtyMode dirtyMode, const QString &description)
+SubtitleAction::SubtitleAction(Subtitle *subtitle, UndoStack::DirtyMode dirtyMode, const QString &description)
 	: UndoAction(dirtyMode, subtitle, description)
 {}
 
@@ -40,7 +40,7 @@ SubtitleAction::~SubtitleAction()
 
 // *** SetFramesPerSecondAction
 SetFramesPerSecondAction::SetFramesPerSecondAction(Subtitle *subtitle, double framesPerSecond)
-	: SubtitleAction(subtitle, UndoAction::Both, i18n("Set Frame Rate")),
+	: SubtitleAction(subtitle, UndoStack::Both, i18n("Set Frame Rate")),
 	  m_framesPerSecond(framesPerSecond)
 {}
 
@@ -60,7 +60,7 @@ SetFramesPerSecondAction::redo()
 
 // *** InsertLinesAction
 InsertLinesAction::InsertLinesAction(Subtitle *subtitle, const QList<SubtitleLine *> &lines, int insertIndex)
-	: SubtitleAction(subtitle, UndoAction::Both, i18n("Insert Lines")),
+	: SubtitleAction(subtitle, UndoStack::Both, i18n("Insert Lines")),
 	  m_insertIndex(insertIndex < 0 ? subtitle->linesCount() : insertIndex),
 	  m_lastIndex(m_insertIndex + lines.count() - 1),
 	  m_lines(lines)
@@ -79,7 +79,7 @@ bool
 InsertLinesAction::mergeWith(const QUndoCommand *command)
 {
 	const InsertLinesAction *currentAction = static_cast<const InsertLinesAction *>(command);
-	if(&currentAction->m_subtitle != &m_subtitle)
+	if(currentAction->m_subtitle != m_subtitle)
 		return false;
 
 	if(currentAction->m_insertIndex == m_lastIndex + 1 || (m_insertIndex <= currentAction->m_lastIndex && currentAction->m_insertIndex <= m_lastIndex)) {
@@ -130,7 +130,7 @@ InsertLinesAction::undo()
 
 // *** RemoveLinesAction
 RemoveLinesAction::RemoveLinesAction(Subtitle *subtitle, int firstIndex, int lastIndex)
-	: SubtitleAction(subtitle, UndoAction::Both, i18n("Remove Lines")),
+	: SubtitleAction(subtitle, UndoStack::Both, i18n("Remove Lines")),
 	  m_firstIndex(firstIndex),
 	  m_lastIndex(lastIndex < 0 ? subtitle->lastIndex() : lastIndex),
 	  m_lines()
@@ -208,7 +208,7 @@ RemoveLinesAction::undo()
 
 // *** MoveLineAction
 MoveLineAction::MoveLineAction(Subtitle *subtitle, int fromIndex, int toIndex) :
-	SubtitleAction(subtitle, UndoAction::Both, i18n("Move Line")),
+	SubtitleAction(subtitle, UndoStack::Both, i18n("Move Line")),
 	m_fromIndex(fromIndex),
 	m_toIndex(toIndex < 0 ? subtitle->lastIndex() : toIndex)
 {
@@ -226,7 +226,7 @@ bool
 MoveLineAction::mergeWith(const QUndoCommand *command)
 {
 	const MoveLineAction *currentAction = static_cast<const MoveLineAction *>(command);
-	if(&currentAction->m_subtitle != &m_subtitle)
+	if(currentAction->m_subtitle != m_subtitle)
 		return false;
 
 	Q_ASSERT(command != this);
@@ -293,7 +293,7 @@ MoveLineAction::undo()
 
 // *** SwapLinesTextsAction
 SwapLinesTextsAction::SwapLinesTextsAction(Subtitle *subtitle, const RangeList &ranges) :
-	SubtitleAction(subtitle, UndoAction::Both, i18n("Swap Texts")),
+	SubtitleAction(subtitle, UndoStack::Both, i18n("Swap Texts")),
 	m_ranges(ranges)
 {}
 

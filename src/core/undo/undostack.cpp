@@ -103,6 +103,8 @@ void
 UndoStack::levelIncrease(int idx)
 {
 	if(m_level++ == 0) {
+		while(m_dirtyStack.size() < idx)
+			m_dirtyStack.push(DirtyMode::None);
 		while(m_selectionStack.size() <= idx)
 			m_selectionStack.push(Selection());
 		Selection &sel = m_selectionStack[idx];
@@ -122,10 +124,12 @@ UndoStack::levelDecrease(int idx)
 void
 UndoStack::push(UndoAction *cmd)
 {
-	const int idx = index() + 1;
-	levelIncrease(idx);
+	const int idx = index();
+	const int idx1 = idx + 1;
+	levelIncrease(idx1);
 	QUndoStack::push(cmd);
-	levelDecrease(idx);
+	m_dirtyStack[idx] = static_cast<DirtyMode>(m_dirtyStack.at(idx) | cmd->m_dirtyMode);
+	levelDecrease(idx1);
 }
 
 void
@@ -136,9 +140,12 @@ UndoStack::beginMacro(const QString &text)
 }
 
 void
-UndoStack::endMacro()
+UndoStack::endMacro(DirtyMode dirtyOverride)
 {
-	levelDecrease(index() + 1);
+	const int idx = index();
+	levelDecrease(idx + 1);
+	if(dirtyOverride != Invalid)
+		m_dirtyStack[idx] = dirtyOverride;
 	QUndoStack::endMacro();
 }
 

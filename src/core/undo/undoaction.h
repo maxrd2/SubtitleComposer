@@ -23,22 +23,17 @@
 #include <QExplicitlySharedDataPointer>
 #include <QUndoCommand>
 
+#include "core/undo/undostack.h"
+
 namespace SubtitleComposer {
 
 class Subtitle;
 
 class UndoAction : public QUndoCommand
 {
-	friend class Subtitle;
+	friend class UndoStack;
 
 public:
-	typedef enum {
-		None,
-		Primary,
-		Secondary,
-		Both
-	} DirtyMode;
-
 	enum {
 		// subtitle actions
 		SetFramesPerSecond = 1,
@@ -58,14 +53,14 @@ public:
 	} ActionID;
 
 
-	UndoAction(DirtyMode dirtyMode, Subtitle *subtitle=nullptr, const QString &desc=QString());
+	UndoAction(UndoStack::DirtyMode dirtyMode, Subtitle *subtitle=nullptr, const QString &desc=QString());
 	virtual ~UndoAction();
 
 	void redo() override = 0;
 	void undo() override;
 
 protected:
-	const DirtyMode m_dirtyMode;
+	const UndoStack::DirtyMode m_dirtyMode;
 	QExplicitlySharedDataPointer<Subtitle> m_subtitle;
 };
 

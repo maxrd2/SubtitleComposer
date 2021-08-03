@@ -32,7 +32,7 @@ namespace SubtitleComposer {
 class SubtitleLineAction : public UndoAction
 {
 public:
-	SubtitleLineAction(SubtitleLine *line, UndoAction::DirtyMode dirtyMode, const QString &desc = QString());
+	SubtitleLineAction(SubtitleLine *line, UndoStack::DirtyMode dirtyMode, const QString &desc = QString());
 	virtual ~SubtitleLineAction();
 
 protected:

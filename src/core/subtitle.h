@@ -26,6 +26,7 @@
 #include "core/time.h"
 #include "core/sstring.h"
 #include "core/subtitletarget.h"
+#include "core/undo/undostack.h"
 #include "helpers/objectref.h"
 #include "formatdata.h"
 
@@ -209,7 +210,7 @@ private:
 	void setFormatData(const FormatData *formatData);
 
 	void beginCompositeAction(const QString &title) const;
-	void endCompositeAction() const;
+	void endCompositeAction(UndoStack::DirtyMode dirtyOverride = UndoStack::Invalid) const;
 	void processAction(UndoAction *action) const;
 
 	bool isPrimaryDirty(int index) const;

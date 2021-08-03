@@ -22,7 +22,7 @@
 
 using namespace SubtitleComposer;
 
-UndoAction::UndoAction(DirtyMode dirtyMode, Subtitle *subtitle, const QString &desc)
+UndoAction::UndoAction(UndoStack::DirtyMode dirtyMode, Subtitle *subtitle, const QString &desc)
 	: QUndoCommand(desc),
 	  m_dirtyMode(dirtyMode),
 	  m_subtitle(subtitle)
