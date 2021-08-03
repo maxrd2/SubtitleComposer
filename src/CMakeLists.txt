@@ -35,19 +35,10 @@ message(STATUS "Subtitle Composer plugin path: ${SC_PLUGIN_INSTALL_DIR}")
 include_directories(
 	${CMAKE_CURRENT_SOURCE_DIR} # so that we can refer to our files starting at src dir
 	${CMAKE_CURRENT_SOURCE_DIR}/widgets # needed for .ui files to access custom widgets
-	${Qt5Core_INCLUDE_DIRS}
-	${Qt5Widgets_INCLUDE_DIRS} ${Qt5Widgets_PRIVATE_INCLUDE_DIRS}
-	${Qt5Gui_INCLUDE_DIRS} ${Qt5Gui_PRIVATE_INCLUDE_DIRS}
-	${OPENAL_INCLUDE_DIR}
-	${FFMPEG_INCLUDE_DIRS}
 )
 
-add_subdirectory(tests)
-
-add_subdirectory(scripting)
-
 set(subtitlecomposer_SRCS
-	#[[ main ]] application.cpp application_actions.cpp application_errorcheck.cpp application_subtitle.cpp main.cpp mainwindow.cpp
+	#[[ main ]] application.cpp application_actions.cpp application_errorcheck.cpp application_subtitle.cpp mainwindow.cpp
 	#[[ actions ]] actions/useraction.cpp actions/useractionnames.h actions/kcodecactionext.cpp actions/krecentfilesactionext.cpp
 	#[[ configs ]] configs/configdialog.cpp configs/errorsconfigwidget.cpp configs/generalconfigwidget.cpp configs/playerconfigwidget.cpp configs/waveformconfigwidget.cpp
 	#[[ core ]] core/formatdata.h core/range.h core/rangelist.h core/time.cpp core/richdocument.cpp core/richdocumenteditor.cpp core/sstring.cpp
@@ -94,8 +85,6 @@ set(subtitlecomposer_SRCS
 	CACHE INTERNAL EXPORTEDVARIABLE
 	)
 
-add_subdirectory(icons)
-
 kconfig_add_kcfg_files(subtitlecomposer_SRCS GENERATE_MOC scconfig.kcfgc)
 
 ki18n_wrap_ui(subtitlecomposer_SRCS
@@ -107,17 +96,10 @@ ki18n_wrap_ui(subtitlecomposer_SRCS
 
 qt5_add_resources(subtitlecomposer_SRCS ${subtitlecomposer_RES})
 
-add_executable(subtitlecomposer WIN32 ${subtitlecomposer_SRCS})
+add_subdirectory(icons)
 
-if(ICU_FOUND)
-	message(STATUS "ICU Library will be used for charset detection.")
-	set(HAVE_ICU 1 CACHE INTERNAL EXPORTEDVARIABLE)
-	include_directories(${ICU_INCLUDE_DIRS})
-else()
-	message(STATUS "ICU Library not found. KEncodingProber fallback will be used for charset detection.")
-endif()
-
-target_link_libraries(subtitlecomposer
+add_library(subtitlecomposer-lib STATIC ${subtitlecomposer_SRCS})
+target_link_libraries(subtitlecomposer-lib
 	Qt5::Core Qt5::Widgets Qt5::WidgetsPrivate Qt5::Gui
 	KF5::CoreAddons KF5::WidgetsAddons KF5::TextWidgets KF5::Codecs
 	KF5::SonnetCore KF5::SonnetUi
@@ -127,6 +109,26 @@ target_link_libraries(subtitlecomposer
 	${OPENAL_LIBRARY}
 	${ICU_LIBRARIES}
 )
+target_include_directories(subtitlecomposer-lib PUBLIC
+	${Qt5Core_INCLUDE_DIRS}
+	${Qt5Widgets_INCLUDE_DIRS} ${Qt5Widgets_PRIVATE_INCLUDE_DIRS}
+	${Qt5Gui_INCLUDE_DIRS} ${Qt5Gui_PRIVATE_INCLUDE_DIRS}
+	${OPENAL_INCLUDE_DIR}
+	${FFMPEG_INCLUDE_DIRS}
+)
+if(ICU_FOUND)
+	message(STATUS "ICU Library will be used for charset detection.")
+	set(HAVE_ICU 1 CACHE INTERNAL EXPORTEDVARIABLE)
+	target_include_directories(subtitlecomposer-lib PUBLIC ${ICU_INCLUDE_DIRS})
+else()
+	message(STATUS "ICU Library not found. KEncodingProber fallback will be used for charset detection.")
+endif()
+
+add_subdirectory(tests)
+add_subdirectory(scripting)
+
+add_executable(subtitlecomposer WIN32 main.cpp)
+target_link_libraries(subtitlecomposer subtitlecomposer-lib)
 
 install(TARGETS subtitlecomposer DESTINATION ${BIN_INSTALL_DIR})
 
