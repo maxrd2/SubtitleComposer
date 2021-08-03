@@ -17,6 +17,8 @@ matrix:
       dist: bionic
       sudo: required
       compiler: clang
+      services:
+        - xvfb
       before_install: |-
         sudo apt-get update -qq
       install:
@@ -35,13 +37,15 @@ matrix:
             -DKDE_INSTALL_USE_QT_SYS_PATHS=ON \
             .. || exit 1
           make -j$(nproc) || exit 1
-          make test || (cat Testing/Temporary/LastTest.log ; exit 1) || exit 1
+          make test || (cat Testing/Temporary/LastTest.log ; sleep 5 ; exit 1) || exit 1
 
     - name: "Ubuntu 18.04 Bionic - GCC"
       os: linux
       dist: bionic
       sudo: required
       compiler: gcc
+      services:
+        - xvfb
       before_install: |-
         sudo apt-get update -qq
       install:
@@ -60,13 +64,15 @@ matrix:
             -DKDE_INSTALL_USE_QT_SYS_PATHS=ON \
             .. || exit 1
           make -j$(nproc) || exit 1
-          make test || (cat Testing/Temporary/LastTest.log ; exit 1) || exit 1
+          make test || (cat Testing/Temporary/LastTest.log ; sleep 5 ; exit 1) || exit 1
 
     - name: "Ubuntu 20.04 Focal - CLang"
       os: linux
       dist: focal
       sudo: required
       compiler: clang
+      services:
+        - xvfb
       sources:
         - sourceline: universe
         - sourceline: restricted
@@ -89,13 +95,15 @@ matrix:
             -DKDE_INSTALL_USE_QT_SYS_PATHS=ON \
             .. || exit 1
           make -j$(nproc) || exit 1
-          make test || (cat Testing/Temporary/LastTest.log ; exit 1) || exit 1
+          make test || (cat Testing/Temporary/LastTest.log ; sleep 5 ; exit 1) || exit 1
 
     - name: "Ubuntu 20.04 Focal - GCC"
       os: linux
       dist: focal
       sudo: required
       compiler: gcc
+      services:
+        - xvfb
       sources:
         - sourceline: universe
         - sourceline: restricted
@@ -118,4 +126,4 @@ matrix:
             -DKDE_INSTALL_USE_QT_SYS_PATHS=ON \
             .. || exit 1
           make -j$(nproc) || exit 1
-          make test || (cat Testing/Temporary/LastTest.log ; exit 1) || exit 1
+          make test || (cat Testing/Temporary/LastTest.log ; sleep 5 ; exit 1) || exit 1
