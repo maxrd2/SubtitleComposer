@@ -21,6 +21,7 @@
 
 #include <QTest>
 
+#include "application.h"
 #include "core/richdocument.h"
 
 using namespace SubtitleComposer;
@@ -58,4 +59,5 @@ SubtitleTest::testSort()
 		QVERIFY(qRound(sub.at(i)->showTime().toSeconds()) == i + 1);
 }
 
+#define QCoreApplication Application
 QTEST_GUILESS_MAIN(SubtitleTest);
