@@ -94,9 +94,9 @@ ki18n_wrap_ui(subtitlecomposer_SRCS
 	#[[ scripting ]] scripting/scriptsmanager.ui
 	)
 
-qt5_add_resources(subtitlecomposer_SRCS ${subtitlecomposer_RES})
-
 add_subdirectory(icons)
+
+qt5_add_resources(subtitlecomposer_RES_SRC ${subtitlecomposer_RES})
 
 add_library(subtitlecomposer-lib STATIC ${subtitlecomposer_SRCS})
 target_link_libraries(subtitlecomposer-lib
@@ -127,7 +127,7 @@ endif()
 add_subdirectory(tests)
 add_subdirectory(scripting)
 
-add_executable(subtitlecomposer WIN32 main.cpp)
+add_executable(subtitlecomposer WIN32 main.cpp ${subtitlecomposer_RES_SRC})
 target_link_libraries(subtitlecomposer subtitlecomposer-lib)
 
 install(TARGETS subtitlecomposer DESTINATION ${BIN_INSTALL_DIR})

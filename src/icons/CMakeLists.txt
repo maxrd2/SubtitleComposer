@@ -1,7 +1,7 @@
 list(APPEND subtitlecomposer_RES ${CMAKE_CURRENT_SOURCE_DIR}/icon-bundle.qrc)
 
 if(MINGW)
-	list(APPEND subtitlecomposer_SRCS ${CMAKE_CURRENT_SOURCE_DIR}/subtitlecomposer.rc)
+	list(APPEND subtitlecomposer_RES_SRC ${CMAKE_CURRENT_SOURCE_DIR}/subtitlecomposer.rc)
 	set(BUNDLE_THEME_ICONS 1)
 elseif(APPIMAGE)
 	ecm_install_icons(ICONS
@@ -32,5 +32,5 @@ if(BUNDLE_THEME_ICONS)
 endif()
 
 # export vars
-set(subtitlecomposer_SRCS "${subtitlecomposer_SRCS}" PARENT_SCOPE)
+set(subtitlecomposer_RES_SRC "${subtitlecomposer_RES_SRC}" PARENT_SCOPE)
 set(subtitlecomposer_RES "${subtitlecomposer_RES}" PARENT_SCOPE)
