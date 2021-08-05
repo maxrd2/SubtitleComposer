@@ -6,6 +6,7 @@
   <name>Subtitle Composer</name>
   <name xml:lang="ca">Subtitle Composer</name>
   <name xml:lang="ca-valencia">Subtitle Composer</name>
+  <name xml:lang="cs">Subtitle Composer</name>
   <name xml:lang="de">Subtitle Composer</name>
   <name xml:lang="en-GB">Subtitle Composer</name>
   <name xml:lang="es">Subtitle Composer</name>
@@ -407,6 +408,7 @@
       <caption>Main application window</caption>
       <caption xml:lang="ca">Finestra principal de l'aplicació</caption>
       <caption xml:lang="ca-valencia">Finestra principal de l'aplicació</caption>
+      <caption xml:lang="cs">Hlavní okno aplikace</caption>
       <caption xml:lang="de">Programm-Hauptfenster</caption>
       <caption xml:lang="en-GB">Main application window</caption>
       <caption xml:lang="es">Ventana principal de la aplicación</caption>
