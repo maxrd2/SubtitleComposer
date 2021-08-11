@@ -277,7 +277,8 @@ Application::loadConfig()
 
 	KConfigGroup wfGroup(config->group("Waveform Widget"));
 	action(ACT_WAVEFORM_AUTOSCROLL)->setChecked(wfGroup.readEntry<bool>("AutoScroll", true));
-	m_mainWindow->m_waveformWidget->setZoom(wfGroup.readEntry<quint32>("Zoom", 6000));
+	if(wfGroup.hasKey("Zoom"))
+		m_mainWindow->m_waveformWidget->setZoom(wfGroup.readEntry<quint32>("Zoom", 0));
 
 	m_mainWindow->loadConfig();
 	m_playerWidget->loadConfig();
