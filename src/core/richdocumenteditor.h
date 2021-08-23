@@ -1,9 +1,9 @@
 /*
- * SPDX-FileCopyrightText: 2020 The Qt Company Ltd.
- * SPDX-FileCopyrightText: 2020 Mladen Milinkovic <max@smoothware.net>
- *
- * SPDX-License-Identifier: GPL-2.0-or-later
- */
+    SPDX-FileCopyrightText: 2020 The Qt Company Ltd.
+    SPDX-FileCopyrightText: 2020 Mladen Milinkovic <max@smoothware.net>
+
+    SPDX-License-Identifier: GPL-2.0-or-later
+*/
 
 #ifndef RICHDOCUMENTEDITOR_H
 #define RICHDOCUMENTEDITOR_H

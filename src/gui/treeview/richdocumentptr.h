@@ -1,8 +1,8 @@
 /*
- * SPDX-FileCopyrightText: 2020 Mladen Milinkovic <max@smoothware.net>
- *
- * SPDX-License-Identifier: GPL-2.0-or-later
- */
+    SPDX-FileCopyrightText: 2020 Mladen Milinkovic <max@smoothware.net>
+
+    SPDX-License-Identifier: GPL-2.0-or-later
+*/
 
 #ifndef RICHDOCUMENTPTR_H
 #define RICHDOCUMENTPTR_H
