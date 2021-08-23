@@ -1,16 +1,15 @@
+/*
+    smplayer, GUI front-end for mplayer.
+    SPDX-FileCopyrightText: 2007 Ricardo Villalba (rvm@escomposlinux.org)
+
+    modified for inclusion in Subtitle Composer
+    SPDX-FileCopyrightText: 2007-2009 Sergio Pistone (sergio_pistone@yahoo.com.ar)
+
+    SPDX-License-Identifier: GPL-2.0-or-later
+*/
+
 #ifndef POINTINGSLIDER_H
 #define POINTINGSLIDER_H
-
-/***************************************************************************
- *   smplayer, GUI front-end for mplayer.                                  *
- *   SPDX-FileCopyrightText: 2007 Ricardo Villalba (rvm@escomposlinux.org)           *
- *                                                                         *
- *   modified for inclusion in Subtitle Composer                           *
- *   SPDX-FileCopyrightText: 2007-2009 Sergio Pistone (sergio_pistone@yahoo.com.ar)  *
- *                                                                         *
- *   SPDX-License-Identifier: GPL-2.0-or-later
- *                                                                         *
- ***************************************************************************/
 
 #include <QSlider>
 
