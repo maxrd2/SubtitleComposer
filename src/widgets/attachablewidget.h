@@ -3,15 +3,12 @@
 
 /***************************************************************************
  *   smplayer, GUI front-end for mplayer.                                  *
- *   Copyright (C) 2006-2008 Ricardo Villalba (rvm@escomposlinux.org)      *
+ *   SPDX-FileCopyrightText: 2006-2008 Ricardo Villalba (rvm@escomposlinux.org)      *
  *                                                                         *
  *   modified for inclusion in Subtitle Composer                           *
- *   Copyright (C) 2007-2009 Sergio Pistone (sergio_pistone@yahoo.com.ar)  *
+ *   SPDX-FileCopyrightText: 2007-2009 Sergio Pistone (sergio_pistone@yahoo.com.ar)  *
  *                                                                         *
- *   This program is free software; you can redistribute it and/or modify  *
- *   it under the terms of the GNU General Public License as published by  *
- *   the Free Software Foundation; either version 2 of the License, or     *
- *   (at your option) any later version.                                   *
+ *   SPDX-License-Identifier: GPL-2.0-or-later
  *                                                                         *
  *   This program is distributed in the hope that it will be useful,       *
  *   but WITHOUT ANY WARRANTY; without even the implied warranty of        *
