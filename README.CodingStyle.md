@@ -413,7 +413,6 @@ You can use the auto keyword in the following cases. If in doubt (e.g. using aut
 	// Correct
 	auto something = new MyCustomType;
 	auto keyEvent = static_cast<QKeyEvent *>(event);
-	auto myList = QStringList() << QLatin1String("FooThing") << QLatin1String("BarThing");
 ```
 
 * When assigning iterator types.
@@ -422,6 +421,17 @@ You can use the auto keyword in the following cases. If in doubt (e.g. using aut
 	auto it = myList.const_iterator();
 ```
 
+### C++11 initializer lists
+
+You should prefer initializer lists over adding the entries at runtime.
+
+```C++
+	// Wrong
+    auto myList = QStringList() << QLatin1String("FooThing") << QLatin1String("BarThing");
+	// Correct
+	QStringList myList{QStringLiteral("FooThing"), QStringLiteral("BarThing")};
+	QStringList myListWithSingleEntry{QStringLiteral("FooThing")};
+```
 
 ### General exception
 
