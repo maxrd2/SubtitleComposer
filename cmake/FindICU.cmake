@@ -8,9 +8,7 @@
 #  ICU_DEFINITIONS - compiler switches required for using ICU library
 
 # SPDX-FileCopyrightText: 2010-2019 Mladen Milinkovic <maxrd2@smoothware.net>
-#
-# Redistribution and use is allowed according to the terms of the BSD license.
-# For details see the accompanying COPYING-CMAKE-SCRIPTS file.
+# SPDX-License-Identifier: BSD-3-Clause
 
 find_package(PkgConfig REQUIRED)
 
