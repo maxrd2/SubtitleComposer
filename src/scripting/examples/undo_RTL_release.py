@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-# SPDX-FileCopyrightText: 2018 Safa AlFulaij (safa1996alfulaij@gmail.com)
+# SPDX-FileCopyrightText: 2018 Safa AlFulaij <safa1996alfulaij@gmail.com>
 #
 # SPDX-License-Identifier: GPL-2.0-or-later
 #
