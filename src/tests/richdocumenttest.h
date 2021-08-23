@@ -1,10 +1,11 @@
-#ifndef RICHDOCUMENTTEST_H
-#define RICHDOCUMENTTEST_H
 /*
  * SPDX-FileCopyrightText: 2020 Mladen Milinkovic <max@smoothware.net>
  *
  * SPDX-License-Identifier: GPL-2.0-or-later
  */
+
+#ifndef RICHDOCUMENTTEST_H
+#define RICHDOCUMENTTEST_H
 
 #include "core/richdocument.h"
 

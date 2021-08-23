@@ -1,10 +1,11 @@
-#ifndef OBJECTREF_H
-#define OBJECTREF_H
 /*
  * SPDX-FileCopyrightText: 2010-2018 Mladen Milinkovic <max@smoothware.net>
  *
  * SPDX-License-Identifier: GPL-2.0-or-later
  */
+
+#ifndef OBJECTREF_H
+#define OBJECTREF_H
 
 #include <QObject>
 #include <QVector>

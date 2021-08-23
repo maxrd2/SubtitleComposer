@@ -1,10 +1,11 @@
-#ifndef SPEECHPROCESSOR_H
-#define SPEECHPROCESSOR_H
 /*
  * SPDX-FileCopyrightText: 2010-2019 Mladen Milinkovic <max@smoothware.net>
  *
  * SPDX-License-Identifier: GPL-2.0-or-later
  */
+
+#ifndef SPEECHPROCESSOR_H
+#define SPEECHPROCESSOR_H
 
 #include "core/time.h"
 #include "core/subtitle.h"

@@ -1,11 +1,11 @@
-#ifndef STREAMPROCESSOR_H
-#define STREAMPROCESSOR_H
-
 /*
  * SPDX-FileCopyrightText: 2010-2019 Mladen Milinkovic <max@smoothware.net>
  *
  * SPDX-License-Identifier: GPL-2.0-or-later
  */
+
+#ifndef STREAMPROCESSOR_H
+#define STREAMPROCESSOR_H
 
 #include "videoplayer/waveformat.h"
 

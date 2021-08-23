@@ -1,10 +1,11 @@
-#ifndef WAVEFORMWIDGET_H
-#define WAVEFORMWIDGET_H
 /*
  * SPDX-FileCopyrightText: 2010-2021 Mladen Milinkovic <max@smoothware.net>
  *
  * SPDX-License-Identifier: GPL-2.0-or-later
  */
+
+#ifndef WAVEFORMWIDGET_H
+#define WAVEFORMWIDGET_H
 
 #include "core/time.h"
 #include "core/subtitle.h"

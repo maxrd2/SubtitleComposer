@@ -1,10 +1,11 @@
-#ifndef RICHDOCUMENT_H
-#define RICHDOCUMENT_H
 /*
  * SPDX-FileCopyrightText: 2020 Mladen Milinkovic <max@smoothware.net>
  *
  * SPDX-License-Identifier: GPL-2.0-or-later
  */
+
+#ifndef RICHDOCUMENT_H
+#define RICHDOCUMENT_H
 
 #include "core/sstring.h"
 

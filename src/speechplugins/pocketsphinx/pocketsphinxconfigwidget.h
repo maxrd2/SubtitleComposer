@@ -1,11 +1,11 @@
-#ifndef MPLAYERCONFIGWIDGET_H
-#define MPLAYERCONFIGWIDGET_H
-
 /*
  * SPDX-FileCopyrightText: 2010-2019 Mladen Milinkovic <max@smoothware.net>
  *
  * SPDX-License-Identifier: GPL-2.0-or-later
  */
+
+#ifndef MPLAYERCONFIGWIDGET_H
+#define MPLAYERCONFIGWIDGET_H
 
 #include "ui_pocketsphinxconfigwidget.h"
 

@@ -1,10 +1,11 @@
-#ifndef HELPERS_COMMON_H
-#define HELPERS_COMMON_H
 /*
  * SPDX-FileCopyrightText: 2020 Mladen Milinkovic <max@smoothware.net>
  *
  * SPDX-License-Identifier: GPL-2.0-or-later
  */
+
+#ifndef HELPERS_COMMON_H
+#define HELPERS_COMMON_H
 
 #define $(str) QStringLiteral(str)
 

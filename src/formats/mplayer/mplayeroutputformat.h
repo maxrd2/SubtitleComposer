@@ -1,12 +1,12 @@
-#ifndef MPLAYEROUTPUTFORMAT_H
-#define MPLAYEROUTPUTFORMAT_H
-
 /*
  * SPDX-FileCopyrightText: 2007-2009 Sergio Pistone <sergio_pistone@yahoo.com.ar>
  * SPDX-FileCopyrightText: 2010-2019 Mladen Milinkovic <max@smoothware.net>
  *
  * SPDX-License-Identifier: GPL-2.0-or-later
  */
+
+#ifndef MPLAYEROUTPUTFORMAT_H
+#define MPLAYEROUTPUTFORMAT_H
 
 #include "formats/outputformat.h"
 #include "core/richdocument.h"

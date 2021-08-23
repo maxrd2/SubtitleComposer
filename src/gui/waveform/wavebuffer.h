@@ -1,10 +1,11 @@
-#ifndef WAVEBUFFER_H
-#define WAVEBUFFER_H
 /*
  * SPDX-FileCopyrightText: 2010-2021 Mladen Milinkovic <max@smoothware.net>
  *
  * SPDX-License-Identifier: GPL-2.0-or-later
  */
+
+#ifndef WAVEBUFFER_H
+#define WAVEBUFFER_H
 
 #include "streamprocessor/streamprocessor.h"
 

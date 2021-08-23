@@ -1,12 +1,12 @@
-#ifndef CONFIGDIALOG_H
-#define CONFIGDIALOG_H
-
 /*
  * SPDX-FileCopyrightText: 2015 Martin Steghöfer <martin@steghoefer.eu>
  * SPDX-FileCopyrightText: 2015-2019 Mladen Milinkovic <max@smoothware.net>
  *
  * SPDX-License-Identifier: GPL-2.0-or-later
  */
+
+#ifndef CONFIGDIALOG_H
+#define CONFIGDIALOG_H
 
 #include <KConfigDialog>
 

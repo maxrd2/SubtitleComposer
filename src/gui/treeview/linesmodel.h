@@ -1,12 +1,12 @@
-#ifndef LINESMODEL_H
-#define LINESMODEL_H
-
 /*
  * SPDX-FileCopyrightText: 2007-2009 Sergio Pistone <sergio_pistone@yahoo.com.ar>
  * SPDX-FileCopyrightText: 2010-2020 Mladen Milinkovic <max@smoothware.net>
  *
  * SPDX-License-Identifier: GPL-2.0-or-later
  */
+
+#ifndef LINESMODEL_H
+#define LINESMODEL_H
 
 #include <QAbstractListModel>
 #include <QExplicitlySharedDataPointer>

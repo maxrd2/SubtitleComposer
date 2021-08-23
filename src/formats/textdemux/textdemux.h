@@ -1,11 +1,11 @@
-#ifndef TEXTDEMUX_H
-#define TEXTDEMUX_H
-
 /*
  * SPDX-FileCopyrightText: 2010-2018 Mladen Milinkovic <max@smoothware.net>
  *
  * SPDX-License-Identifier: GPL-2.0-or-later
  */
+
+#ifndef TEXTDEMUX_H
+#define TEXTDEMUX_H
 
 #include <QExplicitlySharedDataPointer>
 #include <QObject>

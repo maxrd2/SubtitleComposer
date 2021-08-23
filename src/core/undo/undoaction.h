@@ -1,11 +1,11 @@
-#ifndef UNDOACTION_H
-#define UNDOACTION_H
-
 /*
  * SPDX-FileCopyrightText: 2018-2019 Mladen Milinkovic <max@smoothware.net>
  *
  * SPDX-License-Identifier: GPL-2.0-or-later
  */
+
+#ifndef UNDOACTION_H
+#define UNDOACTION_H
 
 #include <QExplicitlySharedDataPointer>
 #include <QUndoCommand>

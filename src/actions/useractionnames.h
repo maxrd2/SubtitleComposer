@@ -1,12 +1,12 @@
-#ifndef USERACTIONNAMES_H
-#define USERACTIONNAMES_H
-
 /*
  * SPDX-FileCopyrightText: 2007-2009 Sergio Pistone <sergio_pistone@yahoo.com.ar>
  * SPDX-FileCopyrightText: 2010-2018 Mladen Milinkovic <max@smoothware.net>
  *
  * SPDX-License-Identifier: GPL-2.0-or-later
  */
+
+#ifndef USERACTIONNAMES_H
+#define USERACTIONNAMES_H
 
 #define ACT_NEW_SUBTITLE "new_subtitle"
 #define ACT_OPEN_SUBTITLE "open_subtitle"

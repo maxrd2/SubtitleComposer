@@ -1,10 +1,11 @@
-#ifndef WAVEFORMCONFIGWIDGET_H
-#define WAVEFORMCONFIGWIDGET_H
 /*
  * SPDX-FileCopyrightText: 2010-2018 Mladen Milinkovic <max@smoothware.net>
  *
  * SPDX-License-Identifier: GPL-2.0-or-later
  */
+
+#ifndef WAVEFORMCONFIGWIDGET_H
+#define WAVEFORMCONFIGWIDGET_H
 
 #include "ui_waveformconfigwidget.h"
 

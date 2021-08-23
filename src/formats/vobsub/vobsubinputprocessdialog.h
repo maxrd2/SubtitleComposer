@@ -1,11 +1,11 @@
-#ifndef VOBSUBINPUTPROCESSDIALOG_H
-#define VOBSUBINPUTPROCESSDIALOG_H
-
 /*
  * SPDX-FileCopyrightText: 2017-2019 Mladen Milinkovic <max@smoothware.net>
  *
  * SPDX-License-Identifier: GPL-2.0-or-later
  */
+
+#ifndef VOBSUBINPUTPROCESSDIALOG_H
+#define VOBSUBINPUTPROCESSDIALOG_H
 
 #include "core/subtitle.h"
 

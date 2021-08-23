@@ -1,10 +1,11 @@
-#ifndef SPEECHPLUGIN_H
-#define SPEECHPLUGIN_H
 /*
  * SPDX-FileCopyrightText: 2010-2019 Mladen Milinkovic <max@smoothware.net>
  *
  * SPDX-License-Identifier: GPL-2.0-or-later
  */
+
+#ifndef SPEECHPLUGIN_H
+#define SPEECHPLUGIN_H
 
 #include <QObject>
 

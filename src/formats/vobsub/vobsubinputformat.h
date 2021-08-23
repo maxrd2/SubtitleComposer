@@ -1,11 +1,11 @@
-#ifndef VOBSUBINPUTFORMAT_H
-#define VOBSUBINPUTFORMAT_H
-
 /*
  * SPDX-FileCopyrightText: 2017-2019 Mladen Milinkovic <max@smoothware.net>
  *
  * SPDX-License-Identifier: GPL-2.0-or-later
  */
+
+#ifndef VOBSUBINPUTFORMAT_H
+#define VOBSUBINPUTFORMAT_H
 
 #include "application.h"
 #include "core/richdocument.h"
