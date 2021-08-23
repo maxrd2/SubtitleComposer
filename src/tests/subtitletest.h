@@ -1,8 +1,8 @@
 /*
- * SPDX-FileCopyrightText: 2021 Mladen Milinkovic <max@smoothware.net>
- *
- * SPDX-License-Identifier: GPL-2.0-or-later
- */
+    SPDX-FileCopyrightText: 2021 Mladen Milinkovic <max@smoothware.net>
+
+    SPDX-License-Identifier: GPL-2.0-or-later
+*/
 
 #ifndef SUBTITLESORTTEST_H
 #define SUBTITLESORTTEST_H

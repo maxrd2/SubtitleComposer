@@ -1,8 +1,8 @@
 /*
- * SPDX-FileCopyrightText: 2017-2018 Mladen Milinkovic <max@smoothware.net>
- *
- * SPDX-License-Identifier: GPL-2.0-or-later
- */
+    SPDX-FileCopyrightText: 2017-2018 Mladen Milinkovic <max@smoothware.net>
+
+    SPDX-License-Identifier: GPL-2.0-or-later
+*/
 
 #ifndef VOBSUBINPUTINITDIALOG_H
 #define VOBSUBINPUTINITDIALOG_H
