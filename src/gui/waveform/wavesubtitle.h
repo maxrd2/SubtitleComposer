@@ -59,7 +59,7 @@ private:
 
 	DragPosition m_dragMode = DRAG_NONE;
 	double m_dragTime = 0.;
-	double m_dragTimeOffset;
+	double m_dragTimeOffset = 0.;
 };
 }
 
