@@ -352,7 +352,7 @@ Application::saveSubtitleAs(QTextCodec *codec)
 			return false;
 
 		m_subtitleUrl = url;
-		m_subtitleFileName = QFileInfo(m_subtitleUrl.path()).completeBaseName();
+		m_subtitleFileName = QFileInfo(m_subtitleUrl.path()).fileName();
 		m_subtitleFormat = saveDlg.selectedNameFilter();
 		if(!m_subtitleFormat.isEmpty())
 			m_subtitleFormat.truncate(m_subtitleFormat.indexOf(QStringLiteral(" (")));
@@ -588,7 +588,7 @@ Application::saveSubtitleTrAs(QTextCodec *codec)
 			return false;
 
 		m_subtitleTrUrl = url;
-		m_subtitleTrFileName = QFileInfo(m_subtitleTrUrl.path()).completeBaseName();
+		m_subtitleTrFileName = QFileInfo(m_subtitleTrUrl.path()).fileName();
 		m_subtitleTrFormat = saveDlg.selectedNameFilter();
 		if(!m_subtitleTrFormat.isEmpty())
 			m_subtitleTrFormat.truncate(m_subtitleTrFormat.indexOf(QStringLiteral(" (")));
