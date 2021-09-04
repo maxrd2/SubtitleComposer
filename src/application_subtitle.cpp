@@ -300,7 +300,7 @@ Application::speechImportAudioStream(int audioStreamIndex)
 bool
 Application::saveSubtitle(QTextCodec *codec)
 {
-	if(m_subtitleUrl.isEmpty() || m_subtitleEncoding.isEmpty() || !FormatManager::instance().hasOutput(m_subtitleFormat))
+	if(m_subtitleUrl.isEmpty() || !FormatManager::instance().hasOutput(m_subtitleFormat))
 		return saveSubtitleAs(codec);
 
 	bool codecFound = true;
@@ -539,7 +539,7 @@ Application::processTranslationOpened(QTextCodec *codec, const QString &subtitle
 bool
 Application::saveSubtitleTr(QTextCodec *codec)
 {
-	if(m_subtitleTrUrl.isEmpty() || m_subtitleTrEncoding.isEmpty() || !FormatManager::instance().hasOutput(m_subtitleTrFormat))
+	if(m_subtitleTrUrl.isEmpty() || !FormatManager::instance().hasOutput(m_subtitleTrFormat))
 		return saveSubtitleTrAs(codec);
 
 	bool codecFound = true;
@@ -556,6 +556,7 @@ Application::saveSubtitleTr(QTextCodec *codec)
 		m_reopenSubtitleTrAsAction->setCurrentCodec(codec);
 		m_saveSubtitleTrAsAction->setCurrentCodec(codec);
 		m_recentSubtitlesTrAction->addUrl(m_subtitleTrUrl, codec->name());
+		m_subtitleTrEncoding = codec->name();
 
 		updateTitle();
 
