@@ -20,6 +20,7 @@ extern "C" {
 }
 
 #define DEBUG_GL 0
+#define FORCE_GLES 0
 #define OPENGL_CORE 0
 #define OPENGL_VER 2,0
 
@@ -31,6 +32,17 @@ extern "C" {
 }
 #else
 #define asGL(glCall) glCall
+#endif
+
+#if defined(GL_ES_VERSION_2_0) || FORCE_GLES
+#define USE_GLES
+#define TEXTURE_RGB_FORMAT GL_RGBA
+// NOTE: we don't currently support more than 8bpp on GLES
+#define TEXTURE_U16_FORMAT GL_R8
+#else
+#undef USE_GLES
+#define TEXTURE_RGB_FORMAT GL_BGRA
+#define TEXTURE_U16_FORMAT GL_R16
 #endif
 
 using namespace SubtitleComposer;
@@ -82,6 +94,9 @@ void
 GLRenderer::setupProfile()
 {
 	QSurfaceFormat format(QSurfaceFormat::defaultFormat());
+#if FORCE_GLES
+	format.setRenderableType(QSurfaceFormat::OpenGLES);
+#endif
 	format.setVersion(OPENGL_VER);
 #if DEBUG_GL
 	format.setOption(QSurfaceFormat::DebugContext);
@@ -126,7 +141,7 @@ GLRenderer::setFrameFormat(int width, int height, int compBits, int crWidthShift
 	m_crHeight = crHeight;
 
 	m_glType = compBytes == 1 ? GL_UNSIGNED_BYTE : GL_UNSIGNED_SHORT;
-	m_glFormat = compBytes == 1 ? GL_R8 : GL_R16;
+	m_glFormat = compBytes == 1 ? GL_R8 : TEXTURE_U16_FORMAT;
 
 	delete[] m_bufYUV;
 	m_bufSize = bufSize;
@@ -261,7 +276,11 @@ GLRenderer::initShader()
 	delete m_vertShader;
 	m_vertShader = new QOpenGLShader(QOpenGLShader::Vertex, this);
 	bool success = m_vertShader->compileSourceCode(
+#ifdef USE_GLES
+		"#version 100\n"
+#else
 		"#version 120\n"
+#endif
 		"attribute vec4 vPos;"
 		"attribute vec2 vVidTex;"
 		"attribute vec2 vOvrTex;"
@@ -288,7 +307,13 @@ GLRenderer::initShader()
 		csms.append(QString::number(csm[i], 'g', 10));
 	}
 
-	success = m_fragShader->compileSourceCode(QStringLiteral("#version 120\n"
+	success = m_fragShader->compileSourceCode(QStringLiteral(
+#ifdef USE_GLES
+		"#version 100\n"
+		"precision mediump float;\n"
+#else
+		"#version 120\n"
+#endif
 		"varying vec2 vfVidTex;"
 		"varying vec2 vfOvrTex;"
 		"uniform sampler2D texY;"
@@ -348,8 +373,15 @@ GLRenderer::initializeGL()
 	QMutexLocker l(&m_texMutex);
 
 	initializeOpenGLFunctions();
-	qDebug() << "OpenGL version: " << reinterpret_cast<const char *>(glGetString(GL_VERSION));
-	qDebug() << "GLSL version: " << reinterpret_cast<const char *>(glGetString(GL_SHADING_LANGUAGE_VERSION));
+	qDebug().nospace() << "GL API: OpenGL " << (format().renderableType() == QSurfaceFormat::OpenGLES ? "ES" : "Desktop")
+		<< ' ' << format().majorVersion() << "." << format().minorVersion()
+#ifdef USE_GLES
+		<< " (compiled for OpenGL ES)";
+#else
+		<< " (compiled for OpenGL Desktop)";
+#endif
+	qDebug() << "OpenGL version:" << reinterpret_cast<const char *>(glGetString(GL_VERSION));
+	qDebug() << "GLSL version:" << reinterpret_cast<const char *>(glGetString(GL_SHADING_LANGUAGE_VERSION));
 
 	if(m_vao.create())
 		m_vao.bind();
@@ -453,13 +485,13 @@ GLRenderer::uploadMM(int texWidth, int texHeight, T *texBuf, const T *texSrc)
 			if(D == 1) {
 				asGL(glTexImage2D(GL_TEXTURE_2D, level, m_glFormat, texWidth, texHeight, 0, GL_RED, m_glType, texSrc));
 			} else { // D == 4
-				asGL(glTexImage2D(GL_TEXTURE_2D, level, GL_RGBA8, texWidth, texHeight, 0, GL_BGRA, GL_UNSIGNED_BYTE, texSrc));
+				asGL(glTexImage2D(GL_TEXTURE_2D, level, GL_RGBA8, texWidth, texHeight, 0, TEXTURE_RGB_FORMAT, GL_UNSIGNED_BYTE, texSrc));
 			}
 		} else {
 			if(D == 1) {
 				asGL(glTexSubImage2D(GL_TEXTURE_2D, level, 0, 0, texWidth, texHeight, GL_RED, m_glType, texSrc));
 			} else { // D == 4
-				asGL(glTexSubImage2D(GL_TEXTURE_2D, level, 0, 0, texWidth, texHeight, GL_BGRA, GL_UNSIGNED_BYTE, texSrc));
+				asGL(glTexSubImage2D(GL_TEXTURE_2D, level, 0, 0, texWidth, texHeight, TEXTURE_RGB_FORMAT, GL_UNSIGNED_BYTE, texSrc));
 			}
 		}
 
