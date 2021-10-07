@@ -113,6 +113,9 @@ GLRenderer::setOverlay(SubtitleTextOverlay *overlay)
 	if(m_overlay)
 		disconnect(m_overlay, nullptr, this, nullptr);
 	m_overlay = overlay;
+#ifdef USE_GLES
+	overlay->invertPixels(true);
+#endif
 	connect(m_overlay, &SubtitleTextOverlay::repaintNeeded, this, QOverload<>::of(&GLRenderer::update));
 }
 
@@ -607,7 +610,7 @@ GLRenderer::uploadSubtitle()
 	// overlay
 	asGL(glActiveTexture(GL_TEXTURE0 + ID_OVR));
 	asGL(glBindTexture(GL_TEXTURE_2D, m_idTex[ID_OVR]));
-	uploadMM<quint8, 4>(img.width(), img.height(), m_mmOvr, img.bits());
+	uploadMM<quint8, 4>(img.width(), img.height(), m_mmOvr, img.constBits());
 	if(m_texNeedInit) {
 		asGL(glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_BORDER));
 		asGL(glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_BORDER));

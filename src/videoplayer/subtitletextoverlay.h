@@ -36,6 +36,7 @@ public:
 	const QSize & textSize();
 	inline bool isDirty() const { return m_dirty; }
 	inline double renderScale() const { return m_renderScale; }
+	void invertPixels(bool invert);
 
 private:
 	void drawImage();
@@ -53,12 +54,13 @@ public slots:
 	void setDoc(const RichDocument *doc);
 	void setFontFamily(const QString &family);
 	void setFontSize(int fontSize);
-	void setTextColor(const QColor &color);
-	void setOutlineColor(const QColor &color);
+	void setTextColor(QColor color);
+	void setOutlineColor(QColor color);
 	void setOutlineWidth(int width);
 	inline void setRenderScale(double scale) { m_renderScale = scale; }
 
 private:
+	bool m_invertPixels;
 	QString m_text;
 	const RichDocument *m_doc = nullptr;
 	QFont m_font;

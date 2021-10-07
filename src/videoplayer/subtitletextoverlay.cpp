@@ -18,7 +18,8 @@
 using namespace SubtitleComposer;
 
 SubtitleTextOverlay::SubtitleTextOverlay()
-	: m_fontSize(SCConfig::fontSize())
+	: m_invertPixels(false),
+	  m_fontSize(SCConfig::fontSize())
 {
 	m_font.setStyleStrategy(QFont::PreferAntialias);
 }
@@ -192,6 +193,16 @@ SubtitleTextOverlay::image()
 	return m_image;
 }
 
+void
+SubtitleTextOverlay::invertPixels(bool invert)
+{
+	if(m_invertPixels == invert)
+		return;
+	m_invertPixels = invert;
+	setTextColor(m_textColor);
+	setOutlineColor(m_textOutline.color());
+}
+
 const QSize &
 SubtitleTextOverlay::textSize()
 {
@@ -278,8 +289,10 @@ SubtitleTextOverlay::setFontSize(int fontSize)
 }
 
 void
-SubtitleTextOverlay::setTextColor(const QColor &color)
+SubtitleTextOverlay::setTextColor(QColor color)
 {
+	if(m_invertPixels)
+		color = QColor(color.blue(), color.green(), color.red(), color.alpha());
 	if(m_textColor == color)
 		return;
 	m_textColor = color;
@@ -287,8 +300,10 @@ SubtitleTextOverlay::setTextColor(const QColor &color)
 }
 
 void
-SubtitleTextOverlay::setOutlineColor(const QColor &color)
+SubtitleTextOverlay::setOutlineColor(QColor color)
 {
+	if(m_invertPixels)
+		color = QColor(color.blue(), color.green(), color.red(), color.alpha());
 	if(m_textOutline.color() == color)
 		return;
 	m_textOutline.setColor(color);
