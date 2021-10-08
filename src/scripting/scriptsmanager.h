@@ -21,6 +21,7 @@ QT_FORWARD_DECLARE_CLASS(QPushButton)
 class TreeView;
 
 namespace SubtitleComposer {
+class SCScript;
 class Subtitle;
 
 class ScriptsManager : public QObject, private Ui::ScriptsManager
@@ -30,9 +31,6 @@ class ScriptsManager : public QObject, private Ui::ScriptsManager
 public:
 	explicit ScriptsManager(QObject *parent = 0);
 	virtual ~ScriptsManager();
-
-	QString currentScriptName() const;
-	QStringList scriptNames() const;
 
 	bool eventFilter(QObject *object, QEvent *event) override;
 
@@ -51,6 +49,8 @@ public slots:
 private:
 	static const QStringList & mimeTypes();
 	QMenu * toolsMenu();
+	const SCScript * currentScript() const;
+	const SCScript * findScript(const QString title) const;
 
 	static void findAllFiles(QString path, QStringList &findAllFiles);
 
@@ -58,22 +58,7 @@ private slots:
 	void onToolsMenuActionTriggered(QAction *action);
 
 private:
-	QMap<QString, QString> m_scripts;               // name => path
 	QDialog *m_dialog;
-};
-
-class Debug : public QObject
-{
-	Q_OBJECT
-
-public:
-	Debug();
-	~Debug();
-
-public slots:
-	void information(const QString &message);
-	void warning(const QString &message);
-	void error(const QString &message);
 };
 }
 #endif

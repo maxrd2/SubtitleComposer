@@ -22,7 +22,7 @@
 #include "helpers/filetrasher.h"
 #include "gui/treeview/treeview.h"
 
-#include <QStringListModel>
+#include <QAbstractItemModel>
 #include <QStandardPaths>
 #include <QDialog>
 #include <QFileDialog>
@@ -59,55 +59,310 @@ userScriptDir()
 }
 
 namespace SubtitleComposer {
-class InstalledScriptsModel : public QStringListModel
+class SCScript
 {
+	friend class InstalledScriptsModel;
+
+	SCScript(const QString &path, const QString &name)
+		: m_name(name),
+		  m_path(path),
+		  m_isScript(name.right(3) == $(".js")),
+		  m_title(name)
+	{
+		if(m_isScript)
+			initScript();
+		else
+			m_category = i18n("Non-Script Files");
+	}
+
+	void initScript()
+	{
+		const QString script = content();
+
+		QRegularExpressionMatch m;
+		staticRE$(reCat, "@category\\s+(.+)\\s*$", REm);
+		if((m = reCat.match(script)).hasMatch())
+			m_category = m.captured(1);
+		staticRE$(reName, "@name\\s+(.+)\\s*$", REm);
+		if((m = reName.match(script)).hasMatch())
+			m_title = m.captured(1);
+		staticRE$(reVer, "@version\\s+(.+)\\s*$", REm);
+		if((m = reVer.match(script)).hasMatch())
+			m_version = m.captured(1);
+		staticRE$(reSummary, "@summary\\s+(.+)\\s*$", REm);
+		if((m = reSummary.match(script)).hasMatch())
+			m_description = m.captured(1);
+		staticRE$(reAuthor, "@author\\s+(.+)\\s*$", REm);
+		if((m = reAuthor.match(script)).hasMatch())
+			m_author = m.captured(1);
+	}
+
 public:
-	InstalledScriptsModel(QObject *parent = 0) : QStringListModel(parent) {}
+	QString content() const
+	{
+		QFile jsf(m_path);
+		if(!jsf.open(QFile::ReadOnly | QFile::Text))
+			return QString();
+		return QTextStream(&jsf).readAll();
+	}
 
-	virtual ~InstalledScriptsModel() {}
+	inline bool isScript() const { return m_isScript; }
 
-	QVariant headerData(int /*section */, Qt::Orientation orientation, int role) const override
+	inline const QString & name() const { return m_name; }
+	inline const QString & path() const { return m_path; }
+
+	inline const QString & title() const { return m_title; }
+	inline const QString & version() const { return m_version; }
+	inline const QString & category() const { return m_category; }
+	inline const QString & description() const { return m_description; }
+	inline const QString & author() const { return m_author; }
+
+	inline int compare(const SCScript &other, Qt::CaseSensitivity cs = Qt::CaseSensitive) const
+	{ return m_title.compare(other.m_title, cs); }
+
+private:
+	QString m_name;
+	QString m_path;
+
+	bool m_isScript;
+	QString m_title;
+	QString m_version;
+	QString m_category;
+	QString m_description;
+	QString m_author;
+};
+
+class InstalledScriptsModel : public QAbstractItemModel
+{
+	Q_OBJECT
+
+	enum { Title, Version, Author, Path, ColumnCount };
+
+public:
+	InstalledScriptsModel(QObject *parent = 0) : QAbstractItemModel(parent) {}
+	~InstalledScriptsModel() {}
+
+	QVariant headerData(int section, Qt::Orientation orientation, int role) const override
 	{
 		if(role != Qt::DisplayRole || orientation == Qt::Vertical)
 			return QVariant();
-		return i18n("Installed Scripts");
+		switch(section) {
+		case Title: return i18n("Title");
+		case Version: return i18n("Version");
+		case Author: return i18n("Author");
+		case Path: return i18n("Path");
+		default: return QString();
+		}
 	}
 
 	Qt::ItemFlags flags(const QModelIndex &index) const override
 	{
-		return QAbstractItemModel::flags(index);
+		if(index.internalId() > 0)
+			return Qt::ItemNeverHasChildren | Qt::ItemIsSelectable | Qt::ItemIsEnabled;
+		return Qt::ItemIsEnabled;
+	}
+
+	int childIndex(const QString &categoryName, int row) const
+	{
+		for(int i = 0, si = 0; i < m_scripts.size(); i++) {
+			const SCScript &s = m_scripts.at(i);
+			if(s.category() != categoryName)
+				continue;
+			if(si == row)
+				return i;
+			si++;
+		}
+		Q_ASSERT(false);
+		return -1;
+	}
+
+	QModelIndex index(int row, int column, const QModelIndex &parent = QModelIndex()) const override
+	{
+		if(!hasIndex(row, column, parent))
+			return QModelIndex();
+
+		if(!parent.isValid()) {
+			// category
+			if(row < m_categories.size())
+				return createIndex(row, column, 0ULL);
+			// script (root)
+			return createIndex(row, column, childIndex(QString(), row - m_categories.size()) + 1);
+		} else {
+			// script (child)
+			Q_ASSERT(!parent.parent().isValid());
+			Q_ASSERT(parent.row() < m_categories.size());
+			const QString catName = m_categories.at(parent.row());
+			return createIndex(row, column, childIndex(catName, row) + 1);
+		}
+	}
+
+	QModelIndex parent(const QModelIndex &child) const override
+	{
+		if(!child.isValid() || child.internalId() == 0)
+			return QModelIndex();
+
+		// script
+		Q_ASSERT(int(child.internalId()) <= m_scripts.size());
+		const SCScript &s = m_scripts.at(child.internalId() - 1);
+		const int i = m_categories.indexOf(s.category());
+		if(i >= 0) // script (child)
+			return createIndex(i, 0, 0ULL);
+		return QModelIndex(); // script (root)
+	}
+
+	int scriptCount(const QString &categoryName) const
+	{
+		int n = 0;
+		for(int i = 0; i < m_scripts.size(); i++) {
+			if(m_scripts.at(i).category() == categoryName)
+				n++;
+		}
+		return n;
+	}
+
+	int rowCount(const QModelIndex &parent = QModelIndex()) const override
+	{
+		if(!parent.isValid())
+			return m_categories.size() + scriptCount(QString());
+		if(parent.row() >= m_categories.size())
+			return 0;
+		return scriptCount(m_categories.at(parent.row()));
+	}
+
+	int columnCount(const QModelIndex &parent = QModelIndex()) const override
+	{
+		Q_UNUSED(parent);
+		return ColumnCount;
+	}
+
+	QVariant data(const QModelIndex &index, int role = Qt::DisplayRole) const override
+	{
+		if(index.internalId() > 0) {
+			if(role == Qt::DisplayRole) {
+				switch(index.column()) {
+				case Title: return m_scripts.at(index.internalId() - 1).title();
+				case Version: return m_scripts.at(index.internalId() - 1).version();
+				case Author: return m_scripts.at(index.internalId() - 1).author();
+				case Path: return m_scripts.at(index.internalId() - 1).path();
+				}
+			} else if(role == Qt::ToolTipRole) {
+				if(index.column() == Path)
+					return m_scripts.at(index.internalId() - 1).path();
+				return m_scripts.at(index.internalId() - 1).description();
+			}
+		} else {
+			if(role == Qt::DisplayRole && index.column() == Title) {
+				const QString title = m_categories.at(index.row());
+				return title.isEmpty() ? $("Misc") : title;
+			}
+		}
+		return QVariant();
+
+	}
+
+	const SCScript * findByName(const QString &name) const
+	{
+		if(name.isEmpty())
+			return nullptr;
+		for(auto it = m_scripts.begin(); it != m_scripts.end(); ++it) {
+			if(it->name() == name)
+				return &(*it);
+		}
+		return nullptr;
+	}
+
+	const SCScript * findByTitle(const QString &title) const
+	{
+		if(title.isEmpty())
+			return nullptr;
+		for(auto it = m_scripts.begin(); it != m_scripts.end(); ++it) {
+			if(it->title() == title)
+				return &(*it);
+		}
+		return nullptr;
+	}
+
+	void removeAll()
+	{
+		beginRemoveRows(QModelIndex(), 0, m_categories.size());
+		m_categories.clear();
+		m_scripts.clear();
+		endRemoveRows();
+	}
+
+	inline const SCScript * at(int index) const { return &m_scripts.at(index); }
+
+	template<class T>
+	const T * insertSorted(QVector<T> *vec, T &&el)
+	{
+		for(int i = 0; i < vec->size(); i++) {
+			if(vec->at(i).compare(el, Qt::CaseInsensitive) >= 0) {
+				vec->insert(i, std::move(el));
+				return &vec->at(i);
+			}
+		}
+		vec->push_back(std::move(el));
+		return &vec->last();
+	}
+
+	const SCScript * add(const QString &path, int prefixLen)
+	{
+		const QString name = path.mid(prefixLen);
+		if(findByName(name))
+			return nullptr;
+
+		const SCScript *script = insertSorted(&m_scripts, SCScript(path, name));
+		const QString catTitle = script->category();
+
+		int catIndex = m_categories.indexOf(catTitle);
+		if(catIndex < 0 && !catTitle.isEmpty()) {
+			catIndex = m_categories.size();
+			beginInsertRows(QModelIndex(), catIndex, catIndex + 1);
+			insertSorted(&m_categories, QString(catTitle));
+			endInsertRows();
+		}
+
+		const int n = m_scripts.size();
+		beginInsertRows(catTitle.isEmpty() ? QModelIndex() : createIndex(catIndex, 0, 0ULL), n - 1, n + 1);
+		endInsertRows();
+		return script;
+	}
+
+private:
+	QVector<SCScript> m_scripts;
+	QVector<QString> m_categories;
+};
+
+class Debug : public QObject
+{
+	Q_OBJECT
+
+public:
+	Debug() {}
+	~Debug() {}
+
+public slots:
+	void information(const QString &message)
+	{
+		KMessageBox::information(app()->mainWindow(), message, i18n("Information"));
+		qDebug() << message;
+	}
+
+	void warning(const QString &message)
+	{
+		KMessageBox::sorry(app()->mainWindow(), message, i18n("Warning"));
+		qWarning() << message;
+	}
+
+	void error(const QString &message)
+	{
+		KMessageBox::error(app()->mainWindow(), message, i18n("Error"));
+		qWarning() << message;
 	}
 };
 }
 
 using namespace SubtitleComposer;
-
-Debug::Debug()
-{}
-
-Debug::~Debug()
-{}
-
-void
-Debug::information(const QString &message)
-{
-	KMessageBox::information(app()->mainWindow(), message, i18n("Information"));
-	qDebug() << message;
-}
-
-void
-Debug::warning(const QString &message)
-{
-	KMessageBox::sorry(app()->mainWindow(), message, i18n("Warning"));
-	qWarning() << message;
-}
-
-void
-Debug::error(const QString &message)
-{
-	KMessageBox::error(app()->mainWindow(), message, i18n("Error"));
-	qWarning() << message;
-}
 
 ScriptsManager::ScriptsManager(QObject *parent)
 	: QObject(parent)
@@ -115,19 +370,35 @@ ScriptsManager::ScriptsManager(QObject *parent)
 	m_dialog = new QDialog(app()->mainWindow());
 	setupUi(m_dialog);
 
+	scriptsView->header()->setSectionResizeMode(QHeaderView::ResizeToContents);
 	scriptsView->installEventFilter(this);
+	scriptsView->selectionModel()->deleteLater();
 	scriptsView->setModel(new InstalledScriptsModel(scriptsView));
-	scriptsView->setRootIsDecorated(false);
 	scriptsView->setSortingEnabled(false);
+	scriptsView->expandAll();
+	connect(scriptsView, &QTreeView::doubleClicked, this, [&](){ editScript(); });
+	connect(scriptsView->selectionModel(), &QItemSelectionModel::currentRowChanged, this, [&](){
+		const SCScript *s = currentScript();
+		const bool isScriptSelected = s && s->isScript();
+		const bool isFileWritable = s && QFileInfo(s->path()).isWritable();
+		btnRemove->setEnabled(isFileWritable);
+		if(isFileWritable) {
+			btnEdit->setText(i18n("Edit"));
+			btnEdit->setIcon(QIcon::fromTheme($("document-edit")));
+		} else {
+			btnEdit->setText(i18n("View"));
+			btnEdit->setIcon(QIcon::fromTheme($("document-open")));
+		}
+		btnEdit->setEnabled(isScriptSelected);
+		btnRun->setEnabled(isScriptSelected);
+	});
 
-	connect(btnCreate, &QPushButton::clicked, [this](){ createScript(); });
-	connect(btnAdd, &QPushButton::clicked, [this](){ addScript(); });
-	connect(btnRemove, &QPushButton::clicked, [this](){ removeScript(); });
-	connect(btnEdit, &QPushButton::clicked, [this](){ editScript(); });
-	connect(btnRun, &QPushButton::clicked, [this](){ runScript(); });
-	connect(btnRefresh, &QAbstractButton::clicked, [this](){ reloadScripts(); });
-
-//	m_dialog->resize(350, 10);
+	connect(btnCreate, &QPushButton::clicked, this, [&](){ createScript(); });
+	connect(btnAdd, &QPushButton::clicked, this, [&](){ addScript(); });
+	connect(btnRemove, &QPushButton::clicked, this, [&](){ removeScript(); });
+	connect(btnEdit, &QPushButton::clicked, this, [&](){ editScript(); });
+	connect(btnRun, &QPushButton::clicked, this, [&](){ runScript(); });
+	connect(btnRefresh, &QAbstractButton::clicked, this, [&](){ reloadScripts(); });
 }
 
 ScriptsManager::~ScriptsManager()
@@ -147,17 +418,20 @@ ScriptsManager::showDialog()
 	m_dialog->show();
 }
 
-QString
-ScriptsManager::currentScriptName() const
+const SCScript *
+ScriptsManager::findScript(const QString title) const
 {
-	QModelIndex currentIndex = scriptsView->currentIndex();
-	return currentIndex.isValid() ? scriptsView->model()->data(currentIndex, Qt::DisplayRole).toString() : 0;
+	const SCScript *s = title.isEmpty() ? nullptr : static_cast<InstalledScriptsModel *>(scriptsView->model())->findByTitle(title);
+	return s ?: currentScript();
 }
 
-QStringList
-ScriptsManager::scriptNames() const
+const SCScript *
+ScriptsManager::currentScript() const
 {
-	return m_scripts.keys();
+	const QModelIndex ci = scriptsView->currentIndex();
+	if(ci.isValid() && ci.internalId() > 0)
+		return static_cast<InstalledScriptsModel *>(scriptsView->model())->at(ci.internalId() - 1);
+	return nullptr;
 }
 
 void
@@ -165,22 +439,21 @@ ScriptsManager::createScript(const QString &sN)
 {
 	QString scriptName = sN;
 
-	QMap<QString, QString>::const_iterator it;
-	while(scriptName.isEmpty() || (it = m_scripts.constFind(scriptName)) != m_scripts.cend()) {
-		if(!scriptName.isEmpty()) {
-			qDebug() << "porco diio" << it.key() << ":" << it.value();
-			QFileInfo fp(it.value());
-			qDebug() << "porco 2" << fp.canonicalFilePath() << " startsWith " << userScriptDir().canonicalPath() << "???" <<
-					!fp.canonicalFilePath().startsWith(userScriptDir().canonicalPath());
+	InstalledScriptsModel *model = static_cast<InstalledScriptsModel *>(scriptsView->model());
+
+	const SCScript *script = nullptr;
+	while(scriptName.isEmpty() || (script = model->findByTitle(scriptName))) {
+		if(script) {
+			QFileInfo fp(script->path());
 			if(!fp.canonicalFilePath().startsWith(userScriptDir().canonicalPath())) {
 				// a system script can be overridden by user
-				scriptName = it.key();
+				scriptName = script->name();
 				break;
 			}
 			if(KMessageBox::questionYesNo(app()->mainWindow(),
-				i18n("You must enter an unused name to continue.\nWould you like to enter another name?"),
-				i18n("Name Already Used"), KStandardGuiItem::cont(), KStandardGuiItem::cancel()) != KMessageBox::Yes)
-			return;
+					i18n("You must enter an unused name to continue.\nWould you like to enter another name?"),
+					i18n("Name Already Used"), KStandardGuiItem::cont(), KStandardGuiItem::cancel()) != KMessageBox::Yes)
+				return;
 		}
 
 		TextInputDialog nameDlg(i18n("Create New Script"), i18n("Script name:"));
@@ -240,9 +513,9 @@ ScriptsManager::addScript(const QUrl &sSU)
 
 	QString scriptName = QFileInfo(srcScriptUrl.fileName()).fileName();
 
-	while(m_scripts.contains(scriptName)) {
-		if(m_scripts.contains(scriptName)
-			&& KMessageBox::questionYesNo(app()->mainWindow(),
+	InstalledScriptsModel *model = static_cast<InstalledScriptsModel *>(scriptsView->model());
+	while(model->findByTitle(scriptName)) {
+		if(KMessageBox::questionYesNo(app()->mainWindow(),
 				i18n("You must enter an unused name to continue.\nWould you like to enter another name?"),
 				i18n("Name Already Used"), KStandardGuiItem::cont(), KStandardGuiItem::cancel()) != KMessageBox::Yes)
 			return;
@@ -274,17 +547,16 @@ ScriptsManager::addScript(const QUrl &sSU)
 void
 ScriptsManager::removeScript(const QString &sN)
 {
-	QString scriptName = sN.isEmpty() ? currentScriptName() : sN;
-	if(scriptName.isEmpty() || !m_scripts.contains(scriptName)) {
-		qWarning() << "unknown script specified";
-		return;
-	}
-
-	if(KMessageBox::warningContinueCancel(app()->mainWindow(), i18n("Do you really want to send file <b>%1</b> to the trash?", scriptName), i18n("Move to Trash")) != KMessageBox::Continue)
+	const SCScript *script = findScript(sN);
+	if(!script)
 		return;
 
-	if(!FileTrasher(m_scripts[scriptName]).exec()) {
-		KMessageBox::sorry(app()->mainWindow(), i18n("There was an error removing the file <b>%1</b>.", m_scripts[scriptName]));
+	if(KMessageBox::warningContinueCancel(app()->mainWindow(),
+			i18n("Do you really want to send file <b>%1</b> to the trash?", script->path()), i18n("Move to Trash")) != KMessageBox::Continue)
+		return;
+
+	if(!FileTrasher(script->path()).exec()) {
+		KMessageBox::sorry(app()->mainWindow(), i18n("There was an error removing the file <b>%1</b>.", script->path()));
 		return;
 	}
 
@@ -294,53 +566,35 @@ ScriptsManager::removeScript(const QString &sN)
 void
 ScriptsManager::editScript(const QString &sN)
 {
-	QString scriptName = sN.isEmpty() ? currentScriptName() : sN;
-	if(scriptName.isEmpty() || !m_scripts.contains(scriptName)) {
+	const SCScript *script = findScript(sN);
+	if(!script) {
 		qWarning() << "unknown script specified";
 		return;
 	}
 
-	const QUrl script = QUrl::fromLocalFile(m_scripts[scriptName]);
+	const QUrl scriptUrl = QUrl::fromLocalFile(script->path());
 #ifdef SC_APPIMAGE
 	{
 #elif KIO_VERSION >= QT_VERSION_CHECK(5, 71, 0)
-	KIO::OpenUrlJob *job = new KIO::OpenUrlJob(script);
+	KIO::OpenUrlJob *job = new KIO::OpenUrlJob(scriptUrl);
 	job->setUiDelegate(new KIO::JobUiDelegate(KJobUiDelegate::AutoHandlingEnabled, app()->mainWindow()));
 	if(!job->exec()) {
 #elif KIO_VERSION >= QT_VERSION_CHECK(5, 31, 0)
-	if(!KRun::runUrl(script, "text/plain", app()->mainWindow(), KRun::RunFlags())) {
+	if(!KRun::runUrl(scriptUrl, "text/plain", app()->mainWindow(), KRun::RunFlags())) {
 #else
-	if(!KRun::runUrl(script, "text/plain", app()->mainWindow(), false, false)) {
+	if(!KRun::runUrl(scriptUrl, "text/plain", app()->mainWindow(), false, false)) {
 #endif
-		if(!QDesktopServices::openUrl(script))
+		if(!QDesktopServices::openUrl(scriptUrl))
 			KMessageBox::sorry(app()->mainWindow(), i18n("Could not launch external editor.\n"));
 	}
-}
-
-static inline QString
-readFileContent(const QString &filename)
-{
-	QFile jsf(filename);
-	if(!jsf.open(QFile::ReadOnly | QFile::Text))
-		return QString();
-	return QTextStream(&jsf).readAll();
 }
 
 void
 ScriptsManager::runScript(const QString &sN)
 {
-	QString scriptName = sN;
-
-	if(scriptName.isEmpty()) {
-		scriptName = currentScriptName();
-		if(scriptName.isEmpty())
-			return;
-	}
-
-	if(!m_scripts.contains(scriptName)) {
-		qWarning() << "unknown script file specified";
+	const SCScript *script = findScript(sN);
+	if(!script || !script->isScript())
 		return;
-	}
 
 	QJSEngine jse;
 	jse.installExtensions(QJSEngine::ConsoleExtension);
@@ -350,23 +604,22 @@ ScriptsManager::runScript(const QString &sN)
 	jse.globalObject().setProperty("subtitleline", jse.newQObject(new Scripting::SubtitleLineModule));
 	jse.globalObject().setProperty("debug", jse.newQObject(new Debug()));
 
-	QString script = readFileContent(m_scripts[scriptName]);
-	if(script.isNull()) {
-		KMessageBox::error(app()->mainWindow(), i18n("Error opening script %1.", m_scripts[scriptName]), i18n("Error Running Script"));
+	QString scriptData = script->content();
+	if(scriptData.isNull()) {
+		KMessageBox::error(app()->mainWindow(), i18n("Error opening script %1.", script->path()), i18n("Error Running Script"));
 		return;
 	}
 
 	QJSValue res;
 	{
 		// everything done by the script will be undoable in a single step
-		SubtitleCompositeActionExecutor executor(app()->subtitle(), scriptName);
-		// execute the script file
-		res = jse.evaluate(script, scriptName);
+		SubtitleCompositeActionExecutor executor(app()->subtitle(), script->path());
+		res = jse.evaluate(scriptData, script->name());
 	}
 
 	if(!res.isUndefined()) {
 		if(res.isError()) {
-			const QString details = i18n("Path: %1", m_scripts[scriptName]) % "\n"
+			const QString details = i18n("Path: %1", script->path()) % "\n"
 				% res.property($("stack")).toString();
 			KMessageBox::detailedError(app()->mainWindow(), res.toString(), details, i18n("Error Running Script"));
 		} else {
@@ -414,14 +667,15 @@ ScriptsManager::reloadScripts()
 	KActionCollection *actionCollection = app()->mainWindow()->actionCollection();
 	UserActionManager *actionManager = UserActionManager::instance();
 
-	QString selectedPath = scriptsView->model()->rowCount() && !currentScriptName().isEmpty() ? m_scripts[currentScriptName()] : QString();
+	InstalledScriptsModel *model = static_cast<InstalledScriptsModel *>(scriptsView->model());
 
-	m_scripts.clear();
 	toolsMenu->clear();
 	toolsMenu->addAction(app()->action(ACT_SCRIPTS_MANAGER));
 	toolsMenu->addSeparator();
 
 	QMap<QString, QMenu *> categoryMenus;
+
+	model->removeAll();
 
 	// make sure userScriptDir is first on the list so it will override system scripts
 	const QString userDir = userScriptDir().absolutePath();
@@ -432,66 +686,39 @@ ScriptsManager::reloadScripts()
 	else if(pos > 0)
 		scriptDirs.move(pos, 0);
 
-	int index = 0, newCurrentIndex = -1;
-	QStringList scriptNames;
 	foreach(const QString &path, scriptDirs) {
 		const int pathLen = QDir(path).absolutePath().length() + 1;
 		QStringList scriptPaths;
 		findAllFiles(path, scriptPaths);
 		foreach(const QString &path, scriptPaths) {
-			const QString name = path.mid(pathLen);
-			if(m_scripts.contains(name))
+			const SCScript *script = model->add(path, pathLen);
+			if(!script)
 				continue;
 
-			scriptNames << name;
-
-			m_scripts[name] = path;
-
-			if(name.right(3) == $(".js")) {
-				QRegularExpressionMatch m;
-				staticRE$(reCat, "@category\\s+(.+)\\s*$", REm);
-				staticRE$(reName, "@name\\s+(.+)\\s*$", REm);
-				staticRE$(reSummary, "@summary\\s+(.+)\\s*$", REm);
-
-				const QString script = readFileContent(path);
-
+			if(script->isScript()) {
 				QMenu *parentMenu = toolsMenu;
-				if((m = reCat.match(script)).hasMatch()) {
-					const QString cat = m.captured(1);
-					auto it = categoryMenus.constFind(cat);
+				if(!script->category().isEmpty()) {
+					auto it = categoryMenus.constFind(script->category());
 					if(it != categoryMenus.cend()) {
 						parentMenu = it.value();
 					} else {
-						parentMenu = new QMenu(cat, toolsMenu);
-						categoryMenus[cat] = parentMenu;
+						parentMenu = new QMenu(script->category(), toolsMenu);
+						categoryMenus[script->category()] = parentMenu;
 					}
 				}
 
-				m = reName.match(script);
-				const QString title = m.hasMatch() ? m.captured(1) : name;
-				QAction *scriptAction = parentMenu->addAction(title);
-				scriptAction->setObjectName(name);
-				if((m = reSummary.match(script)).hasMatch())
-					scriptAction->setStatusTip(m.captured(1));
-				actionCollection->addAction(name, scriptAction);
+				QAction *scriptAction = parentMenu->addAction(script->title());
+				scriptAction->setObjectName(script->name());
+				if(!script->description().isEmpty())
+					scriptAction->setStatusTip(script->description());
+				actionCollection->addAction(script->name(), scriptAction);
 				actionManager->addAction(scriptAction, UserAction::SubOpened | UserAction::FullScreenOff);
 			}
-
-			for(auto it = categoryMenus.cbegin(); it != categoryMenus.cend(); ++it)
-				toolsMenu->addMenu(it.value());
-
-			if(newCurrentIndex < 0 && path == selectedPath)
-				newCurrentIndex = index;
-			index++;
 		}
 	}
-	scriptNames.sort();
 
-	static_cast<InstalledScriptsModel *>(scriptsView->model())->setStringList(scriptNames);
-	if(!scriptNames.isEmpty()) {
-		QModelIndex currentIndex = scriptsView->model()->index(newCurrentIndex < 0 ? 0 : newCurrentIndex, 0);
-		scriptsView->setCurrentIndex(currentIndex);
-	}
+	for(auto it = categoryMenus.cbegin(); it != categoryMenus.cend(); ++it)
+		toolsMenu->addMenu(it.value());
 }
 
 void
@@ -514,4 +741,4 @@ ScriptsManager::eventFilter(QObject *object, QEvent *event)
 	return QObject::eventFilter(object, event);
 }
 
-
+#include "scriptsmanager.moc"

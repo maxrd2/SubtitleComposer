@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>400</width>
-    <height>300</height>
+    <width>800</width>
+    <height>500</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -17,7 +17,7 @@
    <item>
     <layout class="QVBoxLayout" name="mainContent">
      <item>
-      <widget class="TreeView" name="scriptsView"/>
+      <widget class="QTreeView" name="scriptsView"/>
      </item>
     </layout>
    </item>
@@ -33,8 +33,7 @@
        </property>
        <property name="icon">
         <iconset theme="document-new">
-         <normaloff/>
-        </iconset>
+         <normaloff>.</normaloff>.</iconset>
        </property>
       </widget>
      </item>
@@ -48,8 +47,7 @@
        </property>
        <property name="icon">
         <iconset theme="document-open">
-         <normaloff/>
-        </iconset>
+         <normaloff>.</normaloff>.</iconset>
        </property>
       </widget>
      </item>
@@ -63,8 +61,7 @@
        </property>
        <property name="icon">
         <iconset theme="user-trash">
-         <normaloff/>
-        </iconset>
+         <normaloff>.</normaloff>.</iconset>
        </property>
       </widget>
      </item>
@@ -78,8 +75,7 @@
        </property>
        <property name="icon">
         <iconset theme="document-edit">
-         <normaloff/>
-        </iconset>
+         <normaloff>.</normaloff>.</iconset>
        </property>
       </widget>
      </item>
@@ -109,8 +105,7 @@
        </property>
        <property name="icon">
         <iconset theme="media-playback-start">
-         <normaloff/>
-        </iconset>
+         <normaloff>.</normaloff>.</iconset>
        </property>
       </widget>
      </item>
@@ -140,8 +135,7 @@
        </property>
        <property name="icon">
         <iconset theme="view-refresh">
-         <normaloff/>
-        </iconset>
+         <normaloff>.</normaloff>.</iconset>
        </property>
       </widget>
      </item>
@@ -162,13 +156,6 @@
    </item>
   </layout>
  </widget>
- <customwidgets>
-  <customwidget>
-   <class>TreeView</class>
-   <extends>QTreeView</extends>
-   <header>gui/treeview/treeview.h</header>
-  </customwidget>
- </customwidgets>
  <resources/>
  <connections/>
 </ui>
