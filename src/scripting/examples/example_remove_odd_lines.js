@@ -4,10 +4,14 @@
 	SPDX-License-Identifier: GPL-2.0-or-later
 
 	@category Examples
-	@name Remove Unselected Lines
+	@name Remove Odd Lines
 	@version 1.0
-	@summary Example script to remove all lines except the selected ones.
+	@summary Example script to remove odd lines.
 	@author SubtitleComposer Team
 */
 
-subtitle.instance().removeLines(ranges.newSelectionRangeList().complement());
+let s = subtitle.instance();
+for(let i = s.linesCount() - 1; i >= 0; i--) {
+	if(i % 2 == 0)
+		s.removeLine(i);
+}

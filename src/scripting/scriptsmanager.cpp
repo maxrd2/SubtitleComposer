@@ -43,6 +43,21 @@
 #include <KIO/JobUiDelegate>
 #endif
 
+inline static const QDir &
+userScriptDir()
+{
+	static const QDir *dir = nullptr;
+	if(dir == nullptr) {
+		const QString userScriptDirName = $("scripts");
+		static QDir d(QStandardPaths::writableLocation(QStandardPaths::AppDataLocation));
+		if(!d.exists(userScriptDirName))
+			d.mkpath(userScriptDirName);
+		d.cd(userScriptDirName);
+		dir = &d;
+	}
+	return *dir;
+}
+
 namespace SubtitleComposer {
 class InstalledScriptsModel : public QStringListModel
 {
@@ -150,12 +165,23 @@ ScriptsManager::createScript(const QString &sN)
 {
 	QString scriptName = sN;
 
-	while(scriptName.isEmpty() || m_scripts.contains(scriptName)) {
-		if(m_scripts.contains(scriptName)
-			&& KMessageBox::questionYesNo(app()->mainWindow(),
+	QMap<QString, QString>::const_iterator it;
+	while(scriptName.isEmpty() || (it = m_scripts.constFind(scriptName)) != m_scripts.cend()) {
+		if(!scriptName.isEmpty()) {
+			qDebug() << "porco diio" << it.key() << ":" << it.value();
+			QFileInfo fp(it.value());
+			qDebug() << "porco 2" << fp.canonicalFilePath() << " startsWith " << userScriptDir().canonicalPath() << "???" <<
+					!fp.canonicalFilePath().startsWith(userScriptDir().canonicalPath());
+			if(!fp.canonicalFilePath().startsWith(userScriptDir().canonicalPath())) {
+				// a system script can be overridden by user
+				scriptName = it.key();
+				break;
+			}
+			if(KMessageBox::questionYesNo(app()->mainWindow(),
 				i18n("You must enter an unused name to continue.\nWould you like to enter another name?"),
 				i18n("Name Already Used"), KStandardGuiItem::cont(), KStandardGuiItem::cancel()) != KMessageBox::Yes)
 			return;
+		}
 
 		TextInputDialog nameDlg(i18n("Create New Script"), i18n("Script name:"));
 		if(nameDlg.exec() != QDialog::Accepted)
@@ -163,24 +189,19 @@ ScriptsManager::createScript(const QString &sN)
 		scriptName = nameDlg.value();
 	}
 
-	QDir scriptPath(QStandardPaths::writableLocation(QStandardPaths::AppDataLocation));
-	if(!scriptPath.exists("scripts"))
-		scriptPath.mkpath("scripts");
-	scriptPath.cd("scripts");
-
-	QFile scriptFile(scriptPath.absoluteFilePath(scriptName));
+	QFile scriptFile(userScriptDir().absoluteFilePath(scriptName));
 	if(!scriptFile.open(QIODevice::WriteOnly | QIODevice::Text)) {
-		KMessageBox::sorry(app()->mainWindow(), i18n("There was an error creating the file <b>%1</b>.", scriptPath.absoluteFilePath(scriptName)));
+		KMessageBox::sorry(app()->mainWindow(), i18n("There was an error creating the file <b>%1</b>.", userScriptDir().absoluteFilePath(scriptName)));
 		return;
 	}
 
 	QTextStream outputStream(&scriptFile);
-	QString scriptExtension = QFileInfo(scriptName).suffix().toLower();
-	if(scriptExtension == QLatin1String("rb"))
-		outputStream << "#!/usr/bin/env ruby";
-	else if(scriptExtension == QLatin1String("py"))
-		outputStream << "#!/usr/bin/env python";
-	outputStream << "\n";
+	outputStream << "/*\n"
+		"\t@name " << scriptName << " Title\n"
+		"\t@version 1.0\n"
+		"\t@summary " << scriptName << " summary/short desription.\n"
+		"\t@author Author's Name\n"
+		"*/\n";
 
 	scriptFile.close();
 
@@ -232,11 +253,6 @@ ScriptsManager::addScript(const QUrl &sSU)
 		scriptName = nameDlg.value();
 	}
 
-	QDir scriptPath(QStandardPaths::writableLocation(QStandardPaths::AppDataLocation));
-	if(!scriptPath.exists("scripts"))
-		scriptPath.mkpath("scripts");
-	scriptPath.cd("scripts");
-
 	FileLoadHelper fileLoadHelper(srcScriptUrl);
 
 	if(!fileLoadHelper.open()) {
@@ -244,7 +260,7 @@ ScriptsManager::addScript(const QUrl &sSU)
 		return;
 	}
 
-	QFile dest(scriptPath.absoluteFilePath(scriptName));
+	QFile dest(userScriptDir().absoluteFilePath(scriptName));
 	if(!dest.open(QIODevice::WriteOnly | QIODevice::Truncate)
 			|| dest.write(fileLoadHelper.file()->readAll()) == -1
 			|| !dest.flush()) {
@@ -301,14 +317,18 @@ ScriptsManager::editScript(const QString &sN)
 	}
 }
 
+static inline QString
+readFileContent(const QString &filename)
+{
+	QFile jsf(filename);
+	if(!jsf.open(QFile::ReadOnly | QFile::Text))
+		return QString();
+	return QTextStream(&jsf).readAll();
+}
+
 void
 ScriptsManager::runScript(const QString &sN)
 {
-	if(!app()->subtitle()) {
-		qWarning() << "attempt to run script without a working subtitle";
-		return;
-	}
-
 	QString scriptName = sN;
 
 	if(scriptName.isEmpty()) {
@@ -330,14 +350,10 @@ ScriptsManager::runScript(const QString &sN)
 	jse.globalObject().setProperty("subtitleline", jse.newQObject(new Scripting::SubtitleLineModule));
 	jse.globalObject().setProperty("debug", jse.newQObject(new Debug()));
 
-	QString script;
-	{
-		QFile jsf(m_scripts[scriptName]);
-		if(!jsf.open(QFile::ReadOnly | QFile::Text)) {
-			KMessageBox::error(app()->mainWindow(), i18n("Error opening script %1.", m_scripts[scriptName]), i18n("Error Running Script"));
-			return;
-		}
-		script = QTextStream(&jsf).readAll();
+	QString script = readFileContent(m_scripts[scriptName]);
+	if(script.isNull()) {
+		KMessageBox::error(app()->mainWindow(), i18n("Error opening script %1.", m_scripts[scriptName]), i18n("Error Running Script"));
+		return;
 	}
 
 	QJSValue res;
@@ -376,12 +392,12 @@ ScriptsManager::toolsMenu()
 	return toolsMenu;
 }
 
-/*static*/ void
+void
 ScriptsManager::findAllFiles(QString directory, QStringList &fileList)
 {
 	QDir path(directory);
-	QFileInfoList files = path.entryInfoList();
-	foreach(QFileInfo file, files) {
+	const QFileInfoList files = path.entryInfoList();
+	for(const QFileInfo &file: files) {
 		if(file.isDir()) {
 			if(file.fileName().at(0) != '.')
 				findAllFiles(file.absoluteFilePath(), fileList);
@@ -405,15 +421,25 @@ ScriptsManager::reloadScripts()
 	toolsMenu->addAction(app()->action(ACT_SCRIPTS_MANAGER));
 	toolsMenu->addSeparator();
 
-	QStringList scriptDirs = QStandardPaths::locateAll(QStandardPaths::AppDataLocation, "scripts", QStandardPaths::LocateDirectory);
-	QStringList scriptNames;
+	QMap<QString, QMenu *> categoryMenus;
+
+	// make sure userScriptDir is first on the list so it will override system scripts
+	const QString userDir = userScriptDir().absolutePath();
+	QStringList scriptDirs = QStandardPaths::locateAll(QStandardPaths::AppDataLocation, userScriptDir().dirName(), QStandardPaths::LocateDirectory);
+	int pos = scriptDirs.indexOf(userDir);
+	if(pos == -1)
+		scriptDirs.prepend(userDir);
+	else if(pos > 0)
+		scriptDirs.move(pos, 0);
+
 	int index = 0, newCurrentIndex = -1;
+	QStringList scriptNames;
 	foreach(const QString &path, scriptDirs) {
-		int pathLen = QDir(path).absolutePath().length() + 1;
+		const int pathLen = QDir(path).absolutePath().length() + 1;
 		QStringList scriptPaths;
 		findAllFiles(path, scriptPaths);
 		foreach(const QString &path, scriptPaths) {
-			QString name = path.mid(pathLen);
+			const QString name = path.mid(pathLen);
 			if(m_scripts.contains(name))
 				continue;
 
@@ -422,11 +448,37 @@ ScriptsManager::reloadScripts()
 			m_scripts[name] = path;
 
 			if(name.right(3) == $(".js")) {
-				QAction *scriptAction = toolsMenu->addAction(name);
+				QRegularExpressionMatch m;
+				staticRE$(reCat, "@category\\s+(.+)\\s*$", REm);
+				staticRE$(reName, "@name\\s+(.+)\\s*$", REm);
+				staticRE$(reSummary, "@summary\\s+(.+)\\s*$", REm);
+
+				const QString script = readFileContent(path);
+
+				QMenu *parentMenu = toolsMenu;
+				if((m = reCat.match(script)).hasMatch()) {
+					const QString cat = m.captured(1);
+					auto it = categoryMenus.constFind(cat);
+					if(it != categoryMenus.cend()) {
+						parentMenu = it.value();
+					} else {
+						parentMenu = new QMenu(cat, toolsMenu);
+						categoryMenus[cat] = parentMenu;
+					}
+				}
+
+				m = reName.match(script);
+				const QString title = m.hasMatch() ? m.captured(1) : name;
+				QAction *scriptAction = parentMenu->addAction(title);
 				scriptAction->setObjectName(name);
+				if((m = reSummary.match(script)).hasMatch())
+					scriptAction->setStatusTip(m.captured(1));
 				actionCollection->addAction(name, scriptAction);
 				actionManager->addAction(scriptAction, UserAction::SubOpened | UserAction::FullScreenOff);
 			}
+
+			for(auto it = categoryMenus.cbegin(); it != categoryMenus.cend(); ++it)
+				toolsMenu->addMenu(it.value());
 
 			if(newCurrentIndex < 0 && path == selectedPath)
 				newCurrentIndex = index;
