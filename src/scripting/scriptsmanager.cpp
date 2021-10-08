@@ -17,6 +17,7 @@
 #include "actions/useraction.h"
 #include "actions/useractionnames.h"
 #include "dialogs/textinputdialog.h"
+#include "helpers/common.h"
 #include "helpers/fileloadhelper.h"
 #include "helpers/filetrasher.h"
 #include "gui/treeview/treeview.h"
@@ -25,10 +26,12 @@
 #include <QStandardPaths>
 #include <QDialog>
 #include <QFileDialog>
+#include <QJSEngine>
 #include <QMenuBar>
 #include <QMenu>
 #include <QDesktopServices>
 #include <QKeyEvent>
+#include <QStringBuilder>
 
 #include <KMessageBox>
 #include <KRun>
@@ -39,10 +42,6 @@
 #include <KIO/OpenUrlJob>
 #include <KIO/JobUiDelegate>
 #endif
-
-#include <kross/core/manager.h>
-#include <kross/core/interpreter.h>
-#include <kross/core/action.h>
 
 namespace SubtitleComposer {
 class InstalledScriptsModel : public QStringListModel
@@ -194,16 +193,8 @@ ScriptsManager::mimeTypes()
 {
 	static QStringList mimeTypes;
 
-	if(mimeTypes.isEmpty()) {
-		QHash<QString, Kross::InterpreterInfo *> infos = Kross::Manager::self().interpreterInfos();
-		for(QHash<QString, Kross::InterpreterInfo *>::ConstIterator it = infos.constBegin(), end = infos.constEnd(); it != end; ++it) {
-			QStringList intMimeTypes = it.value()->mimeTypes();
-			for(QStringList::ConstIterator it = intMimeTypes.constBegin(), end = intMimeTypes.constEnd(); it != end; ++it)
-				mimeTypes << *it;
-		}
-		if(!mimeTypes.contains("application/javascript") && !mimeTypes.contains("text/javascript") && !mimeTypes.contains("application/x-javascript"))
-			mimeTypes.prepend("application/javascript");
-	}
+	if(mimeTypes.isEmpty())
+		mimeTypes.append("application/javascript");
 
 	return mimeTypes;
 }
@@ -331,45 +322,40 @@ ScriptsManager::runScript(const QString &sN)
 		return;
 	}
 
-	Kross::Action krossAction(0, "Kross::Action");
+	QJSEngine jse;
+	jse.installExtensions(QJSEngine::ConsoleExtension);
+	jse.globalObject().setProperty("ranges", jse.newQObject(new Scripting::RangesModule));
+	jse.globalObject().setProperty("strings", jse.newQObject(new Scripting::StringsModule));
+	jse.globalObject().setProperty("subtitle", jse.newQObject(new Scripting::SubtitleModule));
+	jse.globalObject().setProperty("subtitleline", jse.newQObject(new Scripting::SubtitleLineModule));
+	jse.globalObject().setProperty("debug", jse.newQObject(new Debug()));
 
-	Scripting::RangesModule *rangesModule = new Scripting::RangesModule;
-	Scripting::StringsModule *stringsModule = new Scripting::StringsModule;
-	Scripting::SubtitleModule *subtitleModule = new Scripting::SubtitleModule;
-	Scripting::SubtitleLineModule *subtitleLineModule = new Scripting::SubtitleLineModule;
-	Debug *debug = new Debug();
+	QString script;
+	{
+		QFile jsf(m_scripts[scriptName]);
+		if(!jsf.open(QFile::ReadOnly | QFile::Text)) {
+			KMessageBox::error(app()->mainWindow(), i18n("Error opening script %1.", m_scripts[scriptName]), i18n("Error Running Script"));
+			return;
+		}
+		script = QTextStream(&jsf).readAll();
+	}
 
-	krossAction.addObject(rangesModule, "ranges");
-	krossAction.addObject(stringsModule, "strings");
-	krossAction.addObject(subtitleModule, "subtitle");
-	krossAction.addObject(subtitleLineModule, "subtitleline");
-	krossAction.addObject(debug, "debug");
-
-	krossAction.setFile(m_scripts[scriptName]);
-	if(krossAction.interpreter().isEmpty() && scriptName.right(3) == QLatin1String(".js"))
-		krossAction.setInterpreter("qtscript");
-	// default javascript interpreter has weird (crash inducing) bugs
-	else if(krossAction.interpreter() == QLatin1String("javascript"))
-		krossAction.setInterpreter("qtscript");
-
+	QJSValue res;
 	{
 		// everything done by the script will be undoable in a single step
 		SubtitleCompositeActionExecutor executor(app()->subtitle(), scriptName);
 		// execute the script file
-		krossAction.trigger();
+		res = jse.evaluate(script, scriptName);
 	}
 
-	delete rangesModule;
-	delete stringsModule;
-	delete subtitleModule;
-	delete subtitleLineModule;
-	delete debug;
-
-	if(krossAction.hadError()) {
-		if(krossAction.errorTrace().isNull())
-			KMessageBox::error(app()->mainWindow(), krossAction.errorMessage(), i18n("Error Running Script"));
-		else
-			KMessageBox::detailedError(app()->mainWindow(), krossAction.errorMessage(), krossAction.errorTrace(), i18n("Error Running Script"));
+	if(!res.isUndefined()) {
+		if(res.isError()) {
+			const QString details = i18n("Path: %1", m_scripts[scriptName]) % "\n"
+				% res.property($("stack")).toString();
+			KMessageBox::detailedError(app()->mainWindow(), res.toString(), details, i18n("Error Running Script"));
+		} else {
+			KMessageBox::error(app()->mainWindow(), res.toString(), i18n("Error Running Script"));
+		}
 	}
 }
 
@@ -419,17 +405,6 @@ ScriptsManager::reloadScripts()
 	toolsMenu->addAction(app()->action(ACT_SCRIPTS_MANAGER));
 	toolsMenu->addSeparator();
 
-	qDebug() << "KROSS interpreters:" << Kross::Manager::self().interpreters();
-	QStringList scriptExtensions;
-	foreach(const QString interpreter, Kross::Manager::self().interpreters()) {
-		if(interpreter == QStringLiteral("qtscript"))
-			scriptExtensions.append(QStringLiteral(".js"));
-		else if(interpreter == QStringLiteral("ruby"))
-			scriptExtensions.append(QStringLiteral(".rb"));
-		else if(interpreter == QStringLiteral("python"))
-			scriptExtensions.append(QStringLiteral(".py"));
-	}
-
 	QStringList scriptDirs = QStandardPaths::locateAll(QStandardPaths::AppDataLocation, "scripts", QStandardPaths::LocateDirectory);
 	QStringList scriptNames;
 	int index = 0, newCurrentIndex = -1;
@@ -446,8 +421,7 @@ ScriptsManager::reloadScripts()
 
 			m_scripts[name] = path;
 
-			QString suffix = name.right(3);
-			if(scriptExtensions.contains(suffix)) {
+			if(name.right(3) == $(".js")) {
 				QAction *scriptAction = toolsMenu->addAction(name);
 				scriptAction->setObjectName(name);
 				actionCollection->addAction(name, scriptAction);

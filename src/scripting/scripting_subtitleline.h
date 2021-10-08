@@ -36,7 +36,7 @@ public slots:
 	int primaryLines() const;
 
 	QObject * primaryText() const;
-	void setPrimaryText(const QObject *text);
+	void setPrimaryText(QObject *text);
 	QString plainPrimaryText() const;
 	void setPlainPrimaryText(const QString &plainText);
 	QString richPrimaryText() const;
@@ -47,7 +47,7 @@ public slots:
 	int secondaryLines() const;
 
 	QObject * secondaryText() const;
-	void setSecondaryText(const QObject *text);
+	void setSecondaryText(QObject *text);
 	QString plainSecondaryText() const;
 	void setPlainSecondaryText(const QString &plainText);
 	QString richSecondaryText() const;

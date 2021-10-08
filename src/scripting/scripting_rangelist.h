@@ -36,10 +36,10 @@ public slots:
 	void clear();
 
 	void trimToIndex(int index);
-	void trimToRange(const QObject *range);
+	void trimToRange(QObject *range);
 
 	QObject * addIndex(int index);
-	QObject * addRange(const QObject *range);
+	QObject * addRange(QObject *range);
 
 	void shiftIndexesForwards(int fromIndex, int delta, bool fillSplitGap);
 	void shiftIndexesBackwards(int fromIndex, int delta);

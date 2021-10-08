@@ -117,64 +117,64 @@ Scripting::Subtitle::removeLine(int index, int target)
 }
 
 void
-Scripting::Subtitle::removeLines(const QObject *ranges, int target)
+Scripting::Subtitle::removeLines(QObject *ranges, int target)
 {
 	static const int opDefault = Both;
 	m_backend->removeLines(toRangesList(ranges), toTextTarget(target, opDefault));
 }
 
 void
-Scripting::Subtitle::swapTexts(const QObject *ranges)
+Scripting::Subtitle::swapTexts(QObject *ranges)
 {
 	m_backend->swapTexts(toRangesList(ranges));
 }
 
 void
-Scripting::Subtitle::splitLines(const QObject *ranges)
+Scripting::Subtitle::splitLines(QObject *ranges)
 {
 	m_backend->splitLines(toRangesList(ranges));
 }
 
 void
-Scripting::Subtitle::joinLines(const QObject *ranges)
+Scripting::Subtitle::joinLines(QObject *ranges)
 {
 	m_backend->joinLines(toRangesList(ranges));
 }
 
 void
-Scripting::Subtitle::shiftLines(const QObject *ranges, int msecs)
+Scripting::Subtitle::shiftLines(QObject *ranges, int msecs)
 {
 	m_backend->shiftLines(toRangesList(ranges), msecs);
 }
 
 void
-Scripting::Subtitle::adjustLines(const QObject *object, int firstTime, int lastTime)
+Scripting::Subtitle::adjustLines(QObject *object, int firstTime, int lastTime)
 {
 	if(const Scripting::Range * range = qobject_cast<const Scripting::Range *>(object))
 		m_backend->adjustLines(range->m_backend, firstTime, lastTime);
 }
 
 void
-Scripting::Subtitle::sortLines(const QObject *object)
+Scripting::Subtitle::sortLines(QObject *object)
 {
 	if(const Scripting::Range * range = qobject_cast<const Scripting::Range *>(object))
 		m_backend->sortLines(range->m_backend);
 }
 
 void
-Scripting::Subtitle::applyDurationLimits(const QObject *ranges, int minDuration, int maxDuration, bool canOverlap)
+Scripting::Subtitle::applyDurationLimits(QObject *ranges, int minDuration, int maxDuration, bool canOverlap)
 {
 	m_backend->applyDurationLimits(toRangesList(ranges), minDuration, maxDuration, canOverlap);
 }
 
 void
-Scripting::Subtitle::setMaximumDurations(const QObject *ranges)
+Scripting::Subtitle::setMaximumDurations(QObject *ranges)
 {
 	m_backend->setMaximumDurations(toRangesList(ranges));
 }
 
 void
-Scripting::Subtitle::setAutoDurations(const QObject *ranges, int msecsPerChar, int msecsPerWord, int msecsPerLine, bool canOverlap, int calculationTarget)
+Scripting::Subtitle::setAutoDurations(QObject *ranges, int msecsPerChar, int msecsPerWord, int msecsPerLine, bool canOverlap, int calculationTarget)
 {
 	const int opDefault = app()->translationMode() ? Both : Primary;
 
@@ -182,87 +182,87 @@ Scripting::Subtitle::setAutoDurations(const QObject *ranges, int msecsPerChar, i
 }
 
 void
-Scripting::Subtitle::fixOverlappingLines(const QObject *ranges, int minInterval)
+Scripting::Subtitle::fixOverlappingLines(QObject *ranges, int minInterval)
 {
 	m_backend->fixOverlappingLines(toRangesList(ranges), minInterval);
 }
 
 void
-Scripting::Subtitle::fixPunctuation(const QObject *ranges, bool spaces, bool quotes, bool englishI, bool ellipsis, int target)
+Scripting::Subtitle::fixPunctuation(QObject *ranges, bool spaces, bool quotes, bool englishI, bool ellipsis, int target)
 {
 	const int opDefault = app()->translationMode() ? Both : Primary;
 	m_backend->fixPunctuation(toRangesList(ranges), spaces, quotes, englishI, ellipsis, toTextTarget(target, opDefault));
 }
 
 void
-Scripting::Subtitle::lowerCase(const QObject *ranges, int target)
+Scripting::Subtitle::lowerCase(QObject *ranges, int target)
 {
 	const int opDefault = app()->translationMode() ? Both : Primary;
 	m_backend->lowerCase(toRangesList(ranges), toTextTarget(target, opDefault));
 }
 
 void
-Scripting::Subtitle::upperCase(const QObject *ranges, int target)
+Scripting::Subtitle::upperCase(QObject *ranges, int target)
 {
 	const int opDefault = app()->translationMode() ? Both : Primary;
 	m_backend->upperCase(toRangesList(ranges), toTextTarget(target, opDefault));
 }
 
 void
-Scripting::Subtitle::titleCase(const QObject *ranges, bool lowerFirst, int target)
+Scripting::Subtitle::titleCase(QObject *ranges, bool lowerFirst, int target)
 {
 	const int opDefault = app()->translationMode() ? Both : Primary;
 	m_backend->titleCase(toRangesList(ranges), lowerFirst, toTextTarget(target, opDefault));
 }
 
 void
-Scripting::Subtitle::sentenceCase(const QObject *ranges, bool lowerFirst, int target)
+Scripting::Subtitle::sentenceCase(QObject *ranges, bool lowerFirst, int target)
 {
 	const int opDefault = app()->translationMode() ? Both : Primary;
 	m_backend->sentenceCase(toRangesList(ranges), lowerFirst, toTextTarget(target, opDefault));
 }
 
 void
-Scripting::Subtitle::breakLines(const QObject *ranges, int minLengthForLineBreak, int target)
+Scripting::Subtitle::breakLines(QObject *ranges, int minLengthForLineBreak, int target)
 {
 	const int opDefault = app()->translationMode() ? Both : Primary;
 	m_backend->breakLines(toRangesList(ranges), minLengthForLineBreak, toTextTarget(target, opDefault));
 }
 
 void
-Scripting::Subtitle::unbreakTexts(const QObject *ranges, int target)
+Scripting::Subtitle::unbreakTexts(QObject *ranges, int target)
 {
 	const int opDefault = app()->translationMode() ? Both : Primary;
 	m_backend->unbreakTexts(toRangesList(ranges), toTextTarget(target, opDefault));
 }
 
 void
-Scripting::Subtitle::simplifyTextWhiteSpace(const QObject *ranges, int target)
+Scripting::Subtitle::simplifyTextWhiteSpace(QObject *ranges, int target)
 {
 	const int opDefault = app()->translationMode() ? Both : Primary;
 	m_backend->simplifyTextWhiteSpace(toRangesList(ranges), toTextTarget(target, opDefault));
 }
 
 void
-Scripting::Subtitle::setMarked(const QObject *ranges, bool value)
+Scripting::Subtitle::setMarked(QObject *ranges, bool value)
 {
 	m_backend->setMarked(toRangesList(ranges), value);
 }
 
 void
-Scripting::Subtitle::clearErrors(const QObject *ranges, int errorFlags)
+Scripting::Subtitle::clearErrors(QObject *ranges, int errorFlags)
 {
 	m_backend->clearErrors(toRangesList(ranges), errorFlags);
 }
 
 void
-Scripting::Subtitle::checkErrors(const QObject *ranges, int errorFlags)
+Scripting::Subtitle::checkErrors(QObject *ranges, int errorFlags)
 {
 	m_backend->checkErrors(toRangesList(ranges), errorFlags);
 }
 
 void
-Scripting::Subtitle::recheckErrors(const QObject *ranges)
+Scripting::Subtitle::recheckErrors(QObject *ranges)
 {
 	m_backend->recheckErrors(toRangesList(ranges));
 }

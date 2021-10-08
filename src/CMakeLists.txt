@@ -100,11 +100,11 @@ qt5_add_resources(subtitlecomposer_RES_SRC ${subtitlecomposer_RES})
 
 add_library(subtitlecomposer-lib STATIC ${subtitlecomposer_SRCS})
 target_link_libraries(subtitlecomposer-lib
-	Qt5::Core Qt5::Widgets Qt5::WidgetsPrivate Qt5::Gui
+	Qt5::Core Qt5::Widgets Qt5::WidgetsPrivate Qt5::Gui Qt5::Qml
 	KF5::CoreAddons KF5::WidgetsAddons KF5::TextWidgets KF5::Codecs
 	KF5::SonnetCore KF5::SonnetUi
 	KF5::KIOCore KF5::KIOFileWidgets KF5::KIOWidgets KF5::KIONTLM
-	KF5::KrossCore KF5::KrossUi KF5::XmlGui KF5::I18n
+	KF5::XmlGui KF5::I18n
 	${FFMPEG_LIBRARIES}
 	${OPENAL_LIBRARY}
 	${ICU_LIBRARIES}

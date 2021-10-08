@@ -80,7 +80,7 @@ Scripting::RangeList::trimToIndex(int index)
 }
 
 void
-Scripting::RangeList::trimToRange(const QObject *object)
+Scripting::RangeList::trimToRange(QObject *object)
 {
 	if(const Scripting::Range * range = qobject_cast<const Scripting::Range *>(object))
 		m_backend.trimToRange(range->m_backend);
@@ -95,7 +95,7 @@ Scripting::RangeList::addIndex(int index)
 }
 
 QObject *
-Scripting::RangeList::addRange(const QObject *object)
+Scripting::RangeList::addRange(QObject *object)
 {
 	if(const Scripting::Range * range = qobject_cast<const Scripting::Range *>(object))
 		m_backend << range->m_backend;

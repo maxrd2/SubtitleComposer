@@ -41,41 +41,41 @@ public slots:
 
 	SubtitleLine * insertNewLine(int index, bool timeAfter, int target = -1);
 	void removeLine(int index, int target = -1);
-	void removeLines(const QObject *ranges, int target = -1);
+	void removeLines(QObject *ranges, int target = -1);
 
-	void swapTexts(const QObject *ranges);
+	void swapTexts(QObject *ranges);
 
-	void splitLines(const QObject *ranges);
-	void joinLines(const QObject *ranges);
+	void splitLines(QObject *ranges);
+	void joinLines(QObject *ranges);
 
-	void shiftLines(const QObject *ranges, int msecs);
-	void adjustLines(const QObject *range, int firstTime, int lastTime);
-	void sortLines(const QObject *range);
+	void shiftLines(QObject *ranges, int msecs);
+	void adjustLines(QObject *range, int firstTime, int lastTime);
+	void sortLines(QObject *range);
 
-	void applyDurationLimits(const QObject *ranges, int minDuration, int maxDuration, bool canOverlap);
-	void setMaximumDurations(const QObject *ranges);
-	void setAutoDurations(const QObject *ranges, int msecsPerChar, int msecsPerWord, int msecsPerLine, bool canOverlap, int calculationTarget = -1);
+	void applyDurationLimits(QObject *ranges, int minDuration, int maxDuration, bool canOverlap);
+	void setMaximumDurations(QObject *ranges);
+	void setAutoDurations(QObject *ranges, int msecsPerChar, int msecsPerWord, int msecsPerLine, bool canOverlap, int calculationTarget = -1);
 
-	void fixOverlappingLines(const QObject *ranges, int minInterval = 100);
+	void fixOverlappingLines(QObject *ranges, int minInterval = 100);
 
-	void fixPunctuation(const QObject *ranges, bool spaces, bool quotes, bool englishI, bool ellipsis, int target = -1);
+	void fixPunctuation(QObject *ranges, bool spaces, bool quotes, bool englishI, bool ellipsis, int target = -1);
 
-	void lowerCase(const QObject *ranges, int target = -1);
-	void upperCase(const QObject *ranges, int target = -1);
-	void titleCase(const QObject *ranges, bool lowerFirst, int target = -1);
-	void sentenceCase(const QObject *ranges, bool lowerFirst, int target = -1);
+	void lowerCase(QObject *ranges, int target = -1);
+	void upperCase(QObject *ranges, int target = -1);
+	void titleCase(QObject *ranges, bool lowerFirst, int target = -1);
+	void sentenceCase(QObject *ranges, bool lowerFirst, int target = -1);
 
-	void breakLines(const QObject *ranges, int minLengthForLineBreak, int target = -1);
-	void unbreakTexts(const QObject *ranges, int target = -1);
-	void simplifyTextWhiteSpace(const QObject *ranges, int target = -1);
+	void breakLines(QObject *ranges, int minLengthForLineBreak, int target = -1);
+	void unbreakTexts(QObject *ranges, int target = -1);
+	void simplifyTextWhiteSpace(QObject *ranges, int target = -1);
 
-	void setMarked(const QObject *ranges, bool value);
+	void setMarked(QObject *ranges, bool value);
 
-	void clearErrors(const QObject *ranges, int errorFlags);
+	void clearErrors(QObject *ranges, int errorFlags);
 
-	void checkErrors(const QObject *ranges, int errorFlags);
+	void checkErrors(QObject *ranges, int errorFlags);
 
-	void recheckErrors(const QObject *ranges);
+	void recheckErrors(QObject *ranges);
 
 private:
 	static SubtitleComposer::RangeList toRangesList(const QObject *object);

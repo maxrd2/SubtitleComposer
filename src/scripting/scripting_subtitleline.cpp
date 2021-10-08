@@ -81,7 +81,7 @@ Scripting::SubtitleLine::primaryText() const
 }
 
 void
-Scripting::SubtitleLine::setPrimaryText(const QObject *object)
+Scripting::SubtitleLine::setPrimaryText(QObject *object)
 {
 	const Scripting::SString *string = qobject_cast<const Scripting::SString *>(object);
 	if(string)
@@ -139,7 +139,7 @@ Scripting::SubtitleLine::secondaryText() const
 }
 
 void
-Scripting::SubtitleLine::setSecondaryText(const QObject *object)
+Scripting::SubtitleLine::setSecondaryText(QObject *object)
 {
 	if(app()->translationMode()) {
 		const Scripting::SString *string = qobject_cast<const Scripting::SString *>(object);
