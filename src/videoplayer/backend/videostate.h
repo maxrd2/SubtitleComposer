@@ -24,6 +24,7 @@
 extern "C" {
 #include "libavformat/avformat.h"
 #include "libavcodec/avfft.h"
+#include "libswscale/swscale.h"
 }
 
 

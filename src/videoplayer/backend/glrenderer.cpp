@@ -17,6 +17,7 @@
 
 extern "C" {
 #include "libavutil/pixdesc.h"
+#include "libswscale/swscale.h"
 }
 
 #define DEBUG_GL 0
@@ -37,13 +38,17 @@ extern "C" {
 #if defined(GL_ES_VERSION_2_0) || FORCE_GLES
 #define USE_GLES
 #define TEXTURE_RGB_FORMAT GL_RGBA
-// NOTE: we don't currently support more than 8bpp on GLES
-#define TEXTURE_U16_FORMAT GL_R8
+// NOTE: we don't support rendering >8bpp on GLES, so 16bit textures are never used
+//       and cpu will convert the frame to 8bpp
+#define TEXTURE_U16_FORMAT 0x822A
 #else
 #undef USE_GLES
 #define TEXTURE_RGB_FORMAT GL_BGRA
 #define TEXTURE_U16_FORMAT GL_R16
 #endif
+
+#define FRAME_IS_YUV(f) ((f & AV_PIX_FMT_FLAG_RGB) == 0)
+#define FRAME_IS_PLANAR(f) ((f & AV_PIX_FMT_FLAG_PLANAR) != 0)
 
 using namespace SubtitleComposer;
 
@@ -54,6 +59,7 @@ GLRenderer::GLRenderer(QWidget *parent)
 	: QOpenGLWidget(parent),
 	  m_overlay(nullptr),
 	  m_mmOvr(nullptr),
+	  m_frameConvCtx(nullptr),
 	  m_bufYUV(nullptr),
 	  m_mmYUV(nullptr),
 	  m_bufSize(0),
@@ -86,6 +92,7 @@ GLRenderer::~GLRenderer()
 	}
 	m_vao.destroy();
 	doneCurrent();
+	sws_freeContext(m_frameConvCtx);
 	delete[] m_bufYUV;
 	delete[] m_mmYUV;
 	delete[] m_mmOvr;
@@ -180,7 +187,7 @@ GLRenderer::setColorspace(const AVFrame *frame)
 	const AVPixFmtDescriptor *fd = av_pix_fmt_desc_get(AVPixelFormat(frame->format));
 	const quint8 compBits = fd->comp[0].depth;
 	const quint8 compBytes = compBits > 8 ? 2 : 1;
-	const bool isYUV = ~fd->flags & AV_PIX_FMT_FLAG_RGB;
+	const bool isYUV = FRAME_IS_YUV(fd->flags);
 
 	qDebug("Color range: %s(%d); primaries: %s(%d); xfer: %s(%d); space: %s(%d); depth: %d",
 		   av_color_range_name(frame->color_range), frame->color_range,
@@ -246,9 +253,7 @@ GLRenderer::validTextureFormat(const AVPixFmtDescriptor *fd)
 		return false;
 	}
 
-	const bool isYUV = !(f & AV_PIX_FMT_FLAG_RGB);
-	const bool isPlanar = f & AV_PIX_FMT_FLAG_PLANAR;
-	if(isPlanar && isYUV) {
+	if(FRAME_IS_YUV(f) && FRAME_IS_PLANAR(f)) {
 		const quint8 b = fd->comp[0].depth > 8 ? 2 : 1;
 		if(fd->comp[0].step != b || fd->comp[1].step != b || fd->comp[2].step != b) {
 			qCritical("validTextureFormat() failed: unsupported plane step [%d, %d, %d] %s",
@@ -300,25 +305,47 @@ GLRenderer::uploadTexture(AVFrame *frame)
 
 	QMutexLocker l(&m_texMutex);
 
-	setFrameFormat(frame->width, frame->height,
-		fd->comp[0].depth, fd->log2_chroma_w, fd->log2_chroma_h);
+#ifdef USE_GLES
+	if(fd->comp[0].depth > 8) {
+		// convert >8bpp YUV
+		frame->format = AV_PIX_FMT_YUV420P;
 
-	setColorspace(frame);
+		const static AVPixFmtDescriptor *fd8 = av_pix_fmt_desc_get(AVPixelFormat(frame->format));
+		m_frameConvCtx = sws_getCachedContext(m_frameConvCtx,
+				frame->width, frame->height, AVPixelFormat(m_lastFormat),
+				frame->width, frame->height, AVPixelFormat(frame->format),
+				0, nullptr, nullptr, nullptr);
 
-	if(frame->linesize[0] > 0)
-		setFrameY(frame->data[0], frame->linesize[0]);
-	else
-		setFrameY(frame->data[0] + frame->linesize[0] * (frame->height - 1), -frame->linesize[0]);
+		setFrameFormat(frame->width, frame->height,
+			fd8->comp[0].depth, fd8->log2_chroma_w, fd8->log2_chroma_h);
 
-	if(frame->linesize[1] > 0)
-		setFrameU(frame->data[1], frame->linesize[1]);
-	else
-		setFrameU(frame->data[1] + frame->linesize[1] * (AV_CEIL_RSHIFT(frame->height, 1) - 1), -frame->linesize[1]);
+		setColorspace(frame);
 
-	if(frame->linesize[2] > 0)
-		setFrameV(frame->data[2], frame->linesize[2]);
-	else
-		setFrameV(frame->data[2] + frame->linesize[2] * (AV_CEIL_RSHIFT(frame->height, 1) - 1), -frame->linesize[2]);
+		sws_scale(m_frameConvCtx, frame->data, frame->linesize, 0, frame->height,
+				m_pixels, reinterpret_cast<const int *>(m_pitch));
+	} else
+#endif
+	{
+		setFrameFormat(frame->width, frame->height,
+			fd->comp[0].depth, fd->log2_chroma_w, fd->log2_chroma_h);
+
+		setColorspace(frame);
+
+		if(frame->linesize[0] > 0)
+			setFrameY(frame->data[0], frame->linesize[0]);
+		else
+			setFrameY(frame->data[0] + frame->linesize[0] * (frame->height - 1), -frame->linesize[0]);
+
+		if(frame->linesize[1] > 0)
+			setFrameU(frame->data[1], frame->linesize[1]);
+		else
+			setFrameU(frame->data[1] + frame->linesize[1] * (AV_CEIL_RSHIFT(frame->height, 1) - 1), -frame->linesize[1]);
+
+		if(frame->linesize[2] > 0)
+			setFrameV(frame->data[2], frame->linesize[2]);
+		else
+			setFrameV(frame->data[2] + frame->linesize[2] * (AV_CEIL_RSHIFT(frame->height, 1) - 1), -frame->linesize[2]);
+	}
 
 	update();
 

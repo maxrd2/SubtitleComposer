@@ -22,6 +22,7 @@ QT_FORWARD_DECLARE_CLASS(QOpenGLShader)
 QT_FORWARD_DECLARE_CLASS(QOpenGLShaderProgram)
 
 struct AVPixFmtDescriptor;
+struct SwsContext;
 
 namespace SubtitleComposer {
 class SubtitleTextOverlay;
@@ -72,6 +73,7 @@ private:
 
 	QOpenGLVertexArrayObject m_vao;
 
+	SwsContext *m_frameConvCtx;
 	quint8 *m_bufYUV, *m_mmYUV;
 	quint32 m_bufSize;
 	GLsizei m_bufWidth, m_bufHeight;
