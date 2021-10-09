@@ -23,8 +23,7 @@ using namespace SubtitleComposer;
 
 RenderThread::RenderThread(VideoState *state, QObject *parent)
 	: QThread(parent),
-	  m_vs(state),
-	  m_lastFormat(-1)
+	  m_vs(state)
 {
 }
 
@@ -412,8 +411,10 @@ RenderThread::videoImageDisplay()
 #endif
 
 	if(!vp->uploaded) {
-		if(uploadTexture(vp->frame) < 0)
+		if(m_vs->glRenderer->uploadTexture(vp->frame) < 0) {
+			requestInterruption();
 			return;
+		}
 		vp->uploaded = true;
 	}
 
@@ -472,104 +473,4 @@ RenderThread::toggleAudioDisplay()
 		m_vs->forceRefresh = true;
 		m_vs->showMode = ShowMode(next);
 	}
-}
-
-bool
-RenderThread::validTextureFormat(const AVPixFmtDescriptor *fd)
-{
-	const uint64_t &f = fd->flags;
-	if((f & AV_PIX_FMT_FLAG_BITSTREAM)) {
-		qCritical("uploadTexture() failed: unsupported frame format [%s] - bitstream", fd->name);
-		return false;
-	}
-	if((f & AV_PIX_FMT_FLAG_PAL)) {
-		qCritical("uploadTexture() failed: unsupported frame format [%s] - palette", fd->name);
-		return false;
-	}
-	if((f & AV_PIX_FMT_FLAG_BE)) {
-		qCritical("uploadTexture() failed: unsupported frame format [%s] - bigendian", fd->name);
-		return false;
-	}
-
-	m_isYUV = !(f & AV_PIX_FMT_FLAG_RGB);
-	m_isPlanar = f & AV_PIX_FMT_FLAG_PLANAR;
-	if(m_isPlanar && m_isYUV) {
-		const quint8 b = fd->comp[0].depth > 8 ? 2 : 1;
-		if(fd->comp[0].step != b || fd->comp[1].step != b || fd->comp[2].step != b) {
-			qCritical("validTextureFormat() failed: unsupported plane step [%d, %d, %d] %s",
-				   fd->comp[0].step, fd->comp[1].step, fd->comp[2].step, fd->name);
-			return false;
-		}
-		if(fd->comp[0].offset || fd->comp[1].offset || fd->comp[2].offset) {
-			qCritical("validTextureFormat() failed: unsupported plane offset [%d, %d, %d] %s",
-				   fd->comp[0].offset, fd->comp[1].offset, fd->comp[2].offset, fd->name);
-			return false;
-		}
-		if(fd->comp[0].shift || fd->comp[1].shift || fd->comp[2].shift) {
-			qCritical("validTextureFormat() failed: unsupported plane shift [%d, %d, %d] %s",
-				   fd->comp[0].shift, fd->comp[1].shift, fd->comp[2].shift, fd->name);
-			return false;
-		}
-		if(fd->comp[0].depth != fd->comp[1].depth || fd->comp[0].depth != fd->comp[2].depth) {
-			qCritical("validTextureFormat() failed: unsupported plane depths [%d, %d, %d] %s",
-				   fd->comp[0].depth, fd->comp[1].depth, fd->comp[2].depth, fd->name);
-			return false;
-		}
-		if(fd->nb_components < 3) {
-			qCritical("validTextureFormat() failed: unsupported plane count [%d] %s",
-					  fd->nb_components, fd->name);
-			return false;
-		}
-	} else {
-		qCritical("validTextureFormat() failed: unsupported frame format [%s]", fd->name);
-		return false;
-	}
-	return true;
-}
-
-int
-RenderThread::uploadTexture(AVFrame *frame)
-{
-	const AVPixFmtDescriptor *fd = av_pix_fmt_desc_get(AVPixelFormat(frame->format));
-	if(m_lastFormat != frame->format) {
-		if(!validTextureFormat(fd)) {
-			requestInterruption();
-			return -1;
-		}
-		m_lastFormat = frame->format;
-	}
-
-	if(m_isPlanar && m_isYUV) {
-		if(!frame->linesize[0] || !frame->linesize[1] || !frame->linesize[2]) {
-			qCritical("uploadTexture() failed: invalid linesize [%d, %d, %d]",
-				   frame->linesize[0], frame->linesize[1], frame->linesize[2]);
-			return -1;
-		}
-
-		QMutexLocker l(m_vs->glRenderer->mutex());
-
-		m_vs->glRenderer->setFrameFormat(frame->width, frame->height,
-			fd->comp[0].depth, fd->log2_chroma_w, fd->log2_chroma_h);
-
-		m_vs->glRenderer->setColorspace(frame);
-
-		if(frame->linesize[0] > 0)
-			m_vs->glRenderer->setFrameY(frame->data[0], frame->linesize[0]);
-		else
-			m_vs->glRenderer->setFrameY(frame->data[0] + frame->linesize[0] * (frame->height - 1), -frame->linesize[0]);
-
-		if(frame->linesize[1] > 0)
-			m_vs->glRenderer->setFrameU(frame->data[1], frame->linesize[1]);
-		else
-			m_vs->glRenderer->setFrameU(frame->data[1] + frame->linesize[1] * (AV_CEIL_RSHIFT(frame->height, 1) - 1), -frame->linesize[1]);
-
-		if(frame->linesize[2] > 0)
-			m_vs->glRenderer->setFrameV(frame->data[2], frame->linesize[2]);
-		else
-			m_vs->glRenderer->setFrameV(frame->data[2] + frame->linesize[2] * (AV_CEIL_RSHIFT(frame->height, 1) - 1), -frame->linesize[2]);
-
-		m_vs->glRenderer->update();
-	}
-
-	return 0;
 }

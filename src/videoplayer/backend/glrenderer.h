@@ -21,6 +21,8 @@ extern "C" {
 QT_FORWARD_DECLARE_CLASS(QOpenGLShader)
 QT_FORWARD_DECLARE_CLASS(QOpenGLShaderProgram)
 
+struct AVPixFmtDescriptor;
+
 namespace SubtitleComposer {
 class SubtitleTextOverlay;
 
@@ -40,6 +42,7 @@ public:
 
 	void setFrameFormat(int width, int height, int compBits, int crWidthShift, int crHeightShift);
 	void setColorspace(const AVFrame *frame);
+	int uploadTexture(AVFrame *frame);
 	void setFrameY(quint8 *buf, quint32 pitch);
 	void setFrameU(quint8 *buf, quint32 pitch);
 	void setFrameV(quint8 *buf, quint32 pitch);
@@ -60,6 +63,7 @@ private:
 	template<class T, int D> void uploadMM(int texWidth, int texHeight, T *texBuf, const T *texSrc);
 	void uploadYUV();
 	void uploadSubtitle();
+	bool validTextureFormat(const AVPixFmtDescriptor *fd);
 
 private:
 	SubtitleTextOverlay *m_overlay;
@@ -85,6 +89,7 @@ private:
 	QOpenGLShaderProgram *m_shaderProg;
 
 	bool m_texNeedInit;
+	int m_lastFormat;
 	int m_vpWidth, m_vpHeight;
 	int m_texY, m_texU, m_texV, m_texOvr;
 	GLuint *m_idTex;

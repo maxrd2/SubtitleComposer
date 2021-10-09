@@ -66,6 +66,7 @@ GLRenderer::GLRenderer(QWidget *parent)
 	  m_fragShader(nullptr),
 	  m_shaderProg(nullptr),
 	  m_texNeedInit(true),
+	  m_lastFormat(-1),
 	  m_idTex(nullptr),
 	  m_vaBuf(nullptr)
 {
@@ -226,6 +227,102 @@ GLRenderer::setColorspace(const AVFrame *frame)
 	// scale to full range when some bits are unused
 	const float pixMult = double(1 << (compBytes << 3)) / double(1 << compBits);
 	m_csCM.scale(pixMult, pixMult, pixMult);
+}
+
+bool
+GLRenderer::validTextureFormat(const AVPixFmtDescriptor *fd)
+{
+	const uint64_t &f = fd->flags;
+	if((f & AV_PIX_FMT_FLAG_BITSTREAM)) {
+		qCritical("uploadTexture() failed: unsupported frame format [%s] - bitstream", fd->name);
+		return false;
+	}
+	if((f & AV_PIX_FMT_FLAG_PAL)) {
+		qCritical("uploadTexture() failed: unsupported frame format [%s] - palette", fd->name);
+		return false;
+	}
+	if((f & AV_PIX_FMT_FLAG_BE)) {
+		qCritical("uploadTexture() failed: unsupported frame format [%s] - bigendian", fd->name);
+		return false;
+	}
+
+	const bool isYUV = !(f & AV_PIX_FMT_FLAG_RGB);
+	const bool isPlanar = f & AV_PIX_FMT_FLAG_PLANAR;
+	if(isPlanar && isYUV) {
+		const quint8 b = fd->comp[0].depth > 8 ? 2 : 1;
+		if(fd->comp[0].step != b || fd->comp[1].step != b || fd->comp[2].step != b) {
+			qCritical("validTextureFormat() failed: unsupported plane step [%d, %d, %d] %s",
+				   fd->comp[0].step, fd->comp[1].step, fd->comp[2].step, fd->name);
+			return false;
+		}
+		if(fd->comp[0].offset || fd->comp[1].offset || fd->comp[2].offset) {
+			qCritical("validTextureFormat() failed: unsupported plane offset [%d, %d, %d] %s",
+				   fd->comp[0].offset, fd->comp[1].offset, fd->comp[2].offset, fd->name);
+			return false;
+		}
+		if(fd->comp[0].shift || fd->comp[1].shift || fd->comp[2].shift) {
+			qCritical("validTextureFormat() failed: unsupported plane shift [%d, %d, %d] %s",
+				   fd->comp[0].shift, fd->comp[1].shift, fd->comp[2].shift, fd->name);
+			return false;
+		}
+		if(fd->comp[0].depth != fd->comp[1].depth || fd->comp[0].depth != fd->comp[2].depth) {
+			qCritical("validTextureFormat() failed: unsupported plane depths [%d, %d, %d] %s",
+				   fd->comp[0].depth, fd->comp[1].depth, fd->comp[2].depth, fd->name);
+			return false;
+		}
+		if(fd->nb_components < 3) {
+			qCritical("validTextureFormat() failed: unsupported plane count [%d] %s",
+					  fd->nb_components, fd->name);
+			return false;
+		}
+	} else {
+		qCritical("validTextureFormat() failed: unsupported frame format [%s]", fd->name);
+		return false;
+	}
+	return true;
+}
+
+int
+GLRenderer::uploadTexture(AVFrame *frame)
+{
+	const AVPixFmtDescriptor *fd = av_pix_fmt_desc_get(AVPixelFormat(frame->format));
+	if(m_lastFormat != frame->format) {
+		if(!validTextureFormat(fd))
+			return -1;
+		m_lastFormat = frame->format;
+	}
+
+	if(!frame->linesize[0] || !frame->linesize[1] || !frame->linesize[2]) {
+		qCritical("uploadTexture() failed: invalid linesize [%d, %d, %d]",
+			   frame->linesize[0], frame->linesize[1], frame->linesize[2]);
+		return -1;
+	}
+
+	QMutexLocker l(&m_texMutex);
+
+	setFrameFormat(frame->width, frame->height,
+		fd->comp[0].depth, fd->log2_chroma_w, fd->log2_chroma_h);
+
+	setColorspace(frame);
+
+	if(frame->linesize[0] > 0)
+		setFrameY(frame->data[0], frame->linesize[0]);
+	else
+		setFrameY(frame->data[0] + frame->linesize[0] * (frame->height - 1), -frame->linesize[0]);
+
+	if(frame->linesize[1] > 0)
+		setFrameU(frame->data[1], frame->linesize[1]);
+	else
+		setFrameU(frame->data[1] + frame->linesize[1] * (AV_CEIL_RSHIFT(frame->height, 1) - 1), -frame->linesize[1]);
+
+	if(frame->linesize[2] > 0)
+		setFrameV(frame->data[2], frame->linesize[2]);
+	else
+		setFrameV(frame->data[2] + frame->linesize[2] * (AV_CEIL_RSHIFT(frame->height, 1) - 1), -frame->linesize[2]);
+
+	update();
+
+	return 0;
 }
 
 void
