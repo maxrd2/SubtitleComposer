@@ -91,6 +91,7 @@ private:
 	QOpenGLShaderProgram *m_shaderProg;
 
 	bool m_texNeedInit;
+	bool m_texUploaded;
 	int m_lastFormat;
 	int m_vpWidth, m_vpHeight;
 	int m_texY, m_texU, m_texV, m_texOvr;

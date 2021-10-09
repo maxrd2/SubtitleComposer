@@ -347,6 +347,7 @@ GLRenderer::uploadTexture(AVFrame *frame)
 			setFrameV(frame->data[2] + frame->linesize[2] * (AV_CEIL_RSHIFT(frame->height, 1) - 1), -frame->linesize[2]);
 	}
 
+	m_texUploaded = false;
 	update();
 
 	return 0;
@@ -665,6 +666,11 @@ GLRenderer::uploadMM(int texWidth, int texHeight, T *texBuf, const T *texSrc)
 void
 GLRenderer::uploadYUV()
 {
+	if(!m_texNeedInit && m_texUploaded)
+		return;
+
+	m_texUploaded = true;
+
 	// load Y data
 	asGL(glActiveTexture(GL_TEXTURE0 + ID_Y));
 	asGL(glBindTexture(GL_TEXTURE_2D, m_idTex[ID_Y]));

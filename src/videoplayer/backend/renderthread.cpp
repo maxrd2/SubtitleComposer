@@ -34,6 +34,8 @@ RenderThread::run()
 	for(;;) {
 		if(remaining_time > 0.0)
 			av_usleep((int64_t)(remaining_time * double(AV_TIME_BASE)));
+		else
+			yieldCurrentThread(); // allow gui to update
 		remaining_time = REFRESH_RATE;
 		if(isInterruptionRequested())
 			break;
