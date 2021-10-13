@@ -130,7 +130,7 @@ handleCommandLine(SubtitleComposer::Application &app, KAboutData &aboutData)
 
 	if(!fileSub.isEmpty())
 		app.openSubtitle(System::urlFromPath(fileSub));
-	else if(!fileTrans.isEmpty())
+	else
 		app.newSubtitle();
 	if(!fileTrans.isEmpty())
 		app.openSubtitleTr(System::urlFromPath(fileTrans));
