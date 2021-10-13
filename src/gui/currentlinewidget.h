@@ -52,6 +52,7 @@ protected slots:
 
 	void onLineAnchorChanged(const SubtitleLine *line, bool anchored);
 
+	void onLineTimesChanged(const Time &showTime, const Time &hideTime);
 	void onLineShowTimeChanged(const Time &showTime);
 	void onLineHideTimeChanged(const Time &hideTime);
 

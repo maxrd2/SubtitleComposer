@@ -236,9 +236,6 @@ CurrentLineWidget::setCurrentLine(SubtitleLine *line)
 		connect(m_currentLine, &SubtitleLine::showTimeChanged, this, &CurrentLineWidget::onLineShowTimeChanged);
 		connect(m_currentLine, &SubtitleLine::hideTimeChanged, this, &CurrentLineWidget::onLineHideTimeChanged);
 
-		onLineShowTimeChanged(m_currentLine->showTime());
-		onLineHideTimeChanged(m_currentLine->hideTime());
-
 		RichDocument *doc = m_currentLine->primaryDoc();
 		if(m_textEdits[0]->isReadOnly())
 			m_textEdits[0]->setReadOnly(false);
@@ -253,7 +250,7 @@ CurrentLineWidget::setCurrentLine(SubtitleLine *line)
 		m_textEdits[1]->setDocument(doc);
 		connect(m_currentLine, &SubtitleLine::secondaryTextChanged, this, &CurrentLineWidget::updateLabels);
 
-		updateLabels();
+		onLineTimesChanged(m_currentLine->showTime(), m_currentLine->hideTime());
 
 		if(m_subtitle)
 			onLineAnchorChanged(m_currentLine, m_subtitle->isLineAnchored(m_currentLine));
@@ -267,8 +264,7 @@ CurrentLineWidget::setCurrentLine(SubtitleLine *line)
 		m_textLabels[1]->setText(i18n("No current line"));
 		m_textEdits[1]->setDocument(&m_blankDoc);
 		m_textEdits[1]->setReadOnly(true);
-		onLineShowTimeChanged(Time());
-		onLineHideTimeChanged(Time());
+		onLineTimesChanged(Time(), Time());
 
 		setEnabled(false);
 	}
@@ -360,11 +356,23 @@ CurrentLineWidget::onLineAnchorChanged(const SubtitleLine *line, bool anchored)
 }
 
 void
+CurrentLineWidget::onLineTimesChanged(const Time &showTime, const Time &hideTime)
+{
+	QSignalBlocker s1(m_showTimeEdit), s2(m_hideTimeEdit), s3(m_durationTimeEdit);
+	const int showMillis = showTime.toMillis();
+	m_showTimeEdit->setValue(showMillis);
+	m_hideTimeEdit->setMinimumTime(QTime::fromMSecsSinceStartOfDay(showMillis));
+	m_hideTimeEdit->setValue(hideTime.toMillis());
+	m_durationTimeEdit->setValue(m_hideTimeEdit->value() - m_showTimeEdit->value());
+	updateLabels();
+}
+
+void
 CurrentLineWidget::onLineShowTimeChanged(const Time &showTime)
 {
 	QSignalBlocker s1(m_showTimeEdit), s2(m_hideTimeEdit), s3(m_durationTimeEdit);
 	m_showTimeEdit->setValue(showTime.toMillis());
-	m_hideTimeEdit->setMinimumTime(QTime(0, 0, 0, 0).addMSecs(showTime.toMillis()));
+	m_hideTimeEdit->setMinimumTime(QTime::fromMSecsSinceStartOfDay(showTime.toMillis()));
 	updateLabels();
 }
 
