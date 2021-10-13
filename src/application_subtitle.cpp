@@ -393,9 +393,9 @@ Application::closeSubtitle()
 			emit translationModeChanged(false);
 		}
 
-		m_undoStack->clear();
-
 		emit subtitleClosed();
+
+		m_undoStack->clear();
 
 		m_subtitle.reset();
 
