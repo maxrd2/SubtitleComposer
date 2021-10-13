@@ -114,8 +114,8 @@ UndoStack::push(UndoAction *cmd)
 	const int idx = index();
 	const int idx1 = idx + 1;
 	levelIncrease(idx1);
-	QUndoStack::push(cmd);
 	m_dirtyStack[idx] = static_cast<DirtyMode>(m_dirtyStack.at(idx) | cmd->m_dirtyMode);
+	QUndoStack::push(cmd); // NOTE: cmd can/will be deleted after push()
 	levelDecrease(idx1);
 }
 
