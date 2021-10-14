@@ -23,9 +23,9 @@ matrix:
         sudo apt-get update -qq
       install:
         - |- # dependencies
-         sudo apt-get install -yqq curl cmake make extra-cmake-modules kross-dev libavformat-dev libswscale-dev libopenal-dev breeze \
-                                  qtbase5-dev qtbase5-private-dev libkf5auth-dev libkf5codecs-dev libkf5config-dev libkf5configwidgets-dev \
-                                  libkf5coreaddons-dev libkf5i18n-dev libkf5kio-dev kross-dev libkf5sonnet-dev libkf5textwidgets-dev \
+         sudo apt-get install -yqq curl cmake make extra-cmake-modules libavformat-dev libswscale-dev libopenal-dev breeze qtbase5-dev \
+                                  qtbase5-private-dev qtdeclarative5-dev libkf5auth-dev libkf5codecs-dev libkf5config-dev libkf5configwidgets-dev \
+                                  libkf5coreaddons-dev libkf5i18n-dev libkf5kio-dev libkf5sonnet-dev libkf5textwidgets-dev \
                                   libkf5widgetsaddons-dev libkf5xmlgui-dev libicu-dev libsphinxbase-dev libpocketsphinx-dev
       script:
         - |-
@@ -50,9 +50,9 @@ matrix:
         sudo apt-get update -qq
       install:
         - |- # dependencies
-         sudo apt-get install -yqq curl cmake make extra-cmake-modules kross-dev libavformat-dev libswscale-dev libopenal-dev breeze \
-                                  qtbase5-dev qtbase5-private-dev libkf5auth-dev libkf5codecs-dev libkf5config-dev libkf5configwidgets-dev \
-                                  libkf5coreaddons-dev libkf5i18n-dev libkf5kio-dev kross-dev libkf5sonnet-dev libkf5textwidgets-dev \
+         sudo apt-get install -yqq curl cmake make extra-cmake-modules libavformat-dev libswscale-dev libopenal-dev breeze qtbase5-dev \
+                                  qtbase5-private-dev qtdeclarative5-dev libkf5auth-dev libkf5codecs-dev libkf5config-dev libkf5configwidgets-dev \
+                                  libkf5coreaddons-dev libkf5i18n-dev libkf5kio-dev libkf5sonnet-dev libkf5textwidgets-dev \
                                   libkf5widgetsaddons-dev libkf5xmlgui-dev libicu-dev libsphinxbase-dev libpocketsphinx-dev
       script:
         - |-
@@ -81,9 +81,9 @@ matrix:
         sudo apt-get update -qq
       install:
         - |- # dependencies
-         sudo apt-get install -yq curl cmake make extra-cmake-modules kross-dev libavformat-dev libswscale-dev libopenal-dev breeze \
-                                  qtbase5-dev qtbase5-private-dev libkf5auth-dev libkf5codecs-dev libkf5config-dev libkf5configwidgets-dev \
-                                  libkf5coreaddons-dev libkf5i18n-dev libkf5kio-dev kross-dev libkf5sonnet-dev libkf5textwidgets-dev \
+         sudo apt-get install -yqq curl cmake make extra-cmake-modules libavformat-dev libswscale-dev libopenal-dev breeze qtbase5-dev \
+                                  qtbase5-private-dev qtdeclarative5-dev libkf5auth-dev libkf5codecs-dev libkf5config-dev libkf5configwidgets-dev \
+                                  libkf5coreaddons-dev libkf5i18n-dev libkf5kio-dev libkf5sonnet-dev libkf5textwidgets-dev \
                                   libkf5widgetsaddons-dev libkf5xmlgui-dev libicu-dev libsphinxbase-dev libpocketsphinx-dev
       script:
         - |-
@@ -112,9 +112,9 @@ matrix:
         sudo apt-get update -qq
       install:
         - |- # dependencies
-         sudo apt-get install -yq curl cmake make extra-cmake-modules kross-dev libavformat-dev libswscale-dev libopenal-dev breeze \
-                                  qtbase5-dev qtbase5-private-dev libkf5auth-dev libkf5codecs-dev libkf5config-dev libkf5configwidgets-dev \
-                                  libkf5coreaddons-dev libkf5i18n-dev libkf5kio-dev kross-dev libkf5sonnet-dev libkf5textwidgets-dev \
+         sudo apt-get install -yqq curl cmake make extra-cmake-modules libavformat-dev libswscale-dev libopenal-dev breeze qtbase5-dev \
+                                  qtbase5-private-dev qtdeclarative5-dev libkf5auth-dev libkf5codecs-dev libkf5config-dev libkf5configwidgets-dev \
+                                  libkf5coreaddons-dev libkf5i18n-dev libkf5kio-dev libkf5sonnet-dev libkf5textwidgets-dev \
                                   libkf5widgetsaddons-dev libkf5xmlgui-dev libicu-dev libsphinxbase-dev libpocketsphinx-dev
       script:
         - |-
