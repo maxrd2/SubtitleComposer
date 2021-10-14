@@ -165,7 +165,7 @@ Application::init()
 
 #define CONNECT_SUB(c, x) \
 	connect(this, &Application::subtitleOpened, x, &c::setSubtitle); \
-	connect(this, &Application::subtitleClosed, x, [this](){ x->setSubtitle(nullptr); });
+	connect(this, &Application::subtitleClosed, x, [&](){ x->setSubtitle(nullptr); });
 
 	CONNECT_SUB(UserActionManager, UserActionManager::instance());
 	CONNECT_SUB(MainWindow, m_mainWindow);

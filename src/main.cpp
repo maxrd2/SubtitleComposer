@@ -183,6 +183,9 @@ setupIconTheme(int argc, char **argv)
 
 	if(platformThemeName == QStringLiteral("lxqt"))
 		QIcon::setThemeSearchPaths(QIcon::themeSearchPaths() << fallbackPaths);
+#else
+	Q_UNUSED(argc)
+	Q_UNUSED(argv)
 #endif
 }
 
