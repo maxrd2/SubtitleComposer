@@ -691,7 +691,7 @@ WaveformWidget::showContextMenu(QPoint pos)
 			}));
 		menu->addSeparator();
 		needSubtitle.append(
-			menu->addAction(i18n("Join Lines"), [&](){
+			menu->addAction(i18n("Join Lines"), this, [&](){
 				int startIndex = -1, endIndex = -1;
 				const Time startTime = rightMouseSoonerTime();
 				const Time endTime = rightMouseLaterTime();
@@ -709,13 +709,13 @@ WaveformWidget::showContextMenu(QPoint pos)
 			})
 		);
 		needCurrentLine.append(
-			menu->addAction(i18n("Split Line"), [&](){
+			menu->addAction(i18n("Split Line"), this, [&](){
 				// TODO: split the line at exact waveform mouse position
 				m_subtitle->splitLines(RangeList(Range(currentLine->index())));
 			}));
 		menu->addSeparator();
 		needCurrentLine.append(
-			menu->addAction(i18n("Toggle Anchor"), [&](){ m_subtitle->toggleLineAnchor(currentLine); }));
+			menu->addAction(i18n("Toggle Anchor"), this, [&](){ m_subtitle->toggleLineAnchor(currentLine); }));
 		menu->addAction(app->action(ACT_ANCHOR_REMOVE_ALL));
 		menu->addSeparator();
 		actionManager->addAction(

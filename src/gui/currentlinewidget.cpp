@@ -158,7 +158,7 @@ CurrentLineWidget::createLineWidgetBox(int index)
 	connect(btnColor, &QToolButton::clicked, textEdit, &SimpleRichTextEdit::changeTextColor);
 	layout->addWidget(btnColor, 0, 6, Qt::AlignBottom);
 
-	connect(textEdit, &SimpleRichTextEdit::cursorPositionChanged, [=](){
+	connect(textEdit, &SimpleRichTextEdit::cursorPositionChanged, this, [=](){
 		btnBold->setChecked(textEdit->fontBold());
 		btnItalic->setChecked(textEdit->fontItalic());
 		btnUnderline->setChecked(textEdit->fontUnderline());

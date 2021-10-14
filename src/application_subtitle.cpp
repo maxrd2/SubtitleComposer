@@ -154,7 +154,7 @@ Application::openSubtitle()
 	openDlg.selectUrl(m_lastSubtitleUrl);
 
 	if(openDlg.exec() == QDialog::Accepted)
-		openSubtitle(openDlg.selectedUrls().first());
+		openSubtitle(openDlg.selectedUrls().constFirst());
 }
 
 void

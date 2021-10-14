@@ -104,7 +104,7 @@ SpeechProcessor::setAudioStream(const QString &mediaFile, int audioStream)
 	}
 
 	connect(m_plugin, &SpeechPlugin::textRecognized, this, &SpeechProcessor::onTextRecognized);
-	connect(m_plugin, &SpeechPlugin::error, [this](int code, const QString &message) { onStreamError(code, message, QString()); });
+	connect(m_plugin, &SpeechPlugin::error, this, [this](int code, const QString &message) { onStreamError(code, message, QString()); });
 
 	m_mediaFile = mediaFile;
 	m_streamIndex = audioStream;

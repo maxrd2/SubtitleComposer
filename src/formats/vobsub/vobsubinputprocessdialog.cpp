@@ -367,17 +367,17 @@ VobSubInputProcessDialog::VobSubInputProcessDialog(Subtitle *subtitle, QWidget *
 	connect(ui->btnOk, &QPushButton::clicked, this, &VobSubInputProcessDialog::onOkClicked);
 	connect(ui->btnAbort, &QPushButton::clicked, this, &VobSubInputProcessDialog::onAbortClicked);
 
-	connect(ui->styleBold, &QPushButton::toggled, [this](bool checked){
+	connect(ui->styleBold, &QPushButton::toggled, this, [this](bool checked){
 		QFont font = ui->lineEdit->font();
 		font.setBold(checked);
 		ui->lineEdit->setFont(font);
 	});
-	connect(ui->styleItalic, &QPushButton::toggled, [this](bool checked){
+	connect(ui->styleItalic, &QPushButton::toggled, this, [this](bool checked){
 		QFont font = ui->lineEdit->font();
 		font.setItalic(checked);
 		ui->lineEdit->setFont(font);
 	});
-	connect(ui->styleUnderline, &QPushButton::toggled, [this](bool checked){
+	connect(ui->styleUnderline, &QPushButton::toggled, this, [this](bool checked){
 		QFont font = ui->lineEdit->font();
 		font.setUnderline(checked);
 		ui->lineEdit->setFont(font);

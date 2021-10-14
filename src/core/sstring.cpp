@@ -188,7 +188,7 @@ SString::richString(RichOutputMode mode) const
 				if(currentStyleFlags & Color)
 					ret += "<font color=" + QColor(currentColor).name() + ">";
 
-				ret += QString::mid(prevIndex, index - prevIndex);
+				ret += QString::midRef(prevIndex, index - prevIndex);
 
 				if(currentStyleFlags & Color)
 					ret += "</font>";
@@ -220,7 +220,7 @@ SString::richString(RichOutputMode mode) const
 			if(currentStyleFlags & Color)
 				ret += "<font color=" + QColor(currentColor).name() + ">";
 
-			ret += QString::mid(prevIndex);
+			ret += QString::midRef(prevIndex);
 
 			if(currentStyleFlags & Color)
 				ret += "</font>";

@@ -44,9 +44,9 @@ public:
 			if(prevColor != curColor) {
 				subtitle += QStringLiteral("{\\c&H");
 				if(curColor != 0) {
-					subtitle += (QChar('0') + QString::number(qBlue(curColor), 16)).toUpper().right(2);
-					subtitle += (QChar('0') + QString::number(qGreen(curColor), 16)).toUpper().right(2);
-					subtitle += (QChar('0') + QString::number(qRed(curColor), 16)).toUpper().right(2);
+					subtitle += (QChar('0') + QString::number(qBlue(curColor), 16)).toUpper().rightRef(2);
+					subtitle += (QChar('0') + QString::number(qGreen(curColor), 16)).toUpper().rightRef(2);
+					subtitle += (QChar('0') + QString::number(qRed(curColor), 16)).toUpper().rightRef(2);
 				} else {
 					subtitle += QStringLiteral("00");
 				}

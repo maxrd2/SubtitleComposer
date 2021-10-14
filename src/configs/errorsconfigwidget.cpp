@@ -17,20 +17,20 @@ ErrorsConfigWidget::ErrorsConfigWidget(QWidget *parent)
 {
 	setupUi(this);
 
-	connect(kcfg_MinDurationPerCharacter, QOverload<int>::of(&QSpinBox::valueChanged), [this](int val){
+	connect(kcfg_MinDurationPerCharacter, QOverload<int>::of(&QSpinBox::valueChanged), this, [this](int val){
 		QSignalBlocker b(alt_MinDurationPerCharacter);
 		alt_MinDurationPerCharacter->setValue(1000 / val);
 		kcfg_IdealDurationPerCharacter->setMinimum(val);
 		alt_IdealDurationPerCharacter->setMaximum(1000 / val);
 	});
-	connect(alt_MinDurationPerCharacter, QOverload<int>::of(&QSpinBox::valueChanged), [this](int val){
+	connect(alt_MinDurationPerCharacter, QOverload<int>::of(&QSpinBox::valueChanged), this, [this](int val){
 		QSignalBlocker b(kcfg_MinDurationPerCharacter);
 		kcfg_MinDurationPerCharacter->setValue(1000 / val);
 		alt_IdealDurationPerCharacter->setMaximum(val);
 		kcfg_IdealDurationPerCharacter->setMinimum(1000 / val);
 	});
 
-	connect(kcfg_IdealDurationPerCharacter, QOverload<int>::of(&QSpinBox::valueChanged), [this](int val){
+	connect(kcfg_IdealDurationPerCharacter, QOverload<int>::of(&QSpinBox::valueChanged), this, [this](int val){
 		QSignalBlocker b(alt_IdealDurationPerCharacter);
 		alt_IdealDurationPerCharacter->setValue(1000 / val);
 		kcfg_MinDurationPerCharacter->setMaximum(val);
@@ -38,7 +38,7 @@ ErrorsConfigWidget::ErrorsConfigWidget(QWidget *parent)
 		alt_MinDurationPerCharacter->setMinimum(1000 / val);
 		alt_MaxDurationPerCharacter->setMaximum(1000 / val);
 	});
-	connect(alt_IdealDurationPerCharacter, QOverload<int>::of(&QSpinBox::valueChanged), [this](int val){
+	connect(alt_IdealDurationPerCharacter, QOverload<int>::of(&QSpinBox::valueChanged), this, [this](int val){
 		QSignalBlocker b(kcfg_IdealDurationPerCharacter);
 		kcfg_IdealDurationPerCharacter->setValue(1000 / val);
 		alt_MinDurationPerCharacter->setMinimum(val);
@@ -47,13 +47,13 @@ ErrorsConfigWidget::ErrorsConfigWidget(QWidget *parent)
 		kcfg_MaxDurationPerCharacter->setMinimum(1000 / val);
 	});
 
-	connect(kcfg_MaxDurationPerCharacter, QOverload<int>::of(&QSpinBox::valueChanged), [this](int val){
+	connect(kcfg_MaxDurationPerCharacter, QOverload<int>::of(&QSpinBox::valueChanged), this, [this](int val){
 		QSignalBlocker b(alt_MaxDurationPerCharacter);
 		alt_MaxDurationPerCharacter->setValue(1000 / val);
 		kcfg_IdealDurationPerCharacter->setMaximum(val);
 		alt_IdealDurationPerCharacter->setMinimum(1000 / val);
 	});
-	connect(alt_MaxDurationPerCharacter, QOverload<int>::of(&QSpinBox::valueChanged), [this](int val){
+	connect(alt_MaxDurationPerCharacter, QOverload<int>::of(&QSpinBox::valueChanged), this, [this](int val){
 		QSignalBlocker b(kcfg_MaxDurationPerCharacter);
 		kcfg_MaxDurationPerCharacter->setValue(1000 / val);
 		alt_IdealDurationPerCharacter->setMinimum(val);

@@ -223,7 +223,7 @@ ScriptsManager::addScript(const QUrl &sSU)
 		if(fileDialog.exec() != QDialog::Accepted)
 			return;
 
-		srcScriptUrl = fileDialog.selectedUrls().first();
+		srcScriptUrl = fileDialog.selectedUrls().constFirst();
 	}
 
 	QString scriptName = QFileInfo(srcScriptUrl.fileName()).fileName();

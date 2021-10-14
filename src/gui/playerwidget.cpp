@@ -238,7 +238,7 @@ PlayerWidget::PlayerWidget(QWidget *parent) :
 
 	setFullScreenMode(m_fullScreenMode);
 
-	connect(app(), &Application::actionsReady, [this](){
+	connect(app(), &Application::actionsReady, this, [this](){
 		toolButton(this, ACT_STOP)->setDefaultAction(app()->action(ACT_STOP));
 		toolButton(this, ACT_PLAY_PAUSE)->setDefaultAction(app()->action(ACT_PLAY_PAUSE));
 		toolButton(this, ACT_SEEK_BACKWARD)->setDefaultAction(app()->action(ACT_SEEK_BACKWARD));

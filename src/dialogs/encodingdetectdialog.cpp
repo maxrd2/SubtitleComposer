@@ -50,7 +50,7 @@ EncodingDetectDialog::EncodingDetectDialog(const QByteArray &text, QWidget *pare
 	ui->encoding->setModel(model);
 
 	ui->buttonBox->button(QDialogButtonBox::Ok)->setDisabled(true);
-	connect(ui->encoding->selectionModel(), &QItemSelectionModel::selectionChanged, [&, model](const QItemSelection &sel, const QItemSelection &){
+	connect(ui->encoding->selectionModel(), &QItemSelectionModel::selectionChanged, this, [&, model](const QItemSelection &sel, const QItemSelection &){
 		const bool hasSelection = !sel.isEmpty() && !sel.first().isEmpty();
 		ui->buttonBox->button(QDialogButtonBox::Ok)->setEnabled(hasSelection);
 

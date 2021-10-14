@@ -80,35 +80,35 @@ RichLineEdit::setupActions()
 	act->setIcon(QIcon::fromTheme("edit-cut"));
 	act->setText(i18n("Cut"));
 	act->setShortcuts(KStandardShortcut::cut());
-	connect(act, &QAction::triggered, [this](){ m_control->cut(); });
+	connect(act, &QAction::triggered, this, [this](){ m_control->cut(); });
 	m_actions.push_back(act);
 
 	act = new QAction(this);
 	act->setIcon(QIcon::fromTheme("edit-copy"));
 	act->setText(i18n("Copy"));
 	act->setShortcuts(KStandardShortcut::copy());
-	connect(act, &QAction::triggered, [this](){ m_control->copy(); });
+	connect(act, &QAction::triggered, this, [this](){ m_control->copy(); });
 	m_actions.push_back(act);
 
 	act = new QAction(this);
 	act->setIcon(QIcon::fromTheme("edit-paste"));
 	act->setText(i18n("Paste"));
 	act->setShortcuts(KStandardShortcut::paste());
-	connect(act, &QAction::triggered, [this](){ m_control->paste(); });
+	connect(act, &QAction::triggered, this, [this](){ m_control->paste(); });
 	m_actions.push_back(act);
 #endif
 
 	act = new QAction(this);
 	act->setIcon(QIcon::fromTheme("edit-clear"));
 	act->setText(i18nc("@action:inmenu Clear all text", "Clear"));
-	connect(act, &QAction::triggered, [this](){ m_control->clear(); });
+	connect(act, &QAction::triggered, this, [this](){ m_control->clear(); });
 	m_actions.push_back(act);
 
 	act = new QAction(this);
 	act->setIcon(QIcon::fromTheme("edit-select-all"));
 	act->setText(i18n("Select All"));
 	setupActionCommon(act, ACT_SELECT_ALL_LINES);
-	connect(act, &QAction::triggered, [this](){ m_control->selectAll(); });
+	connect(act, &QAction::triggered, this, [this](){ m_control->selectAll(); });
 	m_actions.push_back(act);
 
 	act = new QAction(this);
@@ -116,7 +116,7 @@ RichLineEdit::setupActions()
 	act->setText(i18nc("@action:inmenu Toggle bold style", "Bold"));
 	act->setCheckable(true);
 	setupActionCommon(act, ACT_TOGGLE_SELECTED_LINES_BOLD);
-	connect(act, &QAction::triggered, [this](){ m_control->toggleBold(); });
+	connect(act, &QAction::triggered, this, [this](){ m_control->toggleBold(); });
 	m_actions.push_back(act);
 
 	act = new QAction(this);
@@ -124,7 +124,7 @@ RichLineEdit::setupActions()
 	act->setText(i18nc("@action:inmenu Toggle italic style", "Italic"));
 	act->setCheckable(true);
 	setupActionCommon(act, ACT_TOGGLE_SELECTED_LINES_ITALIC);
-	connect(act, &QAction::triggered, [this](){ m_control->toggleItalic(); });
+	connect(act, &QAction::triggered, this, [this](){ m_control->toggleItalic(); });
 	m_actions.push_back(act);
 
 	act = new QAction(this);
@@ -132,7 +132,7 @@ RichLineEdit::setupActions()
 	act->setText(i18nc("@action:inmenu Toggle underline style", "Underline"));
 	act->setCheckable(true);
 	setupActionCommon(act, ACT_TOGGLE_SELECTED_LINES_UNDERLINE);
-	connect(act, &QAction::triggered, [this](){ m_control->toggleUnderline(); });
+	connect(act, &QAction::triggered, this, [this](){ m_control->toggleUnderline(); });
 	m_actions.push_back(act);
 
 	act = new QAction(this);
@@ -140,7 +140,7 @@ RichLineEdit::setupActions()
 	act->setText(i18nc("@action:inmenu Toggle strike through style", "Strike Through"));
 	act->setCheckable(true);
 	setupActionCommon(act, ACT_TOGGLE_SELECTED_LINES_STRIKETHROUGH);
-	connect(act, &QAction::triggered, [this](){ m_control->toggleStrikeOut(); });
+	connect(act, &QAction::triggered, this, [this](){ m_control->toggleStrikeOut(); });
 	m_actions.push_back(act);
 
 	act = new QAction(this);

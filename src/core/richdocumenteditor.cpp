@@ -498,7 +498,7 @@ RichDocumentEditor::finishChange(bool edited)
 		emit selectionChanged();
 	}
 	if(m_textCursor->position() == m_lastCursorPos)
-		updateMicroFocus();
+		emit updateMicroFocus();
 	emitCursorPositionChanged();
 	return true;
 }
@@ -645,7 +645,7 @@ RichDocumentEditor::emitCursorPositionChanged()
 	if(curPos != m_lastCursorPos) {
 		const int oldLast = m_lastCursorPos;
 		m_lastCursorPos = curPos;
-		cursorPositionChanged(oldLast, curPos);
+		emit cursorPositionChanged(oldLast, curPos);
 #ifndef QT_NO_ACCESSIBILITY
 		// otherwise we send a selection update which includes the cursor
 		if(!hasSelection()) {
