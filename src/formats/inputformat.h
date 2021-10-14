@@ -17,15 +17,15 @@ class InputFormat : public Format
 public:
 	bool readSubtitle(Subtitle &subtitle, bool primary, const QString &data) const
 	{
-		Subtitle newSubtitle;
+		QExplicitlySharedDataPointer<Subtitle> newSubtitle(new Subtitle());
 
-		if(!parseSubtitles(newSubtitle, data))
+		if(!parseSubtitles(*newSubtitle, data))
 			return false;
 
 		if(primary)
-			subtitle.setPrimaryData(newSubtitle, true);
+			subtitle.setPrimaryData(*newSubtitle, true);
 		else
-			subtitle.setSecondaryData(newSubtitle, true);
+			subtitle.setSecondaryData(*newSubtitle, true);
 
 		return true;
 	}

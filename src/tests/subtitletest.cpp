@@ -33,17 +33,17 @@ SubtitleTest::testSort()
 {
 	QFETCH(QVector<int>, lines);
 
-	sub.removeLines(RangeList(Range::full()), SubtitleTarget::Both);
+	sub->removeLines(RangeList(Range::full()), SubtitleTarget::Both);
 
 	for(int n: lines) {
 		SubtitleLine *l = new SubtitleLine(n * 1000, n * 1000 + 500);
 		l->primaryDoc()->setPlainText(QString::number(n));
-		sub.insertLine(l);
+		sub->insertLine(l);
 	}
 
-	QVERIFY(sub.count() == lines.size());
-	for(int i = 0; i < sub.count(); i++)
-		QVERIFY(qRound(sub.at(i)->showTime().toSeconds()) == i + 1);
+	QVERIFY(sub->count() == lines.size());
+	for(int i = 0; i < sub->count(); i++)
+		QVERIFY(qRound(sub->at(i)->showTime().toSeconds()) == i + 1);
 }
 
 #define QCoreApplication Application

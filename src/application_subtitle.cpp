@@ -459,10 +459,10 @@ Application::openSubtitleTr(const QUrl &url, bool warnClashingUrls)
 	if(!closeSubtitleTr())
 		return;
 
-	Subtitle subtitleTr;
+	QExplicitlySharedDataPointer<Subtitle> subtitleTr(new Subtitle());
 	QTextCodec *codec = codecForEncoding(KRecentFilesActionExt::encodingForUrl(url));
 
-	FormatManager::Status res = FormatManager::instance().readSubtitle(subtitleTr, false, url, &codec, &m_subtitleTrFormat);
+	FormatManager::Status res = FormatManager::instance().readSubtitle(*subtitleTr, false, url, &codec, &m_subtitleTrFormat);
 	if(res != FormatManager::SUCCESS) {
 		if(res == FormatManager::ERROR) {
 			KMessageBox::sorry(
@@ -474,7 +474,7 @@ Application::openSubtitleTr(const QUrl &url, bool warnClashingUrls)
 	}
 
 	m_subtitleTrUrl = url;
-	m_subtitle->setSecondaryData(subtitleTr, false);
+	m_subtitle->setSecondaryData(*subtitleTr, false);
 	processTranslationOpened(codec, m_subtitleTrFormat);
 }
 
@@ -484,10 +484,10 @@ Application::reopenSubtitleTrWithCodec(QTextCodec *codec)
 	if(m_subtitleTrUrl.isEmpty())
 		return;
 
-	Subtitle subtitleTr;
+	QExplicitlySharedDataPointer<Subtitle> subtitleTr(new Subtitle());
 	QString subtitleTrFormat;
 
-	FormatManager::Status res = FormatManager::instance().readSubtitle(subtitleTr, false, m_subtitleTrUrl, &codec, &subtitleTrFormat);
+	FormatManager::Status res = FormatManager::instance().readSubtitle(*subtitleTr, false, m_subtitleTrUrl, &codec, &subtitleTrFormat);
 	if(res != FormatManager::SUCCESS) {
 		if(res == FormatManager::ERROR) {
 			KMessageBox::sorry(
@@ -498,7 +498,7 @@ Application::reopenSubtitleTrWithCodec(QTextCodec *codec)
 		return;
 	}
 
-	m_subtitle->setSecondaryData(subtitleTr, false);
+	m_subtitle->setSecondaryData(*subtitleTr, false);
 	processTranslationOpened(codec, m_subtitleTrFormat);
 }
 
@@ -686,18 +686,18 @@ Application::joinSubtitles()
 	static JoinSubtitlesDialog *dlg = new JoinSubtitlesDialog(m_mainWindow);
 
 	if(dlg->exec() == QDialog::Accepted) {
-		Subtitle secondSubtitle;
+		QExplicitlySharedDataPointer<Subtitle> secondSubtitle(new Subtitle());
 
 		const QUrl url = dlg->subtitleUrl();
 		QTextCodec *codec = codecForEncoding(KRecentFilesActionExt::encodingForUrl(url));
 		const bool primary = dlg->selectedTextsTarget() != Secondary;
 
-		FormatManager::Status res = FormatManager::instance().readSubtitle(secondSubtitle, primary, url, &codec, nullptr);
+		FormatManager::Status res = FormatManager::instance().readSubtitle(*secondSubtitle, primary, url, &codec, nullptr);
 		if(res == FormatManager::SUCCESS) {
 			if(dlg->selectedTextsTarget() == Both)
-				secondSubtitle.setSecondaryData(secondSubtitle, true);
+				secondSubtitle->setSecondaryData(*secondSubtitle, true);
 
-			m_subtitle->appendSubtitle(secondSubtitle, dlg->shiftTime().toMillis());
+			m_subtitle->appendSubtitle(*secondSubtitle, dlg->shiftTime().toMillis());
 		} else {
 			KMessageBox::sorry(m_mainWindow, i18n("Could not read the subtitle file to append."));
 		}
@@ -712,15 +712,15 @@ Application::splitSubtitle()
 	if(dlg->exec() != QDialog::Accepted)
 		return;
 
-	Subtitle newSubtitle;
-	m_subtitle->splitSubtitle(newSubtitle, dlg->splitTime().toMillis(), dlg->shiftNewSubtitle());
-	if(!newSubtitle.linesCount()) {
+	QExplicitlySharedDataPointer<Subtitle> newSubtitle(new Subtitle());
+	m_subtitle->splitSubtitle(*newSubtitle, dlg->splitTime().toMillis(), dlg->shiftNewSubtitle());
+	if(!newSubtitle->linesCount()) {
 		KMessageBox::information(m_mainWindow, i18n("The specified time does not split the subtitles."));
 		return;
 	}
 
 	QUrl splitUrl = saveSplitSubtitle(
-		newSubtitle,
+		*newSubtitle,
 		m_subtitleUrl,
 		m_subtitleEncoding,
 		m_subtitleFormat,
@@ -734,7 +734,7 @@ Application::splitSubtitle()
 
 	QUrl splitTrUrl;
 	if(m_translationMode) {
-		splitTrUrl = saveSplitSubtitle(newSubtitle, m_subtitleTrUrl, m_subtitleTrEncoding, m_subtitleTrFormat, false);
+		splitTrUrl = saveSplitSubtitle(*newSubtitle, m_subtitleTrUrl, m_subtitleTrEncoding, m_subtitleTrFormat, false);
 
 		if(splitTrUrl.path().isEmpty()) {
 			// there was an error saving the split part, undo the splitting of m_subtitle
@@ -761,21 +761,21 @@ Application::syncWithSubtitle()
 	static SyncSubtitlesDialog *dlg = new SyncSubtitlesDialog(m_mainWindow);
 
 	if(dlg->exec() == QDialog::Accepted) {
-		Subtitle referenceSubtitle;
+		QExplicitlySharedDataPointer<Subtitle> referenceSubtitle(new Subtitle());
 
 		const QUrl url = dlg->subtitleUrl();
 
-		FormatManager::Status res = FormatManager::instance().readSubtitle(referenceSubtitle, true, url, nullptr, nullptr);
+		FormatManager::Status res = FormatManager::instance().readSubtitle(*referenceSubtitle, true, url, nullptr, nullptr);
 		if(res == FormatManager::SUCCESS) {
 			if(dlg->adjustToReferenceSubtitle()) {
-				if(referenceSubtitle.linesCount() <= 1)
+				if(referenceSubtitle->linesCount() <= 1)
 					KMessageBox::sorry(m_mainWindow, i18n("The reference subtitle must have more than one line to proceed."));
 				else
 					m_subtitle->adjustLines(Range::full(),
-											referenceSubtitle.firstLine()->showTime().toMillis(),
-											referenceSubtitle.lastLine()->showTime().toMillis());
+											referenceSubtitle->firstLine()->showTime().toMillis(),
+											referenceSubtitle->lastLine()->showTime().toMillis());
 			} else /*if(dlg->synchronizeToReferenceTimes())*/ {
-				m_subtitle->syncWithSubtitle(referenceSubtitle);
+				m_subtitle->syncWithSubtitle(*referenceSubtitle);
 			}
 		} else {
 			KMessageBox::sorry(m_mainWindow, i18n("Could not parse the reference subtitle file."));

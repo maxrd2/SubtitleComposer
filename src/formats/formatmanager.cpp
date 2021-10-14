@@ -154,8 +154,8 @@ FormatManager::readBinary(Subtitle &subtitle, const QUrl &url, bool primary,
 						  QTextCodec **codec, QString *formatName) const
 {
 	foreach(InputFormat *format, m_inputFormats) {
-		Subtitle newSubtitle;
-		Status res = format->readBinary(newSubtitle, url);
+		QExplicitlySharedDataPointer<Subtitle> newSubtitle(new Subtitle());
+		Status res = format->readBinary(*newSubtitle, url);
 		if(res == ERROR)
 			continue;
 		if(res == SUCCESS) {
@@ -163,9 +163,9 @@ FormatManager::readBinary(Subtitle &subtitle, const QUrl &url, bool primary,
 				*formatName = format->name();
 			*codec = KCharsets::charsets()->codecForName(SCConfig::defaultSubtitlesEncoding());
 			if(primary)
-				subtitle.setPrimaryData(newSubtitle, true);
+				subtitle.setPrimaryData(*newSubtitle, true);
 			else
-				subtitle.setSecondaryData(newSubtitle, true);
+				subtitle.setSecondaryData(*newSubtitle, true);
 		}
 		return res;
 	}
