@@ -292,7 +292,11 @@ LinesModel::onLinesInserted(int firstIndex, int lastIndex)
 	m_resetModelSelection.second = m_subtitle->at(lastIndex);
 	LinesWidget *lw = static_cast<LinesWidget *>(parent());
 	m_resetModelResumeEditing = lw->isEditing();
-	lw->selectionModel()->clear();
+	{
+		QItemSelectionModel *sm = lw->selectionModel();
+		QSignalBlocker s(sm);
+		sm->clear();
+	}
 	m_resetModelTimer->start();
 }
 
