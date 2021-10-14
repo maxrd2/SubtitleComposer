@@ -358,92 +358,82 @@ LinesWidget::eventFilter(QObject *object, QEvent *event)
 	return TreeView::eventFilter(object, event);
 }
 
+inline static void
+addAppAction(QMenu *menu, const char *actionName, bool checkable=false, bool checked=false)
+{
+	QAction *action = app()->action(actionName);
+	if(checkable) {
+		action->setCheckable(true);
+		action->setChecked(checked);
+	}
+	menu->addAction(action);
+	if(checkable)
+		action->setCheckable(false);
+}
+
 void
 LinesWidget::contextMenuEvent(QContextMenuEvent *e)
 {
-	SubtitleLine *referenceLine = nullptr;
-	QItemSelectionModel *selection = selectionModel();
-	for(int row = 0, rowCount = model()->rowCount(); row < rowCount; ++row) {
-		if(selection->isSelected(model()->index(row, 0))) {
-			referenceLine = model()->subtitle()->line(row);
-			break;
-		}
-	}
-	if(!referenceLine)
-		return;
-
-	QList<QAction *> checkableActions;
-	auto appAction = [&](const char *actionName, bool checkable=false, bool checked=false) -> QAction * {
-		QAction *action = app()->action(actionName);
-		if(checkable) {
-			checkableActions.append(action);
-			action->setCheckable(true);
-			action->setChecked(checked);
-		}
-		return action;
-	};
+	SubtitleLine *subLine = static_cast<LinesSelectionModel *>(selectionModel())->currentLine();
 
 	QMenu menu;
-	menu.addAction(appAction(ACT_SELECT_ALL_LINES));
-	menu.addAction(appAction(ACT_EDIT_CURRENT_LINE_IN_PLACE));
+	addAppAction(&menu, ACT_SELECT_ALL_LINES);
+	addAppAction(&menu, ACT_EDIT_CURRENT_LINE_IN_PLACE);
 	menu.addSeparator();
-	menu.addAction(appAction(ACT_INSERT_BEFORE_CURRENT_LINE));
-	menu.addAction(appAction(ACT_INSERT_AFTER_CURRENT_LINE));
-	menu.addAction(appAction(ACT_REMOVE_SELECTED_LINES));
+	addAppAction(&menu, ACT_INSERT_BEFORE_CURRENT_LINE);
+	addAppAction(&menu, ACT_INSERT_AFTER_CURRENT_LINE);
+	addAppAction(&menu, ACT_REMOVE_SELECTED_LINES);
 	menu.addSeparator();
-	menu.addAction(appAction(ACT_JOIN_SELECTED_LINES));
-	menu.addAction(appAction(ACT_SPLIT_SELECTED_LINES));
+	addAppAction(&menu, ACT_JOIN_SELECTED_LINES);
+	addAppAction(&menu, ACT_SPLIT_SELECTED_LINES);
 	menu.addSeparator();
-	menu.addAction(appAction(ACT_ANCHOR_TOGGLE));
-	menu.addAction(appAction(ACT_ANCHOR_REMOVE_ALL));
+	addAppAction(&menu, ACT_ANCHOR_TOGGLE);
+	addAppAction(&menu, ACT_ANCHOR_REMOVE_ALL);
 	menu.addSeparator();
 
 	QMenu textsMenu(i18n("Texts"));
-	textsMenu.addAction(appAction(ACT_ADJUST_TEXTS));
-	textsMenu.addAction(appAction(ACT_UNBREAK_TEXTS));
-	textsMenu.addAction(appAction(ACT_SIMPLIFY_SPACES));
-	textsMenu.addAction(appAction(ACT_CHANGE_CASE));
-	textsMenu.addAction(appAction(ACT_FIX_PUNCTUATION));
-	textsMenu.addAction(appAction(ACT_TRANSLATE));
+	addAppAction(&textsMenu, ACT_ADJUST_TEXTS);
+	addAppAction(&textsMenu, ACT_UNBREAK_TEXTS);
+	addAppAction(&textsMenu, ACT_SIMPLIFY_SPACES);
+	addAppAction(&textsMenu, ACT_CHANGE_CASE);
+	addAppAction(&textsMenu, ACT_FIX_PUNCTUATION);
+	addAppAction(&textsMenu, ACT_TRANSLATE);
 	textsMenu.addSeparator();
-	textsMenu.addAction(appAction(ACT_SPELL_CHECK));
+	addAppAction(&textsMenu, ACT_SPELL_CHECK);
 	menu.addMenu(&textsMenu);
 
 	QMenu stylesMenu(i18n("Styles"));
-	const int styleFlags = referenceLine->primaryDoc()->cummulativeStyleFlags() | referenceLine->secondaryDoc()->cummulativeStyleFlags();
-	stylesMenu.addAction(appAction(ACT_TOGGLE_SELECTED_LINES_BOLD, true, styleFlags & SString::Bold));
-	stylesMenu.addAction(appAction(ACT_TOGGLE_SELECTED_LINES_ITALIC, true, styleFlags & SString::Italic));
-	stylesMenu.addAction(appAction(ACT_TOGGLE_SELECTED_LINES_UNDERLINE, true, styleFlags & SString::Underline));
-	stylesMenu.addAction(appAction(ACT_TOGGLE_SELECTED_LINES_STRIKETHROUGH, true, styleFlags & SString::StrikeThrough));
-	stylesMenu.addAction(appAction(ACT_CHANGE_SELECTED_LINES_TEXT_COLOR));
+	const int styleFlags = subLine ? subLine->primaryDoc()->cummulativeStyleFlags() | subLine->secondaryDoc()->cummulativeStyleFlags() : 0;
+	addAppAction(&stylesMenu, ACT_TOGGLE_SELECTED_LINES_BOLD, true, styleFlags & SString::Bold);
+	addAppAction(&stylesMenu, ACT_TOGGLE_SELECTED_LINES_ITALIC, true, styleFlags & SString::Italic);
+	addAppAction(&stylesMenu, ACT_TOGGLE_SELECTED_LINES_UNDERLINE, true, styleFlags & SString::Underline);
+	addAppAction(&stylesMenu, ACT_TOGGLE_SELECTED_LINES_STRIKETHROUGH, true, styleFlags & SString::StrikeThrough);
+	addAppAction(&stylesMenu, ACT_CHANGE_SELECTED_LINES_TEXT_COLOR);
 	menu.addMenu(&stylesMenu);
 
 	QMenu timesMenu(i18n("Times"));
-	timesMenu.addAction(appAction(ACT_SHIFT_SELECTED_LINES_FORWARDS));
-	timesMenu.addAction(appAction(ACT_SHIFT_SELECTED_LINES_BACKWARDS));
+	addAppAction(&timesMenu, ACT_SHIFT_SELECTED_LINES_FORWARDS);
+	addAppAction(&timesMenu, ACT_SHIFT_SELECTED_LINES_BACKWARDS);
 	timesMenu.addSeparator();
-	timesMenu.addAction(appAction(ACT_SHIFT));
-	timesMenu.addAction(appAction(ACT_DURATION_LIMITS));
-	timesMenu.addAction(appAction(ACT_AUTOMATIC_DURATIONS));
-	timesMenu.addAction(appAction(ACT_MAXIMIZE_DURATIONS));
-	timesMenu.addAction(appAction(ACT_FIX_OVERLAPPING_LINES));
+	addAppAction(&timesMenu, ACT_SHIFT);
+	addAppAction(&timesMenu, ACT_DURATION_LIMITS);
+	addAppAction(&timesMenu, ACT_AUTOMATIC_DURATIONS);
+	addAppAction(&timesMenu, ACT_MAXIMIZE_DURATIONS);
+	addAppAction(&timesMenu, ACT_FIX_OVERLAPPING_LINES);
 	menu.addMenu(&timesMenu);
 
 	QMenu errorsMenu(i18n("Errors"));
-	errorsMenu.addAction(appAction(ACT_TOGGLE_SELECTED_LINES_MARK, true, referenceLine->errorFlags() & SubtitleLine::UserMark));
+	addAppAction(&errorsMenu, ACT_TOGGLE_SELECTED_LINES_MARK, true, subLine ? subLine->errorFlags() & SubtitleLine::UserMark : 0);
 	errorsMenu.addSeparator();
-	errorsMenu.addAction(appAction(ACT_DETECT_ERRORS));
-	errorsMenu.addAction(appAction(ACT_CLEAR_ERRORS));
+	addAppAction(&errorsMenu, ACT_DETECT_ERRORS);
+	addAppAction(&errorsMenu, ACT_CLEAR_ERRORS);
 	errorsMenu.addSeparator();
-	errorsMenu.addAction(appAction(ACT_SHOW_ERRORS));
+	addAppAction(&errorsMenu, ACT_SHOW_ERRORS);
 	menu.addMenu(&errorsMenu);
 
 	m_showingContextMenu = true;
 	menu.exec(e->globalPos());
 	m_showingContextMenu = false;
-
-	foreach(QAction *action, checkableActions)
-		action->setCheckable(false);
 
 	e->ignore();
 
