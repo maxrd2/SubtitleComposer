@@ -97,6 +97,13 @@ class SCScript
 			m_author = m.captured(1);
 	}
 
+	friend class QVector<SCScript>;
+	SCScript() noexcept {}
+	SCScript(const SCScript &) noexcept = default;
+	SCScript & operator=(const SCScript &) noexcept = default;
+	SCScript(SCScript &&) noexcept = default;
+	SCScript & operator=(SCScript &&) noexcept = default;
+
 public:
 	QString content() const
 	{
