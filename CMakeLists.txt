@@ -1,7 +1,7 @@
 cmake_policy(SET CMP0048 NEW)
 project(subtitlecomposer VERSION "0.7.1")
 
-cmake_minimum_required(VERSION 3.16 FATAL_ERROR)
+cmake_minimum_required(VERSION 3.4...3.20 FATAL_ERROR)
 set(QT_MIN_VERSION "5.9.0")
 set(KF5_MIN_VERSION "5.44.0")
 
@@ -9,13 +9,7 @@ set(CMAKE_CXX_STANDARD 11)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 find_package(ECM 1.2.0 REQUIRED NO_MODULE)
-set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} ${ECM_MODULE_PATH} ${ECM_KDE_MODULE_DIR} "${CMAKE_CURRENT_SOURCE_DIR}/cmake")
-
-cmake_policy(SET CMP0043 NEW)
-cmake_policy(SET CMP0063 NEW)
-if(POLICY CMP0071)
-	cmake_policy(SET CMP0071 NEW)
-endif()
+set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} ${ECM_MODULE_PATH} "${CMAKE_CURRENT_SOURCE_DIR}/cmake")
 
 include(KDEInstallDirs)
 include(KDECMakeSettings)
