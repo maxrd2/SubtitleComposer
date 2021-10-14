@@ -314,11 +314,13 @@ LinesModel::onLinesRemoved(int firstIndex, int lastIndex)
 void
 LinesModel::onModelReset()
 {
-	beginResetModel();
-	endResetModel();
-
 	LinesWidget *w = static_cast<LinesWidget *>(parent());
 	QItemSelectionModel *sm = w->selectionModel();
+
+	const QModelIndex prevIndex = sm->currentIndex();;
+
+	beginResetModel();
+	endResetModel();
 
 	if(sm->hasSelection()) {
 		if(!sm->currentIndex().isValid()) {
@@ -332,6 +334,13 @@ LinesModel::onModelReset()
 			sm->select(QItemSelection(first, last), QItemSelectionModel::ClearAndSelect);
 		}
 		sm->setCurrentIndex(first, QItemSelectionModel::Rows);
+	} else {
+		if(prevIndex.isValid() && !sm->currentIndex().isValid()) {
+			// model reset should invalidate current index and prevent signals
+			QSignalBlocker s(sm); // make sure nothing fires anyway
+			sm->setCurrentIndex(prevIndex, QItemSelectionModel::Rows);
+		}
+		sm->clear();
 	}
 
 	if(w->scrollFollowsModel())

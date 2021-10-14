@@ -28,7 +28,8 @@ LinesSelectionModel::LinesSelectionModel(LinesModel *model)
 void
 LinesSelectionModel::setCurrentIndex(const QModelIndex &index, QItemSelectionModel::SelectionFlags command)
 {
-	m_currentLine = static_cast<LinesModel *>(model())->subtitle()->line(index.row());
+	Subtitle *sub = static_cast<LinesModel *>(model())->subtitle();
+	m_currentLine = sub ? sub->line(index.row()) : nullptr;
 	QItemSelectionModel::setCurrentIndex(index, command);
 }
 
@@ -50,6 +51,9 @@ LinesSelectionModel::select(const QItemSelection &selection, QItemSelectionModel
 		m_selection.clear();
 
 	const Subtitle *subtitle = static_cast<LinesModel *>(model())->subtitle();
+	if(!subtitle)
+		return;
+
 	QModelIndexList sel = selection.indexes();
 	while(!sel.empty()) {
 		const SubtitleLine *line = subtitle->line(sel.takeFirst().row());
@@ -83,11 +87,16 @@ LinesSelectionModel::reset()
 	QItemSelectionModel::reset();
 	m_resetInProgress = false;
 
-	if(m_currentLine)
-		QItemSelectionModel::setCurrentIndex(model()->index(m_currentLine->index(), 0), QItemSelectionModel::Current);
-
 	const LinesModel *model = static_cast<LinesModel *>(this->model());
 	Subtitle *subtitle = model->subtitle();
+	if(!subtitle) {
+		QItemSelectionModel::clear();
+		return;
+	}
+
+	if(m_currentLine)
+		QItemSelectionModel::setCurrentIndex(model->index(m_currentLine->index(), 0), QItemSelectionModel::Current);
+
 	const int lastCol = model->columnCount() - 1;
 	for(auto it = m_selection.cbegin(); it != m_selection.cend(); ++it) {
 		const SubtitleLine *line = *it;
