@@ -1368,10 +1368,12 @@ Subtitle::recheckErrors(const RangeList &ranges)
 void
 Subtitle::processAction(UndoAction *action) const
 {
-	if(app()->subtitle() == this)
+	if(app()->subtitle() == this) {
 		app()->undoStack()->push(action);
-	else
+	} else {
 		action->redo();
+		delete action;
+	}
 }
 
 void
