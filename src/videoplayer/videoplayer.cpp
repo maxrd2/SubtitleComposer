@@ -263,6 +263,8 @@ VideoPlayer::setupNotifications()
 		m_videoWidget->videoLayer()->show();
 	});
 	connect(m_player, &FFPlayer::stateChanged, this, [this](FFPlayer::State ffs){
+		if(m_state == Initialized) // video file is closed don't notify play/pause/stop
+			return;
 		static const QMap<FFPlayer::State, State> stateMap
 			{{ FFPlayer::Stopped, Stopped }, { FFPlayer::Playing, Playing }, { FFPlayer::Paused, Paused }};
 		const State state = stateMap[ffs];
