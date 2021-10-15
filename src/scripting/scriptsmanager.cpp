@@ -191,7 +191,7 @@ public:
 		if(!parent.isValid()) {
 			// category
 			if(row < m_categories.size())
-				return createIndex(row, column, 0ULL);
+				return createIndex(row, column, quintptr(0ULL));
 			// script (root)
 			return createIndex(row, column, childIndex(QString(), row - m_categories.size()) + 1);
 		} else {
@@ -213,7 +213,7 @@ public:
 		const SCScript &s = m_scripts.at(child.internalId() - 1);
 		const int i = m_categories.indexOf(s.category());
 		if(i >= 0) // script (child)
-			return createIndex(i, 0, 0ULL);
+			return createIndex(i, 0, quintptr(0ULL));
 		return QModelIndex(); // script (root)
 	}
 
@@ -330,7 +330,7 @@ public:
 		}
 
 		const int n = m_scripts.size();
-		beginInsertRows(catTitle.isEmpty() ? QModelIndex() : createIndex(catIndex, 0, 0ULL), n - 1, n + 1);
+		beginInsertRows(catTitle.isEmpty() ? QModelIndex() : createIndex(catIndex, 0, quintptr(0ULL)), n - 1, n + 1);
 		endInsertRows();
 		return script;
 	}
