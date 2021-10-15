@@ -1122,13 +1122,7 @@ Application::onPlayerPaused()
 void
 Application::onPlayerStopped()
 {
-	Q_ASSERT(m_mainWindow != nullptr);
-	KActionCollection *ac = m_mainWindow->actionCollection();
-	Q_ASSERT(ac != nullptr);
-
-	QAction *playPauseAction = action(ACT_PLAY_PAUSE);
-	playPauseAction->setIcon(QIcon::fromTheme(QStringLiteral("media-playback-start")));
-	playPauseAction->setText(i18n("Play"));
+	onPlayerPaused();
 }
 
 void
