@@ -38,7 +38,7 @@ EOF
 
 git="git -C $gitpath"
 files=(po CMakeLists.txt)
-if [ "$($git describe HEAD --all)" = "heads/obs/latest" ]; then
+if [ "$($git describe --all --match=obs/\* HEAD)" = "heads/obs/latest" ]; then
 	gitver="$($git describe --always --tags --abbrev=10 kde/master)"
 	echo "Updating version to $gitver"
 	sed -E "s|SUBTITLECOMPOSER_VERSION_STRING|\"${gitver#v}\"|" -i $gitpath/src/main.cpp
@@ -46,5 +46,8 @@ if [ "$($git describe HEAD --all)" = "heads/obs/latest" ]; then
 	$git add "${files[@]}"
 	$git commit -m "Added i18n - $gitver"
 else
-	echo -e "\n$git add ${files[@]} && $git commit -c 'Added i18n - $gitver'"
+	gitver="$($git describe --always --tags --abbrev=10 kde/master)"
+	$git add "${files[@]}"
+	sed -E "s|SUBTITLECOMPOSER_VERSION_STRING|\"${gitver#v}\"|" -i $gitpath/src/main.cpp
+	echo -e "\n$git commit -c 'Added i18n - $gitver'"
 fi
