@@ -48,7 +48,7 @@ Application::setupActions()
 	openSubtitleAction->setText(i18nc("@action:inmenu Open subtitle file", "Open Subtitle..."));
 	openSubtitleAction->setStatusTip(i18n("Open subtitle file"));
 	actionCollection->setDefaultShortcuts(openSubtitleAction, KStandardShortcut::open());
-	connect(openSubtitleAction, &QAction::triggered, [this](){ openSubtitle(); });
+	connect(openSubtitleAction, &QAction::triggered, this, [this](){ openSubtitle(); });
 	actionCollection->addAction(ACT_OPEN_SUBTITLE, openSubtitleAction);
 	actionManager->addAction(openSubtitleAction, 0);
 
@@ -64,7 +64,7 @@ Application::setupActions()
 	m_recentSubtitlesAction->setIcon(QIcon::fromTheme("document-open"));
 	m_recentSubtitlesAction->setText(i18nc("@action:inmenu Open rencently used subtitle file", "Open &Recent Subtitle"));
 	m_recentSubtitlesAction->setStatusTip(i18n("Open subtitle file"));
-	connect(m_recentSubtitlesAction, &KRecentFilesActionExt::urlSelected, [this](const QUrl &url){ openSubtitle(url); });
+	connect(m_recentSubtitlesAction, &KRecentFilesActionExt::urlSelected, this, [this](const QUrl &url){ openSubtitle(url); });
 	actionCollection->addAction(ACT_RECENT_SUBTITLES, m_recentSubtitlesAction);
 
 	QAction *saveSubtitleAction = new QAction(actionCollection);
@@ -72,7 +72,7 @@ Application::setupActions()
 	saveSubtitleAction->setText(i18n("Save"));
 	saveSubtitleAction->setStatusTip(i18n("Save opened subtitle"));
 	actionCollection->setDefaultShortcuts(saveSubtitleAction, KStandardShortcut::save());
-	connect(saveSubtitleAction, &QAction::triggered, [this](){ saveSubtitle(KCharsets::charsets()->codecForName(m_subtitleEncoding)); });
+	connect(saveSubtitleAction, &QAction::triggered, this, [this](){ saveSubtitle(KCharsets::charsets()->codecForName(m_subtitleEncoding)); });
 	actionCollection->addAction(ACT_SAVE_SUBTITLE, saveSubtitleAction);
 	actionManager->addAction(saveSubtitleAction, UserAction::SubPDirty | UserAction::FullScreenOff);
 
@@ -108,7 +108,7 @@ Application::setupActions()
 	openSubtitleTrAction->setText(i18n("Open Translation..."));
 	openSubtitleTrAction->setStatusTip(i18n("Open translation subtitle file"));
 	actionCollection->setDefaultShortcut(openSubtitleTrAction, QKeySequence("Ctrl+Shift+O"));
-	connect(openSubtitleTrAction, &QAction::triggered, [this](){ openSubtitleTr(); });
+	connect(openSubtitleTrAction, &QAction::triggered, this, [this](){ openSubtitleTr(); });
 	actionCollection->addAction(ACT_OPEN_SUBTITLE_TR, openSubtitleTrAction);
 	actionManager->addAction(openSubtitleTrAction, UserAction::SubOpened);
 
@@ -124,7 +124,7 @@ Application::setupActions()
 	m_recentSubtitlesTrAction->setIcon(QIcon::fromTheme("document-open"));
 	m_recentSubtitlesTrAction->setText(i18n("Open &Recent Translation"));
 	m_recentSubtitlesTrAction->setStatusTip(i18n("Open translation subtitle file"));
-	connect(m_recentSubtitlesTrAction, &KRecentFilesActionExt::urlSelected, [this](const QUrl &url){ openSubtitleTr(url); });
+	connect(m_recentSubtitlesTrAction, &KRecentFilesActionExt::urlSelected, this, [this](const QUrl &url){ openSubtitleTr(url); });
 	actionCollection->addAction(ACT_RECENT_SUBTITLES_TR, m_recentSubtitlesTrAction);
 	actionManager->addAction(m_recentSubtitlesTrAction, UserAction::SubOpened | UserAction::FullScreenOff);
 
@@ -133,7 +133,7 @@ Application::setupActions()
 	saveSubtitleTrAction->setText(i18n("Save Translation"));
 	saveSubtitleTrAction->setStatusTip(i18n("Save opened translation subtitle"));
 	actionCollection->setDefaultShortcut(saveSubtitleTrAction, QKeySequence("Ctrl+Shift+S"));
-	connect(saveSubtitleTrAction, &QAction::triggered, [&](){
+	connect(saveSubtitleTrAction, &QAction::triggered, this, [&](){
 		saveSubtitleTr(KCharsets::charsets()->codecForName(m_subtitleTrEncoding));
 	});
 	actionCollection->addAction(ACT_SAVE_SUBTITLE_TR, saveSubtitleTrAction);
@@ -513,14 +513,14 @@ Application::setupActions()
 	openVideoAction->setIcon(QIcon::fromTheme("document-open"));
 	openVideoAction->setText(i18n("Open Video..."));
 	openVideoAction->setStatusTip(i18n("Open video file"));
-	connect(openVideoAction, &QAction::triggered, [this](){ openVideo(); });
+	connect(openVideoAction, &QAction::triggered, this, [this](){ openVideo(); });
 	actionCollection->addAction(ACT_OPEN_VIDEO, openVideoAction);
 
 	m_recentVideosAction = new KRecentFilesActionExt(actionCollection);
 	m_recentVideosAction->setIcon(QIcon::fromTheme("document-open"));
 	m_recentVideosAction->setText(i18n("Open &Recent Video"));
 	m_recentVideosAction->setStatusTip(i18n("Open video file"));
-	connect(m_recentVideosAction, &KRecentFilesActionExt::urlSelected, [this](const QUrl &url){ openVideo(url); });
+	connect(m_recentVideosAction, &KRecentFilesActionExt::urlSelected, this, [this](const QUrl &url){ openVideo(url); });
 	actionCollection->addAction(ACT_RECENT_VIDEOS, m_recentVideosAction);
 
 	QAction *demuxTextStreamAction = new KSelectAction(actionCollection);
@@ -529,7 +529,7 @@ Application::setupActions()
 	demuxTextStreamAction->setIcon(QIcon::fromTheme("select_stream"));
 	demuxTextStreamAction->setText(i18n("Import Subtitle Stream"));
 	demuxTextStreamAction->setStatusTip(i18n("Import subtitle stream into subtitle editor"));
-	connect(demuxTextStreamActionMenu, &QMenu::triggered, [this](QAction *action){ demuxTextStream(action->data().value<int>()); });
+	connect(demuxTextStreamActionMenu, &QMenu::triggered, this, [this](QAction *action){ demuxTextStream(action->data().value<int>()); });
 	actionCollection->addAction(ACT_DEMUX_TEXT_STREAM, demuxTextStreamAction);
 
 	QAction *speechImportStreamAction = new KSelectAction(actionCollection);
@@ -538,7 +538,7 @@ Application::setupActions()
 	speechImportStreamAction->setIcon(QIcon::fromTheme("select_stream"));
 	speechImportStreamAction->setText(i18n("Recognize Speech"));
 	speechImportStreamAction->setStatusTip(i18n("Recognize speech in audio stream"));
-	connect(speechImportStreamActionMenu, &QMenu::triggered, [this](QAction *action){ speechImportAudioStream(action->data().value<int>()); });
+	connect(speechImportStreamActionMenu, &QMenu::triggered, this, [this](QAction *action){ speechImportAudioStream(action->data().value<int>()); });
 	actionCollection->addAction(ACT_ASR_IMPORT_AUDIO_STREAM, speechImportStreamAction);
 
 	QAction *closeVideoAction = new QAction(actionCollection);
