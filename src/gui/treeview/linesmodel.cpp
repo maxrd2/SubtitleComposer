@@ -189,7 +189,7 @@ LinesModel::headerData(int section, Qt::Orientation orientation, int role) const
 QVariant
 LinesModel::data(const QModelIndex &index, int role) const
 {
-	if(!m_subtitle)
+	if(!m_subtitle || m_subtitle->count() <= index.row())
 		return QVariant();
 
 	SubtitleLine *line = m_subtitle->at(index.row());

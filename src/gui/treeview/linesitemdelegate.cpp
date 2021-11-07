@@ -334,6 +334,8 @@ LinesItemDelegate::setEditorData(QWidget *editor, const QModelIndex &index) cons
 {
 	if(isRichDoc(index)) {
 		RichDocument *doc = index.data(Qt::EditRole).value<RichDocumentPtr>();
+		if(!doc)
+			return;
 		RichLineEdit *edit = static_cast<RichLineEdit *>(editor);
 		if(edit->document() != doc)
 			edit->setDocument(doc);
