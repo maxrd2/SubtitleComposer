@@ -524,21 +524,17 @@ Application::setupActions()
 	actionCollection->addAction(ACT_RECENT_VIDEOS, m_recentVideosAction);
 
 	QAction *demuxTextStreamAction = new KSelectAction(actionCollection);
-	QMenu *demuxTextStreamActionMenu = new QMenu(m_mainWindow);
-	demuxTextStreamAction->setMenu(demuxTextStreamActionMenu);
 	demuxTextStreamAction->setIcon(QIcon::fromTheme("select_stream"));
 	demuxTextStreamAction->setText(i18n("Import Subtitle Stream"));
 	demuxTextStreamAction->setStatusTip(i18n("Import subtitle stream into subtitle editor"));
-	connect(demuxTextStreamActionMenu, &QMenu::triggered, this, [this](QAction *action){ demuxTextStream(action->data().value<int>()); });
+	connect(demuxTextStreamAction->menu(), &QMenu::triggered, this, [this](QAction *action){ demuxTextStream(action->data().value<int>()); });
 	actionCollection->addAction(ACT_DEMUX_TEXT_STREAM, demuxTextStreamAction);
 
 	QAction *speechImportStreamAction = new KSelectAction(actionCollection);
-	QMenu *speechImportStreamActionMenu = new QMenu(m_mainWindow);
-	speechImportStreamAction->setMenu(speechImportStreamActionMenu);
 	speechImportStreamAction->setIcon(QIcon::fromTheme("select_stream"));
 	speechImportStreamAction->setText(i18n("Recognize Speech"));
 	speechImportStreamAction->setStatusTip(i18n("Recognize speech in audio stream"));
-	connect(speechImportStreamActionMenu, &QMenu::triggered, this, [this](QAction *action){ speechImportAudioStream(action->data().value<int>()); });
+	connect(speechImportStreamAction->menu(), &QMenu::triggered, this, [this](QAction *action){ speechImportAudioStream(action->data().value<int>()); });
 	actionCollection->addAction(ACT_ASR_IMPORT_AUDIO_STREAM, speechImportStreamAction);
 
 	QAction *closeVideoAction = new QAction(actionCollection);

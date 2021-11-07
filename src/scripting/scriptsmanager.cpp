@@ -379,7 +379,8 @@ ScriptsManager::ScriptsManager(QObject *parent)
 
 	scriptsView->header()->setSectionResizeMode(QHeaderView::ResizeToContents);
 	scriptsView->installEventFilter(this);
-	scriptsView->selectionModel()->deleteLater();
+	if(QItemSelectionModel *m = scriptsView->selectionModel())
+		m->deleteLater();
 	scriptsView->setModel(new InstalledScriptsModel(scriptsView));
 	scriptsView->setSortingEnabled(false);
 	scriptsView->expandAll();
