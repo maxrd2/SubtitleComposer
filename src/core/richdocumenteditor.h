@@ -237,7 +237,7 @@ private:
 
 	void emitCursorPositionChanged();
 
-	bool finishChange(bool edited);
+	bool finishChange(bool edited, bool forceUpdate = false);
 
 	QPointer<QCompleter> m_completer;
 #if QT_CONFIG(completer)
@@ -289,6 +289,8 @@ private:
 
 	int m_keyboardScheme = 0;
 	QObject *m_accessibleObject = nullptr;
+
+	QVector<QTextLayout::FormatRange> m_preeditRanges;
 };
 
 }

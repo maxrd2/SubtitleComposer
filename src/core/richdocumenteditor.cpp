@@ -53,7 +53,7 @@ RichDocumentEditor::updateDisplayText(bool forceUpdate)
 	QString orig = m_textLayout.text();
 
 	QString text;
-	QVector<QTextLayout::FormatRange> ranges;
+	QVector<QTextLayout::FormatRange> ranges = m_preeditRanges;
 	if(m_document) {
 		for(QTextBlock bi = m_document->begin(); bi != m_document->end(); bi = bi.next()) {
 			if(bi != m_document->begin()) {
@@ -329,97 +329,78 @@ RichDocumentEditor::end(bool mark)
 void
 RichDocumentEditor::processInputMethodEvent(QInputMethodEvent *event)
 {
-	Q_UNUSED(event);
-	/* FIXME:
-	int priorState = -1;
-	bool isGettingInput = !event->commitString().isEmpty()
+	bool didChange = false;
+	const bool isGettingInput = !event->commitString().isEmpty()
 			|| event->preeditString() != preeditAreaText()
 			|| event->replacementLength() > 0;
-	bool cursorPositionChanged = false;
-	bool selectionChange = false;
 
 	if(isGettingInput) {
 		// If any text is being input, remove selected text.
-		removeSelectedText();
+		if(m_textCursor->hasSelection()) {
+			removeSelectedText();
+			didChange = true;
+		}
 	}
 
-	int c = m_cursor; // cursor position after insertion of commit string
-	if(event->replacementStart() <= 0)
-		c += event->commitString().length() - qMin(-event->replacementStart(), event->replacementLength());
-
-	m_cursor += event->replacementStart();
-	if(m_cursor < 0)
-		m_cursor = 0;
+	if(event->replacementStart()) {
+		if(event->replacementStart() < 0)
+			m_textCursor->movePosition(QTextCursor::PreviousCharacter, QTextCursor::MoveAnchor, -event->replacementStart());
+		else
+			m_textCursor->movePosition(QTextCursor::NextCharacter, QTextCursor::MoveAnchor, event->replacementStart());
+	}
 
 	// insert commit string
 	if(event->replacementLength()) {
-		m_selstart = m_cursor;
-		m_selend = m_selstart + event->replacementLength();
+		m_textCursor->movePosition(QTextCursor::NextCharacter, QTextCursor::KeepAnchor, event->replacementLength());
 		removeSelectedText();
+		didChange = true;
 	}
 	if(!event->commitString().isEmpty()) {
-		internalInsert(event->commitString());
-		cursorPositionChanged = true;
-	} else {
-		m_cursor = qBound(0, c, m_text.length());
+		m_textCursor->insertText(event->commitString());
 	}
 
+	// update selection
 	for(int i = 0; i < event->attributes().size(); ++i) {
 		const QInputMethodEvent::Attribute &a = event->attributes().at(i);
 		if(a.type == QInputMethodEvent::Selection) {
-			m_cursor = qBound(0, a.start + a.length, m_text.length());
-			if(a.length) {
-				m_selstart = qMax(0, qMin(a.start, m_text.length()));
-				m_selend = m_cursor;
-				if(m_selend < m_selstart) {
-					qSwap(m_selstart, m_selend);
-				}
-				selectionChange = true;
-			} else {
-				if(m_selstart != m_selend)
-					selectionChange = true;
-				m_selstart = m_selend = 0;
-			}
-			cursorPositionChanged = true;
+			const int relMove = a.start - m_textCursor->position();
+			m_textCursor->movePosition(relMove > 0 ? QTextCursor::NextCharacter : QTextCursor::PreviousCharacter, QTextCursor::MoveAnchor, relMove);
+			m_textCursor->movePosition(a.length > 0 ? QTextCursor::NextCharacter : QTextCursor::PreviousCharacter, QTextCursor::KeepAnchor, a.length);
+			if(a.length)
+				m_selDirty = true;
 		}
 	}
+
+	// update preedit text
+	const int oldPreeditCursor = m_textLayout.preeditAreaPosition();
 #ifndef QT_NO_IM
-	setPreeditArea(m_cursor, event->preeditString());
+	setPreeditArea(m_textCursor->position(), event->preeditString());
 #endif //QT_NO_IM
-	const int oldPreeditCursor = m_preeditCursor;
-	m_preeditCursor = event->preeditString().length();
-	m_hideCursor = false;
-	QVector<QTextLayout::FormatRange> formats;
-	formats.reserve(event->attributes().size());
+	int preeditCursor = event->preeditString().length();
+	m_preeditRanges.clear();
+	m_preeditRanges.reserve(event->attributes().size());
 	for(int i = 0; i < event->attributes().size(); ++i) {
 		const QInputMethodEvent::Attribute &a = event->attributes().at(i);
 		if(a.type == QInputMethodEvent::Cursor) {
-			m_preeditCursor = a.start;
-			m_hideCursor = !a.length;
+			preeditCursor = a.start;
 		} else if(a.type == QInputMethodEvent::TextFormat) {
 			QTextCharFormat f = qvariant_cast<QTextFormat>(a.value).toCharFormat();
 			if(f.isValid()) {
 				QTextLayout::FormatRange o;
-				o.start = a.start + m_cursor;
+				o.start = a.start + m_textCursor->position();
 				o.length = a.length;
 				o.format = f;
-				formats.append(o);
+				m_preeditRanges.append(o);
 			}
 		}
 	}
-	m_textLayout.setFormats(formats);
-	updateDisplayText(true);
-	if(cursorPositionChanged)
-		emitCursorPositionChanged();
-	else if(m_preeditCursor != oldPreeditCursor)
-		emit updateMicroFocus();
 
+	// finish up
 	if(isGettingInput)
-		finishChange(priorState);
-
-	if(selectionChange)
-		emit selectionChanged();
-		*/
+		m_textDirty = true;
+	if(!m_selDirty && preeditCursor != oldPreeditCursor)
+		emit updateMicroFocus();
+	finishChange(didChange, true);
 }
 
 void
@@ -480,10 +461,10 @@ RichDocumentEditor::selectWordAtPos(int cursor)
 }
 
 bool
-RichDocumentEditor::finishChange(bool edited)
+RichDocumentEditor::finishChange(bool edited, bool forceUpdate)
 {
 	if(m_textDirty) {
-		updateDisplayText();
+		updateDisplayText(forceUpdate);
 
 		if(m_textDirty) {
 			m_textDirty = false;
@@ -492,6 +473,8 @@ RichDocumentEditor::finishChange(bool edited)
 				emit textEdited(actualText);
 			emit textChanged(actualText);
 		}
+	} else if(forceUpdate) {
+		updateDisplayText(forceUpdate);
 	}
 	if(m_selDirty) {
 		m_selDirty = false;
