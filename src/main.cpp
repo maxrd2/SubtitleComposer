@@ -213,8 +213,7 @@ main(int argc, char **argv)
 		KAboutLicense::GPL_V2,
 		QStringLiteral("&copy; 2007-2021 The Subtitle Composer Authors"),
 		QString(), // Additional text
-		QStringLiteral("https://subtitlecomposer.kde.org/"),
-		QStringLiteral("https://invent.kde.org/kde/subtitlecomposer/issues"));
+		QStringLiteral("https://subtitlecomposer.kde.org/"));
 
 	aboutData.addAuthor(QStringLiteral("Mladen Milinković"), i18n("Maintainer"), "maxrd2@smoothware.net");
 	aboutData.addAuthor(QStringLiteral("Sergio Pistone"), i18n("Former Maintainer"), "sergio_pistone@yahoo.com.ar");
