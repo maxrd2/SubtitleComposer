@@ -114,8 +114,8 @@
       <li xml:lang="x-test">xxOpen/Save Text Subtitle Formats - SubRip/SRT, MicroDVD, SSA/ASS, MPlayer, TMPlayer and YouTube captionsxx</li>
       <li xml:lang="zh-TW">開啟／儲存文字字幕格式 - SubRip/SRT、MicroDVD、SSA/ASS、MPlayer、TMPlayer 及 YouTube 字幕</li>
       <li>Open/OCR Graphics Subtitle Formats - VobSub (.idx/.sub/.rar), BluRay/PGS (*.sup), formats supported by ffmpeg (DVD/Vob, DVB, XSUB, HDMV-PGS)</li>
-      <li xml:lang="ca">Obre/Formats de subtítols gràfics OCR: VobSub (.idx/.sub/.rar), BluRay/PGS (*.sup), formats admesos per ffmpeg (DVD/Vob, DVB, XSUB, HDMV-PGS)</li>
-      <li xml:lang="ca-valencia">Obri/Formats de subtítols gràfics OCR: VobSub (.idx/.sub/.rar), BluRay/PGS (*.sup), formats admesos per ffmpeg (DVD/Vob, DVB, XSUB, HDMV-PGS)</li>
+      <li xml:lang="ca">Obre/Formats de subtítols gràfics OCR: VobSub (.idx/.sub/.rar), Blu-ray/PGS (*.sup), formats admesos per ffmpeg (DVD/Vob, DVB, XSUB, HDMV-PGS)</li>
+      <li xml:lang="ca-valencia">Obri/Formats de subtítols gràfics OCR: VobSub (.idx/.sub/.rar), Blu-ray/PGS (*.sup), formats admesos per ffmpeg (DVD/Vob, DVB, XSUB, HDMV-PGS)</li>
       <li xml:lang="en-GB">Open/OCR Graphics Subtitle Formats - VobSub (.idx/.sub/.rar), BluRay/PGS (*.sup), formats supported by ffmpeg (DVD/Vob, DVB, XSUB, HDMV-PGS)</li>
       <li xml:lang="es">Abrir y OCR de formatos de subtítulos gráficos: VobSub (.idx/.sub/.rar), BluRay/PGS (*.sup), formatos permitidos por ffmpeg (DVD/Vob, DVB, XSUB, HDMV-PGS)</li>
       <li xml:lang="et">Subtiitrite graafikavormingute - VobSub (.idx/.sub/.rar), BluRay/PGS (*.sup), ffmpeg toetatud vormingud (DVD/Vob, DVB, XSUB, HDMV-PGS) - avamine ja optiline märgituvastus</li>
