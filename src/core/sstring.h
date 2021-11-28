@@ -65,7 +65,8 @@ public:
 	void setString(const QString &string, int styleFlags = 0, QRgb styleColor = 0);         // always clears all the style flags
 
 	QString richString(RichOutputMode mode = Compact) const;
-	SString & setRichString(const QString &string);
+	SString & setRichString(const QStringRef &string);
+	inline SString & setRichString(const QString &string) { return setRichString(QStringRef(&string)); }
 
 	int styleFlagsAt(int index) const;
 	void setStyleFlagsAt(int index, int styleFlags) const;

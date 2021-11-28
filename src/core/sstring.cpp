@@ -7,6 +7,8 @@
 
 #include "core/sstring.h"
 
+#include "helpers/common.h"
+
 #include <QList>
 #include <QStringList>
 #include <QRegularExpression>
@@ -31,11 +33,11 @@ memset_n(void *ptr, int value, size_t length, size_t size)
 
 SString::SString(const QString &string, int styleFlags /* = 0*/, QRgb styleColor /* = 0*/) :
 	QString(string),
-	m_styleFlags(NULL),
-	m_styleColors(NULL),
+	m_styleFlags(nullptr),
+	m_styleColors(nullptr),
 	m_capacity(0)
 {
-	if(QString::length()) {
+	if(length()) {
 		setMinFlagsCapacity(length());
 		memset(m_styleFlags, styleFlags & AllStyles, length() * sizeof(*m_styleFlags));
 		memset_n(m_styleColors, styleColor, length(), sizeof(*m_styleColors));
@@ -44,8 +46,8 @@ SString::SString(const QString &string, int styleFlags /* = 0*/, QRgb styleColor
 
 SString::SString(const SString &sstring) :
 	QString(sstring),
-	m_styleFlags(NULL),
-	m_styleColors(NULL),
+	m_styleFlags(nullptr),
+	m_styleColors(nullptr),
 	m_capacity(0)
 {
 	if(length()) {
@@ -239,17 +241,22 @@ SString::richString(RichOutputMode mode) const
 }
 
 SString &
-SString::setRichString(const QString &string)
+SString::setRichString(const QStringRef &string)
 {
-	QRegExp tagRegExp("<(/?([bBiIuUsS]|font))[^>]*(\\s+color=\"?([\\w#]+)\"?)?[^>]*>");
+	staticRE$(tagRegExp, "<(/?([bius]|font))[^>]*(\\s+color=\"?([\\w#]+)\"?)?[^>]*>", REu | REi);
+
+	QRegularExpressionMatchIterator it = tagRegExp.globalMatch(string);
 
 	clear();
 
 	int currentStyle = 0;
 	QColor currentColor;
-	int offsetPos = 0, matchedPos;
-	while((matchedPos = tagRegExp.indexIn(string, offsetPos)) != -1) {
-		QString matched(tagRegExp.cap(1).toLower());
+	int offsetPos = 0, matchedPos = -1;
+	while(it.hasNext()) {
+		QRegularExpressionMatch m = it.next();
+
+		matchedPos = m.capturedStart();
+		QString matched(m.captured(1).toLower());
 
 		int newStyle = currentStyle;
 		QColor newColor(currentColor);
@@ -263,7 +270,7 @@ SString::setRichString(const QString &string)
 		} else if(matched == QLatin1String("s")) {
 			newStyle |= SString::StrikeThrough;
 		} else if(matched == QLatin1String("font")) {
-			const QString &color = tagRegExp.cap(4);
+			const QString &color = m.captured(4);
 			if(!color.isEmpty()) {
 				newStyle |= SString::Color;
 				newColor.setNamedColor(color.toLower());
@@ -281,15 +288,15 @@ SString::setRichString(const QString &string)
 			newColor.setNamedColor("-invalid-");
 		}
 
-		QString token(string.mid(offsetPos, matchedPos - offsetPos));
+		QString token(string.mid(offsetPos, matchedPos - offsetPos).toString());
 		append(SString(token, currentStyle, currentColor.isValid() ? currentColor.rgb() : 0));
 		currentStyle = newStyle;
 		currentColor = newColor;
 
-		offsetPos = matchedPos + tagRegExp.cap(0).length();
+		offsetPos = m.capturedEnd();
 	}
 
-	QString token(string.mid(offsetPos, matchedPos - offsetPos));
+	QString token(string.mid(offsetPos, matchedPos - offsetPos).toString());
 	append(SString(token /*.replace("&lt;", "<").replace("&gt;", ">")*/, currentStyle, currentColor.isValid() ? currentColor.rgb() : 0));
 
 	return *this;
