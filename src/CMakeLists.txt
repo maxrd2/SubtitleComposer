@@ -63,6 +63,7 @@ set(subtitlecomposer_SRCS
 	formats/textdemux/textdemux.cpp
 	formats/tmplayer/tmplayerinputformat.h formats/tmplayer/tmplayeroutputformat.h
 	formats/vobsub/vobsubinputformat.h formats/vobsub/vobsubinputinitdialog.cpp formats/vobsub/vobsubinputprocessdialog.cpp
+	formats/webvtt/webvttinputformat.cpp formats/webvtt/webvttoutputformat.cpp
 	formats/youtubecaptions/youtubecaptionsinputformat.h formats/youtubecaptions/youtubecaptionsoutputformat.h
 	#[[ gui ]] gui/currentlinewidget.cpp gui/playerwidget.cpp
 	#[[ gui/waveform ]] gui/waveform/waveformwidget.cpp gui/waveform/wavebuffer.cpp gui/waveform/zoombuffer.cpp gui/waveform/waverenderer.cpp
