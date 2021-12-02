@@ -1,6 +1,6 @@
 /*
     SPDX-FileCopyrightText: 2007-2009 Sergio Pistone <sergio_pistone@yahoo.com.ar>
-    SPDX-FileCopyrightText: 2010-2019 Mladen Milinkovic <max@smoothware.net>
+    SPDX-FileCopyrightText: 2010-2022 Mladen Milinkovic <max@smoothware.net>
 
     SPDX-License-Identifier: GPL-2.0-or-later
 */
@@ -81,11 +81,6 @@ protected:
 		subtitle.setFormatData(formatData);
 	}
 
-	void setFormatData(Subtitle &subtitle, FormatData &formatData) const
-	{
-		subtitle.setFormatData(&formatData);
-	}
-
 	FormatData * formatData(const SubtitleLine *line) const
 	{
 		FormatData *formatData = line->formatData();
@@ -95,11 +90,6 @@ protected:
 	void setFormatData(SubtitleLine *line, FormatData *formatData) const
 	{
 		line->setFormatData(formatData);
-	}
-
-	void setFormatData(SubtitleLine *line, FormatData &formatData) const
-	{
-		line->setFormatData(&formatData);
 	}
 
 	QString m_name;

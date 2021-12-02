@@ -101,7 +101,7 @@ protected:
 		if(m_formatRegExp.indexIn(data, eventsStart) == -1)
 			return false;
 
-		setFormatData(subtitle, formatData);
+		setFormatData(subtitle, &formatData);
 		formatData.clear();
 
 		unsigned readLines = 0;
@@ -120,7 +120,7 @@ protected:
 			line->primaryDoc()->setRichText(toRichString(m_dialogueRegExp.cap(3)), true);
 
 			formatData.setValue(QStringLiteral("Dialogue"), m_dialogueRegExp.cap(0).replace(m_dialogueDataRegExp, QStringLiteral("\\1%1\\2%2\\3%3\n")));
-			setFormatData(line, formatData);
+			setFormatData(line, &formatData);
 
 			subtitle.insertLine(line);
 
