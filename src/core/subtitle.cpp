@@ -58,6 +58,8 @@ Subtitle::setPrimaryData(const Subtitle &from, bool usePrimaryData)
 {
 	beginCompositeAction(i18n("Set Primary Data"));
 
+	m_metaData = from.m_metaData;
+
 	setFormatData(from.m_formatData);
 
 	setFramesPerSecond(from.framesPerSecond());
@@ -75,6 +77,7 @@ Subtitle::setPrimaryData(const Subtitle &from, bool usePrimaryData)
 		thisLine->setTimes(fromLine->showTime(), fromLine->hideTime());
 		thisLine->setErrorFlags((fromLine->errorFlags() & fromErrors) | (thisLine->errorFlags() & thisErrors));
 		thisLine->setFormatData(fromLine->formatData());
+		thisLine->m_metaData = fromLine->m_metaData;
 	}
 
 	if(fromIt.current()) { // from has more lines
@@ -85,6 +88,7 @@ Subtitle::setPrimaryData(const Subtitle &from, bool usePrimaryData)
 			thisLine->setPrimaryDoc(usePrimaryData ? cur->primaryDoc() : cur->secondaryDoc());
 			thisLine->setErrorFlags(SubtitleLine::SecondaryOnlyErrors, false);
 			thisLine->setFormatData(cur->formatData());
+			thisLine->m_metaData = cur->m_metaData;
 			lines.append(thisLine);
 		}
 		processAction(new InsertLinesAction(this, lines));
@@ -92,7 +96,8 @@ Subtitle::setPrimaryData(const Subtitle &from, bool usePrimaryData)
 		for(SubtitleLine *thisLine = thisIt.current(); thisLine; ++thisIt, thisLine = thisIt.current()) {
 			thisLine->primaryDoc()->clear();
 			thisLine->setErrorFlags(SubtitleLine::PrimaryOnlyErrors, false);
-			thisLine->setFormatData(0);
+			thisLine->setFormatData(nullptr);
+			thisLine->m_metaData.clear();
 		}
 	}
 

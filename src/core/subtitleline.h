@@ -205,6 +205,11 @@ public:
 
 	int check(int errorFlagsToCheck, bool update = true);
 
+	inline bool metaExists(const QByteArray &key) const { return m_metaData.contains(key); }
+	inline int metaRemove(const QByteArray &key) { return m_metaData.remove(key); }
+	inline const QString meta(const QByteArray &key) const { return m_metaData.value(key); }
+	inline void meta(const QByteArray &key, const QString &value) { m_metaData.insert(key, value); }
+
 signals:
 	void primaryTextChanged();
 	void secondaryTextChanged();
@@ -241,6 +246,8 @@ private:
 	Time m_hideTime;
 	int m_errorFlags;
 	bool m_ignoreDocChanges = false;
+
+	QMap<QByteArray, QString> m_metaData;
 
 	FormatData *m_formatData;
 
