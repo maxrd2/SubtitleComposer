@@ -1,5 +1,5 @@
 /*
-    SPDX-FileCopyrightText: 2010-2020 Mladen Milinkovic <max@smoothware.net>
+    SPDX-FileCopyrightText: 2010-2022 Mladen Milinkovic <max@smoothware.net>
 
     SPDX-License-Identifier: GPL-2.0-or-later
 */
@@ -12,8 +12,9 @@
 #include <QPen>
 #include <QImage>
 
+#include "core/richdocument.h"
+
 namespace SubtitleComposer {
-class RichDocument;
 
 class SubtitleTextOverlay : public QObject
 {
@@ -22,9 +23,9 @@ class SubtitleTextOverlay : public QObject
 public:
 	SubtitleTextOverlay();
 
-	inline QString text() const { return m_text; }
+	inline QString text() const { return m_text->toPlainText(); }
 	inline QString fontFamily() const { return m_font.family(); }
-	inline int fontSize() const { return m_fontSize; }
+	inline int fontSize() const { return m_font.pixelSize(); }
 	inline QColor textColor() const { return m_textColor; }
 	inline QColor outlineColor() const { return m_textOutline.color(); }
 	inline int outlineWidth() const { return m_textOutline.width(); }
@@ -40,7 +41,6 @@ public:
 
 private:
 	void drawImage();
-	void drawText();
 	void drawDoc();
 	void setDirty();
 
@@ -49,7 +49,7 @@ signals:
 
 public slots:
 	void setImageSize(int width, int height);
-	void setImageSize(QSize size);
+	inline void setImageSize(QSize size) { setImageSize(size.width(), size.height()); }
 	void setText(const QString &text);
 	void setDoc(const RichDocument *doc);
 	void setFontFamily(const QString &family);
@@ -61,11 +61,9 @@ public slots:
 
 private:
 	bool m_invertPixels;
-	QString m_text;
+	RichDocument *m_text = nullptr;
 	const RichDocument *m_doc = nullptr;
 	QFont m_font;
-	int m_fontSize;
-	int m_outlineWidth;
 	QColor m_textColor;
 	QPen m_textOutline;
 

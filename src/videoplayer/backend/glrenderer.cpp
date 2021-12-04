@@ -1,5 +1,5 @@
 /*
-    SPDX-FileCopyrightText: 2020 Mladen Milinkovic <max@smoothware.net>
+    SPDX-FileCopyrightText: 2020-2022 Mladen Milinkovic <max@smoothware.net>
 
     SPDX-License-Identifier: GPL-2.0-or-later
 */
@@ -9,6 +9,8 @@
 #include <QOpenGLShader>
 #include <QMutexLocker>
 #include <QStringBuilder>
+#include <QScreen>
+#include <QWindow>
 
 #include "videoplayer/backend/ffplayer.h"
 #include "videoplayer/videoplayer.h"
@@ -161,7 +163,16 @@ GLRenderer::setFrameFormat(int width, int height, int compBits, int crWidthShift
 	delete[] m_mmYUV;
 	m_mmYUV = new quint8[(m_bufWidth >> 1) * (m_bufHeight >> 1) * compBytes];
 
-	m_overlay->setImageSize(width, height);
+#if QT_VERSION < QT_VERSION_CHECK(5, 14, 0)
+	QWindow *w = windowHandle();
+	if(!w)
+		w = nativeParentWidget()->windowHandle();
+	const QSize sr = w->screen()->size();
+#else
+	const QSize sr = screen()->size();
+#endif
+	const double rr = qMin(sr.width() / width, sr.height() / height);
+	m_overlay->setImageSize(rr * width, rr * height);
 	delete[] m_mmOvr;
 	m_mmOvr = new quint8[(m_overlay->width() >> 1) * (m_overlay->height() >> 1) * 4];
 
@@ -551,6 +562,7 @@ GLRenderer::initializeGL()
 	asGL(glBindBuffer(GL_ARRAY_BUFFER, m_vaBuf[AV_OVRTEX]));
 	asGL(glVertexAttribPointer(AV_OVRTEX, 2, GL_FLOAT, GL_FALSE, 0, nullptr));
 	asGL(glEnableVertexAttribArray(AV_OVRTEX));
+	m_overlayPos[2] = 0.0f; // uploadSubtitle() will upload vertex data
 
 	if(m_idTex) {
 		asGL(glDeleteTextures(ID_SIZE, m_idTex));
@@ -575,6 +587,7 @@ GLRenderer::resizeGL(int width, int height)
 	m_vpWidth = width;
 	m_vpHeight = height;
 	m_texNeedInit = true;
+	m_overlay->setRenderScale(double(m_overlay->height()) / height);
 	update();
 }
 
@@ -720,23 +733,13 @@ GLRenderer::uploadSubtitle()
 
 	const QImage &img = m_overlay->image();
 
-	const float ratio = float(img.height()) / float(m_bufHeight);
-	const float scaleV = m_overlay->renderScale() - 1.0f;
-	const float scaleH = scaleV * ratio / 2.0f;
-
-	// fix subtitle aspect ratio as image heights can differ
-	const float ratioDiff = (ratio - 1.) / 2.0f;
-	m_overlayPos[0] = m_overlayPos[4] = 0.0f - ratioDiff + scaleH;
-	m_overlayPos[2] = m_overlayPos[6] = 1.0f + ratioDiff - scaleH;
-
-	// subtitle offset + margin
-	const float hr = float(m_overlay->textSize().height()) / float(img.height()) + .03f;
-	m_overlayPos[1] = m_overlayPos[3] = -1.0f + hr + scaleV;
-	m_overlayPos[5] = m_overlayPos[7] = hr;
-
-	asGL(glBindBuffer(GL_ARRAY_BUFFER, m_vaBuf[AV_OVRTEX]));
-	asGL(glBufferData(GL_ARRAY_BUFFER, sizeof(m_overlayPos), m_overlayPos, GL_DYNAMIC_DRAW));
-	asGL(glBindBuffer(GL_ARRAY_BUFFER, 0));
+	const GLfloat rs = qMin(1.0 / m_overlay->renderScale(), 1.0);
+	if(rs != m_overlayPos[2]) {
+		m_overlayPos[2] = m_overlayPos[6] = m_overlayPos[5] = m_overlayPos[7] = rs;
+		asGL(glBindBuffer(GL_ARRAY_BUFFER, m_vaBuf[AV_OVRTEX]));
+		asGL(glBufferData(GL_ARRAY_BUFFER, sizeof(m_overlayPos), m_overlayPos, GL_STATIC_DRAW));
+		asGL(glBindBuffer(GL_ARRAY_BUFFER, 0));
+	}
 
 	// overlay
 	asGL(glActiveTexture(GL_TEXTURE0 + ID_OVR));

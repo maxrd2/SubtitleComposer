@@ -1,12 +1,10 @@
 /*
-    SPDX-FileCopyrightText: 2010-2020 Mladen Milinkovic <max@smoothware.net>
+    SPDX-FileCopyrightText: 2010-2022 Mladen Milinkovic <max@smoothware.net>
 
     SPDX-License-Identifier: GPL-2.0-or-later
 */
 
 #include "subtitletextoverlay.h"
-
-#include "core/richdocument.h"
 
 #include <QAbstractTextDocumentLayout>
 #include <QPainter>
@@ -18,83 +16,10 @@
 using namespace SubtitleComposer;
 
 SubtitleTextOverlay::SubtitleTextOverlay()
-	: m_invertPixels(false),
-	  m_fontSize(SCConfig::fontSize())
+	: m_invertPixels(false)
 {
 	m_font.setStyleStrategy(QFont::PreferAntialias);
-}
-
-void
-SubtitleTextOverlay::drawText()
-{
-	QTextDocument doc;
-	doc.setDefaultStyleSheet(QStringLiteral("p { margin:0; padding:0; display:block; white-space:pre; }"));
-	doc.setTextWidth(m_image.width());
-	doc.setHtml(QStringLiteral("<p>") + m_text + QStringLiteral("</p>"));
-
-	QTextOption textOption;
-	textOption.setAlignment(Qt::AlignTop | Qt::AlignHCenter);
-	textOption.setWrapMode(QTextOption::NoWrap);
-	doc.setDefaultTextOption(textOption);
-
-	doc.setDefaultFont(m_font);
-
-	QPainter painter(&m_image);
-	painter.setRenderHints(QPainter::Antialiasing | QPainter::TextAntialiasing | QPainter::SmoothPixmapTransform
-						   | QPainter::HighQualityAntialiasing | QPainter::NonCosmeticDefaultPen, true);
-
-	QAbstractTextDocumentLayout::PaintContext context;
-	context.palette.setColor(QPalette::Text, m_textColor);
-
-	QTextCursor cur(&doc);
-	cur.select(QTextCursor::Document);
-
-	QTextCharFormat fmt;
-
-	// fix top outline being cut
-	const int topOffset = m_textOutline.width() / 2;
-	painter.translate(0, topOffset);
-
-	// text shadow
-//	painter.translate(5, 5 + topOffset);
-//	{
-//		const QColor shadowColor(0, 0, 0, 100);
-//		const QPen shadowOutline(QBrush(shadowColor), m_textOutline.widthF());
-
-//		QTextDocument *doc2 = doc.clone();
-
-//		QTextCharFormat fmt;
-//		fmt.setTextOutline(shadowOutline);
-//		fmt.setForeground(shadowColor);
-//		QTextCursor cur(doc2);
-//		cur.select(QTextCursor::Document);
-//		cur.mergeCharFormat(fmt);
-
-//		doc2->documentLayout()->draw(&painter, context);
-
-//		delete doc2;
-//	}
-//	painter.end();
-//	painter.begin(&m_image);
-//	painter.translate(0, 0);
-
-	if(m_textOutline.width()) {
-		// draw text outline
-		fmt.setTextOutline(m_textOutline);
-		cur.mergeCharFormat(fmt);
-
-		doc.documentLayout()->draw(&painter, context);
-	}
-
-	// draw rich text
-	fmt.setTextOutline(QPen(Qt::transparent, 0));
-	cur.mergeCharFormat(fmt);
-
-	doc.documentLayout()->draw(&painter, context);
-
-	m_textSize = QSize(doc.idealWidth(), doc.size().height() + topOffset);
-
-	painter.end();
+	m_font.setPixelSize(SCConfig::fontSize());
 }
 
 void
@@ -106,6 +31,7 @@ SubtitleTextOverlay::drawDoc()
 
 	QTextLayout textLayout(QString(), m_font, painter.device());
 	QTextOption layoutTextOption;
+	const int imgWidth = m_renderScale > 1.f ? float(m_image.width()) / m_renderScale : m_image.width();
 	layoutTextOption.setWrapMode(QTextOption::NoWrap);
 	layoutTextOption.setAlignment(Qt::AlignHCenter);
 	textLayout.setTextOption(layoutTextOption);
@@ -142,7 +68,7 @@ SubtitleTextOverlay::drawDoc()
 
 			textLayout.beginLayout();
 			QTextLine line = textLayout.createLine();
-			line.setLineWidth(m_image.width());
+			line.setLineWidth(imgWidth);
 			heightOutline += fontMetrics.leading();
 			line.setPosition(QPointF(0., heightOutline));
 			heightOutline += line.height();
@@ -156,7 +82,7 @@ SubtitleTextOverlay::drawDoc()
 
 		textLayout.beginLayout();
 		QTextLine line = textLayout.createLine();
-		line.setLineWidth(m_image.width());
+		line.setLineWidth(imgWidth);
 		height += fontMetrics.leading();
 		line.setPosition(QPointF(0., height));
 		height += line.height();
@@ -175,12 +101,8 @@ void
 SubtitleTextOverlay::drawImage()
 {
 	m_image.fill(Qt::transparent);
-
-	if(m_doc && !m_doc->isEmpty())
+	if(m_doc)
 		drawDoc();
-	else if(!m_text.isEmpty())
-		drawText();
-
 	m_dirty = false;
 }
 
@@ -215,23 +137,11 @@ SubtitleTextOverlay::textSize()
 void
 SubtitleTextOverlay::setImageSize(int width, int height)
 {
-	if(height < 500)
-		height = 500;
-
 	if(m_image.width() == width && m_image.height() == height)
 		return;
 
 	m_image = QImage(width, height, QImage::Format_ARGB32);
 	setDirty();
-
-	setFontSize(m_fontSize);
-	setOutlineWidth(m_outlineWidth);
-}
-
-void
-SubtitleTextOverlay::setImageSize(QSize size)
-{
-	setImageSize(size.width(), size.height());
 }
 
 void
@@ -244,13 +154,13 @@ SubtitleTextOverlay::setDirty()
 void
 SubtitleTextOverlay::setText(const QString &text)
 {
-	if(m_text == text)
+	if(!m_text) {
+		m_text = new RichDocument(this);
+	} else if(m_text->toHtml() == text) {
 		return;
-	m_text = text;
-	if(m_doc) {
-		disconnect(m_doc, nullptr, this, nullptr);
-		m_doc = nullptr;
 	}
+	m_text->setHtml(text, true);
+	setDoc(m_text);
 	setDirty();
 }
 
@@ -264,7 +174,6 @@ SubtitleTextOverlay::setDoc(const RichDocument *doc)
 	m_doc = doc;
 	if(m_doc)
 		connect(m_doc, &RichDocument::contentsChanged, this, &SubtitleTextOverlay::setDirty);
-	m_text.clear();
 	setDirty();
 }
 
@@ -280,11 +189,9 @@ SubtitleTextOverlay::setFontFamily(const QString &family)
 void
 SubtitleTextOverlay::setFontSize(int fontSize)
 {
-	m_fontSize = fontSize;
-	const int pixelSize = m_fontSize * m_image.height() / 300;
-	if(pixelSize == m_font.pixelSize())
+	if(fontSize == m_font.pixelSize())
 		return;
-	m_font.setPixelSize(pixelSize);
+	m_font.setPixelSize(fontSize);
 	setDirty();
 }
 
@@ -313,11 +220,9 @@ SubtitleTextOverlay::setOutlineColor(QColor color)
 void
 SubtitleTextOverlay::setOutlineWidth(int width)
 {
-	m_outlineWidth = width;
-	const int pixelWidth = m_outlineWidth * m_image.height() / 300;
-	if(m_textOutline.width() == pixelWidth)
+	if(m_textOutline.width() == width)
 		return;
-	m_textOutline.setWidth(pixelWidth);
+	m_textOutline.setWidth(width);
 	setDirty();
 }
 

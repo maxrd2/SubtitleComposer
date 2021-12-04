@@ -1,6 +1,6 @@
 /*
     SPDX-FileCopyrightText: 2003 Fabrice Bellard
-    SPDX-FileCopyrightText: 2020 Mladen Milinkovic <max@smoothware.net>
+    SPDX-FileCopyrightText: 2020-2022 Mladen Milinkovic <max@smoothware.net>
 
     SPDX-License-Identifier: GPL-2.0-or-later
 */
@@ -68,7 +68,7 @@ private:
 
 private:
 	SubtitleTextOverlay *m_overlay;
-	GLfloat m_overlayPos[8];
+	GLfloat m_overlayPos[8] = {0};
 	quint8 *m_mmOvr;
 
 	QOpenGLVertexArrayObject m_vao;
