@@ -57,6 +57,7 @@ public slots:
 	void setDoc(const RichDocument *doc);
 	void setDocRect(const SubtitleRect *pos);
 	void setRenderScale(double scale);
+	void setBottomPadding(int padding);
 	void setFontFamily(const QString &family);
 	void setFontSize(int fontSize);
 	void setTextColor(QColor color);
@@ -75,6 +76,7 @@ private:
 	QImage m_image;
 	QSize m_textSize;
 	double m_renderScale = 1.0;
+	int m_bottomPadding = 0;
 
 	bool m_dirty = true;
 };

@@ -336,6 +336,8 @@ PlayerWidget::setFullScreenMode(bool fullScreenMode)
 		m_fullScreenControls->attach(m_layeredWidget);
 
 		m_fullScreenTID = startTimer(HIDE_MOUSE_MSECS);
+
+		VideoPlayer::instance()->subtitleOverlay().setBottomPadding(m_fullScreenControls->height());
 	} else {
 		if(m_fullScreenTID) {
 			killTimer(m_fullScreenTID);
@@ -351,6 +353,8 @@ PlayerWidget::setFullScreenMode(bool fullScreenMode)
 		m_layeredWidget->setParent(this);
 
 		m_mainLayout->addWidget(m_layeredWidget, 0, 1);
+
+		VideoPlayer::instance()->subtitleOverlay().setBottomPadding(0);
 
 		window()->show();
 	}

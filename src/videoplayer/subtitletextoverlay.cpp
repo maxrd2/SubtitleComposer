@@ -147,7 +147,7 @@ SubtitleTextOverlay::drawDoc()
 	DrawDocData *d = drawDocPrepare(&painter);
 
 	const float imgWidth = m_renderScale > 1.f ? float(m_image.width()) / m_renderScale : m_image.width();
-	const float imgHeight = m_renderScale > 1.f ? float(m_image.height()) / m_renderScale : m_image.height();
+	const float imgHeight = (m_renderScale > 1.f ? float(m_image.height()) / m_renderScale : m_image.height()) - m_bottomPadding;
 	QPointF drawPos;
 	if(m_pos) {
 		drawPos.setX(m_pos->left * imgWidth / 100.);
@@ -266,6 +266,15 @@ SubtitleTextOverlay::setRenderScale(double scale)
 	if(m_renderScale == scale)
 		return;
 	m_renderScale = scale;
+	setDirty();
+}
+
+void
+SubtitleTextOverlay::setBottomPadding(int padding)
+{
+	if(m_bottomPadding == padding)
+		return;
+	m_bottomPadding = padding;
 	setDirty();
 }
 
