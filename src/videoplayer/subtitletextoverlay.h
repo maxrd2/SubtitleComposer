@@ -15,6 +15,8 @@
 #include "core/richtext/richdocument.h"
 
 namespace SubtitleComposer {
+struct SubtitleRect;
+struct DrawDocData;
 
 class SubtitleTextOverlay : public QObject
 {
@@ -42,6 +44,7 @@ public:
 private:
 	void drawImage();
 	void drawDoc();
+	DrawDocData * drawDocPrepare(QPainter *painter);
 	void setDirty();
 
 signals:
@@ -52,17 +55,19 @@ public slots:
 	inline void setImageSize(QSize size) { setImageSize(size.width(), size.height()); }
 	void setText(const QString &text);
 	void setDoc(const RichDocument *doc);
+	void setDocRect(const SubtitleRect *pos);
+	void setRenderScale(double scale);
 	void setFontFamily(const QString &family);
 	void setFontSize(int fontSize);
 	void setTextColor(QColor color);
 	void setOutlineColor(QColor color);
 	void setOutlineWidth(int width);
-	inline void setRenderScale(double scale) { m_renderScale = scale; }
 
 private:
 	bool m_invertPixels;
 	RichDocument *m_text = nullptr;
 	const RichDocument *m_doc = nullptr;
+	const SubtitleRect *m_pos = nullptr;
 	QFont m_font;
 	QColor m_textColor;
 	QPen m_textOutline;

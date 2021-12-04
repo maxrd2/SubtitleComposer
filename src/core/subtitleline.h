@@ -25,6 +25,18 @@ class RichString;
 class RichDocument;
 class UndoAction;
 
+struct SubtitleRect {
+	// percentages from 0-100 relative to video frame, values are not bounded
+	float top = 0.f;
+	float left = 0.f;
+	float right = 100.f;
+	float bottom = 100.f;
+	// if true - text is drawn vertically and hAlign/vAlign use orthogonal axis
+	bool vertical = false;
+	enum { CENTER, START, END } hAlign = CENTER;
+	enum { BOTTOM, TOP } vAlign = BOTTOM;
+};
+
 class SubtitleLine : public QObject
 {
 	Q_OBJECT
@@ -210,6 +222,9 @@ public:
 	inline const QString meta(const QByteArray &key) const { return m_metaData.value(key); }
 	inline void meta(const QByteArray &key, const QString &value) { m_metaData.insert(key, value); }
 
+	inline const SubtitleRect & pos() const { return m_position; }
+	inline SubtitleRect & pos() { return m_position; }
+
 signals:
 	void primaryTextChanged();
 	void secondaryTextChanged();
@@ -248,6 +263,8 @@ private:
 	bool m_ignoreDocChanges = false;
 
 	QMap<QByteArray, QString> m_metaData;
+
+	SubtitleRect m_position;
 
 	FormatData *m_formatData;
 

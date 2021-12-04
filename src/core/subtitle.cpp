@@ -83,6 +83,7 @@ Subtitle::setPrimaryData(const Subtitle &from, bool usePrimaryData)
 		thisLine->setErrorFlags((fromLine->errorFlags() & fromErrors) | (thisLine->errorFlags() & thisErrors));
 		thisLine->setFormatData(fromLine->formatData());
 		thisLine->m_metaData = fromLine->m_metaData;
+		thisLine->m_position = fromLine->m_position;
 	}
 
 	if(fromIt.current()) { // from has more lines
@@ -94,6 +95,7 @@ Subtitle::setPrimaryData(const Subtitle &from, bool usePrimaryData)
 			thisLine->setErrorFlags(SubtitleLine::SecondaryOnlyErrors, false);
 			thisLine->setFormatData(cur->formatData());
 			thisLine->m_metaData = cur->m_metaData;
+			thisLine->m_position = cur->m_position;
 			lines.append(thisLine);
 		}
 		processAction(new InsertLinesAction(this, lines));
@@ -103,6 +105,7 @@ Subtitle::setPrimaryData(const Subtitle &from, bool usePrimaryData)
 			thisLine->setErrorFlags(SubtitleLine::PrimaryOnlyErrors, false);
 			thisLine->setFormatData(nullptr);
 			thisLine->m_metaData.clear();
+			thisLine->m_position = SubtitleRect();
 		}
 	}
 

@@ -579,12 +579,15 @@ PlayerWidget::setPlayingLine(SubtitleLine *line)
 
 	emit playingLineChanged(m_playingLine = line);
 
+	SubtitleTextOverlay &ovr = VideoPlayer::instance()->subtitleOverlay();
 	if(m_playingLine) {
 		connect(m_playingLine, &SubtitleLine::showTimeChanged, this, &PlayerWidget::setPlayingLineFromVideo);
 		connect(m_playingLine, &SubtitleLine::hideTimeChanged, this, &PlayerWidget::setPlayingLineFromVideo);
-		VideoPlayer::instance()->subtitleOverlay().setDoc(m_showTranslation ? m_playingLine->secondaryDoc() : m_playingLine->primaryDoc());
+		ovr.setDoc(m_showTranslation ? m_playingLine->secondaryDoc() : m_playingLine->primaryDoc());
+		ovr.setDocRect(&m_playingLine->pos());
 	} else {
-		VideoPlayer::instance()->subtitleOverlay().setDoc(nullptr);
+		ovr.setDoc(nullptr);
+		ovr.setDocRect(nullptr);
 	}
 }
 

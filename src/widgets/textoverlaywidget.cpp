@@ -50,6 +50,7 @@ TextOverlayWidget::paintEvent(QPaintEvent * /*event */)
 	const QImage &img = m_overlay.image();
 	const int imgCenterX = img.width() / 2;
 	const int widgetHalfWidth = width() / 2;
-	const QRect src(imgCenterX - widgetHalfWidth, 0, imgCenterX + widgetHalfWidth, height());
+	const QRect src(imgCenterX - widgetHalfWidth, height() - m_overlay.textSize().height(),
+					imgCenterX + widgetHalfWidth, height());
 	painter.drawImage(rect(), img, src);
 }
