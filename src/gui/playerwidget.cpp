@@ -324,8 +324,9 @@ PlayerWidget::setFullScreenMode(bool fullScreenMode)
 		// because restoring the previous state is buggy under
 		// some desktop environments / window managers.
 
-		auto *fullScreenWidget = new QWidget;
-		auto *fullScreenLayout = new QHBoxLayout;
+		auto *fullScreenWidget = new QWidget();
+		fullScreenWidget->installEventFilter(this);
+		auto *fullScreenLayout = new QHBoxLayout();
 		fullScreenLayout->setMargin(0);
 		fullScreenWidget->setLayout(fullScreenLayout);
 		m_layeredWidget->setParent(fullScreenWidget);
@@ -358,8 +359,9 @@ PlayerWidget::setFullScreenMode(bool fullScreenMode)
 }
 
 void
-PlayerWidget::timerEvent(QTimerEvent * /*event */)
+PlayerWidget::timerEvent(QTimerEvent *event)
 {
+	Q_UNUSED(event);
 	if(m_currentCursorPos != m_savedCursorPos) {
 		m_savedCursorPos = m_currentCursorPos;
 	} else if(!m_fullScreenControls->underMouse()) {
@@ -380,9 +382,8 @@ PlayerWidget::eventFilter(QObject *object, QEvent *event)
 			foreach(const QUrl &url, static_cast<QDropEvent *>(event)->mimeData()->urls()) {
 				if(url.scheme() == QLatin1String("file")) {
 					event->accept();
-					if(event->type() == QEvent::Drop) {
+					if(event->type() == QEvent::Drop)
 						app()->openVideo(url);
-					}
 					return true; // eat event
 				}
 			}
@@ -417,9 +418,8 @@ PlayerWidget::eventFilter(QObject *object, QEvent *event)
 		}
 
 		default:
-			;
+			break;
 		}
-
 	} else if(object == m_infoControlsGroupBox || object->parent() == m_infoControlsGroupBox) {
 		if(event->type() != QEvent::MouseButtonRelease)
 			return false;
@@ -437,6 +437,10 @@ PlayerWidget::eventFilter(QObject *object, QEvent *event)
 		if(menu.exec(mouseEvent->globalPos()) == action)
 			SCConfig::setShowPositionTimeEdit(!SCConfig::showPositionTimeEdit());
 
+		return true; // eat event
+	} else if(m_fullScreenMode && object == m_layeredWidget->parentWidget() && event->type() == QEvent::Close) {
+		app()->action(ACT_TOGGLE_FULL_SCREEN)->trigger();
+		event->ignore();
 		return true; // eat event
 	}
 
