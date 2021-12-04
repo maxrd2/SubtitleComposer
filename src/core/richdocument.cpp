@@ -69,15 +69,13 @@ RichDocument::~RichDocument()
 void
 RichDocument::setRichText(const SString &text, bool resetUndo)
 {
-	QTextCursor cursor(this);
-
 	if(resetUndo)
 		setUndoRedoEnabled(false);
 	else
-		cursor.beginEditBlock();
+		m_undoableCursor.beginEditBlock();
 
-	cursor.select(QTextCursor::Document);
-	cursor.removeSelectedText();
+	m_undoableCursor.select(QTextCursor::Document);
+	m_undoableCursor.removeSelectedText();
 
 	int currentStyleFlags = -1;
 	QRgb currentStyleColor = 0;
@@ -88,7 +86,7 @@ RichDocument::setRichText(const SString &text, bool resetUndo)
 		const QRgb posColor = text.styleColorAt(pos);
 		if(currentStyleFlags != posFlags || ((posFlags & SubtitleComposer::SString::Color) && currentStyleColor != posColor)) {
 			if(prev != pos)
-				cursor.insertText(text.midRef(prev, pos - prev).toString(), format);
+				m_undoableCursor.insertText(text.midRef(prev, pos - prev).toString(), format);
 			prev = pos;
 			currentStyleFlags = posFlags;
 			currentStyleColor = posColor;
@@ -103,12 +101,12 @@ RichDocument::setRichText(const SString &text, bool resetUndo)
 		}
 	}
 	if(prev != text.length())
-		cursor.insertText(text.midRef(prev).toString(), format);
+		m_undoableCursor.insertText(text.midRef(prev).toString(), format);
 
 	if(resetUndo)
 		setUndoRedoEnabled(true);
 	else
-		cursor.endEditBlock();
+		m_undoableCursor.endEditBlock();
 }
 
 QString
@@ -274,16 +272,18 @@ RichDocument::toRichText() const
 void
 RichDocument::replace(QChar before, QChar after, Qt::CaseSensitivity cs)
 {
-	QTextCursor cursor(this);
 	const QString search(before);
 	const FindFlags ff = cs == Qt::CaseSensitive ? FindCaseSensitively : FindFlags();
 
+	m_undoableCursor.beginEditBlock();
+	m_undoableCursor.movePosition(QTextCursor::Start);
 	for(;;) {
-		cursor = find(search, cursor, ff);
-		if(cursor.isNull())
+		m_undoableCursor = find(search, m_undoableCursor, ff);
+		if(m_undoableCursor.isNull())
 			break;
-		cursor.insertText(after);
+		m_undoableCursor.insertText(after);
 	}
+	m_undoableCursor.endEditBlock();
 }
 
 int
@@ -643,7 +643,7 @@ RichDocument::replace(const QRegularExpression &search, const QString &replaceme
 	if(!matches.hasNext()) // no matches at all
 		return;
 
-	QTextCursor cursor(this);
+	QTextCursor readCur(this);
 	QVector<EditChange> cl;
 
 	const int numCaptures = search.captureCount();
@@ -715,10 +715,10 @@ RichDocument::replace(const QRegularExpression &search, const QString &replaceme
 				REBackrefFragment *brF = &backRefFrags[backRef.no - 1];
 				const int pos = match.capturedStart(backRef.no);
 				if(brF->frag.isNull() || pos != brF->pos || len != brF->len) {
-					cursor.movePosition(QTextCursor::Start);
-					cursor.movePosition(QTextCursor::Right, QTextCursor::MoveAnchor, pos);
-					cursor.movePosition(QTextCursor::Right, QTextCursor::KeepAnchor, len);
-					brF->frag.reset(new QTextDocumentFragment(cursor));
+					readCur.movePosition(QTextCursor::Start);
+					readCur.movePosition(QTextCursor::Right, QTextCursor::MoveAnchor, pos);
+					readCur.movePosition(QTextCursor::Right, QTextCursor::KeepAnchor, len);
+					brF->frag.reset(new QTextDocumentFragment(readCur));
 				}
 				cl.push_back(EditChange(ReplaceFragment, matchStart, 0, brF->frag));
 			}
