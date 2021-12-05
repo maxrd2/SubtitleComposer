@@ -8,7 +8,7 @@
 #define VOBSUBINPUTFORMAT_H
 
 #include "application.h"
-#include "core/richdocument.h"
+#include "core/richtext/richdocument.h"
 #include "formats/inputformat.h"
 #include "vobsubinputinitdialog.h"
 #include "vobsubinputprocessdialog.h"

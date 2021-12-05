@@ -9,7 +9,7 @@
 #include "application.h"
 #include "actions/useractionnames.h"
 #include "helpers/commondefs.h"
-#include "core/richdocument.h"
+#include "core/richtext/richdocument.h"
 #include "core/subtitleiterator.h"
 #include "videoplayer/videoplayer.h"
 #include "widgets/layeredwidget.h"

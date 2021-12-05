@@ -8,7 +8,7 @@
 #include "scripting_subtitleline.h"
 #include "scripting_richstring.h"
 #include "application.h"
-#include "core/richdocument.h"
+#include "core/richtext/richdocument.h"
 #include "core/subtitletarget.h"
 
 #include <QDebug>

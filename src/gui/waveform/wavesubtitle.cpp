@@ -1,12 +1,12 @@
 /*
-    SPDX-FileCopyrightText: 2010-2021 Mladen Milinkovic <max@smoothware.net>
+    SPDX-FileCopyrightText: 2010-2022 Mladen Milinkovic <max@smoothware.net>
 
     SPDX-License-Identifier: GPL-2.0-or-later
 */
 
 #include "wavesubtitle.h"
 
-#include "core/richdocument.h"
+#include "core/richtext/richdocument.h"
 #include "core/subtitleline.h"
 #include "gui/waveform/waverenderer.h"
 

@@ -8,7 +8,7 @@
 #ifndef YOUTUBECAPTIONSINPUTFORMAT_H
 #define YOUTUBECAPTIONSINPUTFORMAT_H
 
-#include "core/richdocument.h"
+#include "core/richtext/richdocument.h"
 #include "formats/inputformat.h"
 
 #include <QRegExp>

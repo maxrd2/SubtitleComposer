@@ -1,13 +1,13 @@
 /*
     SPDX-FileCopyrightText: 2007-2009 Sergio Pistone <sergio_pistone@yahoo.com.ar>
-    SPDX-FileCopyrightText: 2010-2018 Mladen Milinkovic <max@smoothware.net>
+    SPDX-FileCopyrightText: 2010-2022 Mladen Milinkovic <max@smoothware.net>
 
     SPDX-License-Identifier: GPL-2.0-or-later
 */
 
 #include "errortracker.h"
 #include "application.h"
-#include "core/richdocument.h"
+#include "core/richtext/richdocument.h"
 #include "core/subtitleline.h"
 
 using namespace SubtitleComposer;

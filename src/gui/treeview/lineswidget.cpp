@@ -7,7 +7,7 @@
 
 #include "lineswidget.h"
 #include "application.h"
-#include "core/richdocument.h"
+#include "core/richtext/richdocument.h"
 #include "actions/useractionnames.h"
 #include "dialogs/actionwithtargetdialog.h"
 #include "gui/treeview/linesitemdelegate.h"

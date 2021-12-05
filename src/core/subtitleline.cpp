@@ -5,7 +5,7 @@
     SPDX-License-Identifier: GPL-2.0-or-later
 */
 
-#include "core/richdocument.h"
+#include "core/richtext/richdocument.h"
 #include "core/subtitleline.h"
 #include "core/undo/subtitlelineactions.h"
 #include "core/undo/subtitleactions.h"

@@ -1,5 +1,5 @@
 /*
-    SPDX-FileCopyrightText: 2020 Mladen Milinkovic <max@smoothware.net>
+    SPDX-FileCopyrightText: 2020-2022 Mladen Milinkovic <max@smoothware.net>
 
     SPDX-License-Identifier: GPL-2.0-or-later
 */
@@ -8,7 +8,7 @@
 
 #include "application.h"
 #include "actions/useractionnames.h"
-#include "core/richdocumenteditor.h"
+#include "core/richtext/richdocumenteditor.h"
 #include "dialogs/subtitlecolordialog.h"
 
 #include <QDrag>

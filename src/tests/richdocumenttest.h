@@ -1,5 +1,5 @@
 /*
-    SPDX-FileCopyrightText: 2020 Mladen Milinkovic <max@smoothware.net>
+    SPDX-FileCopyrightText: 2020-2022 Mladen Milinkovic <max@smoothware.net>
 
     SPDX-License-Identifier: GPL-2.0-or-later
 */
@@ -7,7 +7,7 @@
 #ifndef RICHDOCUMENTTEST_H
 #define RICHDOCUMENTTEST_H
 
-#include "core/richdocument.h"
+#include "core/richtext/richdocument.h"
 
 class RichDocumentTest : public QObject
 {

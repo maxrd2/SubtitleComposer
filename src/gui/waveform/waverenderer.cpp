@@ -1,5 +1,5 @@
 /*
-    SPDX-FileCopyrightText: 2010-2021 Mladen Milinkovic <max@smoothware.net>
+    SPDX-FileCopyrightText: 2010-2022 Mladen Milinkovic <max@smoothware.net>
 
     SPDX-License-Identifier: GPL-2.0-or-later
 */
@@ -8,7 +8,7 @@
 
 #include "application.h"
 #include "scconfig.h"
-#include "core/richdocument.h"
+#include "core/richtext/richdocument.h"
 #include "gui/waveform/wavebuffer.h"
 #include "gui/waveform/waveformwidget.h"
 #include "gui/waveform/wavesubtitle.h"

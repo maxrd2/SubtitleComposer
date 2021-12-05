@@ -41,9 +41,10 @@ set(subtitlecomposer_SRCS
 	#[[ main ]] application.cpp application_actions.cpp application_errorcheck.cpp application_subtitle.cpp mainwindow.cpp
 	#[[ actions ]] actions/useraction.cpp actions/useractionnames.h actions/kcodecactionext.cpp actions/krecentfilesactionext.cpp
 	#[[ configs ]] configs/configdialog.cpp configs/errorsconfigwidget.cpp configs/generalconfigwidget.cpp configs/playerconfigwidget.cpp configs/waveformconfigwidget.cpp
-	#[[ core ]] core/formatdata.h core/range.h core/rangelist.h core/time.cpp core/richdocument.cpp core/richdocumenteditor.cpp core/richstring.cpp
-	core/subtitle.cpp core/subtitleiterator.cpp core/subtitleline.cpp core/undo/subtitleactions.cpp core/undo/subtitlelineactions.cpp
-	core/undo/undoaction.cpp core/undo/undostack.cpp
+	#[[ core ]] core/formatdata.h core/range.h core/rangelist.h core/time.cpp core/richstring.cpp
+	core/subtitle.cpp core/subtitleiterator.cpp core/subtitleline.cpp
+	#[[ core/richtext ]] core/richtext/richdocument.cpp core/richtext/richdocumenteditor.cpp
+	#[[ core/undo ]] core/undo/subtitleactions.cpp core/undo/subtitlelineactions.cpp core/undo/undoaction.cpp core/undo/undostack.cpp
 	#[[ dialogs ]] dialogs/actiondialog.cpp #[[dialogs/actionwitherrortargetsdialog.cpp]] dialogs/actionwithtargetdialog.cpp dialogs/adjusttimesdialog.cpp
 	dialogs/autodurationsdialog.cpp dialogs/changeframeratedialog.cpp dialogs/changetextscasedialog.cpp dialogs/durationlimitsdialog.cpp
 	dialogs/encodingdetectdialog.cpp dialogs/fixoverlappingtimesdialog.cpp dialogs/fixpunctuationdialog.cpp dialogs/insertlinedialog.cpp

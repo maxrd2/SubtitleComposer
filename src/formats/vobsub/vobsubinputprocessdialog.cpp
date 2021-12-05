@@ -7,7 +7,7 @@
 #include "vobsubinputprocessdialog.h"
 #include "ui_vobsubinputprocessdialog.h"
 
-#include "core/richdocument.h"
+#include "core/richtext/richdocument.h"
 
 #include <functional>
 

@@ -1,6 +1,6 @@
 /*
     SPDX-FileCopyrightText: 2016 The Qt Company Ltd.
-    SPDX-FileCopyrightText: 2020 Mladen Milinkovic <max@smoothware.net>
+    SPDX-FileCopyrightText: 2020-2022 Mladen Milinkovic <max@smoothware.net>
 
     SPDX-License-Identifier: GPL-2.0-or-later
 */

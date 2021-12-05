@@ -1,12 +1,12 @@
 /*
-    SPDX-FileCopyrightText: 2010-2019 Mladen Milinkovic <max@smoothware.net>
+    SPDX-FileCopyrightText: 2010-2022 Mladen Milinkovic <max@smoothware.net>
 
     SPDX-License-Identifier: GPL-2.0-or-later
 */
 
 #include "config.h"
 
-#include "core/richdocument.h"
+#include "core/richtext/richdocument.h"
 #include "helpers/pluginhelper.h"
 #include "speechprocessor.h"
 #include "speechplugin.h"

@@ -9,7 +9,7 @@
 #define SUBVIEWER2OUTPUTFORMAT_H
 
 #include "formats/outputformat.h"
-#include "core/richdocument.h"
+#include "core/richtext/richdocument.h"
 #include "core/subtitleiterator.h"
 
 namespace SubtitleComposer {

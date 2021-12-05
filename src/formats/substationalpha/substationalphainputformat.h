@@ -8,7 +8,7 @@
 #ifndef SUBSTATIONALPHAINPUTFORMAT_H
 #define SUBSTATIONALPHAINPUTFORMAT_H
 
-#include "core/richdocument.h"
+#include "core/richtext/richdocument.h"
 #include "formats/inputformat.h"
 
 #include <QRegExp>

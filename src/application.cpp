@@ -12,7 +12,7 @@
 #include "actions/useraction.h"
 #include "actions/useractionnames.h"
 #include "configs/configdialog.h"
-#include "core/richdocument.h"
+#include "core/richtext/richdocument.h"
 #include "core/subtitleiterator.h"
 #include "core/undo/undostack.h"
 #include "gui/currentlinewidget.h"

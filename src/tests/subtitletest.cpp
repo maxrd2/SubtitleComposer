@@ -1,5 +1,5 @@
 /*
-    SPDX-FileCopyrightText: 2021 Mladen Milinkovic <max@smoothware.net>
+    SPDX-FileCopyrightText: 2021-2022 Mladen Milinkovic <max@smoothware.net>
 
     SPDX-License-Identifier: GPL-2.0-or-later
 */
@@ -9,7 +9,7 @@
 #include <QTest>
 
 #include "application.h"
-#include "core/richdocument.h"
+#include "core/richtext/richdocument.h"
 
 using namespace SubtitleComposer;
 
