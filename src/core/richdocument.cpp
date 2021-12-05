@@ -121,9 +121,10 @@ RichDocument::toHtml() const
 
 	for(QTextBlock bi = begin(); bi != end(); bi = bi.next()) {
 		for(QTextBlock::iterator it = bi.begin(); !it.atEnd(); ++it) {
-			if(!it.fragment().isValid())
+			const QTextFragment &f = it.fragment();
+			if(!f.isValid())
 				continue;
-			const QTextCharFormat &format = it.fragment().charFormat();
+			const QTextCharFormat &format = f.charFormat();
 			if(fB != (format.fontWeight() == QFont::Bold))
 				html.append((fB = !fB) ? $("<b>") : $("</b>"));
 			if(fI != format.fontItalic())
@@ -137,7 +138,7 @@ RichDocument::toHtml() const
 				if(fC) html.append($("</font>"));
 				if((fC = fg)) html.append($("<font color=#%1>").arg(fC & 0xFFFFFF, 6, 16, QChar('0')));
 			}
-			html.append(it.fragment().text().replace(QChar::LineSeparator, $("<br>\n")));
+			html.append(f.text().replace(QChar::LineSeparator, $("<br>\n")));
 		}
 		if(bi != lastBlock()) {
 			html.append($("<br>\n"));
@@ -243,9 +244,10 @@ RichDocument::toRichText() const
 		if(bi != begin())
 			richText.append(QChar::LineFeed);
 		for(QTextBlock::iterator it = bi.begin(); !it.atEnd(); ++it) {
-			if(!it.fragment().isValid())
+			const QTextFragment &f = it.fragment();
+			if(!f.isValid())
 				continue;
-			const QTextCharFormat &format = it.fragment().charFormat();
+			const QTextCharFormat &format = f.charFormat();
 			int styleFlags = 0;
 			QRgb styleColor;
 			if(format.fontWeight() == QFont::Bold)
@@ -263,7 +265,7 @@ RichDocument::toRichText() const
 				styleColor = 0;
 			}
 
-			richText.append(RichString(it.fragment().text(), styleFlags, styleColor));
+			richText.append(RichString(f.text(), styleFlags, styleColor));
 		}
 	}
 	return richText;
@@ -299,9 +301,10 @@ RichDocument::cummulativeStyleFlags() const
 	int flags = 0;
 	for(QTextBlock bi = begin(); bi != end(); bi = bi.next()) {
 		for(QTextBlock::iterator it = bi.begin(); !it.atEnd(); ++it) {
-			if(!it.fragment().isValid())
+			const QTextFragment &f = it.fragment();
+			if(!f.isValid())
 				continue;
-			const QTextCharFormat &format = it.fragment().charFormat();
+			const QTextCharFormat &format = f.charFormat();
 			if(format.fontWeight() == QFont::Bold)
 				flags |= SubtitleComposer::RichString::Bold;
 			if(format.fontItalic())
