@@ -13,6 +13,7 @@
 #include <QTextBlock>
 #include <QTextCursor>
 #include <QTextDocument>
+#include <QTextFormat>
 #include <QObject>
 #include <QPalette>
 
@@ -26,6 +27,13 @@ class RichDocument : public QTextDocument
 	Q_OBJECT
 
 public:
+	enum Property {
+		Class = QTextFormat::UserProperty,
+		Voice = QTextFormat::UserProperty + 1,
+		Merged = QTextFormat::UserProperty + 2,
+	};
+	Q_ENUM(Property)
+
 	explicit RichDocument(QObject *parent=nullptr);
 	virtual ~RichDocument();
 
@@ -60,8 +68,8 @@ public:
 
 	inline QTextCursor *undoableCursor() { return &m_undoableCursor; }
 
-	inline void setStylesheet(RichCSS *css) { m_stylesheet = css; }
-	inline RichCSS *stylesheet() { return m_stylesheet; }
+	void setStylesheet(const RichCSS *css);
+	inline const RichCSS *stylesheet() const { return m_stylesheet; }
 
 public slots:
 	inline void undo() { QTextDocument::undo(&m_undoableCursor); }
@@ -74,7 +82,7 @@ private:
 
 private:
 	QTextCursor m_undoableCursor;
-	RichCSS *m_stylesheet;
+	const RichCSS *m_stylesheet;
 
 	void applyChanges(const void *changeList);
 

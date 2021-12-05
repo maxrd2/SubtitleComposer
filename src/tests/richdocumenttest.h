@@ -37,6 +37,8 @@ private slots:
 
 	void testTitle_data();
 	void testTitle();
+
+	void testClass();
 };
 
 #endif // RICHDOCUMENTTEST_H

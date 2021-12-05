@@ -1,5 +1,5 @@
 /*
-    SPDX-FileCopyrightText: 2020 Mladen Milinkovic <max@smoothware.net>
+    SPDX-FileCopyrightText: 2020-2022 Mladen Milinkovic <max@smoothware.net>
 
     SPDX-License-Identifier: GPL-2.0-or-later
 */
@@ -8,9 +8,10 @@
 
 #include "helpers/common.h"
 
+#include <QDebug>
 #include <QRegularExpression>
 #include <QTest>
-#include <QDebug>
+#include <QTextDocumentFragment>
 
 using namespace SubtitleComposer;
 
@@ -62,6 +63,10 @@ RichDocumentTest::testHtml_data()
 			<< "<p>Try <font color=\"red\">red</font> and <font color=\"black\">black</font> and <span style=\"color:blue\">blue</span> color.</p>"
 			<< "Try <font color=#ff0000>red</font> and <font color=#000000>black</font> and <font color=#0000ff>blue</font> color."
 			<< "Try red and black and blue color.";
+	QTest::newRow("nested color styles")
+			<< "<p><span style=\"color:blue\">Try <font color=\"red\">red</font> and <font color=\"black\">black</font> and blue</span> color.</p>"
+			<< "<font color=#0000ff>Try </font><font color=#ff0000>red</font><font color=#0000ff> and </font><font color=#000000>black</font><font color=#0000ff> and blue</font> color."
+			<< "Try red and black and blue color.";
 	QTest::newRow("unicode literal")
 			<< "An unicode ♪ char."
 			<< "An unicode \u266A char."
@@ -82,6 +87,10 @@ RichDocumentTest::testHtml_data()
 			   "A line break.\n"
 			   "And a\ndifferent paragraph\n"
 			   "and some \nunclosed and bad tags.";
+	QTest::newRow("paragraph break")
+			<< "<p>paragraph text</p>new line"
+			<< "paragraph text<br>\nnew line"
+			<< "paragraph text\nnew line";
 }
 
 void
@@ -344,6 +353,38 @@ RichDocumentTest::testTitle()
 	doc.setPlainText(input);
 	doc.toSentenceCase(&sentenceStart, true, true);
 	QCOMPARE(doc.toPlainText(), expected);
+}
+
+void
+RichDocumentTest::testClass()
+{
+	QTextCursor *c = doc.undoableCursor();
+	doc.setPlainText($("The quick brown fox jumps over the lazy dog"));
+	QVERIFY(c->movePosition(QTextCursor::Start));
+
+	{
+		QVERIFY(c->movePosition(QTextCursor::Right, QTextCursor::MoveAnchor, 4));
+		QVERIFY(c->movePosition(QTextCursor::Right, QTextCursor::KeepAnchor, 11));
+		QCOMPARE(c->selectedText(), $("quick brown"));
+		QTextCharFormat fmt;
+		fmt.setFontWeight(QFont::Bold);
+		c->mergeCharFormat(fmt);
+		QCOMPARE(c->selectedText(), $("quick brown"));
+		c->clearSelection();
+	}
+	{
+		QVERIFY(c->movePosition(QTextCursor::Left, QTextCursor::MoveAnchor, 5));
+		QVERIFY(c->movePosition(QTextCursor::Right, QTextCursor::KeepAnchor, 9));
+		QCOMPARE(c->selectedText(), $("brown fox"));
+		QTextCharFormat fmt;
+		QSet<QString> classList;
+		classList.insert($("test-class"));
+		fmt.setProperty(RichDocument::Class, QVariant::fromValue(classList));
+		c->mergeCharFormat(fmt);
+		QCOMPARE(c->selectedText(), $("brown fox"));
+		c->clearSelection();
+	}
+	qDebug() << doc.toHtml();
 }
 
 QTEST_GUILESS_MAIN(RichDocumentTest)

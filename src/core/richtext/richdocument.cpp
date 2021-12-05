@@ -12,6 +12,7 @@
 #include <QApplication>
 #include <QPainter>
 #include <QSharedPointer>
+#include <QSet>
 #include <QStyle>
 #include <QStyleOptionViewItem>
 #include <QTextDocumentFragment>
@@ -71,6 +72,23 @@ RichDocument::~RichDocument()
 }
 
 void
+RichDocument::setStylesheet(const RichCSS *css)
+{
+	if(m_stylesheet == css)
+		return;
+	RichDocumentLayout *layout = reinterpret_cast<RichDocumentLayout *>(documentLayout());
+	if(m_stylesheet) {
+		disconnect(m_stylesheet, &RichCSS::changed, layout, &RichDocumentLayout::flagDirty);
+		layout->flagDirty();
+	}
+	m_stylesheet = css;
+	if(m_stylesheet) {
+		connect(m_stylesheet, &RichCSS::changed, layout, &RichDocumentLayout::flagDirty);
+		layout->flagDirty();
+	}
+}
+
+void
 RichDocument::setRichText(const RichString &text, bool resetUndo)
 {
 	if(resetUndo)
@@ -83,15 +101,18 @@ RichDocument::setRichText(const RichString &text, bool resetUndo)
 
 	int currentStyleFlags = -1;
 	QRgb currentStyleColor = 0;
+	quint64 currentStyleClasses = 0;
+	qint32 currentStyleVoice = -1;
 	QTextCharFormat format;
 	int prev = 0;
 	for(int pos = 0, size = text.length(); pos < size; pos++) {
 		const int posFlags = text.styleFlagsAt(pos);
 		const QRgb posColor = text.styleColorAt(pos);
+		const quint64 posClasses = text.styleClassesAt(pos);
+		const qint32 posVoice = text.styleVoiceAt(pos);
+		bool insert = false;
 		if(currentStyleFlags != posFlags || ((posFlags & SubtitleComposer::RichString::Color) && currentStyleColor != posColor)) {
-			if(prev != pos)
-				m_undoableCursor.insertText(text.midRef(prev, pos - prev).toString(), format);
-			prev = pos;
+			insert = true;
 			currentStyleFlags = posFlags;
 			currentStyleColor = posColor;
 			format.setFontWeight(currentStyleFlags & SubtitleComposer::RichString::Bold ? QFont::Bold : QFont::Normal);
@@ -102,6 +123,20 @@ RichDocument::setRichText(const RichString &text, bool resetUndo)
 				format.setForeground(QBrush());
 			else
 				format.setForeground(QBrush(QColor(currentStyleColor)));
+		}
+		if(currentStyleClasses != posClasses) {
+			insert = true;
+			currentStyleClasses = posClasses;
+			format.setProperty(RichDocument::Class, QVariant::fromValue(text.styleClassNamesAt(pos)));
+		}
+		if(currentStyleVoice != posVoice) {
+			insert = true;
+			currentStyleVoice = posVoice;
+			format.setProperty(RichDocument::Voice, QVariant::fromValue(text.styleVoiceNameAt(pos)));
+		}
+		if(insert && prev != pos) {
+			m_undoableCursor.insertText(text.midRef(prev, pos - prev).toString(), format);
+			prev = pos;
 		}
 	}
 	if(prev != text.length())
@@ -122,13 +157,35 @@ RichDocument::toHtml() const
 	bool fU = false;
 	bool fS = false;
 	QRgb fC = 0;
-
-	for(QTextBlock bi = begin(); bi != end(); bi = bi.next()) {
+	QSet<QString> fClass;
+	QString fVoice; // <v:speaker name> - can't be nested... right? No need for QSet<QString>
+	QTextBlock bi = begin();
+	for(;;) {
 		for(QTextBlock::iterator it = bi.begin(); !it.atEnd(); ++it) {
 			const QTextFragment &f = it.fragment();
 			if(!f.isValid())
 				continue;
 			const QTextCharFormat &format = f.charFormat();
+			const QSet<QString> &cl = format.property(Class).value<QSet<QString>>();
+			for(auto it = fClass.begin(); it != fClass.end();) {
+				if(cl.contains(*it)) {
+					++it;
+					continue;
+				}
+				html.append($("</c.%1>").arg(*it));
+				it = fClass.erase(it);
+			}
+			for(auto it = cl.cbegin(); it != cl.cend(); ++it) {
+				if(fClass.contains(*it))
+					continue;
+				html.append($("<c.%1>").arg(*it));
+				fClass.insert(*it);
+			}
+			const QString &vt = format.property(Voice).value<QString>();
+			if(fVoice != vt) {
+				fVoice = vt;
+				html.append($("<v %1>").arg(fVoice));
+			}
 			if(fB != (format.fontWeight() == QFont::Bold))
 				html.append((fB = !fB) ? $("<b>") : $("</b>"));
 			if(fI != format.fontItalic())
@@ -144,17 +201,20 @@ RichDocument::toHtml() const
 			}
 			html.append(f.text().replace(QChar::LineSeparator, $("<br>\n")));
 		}
-		if(bi != lastBlock()) {
-			html.append($("<br>\n"));
-		} else {
+		bi = bi.next();
+		if(bi == end()) {
 			if(fB) html.append($("</b>"));
 			if(fI) html.append($("</i>"));
 			if(fU) html.append($("</u>"));
 			if(fS) html.append($("</s>"));
 			if(fC) html.append($("</font>"));
+			for(const QString &cl: fClass)
+				html.append($("</c.%1>").arg(cl));
+			return html;
 		}
+		html.append($("<br>\n"));
 	}
-	return html;
+	// unreachable
 }
 
 void
@@ -177,16 +237,9 @@ RichDocument::linesToBlocks()
 void
 RichDocument::setHtml(const QString &html, bool resetUndo)
 {
-	if(resetUndo)
-		setUndoRedoEnabled(false);
-	else
-		m_undoableCursor.beginEditBlock();
-	m_undoableCursor.select(QTextCursor::Document);
-	m_undoableCursor.insertBlock();
-	if(resetUndo)
-		setUndoRedoEnabled(true);
-	else
-		m_undoableCursor.endEditBlock();
+	RichString s;
+	s.setRichString(html);
+	setRichText(s, resetUndo);
 }
 
 void
@@ -253,6 +306,8 @@ RichDocument::toRichText() const
 			const QTextCharFormat &format = f.charFormat();
 			int styleFlags = 0;
 			QRgb styleColor;
+			const QSet<QString> &styleClass = format.property(Class).value<QSet<QString>>();
+			const QString &styleVoice = format.property(Voice).value<QString>();
 			if(format.fontWeight() == QFont::Bold)
 				styleFlags |= SubtitleComposer::RichString::Bold;
 			if(format.fontItalic())
@@ -268,7 +323,7 @@ RichDocument::toRichText() const
 				styleColor = 0;
 			}
 
-			richText.append(RichString(f.text(), styleFlags, styleColor));
+			richText.append(RichString(f.text(), styleFlags, styleColor, styleClass, styleVoice));
 		}
 	}
 	return richText;
@@ -308,6 +363,7 @@ RichDocument::cummulativeStyleFlags() const
 			if(!f.isValid())
 				continue;
 			const QTextCharFormat &format = f.charFormat();
+			// FIXME: consider classes/styles/css
 			if(format.fontWeight() == QFont::Bold)
 				flags |= SubtitleComposer::RichString::Bold;
 			if(format.fontItalic())
