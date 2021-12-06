@@ -43,7 +43,7 @@ set(subtitlecomposer_SRCS
 	#[[ configs ]] configs/configdialog.cpp configs/errorsconfigwidget.cpp configs/generalconfigwidget.cpp configs/playerconfigwidget.cpp configs/waveformconfigwidget.cpp
 	#[[ core ]] core/formatdata.h core/range.h core/rangelist.h core/time.cpp core/richstring.cpp
 	core/subtitle.cpp core/subtitleiterator.cpp core/subtitleline.cpp
-	#[[ core/richtext ]] core/richtext/richdocument.cpp core/richtext/richdocumenteditor.cpp core/richtext/richdocumentlayout.cpp
+	#[[ core/richtext ]] core/richtext/richdocument.cpp core/richtext/richdocumenteditor.cpp core/richtext/richdocumentlayout.cpp core/richtext/richcss.cpp
 	#[[ core/undo ]] core/undo/subtitleactions.cpp core/undo/subtitlelineactions.cpp core/undo/undoaction.cpp core/undo/undostack.cpp
 	#[[ dialogs ]] dialogs/actiondialog.cpp #[[dialogs/actionwitherrortargetsdialog.cpp]] dialogs/actionwithtargetdialog.cpp dialogs/adjusttimesdialog.cpp
 	dialogs/autodurationsdialog.cpp dialogs/changeframeratedialog.cpp dialogs/changetextscasedialog.cpp dialogs/durationlimitsdialog.cpp

@@ -51,7 +51,8 @@ struct EditChange {
 
 RichDocument::RichDocument(QObject *parent)
 	: QTextDocument(parent),
-	  m_undoableCursor(this)
+	  m_undoableCursor(this),
+	  m_stylesheet(nullptr)
 {
 	setUndoRedoEnabled(true);
 

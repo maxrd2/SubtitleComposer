@@ -8,6 +8,7 @@
 #define RICHDOCUMENT_H
 
 #include "core/richstring.h"
+#include "core/richtext/richcss.h"
 
 #include <QTextBlock>
 #include <QTextCursor>
@@ -59,6 +60,9 @@ public:
 
 	inline QTextCursor *undoableCursor() { return &m_undoableCursor; }
 
+	inline void setStylesheet(RichCSS *css) { m_stylesheet = css; }
+	inline RichCSS *stylesheet() { return m_stylesheet; }
+
 public slots:
 	inline void undo() { QTextDocument::undo(&m_undoableCursor); }
 	inline void redo() { QTextDocument::redo(&m_undoableCursor); }
@@ -70,6 +74,7 @@ private:
 
 private:
 	QTextCursor m_undoableCursor;
+	RichCSS *m_stylesheet;
 
 	void applyChanges(const void *changeList);
 

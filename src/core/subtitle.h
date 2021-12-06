@@ -29,6 +29,7 @@ namespace SubtitleComposer {
 class RichDocument;
 class SubtitleLine;
 class UndoAction;
+class RichCSS;
 
 class Subtitle : public QObject, public QSharedData
 {
@@ -168,6 +169,8 @@ public:
 	inline const QString meta(const QByteArray &key) const { return m_metaData.value(key); }
 	inline void meta(const QByteArray &key, const QString &value) { m_metaData.insert(key, value); }
 
+	inline const RichCSS *stylesheet() { return m_stylesheet; }
+
 signals:
 	void primaryChanged();
 	void secondaryChanged();
@@ -225,6 +228,8 @@ private:
 	QList<const SubtitleLine *> m_anchoredLines;
 
 	QMap<QByteArray, QString> m_metaData;
+
+	RichCSS *m_stylesheet;
 
 	FormatData *m_formatData;
 

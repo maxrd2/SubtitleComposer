@@ -43,6 +43,7 @@ Subtitle::Subtitle(double framesPerSecond)
 	  m_secondaryDirtyState(false),
 	  m_secondaryCleanIndex(0),
 	  m_framesPerSecond(framesPerSecond),
+	  m_stylesheet(new RichCSS()),
 	  m_formatData(nullptr)
 {}
 
@@ -50,6 +51,7 @@ Subtitle::~Subtitle()
 {
 	qDeleteAll(m_lines);
 
+	delete m_stylesheet;
 	delete m_formatData;
 }
 
@@ -59,6 +61,9 @@ Subtitle::setPrimaryData(const Subtitle &from, bool usePrimaryData)
 	beginCompositeAction(i18n("Set Primary Data"));
 
 	m_metaData = from.m_metaData;
+
+	delete m_stylesheet;
+	m_stylesheet = new RichCSS(*from.m_stylesheet);
 
 	setFormatData(from.m_formatData);
 
@@ -200,7 +205,7 @@ Subtitle::setFormatData(const FormatData *formatData)
 {
 	delete m_formatData;
 
-	m_formatData = formatData ? new FormatData(*formatData) : NULL;
+	m_formatData = formatData ? new FormatData(*formatData) : nullptr;
 }
 
 double
@@ -1224,7 +1229,8 @@ Subtitle::splitSubtitle(Subtitle &dstSubtitle, const Time &splitTime, bool shift
 	}
 
 	if(splitIndex > 0 || (splitIndex == 0 && splitsLine)) {
-		dstSubtitle.m_formatData = m_formatData ? new FormatData(*m_formatData) : 0;
+		dstSubtitle.m_stylesheet = m_stylesheet ? new RichCSS(*m_stylesheet) : new RichCSS();
+		dstSubtitle.m_formatData = m_formatData ? new FormatData(*m_formatData) : nullptr;
 
 		dstSubtitle.beginCompositeAction(i18n("Split Subtitles"));
 		if(dstSubtitle.count())
