@@ -195,7 +195,7 @@ StreamProcessor::findStream(int streamType, int streamIndex, bool imageSub)
 		int ret;
 		char errorText[1024];
 
-		AVCodec *dec = avcodec_find_decoder(m_avStream->codecpar->codec_id);
+		const AVCodec *dec = avcodec_find_decoder(m_avStream->codecpar->codec_id);
 		if(!dec) {
 			qWarning() << "Failed to find decoder for stream" << i;
 			return false;

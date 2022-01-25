@@ -230,7 +230,7 @@ StreamDemuxer::componentOpen(int streamIndex)
 {
 	AVFormatContext *ic = m_vs->fmtContext;
 	AVCodecContext *avCtx;
-	AVCodec *codec;
+	const AVCodec *codec;
 	AVDictionary *opts = nullptr;
 	AVDictionaryEntry *t = nullptr;
 	int sampleRate, nbChannels;
