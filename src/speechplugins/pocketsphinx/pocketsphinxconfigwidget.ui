@@ -75,7 +75,7 @@
       <item row="4" column="0" colspan="2">
        <widget class="QLabel" name="label_modelInfoText">
         <property name="text">
-         <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;Acoustic and Language Models can be downloaded from &lt;a href=&quot;https://cmusphinx.github.io/wiki/download/&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#007af4;&quot;&gt;CMU Spinx&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+         <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;Acoustic and Language Models can be downloaded from &lt;a href=&quot;https://cmusphinx.github.io/wiki/download/&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#007af4;&quot;&gt;CMU Sphinx&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
         </property>
         <property name="textFormat">
          <enum>Qt::RichText</enum>
