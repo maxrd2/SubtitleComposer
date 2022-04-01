@@ -287,6 +287,8 @@ StreamDemuxer::componentOpen(int streamIndex)
 	if(stream_lowres)
 		av_dict_set_int(&opts, "lowres", stream_lowres, 0);
 	if((ret = avcodec_open2(avCtx, codec, &opts)) < 0) {
+		char e[AV_ERROR_MAX_STRING_SIZE];
+		av_log(nullptr, AV_LOG_ERROR, "Failed opening codec err:%d - %s.\n", ret, av_make_error_string(e, sizeof(e), ret));
 		goto fail;
 	}
 	if((t = av_dict_get(opts, "", nullptr, AV_DICT_IGNORE_SUFFIX))) {
