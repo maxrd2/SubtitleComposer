@@ -286,8 +286,6 @@ StreamDemuxer::componentOpen(int streamIndex)
 		av_dict_set(&opts, "threads", "auto", 0);
 	if(stream_lowres)
 		av_dict_set_int(&opts, "lowres", stream_lowres, 0);
-	if(avCtx->codec_type == AVMEDIA_TYPE_VIDEO || avCtx->codec_type == AVMEDIA_TYPE_AUDIO)
-		av_dict_set(&opts, "refcounted_frames", "1", 0);
 	if((ret = avcodec_open2(avCtx, codec, &opts)) < 0) {
 		goto fail;
 	}
