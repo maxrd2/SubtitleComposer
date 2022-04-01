@@ -292,9 +292,7 @@ StreamDemuxer::componentOpen(int streamIndex)
 		goto fail;
 	}
 	if((t = av_dict_get(opts, "", nullptr, AV_DICT_IGNORE_SUFFIX))) {
-		av_log(nullptr, AV_LOG_ERROR, "Option %s not found.\n", t->key);
-		ret = AVERROR_OPTION_NOT_FOUND;
-		goto fail;
+		av_log(nullptr, AV_LOG_WARNING, "AVCodec option %s not found.\n", t->key);
 	}
 
 	m_vs->eof = false;
