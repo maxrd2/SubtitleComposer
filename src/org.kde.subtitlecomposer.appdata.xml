@@ -162,7 +162,7 @@
       <li xml:lang="et">Kõne tuvastamine heli/videofailist PocketSphinxi abil</li>
       <li xml:lang="fi">Puheentunnistus ääni- tai videotiedostosta PocketSphinxillä</li>
       <li xml:lang="fr">Reconnaissance vocale des fichiers audio / vidéo grâce à PocketSphinx</li>
-      <li xml:lang="id">Pengenalan ucapan dari file audio/video menggunakan PocketSphinx</li>
+      <li xml:lang="id">Pengenalan lisan dari file audio/video menggunakan PocketSphinx</li>
       <li xml:lang="it">Riconoscimento della voce da file audio/video tramite PocketSphinx</li>
       <li xml:lang="ko">PocketSphinx를 사용하여 오디오/동영상 파일의 음성 인식</li>
       <li xml:lang="nl">Spraakherkenning uit audio/video bestand met gebruik van PocketSphinx</li>
@@ -381,7 +381,7 @@
       <li xml:lang="zh-TW">偵測字幕中的時間錯誤</li>
       <li>Scripting (JavaScript, Python, Ruby and other languages supported by Kross).</li>
       <li xml:lang="ca">Creació de scripts (JavaScript, Python, Ruby i altres llenguatges admesos pel Kross).</li>
-      <li xml:lang="ca-valencia">Creació de scripts (JavaScript, Python, Ruby i altres llenguatges admesos pel Kross).</li>
+      <li xml:lang="ca-valencia">Creació de scripts (JavaScript, Python, Ruby i altres llenguatges admesos per Kross).</li>
       <li xml:lang="de"> Skripte in den Programmsprachen JavaScript, Python, Ruby und anderen von Kross unterstützten Sprachen. </li>
       <li xml:lang="en-GB">Scripting (JavaScript, Python, Ruby and other languages supported by Kross).</li>
       <li xml:lang="es">Guiones (JavaScript, Python, Ruby y otros lenguajes permitidos por Kross).</li>
