@@ -175,7 +175,7 @@
       <li xml:lang="x-test">xxSpeech recognition from audio/video file using PocketSphinxxx</li>
       <li>Smart language/text encoding** detection</li>
       <li xml:lang="ca">Detecció** intel·ligent de la codificació d'idioma/text</li>
-      <li xml:lang="ca-valencia">Detecció** intel·ligent de la codificació d'idioma/text</li>
+      <li xml:lang="ca-valencia">Detecció** inteligent de la codificació d'idioma/text</li>
       <li xml:lang="de">Intelligente Erkennung von Sprach- und Textkodierung</li>
       <li xml:lang="en-GB">Smart language/text encoding** detection</li>
       <li xml:lang="es">Detección inteligente de codificación** de idioma y de texto</li>
@@ -296,7 +296,7 @@
       <li xml:lang="x-test">xxJoining and splitting of subtitle filesxx</li>
       <li>Side by side subtitle translations</li>
       <li xml:lang="ca">Traducció dels subtítols en paral·lel</li>
-      <li xml:lang="ca-valencia">Traducció dels subtítols en paral·lel</li>
+      <li xml:lang="ca-valencia">Traducció dels subtítols en paralel</li>
       <li xml:lang="de">Übersetzungen von Untertiteln in einer nebeneinander angeordneten Ansicht</li>
       <li xml:lang="en-GB">Side by side subtitle translations</li>
       <li xml:lang="es">Traducciones de subtítulos lado a lado</li>
