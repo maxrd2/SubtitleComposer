@@ -136,7 +136,7 @@
       <li xml:lang="zh-TW">開啟／OCR 圖形字幕格式 - VobSub (.idx/.sub/.rar)、BluRay/PGS (*.sup)、FFmpeg 支援的格式 (DVD/Vob, DVB, XSUB, HDMV-PGS)</li>
       <li>Demux Graphics/Text Subtitle Stream from video file - SRT, SSA/ASS, MOV text, MicroDVD, DVD/Vob, DVB, XSUB, HDMV-PGS</li>
       <li xml:lang="ca">Desmultiplexa el flux de subtítols gràfics/de text des d'un fitxer de vídeo: SRT, SSA/ASS, text MOV, MicroDVD, DVD/Vob, DVB, XSUB, HDMV-PGS</li>
-      <li xml:lang="ca-valencia">Desmultiplexa el flux de subtítols gràfics/de text des d'un ficher de vídeo: SRT, SSA/ASS, text MOV, MicroDVD, DVD/Vob, DVB, XSUB, HDMV-PGS</li>
+      <li xml:lang="ca-valencia">Desmultiplexa el flux de subtítols gràfics/de text des d'un fitxer de vídeo: SRT, SSA/ASS, text MOV, MicroDVD, DVD/Vob, DVB, XSUB, HDMV-PGS</li>
       <li xml:lang="en-GB">Demux Graphics/Text Subtitle Stream from video file - SRT, SSA/ASS, MOV text, MicroDVD, DVD/Vob, DVB, XSUB, HDMV-PGS</li>
       <li xml:lang="es">Demultiplexar emisiones de subtítulos gráficos y de texto de archivos de vídeo: SRT, SSA/ASS, texto MOV, MicroDVD, DVD/Vob, DVB, XSUB, HDMV-PGS</li>
       <li xml:lang="et">Graafilise või tekstisubtiitri voo demultipleksimine videofailist - SRT, SSA/ASS, MOV text, MicroDVD, DVD/Vob, DVB, XSUB, HDMV-PGS</li>
@@ -155,7 +155,7 @@
       <li xml:lang="x-test">xxDemux Graphics/Text Subtitle Stream from video file - SRT, SSA/ASS, MOV text, MicroDVD, DVD/Vob, DVB, XSUB, HDMV-PGSxx</li>
       <li>Speech recognition from audio/video file using PocketSphinx</li>
       <li xml:lang="ca">Reconeixement de la veu des de fitxers d'àudio/vídeo emprant PocketSphinx</li>
-      <li xml:lang="ca-valencia">Reconeixement de la veu des de fichers d'àudio/vídeo emprant PocketSphinx</li>
+      <li xml:lang="ca-valencia">Reconeixement de la veu des de fitxers d'àudio/vídeo emprant PocketSphinx</li>
       <li xml:lang="de">Spracherkennung von Audio-/Videodateien mit PocketSphinx</li>
       <li xml:lang="en-GB">Speech recognition from audio/video file using PocketSphinx</li>
       <li xml:lang="es">Reconocimiento de habla de archivos de sonido y de vídeo mediante el uso de PocketSphinx</li>
@@ -276,7 +276,7 @@
       <li xml:lang="x-test">xxTime shifting and scaling, lines duration re-calculation, framerate conversion, etc.xx</li>
       <li>Joining and splitting of subtitle files</li>
       <li xml:lang="ca">Unir i dividir fitxers de subtítols</li>
-      <li xml:lang="ca-valencia">Unir i dividir fichers de subtítols</li>
+      <li xml:lang="ca-valencia">Unir i dividir fitxers de subtítols</li>
       <li xml:lang="de">Zusammenführen und Teilen von Untertitel-Dateien</li>
       <li xml:lang="en-GB">Joining and splitting of subtitle files</li>
       <li xml:lang="es">Fusión y división de archivos de subtítulos</li>
