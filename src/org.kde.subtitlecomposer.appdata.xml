@@ -175,7 +175,7 @@
       <li xml:lang="x-test">xxSpeech recognition from audio/video file using PocketSphinxxx</li>
       <li>Smart language/text encoding** detection</li>
       <li xml:lang="ca">Detecció** intel·ligent de la codificació d'idioma/text</li>
-      <li xml:lang="ca-valencia">Detecció** inteligent de la codificació d'idioma/text</li>
+      <li xml:lang="ca-valencia">Detecció** intel·ligent de la codificació d'idioma/text</li>
       <li xml:lang="de">Intelligente Erkennung von Sprach- und Textkodierung</li>
       <li xml:lang="en-GB">Smart language/text encoding** detection</li>
       <li xml:lang="es">Detección inteligente de codificación** de idioma y de texto</li>
@@ -236,7 +236,7 @@
       <li xml:lang="x-test">xxPreview/editing of subtitles on graphical audio waveform w/ audio stream selectionxx</li>
       <li>Sync by dragging several anchors/graftpoints and stretching timeline</li>
       <li xml:lang="ca">Sincronització arrossegant diversos ancoratges/punts d'empelt i estirant la línia de temps</li>
-      <li xml:lang="ca-valencia">Sincronisació arrossegant diversos ancoratges/punts d'empelt i estirant la llínea de temps</li>
+      <li xml:lang="ca-valencia">Sincronització arrossegant diversos ancoratges/punts d'empelt i estirant la línia de temps</li>
       <li xml:lang="de">Synchronisieren durch Ziehen mehrerer Anker/Anfasspunkte und Dehnen der Zeitleiste</li>
       <li xml:lang="en-GB">Sync by dragging several anchors/graftpoints and stretching timeline</li>
       <li xml:lang="es">Sincronización mediante el arrastre de diversos anclajes o puntos gráficos y ajuste de la línea de tiempos</li>
@@ -256,7 +256,7 @@
       <li xml:lang="x-test">xxSync by dragging several anchors/graftpoints and stretching timelinexx</li>
       <li>Time shifting and scaling, lines duration re-calculation, framerate conversion, etc.</li>
       <li xml:lang="ca">Desplaçament i escalat del temps, recàlcul de la durada de les línies, conversió de la velocitat dels fotogrames, etc.</li>
-      <li xml:lang="ca-valencia">Desplaçament i escalat del temps, recàlcul de la duració de les llínees, conversió de la velocitat dels fotogrames, etc.</li>
+      <li xml:lang="ca-valencia">Desplaçament i escalat del temps, recàlcul de la duració de les línies, conversió de la velocitat dels fotogrames, etc.</li>
       <li xml:lang="de">Zeitverschiebung und Skalierung, Neuberechnung der Zeilendauer, Bildfrequenzkonvertierung usw.</li>
       <li xml:lang="en-GB">Time shifting and scaling, lines duration re-calculation, framerate conversion, etc.</li>
       <li xml:lang="es">Desplazamiento de tiempos y escalado, cálculo automático de la duración de las líneas, conversión de tasa de fotogramas, etc.</li>
@@ -296,7 +296,7 @@
       <li xml:lang="x-test">xxJoining and splitting of subtitle filesxx</li>
       <li>Side by side subtitle translations</li>
       <li xml:lang="ca">Traducció dels subtítols en paral·lel</li>
-      <li xml:lang="ca-valencia">Traducció dels subtítols en paralel</li>
+      <li xml:lang="ca-valencia">Traducció dels subtítols en paral·lel</li>
       <li xml:lang="de">Übersetzungen von Untertiteln in einer nebeneinander angeordneten Ansicht</li>
       <li xml:lang="en-GB">Side by side subtitle translations</li>
       <li xml:lang="es">Traducciones de subtítulos lado a lado</li>
@@ -381,7 +381,7 @@
       <li xml:lang="zh-TW">偵測字幕中的時間錯誤</li>
       <li>Scripting (JavaScript, Python, Ruby and other languages supported by Kross).</li>
       <li xml:lang="ca">Creació de scripts (JavaScript, Python, Ruby i altres llenguatges admesos pel Kross).</li>
-      <li xml:lang="ca-valencia">Creació de scripts (JavaScript, Python, Ruby i atres llenguatges admesos per Kross).</li>
+      <li xml:lang="ca-valencia">Creació de scripts (JavaScript, Python, Ruby i altres llenguatges admesos per Kross).</li>
       <li xml:lang="de"> Skripte in den Programmsprachen JavaScript, Python, Ruby und anderen von Kross unterstützten Sprachen. </li>
       <li xml:lang="en-GB">Scripting (JavaScript, Python, Ruby and other languages supported by Kross).</li>
       <li xml:lang="es">Guiones (JavaScript, Python, Ruby y otros lenguajes permitidos por Kross).</li>
