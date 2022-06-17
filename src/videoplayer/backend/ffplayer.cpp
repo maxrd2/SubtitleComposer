@@ -288,6 +288,8 @@ FFPlayer::activeAudioStream()
 void
 FFPlayer::activeAudioStream(int streamIndex)
 {
+	if(!m_vs)
+		return;
 	streamIndex = streamIndex < 0 ? -1 : m_vs->demuxer->absoluteStreamIndex(AVMEDIA_TYPE_AUDIO, streamIndex);
 	m_vs->demuxer->selectStream(AVMEDIA_TYPE_AUDIO, streamIndex);
 }

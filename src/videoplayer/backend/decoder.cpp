@@ -155,6 +155,7 @@ Decoder::abort()
 	m_queue->abort();
 	if(m_frameQueue)
 		m_frameQueue->signal();
+	requestInterruption();
 	wait();
 	m_queue->flush();
 }

@@ -301,6 +301,8 @@ VideoPlayer::setupNotifications()
 
 	//connect(m_player, &FFPlayer::videoStreamsChanged, this, [this](const QStringList &streams){});
 	connect(m_player, &FFPlayer::audioStreamsChanged, this, [this](const QStringList &streams){
+		if(m_activeAudioStream >= 0)
+			m_player->activeAudioStream(m_activeAudioStream);
 		emit audioStreamsChanged(m_audioStreams = streams);
 		emit activeAudioStreamChanged(m_activeAudioStream = m_player->activeAudioStream());
 	});

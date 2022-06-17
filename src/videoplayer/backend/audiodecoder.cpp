@@ -499,7 +499,7 @@ AudioDecoder::run()
 			// bytes needed for 100ms of audio
 			const ALint hwMinBytes = m_vs->audClk.speed() * m_fmtTgt.bytesPerSec * .100;
 
-			while(!m_vs->abortRequested) {
+			while(!m_vs->abortRequested && !isInterruptionRequested()) {
 				ALint hwBufOffset = 0;
 				alGetSourcei(m_alSrc, AL_BYTE_OFFSET, &hwBufOffset);
 				if(!std::isnan(af->pts)) {
