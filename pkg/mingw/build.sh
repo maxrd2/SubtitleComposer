@@ -2,12 +2,11 @@
 
 set -e
 
-_pr="$(readlink -f "$(dirname "$0")/../..")"
-cd "$_pr"
+project_root="$(readlink -f "$(dirname "$0")/../..")"
+cd "$project_root"
 
-appver="$(git describe --always --abbrev=8 | sed 's/-g/./;s/-/./;s/^v//g')"
-rm -rf build &>/dev/null || true
-mkdir -p build/nsis
+rm -rf /home/devel/build
+mkdir -p /home/devel/build/nsis
 
 sudo pacman -Sy --noconfirm --needed archlinux-keyring
 sudo pacman -Su --noconfirm
@@ -23,7 +22,7 @@ sudo pacman -Sdd --noconfirm --needed kauth kbookmarks kcodecs kcompletion \
 	knotifications kross ktextwidgets kwidgetsaddons kwindowsystem kxmlgui \
 	solid sonnet
 
-i686-w64-mingw32-cmake -B build \
+i686-w64-mingw32-cmake -B /home/devel/build \
 	-DCMAKE_BUILD_TYPE=Release \
 	-DKDE_INSTALL_LIBDIR=lib \
 	-DKDE_INSTALL_USE_QT_SYS_PATHS=ON \
@@ -31,5 +30,5 @@ i686-w64-mingw32-cmake -B build \
 	-DKF5_HOST_TOOLING=/usr/lib/cmake \
 	-DKCONFIGCOMPILER_PATH=/usr/lib/cmake/KF5Config/KF5ConfigCompilerTargets.cmake \
 	-DTARGETSFILE=/usr/lib/cmake/KF5CoreAddons/KF5CoreAddonsToolingTargets.cmake
-cmake --build build -j$(nproc)
-DESTDIR="$_pr/build/nsis" cmake --build build --target nsis
+cmake --build /home/devel/build -j$(nproc)
+DESTDIR="/home/devel/build/nsis" cmake --build /home/devel/build --target nsis

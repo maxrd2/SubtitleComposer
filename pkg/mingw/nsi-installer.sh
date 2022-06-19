@@ -4,7 +4,8 @@ set -e
 
 _arch="$1"
 _destdir="$DESTDIR/usr/$_arch"
-sdir="$(dirname "$0")"
+project_root="$(readlink -f "$(dirname "$0")/../..")"
+
 [[ -z "$DESTDIR" ]] && echo -e "ERROR: DESTDIR was not specified... bailing\n" && exit 1
 [[ -z "$_arch" ]] && echo -e "Usage: nsi-installer.sh <arch>\n" && exit 1
 
@@ -39,7 +40,7 @@ deps=(
 
 dlls=(
 	"${deps[@]}"
-	`"$sdir/deps-find.sh" "$_arch" "$_destdir/bin/subtitlecomposer.exe" "${deps[@]}"`
+	`"$project_root/pkg/mingw/deps-find.sh" "$_arch" "$_destdir/bin/subtitlecomposer.exe" "${deps[@]}"`
 )
 
 for dll in "${dlls[@]}"; do
@@ -56,5 +57,5 @@ for f in $(pacman -Ql $(pacman -Qg kf5|cut -d ' ' -f 2-) | cut -d ' ' -f 2-|grep
 	install $_v "$f" -D "$localedest/${f/\/usr\/share\/locale\//}"
 done
 
-sed -e "s|{BUILD_PATH}|$_destdir|g" "$sdir/installer.nsi" > installer.nsi
+sed -e "s|{BUILD_PATH}|$_destdir|g" -e "s|{PROJECT_PATH}|$project_root|g" "$project_root/pkg/mingw/installer.nsi" > installer.nsi
 makensis -V4 installer.nsi

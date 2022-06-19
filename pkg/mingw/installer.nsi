@@ -14,7 +14,7 @@ RequestExecutionLevel admin
 !define MUI_ABORTWARNING
 
 ; Pages
-!insertmacro MUI_PAGE_LICENSE "../LICENSE"
+!insertmacro MUI_PAGE_LICENSE "{PROJECT_PATH}/LICENSE"
 ;!insertmacro MUI_PAGE_COMPONENTS
 !insertmacro MUI_PAGE_DIRECTORY
 !insertmacro MUI_PAGE_INSTFILES

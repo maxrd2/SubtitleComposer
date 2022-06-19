@@ -8,7 +8,7 @@ gpg_key="EF9D9B26"
 
 obs_project_dir="$(readlink -f "$PWD")"
 
-[ ! -d "$obs_project_dir/.osc" -o ! -f "$obs_project_dir/subtitlecomposer.spec" ] \
+[ ! -d "$obs_project_dir/.osc" -o ! -f "$obs_project_dir"/subtitlecomposer*.spec ] \
 		&& echo 'ERROR: OBS project dir is not current' 1>&2 \
 		&& exit 1
 
@@ -22,43 +22,52 @@ osc_build_root="$(grep -E '^build-root = ' ~/.config/osc/oscrc | sed -r \
 	-e 's|%\(repo\)s|Windows|g' \
 	-e 's|%\(arch\)s|x86|g')"
 
-dist_tar="$(ls "$obs_project_dir"/subtitlecomposer-*.tar.xz)"
+osc service run
 
-[[ ! -f "$dist_tar" ]] && echo "Archive '$dist_tar' doesn't exist.." && exit 1
+dist_cpio="$(ls "$obs_project_dir"/_service:obs_scm:subtitlecomposer-*.obscpio)"
+
+docker_id=obs_win32_build
+
+[[ ! -f "$dist_cpio" ]] && echo "Archive '$dist_cpio' doesn't exist.." && exit 1
 
 cleanup() {
 	[ ! -z "$pid_tail" ] && echo "Terminating logger" && kill "$pid_tail"
-	[ ! -z "$docker_id" ] && echo "Terminating container $docker_id" && docker container kill "$docker_id"
+	[ ! -z "$(docker container ls -q -f "name=$docker_id")" ] && echo "Terminating container $docker_id" && docker container kill "$docker_id"
 	return 0
 }
 
 build() {
 	pid_tail=
-	docker_id=
 	trap cleanup EXIT
 
 	echo "Extracting sources into '$osc_build_root'..."
 	rm -rf "$osc_build_root"
 	install -m 0700 -o "$user_id" -d "$osc_build_root" "$osc_build_root/dist-win32"
-	sudo -u "$user_name" tar -xf "$dist_tar" --strip-components=1 -C "$osc_build_root"
+	sudo -u "$user_name" cpio -i -d -F "$dist_cpio" -D "$osc_build_root"
+	sudo -u "$user_name" cp -vax "$git_project_dir/pkg/mingw/." "$osc_build_root"/subtitlecomposer-*/pkg/mingw/.
 
 	echo "Logging to '$log_file'..."
-	echo "Building archive '$dist_tar'..." > "$log_file"
+	echo "Building archive '$dist_cpio'..." > "$log_file"
 	chown "$user_id" "$log_file"
+
+	[ -z "$(docker container ls -aq -f "name=$docker_id")" ] && {
+		echo "Creating docker container..."
+		docker container create -v "$osc_build_root":/home/devel --name "$docker_id" -it maxrd2/arch-mingw /bin/bash -c 'bash subtitlecomposer-*/pkg/mingw/build.sh >>dist-win32/build.log 2>&1'
+	}
+	echo "Starting docker build..."
+	docker container start "$docker_id"
+
 	tail -f "$log_file" &
 	pid_tail=$!
 
-	echo "Starting docker build..."
-	docker_id="$(docker container run -d --rm -v "$osc_build_root":/home/devel -it maxrd2/arch-mingw /bin/bash -c 'bash pkg/mingw/build.sh >>dist-win32/build.log 2>&1')"
-	docker container wait $docker_id
-	docker_id=
+	docker container wait "$docker_id"
 	return 0
 }
 
 user_id="$UID"
 user_name="$USER"
 log_file="$osc_build_root/dist-win32/build.log"
-sudo bash -c "set -e; $(declare -f build cleanup); $(declare -p gpg_key obs_project_dir git_project_dir osc_build_root dist_tar user_id user_name log_file); build"
+sudo bash -c "set -e; $(declare -f build cleanup); $(declare -p gpg_key obs_project_dir git_project_dir osc_build_root dist_cpio user_id user_name docker_id log_file); build"
 echo "Build completed successfully."
 
 gpg_sign() {
