@@ -5,13 +5,16 @@ mingw-win32-build:
   only:
     - /^obs/.*/
   script:
-    #- git="git -C $CI_PROJECT_DIR"
-    #- $git config remote.origin.fetch '+refs/heads/*:refs/remotes/origin/*'
-    #- $git fetch origin --depth=200
-    #- gitver="$($git describe --always --tags --abbrev=10 "$($git log --reverse --oneline --no-abbrev-commit origin/${CI_DEFAULT_BRANCH}..${CI_COMMIT_SHA} | head -n 1 | cut -d ' ' -f 1)^")"
-    #- echo "Updating version to $gitver"
-    #- sed -E "s|SUBTITLECOMPOSER_VERSION_STRING|\"${gitver#v}\"|" -i $CI_PROJECT_DIR/src/main.cpp
+    - |-
+      git="git -C $CI_PROJECT_DIR"
+      $git config remote.origin.fetch '+refs/heads/*:refs/remotes/origin/*'
+      $git fetch origin --depth=200
+      gitver="$($git describe --always --tags --abbrev=10 "$($git log --reverse --oneline --no-abbrev-commit origin/${CI_DEFAULT_BRANCH}..${CI_COMMIT_SHA} | head -n 1 | cut -d ' ' -f 1)^")"
+      echo "SubtitleComposer $gitver" > $CI_PROJECT_DIR/version.txt
     - pkg/mingw/build.sh
+    # gitlab artifact paths are relative to CI_PROJECT_DIR
+    - mv /home/devel/build/SubtitleComposerSetup.exe $CI_PROJECT_DIR
   artifacts:
     paths:
-      - build/SubtitleComposerSetup.exe
+      - SubtitleComposerSetup.exe
+      - version.txt
