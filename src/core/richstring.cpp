@@ -25,18 +25,29 @@ namespace SubtitleComposer {
 class RichStyle {
 public:
 	RichStyle() {}
-	RichStyle(quint8 flags, QRgb color) : m_flags(flags), m_color(color) {}
+	RichStyle(quint8 flags, QRgb color, quint64 klass, qint32 voice)
+		: m_flags(flags), m_color(color), m_class(klass), m_voice(voice) {}
+
 	inline quint8 flags() const { return m_flags; }
 	inline quint8 & flags() { return m_flags; }
 	inline quint8 flags(RichString::StyleFlag mask) const { return m_flags & mask; }
+
 	inline QRgb color() const { return flags(RichString::Color) ? m_color : s_null.m_color; }
 	inline QRgb & color() { return m_color; }
+
+	inline quint64 klass() const { return m_class; }
+	inline quint64 & klass() { return m_class; }
+
+	inline qint32 voice() const { return m_voice; }
+	inline qint32 & voice() { return m_voice; }
 
 	static const RichStyle s_null;
 
 	inline bool operator==(const RichStyle &other) const {
 		return flags() == other.flags()
-			&& (!flags(RichString::Color) || color() == other.color());
+			&& (!flags(RichString::Color) || color() == other.color())
+			&& (voice() == other.voice())
+			&& (klass() == other.klass());
 	}
 	inline bool operator!=(const RichStyle &other) { return !operator==(other); }
 
@@ -44,9 +55,11 @@ private:
 	friend class Iterator;
 	quint8 m_flags;
 	QRgb m_color;
+	quint64 m_class;
+	qint32 m_voice;
 };
 
-const RichStyle RichStyle::s_null(0, 0);
+const RichStyle RichStyle::s_null(0, 0, 0, -1);
 
 class RichStringStyle {
 	friend QDataStream & ::operator<<(QDataStream &stream, const SubtitleComposer::RichString &string);
@@ -54,7 +67,8 @@ class RichStringStyle {
 
 public:
 	RichStringStyle(int len);
-	RichStringStyle(int len, quint8 styleFlags, QRgb styleColor);
+	RichStringStyle(int len, quint8 styleFlags, QRgb styleColor, const QString &klass, const QString &voice);
+	RichStringStyle(int len, quint8 styleFlags, QRgb styleColor, const QSet<QString> &classList, const QString &voice);
 	RichStringStyle(const RichStringStyle &other);
 	~RichStringStyle();
 
@@ -65,6 +79,9 @@ public:
 	qint32 voiceIndex(const QString &name);
 	qint32 classIndex(const QString &name);
 
+	inline QString voiceName(int index) const { return m_voiceList.at(index); }
+	inline QString className(int index) const { return m_classList.at(index); }
+
 	inline RichStyle * operator[](int index) { Q_ASSERT(index >= 0 && index < m_length); return &m_style[index]; }
 	inline const RichStyle & at(int index) const { return index >= 0 && index < m_length ? m_style[index] : RichStyle::s_null; }
 
@@ -73,7 +90,7 @@ public:
 	inline void fill(int index, int len, const RichStyle &style);
 	void copy(int index, int len, const RichStringStyle &src, int srcOffset=0);
 
-	void swap(RichStringStyle &other);
+	void swap(RichStringStyle &other, bool swapLists);
 
 	inline void richText(QString &out, int prevIndex, int curIndex, bool opening);
 
@@ -82,6 +99,8 @@ private:
 	void updateCapacity();
 
 private:
+	QVector<QString> m_classList;
+	QVector<QString> m_voiceList;
 	RichStyle *m_style;
 	int m_length;
 	int m_capacity;
@@ -171,19 +190,44 @@ RichStringStyle::RichStringStyle(int len)
 		updateCapacity();
 }
 
-RichStringStyle::RichStringStyle(int len, quint8 styleFlags, QRgb styleColor)
+RichStringStyle::RichStringStyle(int len, quint8 styleFlags, QRgb styleColor, const QString &klass, const QString &voice)
 	: m_style(nullptr),
 	  m_length(len),
 	  m_capacity(0)
 {
+	if(!klass.isEmpty())
+		m_classList.append(klass);
+	if(!voice.isEmpty())
+		m_voiceList.append(voice);
 	if(m_length) {
 		updateCapacity();
-		fill(0, m_length, RichStyle(quint8(styleFlags & RichString::AllStyles), styleColor));
+		fill(0, m_length, RichStyle(quint8(styleFlags & RichString::AllStyles), styleColor, m_classList.size(), m_voiceList.size() - 1));
+	}
+}
+
+RichStringStyle::RichStringStyle(int len, quint8 styleFlags, QRgb styleColor, const QSet<QString> &classList, const QString &voice)
+	: m_style(nullptr),
+	  m_length(len),
+	  m_capacity(0)
+{
+	quint64 classMap = 0;
+	for(const QString &klass: classList) {
+		m_classList.append(klass);
+		classMap <<= 1;
+		classMap |= 1;
+	}
+	if(!voice.isEmpty())
+		m_voiceList.append(voice);
+	if(m_length) {
+		updateCapacity();
+		fill(0, m_length, RichStyle(quint8(styleFlags & RichString::AllStyles), styleColor, classMap, m_voiceList.size() - 1));
 	}
 }
 
 RichStringStyle::RichStringStyle(const RichStringStyle &other)
-	: m_style(nullptr),
+	: m_classList(other.m_classList),
+	  m_voiceList(other.m_voiceList),
+	  m_style(nullptr),
 	  m_length(other.m_length),
 	  m_capacity(0)
 {
@@ -201,6 +245,8 @@ RichStringStyle::~RichStringStyle()
 void
 RichStringStyle::clear()
 {
+	m_classList.clear();
+	m_voiceList.clear();
 	m_length = 0;
 	updateCapacity();
 }
@@ -208,15 +254,47 @@ RichStringStyle::clear()
 RichStringStyle &
 RichStringStyle::operator=(const RichStringStyle &other)
 {
+	m_classList = other.m_classList;
+	m_voiceList = other.m_voiceList;
 	m_length = other.m_length;
 	updateCapacity();
 	copy(0, m_length, other);
 	return *this;
 }
 
-void
-RichStringStyle::swap(RichStringStyle &other)
+qint32
+RichStringStyle::voiceIndex(const QString &name)
 {
+	if(name.isEmpty())
+		return -1;
+	int i = m_voiceList.indexOf(name);
+	if(i == -1) {
+		i = m_voiceList.size();
+		m_voiceList.push_back(name);
+	}
+	return i;
+}
+
+qint32
+RichStringStyle::classIndex(const QString &klass)
+{
+	if(klass.isEmpty())
+		return -1;
+	int i = m_classList.indexOf(klass);
+	if(i == -1) {
+		i = m_classList.size();
+		m_classList.push_back(klass);
+	}
+	return i;
+}
+
+void
+RichStringStyle::swap(RichStringStyle &other, bool swapLists)
+{
+	if(swapLists) {
+		qSwap(m_classList, other.m_classList);
+		qSwap(m_voiceList, other.m_voiceList);
+	}
 	qSwap(m_style, other.m_style);
 	qSwap(m_length, other.m_length);
 	qSwap(m_capacity, other.m_capacity);
@@ -242,17 +320,13 @@ RichStringStyle::updateCapacity()
 		return;
 
 	delete[] m_style;
-	if(m_capacity) {
-		m_style = new RichStyle[m_capacity];
-	} else {
-		m_style = nullptr;
-	}
+	m_style = m_capacity ? new RichStyle[m_capacity] : nullptr;
 }
 
 
-RichString::RichString(const QString &string, quint8 styleFlags, QRgb styleColor)
+RichString::RichString(const QString &string, quint8 styleFlags, QRgb styleColor, const QSet<QString> &classList, const QString &voice)
 	: QString(string),
-	  m_style(new RichStringStyle(string.length(), styleFlags, styleColor))
+	  m_style(new RichStringStyle(string.length(), styleFlags, styleColor, classList, voice))
 {
 }
 
@@ -278,10 +352,10 @@ RichString::~RichString()
 }
 
 void
-RichString::setString(const QString &string, quint8 styleFlags, QRgb styleColor)
+RichString::setString(const QString &string, quint8 styleFlags, QRgb styleColor, const QString klass, const QString voice)
 {
 	QString::operator=(string);
-	*m_style = RichStringStyle(string.length(), styleFlags, styleColor);
+	*m_style = RichStringStyle(string.length(), styleFlags, styleColor, klass, voice);
 }
 
 quint8
@@ -317,11 +391,75 @@ RichString::setStyleColorAt(int index, QRgb rgbColor) const
 	it->color() = rgbColor;
 }
 
+quint64
+RichString::styleClassesAt(int index) const
+{
+	return m_style->at(index).klass();
+}
+
+void
+RichString::setStyleClassesAt(int index, quint64 classes) const
+{
+	(*m_style)[index]->klass() = classes;
+}
+
+QSet<QString>
+RichString::styleClassNamesAt(int index) const
+{
+	QSet<QString> res;
+	quint64 k = styleClassesAt(index);
+	for(int i = 0; k; k >>= 1, i++) {
+		if(k & 1)
+			res.insert(m_style->className(i));
+	}
+	return res;
+}
+
+void
+RichString::setStyleClassNamesAt(int index, const QSet<QString> &classes) const
+{
+	quint64 k = 0;
+	for(const QString &cl: classes) {
+		qint32 i = m_style->classIndex(cl);
+		if(i >= 0)
+			k |= 1ULL << i;
+	}
+	setStyleClassesAt(index, k);
+}
+
+qint32
+RichString::styleVoiceAt(int index) const
+{
+	return m_style->at(index).voice();
+}
+
+void
+RichString::setStyleVoiceAt(int index, qint32 voice) const
+{
+	(*m_style)[index]->voice() = voice;
+}
+
+QString
+RichString::styleVoiceNameAt(int index) const
+{
+	const qint32 i = styleVoiceAt(index);
+	return i >= 0 ? m_style->voiceName(i) : QString();
+}
+
+void
+RichString::setStyleVoiceNameAt(int index, const QString &voice) const
+{
+	const qint32 v = m_style->voiceIndex(voice);
+	setStyleVoiceAt(index, v);
+}
+
 QDataStream &
 operator<<(QDataStream &stream, const RichString &string)
 {
 	stream << static_cast<const QString &>(string);
 	stream.writeRawData(reinterpret_cast<const char *>(string.m_style->m_style), string.length() * sizeof(*string.m_style->m_style));
+	stream << string.m_style->m_classList;
+	stream << string.m_style->m_voiceList;
 	return stream;
 }
 
@@ -332,6 +470,8 @@ operator>>(QDataStream &stream, RichString &string)
 	string.m_style->m_length = string.length();
 	string.m_style->updateCapacity();
 	stream.readRawData(reinterpret_cast<char *>(string.m_style->m_style), string.length() * sizeof(*string.m_style->m_style));
+	stream >> string.m_style->m_classList;
+	stream >> string.m_style->m_voiceList;
 	return stream;
 }
 
@@ -341,6 +481,13 @@ RichStringStyle::richText(QString &out, int prevIndex, int curIndex, bool openin
 	const RichStyle &prev = at(prevIndex);
 	const RichStyle &cur = at(curIndex);
 	if(opening) {
+		if(prev.voice() != cur.voice())
+			out += "<v " + m_voiceList.at(cur.voice()) + ">";
+		if(prev.klass() != cur.klass()) {
+			quint64 k = ~prev.klass() & cur.klass();
+			for(int i = 0; k; k >>= 1, i++)
+				out += "<c." + m_classList.at(i) + ">";
+		}
 		const quint8 sf = ~prev.flags() & cur.flags();
 		if(sf & RichString::Italic)
 			out += "<i>";
@@ -364,6 +511,11 @@ RichStringStyle::richText(QString &out, int prevIndex, int curIndex, bool openin
 			out += "</i>";
 		if((sf & RichString::Color) || (prev.flags(RichString::Color) && prev.color() != cur.color()))
 			out += "</font>";
+		if(prev.klass() != cur.klass()) {
+			quint64 k = prev.klass() & ~cur.klass();
+			for(int i = 0; k; k >>= 1, i++)
+				out += "</c." + m_classList.at(i) + ">";
+		}
 	}
 }
 
@@ -430,61 +582,157 @@ RichString::richString() const
 RichString &
 RichString::setRichString(const QStringRef &string)
 {
-	staticRE$(tagRegExp, "<(/?([bius]|font))[^>]*(\\s+color=\"?([\\w#]+)\"?)?[^>]*>", REu | REi);
+	staticRE$(tagRegExp, "(<"
+			"(/?(v |c\\.|\\w+))"
+			"([^>]*\\bcolor=\"?([\\w#]+)\"?|[^>]+)?"
+			"[^>]*?>|&([^;]+);|\\n)", REu | REi);
+	staticRE$(colorRegExp, "style=\"[^\">]*\\bcolor:([\\w#]+)", REu | REi);
 
 	QRegularExpressionMatchIterator it = tagRegExp.globalMatch(string);
 
 	clear();
 
+	QStringList colorTags;
+	bool softBreak = false;
 	quint8 currentStyle = 0;
 	QColor currentColor;
-	int offsetPos = 0, matchedPos = -1;
-	while(it.hasNext()) {
-		QRegularExpressionMatch m = it.next();
-
-		matchedPos = m.capturedStart();
-		QString matched(m.captured(1).toLower());
-
+	int offsetPos = 0, matchedPos;
+	quint32 currentClass = 0;
+	qint32 currentVoice = -1;
+	for(;;) {
 		quint8 newStyle = currentStyle;
 		QColor newColor(currentColor);
+		quint32 newClass = currentClass;
+		qint32 newVoice = currentVoice;
 
-		if(matched == QLatin1String("b")) {
-			newStyle |= RichString::Bold;
-		} else if(matched == QLatin1String("i")) {
-			newStyle |= RichString::Italic;
-		} else if(matched == QLatin1String("u")) {
-			newStyle |= RichString::Underline;
-		} else if(matched == QLatin1String("s")) {
-			newStyle |= RichString::StrikeThrough;
-		} else if(matched == QLatin1String("font")) {
-			const QString &color = m.captured(4);
-			if(!color.isEmpty()) {
-				newStyle |= RichString::Color;
-				newColor.setNamedColor(color.toLower());
+		const bool validIter = it.hasNext();
+		QRegularExpressionMatch m;
+
+		QString mTag;
+		QStringRef ent;
+
+		if(validIter) {
+			m = it.next();
+
+			matchedPos = m.capturedStart();
+			ent = m.capturedRef(6);
+			if(ent.isNull()) {
+				mTag = m.captured(2).toLower();
+				if(mTag == QLatin1String("b") || mTag == QLatin1String("strong")) {
+					newStyle |= RichString::Bold;
+				} else if(mTag == QLatin1String("i") || mTag == QLatin1String("em")) {
+					newStyle |= RichString::Italic;
+				} else if(mTag == QLatin1String("u")) {
+					newStyle |= RichString::Underline;
+				} else if(mTag == QLatin1String("s")) {
+					newStyle |= RichString::StrikeThrough;
+				} else if(mTag == QLatin1String("font")) {
+					const QString &color = m.captured(5);
+					if(!color.isEmpty()) {
+						newStyle |= RichString::Color;
+						newColor.setNamedColor(color.toLower());
+						colorTags.push_back(currentColor.name());
+						colorTags.push_back(mTag);
+					}
+				} else if(mTag == QLatin1String("v ")) {
+					newVoice = m_style->voiceIndex(m.captured(4));
+				} else if(mTag == QLatin1String("c.")) {
+					const int i = m_style->classIndex(m.captured(4));
+					if(i >= 0)
+						newClass |= 1UL << i;
+				} else if(mTag == QLatin1String("/b") || mTag == QLatin1String("/strong")) {
+					newStyle &= ~RichString::Bold;
+				} else if(mTag == QLatin1String("/i") || mTag == QLatin1String("/em")) {
+					newStyle &= ~RichString::Italic;
+				} else if(mTag == QLatin1String("/u")) {
+					newStyle &= ~RichString::Underline;
+				} else if(mTag == QLatin1String("/s")) {
+					newStyle &= ~RichString::StrikeThrough;
+				} else if(mTag == QLatin1String("/c.")) {
+					const int i = m_style->classIndex(m.captured(4));
+					if(i >= 0)
+						newClass &= ~(1UL << i);
+				}
+				if(!mTag.isEmpty()) {
+					if(mTag.front() != QLatin1Char('/')) {
+						QRegularExpressionMatch mc = colorRegExp.match(m.capturedRef(4));
+						if(mc.hasMatch()) {
+							newStyle |= RichString::Color;
+							newColor.setNamedColor(mc.captured(1).toLower());
+							colorTags.push_back(currentColor.name());
+							colorTags.push_back(mTag);
+						}
+					} else if(!colorTags.empty() && mTag.midRef(1) == colorTags.back()) {
+						colorTags.pop_back();
+						if(colorTags.size() == 1) {
+							newStyle &= ~RichString::Color;
+							newColor.setNamedColor("-invalid-");
+						} else {
+							newStyle |= RichString::Color;
+							newColor.setNamedColor(colorTags.back());
+						}
+						colorTags.pop_back();
+					}
+				}
 			}
-		} else if(matched == QLatin1String("/b")) {
-			newStyle &= ~RichString::Bold;
-		} else if(matched == QLatin1String("/i")) {
-			newStyle &= ~RichString::Italic;
-		} else if(matched == QLatin1String("/u")) {
-			newStyle &= ~RichString::Underline;
-		} else if(matched == QLatin1String("/s")) {
-			newStyle &= ~RichString::StrikeThrough;
-		} else if(matched == QLatin1String("/font")) {
-			newStyle &= ~RichString::Color;
-			newColor.setNamedColor("-invalid-");
+		} else {
+			matchedPos = string.length();
 		}
 
-		QString token(string.mid(offsetPos, matchedPos - offsetPos).toString());
-		append(RichString(token, currentStyle, currentColor.isValid() ? currentColor.rgb() : 0));
+		if(const int len = matchedPos - offsetPos) {
+			if(softBreak) {
+				if(!isEmpty() && QString::back() != QChar::LineFeed)
+					append(QChar::LineFeed);
+				softBreak = false;
+			}
+			const int index = length();
+			QString::append(string.mid(offsetPos, len));
+			m_style->insert(index, len);
+			m_style->fill(index, len, RichStyle(currentStyle, currentColor.isValid() ? currentColor.rgb() : 0, currentClass, currentVoice));
+		}
+
 		currentStyle = newStyle;
 		currentColor = newColor;
+		currentClass = newClass;
+		currentVoice = newVoice;
+
+		if(validIter) {
+			if(!ent.isNull()) {
+				if(ent == QLatin1String("nbsp")) {
+					append(QChar::Nbsp);
+				} else if(ent == QLatin1String("lt")) {
+					append(QLatin1Char('<'));
+				} else if(ent == QLatin1String("gt")) {
+					append(QLatin1Char('>'));
+				} else if(ent == QLatin1String("amp")) {
+					append(QLatin1Char('&'));
+				} else if(ent == QLatin1String("quot")) {
+					append(QLatin1Char('"'));
+				} else {
+					qWarning().nospace().noquote() << "Unknown entity \"&" << ent << ";\"";
+					append(ent.toString());
+				}
+			} else {
+				if(m.capturedRef(1).front() == QChar::LineFeed) {
+					softBreak = true;
+				} else if(mTag == QLatin1String("br")) {
+					append(QChar::LineFeed);
+					softBreak = false;
+				} else if(mTag == QLatin1String("p")) {
+					if(!isEmpty() && QString::back() != QChar::LineFeed) {
+						append(QChar::LineFeed);
+						softBreak = false;
+					}
+				} else if(mTag == QLatin1String("/p")) {
+					softBreak = true;
+				}
+			}
+		} else {
+			break;
+		}
 
 		offsetPos = m.capturedEnd();
 	}
-
-	QString token(string.mid(offsetPos, matchedPos - offsetPos).toString());
-	append(RichString(token /*.replace("&lt;", "<").replace("&gt;", ">")*/, currentStyle, currentColor.isValid() ? currentColor.rgb() : 0));
 
 	return *this;
 }
@@ -1366,5 +1614,5 @@ ReplaceHelper::replace(const MatchRefList &matchList, RichString &str, const T &
 		}
 	}
 	str.swap(newString);
-	str.m_style->swap(newStyle);
+	str.m_style->swap(newStyle, false);
 }

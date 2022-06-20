@@ -182,8 +182,7 @@ RichDocument::setHtml(const QString &html, bool resetUndo)
 	else
 		m_undoableCursor.beginEditBlock();
 	m_undoableCursor.select(QTextCursor::Document);
-	m_undoableCursor.insertHtml(html);
-	linesToBlocks();
+	m_undoableCursor.insertBlock();
 	if(resetUndo)
 		setUndoRedoEnabled(true);
 	else

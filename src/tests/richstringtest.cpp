@@ -329,6 +329,11 @@ RichStringTest::testReplace()
 	// RichString & RichString::richString();
 	sstring.setRichString("<b>This </b><i>  is a space testI</i>");
 	QVERIFY(sstring.richString() == QLatin1String("<b>This</b>   <i>is a space testI</i>"));
+
+	// RichString & Voice/Class
+	sstring.setRichString("<v Person A>Hi <b>Person B</b>! How are you doing?\n<v Person B><c.test>Hi there.</c.test> Doing great!");
+	sstring.replace($("are you"), $("is you"));
+	QVERIFY(sstring.richString() == QLatin1String("<v Person A>Hi <b>Person B</b>! How is you doing?\n<v Person B><c.test>Hi there.</c.test> Doing great!"));
 }
 
 QTEST_GUILESS_MAIN(RichStringTest);
