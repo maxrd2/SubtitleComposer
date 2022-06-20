@@ -232,7 +232,6 @@ SStringTest::testReplace()
 	QVERIFY(sstring.richString() == QLatin1String("\\w w w w w"));
 	sstring = SString("this is a pretty test");
 	sstring.replace(RE$("([\\w]*)"), "[\\1]");
-	QEXPECT_FAIL("", "SString will be rewritten - it's too complex/buggy/slow now.", Continue);
 	QVERIFY(sstring.richString() == QLatin1String("[this][] [is][] [a][] [pretty][] [test][]"));
 
 	// SString & SString::replace(const QRegularExpression &regExp, const QString &replacement)
@@ -243,7 +242,6 @@ SStringTest::testReplace()
 	QVERIFY(sstring.richString() == QLatin1String("\\w w w w w"));
 	sstring = SString("this is a pretty test");
 	sstring.replace(RE$("([\\w]*)"), "[\\1]");
-	QEXPECT_FAIL("", "SString will be rewritten - it's too complex/buggy/slow now.", Continue);
 	QVERIFY(sstring.richString() == QLatin1String("[this][] [is][] [a][] [pretty][] [test][]"));
 	sstring.setRichString("<b>a</b>");
 	sstring.replace(RE$("a$"), "b");
@@ -308,6 +306,17 @@ SStringTest::testReplace()
 	sstring.remove(QRegExp("345$"));
 	QVERIFY(sstring.richString() == QLatin1String("<i>012</i><u>345</u>"));
 	sstring.remove(QRegExp("\\d+"));
+	QVERIFY(sstring.richString().isEmpty());
+
+	// SString & SString::remove(const QRegularExpression &regExp);
+	sstring.setRichString("<b>012</b><i>012</i><u>345</u><s>345</s>");
+	sstring.remove(RE$("^013"));
+	QVERIFY(sstring.richString() == QLatin1String("<b>012</b><i>012</i><u>345</u><s>345</s>"));
+	sstring.remove(RE$("^012"));
+	QVERIFY(sstring.richString() == QLatin1String("<i>012</i><u>345</u><s>345</s>"));
+	sstring.remove(RE$("345$"));
+	QVERIFY(sstring.richString() == QLatin1String("<i>012</i><u>345</u>"));
+	sstring.remove(RE$("\\d+"));
 	QVERIFY(sstring.richString().isEmpty());
 
 	// SString & SString::remove(QChar ch, Qt::CaseSensitivity cs=Qt::CaseSensitive);
