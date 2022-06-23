@@ -1,12 +1,12 @@
 /*
     SPDX-FileCopyrightText: 2007-2009 Sergio Pistone <sergio_pistone@yahoo.com.ar>
-    SPDX-FileCopyrightText: 2010-2018 Mladen Milinkovic <max@smoothware.net>
+    SPDX-FileCopyrightText: 2010-2022 Mladen Milinkovic <max@smoothware.net>
 
     SPDX-License-Identifier: GPL-2.0-or-later
 */
 
 #include "scripting_subtitleline.h"
-#include "scripting_sstring.h"
+#include "scripting_richstring.h"
 #include "application.h"
 #include "core/richdocument.h"
 #include "core/subtitletarget.h"
@@ -77,13 +77,13 @@ Scripting::SubtitleLine::primaryLines() const
 QObject *
 Scripting::SubtitleLine::primaryText() const
 {
-	return new Scripting::SString(m_backend->primaryDoc()->toRichText(), const_cast<Scripting::SubtitleLine *>(this));
+	return new Scripting::RichString(m_backend->primaryDoc()->toRichText(), const_cast<Scripting::SubtitleLine *>(this));
 }
 
 void
 Scripting::SubtitleLine::setPrimaryText(QObject *object)
 {
-	const Scripting::SString *string = qobject_cast<const Scripting::SString *>(object);
+	const Scripting::RichString *string = qobject_cast<const Scripting::RichString *>(object);
 	if(string)
 		m_backend->primaryDoc()->setRichText(string->m_backend);
 }
@@ -109,7 +109,7 @@ Scripting::SubtitleLine::richPrimaryText() const
 void
 Scripting::SubtitleLine::setRichPrimaryText(const QString &richText)
 {
-	SubtitleComposer::SString text;
+	SubtitleComposer::RichString text;
 	text.setRichString(richText);
 	m_backend->primaryDoc()->setRichText(text);
 }
@@ -135,14 +135,14 @@ Scripting::SubtitleLine::secondaryLines() const
 QObject *
 Scripting::SubtitleLine::secondaryText() const
 {
-	return new Scripting::SString(m_backend->secondaryDoc()->toRichText(), const_cast<Scripting::SubtitleLine *>(this));
+	return new Scripting::RichString(m_backend->secondaryDoc()->toRichText(), const_cast<Scripting::SubtitleLine *>(this));
 }
 
 void
 Scripting::SubtitleLine::setSecondaryText(QObject *object)
 {
 	if(app()->translationMode()) {
-		const Scripting::SString *string = qobject_cast<const Scripting::SString *>(object);
+		const Scripting::RichString *string = qobject_cast<const Scripting::RichString *>(object);
 		if(string)
 			m_backend->secondaryDoc()->setRichText(string->m_backend);
 	}
@@ -171,7 +171,7 @@ void
 Scripting::SubtitleLine::setRichSecondaryText(const QString &richText)
 {
 	if(app()->translationMode()) {
-		SubtitleComposer::SString text;
+		SubtitleComposer::RichString text;
 		text.setRichString(richText);
 		m_backend->secondaryDoc()->setRichText(text);
 	}

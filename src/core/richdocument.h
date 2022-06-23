@@ -1,5 +1,5 @@
 /*
-    SPDX-FileCopyrightText: 2020 Mladen Milinkovic <max@smoothware.net>
+    SPDX-FileCopyrightText: 2020-2022 Mladen Milinkovic <max@smoothware.net>
 
     SPDX-License-Identifier: GPL-2.0-or-later
 */
@@ -7,7 +7,7 @@
 #ifndef RICHDOCUMENT_H
 #define RICHDOCUMENT_H
 
-#include "core/sstring.h"
+#include "core/richstring.h"
 
 #include <QTextBlock>
 #include <QTextCursor>
@@ -28,8 +28,8 @@ public:
 	explicit RichDocument(QObject *parent=nullptr);
 	virtual ~RichDocument();
 
-	SString toRichText() const;
-	void setRichText(const SString &text, bool resetUndo=false);
+	RichString toRichText() const;
+	void setRichText(const RichString &text, bool resetUndo=false);
 
 	QString toHtml() const;
 	void setHtml(const QString &html, bool resetUndo=false);

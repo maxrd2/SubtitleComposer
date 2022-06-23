@@ -41,7 +41,7 @@ set(subtitlecomposer_SRCS
 	#[[ main ]] application.cpp application_actions.cpp application_errorcheck.cpp application_subtitle.cpp mainwindow.cpp
 	#[[ actions ]] actions/useraction.cpp actions/useractionnames.h actions/kcodecactionext.cpp actions/krecentfilesactionext.cpp
 	#[[ configs ]] configs/configdialog.cpp configs/errorsconfigwidget.cpp configs/generalconfigwidget.cpp configs/playerconfigwidget.cpp configs/waveformconfigwidget.cpp
-	#[[ core ]] core/formatdata.h core/range.h core/rangelist.h core/time.cpp core/richdocument.cpp core/richdocumenteditor.cpp core/sstring.cpp
+	#[[ core ]] core/formatdata.h core/range.h core/rangelist.h core/time.cpp core/richdocument.cpp core/richdocumenteditor.cpp core/richstring.cpp
 	core/subtitle.cpp core/subtitleiterator.cpp core/subtitleline.cpp core/undo/subtitleactions.cpp core/undo/subtitlelineactions.cpp
 	core/undo/undoaction.cpp core/undo/undostack.cpp
 	#[[ dialogs ]] dialogs/actiondialog.cpp #[[dialogs/actionwitherrortargetsdialog.cpp]] dialogs/actionwithtargetdialog.cpp dialogs/adjusttimesdialog.cpp
@@ -71,7 +71,7 @@ set(subtitlecomposer_SRCS
 	#[[ helpers ]] helpers/commondefs.cpp helpers/fileloadhelper.cpp helpers/filesavehelper.cpp helpers/filetrasher.cpp helpers/languagecode.cpp helpers/pluginhelper.h
 	#[[ scripting ]] scripting/scriptsmanager.cpp
 	scripting/scripting_rangesmodule.cpp scripting/scripting_stringsmodule.cpp scripting/scripting_subtitlemodule.cpp scripting/scripting_subtitlelinemodule.cpp
-	scripting/scripting_list.cpp scripting/scripting_range.cpp scripting/scripting_rangelist.cpp scripting/scripting_sstring.cpp scripting/scripting_subtitle.cpp
+	scripting/scripting_list.cpp scripting/scripting_range.cpp scripting/scripting_rangelist.cpp scripting/scripting_richstring.cpp scripting/scripting_subtitle.cpp
 	scripting/scripting_subtitleline.cpp
 	#[[ speechprocessor ]] speechprocessor/speechprocessor.cpp speechprocessor/speechplugin.cpp
 	#[[ streamprocessor ]] streamprocessor/streamprocessor.cpp

@@ -1,5 +1,5 @@
 /*
-    SPDX-FileCopyrightText: 2017-2019 Mladen Milinkovic <max@smoothware.net>
+    SPDX-FileCopyrightText: 2017-2022 Mladen Milinkovic <max@smoothware.net>
 
     SPDX-License-Identifier: GPL-2.0-or-later
 */
@@ -80,7 +80,7 @@ public:
 		quint32 ppFlags = dlgInit.postProcessingFlags();
 		for(int i = 0, n = subtitle.count(); i < n; i++) {
 			SubtitleLine *line = subtitle.at(i);
-			SString text = line->primaryDoc()->toRichText();
+			RichString text = line->primaryDoc()->toRichText();
 			if(ppFlags & VobSubInputInitDialog::APOSTROPHE_TO_QUOTES)
 				text
 					.replace(QRegularExpression(QStringLiteral("(?:"

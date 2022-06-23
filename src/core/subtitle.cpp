@@ -1,6 +1,6 @@
 /*
     SPDX-FileCopyrightText: 2007-2009 Sergio Pistone <sergio_pistone@yahoo.com.ar>
-    SPDX-FileCopyrightText: 2010-2019 Mladen Milinkovic <max@smoothware.net>
+    SPDX-FileCopyrightText: 2010-2022 Mladen Milinkovic <max@smoothware.net>
 
     SPDX-License-Identifier: GPL-2.0-or-later
 */
@@ -1240,7 +1240,7 @@ Subtitle::splitSubtitle(Subtitle &dstSubtitle, const Time &splitTime, bool shift
 }
 
 void
-Subtitle::toggleStyleFlag(const RangeList &ranges, SString::StyleFlag styleFlag)
+Subtitle::toggleStyleFlag(const RangeList &ranges, RichString::StyleFlag styleFlag)
 {
 	SubtitleIterator it(*this, ranges);
 	if(!it.current())
@@ -1250,19 +1250,19 @@ Subtitle::toggleStyleFlag(const RangeList &ranges, SString::StyleFlag styleFlag)
 
 	QTextCharFormat fmtPri, fmtSec;
 	switch(styleFlag) {
-	case SString::Bold:
+	case RichString::Bold:
 		fmtPri.setFontWeight(QTextCursor(it.current()->primaryDoc()).charFormat().fontWeight() == QFont::Bold ? QFont::Normal : QFont::Bold);
 		fmtSec.setFontWeight(QTextCursor(it.current()->secondaryDoc()).charFormat().fontWeight() == QFont::Bold ? QFont::Normal : QFont::Bold);
 		break;
-	case SString::Italic:
+	case RichString::Italic:
 		fmtPri.setFontItalic(!QTextCursor(it.current()->primaryDoc()).charFormat().fontItalic());
 		fmtSec.setFontItalic(!QTextCursor(it.current()->secondaryDoc()).charFormat().fontItalic());
 		break;
-	case SString::Underline:
+	case RichString::Underline:
 		fmtPri.setFontUnderline(!QTextCursor(it.current()->primaryDoc()).charFormat().fontUnderline());
 		fmtSec.setFontUnderline(!QTextCursor(it.current()->secondaryDoc()).charFormat().fontUnderline());
 		break;
-	case SString::StrikeThrough:
+	case RichString::StrikeThrough:
 		fmtPri.setFontStrikeOut(!QTextCursor(it.current()->primaryDoc()).charFormat().fontStrikeOut());
 		fmtSec.setFontStrikeOut(!QTextCursor(it.current()->secondaryDoc()).charFormat().fontStrikeOut());
 		break;

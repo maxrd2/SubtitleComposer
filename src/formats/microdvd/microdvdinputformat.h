@@ -1,6 +1,6 @@
 /*
     SPDX-FileCopyrightText: 2007-2009 Sergio Pistone <sergio_pistone@yahoo.com.ar>
-    SPDX-FileCopyrightText: 2010-2019 Mladen Milinkovic <max@smoothware.net>
+    SPDX-FileCopyrightText: 2010-2022 Mladen Milinkovic <max@smoothware.net>
 
     SPDX-License-Identifier: GPL-2.0-or-later
 */
@@ -50,7 +50,7 @@ protected:
 			Time showTime(static_cast<long>((m_lineRegExp.cap(1).toLong() / framesPerSecond) * 1000));
 			Time hideTime(static_cast<long>((m_lineRegExp.cap(2).toLong() / framesPerSecond) * 1000));
 
-			SString richText;
+			RichString richText;
 
 			QString text = m_lineRegExp.cap(3);
 
@@ -66,28 +66,28 @@ protected:
 				if(tag == QChar('Y')) {
 					globalStyle = 0;
 					if(val.contains('b'))
-						globalStyle |= SString::Bold;
+						globalStyle |= RichString::Bold;
 					if(val.contains('i'))
-						globalStyle |= SString::Italic;
+						globalStyle |= RichString::Italic;
 					if(val.contains('u'))
-						globalStyle |= SString::Underline;
+						globalStyle |= RichString::Underline;
 				} else if(tag == QLatin1String("C")) {
 					globalColor = val.length() != 7 ? 0 : QColor(QChar('#') % val.mid(5, 2) % val.mid(3, 2) % val.mid(1, 2)).rgb();
 				} else if(tag == QLatin1String("y")) {
 					newStyle = 0;
 					if(val.contains('b'))
-						newStyle |= SString::Bold;
+						newStyle |= RichString::Bold;
 					if(val.contains('i'))
-						newStyle |= SString::Italic;
+						newStyle |= RichString::Italic;
 					if(val.contains('u'))
-						newStyle |= SString::Underline;
+						newStyle |= RichString::Underline;
 				} else if(tag == QLatin1String("c")) {
 					newColor = val.length() != 7 ? 0 : QColor(QChar('#') % val.mid(5, 2) % val.mid(3, 2) % val.mid(1, 2)).rgb();
 				}
 
 				if(newStyle != currentStyle || currentColor != newColor) {
 					QString token(text.mid(offsetPos, matchedPos - offsetPos));
-					richText += SString(token, currentStyle | (currentColor == 0 ? 0 : SString::Color), currentColor);
+					richText += RichString(token, currentStyle | (currentColor == 0 ? 0 : RichString::Color), currentColor);
 					currentStyle = newStyle;
 					currentColor = newColor;
 				}
@@ -96,10 +96,10 @@ protected:
 			}
 
 			QString token(text.mid(offsetPos, matchedPos - offsetPos));
-			richText += SString(token, currentStyle | (currentColor == 0 ? 0 : SString::Color), currentColor);
+			richText += RichString(token, currentStyle | (currentColor == 0 ? 0 : RichString::Color), currentColor);
 
 			if(globalColor != 0)
-				globalStyle |= SString::Color;
+				globalStyle |= RichString::Color;
 			if(globalStyle != 0) {
 				for(int i = 0, sz = richText.length(); i < sz; i++) {
 					if(richText.styleFlagsAt(i) == 0) {

@@ -1,6 +1,6 @@
 /*
     SPDX-FileCopyrightText: 2007-2009 Sergio Pistone <sergio_pistone@yahoo.com.ar>
-    SPDX-FileCopyrightText: 2010-2018 Mladen Milinkovic <max@smoothware.net>
+    SPDX-FileCopyrightText: 2010-2022 Mladen Milinkovic <max@smoothware.net>
 
     SPDX-License-Identifier: GPL-2.0-or-later
 */
@@ -8,7 +8,7 @@
 #ifndef SCRIPTING_STRINGSMODULE_H
 #define SCRIPTING_STRINGSMODULE_H
 
-#include "core/sstring.h"
+#include "core/richstring.h"
 #include "scripting_list.h"
 
 #include <QObject>
@@ -23,7 +23,7 @@ class StringsModule : public QObject
 	Q_ENUMS(StyleFlag)
 
 public:
-	using StyleFlag = SubtitleComposer::SString::StyleFlag;
+	using StyleFlag = SubtitleComposer::RichString::StyleFlag;
 
 	StringsModule(QObject *parent = 0);
 

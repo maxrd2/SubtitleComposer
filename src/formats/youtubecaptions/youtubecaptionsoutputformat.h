@@ -1,6 +1,6 @@
 /*
     SPDX-FileCopyrightText: 2007-2009 Sergio Pistone <sergio_pistone@yahoo.com.ar>
-    SPDX-FileCopyrightText: 2010-2019 Mladen Milinkovic <max@smoothware.net>
+    SPDX-FileCopyrightText: 2010-2022 Mladen Milinkovic <max@smoothware.net>
 
     SPDX-License-Identifier: GPL-2.0-or-later
 */
@@ -38,7 +38,7 @@ protected:
 										 hideTime.millis()
 										 );
 
-			const SString text = (primary ? line->primaryDoc() : line->secondaryDoc())->toRichText();
+			const RichString text = (primary ? line->primaryDoc() : line->secondaryDoc())->toRichText();
 
 			// TODO does the format actually supports styled text?
 			// if so, does it use standard HTML style tags?

@@ -1,6 +1,6 @@
 /*
     SPDX-FileCopyrightText: 2007-2009 Sergio Pistone <sergio_pistone@yahoo.com.ar>
-    SPDX-FileCopyrightText: 2010-2019 Mladen Milinkovic <max@smoothware.net>
+    SPDX-FileCopyrightText: 2010-2022 Mladen Milinkovic <max@smoothware.net>
 
     SPDX-License-Identifier: GPL-2.0-or-later
 */
@@ -35,15 +35,15 @@ protected:
 		for(SubtitleIterator it(subtitle); it.current(); ++it) {
 			const SubtitleLine *line = it.current();
 
-			const SString &text = (primary ? line->primaryDoc() : line->secondaryDoc())->toRichText();
+			const RichString &text = (primary ? line->primaryDoc() : line->secondaryDoc())->toRichText();
 			QString subtitle;
 
 			int prevStyle = 0;
 			QRgb prevColor = 0;
 			for(int i = 0, sz = text.length(); i < sz; i++) {
 				int curStyle = text.styleFlagsAt(i);
-				QRgb curColor = (curStyle &SString::Color) != 0 ? text.styleColorAt(i) : 0;
-				curStyle &= SString::Bold | SString::Italic | SString::Underline;
+				QRgb curColor = (curStyle &RichString::Color) != 0 ? text.styleColorAt(i) : 0;
+				curStyle &= RichString::Bold | RichString::Italic | RichString::Underline;
 				if(prevStyle != curStyle)
 					subtitle += m_stylesMap[curStyle];
 				if(prevColor != curColor)
@@ -72,13 +72,13 @@ protected:
 		m_lineBuilder(QStringLiteral("{%1}{%2}%3\n"))
 	{
 		m_stylesMap[0] = QStringLiteral("{y:}");
-		m_stylesMap[SString::Bold] = QStringLiteral("{y:b}");
-		m_stylesMap[SString::Italic] = QStringLiteral("{y:i}");
-		m_stylesMap[SString::Underline] = QStringLiteral("{y:u}");
-		m_stylesMap[SString::Bold | SString::Italic] = QStringLiteral("{y:b,i}");
-		m_stylesMap[SString::Bold | SString::Underline] = QStringLiteral("{y:u,b}");
-		m_stylesMap[SString::Italic | SString::Underline] = QStringLiteral("{y:u,i}");
-		m_stylesMap[SString::Bold | SString::Italic | SString::Underline] = QStringLiteral("{y:u,b,i}");
+		m_stylesMap[RichString::Bold] = QStringLiteral("{y:b}");
+		m_stylesMap[RichString::Italic] = QStringLiteral("{y:i}");
+		m_stylesMap[RichString::Underline] = QStringLiteral("{y:u}");
+		m_stylesMap[RichString::Bold | RichString::Italic] = QStringLiteral("{y:b,i}");
+		m_stylesMap[RichString::Bold | RichString::Underline] = QStringLiteral("{y:u,b}");
+		m_stylesMap[RichString::Italic | RichString::Underline] = QStringLiteral("{y:u,i}");
+		m_stylesMap[RichString::Bold | RichString::Italic | RichString::Underline] = QStringLiteral("{y:u,b,i}");
 	}
 
 	const QString m_lineBuilder;

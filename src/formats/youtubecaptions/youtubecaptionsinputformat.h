@@ -1,6 +1,6 @@
 /*
     SPDX-FileCopyrightText: 2007-2009 Sergio Pistone <sergio_pistone@yahoo.com.ar>
-    SPDX-FileCopyrightText: 2010-2019 Mladen Milinkovic <max@smoothware.net>
+    SPDX-FileCopyrightText: 2010-2022 Mladen Milinkovic <max@smoothware.net>
 
     SPDX-License-Identifier: GPL-2.0-or-later
 */
@@ -40,7 +40,7 @@ protected:
 
 			// TODO does the format actually support styled text?
 			// if so, does it use standard HTML style tags?
-			SString stext;
+			RichString stext;
 			stext.setRichString(text.trimmed().toString());
 
 			SubtitleLine *l = new SubtitleLine(showTime, hideTime);

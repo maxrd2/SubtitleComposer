@@ -1,6 +1,6 @@
 /*
     SPDX-FileCopyrightText: 2007-2009 Sergio Pistone <sergio_pistone@yahoo.com.ar>
-    SPDX-FileCopyrightText: 2010-2020 Mladen Milinkovic <max@smoothware.net>
+    SPDX-FileCopyrightText: 2010-2022 Mladen Milinkovic <max@smoothware.net>
 
     SPDX-License-Identifier: GPL-2.0-or-later
 */
@@ -404,10 +404,10 @@ LinesWidget::contextMenuEvent(QContextMenuEvent *e)
 
 	QMenu stylesMenu(i18n("Styles"));
 	const int styleFlags = subLine ? subLine->primaryDoc()->cummulativeStyleFlags() | subLine->secondaryDoc()->cummulativeStyleFlags() : 0;
-	addAppAction(&stylesMenu, ACT_TOGGLE_SELECTED_LINES_BOLD, true, styleFlags & SString::Bold);
-	addAppAction(&stylesMenu, ACT_TOGGLE_SELECTED_LINES_ITALIC, true, styleFlags & SString::Italic);
-	addAppAction(&stylesMenu, ACT_TOGGLE_SELECTED_LINES_UNDERLINE, true, styleFlags & SString::Underline);
-	addAppAction(&stylesMenu, ACT_TOGGLE_SELECTED_LINES_STRIKETHROUGH, true, styleFlags & SString::StrikeThrough);
+	addAppAction(&stylesMenu, ACT_TOGGLE_SELECTED_LINES_BOLD, true, styleFlags & RichString::Bold);
+	addAppAction(&stylesMenu, ACT_TOGGLE_SELECTED_LINES_ITALIC, true, styleFlags & RichString::Italic);
+	addAppAction(&stylesMenu, ACT_TOGGLE_SELECTED_LINES_UNDERLINE, true, styleFlags & RichString::Underline);
+	addAppAction(&stylesMenu, ACT_TOGGLE_SELECTED_LINES_STRIKETHROUGH, true, styleFlags & RichString::StrikeThrough);
 	addAppAction(&stylesMenu, ACT_CHANGE_SELECTED_LINES_TEXT_COLOR);
 	menu.addMenu(&stylesMenu);
 

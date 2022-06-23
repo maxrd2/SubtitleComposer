@@ -1,5 +1,5 @@
 /*
-    SPDX-FileCopyrightText: 2017-2018 Mladen Milinkovic <max@smoothware.net>
+    SPDX-FileCopyrightText: 2017-2022 Mladen Milinkovic <max@smoothware.net>
 
     SPDX-License-Identifier: GPL-2.0-or-later
 */
@@ -85,7 +85,7 @@ public:
 	LinePtr line;
 	qint32 top, left, bottom, right;
 	qint32 symbolCount;
-	SString text;
+	RichString text;
 	QVector<QPoint> pixels;
 };
 
@@ -413,7 +413,7 @@ VobSubInputProcessDialog::symFileOpen(const QString &filename)
 	m_recognizedPieces.clear();
 	m_recognizedPiecesMaxSymbolLength = 0;
 
-	SString text;
+	RichString text;
 	Piece piece;
 	QString line;
 	QChar ch;
@@ -723,7 +723,7 @@ VobSubInputProcessDialog::recognizePiece()
 		if(len != normal->symbolCount)
 			continue;
 		if(m_recognizedPieces.contains(*normal)) {
-			const SString text = m_recognizedPieces.value(*normal);
+			const RichString text = m_recognizedPieces.value(*normal);
 			(*m_pieceCurrent)->text = text;
 			currentSymbolCountSet(len);
 			processNextPiece();
@@ -734,17 +734,17 @@ VobSubInputProcessDialog::recognizePiece()
 	processCurrentPiece();
 }
 
-SString
+RichString
 VobSubInputProcessDialog::currentText()
 {
 	int style = 0;
 	if(ui->styleBold->isChecked())
-		style |= SString::Bold;
+		style |= RichString::Bold;
 	if(ui->styleItalic->isChecked())
-		style |= SString::Italic;
+		style |= RichString::Italic;
 	if(ui->styleUnderline->isChecked())
-		style |= SString::Underline;
-	return SString(ui->lineEdit->text(), style);
+		style |= RichString::Underline;
+	return RichString(ui->lineEdit->text(), style);
 }
 
 VobSubInputProcessDialog::PiecePtr
@@ -874,9 +874,9 @@ VobSubInputProcessDialog::updateCurrentPiece()
 	ui->lineEdit->selectAll();
 
 	int style = (*m_pieceCurrent)->text.styleFlagsAt(0);
-	ui->styleBold->setChecked((style & SString::Bold) != 0);
-	ui->styleItalic->setChecked((style & SString::Italic) != 0);
-	ui->styleUnderline->setChecked((style & SString::Underline) != 0);
+	ui->styleBold->setChecked((style & RichString::Bold) != 0);
+	ui->styleItalic->setChecked((style & RichString::Italic) != 0);
+	ui->styleUnderline->setChecked((style & RichString::Underline) != 0);
 
 	ui->symbolCount->setValue((*m_pieceCurrent)->symbolCount);
 }

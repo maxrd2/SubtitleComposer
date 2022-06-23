@@ -1,14 +1,14 @@
 /*
     SPDX-FileCopyrightText: 2007-2009 Sergio Pistone <sergio_pistone@yahoo.com.ar>
-    SPDX-FileCopyrightText: 2010-2018 Mladen Milinkovic <max@smoothware.net>
+    SPDX-FileCopyrightText: 2010-2022 Mladen Milinkovic <max@smoothware.net>
 
     SPDX-License-Identifier: GPL-2.0-or-later
 */
 
-#ifndef SCRIPTING_SSTRING_H
-#define SCRIPTING_SSTRING_H
+#ifndef SCRIPTING_RICHSTRING_H
+#define SCRIPTING_RICHSTRING_H
 
-#include "core/sstring.h"
+#include "core/richstring.h"
 
 #include <QObject>
 #include <QString>
@@ -16,7 +16,7 @@
 namespace SubtitleComposer {
 namespace Scripting {
 class List;
-class SString : public QObject
+class RichString : public QObject
 {
 	Q_OBJECT
 
@@ -82,9 +82,9 @@ private:
 	friend class StringsModule;
 	friend class SubtitleLine;
 
-	SString(const SubtitleComposer::SString &backend, QObject *parent);
+	RichString(const SubtitleComposer::RichString &backend, QObject *parent);
 
-	SubtitleComposer::SString m_backend;
+	SubtitleComposer::RichString m_backend;
 };
 }
 }

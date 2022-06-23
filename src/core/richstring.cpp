@@ -5,7 +5,7 @@
     SPDX-License-Identifier: GPL-2.0-or-later
 */
 
-#include "core/sstring.h"
+#include "core/richstring.h"
 
 #include "helpers/common.h"
 
@@ -34,13 +34,13 @@ memset_n(T *dest, const T &value, size_t count)
 }
 
 namespace SubtitleComposer {
-class SStringStyle {
-	friend QDataStream & ::operator<<(QDataStream &stream, const SubtitleComposer::SString &string);
-	friend QDataStream & ::operator>>(QDataStream &stream, SubtitleComposer::SString &string);
+class RichStringStyle {
+	friend QDataStream & ::operator<<(QDataStream &stream, const SubtitleComposer::RichString &string);
+	friend QDataStream & ::operator>>(QDataStream &stream, SubtitleComposer::RichString &string);
 
 	class Iterator {
 	public:
-		Iterator(const SStringStyle *style, int index)
+		Iterator(const RichStringStyle *style, int index)
 			: m_style(style),
 			  m_index(index)
 		{}
@@ -51,29 +51,29 @@ class SStringStyle {
 		inline bool operator==(const Iterator &other)
 		{
 			return flags() == other.flags()
-					&& (!flags(SString::Color) || color() == other.color());
+					&& (!flags(RichString::Color) || color() == other.color());
 		}
 		inline bool operator!=(const Iterator &other) { return !(*this == other); }
 
 		inline int index() const { return m_index; }
-		inline quint8 flags(SString::StyleFlag mask) const { return m_style->m_styleFlags[m_index] & mask; }
+		inline quint8 flags(RichString::StyleFlag mask) const { return m_style->m_styleFlags[m_index] & mask; }
 		inline quint8 & flags() const { return m_style->m_styleFlags[m_index]; }
 		inline QRgb & color() const { return m_style->m_styleColors[m_index]; }
 
 	private:
-		const SStringStyle *m_style;
+		const RichStringStyle *m_style;
 		int m_index;
 	};
 
 public:
-	SStringStyle(int len);
-	SStringStyle(int len, quint8 styleFlags, QRgb styleColor);
-	SStringStyle(const SStringStyle &other);
-	~SStringStyle();
+	RichStringStyle(int len);
+	RichStringStyle(int len, quint8 styleFlags, QRgb styleColor);
+	RichStringStyle(const RichStringStyle &other);
+	~RichStringStyle();
 
 	void clear();
 
-	SStringStyle & operator=(const SStringStyle &other);
+	RichStringStyle & operator=(const RichStringStyle &other);
 
 	qint32 voiceIndex(const QString &name);
 	qint32 classIndex(const QString &name);
@@ -83,9 +83,9 @@ public:
 	inline void insert(int index, int len) { replace(index, 0, len); }
 	void replace(int index, int len, int newLen);
 	void fill(int index, int len, quint8 flags, QRgb color);
-	void copy(int index, int len, const SStringStyle &src, int srcOffset=0);
+	void copy(int index, int len, const RichStringStyle &src, int srcOffset=0);
 
-	void swap(SStringStyle &other);
+	void swap(RichStringStyle &other);
 
 private:
 	void detach();
@@ -112,21 +112,21 @@ struct SSHelper {
 	using MatchRefList = QList<MatchRef>;
 
 	template<class T>
-	static MatchRefList match(SString &str, const QString &before, const T &after, Qt::CaseSensitivity cs);
+	static MatchRefList match(RichString &str, const QString &before, const T &after, Qt::CaseSensitivity cs);
 
 	template<class T>
-	static MatchRefList match(SString &str, const QRegExp &regExp, const T &replacement);
+	static MatchRefList match(RichString &str, const QRegExp &regExp, const T &replacement);
 
 	template<class T>
-	static MatchRefList match(SString &str, const QRegularExpression &regExp, const T &replacement);
+	static MatchRefList match(RichString &str, const QRegularExpression &regExp, const T &replacement);
 
 	template<class T>
-	static void replace(const MatchRefList &matchList, SString &str, const T &replacement);
+	static void replace(const MatchRefList &matchList, RichString &str, const T &replacement);
 };
 }
 
 void
-SStringStyle::replace(int index, int lenRemove, int lenAdd)
+RichStringStyle::replace(int index, int lenRemove, int lenAdd)
 {
 	Q_ASSERT(index + lenRemove <= m_length);
 	const int tailLength = m_length - index - lenRemove;
@@ -158,7 +158,7 @@ SStringStyle::replace(int index, int lenRemove, int lenAdd)
 }
 
 void
-SStringStyle::fill(int index, int len, quint8 flags, QRgb color)
+RichStringStyle::fill(int index, int len, quint8 flags, QRgb color)
 {
 	Q_ASSERT(index + len <= m_length);
 	if(len) {
@@ -168,7 +168,7 @@ SStringStyle::fill(int index, int len, quint8 flags, QRgb color)
 }
 
 void
-SStringStyle::copy(int index, int len, const SStringStyle &src, int srcOffset)
+RichStringStyle::copy(int index, int len, const RichStringStyle &src, int srcOffset)
 {
 	Q_ASSERT(index + len <= m_length);
 	if(len) {
@@ -177,7 +177,7 @@ SStringStyle::copy(int index, int len, const SStringStyle &src, int srcOffset)
 	}
 }
 
-SStringStyle::SStringStyle(int len)
+RichStringStyle::RichStringStyle(int len)
 	: m_styleFlags(nullptr),
 	  m_styleColors(nullptr),
 	  m_length(len),
@@ -187,7 +187,7 @@ SStringStyle::SStringStyle(int len)
 		updateCapacity();
 }
 
-SStringStyle::SStringStyle(int len, quint8 styleFlags, QRgb styleColor)
+RichStringStyle::RichStringStyle(int len, quint8 styleFlags, QRgb styleColor)
 	: m_styleFlags(nullptr),
 	  m_styleColors(nullptr),
 	  m_length(len),
@@ -195,11 +195,11 @@ SStringStyle::SStringStyle(int len, quint8 styleFlags, QRgb styleColor)
 {
 	if(m_length) {
 		updateCapacity();
-		fill(0, m_length, quint8(styleFlags & SString::AllStyles), styleColor);
+		fill(0, m_length, quint8(styleFlags & RichString::AllStyles), styleColor);
 	}
 }
 
-SStringStyle::SStringStyle(const SStringStyle &other)
+RichStringStyle::RichStringStyle(const RichStringStyle &other)
 	: m_styleFlags(nullptr),
 	  m_styleColors(nullptr),
 	  m_length(other.m_length),
@@ -211,21 +211,21 @@ SStringStyle::SStringStyle(const SStringStyle &other)
 	}
 }
 
-SStringStyle::~SStringStyle()
+RichStringStyle::~RichStringStyle()
 {
 	delete[] m_styleFlags;
 	delete[] m_styleColors;
 }
 
 void
-SStringStyle::clear()
+RichStringStyle::clear()
 {
 	m_length = 0;
 	updateCapacity();
 }
 
-SStringStyle &
-SStringStyle::operator=(const SStringStyle &other)
+RichStringStyle &
+RichStringStyle::operator=(const RichStringStyle &other)
 {
 	m_length = other.m_length;
 	updateCapacity();
@@ -234,7 +234,7 @@ SStringStyle::operator=(const SStringStyle &other)
 }
 
 void
-SStringStyle::swap(SStringStyle &other)
+RichStringStyle::swap(RichStringStyle &other)
 {
 	qSwap(m_styleFlags, other.m_styleFlags);
 	qSwap(m_styleColors, other.m_styleColors);
@@ -243,7 +243,7 @@ SStringStyle::swap(SStringStyle &other)
 }
 
 void
-SStringStyle::detach()
+RichStringStyle::detach()
 {
 	m_styleFlags = nullptr;
 	m_styleColors = nullptr;
@@ -251,7 +251,7 @@ SStringStyle::detach()
 }
 
 void
-SStringStyle::updateCapacity()
+RichStringStyle::updateCapacity()
 {
 	if(m_length > m_capacity)
 		m_capacity = m_length * 2;
@@ -274,42 +274,42 @@ SStringStyle::updateCapacity()
 }
 
 
-SString::SString(const QString &string, quint8 styleFlags, QRgb styleColor)
+RichString::RichString(const QString &string, quint8 styleFlags, QRgb styleColor)
 	: QString(string),
-	  m_style(new SStringStyle(string.length(), styleFlags, styleColor))
+	  m_style(new RichStringStyle(string.length(), styleFlags, styleColor))
 {
 }
 
-SString::SString(const SString &sstring)
-	: QString(sstring),
-	  m_style(new SStringStyle(*sstring.m_style))
+RichString::RichString(const RichString &richstring)
+	: QString(richstring),
+	  m_style(new RichStringStyle(*richstring.m_style))
 {
 }
 
-SString &
-SString::operator=(const SString &sstring)
+RichString &
+RichString::operator=(const RichString &richstring)
 {
-	if(this != &sstring) {
-		QString::operator=(sstring);
-		*m_style = SStringStyle(*sstring.m_style);
+	if(this != &richstring) {
+		QString::operator=(richstring);
+		*m_style = RichStringStyle(*richstring.m_style);
 	}
 	return *this;
 }
 
-SString::~SString()
+RichString::~RichString()
 {
 	delete m_style;
 }
 
 void
-SString::setString(const QString &string, quint8 styleFlags, QRgb styleColor)
+RichString::setString(const QString &string, quint8 styleFlags, QRgb styleColor)
 {
 	QString::operator=(string);
-	*m_style = SStringStyle(string.length(), styleFlags, styleColor);
+	*m_style = RichStringStyle(string.length(), styleFlags, styleColor);
 }
 
 quint8
-SString::styleFlagsAt(int index) const
+RichString::styleFlagsAt(int index) const
 {
 	if(index < 0 || index >= length())
 		return 0;
@@ -317,7 +317,7 @@ SString::styleFlagsAt(int index) const
 }
 
 void
-SString::setStyleFlagsAt(int index, quint8 styleFlags) const
+RichString::setStyleFlagsAt(int index, quint8 styleFlags) const
 {
 	if(index < 0 || index >= length())
 		return;
@@ -325,7 +325,7 @@ SString::setStyleFlagsAt(int index, quint8 styleFlags) const
 }
 
 QRgb
-SString::styleColorAt(int index) const
+RichString::styleColorAt(int index) const
 {
 	if(index < 0 || index >= length())
 		return 0;
@@ -334,20 +334,20 @@ SString::styleColorAt(int index) const
 }
 
 void
-SString::setStyleColorAt(int index, QRgb rgbColor) const
+RichString::setStyleColorAt(int index, QRgb rgbColor) const
 {
 	if(index < 0 || index >= length())
 		return;
 	auto it = m_style->iter(index);
 	if(rgbColor == 0)
-		it.flags() &= ~SString::Color;
+		it.flags() &= ~RichString::Color;
 	else
-		it.flags() |= SString::Color;
+		it.flags() |= RichString::Color;
 	it.color() = rgbColor;
 }
 
 QDataStream &
-operator<<(QDataStream &stream, const SString &string)
+operator<<(QDataStream &stream, const RichString &string)
 {
 	stream << static_cast<const QString &>(string);
 	stream.writeRawData(reinterpret_cast<const char *>(string.m_style->m_styleFlags), string.length() * sizeof(*string.m_style->m_styleFlags));
@@ -356,7 +356,7 @@ operator<<(QDataStream &stream, const SString &string)
 }
 
 QDataStream &
-operator>>(QDataStream &stream, SString &string)
+operator>>(QDataStream &stream, RichString &string)
 {
 	stream >> static_cast<QString &>(string);
 	string.m_style->m_length = string.length();
@@ -367,7 +367,7 @@ operator>>(QDataStream &stream, SString &string)
 }
 
 QString
-SString::richString() const
+RichString::richString() const
 {
 	QString ret;
 
@@ -449,8 +449,8 @@ SString::richString() const
 	return ret;
 }
 
-SString &
-SString::setRichString(const QStringRef &string)
+RichString &
+RichString::setRichString(const QStringRef &string)
 {
 	staticRE$(tagRegExp, "<(/?([bius]|font))[^>]*(\\s+color=\"?([\\w#]+)\"?)?[^>]*>", REu | REi);
 
@@ -471,34 +471,34 @@ SString::setRichString(const QStringRef &string)
 		QColor newColor(currentColor);
 
 		if(matched == QLatin1String("b")) {
-			newStyle |= SString::Bold;
+			newStyle |= RichString::Bold;
 		} else if(matched == QLatin1String("i")) {
-			newStyle |= SString::Italic;
+			newStyle |= RichString::Italic;
 		} else if(matched == QLatin1String("u")) {
-			newStyle |= SString::Underline;
+			newStyle |= RichString::Underline;
 		} else if(matched == QLatin1String("s")) {
-			newStyle |= SString::StrikeThrough;
+			newStyle |= RichString::StrikeThrough;
 		} else if(matched == QLatin1String("font")) {
 			const QString &color = m.captured(4);
 			if(!color.isEmpty()) {
-				newStyle |= SString::Color;
+				newStyle |= RichString::Color;
 				newColor.setNamedColor(color.toLower());
 			}
 		} else if(matched == QLatin1String("/b")) {
-			newStyle &= ~SString::Bold;
+			newStyle &= ~RichString::Bold;
 		} else if(matched == QLatin1String("/i")) {
-			newStyle &= ~SString::Italic;
+			newStyle &= ~RichString::Italic;
 		} else if(matched == QLatin1String("/u")) {
-			newStyle &= ~SString::Underline;
+			newStyle &= ~RichString::Underline;
 		} else if(matched == QLatin1String("/s")) {
-			newStyle &= ~SString::StrikeThrough;
+			newStyle &= ~RichString::StrikeThrough;
 		} else if(matched == QLatin1String("/font")) {
-			newStyle &= ~SString::Color;
+			newStyle &= ~RichString::Color;
 			newColor.setNamedColor("-invalid-");
 		}
 
 		QString token(string.mid(offsetPos, matchedPos - offsetPos).toString());
-		append(SString(token, currentStyle, currentColor.isValid() ? currentColor.rgb() : 0));
+		append(RichString(token, currentStyle, currentColor.isValid() ? currentColor.rgb() : 0));
 		currentStyle = newStyle;
 		currentColor = newColor;
 
@@ -506,13 +506,13 @@ SString::setRichString(const QStringRef &string)
 	}
 
 	QString token(string.mid(offsetPos, matchedPos - offsetPos).toString());
-	append(SString(token /*.replace("&lt;", "<").replace("&gt;", ">")*/, currentStyle, currentColor.isValid() ? currentColor.rgb() : 0));
+	append(RichString(token /*.replace("&lt;", "<").replace("&gt;", ">")*/, currentStyle, currentColor.isValid() ? currentColor.rgb() : 0));
 
 	return *this;
 }
 
 int
-SString::cummulativeStyleFlags() const
+RichString::cummulativeStyleFlags() const
 {
 	int cummulativeStyleFlags = 0;
 	for(int i = 0, size = length(); i < size; i++) {
@@ -524,7 +524,7 @@ SString::cummulativeStyleFlags() const
 }
 
 bool
-SString::hasStyleFlags(int styleFlags) const
+RichString::hasStyleFlags(int styleFlags) const
 {
 	int cummulativeStyleFlags = 0;
 	for(int i = 0, size = length(); i < size; i++) {
@@ -535,8 +535,8 @@ SString::hasStyleFlags(int styleFlags) const
 	return false;
 }
 
-SString &
-SString::setStyleFlags(int index, int len, int styleFlags)
+RichString &
+RichString::setStyleFlags(int index, int len, int styleFlags)
 {
 	if(index < 0 || index >= length())
 		return *this;
@@ -547,8 +547,8 @@ SString::setStyleFlags(int index, int len, int styleFlags)
 	return *this;
 }
 
-SString &
-SString::setStyleFlags(int index, int len, int styleFlags, bool on)
+RichString &
+RichString::setStyleFlags(int index, int len, int styleFlags, bool on)
 {
 	if(index < 0 || index >= length())
 		return *this;
@@ -566,8 +566,8 @@ SString::setStyleFlags(int index, int len, int styleFlags, bool on)
 	return *this;
 }
 
-SString &
-SString::setStyleColor(int index, int len, QRgb color)
+RichString &
+RichString::setStyleColor(int index, int len, QRgb color)
 {
 	if(index < 0 || index >= length())
 		return *this;
@@ -584,14 +584,14 @@ SString::setStyleColor(int index, int len, QRgb color)
 }
 
 void
-SString::clear()
+RichString::clear()
 {
 	QString::clear();
 	m_style->clear();
 }
 
-SString &
-SString::insert(int index, QChar ch)
+RichString &
+RichString::insert(int index, QChar ch)
 {
 	if(index >= 0 && index <= length()) {
 		quint8 fillFlags = 0;
@@ -610,8 +610,8 @@ SString::insert(int index, QChar ch)
 	return *this;
 }
 
-SString &
-SString::insert(int index, const QString &str)
+RichString &
+RichString::insert(int index, const QString &str)
 {
 	if(!length()) {
 		setString(str);
@@ -631,8 +631,8 @@ SString::insert(int index, const QString &str)
 	return *this;
 }
 
-SString &
-SString::insert(int index, const SString &str)
+RichString &
+RichString::insert(int index, const RichString &str)
 {
 	if(!length()) {
 		*this = str;
@@ -648,8 +648,8 @@ SString::insert(int index, const SString &str)
 	return *this;
 }
 
-SString &
-SString::replace(int index, int len, const QString &replacement)
+RichString &
+RichString::replace(int index, int len, const QString &replacement)
 {
 	if(index < 0 || index >= length())
 		return *this;
@@ -673,8 +673,8 @@ SString::replace(int index, int len, const QString &replacement)
 	return *this;
 }
 
-SString &
-SString::replace(int index, int len, const SString &replacement)
+RichString &
+RichString::replace(int index, int len, const RichString &replacement)
 {
 	if(index < 0 || index >= length())
 		return *this;
@@ -693,8 +693,8 @@ SString::replace(int index, int len, const SString &replacement)
 	return *this;
 }
 
-SString &
-SString::replace(const QString &before, const QString &after, Qt::CaseSensitivity cs)
+RichString &
+RichString::replace(const QString &before, const QString &after, Qt::CaseSensitivity cs)
 {
 	if(before.isEmpty() && after.isEmpty())
 		return *this;
@@ -712,8 +712,8 @@ SString::replace(const QString &before, const QString &after, Qt::CaseSensitivit
 	return *this;
 }
 
-SString &
-SString::replace(const QString &before, const SString &after, Qt::CaseSensitivity cs)
+RichString &
+RichString::replace(const QString &before, const RichString &after, Qt::CaseSensitivity cs)
 {
 	if(before.isEmpty() && after.isEmpty())
 		return *this;
@@ -725,15 +725,15 @@ SString::replace(const QString &before, const SString &after, Qt::CaseSensitivit
 	return *this;
 }
 
-SString &
-SString::replace(QChar before, QChar after, Qt::CaseSensitivity cs)
+RichString &
+RichString::replace(QChar before, QChar after, Qt::CaseSensitivity cs)
 {
 	QString::replace(before, after, cs);
 	return *this;
 }
 
-SString &
-SString::replace(QChar ch, const QString &after, Qt::CaseSensitivity cs)
+RichString &
+RichString::replace(QChar ch, const QString &after, Qt::CaseSensitivity cs)
 {
 	if(after.length() == 1) {
 		// there's no need to change the styles (char substitution)
@@ -748,8 +748,8 @@ SString::replace(QChar ch, const QString &after, Qt::CaseSensitivity cs)
 	return *this;
 }
 
-SString &
-SString::replace(QChar ch, const SString &after, Qt::CaseSensitivity cs)
+RichString &
+RichString::replace(QChar ch, const RichString &after, Qt::CaseSensitivity cs)
 {
 	const SSHelper::MatchRefList matchList = SSHelper::match(*this, ch, after, cs);
 	if(!matchList.empty())
@@ -757,8 +757,8 @@ SString::replace(QChar ch, const SString &after, Qt::CaseSensitivity cs)
 	return *this;
 }
 
-SString &
-SString::replace(const QRegExp &regExp, const QString &replacement)
+RichString &
+RichString::replace(const QRegExp &regExp, const QString &replacement)
 {
 	const SSHelper::MatchRefList matchList = SSHelper::match(*this, regExp, replacement);
 	if(!matchList.empty())
@@ -766,8 +766,8 @@ SString::replace(const QRegExp &regExp, const QString &replacement)
 	return *this;
 }
 
-SString &
-SString::replace(const QRegExp &regExp, const SString &replacement)
+RichString &
+RichString::replace(const QRegExp &regExp, const RichString &replacement)
 {
 	const SSHelper::MatchRefList matchList = SSHelper::match(*this, regExp, replacement);
 	if(!matchList.empty())
@@ -775,8 +775,8 @@ SString::replace(const QRegExp &regExp, const SString &replacement)
 	return *this;
 }
 
-SString &
-SString::replace(const QRegularExpression &regExp, const QString &replacement)
+RichString &
+RichString::replace(const QRegularExpression &regExp, const QString &replacement)
 {
 	const SSHelper::MatchRefList matchList = SSHelper::match(*this, regExp, replacement);
 	if(!matchList.empty())
@@ -784,8 +784,8 @@ SString::replace(const QRegularExpression &regExp, const QString &replacement)
 	return *this;
 }
 
-SString &
-SString::replace(const QRegularExpression &regExp, const SString &replacement)
+RichString &
+RichString::replace(const QRegularExpression &regExp, const RichString &replacement)
 {
 	const SSHelper::MatchRefList matchList = SSHelper::match(*this, regExp, replacement);
 	if(!matchList.empty())
@@ -793,10 +793,10 @@ SString::replace(const QRegularExpression &regExp, const SString &replacement)
 	return *this;
 }
 
-SStringList
-SString::split(const QString &sep, QString::SplitBehavior behavior, Qt::CaseSensitivity cs) const
+RichStringList
+RichString::split(const QString &sep, QString::SplitBehavior behavior, Qt::CaseSensitivity cs) const
 {
-	SStringList ret;
+	RichStringList ret;
 
 	if(sep.length()) {
 		int off = 0;
@@ -817,10 +817,10 @@ SString::split(const QString &sep, QString::SplitBehavior behavior, Qt::CaseSens
 	return ret;
 }
 
-SStringList
-SString::split(const QChar &sep, QString::SplitBehavior behavior, Qt::CaseSensitivity cs) const
+RichStringList
+RichString::split(const QChar &sep, QString::SplitBehavior behavior, Qt::CaseSensitivity cs) const
 {
-	SStringList ret;
+	RichStringList ret;
 
 	int off = 0;
 	for(;;) {
@@ -837,10 +837,10 @@ SString::split(const QChar &sep, QString::SplitBehavior behavior, Qt::CaseSensit
 	return ret;
 }
 
-SStringList
-SString::split(const QRegExp &sep, QString::SplitBehavior behavior) const
+RichStringList
+RichString::split(const QRegExp &sep, QString::SplitBehavior behavior) const
 {
-	SStringList ret;
+	RichStringList ret;
 
 	int off = 0;
 	for(;;) {
@@ -857,28 +857,28 @@ SString::split(const QRegExp &sep, QString::SplitBehavior behavior) const
 	return ret;
 }
 
-SString
-SString::left(int len) const
+RichString
+RichString::left(int len) const
 {
 	len = length(0, len);
-	SString ret;
+	RichString ret;
 	ret.operator=(QString::left(len));
 	ret.m_style->copy(0, len, *m_style, 0);
 	return ret;
 }
 
-SString
-SString::right(int len) const
+RichString
+RichString::right(int len) const
 {
 	len = length(0, len);
-	SString ret;
+	RichString ret;
 	ret.operator=(QString::right(len));
 	ret.m_style->copy(0, len, *m_style, length() - len);
 	return ret;
 }
 
-SString
-SString::mid(int index, int len) const
+RichString
+RichString::mid(int index, int len) const
 {
 	if(index < 0) {
 		if(len >= 0)
@@ -887,37 +887,37 @@ SString::mid(int index, int len) const
 	}
 
 	if(index >= (int)length())
-		return SString();
+		return RichString();
 
 	len = length(index, len);
-	SString ret;
+	RichString ret;
 	ret.operator=(QString::mid(index, len));
 	ret.m_style->copy(0, len, *m_style, index);
 	return ret;
 }
 
-SString
-SString::toLower() const
+RichString
+RichString::toLower() const
 {
-	SString ret(*this);
+	RichString ret(*this);
 	ret.operator=(QString::toLower());
 	return ret;
 }
 
-SString
-SString::toUpper() const
+RichString
+RichString::toUpper() const
 {
-	SString ret(*this);
+	RichString ret(*this);
 	ret.operator=(QString::toUpper());
 	return ret;
 }
 
-SString
-SString::toTitleCase(bool lowerFirst) const
+RichString
+RichString::toTitleCase(bool lowerFirst) const
 {
 	const QString wordSeparators(QStringLiteral(" -_([:,;./\\\t\n\""));
 
-	SString ret(*this);
+	RichString ret(*this);
 
 	if(lowerFirst)
 		ret.operator=(QString::toLower());
@@ -938,12 +938,12 @@ SString::toTitleCase(bool lowerFirst) const
 	return ret;
 }
 
-SString
-SString::toSentenceCase(bool lowerFirst, bool *cont) const
+RichString
+RichString::toSentenceCase(bool lowerFirst, bool *cont) const
 {
 	const QString sentenceEndChars(".?!");
 
-	SString ret(*this);
+	RichString ret(*this);
 
 	if(lowerFirst)
 		ret.operator=(QString::toLower());
@@ -982,25 +982,25 @@ SString::toSentenceCase(bool lowerFirst, bool *cont) const
 	return ret;
 }
 
-SString
-SString::simplified() const
+RichString
+RichString::simplified() const
 {
 	const QRegExp simplifySpaceRegExp("\\s{2,MAXINT}");
 
 	return trimmed().replace(simplifySpaceRegExp, " ");
 }
 
-SString
-SString::trimmed() const
+RichString
+RichString::trimmed() const
 {
 	const QRegExp trimRegExp("(^\\s+|\\s+$)");
 
-	SString ret(*this);
+	RichString ret(*this);
 	return ret.remove(trimRegExp);
 }
 
 void
-SString::simplifyWhiteSpace(QString &text)
+RichString::simplifyWhiteSpace(QString &text)
 {
 	int di = 0;
 	bool lastWasSpace = true;
@@ -1032,7 +1032,7 @@ SString::simplifyWhiteSpace(QString &text)
 }
 
 void
-SString::simplifyWhiteSpace()
+RichString::simplifyWhiteSpace()
 {
 	int di = 0;
 	bool lastWasSpace = true;
@@ -1067,14 +1067,14 @@ SString::simplifyWhiteSpace()
 }
 
 bool
-SString::operator!=(const SString &sstring) const
+RichString::operator!=(const RichString &richstring) const
 {
-	if(!(static_cast<const QString &>(*this) == static_cast<const QString &>(sstring)))
+	if(!(static_cast<const QString &>(*this) == static_cast<const QString &>(richstring)))
 		return true;
 
 	for(int i = 0, sz = length(); i < sz; i++) {
 		auto s1 = m_style->iter(i);
-		auto s2 = sstring.m_style->iter(i);
+		auto s2 = richstring.m_style->iter(i);
 		if(s1.flags() != s2.flags())
 			return true;
 		if(s1.flags(Color) && s1.color() != s2.color())
@@ -1084,41 +1084,41 @@ SString::operator!=(const SString &sstring) const
 	return false;
 }
 
-SStringList::SStringList()
+RichStringList::RichStringList()
 {}
 
-SStringList::SStringList(const SString &str)
+RichStringList::RichStringList(const RichString &str)
 {
 	append(str);
 }
 
-SStringList::SStringList(const SStringList &list) :
-	QList<SString>(list)
+RichStringList::RichStringList(const RichStringList &list) :
+	QList<RichString>(list)
 {}
 
-SStringList::SStringList(const QList<SString> &list) :
-	QList<SString>(list)
+RichStringList::RichStringList(const QList<RichString> &list) :
+	QList<RichString>(list)
 {}
 
-SStringList::SStringList(const QStringList &list)
+RichStringList::RichStringList(const QStringList &list)
 {
 	for(QStringList::ConstIterator it = list.begin(), end = list.end(); it != end; ++it)
 		append(*it);
 }
 
-SStringList::SStringList(const QList<QString> &list)
+RichStringList::RichStringList(const QList<QString> &list)
 {
 	for(QList<QString>::ConstIterator it = list.begin(), end = list.end(); it != end; ++it)
 		append(*it);
 }
 
-SString
-SStringList::join(const SString &sep) const
+RichString
+RichStringList::join(const RichString &sep) const
 {
-	SString ret;
+	RichString ret;
 
 	bool skipSeparator = true;
-	for(SStringList::ConstIterator it = begin(), end = this->end(); it != end; ++it) {
+	for(RichStringList::ConstIterator it = begin(), end = this->end(); it != end; ++it) {
 		if(skipSeparator) {
 			ret += *it;
 			skipSeparator = false;
@@ -1137,7 +1137,7 @@ SStringList::join(const SString &sep) const
 
 template<class T>
 SSHelper::MatchRefList
-SSHelper::match(SString &str, const QString &before, const T &after, Qt::CaseSensitivity cs)
+SSHelper::match(RichString &str, const QString &before, const T &after, Qt::CaseSensitivity cs)
 {
 	MatchRefList matchList;
 	int newLength = str.length();
@@ -1183,7 +1183,7 @@ SSHelper::match(SString &str, const QString &before, const T &after, Qt::CaseSen
 
 template<class T>
 SSHelper::MatchRefList
-SSHelper::match(SString &str, const QRegExp &regExp, const T &replacement)
+SSHelper::match(RichString &str, const QRegExp &regExp, const T &replacement)
 {
 	MatchRefList matchList;
 	if(!regExp.isValid()) {
@@ -1282,7 +1282,7 @@ SSHelper::match(SString &str, const QRegExp &regExp, const T &replacement)
 
 template<class T>
 SSHelper::MatchRefList
-SSHelper::match(SString &str, const QRegularExpression &regExp, const T &replacement)
+SSHelper::match(RichString &str, const QRegularExpression &regExp, const T &replacement)
 {
 	MatchRefList matchList;
 	if(!regExp.isValid()) {
@@ -1373,12 +1373,12 @@ SSHelper::match(SString &str, const QRegularExpression &regExp, const T &replace
 
 template<class T>
 void
-SSHelper::replace(const MatchRefList &matchList, SString &str, const T &replacement)
+SSHelper::replace(const MatchRefList &matchList, RichString &str, const T &replacement)
 {
 	const int newLength = matchList.back().length; // last entry contains total lengths
 	QString newString;
 	newString.reserve(newLength);
-	SStringStyle newStyle(newLength);
+	RichStringStyle newStyle(newLength);
 	int startNew = 0;
 	int strStyleOffset = -1;
 	for(const MatchRef &md: matchList) {
@@ -1391,8 +1391,8 @@ SSHelper::replace(const MatchRefList &matchList, SString &str, const T &replacem
 			strStyleOffset = md.offset + md.length;
 		} else if(md.ref == md.REPLACEMENT) {
 			newString.append(replacement.midRef(md.offset, md.length));
-			if(std::is_same<decltype(replacement), const SString &>::value) {
-				newStyle.copy(startNew, md.length, *static_cast<const SString &>(replacement).m_style, md.offset);
+			if(std::is_same<decltype(replacement), const RichString &>::value) {
+				newStyle.copy(startNew, md.length, *static_cast<const RichString &>(replacement).m_style, md.offset);
 			} else {
 				if(strStyleOffset < 0)
 					strStyleOffset = 0;

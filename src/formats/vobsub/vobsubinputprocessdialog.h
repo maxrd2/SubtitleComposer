@@ -1,5 +1,5 @@
 /*
-    SPDX-FileCopyrightText: 2017-2019 Mladen Milinkovic <max@smoothware.net>
+    SPDX-FileCopyrightText: 2017-2022 Mladen Milinkovic <max@smoothware.net>
 
     SPDX-License-Identifier: GPL-2.0-or-later
 */
@@ -65,7 +65,7 @@ private:
 	void processNextPiece();
 	void recognizePiece();
 
-	SString currentText();
+	RichString currentText();
 	PiecePtr currentNormalizedPiece(int symbolCount);
 	void currentSymbolCountSet(int symbolCount);
 
@@ -79,7 +79,7 @@ private:
 	QList<PiecePtr> m_pieces;
 	QList<PiecePtr>::iterator m_pieceCurrent;
 
-	QHash<Piece, SString> m_recognizedPieces;
+	QHash<Piece, RichString> m_recognizedPieces;
 	qint32 m_recognizedPiecesMaxSymbolLength;
 };
 }

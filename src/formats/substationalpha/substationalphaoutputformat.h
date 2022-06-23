@@ -1,6 +1,6 @@
 /*
     SPDX-FileCopyrightText: 2007-2009 Sergio Pistone <sergio_pistone@yahoo.com.ar>
-    SPDX-FileCopyrightText: 2010-2019 Mladen Milinkovic <max@smoothware.net>
+    SPDX-FileCopyrightText: 2010-2022 Mladen Milinkovic <max@smoothware.net>
 
     SPDX-License-Identifier: GPL-2.0-or-later
 */
@@ -19,7 +19,7 @@ class SubStationAlphaOutputFormat : public OutputFormat
 	friend class FormatManager;
 
 public:
-	QString fromSString(const SString &text) const
+	QString fromRichString(const RichString &text) const
 	{
 
 		QString subtitle;
@@ -28,17 +28,17 @@ public:
 		QRgb prevColor = 0;
 		for(int i = 0, sz = text.length(); i < sz; i++) {
 			int curStyle = text.styleFlagsAt(i);
-			QRgb curColor = (curStyle & SString::Color) != 0 ? text.styleColorAt(i) : 0;
-			curStyle &= SString::Bold | SString::Italic | SString::Underline;
+			QRgb curColor = (curStyle & RichString::Color) != 0 ? text.styleColorAt(i) : 0;
+			curStyle &= RichString::Bold | RichString::Italic | RichString::Underline;
 			if(prevStyle != curStyle) {
 				int diff = curStyle ^ prevStyle;
 				subtitle += '{';
-				if(diff & SString::Bold)
-					subtitle += curStyle & SString::Bold ? QStringLiteral("\\b1") : QStringLiteral("\\b0");
-				if(diff & SString::Italic)
-					subtitle += curStyle & SString::Italic ? QStringLiteral("\\i1") : QStringLiteral("\\i0");
-				if(diff & SString::Underline)
-					subtitle += curStyle & SString::Underline ? QStringLiteral("\\u1") : QStringLiteral("\\u0");
+				if(diff & RichString::Bold)
+					subtitle += curStyle & RichString::Bold ? QStringLiteral("\\b1") : QStringLiteral("\\b0");
+				if(diff & RichString::Italic)
+					subtitle += curStyle & RichString::Italic ? QStringLiteral("\\i1") : QStringLiteral("\\i0");
+				if(diff & RichString::Underline)
+					subtitle += curStyle & RichString::Underline ? QStringLiteral("\\u1") : QStringLiteral("\\u0");
 				subtitle += "}";
 			}
 			if(prevColor != curColor) {
@@ -61,11 +61,11 @@ public:
 
 		if(prevStyle) {
 			subtitle +='{';
-			if(prevStyle & SString::Bold)
+			if(prevStyle & RichString::Bold)
 				subtitle += QStringLiteral("\\b0");
-			if(prevStyle & SString::Italic)
+			if(prevStyle & RichString::Italic)
 				subtitle += QStringLiteral("\\i0");
-			if(prevStyle & SString::Underline)
+			if(prevStyle & RichString::Underline)
 				subtitle += QStringLiteral("\\u0");
 			subtitle += '}';
 		}
@@ -117,9 +117,9 @@ protected:
 
 			formatData = this->formatData(line);
 
-			SString stext = (primary ? line->primaryDoc() : line->secondaryDoc())->toRichText();
+			RichString stext = (primary ? line->primaryDoc() : line->secondaryDoc())->toRichText();
 			ret += QString(formatData ? formatData->value(QStringLiteral("Dialogue")) : m_dialogueBuilder)
-					.arg(showTimeArg, hideTimeArg, fromSString(stext));
+					.arg(showTimeArg, hideTimeArg, fromRichString(stext));
 		}
 		return ret;
 	}

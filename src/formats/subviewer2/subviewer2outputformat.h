@@ -1,6 +1,6 @@
 /*
     SPDX-FileCopyrightText: 2007-2009 Sergio Pistone <sergio_pistone@yahoo.com.ar>
-    SPDX-FileCopyrightText: 2010-2019 Mladen Milinkovic <max@smoothware.net>
+    SPDX-FileCopyrightText: 2010-2022 Mladen Milinkovic <max@smoothware.net>
 
     SPDX-License-Identifier: GPL-2.0-or-later
 */
@@ -29,7 +29,7 @@ protected:
 			Time hideTime = line->hideTime();
 			ret += QString::asprintf("%02d:%02d:%02d.%02d,%02d:%02d:%02d.%02d\n", showTime.hours(), showTime.minutes(), showTime.seconds(), (showTime.millis() + 5) / 10, hideTime.hours(), hideTime.minutes(), hideTime.seconds(), (hideTime.millis() + 5) / 10);
 
-			const SString text = (primary ? line->primaryDoc() : line->secondaryDoc())->toRichText();
+			const RichString text = (primary ? line->primaryDoc() : line->secondaryDoc())->toRichText();
 			ret += m_stylesMap[text.cummulativeStyleFlags()];
 			ret += text.string().replace("\n", "[br]");
 
@@ -42,13 +42,13 @@ protected:
 		OutputFormat(QStringLiteral("SubViewer 2.0"), QStringList(QStringLiteral("sub"))),
 		m_stylesMap()
 	{
-		m_stylesMap[SString::Bold] = QStringLiteral("{Y:b}");
-		m_stylesMap[SString::Italic] = QStringLiteral("{Y:i}");
-		m_stylesMap[SString::Underline] = QStringLiteral("{Y:u}");
-		m_stylesMap[SString::Bold | SString::Italic] = QStringLiteral("{Y:bi}");
-		m_stylesMap[SString::Bold | SString::Underline] = QStringLiteral("{Y:ub}");
-		m_stylesMap[SString::Italic | SString::Underline] = QStringLiteral("{Y:ui}");
-		m_stylesMap[SString::Bold | SString::Italic | SString::Underline] = QStringLiteral("{Y:ubi}");
+		m_stylesMap[RichString::Bold] = QStringLiteral("{Y:b}");
+		m_stylesMap[RichString::Italic] = QStringLiteral("{Y:i}");
+		m_stylesMap[RichString::Underline] = QStringLiteral("{Y:u}");
+		m_stylesMap[RichString::Bold | RichString::Italic] = QStringLiteral("{Y:bi}");
+		m_stylesMap[RichString::Bold | RichString::Underline] = QStringLiteral("{Y:ub}");
+		m_stylesMap[RichString::Italic | RichString::Underline] = QStringLiteral("{Y:ui}");
+		m_stylesMap[RichString::Bold | RichString::Italic | RichString::Underline] = QStringLiteral("{Y:ubi}");
 	}
 
 	mutable QMap<int, QString> m_stylesMap;

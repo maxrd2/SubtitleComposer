@@ -1,6 +1,6 @@
 /*
     SPDX-FileCopyrightText: 2007-2009 Sergio Pistone <sergio_pistone@yahoo.com.ar>
-    SPDX-FileCopyrightText: 2010-2019 Mladen Milinkovic <max@smoothware.net>
+    SPDX-FileCopyrightText: 2010-2022 Mladen Milinkovic <max@smoothware.net>
 
     SPDX-License-Identifier: GPL-2.0-or-later
 */
@@ -33,17 +33,17 @@ protected:
 			if(m_styleRegExp.indexIn(text) != -1) {
 				QString styleText(m_styleRegExp.cap(1));
 				if(styleText.contains('b', Qt::CaseInsensitive))
-					styleFlags |= SString::Bold;
+					styleFlags |= RichString::Bold;
 				if(styleText.contains('i', Qt::CaseInsensitive))
-					styleFlags |= SString::Italic;
+					styleFlags |= RichString::Italic;
 				if(styleText.contains('u', Qt::CaseInsensitive))
-					styleFlags |= SString::Underline;
+					styleFlags |= RichString::Underline;
 
 				text.remove(m_styleRegExp);
 			}
 
 			SubtitleLine *l = new SubtitleLine(showTime, hideTime);
-			l->primaryDoc()->setRichText(SString(text, styleFlags), true);
+			l->primaryDoc()->setRichText(RichString(text, styleFlags), true);
 			subtitle.insertLine(l);
 
 			readLines++;

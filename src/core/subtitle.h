@@ -1,6 +1,6 @@
 /*
     SPDX-FileCopyrightText: 2007-2009 Sergio Pistone <sergio_pistone@yahoo.com.ar>
-    SPDX-FileCopyrightText: 2010-2018 Mladen Milinkovic <max@smoothware.net>
+    SPDX-FileCopyrightText: 2010-2022 Mladen Milinkovic <max@smoothware.net>
 
     SPDX-License-Identifier: GPL-2.0-or-later
 */
@@ -11,7 +11,7 @@
 #include "core/range.h"
 #include "core/rangelist.h"
 #include "core/time.h"
-#include "core/sstring.h"
+#include "core/richstring.h"
 #include "core/subtitletarget.h"
 #include "core/undo/undostack.h"
 #include "helpers/objectref.h"
@@ -152,7 +152,7 @@ public:
 	void appendSubtitle(const Subtitle &srcSubtitle, double shiftMsecsBeforeAppend);
 	void splitSubtitle(Subtitle &dstSubtitle, const Time &splitTime, bool shiftSplitLines);
 
-	void toggleStyleFlag(const RangeList &ranges, SString::StyleFlag styleFlag);
+	void toggleStyleFlag(const RangeList &ranges, RichString::StyleFlag styleFlag);
 	void changeTextColor(const RangeList &ranges, QRgb color);
 
 	void setMarked(const RangeList &ranges, bool value);

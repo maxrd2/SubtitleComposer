@@ -1,6 +1,6 @@
 /*
     SPDX-FileCopyrightText: 2007-2009 Sergio Pistone <sergio_pistone@yahoo.com.ar>
-    SPDX-FileCopyrightText: 2010-2019 Mladen Milinkovic <max@smoothware.net>
+    SPDX-FileCopyrightText: 2010-2022 Mladen Milinkovic <max@smoothware.net>
 
     SPDX-License-Identifier: GPL-2.0-or-later
 */
@@ -500,25 +500,25 @@ Application::advanceCurrentLine()
 void
 Application::toggleSelectedLinesBold()
 {
-	m_subtitle->toggleStyleFlag(m_linesWidget->selectionRanges(), SString::Bold);
+	m_subtitle->toggleStyleFlag(m_linesWidget->selectionRanges(), RichString::Bold);
 }
 
 void
 Application::toggleSelectedLinesItalic()
 {
-	m_subtitle->toggleStyleFlag(m_linesWidget->selectionRanges(), SString::Italic);
+	m_subtitle->toggleStyleFlag(m_linesWidget->selectionRanges(), RichString::Italic);
 }
 
 void
 Application::toggleSelectedLinesUnderline()
 {
-	m_subtitle->toggleStyleFlag(m_linesWidget->selectionRanges(), SString::Underline);
+	m_subtitle->toggleStyleFlag(m_linesWidget->selectionRanges(), RichString::Underline);
 }
 
 void
 Application::toggleSelectedLinesStrikeThrough()
 {
-	m_subtitle->toggleStyleFlag(m_linesWidget->selectionRanges(), SString::StrikeThrough);
+	m_subtitle->toggleStyleFlag(m_linesWidget->selectionRanges(), RichString::StrikeThrough);
 }
 
 void
@@ -753,7 +753,7 @@ Application::applyTranslation(RangeList ranges, bool primary, int inputLanguage,
 			line.replace(" ---", "--");
 			line.replace(ellipsisRegExp, "...");
 			line.replace(dialogCueRegExp, "\n-");
-			SString text;
+			RichString text;
 			text.setRichString(line);
 			it.current()->primaryDoc()->setRichText(text.trimmed());
 		}

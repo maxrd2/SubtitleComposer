@@ -1,6 +1,6 @@
 /*
     SPDX-FileCopyrightText: 2007-2009 Sergio Pistone <sergio_pistone@yahoo.com.ar>
-    SPDX-FileCopyrightText: 2010-2019 Mladen Milinkovic <max@smoothware.net>
+    SPDX-FileCopyrightText: 2010-2022 Mladen Milinkovic <max@smoothware.net>
 
     SPDX-License-Identifier: GPL-2.0-or-later
 */
@@ -475,7 +475,7 @@ SubtitleLine::primaryWords() const
 int
 SubtitleLine::primaryLines() const
 {
-	SString text(m_primaryDoc->toPlainText());
+	RichString text(m_primaryDoc->toPlainText());
 	text.simplifyWhiteSpace();
 	return text.isEmpty() ? 0 : text.count('\n') + 1;
 }
@@ -496,7 +496,7 @@ SubtitleLine::secondaryWords() const
 int
 SubtitleLine::secondaryLines() const
 {
-	SString text(m_secondaryDoc->toPlainText());
+	RichString text(m_secondaryDoc->toPlainText());
 	text.simplifyWhiteSpace();
 	return text.isEmpty() ? 0 : text.count('\n') + 1;
 }
@@ -508,7 +508,7 @@ SubtitleLine::autoDuration(const QString &t, int msecsPerChar, int msecsPerWord,
 	Q_ASSERT(msecsPerWord >= 0);
 	Q_ASSERT(msecsPerLine >= 0);
 
-	SString text(t);
+	RichString text(t);
 	text.simplifyWhiteSpace();
 	if(text.isEmpty())
 		return 0;

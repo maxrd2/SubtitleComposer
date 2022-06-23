@@ -1,6 +1,6 @@
 /*
     SPDX-FileCopyrightText: 2007-2009 Sergio Pistone <sergio_pistone@yahoo.com.ar>
-    SPDX-FileCopyrightText: 2010-2019 Mladen Milinkovic <max@smoothware.net>
+    SPDX-FileCopyrightText: 2010-2022 Mladen Milinkovic <max@smoothware.net>
 
     SPDX-License-Identifier: GPL-2.0-or-later
 */
@@ -21,11 +21,11 @@ class SubStationAlphaInputFormat : public InputFormat
 	friend class AdvancedSubStationAlphaInputFormat;
 
 protected:
-	SString toSString(QString string) const
+	RichString toRichString(QString string) const
 	{
 		static const QRegExp cmdRegExp(QStringLiteral("\\{([^\\}]+)\\}"));
 
-		SString ret;
+		RichString ret;
 
 		string.replace(QLatin1String("\\N"), QLatin1String("\n"));
 		string.replace(QLatin1String("\\n"), QLatin1String("\n"));
@@ -44,37 +44,37 @@ protected:
 				if(it->isEmpty()) {
 					continue;
 				} else if(*it == QLatin1String("i0")) {
-					newStyleFlags &= ~SString::Italic;
+					newStyleFlags &= ~RichString::Italic;
 				} else if(*it == QLatin1String("b0")) {
-					newStyleFlags &= ~SString::Bold;
+					newStyleFlags &= ~RichString::Bold;
 				} else if(*it == QLatin1String("u0")) {
-					newStyleFlags &= ~SString::Underline;
+					newStyleFlags &= ~RichString::Underline;
 				} else if(*it == QLatin1String("i1")) {
-					newStyleFlags |= SString::Italic;
+					newStyleFlags |= RichString::Italic;
 				} else if(it->at(0) == 'b') {
 					// it's usually followed 1, but can be weight of the font: 400, 700, ...
-					newStyleFlags |= SString::Bold;
+					newStyleFlags |= RichString::Bold;
 				} else if(*it == QLatin1String("u1")) {
-					newStyleFlags |= SString::Underline;
+					newStyleFlags |= RichString::Underline;
 				} else if(it->at(0) == 'c') {
 					QString val = (QStringLiteral("000000") + it->mid(3, -2)).right(6);
 					if(val == QLatin1String("000000")) {
-						newStyleFlags &= ~SString::Color;
+						newStyleFlags &= ~RichString::Color;
 						newColor = 0;
 					} else {
-						newStyleFlags |= SString::Color;
+						newStyleFlags |= RichString::Color;
 						newColor = QColor(QChar('#') % val.mid(4, 2) % val.mid(2, 2) % val.mid(0, 2)).rgb();
 					}
 				}
 			}
 
-			ret.append(SString(string.mid(offsetPos, matchedPos - offsetPos), currentStyle, currentColor));
+			ret.append(RichString(string.mid(offsetPos, matchedPos - offsetPos), currentStyle, currentColor));
 
 			currentStyle = newStyleFlags;
 			currentColor = newColor;
 			offsetPos = matchedPos + cmdRegExp.matchedLength();
 		}
-		ret.append(SString(string.mid(offsetPos, matchedPos - offsetPos), currentStyle, currentColor));
+		ret.append(RichString(string.mid(offsetPos, matchedPos - offsetPos), currentStyle, currentColor));
 
 		return ret;
 	}
@@ -117,7 +117,7 @@ protected:
 			Time hideTime(m_timeRegExp.cap(1).toInt(), m_timeRegExp.cap(2).toInt(), m_timeRegExp.cap(3).toInt(), m_timeRegExp.cap(4).toInt() * 10);
 
 			SubtitleLine *line = new SubtitleLine(showTime, hideTime);
-			line->primaryDoc()->setRichText(toSString(m_dialogueRegExp.cap(3)), true);
+			line->primaryDoc()->setRichText(toRichString(m_dialogueRegExp.cap(3)), true);
 
 			formatData.setValue(QStringLiteral("Dialogue"), m_dialogueRegExp.cap(0).replace(m_dialogueDataRegExp, QStringLiteral("\\1%1\\2%2\\3%3\n")));
 			setFormatData(line, formatData);

@@ -1,5 +1,5 @@
 /*
-    SPDX-FileCopyrightText: 2020 Mladen Milinkovic <max@smoothware.net>
+    SPDX-FileCopyrightText: 2020-2022 Mladen Milinkovic <max@smoothware.net>
 
     SPDX-License-Identifier: GPL-2.0-or-later
 */
@@ -67,7 +67,7 @@ RichDocument::~RichDocument()
 }
 
 void
-RichDocument::setRichText(const SString &text, bool resetUndo)
+RichDocument::setRichText(const RichString &text, bool resetUndo)
 {
 	if(resetUndo)
 		setUndoRedoEnabled(false);
@@ -84,17 +84,17 @@ RichDocument::setRichText(const SString &text, bool resetUndo)
 	for(int pos = 0, size = text.length(); pos < size; pos++) {
 		const int posFlags = text.styleFlagsAt(pos);
 		const QRgb posColor = text.styleColorAt(pos);
-		if(currentStyleFlags != posFlags || ((posFlags & SubtitleComposer::SString::Color) && currentStyleColor != posColor)) {
+		if(currentStyleFlags != posFlags || ((posFlags & SubtitleComposer::RichString::Color) && currentStyleColor != posColor)) {
 			if(prev != pos)
 				m_undoableCursor.insertText(text.midRef(prev, pos - prev).toString(), format);
 			prev = pos;
 			currentStyleFlags = posFlags;
 			currentStyleColor = posColor;
-			format.setFontWeight(currentStyleFlags & SubtitleComposer::SString::Bold ? QFont::Bold : QFont::Normal);
-			format.setFontItalic(currentStyleFlags & SubtitleComposer::SString::Italic);
-			format.setFontUnderline(currentStyleFlags & SubtitleComposer::SString::Underline);
-			format.setFontStrikeOut(currentStyleFlags & SubtitleComposer::SString::StrikeThrough);
-			if((currentStyleFlags &SubtitleComposer::SString::Color) == 0)
+			format.setFontWeight(currentStyleFlags & SubtitleComposer::RichString::Bold ? QFont::Bold : QFont::Normal);
+			format.setFontItalic(currentStyleFlags & SubtitleComposer::RichString::Italic);
+			format.setFontUnderline(currentStyleFlags & SubtitleComposer::RichString::Underline);
+			format.setFontStrikeOut(currentStyleFlags & SubtitleComposer::RichString::StrikeThrough);
+			if((currentStyleFlags &SubtitleComposer::RichString::Color) == 0)
 				format.setForeground(QBrush());
 			else
 				format.setForeground(QBrush(QColor(currentStyleColor)));
@@ -234,10 +234,10 @@ RichDocument::clear(bool resetUndo)
 		m_undoableCursor.endEditBlock();
 }
 
-SString
+RichString
 RichDocument::toRichText() const
 {
-	SubtitleComposer::SString richText;
+	SubtitleComposer::RichString richText;
 
 	for(QTextBlock bi = begin(); bi != end(); bi = bi.next()) {
 		if(bi != begin())
@@ -249,21 +249,21 @@ RichDocument::toRichText() const
 			int styleFlags = 0;
 			QRgb styleColor;
 			if(format.fontWeight() == QFont::Bold)
-				styleFlags |= SubtitleComposer::SString::Bold;
+				styleFlags |= SubtitleComposer::RichString::Bold;
 			if(format.fontItalic())
-				styleFlags |= SubtitleComposer::SString::Italic;
+				styleFlags |= SubtitleComposer::RichString::Italic;
 			if(format.fontUnderline())
-				styleFlags |= SubtitleComposer::SString::Underline;
+				styleFlags |= SubtitleComposer::RichString::Underline;
 			if(format.fontStrikeOut())
-				styleFlags |= SubtitleComposer::SString::StrikeThrough;
+				styleFlags |= SubtitleComposer::RichString::StrikeThrough;
 			if(format.foreground().style() != Qt::NoBrush) {
-				styleFlags |= SubtitleComposer::SString::Color;
+				styleFlags |= SubtitleComposer::RichString::Color;
 				styleColor = format.foreground().color().toRgb().rgb();
 			} else {
 				styleColor = 0;
 			}
 
-			richText.append(SString(it.fragment().text(), styleFlags, styleColor));
+			richText.append(RichString(it.fragment().text(), styleFlags, styleColor));
 		}
 	}
 	return richText;
@@ -303,15 +303,15 @@ RichDocument::cummulativeStyleFlags() const
 				continue;
 			const QTextCharFormat &format = it.fragment().charFormat();
 			if(format.fontWeight() == QFont::Bold)
-				flags |= SubtitleComposer::SString::Bold;
+				flags |= SubtitleComposer::RichString::Bold;
 			if(format.fontItalic())
-				flags |= SubtitleComposer::SString::Italic;
+				flags |= SubtitleComposer::RichString::Italic;
 			if(format.fontUnderline())
-				flags |= SubtitleComposer::SString::Underline;
+				flags |= SubtitleComposer::RichString::Underline;
 			if(format.fontStrikeOut())
-				flags |= SubtitleComposer::SString::StrikeThrough;
+				flags |= SubtitleComposer::RichString::StrikeThrough;
 			if(format.foreground().style() != Qt::NoBrush)
-				flags |= SubtitleComposer::SString::Color;
+				flags |= SubtitleComposer::RichString::Color;
 		}
 	}
 	return flags;

@@ -1,6 +1,6 @@
 /*
     SPDX-FileCopyrightText: 2007-2009 Sergio Pistone <sergio_pistone@yahoo.com.ar>
-    SPDX-FileCopyrightText: 2010-2019 Mladen Milinkovic <max@smoothware.net>
+    SPDX-FileCopyrightText: 2010-2022 Mladen Milinkovic <max@smoothware.net>
 
     SPDX-License-Identifier: GPL-2.0-or-later
 */
@@ -29,7 +29,7 @@ protected:
 			Time hideTime = line->hideTime();
 			ret += QString::asprintf("%d\n%02d:%02d:%02d,%03d --> %02d:%02d:%02d,%03d\n", it.index() + 1, showTime.hours(), showTime.minutes(), showTime.seconds(), showTime.millis(), hideTime.hours(), hideTime.minutes(), hideTime.seconds(), hideTime.millis());
 
-			const SString text = (primary ? line->primaryDoc() : line->secondaryDoc())->toRichText();
+			const RichString text = (primary ? line->primaryDoc() : line->secondaryDoc())->toRichText();
 
 			ret += text.richString().replace(QLatin1String("&amp;"), QLatin1String("&")).replace(QLatin1String("&lt;"), QLatin1String("<")).replace(QLatin1String("&gt;"), QLatin1String(">"));
 
