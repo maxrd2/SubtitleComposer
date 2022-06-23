@@ -981,7 +981,7 @@ SString::replace(const QRegularExpression &regExp, const SString &replacement, b
 	for(int i = 0; i < repLen - 1; i++) {
 		if(repChar[i] == QLatin1Char('\\')) {
 			int no = repChar[i + 1].digitValue();
-			if(no > 0 && no <= numCaptures) {
+			if(no >= 0 && no <= numCaptures) {
 				SStringCapture backRef;
 				backRef.pos = i;
 				backRef.len = 2;
