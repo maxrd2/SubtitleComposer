@@ -75,6 +75,8 @@ public:
 
 	void swap(RichStringStyle &other);
 
+	inline void richText(QString &out, int prevIndex, int curIndex, bool opening);
+
 private:
 	void detach();
 	void updateCapacity();
@@ -333,6 +335,38 @@ operator>>(QDataStream &stream, RichString &string)
 	return stream;
 }
 
+inline void
+RichStringStyle::richText(QString &out, int prevIndex, int curIndex, bool opening)
+{
+	const RichStyle &prev = at(prevIndex);
+	const RichStyle &cur = at(curIndex);
+	if(opening) {
+		const quint8 sf = ~prev.flags() & cur.flags();
+		if(sf & RichString::Italic)
+			out += "<i>";
+		if(sf & RichString::Bold)
+			out += "<b>";
+		if(sf & RichString::Underline)
+			out += "<u>";
+		if(sf & RichString::StrikeThrough)
+			out += "<s>";
+		if(sf & RichString::Color || (cur.flags(RichString::Color) && prev.color() != cur.color()))
+			out += "<font color=" + QColor(cur.color()).name() + ">";
+	} else {
+		const quint8 sf = prev.flags() & ~cur.flags();
+		if(sf & RichString::StrikeThrough)
+			out += "</s>";
+		if(sf & RichString::Underline)
+			out += "</u>";
+		if(sf & RichString::Bold)
+			out += "</b>";
+		if(sf & RichString::Italic)
+			out += "</i>";
+		if((sf & RichString::Color) || (prev.flags(RichString::Color) && prev.color() != cur.color()))
+			out += "</font>";
+	}
+}
+
 QString
 RichString::richString() const
 {
@@ -341,77 +375,33 @@ RichString::richString() const
 	if(isEmpty())
 		return ret;
 
-	RichStyle *prevStyle = (*m_style)[0];
-	int prevIndex = 0;
+	const int len = length();
+	int prev = 0;
 
-	if(prevStyle->flags(Italic))
-		ret += "<i>";
-	if(prevStyle->flags(Bold))
-		ret += "<b>";
-	if(prevStyle->flags(Underline))
-		ret += "<u>";
-	if(prevStyle->flags(StrikeThrough))
-		ret += "<s>";
-	if(prevStyle->flags(Color))
-		ret += "<font color=" + QColor(prevStyle->color()).name() + ">";
+	m_style->richText(ret, -1, prev, true);
 
-	const int size = length();
-	for(int index = 1; index < size; ++index) {
-		RichStyle *style = (*m_style)[index];
-		if(*prevStyle != *style) {
-			ret += QString::mid(prevIndex, index - prevIndex)
-					.replace('<', "&lt;")
-					.replace('>', "&gt;");
+	for(int cur = 1; cur < len; cur++) {
+		if(m_style->at(prev) == m_style->at(cur))
+			continue;
 
-			if(prevStyle->flags(StrikeThrough) && !style->flags(StrikeThrough))
-				ret += "</s>";
-			if(prevStyle->flags(Underline) && !style->flags(Underline))
-				ret += "</u>";
-			if(prevStyle->flags(Bold) && !style->flags(Bold))
-				ret += "</b>";
-			if(prevStyle->flags(Italic) && !style->flags(Italic))
-				ret += "</i>";
-			if(prevStyle->flags(Color) && (!style->flags(Color) || prevStyle->color() != style->color()))
-				ret += "</font>";
+		// text
+		ret += QString::mid(prev, cur - prev)
+				.replace('<', "&lt;")
+				.replace('>', "&gt;");
 
-			while(index < size) {
-				// place opening html tags after spaces/newlines
-				const QChar ch = at(index);
-				if(ch != '\n' && ch != '\r' && ch != ' ' && ch != '\t')
-					break;
-				ret += ch;
-				index++;
-			}
+		// closing tags
+		m_style->richText(ret, prev, cur, false);
 
-			if(!prevStyle->flags(Italic) && style->flags(Italic))
-				ret += "<i>";
-			if(!prevStyle->flags(Bold) && style->flags(Bold))
-				ret += "<b>";
-			if(!prevStyle->flags(Underline) && style->flags(Underline))
-				ret += "<u>";
-			if(!prevStyle->flags(StrikeThrough) && style->flags(StrikeThrough))
-				ret += "<s>";
-			if(style->flags(Color) && (!prevStyle->flags(Color) || prevStyle->color() != style->color()))
-				ret += "<font color=" + QColor(style->color()).name() + ">";
+		// opening tags
+		m_style->richText(ret, prev, cur, true);
 
-			prevStyle = style;
-			prevIndex = index;
-		}
+		prev = cur;
 	}
-	if(prevIndex != length()) {
-		ret += QString::mid(prevIndex, length() - prevIndex)
+	if(prev != length()) {
+		ret += QString::mid(prev, length() - prev)
 			.replace('<', "&lt;")
 			.replace('>', "&gt;");
-		if(prevStyle->flags(StrikeThrough))
-			ret += "</s>";
-		if(prevStyle->flags(Underline))
-			ret += "</u>";
-		if(prevStyle->flags(Bold))
-			ret += "</b>";
-		if(prevStyle->flags(Italic))
-			ret += "</i>";
-		if(prevStyle->flags(Color))
-			ret += "</font>";
+		m_style->richText(ret, prev, -1, false);
 	}
 	return ret;
 }
