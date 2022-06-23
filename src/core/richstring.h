@@ -84,19 +84,20 @@ public:
 	RichString & insert(int index, QChar ch);
 	RichString & insert(int index, const QString &str);
 	RichString & insert(int index, const RichString &str);
-	RichString & append(QChar ch);
-	RichString & append(const QString &str);
-	RichString & append(const RichString &str);
-	RichString & prepend(QChar ch);
-	RichString & prepend(const QString &str);
-	RichString & prepend(const RichString &str);
-	RichString & operator+=(QChar ch);
-	RichString & operator+=(const QString &str);
-	RichString & operator+=(const RichString &str);
 
-	RichString & remove(int index, int len);
-	RichString & remove(const QString &str, Qt::CaseSensitivity cs = Qt::CaseSensitive);
-	RichString & remove(QChar ch, Qt::CaseSensitivity cs = Qt::CaseSensitive);
+	inline RichString & append(QChar ch) { return insert(length(), ch); }
+	inline RichString & append(const QString &str) { return insert(length(), str); }
+	inline RichString & append(const RichString &str) { return insert(length(), str); }
+	inline RichString & prepend(QChar ch) { return insert(0, ch); }
+	inline RichString & prepend(const QString &str) { return insert(0, str); }
+	inline RichString & prepend(const RichString &str) { return insert(0, str); }
+	inline RichString & operator+=(QChar ch) { return append(ch); }
+	inline RichString & operator+=(const QString &str) { return append(str); }
+	inline RichString & operator+=(const RichString &str) { return append(str); }
+
+	inline RichString & remove(int index, int len) { return replace(index, len, QString()); }
+	inline RichString & remove(const QString &str, Qt::CaseSensitivity cs = Qt::CaseSensitive) { return replace(str, QString(), cs); }
+	inline RichString & remove(QChar ch, Qt::CaseSensitivity cs = Qt::CaseSensitive) { return replace(ch, QString(), cs); }
 	RichString & remove(const QRegExp &rx) { return replace(rx, QString()); }
 	RichString & remove(const QRegularExpression &rx) { return replace(rx, QString()); }
 
@@ -131,7 +132,7 @@ public:
 	static void simplifyWhiteSpace(QString &text);
 	void simplifyWhiteSpace();
 
-	bool operator==(const RichString &richstring) const;
+	inline bool operator==(const RichString &richstring) const { return !operator!=(richstring); }
 	bool operator!=(const RichString &richstring) const;
 
 	inline int length() const { return QString::length(); }
@@ -142,87 +143,9 @@ private:
 private:
 	friend QDataStream & ::operator<<(QDataStream &stream, const RichString &string);
 	friend QDataStream & ::operator>>(QDataStream &stream, RichString &string);
-	friend struct SSHelper;
+	friend struct ReplaceHelper;
 	RichStringStyle *m_style;
 };
-
-inline RichString &
-RichString::append(QChar ch)
-{
-	return insert(length(), ch);
-}
-
-inline RichString &
-RichString::append(const QString &str)
-{
-	return insert(length(), str);
-}
-
-inline RichString &
-RichString::append(const RichString &str)
-{
-	return insert(length(), str);
-}
-
-inline RichString &
-RichString::prepend(QChar ch)
-{
-	return insert(0, ch);
-}
-
-inline RichString &
-RichString::prepend(const QString &str)
-{
-	return insert(0, str);
-}
-
-inline RichString &
-RichString::prepend(const RichString &str)
-{
-	return insert(0, str);
-}
-
-inline RichString &
-RichString::operator+=(const QChar ch)
-{
-	return append(ch);
-}
-
-inline RichString &
-RichString::operator+=(const QString &str)
-{
-	return append(str);
-}
-
-inline RichString &
-RichString::operator+=(const RichString &str)
-{
-	return append(str);
-}
-
-inline RichString &
-RichString::remove(int index, int len)
-{
-	return replace(index, len, QString());
-}
-
-inline RichString &
-RichString::remove(const QString &str, Qt::CaseSensitivity cs)
-{
-	return replace(str, QString(), cs);
-}
-
-inline RichString &
-RichString::remove(QChar ch, Qt::CaseSensitivity cs)
-{
-	return replace(ch, QString(), cs);
-}
-
-inline bool
-RichString::operator==(const RichString &richstring) const
-{
-	return !operator!=(richstring);
-}
 
 }
 
