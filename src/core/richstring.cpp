@@ -384,13 +384,34 @@ RichString::richString() const
 		if(m_style->at(prev) == m_style->at(cur))
 			continue;
 
+		// place closing html tags before spaces/newlines
+		int cps = cur;
+		while(cur > 0) {
+			const QChar ch = at(cur - 1);
+			if(ch != '\n' && ch != '\r' && ch != ' ' && ch != '\t')
+				break;
+			cur--;
+		}
+
 		// text
 		ret += QString::mid(prev, cur - prev)
 				.replace('<', "&lt;")
 				.replace('>', "&gt;");
 
 		// closing tags
-		m_style->richText(ret, prev, cur, false);
+		m_style->richText(ret, prev, cps, false);
+
+		// place opening html tags after spaces/newlines
+		while(cps < len) {
+			const QChar ch = at(cps);
+			if(ch != '\n' && ch != '\r' && ch != ' ' && ch != '\t')
+				break;
+			cps++;
+		}
+
+		// spaces
+		ret += QString::midRef(cur, cps - cur);
+		cur = cps;
 
 		// opening tags
 		m_style->richText(ret, prev, cur, true);

@@ -250,9 +250,9 @@ RichStringTest::testReplace()
 	// RichString & RichString::replace(QChar before, QChar after, Qt::CaseSensitivity cs=Qt::CaseSensitive)
 	sstring.setRichString("<b>This </b>Is <i>a preTtI</i> testi");
 	sstring.replace('I', 'X', Qt::CaseSensitive);
-	QVERIFY(sstring.richString() == QLatin1String("<b>This </b>Xs <i>a preTtX</i> testi"));
+	QVERIFY(sstring.richString() == QLatin1String("<b>This</b> Xs <i>a preTtX</i> testi"));
 	sstring.replace('T', 'w', Qt::CaseInsensitive);
-	QVERIFY(sstring.richString() == QLatin1String("<b>whis </b>Xs <i>a prewwX</i> weswi"));
+	QVERIFY(sstring.richString() == QLatin1String("<b>whis</b> Xs <i>a prewwX</i> weswi"));
 	sstring.setRichString("c<b>a</b>c");
 	sstring.replace('c', 'b');
 	QVERIFY(sstring.richString() == QLatin1String("b<b>a</b>b"));
@@ -260,14 +260,14 @@ RichStringTest::testReplace()
 	// RichString & RichString::replace(QChar ch, const QString &after, Qt::CaseSensitivity cs=Qt::CaseSensitive)
 	sstring.setRichString("<b>This </b>Is <i>a preTtI</i> testi");
 	sstring.replace('i', $("AA"), Qt::CaseInsensitive);
-	QVERIFY(sstring.richString() == QLatin1String("<b>ThAAs </b>AAs <i>a preTtAA</i> testAA"));
+	QVERIFY(sstring.richString() == QLatin1String("<b>ThAAs</b> AAs <i>a preTtAA</i> testAA"));
 	sstring.replace('T', $("XX"), Qt::CaseSensitive);
-	QVERIFY(sstring.richString() == QLatin1String("<b>XXhAAs </b>AAs <i>a preXXtAA</i> testAA"));
+	QVERIFY(sstring.richString() == QLatin1String("<b>XXhAAs</b> AAs <i>a preXXtAA</i> testAA"));
 
 	// RichString & RichString::replace(QChar ch, const RichString &after, Qt::CaseSensitivity cs=Qt::CaseSensitive)
 	sstring.setRichString("<b>This </b>Is <i>a preTtI</i> testi");
 	sstring.replace('i', RichString("A", RichString::Bold));
-	QVERIFY(sstring.richString() == QLatin1String("<b>ThAs </b>Is <i>a preTtI</i> test<b>A</b>"));
+	QVERIFY(sstring.richString() == QLatin1String("<b>ThAs</b> Is <i>a preTtI</i> test<b>A</b>"));
 	sstring.replace('T', RichString("X", RichString::Underline), Qt::CaseInsensitive);
 	QVERIFY(sstring == RichString().setRichString("<u>X</u><b>hAs </b>Is <i>a pre</i><u>XX</u><i>I</i> <u>X</u>es<u>X</u><b>A</b>"));
 
@@ -322,9 +322,13 @@ RichStringTest::testReplace()
 	// RichString & RichString::remove(QChar ch, Qt::CaseSensitivity cs=Qt::CaseSensitive);
 	sstring.setRichString("<b>This </b>Is <i>a preTtI</i> testi");
 	sstring.remove(QChar('T'), Qt::CaseSensitive);
-	QVERIFY(sstring.richString() == QLatin1String("<b>his </b>Is <i>a pretI</i> testi"));
+	QVERIFY(sstring.richString() == QLatin1String("<b>his</b> Is <i>a pretI</i> testi"));
 	sstring.remove(QChar('i'), Qt::CaseInsensitive);
-	QVERIFY(sstring.richString() == QLatin1String("<b>hs </b>s <i>a pret</i> test"));
+	QVERIFY(sstring.richString() == QLatin1String("<b>hs</b> s <i>a pret</i> test"));
+
+	// RichString & RichString::richString();
+	sstring.setRichString("<b>This </b><i>  is a space testI</i>");
+	QVERIFY(sstring.richString() == QLatin1String("<b>This</b>   <i>is a space testI</i>"));
 }
 
 QTEST_GUILESS_MAIN(RichStringTest);
