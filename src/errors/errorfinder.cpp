@@ -168,7 +168,7 @@ ErrorFinder::advance(bool advanceIteratorOnFirstStep)
 			break;
 		} else if(searched && startIndex == m_iterator->index()) {
 			// searched through all lines and found no errors
-			KMessageBox::sorry(parentWidget(), i18n("No errors matching given criteria were found!"), i18n("Find Error"));
+			KMessageBox::information(parentWidget(), i18n("No errors matching given criteria were found!"), i18n("Find Error"));
 			invalidate();
 			return;
 		}

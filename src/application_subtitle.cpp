@@ -202,7 +202,7 @@ Application::openSubtitle(const QUrl &url, bool warnClashingUrls)
 		m_subtitle.reset();
 
 		if(res == FormatManager::ERROR) {
-			KMessageBox::sorry(
+			KMessageBox::error(
 				m_mainWindow,
 				i18n("<qt>Could not parse the subtitle file.<br/>"
 					 "This may have been caused by usage of the wrong encoding.</qt>"));
@@ -222,7 +222,7 @@ Application::reopenSubtitleWithCodec(QTextCodec *codec)
 	FormatManager::Status res = FormatManager::instance().readSubtitle(*subtitle, true, m_subtitleUrl, &codec, &subtitleFormat);
 	if(res != FormatManager::SUCCESS) {
 		if(res == FormatManager::ERROR) {
-			KMessageBox::sorry(
+			KMessageBox::error(
 				m_mainWindow,
 				i18n("<qt>Could not parse the subtitle file.<br/>"
 					 "This may have been caused by usage of the wrong encoding.</qt>"));
@@ -325,7 +325,7 @@ Application::saveSubtitle(QTextCodec *codec)
 
 		return true;
 	} else {
-		KMessageBox::sorry(m_mainWindow, i18n("There was an error saving the subtitle."));
+		KMessageBox::error(m_mainWindow, i18n("There was an error saving the subtitle."));
 		return false;
 	}
 }
@@ -465,7 +465,7 @@ Application::openSubtitleTr(const QUrl &url, bool warnClashingUrls)
 	FormatManager::Status res = FormatManager::instance().readSubtitle(*subtitleTr, false, url, &codec, &m_subtitleTrFormat);
 	if(res != FormatManager::SUCCESS) {
 		if(res == FormatManager::ERROR) {
-			KMessageBox::sorry(
+			KMessageBox::error(
 				m_mainWindow,
 				i18n("<qt>Could not parse the subtitle file.<br/>"
 					 "This may have been caused by usage of the wrong encoding.</qt>"));
@@ -490,7 +490,7 @@ Application::reopenSubtitleTrWithCodec(QTextCodec *codec)
 	FormatManager::Status res = FormatManager::instance().readSubtitle(*subtitleTr, false, m_subtitleTrUrl, &codec, &subtitleTrFormat);
 	if(res != FormatManager::SUCCESS) {
 		if(res == FormatManager::ERROR) {
-			KMessageBox::sorry(
+			KMessageBox::error(
 				m_mainWindow,
 				i18n("<qt>Could not parse the subtitle file.<br/>"
 					 "This may have been caused by usage of the wrong encoding.</qt>"));
@@ -562,7 +562,7 @@ Application::saveSubtitleTr(QTextCodec *codec)
 
 		return true;
 	} else {
-		KMessageBox::sorry(m_mainWindow, i18n("There was an error saving the translation subtitle."));
+		KMessageBox::error(m_mainWindow, i18n("There was an error saving the translation subtitle."));
 		return false;
 	}
 }
@@ -674,7 +674,7 @@ Application::saveSplitSubtitle(const Subtitle &subtitle, const QUrl &srcUrl, QSt
 	}
 
 	if(dstUrl.path().isEmpty()) {
-		KMessageBox::sorry(m_mainWindow, primary ? i18n("Could not write the split subtitle file.") : i18n("Could not write the split subtitle translation file."));
+		KMessageBox::error(m_mainWindow, primary ? i18n("Could not write the split subtitle file.") : i18n("Could not write the split subtitle translation file."));
 	}
 
 	return dstUrl;
@@ -699,7 +699,7 @@ Application::joinSubtitles()
 
 			m_subtitle->appendSubtitle(*secondSubtitle, dlg->shiftTime().toMillis());
 		} else {
-			KMessageBox::sorry(m_mainWindow, i18n("Could not read the subtitle file to append."));
+			KMessageBox::error(m_mainWindow, i18n("Could not read the subtitle file to append."));
 		}
 	}
 }
@@ -749,7 +749,7 @@ Application::splitSubtitle()
 		args << splitTrUrl.toString(QUrl::PreferLocalFile);
 
 	if(!QProcess::startDetached(applicationName(), args)) {
-		KMessageBox::sorry(m_mainWindow, m_translationMode
+		KMessageBox::error(m_mainWindow, m_translationMode
 			? i18n("Could not open a new Subtitle Composer window.\n" "The split part was saved as %1.", splitUrl.path())
 			: i18n("Could not open a new Subtitle Composer window.\n" "The split parts were saved as %1 and %2.", splitUrl.path(), splitTrUrl.path()));
 	}
@@ -769,7 +769,7 @@ Application::syncWithSubtitle()
 		if(res == FormatManager::SUCCESS) {
 			if(dlg->adjustToReferenceSubtitle()) {
 				if(referenceSubtitle->linesCount() <= 1)
-					KMessageBox::sorry(m_mainWindow, i18n("The reference subtitle must have more than one line to proceed."));
+					KMessageBox::error(m_mainWindow, i18n("The reference subtitle must have more than one line to proceed."));
 				else
 					m_subtitle->adjustLines(Range::full(),
 											referenceSubtitle->firstLine()->showTime().toMillis(),
@@ -778,7 +778,7 @@ Application::syncWithSubtitle()
 				m_subtitle->syncWithSubtitle(*referenceSubtitle);
 			}
 		} else {
-			KMessageBox::sorry(m_mainWindow, i18n("Could not parse the reference subtitle file."));
+			KMessageBox::error(m_mainWindow, i18n("Could not parse the reference subtitle file."));
 		}
 	}
 }

@@ -357,7 +357,7 @@ public slots:
 
 	void warning(const QString &message)
 	{
-		KMessageBox::sorry(app()->mainWindow(), message, i18n("Warning"));
+		KMessageBox::error(app()->mainWindow(), message, i18n("Warning"));
 		qWarning() << message;
 	}
 
@@ -472,7 +472,7 @@ ScriptsManager::createScript(const QString &sN)
 
 	QFile scriptFile(userScriptDir().absoluteFilePath(scriptName));
 	if(!scriptFile.open(QIODevice::WriteOnly | QIODevice::Text)) {
-		KMessageBox::sorry(app()->mainWindow(), i18n("There was an error creating the file <b>%1</b>.", userScriptDir().absoluteFilePath(scriptName)));
+		KMessageBox::error(app()->mainWindow(), i18n("There was an error creating the file <b>%1</b>.", userScriptDir().absoluteFilePath(scriptName)));
 		return;
 	}
 
@@ -537,7 +537,7 @@ ScriptsManager::addScript(const QUrl &sSU)
 	FileLoadHelper fileLoadHelper(srcScriptUrl);
 
 	if(!fileLoadHelper.open()) {
-		KMessageBox::sorry(app()->mainWindow(), i18n("There was an error opening the file <b>%1</b>.", srcScriptUrl.toString(QUrl::PreferLocalFile)));
+		KMessageBox::error(app()->mainWindow(), i18n("There was an error opening the file <b>%1</b>.", srcScriptUrl.toString(QUrl::PreferLocalFile)));
 		return;
 	}
 
@@ -545,7 +545,7 @@ ScriptsManager::addScript(const QUrl &sSU)
 	if(!dest.open(QIODevice::WriteOnly | QIODevice::Truncate)
 			|| dest.write(fileLoadHelper.file()->readAll()) == -1
 			|| !dest.flush()) {
-		KMessageBox::sorry(app()->mainWindow(), i18n("There was an error copying the file to <b>%1</b>.", dest.fileName()));
+		KMessageBox::error(app()->mainWindow(), i18n("There was an error copying the file to <b>%1</b>.", dest.fileName()));
 		return;
 	}
 
@@ -564,7 +564,7 @@ ScriptsManager::removeScript(const QString &sN)
 		return;
 
 	if(!FileTrasher(script->path()).exec()) {
-		KMessageBox::sorry(app()->mainWindow(), i18n("There was an error removing the file <b>%1</b>.", script->path()));
+		KMessageBox::error(app()->mainWindow(), i18n("There was an error removing the file <b>%1</b>.", script->path()));
 		return;
 	}
 
@@ -593,7 +593,7 @@ ScriptsManager::editScript(const QString &sN)
 	if(!KRun::runUrl(scriptUrl, "text/plain", app()->mainWindow(), false, false)) {
 #endif
 		if(!QDesktopServices::openUrl(scriptUrl))
-			KMessageBox::sorry(app()->mainWindow(), i18n("Could not launch external editor.\n"));
+			KMessageBox::error(app()->mainWindow(), i18n("Could not launch external editor.\n"));
 	}
 }
 

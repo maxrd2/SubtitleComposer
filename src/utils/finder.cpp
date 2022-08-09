@@ -243,7 +243,7 @@ Finder::advance()
 			if(!m_instancesFound && (m_allSearchedIndex == m_iterator->index() || (backwards ? (m_allSearchedIndex == m_iterator->lastIndex() && m_iterator->index() == SubtitleIterator::BehindFirst) : (m_allSearchedIndex == m_iterator->firstIndex() && m_iterator->index() == SubtitleIterator::AfterLast))
 									 ))
 			{
-				KMessageBox::sorry(parentWidget(), i18n("No instances of '%1' found!", m_find->pattern()), i18n("Find")
+				KMessageBox::information(parentWidget(), i18n("No instances of '%1' found!", m_find->pattern()), i18n("Find")
 								   );
 
 				invalidate();

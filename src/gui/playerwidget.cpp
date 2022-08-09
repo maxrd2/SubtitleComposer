@@ -660,7 +660,7 @@ PlayerWidget::onPlayerFileOpenError(const QString &filePath, const QString &reas
 	QString message = i18n("<qt>There was an error opening media file %1.</qt>", filePath);
 	if(!reason.isEmpty())
 		message += "\n" + reason;
-	KMessageBox::sorry(this, message);
+	KMessageBox::error(this, message);
 }
 
 void

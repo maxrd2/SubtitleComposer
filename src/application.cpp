@@ -211,9 +211,9 @@ Application::init()
 	connect(m_errorFinder, &ErrorFinder::found, this, [this](SubtitleLine *l){ onHighlightLine(l); });
 	connect(m_speller, &Speller::misspelled, this, &Application::onHighlightLine);
 
-	connect(m_textDemux, &TextDemux::onError, this, [&](const QString &message){ KMessageBox::sorry(m_mainWindow, message); });
+	connect(m_textDemux, &TextDemux::onError, this, [&](const QString &message){ KMessageBox::error(m_mainWindow, message); });
 
-	connect(m_speechProcessor, &SpeechProcessor::onError, this, [&](const QString &message){ KMessageBox::sorry(m_mainWindow, message); });
+	connect(m_speechProcessor, &SpeechProcessor::onError, this, [&](const QString &message){ KMessageBox::error(m_mainWindow, message); });
 
 	m_mainWindow->setupGUI();
 
@@ -769,7 +769,7 @@ Application::applyTranslation(RangeList ranges, bool primary, int inputLanguage,
 			it.current()->primaryDoc()->setRichText(text.trimmed());
 		}
 	} else {
-		KMessageBox::sorry(m_mainWindow, i18n("There was an error performing the translation:\n\n%1", errorMessage));
+		KMessageBox::error(m_mainWindow, i18n("There was an error performing the translation:\n\n%1", errorMessage));
 	}
 
 	return errorMessage.isEmpty();
