@@ -45,7 +45,7 @@ isRealTime(AVFormatContext *s)
 #else
 	const char *url = s->url;
 #endif
-	if(s->pb && (!strncmp(url, "rtp:", 4) || !strncmp(url, "udp:", 4)))
+	if(s->pb && url && (!strncmp(url, "rtp:", 4) || !strncmp(url, "udp:", 4)))
 		return 1;
 	return 0;
 }
