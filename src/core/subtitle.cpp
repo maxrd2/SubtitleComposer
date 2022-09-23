@@ -1464,6 +1464,25 @@ Subtitle::updateState()
 		emit secondaryChanged();
 }
 
+void
+Subtitle::stylesheetSet(const QStringRef &css)
+{
+	m_stylesheet->clear();
+	m_stylesheet->parse(css);
+}
+
+void
+Subtitle::stylesheetAppend(const QStringRef &css)
+{
+	m_stylesheet->parse(css);
+}
+
+void
+Subtitle::stylesheetClear()
+{
+	m_stylesheet->clear();
+}
+
 /// SUBTITLECOMPOSITEACTIONEXECUTOR
 
 SubtitleCompositeActionExecutor::SubtitleCompositeActionExecutor(const Subtitle *subtitle, const QString &title)

@@ -1,6 +1,6 @@
 /*
     SPDX-FileCopyrightText: 2007-2009 Sergio Pistone <sergio_pistone@yahoo.com.ar>
-    SPDX-FileCopyrightText: 2010-2019 Mladen Milinkovic <max@smoothware.net>
+    SPDX-FileCopyrightText: 2010-2022 Mladen Milinkovic <max@smoothware.net>
 
     SPDX-License-Identifier: GPL-2.0-or-later
 */
@@ -12,6 +12,7 @@
 #include "gui/currentlinewidget.h"
 #include "videoplayer/videoplayer.h"
 #include "gui/waveform/waveformwidget.h"
+#include "gui/subtitlemeta/subtitlemetawidget.h"
 
 #include <QGridLayout>
 #include <QDockWidget>
@@ -58,6 +59,20 @@ MainWindow::MainWindow()
 	playerDock->setWidget(m_playerWidget);
 	playerDock->setTitleBarWidget(m_playerWidget->infoSidebarWidget());
 	addDockWidget(Qt::TopDockWidgetArea, playerDock);
+
+
+	QDockWidget *cssDock = new QDockWidget(i18n("Styles and Comments"), this);
+	cssDock->setObjectName(QStringLiteral("submeta_dock"));
+	cssDock->setAllowedAreas(Qt::AllDockWidgetAreas);
+	cssDock->setFeatures(QDockWidget::DockWidgetMovable | QDockWidget::DockWidgetClosable);
+	cssDock->setFloating(false);
+
+	m_metaWidget = new SubtitleMetaWidget(cssDock);
+	m_metaWidget->setContentsMargins(0, 0, 0, 0);
+
+	cssDock->setWidget(m_metaWidget);
+	cssDock->setTitleBarWidget(m_metaWidget->dockTitleBar());
+	addDockWidget(Qt::TopDockWidgetArea, cssDock);
 
 
 	QWidget *mainWidget = new QWidget(this);

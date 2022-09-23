@@ -169,7 +169,10 @@ public:
 	inline const QString meta(const QByteArray &key) const { return m_metaData.value(key); }
 	inline void meta(const QByteArray &key, const QString &value) { m_metaData.insert(key, value); }
 
-	inline const RichCSS *stylesheet() { return m_stylesheet; }
+	void stylesheetSet(const QStringRef &css);
+	void stylesheetAppend(const QStringRef &css);
+	void stylesheetClear();
+	inline const RichCSS *stylesheet() const { return m_stylesheet; }
 
 signals:
 	void primaryChanged();

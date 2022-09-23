@@ -16,6 +16,7 @@
 #include "core/subtitleiterator.h"
 #include "core/undo/undostack.h"
 #include "gui/currentlinewidget.h"
+#include "gui/subtitlemeta/subtitlemetawidget.h"
 #include "helpers/common.h"
 #include "dialogs/actionwithtargetdialog.h"
 #include "dialogs/shifttimesdialog.h"
@@ -55,6 +56,7 @@
 #include <limits>
 
 #include <QAction>
+#include <QByteArrayList>
 #include <QDir>
 #include <QDockWidget>
 #include <QFileDialog>
@@ -159,6 +161,7 @@ Application::Application(int &argc, char **argv) :
 	CONNECT_SUB(UserActionManager, UserActionManager::instance());
 	CONNECT_SUB(MainWindow, m_mainWindow);
 	CONNECT_SUB(PlayerWidget, m_playerWidget);
+	CONNECT_SUB(SubtitleMetaWidget, m_mainWindow->m_metaWidget);
 	CONNECT_SUB(LinesWidget, m_linesWidget);
 	CONNECT_SUB(CurrentLineWidget, m_curLineWidget);
 	CONNECT_SUB(Finder, m_finder);
