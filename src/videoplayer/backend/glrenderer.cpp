@@ -625,6 +625,7 @@ GLRenderer::uploadMM(int texWidth, int texHeight, T *texBuf, const T *texSrc)
 
 		const int srcStride = texWidth * D;
 		const int srcStridePD = srcStride + D;
+		const int srcStrideDiff = texWidth & 1;
 		texWidth >>= 1;
 		texHeight >>= 1;
 		if(texWidth < m_vpWidth && texHeight < m_vpHeight) {
@@ -657,7 +658,7 @@ GLRenderer::uploadMM(int texWidth, int texHeight, T *texBuf, const T *texSrc)
 					texSrc += D + 1;
 				}
 			}
-			texSrc += srcStride;
+			texSrc += srcStride + srcStrideDiff;
 		}
 		texSrc = texBuf;
 	}
