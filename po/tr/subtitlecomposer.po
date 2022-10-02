@@ -1,0 +1,3880 @@
+# Copyright (C) YEAR This file is copyright:
+# This file is distributed under the same license as the subtitlecomposer package.
+#
+# Emir SARI <emir_sari@icloud.com>, 2022.
+msgid ""
+msgstr ""
+"Project-Id-Version: subtitlecomposer\n"
+"Report-Msgid-Bugs-To: https://bugs.kde.org\n"
+"POT-Creation-Date: 2022-03-22 00:42+0000\n"
+"PO-Revision-Date: 2022-07-30 05:10+0300\n"
+"Last-Translator: Emir SARI <emir_sari@icloud.com>\n"
+"Language-Team: Turkish <kde-l10n-tr@kde.org>\n"
+"Language: tr\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+"X-Generator: Lokalize 22.04.3\n"
+
+#: src/actions/kcodecactionext.cpp:29
+#, kde-format
+msgctxt "Encodings menu"
+msgid "Default: %1"
+msgstr "Öntanımlı: %1"
+
+#: src/actions/kcodecactionext.cpp:35 src/actions/kcodecactionext.cpp:78
+#, kde-format
+msgctxt "Encodings menu"
+msgid "Current: %1"
+msgstr "Geçerli: %1"
+
+#: src/actions/kcodecactionext.cpp:41
+#, kde-format
+msgctxt "Encodings menu"
+msgid "Autodetect"
+msgstr "Otomatik Algıla"
+
+#: src/application.cpp:451
+#, kde-format
+msgid "Go to Line"
+msgstr "Satıra Git"
+
+#: src/application.cpp:451
+#, kde-format
+msgid "&Go to line:"
+msgstr "&Satıra git:"
+
+#: src/application.cpp:626 src/core/subtitle.cpp:862
+#, kde-format
+msgid "Maximize Durations"
+msgstr "Süreleri En Uzun Yap"
+
+#: src/application.cpp:655 src/core/subtitle.cpp:1137
+#, kde-format
+msgid "Unbreak Lines"
+msgstr "Satırları Sonlandırma"
+
+#: src/application.cpp:666 src/core/subtitle.cpp:1146
+#, kde-format
+msgid "Simplify Spaces"
+msgstr "Boşlukları Yalınlaştır"
+
+#: src/application.cpp:720 src/dialogs/translatedialog.cpp:20
+#, kde-format
+msgid "Translate"
+msgstr "Çevir"
+
+#: src/application.cpp:720
+#, kde-format
+msgid "Translating text (%1 to %2)..."
+msgstr "Metin çevriliyor (%1 - %2)..."
+
+#: src/application.cpp:724
+#, kde-format
+msgid "Translating primary text (%1 to %2)..."
+msgstr "Birincil metin çevriliyor (%1 - %2)..."
+
+#: src/application.cpp:725
+#, kde-format
+msgid "Translating secondary text (%1 to %2)..."
+msgstr "İkincil metin çevriliyor (%1 - %2)..."
+
+#: src/application.cpp:753
+#, kde-format
+msgid ""
+"Unable to perform texts synchronization (sent and received lines count do "
+"not match)."
+msgstr ""
+"Metin eşzamanlaması gerçekleştirilemiyor (gönderilen ve alınan satırlar "
+"sayısı eşleşmiyor)."
+
+#: src/application.cpp:757
+#, kde-format
+msgid "Translate Primary Text"
+msgstr "Birincil Metni Çevir"
+
+#: src/application.cpp:757
+#, kde-format
+msgid "Translate Secondary Text"
+msgstr "İkincil Metni Çevir"
+
+#: src/application.cpp:772
+#, kde-format
+msgid ""
+"There was an error performing the translation:\n"
+"\n"
+"%1"
+msgstr ""
+"Çeviri yapılırken bir hata oluştu:\n"
+"\n"
+"%1"
+
+#: src/application.cpp:810
+#, kde-format
+msgid "Open Video"
+msgstr "Video Aç"
+
+#: src/application.cpp:1008 src/application.cpp:1015
+#: src/application_subtitle.cpp:652
+#, kde-format
+msgid "Untitled"
+msgstr "Başlıksız"
+
+#: src/application.cpp:1010 src/application_subtitle.cpp:652
+#, kde-format
+msgid "Untitled Translation"
+msgstr "Başlıksız Çeviri"
+
+#: src/application.cpp:1111
+#, kde-format
+msgid "Pause"
+msgstr "Duraklat"
+
+#: src/application.cpp:1119 src/application_actions.cpp:566
+#, kde-format
+msgid "Play"
+msgstr "Oynat"
+
+#: src/application.cpp:1180
+#, kde-format
+msgid "Seek backwards 1 second"
+msgid_plural "Seek backwards %1 seconds"
+msgstr[0] "1 saniye geri git"
+msgstr[1] "%1 saniye geri git"
+
+#: src/application.cpp:1181
+#, kde-format
+msgid "Seek forwards 1 second"
+msgid_plural "Seek forwards %1 seconds"
+msgstr[0] "1 saniye ileri git"
+msgstr[1] "%1 saniye ileri git"
+
+#: src/application.cpp:1184 src/application.cpp:1188
+#, kde-format
+msgid "Shift %2%1 millisecond"
+msgid_plural "Shift %2%1 milliseconds"
+msgstr[0] "%2%1 milisaniye kaydır"
+msgstr[1] "%2%1 milisaniye kaydır"
+
+#: src/application.cpp:1185 src/application.cpp:1189
+#, kde-format
+msgid "Shift selected lines %2%1 millisecond"
+msgid_plural "Shift selected lines %2%1 milliseconds"
+msgstr[0] "Seçili satırları %2%1 milisaniye kaydır"
+msgstr[1] "Seçili satırları %2%1 milisaniye kaydır"
+
+#: src/application_actions.cpp:32
+#, kde-format
+msgid "Exit the application"
+msgstr "Uygulamadan Çık"
+
+#: src/application_actions.cpp:35
+#, kde-format
+msgid "Configure Subtitle Composer"
+msgstr "Altyazı Oluşturucu'yu Yapılandır"
+
+#: src/application_actions.cpp:39
+#, kde-format
+msgctxt "@action:inmenu Create a new subtitle"
+msgid "New"
+msgstr "Yeni"
+
+#: src/application_actions.cpp:40
+#, kde-format
+msgid "Create an empty subtitle"
+msgstr "Boş bir altyazı oluştur"
+
+#: src/application_actions.cpp:48
+#, kde-format
+msgctxt "@action:inmenu Open subtitle file"
+msgid "Open Subtitle..."
+msgstr "Altyazı Aç..."
+
+#: src/application_actions.cpp:49 src/application_actions.cpp:66
+#, kde-format
+msgid "Open subtitle file"
+msgstr "Altyazı dosyası aç"
+
+#: src/application_actions.cpp:57
+#, kde-format
+msgid "Reload As..."
+msgstr "Farklı Yeniden Yükle..."
+
+#: src/application_actions.cpp:58
+#, kde-format
+msgid "Reload opened file with a different encoding"
+msgstr "Açık dosyayı farklı bir kodlama ile yeniden yükle"
+
+#: src/application_actions.cpp:65
+#, kde-format
+msgctxt "@action:inmenu Open rencently used subtitle file"
+msgid "Open &Recent Subtitle"
+msgstr "S&on Kullanılan Altyazıyı Aç"
+
+#: src/application_actions.cpp:72
+#, kde-format
+msgid "Save"
+msgstr "Kaydet"
+
+#: src/application_actions.cpp:73
+#, kde-format
+msgid "Save opened subtitle"
+msgstr "Açık altyazıyı kaydet"
+
+#: src/application_actions.cpp:81
+#, kde-format
+msgid "Save As..."
+msgstr "Farklı Kaydet..."
+
+#: src/application_actions.cpp:82
+#, kde-format
+msgid "Save opened subtitle with different settings"
+msgstr "Açık altyazıyı farklı ayarlarla kaydet"
+
+#: src/application_actions.cpp:90
+#, kde-format
+msgid "Close"
+msgstr "Kapat"
+
+#: src/application_actions.cpp:91
+#, kde-format
+msgid "Close opened subtitle"
+msgstr "Açık altyazıyı kapat"
+
+#: src/application_actions.cpp:99
+#, kde-format
+msgid "New Translation"
+msgstr "Yeni Çeviri"
+
+#: src/application_actions.cpp:100
+#, kde-format
+msgid "Create an empty translation subtitle"
+msgstr "Boş bir altyazı çevirisi oluştur"
+
+#: src/application_actions.cpp:108
+#, kde-format
+msgid "Open Translation..."
+msgstr "Çeviri Aç..."
+
+#: src/application_actions.cpp:109 src/application_actions.cpp:126
+#, kde-format
+msgid "Open translation subtitle file"
+msgstr "Altyazı çeviri dosyası aç"
+
+#: src/application_actions.cpp:117
+#, kde-format
+msgid "Reload Translation As..."
+msgstr "Çeviri Farklı Yeniden Yükle..."
+
+#: src/application_actions.cpp:118
+#, kde-format
+msgid "Reload opened translation file with a different encoding"
+msgstr "Açık çeviri dosyasını farklı bir kodlamayla yeniden yükle"
+
+#: src/application_actions.cpp:125
+#, kde-format
+msgid "Open &Recent Translation"
+msgstr "S&on Kullanılan Çeviriyi Aç"
+
+#: src/application_actions.cpp:133
+#, kde-format
+msgid "Save Translation"
+msgstr "Çeviriyi Kaydet"
+
+#: src/application_actions.cpp:134
+#, kde-format
+msgid "Save opened translation subtitle"
+msgstr "Açık altyazı çevirisini kaydet"
+
+#: src/application_actions.cpp:144
+#, kde-format
+msgid "Save Translation As..."
+msgstr "Çeviriyi Farklı Kaydet..."
+
+#: src/application_actions.cpp:145
+#, kde-format
+msgid "Save opened translation subtitle with different settings"
+msgstr "Açık altyazı çeviri dosyasını farklı ayarlarla kaydet"
+
+#: src/application_actions.cpp:153
+#, kde-format
+msgid "Close Translation"
+msgstr "Çeviriyi Kapat"
+
+#: src/application_actions.cpp:154
+#, kde-format
+msgid "Close opened translation subtitle"
+msgstr "Açık altyazı çevirisini kapat"
+
+#: src/application_actions.cpp:171
+#, kde-format
+msgid "Split Subtitle..."
+msgstr "Altyazıyı Böl..."
+
+#: src/application_actions.cpp:172
+#, kde-format
+msgid "Split the opened subtitle in two parts"
+msgstr "Açık altyazıyı iki parçaya böl"
+
+#: src/application_actions.cpp:178
+#, kde-format
+msgid "Join Subtitles..."
+msgstr "Altyazıları Birbirine Kat..."
+
+#: src/application_actions.cpp:179
+#, kde-format
+msgid "Append to the opened subtitle another one"
+msgstr "Açık altyazıya bir başkasını iliştir"
+
+#: src/application_actions.cpp:186
+#, kde-format
+msgid "Insert Before"
+msgstr "Öncesine Ekle"
+
+#: src/application_actions.cpp:187
+#, kde-format
+msgid "Insert empty line before current one"
+msgstr "Geçerli satırdan önce boş satır ekle"
+
+#: src/application_actions.cpp:195
+#, kde-format
+msgid "Insert After"
+msgstr "Sonrasına Ekle"
+
+#: src/application_actions.cpp:196
+#, kde-format
+msgid "Insert empty line after current one"
+msgstr "Geçerli satırdan önce boş satır ekle"
+
+#. i18n: ectx: property (text), widget (QPushButton, btnRemove)
+#: src/application_actions.cpp:204 src/scripting/scriptsmanager.ui:60
+#, kde-format
+msgid "Remove"
+msgstr "Kaldır"
+
+#: src/application_actions.cpp:205
+#, kde-format
+msgid "Remove selected lines"
+msgstr "Seçili satırları kaldır"
+
+#: src/application_actions.cpp:212 src/core/subtitle.cpp:544
+#, kde-format
+msgid "Split Lines"
+msgstr "Satırları Böl"
+
+#: src/application_actions.cpp:213
+#, kde-format
+msgid "Split selected lines"
+msgstr "Seçili satırları böl"
+
+#: src/application_actions.cpp:219 src/core/subtitle.cpp:626
+#: src/gui/waveform/waveformwidget.cpp:694
+#, kde-format
+msgid "Join Lines"
+msgstr "Satırları Birbirine Kat"
+
+#: src/application_actions.cpp:220
+#, kde-format
+msgid "Join selected lines"
+msgstr "Seçili satırları birbirine kat"
+
+#: src/application_actions.cpp:227 src/errors/finderrorsdialog.cpp:114
+#: src/gui/treeview/richlineedit.cpp:109 src/widgets/simplerichtextedit.cpp:370
+#, kde-format
+msgid "Select All"
+msgstr "Tümünü Seç"
+
+#: src/application_actions.cpp:228
+#, kde-format
+msgid "Select all lines"
+msgstr "Tüm satırları seç"
+
+#: src/application_actions.cpp:235
+#, kde-format
+msgid "Go to Line..."
+msgstr "Satıra Git..."
+
+#: src/application_actions.cpp:236
+#, kde-format
+msgid "Go to specified line"
+msgstr "Belirtilen satıra git"
+
+#: src/application_actions.cpp:244
+#, kde-format
+msgid "Find..."
+msgstr "Bul..."
+
+#: src/application_actions.cpp:245
+#, kde-format
+msgid "Find occurrences of strings or regular expressions"
+msgstr "Dizilerin veya düzenli ifadelerin oluşlarını bul"
+
+#: src/application_actions.cpp:253
+#, kde-format
+msgid "Find Next"
+msgstr "Sonrakini Bul"
+
+#: src/application_actions.cpp:254
+#, kde-format
+msgid "Find next occurrence of string or regular expression"
+msgstr "Dizinin veya düzenli ifadenin sonraki oluşunu bul"
+
+#: src/application_actions.cpp:262
+#, kde-format
+msgid "Find Previous"
+msgstr "Öncekini Bul"
+
+#: src/application_actions.cpp:263
+#, kde-format
+msgid "Find previous occurrence of string or regular expression"
+msgstr "Dizinin veya düzenli ifadenin önceki oluşunu bul"
+
+#: src/application_actions.cpp:270
+#, kde-format
+msgid "Replace..."
+msgstr "Değiştir..."
+
+#: src/application_actions.cpp:271
+#, kde-format
+msgid "Replace occurrences of strings or regular expressions"
+msgstr "Dizilerin veya düzenli ifadelerin oluşlarını değiştir"
+
+#: src/application_actions.cpp:279
+#, kde-format
+msgid "Retrocede current line"
+msgstr "Geçerli Satırı Gerilet"
+
+#: src/application_actions.cpp:280
+#, kde-format
+msgid "Makes the line before the current one active"
+msgstr "Geçerli satırdan önceki satırı etkin yap"
+
+#: src/application_actions.cpp:288
+#, kde-format
+msgid "Advance current line"
+msgstr "Geçerli Satırı İlerlet"
+
+#: src/application_actions.cpp:289
+#, kde-format
+msgid "Makes the line after the current one active"
+msgstr "Geçerli satırdan sonraki satırı etkin yap"
+
+#: src/application_actions.cpp:297
+#, kde-format
+msgid "Detect Errors..."
+msgstr "Hataları Algıla..."
+
+#: src/application_actions.cpp:298
+#, kde-format
+msgid "Detect errors in the current subtitle"
+msgstr "Geçerli altyazıdaki hataları algıla"
+
+#: src/application_actions.cpp:305
+#, kde-format
+msgid "Clear Errors/Marks"
+msgstr "Hataları/İmleri Temizle"
+
+#: src/application_actions.cpp:306
+#, kde-format
+msgid "Clear detected errors and marks in the current subtitle"
+msgstr "Geçerli altyazıda algılanan hataları ve imleri temizle"
+
+#: src/application_actions.cpp:314
+#, kde-format
+msgid "Select Next Error/Mark"
+msgstr "Sonraki Hatayı/İmi Seç"
+
+#: src/application_actions.cpp:315
+#, kde-format
+msgid "Select next line with error or mark"
+msgstr "Hata veya im içeren sonraki satırı seç"
+
+#: src/application_actions.cpp:323
+#, kde-format
+msgid "Select Previous Error/Mark"
+msgstr "Önceki Hatayı/İmi Seç"
+
+#: src/application_actions.cpp:324
+#, kde-format
+msgid "Select previous line with error or mark"
+msgstr "Hata veya im içeren sonraki satırı seç"
+
+#: src/application_actions.cpp:332
+#, kde-format
+msgid "Spelling..."
+msgstr "Yazım Denetimi..."
+
+#: src/application_actions.cpp:333
+#, kde-format
+msgid "Check lines spelling"
+msgstr "Satırların yazımını denetle"
+
+#: src/application_actions.cpp:339
+#, kde-format
+msgid "Toggle Mark"
+msgstr "İm Aç/Kapat"
+
+#: src/application_actions.cpp:340
+#, kde-format
+msgid "Toggle mark on selected lines"
+msgstr "Seçili satırlarda im aç/kapat"
+
+#: src/application_actions.cpp:348 src/gui/currentlinewidget.cpp:141
+#, kde-format
+msgid "Toggle Bold"
+msgstr "Kalın Aç/Kapat"
+
+#: src/application_actions.cpp:349
+#, kde-format
+msgid "Toggle selected lines bold attribute"
+msgstr "Seçili satırlarda kalın özniteliği aç/kapat"
+
+#: src/application_actions.cpp:357 src/gui/currentlinewidget.cpp:145
+#, kde-format
+msgid "Toggle Italic"
+msgstr "Yatık Aç/Kapat"
+
+#: src/application_actions.cpp:358
+#, kde-format
+msgid "Toggle selected lines italic attribute"
+msgstr "Seçili satırlarda yatık özniteliği aç/kapat"
+
+#: src/application_actions.cpp:366 src/gui/currentlinewidget.cpp:149
+#, kde-format
+msgid "Toggle Underline"
+msgstr "Altı Çizili Aç/Kapat"
+
+#: src/application_actions.cpp:367
+#, kde-format
+msgid "Toggle selected lines underline attribute"
+msgstr "Seçili satırlarda altı çizili özniteliği aç/kapat"
+
+#: src/application_actions.cpp:375 src/gui/currentlinewidget.cpp:153
+#, kde-format
+msgid "Toggle Strike Through"
+msgstr "Üzeri Çizili Aç/Kapat"
+
+#: src/application_actions.cpp:376
+#, kde-format
+msgid "Toggle selected lines strike through attribute"
+msgstr "Seçili satırlarda üzeri çizili özniteliği aç/kapat"
+
+#: src/application_actions.cpp:384 src/gui/currentlinewidget.cpp:157
+#, kde-format
+msgid "Change Text Color"
+msgstr "Metin Rengini Değiştir"
+
+#: src/application_actions.cpp:385
+#, kde-format
+msgid "Change text color of selected lines"
+msgstr "Seçili satırların metin rengini değiştir"
+
+#: src/application_actions.cpp:392
+#, kde-format
+msgid "Shift..."
+msgstr "Kaydır..."
+
+#: src/application_actions.cpp:393
+#, kde-format
+msgid "Shift lines an specified amount of time"
+msgstr "Seçili satırları belirtilen zaman kadar kaydır"
+
+#: src/application_actions.cpp:412
+#, kde-format
+msgid "Adjust..."
+msgstr "Uydur..."
+
+#: src/application_actions.cpp:413
+#, kde-format
+msgid "Linearly adjust all lines to a specified interval"
+msgstr "Tüm satırları belirtilen bir aralığa doğrusal olarak uydur"
+
+#: src/application_actions.cpp:420
+#, kde-format
+msgid "Change Frame Rate..."
+msgstr "Kare Hızını Değiştir..."
+
+#: src/application_actions.cpp:421
+#, kde-format
+msgid "Retime subtitle lines by reinterpreting its frame rate"
+msgstr "Kare hızını yeniden yorumlayarak altyazı satırlarını yeniden zamanla"
+
+#: src/application_actions.cpp:427
+#, kde-format
+msgid "Enforce Duration Limits..."
+msgstr "Süre Limitlerini Zorla..."
+
+#: src/application_actions.cpp:428
+#, kde-format
+msgid "Enforce lines minimum and/or maximum duration limits"
+msgstr "Satırların en kısa ve/veya en uzun süre limitlerini zorla"
+
+#: src/application_actions.cpp:435
+#, kde-format
+msgid "Set Automatic Durations..."
+msgstr "Otomatik Süreler Ayarla..."
+
+#: src/application_actions.cpp:436
+#, kde-format
+msgid "Set lines durations based on amount of letters, words and line breaks"
+msgstr ""
+"Satırların sürelerini harflere, sözcüklere ve satır sonlarına göre ayarla"
+
+#: src/application_actions.cpp:442
+#, kde-format
+msgid "Maximize Durations..."
+msgstr "Süreleri En Uzun Yap..."
+
+#: src/application_actions.cpp:443
+#, kde-format
+msgid "Extend lines durations up to their next lines show time"
+msgstr ""
+"Satırların sürelerini sonraki satırların gösterim zamanına kadar genişlet"
+
+#: src/application_actions.cpp:449
+#, kde-format
+msgid "Fix Overlapping Times..."
+msgstr "Üst Üste Binen Zamanları Düzelt..."
+
+#: src/application_actions.cpp:450
+#, kde-format
+msgid "Fix lines overlapping times"
+msgstr "Satırların üst üste binen zamanlarını düzelt"
+
+#: src/application_actions.cpp:456
+#, kde-format
+msgid "Synchronize with Subtitle..."
+msgstr "Altyazı ile Eşzamanla..."
+
+#: src/application_actions.cpp:457
+#, kde-format
+msgid "Copy timing information from another subtitle"
+msgstr "Zamanlama bilgisini başka altyazıdan kopyala"
+
+#: src/application_actions.cpp:463
+#, kde-format
+msgid "Break Lines..."
+msgstr "Satırları Sonlandır..."
+
+#: src/application_actions.cpp:464
+#, kde-format
+msgid "Automatically set line breaks"
+msgstr "Satır sonlarını otomatik olarak ayarla"
+
+#: src/application_actions.cpp:470
+#, kde-format
+msgid "Unbreak Lines..."
+msgstr "Satırları Sonlandırma..."
+
+#: src/application_actions.cpp:471
+#, kde-format
+msgid "Remove line breaks from lines"
+msgstr "Satırlardan satır sonlarını kaldırır"
+
+#: src/application_actions.cpp:477
+#, kde-format
+msgid "Simplify Spaces..."
+msgstr "Boşlukları Yalınlaştır..."
+
+#: src/application_actions.cpp:478
+#, kde-format
+msgid "Remove unneeded spaces from lines"
+msgstr "Satırlardan gereksiz boşlukları kaldır"
+
+#: src/application_actions.cpp:484
+#, kde-format
+msgid "Change Case..."
+msgstr "Harf Biçimini Değiştir..."
+
+#: src/application_actions.cpp:485
+#, kde-format
+msgid "Change lines text to upper, lower, title or sentence case"
+msgstr ""
+"Satır metinlerini \"BÜYÜK\", \"küçük\", \"Başlık Biçimi\" veya \"Tümce.\" "
+"biçimine değiştir"
+
+#: src/application_actions.cpp:491
+#, kde-format
+msgid "Fix Punctuation..."
+msgstr "Noktalamayı Düzelt..."
+
+#: src/application_actions.cpp:492
+#, kde-format
+msgid "Fix punctuation errors in lines"
+msgstr "Satırlardaki noktalama hatalarını düzelt"
+
+#: src/application_actions.cpp:498
+#, kde-format
+msgid "Translate..."
+msgstr "Çevir..."
+
+#: src/application_actions.cpp:499
+#, kde-format
+msgid "Translate lines texts using Google services"
+msgstr "Satır metinlerini Google hizmetlerini kullanarak çevir"
+
+#: src/application_actions.cpp:505
+#, kde-format
+msgid "Edit Line in Place"
+msgstr "Satırı Yerinde Düzenle"
+
+#: src/application_actions.cpp:506
+#, kde-format
+msgid "Edit current line text in place"
+msgstr "Geçerli satır metnini yerinde düzenle"
+
+#: src/application_actions.cpp:514
+#, kde-format
+msgid "Open Video..."
+msgstr "Video Aç..."
+
+#: src/application_actions.cpp:515 src/application_actions.cpp:522
+#, kde-format
+msgid "Open video file"
+msgstr "Video dosyası aç"
+
+#: src/application_actions.cpp:521
+#, kde-format
+msgid "Open &Recent Video"
+msgstr "Son Kullanılan &Videoyu Aç"
+
+#: src/application_actions.cpp:528
+#, kde-format
+msgid "Import Subtitle Stream"
+msgstr "Altyazı Akışı İçe Aktar"
+
+#: src/application_actions.cpp:529
+#, kde-format
+msgid "Import subtitle stream into subtitle editor"
+msgstr "Altyazı akışını altyazı düzenleyiciye içe aktar"
+
+#: src/application_actions.cpp:535
+#, kde-format
+msgid "Recognize Speech"
+msgstr "Konuşmayı Tanı"
+
+#: src/application_actions.cpp:536
+#, kde-format
+msgid "Recognize speech in audio stream"
+msgstr "Ses akışındaki konuşmayı tanı"
+
+#: src/application_actions.cpp:542
+#, kde-format
+msgid "Close Video"
+msgstr "Videoyu Kapat"
+
+#: src/application_actions.cpp:543
+#, kde-format
+msgid "Close video file"
+msgstr "Video dosyasını kapat"
+
+#: src/application_actions.cpp:550
+#, kde-format
+msgid "Full Screen Mode"
+msgstr "Tam Ekran Kipi"
+
+#: src/application_actions.cpp:551
+#, kde-format
+msgid "Toggle full screen mode"
+msgstr "Tam ekran kipini aç/kapat"
+
+#: src/application_actions.cpp:558
+#, kde-format
+msgid "Stop"
+msgstr "Durdur"
+
+#: src/application_actions.cpp:559
+#, kde-format
+msgid "Stop video playback"
+msgstr "Video oynatımını durdur"
+
+#: src/application_actions.cpp:567
+#, kde-format
+msgid "Toggle video playing/paused"
+msgstr "Video oynatımını sürdür/duraklat"
+
+#: src/application_actions.cpp:575
+#, kde-format
+msgid "Seek Backward"
+msgstr "Geri Git"
+
+#: src/application_actions.cpp:583
+#, kde-format
+msgid "Seek Forward"
+msgstr "İleri Git"
+
+#: src/application_actions.cpp:590
+#, kde-format
+msgid "Frame Step Backward"
+msgstr "Bir Kare Geri"
+
+#: src/application_actions.cpp:597
+#, kde-format
+msgid "Frame Step Forward"
+msgstr "Bir Kare İleri"
+
+#: src/application_actions.cpp:605
+#, kde-format
+msgid "Seek to Previous Line"
+msgstr "Önceki Satıra Git"
+
+#: src/application_actions.cpp:606
+#, kde-format
+msgid "Seek to previous subtitle line show time"
+msgstr "Bir önceki altyazı satırı gösterim zamanına git"
+
+#: src/application_actions.cpp:614
+#, kde-format
+msgid "Increase media play rate"
+msgstr "Ortam Oynatma Hızını Artır"
+
+#: src/application_actions.cpp:615
+#, kde-format
+msgid "Increase media playback rate"
+msgstr "Ortam oynatma hızını artır"
+
+#: src/application_actions.cpp:622
+#, kde-format
+msgid "Decrease media play rate"
+msgstr "Ortam Oynatma Hızını Azalt"
+
+#: src/application_actions.cpp:623
+#, kde-format
+msgid "Decrease media playback rate"
+msgstr "Ortam oynatma hızını azalt"
+
+#: src/application_actions.cpp:629
+#, kde-format
+msgid "Play Current Line and Pause"
+msgstr "Geçerli Satırı Oynat ve Duraklat"
+
+#: src/application_actions.cpp:630
+#, kde-format
+msgid "Seek to selected subtitle line show time, play it and then pause"
+msgstr "Seçili altyazı satırı gösterim zamanına git, oynat ve duraklat"
+
+#: src/application_actions.cpp:637
+#, kde-format
+msgid "Seek to Current Line"
+msgstr "Geçerli Satıra Git"
+
+#: src/application_actions.cpp:638
+#, kde-format
+msgid "Seek to selected subtitle line show time"
+msgstr "Seçili altyazı satırı gösterim zamanına git"
+
+#: src/application_actions.cpp:645
+#, kde-format
+msgid "Seek to Next Line"
+msgstr "Sonraki Satıra Git"
+
+#: src/application_actions.cpp:646
+#, kde-format
+msgid "Seek to next subtitle line show time"
+msgstr "Sonraki altyazı satırı gösterim zamanına git"
+
+#: src/application_actions.cpp:654
+#, kde-format
+msgid "Set Line Show Time to Video Position"
+msgstr "Satır Gösterim Zamanını Video Konumuna Ayarla"
+
+#: src/application_actions.cpp:655
+#, kde-format
+msgid "Set current line show time to video position"
+msgstr "Geçerli satır gösterim zamanını video konumuna ayarla"
+
+#: src/application_actions.cpp:663
+#, kde-format
+msgid "Set Line Hide Time to Video Position"
+msgstr "Satır Gizleme Zamanını Video Konumuna Ayarla"
+
+#: src/application_actions.cpp:664
+#, kde-format
+msgid "Set current line hide time to video position"
+msgstr "Geçerli satır gizleme zamanını video konumuna ayarla"
+
+#: src/application_actions.cpp:671
+#, kde-format
+msgid "Shift Current Line to Video Position"
+msgstr "Geçerli Satırı Video Konumuna Kaydır"
+
+#: src/application_actions.cpp:672
+#, kde-format
+msgid ""
+"Set current line show time to video position by equally shifting all lines"
+msgstr ""
+"Geçerli satır gösterim zamanını tüm satırları eşit biçimde kaydırarak video "
+"konumuna ayarla"
+
+#: src/application_actions.cpp:680
+#, kde-format
+msgid "Current Line Follows Video"
+msgstr "Geçerli Satır Videoyu İzler"
+
+#: src/application_actions.cpp:681
+#, kde-format
+msgid "Make current line follow the playing video position"
+msgstr "Geçerli satırı oynatılan video konumunu izlettir"
+
+#: src/application_actions.cpp:687
+#, kde-format
+msgctxt "@action:inmenu Toggle audio muted"
+msgid "Mute"
+msgstr "Sessize Al"
+
+#: src/application_actions.cpp:688
+#, kde-format
+msgid "Enable/disable playback sound"
+msgstr "Oynatma sesini aç/kapat"
+
+#: src/application_actions.cpp:695
+#, kde-format
+msgid "Increase Volume"
+msgstr "Ses Düzeyini Artır"
+
+#: src/application_actions.cpp:696
+#, kde-format
+msgid "Increase volume by 5%"
+msgstr "Ses düzeyini %​5 artır"
+
+#: src/application_actions.cpp:703
+#, kde-format
+msgid "Decrease Volume"
+msgstr "Ses Düzeyini Azalt"
+
+#: src/application_actions.cpp:704
+#, kde-format
+msgid "Decrease volume by 5%"
+msgstr "Ses düzeyini %​5 azalt"
+
+#: src/application_actions.cpp:711
+#, kde-format
+msgid "Audio Streams"
+msgstr "Ses Akışları"
+
+#: src/application_actions.cpp:712
+#, kde-format
+msgid "Select active audio stream"
+msgstr "Etkin ses akışını seç"
+
+#: src/application_actions.cpp:723
+#, kde-format
+msgid "Increase Font Size"
+msgstr "Yazıtipi Boyutunu Artır"
+
+#: src/application_actions.cpp:724
+#, kde-format
+msgid "Increase subtitles font size by 1 point"
+msgstr "Altyazı yazıtipi boyutunu 1 punto artır"
+
+#: src/application_actions.cpp:731
+#, kde-format
+msgid "Decrease Font Size"
+msgstr "Yazıtipi Boyutunu Azalt"
+
+#: src/application_actions.cpp:732
+#, kde-format
+msgid "Decrease subtitles font size by 1 point"
+msgstr "Altyazı yazıtipi boyutunu 1 punto azalt"
+
+#: src/application_actions.cpp:739
+#, kde-format
+msgid "Displayed Subtitle Text"
+msgstr "Görüntülenen Altyazı Metni"
+
+#: src/application_actions.cpp:740
+#, kde-format
+msgid "Select visible subtitle text"
+msgstr "Görünür altyazı metnini seç"
+
+#: src/application_actions.cpp:751 src/gui/waveform/waveformwidget.cpp:718
+#, kde-format
+msgid "Toggle Anchor"
+msgstr "Çapayı Aç/Kapat"
+
+#: src/application_actions.cpp:752
+#, kde-format
+msgid ""
+"(Un)Anchor current line's show time to timeline (Editing anchored line's "
+"show time will stretch/compact the timeline between adjacent anchors)"
+msgstr ""
+"Geçerli satırın gösterim zamanını zaman akışına çapala/çapayı kaldır "
+"(Çapalanan satırın gösterim zamanı, zaman akışını komşu çapalar arasında "
+"çekiştirir/ufaltır)"
+
+#: src/application_actions.cpp:759
+#, kde-format
+msgid "Remove All Anchors"
+msgstr "Tüm Çapaları Kaldır"
+
+#: src/application_actions.cpp:760
+#, kde-format
+msgid "Unanchor show time from the timeline on all anchored lines"
+msgstr ""
+"Gösterim zamanının çapasını, tüm çapalanan satırlarda zaman akışından kaldır"
+
+#: src/application_actions.cpp:768
+#, kde-format
+msgctxt "@action:inmenu Manage user scripts"
+msgid "Scripts Manager..."
+msgstr "Betik Yöneticisi..."
+
+#: src/application_actions.cpp:769
+#, kde-format
+msgid "Manage user scripts"
+msgstr "Kullanıcı betiklerini yönet"
+
+#: src/application_actions.cpp:776 src/application_actions.cpp:777
+#, kde-format
+msgid "Waveform Zoom In"
+msgstr "Dalga Biçimi Yakınlaştır"
+
+#: src/application_actions.cpp:783 src/application_actions.cpp:784
+#, kde-format
+msgid "Waveform Zoom Out"
+msgstr "Dalga Biçimi Uzaklaştır"
+
+#: src/application_actions.cpp:791
+#, kde-format
+msgid "Waveform Auto Scroll"
+msgstr "Dalga Biçimi Otomatik Kaydır"
+
+#: src/application_actions.cpp:792
+#, kde-format
+msgid "Waveform display will automatically scroll to video position"
+msgstr "Dalga boyutu görüntüsü, otomatik olarak video konumuna kaydırılacaktır"
+
+#: src/application_subtitle.cpp:75
+#, kde-format
+msgid "All Text Subtitles"
+msgstr "Tüm Metin Altyazılar"
+
+#: src/application_subtitle.cpp:76
+#, kde-format
+msgid "All Image Subtitles"
+msgstr "Tüm Görsel Altyazılar"
+
+#: src/application_subtitle.cpp:78 src/application_subtitle.cpp:102
+#, kde-format
+msgid "All Files"
+msgstr "Tüm Dosyalar"
+
+#: src/application_subtitle.cpp:99
+#, kde-format
+msgid "Media Files"
+msgstr "Ortam Dosyaları"
+
+#: src/application_subtitle.cpp:100
+#, kde-format
+msgid "Video Files"
+msgstr "Video Dosyaları"
+
+#: src/application_subtitle.cpp:101
+#, kde-format
+msgid "Audio Files"
+msgstr "Ses Dosyaları"
+
+#: src/application_subtitle.cpp:130
+#, kde-format
+msgid ""
+"The requested action would make the subtitle and its translation share the "
+"same file, possibly resulting in loss of information when saving.\n"
+"Are you sure you want to continue?"
+msgstr ""
+"İstenen eylem, altyazıyı ve onun çevirisini aynı dosyayı paylaşır biçimde "
+"yapacaktır; bu kayıt sırasında bilgi kaybına neden olabilir.\n"
+"Sürdürmek istediğinize emin misiniz?"
+
+#: src/application_subtitle.cpp:133
+#, kde-format
+msgid "Conflicting Subtitle Files"
+msgstr "Çakışan Altyazı Dosyaları"
+
+#: src/application_subtitle.cpp:151 src/dialogs/selectablesubtitledialog.cpp:65
+#, kde-format
+msgid "Open Subtitle"
+msgstr "Açık Altyazı"
+
+#: src/application_subtitle.cpp:207 src/application_subtitle.cpp:227
+#: src/application_subtitle.cpp:470 src/application_subtitle.cpp:495
+#, kde-format
+msgid ""
+"<qt>Could not parse the subtitle file.<br/>This may have been caused by "
+"usage of the wrong encoding.</qt>"
+msgstr ""
+"<qt>Altyazı dosyası ayrıştırılamadı.<br/>Bu, hatalı kodlama kullanımı sonucu "
+"meydana gelmiş olabilir.</qt>"
+
+#: src/application_subtitle.cpp:273 src/application_subtitle.cpp:321
+#, kde-format
+msgid "Format: %1"
+msgstr "Biçim: %1"
+
+#: src/application_subtitle.cpp:274 src/application_subtitle.cpp:322
+#, kde-format
+msgid "Encoding: %1"
+msgstr "Kodlama: %1"
+
+#: src/application_subtitle.cpp:328
+#, kde-format
+msgid "There was an error saving the subtitle."
+msgstr "Altyazıyı kaydederken bir hata oluştu."
+
+#: src/application_subtitle.cpp:336
+#, kde-format
+msgid "Save Subtitle"
+msgstr "Altyazıyı Kaydet"
+
+#: src/application_subtitle.cpp:371 src/application_subtitle.cpp:609
+#, kde-format
+msgid ""
+"Currently opened translation subtitle has unsaved changes.\n"
+"Do you want to save them?"
+msgstr ""
+"Şu anda açık olan altyazı çevirisinde kaydedilmemiş değişiklikler var.\n"
+"Kaydetmek istiyor musunuz?"
+
+#: src/application_subtitle.cpp:372 src/application_subtitle.cpp:610
+#, kde-format
+msgid "Close Translation Subtitle"
+msgstr "Altyazı Çevirisini Kapat"
+
+#: src/application_subtitle.cpp:382
+#, kde-format
+msgid ""
+"Currently opened subtitle has unsaved changes.\n"
+"Do you want to save them?"
+msgstr ""
+"Şu anda açık olan altyazıda kaydedilmemiş değişiklikler var.\n"
+"Kaydetmek istiyor musunuz?"
+
+#: src/application_subtitle.cpp:383
+#, kde-format
+msgid "Close Subtitle"
+msgstr "Altyazıyı Kapat"
+
+#: src/application_subtitle.cpp:439
+#, kde-format
+msgid "Open Translation Subtitle"
+msgstr "Altyazı Çevirisi Aç"
+
+#: src/application_subtitle.cpp:524
+#, kde-format
+msgctxt "@item:inmenu Display primary text in video player"
+msgid "Primary"
+msgstr "Birincil"
+
+#: src/application_subtitle.cpp:525
+#, kde-format
+msgctxt "@item:inmenu Display translation text in video player"
+msgid "Translation"
+msgstr "Çeviri"
+
+#: src/application_subtitle.cpp:565
+#, kde-format
+msgid "There was an error saving the translation subtitle."
+msgstr "Altyazı çevirisini kaydederken bir hata oluştu."
+
+#: src/application_subtitle.cpp:573
+#, kde-format
+msgid "Save Translation Subtitle"
+msgstr "Altyazı Çevirisini Kaydet"
+
+#: src/application_subtitle.cpp:659
+#, kde-format
+msgctxt "Suffix added to split subtitles"
+msgid "split"
+msgstr "bölünmüş"
+
+#: src/application_subtitle.cpp:677
+#, kde-format
+msgid "Could not write the split subtitle file."
+msgstr "Bölünmüş altyazı dosyası yazılamadı."
+
+#: src/application_subtitle.cpp:677
+#, kde-format
+msgid "Could not write the split subtitle translation file."
+msgstr "Bölünmüş altyazı çeviri dosyası yazılamadı."
+
+#: src/application_subtitle.cpp:702
+#, kde-format
+msgid "Could not read the subtitle file to append."
+msgstr "İliştirmek üzere altyazı dosyası okunamadı."
+
+#: src/application_subtitle.cpp:718
+#, kde-format
+msgid "The specified time does not split the subtitles."
+msgstr "Belirtilen zaman, altyazıları bölmüyor."
+
+#: src/application_subtitle.cpp:753
+#, kde-format
+msgid ""
+"Could not open a new Subtitle Composer window.\n"
+"The split part was saved as %1."
+msgstr ""
+"Yeni bir Altyazı Oluşturucu penceresi açılamadı.\n"
+"Bölünmüş kısım %1 olarak kaydedildi."
+
+#: src/application_subtitle.cpp:754
+#, kde-format
+msgid ""
+"Could not open a new Subtitle Composer window.\n"
+"The split parts were saved as %1 and %2."
+msgstr ""
+"Yeni bir Altyazı Oluşturucu penceresi açılamadı.\n"
+"Bölünmüş kısımlar %1 ve %2 olarak kaydedildi."
+
+#: src/application_subtitle.cpp:772
+#, kde-format
+msgid "The reference subtitle must have more than one line to proceed."
+msgstr "Sürdürmek için başvuru altyazısında birden çok satır olmalı."
+
+#: src/application_subtitle.cpp:781
+#, kde-format
+msgid "Could not parse the reference subtitle file."
+msgstr "Başvuru altyazı dosyası ayrıştırılamadı."
+
+#: src/configs/configdialog.cpp:38
+#, kde-format
+msgctxt "@title General settings"
+msgid "General"
+msgstr "Genel"
+
+#: src/configs/configdialog.cpp:39
+#, kde-format
+msgid "General Settings"
+msgstr "Genel Ayarlar"
+
+#: src/configs/configdialog.cpp:43
+#, kde-format
+msgctxt "@title Error check settings"
+msgid "Error Check"
+msgstr "Hata Denetimi"
+
+#: src/configs/configdialog.cpp:44
+#, kde-format
+msgid "Error Check Settings"
+msgstr "Hata Denetimi Ayarları"
+
+#: src/configs/configdialog.cpp:50
+#, kde-format
+msgctxt "@title Spelling settings"
+msgid "Spelling"
+msgstr "Yazım Denetimi"
+
+#: src/configs/configdialog.cpp:51
+#, kde-format
+msgid "Spelling Settings"
+msgstr "Yazım Denetimi Ayarları"
+
+#: src/configs/configdialog.cpp:55
+#, kde-format
+msgctxt "@title Waveform settings"
+msgid "Waveform"
+msgstr "Dalga Biçimi"
+
+#: src/configs/configdialog.cpp:56
+#, kde-format
+msgid "Waveform settings"
+msgstr "Dalga Biçimi Ayarları"
+
+#: src/configs/configdialog.cpp:60
+#, kde-format
+msgctxt "@title Video player settings"
+msgid "Video Player"
+msgstr "Video Oynatıcı"
+
+#: src/configs/configdialog.cpp:61
+#, kde-format
+msgid "Video Player Settings"
+msgstr "Video Oynatıcı Ayarları"
+
+#: src/configs/configdialog.cpp:70
+#, kde-format
+msgctxt "@title Speech recognition backend settings"
+msgid "%1 backend settings"
+msgstr "%1 Arka Ucu Ayarları"
+
+#. i18n: ectx: property (title), widget (QGroupBox, m_grpGeneral)
+#: src/configs/errorsconfigwidget.ui:17 src/gui/treeview/lineswidget.cpp:394
+#, kde-format
+msgid "Texts"
+msgstr "Metinler"
+
+#. i18n: ectx: property (suffix), widget (QSpinBox, kcfg_MaxLines)
+#: src/configs/errorsconfigwidget.ui:23
+#, kde-format
+msgid " lines"
+msgstr " satır"
+
+#. i18n: ectx: property (suffix), widget (QSpinBox, kcfg_MaxCharacters)
+#: src/configs/errorsconfigwidget.ui:36
+#: src/dialogs/smarttextsadjustdialog.cpp:26
+#, kde-format
+msgid " characters"
+msgstr " karakter"
+
+#. i18n: ectx: property (text), widget (QLabel, label)
+#: src/configs/errorsconfigwidget.ui:46
+#, kde-format
+msgid "Maximum number of characters:"
+msgstr "En çok karakter sayısı:"
+
+#. i18n: ectx: property (text), widget (QLabel, label_4)
+#: src/configs/errorsconfigwidget.ui:53
+#, kde-format
+msgid "Maximum number of lines:"
+msgstr "En çok satır sayısı:"
+
+#. i18n: ectx: property (title), widget (QGroupBox, m_grpQuickActions)
+#: src/configs/errorsconfigwidget.ui:63
+#, kde-format
+msgid "Absolute Durations"
+msgstr "Mutlak Süreler"
+
+#. i18n: ectx: property (suffix), widget (QSpinBox, kcfg_LinePause)
+#. i18n: ectx: property (suffix), widget (QSpinBox, kcfg_LineDuration)
+#. i18n: ectx: property (suffix), widget (QSpinBox, kcfg_SeekOffsetOnDoubleClick)
+#. i18n: ectx: property (suffix), widget (QSpinBox, kcfg_JumpLineOffset)
+#. i18n: ectx: property (suffix), widget (QSpinBox, kcfg_LinesQuickShiftAmount)
+#. i18n: ectx: property (suffix), widget (QSpinBox, kcfg_GrabbedPositionCompensation)
+#. i18n: ectx: property (suffix), widget (QSpinBox, kcfg_MinDuration)
+#. i18n: ectx: property (suffix), widget (QSpinBox, kcfg_MaxDuration)
+#: src/configs/errorsconfigwidget.ui:69 src/configs/errorsconfigwidget.ui:79
+#: src/configs/generalconfigwidget.ui:114
+#: src/configs/generalconfigwidget.ui:124
+#: src/configs/generalconfigwidget.ui:134
+#: src/configs/generalconfigwidget.ui:154
+#: src/configs/generalconfigwidget.ui:173
+#: src/configs/generalconfigwidget.ui:183
+#, kde-format
+msgid " msec"
+msgstr " msan"
+
+#. i18n: ectx: property (text), widget (QLabel, label_8)
+#. i18n: ectx: property (text), widget (QLabel, lab_MaxDurationPerCharacter)
+#: src/configs/errorsconfigwidget.ui:92 src/configs/errorsconfigwidget.ui:174
+#, kde-format
+msgid "Maximum duration:"
+msgstr "En uzun süre:"
+
+#. i18n: ectx: property (text), widget (QLabel, label_5)
+#. i18n: ectx: property (text), widget (QLabel, lab_MinDurationPerCharacter)
+#: src/configs/errorsconfigwidget.ui:99 src/configs/errorsconfigwidget.ui:154
+#, kde-format
+msgid "Minimum duration:"
+msgstr "En kısa süre:"
+
+#. i18n: ectx: property (title), widget (QGroupBox, groupBox)
+#: src/configs/errorsconfigwidget.ui:109
+#, kde-format
+msgid "Relative Durations"
+msgstr "Göreceli Süreler"
+
+#. i18n: ectx: property (suffix), widget (QSpinBox, kcfg_MaxDurationPerCharacter)
+#. i18n: ectx: property (suffix), widget (QSpinBox, kcfg_MinDurationPerCharacter)
+#. i18n: ectx: property (suffix), widget (QSpinBox, kcfg_IdealDurationPerCharacter)
+#: src/configs/errorsconfigwidget.ui:115 src/configs/errorsconfigwidget.ui:141
+#: src/configs/errorsconfigwidget.ui:188
+#, kde-format
+msgid " ms/char"
+msgstr " msn/karakter"
+
+#. i18n: ectx: property (suffix), widget (QSpinBox, alt_MinDurationPerCharacter)
+#. i18n: ectx: property (suffix), widget (QSpinBox, alt_MaxDurationPerCharacter)
+#. i18n: ectx: property (suffix), widget (QSpinBox, alt_IdealDurationPerCharacter)
+#: src/configs/errorsconfigwidget.ui:128 src/configs/errorsconfigwidget.ui:161
+#: src/configs/errorsconfigwidget.ui:201
+#, kde-format
+msgid " ch/sec"
+msgstr " kr/sn"
+
+#. i18n: ectx: property (text), widget (QLabel, lab_IdealDurationPerCharacter)
+#: src/configs/errorsconfigwidget.ui:181
+#, kde-format
+msgid "Ideal duration:"
+msgstr "İdeal süre:"
+
+#. i18n: ectx: property (title), widget (QGroupBox, groupBox_2)
+#: src/configs/errorsconfigwidget.ui:217
+#, kde-format
+msgid "Behavior"
+msgstr "Davranış"
+
+#. i18n: ectx: label, entry (AutoClearFixed), group (Error Check)
+#. i18n: ectx: property (text), widget (QCheckBox, kcfg_AutoClearFixed)
+#: src/configs/errorsconfigwidget.ui:223 src/scconfig.kcfg:86
+#, kde-format
+msgid "Automatically clear fixed errors"
+msgstr "Düzeltilen hataları kendiliğinden temizle"
+
+#. i18n: ectx: property (title), widget (QGroupBox, m_grpGeneral)
+#: src/configs/generalconfigwidget.ui:17 src/configs/playerconfigwidget.ui:17
+#, kde-format
+msgid "General"
+msgstr "Genel"
+
+#. i18n: ectx: property (text), widget (QCheckBox, kcfg_AutomaticVideoLoad)
+#: src/configs/generalconfigwidget.ui:26
+#, kde-format
+msgid "Automatically load video file when opening a subtitle"
+msgstr "Bir altyazı açarken video dosyasını kendiliğinden yükle"
+
+#. i18n: ectx: property (text), widget (QLabel, lab_DefaultSubtitlesEncoding)
+#: src/configs/generalconfigwidget.ui:33
+#, kde-format
+msgid "Defau&lt subtitles encoding:"
+msgstr "Ön&tanımlı altyazı kodlaması:"
+
+#. i18n: ectx: property (currentText), widget (QComboBox, kcfg_TextLineBreak)
+#. i18n: ectx: property (text), item, widget (QComboBox, kcfg_TextLineBreak)
+#: src/configs/generalconfigwidget.ui:43 src/configs/generalconfigwidget.ui:47
+#, kde-format
+msgid "UNIX (LF)"
+msgstr "UNIX (LF)"
+
+#. i18n: ectx: property (text), item, widget (QComboBox, kcfg_TextLineBreak)
+#: src/configs/generalconfigwidget.ui:52
+#, kde-format
+msgid "Windows (CRLF)"
+msgstr "Windows (CRLF)"
+
+#. i18n: ectx: property (text), item, widget (QComboBox, kcfg_TextLineBreak)
+#: src/configs/generalconfigwidget.ui:57
+#, kde-format
+msgid "Macintosh (CR)"
+msgstr "Macintosh (CR)"
+
+#. i18n: ectx: property (text), widget (QLabel, lab_TextLineBreak)
+#: src/configs/generalconfigwidget.ui:65
+#, kde-format
+msgid "Line break character:"
+msgstr "Satır sonu karakteri:"
+
+#. i18n: ectx: property (title), widget (QGroupBox, m_grpSubtitleLine)
+#: src/configs/generalconfigwidget.ui:78
+#, kde-format
+msgid "Subtitle Line"
+msgstr "Altyazı Satırı"
+
+#. i18n: ectx: property (text), widget (QLabel, label_LineDuration)
+#: src/configs/generalconfigwidget.ui:84
+#, kde-format
+msgid "Default subtitle line duration:"
+msgstr "Öntanımlı altyazı satır süresi:"
+
+#. i18n: ectx: property (text), widget (QLabel, label_4)
+#: src/configs/generalconfigwidget.ui:94
+#, kde-format
+msgid "On double click, &jump to show time minus:"
+msgstr "Çift tıklamada gö&sterim zamanı eksi şu zamana atla:"
+
+#. i18n: ectx: property (text), widget (QLabel, label_LinePause)
+#: src/configs/generalconfigwidget.ui:104
+#, kde-format
+msgid "Default pause between subtitle lines:"
+msgstr "Altyazı satırları arasındaki öntanımlı duraklama:"
+
+#. i18n: ectx: property (text), widget (QLabel, label_2)
+#: src/configs/generalconfigwidget.ui:144
+#, kde-format
+msgid "Ju&mp to prev/next line offset:"
+msgstr "Ö&nceki/sonraki satıra atlama ofseti:"
+
+#. i18n: ectx: property (title), widget (QGroupBox, m_grpQuickActions)
+#: src/configs/generalconfigwidget.ui:167
+#, kde-format
+msgid "Quick Actions"
+msgstr "Hızlı Eylemler"
+
+#. i18n: ectx: property (text), widget (QLabel, label_8)
+#: src/configs/generalconfigwidget.ui:193
+#, kde-format
+msgid "Compensation for captured &video times:"
+msgstr "Yakalanan vid&eo zamanları için tazmin:"
+
+#. i18n: ectx: property (text), widget (QLabel, label_5)
+#: src/configs/generalconfigwidget.ui:203
+#, kde-format
+msgid "Ti&me shift for selected lines:"
+msgstr "Seçili &satırlar için zaman kaydırması:"
+
+#: src/configs/playerconfigwidget.cpp:27
+#, kde-format
+msgctxt "Text for previewing the subtitles font settings"
+msgid "<p>The Quick Brown Fox<br/>Jumps Over The Lazy Dog</p>"
+msgstr "<p>Pijamalı hasta<br/>yağız şoföre çabucak güvendi</p>"
+
+#. i18n: ectx: property (text), widget (QCheckBox, kcfg_UnpauseOnDoubleClick)
+#: src/configs/playerconfigwidget.ui:23
+#, kde-format
+msgid "Resume playback after line double click"
+msgstr "Çift tıklama sonrası oynatmayı sürdür"
+
+#. i18n: ectx: property (text), widget (QLabel, lab_SeekJumpLength)
+#: src/configs/playerconfigwidget.ui:30
+#, kde-format
+msgid "Seconds to &jump on seek:"
+msgstr "Gidişte at&lanacak saniye:"
+
+#. i18n: ectx: label, entry (VideoAutoPlay), group (VideoPlayer)
+#. i18n: ectx: property (text), widget (QCheckBox, kcfg_VideoAutoPlay)
+#: src/configs/playerconfigwidget.ui:50 src/scconfig.kcfg:180
+#, kde-format
+msgid "Start playing video when loaded"
+msgstr "Yüklendiğinde videoyu oynatmayı başlat"
+
+#. i18n: ectx: property (text), widget (QCheckBox, kcfg_ShowPositionTimeEdit)
+#: src/configs/playerconfigwidget.ui:57 src/gui/playerwidget.cpp:433
+#, kde-format
+msgid "Show editable position control"
+msgstr "Düzenlenebilir konum denetimini göster"
+
+#. i18n: ectx: property (text), widget (QLabel, lab_StepJumpLength)
+#: src/configs/playerconfigwidget.ui:64
+#, kde-format
+msgid "Fra&me step amount:"
+msgstr "K&are adım sayısı:"
+
+#. i18n: ectx: property (text), widget (QLabel, lab_VolumeAmplification)
+#: src/configs/playerconfigwidget.ui:74
+#, kde-format
+msgid "Volume amplification:"
+msgstr "Ses düzeyi yükseltmesi:"
+
+#. i18n: ectx: property (title), widget (QGroupBox, m_grpSubtitles)
+#: src/configs/playerconfigwidget.ui:122
+#, kde-format
+msgid "Subtitles"
+msgstr "Altyazılar"
+
+#. i18n: ectx: property (text), widget (QLabel, lab_OutlineColor)
+#: src/configs/playerconfigwidget.ui:138
+#, kde-format
+msgid "Outline color:"
+msgstr "Dış hat rengi:"
+
+#. i18n: ectx: property (text), widget (QLabel, lab_FontColor)
+#: src/configs/playerconfigwidget.ui:151
+#, kde-format
+msgid "Te&xt color:"
+msgstr "Met&in rengi:"
+
+#. i18n: ectx: property (text), widget (QLabel, lab_FontFamily)
+#: src/configs/playerconfigwidget.ui:164
+#, kde-format
+msgid "Font family:"
+msgstr "Yazıtipi ailesi:"
+
+#. i18n: ectx: property (text), widget (QLabel, lab_OutlineWidth)
+#: src/configs/playerconfigwidget.ui:177
+#, kde-format
+msgid "Outline width:"
+msgstr "Dış hat genişliği:"
+
+#. i18n: ectx: property (text), widget (QLabel, lab_FontSize)
+#: src/configs/playerconfigwidget.ui:187
+#, kde-format
+msgid "Font si&ze:"
+msgstr "Yazıti&pi boyutu:"
+
+#. i18n: ectx: property (title), widget (QGroupBox, m_grpPreview)
+#: src/configs/playerconfigwidget.ui:203
+#, kde-format
+msgid "Subtitles Preview"
+msgstr "Altyazı Önizlemesi"
+
+#. i18n: ectx: property (title), widget (QGroupBox, groupBox_3)
+#: src/configs/waveformconfigwidget.ui:17
+#, kde-format
+msgid "Waveform Display"
+msgstr "Dalga Biçimi Görüntüsü"
+
+#. i18n: ectx: property (text), widget (QCheckBox, kcfg_wfSmoothScroll)
+#: src/configs/waveformconfigwidget.ui:23
+#, kde-format
+msgid "Smooth Scrolling"
+msgstr "Pürüzsüz Kaydırma"
+
+#. i18n: ectx: property (text), widget (QLabel, label_12)
+#: src/configs/waveformconfigwidget.ui:49
+#, kde-format
+msgid "Outer color:"
+msgstr "Dış renk:"
+
+#. i18n: ectx: property (text), widget (QLabel, label_11)
+#: src/configs/waveformconfigwidget.ui:78
+#, kde-format
+msgid "Inner color:"
+msgstr "İç renk:"
+
+#. i18n: ectx: property (toolTip), widget (QLabel, label_wfAutoscrollPadding)
+#: src/configs/waveformconfigwidget.ui:104
+#, kde-format
+msgid ""
+"Autoscroll page when play position reaches ScrollPadding distance "
+"(percentage) from page border"
+msgstr ""
+"Oynatma konumu, sayfa kenarlığından Kaydırma Dolgusu uzaklığına (yüzde) "
+"ulaştığında sayfayı otomatik kaydır"
+
+#. i18n: ectx: property (text), widget (QLabel, label_wfAutoscrollPadding)
+#: src/configs/waveformconfigwidget.ui:107
+#, kde-format
+msgid "Auto Scroll Padding:"
+msgstr "Otomatik Kaydırma Dolgusu:"
+
+#. i18n: ectx: property (title), widget (QGroupBox, m_grpGeneral)
+#: src/configs/waveformconfigwidget.ui:120
+#, kde-format
+msgid "Subtitle Display"
+msgstr "Altyazı Görüntüsü"
+
+#. i18n: ectx: property (text), widget (QLabel, label_14)
+#: src/configs/waveformconfigwidget.ui:148
+#, kde-format
+msgid "Subtitle border color:"
+msgstr "Altyazı kenarlık rengi:"
+
+#. i18n: ectx: property (text), widget (QLabel, label_16)
+#: src/configs/waveformconfigwidget.ui:158
+#, kde-format
+msgid "Selected background color:"
+msgstr "Seçili arka plan rengi:"
+
+#. i18n: ectx: property (text), widget (QLabel, label_15)
+#: src/configs/waveformconfigwidget.ui:168
+#, kde-format
+msgid "Subtitle border width:"
+msgstr "Altyazı kenarlık genişliği:"
+
+#. i18n: ectx: property (text), widget (QLabel, label_13)
+#: src/configs/waveformconfigwidget.ui:178
+#, kde-format
+msgid "Subtitle background color:"
+msgstr "Altyazı arka plan rengi:"
+
+#. i18n: ectx: property (text), widget (QLabel, label_17)
+#: src/configs/waveformconfigwidget.ui:207
+#, kde-format
+msgid "Selected border color:"
+msgstr "Seçili kenarlık rengi:"
+
+#. i18n: ectx: property (title), widget (QGroupBox, groupBox)
+#: src/configs/waveformconfigwidget.ui:258
+#, kde-format
+msgid "Text Font and Colors"
+msgstr "Metin Yazıtipi ve Renkleri"
+
+#. i18n: ectx: property (text), widget (QLabel, label_21)
+#: src/configs/waveformconfigwidget.ui:264
+#, kde-format
+msgid "Subtitle font family:"
+msgstr "Altyazı yazıtipi ailesi:"
+
+#. i18n: ectx: property (text), widget (QLabel, label_22)
+#: src/configs/waveformconfigwidget.ui:277
+#, kde-format
+msgid "Subtitle number font size:"
+msgstr "Altyazı sayı yazıtipi boyutu:"
+
+#. i18n: ectx: property (suffix), widget (QSpinBox, kcfg_wfSubNumberFontSize)
+#. i18n: ectx: property (suffix), widget (QSpinBox, kcfg_wfSubTextFontSize)
+#: src/configs/waveformconfigwidget.ui:287
+#: src/configs/waveformconfigwidget.ui:333
+#, kde-format
+msgid " pt"
+msgstr " pt"
+
+#. i18n: ectx: property (text), widget (QLabel, label_23)
+#: src/configs/waveformconfigwidget.ui:294
+#, kde-format
+msgid "Subtitle Number Color"
+msgstr "Altyazı Sayı Rengi"
+
+#. i18n: ectx: property (text), widget (QLabel, label_24)
+#: src/configs/waveformconfigwidget.ui:323
+#, kde-format
+msgid "Subtitle text font size:"
+msgstr "Altyazı metin yazıtipi boyutu:"
+
+#. i18n: ectx: property (text), widget (QLabel, label_25)
+#: src/configs/waveformconfigwidget.ui:340
+#, kde-format
+msgid "Subtitle Text Color:"
+msgstr "Altyazı Metin Rengi:"
+
+#. i18n: ectx: property (title), widget (QGroupBox, groupBox_2)
+#: src/configs/waveformconfigwidget.ui:372
+#, kde-format
+msgid "Line Indicators"
+msgstr "Satır Göstergeleri"
+
+#. i18n: ectx: property (text), widget (QLabel, label_31)
+#: src/configs/waveformconfigwidget.ui:378
+#, kde-format
+msgid "Player position color:"
+msgstr "Oynatıcı konum rengi:"
+
+#. i18n: ectx: property (text), widget (QLabel, label_32)
+#: src/configs/waveformconfigwidget.ui:388
+#, kde-format
+msgid "Mouse indicator color:"
+msgstr "Fare göstergesi rengi:"
+
+#: src/core/subtitle.cpp:59
+#, kde-format
+msgid "Set Primary Data"
+msgstr "Birincil Veriyi Ayarla"
+
+#: src/core/subtitle.cpp:105
+#, kde-format
+msgid "Clear Primary Text Data"
+msgstr "Birincil Metin Verisini Temizle"
+
+#: src/core/subtitle.cpp:118
+#, kde-format
+msgid "Set Secondary Data"
+msgstr "İkincil Veriyi Ayarla"
+
+#: src/core/subtitle.cpp:155
+#, kde-format
+msgid "Clear Secondary Text Data"
+msgstr "İkincil Metin Verisini Temizle"
+
+#: src/core/subtitle.cpp:223 src/dialogs/changeframeratedialog.cpp:22
+#, kde-format
+msgid "Change Frame Rate"
+msgstr "Kare Hızını Değiştir"
+
+#: src/core/subtitle.cpp:385 src/core/subtitle.cpp:399
+#: src/gui/waveform/waveformwidget.cpp:677
+#, kde-format
+msgid "Insert Line"
+msgstr "Satır Ekle"
+
+#: src/core/subtitle.cpp:432 src/core/subtitle.cpp:442
+#: src/core/subtitle.cpp:459 src/core/undo/subtitleactions.cpp:120
+#, kde-format
+msgid "Remove Lines"
+msgstr "Satırları Kaldır"
+
+#: src/core/subtitle.cpp:724
+#, kde-format
+msgid "Shift Lines"
+msgstr "Satırları Kaydır"
+
+#: src/core/subtitle.cpp:780
+#, kde-format
+msgid "Adjust Lines"
+msgstr "Satırları Uydur"
+
+#: src/core/subtitle.cpp:791
+#, kde-format
+msgid "Sort"
+msgstr "Sırala"
+
+#: src/core/subtitle.cpp:823 src/dialogs/durationlimitsdialog.cpp:18
+#, kde-format
+msgid "Enforce Duration Limits"
+msgstr "Süre Limitlerini Zorla"
+
+#: src/core/subtitle.cpp:885 src/dialogs/autodurationsdialog.cpp:21
+#, kde-format
+msgid "Set Automatic Durations"
+msgstr "Otomatik Süreler Ayarla"
+
+#: src/core/subtitle.cpp:918 src/dialogs/fixoverlappingtimesdialog.cpp:18
+#, kde-format
+msgid "Fix Overlapping Times"
+msgstr "Üst Üste Binen Zamanları Düzelt"
+
+#: src/core/subtitle.cpp:949
+#, kde-format
+msgid "Fix Lines Punctuation"
+msgstr "Satır Noktalamasını Düzelt"
+
+#: src/core/subtitle.cpp:991
+#, kde-format
+msgid "Lower Case"
+msgstr "Küçük Harf"
+
+#: src/core/subtitle.cpp:1021
+#, kde-format
+msgid "Upper Case"
+msgstr "Büyük Harf"
+
+#: src/core/subtitle.cpp:1051
+#, kde-format
+msgid "Title Case"
+msgstr "Başlık Biçimi"
+
+#: src/core/subtitle.cpp:1084
+#, kde-format
+msgid "Sentence Case"
+msgstr "Tümce Biçimi"
+
+#: src/core/subtitle.cpp:1128 src/dialogs/smarttextsadjustdialog.cpp:18
+#, kde-format
+msgid "Break Lines"
+msgstr "Satırları Sonlandır"
+
+#: src/core/subtitle.cpp:1155
+#, kde-format
+msgid "Synchronize Subtitles"
+msgstr "Altyazıları Eşzamanla"
+
+#: src/core/subtitle.cpp:1180 src/dialogs/joinsubtitlesdialog.cpp:24
+#, kde-format
+msgid "Join Subtitles"
+msgstr "Altyazıları Birbirine Kat"
+
+#: src/core/subtitle.cpp:1224 src/core/subtitle.cpp:1230
+#, kde-format
+msgid "Split Subtitles"
+msgstr "Altyazıları Böl"
+
+#: src/core/subtitle.cpp:1249
+#, kde-format
+msgid "Toggle Lines Style"
+msgstr "Satır Biçemlerini Aç/Kapat"
+
+#: src/core/subtitle.cpp:1293
+#, kde-format
+msgid "Change Lines Text Color"
+msgstr "Satır Metin Rengini Değiştir"
+
+#: src/core/subtitle.cpp:1313
+#, kde-format
+msgid "Set Lines Mark"
+msgstr "Satır İmleri Ayarla"
+
+#: src/core/subtitle.cpp:1313
+#, kde-format
+msgid "Clear Lines Mark"
+msgstr "Satır İmlerini Temizle"
+
+#: src/core/subtitle.cpp:1328
+#, kde-format
+msgid "Toggle Lines Mark"
+msgstr "Satır İmlerini Aç/Kapat"
+
+#: src/core/subtitle.cpp:1338
+#, kde-format
+msgid "Clear Line Errors"
+msgstr "Satır Hatalarını Temizle"
+
+#: src/core/subtitle.cpp:1349 src/core/subtitle.cpp:1360
+#: src/errors/errorfinder.cpp:82
+#, kde-format
+msgid "Check Lines Errors"
+msgstr "Satır Hatalarını Denetle"
+
+#: src/core/subtitleline.cpp:68
+#, kde-format
+msgid "Empty text"
+msgstr "Boş metin"
+
+#: src/core/subtitleline.cpp:70
+#, kde-format
+msgid "Too many characters"
+msgstr "Pek çok karakter"
+
+#: src/core/subtitleline.cpp:72
+#, kde-format
+msgid "Too many lines"
+msgstr "Pek çok satır"
+
+#: src/core/subtitleline.cpp:74
+#, kde-format
+msgid "Unnecessary white space"
+msgstr "Gereksiz boşluk"
+
+#: src/core/subtitleline.cpp:76
+#, kde-format
+msgid "Unnecessary dash"
+msgstr "Gereksiz tire"
+
+#: src/core/subtitleline.cpp:78
+#, kde-format
+msgid "Capital letter after continuation ellipsis"
+msgstr "Sürdüren üç noktadan sonra büyük harf"
+
+#: src/core/subtitleline.cpp:80
+#, kde-format
+msgid "Too long duration per character"
+msgstr "Karakter başı pek uzun süre"
+
+#: src/core/subtitleline.cpp:82
+#, kde-format
+msgid "Too short duration per character"
+msgstr "Karakter başı pek kısa süre"
+
+#: src/core/subtitleline.cpp:84
+#, kde-format
+msgid "Too long duration"
+msgstr "Pek uzun süre"
+
+#: src/core/subtitleline.cpp:85
+#, kde-format
+msgid "Too short duration"
+msgstr "Pek kısa süre"
+
+#: src/core/subtitleline.cpp:86
+#, kde-format
+msgid "Overlapping times"
+msgstr "Üst üste binen zamanlar"
+
+#: src/core/subtitleline.cpp:87
+#, kde-format
+msgid "Untranslated text"
+msgstr "Çevrilmemiş metin"
+
+#: src/core/subtitleline.cpp:88
+#, kde-format
+msgid "User mark"
+msgstr "Kullanıcı imi"
+
+#: src/core/subtitleline.cpp:107
+#, kde-format
+msgid "Has no primary text."
+msgstr "Birincil metin yok."
+
+#: src/core/subtitleline.cpp:108
+#, kde-format
+msgid "Has no translation text."
+msgstr "Çeviri metni yok."
+
+#: src/core/subtitleline.cpp:109
+#, kde-format
+msgid "Has too many characters in primary text (1 char)."
+msgid_plural "Has too many characters in primary text (%1 chars)."
+msgstr[0] "Birincil metinde pek çok karakter (1 karakter)."
+msgstr[1] "Birincil metinde pek çok karakter (%1 karakter)."
+
+#: src/core/subtitleline.cpp:110
+#, kde-format
+msgid "Has too many characters in translation text (1 char)."
+msgid_plural "Has too many characters in translation text (%1 chars)."
+msgstr[0] "Çeviri metninde pek çok karakter (1 karakter)."
+msgstr[1] "Çeviri metninde pek çok karakter (%1 karakter)."
+
+#: src/core/subtitleline.cpp:111
+#, kde-format
+msgid "Has too many lines in primary text (1 line)."
+msgid_plural "Has too many lines in primary text (%1 lines)."
+msgstr[0] "Birincil metinde pek çok satır (1 satır)."
+msgstr[1] "Birincil metinde pek çok satır (%1 satır)."
+
+#: src/core/subtitleline.cpp:112
+#, kde-format
+msgid "Has too many lines in translation text (1 line)."
+msgid_plural "Has too many lines in translation text (%1 lines)."
+msgstr[0] "Çeviri metninde pek çok satır (1 satır)."
+msgstr[1] "Çeviri metninde pek çok satır (%1 satır)."
+
+#: src/core/subtitleline.cpp:113
+#, kde-format
+msgid "Has unnecessary spaces in primary text."
+msgstr "Birincil metinde gereksiz boşluk."
+
+#: src/core/subtitleline.cpp:114
+#, kde-format
+msgid "Has unnecessary spaces in translation text."
+msgstr "Çeviri metninde gereksiz boşluk."
+
+#: src/core/subtitleline.cpp:115
+#, kde-format
+msgid "Has unnecessary dash in primary text."
+msgstr "Birincil metinde gereksiz tire."
+
+#: src/core/subtitleline.cpp:116
+#, kde-format
+msgid "Has unnecessary dash in translation text."
+msgstr "Çeviri metninde gereksiz tire."
+
+#: src/core/subtitleline.cpp:117
+#, kde-format
+msgid "Has capital letter after line continuation ellipsis in primary text."
+msgstr "Birincil metinde sürdüren üç noktadan sonra büyük harf."
+
+#: src/core/subtitleline.cpp:118
+#, kde-format
+msgid ""
+"Has capital letter after line continuation ellipsis in translation text."
+msgstr "Çeviri metninde sürdüren üç noktadan sonra büyük harf."
+
+#: src/core/subtitleline.cpp:119
+#, kde-format
+msgid "Has too long duration per character in primary text (1 msec/char)."
+msgid_plural ""
+"Has too long duration per character in primary text (%1 msecs/char)."
+msgstr[0] "Birincil metinde karakter başı süre pek uzun (1 milisn/karakter)."
+msgstr[1] "Birincil metinde karakter başı süre pek uzun (%1 milisn/karakter)."
+
+#: src/core/subtitleline.cpp:120
+#, kde-format
+msgid "Has too long duration per character in translation text (1 msec/char)."
+msgid_plural ""
+"Has too long duration per character in translation text (%1 msecs/char)."
+msgstr[0] "Çeviri metninde karakter başı süre pek uzun (1 milisn/karakter)."
+msgstr[1] "Çeviri metninde karakter başı süre pek uzun (%1 milisn/karakter)."
+
+#: src/core/subtitleline.cpp:121
+#, kde-format
+msgid "Has too short duration per character in primary text (1 msec/char)."
+msgid_plural ""
+"Has too short duration per character in primary text (%1 msecs/char)."
+msgstr[0] "Birincil metinde karakter başı süre pek kısa (1 milisn/karakter)."
+msgstr[1] "Birincil metinde karakter başı süre pek kısa (%1 milisn/karakter)."
+
+#: src/core/subtitleline.cpp:122
+#, kde-format
+msgid "Has too short duration per character in translation text (1 msec/char)."
+msgid_plural ""
+"Has too short duration per character in translation text (%1 msecs/char)."
+msgstr[0] "Çeviri metninde karakter başı süre pek kısa (1 milisn/karakter)."
+msgstr[1] "Çeviri metninde karakter başı süre pek kısa (%1 milisn/karakter)."
+
+#: src/core/subtitleline.cpp:123
+#, kde-format
+msgid "Has too long duration (1 msec)."
+msgid_plural "Has too long duration (%1 msecs)."
+msgstr[0] "Süre pek uzun (1 milisn)."
+msgstr[1] "Süre pek uzun (%1 milisn)."
+
+#: src/core/subtitleline.cpp:124
+#, kde-format
+msgid "Has too short duration (1 msec)."
+msgid_plural "Has too short duration (%1 msecs)."
+msgstr[0] "Süre pek kısa (1 milisn)."
+msgstr[1] "Süre pek kısa (%1 milisn)."
+
+#: src/core/subtitleline.cpp:125
+#, kde-format
+msgid "Overlaps with next line."
+msgstr "Sonraki satırın üzerine biniyor."
+
+#: src/core/subtitleline.cpp:126
+#, kde-format
+msgid "Has untranslated text."
+msgstr "Çevrilmemiş metin var."
+
+#: src/core/subtitleline.cpp:127
+#, kde-format
+msgid "Has user mark."
+msgstr "Kullanıcı imi var."
+
+#: src/core/subtitleline.cpp:378 src/core/undo/subtitlelineactions.cpp:105
+#, kde-format
+msgid "Set Line Show Time"
+msgstr "Satır Gösterim Zamanını Ayarla"
+
+#: src/core/subtitleline.cpp:402 src/core/undo/subtitlelineactions.cpp:132
+#, kde-format
+msgid "Set Line Hide Time"
+msgstr "Satır Gizleme Zamanını Ayarla"
+
+#: src/core/subtitleline.cpp:449
+#, kde-format
+msgid "Set Line Times"
+msgstr "Satır Zamanlarını Ayarla"
+
+#: src/core/subtitleline.cpp:546
+#, kde-format
+msgid "Shift Line Times"
+msgstr "Satır Zamanlarını Kaydır"
+
+#: src/core/subtitleline.cpp:556
+#, kde-format
+msgid "Adjust Line Times"
+msgstr "Satır Zamanlarını Uydur"
+
+#: src/core/undo/subtitleactions.cpp:30
+#, kde-format
+msgid "Set Frame Rate"
+msgstr "Kare Hızını Ayarla"
+
+#: src/core/undo/subtitleactions.cpp:50
+#, kde-format
+msgid "Insert Lines"
+msgstr "Satırlar Ekle"
+
+#: src/core/undo/subtitleactions.cpp:198
+#, kde-format
+msgid "Move Line"
+msgstr "Satırı Taşı"
+
+#: src/core/undo/subtitleactions.cpp:283
+#, kde-format
+msgid "Swap Texts"
+msgstr "Metni Takas Et"
+
+#: src/core/undo/subtitlelineactions.cpp:28
+#, kde-format
+msgid "Set Line Text"
+msgstr "Satır Metnini Ayarla"
+
+#: src/core/undo/subtitlelineactions.cpp:66
+#, kde-format
+msgid "Set Line Secondary Text"
+msgstr "Satır İkincil Metnini Ayarla"
+
+#: src/core/undo/subtitlelineactions.cpp:196
+#, kde-format
+msgid "Set Line Errors"
+msgstr "Satır Hatalarını Ayarla"
+
+#: src/dialogs/actionwithtargetdialog.cpp:111
+#, kde-format
+msgid "Target >>"
+msgstr "Hedef >>"
+
+#: src/dialogs/actionwithtargetdialog.cpp:111
+#: src/dialogs/actionwithtargetdialog.cpp:127
+#, kde-format
+msgid "Target <<"
+msgstr "Hedef <<"
+
+#: src/dialogs/actionwithtargetdialog.cpp:141
+#, kde-format
+msgid "All lines"
+msgstr "Tüm satırlar"
+
+#: src/dialogs/actionwithtargetdialog.cpp:142
+#, kde-format
+msgid "Selected lines"
+msgstr "Seçili satırlar"
+
+#: src/dialogs/actionwithtargetdialog.cpp:143
+#, kde-format
+msgid "All lines from first selected"
+msgstr "İlk seçimden tüm satırlar"
+
+#: src/dialogs/actionwithtargetdialog.cpp:144
+#, kde-format
+msgid "All lines up to last selected"
+msgstr "Son seçime kadar tüm satırlar"
+
+#: src/dialogs/actionwithtargetdialog.cpp:232 src/utils/finder.cpp:53
+#: src/utils/replacer.cpp:51
+#, kde-format
+msgid "Both subtitles"
+msgstr "Her iki altyazı"
+
+#: src/dialogs/actionwithtargetdialog.cpp:235 src/utils/finder.cpp:55
+#: src/utils/replacer.cpp:53
+#, kde-format
+msgid "Primary subtitle"
+msgstr "Birincil altyazı"
+
+#: src/dialogs/actionwithtargetdialog.cpp:238 src/utils/finder.cpp:57
+#: src/utils/replacer.cpp:55
+#, kde-format
+msgid "Translation subtitle"
+msgstr "Çeviri altyazısı"
+
+#: src/dialogs/actionwithtargetdialog.h:58
+#, kde-format
+msgid "Apply To"
+msgstr "Şuna Uygula"
+
+#: src/dialogs/adjusttimesdialog.cpp:20
+#, kde-format
+msgid "Adjust"
+msgstr "Uydur"
+
+#: src/dialogs/adjusttimesdialog.cpp:22
+#, kde-format
+msgctxt "@title:group"
+msgid "New Times"
+msgstr "Yeni Zamanlar"
+
+#: src/dialogs/adjusttimesdialog.cpp:27
+#, kde-format
+msgid "First spoken line:"
+msgstr "İlk konuşma satırı:"
+
+#: src/dialogs/adjusttimesdialog.cpp:33
+#, kde-format
+msgid "Last spoken line:"
+msgstr "Son konuşma satırı:"
+
+#: src/dialogs/autodurationsdialog.cpp:24
+#: src/dialogs/changeframeratedialog.cpp:24
+#: src/dialogs/fixoverlappingtimesdialog.cpp:20
+#: src/dialogs/fixpunctuationdialog.cpp:19
+#: src/dialogs/smarttextsadjustdialog.cpp:20
+#: src/dialogs/splitsubtitledialog.cpp:29 src/dialogs/translatedialog.cpp:22
+#, kde-format
+msgctxt "@title:group"
+msgid "Settings"
+msgstr "Ayarlar"
+
+#: src/dialogs/autodurationsdialog.cpp:32
+#, kde-format
+msgid "Milliseconds per line:"
+msgstr "Satır başı milisaniye:"
+
+#: src/dialogs/autodurationsdialog.cpp:41
+#, kde-format
+msgid "Milliseconds per word:"
+msgstr "Sözcük başı milisaniye:"
+
+#: src/dialogs/autodurationsdialog.cpp:50
+#, kde-format
+msgid "Milliseconds per character:"
+msgstr "Karakter başı milisaniye:"
+
+#: src/dialogs/autodurationsdialog.cpp:54
+#: src/dialogs/durationlimitsdialog.cpp:30
+#, kde-format
+msgid "Prevent overlapping"
+msgstr "Üst üste binmeyi engelle"
+
+#: src/dialogs/autodurationsdialog.cpp:57
+#, kde-format
+msgctxt "@title:group"
+msgid "Duration Calculation"
+msgstr "Süre Hesaplama"
+
+#: src/dialogs/autodurationsdialog.cpp:63
+#, kde-format
+msgid "Use primary text"
+msgstr "Birincil metni kullan"
+
+#: src/dialogs/autodurationsdialog.cpp:64
+#, kde-format
+msgid "Use translation text"
+msgstr "Çeviri metnini kullan"
+
+#: src/dialogs/autodurationsdialog.cpp:65
+#, kde-format
+msgid "Calculate both and use maximum"
+msgstr "Her ikisini de hesapla ve en uzunu kullan"
+
+#: src/dialogs/changeframeratedialog.cpp:33
+#, kde-format
+msgid "Current frame rate:"
+msgstr "Geçerli kare hızı:"
+
+#: src/dialogs/changeframeratedialog.cpp:42
+#, kde-format
+msgid "New frame rate:"
+msgstr "Yeni kare hızı:"
+
+#: src/dialogs/changetextscasedialog.cpp:19
+#, kde-format
+msgid "Change Case"
+msgstr "Harf Biçimini Değiştir"
+
+#: src/dialogs/changetextscasedialog.cpp:21
+#, kde-format
+msgctxt "@title:group"
+msgid "Change To"
+msgstr "Şuna Değiştir"
+
+#: src/dialogs/changetextscasedialog.cpp:25
+#, kde-format
+msgid "Lower case"
+msgstr "Küçük harf"
+
+#: src/dialogs/changetextscasedialog.cpp:30
+#, kde-format
+msgid "Upper case"
+msgstr "Büyük harf"
+
+#: src/dialogs/changetextscasedialog.cpp:34
+#, kde-format
+msgid "Title case"
+msgstr "Başlık biçimi"
+
+#: src/dialogs/changetextscasedialog.cpp:38
+#, kde-format
+msgid "Sentence case"
+msgstr "Tümce biçimi"
+
+#: src/dialogs/changetextscasedialog.cpp:42
+#, kde-format
+msgid "Convert to lower case first"
+msgstr "İlk önce küçük harfe dönüştür"
+
+#: src/dialogs/durationlimitsdialog.cpp:20
+#, kde-format
+msgctxt "@title:group"
+msgid "Minimum Duration"
+msgstr "En Kısa Süre"
+
+#: src/dialogs/durationlimitsdialog.cpp:26
+#, kde-format
+msgid "Expand duration to:"
+msgstr "Süreyi şuna genişlet:"
+
+#: src/dialogs/durationlimitsdialog.cpp:33
+#, kde-format
+msgctxt "@title:group"
+msgid "Maximum Duration"
+msgstr "En Uzun Süre"
+
+#: src/dialogs/durationlimitsdialog.cpp:39
+#, kde-format
+msgid "Shrink duration to:"
+msgstr "Süreyi şuna kısalt:"
+
+#: src/dialogs/encodingdetectdialog.cpp:83
+#, kde-format
+msgctxt "Text encoding detected with n% confidence."
+msgid "%1 (%2% confidence)"
+msgstr "%1 (%​%2 güven)"
+
+#: src/dialogs/encodingdetectdialog.cpp:193
+#, kde-format
+msgid "Detected"
+msgstr "Algılandı"
+
+#. i18n: ectx: property (windowTitle), widget (QDialog, EncodingDetectDialog)
+#: src/dialogs/encodingdetectdialog.ui:14
+#, kde-format
+msgid "Confirm detected subtitle encoding"
+msgstr "Algılanan altyazı kodlamasını onayla"
+
+#. i18n: ectx: property (text), widget (QLabel, encodingLabel)
+#: src/dialogs/encodingdetectdialog.ui:30
+#, kde-format
+msgid "Encoding"
+msgstr "Kodlama"
+
+#. i18n: ectx: property (text), widget (QLabel, previewLabel)
+#: src/dialogs/encodingdetectdialog.ui:57
+#, kde-format
+msgid "Preview"
+msgstr "Önizleme"
+
+#: src/dialogs/fixoverlappingtimesdialog.cpp:23
+#, kde-format
+msgid " msecs"
+msgstr " msan"
+
+#: src/dialogs/fixoverlappingtimesdialog.cpp:29
+#, kde-format
+msgid "Minimum interval between lines:"
+msgstr "Satırlar arasındaki en kısa aralık:"
+
+#: src/dialogs/fixpunctuationdialog.cpp:17
+#, kde-format
+msgid "Fix Punctuation"
+msgstr "Noktalamayı Düzelt"
+
+#: src/dialogs/fixpunctuationdialog.cpp:22
+#, kde-format
+msgid "Fix and cleanup spaces"
+msgstr "Boşlukları düzelt ve temizle"
+
+#: src/dialogs/fixpunctuationdialog.cpp:26
+#, kde-format
+msgid "Fix quotes and double quotes"
+msgstr "Tek ve çift tırnakları düzelt"
+
+#: src/dialogs/fixpunctuationdialog.cpp:30
+#, kde-format
+msgid "Fix English 'I' pronoun"
+msgstr "İngilizce \"I\" adılını düzelt"
+
+#: src/dialogs/fixpunctuationdialog.cpp:34
+#, kde-format
+msgid "Add ellipsis indicating non finished lines"
+msgstr "Bitmeyen satırları belirtmek için üç nokta ekle"
+
+#: src/dialogs/insertlinedialog.cpp:13
+#, kde-format
+msgid "Insert Line Before Current"
+msgstr "Geçerli Satır Öncesi Ekle"
+
+#: src/dialogs/insertlinedialog.cpp:13
+#, kde-format
+msgid "Insert Line After Current"
+msgstr "Geçerli Satır Sonrası Ekle"
+
+#: src/dialogs/insertlinedialog.cpp:13
+#, kde-format
+msgid "Insert Into"
+msgstr "Şuraya Ekle"
+
+#: src/dialogs/joinsubtitlesdialog.cpp:29
+#, kde-format
+msgid "Shift subtitle forwards before append"
+msgstr "İliştirmeden önce altyazıyı ileri kaydır"
+
+#: src/dialogs/joinsubtitlesdialog.cpp:36
+#: src/dialogs/splitsubtitledialog.cpp:35
+#, kde-format
+msgid "Set from video length"
+msgstr "Video uzunluğundan ayarla"
+
+#: src/dialogs/removelinesdialog.cpp:13
+#, kde-format
+msgid "Remove Selected Lines"
+msgstr "Seçili Satırları Kaldır"
+
+#: src/dialogs/removelinesdialog.cpp:13
+#, kde-format
+msgid "Remove From"
+msgstr "Şuradan Kaldır"
+
+#: src/dialogs/selectablesubtitledialog.cpp:39
+#, kde-format
+msgid "Path:"
+msgstr "Yol:"
+
+#: src/dialogs/selectablesubtitledialog.cpp:44
+#, kde-format
+msgid "Select subtitle"
+msgstr "Altyazı seç"
+
+#: src/dialogs/selectablesubtitledialog.h:30
+#, kde-format
+msgid "Subtitle"
+msgstr "Altyazı"
+
+#: src/dialogs/shifttimesdialog.cpp:19
+#, kde-format
+msgid "Shift"
+msgstr "Kaydır"
+
+#: src/dialogs/shifttimesdialog.cpp:21
+#, kde-format
+msgctxt "@title:group"
+msgid "Shifting"
+msgstr "Kaydırılıyor"
+
+#: src/dialogs/shifttimesdialog.cpp:25
+#, kde-format
+msgid "Forwards (+)"
+msgstr "İleri (+)"
+
+#: src/dialogs/shifttimesdialog.cpp:26
+#, kde-format
+msgid "Backwards (−)"
+msgstr "Geri (−)"
+
+#: src/dialogs/smarttextsadjustdialog.cpp:29
+#, kde-format
+msgid "Minimum length for line break:"
+msgstr "Satır sonu için en kısa uzunluk:"
+
+#: src/dialogs/splitsubtitledialog.cpp:27
+#, kde-format
+msgid "Split Subtitle"
+msgstr "Altyazıyı Böl"
+
+#: src/dialogs/splitsubtitledialog.cpp:40
+#, kde-format
+msgid "Split time:"
+msgstr "Bölme zamanı:"
+
+#: src/dialogs/splitsubtitledialog.cpp:44
+#, kde-format
+msgid "Shift new part backwards after split"
+msgstr "Yeni kısmı böldükten sonra geri kaydır"
+
+#: src/dialogs/syncsubtitlesdialog.cpp:17
+#, kde-format
+msgid "Synchronize with Subtitle"
+msgstr "Altyazı ile Eşzamanla"
+
+#: src/dialogs/syncsubtitlesdialog.cpp:19
+#, kde-format
+msgid "Reference Subtitle"
+msgstr "Başvuru Altyazısı"
+
+#: src/dialogs/syncsubtitlesdialog.cpp:21
+#, kde-format
+msgctxt "@title:group"
+msgid "Synchronization Mode"
+msgstr "Eşzamanlama Kipi"
+
+#: src/dialogs/syncsubtitlesdialog.cpp:24
+#, kde-format
+msgid "Adjust to reference's first and last lines"
+msgstr "Başvurunun ilk ve son satırlarına uydur"
+
+#: src/dialogs/syncsubtitlesdialog.cpp:28
+#, kde-format
+msgid "Copy timing information from reference line by line"
+msgstr "Zamanlama bilgisini başvuru satırlarından teker teker kopyala"
+
+#: src/dialogs/translatedialog.cpp:37
+#, kde-format
+msgid "Input language:"
+msgstr "Girdi dili:"
+
+#: src/dialogs/translatedialog.cpp:53
+#, kde-format
+msgid "Output language:"
+msgstr "Çıktı dili:"
+
+#: src/errors/errorfinder.cpp:171 src/errors/finderrorsdialog.cpp:17
+#, kde-format
+msgid "Find Error"
+msgstr "Hata Bul"
+
+#: src/errors/errorfinder.cpp:171
+#, kde-format
+msgid "No errors matching given criteria were found!"
+msgstr "Verilen ölçüte göre eşleşen hata bulunamadı!"
+
+#: src/errors/finderrorsdialog.cpp:22
+#, kde-format
+msgctxt "@title:group"
+msgid "Errors to Find"
+msgstr "Bulunacak Hatalar"
+
+#: src/errors/finderrorsdialog.cpp:28
+#, kde-format
+msgctxt "@title:group Miscellaneous settings"
+msgid "Miscellaneous"
+msgstr "Çeşitli"
+
+#: src/errors/finderrorsdialog.cpp:31
+#, kde-format
+msgid "Clear other errors"
+msgstr "Diğer hataları temizle"
+
+#: src/errors/finderrorsdialog.cpp:35
+#, kde-format
+msgid "Clear user marks"
+msgstr "Kullanıcı imlerini temizle"
+
+#: src/errors/finderrorsdialog.cpp:86
+#, kde-format
+msgid "Available errors"
+msgstr "Çıkan hatalar"
+
+#: src/errors/finderrorsdialog.cpp:116
+#, kde-format
+msgid "Select None"
+msgstr "Hiçbirini Seçme"
+
+#: src/formats/textdemux/textdemux.cpp:32
+#, kde-format
+msgid "Importing Subtitle Stream"
+msgstr "Altyazı Akışı İçe Aktarılıyor"
+
+#: src/formats/textdemux/textdemux.cpp:90
+#, kde-format
+msgid ""
+"Subtitle demux failed %1: %2\n"
+"%3"
+msgstr ""
+"Altyazı çoklamama %1 başarısız: %2\n"
+"%3"
+
+#. i18n: ectx: property (windowTitle), widget (QDialog, VobSubInputInitDialog)
+#. i18n: ectx: property (windowTitle), widget (QDialog, VobSubInputProcessDialog)
+#: src/formats/vobsub/vobsubinputinitdialog.ui:14
+#: src/formats/vobsub/vobsubinputprocessdialog.ui:14
+#, kde-format
+msgid "VobSub Import"
+msgstr "VobSub İçe Aktar"
+
+#. i18n: ectx: property (text), widget (QLabel, labelStream)
+#: src/formats/vobsub/vobsubinputinitdialog.ui:20
+#, kde-format
+msgid "Stream / Language"
+msgstr "Akış / Dil"
+
+#. i18n: ectx: property (title), widget (QGroupBox, grpPostProc)
+#: src/formats/vobsub/vobsubinputinitdialog.ui:53
+#, kde-format
+msgid "Post Processing"
+msgstr "İşlem Sonrası"
+
+#. i18n: ectx: property (text), widget (QCheckBox, ppSpaceNumber)
+#: src/formats/vobsub/vobsubinputinitdialog.ui:59
+#, kde-format
+msgid "Fix space between numbers"
+msgstr "Sayılar arasındaki boşlukları düzelt"
+
+#. i18n: ectx: property (text), widget (QCheckBox, ppSpacePunct)
+#: src/formats/vobsub/vobsubinputinitdialog.ui:69
+#, kde-format
+msgid "Fix space around punctuation (.,;:?!)"
+msgstr "Noktalama çevresindeki boşlukları düzelt (.,;:?!)"
+
+#. i18n: ectx: property (text), widget (QCheckBox, ppSpaceParen)
+#: src/formats/vobsub/vobsubinputinitdialog.ui:79
+#, kde-format
+msgid "Fix space around quotes and parentheses (\"()[]{})"
+msgstr "Tırnaklar ve ayraçlar çevresindeki boşlukları düzelt (\"()[]{})"
+
+#. i18n: ectx: property (text), widget (QCheckBox, ppAposQuote)
+#: src/formats/vobsub/vobsubinputinitdialog.ui:89
+#, kde-format
+msgid "Fix double apostrophes/quotes"
+msgstr "Çift kesme imi ve tırnakları düzelt"
+
+#. i18n: ectx: property (text), widget (QCheckBox, ppCharsOCR)
+#: src/formats/vobsub/vobsubinputinitdialog.ui:99
+#, kde-format
+msgid "Fix i <-> l, 0 <-> O mistakes"
+msgstr "i <-> l, 0 <-> O yanlışlarını düzelt"
+
+#: src/formats/vobsub/vobsubinputprocessdialog.cpp:589
+#, kde-format
+msgid "VobSub Error"
+msgstr "VobSub Hatası"
+
+#. i18n: ectx: property (title), widget (QGroupBox, grpText)
+#: src/formats/vobsub/vobsubinputprocessdialog.ui:26
+#, kde-format
+msgid "Enter character(s)"
+msgstr "Karakter(ler) gir"
+
+#. i18n: ectx: property (text), widget (QLabel, symbolLabel)
+#: src/formats/vobsub/vobsubinputprocessdialog.ui:35
+#, kde-format
+msgid "S&ymbols:"
+msgstr "S&emboller:"
+
+#. i18n: ectx: property (toolTip), widget (QSpinBox, symbolCount)
+#: src/formats/vobsub/vobsubinputprocessdialog.ui:45
+#, kde-format
+msgid "Up/Down: change value"
+msgstr "Yukarı/Aşağı: Değeri değiştir"
+
+#. i18n: ectx: property (text), widget (QPushButton, btnOk)
+#: src/formats/vobsub/vobsubinputprocessdialog.ui:146
+#, kde-format
+msgid "OK"
+msgstr "Tamam"
+
+#. i18n: ectx: property (toolTip), widget (QPushButton, btnPrevImage)
+#: src/formats/vobsub/vobsubinputprocessdialog.ui:202
+#, kde-format
+msgid "Ctrl+Shift+Left"
+msgstr "Ctrl+Shift+Sol"
+
+#. i18n: ectx: property (text), widget (QPushButton, btnPrevImage)
+#: src/formats/vobsub/vobsubinputprocessdialog.ui:205
+#, kde-format
+msgid "Prev Image"
+msgstr "Önceki Görsel"
+
+#. i18n: ectx: property (toolTip), widget (QPushButton, btnPrevSymbol)
+#: src/formats/vobsub/vobsubinputprocessdialog.ui:219
+#, kde-format
+msgid "Ctrl+Left"
+msgstr "Ctrl+Sol"
+
+#. i18n: ectx: property (text), widget (QPushButton, btnPrevSymbol)
+#: src/formats/vobsub/vobsubinputprocessdialog.ui:222
+#, kde-format
+msgid "Prev Symbol"
+msgstr "Önceki Sembol"
+
+#. i18n: ectx: property (toolTip), widget (QPushButton, btnNextSymbol)
+#: src/formats/vobsub/vobsubinputprocessdialog.ui:236
+#, kde-format
+msgid "Ctrl+Right"
+msgstr "Ctrl+Sağ"
+
+#. i18n: ectx: property (text), widget (QPushButton, btnNextSymbol)
+#: src/formats/vobsub/vobsubinputprocessdialog.ui:239
+#, kde-format
+msgid "Next Symbol"
+msgstr "Sonraki Sembol"
+
+#. i18n: ectx: property (toolTip), widget (QPushButton, btnNextImage)
+#: src/formats/vobsub/vobsubinputprocessdialog.ui:250
+#, kde-format
+msgid "Ctrl+Shift+Right"
+msgstr "Ctrl+Shift+Sağ"
+
+#. i18n: ectx: property (text), widget (QPushButton, btnNextImage)
+#: src/formats/vobsub/vobsubinputprocessdialog.ui:253
+#, kde-format
+msgid "Next Image"
+msgstr "Sonraki Görsel"
+
+#. i18n: ectx: property (text), widget (QPushButton, btnAbort)
+#: src/formats/vobsub/vobsubinputprocessdialog.ui:280
+#, kde-format
+msgid "Abort"
+msgstr "İptal Et"
+
+#. i18n: ectx: property (title), widget (QGroupBox, grpPreview)
+#: src/formats/vobsub/vobsubinputprocessdialog.ui:303
+#, kde-format
+msgid "Subtitle Image"
+msgstr "Altyazı Görsel"
+
+#: src/gui/currentlinewidget.cpp:52
+#, kde-format
+msgid "<b>Show</b>"
+msgstr "<b>Göster</b>"
+
+#: src/gui/currentlinewidget.cpp:60
+#, kde-format
+msgid "<b>Hide</b>"
+msgstr "<b>Gizle</b>"
+
+#: src/gui/currentlinewidget.cpp:68
+#, kde-format
+msgid "<b>Duration</b>"
+msgstr "<b>Süre</b>"
+
+#: src/gui/currentlinewidget.cpp:261 src/gui/currentlinewidget.cpp:264
+#, kde-format
+msgid "No current line"
+msgstr "Geçerli satır yok"
+
+#: src/gui/currentlinewidget.cpp:336
+#, kde-format
+msgid "chars"
+msgstr "karakter"
+
+#: src/gui/currentlinewidget.cpp:344
+#, kde-format
+msgid "ms/char"
+msgstr "msn/karakter"
+
+#: src/gui/currentlinewidget.cpp:346
+#, kde-format
+msgid "chars/sec"
+msgstr "karakter/san"
+
+#: src/gui/playerwidget.cpp:72
+#, kde-format
+msgid "<b>Position</b>"
+msgstr "<b>Konum</b>"
+
+#: src/gui/playerwidget.cpp:80
+#, kde-format
+msgid "<b>Length</b>"
+msgstr "<b>Uzunluk</b>"
+
+#: src/gui/playerwidget.cpp:85
+#, kde-format
+msgid "<b>FPS</b>"
+msgstr "<b>FPS</b>"
+
+#: src/gui/playerwidget.cpp:91
+#, kde-format
+msgid "<b>Playback Rate</b>"
+msgstr "<b>Oynatma Hızı</b>"
+
+#: src/gui/playerwidget.cpp:660
+#, kde-format
+msgid "<qt>There was an error opening media file %1.</qt>"
+msgstr "<qt>%1 ortam dosyası açılırken bir hata oluştu.</qt>"
+
+#: src/gui/playerwidget.cpp:676 src/gui/playerwidget.cpp:677
+#: src/gui/playerwidget.cpp:678 src/gui/playerwidget.cpp:679
+#: src/gui/playerwidget.cpp:746 src/gui/playerwidget.cpp:754
+#: src/gui/playerwidget.cpp:760
+#, kde-format
+msgid "<i>Unknown</i>"
+msgstr "<i>Bilinmiyor</i>"
+
+#: src/gui/playerwidget.cpp:692 src/gui/playerwidget.cpp:694
+#, kde-format
+msgid "Unexpected error when playing file."
+msgstr "Dosya oynatılırken beklenmedik bir hata oluştu."
+
+#: src/gui/playerwidget.cpp:692 src/gui/playerwidget.cpp:694
+#, kde-format
+msgid "Error Playing File"
+msgstr "Dosya Oynatma Hatası"
+
+#: src/gui/treeview/linesmodel.cpp:151
+#, kde-format
+msgid "<b>Observations:</b>"
+msgstr "<b>Gözlemler:</b>"
+
+#: src/gui/treeview/linesmodel.cpp:178
+#, kde-format
+msgctxt "@title:column Subtitle line number"
+msgid "Line"
+msgstr "Satır"
+
+#: src/gui/treeview/linesmodel.cpp:179
+#, kde-format
+msgctxt "@title:column"
+msgid "Pause"
+msgstr "Duraklat"
+
+#: src/gui/treeview/linesmodel.cpp:180
+#, kde-format
+msgctxt "@title:column"
+msgid "Show Time"
+msgstr "Zamanı Göster"
+
+#: src/gui/treeview/linesmodel.cpp:181
+#, kde-format
+msgctxt "@title:column"
+msgid "Hide Time"
+msgstr "Zamanı Gizle"
+
+#: src/gui/treeview/linesmodel.cpp:182
+#, kde-format
+msgctxt "@title:column"
+msgid "Duration"
+msgstr "Süre"
+
+#: src/gui/treeview/linesmodel.cpp:183
+#, kde-format
+msgctxt "@title:column Subtitle line (primary) text"
+msgid "Text"
+msgstr "Metin"
+
+#: src/gui/treeview/linesmodel.cpp:184
+#, kde-format
+msgctxt "@title:column Subtitle line translation text"
+msgid "Translation"
+msgstr "Çeviri"
+
+#: src/gui/treeview/lineswidget.cpp:405
+#, kde-format
+msgid "Styles"
+msgstr "Biçemler"
+
+#: src/gui/treeview/lineswidget.cpp:414
+#, kde-format
+msgid "Times"
+msgstr "Zamanlar"
+
+#: src/gui/treeview/lineswidget.cpp:425
+#, kde-format
+msgid "Errors"
+msgstr "Hatalar"
+
+#: src/gui/treeview/richlineedit.cpp:81 src/widgets/simplerichtextedit.cpp:339
+#, kde-format
+msgid "Cut"
+msgstr "Kes"
+
+#: src/gui/treeview/richlineedit.cpp:88 src/widgets/simplerichtextedit.cpp:345
+#, kde-format
+msgid "Copy"
+msgstr "Kopyala"
+
+#: src/gui/treeview/richlineedit.cpp:95 src/widgets/simplerichtextedit.cpp:352
+#, kde-format
+msgid "Paste"
+msgstr "Yapıştır"
+
+#: src/gui/treeview/richlineedit.cpp:103 src/widgets/simplerichtextedit.cpp:365
+#, kde-format
+msgctxt "@action:inmenu Clear all text"
+msgid "Clear"
+msgstr "Temizle"
+
+#: src/gui/treeview/richlineedit.cpp:116 src/widgets/simplerichtextedit.cpp:376
+#, kde-format
+msgctxt "@action:inmenu Toggle bold style"
+msgid "Bold"
+msgstr "Kalın"
+
+#: src/gui/treeview/richlineedit.cpp:124 src/widgets/simplerichtextedit.cpp:383
+#, kde-format
+msgctxt "@action:inmenu Toggle italic style"
+msgid "Italic"
+msgstr "Yatık"
+
+#: src/gui/treeview/richlineedit.cpp:132 src/widgets/simplerichtextedit.cpp:390
+#, kde-format
+msgctxt "@action:inmenu Toggle underline style"
+msgid "Underline"
+msgstr "Altı Çizili"
+
+#: src/gui/treeview/richlineedit.cpp:140 src/widgets/simplerichtextedit.cpp:397
+#, kde-format
+msgctxt "@action:inmenu Toggle strike through style"
+msgid "Strike Through"
+msgstr "Üzeri Çizili"
+
+#: src/gui/treeview/richlineedit.cpp:148 src/widgets/simplerichtextedit.cpp:404
+#, kde-format
+msgctxt "@action:inmenu Change Text Color"
+msgid "Text Color"
+msgstr "Metin Rengi"
+
+#: src/gui/waveform/waveformwidget.cpp:115
+#, kde-format
+msgid "Generating waveform"
+msgstr "Dalga biçimi oluşturuluyor"
+
+#: src/gui/waveform/waveformwidget.cpp:672
+#, kde-format
+msgid "Select Line"
+msgstr "Satır Seç"
+
+#: src/gui/waveform/waveformwidget.cpp:687
+#, kde-format
+msgid "Remove Line"
+msgstr "Satır Kaldır"
+
+#: src/gui/waveform/waveformwidget.cpp:712
+#, kde-format
+msgid "Split Line"
+msgstr "Satır Böl"
+
+#: src/gui/waveform/waveformwidget.cpp:722
+#, kde-format
+msgid "Set Current Line Show Time"
+msgstr "Geçerli Satır Gösterim Zamanını Ayarla"
+
+#: src/gui/waveform/waveformwidget.cpp:727
+#, kde-format
+msgid "Set Current Line Hide Time"
+msgstr "Geçerli Satır Gizleme Zamanını Ayarla"
+
+#: src/helpers/languagecode.cpp:407
+#, kde-format
+msgid "Unknown"
+msgstr "Bilinmeyen"
+
+#: src/main.cpp:71
+#, kde-format
+msgid "The primary subtitle to be edited."
+msgstr "Düzenlenecek birincil altyazı."
+
+#: src/main.cpp:76
+#, kde-format
+msgid "The video to be subtitled."
+msgstr "Altyazılanacak video."
+
+#: src/main.cpp:81
+#, kde-format
+msgid ""
+"The translation subtitle to be edited.\n"
+"If included, a second pane gets added to the right of the primary subtitle "
+"for side-by-side translation."
+msgstr ""
+"Düzenlenecek altyazı çevirisi.\n"
+"İçerilirse yan yana çeviri için birincil altyazının sağına ikinci bir pano "
+"eklenir."
+
+#: src/main.cpp:210
+#, kde-format
+msgid "Subtitle Composer"
+msgstr "Altyazı Oluşturucu"
+
+#: src/main.cpp:212
+#, kde-format
+msgid "A KDE subtitle editor."
+msgstr "KDE altyazı düzenleyicisi."
+
+#: src/main.cpp:218
+#, kde-format
+msgid "Maintainer"
+msgstr "Projeyi Sürdüren"
+
+#: src/main.cpp:219
+#, kde-format
+msgid "Former Maintainer"
+msgstr "Önceden Projeyi Sürdüren"
+
+#: src/main.cpp:220
+#, kde-format
+msgid "Patches and Website"
+msgstr "Yamalar ve Web Sitesi"
+
+#: src/main.cpp:222
+#, kde-format
+msgctxt "NAME OF TRANSLATORS"
+msgid "Your names"
+msgstr "Emir SARI"
+
+#: src/main.cpp:222
+#, kde-format
+msgctxt "EMAIL OF TRANSLATORS"
+msgid "Your emails"
+msgstr "emir_sari@icloud.com"
+
+#: src/main.cpp:224
+#, kde-format
+msgid "code contributions"
+msgstr "kod katkıları"
+
+#: src/main.cpp:225
+#, kde-format
+msgid "code contributions, Arch Linux packaging"
+msgstr "kod katkıları, Arch Linux paketlemesi"
+
+#: src/main.cpp:227
+#, kde-format
+msgid "All people who have contributed and I have forgotten to mention"
+msgstr "Katkıda bulunan ve değinmeyi unuttuğum diğer herkes"
+
+#: src/mainwindow.cpp:35
+#, kde-format
+msgid "Waveform"
+msgstr "Dalga Biçimi"
+
+#: src/mainwindow.cpp:49
+#, kde-format
+msgid "Video Player"
+msgstr "Video Oynatıcı"
+
+#. i18n: ectx: label, entry (DefaultSubtitlesEncoding), group (General)
+#: src/scconfig.kcfg:10
+#, kde-format
+msgid "Default Subtitles Encoding"
+msgstr "Öntanımlı Altyazı Kodlaması"
+
+#. i18n: ectx: label, entry (TextLineBreak), group (General)
+#: src/scconfig.kcfg:14
+#, kde-format
+msgid "Line Break Character"
+msgstr "Satır Sonu Karakteri"
+
+#. i18n: ectx: label, entry (SeekOffsetOnDoubleClick), group (General)
+#: src/scconfig.kcfg:18
+#, kde-format
+msgid "Seek Offset On Double Click"
+msgstr "Çift Tıklamada Gidiş Ofseti"
+
+#. i18n: ectx: label, entry (JumpLineOffset), group (General)
+#: src/scconfig.kcfg:22
+#, kde-format
+msgid "Jump to prev/next line offset"
+msgstr "Ö&nceki/sonraki satıra atlama ofseti"
+
+#. i18n: ectx: label, entry (UnpauseOnDoubleClick), group (General)
+#: src/scconfig.kcfg:26
+#, kde-format
+msgid "Unpause On Double Click"
+msgstr "Çift Tıklamada Oynatmayı Sürdür"
+
+#. i18n: ectx: label, entry (AutomaticVideoLoad), group (General)
+#: src/scconfig.kcfg:30
+#, kde-format
+msgid "Automatic Video Load"
+msgstr "Otomatik Video Yükle"
+
+#. i18n: ectx: label, entry (LinesQuickShiftAmount), group (General)
+#: src/scconfig.kcfg:35
+#, kde-format
+msgid "Lines Quick Shift Amount"
+msgstr "Satır Hızlı Kaydırma Miktarı"
+
+#. i18n: ectx: label, entry (GrabbedPositionCompensation), group (General)
+#: src/scconfig.kcfg:39
+#, kde-format
+msgid "Grabbed Position Compensation"
+msgstr "Yakalanan Konum Tazmini"
+
+#. i18n: ectx: label, entry (LineDuration), group (General)
+#: src/scconfig.kcfg:44
+#, kde-format
+msgid "Default subtitle line duration"
+msgstr "Öntanımlı altyazı satır süresi"
+
+#. i18n: ectx: label, entry (LinePause), group (General)
+#: src/scconfig.kcfg:48
+#, kde-format
+msgid "Default duration between subtitle lines"
+msgstr "Altyazı satırları arasındaki öntanımlı süre"
+
+#. i18n: ectx: label, entry (MaxCharacters), group (Error Check)
+#: src/scconfig.kcfg:55
+#, kde-format
+msgid "Maximum number of characters"
+msgstr "En çok karakter sayısı"
+
+#. i18n: ectx: label, entry (MaxLines), group (Error Check)
+#: src/scconfig.kcfg:59
+#, kde-format
+msgid "Maximum number of lines"
+msgstr "En çok satır sayısı"
+
+#. i18n: ectx: label, entry (MinDuration), group (Error Check)
+#: src/scconfig.kcfg:64
+#, kde-format
+msgid "Minimum duration"
+msgstr "En kısa süre"
+
+#. i18n: ectx: label, entry (MaxDuration), group (Error Check)
+#: src/scconfig.kcfg:68
+#, kde-format
+msgid "Maximum duration"
+msgstr "En uzun süre"
+
+#. i18n: ectx: label, entry (MinDurationPerCharacter), group (Error Check)
+#: src/scconfig.kcfg:73
+#, kde-format
+msgid "Minimum duration per character"
+msgstr "Karakter başı en kısa süre"
+
+#. i18n: ectx: label, entry (IdealDurationPerCharacter), group (Error Check)
+#: src/scconfig.kcfg:77
+#, kde-format
+msgid "Ideal duration per character"
+msgstr "Karakter başı ideal süre"
+
+#. i18n: ectx: label, entry (MaxDurationPerCharacter), group (Error Check)
+#: src/scconfig.kcfg:81
+#, kde-format
+msgid "Maximum duration per character"
+msgstr "Karakter başı en uzun süre"
+
+#. i18n: ectx: label, entry (DefaultLanguage), group (Spelling)
+#: src/scconfig.kcfg:93
+#, kde-format
+msgid "Default Language"
+msgstr "Öntanımlı Dil"
+
+#. i18n: ectx: label, entry (DefaultClient), group (Spelling)
+#: src/scconfig.kcfg:97
+#, kde-format
+msgid "Default client"
+msgstr "Öntanımlı İstemci"
+
+#. i18n: ectx: label, entry (CheckUppercase), group (Spelling)
+#: src/scconfig.kcfg:101
+#, kde-format
+msgid "Check uppercase"
+msgstr "Büyük harf denetle"
+
+#. i18n: ectx: label, entry (SkipRunTogether), group (Spelling)
+#: src/scconfig.kcfg:105
+#, kde-format
+msgid "Skip Run Together"
+msgstr "Birlikte Çalışmayı Atla"
+
+#. i18n: ectx: label, entry (wfInnerColor), group (Waveform Widget)
+#: src/scconfig.kcfg:112
+#, kde-format
+msgid "Waveform Inner Color"
+msgstr "Dalga Biçimi İç Rengi"
+
+#. i18n: ectx: label, entry (wfOuterColor), group (Waveform Widget)
+#: src/scconfig.kcfg:116
+#, kde-format
+msgid "Waveform Outer Color"
+msgstr "Dalga Biçimi Dış Rengi"
+
+#. i18n: ectx: label, entry (wfSmoothScroll), group (Waveform Widget)
+#: src/scconfig.kcfg:120
+#, kde-format
+msgid "Waveform Smooth Scrolling"
+msgstr "Dalga Biçimi Pürüzsüz Kaydırma"
+
+#. i18n: ectx: label, entry (wfAutoscrollPadding), group (Waveform Widget)
+#: src/scconfig.kcfg:124
+#, kde-format
+msgid "Autoscroll Padding"
+msgstr "Otomatik Kaydırma Dolgusu"
+
+#. i18n: ectx: whatsthis, entry (wfAutoscrollPadding), group (Waveform Widget)
+#: src/scconfig.kcfg:126
+#, kde-format
+msgid ""
+"Autoscroll page when play position reaches ScrollPadding distance "
+"(percentage) from page border."
+msgstr ""
+"Oynatma konumu, sayfa kenarlığından Kaydırma Dolgusu uzaklığına (yüzde) "
+"ulaştığında sayfayı otomatik kaydır."
+
+#. i18n: ectx: label, entry (wfSubBackground), group (Waveform Widget)
+#: src/scconfig.kcfg:129
+#, kde-format
+msgid "Waveform Subtitle Background Color"
+msgstr "Dalga Biçimi Altyazı Arka Plan Rengi"
+
+#. i18n: ectx: label, entry (wfSubBorder), group (Waveform Widget)
+#: src/scconfig.kcfg:133
+#, kde-format
+msgid "Waveform Subtitle Border Color"
+msgstr "Dalga Biçimi Altyazı Kenarlık Rengi"
+
+#. i18n: ectx: label, entry (wfSubBorderWidth), group (Waveform Widget)
+#: src/scconfig.kcfg:137
+#, kde-format
+msgid "Waveform Subtitle Border Width"
+msgstr "Dalga Biçimi Altyazı Kenarlık Genişliği"
+
+#. i18n: ectx: label, entry (wfSelBackground), group (Waveform Widget)
+#: src/scconfig.kcfg:141
+#, kde-format
+msgid "Waveform Selected Subtitle Background Color"
+msgstr "Dalga Biçimi Seçili Altyazı Arka Plan Rengi"
+
+#. i18n: ectx: label, entry (wfSelBorder), group (Waveform Widget)
+#: src/scconfig.kcfg:145
+#, kde-format
+msgid "Waveform Selected Subtitle Border Color"
+msgstr "Dalga Biçimi Seçili Altyazı Kenarlık Rengi"
+
+#. i18n: ectx: label, entry (wfFontFamily), group (Waveform Widget)
+#. i18n: ectx: label, entry (FontFamily), group (VideoPlayer)
+#: src/scconfig.kcfg:149 src/scconfig.kcfg:201
+#, kde-format
+msgid "Font Family"
+msgstr "Yazıtipi Ailesi"
+
+#. i18n: ectx: label, entry (wfSubNumberFontSize), group (Waveform Widget)
+#: src/scconfig.kcfg:153
+#, kde-format
+msgid "Subtitle Number Font Size"
+msgstr "Altyazı Sayı Yazıtipi Boyutu"
+
+#. i18n: ectx: label, entry (wfSubNumberColor), group (Waveform Widget)
+#: src/scconfig.kcfg:157
+#, kde-format
+msgid "Subtitle Number Font Color"
+msgstr "Altyazı Sayı Yazıtipi Rengi"
+
+#. i18n: ectx: label, entry (wfSubTextFontSize), group (Waveform Widget)
+#: src/scconfig.kcfg:161
+#, kde-format
+msgid "Subtitle Text Font Size"
+msgstr "Altyazı Metin Yazıtipi Boyutu"
+
+#. i18n: ectx: label, entry (wfSubTextColor), group (Waveform Widget)
+#: src/scconfig.kcfg:165
+#, kde-format
+msgid "Subtitle Text Font Color"
+msgstr "Altyazı Metin Yazıtipi Rengi"
+
+#. i18n: ectx: label, entry (wfMouseLocation), group (Waveform Widget)
+#: src/scconfig.kcfg:169
+#, kde-format
+msgid "Mouse Location Line Color"
+msgstr "Fare Konumu Satır Rengi"
+
+#. i18n: ectx: label, entry (wfPlayLocation), group (Waveform Widget)
+#: src/scconfig.kcfg:173
+#, kde-format
+msgid "Play Location Line Color"
+msgstr "Oynatma Konumu Satır Rengi"
+
+#. i18n: ectx: label, entry (SeekJumpLength), group (VideoPlayer)
+#: src/scconfig.kcfg:184
+#, kde-format
+msgid "Jump length on seek"
+msgstr "Gidişte atlama uzunluğu"
+
+#. i18n: ectx: label, entry (StepJumpLength), group (VideoPlayer)
+#: src/scconfig.kcfg:188
+#, kde-format
+msgid "Amount of frames to skip when stepping"
+msgstr "Adım atarken atlanacak kare"
+
+#. i18n: ectx: label, entry (ShowPositionTimeEdit), group (VideoPlayer)
+#: src/scconfig.kcfg:192
+#, kde-format
+msgid "Show editable time position"
+msgstr "Düzenlenebilir zaman konumunu göster"
+
+#. i18n: ectx: label, entry (VolumeAmplification), group (VideoPlayer)
+#: src/scconfig.kcfg:196
+#, kde-format
+msgid "Volume Amplification"
+msgstr "Ses Düzeyi Yükseltmesi"
+
+#. i18n: ectx: label, entry (FontSize), group (VideoPlayer)
+#: src/scconfig.kcfg:205
+#, kde-format
+msgid "Font Size"
+msgstr "Yazıtipi Boyutu"
+
+#. i18n: ectx: label, entry (FontColor), group (VideoPlayer)
+#: src/scconfig.kcfg:209
+#, kde-format
+msgid "Font Color"
+msgstr "Yazıtipi Rengi"
+
+#. i18n: ectx: label, entry (OutlineColor), group (VideoPlayer)
+#: src/scconfig.kcfg:213
+#, kde-format
+msgid "Outline Color"
+msgstr "Dış Hat Rengi"
+
+#. i18n: ectx: label, entry (OutlineWidth), group (VideoPlayer)
+#: src/scconfig.kcfg:217
+#, kde-format
+msgid "Outline Width"
+msgstr "Dış Hat Genişliği"
+
+#: src/scripting/scriptsmanager.cpp:75
+#, kde-format
+msgid "Non-Script Files"
+msgstr "Betik Olmayan Dosyalar"
+
+#: src/scripting/scriptsmanager.cpp:157
+#, kde-format
+msgid "Title"
+msgstr "Başlık"
+
+#: src/scripting/scriptsmanager.cpp:158
+#, kde-format
+msgid "Version"
+msgstr "Sürüm"
+
+#: src/scripting/scriptsmanager.cpp:159
+#, kde-format
+msgid "Author"
+msgstr "Yazar"
+
+#: src/scripting/scriptsmanager.cpp:160
+#, kde-format
+msgid "Path"
+msgstr "Yol"
+
+#: src/scripting/scriptsmanager.cpp:354
+#, kde-format
+msgid "Information"
+msgstr "Bilgi"
+
+#: src/scripting/scriptsmanager.cpp:360
+#, kde-format
+msgid "Warning"
+msgstr "Uyarı"
+
+#: src/scripting/scriptsmanager.cpp:366
+#, kde-format
+msgid "Error"
+msgstr "Hata"
+
+#. i18n: ectx: property (text), widget (QPushButton, btnEdit)
+#: src/scripting/scriptsmanager.cpp:394 src/scripting/scriptsmanager.ui:74
+#, kde-format
+msgid "Edit"
+msgstr "Düzenle"
+
+#: src/scripting/scriptsmanager.cpp:397
+#, kde-format
+msgid "View"
+msgstr "Görünüm"
+
+#: src/scripting/scriptsmanager.cpp:462 src/scripting/scriptsmanager.cpp:527
+#, kde-format
+msgid ""
+"You must enter an unused name to continue.\n"
+"Would you like to enter another name?"
+msgstr ""
+"Sürdürmek için kullanılmayan bir ad girmelisiniz.\n"
+"Başka bir ad girmek ister misiniz?"
+
+#: src/scripting/scriptsmanager.cpp:463 src/scripting/scriptsmanager.cpp:528
+#, kde-format
+msgid "Name Already Used"
+msgstr "Ad Halihazırda Kullanılıyor"
+
+#: src/scripting/scriptsmanager.cpp:467
+#, kde-format
+msgid "Create New Script"
+msgstr "Yeni Betik Oluştur"
+
+#: src/scripting/scriptsmanager.cpp:467 src/scripting/scriptsmanager.cpp:531
+#, kde-format
+msgid "Script name:"
+msgstr "Betik adı:"
+
+#: src/scripting/scriptsmanager.cpp:475
+#, kde-format
+msgid "There was an error creating the file <b>%1</b>."
+msgstr "<b>%1</b> dosyası oluşturulurken bir hata oluştu."
+
+#: src/scripting/scriptsmanager.cpp:510
+#, kde-format
+msgid "Select Existing Script"
+msgstr "Var Olan Betiği Seç"
+
+#: src/scripting/scriptsmanager.cpp:531
+#, kde-format
+msgid "Rename Script"
+msgstr "Betiği Yeniden Adlandır"
+
+#: src/scripting/scriptsmanager.cpp:540
+#, kde-format
+msgid "There was an error opening the file <b>%1</b>."
+msgstr "<b>%1</b> dosyası açılırken bir hata oluştu."
+
+#: src/scripting/scriptsmanager.cpp:548
+#, kde-format
+msgid "There was an error copying the file to <b>%1</b>."
+msgstr "Dosya, <b>%1</b> konumuna kopyalanırken bir hata oluştu."
+
+#: src/scripting/scriptsmanager.cpp:563
+#, kde-format
+msgid "Do you really want to send file <b>%1</b> to the trash?"
+msgstr "<b>%1</b> dosyasını çöpe atmak istediğinize emin misiniz?"
+
+#: src/scripting/scriptsmanager.cpp:563
+#, kde-format
+msgid "Move to Trash"
+msgstr "Çöpe Taşı"
+
+#: src/scripting/scriptsmanager.cpp:567
+#, kde-format
+msgid "There was an error removing the file <b>%1</b>."
+msgstr "<b>%1</b> dosyası kaldırılırken bir hata oluştu."
+
+#: src/scripting/scriptsmanager.cpp:596
+#, kde-format
+msgid "Could not launch external editor.\n"
+msgstr "Dış düzenleyici çalıştırılamadı.\n"
+
+#: src/scripting/scriptsmanager.cpp:617
+#, kde-format
+msgid "Error opening script %1."
+msgstr "%1 betiği açılırken hata."
+
+#: src/scripting/scriptsmanager.cpp:617 src/scripting/scriptsmanager.cpp:632
+#: src/scripting/scriptsmanager.cpp:634
+#, kde-format
+msgid "Error Running Script"
+msgstr "Betik Çalıştırılırken Hata"
+
+#: src/scripting/scriptsmanager.cpp:630
+#, kde-format
+msgid "Path: %1"
+msgstr "Yol: %1"
+
+#: src/scripting/scriptsmanager.cpp:647
+#, kde-format
+msgid "Tools"
+msgstr "Araçlar"
+
+#. i18n: ectx: property (windowTitle), widget (QDialog, ScriptsManager)
+#: src/scripting/scriptsmanager.ui:14
+#, kde-format
+msgid "Scripts Manager"
+msgstr "Betik Yöneticisi"
+
+#. i18n: ectx: property (whatsThis), widget (QPushButton, btnCreate)
+#: src/scripting/scriptsmanager.ui:29
+#, kde-format
+msgid "Creates a new script file."
+msgstr "Yeni bir betik dosyası oluşturur."
+
+#. i18n: ectx: property (text), widget (QPushButton, btnCreate)
+#: src/scripting/scriptsmanager.ui:32
+#, kde-format
+msgid "Create..."
+msgstr "Oluştur..."
+
+#. i18n: ectx: property (whatsThis), widget (QPushButton, btnAdd)
+#: src/scripting/scriptsmanager.ui:43
+#, kde-format
+msgid "Copies an existing script from a specified location."
+msgstr "Belirtilen bir konumdan var olan bir betiği kopyalar."
+
+#. i18n: ectx: property (text), widget (QPushButton, btnAdd)
+#: src/scripting/scriptsmanager.ui:46
+#, kde-format
+msgid "Add..."
+msgstr "Ekle..."
+
+#. i18n: ectx: property (whatsThis), widget (QPushButton, btnRemove)
+#: src/scripting/scriptsmanager.ui:57
+#, kde-format
+msgid "Sends the selected script to the trash."
+msgstr "Seçili betiği çöpe atar."
+
+#. i18n: ectx: property (whatsThis), widget (QPushButton, btnEdit)
+#: src/scripting/scriptsmanager.ui:71
+#, kde-format
+msgid "Opens the selected script with an external editor."
+msgstr "Seçili betiği bir dış düzenleyici ile açar."
+
+#. i18n: ectx: property (whatsThis), widget (QPushButton, btnRun)
+#: src/scripting/scriptsmanager.ui:101
+#, kde-format
+msgid "Executes the selected script."
+msgstr "Seçili betiği çalıştırır."
+
+#. i18n: ectx: property (text), widget (QPushButton, btnRun)
+#: src/scripting/scriptsmanager.ui:104
+#, kde-format
+msgid "Run"
+msgstr "Çalıştır"
+
+#. i18n: ectx: property (whatsThis), widget (QPushButton, btnRefresh)
+#: src/scripting/scriptsmanager.ui:131
+#, kde-format
+msgid "Reloads the installed scripts list."
+msgstr "Kurulu betikler listesini yeniden yükler."
+
+#. i18n: ectx: property (text), widget (QPushButton, btnRefresh)
+#: src/scripting/scriptsmanager.ui:134
+#, kde-format
+msgid "Refresh"
+msgstr "Yenile"
+
+#. i18n: ectx: label, entry (acousticModelPath), group (PocketSphinx)
+#. i18n: ectx: property (toolTip), widget (QLabel, label_acousticModelPath)
+#: src/speechplugins/pocketsphinx/pocketsphinxconfig.kcfg:11
+#: src/speechplugins/pocketsphinx/pocketsphinxconfigwidget.ui:65
+#, kde-format
+msgid "Directory containing acoustic model files"
+msgstr "Akustik model dosyalarını içeren dizin"
+
+#. i18n: ectx: label, entry (trigramModelFile), group (PocketSphinx)
+#. i18n: ectx: property (toolTip), widget (QLabel, label_trigramModelFile)
+#: src/speechplugins/pocketsphinx/pocketsphinxconfig.kcfg:15
+#: src/speechplugins/pocketsphinx/pocketsphinxconfigwidget.ui:39
+#, kde-format
+msgid "Word trigram language model input file"
+msgstr "Sözcük trigram dil modeli girdi dosyası"
+
+#. i18n: ectx: label, entry (lexiconFile), group (PocketSphinx)
+#. i18n: ectx: property (toolTip), widget (QLabel, label_lexiconFile)
+#: src/speechplugins/pocketsphinx/pocketsphinxconfig.kcfg:19
+#: src/speechplugins/pocketsphinx/pocketsphinxconfigwidget.ui:26
+#, kde-format
+msgid "Main pronunciation dictionary (lexicon) input file"
+msgstr "Ana sesletim sözlüğü girdi dosyası"
+
+#. i18n: ectx: label, entry (vadPostSpeech), group (PocketSphinx)
+#. i18n: ectx: property (toolTip), widget (QLabel, label_vadPostSpeech)
+#: src/speechplugins/pocketsphinx/pocketsphinxconfig.kcfg:24
+#: src/speechplugins/pocketsphinx/pocketsphinxconfigwidget.ui:152
+#, kde-format
+msgid "Num of silence frames to keep after speech to silence transition"
+msgstr "Konuşmadan sessizliğe geçişten sonra tutulacak sessiz kareler"
+
+#. i18n: ectx: label, entry (vadPreSpeech), group (PocketSphinx)
+#. i18n: ectx: property (toolTip), widget (QLabel, label_vadPreSpeech)
+#: src/speechplugins/pocketsphinx/pocketsphinxconfig.kcfg:28
+#: src/speechplugins/pocketsphinx/pocketsphinxconfigwidget.ui:139
+#, kde-format
+msgid "Num of speech frames to keep before silence to speech transition"
+msgstr "Konuşmadan sessizliğe geçişten önce tutulacak sessiz kareler"
+
+#. i18n: ectx: label, entry (vadStartSpeech), group (PocketSphinx)
+#. i18n: ectx: property (toolTip), widget (QLabel, label_vadStartSpeech)
+#: src/speechplugins/pocketsphinx/pocketsphinxconfig.kcfg:32
+#: src/speechplugins/pocketsphinx/pocketsphinxconfigwidget.ui:165
+#, kde-format
+msgid "Num of speech frames to trigger VAD from silence to speech"
+msgstr ""
+"Konuşmadan sessizliğe geçişten VAD tetikleyecek konuşma kareleri sayısı"
+
+#. i18n: ectx: label, entry (vadTreshold), group (PocketSphinx)
+#. i18n: ectx: property (toolTip), widget (QDoubleSpinBox, kcfg_vadTreshold)
+#. i18n: ectx: property (toolTip), widget (QLabel, label_vadTreshold)
+#: src/speechplugins/pocketsphinx/pocketsphinxconfig.kcfg:36
+#: src/speechplugins/pocketsphinx/pocketsphinxconfigwidget.ui:106
+#: src/speechplugins/pocketsphinx/pocketsphinxconfigwidget.ui:126
+#, kde-format
+msgid ""
+"Threshold for decision between noise and silence frames. Log-ratio between "
+"signal level and noise level"
+msgstr ""
+"Gürültü ve sessiz kareler arası karar eşiği. Sinyal düzeyi ve gürültü düzeyi "
+"arasındaki logaritmik oran"
+
+#. i18n: ectx: property (title), widget (QGroupBox, grpModel)
+#: src/speechplugins/pocketsphinx/pocketsphinxconfigwidget.ui:20
+#, kde-format
+msgid "Speech Recognition Model"
+msgstr "Konuşma Tanıma Modeli"
+
+#. i18n: ectx: property (text), widget (QLabel, label_lexiconFile)
+#: src/speechplugins/pocketsphinx/pocketsphinxconfigwidget.ui:29
+#, kde-format
+msgid "Pronunciation Dictionary (Lexicon)"
+msgstr "Sesletim Sözlüğü"
+
+#. i18n: ectx: property (text), widget (QLabel, label_trigramModelFile)
+#: src/speechplugins/pocketsphinx/pocketsphinxconfigwidget.ui:42
+#, kde-format
+msgid "Trigram Model"
+msgstr "Trigram Modeli"
+
+#. i18n: ectx: property (text), widget (QLabel, label_acousticModelPath)
+#: src/speechplugins/pocketsphinx/pocketsphinxconfigwidget.ui:68
+#, kde-format
+msgid "Acoustic Model"
+msgstr "Akustik Model"
+
+#. i18n: ectx: property (text), widget (QLabel, label_modelInfoText)
+#: src/speechplugins/pocketsphinx/pocketsphinxconfigwidget.ui:78
+#, kde-format
+msgid ""
+"<html><head/><body><p align=\"center\">Acoustic and Language Models can be "
+"downloaded from <a href=\"https://cmusphinx.github.io/wiki/download/\"><span "
+"style=\" text-decoration: underline; color:#007af4;\">CMU Sphinx</span></a></"
+"p></body></html>"
+msgstr ""
+"<html><head/><body><p align=\"center\">Akustik ve Dil Modelleri indirmek "
+"için: <a href=\"https://cmusphinx.github.io/wiki/download/\"><span style=\" "
+"text-decoration: underline; color:#007af4;\">CMU Sphinx</span></a></p></"
+"body></html>"
+
+#. i18n: ectx: property (title), widget (QGroupBox, grpVAD)
+#: src/speechplugins/pocketsphinx/pocketsphinxconfigwidget.ui:100
+#, kde-format
+msgid "Voice Activity Detection"
+msgstr "Ses Etkinliği Algılaması"
+
+#. i18n: ectx: property (text), widget (QLabel, label_vadTreshold)
+#: src/speechplugins/pocketsphinx/pocketsphinxconfigwidget.ui:129
+#, kde-format
+msgid "Noise Threshold"
+msgstr "Gürültü Eşiği"
+
+#. i18n: ectx: property (text), widget (QLabel, label_vadPreSpeech)
+#: src/speechplugins/pocketsphinx/pocketsphinxconfigwidget.ui:142
+#, kde-format
+msgid "Pre Speech Frames"
+msgstr "Konuşma Öncesi Kareler"
+
+#. i18n: ectx: property (text), widget (QLabel, label_vadPostSpeech)
+#: src/speechplugins/pocketsphinx/pocketsphinxconfigwidget.ui:155
+#, kde-format
+msgid "Post Speech Frames"
+msgstr "Konuşma Sonrası Kareler"
+
+#. i18n: ectx: property (text), widget (QLabel, label_vadStartSpeech)
+#: src/speechplugins/pocketsphinx/pocketsphinxconfigwidget.ui:168
+#, kde-format
+msgid "Start Speech Frames"
+msgstr "Konuşma Başlatma Kareleri"
+
+#: src/speechprocessor/speechprocessor.cpp:40
+#, kde-format
+msgid "Recognizing speech"
+msgstr "Konuşma tanınıyor"
+
+#: src/speechprocessor/speechprocessor.cpp:48
+#, kde-format
+msgid "Abort speech recognition"
+msgstr "Konuşma tanıma hakkında"
+
+#: src/speechprocessor/speechprocessor.cpp:97
+#, kde-format
+msgid "No speech recognition plugins available"
+msgstr "Kullanılabilir konuşma tanıma eklentisi yok"
+
+#: src/speechprocessor/speechprocessor.cpp:102
+#, kde-format
+msgid "Initialization of speech recognition plugin failed"
+msgstr "Konuşma tanıma eklentisi ilklendirmesi başarısız"
+
+#: src/speechprocessor/speechprocessor.cpp:172
+#, kde-format
+msgid ""
+"Speech Recognition failed: %2\n"
+"Code %1: %3"
+msgstr ""
+"Konuşma tanıma başarısız: %2\n"
+"Kod %1: %3"
+
+#. i18n: ectx: Menu (file)
+#: src/subtitlecomposerui.rc:5
+#, kde-format
+msgid "&File"
+msgstr "&Dosya"
+
+#. i18n: ectx: Menu (translation)
+#: src/subtitlecomposerui.rc:20
+#, kde-format
+msgid "Translation"
+msgstr "Çeviri"
+
+#. i18n: ectx: Menu (edit)
+#: src/subtitlecomposerui.rc:33
+#, kde-format
+msgid "&Edit"
+msgstr "Dü&zen"
+
+#. i18n: ectx: Menu (texts)
+#: src/subtitlecomposerui.rc:56
+#, kde-format
+msgid "&Texts"
+msgstr "&Metinler"
+
+#. i18n: ectx: Menu (styles)
+#: src/subtitlecomposerui.rc:67
+#, kde-format
+msgid "St&yles"
+msgstr "Biç&emler"
+
+#. i18n: ectx: Menu (times)
+#: src/subtitlecomposerui.rc:75
+#, kde-format
+msgid "T&imes"
+msgstr "Z&amanlar"
+
+#. i18n: ectx: Menu (errors)
+#: src/subtitlecomposerui.rc:96
+#, kde-format
+msgid "E&rrors"
+msgstr "&Hatalar"
+
+#. i18n: ectx: Menu (video)
+#: src/subtitlecomposerui.rc:105
+#, kde-format
+msgid "&Video"
+msgstr "&Video"
+
+#. i18n: ectx: Menu (tools)
+#: src/subtitlecomposerui.rc:140
+#, kde-format
+msgid "T&ools"
+msgstr "A&raçlar"
+
+#. i18n: ectx: ToolBar (mainToolBar)
+#: src/subtitlecomposerui.rc:145
+#, kde-format
+msgid "Main Toolbar"
+msgstr "Ana Araç Çubuğu"
+
+#. i18n: ectx: ToolBar (editToolBar)
+#: src/subtitlecomposerui.rc:156
+#, kde-format
+msgid "Edit Toolbar"
+msgstr "Araç Çubuğunu Düzenle"
+
+#: src/utils/finder.cpp:45
+#, kde-format
+msgid "Find In"
+msgstr "Şurada Bul"
+
+#: src/utils/finder.cpp:246
+#, kde-format
+msgid "No instances of '%1' found!"
+msgstr "Bir '%1' örneği bulunamadı!"
+
+#: src/utils/finder.cpp:246 src/utils/finder.cpp:260
+#, kde-format
+msgid "Find"
+msgstr "Bul"
+
+#: src/utils/finder.cpp:260 src/utils/speller.cpp:135
+#, kde-format
+msgid ""
+"End of subtitle reached.\n"
+"Continue from the beginning?"
+msgstr ""
+"Altyazının sonuna erişildi.\n"
+"Baştan sürdürülsün mü?"
+
+#: src/utils/finder.cpp:260
+#, kde-format
+msgid ""
+"Beginning of selection reached.\n"
+"Continue from the end?"
+msgstr ""
+"Seçimin başına erişildi.\n"
+"Sondan sürdürülsün mü?"
+
+#: src/utils/finder.cpp:260
+#, kde-format
+msgid ""
+"Beginning of subtitle reached.\n"
+"Continue from the end?"
+msgstr ""
+"Altyazının başına erişildi.\n"
+"Sondan sürdürülsün mü?"
+
+#: src/utils/finder.cpp:260
+#, kde-format
+msgid ""
+"End of selection reached.\n"
+"Continue from the beginning?"
+msgstr ""
+"Seçimin sonuna erişildi.\n"
+"Baştan sürdürülsün mü?"
+
+#: src/utils/language.cpp:115
+#, kde-format
+msgid "Automatic"
+msgstr "Otomatik"
+
+#: src/utils/language.cpp:122
+#, kde-format
+msgctxt "Official language of the Philippines, aka Filipino"
+msgid "Tagalog"
+msgstr "Tagalog"
+
+#: src/utils/replacer.cpp:43
+#, kde-format
+msgid "Find/Replace In"
+msgstr "Şurada Bul/Değiştir"
+
+#: src/utils/replacer.cpp:250
+#, kde-format
+msgid "Replace"
+msgstr "Değiştir"
+
+#: src/utils/speller.cpp:135
+#, kde-format
+msgid "Spell Checking"
+msgstr "Yazım Denetimi"
+
+#: src/utils/translator.cpp:163
+#, kde-format
+msgid "Operation canceled by user"
+msgstr "İşlem, kullanıcı tarafından iptal edildi"
+
+#: src/utils/translator.cpp:263 src/utils/translator.cpp:272
+#, kde-format
+msgid "Unexpected contents received from translation service"
+msgstr "Çeviri hizmetinden beklenmedik içerik alındı"
+
+#: src/videoplayer/backend/videostate.cpp:110
+#, kde-format
+msgid "Video Stream #%1"
+msgstr "Video Akışı #%1"
+
+#: src/videoplayer/backend/videostate.cpp:114
+#, kde-format
+msgid "Audio Stream #%1"
+msgstr "Ses Akışı #%1"
+
+#: src/videoplayer/backend/videostate.cpp:120
+#, kde-format
+msgid "Subtitle Stream #%1"
+msgstr "Altyazı Akışı #%1"
+
+#: src/videoplayer/videoplayer.cpp:115
+#, kde-format
+msgid "File does not exist."
+msgstr "Dosya yok."
+
+#: src/widgets/simplerichtextedit.cpp:254
+#, kde-format
+msgid "Suggestions"
+msgstr "Öneriler"
+
+#: src/widgets/simplerichtextedit.cpp:255
+#, kde-format
+msgid "Ignore"
+msgstr "Yok Say"
+
+#: src/widgets/simplerichtextedit.cpp:256
+#, kde-format
+msgid "Add to Dictionary"
+msgstr "Sözlüğe Ekle"
+
+#: src/widgets/simplerichtextedit.cpp:260
+#, kde-format
+msgid "No suggestions"
+msgstr "Öneri yok"
+
+#: src/widgets/simplerichtextedit.cpp:359
+#, kde-format
+msgid "Delete"
+msgstr "Sil"
+
+#: src/widgets/simplerichtextedit.cpp:410
+#, kde-format
+msgid "Check Spelling..."
+msgstr "Yazımı Denetle..."
+
+#: src/widgets/simplerichtextedit.cpp:415
+#, kde-format
+msgid "Auto Spell Check"
+msgstr "Otomatik Yazım Denetimi"
+
+#: src/widgets/simplerichtextedit.cpp:420
+#, kde-format
+msgid "Allow Tabulations"
+msgstr "Sekmelere İzin Ver"

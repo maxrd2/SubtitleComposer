@@ -1,0 +1,4135 @@
+# Copyright (C) YEAR This file is copyright:
+# This file is distributed under the same license as the subtitlecomposer package.
+#
+# Marek Laane <qiilaq69@gmail.com>, 2020.
+msgid ""
+msgstr ""
+"Project-Id-Version: subtitlecomposer\n"
+"Report-Msgid-Bugs-To: https://bugs.kde.org\n"
+"POT-Creation-Date: 2022-03-22 00:42+0000\n"
+"PO-Revision-Date: 2020-02-21 11:52+0200\n"
+"Last-Translator: Marek Laane <qiilaq69@gmail.com>\n"
+"Language-Team: Estonian <kde-et@lists.linux.ee>\n"
+"Language: et\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Lokalize 19.08.1\n"
+
+#: src/actions/kcodecactionext.cpp:29
+#, kde-format
+msgctxt "Encodings menu"
+msgid "Default: %1"
+msgstr "Vaikimisi: %1"
+
+#: src/actions/kcodecactionext.cpp:35 src/actions/kcodecactionext.cpp:78
+#, kde-format
+msgctxt "Encodings menu"
+msgid "Current: %1"
+msgstr "Aktiivne: %1"
+
+#: src/actions/kcodecactionext.cpp:41
+#, kde-format
+msgctxt "Encodings menu"
+msgid "Autodetect"
+msgstr "Automaatne tuvastamine"
+
+#: src/application.cpp:451
+#, kde-format
+msgid "Go to Line"
+msgstr "Liikumine reale"
+
+#: src/application.cpp:451
+#, kde-format
+msgid "&Go to line:"
+msgstr "L&iikumine reale:"
+
+#: src/application.cpp:626 src/core/subtitle.cpp:862
+#, kde-format
+msgid "Maximize Durations"
+msgstr "Maksimeeri kestused "
+
+#: src/application.cpp:655 src/core/subtitle.cpp:1137
+#, kde-format
+msgid "Unbreak Lines"
+msgstr "Eemalda reamurdmine "
+
+#: src/application.cpp:666 src/core/subtitle.cpp:1146
+#, kde-format
+msgid "Simplify Spaces"
+msgstr "Lihtsusta tühikuid"
+
+#: src/application.cpp:720 src/dialogs/translatedialog.cpp:20
+#, kde-format
+msgid "Translate"
+msgstr "Tõlgi "
+
+#: src/application.cpp:720
+#, kde-format
+msgid "Translating text (%1 to %2)..."
+msgstr "Teksti tõlkimine (%1 -> %2) ..."
+
+#: src/application.cpp:724
+#, kde-format
+msgid "Translating primary text (%1 to %2)..."
+msgstr "Esmase teksti tõlkimine (%1 -> %2) ..."
+
+#: src/application.cpp:725
+#, kde-format
+msgid "Translating secondary text (%1 to %2)..."
+msgstr "Teisese teksti tõlkimine (%1 -> %2) ..."
+
+#: src/application.cpp:753
+#, kde-format
+msgid ""
+"Unable to perform texts synchronization (sent and received lines count do "
+"not match)."
+msgstr ""
+"Teksti sünkroonimine ei õnnestunud (saadetud ja saadud read ei sobi kokku)."
+
+#: src/application.cpp:757
+#, kde-format
+msgid "Translate Primary Text"
+msgstr "Tõlgi esmast teksti"
+
+#: src/application.cpp:757
+#, kde-format
+msgid "Translate Secondary Text"
+msgstr "Tõlgi teisest teksti"
+
+#: src/application.cpp:772
+#, kde-format
+msgid ""
+"There was an error performing the translation:\n"
+"\n"
+"%1"
+msgstr ""
+"Tõlkimisel tekkis tõrge:\n"
+"\n"
+"%1"
+
+#: src/application.cpp:810
+#, kde-format
+msgid "Open Video"
+msgstr "Video avamine"
+
+#: src/application.cpp:1008 src/application.cpp:1015
+#: src/application_subtitle.cpp:652
+#, kde-format
+msgid "Untitled"
+msgstr "Pealkirjata"
+
+#: src/application.cpp:1010 src/application_subtitle.cpp:652
+#, kde-format
+msgid "Untitled Translation"
+msgstr "Pealkirjata tõlge"
+
+#: src/application.cpp:1111
+#, kde-format
+msgid "Pause"
+msgstr "Paus"
+
+#: src/application.cpp:1119 src/application_actions.cpp:566
+#, kde-format
+msgid "Play"
+msgstr "Esita"
+
+#: src/application.cpp:1180
+#, kde-format
+msgid "Seek backwards 1 second"
+msgid_plural "Seek backwards %1 seconds"
+msgstr[0] "Otsing 1 sekund tagasi"
+msgstr[1] "Otsing %1 sekundit tagasi"
+
+#: src/application.cpp:1181
+#, kde-format
+msgid "Seek forwards 1 second"
+msgid_plural "Seek forwards %1 seconds"
+msgstr[0] "Otsing 1 sekund edasi"
+msgstr[1] "Otsing %1 sekundit edasi"
+
+#: src/application.cpp:1184 src/application.cpp:1188
+#, kde-format
+msgid "Shift %2%1 millisecond"
+msgid_plural "Shift %2%1 milliseconds"
+msgstr[0] "Nihe %2%1 millisekundit"
+msgstr[1] "Nihe %2%1 millisekundit"
+
+#: src/application.cpp:1185 src/application.cpp:1189
+#, kde-format
+msgid "Shift selected lines %2%1 millisecond"
+msgid_plural "Shift selected lines %2%1 milliseconds"
+msgstr[0] "Valitud ridade nihutamine %2%1 millisekundit"
+msgstr[1] "Valitud ridade nihutamine %2%1 millisekundit"
+
+#: src/application_actions.cpp:32
+#, kde-format
+msgid "Exit the application"
+msgstr "Rakendusest väljumine"
+
+#: src/application_actions.cpp:35
+#, kde-format
+msgid "Configure Subtitle Composer"
+msgstr "Subtiitrilooja seadistamine"
+
+#: src/application_actions.cpp:39
+#, kde-format
+msgctxt "@action:inmenu Create a new subtitle"
+msgid "New"
+msgstr "Uus"
+
+#: src/application_actions.cpp:40
+#, kde-format
+msgid "Create an empty subtitle"
+msgstr "Tühja subtiitri loomine"
+
+#: src/application_actions.cpp:48
+#, kde-format
+msgctxt "@action:inmenu Open subtitle file"
+msgid "Open Subtitle..."
+msgstr "Ava subtiiter ..."
+
+#: src/application_actions.cpp:49 src/application_actions.cpp:66
+#, kde-format
+msgid "Open subtitle file"
+msgstr "Subtiitrifaili avamine"
+
+#: src/application_actions.cpp:57
+#, kde-format
+msgid "Reload As..."
+msgstr "Laadi uuesti kui ..."
+
+#: src/application_actions.cpp:58
+#, kde-format
+msgid "Reload opened file with a different encoding"
+msgstr "Avatud faili taaslaadimine teises kodeeringus"
+
+#: src/application_actions.cpp:65
+#, kde-format
+msgctxt "@action:inmenu Open rencently used subtitle file"
+msgid "Open &Recent Subtitle"
+msgstr "Ava &hiljutine subtiiter"
+
+#: src/application_actions.cpp:72
+#, kde-format
+msgid "Save"
+msgstr "Salvesta"
+
+#: src/application_actions.cpp:73
+#, kde-format
+msgid "Save opened subtitle"
+msgstr "Avatud subtiitri salvestamine"
+
+#: src/application_actions.cpp:81
+#, kde-format
+msgid "Save As..."
+msgstr "Salvesta kui ..."
+
+#: src/application_actions.cpp:82
+#, kde-format
+msgid "Save opened subtitle with different settings"
+msgstr "Avatud subtiitri salvestamine teiste seadistustega"
+
+#: src/application_actions.cpp:90
+#, kde-format
+msgid "Close"
+msgstr "Sulge"
+
+#: src/application_actions.cpp:91
+#, kde-format
+msgid "Close opened subtitle"
+msgstr "Avatud subtiitri sulgemine"
+
+#: src/application_actions.cpp:99
+#, kde-format
+msgid "New Translation"
+msgstr "Uus tõlge"
+
+#: src/application_actions.cpp:100
+#, kde-format
+msgid "Create an empty translation subtitle"
+msgstr "Tühja subtiitritõlke loomine"
+
+#: src/application_actions.cpp:108
+#, kde-format
+msgid "Open Translation..."
+msgstr "Ava tõlge ..."
+
+#: src/application_actions.cpp:109 src/application_actions.cpp:126
+#, kde-format
+msgid "Open translation subtitle file"
+msgstr "Tõlke subtiitrifaili avamine"
+
+#: src/application_actions.cpp:117
+#, kde-format
+msgid "Reload Translation As..."
+msgstr "Laadi tõlge uuesti kui ..."
+
+#: src/application_actions.cpp:118
+#, kde-format
+msgid "Reload opened translation file with a different encoding"
+msgstr "Avatud tõlkefaili taaslaadimine teises kodeeringus"
+
+#: src/application_actions.cpp:125
+#, kde-format
+msgid "Open &Recent Translation"
+msgstr "Ava &hiljutine tõlge"
+
+#: src/application_actions.cpp:133
+#, kde-format
+msgid "Save Translation"
+msgstr "Salvesta tõlge"
+
+#: src/application_actions.cpp:134
+#, kde-format
+msgid "Save opened translation subtitle"
+msgstr "Avatud subtiitritõlke salvestamine"
+
+#: src/application_actions.cpp:144
+#, kde-format
+msgid "Save Translation As..."
+msgstr "Salvesta tõlge kui ..."
+
+#: src/application_actions.cpp:145
+#, kde-format
+msgid "Save opened translation subtitle with different settings"
+msgstr "Avatud subtiitritõlke salvestamine teiste seadistustega"
+
+#: src/application_actions.cpp:153
+#, kde-format
+msgid "Close Translation"
+msgstr "Sulge tõlge"
+
+#: src/application_actions.cpp:154
+#, kde-format
+msgid "Close opened translation subtitle"
+msgstr "Avatud subtiitritõlke sulgemine"
+
+#: src/application_actions.cpp:171
+#, kde-format
+msgid "Split Subtitle..."
+msgstr "Tükelda subtiiter ..."
+
+#: src/application_actions.cpp:172
+#, kde-format
+msgid "Split the opened subtitle in two parts"
+msgstr "Avatud subtiitri tükeldamine kaheks"
+
+#: src/application_actions.cpp:178
+#, kde-format
+msgid "Join Subtitles..."
+msgstr "Ühenda subtiitrid ..."
+
+#: src/application_actions.cpp:179
+#, kde-format
+msgid "Append to the opened subtitle another one"
+msgstr "Avatud subtiitrile teise lisamine"
+
+#: src/application_actions.cpp:186
+#, kde-format
+msgid "Insert Before"
+msgstr "Lisa ette"
+
+#: src/application_actions.cpp:187
+#, kde-format
+msgid "Insert empty line before current one"
+msgstr "Tühja rea lisamine aktiivse rea ette"
+
+#: src/application_actions.cpp:195
+#, kde-format
+msgid "Insert After"
+msgstr "Lisa järele"
+
+#: src/application_actions.cpp:196
+#, kde-format
+msgid "Insert empty line after current one"
+msgstr "Tühja rea lisamine aktiivse rea järele"
+
+#. i18n: ectx: property (text), widget (QPushButton, btnRemove)
+#: src/application_actions.cpp:204 src/scripting/scriptsmanager.ui:60
+#, kde-format
+msgid "Remove"
+msgstr "Eemalda"
+
+#: src/application_actions.cpp:205
+#, kde-format
+msgid "Remove selected lines"
+msgstr "Valitud ridade eemaldamine"
+
+#: src/application_actions.cpp:212 src/core/subtitle.cpp:544
+#, kde-format
+msgid "Split Lines"
+msgstr "Tükelda read"
+
+#: src/application_actions.cpp:213
+#, kde-format
+msgid "Split selected lines"
+msgstr "Valitud ridade tükeldamine"
+
+#: src/application_actions.cpp:219 src/core/subtitle.cpp:626
+#: src/gui/waveform/waveformwidget.cpp:694
+#, kde-format
+msgid "Join Lines"
+msgstr "Ühenda read"
+
+#: src/application_actions.cpp:220
+#, kde-format
+msgid "Join selected lines"
+msgstr "Valitud ridade ühendamine"
+
+#: src/application_actions.cpp:227 src/errors/finderrorsdialog.cpp:114
+#: src/gui/treeview/richlineedit.cpp:109 src/widgets/simplerichtextedit.cpp:370
+#, kde-format
+msgid "Select All"
+msgstr "Vali kõik"
+
+#: src/application_actions.cpp:228
+#, kde-format
+msgid "Select all lines"
+msgstr "Kõigi ridade valimine"
+
+#: src/application_actions.cpp:235
+#, kde-format
+msgid "Go to Line..."
+msgstr "Liigu reale ..."
+
+#: src/application_actions.cpp:236
+#, kde-format
+msgid "Go to specified line"
+msgstr "Liikumine määratud reale"
+
+#: src/application_actions.cpp:244
+#, kde-format
+msgid "Find..."
+msgstr "Otsi ..."
+
+#: src/application_actions.cpp:245
+#, kde-format
+msgid "Find occurrences of strings or regular expressions"
+msgstr "Stringide või regulaaravaldiste vastete otsimine"
+
+#: src/application_actions.cpp:253
+#, kde-format
+msgid "Find Next"
+msgstr "Leia järgmine"
+
+#: src/application_actions.cpp:254
+#, kde-format
+msgid "Find next occurrence of string or regular expression"
+msgstr "Stringi või regulaaravaldise järgmise vaste otsimine"
+
+#: src/application_actions.cpp:262
+#, kde-format
+msgid "Find Previous"
+msgstr "Leia eelmine"
+
+#: src/application_actions.cpp:263
+#, kde-format
+msgid "Find previous occurrence of string or regular expression"
+msgstr "Stringi või regulaaravaldise eelmise vaste otsimine"
+
+#: src/application_actions.cpp:270
+#, kde-format
+msgid "Replace..."
+msgstr "Asenda ..."
+
+#: src/application_actions.cpp:271
+#, kde-format
+msgid "Replace occurrences of strings or regular expressions"
+msgstr "Leitud stringide või regulaaravaldiste vastete asendamine"
+
+#: src/application_actions.cpp:279
+#, kde-format
+msgid "Retrocede current line"
+msgstr "Tagasi eelmisele reale"
+
+#: src/application_actions.cpp:280
+#, kde-format
+msgid "Makes the line before the current one active"
+msgstr "Aktiivseks muudetakse praegusele eelnev rida"
+
+#: src/application_actions.cpp:288
+#, kde-format
+msgid "Advance current line"
+msgstr "Edasi järgmisele reale"
+
+#: src/application_actions.cpp:289
+#, kde-format
+msgid "Makes the line after the current one active"
+msgstr "Aktiivseks muudetakse praegusele järgnev rida"
+
+#: src/application_actions.cpp:297
+#, kde-format
+msgid "Detect Errors..."
+msgstr "Leia vead ..."
+
+#: src/application_actions.cpp:298
+#, kde-format
+msgid "Detect errors in the current subtitle"
+msgstr "Vigade tuvastamine aktiivses subtiitris"
+
+#: src/application_actions.cpp:305
+#, kde-format
+msgid "Clear Errors/Marks"
+msgstr "Puhasta vead/märgised"
+
+#: src/application_actions.cpp:306
+#, kde-format
+msgid "Clear detected errors and marks in the current subtitle"
+msgstr "Aktiivses subtiitris tuvastatud vigade ja märgiste puhastamine"
+
+#: src/application_actions.cpp:314
+#, kde-format
+msgid "Select Next Error/Mark"
+msgstr "Vali järgmine viga/märgis"
+
+#: src/application_actions.cpp:315
+#, kde-format
+msgid "Select next line with error or mark"
+msgstr "Järgmise vea või märgisega rea valimine"
+
+#: src/application_actions.cpp:323
+#, kde-format
+msgid "Select Previous Error/Mark"
+msgstr "Vali eelmine viga/märgis"
+
+#: src/application_actions.cpp:324
+#, kde-format
+msgid "Select previous line with error or mark"
+msgstr "Eelmise vea või märgisega rea valimine"
+
+#: src/application_actions.cpp:332
+#, kde-format
+msgid "Spelling..."
+msgstr "Õigekiri ..."
+
+#: src/application_actions.cpp:333
+#, kde-format
+msgid "Check lines spelling"
+msgstr "Ridade õigekirja kontrollimine"
+
+#: src/application_actions.cpp:339
+#, kde-format
+msgid "Toggle Mark"
+msgstr "Lülita märgist"
+
+#: src/application_actions.cpp:340
+#, kde-format
+msgid "Toggle mark on selected lines"
+msgstr "Valitud ridade märgise lülitamine"
+
+#: src/application_actions.cpp:348 src/gui/currentlinewidget.cpp:141
+#, kde-format
+msgid "Toggle Bold"
+msgstr "Lülita rasvast kirja"
+
+#: src/application_actions.cpp:349
+#, kde-format
+msgid "Toggle selected lines bold attribute"
+msgstr "Valitud ridade rasvase kirja atribuudi lülitamine"
+
+#: src/application_actions.cpp:357 src/gui/currentlinewidget.cpp:145
+#, kde-format
+msgid "Toggle Italic"
+msgstr "Lülita kaldkirja"
+
+#: src/application_actions.cpp:358
+#, kde-format
+msgid "Toggle selected lines italic attribute"
+msgstr "Valitud ridade kaldkirja atribuudi lülitamine"
+
+#: src/application_actions.cpp:366 src/gui/currentlinewidget.cpp:149
+#, kde-format
+msgid "Toggle Underline"
+msgstr "Lülita allajoonimist"
+
+#: src/application_actions.cpp:367
+#, kde-format
+msgid "Toggle selected lines underline attribute"
+msgstr "Valitud ridade allajoonimise atribuudi lülitamine"
+
+#: src/application_actions.cpp:375 src/gui/currentlinewidget.cpp:153
+#, kde-format
+msgid "Toggle Strike Through"
+msgstr "Lülita läbikriipsutust"
+
+#: src/application_actions.cpp:376
+#, kde-format
+msgid "Toggle selected lines strike through attribute"
+msgstr "Valitud ridade läbikriipsutamise atribuudi lülitamine"
+
+#: src/application_actions.cpp:384 src/gui/currentlinewidget.cpp:157
+#, kde-format
+msgid "Change Text Color"
+msgstr "Muuda teksti värvi"
+
+#: src/application_actions.cpp:385
+#, kde-format
+msgid "Change text color of selected lines"
+msgstr "Valitud ridade teksti värvi muutmine"
+
+#: src/application_actions.cpp:392
+#, kde-format
+msgid "Shift..."
+msgstr "Nihuta ..."
+
+#: src/application_actions.cpp:393
+#, kde-format
+msgid "Shift lines an specified amount of time"
+msgstr "Ridade nihutamine määratud ajakoguse võrra"
+
+#: src/application_actions.cpp:412
+#, kde-format
+msgid "Adjust..."
+msgstr "Kohanda ..."
+
+#: src/application_actions.cpp:413
+#, kde-format
+msgid "Linearly adjust all lines to a specified interval"
+msgstr "Kõigi ridade lineaarne kohandamine määratud intervalli alusel"
+
+#: src/application_actions.cpp:420
+#, kde-format
+msgid "Change Frame Rate..."
+msgstr "Muuda kaadrisagedust ..."
+
+#: src/application_actions.cpp:421
+#, kde-format
+msgid "Retime subtitle lines by reinterpreting its frame rate"
+msgstr "Subtiitri ridade ümberajastamine muudetud kaadrisageduse põhjal"
+
+#: src/application_actions.cpp:427
+#, kde-format
+msgid "Enforce Duration Limits..."
+msgstr "Rakenda kestusepiirangud ..."
+
+#: src/application_actions.cpp:428
+#, kde-format
+msgid "Enforce lines minimum and/or maximum duration limits"
+msgstr "Ridade minimaalse ja/või maksimaalse kestmise piirangute rakendamine"
+
+#: src/application_actions.cpp:435
+#, kde-format
+msgid "Set Automatic Durations..."
+msgstr "Määra automaatsed kestused ..."
+
+#: src/application_actions.cpp:436
+#, kde-format
+msgid "Set lines durations based on amount of letters, words and line breaks"
+msgstr "Ridade kestmise määramine tähtede, sõnade ja reavahetuste hulga alusel"
+
+#: src/application_actions.cpp:442
+#, kde-format
+msgid "Maximize Durations..."
+msgstr "Maksimeeri kestused ..."
+
+#: src/application_actions.cpp:443
+#, kde-format
+msgid "Extend lines durations up to their next lines show time"
+msgstr "Ridade kestuse pikendamine järgmiste ridade näitamisajani"
+
+#: src/application_actions.cpp:449
+#, kde-format
+msgid "Fix Overlapping Times..."
+msgstr "Paranda ajalised kattuvused ..."
+
+#: src/application_actions.cpp:450
+#, kde-format
+msgid "Fix lines overlapping times"
+msgstr "Kattuvate aegadega ridade parandamine"
+
+#: src/application_actions.cpp:456
+#, kde-format
+msgid "Synchronize with Subtitle..."
+msgstr "Sünkrooni subtiitriga ..."
+
+#: src/application_actions.cpp:457
+#, kde-format
+msgid "Copy timing information from another subtitle"
+msgstr "Ajastamisteabe kopeerimine teise subtiitrisse"
+
+#: src/application_actions.cpp:463
+#, kde-format
+msgid "Break Lines..."
+msgstr "Murra ridu ..."
+
+#: src/application_actions.cpp:464
+#, kde-format
+msgid "Automatically set line breaks"
+msgstr "Automaatse reamurdmise määramine"
+
+#: src/application_actions.cpp:470
+#, kde-format
+msgid "Unbreak Lines..."
+msgstr "Eemalda reamurdmine ..."
+
+#: src/application_actions.cpp:471
+#, kde-format
+msgid "Remove line breaks from lines"
+msgstr "Reamurdmise eemaldamine"
+
+#: src/application_actions.cpp:477
+#, kde-format
+msgid "Simplify Spaces..."
+msgstr "Lihtsusta tühikuid"
+
+#: src/application_actions.cpp:478
+#, kde-format
+msgid "Remove unneeded spaces from lines"
+msgstr "Tarbetute tühikute eemaldamine ridadest"
+
+#: src/application_actions.cpp:484
+#, kde-format
+msgid "Change Case..."
+msgstr "Muuda tähesuurust ..."
+
+#: src/application_actions.cpp:485
+#, kde-format
+msgid "Change lines text to upper, lower, title or sentence case"
+msgstr ""
+"Ridade teksti muutmine suur- või väiketäheliseks, läbivalt või "
+"algussuurtäheliseks"
+
+#: src/application_actions.cpp:491
+#, kde-format
+msgid "Fix Punctuation..."
+msgstr "Paranda kirjavahemärke ..."
+
+#: src/application_actions.cpp:492
+#, kde-format
+msgid "Fix punctuation errors in lines"
+msgstr "Kirjavahemärkide vigade parandamine ridades"
+
+#: src/application_actions.cpp:498
+#, kde-format
+msgid "Translate..."
+msgstr "Tõlgi ..."
+
+#: src/application_actions.cpp:499
+#, kde-format
+msgid "Translate lines texts using Google services"
+msgstr "Ridade teksti tõlkimine Google'i teenuste abil"
+
+#: src/application_actions.cpp:505
+#, kde-format
+msgid "Edit Line in Place"
+msgstr "Muuda rida kohapeal"
+
+#: src/application_actions.cpp:506
+#, kde-format
+msgid "Edit current line text in place"
+msgstr "Aktiivse rea teksti muutmine kohapeal"
+
+#: src/application_actions.cpp:514
+#, kde-format
+msgid "Open Video..."
+msgstr "Ava video ..."
+
+#: src/application_actions.cpp:515 src/application_actions.cpp:522
+#, kde-format
+msgid "Open video file"
+msgstr "Videofaili avamine"
+
+#: src/application_actions.cpp:521
+#, kde-format
+msgid "Open &Recent Video"
+msgstr "Ava &hiljutine video"
+
+#: src/application_actions.cpp:528
+#, kde-format
+msgid "Import Subtitle Stream"
+msgstr "Impordi subtiitrivoog"
+
+#: src/application_actions.cpp:529
+#, kde-format
+msgid "Import subtitle stream into subtitle editor"
+msgstr "Subtiitrivoo importimine subtiitriredaktorisse"
+
+#: src/application_actions.cpp:535
+#, kde-format
+msgid "Recognize Speech"
+msgstr "Tuvasta kõne"
+
+#: src/application_actions.cpp:536
+#, kde-format
+msgid "Recognize speech in audio stream"
+msgstr "Kõne tuvastamine helivoos"
+
+#: src/application_actions.cpp:542
+#, kde-format
+msgid "Close Video"
+msgstr "Sulge video"
+
+#: src/application_actions.cpp:543
+#, kde-format
+msgid "Close video file"
+msgstr "Videofaili sulgemine"
+
+#: src/application_actions.cpp:550
+#, kde-format
+msgid "Full Screen Mode"
+msgstr "Täisekraanirežiim"
+
+#: src/application_actions.cpp:551
+#, kde-format
+msgid "Toggle full screen mode"
+msgstr "Täisekraanirežiimi lülitamine"
+
+#: src/application_actions.cpp:558
+#, kde-format
+msgid "Stop"
+msgstr "Peata"
+
+#: src/application_actions.cpp:559
+#, kde-format
+msgid "Stop video playback"
+msgstr "Video esitamise peatamine"
+
+#: src/application_actions.cpp:567
+#, kde-format
+msgid "Toggle video playing/paused"
+msgstr "Video esitamise/pausile panemise lülitamine"
+
+#: src/application_actions.cpp:575
+#, kde-format
+msgid "Seek Backward"
+msgstr "Otsing tagasi"
+
+#: src/application_actions.cpp:583
+#, kde-format
+msgid "Seek Forward"
+msgstr "Otsing edasi"
+
+#: src/application_actions.cpp:590
+#, kde-format
+msgid "Frame Step Backward"
+msgstr ""
+
+#: src/application_actions.cpp:597
+#, kde-format
+msgid "Frame Step Forward"
+msgstr ""
+
+#: src/application_actions.cpp:605
+#, fuzzy, kde-format
+#| msgid "Jump to Previous Line"
+msgid "Seek to Previous Line"
+msgstr "Hüpe eelmisele reale"
+
+#: src/application_actions.cpp:606
+#, kde-format
+msgid "Seek to previous subtitle line show time"
+msgstr "Subtiitrirea eelmise näitamisaja otsimine"
+
+#: src/application_actions.cpp:614
+#, kde-format
+msgid "Increase media play rate"
+msgstr ""
+
+#: src/application_actions.cpp:615
+#, kde-format
+msgid "Increase media playback rate"
+msgstr ""
+
+#: src/application_actions.cpp:622
+#, kde-format
+msgid "Decrease media play rate"
+msgstr ""
+
+#: src/application_actions.cpp:623
+#, kde-format
+msgid "Decrease media playback rate"
+msgstr ""
+
+#: src/application_actions.cpp:629
+#, kde-format
+msgid "Play Current Line and Pause"
+msgstr "Esita aktiivne rida ja tee paus"
+
+#: src/application_actions.cpp:630
+#, fuzzy, kde-format
+#| msgid "Seek to next subtitle line show time"
+msgid "Seek to selected subtitle line show time, play it and then pause"
+msgstr "Subtiitrirea järgmise näitamisaja otsimine"
+
+#: src/application_actions.cpp:637
+#, fuzzy, kde-format
+#| msgid "Set Current Line Show Time"
+msgid "Seek to Current Line"
+msgstr "Määra aktiivse rea näitamisaeg"
+
+#: src/application_actions.cpp:638
+#, fuzzy, kde-format
+#| msgid "Seek to next subtitle line show time"
+msgid "Seek to selected subtitle line show time"
+msgstr "Subtiitrirea järgmise näitamisaja otsimine"
+
+#: src/application_actions.cpp:645
+#, fuzzy, kde-format
+#| msgid "Jump to Next Line"
+msgid "Seek to Next Line"
+msgstr "Hüpe järgmisele reale"
+
+#: src/application_actions.cpp:646
+#, kde-format
+msgid "Seek to next subtitle line show time"
+msgstr "Subtiitrirea järgmise näitamisaja otsimine"
+
+#: src/application_actions.cpp:654
+#, fuzzy, kde-format
+#| msgid "Set current line show time to video position"
+msgid "Set Line Show Time to Video Position"
+msgstr "Aktiivse rea näitamise aja määramine video asukohas"
+
+#: src/application_actions.cpp:655
+#, kde-format
+msgid "Set current line show time to video position"
+msgstr "Aktiivse rea näitamise aja määramine video asukohas"
+
+#: src/application_actions.cpp:663
+#, fuzzy, kde-format
+#| msgid "Set current line hide time to video position"
+msgid "Set Line Hide Time to Video Position"
+msgstr "Aktiivse rea peitmise aja määramine video asukohas"
+
+#: src/application_actions.cpp:664
+#, kde-format
+msgid "Set current line hide time to video position"
+msgstr "Aktiivse rea peitmise aja määramine video asukohas"
+
+#: src/application_actions.cpp:671
+#, fuzzy, kde-format
+#| msgid "Shift to Video Position"
+msgid "Shift Current Line to Video Position"
+msgstr "Nihuta video asukohta"
+
+#: src/application_actions.cpp:672
+#, kde-format
+msgid ""
+"Set current line show time to video position by equally shifting all lines"
+msgstr ""
+"Aktiivse rea näitamisaja määrmine video asukohta kõiki ridu võrdselt "
+"nihutades"
+
+#: src/application_actions.cpp:680
+#, kde-format
+msgid "Current Line Follows Video"
+msgstr "Aktiivne rida järgib videot"
+
+#: src/application_actions.cpp:681
+#, kde-format
+msgid "Make current line follow the playing video position"
+msgstr "Aktiivne rida hakkab järgima video esitamise asukohta"
+
+#: src/application_actions.cpp:687
+#, kde-format
+msgctxt "@action:inmenu Toggle audio muted"
+msgid "Mute"
+msgstr "Heli maha"
+
+#: src/application_actions.cpp:688
+#, kde-format
+msgid "Enable/disable playback sound"
+msgstr "Taasesituse heli lubamine/keelamine"
+
+#: src/application_actions.cpp:695
+#, kde-format
+msgid "Increase Volume"
+msgstr "Heli tugevamaks"
+
+#: src/application_actions.cpp:696
+#, kde-format
+msgid "Increase volume by 5%"
+msgstr "Helitugevuse suurendamine 5% võrra"
+
+#: src/application_actions.cpp:703
+#, kde-format
+msgid "Decrease Volume"
+msgstr "Heli nõrgemaks"
+
+#: src/application_actions.cpp:704
+#, kde-format
+msgid "Decrease volume by 5%"
+msgstr "Helitugevuse vähendamine 5% võrra"
+
+#: src/application_actions.cpp:711
+#, kde-format
+msgid "Audio Streams"
+msgstr "Helivood"
+
+#: src/application_actions.cpp:712
+#, kde-format
+msgid "Select active audio stream"
+msgstr "Vali aktiivne helivoog"
+
+#: src/application_actions.cpp:723
+#, kde-format
+msgid "Increase Font Size"
+msgstr "Suurenda fondisuurust"
+
+#: src/application_actions.cpp:724
+#, kde-format
+msgid "Increase subtitles font size by 1 point"
+msgstr "Subtiitri fondi suuruse suurendamine 1 punkti võrra"
+
+#: src/application_actions.cpp:731
+#, kde-format
+msgid "Decrease Font Size"
+msgstr "Vähenda fondisuurust"
+
+#: src/application_actions.cpp:732
+#, kde-format
+msgid "Decrease subtitles font size by 1 point"
+msgstr "Subtiitri fondi suuruse vähendamine 1 punkti võrra"
+
+#: src/application_actions.cpp:739
+#, kde-format
+msgid "Displayed Subtitle Text"
+msgstr "Näidatav subtiitri tekst"
+
+#: src/application_actions.cpp:740
+#, kde-format
+msgid "Select visible subtitle text"
+msgstr "Nähtava subtiitriteksti valimine"
+
+#: src/application_actions.cpp:751 src/gui/waveform/waveformwidget.cpp:718
+#, kde-format
+msgid "Toggle Anchor"
+msgstr "Lülita ankrut"
+
+#: src/application_actions.cpp:752
+#, kde-format
+msgid ""
+"(Un)Anchor current line's show time to timeline (Editing anchored line's "
+"show time will stretch/compact the timeline between adjacent anchors)"
+msgstr ""
+
+#: src/application_actions.cpp:759
+#, kde-format
+msgid "Remove All Anchors"
+msgstr "Eemalda kõik ankrud"
+
+#: src/application_actions.cpp:760
+#, kde-format
+msgid "Unanchor show time from the timeline on all anchored lines"
+msgstr ""
+
+#: src/application_actions.cpp:768
+#, kde-format
+msgctxt "@action:inmenu Manage user scripts"
+msgid "Scripts Manager..."
+msgstr "Skriptihaldur ..."
+
+#: src/application_actions.cpp:769
+#, kde-format
+msgid "Manage user scripts"
+msgstr "Kasutaja skriptide haldamine"
+
+#: src/application_actions.cpp:776 src/application_actions.cpp:777
+#, kde-format
+msgid "Waveform Zoom In"
+msgstr "Helilaine suurendus"
+
+#: src/application_actions.cpp:783 src/application_actions.cpp:784
+#, kde-format
+msgid "Waveform Zoom Out"
+msgstr "Helilaine vähendus"
+
+#: src/application_actions.cpp:791
+#, kde-format
+msgid "Waveform Auto Scroll"
+msgstr "Helilaine automaatne kerimine"
+
+#: src/application_actions.cpp:792
+#, kde-format
+msgid "Waveform display will automatically scroll to video position"
+msgstr "Helilainet näidatakse automaatselt video asukohas"
+
+#: src/application_subtitle.cpp:75
+#, kde-format
+msgid "All Text Subtitles"
+msgstr "Kõik tekstisubtiitrid"
+
+#: src/application_subtitle.cpp:76
+#, kde-format
+msgid "All Image Subtitles"
+msgstr "Kõik pildisubtiitrid"
+
+#: src/application_subtitle.cpp:78 src/application_subtitle.cpp:102
+#, kde-format
+msgid "All Files"
+msgstr "Kõik failid"
+
+#: src/application_subtitle.cpp:99
+#, kde-format
+msgid "Media Files"
+msgstr "Meediafailid"
+
+#: src/application_subtitle.cpp:100
+#, kde-format
+msgid "Video Files"
+msgstr "Videofailid"
+
+#: src/application_subtitle.cpp:101
+#, kde-format
+msgid "Audio Files"
+msgstr "Helifailid"
+
+#: src/application_subtitle.cpp:130
+#, kde-format
+msgid ""
+"The requested action would make the subtitle and its translation share the "
+"same file, possibly resulting in loss of information when saving.\n"
+"Are you sure you want to continue?"
+msgstr ""
+"Soovitud toiming asetab subtiitri ja tõlke ühte faili, mis võib "
+"salvestamisel kaasa tuua teabekadu.\n"
+"Kas tõesti jätkata?"
+
+#: src/application_subtitle.cpp:133
+#, kde-format
+msgid "Conflicting Subtitle Files"
+msgstr "Subtiitrifailide konflikt"
+
+#: src/application_subtitle.cpp:151 src/dialogs/selectablesubtitledialog.cpp:65
+#, kde-format
+msgid "Open Subtitle"
+msgstr "Subtiitri avamine"
+
+#: src/application_subtitle.cpp:207 src/application_subtitle.cpp:227
+#: src/application_subtitle.cpp:470 src/application_subtitle.cpp:495
+#, kde-format
+msgid ""
+"<qt>Could not parse the subtitle file.<br/>This may have been caused by "
+"usage of the wrong encoding.</qt>"
+msgstr ""
+"<qt>Subtiitrifaili parsimine nurjus.<br/>Selle põhjuseks võib olla vale "
+"kodeeringu kasutamine.</qt>"
+
+#: src/application_subtitle.cpp:273 src/application_subtitle.cpp:321
+#, kde-format
+msgid "Format: %1"
+msgstr ""
+
+#: src/application_subtitle.cpp:274 src/application_subtitle.cpp:322
+#, fuzzy, kde-format
+#| msgid "Encoding"
+msgid "Encoding: %1"
+msgstr "Kodeering"
+
+#: src/application_subtitle.cpp:328
+#, kde-format
+msgid "There was an error saving the subtitle."
+msgstr "Subtiitri salvestamisel tekkis tõrge."
+
+#: src/application_subtitle.cpp:336
+#, kde-format
+msgid "Save Subtitle"
+msgstr "Subtiitri salvestamine"
+
+#: src/application_subtitle.cpp:371 src/application_subtitle.cpp:609
+#, kde-format
+msgid ""
+"Currently opened translation subtitle has unsaved changes.\n"
+"Do you want to save them?"
+msgstr ""
+"Praegu avatud subtiitritõlkes on salvestamata muudatusi.\n"
+"Kas salvestada need?"
+
+#: src/application_subtitle.cpp:372 src/application_subtitle.cpp:610
+#, kde-format
+msgid "Close Translation Subtitle"
+msgstr "Subtiitri tõlke sulgemine"
+
+#: src/application_subtitle.cpp:382
+#, kde-format
+msgid ""
+"Currently opened subtitle has unsaved changes.\n"
+"Do you want to save them?"
+msgstr ""
+"Praegu avatud subtiitris on salvestamata muudatusi.\n"
+"Kas salvestada need?"
+
+#: src/application_subtitle.cpp:383
+#, kde-format
+msgid "Close Subtitle"
+msgstr "Subtiitri sulgemine"
+
+#: src/application_subtitle.cpp:439
+#, kde-format
+msgid "Open Translation Subtitle"
+msgstr "Subtiitri tõlke avamine"
+
+#: src/application_subtitle.cpp:524
+#, kde-format
+msgctxt "@item:inmenu Display primary text in video player"
+msgid "Primary"
+msgstr "Esmane"
+
+#: src/application_subtitle.cpp:525
+#, kde-format
+msgctxt "@item:inmenu Display translation text in video player"
+msgid "Translation"
+msgstr "Tõlge"
+
+#: src/application_subtitle.cpp:565
+#, kde-format
+msgid "There was an error saving the translation subtitle."
+msgstr "Subtiitri tõlke salvestamisel tekkis tõrge."
+
+#: src/application_subtitle.cpp:573
+#, kde-format
+msgid "Save Translation Subtitle"
+msgstr "Subtiitri tõlke salvestamine"
+
+#: src/application_subtitle.cpp:659
+#, kde-format
+msgctxt "Suffix added to split subtitles"
+msgid "split"
+msgstr "tükk"
+
+#: src/application_subtitle.cpp:677
+#, kde-format
+msgid "Could not write the split subtitle file."
+msgstr "Tükeldatud subtiitrifaili kirjutamine nurjus."
+
+#: src/application_subtitle.cpp:677
+#, kde-format
+msgid "Could not write the split subtitle translation file."
+msgstr "Tükeldatud tõlkefaili kirjutamine nurjus."
+
+#: src/application_subtitle.cpp:702
+#, kde-format
+msgid "Could not read the subtitle file to append."
+msgstr "Lisatava subtiitrifaili lugemine nurjus."
+
+#: src/application_subtitle.cpp:718
+#, kde-format
+msgid "The specified time does not split the subtitles."
+msgstr "Määratud aeg ei tükelda subtiitrit."
+
+#: src/application_subtitle.cpp:753
+#, kde-format
+msgid ""
+"Could not open a new Subtitle Composer window.\n"
+"The split part was saved as %1."
+msgstr ""
+"Uue subtiitrilooja akna avamine nurjus.\n"
+"Tükeldatud osa salvestati nimega %1."
+
+#: src/application_subtitle.cpp:754
+#, kde-format
+msgid ""
+"Could not open a new Subtitle Composer window.\n"
+"The split parts were saved as %1 and %2."
+msgstr ""
+"Uue subtiitrilooja akna avamine nurjus.\n"
+"Tükeldatud osad salvestati nimedega %1 ja %2."
+
+#: src/application_subtitle.cpp:772
+#, kde-format
+msgid "The reference subtitle must have more than one line to proceed."
+msgstr "Jätkamiseks peab võrdlussubtiitril olema rohkem kui üks rida."
+
+#: src/application_subtitle.cpp:781
+#, kde-format
+msgid "Could not parse the reference subtitle file."
+msgstr "Võrdlussubtiitrifaili parsimine nurjus."
+
+#: src/configs/configdialog.cpp:38
+#, kde-format
+msgctxt "@title General settings"
+msgid "General"
+msgstr "Üldine"
+
+#: src/configs/configdialog.cpp:39
+#, kde-format
+msgid "General Settings"
+msgstr "Üldised seadistused"
+
+#: src/configs/configdialog.cpp:43
+#, kde-format
+msgctxt "@title Error check settings"
+msgid "Error Check"
+msgstr "Veakontroll"
+
+#: src/configs/configdialog.cpp:44
+#, kde-format
+msgid "Error Check Settings"
+msgstr "Veakontrolli seadistused"
+
+#: src/configs/configdialog.cpp:50
+#, kde-format
+msgctxt "@title Spelling settings"
+msgid "Spelling"
+msgstr "Õigekiri"
+
+#: src/configs/configdialog.cpp:51
+#, kde-format
+msgid "Spelling Settings"
+msgstr "Õigekirja kontrollimise seadistused"
+
+#: src/configs/configdialog.cpp:55
+#, kde-format
+msgctxt "@title Waveform settings"
+msgid "Waveform"
+msgstr "Helilaine"
+
+#: src/configs/configdialog.cpp:56
+#, kde-format
+msgid "Waveform settings"
+msgstr "Helilaine seadistused"
+
+#: src/configs/configdialog.cpp:60
+#, kde-format
+msgctxt "@title Video player settings"
+msgid "Video Player"
+msgstr "Videomängija"
+
+#: src/configs/configdialog.cpp:61
+#, kde-format
+msgid "Video Player Settings"
+msgstr "Videomängija seadistused"
+
+#: src/configs/configdialog.cpp:70
+#, kde-format
+msgctxt "@title Speech recognition backend settings"
+msgid "%1 backend settings"
+msgstr "Taustaprogrammi %1 seadistused"
+
+#. i18n: ectx: property (title), widget (QGroupBox, m_grpGeneral)
+#: src/configs/errorsconfigwidget.ui:17 src/gui/treeview/lineswidget.cpp:394
+#, kde-format
+msgid "Texts"
+msgstr "Tekstid"
+
+#. i18n: ectx: property (suffix), widget (QSpinBox, kcfg_MaxLines)
+#: src/configs/errorsconfigwidget.ui:23
+#, fuzzy, kde-format
+#| msgid "All lines"
+msgid " lines"
+msgstr "Kõik read"
+
+#. i18n: ectx: property (suffix), widget (QSpinBox, kcfg_MaxCharacters)
+#: src/configs/errorsconfigwidget.ui:36
+#: src/dialogs/smarttextsadjustdialog.cpp:26
+#, kde-format
+msgid " characters"
+msgstr " märki"
+
+#. i18n: ectx: property (text), widget (QLabel, label)
+#: src/configs/errorsconfigwidget.ui:46
+#, kde-format
+msgid "Maximum number of characters:"
+msgstr "Märkide maks. arv:"
+
+#. i18n: ectx: property (text), widget (QLabel, label_4)
+#: src/configs/errorsconfigwidget.ui:53
+#, kde-format
+msgid "Maximum number of lines:"
+msgstr "Ridade maks. arv:"
+
+#. i18n: ectx: property (title), widget (QGroupBox, m_grpQuickActions)
+#: src/configs/errorsconfigwidget.ui:63
+#, kde-format
+msgid "Absolute Durations"
+msgstr "Absoluutsed kestused"
+
+#. i18n: ectx: property (suffix), widget (QSpinBox, kcfg_LinePause)
+#. i18n: ectx: property (suffix), widget (QSpinBox, kcfg_LineDuration)
+#. i18n: ectx: property (suffix), widget (QSpinBox, kcfg_SeekOffsetOnDoubleClick)
+#. i18n: ectx: property (suffix), widget (QSpinBox, kcfg_JumpLineOffset)
+#. i18n: ectx: property (suffix), widget (QSpinBox, kcfg_LinesQuickShiftAmount)
+#. i18n: ectx: property (suffix), widget (QSpinBox, kcfg_GrabbedPositionCompensation)
+#. i18n: ectx: property (suffix), widget (QSpinBox, kcfg_MinDuration)
+#. i18n: ectx: property (suffix), widget (QSpinBox, kcfg_MaxDuration)
+#: src/configs/errorsconfigwidget.ui:69 src/configs/errorsconfigwidget.ui:79
+#: src/configs/generalconfigwidget.ui:114
+#: src/configs/generalconfigwidget.ui:124
+#: src/configs/generalconfigwidget.ui:134
+#: src/configs/generalconfigwidget.ui:154
+#: src/configs/generalconfigwidget.ui:173
+#: src/configs/generalconfigwidget.ui:183
+#, kde-format
+msgid " msec"
+msgstr " msek"
+
+#. i18n: ectx: property (text), widget (QLabel, label_8)
+#. i18n: ectx: property (text), widget (QLabel, lab_MaxDurationPerCharacter)
+#: src/configs/errorsconfigwidget.ui:92 src/configs/errorsconfigwidget.ui:174
+#, kde-format
+msgid "Maximum duration:"
+msgstr "Maksimumkestus:"
+
+#. i18n: ectx: property (text), widget (QLabel, label_5)
+#. i18n: ectx: property (text), widget (QLabel, lab_MinDurationPerCharacter)
+#: src/configs/errorsconfigwidget.ui:99 src/configs/errorsconfigwidget.ui:154
+#, kde-format
+msgid "Minimum duration:"
+msgstr "Miinimumkestus:"
+
+#. i18n: ectx: property (title), widget (QGroupBox, groupBox)
+#: src/configs/errorsconfigwidget.ui:109
+#, kde-format
+msgid "Relative Durations"
+msgstr "Suhtelised kestused"
+
+#. i18n: ectx: property (suffix), widget (QSpinBox, kcfg_MaxDurationPerCharacter)
+#. i18n: ectx: property (suffix), widget (QSpinBox, kcfg_MinDurationPerCharacter)
+#. i18n: ectx: property (suffix), widget (QSpinBox, kcfg_IdealDurationPerCharacter)
+#: src/configs/errorsconfigwidget.ui:115 src/configs/errorsconfigwidget.ui:141
+#: src/configs/errorsconfigwidget.ui:188
+#, fuzzy, kde-format
+#| msgid " msec/char"
+msgid " ms/char"
+msgstr " msek märgi kohta"
+
+#. i18n: ectx: property (suffix), widget (QSpinBox, alt_MinDurationPerCharacter)
+#. i18n: ectx: property (suffix), widget (QSpinBox, alt_MaxDurationPerCharacter)
+#. i18n: ectx: property (suffix), widget (QSpinBox, alt_IdealDurationPerCharacter)
+#: src/configs/errorsconfigwidget.ui:128 src/configs/errorsconfigwidget.ui:161
+#: src/configs/errorsconfigwidget.ui:201
+#, kde-format
+msgid " ch/sec"
+msgstr ""
+
+#. i18n: ectx: property (text), widget (QLabel, lab_IdealDurationPerCharacter)
+#: src/configs/errorsconfigwidget.ui:181
+#, fuzzy, kde-format
+#| msgid "Maximum duration:"
+msgid "Ideal duration:"
+msgstr "Maksimumkestus:"
+
+#. i18n: ectx: property (title), widget (QGroupBox, groupBox_2)
+#: src/configs/errorsconfigwidget.ui:217
+#, kde-format
+msgid "Behavior"
+msgstr "Käitumine"
+
+#. i18n: ectx: label, entry (AutoClearFixed), group (Error Check)
+#. i18n: ectx: property (text), widget (QCheckBox, kcfg_AutoClearFixed)
+#: src/configs/errorsconfigwidget.ui:223 src/scconfig.kcfg:86
+#, kde-format
+msgid "Automatically clear fixed errors"
+msgstr "Parandatud vigade automaatne puhastamine"
+
+#. i18n: ectx: property (title), widget (QGroupBox, m_grpGeneral)
+#: src/configs/generalconfigwidget.ui:17 src/configs/playerconfigwidget.ui:17
+#, kde-format
+msgid "General"
+msgstr "Üldine"
+
+#. i18n: ectx: property (text), widget (QCheckBox, kcfg_AutomaticVideoLoad)
+#: src/configs/generalconfigwidget.ui:26
+#, kde-format
+msgid "Automatically load video file when opening a subtitle"
+msgstr "Videofaili automaatne laadimine subtiitri avamisel"
+
+#. i18n: ectx: property (text), widget (QLabel, lab_DefaultSubtitlesEncoding)
+#: src/configs/generalconfigwidget.ui:33
+#, kde-format
+msgid "Defau&lt subtitles encoding:"
+msgstr "Su&btiitrite vaikimisi kodeering:"
+
+#. i18n: ectx: property (currentText), widget (QComboBox, kcfg_TextLineBreak)
+#. i18n: ectx: property (text), item, widget (QComboBox, kcfg_TextLineBreak)
+#: src/configs/generalconfigwidget.ui:43 src/configs/generalconfigwidget.ui:47
+#, kde-format
+msgid "UNIX (LF)"
+msgstr ""
+
+#. i18n: ectx: property (text), item, widget (QComboBox, kcfg_TextLineBreak)
+#: src/configs/generalconfigwidget.ui:52
+#, kde-format
+msgid "Windows (CRLF)"
+msgstr ""
+
+#. i18n: ectx: property (text), item, widget (QComboBox, kcfg_TextLineBreak)
+#: src/configs/generalconfigwidget.ui:57
+#, kde-format
+msgid "Macintosh (CR)"
+msgstr ""
+
+#. i18n: ectx: property (text), widget (QLabel, lab_TextLineBreak)
+#: src/configs/generalconfigwidget.ui:65
+#, fuzzy, kde-format
+#| msgid "Enter character(s)"
+msgid "Line break character:"
+msgstr "Märkide sisestamine"
+
+#. i18n: ectx: property (title), widget (QGroupBox, m_grpSubtitleLine)
+#: src/configs/generalconfigwidget.ui:78
+#, kde-format
+msgid "Subtitle Line"
+msgstr "Subtiitri rida"
+
+#. i18n: ectx: property (text), widget (QLabel, label_LineDuration)
+#: src/configs/generalconfigwidget.ui:84
+#, kde-format
+msgid "Default subtitle line duration:"
+msgstr "Subtiitri rea vaikimisi kestus:"
+
+#. i18n: ectx: property (text), widget (QLabel, label_4)
+#: src/configs/generalconfigwidget.ui:94
+#, kde-format
+msgid "On double click, &jump to show time minus:"
+msgstr "Topeltklõpsuga &hüpatakse ajas tagasi:"
+
+#. i18n: ectx: property (text), widget (QLabel, label_LinePause)
+#: src/configs/generalconfigwidget.ui:104
+#, kde-format
+msgid "Default pause between subtitle lines:"
+msgstr "Vaikimisi paus subtiitriridade vahel:"
+
+#. i18n: ectx: property (text), widget (QLabel, label_2)
+#: src/configs/generalconfigwidget.ui:144
+#, kde-format
+msgid "Ju&mp to prev/next line offset:"
+msgstr ""
+
+#. i18n: ectx: property (title), widget (QGroupBox, m_grpQuickActions)
+#: src/configs/generalconfigwidget.ui:167
+#, kde-format
+msgid "Quick Actions"
+msgstr "Kiirtoimingud"
+
+#. i18n: ectx: property (text), widget (QLabel, label_8)
+#: src/configs/generalconfigwidget.ui:193
+#, kde-format
+msgid "Compensation for captured &video times:"
+msgstr ""
+
+#. i18n: ectx: property (text), widget (QLabel, label_5)
+#: src/configs/generalconfigwidget.ui:203
+#, kde-format
+msgid "Ti&me shift for selected lines:"
+msgstr "Valitud ridade a&janihe:"
+
+#: src/configs/playerconfigwidget.cpp:27
+#, kde-format
+msgctxt "Text for previewing the subtitles font settings"
+msgid "<p>The Quick Brown Fox<br/>Jumps Over The Lazy Dog</p>"
+msgstr ""
+"<p>Põdur Zagrebi tšellomängija-följetonist<br/>Ciqo külmetas kehvas "
+"garaažis</p>"
+
+#. i18n: ectx: property (text), widget (QCheckBox, kcfg_UnpauseOnDoubleClick)
+#: src/configs/playerconfigwidget.ui:23
+#, kde-format
+msgid "Resume playback after line double click"
+msgstr "Esitamise jätkamine topeltklõpsuga real"
+
+#. i18n: ectx: property (text), widget (QLabel, lab_SeekJumpLength)
+#: src/configs/playerconfigwidget.ui:30
+#, kde-format
+msgid "Seconds to &jump on seek:"
+msgstr "Otsi&ngul hüpatavate sekundite arv:"
+
+#. i18n: ectx: label, entry (VideoAutoPlay), group (VideoPlayer)
+#. i18n: ectx: property (text), widget (QCheckBox, kcfg_VideoAutoPlay)
+#: src/configs/playerconfigwidget.ui:50 src/scconfig.kcfg:180
+#, kde-format
+msgid "Start playing video when loaded"
+msgstr "Video esitamise alustamine laadimise järel"
+
+#. i18n: ectx: property (text), widget (QCheckBox, kcfg_ShowPositionTimeEdit)
+#: src/configs/playerconfigwidget.ui:57 src/gui/playerwidget.cpp:433
+#, kde-format
+msgid "Show editable position control"
+msgstr ""
+
+#. i18n: ectx: property (text), widget (QLabel, lab_StepJumpLength)
+#: src/configs/playerconfigwidget.ui:64
+#, kde-format
+msgid "Fra&me step amount:"
+msgstr ""
+
+#. i18n: ectx: property (text), widget (QLabel, lab_VolumeAmplification)
+#: src/configs/playerconfigwidget.ui:74
+#, kde-format
+msgid "Volume amplification:"
+msgstr "Helitugevuse võimendamine:"
+
+#. i18n: ectx: property (title), widget (QGroupBox, m_grpSubtitles)
+#: src/configs/playerconfigwidget.ui:122
+#, kde-format
+msgid "Subtitles"
+msgstr "Subtiitrid"
+
+#. i18n: ectx: property (text), widget (QLabel, lab_OutlineColor)
+#: src/configs/playerconfigwidget.ui:138
+#, kde-format
+msgid "Outline color:"
+msgstr "Kontuuri värv:"
+
+#. i18n: ectx: property (text), widget (QLabel, lab_FontColor)
+#: src/configs/playerconfigwidget.ui:151
+#, kde-format
+msgid "Te&xt color:"
+msgstr "&Teksti värv:"
+
+#. i18n: ectx: property (text), widget (QLabel, lab_FontFamily)
+#: src/configs/playerconfigwidget.ui:164
+#, kde-format
+msgid "Font family:"
+msgstr "Fondipere:"
+
+#. i18n: ectx: property (text), widget (QLabel, lab_OutlineWidth)
+#: src/configs/playerconfigwidget.ui:177
+#, kde-format
+msgid "Outline width:"
+msgstr "Kontuuri laius:"
+
+#. i18n: ectx: property (text), widget (QLabel, lab_FontSize)
+#: src/configs/playerconfigwidget.ui:187
+#, kde-format
+msgid "Font si&ze:"
+msgstr "Fon&di suurus:"
+
+#. i18n: ectx: property (title), widget (QGroupBox, m_grpPreview)
+#: src/configs/playerconfigwidget.ui:203
+#, kde-format
+msgid "Subtitles Preview"
+msgstr "Subtiitrite eelvaatlus"
+
+#. i18n: ectx: property (title), widget (QGroupBox, groupBox_3)
+#: src/configs/waveformconfigwidget.ui:17
+#, kde-format
+msgid "Waveform Display"
+msgstr "Helilaine näitamine"
+
+#. i18n: ectx: property (text), widget (QCheckBox, kcfg_wfSmoothScroll)
+#: src/configs/waveformconfigwidget.ui:23
+#, kde-format
+msgid "Smooth Scrolling"
+msgstr "Sujuv kerimine"
+
+#. i18n: ectx: property (text), widget (QLabel, label_12)
+#: src/configs/waveformconfigwidget.ui:49
+#, kde-format
+msgid "Outer color:"
+msgstr "Välisvärv:"
+
+#. i18n: ectx: property (text), widget (QLabel, label_11)
+#: src/configs/waveformconfigwidget.ui:78
+#, kde-format
+msgid "Inner color:"
+msgstr "Sisevärv:"
+
+#. i18n: ectx: property (toolTip), widget (QLabel, label_wfAutoscrollPadding)
+#: src/configs/waveformconfigwidget.ui:104
+#, kde-format
+msgid ""
+"Autoscroll page when play position reaches ScrollPadding distance "
+"(percentage) from page border"
+msgstr ""
+"Lehekülje automaatne kerimine, kui esitamise asukoht jõuab lehekülje "
+"piirdest kerimistäidise kaugusele (protsentides)"
+
+#. i18n: ectx: property (text), widget (QLabel, label_wfAutoscrollPadding)
+#: src/configs/waveformconfigwidget.ui:107
+#, kde-format
+msgid "Auto Scroll Padding:"
+msgstr "Automaatse kerimise täidis:"
+
+#. i18n: ectx: property (title), widget (QGroupBox, m_grpGeneral)
+#: src/configs/waveformconfigwidget.ui:120
+#, kde-format
+msgid "Subtitle Display"
+msgstr "Subtiitri näitamine"
+
+#. i18n: ectx: property (text), widget (QLabel, label_14)
+#: src/configs/waveformconfigwidget.ui:148
+#, kde-format
+msgid "Subtitle border color:"
+msgstr "Subtiitri piirde värv:"
+
+#. i18n: ectx: property (text), widget (QLabel, label_16)
+#: src/configs/waveformconfigwidget.ui:158
+#, kde-format
+msgid "Selected background color:"
+msgstr "Valitud taustavärv:"
+
+#. i18n: ectx: property (text), widget (QLabel, label_15)
+#: src/configs/waveformconfigwidget.ui:168
+#, kde-format
+msgid "Subtitle border width:"
+msgstr "Subtiitri piirde laius:"
+
+#. i18n: ectx: property (text), widget (QLabel, label_13)
+#: src/configs/waveformconfigwidget.ui:178
+#, kde-format
+msgid "Subtitle background color:"
+msgstr "Subtiitri taustavärv:"
+
+#. i18n: ectx: property (text), widget (QLabel, label_17)
+#: src/configs/waveformconfigwidget.ui:207
+#, kde-format
+msgid "Selected border color:"
+msgstr "Valitud piirde värv:"
+
+#. i18n: ectx: property (title), widget (QGroupBox, groupBox)
+#: src/configs/waveformconfigwidget.ui:258
+#, kde-format
+msgid "Text Font and Colors"
+msgstr "Teksti font ja värvid"
+
+#. i18n: ectx: property (text), widget (QLabel, label_21)
+#: src/configs/waveformconfigwidget.ui:264
+#, kde-format
+msgid "Subtitle font family:"
+msgstr "Subtiitri fondipere:"
+
+#. i18n: ectx: property (text), widget (QLabel, label_22)
+#: src/configs/waveformconfigwidget.ui:277
+#, kde-format
+msgid "Subtitle number font size:"
+msgstr "Subtiitri arvude fondisuurus:"
+
+#. i18n: ectx: property (suffix), widget (QSpinBox, kcfg_wfSubNumberFontSize)
+#. i18n: ectx: property (suffix), widget (QSpinBox, kcfg_wfSubTextFontSize)
+#: src/configs/waveformconfigwidget.ui:287
+#: src/configs/waveformconfigwidget.ui:333
+#, kde-format
+msgid " pt"
+msgstr " pt"
+
+#. i18n: ectx: property (text), widget (QLabel, label_23)
+#: src/configs/waveformconfigwidget.ui:294
+#, kde-format
+msgid "Subtitle Number Color"
+msgstr "Subtiitri arvude värv"
+
+#. i18n: ectx: property (text), widget (QLabel, label_24)
+#: src/configs/waveformconfigwidget.ui:323
+#, kde-format
+msgid "Subtitle text font size:"
+msgstr "Subtiitri teksti fondisuurus:"
+
+#. i18n: ectx: property (text), widget (QLabel, label_25)
+#: src/configs/waveformconfigwidget.ui:340
+#, kde-format
+msgid "Subtitle Text Color:"
+msgstr "Subtiitri teksti värv:"
+
+#. i18n: ectx: property (title), widget (QGroupBox, groupBox_2)
+#: src/configs/waveformconfigwidget.ui:372
+#, kde-format
+msgid "Line Indicators"
+msgstr "Reatähised"
+
+#. i18n: ectx: property (text), widget (QLabel, label_31)
+#: src/configs/waveformconfigwidget.ui:378
+#, kde-format
+msgid "Player position color:"
+msgstr "Esitamise asukoha värv:"
+
+#. i18n: ectx: property (text), widget (QLabel, label_32)
+#: src/configs/waveformconfigwidget.ui:388
+#, kde-format
+msgid "Mouse indicator color:"
+msgstr "Hiire tähise värv:"
+
+#: src/core/subtitle.cpp:59
+#, kde-format
+msgid "Set Primary Data"
+msgstr "Määra esmased andmed"
+
+#: src/core/subtitle.cpp:105
+#, kde-format
+msgid "Clear Primary Text Data"
+msgstr "Puhasta esmased tekstiandmed"
+
+#: src/core/subtitle.cpp:118
+#, kde-format
+msgid "Set Secondary Data"
+msgstr "Määra teisesed andmed"
+
+#: src/core/subtitle.cpp:155
+#, kde-format
+msgid "Clear Secondary Text Data"
+msgstr "Puhasta teisesed tekstiandmed"
+
+#: src/core/subtitle.cpp:223 src/dialogs/changeframeratedialog.cpp:22
+#, kde-format
+msgid "Change Frame Rate"
+msgstr "Muuda kaadrisagedust "
+
+#: src/core/subtitle.cpp:385 src/core/subtitle.cpp:399
+#: src/gui/waveform/waveformwidget.cpp:677
+#, kde-format
+msgid "Insert Line"
+msgstr "Lisa rida"
+
+#: src/core/subtitle.cpp:432 src/core/subtitle.cpp:442
+#: src/core/subtitle.cpp:459 src/core/undo/subtitleactions.cpp:120
+#, kde-format
+msgid "Remove Lines"
+msgstr "Eemalda read"
+
+#: src/core/subtitle.cpp:724
+#, kde-format
+msgid "Shift Lines"
+msgstr "Nihuta ridu"
+
+#: src/core/subtitle.cpp:780
+#, kde-format
+msgid "Adjust Lines"
+msgstr "Kohanda ridu"
+
+#: src/core/subtitle.cpp:791
+#, kde-format
+msgid "Sort"
+msgstr "Sordi"
+
+#: src/core/subtitle.cpp:823 src/dialogs/durationlimitsdialog.cpp:18
+#, kde-format
+msgid "Enforce Duration Limits"
+msgstr "Rakenda kestusepiirangud "
+
+#: src/core/subtitle.cpp:885 src/dialogs/autodurationsdialog.cpp:21
+#, kde-format
+msgid "Set Automatic Durations"
+msgstr "Määra automaatsed kestused "
+
+#: src/core/subtitle.cpp:918 src/dialogs/fixoverlappingtimesdialog.cpp:18
+#, kde-format
+msgid "Fix Overlapping Times"
+msgstr "Paranda ajalised kattuvused "
+
+#: src/core/subtitle.cpp:949
+#, kde-format
+msgid "Fix Lines Punctuation"
+msgstr "Paranda kirjavahemärke "
+
+#: src/core/subtitle.cpp:991
+#, kde-format
+msgid "Lower Case"
+msgstr "Väiketäheline"
+
+#: src/core/subtitle.cpp:1021
+#, kde-format
+msgid "Upper Case"
+msgstr "Suurtäheline"
+
+#: src/core/subtitle.cpp:1051
+#, kde-format
+msgid "Title Case"
+msgstr "Läbiv suurtäht"
+
+#: src/core/subtitle.cpp:1084
+#, kde-format
+msgid "Sentence Case"
+msgstr "Algussuurtäht"
+
+#: src/core/subtitle.cpp:1128 src/dialogs/smarttextsadjustdialog.cpp:18
+#, kde-format
+msgid "Break Lines"
+msgstr "Reamurdmine"
+
+#: src/core/subtitle.cpp:1155
+#, kde-format
+msgid "Synchronize Subtitles"
+msgstr "Sünkrooni subtiitrid"
+
+#: src/core/subtitle.cpp:1180 src/dialogs/joinsubtitlesdialog.cpp:24
+#, kde-format
+msgid "Join Subtitles"
+msgstr "Ühenda subtiitrid "
+
+#: src/core/subtitle.cpp:1224 src/core/subtitle.cpp:1230
+#, kde-format
+msgid "Split Subtitles"
+msgstr "Tükelda subtiitrid"
+
+#: src/core/subtitle.cpp:1249
+#, kde-format
+msgid "Toggle Lines Style"
+msgstr "Lülita reastiili"
+
+#: src/core/subtitle.cpp:1293
+#, kde-format
+msgid "Change Lines Text Color"
+msgstr "Muuda ridade teksti värvi"
+
+#: src/core/subtitle.cpp:1313
+#, kde-format
+msgid "Set Lines Mark"
+msgstr "Määra ridade märgised"
+
+#: src/core/subtitle.cpp:1313
+#, kde-format
+msgid "Clear Lines Mark"
+msgstr "Puhasta ridade märgised"
+
+#: src/core/subtitle.cpp:1328
+#, kde-format
+msgid "Toggle Lines Mark"
+msgstr "Lülita ridade märgiseid"
+
+#: src/core/subtitle.cpp:1338
+#, kde-format
+msgid "Clear Line Errors"
+msgstr "Puhasta ridade vead"
+
+#: src/core/subtitle.cpp:1349 src/core/subtitle.cpp:1360
+#: src/errors/errorfinder.cpp:82
+#, kde-format
+msgid "Check Lines Errors"
+msgstr "Kontrolli ridade vigu"
+
+#: src/core/subtitleline.cpp:68
+#, kde-format
+msgid "Empty text"
+msgstr "Tühi tekst"
+
+#: src/core/subtitleline.cpp:70
+#, kde-format
+msgid "Too many characters"
+msgstr "Liiga palju märke"
+
+#: src/core/subtitleline.cpp:72
+#, kde-format
+msgid "Too many lines"
+msgstr "Liiga palju ridu"
+
+#: src/core/subtitleline.cpp:74
+#, kde-format
+msgid "Unnecessary white space"
+msgstr "Tarbetu tühimärk"
+
+#: src/core/subtitleline.cpp:76
+#, kde-format
+msgid "Unnecessary dash"
+msgstr "Tarbetu kriips"
+
+#: src/core/subtitleline.cpp:78
+#, kde-format
+msgid "Capital letter after continuation ellipsis"
+msgstr "Suurtäht mõttepunktide järel"
+
+#: src/core/subtitleline.cpp:80
+#, kde-format
+msgid "Too long duration per character"
+msgstr "Liiga pikk kestus märgi kohta"
+
+#: src/core/subtitleline.cpp:82
+#, kde-format
+msgid "Too short duration per character"
+msgstr "Liiga lühike kestus märgi kohta"
+
+#: src/core/subtitleline.cpp:84
+#, kde-format
+msgid "Too long duration"
+msgstr "Liiga pikk kestus"
+
+#: src/core/subtitleline.cpp:85
+#, kde-format
+msgid "Too short duration"
+msgstr "Liiga lühike kestus"
+
+#: src/core/subtitleline.cpp:86
+#, kde-format
+msgid "Overlapping times"
+msgstr "Ajaline kattuvus"
+
+#: src/core/subtitleline.cpp:87
+#, kde-format
+msgid "Untranslated text"
+msgstr "Tõlkimata tekst"
+
+#: src/core/subtitleline.cpp:88
+#, kde-format
+msgid "User mark"
+msgstr "Kasutaja märgis"
+
+#: src/core/subtitleline.cpp:107
+#, kde-format
+msgid "Has no primary text."
+msgstr "Esmane tekst puudub."
+
+#: src/core/subtitleline.cpp:108
+#, kde-format
+msgid "Has no translation text."
+msgstr "Tõlketekst puudub."
+
+#: src/core/subtitleline.cpp:109
+#, kde-format
+msgid "Has too many characters in primary text (1 char)."
+msgid_plural "Has too many characters in primary text (%1 chars)."
+msgstr[0] "Liiga palju märke esmases tekstis (1 märk)."
+msgstr[1] "Liiga palju märke esmases tekstis (%1 märki)."
+
+#: src/core/subtitleline.cpp:110
+#, kde-format
+msgid "Has too many characters in translation text (1 char)."
+msgid_plural "Has too many characters in translation text (%1 chars)."
+msgstr[0] "Liiga palju märke tõlketekstis (1 märk)."
+msgstr[1] "Liiga palju märke tõlketekstis (%1 märki)."
+
+#: src/core/subtitleline.cpp:111
+#, kde-format
+msgid "Has too many lines in primary text (1 line)."
+msgid_plural "Has too many lines in primary text (%1 lines)."
+msgstr[0] "Liiga palju ridu esmases tekstis (1 rida)."
+msgstr[1] "Liiga palju ridu esmases tekstis (%1 rida)."
+
+#: src/core/subtitleline.cpp:112
+#, kde-format
+msgid "Has too many lines in translation text (1 line)."
+msgid_plural "Has too many lines in translation text (%1 lines)."
+msgstr[0] "Liiga palju ridu tõlketekstis (1 rida)."
+msgstr[1] "Liiga palju ridu tõlketekstis (%1 rida)."
+
+#: src/core/subtitleline.cpp:113
+#, kde-format
+msgid "Has unnecessary spaces in primary text."
+msgstr "Tarbetud tühikud esmases tekstis."
+
+#: src/core/subtitleline.cpp:114
+#, kde-format
+msgid "Has unnecessary spaces in translation text."
+msgstr "Tarbetud tühikud tõlketekstis."
+
+#: src/core/subtitleline.cpp:115
+#, kde-format
+msgid "Has unnecessary dash in primary text."
+msgstr "Tarbetu kriips esmases tekstis."
+
+#: src/core/subtitleline.cpp:116
+#, kde-format
+msgid "Has unnecessary dash in translation text."
+msgstr "Tarbetu kriips tõlketekstis."
+
+#: src/core/subtitleline.cpp:117
+#, kde-format
+msgid "Has capital letter after line continuation ellipsis in primary text."
+msgstr "Suurtäht mõttepunktide järel esmases tekstis."
+
+#: src/core/subtitleline.cpp:118
+#, kde-format
+msgid ""
+"Has capital letter after line continuation ellipsis in translation text."
+msgstr "Suurtäht mõttepunktide järel tõlketekstis."
+
+#: src/core/subtitleline.cpp:119
+#, kde-format
+msgid "Has too long duration per character in primary text (1 msec/char)."
+msgid_plural ""
+"Has too long duration per character in primary text (%1 msecs/char)."
+msgstr[0] "Liiga pikk kestus märgi kohta esmases tekstis (1 msek märgi kohta)."
+msgstr[1] ""
+"Liiga pikk kestus märgi kohta esmases tekstis (%1 msek märgi kohta)."
+
+#: src/core/subtitleline.cpp:120
+#, kde-format
+msgid "Has too long duration per character in translation text (1 msec/char)."
+msgid_plural ""
+"Has too long duration per character in translation text (%1 msecs/char)."
+msgstr[0] "Liiga pikk kestus märgi kohta tõlketekstis (1 msek märgi kohta)."
+msgstr[1] "Liiga pikk kestus märgi kohta tõlketekstis (%1 msek märgi kohta)."
+
+#: src/core/subtitleline.cpp:121
+#, kde-format
+msgid "Has too short duration per character in primary text (1 msec/char)."
+msgid_plural ""
+"Has too short duration per character in primary text (%1 msecs/char)."
+msgstr[0] ""
+"Liiga lühike kestus märgi kohta esmases tekstis (1 msek märgi kohta)."
+msgstr[1] ""
+"Liiga lühike kestus märgi kohta esmases tekstis (%1 msek märgi kohta)."
+
+#: src/core/subtitleline.cpp:122
+#, kde-format
+msgid "Has too short duration per character in translation text (1 msec/char)."
+msgid_plural ""
+"Has too short duration per character in translation text (%1 msecs/char)."
+msgstr[0] "Liiga lühike kestus märgi kohta tõlketekstis (1 msek märgi kohta)."
+msgstr[1] "Liiga lühike kestus märgi kohta tõlketekstis (%1 msek märgi kohta)."
+
+#: src/core/subtitleline.cpp:123
+#, kde-format
+msgid "Has too long duration (1 msec)."
+msgid_plural "Has too long duration (%1 msecs)."
+msgstr[0] "Liiga pikk kestus (1 msek)."
+msgstr[1] "Liiga pikk kestus (%1 msek)."
+
+#: src/core/subtitleline.cpp:124
+#, kde-format
+msgid "Has too short duration (1 msec)."
+msgid_plural "Has too short duration (%1 msecs)."
+msgstr[0] "Liiga lühike kestus (1 msek)."
+msgstr[1] "Liiga lühike kestus (%1 msek)."
+
+#: src/core/subtitleline.cpp:125
+#, kde-format
+msgid "Overlaps with next line."
+msgstr "Kattumine järgmise reaga."
+
+#: src/core/subtitleline.cpp:126
+#, kde-format
+msgid "Has untranslated text."
+msgstr "Tõlkimata tekstiga."
+
+#: src/core/subtitleline.cpp:127
+#, kde-format
+msgid "Has user mark."
+msgstr "Kasutaja märgisega."
+
+#: src/core/subtitleline.cpp:378 src/core/undo/subtitlelineactions.cpp:105
+#, kde-format
+msgid "Set Line Show Time"
+msgstr "Määra rea näitamise aeg"
+
+#: src/core/subtitleline.cpp:402 src/core/undo/subtitlelineactions.cpp:132
+#, kde-format
+msgid "Set Line Hide Time"
+msgstr "Määra rea peitmise aeg"
+
+#: src/core/subtitleline.cpp:449
+#, kde-format
+msgid "Set Line Times"
+msgstr "Määra rea ajad"
+
+#: src/core/subtitleline.cpp:546
+#, kde-format
+msgid "Shift Line Times"
+msgstr "Nihuta rea aegu"
+
+#: src/core/subtitleline.cpp:556
+#, kde-format
+msgid "Adjust Line Times"
+msgstr "Kohanda rea aegu"
+
+#: src/core/undo/subtitleactions.cpp:30
+#, kde-format
+msgid "Set Frame Rate"
+msgstr "Määra kaadrisagedus"
+
+#: src/core/undo/subtitleactions.cpp:50
+#, kde-format
+msgid "Insert Lines"
+msgstr "Lisa ridu"
+
+#: src/core/undo/subtitleactions.cpp:198
+#, kde-format
+msgid "Move Line"
+msgstr "Liiguta rida"
+
+#: src/core/undo/subtitleactions.cpp:283
+#, kde-format
+msgid "Swap Texts"
+msgstr "Vaheta tekstid"
+
+#: src/core/undo/subtitlelineactions.cpp:28
+#, kde-format
+msgid "Set Line Text"
+msgstr "Määra rea tekst"
+
+#: src/core/undo/subtitlelineactions.cpp:66
+#, kde-format
+msgid "Set Line Secondary Text"
+msgstr "Määra rea teisene tekst"
+
+#: src/core/undo/subtitlelineactions.cpp:196
+#, kde-format
+msgid "Set Line Errors"
+msgstr "Määra rea vead"
+
+#: src/dialogs/actionwithtargetdialog.cpp:111
+#, kde-format
+msgid "Target >>"
+msgstr "Sihtmärk >>"
+
+#: src/dialogs/actionwithtargetdialog.cpp:111
+#: src/dialogs/actionwithtargetdialog.cpp:127
+#, kde-format
+msgid "Target <<"
+msgstr "Sihtmärk <<"
+
+#: src/dialogs/actionwithtargetdialog.cpp:141
+#, kde-format
+msgid "All lines"
+msgstr "Kõik read"
+
+#: src/dialogs/actionwithtargetdialog.cpp:142
+#, kde-format
+msgid "Selected lines"
+msgstr "Valitud read"
+
+#: src/dialogs/actionwithtargetdialog.cpp:143
+#, kde-format
+msgid "All lines from first selected"
+msgstr "Kõik read alates esimesest valitust"
+
+#: src/dialogs/actionwithtargetdialog.cpp:144
+#, kde-format
+msgid "All lines up to last selected"
+msgstr "Kõik read viimase valituni"
+
+#: src/dialogs/actionwithtargetdialog.cpp:232 src/utils/finder.cpp:53
+#: src/utils/replacer.cpp:51
+#, kde-format
+msgid "Both subtitles"
+msgstr "Mõlemad subtiitrid"
+
+#: src/dialogs/actionwithtargetdialog.cpp:235 src/utils/finder.cpp:55
+#: src/utils/replacer.cpp:53
+#, kde-format
+msgid "Primary subtitle"
+msgstr "Esmane subtiiter"
+
+#: src/dialogs/actionwithtargetdialog.cpp:238 src/utils/finder.cpp:57
+#: src/utils/replacer.cpp:55
+#, kde-format
+msgid "Translation subtitle"
+msgstr "Subtiitritõlge"
+
+#: src/dialogs/actionwithtargetdialog.h:58
+#, kde-format
+msgid "Apply To"
+msgstr "Rakendamine"
+
+#: src/dialogs/adjusttimesdialog.cpp:20
+#, kde-format
+msgid "Adjust"
+msgstr "Kohandamine"
+
+#: src/dialogs/adjusttimesdialog.cpp:22
+#, kde-format
+msgctxt "@title:group"
+msgid "New Times"
+msgstr "Uued ajad"
+
+#: src/dialogs/adjusttimesdialog.cpp:27
+#, kde-format
+msgid "First spoken line:"
+msgstr "Esimene kõneldav rida:"
+
+#: src/dialogs/adjusttimesdialog.cpp:33
+#, kde-format
+msgid "Last spoken line:"
+msgstr "Viimane kõneldav rida:"
+
+#: src/dialogs/autodurationsdialog.cpp:24
+#: src/dialogs/changeframeratedialog.cpp:24
+#: src/dialogs/fixoverlappingtimesdialog.cpp:20
+#: src/dialogs/fixpunctuationdialog.cpp:19
+#: src/dialogs/smarttextsadjustdialog.cpp:20
+#: src/dialogs/splitsubtitledialog.cpp:29 src/dialogs/translatedialog.cpp:22
+#, kde-format
+msgctxt "@title:group"
+msgid "Settings"
+msgstr "Seadistused"
+
+#: src/dialogs/autodurationsdialog.cpp:32
+#, kde-format
+msgid "Milliseconds per line:"
+msgstr "Millisekundeid rea kohta:"
+
+#: src/dialogs/autodurationsdialog.cpp:41
+#, kde-format
+msgid "Milliseconds per word:"
+msgstr "Millisekundeid sõna kohta:"
+
+#: src/dialogs/autodurationsdialog.cpp:50
+#, kde-format
+msgid "Milliseconds per character:"
+msgstr "Millisekundeid märgi kohta:"
+
+#: src/dialogs/autodurationsdialog.cpp:54
+#: src/dialogs/durationlimitsdialog.cpp:30
+#, kde-format
+msgid "Prevent overlapping"
+msgstr "Kattuvuse vältimine"
+
+#: src/dialogs/autodurationsdialog.cpp:57
+#, kde-format
+msgctxt "@title:group"
+msgid "Duration Calculation"
+msgstr "Kestuse arvutamine"
+
+#: src/dialogs/autodurationsdialog.cpp:63
+#, kde-format
+msgid "Use primary text"
+msgstr "Esmase teksti kasutamine"
+
+#: src/dialogs/autodurationsdialog.cpp:64
+#, kde-format
+msgid "Use translation text"
+msgstr "Tõlketeksti kasutamine"
+
+#: src/dialogs/autodurationsdialog.cpp:65
+#, kde-format
+msgid "Calculate both and use maximum"
+msgstr "Mõlema arvutamine ja maksimumi kasutamine"
+
+#: src/dialogs/changeframeratedialog.cpp:33
+#, kde-format
+msgid "Current frame rate:"
+msgstr "Praegune kaadrisagedus:"
+
+#: src/dialogs/changeframeratedialog.cpp:42
+#, kde-format
+msgid "New frame rate:"
+msgstr "Uus kaadrisagedus:"
+
+#: src/dialogs/changetextscasedialog.cpp:19
+#, kde-format
+msgid "Change Case"
+msgstr "Tähsesuuruse muutmine"
+
+#: src/dialogs/changetextscasedialog.cpp:21
+#, kde-format
+msgctxt "@title:group"
+msgid "Change To"
+msgstr "Muutmise tulemus"
+
+#: src/dialogs/changetextscasedialog.cpp:25
+#, kde-format
+msgid "Lower case"
+msgstr "Väiketäheline"
+
+#: src/dialogs/changetextscasedialog.cpp:30
+#, kde-format
+msgid "Upper case"
+msgstr "Suurtäheline"
+
+#: src/dialogs/changetextscasedialog.cpp:34
+#, kde-format
+msgid "Title case"
+msgstr "Läbiv suurtäht"
+
+#: src/dialogs/changetextscasedialog.cpp:38
+#, kde-format
+msgid "Sentence case"
+msgstr "Algussuurtäht"
+
+#: src/dialogs/changetextscasedialog.cpp:42
+#, kde-format
+msgid "Convert to lower case first"
+msgstr "Esmalt teisendamine väiketäheliseks"
+
+#: src/dialogs/durationlimitsdialog.cpp:20
+#, kde-format
+msgctxt "@title:group"
+msgid "Minimum Duration"
+msgstr "Miinimumkestus"
+
+#: src/dialogs/durationlimitsdialog.cpp:26
+#, kde-format
+msgid "Expand duration to:"
+msgstr "Kestuse pikendamine:"
+
+#: src/dialogs/durationlimitsdialog.cpp:33
+#, kde-format
+msgctxt "@title:group"
+msgid "Maximum Duration"
+msgstr "Maksimumkestus"
+
+#: src/dialogs/durationlimitsdialog.cpp:39
+#, kde-format
+msgid "Shrink duration to:"
+msgstr "Kestuse lühendamine:"
+
+#: src/dialogs/encodingdetectdialog.cpp:83
+#, kde-format
+msgctxt "Text encoding detected with n% confidence."
+msgid "%1 (%2% confidence)"
+msgstr "%1 (usaldusväärsusega %2%)"
+
+#: src/dialogs/encodingdetectdialog.cpp:193
+#, kde-format
+msgid "Detected"
+msgstr "Tuvastati"
+
+#. i18n: ectx: property (windowTitle), widget (QDialog, EncodingDetectDialog)
+#: src/dialogs/encodingdetectdialog.ui:14
+#, kde-format
+msgid "Confirm detected subtitle encoding"
+msgstr "Tuvastatud subtiitri kodeeringu kinnitus"
+
+#. i18n: ectx: property (text), widget (QLabel, encodingLabel)
+#: src/dialogs/encodingdetectdialog.ui:30
+#, kde-format
+msgid "Encoding"
+msgstr "Kodeering"
+
+#. i18n: ectx: property (text), widget (QLabel, previewLabel)
+#: src/dialogs/encodingdetectdialog.ui:57
+#, kde-format
+msgid "Preview"
+msgstr "Eelvaatlus"
+
+#: src/dialogs/fixoverlappingtimesdialog.cpp:23
+#, kde-format
+msgid " msecs"
+msgstr " msek"
+
+#: src/dialogs/fixoverlappingtimesdialog.cpp:29
+#, kde-format
+msgid "Minimum interval between lines:"
+msgstr "Minimaalne intervall ridade vahel:"
+
+#: src/dialogs/fixpunctuationdialog.cpp:17
+#, kde-format
+msgid "Fix Punctuation"
+msgstr "Kirjavahemärkide parandamine"
+
+#: src/dialogs/fixpunctuationdialog.cpp:22
+#, kde-format
+msgid "Fix and cleanup spaces"
+msgstr "Tühikute parandamine ja puhastamine"
+
+#: src/dialogs/fixpunctuationdialog.cpp:26
+#, kde-format
+msgid "Fix quotes and double quotes"
+msgstr "Ühe- ja kahekordsete jutumärkide parandamine"
+
+#: src/dialogs/fixpunctuationdialog.cpp:30
+#, kde-format
+msgid "Fix English 'I' pronoun"
+msgstr "Inglise asesõna \"I\" parandamine"
+
+#: src/dialogs/fixpunctuationdialog.cpp:34
+#, kde-format
+msgid "Add ellipsis indicating non finished lines"
+msgstr "Mõttepunktide lisamine lõpetamata ridade tähistamiseks"
+
+#: src/dialogs/insertlinedialog.cpp:13
+#, kde-format
+msgid "Insert Line Before Current"
+msgstr "Rea lisamine aktiivse rea ette"
+
+#: src/dialogs/insertlinedialog.cpp:13
+#, kde-format
+msgid "Insert Line After Current"
+msgstr "Rea lisamine aktiivse rea järele"
+
+#: src/dialogs/insertlinedialog.cpp:13
+#, kde-format
+msgid "Insert Into"
+msgstr "Lisamine sisse"
+
+#: src/dialogs/joinsubtitlesdialog.cpp:29
+#, kde-format
+msgid "Shift subtitle forwards before append"
+msgstr "Subtiitri nihutamine edasi enne lisamist"
+
+#: src/dialogs/joinsubtitlesdialog.cpp:36
+#: src/dialogs/splitsubtitledialog.cpp:35
+#, kde-format
+msgid "Set from video length"
+msgstr "Määramine video pikkuse järgi"
+
+#: src/dialogs/removelinesdialog.cpp:13
+#, kde-format
+msgid "Remove Selected Lines"
+msgstr "Valitud ridade eemaldamine"
+
+#: src/dialogs/removelinesdialog.cpp:13
+#, kde-format
+msgid "Remove From"
+msgstr ""
+
+#: src/dialogs/selectablesubtitledialog.cpp:39
+#, kde-format
+msgid "Path:"
+msgstr "Asukoht:"
+
+#: src/dialogs/selectablesubtitledialog.cpp:44
+#, kde-format
+msgid "Select subtitle"
+msgstr "Vali subtiiter"
+
+#: src/dialogs/selectablesubtitledialog.h:30
+#, kde-format
+msgid "Subtitle"
+msgstr "Subtiiter"
+
+#: src/dialogs/shifttimesdialog.cpp:19
+#, kde-format
+msgid "Shift"
+msgstr "Nihutamine"
+
+#: src/dialogs/shifttimesdialog.cpp:21
+#, kde-format
+msgctxt "@title:group"
+msgid "Shifting"
+msgstr "Nihutamine"
+
+#: src/dialogs/shifttimesdialog.cpp:25
+#, kde-format
+msgid "Forwards (+)"
+msgstr "Edasi (+)"
+
+#: src/dialogs/shifttimesdialog.cpp:26
+#, kde-format
+msgid "Backwards (−)"
+msgstr "Tagasi (−)"
+
+#: src/dialogs/smarttextsadjustdialog.cpp:29
+#, kde-format
+msgid "Minimum length for line break:"
+msgstr "Min. reamurdmise pikkus:"
+
+#: src/dialogs/splitsubtitledialog.cpp:27
+#, kde-format
+msgid "Split Subtitle"
+msgstr "Subtiitri tükeldamine"
+
+#: src/dialogs/splitsubtitledialog.cpp:40
+#, kde-format
+msgid "Split time:"
+msgstr "Tükeldamise aeg:"
+
+#: src/dialogs/splitsubtitledialog.cpp:44
+#, kde-format
+msgid "Shift new part backwards after split"
+msgstr "Uue osa nihutamine tagasi pärast tükeldamist"
+
+#: src/dialogs/syncsubtitlesdialog.cpp:17
+#, kde-format
+msgid "Synchronize with Subtitle"
+msgstr "Sünkroonimine subtiitriga"
+
+#: src/dialogs/syncsubtitlesdialog.cpp:19
+#, kde-format
+msgid "Reference Subtitle"
+msgstr "Võrdlussubtiiter"
+
+#: src/dialogs/syncsubtitlesdialog.cpp:21
+#, kde-format
+msgctxt "@title:group"
+msgid "Synchronization Mode"
+msgstr "Sünkroonimisrežiim"
+
+#: src/dialogs/syncsubtitlesdialog.cpp:24
+#, kde-format
+msgid "Adjust to reference's first and last lines"
+msgstr "Võrdluse esimene ja viimase rea kohandamine"
+
+#: src/dialogs/syncsubtitlesdialog.cpp:28
+#, kde-format
+msgid "Copy timing information from reference line by line"
+msgstr "Ajastusteabe kopeerimine võrdlusfailist rida realt"
+
+#: src/dialogs/translatedialog.cpp:37
+#, kde-format
+msgid "Input language:"
+msgstr "Sisendkeel:"
+
+#: src/dialogs/translatedialog.cpp:53
+#, kde-format
+msgid "Output language:"
+msgstr "Väljundkeel:"
+
+#: src/errors/errorfinder.cpp:171 src/errors/finderrorsdialog.cpp:17
+#, kde-format
+msgid "Find Error"
+msgstr "Vea otsimine"
+
+#: src/errors/errorfinder.cpp:171
+#, kde-format
+msgid "No errors matching given criteria were found!"
+msgstr "Määratud kriteeriumile vastavaid vigu ei leitud!"
+
+#: src/errors/finderrorsdialog.cpp:22
+#, kde-format
+msgctxt "@title:group"
+msgid "Errors to Find"
+msgstr "Otsitavad vead"
+
+#: src/errors/finderrorsdialog.cpp:28
+#, kde-format
+msgctxt "@title:group Miscellaneous settings"
+msgid "Miscellaneous"
+msgstr "Muu"
+
+#: src/errors/finderrorsdialog.cpp:31
+#, kde-format
+msgid "Clear other errors"
+msgstr "Muude vigade puhastamine"
+
+#: src/errors/finderrorsdialog.cpp:35
+#, kde-format
+msgid "Clear user marks"
+msgstr "Kasutaja märgiste puhastamine"
+
+#: src/errors/finderrorsdialog.cpp:86
+#, kde-format
+msgid "Available errors"
+msgstr "Saadaolevad vead"
+
+#: src/errors/finderrorsdialog.cpp:116
+#, kde-format
+msgid "Select None"
+msgstr "Ära vali midagi"
+
+#: src/formats/textdemux/textdemux.cpp:32
+#, kde-format
+msgid "Importing Subtitle Stream"
+msgstr "Subtiitrivoo import"
+
+#: src/formats/textdemux/textdemux.cpp:90
+#, kde-format
+msgid ""
+"Subtitle demux failed %1: %2\n"
+"%3"
+msgstr ""
+"Subtiitri demultipleksimine nurjus %1: %2\n"
+"%3"
+
+#. i18n: ectx: property (windowTitle), widget (QDialog, VobSubInputInitDialog)
+#. i18n: ectx: property (windowTitle), widget (QDialog, VobSubInputProcessDialog)
+#: src/formats/vobsub/vobsubinputinitdialog.ui:14
+#: src/formats/vobsub/vobsubinputprocessdialog.ui:14
+#, kde-format
+msgid "VobSub Import"
+msgstr "VobSubi import"
+
+#. i18n: ectx: property (text), widget (QLabel, labelStream)
+#: src/formats/vobsub/vobsubinputinitdialog.ui:20
+#, kde-format
+msgid "Stream / Language"
+msgstr "Voog / keel"
+
+#. i18n: ectx: property (title), widget (QGroupBox, grpPostProc)
+#: src/formats/vobsub/vobsubinputinitdialog.ui:53
+#, kde-format
+msgid "Post Processing"
+msgstr "Järeltöötlus"
+
+#. i18n: ectx: property (text), widget (QCheckBox, ppSpaceNumber)
+#: src/formats/vobsub/vobsubinputinitdialog.ui:59
+#, kde-format
+msgid "Fix space between numbers"
+msgstr "Tühiku parandamine numbrite vahel"
+
+#. i18n: ectx: property (text), widget (QCheckBox, ppSpacePunct)
+#: src/formats/vobsub/vobsubinputinitdialog.ui:69
+#, kde-format
+msgid "Fix space around punctuation (.,;:?!)"
+msgstr "Tühiku parandamine kirjavahemärkide (.,;:?!) ümber"
+
+#. i18n: ectx: property (text), widget (QCheckBox, ppSpaceParen)
+#: src/formats/vobsub/vobsubinputinitdialog.ui:79
+#, kde-format
+msgid "Fix space around quotes and parentheses (\"()[]{})"
+msgstr "Tühiku parandamine jutumärkide ja sulgude (\"()[]{}) ümber"
+
+#. i18n: ectx: property (text), widget (QCheckBox, ppAposQuote)
+#: src/formats/vobsub/vobsubinputinitdialog.ui:89
+#, kde-format
+msgid "Fix double apostrophes/quotes"
+msgstr "Kahekordsete ülakomade/jutumärkide parandamine"
+
+#. i18n: ectx: property (text), widget (QCheckBox, ppCharsOCR)
+#: src/formats/vobsub/vobsubinputinitdialog.ui:99
+#, kde-format
+msgid "Fix i <-> l, 0 <-> O mistakes"
+msgstr "i <-> l, 0 <-> O äravahetamiste parandamine"
+
+#: src/formats/vobsub/vobsubinputprocessdialog.cpp:589
+#, kde-format
+msgid "VobSub Error"
+msgstr "VobSubi tõrge"
+
+#. i18n: ectx: property (title), widget (QGroupBox, grpText)
+#: src/formats/vobsub/vobsubinputprocessdialog.ui:26
+#, kde-format
+msgid "Enter character(s)"
+msgstr "Märkide sisestamine"
+
+#. i18n: ectx: property (text), widget (QLabel, symbolLabel)
+#: src/formats/vobsub/vobsubinputprocessdialog.ui:35
+#, kde-format
+msgid "S&ymbols:"
+msgstr "Süm&bolid:"
+
+#. i18n: ectx: property (toolTip), widget (QSpinBox, symbolCount)
+#: src/formats/vobsub/vobsubinputprocessdialog.ui:45
+#, kde-format
+msgid "Up/Down: change value"
+msgstr "Üles/alla: väärtuse muutmine"
+
+#. i18n: ectx: property (text), widget (QPushButton, btnOk)
+#: src/formats/vobsub/vobsubinputprocessdialog.ui:146
+#, kde-format
+msgid "OK"
+msgstr "OK"
+
+#. i18n: ectx: property (toolTip), widget (QPushButton, btnPrevImage)
+#: src/formats/vobsub/vobsubinputprocessdialog.ui:202
+#, kde-format
+msgid "Ctrl+Shift+Left"
+msgstr ""
+
+#. i18n: ectx: property (text), widget (QPushButton, btnPrevImage)
+#: src/formats/vobsub/vobsubinputprocessdialog.ui:205
+#, kde-format
+msgid "Prev Image"
+msgstr "Eelmine pilt"
+
+#. i18n: ectx: property (toolTip), widget (QPushButton, btnPrevSymbol)
+#: src/formats/vobsub/vobsubinputprocessdialog.ui:219
+#, kde-format
+msgid "Ctrl+Left"
+msgstr ""
+
+#. i18n: ectx: property (text), widget (QPushButton, btnPrevSymbol)
+#: src/formats/vobsub/vobsubinputprocessdialog.ui:222
+#, kde-format
+msgid "Prev Symbol"
+msgstr "Eelmine sümbol"
+
+#. i18n: ectx: property (toolTip), widget (QPushButton, btnNextSymbol)
+#: src/formats/vobsub/vobsubinputprocessdialog.ui:236
+#, kde-format
+msgid "Ctrl+Right"
+msgstr ""
+
+#. i18n: ectx: property (text), widget (QPushButton, btnNextSymbol)
+#: src/formats/vobsub/vobsubinputprocessdialog.ui:239
+#, kde-format
+msgid "Next Symbol"
+msgstr "Järgmine sümbol"
+
+#. i18n: ectx: property (toolTip), widget (QPushButton, btnNextImage)
+#: src/formats/vobsub/vobsubinputprocessdialog.ui:250
+#, kde-format
+msgid "Ctrl+Shift+Right"
+msgstr ""
+
+#. i18n: ectx: property (text), widget (QPushButton, btnNextImage)
+#: src/formats/vobsub/vobsubinputprocessdialog.ui:253
+#, kde-format
+msgid "Next Image"
+msgstr "Järgmine pilt"
+
+#. i18n: ectx: property (text), widget (QPushButton, btnAbort)
+#: src/formats/vobsub/vobsubinputprocessdialog.ui:280
+#, kde-format
+msgid "Abort"
+msgstr "Katkesta"
+
+#. i18n: ectx: property (title), widget (QGroupBox, grpPreview)
+#: src/formats/vobsub/vobsubinputprocessdialog.ui:303
+#, kde-format
+msgid "Subtitle Image"
+msgstr "Subtiitri pilt"
+
+#: src/gui/currentlinewidget.cpp:52
+#, kde-format
+msgid "<b>Show</b>"
+msgstr "<b>Näita</b>"
+
+#: src/gui/currentlinewidget.cpp:60
+#, kde-format
+msgid "<b>Hide</b>"
+msgstr "<b>Peida</b>"
+
+#: src/gui/currentlinewidget.cpp:68
+#, kde-format
+msgid "<b>Duration</b>"
+msgstr "<b>Kestus</b>"
+
+#: src/gui/currentlinewidget.cpp:261 src/gui/currentlinewidget.cpp:264
+#, kde-format
+msgid "No current line"
+msgstr "Aktiivne rida puudub"
+
+#: src/gui/currentlinewidget.cpp:336
+#, fuzzy, kde-format
+#| msgid " characters"
+msgid "chars"
+msgstr " märki"
+
+#: src/gui/currentlinewidget.cpp:344
+#, fuzzy, kde-format
+#| msgid " msec/char"
+msgid "ms/char"
+msgstr " msek märgi kohta"
+
+#: src/gui/currentlinewidget.cpp:346
+#, fuzzy, kde-format
+#| msgid " characters"
+msgid "chars/sec"
+msgstr " märki"
+
+#: src/gui/playerwidget.cpp:72
+#, kde-format
+msgid "<b>Position</b>"
+msgstr "<b>Asukoht</b>"
+
+#: src/gui/playerwidget.cpp:80
+#, kde-format
+msgid "<b>Length</b>"
+msgstr "<b>Pikkus</b>"
+
+#: src/gui/playerwidget.cpp:85
+#, kde-format
+msgid "<b>FPS</b>"
+msgstr "<b>FPS</b>"
+
+#: src/gui/playerwidget.cpp:91
+#, kde-format
+msgid "<b>Playback Rate</b>"
+msgstr "<b>Esitamiste arv</b>"
+
+#: src/gui/playerwidget.cpp:660
+#, kde-format
+msgid "<qt>There was an error opening media file %1.</qt>"
+msgstr "<qt>Meediafaili %1 avamisel tekkis tõrge.</qt>"
+
+#: src/gui/playerwidget.cpp:676 src/gui/playerwidget.cpp:677
+#: src/gui/playerwidget.cpp:678 src/gui/playerwidget.cpp:679
+#: src/gui/playerwidget.cpp:746 src/gui/playerwidget.cpp:754
+#: src/gui/playerwidget.cpp:760
+#, kde-format
+msgid "<i>Unknown</i>"
+msgstr "<i>Tundmatu</i>"
+
+#: src/gui/playerwidget.cpp:692 src/gui/playerwidget.cpp:694
+#, kde-format
+msgid "Unexpected error when playing file."
+msgstr "Ootamatu tõrge faili esitamisel."
+
+#: src/gui/playerwidget.cpp:692 src/gui/playerwidget.cpp:694
+#, kde-format
+msgid "Error Playing File"
+msgstr "Tõrge faili esitamisel"
+
+#: src/gui/treeview/linesmodel.cpp:151
+#, kde-format
+msgid "<b>Observations:</b>"
+msgstr "<b>Vaatlused:</b>"
+
+#: src/gui/treeview/linesmodel.cpp:178
+#, kde-format
+msgctxt "@title:column Subtitle line number"
+msgid "Line"
+msgstr "Rida"
+
+#: src/gui/treeview/linesmodel.cpp:179
+#, fuzzy, kde-format
+#| msgid "Pause"
+msgctxt "@title:column"
+msgid "Pause"
+msgstr "Paus"
+
+#: src/gui/treeview/linesmodel.cpp:180
+#, kde-format
+msgctxt "@title:column"
+msgid "Show Time"
+msgstr "Näitamisaeg"
+
+#: src/gui/treeview/linesmodel.cpp:181
+#, kde-format
+msgctxt "@title:column"
+msgid "Hide Time"
+msgstr "Peitmisaeg"
+
+#: src/gui/treeview/linesmodel.cpp:182
+#, fuzzy, kde-format
+#| msgid "<b>Duration</b>"
+msgctxt "@title:column"
+msgid "Duration"
+msgstr "<b>Kestus</b>"
+
+#: src/gui/treeview/linesmodel.cpp:183
+#, kde-format
+msgctxt "@title:column Subtitle line (primary) text"
+msgid "Text"
+msgstr "Tekst"
+
+#: src/gui/treeview/linesmodel.cpp:184
+#, kde-format
+msgctxt "@title:column Subtitle line translation text"
+msgid "Translation"
+msgstr "Tõlge"
+
+#: src/gui/treeview/lineswidget.cpp:405
+#, kde-format
+msgid "Styles"
+msgstr "Stiilid"
+
+#: src/gui/treeview/lineswidget.cpp:414
+#, kde-format
+msgid "Times"
+msgstr "Ajad"
+
+#: src/gui/treeview/lineswidget.cpp:425
+#, kde-format
+msgid "Errors"
+msgstr "Vead"
+
+#: src/gui/treeview/richlineedit.cpp:81 src/widgets/simplerichtextedit.cpp:339
+#, kde-format
+msgid "Cut"
+msgstr "Lõika"
+
+#: src/gui/treeview/richlineedit.cpp:88 src/widgets/simplerichtextedit.cpp:345
+#, kde-format
+msgid "Copy"
+msgstr "Kopeeri"
+
+#: src/gui/treeview/richlineedit.cpp:95 src/widgets/simplerichtextedit.cpp:352
+#, kde-format
+msgid "Paste"
+msgstr "Aseta"
+
+#: src/gui/treeview/richlineedit.cpp:103 src/widgets/simplerichtextedit.cpp:365
+#, kde-format
+msgctxt "@action:inmenu Clear all text"
+msgid "Clear"
+msgstr "Puhasta"
+
+#: src/gui/treeview/richlineedit.cpp:116 src/widgets/simplerichtextedit.cpp:376
+#, kde-format
+msgctxt "@action:inmenu Toggle bold style"
+msgid "Bold"
+msgstr "Rasvane"
+
+#: src/gui/treeview/richlineedit.cpp:124 src/widgets/simplerichtextedit.cpp:383
+#, kde-format
+msgctxt "@action:inmenu Toggle italic style"
+msgid "Italic"
+msgstr "Kaldkiri"
+
+#: src/gui/treeview/richlineedit.cpp:132 src/widgets/simplerichtextedit.cpp:390
+#, kde-format
+msgctxt "@action:inmenu Toggle underline style"
+msgid "Underline"
+msgstr "Allajoonimine"
+
+#: src/gui/treeview/richlineedit.cpp:140 src/widgets/simplerichtextedit.cpp:397
+#, kde-format
+msgctxt "@action:inmenu Toggle strike through style"
+msgid "Strike Through"
+msgstr "Läbikriipsutus"
+
+#: src/gui/treeview/richlineedit.cpp:148 src/widgets/simplerichtextedit.cpp:404
+#, kde-format
+msgctxt "@action:inmenu Change Text Color"
+msgid "Text Color"
+msgstr "Teksti värv"
+
+#: src/gui/waveform/waveformwidget.cpp:115
+#, kde-format
+msgid "Generating waveform"
+msgstr "Helilaine genereerimine"
+
+#: src/gui/waveform/waveformwidget.cpp:672
+#, kde-format
+msgid "Select Line"
+msgstr "Vali rida"
+
+#: src/gui/waveform/waveformwidget.cpp:687
+#, kde-format
+msgid "Remove Line"
+msgstr "Eemalda rida"
+
+#: src/gui/waveform/waveformwidget.cpp:712
+#, kde-format
+msgid "Split Line"
+msgstr "Tükelda rida"
+
+#: src/gui/waveform/waveformwidget.cpp:722
+#, kde-format
+msgid "Set Current Line Show Time"
+msgstr "Määra aktiivse rea näitamisaeg"
+
+#: src/gui/waveform/waveformwidget.cpp:727
+#, kde-format
+msgid "Set Current Line Hide Time"
+msgstr "Määra aktiivse rea peitmise aeg"
+
+#: src/helpers/languagecode.cpp:407
+#, kde-format
+msgid "Unknown"
+msgstr "Teadmata"
+
+#: src/main.cpp:71
+#, fuzzy, kde-format
+#| msgid "Primary subtitle"
+msgid "The primary subtitle to be edited."
+msgstr "Esmane subtiiter"
+
+#: src/main.cpp:76
+#, fuzzy, kde-format
+#| msgid "Save opened subtitle"
+msgid "The video to be subtitled."
+msgstr "Avatud subtiitri salvestamine"
+
+#: src/main.cpp:81
+#, kde-format
+msgid ""
+"The translation subtitle to be edited.\n"
+"If included, a second pane gets added to the right of the primary subtitle "
+"for side-by-side translation."
+msgstr ""
+
+#: src/main.cpp:210
+#, kde-format
+msgid "Subtitle Composer"
+msgstr "Subtiitrilooja"
+
+#: src/main.cpp:212
+#, kde-format
+msgid "A KDE subtitle editor."
+msgstr "KDE subtiitriredaktor."
+
+#: src/main.cpp:218
+#, kde-format
+msgid "Maintainer"
+msgstr ""
+
+#: src/main.cpp:219
+#, fuzzy, kde-format
+#| msgid "Current Author & Maintainer"
+msgid "Former Maintainer"
+msgstr "Praegune autor ja hooldaja"
+
+#: src/main.cpp:220
+#, kde-format
+msgid "Patches and Website"
+msgstr ""
+
+#: src/main.cpp:222
+#, kde-format
+msgctxt "NAME OF TRANSLATORS"
+msgid "Your names"
+msgstr "Marek Laane"
+
+#: src/main.cpp:222
+#, kde-format
+msgctxt "EMAIL OF TRANSLATORS"
+msgid "Your emails"
+msgstr "qiilaq69@gmail.com"
+
+#: src/main.cpp:224
+#, kde-format
+msgid "code contributions"
+msgstr "panustamine koodiga"
+
+#: src/main.cpp:225
+#, kde-format
+msgid "code contributions, Arch Linux packaging"
+msgstr "panustamine koodiga, Arch Linuxi pakendamine"
+
+#: src/main.cpp:227
+#, kde-format
+msgid "All people who have contributed and I have forgotten to mention"
+msgstr "Kõik, kes on andnud oma panuse ja keda ma olen unustanud nimetada"
+
+#: src/mainwindow.cpp:35
+#, kde-format
+msgid "Waveform"
+msgstr "Helilaine"
+
+#: src/mainwindow.cpp:49
+#, kde-format
+msgid "Video Player"
+msgstr "Videomängija"
+
+#. i18n: ectx: label, entry (DefaultSubtitlesEncoding), group (General)
+#: src/scconfig.kcfg:10
+#, kde-format
+msgid "Default Subtitles Encoding"
+msgstr "Subtiitrite vaikimisi kodeering"
+
+#. i18n: ectx: label, entry (TextLineBreak), group (General)
+#: src/scconfig.kcfg:14
+#, fuzzy, kde-format
+#| msgid "Enter character(s)"
+msgid "Line Break Character"
+msgstr "Märkide sisestamine"
+
+#. i18n: ectx: label, entry (SeekOffsetOnDoubleClick), group (General)
+#: src/scconfig.kcfg:18
+#, kde-format
+msgid "Seek Offset On Double Click"
+msgstr ""
+
+#. i18n: ectx: label, entry (JumpLineOffset), group (General)
+#: src/scconfig.kcfg:22
+#, kde-format
+msgid "Jump to prev/next line offset"
+msgstr ""
+
+#. i18n: ectx: label, entry (UnpauseOnDoubleClick), group (General)
+#: src/scconfig.kcfg:26
+#, kde-format
+msgid "Unpause On Double Click"
+msgstr "Pausi lõpetamine topeltklõpsu peale"
+
+#. i18n: ectx: label, entry (AutomaticVideoLoad), group (General)
+#: src/scconfig.kcfg:30
+#, kde-format
+msgid "Automatic Video Load"
+msgstr "Video automaatne laadimine"
+
+#. i18n: ectx: label, entry (LinesQuickShiftAmount), group (General)
+#: src/scconfig.kcfg:35
+#, kde-format
+msgid "Lines Quick Shift Amount"
+msgstr "Ridade kiire nihutamise kogus"
+
+#. i18n: ectx: label, entry (GrabbedPositionCompensation), group (General)
+#: src/scconfig.kcfg:39
+#, kde-format
+msgid "Grabbed Position Compensation"
+msgstr ""
+
+#. i18n: ectx: label, entry (LineDuration), group (General)
+#: src/scconfig.kcfg:44
+#, kde-format
+msgid "Default subtitle line duration"
+msgstr "Subtiitri rea vaikimisi kestus"
+
+#. i18n: ectx: label, entry (LinePause), group (General)
+#: src/scconfig.kcfg:48
+#, kde-format
+msgid "Default duration between subtitle lines"
+msgstr "Vaikimisi kestus subtiitri ridade vahel"
+
+#. i18n: ectx: label, entry (MaxCharacters), group (Error Check)
+#: src/scconfig.kcfg:55
+#, kde-format
+msgid "Maximum number of characters"
+msgstr "Märkide maks. arv"
+
+#. i18n: ectx: label, entry (MaxLines), group (Error Check)
+#: src/scconfig.kcfg:59
+#, kde-format
+msgid "Maximum number of lines"
+msgstr "Ridade maks. arv"
+
+#. i18n: ectx: label, entry (MinDuration), group (Error Check)
+#: src/scconfig.kcfg:64
+#, kde-format
+msgid "Minimum duration"
+msgstr "Miinimumkestus"
+
+#. i18n: ectx: label, entry (MaxDuration), group (Error Check)
+#: src/scconfig.kcfg:68
+#, kde-format
+msgid "Maximum duration"
+msgstr "Maksimumkestus"
+
+#. i18n: ectx: label, entry (MinDurationPerCharacter), group (Error Check)
+#: src/scconfig.kcfg:73
+#, kde-format
+msgid "Minimum duration per character"
+msgstr "Miinimumkestus märgi kohta"
+
+#. i18n: ectx: label, entry (IdealDurationPerCharacter), group (Error Check)
+#: src/scconfig.kcfg:77
+#, fuzzy, kde-format
+#| msgid "Maximum duration per character"
+msgid "Ideal duration per character"
+msgstr "Maksimumkestus märgi kohta"
+
+#. i18n: ectx: label, entry (MaxDurationPerCharacter), group (Error Check)
+#: src/scconfig.kcfg:81
+#, kde-format
+msgid "Maximum duration per character"
+msgstr "Maksimumkestus märgi kohta"
+
+#. i18n: ectx: label, entry (DefaultLanguage), group (Spelling)
+#: src/scconfig.kcfg:93
+#, kde-format
+msgid "Default Language"
+msgstr "Vaikimisi keel"
+
+#. i18n: ectx: label, entry (DefaultClient), group (Spelling)
+#: src/scconfig.kcfg:97
+#, kde-format
+msgid "Default client"
+msgstr "Vaikimisi klient"
+
+#. i18n: ectx: label, entry (CheckUppercase), group (Spelling)
+#: src/scconfig.kcfg:101
+#, kde-format
+msgid "Check uppercase"
+msgstr ""
+
+#. i18n: ectx: label, entry (SkipRunTogether), group (Spelling)
+#: src/scconfig.kcfg:105
+#, kde-format
+msgid "Skip Run Together"
+msgstr ""
+
+#. i18n: ectx: label, entry (wfInnerColor), group (Waveform Widget)
+#: src/scconfig.kcfg:112
+#, kde-format
+msgid "Waveform Inner Color"
+msgstr "Helilaine sisevärv"
+
+#. i18n: ectx: label, entry (wfOuterColor), group (Waveform Widget)
+#: src/scconfig.kcfg:116
+#, kde-format
+msgid "Waveform Outer Color"
+msgstr "Helilaine välisvärv"
+
+#. i18n: ectx: label, entry (wfSmoothScroll), group (Waveform Widget)
+#: src/scconfig.kcfg:120
+#, kde-format
+msgid "Waveform Smooth Scrolling"
+msgstr "Helilaine sujuv kerimine"
+
+#. i18n: ectx: label, entry (wfAutoscrollPadding), group (Waveform Widget)
+#: src/scconfig.kcfg:124
+#, kde-format
+msgid "Autoscroll Padding"
+msgstr "Automaatse kerimise täidis"
+
+#. i18n: ectx: whatsthis, entry (wfAutoscrollPadding), group (Waveform Widget)
+#: src/scconfig.kcfg:126
+#, kde-format
+msgid ""
+"Autoscroll page when play position reaches ScrollPadding distance "
+"(percentage) from page border."
+msgstr ""
+"Lehekülje automaatne kerimine, kui esitamise asukoht jõuab lehekülje "
+"piirdest kerimistäidise kaugusele (protsentides)."
+
+#. i18n: ectx: label, entry (wfSubBackground), group (Waveform Widget)
+#: src/scconfig.kcfg:129
+#, kde-format
+msgid "Waveform Subtitle Background Color"
+msgstr "Helilaine subtiitri taustavärv"
+
+#. i18n: ectx: label, entry (wfSubBorder), group (Waveform Widget)
+#: src/scconfig.kcfg:133
+#, kde-format
+msgid "Waveform Subtitle Border Color"
+msgstr "Helilaine subtiitri piirde värv"
+
+#. i18n: ectx: label, entry (wfSubBorderWidth), group (Waveform Widget)
+#: src/scconfig.kcfg:137
+#, kde-format
+msgid "Waveform Subtitle Border Width"
+msgstr "Helilaine subtiitri piirde laius"
+
+#. i18n: ectx: label, entry (wfSelBackground), group (Waveform Widget)
+#: src/scconfig.kcfg:141
+#, kde-format
+msgid "Waveform Selected Subtitle Background Color"
+msgstr "Helilaine valitud subtiitri taustavärv"
+
+#. i18n: ectx: label, entry (wfSelBorder), group (Waveform Widget)
+#: src/scconfig.kcfg:145
+#, kde-format
+msgid "Waveform Selected Subtitle Border Color"
+msgstr "Helilaine valitud subtiitri piirde värv"
+
+#. i18n: ectx: label, entry (wfFontFamily), group (Waveform Widget)
+#. i18n: ectx: label, entry (FontFamily), group (VideoPlayer)
+#: src/scconfig.kcfg:149 src/scconfig.kcfg:201
+#, kde-format
+msgid "Font Family"
+msgstr "Fondipere"
+
+#. i18n: ectx: label, entry (wfSubNumberFontSize), group (Waveform Widget)
+#: src/scconfig.kcfg:153
+#, kde-format
+msgid "Subtitle Number Font Size"
+msgstr "Subtiitri arvude fondisuurus"
+
+#. i18n: ectx: label, entry (wfSubNumberColor), group (Waveform Widget)
+#: src/scconfig.kcfg:157
+#, kde-format
+msgid "Subtitle Number Font Color"
+msgstr "Subtiitri arvude fondivärv"
+
+#. i18n: ectx: label, entry (wfSubTextFontSize), group (Waveform Widget)
+#: src/scconfig.kcfg:161
+#, kde-format
+msgid "Subtitle Text Font Size"
+msgstr "Subtiitri teksti fondisuurus"
+
+#. i18n: ectx: label, entry (wfSubTextColor), group (Waveform Widget)
+#: src/scconfig.kcfg:165
+#, kde-format
+msgid "Subtitle Text Font Color"
+msgstr "Subtiitri teksti fondivärv"
+
+#. i18n: ectx: label, entry (wfMouseLocation), group (Waveform Widget)
+#: src/scconfig.kcfg:169
+#, kde-format
+msgid "Mouse Location Line Color"
+msgstr "Hiire asukoha rea värv"
+
+#. i18n: ectx: label, entry (wfPlayLocation), group (Waveform Widget)
+#: src/scconfig.kcfg:173
+#, kde-format
+msgid "Play Location Line Color"
+msgstr "Esitamise asukoha rea värv"
+
+#. i18n: ectx: label, entry (SeekJumpLength), group (VideoPlayer)
+#: src/scconfig.kcfg:184
+#, kde-format
+msgid "Jump length on seek"
+msgstr "Hüppe pikkus otsingul"
+
+#. i18n: ectx: label, entry (StepJumpLength), group (VideoPlayer)
+#: src/scconfig.kcfg:188
+#, kde-format
+msgid "Amount of frames to skip when stepping"
+msgstr ""
+
+#. i18n: ectx: label, entry (ShowPositionTimeEdit), group (VideoPlayer)
+#: src/scconfig.kcfg:192
+#, kde-format
+msgid "Show editable time position"
+msgstr ""
+
+#. i18n: ectx: label, entry (VolumeAmplification), group (VideoPlayer)
+#: src/scconfig.kcfg:196
+#, kde-format
+msgid "Volume Amplification"
+msgstr "Helitugevuse võimendamine"
+
+#. i18n: ectx: label, entry (FontSize), group (VideoPlayer)
+#: src/scconfig.kcfg:205
+#, kde-format
+msgid "Font Size"
+msgstr "Fondi suurus"
+
+#. i18n: ectx: label, entry (FontColor), group (VideoPlayer)
+#: src/scconfig.kcfg:209
+#, kde-format
+msgid "Font Color"
+msgstr "Fondi värv"
+
+#. i18n: ectx: label, entry (OutlineColor), group (VideoPlayer)
+#: src/scconfig.kcfg:213
+#, kde-format
+msgid "Outline Color"
+msgstr "Kontuuri värv"
+
+#. i18n: ectx: label, entry (OutlineWidth), group (VideoPlayer)
+#: src/scconfig.kcfg:217
+#, kde-format
+msgid "Outline Width"
+msgstr "Kontuuri laius"
+
+#: src/scripting/scriptsmanager.cpp:75
+#, kde-format
+msgid "Non-Script Files"
+msgstr ""
+
+#: src/scripting/scriptsmanager.cpp:157
+#, fuzzy, kde-format
+#| msgid "Title Case"
+msgid "Title"
+msgstr "Läbiv suurtäht"
+
+#: src/scripting/scriptsmanager.cpp:158
+#, kde-format
+msgid "Version"
+msgstr ""
+
+#: src/scripting/scriptsmanager.cpp:159
+#, kde-format
+msgid "Author"
+msgstr ""
+
+#: src/scripting/scriptsmanager.cpp:160
+#, fuzzy, kde-format
+#| msgid "Path:"
+msgid "Path"
+msgstr "Asukoht:"
+
+#: src/scripting/scriptsmanager.cpp:354
+#, kde-format
+msgid "Information"
+msgstr "Teave"
+
+#: src/scripting/scriptsmanager.cpp:360
+#, kde-format
+msgid "Warning"
+msgstr "Hoiatus"
+
+#: src/scripting/scriptsmanager.cpp:366
+#, kde-format
+msgid "Error"
+msgstr "Tõrge"
+
+#. i18n: ectx: property (text), widget (QPushButton, btnEdit)
+#: src/scripting/scriptsmanager.cpp:394 src/scripting/scriptsmanager.ui:74
+#, kde-format
+msgid "Edit"
+msgstr "Muuda"
+
+#: src/scripting/scriptsmanager.cpp:397
+#, kde-format
+msgid "View"
+msgstr ""
+
+#: src/scripting/scriptsmanager.cpp:462 src/scripting/scriptsmanager.cpp:527
+#, kde-format
+msgid ""
+"You must enter an unused name to continue.\n"
+"Would you like to enter another name?"
+msgstr ""
+"Jätkamiseks pead sisestama kasutamata nime.\n"
+"Kas sisestada mõni muu nimi?"
+
+#: src/scripting/scriptsmanager.cpp:463 src/scripting/scriptsmanager.cpp:528
+#, kde-format
+msgid "Name Already Used"
+msgstr "Nimi on juba kasutusel"
+
+#: src/scripting/scriptsmanager.cpp:467
+#, kde-format
+msgid "Create New Script"
+msgstr "Uue skripti loomine"
+
+#: src/scripting/scriptsmanager.cpp:467 src/scripting/scriptsmanager.cpp:531
+#, kde-format
+msgid "Script name:"
+msgstr "Skripti nimi:"
+
+#: src/scripting/scriptsmanager.cpp:475
+#, kde-format
+msgid "There was an error creating the file <b>%1</b>."
+msgstr "Faili <b>%1</b> loomisel tekkis tõrge."
+
+#: src/scripting/scriptsmanager.cpp:510
+#, kde-format
+msgid "Select Existing Script"
+msgstr "Olemasoleva skripti valimine"
+
+#: src/scripting/scriptsmanager.cpp:531
+#, kde-format
+msgid "Rename Script"
+msgstr "Skripti nime muutmine"
+
+#: src/scripting/scriptsmanager.cpp:540
+#, kde-format
+msgid "There was an error opening the file <b>%1</b>."
+msgstr "Faili <b>%1</b> avamisel tekkis tõrge."
+
+#: src/scripting/scriptsmanager.cpp:548
+#, kde-format
+msgid "There was an error copying the file to <b>%1</b>."
+msgstr "Faili <b>%1</b> kopeerimisel tekkis tõrge."
+
+#: src/scripting/scriptsmanager.cpp:563
+#, kde-format
+msgid "Do you really want to send file <b>%1</b> to the trash?"
+msgstr "Kas tõesti visata fail <b>%1</b> prügikasti?"
+
+#: src/scripting/scriptsmanager.cpp:563
+#, kde-format
+msgid "Move to Trash"
+msgstr "Prügikasti viskamine"
+
+#: src/scripting/scriptsmanager.cpp:567
+#, kde-format
+msgid "There was an error removing the file <b>%1</b>."
+msgstr "Faili <b>%1</b> eemaldamisel tekkis tõrge."
+
+#: src/scripting/scriptsmanager.cpp:596
+#, kde-format
+msgid "Could not launch external editor.\n"
+msgstr "Välise redaktori käivitamine nurjus.\n"
+
+#: src/scripting/scriptsmanager.cpp:617
+#, fuzzy, kde-format
+#| msgid "Error Running Script"
+msgid "Error opening script %1."
+msgstr "Tõrge skripti käitamisel"
+
+#: src/scripting/scriptsmanager.cpp:617 src/scripting/scriptsmanager.cpp:632
+#: src/scripting/scriptsmanager.cpp:634
+#, kde-format
+msgid "Error Running Script"
+msgstr "Tõrge skripti käitamisel"
+
+#: src/scripting/scriptsmanager.cpp:630
+#, fuzzy, kde-format
+#| msgid "Path:"
+msgid "Path: %1"
+msgstr "Asukoht:"
+
+#: src/scripting/scriptsmanager.cpp:647
+#, kde-format
+msgid "Tools"
+msgstr "Tööriistad"
+
+#. i18n: ectx: property (windowTitle), widget (QDialog, ScriptsManager)
+#: src/scripting/scriptsmanager.ui:14
+#, kde-format
+msgid "Scripts Manager"
+msgstr "Skriptihaldur "
+
+#. i18n: ectx: property (whatsThis), widget (QPushButton, btnCreate)
+#: src/scripting/scriptsmanager.ui:29
+#, kde-format
+msgid "Creates a new script file."
+msgstr "Uue skriptifaili loomine."
+
+#. i18n: ectx: property (text), widget (QPushButton, btnCreate)
+#: src/scripting/scriptsmanager.ui:32
+#, kde-format
+msgid "Create..."
+msgstr "Loo ..."
+
+#. i18n: ectx: property (whatsThis), widget (QPushButton, btnAdd)
+#: src/scripting/scriptsmanager.ui:43
+#, kde-format
+msgid "Copies an existing script from a specified location."
+msgstr "Olemasoleva skripti kopeerimine määratud asukohta."
+
+#. i18n: ectx: property (text), widget (QPushButton, btnAdd)
+#: src/scripting/scriptsmanager.ui:46
+#, kde-format
+msgid "Add..."
+msgstr "Lisa ..."
+
+#. i18n: ectx: property (whatsThis), widget (QPushButton, btnRemove)
+#: src/scripting/scriptsmanager.ui:57
+#, kde-format
+msgid "Sends the selected script to the trash."
+msgstr "Valitud skripti viskamine prügikasti."
+
+#. i18n: ectx: property (whatsThis), widget (QPushButton, btnEdit)
+#: src/scripting/scriptsmanager.ui:71
+#, kde-format
+msgid "Opens the selected script with an external editor."
+msgstr "Valitud skripti avamise välises redaktoris."
+
+#. i18n: ectx: property (whatsThis), widget (QPushButton, btnRun)
+#: src/scripting/scriptsmanager.ui:101
+#, kde-format
+msgid "Executes the selected script."
+msgstr "Valitud skripti täitmine."
+
+#. i18n: ectx: property (text), widget (QPushButton, btnRun)
+#: src/scripting/scriptsmanager.ui:104
+#, kde-format
+msgid "Run"
+msgstr "Käivita"
+
+#. i18n: ectx: property (whatsThis), widget (QPushButton, btnRefresh)
+#: src/scripting/scriptsmanager.ui:131
+#, kde-format
+msgid "Reloads the installed scripts list."
+msgstr "Valitud skriptide loendi taaslaadimine."
+
+#. i18n: ectx: property (text), widget (QPushButton, btnRefresh)
+#: src/scripting/scriptsmanager.ui:134
+#, kde-format
+msgid "Refresh"
+msgstr "Värskenda"
+
+#. i18n: ectx: label, entry (acousticModelPath), group (PocketSphinx)
+#. i18n: ectx: property (toolTip), widget (QLabel, label_acousticModelPath)
+#: src/speechplugins/pocketsphinx/pocketsphinxconfig.kcfg:11
+#: src/speechplugins/pocketsphinx/pocketsphinxconfigwidget.ui:65
+#, kde-format
+msgid "Directory containing acoustic model files"
+msgstr "Akustilise mudeli faile sisaldav kataloog"
+
+#. i18n: ectx: label, entry (trigramModelFile), group (PocketSphinx)
+#. i18n: ectx: property (toolTip), widget (QLabel, label_trigramModelFile)
+#: src/speechplugins/pocketsphinx/pocketsphinxconfig.kcfg:15
+#: src/speechplugins/pocketsphinx/pocketsphinxconfigwidget.ui:39
+#, kde-format
+msgid "Word trigram language model input file"
+msgstr ""
+
+#. i18n: ectx: label, entry (lexiconFile), group (PocketSphinx)
+#. i18n: ectx: property (toolTip), widget (QLabel, label_lexiconFile)
+#: src/speechplugins/pocketsphinx/pocketsphinxconfig.kcfg:19
+#: src/speechplugins/pocketsphinx/pocketsphinxconfigwidget.ui:26
+#, kde-format
+msgid "Main pronunciation dictionary (lexicon) input file"
+msgstr "Peamine hääldussõnastiku (leksikoni) sisendfail"
+
+#. i18n: ectx: label, entry (vadPostSpeech), group (PocketSphinx)
+#. i18n: ectx: property (toolTip), widget (QLabel, label_vadPostSpeech)
+#: src/speechplugins/pocketsphinx/pocketsphinxconfig.kcfg:24
+#: src/speechplugins/pocketsphinx/pocketsphinxconfigwidget.ui:152
+#, kde-format
+msgid "Num of silence frames to keep after speech to silence transition"
+msgstr ""
+
+#. i18n: ectx: label, entry (vadPreSpeech), group (PocketSphinx)
+#. i18n: ectx: property (toolTip), widget (QLabel, label_vadPreSpeech)
+#: src/speechplugins/pocketsphinx/pocketsphinxconfig.kcfg:28
+#: src/speechplugins/pocketsphinx/pocketsphinxconfigwidget.ui:139
+#, kde-format
+msgid "Num of speech frames to keep before silence to speech transition"
+msgstr ""
+
+#. i18n: ectx: label, entry (vadStartSpeech), group (PocketSphinx)
+#. i18n: ectx: property (toolTip), widget (QLabel, label_vadStartSpeech)
+#: src/speechplugins/pocketsphinx/pocketsphinxconfig.kcfg:32
+#: src/speechplugins/pocketsphinx/pocketsphinxconfigwidget.ui:165
+#, kde-format
+msgid "Num of speech frames to trigger VAD from silence to speech"
+msgstr ""
+
+#. i18n: ectx: label, entry (vadTreshold), group (PocketSphinx)
+#. i18n: ectx: property (toolTip), widget (QDoubleSpinBox, kcfg_vadTreshold)
+#. i18n: ectx: property (toolTip), widget (QLabel, label_vadTreshold)
+#: src/speechplugins/pocketsphinx/pocketsphinxconfig.kcfg:36
+#: src/speechplugins/pocketsphinx/pocketsphinxconfigwidget.ui:106
+#: src/speechplugins/pocketsphinx/pocketsphinxconfigwidget.ui:126
+#, kde-format
+msgid ""
+"Threshold for decision between noise and silence frames. Log-ratio between "
+"signal level and noise level"
+msgstr ""
+
+#. i18n: ectx: property (title), widget (QGroupBox, grpModel)
+#: src/speechplugins/pocketsphinx/pocketsphinxconfigwidget.ui:20
+#, kde-format
+msgid "Speech Recognition Model"
+msgstr "Kõne tuvastamise mudel"
+
+#. i18n: ectx: property (text), widget (QLabel, label_lexiconFile)
+#: src/speechplugins/pocketsphinx/pocketsphinxconfigwidget.ui:29
+#, kde-format
+msgid "Pronunciation Dictionary (Lexicon)"
+msgstr "Hääldussõnastik (leksikon)"
+
+#. i18n: ectx: property (text), widget (QLabel, label_trigramModelFile)
+#: src/speechplugins/pocketsphinx/pocketsphinxconfigwidget.ui:42
+#, kde-format
+msgid "Trigram Model"
+msgstr ""
+
+#. i18n: ectx: property (text), widget (QLabel, label_acousticModelPath)
+#: src/speechplugins/pocketsphinx/pocketsphinxconfigwidget.ui:68
+#, kde-format
+msgid "Acoustic Model"
+msgstr "Akustiline mudel"
+
+#. i18n: ectx: property (text), widget (QLabel, label_modelInfoText)
+#: src/speechplugins/pocketsphinx/pocketsphinxconfigwidget.ui:78
+#, fuzzy, kde-format
+#| msgid ""
+#| "<html><head/><body><p align=\"center\">Acoustic and Language Models can "
+#| "be downloaded from <a href=\"https://cmusphinx.github.io/wiki/download/"
+#| "\"><span style=\" text-decoration: underline; color:#007af4;\">CMU Spinx</"
+#| "span></a></p></body></html>"
+msgid ""
+"<html><head/><body><p align=\"center\">Acoustic and Language Models can be "
+"downloaded from <a href=\"https://cmusphinx.github.io/wiki/download/\"><span "
+"style=\" text-decoration: underline; color:#007af4;\">CMU Sphinx</span></a></"
+"p></body></html>"
+msgstr ""
+"<html><head/><body><p align=\"center\">Akustilisi ja keelemudeleid saab alla "
+"laadida <a href=\"https://cmusphinx.github.io/wiki/download/\"><span style="
+"\" text-decoration: underline; color:#007af4;\">CMU Sphinxi saidilt</span></"
+"a></p></body></html>"
+
+#. i18n: ectx: property (title), widget (QGroupBox, grpVAD)
+#: src/speechplugins/pocketsphinx/pocketsphinxconfigwidget.ui:100
+#, kde-format
+msgid "Voice Activity Detection"
+msgstr "Helilise aktiivsuse tuvastamine"
+
+#. i18n: ectx: property (text), widget (QLabel, label_vadTreshold)
+#: src/speechplugins/pocketsphinx/pocketsphinxconfigwidget.ui:129
+#, kde-format
+msgid "Noise Threshold"
+msgstr "Müralävi"
+
+#. i18n: ectx: property (text), widget (QLabel, label_vadPreSpeech)
+#: src/speechplugins/pocketsphinx/pocketsphinxconfigwidget.ui:142
+#, kde-format
+msgid "Pre Speech Frames"
+msgstr "Kõnele eelnevad kaadrid"
+
+#. i18n: ectx: property (text), widget (QLabel, label_vadPostSpeech)
+#: src/speechplugins/pocketsphinx/pocketsphinxconfigwidget.ui:155
+#, kde-format
+msgid "Post Speech Frames"
+msgstr "Kõnele järgnevad kaadrid"
+
+#. i18n: ectx: property (text), widget (QLabel, label_vadStartSpeech)
+#: src/speechplugins/pocketsphinx/pocketsphinxconfigwidget.ui:168
+#, kde-format
+msgid "Start Speech Frames"
+msgstr "Kõnekaadrite algus"
+
+#: src/speechprocessor/speechprocessor.cpp:40
+#, kde-format
+msgid "Recognizing speech"
+msgstr "Kõne tuvastamine"
+
+#: src/speechprocessor/speechprocessor.cpp:48
+#, kde-format
+msgid "Abort speech recognition"
+msgstr "Katkesta kõne tuvastamine"
+
+#: src/speechprocessor/speechprocessor.cpp:97
+#, kde-format
+msgid "No speech recognition plugins available"
+msgstr "Ühtegi kõne tuvastamise pluginat pole saadaval"
+
+#: src/speechprocessor/speechprocessor.cpp:102
+#, kde-format
+msgid "Initialization of speech recognition plugin failed"
+msgstr "Kõne tuvastamise plugina initsialiseerimine nurjus"
+
+#: src/speechprocessor/speechprocessor.cpp:172
+#, kde-format
+msgid ""
+"Speech Recognition failed: %2\n"
+"Code %1: %3"
+msgstr ""
+"Kõne tuvastamine nurjus: %2\n"
+"Kood %1: %3"
+
+#. i18n: ectx: Menu (file)
+#: src/subtitlecomposerui.rc:5
+#, kde-format
+msgid "&File"
+msgstr "&Fail"
+
+#. i18n: ectx: Menu (translation)
+#: src/subtitlecomposerui.rc:20
+#, kde-format
+msgid "Translation"
+msgstr "Tõlge"
+
+#. i18n: ectx: Menu (edit)
+#: src/subtitlecomposerui.rc:33
+#, kde-format
+msgid "&Edit"
+msgstr "&Redigeerimine"
+
+#. i18n: ectx: Menu (texts)
+#: src/subtitlecomposerui.rc:56
+#, kde-format
+msgid "&Texts"
+msgstr "&Tekstid"
+
+#. i18n: ectx: Menu (styles)
+#: src/subtitlecomposerui.rc:67
+#, kde-format
+msgid "St&yles"
+msgstr "St&iilid"
+
+#. i18n: ectx: Menu (times)
+#: src/subtitlecomposerui.rc:75
+#, kde-format
+msgid "T&imes"
+msgstr "A&jad"
+
+#. i18n: ectx: Menu (errors)
+#: src/subtitlecomposerui.rc:96
+#, kde-format
+msgid "E&rrors"
+msgstr "Vea&d"
+
+#. i18n: ectx: Menu (video)
+#: src/subtitlecomposerui.rc:105
+#, kde-format
+msgid "&Video"
+msgstr "&Video"
+
+#. i18n: ectx: Menu (tools)
+#: src/subtitlecomposerui.rc:140
+#, kde-format
+msgid "T&ools"
+msgstr "Töö&riistad"
+
+#. i18n: ectx: ToolBar (mainToolBar)
+#: src/subtitlecomposerui.rc:145
+#, kde-format
+msgid "Main Toolbar"
+msgstr "Peamine tööriistariba"
+
+#. i18n: ectx: ToolBar (editToolBar)
+#: src/subtitlecomposerui.rc:156
+#, kde-format
+msgid "Edit Toolbar"
+msgstr "Muutmisriba"
+
+#: src/utils/finder.cpp:45
+#, kde-format
+msgid "Find In"
+msgstr ""
+
+#: src/utils/finder.cpp:246
+#, kde-format
+msgid "No instances of '%1' found!"
+msgstr "Ühtegi \"%1\" isendit ei leitud!"
+
+#: src/utils/finder.cpp:246 src/utils/finder.cpp:260
+#, kde-format
+msgid "Find"
+msgstr ""
+
+#: src/utils/finder.cpp:260 src/utils/speller.cpp:135
+#, kde-format
+msgid ""
+"End of subtitle reached.\n"
+"Continue from the beginning?"
+msgstr ""
+"Jõuti subtiitri lõppu.\n"
+"Kas jätkata algusest?"
+
+#: src/utils/finder.cpp:260
+#, kde-format
+msgid ""
+"Beginning of selection reached.\n"
+"Continue from the end?"
+msgstr ""
+"Jõuti valiku algusse.\n"
+"Kas jätkata lõpust?"
+
+#: src/utils/finder.cpp:260
+#, kde-format
+msgid ""
+"Beginning of subtitle reached.\n"
+"Continue from the end?"
+msgstr ""
+"Jõuti subtiitri algusse.\n"
+"Kas jätkata lõpust?"
+
+#: src/utils/finder.cpp:260
+#, kde-format
+msgid ""
+"End of selection reached.\n"
+"Continue from the beginning?"
+msgstr ""
+"Jõuti valiku lõppu.\n"
+"Kas jätkata algusest?"
+
+#: src/utils/language.cpp:115
+#, kde-format
+msgid "Automatic"
+msgstr "Automaatne"
+
+#: src/utils/language.cpp:122
+#, kde-format
+msgctxt "Official language of the Philippines, aka Filipino"
+msgid "Tagalog"
+msgstr "Tagalogi"
+
+#: src/utils/replacer.cpp:43
+#, kde-format
+msgid "Find/Replace In"
+msgstr "Otsimine ja asendamine"
+
+#: src/utils/replacer.cpp:250
+#, kde-format
+msgid "Replace"
+msgstr "Asenda"
+
+#: src/utils/speller.cpp:135
+#, kde-format
+msgid "Spell Checking"
+msgstr "Õigekirja kontroll"
+
+#: src/utils/translator.cpp:163
+#, fuzzy, kde-format
+#| msgid "Operation cancelled by user"
+msgid "Operation canceled by user"
+msgstr "Kasutaja loobus toimingust"
+
+#: src/utils/translator.cpp:263 src/utils/translator.cpp:272
+#, kde-format
+msgid "Unexpected contents received from translation service"
+msgstr "Tõlketeenuselt saadi ootamatu sisu"
+
+#: src/videoplayer/backend/videostate.cpp:110
+#, fuzzy, kde-format
+#| msgid "Audio Stream #%1"
+msgid "Video Stream #%1"
+msgstr "Helivoog nr %1"
+
+#: src/videoplayer/backend/videostate.cpp:114
+#, kde-format
+msgid "Audio Stream #%1"
+msgstr "Helivoog nr %1"
+
+#: src/videoplayer/backend/videostate.cpp:120
+#, fuzzy, kde-format
+#| msgid "Audio Stream #%1"
+msgid "Subtitle Stream #%1"
+msgstr "Helivoog nr %1"
+
+#: src/videoplayer/videoplayer.cpp:115
+#, kde-format
+msgid "File does not exist."
+msgstr "Faili ei ole olemas."
+
+#: src/widgets/simplerichtextedit.cpp:254
+#, kde-format
+msgid "Suggestions"
+msgstr "Pakkumised"
+
+#: src/widgets/simplerichtextedit.cpp:255
+#, kde-format
+msgid "Ignore"
+msgstr "Eira"
+
+#: src/widgets/simplerichtextedit.cpp:256
+#, kde-format
+msgid "Add to Dictionary"
+msgstr "Lisa sõnastikku"
+
+#: src/widgets/simplerichtextedit.cpp:260
+#, kde-format
+msgid "No suggestions"
+msgstr "Pakkumisi pole"
+
+#: src/widgets/simplerichtextedit.cpp:359
+#, kde-format
+msgid "Delete"
+msgstr "Kustuta"
+
+#: src/widgets/simplerichtextedit.cpp:410
+#, kde-format
+msgid "Check Spelling..."
+msgstr "Õigekirja kontroll ..."
+
+#: src/widgets/simplerichtextedit.cpp:415
+#, kde-format
+msgid "Auto Spell Check"
+msgstr "Automaatne õigekirja kontroll"
+
+#: src/widgets/simplerichtextedit.cpp:420
+#, kde-format
+msgid "Allow Tabulations"
+msgstr ""
+
+#~ msgid "Installed Scripts"
+#~ msgstr "Paigaldatud skriptid"
+
+#~ msgid "Can not perform sort on selection with multiple ranges."
+#~ msgstr "Mitme vahemikuga valiku sortimine ei ole võimalik"
+
+#~ msgid "Sort..."
+#~ msgstr "Sordi ..."
+
+#~ msgid "Sort lines based on their show time"
+#~ msgstr "Ridade sortimine vastavalt näitamisajale"
+
+#~ msgid "modified"
+#~ msgstr "muudetud"
+
+#~ msgid "Mladen Milinković"
+#~ msgstr "Mladen Milinković"
+
+#~ msgid "Sergio Pistone"
+#~ msgstr "Sergio Pistone"
+
+#~ msgid "Original Author"
+#~ msgstr "Algne autor"
+
+#~ msgid "Open location as primary subtitle"
+#~ msgstr "Asukoha avamine esmase subtiitrina"
+
+#~ msgid "Open location as translation subtitle"
+#~ msgstr "Asukoha avamine subtiitritõlkena"
+
+#~ msgid "Adjust to Video Position (Anchor Last Line)"
+#~ msgstr "Kohanda video asukoha järgi (viimase rea ankurdamine)"
+
+#~ msgid ""
+#~ "Set current line to video position by fixing the last line and linearly "
+#~ "adjusting the other ones"
+#~ msgstr ""
+#~ "Aktiivse rea määramine video asukohta viimase rea fikseerimise ja teiste "
+#~ "ridade lineaarse kohandamise abil"
+
+#~ msgid "Adjust to Video Position (Anchor First Line)"
+#~ msgstr "Kohanda video asukoha järgi (esimese rea ankurdamine)"
+
+#~ msgid ""
+#~ "Set current line to video position by fixing the first line and linearly "
+#~ "adjusting the other ones"
+#~ msgstr ""
+#~ "Aktiivse rea määramine video asukohta esimese rea fikseerimise ja teiste "
+#~ "ridade lineaarse kohandamise abil"
+
+#~ msgid ""
+#~ "Continuing would result in loss of timing information for some lines.\n"
+#~ "Are you sure you want to continue?"
+#~ msgstr ""
+#~ "Jätkamisel läheb mõne rea ajastamisteave kaotsi.\n"
+#~ "Kas tõesti jätkata?"
+
+#~ msgid "Set Lines Style"
+#~ msgstr "Määra reastiil"
+
+#~ msgid "Set Line Texts"
+#~ msgstr "Määra rea tekstid"
+
+#~ msgid "Current line:"
+#~ msgstr "Aktiivne rida:"
+
+#~ msgid "1 character"
+#~ msgid_plural "%1 characters"
+#~ msgstr[0] "1 märk"
+#~ msgstr[1] "%1 märki"
+
+#~ msgid "Undo"
+#~ msgstr "Võta tagasi"
+
+#~ msgid "Redo"
+#~ msgstr "Tee uuesti"
+
+#~ msgid "Text Stream #%1"
+#~ msgstr "Tekstivoog nr %1"
+
+#~ msgctxt "@title Video player backend settings"
+#~ msgid "%1 backend settings"
+#~ msgstr "Taustaprogrammi %1 seadistused"
+
+#~ msgid "&VideoPlayer backend:"
+#~ msgstr "&Videomängija taustaprogramm:"
+
+#~ msgid "Text Antialiasing"
+#~ msgstr "Teksti antialias"
+
+#~ msgid "VideoPlayer Backend"
+#~ msgstr "Videomängija taustaprogramm"
+
+#~ msgid "Font Antialiasing"
+#~ msgstr "Fondi antialias"
+
+#~ msgid "Auto Video Sink"
+#~ msgstr "Automaatne videoneel"
+
+#~ msgid "Video Sink"
+#~ msgstr "Videoneel"
+
+#~ msgid "Auto Audio Sink"
+#~ msgstr "Automaatne helineel"
+
+#~ msgid "Audio Sink"
+#~ msgstr "Helineel"
+
+#~ msgid "Options"
+#~ msgstr "Valikud"
+
+#~ msgid "Video sink:"
+#~ msgstr "Videoneel:"
+
+#~ msgid "Audio sink:"
+#~ msgstr "Helineel:"
+
+#~ msgid "Cache Enabled"
+#~ msgstr "Puhver lubatud"
+
+#~ msgid "Cache Size (KB)"
+#~ msgstr "Puhvri suurus (KB)"
+
+#~ msgid "mplayer executable path"
+#~ msgstr "mplayeri täitmisfaili asukoht"
+
+#~ msgid "Auto Sync Enabled"
+#~ msgstr "Automaatne sünkroonimine lubatud"
+
+#~ msgid "Auto Sync Factor"
+#~ msgstr "Automaatse sünkroonimise tegur"
+
+#~ msgid "Video Output Enabled"
+#~ msgstr "Videoväljund lubatud"
+
+#~ msgid "Video Output"
+#~ msgstr "Videoväljund"
+
+#~ msgid "Hardware Decode"
+#~ msgstr "Riistvaraline dekodeerimine"
+
+#~ msgid "Frame Dropping"
+#~ msgstr "Kaadrite vahelejätmine"
+
+#~ msgid "Hard Frame Dropping"
+#~ msgstr "Karm kaadrite vahelejätmine"
+
+#~ msgid "Audio Output Enabled"
+#~ msgstr "Heliväljund lubatud"
+
+#~ msgid "Audio Output"
+#~ msgstr "Heliväljund"
+
+#~ msgid "Audio Channels Enabled"
+#~ msgstr "Helikanalid lubatud"
+
+#~ msgid "Audio Channels"
+#~ msgstr "Helikanalid"
+
+#~ msgid "Volume Amplification Enabled"
+#~ msgstr "Helitugevuse võimendamine lubatud"
+
+#~ msgid "Volume Normalization"
+#~ msgstr "Helitugevuse normaliseerimine"
+
+#~ msgid "Executable path:"
+#~ msgstr "Täitmisfaili asukoht:"
+
+#~ msgid "A/V synchronization factor:"
+#~ msgstr "A/V sünkroonimise tegur:"
+
+#~ msgid "Video"
+#~ msgstr "Video"
+
+#~ msgid "Video output driver:"
+#~ msgstr "Videoväljundi draiver:"
+
+#~ msgid "Enable VDPAU for DivX/XviD"
+#~ msgstr "VDPAU lubamine DivX/XviD puhul"
+
+#~ msgid "Allow frame dropping"
+#~ msgstr "Kaadrite vahelejätmise lubamine"
+
+#~ msgid "Allow hard frame dropping"
+#~ msgstr "Karmi kaadrite vahelejätmise lubamine"
+
+#~ msgid "Audio"
+#~ msgstr "Heli"
+
+#~ msgid "Audio output driver:"
+#~ msgstr "Heliväljundi draiver:"
+
+#~ msgid "Audio channels:"
+#~ msgstr "Helikanalid:"
+
+#~ msgid "Volume normalization"
+#~ msgstr "Helitugevuse normaliseerimine"
+
+#~ msgid "RenderMethod"
+#~ msgstr "Renderdamisviis"
+
+#~ msgid "Hardware Decode Enabled"
+#~ msgstr "Riistvaraline dekodeerimine lubatud"
+
+#~ msgid "Hardware video decoding:"
+#~ msgstr "Riistvaraline video dekodeerimine:"
+
+#~ msgid "Native window embedding"
+#~ msgstr "Omaakna põimimine"
+
+#~ msgid "OpenGL render API"
+#~ msgstr "OpenGL renderdamise API"
+
+#~ msgid "Video rendering method"
+#~ msgstr "Video renderdamise viis"
+
+#~ msgid "Video Enabled"
+#~ msgstr "Video lubatud"
+
+#~ msgid "Audio Enabled"
+#~ msgstr "Heli lubatud"
+
+#~ msgid "Video driver:"
+#~ msgstr "Videodraiver:"
+
+#~ msgid "Audio driver:"
+#~ msgstr "Helidraiver:"

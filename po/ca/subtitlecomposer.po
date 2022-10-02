@@ -1,0 +1,4181 @@
+# Translation of subtitlecomposer.po to Catalan
+# Copyright (C) 2019-2022 This_file_is_part_of_KDE
+# This file is distributed under the license LGPL version 2.1 or
+# version 3 or later versions approved by the membership of KDE e.V.
+#
+# Antoni Bella Pérez <antonibella5@yahoo.com>, 2019, 2020.
+# Josep M. Ferrer <txemaq@gmail.com>, 2020, 2021, 2022.
+msgid ""
+msgstr ""
+"Project-Id-Version: subtitlecomposer\n"
+"Report-Msgid-Bugs-To: https://bugs.kde.org\n"
+"POT-Creation-Date: 2022-03-22 00:42+0000\n"
+"PO-Revision-Date: 2022-07-08 14:51+0200\n"
+"Last-Translator: Josep M. Ferrer <txemaq@gmail.com>\n"
+"Language-Team: Catalan <kde-i18n-ca@kde.org>\n"
+"Language: ca\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Lokalize 20.12.0\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Accelerator-Marker: &\n"
+
+#: src/actions/kcodecactionext.cpp:29
+#, kde-format
+msgctxt "Encodings menu"
+msgid "Default: %1"
+msgstr "Predeterminada: %1"
+
+#: src/actions/kcodecactionext.cpp:35 src/actions/kcodecactionext.cpp:78
+#, kde-format
+msgctxt "Encodings menu"
+msgid "Current: %1"
+msgstr "Actual: %1"
+
+#: src/actions/kcodecactionext.cpp:41
+#, kde-format
+msgctxt "Encodings menu"
+msgid "Autodetect"
+msgstr "Detecta automàticament"
+
+#: src/application.cpp:451
+#, kde-format
+msgid "Go to Line"
+msgstr "Ves a la línia"
+
+#: src/application.cpp:451
+#, kde-format
+msgid "&Go to line:"
+msgstr "&Ves a la línia:"
+
+#: src/application.cpp:626 src/core/subtitle.cpp:862
+#, kde-format
+msgid "Maximize Durations"
+msgstr "Maximitza les durades"
+
+#: src/application.cpp:655 src/core/subtitle.cpp:1137
+#, kde-format
+msgid "Unbreak Lines"
+msgstr "Elimina els salts de línia"
+
+#: src/application.cpp:666 src/core/subtitle.cpp:1146
+#, kde-format
+msgid "Simplify Spaces"
+msgstr "Simplifica els espais"
+
+#: src/application.cpp:720 src/dialogs/translatedialog.cpp:20
+#, kde-format
+msgid "Translate"
+msgstr "Tradueix"
+
+#: src/application.cpp:720
+#, kde-format
+msgid "Translating text (%1 to %2)..."
+msgstr "S'està traduint el text: (de «%1» a «%2»)..."
+
+#: src/application.cpp:724
+#, kde-format
+msgid "Translating primary text (%1 to %2)..."
+msgstr "S'està traduint el text primari (de «%1» a «%2»)..."
+
+#: src/application.cpp:725
+#, kde-format
+msgid "Translating secondary text (%1 to %2)..."
+msgstr "S'està traduint el text secundari (de «%1» a «%2»)..."
+
+#: src/application.cpp:753
+#, kde-format
+msgid ""
+"Unable to perform texts synchronization (sent and received lines count do "
+"not match)."
+msgstr ""
+"No s'ha pogut realitzar l'operació de sincronització del text (el recompte "
+"de les línies enviades i rebudes no coincideix)."
+
+#: src/application.cpp:757
+#, kde-format
+msgid "Translate Primary Text"
+msgstr "Tradueix el text primari"
+
+#: src/application.cpp:757
+#, kde-format
+msgid "Translate Secondary Text"
+msgstr "Tradueix el text secundari"
+
+#: src/application.cpp:772
+#, kde-format
+msgid ""
+"There was an error performing the translation:\n"
+"\n"
+"%1"
+msgstr ""
+"S'ha produït un error en realitzar la traducció:\n"
+"\n"
+"%1"
+
+#: src/application.cpp:810
+#, kde-format
+msgid "Open Video"
+msgstr "Obre un vídeo"
+
+#: src/application.cpp:1008 src/application.cpp:1015
+#: src/application_subtitle.cpp:652
+#, kde-format
+msgid "Untitled"
+msgstr "Sense títol"
+
+#: src/application.cpp:1010 src/application_subtitle.cpp:652
+#, kde-format
+msgid "Untitled Translation"
+msgstr "Traducció sense títol"
+
+#: src/application.cpp:1111
+#, kde-format
+msgid "Pause"
+msgstr "Pausa"
+
+#: src/application.cpp:1119 src/application_actions.cpp:566
+#, kde-format
+msgid "Play"
+msgstr "Reprodueix"
+
+#: src/application.cpp:1180
+#, kde-format
+msgid "Seek backwards 1 second"
+msgid_plural "Seek backwards %1 seconds"
+msgstr[0] "Cerca cap enrere 1 segon"
+msgstr[1] "Cerca cap enrere %1 segons"
+
+#: src/application.cpp:1181
+#, kde-format
+msgid "Seek forwards 1 second"
+msgid_plural "Seek forwards %1 seconds"
+msgstr[0] "Cerca cap endavant 1 segon"
+msgstr[1] "Cerca cap endavant %1 segons"
+
+#: src/application.cpp:1184 src/application.cpp:1188
+#, kde-format
+msgid "Shift %2%1 millisecond"
+msgid_plural "Shift %2%1 milliseconds"
+msgstr[0] "Desplaçament d'%2%1 mil·lisegon"
+msgstr[1] "Desplaçament de %2%1 mil·lisegons"
+
+#: src/application.cpp:1185 src/application.cpp:1189
+#, kde-format
+msgid "Shift selected lines %2%1 millisecond"
+msgid_plural "Shift selected lines %2%1 milliseconds"
+msgstr[0] "Desplaça les línies seleccionades %2%1 mil·lisegon"
+msgstr[1] "Desplaça les línies seleccionades %2%1 mil·lisegons"
+
+#: src/application_actions.cpp:32
+#, kde-format
+msgid "Exit the application"
+msgstr "Surt de l'aplicació"
+
+#: src/application_actions.cpp:35
+#, kde-format
+msgid "Configure Subtitle Composer"
+msgstr "Configura el Subtitle Composer"
+
+#: src/application_actions.cpp:39
+#, kde-format
+msgctxt "@action:inmenu Create a new subtitle"
+msgid "New"
+msgstr "Nou"
+
+# skip-rule: barb-uns
+#: src/application_actions.cpp:40
+#, kde-format
+msgid "Create an empty subtitle"
+msgstr "Crea uns subtítols nous"
+
+#: src/application_actions.cpp:48
+#, kde-format
+msgctxt "@action:inmenu Open subtitle file"
+msgid "Open Subtitle..."
+msgstr "Obre els subtítols..."
+
+#: src/application_actions.cpp:49 src/application_actions.cpp:66
+#, kde-format
+msgid "Open subtitle file"
+msgstr "Obre un fitxer de subtítols"
+
+#: src/application_actions.cpp:57
+#, kde-format
+msgid "Reload As..."
+msgstr "Torna a carregar com a..."
+
+#: src/application_actions.cpp:58
+#, kde-format
+msgid "Reload opened file with a different encoding"
+msgstr "Torna a carregar el fitxer obert amb una codificació diferent"
+
+#: src/application_actions.cpp:65
+#, kde-format
+msgctxt "@action:inmenu Open rencently used subtitle file"
+msgid "Open &Recent Subtitle"
+msgstr "Obre els subtítols &recents"
+
+#: src/application_actions.cpp:72
+#, kde-format
+msgid "Save"
+msgstr "Desa"
+
+#: src/application_actions.cpp:73
+#, kde-format
+msgid "Save opened subtitle"
+msgstr "Desa els subtítols oberts"
+
+#: src/application_actions.cpp:81
+#, kde-format
+msgid "Save As..."
+msgstr "Desa com a..."
+
+# skip-rule: barb-uns
+#: src/application_actions.cpp:82
+#, kde-format
+msgid "Save opened subtitle with different settings"
+msgstr "Desa els subtítols oberts amb una configuració diferent"
+
+#: src/application_actions.cpp:90
+#, kde-format
+msgid "Close"
+msgstr "Tanca"
+
+#: src/application_actions.cpp:91
+#, kde-format
+msgid "Close opened subtitle"
+msgstr "Tanca els subtítols oberts"
+
+#: src/application_actions.cpp:99
+#, kde-format
+msgid "New Translation"
+msgstr "Traducció nova"
+
+#: src/application_actions.cpp:100
+#, kde-format
+msgid "Create an empty translation subtitle"
+msgstr "Crea una traducció nova dels subtítols"
+
+#: src/application_actions.cpp:108
+#, kde-format
+msgid "Open Translation..."
+msgstr "Obre una traducció..."
+
+#: src/application_actions.cpp:109 src/application_actions.cpp:126
+#, kde-format
+msgid "Open translation subtitle file"
+msgstr "Obre un fitxer de traducció dels subtítols"
+
+#: src/application_actions.cpp:117
+#, kde-format
+msgid "Reload Translation As..."
+msgstr "Torna a carregar la traducció com a..."
+
+#: src/application_actions.cpp:118
+#, kde-format
+msgid "Reload opened translation file with a different encoding"
+msgstr ""
+"Torna a carregar el fitxer de traduccions obert amb una codificació diferent"
+
+#: src/application_actions.cpp:125
+#, kde-format
+msgid "Open &Recent Translation"
+msgstr "Obre una traducció &recent"
+
+#: src/application_actions.cpp:133
+#, kde-format
+msgid "Save Translation"
+msgstr "Desa la traducció"
+
+#: src/application_actions.cpp:134
+#, kde-format
+msgid "Save opened translation subtitle"
+msgstr "Desa la traducció oberta dels subtítols"
+
+#: src/application_actions.cpp:144
+#, kde-format
+msgid "Save Translation As..."
+msgstr "Desa la traducció com a..."
+
+# skip-rule: barb-uns
+#: src/application_actions.cpp:145
+#, kde-format
+msgid "Save opened translation subtitle with different settings"
+msgstr "Desa la traducció dels subtítols oberts amb una configuració diferent"
+
+#: src/application_actions.cpp:153
+#, kde-format
+msgid "Close Translation"
+msgstr "Tanca la traducció"
+
+#: src/application_actions.cpp:154
+#, kde-format
+msgid "Close opened translation subtitle"
+msgstr "Tanca la traducció dels subtítols oberts"
+
+#: src/application_actions.cpp:171
+#, kde-format
+msgid "Split Subtitle..."
+msgstr "Divideix els subtítols..."
+
+#: src/application_actions.cpp:172
+#, kde-format
+msgid "Split the opened subtitle in two parts"
+msgstr "Divideix els subtítols oberts en dues parts"
+
+#: src/application_actions.cpp:178
+#, kde-format
+msgid "Join Subtitles..."
+msgstr "Uneix els subtítols..."
+
+#: src/application_actions.cpp:179
+#, kde-format
+msgid "Append to the opened subtitle another one"
+msgstr "Afegeix al subtítol obert un altre subtítol"
+
+#: src/application_actions.cpp:186
+#, kde-format
+msgid "Insert Before"
+msgstr "Insereix abans"
+
+#: src/application_actions.cpp:187
+#, kde-format
+msgid "Insert empty line before current one"
+msgstr "Insereix una línia buida abans de l'actual"
+
+#: src/application_actions.cpp:195
+#, kde-format
+msgid "Insert After"
+msgstr "Insereix després"
+
+#: src/application_actions.cpp:196
+#, kde-format
+msgid "Insert empty line after current one"
+msgstr "Insereix una línia buida després de l'actual"
+
+#. i18n: ectx: property (text), widget (QPushButton, btnRemove)
+#: src/application_actions.cpp:204 src/scripting/scriptsmanager.ui:60
+#, kde-format
+msgid "Remove"
+msgstr "Elimina"
+
+#: src/application_actions.cpp:205
+#, kde-format
+msgid "Remove selected lines"
+msgstr "Elimina les línies seleccionades"
+
+#: src/application_actions.cpp:212 src/core/subtitle.cpp:544
+#, kde-format
+msgid "Split Lines"
+msgstr "Divideix les línies"
+
+#: src/application_actions.cpp:213
+#, kde-format
+msgid "Split selected lines"
+msgstr "Divideix les línies seleccionades"
+
+#: src/application_actions.cpp:219 src/core/subtitle.cpp:626
+#: src/gui/waveform/waveformwidget.cpp:694
+#, kde-format
+msgid "Join Lines"
+msgstr "Uneix les línies"
+
+#: src/application_actions.cpp:220
+#, kde-format
+msgid "Join selected lines"
+msgstr "Uneix les línies seleccionades"
+
+#: src/application_actions.cpp:227 src/errors/finderrorsdialog.cpp:114
+#: src/gui/treeview/richlineedit.cpp:109 src/widgets/simplerichtextedit.cpp:370
+#, kde-format
+msgid "Select All"
+msgstr "Selecciona-ho tot"
+
+#: src/application_actions.cpp:228
+#, kde-format
+msgid "Select all lines"
+msgstr "Selecciona totes les línies"
+
+#: src/application_actions.cpp:235
+#, kde-format
+msgid "Go to Line..."
+msgstr "Ves a la línia..."
+
+#: src/application_actions.cpp:236
+#, kde-format
+msgid "Go to specified line"
+msgstr "Va a la línia especificada"
+
+#: src/application_actions.cpp:244
+#, kde-format
+msgid "Find..."
+msgstr "Cerca..."
+
+#: src/application_actions.cpp:245
+#, kde-format
+msgid "Find occurrences of strings or regular expressions"
+msgstr "Cerca les ocurrències de les cadenes o expressions regulars"
+
+#: src/application_actions.cpp:253
+#, kde-format
+msgid "Find Next"
+msgstr "Cerca la següent"
+
+#: src/application_actions.cpp:254
+#, kde-format
+msgid "Find next occurrence of string or regular expression"
+msgstr "Cerca l'ocurrència següent de la cadena o expressió regular"
+
+#: src/application_actions.cpp:262
+#, kde-format
+msgid "Find Previous"
+msgstr "Cerca l'anterior"
+
+#: src/application_actions.cpp:263
+#, kde-format
+msgid "Find previous occurrence of string or regular expression"
+msgstr "Cerca l'ocurrència anterior de la cadena o expressió regular"
+
+#: src/application_actions.cpp:270
+#, kde-format
+msgid "Replace..."
+msgstr "Substitueix..."
+
+#: src/application_actions.cpp:271
+#, kde-format
+msgid "Replace occurrences of strings or regular expressions"
+msgstr "Substitueix les ocurrències de les cadenes o expressions regulars"
+
+#: src/application_actions.cpp:279
+#, kde-format
+msgid "Retrocede current line"
+msgstr "Fes retrocedir la línia actual"
+
+#: src/application_actions.cpp:280
+#, kde-format
+msgid "Makes the line before the current one active"
+msgstr "Fes que la línia anterior a l'actual sigui l'activa"
+
+#: src/application_actions.cpp:288
+#, kde-format
+msgid "Advance current line"
+msgstr "Fes avançar la línia actual"
+
+#: src/application_actions.cpp:289
+#, kde-format
+msgid "Makes the line after the current one active"
+msgstr "Fes que la línia després a l'actual sigui l'activa"
+
+#: src/application_actions.cpp:297
+#, kde-format
+msgid "Detect Errors..."
+msgstr "Detecta els errors..."
+
+#: src/application_actions.cpp:298
+#, kde-format
+msgid "Detect errors in the current subtitle"
+msgstr "Detecta els errors en el subtítol actual"
+
+#: src/application_actions.cpp:305
+#, kde-format
+msgid "Clear Errors/Marks"
+msgstr "Neteja els errors/marques"
+
+#: src/application_actions.cpp:306
+#, kde-format
+msgid "Clear detected errors and marks in the current subtitle"
+msgstr "Neteja els errors i marques detectades en el subtítol actual"
+
+#: src/application_actions.cpp:314
+#, kde-format
+msgid "Select Next Error/Mark"
+msgstr "Selecciona l'error/marca següent"
+
+#: src/application_actions.cpp:315
+#, kde-format
+msgid "Select next line with error or mark"
+msgstr "Selecciona la línia següent on s'ha especificat algun error o marca"
+
+#: src/application_actions.cpp:323
+#, kde-format
+msgid "Select Previous Error/Mark"
+msgstr "Selecciona l'error/marca anterior"
+
+#: src/application_actions.cpp:324
+#, kde-format
+msgid "Select previous line with error or mark"
+msgstr "Selecciona la línia anterior on s'ha especificat algun error o marca"
+
+#: src/application_actions.cpp:332
+#, kde-format
+msgid "Spelling..."
+msgstr "Ortografia..."
+
+#: src/application_actions.cpp:333
+#, kde-format
+msgid "Check lines spelling"
+msgstr "Verifica l'ortografia a les línies"
+
+#: src/application_actions.cpp:339
+#, kde-format
+msgid "Toggle Mark"
+msgstr "Commuta la marca"
+
+#: src/application_actions.cpp:340
+#, kde-format
+msgid "Toggle mark on selected lines"
+msgstr "Commuta la marca a les línies seleccionades"
+
+#: src/application_actions.cpp:348 src/gui/currentlinewidget.cpp:141
+#, kde-format
+msgid "Toggle Bold"
+msgstr "Commuta a negreta"
+
+#: src/application_actions.cpp:349
+#, kde-format
+msgid "Toggle selected lines bold attribute"
+msgstr "Commuta l'atribut de negreta a les línies seleccionades"
+
+#: src/application_actions.cpp:357 src/gui/currentlinewidget.cpp:145
+#, kde-format
+msgid "Toggle Italic"
+msgstr "Commuta a cursiva"
+
+#: src/application_actions.cpp:358
+#, kde-format
+msgid "Toggle selected lines italic attribute"
+msgstr "Commuta l'atribut de cursiva a les línies seleccionades"
+
+#: src/application_actions.cpp:366 src/gui/currentlinewidget.cpp:149
+#, kde-format
+msgid "Toggle Underline"
+msgstr "Commuta a subratllat"
+
+#: src/application_actions.cpp:367
+#, kde-format
+msgid "Toggle selected lines underline attribute"
+msgstr "Commuta l'atribut de subratllat a les línies seleccionades"
+
+#: src/application_actions.cpp:375 src/gui/currentlinewidget.cpp:153
+#, kde-format
+msgid "Toggle Strike Through"
+msgstr "Commuta a ratllat"
+
+#: src/application_actions.cpp:376
+#, kde-format
+msgid "Toggle selected lines strike through attribute"
+msgstr "Commuta l'atribut de ratllat a les línies seleccionades"
+
+#: src/application_actions.cpp:384 src/gui/currentlinewidget.cpp:157
+#, kde-format
+msgid "Change Text Color"
+msgstr "Canvia el color del text"
+
+#: src/application_actions.cpp:385
+#, kde-format
+msgid "Change text color of selected lines"
+msgstr "Canvia el color del text de les línies seleccionades"
+
+#: src/application_actions.cpp:392
+#, kde-format
+msgid "Shift..."
+msgstr "Desplaça..."
+
+#: src/application_actions.cpp:393
+#, kde-format
+msgid "Shift lines an specified amount of time"
+msgstr "Desplaça les línies una quantitat de temps determinat"
+
+#: src/application_actions.cpp:412
+#, kde-format
+msgid "Adjust..."
+msgstr "Ajusta..."
+
+#: src/application_actions.cpp:413
+#, kde-format
+msgid "Linearly adjust all lines to a specified interval"
+msgstr "Ajusta linealment totes les línies amb un interval especificat"
+
+#: src/application_actions.cpp:420
+#, kde-format
+msgid "Change Frame Rate..."
+msgstr "Canvia la velocitat dels fotogrames..."
+
+#: src/application_actions.cpp:421
+#, kde-format
+msgid "Retime subtitle lines by reinterpreting its frame rate"
+msgstr ""
+"Torna a establir el temps de les línies de subtítol reinterpretant la seva "
+"velocitat dels fotogrames"
+
+#: src/application_actions.cpp:427
+#, kde-format
+msgid "Enforce Duration Limits..."
+msgstr "Força els límits de durada..."
+
+#: src/application_actions.cpp:428
+#, kde-format
+msgid "Enforce lines minimum and/or maximum duration limits"
+msgstr "Força el límit màxim i/o mínim de durada de les línies"
+
+#: src/application_actions.cpp:435
+#, kde-format
+msgid "Set Automatic Durations..."
+msgstr "Estableix les durades de manera automàtica..."
+
+#: src/application_actions.cpp:436
+#, kde-format
+msgid "Set lines durations based on amount of letters, words and line breaks"
+msgstr ""
+"Estableix la durada de les línies segons la quantitat de lletres, paraules i "
+"salts de línia"
+
+#: src/application_actions.cpp:442
+#, kde-format
+msgid "Maximize Durations..."
+msgstr "Maximitza les durades..."
+
+#: src/application_actions.cpp:443
+#, kde-format
+msgid "Extend lines durations up to their next lines show time"
+msgstr ""
+"Estén la durada de les línies fins al temps de presentació de la línia "
+"següent"
+
+#: src/application_actions.cpp:449
+#, kde-format
+msgid "Fix Overlapping Times..."
+msgstr "Esmena els temps superposats..."
+
+#: src/application_actions.cpp:450
+#, kde-format
+msgid "Fix lines overlapping times"
+msgstr "Esmena els temps de les línies que se superposen"
+
+#: src/application_actions.cpp:456
+#, kde-format
+msgid "Synchronize with Subtitle..."
+msgstr "Sincronitza amb el subtítol..."
+
+#: src/application_actions.cpp:457
+#, kde-format
+msgid "Copy timing information from another subtitle"
+msgstr "Copia la informació del temps des d'un altre subtítol"
+
+#: src/application_actions.cpp:463
+#, kde-format
+msgid "Break Lines..."
+msgstr "Afegeix salts de línia..."
+
+#: src/application_actions.cpp:464
+#, kde-format
+msgid "Automatically set line breaks"
+msgstr "Estableix de manera automàtica els salts de línia"
+
+#: src/application_actions.cpp:470
+#, kde-format
+msgid "Unbreak Lines..."
+msgstr "Elimina els salts de línia..."
+
+#: src/application_actions.cpp:471
+#, kde-format
+msgid "Remove line breaks from lines"
+msgstr "Elimina els salts de línia del text"
+
+#: src/application_actions.cpp:477
+#, kde-format
+msgid "Simplify Spaces..."
+msgstr "Simplifica els espais..."
+
+#: src/application_actions.cpp:478
+#, kde-format
+msgid "Remove unneeded spaces from lines"
+msgstr "Elimina els espais innecessaris del text"
+
+#: src/application_actions.cpp:484
+#, kde-format
+msgid "Change Case..."
+msgstr "Canvia les majúscules/minúscules..."
+
+#: src/application_actions.cpp:485
+#, kde-format
+msgid "Change lines text to upper, lower, title or sentence case"
+msgstr "Canviar el text de les línies, títol o frase a majúscules, minúscules"
+
+#: src/application_actions.cpp:491
+#, kde-format
+msgid "Fix Punctuation..."
+msgstr "Esmena la puntuació..."
+
+#: src/application_actions.cpp:492
+#, kde-format
+msgid "Fix punctuation errors in lines"
+msgstr "Esmena els errors de puntuació en el text"
+
+#: src/application_actions.cpp:498
+#, kde-format
+msgid "Translate..."
+msgstr "Tradueix..."
+
+#: src/application_actions.cpp:499
+#, kde-format
+msgid "Translate lines texts using Google services"
+msgstr "Tradueix els textos de les línies emprant els serveis de Google"
+
+#: src/application_actions.cpp:505
+#, kde-format
+msgid "Edit Line in Place"
+msgstr "Edita la línia en el seu lloc"
+
+#: src/application_actions.cpp:506
+#, kde-format
+msgid "Edit current line text in place"
+msgstr "Edita el text de línia actual en el seu lloc"
+
+#: src/application_actions.cpp:514
+#, kde-format
+msgid "Open Video..."
+msgstr "Obre un vídeo..."
+
+#: src/application_actions.cpp:515 src/application_actions.cpp:522
+#, kde-format
+msgid "Open video file"
+msgstr "Obre un fitxer de vídeo"
+
+#: src/application_actions.cpp:521
+#, kde-format
+msgid "Open &Recent Video"
+msgstr "Obre un vídeo &recent"
+
+#: src/application_actions.cpp:528
+#, kde-format
+msgid "Import Subtitle Stream"
+msgstr "Importa un flux de subtítols"
+
+#: src/application_actions.cpp:529
+#, kde-format
+msgid "Import subtitle stream into subtitle editor"
+msgstr "Importa un flux de subtítols a dins de l'editor de subtítols"
+
+#: src/application_actions.cpp:535
+#, kde-format
+msgid "Recognize Speech"
+msgstr "Reconeix la veu"
+
+#: src/application_actions.cpp:536
+#, kde-format
+msgid "Recognize speech in audio stream"
+msgstr "Reconeix la veu al flux d'àudio"
+
+#: src/application_actions.cpp:542
+#, kde-format
+msgid "Close Video"
+msgstr "Tanca el vídeo"
+
+#: src/application_actions.cpp:543
+#, kde-format
+msgid "Close video file"
+msgstr "Tanca el fitxer de vídeo"
+
+#: src/application_actions.cpp:550
+#, kde-format
+msgid "Full Screen Mode"
+msgstr "Mode de pantalla completa"
+
+#: src/application_actions.cpp:551
+#, kde-format
+msgid "Toggle full screen mode"
+msgstr "Canvia al mode de pantalla completa"
+
+#: src/application_actions.cpp:558
+#, kde-format
+msgid "Stop"
+msgstr "Atura"
+
+#: src/application_actions.cpp:559
+#, kde-format
+msgid "Stop video playback"
+msgstr "Atura la reproducció del vídeo"
+
+#: src/application_actions.cpp:567
+#, kde-format
+msgid "Toggle video playing/paused"
+msgstr "Alterna entre reproduir i fer pausa del vídeo"
+
+#: src/application_actions.cpp:575
+#, kde-format
+msgid "Seek Backward"
+msgstr "Cerca enrere"
+
+#: src/application_actions.cpp:583
+#, kde-format
+msgid "Seek Forward"
+msgstr "Cerca endavant"
+
+#: src/application_actions.cpp:590
+#, kde-format
+msgid "Frame Step Backward"
+msgstr "Recula un pas de fotogrames"
+
+#: src/application_actions.cpp:597
+#, kde-format
+msgid "Frame Step Forward"
+msgstr "Avança un pas de fotogrames"
+
+#: src/application_actions.cpp:605
+#, kde-format
+msgid "Seek to Previous Line"
+msgstr "Cerca a la línia anterior"
+
+#: src/application_actions.cpp:606
+#, kde-format
+msgid "Seek to previous subtitle line show time"
+msgstr "Cerca el temps de presentació de l'anterior línia de subtítol"
+
+#: src/application_actions.cpp:614
+#, kde-format
+msgid "Increase media play rate"
+msgstr "Incrementa la velocitat de reproducció"
+
+#: src/application_actions.cpp:615
+#, kde-format
+msgid "Increase media playback rate"
+msgstr "Fa pujar la velocitat de reproducció"
+
+#: src/application_actions.cpp:622
+#, kde-format
+msgid "Decrease media play rate"
+msgstr "Disminueix la velocitat de reproducció"
+
+#: src/application_actions.cpp:623
+#, kde-format
+msgid "Decrease media playback rate"
+msgstr "Fa baixar la velocitat de reproducció"
+
+#: src/application_actions.cpp:629
+#, kde-format
+msgid "Play Current Line and Pause"
+msgstr "Reprodueix la línia actual i fes una pausa"
+
+#: src/application_actions.cpp:630
+#, kde-format
+msgid "Seek to selected subtitle line show time, play it and then pause"
+msgstr ""
+"Cerca el temps de presentació de la línia de subtítol seleccionat, el "
+"reprodueix i després fa una pausa"
+
+#: src/application_actions.cpp:637
+#, kde-format
+msgid "Seek to Current Line"
+msgstr "Cerca a la línia actual"
+
+#: src/application_actions.cpp:638
+#, kde-format
+msgid "Seek to selected subtitle line show time"
+msgstr "Cerca el temps de presentació de la línia de subtítol seleccionat"
+
+#: src/application_actions.cpp:645
+#, kde-format
+msgid "Seek to Next Line"
+msgstr "Cerca a la línia següent"
+
+#: src/application_actions.cpp:646
+#, kde-format
+msgid "Seek to next subtitle line show time"
+msgstr "Cerca el temps de presentació de la següent línia de subtítol"
+
+#: src/application_actions.cpp:654
+#, kde-format
+msgid "Set Line Show Time to Video Position"
+msgstr ""
+"Estableix el temps per a aparèixer de la línia a la posició en el vídeo"
+
+#: src/application_actions.cpp:655
+#, kde-format
+msgid "Set current line show time to video position"
+msgstr ""
+"Estableix el temps per a aparèixer de la línia actual a la posició en el "
+"vídeo"
+
+#: src/application_actions.cpp:663
+#, kde-format
+msgid "Set Line Hide Time to Video Position"
+msgstr ""
+"Estableix el temps per a desaparèixer de la línia a la posició en el vídeo"
+
+#: src/application_actions.cpp:664
+#, kde-format
+msgid "Set current line hide time to video position"
+msgstr ""
+"Estableix el temps per a desaparèixer de la línia actual a la posició en el "
+"vídeo"
+
+#: src/application_actions.cpp:671
+#, kde-format
+msgid "Shift Current Line to Video Position"
+msgstr "Desplaça la línia actual a la posició en el vídeo"
+
+#: src/application_actions.cpp:672
+#, kde-format
+msgid ""
+"Set current line show time to video position by equally shifting all lines"
+msgstr ""
+"Estableix el temps per a aparèixer de la línia actual a la posició en el "
+"vídeo desplaçant totes les línies per igual"
+
+#: src/application_actions.cpp:680
+#, kde-format
+msgid "Current Line Follows Video"
+msgstr "La línia actual segueix el vídeo"
+
+#: src/application_actions.cpp:681
+#, kde-format
+msgid "Make current line follow the playing video position"
+msgstr "Fa que la línia actual segueixi la posició en la reproducció del vídeo"
+
+#: src/application_actions.cpp:687
+#, kde-format
+msgctxt "@action:inmenu Toggle audio muted"
+msgid "Mute"
+msgstr "Silencia"
+
+#: src/application_actions.cpp:688
+#, kde-format
+msgid "Enable/disable playback sound"
+msgstr "Activa/Desactiva la reproducció del so"
+
+#: src/application_actions.cpp:695
+#, kde-format
+msgid "Increase Volume"
+msgstr "Apuja el volum"
+
+#: src/application_actions.cpp:696
+#, kde-format
+msgid "Increase volume by 5%"
+msgstr "Apuja el volum un 5%"
+
+#: src/application_actions.cpp:703
+#, kde-format
+msgid "Decrease Volume"
+msgstr "Abaixa el volum"
+
+#: src/application_actions.cpp:704
+#, kde-format
+msgid "Decrease volume by 5%"
+msgstr "Abaixa el volum un 5%"
+
+#: src/application_actions.cpp:711
+#, kde-format
+msgid "Audio Streams"
+msgstr "Fluxos d'àudio"
+
+#: src/application_actions.cpp:712
+#, kde-format
+msgid "Select active audio stream"
+msgstr "Selecciona el flux d'àudio actiu"
+
+#: src/application_actions.cpp:723
+#, kde-format
+msgid "Increase Font Size"
+msgstr "Augmenta la mida del tipus de lletra"
+
+#: src/application_actions.cpp:724
+#, kde-format
+msgid "Increase subtitles font size by 1 point"
+msgstr "Augmenta la mida del tipus de lletra dels subtítols en 1 punt"
+
+#: src/application_actions.cpp:731
+#, kde-format
+msgid "Decrease Font Size"
+msgstr "Disminueix la mida del tipus de lletra"
+
+#: src/application_actions.cpp:732
+#, kde-format
+msgid "Decrease subtitles font size by 1 point"
+msgstr "Disminueix la mida del tipus de lletra dels subtítols en 1 punt"
+
+#: src/application_actions.cpp:739
+#, kde-format
+msgid "Displayed Subtitle Text"
+msgstr "Text del subtítol mostrat"
+
+#: src/application_actions.cpp:740
+#, kde-format
+msgid "Select visible subtitle text"
+msgstr "Selecciona el text del subtítol visible"
+
+#: src/application_actions.cpp:751 src/gui/waveform/waveformwidget.cpp:718
+#, kde-format
+msgid "Toggle Anchor"
+msgstr "Commuta l'àncora"
+
+#: src/application_actions.cpp:752
+#, kde-format
+msgid ""
+"(Un)Anchor current line's show time to timeline (Editing anchored line's "
+"show time will stretch/compact the timeline between adjacent anchors)"
+msgstr ""
+"Des/Ancora el temps de presentació de la línia actual a la línia de temps "
+"(editar el temps de presentació de la línia ancorada estirarà/compactarà la "
+"línia de temps entre les àncores adjacents)"
+
+#: src/application_actions.cpp:759
+#, kde-format
+msgid "Remove All Anchors"
+msgstr "Elimina totes les àncores"
+
+#: src/application_actions.cpp:760
+#, kde-format
+msgid "Unanchor show time from the timeline on all anchored lines"
+msgstr ""
+"Desancora el temps de presentació a la línia de temps en totes les línies "
+"ancorades"
+
+#: src/application_actions.cpp:768
+#, kde-format
+msgctxt "@action:inmenu Manage user scripts"
+msgid "Scripts Manager..."
+msgstr "Gestor de scripts..."
+
+#: src/application_actions.cpp:769
+#, kde-format
+msgid "Manage user scripts"
+msgstr "Gestiona els scripts d'usuari"
+
+#: src/application_actions.cpp:776 src/application_actions.cpp:777
+#, kde-format
+msgid "Waveform Zoom In"
+msgstr "Amplia la forma de l'ona"
+
+#: src/application_actions.cpp:783 src/application_actions.cpp:784
+#, kde-format
+msgid "Waveform Zoom Out"
+msgstr "Redueix la forma de l'ona"
+
+#: src/application_actions.cpp:791
+#, kde-format
+msgid "Waveform Auto Scroll"
+msgstr "Desplaçament automàtic en la forma de l'ona"
+
+#: src/application_actions.cpp:792
+#, kde-format
+msgid "Waveform display will automatically scroll to video position"
+msgstr ""
+"La visualització de la forma de l'ona es desplaçarà automàticament fins a la "
+"posició en el vídeo"
+
+#: src/application_subtitle.cpp:75
+#, kde-format
+msgid "All Text Subtitles"
+msgstr "Tots els subtítols de text"
+
+#: src/application_subtitle.cpp:76
+#, kde-format
+msgid "All Image Subtitles"
+msgstr "Tots els subtítols d'imatge"
+
+#: src/application_subtitle.cpp:78 src/application_subtitle.cpp:102
+#, kde-format
+msgid "All Files"
+msgstr "Tots els fitxers"
+
+#: src/application_subtitle.cpp:99
+#, kde-format
+msgid "Media Files"
+msgstr "Fitxers multimèdia"
+
+#: src/application_subtitle.cpp:100
+#, kde-format
+msgid "Video Files"
+msgstr "Fitxers de vídeo"
+
+#: src/application_subtitle.cpp:101
+#, kde-format
+msgid "Audio Files"
+msgstr "Fitxers d'àudio"
+
+#: src/application_subtitle.cpp:130
+#, kde-format
+msgid ""
+"The requested action would make the subtitle and its translation share the "
+"same file, possibly resulting in loss of information when saving.\n"
+"Are you sure you want to continue?"
+msgstr ""
+"L'acció sol·licitada faria que el subtítol i la seva traducció compartissin "
+"el mateix fitxer, possiblement resultant en la pèrdua d'informació en "
+"desar.\n"
+"Esteu segur que voleu continuar?"
+
+#: src/application_subtitle.cpp:133
+#, kde-format
+msgid "Conflicting Subtitle Files"
+msgstr "Fitxers de subtítols en conflicte"
+
+#: src/application_subtitle.cpp:151 src/dialogs/selectablesubtitledialog.cpp:65
+#, kde-format
+msgid "Open Subtitle"
+msgstr "Obre els subtítols"
+
+#: src/application_subtitle.cpp:207 src/application_subtitle.cpp:227
+#: src/application_subtitle.cpp:470 src/application_subtitle.cpp:495
+#, kde-format
+msgid ""
+"<qt>Could not parse the subtitle file.<br/>This may have been caused by "
+"usage of the wrong encoding.</qt>"
+msgstr ""
+"<qt>No s'ha pogut analitzar el fitxer de subtítols.<br/>Això pot ser "
+"provocat per l'ús d'una codificació incorrecta.</qt>"
+
+#: src/application_subtitle.cpp:273 src/application_subtitle.cpp:321
+#, kde-format
+msgid "Format: %1"
+msgstr "Format: %1"
+
+#: src/application_subtitle.cpp:274 src/application_subtitle.cpp:322
+#, kde-format
+msgid "Encoding: %1"
+msgstr "Codificació: %1"
+
+#: src/application_subtitle.cpp:328
+#, kde-format
+msgid "There was an error saving the subtitle."
+msgstr "S'ha produït un error en desar el subtítol."
+
+#: src/application_subtitle.cpp:336
+#, kde-format
+msgid "Save Subtitle"
+msgstr "Desa els subtítols"
+
+#: src/application_subtitle.cpp:371 src/application_subtitle.cpp:609
+#, kde-format
+msgid ""
+"Currently opened translation subtitle has unsaved changes.\n"
+"Do you want to save them?"
+msgstr ""
+"La traducció oberta dels subtítols conté canvis sense desar.\n"
+"Els deso?"
+
+#: src/application_subtitle.cpp:372 src/application_subtitle.cpp:610
+#, kde-format
+msgid "Close Translation Subtitle"
+msgstr "Tanca la traducció dels subtítols"
+
+#: src/application_subtitle.cpp:382
+#, kde-format
+msgid ""
+"Currently opened subtitle has unsaved changes.\n"
+"Do you want to save them?"
+msgstr ""
+"El subtítol obert conté canvis sense desar.\n"
+"Els deso?"
+
+#: src/application_subtitle.cpp:383
+#, kde-format
+msgid "Close Subtitle"
+msgstr "Tanca els subtítols"
+
+#: src/application_subtitle.cpp:439
+#, kde-format
+msgid "Open Translation Subtitle"
+msgstr "Obre una traducció de subtítols"
+
+#: src/application_subtitle.cpp:524
+#, kde-format
+msgctxt "@item:inmenu Display primary text in video player"
+msgid "Primary"
+msgstr "Primari"
+
+#: src/application_subtitle.cpp:525
+#, kde-format
+msgctxt "@item:inmenu Display translation text in video player"
+msgid "Translation"
+msgstr "Traducció"
+
+#: src/application_subtitle.cpp:565
+#, kde-format
+msgid "There was an error saving the translation subtitle."
+msgstr "S'ha produït un error en desar la traducció del subtítol."
+
+#: src/application_subtitle.cpp:573
+#, kde-format
+msgid "Save Translation Subtitle"
+msgstr "Desa la traducció del subtítol"
+
+#: src/application_subtitle.cpp:659
+#, kde-format
+msgctxt "Suffix added to split subtitles"
+msgid "split"
+msgstr "dividit"
+
+#: src/application_subtitle.cpp:677
+#, kde-format
+msgid "Could not write the split subtitle file."
+msgstr "No s'ha pogut escriure el fitxer dividit de subtítols."
+
+#: src/application_subtitle.cpp:677
+#, kde-format
+msgid "Could not write the split subtitle translation file."
+msgstr ""
+"No s'ha pogut escriure el fitxer dividit de traduccions dels subtítols."
+
+#: src/application_subtitle.cpp:702
+#, kde-format
+msgid "Could not read the subtitle file to append."
+msgstr "No s'ha pogut llegir el fitxer de subtítols a annexar."
+
+#: src/application_subtitle.cpp:718
+#, kde-format
+msgid "The specified time does not split the subtitles."
+msgstr "El temps especificat no divideix els subtítols."
+
+#: src/application_subtitle.cpp:753
+#, kde-format
+msgid ""
+"Could not open a new Subtitle Composer window.\n"
+"The split part was saved as %1."
+msgstr ""
+"No s'ha pogut obrir una finestra nova del Subtitle Composer.\n"
+"La part dividida s'ha desat com a %1."
+
+#: src/application_subtitle.cpp:754
+#, kde-format
+msgid ""
+"Could not open a new Subtitle Composer window.\n"
+"The split parts were saved as %1 and %2."
+msgstr ""
+"No s'ha pogut obrir una finestra nova del Subtitle Composer.\n"
+"Les parts dividides s'han desat com a %1 i %2."
+
+#: src/application_subtitle.cpp:772
+#, kde-format
+msgid "The reference subtitle must have more than one line to proceed."
+msgstr ""
+"El subtítol de referència haurà de tenir més d'una línia per a continuar."
+
+#: src/application_subtitle.cpp:781
+#, kde-format
+msgid "Could not parse the reference subtitle file."
+msgstr "No s'ha pogut analitzar el fitxer de subtítols de referència."
+
+#: src/configs/configdialog.cpp:38
+#, kde-format
+msgctxt "@title General settings"
+msgid "General"
+msgstr "General"
+
+#: src/configs/configdialog.cpp:39
+#, kde-format
+msgid "General Settings"
+msgstr "Configuració general"
+
+#: src/configs/configdialog.cpp:43
+#, kde-format
+msgctxt "@title Error check settings"
+msgid "Error Check"
+msgstr "Comprovació dels errors"
+
+#: src/configs/configdialog.cpp:44
+#, kde-format
+msgid "Error Check Settings"
+msgstr "Configuració de la comprovació dels errors"
+
+#: src/configs/configdialog.cpp:50
+#, kde-format
+msgctxt "@title Spelling settings"
+msgid "Spelling"
+msgstr "Ortografia"
+
+#: src/configs/configdialog.cpp:51
+#, kde-format
+msgid "Spelling Settings"
+msgstr "Configuració de l'ortografia"
+
+#: src/configs/configdialog.cpp:55
+#, kde-format
+msgctxt "@title Waveform settings"
+msgid "Waveform"
+msgstr "Forma de l'ona"
+
+#: src/configs/configdialog.cpp:56
+#, kde-format
+msgid "Waveform settings"
+msgstr "Configuració de la forma de l'ona"
+
+#: src/configs/configdialog.cpp:60
+#, kde-format
+msgctxt "@title Video player settings"
+msgid "Video Player"
+msgstr "Reproductor de vídeo"
+
+#: src/configs/configdialog.cpp:61
+#, kde-format
+msgid "Video Player Settings"
+msgstr "Configuració del reproductor de vídeo"
+
+#: src/configs/configdialog.cpp:70
+#, kde-format
+msgctxt "@title Speech recognition backend settings"
+msgid "%1 backend settings"
+msgstr "Configuració del dorsal %1"
+
+#. i18n: ectx: property (title), widget (QGroupBox, m_grpGeneral)
+#: src/configs/errorsconfigwidget.ui:17 src/gui/treeview/lineswidget.cpp:394
+#, kde-format
+msgid "Texts"
+msgstr "Textos"
+
+#. i18n: ectx: property (suffix), widget (QSpinBox, kcfg_MaxLines)
+#: src/configs/errorsconfigwidget.ui:23
+#, kde-format
+msgid " lines"
+msgstr " línies"
+
+#. i18n: ectx: property (suffix), widget (QSpinBox, kcfg_MaxCharacters)
+#: src/configs/errorsconfigwidget.ui:36
+#: src/dialogs/smarttextsadjustdialog.cpp:26
+#, kde-format
+msgid " characters"
+msgstr " caràcters"
+
+#. i18n: ectx: property (text), widget (QLabel, label)
+#: src/configs/errorsconfigwidget.ui:46
+#, kde-format
+msgid "Maximum number of characters:"
+msgstr "Nombre màxim de caràcters:"
+
+#. i18n: ectx: property (text), widget (QLabel, label_4)
+#: src/configs/errorsconfigwidget.ui:53
+#, kde-format
+msgid "Maximum number of lines:"
+msgstr "Nombre màxim de línies:"
+
+#. i18n: ectx: property (title), widget (QGroupBox, m_grpQuickActions)
+#: src/configs/errorsconfigwidget.ui:63
+#, kde-format
+msgid "Absolute Durations"
+msgstr "Durades absolutes"
+
+#. i18n: ectx: property (suffix), widget (QSpinBox, kcfg_LinePause)
+#. i18n: ectx: property (suffix), widget (QSpinBox, kcfg_LineDuration)
+#. i18n: ectx: property (suffix), widget (QSpinBox, kcfg_SeekOffsetOnDoubleClick)
+#. i18n: ectx: property (suffix), widget (QSpinBox, kcfg_JumpLineOffset)
+#. i18n: ectx: property (suffix), widget (QSpinBox, kcfg_LinesQuickShiftAmount)
+#. i18n: ectx: property (suffix), widget (QSpinBox, kcfg_GrabbedPositionCompensation)
+#. i18n: ectx: property (suffix), widget (QSpinBox, kcfg_MinDuration)
+#. i18n: ectx: property (suffix), widget (QSpinBox, kcfg_MaxDuration)
+#: src/configs/errorsconfigwidget.ui:69 src/configs/errorsconfigwidget.ui:79
+#: src/configs/generalconfigwidget.ui:114
+#: src/configs/generalconfigwidget.ui:124
+#: src/configs/generalconfigwidget.ui:134
+#: src/configs/generalconfigwidget.ui:154
+#: src/configs/generalconfigwidget.ui:173
+#: src/configs/generalconfigwidget.ui:183
+#, kde-format
+msgid " msec"
+msgstr " ms"
+
+#. i18n: ectx: property (text), widget (QLabel, label_8)
+#. i18n: ectx: property (text), widget (QLabel, lab_MaxDurationPerCharacter)
+#: src/configs/errorsconfigwidget.ui:92 src/configs/errorsconfigwidget.ui:174
+#, kde-format
+msgid "Maximum duration:"
+msgstr "Durada màxima:"
+
+#. i18n: ectx: property (text), widget (QLabel, label_5)
+#. i18n: ectx: property (text), widget (QLabel, lab_MinDurationPerCharacter)
+#: src/configs/errorsconfigwidget.ui:99 src/configs/errorsconfigwidget.ui:154
+#, kde-format
+msgid "Minimum duration:"
+msgstr "Durada mínima:"
+
+#. i18n: ectx: property (title), widget (QGroupBox, groupBox)
+#: src/configs/errorsconfigwidget.ui:109
+#, kde-format
+msgid "Relative Durations"
+msgstr "Durades relatives"
+
+#. i18n: ectx: property (suffix), widget (QSpinBox, kcfg_MaxDurationPerCharacter)
+#. i18n: ectx: property (suffix), widget (QSpinBox, kcfg_MinDurationPerCharacter)
+#. i18n: ectx: property (suffix), widget (QSpinBox, kcfg_IdealDurationPerCharacter)
+#: src/configs/errorsconfigwidget.ui:115 src/configs/errorsconfigwidget.ui:141
+#: src/configs/errorsconfigwidget.ui:188
+#, kde-format
+msgid " ms/char"
+msgstr " ms/caràc."
+
+#. i18n: ectx: property (suffix), widget (QSpinBox, alt_MinDurationPerCharacter)
+#. i18n: ectx: property (suffix), widget (QSpinBox, alt_MaxDurationPerCharacter)
+#. i18n: ectx: property (suffix), widget (QSpinBox, alt_IdealDurationPerCharacter)
+#: src/configs/errorsconfigwidget.ui:128 src/configs/errorsconfigwidget.ui:161
+#: src/configs/errorsconfigwidget.ui:201
+#, kde-format
+msgid " ch/sec"
+msgstr " caràc./s"
+
+#. i18n: ectx: property (text), widget (QLabel, lab_IdealDurationPerCharacter)
+#: src/configs/errorsconfigwidget.ui:181
+#, kde-format
+msgid "Ideal duration:"
+msgstr "Durada ideal:"
+
+#. i18n: ectx: property (title), widget (QGroupBox, groupBox_2)
+#: src/configs/errorsconfigwidget.ui:217
+#, kde-format
+msgid "Behavior"
+msgstr "Comportament"
+
+#. i18n: ectx: label, entry (AutoClearFixed), group (Error Check)
+#. i18n: ectx: property (text), widget (QCheckBox, kcfg_AutoClearFixed)
+#: src/configs/errorsconfigwidget.ui:223 src/scconfig.kcfg:86
+#, kde-format
+msgid "Automatically clear fixed errors"
+msgstr "Neteja automàticament els errors esmenats"
+
+#. i18n: ectx: property (title), widget (QGroupBox, m_grpGeneral)
+#: src/configs/generalconfigwidget.ui:17 src/configs/playerconfigwidget.ui:17
+#, kde-format
+msgid "General"
+msgstr "General"
+
+#. i18n: ectx: property (text), widget (QCheckBox, kcfg_AutomaticVideoLoad)
+#: src/configs/generalconfigwidget.ui:26
+#, kde-format
+msgid "Automatically load video file when opening a subtitle"
+msgstr "Carrega automàticament un fitxer de vídeo en obrir un subtítol"
+
+#. i18n: ectx: property (text), widget (QLabel, lab_DefaultSubtitlesEncoding)
+#: src/configs/generalconfigwidget.ui:33
+#, kde-format
+msgid "Defau&lt subtitles encoding:"
+msgstr "Codificació predeterminada de&ls subtítols:"
+
+#. i18n: ectx: property (currentText), widget (QComboBox, kcfg_TextLineBreak)
+#. i18n: ectx: property (text), item, widget (QComboBox, kcfg_TextLineBreak)
+#: src/configs/generalconfigwidget.ui:43 src/configs/generalconfigwidget.ui:47
+#, kde-format
+msgid "UNIX (LF)"
+msgstr "UNIX (LF)"
+
+#. i18n: ectx: property (text), item, widget (QComboBox, kcfg_TextLineBreak)
+#: src/configs/generalconfigwidget.ui:52
+#, kde-format
+msgid "Windows (CRLF)"
+msgstr "Windows (CRLF)"
+
+#. i18n: ectx: property (text), item, widget (QComboBox, kcfg_TextLineBreak)
+#: src/configs/generalconfigwidget.ui:57
+#, kde-format
+msgid "Macintosh (CR)"
+msgstr "Macintosh (CR)"
+
+#. i18n: ectx: property (text), widget (QLabel, lab_TextLineBreak)
+#: src/configs/generalconfigwidget.ui:65
+#, kde-format
+msgid "Line break character:"
+msgstr "Caràcter de salt de línia:"
+
+#. i18n: ectx: property (title), widget (QGroupBox, m_grpSubtitleLine)
+#: src/configs/generalconfigwidget.ui:78
+#, kde-format
+msgid "Subtitle Line"
+msgstr "Línia del subtítol"
+
+#. i18n: ectx: property (text), widget (QLabel, label_LineDuration)
+#: src/configs/generalconfigwidget.ui:84
+#, kde-format
+msgid "Default subtitle line duration:"
+msgstr "Durada predeterminada de la línia del subtítol:"
+
+#. i18n: ectx: property (text), widget (QLabel, label_4)
+#: src/configs/generalconfigwidget.ui:94
+#, kde-format
+msgid "On double click, &jump to show time minus:"
+msgstr "En fer doble clic, sal&ta al temps per a aparèixer menys:"
+
+#. i18n: ectx: property (text), widget (QLabel, label_LinePause)
+#: src/configs/generalconfigwidget.ui:104
+#, kde-format
+msgid "Default pause between subtitle lines:"
+msgstr "Fes una pausa predeterminada entre les línies dels subtítols:"
+
+#. i18n: ectx: property (text), widget (QLabel, label_2)
+#: src/configs/generalconfigwidget.ui:144
+#, kde-format
+msgid "Ju&mp to prev/next line offset:"
+msgstr "Salta a la co&mpensació de línia anterior/següent:"
+
+#. i18n: ectx: property (title), widget (QGroupBox, m_grpQuickActions)
+#: src/configs/generalconfigwidget.ui:167
+#, kde-format
+msgid "Quick Actions"
+msgstr "Accions ràpides"
+
+#. i18n: ectx: property (text), widget (QLabel, label_8)
+#: src/configs/generalconfigwidget.ui:193
+#, kde-format
+msgid "Compensation for captured &video times:"
+msgstr "Compensació per als temps capturats del &vídeo:"
+
+#. i18n: ectx: property (text), widget (QLabel, label_5)
+#: src/configs/generalconfigwidget.ui:203
+#, kde-format
+msgid "Ti&me shift for selected lines:"
+msgstr "Desplaça el te&mps per a les línies seleccionades:"
+
+#: src/configs/playerconfigwidget.cpp:27
+#, kde-format
+msgctxt "Text for previewing the subtitles font settings"
+msgid "<p>The Quick Brown Fox<br/>Jumps Over The Lazy Dog</p>"
+msgstr "<p>Zel de grum:<br/>quètxup, whisky, cafè, bon vi; ja!</p>"
+
+#. i18n: ectx: property (text), widget (QCheckBox, kcfg_UnpauseOnDoubleClick)
+#: src/configs/playerconfigwidget.ui:23
+#, kde-format
+msgid "Resume playback after line double click"
+msgstr "Reprèn la reproducció després de fer doble clic a la línia"
+
+#. i18n: ectx: property (text), widget (QLabel, lab_SeekJumpLength)
+#: src/configs/playerconfigwidget.ui:30
+#, kde-format
+msgid "Seconds to &jump on seek:"
+msgstr "Segons a sal&tar en cercar:"
+
+#. i18n: ectx: label, entry (VideoAutoPlay), group (VideoPlayer)
+#. i18n: ectx: property (text), widget (QCheckBox, kcfg_VideoAutoPlay)
+#: src/configs/playerconfigwidget.ui:50 src/scconfig.kcfg:180
+#, kde-format
+msgid "Start playing video when loaded"
+msgstr "Comença a reproduir el vídeo quan es carregui"
+
+#. i18n: ectx: property (text), widget (QCheckBox, kcfg_ShowPositionTimeEdit)
+#: src/configs/playerconfigwidget.ui:57 src/gui/playerwidget.cpp:433
+#, kde-format
+msgid "Show editable position control"
+msgstr "Mostra un control de posició editable"
+
+#. i18n: ectx: property (text), widget (QLabel, lab_StepJumpLength)
+#: src/configs/playerconfigwidget.ui:64
+#, kde-format
+msgid "Fra&me step amount:"
+msgstr "Quantitat del pas de fotogra&mes:"
+
+#. i18n: ectx: property (text), widget (QLabel, lab_VolumeAmplification)
+#: src/configs/playerconfigwidget.ui:74
+#, kde-format
+msgid "Volume amplification:"
+msgstr "Amplifica el volum:"
+
+#. i18n: ectx: property (title), widget (QGroupBox, m_grpSubtitles)
+#: src/configs/playerconfigwidget.ui:122
+#, kde-format
+msgid "Subtitles"
+msgstr "Subtítols"
+
+#. i18n: ectx: property (text), widget (QLabel, lab_OutlineColor)
+#: src/configs/playerconfigwidget.ui:138
+#, kde-format
+msgid "Outline color:"
+msgstr "Color del contorn:"
+
+#. i18n: ectx: property (text), widget (QLabel, lab_FontColor)
+#: src/configs/playerconfigwidget.ui:151
+#, kde-format
+msgid "Te&xt color:"
+msgstr "Color del te&xt:"
+
+#. i18n: ectx: property (text), widget (QLabel, lab_FontFamily)
+#: src/configs/playerconfigwidget.ui:164
+#, kde-format
+msgid "Font family:"
+msgstr "Família del tipus de lletra:"
+
+#. i18n: ectx: property (text), widget (QLabel, lab_OutlineWidth)
+#: src/configs/playerconfigwidget.ui:177
+#, kde-format
+msgid "Outline width:"
+msgstr "Amplada del contorn:"
+
+#. i18n: ectx: property (text), widget (QLabel, lab_FontSize)
+#: src/configs/playerconfigwidget.ui:187
+#, kde-format
+msgid "Font si&ze:"
+msgstr "Mida del tipus de lletra:"
+
+#. i18n: ectx: property (title), widget (QGroupBox, m_grpPreview)
+#: src/configs/playerconfigwidget.ui:203
+#, kde-format
+msgid "Subtitles Preview"
+msgstr "Vista prèvia dels subtítols"
+
+#. i18n: ectx: property (title), widget (QGroupBox, groupBox_3)
+#: src/configs/waveformconfigwidget.ui:17
+#, kde-format
+msgid "Waveform Display"
+msgstr "Aparició de la forma de l'ona"
+
+#. i18n: ectx: property (text), widget (QCheckBox, kcfg_wfSmoothScroll)
+#: src/configs/waveformconfigwidget.ui:23
+#, kde-format
+msgid "Smooth Scrolling"
+msgstr "Desplaçament suau"
+
+#. i18n: ectx: property (text), widget (QLabel, label_12)
+#: src/configs/waveformconfigwidget.ui:49
+#, kde-format
+msgid "Outer color:"
+msgstr "Color exterior:"
+
+#. i18n: ectx: property (text), widget (QLabel, label_11)
+#: src/configs/waveformconfigwidget.ui:78
+#, kde-format
+msgid "Inner color:"
+msgstr "Color interior:"
+
+#. i18n: ectx: property (toolTip), widget (QLabel, label_wfAutoscrollPadding)
+#: src/configs/waveformconfigwidget.ui:104
+#, kde-format
+msgid ""
+"Autoscroll page when play position reaches ScrollPadding distance "
+"(percentage) from page border"
+msgstr ""
+"Desplaça automàticament la pàgina quan la posició de reproducció abasti la "
+"distància de l'Emplenat del desplaçament (en percentatge) des de la vora de "
+"la pàgina"
+
+#. i18n: ectx: property (text), widget (QLabel, label_wfAutoscrollPadding)
+#: src/configs/waveformconfigwidget.ui:107
+#, kde-format
+msgid "Auto Scroll Padding:"
+msgstr "Emplenat del desplaçament automàtic:"
+
+#. i18n: ectx: property (title), widget (QGroupBox, m_grpGeneral)
+#: src/configs/waveformconfigwidget.ui:120
+#, kde-format
+msgid "Subtitle Display"
+msgstr "Aparició del subtítol"
+
+#. i18n: ectx: property (text), widget (QLabel, label_14)
+#: src/configs/waveformconfigwidget.ui:148
+#, kde-format
+msgid "Subtitle border color:"
+msgstr "Color del contorn del subtítol:"
+
+#. i18n: ectx: property (text), widget (QLabel, label_16)
+#: src/configs/waveformconfigwidget.ui:158
+#, kde-format
+msgid "Selected background color:"
+msgstr "Color de fons seleccionat:"
+
+#. i18n: ectx: property (text), widget (QLabel, label_15)
+#: src/configs/waveformconfigwidget.ui:168
+#, kde-format
+msgid "Subtitle border width:"
+msgstr "Amplada del contorn del subtítol:"
+
+#. i18n: ectx: property (text), widget (QLabel, label_13)
+#: src/configs/waveformconfigwidget.ui:178
+#, kde-format
+msgid "Subtitle background color:"
+msgstr "Color de fons del subtítol:"
+
+#. i18n: ectx: property (text), widget (QLabel, label_17)
+#: src/configs/waveformconfigwidget.ui:207
+#, kde-format
+msgid "Selected border color:"
+msgstr "Color seleccionat del contorn:"
+
+#. i18n: ectx: property (title), widget (QGroupBox, groupBox)
+#: src/configs/waveformconfigwidget.ui:258
+#, kde-format
+msgid "Text Font and Colors"
+msgstr "Tipus de lletra i colors del text"
+
+#. i18n: ectx: property (text), widget (QLabel, label_21)
+#: src/configs/waveformconfigwidget.ui:264
+#, kde-format
+msgid "Subtitle font family:"
+msgstr "Família del tipus de lletra dels subtítols:"
+
+#. i18n: ectx: property (text), widget (QLabel, label_22)
+#: src/configs/waveformconfigwidget.ui:277
+#, kde-format
+msgid "Subtitle number font size:"
+msgstr "Mida del tipus de lletra del número del subtítol:"
+
+#. i18n: ectx: property (suffix), widget (QSpinBox, kcfg_wfSubNumberFontSize)
+#. i18n: ectx: property (suffix), widget (QSpinBox, kcfg_wfSubTextFontSize)
+#: src/configs/waveformconfigwidget.ui:287
+#: src/configs/waveformconfigwidget.ui:333
+#, kde-format
+msgid " pt"
+msgstr " pt"
+
+#. i18n: ectx: property (text), widget (QLabel, label_23)
+#: src/configs/waveformconfigwidget.ui:294
+#, kde-format
+msgid "Subtitle Number Color"
+msgstr "Color del número del subtítol"
+
+#. i18n: ectx: property (text), widget (QLabel, label_24)
+#: src/configs/waveformconfigwidget.ui:323
+#, kde-format
+msgid "Subtitle text font size:"
+msgstr "Mida del tipus de lletra del text del subtítol:"
+
+#. i18n: ectx: property (text), widget (QLabel, label_25)
+#: src/configs/waveformconfigwidget.ui:340
+#, kde-format
+msgid "Subtitle Text Color:"
+msgstr "Color del text del subtítol:"
+
+#. i18n: ectx: property (title), widget (QGroupBox, groupBox_2)
+#: src/configs/waveformconfigwidget.ui:372
+#, kde-format
+msgid "Line Indicators"
+msgstr "Indicadors de línia"
+
+#. i18n: ectx: property (text), widget (QLabel, label_31)
+#: src/configs/waveformconfigwidget.ui:378
+#, kde-format
+msgid "Player position color:"
+msgstr "Color de la posició en el reproductor:"
+
+#. i18n: ectx: property (text), widget (QLabel, label_32)
+#: src/configs/waveformconfigwidget.ui:388
+#, kde-format
+msgid "Mouse indicator color:"
+msgstr "Color per a l'indicador del ratolí:"
+
+#: src/core/subtitle.cpp:59
+#, kde-format
+msgid "Set Primary Data"
+msgstr "Estableix les dades primàries"
+
+#: src/core/subtitle.cpp:105
+#, kde-format
+msgid "Clear Primary Text Data"
+msgstr "Neteja les dades del text primari"
+
+#: src/core/subtitle.cpp:118
+#, kde-format
+msgid "Set Secondary Data"
+msgstr "Estableix les dades secundàries"
+
+#: src/core/subtitle.cpp:155
+#, kde-format
+msgid "Clear Secondary Text Data"
+msgstr "Neteja les dades del text secundari"
+
+#: src/core/subtitle.cpp:223 src/dialogs/changeframeratedialog.cpp:22
+#, kde-format
+msgid "Change Frame Rate"
+msgstr "Canvia la velocitat dels fotogrames"
+
+#: src/core/subtitle.cpp:385 src/core/subtitle.cpp:399
+#: src/gui/waveform/waveformwidget.cpp:677
+#, kde-format
+msgid "Insert Line"
+msgstr "Insereix una línia"
+
+#: src/core/subtitle.cpp:432 src/core/subtitle.cpp:442
+#: src/core/subtitle.cpp:459 src/core/undo/subtitleactions.cpp:120
+#, kde-format
+msgid "Remove Lines"
+msgstr "Elimina les línies"
+
+#: src/core/subtitle.cpp:724
+#, kde-format
+msgid "Shift Lines"
+msgstr "Desplaça les línies"
+
+#: src/core/subtitle.cpp:780
+#, kde-format
+msgid "Adjust Lines"
+msgstr "Ajusta les línies"
+
+#: src/core/subtitle.cpp:791
+#, kde-format
+msgid "Sort"
+msgstr "Ordena"
+
+#: src/core/subtitle.cpp:823 src/dialogs/durationlimitsdialog.cpp:18
+#, kde-format
+msgid "Enforce Duration Limits"
+msgstr "Fes complir els límits de durada"
+
+#: src/core/subtitle.cpp:885 src/dialogs/autodurationsdialog.cpp:21
+#, kde-format
+msgid "Set Automatic Durations"
+msgstr "Estableix les durades de manera automàtica"
+
+#: src/core/subtitle.cpp:918 src/dialogs/fixoverlappingtimesdialog.cpp:18
+#, kde-format
+msgid "Fix Overlapping Times"
+msgstr "Esmena els temps superposats"
+
+#: src/core/subtitle.cpp:949
+#, kde-format
+msgid "Fix Lines Punctuation"
+msgstr "Esmena la puntuació de les línies"
+
+#: src/core/subtitle.cpp:991
+#, kde-format
+msgid "Lower Case"
+msgstr "Tot en minúscules"
+
+#: src/core/subtitle.cpp:1021
+#, kde-format
+msgid "Upper Case"
+msgstr "Tot en majúscules"
+
+#: src/core/subtitle.cpp:1051
+#, kde-format
+msgid "Title Case"
+msgstr "Majúscules/minúscules al títol"
+
+#: src/core/subtitle.cpp:1084
+#, kde-format
+msgid "Sentence Case"
+msgstr "Majúscules/minúscules a la frase"
+
+#: src/core/subtitle.cpp:1128 src/dialogs/smarttextsadjustdialog.cpp:18
+#, kde-format
+msgid "Break Lines"
+msgstr "Trenca les línies"
+
+#: src/core/subtitle.cpp:1155
+#, kde-format
+msgid "Synchronize Subtitles"
+msgstr "Sincronitza els subtítols"
+
+#: src/core/subtitle.cpp:1180 src/dialogs/joinsubtitlesdialog.cpp:24
+#, kde-format
+msgid "Join Subtitles"
+msgstr "Uneix els subtítols"
+
+#: src/core/subtitle.cpp:1224 src/core/subtitle.cpp:1230
+#, kde-format
+msgid "Split Subtitles"
+msgstr "Divideix els subtítols"
+
+#: src/core/subtitle.cpp:1249
+#, kde-format
+msgid "Toggle Lines Style"
+msgstr "Commuta l'estil de les línies"
+
+#: src/core/subtitle.cpp:1293
+#, kde-format
+msgid "Change Lines Text Color"
+msgstr "Canvia el color del text de les línies"
+
+#: src/core/subtitle.cpp:1313
+#, kde-format
+msgid "Set Lines Mark"
+msgstr "Estableix les marques de les línies"
+
+#: src/core/subtitle.cpp:1313
+#, kde-format
+msgid "Clear Lines Mark"
+msgstr "Neteja les marques de les línies"
+
+#: src/core/subtitle.cpp:1328
+#, kde-format
+msgid "Toggle Lines Mark"
+msgstr "Commuta la marca a les línies"
+
+#: src/core/subtitle.cpp:1338
+#, kde-format
+msgid "Clear Line Errors"
+msgstr "Neteja els errors a les línies"
+
+#: src/core/subtitle.cpp:1349 src/core/subtitle.cpp:1360
+#: src/errors/errorfinder.cpp:82
+#, kde-format
+msgid "Check Lines Errors"
+msgstr "Comprova els errors a les línies"
+
+#: src/core/subtitleline.cpp:68
+#, kde-format
+msgid "Empty text"
+msgstr "Text buit"
+
+#: src/core/subtitleline.cpp:70
+#, kde-format
+msgid "Too many characters"
+msgstr "Hi ha massa caràcters"
+
+#: src/core/subtitleline.cpp:72
+#, kde-format
+msgid "Too many lines"
+msgstr "Hi ha massa línies"
+
+#: src/core/subtitleline.cpp:74
+#, kde-format
+msgid "Unnecessary white space"
+msgstr "Cal un espai en blanc"
+
+#: src/core/subtitleline.cpp:76
+#, kde-format
+msgid "Unnecessary dash"
+msgstr "Guió innecessari"
+
+#: src/core/subtitleline.cpp:78
+#, kde-format
+msgid "Capital letter after continuation ellipsis"
+msgstr "Majúscula a continuació dels punts suspensius"
+
+#: src/core/subtitleline.cpp:80
+#, kde-format
+msgid "Too long duration per character"
+msgstr "Durada massa llarga per caràcter"
+
+#: src/core/subtitleline.cpp:82
+#, kde-format
+msgid "Too short duration per character"
+msgstr "Durada massa curta per caràcter"
+
+#: src/core/subtitleline.cpp:84
+#, kde-format
+msgid "Too long duration"
+msgstr "Durada massa llarga"
+
+#: src/core/subtitleline.cpp:85
+#, kde-format
+msgid "Too short duration"
+msgstr "Durada massa curta"
+
+#: src/core/subtitleline.cpp:86
+#, kde-format
+msgid "Overlapping times"
+msgstr "Els temps se superposen"
+
+#: src/core/subtitleline.cpp:87
+#, kde-format
+msgid "Untranslated text"
+msgstr "Text sense traduir"
+
+#: src/core/subtitleline.cpp:88
+#, kde-format
+msgid "User mark"
+msgstr "Marca d'usuari"
+
+#: src/core/subtitleline.cpp:107
+#, kde-format
+msgid "Has no primary text."
+msgstr "No hi ha cap text primari."
+
+#: src/core/subtitleline.cpp:108
+#, kde-format
+msgid "Has no translation text."
+msgstr "No hi ha cap text de traducció."
+
+#: src/core/subtitleline.cpp:109
+#, kde-format
+msgid "Has too many characters in primary text (1 char)."
+msgid_plural "Has too many characters in primary text (%1 chars)."
+msgstr[0] "Hi ha massa caràcters al text primari (1 caràcter)."
+msgstr[1] "Hi ha massa caràcters al text primari (%1 caràcters)."
+
+#: src/core/subtitleline.cpp:110
+#, kde-format
+msgid "Has too many characters in translation text (1 char)."
+msgid_plural "Has too many characters in translation text (%1 chars)."
+msgstr[0] "Hi ha massa caràcters al text de la traducció (1 caràcter)."
+msgstr[1] "Hi ha massa caràcters al text de la traducció (%1 caràcters)."
+
+#: src/core/subtitleline.cpp:111
+#, kde-format
+msgid "Has too many lines in primary text (1 line)."
+msgid_plural "Has too many lines in primary text (%1 lines)."
+msgstr[0] "Hi ha massa línies al text primari (1 caràcter)."
+msgstr[1] "Hi ha massa línies al text primari (%1 caràcters)."
+
+#: src/core/subtitleline.cpp:112
+#, kde-format
+msgid "Has too many lines in translation text (1 line)."
+msgid_plural "Has too many lines in translation text (%1 lines)."
+msgstr[0] "Hi ha massa línies al text de la traducció (1 caràcter)."
+msgstr[1] "Hi ha massa línies al text de la traducció (%1 caràcters)."
+
+#: src/core/subtitleline.cpp:113
+#, kde-format
+msgid "Has unnecessary spaces in primary text."
+msgstr "Hi ha espais innecessaris en el text primari."
+
+#: src/core/subtitleline.cpp:114
+#, kde-format
+msgid "Has unnecessary spaces in translation text."
+msgstr "Hi ha espais innecessaris en el text de la traducció."
+
+#: src/core/subtitleline.cpp:115
+#, kde-format
+msgid "Has unnecessary dash in primary text."
+msgstr "Hi ha un guionet innecessari en el text primari."
+
+#: src/core/subtitleline.cpp:116
+#, kde-format
+msgid "Has unnecessary dash in translation text."
+msgstr "Hi ha un guionet innecessari en el text de la traducció."
+
+#: src/core/subtitleline.cpp:117
+#, kde-format
+msgid "Has capital letter after line continuation ellipsis in primary text."
+msgstr ""
+"Té lletra majúscula a continuació dels punts suspensius en el text primari "
+"de la línia."
+
+#: src/core/subtitleline.cpp:118
+#, kde-format
+msgid ""
+"Has capital letter after line continuation ellipsis in translation text."
+msgstr ""
+"Té lletra majúscula a continuació dels punts suspensius en el text de la "
+"traducció de la línia."
+
+#: src/core/subtitleline.cpp:119
+#, kde-format
+msgid "Has too long duration per character in primary text (1 msec/char)."
+msgid_plural ""
+"Has too long duration per character in primary text (%1 msecs/char)."
+msgstr[0] ""
+"Té una durada massa llarga de caràcters en el text primari (1 ms/caràc)."
+msgstr[1] ""
+"Té una durada massa llarga de caràcters en el text primari (%1 ms/caràc)."
+
+#: src/core/subtitleline.cpp:120
+#, kde-format
+msgid "Has too long duration per character in translation text (1 msec/char)."
+msgid_plural ""
+"Has too long duration per character in translation text (%1 msecs/char)."
+msgstr[0] ""
+"Té una durada massa llarga de caràcters en el text de la traducció (1 ms/"
+"caràc)."
+msgstr[1] ""
+"Té una durada massa llarga de caràcters en el text de la traducció (%1 ms/"
+"caràc)."
+
+#: src/core/subtitleline.cpp:121
+#, kde-format
+msgid "Has too short duration per character in primary text (1 msec/char)."
+msgid_plural ""
+"Has too short duration per character in primary text (%1 msecs/char)."
+msgstr[0] ""
+"Té una durada massa curta de caràcters en el text primari (1 ms/caràc)."
+msgstr[1] ""
+"Té una durada massa curta de caràcters en el text primari (%1 ms/caràc)."
+
+#: src/core/subtitleline.cpp:122
+#, kde-format
+msgid "Has too short duration per character in translation text (1 msec/char)."
+msgid_plural ""
+"Has too short duration per character in translation text (%1 msecs/char)."
+msgstr[0] ""
+"Té una durada massa curta de caràcters en el text de la traducció (1 ms/"
+"caràc)."
+msgstr[1] ""
+"Té una durada massa curta de caràcters en el text de la traducció (%1 ms/"
+"caràc)."
+
+#: src/core/subtitleline.cpp:123
+#, kde-format
+msgid "Has too long duration (1 msec)."
+msgid_plural "Has too long duration (%1 msecs)."
+msgstr[0] "Té una durada massa llarga (1 ms)."
+msgstr[1] "Té una durada massa llarga (%1 ms)."
+
+#: src/core/subtitleline.cpp:124
+#, kde-format
+msgid "Has too short duration (1 msec)."
+msgid_plural "Has too short duration (%1 msecs)."
+msgstr[0] "Té una durada massa curta (1 ms)."
+msgstr[1] "Té una durada massa curta (%1 ms)."
+
+#: src/core/subtitleline.cpp:125
+#, kde-format
+msgid "Overlaps with next line."
+msgstr "Se superposa amb la següent línia."
+
+#: src/core/subtitleline.cpp:126
+#, kde-format
+msgid "Has untranslated text."
+msgstr "Hi ha text sense traduir."
+
+#: src/core/subtitleline.cpp:127
+#, kde-format
+msgid "Has user mark."
+msgstr "Hi ha una marca d'usuari."
+
+#: src/core/subtitleline.cpp:378 src/core/undo/subtitlelineactions.cpp:105
+#, kde-format
+msgid "Set Line Show Time"
+msgstr "Estableix el temps d'aparició de la línia"
+
+#: src/core/subtitleline.cpp:402 src/core/undo/subtitlelineactions.cpp:132
+#, kde-format
+msgid "Set Line Hide Time"
+msgstr "Estableix el temps de desaparició de la línia"
+
+#: src/core/subtitleline.cpp:449
+#, kde-format
+msgid "Set Line Times"
+msgstr "Estableix els temps de la línia"
+
+#: src/core/subtitleline.cpp:546
+#, kde-format
+msgid "Shift Line Times"
+msgstr "Desplaça els temps de la línia"
+
+#: src/core/subtitleline.cpp:556
+#, kde-format
+msgid "Adjust Line Times"
+msgstr "Ajusta els temps de la línia"
+
+#: src/core/undo/subtitleactions.cpp:30
+#, kde-format
+msgid "Set Frame Rate"
+msgstr "Estableix la velocitat dels fotogrames"
+
+#: src/core/undo/subtitleactions.cpp:50
+#, kde-format
+msgid "Insert Lines"
+msgstr "Insereix línies"
+
+#: src/core/undo/subtitleactions.cpp:198
+#, kde-format
+msgid "Move Line"
+msgstr "Mou la línia"
+
+#: src/core/undo/subtitleactions.cpp:283
+#, kde-format
+msgid "Swap Texts"
+msgstr "Intercanvia els textos"
+
+#: src/core/undo/subtitlelineactions.cpp:28
+#, kde-format
+msgid "Set Line Text"
+msgstr "Estableix el text de la línia"
+
+#: src/core/undo/subtitlelineactions.cpp:66
+#, kde-format
+msgid "Set Line Secondary Text"
+msgstr "Estableix el text secundari de la línia"
+
+#: src/core/undo/subtitlelineactions.cpp:196
+#, kde-format
+msgid "Set Line Errors"
+msgstr "Estableix errors a la línia"
+
+#: src/dialogs/actionwithtargetdialog.cpp:111
+#, kde-format
+msgid "Target >>"
+msgstr "Destinació >>"
+
+#: src/dialogs/actionwithtargetdialog.cpp:111
+#: src/dialogs/actionwithtargetdialog.cpp:127
+#, kde-format
+msgid "Target <<"
+msgstr "Destinació <<"
+
+#: src/dialogs/actionwithtargetdialog.cpp:141
+#, kde-format
+msgid "All lines"
+msgstr "Totes les línies"
+
+#: src/dialogs/actionwithtargetdialog.cpp:142
+#, kde-format
+msgid "Selected lines"
+msgstr "Les línies seleccionades"
+
+#: src/dialogs/actionwithtargetdialog.cpp:143
+#, kde-format
+msgid "All lines from first selected"
+msgstr "Totes les línies des de la primera seleccionada"
+
+#: src/dialogs/actionwithtargetdialog.cpp:144
+#, kde-format
+msgid "All lines up to last selected"
+msgstr "Totes les línies fins a l'última seleccionada"
+
+#: src/dialogs/actionwithtargetdialog.cpp:232 src/utils/finder.cpp:53
+#: src/utils/replacer.cpp:51
+#, kde-format
+msgid "Both subtitles"
+msgstr "Ambdós subtítols"
+
+#: src/dialogs/actionwithtargetdialog.cpp:235 src/utils/finder.cpp:55
+#: src/utils/replacer.cpp:53
+#, kde-format
+msgid "Primary subtitle"
+msgstr "Subtítol primari"
+
+#: src/dialogs/actionwithtargetdialog.cpp:238 src/utils/finder.cpp:57
+#: src/utils/replacer.cpp:55
+#, kde-format
+msgid "Translation subtitle"
+msgstr "Traducció dels subtítols"
+
+#: src/dialogs/actionwithtargetdialog.h:58
+#, kde-format
+msgid "Apply To"
+msgstr "Aplica a"
+
+#: src/dialogs/adjusttimesdialog.cpp:20
+#, kde-format
+msgid "Adjust"
+msgstr "Ajusta"
+
+#: src/dialogs/adjusttimesdialog.cpp:22
+#, kde-format
+msgctxt "@title:group"
+msgid "New Times"
+msgstr "Temps nous"
+
+#: src/dialogs/adjusttimesdialog.cpp:27
+#, kde-format
+msgid "First spoken line:"
+msgstr "Pronuncia la primera línia:"
+
+#: src/dialogs/adjusttimesdialog.cpp:33
+#, kde-format
+msgid "Last spoken line:"
+msgstr "Pronuncia l'última línia:"
+
+#: src/dialogs/autodurationsdialog.cpp:24
+#: src/dialogs/changeframeratedialog.cpp:24
+#: src/dialogs/fixoverlappingtimesdialog.cpp:20
+#: src/dialogs/fixpunctuationdialog.cpp:19
+#: src/dialogs/smarttextsadjustdialog.cpp:20
+#: src/dialogs/splitsubtitledialog.cpp:29 src/dialogs/translatedialog.cpp:22
+#, kde-format
+msgctxt "@title:group"
+msgid "Settings"
+msgstr "Arranjament"
+
+#: src/dialogs/autodurationsdialog.cpp:32
+#, kde-format
+msgid "Milliseconds per line:"
+msgstr "Mil·lisegons per línia:"
+
+#: src/dialogs/autodurationsdialog.cpp:41
+#, kde-format
+msgid "Milliseconds per word:"
+msgstr "Mil·lisegons per paraula:"
+
+#: src/dialogs/autodurationsdialog.cpp:50
+#, kde-format
+msgid "Milliseconds per character:"
+msgstr "Mil·lisegons per caràcter:"
+
+#: src/dialogs/autodurationsdialog.cpp:54
+#: src/dialogs/durationlimitsdialog.cpp:30
+#, kde-format
+msgid "Prevent overlapping"
+msgstr "Prevenir el superposat"
+
+#: src/dialogs/autodurationsdialog.cpp:57
+#, kde-format
+msgctxt "@title:group"
+msgid "Duration Calculation"
+msgstr "Càlcul de la durada"
+
+#: src/dialogs/autodurationsdialog.cpp:63
+#, kde-format
+msgid "Use primary text"
+msgstr "Empra el text primari"
+
+#: src/dialogs/autodurationsdialog.cpp:64
+#, kde-format
+msgid "Use translation text"
+msgstr "Empra el text de la traducció"
+
+#: src/dialogs/autodurationsdialog.cpp:65
+#, kde-format
+msgid "Calculate both and use maximum"
+msgstr "Calcula ambdós i usa el màxim"
+
+#: src/dialogs/changeframeratedialog.cpp:33
+#, kde-format
+msgid "Current frame rate:"
+msgstr "Velocitat actual dels fotogrames:"
+
+#: src/dialogs/changeframeratedialog.cpp:42
+#, kde-format
+msgid "New frame rate:"
+msgstr "Velocitat nova dels fotogrames:"
+
+#: src/dialogs/changetextscasedialog.cpp:19
+#, kde-format
+msgid "Change Case"
+msgstr "Canvia les majúscules/minúscules"
+
+#: src/dialogs/changetextscasedialog.cpp:21
+#, kde-format
+msgctxt "@title:group"
+msgid "Change To"
+msgstr "Canvia a"
+
+#: src/dialogs/changetextscasedialog.cpp:25
+#, kde-format
+msgid "Lower case"
+msgstr "Tot en minúscules"
+
+#: src/dialogs/changetextscasedialog.cpp:30
+#, kde-format
+msgid "Upper case"
+msgstr "Tot en majúscules"
+
+#: src/dialogs/changetextscasedialog.cpp:34
+#, kde-format
+msgid "Title case"
+msgstr "Majúscules/minúscules al títol"
+
+#: src/dialogs/changetextscasedialog.cpp:38
+#, kde-format
+msgid "Sentence case"
+msgstr "Majúscules/minúscules a la frase"
+
+#: src/dialogs/changetextscasedialog.cpp:42
+#, kde-format
+msgid "Convert to lower case first"
+msgstr "Converteix primer a minúscules"
+
+#: src/dialogs/durationlimitsdialog.cpp:20
+#, kde-format
+msgctxt "@title:group"
+msgid "Minimum Duration"
+msgstr "Durada mínima"
+
+#: src/dialogs/durationlimitsdialog.cpp:26
+#, kde-format
+msgid "Expand duration to:"
+msgstr "Expandeix la durada a:"
+
+#: src/dialogs/durationlimitsdialog.cpp:33
+#, kde-format
+msgctxt "@title:group"
+msgid "Maximum Duration"
+msgstr "Durada màxima"
+
+#: src/dialogs/durationlimitsdialog.cpp:39
+#, kde-format
+msgid "Shrink duration to:"
+msgstr "Encongeix la durada a:"
+
+#: src/dialogs/encodingdetectdialog.cpp:83
+#, kde-format
+msgctxt "Text encoding detected with n% confidence."
+msgid "%1 (%2% confidence)"
+msgstr "%1 (%2% de confiança)"
+
+#: src/dialogs/encodingdetectdialog.cpp:193
+#, kde-format
+msgid "Detected"
+msgstr "Detectat"
+
+#. i18n: ectx: property (windowTitle), widget (QDialog, EncodingDetectDialog)
+#: src/dialogs/encodingdetectdialog.ui:14
+#, kde-format
+msgid "Confirm detected subtitle encoding"
+msgstr "Confirma la codificació detectada dels subtítols"
+
+#. i18n: ectx: property (text), widget (QLabel, encodingLabel)
+#: src/dialogs/encodingdetectdialog.ui:30
+#, kde-format
+msgid "Encoding"
+msgstr "Codificació"
+
+#. i18n: ectx: property (text), widget (QLabel, previewLabel)
+#: src/dialogs/encodingdetectdialog.ui:57
+#, kde-format
+msgid "Preview"
+msgstr "Vista prèvia"
+
+#: src/dialogs/fixoverlappingtimesdialog.cpp:23
+#, kde-format
+msgid " msecs"
+msgstr " ms"
+
+#: src/dialogs/fixoverlappingtimesdialog.cpp:29
+#, kde-format
+msgid "Minimum interval between lines:"
+msgstr "Interval mínim entre les línies:"
+
+#: src/dialogs/fixpunctuationdialog.cpp:17
+#, kde-format
+msgid "Fix Punctuation"
+msgstr "Esmena la puntuació"
+
+#: src/dialogs/fixpunctuationdialog.cpp:22
+#, kde-format
+msgid "Fix and cleanup spaces"
+msgstr "Esmena i neteja els espais"
+
+#: src/dialogs/fixpunctuationdialog.cpp:26
+#, kde-format
+msgid "Fix quotes and double quotes"
+msgstr "Esmena les cometes i les cometes dobles"
+
+#: src/dialogs/fixpunctuationdialog.cpp:30
+#, kde-format
+msgid "Fix English 'I' pronoun"
+msgstr "Esmena el pronom anglès «I»"
+
+#: src/dialogs/fixpunctuationdialog.cpp:34
+#, kde-format
+msgid "Add ellipsis indicating non finished lines"
+msgstr "Afegeix el·lipsi indicant línies sense enllestir"
+
+#: src/dialogs/insertlinedialog.cpp:13
+#, kde-format
+msgid "Insert Line Before Current"
+msgstr "Insereix una línia abans de l'actual"
+
+#: src/dialogs/insertlinedialog.cpp:13
+#, kde-format
+msgid "Insert Line After Current"
+msgstr "Insereix una línia després de l'actual"
+
+#: src/dialogs/insertlinedialog.cpp:13
+#, kde-format
+msgid "Insert Into"
+msgstr "Insereix a dins"
+
+#: src/dialogs/joinsubtitlesdialog.cpp:29
+#, kde-format
+msgid "Shift subtitle forwards before append"
+msgstr "Desplaça el subtítol cap endavant abans d'annexar"
+
+#: src/dialogs/joinsubtitlesdialog.cpp:36
+#: src/dialogs/splitsubtitledialog.cpp:35
+#, kde-format
+msgid "Set from video length"
+msgstr "Estableix des de la durada del vídeo"
+
+#: src/dialogs/removelinesdialog.cpp:13
+#, kde-format
+msgid "Remove Selected Lines"
+msgstr "Elimina les línies seleccionades"
+
+#: src/dialogs/removelinesdialog.cpp:13
+#, kde-format
+msgid "Remove From"
+msgstr "Elimina de"
+
+#: src/dialogs/selectablesubtitledialog.cpp:39
+#, kde-format
+msgid "Path:"
+msgstr "Camí:"
+
+#: src/dialogs/selectablesubtitledialog.cpp:44
+#, kde-format
+msgid "Select subtitle"
+msgstr "Selecciona el subtítol"
+
+#: src/dialogs/selectablesubtitledialog.h:30
+#, kde-format
+msgid "Subtitle"
+msgstr "Subtítol"
+
+#: src/dialogs/shifttimesdialog.cpp:19
+#, kde-format
+msgid "Shift"
+msgstr "Desplaça"
+
+#: src/dialogs/shifttimesdialog.cpp:21
+#, kde-format
+msgctxt "@title:group"
+msgid "Shifting"
+msgstr "Desplaçament"
+
+#: src/dialogs/shifttimesdialog.cpp:25
+#, kde-format
+msgid "Forwards (+)"
+msgstr "Endavant (+)"
+
+#: src/dialogs/shifttimesdialog.cpp:26
+#, kde-format
+msgid "Backwards (−)"
+msgstr "Enrere (−)"
+
+#: src/dialogs/smarttextsadjustdialog.cpp:29
+#, kde-format
+msgid "Minimum length for line break:"
+msgstr "Longitud mínima per al salt de línia:"
+
+#: src/dialogs/splitsubtitledialog.cpp:27
+#, kde-format
+msgid "Split Subtitle"
+msgstr "Divideix el subtítol"
+
+#: src/dialogs/splitsubtitledialog.cpp:40
+#, kde-format
+msgid "Split time:"
+msgstr "Divideix el temps:"
+
+#: src/dialogs/splitsubtitledialog.cpp:44
+#, kde-format
+msgid "Shift new part backwards after split"
+msgstr "Desplaça cap enrere la part nova després de dividir-la"
+
+#: src/dialogs/syncsubtitlesdialog.cpp:17
+#, kde-format
+msgid "Synchronize with Subtitle"
+msgstr "Sincronitza amb el subtítol"
+
+#: src/dialogs/syncsubtitlesdialog.cpp:19
+#, kde-format
+msgid "Reference Subtitle"
+msgstr "Subtítol de referència"
+
+#: src/dialogs/syncsubtitlesdialog.cpp:21
+#, kde-format
+msgctxt "@title:group"
+msgid "Synchronization Mode"
+msgstr "Mode de sincronitzar"
+
+#: src/dialogs/syncsubtitlesdialog.cpp:24
+#, kde-format
+msgid "Adjust to reference's first and last lines"
+msgstr "Ajusta a la primera i última línia de la referència"
+
+#: src/dialogs/syncsubtitlesdialog.cpp:28
+#, kde-format
+msgid "Copy timing information from reference line by line"
+msgstr "Copia la informació de temps des de la referència línia per línia"
+
+#: src/dialogs/translatedialog.cpp:37
+#, kde-format
+msgid "Input language:"
+msgstr "Idioma d'entrada:"
+
+#: src/dialogs/translatedialog.cpp:53
+#, kde-format
+msgid "Output language:"
+msgstr "Idioma de sortida:"
+
+#: src/errors/errorfinder.cpp:171 src/errors/finderrorsdialog.cpp:17
+#, kde-format
+msgid "Find Error"
+msgstr "Cerca l'error"
+
+#: src/errors/errorfinder.cpp:171
+#, kde-format
+msgid "No errors matching given criteria were found!"
+msgstr "No s'ha trobat cap error que coincideixi amb el criteri indicat!"
+
+#: src/errors/finderrorsdialog.cpp:22
+#, kde-format
+msgctxt "@title:group"
+msgid "Errors to Find"
+msgstr "Errors a cercar"
+
+#: src/errors/finderrorsdialog.cpp:28
+#, kde-format
+msgctxt "@title:group Miscellaneous settings"
+msgid "Miscellaneous"
+msgstr "Miscel·lània"
+
+#: src/errors/finderrorsdialog.cpp:31
+#, kde-format
+msgid "Clear other errors"
+msgstr "Neteja els altres errors"
+
+#: src/errors/finderrorsdialog.cpp:35
+#, kde-format
+msgid "Clear user marks"
+msgstr "Neteja les marques d'usuari"
+
+#: src/errors/finderrorsdialog.cpp:86
+#, kde-format
+msgid "Available errors"
+msgstr "Errors disponibles"
+
+#: src/errors/finderrorsdialog.cpp:116
+#, kde-format
+msgid "Select None"
+msgstr "No seleccionis res"
+
+#: src/formats/textdemux/textdemux.cpp:32
+#, kde-format
+msgid "Importing Subtitle Stream"
+msgstr "S'està important un flux de subtítols"
+
+#: src/formats/textdemux/textdemux.cpp:90
+#, kde-format
+msgid ""
+"Subtitle demux failed %1: %2\n"
+"%3"
+msgstr ""
+"Ha fallat la desmultiplexació dels subtítols %1: %2\n"
+"%3"
+
+#. i18n: ectx: property (windowTitle), widget (QDialog, VobSubInputInitDialog)
+#. i18n: ectx: property (windowTitle), widget (QDialog, VobSubInputProcessDialog)
+#: src/formats/vobsub/vobsubinputinitdialog.ui:14
+#: src/formats/vobsub/vobsubinputprocessdialog.ui:14
+#, kde-format
+msgid "VobSub Import"
+msgstr "Importa VobSub"
+
+#. i18n: ectx: property (text), widget (QLabel, labelStream)
+#: src/formats/vobsub/vobsubinputinitdialog.ui:20
+#, kde-format
+msgid "Stream / Language"
+msgstr "Flux / Idioma"
+
+#. i18n: ectx: property (title), widget (QGroupBox, grpPostProc)
+#: src/formats/vobsub/vobsubinputinitdialog.ui:53
+#, kde-format
+msgid "Post Processing"
+msgstr "Postprocessat"
+
+#. i18n: ectx: property (text), widget (QCheckBox, ppSpaceNumber)
+#: src/formats/vobsub/vobsubinputinitdialog.ui:59
+#, kde-format
+msgid "Fix space between numbers"
+msgstr "Esmena l'espai entre els números"
+
+# skip-rule: t-2p_sp,t-pc_sp,t-sp_in
+#. i18n: ectx: property (text), widget (QCheckBox, ppSpacePunct)
+#: src/formats/vobsub/vobsubinputinitdialog.ui:69
+#, kde-format
+msgid "Fix space around punctuation (.,;:?!)"
+msgstr "Esmena l'espai al voltant de la puntuació (.,;:?!)"
+
+#. i18n: ectx: property (text), widget (QCheckBox, ppSpaceParen)
+#: src/formats/vobsub/vobsubinputinitdialog.ui:79
+#, kde-format
+msgid "Fix space around quotes and parentheses (\"()[]{})"
+msgstr "Esmena l'espai al voltant de les cometes i parèntesis (\"()[]{})"
+
+#. i18n: ectx: property (text), widget (QCheckBox, ppAposQuote)
+#: src/formats/vobsub/vobsubinputinitdialog.ui:89
+#, kde-format
+msgid "Fix double apostrophes/quotes"
+msgstr "Esmena la parella dels apòstrofs/cometes"
+
+#. i18n: ectx: property (text), widget (QCheckBox, ppCharsOCR)
+#: src/formats/vobsub/vobsubinputinitdialog.ui:99
+#, kde-format
+msgid "Fix i <-> l, 0 <-> O mistakes"
+msgstr "Esmena els errors i <-> l, 0 <-> O"
+
+#: src/formats/vobsub/vobsubinputprocessdialog.cpp:589
+#, kde-format
+msgid "VobSub Error"
+msgstr "Error a VobSub"
+
+#. i18n: ectx: property (title), widget (QGroupBox, grpText)
+#: src/formats/vobsub/vobsubinputprocessdialog.ui:26
+#, kde-format
+msgid "Enter character(s)"
+msgstr "Introduïu el/s caràcter/s"
+
+#. i18n: ectx: property (text), widget (QLabel, symbolLabel)
+#: src/formats/vobsub/vobsubinputprocessdialog.ui:35
+#, kde-format
+msgid "S&ymbols:"
+msgstr "Sí&mbols:"
+
+#. i18n: ectx: property (toolTip), widget (QSpinBox, symbolCount)
+#: src/formats/vobsub/vobsubinputprocessdialog.ui:45
+#, kde-format
+msgid "Up/Down: change value"
+msgstr "Amunt/Avall: es canvia el valor"
+
+#. i18n: ectx: property (text), widget (QPushButton, btnOk)
+#: src/formats/vobsub/vobsubinputprocessdialog.ui:146
+#, kde-format
+msgid "OK"
+msgstr "D'acord"
+
+#. i18n: ectx: property (toolTip), widget (QPushButton, btnPrevImage)
+#: src/formats/vobsub/vobsubinputprocessdialog.ui:202
+#, kde-format
+msgid "Ctrl+Shift+Left"
+msgstr "Ctrl+Maj+Fletxa esquerra"
+
+#. i18n: ectx: property (text), widget (QPushButton, btnPrevImage)
+#: src/formats/vobsub/vobsubinputprocessdialog.ui:205
+#, kde-format
+msgid "Prev Image"
+msgstr "Imatge anterior"
+
+#. i18n: ectx: property (toolTip), widget (QPushButton, btnPrevSymbol)
+#: src/formats/vobsub/vobsubinputprocessdialog.ui:219
+#, kde-format
+msgid "Ctrl+Left"
+msgstr "Ctrl+Fletxa esquerra"
+
+#. i18n: ectx: property (text), widget (QPushButton, btnPrevSymbol)
+#: src/formats/vobsub/vobsubinputprocessdialog.ui:222
+#, kde-format
+msgid "Prev Symbol"
+msgstr "Símbol anterior"
+
+#. i18n: ectx: property (toolTip), widget (QPushButton, btnNextSymbol)
+#: src/formats/vobsub/vobsubinputprocessdialog.ui:236
+#, kde-format
+msgid "Ctrl+Right"
+msgstr "Ctrl+Fletxa dreta"
+
+#. i18n: ectx: property (text), widget (QPushButton, btnNextSymbol)
+#: src/formats/vobsub/vobsubinputprocessdialog.ui:239
+#, kde-format
+msgid "Next Symbol"
+msgstr "Símbol següent"
+
+#. i18n: ectx: property (toolTip), widget (QPushButton, btnNextImage)
+#: src/formats/vobsub/vobsubinputprocessdialog.ui:250
+#, kde-format
+msgid "Ctrl+Shift+Right"
+msgstr "Ctrl+Maj+Fletxa dreta"
+
+#. i18n: ectx: property (text), widget (QPushButton, btnNextImage)
+#: src/formats/vobsub/vobsubinputprocessdialog.ui:253
+#, kde-format
+msgid "Next Image"
+msgstr "Imatge següent"
+
+#. i18n: ectx: property (text), widget (QPushButton, btnAbort)
+#: src/formats/vobsub/vobsubinputprocessdialog.ui:280
+#, kde-format
+msgid "Abort"
+msgstr "Interromp"
+
+#. i18n: ectx: property (title), widget (QGroupBox, grpPreview)
+#: src/formats/vobsub/vobsubinputprocessdialog.ui:303
+#, kde-format
+msgid "Subtitle Image"
+msgstr "Subtítols en imatge"
+
+#: src/gui/currentlinewidget.cpp:52
+#, kde-format
+msgid "<b>Show</b>"
+msgstr "<b>Mostra</b>"
+
+#: src/gui/currentlinewidget.cpp:60
+#, kde-format
+msgid "<b>Hide</b>"
+msgstr "<b>Oculta</b>"
+
+#: src/gui/currentlinewidget.cpp:68
+#, kde-format
+msgid "<b>Duration</b>"
+msgstr "<b>Durada</b>"
+
+#: src/gui/currentlinewidget.cpp:261 src/gui/currentlinewidget.cpp:264
+#, kde-format
+msgid "No current line"
+msgstr "Sense línia actual"
+
+#: src/gui/currentlinewidget.cpp:336
+#, kde-format
+msgid "chars"
+msgstr " caràcters"
+
+#: src/gui/currentlinewidget.cpp:344
+#, kde-format
+msgid "ms/char"
+msgstr "ms/caràc."
+
+#: src/gui/currentlinewidget.cpp:346
+#, kde-format
+msgid "chars/sec"
+msgstr "caràc./s"
+
+#: src/gui/playerwidget.cpp:72
+#, kde-format
+msgid "<b>Position</b>"
+msgstr "<b>Posició</b>"
+
+#: src/gui/playerwidget.cpp:80
+#, kde-format
+msgid "<b>Length</b>"
+msgstr "<b>Durada</b>"
+
+#: src/gui/playerwidget.cpp:85
+#, kde-format
+msgid "<b>FPS</b>"
+msgstr "<b>FPS</b>"
+
+#: src/gui/playerwidget.cpp:91
+#, kde-format
+msgid "<b>Playback Rate</b>"
+msgstr "<b>Velocitat de reproducció</b>"
+
+#: src/gui/playerwidget.cpp:660
+#, kde-format
+msgid "<qt>There was an error opening media file %1.</qt>"
+msgstr "<qt>S'ha produït un error en obrir el fitxer multimèdia %1.</qt>"
+
+#: src/gui/playerwidget.cpp:676 src/gui/playerwidget.cpp:677
+#: src/gui/playerwidget.cpp:678 src/gui/playerwidget.cpp:679
+#: src/gui/playerwidget.cpp:746 src/gui/playerwidget.cpp:754
+#: src/gui/playerwidget.cpp:760
+#, kde-format
+msgid "<i>Unknown</i>"
+msgstr "<i>Desconegut</i>"
+
+#: src/gui/playerwidget.cpp:692 src/gui/playerwidget.cpp:694
+#, kde-format
+msgid "Unexpected error when playing file."
+msgstr "Error inesperat en reproduir el fitxer."
+
+#: src/gui/playerwidget.cpp:692 src/gui/playerwidget.cpp:694
+#, kde-format
+msgid "Error Playing File"
+msgstr "Error en reproduir el fitxer"
+
+#: src/gui/treeview/linesmodel.cpp:151
+#, kde-format
+msgid "<b>Observations:</b>"
+msgstr "<b>Observacions:</b>"
+
+#: src/gui/treeview/linesmodel.cpp:178
+#, kde-format
+msgctxt "@title:column Subtitle line number"
+msgid "Line"
+msgstr "Línia"
+
+#: src/gui/treeview/linesmodel.cpp:179
+#, kde-format
+msgctxt "@title:column"
+msgid "Pause"
+msgstr "Pausa"
+
+#: src/gui/treeview/linesmodel.cpp:180
+#, kde-format
+msgctxt "@title:column"
+msgid "Show Time"
+msgstr "Temps d'aparició"
+
+#: src/gui/treeview/linesmodel.cpp:181
+#, kde-format
+msgctxt "@title:column"
+msgid "Hide Time"
+msgstr "Temps de desaparició"
+
+#: src/gui/treeview/linesmodel.cpp:182
+#, kde-format
+msgctxt "@title:column"
+msgid "Duration"
+msgstr "Durada"
+
+#: src/gui/treeview/linesmodel.cpp:183
+#, kde-format
+msgctxt "@title:column Subtitle line (primary) text"
+msgid "Text"
+msgstr "Text"
+
+#: src/gui/treeview/linesmodel.cpp:184
+#, kde-format
+msgctxt "@title:column Subtitle line translation text"
+msgid "Translation"
+msgstr "Traducció"
+
+#: src/gui/treeview/lineswidget.cpp:405
+#, kde-format
+msgid "Styles"
+msgstr "Estils"
+
+#: src/gui/treeview/lineswidget.cpp:414
+#, kde-format
+msgid "Times"
+msgstr "Temps"
+
+#: src/gui/treeview/lineswidget.cpp:425
+#, kde-format
+msgid "Errors"
+msgstr "Errors"
+
+#: src/gui/treeview/richlineedit.cpp:81 src/widgets/simplerichtextedit.cpp:339
+#, kde-format
+msgid "Cut"
+msgstr "Retalla"
+
+#: src/gui/treeview/richlineedit.cpp:88 src/widgets/simplerichtextedit.cpp:345
+#, kde-format
+msgid "Copy"
+msgstr "Copia"
+
+#: src/gui/treeview/richlineedit.cpp:95 src/widgets/simplerichtextedit.cpp:352
+#, kde-format
+msgid "Paste"
+msgstr "Enganxa"
+
+#: src/gui/treeview/richlineedit.cpp:103 src/widgets/simplerichtextedit.cpp:365
+#, kde-format
+msgctxt "@action:inmenu Clear all text"
+msgid "Clear"
+msgstr "Neteja"
+
+#: src/gui/treeview/richlineedit.cpp:116 src/widgets/simplerichtextedit.cpp:376
+#, kde-format
+msgctxt "@action:inmenu Toggle bold style"
+msgid "Bold"
+msgstr "Negreta"
+
+#: src/gui/treeview/richlineedit.cpp:124 src/widgets/simplerichtextedit.cpp:383
+#, kde-format
+msgctxt "@action:inmenu Toggle italic style"
+msgid "Italic"
+msgstr "Cursiva"
+
+#: src/gui/treeview/richlineedit.cpp:132 src/widgets/simplerichtextedit.cpp:390
+#, kde-format
+msgctxt "@action:inmenu Toggle underline style"
+msgid "Underline"
+msgstr "Subratllat"
+
+#: src/gui/treeview/richlineedit.cpp:140 src/widgets/simplerichtextedit.cpp:397
+#, kde-format
+msgctxt "@action:inmenu Toggle strike through style"
+msgid "Strike Through"
+msgstr "Barrat"
+
+#: src/gui/treeview/richlineedit.cpp:148 src/widgets/simplerichtextedit.cpp:404
+#, kde-format
+msgctxt "@action:inmenu Change Text Color"
+msgid "Text Color"
+msgstr "Color del text"
+
+#: src/gui/waveform/waveformwidget.cpp:115
+#, kde-format
+msgid "Generating waveform"
+msgstr "S'està generant la forma de l'ona"
+
+#: src/gui/waveform/waveformwidget.cpp:672
+#, kde-format
+msgid "Select Line"
+msgstr "Selecciona una línia"
+
+#: src/gui/waveform/waveformwidget.cpp:687
+#, kde-format
+msgid "Remove Line"
+msgstr "Elimina la línia"
+
+#: src/gui/waveform/waveformwidget.cpp:712
+#, kde-format
+msgid "Split Line"
+msgstr "Divideix la línia"
+
+#: src/gui/waveform/waveformwidget.cpp:722
+#, kde-format
+msgid "Set Current Line Show Time"
+msgstr "Estableix el temps d'aparició de la línia actual"
+
+#: src/gui/waveform/waveformwidget.cpp:727
+#, kde-format
+msgid "Set Current Line Hide Time"
+msgstr "Estableix el temps de desaparició de la línia actual"
+
+#: src/helpers/languagecode.cpp:407
+#, kde-format
+msgid "Unknown"
+msgstr "Desconegut"
+
+#: src/main.cpp:71
+#, kde-format
+msgid "The primary subtitle to be edited."
+msgstr "El subtítol primari a editar."
+
+#: src/main.cpp:76
+#, kde-format
+msgid "The video to be subtitled."
+msgstr "El vídeo a subtitular."
+
+#: src/main.cpp:81
+#, kde-format
+msgid ""
+"The translation subtitle to be edited.\n"
+"If included, a second pane gets added to the right of the primary subtitle "
+"for side-by-side translation."
+msgstr ""
+"El subtítol de traducció a editar.\n"
+"Si s'inclou, s'afegirà una segona subfinestra a la dreta del subtítol "
+"primari per a la traducció en paral·lel."
+
+#: src/main.cpp:210
+#, kde-format
+msgid "Subtitle Composer"
+msgstr "Subtitle Composer"
+
+#: src/main.cpp:212
+#, kde-format
+msgid "A KDE subtitle editor."
+msgstr "Un editor de subtítols per al KDE."
+
+#: src/main.cpp:218
+#, kde-format
+msgid "Maintainer"
+msgstr "Mantenidor"
+
+#: src/main.cpp:219
+#, kde-format
+msgid "Former Maintainer"
+msgstr "Mantenidor anterior"
+
+#: src/main.cpp:220
+#, kde-format
+msgid "Patches and Website"
+msgstr "Pedaços i lloc web"
+
+#: src/main.cpp:222
+#, kde-format
+msgctxt "NAME OF TRANSLATORS"
+msgid "Your names"
+msgstr "Antoni Bella"
+
+#: src/main.cpp:222
+#, kde-format
+msgctxt "EMAIL OF TRANSLATORS"
+msgid "Your emails"
+msgstr "antonibella5@yahoo.com"
+
+#: src/main.cpp:224
+#, kde-format
+msgid "code contributions"
+msgstr "Contribucions al codi"
+
+#: src/main.cpp:225
+#, kde-format
+msgid "code contributions, Arch Linux packaging"
+msgstr "Contribucions al codi, empaquetat a l'Arch Linux"
+
+#: src/main.cpp:227
+#, kde-format
+msgid "All people who have contributed and I have forgotten to mention"
+msgstr "Tothom qui ha col·laborat i als que m'he descuidat de mencionar"
+
+#: src/mainwindow.cpp:35
+#, kde-format
+msgid "Waveform"
+msgstr "Forma de l'ona"
+
+#: src/mainwindow.cpp:49
+#, kde-format
+msgid "Video Player"
+msgstr "Reproductor de vídeo"
+
+#. i18n: ectx: label, entry (DefaultSubtitlesEncoding), group (General)
+#: src/scconfig.kcfg:10
+#, kde-format
+msgid "Default Subtitles Encoding"
+msgstr "Codificació predeterminada dels subtítols"
+
+#. i18n: ectx: label, entry (TextLineBreak), group (General)
+#: src/scconfig.kcfg:14
+#, kde-format
+msgid "Line Break Character"
+msgstr "Caràcter de salt de línia"
+
+#. i18n: ectx: label, entry (SeekOffsetOnDoubleClick), group (General)
+#: src/scconfig.kcfg:18
+#, kde-format
+msgid "Seek Offset On Double Click"
+msgstr "Cerca la compensació en fer doble clic"
+
+#. i18n: ectx: label, entry (JumpLineOffset), group (General)
+#: src/scconfig.kcfg:22
+#, kde-format
+msgid "Jump to prev/next line offset"
+msgstr "Salta a la compensació de línia anterior/següent"
+
+#. i18n: ectx: label, entry (UnpauseOnDoubleClick), group (General)
+#: src/scconfig.kcfg:26
+#, kde-format
+msgid "Unpause On Double Click"
+msgstr "Treu la pausa en fer doble clic"
+
+#. i18n: ectx: label, entry (AutomaticVideoLoad), group (General)
+#: src/scconfig.kcfg:30
+#, kde-format
+msgid "Automatic Video Load"
+msgstr "Càrrega automàtica del vídeo"
+
+#. i18n: ectx: label, entry (LinesQuickShiftAmount), group (General)
+#: src/scconfig.kcfg:35
+#, kde-format
+msgid "Lines Quick Shift Amount"
+msgstr "Quantitat de desplaçament ràpid de les línies"
+
+#. i18n: ectx: label, entry (GrabbedPositionCompensation), group (General)
+#: src/scconfig.kcfg:39
+#, kde-format
+msgid "Grabbed Position Compensation"
+msgstr "Compensació de la posició agafada"
+
+#. i18n: ectx: label, entry (LineDuration), group (General)
+#: src/scconfig.kcfg:44
+#, kde-format
+msgid "Default subtitle line duration"
+msgstr "Durada predeterminada de la línia de subtítol"
+
+#. i18n: ectx: label, entry (LinePause), group (General)
+#: src/scconfig.kcfg:48
+#, kde-format
+msgid "Default duration between subtitle lines"
+msgstr "Durada predeterminada entre les línies dels subtítols"
+
+#. i18n: ectx: label, entry (MaxCharacters), group (Error Check)
+#: src/scconfig.kcfg:55
+#, kde-format
+msgid "Maximum number of characters"
+msgstr "Nombre màxim de caràcters"
+
+#. i18n: ectx: label, entry (MaxLines), group (Error Check)
+#: src/scconfig.kcfg:59
+#, kde-format
+msgid "Maximum number of lines"
+msgstr "Nombre màxim de línies"
+
+#. i18n: ectx: label, entry (MinDuration), group (Error Check)
+#: src/scconfig.kcfg:64
+#, kde-format
+msgid "Minimum duration"
+msgstr "Durada mínima"
+
+#. i18n: ectx: label, entry (MaxDuration), group (Error Check)
+#: src/scconfig.kcfg:68
+#, kde-format
+msgid "Maximum duration"
+msgstr "Durada màxima"
+
+#. i18n: ectx: label, entry (MinDurationPerCharacter), group (Error Check)
+#: src/scconfig.kcfg:73
+#, kde-format
+msgid "Minimum duration per character"
+msgstr "Durada mínima per caràcter"
+
+#. i18n: ectx: label, entry (IdealDurationPerCharacter), group (Error Check)
+#: src/scconfig.kcfg:77
+#, kde-format
+msgid "Ideal duration per character"
+msgstr "Durada ideal per caràcter"
+
+#. i18n: ectx: label, entry (MaxDurationPerCharacter), group (Error Check)
+#: src/scconfig.kcfg:81
+#, kde-format
+msgid "Maximum duration per character"
+msgstr "Durada màxima per caràcter"
+
+#. i18n: ectx: label, entry (DefaultLanguage), group (Spelling)
+#: src/scconfig.kcfg:93
+#, kde-format
+msgid "Default Language"
+msgstr "Idioma predeterminat"
+
+#. i18n: ectx: label, entry (DefaultClient), group (Spelling)
+#: src/scconfig.kcfg:97
+#, kde-format
+msgid "Default client"
+msgstr "Client predeterminat"
+
+#. i18n: ectx: label, entry (CheckUppercase), group (Spelling)
+#: src/scconfig.kcfg:101
+#, kde-format
+msgid "Check uppercase"
+msgstr "Comprova les majúscules"
+
+#. i18n: ectx: label, entry (SkipRunTogether), group (Spelling)
+#: src/scconfig.kcfg:105
+#, kde-format
+msgid "Skip Run Together"
+msgstr "Omet les paraules enganxades"
+
+#. i18n: ectx: label, entry (wfInnerColor), group (Waveform Widget)
+#: src/scconfig.kcfg:112
+#, kde-format
+msgid "Waveform Inner Color"
+msgstr "Color interior en la forma de l'ona"
+
+#. i18n: ectx: label, entry (wfOuterColor), group (Waveform Widget)
+#: src/scconfig.kcfg:116
+#, kde-format
+msgid "Waveform Outer Color"
+msgstr "Color exterior en la forma de l'ona"
+
+#. i18n: ectx: label, entry (wfSmoothScroll), group (Waveform Widget)
+#: src/scconfig.kcfg:120
+#, kde-format
+msgid "Waveform Smooth Scrolling"
+msgstr "Desplaçament suau de la forma de l'ona"
+
+#. i18n: ectx: label, entry (wfAutoscrollPadding), group (Waveform Widget)
+#: src/scconfig.kcfg:124
+#, kde-format
+msgid "Autoscroll Padding"
+msgstr "Emplenat del desplaçament automàtic"
+
+#. i18n: ectx: whatsthis, entry (wfAutoscrollPadding), group (Waveform Widget)
+#: src/scconfig.kcfg:126
+#, kde-format
+msgid ""
+"Autoscroll page when play position reaches ScrollPadding distance "
+"(percentage) from page border."
+msgstr ""
+"Desplaça automàticament la pàgina quan la posició de reproducció abasti la "
+"distància de l'Emplenat del desplaçament (en percentatge) des de la vora de "
+"la pàgina."
+
+#. i18n: ectx: label, entry (wfSubBackground), group (Waveform Widget)
+#: src/scconfig.kcfg:129
+#, kde-format
+msgid "Waveform Subtitle Background Color"
+msgstr "Color de fons del subtítol en la forma de l'ona"
+
+#. i18n: ectx: label, entry (wfSubBorder), group (Waveform Widget)
+#: src/scconfig.kcfg:133
+#, kde-format
+msgid "Waveform Subtitle Border Color"
+msgstr "Color del contorn del subtítol en la forma de l'ona"
+
+#. i18n: ectx: label, entry (wfSubBorderWidth), group (Waveform Widget)
+#: src/scconfig.kcfg:137
+#, kde-format
+msgid "Waveform Subtitle Border Width"
+msgstr "Amplada del contorn en la forma de l'ona"
+
+#. i18n: ectx: label, entry (wfSelBackground), group (Waveform Widget)
+#: src/scconfig.kcfg:141
+#, kde-format
+msgid "Waveform Selected Subtitle Background Color"
+msgstr "Color de fons del subtítol seleccionat en la forma de l'ona"
+
+#. i18n: ectx: label, entry (wfSelBorder), group (Waveform Widget)
+#: src/scconfig.kcfg:145
+#, kde-format
+msgid "Waveform Selected Subtitle Border Color"
+msgstr "Color del contorn del subtítol seleccionat en la forma de l'ona"
+
+#. i18n: ectx: label, entry (wfFontFamily), group (Waveform Widget)
+#. i18n: ectx: label, entry (FontFamily), group (VideoPlayer)
+#: src/scconfig.kcfg:149 src/scconfig.kcfg:201
+#, kde-format
+msgid "Font Family"
+msgstr "Família del tipus de lletra"
+
+#. i18n: ectx: label, entry (wfSubNumberFontSize), group (Waveform Widget)
+#: src/scconfig.kcfg:153
+#, kde-format
+msgid "Subtitle Number Font Size"
+msgstr "Mida del tipus de lletra del número de subtítol"
+
+#. i18n: ectx: label, entry (wfSubNumberColor), group (Waveform Widget)
+#: src/scconfig.kcfg:157
+#, kde-format
+msgid "Subtitle Number Font Color"
+msgstr "Color del tipus de lletra del número de subtítol"
+
+#. i18n: ectx: label, entry (wfSubTextFontSize), group (Waveform Widget)
+#: src/scconfig.kcfg:161
+#, kde-format
+msgid "Subtitle Text Font Size"
+msgstr "Mida del tipus de lletra del text de subtítol"
+
+#. i18n: ectx: label, entry (wfSubTextColor), group (Waveform Widget)
+#: src/scconfig.kcfg:165
+#, kde-format
+msgid "Subtitle Text Font Color"
+msgstr "Color del tipus de lletra del text de subtítol"
+
+#. i18n: ectx: label, entry (wfMouseLocation), group (Waveform Widget)
+#: src/scconfig.kcfg:169
+#, kde-format
+msgid "Mouse Location Line Color"
+msgstr "Color de la línia en la posició del ratolí"
+
+#. i18n: ectx: label, entry (wfPlayLocation), group (Waveform Widget)
+#: src/scconfig.kcfg:173
+#, kde-format
+msgid "Play Location Line Color"
+msgstr "Color de la línia en la posició de la reproducció"
+
+#. i18n: ectx: label, entry (SeekJumpLength), group (VideoPlayer)
+#: src/scconfig.kcfg:184
+#, kde-format
+msgid "Jump length on seek"
+msgstr "Durada del salt en avançar/recular"
+
+#. i18n: ectx: label, entry (StepJumpLength), group (VideoPlayer)
+#: src/scconfig.kcfg:188
+#, kde-format
+msgid "Amount of frames to skip when stepping"
+msgstr "Quantitat de fotogrames a saltar en explorar"
+
+#. i18n: ectx: label, entry (ShowPositionTimeEdit), group (VideoPlayer)
+#: src/scconfig.kcfg:192
+#, kde-format
+msgid "Show editable time position"
+msgstr "Mostra la posició del temps editable"
+
+#. i18n: ectx: label, entry (VolumeAmplification), group (VideoPlayer)
+#: src/scconfig.kcfg:196
+#, kde-format
+msgid "Volume Amplification"
+msgstr "Amplifica el volum"
+
+#. i18n: ectx: label, entry (FontSize), group (VideoPlayer)
+#: src/scconfig.kcfg:205
+#, kde-format
+msgid "Font Size"
+msgstr "Mida del tipus de lletra"
+
+#. i18n: ectx: label, entry (FontColor), group (VideoPlayer)
+#: src/scconfig.kcfg:209
+#, kde-format
+msgid "Font Color"
+msgstr "Color del tipus de lletra"
+
+#. i18n: ectx: label, entry (OutlineColor), group (VideoPlayer)
+#: src/scconfig.kcfg:213
+#, kde-format
+msgid "Outline Color"
+msgstr "Color del contorn"
+
+#. i18n: ectx: label, entry (OutlineWidth), group (VideoPlayer)
+#: src/scconfig.kcfg:217
+#, kde-format
+msgid "Outline Width"
+msgstr "Amplada del contorn"
+
+#: src/scripting/scriptsmanager.cpp:75
+#, kde-format
+msgid "Non-Script Files"
+msgstr "Fitxers que no són de script"
+
+#: src/scripting/scriptsmanager.cpp:157
+#, kde-format
+msgid "Title"
+msgstr "Títol"
+
+#: src/scripting/scriptsmanager.cpp:158
+#, kde-format
+msgid "Version"
+msgstr "Versió"
+
+#: src/scripting/scriptsmanager.cpp:159
+#, kde-format
+msgid "Author"
+msgstr "Autor"
+
+#: src/scripting/scriptsmanager.cpp:160
+#, kde-format
+msgid "Path"
+msgstr "Camí"
+
+#: src/scripting/scriptsmanager.cpp:354
+#, kde-format
+msgid "Information"
+msgstr "Informació"
+
+#: src/scripting/scriptsmanager.cpp:360
+#, kde-format
+msgid "Warning"
+msgstr "Avís"
+
+#: src/scripting/scriptsmanager.cpp:366
+#, kde-format
+msgid "Error"
+msgstr "Error"
+
+#. i18n: ectx: property (text), widget (QPushButton, btnEdit)
+#: src/scripting/scriptsmanager.cpp:394 src/scripting/scriptsmanager.ui:74
+#, kde-format
+msgid "Edit"
+msgstr "Edita"
+
+#: src/scripting/scriptsmanager.cpp:397
+#, kde-format
+msgid "View"
+msgstr "Visualitza"
+
+#: src/scripting/scriptsmanager.cpp:462 src/scripting/scriptsmanager.cpp:527
+#, kde-format
+msgid ""
+"You must enter an unused name to continue.\n"
+"Would you like to enter another name?"
+msgstr ""
+"Per a continuar, haureu d'introduir un nom sense usar.\n"
+"Voleu introduir un altre nom?"
+
+#: src/scripting/scriptsmanager.cpp:463 src/scripting/scriptsmanager.cpp:528
+#, kde-format
+msgid "Name Already Used"
+msgstr "El nom ja està en ús"
+
+#: src/scripting/scriptsmanager.cpp:467
+#, kde-format
+msgid "Create New Script"
+msgstr "Creació d'un script nou"
+
+#: src/scripting/scriptsmanager.cpp:467 src/scripting/scriptsmanager.cpp:531
+#, kde-format
+msgid "Script name:"
+msgstr "Nom de l'script:"
+
+#: src/scripting/scriptsmanager.cpp:475
+#, kde-format
+msgid "There was an error creating the file <b>%1</b>."
+msgstr "S'ha produït un error en crear el fitxer <b>%1</b>."
+
+#: src/scripting/scriptsmanager.cpp:510
+#, kde-format
+msgid "Select Existing Script"
+msgstr "Selecció d'un script existent"
+
+#: src/scripting/scriptsmanager.cpp:531
+#, kde-format
+msgid "Rename Script"
+msgstr "Reanomena l'script"
+
+#: src/scripting/scriptsmanager.cpp:540
+#, kde-format
+msgid "There was an error opening the file <b>%1</b>."
+msgstr "S'ha produït un error en obrir el fitxer <b>%1</b>."
+
+#: src/scripting/scriptsmanager.cpp:548
+#, kde-format
+msgid "There was an error copying the file to <b>%1</b>."
+msgstr "S'ha produït un error en copiar el fitxer a <b>%1</b>."
+
+#: src/scripting/scriptsmanager.cpp:563
+#, kde-format
+msgid "Do you really want to send file <b>%1</b> to the trash?"
+msgstr "Realment voleu enviar el fitxer <b>%1</b> a la paperera?"
+
+#: src/scripting/scriptsmanager.cpp:563
+#, kde-format
+msgid "Move to Trash"
+msgstr "Mou a la paperera"
+
+#: src/scripting/scriptsmanager.cpp:567
+#, kde-format
+msgid "There was an error removing the file <b>%1</b>."
+msgstr "S'ha produït un error en eliminar el fitxer <b>%1</b>."
+
+#: src/scripting/scriptsmanager.cpp:596
+#, kde-format
+msgid "Could not launch external editor.\n"
+msgstr "No s'ha pogut llançar l'editor extern.\n"
+
+#: src/scripting/scriptsmanager.cpp:617
+#, kde-format
+msgid "Error opening script %1."
+msgstr "Error en obrir l'script %1."
+
+#: src/scripting/scriptsmanager.cpp:617 src/scripting/scriptsmanager.cpp:632
+#: src/scripting/scriptsmanager.cpp:634
+#, kde-format
+msgid "Error Running Script"
+msgstr "Error en executar un script"
+
+#: src/scripting/scriptsmanager.cpp:630
+#, kde-format
+msgid "Path: %1"
+msgstr "Camí: %1"
+
+#: src/scripting/scriptsmanager.cpp:647
+#, kde-format
+msgid "Tools"
+msgstr "Eines"
+
+#. i18n: ectx: property (windowTitle), widget (QDialog, ScriptsManager)
+#: src/scripting/scriptsmanager.ui:14
+#, kde-format
+msgid "Scripts Manager"
+msgstr "Gestor de scripts"
+
+#. i18n: ectx: property (whatsThis), widget (QPushButton, btnCreate)
+#: src/scripting/scriptsmanager.ui:29
+#, kde-format
+msgid "Creates a new script file."
+msgstr "Crea un fitxer de script nou."
+
+#. i18n: ectx: property (text), widget (QPushButton, btnCreate)
+#: src/scripting/scriptsmanager.ui:32
+#, kde-format
+msgid "Create..."
+msgstr "Crea..."
+
+#. i18n: ectx: property (whatsThis), widget (QPushButton, btnAdd)
+#: src/scripting/scriptsmanager.ui:43
+#, kde-format
+msgid "Copies an existing script from a specified location."
+msgstr "Copia un script existent des d'una ubicació especificada."
+
+#. i18n: ectx: property (text), widget (QPushButton, btnAdd)
+#: src/scripting/scriptsmanager.ui:46
+#, kde-format
+msgid "Add..."
+msgstr "Afegeix..."
+
+#. i18n: ectx: property (whatsThis), widget (QPushButton, btnRemove)
+#: src/scripting/scriptsmanager.ui:57
+#, kde-format
+msgid "Sends the selected script to the trash."
+msgstr "Envia l'script seleccionat a la paperera."
+
+#. i18n: ectx: property (whatsThis), widget (QPushButton, btnEdit)
+#: src/scripting/scriptsmanager.ui:71
+#, kde-format
+msgid "Opens the selected script with an external editor."
+msgstr "Obre l'script seleccionat amb un editor extern."
+
+#. i18n: ectx: property (whatsThis), widget (QPushButton, btnRun)
+#: src/scripting/scriptsmanager.ui:101
+#, kde-format
+msgid "Executes the selected script."
+msgstr "Executa l'script seleccionat."
+
+#. i18n: ectx: property (text), widget (QPushButton, btnRun)
+#: src/scripting/scriptsmanager.ui:104
+#, kde-format
+msgid "Run"
+msgstr "Executa"
+
+#. i18n: ectx: property (whatsThis), widget (QPushButton, btnRefresh)
+#: src/scripting/scriptsmanager.ui:131
+#, kde-format
+msgid "Reloads the installed scripts list."
+msgstr "Torna a carregar la llista dels scripts instal·lats."
+
+#. i18n: ectx: property (text), widget (QPushButton, btnRefresh)
+#: src/scripting/scriptsmanager.ui:134
+#, kde-format
+msgid "Refresh"
+msgstr "Actualitza"
+
+#. i18n: ectx: label, entry (acousticModelPath), group (PocketSphinx)
+#. i18n: ectx: property (toolTip), widget (QLabel, label_acousticModelPath)
+#: src/speechplugins/pocketsphinx/pocketsphinxconfig.kcfg:11
+#: src/speechplugins/pocketsphinx/pocketsphinxconfigwidget.ui:65
+#, kde-format
+msgid "Directory containing acoustic model files"
+msgstr "Directori que conté els fitxers del model acústic"
+
+#. i18n: ectx: label, entry (trigramModelFile), group (PocketSphinx)
+#. i18n: ectx: property (toolTip), widget (QLabel, label_trigramModelFile)
+#: src/speechplugins/pocketsphinx/pocketsphinxconfig.kcfg:15
+#: src/speechplugins/pocketsphinx/pocketsphinxconfigwidget.ui:39
+#, kde-format
+msgid "Word trigram language model input file"
+msgstr "Fitxer d'entrada del model d'idioma del trigrama de paraules"
+
+#. i18n: ectx: label, entry (lexiconFile), group (PocketSphinx)
+#. i18n: ectx: property (toolTip), widget (QLabel, label_lexiconFile)
+#: src/speechplugins/pocketsphinx/pocketsphinxconfig.kcfg:19
+#: src/speechplugins/pocketsphinx/pocketsphinxconfigwidget.ui:26
+#, kde-format
+msgid "Main pronunciation dictionary (lexicon) input file"
+msgstr "Fitxer d'entrada del diccionari de pronunciació principal (lèxic)"
+
+#. i18n: ectx: label, entry (vadPostSpeech), group (PocketSphinx)
+#. i18n: ectx: property (toolTip), widget (QLabel, label_vadPostSpeech)
+#: src/speechplugins/pocketsphinx/pocketsphinxconfig.kcfg:24
+#: src/speechplugins/pocketsphinx/pocketsphinxconfigwidget.ui:152
+#, kde-format
+msgid "Num of silence frames to keep after speech to silence transition"
+msgstr ""
+"Nombre de fotogrames en silenci a mantenir després d'una transició de veu a "
+"silenci"
+
+#. i18n: ectx: label, entry (vadPreSpeech), group (PocketSphinx)
+#. i18n: ectx: property (toolTip), widget (QLabel, label_vadPreSpeech)
+#: src/speechplugins/pocketsphinx/pocketsphinxconfig.kcfg:28
+#: src/speechplugins/pocketsphinx/pocketsphinxconfigwidget.ui:139
+#, kde-format
+msgid "Num of speech frames to keep before silence to speech transition"
+msgstr ""
+"Nombre de fotogrames amb veu a mantenir abans d'una transició de silenci a "
+"veu"
+
+#. i18n: ectx: label, entry (vadStartSpeech), group (PocketSphinx)
+#. i18n: ectx: property (toolTip), widget (QLabel, label_vadStartSpeech)
+#: src/speechplugins/pocketsphinx/pocketsphinxconfig.kcfg:32
+#: src/speechplugins/pocketsphinx/pocketsphinxconfigwidget.ui:165
+#, kde-format
+msgid "Num of speech frames to trigger VAD from silence to speech"
+msgstr ""
+"Nombre de fotogrames amb veu per a activar la DAV des del silenci a veu"
+
+#. i18n: ectx: label, entry (vadTreshold), group (PocketSphinx)
+#. i18n: ectx: property (toolTip), widget (QDoubleSpinBox, kcfg_vadTreshold)
+#. i18n: ectx: property (toolTip), widget (QLabel, label_vadTreshold)
+#: src/speechplugins/pocketsphinx/pocketsphinxconfig.kcfg:36
+#: src/speechplugins/pocketsphinx/pocketsphinxconfigwidget.ui:106
+#: src/speechplugins/pocketsphinx/pocketsphinxconfigwidget.ui:126
+#, kde-format
+msgid ""
+"Threshold for decision between noise and silence frames. Log-ratio between "
+"signal level and noise level"
+msgstr ""
+"Llindar per a la decisió entre fotogrames amb soroll i silenci. Relació del "
+"registre entre el nivell de senyal i de soroll"
+
+#. i18n: ectx: property (title), widget (QGroupBox, grpModel)
+#: src/speechplugins/pocketsphinx/pocketsphinxconfigwidget.ui:20
+#, kde-format
+msgid "Speech Recognition Model"
+msgstr "Model de reconeixement de la veu"
+
+#. i18n: ectx: property (text), widget (QLabel, label_lexiconFile)
+#: src/speechplugins/pocketsphinx/pocketsphinxconfigwidget.ui:29
+#, kde-format
+msgid "Pronunciation Dictionary (Lexicon)"
+msgstr "Diccionari de pronunciació (lèxic)"
+
+#. i18n: ectx: property (text), widget (QLabel, label_trigramModelFile)
+#: src/speechplugins/pocketsphinx/pocketsphinxconfigwidget.ui:42
+#, kde-format
+msgid "Trigram Model"
+msgstr "Model trigrama"
+
+#. i18n: ectx: property (text), widget (QLabel, label_acousticModelPath)
+#: src/speechplugins/pocketsphinx/pocketsphinxconfigwidget.ui:68
+#, kde-format
+msgid "Acoustic Model"
+msgstr "Model acústic"
+
+#. i18n: ectx: property (text), widget (QLabel, label_modelInfoText)
+#: src/speechplugins/pocketsphinx/pocketsphinxconfigwidget.ui:78
+#, kde-format
+msgid ""
+"<html><head/><body><p align=\"center\">Acoustic and Language Models can be "
+"downloaded from <a href=\"https://cmusphinx.github.io/wiki/download/\"><span "
+"style=\" text-decoration: underline; color:#007af4;\">CMU Sphinx</span></a></"
+"p></body></html>"
+msgstr ""
+"<html><head/><body><p align=\"center\">Es poden descarregar els models "
+"d'idioma i acústics des de <a href=\"https://cmusphinx.github.io/wiki/"
+"download/\"><span style=\" text-decoration: underline; color:#007af4;\">CMU "
+"Sphinx</span></a></p></body></html>"
+
+#. i18n: ectx: property (title), widget (QGroupBox, grpVAD)
+#: src/speechplugins/pocketsphinx/pocketsphinxconfigwidget.ui:100
+#, kde-format
+msgid "Voice Activity Detection"
+msgstr "Detecció d'activitat de la veu"
+
+#. i18n: ectx: property (text), widget (QLabel, label_vadTreshold)
+#: src/speechplugins/pocketsphinx/pocketsphinxconfigwidget.ui:129
+#, kde-format
+msgid "Noise Threshold"
+msgstr "Llindar de soroll"
+
+#. i18n: ectx: property (text), widget (QLabel, label_vadPreSpeech)
+#: src/speechplugins/pocketsphinx/pocketsphinxconfigwidget.ui:142
+#, kde-format
+msgid "Pre Speech Frames"
+msgstr "Fotogrames amb veu anteriors"
+
+#. i18n: ectx: property (text), widget (QLabel, label_vadPostSpeech)
+#: src/speechplugins/pocketsphinx/pocketsphinxconfigwidget.ui:155
+#, kde-format
+msgid "Post Speech Frames"
+msgstr "Fotogrames amb veu posteriors"
+
+#. i18n: ectx: property (text), widget (QLabel, label_vadStartSpeech)
+#: src/speechplugins/pocketsphinx/pocketsphinxconfigwidget.ui:168
+#, kde-format
+msgid "Start Speech Frames"
+msgstr "Fotogrames amb veu d'inici"
+
+#: src/speechprocessor/speechprocessor.cpp:40
+#, kde-format
+msgid "Recognizing speech"
+msgstr "S'està reconeixent la veu"
+
+#: src/speechprocessor/speechprocessor.cpp:48
+#, kde-format
+msgid "Abort speech recognition"
+msgstr "Interromp el reconeixement de la veu"
+
+#: src/speechprocessor/speechprocessor.cpp:97
+#, kde-format
+msgid "No speech recognition plugins available"
+msgstr "No hi ha cap connector disponible de reconeixement de la veu"
+
+#: src/speechprocessor/speechprocessor.cpp:102
+#, kde-format
+msgid "Initialization of speech recognition plugin failed"
+msgstr "Ha fallat la inicialització del connector de reconeixement de la veu"
+
+#: src/speechprocessor/speechprocessor.cpp:172
+#, kde-format
+msgid ""
+"Speech Recognition failed: %2\n"
+"Code %1: %3"
+msgstr ""
+"Ha fallat el reconeixement de la veu: %2\n"
+"Codi %1: %3"
+
+#. i18n: ectx: Menu (file)
+#: src/subtitlecomposerui.rc:5
+#, kde-format
+msgid "&File"
+msgstr "&Fitxer"
+
+#. i18n: ectx: Menu (translation)
+#: src/subtitlecomposerui.rc:20
+#, kde-format
+msgid "Translation"
+msgstr "Traducció"
+
+#. i18n: ectx: Menu (edit)
+#: src/subtitlecomposerui.rc:33
+#, kde-format
+msgid "&Edit"
+msgstr "&Edita"
+
+#. i18n: ectx: Menu (texts)
+#: src/subtitlecomposerui.rc:56
+#, kde-format
+msgid "&Texts"
+msgstr "&Textos"
+
+#. i18n: ectx: Menu (styles)
+#: src/subtitlecomposerui.rc:67
+#, kde-format
+msgid "St&yles"
+msgstr "Est&ils"
+
+#. i18n: ectx: Menu (times)
+#: src/subtitlecomposerui.rc:75
+#, kde-format
+msgid "T&imes"
+msgstr "T&emps"
+
+#. i18n: ectx: Menu (errors)
+#: src/subtitlecomposerui.rc:96
+#, kde-format
+msgid "E&rrors"
+msgstr "E&rrors"
+
+#. i18n: ectx: Menu (video)
+#: src/subtitlecomposerui.rc:105
+#, kde-format
+msgid "&Video"
+msgstr "&Vídeo"
+
+#. i18n: ectx: Menu (tools)
+#: src/subtitlecomposerui.rc:140
+#, kde-format
+msgid "T&ools"
+msgstr "E&ines"
+
+#. i18n: ectx: ToolBar (mainToolBar)
+#: src/subtitlecomposerui.rc:145
+#, kde-format
+msgid "Main Toolbar"
+msgstr "Barra d'eines principal"
+
+#. i18n: ectx: ToolBar (editToolBar)
+#: src/subtitlecomposerui.rc:156
+#, kde-format
+msgid "Edit Toolbar"
+msgstr "Barra d'eines d'edició"
+
+#: src/utils/finder.cpp:45
+#, kde-format
+msgid "Find In"
+msgstr "Cerca a"
+
+#: src/utils/finder.cpp:246
+#, kde-format
+msgid "No instances of '%1' found!"
+msgstr "No s'han trobat les instàncies de «%1»!"
+
+#: src/utils/finder.cpp:246 src/utils/finder.cpp:260
+#, kde-format
+msgid "Find"
+msgstr "Cerca"
+
+#: src/utils/finder.cpp:260 src/utils/speller.cpp:135
+#, kde-format
+msgid ""
+"End of subtitle reached.\n"
+"Continue from the beginning?"
+msgstr ""
+"S'ha arribat al final del subtítol.\n"
+"Continuo des del començament?"
+
+#: src/utils/finder.cpp:260
+#, kde-format
+msgid ""
+"Beginning of selection reached.\n"
+"Continue from the end?"
+msgstr ""
+"S'ha arribat al començament de la selecció.\n"
+"Continuo des del final?"
+
+#: src/utils/finder.cpp:260
+#, kde-format
+msgid ""
+"Beginning of subtitle reached.\n"
+"Continue from the end?"
+msgstr ""
+"S'ha arribat al començament del subtítol.\n"
+"Continuo des del final?"
+
+#: src/utils/finder.cpp:260
+#, kde-format
+msgid ""
+"End of selection reached.\n"
+"Continue from the beginning?"
+msgstr ""
+"S'ha arribat al final de la selecció.\n"
+"Continuo des del començament?"
+
+#: src/utils/language.cpp:115
+#, kde-format
+msgid "Automatic"
+msgstr "Automàtic"
+
+#: src/utils/language.cpp:122
+#, kde-format
+msgctxt "Official language of the Philippines, aka Filipino"
+msgid "Tagalog"
+msgstr "Tagal"
+
+#: src/utils/replacer.cpp:43
+#, kde-format
+msgid "Find/Replace In"
+msgstr "Cerca i substitueix a"
+
+#: src/utils/replacer.cpp:250
+#, kde-format
+msgid "Replace"
+msgstr "Substitueix"
+
+#: src/utils/speller.cpp:135
+#, kde-format
+msgid "Spell Checking"
+msgstr "Verificació ortogràfica"
+
+#: src/utils/translator.cpp:163
+#, kde-format
+msgid "Operation canceled by user"
+msgstr "Operació cancel·lada per l'usuari"
+
+#: src/utils/translator.cpp:263 src/utils/translator.cpp:272
+#, kde-format
+msgid "Unexpected contents received from translation service"
+msgstr "S'ha rebut contingut inesperat des del servei de traducció"
+
+#: src/videoplayer/backend/videostate.cpp:110
+#, kde-format
+msgid "Video Stream #%1"
+msgstr "Flux de vídeo núm. %1"
+
+#: src/videoplayer/backend/videostate.cpp:114
+#, kde-format
+msgid "Audio Stream #%1"
+msgstr "Flux d'àudio núm. %1"
+
+#: src/videoplayer/backend/videostate.cpp:120
+#, kde-format
+msgid "Subtitle Stream #%1"
+msgstr "Flux de subtítols núm. %1"
+
+#: src/videoplayer/videoplayer.cpp:115
+#, kde-format
+msgid "File does not exist."
+msgstr "El fitxer no existeix."
+
+#: src/widgets/simplerichtextedit.cpp:254
+#, kde-format
+msgid "Suggestions"
+msgstr "Consells"
+
+#: src/widgets/simplerichtextedit.cpp:255
+#, kde-format
+msgid "Ignore"
+msgstr "Ignora"
+
+#: src/widgets/simplerichtextedit.cpp:256
+#, kde-format
+msgid "Add to Dictionary"
+msgstr "Afegeix al diccionari"
+
+#: src/widgets/simplerichtextedit.cpp:260
+#, kde-format
+msgid "No suggestions"
+msgstr "No hi ha cap suggeriment"
+
+#: src/widgets/simplerichtextedit.cpp:359
+#, kde-format
+msgid "Delete"
+msgstr "Suprimeix"
+
+#: src/widgets/simplerichtextedit.cpp:410
+#, kde-format
+msgid "Check Spelling..."
+msgstr "Verifica l'ortografia..."
+
+#: src/widgets/simplerichtextedit.cpp:415
+#, kde-format
+msgid "Auto Spell Check"
+msgstr "Comprova automàticament l'ortografia"
+
+#: src/widgets/simplerichtextedit.cpp:420
+#, kde-format
+msgid "Allow Tabulations"
+msgstr "Permet les tabulacions"
+
+#~ msgid "Installed Scripts"
+#~ msgstr "Scripts instal·lats"
+
+#~ msgid "Can not perform sort on selection with multiple ranges."
+#~ msgstr ""
+#~ "No es pot realitzar l'ordenació en una selecció amb múltiples intervals."
+
+#~ msgid "Sort..."
+#~ msgstr "Ordena..."
+
+#~ msgid "Sort lines based on their show time"
+#~ msgstr "Ordena les línies en funció del seu temps de presentació"
+
+#~ msgid "modified"
+#~ msgstr "modificat"
+
+#~ msgid "Mladen Milinković"
+#~ msgstr "Mladen Milinković"
+
+#~ msgid "Sergio Pistone"
+#~ msgstr "Sergio Pistone"
+
+#~ msgid "Original Author"
+#~ msgstr "Autor original"
+
+#~ msgid "Open location as primary subtitle"
+#~ msgstr "Obre la ubicació com a subtítols primaris"
+
+#~ msgid "Open location as translation subtitle"
+#~ msgstr "Obre la ubicació com a traducció dels subtítols"
+
+#~ msgid "ms/ch"
+#~ msgstr "ms/caràc."
+
+#~ msgid "Adjust to Video Position (Anchor Last Line)"
+#~ msgstr "Ajusta a la posició en el vídeo (ancoratge a la primera línia)"
+
+#~ msgid ""
+#~ "Set current line to video position by fixing the last line and linearly "
+#~ "adjusting the other ones"
+#~ msgstr ""
+#~ "Estableix la línia actual a la posició en el vídeo arreglant l'última "
+#~ "línia i ajustant linealment les altres"
+
+#~ msgid "Adjust to Video Position (Anchor First Line)"
+#~ msgstr "Ajusta a la posició en el vídeo (ancoratge a l'última línia)"
+
+#~ msgid ""
+#~ "Set current line to video position by fixing the first line and linearly "
+#~ "adjusting the other ones"
+#~ msgstr ""
+#~ "Estableix la línia actual a la posició en el vídeo arreglant la primera "
+#~ "línia i ajustant linealment les altres"
+
+#~ msgid ""
+#~ "Continuing would result in loss of timing information for some lines.\n"
+#~ "Are you sure you want to continue?"
+#~ msgstr ""
+#~ "Continuar donaria com a resultat la pèrdua d'informació del temps per a "
+#~ "algunes línies.\n"
+#~ "Esteu segur que voleu continuar?"
+
+#~ msgid "Set Lines Style"
+#~ msgstr "Estableix l'estil de les línies"
+
+#~ msgid "Set Line Texts"
+#~ msgstr "Estableix els textos de la línia"
+
+#~ msgid "Current line:"
+#~ msgstr "Línia actual:"
+
+#~ msgid "1 character"
+#~ msgid_plural "%1 characters"
+#~ msgstr[0] "1 caràcter"
+#~ msgstr[1] "%1 caràcters"
+
+#~ msgid "Undo"
+#~ msgstr "Desfés"
+
+#~ msgid "Redo"
+#~ msgstr "Refés"
+
+#~ msgid "Jump length on frame step"
+#~ msgstr "Durada del salt en el pas de fotogrames"
+
+#~ msgid "Text Stream #%1"
+#~ msgstr "Flux de text núm. %1"
+
+#~ msgid "Text Antialiasing"
+#~ msgstr "Text amb antialiàsing"
+
+#~ msgid "Font Antialiasing"
+#~ msgstr "Tipus de lletra amb antialiàsing"
+
+#~ msgid "Auto Video Sink"
+#~ msgstr "Receptor automàtic del vídeo"
+
+#~ msgid "Video Sink"
+#~ msgstr "Receptor del vídeo"
+
+#~ msgid "Auto Audio Sink"
+#~ msgstr "Receptor automàtic de l'àudio"
+
+#~ msgid "Audio Sink"
+#~ msgstr "Receptor de l'àudio"
+
+#~ msgid "Options"
+#~ msgstr "Opcions"
+
+#~ msgid "Video sink:"
+#~ msgstr "Receptor del vídeo:"
+
+#~ msgid "Audio sink:"
+#~ msgstr "Receptor de l'àudio:"
+
+#~ msgid "Cache Enabled"
+#~ msgstr "Memòria cau activada"
+
+#~ msgid "Cache Size (KB)"
+#~ msgstr "Mida de la memòria cau (KB)"
+
+#~ msgid "mplayer executable path"
+#~ msgstr "Camí cap a l'executable «mplayer»"
+
+#~ msgid "Auto Sync Enabled"
+#~ msgstr "Sincronització automàtica activada"
+
+#~ msgid "Auto Sync Factor"
+#~ msgstr "Factor per a la sincronització automàtica"
+
+#~ msgid "Video Output Enabled"
+#~ msgstr "Sortida del vídeo activada"
+
+#~ msgid "Video Output"
+#~ msgstr "Sortida del vídeo"
+
+#~ msgid "Hardware Decode"
+#~ msgstr "Descodificació amb el maquinari"
+
+#~ msgid "Frame Dropping"
+#~ msgstr "Pèrdua de fotogrames"
+
+#~ msgid "Hard Frame Dropping"
+#~ msgstr "Pèrdua forta de fotogrames"
+
+#~ msgid "Audio Output Enabled"
+#~ msgstr "Sortida de l'àudio activada"
+
+#~ msgid "Audio Output"
+#~ msgstr "Sortida de l'àudio"
+
+#~ msgid "Audio Channels Enabled"
+#~ msgstr "Canals de l'àudio activats"
+
+#~ msgid "Audio Channels"
+#~ msgstr "Canals de l'àudio"
+
+#~ msgid "Volume Amplification Enabled"
+#~ msgstr "Amplificació del volum activada"
+
+#~ msgid "Volume Normalization"
+#~ msgstr "Normalitza el volum"
+
+#~ msgid "Executable path:"
+#~ msgstr "Camí cap a l'executable:"
+
+#~ msgid "Video"
+#~ msgstr "Vídeo"
+
+#~ msgid "Enable VDPAU for DivX/XviD"
+#~ msgstr "Activa VDPAU per a DivX/XviD"
+
+#~ msgid "Allow frame dropping"
+#~ msgstr "Permet la pèrdua de fotogrames"
+
+#~ msgid "Allow hard frame dropping"
+#~ msgstr "Permet la pèrdua forta de fotogrames"
+
+#~ msgid "Audio"
+#~ msgstr "Àudio"
+
+#~ msgid "Audio channels:"
+#~ msgstr "Canals de l'àudio:"
+
+#~ msgid "Volume normalization"
+#~ msgstr "Normalitza el volum"
+
+#~ msgid "Hardware Decode Enabled"
+#~ msgstr "Descodificació amb el maquinari activada"
+
+#~ msgid "Native window embedding"
+#~ msgstr "Finestra nativa incrustada"
+
+#~ msgid "OpenGL render API"
+#~ msgstr "API de la renderització OpenGL"
+
+#~ msgid "Video rendering method"
+#~ msgstr "Mètode de renderitzant del vídeo"
+
+#~ msgid "Video Enabled"
+#~ msgstr "Vídeo activat"
+
+#~ msgid "Audio Enabled"
+#~ msgstr "Àudio activat"
+
+#~ msgid "Clear Errors..."
+#~ msgstr "Neteja els errors..."
+
+#~ msgid "Clear errors from selected lines"
+#~ msgstr "Neteja els errors de les línies seleccionades"
+
+#~ msgid "Show Errors..."
+#~ msgstr "Mostra els errors..."
+
+#~ msgid "Show errors information for the current subtitle"
+#~ msgstr "Mostra la informació dels errors per al subtítol actual"
+
+#~ msgid "Find Error..."
+#~ msgstr "Cerca l'error..."
+
+#~ msgid "Find lines with specified errors"
+#~ msgstr "Cerca les línies on s'ha especificat algun error"
+
+#~ msgid "Find Next Error"
+#~ msgstr "Cerca l'error següent"
+
+#~ msgid "Find next line with specified errors"
+#~ msgstr "Cerca la línia següent on s'ha especificat algun error"
+
+#~ msgid "Check Errors"
+#~ msgstr "Comprova els errors"
+
+#~ msgctxt "@title:group"
+#~ msgid "Errors to Check"
+#~ msgstr "Errors a comprovar"
+
+#~ msgctxt "@title:group"
+#~ msgid "Errors to Clear"
+#~ msgstr "Errors a netejar"
+
+#~ msgid "From current line"
+#~ msgstr "Des de la línia actual"
+
+#~ msgid "Find backwards"
+#~ msgstr "Cerca enrere"
+
+#~ msgid "1 replacement done."
+#~ msgid_plural "%1 replacements done."
+#~ msgstr[0] "S'ha fet una substitució."
+#~ msgstr[1] "S'han fet %1 substitucions."
+
+#~ msgid "Autodetect"
+#~ msgstr "Autodetecta"
