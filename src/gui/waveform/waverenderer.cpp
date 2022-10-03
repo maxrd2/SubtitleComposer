@@ -169,7 +169,7 @@ WaveRenderer::paintGraphics(QPainter &painter)
 	m_wfw->updateVisibleLines();
 
 	const RangeList &selection = app()->linesWidget()->selectionRanges();
-	foreach(WaveSubtitle *sub, m_wfw->m_visibleLines) {
+	for(const WaveSubtitle *sub: qAsConst(m_wfw->m_visibleLines)) {
 		const Time timeShow = sub->showTime();
 		const Time timeHide = sub->hideTime();
 		if(timeShow > m_wfw->m_timeEnd || m_wfw->m_timeStart > timeHide)

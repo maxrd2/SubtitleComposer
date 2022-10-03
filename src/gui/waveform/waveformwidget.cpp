@@ -370,19 +370,37 @@ WaveformWidget::updateVisibleLines()
 
 	auto it = m_visibleLines.begin();
 	while(it != m_visibleLines.end()) {
-		if(*it != m_draggedLine)
+		if(*it == m_draggedLine) {
+			it = m_visibleLines.erase(it);
+		} else if(!(*it)->line()->intersectsTimespan(m_timeStart, m_timeEnd)) {
 			delete *it;
-		++it;
+			it = m_visibleLines.erase(it);
+		} else {
+			++it;
+		}
 	}
-	m_visibleLines.clear();
 
-	const SubtitleLine *dragged = m_draggedLine ? m_draggedLine->line() : nullptr;
+	it = m_visibleLines.begin();
 	for(int i = 0, n = m_subtitle->count(); i < n; i++) {
 		SubtitleLine *sub = m_subtitle->at(i);
-		if(sub == dragged)
-			m_visibleLines.push_back(m_draggedLine);
-		else if(sub->intersectsTimespan(m_timeStart, m_timeEnd))
-			m_visibleLines.push_back(new WaveSubtitle(sub, m_waveformGraphics));
+		const bool isDragged = m_draggedLine != nullptr && sub == m_draggedLine->line();
+		if(!sub->intersectsTimespan(m_timeStart, m_timeEnd) && !isDragged)
+			continue;
+		const Time showTime = isDragged ? m_draggedLine->showTime() : sub->showTime();
+		while(it != m_visibleLines.end() && (*it)->showTime() < showTime) {
+			if((*it)->line() == sub)
+				break;
+			++it;
+		}
+		if(it == m_visibleLines.end() || (*it)->line() != sub) {
+			if(isDragged) {
+				m_visibleLines.emplace(it, m_draggedLine);
+				it = m_visibleLines.begin();
+			} else {
+				it = m_visibleLines.emplace(it, new WaveSubtitle(sub, m_waveformGraphics));
+				++it;
+			}
+		}
 	}
 }
 
@@ -444,7 +462,7 @@ WaveformWidget::draggableAt(double posTime, WaveSubtitle **result)
 	double msTolerance = double(10 * m_wfBuffer->millisPerPixel());
 
 	DragPosition dragMode = DRAG_NONE;
-	foreach(WaveSubtitle *sub, m_visibleLines) {
+	for(WaveSubtitle *sub: m_visibleLines) {
 		DragPosition dm = sub->draggableAt(posTime, &msTolerance);
 		if(dm > DRAG_FORBIDDEN || dragMode == DRAG_NONE) {
 			dragMode = dm;
@@ -460,7 +478,7 @@ SubtitleLine *
 WaveformWidget::subtitleLineAtMousePosition() const
 {
 	const Time mouseTime = m_RMBDown ? m_timeRMBRelease : m_pointerTime;
-	foreach(WaveSubtitle *sub, m_visibleLines) {
+	for(const WaveSubtitle *sub: qAsConst(m_visibleLines)) {
 		if(sub->line()->containsTime(mouseTime))
 			return sub->line();
 	}

@@ -38,7 +38,7 @@ WaveSubtitle::~WaveSubtitle()
 }
 
 DragPosition
-WaveSubtitle::draggableAt(double time, double *msTolerance)
+WaveSubtitle::draggableAt(double time, double *msTolerance) const
 {
 	if(!m_line->intersectsTimespan(time - *msTolerance, time + *msTolerance))
 		return DRAG_NONE;
@@ -140,7 +140,7 @@ WaveSubtitle::hideTime() const
 }
 
 const QImage &
-WaveSubtitle::image()
+WaveSubtitle::image() const
 {
 	if(!m_imageDirty)
 		return m_image;

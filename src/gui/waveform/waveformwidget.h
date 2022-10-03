@@ -13,9 +13,10 @@
 #include "videoplayer/waveformat.h"
 
 #include <QExplicitlySharedDataPointer>
-#include <QList>
 #include <QTimer>
 #include <QWidget>
+
+#include <list>
 
 QT_FORWARD_DECLARE_CLASS(QRegion)
 QT_FORWARD_DECLARE_CLASS(QPolygon)
@@ -141,7 +142,7 @@ private:
 	QWidget *m_progressWidget;
 	QProgressBar *m_progressBar;
 
-	QList<WaveSubtitle *> m_visibleLines;
+	std::list<WaveSubtitle *> m_visibleLines;
 	bool m_visibleLinesDirty;
 
 	WaveSubtitle *m_draggedLine;

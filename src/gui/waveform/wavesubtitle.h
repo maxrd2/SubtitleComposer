@@ -38,7 +38,7 @@ public:
 
 	inline SubtitleLine * line() const { return m_line; }
 
-	DragPosition draggableAt(double time, double *msTolerance);
+	DragPosition draggableAt(double time, double *msTolerance) const;
 
 	void dragStart(DragPosition dragMode, double dragTime);
 	inline void dragUpdate(double dragTime) { m_dragTime = dragTime; }
@@ -47,15 +47,15 @@ public:
 	Time showTime() const;
 	Time hideTime() const;
 
-	const QImage & image();
+	const QImage & image() const;
 
 private:
 	SubtitleLine *m_line;
 	WaveRenderer *m_rend;
 
 	QTextLayout *m_textLayout;
-	QImage m_image;
-	bool m_imageDirty = true;
+	mutable QImage m_image;
+	mutable bool m_imageDirty = true;
 
 	DragPosition m_dragMode = DRAG_NONE;
 	double m_dragTime = 0.;
