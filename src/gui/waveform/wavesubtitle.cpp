@@ -11,30 +11,24 @@
 #include "gui/waveform/waverenderer.h"
 
 #include <QPainter>
+#include <QTextBlock>
 #include <QTextLayout>
+#include <QTextLine>
 
 using namespace SubtitleComposer;
-
-#define IMG_WIDTH 500
 
 WaveSubtitle::WaveSubtitle(SubtitleLine *line, WaveRenderer *parent)
 	: QObject(parent),
 	  m_line(line),
 	  m_rend(parent),
-	  m_textLayout(new QTextLayout()),
-	  m_image(IMG_WIDTH, 1, QImage::Format_ARGB32_Premultiplied)
+	  m_image(1, 1, QImage::Format_ARGB32_Premultiplied)
 {
-	m_textLayout->setFont(m_rend->fontText());
-	QTextOption layoutTextOption;
-	layoutTextOption.setWrapMode(QTextOption::NoWrap);
-	layoutTextOption.setAlignment(Qt::AlignCenter);
-	m_textLayout->setTextOption(layoutTextOption);
-	m_textLayout->setCacheEnabled(true);
+	const RichDocument *doc = m_rend->showTranslation() ? m_line->secondaryDoc() : m_line->primaryDoc();
+	connect(doc, &RichDocument::contentsChanged, this, [&](){ m_imageDirty = true; });
 }
 
 WaveSubtitle::~WaveSubtitle()
 {
-	delete m_textLayout;
 }
 
 DragPosition
@@ -145,55 +139,59 @@ WaveSubtitle::image() const
 	if(!m_imageDirty)
 		return m_image;
 
-	RichDocument *doc = m_rend->showTranslation() ? m_line->secondaryDoc() : m_line->primaryDoc();
+	const RichDocument *doc = m_rend->showTranslation() ? m_line->secondaryDoc() : m_line->primaryDoc();
 
-	QPainter *painter = nullptr;
-	const QFont &font = m_rend->fontText();
-	const QFontMetrics fontMetrics(font, &m_image);
-	qreal height = 0., heightTotal = -1.;
-
+	qreal width = 0., height = 0.;
+	QTextLayout *layouts = new QTextLayout[doc->blockCount()];
+	QTextLayout *bl = layouts;
 	for(QTextBlock bi = doc->begin(); bi != doc->end(); bi = bi.next()) {
-		QString text;
-		QVector<QTextLayout::FormatRange> ranges;
-		for(QTextBlock::iterator it = bi.begin(); !it.atEnd(); ++it) {
-			if(!it.fragment().isValid())
-				continue;
-			const QString &t = it.fragment().text();
-			ranges.push_back(QTextLayout::FormatRange{text.length(), t.length(), it.fragment().charFormat()});
-			text.append(t);
+		bl->setCacheEnabled(true);
+		bl->setFont(m_rend->fontText());
+		bl->setText(bi.text());
+		bl->setFormats(bi.textFormats());
+		bl->beginLayout();
+		QTextOption option = bi.layout()->textOption();
+		option.setAlignment(Qt::AlignTop | Qt::AlignLeft | Qt::AlignAbsolute);
+		bl->setTextOption(option);
+		for(;;) {
+			QTextLine line = bl->createLine();
+			if(!line.isValid())
+				break;
+			line.setLeadingIncluded(true);
+			line.setLineWidth(10000);
+			line.setPosition(QPointF(0., height));
+			height += line.height();
+			width = qMax(width, line.naturalTextWidth());
 		}
-
-		m_textLayout->setText(text);
-		m_textLayout->setFormats(ranges);
-
-		m_textLayout->beginLayout();
-		QTextLine line = m_textLayout->createLine();
-		line.setLineWidth(IMG_WIDTH);
-		height += fontMetrics.leading();
-		line.setPosition(QPointF(0., height));
-		height += line.height();
-		m_textLayout->endLayout();
-
-		if(heightTotal < 0.) {
-			const int nLines = doc->blockCount();
-			heightTotal = nLines * height;
-			m_image = QImage(IMG_WIDTH, heightTotal, QImage::Format_ARGB32_Premultiplied);
-			m_image.fill(Qt::transparent);
-			painter = new QPainter(&m_image);
-			painter->setRenderHints(QPainter::Antialiasing | QPainter::TextAntialiasing | QPainter::SmoothPixmapTransform);
-			painter->setFont(font);
-			painter->setPen(m_rend->subTextColor());
-		}
-
-		QRectF br = m_textLayout->boundingRect();
-		br.setBottom(br.top() + heightTotal);
-		m_textLayout->draw(painter, QPointF());
+		bl->endLayout();
+		bl++;
 	}
 
-	if(painter) {
-		painter->end();
+	m_image = QImage(QSize(width, height), QImage::Format_ARGB32_Premultiplied);
+	m_image.fill(Qt::transparent);
+	QPainter *painter = new QPainter(&m_image);
+	if(!painter->isActive()) {
+		delete[] layouts;
 		delete painter;
+		return m_image;
 	}
+	painter->setRenderHints(QPainter::Antialiasing | QPainter::TextAntialiasing | QPainter::SmoothPixmapTransform);
+	painter->setFont(m_rend->fontText());
+	painter->setPen(m_rend->subTextColor());
+
+	while(bl-- != layouts) {
+		const int n = bl->lineCount();
+		for(int i = 0; i < n; i++) {
+			const QTextLine &tl = bl->lineAt(i);
+			const QPointF pos((width - tl.naturalTextWidth()) / 2., 0.);
+			tl.draw(painter, pos);
+		}
+	}
+
+	delete[] layouts;
+
+	painter->end();
+	delete painter;
 
 	m_imageDirty = false;
 	return m_image;

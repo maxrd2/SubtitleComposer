@@ -1,5 +1,5 @@
 /*
-    SPDX-FileCopyrightText: 2010-2021 Mladen Milinkovic <max@smoothware.net>
+    SPDX-FileCopyrightText: 2010-2022 Mladen Milinkovic <max@smoothware.net>
 
     SPDX-License-Identifier: GPL-2.0-or-later
 */
@@ -53,7 +53,6 @@ private:
 	SubtitleLine *m_line;
 	WaveRenderer *m_rend;
 
-	QTextLayout *m_textLayout;
 	mutable QImage m_image;
 	mutable bool m_imageDirty = true;
 
