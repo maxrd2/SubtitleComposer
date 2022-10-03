@@ -6,6 +6,7 @@
 
 #include "richdocument.h"
 
+#include "core/richtext/richdocumentlayout.h"
 #include "helpers/common.h"
 
 #include <QApplication>
@@ -60,6 +61,8 @@ RichDocument::RichDocument(QObject *parent)
 	setDefaultTextOption(textOption);
 
 	setDefaultStyleSheet($("p { display:block; white-space:pre; margin-top:0; margin-bottom:0; }"));
+
+	setDocumentLayout(new RichDocumentLayout(this));
 }
 
 RichDocument::~RichDocument()
