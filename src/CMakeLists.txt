@@ -130,13 +130,13 @@ add_subdirectory(scripting)
 add_executable(subtitlecomposer WIN32 main.cpp ${subtitlecomposer_RES_SRC})
 target_link_libraries(subtitlecomposer subtitlecomposer-lib)
 
-install(TARGETS subtitlecomposer DESTINATION ${BIN_INSTALL_DIR})
+install(TARGETS subtitlecomposer DESTINATION ${KDE_INSTALL_BINDIR})
 
-install(FILES subtitlecomposerrc DESTINATION ${CONFIG_INSTALL_DIR})
-install(FILES subtitlecomposerui.rc DESTINATION ${KXMLGUI_INSTALL_DIR}/subtitlecomposer)
-install(FILES org.kde.subtitlecomposer.desktop DESTINATION ${XDG_APPS_INSTALL_DIR})
+install(FILES subtitlecomposerrc DESTINATION ${KDE_INSTALL_CONFDIR})
+install(FILES subtitlecomposerui.rc DESTINATION ${KDE_INSTALL_KXMLGUI5DIR}/subtitlecomposer)
+install(FILES org.kde.subtitlecomposer.desktop DESTINATION ${KDE_INSTALL_APPDIR})
 install(FILES org.kde.subtitlecomposer.appdata.xml DESTINATION ${KDE_INSTALL_METAINFODIR})
-install(FILES subtitlecomposer.xml DESTINATION ${XDG_MIME_INSTALL_DIR})
+install(FILES subtitlecomposer.xml DESTINATION ${KDE_INSTALL_MIMEDIR})
 
 # build plugins
 add_subdirectory(speechplugins/pocketsphinx)

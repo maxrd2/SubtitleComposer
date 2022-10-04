@@ -6,13 +6,13 @@ if(MINGW)
 elseif(APPIMAGE)
 	ecm_install_icons(ICONS
 		256-apps-subtitlecomposer.png
-		DESTINATION ${ICON_INSTALL_DIR}
+		DESTINATION ${KDE_INSTALL_ICONDIR}
 		THEME hicolor)
 	set(BUNDLE_THEME_ICONS 1)
 else()
 	ecm_install_icons(ICONS
 		16-apps-subtitlecomposer.png 32-apps-subtitlecomposer.png 128-apps-subtitlecomposer.png 256-apps-subtitlecomposer.png
-		DESTINATION ${ICON_INSTALL_DIR}
+		DESTINATION ${KDE_INSTALL_ICONDIR}
 		THEME hicolor)
 endif()
 
@@ -21,7 +21,7 @@ if(BUNDLE_THEME_ICONS)
 		if(CMAKE_CROSSCOMPILING)
 			set(BUNDLE_THEME_ICONS "/usr/share/icons/breeze") # how do you get host's install_prefix when cross compiling?
 		else()
-			set(BUNDLE_THEME_ICONS "${CMAKE_INSTALL_PREFIX}/${ICON_INSTALL_DIR}/breeze")
+			set(BUNDLE_THEME_ICONS "${CMAKE_INSTALL_PREFIX}/${KDE_INSTALL_ICONDIR}/breeze")
 		endif()
 	endif()
 	message(STATUS "Bundling system icon theme...'")
