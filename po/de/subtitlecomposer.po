@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: subtitlecomposer\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2022-03-22 00:42+0000\n"
+"POT-Creation-Date: 2022-10-04 00:43+0000\n"
 "PO-Revision-Date: 2021-06-08 11:47+0200\n"
 "Last-Translator: Burkhard Lück <lueck@hube-lueck.de>\n"
 "Language-Team: German <kde-i18n-de@kde.org>\n"
@@ -372,7 +372,7 @@ msgid "Split selected lines"
 msgstr "Ausgewählte Zeilen trennen"
 
 #: src/application_actions.cpp:219 src/core/subtitle.cpp:626
-#: src/gui/waveform/waveformwidget.cpp:694
+#: src/gui/waveform/waveformwidget.cpp:711
 #, kde-format
 msgid "Join Lines"
 msgstr "Zeilen verbinden"
@@ -989,7 +989,7 @@ msgstr "Angezeigter Untertiteltext"
 msgid "Select visible subtitle text"
 msgstr "Sichtbaren Untertiteltext auswählen"
 
-#: src/application_actions.cpp:751 src/gui/waveform/waveformwidget.cpp:718
+#: src/application_actions.cpp:751 src/gui/waveform/waveformwidget.cpp:735
 #, kde-format
 msgid "Toggle Anchor"
 msgstr "Markierung ein-/ausblenden"
@@ -1752,7 +1752,7 @@ msgid "Change Frame Rate"
 msgstr "Bildwiederholrate ändern"
 
 #: src/core/subtitle.cpp:385 src/core/subtitle.cpp:399
-#: src/gui/waveform/waveformwidget.cpp:677
+#: src/gui/waveform/waveformwidget.cpp:694
 #, kde-format
 msgid "Insert Line"
 msgstr "Zeile einfügen"
@@ -2909,27 +2909,27 @@ msgstr "Schriftfarbe"
 msgid "Generating waveform"
 msgstr "Waveform generieren"
 
-#: src/gui/waveform/waveformwidget.cpp:672
+#: src/gui/waveform/waveformwidget.cpp:689
 #, kde-format
 msgid "Select Line"
 msgstr "Zeile auswählen"
 
-#: src/gui/waveform/waveformwidget.cpp:687
+#: src/gui/waveform/waveformwidget.cpp:704
 #, kde-format
 msgid "Remove Line"
 msgstr "Zeile entfernen"
 
-#: src/gui/waveform/waveformwidget.cpp:712
+#: src/gui/waveform/waveformwidget.cpp:729
 #, kde-format
 msgid "Split Line"
 msgstr "Trennzeile"
 
-#: src/gui/waveform/waveformwidget.cpp:722
+#: src/gui/waveform/waveformwidget.cpp:739
 #, kde-format
 msgid "Set Current Line Show Time"
 msgstr "Einblendezeit der aktuellen Zeile einstellen"
 
-#: src/gui/waveform/waveformwidget.cpp:727
+#: src/gui/waveform/waveformwidget.cpp:744
 #, kde-format
 msgid "Set Current Line Hide Time"
 msgstr "Ausblendezeit der aktuellen Zeile einstellen"

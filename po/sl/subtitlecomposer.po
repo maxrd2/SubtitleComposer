@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: subtitlecomposer\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2022-03-22 00:42+0000\n"
+"POT-Creation-Date: 2022-10-04 00:43+0000\n"
 "PO-Revision-Date: 2022-03-23 07:24+0100\n"
 "Last-Translator: Matjaž Jeran <matjaz.jeran@amis.net>\n"
 "Language-Team: Slovenian <lugos-slo@lugos.si>\n"
@@ -378,7 +378,7 @@ msgid "Split selected lines"
 msgstr "Razcepi izbrane vrstice"
 
 #: src/application_actions.cpp:219 src/core/subtitle.cpp:626
-#: src/gui/waveform/waveformwidget.cpp:694
+#: src/gui/waveform/waveformwidget.cpp:711
 #, kde-format
 msgid "Join Lines"
 msgstr "Zlij vrstice"
@@ -994,7 +994,7 @@ msgstr "Prikazano besedilo podnapisa"
 msgid "Select visible subtitle text"
 msgstr "Izberi vidno besedilo podnapisa"
 
-#: src/application_actions.cpp:751 src/gui/waveform/waveformwidget.cpp:718
+#: src/application_actions.cpp:751 src/gui/waveform/waveformwidget.cpp:735
 #, kde-format
 msgid "Toggle Anchor"
 msgstr "Preklopi sidro"
@@ -1753,7 +1753,7 @@ msgid "Change Frame Rate"
 msgstr "Sprememba hitrosti predvajanja"
 
 #: src/core/subtitle.cpp:385 src/core/subtitle.cpp:399
-#: src/gui/waveform/waveformwidget.cpp:677
+#: src/gui/waveform/waveformwidget.cpp:694
 #, kde-format
 msgid "Insert Line"
 msgstr "Vstavi vrstico"
@@ -2929,27 +2929,27 @@ msgstr "Barva besedila"
 msgid "Generating waveform"
 msgstr "Ustvarjanje valovne oblike"
 
-#: src/gui/waveform/waveformwidget.cpp:672
+#: src/gui/waveform/waveformwidget.cpp:689
 #, kde-format
 msgid "Select Line"
 msgstr "Izberi vrstico"
 
-#: src/gui/waveform/waveformwidget.cpp:687
+#: src/gui/waveform/waveformwidget.cpp:704
 #, kde-format
 msgid "Remove Line"
 msgstr "Odstrani vrstico"
 
-#: src/gui/waveform/waveformwidget.cpp:712
+#: src/gui/waveform/waveformwidget.cpp:729
 #, kde-format
 msgid "Split Line"
 msgstr "Razcepi vrstico"
 
-#: src/gui/waveform/waveformwidget.cpp:722
+#: src/gui/waveform/waveformwidget.cpp:739
 #, kde-format
 msgid "Set Current Line Show Time"
 msgstr "Nastavi čas prikaza trenutne vrstice"
 
-#: src/gui/waveform/waveformwidget.cpp:727
+#: src/gui/waveform/waveformwidget.cpp:744
 #, kde-format
 msgid "Set Current Line Hide Time"
 msgstr "Nastavi čas skrivanja trenutne vrstice"

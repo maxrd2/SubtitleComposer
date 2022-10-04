@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: subtitlecomposer\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2022-03-22 00:42+0000\n"
+"POT-Creation-Date: 2022-10-04 00:43+0000\n"
 "PO-Revision-Date: 2022-07-30 05:10+0300\n"
 "Last-Translator: Emir SARI <emir_sari@icloud.com>\n"
 "Language-Team: Turkish <kde-l10n-tr@kde.org>\n"
@@ -369,7 +369,7 @@ msgid "Split selected lines"
 msgstr "Seçili satırları böl"
 
 #: src/application_actions.cpp:219 src/core/subtitle.cpp:626
-#: src/gui/waveform/waveformwidget.cpp:694
+#: src/gui/waveform/waveformwidget.cpp:711
 #, kde-format
 msgid "Join Lines"
 msgstr "Satırları Birbirine Kat"
@@ -988,7 +988,7 @@ msgstr "Görüntülenen Altyazı Metni"
 msgid "Select visible subtitle text"
 msgstr "Görünür altyazı metnini seç"
 
-#: src/application_actions.cpp:751 src/gui/waveform/waveformwidget.cpp:718
+#: src/application_actions.cpp:751 src/gui/waveform/waveformwidget.cpp:735
 #, kde-format
 msgid "Toggle Anchor"
 msgstr "Çapayı Aç/Kapat"
@@ -1749,7 +1749,7 @@ msgid "Change Frame Rate"
 msgstr "Kare Hızını Değiştir"
 
 #: src/core/subtitle.cpp:385 src/core/subtitle.cpp:399
-#: src/gui/waveform/waveformwidget.cpp:677
+#: src/gui/waveform/waveformwidget.cpp:694
 #, kde-format
 msgid "Insert Line"
 msgstr "Satır Ekle"
@@ -2905,27 +2905,27 @@ msgstr "Metin Rengi"
 msgid "Generating waveform"
 msgstr "Dalga biçimi oluşturuluyor"
 
-#: src/gui/waveform/waveformwidget.cpp:672
+#: src/gui/waveform/waveformwidget.cpp:689
 #, kde-format
 msgid "Select Line"
 msgstr "Satır Seç"
 
-#: src/gui/waveform/waveformwidget.cpp:687
+#: src/gui/waveform/waveformwidget.cpp:704
 #, kde-format
 msgid "Remove Line"
 msgstr "Satır Kaldır"
 
-#: src/gui/waveform/waveformwidget.cpp:712
+#: src/gui/waveform/waveformwidget.cpp:729
 #, kde-format
 msgid "Split Line"
 msgstr "Satır Böl"
 
-#: src/gui/waveform/waveformwidget.cpp:722
+#: src/gui/waveform/waveformwidget.cpp:739
 #, kde-format
 msgid "Set Current Line Show Time"
 msgstr "Geçerli Satır Gösterim Zamanını Ayarla"
 
-#: src/gui/waveform/waveformwidget.cpp:727
+#: src/gui/waveform/waveformwidget.cpp:744
 #, kde-format
 msgid "Set Current Line Hide Time"
 msgstr "Geçerli Satır Gizleme Zamanını Ayarla"

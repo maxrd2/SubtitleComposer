@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: subtitlecomposer\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2022-03-22 00:42+0000\n"
+"POT-Creation-Date: 2022-10-04 00:43+0000\n"
 "PO-Revision-Date: 2022-03-26 22:58+0000\n"
 "Last-Translator: Hugo Carvalho <hugokarvalho@hotmail.com>\n"
 "Language-Team: Portuguese\n"
@@ -378,7 +378,7 @@ msgid "Split selected lines"
 msgstr "Divide as linhas seleccionadas"
 
 #: src/application_actions.cpp:219 src/core/subtitle.cpp:626
-#: src/gui/waveform/waveformwidget.cpp:694
+#: src/gui/waveform/waveformwidget.cpp:711
 #, kde-format
 msgid "Join Lines"
 msgstr "Juntar as Linhas"
@@ -1006,7 +1006,7 @@ msgstr "Texto da Legenda Visível"
 msgid "Select visible subtitle text"
 msgstr "Seleccione o texto da legenda visível"
 
-#: src/application_actions.cpp:751 src/gui/waveform/waveformwidget.cpp:718
+#: src/application_actions.cpp:751 src/gui/waveform/waveformwidget.cpp:735
 #, kde-format
 msgid "Toggle Anchor"
 msgstr "Comutar a Fixação"
@@ -1771,7 +1771,7 @@ msgid "Change Frame Rate"
 msgstr "Mudar a Taxa de Imagens"
 
 #: src/core/subtitle.cpp:385 src/core/subtitle.cpp:399
-#: src/gui/waveform/waveformwidget.cpp:677
+#: src/gui/waveform/waveformwidget.cpp:694
 #, kde-format
 msgid "Insert Line"
 msgstr "Inserir uma Linha"
@@ -2947,27 +2947,27 @@ msgstr "Cor do Texto"
 msgid "Generating waveform"
 msgstr "A gerar a forma de onda"
 
-#: src/gui/waveform/waveformwidget.cpp:672
+#: src/gui/waveform/waveformwidget.cpp:689
 #, kde-format
 msgid "Select Line"
 msgstr "Seleccionar a Linha"
 
-#: src/gui/waveform/waveformwidget.cpp:687
+#: src/gui/waveform/waveformwidget.cpp:704
 #, kde-format
 msgid "Remove Line"
 msgstr "Remover a Linha"
 
-#: src/gui/waveform/waveformwidget.cpp:712
+#: src/gui/waveform/waveformwidget.cpp:729
 #, kde-format
 msgid "Split Line"
 msgstr "Dividir a Linha"
 
-#: src/gui/waveform/waveformwidget.cpp:722
+#: src/gui/waveform/waveformwidget.cpp:739
 #, kde-format
 msgid "Set Current Line Show Time"
 msgstr "Definir o Tempo de Apresentação da Linha Actual"
 
-#: src/gui/waveform/waveformwidget.cpp:727
+#: src/gui/waveform/waveformwidget.cpp:744
 #, kde-format
 msgid "Set Current Line Hide Time"
 msgstr "Definir o Tempo de Desaparecimento da Linha Actual"
