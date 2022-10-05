@@ -29,6 +29,11 @@ add_test(core-richdocument test-core-richdocument)
 ecm_mark_as_test(test-core-richdocument)
 target_link_libraries(test-core-richdocument Qt5::Test subtitlecomposer-lib)
 
+add_executable(test-core-richdocumentlayout richdocumentlayouttest.cpp)
+add_test(core-richdocument test-core-richdocumentlayout)
+ecm_mark_as_test(test-core-richdocumentlayout)
+target_link_libraries(test-core-richdocumentlayout Qt5::Test subtitlecomposer-lib)
+
 add_executable(test-core-richcss richcsstest.cpp)
 add_test(core-richcss test-core-richcss)
 ecm_mark_as_test(test-core-richcss)

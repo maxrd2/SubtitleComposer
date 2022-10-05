@@ -1,6 +1,6 @@
 /*
     SPDX-FileCopyrightText: 2007-2009 Sergio Pistone <sergio_pistone@yahoo.com.ar>
-    SPDX-FileCopyrightText: 2010-2019 Mladen Milinkovic <max@smoothware.net>
+    SPDX-FileCopyrightText: 2010-2022 Mladen Milinkovic <max@smoothware.net>
 
     SPDX-License-Identifier: GPL-2.0-or-later
 */
@@ -11,6 +11,7 @@
 #include "core/range.h"
 #include "core/rangelist.h"
 #include "core/undo/undoaction.h"
+#include "core/richtext/richdocument.h"
 #include "core/subtitle.h"
 
 #include <QString>
@@ -26,12 +27,16 @@ public:
 
 	inline void setLineSubtitle(SubtitleLine *line)
 	{
+		line->m_primaryDoc->setStylesheet(m_subtitle->stylesheet());
+		line->m_secondaryDoc->setStylesheet(m_subtitle->stylesheet());
 		line->m_subtitle = m_subtitle;
 	}
 
 	inline void clearLineSubtitle(SubtitleLine *line)
 	{
 		line->m_subtitle = nullptr;
+		line->m_primaryDoc->setStylesheet(nullptr);
+		line->m_secondaryDoc->setStylesheet(nullptr);
 	}
 };
 

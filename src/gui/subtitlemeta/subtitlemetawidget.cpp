@@ -142,7 +142,6 @@ SubtitleMetaWidget::setSubtitle(Subtitle *subtitle)
 			setComments(m_subtitle.data(), "comment.bottom.", m_commentBottomEdit->toPlainText());
 		});
 		connect(m_cssEdit, &QTextEdit::textChanged, this, [&](){
-			QSignalBlocker b(*m_subtitle);
 			QString text = m_cssEdit->toPlainText();
 			m_subtitle->stylesheetSet(&text);
 		});

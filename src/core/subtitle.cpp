@@ -64,6 +64,7 @@ Subtitle::setPrimaryData(const Subtitle &from, bool usePrimaryData)
 
 	delete m_stylesheet;
 	m_stylesheet = new RichCSS(*from.m_stylesheet);
+	m_stylesheet->setParent(this);
 
 	setFormatData(from.m_formatData);
 
@@ -1467,7 +1468,9 @@ Subtitle::updateState()
 void
 Subtitle::stylesheetSet(const QStringRef &css)
 {
+	m_stylesheet->blockSignals(true);
 	m_stylesheet->clear();
+	m_stylesheet->blockSignals(false);
 	m_stylesheet->parse(css);
 }
 

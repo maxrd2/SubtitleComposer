@@ -273,20 +273,30 @@ SubtitleLine::secondaryDocumentChanged()
 void
 SubtitleLine::setPrimaryDoc(RichDocument *doc)
 {
-	if(m_primaryDoc)
+	if(m_primaryDoc == doc)
+		return;
+	if(m_primaryDoc) {
 		disconnect(m_primaryDoc, &RichDocument::contentsChanged, this, &SubtitleLine::primaryDocumentChanged);
+		m_primaryDoc->setStylesheet(nullptr);
+	}
 	m_primaryDoc = doc;
 	m_primaryDoc->setParent(this);
+	m_primaryDoc->setStylesheet(m_subtitle ? m_subtitle->m_stylesheet : nullptr);
 	connect(m_primaryDoc, &RichDocument::contentsChanged, this, &SubtitleLine::primaryDocumentChanged);
 }
 
 void
 SubtitleLine::setSecondaryDoc(RichDocument *doc)
 {
-	if(m_secondaryDoc)
+	if(m_secondaryDoc == doc)
+		return;
+	if(m_secondaryDoc) {
 		disconnect(m_secondaryDoc, &RichDocument::contentsChanged, this, &SubtitleLine::secondaryDocumentChanged);
+		m_secondaryDoc->setStylesheet(nullptr);
+	}
 	m_secondaryDoc = doc;
 	m_secondaryDoc->setParent(this);
+	m_secondaryDoc->setStylesheet(m_subtitle ? m_subtitle->m_stylesheet : nullptr);
 	connect(m_secondaryDoc, &RichDocument::contentsChanged, this, &SubtitleLine::secondaryDocumentChanged);
 }
 

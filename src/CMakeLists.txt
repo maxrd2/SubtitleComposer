@@ -70,7 +70,8 @@ set(subtitlecomposer_SRCS
 	#[[ gui/treeview ]] gui/treeview/linesitemdelegate.cpp gui/treeview/linesmodel.cpp gui/treeview/linesselectionmodel.cpp gui/treeview/lineswidget.cpp
 	gui/treeview/richlineedit.cpp gui/treeview/richdocumentptr.cpp gui/treeview/treeview.cpp
 	#[[ gui/subtitlemetawidget ]] gui/subtitlemeta/subtitlemetawidget.cpp gui/subtitlemeta/csshighlighter.cpp
-	#[[ helpers ]] helpers/commondefs.cpp helpers/fileloadhelper.cpp helpers/filesavehelper.cpp helpers/filetrasher.cpp helpers/languagecode.cpp helpers/pluginhelper.h
+	#[[ helpers ]] helpers/commondefs.cpp helpers/debug.cpp helpers/fileloadhelper.cpp helpers/filesavehelper.cpp helpers/filetrasher.cpp helpers/languagecode.cpp
+	helpers/pluginhelper.h
 	#[[ scripting ]] scripting/scriptsmanager.cpp
 	scripting/scripting_rangesmodule.cpp scripting/scripting_stringsmodule.cpp scripting/scripting_subtitlemodule.cpp scripting/scripting_subtitlelinemodule.cpp
 	scripting/scripting_list.cpp scripting/scripting_range.cpp scripting/scripting_rangelist.cpp scripting/scripting_richstring.cpp scripting/scripting_subtitle.cpp
