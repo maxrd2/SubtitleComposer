@@ -2575,7 +2575,7 @@ msgstr "Errors a buscar"
 #, kde-format
 msgctxt "@title:group Miscellaneous settings"
 msgid "Miscellaneous"
-msgstr "Miscelànea"
+msgstr "Miscel·lània"
 
 #: src/errors/finderrorsdialog.cpp:31
 #, kde-format
@@ -3717,7 +3717,7 @@ msgstr ""
 #: src/subtitlecomposerui.rc:5
 #, kde-format
 msgid "&File"
-msgstr "&Fitxer"
+msgstr "Fi&txer"
 
 #. i18n: ectx: Menu (translation)
 #: src/subtitlecomposerui.rc:20
