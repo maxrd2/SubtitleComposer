@@ -6,23 +6,8 @@ if [ "$1" == "" ]; then
 fi
 
 textc=-$(date +%Y)' Mladen Milinkovic <max\@smoothware.net>'
-text1=':a;N;$!ba;s/\/\*[^\/]+Copyright([^\/]+|[^\*]\/)+\*\//\/*\n'
-text2=' *\
- * This program is free software; you can redistribute it and\/or modify\
- * it under the terms of the GNU General Public License as published by\
- * the Free Software Foundation; either version 2 of the License, or\
- * (at your option) any later version.\
- *\
- * This program is distributed in the hope that it will be useful,\
- * but WITHOUT ANY WARRANTY; without even the implied warranty of\
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the\
- * GNU General Public License for more details.\
- *\
- * You should have received a copy of the GNU General Public License\
- * along with this program; if not, write to the\
- * Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor,\
- * Boston, MA 02110-1301, USA.\
- *\//'
+text1=':a;N;$!ba;s/\/\*[^\/]+SPDX-FileCopyrightText:([^\/]+|[^\*]\/)+\*\//\/*\n'
+text2='\n    SPDX-License-Identifier: GPL-2.0-or-later\n*\//'
 
 update_copyright() {
 	f="$1"
@@ -30,11 +15,11 @@ update_copyright() {
 		return
 	fi
 	echo -e '\e[01;33mProcessing \e[01;39m'$f'\e[01;33m\e[00m'
-	copy=$(perl -pe 'BEGIN{undef $/;} s!^.*?/\*[^/]*?(([\t *]*?Copyright[^\n]*?[\t *]*?\n)+).*?$!$1!sg' "$f" \
-		| perl -pe 's!(^|\n)[\t *]+! * !mg' \
-		| perl -pe 's![\t *]+$!!mg' \
+
+	copy=$(perl -pe 'BEGIN{undef $/;} s!^.*?/\*[^/]*?(([\t *]*?SPDX-FileCopyrightText[^\n]*?[\t *]*?\n)+).*?$!$1!sg' "$f"\
 		| perl -pe 's!\(([^)>]+@[^)>]+)\)!<$1>!' \
 		| perl -pe "s!(-\d+)? Mladen Milinkovic [<(][^>]+[>)]!$textc!g" \
+		| perl -pe 's!(\d{4})(-\1)!$1!g' \
 		| perl -pe 'BEGIN{undef $/;} s!\n+!\\n!sg')
 
 	if [[ $copy == *"Sergio Pistone"* || $copy == *"Mladen Milinkovic"* ]]; then
