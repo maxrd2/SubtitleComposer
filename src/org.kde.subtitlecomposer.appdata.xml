@@ -15,6 +15,7 @@
   <name xml:lang="fr">Subtitle Composer</name>
   <name xml:lang="id">Subtitle Composer</name>
   <name xml:lang="it">Subtitle Composer</name>
+  <name xml:lang="ka">სუბტიტრების შედგენა</name>
   <name xml:lang="ko">Subtitle Composer</name>
   <name xml:lang="nl">Samensteller van ondertitels</name>
   <name xml:lang="pl">Twórca napisów</name>
@@ -84,6 +85,7 @@
     <p xml:lang="fr">Fonctionnalités</p>
     <p xml:lang="id">Fitur</p>
     <p xml:lang="it">Caratteristiche</p>
+    <p xml:lang="ka">თვისებები</p>
     <p xml:lang="ko">기능</p>
     <p xml:lang="nl">Mogelijkheden</p>
     <p xml:lang="pl">Możliwości</p>
@@ -298,6 +300,7 @@
       <li xml:lang="fr">Fusion et fractionnement de fichiers de sous-titres</li>
       <li xml:lang="id">Penyatuan dan pembelahan file subtitle</li>
       <li xml:lang="it">Unione e divisione di file di sottotitoli</li>
+      <li xml:lang="ka">სუბტიტრის ფაილების დაყოფა და შერწყმა</li>
       <li xml:lang="ko">자막 파일 합치고 나누기</li>
       <li xml:lang="nl">Samenvoegen en splitsen van bestanden met ondertitels</li>
       <li xml:lang="pl">Łączenie i dzielenie plików napisów</li>
@@ -363,6 +366,7 @@
       <li xml:lang="fr">Vérification orthographique</li>
       <li xml:lang="id">Pengecekan ejaan</li>
       <li xml:lang="it">Controllo ortografico</li>
+      <li xml:lang="ka">მართლწერის შემოწმება</li>
       <li xml:lang="ko">맞춤법 검사</li>
       <li xml:lang="nl">Spellingcontrole</li>
       <li xml:lang="pl">Sprawdzanie pisowni</li>
@@ -386,6 +390,7 @@
       <li xml:lang="fr">Détection des erreurs de minutage des sous-titres</li>
       <li xml:lang="id">Pendeteksian timing error pada subtitle</li>
       <li xml:lang="it">Rilevamento di errori temporali nei sottotitoli</li>
+      <li xml:lang="ka">სუბტიტრებში დროის შეცდომების გადამოწმება</li>
       <li xml:lang="ko">자막의 타이밍 오류 감지</li>
       <li xml:lang="nl">Detectie van fouten in timing in ondertitels</li>
       <li xml:lang="pl">Wykrywanie błędów czasu pojawiania w napisach</li>
@@ -408,6 +413,7 @@
       <li xml:lang="fr">Scripts (JavaScript, Python, Ruby et autres langages pris en charge par Kross).</li>
       <li xml:lang="id">Penyekripan (JavaScript, Python, Ruby dan bahasa lainnya yang didukung oleh Kross).</li>
       <li xml:lang="it">Scripting (JavaScript, Python, Ruby ed altri linguaggi supportati da Kross).</li>
+      <li xml:lang="ka">სკრიპტები (JavaScript, Python, Ruby და Kross-ის მიერ მხარდაჭერილი სხვა ენები).</li>
       <li xml:lang="ko">스크립팅(JavaScript, Python, Ruby 및 Kross가 지원하는 다른 프로그래밍 언어).</li>
       <li xml:lang="nl">Scripting (JavaScript, Python, Ruby en andere talen ondersteund door Kross).</li>
       <li xml:lang="pl">Skrypty (JavaScript, Python, Ruby i inne języki obsługiwane przez Kross).</li>
@@ -437,6 +443,7 @@
       <caption xml:lang="fr">Fenêtre principale de l'application</caption>
       <caption xml:lang="id">Jendela utama aplikasi</caption>
       <caption xml:lang="it">Finestra principale dell'applicazione</caption>
+      <caption xml:lang="ka">აპლიკაციის მთავარი ფანჯარა</caption>
       <caption xml:lang="ko">주 프로그램 창</caption>
       <caption xml:lang="nl">Hoofdvenster van toepassing</caption>
       <caption xml:lang="pl">Główne okno programu</caption>
