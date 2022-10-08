@@ -165,7 +165,10 @@ drawTextPrimitive(QPainter *painter, const QStyle *style, const QStyleOptionView
 static void
 drawRichText(QPainter *painter, const QStyleOptionViewItem &option, const QRect &rect)
 {
+	painter->setRenderHints(QPainter::Antialiasing | QPainter::TextAntialiasing | QPainter::SmoothPixmapTransform);
+
 	const RichDocument *doc = option.index.data(Qt::DisplayRole).value<RichDocumentPtr>();
+	RichDocumentLayout *docLayout = doc->documentLayout();
 
 	QPalette::ColorGroup cg = option.state & QStyle::State_Enabled ? QPalette::Normal : QPalette::Disabled;
 	if(cg == QPalette::Normal && !(option.state & QStyle::State_Active))
@@ -175,48 +178,59 @@ drawRichText(QPainter *painter, const QStyleOptionViewItem &option, const QRect 
 	const QStyle *style = option.widget ? option.widget->style() : QApplication::style();
 	int textMargin = style->pixelMetric(QStyle::PM_FocusFrameHMargin, nullptr, option.widget) + 1;
 
-	QTextLayout layout;
-	layout.setFont(option.font);
-	layout.setCacheEnabled(true);
-
 	QTextOption textOption;
 	textOption.setAlignment(QStyle::visualAlignment(option.direction, option.displayAlignment));
+	textOption.setFlags(QTextOption::IncludeTrailingSpaces);
 	textOption.setWrapMode(QTextOption::NoWrap);
 	textOption.setTextDirection(option.direction);
-	layout.setTextOption(textOption);
-
-	QString text;
-	QVector<QTextLayout::FormatRange> ranges;
-	for(QTextBlock bi = doc->begin(); bi != doc->end(); bi = bi.next()) {
-		if(bi != doc->begin()) {
-			QTextCharFormat fmt;
-			fmt.setTextOutline(QPen(option.palette.color(cg, QPalette::Link), .75));
-			ranges.push_back(QTextLayout::FormatRange{text.length(), 1, fmt});
-			text.append(QChar(0x299a));
-		}
-		for(QTextBlock::iterator it = bi.begin(); !it.atEnd(); ++it) {
-			if(!it.fragment().isValid())
-				continue;
-			const QString &t = it.fragment().text();
-			ranges.push_back(QTextLayout::FormatRange{text.length(), t.length(), it.fragment().charFormat()});
-			text.append(t);
-		}
-	}
-
-	layout.setText(text);
-	layout.setFormats(ranges);
 
 	const QRect textRect = rect.adjusted(textMargin, 0, -textMargin, 0);
-	QPointF textPos(textRect.topLeft());
+	qreal xOff = textRect.left();
 
-	layout.beginLayout();
-	QTextLine line = layout.createLine();
-	line.setPosition(QPointF(0.0, option.fontMetrics.leading()));
-	line.setLineWidth(textRect.width());
-	textPos.ry() += (qreal(textRect.height()) - line.height()) / 2.;
-	layout.endLayout();
+	// prepare line seprator
+	const qreal sepWidth = qreal(textRect.height()) / 2.;
+	docLayout->separatorResize(QSizeF(sepWidth, textRect.height()));
 
-	layout.draw(painter, textPos);
+	// layout and draw text
+	for(QTextBlock bi = doc->begin(); bi != doc->end(); bi = bi.next()) {
+		QTextLayout bl;
+		bl.setCacheEnabled(true);
+		bl.setFont(option.font);
+		bl.setTextOption(textOption);
+		QString text = bi.text() + QChar(QChar::LineSeparator);
+		// replace certain non-printable characters with spaces (to avoid drawing boxes
+		// when using fonts that don't have glyphs for such characters)
+		QChar *uc = text.data();
+		for(int i = 0; i < (int)text.length(); ++i) {
+			if((uc[i].unicode() < 0x20 && uc[i].unicode() != 0x09)
+			|| uc[i] == QChar::LineSeparator
+			|| uc[i] == QChar::ParagraphSeparator
+			|| uc[i] == QChar::ObjectReplacementCharacter)
+				uc[i] = QChar(QChar::Space);
+		}
+		bl.setText(text);
+		bl.setFormats(docLayout->applyCSS(bi.textFormats()));
+		bl.beginLayout();
+		for(;;) {
+			QTextLine line = bl.createLine();
+			if(!line.isValid())
+				break;
+			line.setLeadingIncluded(true);
+			line.setLineWidth(10000);
+			line.setPosition(QPointF(xOff, textRect.top() + (qreal(textRect.height()) - line.height()) / 2.));
+			const int w = line.naturalTextWidth();
+			xOff += w + sepWidth;
+			line.setLineWidth(w);
+		}
+		bl.endLayout();
+
+		const int n = bl.lineCount();
+		for(int i = 0; i < n; i++) {
+			const QTextLine &tl = bl.lineAt(i);
+			tl.draw(painter, QPointF());
+			docLayout->separatorDraw(painter, QPointF(tl.position().x() - sepWidth, 0.));
+		}
+	}
 }
 
 void
@@ -317,8 +331,7 @@ QWidget *
 LinesItemDelegate::createEditor(QWidget *parent, const QStyleOptionViewItem &option, const QModelIndex &index) const
 {
 	if(isRichDoc(index)) {
-		RichLineEdit *ed = new RichLineEdit(parent);
-		ed->setLineEditStyle(option);
+		RichLineEdit *ed = new RichLineEdit(option, parent);
 		linesWidget()->m_inlineEditor = ed;
 		connect(ed, &QObject::destroyed, this, [this, ed](){
 			if(linesWidget()->m_inlineEditor == ed)

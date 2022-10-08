@@ -14,9 +14,10 @@
 
 #include "core/richtext/richdocument.h"
 
+QT_FORWARD_DECLARE_CLASS(QTextLayout)
+
 namespace SubtitleComposer {
 struct SubtitleRect;
-struct DrawDocData;
 
 class SubtitleTextOverlay : public QObject
 {
@@ -44,7 +45,7 @@ public:
 private:
 	void drawImage();
 	void drawDoc();
-	DrawDocData * drawDocPrepare(QPainter *painter);
+	QTextLayout ** drawDocPrepare(QPainter *painter);
 	void setDirty();
 
 signals:

@@ -5,6 +5,7 @@
     SPDX-License-Identifier: GPL-2.0-or-later
 */
 
+#include "core/richtext/richcss.h"
 #include "core/richtext/richdocument.h"
 #include "core/subtitle.h"
 #include "gui/treeview/linesmodel.h"
@@ -64,6 +65,8 @@ LinesModel::setSubtitle(Subtitle *subtitle)
 			disconnect(m_subtitle.constData(), &Subtitle::lineShowTimeChanged, this, &LinesModel::onLineChanged);
 			disconnect(m_subtitle.constData(), &Subtitle::lineHideTimeChanged, this, &LinesModel::onLineChanged);
 
+			disconnect(m_subtitle->stylesheet(), &RichCSS::changed, this, &LinesModel::onLinesChanged);
+
 			if(m_subtitle->linesCount()) {
 				onLinesAboutToRemove(0, m_subtitle->linesCount() - 1);
 				onLinesRemoved(0, m_subtitle->linesCount() - 1);
@@ -87,6 +90,8 @@ LinesModel::setSubtitle(Subtitle *subtitle)
 			connect(m_subtitle.constData(), &Subtitle::lineSecondaryTextChanged, this, &LinesModel::onLineChanged);
 			connect(m_subtitle.constData(), &Subtitle::lineShowTimeChanged, this, &LinesModel::onLineChanged);
 			connect(m_subtitle.constData(), &Subtitle::lineHideTimeChanged, this, &LinesModel::onLineChanged);
+
+			connect(m_subtitle->stylesheet(), &RichCSS::changed, this, &LinesModel::onLinesChanged);
 		}
 	}
 }
@@ -372,6 +377,15 @@ LinesModel::onLineChanged(const SubtitleLine *line)
 	} else if(lineIndex > m_maxChangedLineIndex) {
 		m_maxChangedLineIndex = lineIndex;
 	}
+}
+
+void
+LinesModel::onLinesChanged()
+{
+	if(m_minChangedLineIndex < 0)
+		m_dataChangedTimer->start();
+	m_minChangedLineIndex = 0;
+	m_maxChangedLineIndex = m_subtitle->lastIndex();
 }
 
 void

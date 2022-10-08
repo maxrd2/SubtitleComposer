@@ -16,6 +16,7 @@
 #include <QBasicTimer>
 #include <QFont>
 #include <QFontMetrics>
+#include <QGuiApplication>
 #include <QPainter>
 #include <QSet>
 #include <QStringBuilder>
@@ -422,4 +423,39 @@ RichDocumentLayout::documentChanged(int from, int oldLength, int length)
 	if(m_layoutPosition > from)
 		m_layoutPosition = from;
 	processLayout(from, oldLength, length);
+}
+
+void
+RichDocumentLayout::separatorResize(const QSizeF &size)
+{
+	if(m_separatorSize == size)
+		return;
+
+	m_separatorSize = size;
+	const qreal dy = size.height() * .4 / 5.;
+	const qreal xc = qFloor(size.width() / 2. - .5);
+	const qreal xl = xc - size.width() * .15;
+	const qreal xr = xc + size.width() * .15;
+	qreal y = size.height() * .3;
+	m_separatorPoints.clear();
+	m_separatorPoints.reserve(6);
+	m_separatorPoints.push_back(QPointF(xl, y));
+	m_separatorPoints.push_back(QPointF(xr, y += dy));
+	m_separatorPoints.push_back(QPointF(xl, y += dy));
+	m_separatorPoints.push_back(QPointF(xr, y += dy));
+	m_separatorPoints.push_back(QPointF(xl, y += dy));
+	m_separatorPoints.push_back(QPointF(xr, y + dy));
+}
+
+void
+RichDocumentLayout::separatorDraw(QPainter *painter, const QPointF &offset) const
+{
+	Q_ASSERT(!m_separatorSize.isEmpty());
+	const QPen oldPen = painter->pen();
+	painter->setPen(QPen(QGuiApplication::palette().color(QPalette::Normal, QPalette::Link), .75));
+	const QTransform oldTransform = painter->worldTransform();
+	painter->translate(offset);
+	painter->drawPolyline(m_separatorPoints);
+	painter->setWorldTransform(oldTransform);
+	painter->setPen(oldPen);
 }

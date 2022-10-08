@@ -55,10 +55,10 @@ public:
 
 	bool hasSelection() const { return m_textCursor && m_textCursor->hasSelection(); }
 
-	int width() const { return qRound(m_textLayout.lineAt(0).width()) + 1; }
-	int height() const { return qRound(m_textLayout.lineAt(0).height()) + 1; }
-	int ascent() const { return m_ascent; }
-	qreal naturalTextWidth() const { return m_textLayout.lineAt(0).naturalTextWidth(); }
+	inline int width() const { return qRound(m_layoutWidth); }
+	inline int height() const { return qRound(m_layoutHeight); }
+	inline int ascent() const { return m_ascent; }
+	inline qreal naturalTextWidth() const { return m_layoutWidth; }
 
 	void setSelection(int start, int length);
 
@@ -102,6 +102,8 @@ public:
 	int cursorWidth() const { return m_cursorWidth; }
 	void setCursorWidth(int value) { m_cursorWidth = value; }
 
+	void setLineSeparatorSize(const QSizeF &size) { m_layoutSeparatorSize = size; }
+
 	Qt::CursorMoveStyle cursorMoveStyle() const { return m_document->defaultCursorMoveStyle(); }
 	void setCursorMoveStyle(Qt::CursorMoveStyle style) { m_document->setDefaultCursorMoveStyle(style); }
 
@@ -120,7 +122,7 @@ public:
 	QRect cursorRect() const;
 	QRect anchorRect() const;
 
-	qreal cursorToX(int cursor) const { return m_textLayout.lineAt(0).cursorToX(cursor); }
+	qreal cursorToX(int cursor) const;
 	qreal cursorToX() const { return cursorToX(m_textCursor ? m_textCursor->position() : 0); }
 
 	bool isReadOnly() const { return m_readOnly; }
@@ -128,18 +130,9 @@ public:
 
 	void setDocument(RichDocument *doc);
 
-	QString text() const
-	{
-		return m_document == nullptr ? QString::fromLatin1("") : m_document->toPlainText();
-	}
+	QString text() const;
+
 	void commitPreedit();
-
-	QString displayText() const { return m_textLayout.text(); }
-
-	QString surroundingText() const
-	{
-		return m_document == nullptr ? QString::fromLatin1("") : m_document->toPlainText();
-	}
 
 	void backspace();
 	void del();
@@ -171,11 +164,12 @@ public:
 
 	// input methods
 #ifndef QT_NO_IM
-	bool composeMode() const { return !m_textLayout.preeditAreaText().isEmpty(); }
-	void setPreeditArea(int cursor, const QString &text) { m_textLayout.setPreeditArea(cursor, text); }
+	inline bool composeMode() const { return !preeditAreaText().isEmpty(); }
+	void setPreeditArea(int cursor, const QString &text);
 #endif
 
-	QString preeditAreaText() const { return m_textLayout.preeditAreaText(); }
+	int preeditAreaPosition() const;
+	QString preeditAreaText() const;
 
 	Qt::LayoutDirection layoutDirection() const {
 		if(m_layoutDirection == Qt::LayoutDirectionAuto && !m_document->isEmpty())
@@ -190,7 +184,7 @@ public:
 		}
 	}
 
-	void setFont(const QFont &font) { m_textLayout.setFont(font); updateDisplayText(); }
+	void setFont(const QFont &font);
 
 	void processInputMethodEvent(QInputMethodEvent *event);
 	void processKeyEvent(QKeyEvent* ev);
@@ -212,11 +206,6 @@ public:
 #ifndef QT_NO_SHORTCUT
 	void processShortcutOverrideEvent(QKeyEvent *ke);
 #endif
-
-	QTextLayout *textLayout() const
-	{
-		return &m_textLayout;
-	}
 
 	void updateDisplayText(bool forceUpdate = false);
 
@@ -249,7 +238,7 @@ private:
 
 	virtual void timerEvent(QTimerEvent *event) override;
 
-	int redoTextLayout() const;
+	QTextLayout * cursorToLayout(int *cursorPosition) const;
 
 signals:
 	void cursorPositionChanged(int, int);
@@ -268,7 +257,12 @@ signals:
 	void inputRejected();
 
 private:
-	mutable QTextLayout m_textLayout;
+	mutable QTextLayout *m_textLayouts = nullptr;
+	int m_layoutCount = 0;
+	qreal m_layoutWidth = 0.;
+	qreal m_layoutHeight = 0.;
+	QFont m_layoutFont;
+	QSizeF m_layoutSeparatorSize;
 
 	RichDocument *m_document = nullptr;
 	QTextCursor *m_textCursor = nullptr;

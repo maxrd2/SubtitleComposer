@@ -140,6 +140,7 @@ WaveSubtitle::image() const
 		return m_image;
 
 	const RichDocument *doc = m_rend->showTranslation() ? m_line->secondaryDoc() : m_line->primaryDoc();
+	const RichDocumentLayout *layout = doc->documentLayout();
 
 	qreal width = 0., height = 0.;
 	QTextLayout *layouts = new QTextLayout[doc->blockCount()];
@@ -148,7 +149,7 @@ WaveSubtitle::image() const
 		bl->setCacheEnabled(true);
 		bl->setFont(m_rend->fontText());
 		bl->setText(bi.text());
-		bl->setFormats(bi.textFormats());
+		bl->setFormats(layout->applyCSS(bi.textFormats()));
 		bl->beginLayout();
 		QTextOption option = bi.layout()->textOption();
 		option.setAlignment(Qt::AlignTop | Qt::AlignLeft | Qt::AlignAbsolute);

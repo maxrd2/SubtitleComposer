@@ -13,6 +13,7 @@
 #include <QClipboard>
 #include <QGraphicsSceneEvent>
 #include <QMimeData>
+#include <QPainter>
 #include <QStyleHints>
 #include <QTextBlock>
 
@@ -35,67 +36,75 @@ RichDocumentEditor::RichDocumentEditor()
 	init();
 }
 
-int
-RichDocumentEditor::redoTextLayout() const
-{
-	m_textLayout.clearLayout();
-
-	m_textLayout.beginLayout();
-	QTextLine l = m_textLayout.createLine();
-	m_textLayout.endLayout();
-
-	return qRound(l.ascent());
-}
-
 void
 RichDocumentEditor::updateDisplayText(bool forceUpdate)
 {
-	QString orig = m_textLayout.text();
+	QString orig = text();
+	QString newText;
 
-	QString text;
-	QVector<QTextLayout::FormatRange> ranges = m_preeditRanges;
+	delete[] m_textLayouts;
+	m_textLayouts = nullptr;
+	m_layoutCount = 0;
+
+	m_ascent = 0;
+	m_layoutWidth = 0.;
+	m_layoutHeight = 0.;
+
 	if(m_document) {
+		const RichDocumentLayout *docLayout = m_document->documentLayout();
+		m_textLayouts = new QTextLayout[m_document->blockCount()];
 		for(QTextBlock bi = m_document->begin(); bi != m_document->end(); bi = bi.next()) {
-			if(bi != m_document->begin()) {
-				QTextCharFormat fmt;
-				fmt.setTextOutline(QPen(QApplication::palette().color(QPalette::Link), .75));
-				ranges.push_back(QTextLayout::FormatRange{text.length(), 1, fmt});
-				text.append(QChar(0x299a));
+			const QTextLayout *bl = bi.layout();
+			QTextLayout *layout = &m_textLayouts[m_layoutCount++];
+			layout->setCacheEnabled(true);
+
+			QTextOption option = bl->textOption();
+			option.setTextDirection(m_layoutDirection);
+			option.setFlags(QTextOption::IncludeTrailingSpaces);
+			option.setWrapMode(QTextOption::NoWrap);
+			layout->setTextOption(option);
+
+			layout->setFont(m_layoutFont);
+
+			QString text = bi.text() + QChar(QChar::LineSeparator);
+			newText.push_back(text + QChar(QChar::LineSeparator));
+			// replace certain non-printable characters with spaces (to avoid drawing boxes
+			// when using fonts that don't have glyphs for such characters)
+			QChar *uc = text.data();
+			for(int i = 0; i < (int)text.length(); ++i) {
+				if((uc[i].unicode() < 0x20 && uc[i].unicode() != 0x09)
+				|| uc[i] == QChar::LineSeparator
+				|| uc[i] == QChar::ParagraphSeparator
+				|| uc[i] == QChar::ObjectReplacementCharacter)
+					uc[i] = QChar(QChar::Space);
 			}
-			for(QTextBlock::iterator it = bi.begin(); !it.atEnd(); ++it) {
-				if(!it.fragment().isValid())
-					continue;
-				const QString &t = it.fragment().text();
-				ranges.push_back(QTextLayout::FormatRange{text.length(), t.length(), it.fragment().charFormat()});
-				text.append(t);
+			layout->setText(text);
+
+			QVector<QTextLayout::FormatRange> ranges = m_preeditRanges;
+			ranges.append(docLayout->applyCSS(bl->formats()));
+			layout->setFormats(ranges);
+
+			layout->beginLayout();
+			for(;;) {
+				QTextLine line = layout->createLine();
+				if(!line.isValid())
+					break;
+				line.setLineWidth(1e9);
+				line.setPosition(QPointF(m_layoutWidth, 0.));
+				const int w = line.naturalTextWidth();
+				m_layoutWidth += w + m_layoutSeparatorSize.width();
+				line.setLineWidth(w);
+				m_ascent = qMax(m_ascent, qRound(line.ascent()));
+				m_layoutHeight = qMax(m_layoutHeight, line.leading() + line.height());
 			}
+			layout->endLayout();
 		}
+		if(m_layoutWidth >= m_layoutSeparatorSize.width())
+			m_layoutWidth -= m_layoutSeparatorSize.width();
 	}
 
-	// replace certain non-printable characters with spaces (to avoid
-	// drawing boxes when using fonts that don't have glyphs for such
-	// characters)
-	QChar* uc = text.data();
-	for(int i = 0; i < (int)text.length(); ++i) {
-		if((uc[i].unicode() < 0x20 && uc[i].unicode() != 0x09)
-			|| uc[i] == QChar::LineSeparator
-			|| uc[i] == QChar::ParagraphSeparator
-			|| uc[i] == QChar::ObjectReplacementCharacter)
-			uc[i] = QChar(0x0020);
-	}
-
-	m_textLayout.setText(text);
-	m_textLayout.setFormats(ranges);
-
-	QTextOption option = m_textLayout.textOption();
-	option.setTextDirection(m_layoutDirection);
-	option.setFlags(QTextOption::IncludeTrailingSpaces);
-	m_textLayout.setTextOption(option);
-
-	m_ascent = redoTextLayout();
-
-	if(text != orig || forceUpdate)
-		emit displayTextChanged(text);
+	if(newText != orig || forceUpdate)
+		emit displayTextChanged(newText);
 }
 
 #ifndef QT_NO_CLIPBOARD
@@ -144,7 +153,8 @@ RichDocumentEditor::commitPreedit()
 		return;
 
 	setPreeditArea(-1, QString());
-	m_textLayout.clearFormats();
+	for(int i = 0; i < m_layoutCount; i++)
+		m_textLayouts[i].clearFormats();
 	updateDisplayText(/*force*/ true);
 #endif
 }
@@ -228,7 +238,6 @@ RichDocumentEditor::setSelection(int start, int length)
 void
 RichDocumentEditor::init()
 {
-	m_textLayout.setCacheEnabled(true);
 	updateDisplayText();
 	if(const QPlatformTheme *theme = QGuiApplicationPrivate::platformTheme()) {
 		m_keyboardScheme = theme->themeHint(QPlatformTheme::KeyboardScheme).toInt();
@@ -244,13 +253,52 @@ RichDocumentEditor::init()
 int
 RichDocumentEditor::xToPos(int x, QTextLine::CursorPosition betweenOrOn) const
 {
-	return textLayout()->lineAt(0).xToCursor(x, betweenOrOn);
+	int off = 0;
+	for(int l = 0; l < m_layoutCount; l++) {
+		const QTextLine &line = m_textLayouts[l].lineAt(0);
+		QRectF lr = line.rect();
+		lr.setWidth(lr.width() + m_layoutSeparatorSize.width());
+		if(x < lr.right() || l == m_layoutCount - 1)
+			return off + line.xToCursor(x, betweenOrOn);
+		off += m_textLayouts[l].text().length();
+	}
+	return 0;
+}
+
+QTextLayout *
+RichDocumentEditor::cursorToLayout(int *cursorPosition) const
+{
+	if(!m_layoutCount)
+		return nullptr;
+	const QTextLayout *last = m_textLayouts + (m_layoutCount - 1);
+	QTextLayout *layout = m_textLayouts;
+	for(;;) {
+		const int len = layout->text().length();
+		if(*cursorPosition <= len || layout == last)
+			break;
+		*cursorPosition -= len;
+		layout++;
+	}
+	return layout;
+}
+
+qreal
+RichDocumentEditor::cursorToX(int cursor) const
+{
+	const QTextLayout *layout = cursorToLayout(&cursor);
+	if(!layout)
+		return 0.;
+	return layout->lineAt(0).cursorToX(cursor);
 }
 
 QRect
 RichDocumentEditor::rectForPos(int pos) const
 {
-	QTextLine l = textLayout()->lineAt(0);
+	const QTextLayout *layout = cursorToLayout(&pos);
+	if(!layout)
+		return QRect();
+
+	QTextLine l = layout->lineForTextPosition(pos);
 	int cix = qRound(l.cursorToX(pos));
 	int w = m_cursorWidth;
 	int ch = l.height() + 1;
@@ -291,8 +339,8 @@ RichDocumentEditor::cursorMoveRelative(QTextCursor::MoveOperation oper, bool mar
 		m_textCursor->movePosition(oper, QTextCursor::KeepAnchor, n);
 		updateDisplayText();
 	} else {
-		m_textCursor->movePosition(oper, QTextCursor::MoveAnchor, n);
 		internalDeselect();
+		m_textCursor->movePosition(oper, QTextCursor::MoveAnchor, n);
 	}
 	if(mark || m_selDirty) {
 		m_selDirty = false;
@@ -372,7 +420,7 @@ RichDocumentEditor::processInputMethodEvent(QInputMethodEvent *event)
 	}
 
 	// update preedit text
-	const int oldPreeditCursor = m_textLayout.preeditAreaPosition();
+	const int oldPreeditCursor = preeditAreaPosition();
 #ifndef QT_NO_IM
 	setPreeditArea(m_textCursor->position(), event->preeditString());
 #endif //QT_NO_IM
@@ -406,35 +454,54 @@ RichDocumentEditor::processInputMethodEvent(QInputMethodEvent *event)
 void
 RichDocumentEditor::draw(QPainter *painter, const QPoint &offset, const QRect &clip, int flags, int cursorPos)
 {
-	QVector<QTextLayout::FormatRange> selections;
-	if(flags & DrawSelections) {
+	painter->setRenderHints(QPainter::Antialiasing | QPainter::TextAntialiasing | QPainter::SmoothPixmapTransform);
+
+	QTextLayout::FormatRange sr;
+	if(flags & DrawSelections && flags & DrawText) {
 		const int ss = m_textCursor->selectionStart();
 		const int se = m_textCursor->selectionEnd();
-		QTextLayout::FormatRange o;
 		if(ss < se) {
-			o.start = ss;
-			o.length = se - ss;
-			o.format.setBackground(m_palette.brush(QPalette::Highlight));
-			o.format.setForeground(m_palette.brush(QPalette::HighlightedText));
+			sr.start = ss;
+			sr.length = se;
+			sr.format.setBackground(m_palette.brush(QPalette::Highlight));
+			sr.format.setForeground(m_palette.brush(QPalette::HighlightedText));
 		} else {
 			// mask selection
-			if(m_blinkStatus){
-				o.start = m_textCursor->position();
-				o.length = 1;
-				o.format.setBackground(m_palette.brush(QPalette::Text));
-				o.format.setForeground(m_palette.brush(QPalette::Window));
+			if(m_blinkStatus) {
+				sr.start = m_textCursor->position();
+				sr.length = sr.start + 1;
+				sr.format.setBackground(m_palette.brush(QPalette::Text));
+				sr.format.setForeground(m_palette.brush(QPalette::Window));
 			}
 		}
-		selections.append(o);
 	}
 
-	if(flags & DrawText)
-		textLayout()->draw(painter, offset, selections, clip);
-
-	if(flags & DrawCursor){
+	if(flags & (DrawText | DrawCursor)) {
 		int cursor = cursorPos >= 0 ? cursorPos : m_textCursor->position();
-		if(m_blinkStatus)
-			textLayout()->drawCursor(painter, offset, cursor, m_cursorWidth);
+		int off = 0;
+
+		RichDocumentLayout *docLayout = m_document->documentLayout();
+		docLayout->separatorResize(m_layoutSeparatorSize);
+
+		painter->setPen(palette().color(QPalette::Normal, QPalette::Text));
+
+		for(int i = 0; i < m_layoutCount; i++) {
+			const int end = off + m_textLayouts[i].text().length();
+			if(flags & DrawText) {
+				QVector<QTextLayout::FormatRange> selections;
+				if(flags & DrawSelections && off < sr.length && end > sr.start) {
+					const int s = qMax(sr.start, off);
+					const int l = qMin(sr.length, end) - s;
+					selections.push_back(QTextLayout::FormatRange{s - off, l, sr.format});
+				}
+				m_textLayouts[i].draw(painter, offset, selections, clip);
+				const QTextLine &tl = m_textLayouts[i].lineAt(0);
+				docLayout->separatorDraw(painter, QPointF(tl.position().x() + offset.x() - m_layoutSeparatorSize.width(), 0.));
+			}
+			if(flags & DrawCursor && m_blinkStatus && cursor >= off && cursor < end)
+				m_textLayouts[i].drawCursor(painter, offset, cursor - off, m_cursorWidth);
+			off = end;
+		}
 	}
 }
 
@@ -1143,3 +1210,64 @@ RichDocumentEditor::setDocument(RichDocument *doc)
 		m_textCursor = nullptr;
 	}
 }
+
+QString
+RichDocumentEditor::text() const
+{
+	QString text;
+	for(int i = 0; i < m_layoutCount; i++) {
+		if(i)
+			text.push_back(QChar::LineSeparator);
+		text.push_back(m_textLayouts[i].text());
+	}
+	return text;
+}
+
+#ifndef QT_NO_IM
+void
+RichDocumentEditor::setPreeditArea(int cursor, const QString &text)
+{
+	int off = 0;
+	for(int i = 0; i < m_layoutCount; i++) {
+		if(cursor == -1) {
+			m_textLayouts[i].setPreeditArea(-1, text);
+		} else if(cursor <= off) {
+			m_textLayouts[i].setPreeditArea(cursor - off, text);
+			break;
+		}
+		off += m_textLayouts[i].text().length();
+	}
+}
+#endif
+
+int
+RichDocumentEditor::preeditAreaPosition() const
+{
+	if(m_textCursor) {
+		int pos = m_textCursor->position();
+		const QTextLayout *layout = cursorToLayout(&pos);
+		if(layout)
+			return layout->preeditAreaPosition();
+	}
+	return -1;
+}
+
+QString
+RichDocumentEditor::preeditAreaText() const
+{
+	if(m_textCursor) {
+		int pos = m_textCursor->position();
+		const QTextLayout *layout = cursorToLayout(&pos);
+		if(layout)
+			return layout->preeditAreaText();
+	}
+	return QString();
+}
+
+void
+RichDocumentEditor::setFont(const QFont &font)
+{
+	m_layoutFont = font;
+	updateDisplayText();
+}
+

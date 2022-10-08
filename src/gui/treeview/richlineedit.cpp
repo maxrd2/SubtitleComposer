@@ -21,8 +21,9 @@
 
 using namespace SubtitleComposer;
 
-RichLineEdit::RichLineEdit(QWidget *parent)
+RichLineEdit::RichLineEdit(const QStyleOptionViewItem &styleOption, QWidget *parent)
 	: QWidget(parent),
+	  m_lineStyle(styleOption),
 	  m_control(new RichDocumentEditor())
 {
 	setupActions();
@@ -31,6 +32,7 @@ RichLineEdit::RichLineEdit(QWidget *parent)
 
 	m_control->setAccessibleObject(this);
 	m_control->setCursorWidth(style()->pixelMetric(QStyle::PM_TextCursorWidth));
+	m_control->setLineSeparatorSize(QSizeF(.5 * styleOption.rect.height(), styleOption.rect.height()));
 
 	setFocusPolicy(Qt::StrongFocus);
 	setAttribute(Qt::WA_InputMethodEnabled);
@@ -316,10 +318,7 @@ void
 RichLineEdit::mouseDoubleClickEvent(QMouseEvent* e)
 {
 	if(e->button() == Qt::LeftButton) {
-		int position =
-//				d->xToPos(e->pos().x())
-				m_control->xToPos(e->pos().x())
-				;
+		int position = m_control->xToPos(e->pos().x());
 
 		// exit composition mode
 #ifndef QT_NO_IM
@@ -407,7 +406,7 @@ RichLineEdit::inputMethodQuery(Qt::InputMethodQuery property) const
 	case Qt::ImCursorPosition: {
 		return QVariant(m_control->cursor()); }
 	case Qt::ImSurroundingText:
-		return QVariant(m_control->surroundingText());
+		return QVariant(m_control->text());
 	case Qt::ImCurrentSelection:
 		return QVariant(m_control->selectedText());
 	case Qt::ImAnchorPosition:
@@ -563,7 +562,7 @@ RichLineEdit::paintEvent(QPaintEvent *e)
 	textRect.adjust(1, 1, -1, -1);
 
 	QPoint textPos(textRect.topLeft());
-	textPos.ry() += (qreal(textRect.height()) - m_control->textLayout()->lineAt(0).height()) / 2.;
+	textPos.ry() += (qreal(textRect.height()) - m_control->height()) / 2.;
 
 	int flags = RichDocumentEditor::DrawText | RichDocumentEditor::DrawCursor;
 	if(m_control->hasSelection())

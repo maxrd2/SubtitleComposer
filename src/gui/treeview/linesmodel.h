@@ -57,6 +57,7 @@ private slots:
 	void onModelReset();
 
 	void onLineChanged(const SubtitleLine *line);
+	void onLinesChanged();
 	void emitDataChanged();
 
 private:

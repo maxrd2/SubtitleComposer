@@ -24,28 +24,11 @@ SubtitleTextOverlay::SubtitleTextOverlay()
 	m_font.setPixelSize(SCConfig::fontSize());
 }
 
-struct SubtitleComposer::DrawDocData {
-	DrawDocData(QTextLayout *ln, QTextLayout *lo)
-		: layoutNormal(ln),
-		  layoutOutline(lo),
-		  next(nullptr)
-	{}
-	~DrawDocData() {
-		delete layoutNormal;
-		delete layoutOutline;
-	}
-
-	QTextLayout *layoutNormal;
-	QTextLayout *layoutOutline;
-	DrawDocData *next;
-};
-
-
-DrawDocData *
+QTextLayout **
 SubtitleTextOverlay::drawDocPrepare(QPainter *painter)
 {
-	DrawDocData *data = nullptr;
-	DrawDocData **d = &data;
+	QTextLayout **layoutData = new QTextLayout*[2 * m_doc->blockCount() + 1];
+	QTextLayout **res = layoutData;
 
 	const QFontMetrics &fontMetrics = painter->fontMetrics();
 
@@ -70,48 +53,16 @@ SubtitleTextOverlay::drawDocPrepare(QPainter *painter)
 	qreal height = 0., heightOutline = 0.;
 	qreal maxLineWidth = 0;
 
+	RichDocumentLayout *docLayout = m_doc->documentLayout();
 	for(QTextBlock bi = m_doc->begin(); bi != m_doc->end(); bi = bi.next()) {
-		QString text;
-		QVector<QTextLayout::FormatRange> fmtNormal, fmtOutline;
-
-		for(QTextBlock::iterator it = bi.begin(); !it.atEnd(); ++it) {
-			if(!it.fragment().isValid())
-				continue;
-			const QString &t = it.fragment().text();
-			QTextCharFormat fmt = it.fragment().charFormat();
-			fmtNormal.push_back(QTextLayout::FormatRange{text.length(), t.length(), fmt});
-			if(m_textOutline.width()) {
-				fmt.setTextOutline(m_textOutline);
-				fmtOutline.push_back(QTextLayout::FormatRange{text.length(), t.length(), fmt});
-			}
-			text.append(t);
-		}
-
-		QTextLayout *tlOutline = nullptr;
-		if(m_textOutline.width()) {
-			tlOutline = new QTextLayout(text, m_font, painter->device());
-			tlOutline->setCacheEnabled(true);
-			tlOutline->setTextOption(layoutTextOption);
-			tlOutline->setFormats(fmtOutline);
-
-			tlOutline->beginLayout();
-			for(;;) {
-				QTextLine line = tlOutline->createLine();
-				if(!line.isValid())
-					break;
-				line.setLineWidth(lineWidth);
-				heightOutline += fontMetrics.leading();
-				line.setPosition(QPointF(0., heightOutline));
-				heightOutline += line.height();
-				maxLineWidth = qMax(maxLineWidth, line.naturalTextWidth());
-			}
-			tlOutline->endLayout();
-		}
+		const QString &text = bi.text();
+		QVector<QTextLayout::FormatRange> fmtRanges = docLayout->applyCSS(bi.textFormats());
 
 		QTextLayout *tlNormal = new QTextLayout(text, m_font, painter->device());
+		*layoutData++ = tlNormal;
 		tlNormal->setCacheEnabled(true);
 		tlNormal->setTextOption(layoutTextOption);
-		tlNormal->setFormats(fmtNormal);
+		tlNormal->setFormats(fmtRanges);
 
 		tlNormal->beginLayout();
 		for(;;) {
@@ -126,13 +77,37 @@ SubtitleTextOverlay::drawDocPrepare(QPainter *painter)
 		}
 		tlNormal->endLayout();
 
-		*d = new DrawDocData(tlNormal, tlOutline);
-		d = &(*d)->next;
+		if(m_textOutline.width()) {
+			QTextLayout *tlOutline = new QTextLayout(text, m_font, painter->device());
+			*layoutData++ = tlOutline;
+			tlOutline->setCacheEnabled(true);
+			tlOutline->setTextOption(layoutTextOption);
+			for(QTextLayout::FormatRange &r: fmtRanges)
+				r.format.setTextOutline(m_textOutline);
+			tlOutline->setFormats(fmtRanges);
+
+			tlOutline->beginLayout();
+			for(;;) {
+				QTextLine line = tlOutline->createLine();
+				if(!line.isValid())
+					break;
+				line.setLineWidth(lineWidth);
+				heightOutline += fontMetrics.leading();
+				line.setPosition(QPointF(0., heightOutline));
+				heightOutline += line.height();
+				maxLineWidth = qMax(maxLineWidth, line.naturalTextWidth());
+			}
+			tlOutline->endLayout();
+		} else {
+			*layoutData++ = nullptr;
+		}
 	}
+
+	*layoutData = nullptr;
 
 	m_textSize = QSize(maxLineWidth, qMax(height, heightOutline));
 
-	return data;
+	return res;
 }
 
 void
@@ -144,7 +119,7 @@ SubtitleTextOverlay::drawDoc()
 	painter.setFont(m_font);
 	painter.setPen(m_textColor);
 
-	DrawDocData *d = drawDocPrepare(&painter);
+	QTextLayout **d = drawDocPrepare(&painter);
 
 	const float imgWidth = m_renderScale > 1.f ? float(m_image.width()) / m_renderScale : m_image.width();
 	const float imgHeight = (m_renderScale > 1.f ? float(m_image.height()) / m_renderScale : m_image.height()) - m_bottomPadding;
@@ -159,14 +134,15 @@ SubtitleTextOverlay::drawDoc()
 		drawPos.setY(imgHeight - m_textSize.height());
 	}
 
-	while(d) {
-		DrawDocData *t = d;
-		if(t->layoutOutline)
-			t->layoutOutline->draw(&painter, drawPos);
-		t->layoutNormal->draw(&painter, drawPos);
-		d = d->next;
-		delete t;
+	for(int i = 0; d[i]; i += 2) {
+		if(d[i + 1]) {
+			d[i + 1]->draw(&painter, drawPos);
+			delete d[i + 1];
+		}
+		d[i]->draw(&painter, drawPos);
+		delete d[i];
 	}
+	delete[] d;
 
 	painter.end();
 }
@@ -243,11 +219,15 @@ SubtitleTextOverlay::setDoc(const RichDocument *doc)
 {
 	if(m_doc == doc)
 		return;
-	if(m_doc)
+	if(m_doc) {
 		disconnect(m_doc, nullptr, this, nullptr);
+		disconnect(m_doc->stylesheet(), nullptr, this, nullptr);
+	}
 	m_doc = doc;
-	if(m_doc)
+	if(m_doc) {
 		connect(m_doc, &RichDocument::contentsChanged, this, &SubtitleTextOverlay::setDirty);
+		connect(m_doc->stylesheet(), &RichCSS::changed, this, &SubtitleTextOverlay::setDirty);
+	}
 	setDirty();
 }
 

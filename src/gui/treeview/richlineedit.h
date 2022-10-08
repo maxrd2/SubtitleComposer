@@ -26,13 +26,11 @@ class RichLineEdit : public QWidget
 	Q_OBJECT
 
 public:
-	explicit RichLineEdit(QWidget *parent = nullptr);
+	RichLineEdit(const QStyleOptionViewItem &styleOption, QWidget *parent = nullptr);
 	virtual ~RichLineEdit();
 
 	void setDocument(RichDocument *document);
 	inline RichDocument *document() const { return RichDocumentPtr(m_document); }
-
-	inline void setLineEditStyle(const QStyleOptionViewItem &style) { m_lineStyle = style; }
 
 protected:
 	bool event(QEvent *e) override;
