@@ -9,6 +9,7 @@
 
 #include "core/richstring.h"
 #include "core/richtext/richcss.h"
+#include "core/richtext/richdocumentlayout.h"
 
 #include <QTextBlock>
 #include <QTextCursor>
@@ -46,6 +47,9 @@ public:
 	void setPlainText(const QString &text, bool resetUndo=false);
 
 	void setDocument(const QTextDocument *doc, bool resetUndo=false);
+
+	inline void setDocumentLayout(RichDocumentLayout *layout) { QTextDocument::setDocumentLayout(layout); }
+	inline RichDocumentLayout * documentLayout() const { return static_cast<RichDocumentLayout *>(QTextDocument::documentLayout()); }
 
 	void clear(bool resetUndo);
 	inline void clear() override { clear(false); }

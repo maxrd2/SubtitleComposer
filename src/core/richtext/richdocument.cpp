@@ -76,7 +76,7 @@ RichDocument::setStylesheet(const RichCSS *css)
 {
 	if(m_stylesheet == css)
 		return;
-	RichDocumentLayout *layout = reinterpret_cast<RichDocumentLayout *>(documentLayout());
+	RichDocumentLayout *layout = documentLayout();
 	if(m_stylesheet) {
 		disconnect(m_stylesheet, &RichCSS::changed, layout, &RichDocumentLayout::flagDirty);
 		layout->flagDirty();
