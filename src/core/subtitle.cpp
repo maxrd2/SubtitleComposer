@@ -18,6 +18,7 @@
 #include "gui/treeview/lineswidget.h"
 
 #include <QTextDocumentFragment>
+#include <QTextEdit>
 
 #include <KLocalizedString>
 
@@ -1466,12 +1467,11 @@ Subtitle::updateState()
 }
 
 void
-Subtitle::stylesheetSet(const QStringRef &css)
+Subtitle::stylesheetEdit(QTextEdit *textEdit)
 {
-	m_stylesheet->blockSignals(true);
-	m_stylesheet->clear();
-	m_stylesheet->blockSignals(false);
-	m_stylesheet->parse(css);
+	if(m_ignoreDocChanges)
+		return;
+	processAction(new EditStylesheetAction(this, textEdit));
 }
 
 void

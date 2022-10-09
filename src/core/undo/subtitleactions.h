@@ -17,6 +17,8 @@
 #include <QString>
 #include <QList>
 
+QT_FORWARD_DECLARE_CLASS(QTextEdit)
+
 namespace SubtitleComposer {
 
 class SubtitleAction : public UndoAction
@@ -125,6 +127,27 @@ protected:
 private:
 	const RangeList m_ranges;
 };
-}
 
+class EditStylesheetAction : public SubtitleAction
+{
+public:
+	EditStylesheetAction(Subtitle *subtitle, QTextEdit *textEdit);
+	virtual ~EditStylesheetAction();
+
+	inline int id() const override { return UndoAction::ChangeStylesheet; }
+	bool mergeWith(const QUndoCommand *command) override;
+
+protected:
+	void redo() override;
+	void undo() override;
+
+private:
+	void update(const QString &stylesheet);
+
+private:
+	QTextEdit *m_stylesheetEdit;
+	int m_stylesheetDocState = -1;
+};
+
+}
 #endif

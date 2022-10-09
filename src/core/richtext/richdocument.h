@@ -84,6 +84,8 @@ private:
 	inline int length(int index, int len) const { const int dl = length(); return len < 0 || (index + len) > dl ? dl - index : len; }
 	void linesToBlocks();
 
+	void markStylesheetDirty();
+
 private:
 	QTextCursor m_undoableCursor;
 	const RichCSS *m_stylesheet;

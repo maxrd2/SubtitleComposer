@@ -11,6 +11,8 @@
 #include "core/richstring.h"
 
 #include <QObject>
+#include <QTextDocument>
+#include <QTextEdit>
 
 #include <KLocalizedString>
 
@@ -298,4 +300,55 @@ SwapLinesTextsAction::redo()
 		emit line->primaryTextChanged();
 		emit line->secondaryTextChanged();
 	}
+}
+
+
+// *** ChangeStylesheetAction
+EditStylesheetAction::EditStylesheetAction(Subtitle *subtitle, QTextEdit *textEdit)
+	: SubtitleAction(subtitle, UndoStack::Primary, i18n("Change stylesheet")),
+	  m_stylesheetEdit(textEdit),
+	  m_stylesheetDocState(m_stylesheetEdit->document()->availableUndoSteps())
+{
+}
+
+EditStylesheetAction::~EditStylesheetAction()
+{
+}
+
+bool
+EditStylesheetAction::mergeWith(const QUndoCommand *command)
+{
+	const EditStylesheetAction *cur = static_cast<const EditStylesheetAction *>(command);
+	Q_ASSERT(cur->m_stylesheetEdit == m_stylesheetEdit);
+	return cur->m_stylesheetDocState == m_stylesheetDocState;
+}
+
+void
+EditStylesheetAction::update(const QString &stylesheet)
+{
+	RichCSS *ss = m_subtitle->m_stylesheet;
+	ss->blockSignals(true);
+	ss->clear();
+	ss->blockSignals(false);
+	ss->parse(&stylesheet);
+}
+
+void
+EditStylesheetAction::undo()
+{
+	const bool prev = m_subtitle->ignoreDocChanges(true);
+	while(m_stylesheetEdit->document()->isUndoAvailable() && m_stylesheetEdit->document()->availableUndoSteps() >= m_stylesheetDocState)
+		m_stylesheetEdit->undo();
+	update(m_stylesheetEdit->document()->toPlainText());
+	m_subtitle->ignoreDocChanges(prev);
+}
+
+void
+EditStylesheetAction::redo()
+{
+	const bool prev = m_subtitle->ignoreDocChanges(true);
+	while(m_stylesheetEdit->document()->isRedoAvailable() && m_stylesheetEdit->document()->availableUndoSteps() < m_stylesheetDocState)
+		m_stylesheetEdit->redo();
+	update(m_stylesheetEdit->document()->toPlainText());
+	m_subtitle->ignoreDocChanges(prev);
 }

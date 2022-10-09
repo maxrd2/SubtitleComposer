@@ -257,7 +257,7 @@ SubtitleLine::index() const
 void
 SubtitleLine::primaryDocumentChanged()
 {
-	if(m_ignoreDocChanges)
+	if(m_ignoreDocChanges || (m_subtitle && m_subtitle->m_ignoreDocChanges))
 		return;
 	processAction(new SetLinePrimaryTextAction(this, m_primaryDoc));
 }
@@ -265,7 +265,7 @@ SubtitleLine::primaryDocumentChanged()
 void
 SubtitleLine::secondaryDocumentChanged()
 {
-	if(m_ignoreDocChanges)
+	if(m_ignoreDocChanges || (m_subtitle && m_subtitle->m_ignoreDocChanges))
 		return;
 	processAction(new SetLineSecondaryTextAction(this, m_secondaryDoc));
 }

@@ -6,6 +6,8 @@
 
 #include "subtitlemetawidget.h"
 
+#include "application.h"
+#include "actions/useractionnames.h"
 #include "core/subtitle.h"
 #include "core/richtext/richcss.h"
 #include "gui/subtitlemeta/csshighlighter.h"
@@ -78,12 +80,16 @@ SubtitleMetaWidget::SubtitleMetaWidget(QWidget *parent)
 	QTabWidget *comments = new QTabWidget();
 	comments->setTabPosition(QTabWidget::East);
 	comments->addTab(m_commentIntroEdit, i18n("Intro"));
+	m_commentIntroEdit->installEventFilter(this);
 	comments->addTab(m_commentTopEdit, i18n("Header"));
+	m_commentTopEdit->installEventFilter(this);
 	comments->addTab(m_commentBottomEdit, i18n("Footer"));
+	m_commentBottomEdit->installEventFilter(this);
 
 	QStackedLayout *mainLayout = new QStackedLayout();
 	mainLayout->setContentsMargins(0, 0, 0, 0);
 	mainLayout->addWidget(m_cssEdit);
+	m_cssEdit->installEventFilter(this);
 	mainLayout->addWidget(comments);
 	setLayout(mainLayout);
 
@@ -121,7 +127,7 @@ SubtitleMetaWidget::setSubtitle(Subtitle *subtitle)
 		disconnect(m_commentIntroEdit, &KTextEdit::textChanged, this, nullptr);
 		disconnect(m_commentTopEdit, &KTextEdit::textChanged, this, nullptr);
 		disconnect(m_commentBottomEdit, &KTextEdit::textChanged, this, nullptr);
-		disconnect(m_cssEdit, &QTextEdit::textChanged, this, nullptr);
+		disconnect(m_cssEdit->document(), &QTextDocument::contentsChanged, this, nullptr);
 	}
 
 	m_subtitle = subtitle;
@@ -141,9 +147,8 @@ SubtitleMetaWidget::setSubtitle(Subtitle *subtitle)
 		connect(m_commentBottomEdit, &KTextEdit::textChanged, this, [&](){
 			setComments(m_subtitle.data(), "comment.bottom.", m_commentBottomEdit->toPlainText());
 		});
-		connect(m_cssEdit, &QTextEdit::textChanged, this, [&](){
-			QString text = m_cssEdit->toPlainText();
-			m_subtitle->stylesheetSet(&text);
+		connect(m_cssEdit->document(), &QTextDocument::contentsChanged, this, [&](){
+			m_subtitle->stylesheetEdit(m_cssEdit);
 		});
 	} else {
 		m_cssEdit->clear();
@@ -151,6 +156,18 @@ SubtitleMetaWidget::setSubtitle(Subtitle *subtitle)
 		m_commentTopEdit->clear();
 		m_commentBottomEdit->clear();
 	}
+}
+
+static QAction *
+actionGet(const QKeySequence &key)
+{
+	QAction *action = app()->action(ACT_UNDO);
+	if(action->shortcuts().contains(key))
+		return action;
+	action = app()->action(ACT_REDO);
+	if(action->shortcuts().contains(key))
+		return action;
+	return nullptr;
 }
 
 bool
@@ -168,6 +185,17 @@ SubtitleMetaWidget::eventFilter(QObject *obj, QEvent *event)
 		// flag it as ignored so QDockWidget can handle it
 		event->ignore();
 		return true;
+	} else if(event->type() == QEvent::ShortcutOverride || event->type() == QEvent::KeyPress) {
+		if(obj == m_cssEdit || obj == m_commentIntroEdit || obj == m_commentTopEdit || obj == m_commentBottomEdit) {
+			const QKeyEvent *keyEvent = static_cast<QKeyEvent *>(event);
+			QAction *action = actionGet(keyEvent->modifiers() + keyEvent->key());
+			if(action) {
+				if(event->type() == QEvent::KeyPress)
+					action->trigger();
+				event->accept();
+				return true;
+			}
+		}
 	}
 	return QObject::eventFilter(obj, event);
 }

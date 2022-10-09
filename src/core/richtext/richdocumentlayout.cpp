@@ -293,13 +293,6 @@ RichDocumentLayout::processLayout(int from, int oldLength, int length)
 }
 
 void
-RichDocumentLayout::flagDirty()
-{
-	m_layoutPosition = 0;
-	m_doc->markContentsDirty(0, m_doc->length());
-}
-
-void
 RichDocumentLayout::draw(QPainter *painter, const PaintContext &context)
 {
 	ensureLayout(INT_MAX);

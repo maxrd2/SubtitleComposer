@@ -24,6 +24,7 @@
 #include <QMap>
 
 QT_FORWARD_DECLARE_CLASS(QUndoCommand)
+QT_FORWARD_DECLARE_CLASS(QTextEdit)
 
 namespace SubtitleComposer {
 class RichDocument;
@@ -47,6 +48,7 @@ class Subtitle : public QObject, public QSharedData
 	friend class InsertLinesAction;
 	friend class RemoveLinesAction;
 	friend class MoveLineAction;
+	friend class EditStylesheetAction;
 
 	friend class SubtitleLineAction;
 	friend class SetLinePrimaryTextAction;
@@ -169,7 +171,7 @@ public:
 	inline const QString meta(const QByteArray &key) const { return m_metaData.value(key); }
 	inline void meta(const QByteArray &key, const QString &value) { m_metaData.insert(key, value); }
 
-	void stylesheetSet(const QStringRef &css);
+	void stylesheetEdit(QTextEdit *textEdit);
 	void stylesheetAppend(const QStringRef &css);
 	void stylesheetClear();
 	inline const RichCSS *stylesheet() const { return m_stylesheet; }
@@ -220,11 +222,19 @@ private:
 
 	inline SubtitleLine * takeAt(const int i) { SubtitleLine *s = m_lines.at(i).obj(); m_lines.remove(i); return s; }
 
+	inline bool ignoreDocChanges(bool ignore) {
+		bool r = m_ignoreDocChanges;
+		m_ignoreDocChanges = ignore;
+		return r;
+	}
+
 private:
 	bool m_primaryDirtyState;
 	int m_primaryCleanIndex;
 	bool m_secondaryDirtyState;
 	int m_secondaryCleanIndex;
+
+	bool m_ignoreDocChanges = false;
 
 	double m_framesPerSecond;
 	mutable QVector<ObjectRef<SubtitleLine>> m_lines;

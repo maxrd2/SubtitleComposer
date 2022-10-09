@@ -28,6 +28,7 @@ public:
 		RemoveLines,
 		MoveLine,
 		SwapLinesTexts,
+		ChangeStylesheet,
 
 		// subtitle line actions
 		SetLinePrimaryText,

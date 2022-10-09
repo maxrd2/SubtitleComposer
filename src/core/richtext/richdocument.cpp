@@ -72,20 +72,24 @@ RichDocument::~RichDocument()
 }
 
 void
+RichDocument::markStylesheetDirty()
+{
+	m_undoableCursor.beginEditBlock();
+	markContentsDirty(0, length());
+	m_undoableCursor.endEditBlock();
+}
+
+void
 RichDocument::setStylesheet(const RichCSS *css)
 {
 	if(m_stylesheet == css)
 		return;
-	RichDocumentLayout *layout = documentLayout();
-	if(m_stylesheet) {
-		disconnect(m_stylesheet, &RichCSS::changed, layout, &RichDocumentLayout::flagDirty);
-		layout->flagDirty();
-	}
+	if(m_stylesheet)
+		disconnect(m_stylesheet, &RichCSS::changed, this, &RichDocument::markStylesheetDirty);
 	m_stylesheet = css;
-	if(m_stylesheet) {
-		connect(m_stylesheet, &RichCSS::changed, layout, &RichDocumentLayout::flagDirty);
-		layout->flagDirty();
-	}
+	if(m_stylesheet)
+		connect(m_stylesheet, &RichCSS::changed, this, &RichDocument::markStylesheetDirty);
+	markStylesheetDirty();
 }
 
 void

@@ -22,8 +22,6 @@ class RichDocumentLayout : public QAbstractTextDocumentLayout
 public:
 	explicit RichDocumentLayout(RichDocument *doc);
 
-	void flagDirty();
-
 	void draw(QPainter *painter, const PaintContext &context) override;
 	int hitTest(const QPointF &point, Qt::HitTestAccuracy accuracy) const override;
 
