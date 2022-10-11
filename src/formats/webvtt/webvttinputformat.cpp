@@ -226,9 +226,8 @@ WebVTTInputFormat::parseSubtitles(Subtitle &subtitle, const QString &data) const
 				notes.clear();
 			}
 			// NOTE: styles can't appear after first cue/line, even if we're not forbidding it
-			// TODO: support styles
 			end = skipTextBlock(data, off += 5);
-			subtitle.stylesheetAppend(data.midRef(off, end - off).trimmed());
+			subtitle.stylesheetAppend(data.midRef(off, end - off).trimmed().toString());
 			off = end;
 			continue;
 		}
@@ -264,14 +263,13 @@ WebVTTInputFormat::parseSubtitles(Subtitle &subtitle, const QString &data) const
 		const QStringRef cueText = data.midRef(off, end - off).trimmed();
 		off = end;
 
+		SubtitleLine *line = new SubtitleLine(showTime, hideTime);
 		RichString stext;
-		stext.setRichString(cueText);
 		// TODO: handle voice/class tags
 		// https://developer.mozilla.org/en-US/docs/Web/API/WebVTT_API#cue_payload_text_tags
 		// TODO: handle pseudo classes
 		// https://developer.mozilla.org/en-US/docs/Web/API/WebVTT_API#css_pseudo-classes
-
-		SubtitleLine *line = new SubtitleLine(showTime, hideTime);
+		stext.setRichString(cueText);
 		line->primaryDoc()->setRichText(stext, true);
 
 		if(!notes.isEmpty()) {

@@ -41,18 +41,16 @@ RichCSS::operator=(const RichCSS &rhs)
 	return *this;
 }
 
-
 static bool
-skipComment(const QChar **c, const QChar *end)
+skipComment(const QChar **c)
 {
-	const QChar *last = end - 1;
 	// skip comment blocks
-	if(**c == QChar('/') && *c != last && *((*c) + 1) == QChar('*')) {
+	if(**c == QChar('/') && !(*c)->isNull() && *((*c) + 1) == QChar('*')) {
 		*c += 2;
 		for(;;) {
-			if(*c == end)
+			if((*c)->isNull())
 				break;
-			if(**c == QChar('*') && *c != last && *((*c) + 1) == QChar('/')) {
+			if(**c == QChar('*') && !(*c)->isNull() && *((*c) + 1) == QChar('/')) {
 				*c += 2;
 				break;
 			}
@@ -69,7 +67,7 @@ skipChar(const QStringRef text, int off, const charCompare &cf)
 	auto it = text.cbegin() + off;
 	const auto end = text.cend();
 	while(it != end) {
-		if(skipComment(&it, end) && it == end)
+		if(skipComment(&it) && it == end)
 			break;
 		if(!cf(*it))
 			break;
@@ -96,26 +94,40 @@ RichCSS::clear()
 }
 
 void
-RichCSS::parse(const QStringRef &css)
+RichCSS::parse(const QChar *css)
 {
+	if(!css || css->isNull())
+		return;
+
 	m_unformatted.append(css);
 
-	int off = 0;
-	while(off < css.size()) {
-		off = skipChar(css, off, [](QChar c){ return c.isSpace(); });
-		int end = skipChar(css, off, [](QChar c){ return /*!c.isSpace() &&*/ c != QChar('{') /*&& c.isPrint()*/; });
-		QStringRef cssSel = css.mid(off, end - off);
-		off = end;
+	for(;;) {
+		QString cssSel = parseCssSelector(&css);
 
-		off = skipChar(css, off, [](QChar c){ return c.isSpace() || c == QChar('{'); });
-		end = skipChar(css, off, [](QChar c){ return c != QChar('}'); });
-		QStringRef cssStyles = css.mid(off, end - off);
-		off = end + 1;
+		Q_ASSERT(css->isNull() || *css == QChar('{'));
+		if(*css != QChar('{'))
+			break;
+		css++;
 
-		if(!cssSel.isEmpty() && !cssStyles.isEmpty())
-			parseBlock(cssSel, cssStyles);
-		else
-			qWarning() << "invalid css - selector:" << cssSel << "rules:" << cssStyles;
+		RuleList cssRules = parseCssRules(&css);
+
+		if(!cssSel.isEmpty() && !cssRules.isEmpty()) {
+			auto it = m_stylesheet.begin();
+			while(it != m_stylesheet.end()) {
+				if(it->selector == cssSel) {
+					mergeCssRules(it->rules, cssRules);
+					break;
+				}
+				++it;
+			}
+			if(it == m_stylesheet.end())
+				m_stylesheet.push_back(Block{cssSel, cssRules});
+		}
+
+		Q_ASSERT(css->isNull() || *css == QChar('}'));
+		if(*css != QChar('}'))
+			break;
+		css++;
 	}
 	emit changed();
 }
@@ -130,10 +142,10 @@ nonSepSel(const QChar *c)
 }
 
 static bool
-copyCssChar(QChar *&dst, const QChar *&c, const QChar *se)
+copyCssChar(QString *dst, const QChar *&c)
 {
 	if(*c != QChar('\\')) {
-		*dst++ = *c;
+		dst->push_back(*c);
 		return false;
 	}
 
@@ -141,7 +153,7 @@ copyCssChar(QChar *&dst, const QChar *&c, const QChar *se)
 	uint32_t ucs32 = 0x80000000;
 	const QChar *n = c + 1;
 	for(;;) {
-		if(n == se || n == e)
+		if(n->isNull() || n == e)
 			break;
 		const char d = n->toLatin1();
 		if(d >= '0' && d <= '9')
@@ -161,67 +173,72 @@ copyCssChar(QChar *&dst, const QChar *&c, const QChar *se)
 		//       space after 6th digit is not needed, but can be included.
 		//       Their examples ignore it - we do too.
 		c = n != e && n->isSpace() ? n : n - 1;
-		*dst++ = QChar(ucs32 >> 4);
-	} else {
+		dst->push_back(QChar(ucs32 >> 4));
+	} else if(!(c + 1)->isNull()) {
 		// copy backslash
-		*dst++ = *c++;
+		dst->push_back(*c++);
 		// and next char
-		if(c != se)
-			*dst++ = *c;
+		dst->push_back(*c);
 	}
 	return true;
 }
 
 RichCSS::Selector
-RichCSS::parseCssSelector(const QStringRef &selector)
+RichCSS::parseCssSelector(const QChar **stylesheet)
 {
-	QString str;
-	str.resize(selector.size());
-	QChar *sel = str.data();
-	const QChar *c = selector.cbegin();
-	const QChar *se = selector.cend();
-	while(c != se && c->isSpace())
-		c++;
-	for(; c != se; c++) {
-		if(skipComment(&c, se) && c == se)
+	QString sel;
+	const QChar *&c = *stylesheet;
+
+	// skip starting spaces and comments
+	while(!c->isNull()) {
+		if(c->isSpace())
+			c++;
+		else if(!skipComment(&c))
+			break;
+	}
+
+	bool skippedSpace = false;
+	for(; !c->isNull() && *c != QChar('{'); c++) {
+		if(skipComment(&c) && (c->isNull() || *c == QChar('{')))
 			break;
 		if(c->isSpace()) {
-			// NOTE: if c is space *p can't underflow - we skipped starting spaces
-			const QChar *p = sel - 1;
-			const QChar *n = c + 1;
-			if(n != se && nonSepSel(p) && nonSepSel(n))
-				*sel++ = QChar::Space;
+			skippedSpace = true;
 			continue;
 		}
-		if(copyCssChar(sel, c, se))
+		if(skippedSpace) {
+			const QChar *p = sel.data() + sel.size() - 1;
+			if(nonSepSel(p) && nonSepSel(c))
+				sel += QChar::Space;
+			skippedSpace = false;
+		}
+		if(copyCssChar(&sel, c))
 			continue;
 		if(*c == QChar('[')) {
-			while(++c != se) {
+			while(!(++c)->isNull()) {
 				if(c->isSpace())
 					continue;
-				if(skipComment(&c, se) && c == se)
+				if(skipComment(&c) && c->isNull())
 					break;
-				if(copyCssChar(sel, c, se))
+				if(copyCssChar(&sel, c))
 					continue;
 				if(*c == QChar(']'))
 					break;
 				if(*c == QChar('"')) {
-					while(++c != se) {
-						if(copyCssChar(sel, c, se))
+					while(!(++c)->isNull()) {
+						if(copyCssChar(&sel, c))
 							continue;
 						if(*c == QChar('"'))
 							break;
 					}
-					if(c == se)
+					if(c->isNull())
 						break;
 				}
 			}
-			if(c == se)
+			if(c->isNull())
 				break;
 		}
 	}
-	str.truncate(sel - str.data());
-	return str;
+	return sel;
 }
 
 inline static bool
@@ -233,78 +250,109 @@ nonSepVal(const QChar *c)
 	return l != '(' && l != ')' && l != '"' && l != '\'' && l != ',';
 }
 
-static QString
-cleanupCssValue(QStringRef value)
+QString
+RichCSS::parseCssKey(const QChar **stylesheet)
 {
-	QString str;
-	str.resize(value.size());
-	QChar *val = str.data();
-	const QChar *c = value.cbegin();
-	const QChar *se = value.cend();
-	while(c != se && c->isSpace())
-		c++;
-	for(; c != se; c++) {
-		if(skipComment(&c, se) && c == se)
+	QString cssKey;
+	const QChar *&c = *stylesheet;
+
+	// skip starting spaces and comments
+	while(!c->isNull()) {
+		if(c->isSpace())
+			c++;
+		else if(!skipComment(&c))
+			break;
+	}
+
+	bool skippedSpace = false;
+	for(; !c->isNull() && *c != QChar('}') && *c != QChar(':') && *c != QChar(';'); c++) {
+		if(skipComment(&c) && (c->isNull() || *c == QChar('}') || *c == QChar(':') || *c == QChar(';')))
 			break;
 		if(c->isSpace()) {
-			// NOTE: if c is space *p can't underflow - we skipped starting spaces
-			const QChar *p = val - 1;
-			const QChar *n = c + 1;
-			if(n != se && nonSepVal(p) && nonSepVal(n))
-				*val++ = QChar::Space;
+			skippedSpace = true;
 			continue;
 		}
-		if(copyCssChar(val, c, se))
+		if(skippedSpace) {
+			cssKey += QChar::Space;
+			skippedSpace = false;
+		}
+		copyCssChar(&cssKey, c);
+	}
+	return cssKey;
+}
+
+QString
+RichCSS::parseCssValue(const QChar **stylesheet)
+{
+	QString cssValue;
+	const QChar *&c = *stylesheet;
+
+	// skip starting spaces and comments
+	while(!c->isNull()) {
+		if(c->isSpace())
+			c++;
+		else if(!skipComment(&c))
+			break;
+	}
+
+	bool skippedSpace = false;
+	for(; !c->isNull() && *c != QChar('}') && *c != QChar(';'); c++) {
+		if(skipComment(&c) && (c->isNull() || *c == QChar('}') || *c == QChar(';')))
+			break;
+		if(c->isSpace()) {
+			skippedSpace = true;
+			continue;
+		}
+		if(skippedSpace) {
+			const QChar *p = cssValue.data() + cssValue.size() - 1;
+			if(nonSepVal(p) && nonSepVal(c))
+				cssValue += QChar::Space;
+			skippedSpace = false;
+		}
+		if(copyCssChar(&cssValue, c))
 			continue;
 		if(*c == QChar('"') || *c == QChar('\'')) {
 			const QChar ce = *c;
-			while(++c != se) {
-				if(copyCssChar(val, c, se))
+			while(!(++c)->isNull()) {
+				if(copyCssChar(&cssValue, c))
 					continue;
 				if(*c == ce)
 					break;
 			}
-			if(c == se)
+			if(c->isNull())
 				break;
 		}
 	}
-	str.truncate(val - str.data());
-	return str;
+
+	return cssValue;
 }
 
 RichCSS::RuleList
-RichCSS::parseCssRules(const QStringRef &rules)
+RichCSS::parseCssRules(const QChar **stylesheet)
 {
 	RuleList cssRules;
-	const auto ite = rules.cend();
-	auto it = rules.cbegin();
-	auto ie = it;
+	const QChar *&c = *stylesheet;
 	for(;;) {
-		for(; ie != ite && *ie != QChar(':'); ++ie);
-		if(ie == ite)
-			break;
-		QStringRef cssKey = rules.mid(it - rules.cbegin(), ie - it).trimmed();
+		QString cssKey = parseCssKey(stylesheet);
 
-		it = ++ie;
-		for(;;) {
-			if(ie == ite || *ie == QChar(';'))
-				break;
-			if(*ie == QChar('"') || *ie == QChar('\'')) {
-				const QChar sc = *ie;
-				while(++ie != ite && *ie != sc);
-				if(ie == ite)
-					break;
-			}
-			++ie;
+		Q_ASSERT(c->isNull() || *c == QChar('}') || *c == QChar(':') || *c == QChar(';'));
+		if(*c == QChar(';')) {
+			qWarning() << "invalid css - rule-name:" << cssKey << " wihtout value, terminated by" << *c;
+			c++;
+			continue;
 		}
-		QString cssValue = cleanupCssValue(rules.mid(it - rules.cbegin(), ie - it).trimmed());
+		if(*c != QChar(':'))
+			break;
+		c++;
+
+		QString cssValue = parseCssValue(stylesheet);
 
 		if(!cssKey.isEmpty() && !cssValue.isEmpty()) {
 			RuleList::iterator it = cssRules.begin();
 			for(;;) {
 				if(it == cssRules.end()) {
 					// new rule
-					cssRules.push_back(Rule{cssKey.toLatin1(), cssValue});
+					cssRules.push_back(Rule{cssKey.toUtf8(), cssValue});
 					break;
 				}
 				if(it->name == cssKey) {
@@ -316,9 +364,10 @@ RichCSS::parseCssRules(const QStringRef &rules)
 			}
 		}
 
-		if(ie == ite)
+		Q_ASSERT(c->isNull() || *c == QChar('}') || *c == QChar(';'));
+		if(*c != QChar(';'))
 			break;
-		it = ++ie;
+		c++;
 	}
 	return cssRules;
 }
@@ -346,22 +395,6 @@ RichCSS::mergeCssRules(RuleList &base, const RuleList &override) const
 	// then append new rules
 	base.append(override);
 }
-
-void
-RichCSS::parseBlock(const QStringRef &selector, const QStringRef &rules)
-{
-	QString cssSel = parseCssSelector(selector);
-	RuleList cssRules = parseCssRules(rules);
-
-	for(Block &b: m_stylesheet) {
-		if(b.selector == cssSel) {
-			mergeCssRules(b.rules, cssRules);
-			return;
-		}
-	}
-	m_stylesheet.push_back(Block{cssSel, cssRules});
-}
-
 
 QMap<QByteArray, QString>
 RichCSS::match(QSet<QString> selectors) const

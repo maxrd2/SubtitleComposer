@@ -37,9 +37,8 @@ public:
 	struct Block { Selector selector; RuleList rules; };
 	typedef QVector<Block> Stylesheet;
 
-	void parse(const QStringRef &css);
-
-	void parseBlock(const QStringRef &selector, const QStringRef &rules);
+	inline void parse(const QString &css) { parse(css.data()); }
+	void parse(const QChar *css);
 
 	inline const QString & unformattedCSS() const { return m_unformatted; }
 
@@ -51,11 +50,10 @@ signals:
 	void changed();
 
 private:
-	static inline Selector parseCssSelector(const QString &selector) { return parseCssSelector(QStringRef(&selector)); }
-	static Selector parseCssSelector(const QStringRef &selector);
-
-	static inline RuleList parseCssRules(const QString &rules) { return parseCssRules(QStringRef(&rules)); }
-	static RuleList parseCssRules(const QStringRef &rules);
+	static Selector parseCssSelector(const QChar **stylesheet);
+	static RuleList parseCssRules(const QChar **stylesheet);
+	static QString parseCssKey(const QChar **stylesheet);
+	static QString parseCssValue(const QChar **stylesheet);
 
 	void mergeCssRules(RuleList &base, const RuleList &override) const;
 

@@ -172,7 +172,7 @@ public:
 	inline void meta(const QByteArray &key, const QString &value) { m_metaData.insert(key, value); }
 
 	void stylesheetEdit(QTextEdit *textEdit);
-	void stylesheetAppend(const QStringRef &css);
+	void stylesheetAppend(const QString &css);
 	void stylesheetClear();
 	inline const RichCSS *stylesheet() const { return m_stylesheet; }
 

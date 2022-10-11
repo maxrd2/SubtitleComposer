@@ -78,6 +78,9 @@ RichCssTest::testParseSelector_data()
 	QTest::newRow("unicode escape 9")
 			<< "\\0000E9dition"
 			<< "édition";
+	QTest::newRow("comments+spaces around")
+			<< "   /* comm */ tag.class1.class2  /* comm */  "
+			<< "tag.class1.class2";
 }
 
 void
@@ -86,7 +89,8 @@ RichCssTest::testParseSelector()
 	QFETCH(QString, selIn);
 	QFETCH(QString, selOut);
 
-	QCOMPARE(RichCSS::parseCssSelector(selIn), selOut);
+	const QChar *data = selIn.data();
+	QCOMPARE(RichCSS::parseCssSelector(&data), selOut);
 }
 
 void
@@ -108,8 +112,8 @@ RichCssTest::testParseRules_data()
 			<< "\t line-height \t : \t 1px \t ; \t line-height \t : \t 3px \t ; "
 			<< "line-height:3px;";
 	QTest::newRow("attribute selector quoted")
-			<< "\t line-height \t : \t 1px \t ; \t weight \t : \t bold \t ; "
-			<< "line-height:1px;weight:bold;";
+			<< "\t line-height \t : \t 1px \t ; \t font-weight \t : \t bold \t ; "
+			<< "line-height:1px;font-weight:bold;";
 	QTest::newRow("apostrophe")
 			<< "background : url ( \t '  something somewhere with \t spaces  ' \t )  "
 			<< "background:url('  something somewhere with \t spaces  ');";
@@ -133,7 +137,8 @@ RichCssTest::testParseRules()
 	QFETCH(QString, cssIn);
 	QFETCH(QString, cssOut);
 
-	QCOMPARE(RichCSS::parseCssRules(cssIn).toString(), cssOut);
+	const QChar *data = cssIn.data();
+	QCOMPARE(RichCSS::parseCssRules(&data).toString(), cssOut);
 }
 
 QTEST_GUILESS_MAIN(RichCssTest)

@@ -1475,7 +1475,7 @@ Subtitle::stylesheetEdit(QTextEdit *textEdit)
 }
 
 void
-Subtitle::stylesheetAppend(const QStringRef &css)
+Subtitle::stylesheetAppend(const QString &css)
 {
 	m_stylesheet->parse(css);
 }

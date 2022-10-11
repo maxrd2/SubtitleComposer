@@ -330,7 +330,7 @@ EditStylesheetAction::update(const QString &stylesheet)
 	ss->blockSignals(true);
 	ss->clear();
 	ss->blockSignals(false);
-	ss->parse(&stylesheet);
+	ss->parse(stylesheet);
 }
 
 void
