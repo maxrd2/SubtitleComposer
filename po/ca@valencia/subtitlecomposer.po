@@ -2569,7 +2569,7 @@ msgstr "No s'ha trobat cap error que coincidisca amb el criteri indicat!"
 #, kde-format
 msgctxt "@title:group"
 msgid "Errors to Find"
-msgstr "Errors a buscar"
+msgstr "Errors que s'han de buscar"
 
 #: src/errors/finderrorsdialog.cpp:28
 #, kde-format
@@ -2994,7 +2994,7 @@ msgid ""
 "If included, a second pane gets added to the right of the primary subtitle "
 "for side-by-side translation."
 msgstr ""
-"El subtítol de traducció a editar.\n"
+"El subtítol de traducció que s'editarà.\n"
 "Si s'inclou, s'afegirà una segona subfinestra a la dreta del subtítol "
 "primari per a la traducció en paral·lel."
 
@@ -3580,8 +3580,8 @@ msgstr "Fitxer d'entrada del diccionari de pronunciació principal (lèxic)"
 #, kde-format
 msgid "Num of silence frames to keep after speech to silence transition"
 msgstr ""
-"Nombre de fotogrames en silenci a mantindre després d'una transició de veu a "
-"silenci"
+"Nombre de fotogrames en silenci que es mantindran després d'una transició de "
+"veu a silenci"
 
 #. i18n: ectx: label, entry (vadPreSpeech), group (PocketSphinx)
 #. i18n: ectx: property (toolTip), widget (QLabel, label_vadPreSpeech)
@@ -3590,8 +3590,8 @@ msgstr ""
 #, kde-format
 msgid "Num of speech frames to keep before silence to speech transition"
 msgstr ""
-"Nombre de fotogrames amb veu a mantindre abans d'una transició de silenci a "
-"veu"
+"Nombre de fotogrames amb veu que es mantindran abans d'una transició de "
+"silenci a veu"
 
 #. i18n: ectx: label, entry (vadStartSpeech), group (PocketSphinx)
 #. i18n: ectx: property (toolTip), widget (QLabel, label_vadStartSpeech)
