@@ -2980,7 +2980,7 @@ msgstr "Desconegut"
 #: src/main.cpp:71
 #, kde-format
 msgid "The primary subtitle to be edited."
-msgstr "El subtítol primari a editar."
+msgstr "El subtítol primari que s'editarà."
 
 #: src/main.cpp:76
 #, kde-format
