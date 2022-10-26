@@ -42,7 +42,7 @@ SimpleRichTextEdit::SimpleRichTextEdit(QWidget *parent)
 
 	connect(app(), &Application::actionsReady, this, &SimpleRichTextEdit::setupActions);
 
-	QMenu *menu = createStandardContextMenu();
+	QMenu *menu = QTextEdit::createStandardContextMenu();
 	menu->setParent(this);
 	QList<QAction *> actions = menu->actions();
 	m_insertUnicodeControlCharMenu = 0;
