@@ -3430,7 +3430,7 @@ msgstr "Seleccioneu un script existent"
 #: src/scripting/scriptsmanager.cpp:531
 #, kde-format
 msgid "Rename Script"
-msgstr "Canvia el nom l'script"
+msgstr "Canvia el nom de l'script"
 
 #: src/scripting/scriptsmanager.cpp:540
 #, kde-format
