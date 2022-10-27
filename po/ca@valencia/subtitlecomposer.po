@@ -1222,7 +1222,7 @@ msgstr ""
 #: src/application_subtitle.cpp:702
 #, kde-format
 msgid "Could not read the subtitle file to append."
-msgstr "No s'ha pogut llegir el fitxer de subtítols a annexar."
+msgstr "No s'ha pogut llegir el fitxer de subtítols que s'ha d'annexar."
 
 #: src/application_subtitle.cpp:718
 #, kde-format
@@ -1540,7 +1540,7 @@ msgstr "Reprén la reproducció després de fer doble clic a la línia"
 #: src/configs/playerconfigwidget.ui:30
 #, kde-format
 msgid "Seconds to &jump on seek:"
-msgstr "Segons a sal&tar en buscar:"
+msgstr "Segons que s'han de sal&tar en buscar:"
 
 #. i18n: ectx: label, entry (VideoAutoPlay), group (VideoPlayer)
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_VideoAutoPlay)
@@ -2665,7 +2665,7 @@ msgstr "Esmena els errors i <-> l, 0 <-> O"
 #: src/formats/vobsub/vobsubinputprocessdialog.cpp:589
 #, kde-format
 msgid "VobSub Error"
-msgstr "Error a VobSub"
+msgstr "Error en VobSub"
 
 #. i18n: ectx: property (title), widget (QGroupBox, grpText)
 #: src/formats/vobsub/vobsubinputprocessdialog.ui:26
@@ -2985,7 +2985,7 @@ msgstr "El subtítol primari que s'editarà."
 #: src/main.cpp:76
 #, kde-format
 msgid "The video to be subtitled."
-msgstr "El vídeo a subtitular."
+msgstr "El vídeo que se subtitularà."
 
 #: src/main.cpp:81
 #, kde-format
@@ -3304,7 +3304,7 @@ msgstr "Duració del salt en avançar/recular"
 #: src/scconfig.kcfg:188
 #, kde-format
 msgid "Amount of frames to skip when stepping"
-msgstr "Quantitat de fotogrames a saltar en explorar"
+msgstr "Quantitat de fotogrames que s'han de saltar en explorar"
 
 #. i18n: ectx: label, entry (ShowPositionTimeEdit), group (VideoPlayer)
 #: src/scconfig.kcfg:192
