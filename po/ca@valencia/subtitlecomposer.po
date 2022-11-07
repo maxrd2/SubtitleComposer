@@ -1534,7 +1534,7 @@ msgstr ""
 #: src/configs/playerconfigwidget.ui:23
 #, kde-format
 msgid "Resume playback after line double click"
-msgstr "Reprén la reproducció després de fer doble clic a la línia"
+msgstr "Reprén la reproducció després de fer doble clic en la línia"
 
 #. i18n: ectx: property (text), widget (QLabel, lab_SeekJumpLength)
 #: src/configs/playerconfigwidget.ui:30
