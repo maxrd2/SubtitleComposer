@@ -88,8 +88,6 @@ handleCommandLine(SubtitleComposer::Application &app, KAboutData &aboutData)
 	parser.process(app);
 	aboutData.processCommandLine(&parser);
 
-	app.init();
-
 	app.mainWindow()->show();
 
 	QString fileSub;
@@ -202,8 +200,6 @@ main(int argc, char **argv)
 	SubtitleComposer::Application app(argc, argv);
 
 	setupIconTheme(argc, argv);
-
-	KLocalizedString::setApplicationDomain("subtitlecomposer");
 
 	KAboutData aboutData(
 		QStringLiteral("subtitlecomposer"),

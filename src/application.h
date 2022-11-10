@@ -65,8 +65,6 @@ public:
 	Application(int &argc, char **argv);
 	virtual ~Application();
 
-	void init();
-
 	inline Subtitle * subtitle() const { return m_subtitle.data(); }
 	inline UndoStack * undoStack() const { return m_undoStack; }
 	inline MainWindow * mainWindow() const { return m_mainWindow; }
