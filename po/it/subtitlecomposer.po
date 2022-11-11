@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: subtitlecomposer\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2022-10-04 00:43+0000\n"
+"POT-Creation-Date: 2022-11-11 00:45+0000\n"
 "PO-Revision-Date: 2022-04-01 23:47+0200\n"
 "Last-Translator: Luigi Toscano <luigi.toscano@tiscali.it>\n"
 "Language-Team: Italian <kde-i18n-it@kde.org>\n"
@@ -39,52 +39,52 @@ msgctxt "Encodings menu"
 msgid "Autodetect"
 msgstr "Rilevamento automatico"
 
-#: src/application.cpp:451
+#: src/application.cpp:443
 #, kde-format
 msgid "Go to Line"
 msgstr "Vai alla riga"
 
-#: src/application.cpp:451
+#: src/application.cpp:443
 #, kde-format
 msgid "&Go to line:"
 msgstr "Vai alla ri&ga:"
 
-#: src/application.cpp:626 src/core/subtitle.cpp:862
+#: src/application.cpp:618 src/core/subtitle.cpp:877
 #, kde-format
 msgid "Maximize Durations"
 msgstr "Massimizza la durata"
 
-#: src/application.cpp:655 src/core/subtitle.cpp:1137
+#: src/application.cpp:647 src/core/subtitle.cpp:1152
 #, kde-format
 msgid "Unbreak Lines"
 msgstr "Riunisci righe"
 
-#: src/application.cpp:666 src/core/subtitle.cpp:1146
+#: src/application.cpp:658 src/core/subtitle.cpp:1161
 #, kde-format
 msgid "Simplify Spaces"
 msgstr "Semplifica spaziature"
 
-#: src/application.cpp:720 src/dialogs/translatedialog.cpp:20
+#: src/application.cpp:712 src/dialogs/translatedialog.cpp:20
 #, kde-format
 msgid "Translate"
 msgstr "Traduci"
 
-#: src/application.cpp:720
+#: src/application.cpp:712
 #, kde-format
 msgid "Translating text (%1 to %2)..."
 msgstr "Traduzione del testo in corso (da %1 a %2)"
 
-#: src/application.cpp:724
+#: src/application.cpp:716
 #, kde-format
 msgid "Translating primary text (%1 to %2)..."
 msgstr "Traduzione del testo primario in corso (da %1 a %2)"
 
-#: src/application.cpp:725
+#: src/application.cpp:717
 #, kde-format
 msgid "Translating secondary text (%1 to %2)..."
 msgstr "Traduzione del testo secondario in corso (da %1 a %2)"
 
-#: src/application.cpp:753
+#: src/application.cpp:745
 #, kde-format
 msgid ""
 "Unable to perform texts synchronization (sent and received lines count do "
@@ -93,17 +93,17 @@ msgstr ""
 "Impossibile sincronizzare il testo (il numero di righe inviate e ricevute "
 "non coincide)."
 
-#: src/application.cpp:757
+#: src/application.cpp:749
 #, kde-format
 msgid "Translate Primary Text"
 msgstr "Traduci testo primario"
 
-#: src/application.cpp:757
+#: src/application.cpp:749
 #, kde-format
 msgid "Translate Secondary Text"
 msgstr "Traduci testo secondario"
 
-#: src/application.cpp:772
+#: src/application.cpp:764
 #, kde-format
 msgid ""
 "There was an error performing the translation:\n"
@@ -113,54 +113,54 @@ msgstr ""
 "Si è verificato un errore durante la traduzione:\n"
 "%1"
 
-#: src/application.cpp:810
+#: src/application.cpp:802
 #, kde-format
 msgid "Open Video"
 msgstr "Apri vídeo"
 
-#: src/application.cpp:1008 src/application.cpp:1015
-#: src/application_subtitle.cpp:652
+#: src/application.cpp:1000 src/application.cpp:1007
+#: src/application_subtitle.cpp:655
 #, kde-format
 msgid "Untitled"
 msgstr "Senza titolo"
 
-#: src/application.cpp:1010 src/application_subtitle.cpp:652
+#: src/application.cpp:1002 src/application_subtitle.cpp:655
 #, kde-format
 msgid "Untitled Translation"
 msgstr "Traduzione senza titolo"
 
-#: src/application.cpp:1111
+#: src/application.cpp:1103
 #, kde-format
 msgid "Pause"
 msgstr "Pausa"
 
-#: src/application.cpp:1119 src/application_actions.cpp:566
+#: src/application.cpp:1111 src/application_actions.cpp:566
 #, kde-format
 msgid "Play"
 msgstr "Riproduci"
 
-#: src/application.cpp:1180
+#: src/application.cpp:1172
 #, kde-format
 msgid "Seek backwards 1 second"
 msgid_plural "Seek backwards %1 seconds"
 msgstr[0] "Cerca indietro di %1 secondi"
 msgstr[1] "Cerca indietro di %1 secondi"
 
-#: src/application.cpp:1181
+#: src/application.cpp:1173
 #, kde-format
 msgid "Seek forwards 1 second"
 msgid_plural "Seek forwards %1 seconds"
 msgstr[0] "Cerca in avanti di %1 secondi"
 msgstr[1] "Cerca in avanti di %1 secondi"
 
-#: src/application.cpp:1184 src/application.cpp:1188
+#: src/application.cpp:1176 src/application.cpp:1180
 #, kde-format
 msgid "Shift %2%1 millisecond"
 msgid_plural "Shift %2%1 milliseconds"
 msgstr[0] "Sposta di %2%1 millisecondi"
 msgstr[1] "Sposta di %2%1 millisecondi"
 
-#: src/application.cpp:1185 src/application.cpp:1189
+#: src/application.cpp:1177 src/application.cpp:1181
 #, kde-format
 msgid "Shift selected lines %2%1 millisecond"
 msgid_plural "Shift selected lines %2%1 milliseconds"
@@ -361,7 +361,7 @@ msgstr "Rimuovi"
 msgid "Remove selected lines"
 msgstr "Elimina le righe selezionate"
 
-#: src/application_actions.cpp:212 src/core/subtitle.cpp:544
+#: src/application_actions.cpp:212 src/core/subtitle.cpp:559
 #, kde-format
 msgid "Split Lines"
 msgstr "Dividi righe"
@@ -371,7 +371,7 @@ msgstr "Dividi righe"
 msgid "Split selected lines"
 msgstr "Dividi le righe selezionate"
 
-#: src/application_actions.cpp:219 src/core/subtitle.cpp:626
+#: src/application_actions.cpp:219 src/core/subtitle.cpp:641
 #: src/gui/waveform/waveformwidget.cpp:711
 #, kde-format
 msgid "Join Lines"
@@ -383,7 +383,7 @@ msgid "Join selected lines"
 msgstr "Unisci le righe selezionate"
 
 #: src/application_actions.cpp:227 src/errors/finderrorsdialog.cpp:114
-#: src/gui/treeview/richlineedit.cpp:109 src/widgets/simplerichtextedit.cpp:370
+#: src/gui/treeview/richlineedit.cpp:111 src/widgets/simplerichtextedit.cpp:370
 #, kde-format
 msgid "Select All"
 msgstr "Seleziona tutto"
@@ -1114,7 +1114,7 @@ msgid "Open Subtitle"
 msgstr "Apri sottotitoli"
 
 #: src/application_subtitle.cpp:207 src/application_subtitle.cpp:227
-#: src/application_subtitle.cpp:470 src/application_subtitle.cpp:495
+#: src/application_subtitle.cpp:473 src/application_subtitle.cpp:498
 #, kde-format
 msgid ""
 "<qt>Could not parse the subtitle file.<br/>This may have been caused by "
@@ -1143,7 +1143,7 @@ msgstr "C'è stato un errore durante il salvataggio dei sottotitoli."
 msgid "Save Subtitle"
 msgstr "Salva sottotitoli"
 
-#: src/application_subtitle.cpp:371 src/application_subtitle.cpp:609
+#: src/application_subtitle.cpp:371 src/application_subtitle.cpp:612
 #, kde-format
 msgid ""
 "Currently opened translation subtitle has unsaved changes.\n"
@@ -1152,7 +1152,7 @@ msgstr ""
 "La traduzione corrente ha delle modifiche non salvate.\n"
 "Vuoi salvare?"
 
-#: src/application_subtitle.cpp:372 src/application_subtitle.cpp:610
+#: src/application_subtitle.cpp:372 src/application_subtitle.cpp:613
 #, kde-format
 msgid "Close Translation Subtitle"
 msgstr "Chiudi i sottotitoli tradotti"
@@ -1171,60 +1171,60 @@ msgstr ""
 msgid "Close Subtitle"
 msgstr "Chiudi sottotitoli"
 
-#: src/application_subtitle.cpp:439
+#: src/application_subtitle.cpp:442
 #, kde-format
 msgid "Open Translation Subtitle"
 msgstr "Apri traduzione sottotitoli"
 
-#: src/application_subtitle.cpp:524
+#: src/application_subtitle.cpp:527
 #, kde-format
 msgctxt "@item:inmenu Display primary text in video player"
 msgid "Primary"
 msgstr "Testo primario"
 
-#: src/application_subtitle.cpp:525
+#: src/application_subtitle.cpp:528
 #, kde-format
 msgctxt "@item:inmenu Display translation text in video player"
 msgid "Translation"
 msgstr "Traduzione"
 
-#: src/application_subtitle.cpp:565
+#: src/application_subtitle.cpp:568
 #, kde-format
 msgid "There was an error saving the translation subtitle."
 msgstr "C'è stato un errore durante il salvataggio dei sottotitoli tradotti."
 
-#: src/application_subtitle.cpp:573
+#: src/application_subtitle.cpp:576
 #, kde-format
 msgid "Save Translation Subtitle"
 msgstr "Salva traduzione sottotitoli"
 
-#: src/application_subtitle.cpp:659
+#: src/application_subtitle.cpp:662
 #, kde-format
 msgctxt "Suffix added to split subtitles"
 msgid "split"
 msgstr "diviso"
 
-#: src/application_subtitle.cpp:677
+#: src/application_subtitle.cpp:680
 #, kde-format
 msgid "Could not write the split subtitle file."
 msgstr "Impossibile scrivere il file dei sottotitoli divisi."
 
-#: src/application_subtitle.cpp:677
+#: src/application_subtitle.cpp:680
 #, kde-format
 msgid "Could not write the split subtitle translation file."
 msgstr "Impossibile scrivere il file diviso dei sottotitoli tradotti."
 
-#: src/application_subtitle.cpp:702
+#: src/application_subtitle.cpp:705
 #, kde-format
 msgid "Could not read the subtitle file to append."
 msgstr "Impossibile leggere il file dei sottotitoli da aggiungere."
 
-#: src/application_subtitle.cpp:718
+#: src/application_subtitle.cpp:721
 #, kde-format
 msgid "The specified time does not split the subtitles."
 msgstr "Il tempo indicato non divide i sottotitoli."
 
-#: src/application_subtitle.cpp:753
+#: src/application_subtitle.cpp:756
 #, kde-format
 msgid ""
 "Could not open a new Subtitle Composer window.\n"
@@ -1233,7 +1233,7 @@ msgstr ""
 "Impossibile aprire una nuova finestra di Subtitle Composer.\n"
 "La parte divisa è stata salvata come %1."
 
-#: src/application_subtitle.cpp:754
+#: src/application_subtitle.cpp:757
 #, kde-format
 msgid ""
 "Could not open a new Subtitle Composer window.\n"
@@ -1242,13 +1242,13 @@ msgstr ""
 "Impossibile aprire una nuova finestra di Subtitle Composer.\n"
 "Le parti divise sono state salvate come %1 e %2."
 
-#: src/application_subtitle.cpp:772
+#: src/application_subtitle.cpp:775
 #, kde-format
 msgid "The reference subtitle must have more than one line to proceed."
 msgstr ""
 "Il sottotitolo di riferimento deve avere più di una riga per poter procedere."
 
-#: src/application_subtitle.cpp:781
+#: src/application_subtitle.cpp:784
 #, kde-format
 msgid "Could not parse the reference subtitle file."
 msgstr "Impossibile interpretare il file dei sottotitoli di riferimento."
@@ -1544,7 +1544,7 @@ msgid "Start playing video when loaded"
 msgstr "Riproduci video quando caricato"
 
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_ShowPositionTimeEdit)
-#: src/configs/playerconfigwidget.ui:57 src/gui/playerwidget.cpp:433
+#: src/configs/playerconfigwidget.ui:57 src/gui/playerwidget.cpp:435
 #, kde-format
 msgid "Show editable position control"
 msgstr "Mostra controllo di modifica posizione"
@@ -1741,149 +1741,149 @@ msgstr "Colore della posizione del lettore:"
 msgid "Mouse indicator color:"
 msgstr "Colore dell'indicatore del mouse:"
 
-#: src/core/subtitle.cpp:59
+#: src/core/subtitle.cpp:62
 #, kde-format
 msgid "Set Primary Data"
 msgstr "Imposta dati primari"
 
-#: src/core/subtitle.cpp:105
+#: src/core/subtitle.cpp:120
 #, kde-format
 msgid "Clear Primary Text Data"
 msgstr "Cancella i dati del testo principale"
 
-#: src/core/subtitle.cpp:118
+#: src/core/subtitle.cpp:133
 #, kde-format
 msgid "Set Secondary Data"
 msgstr "Imposta dati secondari"
 
-#: src/core/subtitle.cpp:155
+#: src/core/subtitle.cpp:170
 #, kde-format
 msgid "Clear Secondary Text Data"
 msgstr "Cancella dati di testo secondari"
 
-#: src/core/subtitle.cpp:223 src/dialogs/changeframeratedialog.cpp:22
+#: src/core/subtitle.cpp:238 src/dialogs/changeframeratedialog.cpp:22
 #, kde-format
 msgid "Change Frame Rate"
 msgstr "Cambia frequenza dei fotogrammi"
 
-#: src/core/subtitle.cpp:385 src/core/subtitle.cpp:399
+#: src/core/subtitle.cpp:400 src/core/subtitle.cpp:414
 #: src/gui/waveform/waveformwidget.cpp:694
 #, kde-format
 msgid "Insert Line"
 msgstr "Inserisci riga"
 
-#: src/core/subtitle.cpp:432 src/core/subtitle.cpp:442
-#: src/core/subtitle.cpp:459 src/core/undo/subtitleactions.cpp:120
+#: src/core/subtitle.cpp:447 src/core/subtitle.cpp:457
+#: src/core/subtitle.cpp:474 src/core/undo/subtitleactions.cpp:122
 #, kde-format
 msgid "Remove Lines"
 msgstr "Rimuovi righe"
 
-#: src/core/subtitle.cpp:724
+#: src/core/subtitle.cpp:739
 #, kde-format
 msgid "Shift Lines"
 msgstr "Sposta righe"
 
-#: src/core/subtitle.cpp:780
+#: src/core/subtitle.cpp:795
 #, kde-format
 msgid "Adjust Lines"
 msgstr "Aggiusta righe"
 
-#: src/core/subtitle.cpp:791
+#: src/core/subtitle.cpp:806
 #, kde-format
 msgid "Sort"
 msgstr "Ordina"
 
-#: src/core/subtitle.cpp:823 src/dialogs/durationlimitsdialog.cpp:18
+#: src/core/subtitle.cpp:838 src/dialogs/durationlimitsdialog.cpp:18
 #, kde-format
 msgid "Enforce Duration Limits"
 msgstr "Forza i limiti di durata"
 
-#: src/core/subtitle.cpp:885 src/dialogs/autodurationsdialog.cpp:21
+#: src/core/subtitle.cpp:900 src/dialogs/autodurationsdialog.cpp:21
 #, kde-format
 msgid "Set Automatic Durations"
 msgstr "Imposta durata automatica"
 
-#: src/core/subtitle.cpp:918 src/dialogs/fixoverlappingtimesdialog.cpp:18
+#: src/core/subtitle.cpp:933 src/dialogs/fixoverlappingtimesdialog.cpp:18
 #, kde-format
 msgid "Fix Overlapping Times"
 msgstr "Correggi tempi sovrapposti"
 
-#: src/core/subtitle.cpp:949
+#: src/core/subtitle.cpp:964
 #, kde-format
 msgid "Fix Lines Punctuation"
 msgstr "Correggi punteggiature righe"
 
-#: src/core/subtitle.cpp:991
+#: src/core/subtitle.cpp:1006
 #, kde-format
 msgid "Lower Case"
 msgstr "Converti in minuscolo"
 
-#: src/core/subtitle.cpp:1021
+#: src/core/subtitle.cpp:1036
 #, kde-format
 msgid "Upper Case"
 msgstr "Converti in maiuscolo"
 
-#: src/core/subtitle.cpp:1051
+#: src/core/subtitle.cpp:1066
 #, kde-format
 msgid "Title Case"
 msgstr "Iniziali in maiuscolo"
 
-#: src/core/subtitle.cpp:1084
+#: src/core/subtitle.cpp:1099
 #, kde-format
 msgid "Sentence Case"
 msgstr "Maiuscolo a inizio frase"
 
-#: src/core/subtitle.cpp:1128 src/dialogs/smarttextsadjustdialog.cpp:18
+#: src/core/subtitle.cpp:1143 src/dialogs/smarttextsadjustdialog.cpp:18
 #, kde-format
 msgid "Break Lines"
 msgstr "Interrompi righe"
 
-#: src/core/subtitle.cpp:1155
+#: src/core/subtitle.cpp:1170
 #, kde-format
 msgid "Synchronize Subtitles"
 msgstr "Sincronizza sottotitoli"
 
-#: src/core/subtitle.cpp:1180 src/dialogs/joinsubtitlesdialog.cpp:24
+#: src/core/subtitle.cpp:1195 src/dialogs/joinsubtitlesdialog.cpp:24
 #, kde-format
 msgid "Join Subtitles"
 msgstr "Unisci sottotitoli"
 
-#: src/core/subtitle.cpp:1224 src/core/subtitle.cpp:1230
+#: src/core/subtitle.cpp:1240 src/core/subtitle.cpp:1246
 #, kde-format
 msgid "Split Subtitles"
 msgstr "Dividi sottotitoli"
 
-#: src/core/subtitle.cpp:1249
+#: src/core/subtitle.cpp:1265
 #, kde-format
 msgid "Toggle Lines Style"
 msgstr "Alterna stile delle righe"
 
-#: src/core/subtitle.cpp:1293
+#: src/core/subtitle.cpp:1309
 #, kde-format
 msgid "Change Lines Text Color"
 msgstr "Imposta colore testo delle righe"
 
-#: src/core/subtitle.cpp:1313
+#: src/core/subtitle.cpp:1329
 #, kde-format
 msgid "Set Lines Mark"
 msgstr "Imposta marcatori delle righe"
 
-#: src/core/subtitle.cpp:1313
+#: src/core/subtitle.cpp:1329
 #, kde-format
 msgid "Clear Lines Mark"
 msgstr "Rimuovi marcatori delle righe"
 
-#: src/core/subtitle.cpp:1328
+#: src/core/subtitle.cpp:1344
 #, kde-format
 msgid "Toggle Lines Mark"
 msgstr "Alterna stile delle righe"
 
-#: src/core/subtitle.cpp:1338
+#: src/core/subtitle.cpp:1354
 #, kde-format
 msgid "Clear Line Errors"
 msgstr "Cancella errori delle righe"
 
-#: src/core/subtitle.cpp:1349 src/core/subtitle.cpp:1360
+#: src/core/subtitle.cpp:1365 src/core/subtitle.cpp:1376
 #: src/errors/errorfinder.cpp:82
 #, kde-format
 msgid "Check Lines Errors"
@@ -2100,50 +2100,56 @@ msgstr "Testo non tradotto."
 msgid "Has user mark."
 msgstr "Contiene un segno utente."
 
-#: src/core/subtitleline.cpp:378 src/core/undo/subtitlelineactions.cpp:105
+#: src/core/subtitleline.cpp:388 src/core/undo/subtitlelineactions.cpp:105
 #, kde-format
 msgid "Set Line Show Time"
 msgstr "Imposta tempo di visualizzazione riga"
 
-#: src/core/subtitleline.cpp:402 src/core/undo/subtitlelineactions.cpp:132
+#: src/core/subtitleline.cpp:412 src/core/undo/subtitlelineactions.cpp:132
 #, kde-format
 msgid "Set Line Hide Time"
 msgstr "Imposta tempo per nascondere riga"
 
-#: src/core/subtitleline.cpp:449
+#: src/core/subtitleline.cpp:459
 #, kde-format
 msgid "Set Line Times"
 msgstr "Imposta tempi riga"
 
-#: src/core/subtitleline.cpp:546
+#: src/core/subtitleline.cpp:556
 #, kde-format
 msgid "Shift Line Times"
 msgstr "Sposta tempi riga"
 
-#: src/core/subtitleline.cpp:556
+#: src/core/subtitleline.cpp:566
 #, kde-format
 msgid "Adjust Line Times"
 msgstr "Aggiusta tempi riga"
 
-#: src/core/undo/subtitleactions.cpp:30
+#: src/core/undo/subtitleactions.cpp:32
 #, kde-format
 msgid "Set Frame Rate"
 msgstr "Imposta frequenza dei fotogrammi"
 
-#: src/core/undo/subtitleactions.cpp:50
+#: src/core/undo/subtitleactions.cpp:52
 #, kde-format
 msgid "Insert Lines"
 msgstr "Inserisci righe"
 
-#: src/core/undo/subtitleactions.cpp:198
+#: src/core/undo/subtitleactions.cpp:200
 #, kde-format
 msgid "Move Line"
 msgstr "Sposta riga"
 
-#: src/core/undo/subtitleactions.cpp:283
+#: src/core/undo/subtitleactions.cpp:285
 #, kde-format
 msgid "Swap Texts"
 msgstr "Scambia testi"
+
+#: src/core/undo/subtitleactions.cpp:308
+#, fuzzy, kde-format
+#| msgid "Change Case"
+msgid "Change stylesheet"
+msgstr "Cambia maiuscole/minuscole"
 
 #: src/core/undo/subtitlelineactions.cpp:28
 #, kde-format
@@ -2798,72 +2804,98 @@ msgstr "<b>FPS</b>"
 msgid "<b>Playback Rate</b>"
 msgstr "<b>Velocità di Riproduzione</b>"
 
-#: src/gui/playerwidget.cpp:660
+#: src/gui/playerwidget.cpp:665
 #, kde-format
 msgid "<qt>There was an error opening media file %1.</qt>"
 msgstr ""
 "<qt>C'è stato un errore durante l'apertura del file multimediale %1</qt>"
 
-#: src/gui/playerwidget.cpp:676 src/gui/playerwidget.cpp:677
-#: src/gui/playerwidget.cpp:678 src/gui/playerwidget.cpp:679
-#: src/gui/playerwidget.cpp:746 src/gui/playerwidget.cpp:754
-#: src/gui/playerwidget.cpp:760
+#: src/gui/playerwidget.cpp:681 src/gui/playerwidget.cpp:682
+#: src/gui/playerwidget.cpp:683 src/gui/playerwidget.cpp:684
+#: src/gui/playerwidget.cpp:751 src/gui/playerwidget.cpp:759
+#: src/gui/playerwidget.cpp:765
 #, kde-format
 msgid "<i>Unknown</i>"
 msgstr "<i>Sconosciuto</i>"
 
-#: src/gui/playerwidget.cpp:692 src/gui/playerwidget.cpp:694
+#: src/gui/playerwidget.cpp:697 src/gui/playerwidget.cpp:699
 #, kde-format
 msgid "Unexpected error when playing file."
 msgstr "Errore inaspettato durante la riproduzione del file."
 
-#: src/gui/playerwidget.cpp:692 src/gui/playerwidget.cpp:694
+#: src/gui/playerwidget.cpp:697 src/gui/playerwidget.cpp:699
 #, kde-format
 msgid "Error Playing File"
 msgstr "Errore durante la riproduzione del file"
 
-#: src/gui/treeview/linesmodel.cpp:151
+#: src/gui/subtitlemeta/subtitlemetawidget.cpp:41
+#, fuzzy, kde-format
+#| msgid "Styles"
+msgid "&Stylesheet"
+msgstr "Stili"
+
+#: src/gui/subtitlemeta/subtitlemetawidget.cpp:42
+#, kde-format
+msgid "&Comments"
+msgstr ""
+
+#: src/gui/subtitlemeta/subtitlemetawidget.cpp:82
+#, kde-format
+msgid "Intro"
+msgstr ""
+
+#: src/gui/subtitlemeta/subtitlemetawidget.cpp:84
+#, kde-format
+msgid "Header"
+msgstr ""
+
+#: src/gui/subtitlemeta/subtitlemetawidget.cpp:86
+#, kde-format
+msgid "Footer"
+msgstr ""
+
+#: src/gui/treeview/linesmodel.cpp:156
 #, kde-format
 msgid "<b>Observations:</b>"
 msgstr "<b>Osservazioni:</b>"
 
-#: src/gui/treeview/linesmodel.cpp:178
+#: src/gui/treeview/linesmodel.cpp:183
 #, kde-format
 msgctxt "@title:column Subtitle line number"
 msgid "Line"
 msgstr "Riga"
 
-#: src/gui/treeview/linesmodel.cpp:179
+#: src/gui/treeview/linesmodel.cpp:184
 #, kde-format
 msgctxt "@title:column"
 msgid "Pause"
 msgstr "Pausa"
 
-#: src/gui/treeview/linesmodel.cpp:180
+#: src/gui/treeview/linesmodel.cpp:185
 #, kde-format
 msgctxt "@title:column"
 msgid "Show Time"
 msgstr "Mostra tempo"
 
-#: src/gui/treeview/linesmodel.cpp:181
+#: src/gui/treeview/linesmodel.cpp:186
 #, kde-format
 msgctxt "@title:column"
 msgid "Hide Time"
 msgstr "Nascondi tempo"
 
-#: src/gui/treeview/linesmodel.cpp:182
+#: src/gui/treeview/linesmodel.cpp:187
 #, kde-format
 msgctxt "@title:column"
 msgid "Duration"
 msgstr "Durata"
 
-#: src/gui/treeview/linesmodel.cpp:183
+#: src/gui/treeview/linesmodel.cpp:188
 #, kde-format
 msgctxt "@title:column Subtitle line (primary) text"
 msgid "Text"
 msgstr "Testo"
 
-#: src/gui/treeview/linesmodel.cpp:184
+#: src/gui/treeview/linesmodel.cpp:189
 #, kde-format
 msgctxt "@title:column Subtitle line translation text"
 msgid "Translation"
@@ -2884,52 +2916,52 @@ msgstr "Tempi"
 msgid "Errors"
 msgstr "Errori"
 
-#: src/gui/treeview/richlineedit.cpp:81 src/widgets/simplerichtextedit.cpp:339
+#: src/gui/treeview/richlineedit.cpp:83 src/widgets/simplerichtextedit.cpp:339
 #, kde-format
 msgid "Cut"
 msgstr "Taglia"
 
-#: src/gui/treeview/richlineedit.cpp:88 src/widgets/simplerichtextedit.cpp:345
+#: src/gui/treeview/richlineedit.cpp:90 src/widgets/simplerichtextedit.cpp:345
 #, kde-format
 msgid "Copy"
 msgstr "Copia"
 
-#: src/gui/treeview/richlineedit.cpp:95 src/widgets/simplerichtextedit.cpp:352
+#: src/gui/treeview/richlineedit.cpp:97 src/widgets/simplerichtextedit.cpp:352
 #, kde-format
 msgid "Paste"
 msgstr "Incolla"
 
-#: src/gui/treeview/richlineedit.cpp:103 src/widgets/simplerichtextedit.cpp:365
+#: src/gui/treeview/richlineedit.cpp:105 src/widgets/simplerichtextedit.cpp:365
 #, kde-format
 msgctxt "@action:inmenu Clear all text"
 msgid "Clear"
 msgstr "Svuota"
 
-#: src/gui/treeview/richlineedit.cpp:116 src/widgets/simplerichtextedit.cpp:376
+#: src/gui/treeview/richlineedit.cpp:118 src/widgets/simplerichtextedit.cpp:376
 #, kde-format
 msgctxt "@action:inmenu Toggle bold style"
 msgid "Bold"
 msgstr "Grassetto"
 
-#: src/gui/treeview/richlineedit.cpp:124 src/widgets/simplerichtextedit.cpp:383
+#: src/gui/treeview/richlineedit.cpp:126 src/widgets/simplerichtextedit.cpp:383
 #, kde-format
 msgctxt "@action:inmenu Toggle italic style"
 msgid "Italic"
 msgstr "Italico"
 
-#: src/gui/treeview/richlineedit.cpp:132 src/widgets/simplerichtextedit.cpp:390
+#: src/gui/treeview/richlineedit.cpp:134 src/widgets/simplerichtextedit.cpp:390
 #, kde-format
 msgctxt "@action:inmenu Toggle underline style"
 msgid "Underline"
 msgstr "Sottolineato"
 
-#: src/gui/treeview/richlineedit.cpp:140 src/widgets/simplerichtextedit.cpp:397
+#: src/gui/treeview/richlineedit.cpp:142 src/widgets/simplerichtextedit.cpp:397
 #, kde-format
 msgctxt "@action:inmenu Toggle strike through style"
 msgid "Strike Through"
 msgstr "Barrato"
 
-#: src/gui/treeview/richlineedit.cpp:148 src/widgets/simplerichtextedit.cpp:404
+#: src/gui/treeview/richlineedit.cpp:150 src/widgets/simplerichtextedit.cpp:404
 #, kde-format
 msgctxt "@action:inmenu Change Text Color"
 msgid "Text Color"
@@ -2991,67 +3023,72 @@ msgstr ""
 "Se incluso, un secondo pannello viene aggiunto a destra del sottotitolo "
 "principale per una traduzione fianco a fianco."
 
-#: src/main.cpp:210
+#: src/main.cpp:206
 #, kde-format
 msgid "Subtitle Composer"
 msgstr "Subtitle Composer"
 
-#: src/main.cpp:212
+#: src/main.cpp:208
 #, kde-format
 msgid "A KDE subtitle editor."
 msgstr "Un editor di sottotitoli basato su tecnologie KDE"
 
-#: src/main.cpp:218
+#: src/main.cpp:214
 #, kde-format
 msgid "Maintainer"
 msgstr "Responsabile"
 
-#: src/main.cpp:219
+#: src/main.cpp:215
 #, kde-format
 msgid "Former Maintainer"
 msgstr "Responsabile precedente"
 
-#: src/main.cpp:220
+#: src/main.cpp:216
 #, kde-format
 msgid "Patches and Website"
 msgstr "Patch e sito web"
 
-#: src/main.cpp:222
+#: src/main.cpp:218
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
 msgid "Your names"
 msgstr "Luigi Toscano,Alessandro Polverini"
 
-#: src/main.cpp:222
+#: src/main.cpp:218
 #, kde-format
 msgctxt "EMAIL OF TRANSLATORS"
 msgid "Your emails"
 msgstr "luigi.toscano@tiscali.it,alex@nibbles.it"
 
-#: src/main.cpp:224
+#: src/main.cpp:220
 #, kde-format
 msgid "code contributions"
 msgstr "contributi al codice"
 
-#: src/main.cpp:225
+#: src/main.cpp:221
 #, kde-format
 msgid "code contributions, Arch Linux packaging"
 msgstr "contributi al codice, pacchettizzazione Arch Linux"
 
-#: src/main.cpp:227
+#: src/main.cpp:223
 #, kde-format
 msgid "All people who have contributed and I have forgotten to mention"
 msgstr "Tutte le persone che hanno contribuito e che ho dimenticato di citare"
 
-#: src/mainwindow.cpp:35
+#: src/mainwindow.cpp:36
 #, kde-format
 msgid "Waveform"
 msgstr "Forma d'onda"
 
-#: src/mainwindow.cpp:49
+#: src/mainwindow.cpp:50
 #, kde-format
 msgid "Video Player"
 msgstr "Lettore video"
+
+#: src/mainwindow.cpp:64
+#, kde-format
+msgid "Styles and Comments"
+msgstr ""
 
 #. i18n: ectx: label, entry (DefaultSubtitlesEncoding), group (General)
 #: src/scconfig.kcfg:10
