@@ -99,7 +99,7 @@ RichCSS::parse(const QChar *css)
 	if(!css || css->isNull())
 		return;
 
-	m_unformatted.append(css);
+	const QChar *cssStart = css;
 
 	for(;;) {
 		QString cssSel = parseCssSelector(&css);
@@ -129,6 +129,9 @@ RichCSS::parse(const QChar *css)
 			break;
 		css++;
 	}
+
+	m_unformatted.append(cssStart, css - cssStart);
+
 	emit changed();
 }
 
