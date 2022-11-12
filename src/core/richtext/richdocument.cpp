@@ -114,37 +114,41 @@ RichDocument::setRichText(const RichString &text, bool resetUndo)
 		const QRgb posColor = text.styleColorAt(pos);
 		const quint64 posClasses = text.styleClassesAt(pos);
 		const qint32 posVoice = text.styleVoiceAt(pos);
-		bool insert = false;
 		if(currentStyleFlags != posFlags || ((posFlags & SubtitleComposer::RichString::Color) && currentStyleColor != posColor)) {
-			insert = true;
+			if(prev != pos) {
+				m_undoableCursor.insertText(text.string().mid(prev, pos - prev), format);
+				prev = pos;
+			}
 			currentStyleFlags = posFlags;
 			currentStyleColor = posColor;
 			format.setFontWeight(currentStyleFlags & SubtitleComposer::RichString::Bold ? QFont::Bold : QFont::Normal);
 			format.setFontItalic(currentStyleFlags & SubtitleComposer::RichString::Italic);
 			format.setFontUnderline(currentStyleFlags & SubtitleComposer::RichString::Underline);
 			format.setFontStrikeOut(currentStyleFlags & SubtitleComposer::RichString::StrikeThrough);
-			if((currentStyleFlags &SubtitleComposer::RichString::Color) == 0)
+			if((currentStyleFlags & SubtitleComposer::RichString::Color) == 0)
 				format.setForeground(QBrush());
 			else
 				format.setForeground(QBrush(QColor(currentStyleColor)));
 		}
 		if(currentStyleClasses != posClasses) {
-			insert = true;
+			if(prev != pos) {
+				m_undoableCursor.insertText(text.string().mid(prev, pos - prev), format);
+				prev = pos;
+			}
 			currentStyleClasses = posClasses;
 			format.setProperty(RichDocument::Class, QVariant::fromValue(text.styleClassNamesAt(pos)));
 		}
 		if(currentStyleVoice != posVoice) {
-			insert = true;
+			if(prev != pos) {
+				m_undoableCursor.insertText(text.string().mid(prev, pos - prev), format);
+				prev = pos;
+			}
 			currentStyleVoice = posVoice;
 			format.setProperty(RichDocument::Voice, QVariant::fromValue(text.styleVoiceNameAt(pos)));
 		}
-		if(insert && prev != pos) {
-			m_undoableCursor.insertText(text.midRef(prev, pos - prev).toString(), format);
-			prev = pos;
-		}
 	}
 	if(prev != text.length())
-		m_undoableCursor.insertText(text.midRef(prev).toString(), format);
+		m_undoableCursor.insertText(text.string().mid(prev), format);
 
 	if(resetUndo)
 		setUndoRedoEnabled(true);
