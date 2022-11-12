@@ -1,0 +1,225 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>SubtitlePositionWidget</class>
+ <widget class="QWidget" name="SubtitlePositionWidget">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>400</width>
+    <height>306</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Form</string>
+  </property>
+  <layout class="QGridLayout" name="gridLayout">
+   <item row="1" column="0" alignment="Qt::AlignTop">
+    <widget class="QGroupBox" name="grpHAlign">
+     <property name="title">
+      <string>Horizontal Alignment</string>
+     </property>
+     <layout class="QHBoxLayout" name="horizontalLayout">
+      <item>
+       <spacer name="haSL">
+        <property name="orientation">
+         <enum>Qt::Horizontal</enum>
+        </property>
+        <property name="sizeHint" stdset="0">
+         <size>
+          <width>40</width>
+          <height>20</height>
+         </size>
+        </property>
+       </spacer>
+      </item>
+      <item>
+       <widget class="QPushButton" name="haLeft">
+        <property name="text">
+         <string/>
+        </property>
+        <property name="icon">
+         <iconset theme="align-horizontal-left">
+          <normaloff>.</normaloff>.</iconset>
+        </property>
+        <property name="checkable">
+         <bool>true</bool>
+        </property>
+        <property name="autoExclusive">
+         <bool>true</bool>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QPushButton" name="haCenter">
+        <property name="text">
+         <string/>
+        </property>
+        <property name="icon">
+         <iconset theme="align-horizontal-center">
+          <normaloff>.</normaloff>.</iconset>
+        </property>
+        <property name="checkable">
+         <bool>true</bool>
+        </property>
+        <property name="autoExclusive">
+         <bool>true</bool>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QPushButton" name="haRight">
+        <property name="text">
+         <string/>
+        </property>
+        <property name="icon">
+         <iconset theme="align-horizontal-right">
+          <normaloff>.</normaloff>.</iconset>
+        </property>
+        <property name="checkable">
+         <bool>true</bool>
+        </property>
+        <property name="autoExclusive">
+         <bool>true</bool>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <spacer name="haSR">
+        <property name="orientation">
+         <enum>Qt::Horizontal</enum>
+        </property>
+        <property name="sizeHint" stdset="0">
+         <size>
+          <width>40</width>
+          <height>20</height>
+         </size>
+        </property>
+       </spacer>
+      </item>
+     </layout>
+    </widget>
+   </item>
+   <item row="1" column="1" alignment="Qt::AlignTop">
+    <widget class="QGroupBox" name="grpVAlign">
+     <property name="title">
+      <string>Vertical Alignment</string>
+     </property>
+     <layout class="QHBoxLayout" name="horizontalLayout_2">
+      <item>
+       <spacer name="vaSL">
+        <property name="orientation">
+         <enum>Qt::Horizontal</enum>
+        </property>
+        <property name="sizeHint" stdset="0">
+         <size>
+          <width>40</width>
+          <height>20</height>
+         </size>
+        </property>
+       </spacer>
+      </item>
+      <item>
+       <widget class="QPushButton" name="vaTop">
+        <property name="icon">
+         <iconset theme="align-vertical-top">
+          <normaloff>.</normaloff>.</iconset>
+        </property>
+        <property name="checkable">
+         <bool>true</bool>
+        </property>
+        <property name="autoExclusive">
+         <bool>true</bool>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QPushButton" name="vaBottom">
+        <property name="icon">
+         <iconset theme="align-vertical-bottom">
+          <normaloff>.</normaloff>.</iconset>
+        </property>
+        <property name="checkable">
+         <bool>true</bool>
+        </property>
+        <property name="autoExclusive">
+         <bool>true</bool>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <spacer name="vaSR">
+        <property name="orientation">
+         <enum>Qt::Horizontal</enum>
+        </property>
+        <property name="sizeHint" stdset="0">
+         <size>
+          <width>40</width>
+          <height>20</height>
+         </size>
+        </property>
+       </spacer>
+      </item>
+     </layout>
+    </widget>
+   </item>
+   <item row="0" column="0" colspan="2" alignment="Qt::AlignTop">
+    <widget class="QGroupBox" name="grpPosition">
+     <property name="title">
+      <string>Position/Size</string>
+     </property>
+     <layout class="QGridLayout" name="gridLayout_2">
+      <item row="4" column="1">
+       <widget class="QDoubleSpinBox" name="posBottom">
+        <property name="suffix">
+         <string>%</string>
+        </property>
+        <property name="maximum">
+         <double>100.000000000000000</double>
+        </property>
+       </widget>
+      </item>
+      <item row="3" column="0">
+       <widget class="QDoubleSpinBox" name="posLeft">
+        <property name="suffix">
+         <string>%</string>
+        </property>
+        <property name="maximum">
+         <double>100.000000000000000</double>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="1">
+       <widget class="QDoubleSpinBox" name="posTop">
+        <property name="suffix">
+         <string>%</string>
+        </property>
+        <property name="maximum">
+         <double>100.000000000000000</double>
+        </property>
+       </widget>
+      </item>
+      <item row="3" column="2">
+       <widget class="QDoubleSpinBox" name="posRight">
+        <property name="suffix">
+         <string>%</string>
+        </property>
+        <property name="maximum">
+         <double>100.000000000000000</double>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </widget>
+   </item>
+  </layout>
+ </widget>
+ <tabstops>
+  <tabstop>posTop</tabstop>
+  <tabstop>posRight</tabstop>
+  <tabstop>posBottom</tabstop>
+  <tabstop>posLeft</tabstop>
+ </tabstops>
+ <resources/>
+ <connections/>
+</ui>

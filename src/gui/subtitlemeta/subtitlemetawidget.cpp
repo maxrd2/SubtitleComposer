@@ -6,9 +6,12 @@
 
 #include "subtitlemetawidget.h"
 
+#include "ui_subtitlepositionwidget.h"
+
 #include "application.h"
 #include "actions/useractionnames.h"
 #include "core/subtitle.h"
+#include "core/subtitleline.h"
 #include "core/richtext/richcss.h"
 #include "gui/subtitlemeta/csshighlighter.h"
 
@@ -25,6 +28,7 @@
 #include <KLocalizedString>
 #include <KTextEdit>
 
+
 using namespace SubtitleComposer;
 
 SubtitleMetaWidget::SubtitleMetaWidget(QWidget *parent)
@@ -35,11 +39,13 @@ SubtitleMetaWidget::SubtitleMetaWidget(QWidget *parent)
 	  m_cssEdit(new QTextEdit(this)),
 	  m_commentIntroEdit(new KTextEdit(this)),
 	  m_commentTopEdit(new KTextEdit(this)),
-	  m_commentBottomEdit(new KTextEdit(this))
+	  m_commentBottomEdit(new KTextEdit(this)),
+	  m_subPosition(new SubtitlePositionWidget(this))
 {
 	m_tabBar->setExpanding(false);
 	m_tabBar->addTab(i18n("&Stylesheet"));
 	m_tabBar->addTab(i18n("&Comments"));
+	m_tabBar->addTab(i18n("&Position"));
 	m_tabBar->installEventFilter(this);
 
 	// parent title widget otherwise QTabBar has strange margins
@@ -91,6 +97,7 @@ SubtitleMetaWidget::SubtitleMetaWidget(QWidget *parent)
 	mainLayout->addWidget(m_cssEdit);
 	m_cssEdit->installEventFilter(this);
 	mainLayout->addWidget(comments);
+	mainLayout->addWidget(m_subPosition);
 	setLayout(mainLayout);
 
 	connect(m_tabBar, &QTabBar::currentChanged, mainLayout, &QStackedLayout::setCurrentIndex);
@@ -155,6 +162,7 @@ SubtitleMetaWidget::setSubtitle(Subtitle *subtitle)
 		m_commentIntroEdit->clear();
 		m_commentTopEdit->clear();
 		m_commentBottomEdit->clear();
+		m_subPosition->setCurrentLine(nullptr);
 	}
 }
 

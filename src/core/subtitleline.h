@@ -223,7 +223,7 @@ public:
 	inline void meta(const QByteArray &key, const QString &value) { m_metaData.insert(key, value); }
 
 	inline const SubtitleRect & pos() const { return m_position; }
-	inline SubtitleRect & pos() { return m_position; }
+	void setPosition(const SubtitleRect &pos);
 
 signals:
 	void primaryTextChanged();
@@ -231,6 +231,7 @@ signals:
 	void showTimeChanged(const Time &showTime);
 	void hideTimeChanged(const Time &hideTime);
 	void errorFlagsChanged(int errorFlags);
+	void positionChanged();
 
 private:
 	FormatData * formatData() const;

@@ -566,6 +566,13 @@ SubtitleLine::adjustTimes(double shiftMseconds, double scaleFactor)
 			i18n("Adjust Line Times")));
 }
 
+void
+SubtitleLine::setPosition(const SubtitleRect &pos)
+{
+	m_position = pos;
+	emit positionChanged();
+}
+
 /// ERRORS
 
 int

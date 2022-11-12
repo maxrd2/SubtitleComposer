@@ -76,7 +76,7 @@ parseCueSettings(SubtitleLine *line, QStringRef css)
 		off = end + 1;
 	}
 
-	SubtitleRect &p = line->pos();
+	SubtitleRect p;
 
 	// vertical:rl|lr
 	const QStringRef csVert = settings.value("vertical");
@@ -197,6 +197,8 @@ parseCueSettings(SubtitleLine *line, QStringRef css)
 			p.bottom = -lineOff;
 		}
 	}
+
+	line->setPosition(p);
 }
 
 bool

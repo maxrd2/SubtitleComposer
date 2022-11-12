@@ -189,6 +189,8 @@ Application::Application(int &argc, char **argv) :
 	connect(m_mainWindow->m_waveformWidget, &WaveformWidget::middleMouseMove, this, &Application::onWaveformMiddleMouse);
 	connect(m_mainWindow->m_waveformWidget, &WaveformWidget::middleMouseUp, this, &Application::onWaveformMiddleMouse);
 
+	connect(m_mainWindow->m_linesWidget, &LinesWidget::currentLineChanged, m_mainWindow->m_metaWidget, &SubtitleMetaWidget::setCurrentLine);
+
 	connect(m_mainWindow->m_linesWidget, &LinesWidget::currentLineChanged, m_mainWindow->m_curLineWidget, &CurrentLineWidget::setCurrentLine);
 	connect(m_mainWindow->m_linesWidget, &LinesWidget::lineDoubleClicked, this, &Application::onLineDoubleClicked);
 

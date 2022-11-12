@@ -71,6 +71,7 @@ set(subtitlecomposer_SRCS
 	#[[ gui/treeview ]] gui/treeview/linesitemdelegate.cpp gui/treeview/linesmodel.cpp gui/treeview/linesselectionmodel.cpp gui/treeview/lineswidget.cpp
 	gui/treeview/richlineedit.cpp gui/treeview/richdocumentptr.cpp gui/treeview/treeview.cpp
 	#[[ gui/subtitlemetawidget ]] gui/subtitlemeta/subtitlemetawidget.cpp gui/subtitlemeta/csshighlighter.cpp
+	gui/subtitlemeta/subtitlepositionwidget.cpp
 	#[[ helpers ]] helpers/commondefs.cpp helpers/debug.cpp helpers/fileloadhelper.cpp helpers/filesavehelper.cpp helpers/filetrasher.cpp helpers/languagecode.cpp
 	helpers/pluginhelper.h
 	#[[ scripting ]] scripting/scriptsmanager.cpp
@@ -95,6 +96,7 @@ ki18n_wrap_ui(subtitlecomposer_SRCS
 	#[[ configs ]] configs/errorsconfigwidget.ui configs/generalconfigwidget.ui configs/playerconfigwidget.ui configs/waveformconfigwidget.ui
 	#[[ dialogs ]] dialogs/encodingdetectdialog.ui dialogs/intinputdialog.ui dialogs/textinputdialog.ui
 	#[[ formats ]] formats/vobsub/vobsubinputinitdialog.ui formats/vobsub/vobsubinputprocessdialog.ui
+	#[[ gui/subtitlemetawidget ]] gui/subtitlemeta/subtitlepositionwidget.ui
 	#[[ scripting ]] scripting/scriptsmanager.ui
 	)
 

@@ -64,6 +64,7 @@ public slots:
 	void setTextColor(QColor color);
 	void setOutlineColor(QColor color);
 	void setOutlineWidth(int width);
+	inline void forceRepaint() { setDirty(); }
 
 private:
 	bool m_invertPixels;
