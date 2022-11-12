@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: subtitlecomposer\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2022-11-11 00:45+0000\n"
-"PO-Revision-Date: 2022-07-08 14:51+0200\n"
+"PO-Revision-Date: 2022-11-11 09:19+0100\n"
 "Last-Translator: Josep M. Ferrer <txemaq@gmail.com>\n"
 "Language-Team: Catalan <kde-i18n-ca@kde.org>\n"
 "Language: ca\n"
@@ -2153,10 +2153,9 @@ msgid "Swap Texts"
 msgstr "Intercanvia els textos"
 
 #: src/core/undo/subtitleactions.cpp:308
-#, fuzzy, kde-format
-#| msgid "Change Case"
+#, kde-format
 msgid "Change stylesheet"
-msgstr "Canvia les majúscules/minúscules"
+msgstr "Canvia el full d'estil"
 
 #: src/core/undo/subtitlelineactions.cpp:28
 #, kde-format
@@ -2836,30 +2835,29 @@ msgid "Error Playing File"
 msgstr "Error en reproduir el fitxer"
 
 #: src/gui/subtitlemeta/subtitlemetawidget.cpp:41
-#, fuzzy, kde-format
-#| msgid "Styles"
+#, kde-format
 msgid "&Stylesheet"
-msgstr "Estils"
+msgstr "Full d'e&stil"
 
 #: src/gui/subtitlemeta/subtitlemetawidget.cpp:42
 #, kde-format
 msgid "&Comments"
-msgstr ""
+msgstr "&Comentaris"
 
 #: src/gui/subtitlemeta/subtitlemetawidget.cpp:82
 #, kde-format
 msgid "Intro"
-msgstr ""
+msgstr "Introducció"
 
 #: src/gui/subtitlemeta/subtitlemetawidget.cpp:84
 #, kde-format
 msgid "Header"
-msgstr ""
+msgstr "Capçalera"
 
 #: src/gui/subtitlemeta/subtitlemetawidget.cpp:86
 #, kde-format
 msgid "Footer"
-msgstr ""
+msgstr "Peu de pàgina"
 
 #: src/gui/treeview/linesmodel.cpp:156
 #, kde-format
@@ -3095,7 +3093,7 @@ msgstr "Reproductor de vídeo"
 #: src/mainwindow.cpp:64
 #, kde-format
 msgid "Styles and Comments"
-msgstr ""
+msgstr "Estils i comentaris"
 
 #. i18n: ectx: label, entry (DefaultSubtitlesEncoding), group (General)
 #: src/scconfig.kcfg:10
@@ -3962,257 +3960,3 @@ msgstr "Comprova automàticament l'ortografia"
 #, kde-format
 msgid "Allow Tabulations"
 msgstr "Permet les tabulacions"
-
-#~ msgid "Installed Scripts"
-#~ msgstr "Scripts instal·lats"
-
-#~ msgid "Can not perform sort on selection with multiple ranges."
-#~ msgstr ""
-#~ "No es pot realitzar l'ordenació en una selecció amb múltiples intervals."
-
-#~ msgid "Sort..."
-#~ msgstr "Ordena..."
-
-#~ msgid "Sort lines based on their show time"
-#~ msgstr "Ordena les línies en funció del seu temps de presentació"
-
-#~ msgid "modified"
-#~ msgstr "modificat"
-
-#~ msgid "Mladen Milinković"
-#~ msgstr "Mladen Milinković"
-
-#~ msgid "Sergio Pistone"
-#~ msgstr "Sergio Pistone"
-
-#~ msgid "Original Author"
-#~ msgstr "Autor original"
-
-#~ msgid "Open location as primary subtitle"
-#~ msgstr "Obre la ubicació com a subtítols primaris"
-
-#~ msgid "Open location as translation subtitle"
-#~ msgstr "Obre la ubicació com a traducció dels subtítols"
-
-#~ msgid "ms/ch"
-#~ msgstr "ms/caràc."
-
-#~ msgid "Adjust to Video Position (Anchor Last Line)"
-#~ msgstr "Ajusta a la posició en el vídeo (ancoratge a la primera línia)"
-
-#~ msgid ""
-#~ "Set current line to video position by fixing the last line and linearly "
-#~ "adjusting the other ones"
-#~ msgstr ""
-#~ "Estableix la línia actual a la posició en el vídeo arreglant l'última "
-#~ "línia i ajustant linealment les altres"
-
-#~ msgid "Adjust to Video Position (Anchor First Line)"
-#~ msgstr "Ajusta a la posició en el vídeo (ancoratge a l'última línia)"
-
-#~ msgid ""
-#~ "Set current line to video position by fixing the first line and linearly "
-#~ "adjusting the other ones"
-#~ msgstr ""
-#~ "Estableix la línia actual a la posició en el vídeo arreglant la primera "
-#~ "línia i ajustant linealment les altres"
-
-#~ msgid ""
-#~ "Continuing would result in loss of timing information for some lines.\n"
-#~ "Are you sure you want to continue?"
-#~ msgstr ""
-#~ "Continuar donaria com a resultat la pèrdua d'informació del temps per a "
-#~ "algunes línies.\n"
-#~ "Esteu segur que voleu continuar?"
-
-#~ msgid "Set Lines Style"
-#~ msgstr "Estableix l'estil de les línies"
-
-#~ msgid "Set Line Texts"
-#~ msgstr "Estableix els textos de la línia"
-
-#~ msgid "Current line:"
-#~ msgstr "Línia actual:"
-
-#~ msgid "1 character"
-#~ msgid_plural "%1 characters"
-#~ msgstr[0] "1 caràcter"
-#~ msgstr[1] "%1 caràcters"
-
-#~ msgid "Undo"
-#~ msgstr "Desfés"
-
-#~ msgid "Redo"
-#~ msgstr "Refés"
-
-#~ msgid "Jump length on frame step"
-#~ msgstr "Durada del salt en el pas de fotogrames"
-
-#~ msgid "Text Stream #%1"
-#~ msgstr "Flux de text núm. %1"
-
-#~ msgid "Text Antialiasing"
-#~ msgstr "Text amb antialiàsing"
-
-#~ msgid "Font Antialiasing"
-#~ msgstr "Tipus de lletra amb antialiàsing"
-
-#~ msgid "Auto Video Sink"
-#~ msgstr "Receptor automàtic del vídeo"
-
-#~ msgid "Video Sink"
-#~ msgstr "Receptor del vídeo"
-
-#~ msgid "Auto Audio Sink"
-#~ msgstr "Receptor automàtic de l'àudio"
-
-#~ msgid "Audio Sink"
-#~ msgstr "Receptor de l'àudio"
-
-#~ msgid "Options"
-#~ msgstr "Opcions"
-
-#~ msgid "Video sink:"
-#~ msgstr "Receptor del vídeo:"
-
-#~ msgid "Audio sink:"
-#~ msgstr "Receptor de l'àudio:"
-
-#~ msgid "Cache Enabled"
-#~ msgstr "Memòria cau activada"
-
-#~ msgid "Cache Size (KB)"
-#~ msgstr "Mida de la memòria cau (KB)"
-
-#~ msgid "mplayer executable path"
-#~ msgstr "Camí cap a l'executable «mplayer»"
-
-#~ msgid "Auto Sync Enabled"
-#~ msgstr "Sincronització automàtica activada"
-
-#~ msgid "Auto Sync Factor"
-#~ msgstr "Factor per a la sincronització automàtica"
-
-#~ msgid "Video Output Enabled"
-#~ msgstr "Sortida del vídeo activada"
-
-#~ msgid "Video Output"
-#~ msgstr "Sortida del vídeo"
-
-#~ msgid "Hardware Decode"
-#~ msgstr "Descodificació amb el maquinari"
-
-#~ msgid "Frame Dropping"
-#~ msgstr "Pèrdua de fotogrames"
-
-#~ msgid "Hard Frame Dropping"
-#~ msgstr "Pèrdua forta de fotogrames"
-
-#~ msgid "Audio Output Enabled"
-#~ msgstr "Sortida de l'àudio activada"
-
-#~ msgid "Audio Output"
-#~ msgstr "Sortida de l'àudio"
-
-#~ msgid "Audio Channels Enabled"
-#~ msgstr "Canals de l'àudio activats"
-
-#~ msgid "Audio Channels"
-#~ msgstr "Canals de l'àudio"
-
-#~ msgid "Volume Amplification Enabled"
-#~ msgstr "Amplificació del volum activada"
-
-#~ msgid "Volume Normalization"
-#~ msgstr "Normalitza el volum"
-
-#~ msgid "Executable path:"
-#~ msgstr "Camí cap a l'executable:"
-
-#~ msgid "Video"
-#~ msgstr "Vídeo"
-
-#~ msgid "Enable VDPAU for DivX/XviD"
-#~ msgstr "Activa VDPAU per a DivX/XviD"
-
-#~ msgid "Allow frame dropping"
-#~ msgstr "Permet la pèrdua de fotogrames"
-
-#~ msgid "Allow hard frame dropping"
-#~ msgstr "Permet la pèrdua forta de fotogrames"
-
-#~ msgid "Audio"
-#~ msgstr "Àudio"
-
-#~ msgid "Audio channels:"
-#~ msgstr "Canals de l'àudio:"
-
-#~ msgid "Volume normalization"
-#~ msgstr "Normalitza el volum"
-
-#~ msgid "Hardware Decode Enabled"
-#~ msgstr "Descodificació amb el maquinari activada"
-
-#~ msgid "Native window embedding"
-#~ msgstr "Finestra nativa incrustada"
-
-#~ msgid "OpenGL render API"
-#~ msgstr "API de la renderització OpenGL"
-
-#~ msgid "Video rendering method"
-#~ msgstr "Mètode de renderitzant del vídeo"
-
-#~ msgid "Video Enabled"
-#~ msgstr "Vídeo activat"
-
-#~ msgid "Audio Enabled"
-#~ msgstr "Àudio activat"
-
-#~ msgid "Clear Errors..."
-#~ msgstr "Neteja els errors..."
-
-#~ msgid "Clear errors from selected lines"
-#~ msgstr "Neteja els errors de les línies seleccionades"
-
-#~ msgid "Show Errors..."
-#~ msgstr "Mostra els errors..."
-
-#~ msgid "Show errors information for the current subtitle"
-#~ msgstr "Mostra la informació dels errors per al subtítol actual"
-
-#~ msgid "Find Error..."
-#~ msgstr "Cerca l'error..."
-
-#~ msgid "Find lines with specified errors"
-#~ msgstr "Cerca les línies on s'ha especificat algun error"
-
-#~ msgid "Find Next Error"
-#~ msgstr "Cerca l'error següent"
-
-#~ msgid "Find next line with specified errors"
-#~ msgstr "Cerca la línia següent on s'ha especificat algun error"
-
-#~ msgid "Check Errors"
-#~ msgstr "Comprova els errors"
-
-#~ msgctxt "@title:group"
-#~ msgid "Errors to Check"
-#~ msgstr "Errors a comprovar"
-
-#~ msgctxt "@title:group"
-#~ msgid "Errors to Clear"
-#~ msgstr "Errors a netejar"
-
-#~ msgid "From current line"
-#~ msgstr "Des de la línia actual"
-
-#~ msgid "Find backwards"
-#~ msgstr "Cerca enrere"
-
-#~ msgid "1 replacement done."
-#~ msgid_plural "%1 replacements done."
-#~ msgstr[0] "S'ha fet una substitució."
-#~ msgstr[1] "S'han fet %1 substitucions."
-
-#~ msgid "Autodetect"
-#~ msgstr "Autodetecta"

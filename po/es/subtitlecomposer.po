@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: subtitlecomposer\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2022-11-11 00:45+0000\n"
-"PO-Revision-Date: 2022-03-22 20:35+0100\n"
+"PO-Revision-Date: 2022-11-11 04:15+0100\n"
 "Last-Translator: Eloy Cuadra <ecuadra@eloihr.net>\n"
 "Language-Team: Spanish <kde-l10n-es@kde.org>\n"
 "Language: es\n"
@@ -18,7 +18,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Lokalize 21.12.3\n"
+"X-Generator: Lokalize 22.08.3\n"
 "X-Crowdin-Project: subtitlecomposer\n"
 "X-Crowdin-Language: es-ES\n"
 "X-Crowdin-File: subtitlecomposer.pot\n"
@@ -2149,10 +2149,9 @@ msgid "Swap Texts"
 msgstr "Intercambiar textos"
 
 #: src/core/undo/subtitleactions.cpp:308
-#, fuzzy, kde-format
-#| msgid "Change Case"
+#, kde-format
 msgid "Change stylesheet"
-msgstr "Modificar mayúsculas/minúsculas"
+msgstr "Cambiar hoja de estilos"
 
 #: src/core/undo/subtitlelineactions.cpp:28
 #, kde-format
@@ -2833,30 +2832,29 @@ msgid "Error Playing File"
 msgstr "Error reproduciendo archivo"
 
 #: src/gui/subtitlemeta/subtitlemetawidget.cpp:41
-#, fuzzy, kde-format
-#| msgid "Styles"
+#, kde-format
 msgid "&Stylesheet"
-msgstr "Estilos"
+msgstr "Hoja de e&stilos"
 
 #: src/gui/subtitlemeta/subtitlemetawidget.cpp:42
 #, kde-format
 msgid "&Comments"
-msgstr ""
+msgstr "&Comentarios"
 
 #: src/gui/subtitlemeta/subtitlemetawidget.cpp:82
 #, kde-format
 msgid "Intro"
-msgstr ""
+msgstr "Intro"
 
 #: src/gui/subtitlemeta/subtitlemetawidget.cpp:84
 #, kde-format
 msgid "Header"
-msgstr ""
+msgstr "Cabecera"
 
 #: src/gui/subtitlemeta/subtitlemetawidget.cpp:86
 #, kde-format
 msgid "Footer"
-msgstr ""
+msgstr "Pie de página"
 
 #: src/gui/treeview/linesmodel.cpp:156
 #, kde-format
@@ -3092,7 +3090,7 @@ msgstr "Reproductor de vídeo"
 #: src/mainwindow.cpp:64
 #, kde-format
 msgid "Styles and Comments"
-msgstr ""
+msgstr "Estilos y comentarios"
 
 #. i18n: ectx: label, entry (DefaultSubtitlesEncoding), group (General)
 #: src/scconfig.kcfg:10

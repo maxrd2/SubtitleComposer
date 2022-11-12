@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: subtitlecomposer\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2022-11-11 00:45+0000\n"
-"PO-Revision-Date: 2022-03-22 08:57+0200\n"
+"PO-Revision-Date: 2022-11-11 17:34+0200\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian <kde-i18n-uk@kde.org>\n"
 "Language: uk\n"
@@ -2171,10 +2171,9 @@ msgid "Swap Texts"
 msgstr "Обміняти тексти"
 
 #: src/core/undo/subtitleactions.cpp:308
-#, fuzzy, kde-format
-#| msgid "Change Case"
+#, kde-format
 msgid "Change stylesheet"
-msgstr "Змінити регістр"
+msgstr "Змінити таблицю стилів"
 
 #: src/core/undo/subtitlelineactions.cpp:28
 #, kde-format
@@ -2855,30 +2854,29 @@ msgid "Error Playing File"
 msgstr "Помилка під час спроби відтворити файл"
 
 #: src/gui/subtitlemeta/subtitlemetawidget.cpp:41
-#, fuzzy, kde-format
-#| msgid "Styles"
+#, kde-format
 msgid "&Stylesheet"
-msgstr "Стилі"
+msgstr "&Таблиця стилів"
 
 #: src/gui/subtitlemeta/subtitlemetawidget.cpp:42
 #, kde-format
 msgid "&Comments"
-msgstr ""
+msgstr "&Коментарі"
 
 #: src/gui/subtitlemeta/subtitlemetawidget.cpp:82
 #, kde-format
 msgid "Intro"
-msgstr ""
+msgstr "Вступ"
 
 #: src/gui/subtitlemeta/subtitlemetawidget.cpp:84
 #, kde-format
 msgid "Header"
-msgstr ""
+msgstr "Верхній колонтитул"
 
 #: src/gui/subtitlemeta/subtitlemetawidget.cpp:86
 #, kde-format
 msgid "Footer"
-msgstr ""
+msgstr "Нижній колонтитул"
 
 #: src/gui/treeview/linesmodel.cpp:156
 #, kde-format
@@ -3114,7 +3112,7 @@ msgstr "Відеопрогравач"
 #: src/mainwindow.cpp:64
 #, kde-format
 msgid "Styles and Comments"
-msgstr ""
+msgstr "Стилі і коментарі"
 
 #. i18n: ectx: label, entry (DefaultSubtitlesEncoding), group (General)
 #: src/scconfig.kcfg:10
