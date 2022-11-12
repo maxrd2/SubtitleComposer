@@ -86,6 +86,57 @@
 
 using namespace SubtitleComposer;
 
+static void
+setupIconTheme(int argc, char **argv)
+{
+#ifdef SC_BUNDLE_SYSTEM_THEME
+	QIcon::setThemeSearchPaths(QIcon::themeSearchPaths() << $(":/icons"));
+#endif
+	if(QIcon::themeName().isEmpty())
+		QIcon::setThemeName($("breeze"));
+
+	const QStringList fallbackPaths = {
+		$(":/icons-fallback/breeze/actions/22"),
+		$(":/icons-fallback/breeze/apps/256"),
+		$(":/icons-fallback/breeze/apps/128"),
+		$(":/icons-fallback/breeze/apps/48"),
+		$(":/icons-fallback/breeze/apps/32"),
+		$(":/icons-fallback/breeze/apps/16"),
+	};
+
+#if QT_VERSION >= QT_VERSION_CHECK(5, 11, 0)
+	QIcon::setFallbackSearchPaths(QIcon::fallbackSearchPaths()
+#else
+	QIcon::setThemeSearchPaths(QIcon::themeSearchPaths()
+#endif
+			// access the icons through breeze theme path
+			<< $(":/icons-fallback")
+			// or directly as fallback
+			<< fallbackPaths);
+
+#if QT_VERSION >= QT_VERSION_CHECK(5, 12, 0)
+	if(QIcon::fallbackThemeName().isEmpty())
+		QIcon::setFallbackThemeName($("breeze"));
+#endif
+
+#if QT_VERSION >= QT_VERSION_CHECK(5, 11, 0)
+	// LXQt just ignores QIcon::fallbackSearchPaths()
+	QString platformThemeName = QString::fromLocal8Bit(qgetenv("QT_QPA_PLATFORMTHEME"));
+	for(int i = 0; i < argc; i++) {
+		if(strcmp(argv[i], "-platformtheme") == 0 && ++i < argc) {
+			platformThemeName = QString::fromLocal8Bit(argv[i]);
+			break;
+		}
+	}
+
+	if(platformThemeName == $("lxqt"))
+		QIcon::setThemeSearchPaths(QIcon::themeSearchPaths() << fallbackPaths);
+#else
+	Q_UNUSED(argc)
+	Q_UNUSED(argv)
+#endif
+}
+
 Application::Application(int &argc, char **argv) :
 	QApplication(argc, argv),
 	m_subtitle(nullptr),
@@ -99,11 +150,12 @@ Application::Application(int &argc, char **argv) :
 {
 	KLocalizedString::setApplicationDomain("subtitlecomposer");
 
+	setupIconTheme(argc, argv);
+
 	setAttribute(Qt::AA_UseHighDpiPixmaps, true);
 
 	m_mainWindow = new MainWindow();
 	connect(m_mainWindow, &QObject::destroyed, this, [&](){ m_mainWindow = nullptr; });
-
 
 	m_finder = new Finder(m_mainWindow->m_linesWidget);
 	m_replacer = new Replacer(m_mainWindow->m_linesWidget);

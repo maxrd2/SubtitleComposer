@@ -136,57 +136,6 @@ handleCommandLine(SubtitleComposer::Application &app, KAboutData &aboutData)
 		app.openVideo(System::urlFromPath(fileVideo));
 }
 
-static void
-setupIconTheme(int argc, char **argv)
-{
-#ifdef SC_BUNDLE_SYSTEM_THEME
-	QIcon::setThemeSearchPaths(QIcon::themeSearchPaths() << QStringLiteral(":/icons"));
-#endif
-	if(QIcon::themeName().isEmpty())
-		QIcon::setThemeName(QStringLiteral("breeze"));
-
-	const QStringList fallbackPaths = {
-		QStringLiteral(":/icons-fallback/breeze/actions/22"),
-		QStringLiteral(":/icons-fallback/breeze/apps/256"),
-		QStringLiteral(":/icons-fallback/breeze/apps/128"),
-		QStringLiteral(":/icons-fallback/breeze/apps/48"),
-		QStringLiteral(":/icons-fallback/breeze/apps/32"),
-		QStringLiteral(":/icons-fallback/breeze/apps/16"),
-	};
-
-#if QT_VERSION >= QT_VERSION_CHECK(5, 11, 0)
-	QIcon::setFallbackSearchPaths(QIcon::fallbackSearchPaths()
-#else
-	QIcon::setThemeSearchPaths(QIcon::themeSearchPaths()
-#endif
-			// access the icons through breeze theme path
-			<< QStringLiteral(":/icons-fallback")
-			// or directly as fallback
-			<< fallbackPaths);
-
-#if QT_VERSION >= QT_VERSION_CHECK(5, 12, 0)
-	if(QIcon::fallbackThemeName().isEmpty())
-		QIcon::setFallbackThemeName(QStringLiteral("breeze"));
-#endif
-
-#if QT_VERSION >= QT_VERSION_CHECK(5, 11, 0)
-	// LXQt just ignores QIcon::fallbackSearchPaths()
-	QString platformThemeName = QString::fromLocal8Bit(qgetenv("QT_QPA_PLATFORMTHEME"));
-	for(int i = 0; i < argc; i++) {
-		if(strcmp(argv[i], "-platformtheme") == 0 && ++i < argc) {
-			platformThemeName = QString::fromLocal8Bit(argv[i]);
-			break;
-		}
-	}
-
-	if(platformThemeName == QStringLiteral("lxqt"))
-		QIcon::setThemeSearchPaths(QIcon::themeSearchPaths() << fallbackPaths);
-#else
-	Q_UNUSED(argc)
-	Q_UNUSED(argv)
-#endif
-}
-
 int
 main(int argc, char **argv)
 {
@@ -198,8 +147,6 @@ main(int argc, char **argv)
 #endif
 
 	SubtitleComposer::Application app(argc, argv);
-
-	setupIconTheme(argc, argv);
 
 	KAboutData aboutData(
 		QStringLiteral("subtitlecomposer"),
