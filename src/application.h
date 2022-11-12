@@ -68,11 +68,11 @@ public:
 	inline Subtitle * subtitle() const { return m_subtitle.data(); }
 	inline UndoStack * undoStack() const { return m_undoStack; }
 	inline MainWindow * mainWindow() const { return m_mainWindow; }
-	inline LinesWidget * linesWidget() const { return m_linesWidget; }
+	inline LinesWidget * linesWidget() const { return m_mainWindow->m_linesWidget; }
 	inline const SpeechProcessor * speechProcessor() const { return m_speechProcessor; }
 
 	inline bool translationMode() const { return m_translationMode; }
-	inline bool showingLinesContextMenu() const { return m_linesWidget->showingContextMenu(); }
+	inline bool showingLinesContextMenu() const { return m_mainWindow->m_linesWidget->showingContextMenu(); }
 
 	void loadConfig();
 	void saveConfig();
@@ -267,9 +267,6 @@ private:
 	SubtitleLine *m_lastFoundLine;
 
 	MainWindow *m_mainWindow;
-	PlayerWidget *m_playerWidget;
-	LinesWidget *m_linesWidget;
-	CurrentLineWidget *m_curLineWidget;
 
 	QUrl m_lastSubtitleUrl;
 	KRecentFilesActionExt *m_recentSubtitlesAction;

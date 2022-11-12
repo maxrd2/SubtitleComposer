@@ -17,7 +17,7 @@ using namespace SubtitleComposer;
 void
 Application::selectNextError()
 {
-	const int idx = m_linesWidget->currentLineIndex();
+	const int idx = m_mainWindow->m_linesWidget->currentLineIndex();
 	if(!m_errorFinder->findNext(idx)) {
 		m_lastFoundLine = nullptr;
 		m_errorFinder->find(idx, false);
@@ -27,7 +27,7 @@ Application::selectNextError()
 void
 Application::selectPreviousError()
 {
-	const int idx = m_linesWidget->currentLineIndex();
+	const int idx = m_mainWindow->m_linesWidget->currentLineIndex();
 	if(!m_errorFinder->findPrevious(idx)) {
 		m_lastFoundLine = nullptr;
 		m_errorFinder->find(idx, true);
@@ -38,7 +38,7 @@ void
 Application::detectErrors()
 {
 	m_lastFoundLine = nullptr;
-	m_errorFinder->find(m_linesWidget->currentLineIndex());
+	m_errorFinder->find(m_mainWindow->m_linesWidget->currentLineIndex());
 }
 
 void
@@ -50,6 +50,6 @@ Application::clearErrors()
 void
 Application::toggleSelectedLinesMark()
 {
-	m_subtitle->toggleMarked(m_linesWidget->selectionRanges());
+	m_subtitle->toggleMarked(m_mainWindow->m_linesWidget->selectionRanges());
 }
 

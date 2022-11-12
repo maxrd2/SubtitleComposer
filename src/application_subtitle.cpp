@@ -623,7 +623,7 @@ Application::closeSubtitleTr()
 
 		updateTitle();
 
-		m_linesWidget->setUpdatesEnabled(false);
+		m_mainWindow->m_linesWidget->setUpdatesEnabled(false);
 
 		// The cleaning of the translations texts shouldn't be an undoable action
 //		QUndoStack *savedStack = m_undoStack;
@@ -632,7 +632,7 @@ Application::closeSubtitleTr()
 //		delete m_undoStack;
 //		m_undoStack = savedStack;
 
-		m_linesWidget->setUpdatesEnabled(true);
+		m_mainWindow->m_linesWidget->setUpdatesEnabled(true);
 	}
 
 	return true;

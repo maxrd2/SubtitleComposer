@@ -505,7 +505,7 @@ Application::setupActions()
 	editCurrentLineInPlaceAction->setText(i18n("Edit Line in Place"));
 	editCurrentLineInPlaceAction->setStatusTip(i18n("Edit current line text in place"));
 	actionCollection->setDefaultShortcut(editCurrentLineInPlaceAction, QKeySequence("F2"));
-	connect(editCurrentLineInPlaceAction, &QAction::triggered, m_linesWidget, &LinesWidget::editCurrentLineInPlace);
+	connect(editCurrentLineInPlaceAction, &QAction::triggered, m_mainWindow->m_linesWidget, &LinesWidget::editCurrentLineInPlace);
 	actionCollection->addAction(ACT_EDIT_CURRENT_LINE_IN_PLACE, editCurrentLineInPlaceAction);
 	actionManager->addAction(editCurrentLineInPlaceAction, UserAction::HasSelection | UserAction::FullScreenOff);
 
@@ -723,7 +723,7 @@ Application::setupActions()
 	increaseSubtitleFontAction->setText(i18n("Increase Font Size"));
 	increaseSubtitleFontAction->setStatusTip(i18n("Increase subtitles font size by 1 point"));
 	actionCollection->setDefaultShortcut(increaseSubtitleFontAction, QKeySequence("Alt++"));
-	connect(increaseSubtitleFontAction, &QAction::triggered, m_playerWidget, &PlayerWidget::increaseFontSize);
+	connect(increaseSubtitleFontAction, &QAction::triggered, m_mainWindow->m_playerWidget, &PlayerWidget::increaseFontSize);
 	actionCollection->addAction(ACT_INCREASE_SUBTITLE_FONT, increaseSubtitleFontAction);
 
 	QAction *decreaseSubtitleFontAction = new QAction(actionCollection);
@@ -731,7 +731,7 @@ Application::setupActions()
 	decreaseSubtitleFontAction->setText(i18n("Decrease Font Size"));
 	decreaseSubtitleFontAction->setStatusTip(i18n("Decrease subtitles font size by 1 point"));
 	actionCollection->setDefaultShortcut(decreaseSubtitleFontAction, QKeySequence("Alt+-"));
-	connect(decreaseSubtitleFontAction, &QAction::triggered, m_playerWidget, &PlayerWidget::decreaseFontSize);
+	connect(decreaseSubtitleFontAction, &QAction::triggered, m_mainWindow->m_playerWidget, &PlayerWidget::decreaseFontSize);
 	actionCollection->addAction(ACT_DECREASE_SUBTITLE_FONT, decreaseSubtitleFontAction);
 
 	KSelectAction *setActiveSubtitleStreamAction = new KSelectAction(actionCollection);

@@ -119,10 +119,6 @@ MainWindow::saveConfig()
 {
 }
 
-void
-MainWindow::setSubtitle(Subtitle */*subtitle*/)
-{}
-
 QMenu *
 MainWindow::createPopupMenu()
 {

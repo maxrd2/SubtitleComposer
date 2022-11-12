@@ -104,14 +104,11 @@ Application::Application(int &argc, char **argv) :
 	m_mainWindow = new MainWindow();
 	connect(m_mainWindow, &QObject::destroyed, this, [&](){ m_mainWindow = nullptr; });
 
-	m_playerWidget = m_mainWindow->m_playerWidget;
-	m_linesWidget = m_mainWindow->m_linesWidget;
-	m_curLineWidget = m_mainWindow->m_curLineWidget;
 
-	m_finder = new Finder(m_linesWidget);
-	m_replacer = new Replacer(m_linesWidget);
-	m_errorFinder = new ErrorFinder(m_linesWidget);
-	m_speller = new Speller(m_linesWidget);
+	m_finder = new Finder(m_mainWindow->m_linesWidget);
+	m_replacer = new Replacer(m_mainWindow->m_linesWidget);
+	m_errorFinder = new ErrorFinder(m_mainWindow->m_linesWidget);
+	m_speller = new Speller(m_mainWindow->m_linesWidget);
 
 	m_errorTracker = new ErrorTracker(this);
 
@@ -137,7 +134,7 @@ Application::Application(int &argc, char **argv) :
 	m_undoStack = new UndoStack(m_mainWindow);
 
 	UserActionManager *actionManager = UserActionManager::instance();
-	actionManager->setLinesWidget(m_linesWidget);
+	actionManager->setLinesWidget(m_mainWindow->m_linesWidget);
 	actionManager->setFullScreenMode(false);
 
 	setupActions();
@@ -159,11 +156,10 @@ Application::Application(int &argc, char **argv) :
 	connect(this, &Application::subtitleClosed, x, [&](){ x->setSubtitle(nullptr); });
 
 	CONNECT_SUB(UserActionManager, UserActionManager::instance());
-	CONNECT_SUB(MainWindow, m_mainWindow);
-	CONNECT_SUB(PlayerWidget, m_playerWidget);
+	CONNECT_SUB(PlayerWidget, m_mainWindow->m_playerWidget);
 	CONNECT_SUB(SubtitleMetaWidget, m_mainWindow->m_metaWidget);
-	CONNECT_SUB(LinesWidget, m_linesWidget);
-	CONNECT_SUB(CurrentLineWidget, m_curLineWidget);
+	CONNECT_SUB(LinesWidget, m_mainWindow->m_linesWidget);
+	CONNECT_SUB(CurrentLineWidget, m_mainWindow->m_curLineWidget);
 	CONNECT_SUB(Finder, m_finder);
 	CONNECT_SUB(Replacer, m_replacer);
 	CONNECT_SUB(ErrorFinder, m_errorFinder);
@@ -177,10 +173,10 @@ Application::Application(int &argc, char **argv) :
 	connect(this, &Application::translationModeChanged, x, &c::setTranslationMode);
 
 	CONNECT_TRANS(UserActionManager, UserActionManager::instance());
-	CONNECT_TRANS(PlayerWidget, m_playerWidget);
+	CONNECT_TRANS(PlayerWidget, m_mainWindow->m_playerWidget);
 	CONNECT_TRANS(WaveformWidget, m_mainWindow->m_waveformWidget);
-	CONNECT_TRANS(LinesWidget, m_linesWidget);
-	CONNECT_TRANS(CurrentLineWidget, m_curLineWidget);
+	CONNECT_TRANS(LinesWidget, m_mainWindow->m_linesWidget);
+	CONNECT_TRANS(CurrentLineWidget, m_mainWindow->m_curLineWidget);
 	CONNECT_TRANS(Finder, m_finder);
 	CONNECT_TRANS(Replacer, m_replacer);
 	CONNECT_TRANS(ErrorFinder, m_errorFinder);
@@ -193,10 +189,10 @@ Application::Application(int &argc, char **argv) :
 	connect(m_mainWindow->m_waveformWidget, &WaveformWidget::middleMouseMove, this, &Application::onWaveformMiddleMouse);
 	connect(m_mainWindow->m_waveformWidget, &WaveformWidget::middleMouseUp, this, &Application::onWaveformMiddleMouse);
 
-	connect(m_linesWidget, &LinesWidget::currentLineChanged, m_curLineWidget, &CurrentLineWidget::setCurrentLine);
-	connect(m_linesWidget, &LinesWidget::lineDoubleClicked, this, &Application::onLineDoubleClicked);
+	connect(m_mainWindow->m_linesWidget, &LinesWidget::currentLineChanged, m_mainWindow->m_curLineWidget, &CurrentLineWidget::setCurrentLine);
+	connect(m_mainWindow->m_linesWidget, &LinesWidget::lineDoubleClicked, this, &Application::onLineDoubleClicked);
 
-	connect(m_playerWidget, &PlayerWidget::playingLineChanged, this, &Application::onPlayingLineChanged);
+	connect(m_mainWindow->m_playerWidget, &PlayerWidget::playingLineChanged, this, &Application::onPlayingLineChanged);
 
 	connect(m_finder, &Finder::found, this, &Application::onHighlightLine);
 	connect(m_replacer, &Replacer::found, this, &Application::onHighlightLine);
@@ -260,9 +256,9 @@ Application::loadConfig()
 		m_mainWindow->m_waveformWidget->setZoom(wfGroup.readEntry<quint32>("Zoom", 0));
 
 	m_mainWindow->loadConfig();
-	m_playerWidget->loadConfig();
-	m_linesWidget->loadConfig();
-	m_curLineWidget->loadConfig();
+	m_mainWindow->m_playerWidget->loadConfig();
+	m_mainWindow->m_linesWidget->loadConfig();
+	m_mainWindow->m_curLineWidget->loadConfig();
 }
 
 void
@@ -287,9 +283,9 @@ Application::saveConfig()
 	wfGroup.writeEntry("Zoom", m_mainWindow->m_waveformWidget->zoom());
 
 	m_mainWindow->saveConfig();
-	m_playerWidget->saveConfig();
-	m_linesWidget->saveConfig();
-	m_curLineWidget->saveConfig();
+	m_mainWindow->m_playerWidget->saveConfig();
+	m_mainWindow->m_linesWidget->saveConfig();
+	m_mainWindow->m_curLineWidget->saveConfig();
 }
 
 bool
@@ -362,11 +358,11 @@ Application::insertBeforeCurrentLine()
 	if(dlg->exec() == QDialog::Accepted) {
 		SubtitleLine *newLine;
 		{
-			LinesWidgetScrollToModelDetacher detacher(*m_linesWidget);
-			SubtitleLine *currentLine = m_linesWidget->currentLine();
+			LinesWidgetScrollToModelDetacher detacher(*m_mainWindow->m_linesWidget);
+			SubtitleLine *currentLine = m_mainWindow->m_linesWidget->currentLine();
 			newLine = m_subtitle->insertNewLine(currentLine ? currentLine->index() : 0, false, dlg->selectedTextsTarget());
 		}
-		m_linesWidget->setCurrentLine(newLine, true);
+		m_mainWindow->m_linesWidget->setCurrentLine(newLine, true);
 	}
 }
 
@@ -378,12 +374,12 @@ Application::insertAfterCurrentLine()
 	if(dlg->exec() == QDialog::Accepted) {
 		SubtitleLine *newLine;
 		{
-			LinesWidgetScrollToModelDetacher detacher(*m_linesWidget);
+			LinesWidgetScrollToModelDetacher detacher(*m_mainWindow->m_linesWidget);
 
-			SubtitleLine *currentLine = m_linesWidget->currentLine();
+			SubtitleLine *currentLine = m_mainWindow->m_linesWidget->currentLine();
 			newLine = m_subtitle->insertNewLine(currentLine ? currentLine->index() + 1 : 0, true, dlg->selectedTextsTarget());
 		}
-		m_linesWidget->setCurrentLine(newLine, true);
+		m_mainWindow->m_linesWidget->setCurrentLine(newLine, true);
 	}
 }
 
@@ -393,28 +389,28 @@ Application::removeSelectedLines()
 	static RemoveLinesDialog *dlg = new RemoveLinesDialog(m_mainWindow);
 
 	if(dlg->exec() == QDialog::Accepted) {
-		RangeList selectionRanges = m_linesWidget->selectionRanges();
+		RangeList selectionRanges = m_mainWindow->m_linesWidget->selectionRanges();
 
 		if(selectionRanges.isEmpty())
 			return;
 
 		{
-			LinesWidgetScrollToModelDetacher detacher(*m_linesWidget);
+			LinesWidgetScrollToModelDetacher detacher(*m_mainWindow->m_linesWidget);
 			m_subtitle->removeLines(selectionRanges, dlg->selectedTextsTarget());
 		}
 
 		int firstIndex = selectionRanges.firstIndex();
 		if(firstIndex < m_subtitle->linesCount())
-			m_linesWidget->setCurrentLine(m_subtitle->line(firstIndex), true);
+			m_mainWindow->m_linesWidget->setCurrentLine(m_subtitle->line(firstIndex), true);
 		else if(firstIndex - 1 < m_subtitle->linesCount())
-			m_linesWidget->setCurrentLine(m_subtitle->line(firstIndex - 1), true);
+			m_mainWindow->m_linesWidget->setCurrentLine(m_subtitle->line(firstIndex - 1), true);
 	}
 }
 
 void
 Application::joinSelectedLines()
 {
-	const RangeList &ranges = m_linesWidget->selectionRanges();
+	const RangeList &ranges = m_mainWindow->m_linesWidget->selectionRanges();
 
 //  if ( ranges.count() > 1 && KMessageBox::Continue != KMessageBox::warningContinueCancel(
 //      m_mainWindow,
@@ -428,29 +424,29 @@ Application::joinSelectedLines()
 void
 Application::splitSelectedLines()
 {
-	m_subtitle->splitLines(m_linesWidget->selectionRanges());
+	m_subtitle->splitLines(m_mainWindow->m_linesWidget->selectionRanges());
 }
 
 void
 Application::selectAllLines()
 {
-	m_linesWidget->selectAll();
+	m_mainWindow->m_linesWidget->selectAll();
 }
 
 void
 Application::gotoLine()
 {
-	IntInputDialog gotoLineDlg(i18n("Go to Line"), i18n("&Go to line:"), 1, m_subtitle->linesCount(), m_linesWidget->currentLineIndex() + 1);
+	IntInputDialog gotoLineDlg(i18n("Go to Line"), i18n("&Go to line:"), 1, m_subtitle->linesCount(), m_mainWindow->m_linesWidget->currentLineIndex() + 1);
 
 	if(gotoLineDlg.exec() == QDialog::Accepted)
-		m_linesWidget->setCurrentLine(m_subtitle->line(gotoLineDlg.value() - 1), true);
+		m_mainWindow->m_linesWidget->setCurrentLine(m_subtitle->line(gotoLineDlg.value() - 1), true);
 }
 
 void
 Application::find()
 {
 	m_lastFoundLine = nullptr;
-	m_finder->find(m_linesWidget->selectionRanges(), m_linesWidget->currentLineIndex(), m_curLineWidget->focusedText(), false);
+	m_finder->find(m_mainWindow->m_linesWidget->selectionRanges(), m_mainWindow->m_linesWidget->currentLineIndex(), m_mainWindow->m_curLineWidget->focusedText(), false);
 }
 
 void
@@ -458,7 +454,7 @@ Application::findNext()
 {
 	if(!m_finder->findNext()) {
 		m_lastFoundLine = nullptr;
-		m_finder->find(m_linesWidget->selectionRanges(), m_linesWidget->currentLineIndex(), m_curLineWidget->focusedText(), false);
+		m_finder->find(m_mainWindow->m_linesWidget->selectionRanges(), m_mainWindow->m_linesWidget->currentLineIndex(), m_mainWindow->m_curLineWidget->focusedText(), false);
 	}
 }
 
@@ -467,67 +463,66 @@ Application::findPrevious()
 {
 	if(!m_finder->findPrevious()) {
 		m_lastFoundLine = nullptr;
-		m_finder->find(m_linesWidget->selectionRanges(), m_linesWidget->currentLineIndex(), m_curLineWidget->focusedText(), true);
+		m_finder->find(m_mainWindow->m_linesWidget->selectionRanges(), m_mainWindow->m_linesWidget->currentLineIndex(), m_mainWindow->m_curLineWidget->focusedText(), true);
 	}
 }
 
 void
 Application::replace()
 {
-	m_replacer->replace(m_linesWidget->selectionRanges(), m_linesWidget->currentLineIndex(), m_curLineWidget->focusedText()
-						);
+	m_replacer->replace(m_mainWindow->m_linesWidget->selectionRanges(), m_mainWindow->m_linesWidget->currentLineIndex(), m_mainWindow->m_curLineWidget->focusedText());
 }
 
 void
 Application::spellCheck()
 {
-	m_speller->spellCheck(m_linesWidget->currentLineIndex());
+	m_speller->spellCheck(m_mainWindow->m_linesWidget->currentLineIndex());
 }
 
 void
 Application::retrocedeCurrentLine()
 {
-	SubtitleLine *currentLine = m_linesWidget->currentLine();
+	SubtitleLine *currentLine = m_mainWindow->m_linesWidget->currentLine();
 	if(currentLine && currentLine->prevLine())
-		m_linesWidget->setCurrentLine(currentLine->prevLine(), true);
+		m_mainWindow->m_linesWidget->setCurrentLine(currentLine->prevLine(), true);
 }
 
 void
 Application::advanceCurrentLine()
 {
-	SubtitleLine *currentLine = m_linesWidget->currentLine();
+	SubtitleLine *currentLine = m_mainWindow->m_linesWidget->currentLine();
 	if(currentLine && currentLine->nextLine())
-		m_linesWidget->setCurrentLine(currentLine->nextLine(), true);
+		m_mainWindow->m_linesWidget->setCurrentLine(currentLine->nextLine(), true);
 }
 
 void
 Application::toggleSelectedLinesBold()
 {
-	m_subtitle->toggleStyleFlag(m_linesWidget->selectionRanges(), RichString::Bold);
+	m_subtitle->toggleStyleFlag(m_mainWindow->m_linesWidget->selectionRanges(), RichString::Bold);
 }
 
 void
 Application::toggleSelectedLinesItalic()
 {
-	m_subtitle->toggleStyleFlag(m_linesWidget->selectionRanges(), RichString::Italic);
+	m_subtitle->toggleStyleFlag(m_mainWindow->m_linesWidget->selectionRanges(), RichString::Italic);
 }
 
 void
 Application::toggleSelectedLinesUnderline()
 {
-	m_subtitle->toggleStyleFlag(m_linesWidget->selectionRanges(), RichString::Underline);
+	m_subtitle->toggleStyleFlag(m_mainWindow->m_linesWidget->selectionRanges(), RichString::Underline);
 }
 
 void
 Application::toggleSelectedLinesStrikeThrough()
 {
-	m_subtitle->toggleStyleFlag(m_linesWidget->selectionRanges(), RichString::StrikeThrough);
+	m_subtitle->toggleStyleFlag(m_mainWindow->m_linesWidget->selectionRanges(), RichString::StrikeThrough);
 }
 
 void
 Application::changeSelectedLinesColor()
 {
-	const RangeList range = m_linesWidget->selectionRanges();
+	const RangeList range = m_mainWindow->m_linesWidget->selectionRanges();
 	SubtitleIterator it(*m_subtitle, range);
 	if(!it.current())
 		return;
@@ -544,21 +539,20 @@ Application::shiftLines()
 
 	dlg->resetShiftTime();
 
-	if(dlg->exec() == QDialog::Accepted) {
-		m_subtitle->shiftLines(m_linesWidget->targetRanges(dlg->selectedLinesTarget()), dlg->shiftTimeMillis());
-	}
+	if(dlg->exec() == QDialog::Accepted)
+		m_subtitle->shiftLines(m_mainWindow->m_linesWidget->targetRanges(dlg->selectedLinesTarget()), dlg->shiftTimeMillis());
 }
 
 void
 Application::shiftSelectedLinesForwards()
 {
-	m_subtitle->shiftLines(m_linesWidget->selectionRanges(), SCConfig::linesQuickShiftAmount());
+	m_subtitle->shiftLines(m_mainWindow->m_linesWidget->selectionRanges(), SCConfig::linesQuickShiftAmount());
 }
 
 void
 Application::shiftSelectedLinesBackwards()
 {
-	m_subtitle->shiftLines(m_linesWidget->selectionRanges(), -SCConfig::linesQuickShiftAmount());
+	m_subtitle->shiftLines(m_mainWindow->m_linesWidget->selectionRanges(), -SCConfig::linesQuickShiftAmount());
 }
 
 void
@@ -569,9 +563,8 @@ Application::adjustLines()
 	dlg->setFirstLineTime(m_subtitle->firstLine()->showTime());
 	dlg->setLastLineTime(m_subtitle->lastLine()->showTime());
 
-	if(dlg->exec() == QDialog::Accepted) {
+	if(dlg->exec() == QDialog::Accepted)
 		m_subtitle->adjustLines(Range::full(), dlg->firstLineTime().toMillis(), dlg->lastLineTime().toMillis());
-	}
 }
 
 void
@@ -594,7 +587,7 @@ Application::enforceDurationLimits()
 																m_mainWindow);
 
 	if(dlg->exec() == QDialog::Accepted) {
-		m_subtitle->applyDurationLimits(m_linesWidget->targetRanges(dlg->selectedLinesTarget()),
+		m_subtitle->applyDurationLimits(m_mainWindow->m_linesWidget->targetRanges(dlg->selectedLinesTarget()),
 			dlg->enforceMinDuration() ? dlg->minDuration() : Time(),
 			dlg->enforceMaxDuration() ? dlg->maxDuration() : Time(std::numeric_limits<double>::max()),
 			!dlg->preventOverlap());
@@ -607,19 +600,19 @@ Application::setAutoDurations()
 	static AutoDurationsDialog *dlg = new AutoDurationsDialog(60, 50, 50, m_mainWindow);
 
 	if(dlg->exec() == QDialog::Accepted) {
-		m_subtitle->setAutoDurations(m_linesWidget->targetRanges(dlg->selectedLinesTarget()), dlg->charMillis(), dlg->wordMillis(), dlg->lineMillis(), !dlg->preventOverlap(), dlg->calculationMode()
-									 );
+		m_subtitle->setAutoDurations(m_mainWindow->m_linesWidget->targetRanges(dlg->selectedLinesTarget()),
+									 dlg->charMillis(), dlg->wordMillis(), dlg->lineMillis(),
+									 !dlg->preventOverlap(), dlg->calculationMode());
 	}
 }
 
 void
 Application::maximizeDurations()
 {
-	static ActionWithLinesTargetDialog *dlg = new ActionWithLinesTargetDialog(i18n("Maximize Durations"),
-																			  m_mainWindow);
+	static auto *dlg = new ActionWithLinesTargetDialog(i18n("Maximize Durations"), m_mainWindow);
 
 	if(dlg->exec() == QDialog::Accepted)
-		m_subtitle->setMaximumDurations(m_linesWidget->targetRanges(dlg->selectedLinesTarget()));
+		m_subtitle->setMaximumDurations(m_mainWindow->m_linesWidget->targetRanges(dlg->selectedLinesTarget()));
 }
 
 void
@@ -628,7 +621,7 @@ Application::fixOverlappingLines()
 	static FixOverlappingTimesDialog *dlg = new FixOverlappingTimesDialog(m_mainWindow);
 
 	if(dlg->exec() == QDialog::Accepted)
-		m_subtitle->fixOverlappingLines(m_linesWidget->targetRanges(dlg->selectedLinesTarget()), dlg->minimumInterval());
+		m_subtitle->fixOverlappingLines(m_mainWindow->m_linesWidget->targetRanges(dlg->selectedLinesTarget()), dlg->minimumInterval());
 }
 
 void
@@ -637,8 +630,8 @@ Application::breakLines()
 	static SmartTextsAdjustDialog *dlg = new SmartTextsAdjustDialog(30, m_mainWindow);
 
 	if(dlg->exec() == QDialog::Accepted)
-		m_subtitle->breakLines(m_linesWidget->targetRanges(dlg->selectedLinesTarget()), dlg->minLengthForLineBreak(), dlg->selectedTextsTarget()
-							   );
+		m_subtitle->breakLines(m_mainWindow->m_linesWidget->targetRanges(dlg->selectedLinesTarget()),
+							   dlg->minLengthForLineBreak(), dlg->selectedTextsTarget());
 }
 
 void
@@ -648,8 +641,8 @@ Application::unbreakTexts()
 																							  m_mainWindow);
 
 	if(dlg->exec() == QDialog::Accepted)
-		m_subtitle->unbreakTexts(m_linesWidget->targetRanges(dlg->selectedLinesTarget()), dlg->selectedTextsTarget()
-								 );
+		m_subtitle->unbreakTexts(m_mainWindow->m_linesWidget->targetRanges(dlg->selectedLinesTarget()),
+								 dlg->selectedTextsTarget());
 }
 
 void
@@ -659,8 +652,8 @@ Application::simplifySpaces()
 																							  m_mainWindow);
 
 	if(dlg->exec() == QDialog::Accepted)
-		m_subtitle->simplifyTextWhiteSpace(m_linesWidget->targetRanges(dlg->selectedLinesTarget()), dlg->selectedTextsTarget()
-										   );
+		m_subtitle->simplifyTextWhiteSpace(m_mainWindow->m_linesWidget->targetRanges(dlg->selectedLinesTarget()),
+										   dlg->selectedTextsTarget());
 }
 
 void
@@ -671,20 +664,20 @@ Application::changeCase()
 	if(dlg->exec() == QDialog::Accepted) {
 		switch(dlg->caseOperation()) {
 		case ChangeTextsCaseDialog::Upper:
-			m_subtitle->upperCase(m_linesWidget->targetRanges(dlg->selectedLinesTarget()), dlg->selectedTextsTarget()
-								  );
+			m_subtitle->upperCase(m_mainWindow->m_linesWidget->targetRanges(dlg->selectedLinesTarget()),
+								  dlg->selectedTextsTarget());
 			break;
 		case ChangeTextsCaseDialog::Lower:
-			m_subtitle->lowerCase(m_linesWidget->targetRanges(dlg->selectedLinesTarget()), dlg->selectedTextsTarget()
-								  );
+			m_subtitle->lowerCase(m_mainWindow->m_linesWidget->targetRanges(dlg->selectedLinesTarget()),
+								  dlg->selectedTextsTarget());
 			break;
 		case ChangeTextsCaseDialog::Title:
-			m_subtitle->titleCase(m_linesWidget->targetRanges(dlg->selectedLinesTarget()), dlg->lowerFirst(), dlg->selectedTextsTarget()
-								  );
+			m_subtitle->titleCase(m_mainWindow->m_linesWidget->targetRanges(dlg->selectedLinesTarget()),
+								  dlg->lowerFirst(), dlg->selectedTextsTarget());
 			break;
 		case ChangeTextsCaseDialog::Sentence:
-			m_subtitle->sentenceCase(m_linesWidget->targetRanges(dlg->selectedLinesTarget()), dlg->lowerFirst(), dlg->selectedTextsTarget()
-									 );
+			m_subtitle->sentenceCase(m_mainWindow->m_linesWidget->targetRanges(dlg->selectedLinesTarget()),
+									 dlg->lowerFirst(), dlg->selectedTextsTarget());
 			break;
 		}
 	}
@@ -696,8 +689,9 @@ Application::fixPunctuation()
 	static FixPunctuationDialog *dlg = new FixPunctuationDialog(m_mainWindow);
 
 	if(dlg->exec() == QDialog::Accepted) {
-		m_subtitle->fixPunctuation(m_linesWidget->targetRanges(dlg->selectedLinesTarget()), dlg->spaces(), dlg->quotes(), dlg->englishI(), dlg->ellipsis(), dlg->selectedTextsTarget()
-								   );
+		m_subtitle->fixPunctuation(m_mainWindow->m_linesWidget->targetRanges(dlg->selectedLinesTarget()),
+								   dlg->spaces(), dlg->quotes(), dlg->englishI(),
+								   dlg->ellipsis(), dlg->selectedTextsTarget());
 	}
 }
 
@@ -774,12 +768,14 @@ Application::translate()
 
 	if(dlg->exec() == QDialog::Accepted) {
 		if(dlg->selectedTextsTarget() == Primary || dlg->selectedTextsTarget() == Both) {
-			if(!applyTranslation(m_linesWidget->targetRanges(dlg->selectedLinesTarget()), true, dlg->inputLanguage(), dlg->outputLanguage(), dlg->selectedTextsTarget()))
+			if(!applyTranslation(m_mainWindow->m_linesWidget->targetRanges(dlg->selectedLinesTarget()),
+								 true, dlg->inputLanguage(), dlg->outputLanguage(), dlg->selectedTextsTarget()))
 				return;
 		}
 
 		if(dlg->selectedTextsTarget() == Secondary || dlg->selectedTextsTarget() == Both) {
-			if(!applyTranslation(m_linesWidget->targetRanges(dlg->selectedLinesTarget()), false, dlg->inputLanguage(), dlg->outputLanguage(), dlg->selectedTextsTarget()))
+			if(!applyTranslation(m_mainWindow->m_linesWidget->targetRanges(dlg->selectedLinesTarget()),
+								 false, dlg->inputLanguage(), dlg->outputLanguage(), dlg->selectedTextsTarget()))
 				return;
 		}
 	}
@@ -813,14 +809,14 @@ Application::openVideo()
 void
 Application::toggleFullScreenMode()
 {
-	setFullScreenMode(!m_playerWidget->fullScreenMode());
+	setFullScreenMode(!m_mainWindow->m_playerWidget->fullScreenMode());
 }
 
 void
 Application::setFullScreenMode(bool enabled)
 {
-	if(enabled != m_playerWidget->fullScreenMode()) {
-		m_playerWidget->setFullScreenMode(enabled);
+	if(enabled != m_mainWindow->m_playerWidget->fullScreenMode()) {
+		m_mainWindow->m_playerWidget->setFullScreenMode(enabled);
 
 		KToggleAction *toggleFullScreenAction = static_cast<KToggleAction *>(action(ACT_TOGGLE_FULL_SCREEN));
 		toggleFullScreenAction->setChecked(enabled);
@@ -834,7 +830,7 @@ Application::seekBackward()
 {
 	VideoPlayer *videoPlayer = VideoPlayer::instance();
 	double position = videoPlayer->position() - SCConfig::seekJumpLength();
-	m_playerWidget->pauseAfterPlayingLine(nullptr);
+	m_mainWindow->m_playerWidget->pauseAfterPlayingLine(nullptr);
 	videoPlayer->seek(position > 0.0 ? position : 0.0);
 }
 
@@ -843,7 +839,7 @@ Application::seekForward()
 {
 	VideoPlayer *videoPlayer = VideoPlayer::instance();
 	double position = videoPlayer->position() + SCConfig::seekJumpLength();
-	m_playerWidget->pauseAfterPlayingLine(nullptr);
+	m_mainWindow->m_playerWidget->pauseAfterPlayingLine(nullptr);
 	videoPlayer->seek(position <= videoPlayer->duration() ? position : videoPlayer->duration());
 }
 
@@ -862,17 +858,17 @@ Application::stepForward()
 void
 Application::seekToPrevLine()
 {
-	int selectedIndex = m_linesWidget->firstSelectedIndex();
+	int selectedIndex = m_mainWindow->m_linesWidget->firstSelectedIndex();
 	if(selectedIndex < 0)
 		return;
 	SubtitleLine *currentLine = m_subtitle->line(selectedIndex);
 	if(currentLine) {
 		SubtitleLine *prevLine = currentLine->prevLine();
 		if(prevLine) {
-			m_playerWidget->pauseAfterPlayingLine(nullptr);
+			m_mainWindow->m_playerWidget->pauseAfterPlayingLine(nullptr);
 			VideoPlayer::instance()->seek(prevLine->showTime().toSeconds() - SCConfig::jumpLineOffset() / 1000.0);
-			m_linesWidget->setCurrentLine(prevLine);
-			m_curLineWidget->setCurrentLine(prevLine);
+			m_mainWindow->m_linesWidget->setCurrentLine(prevLine);
+			m_mainWindow->m_curLineWidget->setCurrentLine(prevLine);
 		}
 	}
 }
@@ -880,7 +876,7 @@ Application::seekToPrevLine()
 void
 Application::playOnlyCurrentLine()
 {
-	int selectedIndex = m_linesWidget->firstSelectedIndex();
+	int selectedIndex = m_mainWindow->m_linesWidget->firstSelectedIndex();
 	if(selectedIndex < 0)
 		return;
 	SubtitleLine *currentLine = m_subtitle->line(selectedIndex);
@@ -889,19 +885,19 @@ Application::playOnlyCurrentLine()
 		if(!videoPlayer->isPlaying())
 			videoPlayer->play();
 		videoPlayer->seek(currentLine->showTime().toSeconds() - SCConfig::jumpLineOffset() / 1000.0);
-		m_playerWidget->pauseAfterPlayingLine(currentLine);
+		m_mainWindow->m_playerWidget->pauseAfterPlayingLine(currentLine);
 	}
 }
 
 void
 Application::seekToCurrentLine()
 {
-	int selectedIndex = m_linesWidget->firstSelectedIndex();
+	int selectedIndex = m_mainWindow->m_linesWidget->firstSelectedIndex();
 	if(selectedIndex < 0)
 		return;
 	SubtitleLine *currentLine = m_subtitle->line(selectedIndex);
 	if(currentLine) {
-		m_playerWidget->pauseAfterPlayingLine(nullptr);
+		m_mainWindow->m_playerWidget->pauseAfterPlayingLine(nullptr);
 		VideoPlayer::instance()->seek(currentLine->showTime().toSeconds() - SCConfig::jumpLineOffset() / 1000.0);
 	}
 }
@@ -909,17 +905,17 @@ Application::seekToCurrentLine()
 void
 Application::seekToNextLine()
 {
-	int selectedIndex = m_linesWidget->firstSelectedIndex();
+	int selectedIndex = m_mainWindow->m_linesWidget->firstSelectedIndex();
 	if(selectedIndex < 0)
 		return;
 	SubtitleLine *currentLine = m_subtitle->line(selectedIndex);
 	if(currentLine) {
 		SubtitleLine *nextLine = currentLine->nextLine();
 		if(nextLine) {
-			m_playerWidget->pauseAfterPlayingLine(nullptr);
+			m_mainWindow->m_playerWidget->pauseAfterPlayingLine(nullptr);
 			VideoPlayer::instance()->seek(nextLine->showTime().toSeconds() - SCConfig::jumpLineOffset() / 1000.0);
-			m_linesWidget->setCurrentLine(nextLine);
-			m_curLineWidget->setCurrentLine(nextLine);
+			m_mainWindow->m_linesWidget->setCurrentLine(nextLine);
+			m_mainWindow->m_curLineWidget->setCurrentLine(nextLine);
 		}
 	}
 }
@@ -943,7 +939,7 @@ Application::playrateDecrease()
 void
 Application::setCurrentLineShowTimeFromVideo()
 {
-	SubtitleLine *currentLine = m_linesWidget->currentLine();
+	SubtitleLine *currentLine = m_mainWindow->m_linesWidget->currentLine();
 	if(currentLine)
 		currentLine->setShowTime(videoPosition(true));
 }
@@ -951,7 +947,7 @@ Application::setCurrentLineShowTimeFromVideo()
 void
 Application::setCurrentLineHideTimeFromVideo()
 {
-	SubtitleLine *currentLine = m_linesWidget->currentLine();
+	SubtitleLine *currentLine = m_mainWindow->m_linesWidget->currentLine();
 	if(currentLine)
 		currentLine->setHideTime(videoPosition(true));
 }
@@ -963,7 +959,7 @@ Application::setActiveSubtitleStream(int subtitleStream)
 	activeSubtitleStreamAction->setCurrentItem(subtitleStream);
 
 	const bool translationSelected = bool(subtitleStream);
-	m_playerWidget->setShowTranslation(translationSelected);
+	m_mainWindow->m_playerWidget->setShowTranslation(translationSelected);
 	m_mainWindow->m_waveformWidget->setShowTranslation(translationSelected);
 	m_speller->setUseTranslation(translationSelected);
 }
@@ -972,7 +968,7 @@ Application::setActiveSubtitleStream(int subtitleStream)
 void
 Application::anchorToggle()
 {
-	m_subtitle->toggleLineAnchor(m_linesWidget->currentLine());
+	m_subtitle->toggleLineAnchor(m_mainWindow->m_linesWidget->currentLine());
 }
 
 void
@@ -984,7 +980,7 @@ Application::anchorRemoveAll()
 void
 Application::shiftToVideoPosition()
 {
-	SubtitleLine *currentLine = m_linesWidget->currentLine();
+	SubtitleLine *currentLine = m_mainWindow->m_linesWidget->currentLine();
 	if(currentLine)
 		m_subtitle->shiftLines(Range::full(), videoPosition(true).toMillis() - currentLine->showTime().toMillis());
 }
@@ -1019,14 +1015,14 @@ Application::onWaveformDoubleClicked(Time time)
 	if(videoPlayer->state() == VideoPlayer::Stopped)
 		videoPlayer->play();
 
-	m_playerWidget->pauseAfterPlayingLine(nullptr);
+	m_mainWindow->m_playerWidget->pauseAfterPlayingLine(nullptr);
 	videoPlayer->seek(time.toSeconds());
 }
 
 void
 Application::onWaveformMiddleMouse(Time time)
 {
-	m_playerWidget->pauseAfterPlayingLine(nullptr);
+	m_mainWindow->m_playerWidget->pauseAfterPlayingLine(nullptr);
 	VideoPlayer::instance()->seek(time.toSeconds());
 }
 
@@ -1038,7 +1034,7 @@ Application::onLineDoubleClicked(SubtitleLine *line)
 		videoPlayer->play();
 
 	int mseconds = line->showTime().toMillis() - SCConfig::seekOffsetOnDoubleClick();
-	m_playerWidget->pauseAfterPlayingLine(nullptr);
+	m_mainWindow->m_playerWidget->pauseAfterPlayingLine(nullptr);
 	videoPlayer->seek(mseconds > 0 ? mseconds / 1000.0 : 0.0);
 
 	if(videoPlayer->state() != VideoPlayer::Playing && SCConfig::unpauseOnDoubleClick())
@@ -1050,21 +1046,21 @@ Application::onLineDoubleClicked(SubtitleLine *line)
 void
 Application::onHighlightLine(SubtitleLine *line, bool primary, int firstIndex, int lastIndex)
 {
-	if(m_playerWidget->fullScreenMode()) {
+	if(m_mainWindow->m_playerWidget->fullScreenMode()) {
 		if(m_lastFoundLine != line) {
 			m_lastFoundLine = line;
 
-			m_playerWidget->pauseAfterPlayingLine(nullptr);
+			m_mainWindow->m_playerWidget->pauseAfterPlayingLine(nullptr);
 			VideoPlayer::instance()->seek(line->showTime().toSeconds());
 		}
 	} else {
-		m_linesWidget->setCurrentLine(line, true);
+		m_mainWindow->m_linesWidget->setCurrentLine(line, true);
 
 		if(firstIndex >= 0 && lastIndex >= 0) {
 			if(primary)
-				m_curLineWidget->selectPrimaryText(firstIndex, lastIndex);
+				m_mainWindow->m_curLineWidget->selectPrimaryText(firstIndex, lastIndex);
 			else
-				m_curLineWidget->selectTranslationText(firstIndex, lastIndex);
+				m_mainWindow->m_curLineWidget->selectTranslationText(firstIndex, lastIndex);
 		}
 	}
 }
@@ -1072,10 +1068,10 @@ Application::onHighlightLine(SubtitleLine *line, bool primary, int firstIndex, i
 void
 Application::onPlayingLineChanged(SubtitleLine *line)
 {
-	m_linesWidget->setPlayingLine(line);
+	m_mainWindow->m_linesWidget->setPlayingLine(line);
 
 	if(m_linkCurrentLineToPosition)
-		m_linesWidget->setCurrentLine(line, true);
+		m_mainWindow->m_linesWidget->setCurrentLine(line, true);
 }
 
 void
@@ -1085,7 +1081,7 @@ Application::onLinkCurrentLineToVideoToggled(bool value)
 		m_linkCurrentLineToPosition = value;
 
 		if(m_linkCurrentLineToPosition)
-			m_linesWidget->setCurrentLine(m_playerWidget->playingLine(), true);
+			m_mainWindow->m_linesWidget->setCurrentLine(m_mainWindow->m_playerWidget->playingLine(), true);
 	}
 }
 

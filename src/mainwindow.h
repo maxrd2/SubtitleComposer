@@ -34,9 +34,6 @@ public:
 
 	QMenu *createPopupMenu() override;
 
-public slots:
-	void setSubtitle(Subtitle *subtitle = 0);
-
 protected:
 	bool queryClose() override;
 
