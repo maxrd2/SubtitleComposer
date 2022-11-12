@@ -199,6 +199,9 @@ RichDocumentLayout::processLayout(int from, int oldLength, int length)
 {
 	Q_UNUSED(oldLength);
 
+	if(!m_doc->pageSize().isValid())
+		return;
+
 	const QTextFrameFormat &ff = m_doc->rootFrame()->frameFormat();
 	const qreal lineLeft = ff.border() + ff.padding() + ff.leftMargin();
 	const qreal lineRight = m_doc->pageSize().width() - ff.border() - ff.padding() - ff.rightMargin();
