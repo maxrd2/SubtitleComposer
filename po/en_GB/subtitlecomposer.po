@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: subtitlecomposer\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2022-11-11 00:45+0000\n"
+"POT-Creation-Date: 2022-11-13 00:45+0000\n"
 "PO-Revision-Date: 2022-04-02 16:38+0100\n"
 "Last-Translator: Steve Allewell <steve.allewell@gmail.com>\n"
 "Language-Team: British English <kde-l10n-en_gb@kde.org>\n"
@@ -35,52 +35,52 @@ msgctxt "Encodings menu"
 msgid "Autodetect"
 msgstr "Autodetect"
 
-#: src/application.cpp:443
+#: src/application.cpp:493
 #, kde-format
 msgid "Go to Line"
 msgstr "Go to Line"
 
-#: src/application.cpp:443
+#: src/application.cpp:493
 #, kde-format
 msgid "&Go to line:"
 msgstr "&Go to line:"
 
-#: src/application.cpp:618 src/core/subtitle.cpp:877
+#: src/application.cpp:666 src/core/subtitle.cpp:877
 #, kde-format
 msgid "Maximize Durations"
 msgstr "Maximise Durations"
 
-#: src/application.cpp:647 src/core/subtitle.cpp:1152
+#: src/application.cpp:694 src/core/subtitle.cpp:1152
 #, kde-format
 msgid "Unbreak Lines"
 msgstr "Unbreak Lines"
 
-#: src/application.cpp:658 src/core/subtitle.cpp:1161
+#: src/application.cpp:705 src/core/subtitle.cpp:1161
 #, kde-format
 msgid "Simplify Spaces"
 msgstr "Simplify Spaces"
 
-#: src/application.cpp:712 src/dialogs/translatedialog.cpp:20
+#: src/application.cpp:760 src/dialogs/translatedialog.cpp:20
 #, kde-format
 msgid "Translate"
 msgstr "Translate"
 
-#: src/application.cpp:712
+#: src/application.cpp:760
 #, kde-format
 msgid "Translating text (%1 to %2)..."
 msgstr "Translating text (%1 to %2)..."
 
-#: src/application.cpp:716
+#: src/application.cpp:764
 #, kde-format
 msgid "Translating primary text (%1 to %2)..."
 msgstr "Translating primary text (%1 to %2)..."
 
-#: src/application.cpp:717
+#: src/application.cpp:765
 #, kde-format
 msgid "Translating secondary text (%1 to %2)..."
 msgstr "Translating secondary text (%1 to %2)..."
 
-#: src/application.cpp:745
+#: src/application.cpp:793
 #, kde-format
 msgid ""
 "Unable to perform texts synchronization (sent and received lines count do "
@@ -89,17 +89,17 @@ msgstr ""
 "Unable to perform texts synchronisation (sent and received lines count do "
 "not match)."
 
-#: src/application.cpp:749
+#: src/application.cpp:797
 #, kde-format
 msgid "Translate Primary Text"
 msgstr "Translate Primary Text"
 
-#: src/application.cpp:749
+#: src/application.cpp:797
 #, kde-format
 msgid "Translate Secondary Text"
 msgstr "Translate Secondary Text"
 
-#: src/application.cpp:764
+#: src/application.cpp:812
 #, kde-format
 msgid ""
 "There was an error performing the translation:\n"
@@ -110,54 +110,54 @@ msgstr ""
 "\n"
 "%1"
 
-#: src/application.cpp:802
+#: src/application.cpp:852
 #, kde-format
 msgid "Open Video"
 msgstr "Open Video"
 
-#: src/application.cpp:1000 src/application.cpp:1007
+#: src/application.cpp:1050 src/application.cpp:1057
 #: src/application_subtitle.cpp:655
 #, kde-format
 msgid "Untitled"
 msgstr "Untitled"
 
-#: src/application.cpp:1002 src/application_subtitle.cpp:655
+#: src/application.cpp:1052 src/application_subtitle.cpp:655
 #, kde-format
 msgid "Untitled Translation"
 msgstr "Untitled Translation"
 
-#: src/application.cpp:1103
+#: src/application.cpp:1153
 #, kde-format
 msgid "Pause"
 msgstr "Pause"
 
-#: src/application.cpp:1111 src/application_actions.cpp:566
+#: src/application.cpp:1161 src/application_actions.cpp:566
 #, kde-format
 msgid "Play"
 msgstr "Play"
 
-#: src/application.cpp:1172
+#: src/application.cpp:1222
 #, kde-format
 msgid "Seek backwards 1 second"
 msgid_plural "Seek backwards %1 seconds"
 msgstr[0] "Seek backwards 1 second"
 msgstr[1] "Seek backwards %1 seconds"
 
-#: src/application.cpp:1173
+#: src/application.cpp:1223
 #, kde-format
 msgid "Seek forwards 1 second"
 msgid_plural "Seek forwards %1 seconds"
 msgstr[0] "Seek forwards 1 second"
 msgstr[1] "Seek forwards %1 seconds"
 
-#: src/application.cpp:1176 src/application.cpp:1180
+#: src/application.cpp:1226 src/application.cpp:1230
 #, kde-format
 msgid "Shift %2%1 millisecond"
 msgid_plural "Shift %2%1 milliseconds"
 msgstr[0] "Shift %2%1 millisecond"
 msgstr[1] "Shift %2%1 milliseconds"
 
-#: src/application.cpp:1177 src/application.cpp:1181
+#: src/application.cpp:1227 src/application.cpp:1231
 #, kde-format
 msgid "Shift selected lines %2%1 millisecond"
 msgid_plural "Shift selected lines %2%1 milliseconds"
@@ -2770,53 +2770,96 @@ msgstr "<b>FPS</b>"
 msgid "<b>Playback Rate</b>"
 msgstr "<b>Playback Rate</b>"
 
-#: src/gui/playerwidget.cpp:665
+#: src/gui/playerwidget.cpp:667
 #, kde-format
 msgid "<qt>There was an error opening media file %1.</qt>"
 msgstr "<qt>There was an error opening media file %1.</qt>"
 
-#: src/gui/playerwidget.cpp:681 src/gui/playerwidget.cpp:682
 #: src/gui/playerwidget.cpp:683 src/gui/playerwidget.cpp:684
-#: src/gui/playerwidget.cpp:751 src/gui/playerwidget.cpp:759
-#: src/gui/playerwidget.cpp:765
+#: src/gui/playerwidget.cpp:685 src/gui/playerwidget.cpp:686
+#: src/gui/playerwidget.cpp:753 src/gui/playerwidget.cpp:761
+#: src/gui/playerwidget.cpp:767
 #, kde-format
 msgid "<i>Unknown</i>"
 msgstr "<i>Unknown</i>"
 
-#: src/gui/playerwidget.cpp:697 src/gui/playerwidget.cpp:699
+#: src/gui/playerwidget.cpp:699 src/gui/playerwidget.cpp:701
 #, kde-format
 msgid "Unexpected error when playing file."
 msgstr "Unexpected error when playing file."
 
-#: src/gui/playerwidget.cpp:697 src/gui/playerwidget.cpp:699
+#: src/gui/playerwidget.cpp:699 src/gui/playerwidget.cpp:701
 #, kde-format
 msgid "Error Playing File"
 msgstr "Error Playing File"
 
-#: src/gui/subtitlemeta/subtitlemetawidget.cpp:41
+#: src/gui/subtitlemeta/subtitlemetawidget.cpp:46
 #, fuzzy, kde-format
 #| msgid "Styles"
 msgid "&Stylesheet"
 msgstr "Styles"
 
-#: src/gui/subtitlemeta/subtitlemetawidget.cpp:42
+#: src/gui/subtitlemeta/subtitlemetawidget.cpp:47
 #, kde-format
 msgid "&Comments"
 msgstr ""
 
-#: src/gui/subtitlemeta/subtitlemetawidget.cpp:82
+#: src/gui/subtitlemeta/subtitlemetawidget.cpp:48
+#, fuzzy, kde-format
+#| msgid "<b>Position</b>"
+msgid "&Position"
+msgstr "<b>Position</b>"
+
+#: src/gui/subtitlemeta/subtitlemetawidget.cpp:88
 #, kde-format
 msgid "Intro"
 msgstr ""
 
-#: src/gui/subtitlemeta/subtitlemetawidget.cpp:84
+#: src/gui/subtitlemeta/subtitlemetawidget.cpp:90
 #, kde-format
 msgid "Header"
 msgstr ""
 
-#: src/gui/subtitlemeta/subtitlemetawidget.cpp:86
+#: src/gui/subtitlemeta/subtitlemetawidget.cpp:92
 #, kde-format
 msgid "Footer"
+msgstr ""
+
+#. i18n: ectx: property (windowTitle), widget (QWidget, SubtitlePositionWidget)
+#: src/gui/subtitlemeta/subtitlepositionwidget.ui:14
+#, kde-format
+msgid "Form"
+msgstr ""
+
+#. i18n: ectx: property (title), widget (QGroupBox, grpHAlign)
+#: src/gui/subtitlemeta/subtitlepositionwidget.ui:20
+#, kde-format
+msgid "Horizontal Alignment"
+msgstr ""
+
+#. i18n: ectx: property (title), widget (QGroupBox, grpVAlign)
+#: src/gui/subtitlemeta/subtitlepositionwidget.ui:106
+#, kde-format
+msgid "Vertical Alignment"
+msgstr ""
+
+#. i18n: ectx: property (title), widget (QGroupBox, grpPosition)
+#: src/gui/subtitlemeta/subtitlepositionwidget.ui:169
+#, fuzzy, kde-format
+#| msgid "<b>Position</b>"
+msgid "Position/Size"
+msgstr "<b>Position</b>"
+
+#. i18n: ectx: property (suffix), widget (QDoubleSpinBox, posBottom)
+#. i18n: ectx: property (suffix), widget (QDoubleSpinBox, posLeft)
+#. i18n: ectx: property (suffix), widget (QDoubleSpinBox, posTop)
+#. i18n: ectx: property (suffix), widget (QDoubleSpinBox, posRight)
+#: src/gui/subtitlemeta/subtitlepositionwidget.ui:175
+#: src/gui/subtitlemeta/subtitlepositionwidget.ui:185
+#: src/gui/subtitlemeta/subtitlepositionwidget.ui:195
+#: src/gui/subtitlemeta/subtitlepositionwidget.ui:205
+#, no-c-format, kde-format
+msgid "%"
 msgstr ""
 
 #: src/gui/treeview/linesmodel.cpp:156
@@ -2988,54 +3031,54 @@ msgstr ""
 "If included, a second pane gets added to the right of the primary subtitle "
 "for side-by-side translation."
 
-#: src/main.cpp:206
+#: src/main.cpp:153
 #, kde-format
 msgid "Subtitle Composer"
 msgstr "Subtitle Composer"
 
-#: src/main.cpp:208
+#: src/main.cpp:155
 #, kde-format
 msgid "A KDE subtitle editor."
 msgstr "A KDE subtitle editor."
 
-#: src/main.cpp:214
+#: src/main.cpp:161
 #, kde-format
 msgid "Maintainer"
 msgstr "Maintainer"
 
-#: src/main.cpp:215
+#: src/main.cpp:162
 #, kde-format
 msgid "Former Maintainer"
 msgstr "Former Maintainer"
 
-#: src/main.cpp:216
+#: src/main.cpp:163
 #, kde-format
 msgid "Patches and Website"
 msgstr "Patches and Website"
 
-#: src/main.cpp:218
+#: src/main.cpp:165
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
 msgid "Your names"
 msgstr "Steve Allewell"
 
-#: src/main.cpp:218
+#: src/main.cpp:165
 #, kde-format
 msgctxt "EMAIL OF TRANSLATORS"
 msgid "Your emails"
 msgstr "steve.allewell@gmail.com"
 
-#: src/main.cpp:220
+#: src/main.cpp:167
 #, kde-format
 msgid "code contributions"
 msgstr "code contributions"
 
-#: src/main.cpp:221
+#: src/main.cpp:168
 #, kde-format
 msgid "code contributions, Arch Linux packaging"
 msgstr "code contributions, Arch Linux packaging"
 
-#: src/main.cpp:223
+#: src/main.cpp:170
 #, kde-format
 msgid "All people who have contributed and I have forgotten to mention"
 msgstr "All people who have contributed and I have forgotten to mention"

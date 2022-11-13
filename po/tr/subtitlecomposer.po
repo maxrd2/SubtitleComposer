@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: subtitlecomposer\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2022-11-11 00:45+0000\n"
+"POT-Creation-Date: 2022-11-13 00:45+0000\n"
 "PO-Revision-Date: 2022-11-11 20:22+0300\n"
 "Last-Translator: Emir SARI <emir_sari@icloud.com>\n"
 "Language-Team: Turkish <kde-l10n-tr@kde.org>\n"
@@ -35,52 +35,52 @@ msgctxt "Encodings menu"
 msgid "Autodetect"
 msgstr "Otomatik Algıla"
 
-#: src/application.cpp:443
+#: src/application.cpp:493
 #, kde-format
 msgid "Go to Line"
 msgstr "Satıra Git"
 
-#: src/application.cpp:443
+#: src/application.cpp:493
 #, kde-format
 msgid "&Go to line:"
 msgstr "&Satıra git:"
 
-#: src/application.cpp:618 src/core/subtitle.cpp:877
+#: src/application.cpp:666 src/core/subtitle.cpp:877
 #, kde-format
 msgid "Maximize Durations"
 msgstr "Süreleri En Uzun Yap"
 
-#: src/application.cpp:647 src/core/subtitle.cpp:1152
+#: src/application.cpp:694 src/core/subtitle.cpp:1152
 #, kde-format
 msgid "Unbreak Lines"
 msgstr "Satırları Sonlandırma"
 
-#: src/application.cpp:658 src/core/subtitle.cpp:1161
+#: src/application.cpp:705 src/core/subtitle.cpp:1161
 #, kde-format
 msgid "Simplify Spaces"
 msgstr "Boşlukları Yalınlaştır"
 
-#: src/application.cpp:712 src/dialogs/translatedialog.cpp:20
+#: src/application.cpp:760 src/dialogs/translatedialog.cpp:20
 #, kde-format
 msgid "Translate"
 msgstr "Çevir"
 
-#: src/application.cpp:712
+#: src/application.cpp:760
 #, kde-format
 msgid "Translating text (%1 to %2)..."
 msgstr "Metin çevriliyor (%1 - %2)..."
 
-#: src/application.cpp:716
+#: src/application.cpp:764
 #, kde-format
 msgid "Translating primary text (%1 to %2)..."
 msgstr "Birincil metin çevriliyor (%1 - %2)..."
 
-#: src/application.cpp:717
+#: src/application.cpp:765
 #, kde-format
 msgid "Translating secondary text (%1 to %2)..."
 msgstr "İkincil metin çevriliyor (%1 - %2)..."
 
-#: src/application.cpp:745
+#: src/application.cpp:793
 #, kde-format
 msgid ""
 "Unable to perform texts synchronization (sent and received lines count do "
@@ -89,17 +89,17 @@ msgstr ""
 "Metin eşzamanlaması gerçekleştirilemiyor (gönderilen ve alınan satırlar "
 "sayısı eşleşmiyor)."
 
-#: src/application.cpp:749
+#: src/application.cpp:797
 #, kde-format
 msgid "Translate Primary Text"
 msgstr "Birincil Metni Çevir"
 
-#: src/application.cpp:749
+#: src/application.cpp:797
 #, kde-format
 msgid "Translate Secondary Text"
 msgstr "İkincil Metni Çevir"
 
-#: src/application.cpp:764
+#: src/application.cpp:812
 #, kde-format
 msgid ""
 "There was an error performing the translation:\n"
@@ -110,54 +110,54 @@ msgstr ""
 "\n"
 "%1"
 
-#: src/application.cpp:802
+#: src/application.cpp:852
 #, kde-format
 msgid "Open Video"
 msgstr "Video Aç"
 
-#: src/application.cpp:1000 src/application.cpp:1007
+#: src/application.cpp:1050 src/application.cpp:1057
 #: src/application_subtitle.cpp:655
 #, kde-format
 msgid "Untitled"
 msgstr "Başlıksız"
 
-#: src/application.cpp:1002 src/application_subtitle.cpp:655
+#: src/application.cpp:1052 src/application_subtitle.cpp:655
 #, kde-format
 msgid "Untitled Translation"
 msgstr "Başlıksız Çeviri"
 
-#: src/application.cpp:1103
+#: src/application.cpp:1153
 #, kde-format
 msgid "Pause"
 msgstr "Duraklat"
 
-#: src/application.cpp:1111 src/application_actions.cpp:566
+#: src/application.cpp:1161 src/application_actions.cpp:566
 #, kde-format
 msgid "Play"
 msgstr "Oynat"
 
-#: src/application.cpp:1172
+#: src/application.cpp:1222
 #, kde-format
 msgid "Seek backwards 1 second"
 msgid_plural "Seek backwards %1 seconds"
 msgstr[0] "1 saniye geri git"
 msgstr[1] "%1 saniye geri git"
 
-#: src/application.cpp:1173
+#: src/application.cpp:1223
 #, kde-format
 msgid "Seek forwards 1 second"
 msgid_plural "Seek forwards %1 seconds"
 msgstr[0] "1 saniye ileri git"
 msgstr[1] "%1 saniye ileri git"
 
-#: src/application.cpp:1176 src/application.cpp:1180
+#: src/application.cpp:1226 src/application.cpp:1230
 #, kde-format
 msgid "Shift %2%1 millisecond"
 msgid_plural "Shift %2%1 milliseconds"
 msgstr[0] "%2%1 milisaniye kaydır"
 msgstr[1] "%2%1 milisaniye kaydır"
 
-#: src/application.cpp:1177 src/application.cpp:1181
+#: src/application.cpp:1227 src/application.cpp:1231
 #, kde-format
 msgid "Shift selected lines %2%1 millisecond"
 msgid_plural "Shift selected lines %2%1 milliseconds"
@@ -2769,53 +2769,96 @@ msgstr "<b>FPS</b>"
 msgid "<b>Playback Rate</b>"
 msgstr "<b>Oynatma Hızı</b>"
 
-#: src/gui/playerwidget.cpp:665
+#: src/gui/playerwidget.cpp:667
 #, kde-format
 msgid "<qt>There was an error opening media file %1.</qt>"
 msgstr "<qt>%1 ortam dosyası açılırken bir hata oluştu.</qt>"
 
-#: src/gui/playerwidget.cpp:681 src/gui/playerwidget.cpp:682
 #: src/gui/playerwidget.cpp:683 src/gui/playerwidget.cpp:684
-#: src/gui/playerwidget.cpp:751 src/gui/playerwidget.cpp:759
-#: src/gui/playerwidget.cpp:765
+#: src/gui/playerwidget.cpp:685 src/gui/playerwidget.cpp:686
+#: src/gui/playerwidget.cpp:753 src/gui/playerwidget.cpp:761
+#: src/gui/playerwidget.cpp:767
 #, kde-format
 msgid "<i>Unknown</i>"
 msgstr "<i>Bilinmiyor</i>"
 
-#: src/gui/playerwidget.cpp:697 src/gui/playerwidget.cpp:699
+#: src/gui/playerwidget.cpp:699 src/gui/playerwidget.cpp:701
 #, kde-format
 msgid "Unexpected error when playing file."
 msgstr "Dosya oynatılırken beklenmedik bir hata oluştu."
 
-#: src/gui/playerwidget.cpp:697 src/gui/playerwidget.cpp:699
+#: src/gui/playerwidget.cpp:699 src/gui/playerwidget.cpp:701
 #, kde-format
 msgid "Error Playing File"
 msgstr "Dosya Oynatma Hatası"
 
-#: src/gui/subtitlemeta/subtitlemetawidget.cpp:41
+#: src/gui/subtitlemeta/subtitlemetawidget.cpp:46
 #, kde-format
 msgid "&Stylesheet"
 msgstr "&Biçem Sayfası"
 
-#: src/gui/subtitlemeta/subtitlemetawidget.cpp:42
+#: src/gui/subtitlemeta/subtitlemetawidget.cpp:47
 #, kde-format
 msgid "&Comments"
 msgstr "&Açıklamalar"
 
-#: src/gui/subtitlemeta/subtitlemetawidget.cpp:82
+#: src/gui/subtitlemeta/subtitlemetawidget.cpp:48
+#, fuzzy, kde-format
+#| msgid "<b>Position</b>"
+msgid "&Position"
+msgstr "<b>Konum</b>"
+
+#: src/gui/subtitlemeta/subtitlemetawidget.cpp:88
 #, kde-format
 msgid "Intro"
 msgstr "Giriş"
 
-#: src/gui/subtitlemeta/subtitlemetawidget.cpp:84
+#: src/gui/subtitlemeta/subtitlemetawidget.cpp:90
 #, kde-format
 msgid "Header"
 msgstr "Üstbilgi"
 
-#: src/gui/subtitlemeta/subtitlemetawidget.cpp:86
+#: src/gui/subtitlemeta/subtitlemetawidget.cpp:92
 #, kde-format
 msgid "Footer"
 msgstr "Altbilgi"
+
+#. i18n: ectx: property (windowTitle), widget (QWidget, SubtitlePositionWidget)
+#: src/gui/subtitlemeta/subtitlepositionwidget.ui:14
+#, kde-format
+msgid "Form"
+msgstr ""
+
+#. i18n: ectx: property (title), widget (QGroupBox, grpHAlign)
+#: src/gui/subtitlemeta/subtitlepositionwidget.ui:20
+#, kde-format
+msgid "Horizontal Alignment"
+msgstr ""
+
+#. i18n: ectx: property (title), widget (QGroupBox, grpVAlign)
+#: src/gui/subtitlemeta/subtitlepositionwidget.ui:106
+#, kde-format
+msgid "Vertical Alignment"
+msgstr ""
+
+#. i18n: ectx: property (title), widget (QGroupBox, grpPosition)
+#: src/gui/subtitlemeta/subtitlepositionwidget.ui:169
+#, fuzzy, kde-format
+#| msgid "<b>Position</b>"
+msgid "Position/Size"
+msgstr "<b>Konum</b>"
+
+#. i18n: ectx: property (suffix), widget (QDoubleSpinBox, posBottom)
+#. i18n: ectx: property (suffix), widget (QDoubleSpinBox, posLeft)
+#. i18n: ectx: property (suffix), widget (QDoubleSpinBox, posTop)
+#. i18n: ectx: property (suffix), widget (QDoubleSpinBox, posRight)
+#: src/gui/subtitlemeta/subtitlepositionwidget.ui:175
+#: src/gui/subtitlemeta/subtitlepositionwidget.ui:185
+#: src/gui/subtitlemeta/subtitlepositionwidget.ui:195
+#: src/gui/subtitlemeta/subtitlepositionwidget.ui:205
+#, no-c-format, kde-format
+msgid "%"
+msgstr ""
 
 #: src/gui/treeview/linesmodel.cpp:156
 #, kde-format
@@ -2986,54 +3029,54 @@ msgstr ""
 "İçerilirse yan yana çeviri için birincil altyazının sağına ikinci bir pano "
 "eklenir."
 
-#: src/main.cpp:206
+#: src/main.cpp:153
 #, kde-format
 msgid "Subtitle Composer"
 msgstr "Altyazı Oluşturucu"
 
-#: src/main.cpp:208
+#: src/main.cpp:155
 #, kde-format
 msgid "A KDE subtitle editor."
 msgstr "KDE altyazı düzenleyicisi."
 
-#: src/main.cpp:214
+#: src/main.cpp:161
 #, kde-format
 msgid "Maintainer"
 msgstr "Projeyi Sürdüren"
 
-#: src/main.cpp:215
+#: src/main.cpp:162
 #, kde-format
 msgid "Former Maintainer"
 msgstr "Önceden Projeyi Sürdüren"
 
-#: src/main.cpp:216
+#: src/main.cpp:163
 #, kde-format
 msgid "Patches and Website"
 msgstr "Yamalar ve Web Sitesi"
 
-#: src/main.cpp:218
+#: src/main.cpp:165
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
 msgid "Your names"
 msgstr "Emir SARI"
 
-#: src/main.cpp:218
+#: src/main.cpp:165
 #, kde-format
 msgctxt "EMAIL OF TRANSLATORS"
 msgid "Your emails"
 msgstr "emir_sari@icloud.com"
 
-#: src/main.cpp:220
+#: src/main.cpp:167
 #, kde-format
 msgid "code contributions"
 msgstr "kod katkıları"
 
-#: src/main.cpp:221
+#: src/main.cpp:168
 #, kde-format
 msgid "code contributions, Arch Linux packaging"
 msgstr "kod katkıları, Arch Linux paketlemesi"
 
-#: src/main.cpp:223
+#: src/main.cpp:170
 #, kde-format
 msgid "All people who have contributed and I have forgotten to mention"
 msgstr "Katkıda bulunan ve değinmeyi unuttuğum diğer herkes"

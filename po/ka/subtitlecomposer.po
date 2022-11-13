@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: subtitlecomposer\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2022-11-11 00:45+0000\n"
-"PO-Revision-Date: 2022-10-06 12:41+0200\n"
+"POT-Creation-Date: 2022-11-13 00:45+0000\n"
+"PO-Revision-Date: 2022-11-12 05:09+0100\n"
 "Last-Translator: Temuri Doghonadze <temuri.doghonadze@gmail.com>\n"
 "Language-Team: Georgian <kde-i18n-doc@kde.org>\n"
 "Language: ka\n"
@@ -16,7 +16,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 3.1.1\n"
+"X-Generator: Poedit 3.2\n"
 
 #: src/actions/kcodecactionext.cpp:29
 #, kde-format
@@ -36,139 +36,144 @@ msgctxt "Encodings menu"
 msgid "Autodetect"
 msgstr "ავტოამოცნობა"
 
-#: src/application.cpp:443
+#: src/application.cpp:493
 #, kde-format
 msgid "Go to Line"
 msgstr "ხაზზე გადასვლა"
 
-#: src/application.cpp:443
+#: src/application.cpp:493
 #, kde-format
 msgid "&Go to line:"
 msgstr "&ხაზზე გადასვლა:"
 
-#: src/application.cpp:618 src/core/subtitle.cpp:877
+#: src/application.cpp:666 src/core/subtitle.cpp:877
 #, kde-format
 msgid "Maximize Durations"
 msgstr "ხანგრძლივობების მაქსიმიზაცია"
 
-#: src/application.cpp:647 src/core/subtitle.cpp:1152
+#: src/application.cpp:694 src/core/subtitle.cpp:1152
 #, kde-format
 msgid "Unbreak Lines"
 msgstr "გატეხილი ხაზების შეერთება"
 
-#: src/application.cpp:658 src/core/subtitle.cpp:1161
+#: src/application.cpp:705 src/core/subtitle.cpp:1161
 #, kde-format
 msgid "Simplify Spaces"
 msgstr "გამოტოვებების გამარტივება"
 
-#: src/application.cpp:712 src/dialogs/translatedialog.cpp:20
+#: src/application.cpp:760 src/dialogs/translatedialog.cpp:20
 #, kde-format
 msgid "Translate"
 msgstr "თარგმნა"
 
-#: src/application.cpp:712
+#: src/application.cpp:760
 #, kde-format
 msgid "Translating text (%1 to %2)..."
-msgstr ""
+msgstr "ტექსტის თარგმანი (%1-დან %2-ზე)..."
 
-#: src/application.cpp:716
+#: src/application.cpp:764
 #, kde-format
 msgid "Translating primary text (%1 to %2)..."
-msgstr ""
+msgstr "ძირითადი ტექსტის თარგმანი (%1-დან %2-ზე)"
 
-#: src/application.cpp:717
+#: src/application.cpp:765
 #, kde-format
 msgid "Translating secondary text (%1 to %2)..."
-msgstr ""
+msgstr "დამხმარე ტექსტის თარგმანი (%1-დან %2-ზე)"
 
-#: src/application.cpp:745
+#: src/application.cpp:793
 #, kde-format
 msgid ""
 "Unable to perform texts synchronization (sent and received lines count do "
 "not match)."
 msgstr ""
+"ტექსტის სინქრონიზაცია შეუძლებელია (გაგზავნილი და მიღებული ხაზების რაოდენობა "
+"არ ემთხვევა)."
 
-#: src/application.cpp:749
+#: src/application.cpp:797
 #, kde-format
 msgid "Translate Primary Text"
-msgstr ""
+msgstr "ძირითადი ტექსტის თარგმანი"
 
-#: src/application.cpp:749
+#: src/application.cpp:797
 #, kde-format
 msgid "Translate Secondary Text"
-msgstr ""
+msgstr "დამხმარე ტექსტის თარგმანი"
 
-#: src/application.cpp:764
+#: src/application.cpp:812
 #, kde-format
 msgid ""
 "There was an error performing the translation:\n"
 "\n"
 "%1"
 msgstr ""
+"შეცდომა თარგმნისას:\n"
+"\n"
+"%1"
 
-#: src/application.cpp:802
+#: src/application.cpp:852
 #, kde-format
 msgid "Open Video"
-msgstr ""
+msgstr "ვიდეოს გახსნა"
 
-#: src/application.cpp:1000 src/application.cpp:1007
+#: src/application.cpp:1050 src/application.cpp:1057
 #: src/application_subtitle.cpp:655
 #, kde-format
 msgid "Untitled"
 msgstr "უსახელო"
 
-#: src/application.cpp:1002 src/application_subtitle.cpp:655
+#: src/application.cpp:1052 src/application_subtitle.cpp:655
 #, kde-format
 msgid "Untitled Translation"
-msgstr ""
+msgstr "უსახელო თარგმანი"
 
-#: src/application.cpp:1103
+#: src/application.cpp:1153
 #, kde-format
 msgid "Pause"
 msgstr "შეჩერება"
 
-#: src/application.cpp:1111 src/application_actions.cpp:566
+#: src/application.cpp:1161 src/application_actions.cpp:566
 #, kde-format
 msgid "Play"
 msgstr "დაკვრა"
 
-#: src/application.cpp:1172
+#: src/application.cpp:1222
 #, kde-format
 msgid "Seek backwards 1 second"
 msgid_plural "Seek backwards %1 seconds"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "1 წამით უკან გადახვევა"
+msgstr[1] "%1 წამით უკან გადახვევა"
 
-#: src/application.cpp:1173
+#: src/application.cpp:1223
 #, kde-format
 msgid "Seek forwards 1 second"
 msgid_plural "Seek forwards %1 seconds"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "წინ გადახვევა 1 წამით"
+msgstr[1] "წინ გადახვევა %1 წამით"
 
-#: src/application.cpp:1176 src/application.cpp:1180
+#: src/application.cpp:1226 src/application.cpp:1230
 #, kde-format
 msgid "Shift %2%1 millisecond"
 msgid_plural "Shift %2%1 milliseconds"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%2%1 მილიწამით წანაცვლება"
+msgstr[1] "%2%1 მილიწამით წანაცვლება"
 
-#: src/application.cpp:1177 src/application.cpp:1181
+#: src/application.cpp:1227 src/application.cpp:1231
 #, kde-format
 msgid "Shift selected lines %2%1 millisecond"
 msgid_plural "Shift selected lines %2%1 milliseconds"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "მონიშნული ხაზების %2%1 მილიწამით წანაცვლება"
+msgstr[1] "მონიშნული ხაზების %2%1 მილიწამით წანაცვლება"
 
 #: src/application_actions.cpp:32
 #, kde-format
 msgid "Exit the application"
-msgstr ""
+msgstr "აპლიკაციიდან გასვლა"
 
 #: src/application_actions.cpp:35
 #, kde-format
 msgid "Configure Subtitle Composer"
-msgstr ""
+msgstr "Subtitle Composer-ის მორგება"
 
 #: src/application_actions.cpp:39
 #, kde-format
@@ -179,34 +184,34 @@ msgstr "ახალი"
 #: src/application_actions.cpp:40
 #, kde-format
 msgid "Create an empty subtitle"
-msgstr ""
+msgstr "ცარიელი სუბტიტრის შექმნა"
 
 #: src/application_actions.cpp:48
 #, kde-format
 msgctxt "@action:inmenu Open subtitle file"
 msgid "Open Subtitle..."
-msgstr ""
+msgstr "სუბტიტრის ფაილის გახსნა..."
 
 #: src/application_actions.cpp:49 src/application_actions.cpp:66
 #, kde-format
 msgid "Open subtitle file"
-msgstr ""
+msgstr "სუბტიტრის ფაილის გახსნა"
 
 #: src/application_actions.cpp:57
 #, kde-format
 msgid "Reload As..."
-msgstr ""
+msgstr "თავიდან ჩატვირთვა, როგორც..."
 
 #: src/application_actions.cpp:58
 #, kde-format
 msgid "Reload opened file with a different encoding"
-msgstr ""
+msgstr "ღია ფაილის თავიდან გახსნა განსხვავებული კოდირებით"
 
 #: src/application_actions.cpp:65
 #, kde-format
 msgctxt "@action:inmenu Open rencently used subtitle file"
 msgid "Open &Recent Subtitle"
-msgstr ""
+msgstr "&უახლესი სუბტიტრის გახსნა"
 
 #: src/application_actions.cpp:72
 #, kde-format
@@ -216,7 +221,7 @@ msgstr "შენახვა"
 #: src/application_actions.cpp:73
 #, kde-format
 msgid "Save opened subtitle"
-msgstr ""
+msgstr "ღია სუბტიტრის შენახვა"
 
 #: src/application_actions.cpp:81
 #, kde-format
@@ -226,7 +231,7 @@ msgstr "შენახვა, როგორც..."
 #: src/application_actions.cpp:82
 #, kde-format
 msgid "Save opened subtitle with different settings"
-msgstr ""
+msgstr "ღია სუბტიტრის სხვა პარამეტრებით შენახვა"
 
 #: src/application_actions.cpp:90
 #, kde-format
@@ -236,7 +241,7 @@ msgstr "დახურვა"
 #: src/application_actions.cpp:91
 #, kde-format
 msgid "Close opened subtitle"
-msgstr ""
+msgstr "ღია სუბტიტრის დახურვა"
 
 #: src/application_actions.cpp:99
 #, kde-format
@@ -246,32 +251,32 @@ msgstr "ახალი თარგმანი"
 #: src/application_actions.cpp:100
 #, kde-format
 msgid "Create an empty translation subtitle"
-msgstr ""
+msgstr "ცარიელი სათარგმნი სუბტიტრის შექმნა"
 
 #: src/application_actions.cpp:108
 #, kde-format
 msgid "Open Translation..."
-msgstr ""
+msgstr "თარგმანის გახსნა..."
 
 #: src/application_actions.cpp:109 src/application_actions.cpp:126
 #, kde-format
 msgid "Open translation subtitle file"
-msgstr ""
+msgstr "თარგმნილი სუბტიტრების ფაილის გახსნა"
 
 #: src/application_actions.cpp:117
 #, kde-format
 msgid "Reload Translation As..."
-msgstr ""
+msgstr "თარგმანის გახსნა, როგორც..."
 
 #: src/application_actions.cpp:118
 #, kde-format
 msgid "Reload opened translation file with a different encoding"
-msgstr ""
+msgstr "ღია თარგმანის ფაილის თავიდან ჩატვირთვა განსხვავებული კოდირებით"
 
 #: src/application_actions.cpp:125
 #, kde-format
 msgid "Open &Recent Translation"
-msgstr ""
+msgstr "&უახლესი თარგმანის გახსნა"
 
 #: src/application_actions.cpp:133
 #, kde-format
@@ -281,42 +286,42 @@ msgstr "თარგმანის შენახვა"
 #: src/application_actions.cpp:134
 #, kde-format
 msgid "Save opened translation subtitle"
-msgstr ""
+msgstr "ღია თარგმნილი სუბტიტრის შენახვა"
 
 #: src/application_actions.cpp:144
 #, kde-format
 msgid "Save Translation As..."
-msgstr ""
+msgstr "თარგმანის შენახვა, როგორც..."
 
 #: src/application_actions.cpp:145
 #, kde-format
 msgid "Save opened translation subtitle with different settings"
-msgstr ""
+msgstr "ღია თარგმანის ფაილის განსხვავებული პარამეტრებით შენახვა"
 
 #: src/application_actions.cpp:153
 #, kde-format
 msgid "Close Translation"
-msgstr ""
+msgstr "თარგმანის დახურვა"
 
 #: src/application_actions.cpp:154
 #, kde-format
 msgid "Close opened translation subtitle"
-msgstr ""
+msgstr "ღია სათარგმნი სუბტიტრის დახურვა"
 
 #: src/application_actions.cpp:171
 #, kde-format
 msgid "Split Subtitle..."
-msgstr ""
+msgstr "სუბტიტრების გაყოფა..."
 
 #: src/application_actions.cpp:172
 #, kde-format
 msgid "Split the opened subtitle in two parts"
-msgstr ""
+msgstr "გახსნილი სუბტიტრის ორ ნაწილად გაყოფა"
 
 #: src/application_actions.cpp:178
 #, kde-format
 msgid "Join Subtitles..."
-msgstr ""
+msgstr "სუბტიტრების შეერთება..."
 
 #: src/application_actions.cpp:179
 #, kde-format
@@ -352,23 +357,23 @@ msgstr "წაშლა"
 #: src/application_actions.cpp:205
 #, kde-format
 msgid "Remove selected lines"
-msgstr ""
+msgstr "მონიშნული ხაზების წაშლა"
 
 #: src/application_actions.cpp:212 src/core/subtitle.cpp:559
 #, kde-format
 msgid "Split Lines"
-msgstr ""
+msgstr "ხაზების დაყოფა"
 
 #: src/application_actions.cpp:213
 #, kde-format
 msgid "Split selected lines"
-msgstr ""
+msgstr "მონიშნული ხაზების დაყოფა"
 
 #: src/application_actions.cpp:219 src/core/subtitle.cpp:641
 #: src/gui/waveform/waveformwidget.cpp:711
 #, kde-format
 msgid "Join Lines"
-msgstr ""
+msgstr "ხაზების შეერთება"
 
 #: src/application_actions.cpp:220
 #, kde-format
@@ -394,7 +399,7 @@ msgstr "ხაზზე გადასვლა..."
 #: src/application_actions.cpp:236
 #, kde-format
 msgid "Go to specified line"
-msgstr ""
+msgstr "მითითებულ ხაზზე გადასვლა"
 
 #: src/application_actions.cpp:244
 #, kde-format
@@ -439,7 +444,7 @@ msgstr ""
 #: src/application_actions.cpp:279
 #, kde-format
 msgid "Retrocede current line"
-msgstr ""
+msgstr "მიმდინარე ხაზის რეტროციდი"
 
 #: src/application_actions.cpp:280
 #, kde-format
@@ -449,7 +454,7 @@ msgstr ""
 #: src/application_actions.cpp:288
 #, kde-format
 msgid "Advance current line"
-msgstr ""
+msgstr "მიმდინარე ხაზის წაწევა"
 
 #: src/application_actions.cpp:289
 #, kde-format
@@ -459,27 +464,27 @@ msgstr ""
 #: src/application_actions.cpp:297
 #, kde-format
 msgid "Detect Errors..."
-msgstr ""
+msgstr "შეცდომების პოვნა..."
 
 #: src/application_actions.cpp:298
 #, kde-format
 msgid "Detect errors in the current subtitle"
-msgstr ""
+msgstr "მიმდინარე სუბტიტრში შეცდომების პოვნა"
 
 #: src/application_actions.cpp:305
 #, kde-format
 msgid "Clear Errors/Marks"
-msgstr ""
+msgstr "შეცდომების/ნიშნების გასუფთავება"
 
 #: src/application_actions.cpp:306
 #, kde-format
 msgid "Clear detected errors and marks in the current subtitle"
-msgstr ""
+msgstr "მიმდინარე სუბტიტრიდან ნიშნების და შეცდომების წაშლა"
 
 #: src/application_actions.cpp:314
 #, kde-format
 msgid "Select Next Error/Mark"
-msgstr ""
+msgstr "აირჩიეთ შემდეგი შეცდომა/ნიშანი"
 
 #: src/application_actions.cpp:315
 #, kde-format
@@ -509,7 +514,7 @@ msgstr ""
 #: src/application_actions.cpp:339
 #, kde-format
 msgid "Toggle Mark"
-msgstr ""
+msgstr "ნიშნის გადართვა"
 
 #: src/application_actions.cpp:340
 #, kde-format
@@ -519,7 +524,7 @@ msgstr ""
 #: src/application_actions.cpp:348 src/gui/currentlinewidget.cpp:141
 #, kde-format
 msgid "Toggle Bold"
-msgstr ""
+msgstr "სქელობის გადართვა"
 
 #: src/application_actions.cpp:349
 #, kde-format
@@ -529,7 +534,7 @@ msgstr ""
 #: src/application_actions.cpp:357 src/gui/currentlinewidget.cpp:145
 #, kde-format
 msgid "Toggle Italic"
-msgstr ""
+msgstr "კურსივის გადართვა"
 
 #: src/application_actions.cpp:358
 #, kde-format
@@ -539,7 +544,7 @@ msgstr ""
 #: src/application_actions.cpp:366 src/gui/currentlinewidget.cpp:149
 #, kde-format
 msgid "Toggle Underline"
-msgstr ""
+msgstr "ხაზგასმის გადართვა"
 
 #: src/application_actions.cpp:367
 #, kde-format
@@ -549,7 +554,7 @@ msgstr ""
 #: src/application_actions.cpp:375 src/gui/currentlinewidget.cpp:153
 #, kde-format
 msgid "Toggle Strike Through"
-msgstr ""
+msgstr "ხაზგადასმის გადართვა"
 
 #: src/application_actions.cpp:376
 #, kde-format
@@ -559,7 +564,7 @@ msgstr ""
 #: src/application_actions.cpp:384 src/gui/currentlinewidget.cpp:157
 #, kde-format
 msgid "Change Text Color"
-msgstr ""
+msgstr "ტექსტის ფერის შეცვლა"
 
 #: src/application_actions.cpp:385
 #, kde-format
@@ -569,7 +574,7 @@ msgstr ""
 #: src/application_actions.cpp:392
 #, kde-format
 msgid "Shift..."
-msgstr ""
+msgstr "წანაცვლება..."
 
 #: src/application_actions.cpp:393
 #, kde-format
@@ -579,7 +584,7 @@ msgstr ""
 #: src/application_actions.cpp:412
 #, kde-format
 msgid "Adjust..."
-msgstr ""
+msgstr "მორგება..."
 
 #: src/application_actions.cpp:413
 #, kde-format
@@ -589,7 +594,7 @@ msgstr ""
 #: src/application_actions.cpp:420
 #, kde-format
 msgid "Change Frame Rate..."
-msgstr ""
+msgstr "კადრების სიხშირის შეცვლა..."
 
 #: src/application_actions.cpp:421
 #, kde-format
@@ -599,7 +604,7 @@ msgstr ""
 #: src/application_actions.cpp:427
 #, kde-format
 msgid "Enforce Duration Limits..."
-msgstr ""
+msgstr "გამძლეობის ლიმიტების შეზღუდვა..."
 
 #: src/application_actions.cpp:428
 #, kde-format
@@ -609,7 +614,7 @@ msgstr ""
 #: src/application_actions.cpp:435
 #, kde-format
 msgid "Set Automatic Durations..."
-msgstr ""
+msgstr "ავტომატური ხანგრძლივობების დაყენება..."
 
 #: src/application_actions.cpp:436
 #, kde-format
@@ -619,7 +624,7 @@ msgstr ""
 #: src/application_actions.cpp:442
 #, kde-format
 msgid "Maximize Durations..."
-msgstr ""
+msgstr "ხანგრძლივობების მაქსიმიზაცია..."
 
 #: src/application_actions.cpp:443
 #, kde-format
@@ -649,7 +654,7 @@ msgstr ""
 #: src/application_actions.cpp:463
 #, kde-format
 msgid "Break Lines..."
-msgstr ""
+msgstr "ხაზების გატეხვა..."
 
 #: src/application_actions.cpp:464
 #, kde-format
@@ -659,7 +664,7 @@ msgstr ""
 #: src/application_actions.cpp:470
 #, kde-format
 msgid "Unbreak Lines..."
-msgstr ""
+msgstr "გატეხილი ხაზების შეერთება..."
 
 #: src/application_actions.cpp:471
 #, kde-format
@@ -669,7 +674,7 @@ msgstr ""
 #: src/application_actions.cpp:477
 #, kde-format
 msgid "Simplify Spaces..."
-msgstr ""
+msgstr "გამოტოვებების გამარტივება..."
 
 #: src/application_actions.cpp:478
 #, kde-format
@@ -689,12 +694,12 @@ msgstr ""
 #: src/application_actions.cpp:491
 #, kde-format
 msgid "Fix Punctuation..."
-msgstr ""
+msgstr "პუნქტუაციის გასწორება..."
 
 #: src/application_actions.cpp:492
 #, kde-format
 msgid "Fix punctuation errors in lines"
-msgstr ""
+msgstr "ხაზებში პუნქტუაციის გასწორება"
 
 #: src/application_actions.cpp:498
 #, kde-format
@@ -704,62 +709,62 @@ msgstr "თარგმნა..."
 #: src/application_actions.cpp:499
 #, kde-format
 msgid "Translate lines texts using Google services"
-msgstr ""
+msgstr "ხაზების ტექსტის Google-ის სერვისებით თარგმნა"
 
 #: src/application_actions.cpp:505
 #, kde-format
 msgid "Edit Line in Place"
-msgstr ""
+msgstr "ხაზის ადგილზევე ჩასწორება"
 
 #: src/application_actions.cpp:506
 #, kde-format
 msgid "Edit current line text in place"
-msgstr ""
+msgstr "მიმდინარე ხაზის ტექსტის ადგილზევე ჩასწორება"
 
 #: src/application_actions.cpp:514
 #, kde-format
 msgid "Open Video..."
-msgstr ""
+msgstr "ვიდეოს გახსნა..."
 
 #: src/application_actions.cpp:515 src/application_actions.cpp:522
 #, kde-format
 msgid "Open video file"
-msgstr ""
+msgstr "ვიდეოფაილის გახსნა"
 
 #: src/application_actions.cpp:521
 #, kde-format
 msgid "Open &Recent Video"
-msgstr ""
+msgstr "&უახლესი ვიდეოს გახსნა"
 
 #: src/application_actions.cpp:528
 #, kde-format
 msgid "Import Subtitle Stream"
-msgstr ""
+msgstr "სუბტიტრების ნაკადის შემოტანა"
 
 #: src/application_actions.cpp:529
 #, kde-format
 msgid "Import subtitle stream into subtitle editor"
-msgstr ""
+msgstr "სუბტიტრებს ნაკადის რედაქტორში შემოტანა"
 
 #: src/application_actions.cpp:535
 #, kde-format
 msgid "Recognize Speech"
-msgstr ""
+msgstr "საუბრის ამოცნობა"
 
 #: src/application_actions.cpp:536
 #, kde-format
 msgid "Recognize speech in audio stream"
-msgstr ""
+msgstr "აუდიონაკადში ხმის ამოცნობა"
 
 #: src/application_actions.cpp:542
 #, kde-format
 msgid "Close Video"
-msgstr ""
+msgstr "ვიდეოს დახურვა"
 
 #: src/application_actions.cpp:543
 #, kde-format
 msgid "Close video file"
-msgstr ""
+msgstr "ვიდეოფაილის დახურვა"
 
 #: src/application_actions.cpp:550
 #, kde-format
@@ -769,7 +774,7 @@ msgstr "მთელი ეკრანის რეჟიმი"
 #: src/application_actions.cpp:551
 #, kde-format
 msgid "Toggle full screen mode"
-msgstr ""
+msgstr "მთელ ეკრანზე გასვლის რეჟიმის ჩართ/გამორთვა"
 
 #: src/application_actions.cpp:558
 #, kde-format
@@ -779,32 +784,32 @@ msgstr "შეჩერება"
 #: src/application_actions.cpp:559
 #, kde-format
 msgid "Stop video playback"
-msgstr ""
+msgstr "ვიდეოს დაკვრის გაჩერება"
 
 #: src/application_actions.cpp:567
 #, kde-format
 msgid "Toggle video playing/paused"
-msgstr ""
+msgstr "ვიდეოს დაკვრის/გაჩერების გადართვა"
 
 #: src/application_actions.cpp:575
 #, kde-format
 msgid "Seek Backward"
-msgstr ""
+msgstr "უკან გადახვევა"
 
 #: src/application_actions.cpp:583
 #, kde-format
 msgid "Seek Forward"
-msgstr ""
+msgstr "წინ გადახვევა"
 
 #: src/application_actions.cpp:590
 #, kde-format
 msgid "Frame Step Backward"
-msgstr ""
+msgstr "კადრის ბიჯი უკან"
 
 #: src/application_actions.cpp:597
 #, kde-format
 msgid "Frame Step Forward"
-msgstr ""
+msgstr "კადრის ბიჯი წინ"
 
 #: src/application_actions.cpp:605
 #, kde-format
@@ -951,7 +956,7 @@ msgstr ""
 #: src/application_actions.cpp:723
 #, kde-format
 msgid "Increase Font Size"
-msgstr ""
+msgstr "ფონტის ზომის გაზრდა"
 
 #: src/application_actions.cpp:724
 #, kde-format
@@ -961,7 +966,7 @@ msgstr ""
 #: src/application_actions.cpp:731
 #, kde-format
 msgid "Decrease Font Size"
-msgstr ""
+msgstr "ფონტის ზომის შესრულება"
 
 #: src/application_actions.cpp:732
 #, kde-format
@@ -1004,12 +1009,12 @@ msgstr ""
 #, kde-format
 msgctxt "@action:inmenu Manage user scripts"
 msgid "Scripts Manager..."
-msgstr ""
+msgstr "სკრიპტების მმართველი..."
 
 #: src/application_actions.cpp:769
 #, kde-format
 msgid "Manage user scripts"
-msgstr ""
+msgstr "მომხმარებლის სკრიპტების მართვა"
 
 #: src/application_actions.cpp:776 src/application_actions.cpp:777
 #, kde-format
@@ -1049,7 +1054,7 @@ msgstr "ყველა ფაილი"
 #: src/application_subtitle.cpp:99
 #, kde-format
 msgid "Media Files"
-msgstr ""
+msgstr "მედია ფაილები"
 
 #: src/application_subtitle.cpp:100
 #, kde-format
@@ -1117,7 +1122,7 @@ msgstr ""
 #: src/application_subtitle.cpp:372 src/application_subtitle.cpp:613
 #, kde-format
 msgid "Close Translation Subtitle"
-msgstr ""
+msgstr "სათარგმნი სუბტიტრის დახურვა"
 
 #: src/application_subtitle.cpp:382
 #, kde-format
@@ -1223,12 +1228,12 @@ msgstr "ზოგადი პარამეტრები"
 #, kde-format
 msgctxt "@title Error check settings"
 msgid "Error Check"
-msgstr ""
+msgstr "შეცდომის შემოწმება"
 
 #: src/configs/configdialog.cpp:44
 #, kde-format
 msgid "Error Check Settings"
-msgstr ""
+msgstr "შეცდომების შემოწმების მორგება"
 
 #: src/configs/configdialog.cpp:50
 #, kde-format
@@ -1239,7 +1244,7 @@ msgstr "მართლწერა"
 #: src/configs/configdialog.cpp:51
 #, kde-format
 msgid "Spelling Settings"
-msgstr ""
+msgstr "მართლწერის მორგება"
 
 #: src/configs/configdialog.cpp:55
 #, kde-format
@@ -1250,7 +1255,7 @@ msgstr "ტალღოვანი"
 #: src/configs/configdialog.cpp:56
 #, kde-format
 msgid "Waveform settings"
-msgstr ""
+msgstr "ტალღის ფორმის მორგება"
 
 #: src/configs/configdialog.cpp:60
 #, kde-format
@@ -1261,19 +1266,19 @@ msgstr "ვიდეო დამკვრელი"
 #: src/configs/configdialog.cpp:61
 #, kde-format
 msgid "Video Player Settings"
-msgstr ""
+msgstr "ვიდეოდამკვრელის მორგება"
 
 #: src/configs/configdialog.cpp:70
 #, kde-format
 msgctxt "@title Speech recognition backend settings"
 msgid "%1 backend settings"
-msgstr ""
+msgstr "%1 უკანაბოლოს მორგება"
 
 #. i18n: ectx: property (title), widget (QGroupBox, m_grpGeneral)
 #: src/configs/errorsconfigwidget.ui:17 src/gui/treeview/lineswidget.cpp:394
 #, kde-format
 msgid "Texts"
-msgstr ""
+msgstr "ტექსტები"
 
 #. i18n: ectx: property (suffix), widget (QSpinBox, kcfg_MaxLines)
 #: src/configs/errorsconfigwidget.ui:23
@@ -1292,19 +1297,19 @@ msgstr " სიმბოლო"
 #: src/configs/errorsconfigwidget.ui:46
 #, kde-format
 msgid "Maximum number of characters:"
-msgstr ""
+msgstr "სიმბოლოების მაქსიმალური რაოდენობა:"
 
 #. i18n: ectx: property (text), widget (QLabel, label_4)
 #: src/configs/errorsconfigwidget.ui:53
 #, kde-format
 msgid "Maximum number of lines:"
-msgstr ""
+msgstr "ხაზების მაქსიმალური რაოდენობა:"
 
 #. i18n: ectx: property (title), widget (QGroupBox, m_grpQuickActions)
 #: src/configs/errorsconfigwidget.ui:63
 #, kde-format
 msgid "Absolute Durations"
-msgstr ""
+msgstr "აბსოლუტური ხანგრძლივობები"
 
 #. i18n: ectx: property (suffix), widget (QSpinBox, kcfg_LinePause)
 #. i18n: ectx: property (suffix), widget (QSpinBox, kcfg_LineDuration)
@@ -1330,20 +1335,20 @@ msgstr " მწმ"
 #: src/configs/errorsconfigwidget.ui:92 src/configs/errorsconfigwidget.ui:174
 #, kde-format
 msgid "Maximum duration:"
-msgstr ""
+msgstr "მაქსიმალური ხანგრძლივობა:"
 
 #. i18n: ectx: property (text), widget (QLabel, label_5)
 #. i18n: ectx: property (text), widget (QLabel, lab_MinDurationPerCharacter)
 #: src/configs/errorsconfigwidget.ui:99 src/configs/errorsconfigwidget.ui:154
 #, kde-format
 msgid "Minimum duration:"
-msgstr ""
+msgstr "მინიმალური ხანგრძლივობა:"
 
 #. i18n: ectx: property (title), widget (QGroupBox, groupBox)
 #: src/configs/errorsconfigwidget.ui:109
 #, kde-format
 msgid "Relative Durations"
-msgstr ""
+msgstr "შედარებით ხანგრძლივობები"
 
 #. i18n: ectx: property (suffix), widget (QSpinBox, kcfg_MaxDurationPerCharacter)
 #. i18n: ectx: property (suffix), widget (QSpinBox, kcfg_MinDurationPerCharacter)
@@ -1352,7 +1357,7 @@ msgstr ""
 #: src/configs/errorsconfigwidget.ui:188
 #, kde-format
 msgid " ms/char"
-msgstr ""
+msgstr "მწმ/სიმბ"
 
 #. i18n: ectx: property (suffix), widget (QSpinBox, alt_MinDurationPerCharacter)
 #. i18n: ectx: property (suffix), widget (QSpinBox, alt_MaxDurationPerCharacter)
@@ -1361,13 +1366,13 @@ msgstr ""
 #: src/configs/errorsconfigwidget.ui:201
 #, kde-format
 msgid " ch/sec"
-msgstr ""
+msgstr " სიმბ/წმ"
 
 #. i18n: ectx: property (text), widget (QLabel, lab_IdealDurationPerCharacter)
 #: src/configs/errorsconfigwidget.ui:181
 #, kde-format
 msgid "Ideal duration:"
-msgstr ""
+msgstr "იდეალური ხანგრძლივობა:"
 
 #. i18n: ectx: property (title), widget (QGroupBox, groupBox_2)
 #: src/configs/errorsconfigwidget.ui:217
@@ -1459,7 +1464,7 @@ msgstr ""
 #: src/configs/generalconfigwidget.ui:167
 #, kde-format
 msgid "Quick Actions"
-msgstr ""
+msgstr "სწრაფი მოქმედებები"
 
 #. i18n: ectx: property (text), widget (QLabel, label_8)
 #: src/configs/generalconfigwidget.ui:193
@@ -1508,13 +1513,13 @@ msgstr ""
 #: src/configs/playerconfigwidget.ui:64
 #, kde-format
 msgid "Fra&me step amount:"
-msgstr ""
+msgstr "&კადრების ბიჯების რაოდენობა:"
 
 #. i18n: ectx: property (text), widget (QLabel, lab_VolumeAmplification)
 #: src/configs/playerconfigwidget.ui:74
 #, kde-format
 msgid "Volume amplification:"
-msgstr ""
+msgstr "ხმის გაძლიერება:"
 
 #. i18n: ectx: property (title), widget (QGroupBox, m_grpSubtitles)
 #: src/configs/playerconfigwidget.ui:122
@@ -1526,25 +1531,25 @@ msgstr "სუბტიტრები"
 #: src/configs/playerconfigwidget.ui:138
 #, kde-format
 msgid "Outline color:"
-msgstr ""
+msgstr "კიდის ფერი:"
 
 #. i18n: ectx: property (text), widget (QLabel, lab_FontColor)
 #: src/configs/playerconfigwidget.ui:151
 #, kde-format
 msgid "Te&xt color:"
-msgstr ""
+msgstr "&ტექსტის ფერი:"
 
 #. i18n: ectx: property (text), widget (QLabel, lab_FontFamily)
 #: src/configs/playerconfigwidget.ui:164
 #, kde-format
 msgid "Font family:"
-msgstr ""
+msgstr "ფონტის ოჯახი:"
 
 #. i18n: ectx: property (text), widget (QLabel, lab_OutlineWidth)
 #: src/configs/playerconfigwidget.ui:177
 #, kde-format
 msgid "Outline width:"
-msgstr ""
+msgstr "კიდის სიგანე:"
 
 #. i18n: ectx: property (text), widget (QLabel, lab_FontSize)
 #: src/configs/playerconfigwidget.ui:187
@@ -1556,31 +1561,31 @@ msgstr "ფონტის &ზომა:"
 #: src/configs/playerconfigwidget.ui:203
 #, kde-format
 msgid "Subtitles Preview"
-msgstr ""
+msgstr "სუბტიტრების გადახედვა"
 
 #. i18n: ectx: property (title), widget (QGroupBox, groupBox_3)
 #: src/configs/waveformconfigwidget.ui:17
 #, kde-format
 msgid "Waveform Display"
-msgstr ""
+msgstr "ტალღის ფორმის ჩვენება"
 
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_wfSmoothScroll)
 #: src/configs/waveformconfigwidget.ui:23
 #, kde-format
 msgid "Smooth Scrolling"
-msgstr ""
+msgstr "გლუვი გადახვევა"
 
 #. i18n: ectx: property (text), widget (QLabel, label_12)
 #: src/configs/waveformconfigwidget.ui:49
 #, kde-format
 msgid "Outer color:"
-msgstr ""
+msgstr "გარე ფერი:"
 
 #. i18n: ectx: property (text), widget (QLabel, label_11)
 #: src/configs/waveformconfigwidget.ui:78
 #, kde-format
 msgid "Inner color:"
-msgstr ""
+msgstr "შიდა ფერი:"
 
 #. i18n: ectx: property (toolTip), widget (QLabel, label_wfAutoscrollPadding)
 #: src/configs/waveformconfigwidget.ui:104
@@ -1600,55 +1605,55 @@ msgstr ""
 #: src/configs/waveformconfigwidget.ui:120
 #, kde-format
 msgid "Subtitle Display"
-msgstr ""
+msgstr "სუბტიტრების ჩვენება"
 
 #. i18n: ectx: property (text), widget (QLabel, label_14)
 #: src/configs/waveformconfigwidget.ui:148
 #, kde-format
 msgid "Subtitle border color:"
-msgstr ""
+msgstr "სუბტიტრების საზღვრის ფერი:"
 
 #. i18n: ectx: property (text), widget (QLabel, label_16)
 #: src/configs/waveformconfigwidget.ui:158
 #, kde-format
 msgid "Selected background color:"
-msgstr ""
+msgstr "სუბტიტრების ფონის ფერი:"
 
 #. i18n: ectx: property (text), widget (QLabel, label_15)
 #: src/configs/waveformconfigwidget.ui:168
 #, kde-format
 msgid "Subtitle border width:"
-msgstr ""
+msgstr "სუბტიტრების საზღვრის სიგანე:"
 
 #. i18n: ectx: property (text), widget (QLabel, label_13)
 #: src/configs/waveformconfigwidget.ui:178
 #, kde-format
 msgid "Subtitle background color:"
-msgstr ""
+msgstr "სუბტიტრების ფონის ფერი:"
 
 #. i18n: ectx: property (text), widget (QLabel, label_17)
 #: src/configs/waveformconfigwidget.ui:207
 #, kde-format
 msgid "Selected border color:"
-msgstr ""
+msgstr "არჩეული საზღვრის ფერი:"
 
 #. i18n: ectx: property (title), widget (QGroupBox, groupBox)
 #: src/configs/waveformconfigwidget.ui:258
 #, kde-format
 msgid "Text Font and Colors"
-msgstr ""
+msgstr "ტექსტის ფონტი და ფერები"
 
 #. i18n: ectx: property (text), widget (QLabel, label_21)
 #: src/configs/waveformconfigwidget.ui:264
 #, kde-format
 msgid "Subtitle font family:"
-msgstr ""
+msgstr "სუბტიტრების ფონტის ოჯახი"
 
 #. i18n: ectx: property (text), widget (QLabel, label_22)
 #: src/configs/waveformconfigwidget.ui:277
 #, kde-format
 msgid "Subtitle number font size:"
-msgstr ""
+msgstr "სუბტიტრების ფონტის ზომის ნომერი:"
 
 #. i18n: ectx: property (suffix), widget (QSpinBox, kcfg_wfSubNumberFontSize)
 #. i18n: ectx: property (suffix), widget (QSpinBox, kcfg_wfSubTextFontSize)
@@ -1656,90 +1661,90 @@ msgstr ""
 #: src/configs/waveformconfigwidget.ui:333
 #, kde-format
 msgid " pt"
-msgstr ""
+msgstr " წრტ"
 
 #. i18n: ectx: property (text), widget (QLabel, label_23)
 #: src/configs/waveformconfigwidget.ui:294
 #, kde-format
 msgid "Subtitle Number Color"
-msgstr ""
+msgstr "სუბტიტრების ნომრის ფერი"
 
 #. i18n: ectx: property (text), widget (QLabel, label_24)
 #: src/configs/waveformconfigwidget.ui:323
 #, kde-format
 msgid "Subtitle text font size:"
-msgstr ""
+msgstr "სუბტიტრის ტექსტის შრიფტის ზომა:"
 
 #. i18n: ectx: property (text), widget (QLabel, label_25)
 #: src/configs/waveformconfigwidget.ui:340
 #, kde-format
 msgid "Subtitle Text Color:"
-msgstr ""
+msgstr "სუბტიტრის ტექსტის ფერი:"
 
 #. i18n: ectx: property (title), widget (QGroupBox, groupBox_2)
 #: src/configs/waveformconfigwidget.ui:372
 #, kde-format
 msgid "Line Indicators"
-msgstr ""
+msgstr "ხაზის მაჩვენებლები"
 
 #. i18n: ectx: property (text), widget (QLabel, label_31)
 #: src/configs/waveformconfigwidget.ui:378
 #, kde-format
 msgid "Player position color:"
-msgstr ""
+msgstr "დამკვრელის მდებარეობის ფერი"
 
 #. i18n: ectx: property (text), widget (QLabel, label_32)
 #: src/configs/waveformconfigwidget.ui:388
 #, kde-format
 msgid "Mouse indicator color:"
-msgstr ""
+msgstr "თაგუნას ინდიკატორის ფერი"
 
 #: src/core/subtitle.cpp:62
 #, kde-format
 msgid "Set Primary Data"
-msgstr ""
+msgstr "ძირითადი მონაცემების დაყენება"
 
 #: src/core/subtitle.cpp:120
 #, kde-format
 msgid "Clear Primary Text Data"
-msgstr ""
+msgstr "ტექსტის ძირითადი მონაცემების გასუფთავება"
 
 #: src/core/subtitle.cpp:133
 #, kde-format
 msgid "Set Secondary Data"
-msgstr ""
+msgstr "დამხმარე მონაცემების დაყენება"
 
 #: src/core/subtitle.cpp:170
 #, kde-format
 msgid "Clear Secondary Text Data"
-msgstr ""
+msgstr "დამხმარე ტექსტის მონაცემების გასუფთავება"
 
 #: src/core/subtitle.cpp:238 src/dialogs/changeframeratedialog.cpp:22
 #, kde-format
 msgid "Change Frame Rate"
-msgstr ""
+msgstr "კადრების სიხშირის შეცვლა"
 
 #: src/core/subtitle.cpp:400 src/core/subtitle.cpp:414
 #: src/gui/waveform/waveformwidget.cpp:694
 #, kde-format
 msgid "Insert Line"
-msgstr ""
+msgstr "ხაზის ჩასმა"
 
 #: src/core/subtitle.cpp:447 src/core/subtitle.cpp:457
 #: src/core/subtitle.cpp:474 src/core/undo/subtitleactions.cpp:122
 #, kde-format
 msgid "Remove Lines"
-msgstr ""
+msgstr "ხაზების წაშლა"
 
 #: src/core/subtitle.cpp:739
 #, kde-format
 msgid "Shift Lines"
-msgstr ""
+msgstr "ხაზების წანაცვლება"
 
 #: src/core/subtitle.cpp:795
 #, kde-format
 msgid "Adjust Lines"
-msgstr ""
+msgstr "ხაზების მორგება"
 
 #: src/core/subtitle.cpp:806
 #, kde-format
@@ -1749,123 +1754,123 @@ msgstr "დალაგება"
 #: src/core/subtitle.cpp:838 src/dialogs/durationlimitsdialog.cpp:18
 #, kde-format
 msgid "Enforce Duration Limits"
-msgstr ""
+msgstr "ხანგრძლივობის ლიმიტების შეზღუდვა"
 
 #: src/core/subtitle.cpp:900 src/dialogs/autodurationsdialog.cpp:21
 #, kde-format
 msgid "Set Automatic Durations"
-msgstr ""
+msgstr "ავტომატური ხანგრძლივობების დაყენება"
 
 #: src/core/subtitle.cpp:933 src/dialogs/fixoverlappingtimesdialog.cpp:18
 #, kde-format
 msgid "Fix Overlapping Times"
-msgstr ""
+msgstr "გადაფარვის დროების გასწორება"
 
 #: src/core/subtitle.cpp:964
 #, kde-format
 msgid "Fix Lines Punctuation"
-msgstr ""
+msgstr "ხაზების პუნქტუაციის გასწორება"
 
 #: src/core/subtitle.cpp:1006
 #, kde-format
 msgid "Lower Case"
-msgstr ""
+msgstr "ქვედა რეგისტრი"
 
 #: src/core/subtitle.cpp:1036
 #, kde-format
 msgid "Upper Case"
-msgstr ""
+msgstr "მაღალი რეგისტრი"
 
 #: src/core/subtitle.cpp:1066
 #, kde-format
 msgid "Title Case"
-msgstr ""
+msgstr "სათაურის რეგისტრი"
 
 #: src/core/subtitle.cpp:1099
 #, kde-format
 msgid "Sentence Case"
-msgstr ""
+msgstr "წინადადების რეგისტრი"
 
 #: src/core/subtitle.cpp:1143 src/dialogs/smarttextsadjustdialog.cpp:18
 #, kde-format
 msgid "Break Lines"
-msgstr ""
+msgstr "ხაზების გატეხვა"
 
 #: src/core/subtitle.cpp:1170
 #, kde-format
 msgid "Synchronize Subtitles"
-msgstr ""
+msgstr "სუბტიტრების სინქრონიზაცია"
 
 #: src/core/subtitle.cpp:1195 src/dialogs/joinsubtitlesdialog.cpp:24
 #, kde-format
 msgid "Join Subtitles"
-msgstr ""
+msgstr "სუბტიტრების შეერთება"
 
 #: src/core/subtitle.cpp:1240 src/core/subtitle.cpp:1246
 #, kde-format
 msgid "Split Subtitles"
-msgstr ""
+msgstr "სუბტიტრების გაყოფა"
 
 #: src/core/subtitle.cpp:1265
 #, kde-format
 msgid "Toggle Lines Style"
-msgstr ""
+msgstr "ხაზების სტილის გადართვა"
 
 #: src/core/subtitle.cpp:1309
 #, kde-format
 msgid "Change Lines Text Color"
-msgstr ""
+msgstr "ხაზების ტექსტის ფერის შეცვლა"
 
 #: src/core/subtitle.cpp:1329
 #, kde-format
 msgid "Set Lines Mark"
-msgstr ""
+msgstr "ხაზის სანიშნის დაყენება"
 
 #: src/core/subtitle.cpp:1329
 #, kde-format
 msgid "Clear Lines Mark"
-msgstr ""
+msgstr "ხაზის სანიშნის გასუფავება"
 
 #: src/core/subtitle.cpp:1344
 #, kde-format
 msgid "Toggle Lines Mark"
-msgstr ""
+msgstr "ხაზს სანიშნის გადართვა"
 
 #: src/core/subtitle.cpp:1354
 #, kde-format
 msgid "Clear Line Errors"
-msgstr ""
+msgstr "ხაზის შეცდომების გასუფთავება"
 
 #: src/core/subtitle.cpp:1365 src/core/subtitle.cpp:1376
 #: src/errors/errorfinder.cpp:82
 #, kde-format
 msgid "Check Lines Errors"
-msgstr ""
+msgstr "ხაზის შეცდომებზე შემოწება"
 
 #: src/core/subtitleline.cpp:68
 #, kde-format
 msgid "Empty text"
-msgstr ""
+msgstr "ცარიელი ტექსტი"
 
 #: src/core/subtitleline.cpp:70
 #, kde-format
 msgid "Too many characters"
-msgstr ""
+msgstr "მეტისმეტად ბევრი სიმბოლო"
 
 #: src/core/subtitleline.cpp:72
 #, kde-format
 msgid "Too many lines"
-msgstr ""
+msgstr "მეტისმეტად ბევრი ხაზი"
 
 #: src/core/subtitleline.cpp:74
 #, kde-format
 msgid "Unnecessary white space"
-msgstr ""
+msgstr "არასაჭირო თეთრი გამოტოვება"
 
 #: src/core/subtitleline.cpp:76
 #, kde-format
 msgid "Unnecessary dash"
-msgstr ""
+msgstr "არასაჭირო ტირე"
 
 #: src/core/subtitleline.cpp:78
 #, kde-format
@@ -2083,10 +2088,9 @@ msgid "Swap Texts"
 msgstr ""
 
 #: src/core/undo/subtitleactions.cpp:308
-#, fuzzy, kde-format
-#| msgid "Change Case"
+#, kde-format
 msgid "Change stylesheet"
-msgstr "რეგისტრის შეცვლა"
+msgstr "სტილის ცხრილის შეცვლა"
 
 #: src/core/undo/subtitlelineactions.cpp:28
 #, kde-format
@@ -2106,23 +2110,23 @@ msgstr ""
 #: src/dialogs/actionwithtargetdialog.cpp:111
 #, kde-format
 msgid "Target >>"
-msgstr ""
+msgstr "სამიზნე >>"
 
 #: src/dialogs/actionwithtargetdialog.cpp:111
 #: src/dialogs/actionwithtargetdialog.cpp:127
 #, kde-format
 msgid "Target <<"
-msgstr ""
+msgstr "სამიზნე <<"
 
 #: src/dialogs/actionwithtargetdialog.cpp:141
 #, kde-format
 msgid "All lines"
-msgstr ""
+msgstr "ყველა ხაზი"
 
 #: src/dialogs/actionwithtargetdialog.cpp:142
 #, kde-format
 msgid "Selected lines"
-msgstr ""
+msgstr "მონიშნული ხაზები"
 
 #: src/dialogs/actionwithtargetdialog.cpp:143
 #, kde-format
@@ -2138,24 +2142,24 @@ msgstr ""
 #: src/utils/replacer.cpp:51
 #, kde-format
 msgid "Both subtitles"
-msgstr ""
+msgstr "ორივე სუბტიტრები"
 
 #: src/dialogs/actionwithtargetdialog.cpp:235 src/utils/finder.cpp:55
 #: src/utils/replacer.cpp:53
 #, kde-format
 msgid "Primary subtitle"
-msgstr ""
+msgstr "ძირითადი სუბტიტრები"
 
 #: src/dialogs/actionwithtargetdialog.cpp:238 src/utils/finder.cpp:57
 #: src/utils/replacer.cpp:55
 #, kde-format
 msgid "Translation subtitle"
-msgstr ""
+msgstr "თარგმანის სუბტიტრები"
 
 #: src/dialogs/actionwithtargetdialog.h:58
 #, kde-format
 msgid "Apply To"
-msgstr ""
+msgstr "გადატარება"
 
 #: src/dialogs/adjusttimesdialog.cpp:20
 #, kde-format
@@ -2308,7 +2312,7 @@ msgstr ""
 #: src/dialogs/encodingdetectdialog.cpp:193
 #, kde-format
 msgid "Detected"
-msgstr ""
+msgstr "გამოვლინდა"
 
 #. i18n: ectx: property (windowTitle), widget (QDialog, EncodingDetectDialog)
 #: src/dialogs/encodingdetectdialog.ui:14
@@ -2326,12 +2330,12 @@ msgstr "კოდირება"
 #: src/dialogs/encodingdetectdialog.ui:57
 #, kde-format
 msgid "Preview"
-msgstr ""
+msgstr "ესკიზი"
 
 #: src/dialogs/fixoverlappingtimesdialog.cpp:23
 #, kde-format
 msgid " msecs"
-msgstr ""
+msgstr " მწმ"
 
 #: src/dialogs/fixoverlappingtimesdialog.cpp:29
 #, kde-format
@@ -2484,17 +2488,17 @@ msgstr ""
 #: src/dialogs/translatedialog.cpp:37
 #, kde-format
 msgid "Input language:"
-msgstr ""
+msgstr "შეყვანის ენა:"
 
 #: src/dialogs/translatedialog.cpp:53
 #, kde-format
 msgid "Output language:"
-msgstr ""
+msgstr "გამყვანის ენა:"
 
 #: src/errors/errorfinder.cpp:171 src/errors/finderrorsdialog.cpp:17
 #, kde-format
 msgid "Find Error"
-msgstr ""
+msgstr "შეცდომის პოვნა"
 
 #: src/errors/errorfinder.cpp:171
 #, kde-format
@@ -2722,76 +2726,118 @@ msgstr ""
 #: src/gui/playerwidget.cpp:72
 #, kde-format
 msgid "<b>Position</b>"
-msgstr ""
+msgstr "<b>მდებარეობა</b>"
 
 #: src/gui/playerwidget.cpp:80
 #, kde-format
 msgid "<b>Length</b>"
-msgstr ""
+msgstr "<b>სიგრძე</b>"
 
 #: src/gui/playerwidget.cpp:85
 #, kde-format
 msgid "<b>FPS</b>"
-msgstr ""
+msgstr "<b>კადრი/წმ</b>"
 
 #: src/gui/playerwidget.cpp:91
 #, kde-format
 msgid "<b>Playback Rate</b>"
-msgstr ""
+msgstr "<b>დაკვრის სიჩქარე</b>"
 
-#: src/gui/playerwidget.cpp:665
+#: src/gui/playerwidget.cpp:667
 #, kde-format
 msgid "<qt>There was an error opening media file %1.</qt>"
 msgstr ""
 
-#: src/gui/playerwidget.cpp:681 src/gui/playerwidget.cpp:682
 #: src/gui/playerwidget.cpp:683 src/gui/playerwidget.cpp:684
-#: src/gui/playerwidget.cpp:751 src/gui/playerwidget.cpp:759
-#: src/gui/playerwidget.cpp:765
+#: src/gui/playerwidget.cpp:685 src/gui/playerwidget.cpp:686
+#: src/gui/playerwidget.cpp:753 src/gui/playerwidget.cpp:761
+#: src/gui/playerwidget.cpp:767
 #, kde-format
 msgid "<i>Unknown</i>"
 msgstr "<i>უცნობია</i>"
 
-#: src/gui/playerwidget.cpp:697 src/gui/playerwidget.cpp:699
+#: src/gui/playerwidget.cpp:699 src/gui/playerwidget.cpp:701
 #, kde-format
 msgid "Unexpected error when playing file."
 msgstr ""
 
-#: src/gui/playerwidget.cpp:697 src/gui/playerwidget.cpp:699
+#: src/gui/playerwidget.cpp:699 src/gui/playerwidget.cpp:701
 #, kde-format
 msgid "Error Playing File"
 msgstr ""
 
-#: src/gui/subtitlemeta/subtitlemetawidget.cpp:41
-#, fuzzy, kde-format
-#| msgid "Styles"
+#: src/gui/subtitlemeta/subtitlemetawidget.cpp:46
+#, kde-format
 msgid "&Stylesheet"
-msgstr "სტილები"
+msgstr "&სტილების ცხრილი"
 
-#: src/gui/subtitlemeta/subtitlemetawidget.cpp:42
+#: src/gui/subtitlemeta/subtitlemetawidget.cpp:47
 #, kde-format
 msgid "&Comments"
-msgstr ""
+msgstr "&კომენტარები"
 
-#: src/gui/subtitlemeta/subtitlemetawidget.cpp:82
+#: src/gui/subtitlemeta/subtitlemetawidget.cpp:48
+#, fuzzy, kde-format
+#| msgid "<b>Position</b>"
+msgid "&Position"
+msgstr "<b>მდებარეობა</b>"
+
+#: src/gui/subtitlemeta/subtitlemetawidget.cpp:88
 #, kde-format
 msgid "Intro"
-msgstr ""
+msgstr "შესავალი"
 
-#: src/gui/subtitlemeta/subtitlemetawidget.cpp:84
+#: src/gui/subtitlemeta/subtitlemetawidget.cpp:90
 #, kde-format
 msgid "Header"
-msgstr ""
+msgstr "სათაური"
 
-#: src/gui/subtitlemeta/subtitlemetawidget.cpp:86
+#: src/gui/subtitlemeta/subtitlemetawidget.cpp:92
 #, kde-format
 msgid "Footer"
+msgstr "ქვესართი"
+
+#. i18n: ectx: property (windowTitle), widget (QWidget, SubtitlePositionWidget)
+#: src/gui/subtitlemeta/subtitlepositionwidget.ui:14
+#, kde-format
+msgid "Form"
+msgstr ""
+
+#. i18n: ectx: property (title), widget (QGroupBox, grpHAlign)
+#: src/gui/subtitlemeta/subtitlepositionwidget.ui:20
+#, kde-format
+msgid "Horizontal Alignment"
+msgstr ""
+
+#. i18n: ectx: property (title), widget (QGroupBox, grpVAlign)
+#: src/gui/subtitlemeta/subtitlepositionwidget.ui:106
+#, kde-format
+msgid "Vertical Alignment"
+msgstr ""
+
+#. i18n: ectx: property (title), widget (QGroupBox, grpPosition)
+#: src/gui/subtitlemeta/subtitlepositionwidget.ui:169
+#, fuzzy, kde-format
+#| msgid "<b>Position</b>"
+msgid "Position/Size"
+msgstr "<b>მდებარეობა</b>"
+
+#. i18n: ectx: property (suffix), widget (QDoubleSpinBox, posBottom)
+#. i18n: ectx: property (suffix), widget (QDoubleSpinBox, posLeft)
+#. i18n: ectx: property (suffix), widget (QDoubleSpinBox, posTop)
+#. i18n: ectx: property (suffix), widget (QDoubleSpinBox, posRight)
+#: src/gui/subtitlemeta/subtitlepositionwidget.ui:175
+#: src/gui/subtitlemeta/subtitlepositionwidget.ui:185
+#: src/gui/subtitlemeta/subtitlepositionwidget.ui:195
+#: src/gui/subtitlemeta/subtitlepositionwidget.ui:205
+#, no-c-format, kde-format
+msgid "%"
 msgstr ""
 
 #: src/gui/treeview/linesmodel.cpp:156
 #, kde-format
 msgid "<b>Observations:</b>"
-msgstr ""
+msgstr "<b>დაკვირვებები:</b>"
 
 #: src/gui/treeview/linesmodel.cpp:183
 #, kde-format
@@ -2809,13 +2855,13 @@ msgstr "შეჩერება"
 #, kde-format
 msgctxt "@title:column"
 msgid "Show Time"
-msgstr ""
+msgstr "დროის ჩვენება"
 
 #: src/gui/treeview/linesmodel.cpp:186
 #, kde-format
 msgctxt "@title:column"
 msgid "Hide Time"
-msgstr ""
+msgstr "დროის დამალვა"
 
 #: src/gui/treeview/linesmodel.cpp:187
 #, kde-format
@@ -2954,54 +3000,54 @@ msgid ""
 "for side-by-side translation."
 msgstr ""
 
-#: src/main.cpp:206
+#: src/main.cpp:153
 #, kde-format
 msgid "Subtitle Composer"
 msgstr "სუბტიტრების შედგენა"
 
-#: src/main.cpp:208
+#: src/main.cpp:155
 #, kde-format
 msgid "A KDE subtitle editor."
 msgstr ""
 
-#: src/main.cpp:214
+#: src/main.cpp:161
 #, kde-format
 msgid "Maintainer"
 msgstr "წამყვანი პროგრამისტი"
 
-#: src/main.cpp:215
+#: src/main.cpp:162
 #, kde-format
 msgid "Former Maintainer"
 msgstr "ყოფილი პროგრამისტი"
 
-#: src/main.cpp:216
+#: src/main.cpp:163
 #, kde-format
 msgid "Patches and Website"
 msgstr ""
 
-#: src/main.cpp:218
+#: src/main.cpp:165
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
 msgid "Your names"
 msgstr "Temuri Doghonadze"
 
-#: src/main.cpp:218
+#: src/main.cpp:165
 #, kde-format
 msgctxt "EMAIL OF TRANSLATORS"
 msgid "Your emails"
 msgstr "Temuri.doghonadze@gmail.com"
 
-#: src/main.cpp:220
+#: src/main.cpp:167
 #, kde-format
 msgid "code contributions"
 msgstr ""
 
-#: src/main.cpp:221
+#: src/main.cpp:168
 #, kde-format
 msgid "code contributions, Arch Linux packaging"
 msgstr ""
 
-#: src/main.cpp:223
+#: src/main.cpp:170
 #, kde-format
 msgid "All people who have contributed and I have forgotten to mention"
 msgstr ""
@@ -3292,13 +3338,13 @@ msgstr "ფონტის ფერი"
 #: src/scconfig.kcfg:213
 #, kde-format
 msgid "Outline Color"
-msgstr ""
+msgstr "კიდის ფერი"
 
 #. i18n: ectx: label, entry (OutlineWidth), group (VideoPlayer)
 #: src/scconfig.kcfg:217
 #, kde-format
 msgid "Outline Width"
-msgstr ""
+msgstr "კიდის სიგანე"
 
 #: src/scripting/scriptsmanager.cpp:75
 #, kde-format

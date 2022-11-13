@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: subtitlecomposer\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2022-11-11 00:45+0000\n"
+"POT-Creation-Date: 2022-11-13 00:45+0000\n"
 "PO-Revision-Date: 2022-11-11 17:34+0200\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian <kde-i18n-uk@kde.org>\n"
@@ -38,52 +38,52 @@ msgctxt "Encodings menu"
 msgid "Autodetect"
 msgstr "Автовиявлення"
 
-#: src/application.cpp:443
+#: src/application.cpp:493
 #, kde-format
 msgid "Go to Line"
 msgstr "Перейти до рядка"
 
-#: src/application.cpp:443
+#: src/application.cpp:493
 #, kde-format
 msgid "&Go to line:"
 msgstr "Пере&йти до рядка:"
 
-#: src/application.cpp:618 src/core/subtitle.cpp:877
+#: src/application.cpp:666 src/core/subtitle.cpp:877
 #, kde-format
 msgid "Maximize Durations"
 msgstr "Максимізувати тривалість"
 
-#: src/application.cpp:647 src/core/subtitle.cpp:1152
+#: src/application.cpp:694 src/core/subtitle.cpp:1152
 #, kde-format
 msgid "Unbreak Lines"
 msgstr "Склеїти рядки"
 
-#: src/application.cpp:658 src/core/subtitle.cpp:1161
+#: src/application.cpp:705 src/core/subtitle.cpp:1161
 #, kde-format
 msgid "Simplify Spaces"
 msgstr "Спростити пробіли"
 
-#: src/application.cpp:712 src/dialogs/translatedialog.cpp:20
+#: src/application.cpp:760 src/dialogs/translatedialog.cpp:20
 #, kde-format
 msgid "Translate"
 msgstr "Перекласти"
 
-#: src/application.cpp:712
+#: src/application.cpp:760
 #, kde-format
 msgid "Translating text (%1 to %2)..."
 msgstr "Переклад тексту (з %1 %2)…"
 
-#: src/application.cpp:716
+#: src/application.cpp:764
 #, kde-format
 msgid "Translating primary text (%1 to %2)..."
 msgstr "Переклад основного тексту (з %1 %2)…"
 
-#: src/application.cpp:717
+#: src/application.cpp:765
 #, kde-format
 msgid "Translating secondary text (%1 to %2)..."
 msgstr "Переклад вторинного тексту (з %1 %2)…"
 
-#: src/application.cpp:745
+#: src/application.cpp:793
 #, kde-format
 msgid ""
 "Unable to perform texts synchronization (sent and received lines count do "
@@ -92,17 +92,17 @@ msgstr ""
 "Не вдалося виконати синхронізацію текстів (кількості надісланих і отриманих "
 "рядків не збігаються)."
 
-#: src/application.cpp:749
+#: src/application.cpp:797
 #, kde-format
 msgid "Translate Primary Text"
 msgstr "Перекласти основний текст"
 
-#: src/application.cpp:749
+#: src/application.cpp:797
 #, kde-format
 msgid "Translate Secondary Text"
 msgstr "Перекласти вторинний текст"
 
-#: src/application.cpp:764
+#: src/application.cpp:812
 #, kde-format
 msgid ""
 "There was an error performing the translation:\n"
@@ -113,33 +113,33 @@ msgstr ""
 "\n"
 "%1"
 
-#: src/application.cpp:802
+#: src/application.cpp:852
 #, kde-format
 msgid "Open Video"
 msgstr "Відкрити відео"
 
-#: src/application.cpp:1000 src/application.cpp:1007
+#: src/application.cpp:1050 src/application.cpp:1057
 #: src/application_subtitle.cpp:655
 #, kde-format
 msgid "Untitled"
 msgstr "Без назви"
 
-#: src/application.cpp:1002 src/application_subtitle.cpp:655
+#: src/application.cpp:1052 src/application_subtitle.cpp:655
 #, kde-format
 msgid "Untitled Translation"
 msgstr "Переклад без назви"
 
-#: src/application.cpp:1103
+#: src/application.cpp:1153
 #, kde-format
 msgid "Pause"
 msgstr "Пауза"
 
-#: src/application.cpp:1111 src/application_actions.cpp:566
+#: src/application.cpp:1161 src/application_actions.cpp:566
 #, kde-format
 msgid "Play"
 msgstr "Пуск"
 
-#: src/application.cpp:1172
+#: src/application.cpp:1222
 #, kde-format
 msgid "Seek backwards 1 second"
 msgid_plural "Seek backwards %1 seconds"
@@ -148,7 +148,7 @@ msgstr[1] "Позиціювання назад на %1 секунди"
 msgstr[2] "Позиціювання назад на %1 секунд"
 msgstr[3] "Позиціювання назад на %1 секунду"
 
-#: src/application.cpp:1173
+#: src/application.cpp:1223
 #, kde-format
 msgid "Seek forwards 1 second"
 msgid_plural "Seek forwards %1 seconds"
@@ -157,7 +157,7 @@ msgstr[1] "Позиціювання вперед на %1 секунди"
 msgstr[2] "Позиціювання вперед на %1 секунд"
 msgstr[3] "Позиціювання вперед на %1 секунду"
 
-#: src/application.cpp:1176 src/application.cpp:1180
+#: src/application.cpp:1226 src/application.cpp:1230
 #, kde-format
 msgid "Shift %2%1 millisecond"
 msgid_plural "Shift %2%1 milliseconds"
@@ -166,7 +166,7 @@ msgstr[1] "Посунути на %2%1 мілісекунди"
 msgstr[2] "Посунути на %2%1 мілісекунд"
 msgstr[3] "Посунути на %2%1 мілісекунду"
 
-#: src/application.cpp:1177 src/application.cpp:1181
+#: src/application.cpp:1227 src/application.cpp:1231
 #, kde-format
 msgid "Shift selected lines %2%1 millisecond"
 msgid_plural "Shift selected lines %2%1 milliseconds"
@@ -2828,55 +2828,98 @@ msgstr "<b>Кадрів на секунду</b>"
 msgid "<b>Playback Rate</b>"
 msgstr "<b>Частота відтворення</b>"
 
-#: src/gui/playerwidget.cpp:665
+#: src/gui/playerwidget.cpp:667
 #, kde-format
 msgid "<qt>There was an error opening media file %1.</qt>"
 msgstr ""
 "<qt>Сталася помилка під час спроби відкрити файл мультимедійних даних %1.</"
 "qt>"
 
-#: src/gui/playerwidget.cpp:681 src/gui/playerwidget.cpp:682
 #: src/gui/playerwidget.cpp:683 src/gui/playerwidget.cpp:684
-#: src/gui/playerwidget.cpp:751 src/gui/playerwidget.cpp:759
-#: src/gui/playerwidget.cpp:765
+#: src/gui/playerwidget.cpp:685 src/gui/playerwidget.cpp:686
+#: src/gui/playerwidget.cpp:753 src/gui/playerwidget.cpp:761
+#: src/gui/playerwidget.cpp:767
 #, kde-format
 msgid "<i>Unknown</i>"
 msgstr "<i>Невідома</i>"
 
-#: src/gui/playerwidget.cpp:697 src/gui/playerwidget.cpp:699
+#: src/gui/playerwidget.cpp:699 src/gui/playerwidget.cpp:701
 #, kde-format
 msgid "Unexpected error when playing file."
 msgstr "Неочікувана помилка під час спроби відтворити файл."
 
-#: src/gui/playerwidget.cpp:697 src/gui/playerwidget.cpp:699
+#: src/gui/playerwidget.cpp:699 src/gui/playerwidget.cpp:701
 #, kde-format
 msgid "Error Playing File"
 msgstr "Помилка під час спроби відтворити файл"
 
-#: src/gui/subtitlemeta/subtitlemetawidget.cpp:41
+#: src/gui/subtitlemeta/subtitlemetawidget.cpp:46
 #, kde-format
 msgid "&Stylesheet"
 msgstr "&Таблиця стилів"
 
-#: src/gui/subtitlemeta/subtitlemetawidget.cpp:42
+#: src/gui/subtitlemeta/subtitlemetawidget.cpp:47
 #, kde-format
 msgid "&Comments"
 msgstr "&Коментарі"
 
-#: src/gui/subtitlemeta/subtitlemetawidget.cpp:82
+#: src/gui/subtitlemeta/subtitlemetawidget.cpp:48
+#, fuzzy, kde-format
+#| msgid "<b>Position</b>"
+msgid "&Position"
+msgstr "<b>Позиція</b>"
+
+#: src/gui/subtitlemeta/subtitlemetawidget.cpp:88
 #, kde-format
 msgid "Intro"
 msgstr "Вступ"
 
-#: src/gui/subtitlemeta/subtitlemetawidget.cpp:84
+#: src/gui/subtitlemeta/subtitlemetawidget.cpp:90
 #, kde-format
 msgid "Header"
 msgstr "Верхній колонтитул"
 
-#: src/gui/subtitlemeta/subtitlemetawidget.cpp:86
+#: src/gui/subtitlemeta/subtitlemetawidget.cpp:92
 #, kde-format
 msgid "Footer"
 msgstr "Нижній колонтитул"
+
+#. i18n: ectx: property (windowTitle), widget (QWidget, SubtitlePositionWidget)
+#: src/gui/subtitlemeta/subtitlepositionwidget.ui:14
+#, kde-format
+msgid "Form"
+msgstr ""
+
+#. i18n: ectx: property (title), widget (QGroupBox, grpHAlign)
+#: src/gui/subtitlemeta/subtitlepositionwidget.ui:20
+#, kde-format
+msgid "Horizontal Alignment"
+msgstr ""
+
+#. i18n: ectx: property (title), widget (QGroupBox, grpVAlign)
+#: src/gui/subtitlemeta/subtitlepositionwidget.ui:106
+#, kde-format
+msgid "Vertical Alignment"
+msgstr ""
+
+#. i18n: ectx: property (title), widget (QGroupBox, grpPosition)
+#: src/gui/subtitlemeta/subtitlepositionwidget.ui:169
+#, fuzzy, kde-format
+#| msgid "<b>Position</b>"
+msgid "Position/Size"
+msgstr "<b>Позиція</b>"
+
+#. i18n: ectx: property (suffix), widget (QDoubleSpinBox, posBottom)
+#. i18n: ectx: property (suffix), widget (QDoubleSpinBox, posLeft)
+#. i18n: ectx: property (suffix), widget (QDoubleSpinBox, posTop)
+#. i18n: ectx: property (suffix), widget (QDoubleSpinBox, posRight)
+#: src/gui/subtitlemeta/subtitlepositionwidget.ui:175
+#: src/gui/subtitlemeta/subtitlepositionwidget.ui:185
+#: src/gui/subtitlemeta/subtitlepositionwidget.ui:195
+#: src/gui/subtitlemeta/subtitlepositionwidget.ui:205
+#, no-c-format, kde-format
+msgid "%"
+msgstr ""
 
 #: src/gui/treeview/linesmodel.cpp:156
 #, kde-format
@@ -3047,54 +3090,54 @@ msgstr ""
 "Якщо включено, буде додано другу панель праворуч від панелі основних "
 "субтитрів для паралельного перекладу."
 
-#: src/main.cpp:206
+#: src/main.cpp:153
 #, kde-format
 msgid "Subtitle Composer"
 msgstr "Редактор субтитрів"
 
-#: src/main.cpp:208
+#: src/main.cpp:155
 #, kde-format
 msgid "A KDE subtitle editor."
 msgstr "Редактор субтитрів для KDE."
 
-#: src/main.cpp:214
+#: src/main.cpp:161
 #, kde-format
 msgid "Maintainer"
 msgstr "Супровідник"
 
-#: src/main.cpp:215
+#: src/main.cpp:162
 #, kde-format
 msgid "Former Maintainer"
 msgstr "Колишній супровідник"
 
-#: src/main.cpp:216
+#: src/main.cpp:163
 #, kde-format
 msgid "Patches and Website"
 msgstr "Латки і сайт"
 
-#: src/main.cpp:218
+#: src/main.cpp:165
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
 msgid "Your names"
 msgstr "Юрій Чорноіван"
 
-#: src/main.cpp:218
+#: src/main.cpp:165
 #, kde-format
 msgctxt "EMAIL OF TRANSLATORS"
 msgid "Your emails"
 msgstr "yurchor@ukr.net"
 
-#: src/main.cpp:220
+#: src/main.cpp:167
 #, kde-format
 msgid "code contributions"
 msgstr "написання коду"
 
-#: src/main.cpp:221
+#: src/main.cpp:168
 #, kde-format
 msgid "code contributions, Arch Linux packaging"
 msgstr "написання коду, пакування для Arch Linux"
 
-#: src/main.cpp:223
+#: src/main.cpp:170
 #, kde-format
 msgid "All people who have contributed and I have forgotten to mention"
 msgstr "Всі люди, що зробили свій внесок, але я забув навести їхні імена"
