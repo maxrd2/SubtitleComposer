@@ -39,12 +39,13 @@
   <summary xml:lang="fr">Éditeur de sous-titres vidéo prenant en charge des opérations d'édition basiques et avancées</summary>
   <summary xml:lang="id">Editor subtitle video yang mendukung operasi pengeditan dasar dan tingkat lanjut</summary>
   <summary xml:lang="it">Editor di sottotitoli video che supporta operazioni di modifica di base ed avanzate</summary>
+  <summary xml:lang="ka">ვიდეოს სუბტიტრების რედაქტორი, რომელსაც ჩასწორების ოპერაციების ორივე, მარტივი და რთული შემთხვევების ჩატარება შეუძლია</summary>
   <summary xml:lang="ko">기본 및 고급 자막 편집 기능이 있는 동영상 자막 편집기</summary>
   <summary xml:lang="nl">Bewerker van ondertitels van video die basis en geavanceerde bewerkingshandelingen ondersteunt</summary>
   <summary xml:lang="pl">Edytor napisów filmów, który obsługuje podstawowe i rozszerzone działania edycji</summary>
   <summary xml:lang="pt">Editor de legendas de vídeo que suporta as operações básicas e avançadas de edição</summary>
   <summary xml:lang="pt-BR">Um editor de legendas de vídeo com suporte a operações de edição básicas e avançadas</summary>
-  <summary xml:lang="sl">Urejevalnik video podnapisov, ki podpira osnovne in napredne postopke urejanja</summary>
+  <summary xml:lang="sl">Urejevalnik podnaslovov za videoposnetke, ki podpira osnovne in napredne postopke urejanja</summary>
   <summary xml:lang="sv">Textningseditor för videor som stöder grundläggande och avancerade redigeringsåtgärder</summary>
   <summary xml:lang="tr">Temel ve gelişmiş düzenleme işlemlerini destekleyen video altyazı düzenleyici</summary>
   <summary xml:lang="uk">Текстовий редактор субтитрів до відео, у якому передбачено базові і розширені можливості з редагування</summary>
@@ -62,12 +63,13 @@
     <p xml:lang="fr">Subtitle Composer est un éditeur de sous-titres textes libre prenant en charge des opérations d'édition basiques et avancées.</p>
     <p xml:lang="id">Subtitle Composer adalah editor subtitle berbasis teks open source yang mendukung operasi pengeditan dasar dan tingkat lanjut.</p>
     <p xml:lang="it">Subtitle Composer è un editor di sottotitoli open source basato sul testo che supporta operazioni di modifica di base ed avanzate.</p>
+    <p xml:lang="ka">Subtitle Composer-ი ღია კოდის მქონე სუბტიტრების რედაქტორია, რომელსაც ორივე, ძირითადი და დამატებითი ოპერაციების ჩატარების საშუალება გააჩნია.</p>
     <p xml:lang="ko">Subtitle Composer는 기본 및 고급 편집 기능이 있는 오픈 소스 텍스트 기반 자막 편집기입니다.</p>
     <p xml:lang="nl">Subtitle Composer is een op opensource gebaseerde bewerker van ondertitels van video die basis en geavanceerde bewerkingshandelingen ondersteunt.</p>
     <p xml:lang="pl">Twórca napisów jest otwartoźródłowym edytorem napisów tekstowych, który obsługuje podstawowe i rozszerzone działania edycji</p>
     <p xml:lang="pt">O Compositor de Legendas é um editor de legendas baseadas em texto de código aberto, suportando um conjunto de operações básicas e avançadas de edição.</p>
     <p xml:lang="pt-BR">O Criador de Legendas é um editor de legendas textuais de código aberto com suporte a operações de edição básicas e avançadas.</p>
-    <p xml:lang="sl">Subtitle Composer je odprtokodni urejevalnik podnapisov, ki podpira besedilo osnovne in napredne operacije urejanja.</p>
+    <p xml:lang="sl">Subtitle Composer je odprtokodni urejevalnik podnaslovov, ki podpira besedilo osnovne in napredne operacije urejanja.</p>
     <p xml:lang="sv">Textningsskapare är en textbaserad textningseditor med öppen källkod som stöder grundläggande och avancerade redigeringsåtgärder.</p>
     <p xml:lang="tr">Altyazı Oluşturucu, temel ve gelişmiş düzenleme işlemlerini destekleyen, açık kaynaklı ve metin tabanlı bir altyazı düzenleyicidir.</p>
     <p xml:lang="uk">«Редактор субтитрів» — текстовий редактор субтитрів із відкритим кодом, у якому передбачено базові і розширені можливості з редагування.</p>
@@ -115,7 +117,7 @@
       <li xml:lang="pl">Otwieranie/zapisywanie formatów napisów tekstowych - SubRip/SRT, MicroDVD, SSA/ASS, MPlayer, TMPlayer oraz napisy YouTube</li>
       <li xml:lang="pt">Formatos para Abrir/Gravar as Legendas de Texto - legendas em SubRip/SRT, MicroDVD, SSA/ASS, MPlayer, TMPlayer e YouTube</li>
       <li xml:lang="pt-BR">Abrir/Salvar nos formatos de legenda textuais: SubRip/SRT, MicroDVD, SSA/ASS, MPlayer, TMPlayer e legendas do YouTube</li>
-      <li xml:lang="sl">Odpri / shrani oblike besedil podnapisov - SubRip/SRT, MicroDVD, SSA/ASS, MPlayer, TMPlayer in YouTube</li>
+      <li xml:lang="sl">Odpiranje/shranjevanje različnih besedilnih zapisov podnaslovov - SubRip/SRT, MicroDVD, SSA/ASS, MPlayer, TMPlayer in YouTube</li>
       <li xml:lang="sv">Öppna eller spara textningsformat - SubRip/SRT-, MicroDVD-, SSA/ASS-, MPlayer-, TMPlayer- och YouTube-textning</li>
       <li xml:lang="tr">Metin Altyazı Biçimlerini Aç/Kaydet - SubRip/SRT, MicroDVD, SSA/ASS, MPlayer, TMPlayer ve YouTube altyazıları</li>
       <li xml:lang="uk">Відкриття/Збереження даних у текстових форматах субтитрів — SubRip/SRT, MicroDVD, SSA/ASS, MPlayer, TMPlayer та субтитрів YouTube</li>
@@ -136,7 +138,7 @@
       <li xml:lang="pl">Otwieranie formatów napisów graficznych - VobSub (.idx/.sub/.rar), BluRay/PGS (*.sup), formaty obsługiwane przez ffmpeg (DVD/Vob, DVB, XSUB, HDMV-PGS)</li>
       <li xml:lang="pt">Formatos de Legengas Gráficas Abertas/OCR - VobSub (.idx/.sub/.rar), BluRay/PGS (*.sup), formatos suportados pelo ffmpeg (DVD/Vob, DVB, XSUB, HDMV-PGS)</li>
       <li xml:lang="pt-BR">Formatos de legenda abertos ou em OCR: VobSub (.idx/.sub/.rar), BluRay/PGS (*.sup), formatos suportados pelo ffmpeg (DVD/Vob, DVB, XSUB, HDMV-PGS)</li>
-      <li xml:lang="sl">Formati podnapisov Open/OCR Grafike - VobSub (.idx/.sub/.rar), BluRay/PGS (*.sup), formati, ki jih podpira ffmpeg (DVD/Vob, DVB, XSUB, HDMV-PGS)</li>
+      <li xml:lang="sl">Grafični zapisi podnaslovov Open/OCR - VobSub (.idx/.sub/.rar), BluRay/PGS (*.sup), zapisi, ki jih podpira ffmpeg (DVD/Vob, DVB, XSUB, HDMV-PGS)</li>
       <li xml:lang="sv">Öppna och OCR grafiska textningsformat - VobSub (.idx/.sub/.rar), BluRay/PGS (*.sup), format som stöds av ffmpeg (DVD/Vob, DVB, XSUB, HDMV-PGS)</li>
       <li xml:lang="tr">Açık/OCR Grafik Altyazı Biçimleri - VobSub (.idx/.sub/.rar), BluRay/PGS (*.sup), ffmpeg tarafından desteklenen biçimler (DVD/Vob, DVB, XSUB, HDMV-PGS)</li>
       <li xml:lang="uk">Відкриті/Розпізнані графічні формати субтитрів — VobSub (.idx/.sub/.rar), BluRay/PGS (*.sup), формати, підтримку яких передбачено у ffmpeg (DVD/Vob, DVB, XSUB, HDMV-PGS)</li>
@@ -157,7 +159,7 @@
       <li xml:lang="pl">Demultipleks strumieni napisów graficznych/tekstowych z plików filmów - SRT, SSA/ASS, MOV text, MicroDVD, DVD/Vob, DVB, XSUB, HDMV-PGS</li>
       <li xml:lang="pt">Transmissões de legendas de texto/gráficas desmultiplexadas do ficheiro de vídeo - SRT, SSA/ASS, texto MOV, MicroDVD, DVD/Vob, DVB, XSUB, HDMV-PGS</li>
       <li xml:lang="pt-BR">Demultiplexador de gráficos/fluxo de legenda de texto a partir de arquivo de vídeo: SRT, SSA/ASS, MOV text, MicroDVD, DVD/Vob, DVB, XSUB, HDMV-PGS</li>
-      <li xml:lang="sl">Tokovi podnapisov iz datoteke videa Demux Graphics/Text - SRT, SSA/ASS, MOV text, MicroDVD, DVD/Vob, DVB, XSUB, HDMV-PGS</li>
+      <li xml:lang="sl">Tokovi podnaslovov iz datoteke videa Demux Graphics/Text - SRT, SSA/ASS, MOV text, MicroDVD, DVD/Vob, DVB, XSUB, HDMV-PGS</li>
       <li xml:lang="sv">Avmultiplex av grafik- eller textningsström från videofil - SRT, SSA/ASS, MOV text, MicroDVD, DVD/Vob, DVB, XSUB, HDMV-PGS</li>
       <li xml:lang="tr">Demux Graphics/video dosyasından Metin Altyazı Akışı - SRT, SSA/ASS, MOV metni, MicroDVD, DVD/Vob, DVB, XSUB, HDMV-PGS</li>
       <li xml:lang="uk">Демультиплексовані графічні або текстові потоки субтитрів з відеофайлів — SRT, SSA/ASS, MOV text, MicroDVD, DVD/Vob, DVB, XSUB, HDMV-PGS</li>
@@ -178,7 +180,7 @@
       <li xml:lang="pl">Rozpoznawanie mowy z plików dźwiękowych/obrazu przy użyciu PocketSphinx</li>
       <li xml:lang="pt">Reconhecimento de fala a partir do ficheiro de áudio/vídeo, usando o PocketSphinx</li>
       <li xml:lang="pt-BR">Reconhecimento de voz do arquivo de áudio/vídeo usando o PocketSphinx</li>
-      <li xml:lang="sl">Prepoznavanje govora iz avdio/video datoteke s pomočjo PocketSphinx</li>
+      <li xml:lang="sl">Prepoznava govora iz zvočne/video datoteke s pomočjo PocketSphinx</li>
       <li xml:lang="sv">Taligenkänning från ljud- eller videofil med användning av PocketSphinx</li>
       <li xml:lang="tr">PocketSphinx kullanarak ses/video dosyasından konuşma tanıma</li>
       <li xml:lang="uk">Розпізнавання голосових даних зі звукових і відеофайлів за допомогою PocketSphinx</li>
@@ -199,7 +201,7 @@
       <li xml:lang="pl">Sprytne wykrywanie kodowania** języka/tekstu</li>
       <li xml:lang="pt">Detecção inteligente da codificação da língua/texto**</li>
       <li xml:lang="pt-BR">Detecção inteligente de codificação** de idioma/texto</li>
-      <li xml:lang="sl">Pametno odkrivanje jezika /kodiranja besedila**</li>
+      <li xml:lang="sl">Pametno razpoznavanje jezika/kodiranja besedila**</li>
       <li xml:lang="sv">Smart detektering av språk och textkodning**</li>
       <li xml:lang="tr">Akıllı dil/metin kodlama** algılaması</li>
       <li xml:lang="uk">Автоматичне визначення мови і кодування тексту</li>
@@ -221,7 +223,7 @@
       <li xml:lang="pl">Podgląd na żywo napisów we wbudowanym odtwarzaczu filmów wraz z wyborem ścieżki dźwiękowej</li>
       <li xml:lang="pt">Antevisão em directo das legendas no reprodutor de vídeo integrado com a selecção da sequência de áudio</li>
       <li xml:lang="pt-BR">Pré-visualização em tempo real de legendas no reprodutor de vídeo com seleção de fluxo de áudio</li>
-      <li xml:lang="sl">Predogled podnapisov v živo v integriranem video predvajalniku w/audio z izborom tokaizbor</li>
+      <li xml:lang="sl">Predogled podnaslovov v živo v integriranem video predvajalniku z izborom zvokovnega toka</li>
       <li xml:lang="sv">Direkt förhandsgranskning av textning i integrerad videospelare med val av ljudspår</li>
       <li xml:lang="tr">Tümleşik video oynatıcıda ses akış seçimi ile altyazıların canlı önizlemesi</li>
       <li xml:lang="uk">Інтерактивний перегляд субтитрів у інтегрованому відеопрогравачі із можливістю вибору потоку звукових даних</li>
@@ -242,7 +244,7 @@
       <li xml:lang="pl">Podgląd/edytowanie napisów na graficznym przebiegu fali dźwiękowej wraz z wyborem strumienia dźwięku</li>
       <li xml:lang="pt">Antevisão/edição das legendas da forma de onda gráfica do áudio com a selecção da sequência de áudio</li>
       <li xml:lang="pt-BR">Pré-visualização/edição de legendas com ondas de áudio e seleção de fluxo de áudio</li>
-      <li xml:lang="sl">Predogled/urejanje podnapisov v grafični zvočni valovni obliki z izborom w/avdio toka</li>
+      <li xml:lang="sl">Predogled/urejanje podnaslovov v grafični valovni obliki zvoka z izborom zvočnega toka</li>
       <li xml:lang="sv">Förhandsgranskning och redigering av textning på grafisk ljudvågform med val av ljudspår</li>
       <li xml:lang="tr">Grafik ses dalga biçiminde ses akış seçimi ile altyazıların önizlemesi/düzenlemesi</li>
       <li xml:lang="uk">Попередній перегляд і редагування субтитрів із показом графічного представлення звукових даних і можливістю вибору потоку звукових даних</li>
@@ -263,7 +265,7 @@
       <li xml:lang="pl">Synchronizacja poprzez przeciąganie kilku zakotwiczeń i rozciąganie osi czasu</li>
       <li xml:lang="pt">Sincronização através do arrastamento de várias âncoras/pontos de pega e por esticamento da linha temporal</li>
       <li xml:lang="pt-BR">Sincronização arrastando várias âncoras e esticando a linha do tempo</li>
-      <li xml:lang="sl">Usklajujete tako, da povlečete več sidrišč/točk grafov in raztegnete časovnico</li>
+      <li xml:lang="sl">Sinhronizacija z vlečenjem več sidrišč/točk prijema in raztegovanjem časovnice</li>
       <li xml:lang="sv">Synkronisering genom att dra flera grepp eller ympningsställen och utsträckning av tidslinjen</li>
       <li xml:lang="tr">Birden çok çapa/aşı noktası sürükleyerek ve zaman akışını çekiştirerek eşzamanlama</li>
       <li xml:lang="uk">Синхронізація за допомогою перетягування точок прив'язки та розтягування монтажного столу</li>
@@ -284,7 +286,7 @@
       <li xml:lang="pl">Przesuwanie i skalowanie czasu, ponowne przeliczenia czasu trwania wierszy, przekształcenia liczby klatek, itp.</li>
       <li xml:lang="pt">Deslocamento e escala do tempo, actualização da duração das linhas, conversão da taxa de imagens, etc.</li>
       <li xml:lang="pt-BR">Deslocamento de tempo e escala, calibração de duração de linhas, conversão de taxa de quadros, etc.</li>
-      <li xml:lang="sl">Časovno premikanje in spremembe meril, ponovni izračun trajanja linij, pretvorbe hitrosti sličic itd.</li>
+      <li xml:lang="sl">Časovno zamikanje in sprememba merila, ponovni izračun trajanja vrstic, pretvorba hitrosti sličic itn.</li>
       <li xml:lang="sv">Tidsskift och skalning, omräkning av tidslängd för rader, bildfrekvenskonvertering, etc.</li>
       <li xml:lang="tr">Zaman kaydırma ve ölçekleme, satır süresi yeniden hesaplama, kare hızı dönüşümü vb.</li>
       <li xml:lang="uk">Зсування та масштабування за часом, переобчислення тривалості показу рядків, перетворення за частотою кадрів тощо</li>
@@ -306,7 +308,7 @@
       <li xml:lang="pl">Łączenie i dzielenie plików napisów</li>
       <li xml:lang="pt">Junção e separação de ficheiros de legendas</li>
       <li xml:lang="pt-BR">Unir e separar arquivos de legenda</li>
-      <li xml:lang="sl">Zlivanje in razcepljanje datotek s podnapisi</li>
+      <li xml:lang="sl">Zlivanje in razcepljanje datotek s podnaslovi</li>
       <li xml:lang="sv">Sammanfoga och dela textningsfiler</li>
       <li xml:lang="tr">Altyazı dosyalarının birbirine katılması ve bölünmesi</li>
       <li xml:lang="uk">Можливість об'єднання та поділу файлів субтитрів</li>
@@ -327,7 +329,7 @@
       <li xml:lang="pl">Tłumaczenie napisów w układzie jeden obok drugiego</li>
       <li xml:lang="pt">Traduções de legendas lado-a-lado</li>
       <li xml:lang="pt-BR">Tradução de legendas lado a lado</li>
-      <li xml:lang="sl">Prevodi podnapisov eden poleg drugega</li>
+      <li xml:lang="sl">Prevodi podnaslovov enega poleg drugega</li>
       <li xml:lang="sv">Översättning av textning sida vid sida</li>
       <li xml:lang="tr">Yan yana altyazı çevirisi</li>
       <li xml:lang="uk">Синхронний переклад субтитрів</li>
@@ -343,6 +345,7 @@
       <li xml:lang="fr">Styles de texte (italique, gras, souligné, barré, couleur)</li>
       <li xml:lang="id">gaya teks (miring, tebal, garis bawah, rusuk, warna)</li>
       <li xml:lang="it">Stili di testo (corsivo, grassetto, sottolineato, barrato, colorato)</li>
+      <li xml:lang="ka">ტექსტის სტილები (კურსივი, სქელი, ხაზგასმული, ხაზგადასმული, ფერადი)</li>
       <li xml:lang="ko">텍스트 스타일(기울임꼴, 굵게, 밑줄, 취소선, 글자색)</li>
       <li xml:lang="nl">Tekststijlen (cursief, vet, onderstrepen, streek, kleur)</li>
       <li xml:lang="pl">Formatowanie tekstu (kursywa, wytłuszczenie, podkreślenie, kreska, barwa)</li>
@@ -373,7 +376,7 @@
       <li xml:lang="pt">Verificação ortográfica</li>
       <li xml:lang="pt-BR">Verificação ortográfica</li>
       <li xml:lang="sk">Kontrola pravopisu</li>
-      <li xml:lang="sl">Besedilnik</li>
+      <li xml:lang="sl">Preverjanje črkovanja</li>
       <li xml:lang="sv">Stavningskontroll</li>
       <li xml:lang="tr">Yazım denetimi</li>
       <li xml:lang="uk">Перевірка правопису</li>
@@ -396,7 +399,7 @@
       <li xml:lang="pl">Wykrywanie błędów czasu pojawiania w napisach</li>
       <li xml:lang="pt">Detecção de erros de temporização nas legendas</li>
       <li xml:lang="pt-BR">Detecção de erros de temporização nas legendas</li>
-      <li xml:lang="sl">Zaznavanje časovnih napak v podnapisih</li>
+      <li xml:lang="sl">Zaznavanje časovnih napak v podnaslovih</li>
       <li xml:lang="sv">Detektering av tidsfel i textning</li>
       <li xml:lang="tr">Altyazılarda zamanlama hatalarını algılama</li>
       <li xml:lang="uk">Виявлення часової розсинхронізації у субтитрах</li>
@@ -449,7 +452,7 @@
       <caption xml:lang="pl">Główne okno programu</caption>
       <caption xml:lang="pt">Janela principal da aplicação</caption>
       <caption xml:lang="pt-BR">Janela principal do aplicativo</caption>
-      <caption xml:lang="sl">Glavno okno aplikacije</caption>
+      <caption xml:lang="sl">Glavno okno programa</caption>
       <caption xml:lang="sv">Programmets huvudfönster</caption>
       <caption xml:lang="tr">Ana uygulama penceresi</caption>
       <caption xml:lang="uk">Основне вікно програми</caption>
