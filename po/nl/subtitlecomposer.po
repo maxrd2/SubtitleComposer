@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: subtitlecomposer\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2022-11-13 00:45+0000\n"
-"PO-Revision-Date: 2022-03-23 13:08+0100\n"
+"PO-Revision-Date: 2022-11-13 15:31+0100\n"
 "Last-Translator: Freek de Kruijf <freekdekruijf@kde.nl>\n"
 "Language-Team: \n"
 "Language: nl\n"
@@ -15,7 +15,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Lokalize 21.12.3\n"
+"X-Generator: Lokalize 22.08.2\n"
 
 #: src/actions/kcodecactionext.cpp:29
 #, kde-format
@@ -2119,10 +2119,9 @@ msgid "Swap Texts"
 msgstr "Teksten omwisselen"
 
 #: src/core/undo/subtitleactions.cpp:308
-#, fuzzy, kde-format
-#| msgid "Change Case"
+#, kde-format
 msgid "Change stylesheet"
-msgstr "Hoofd-/kleine letters wijzigen"
+msgstr "Stylesheet wijzigen"
 
 #: src/core/undo/subtitlelineactions.cpp:28
 #, kde-format
@@ -2801,10 +2800,9 @@ msgid "Error Playing File"
 msgstr "Fout bij afspelen van bestand"
 
 #: src/gui/subtitlemeta/subtitlemetawidget.cpp:46
-#, fuzzy, kde-format
-#| msgid "Styles"
+#, kde-format
 msgid "&Stylesheet"
-msgstr "Stijlen"
+msgstr "&Stylesheet"
 
 #: src/gui/subtitlemeta/subtitlemetawidget.cpp:47
 #, kde-format
@@ -2812,10 +2810,9 @@ msgid "&Comments"
 msgstr ""
 
 #: src/gui/subtitlemeta/subtitlemetawidget.cpp:48
-#, fuzzy, kde-format
-#| msgid "<b>Position</b>"
+#, kde-format
 msgid "&Position"
-msgstr "<b>Positie</b>"
+msgstr "&Positie"
 
 #: src/gui/subtitlemeta/subtitlemetawidget.cpp:88
 #, kde-format
@@ -2852,10 +2849,9 @@ msgstr ""
 
 #. i18n: ectx: property (title), widget (QGroupBox, grpPosition)
 #: src/gui/subtitlemeta/subtitlepositionwidget.ui:169
-#, fuzzy, kde-format
-#| msgid "<b>Position</b>"
+#, kde-format
 msgid "Position/Size"
-msgstr "<b>Positie</b>"
+msgstr "Positie/grootte"
 
 #. i18n: ectx: property (suffix), widget (QDoubleSpinBox, posBottom)
 #. i18n: ectx: property (suffix), widget (QDoubleSpinBox, posLeft)

@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: subtitlecomposer\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2022-11-13 00:45+0000\n"
-"PO-Revision-Date: 2022-11-11 17:34+0200\n"
+"PO-Revision-Date: 2022-11-13 19:29+0200\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian <kde-i18n-uk@kde.org>\n"
 "Language: uk\n"
@@ -2864,10 +2864,9 @@ msgid "&Comments"
 msgstr "&Коментарі"
 
 #: src/gui/subtitlemeta/subtitlemetawidget.cpp:48
-#, fuzzy, kde-format
-#| msgid "<b>Position</b>"
+#, kde-format
 msgid "&Position"
-msgstr "<b>Позиція</b>"
+msgstr "&Позиція"
 
 #: src/gui/subtitlemeta/subtitlemetawidget.cpp:88
 #, kde-format
@@ -2888,26 +2887,25 @@ msgstr "Нижній колонтитул"
 #: src/gui/subtitlemeta/subtitlepositionwidget.ui:14
 #, kde-format
 msgid "Form"
-msgstr ""
+msgstr "Форма"
 
 #. i18n: ectx: property (title), widget (QGroupBox, grpHAlign)
 #: src/gui/subtitlemeta/subtitlepositionwidget.ui:20
 #, kde-format
 msgid "Horizontal Alignment"
-msgstr ""
+msgstr "Горизонтальне вирівнювання"
 
 #. i18n: ectx: property (title), widget (QGroupBox, grpVAlign)
 #: src/gui/subtitlemeta/subtitlepositionwidget.ui:106
 #, kde-format
 msgid "Vertical Alignment"
-msgstr ""
+msgstr "Вертикальне вирівнювання"
 
 #. i18n: ectx: property (title), widget (QGroupBox, grpPosition)
 #: src/gui/subtitlemeta/subtitlepositionwidget.ui:169
-#, fuzzy, kde-format
-#| msgid "<b>Position</b>"
+#, kde-format
 msgid "Position/Size"
-msgstr "<b>Позиція</b>"
+msgstr "Позиція/Розмір"
 
 #. i18n: ectx: property (suffix), widget (QDoubleSpinBox, posBottom)
 #. i18n: ectx: property (suffix), widget (QDoubleSpinBox, posLeft)
@@ -2919,7 +2917,7 @@ msgstr "<b>Позиція</b>"
 #: src/gui/subtitlemeta/subtitlepositionwidget.ui:205
 #, no-c-format, kde-format
 msgid "%"
-msgstr ""
+msgstr "%"
 
 #: src/gui/treeview/linesmodel.cpp:156
 #, kde-format
