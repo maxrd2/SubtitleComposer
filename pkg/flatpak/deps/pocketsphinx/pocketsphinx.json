@@ -1,0 +1,14 @@
+{
+    "buildsystem": "autotools",
+    "name": "PocketSphinx",
+    "config-opts": [
+        "--without-python"
+    ],
+    "sources": [
+        {
+            "type": "git",
+            "url": "https://github.com/cmusphinx/pocketsphinx.git",
+            "commit": "588ab6371a1e1c94c10d4ad772b0c4732e1905e6"
+        }
+    ]
+}

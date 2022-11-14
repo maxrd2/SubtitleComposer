@@ -1,0 +1,95 @@
+{
+    "name": "x265",
+    "subdir": "source",
+    "buildsystem": "cmake-ninja",
+    "config-opts": [
+        "-DENABLE_SHARED=TRUE",
+        "-DENABLE_HDR10_PLUS=TRUE'",
+        "-DEXTRA_LIB='x265_main10.a;x265_main12.a'",
+        "-DEXTRA_LINK_FLAGS='-L .'",
+        "-DLINKED_10BIT=TRUE",
+        "-DLINKED_12BIT=TRUE",
+        "-Wno-dev"
+    ],
+    "sources": [
+        {
+            "type": "archive",
+            "url": "https://bitbucket.org/multicoreware/x265_git/get/3.5.tar.gz",
+            "sha256": "5ca3403c08de4716719575ec56c686b1eb55b078c0fe50a064dcf1ac20af1618",
+            "x-checker-data": {
+                "type": "anitya",
+                "project-id": 7275,
+                "stable-only": true,
+                "url-template": "https://bitbucket.org/multicoreware/x265_git/get/$version.tar.gz"
+            }
+        },
+        {
+            "type": "shell",
+            "commands": [
+                "cp ${FLATPAK_DEST}/lib/libx265_main1{0,2}.a ./"
+            ]
+        }
+    ],
+    "modules": [
+        {
+            "name": "libx265-main10",
+            "subdir": "source",
+            "buildsystem": "cmake-ninja",
+            "config-opts": [
+                "-DENABLE_SHARED=FALSE",
+                "-DEXPORT_C_API=FALSE",
+                "-DENABLE_CLI=FALSE",
+                "-DHIGH_BIT_DEPTH=TRUE",
+                "-DMAIN12=FALSE",
+                "-Wno-dev"
+            ],
+            "no-make-install": true,
+            "build-commands": [
+                "install -Dm644 libx265.a ${FLATPAK_DEST}/lib/libx265_main10.a"
+            ],
+            "sources": [
+                {
+                    "type": "archive",
+                    "url": "https://bitbucket.org/multicoreware/x265_git/get/3.5.tar.gz",
+                    "sha256": "5ca3403c08de4716719575ec56c686b1eb55b078c0fe50a064dcf1ac20af1618",
+                    "x-checker-data": {
+                        "type": "anitya",
+                        "project-id": 7275,
+                        "stable-only": true,
+                        "url-template": "https://bitbucket.org/multicoreware/x265_git/get/$version.tar.gz"
+                    }
+                }
+            ]
+        },
+        {
+            "name": "libx265-main12",
+            "subdir": "source",
+            "buildsystem": "cmake-ninja",
+            "config-opts": [
+                "-DENABLE_SHARED=FALSE",
+                "-DEXPORT_C_API=FALSE",
+                "-DENABLE_CLI=FALSE",
+                "-DHIGH_BIT_DEPTH=TRUE",
+                "-DMAIN12=TRUE",
+                "-Wno-dev"
+            ],
+            "no-make-install": true,
+            "build-commands": [
+                "install -Dm644 libx265.a ${FLATPAK_DEST}/lib/libx265_main12.a"
+            ],
+            "sources": [
+                {
+                    "type": "archive",
+                    "url": "https://bitbucket.org/multicoreware/x265_git/get/3.5.tar.gz",
+                    "sha256": "5ca3403c08de4716719575ec56c686b1eb55b078c0fe50a064dcf1ac20af1618",
+                    "x-checker-data": {
+                        "type": "anitya",
+                        "project-id": 7275,
+                        "stable-only": true,
+                        "url-template": "https://bitbucket.org/multicoreware/x265_git/get/$version.tar.gz"
+                    }
+                }
+            ]
+        }
+    ]
+}

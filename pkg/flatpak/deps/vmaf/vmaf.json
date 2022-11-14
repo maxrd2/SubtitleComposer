@@ -1,0 +1,19 @@
+{
+    "name": "vmaf",
+    "builddir": true,
+    "subdir": "libvmaf",
+    "buildsystem": "meson",
+    "sources": [
+        {
+            "type": "archive",
+            "url": "https://github.com/Netflix/vmaf/archive/v2.3.1/vmaf-2.3.1.tar.gz",
+            "sha256": "8d60b1ddab043ada25ff11ced821da6e0c37fd7730dd81c24f1fc12be7293ef2",
+            "x-checker-data": {
+                "type": "anitya",
+                "project-id": 178322,
+                "stable-only": true,
+                "url-template": "https://github.com/Netflix/vmaf/archive/v$version/vmaf-$version.tar.gz"
+            }
+        }
+    ]
+}

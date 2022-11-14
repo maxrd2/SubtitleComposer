@@ -1,0 +1,25 @@
+[
+    {
+        "type": "archive",
+        "url": "http://www.quut.com/gsm/gsm-1.0.22.tar.gz",
+        "sha256": "f0072e91f6bb85a878b2f6dbf4a0b7c850c4deb8049d554c65340b3bf69df0ac",
+        "x-checker-data": {
+            "type": "anitya",
+            "project-id": 12587,
+            "stable-only": true,
+            "url-template": "http://www.quut.com/gsm/gsm-$version.tar.gz"
+        }
+    },
+    {
+        "type": "patch",
+        "path": "gsm-shared_lib.patch"
+    },
+    {
+        "type": "shell",
+        "commands": [
+            "sed -i '/^CC.*= gcc/d' Makefile",
+            "sed -i 's/^\\(CCFLAGS .*\\)/\\1 -fPIC/' Makefile",
+            "install -dm755 ${FLATPAK_DEST}/{bin,include,lib32}"
+        ]
+    }
+]

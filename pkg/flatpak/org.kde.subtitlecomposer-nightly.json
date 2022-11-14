@@ -1,0 +1,64 @@
+{
+    "command": "subtitlecomposer",
+    "finish-args": [
+        "--share=ipc",
+        "--device=dri",
+        "--socket=fallback-x11",
+        "--socket=wayland",
+        "--socket=pulseaudio",
+        "--filesystem=host"
+    ],
+    "id": "org.kde.subtitlecomposer",
+    "runtime": "org.kde.Platform",
+    "runtime-version": "5.15-21.08",
+    "sdk": "org.kde.Sdk",
+    "tags": ["nightly"],
+    "desktop-file-name-suffix": " (Nightly)",
+    "cleanup": [
+        "/include",
+        "/lib/pkgconfig",
+        "/share/pkgconfig",
+        "/share/aclocal",
+        "/man",
+        "/share/man"
+    ],
+    "rename-icon": "subtitlecomposer",
+    "modules": [
+        "deps/ffmpeg/ffmpeg.json",
+        "deps/sphinxbase/sphinxbase.json",
+        "deps/pocketsphinx/pocketsphinx.json",
+        {
+            "name": "kross",
+            "buildsystem": "cmake-ninja",
+            "config-opts": [
+                "-DENABLE_TESTING=OFF"
+            ],
+            "sources": [
+                {
+                    "type": "archive",
+                    "url": "https://download.kde.org/stable/frameworks/5.99/portingAids/kross-5.99.0.tar.xz",
+                    "sha256": "7bf7a895f15554e4a88d63aa2216be9af7662bb8c28e56bad5b31953a97788d6",
+                    "x-checker-data": {
+                        "type": "anitya",
+                        "project-id": 8762,
+                        "stable-only": true,
+                        "url-template": "https://download.kde.org/stable/frameworks/$major.$minor/portingAids/kross-$version.tar.xz"
+                    }
+                }
+            ]
+        },
+        {
+            "buildsystem": "cmake-ninja",
+            "name": "subtitlecomposer",
+            "config-opts": [
+                "-DBUILD_TESTING=OFF"
+            ],
+            "sources": [
+                {
+                    "type": "git",
+                    "url": "https://invent.kde.org/multimedia/subtitlecomposer.git"
+                }
+            ]
+        }
+    ]
+}

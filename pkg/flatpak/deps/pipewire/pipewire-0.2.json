@@ -1,0 +1,40 @@
+{
+  "name": "pipewire-0.2",
+  "buildsystem": "meson",
+  "config-opts": [
+    "-D docs=false",
+    "-D gstreamer=disabled",
+    "-D man=false",
+    "-D systemd=false"
+  ],
+  "sources": [
+    {
+      "type": "archive",
+      "url": "https://github.com/PipeWire/pipewire/archive/0.2.7.tar.gz",
+      "sha256": "bfaa0f6ae6c0791e2e0b59234d399753bf24f1b33dbf587682363a8463dd8df1"
+    }
+  ],
+  "cleanup": [
+    "/bin",
+    "/etc",
+    "/lib/gstreamer-1.0",
+    "/lib/pipewire-0.2/libpipewire-module-audio-dsp.so",
+    "/lib/pipewire-0.2/libpipewire-module-autolink.so",
+    "/lib/pipewire-0.2/libpipewire-module-link-factory.so",
+    "/lib/pipewire-0.2/libpipewire-module-mixer.so",
+    "/lib/pipewire-0.2/libpipewire-module-portal.so",
+    "/lib/pipewire-0.2/libpipewire-module-rtkit.so",
+    "/lib/pipewire-0.2/libpipewire-module-spa-monitor.so",
+    "/lib/pipewire-0.2/libpipewire-module-spa-node-factory.so",
+    "/lib/pipewire-0.2/libpipewire-module-spa-node.so",
+    "/lib/pipewire-0.2/libpipewire-module-suspend-on-idle.so",
+    "/lib/spa/alsa",
+    "/lib/spa/audiomixer",
+    "/lib/spa/audiotestsrc",
+    "/lib/spa/ffmpeg",
+    "/lib/spa/test",
+    "/lib/spa/v4l2",
+    "/lib/spa/videotestsrc",
+    "/lib/spa/volume"
+  ]
+}

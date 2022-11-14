@@ -1,0 +1,21 @@
+{
+    "name": "pipewire-jack-runtime",
+    "buildsystem": "simple",
+    "build-commands": [
+        "install -Dm644 *.h -t ${FLATPAK_DEST}/include/jack/",
+        "sed -i \"s|@@PREFIX@@|\"${FLATPAK_DEST}\"|;s|@@ARCH@@|\"${FLATPAK_ARCH}\"|\" pipewire-jack-runtime.pc",
+        "_LIBDIR=${FLATPAK_DEST}/lib; [ ${FLATPAK_DEST} == '/usr' ] && _LIBDIR+=/${FLATPAK_ARCH}-linux-gnu; install -Dm644 pipewire-jack-runtime.pc ${_LIBDIR}/pkgconfig/jack.pc"
+    ],
+    "sources": [
+        {
+            "type": "git",
+            "url": "https://github.com/jackaudio/headers",
+            "branch": "master",
+            "commit": "2bfa5069718ca4f4dc091e0be845958f2d8a5ba8"
+        },
+        {
+            "type": "file",
+            "path": "pipewire-jack-runtime.pc"
+        }
+    ]
+}

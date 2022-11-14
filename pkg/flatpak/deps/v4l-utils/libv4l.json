@@ -1,0 +1,25 @@
+{
+    "name": "libv4l",
+    "cleanup": [
+        "/bin",
+        "/share/man"
+    ],
+    "config-opts": [
+        "--sbindir=${FLATPAK_DEST}/bin",
+        "--disable-static",
+        "--with-udevdir=${FLATPAK_DEST}/lib/udev"
+    ],
+    "sources": [
+        {
+            "type": "archive",
+            "url": "https://linuxtv.org/downloads/v4l-utils/v4l-utils-1.22.1.tar.bz2",
+            "sha256": "65c6fbe830a44ca105c443b027182c1b2c9053a91d1e72ad849dfab388b94e31",
+            "x-checker-data": {
+                "type": "anitya",
+                "project-id": 9998,
+                "stable-only": true,
+                "url-template": "https://linuxtv.org/downloads/v4l-utils/v4l-utils-$version.tar.bz2"
+            }
+        }
+    ]
+}

@@ -1,0 +1,20 @@
+{
+    "name": "opencore-amr",
+    "config-opts": [
+        "--disable-static",
+        "--disable-examples"
+    ],
+    "sources": [
+        {
+            "type": "archive",
+            "url": "https://downloads.sourceforge.net/opencore-amr/opencore-amr-0.1.6.tar.gz",
+            "sha256": "483eb4061088e2b34b358e47540b5d495a96cd468e361050fae615b1809dc4a1",
+            "x-checker-data": {
+                "type": "anitya",
+                "project-id": 21548,
+                "stable-only": true,
+                "url-template": "https://downloads.sourceforge.net/opencore-amr/opencore-amr-$version.tar.gz"
+            }
+        }
+    ]
+}

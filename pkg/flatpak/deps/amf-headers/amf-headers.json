@@ -1,0 +1,24 @@
+{
+    "name": "amf-headers",
+    "buildsystem": "simple",
+    "build-commands": [
+        "install -dm755 ${FLATPAK_DEST}/include/",
+        "cp --recursive --no-dereference --preserve=links --no-preserve=ownership amf/public/include ${FLATPAK_DEST}/include/AMF"
+    ],
+    "sources": [
+        {
+            "type": "archive",
+            "url": "https://github.com/GPUOpen-LibrariesAndSDKs/AMF/archive/v1.4.26/AMF-1.4.26.tar.gz",
+            "sha256": "fe8b8f370710b159a92d75eee8a8ea557f0a6ca7d6c0436eb44db31cec06b9b7",
+            "x-checker-data": {
+                "type": "anitya",
+                "project-id": 138182,
+                "stable-only": true,
+                "versions": {
+                    ">": "1.4.21"
+                },
+                "url-template": "https://github.com/GPUOpen-LibrariesAndSDKs/AMF/archive/v$version/AMF-$version.tar.gz"
+            }
+        }
+    ]
+}

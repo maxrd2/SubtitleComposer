@@ -1,0 +1,16 @@
+{
+    "name": "libass",
+    "sources": [
+        {
+            "type": "archive",
+            "url": "https://github.com/libass/libass/releases/download/0.16.0/libass-0.16.0.tar.xz",
+            "sha256": "5dbde9e22339119cf8eed59eea6c623a0746ef5a90b689e68a090109078e3c08",
+            "x-checker-data": {
+                "type": "anitya",
+                "project-id": 1560,
+                "stable-only": true,
+                "url-template": "https://github.com/libass/libass/releases/download/$version/libass-$version.tar.xz"
+            }
+        }
+    ]
+}

@@ -1,0 +1,19 @@
+{
+    "name": "libiec61883",
+    "sources": [
+        {
+            "type": "archive",
+            "url": "https://www.kernel.org/pub/linux/libs/ieee1394/libiec61883-1.2.0.tar.xz",
+            "sha256": "d1e02c7e276fac37313a2f8c1c33d7a9e19282ff16f32e72435428ff5121f09e",
+            "x-checker-data": {
+                "type": "anitya",
+                "project-id": 1640,
+                "stable-only": true,
+                "url-template": "https://www.kernel.org/pub/linux/libs/ieee1394/libiec61883-$version.tar.xz"
+            }
+        }
+    ],
+    "modules": [
+        "libraw1394/libraw1394.json"
+    ]
+}

@@ -1,0 +1,14 @@
+{
+    "buildsystem": "autotools",
+    "name": "SphinxBase",
+    "config-opts": [
+        "--without-python"
+    ],
+    "sources": [
+        {
+            "type": "git",
+            "url": "https://github.com/cmusphinx/sphinxbase.git",
+            "commit": "9e901850ee4cd1c0b22f2d3b3c15f162564ca283"
+        }
+    ]
+}

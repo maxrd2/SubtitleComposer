@@ -1,0 +1,20 @@
+{
+    "name": "zimg",
+    "config-opts": [
+        "--disable-static",
+        "--enable-x86simd"
+    ],
+    "sources": [
+        {
+            "type": "archive",
+            "url": "https://github.com/sekrit-twc/zimg/archive/release-3.0.4/zimg-release-3.0.4.tar.gz",
+            "sha256": "219d1bc6b7fde1355d72c9b406ebd730a4aed9c21da779660f0a4c851243e32f",
+            "x-checker-data": {
+                "type": "anitya",
+                "project-id": 13685,
+                "stable-only": true,
+                "url-template": "https://github.com/sekrit-twc/zimg/archive/release-$version/zimg-release-$version.tar.gz"
+            }
+        }
+    ]
+}
