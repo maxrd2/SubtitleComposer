@@ -102,11 +102,16 @@ ki18n_wrap_ui(subtitlecomposer_SRCS
 
 add_subdirectory(icons)
 
-qt5_add_resources(subtitlecomposer_RES_SRC ${subtitlecomposer_RES})
+if(QT_MAJOR_VERSION EQUAL 6)
+	qt6_add_resources(subtitlecomposer_RES_SRC ${subtitlecomposer_RES})
+else()
+	qt5_add_resources(subtitlecomposer_RES_SRC ${subtitlecomposer_RES})
+endif()
 
 add_library(subtitlecomposer-lib STATIC ${subtitlecomposer_SRCS})
 target_link_libraries(subtitlecomposer-lib
-	Qt5::Core Qt5::Widgets Qt5::WidgetsPrivate Qt5::Gui Qt5::Qml
+	Qt${QT_MAJOR_VERSION}::Core Qt${QT_MAJOR_VERSION}::Widgets Qt${QT_MAJOR_VERSION}::WidgetsPrivate
+	Qt${QT_MAJOR_VERSION}::Gui Qt${QT_MAJOR_VERSION}::Qml
 	KF5::CoreAddons KF5::WidgetsAddons KF5::TextWidgets KF5::Codecs
 	KF5::SonnetCore KF5::SonnetUi
 	KF5::KIOCore KF5::KIOFileWidgets KF5::KIOWidgets KF5::KIONTLM
@@ -115,10 +120,10 @@ target_link_libraries(subtitlecomposer-lib
 	${OPENAL_LIBRARY}
 	${ICU_LIBRARIES}
 )
+if(QT_MAJOR_VERSION EQUAL 6)
+	target_link_libraries(subtitlecomposer-lib Qt::OpenGLWidgets Qt::Core5Compat)
+endif()
 target_include_directories(subtitlecomposer-lib PUBLIC
-	${Qt5Core_INCLUDE_DIRS}
-	${Qt5Widgets_INCLUDE_DIRS} ${Qt5Widgets_PRIVATE_INCLUDE_DIRS}
-	${Qt5Gui_INCLUDE_DIRS} ${Qt5Gui_PRIVATE_INCLUDE_DIRS}
 	${OPENAL_INCLUDE_DIR}
 	${FFMPEG_INCLUDE_DIRS}
 )

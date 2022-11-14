@@ -25,7 +25,7 @@ target_include_directories(pocketsphinxasr SYSTEM PRIVATE
 	${CMAKE_CURRENT_BINARY_DIR} # so files can find plugin-config.h
 	${POCKETSPHINX_INCLUDE_DIRS})
 target_link_libraries(pocketsphinxasr
-	Qt5::Core Qt5::Widgets Qt5::Gui
+	Qt${QT_MAJOR_VERSION}::Core Qt${QT_MAJOR_VERSION}::Widgets Qt${QT_MAJOR_VERSION}::Gui
 	KF5::I18n
 	KF5::KIOCore KF5::KIOFileWidgets KF5::KIOWidgets KF5::KIONTLM
 	${POCKETSPHINX_LIBRARIES})
