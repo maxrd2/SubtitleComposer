@@ -103,7 +103,7 @@ PlayerWidget::PlayerWidget(QWidget *parent) :
 	m_volumeSlider->setFocusPolicy(Qt::NoFocus);
 
 	QGridLayout *videoControlsLayout = new QGridLayout();
-	videoControlsLayout->setMargin(0);
+	videoControlsLayout->setContentsMargins(0, 0, 0, 0);
 	videoControlsLayout->setSpacing(2);
 	videoControlsLayout->addWidget(createToolButton(this, ACT_PLAY_PAUSE, 16), 0, 0);
 	videoControlsLayout->addWidget(createToolButton(this, ACT_STOP, 16), 0, 1);
@@ -123,7 +123,7 @@ PlayerWidget::PlayerWidget(QWidget *parent) :
 	videoControlsLayout->addWidget(m_seekSlider, 0, 15);
 
 	QGridLayout *audioControlsLayout = new QGridLayout();
-	audioControlsLayout->setMargin(0);
+	audioControlsLayout->setContentsMargins(0, 0, 0, 0);
 	audioControlsLayout->addWidget(createToolButton(this, ACT_TOGGLE_MUTED, 16), 0, 0, Qt::AlignHCenter);
 	audioControlsLayout->addWidget(m_volumeSlider, 1, 0, Qt::AlignHCenter);
 
@@ -143,7 +143,7 @@ PlayerWidget::PlayerWidget(QWidget *parent) :
 	infoControlsLayout->addWidget(m_positionEdit, 11, 0);
 
 	m_mainLayout = new QGridLayout(this);
-	m_mainLayout->setMargin(0);
+	m_mainLayout->setContentsMargins(0, 0, 0, 0);
 	m_mainLayout->setSpacing(5);
 	m_mainLayout->addWidget(m_infoControlsGroupBox, 0, 0, 2, 1);
 	m_mainLayout->addWidget(m_layeredWidget, 0, 1);
@@ -181,7 +181,7 @@ PlayerWidget::PlayerWidget(QWidget *parent) :
 	m_fsPositionLabel->setMinimumWidth(m_fsPositionLabel->width());
 
 	QHBoxLayout *fullScreenControlsLayout = new QHBoxLayout(m_fullScreenControls);
-	fullScreenControlsLayout->setMargin(0);
+	fullScreenControlsLayout->setContentsMargins(0, 0, 0, 0);
 	fullScreenControlsLayout->setSpacing(0);
 
 	const int FS_BUTTON_SIZE = 32;
@@ -327,7 +327,7 @@ PlayerWidget::setFullScreenMode(bool fullScreenMode)
 		auto *fullScreenWidget = new QWidget();
 		fullScreenWidget->installEventFilter(this);
 		auto *fullScreenLayout = new QHBoxLayout();
-		fullScreenLayout->setMargin(0);
+		fullScreenLayout->setContentsMargins(0, 0, 0, 0);
 		fullScreenWidget->setLayout(fullScreenLayout);
 		m_layeredWidget->setParent(fullScreenWidget);
 		fullScreenLayout->addWidget(m_layeredWidget);

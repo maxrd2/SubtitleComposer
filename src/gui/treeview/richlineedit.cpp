@@ -307,7 +307,7 @@ RichLineEdit::mouseReleaseEvent(QMouseEvent* e)
 	if(QApplication::clipboard()->supportsSelection()) {
 		if(e->button() == Qt::LeftButton) {
 			m_control->copy(QClipboard::Selection);
-		} else if(!m_control->isReadOnly() && e->button() == Qt::MidButton) {
+		} else if(!m_control->isReadOnly() && e->button() == Qt::MiddleButton) {
 			m_control->deselect();
 			m_control->paste(QClipboard::Selection);
 		}

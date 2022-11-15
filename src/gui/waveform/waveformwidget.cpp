@@ -68,7 +68,7 @@ WaveformWidget::WaveformWidget(QWidget *parent)
 	  m_zoomDataLen(0)
 {
 	m_widgetLayout = new QBoxLayout(QBoxLayout::LeftToRight);
-	m_widgetLayout->setMargin(0);
+	m_widgetLayout->setContentsMargins(0, 0, 0, 0);
 	m_widgetLayout->setSpacing(0);
 
 	m_waveformGraphics->installEventFilter(this);
@@ -90,7 +90,7 @@ WaveformWidget::WaveformWidget(QWidget *parent)
 	m_btnAutoScroll = createToolButton(QStringLiteral(ACT_WAVEFORM_AUTOSCROLL));
 
 	QHBoxLayout *toolbarLayout = new QHBoxLayout();
-	toolbarLayout->setMargin(0);
+	toolbarLayout->setContentsMargins(0, 0, 0, 0);
 	toolbarLayout->setSpacing(2);
 	toolbarLayout->addWidget(m_btnZoomOut);
 	toolbarLayout->addWidget(m_btnZoomIn);
@@ -102,7 +102,7 @@ WaveformWidget::WaveformWidget(QWidget *parent)
 	m_toolbar->setLayout(toolbarLayout);
 
 	QBoxLayout *mainLayout = new QVBoxLayout(this);
-	mainLayout->setMargin(0);
+	mainLayout->setContentsMargins(0, 0, 0, 0);
 	mainLayout->setSpacing(5);
 	mainLayout->addWidget(m_toolbar);
 	mainLayout->addLayout(m_widgetLayout);

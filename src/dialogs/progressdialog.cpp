@@ -35,7 +35,7 @@ ProgressDialog::ProgressDialog(const QString &caption, const QString &descriptio
 	m_progressBar->setValue(0);
 
 	QBoxLayout *mainLayout = new QBoxLayout(QBoxLayout::TopToBottom, this);
-	mainLayout->setMargin(0);
+	mainLayout->setContentsMargins(0, 0, 0, 0);
 	mainLayout->addWidget(m_label);
 	mainLayout->addWidget(m_progressBar);
 	mainLayout->addWidget(m_buttonBox);

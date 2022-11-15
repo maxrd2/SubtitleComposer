@@ -29,7 +29,7 @@ VideoWidget::VideoWidget(QWidget *parent)
 {
 	setFocusPolicy(Qt::NoFocus);
 	QPalette pal(palette());
-	pal.setColor(QPalette::Background, Qt::black);
+	pal.setColor(QPalette::Window, Qt::black);
 	setAutoFillBackground(true);
 	setPalette(pal);
 }

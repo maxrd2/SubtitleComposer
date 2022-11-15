@@ -38,7 +38,7 @@ CurrentLineWidget::CurrentLineWidget(QWidget *parent)
 	  m_translationMode(false)
 {
 	QGridLayout *mainLayout = new QGridLayout(this);
-	mainLayout->setMargin(0);
+	mainLayout->setContentsMargins(0, 0, 0, 0);
 	mainLayout->setSpacing(0);
 
 	QGroupBox *timesControlsGroupBox = new QGroupBox(this);

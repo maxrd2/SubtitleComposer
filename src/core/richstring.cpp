@@ -1009,7 +1009,7 @@ RichString::replace(const QRegularExpression &regExp, const RichString &replacem
 }
 
 RichStringList
-RichString::split(const QString &sep, QString::SplitBehavior behavior, Qt::CaseSensitivity cs) const
+RichString::split(const QString &sep, Qt::SplitBehaviorFlags behavior, Qt::CaseSensitivity cs) const
 {
 	RichStringList ret;
 
@@ -1019,13 +1019,13 @@ RichString::split(const QString &sep, QString::SplitBehavior behavior, Qt::CaseS
 			const int matchedIndex = indexOf(sep, off, cs);
 			if(matchedIndex == -1)
 				break;
-			if(behavior == QString::KeepEmptyParts || matchedIndex != off)
+			if(behavior == Qt::KeepEmptyParts || matchedIndex != off)
 				ret << mid(off, matchedIndex - off);
 			off = matchedIndex + sep.length();
 		}
-		if(behavior == QString::KeepEmptyParts || off < length() - 1)
+		if(behavior == Qt::KeepEmptyParts || off < length() - 1)
 			ret << mid(off);
-	} else if(behavior == QString::KeepEmptyParts || length()) {
+	} else if(behavior == Qt::KeepEmptyParts || length()) {
 		ret << *this;
 	}
 
@@ -1033,7 +1033,7 @@ RichString::split(const QString &sep, QString::SplitBehavior behavior, Qt::CaseS
 }
 
 RichStringList
-RichString::split(const QChar &sep, QString::SplitBehavior behavior, Qt::CaseSensitivity cs) const
+RichString::split(const QChar &sep, Qt::SplitBehaviorFlags behavior, Qt::CaseSensitivity cs) const
 {
 	RichStringList ret;
 
@@ -1042,18 +1042,18 @@ RichString::split(const QChar &sep, QString::SplitBehavior behavior, Qt::CaseSen
 		const int matchedIndex = indexOf(sep, off, cs);
 		if(matchedIndex == -1)
 			break;
-		if(behavior == QString::KeepEmptyParts || matchedIndex != off)
+		if(behavior == Qt::KeepEmptyParts || matchedIndex != off)
 			ret << mid(off, matchedIndex - off);
 		off = matchedIndex + 1;
 	}
-	if(behavior == QString::KeepEmptyParts || off < length() - 1)
+	if(behavior == Qt::KeepEmptyParts || off < length() - 1)
 		ret << mid(off);
 
 	return ret;
 }
 
 RichStringList
-RichString::split(const QRegExp &sep, QString::SplitBehavior behavior) const
+RichString::split(const QRegExp &sep, Qt::SplitBehaviorFlags behavior) const
 {
 	RichStringList ret;
 
@@ -1062,11 +1062,11 @@ RichString::split(const QRegExp &sep, QString::SplitBehavior behavior) const
 		const int matchedIndex = sep.indexIn(*this, off);
 		if(matchedIndex == -1)
 			break;
-		if(behavior == QString::KeepEmptyParts || matchedIndex != off)
+		if(behavior == Qt::KeepEmptyParts || matchedIndex != off)
 			ret << mid(off, matchedIndex - off);
 		off = matchedIndex + sep.matchedLength();
 	}
-	if(behavior == QString::KeepEmptyParts || off < length() - 1)
+	if(behavior == Qt::KeepEmptyParts || off < length() - 1)
 		ret << mid(off);
 
 	return ret;

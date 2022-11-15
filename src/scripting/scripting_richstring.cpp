@@ -247,9 +247,9 @@ Scripting::RichString::split(const QString &sep, bool regExp, bool caseSensitive
 {
 	RichStringList tokens;
 	if(regExp)
-		tokens = m_backend.split(QRegExp(sep, caseSensitive ? Qt::CaseSensitive : Qt::CaseInsensitive), QString::KeepEmptyParts);
+		tokens = m_backend.split(QRegExp(sep, caseSensitive ? Qt::CaseSensitive : Qt::CaseInsensitive), Qt::KeepEmptyParts);
 	else
-		tokens = m_backend.split(sep, QString::KeepEmptyParts, caseSensitive ? Qt::CaseSensitive : Qt::CaseInsensitive);
+		tokens = m_backend.split(sep, Qt::KeepEmptyParts, caseSensitive ? Qt::CaseSensitive : Qt::CaseInsensitive);
 
 	Scripting::RichString *parent = const_cast<Scripting::RichString *>(this);
 

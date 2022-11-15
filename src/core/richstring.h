@@ -124,9 +124,9 @@ public:
 	RichString & replace(const QRegularExpression &regExp, const QString &replacement);
 	RichString & replace(const QRegularExpression &regExp, const RichString &replacement);
 
-	RichStringList split(const QString &sep, QString::SplitBehavior behavior = QString::KeepEmptyParts, Qt::CaseSensitivity cs = Qt::CaseSensitive) const;
-	RichStringList split(const QChar &sep, QString::SplitBehavior behavior = QString::KeepEmptyParts, Qt::CaseSensitivity cs = Qt::CaseSensitive) const;
-	RichStringList split(const QRegExp &sep, QString::SplitBehavior behavior = QString::KeepEmptyParts) const;
+	RichStringList split(const QString &sep, Qt::SplitBehaviorFlags behavior = Qt::KeepEmptyParts, Qt::CaseSensitivity cs = Qt::CaseSensitive) const;
+	RichStringList split(const QChar &sep, Qt::SplitBehaviorFlags behavior = Qt::KeepEmptyParts, Qt::CaseSensitivity cs = Qt::CaseSensitive) const;
+	RichStringList split(const QRegExp &sep, Qt::SplitBehaviorFlags behavior = Qt::KeepEmptyParts) const;
 
 	RichString left(int len) const;
 	RichString right(int len) const;
