@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: subtitlecomposer\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2022-11-13 00:45+0000\n"
-"PO-Revision-Date: 2022-11-13 11:48+0300\n"
+"PO-Revision-Date: 2022-11-14 14:11+0300\n"
 "Last-Translator: Emir SARI <emir_sari@icloud.com>\n"
 "Language-Team: Turkish <kde-l10n-tr@kde.org>\n"
 "Language: tr\n"
@@ -1038,12 +1038,12 @@ msgstr "Dalga Biçimi Uzaklaştır"
 #: src/application_actions.cpp:791
 #, kde-format
 msgid "Waveform Auto Scroll"
-msgstr "Dalga Biçimi Otomatik Kaydır"
+msgstr "Dalga Biçimi Otomatik Sarma"
 
 #: src/application_actions.cpp:792
 #, kde-format
 msgid "Waveform display will automatically scroll to video position"
-msgstr "Dalga boyutu görüntüsü, otomatik olarak video konumuna kaydırılacaktır"
+msgstr "Dalga boyutu görüntüsü, otomatik olarak video konumuna sarılacaktır"
 
 #: src/application_subtitle.cpp:75
 #, kde-format
@@ -1595,7 +1595,7 @@ msgstr "Dalga Biçimi Görüntüsü"
 #: src/configs/waveformconfigwidget.ui:23
 #, kde-format
 msgid "Smooth Scrolling"
-msgstr "Pürüzsüz Kaydırma"
+msgstr "Pürüzsüz Sarma"
 
 #. i18n: ectx: property (text), widget (QLabel, label_12)
 #: src/configs/waveformconfigwidget.ui:49
@@ -1616,14 +1616,14 @@ msgid ""
 "Autoscroll page when play position reaches ScrollPadding distance "
 "(percentage) from page border"
 msgstr ""
-"Oynatma konumu, sayfa kenarlığından Kaydırma Dolgusu uzaklığına (yüzde) "
-"ulaştığında sayfayı otomatik kaydır"
+"Oynatma konumu, sayfa kenarlığından Sarma Dolgusu uzaklığına (yüzde) "
+"ulaştığında sayfayı otomatik sar"
 
 #. i18n: ectx: property (text), widget (QLabel, label_wfAutoscrollPadding)
 #: src/configs/waveformconfigwidget.ui:107
 #, kde-format
 msgid "Auto Scroll Padding:"
-msgstr "Otomatik Kaydırma Dolgusu:"
+msgstr "Otomatik Sarma Dolgusu:"
 
 #. i18n: ectx: property (title), widget (QGroupBox, m_grpGeneral)
 #: src/configs/waveformconfigwidget.ui:120
@@ -3236,13 +3236,13 @@ msgstr "Dalga Biçimi Dış Rengi"
 #: src/scconfig.kcfg:120
 #, kde-format
 msgid "Waveform Smooth Scrolling"
-msgstr "Dalga Biçimi Pürüzsüz Kaydırma"
+msgstr "Dalga Biçimi Pürüzsüz Sarma"
 
 #. i18n: ectx: label, entry (wfAutoscrollPadding), group (Waveform Widget)
 #: src/scconfig.kcfg:124
 #, kde-format
 msgid "Autoscroll Padding"
-msgstr "Otomatik Kaydırma Dolgusu"
+msgstr "Otomatik Sarma Dolgusu"
 
 #. i18n: ectx: whatsthis, entry (wfAutoscrollPadding), group (Waveform Widget)
 #: src/scconfig.kcfg:126
@@ -3251,8 +3251,8 @@ msgid ""
 "Autoscroll page when play position reaches ScrollPadding distance "
 "(percentage) from page border."
 msgstr ""
-"Oynatma konumu, sayfa kenarlığından Kaydırma Dolgusu uzaklığına (yüzde) "
-"ulaştığında sayfayı otomatik kaydır."
+"Oynatma konumu, sayfa kenarlığından Sarma Dolgusu uzaklığına (yüzde) "
+"ulaştığında sayfayı otomatik sar."
 
 #. i18n: ectx: label, entry (wfSubBackground), group (Waveform Widget)
 #: src/scconfig.kcfg:129
