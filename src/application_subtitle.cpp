@@ -112,13 +112,7 @@ Application::codecForEncoding(const QString &encoding)
 {
 	if(encoding.isEmpty())
 		return nullptr;
-
-	bool codecFound = false;
-	QTextCodec *codec = KCharsets::charsets()->codecForName(encoding, codecFound);
-	if(!codecFound)
-		return nullptr;
-
-	return codec;
+	return QTextCodec::codecForName(encoding.toUtf8());
 }
 
 bool
@@ -257,8 +251,8 @@ Application::processSubtitleOpened(QTextCodec *codec, const QString &subtitleFor
 
 	if(m_subtitleUrl.isEmpty()) {
 		m_subtitleFileName.clear();
-		m_subtitleEncoding = SCConfig::defaultSubtitlesEncoding();
-		codec = KCharsets::charsets()->codecForName(m_subtitleEncoding);
+		m_subtitleEncoding = SCConfig::defaultSubtitlesEncoding().toUtf8();
+		codec = QTextCodec::codecForName(m_subtitleEncoding.toUtf8());
 	} else {
 		m_subtitleFileName = QFileInfo(m_subtitleUrl.path()).fileName();
 		Q_ASSERT(codec != nullptr);
@@ -305,12 +299,11 @@ Application::saveSubtitle(QTextCodec *codec)
 	if(m_subtitleUrl.isEmpty() || !FormatManager::instance().hasOutput(m_subtitleFormat))
 		return saveSubtitleAs(codec);
 
-	bool codecFound = true;
 	if(!codec)
-		codec = KCharsets::charsets()->codecForName(m_subtitleEncoding, codecFound);
-	if(!codecFound)
-		codec = KCharsets::charsets()->codecForName(SCConfig::defaultSubtitlesEncoding(), codecFound);
-	if(!codecFound)
+		codec = QTextCodec::codecForName(m_subtitleEncoding.toUtf8());
+	if(!codec)
+		codec = QTextCodec::codecForName(SCConfig::defaultSubtitlesEncoding().toUtf8());
+	if(!codec)
 		codec = QTextCodec::codecForLocale();
 
 	if(FormatManager::instance().writeSubtitle(*appSubtitle(), true, m_subtitleUrl, codec, m_subtitleFormat, true)) {
@@ -547,12 +540,11 @@ Application::saveSubtitleTr(QTextCodec *codec)
 	if(m_subtitleTrUrl.isEmpty() || !FormatManager::instance().hasOutput(m_subtitleTrFormat))
 		return saveSubtitleTrAs(codec);
 
-	bool codecFound = true;
 	if(!codec)
-		codec = KCharsets::charsets()->codecForName(m_subtitleTrEncoding, codecFound);
-	if(!codecFound)
-		codec = KCharsets::charsets()->codecForName(SCConfig::defaultSubtitlesEncoding(), codecFound);
-	if(!codecFound)
+		codec = QTextCodec::codecForName(m_subtitleTrEncoding.toUtf8());
+	if(!codec)
+		codec = QTextCodec::codecForName(SCConfig::defaultSubtitlesEncoding().toUtf8());
+	if(!codec)
 		codec = QTextCodec::codecForLocale();
 
 	if(FormatManager::instance().writeSubtitle(*appSubtitle(), false, m_subtitleTrUrl, codec, m_subtitleTrFormat, true)) {
@@ -663,9 +655,8 @@ Application::saveSplitSubtitle(const Subtitle &subtitle, const QUrl &srcUrl, QSt
 		dstUrl.setPath(dstFileInfo.path());
 		dstUrl = System::newUrl(dstUrl, dstFileInfo.completeBaseName() + " - " + i18nc("Suffix added to split subtitles", "split"), dstFileInfo.suffix());
 
-		bool codecFound;
-		QTextCodec *codec = KCharsets::charsets()->codecForName(encoding, codecFound);
-		if(!codecFound)
+		QTextCodec *codec = QTextCodec::codecForName(encoding.toUtf8());
+		if(!codec)
 			codec = QTextCodec::codecForLocale();
 
 		if(FormatManager::instance().writeSubtitle(subtitle, primary, dstUrl, codec, format, false)) {

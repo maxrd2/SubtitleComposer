@@ -17,6 +17,8 @@
 #include <QUrl>
 #include <KEncodingProber>
 
+QT_FORWARD_DECLARE_CLASS(QTextCodec)
+
 namespace SubtitleComposer {
 class InputFormat;
 class OutputFormat;

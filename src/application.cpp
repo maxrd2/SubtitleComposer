@@ -378,9 +378,8 @@ Application::availableEncodingNames() const
 	if(encodingNames.empty()) {
 		QStringList encodings(KCharsets::charsets()->availableEncodingNames());
 		for(QStringList::Iterator it = encodings.begin(); it != encodings.end(); ++it) {
-			bool found = false;
-			QTextCodec *codec = KCharsets::charsets()->codecForName(*it, found);
-			if(found)
+			QTextCodec *codec = QTextCodec::codecForName(it->toUtf8());
+			if(codec)
 				encodingNames.append(codec->name().toUpper());
 		}
 		encodingNames.sort();

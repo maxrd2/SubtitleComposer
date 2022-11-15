@@ -122,9 +122,8 @@ detectEncoding(const QByteArray &byteData)
 	const UCharsetMatch **ucms = ucsdet_detectAll(csd, &matchesFound, &status);
 	for(int index = 0; index < matchesFound; ++index) {
 		int confidence = ucsdet_getConfidence(ucms[index], &status);
-		bool encodingFound;
-		QTextCodec *codec = KCharsets::charsets()->codecForName(ucsdet_getName(ucms[index], &status), encodingFound);
-		if(encodingFound) {
+		QTextCodec *codec = QTextCodec::codecForName(ucsdet_getName(ucms[index], &status));
+		if(codec) {
 			if(confidence == 100)
 				return codec;
 			dlg.addEncoding(codec->name(), confidence);
@@ -134,19 +133,16 @@ detectEncoding(const QByteArray &byteData)
 #else
 	KEncodingProber prober(KEncodingProber::Universal);
 	prober.feed(byteData);
-	bool encodingFound;
-	QTextCodec *codec = KCharsets::charsets()->codecForName(prober.encoding(), encodingFound);
-	if(encodingFound) {
+	QTextCodec *codec = QTextCodec::codecForName(prober.encoding());
+	if(codec) {
 		if(prober.confidence() >= 1.)
 			return codec;
 		dlg.addEncoding(codec->name(), prober.confidence() * 100.);
 	}
 #endif
 
-	if(dlg.exec() == QDialog::Accepted) {
-		bool encodingFound;
-		return KCharsets::charsets()->codecForName(dlg.selectedEncoding(), encodingFound);
-	}
+	if(dlg.exec() == QDialog::Accepted)
+		return QTextCodec::codecForName(dlg.selectedEncoding().toUtf8());
 
 	return nullptr;
 }
@@ -164,7 +160,7 @@ FormatManager::readBinary(Subtitle &subtitle, const QUrl &url, bool primary,
 		if(res == SUCCESS) {
 			if(formatName)
 				*formatName = format->name();
-			*codec = KCharsets::charsets()->codecForName(SCConfig::defaultSubtitlesEncoding());
+			*codec = QTextCodec::codecForName(SCConfig::defaultSubtitlesEncoding().toUtf8());
 			if(primary)
 				subtitle.setPrimaryData(*newSubtitle, true);
 			else

@@ -29,7 +29,7 @@ KCodecActionExt::init()
 		m_defaultCodecAction = addAction(i18nc("Encodings menu", "Default: %1", SCConfig::defaultSubtitlesEncoding()));
 		m_defaultCodecAction->setCheckable(false);
 		connect(m_defaultCodecAction, &QAction::triggered, this, [&](bool){
-			emit triggered(KCharsets::charsets()->codecForName(SCConfig::defaultSubtitlesEncoding()));
+			emit triggered(QTextCodec::codecForName(SCConfig::defaultSubtitlesEncoding().toUtf8()));
 		});
 
 		m_currentCodecAction = addAction(i18nc("Encodings menu", "Current: %1", SCConfig::defaultSubtitlesEncoding()));
@@ -53,7 +53,7 @@ KCodecActionExt::init()
 		for(int i = 1; i < encodingsForScript.size(); ++i)
 			group->addAction(encodingsForScript.at(i).toUpper())->setCheckable(m_mode == Open);
 		connect(group, QOverload<QAction *>::of(&KSelectAction::triggered), this, [=](QAction *a){
-			emit triggered(KCharsets::charsets()->codecForName(a->text()));
+			emit triggered(QTextCodec::codecForName(a->text().toUtf8()));
 		});
 		group->setCheckable(m_mode == Open);
 		addAction(group);
@@ -64,7 +64,7 @@ bool
 KCodecActionExt::setCurrentCodec(QTextCodec *codec)
 {
 	if(!codec)
-		codec = KCharsets::charsets()->codecForName(SCConfig::defaultSubtitlesEncoding());
+		codec = QTextCodec::codecForName(SCConfig::defaultSubtitlesEncoding().toUtf8());
 
 	for(int i = 0, m = actions().size(); i < m; i++) {
 		KSelectAction *menuAction = qobject_cast<KSelectAction *>(actions().at(i));
@@ -73,7 +73,7 @@ KCodecActionExt::setCurrentCodec(QTextCodec *codec)
 		const QMenu *menu = menuAction->menu();
 		for(int j = 0, n = menu->actions().size(); j < n; j++) {
 			QAction *action = menu->actions().at(j);
-			if(codec == KCharsets::charsets()->codecForName(action->text())) {
+			if(codec == QTextCodec::codecForName(action->text().toUtf8())) {
 				if(m_mode == Save)
 					m_currentCodecAction->setText(i18nc("Encodings menu", "Current: %1", action->text()));
 				if(action->isCheckable()) {

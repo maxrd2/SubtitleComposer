@@ -57,7 +57,7 @@ EncodingDetectDialog::EncodingDetectDialog(const QByteArray &text, QWidget *pare
 		if(hasSelection) {
 			const QModelIndex first = sel.first().indexes().first();
 			m_selectedEncoding = model->encoding(first);
-			QTextCodec *codec = KCharsets::charsets()->codecForName(m_selectedEncoding);
+			QTextCodec *codec = QTextCodec::codecForName(m_selectedEncoding.toUtf8());
 			QTextStream textStream(m_text);
 			textStream.setCodec(codec);
 			const int val = ui->preview->verticalScrollBar()->value();

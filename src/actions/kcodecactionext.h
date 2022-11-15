@@ -12,6 +12,8 @@
 
 #include <QIcon>
 
+QT_FORWARD_DECLARE_CLASS(QTextCodec)
+
 class KCodecActionExt : public KSelectAction
 {
 	Q_OBJECT

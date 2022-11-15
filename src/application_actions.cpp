@@ -73,7 +73,7 @@ Application::setupActions()
 	saveSubtitleAction->setText(i18n("Save"));
 	saveSubtitleAction->setStatusTip(i18n("Save opened subtitle"));
 	actionCollection->setDefaultShortcuts(saveSubtitleAction, KStandardShortcut::save());
-	connect(saveSubtitleAction, &QAction::triggered, this, [this](){ saveSubtitle(KCharsets::charsets()->codecForName(m_subtitleEncoding)); });
+	connect(saveSubtitleAction, &QAction::triggered, this, [this](){ saveSubtitle(QTextCodec::codecForName(m_subtitleEncoding.toUtf8())); });
 	actionCollection->addAction(ACT_SAVE_SUBTITLE, saveSubtitleAction);
 	actionManager->addAction(saveSubtitleAction, UserAction::SubPDirty | UserAction::FullScreenOff);
 
@@ -135,7 +135,7 @@ Application::setupActions()
 	saveSubtitleTrAction->setStatusTip(i18n("Save opened translation subtitle"));
 	actionCollection->setDefaultShortcut(saveSubtitleTrAction, QKeySequence("Ctrl+Shift+S"));
 	connect(saveSubtitleTrAction, &QAction::triggered, this, [&](){
-		saveSubtitleTr(KCharsets::charsets()->codecForName(m_subtitleTrEncoding));
+		saveSubtitleTr(QTextCodec::codecForName(m_subtitleTrEncoding.toUtf8()));
 	});
 	actionCollection->addAction(ACT_SAVE_SUBTITLE_TR, saveSubtitleTrAction);
 	actionManager->addAction(saveSubtitleTrAction, UserAction::SubSDirty | UserAction::FullScreenOff);
