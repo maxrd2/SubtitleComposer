@@ -13,13 +13,12 @@ include:
 #  - remote: https://invent.kde.org/sysadmin/ci-utilities/raw/master/gitlab-templates/windows.yml
 #    rules:
 #      - if: $CI_SERVER_HOST =~ /kde\.org$/
-# TODO: Qt6
-  # - remote: https://invent.kde.org/sysadmin/ci-utilities/raw/master/gitlab-templates/linux-qt6.yml
-  #   rules:
-  #     - if: $CI_SERVER_HOST =~ /kde\.org$/
-  # - remote: https://invent.kde.org/sysadmin/ci-utilities/raw/master/gitlab-templates/freebsd-qt6.yml
-  #   rules:
-  #     - if: $CI_SERVER_HOST =~ /kde\.org$/
+  - remote: https://invent.kde.org/sysadmin/ci-utilities/raw/master/gitlab-templates/linux-qt6.yml
+    rules:
+      - if: $CI_SERVER_HOST =~ /kde\.org$/
+  - remote: https://invent.kde.org/sysadmin/ci-utilities/raw/master/gitlab-templates/freebsd-qt6.yml
+    rules:
+      - if: $CI_SERVER_HOST =~ /kde\.org$/
 
 # Gitlab jobs
 mingw-win32-build:
