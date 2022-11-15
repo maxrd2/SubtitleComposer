@@ -8,7 +8,7 @@
 #include "scripting_richstring.h"
 #include "scripting_list.h"
 
-#include <QRegExp>
+#include <QRegularExpression>
 
 using namespace SubtitleComposer;
 
@@ -196,7 +196,7 @@ QObject *
 Scripting::RichString::removeAll(const QString &str, bool regExp, bool caseSensitive)
 {
 	if(regExp)
-		m_backend.remove(QRegExp(str, caseSensitive ? Qt::CaseSensitive : Qt::CaseInsensitive));
+		m_backend.remove(QRegularExpression(str, caseSensitive ? QRegularExpression::NoPatternOption : QRegularExpression::CaseInsensitiveOption));
 	else
 		m_backend.remove(str, caseSensitive ? Qt::CaseSensitive : Qt::CaseInsensitive);
 	return this;
@@ -225,7 +225,7 @@ Scripting::RichString::replaceAll(const QString &before, QObject *object, bool r
 {
 	if(const Scripting::RichString * after = qobject_cast<const Scripting::RichString *>(object)) {
 		if(regExp)
-			m_backend.replace(QRegExp(before, caseSensitive ? Qt::CaseSensitive : Qt::CaseInsensitive), after->m_backend);
+			m_backend.replace(QRegularExpression(before, caseSensitive ? QRegularExpression::NoPatternOption : QRegularExpression::CaseInsensitiveOption), after->m_backend);
 		else
 			m_backend.replace(before, after->m_backend, caseSensitive ? Qt::CaseSensitive : Qt::CaseInsensitive);
 	}
@@ -236,7 +236,7 @@ QObject *
 Scripting::RichString::replaceAllPlain(const QString &before, const QString &after, bool regExp, bool caseSensitive)
 {
 	if(regExp)
-		m_backend.replace(QRegExp(before, caseSensitive ? Qt::CaseSensitive : Qt::CaseInsensitive), after);
+		m_backend.replace(QRegularExpression(before, caseSensitive ? QRegularExpression::NoPatternOption : QRegularExpression::CaseInsensitiveOption), after);
 	else
 		m_backend.replace(before, after, caseSensitive ? Qt::CaseSensitive : Qt::CaseInsensitive);
 	return this;
@@ -247,7 +247,7 @@ Scripting::RichString::split(const QString &sep, bool regExp, bool caseSensitive
 {
 	RichStringList tokens;
 	if(regExp)
-		tokens = m_backend.split(QRegExp(sep, caseSensitive ? Qt::CaseSensitive : Qt::CaseInsensitive), Qt::KeepEmptyParts);
+		tokens = m_backend.split(QRegularExpression(sep, caseSensitive ? QRegularExpression::NoPatternOption : QRegularExpression::CaseInsensitiveOption), Qt::KeepEmptyParts);
 	else
 		tokens = m_backend.split(sep, Qt::KeepEmptyParts, caseSensitive ? Qt::CaseSensitive : Qt::CaseInsensitive);
 

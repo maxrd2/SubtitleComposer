@@ -6,7 +6,6 @@
 */
 
 #include "timeedit.h"
-#include "timevalidator.h"
 
 #include <QTime>
 #include <QEvent>

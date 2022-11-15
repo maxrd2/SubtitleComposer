@@ -9,9 +9,10 @@
 #define SUBVIEWER2INPUTFORMAT_H
 
 #include "core/richtext/richdocument.h"
+#include "helpers/common.h"
 #include "formats/inputformat.h"
 
-#include <QRegExp>
+#include <QRegularExpression>
 
 namespace SubtitleComposer {
 class SubViewer2InputFormat : public InputFormat
@@ -19,46 +20,47 @@ class SubViewer2InputFormat : public InputFormat
 	friend class FormatManager;
 
 protected:
+	SubViewer2InputFormat()
+		: InputFormat($("SubViewer 2.0"), QStringList($("sub")))
+	{}
+
 	bool parseSubtitles(Subtitle &subtitle, const QString &data) const override
 	{
-		unsigned readLines = 0;
+		staticRE$(reLine, "([0-2][0-9]):([0-5][0-9]):([0-5][0-9])\\.([0-9][0-9])," "([0-2][0-9]):([0-5][0-9]):([0-5][0-9])\\.([0-9][0-9])\n" "([^\n]*)\n\n", REu | REi);
+		QRegularExpressionMatchIterator itLine = reLine.globalMatch(data);
+		if(!itLine.hasNext())
+			return false;
 
-		for(int offset = 0; m_lineRegExp.indexIn(data, offset) != -1; offset = m_lineRegExp.pos() + m_lineRegExp.matchedLength()) {
-			Time showTime(m_lineRegExp.cap(1).toInt(), m_lineRegExp.cap(2).toInt(), m_lineRegExp.cap(3).toInt(), m_lineRegExp.cap(4).toInt() * 10);
+		do {
+			QRegularExpressionMatch mLine = itLine.next();
 
-			Time hideTime(m_lineRegExp.cap(5).toInt(), m_lineRegExp.cap(6).toInt(), m_lineRegExp.cap(7).toInt(), m_lineRegExp.cap(8).toInt() * 10);
+			const Time showTime(mLine.captured(1).toInt(), mLine.captured(2).toInt(), mLine.captured(3).toInt(), mLine.captured(4).toInt() * 10);
+			const Time hideTime(mLine.captured(5).toInt(), mLine.captured(6).toInt(), mLine.captured(7).toInt(), mLine.captured(8).toInt() * 10);
 
+			const QString text = mLine.captured(9).replace(QLatin1String("[br]"), QLatin1String("\n")).trimmed();
 			int styleFlags = 0;
-			QString text = m_lineRegExp.cap(9).replace(QLatin1String("[br]"), QLatin1String("\n")).trimmed();
-			if(m_styleRegExp.indexIn(text) != -1) {
-				QString styleText(m_styleRegExp.cap(1));
+
+			staticRE$(reStyle, "(\\{y:[ubi]+\\})", REu | REi);
+			QRegularExpressionMatchIterator itStyle = reStyle.globalMatch(text);
+			if(itStyle.hasNext()) {
+				// TODO: seems styles are affecting the whole line... is that true?
+				const QString styleText = itStyle.next().captured(1);
 				if(styleText.contains('b', Qt::CaseInsensitive))
 					styleFlags |= RichString::Bold;
 				if(styleText.contains('i', Qt::CaseInsensitive))
 					styleFlags |= RichString::Italic;
 				if(styleText.contains('u', Qt::CaseInsensitive))
 					styleFlags |= RichString::Underline;
-
-				text.remove(m_styleRegExp);
 			}
 
 			SubtitleLine *l = new SubtitleLine(showTime, hideTime);
 			l->primaryDoc()->setRichText(RichString(text, styleFlags), true);
 			subtitle.insertLine(l);
 
-			readLines++;
-		}
-		return readLines > 0;
+		} while(itLine.hasNext());
+
+		return subtitle.count() > 0;
 	}
-
-	SubViewer2InputFormat() :
-		InputFormat(QStringLiteral("SubViewer 2.0"), QStringList(QStringLiteral("sub"))),
-		m_lineRegExp(QStringLiteral("([0-2][0-9]):([0-5][0-9]):([0-5][0-9])\\.([0-9][0-9])," "([0-2][0-9]):([0-5][0-9]):([0-5][0-9])\\.([0-9][0-9])\n" "([^\n]*)\n\n"), Qt::CaseInsensitive),
-		m_styleRegExp(QStringLiteral("(\\{y:[ubi]+\\})"), Qt::CaseInsensitive)
-	{}
-
-	mutable QRegExp m_lineRegExp;
-	mutable QRegExp m_styleRegExp;
 };
 }
 

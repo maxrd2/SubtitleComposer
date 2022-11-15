@@ -769,7 +769,7 @@ Application::applyTranslation(RangeList ranges, bool primary, int inputLanguage,
 	}
 
 	QString inputText;
-	QRegExp dialogCueRegExp2("-([^-])");
+	staticRE$(dialogCueRegExp2, "-([^-])");
 	for(SubtitleIterator it(*appSubtitle(), ranges); it.current(); ++it) {
 		QString lineText = it.current()->primaryDoc()->toHtml();
 		lineText.replace($("\n"), QString()).replace("--", "---").replace(dialogCueRegExp2, "- \\1");
@@ -787,7 +787,8 @@ Application::applyTranslation(RangeList ranges, bool primary, int inputLanguage,
 	if(translator.isFinishedWithError()) {
 		errorMessage = translator.errorMessage();
 	} else {
-		outputLines = translator.outputText().split(QRegExp("\\s*\n\\(\\) ?\\(\\)\\s*"));
+		staticRE$(reSep, "\\s*\n\\(\\) ?\\(\\)\\s*", REu);
+		outputLines = translator.outputText().split(reSep);
 
 //		qDebug() << translator.inputText();
 //		qDebug() << translator.outputText();
@@ -800,8 +801,8 @@ Application::applyTranslation(RangeList ranges, bool primary, int inputLanguage,
 		SubtitleCompositeActionExecutor executor(appSubtitle(), primary ? i18n("Translate Primary Text") : i18n("Translate Secondary Text"));
 
 		int index = -1;
-		QRegExp ellipsisRegExp("\\s+\\.\\.\\.");
-		QRegExp dialogCueRegExp("(^| )- ");
+		staticRE$(ellipsisRegExp, "\\s+\\.\\.\\.", REu);
+		staticRE$(dialogCueRegExp, "(^| )- ");
 		for(SubtitleIterator it(*appSubtitle(), ranges); it.current(); ++it) {
 			QString line = outputLines.at(++index);
 			line.replace(" ---", "--");

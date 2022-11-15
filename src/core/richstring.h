@@ -16,7 +16,6 @@
 #include <QList>
 #include <QString>
 
-QT_FORWARD_DECLARE_CLASS(QRegExp)
 QT_FORWARD_DECLARE_CLASS(QRegularExpression)
 
 namespace SubtitleComposer {
@@ -109,7 +108,9 @@ public:
 	inline RichString & remove(int index, int len) { return replace(index, len, QString()); }
 	inline RichString & remove(const QString &str, Qt::CaseSensitivity cs = Qt::CaseSensitive) { return replace(str, QString(), cs); }
 	inline RichString & remove(QChar ch, Qt::CaseSensitivity cs = Qt::CaseSensitive) { return replace(ch, QString(), cs); }
-	RichString & remove(const QRegExp &rx) { return replace(rx, QString()); }
+#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
+	RichString & remove(const QRegExp &rx) = delete;
+#endif
 	RichString & remove(const QRegularExpression &rx) { return replace(rx, QString()); }
 
 	RichString & replace(int index, int len, const QString &replacement);
@@ -119,14 +120,16 @@ public:
 	RichString & replace(QChar before, QChar after, Qt::CaseSensitivity cs = Qt::CaseSensitive);
 	RichString & replace(QChar ch, const QString &after, Qt::CaseSensitivity cs = Qt::CaseSensitive);
 	RichString & replace(QChar ch, const RichString &after, Qt::CaseSensitivity cs = Qt::CaseSensitive);
-	RichString & replace(const QRegExp &regExp, const QString &replacement);
-	RichString & replace(const QRegExp &regExp, const RichString &replacement);
+#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
+	RichString & replace(const QRegExp &regExp, const QString &replacement) = delete;
+	RichString & replace(const QRegExp &regExp, const RichString &replacement) = delete;
+#endif
 	RichString & replace(const QRegularExpression &regExp, const QString &replacement);
 	RichString & replace(const QRegularExpression &regExp, const RichString &replacement);
 
 	RichStringList split(const QString &sep, Qt::SplitBehaviorFlags behavior = Qt::KeepEmptyParts, Qt::CaseSensitivity cs = Qt::CaseSensitive) const;
 	RichStringList split(const QChar &sep, Qt::SplitBehaviorFlags behavior = Qt::KeepEmptyParts, Qt::CaseSensitivity cs = Qt::CaseSensitive) const;
-	RichStringList split(const QRegExp &sep, Qt::SplitBehaviorFlags behavior = Qt::KeepEmptyParts) const;
+	RichStringList split(const QRegularExpression &sep, Qt::SplitBehaviorFlags behavior = Qt::KeepEmptyParts) const;
 
 	RichString left(int len) const;
 	RichString right(int len) const;

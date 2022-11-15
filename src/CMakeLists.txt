@@ -86,7 +86,7 @@ set(subtitlecomposer_SRCS
 	videoplayer/backend/decoder.cpp videoplayer/backend/audiodecoder.cpp videoplayer/backend/videodecoder.cpp videoplayer/backend/subtitledecoder.cpp
 	videoplayer/backend/clock.cpp videoplayer/backend/streamdemuxer.cpp videoplayer/backend/renderthread.cpp videoplayer/backend/videostate.cpp
 	#[[ widgets ]] widgets/attachablewidget.cpp widgets/layeredwidget.cpp widgets/pointingslider.cpp widgets/simplerichtextedit.cpp
-	widgets/textoverlaywidget.cpp widgets/timeedit.cpp widgets/timevalidator.cpp
+	widgets/textoverlaywidget.cpp widgets/timeedit.cpp
 	CACHE INTERNAL EXPORTEDVARIABLE
 	)
 

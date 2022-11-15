@@ -123,9 +123,6 @@ struct ReplaceHelper {
 	static MatchRefList match(RichString &str, const QString &before, const T &after, Qt::CaseSensitivity cs);
 
 	template<class T>
-	static MatchRefList match(RichString &str, const QRegExp &regExp, const T &replacement);
-
-	template<class T>
 	static MatchRefList match(RichString &str, const QRegularExpression &regExp, const T &replacement);
 
 	template<class T>
@@ -973,24 +970,6 @@ RichString::replace(QChar ch, const RichString &after, Qt::CaseSensitivity cs)
 }
 
 RichString &
-RichString::replace(const QRegExp &regExp, const QString &replacement)
-{
-	const ReplaceHelper::MatchRefList matchList = ReplaceHelper::match(*this, regExp, replacement);
-	if(!matchList.empty())
-		ReplaceHelper::replace(matchList, *this, replacement);
-	return *this;
-}
-
-RichString &
-RichString::replace(const QRegExp &regExp, const RichString &replacement)
-{
-	const ReplaceHelper::MatchRefList matchList = ReplaceHelper::match(*this, regExp, replacement);
-	if(!matchList.empty())
-		ReplaceHelper::replace(matchList, *this, replacement);
-	return *this;
-}
-
-RichString &
 RichString::replace(const QRegularExpression &regExp, const QString &replacement)
 {
 	const ReplaceHelper::MatchRefList matchList = ReplaceHelper::match(*this, regExp, replacement);
@@ -1053,18 +1032,20 @@ RichString::split(const QChar &sep, Qt::SplitBehaviorFlags behavior, Qt::CaseSen
 }
 
 RichStringList
-RichString::split(const QRegExp &sep, Qt::SplitBehaviorFlags behavior) const
+RichString::split(const QRegularExpression &sep, Qt::SplitBehaviorFlags behavior) const
 {
 	RichStringList ret;
 
 	int off = 0;
-	for(;;) {
-		const int matchedIndex = sep.indexIn(*this, off);
+	QRegularExpressionMatchIterator iterator = sep.globalMatch(*this);
+	while(iterator.hasNext()) {
+		QRegularExpressionMatch match = iterator.next();
+		const int matchedIndex = match.capturedStart();
 		if(matchedIndex == -1)
 			break;
 		if(behavior == Qt::KeepEmptyParts || matchedIndex != off)
 			ret << mid(off, matchedIndex - off);
-		off = matchedIndex + sep.matchedLength();
+		off = matchedIndex + match.capturedLength();
 	}
 	if(behavior == Qt::KeepEmptyParts || off < length() - 1)
 		ret << mid(off);
@@ -1200,7 +1181,7 @@ RichString::toSentenceCase(bool lowerFirst, bool *cont) const
 RichString
 RichString::simplified() const
 {
-	const QRegExp simplifySpaceRegExp("\\s{2,MAXINT}");
+	staticRE$(simplifySpaceRegExp, "\\s{2,MAXINT}", REu);
 
 	return trimmed().replace(simplifySpaceRegExp, " ");
 }
@@ -1208,10 +1189,9 @@ RichString::simplified() const
 RichString
 RichString::trimmed() const
 {
-	const QRegExp trimRegExp("(^\\s+|\\s+$)");
+	staticRE$(trimRegExp, "(^\\s+|\\s+$)", REu);
 
-	RichString ret(*this);
-	return ret.remove(trimRegExp);
+	return RichString(*this).remove(trimRegExp);
 }
 
 void
@@ -1393,105 +1373,6 @@ ReplaceHelper::match(RichString &str, const QString &before, const T &after, Qt:
 	// old/new total lengths
 	if(matched || !matchList.empty())
 		matchList.push_back(MatchRef{str.length(), newLength, MatchRef::NONE});
-	return matchList;
-}
-
-template<class T>
-ReplaceHelper::MatchRefList
-ReplaceHelper::match(RichString &str, const QRegExp &regExp, const T &replacement)
-{
-	MatchRefList matchList;
-	if(!regExp.isValid()) {
-		qWarning()
-			<< "SSHelper::match(): invalid regular expression:\n\t"
-			<< regExp.pattern() << "\n\t" << regExp.errorString();
-		return matchList;
-	}
-
-	// prepare backreference offset list
-	QVector<BackRef> backRefs;
-	const int capCount = regExp.captureCount();
-	const QChar *repChar = replacement.unicode();
-	const QChar *repEnd = repChar + replacement.size();
-	while(repChar != repEnd) {
-		if(*repChar++ != QLatin1Char('\\'))
-			continue;
-		int no = repChar->digitValue();
-		repChar++;
-		if(no >= 0 && no <= capCount) {
-			const int start = int(repChar - replacement.unicode()) - 2;
-			if(repChar != repEnd) {
-				const int secondDigit = repChar->digitValue();
-				const int nn = (no * 10) + secondDigit;
-				if(secondDigit != -1 && nn <= capCount) {
-					no = nn;
-					repChar++;
-				}
-			}
-			backRefs.push_back(BackRef{start, int(repChar - replacement.unicode()), no});
-		}
-	}
-
-	// handle matches
-	bool matched = false;
-	int matchOffset = 0;
-	int newLength = 0;
-	int len;
-	for(;;) {
-		// caret should only be matched first time (TODO: why?)
-		const QRegExp::CaretMode cm = matchOffset == 0 ? QRegExp::CaretAtZero : QRegExp::CaretWontMatch;
-		const int matchedIndex = regExp.indexIn(str, matchOffset, cm);
-		if(matchedIndex == -1)
-			break;
-		matched = true;
-
-		// subject part before the match
-		if((len = matchedIndex - matchOffset)) {
-			matchList.push_back(MatchRef{matchOffset, len, MatchRef::SUBJECT});
-			newLength += len;
-		}
-
-		int replacementOffset = 0;
-		for(const BackRef &backRef: qAsConst(backRefs)) {
-			// replacement before backref
-			if((len = backRef.start - replacementOffset)) {
-				matchList.push_back(MatchRef{replacementOffset, len, MatchRef::REPLACEMENT});
-				newLength += len;
-			}
-
-			// subject part that backref points to
-			if((len = regExp.cap(backRef.no).length())) {
-				matchList.push_back(MatchRef{regExp.pos(backRef.no), len, MatchRef::SUBJECT});
-				newLength += len;
-			}
-
-			replacementOffset = backRef.end;
-		}
-
-		// remainging replacement
-		if((len = replacement.length() - replacementOffset)) {
-			matchList.push_back(MatchRef{replacementOffset, len, MatchRef::REPLACEMENT});
-			newLength += len;
-		}
-
-		const int ml = regExp.matchedLength();
-		if(ml == 0) {
-			matchList.push_back(MatchRef{matchOffset, 1, MatchRef::SUBJECT});
-			newLength++;
-			matchOffset = matchedIndex + 1;
-		} else {
-			matchOffset = matchedIndex + ml;
-		}
-	}
-	// subject part after all matches
-	if((len = str.length() - matchOffset) > 0) {
-		matchList.push_back(MatchRef{matchOffset, len, MatchRef::SUBJECT});
-		newLength += len;
-	}
-	// old/new total lengths
-	if(matched || !matchList.empty())
-		matchList.push_back(MatchRef{str.length(), newLength, MatchRef::NONE});
-
 	return matchList;
 }
 

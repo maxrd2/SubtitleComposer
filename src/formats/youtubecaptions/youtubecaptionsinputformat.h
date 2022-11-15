@@ -9,9 +9,10 @@
 #define YOUTUBECAPTIONSINPUTFORMAT_H
 
 #include "core/richtext/richdocument.h"
+#include "helpers/common.h"
 #include "formats/inputformat.h"
 
-#include <QRegExp>
+#include <QRegularExpression>
 
 namespace SubtitleComposer {
 class YouTubeCaptionsInputFormat : public InputFormat
@@ -19,46 +20,35 @@ class YouTubeCaptionsInputFormat : public InputFormat
 	friend class FormatManager;
 
 protected:
+	YouTubeCaptionsInputFormat()
+		: InputFormat($("YouTube Captions"), QStringList($("sbv")))
+	{}
+
 	bool parseSubtitles(Subtitle &subtitle, const QString &data) const override
 	{
-		if(m_regExp.indexIn(data, 0) == -1)
-			return false; // couldn't find first line
+		staticRE$(reTime, "[\\d]+\n([0-2][0-9]):([0-5][0-9]):([0-5][0-9])[,\\.]([0-9][0-9][0-9]),([0-2][0-9]):([0-5][0-9]):([0-5][0-9])[,\\.]([0-9][0-9][0-9])\n");
+		QRegularExpressionMatchIterator itTime = reTime.globalMatch(data);
+		if(!itTime.hasNext())
+			return false;
 
-		unsigned readLines = 0;
-
-		int offset = 0;
 		do {
-			Time showTime(m_regExp.cap(1).toInt(), m_regExp.cap(2).toInt(), m_regExp.cap(3).toInt(), m_regExp.cap(4).toInt());
+			QRegularExpressionMatch mTime = itTime.next();
+			const Time showTime(mTime.captured(1).toInt(), mTime.captured(2).toInt(), mTime.captured(3).toInt(), mTime.captured(4).toInt());
+			const Time hideTime(mTime.captured(5).toInt(), mTime.captured(6).toInt(), mTime.captured(7).toInt(), mTime.captured(8).toInt());
 
-			Time hideTime(m_regExp.cap(5).toInt(), m_regExp.cap(6).toInt(), m_regExp.cap(7).toInt(), m_regExp.cap(8).toInt());
-
-			offset += m_regExp.matchedLength();
-
-			QStringRef text(data.midRef(offset, m_regExp.indexIn(data, offset) - offset));
-
-			offset += text.length();
+			const int off = mTime.capturedEnd();
+			const QString text = data.mid(off, itTime.hasNext() ? itTime.peekNext().capturedStart() - off : -1).trimmed();
 
 			// TODO does the format actually support styled text?
 			// if so, does it use standard HTML style tags?
-			RichString stext;
-			stext.setRichString(text.trimmed().toString());
 
 			SubtitleLine *l = new SubtitleLine(showTime, hideTime);
-			l->primaryDoc()->setRichText(stext, true);
+			l->primaryDoc()->setHtml(text, true);
 			subtitle.insertLine(l);
+		} while(itTime.hasNext());
 
-			readLines++;
-		} while(m_regExp.matchedLength() != -1);
-
-		return readLines > 0;
+		return subtitle.count() > 0;
 	}
-
-	YouTubeCaptionsInputFormat() :
-		InputFormat(QStringLiteral("YouTube Captions"), QStringList(QStringLiteral("sbv"))),
-		m_regExp(QStringLiteral("[\\d]+\n([0-2][0-9]):([0-5][0-9]):([0-5][0-9])[,\\.]([0-9][0-9][0-9]),([0-2][0-9]):([0-5][0-9]):([0-5][0-9])[,\\.]([0-9][0-9][0-9])\n"))
-	{}
-
-	mutable QRegExp m_regExp;
 };
 }
 

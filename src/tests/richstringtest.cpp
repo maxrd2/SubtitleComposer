@@ -11,7 +11,6 @@
 
 #include <QDebug>
 #include <QTest>
-#include <QRegExp>
 #include <QRegularExpression>
 
 using namespace SubtitleComposer;
@@ -201,29 +200,6 @@ RichStringTest::testReplace()
 	sstring.replace(QString(), RichString("AA", RichString::Italic), Qt::CaseSensitive);
 	QVERIFY(sstring.richString() == QLatin1String("<i>AA</i>"));
 
-	// RichString & RichString::replace(const QRegExp &regExp, const QString &replacement)
-	sstring = RichString("this is a pretty test");
-	sstring.replace(QRegExp("^this"), "\\2\\0");
-	QVERIFY(sstring.richString() == QLatin1String("\\2this is a pretty test"));
-	sstring.replace(QRegExp("[\\w]+"), "w");
-	QVERIFY(sstring.richString() == QLatin1String("\\w w w w w"));
-	sstring = RichString("this is a pretty test");
-	sstring.replace(QRegExp("([\\w]*)"), "[\\1]");
-	QVERIFY(sstring.richString() == QLatin1String("[this][] [is][] [a][] [pretty][] [test][]"));
-
-	// RichString & RichString::replace(const QRegExp &regExp, const QString &replacement)
-	sstring = RichString("this is a pretty test");
-	sstring.replace(QRegExp("^this"), "\\2\\0");
-	QVERIFY(sstring.richString() == QLatin1String("\\2this is a pretty test"));
-	sstring.replace(QRegExp("[\\w]+"), "w");
-	QVERIFY(sstring.richString() == QLatin1String("\\w w w w w"));
-	sstring = RichString("this is a pretty test");
-	sstring.replace(QRegExp("([\\w]*)"), "[\\1]");
-	QVERIFY(sstring.richString() == QLatin1String("[this][] [is][] [a][] [pretty][] [test][]"));
-	sstring.setRichString("<b>a</b>");
-	sstring.replace(QRegExp("a$"), "b");
-	QVERIFY(sstring.richString() == QLatin1String("<b>b</b>"));
-
 	// RichString & RichString::replace(const QRegularExpression &regExp, const QString &replacement)
 	sstring = RichString("this is a pretty test");
 	sstring.replace(RE$("^this"), "\\2\\0");
@@ -296,17 +272,6 @@ RichStringTest::testReplace()
 	QVERIFY(sstring.richString() == QLatin1String("<b>2</b><i>2</i><u>345</u><s>345</s>"));
 	sstring.remove("2345");
 	QVERIFY(sstring.richString() == QLatin1String("<b>2</b><s>345</s>"));
-
-	// RichString & RichString::remove(const QRegExp &regExp);
-	sstring.setRichString("<b>012</b><i>012</i><u>345</u><s>345</s>");
-	sstring.remove(QRegExp("^013"));
-	QVERIFY(sstring.richString() == QLatin1String("<b>012</b><i>012</i><u>345</u><s>345</s>"));
-	sstring.remove(QRegExp("^012"));
-	QVERIFY(sstring.richString() == QLatin1String("<i>012</i><u>345</u><s>345</s>"));
-	sstring.remove(QRegExp("345$"));
-	QVERIFY(sstring.richString() == QLatin1String("<i>012</i><u>345</u>"));
-	sstring.remove(QRegExp("\\d+"));
-	QVERIFY(sstring.richString().isEmpty());
 
 	// RichString & RichString::remove(const QRegularExpression &regExp);
 	sstring.setRichString("<b>012</b><i>012</i><u>345</u><s>345</s>");

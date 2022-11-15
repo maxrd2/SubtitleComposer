@@ -9,9 +9,10 @@
 #define TMPLAYERINPUTFORMAT_H
 
 #include "core/richtext/richdocument.h"
+#include "helpers/common.h"
 #include "formats/inputformat.h"
 
-#include <QRegExp>
+#include <QRegularExpression>
 
 namespace SubtitleComposer {
 // FIXME TMPlayer Multiline variant
@@ -21,54 +22,50 @@ class TMPlayerInputFormat : public InputFormat
 	friend class FormatManager;
 
 protected:
+	TMPlayerInputFormat(const QString &name, const QStringList &extensions, const QString &re)
+		: InputFormat(name, extensions),
+		  m_reTime(re)
+	{}
+
+	TMPlayerInputFormat()
+		: TMPlayerInputFormat($("TMPlayer"), QStringList() << $("sub") << $("txt"),
+							  $("([0-2]?[0-9]):([0-5][0-9]):([0-5][0-9]):([^\n]*)\n?"))
+	{}
+
 	bool parseSubtitles(Subtitle &subtitle, const QString &data) const override
 	{
-		unsigned readLines = 0;
-
-		if(m_regExp.indexIn(data, 0) == -1)
+		QRegularExpressionMatchIterator itTime = m_reTime.globalMatch(data);
+		if(!itTime.hasNext())
 			return false;
 
-		Time previousShowTime(m_regExp.cap(1).toInt(), m_regExp.cap(2).toInt(), m_regExp.cap(3).toInt(), 0);
-		QString previousText(m_regExp.cap(4).replace('|', '\n').trimmed());
+		do {
+			QRegularExpressionMatch mTime = itTime.next();
 
-		int offset = m_regExp.matchedLength();
-		for(; m_regExp.indexIn(data, offset) != -1; offset += m_regExp.matchedLength()) {
-			Time showTime(m_regExp.cap(1).toInt(), m_regExp.cap(2).toInt(), m_regExp.cap(3).toInt(), 0);
-			QString text(m_regExp.cap(4).replace('|', '\n').trimmed());
+			const QString text = mTime.captured(4).replace('|', '\n').trimmed();
 
-			// To compensate for the format deficiencies, Subtitle Composer writes empty lines
+			// To compensate for the format deficiencies, Subtitle Workshop writes empty lines
 			// indicating that way the line hide time. We do the same.
-			if(!previousText.isEmpty()) {
-				SubtitleLine *l = new SubtitleLine(previousShowTime, showTime);
-				l->primaryDoc()->setPlainText(previousText);
-				subtitle.insertLine(l);
+			if(text.isEmpty())
+				continue;
 
-				readLines++;
+			const Time showTime(mTime.captured(1).toInt(), mTime.captured(2).toInt(), mTime.captured(3).toInt(), 0);
+			Time hideTime;
+			if(itTime.hasNext()) {
+				mTime = itTime.peekNext();
+				hideTime = Time(mTime.captured(1).toInt(), mTime.captured(2).toInt(), mTime.captured(3).toInt(), 0);
+			} else {
+				hideTime = showTime + 2000;
 			}
 
-			previousText = text;
-			previousShowTime = showTime;
-		}
-		if(!previousText.isEmpty()) {
-			SubtitleLine *l = new SubtitleLine(previousShowTime, previousShowTime + 2000);
-			l->primaryDoc()->setPlainText(previousText);
+			SubtitleLine *l = new SubtitleLine(showTime, hideTime);
+			l->primaryDoc()->setPlainText(text);
 			subtitle.insertLine(l);
+		} while(itTime.hasNext());
 
-			readLines++;
-		}
-
-		return true;
+		return subtitle.count() > 0;
 	}
 
-	TMPlayerInputFormat() :
-		InputFormat(QStringLiteral("TMPlayer"), QStringList() << QStringLiteral("sub") << QStringLiteral("txt")),
-		m_regExp(QStringLiteral("([0-2]?[0-9]):([0-5][0-9]):([0-5][0-9]):([^\n]*)\n?")) {}
-
-	TMPlayerInputFormat(const QString &name, const QStringList &extensions, const QString &regExp) :
-		InputFormat(name, extensions),
-		m_regExp(regExp) {}
-
-	mutable QRegExp m_regExp;
+	QRegularExpression m_reTime;
 };
 
 class TMPlayerPlusInputFormat : public TMPlayerInputFormat
@@ -76,8 +73,9 @@ class TMPlayerPlusInputFormat : public TMPlayerInputFormat
 	friend class FormatManager;
 
 protected:
-	TMPlayerPlusInputFormat() :
-		TMPlayerInputFormat(QStringLiteral("TMPlayer+"), QStringList() << QStringLiteral("sub") << QStringLiteral("txt"), QStringLiteral("([0-2]?[0-9]):([0-5][0-9]):([0-5][0-9])=([^\n]*)\n?"))
+	TMPlayerPlusInputFormat()
+		: TMPlayerInputFormat($("TMPlayer+"), QStringList() << $("sub") << $("txt"),
+							  $("([0-2]?[0-9]):([0-5][0-9]):([0-5][0-9])=([^\n]*)\n?"))
 	{}
 };
 }

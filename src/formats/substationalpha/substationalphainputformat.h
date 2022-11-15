@@ -9,10 +9,12 @@
 #define SUBSTATIONALPHAINPUTFORMAT_H
 
 #include "core/richtext/richdocument.h"
+#include "helpers/common.h"
 #include "formats/inputformat.h"
 
-#include <QRegExp>
+#include <QRegularExpression>
 #include <QStringBuilder>
+#include <QDebug>
 
 namespace SubtitleComposer {
 class SubStationAlphaInputFormat : public InputFormat
@@ -21,24 +23,23 @@ class SubStationAlphaInputFormat : public InputFormat
 	friend class AdvancedSubStationAlphaInputFormat;
 
 protected:
-	RichString toRichString(QString string) const
+	RichString toRichString(const QString &string) const
 	{
-		static const QRegExp cmdRegExp(QStringLiteral("\\{([^\\}]+)\\}"));
+		staticRE$(reCommands, "\\{([^\\}]+)\\}", REu);
 
 		RichString ret;
-
-		string.replace(QLatin1String("\\N"), QLatin1String("\n"));
-		string.replace(QLatin1String("\\n"), QLatin1String("\n"));
 
 		int currentStyle = 0;
 		QRgb currentColor = 0;
 
-		int offsetPos = 0, matchedPos;
-		while((matchedPos = cmdRegExp.indexIn(string, offsetPos)) != -1) {
+		QRegularExpressionMatchIterator itCommands = reCommands.globalMatch(string);
+		int offset = 0;
+		while(itCommands.hasNext()) {
+			QRegularExpressionMatch mCommands = itCommands.next();
 			int newStyleFlags = currentStyle;
 			QRgb newColor = currentColor;
 
-			QString commands(cmdRegExp.cap(1));
+			QString commands(mCommands.captured(1));
 			QStringList commandsList(commands.split('\\'));
 			for(QStringList::ConstIterator it = commandsList.constBegin(), end = commandsList.constEnd(); it != end; ++it) {
 				if(it->isEmpty()) {
@@ -57,7 +58,7 @@ protected:
 				} else if(*it == QLatin1String("u1")) {
 					newStyleFlags |= RichString::Underline;
 				} else if(it->at(0) == 'c') {
-					QString val = (QStringLiteral("000000") + it->mid(3, -2)).right(6);
+					QString val = ($("000000") + it->mid(3, -2)).right(6);
 					if(val == QLatin1String("000000")) {
 						newStyleFlags &= ~RichString::Color;
 						newColor = 0;
@@ -68,88 +69,97 @@ protected:
 				}
 			}
 
-			ret.append(RichString(string.mid(offsetPos, matchedPos - offsetPos), currentStyle, currentColor));
+			const QString text = string.mid(offset, mCommands.capturedStart() - offset)
+					.replace(QLatin1String("\\N"), QLatin1String("\n"), Qt::CaseInsensitive);
+			ret.append(RichString(text, currentStyle, currentColor));
 
 			currentStyle = newStyleFlags;
 			currentColor = newColor;
-			offsetPos = matchedPos + cmdRegExp.matchedLength();
+			offset = mCommands.capturedEnd();
 		}
-		ret.append(RichString(string.mid(offsetPos, matchedPos - offsetPos), currentStyle, currentColor));
+		const QString text = string.mid(offset)
+				.replace(QLatin1String("\\N"), QLatin1String("\n"), Qt::CaseInsensitive);
+		ret.append(RichString(text, currentStyle, currentColor));
 
 		return ret;
 	}
 
 	bool parseSubtitles(Subtitle &subtitle, const QString &data) const override
 	{
-		if(m_scriptInfoRegExp.indexIn(data) == -1)
+		staticRE$(reScriptInfo, "^ *\\[Script Info\\] *[\r\n]+", REu);
+		if(!reScriptInfo.globalMatch(data).hasNext())
 			return false;
 
-		int stylesStart = m_stylesRegExp.indexIn(data);
-		if(stylesStart == -1)
+		staticRE$(reStyles, "[\r\n]+ *\\[[vV]4\\+? Styles\\] *[\r\n]+", REu);
+		QRegularExpressionMatchIterator itStyles = reStyles.globalMatch(data);
+		if(!itStyles.hasNext())
 			return false;
+		const int stylesStart = itStyles.next().capturedStart();
 
 		FormatData formatData = createFormatData();
 
-		formatData.setValue(QStringLiteral("ScriptInfo"), data.mid(0, stylesStart));
+		formatData.setValue($("ScriptInfo"), data.mid(0, stylesStart));
 
-		int eventsStart = m_eventsRegExp.indexIn(data, stylesStart);
-		if(eventsStart == -1)
+		staticRE$(reEvents, "[\r\n]+ *\\[Events\\] *[\r\n]+", REu);
+		QRegularExpressionMatchIterator itEvents = reEvents.globalMatch(data, stylesStart);
+		if(!itEvents.hasNext())
 			return false;
+		int eventsStart = itEvents.next().capturedStart();
 
-		formatData.setValue(QStringLiteral("Styles"), data.mid(stylesStart, eventsStart - stylesStart));
+		formatData.setValue($("Styles"), data.mid(stylesStart, eventsStart - stylesStart));
 
-		if(m_formatRegExp.indexIn(data, eventsStart) == -1)
+		staticRE$(reFormat, " *Format: *(\\w+,? *)+[\r\n]+", REu);
+		QRegularExpressionMatchIterator itFormat = reFormat.globalMatch(data, eventsStart);
+		if(!itFormat.hasNext())
 			return false;
 
 		setFormatData(subtitle, &formatData);
 		formatData.clear();
 
-		unsigned readLines = 0;
+		staticRE$(reDialogue, " *Dialogue: *[^,]+, *([^,]+), *([^,]+), *[^,]*, *[^,]*, *[^,]*, *[^,]*, *[^,]*, *[^,]*, *([^\r\n]*)[\r\n]+", REu);
+		staticRE$(reDialogueData, " *(Dialogue: *[^,]+, *)[^,]+(, *)[^,]+(, *[^,]+, *[^,]*, *[^,]*, *[^,]*, *[^,]*, *[^,]*, *).*", REu);
+		staticRE$(reTime, "(\\d+):(\\d+):(\\d+).(\\d+)", REu);
 
-		int offset = m_formatRegExp.pos() + m_formatRegExp.matchedLength();
-		for(; m_dialogueRegExp.indexIn(data, offset) != -1; offset += m_dialogueRegExp.matchedLength()) {
-			if(m_timeRegExp.indexIn(m_dialogueRegExp.cap(1)) == -1)
-				continue;
-			Time showTime(m_timeRegExp.cap(1).toInt(), m_timeRegExp.cap(2).toInt(), m_timeRegExp.cap(3).toInt(), m_timeRegExp.cap(4).toInt() * 10);
+		do {
+			QRegularExpressionMatch mFormat = itFormat.next();
+			QRegularExpressionMatchIterator itDialogue = reDialogue.globalMatch(data, mFormat.capturedEnd());
+			while(itDialogue.hasNext()) {
+				QRegularExpressionMatch mDialogue = itDialogue.next();
 
-			if(m_timeRegExp.indexIn(m_dialogueRegExp.cap(2)) == -1)
-				continue;
-			Time hideTime(m_timeRegExp.cap(1).toInt(), m_timeRegExp.cap(2).toInt(), m_timeRegExp.cap(3).toInt(), m_timeRegExp.cap(4).toInt() * 10);
+				QRegularExpressionMatchIterator itTime = reTime.globalMatch(mDialogue.captured(1));
+				if(!itTime.hasNext()) {
+					qWarning() << "SubStationAlpha failed to match showTime";
+					break;
+				}
+				QRegularExpressionMatch mTime = itTime.next();
+				Time showTime(mTime.captured(1).toInt(), mTime.captured(2).toInt(), mTime.captured(3).toInt(), mTime.captured(4).toInt() * 10);
 
-			SubtitleLine *line = new SubtitleLine(showTime, hideTime);
-			line->primaryDoc()->setRichText(toRichString(m_dialogueRegExp.cap(3)), true);
+				itTime = reTime.globalMatch(mDialogue.captured(2));
+				if(!itTime.hasNext()) {
+					qWarning() << "SubStationAlpha failed to match hideTime";
+					break;
+				}
+				mTime = itTime.next();
+				Time hideTime(mTime.captured(1).toInt(), mTime.captured(2).toInt(), mTime.captured(3).toInt(), mTime.captured(4).toInt() * 10);
 
-			formatData.setValue(QStringLiteral("Dialogue"), m_dialogueRegExp.cap(0).replace(m_dialogueDataRegExp, QStringLiteral("\\1%1\\2%2\\3%3\n")));
-			setFormatData(line, &formatData);
+				SubtitleLine *line = new SubtitleLine(showTime, hideTime);
+				line->primaryDoc()->setRichText(toRichString(mDialogue.captured(3)), true);
 
-			subtitle.insertLine(line);
+				formatData.setValue($("Dialogue"), mDialogue.captured(0).replace(reDialogueData, $("\\1%1\\2%2\\3%3\n")));
+				setFormatData(line, &formatData);
 
-			readLines++;
-		}
-		return readLines;
+				subtitle.insertLine(line);
+			}
+		} while(itFormat.hasNext());
+
+		return true;
 	}
 
 	SubStationAlphaInputFormat(
-			const QString &name = QStringLiteral("SubStation Alpha"),
-			const QStringList &extensions = QStringList(QStringLiteral("ssa")),
-			const QString &stylesRegExp = QStringLiteral("[\r\n]+ *\\[[vV]4 Styles\\] *[\r\n]+")) :
-		InputFormat(name, extensions),
-		m_scriptInfoRegExp(QStringLiteral("^ *\\[Script Info\\] *[\r\n]+")),
-		m_stylesRegExp(stylesRegExp),
-		m_eventsRegExp(QStringLiteral("[\r\n]+ *\\[Events\\] *[\r\n]+")),
-		m_formatRegExp(QStringLiteral(" *Format: *(\\w+,? *)+[\r\n]+")),
-		m_dialogueRegExp(QStringLiteral(" *Dialogue: *[^,]+, *([^,]+), *([^,]+), *[^,]*, *[^,]*, *[^,]*, *[^,]*, *[^,]*, *[^,]*, *([^\r\n]*)[\r\n]+")),
-		m_dialogueDataRegExp(QStringLiteral(" *(Dialogue: *[^,]+, *)[^,]+(, *)[^,]+(, *[^,]+, *[^,]*, *[^,]*, *[^,]*, *[^,]*, *[^,]*, *).*")),
-		m_timeRegExp(QStringLiteral("(\\d+):(\\d+):(\\d+).(\\d+)"))
+			const QString &name = $("SubStation Alpha"),
+			const QStringList &extensions = QStringList($("ssa")))
+		: InputFormat(name, extensions)
 	{}
-
-	mutable QRegExp m_scriptInfoRegExp;
-	mutable QRegExp m_stylesRegExp;
-	mutable QRegExp m_eventsRegExp;
-	mutable QRegExp m_formatRegExp;
-	mutable QRegExp m_dialogueRegExp;
-	mutable QRegExp m_dialogueDataRegExp;
-	mutable QRegExp m_timeRegExp;
 };
 
 class AdvancedSubStationAlphaInputFormat : public SubStationAlphaInputFormat
@@ -157,8 +167,8 @@ class AdvancedSubStationAlphaInputFormat : public SubStationAlphaInputFormat
 	friend class FormatManager;
 
 protected:
-	AdvancedSubStationAlphaInputFormat() :
-		SubStationAlphaInputFormat(QStringLiteral("Advanced SubStation Alpha"), QStringList(QStringLiteral("ass")), "[\r\n]+ *\\[[vV]4\\+ Styles\\] *[\r\n]+")
+	AdvancedSubStationAlphaInputFormat()
+		: SubStationAlphaInputFormat($("Advanced SubStation Alpha"), QStringList($("ass")))
 	{}
 };
 

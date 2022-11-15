@@ -9,9 +9,10 @@
 #define MPLAYER2INPUTFORMAT_H
 
 #include "core/richtext/richdocument.h"
+#include "helpers/common.h"
 #include "formats/inputformat.h"
 
-#include <QRegExp>
+#include <QRegularExpression>
 
 namespace SubtitleComposer {
 class MPlayer2InputFormat : public InputFormat
@@ -19,30 +20,31 @@ class MPlayer2InputFormat : public InputFormat
 	friend class FormatManager;
 
 protected:
+	MPlayer2InputFormat()
+		: InputFormat($("MPlayer2"), QStringList($("mpl")))
+	{}
+
 	bool parseSubtitles(Subtitle &subtitle, const QString &data) const override
 	{
-		unsigned readLines = 0;
+		staticRE$(lineRE, "\\[(\\d+)\\]\\[(\\d+)\\]([^\n]+)\n", REu | REi);
 
-		for(int offset = 0; m_lineRegExp.indexIn(data, offset) != -1; offset += m_lineRegExp.matchedLength()) {
-			Time showTime(m_lineRegExp.cap(1).toInt() * 100);
-			Time hideTime(m_lineRegExp.cap(2).toInt() * 100);
-			QString text(m_lineRegExp.cap(3).replace('|', '\n'));
+		QRegularExpressionMatchIterator itLine = lineRE.globalMatch(data);
+		if(!itLine.hasNext())
+			return false;
+
+		do {
+			const QRegularExpressionMatch mLine = itLine.next();
+			const Time showTime(mLine.captured(1).toInt() * 100);
+			const Time hideTime(mLine.captured(2).toInt() * 100);
+			const QString text = mLine.captured(3).replace(QChar('|'), QChar('\n'));
 
 			SubtitleLine *line = new SubtitleLine(showTime, hideTime);
 			line->primaryDoc()->setPlainText(text);
 			subtitle.insertLine(line);
+		} while(itLine.hasNext());
 
-			readLines++;
-		}
-		return readLines > 0;
+		return true;
 	}
-
-	MPlayer2InputFormat() :
-		InputFormat(QStringLiteral("MPlayer2"), QStringList(QStringLiteral("mpl"))),
-		m_lineRegExp(QStringLiteral("\\[(\\d+)\\]\\[(\\d+)\\]([^\n]+)\n"))
-	{}
-
-	mutable QRegExp m_lineRegExp;
 };
 }
 

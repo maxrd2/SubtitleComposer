@@ -8,8 +8,6 @@
 #include "scripting_stringsmodule.h"
 #include "scripting_richstring.h"
 
-#include <QRegExp>
-
 using namespace SubtitleComposer;
 
 Scripting::StringsModule::StringsModule(QObject *parent) :

@@ -9,9 +9,10 @@
 #define SUBRIPINPUTFORMAT_H
 
 #include "core/richtext/richdocument.h"
+#include "helpers/common.h"
 #include "formats/inputformat.h"
 
-#include <QRegExp>
+#include <QRegularExpression>
 
 namespace SubtitleComposer {
 class SubRipInputFormat : public InputFormat
@@ -19,43 +20,38 @@ class SubRipInputFormat : public InputFormat
 	friend class FormatManager;
 
 protected:
+	SubRipInputFormat()
+		: InputFormat($("SubRip"), QStringList($("srt")))
+
+	{}
+
 	bool parseSubtitles(Subtitle &subtitle, const QString &data) const override
 	{
-		if(m_regExp.indexIn(data, 0) == -1)
-			return false; // couldn't find first line
+		staticRE$(reTime, "[\\d]+\n([0-2][0-9]):([0-5][0-9]):([0-5][0-9])[,\\.]([0-9]+) --> ([0-2][0-9]):([0-5][0-9]):([0-5][0-9])[,\\.]([0-9]+)\n", REu);
 
-		unsigned readLines = 0;
+		QRegularExpressionMatchIterator itTime = reTime.globalMatch(data);
+		if(!itTime.hasNext())
+			return false;
 
-		int offset = 0;
 		do {
-			Time showTime(m_regExp.cap(1).toInt(), m_regExp.cap(2).toInt(), m_regExp.cap(3).toInt(), m_regExp.cap(4).toInt());
-			Time hideTime(m_regExp.cap(5).toInt(), m_regExp.cap(6).toInt(), m_regExp.cap(7).toInt(), m_regExp.cap(8).toInt());
+			QRegularExpressionMatch mTime = itTime.next();
 
-			offset += m_regExp.matchedLength();
+			Time showTime(mTime.captured(1).toInt(), mTime.captured(2).toInt(), mTime.captured(3).toInt(), mTime.captured(4).toInt());
+			Time hideTime(mTime.captured(5).toInt(), mTime.captured(6).toInt(), mTime.captured(7).toInt(), mTime.captured(8).toInt());
 
-			QString text(data.mid(offset, m_regExp.indexIn(data, offset) - offset));
-
-			offset += text.length();
+			const int off = mTime.capturedEnd();
+			const QString text = data.mid(off, itTime.hasNext() ? itTime.peekNext().capturedStart() - off : -1).trimmed();
 
 			RichString stext;
-			stext.setRichString(text.trimmed());
+			stext.setRichString(text);
 
 			SubtitleLine *line = new SubtitleLine(showTime, hideTime);
 			line->primaryDoc()->setRichText(stext, true);
 			subtitle.insertLine(line);
+		} while(itTime.hasNext());
 
-			readLines++;
-		} while(m_regExp.matchedLength() != -1);
-
-		return readLines > 0;
+		return true;
 	}
-
-	SubRipInputFormat() :
-		InputFormat(QStringLiteral("SubRip"), QStringList(QStringLiteral("srt"))),
-		m_regExp(QStringLiteral("[\\d]+\n([0-2][0-9]):([0-5][0-9]):([0-5][0-9])[,\\.]([0-9]+) --> ([0-2][0-9]):([0-5][0-9]):([0-5][0-9])[,\\.]([0-9]+)\n"))
-	{}
-
-	mutable QRegExp m_regExp;
 };
 }
 

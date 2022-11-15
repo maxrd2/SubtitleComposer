@@ -9,9 +9,10 @@
 #define MICRODVDINPUTFORMAT_H
 
 #include "core/richtext/richdocument.h"
+#include "helpers/common.h"
 #include "formats/inputformat.h"
 
-#include <QRegExp>
+#include <QRegularExpression>
 #include <QStringBuilder>
 
 namespace SubtitleComposer {
@@ -20,45 +21,52 @@ class MicroDVDInputFormat : public InputFormat
 	friend class FormatManager;
 
 protected:
+	MicroDVDInputFormat()
+		: InputFormat($("MicroDVD"), QStringList() << $("sub") << $("txt"))
+	{}
+
 	bool parseSubtitles(Subtitle &subtitle, const QString &data) const override
 	{
-		if(m_lineRegExp.indexIn(data, 0) == -1)
+		staticRE$(lineRE, "\\{(\\d+)\\}\\{(\\d+)\\}([^\n]+)\n", REu | REi);
+		staticRE$(styleRE, "\\{([yc]):([^}]*)\\}", REu | REi);
+
+		QRegularExpressionMatchIterator itLine = lineRE.globalMatch(data);
+		if(!itLine.hasNext())
 			return false; // couldn't find first line (content or FPS)
 
-		int offset = 0;
+		QRegularExpressionMatch mLine = itLine.next();
 
 		// if present, the FPS must by indicated by the first entry with both initial and final frames at 1
 		bool ok;
-		double framesPerSecond = m_lineRegExp.cap(3).toDouble(&ok);
-		if(ok && m_lineRegExp.cap(1) == QLatin1String("1") && m_lineRegExp.cap(2) == QLatin1String("1")) {
+		double fps = mLine.captured(3).toDouble(&ok);
+		if(ok && mLine.captured(1) == QLatin1String("1") && mLine.captured(2) == QLatin1String("1")) {
 			// first line contained the frames per second
-			subtitle.setFramesPerSecond(framesPerSecond);
-
-			offset += m_lineRegExp.matchedLength();
-			if(m_lineRegExp.indexIn(data, offset) == -1)
-				return false; // couldn't find first line with content
+			subtitle.setFramesPerSecond(fps);
 		} else {
 			// first line doesn't contain the FPS, use the value loaded by default
-			framesPerSecond = subtitle.framesPerSecond();
+			fps = subtitle.framesPerSecond();
 		}
 
-		unsigned readLines = 0;
+		if(!itLine.hasNext())
+			return false;
 
 		do {
-			offset += m_lineRegExp.matchedLength();
+			mLine = itLine.next();
 
-			Time showTime(static_cast<long>((m_lineRegExp.cap(1).toLong() / framesPerSecond) * 1000));
-			Time hideTime(static_cast<long>((m_lineRegExp.cap(2).toLong() / framesPerSecond) * 1000));
+			Time showTime(static_cast<long>((mLine.captured(1).toLong() / fps) * 1000));
+			Time hideTime(static_cast<long>((mLine.captured(2).toLong() / fps) * 1000));
 
 			RichString richText;
 
-			QString text = m_lineRegExp.cap(3);
+			const QString text = mLine.captured(3);
+			QRegularExpressionMatchIterator itText = styleRE.globalMatch(text);
 
 			int globalStyle = 0, currentStyle = 0;
 			QRgb globalColor = 0, currentColor = 0;
-			int offsetPos = 0, matchedPos;
-			while((matchedPos = m_styleRegExp.indexIn(text, offsetPos)) != -1) {
-				QString tag(m_styleRegExp.cap(1)), val(m_styleRegExp.cap(2).toLower());
+			int offsetPos = 0;
+			while(itText.hasNext()) {
+				QRegularExpressionMatch mText = itText.next();
+				QString tag(mText.captured(1)), val(mText.captured(2).toLower());
 
 				int newStyle = currentStyle;
 				QRgb newColor = currentColor;
@@ -86,16 +94,16 @@ protected:
 				}
 
 				if(newStyle != currentStyle || currentColor != newColor) {
-					QString token(text.mid(offsetPos, matchedPos - offsetPos));
+					QString token(text.mid(offsetPos, mText.capturedStart() - offsetPos));
 					richText += RichString(token, currentStyle | (currentColor == 0 ? 0 : RichString::Color), currentColor);
 					currentStyle = newStyle;
 					currentColor = newColor;
 				}
 
-				offsetPos = matchedPos + m_styleRegExp.cap(0).length();
+				offsetPos = mText.capturedEnd();
 			}
 
-			QString token(text.mid(offsetPos, matchedPos - offsetPos));
+			QString token(text.mid(offsetPos));
 			richText += RichString(token, currentStyle | (currentColor == 0 ? 0 : RichString::Color), currentColor);
 
 			if(globalColor != 0)
@@ -112,21 +120,10 @@ protected:
 			SubtitleLine *l = new SubtitleLine(showTime, hideTime);
 			l->primaryDoc()->setRichText(richText.replace('|', '\n'), true);
 			subtitle.insertLine(l);
+		} while(itLine.hasNext());
 
-			readLines++;
-		} while(m_lineRegExp.indexIn(data, offset) != -1);
-
-		return readLines > 0;
+		return true;
 	}
-
-	MicroDVDInputFormat() :
-		InputFormat(QStringLiteral("MicroDVD"), QStringList() << QStringLiteral("sub") << QStringLiteral("txt")),
-		m_lineRegExp(QStringLiteral("\\{(\\d+)\\}\\{(\\d+)\\}([^\n]+)\n"), Qt::CaseInsensitive),
-		m_styleRegExp(QStringLiteral("\\{([yc]):([^}]*)\\}"), Qt::CaseInsensitive)
-	{}
-
-	mutable QRegExp m_lineRegExp;
-	mutable QRegExp m_styleRegExp;
 };
 }
 

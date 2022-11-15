@@ -7,7 +7,9 @@
 
 #include "translator.h"
 
-#include <QRegExp>
+#include "helpers/common.h"
+
+#include <QRegularExpression>
 #include <QTextCodec>
 #include <QLabel>
 #include <QProgressBar>
@@ -256,7 +258,7 @@ Translator::onTransferJobResult(KJob *job)
 	QTextCodec *codec = QTextCodec::codecForHtml(m_currentTransferData, QTextCodec::codecForName("UTF-8"));
 	QString content = codec->toUnicode(m_currentTransferData);
 
-	static const QRegExp resultStartRegExp(QStringLiteral("^.*<textarea name=utrans [^>]+>"), Qt::CaseInsensitive);
+	staticRE$(resultStartRegExp, "^.*<textarea name=utrans [^>]+>", REi);
 	if(content.contains(resultStartRegExp)) {
 		content.remove(resultStartRegExp);
 	} else {
@@ -265,7 +267,7 @@ Translator::onTransferJobResult(KJob *job)
 		return;
 	}
 
-	QRegExp resultEndRegExp(QStringLiteral("</textarea>.*$"), Qt::CaseInsensitive);
+	staticRE$(resultEndRegExp, "</textarea>.*$", REi);
 	if(content.contains(resultEndRegExp)) {
 		content.remove(resultEndRegExp);
 	} else {
@@ -279,9 +281,12 @@ Translator::onTransferJobResult(KJob *job)
 	content.replace(QLatin1String("&lt;"), QLatin1String("<"));
 	content.replace(QLatin1String("&gt;"), QLatin1String(">"));
 
-	content.replace(QRegExp(QStringLiteral("< *(/?) *([a-z]+) *(/?) *>"), Qt::CaseInsensitive), QStringLiteral("<\\1\\2\\3>"));
-	content.replace(QRegExp(QStringLiteral(" ?<br ?/?> ?"), Qt::CaseInsensitive), QStringLiteral("\n"));
-	content.replace(QRegExp(QStringLiteral("\n{2,}"), Qt::CaseInsensitive), QStringLiteral("\n"));
+	staticRE$(reHtmlTag, "< *(/?) *([a-z]+) *(/?) *>", REi);
+	content.replace(reHtmlTag, $("<\\1\\2\\3>"));
+	staticRE$(reHtmlBreak, " ?<br ?/?> ?", REi);
+	content.replace(reHtmlBreak, $("\n"));
+	staticRE$(reLineBreak, "\\n{2,}", REi);
+	content.replace(reLineBreak, $("\n"));
 
 	if(!m_outputText.isEmpty())
 		m_outputText += "\n";
@@ -298,28 +303,31 @@ Translator::onTransferJobResult(KJob *job)
 QString &
 Translator::replaceHTMLEntities(QString &text)
 {
+	staticRE$(namedEntitiesRegExp, "&([a-zA-Z]+);");
 	const QMap<QString, QChar> &namedEntities = Translator::namedEntities();
-	static QRegExp namedEntitiesRegExp("&([a-zA-Z]+);");
-	for(int offsetIndex = 0, matchedIndex; (matchedIndex = namedEntitiesRegExp.indexIn(text, offsetIndex)) != -1;) {
-		QString entityName = namedEntitiesRegExp.cap(1).toLower();
+	QRegularExpressionMatchIterator it = namedEntitiesRegExp.globalMatch(text);
+	while(it.hasNext()) {
+		QRegularExpressionMatch match = it.next();
+		QString entityName = match.captured(1).toLower();
 		if(namedEntities.contains(entityName)) {
-			text.replace(matchedIndex, namedEntitiesRegExp.matchedLength(), namedEntities[entityName]);
-			offsetIndex = matchedIndex + 1;
-		} else {
-			offsetIndex = matchedIndex + namedEntitiesRegExp.matchedLength();
+			text.replace(match.capturedStart(), match.capturedLength(), namedEntities[entityName]);
 		}
 	}
 
-	static QRegExp unnamedB10EntitiesRegExp(QStringLiteral("&#(\\d{2,4});"));
-	for(int offsetIndex = 0, matchedIndex; (matchedIndex = unnamedB10EntitiesRegExp.indexIn(text, offsetIndex)) != -1; offsetIndex = matchedIndex + 1) {
-		QChar entityValue(unnamedB10EntitiesRegExp.cap(1).toUInt(0, 10));
-		text.replace(matchedIndex, unnamedB10EntitiesRegExp.matchedLength(), entityValue);
+	staticRE$(unnamedB10EntitiesRegExp, "&#(\\d{2,4});");
+	it = unnamedB10EntitiesRegExp.globalMatch(text);
+	while(it.hasNext()) {
+		QRegularExpressionMatch match = it.next();
+		QChar entityValue = match.captured(1).toUInt(0, 10);
+		text.replace(match.capturedStart(), match.capturedLength(), entityValue);
 	}
 
-	static QRegExp unnamedB16EntitiesRegExp(QStringLiteral("&#x([\\da-fA-F]{2,4});"));
-	for(int offsetIndex = 0, matchedIndex; (matchedIndex = unnamedB16EntitiesRegExp.indexIn(text, offsetIndex)) != -1; offsetIndex = matchedIndex + 1) {
-		QChar entityValue(unnamedB16EntitiesRegExp.cap(1).toUInt(0, 16));
-		text.replace(matchedIndex, unnamedB16EntitiesRegExp.matchedLength(), entityValue);
+	staticRE$(unnamedB16EntitiesRegExp, "&#x([\\da-fA-F]{2,4});");
+	it = unnamedB16EntitiesRegExp.globalMatch(text);
+	while(it.hasNext()) {
+		QRegularExpressionMatch match = it.next();
+		QChar entityValue = match.captured(1).toUInt(0, 16);
+		text.replace(match.capturedStart(), match.capturedLength(), entityValue);
 	}
 
 	return text;

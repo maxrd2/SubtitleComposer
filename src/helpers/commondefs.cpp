@@ -11,7 +11,6 @@
 #include <climits>
 
 #include <QStringBuilder>
-#include <QRegExp>
 #include <QDir>
 #include <QFileInfo>
 

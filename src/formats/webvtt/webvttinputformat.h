@@ -9,8 +9,6 @@
 
 #include "formats/inputformat.h"
 
-#include <QRegExp>
-
 namespace SubtitleComposer {
 class WebVTTInputFormat : public InputFormat
 {

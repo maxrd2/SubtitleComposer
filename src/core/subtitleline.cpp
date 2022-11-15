@@ -603,9 +603,7 @@ SubtitleLine::setErrorFlags(int errorFlags, bool value)
 bool
 SubtitleLine::checkEmptyPrimaryText(bool update)
 {
-	static const QRegExp emptyTextRegExp("^\\s*$");
-
-	bool error = m_primaryDoc->isEmpty() || m_primaryDoc->toPlainText().indexOf(emptyTextRegExp) != -1;
+	bool error = m_primaryDoc->isEmpty() || m_primaryDoc->toPlainText().trimmed().isEmpty();
 
 	if(update)
 		setErrorFlags(EmptyPrimaryText, error);
@@ -616,9 +614,7 @@ SubtitleLine::checkEmptyPrimaryText(bool update)
 bool
 SubtitleLine::checkEmptySecondaryText(bool update)
 {
-	static const QRegExp emptyTextRegExp("^\\s*$");
-
-	bool error = m_secondaryDoc->isEmpty() || m_secondaryDoc->toPlainText().indexOf(emptyTextRegExp) != -1;
+	bool error = m_secondaryDoc->isEmpty() || m_secondaryDoc->toPlainText().trimmed().isEmpty();
 
 	if(update)
 		setErrorFlags(EmptySecondaryText, error);
@@ -812,63 +808,65 @@ SubtitleLine::checkSecondaryUnneededSpaces(bool update)
 bool
 SubtitleLine::checkPrimaryCapitalAfterEllipsis(bool update)
 {
-	static const QRegExp capitalAfterEllipsisRegExp("^\\s*\\.\\.\\.[¡¿\\.,;\\(\\[\\{\"'\\s]*");
+	staticRE$(capitalAfterEllipsisRegExp, "^\\s*\\.\\.\\.[¡¿\\.,;\\(\\[\\{\"'\\s]*", REu);
 
 	const QString text = m_primaryDoc->toPlainText();
-	bool error = capitalAfterEllipsisRegExp.indexIn(text, QRegExp::CaretAtZero) != -1;
-	if(error) {
-		QChar chr = text.at(capitalAfterEllipsisRegExp.matchedLength());
-		error = chr.isLetter() && chr == chr.toUpper();
+	QRegularExpressionMatchIterator it = capitalAfterEllipsisRegExp.globalMatch(text);
+	bool success = it.hasNext();
+	if(success) {
+		const QChar chr = text.at(it.next().capturedEnd());
+		success = chr.isLetter() && chr == chr.toUpper();
 	}
 
 	if(update)
-		setErrorFlags(PrimaryCapitalAfterEllipsis, error);
+		setErrorFlags(PrimaryCapitalAfterEllipsis, success);
 
-	return error;
+	return success;
 }
 
 bool
 SubtitleLine::checkSecondaryCapitalAfterEllipsis(bool update)
 {
-	static const QRegExp capitalAfterEllipsisRegExp("^\\s*\\.\\.\\.[¡¿\\.,;\\(\\[\\{\"'\\s]*");
+	staticRE$(capitalAfterEllipsisRegExp, "^\\s*\\.\\.\\.[¡¿\\.,;\\(\\[\\{\"'\\s]*", REu);
 
 	const QString text = m_secondaryDoc->toPlainText();
-	bool error = capitalAfterEllipsisRegExp.indexIn(text, QRegExp::CaretAtZero) != -1;
-	if(error) {
-		QChar chr = text.at(capitalAfterEllipsisRegExp.matchedLength());
-		error = chr.isLetter() && chr == chr.toUpper();
+	QRegularExpressionMatchIterator it = capitalAfterEllipsisRegExp.globalMatch(text);
+	bool success = it.hasNext();
+	if(success) {
+		const QChar chr = text.at(it.next().capturedEnd());
+		success = chr.isLetter() && chr == chr.toUpper();
 	}
 
 	if(update)
-		setErrorFlags(SecondaryCapitalAfterEllipsis, error);
+		setErrorFlags(SecondaryCapitalAfterEllipsis, success);
 
-	return error;
+	return success;
 }
 
 bool
 SubtitleLine::checkPrimaryUnneededDash(bool update)
 {
-	static const QRegExp unneededDashRegExp("(^|\n)\\s*-[^-]");
+	staticRE$(unneededDashRegExp, "(^|\n)\\s*-[^-]", REu);
 
-	bool error = m_primaryDoc->toPlainText().count(unneededDashRegExp) == 1;
+	bool success = m_primaryDoc->toPlainText().count(unneededDashRegExp) == 1;
 
 	if(update)
-		setErrorFlags(PrimaryUnneededDash, error);
+		setErrorFlags(PrimaryUnneededDash, success);
 
-	return error;
+	return success;
 }
 
 bool
 SubtitleLine::checkSecondaryUnneededDash(bool update)
 {
-	static const QRegExp unneededDashRegExp("(^|\n)\\s*-[^-]");
+	staticRE$(unneededDashRegExp, "(^|\n)\\s*-[^-]", REu);
 
-	bool error = m_secondaryDoc->toPlainText().count(unneededDashRegExp) == 1;
+	bool success = m_secondaryDoc->toPlainText().count(unneededDashRegExp) == 1;
 
 	if(update)
-		setErrorFlags(SecondaryUnneededDash, error);
+		setErrorFlags(SecondaryUnneededDash, success);
 
-	return error;
+	return success;
 }
 
 int

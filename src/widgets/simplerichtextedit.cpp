@@ -14,7 +14,6 @@
 #include "core/richtext/richdocument.h"
 #include "dialogs/subtitlecolordialog.h"
 
-#include <QRegExp>
 #include <QEvent>
 #include <QMenu>
 #include <QShortcutEvent>
