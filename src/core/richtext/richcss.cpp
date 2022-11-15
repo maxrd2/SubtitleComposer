@@ -61,21 +61,6 @@ skipComment(const QChar **c)
 	return false;
 }
 
-inline static int
-skipChar(const QStringRef text, int off, const charCompare &cf)
-{
-	auto it = text.cbegin() + off;
-	const auto end = text.cend();
-	while(it != end) {
-		if(skipComment(&it) && it == end)
-			break;
-		if(!cf(*it))
-			break;
-		++it;
-	}
-	return it - text.cbegin();
-}
-
 QStringList
 RichCSS::RuleList::toStringList()
 {
