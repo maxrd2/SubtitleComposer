@@ -249,12 +249,6 @@ VobSubInputProcessDialog::Frame::processPieces()
 }
 
 inline bool
-operator<(const VobSubInputProcessDialog::LinePtr &a, const VobSubInputProcessDialog::LinePtr &b)
-{
-	return a->top < b->top;
-}
-
-inline bool
 VobSubInputProcessDialog::Piece::operator<(const Piece &other) const
 {
 	if(line->top < other.line->top)
