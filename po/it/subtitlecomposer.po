@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: subtitlecomposer\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2022-11-13 00:45+0000\n"
-"PO-Revision-Date: 2022-04-01 23:47+0200\n"
+"PO-Revision-Date: 2022-11-13 19:54+0100\n"
 "Last-Translator: Luigi Toscano <luigi.toscano@tiscali.it>\n"
 "Language-Team: Italian <kde-i18n-it@kde.org>\n"
 "Language: it\n"
@@ -16,7 +16,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Lokalize 21.12.3\n"
+"X-Generator: Lokalize 23.03.70\n"
 "X-Crowdin-Project: subtitlecomposer\n"
 "X-Crowdin-Language: it\n"
 "X-Crowdin-File: subtitlecomposer.pot\n"
@@ -596,7 +596,7 @@ msgstr "Aggiusta tutte le righe in modo lineare ad un intervallo specifico"
 #: src/application_actions.cpp:420
 #, kde-format
 msgid "Change Frame Rate..."
-msgstr "Cambia frequenza dei fotogrammi..."
+msgstr "Modifica frequenza dei fotogrammi..."
 
 #: src/application_actions.cpp:421
 #, kde-format
@@ -691,14 +691,14 @@ msgstr "Elimina spazi non necessari dalle righe"
 #: src/application_actions.cpp:484
 #, kde-format
 msgid "Change Case..."
-msgstr "Cambia maiuscole/minuscole..."
+msgstr "Modifica maiuscole/minuscole..."
 
 #: src/application_actions.cpp:485
 #, kde-format
 msgid "Change lines text to upper, lower, title or sentence case"
 msgstr ""
-"Cambia il testo delle righe in maiuscole, minuscole, maiuscole sui titoli o "
-"sulle parole principali"
+"Modifica il testo delle righe in maiuscole, minuscole, maiuscole sui titoli "
+"o sulle parole principali"
 
 #: src/application_actions.cpp:491
 #, kde-format
@@ -1764,7 +1764,7 @@ msgstr "Cancella dati di testo secondari"
 #: src/core/subtitle.cpp:238 src/dialogs/changeframeratedialog.cpp:22
 #, kde-format
 msgid "Change Frame Rate"
-msgstr "Cambia frequenza dei fotogrammi"
+msgstr "Modifica frequenza dei fotogrammi"
 
 #: src/core/subtitle.cpp:400 src/core/subtitle.cpp:414
 #: src/gui/waveform/waveformwidget.cpp:694
@@ -1861,7 +1861,7 @@ msgstr "Alterna stile delle righe"
 #: src/core/subtitle.cpp:1309
 #, kde-format
 msgid "Change Lines Text Color"
-msgstr "Imposta colore testo delle righe"
+msgstr "Modifica colore testo delle righe"
 
 #: src/core/subtitle.cpp:1329
 #, kde-format
@@ -2146,10 +2146,9 @@ msgid "Swap Texts"
 msgstr "Scambia testi"
 
 #: src/core/undo/subtitleactions.cpp:308
-#, fuzzy, kde-format
-#| msgid "Change Case"
+#, kde-format
 msgid "Change stylesheet"
-msgstr "Cambia maiuscole/minuscole"
+msgstr "Modifica foglio di stile"
 
 #: src/core/undo/subtitlelineactions.cpp:28
 #, kde-format
@@ -2307,7 +2306,7 @@ msgstr "Nuovo frame rate:"
 #: src/dialogs/changetextscasedialog.cpp:19
 #, kde-format
 msgid "Change Case"
-msgstr "Cambia maiuscole/minuscole"
+msgstr "Modifica maiuscole/minuscole"
 
 #: src/dialogs/changetextscasedialog.cpp:21
 #, kde-format
@@ -2681,7 +2680,7 @@ msgstr "S&imboli:"
 #: src/formats/vobsub/vobsubinputprocessdialog.ui:45
 #, kde-format
 msgid "Up/Down: change value"
-msgstr "Su/giù: cambia valore"
+msgstr "Su/giù: modifica valore"
 
 #. i18n: ectx: property (text), widget (QPushButton, btnOk)
 #: src/formats/vobsub/vobsubinputprocessdialog.ui:146
@@ -2829,61 +2828,58 @@ msgid "Error Playing File"
 msgstr "Errore durante la riproduzione del file"
 
 #: src/gui/subtitlemeta/subtitlemetawidget.cpp:46
-#, fuzzy, kde-format
-#| msgid "Styles"
+#, kde-format
 msgid "&Stylesheet"
-msgstr "Stili"
+msgstr "Foglio di &stile"
 
 #: src/gui/subtitlemeta/subtitlemetawidget.cpp:47
 #, kde-format
 msgid "&Comments"
-msgstr ""
+msgstr "&Commenti"
 
 #: src/gui/subtitlemeta/subtitlemetawidget.cpp:48
-#, fuzzy, kde-format
-#| msgid "<b>Position</b>"
+#, kde-format
 msgid "&Position"
-msgstr "<b>Posizione</b>"
+msgstr "&Posizione"
 
 #: src/gui/subtitlemeta/subtitlemetawidget.cpp:88
 #, kde-format
 msgid "Intro"
-msgstr ""
+msgstr "Introduzione"
 
 #: src/gui/subtitlemeta/subtitlemetawidget.cpp:90
 #, kde-format
 msgid "Header"
-msgstr ""
+msgstr "Intestazione"
 
 #: src/gui/subtitlemeta/subtitlemetawidget.cpp:92
 #, kde-format
 msgid "Footer"
-msgstr ""
+msgstr "Piè di pagina"
 
 #. i18n: ectx: property (windowTitle), widget (QWidget, SubtitlePositionWidget)
 #: src/gui/subtitlemeta/subtitlepositionwidget.ui:14
 #, kde-format
 msgid "Form"
-msgstr ""
+msgstr "Modulo"
 
 #. i18n: ectx: property (title), widget (QGroupBox, grpHAlign)
 #: src/gui/subtitlemeta/subtitlepositionwidget.ui:20
 #, kde-format
 msgid "Horizontal Alignment"
-msgstr ""
+msgstr "Allineamento orizzontale"
 
 #. i18n: ectx: property (title), widget (QGroupBox, grpVAlign)
 #: src/gui/subtitlemeta/subtitlepositionwidget.ui:106
 #, kde-format
 msgid "Vertical Alignment"
-msgstr ""
+msgstr "Allineamento verticale"
 
 #. i18n: ectx: property (title), widget (QGroupBox, grpPosition)
 #: src/gui/subtitlemeta/subtitlepositionwidget.ui:169
-#, fuzzy, kde-format
-#| msgid "<b>Position</b>"
+#, kde-format
 msgid "Position/Size"
-msgstr "<b>Posizione</b>"
+msgstr "Posizione/Dimensione"
 
 #. i18n: ectx: property (suffix), widget (QDoubleSpinBox, posBottom)
 #. i18n: ectx: property (suffix), widget (QDoubleSpinBox, posLeft)
@@ -2895,7 +2891,7 @@ msgstr "<b>Posizione</b>"
 #: src/gui/subtitlemeta/subtitlepositionwidget.ui:205
 #, no-c-format, kde-format
 msgid "%"
-msgstr ""
+msgstr "%"
 
 #: src/gui/treeview/linesmodel.cpp:156
 #, kde-format
@@ -3131,7 +3127,7 @@ msgstr "Lettore video"
 #: src/mainwindow.cpp:64
 #, kde-format
 msgid "Styles and Comments"
-msgstr ""
+msgstr "Stili e commenti"
 
 #. i18n: ectx: label, entry (DefaultSubtitlesEncoding), group (General)
 #: src/scconfig.kcfg:10
