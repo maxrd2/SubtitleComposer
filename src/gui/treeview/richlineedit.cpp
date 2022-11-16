@@ -177,7 +177,7 @@ RichLineEdit::event(QEvent *e)
 {
 	if(e->type() == QEvent::ShortcutOverride) {
 		QKeyEvent *ke = static_cast<QKeyEvent *>(e);
-		const QKeySequence key(ke->modifiers() + ke->key());
+		const QKeySequence key(ke->modifiers() | ke->key());
 
 		for(const QAction *act: m_actions) {
 			if(act->shortcuts().contains(key)) {
@@ -362,7 +362,7 @@ RichLineEdit::mouseDoubleClickEvent(QMouseEvent* e)
 void
 RichLineEdit::keyPressEvent(QKeyEvent *event)
 {
-	const QKeySequence key(event->modifiers() + event->key());
+	const QKeySequence key(event->modifiers() | event->key());
 
 	for(QAction *act: m_actions) {
 		if(act->shortcuts().contains(key)) {

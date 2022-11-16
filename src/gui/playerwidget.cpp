@@ -402,7 +402,7 @@ PlayerWidget::eventFilter(QObject *object, QEvent *event)
 				app()->action(ACT_TOGGLE_FULL_SCREEN)->trigger();
 				return true;
 			}
-			return app()->triggerAction(QKeySequence((keyEvent->modifiers() & ~Qt::KeypadModifier) + keyEvent->key()));
+			return app()->triggerAction(QKeySequence((keyEvent->modifiers() & ~Qt::KeypadModifier) | keyEvent->key()));
 		}
 
 		case QEvent::MouseMove: {

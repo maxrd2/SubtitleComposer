@@ -287,7 +287,7 @@ SimpleRichTextEdit::event(QEvent *event)
 {
 	if(event->type() == QEvent::ShortcutOverride) {
 		const QKeyEvent *keyEvent = static_cast<QKeyEvent *>(event);
-		const QKeySequence key(keyEvent->modifiers() + keyEvent->key());
+		const QKeySequence key(keyEvent->modifiers() | keyEvent->key());
 
 		for(int i = 0; i < ActionCount; i++) {
 			if(m_actions.at(i)->shortcuts().contains(key)) {
@@ -303,7 +303,7 @@ SimpleRichTextEdit::event(QEvent *event)
 void
 SimpleRichTextEdit::keyPressEvent(QKeyEvent *event)
 {
-	const QKeySequence key(event->modifiers() + event->key());
+	const QKeySequence key(event->modifiers() | event->key());
 
 	for(int i = 0; i < ActionCount; i++) {
 		if(m_actions.at(i)->shortcuts().contains(key)) {
