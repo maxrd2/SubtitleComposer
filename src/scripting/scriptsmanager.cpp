@@ -40,6 +40,10 @@
 #include <KIO/OpenUrlJob>
 #include <KIO/JobUiDelegate>
 #endif
+#if KIO_VERSION >= QT_VERSION_CHECK(5, 98, 0)
+#include <KIO/JobUiDelegateFactory>
+#endif
+#include <kwidgetsaddons_version.h>
 
 inline static const QDir &
 userScriptDir()
@@ -440,6 +444,11 @@ ScriptsManager::currentScript() const
 	return nullptr;
 }
 
+#if KWIDGETSADDONS_VERSION < QT_VERSION_CHECK(5, 100, 0)
+#define questionTwoActions questionYesNo
+#define PrimaryAction Yes
+#endif
+
 void
 ScriptsManager::createScript(const QString &sN)
 {
@@ -456,9 +465,10 @@ ScriptsManager::createScript(const QString &sN)
 				scriptName = script->name();
 				break;
 			}
-			if(KMessageBox::questionYesNo(app()->mainWindow(),
+			if(KMessageBox::questionTwoActions(app()->mainWindow(),
 					i18n("You must enter an unused name to continue.\nWould you like to enter another name?"),
-					i18n("Name Already Used"), KStandardGuiItem::cont(), KStandardGuiItem::cancel()) != KMessageBox::Yes)
+					i18n("Name Already Used"),
+					KStandardGuiItem::cont(), KStandardGuiItem::cancel()) != KMessageBox::PrimaryAction)
 				return;
 		}
 
@@ -524,9 +534,10 @@ ScriptsManager::addScript(const QUrl &sSU)
 
 	InstalledScriptsModel *model = static_cast<InstalledScriptsModel *>(scriptsView->model());
 	while(model->findByFilename(scriptName)) {
-		if(KMessageBox::questionYesNo(app()->mainWindow(),
+		if(KMessageBox::questionTwoActions(app()->mainWindow(),
 				i18n("You must enter an unused name to continue.\nWould you like to enter another name?"),
-				i18n("Name Already Used"), KStandardGuiItem::cont(), KStandardGuiItem::cancel()) != KMessageBox::Yes)
+				i18n("Name Already Used"),
+				KStandardGuiItem::cont(), KStandardGuiItem::cancel()) != KMessageBox::PrimaryAction)
 			return;
 
 		TextInputDialog nameDlg(i18n("Rename Script"), i18n("Script name:"));
@@ -584,6 +595,10 @@ ScriptsManager::editScript(const QString &sN)
 	const QUrl scriptUrl = QUrl::fromLocalFile(script->path());
 #ifdef SC_APPIMAGE
 	{
+#elif KIO_VERSION >= QT_VERSION_CHECK(5, 98, 0)
+	KIO::OpenUrlJob *job = new KIO::OpenUrlJob(scriptUrl);
+	job->setUiDelegate(KIO::createDefaultJobUiDelegate(KJobUiDelegate::AutoHandlingEnabled, app()->mainWindow()));
+	if(!job->exec()) {
 #elif KIO_VERSION >= QT_VERSION_CHECK(5, 71, 0)
 	KIO::OpenUrlJob *job = new KIO::OpenUrlJob(scriptUrl);
 	job->setUiDelegate(new KIO::JobUiDelegate(KJobUiDelegate::AutoHandlingEnabled, app()->mainWindow()));

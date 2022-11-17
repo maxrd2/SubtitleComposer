@@ -34,6 +34,8 @@
 #include <KCodecAction>
 #include <KLocalizedString>
 #include <KMessageBox>
+#include <kwidgetsaddons_version.h>
+
 
 #undef ERROR
 
@@ -357,28 +359,35 @@ Application::saveSubtitleAs(QTextCodec *codec)
 	return false;
 }
 
+#if KWIDGETSADDONS_VERSION < QT_VERSION_CHECK(5, 100, 0)
+#define warningTwoActionsCancel warningYesNoCancel
+#define PrimaryAction Yes
+#endif
+
 bool
 Application::closeSubtitle()
 {
 	if(appSubtitle()) {
 		if(m_translationMode && appSubtitle()->isSecondaryDirty()) {
-			int result = KMessageBox::warningYesNoCancel(nullptr,
+			KMessageBox::ButtonCode result = KMessageBox::warningTwoActionsCancel(nullptr,
 							i18n("Currently opened translation subtitle has unsaved changes.\nDo you want to save them?"),
-							i18n("Close Translation Subtitle") + " - SubtitleComposer");
+							i18n("Close Translation Subtitle") + " - SubtitleComposer",
+							KStandardGuiItem::save(), KStandardGuiItem::dontSave());
 			if(result == KMessageBox::Cancel)
 				return false;
-			else if(result == KMessageBox::Yes)
+			else if(result == KMessageBox::PrimaryAction)
 				if(!saveSubtitleTr())
 					return false;
 		}
 
 		if(appSubtitle()->isPrimaryDirty()) {
-			int result = KMessageBox::warningYesNoCancel(nullptr,
+			KMessageBox::ButtonCode result = KMessageBox::warningTwoActionsCancel(nullptr,
 							i18n("Currently opened subtitle has unsaved changes.\nDo you want to save them?"),
-							i18n("Close Subtitle") + " - SubtitleComposer");
+							i18n("Close Subtitle") + " - SubtitleComposer",
+							KStandardGuiItem::save(), KStandardGuiItem::dontSave());
 			if(result == KMessageBox::Cancel)
 				return false;
-			else if(result == KMessageBox::Yes)
+			else if(result == KMessageBox::PrimaryAction)
 				if(!saveSubtitle())
 					return false;
 		}
@@ -602,12 +611,13 @@ Application::closeSubtitleTr()
 {
 	if(appSubtitle() && m_translationMode) {
 		if(m_translationMode && appSubtitle()->isSecondaryDirty()) {
-			int result = KMessageBox::warningYesNoCancel(nullptr,
+			KMessageBox::ButtonCode result = KMessageBox::warningTwoActionsCancel(nullptr,
 					i18n("Currently opened translation subtitle has unsaved changes.\nDo you want to save them?"),
-					i18n("Close Translation Subtitle") + " - SubtitleComposer");
+					i18n("Close Translation Subtitle") + " - SubtitleComposer",
+					KStandardGuiItem::save(), KStandardGuiItem::dontSave());
 			if(result == KMessageBox::Cancel)
 				return false;
-			else if(result == KMessageBox::Yes)
+			else if(result == KMessageBox::PrimaryAction)
 				if(!saveSubtitleTr())
 					return false;
 		}

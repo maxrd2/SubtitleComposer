@@ -140,8 +140,11 @@ Replacer::replace(const RangeList &selectionRanges, int currentIndex, const QStr
 	connect(m_replace, &KReplace::textFound, this, &Replacer::onHighlight);
 #endif
 	// Connect replace signal - called when doing a replacement
+#if KTEXTWIDGETS_VERSION < QT_VERSION_CHECK(5, 83, 0)
 	connect(m_replace, QOverload<const QString &,int,int,int>::of(&KReplace::replace), this, &Replacer::onReplace);
-
+#else
+	connect(m_replace, &KReplace::textReplaced, this, &Replacer::onReplace);
+#endif
 	if(m_dialog->options() & KFind::SelectedText) {
 		m_iterator = new SubtitleIterator(*m_subtitle, selectionRanges);
 		if(m_iterator->index() < 0) // Invalid index means no lines in selectionRanges

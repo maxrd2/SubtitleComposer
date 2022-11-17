@@ -154,7 +154,9 @@ Application::Application(int &argc, char **argv) :
 
 	setupIconTheme(argc, argv);
 
+#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
 	setAttribute(Qt::AA_UseHighDpiPixmaps, true);
+#endif
 
 	m_mainWindow = new MainWindow();
 	connect(m_mainWindow, &QObject::destroyed, this, [&](){ m_mainWindow = nullptr; });
