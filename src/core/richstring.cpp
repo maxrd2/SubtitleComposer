@@ -19,6 +19,18 @@
 
 #include <type_traits>
 
+#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
+// QStringView use is unoptimized in Qt5, and some methods are missing pre 5.15
+#include <QStringRef>
+#define QStringView(x) QStringRef(&(x))
+#define QStringView_ QStringRef
+#define capturedView capturedRef
+#else
+#include <QStringView>
+#define QStringView_ QStringView
+#endif
+
+
 using namespace SubtitleComposer;
 
 namespace SubtitleComposer {
@@ -559,7 +571,7 @@ RichString::richString() const
 		}
 
 		// spaces
-		ret += QString::midRef(cur, cps - cur);
+		ret += QStringView(*this).mid(cur, cps - cur);
 		cur = cps;
 
 		// opening tags
@@ -577,7 +589,7 @@ RichString::richString() const
 }
 
 RichString &
-RichString::setRichString(const QStringRef &string)
+RichString::setRichString(const QStringView_ &string)
 {
 	staticRE$(tagRegExp, "(<"
 			"(/?(v |c\\.|\\w+))"
@@ -606,13 +618,13 @@ RichString::setRichString(const QStringRef &string)
 		QRegularExpressionMatch m;
 
 		QString mTag;
-		QStringRef ent;
+		QStringView ent;
 
 		if(validIter) {
 			m = it.next();
 
 			matchedPos = m.capturedStart();
-			ent = m.capturedRef(6);
+			ent = m.capturedView(6);
 			if(ent.isNull()) {
 				mTag = m.captured(2).toLower();
 				if(mTag == QLatin1String("b") || mTag == QLatin1String("strong")) {
@@ -652,14 +664,14 @@ RichString::setRichString(const QStringRef &string)
 				}
 				if(!mTag.isEmpty()) {
 					if(mTag.front() != QLatin1Char('/')) {
-						QRegularExpressionMatch mc = colorRegExp.match(m.capturedRef(4));
+						QRegularExpressionMatch mc = colorRegExp.match(m.capturedView(4));
 						if(mc.hasMatch()) {
 							newStyle |= RichString::Color;
 							newColor.setNamedColor(mc.captured(1).toLower());
 							colorTags.push_back(currentColor.name());
 							colorTags.push_back(mTag);
 						}
-					} else if(!colorTags.empty() && mTag.midRef(1) == colorTags.back()) {
+					} else if(!colorTags.empty() && QStringView(mTag).mid(1) == colorTags.back()) {
 						colorTags.pop_back();
 						if(colorTags.size() == 1) {
 							newStyle &= ~RichString::Color;
@@ -710,7 +722,7 @@ RichString::setRichString(const QStringRef &string)
 					append(ent.toString());
 				}
 			} else {
-				if(m.capturedRef(1).front() == QChar::LineFeed) {
+				if(m.capturedView(1).front() == QChar::LineFeed) {
 					softBreak = true;
 				} else if(mTag == QLatin1String("br")) {
 					append(QChar::LineFeed);
@@ -1111,7 +1123,7 @@ RichString::toUpper() const
 RichString
 RichString::toTitleCase(bool lowerFirst) const
 {
-	const QString wordSeparators(QStringLiteral(" -_([:,;./\\\t\n\""));
+	const QString wordSeparators($(" -_([:,;./\\\t\n\""));
 
 	RichString ret(*this);
 
@@ -1119,14 +1131,13 @@ RichString::toTitleCase(bool lowerFirst) const
 		ret.operator=(QString::toLower());
 
 	bool wordStart = true;
-	for(uint idx = 0, size = length(); idx < size; ++idx) {
-		QCharRef chr = ret[idx];
+	for(QChar *chr = ret.data(); *chr != 0; chr++) {
 		if(wordStart) {
-			if(!wordSeparators.contains(chr)) {
+			if(!wordSeparators.contains(*chr)) {
 				wordStart = false;
-				chr = chr.toUpper();
+				*chr = chr->toUpper();
 			}
-		} else if(wordSeparators.contains(chr)) {
+		} else if(wordSeparators.contains(*chr)) {
 			wordStart = true;
 		}
 	}
@@ -1150,11 +1161,10 @@ RichString::toSentenceCase(bool lowerFirst, bool *cont) const
 	uint prevDots = 0;
 	bool startSentence = cont ? !*cont : true;
 
-	for(uint index = 0, size = length(); index < size; ++index) {
-		QCharRef chr = ret[index];
 
-		if(sentenceEndChars.contains(chr)) {
-			if(chr == '.') {
+	for(QChar *chr = ret.data(); *chr != 0; chr++) {
+		if(sentenceEndChars.contains(*chr)) {
+			if(*chr == '.') {
 				prevDots++;
 				startSentence = prevDots < 3;
 			} else {
@@ -1162,12 +1172,12 @@ RichString::toSentenceCase(bool lowerFirst, bool *cont) const
 				startSentence = true;
 			}
 		} else {
-			if(startSentence && chr.isLetterOrNumber()) {
-				chr = chr.toUpper();
+			if(startSentence && chr->isLetterOrNumber()) {
+				*chr = chr->toUpper();
 				startSentence = false;
 			}
 
-			if(!chr.isSpace())
+			if(!chr->isSpace())
 				prevDots = 0;
 		}
 	}
@@ -1297,13 +1307,13 @@ RichStringList::RichStringList(const QList<RichString> &list) :
 
 RichStringList::RichStringList(const QStringList &list)
 {
-	for(QStringList::ConstIterator it = list.begin(), end = list.end(); it != end; ++it)
+	for(QStringList::const_iterator it = list.cbegin(), end = list.cend(); it != end; ++it)
 		append(*it);
 }
 
 RichStringList::RichStringList(const QList<QString> &list)
 {
-	for(QList<QString>::ConstIterator it = list.begin(), end = list.end(); it != end; ++it)
+	for(QList<QString>::const_iterator it = list.cbegin(), end = list.cend(); it != end; ++it)
 		append(*it);
 }
 
@@ -1481,12 +1491,12 @@ ReplaceHelper::replace(const MatchRefList &matchList, RichString &str, const T &
 		if(!md.length)
 			continue;
 		if(md.ref == md.SUBJECT) {
-			newString.append(str.midRef(md.offset, md.length));
+			newString.append(QStringView(str).mid(md.offset, md.length));
 			newStyle.copy(startNew, md.length, *str.m_style, md.offset);
 			startNew += md.length;
 			strStyleOffset = md.offset + md.length;
 		} else if(md.ref == md.REPLACEMENT) {
-			newString.append(replacement.midRef(md.offset, md.length));
+			newString.append(QStringView(replacement).mid(md.offset, md.length));
 			if(std::is_same<decltype(replacement), const RichString &>::value)
 				newStyle.copy(startNew, md.length, *static_cast<const RichString &>(replacement).m_style, md.offset);
 			else

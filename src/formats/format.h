@@ -51,7 +51,7 @@ public:
 		QString extensions;
 		for(const QString &ext : m_extensions)
 			extensions += QStringLiteral(" *.") % ext;
-		return m_name % QStringLiteral(" (") % extensions.midRef(1) % QChar(')');
+		return m_name % QStringLiteral(" (") % QStringView(extensions).mid(1) % QChar(')');
 	}
 
 	bool knowsExtension(const QString &extension) const

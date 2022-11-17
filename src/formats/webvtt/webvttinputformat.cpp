@@ -16,6 +16,17 @@
 #include <QRegularExpression>
 #include <QVector>
 
+#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
+// QStringView use is unoptimized in Qt5, and some methods are missing pre 5.15
+#include <QStringRef>
+#define QStringView(x) QStringRef(&(x))
+#define QStringView_ QStringRef
+#define capturedView capturedRef
+#else
+#include <QStringView>
+#define QStringView_ QStringView
+#endif
+
 
 using namespace SubtitleComposer;
 
@@ -49,7 +60,7 @@ skipTextBlock(const QString &str, int off)
 typedef bool (*charCompare)(QChar ch);
 
 inline static int
-skipChar(const QStringRef text, int off, const charCompare &cf)
+skipChar(QStringView_ text, int off, const charCompare &cf)
 {
 	auto it = text.cbegin() + off;
 	const auto end = text.cend();
@@ -59,18 +70,18 @@ skipChar(const QStringRef text, int off, const charCompare &cf)
 }
 
 void
-parseCueSettings(SubtitleLine *line, QStringRef css)
+parseCueSettings(SubtitleLine *line, QStringView_ css)
 {
 	// https://developer.mozilla.org/en-US/docs/Web/API/WebVTT_API#cue_settings
-	QMap<QByteArray, QStringRef> settings;
+	QMap<QByteArray, QStringView_> settings;
 	int off = 0;
 	while(off < css.size()) {
 		off = skipChar(css, off, [](QChar c){ return c == QChar::Space || c == QChar::Tabulation; });
 		int end = skipChar(css, off, [](QChar c){ return c != QChar(':'); });
-		QStringRef key = css.mid(off, end - off);
+		const QStringView_ key = css.mid(off, end - off);
 		off = end + 1;
 		end = skipChar(css, off, [](QChar c){ return c != QChar::Space && c != QChar::Tabulation; });
-		QStringRef val = css.mid(off, end - off);
+		const QStringView_ val = css.mid(off, end - off);
 		if(!key.isEmpty() && !val.isEmpty())
 			settings.insert(key.toLatin1(), val);
 		off = end + 1;
@@ -79,25 +90,25 @@ parseCueSettings(SubtitleLine *line, QStringRef css)
 	SubtitleRect p;
 
 	// vertical:rl|lr
-	const QStringRef csVert = settings.value("vertical");
+	const QStringView_ csVert = settings.value("vertical");
 	p.vertical = !csVert.isEmpty();
 #if 0
 	bool rl = p.vertical && csVert.compare(QByteArray("rl")) == 0; // vertical growing left/right (true/false)
 #endif
 
 	// align:<start|center|end|left|right>
-	const QStringRef csAlign = settings.value("align");
+	const QStringView_ csAlign = settings.value("align");
 	if(csAlign.isEmpty())
 		p.hAlign = SubtitleRect::CENTER;
-	else if(csAlign.compare(QByteArray("start")) == 0 || csAlign.compare(QByteArray("left")) == 0) // FIXME: start should consider RTL?
+	else if(csAlign.compare($("start")) == 0 || csAlign.compare($("left")) == 0) // FIXME: start should consider RTL?
 		p.hAlign = SubtitleRect::START;
-	else if(csAlign.compare(QByteArray("end")) == 0 || csAlign.compare(QByteArray("right")) == 0) // FIXME: end should consider RTL?
+	else if(csAlign.compare($("end")) == 0 || csAlign.compare($("right")) == 0) // FIXME: end should consider RTL?
 		p.hAlign = SubtitleRect::END;
 	else
 		p.hAlign = SubtitleRect::CENTER;
 
 	// size:<n>%
-	QStringRef csSize = settings.value("size");
+	QStringView_ csSize = settings.value("size");
 	if(csSize.back() == QChar('%'))
 		csSize.chop(1);
 	else
@@ -105,7 +116,7 @@ parseCueSettings(SubtitleLine *line, QStringRef css)
 	const float posSize = csSize.isEmpty() ? 100 : csSize.toFloat();
 
 	// position:<nFloat>%[,line-left|center|line-right]
-	const QStringRef csPos = settings.value("position");
+	const QStringView_ csPos = settings.value("position");
 	float pos = 0;
 	int posAnchor = p.hAlign; // FIXME: should consider RTL
 	{
@@ -118,11 +129,11 @@ parseCueSettings(SubtitleLine *line, QStringRef css)
 			}
 			if(n < csPos.size() && csPos.at(n) == QChar(',')) {
 				n++;
-				if(csPos.mid(n).compare(QByteArray("line-left")) == 0)
+				if(csPos.mid(n).compare($("line-left")) == 0)
 					posAnchor = SubtitleRect::START;
-				else if(csPos.mid(n).compare(QByteArray("center")) == 0)
+				else if(csPos.mid(n).compare($("center")) == 0)
 					posAnchor = SubtitleRect::CENTER;
-				else if(csPos.mid(n).compare(QByteArray("line-right")) == 0)
+				else if(csPos.mid(n).compare($("line-right")) == 0)
 					posAnchor = SubtitleRect::END;
 			}
 		}
@@ -130,7 +141,7 @@ parseCueSettings(SubtitleLine *line, QStringRef css)
 
 	// line:<n>[%][,start|center|end]
 #if 0
-	const QStringRef csLine = settings.value("line");
+	const QStringView_ csLine = settings.value("line");
 	float lineOff = 0.f;
 	bool lineSnap = true;
 	int lineAlign = SubtitleRect::START;
@@ -144,9 +155,9 @@ parseCueSettings(SubtitleLine *line, QStringRef css)
 			}
 			if(n < csLine.size() && csLine.at(n) == QChar(',')) {
 				n++;
-				if(csLine.mid(n).compare(QByteArray("center")) == 0)
+				if(csLine.mid(n).compare($("center")) == 0)
 					lineAlign = SubtitleRect::CENTER;
-				else if(csLine.mid(n).compare(QByteArray("end")) == 0)
+				else if(csLine.mid(n).compare($("end")) == 0)
 					lineAlign = SubtitleRect::END;
 			}
 			p.vAlign = lineOff >= 0.f ? SubtitleRect::TOP : SubtitleRect::BOTTOM;
@@ -209,46 +220,46 @@ WebVTTInputFormat::parseSubtitles(Subtitle &subtitle, const QString &data) const
 
 	int off = skipTextBlock(data, 6);
 	int end;
-	const QStringRef hdr = data.midRef(6, off - 6).trimmed();
+	const QStringView_ hdr = QStringView(data).mid(6, off - 6).trimmed();
 	if(!hdr.isEmpty())
 		subtitle.meta("comment.intro.0", hdr.toString());
 
-	QVector<QStringRef> notes;
+	QVector<QStringView_> notes;
 	staticRE$(reTime, "(?:([0-9]{2,}):)?([0-5][0-9]):([0-5][0-9])\\.([0-9]{3}) --> (?:([0-9]{2,}):)?([0-5][0-9]):([0-5][0-9])\\.([0-9]{3})\\b([^\\n]*)", REu);
 
 	subtitle.stylesheetClear();
 
 	// https://w3c.github.io/webvtt/
 	while(off < data.length()) {
-		if(data.midRef(off, 5) == $("STYLE")) {
+		if(QStringView(data).mid(off, 5) == $("STYLE")) {
 			if(!notes.isEmpty()) { // store note before style
 				int noteId = 0;
-				for(const QStringRef &note: notes)
+				for(const QStringView_ &note: notes)
 					subtitle.meta(QByteArray("comment.top.") + QByteArray::number(noteId++), note.toString());
 				notes.clear();
 			}
 			// NOTE: styles can't appear after first cue/line, even if we're not forbidding it
 			end = skipTextBlock(data, off += 5);
-			subtitle.stylesheetAppend(data.midRef(off, end - off).trimmed().toString());
+			subtitle.stylesheetAppend(QStringView(data).mid(off, end - off).trimmed().toString());
 			off = end;
 			continue;
 		}
-		if(data.midRef(off, 4) == $("NOTE")) {
+		if(QStringView(data).mid(off, 4) == $("NOTE")) {
 			end = skipTextBlock(data, off += 4);
-			notes.push_back(data.midRef(off, end - off).trimmed());
+			notes.push_back(QStringView(data).mid(off, end - off).trimmed());
 			off = end;
 			continue;
 		}
 		end = skipTextLine(data, off);
-		QStringRef cueId = data.midRef(off, end - off).trimmed();
-		QStringRef cueTime;
+		QStringView_ cueId = QStringView(data).mid(off, end - off).trimmed();
+		QStringView_ cueTime;
 		off = end;
 		if(cueId.contains($("-->"))) {
 			cueTime = cueId;
-			cueId.clear();
+			cueId = QStringView_();
 		} else {
 			end = skipTextLine(data, off);
-			cueTime = data.midRef(off, end - off).trimmed();
+			cueTime = QStringView(data).mid(off, end - off).trimmed();
 			off = end;
 		}
 		QRegularExpressionMatch m = reTime.match(cueTime);
@@ -257,12 +268,12 @@ WebVTTInputFormat::parseSubtitles(Subtitle &subtitle, const QString &data) const
 			return false;
 		}
 
-		const Time showTime(m.capturedRef(1).toInt(), m.capturedRef(2).toInt(), m.capturedRef(3).toInt(), m.capturedRef(4).toInt());
-		const Time hideTime(m.capturedRef(5).toInt(), m.capturedRef(6).toInt(), m.capturedRef(7).toInt(), m.capturedRef(8).toInt());
-		const QStringRef cueSettings = m.capturedRef(9);
+		const Time showTime(m.capturedView(1).toInt(), m.capturedView(2).toInt(), m.capturedView(3).toInt(), m.capturedView(4).toInt());
+		const Time hideTime(m.capturedView(5).toInt(), m.capturedView(6).toInt(), m.capturedView(7).toInt(), m.capturedView(8).toInt());
+		QStringView_ cueSettings = m.capturedView(9);
 
 		end = skipTextBlock(data, off);
-		const QStringRef cueText = data.midRef(off, end - off).trimmed();
+		const QStringView_ cueText = QStringView(data).mid(off, end - off).trimmed();
 		off = end;
 
 		SubtitleLine *line = new SubtitleLine(showTime, hideTime);
@@ -271,12 +282,12 @@ WebVTTInputFormat::parseSubtitles(Subtitle &subtitle, const QString &data) const
 		// https://developer.mozilla.org/en-US/docs/Web/API/WebVTT_API#cue_payload_text_tags
 		// TODO: handle pseudo classes
 		// https://developer.mozilla.org/en-US/docs/Web/API/WebVTT_API#css_pseudo-classes
-		stext.setRichString(cueText);
+		stext.setRichString(cueText.toString());
 		line->primaryDoc()->setRichText(stext, true);
 
 		if(!notes.isEmpty()) {
 			QString comment;
-			for(const QStringRef &note: notes) {
+			for(const QStringView_ &note: notes) {
 				if(!comment.isEmpty())
 					comment.append(QChar::LineFeed);
 				comment.append(note);
@@ -293,7 +304,7 @@ WebVTTInputFormat::parseSubtitles(Subtitle &subtitle, const QString &data) const
 
 	if(!notes.isEmpty()) {
 		int noteId = 0;
-		for(const QStringRef &note: notes)
+		for(const QStringView_ &note: notes)
 			subtitle.meta(QByteArray("comment.bottom.") + QByteArray::number(noteId++), note.toString());
 		notes.clear();
 	}

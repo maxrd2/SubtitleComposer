@@ -18,6 +18,17 @@
 #include <QTextDocumentFragment>
 #include <QTextBlock>
 
+#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
+// QStringView use is unoptimized in Qt5, and some methods are missing pre 5.15
+#include <QStringRef>
+#define QStringView(x) QStringRef(&(x))
+#define QStringView_ QStringRef
+#define capturedView capturedRef
+#else
+#include <QStringView>
+#define QStringView_ QStringView
+#endif
+
 
 #define DEBUG_CHANGES(...) //qDebug(__VA_ARGS__)
 
@@ -37,16 +48,16 @@ struct EditChange {
 	EditChange() : type(None) {}
 	EditChange(EditType t, int p, int l) : type(t), pos(p), len(l) {}
 	EditChange(EditType t, int p, int l, const QChar &v) : type(t), pos(p), len(l), qchar(v.unicode()) {}
-	EditChange(EditType t, int p, int l, const QStringRef &v) : type(t), pos(p), len(l), qstr(v) {}
+	EditChange(EditType t, int p, int l, QStringView_ v) : type(t), pos(p), len(l), qstr(v) {}
 	EditChange(EditType t, int p, int l, const QSharedPointer<QTextDocumentFragment> v) : type(t), pos(p), len(l), qfrag(v) {}
 	EditChange(EditType t, int p, int l, const QTextCursor &c) : type(t), pos(p), len(l), qfrag(new QTextDocumentFragment(c)) {}
 	EditChange(EditType t, int p, int l, const QTextDocument &d) : type(t), pos(p), len(l), qfrag(new QTextDocumentFragment(&d)) {}
 	EditType type;
 	int pos;
 	int len;
-	const ushort qchar = 0;
-	const QStringRef qstr;
-	const QSharedPointer<QTextDocumentFragment> qfrag;
+	ushort qchar = 0;
+	QStringView_ qstr;
+	QSharedPointer<QTextDocumentFragment> qfrag;
 };
 
 

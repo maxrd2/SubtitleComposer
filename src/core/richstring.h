@@ -75,8 +75,13 @@ public:
 	void setString(const QString &string, quint8 styleFlags = 0, QRgb styleColor = 0, const QString klass=QString(), const QString voice=QString());
 
 	QString richString() const;
+#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
 	RichString & setRichString(const QStringRef &string);
 	inline RichString & setRichString(const QString &string) { return setRichString(QStringRef(&string)); }
+#else
+	RichString & setRichString(const QStringView &string);
+	inline RichString & setRichString(const QString &string) { return setRichString(QStringView(string)); }
+#endif
 
 	quint8 styleFlagsAt(int index) const;
 	void setStyleFlagsAt(int index, quint8 styleFlags) const;

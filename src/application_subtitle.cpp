@@ -76,8 +76,8 @@ Application::buildSubtitleFilesFilter(bool openFileFilter)
 				filterSave += formatLine;
 			}
 		}
-		filterOpen = i18n("All Text Subtitles") % $(" (") % textExtensions.midRef(1) % $(")\n")
-			% i18n("All Image Subtitles") % $(" (") % imageExtensions.midRef(1) % $(")\n")
+		filterOpen = i18n("All Text Subtitles") % $(" (") % QStringView(textExtensions).mid(1) % $(")\n")
+			% i18n("All Image Subtitles") % $(" (") % QStringView(imageExtensions).mid(1) % $(")\n")
 			% filterSave
 			% i18n("All Files") % $(" (*)");
 		filterSave.truncate(filterSave.size() - 1);
@@ -100,9 +100,9 @@ Application::buildMediaFilesFilter()
 		foreach(const QString ext, audioExtensionList)
 			audioExtensions += $(" *.") % ext;
 
-		filter = i18n("Media Files") % $(" (") % videoExtensions.midRef(1) % audioExtensions % $(")\n")
-			% i18n("Video Files") % $(" (") % videoExtensions.midRef(1) % $(")\n")
-			% i18n("Audio Files") % $(" (") % audioExtensions.midRef(1) % $(")\n")
+		filter = i18n("Media Files") % $(" (") % QStringView(videoExtensions).mid(1) % audioExtensions % $(")\n")
+			% i18n("Video Files") % $(" (") % QStringView(videoExtensions).mid(1) % $(")\n")
+			% i18n("Audio Files") % $(" (") % QStringView(audioExtensions).mid(1) % $(")\n")
 			% i18n("All Files") % $(" (*)");
 	}
 

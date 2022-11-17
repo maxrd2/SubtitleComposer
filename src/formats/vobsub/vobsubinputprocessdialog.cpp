@@ -21,6 +21,7 @@
 #include <QDataStream>
 #include <QFile>
 #include <QSaveFile>
+#include <QStringView>
 
 using namespace SubtitleComposer;
 
@@ -419,9 +420,9 @@ VobSubInputProcessDialog::symFileOpen(const QString &filename)
 	QChar ch;
 	while(stream.readLineInto(&line)) {
 		if(line.startsWith(QStringLiteral(".s "))) {
-			text.setRichString(line.midRef(3).trimmed().toString());
+			text.setRichString(QStringView(line).mid(3).trimmed().toString());
 		} else if(line.startsWith(QStringLiteral(".d "))) {
-			QTextStream data(line.midRef(3).trimmed().toUtf8());
+			QTextStream data(QStringView(line).mid(3).trimmed().toUtf8());
 
 			// read piece data
 			data >> piece.right;

@@ -17,6 +17,7 @@
 
 #include <QUrl>
 #include <QFile>
+#include <QStringView>
 
 namespace SubtitleComposer {
 class VobSubInputFormat : public InputFormat
@@ -32,7 +33,7 @@ public:
 		const int extension = filename.lastIndexOf('.');
 		const QByteArray filebase = filename.left(extension).toUtf8();
 
-		if(filename.midRef(extension + 1) == QStringLiteral("sub")) {
+		if(QStringView(filename).mid(extension + 1) == QStringLiteral("sub")) {
 			const QString filenameIdx = filebase + ".idx";
 			if(QFile(filenameIdx).exists())
 				filename = filenameIdx;

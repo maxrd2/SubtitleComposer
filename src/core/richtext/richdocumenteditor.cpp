@@ -746,7 +746,7 @@ RichDocumentEditor::complete(int key)
 		if(key == Qt::Key_Up || key == Qt::Key_Down) {
 			if(m_textCursor->selectionEnd() == text.length())
 				return;
-			const QStringRef prefix = hasSelection() ? text.leftRef(m_textCursor->selectionStart()) : QStringRef(&text);
+			const QStringView prefix = hasSelection() ? QStringView(text).mid(0, m_textCursor->selectionStart()) : QStringView(text);
 			if(text.compare(m_completer->currentCompletion(), m_completer->caseSensitivity()) != 0
 				|| prefix.compare(m_completer->completionPrefix(), m_completer->caseSensitivity()) != 0) {
 				m_completer->setCompletionPrefix(prefix.toString());

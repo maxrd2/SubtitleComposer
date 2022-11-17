@@ -37,7 +37,7 @@ SubtitleComposer::dumpFormatRanges(const QString &text, const QVector<QTextLayou
 {
 	QString res;
 	for(const QTextLayout::FormatRange &r: ranges) {
-		res.append(QChar::LineFeed % QChar('"') % text.midRef(r.start, r.length) % QChar('"') % QChar::Space % textFormatString(r.format));
+		res.append(QChar::LineFeed % QChar('"') % QString(text).mid(r.start, r.length) % QChar('"') % QChar::Space % textFormatString(r.format));
 	}
 	return res;
 }
