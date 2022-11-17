@@ -6,6 +6,8 @@
 */
 
 #include "playerwidget.h"
+
+#include "appglobal.h"
 #include "application.h"
 #include "actions/useractionnames.h"
 #include "helpers/commondefs.h"

@@ -7,6 +7,7 @@
 #ifndef VOBSUBINPUTFORMAT_H
 #define VOBSUBINPUTFORMAT_H
 
+#include"appglobal.h"
 #include "application.h"
 #include "core/richtext/richdocument.h"
 #include "formats/inputformat.h"

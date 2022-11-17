@@ -6,6 +6,8 @@
 */
 
 #include "errorfinder.h"
+
+#include "appglobal.h"
 #include "application.h"
 #include "core/subtitleiterator.h"
 #include "errors/finderrorsdialog.h"

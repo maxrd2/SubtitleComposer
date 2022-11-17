@@ -6,6 +6,7 @@
 
 #include "richlineedit.h"
 
+#include "appglobal.h"
 #include "application.h"
 #include "actions/useractionnames.h"
 #include "core/richtext/richdocumenteditor.h"

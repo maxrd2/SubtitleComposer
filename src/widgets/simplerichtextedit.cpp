@@ -7,6 +7,7 @@
 
 #include "simplerichtextedit.h"
 
+#include "appglobal.h"
 #include "application.h"
 #include "actions/useractionnames.h"
 #include "core/undo/undostack.h"
@@ -180,10 +181,10 @@ SimpleRichTextEdit::createContextMenu(const QPoint &mouseGlobalPos)
 	QMenu *menu = new QMenu(this);
 
 	if(interactionFlags & Qt::TextEditable) {
-		m_actions[Undo]->setEnabled(app()->undoStack()->canUndo());
+		m_actions[Undo]->setEnabled(appUndoStack()->canUndo());
 		menu->addAction(m_actions[Undo]);
 
-		m_actions[Redo]->setEnabled(app()->undoStack()->canRedo());
+		m_actions[Redo]->setEnabled(appUndoStack()->canRedo());
 		menu->addAction(m_actions[Redo]);
 
 		menu->addSeparator();

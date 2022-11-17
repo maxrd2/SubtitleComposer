@@ -5,14 +5,9 @@
     SPDX-License-Identifier: GPL-2.0-or-later
 */
 
-#include "config.h"
-
 #include "scriptsmanager.h"
-#include "scripting_rangesmodule.h"
-#include "scripting_stringsmodule.h"
-#include "scripting_subtitlemodule.h"
-#include "scripting_subtitlelinemodule.h"
 
+#include "appglobal.h"
 #include "application.h"
 #include "actions/useraction.h"
 #include "actions/useractionnames.h"
@@ -20,7 +15,10 @@
 #include "helpers/common.h"
 #include "helpers/fileloadhelper.h"
 #include "helpers/filetrasher.h"
-#include "gui/treeview/treeview.h"
+#include "scripting/scripting_rangesmodule.h"
+#include "scripting/scripting_stringsmodule.h"
+#include "scripting/scripting_subtitlemodule.h"
+#include "scripting/scripting_subtitlelinemodule.h"
 
 #include <QAbstractItemModel>
 #include <QStandardPaths>
@@ -624,7 +622,7 @@ ScriptsManager::runScript(const QString &sN)
 	QJSValue res;
 	{
 		// everything done by the script will be undoable in a single step
-		SubtitleCompositeActionExecutor executor(app()->subtitle(), script->title());
+		SubtitleCompositeActionExecutor executor(appSubtitle(), script->title());
 		res = jse.evaluate(scriptData, script->name());
 	}
 

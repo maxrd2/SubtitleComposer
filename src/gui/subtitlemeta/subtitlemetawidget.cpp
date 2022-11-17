@@ -5,9 +5,9 @@
 */
 
 #include "subtitlemetawidget.h"
-
 #include "ui_subtitlepositionwidget.h"
 
+#include "appglobal.h"
 #include "application.h"
 #include "actions/useractionnames.h"
 #include "core/subtitle.h"

@@ -6,6 +6,7 @@
 */
 
 #include "mainwindow.h"
+#include "appglobal.h"
 #include "application.h"
 #include "gui/playerwidget.h"
 #include "gui/treeview/lineswidget.h"

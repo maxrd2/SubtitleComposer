@@ -6,6 +6,7 @@
 
 #include "config.h"
 
+#include "appglobal.h"
 #include "application.h"
 #include "core/subtitleiterator.h"
 #include "errors/finderrorsdialog.h"
@@ -44,12 +45,12 @@ Application::detectErrors()
 void
 Application::clearErrors()
 {
-	m_subtitle->clearErrors(RangeList(Range::full()), SubtitleLine::AllErrors);
+	appSubtitle()->clearErrors(RangeList(Range::full()), SubtitleLine::AllErrors);
 }
 
 void
 Application::toggleSelectedLinesMark()
 {
-	m_subtitle->toggleMarked(m_mainWindow->m_linesWidget->selectionRanges());
+	appSubtitle()->toggleMarked(m_mainWindow->m_linesWidget->selectionRanges());
 }
 

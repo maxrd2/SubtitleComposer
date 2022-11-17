@@ -6,6 +6,8 @@
 */
 
 #include "generalconfigwidget.h"
+
+#include "appglobal.h"
 #include "application.h"
 
 using namespace SubtitleComposer;

@@ -6,6 +6,7 @@
 
 #include "waveformwidget.h"
 
+#include "appglobal.h"
 #include "application.h"
 #include "scconfig.h"
 #include "core/subtitleline.h"

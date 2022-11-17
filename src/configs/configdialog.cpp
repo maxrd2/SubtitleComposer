@@ -7,19 +7,16 @@
 
 #include "config.h"
 
+#include "application.h"
+#include "appglobal.h"
 #include "configs/configdialog.h"
-
 #include "configs/generalconfigwidget.h"
 #include "configs/errorsconfigwidget.h"
 #include "configs/waveformconfigwidget.h"
 #include "configs/playerconfigwidget.h"
-
 #include "videoplayer/videoplayer.h"
-
 #include "speechprocessor/speechprocessor.h"
 #include "speechprocessor/speechplugin.h"
-
-#include "application.h"
 
 #include <KConfigDialog>
 #include <KLocalizedString>

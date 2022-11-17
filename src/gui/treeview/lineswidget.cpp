@@ -6,6 +6,8 @@
 */
 
 #include "lineswidget.h"
+
+#include "appglobal.h"
 #include "application.h"
 #include "core/richtext/richdocument.h"
 #include "actions/useractionnames.h"

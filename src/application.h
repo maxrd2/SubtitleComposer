@@ -65,8 +65,6 @@ public:
 	Application(int &argc, char **argv);
 	virtual ~Application();
 
-	inline Subtitle * subtitle() const { return m_subtitle.data(); }
-	inline UndoStack * undoStack() const { return m_undoStack; }
 	inline MainWindow * mainWindow() const { return m_mainWindow; }
 	inline LinesWidget * linesWidget() const { return m_mainWindow->m_linesWidget; }
 	inline const SpeechProcessor * speechProcessor() const { return m_speechProcessor; }
@@ -249,7 +247,6 @@ private slots:
 	void showPreferences();
 
 private:
-	QExplicitlySharedDataPointer<Subtitle> m_subtitle;
 	QUrl m_subtitleUrl;
 	QString m_subtitleFileName;
 	QString m_subtitleEncoding;
@@ -292,12 +289,7 @@ private:
 	QUrl m_lastVideoUrl;
 	bool m_linkCurrentLineToPosition;
 	KRecentFilesAction *m_recentVideosAction;
-
-	UndoStack *m_undoStack;
 };
-
-inline Application * app() { return static_cast<Application *>(QApplication::instance()); }
-
 
 }
 

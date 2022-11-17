@@ -7,6 +7,7 @@
 
 #include "config.h"
 
+#include "appglobal.h"
 #include "application.h"
 #include "actions/krecentfilesactionext.h"
 #include "actions/useraction.h"
@@ -139,7 +140,6 @@ setupIconTheme(int argc, char **argv)
 
 Application::Application(int &argc, char **argv) :
 	QApplication(argc, argv),
-	m_subtitle(nullptr),
 	m_translationMode(false),
 	m_textDemux(nullptr),
 	m_speechProcessor(nullptr),
@@ -148,6 +148,8 @@ Application::Application(int &argc, char **argv) :
 	m_lastVideoUrl(QDir::homePath()),
 	m_linkCurrentLineToPosition(false)
 {
+	AppGlobal::app = this;
+
 	KLocalizedString::setApplicationDomain("subtitlecomposer");
 
 	setupIconTheme(argc, argv);
@@ -183,7 +185,7 @@ Application::Application(int &argc, char **argv) :
 
 	m_scriptsManager = new ScriptsManager(this);
 
-	m_undoStack = new UndoStack(m_mainWindow);
+	AppGlobal::undoStack = new UndoStack(m_mainWindow);
 
 	UserActionManager *actionManager = UserActionManager::instance();
 	actionManager->setLinesWidget(m_mainWindow->m_linesWidget);
@@ -283,6 +285,7 @@ Application::~Application()
 	// pretty much anything) at this point.
 
 	// delete m_mainWindow; the window is destroyed when it's closed
+	AppGlobal::app = nullptr;
 }
 
 void
@@ -414,7 +417,7 @@ Application::insertBeforeCurrentLine()
 		{
 			LinesWidgetScrollToModelDetacher detacher(*m_mainWindow->m_linesWidget);
 			SubtitleLine *currentLine = m_mainWindow->m_linesWidget->currentLine();
-			newLine = m_subtitle->insertNewLine(currentLine ? currentLine->index() : 0, false, dlg->selectedTextsTarget());
+			newLine = appSubtitle()->insertNewLine(currentLine ? currentLine->index() : 0, false, dlg->selectedTextsTarget());
 		}
 		m_mainWindow->m_linesWidget->setCurrentLine(newLine, true);
 	}
@@ -431,7 +434,7 @@ Application::insertAfterCurrentLine()
 			LinesWidgetScrollToModelDetacher detacher(*m_mainWindow->m_linesWidget);
 
 			SubtitleLine *currentLine = m_mainWindow->m_linesWidget->currentLine();
-			newLine = m_subtitle->insertNewLine(currentLine ? currentLine->index() + 1 : 0, true, dlg->selectedTextsTarget());
+			newLine = appSubtitle()->insertNewLine(currentLine ? currentLine->index() + 1 : 0, true, dlg->selectedTextsTarget());
 		}
 		m_mainWindow->m_linesWidget->setCurrentLine(newLine, true);
 	}
@@ -450,14 +453,14 @@ Application::removeSelectedLines()
 
 		{
 			LinesWidgetScrollToModelDetacher detacher(*m_mainWindow->m_linesWidget);
-			m_subtitle->removeLines(selectionRanges, dlg->selectedTextsTarget());
+			appSubtitle()->removeLines(selectionRanges, dlg->selectedTextsTarget());
 		}
 
 		int firstIndex = selectionRanges.firstIndex();
-		if(firstIndex < m_subtitle->linesCount())
-			m_mainWindow->m_linesWidget->setCurrentLine(m_subtitle->line(firstIndex), true);
-		else if(firstIndex - 1 < m_subtitle->linesCount())
-			m_mainWindow->m_linesWidget->setCurrentLine(m_subtitle->line(firstIndex - 1), true);
+		if(firstIndex < appSubtitle()->linesCount())
+			m_mainWindow->m_linesWidget->setCurrentLine(appSubtitle()->line(firstIndex), true);
+		else if(firstIndex - 1 < appSubtitle()->linesCount())
+			m_mainWindow->m_linesWidget->setCurrentLine(appSubtitle()->line(firstIndex - 1), true);
 	}
 }
 
@@ -472,13 +475,13 @@ Application::joinSelectedLines()
 //      i18n( "Join Lines" ) ) )
 //      return;
 
-	m_subtitle->joinLines(ranges);
+	appSubtitle()->joinLines(ranges);
 }
 
 void
 Application::splitSelectedLines()
 {
-	m_subtitle->splitLines(m_mainWindow->m_linesWidget->selectionRanges());
+	appSubtitle()->splitLines(m_mainWindow->m_linesWidget->selectionRanges());
 }
 
 void
@@ -490,10 +493,10 @@ Application::selectAllLines()
 void
 Application::gotoLine()
 {
-	IntInputDialog gotoLineDlg(i18n("Go to Line"), i18n("&Go to line:"), 1, m_subtitle->linesCount(), m_mainWindow->m_linesWidget->currentLineIndex() + 1);
+	IntInputDialog gotoLineDlg(i18n("Go to Line"), i18n("&Go to line:"), 1, appSubtitle()->linesCount(), m_mainWindow->m_linesWidget->currentLineIndex() + 1);
 
 	if(gotoLineDlg.exec() == QDialog::Accepted)
-		m_mainWindow->m_linesWidget->setCurrentLine(m_subtitle->line(gotoLineDlg.value() - 1), true);
+		m_mainWindow->m_linesWidget->setCurrentLine(appSubtitle()->line(gotoLineDlg.value() - 1), true);
 }
 
 void
@@ -552,38 +555,38 @@ Application::advanceCurrentLine()
 void
 Application::toggleSelectedLinesBold()
 {
-	m_subtitle->toggleStyleFlag(m_mainWindow->m_linesWidget->selectionRanges(), RichString::Bold);
+	appSubtitle()->toggleStyleFlag(m_mainWindow->m_linesWidget->selectionRanges(), RichString::Bold);
 }
 
 void
 Application::toggleSelectedLinesItalic()
 {
-	m_subtitle->toggleStyleFlag(m_mainWindow->m_linesWidget->selectionRanges(), RichString::Italic);
+	appSubtitle()->toggleStyleFlag(m_mainWindow->m_linesWidget->selectionRanges(), RichString::Italic);
 }
 
 void
 Application::toggleSelectedLinesUnderline()
 {
-	m_subtitle->toggleStyleFlag(m_mainWindow->m_linesWidget->selectionRanges(), RichString::Underline);
+	appSubtitle()->toggleStyleFlag(m_mainWindow->m_linesWidget->selectionRanges(), RichString::Underline);
 }
 
 void
 Application::toggleSelectedLinesStrikeThrough()
 {
-	m_subtitle->toggleStyleFlag(m_mainWindow->m_linesWidget->selectionRanges(), RichString::StrikeThrough);
+	appSubtitle()->toggleStyleFlag(m_mainWindow->m_linesWidget->selectionRanges(), RichString::StrikeThrough);
 }
 
 void
 Application::changeSelectedLinesColor()
 {
 	const RangeList range = m_mainWindow->m_linesWidget->selectionRanges();
-	SubtitleIterator it(*m_subtitle, range);
+	SubtitleIterator it(*appSubtitle(), range);
 	if(!it.current())
 		return;
 
 	QColor color = SubtitleColorDialog::getColor(QColor(it.current()->primaryDoc()->styleColorAt(0)), m_mainWindow);
 	if(color.isValid())
-		m_subtitle->changeTextColor(range, color.rgba());
+		appSubtitle()->changeTextColor(range, color.rgba());
 }
 
 void
@@ -594,19 +597,19 @@ Application::shiftLines()
 	dlg->resetShiftTime();
 
 	if(dlg->exec() == QDialog::Accepted)
-		m_subtitle->shiftLines(m_mainWindow->m_linesWidget->targetRanges(dlg->selectedLinesTarget()), dlg->shiftTimeMillis());
+		appSubtitle()->shiftLines(m_mainWindow->m_linesWidget->targetRanges(dlg->selectedLinesTarget()), dlg->shiftTimeMillis());
 }
 
 void
 Application::shiftSelectedLinesForwards()
 {
-	m_subtitle->shiftLines(m_mainWindow->m_linesWidget->selectionRanges(), SCConfig::linesQuickShiftAmount());
+	appSubtitle()->shiftLines(m_mainWindow->m_linesWidget->selectionRanges(), SCConfig::linesQuickShiftAmount());
 }
 
 void
 Application::shiftSelectedLinesBackwards()
 {
-	m_subtitle->shiftLines(m_mainWindow->m_linesWidget->selectionRanges(), -SCConfig::linesQuickShiftAmount());
+	appSubtitle()->shiftLines(m_mainWindow->m_linesWidget->selectionRanges(), -SCConfig::linesQuickShiftAmount());
 }
 
 void
@@ -614,22 +617,22 @@ Application::adjustLines()
 {
 	static AdjustTimesDialog *dlg = new AdjustTimesDialog(m_mainWindow);
 
-	dlg->setFirstLineTime(m_subtitle->firstLine()->showTime());
-	dlg->setLastLineTime(m_subtitle->lastLine()->showTime());
+	dlg->setFirstLineTime(appSubtitle()->firstLine()->showTime());
+	dlg->setLastLineTime(appSubtitle()->lastLine()->showTime());
 
 	if(dlg->exec() == QDialog::Accepted)
-		m_subtitle->adjustLines(Range::full(), dlg->firstLineTime().toMillis(), dlg->lastLineTime().toMillis());
+		appSubtitle()->adjustLines(Range::full(), dlg->firstLineTime().toMillis(), dlg->lastLineTime().toMillis());
 }
 
 void
 Application::changeFrameRate()
 {
-	static ChangeFrameRateDialog *dlg = new ChangeFrameRateDialog(m_subtitle->framesPerSecond(), m_mainWindow);
+	static ChangeFrameRateDialog *dlg = new ChangeFrameRateDialog(appSubtitle()->framesPerSecond(), m_mainWindow);
 
-	dlg->setFromFramesPerSecond(m_subtitle->framesPerSecond());
+	dlg->setFromFramesPerSecond(appSubtitle()->framesPerSecond());
 
 	if(dlg->exec() == QDialog::Accepted) {
-		m_subtitle->changeFramesPerSecond(dlg->toFramesPerSecond(), dlg->fromFramesPerSecond());
+		appSubtitle()->changeFramesPerSecond(dlg->toFramesPerSecond(), dlg->fromFramesPerSecond());
 	}
 }
 
@@ -641,7 +644,7 @@ Application::enforceDurationLimits()
 																m_mainWindow);
 
 	if(dlg->exec() == QDialog::Accepted) {
-		m_subtitle->applyDurationLimits(m_mainWindow->m_linesWidget->targetRanges(dlg->selectedLinesTarget()),
+		appSubtitle()->applyDurationLimits(m_mainWindow->m_linesWidget->targetRanges(dlg->selectedLinesTarget()),
 			dlg->enforceMinDuration() ? dlg->minDuration() : Time(),
 			dlg->enforceMaxDuration() ? dlg->maxDuration() : Time(std::numeric_limits<double>::max()),
 			!dlg->preventOverlap());
@@ -654,7 +657,7 @@ Application::setAutoDurations()
 	static AutoDurationsDialog *dlg = new AutoDurationsDialog(60, 50, 50, m_mainWindow);
 
 	if(dlg->exec() == QDialog::Accepted) {
-		m_subtitle->setAutoDurations(m_mainWindow->m_linesWidget->targetRanges(dlg->selectedLinesTarget()),
+		appSubtitle()->setAutoDurations(m_mainWindow->m_linesWidget->targetRanges(dlg->selectedLinesTarget()),
 									 dlg->charMillis(), dlg->wordMillis(), dlg->lineMillis(),
 									 !dlg->preventOverlap(), dlg->calculationMode());
 	}
@@ -666,7 +669,7 @@ Application::maximizeDurations()
 	static auto *dlg = new ActionWithLinesTargetDialog(i18n("Maximize Durations"), m_mainWindow);
 
 	if(dlg->exec() == QDialog::Accepted)
-		m_subtitle->setMaximumDurations(m_mainWindow->m_linesWidget->targetRanges(dlg->selectedLinesTarget()));
+		appSubtitle()->setMaximumDurations(m_mainWindow->m_linesWidget->targetRanges(dlg->selectedLinesTarget()));
 }
 
 void
@@ -675,7 +678,7 @@ Application::fixOverlappingLines()
 	static FixOverlappingTimesDialog *dlg = new FixOverlappingTimesDialog(m_mainWindow);
 
 	if(dlg->exec() == QDialog::Accepted)
-		m_subtitle->fixOverlappingLines(m_mainWindow->m_linesWidget->targetRanges(dlg->selectedLinesTarget()), dlg->minimumInterval());
+		appSubtitle()->fixOverlappingLines(m_mainWindow->m_linesWidget->targetRanges(dlg->selectedLinesTarget()), dlg->minimumInterval());
 }
 
 void
@@ -684,7 +687,7 @@ Application::breakLines()
 	static SmartTextsAdjustDialog *dlg = new SmartTextsAdjustDialog(30, m_mainWindow);
 
 	if(dlg->exec() == QDialog::Accepted)
-		m_subtitle->breakLines(m_mainWindow->m_linesWidget->targetRanges(dlg->selectedLinesTarget()),
+		appSubtitle()->breakLines(m_mainWindow->m_linesWidget->targetRanges(dlg->selectedLinesTarget()),
 							   dlg->minLengthForLineBreak(), dlg->selectedTextsTarget());
 }
 
@@ -695,7 +698,7 @@ Application::unbreakTexts()
 																							  m_mainWindow);
 
 	if(dlg->exec() == QDialog::Accepted)
-		m_subtitle->unbreakTexts(m_mainWindow->m_linesWidget->targetRanges(dlg->selectedLinesTarget()),
+		appSubtitle()->unbreakTexts(m_mainWindow->m_linesWidget->targetRanges(dlg->selectedLinesTarget()),
 								 dlg->selectedTextsTarget());
 }
 
@@ -706,7 +709,7 @@ Application::simplifySpaces()
 																							  m_mainWindow);
 
 	if(dlg->exec() == QDialog::Accepted)
-		m_subtitle->simplifyTextWhiteSpace(m_mainWindow->m_linesWidget->targetRanges(dlg->selectedLinesTarget()),
+		appSubtitle()->simplifyTextWhiteSpace(m_mainWindow->m_linesWidget->targetRanges(dlg->selectedLinesTarget()),
 										   dlg->selectedTextsTarget());
 }
 
@@ -718,19 +721,19 @@ Application::changeCase()
 	if(dlg->exec() == QDialog::Accepted) {
 		switch(dlg->caseOperation()) {
 		case ChangeTextsCaseDialog::Upper:
-			m_subtitle->upperCase(m_mainWindow->m_linesWidget->targetRanges(dlg->selectedLinesTarget()),
+			appSubtitle()->upperCase(m_mainWindow->m_linesWidget->targetRanges(dlg->selectedLinesTarget()),
 								  dlg->selectedTextsTarget());
 			break;
 		case ChangeTextsCaseDialog::Lower:
-			m_subtitle->lowerCase(m_mainWindow->m_linesWidget->targetRanges(dlg->selectedLinesTarget()),
+			appSubtitle()->lowerCase(m_mainWindow->m_linesWidget->targetRanges(dlg->selectedLinesTarget()),
 								  dlg->selectedTextsTarget());
 			break;
 		case ChangeTextsCaseDialog::Title:
-			m_subtitle->titleCase(m_mainWindow->m_linesWidget->targetRanges(dlg->selectedLinesTarget()),
+			appSubtitle()->titleCase(m_mainWindow->m_linesWidget->targetRanges(dlg->selectedLinesTarget()),
 								  dlg->lowerFirst(), dlg->selectedTextsTarget());
 			break;
 		case ChangeTextsCaseDialog::Sentence:
-			m_subtitle->sentenceCase(m_mainWindow->m_linesWidget->targetRanges(dlg->selectedLinesTarget()),
+			appSubtitle()->sentenceCase(m_mainWindow->m_linesWidget->targetRanges(dlg->selectedLinesTarget()),
 									 dlg->lowerFirst(), dlg->selectedTextsTarget());
 			break;
 		}
@@ -743,7 +746,7 @@ Application::fixPunctuation()
 	static FixPunctuationDialog *dlg = new FixPunctuationDialog(m_mainWindow);
 
 	if(dlg->exec() == QDialog::Accepted) {
-		m_subtitle->fixPunctuation(m_mainWindow->m_linesWidget->targetRanges(dlg->selectedLinesTarget()),
+		appSubtitle()->fixPunctuation(m_mainWindow->m_linesWidget->targetRanges(dlg->selectedLinesTarget()),
 								   dlg->spaces(), dlg->quotes(), dlg->englishI(),
 								   dlg->ellipsis(), dlg->selectedTextsTarget());
 	}
@@ -767,7 +770,7 @@ Application::applyTranslation(RangeList ranges, bool primary, int inputLanguage,
 
 	QString inputText;
 	QRegExp dialogCueRegExp2("-([^-])");
-	for(SubtitleIterator it(*m_subtitle, ranges); it.current(); ++it) {
+	for(SubtitleIterator it(*appSubtitle(), ranges); it.current(); ++it) {
 		QString lineText = it.current()->primaryDoc()->toHtml();
 		lineText.replace($("\n"), QString()).replace("--", "---").replace(dialogCueRegExp2, "- \\1");
 		inputText += lineText + "\n()() ";
@@ -794,12 +797,12 @@ Application::applyTranslation(RangeList ranges, bool primary, int inputLanguage,
 	}
 
 	if(errorMessage.isEmpty()) {
-		SubtitleCompositeActionExecutor executor(m_subtitle.constData(), primary ? i18n("Translate Primary Text") : i18n("Translate Secondary Text"));
+		SubtitleCompositeActionExecutor executor(appSubtitle(), primary ? i18n("Translate Primary Text") : i18n("Translate Secondary Text"));
 
 		int index = -1;
 		QRegExp ellipsisRegExp("\\s+\\.\\.\\.");
 		QRegExp dialogCueRegExp("(^| )- ");
-		for(SubtitleIterator it(*m_subtitle, ranges); it.current(); ++it) {
+		for(SubtitleIterator it(*appSubtitle(), ranges); it.current(); ++it) {
 			QString line = outputLines.at(++index);
 			line.replace(" ---", "--");
 			line.replace(ellipsisRegExp, "...");
@@ -915,7 +918,7 @@ Application::seekToPrevLine()
 	int selectedIndex = m_mainWindow->m_linesWidget->firstSelectedIndex();
 	if(selectedIndex < 0)
 		return;
-	SubtitleLine *currentLine = m_subtitle->line(selectedIndex);
+	SubtitleLine *currentLine = appSubtitle()->line(selectedIndex);
 	if(currentLine) {
 		SubtitleLine *prevLine = currentLine->prevLine();
 		if(prevLine) {
@@ -933,7 +936,7 @@ Application::playOnlyCurrentLine()
 	int selectedIndex = m_mainWindow->m_linesWidget->firstSelectedIndex();
 	if(selectedIndex < 0)
 		return;
-	SubtitleLine *currentLine = m_subtitle->line(selectedIndex);
+	SubtitleLine *currentLine = appSubtitle()->line(selectedIndex);
 	if(currentLine) {
 		VideoPlayer *videoPlayer = VideoPlayer::instance();
 		if(!videoPlayer->isPlaying())
@@ -949,7 +952,7 @@ Application::seekToCurrentLine()
 	int selectedIndex = m_mainWindow->m_linesWidget->firstSelectedIndex();
 	if(selectedIndex < 0)
 		return;
-	SubtitleLine *currentLine = m_subtitle->line(selectedIndex);
+	SubtitleLine *currentLine = appSubtitle()->line(selectedIndex);
 	if(currentLine) {
 		m_mainWindow->m_playerWidget->pauseAfterPlayingLine(nullptr);
 		VideoPlayer::instance()->seek(currentLine->showTime().toSeconds() - SCConfig::jumpLineOffset() / 1000.0);
@@ -962,7 +965,7 @@ Application::seekToNextLine()
 	int selectedIndex = m_mainWindow->m_linesWidget->firstSelectedIndex();
 	if(selectedIndex < 0)
 		return;
-	SubtitleLine *currentLine = m_subtitle->line(selectedIndex);
+	SubtitleLine *currentLine = appSubtitle()->line(selectedIndex);
 	if(currentLine) {
 		SubtitleLine *nextLine = currentLine->nextLine();
 		if(nextLine) {
@@ -1022,13 +1025,13 @@ Application::setActiveSubtitleStream(int subtitleStream)
 void
 Application::anchorToggle()
 {
-	m_subtitle->toggleLineAnchor(m_mainWindow->m_linesWidget->currentLine());
+	appSubtitle()->toggleLineAnchor(m_mainWindow->m_linesWidget->currentLine());
 }
 
 void
 Application::anchorRemoveAll()
 {
-	m_subtitle->removeAllAnchors();
+	appSubtitle()->removeAllAnchors();
 }
 
 void
@@ -1036,7 +1039,7 @@ Application::shiftToVideoPosition()
 {
 	SubtitleLine *currentLine = m_mainWindow->m_linesWidget->currentLine();
 	if(currentLine)
-		m_subtitle->shiftLines(Range::full(), videoPosition(true).toMillis() - currentLine->showTime().toMillis());
+		appSubtitle()->shiftLines(Range::full(), videoPosition(true).toMillis() - currentLine->showTime().toMillis());
 }
 
 /// END ACTION HANDLERS
@@ -1044,18 +1047,18 @@ Application::shiftToVideoPosition()
 void
 Application::updateTitle()
 {
-	if(m_subtitle) {
+	if(appSubtitle()) {
 		if(m_translationMode) {
 			const QString caption = QStringLiteral("%1%2 | %3").arg(
 				m_subtitleUrl.isEmpty() ? i18n("Untitled") : m_subtitleFileName,
-				m_subtitle->isPrimaryDirty() ? $(" *") : QString(),
+				appSubtitle()->isPrimaryDirty() ? $(" *") : QString(),
 				m_subtitleTrUrl.isEmpty() ? i18n("Untitled Translation") : m_subtitleTrFileName
 			);
-			m_mainWindow->setCaption(caption, m_subtitle->isSecondaryDirty());
+			m_mainWindow->setCaption(caption, appSubtitle()->isSecondaryDirty());
 		} else {
 			m_mainWindow->setCaption(
 						m_subtitleUrl.isEmpty() ? i18n("Untitled") : (m_subtitleUrl.isLocalFile() ? m_subtitleUrl.toLocalFile() : m_subtitleUrl.toString(QUrl::PreferLocalFile)),
-						m_subtitle->isPrimaryDirty());
+						appSubtitle()->isPrimaryDirty());
 		}
 	} else {
 		m_mainWindow->setCaption(QString());

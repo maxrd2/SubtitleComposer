@@ -5,6 +5,8 @@
 */
 
 #include "application.h"
+
+#include "appglobal.h"
 #include "actions/kcodecactionext.h"
 #include "actions/krecentfilesactionext.h"
 #include "actions/useractionnames.h"
@@ -139,7 +141,7 @@ Application::newSubtitle()
 	if(!closeSubtitle())
 		return;
 
-	m_subtitle = new Subtitle();
+	AppGlobal::subtitle = new Subtitle();
 	m_subtitleUrl.clear();
 
 	processSubtitleOpened(nullptr, QString());
@@ -170,8 +172,8 @@ Application::openSubtitle(const QUrl &url, bool warnClashingUrls)
 
 	QTextCodec *codec = codecForEncoding(KRecentFilesActionExt::encodingForUrl(url));
 
-	m_subtitle = new Subtitle();
-	FormatManager::Status res = FormatManager::instance().readSubtitle(*m_subtitle, true, url, &codec, &m_subtitleFormat);
+	AppGlobal::subtitle = new Subtitle();
+	FormatManager::Status res = FormatManager::instance().readSubtitle(*appSubtitle(), true, url, &codec, &m_subtitleFormat);
 	if(res == FormatManager::SUCCESS) {
 		m_subtitleUrl = url;
 		processSubtitleOpened(codec, m_subtitleFormat);
@@ -199,7 +201,7 @@ Application::openSubtitle(const QUrl &url, bool warnClashingUrls)
 			}
 		}
 	} else {
-		m_subtitle.reset();
+		AppGlobal::subtitle.reset();
 
 		if(res == FormatManager::ERROR) {
 			KMessageBox::error(
@@ -234,9 +236,9 @@ Application::reopenSubtitleWithCodec(QTextCodec *codec)
 	emit subtitleClosed();
 
 	if(m_translationMode)
-		subtitle->setSecondaryData(*m_subtitle, false);
+		subtitle->setSecondaryData(*appSubtitle(), false);
 
-	m_subtitle = subtitle;
+	AppGlobal::subtitle = subtitle;
 
 	processSubtitleOpened(codec, subtitleFormat);
 }
@@ -245,11 +247,11 @@ void
 Application::processSubtitleOpened(QTextCodec *codec, const QString &subtitleFormat)
 {
 	// The loading of the subtitle shouldn't be an undoable action as there's no state before it
-	m_undoStack->clear();
-	m_subtitle->clearPrimaryDirty();
-	m_subtitle->clearSecondaryDirty();
+	appUndoStack()->clear();
+	appSubtitle()->clearPrimaryDirty();
+	appSubtitle()->clearSecondaryDirty();
 
-	emit subtitleOpened(m_subtitle.data());
+	emit subtitleOpened(appSubtitle());
 
 	m_subtitleFormat = subtitleFormat;
 
@@ -266,8 +268,8 @@ Application::processSubtitleOpened(QTextCodec *codec, const QString &subtitleFor
 	m_reopenSubtitleAsAction->setCurrentCodec(codec);
 	m_saveSubtitleAsAction->setCurrentCodec(codec);
 
-	connect(m_subtitle.constData(), &Subtitle::primaryDirtyStateChanged, this, &Application::updateTitle);
-	connect(m_subtitle.constData(), &Subtitle::secondaryDirtyStateChanged, this, &Application::updateTitle);
+	connect(appSubtitle(), &Subtitle::primaryDirtyStateChanged, this, &Application::updateTitle);
+	connect(appSubtitle(), &Subtitle::secondaryDirtyStateChanged, this, &Application::updateTitle);
 	updateTitle();
 
 	m_labSubFormat->setText(i18n("Format: %1", m_subtitleFormat));
@@ -282,7 +284,7 @@ Application::demuxTextStream(int textStreamIndex)
 
 	newSubtitle();
 
-	m_textDemux->demuxFile(m_subtitle.data(), VideoPlayer::instance()->filePath(), textStreamIndex);
+	m_textDemux->demuxFile(appSubtitle(), VideoPlayer::instance()->filePath(), textStreamIndex);
 }
 
 void
@@ -293,7 +295,7 @@ Application::speechImportAudioStream(int audioStreamIndex)
 
 	newSubtitle();
 
-	m_speechProcessor->setSubtitle(m_subtitle.data());
+	m_speechProcessor->setSubtitle(appSubtitle());
 	m_speechProcessor->setAudioStream(VideoPlayer::instance()->filePath(), audioStreamIndex);
 }
 
@@ -311,8 +313,8 @@ Application::saveSubtitle(QTextCodec *codec)
 	if(!codecFound)
 		codec = QTextCodec::codecForLocale();
 
-	if(FormatManager::instance().writeSubtitle(*m_subtitle, true, m_subtitleUrl, codec, m_subtitleFormat, true)) {
-		m_subtitle->clearPrimaryDirty();
+	if(FormatManager::instance().writeSubtitle(*appSubtitle(), true, m_subtitleUrl, codec, m_subtitleFormat, true)) {
+		appSubtitle()->clearPrimaryDirty();
 
 		m_reopenSubtitleAsAction->setCurrentCodec(codec);
 		m_saveSubtitleAsAction->setCurrentCodec(codec);
@@ -365,8 +367,8 @@ Application::saveSubtitleAs(QTextCodec *codec)
 bool
 Application::closeSubtitle()
 {
-	if(m_subtitle) {
-		if(m_translationMode && m_subtitle->isSecondaryDirty()) {
+	if(appSubtitle()) {
+		if(m_translationMode && appSubtitle()->isSecondaryDirty()) {
 			int result = KMessageBox::warningYesNoCancel(nullptr,
 							i18n("Currently opened translation subtitle has unsaved changes.\nDo you want to save them?"),
 							i18n("Close Translation Subtitle") + " - SubtitleComposer");
@@ -377,7 +379,7 @@ Application::closeSubtitle()
 					return false;
 		}
 
-		if(m_subtitle->isPrimaryDirty()) {
+		if(appSubtitle()->isPrimaryDirty()) {
 			int result = KMessageBox::warningYesNoCancel(nullptr,
 							i18n("Currently opened subtitle has unsaved changes.\nDo you want to save them?"),
 							i18n("Close Subtitle") + " - SubtitleComposer");
@@ -393,14 +395,14 @@ Application::closeSubtitle()
 			emit translationModeChanged(false);
 		}
 
-		disconnect(m_subtitle.constData(), &Subtitle::primaryDirtyStateChanged, this, &Application::updateTitle);
-		disconnect(m_subtitle.constData(), &Subtitle::secondaryDirtyStateChanged, this, &Application::updateTitle);
+		disconnect(appSubtitle(), &Subtitle::primaryDirtyStateChanged, this, &Application::updateTitle);
+		disconnect(appSubtitle(), &Subtitle::secondaryDirtyStateChanged, this, &Application::updateTitle);
 
 		emit subtitleClosed();
 
-		m_undoStack->clear();
+		appUndoStack()->clear();
 
-		m_subtitle.reset();
+		AppGlobal::subtitle.reset();
 
 		m_labSubFormat->setText(QString());
 		m_labSubEncoding->setText(QString());
@@ -436,7 +438,7 @@ Application::newSubtitleTr()
 void
 Application::openSubtitleTr()
 {
-	if(!m_subtitle)
+	if(!appSubtitle())
 		return;
 
 	QFileDialog openDlg(m_mainWindow, i18n("Open Translation Subtitle"),  QString(), buildSubtitleFilesFilter());
@@ -453,7 +455,7 @@ Application::openSubtitleTr(const QUrl &url, bool warnClashingUrls)
 {
 	m_lastSubtitleUrl = url;
 
-	if(!m_subtitle)
+	if(!appSubtitle())
 		return;
 
 	if(warnClashingUrls && !acceptClashingUrls(m_subtitleUrl, url))
@@ -477,7 +479,7 @@ Application::openSubtitleTr(const QUrl &url, bool warnClashingUrls)
 	}
 
 	m_subtitleTrUrl = url;
-	m_subtitle->setSecondaryData(*subtitleTr, false);
+	appSubtitle()->setSecondaryData(*subtitleTr, false);
 	processTranslationOpened(codec, m_subtitleTrFormat);
 }
 
@@ -501,7 +503,7 @@ Application::reopenSubtitleTrWithCodec(QTextCodec *codec)
 		return;
 	}
 
-	m_subtitle->setSecondaryData(*subtitleTr, false);
+	appSubtitle()->setSecondaryData(*subtitleTr, false);
 	processTranslationOpened(codec, m_subtitleTrFormat);
 }
 
@@ -510,7 +512,7 @@ Application::processTranslationOpened(QTextCodec *codec, const QString &subtitle
 {
 	// We don't clear the primary dirty state because the loading of the translation
 	// only changes it when actually needed (i.e., when the translation had more lines)
-	m_subtitle->clearSecondaryDirty();
+	appSubtitle()->clearSecondaryDirty();
 
 	m_subtitleFormat = subtitleFormat;
 
@@ -553,8 +555,8 @@ Application::saveSubtitleTr(QTextCodec *codec)
 	if(!codecFound)
 		codec = QTextCodec::codecForLocale();
 
-	if(FormatManager::instance().writeSubtitle(*m_subtitle, false, m_subtitleTrUrl, codec, m_subtitleTrFormat, true)) {
-		m_subtitle->clearSecondaryDirty();
+	if(FormatManager::instance().writeSubtitle(*appSubtitle(), false, m_subtitleTrUrl, codec, m_subtitleTrFormat, true)) {
+		appSubtitle()->clearSecondaryDirty();
 
 		m_reopenSubtitleTrAsAction->setCurrentCodec(codec);
 		m_saveSubtitleTrAsAction->setCurrentCodec(codec);
@@ -606,8 +608,8 @@ Application::saveSubtitleTrAs(QTextCodec *codec)
 bool
 Application::closeSubtitleTr()
 {
-	if(m_subtitle && m_translationMode) {
-		if(m_translationMode && m_subtitle->isSecondaryDirty()) {
+	if(appSubtitle() && m_translationMode) {
+		if(m_translationMode && appSubtitle()->isSecondaryDirty()) {
 			int result = KMessageBox::warningYesNoCancel(nullptr,
 					i18n("Currently opened translation subtitle has unsaved changes.\nDo you want to save them?"),
 					i18n("Close Translation Subtitle") + " - SubtitleComposer");
@@ -626,11 +628,11 @@ Application::closeSubtitleTr()
 		m_mainWindow->m_linesWidget->setUpdatesEnabled(false);
 
 		// The cleaning of the translations texts shouldn't be an undoable action
-//		QUndoStack *savedStack = m_undoStack;
-//		m_undoStack = new QUndoStack();
-		m_subtitle->clearSecondaryTextData();
-//		delete m_undoStack;
-//		m_undoStack = savedStack;
+//		QUndoStack *savedStack = appUndoStack();
+//		AppGlobal::undoStack = new QUndoStack();
+		appSubtitle()->clearSecondaryTextData();
+//		delete AppGlobal::undoStack;
+//		AppGlobal::undoStack = savedStack;
 
 		m_mainWindow->m_linesWidget->setUpdatesEnabled(true);
 	}
@@ -700,7 +702,7 @@ Application::joinSubtitles()
 			if(dlg->selectedTextsTarget() == Both)
 				secondSubtitle->setSecondaryData(*secondSubtitle, true);
 
-			m_subtitle->appendSubtitle(*secondSubtitle, dlg->shiftTime().toMillis());
+			appSubtitle()->appendSubtitle(*secondSubtitle, dlg->shiftTime().toMillis());
 		} else {
 			KMessageBox::error(m_mainWindow, i18n("Could not read the subtitle file to append."));
 		}
@@ -716,7 +718,7 @@ Application::splitSubtitle()
 		return;
 
 	QExplicitlySharedDataPointer<Subtitle> newSubtitle(new Subtitle());
-	m_subtitle->splitSubtitle(*newSubtitle, dlg->splitTime().toMillis(), dlg->shiftNewSubtitle());
+	appSubtitle()->splitSubtitle(*newSubtitle, dlg->splitTime().toMillis(), dlg->shiftNewSubtitle());
 	if(!newSubtitle->linesCount()) {
 		KMessageBox::information(m_mainWindow, i18n("The specified time does not split the subtitles."));
 		return;
@@ -730,8 +732,8 @@ Application::splitSubtitle()
 		true);
 
 	if(splitUrl.path().isEmpty()) {
-		// there was an error saving the split part, undo the splitting of m_subtitle
-		m_undoStack->undo();
+		// there was an error saving the split part, undo the splitting of appSubtitle()
+		appUndoStack()->undo();
 		return;
 	}
 
@@ -740,8 +742,8 @@ Application::splitSubtitle()
 		splitTrUrl = saveSplitSubtitle(*newSubtitle, m_subtitleTrUrl, m_subtitleTrEncoding, m_subtitleTrFormat, false);
 
 		if(splitTrUrl.path().isEmpty()) {
-			// there was an error saving the split part, undo the splitting of m_subtitle
-			m_undoStack->undo();
+			// there was an error saving the split part, undo the splitting of appSubtitle()
+			appUndoStack()->undo();
 			return;
 		}
 	}
@@ -774,11 +776,11 @@ Application::syncWithSubtitle()
 				if(referenceSubtitle->linesCount() <= 1)
 					KMessageBox::error(m_mainWindow, i18n("The reference subtitle must have more than one line to proceed."));
 				else
-					m_subtitle->adjustLines(Range::full(),
+					appSubtitle()->adjustLines(Range::full(),
 											referenceSubtitle->firstLine()->showTime().toMillis(),
 											referenceSubtitle->lastLine()->showTime().toMillis());
 			} else /*if(dlg->synchronizeToReferenceTimes())*/ {
-				m_subtitle->syncWithSubtitle(*referenceSubtitle);
+				appSubtitle()->syncWithSubtitle(*referenceSubtitle);
 			}
 		} else {
 			KMessageBox::error(m_mainWindow, i18n("Could not parse the reference subtitle file."));

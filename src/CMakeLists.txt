@@ -38,7 +38,7 @@ include_directories(
 )
 
 set(subtitlecomposer_SRCS
-	#[[ main ]] application.cpp application_actions.cpp application_errorcheck.cpp application_subtitle.cpp mainwindow.cpp
+	#[[ main ]] application.cpp appglobal.cpp application_actions.cpp application_errorcheck.cpp application_subtitle.cpp mainwindow.cpp
 	#[[ actions ]] actions/useraction.cpp actions/useractionnames.h actions/kcodecactionext.cpp actions/krecentfilesactionext.cpp
 	#[[ configs ]] configs/configdialog.cpp configs/errorsconfigwidget.cpp configs/generalconfigwidget.cpp configs/playerconfigwidget.cpp configs/waveformconfigwidget.cpp
 	#[[ core ]] core/formatdata.h core/range.h core/rangelist.h core/time.cpp core/richstring.cpp

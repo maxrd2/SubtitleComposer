@@ -6,10 +6,12 @@
 */
 
 #include "scripting_rangesmodule.h"
-#include "scripting_rangelist.h"
-#include "scripting_range.h"
+
+#include "appglobal.h"
 #include "application.h"
 #include "gui/treeview/lineswidget.h"
+#include "scripting/scripting_rangelist.h"
+#include "scripting/scripting_range.h"
 
 using namespace SubtitleComposer;
 

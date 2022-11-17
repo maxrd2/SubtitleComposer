@@ -6,6 +6,7 @@
 
 #include "waverenderer.h"
 
+#include "appglobal.h"
 #include "application.h"
 #include "scconfig.h"
 #include "core/richtext/richdocument.h"

@@ -1,5 +1,6 @@
 #include "application.h"
 
+#include "appglobal.h"
 #include "actions/kcodecactionext.h"
 #include "actions/krecentfilesactionext.h"
 #include "actions/useraction.h"
@@ -157,12 +158,12 @@ Application::setupActions()
 	actionCollection->addAction(ACT_CLOSE_SUBTITLE_TR, closeSubtitleTrAction);
 	actionManager->addAction(closeSubtitleTrAction, UserAction::SubTrOpened | UserAction::FullScreenOff);
 
-	QAction *undoAction = m_undoStack->undoAction();
+	QAction *undoAction = appUndoStack()->undoAction();
 	undoAction->setIcon(QIcon::fromTheme("edit-undo"));
 	actionCollection->setDefaultShortcuts(undoAction, KStandardShortcut::undo());
 	actionCollection->addAction(ACT_UNDO, undoAction);
 
-	QAction *redoAction = m_undoStack->redoAction();
+	QAction *redoAction = appUndoStack()->redoAction();
 	redoAction->setIcon(QIcon::fromTheme("edit-redo"));
 	actionCollection->setDefaultShortcuts(redoAction, KStandardShortcut::redo());
 	actionCollection->addAction(ACT_REDO, redoAction);

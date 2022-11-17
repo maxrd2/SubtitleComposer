@@ -6,6 +6,8 @@
 */
 
 #include "selectablesubtitledialog.h"
+
+#include "appglobal.h"
 #include "application.h"
 
 #include <QFileDialog>

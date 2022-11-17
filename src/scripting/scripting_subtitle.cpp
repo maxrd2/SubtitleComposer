@@ -6,10 +6,12 @@
 */
 
 #include "scripting_subtitle.h"
-#include "scripting_subtitleline.h"
-#include "scripting_range.h"
-#include "scripting_rangelist.h"
+
+#include "appglobal.h"
 #include "application.h"
+#include "scripting/scripting_subtitleline.h"
+#include "scripting/scripting_range.h"
+#include "scripting/scripting_rangelist.h"
 
 using namespace SubtitleComposer;
 

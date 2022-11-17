@@ -6,10 +6,12 @@
 */
 
 #include "scripting_subtitleline.h"
-#include "scripting_richstring.h"
+
+#include "appglobal.h"
 #include "application.h"
 #include "core/richtext/richdocument.h"
 #include "core/subtitletarget.h"
+#include "scripting/scripting_richstring.h"
 
 #include <QDebug>
 

@@ -6,6 +6,8 @@
 */
 
 #include "actionwithtargetdialog.h"
+
+#include "appglobal.h"
 #include "application.h"
 
 #include <QGroupBox>

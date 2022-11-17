@@ -6,11 +6,12 @@
 
 #include "config.h"
 
+#include "appglobal.h"
+#include "application.h"
 #include "core/richtext/richdocument.h"
 #include "helpers/pluginhelper.h"
 #include "speechprocessor.h"
 #include "speechplugin.h"
-#include "application.h"
 #include "gui/treeview/lineswidget.h"
 
 #include <QLabel>

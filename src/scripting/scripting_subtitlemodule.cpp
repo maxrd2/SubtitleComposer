@@ -6,9 +6,10 @@
 */
 
 #include "scripting_subtitlemodule.h"
-#include "scripting_subtitle.h"
+
+#include "appglobal.h"
 #include "application.h"
-#include "core/subtitletarget.h"
+#include "scripting_subtitle.h"
 
 using namespace SubtitleComposer;
 
@@ -19,7 +20,7 @@ Scripting::SubtitleModule::SubtitleModule(QObject *parent) :
 QObject *
 Scripting::SubtitleModule::instance()
 {
-	return app()->subtitle() ? new Scripting::Subtitle(app()->subtitle(), this) : 0;
+	return appSubtitle() ? new Scripting::Subtitle(appSubtitle(), this) : nullptr;
 }
 
 bool

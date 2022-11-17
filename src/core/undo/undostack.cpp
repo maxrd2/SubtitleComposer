@@ -4,11 +4,13 @@
     SPDX-License-Identifier: GPL-2.0-or-later
 */
 
+#include "undostack.h"
+
+#include "appglobal.h"
 #include "application.h"
 #include "actions/useraction.h"
 #include "actions/useractionnames.h"
 #include "core/undo/undoaction.h"
-#include "core/undo/undostack.h"
 #include "gui/treeview/lineswidget.h"
 #include "gui/treeview/linesmodel.h"
 
@@ -24,8 +26,8 @@ UndoStack::UndoStack(QObject *parent)
 
 	connect(this, &UndoStack::undoTextChanged, undoAction(), &QAction::setToolTip);
 	connect(this, &UndoStack::redoTextChanged, redoAction(), &QAction::setToolTip);
-	connect(this, &UndoStack::indexChanged, parent, [](){ if(Subtitle *s = app()->subtitle()) s->updateState(); });
-	connect(this, &UndoStack::cleanChanged, parent, [](){ if(Subtitle *s = app()->subtitle()) s->updateState(); });
+	connect(this, &UndoStack::indexChanged, parent, [](){ if(Subtitle *s = appSubtitle()) s->updateState(); });
+	connect(this, &UndoStack::cleanChanged, parent, [](){ if(Subtitle *s = appSubtitle()) s->updateState(); });
 }
 
 UndoStack::~UndoStack()

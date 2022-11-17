@@ -5,16 +5,17 @@
     SPDX-License-Identifier: GPL-2.0-or-later
 */
 
+#include "subtitle.h"
+
+#include "appglobal.h"
+#include "scconfig.h"
 #include "core/richtext/richdocument.h"
-#include "core/subtitle.h"
 #include "core/subtitleline.h"
 #include "core/subtitleiterator.h"
 #include "core/undo/subtitleactions.h"
 #include "core/undo/subtitlelineactions.h"
 #include "core/undo/undostack.h"
 #include "helpers/objectref.h"
-#include "scconfig.h"
-#include "application.h"
 #include "gui/treeview/lineswidget.h"
 
 #include <QTextDocumentFragment>
@@ -184,7 +185,7 @@ Subtitle::clearPrimaryDirty()
 		return;
 
 	m_primaryDirtyState = false;
-	m_primaryCleanIndex = app()->undoStack()->index();
+	m_primaryCleanIndex = appUndoStack()->index();
 	emit primaryDirtyStateChanged(false);
 }
 
@@ -195,7 +196,7 @@ Subtitle::clearSecondaryDirty()
 		return;
 
 	m_secondaryDirtyState = false;
-	m_secondaryCleanIndex = app()->undoStack()->index();
+	m_secondaryCleanIndex = appUndoStack()->index();
 	emit secondaryDirtyStateChanged(false);
 }
 
@@ -1384,8 +1385,8 @@ Subtitle::recheckErrors(const RangeList &ranges)
 void
 Subtitle::processAction(UndoAction *action) const
 {
-	if(app()->subtitle() == this) {
-		app()->undoStack()->push(action);
+	if(appSubtitle() == this) {
+		appUndoStack()->push(action);
 	} else {
 		action->redo();
 		delete action;
@@ -1395,28 +1396,26 @@ Subtitle::processAction(UndoAction *action) const
 void
 Subtitle::beginCompositeAction(const QString &title) const
 {
-	if(app()->subtitle() == this)
-		app()->undoStack()->beginMacro(title);
+	if(appSubtitle() == this)
+		appUndoStack()->beginMacro(title);
 }
 
 void
 Subtitle::endCompositeAction(UndoStack::DirtyMode dirtyOverride) const
 {
-	if(app()->subtitle() == this)
-		app()->undoStack()->endMacro(dirtyOverride);
+	if(appSubtitle() == this)
+		appUndoStack()->endMacro(dirtyOverride);
 }
 
 bool
 Subtitle::isPrimaryDirty(int index) const
 {
-	const UndoStack *undoStack = app()->undoStack();
-
 	int i = m_primaryCleanIndex;
 	const int d = i > index ? -1 : 1;
 	for(;;) {
 		if(i < 0)
 			return m_primaryCleanIndex >= 0;
-		const UndoStack::DirtyMode dirtyMode = i > 0 ? undoStack->dirtyMode(i - 1) : UndoStack::None;
+		const UndoStack::DirtyMode dirtyMode = i > 0 ? appUndoStack()->dirtyMode(i - 1) : UndoStack::None;
 		if(i != m_primaryCleanIndex && (dirtyMode & UndoStack::Primary))
 			return true;
 		if(i == index)
@@ -1428,14 +1427,12 @@ Subtitle::isPrimaryDirty(int index) const
 bool
 Subtitle::isSecondaryDirty(int index) const
 {
-	const UndoStack *undoStack = app()->undoStack();
-
 	int i = m_secondaryCleanIndex;
 	const int d = i > index ? -1 : 1;
 	for(;;) {
 		if(i < 0)
 			return m_secondaryCleanIndex >= 0;
-		const UndoStack::DirtyMode dirtyMode = i > 0 ? undoStack->dirtyMode(i - 1) : UndoStack::None;
+		const UndoStack::DirtyMode dirtyMode = i > 0 ? appUndoStack()->dirtyMode(i - 1) : UndoStack::None;
 		if(i != m_secondaryCleanIndex && (dirtyMode & UndoStack::Secondary))
 			return true;
 		if(i == index)
@@ -1447,9 +1444,8 @@ Subtitle::isSecondaryDirty(int index) const
 void
 Subtitle::updateState()
 {
-	const UndoStack *undoStack = app()->undoStack();
-	const int index = undoStack->index();
-	const UndoStack::DirtyMode dirtyMode = index > 0 ? undoStack->dirtyMode(index - 1) : UndoStack::Both;
+	const int index = appUndoStack()->index();
+	const UndoStack::DirtyMode dirtyMode = index > 0 ? appUndoStack()->dirtyMode(index - 1) : UndoStack::Both;
 
 	if(m_primaryDirtyState != isPrimaryDirty(index)) {
 		m_primaryDirtyState = !m_primaryDirtyState;
