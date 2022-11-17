@@ -125,8 +125,8 @@ struct ReplaceHelper {
 		int no;
 	};
 	struct MatchRef {
-		int offset;
-		int length;
+		qsizetype offset;
+		qsizetype length;
 		enum { NONE, SUBJECT, REPLACEMENT } ref;
 	};
 	using MatchRefList = QList<MatchRef>;

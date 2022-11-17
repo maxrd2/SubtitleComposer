@@ -120,7 +120,7 @@ Translator::syncTranslate(const QString &text, Language::Value inputLang, Langua
 static int
 findOptimalSplitIndex(const QString &text, int fromIndex = 0)
 {
-	int lastTargetIndex = qMin(fromIndex + Translator::MaxChunkSize, text.count() - 1);
+	int lastTargetIndex = qMin(fromIndex + Translator::MaxChunkSize, text.size() - 1);
 
 	int index = text.lastIndexOf('\n', lastTargetIndex);
 	if(index >= (fromIndex + Translator::MaxChunkSize * (3 / 4)))

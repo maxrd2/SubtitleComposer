@@ -65,6 +65,13 @@ class SCScript
 {
 	friend class InstalledScriptsModel;
 
+#if QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
+	template<class> friend struct QtPrivate::QGenericArrayOps;
+	template<typename iterator, typename N>
+	friend void QtPrivate::q_relocate_overlap_n_left_move(iterator first, N n, iterator d_first);
+	template<typename> friend class QList;
+#endif
+
 	SCScript(const QString &path, const QString &name)
 		: m_name(name),
 		  m_path(path),
@@ -99,7 +106,7 @@ class SCScript
 			m_author = m.captured(1);
 	}
 
-	friend class QVector<SCScript>;
+	friend QVector<SCScript>;
 	SCScript() noexcept {}
 	SCScript(const SCScript &) noexcept = default;
 	SCScript & operator=(const SCScript &) noexcept = default;
