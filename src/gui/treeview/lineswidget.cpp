@@ -325,7 +325,11 @@ LinesWidget::setPlayingLine(SubtitleLine *line)
 void
 LinesWidget::mouseDoubleClickEvent(QMouseEvent *e)
 {
+#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
 	QModelIndex index = indexAt(viewport()->mapFromGlobal(e->globalPos()));
+#else
+	QModelIndex index = indexAt(viewport()->mapFromGlobal(e->globalPosition()).toPoint());
+#endif
 	if(index.isValid())
 		emit lineDoubleClicked(model()->subtitle()->line(index.row()));
 }

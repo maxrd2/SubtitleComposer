@@ -101,6 +101,10 @@ VideoWidget::resizeEvent(QResizeEvent *)
 	updateVideoLayerGeometry();
 }
 
+#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
+#define globalPosition globalPos
+#endif
+
 void
 VideoWidget::mouseReleaseEvent(QMouseEvent *e)
 {
@@ -108,10 +112,10 @@ VideoWidget::mouseReleaseEvent(QMouseEvent *e)
 	Q_ASSERT(e->type() != QEvent::MouseButtonDblClick);
 	if(e->button() == Qt::LeftButton) {
 		e->accept();
-		emit leftClicked(e->globalPos());
+		emit leftClicked(e->globalPosition());
 	} else if(e->button() == Qt::RightButton) {
 		e->accept();
-		emit rightClicked(e->globalPos());
+		emit rightClicked(e->globalPosition());
 	} else {
 		e->ignore();
 	}
@@ -121,7 +125,7 @@ void
 VideoWidget::mouseDoubleClickEvent(QMouseEvent *e)
 {
 	e->accept();
-	emit doubleClicked(e->globalPos());
+	emit doubleClicked(e->globalPosition());
 }
 
 void

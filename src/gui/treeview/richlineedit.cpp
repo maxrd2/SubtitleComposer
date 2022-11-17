@@ -491,7 +491,11 @@ RichLineEdit::dragMoveEvent(QDragMoveEvent *e)
 {
 	if(!m_control->isReadOnly() && (e->mimeData()->hasText() || e->mimeData()->hasHtml())) {
 		e->acceptProposedAction();
+#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
 		m_dndCursor = m_control->xToPos(e->pos().x());
+#else
+		m_dndCursor = m_control->xToPos(e->position().x());
+#endif
 		update();
 	}
 }
@@ -511,6 +515,10 @@ RichLineEdit::dragLeaveEvent(QDragLeaveEvent *)
 	}
 }
 
+#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
+#define position pos
+#endif
+
 void
 RichLineEdit::dropEvent(QDropEvent *e)
 {
@@ -521,7 +529,7 @@ RichLineEdit::dropEvent(QDropEvent *e)
 		strType = RichDocumentEditor::Plain;
 	}
 	if(!str.isNull() && !m_control->isReadOnly()) {
-		int dropPos = m_control->xToPos(e->pos().x());
+		int dropPos = m_control->xToPos(e->position().x());
 		m_dndCursor = -1;
 		if(e->source() == this && e->dropAction() == Qt::MoveAction && m_control->selectionContains(dropPos)) {
 			e->ignore();

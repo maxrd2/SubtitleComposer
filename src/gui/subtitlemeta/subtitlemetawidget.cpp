@@ -196,7 +196,7 @@ SubtitleMetaWidget::eventFilter(QObject *obj, QEvent *event)
 	} else if(event->type() == QEvent::ShortcutOverride || event->type() == QEvent::KeyPress) {
 		if(obj == m_cssEdit || obj == m_commentIntroEdit || obj == m_commentTopEdit || obj == m_commentBottomEdit) {
 			const QKeyEvent *keyEvent = static_cast<QKeyEvent *>(event);
-			QAction *action = actionGet(keyEvent->modifiers() + keyEvent->key());
+			QAction *action = actionGet(keyEvent->modifiers() | keyEvent->key());
 			if(action) {
 				if(event->type() == QEvent::KeyPress)
 					action->trigger();

@@ -53,9 +53,9 @@ public slots:
 	void setMouseTracking(bool enable);
 
 signals:
-	void doubleClicked(const QPoint &point);
-	void rightClicked(const QPoint &point);
-	void leftClicked(const QPoint &point);
+	void doubleClicked(const QPointF &point);
+	void rightClicked(const QPointF &point);
+	void leftClicked(const QPointF &point);
 	void wheelUp();
 	void wheelDown();
 

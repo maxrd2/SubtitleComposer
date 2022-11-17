@@ -407,8 +407,13 @@ PlayerWidget::eventFilter(QObject *object, QEvent *event)
 
 		case QEvent::MouseMove: {
 			QMouseEvent *mouseEvent = static_cast<QMouseEvent *>(event);
+#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
 			if(mouseEvent->globalPos() != m_currentCursorPos) {
 				m_currentCursorPos = mouseEvent->globalPos();
+#else
+			if(mouseEvent->globalPosition() != m_currentCursorPos) {
+				m_currentCursorPos = mouseEvent->globalPosition();
+#endif
 				if(m_layeredWidget->cursor().shape() == Qt::BlankCursor)
 					m_layeredWidget->unsetCursor();
 				if(m_fullScreenControls->isAttached())
@@ -434,7 +439,11 @@ PlayerWidget::eventFilter(QObject *object, QEvent *event)
 		action->setCheckable(true);
 		action->setChecked(SCConfig::showPositionTimeEdit());
 
+#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
 		if(menu.exec(mouseEvent->globalPos()) == action)
+#else
+		if(menu.exec(mouseEvent->globalPosition().toPoint()) == action)
+#endif
 			SCConfig::setShowPositionTimeEdit(!SCConfig::showPositionTimeEdit());
 
 		return true; // eat event
@@ -787,13 +796,14 @@ PlayerWidget::onPlayerVolumeChanged(double volume)
 }
 
 void
-PlayerWidget::onPlayerLeftClicked(const QPoint & /*point */)
+PlayerWidget::onPlayerLeftClicked(const QPointF &point)
 {
+	Q_UNUSED(point);
 	VideoPlayer::instance()->togglePlayPaused();
 }
 
 void
-PlayerWidget::onPlayerRightClicked(const QPoint &point)
+PlayerWidget::onPlayerRightClicked(const QPointF &point)
 {
 	static QMenu *menu = new QMenu(this);
 
@@ -842,11 +852,12 @@ PlayerWidget::onPlayerRightClicked(const QPoint &point)
 	// when using the mplayer backend. i think it's related to the fact
 	// that exec() creates a different event loop and the mplayer backend
 	// depends on the main loop for catching synchronization signals
-	menu->popup(point);
+	menu->popup(point.toPoint());
 }
 
 void
-PlayerWidget::onPlayerDoubleClicked(const QPoint & /*point */)
+PlayerWidget::onPlayerDoubleClicked(const QPointF &point)
 {
+	Q_UNUSED(point);
 	app()->toggleFullScreenMode();
 }

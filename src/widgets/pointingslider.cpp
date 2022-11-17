@@ -25,6 +25,10 @@ PointingSlider::PointingSlider(Qt::Orientation orientation, QWidget *parent) :
 PointingSlider::~PointingSlider()
 {}
 
+#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
+#define position pos
+#endif
+
 // The code from the following function is from Javier Díaz,
 // taken from a post in the Qt-interest mailing list.
 void
@@ -38,14 +42,14 @@ PointingSlider::mousePressEvent(QMouseEvent *e)
 	if(orientation() == Qt::Horizontal) {
 		int width = this->width();
 		pixelsPerUnit = (double)width / range;
-		clickedValue = (e->x() * range) / width;
+		clickedValue = (e->position().x() * range) / width;
 
 		if((qApp->isRightToLeft() && !invertedAppearance()) || (!qApp->isRightToLeft() && invertedAppearance()))
 			clickedValue = maximum() - clickedValue;
 	} else {
 		int height = this->height();
 		pixelsPerUnit = (double)height / range;
-		clickedValue = (e->y() * range) / height;
+		clickedValue = (e->position().y() * range) / height;
 
 		if(!invertedAppearance())
 			clickedValue = maximum() - clickedValue;

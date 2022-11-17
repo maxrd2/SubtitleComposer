@@ -578,12 +578,12 @@ WaveformWidget::mousePress(int pos, Qt::MouseButton button)
 }
 
 bool
-WaveformWidget::mouseRelease(int pos, Qt::MouseButton button, QPoint globalPos)
+WaveformWidget::mouseRelease(int pos, Qt::MouseButton button, const QPointF &globalPos)
 {
 	if(button == Qt::RightButton) {
 		m_timeRMBRelease = timeAt(pos);
 		m_hoverScrollTimer.stop();
-		showContextMenu(globalPos);
+		showContextMenu(globalPos.toPoint());
 		m_RMBDown = false;
 		return false;
 	}

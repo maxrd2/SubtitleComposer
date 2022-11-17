@@ -94,9 +94,9 @@ private slots:
 	void onPlayerPlaybackRateChanged(double rate);
 	void onPlayerVolumeChanged(double volume);
 
-	void onPlayerLeftClicked(const QPoint &point);
-	void onPlayerRightClicked(const QPoint &point);
-	void onPlayerDoubleClicked(const QPoint &point);
+	void onPlayerLeftClicked(const QPointF &point);
+	void onPlayerRightClicked(const QPointF &point);
+	void onPlayerDoubleClicked(const QPointF &point);
 
 private:
 	QExplicitlySharedDataPointer<Subtitle> m_subtitle;
@@ -132,8 +132,8 @@ private:
 	QLabel *m_fpsLabel;
 	QLabel *m_rateLabel;
 
-	QPoint m_savedCursorPos;                // for hiding the mouse on full screen mode
-	QPoint m_currentCursorPos;
+	QPointF m_savedCursorPos; // for hiding the mouse on full screen mode
+	QPointF m_currentCursorPos;
 };
 }
 #endif

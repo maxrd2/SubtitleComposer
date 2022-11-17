@@ -89,31 +89,39 @@ WaveRenderer::event(QEvent *evt)
 		return true;
 	}
 
+#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
+#define position pos
+#endif
+
 	case QEvent::MouseMove: {
 		QMouseEvent *mouse = static_cast<QMouseEvent *>(evt);
-		m_wfw->updatePointerTime(m_vertical ? mouse->y() : mouse->x());
+		m_wfw->updatePointerTime(m_vertical ? mouse->position().y() : mouse->position().x());
 		update();
 		break;
 	}
 
 	case QEvent::MouseButtonDblClick: {
 		QMouseEvent *mouse = static_cast<QMouseEvent *>(evt);
-		emit m_wfw->doubleClick(m_wfw->timeAt(m_vertical ? mouse->y() : mouse->x()));
+		emit m_wfw->doubleClick(m_wfw->timeAt(m_vertical ? mouse->position().y() : mouse->position().x()));
 		return true;
 	}
 
 	case QEvent::MouseButtonPress: {
 		QMouseEvent *mouse = static_cast<QMouseEvent *>(evt);
-		int y = m_vertical ? mouse->y() : mouse->x();
+		int y = m_vertical ? mouse->position().y() : mouse->position().x();
 		if(m_wfw->mousePress(y, mouse->button()))
 			return true;
 		break;
 	}
 
+#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
+#define globalPosition globalPos
+#endif
+
 	case QEvent::MouseButtonRelease: {
 		QMouseEvent *mouse = static_cast<QMouseEvent *>(evt);
-		int y = m_vertical ? mouse->y() : mouse->x();
-		if(m_wfw->mouseRelease(y, mouse->button(), mouse->globalPos()))
+		int y = m_vertical ? mouse->position().y() : mouse->position().x();
+		if(m_wfw->mouseRelease(y, mouse->button(), mouse->globalPosition()))
 			return true;
 		break;
 	}

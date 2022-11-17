@@ -110,7 +110,7 @@ private:
 
 	void updatePointerTime(int pos);
 	bool mousePress(int pos, Qt::MouseButton button);
-	bool mouseRelease(int pos, Qt::MouseButton button, QPoint globalPos);
+	bool mouseRelease(int pos, Qt::MouseButton button, const QPointF &globalPos);
 
 private:
 	QString m_mediaFile;
