@@ -8,15 +8,19 @@
 #include "videowidget.h"
 
 #include <QApplication>
-#include <QDesktopWidget>
-
 #include <QPainter>
 #include <QPaintEvent>
 #include <QResizeEvent>
 #include <QMoveEvent>
 #include <QMouseEvent>
+#include <QScreen>
 
 #include <QDebug>
+
+#if QT_VERSION < QT_VERSION_CHECK(5, 14, 0)
+#include <QDesktopWidget>
+#endif
+
 
 using namespace SubtitleComposer;
 
@@ -133,7 +137,11 @@ VideoWidget::wheelEvent(QWheelEvent *e)
 QSize
 VideoWidget::desktopSize()
 {
-	QRect rect = QApplication::desktop()->screenGeometry(this);
+#if QT_VERSION < QT_VERSION_CHECK(5, 14, 0)
+	QRect rect = QApplication::desktop()->screenGeometry();
+#else
+	QRect rect = screen()->geometry();
+#endif
 	return QSize(rect.width(), rect.height());
 }
 

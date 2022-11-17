@@ -10,12 +10,9 @@
 #include "appglobal.h"
 #include "application.h"
 #include "actions/useractionnames.h"
-#include "helpers/commondefs.h"
 #include "core/richtext/richdocument.h"
-#include "core/subtitleiterator.h"
 #include "videoplayer/videoplayer.h"
 #include "widgets/layeredwidget.h"
-#include "widgets/textoverlaywidget.h"
 #include "widgets/attachablewidget.h"
 #include "widgets/pointingslider.h"
 #include "widgets/timeedit.h"
@@ -27,7 +24,6 @@
 
 #include <QMenu>
 #include <QPushButton>
-#include <QDesktopWidget>
 #include <QCursor>
 #include <QLabel>
 #include <QToolButton>
