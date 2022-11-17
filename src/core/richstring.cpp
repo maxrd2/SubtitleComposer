@@ -1311,11 +1311,13 @@ RichStringList::RichStringList(const QStringList &list)
 		append(*it);
 }
 
+#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
 RichStringList::RichStringList(const QList<QString> &list)
 {
 	for(QList<QString>::const_iterator it = list.cbegin(), end = list.cend(); it != end; ++it)
 		append(*it);
 }
+#endif
 
 RichString
 RichStringList::join(const RichString &sep) const

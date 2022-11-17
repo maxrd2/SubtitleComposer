@@ -46,7 +46,9 @@ public:
 	RichStringList(const RichStringList &list);
 	RichStringList(const QList<RichString> &list);
 	RichStringList(const QStringList &list);
+#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
 	RichStringList(const QList<QString> &list);
+#endif
 
 	RichString join(const RichString &sep) const;
 
