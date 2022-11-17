@@ -8,7 +8,6 @@
 #define CSSHIGHLIGHTER_H
 
 #include <QColor>
-#include <QPalette>
 #include <QSyntaxHighlighter>
 #include <QTextCharFormat>
 
@@ -23,11 +22,13 @@ class CSSHighlighter : public QSyntaxHighlighter
 public:
 	CSSHighlighter(QTextDocument *parent = 0);
 
+	bool event(QEvent *ev) override;
+
 protected:
 	void highlightBlock(const QString &text) override;
 
 private:
-	void onPaletteChanged(const QPalette &pal);
+	void onPaletteChanged();
 
 private:
 	QTextCharFormat m_commentFormat;

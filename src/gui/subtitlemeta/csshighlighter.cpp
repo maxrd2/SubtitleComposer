@@ -27,8 +27,7 @@ union BlockState {
 CSSHighlighter::CSSHighlighter(QTextDocument *parent)
 	: QSyntaxHighlighter(parent)
 {
-	connect(reinterpret_cast<QGuiApplication *>(QGuiApplication::instance()), &QGuiApplication::paletteChanged, this, &CSSHighlighter::onPaletteChanged);
-	onPaletteChanged(QGuiApplication::palette());
+	onPaletteChanged();
 }
 
 static QColor
@@ -39,9 +38,20 @@ correctedColor(const QColor &color)
 	return QColor::fromHsv(h, s, qMin(v * 5 / 2, 255));
 }
 
-void
-CSSHighlighter::onPaletteChanged(const QPalette &pal)
+bool
+CSSHighlighter::event(QEvent *ev)
 {
+	if(ev->type() == QEvent::ApplicationPaletteChange || ev->type() == QEvent::PaletteChange) {
+		onPaletteChanged();
+	}
+
+	return QSyntaxHighlighter::event(ev);
+}
+
+void
+CSSHighlighter::onPaletteChanged()
+{
+	const QPalette pal = QGuiApplication::palette();
 	bool dark = pal.color(QPalette::Window).value() < pal.color(QPalette::WindowText).value();
 	m_commentFormat.setForeground(dark ? correctedColor(Qt::cyan) : Qt::cyan);
 	m_attributeFormat.setForeground(dark ? correctedColor(Qt::green) : Qt::green);
