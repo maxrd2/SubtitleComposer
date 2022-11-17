@@ -600,7 +600,7 @@ VobSubInputProcessDialog::onStreamFinished()
 
 	if(!Frame::spaceStats.empty()) {
 		auto itChar = Frame::spaceStats.begin(); // shorter spaces on start
-		auto itWord = Frame::spaceStats.end() - 1; // longer spaces near end
+		auto itWord = std::prev(Frame::spaceStats.end()); // longer spaces near end
 		qint64 charSpacingSum = itChar.key() * itChar.value();
 		quint64 charSpacingCount = itChar.value();
 		qint64 wordSpacingSum = itWord.key() * itWord.value();
