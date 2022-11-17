@@ -50,7 +50,7 @@ private:
 	static const QStringList & mimeTypes();
 	QMenu * toolsMenu();
 	const SCScript * currentScript() const;
-	const SCScript * findScript(const QString title) const;
+	const SCScript * findScript(const QString filename) const;
 
 	static void findAllFiles(QString path, QStringList &findAllFiles);
 

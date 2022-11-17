@@ -267,7 +267,7 @@ public:
 
 	}
 
-	const SCScript * findByName(const QString &name) const
+	const SCScript * findByFilename(const QString &name) const
 	{
 		if(name.isEmpty())
 			return nullptr;
@@ -315,7 +315,7 @@ public:
 	const SCScript * add(const QString &path, int prefixLen)
 	{
 		const QString name = path.mid(prefixLen);
-		if(findByName(name))
+		if(findByFilename(name))
 			return nullptr;
 
 		const SCScript *script = insertSorted(&m_scripts, SCScript(path, name));
@@ -427,9 +427,9 @@ ScriptsManager::showDialog()
 }
 
 const SCScript *
-ScriptsManager::findScript(const QString title) const
+ScriptsManager::findScript(const QString filename) const
 {
-	const SCScript *s = title.isEmpty() ? nullptr : static_cast<InstalledScriptsModel *>(scriptsView->model())->findByTitle(title);
+	const SCScript *s = filename.isEmpty() ? nullptr : static_cast<InstalledScriptsModel *>(scriptsView->model())->findByFilename(filename);
 	return s ?: currentScript();
 }
 
@@ -470,6 +470,9 @@ ScriptsManager::createScript(const QString &sN)
 		scriptName = nameDlg.value();
 	}
 
+	if(!scriptName.endsWith($(".js")))
+		scriptName.append($(".js"));
+
 	QFile scriptFile(userScriptDir().absoluteFilePath(scriptName));
 	if(!scriptFile.open(QIODevice::WriteOnly | QIODevice::Text)) {
 		KMessageBox::error(app()->mainWindow(), i18n("There was an error creating the file <b>%1</b>.", userScriptDir().absoluteFilePath(scriptName)));
@@ -478,7 +481,7 @@ ScriptsManager::createScript(const QString &sN)
 
 	QTextStream outputStream(&scriptFile);
 	outputStream << "/*\n"
-		"\t@name " << scriptName << " Title\n"
+		"\t@name " << scriptName.chopped(3) << " Title\n"
 		"\t@version 1.0\n"
 		"\t@summary " << scriptName << " summary/short desription.\n"
 		"\t@author Author's Name\n"
@@ -522,7 +525,7 @@ ScriptsManager::addScript(const QUrl &sSU)
 	QString scriptName = QFileInfo(srcScriptUrl.fileName()).fileName();
 
 	InstalledScriptsModel *model = static_cast<InstalledScriptsModel *>(scriptsView->model());
-	while(model->findByTitle(scriptName)) {
+	while(model->findByFilename(scriptName)) {
 		if(KMessageBox::questionYesNo(app()->mainWindow(),
 				i18n("You must enter an unused name to continue.\nWould you like to enter another name?"),
 				i18n("Name Already Used"), KStandardGuiItem::cont(), KStandardGuiItem::cancel()) != KMessageBox::Yes)
@@ -621,7 +624,7 @@ ScriptsManager::runScript(const QString &sN)
 	QJSValue res;
 	{
 		// everything done by the script will be undoable in a single step
-		SubtitleCompositeActionExecutor executor(app()->subtitle(), script->path());
+		SubtitleCompositeActionExecutor executor(app()->subtitle(), script->title());
 		res = jse.evaluate(scriptData, script->name());
 	}
 
