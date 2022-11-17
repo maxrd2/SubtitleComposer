@@ -18,6 +18,17 @@
 
 QT_FORWARD_DECLARE_CLASS(QRegularExpression)
 
+#if QT_VERSION < QT_VERSION_CHECK(5, 14, 0)
+namespace Qt {
+enum SplitBehaviorFlags {
+	KeepEmptyParts = 0,
+	SkipEmptyParts = 0x1,
+};
+Q_DECLARE_FLAGS(SplitBehavior, SplitBehaviorFlags)
+Q_DECLARE_OPERATORS_FOR_FLAGS(SplitBehavior)
+}
+#endif
+
 namespace SubtitleComposer {
 class RichString;
 class RichStringStyle;
