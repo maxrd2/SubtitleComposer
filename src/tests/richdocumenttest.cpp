@@ -387,4 +387,4 @@ RichDocumentTest::testClass()
 	qDebug() << doc.toHtml();
 }
 
-QTEST_GUILESS_MAIN(RichDocumentTest)
+QTEST_MAIN(RichDocumentTest)
