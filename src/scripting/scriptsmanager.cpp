@@ -473,9 +473,9 @@ ScriptsManager::createScript(const QString &sN)
 				break;
 			}
 			if(KMessageBox::questionTwoActions(app()->mainWindow(),
-					i18n("You must enter an unused name to continue.\nWould you like to enter another name?"),
-					i18n("Name Already Used"),
-					KStandardGuiItem::cont(), KStandardGuiItem::cancel()) != KMessageBox::PrimaryAction)
+					i18n("A script already exists with this name.\nWould you like to enter another name?"),
+					i18n("Duplicate filename"),
+					KGuiItem(i18n("Yes")), KStandardGuiItem::cancel()) != KMessageBox::PrimaryAction)
 				return;
 		}
 
