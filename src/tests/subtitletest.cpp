@@ -8,10 +8,23 @@
 
 #include <QTest>
 
-#include "application.h"
 #include "core/richtext/richdocument.h"
 
+#include <klocalizedstring.h>
+
 using namespace SubtitleComposer;
+
+
+SubtitleTest::SubtitleTest()
+	: sub(new SubtitleComposer::Subtitle)
+{
+	KLocalizedString::setApplicationDomain("subtitlecomposer");
+}
+
+SubtitleTest::~SubtitleTest()
+{
+	sub.reset();
+}
 
 void
 SubtitleTest::testSort_data()

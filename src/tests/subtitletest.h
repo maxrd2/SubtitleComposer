@@ -16,7 +16,8 @@ class SubtitleTest : public QObject
 	Q_OBJECT
 
 public:
-	SubtitleTest() : sub(new SubtitleComposer::Subtitle) {}
+	SubtitleTest();
+	virtual ~SubtitleTest();
 
 private slots:
 	void testSort_data();
