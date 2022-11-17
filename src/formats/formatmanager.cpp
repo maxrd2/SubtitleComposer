@@ -40,9 +40,9 @@
 #include "youtubecaptions/youtubecaptionsoutputformat.h"
 
 #include <QFile>
+#include <QFileDevice>
 #include <QFileInfo>
 #include <QTextCodec>
-#include <QTextStream>
 
 #include <KCharsets>
 #include <QUrl>
@@ -193,12 +193,8 @@ FormatManager::readText(Subtitle &subtitle, const QUrl &url, bool primary,
 				return CANCEL;
 			*codec = c;
 		}
-		if(*codec) {
-			QTextStream textStream(byteData);
-			textStream.setCodec(*codec);
-			textStream.setAutoDetectUnicode(false);
-			stringData = textStream.readAll();
-		}
+		if(*codec)
+			stringData = (*codec)->toUnicode(byteData);
 	}
 
 	stringData.replace(QLatin1String("\r\n"), QLatin1String("\n"));
@@ -288,20 +284,19 @@ FormatManager::writeSubtitle(const Subtitle &subtitle, bool primary, const QUrl 
 	if(!fileSaveHelper.open())
 		return false;
 
-	QTextStream stream(fileSaveHelper.file());
-	stream.setCodec(codec);
-	stream.setGenerateByteOrderMark(true);
-
+	QFileDevice *file = fileSaveHelper.file();
 	QString data = format->writeSubtitle(subtitle, primary);
+	if(codec->name().startsWith("UTF-") || codec->name().contains("UCS-"))
+		data.prepend(QChar::ByteOrderMark);
 	switch(SCConfig::textLineBreak()) {
 	case 1: // CRLF
-		stream << data.replace(QChar::LineFeed, QLatin1String("\r\n"));
+		file->write(codec->fromUnicode(data.replace(QChar::LineFeed, QLatin1String("\r\n"))));
 		break;
 	case 2: // CR
-		stream << data.replace(QChar::LineFeed, QChar::CarriageReturn);
+		file->write(codec->fromUnicode(data.replace(QChar::LineFeed, QChar::CarriageReturn)));
 		break;
 	default: // LF
-		stream << data;
+		file->write(codec->fromUnicode(data));
 		break;
 	}
 
