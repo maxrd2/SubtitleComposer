@@ -495,19 +495,19 @@
         </ul>
       </description>
       <artifacts>
-        <artifact type="binary" platform="x86_64-appimage">
+        <artifact type="binary" platform="x86_64-linux-gnu">
           <location>https://downloadcontent.opensuse.org/repositories/home:/maxrd2/AppImage/subtitlecomposer-latest-x86_64.AppImage</location>
           <checksum type="sha256">ac124b356a008ff8358b0540d8aa7be068cd9df60b55a8bcdfed8a6c48d28dae</checksum>
           <size type="download">60078024</size>
           <bundle type="appimage">subtitlecomposer-latest</bundle>
         </artifact>
-        <artifact type="binary" platform="i686-appimage">
+        <artifact type="binary" platform="i386-linux-gnu">
           <location>https://downloadcontent.opensuse.org/repositories/home:/maxrd2/AppImage/subtitlecomposer-latest-i686.AppImage</location>
           <checksum type="sha256">2c2415cd69cd6074056446d8ac3f433faf3c6bed0e02a536d65df98e01ae4201</checksum>
           <size type="download">64520624</size>
           <bundle type="appimage">subtitlecomposer-latest</bundle>
         </artifact>
-        <artifact type="binary" platform="win32">
+        <artifact type="binary" platform="i386-windows-msvc">
           <location>https://gitlab.com/subtitlecomposer/subtitlecomposer/-/jobs/artifacts/obs/v0.7.1/download?job=mingw-win32-build</location>
           <checksum type="sha256">e4e200dc3a6687b1593f98355694b74676d65f458180461a3ebc16e505a0f247</checksum>
           <size type="download">35350375</size>
