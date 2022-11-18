@@ -60,7 +60,7 @@ String::sentence(const QString &text)
 int
 String::rfindFunctionStart(const QString &text)
 {
-	int pos[5] = {
+	qsizetype pos[5] = {
 		text.lastIndexOf(QLatin1String("capitalize{")),
 		text.lastIndexOf(QLatin1String("titlecase{")),
 		text.lastIndexOf(QLatin1String("uppercase{")),

@@ -68,7 +68,7 @@ Scripting::RichString::setRichText(const QString &string)
 const QChar
 Scripting::RichString::charAt(int index)
 {
-	if(index < 0 || index >= m_backend.count())
+	if(index < 0 || index >= m_backend.size())
 		return '\0';
 	return m_backend.at(index);
 }
@@ -76,14 +76,14 @@ Scripting::RichString::charAt(int index)
 void
 Scripting::RichString::setCharAt(int index, const QChar &chr)
 {
-	if(index >= 0 && index < m_backend.count())
+	if(index >= 0 && index < m_backend.size())
 		m_backend[index] = chr;
 }
 
 int
 Scripting::RichString::styleFlagsAt(int index) const
 {
-	if(index < 0 || index >= m_backend.count())
+	if(index < 0 || index >= m_backend.size())
 		return 0;
 	return m_backend.styleFlagsAt(index);
 }
@@ -91,7 +91,7 @@ Scripting::RichString::styleFlagsAt(int index) const
 void
 Scripting::RichString::setStyleFlagsAt(int index, int styleFlags) const
 {
-	if(index >= 0 && index < m_backend.count())
+	if(index >= 0 && index < m_backend.size())
 		m_backend.setStyleFlagsAt(index, styleFlags);
 }
 
@@ -110,7 +110,7 @@ Scripting::RichString::hasStyleFlags(int styleFlags) const
 void
 Scripting::RichString::setStyleFlags(int index, int len, int styleFlags)
 {
-	if(index < 0 || index >= m_backend.count())
+	if(index < 0 || index >= m_backend.size())
 		return;
 	m_backend.setStyleFlags(index, len, styleFlags);
 }
@@ -118,7 +118,7 @@ Scripting::RichString::setStyleFlags(int index, int len, int styleFlags)
 void
 Scripting::RichString::setStyleFlags(int index, int len, int styleFlags, bool on)
 {
-	if(index < 0 || index >= m_backend.count())
+	if(index < 0 || index >= m_backend.size())
 		return;
 	m_backend.setStyleFlags(index, len, styleFlags, on);
 }
@@ -139,7 +139,7 @@ Scripting::RichString::truncate(int size)
 QObject *
 Scripting::RichString::insert(int index, QObject *object)
 {
-	if(index >= 0 && index <= m_backend.count()) {
+	if(index >= 0 && index <= m_backend.size()) {
 		if(const Scripting::RichString * str = qobject_cast<const Scripting::RichString *>(object))
 			m_backend.insert(index, str->m_backend);
 	}
@@ -149,7 +149,7 @@ Scripting::RichString::insert(int index, QObject *object)
 QObject *
 Scripting::RichString::insertPlain(int index, const QString &str)
 {
-	if(index >= 0 && index <= m_backend.count())
+	if(index >= 0 && index <= m_backend.size())
 		m_backend.insert(index, str);
 	return this;
 }
@@ -187,7 +187,7 @@ Scripting::RichString::prependPlain(const QString &str)
 QObject *
 Scripting::RichString::remove(int index, int len)
 {
-	if(index >= 0 && index < m_backend.count())
+	if(index >= 0 && index < m_backend.size())
 		m_backend.remove(index, len);
 	return this;
 }
@@ -206,7 +206,7 @@ QObject *
 Scripting::RichString::replace(int index, int len, QObject *object)
 {
 	if(const Scripting::RichString * replacement = qobject_cast<const Scripting::RichString *>(object)) {
-		if(index >= 0 && index < m_backend.count())
+		if(index >= 0 && index < m_backend.size())
 			m_backend.replace(index, len, replacement->m_backend);
 	}
 	return this;
@@ -215,7 +215,7 @@ Scripting::RichString::replace(int index, int len, QObject *object)
 QObject *
 Scripting::RichString::replacePlain(int index, int len, const QString &replacement)
 {
-	if(index >= 0 && index < m_backend.count())
+	if(index >= 0 && index < m_backend.size())
 		m_backend.replace(index, len, replacement);
 	return this;
 }
@@ -275,7 +275,7 @@ Scripting::RichString::right(int len) const
 QObject *
 Scripting::RichString::mid(int index, int len) const
 {
-	if(index < 0 || index >= m_backend.count())
+	if(index < 0 || index >= m_backend.size())
 		return new RichString(SubtitleComposer::RichString(), const_cast<Scripting::RichString *>(this));
 	return new RichString(m_backend.mid(index, len), const_cast<Scripting::RichString *>(this));
 }
