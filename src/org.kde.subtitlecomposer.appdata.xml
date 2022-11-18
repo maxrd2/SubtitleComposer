@@ -469,6 +469,7 @@
   <content_rating type="oars-1.1"/>
   <releases>
     <release version="0.7.1" date="2021-07-28">
+      <url>https://subtitlecomposer.kde.org/2021/10/05/subtitle-composer-0.7.1-released.html</url>
       <description>
         <ul>
           <li>Fixed script edititing on AppImage</li>
@@ -493,6 +494,30 @@
           <li>Updated/added many translations - thanks to KDE community</li>
         </ul>
       </description>
+      <artifacts>
+        <artifact type="binary" platform="x86_64-appimage">
+          <location>https://downloadcontent.opensuse.org/repositories/home:/maxrd2/AppImage/subtitlecomposer-latest-x86_64.AppImage</location>
+          <checksum type="sha256">ac124b356a008ff8358b0540d8aa7be068cd9df60b55a8bcdfed8a6c48d28dae</checksum>
+          <size type="download">60078024</size>
+          <bundle type="appimage">subtitlecomposer-latest</bundle>
+        </artifact>
+        <artifact type="binary" platform="i686-appimage">
+          <location>https://downloadcontent.opensuse.org/repositories/home:/maxrd2/AppImage/subtitlecomposer-latest-i686.AppImage</location>
+          <checksum type="sha256">2c2415cd69cd6074056446d8ac3f433faf3c6bed0e02a536d65df98e01ae4201</checksum>
+          <size type="download">64520624</size>
+          <bundle type="appimage">subtitlecomposer-latest</bundle>
+        </artifact>
+        <artifact type="binary" platform="win32">
+          <location>https://gitlab.com/subtitlecomposer/subtitlecomposer/-/jobs/artifacts/obs/v0.7.1/download?job=mingw-win32-build</location>
+          <checksum type="sha256">e4e200dc3a6687b1593f98355694b74676d65f458180461a3ebc16e505a0f247</checksum>
+          <size type="download">35350375</size>
+        </artifact>
+        <artifact type="source">
+          <location>https://download.kde.org/stable/subtitlecomposer/subtitlecomposer-0.7.1.tar.xz</location>
+          <checksum type="sha256">ef9cb3c0c1fe1f40cf9d8e795859b9b28adf2da3be77a076d46bc28df4cd0255</checksum>
+          <size type="download">636808</size>
+        </artifact>
+      </artifacts>
     </release>
     <release version="0.7.0" date="2019-06-27">
       <description>
