@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: subtitlecomposer\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2022-11-13 00:45+0000\n"
+"POT-Creation-Date: 2022-11-18 00:44+0000\n"
 "PO-Revision-Date: 2021-11-05 20:31+0200\n"
 "Last-Translator: Tommi Nieminen <translator@legisign.org>\n"
 "Language-Team: Finnish <kde-i18n-doc@kde.org>\n"
@@ -35,52 +35,52 @@ msgctxt "Encodings menu"
 msgid "Autodetect"
 msgstr "Tunnista automaattisesti"
 
-#: src/application.cpp:493
+#: src/application.cpp:496
 #, kde-format
 msgid "Go to Line"
 msgstr "Siirry riville"
 
-#: src/application.cpp:493
+#: src/application.cpp:496
 #, kde-format
 msgid "&Go to line:"
 msgstr "Sii&rry riville:"
 
-#: src/application.cpp:666 src/core/subtitle.cpp:877
+#: src/application.cpp:669 src/core/subtitle.cpp:878
 #, kde-format
 msgid "Maximize Durations"
 msgstr "Maksimoi kestot"
 
-#: src/application.cpp:694 src/core/subtitle.cpp:1152
+#: src/application.cpp:697 src/core/subtitle.cpp:1153
 #, kde-format
 msgid "Unbreak Lines"
 msgstr "Pura rivitys"
 
-#: src/application.cpp:705 src/core/subtitle.cpp:1161
+#: src/application.cpp:708 src/core/subtitle.cpp:1162
 #, kde-format
 msgid "Simplify Spaces"
 msgstr "Sievennä sanavälit"
 
-#: src/application.cpp:760 src/dialogs/translatedialog.cpp:20
+#: src/application.cpp:763 src/dialogs/translatedialog.cpp:20
 #, kde-format
 msgid "Translate"
 msgstr "Käännä"
 
-#: src/application.cpp:760
+#: src/application.cpp:763
 #, kde-format
 msgid "Translating text (%1 to %2)..."
 msgstr "Käännetään tekstiä (%1 → %2)…"
 
-#: src/application.cpp:764
+#: src/application.cpp:767
 #, kde-format
 msgid "Translating primary text (%1 to %2)..."
 msgstr "Käännetään ensisijaista tekstiä (%1 → %2)…"
 
-#: src/application.cpp:765
+#: src/application.cpp:768
 #, kde-format
 msgid "Translating secondary text (%1 to %2)..."
 msgstr "Käännetään toissijaista tekstiä (%1 → %2)…"
 
-#: src/application.cpp:793
+#: src/application.cpp:796
 #, kde-format
 msgid ""
 "Unable to perform texts synchronization (sent and received lines count do "
@@ -90,17 +90,17 @@ msgstr ""
 "eivät täsmää).Tekstejä ei voi synkronoida (lähetettyjen ja vastaanotettujen "
 "rivien määrät eivät täsmää)."
 
-#: src/application.cpp:797
+#: src/application.cpp:800
 #, kde-format
 msgid "Translate Primary Text"
 msgstr "Käännä ensisijainen teksti"
 
-#: src/application.cpp:797
+#: src/application.cpp:800
 #, kde-format
 msgid "Translate Secondary Text"
 msgstr "Käännä toissijainen teksti"
 
-#: src/application.cpp:812
+#: src/application.cpp:815
 #, kde-format
 msgid ""
 "There was an error performing the translation:\n"
@@ -111,512 +111,512 @@ msgstr ""
 "\n"
 "%1"
 
-#: src/application.cpp:852
+#: src/application.cpp:855
 #, kde-format
 msgid "Open Video"
 msgstr "Avaa video"
 
-#: src/application.cpp:1050 src/application.cpp:1057
-#: src/application_subtitle.cpp:655
+#: src/application.cpp:1053 src/application.cpp:1060
+#: src/application_subtitle.cpp:657
 #, kde-format
 msgid "Untitled"
 msgstr "Nimetön"
 
-#: src/application.cpp:1052 src/application_subtitle.cpp:655
+#: src/application.cpp:1055 src/application_subtitle.cpp:657
 #, kde-format
 msgid "Untitled Translation"
 msgstr "Nimetön käännös"
 
-#: src/application.cpp:1153
+#: src/application.cpp:1156
 #, kde-format
 msgid "Pause"
 msgstr "Tauko"
 
-#: src/application.cpp:1161 src/application_actions.cpp:566
+#: src/application.cpp:1164 src/application_actions.cpp:567
 #, kde-format
 msgid "Play"
 msgstr "Toista"
 
-#: src/application.cpp:1222
+#: src/application.cpp:1225
 #, kde-format
 msgid "Seek backwards 1 second"
 msgid_plural "Seek backwards %1 seconds"
 msgstr[0] "Hyppää sekunti taaksepäin"
 msgstr[1] "Hyppää %1 sekuntia taaksepäin"
 
-#: src/application.cpp:1223
+#: src/application.cpp:1226
 #, kde-format
 msgid "Seek forwards 1 second"
 msgid_plural "Seek forwards %1 seconds"
 msgstr[0] "Hyppää sekunti eteenpäin"
 msgstr[1] "Hyppää %1 sekuntia eteenpäin"
 
-#: src/application.cpp:1226 src/application.cpp:1230
+#: src/application.cpp:1229 src/application.cpp:1233
 #, kde-format
 msgid "Shift %2%1 millisecond"
 msgid_plural "Shift %2%1 milliseconds"
 msgstr[0] "Siirrä %2%1 ms"
 msgstr[1] "Siirrä %2%1 ms"
 
-#: src/application.cpp:1227 src/application.cpp:1231
+#: src/application.cpp:1230 src/application.cpp:1234
 #, kde-format
 msgid "Shift selected lines %2%1 millisecond"
 msgid_plural "Shift selected lines %2%1 milliseconds"
 msgstr[0] "Siirrä valittuja repliikkejä %2%1 ms"
 msgstr[1] "Siirrä valittuja repliikkejä %2%1 ms"
 
-#: src/application_actions.cpp:32
+#: src/application_actions.cpp:33
 #, kde-format
 msgid "Exit the application"
 msgstr "Poistu ohjelmasta"
 
-#: src/application_actions.cpp:35
+#: src/application_actions.cpp:36
 #, kde-format
 msgid "Configure Subtitle Composer"
 msgstr "Subtitle Composerin asetukset"
 
-#: src/application_actions.cpp:39
+#: src/application_actions.cpp:40
 #, kde-format
 msgctxt "@action:inmenu Create a new subtitle"
 msgid "New"
 msgstr "Uusi"
 
-#: src/application_actions.cpp:40
+#: src/application_actions.cpp:41
 #, kde-format
 msgid "Create an empty subtitle"
 msgstr "Luo tyhjä tekstitys"
 
-#: src/application_actions.cpp:48
+#: src/application_actions.cpp:49
 #, kde-format
 msgctxt "@action:inmenu Open subtitle file"
 msgid "Open Subtitle..."
 msgstr "Avaa tekstitys…"
 
-#: src/application_actions.cpp:49 src/application_actions.cpp:66
+#: src/application_actions.cpp:50 src/application_actions.cpp:67
 #, kde-format
 msgid "Open subtitle file"
 msgstr "Avaa tekstitys"
 
-#: src/application_actions.cpp:57
+#: src/application_actions.cpp:58
 #, kde-format
 msgid "Reload As..."
 msgstr "Avaa uudelleen muodossa…"
 
-#: src/application_actions.cpp:58
+#: src/application_actions.cpp:59
 #, kde-format
 msgid "Reload opened file with a different encoding"
 msgstr "Avaa tiedosto uudelleen eri merkistökoodauksella"
 
-#: src/application_actions.cpp:65
+#: src/application_actions.cpp:66
 #, kde-format
 msgctxt "@action:inmenu Open rencently used subtitle file"
 msgid "Open &Recent Subtitle"
 msgstr "A&vaa viimeaikainen tekstitys"
 
-#: src/application_actions.cpp:72
+#: src/application_actions.cpp:73
 #, kde-format
 msgid "Save"
 msgstr "Tallenna"
 
-#: src/application_actions.cpp:73
+#: src/application_actions.cpp:74
 #, kde-format
 msgid "Save opened subtitle"
 msgstr "Tallenna tekstitys"
 
-#: src/application_actions.cpp:81
+#: src/application_actions.cpp:82
 #, kde-format
 msgid "Save As..."
 msgstr "Tallenna nimellä…"
 
-#: src/application_actions.cpp:82
+#: src/application_actions.cpp:83
 #, kde-format
 msgid "Save opened subtitle with different settings"
 msgstr "Tallenna tekstitys eri asetuksin"
 
-#: src/application_actions.cpp:90
+#: src/application_actions.cpp:91
 #, kde-format
 msgid "Close"
 msgstr "Sulje"
 
-#: src/application_actions.cpp:91
+#: src/application_actions.cpp:92
 #, kde-format
 msgid "Close opened subtitle"
 msgstr "Sulje tekstitys"
 
-#: src/application_actions.cpp:99
+#: src/application_actions.cpp:100
 #, kde-format
 msgid "New Translation"
 msgstr "Uusi käännös"
 
-#: src/application_actions.cpp:100
+#: src/application_actions.cpp:101
 #, kde-format
 msgid "Create an empty translation subtitle"
 msgstr "Luo uusi käännöstekstitys"
 
-#: src/application_actions.cpp:108
+#: src/application_actions.cpp:109
 #, kde-format
 msgid "Open Translation..."
 msgstr "Avaa käännös…"
 
-#: src/application_actions.cpp:109 src/application_actions.cpp:126
+#: src/application_actions.cpp:110 src/application_actions.cpp:127
 #, kde-format
 msgid "Open translation subtitle file"
 msgstr "Avaa käännöstekstitys"
 
-#: src/application_actions.cpp:117
+#: src/application_actions.cpp:118
 #, kde-format
 msgid "Reload Translation As..."
 msgstr "Avaa käännös uudelleen muodossa…"
 
-#: src/application_actions.cpp:118
+#: src/application_actions.cpp:119
 #, kde-format
 msgid "Reload opened translation file with a different encoding"
 msgstr "Avaa käännös uudelleen eri merkistökoodauksella"
 
-#: src/application_actions.cpp:125
+#: src/application_actions.cpp:126
 #, kde-format
 msgid "Open &Recent Translation"
 msgstr "Avaa v&iimeaikainen käännös"
 
-#: src/application_actions.cpp:133
+#: src/application_actions.cpp:134
 #, kde-format
 msgid "Save Translation"
 msgstr "Tallenna käännös"
 
-#: src/application_actions.cpp:134
+#: src/application_actions.cpp:135
 #, kde-format
 msgid "Save opened translation subtitle"
 msgstr "Tallenna käännöstekstitys"
 
-#: src/application_actions.cpp:144
+#: src/application_actions.cpp:145
 #, kde-format
 msgid "Save Translation As..."
 msgstr "Tallenna käännös nimellä…"
 
-#: src/application_actions.cpp:145
+#: src/application_actions.cpp:146
 #, kde-format
 msgid "Save opened translation subtitle with different settings"
 msgstr "Tallenna käännöstekstitys eri asetuksin"
 
-#: src/application_actions.cpp:153
+#: src/application_actions.cpp:154
 #, kde-format
 msgid "Close Translation"
 msgstr "Sulje käännös"
 
-#: src/application_actions.cpp:154
+#: src/application_actions.cpp:155
 #, kde-format
 msgid "Close opened translation subtitle"
 msgstr "Sulje käännöstekstitystiedosto"
 
-#: src/application_actions.cpp:171
+#: src/application_actions.cpp:172
 #, kde-format
 msgid "Split Subtitle..."
 msgstr "Jaa tekstitys…"
 
-#: src/application_actions.cpp:172
+#: src/application_actions.cpp:173
 #, kde-format
 msgid "Split the opened subtitle in two parts"
 msgstr "Jakaa tekstityksen kahtia"
 
-#: src/application_actions.cpp:178
+#: src/application_actions.cpp:179
 #, kde-format
 msgid "Join Subtitles..."
 msgstr "Yhdistä tekstitykset…"
 
-#: src/application_actions.cpp:179
+#: src/application_actions.cpp:180
 #, kde-format
 msgid "Append to the opened subtitle another one"
 msgstr "Lisää nykyisen tekstitykseen toisen sisältö"
 
-#: src/application_actions.cpp:186
+#: src/application_actions.cpp:187
 #, kde-format
 msgid "Insert Before"
 msgstr "Lisää edelle"
 
-#: src/application_actions.cpp:187
+#: src/application_actions.cpp:188
 #, kde-format
 msgid "Insert empty line before current one"
 msgstr "Lisää tyhjä rivi nykyisen edelle"
 
-#: src/application_actions.cpp:195
+#: src/application_actions.cpp:196
 #, kde-format
 msgid "Insert After"
 msgstr "Lisää jälkeen"
 
-#: src/application_actions.cpp:196
+#: src/application_actions.cpp:197
 #, kde-format
 msgid "Insert empty line after current one"
 msgstr "Lisää tyhjä rivi nykyisen jälkeen"
 
 #. i18n: ectx: property (text), widget (QPushButton, btnRemove)
-#: src/application_actions.cpp:204 src/scripting/scriptsmanager.ui:60
+#: src/application_actions.cpp:205 src/scripting/scriptsmanager.ui:60
 #, kde-format
 msgid "Remove"
 msgstr "Poista"
 
-#: src/application_actions.cpp:205
+#: src/application_actions.cpp:206
 #, kde-format
 msgid "Remove selected lines"
 msgstr "Poista valitut rivit"
 
-#: src/application_actions.cpp:212 src/core/subtitle.cpp:559
+#: src/application_actions.cpp:213 src/core/subtitle.cpp:560
 #, kde-format
 msgid "Split Lines"
 msgstr "Jaa rivit"
 
-#: src/application_actions.cpp:213
+#: src/application_actions.cpp:214
 #, kde-format
 msgid "Split selected lines"
 msgstr "Jaa valitut rivit"
 
-#: src/application_actions.cpp:219 src/core/subtitle.cpp:641
-#: src/gui/waveform/waveformwidget.cpp:711
+#: src/application_actions.cpp:220 src/core/subtitle.cpp:642
+#: src/gui/waveform/waveformwidget.cpp:712
 #, kde-format
 msgid "Join Lines"
 msgstr "Yhdistä rivit"
 
-#: src/application_actions.cpp:220
+#: src/application_actions.cpp:221
 #, kde-format
 msgid "Join selected lines"
 msgstr "Yhdistä valitut rivit"
 
-#: src/application_actions.cpp:227 src/errors/finderrorsdialog.cpp:114
-#: src/gui/treeview/richlineedit.cpp:111 src/widgets/simplerichtextedit.cpp:370
+#: src/application_actions.cpp:228 src/errors/finderrorsdialog.cpp:114
+#: src/gui/treeview/richlineedit.cpp:112 src/widgets/simplerichtextedit.cpp:371
 #, kde-format
 msgid "Select All"
 msgstr "Valitse kaikki"
 
-#: src/application_actions.cpp:228
+#: src/application_actions.cpp:229
 #, kde-format
 msgid "Select all lines"
 msgstr "Valitse kaikki rivit"
 
-#: src/application_actions.cpp:235
+#: src/application_actions.cpp:236
 #, kde-format
 msgid "Go to Line..."
 msgstr "Siirry riville…"
 
-#: src/application_actions.cpp:236
+#: src/application_actions.cpp:237
 #, kde-format
 msgid "Go to specified line"
 msgstr "Siirry määräriville"
 
-#: src/application_actions.cpp:244
+#: src/application_actions.cpp:245
 #, kde-format
 msgid "Find..."
 msgstr "Etsi…"
 
-#: src/application_actions.cpp:245
+#: src/application_actions.cpp:246
 #, kde-format
 msgid "Find occurrences of strings or regular expressions"
 msgstr "Etsi merkkijonon tai säännöllisen lausekkeen esiintymät"
 
-#: src/application_actions.cpp:253
+#: src/application_actions.cpp:254
 #, kde-format
 msgid "Find Next"
 msgstr "Etsi seuraava"
 
-#: src/application_actions.cpp:254
+#: src/application_actions.cpp:255
 #, kde-format
 msgid "Find next occurrence of string or regular expression"
 msgstr "Etsi seuraava merkkijonon tai säännöllisen lausekkeen esiintymä"
 
-#: src/application_actions.cpp:262
+#: src/application_actions.cpp:263
 #, kde-format
 msgid "Find Previous"
 msgstr "Etsi edellinen"
 
-#: src/application_actions.cpp:263
+#: src/application_actions.cpp:264
 #, kde-format
 msgid "Find previous occurrence of string or regular expression"
 msgstr "Etsi edellinen merkkijonon tai säännöllisen lausekkeen esiintymä"
 
-#: src/application_actions.cpp:270
+#: src/application_actions.cpp:271
 #, kde-format
 msgid "Replace..."
 msgstr "Korvaa…"
 
-#: src/application_actions.cpp:271
+#: src/application_actions.cpp:272
 #, kde-format
 msgid "Replace occurrences of strings or regular expressions"
 msgstr "Korvaa merkkijonon tai säännöllisen lausekkeen esiintymät"
 
-#: src/application_actions.cpp:279
+#: src/application_actions.cpp:280
 #, kde-format
 msgid "Retrocede current line"
 msgstr "Siirry edelliselle riville"
 
-#: src/application_actions.cpp:280
+#: src/application_actions.cpp:281
 #, kde-format
 msgid "Makes the line before the current one active"
 msgstr "Siirtää kohdistuksen nykyistä edeltävälle riville"
 
-#: src/application_actions.cpp:288
+#: src/application_actions.cpp:289
 #, kde-format
 msgid "Advance current line"
 msgstr "Siirry seuraavalle riville"
 
-#: src/application_actions.cpp:289
+#: src/application_actions.cpp:290
 #, kde-format
 msgid "Makes the line after the current one active"
 msgstr "Siirtää kohdistuksen nykyistä seuraavalle riville"
 
-#: src/application_actions.cpp:297
+#: src/application_actions.cpp:298
 #, kde-format
 msgid "Detect Errors..."
 msgstr "Etsi virheitä…"
 
-#: src/application_actions.cpp:298
+#: src/application_actions.cpp:299
 #, kde-format
 msgid "Detect errors in the current subtitle"
 msgstr "Etsi nykyisestä tekstityksestä virheitä"
 
-#: src/application_actions.cpp:305
+#: src/application_actions.cpp:306
 #, kde-format
 msgid "Clear Errors/Marks"
 msgstr "Tyhjennä virheet/merkit"
 
-#: src/application_actions.cpp:306
+#: src/application_actions.cpp:307
 #, kde-format
 msgid "Clear detected errors and marks in the current subtitle"
 msgstr "Tyhjennä nykyisestä tekstityksestä havaitut virheet ja merkit"
 
-#: src/application_actions.cpp:314
+#: src/application_actions.cpp:315
 #, kde-format
 msgid "Select Next Error/Mark"
 msgstr "Valitse seuraava virhe tai merkki"
 
-#: src/application_actions.cpp:315
+#: src/application_actions.cpp:316
 #, kde-format
 msgid "Select next line with error or mark"
 msgstr "Valitse seuraava rivi, jolla on virhe tai merkki"
 
-#: src/application_actions.cpp:323
+#: src/application_actions.cpp:324
 #, kde-format
 msgid "Select Previous Error/Mark"
 msgstr "Valitse edellinen virhe tai merkki"
 
-#: src/application_actions.cpp:324
+#: src/application_actions.cpp:325
 #, kde-format
 msgid "Select previous line with error or mark"
 msgstr "Valitse edellinen rivi, jolla on virhe tai merkki"
 
-#: src/application_actions.cpp:332
+#: src/application_actions.cpp:333
 #, kde-format
 msgid "Spelling..."
 msgstr "&Oikeinkirjoituksen tarkistus…"
 
-#: src/application_actions.cpp:333
+#: src/application_actions.cpp:334
 #, kde-format
 msgid "Check lines spelling"
 msgstr "Tarkista oikeinkirjoitus"
 
-#: src/application_actions.cpp:339
+#: src/application_actions.cpp:340
 #, kde-format
 msgid "Toggle Mark"
 msgstr "Aseta tai poista merkki"
 
-#: src/application_actions.cpp:340
+#: src/application_actions.cpp:341
 #, kde-format
 msgid "Toggle mark on selected lines"
 msgstr "Aseta tai poista valittujen repliikkien merkki"
 
-#: src/application_actions.cpp:348 src/gui/currentlinewidget.cpp:141
+#: src/application_actions.cpp:349 src/gui/currentlinewidget.cpp:141
 #, kde-format
 msgid "Toggle Bold"
 msgstr "Aseta tai poista lihavointi"
 
-#: src/application_actions.cpp:349
+#: src/application_actions.cpp:350
 #, kde-format
 msgid "Toggle selected lines bold attribute"
 msgstr "Aseta tai poista valittujen repliikkien lihavointi"
 
-#: src/application_actions.cpp:357 src/gui/currentlinewidget.cpp:145
+#: src/application_actions.cpp:358 src/gui/currentlinewidget.cpp:145
 #, kde-format
 msgid "Toggle Italic"
 msgstr "Aseta tai poista kursivointi"
 
-#: src/application_actions.cpp:358
+#: src/application_actions.cpp:359
 #, kde-format
 msgid "Toggle selected lines italic attribute"
 msgstr "Aseta tai poista valittujen repliikkien kursivointi"
 
-#: src/application_actions.cpp:366 src/gui/currentlinewidget.cpp:149
+#: src/application_actions.cpp:367 src/gui/currentlinewidget.cpp:149
 #, kde-format
 msgid "Toggle Underline"
 msgstr "Aseta tai poista alleviivaus"
 
-#: src/application_actions.cpp:367
+#: src/application_actions.cpp:368
 #, kde-format
 msgid "Toggle selected lines underline attribute"
 msgstr "Aseta tai poista valittujen repliikkien alleviivaus"
 
-#: src/application_actions.cpp:375 src/gui/currentlinewidget.cpp:153
+#: src/application_actions.cpp:376 src/gui/currentlinewidget.cpp:153
 #, kde-format
 msgid "Toggle Strike Through"
 msgstr "Aseta tai poista yliviivaus"
 
-#: src/application_actions.cpp:376
+#: src/application_actions.cpp:377
 #, kde-format
 msgid "Toggle selected lines strike through attribute"
 msgstr "Aseta tai poista valittujen repliikkien yliviivaus"
 
-#: src/application_actions.cpp:384 src/gui/currentlinewidget.cpp:157
+#: src/application_actions.cpp:385 src/gui/currentlinewidget.cpp:157
 #, kde-format
 msgid "Change Text Color"
 msgstr "Vaihda tekstiväri"
 
-#: src/application_actions.cpp:385
+#: src/application_actions.cpp:386
 #, kde-format
 msgid "Change text color of selected lines"
 msgstr "Vaihda valittujen rivien tekstiväriä"
 
-#: src/application_actions.cpp:392
+#: src/application_actions.cpp:393
 #, kde-format
 msgid "Shift..."
 msgstr "Siirrä…"
 
-#: src/application_actions.cpp:393
+#: src/application_actions.cpp:394
 #, kde-format
 msgid "Shift lines an specified amount of time"
 msgstr "Siirtää rivejä annetun ajan verran"
 
-#: src/application_actions.cpp:412
+#: src/application_actions.cpp:413
 #, kde-format
 msgid "Adjust..."
 msgstr "Säädä…"
 
-#: src/application_actions.cpp:413
+#: src/application_actions.cpp:414
 #, kde-format
 msgid "Linearly adjust all lines to a specified interval"
 msgstr "Lineaarisesti säätää kaikkia rivejä annettuun kestoon"
 
-#: src/application_actions.cpp:420
+#: src/application_actions.cpp:421
 #, kde-format
 msgid "Change Frame Rate..."
 msgstr "Muuta kuvanopeutta…"
 
-#: src/application_actions.cpp:421
+#: src/application_actions.cpp:422
 #, kde-format
 msgid "Retime subtitle lines by reinterpreting its frame rate"
 msgstr "Ajasta repliikit uudelleen olettamalla kuvanopeus toisin"
 
-#: src/application_actions.cpp:427
+#: src/application_actions.cpp:428
 #, kde-format
 msgid "Enforce Duration Limits..."
 msgstr "Pakota kestorajat…"
 
-#: src/application_actions.cpp:428
+#: src/application_actions.cpp:429
 #, kde-format
 msgid "Enforce lines minimum and/or maximum duration limits"
 msgstr "Pakota rivien kestot vähimmäis- tai enimmäisrajoihinsa"
 
-#: src/application_actions.cpp:435
+#: src/application_actions.cpp:436
 #, kde-format
 msgid "Set Automatic Durations..."
 msgstr "Aseta automaattiset kestot…"
 
-#: src/application_actions.cpp:436
+#: src/application_actions.cpp:437
 #, kde-format
 msgid "Set lines durations based on amount of letters, words and line breaks"
 msgstr ""
@@ -624,72 +624,72 @@ msgstr ""
 "perusteellaAseta repliikkien kesto merkkien, sanojen tai rivinvaihtojen "
 "määrän perusteella"
 
-#: src/application_actions.cpp:442
+#: src/application_actions.cpp:443
 #, kde-format
 msgid "Maximize Durations..."
 msgstr "Maksimoi kestot…"
 
-#: src/application_actions.cpp:443
+#: src/application_actions.cpp:444
 #, kde-format
 msgid "Extend lines durations up to their next lines show time"
 msgstr "Kasvata repliikkien kestoja niitä seuraavan repliikin ilmestymisaikaan"
 
-#: src/application_actions.cpp:449
+#: src/application_actions.cpp:450
 #, kde-format
 msgid "Fix Overlapping Times..."
 msgstr "Korjaa limittyvät ajat…"
 
-#: src/application_actions.cpp:450
+#: src/application_actions.cpp:451
 #, kde-format
 msgid "Fix lines overlapping times"
 msgstr "Korjaa repliikkien limittyvät ajat"
 
-#: src/application_actions.cpp:456
+#: src/application_actions.cpp:457
 #, kde-format
 msgid "Synchronize with Subtitle..."
 msgstr "Synkronoi tekstityksen kanssa…"
 
-#: src/application_actions.cpp:457
+#: src/application_actions.cpp:458
 #, kde-format
 msgid "Copy timing information from another subtitle"
 msgstr "Kopioi ajoitustieto toisesta tekstityksestä"
 
-#: src/application_actions.cpp:463
+#: src/application_actions.cpp:464
 #, kde-format
 msgid "Break Lines..."
 msgstr "Rivitä…"
 
-#: src/application_actions.cpp:464
+#: src/application_actions.cpp:465
 #, kde-format
 msgid "Automatically set line breaks"
 msgstr "Rivitä automaattisesti"
 
-#: src/application_actions.cpp:470
+#: src/application_actions.cpp:471
 #, kde-format
 msgid "Unbreak Lines..."
 msgstr "Pura rivitys…"
 
-#: src/application_actions.cpp:471
+#: src/application_actions.cpp:472
 #, kde-format
 msgid "Remove line breaks from lines"
 msgstr "Poista repliikistä rivinvaihdot"
 
-#: src/application_actions.cpp:477
+#: src/application_actions.cpp:478
 #, kde-format
 msgid "Simplify Spaces..."
 msgstr "Sievennä sanavälit…"
 
-#: src/application_actions.cpp:478
+#: src/application_actions.cpp:479
 #, kde-format
 msgid "Remove unneeded spaces from lines"
 msgstr "Poista riveiltä turhat sanavälit"
 
-#: src/application_actions.cpp:484
+#: src/application_actions.cpp:485
 #, kde-format
 msgid "Change Case..."
 msgstr "Vaihda aakkoslajia…"
 
-#: src/application_actions.cpp:485
+#: src/application_actions.cpp:486
 #, kde-format
 msgid "Change lines text to upper, lower, title or sentence case"
 msgstr ""
@@ -697,212 +697,212 @@ msgstr ""
 "aakkosiinMuuta repliikin teksti suuraakkosiin, pienaak tai otsikko- tai "
 "virketyylin aakkosiin"
 
-#: src/application_actions.cpp:491
+#: src/application_actions.cpp:492
 #, kde-format
 msgid "Fix Punctuation..."
 msgstr "Korjaa välimerkit…"
 
-#: src/application_actions.cpp:492
+#: src/application_actions.cpp:493
 #, kde-format
 msgid "Fix punctuation errors in lines"
 msgstr "Korjaa rivien välimerkkivirheet"
 
-#: src/application_actions.cpp:498
+#: src/application_actions.cpp:499
 #, kde-format
 msgid "Translate..."
 msgstr "Käännä…"
 
-#: src/application_actions.cpp:499
+#: src/application_actions.cpp:500
 #, kde-format
 msgid "Translate lines texts using Google services"
 msgstr "Käännä repliikkien tekstit Googlen palveluilla"
 
-#: src/application_actions.cpp:505
+#: src/application_actions.cpp:506
 #, kde-format
 msgid "Edit Line in Place"
 msgstr "Muokkaa repliikkiä paikallaan"
 
-#: src/application_actions.cpp:506
+#: src/application_actions.cpp:507
 #, kde-format
 msgid "Edit current line text in place"
 msgstr "Muokkaa nykyistä repliikkiä paikallaan"
 
-#: src/application_actions.cpp:514
+#: src/application_actions.cpp:515
 #, kde-format
 msgid "Open Video..."
 msgstr "Avaa video…"
 
-#: src/application_actions.cpp:515 src/application_actions.cpp:522
+#: src/application_actions.cpp:516 src/application_actions.cpp:523
 #, kde-format
 msgid "Open video file"
 msgstr "Avaa videotiedosto"
 
-#: src/application_actions.cpp:521
+#: src/application_actions.cpp:522
 #, kde-format
 msgid "Open &Recent Video"
 msgstr "Avaa v&iimeaikainen video"
 
-#: src/application_actions.cpp:528
+#: src/application_actions.cpp:529
 #, kde-format
 msgid "Import Subtitle Stream"
 msgstr "Tuo tekstitysvirta"
 
-#: src/application_actions.cpp:529
+#: src/application_actions.cpp:530
 #, kde-format
 msgid "Import subtitle stream into subtitle editor"
 msgstr "Tuo tekstitysmuokkaimeen tekstitysvirta"
 
-#: src/application_actions.cpp:535
+#: src/application_actions.cpp:536
 #, kde-format
 msgid "Recognize Speech"
 msgstr "Tunnista puhe"
 
-#: src/application_actions.cpp:536
+#: src/application_actions.cpp:537
 #, kde-format
 msgid "Recognize speech in audio stream"
 msgstr "Tunnista äänivirran puhe"
 
-#: src/application_actions.cpp:542
+#: src/application_actions.cpp:543
 #, kde-format
 msgid "Close Video"
 msgstr "Sulje video"
 
-#: src/application_actions.cpp:543
+#: src/application_actions.cpp:544
 #, kde-format
 msgid "Close video file"
 msgstr "Sulje videotiedosto"
 
-#: src/application_actions.cpp:550
+#: src/application_actions.cpp:551
 #, kde-format
 msgid "Full Screen Mode"
 msgstr "Koko näytön tila"
 
-#: src/application_actions.cpp:551
+#: src/application_actions.cpp:552
 #, kde-format
 msgid "Toggle full screen mode"
 msgstr "Vaihda koko näytön tilaan tai pois siitä"
 
-#: src/application_actions.cpp:558
+#: src/application_actions.cpp:559
 #, kde-format
 msgid "Stop"
 msgstr "Pysäytä"
 
-#: src/application_actions.cpp:559
+#: src/application_actions.cpp:560
 #, kde-format
 msgid "Stop video playback"
 msgstr "Keskeytä videotoisto"
 
-#: src/application_actions.cpp:567
+#: src/application_actions.cpp:568
 #, kde-format
 msgid "Toggle video playing/paused"
 msgstr "Toista tai aseta tauolle videotoisto"
 
-#: src/application_actions.cpp:575
+#: src/application_actions.cpp:576
 #, kde-format
 msgid "Seek Backward"
 msgstr "Hyppää taaksepäin"
 
-#: src/application_actions.cpp:583
+#: src/application_actions.cpp:584
 #, kde-format
 msgid "Seek Forward"
 msgstr "Hyppää eteenpäin"
 
-#: src/application_actions.cpp:590
+#: src/application_actions.cpp:591
 #, kde-format
 msgid "Frame Step Backward"
 msgstr "Kuva-askellus taaksepäin"
 
-#: src/application_actions.cpp:597
+#: src/application_actions.cpp:598
 #, kde-format
 msgid "Frame Step Forward"
 msgstr "Kuva-askellus eteenpäin"
 
-#: src/application_actions.cpp:605
+#: src/application_actions.cpp:606
 #, kde-format
 msgid "Seek to Previous Line"
 msgstr "Siirry edelliseen repliikkiin"
 
-#: src/application_actions.cpp:606
+#: src/application_actions.cpp:607
 #, kde-format
 msgid "Seek to previous subtitle line show time"
 msgstr "Hyppää edellisen repliikin ilmestymisaikaan"
 
-#: src/application_actions.cpp:614
+#: src/application_actions.cpp:615
 #, kde-format
 msgid "Increase media play rate"
 msgstr "Nopeuta median toistoa"
 
-#: src/application_actions.cpp:615
+#: src/application_actions.cpp:616
 #, kde-format
 msgid "Increase media playback rate"
 msgstr "Nopeuta median toistoa"
 
-#: src/application_actions.cpp:622
+#: src/application_actions.cpp:623
 #, kde-format
 msgid "Decrease media play rate"
 msgstr "Hidasta median toistoa"
 
-#: src/application_actions.cpp:623
+#: src/application_actions.cpp:624
 #, kde-format
 msgid "Decrease media playback rate"
 msgstr "Hidasta mediann toistoa"
 
-#: src/application_actions.cpp:629
+#: src/application_actions.cpp:630
 #, kde-format
 msgid "Play Current Line and Pause"
 msgstr "Toista nykyinen repliikki ja tauota"
 
-#: src/application_actions.cpp:630
+#: src/application_actions.cpp:631
 #, kde-format
 msgid "Seek to selected subtitle line show time, play it and then pause"
 msgstr "Siirry valitun repliikin alkuaikaan, toista se ja keskeytä"
 
-#: src/application_actions.cpp:637
+#: src/application_actions.cpp:638
 #, kde-format
 msgid "Seek to Current Line"
 msgstr "Siirry nykyiseen repliikkiin"
 
-#: src/application_actions.cpp:638
+#: src/application_actions.cpp:639
 #, kde-format
 msgid "Seek to selected subtitle line show time"
 msgstr "Siirry valitun repliikin alkuaikaan"
 
-#: src/application_actions.cpp:645
+#: src/application_actions.cpp:646
 #, kde-format
 msgid "Seek to Next Line"
 msgstr "Siirry seuraavaan repliikkiin"
 
-#: src/application_actions.cpp:646
+#: src/application_actions.cpp:647
 #, kde-format
 msgid "Seek to next subtitle line show time"
 msgstr "Hyppää seuraavan repliikin ilmestymisaikaan"
 
-#: src/application_actions.cpp:654
+#: src/application_actions.cpp:655
 #, kde-format
 msgid "Set Line Show Time to Video Position"
 msgstr "Aseta nykyisen repliikin ilmestymisajaksi videon kohta"
 
-#: src/application_actions.cpp:655
+#: src/application_actions.cpp:656
 #, kde-format
 msgid "Set current line show time to video position"
 msgstr "Aseta nykyisen repliikin ilmestymisajaksi videon kohta"
 
-#: src/application_actions.cpp:663
+#: src/application_actions.cpp:664
 #, kde-format
 msgid "Set Line Hide Time to Video Position"
 msgstr "Aseta nykyisen repliikin piilotusajaksi videon kohta"
 
-#: src/application_actions.cpp:664
+#: src/application_actions.cpp:665
 #, kde-format
 msgid "Set current line hide time to video position"
 msgstr "Aseta nykyisen repliikin piilotusajaksi videon kohta"
 
-#: src/application_actions.cpp:671
+#: src/application_actions.cpp:672
 #, kde-format
 msgid "Shift Current Line to Video Position"
 msgstr "Siirrä nykyinen repliikki videon kohtaan"
 
-#: src/application_actions.cpp:672
+#: src/application_actions.cpp:673
 #, kde-format
 msgid ""
 "Set current line show time to video position by equally shifting all lines"
@@ -910,93 +910,93 @@ msgstr ""
 "Aseta nykyisen repliikin ilmestymisajaksi videon kohta siirtämällä kaikkia "
 "repliikkejä yhtäläisesti"
 
-#: src/application_actions.cpp:680
+#: src/application_actions.cpp:681
 #, kde-format
 msgid "Current Line Follows Video"
 msgstr "Repliikin kohdistus seuraa videota"
 
-#: src/application_actions.cpp:681
+#: src/application_actions.cpp:682
 #, kde-format
 msgid "Make current line follow the playing video position"
 msgstr "Aseta repliikin kohdistus seuraamaan videon kohtaa"
 
-#: src/application_actions.cpp:687
+#: src/application_actions.cpp:688
 #, kde-format
 msgctxt "@action:inmenu Toggle audio muted"
 msgid "Mute"
 msgstr "Vaimenna"
 
-#: src/application_actions.cpp:688
+#: src/application_actions.cpp:689
 #, kde-format
 msgid "Enable/disable playback sound"
 msgstr "Ota käyttöön tai poista käytöstä median äänet"
 
-#: src/application_actions.cpp:695
+#: src/application_actions.cpp:696
 #, kde-format
 msgid "Increase Volume"
 msgstr "Lisää äänenvoimakkuutta"
 
-#: src/application_actions.cpp:696
+#: src/application_actions.cpp:697
 #, kde-format
 msgid "Increase volume by 5%"
 msgstr "Lisää äänenvoimakkuutta 5 %"
 
-#: src/application_actions.cpp:703
+#: src/application_actions.cpp:704
 #, kde-format
 msgid "Decrease Volume"
 msgstr "Vähennä äänenvoimakkuutta"
 
-#: src/application_actions.cpp:704
+#: src/application_actions.cpp:705
 #, kde-format
 msgid "Decrease volume by 5%"
 msgstr "Vähennä äänenvoimakkuutta 5 %"
 
-#: src/application_actions.cpp:711
+#: src/application_actions.cpp:712
 #, kde-format
 msgid "Audio Streams"
 msgstr "Äänivirrat"
 
-#: src/application_actions.cpp:712
+#: src/application_actions.cpp:713
 #, kde-format
 msgid "Select active audio stream"
 msgstr "Valitse aktiivinen äänivirta"
 
-#: src/application_actions.cpp:723
+#: src/application_actions.cpp:724
 #, kde-format
 msgid "Increase Font Size"
 msgstr "Suurenna fonttikokoa"
 
-#: src/application_actions.cpp:724
+#: src/application_actions.cpp:725
 #, kde-format
 msgid "Increase subtitles font size by 1 point"
 msgstr "Suurenna tekstityksen fonttikokoa 1 pisteellä"
 
-#: src/application_actions.cpp:731
+#: src/application_actions.cpp:732
 #, kde-format
 msgid "Decrease Font Size"
 msgstr "Pienennä fonttikokoa"
 
-#: src/application_actions.cpp:732
+#: src/application_actions.cpp:733
 #, kde-format
 msgid "Decrease subtitles font size by 1 point"
 msgstr "Pienennä tekstityksen fonttikokoa 1 pisteellä"
 
-#: src/application_actions.cpp:739
+#: src/application_actions.cpp:740
 #, kde-format
 msgid "Displayed Subtitle Text"
 msgstr "Näytetty tekstitys"
 
-#: src/application_actions.cpp:740
+#: src/application_actions.cpp:741
 #, kde-format
 msgid "Select visible subtitle text"
 msgstr "Valitse näytetty tekstitys"
 
-#: src/application_actions.cpp:751 src/gui/waveform/waveformwidget.cpp:735
+#: src/application_actions.cpp:752 src/gui/waveform/waveformwidget.cpp:736
 #, kde-format
 msgid "Toggle Anchor"
 msgstr "Aseta tai poista ankkuri"
 
-#: src/application_actions.cpp:752
+#: src/application_actions.cpp:753
 #, kde-format
 msgid ""
 "(Un)Anchor current line's show time to timeline (Editing anchored line's "
@@ -1008,12 +1008,12 @@ msgstr ""
 "nykyisen repliikin ilmestymisajalta (ankkuroidun repliikin ilmestymisajan "
 "muokkaus venyttää tai supistaa aikajanaa vierekkäisten ankkurien välissä)"
 
-#: src/application_actions.cpp:759
+#: src/application_actions.cpp:760
 #, kde-format
 msgid "Remove All Anchors"
 msgstr "Poista kaikki ankkurit"
 
-#: src/application_actions.cpp:760
+#: src/application_actions.cpp:761
 #, kde-format
 msgid "Unanchor show time from the timeline on all anchored lines"
 msgstr ""
@@ -1021,68 +1021,68 @@ msgstr ""
 "ankkuriPoista aikajanalta kaikista ankkuroiduista repliikeistä "
 "ilmestymisajan ankkuri"
 
-#: src/application_actions.cpp:768
+#: src/application_actions.cpp:769
 #, kde-format
 msgctxt "@action:inmenu Manage user scripts"
 msgid "Scripts Manager..."
 msgstr "Hallitse skriptejä…"
 
-#: src/application_actions.cpp:769
+#: src/application_actions.cpp:770
 #, kde-format
 msgid "Manage user scripts"
 msgstr "Hallitse käyttäjän skriptejä"
 
-#: src/application_actions.cpp:776 src/application_actions.cpp:777
+#: src/application_actions.cpp:777 src/application_actions.cpp:778
 #, kde-format
 msgid "Waveform Zoom In"
 msgstr "Ääniaallon lähennys"
 
-#: src/application_actions.cpp:783 src/application_actions.cpp:784
+#: src/application_actions.cpp:784 src/application_actions.cpp:785
 #, kde-format
 msgid "Waveform Zoom Out"
 msgstr "Ääniaallon loitonnus"
 
-#: src/application_actions.cpp:791
+#: src/application_actions.cpp:792
 #, kde-format
 msgid "Waveform Auto Scroll"
 msgstr "Ääniaallon automaattinen vieritys"
 
-#: src/application_actions.cpp:792
+#: src/application_actions.cpp:793
 #, kde-format
 msgid "Waveform display will automatically scroll to video position"
 msgstr "Ääniaaltonäkymä vieritetään automaattisesti videon kohtaan"
 
-#: src/application_subtitle.cpp:75
+#: src/application_subtitle.cpp:77
 #, kde-format
 msgid "All Text Subtitles"
 msgstr "Kaikki tekstimuotoiset tekstitykset"
 
-#: src/application_subtitle.cpp:76
+#: src/application_subtitle.cpp:78
 #, kde-format
 msgid "All Image Subtitles"
 msgstr "Kaikki kuvamuotoiset tekstitykset"
 
-#: src/application_subtitle.cpp:78 src/application_subtitle.cpp:102
+#: src/application_subtitle.cpp:80 src/application_subtitle.cpp:104
 #, kde-format
 msgid "All Files"
 msgstr "Kaikki tiedostot"
 
-#: src/application_subtitle.cpp:99
+#: src/application_subtitle.cpp:101
 #, kde-format
 msgid "Media Files"
 msgstr "Mediatiedostot"
 
-#: src/application_subtitle.cpp:100
+#: src/application_subtitle.cpp:102
 #, kde-format
 msgid "Video Files"
 msgstr "Videotiedostot"
 
-#: src/application_subtitle.cpp:101
+#: src/application_subtitle.cpp:103
 #, kde-format
 msgid "Audio Files"
 msgstr "Äänitiedostot"
 
-#: src/application_subtitle.cpp:130
+#: src/application_subtitle.cpp:132
 #, kde-format
 msgid ""
 "The requested action would make the subtitle and its translation share the "
@@ -1093,18 +1093,18 @@ msgstr ""
 "tiedostoa, jolloin tietoa mahdollisesti katoaisi tallennettaessa.\n"
 "Haluatko varmasti jatkaa?"
 
-#: src/application_subtitle.cpp:133
+#: src/application_subtitle.cpp:135
 #, kde-format
 msgid "Conflicting Subtitle Files"
 msgstr "Tekstitystiedostoristiriita"
 
-#: src/application_subtitle.cpp:151 src/dialogs/selectablesubtitledialog.cpp:65
+#: src/application_subtitle.cpp:153 src/dialogs/selectablesubtitledialog.cpp:67
 #, kde-format
 msgid "Open Subtitle"
 msgstr "Avaa tekstitys"
 
-#: src/application_subtitle.cpp:207 src/application_subtitle.cpp:227
-#: src/application_subtitle.cpp:473 src/application_subtitle.cpp:498
+#: src/application_subtitle.cpp:209 src/application_subtitle.cpp:229
+#: src/application_subtitle.cpp:475 src/application_subtitle.cpp:500
 #, kde-format
 msgid ""
 "<qt>Could not parse the subtitle file.<br/>This may have been caused by "
@@ -1113,27 +1113,27 @@ msgstr ""
 "<qt>Tekstitystiedostoa ei voi jäsentää.<br/>Tämän voi aiheuttaa väärän "
 "merkistökoodauksen käyttö."
 
-#: src/application_subtitle.cpp:273 src/application_subtitle.cpp:321
+#: src/application_subtitle.cpp:275 src/application_subtitle.cpp:323
 #, kde-format
 msgid "Format: %1"
 msgstr "Muoto: %1"
 
-#: src/application_subtitle.cpp:274 src/application_subtitle.cpp:322
+#: src/application_subtitle.cpp:276 src/application_subtitle.cpp:324
 #, kde-format
 msgid "Encoding: %1"
 msgstr "Koodaus: %1"
 
-#: src/application_subtitle.cpp:328
+#: src/application_subtitle.cpp:330
 #, kde-format
 msgid "There was an error saving the subtitle."
 msgstr "Tekstitystä tallennettaessa tapahtui virhe."
 
-#: src/application_subtitle.cpp:336
+#: src/application_subtitle.cpp:338
 #, kde-format
 msgid "Save Subtitle"
 msgstr "Tallenna tekstitys"
 
-#: src/application_subtitle.cpp:371 src/application_subtitle.cpp:612
+#: src/application_subtitle.cpp:373 src/application_subtitle.cpp:614
 #, kde-format
 msgid ""
 "Currently opened translation subtitle has unsaved changes.\n"
@@ -1142,12 +1142,12 @@ msgstr ""
 "Auki olevassa tekstityksessä on muutoksia tallentamatta.\n"
 "Haluatko tallentaa ne?"
 
-#: src/application_subtitle.cpp:372 src/application_subtitle.cpp:613
+#: src/application_subtitle.cpp:374 src/application_subtitle.cpp:615
 #, kde-format
 msgid "Close Translation Subtitle"
 msgstr "Sulje käännöstekstitys"
 
-#: src/application_subtitle.cpp:382
+#: src/application_subtitle.cpp:384
 #, kde-format
 msgid ""
 "Currently opened subtitle has unsaved changes.\n"
@@ -1156,65 +1156,65 @@ msgstr ""
 "Avoimessa tekstityksessä on muutoksia tallentamatta.\n"
 "Haluatko tallentaa ne?"
 
-#: src/application_subtitle.cpp:383
+#: src/application_subtitle.cpp:385
 #, kde-format
 msgid "Close Subtitle"
 msgstr "Sulje tekstitys"
 
-#: src/application_subtitle.cpp:442
+#: src/application_subtitle.cpp:444
 #, kde-format
 msgid "Open Translation Subtitle"
 msgstr "Avaa käännöstekstitys"
 
-#: src/application_subtitle.cpp:527
+#: src/application_subtitle.cpp:529
 #, kde-format
 msgctxt "@item:inmenu Display primary text in video player"
 msgid "Primary"
 msgstr "Ensisijainen"
 
-#: src/application_subtitle.cpp:528
+#: src/application_subtitle.cpp:530
 #, kde-format
 msgctxt "@item:inmenu Display translation text in video player"
 msgid "Translation"
 msgstr "Käännös"
 
-#: src/application_subtitle.cpp:568
+#: src/application_subtitle.cpp:570
 #, kde-format
 msgid "There was an error saving the translation subtitle."
 msgstr "Käännöstekstitystä tallennettaessa tapahtui virhe."
 
-#: src/application_subtitle.cpp:576
+#: src/application_subtitle.cpp:578
 #, kde-format
 msgid "Save Translation Subtitle"
 msgstr "Tallenna käännöstekstitys"
 
-#: src/application_subtitle.cpp:662
+#: src/application_subtitle.cpp:664
 #, kde-format
 msgctxt "Suffix added to split subtitles"
 msgid "split"
 msgstr "jaa"
 
-#: src/application_subtitle.cpp:680
+#: src/application_subtitle.cpp:682
 #, kde-format
 msgid "Could not write the split subtitle file."
 msgstr "Jaetun tekstitystiedoston kirjoittaminen epäonnistui."
 
-#: src/application_subtitle.cpp:680
+#: src/application_subtitle.cpp:682
 #, kde-format
 msgid "Could not write the split subtitle translation file."
 msgstr "Jaetun käännöstekstityksen kirjoittaminen epäonnistui."
 
-#: src/application_subtitle.cpp:705
+#: src/application_subtitle.cpp:707
 #, kde-format
 msgid "Could not read the subtitle file to append."
 msgstr "Ei voitu lukea tekstitystiedostoa, johon pitäisi lisätä."
 
-#: src/application_subtitle.cpp:721
+#: src/application_subtitle.cpp:723
 #, kde-format
 msgid "The specified time does not split the subtitles."
 msgstr "Annettu ajankohta ei jaa tekstitystä."
 
-#: src/application_subtitle.cpp:756
+#: src/application_subtitle.cpp:758
 #, kde-format
 msgid ""
 "Could not open a new Subtitle Composer window.\n"
@@ -1223,7 +1223,7 @@ msgstr ""
 "Tekstitysmuokkainikkunaa ei voi avata.\n"
 "Jaettu osa tallennettiin nimellä %1."
 
-#: src/application_subtitle.cpp:757
+#: src/application_subtitle.cpp:759
 #, kde-format
 msgid ""
 "Could not open a new Subtitle Composer window.\n"
@@ -1232,79 +1232,79 @@ msgstr ""
 "Tekstitysmuokkainikkunaa ei voi avata.\n"
 "Jaetut osat tallennettiin nimillä %1 ja %2."
 
-#: src/application_subtitle.cpp:775
+#: src/application_subtitle.cpp:777
 #, kde-format
 msgid "The reference subtitle must have more than one line to proceed."
 msgstr "Viitetekstityksen täytyy sisältää enemmän kuin yksi repliikki."
 
-#: src/application_subtitle.cpp:784
+#: src/application_subtitle.cpp:786
 #, kde-format
 msgid "Could not parse the reference subtitle file."
 msgstr "Viitetekstitystiedostoa ei voitu jäsentää."
 
-#: src/configs/configdialog.cpp:38
+#: src/configs/configdialog.cpp:35
 #, kde-format
 msgctxt "@title General settings"
 msgid "General"
 msgstr "Perusasetukset"
 
-#: src/configs/configdialog.cpp:39
+#: src/configs/configdialog.cpp:36
 #, kde-format
 msgid "General Settings"
 msgstr "Perusasetukset"
 
-#: src/configs/configdialog.cpp:43
+#: src/configs/configdialog.cpp:40
 #, kde-format
 msgctxt "@title Error check settings"
 msgid "Error Check"
 msgstr "Virheentarkistus"
 
-#: src/configs/configdialog.cpp:44
+#: src/configs/configdialog.cpp:41
 #, kde-format
 msgid "Error Check Settings"
 msgstr "Virheentarkistusasetukset"
 
-#: src/configs/configdialog.cpp:50
+#: src/configs/configdialog.cpp:47
 #, kde-format
 msgctxt "@title Spelling settings"
 msgid "Spelling"
 msgstr "Oikoluku"
 
-#: src/configs/configdialog.cpp:51
+#: src/configs/configdialog.cpp:48
 #, kde-format
 msgid "Spelling Settings"
 msgstr "Oikolukuasetukset"
 
-#: src/configs/configdialog.cpp:55
+#: src/configs/configdialog.cpp:52
 #, kde-format
 msgctxt "@title Waveform settings"
 msgid "Waveform"
 msgstr "Ääniaalto"
 
-#: src/configs/configdialog.cpp:56
+#: src/configs/configdialog.cpp:53
 #, kde-format
 msgid "Waveform settings"
 msgstr "Ääniaaltoasetukset"
 
-#: src/configs/configdialog.cpp:60
+#: src/configs/configdialog.cpp:57
 #, kde-format
 msgctxt "@title Video player settings"
 msgid "Video Player"
 msgstr "Videosoitin"
 
-#: src/configs/configdialog.cpp:61
+#: src/configs/configdialog.cpp:58
 #, kde-format
 msgid "Video Player Settings"
 msgstr "Videosoittimen asetukset"
 
-#: src/configs/configdialog.cpp:70
+#: src/configs/configdialog.cpp:67
 #, kde-format
 msgctxt "@title Speech recognition backend settings"
 msgid "%1 backend settings"
 msgstr "%1-taustaosan asetukset"
 
 #. i18n: ectx: property (title), widget (QGroupBox, m_grpGeneral)
-#: src/configs/errorsconfigwidget.ui:17 src/gui/treeview/lineswidget.cpp:394
+#: src/configs/errorsconfigwidget.ui:17 src/gui/treeview/lineswidget.cpp:396
 #, kde-format
 msgid "Texts"
 msgstr "Tekstit"
@@ -1535,7 +1535,7 @@ msgid "Start playing video when loaded"
 msgstr "Käynnistä video, kun se on ladattu"
 
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_ShowPositionTimeEdit)
-#: src/configs/playerconfigwidget.ui:57 src/gui/playerwidget.cpp:435
+#: src/configs/playerconfigwidget.ui:57 src/gui/playerwidget.cpp:437
 #, kde-format
 msgid "Show editable position control"
 msgstr "Näytä sijainti-ilmaisin muokattavana"
@@ -1733,150 +1733,150 @@ msgstr "Toistosijainnin väri:"
 msgid "Mouse indicator color:"
 msgstr "Hiiriosoittimen väri:"
 
-#: src/core/subtitle.cpp:62
+#: src/core/subtitle.cpp:63
 #, kde-format
 msgid "Set Primary Data"
 msgstr "Aseta ensisijainen data"
 
-#: src/core/subtitle.cpp:120
+#: src/core/subtitle.cpp:121
 #, kde-format
 msgid "Clear Primary Text Data"
 msgstr "Tyhjennä ensisijaisen tekstin data"
 
-#: src/core/subtitle.cpp:133
+#: src/core/subtitle.cpp:134
 #, kde-format
 msgid "Set Secondary Data"
 msgstr "Aseta toissijainen data"
 
-#: src/core/subtitle.cpp:170
+#: src/core/subtitle.cpp:171
 #, kde-format
 msgid "Clear Secondary Text Data"
 msgstr "Tyhjennä toissijaisen tekstin data"
 
-#: src/core/subtitle.cpp:238 src/dialogs/changeframeratedialog.cpp:22
+#: src/core/subtitle.cpp:239 src/dialogs/changeframeratedialog.cpp:22
 #, kde-format
 msgid "Change Frame Rate"
 msgstr "Muuta kuvanopeutta"
 
-#: src/core/subtitle.cpp:400 src/core/subtitle.cpp:414
-#: src/gui/waveform/waveformwidget.cpp:694
+#: src/core/subtitle.cpp:401 src/core/subtitle.cpp:415
+#: src/gui/waveform/waveformwidget.cpp:695
 #, kde-format
 msgid "Insert Line"
 msgstr "Lisää rivi"
 
-#: src/core/subtitle.cpp:447 src/core/subtitle.cpp:457
-#: src/core/subtitle.cpp:474 src/core/undo/subtitleactions.cpp:122
+#: src/core/subtitle.cpp:448 src/core/subtitle.cpp:458
+#: src/core/subtitle.cpp:475 src/core/undo/subtitleactions.cpp:122
 #, kde-format
 msgid "Remove Lines"
 msgstr "Poista rivit"
 
-#: src/core/subtitle.cpp:739
+#: src/core/subtitle.cpp:740
 #, kde-format
 msgid "Shift Lines"
 msgstr "Siirrä rivejä"
 
-#: src/core/subtitle.cpp:795
+#: src/core/subtitle.cpp:796
 #, kde-format
 msgid "Adjust Lines"
 msgstr "Säädä rivejä"
 
-#: src/core/subtitle.cpp:806
+#: src/core/subtitle.cpp:807
 #, kde-format
 msgid "Sort"
 msgstr "Lajittele"
 
-#: src/core/subtitle.cpp:838 src/dialogs/durationlimitsdialog.cpp:18
+#: src/core/subtitle.cpp:839 src/dialogs/durationlimitsdialog.cpp:18
 #, kde-format
 msgid "Enforce Duration Limits"
 msgstr "Pakota kestorajat"
 
-#: src/core/subtitle.cpp:900 src/dialogs/autodurationsdialog.cpp:21
+#: src/core/subtitle.cpp:901 src/dialogs/autodurationsdialog.cpp:21
 #, kde-format
 msgid "Set Automatic Durations"
 msgstr "Aseta automaattikestot"
 
-#: src/core/subtitle.cpp:933 src/dialogs/fixoverlappingtimesdialog.cpp:18
+#: src/core/subtitle.cpp:934 src/dialogs/fixoverlappingtimesdialog.cpp:18
 #, kde-format
 msgid "Fix Overlapping Times"
 msgstr "Korjaa limittyvät ajat"
 
-#: src/core/subtitle.cpp:964
+#: src/core/subtitle.cpp:965
 #, kde-format
 msgid "Fix Lines Punctuation"
 msgstr "Korjaa riveiltä välimerkit"
 
-#: src/core/subtitle.cpp:1006
+#: src/core/subtitle.cpp:1007
 #, kde-format
 msgid "Lower Case"
 msgstr "Pienaakkoset"
 
-#: src/core/subtitle.cpp:1036
+#: src/core/subtitle.cpp:1037
 #, kde-format
 msgid "Upper Case"
 msgstr "Suuraakkoset"
 
-#: src/core/subtitle.cpp:1066
+#: src/core/subtitle.cpp:1067
 #, kde-format
 msgid "Title Case"
 msgstr "Englanninkielisen otsikkotyylin aakkoset"
 
-#: src/core/subtitle.cpp:1099
+#: src/core/subtitle.cpp:1100
 #, kde-format
 msgid "Sentence Case"
 msgstr "Virketyylin aakkoset"
 
-#: src/core/subtitle.cpp:1143 src/dialogs/smarttextsadjustdialog.cpp:18
+#: src/core/subtitle.cpp:1144 src/dialogs/smarttextsadjustdialog.cpp:18
 #, kde-format
 msgid "Break Lines"
 msgstr "Rivitä"
 
-#: src/core/subtitle.cpp:1170
+#: src/core/subtitle.cpp:1171
 #, kde-format
 msgid "Synchronize Subtitles"
 msgstr "Synkronoi tekstitykset"
 
-#: src/core/subtitle.cpp:1195 src/dialogs/joinsubtitlesdialog.cpp:24
+#: src/core/subtitle.cpp:1196 src/dialogs/joinsubtitlesdialog.cpp:24
 #, kde-format
 msgid "Join Subtitles"
 msgstr "Yhdistä tekstitykset"
 
-#: src/core/subtitle.cpp:1240 src/core/subtitle.cpp:1246
+#: src/core/subtitle.cpp:1241 src/core/subtitle.cpp:1247
 #, kde-format
 msgid "Split Subtitles"
 msgstr "Jaa tekstitykset"
 
-#: src/core/subtitle.cpp:1265
+#: src/core/subtitle.cpp:1266
 #, kde-format
 msgid "Toggle Lines Style"
 msgstr "Vaihda repliikkien tyyliä"
 
-#: src/core/subtitle.cpp:1309
+#: src/core/subtitle.cpp:1310
 #, kde-format
 msgid "Change Lines Text Color"
 msgstr "Muuta rivien tekstiväriä"
 
-#: src/core/subtitle.cpp:1329
+#: src/core/subtitle.cpp:1330
 #, kde-format
 msgid "Set Lines Mark"
 msgstr "Aseta repliikille merkki"
 
-#: src/core/subtitle.cpp:1329
+#: src/core/subtitle.cpp:1330
 #, kde-format
 msgid "Clear Lines Mark"
 msgstr "Tyhjennä repliikkien merkit"
 
-#: src/core/subtitle.cpp:1344
+#: src/core/subtitle.cpp:1345
 #, kde-format
 msgid "Toggle Lines Mark"
 msgstr "Aseta tai poista repliikin merkki"
 
-#: src/core/subtitle.cpp:1354
+#: src/core/subtitle.cpp:1355
 #, kde-format
 msgid "Clear Line Errors"
 msgstr "Tyhjennä rivien virheet"
 
-#: src/core/subtitle.cpp:1365 src/core/subtitle.cpp:1376
-#: src/errors/errorfinder.cpp:82
+#: src/core/subtitle.cpp:1366 src/core/subtitle.cpp:1377
+#: src/errors/errorfinder.cpp:84
 #, kde-format
 msgid "Check Lines Errors"
 msgstr "Tarkista rivien virheet"
@@ -2146,50 +2146,50 @@ msgstr "Aseta repliikin toisioteksti"
 msgid "Set Line Errors"
 msgstr "Aseta repliikin virheet"
 
-#: src/dialogs/actionwithtargetdialog.cpp:111
+#: src/dialogs/actionwithtargetdialog.cpp:113
 #, kde-format
 msgid "Target >>"
 msgstr "Kohde >>"
 
-#: src/dialogs/actionwithtargetdialog.cpp:111
-#: src/dialogs/actionwithtargetdialog.cpp:127
+#: src/dialogs/actionwithtargetdialog.cpp:113
+#: src/dialogs/actionwithtargetdialog.cpp:129
 #, kde-format
 msgid "Target <<"
 msgstr "Kohde <<"
 
-#: src/dialogs/actionwithtargetdialog.cpp:141
+#: src/dialogs/actionwithtargetdialog.cpp:143
 #, kde-format
 msgid "All lines"
 msgstr "Kaikki repliikit"
 
-#: src/dialogs/actionwithtargetdialog.cpp:142
+#: src/dialogs/actionwithtargetdialog.cpp:144
 #, kde-format
 msgid "Selected lines"
 msgstr "Valitut repliikit"
 
-#: src/dialogs/actionwithtargetdialog.cpp:143
+#: src/dialogs/actionwithtargetdialog.cpp:145
 #, kde-format
 msgid "All lines from first selected"
 msgstr "Kaikki repliikit ensimmäisestä valitusta"
 
-#: src/dialogs/actionwithtargetdialog.cpp:144
+#: src/dialogs/actionwithtargetdialog.cpp:146
 #, kde-format
 msgid "All lines up to last selected"
 msgstr "Kaikki repliikit viimeiseen valittuun saakka"
 
-#: src/dialogs/actionwithtargetdialog.cpp:232 src/utils/finder.cpp:53
+#: src/dialogs/actionwithtargetdialog.cpp:234 src/utils/finder.cpp:53
 #: src/utils/replacer.cpp:51
 #, kde-format
 msgid "Both subtitles"
 msgstr "Kumpikin tekstitys"
 
-#: src/dialogs/actionwithtargetdialog.cpp:235 src/utils/finder.cpp:55
+#: src/dialogs/actionwithtargetdialog.cpp:237 src/utils/finder.cpp:55
 #: src/utils/replacer.cpp:53
 #, kde-format
 msgid "Primary subtitle"
 msgstr "Ensisijainen tekstitys"
 
-#: src/dialogs/actionwithtargetdialog.cpp:238 src/utils/finder.cpp:57
+#: src/dialogs/actionwithtargetdialog.cpp:240 src/utils/finder.cpp:57
 #: src/utils/replacer.cpp:55
 #, kde-format
 msgid "Translation subtitle"
@@ -2442,12 +2442,12 @@ msgstr "Poista valitut repliikit"
 msgid "Remove From"
 msgstr "Poista…"
 
-#: src/dialogs/selectablesubtitledialog.cpp:39
+#: src/dialogs/selectablesubtitledialog.cpp:41
 #, kde-format
 msgid "Path:"
 msgstr "Sijainti:"
 
-#: src/dialogs/selectablesubtitledialog.cpp:44
+#: src/dialogs/selectablesubtitledialog.cpp:46
 #, kde-format
 msgid "Select subtitle"
 msgstr "Valitse tekstitys"
@@ -2534,12 +2534,12 @@ msgstr "Lähtökieli:"
 msgid "Output language:"
 msgstr "Kohdekieli:"
 
-#: src/errors/errorfinder.cpp:171 src/errors/finderrorsdialog.cpp:17
+#: src/errors/errorfinder.cpp:173 src/errors/finderrorsdialog.cpp:17
 #, kde-format
 msgid "Find Error"
 msgstr "Etsi virhe"
 
-#: src/errors/errorfinder.cpp:171
+#: src/errors/errorfinder.cpp:173
 #, kde-format
 msgid "No errors matching given criteria were found!"
 msgstr "Annettuja ehtoja vastaavia virheitä ei löytynyt!"
@@ -2764,45 +2764,45 @@ msgstr " ms/mki"
 msgid "chars/sec"
 msgstr " mkiä/s"
 
-#: src/gui/playerwidget.cpp:72
+#: src/gui/playerwidget.cpp:74
 #, kde-format
 msgid "<b>Position</b>"
 msgstr "<b>Sijainti</b>"
 
-#: src/gui/playerwidget.cpp:80
+#: src/gui/playerwidget.cpp:82
 #, kde-format
 msgid "<b>Length</b>"
 msgstr "<b>Pituus</b>"
 
-#: src/gui/playerwidget.cpp:85
+#: src/gui/playerwidget.cpp:87
 #, kde-format
 msgid "<b>FPS</b>"
 msgstr "<b>Kuvanopeus</b>"
 
-#: src/gui/playerwidget.cpp:91
+#: src/gui/playerwidget.cpp:93
 #, kde-format
 msgid "<b>Playback Rate</b>"
 msgstr "<b>Toistonopeus</b>"
 
-#: src/gui/playerwidget.cpp:667
+#: src/gui/playerwidget.cpp:669
 #, kde-format
 msgid "<qt>There was an error opening media file %1.</qt>"
 msgstr "<qt>Mediatiedostoa %1 avatessa tapahtui virhe.</qt>"
 
-#: src/gui/playerwidget.cpp:683 src/gui/playerwidget.cpp:684
 #: src/gui/playerwidget.cpp:685 src/gui/playerwidget.cpp:686
-#: src/gui/playerwidget.cpp:753 src/gui/playerwidget.cpp:761
-#: src/gui/playerwidget.cpp:767
+#: src/gui/playerwidget.cpp:687 src/gui/playerwidget.cpp:688
+#: src/gui/playerwidget.cpp:755 src/gui/playerwidget.cpp:763
+#: src/gui/playerwidget.cpp:769
 #, kde-format
 msgid "<i>Unknown</i>"
 msgstr "<i>Tuntematon</i>"
 
-#: src/gui/playerwidget.cpp:699 src/gui/playerwidget.cpp:701
+#: src/gui/playerwidget.cpp:701 src/gui/playerwidget.cpp:703
 #, kde-format
 msgid "Unexpected error when playing file."
 msgstr "Odottamaton virhe tiedostoa toistettaessa."
 
-#: src/gui/playerwidget.cpp:699 src/gui/playerwidget.cpp:701
+#: src/gui/playerwidget.cpp:701 src/gui/playerwidget.cpp:703
 #, kde-format
 msgid "Error Playing File"
 msgstr "Virhe toistettaessa tiedostoa"
@@ -2923,98 +2923,98 @@ msgctxt "@title:column Subtitle line translation text"
 msgid "Translation"
 msgstr "Käännös"
 
-#: src/gui/treeview/lineswidget.cpp:405
+#: src/gui/treeview/lineswidget.cpp:407
 #, kde-format
 msgid "Styles"
 msgstr "Tyylit"
 
-#: src/gui/treeview/lineswidget.cpp:414
+#: src/gui/treeview/lineswidget.cpp:416
 #, kde-format
 msgid "Times"
 msgstr "Ajat"
 
-#: src/gui/treeview/lineswidget.cpp:425
+#: src/gui/treeview/lineswidget.cpp:427
 #, kde-format
 msgid "Errors"
 msgstr "Virheet"
 
-#: src/gui/treeview/richlineedit.cpp:83 src/widgets/simplerichtextedit.cpp:339
+#: src/gui/treeview/richlineedit.cpp:84 src/widgets/simplerichtextedit.cpp:340
 #, kde-format
 msgid "Cut"
 msgstr "Leikkaa"
 
-#: src/gui/treeview/richlineedit.cpp:90 src/widgets/simplerichtextedit.cpp:345
+#: src/gui/treeview/richlineedit.cpp:91 src/widgets/simplerichtextedit.cpp:346
 #, kde-format
 msgid "Copy"
 msgstr "Kopioi"
 
-#: src/gui/treeview/richlineedit.cpp:97 src/widgets/simplerichtextedit.cpp:352
+#: src/gui/treeview/richlineedit.cpp:98 src/widgets/simplerichtextedit.cpp:353
 #, kde-format
 msgid "Paste"
 msgstr "Liitä"
 
-#: src/gui/treeview/richlineedit.cpp:105 src/widgets/simplerichtextedit.cpp:365
+#: src/gui/treeview/richlineedit.cpp:106 src/widgets/simplerichtextedit.cpp:366
 #, kde-format
 msgctxt "@action:inmenu Clear all text"
 msgid "Clear"
 msgstr "Tyhjennä"
 
-#: src/gui/treeview/richlineedit.cpp:118 src/widgets/simplerichtextedit.cpp:376
+#: src/gui/treeview/richlineedit.cpp:119 src/widgets/simplerichtextedit.cpp:377
 #, kde-format
 msgctxt "@action:inmenu Toggle bold style"
 msgid "Bold"
 msgstr "Lihavoitu"
 
-#: src/gui/treeview/richlineedit.cpp:126 src/widgets/simplerichtextedit.cpp:383
+#: src/gui/treeview/richlineedit.cpp:127 src/widgets/simplerichtextedit.cpp:384
 #, kde-format
 msgctxt "@action:inmenu Toggle italic style"
 msgid "Italic"
 msgstr "Kursiivi"
 
-#: src/gui/treeview/richlineedit.cpp:134 src/widgets/simplerichtextedit.cpp:390
+#: src/gui/treeview/richlineedit.cpp:135 src/widgets/simplerichtextedit.cpp:391
 #, kde-format
 msgctxt "@action:inmenu Toggle underline style"
 msgid "Underline"
 msgstr "Alleviivaus"
 
-#: src/gui/treeview/richlineedit.cpp:142 src/widgets/simplerichtextedit.cpp:397
+#: src/gui/treeview/richlineedit.cpp:143 src/widgets/simplerichtextedit.cpp:398
 #, kde-format
 msgctxt "@action:inmenu Toggle strike through style"
 msgid "Strike Through"
 msgstr "Yliviivaus"
 
-#: src/gui/treeview/richlineedit.cpp:150 src/widgets/simplerichtextedit.cpp:404
+#: src/gui/treeview/richlineedit.cpp:151 src/widgets/simplerichtextedit.cpp:405
 #, kde-format
 msgctxt "@action:inmenu Change Text Color"
 msgid "Text Color"
 msgstr "Tekstiväri"
 
-#: src/gui/waveform/waveformwidget.cpp:115
+#: src/gui/waveform/waveformwidget.cpp:116
 #, kde-format
 msgid "Generating waveform"
 msgstr "Luodaan ääniaaltoa"
 
-#: src/gui/waveform/waveformwidget.cpp:689
+#: src/gui/waveform/waveformwidget.cpp:690
 #, kde-format
 msgid "Select Line"
 msgstr "Valitse rivi"
 
-#: src/gui/waveform/waveformwidget.cpp:704
+#: src/gui/waveform/waveformwidget.cpp:705
 #, kde-format
 msgid "Remove Line"
 msgstr "Poista rivi"
 
-#: src/gui/waveform/waveformwidget.cpp:729
+#: src/gui/waveform/waveformwidget.cpp:730
 #, kde-format
 msgid "Split Line"
 msgstr "Jaa rivi"
 
-#: src/gui/waveform/waveformwidget.cpp:739
+#: src/gui/waveform/waveformwidget.cpp:740
 #, kde-format
 msgid "Set Current Line Show Time"
 msgstr "Aseta nykyisen repliikin ilmestymisaika"
 
-#: src/gui/waveform/waveformwidget.cpp:744
+#: src/gui/waveform/waveformwidget.cpp:745
 #, kde-format
 msgid "Set Current Line Hide Time"
 msgstr "Aseta nykyisen repliikin piilotusaika"
@@ -3097,17 +3097,17 @@ msgstr "koodiavustukset, Arch Linux -paketointi"
 msgid "All people who have contributed and I have forgotten to mention"
 msgstr "Kaikki, jotka ovat avustaneet, mutta joiden nimet olen unohtanut"
 
-#: src/mainwindow.cpp:36
+#: src/mainwindow.cpp:37
 #, kde-format
 msgid "Waveform"
 msgstr "Ääniaalto"
 
-#: src/mainwindow.cpp:50
+#: src/mainwindow.cpp:51
 #, kde-format
 msgid "Video Player"
 msgstr "Videosoitin"
 
-#: src/mainwindow.cpp:64
+#: src/mainwindow.cpp:65
 #, kde-format
 msgid "Styles and Comments"
 msgstr ""
@@ -3394,58 +3394,58 @@ msgstr "Ääriviivaväri"
 msgid "Outline Width"
 msgstr "Ääriviivan paksuus"
 
-#: src/scripting/scriptsmanager.cpp:75
+#: src/scripting/scriptsmanager.cpp:73
 #, kde-format
 msgid "Non-Script Files"
 msgstr "Ei-skriptitiedostot"
 
-#: src/scripting/scriptsmanager.cpp:157
+#: src/scripting/scriptsmanager.cpp:155
 #, kde-format
 msgid "Title"
 msgstr "Otsikko"
 
-#: src/scripting/scriptsmanager.cpp:158
+#: src/scripting/scriptsmanager.cpp:156
 #, kde-format
 msgid "Version"
 msgstr "Versio"
 
-#: src/scripting/scriptsmanager.cpp:159
+#: src/scripting/scriptsmanager.cpp:157
 #, kde-format
 msgid "Author"
 msgstr "Tekijä"
 
-#: src/scripting/scriptsmanager.cpp:160
+#: src/scripting/scriptsmanager.cpp:158
 #, kde-format
 msgid "Path"
 msgstr "Sijainti"
 
-#: src/scripting/scriptsmanager.cpp:354
+#: src/scripting/scriptsmanager.cpp:352
 #, kde-format
 msgid "Information"
 msgstr "Tietoja"
 
-#: src/scripting/scriptsmanager.cpp:360
+#: src/scripting/scriptsmanager.cpp:358
 #, kde-format
 msgid "Warning"
 msgstr "Varoitus"
 
-#: src/scripting/scriptsmanager.cpp:366
+#: src/scripting/scriptsmanager.cpp:364
 #, kde-format
 msgid "Error"
 msgstr "Virhe"
 
 #. i18n: ectx: property (text), widget (QPushButton, btnEdit)
-#: src/scripting/scriptsmanager.cpp:394 src/scripting/scriptsmanager.ui:74
+#: src/scripting/scriptsmanager.cpp:392 src/scripting/scriptsmanager.ui:74
 #, kde-format
 msgid "Edit"
 msgstr "Muokkaa"
 
-#: src/scripting/scriptsmanager.cpp:397
+#: src/scripting/scriptsmanager.cpp:395
 #, kde-format
 msgid "View"
 msgstr "Näkymä"
 
-#: src/scripting/scriptsmanager.cpp:462 src/scripting/scriptsmanager.cpp:527
+#: src/scripting/scriptsmanager.cpp:460 src/scripting/scriptsmanager.cpp:528
 #, kde-format
 msgid ""
 "You must enter an unused name to continue.\n"
@@ -3454,83 +3454,83 @@ msgstr ""
 "Jotta voisi jatkaa, on annettava nimi, joka ei ole käytössä.\n"
 "Haluatko antaa toisen nimen?"
 
-#: src/scripting/scriptsmanager.cpp:463 src/scripting/scriptsmanager.cpp:528
+#: src/scripting/scriptsmanager.cpp:461 src/scripting/scriptsmanager.cpp:529
 #, kde-format
 msgid "Name Already Used"
 msgstr "Nimi on jo käytössä"
 
-#: src/scripting/scriptsmanager.cpp:467
+#: src/scripting/scriptsmanager.cpp:465
 #, kde-format
 msgid "Create New Script"
 msgstr "Luo uusi skripti"
 
-#: src/scripting/scriptsmanager.cpp:467 src/scripting/scriptsmanager.cpp:531
+#: src/scripting/scriptsmanager.cpp:465 src/scripting/scriptsmanager.cpp:532
 #, kde-format
 msgid "Script name:"
 msgstr "Skriptin nimi:"
 
-#: src/scripting/scriptsmanager.cpp:475
+#: src/scripting/scriptsmanager.cpp:476
 #, kde-format
 msgid "There was an error creating the file <b>%1</b>."
 msgstr "Tiedostoa <b>%1</b> luotaessa tapahtui virhe."
 
-#: src/scripting/scriptsmanager.cpp:510
+#: src/scripting/scriptsmanager.cpp:511
 #, kde-format
 msgid "Select Existing Script"
 msgstr "Valitse olemassa oleva skripti"
 
-#: src/scripting/scriptsmanager.cpp:531
+#: src/scripting/scriptsmanager.cpp:532
 #, kde-format
 msgid "Rename Script"
 msgstr "Muuta skriptin nimeä"
 
-#: src/scripting/scriptsmanager.cpp:540
+#: src/scripting/scriptsmanager.cpp:541
 #, kde-format
 msgid "There was an error opening the file <b>%1</b>."
 msgstr "Tiedostoa <b>%1</b> avattaessa tapahtui virhe."
 
-#: src/scripting/scriptsmanager.cpp:548
+#: src/scripting/scriptsmanager.cpp:549
 #, kde-format
 msgid "There was an error copying the file to <b>%1</b>."
 msgstr "Kopioitaessa tiedostoa kohteeseen <b>%1</b> tapahtui virhe."
 
-#: src/scripting/scriptsmanager.cpp:563
+#: src/scripting/scriptsmanager.cpp:564
 #, kde-format
 msgid "Do you really want to send file <b>%1</b> to the trash?"
 msgstr "Haluatko varmasti siirtää tiedoston <b>%1</b> roskakoriin?"
 
-#: src/scripting/scriptsmanager.cpp:563
+#: src/scripting/scriptsmanager.cpp:564
 #, kde-format
 msgid "Move to Trash"
 msgstr "Siirrä roskakoriin"
 
-#: src/scripting/scriptsmanager.cpp:567
+#: src/scripting/scriptsmanager.cpp:568
 #, kde-format
 msgid "There was an error removing the file <b>%1</b>."
 msgstr "Tiedostoa <b>%1</b> poistettaessa tapahtui virhe."
 
-#: src/scripting/scriptsmanager.cpp:596
+#: src/scripting/scriptsmanager.cpp:597
 #, kde-format
 msgid "Could not launch external editor.\n"
 msgstr "Ulkoista muokkainta ei saatu käynnistettyä.\n"
 
-#: src/scripting/scriptsmanager.cpp:617
+#: src/scripting/scriptsmanager.cpp:618
 #, kde-format
 msgid "Error opening script %1."
 msgstr "Virhe avattaessa skriptiä %1."
 
-#: src/scripting/scriptsmanager.cpp:617 src/scripting/scriptsmanager.cpp:632
-#: src/scripting/scriptsmanager.cpp:634
+#: src/scripting/scriptsmanager.cpp:618 src/scripting/scriptsmanager.cpp:633
+#: src/scripting/scriptsmanager.cpp:635
 #, kde-format
 msgid "Error Running Script"
 msgstr "Virhe suoritettaessa skriptiä"
 
-#: src/scripting/scriptsmanager.cpp:630
+#: src/scripting/scriptsmanager.cpp:631
 #, kde-format
 msgid "Path: %1"
 msgstr "Sijainti: %1"
 
-#: src/scripting/scriptsmanager.cpp:647
+#: src/scripting/scriptsmanager.cpp:648
 #, kde-format
 msgid "Tools"
 msgstr "Työkalut"
@@ -3743,27 +3743,27 @@ msgstr "Puhetta seuraavia kuvia"
 msgid "Start Speech Frames"
 msgstr "Puheen aloittavia kuvia"
 
-#: src/speechprocessor/speechprocessor.cpp:40
+#: src/speechprocessor/speechprocessor.cpp:41
 #, kde-format
 msgid "Recognizing speech"
 msgstr "Tunnistetaan puhetta"
 
-#: src/speechprocessor/speechprocessor.cpp:48
+#: src/speechprocessor/speechprocessor.cpp:49
 #, kde-format
 msgid "Abort speech recognition"
 msgstr "Keskeytä puheentunnistus"
 
-#: src/speechprocessor/speechprocessor.cpp:97
+#: src/speechprocessor/speechprocessor.cpp:98
 #, kde-format
 msgid "No speech recognition plugins available"
 msgstr "Puheentunnistusliitännäisiä ei ole käytettävissä"
 
-#: src/speechprocessor/speechprocessor.cpp:102
+#: src/speechprocessor/speechprocessor.cpp:103
 #, kde-format
 msgid "Initialization of speech recognition plugin failed"
 msgstr "Puheentunnistusliitännäisen valmistelu epäonnistui"
 
-#: src/speechprocessor/speechprocessor.cpp:172
+#: src/speechprocessor/speechprocessor.cpp:173
 #, kde-format
 msgid ""
 "Speech Recognition failed: %2\n"
@@ -3945,42 +3945,42 @@ msgstr "Tekstitysvirta nro %1"
 msgid "File does not exist."
 msgstr "Tiedostoa ei ole olemassa."
 
-#: src/widgets/simplerichtextedit.cpp:254
+#: src/widgets/simplerichtextedit.cpp:255
 #, kde-format
 msgid "Suggestions"
 msgstr "Ehdotukset"
 
-#: src/widgets/simplerichtextedit.cpp:255
+#: src/widgets/simplerichtextedit.cpp:256
 #, kde-format
 msgid "Ignore"
 msgstr "Ohita"
 
-#: src/widgets/simplerichtextedit.cpp:256
+#: src/widgets/simplerichtextedit.cpp:257
 #, kde-format
 msgid "Add to Dictionary"
 msgstr "Lisää sanastoon"
 
-#: src/widgets/simplerichtextedit.cpp:260
+#: src/widgets/simplerichtextedit.cpp:261
 #, kde-format
 msgid "No suggestions"
 msgstr "Ei ehdotuksia"
 
-#: src/widgets/simplerichtextedit.cpp:359
+#: src/widgets/simplerichtextedit.cpp:360
 #, kde-format
 msgid "Delete"
 msgstr "Poista"
 
-#: src/widgets/simplerichtextedit.cpp:410
+#: src/widgets/simplerichtextedit.cpp:411
 #, kde-format
 msgid "Check Spelling..."
 msgstr "Tarkista oikeinkirjoitus…"
 
-#: src/widgets/simplerichtextedit.cpp:415
+#: src/widgets/simplerichtextedit.cpp:416
 #, kde-format
 msgid "Auto Spell Check"
 msgstr "Automaattinen oikeinkirjoituksen tarkistus"
 
-#: src/widgets/simplerichtextedit.cpp:420
+#: src/widgets/simplerichtextedit.cpp:421
 #, kde-format
 msgid "Allow Tabulations"
 msgstr "Salli sarkaus"

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: subtitlecomposer\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2022-11-13 00:45+0000\n"
+"POT-Creation-Date: 2022-11-18 00:44+0000\n"
 "PO-Revision-Date: 2019-10-27 09:12\n"
 "Last-Translator: gogo <trebelnik2@gmail.com>\n"
 "Language-Team: Croatian <hr@hr.org>\n"
@@ -40,52 +40,52 @@ msgctxt "Encodings menu"
 msgid "Autodetect"
 msgstr "Automatsko otkrivanje"
 
-#: src/application.cpp:493
+#: src/application.cpp:496
 #, kde-format
 msgid "Go to Line"
 msgstr "Idi na redak"
 
-#: src/application.cpp:493
+#: src/application.cpp:496
 #, kde-format
 msgid "&Go to line:"
 msgstr "&Idi na redak:"
 
-#: src/application.cpp:666 src/core/subtitle.cpp:877
+#: src/application.cpp:669 src/core/subtitle.cpp:878
 #, kde-format
 msgid "Maximize Durations"
 msgstr "Povećaj trajanja"
 
-#: src/application.cpp:694 src/core/subtitle.cpp:1152
+#: src/application.cpp:697 src/core/subtitle.cpp:1153
 #, kde-format
 msgid "Unbreak Lines"
 msgstr "Spoji redke"
 
-#: src/application.cpp:705 src/core/subtitle.cpp:1161
+#: src/application.cpp:708 src/core/subtitle.cpp:1162
 #, kde-format
 msgid "Simplify Spaces"
 msgstr "Pojednostavi razmake"
 
-#: src/application.cpp:760 src/dialogs/translatedialog.cpp:20
+#: src/application.cpp:763 src/dialogs/translatedialog.cpp:20
 #, kde-format
 msgid "Translate"
 msgstr "Prevedi"
 
-#: src/application.cpp:760
+#: src/application.cpp:763
 #, kde-format
 msgid "Translating text (%1 to %2)..."
 msgstr "Prijevod teksta (%1 u %2)..."
 
-#: src/application.cpp:764
+#: src/application.cpp:767
 #, kde-format
 msgid "Translating primary text (%1 to %2)..."
 msgstr "Prijevod glavnog teksta (%1 u %2)..."
 
-#: src/application.cpp:765
+#: src/application.cpp:768
 #, kde-format
 msgid "Translating secondary text (%1 to %2)..."
 msgstr "Prijevod pomoćnog teksta (%1 u %2)..."
 
-#: src/application.cpp:793
+#: src/application.cpp:796
 #, kde-format
 msgid ""
 "Unable to perform texts synchronization (sent and received lines count do "
@@ -94,17 +94,17 @@ msgstr ""
 "Nemoguće izvođenje usklađivanja tekstova (broj poslanih i primljenih redaka "
 "se ne podudara)."
 
-#: src/application.cpp:797
+#: src/application.cpp:800
 #, kde-format
 msgid "Translate Primary Text"
 msgstr "Prevedi glavni tekst"
 
-#: src/application.cpp:797
+#: src/application.cpp:800
 #, kde-format
 msgid "Translate Secondary Text"
 msgstr "Prevedi pomoćni tekst"
 
-#: src/application.cpp:812
+#: src/application.cpp:815
 #, kde-format
 msgid ""
 "There was an error performing the translation:\n"
@@ -115,33 +115,33 @@ msgstr ""
 "\n"
 "%1"
 
-#: src/application.cpp:852
+#: src/application.cpp:855
 #, kde-format
 msgid "Open Video"
 msgstr "Otvori video"
 
-#: src/application.cpp:1050 src/application.cpp:1057
-#: src/application_subtitle.cpp:655
+#: src/application.cpp:1053 src/application.cpp:1060
+#: src/application_subtitle.cpp:657
 #, kde-format
 msgid "Untitled"
 msgstr "Bezimeni"
 
-#: src/application.cpp:1052 src/application_subtitle.cpp:655
+#: src/application.cpp:1055 src/application_subtitle.cpp:657
 #, kde-format
 msgid "Untitled Translation"
 msgstr "Bezimeni prijevod"
 
-#: src/application.cpp:1153
+#: src/application.cpp:1156
 #, kde-format
 msgid "Pause"
 msgstr "Pauziraj"
 
-#: src/application.cpp:1161 src/application_actions.cpp:566
+#: src/application.cpp:1164 src/application_actions.cpp:567
 #, kde-format
 msgid "Play"
 msgstr "Reproduciraj"
 
-#: src/application.cpp:1222
+#: src/application.cpp:1225
 #, kde-format
 msgid "Seek backwards 1 second"
 msgid_plural "Seek backwards %1 seconds"
@@ -149,7 +149,7 @@ msgstr[0] "Premotaj unatrag %1 sekundu"
 msgstr[1] "Premotaj unatrag %1 sekunde"
 msgstr[2] "Premotaj unatrag %1 sekundi"
 
-#: src/application.cpp:1223
+#: src/application.cpp:1226
 #, kde-format
 msgid "Seek forwards 1 second"
 msgid_plural "Seek forwards %1 seconds"
@@ -157,7 +157,7 @@ msgstr[0] "Premotaj unaprijed %1 sekundu"
 msgstr[1] "Premotaj unaprijed %1 sekunde"
 msgstr[2] "Premotaj unaprijed %1 sekundi"
 
-#: src/application.cpp:1226 src/application.cpp:1230
+#: src/application.cpp:1229 src/application.cpp:1233
 #, kde-format
 msgid "Shift %2%1 millisecond"
 msgid_plural "Shift %2%1 milliseconds"
@@ -165,7 +165,7 @@ msgstr[0] "Pomakni %2%1 milisekundu"
 msgstr[1] "Pomakni %2%1 milisekunde"
 msgstr[2] "Pomakni %2%1 milisekundi"
 
-#: src/application.cpp:1227 src/application.cpp:1231
+#: src/application.cpp:1230 src/application.cpp:1234
 #, kde-format
 msgid "Shift selected lines %2%1 millisecond"
 msgid_plural "Shift selected lines %2%1 milliseconds"
@@ -173,698 +173,698 @@ msgstr[0] "Pomakni odabrane redke %2%1 milisekundu"
 msgstr[1] "Pomakni odabrane redke %2%1 milisekunde"
 msgstr[2] "Pomakni odabrane redke %2%1 milisekundi"
 
-#: src/application_actions.cpp:32
+#: src/application_actions.cpp:33
 #, kde-format
 msgid "Exit the application"
 msgstr "Zatvori aplikaciju"
 
-#: src/application_actions.cpp:35
+#: src/application_actions.cpp:36
 #, kde-format
 msgid "Configure Subtitle Composer"
 msgstr "Podesite Subtitle Composer"
 
-#: src/application_actions.cpp:39
+#: src/application_actions.cpp:40
 #, kde-format
 msgctxt "@action:inmenu Create a new subtitle"
 msgid "New"
 msgstr "Nova"
 
-#: src/application_actions.cpp:40
+#: src/application_actions.cpp:41
 #, kde-format
 msgid "Create an empty subtitle"
 msgstr "Napravi prazan podnaslov"
 
-#: src/application_actions.cpp:48
+#: src/application_actions.cpp:49
 #, kde-format
 msgctxt "@action:inmenu Open subtitle file"
 msgid "Open Subtitle..."
 msgstr "Otvori podnaslov..."
 
-#: src/application_actions.cpp:49 src/application_actions.cpp:66
+#: src/application_actions.cpp:50 src/application_actions.cpp:67
 #, kde-format
 msgid "Open subtitle file"
 msgstr "Otvori datoteku podnaslova"
 
-#: src/application_actions.cpp:57
+#: src/application_actions.cpp:58
 #, kde-format
 msgid "Reload As..."
 msgstr "Učitaj kao..."
 
-#: src/application_actions.cpp:58
+#: src/application_actions.cpp:59
 #, kde-format
 msgid "Reload opened file with a different encoding"
 msgstr "Ponovno učitaj otvoreni podnaslov s drugačijim kôdiranjem"
 
-#: src/application_actions.cpp:65
+#: src/application_actions.cpp:66
 #, kde-format
 msgctxt "@action:inmenu Open rencently used subtitle file"
 msgid "Open &Recent Subtitle"
 msgstr "Otvori &nedavni podnaslov"
 
-#: src/application_actions.cpp:72
+#: src/application_actions.cpp:73
 #, kde-format
 msgid "Save"
 msgstr "Spremi"
 
-#: src/application_actions.cpp:73
+#: src/application_actions.cpp:74
 #, kde-format
 msgid "Save opened subtitle"
 msgstr "Spremi otvoreni podnaslov"
 
-#: src/application_actions.cpp:81
+#: src/application_actions.cpp:82
 #, kde-format
 msgid "Save As..."
 msgstr "Spremi kao..."
 
-#: src/application_actions.cpp:82
+#: src/application_actions.cpp:83
 #, kde-format
 msgid "Save opened subtitle with different settings"
 msgstr "Spremi otvoreni podnaslov s drugačijim postavkama"
 
-#: src/application_actions.cpp:90
+#: src/application_actions.cpp:91
 #, kde-format
 msgid "Close"
 msgstr "Zatvori"
 
-#: src/application_actions.cpp:91
+#: src/application_actions.cpp:92
 #, kde-format
 msgid "Close opened subtitle"
 msgstr "Zatvori otvoreni podnaslov"
 
-#: src/application_actions.cpp:99
+#: src/application_actions.cpp:100
 #, kde-format
 msgid "New Translation"
 msgstr "Novi prijevod"
 
-#: src/application_actions.cpp:100
+#: src/application_actions.cpp:101
 #, kde-format
 msgid "Create an empty translation subtitle"
 msgstr "Napravi prazan prijevod podnaslova"
 
-#: src/application_actions.cpp:108
+#: src/application_actions.cpp:109
 #, kde-format
 msgid "Open Translation..."
 msgstr "Otvori prijevod..."
 
-#: src/application_actions.cpp:109 src/application_actions.cpp:126
+#: src/application_actions.cpp:110 src/application_actions.cpp:127
 #, kde-format
 msgid "Open translation subtitle file"
 msgstr "Otvori datoteku prijevoda podnaslova"
 
-#: src/application_actions.cpp:117
+#: src/application_actions.cpp:118
 #, kde-format
 msgid "Reload Translation As..."
 msgstr "Učitaj prijevod kao..."
 
-#: src/application_actions.cpp:118
+#: src/application_actions.cpp:119
 #, kde-format
 msgid "Reload opened translation file with a different encoding"
 msgstr "Ponovno učitaj datoteku otvorenog prijevoda s drugačijim kôdiranjem"
 
-#: src/application_actions.cpp:125
+#: src/application_actions.cpp:126
 #, kde-format
 msgid "Open &Recent Translation"
 msgstr "Otvori &nedavni prijevod"
 
-#: src/application_actions.cpp:133
+#: src/application_actions.cpp:134
 #, kde-format
 msgid "Save Translation"
 msgstr "Spremi prijevod"
 
-#: src/application_actions.cpp:134
+#: src/application_actions.cpp:135
 #, kde-format
 msgid "Save opened translation subtitle"
 msgstr "Spremi otvoreni prijevod podnaslova"
 
-#: src/application_actions.cpp:144
+#: src/application_actions.cpp:145
 #, kde-format
 msgid "Save Translation As..."
 msgstr "Spremi prijevod kao..."
 
-#: src/application_actions.cpp:145
+#: src/application_actions.cpp:146
 #, kde-format
 msgid "Save opened translation subtitle with different settings"
 msgstr "Spremi otvoreni prijevod podnaslova s drugačijim postavkama"
 
-#: src/application_actions.cpp:153
+#: src/application_actions.cpp:154
 #, kde-format
 msgid "Close Translation"
 msgstr "Zatvori prijevod"
 
-#: src/application_actions.cpp:154
+#: src/application_actions.cpp:155
 #, kde-format
 msgid "Close opened translation subtitle"
 msgstr "Zatvori otvoreni prijevod podnaslova"
 
-#: src/application_actions.cpp:171
+#: src/application_actions.cpp:172
 #, kde-format
 msgid "Split Subtitle..."
 msgstr "Razdvoji podnaslov..."
 
-#: src/application_actions.cpp:172
+#: src/application_actions.cpp:173
 #, kde-format
 msgid "Split the opened subtitle in two parts"
 msgstr "Razdvoji otvoreni podnaslov na dva dijela"
 
-#: src/application_actions.cpp:178
+#: src/application_actions.cpp:179
 #, kde-format
 msgid "Join Subtitles..."
 msgstr "Spoji podnaslove..."
 
-#: src/application_actions.cpp:179
+#: src/application_actions.cpp:180
 #, kde-format
 msgid "Append to the opened subtitle another one"
 msgstr "Dodavanje drugog podnaslova trenutno otvorenom"
 
-#: src/application_actions.cpp:186
+#: src/application_actions.cpp:187
 #, kde-format
 msgid "Insert Before"
 msgstr "Umetni prije"
 
-#: src/application_actions.cpp:187
+#: src/application_actions.cpp:188
 #, kde-format
 msgid "Insert empty line before current one"
 msgstr "Umetni prazan redak prije trenutnog"
 
-#: src/application_actions.cpp:195
+#: src/application_actions.cpp:196
 #, kde-format
 msgid "Insert After"
 msgstr "Umetni nakon"
 
-#: src/application_actions.cpp:196
+#: src/application_actions.cpp:197
 #, kde-format
 msgid "Insert empty line after current one"
 msgstr "Umetni prazani redak nakon trenutnog"
 
 #. i18n: ectx: property (text), widget (QPushButton, btnRemove)
-#: src/application_actions.cpp:204 src/scripting/scriptsmanager.ui:60
+#: src/application_actions.cpp:205 src/scripting/scriptsmanager.ui:60
 #, kde-format
 msgid "Remove"
 msgstr "Ukloni"
 
-#: src/application_actions.cpp:205
+#: src/application_actions.cpp:206
 #, kde-format
 msgid "Remove selected lines"
 msgstr "Ukloni odabrane redke"
 
-#: src/application_actions.cpp:212 src/core/subtitle.cpp:559
+#: src/application_actions.cpp:213 src/core/subtitle.cpp:560
 #, kde-format
 msgid "Split Lines"
 msgstr "Razdvoji redke"
 
-#: src/application_actions.cpp:213
+#: src/application_actions.cpp:214
 #, kde-format
 msgid "Split selected lines"
 msgstr "Razdvoji odabrane redke"
 
-#: src/application_actions.cpp:219 src/core/subtitle.cpp:641
-#: src/gui/waveform/waveformwidget.cpp:711
+#: src/application_actions.cpp:220 src/core/subtitle.cpp:642
+#: src/gui/waveform/waveformwidget.cpp:712
 #, kde-format
 msgid "Join Lines"
 msgstr "Spoji redke"
 
-#: src/application_actions.cpp:220
+#: src/application_actions.cpp:221
 #, kde-format
 msgid "Join selected lines"
 msgstr "Spoji odabrane redke"
 
-#: src/application_actions.cpp:227 src/errors/finderrorsdialog.cpp:114
-#: src/gui/treeview/richlineedit.cpp:111 src/widgets/simplerichtextedit.cpp:370
+#: src/application_actions.cpp:228 src/errors/finderrorsdialog.cpp:114
+#: src/gui/treeview/richlineedit.cpp:112 src/widgets/simplerichtextedit.cpp:371
 #, kde-format
 msgid "Select All"
 msgstr "Odaberi sve"
 
-#: src/application_actions.cpp:228
+#: src/application_actions.cpp:229
 #, kde-format
 msgid "Select all lines"
 msgstr "Odaberi sve redke"
 
-#: src/application_actions.cpp:235
+#: src/application_actions.cpp:236
 #, kde-format
 msgid "Go to Line..."
 msgstr "Idi na redak..."
 
-#: src/application_actions.cpp:236
+#: src/application_actions.cpp:237
 #, kde-format
 msgid "Go to specified line"
 msgstr "Idi na određeni redak"
 
-#: src/application_actions.cpp:244
+#: src/application_actions.cpp:245
 #, kde-format
 msgid "Find..."
 msgstr "Traži..."
 
-#: src/application_actions.cpp:245
+#: src/application_actions.cpp:246
 #, kde-format
 msgid "Find occurrences of strings or regular expressions"
 msgstr "Traži znakovne nizove ili uobičajene izraze"
 
-#: src/application_actions.cpp:253
+#: src/application_actions.cpp:254
 #, kde-format
 msgid "Find Next"
 msgstr "Traži sljedeće"
 
-#: src/application_actions.cpp:254
+#: src/application_actions.cpp:255
 #, kde-format
 msgid "Find next occurrence of string or regular expression"
 msgstr "Traži slijedeću pojavu znakovnog niza ili uobičajenog izraza"
 
-#: src/application_actions.cpp:262
+#: src/application_actions.cpp:263
 #, kde-format
 msgid "Find Previous"
 msgstr "Traži prijašnje"
 
-#: src/application_actions.cpp:263
+#: src/application_actions.cpp:264
 #, kde-format
 msgid "Find previous occurrence of string or regular expression"
 msgstr "Traži prijašnju pojavu znakovnog niza ili uobičajennog izraza"
 
-#: src/application_actions.cpp:270
+#: src/application_actions.cpp:271
 #, kde-format
 msgid "Replace..."
 msgstr "Zamijeni..."
 
-#: src/application_actions.cpp:271
+#: src/application_actions.cpp:272
 #, kde-format
 msgid "Replace occurrences of strings or regular expressions"
 msgstr "Zamijenjuje znakovne nizove ili uobičajene izraze"
 
-#: src/application_actions.cpp:279
+#: src/application_actions.cpp:280
 #, kde-format
 msgid "Retrocede current line"
 msgstr "Prethodno od trenutnog redka"
 
-#: src/application_actions.cpp:280
+#: src/application_actions.cpp:281
 #, kde-format
 msgid "Makes the line before the current one active"
 msgstr "Stvara redak prije trenutnog aktivnim"
 
-#: src/application_actions.cpp:288
+#: src/application_actions.cpp:289
 #, kde-format
 msgid "Advance current line"
 msgstr "Nastavi trenutni redak"
 
-#: src/application_actions.cpp:289
+#: src/application_actions.cpp:290
 #, kde-format
 msgid "Makes the line after the current one active"
 msgstr "Stvara redak nakon trenutnog aktivnim"
 
-#: src/application_actions.cpp:297
+#: src/application_actions.cpp:298
 #, fuzzy, kde-format
 #| msgid "Check Errors..."
 msgid "Detect Errors..."
 msgstr "Provjeri greške..."
 
-#: src/application_actions.cpp:298
+#: src/application_actions.cpp:299
 #, fuzzy, kde-format
 #| msgid "Check for errors in the current subtitle"
 msgid "Detect errors in the current subtitle"
 msgstr "Provjeri greške u trenutnom podnaslovu"
 
-#: src/application_actions.cpp:305
+#: src/application_actions.cpp:306
 #, fuzzy, kde-format
 #| msgid "Clear Errors"
 msgid "Clear Errors/Marks"
 msgstr "Obriši greške"
 
-#: src/application_actions.cpp:306
+#: src/application_actions.cpp:307
 #, fuzzy, kde-format
 #| msgid "Check for errors in the current subtitle"
 msgid "Clear detected errors and marks in the current subtitle"
 msgstr "Provjeri greške u trenutnom podnaslovu"
 
-#: src/application_actions.cpp:314
+#: src/application_actions.cpp:315
 #, kde-format
 msgid "Select Next Error/Mark"
 msgstr ""
 
-#: src/application_actions.cpp:315
+#: src/application_actions.cpp:316
 #, kde-format
 msgid "Select next line with error or mark"
 msgstr ""
 
-#: src/application_actions.cpp:323
+#: src/application_actions.cpp:324
 #, fuzzy, kde-format
 #| msgid "Find Previous Error"
 msgid "Select Previous Error/Mark"
 msgstr "Traži prijašnju grešku"
 
-#: src/application_actions.cpp:324
+#: src/application_actions.cpp:325
 #, fuzzy, kde-format
 #| msgid "Find previous line with specified errors"
 msgid "Select previous line with error or mark"
 msgstr "Traži prijašnji redak s određenim greškama"
 
-#: src/application_actions.cpp:332
+#: src/application_actions.cpp:333
 #, kde-format
 msgid "Spelling..."
 msgstr "Pravopis..."
 
-#: src/application_actions.cpp:333
+#: src/application_actions.cpp:334
 #, kde-format
 msgid "Check lines spelling"
 msgstr "Provjeri pravopis redaka"
 
-#: src/application_actions.cpp:339
+#: src/application_actions.cpp:340
 #, kde-format
 msgid "Toggle Mark"
 msgstr "Označi"
 
-#: src/application_actions.cpp:340
+#: src/application_actions.cpp:341
 #, fuzzy, kde-format
 #| msgid "Toggle selected lines mark"
 msgid "Toggle mark on selected lines"
 msgstr "Označi odabrani redak"
 
-#: src/application_actions.cpp:348 src/gui/currentlinewidget.cpp:141
+#: src/application_actions.cpp:349 src/gui/currentlinewidget.cpp:141
 #, kde-format
 msgid "Toggle Bold"
 msgstr "Podebljano"
 
-#: src/application_actions.cpp:349
+#: src/application_actions.cpp:350
 #, kde-format
 msgid "Toggle selected lines bold attribute"
 msgstr "Podebljajte znakove odabranih redaka"
 
-#: src/application_actions.cpp:357 src/gui/currentlinewidget.cpp:145
+#: src/application_actions.cpp:358 src/gui/currentlinewidget.cpp:145
 #, kde-format
 msgid "Toggle Italic"
 msgstr "Ukošeno"
 
-#: src/application_actions.cpp:358
+#: src/application_actions.cpp:359
 #, kde-format
 msgid "Toggle selected lines italic attribute"
 msgstr "Ukosite znakove odabranih redaka"
 
-#: src/application_actions.cpp:366 src/gui/currentlinewidget.cpp:149
+#: src/application_actions.cpp:367 src/gui/currentlinewidget.cpp:149
 #, kde-format
 msgid "Toggle Underline"
 msgstr "Podcratano"
 
-#: src/application_actions.cpp:367
+#: src/application_actions.cpp:368
 #, kde-format
 msgid "Toggle selected lines underline attribute"
 msgstr "Podcrtajte znakove odabranih redaka"
 
-#: src/application_actions.cpp:375 src/gui/currentlinewidget.cpp:153
+#: src/application_actions.cpp:376 src/gui/currentlinewidget.cpp:153
 #, kde-format
 msgid "Toggle Strike Through"
 msgstr "Precrtano"
 
-#: src/application_actions.cpp:376
+#: src/application_actions.cpp:377
 #, kde-format
 msgid "Toggle selected lines strike through attribute"
 msgstr "Precrtajte znakove odabranih redaka"
 
-#: src/application_actions.cpp:384 src/gui/currentlinewidget.cpp:157
+#: src/application_actions.cpp:385 src/gui/currentlinewidget.cpp:157
 #, kde-format
 msgid "Change Text Color"
 msgstr "Promijeni boju teksta"
 
-#: src/application_actions.cpp:385
+#: src/application_actions.cpp:386
 #, kde-format
 msgid "Change text color of selected lines"
 msgstr "Promijeni boju teksta odabranih redaka"
 
-#: src/application_actions.cpp:392
+#: src/application_actions.cpp:393
 #, kde-format
 msgid "Shift..."
 msgstr "Pomakni..."
 
-#: src/application_actions.cpp:393
+#: src/application_actions.cpp:394
 #, kde-format
 msgid "Shift lines an specified amount of time"
 msgstr "Pomakni redke za određeno vrijeme"
 
-#: src/application_actions.cpp:412
+#: src/application_actions.cpp:413
 #, kde-format
 msgid "Adjust..."
 msgstr "Prilagodi..."
 
-#: src/application_actions.cpp:413
+#: src/application_actions.cpp:414
 #, kde-format
 msgid "Linearly adjust all lines to a specified interval"
 msgstr "Linearno prilagodi sve redke na određeni interval"
 
-#: src/application_actions.cpp:420
+#: src/application_actions.cpp:421
 #, kde-format
 msgid "Change Frame Rate..."
 msgstr "Promijeni broj sličica..."
 
-#: src/application_actions.cpp:421
+#: src/application_actions.cpp:422
 #, kde-format
 msgid "Retime subtitle lines by reinterpreting its frame rate"
 msgstr "Prilagodi vremena redaka preračunavajući broj sličica"
 
-#: src/application_actions.cpp:427
+#: src/application_actions.cpp:428
 #, kde-format
 msgid "Enforce Duration Limits..."
 msgstr "Prisili ograničenja trajanja..."
 
-#: src/application_actions.cpp:428
+#: src/application_actions.cpp:429
 #, kde-format
 msgid "Enforce lines minimum and/or maximum duration limits"
 msgstr "Forsiraj ograničenja najvećeg i/ili najmanjeg trajanja redaka"
 
-#: src/application_actions.cpp:435
+#: src/application_actions.cpp:436
 #, kde-format
 msgid "Set Automatic Durations..."
 msgstr "Postavi automatska trajanja..."
 
-#: src/application_actions.cpp:436
+#: src/application_actions.cpp:437
 #, kde-format
 msgid "Set lines durations based on amount of letters, words and line breaks"
 msgstr ""
 "Postavi trajanje redaka na osnovi broja slova, riječi i prijeloma redaka"
 
-#: src/application_actions.cpp:442
+#: src/application_actions.cpp:443
 #, kde-format
 msgid "Maximize Durations..."
 msgstr "Povećaj trajanja..."
 
-#: src/application_actions.cpp:443
+#: src/application_actions.cpp:444
 #, kde-format
 msgid "Extend lines durations up to their next lines show time"
 msgstr "Produži trajanja redaka do vremena pojavljivanja slijedećeg redka"
 
-#: src/application_actions.cpp:449
+#: src/application_actions.cpp:450
 #, kde-format
 msgid "Fix Overlapping Times..."
 msgstr "Popravi preklapanje vremena..."
 
-#: src/application_actions.cpp:450
+#: src/application_actions.cpp:451
 #, kde-format
 msgid "Fix lines overlapping times"
 msgstr "Popravi vremena preklopljenih redaka"
 
-#: src/application_actions.cpp:456
+#: src/application_actions.cpp:457
 #, kde-format
 msgid "Synchronize with Subtitle..."
 msgstr "Uskladi s podnaslovom..."
 
-#: src/application_actions.cpp:457
+#: src/application_actions.cpp:458
 #, kde-format
 msgid "Copy timing information from another subtitle"
 msgstr "Kopiraj informacije vremena iz drugog podnaslova"
 
-#: src/application_actions.cpp:463
+#: src/application_actions.cpp:464
 #, kde-format
 msgid "Break Lines..."
 msgstr "Prelomi redke..."
 
-#: src/application_actions.cpp:464
+#: src/application_actions.cpp:465
 #, kde-format
 msgid "Automatically set line breaks"
 msgstr "Automatski postavi prijelom redka"
 
-#: src/application_actions.cpp:470
+#: src/application_actions.cpp:471
 #, kde-format
 msgid "Unbreak Lines..."
 msgstr "Spoji redke..."
 
-#: src/application_actions.cpp:471
+#: src/application_actions.cpp:472
 #, kde-format
 msgid "Remove line breaks from lines"
 msgstr "Ukloni prijelom redka iz redaka"
 
-#: src/application_actions.cpp:477
+#: src/application_actions.cpp:478
 #, kde-format
 msgid "Simplify Spaces..."
 msgstr "Pojednostavi razmake..."
 
-#: src/application_actions.cpp:478
+#: src/application_actions.cpp:479
 #, kde-format
 msgid "Remove unneeded spaces from lines"
 msgstr "Ukloni nepotrebne razmake iz redaka"
 
-#: src/application_actions.cpp:484
+#: src/application_actions.cpp:485
 #, kde-format
 msgid "Change Case..."
 msgstr "Promijeni slova..."
 
-#: src/application_actions.cpp:485
+#: src/application_actions.cpp:486
 #, kde-format
 msgid "Change lines text to upper, lower, title or sentence case"
 msgstr ""
 "Promijeni u tekstu redaka velika ili mala slova, naslov ili duljinu rečenice"
 
-#: src/application_actions.cpp:491
+#: src/application_actions.cpp:492
 #, kde-format
 msgid "Fix Punctuation..."
 msgstr "Popravi interpunkciju..."
 
-#: src/application_actions.cpp:492
+#: src/application_actions.cpp:493
 #, kde-format
 msgid "Fix punctuation errors in lines"
 msgstr "Popravi greške interpunkcije u redcima"
 
-#: src/application_actions.cpp:498
+#: src/application_actions.cpp:499
 #, kde-format
 msgid "Translate..."
 msgstr "Prevedi..."
 
-#: src/application_actions.cpp:499
+#: src/application_actions.cpp:500
 #, kde-format
 msgid "Translate lines texts using Google services"
 msgstr "Prevedi tekst redaka pomoću Google usluga"
 
-#: src/application_actions.cpp:505
+#: src/application_actions.cpp:506
 #, kde-format
 msgid "Edit Line in Place"
 msgstr "Uredi redak na mjestu"
 
-#: src/application_actions.cpp:506
+#: src/application_actions.cpp:507
 #, kde-format
 msgid "Edit current line text in place"
 msgstr "Uredi tekst trenutnog redka na mjestu"
 
-#: src/application_actions.cpp:514
+#: src/application_actions.cpp:515
 #, kde-format
 msgid "Open Video..."
 msgstr "Otvori video snimku..."
 
-#: src/application_actions.cpp:515 src/application_actions.cpp:522
+#: src/application_actions.cpp:516 src/application_actions.cpp:523
 #, kde-format
 msgid "Open video file"
 msgstr "Otvori video datoteku"
 
-#: src/application_actions.cpp:521
+#: src/application_actions.cpp:522
 #, kde-format
 msgid "Open &Recent Video"
 msgstr "Otvori &nedavnu video snimku"
 
-#: src/application_actions.cpp:528
+#: src/application_actions.cpp:529
 #, kde-format
 msgid "Import Subtitle Stream"
 msgstr "Uvezi zapis podnaslova"
 
-#: src/application_actions.cpp:529
+#: src/application_actions.cpp:530
 #, kde-format
 msgid "Import subtitle stream into subtitle editor"
 msgstr "Uvezi zapis podnaslova u uređivač podnaslova"
 
-#: src/application_actions.cpp:535
+#: src/application_actions.cpp:536
 #, kde-format
 msgid "Recognize Speech"
 msgstr "Prepoznavanje govora"
 
-#: src/application_actions.cpp:536
+#: src/application_actions.cpp:537
 #, kde-format
 msgid "Recognize speech in audio stream"
 msgstr "Prepoznavanje govora u zvučnom zapisu"
 
-#: src/application_actions.cpp:542
+#: src/application_actions.cpp:543
 #, kde-format
 msgid "Close Video"
 msgstr "Zatvori video snimku"
 
-#: src/application_actions.cpp:543
+#: src/application_actions.cpp:544
 #, kde-format
 msgid "Close video file"
 msgstr "Zatvori video datoteku"
 
-#: src/application_actions.cpp:550
+#: src/application_actions.cpp:551
 #, kde-format
 msgid "Full Screen Mode"
 msgstr "Cjelozaslonski/Prozorski prikaz"
 
-#: src/application_actions.cpp:551
+#: src/application_actions.cpp:552
 #, kde-format
 msgid "Toggle full screen mode"
 msgstr "Prikaz preko cijelog zaslona"
 
-#: src/application_actions.cpp:558
+#: src/application_actions.cpp:559
 #, kde-format
 msgid "Stop"
 msgstr "Zaustavi"
 
-#: src/application_actions.cpp:559
+#: src/application_actions.cpp:560
 #, kde-format
 msgid "Stop video playback"
 msgstr "Zaustavi video reprodukciju"
 
-#: src/application_actions.cpp:567
+#: src/application_actions.cpp:568
 #, kde-format
 msgid "Toggle video playing/paused"
 msgstr "Reprodukcija/Pauzia videa"
 
-#: src/application_actions.cpp:575
+#: src/application_actions.cpp:576
 #, kde-format
 msgid "Seek Backward"
 msgstr "Premotaj unatrag"
 
-#: src/application_actions.cpp:583
+#: src/application_actions.cpp:584
 #, kde-format
 msgid "Seek Forward"
 msgstr "Premotaj unaprijed"
 
-#: src/application_actions.cpp:590
+#: src/application_actions.cpp:591
 #, kde-format
 msgid "Frame Step Backward"
 msgstr "Premotaj za sličicu unatrag"
 
-#: src/application_actions.cpp:597
+#: src/application_actions.cpp:598
 #, kde-format
 msgid "Frame Step Forward"
 msgstr "Premotaj za sličicu unaprijed"
 
-#: src/application_actions.cpp:605
+#: src/application_actions.cpp:606
 #, fuzzy, kde-format
 #| msgid "Jump to Previous Line"
 msgid "Seek to Previous Line"
 msgstr "Skoči na prijašnji redak"
 
-#: src/application_actions.cpp:606
+#: src/application_actions.cpp:607
 #, kde-format
 msgid "Seek to previous subtitle line show time"
 msgstr "Idi na vrijeme prikaza prijašnjeg redka"
 
-#: src/application_actions.cpp:614
+#: src/application_actions.cpp:615
 #, kde-format
 msgid "Increase media play rate"
 msgstr "Ubrzaj reprodukciju video snimke"
 
-#: src/application_actions.cpp:615
+#: src/application_actions.cpp:616
 #, kde-format
 msgid "Increase media playback rate"
 msgstr "Ubrzaj reprodukciju video snimke"
 
-#: src/application_actions.cpp:622
+#: src/application_actions.cpp:623
 #, kde-format
 msgid "Decrease media play rate"
 msgstr "Uspori reprodukciju video snimke"
 
-#: src/application_actions.cpp:623
+#: src/application_actions.cpp:624
 #, kde-format
 msgid "Decrease media playback rate"
 msgstr "Uspori reprodukciju video snimke"
 
-#: src/application_actions.cpp:629
+#: src/application_actions.cpp:630
 #, kde-format
 msgid "Play Current Line and Pause"
 msgstr "Reproduciraj trenutni redak i pauziraj"
 
-#: src/application_actions.cpp:630
+#: src/application_actions.cpp:631
 #, fuzzy, kde-format
 #| msgid ""
 #| "Seek to start of current subtitle line show time, play it and then pause"
@@ -873,58 +873,58 @@ msgstr ""
 "Idi na vrijeme prikaza sljedećeg redka podnaslova, reproduciraj ga i zatim "
 "pauziraj"
 
-#: src/application_actions.cpp:637
+#: src/application_actions.cpp:638
 #, fuzzy, kde-format
 #| msgid "Set Current Line Show Time"
 msgid "Seek to Current Line"
 msgstr "Postavi vrijeme prikaza trenutnog redka"
 
-#: src/application_actions.cpp:638
+#: src/application_actions.cpp:639
 #, fuzzy, kde-format
 #| msgid "Seek to next subtitle line show time"
 msgid "Seek to selected subtitle line show time"
 msgstr "Idi na vrijeme prikaza slijedećeg redka"
 
-#: src/application_actions.cpp:645
+#: src/application_actions.cpp:646
 #, fuzzy, kde-format
 #| msgid "Jump to Next Line"
 msgid "Seek to Next Line"
 msgstr "Skoči na sljedeći redak"
 
-#: src/application_actions.cpp:646
+#: src/application_actions.cpp:647
 #, kde-format
 msgid "Seek to next subtitle line show time"
 msgstr "Idi na vrijeme prikaza slijedećeg redka"
 
-#: src/application_actions.cpp:654
+#: src/application_actions.cpp:655
 #, fuzzy, kde-format
 #| msgid "Set current line show time to video position"
 msgid "Set Line Show Time to Video Position"
 msgstr "Postavi vrijeme prikaza trenutnog redka prema položaju videa"
 
-#: src/application_actions.cpp:655
+#: src/application_actions.cpp:656
 #, kde-format
 msgid "Set current line show time to video position"
 msgstr "Postavi vrijeme prikaza trenutnog redka prema položaju videa"
 
-#: src/application_actions.cpp:663
+#: src/application_actions.cpp:664
 #, fuzzy, kde-format
 #| msgid "Set current line hide time to video position"
 msgid "Set Line Hide Time to Video Position"
 msgstr "Postavi vrijeme nestajanja trenutnog redka prema položaju videa"
 
-#: src/application_actions.cpp:664
+#: src/application_actions.cpp:665
 #, kde-format
 msgid "Set current line hide time to video position"
 msgstr "Postavi vrijeme nestajanja trenutnog redka prema položaju videa"
 
-#: src/application_actions.cpp:671
+#: src/application_actions.cpp:672
 #, fuzzy, kde-format
 #| msgid "Shift to Video Position"
 msgid "Shift Current Line to Video Position"
 msgstr "Pomakni položaj videa"
 
-#: src/application_actions.cpp:672
+#: src/application_actions.cpp:673
 #, kde-format
 msgid ""
 "Set current line show time to video position by equally shifting all lines"
@@ -932,93 +932,93 @@ msgstr ""
 "Postavi vrijeme prikaza trenutnog redka na položaj videa jednakim pomakom "
 "svih redaka"
 
-#: src/application_actions.cpp:680
+#: src/application_actions.cpp:681
 #, kde-format
 msgid "Current Line Follows Video"
 msgstr "Trenutni redak slijedi video"
 
-#: src/application_actions.cpp:681
+#: src/application_actions.cpp:682
 #, kde-format
 msgid "Make current line follow the playing video position"
 msgstr "Trenutni redak slijedi položaj reproduciranog videa"
 
-#: src/application_actions.cpp:687
+#: src/application_actions.cpp:688
 #, kde-format
 msgctxt "@action:inmenu Toggle audio muted"
 msgid "Mute"
 msgstr "Utišaj/Uključi zvuk"
 
-#: src/application_actions.cpp:688
+#: src/application_actions.cpp:689
 #, kde-format
 msgid "Enable/disable playback sound"
 msgstr "Uključi ili isključi glasnoću zvuka"
 
-#: src/application_actions.cpp:695
+#: src/application_actions.cpp:696
 #, kde-format
 msgid "Increase Volume"
 msgstr "Povećaj glasnoću zvuka"
 
-#: src/application_actions.cpp:696
+#: src/application_actions.cpp:697
 #, kde-format
 msgid "Increase volume by 5%"
 msgstr "Povećaj glasnoću zvuka za 5%"
 
-#: src/application_actions.cpp:703
+#: src/application_actions.cpp:704
 #, kde-format
 msgid "Decrease Volume"
 msgstr "Smanji glasnoću zvuka"
 
-#: src/application_actions.cpp:704
+#: src/application_actions.cpp:705
 #, kde-format
 msgid "Decrease volume by 5%"
 msgstr "Smanji glasnoću zvuka za 5%"
 
-#: src/application_actions.cpp:711
+#: src/application_actions.cpp:712
 #, kde-format
 msgid "Audio Streams"
 msgstr "Zvučni zapisi"
 
-#: src/application_actions.cpp:712
+#: src/application_actions.cpp:713
 #, kde-format
 msgid "Select active audio stream"
 msgstr "Odaberi aktivni zvučni zapis"
 
-#: src/application_actions.cpp:723
+#: src/application_actions.cpp:724
 #, kde-format
 msgid "Increase Font Size"
 msgstr "Povećaj veličinu slova"
 
-#: src/application_actions.cpp:724
+#: src/application_actions.cpp:725
 #, kde-format
 msgid "Increase subtitles font size by 1 point"
 msgstr "Povećaj veličinu slova podnaslova za 1 točku"
 
-#: src/application_actions.cpp:731
+#: src/application_actions.cpp:732
 #, kde-format
 msgid "Decrease Font Size"
 msgstr "Smanji veličinu slova"
 
-#: src/application_actions.cpp:732
+#: src/application_actions.cpp:733
 #, kde-format
 msgid "Decrease subtitles font size by 1 point"
 msgstr "Smanji veličinu slova podnaslova za 1 točku"
 
-#: src/application_actions.cpp:739
+#: src/application_actions.cpp:740
 #, kde-format
 msgid "Displayed Subtitle Text"
 msgstr "Prikazani tekst podnaslova"
 
-#: src/application_actions.cpp:740
+#: src/application_actions.cpp:741
 #, kde-format
 msgid "Select visible subtitle text"
 msgstr "Odaberi vidljivi tekst podnaslova"
 
-#: src/application_actions.cpp:751 src/gui/waveform/waveformwidget.cpp:735
+#: src/application_actions.cpp:752 src/gui/waveform/waveformwidget.cpp:736
 #, kde-format
 msgid "Toggle Anchor"
 msgstr "Uklj/Isklj usidrenje redka"
 
-#: src/application_actions.cpp:752
+#: src/application_actions.cpp:753
 #, fuzzy, kde-format
 #| msgid ""
 #| "(Un)Anchor current line's show time to timeline (Editing anchored line's "
@@ -1031,82 +1031,82 @@ msgstr ""
 "(Uređivanje vremena usidrenog podnaslova će rastegnuti/skupiti vremensku "
 "liniju između sudjednih usidrenja)"
 
-#: src/application_actions.cpp:759
+#: src/application_actions.cpp:760
 #, kde-format
 msgid "Remove All Anchors"
 msgstr "Ukloni sva usidrenja"
 
-#: src/application_actions.cpp:760
+#: src/application_actions.cpp:761
 #, kde-format
 msgid "Unanchor show time from the timeline on all anchored lines"
 msgstr ""
 "Ukloni usidrenje vremena početka prikaza iz vremenske linije sa svih "
 "usidrenih redaka"
 
-#: src/application_actions.cpp:768
+#: src/application_actions.cpp:769
 #, kde-format
 msgctxt "@action:inmenu Manage user scripts"
 msgid "Scripts Manager..."
 msgstr "Upravitelj skripti..."
 
-#: src/application_actions.cpp:769
+#: src/application_actions.cpp:770
 #, kde-format
 msgid "Manage user scripts"
 msgstr "Upravljanje korisničkim skriptama"
 
-#: src/application_actions.cpp:776 src/application_actions.cpp:777
+#: src/application_actions.cpp:777 src/application_actions.cpp:778
 #, kde-format
 msgid "Waveform Zoom In"
 msgstr "Uvećaj valni prikaz zvuka"
 
-#: src/application_actions.cpp:783 src/application_actions.cpp:784
+#: src/application_actions.cpp:784 src/application_actions.cpp:785
 #, kde-format
 msgid "Waveform Zoom Out"
 msgstr "Smanji valni prikaz zvuka"
 
-#: src/application_actions.cpp:791
+#: src/application_actions.cpp:792
 #, kde-format
 msgid "Waveform Auto Scroll"
 msgstr "Automatsko pomicanje valnog prikaza zvuka"
 
-#: src/application_actions.cpp:792
+#: src/application_actions.cpp:793
 #, kde-format
 msgid "Waveform display will automatically scroll to video position"
 msgstr ""
 "Valni prikaz zvuka će se automatski pomicati u skladu s položajem video "
 "zapisa"
 
-#: src/application_subtitle.cpp:75
+#: src/application_subtitle.cpp:77
 #, kde-format
 msgid "All Text Subtitles"
 msgstr "Svi tekstovni podnaslovi"
 
-#: src/application_subtitle.cpp:76
+#: src/application_subtitle.cpp:78
 #, kde-format
 msgid "All Image Subtitles"
 msgstr "Svi slikovni podnaslovi"
 
-#: src/application_subtitle.cpp:78 src/application_subtitle.cpp:102
+#: src/application_subtitle.cpp:80 src/application_subtitle.cpp:104
 #, kde-format
 msgid "All Files"
 msgstr "Sve datoteke"
 
-#: src/application_subtitle.cpp:99
+#: src/application_subtitle.cpp:101
 #, kde-format
 msgid "Media Files"
 msgstr "Medijske datoteke"
 
-#: src/application_subtitle.cpp:100
+#: src/application_subtitle.cpp:102
 #, kde-format
 msgid "Video Files"
 msgstr "Video datoteke"
 
-#: src/application_subtitle.cpp:101
+#: src/application_subtitle.cpp:103
 #, kde-format
 msgid "Audio Files"
 msgstr "Zvučne datoteke"
 
-#: src/application_subtitle.cpp:130
+#: src/application_subtitle.cpp:132
 #, kde-format
 msgid ""
 "The requested action would make the subtitle and its translation share the "
@@ -1117,18 +1117,18 @@ msgstr ""
 "datoteku, što može dovesti do gubitka podataka prilikom spremanja.\n"
 "Želite li nastaviti?"
 
-#: src/application_subtitle.cpp:133
+#: src/application_subtitle.cpp:135
 #, kde-format
 msgid "Conflicting Subtitle Files"
 msgstr "Sukob datoteka podnaslova"
 
-#: src/application_subtitle.cpp:151 src/dialogs/selectablesubtitledialog.cpp:65
+#: src/application_subtitle.cpp:153 src/dialogs/selectablesubtitledialog.cpp:67
 #, kde-format
 msgid "Open Subtitle"
 msgstr "Otvori podnaslov"
 
-#: src/application_subtitle.cpp:207 src/application_subtitle.cpp:227
-#: src/application_subtitle.cpp:473 src/application_subtitle.cpp:498
+#: src/application_subtitle.cpp:209 src/application_subtitle.cpp:229
+#: src/application_subtitle.cpp:475 src/application_subtitle.cpp:500
 #, kde-format
 msgid ""
 "<qt>Could not parse the subtitle file.<br/>This may have been caused by "
@@ -1137,28 +1137,28 @@ msgstr ""
 "<qt>Nemoguća obrada datoteke podnaslova.<br/>To može uzrokovati korištenje "
 "pogrešnog kôdiranja.</qt>"
 
-#: src/application_subtitle.cpp:273 src/application_subtitle.cpp:321
+#: src/application_subtitle.cpp:275 src/application_subtitle.cpp:323
 #, kde-format
 msgid "Format: %1"
 msgstr ""
 
-#: src/application_subtitle.cpp:274 src/application_subtitle.cpp:322
+#: src/application_subtitle.cpp:276 src/application_subtitle.cpp:324
 #, fuzzy, kde-format
 #| msgid "Encoding:"
 msgid "Encoding: %1"
 msgstr "Kôdiranje:"
 
-#: src/application_subtitle.cpp:328
+#: src/application_subtitle.cpp:330
 #, kde-format
 msgid "There was an error saving the subtitle."
 msgstr "Dogodila se greška pri spremanju podnaslova."
 
-#: src/application_subtitle.cpp:336
+#: src/application_subtitle.cpp:338
 #, kde-format
 msgid "Save Subtitle"
 msgstr "Spremi podnaslov"
 
-#: src/application_subtitle.cpp:371 src/application_subtitle.cpp:612
+#: src/application_subtitle.cpp:373 src/application_subtitle.cpp:614
 #, kde-format
 msgid ""
 "Currently opened translation subtitle has unsaved changes.\n"
@@ -1167,12 +1167,12 @@ msgstr ""
 "Trenutno otvoreni prijevod podnaslova ima nespremljene promjene.\n"
 "Želite li ga spremiti?"
 
-#: src/application_subtitle.cpp:372 src/application_subtitle.cpp:613
+#: src/application_subtitle.cpp:374 src/application_subtitle.cpp:615
 #, kde-format
 msgid "Close Translation Subtitle"
 msgstr "Zatvori prijevod podnaslova"
 
-#: src/application_subtitle.cpp:382
+#: src/application_subtitle.cpp:384
 #, kde-format
 msgid ""
 "Currently opened subtitle has unsaved changes.\n"
@@ -1181,65 +1181,65 @@ msgstr ""
 "Trenutno otvoreni podnaslov ima nespremljene promjene.\n"
 "Želite li ga spremiti?"
 
-#: src/application_subtitle.cpp:383
+#: src/application_subtitle.cpp:385
 #, kde-format
 msgid "Close Subtitle"
 msgstr "Zatvori podnaslov"
 
-#: src/application_subtitle.cpp:442
+#: src/application_subtitle.cpp:444
 #, kde-format
 msgid "Open Translation Subtitle"
 msgstr "Otvori prijevod podnaslova"
 
-#: src/application_subtitle.cpp:527
+#: src/application_subtitle.cpp:529
 #, kde-format
 msgctxt "@item:inmenu Display primary text in video player"
 msgid "Primary"
 msgstr "Glavni"
 
-#: src/application_subtitle.cpp:528
+#: src/application_subtitle.cpp:530
 #, kde-format
 msgctxt "@item:inmenu Display translation text in video player"
 msgid "Translation"
 msgstr "Prijevod"
 
-#: src/application_subtitle.cpp:568
+#: src/application_subtitle.cpp:570
 #, kde-format
 msgid "There was an error saving the translation subtitle."
 msgstr "Dogodila se greška pri spremanju prijevoda podnaslova."
 
-#: src/application_subtitle.cpp:576
+#: src/application_subtitle.cpp:578
 #, kde-format
 msgid "Save Translation Subtitle"
 msgstr "Spremi prijevod podnaslova"
 
-#: src/application_subtitle.cpp:662
+#: src/application_subtitle.cpp:664
 #, kde-format
 msgctxt "Suffix added to split subtitles"
 msgid "split"
 msgstr "podijeljeno"
 
-#: src/application_subtitle.cpp:680
+#: src/application_subtitle.cpp:682
 #, kde-format
 msgid "Could not write the split subtitle file."
 msgstr "Nemoguće zaspisivanje podijeljene datoteke podnaslova."
 
-#: src/application_subtitle.cpp:680
+#: src/application_subtitle.cpp:682
 #, kde-format
 msgid "Could not write the split subtitle translation file."
 msgstr "Nemoguće zaspisivanje podijeljene datoteke prijevoda podnaslova."
 
-#: src/application_subtitle.cpp:705
+#: src/application_subtitle.cpp:707
 #, kde-format
 msgid "Could not read the subtitle file to append."
 msgstr "Nemoguće čitanje datoteke podnaslova dodavanja."
 
-#: src/application_subtitle.cpp:721
+#: src/application_subtitle.cpp:723
 #, kde-format
 msgid "The specified time does not split the subtitles."
 msgstr "Određeno vrijeme ne može podijeliti podnaslov."
 
-#: src/application_subtitle.cpp:756
+#: src/application_subtitle.cpp:758
 #, kde-format
 msgid ""
 "Could not open a new Subtitle Composer window.\n"
@@ -1248,7 +1248,7 @@ msgstr ""
 "Nemoguće otvaranje novog Subtitle Composer prozora.\n"
 "Podijeljeni dio je spremljen kao %1."
 
-#: src/application_subtitle.cpp:757
+#: src/application_subtitle.cpp:759
 #, kde-format
 msgid ""
 "Could not open a new Subtitle Composer window.\n"
@@ -1257,79 +1257,79 @@ msgstr ""
 "Nemoguće otvaranje novog Subtitle Composer prozora.\n"
 "Podijeljeni dijelovi su spremljeni kao %1 i %2."
 
-#: src/application_subtitle.cpp:775
+#: src/application_subtitle.cpp:777
 #, kde-format
 msgid "The reference subtitle must have more than one line to proceed."
 msgstr "Polazni podnaslov mora imati više od jednog redka da bi radio."
 
-#: src/application_subtitle.cpp:784
+#: src/application_subtitle.cpp:786
 #, kde-format
 msgid "Could not parse the reference subtitle file."
 msgstr "Nemoguća obrada datoteke polaznog podnaslova."
 
-#: src/configs/configdialog.cpp:38
+#: src/configs/configdialog.cpp:35
 #, kde-format
 msgctxt "@title General settings"
 msgid "General"
 msgstr "Općenito"
 
-#: src/configs/configdialog.cpp:39
+#: src/configs/configdialog.cpp:36
 #, kde-format
 msgid "General Settings"
 msgstr "Općenite postavke"
 
-#: src/configs/configdialog.cpp:43
+#: src/configs/configdialog.cpp:40
 #, kde-format
 msgctxt "@title Error check settings"
 msgid "Error Check"
 msgstr "Provjera grešaka"
 
-#: src/configs/configdialog.cpp:44
+#: src/configs/configdialog.cpp:41
 #, kde-format
 msgid "Error Check Settings"
 msgstr "Postavke provjera greški"
 
-#: src/configs/configdialog.cpp:50
+#: src/configs/configdialog.cpp:47
 #, kde-format
 msgctxt "@title Spelling settings"
 msgid "Spelling"
 msgstr "Pravopis"
 
-#: src/configs/configdialog.cpp:51
+#: src/configs/configdialog.cpp:48
 #, kde-format
 msgid "Spelling Settings"
 msgstr "Postavke pravopisa"
 
-#: src/configs/configdialog.cpp:55
+#: src/configs/configdialog.cpp:52
 #, kde-format
 msgctxt "@title Waveform settings"
 msgid "Waveform"
 msgstr "Valni prikaz zvuka"
 
-#: src/configs/configdialog.cpp:56
+#: src/configs/configdialog.cpp:53
 #, kde-format
 msgid "Waveform settings"
 msgstr "Postavke valnog prikaza zvuka"
 
-#: src/configs/configdialog.cpp:60
+#: src/configs/configdialog.cpp:57
 #, kde-format
 msgctxt "@title Video player settings"
 msgid "Video Player"
 msgstr "Video reproduktor"
 
-#: src/configs/configdialog.cpp:61
+#: src/configs/configdialog.cpp:58
 #, kde-format
 msgid "Video Player Settings"
 msgstr "Postavke video reproduktora"
 
-#: src/configs/configdialog.cpp:70
+#: src/configs/configdialog.cpp:67
 #, kde-format
 msgctxt "@title Speech recognition backend settings"
 msgid "%1 backend settings"
 msgstr "Postavke %1 pozadinskog prepoznavanja govora"
 
 #. i18n: ectx: property (title), widget (QGroupBox, m_grpGeneral)
-#: src/configs/errorsconfigwidget.ui:17 src/gui/treeview/lineswidget.cpp:394
+#: src/configs/errorsconfigwidget.ui:17 src/gui/treeview/lineswidget.cpp:396
 #, kde-format
 msgid "Texts"
 msgstr "Tekstovi"
@@ -1562,7 +1562,7 @@ msgid "Start playing video when loaded"
 msgstr "Pokreni reprodukciju video snimke pri učitavanju"
 
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_ShowPositionTimeEdit)
-#: src/configs/playerconfigwidget.ui:57 src/gui/playerwidget.cpp:435
+#: src/configs/playerconfigwidget.ui:57 src/gui/playerwidget.cpp:437
 #, kde-format
 msgid "Show editable position control"
 msgstr "Prikaži promjenjivo upravljanje položaja"
@@ -1759,151 +1759,151 @@ msgstr "Boja linije položaja reproduktora:"
 msgid "Mouse indicator color:"
 msgstr "Boja linije položaja miša:"
 
-#: src/core/subtitle.cpp:62
+#: src/core/subtitle.cpp:63
 #, kde-format
 msgid "Set Primary Data"
 msgstr "Postavi glavni tekst"
 
-#: src/core/subtitle.cpp:120
+#: src/core/subtitle.cpp:121
 #, kde-format
 msgid "Clear Primary Text Data"
 msgstr "Obriši podatke glavnog teksta"
 
-#: src/core/subtitle.cpp:133
+#: src/core/subtitle.cpp:134
 #, kde-format
 msgid "Set Secondary Data"
 msgstr "Postavi podatke pomoćnog teksta"
 
-#: src/core/subtitle.cpp:170
+#: src/core/subtitle.cpp:171
 #, kde-format
 msgid "Clear Secondary Text Data"
 msgstr "Obriši podatke pomoćnog teksta"
 
-#: src/core/subtitle.cpp:238 src/dialogs/changeframeratedialog.cpp:22
+#: src/core/subtitle.cpp:239 src/dialogs/changeframeratedialog.cpp:22
 #, kde-format
 msgid "Change Frame Rate"
 msgstr "Promijeni broj sličica"
 
-#: src/core/subtitle.cpp:400 src/core/subtitle.cpp:414
-#: src/gui/waveform/waveformwidget.cpp:694
+#: src/core/subtitle.cpp:401 src/core/subtitle.cpp:415
+#: src/gui/waveform/waveformwidget.cpp:695
 #, kde-format
 msgid "Insert Line"
 msgstr "Umetni redak"
 
-#: src/core/subtitle.cpp:447 src/core/subtitle.cpp:457
-#: src/core/subtitle.cpp:474 src/core/undo/subtitleactions.cpp:122
+#: src/core/subtitle.cpp:448 src/core/subtitle.cpp:458
+#: src/core/subtitle.cpp:475 src/core/undo/subtitleactions.cpp:122
 #, kde-format
 msgid "Remove Lines"
 msgstr "Ukloni redke"
 
-#: src/core/subtitle.cpp:739
+#: src/core/subtitle.cpp:740
 #, kde-format
 msgid "Shift Lines"
 msgstr "Pomakni redke"
 
-#: src/core/subtitle.cpp:795
+#: src/core/subtitle.cpp:796
 #, kde-format
 msgid "Adjust Lines"
 msgstr "Prilagodi redke"
 
-#: src/core/subtitle.cpp:806
+#: src/core/subtitle.cpp:807
 #, kde-format
 msgid "Sort"
 msgstr "Poredaj"
 
-#: src/core/subtitle.cpp:838 src/dialogs/durationlimitsdialog.cpp:18
+#: src/core/subtitle.cpp:839 src/dialogs/durationlimitsdialog.cpp:18
 #, kde-format
 msgid "Enforce Duration Limits"
 msgstr "Prisili ograničenja trajanja"
 
-#: src/core/subtitle.cpp:900 src/dialogs/autodurationsdialog.cpp:21
+#: src/core/subtitle.cpp:901 src/dialogs/autodurationsdialog.cpp:21
 #, kde-format
 msgid "Set Automatic Durations"
 msgstr "Postavi automatska trajanja"
 
-#: src/core/subtitle.cpp:933 src/dialogs/fixoverlappingtimesdialog.cpp:18
+#: src/core/subtitle.cpp:934 src/dialogs/fixoverlappingtimesdialog.cpp:18
 #, kde-format
 msgid "Fix Overlapping Times"
 msgstr "Popravi preklapajuća vremena"
 
-#: src/core/subtitle.cpp:964
+#: src/core/subtitle.cpp:965
 #, kde-format
 msgid "Fix Lines Punctuation"
 msgstr "Popravi interpunkciju redka"
 
-#: src/core/subtitle.cpp:1006
+#: src/core/subtitle.cpp:1007
 #, kde-format
 msgid "Lower Case"
 msgstr "Mala slova"
 
-#: src/core/subtitle.cpp:1036
+#: src/core/subtitle.cpp:1037
 #, kde-format
 msgid "Upper Case"
 msgstr "Velika slova"
 
-#: src/core/subtitle.cpp:1066
+#: src/core/subtitle.cpp:1067
 #, kde-format
 msgid "Title Case"
 msgstr "Veličina naslova"
 
-#: src/core/subtitle.cpp:1099
+#: src/core/subtitle.cpp:1100
 #, kde-format
 msgid "Sentence Case"
 msgstr "Veličina rečenica"
 
-#: src/core/subtitle.cpp:1143 src/dialogs/smarttextsadjustdialog.cpp:18
+#: src/core/subtitle.cpp:1144 src/dialogs/smarttextsadjustdialog.cpp:18
 #, kde-format
 msgid "Break Lines"
 msgstr "Razdvoji redke"
 
-#: src/core/subtitle.cpp:1170
+#: src/core/subtitle.cpp:1171
 #, kde-format
 msgid "Synchronize Subtitles"
 msgstr "Uskladi podnaslove"
 
-#: src/core/subtitle.cpp:1195 src/dialogs/joinsubtitlesdialog.cpp:24
+#: src/core/subtitle.cpp:1196 src/dialogs/joinsubtitlesdialog.cpp:24
 #, kde-format
 msgid "Join Subtitles"
 msgstr "Spoji podnaslove"
 
-#: src/core/subtitle.cpp:1240 src/core/subtitle.cpp:1246
+#: src/core/subtitle.cpp:1241 src/core/subtitle.cpp:1247
 #, kde-format
 msgid "Split Subtitles"
 msgstr "Razdvoji podnaslove"
 
-#: src/core/subtitle.cpp:1265
+#: src/core/subtitle.cpp:1266
 #, kde-format
 msgid "Toggle Lines Style"
 msgstr "Uklj/Isklj stil redaka"
 
-#: src/core/subtitle.cpp:1309
+#: src/core/subtitle.cpp:1310
 #, kde-format
 msgid "Change Lines Text Color"
 msgstr "Promijeni oznaku redaka"
 
-#: src/core/subtitle.cpp:1329
+#: src/core/subtitle.cpp:1330
 #, kde-format
 msgid "Set Lines Mark"
 msgstr "Postavi oznaku redaka"
 
-#: src/core/subtitle.cpp:1329
+#: src/core/subtitle.cpp:1330
 #, kde-format
 msgid "Clear Lines Mark"
 msgstr "Obriši oznaku redaka"
 
-#: src/core/subtitle.cpp:1344
+#: src/core/subtitle.cpp:1345
 #, kde-format
 msgid "Toggle Lines Mark"
 msgstr "Uklj/Isklj oznaku redaka"
 
-#: src/core/subtitle.cpp:1354
+#: src/core/subtitle.cpp:1355
 #, fuzzy, kde-format
 #| msgid "Clear Lines Errors"
 msgid "Clear Line Errors"
 msgstr "Obriši oznaku redaka"
 
-#: src/core/subtitle.cpp:1365 src/core/subtitle.cpp:1376
-#: src/errors/errorfinder.cpp:82
+#: src/core/subtitle.cpp:1366 src/core/subtitle.cpp:1377
+#: src/errors/errorfinder.cpp:84
 #, kde-format
 msgid "Check Lines Errors"
 msgstr "Provjeri greške redaka"
@@ -2179,50 +2179,50 @@ msgstr "Postavi pomoćni tekst redka"
 msgid "Set Line Errors"
 msgstr "Postavi greške redka"
 
-#: src/dialogs/actionwithtargetdialog.cpp:111
+#: src/dialogs/actionwithtargetdialog.cpp:113
 #, kde-format
 msgid "Target >>"
 msgstr "Odredište >>"
 
-#: src/dialogs/actionwithtargetdialog.cpp:111
-#: src/dialogs/actionwithtargetdialog.cpp:127
+#: src/dialogs/actionwithtargetdialog.cpp:113
+#: src/dialogs/actionwithtargetdialog.cpp:129
 #, kde-format
 msgid "Target <<"
 msgstr "Odredište <<"
 
-#: src/dialogs/actionwithtargetdialog.cpp:141
+#: src/dialogs/actionwithtargetdialog.cpp:143
 #, kde-format
 msgid "All lines"
 msgstr "Sve redke"
 
-#: src/dialogs/actionwithtargetdialog.cpp:142
+#: src/dialogs/actionwithtargetdialog.cpp:144
 #, kde-format
 msgid "Selected lines"
 msgstr "Odabrane redke"
 
-#: src/dialogs/actionwithtargetdialog.cpp:143
+#: src/dialogs/actionwithtargetdialog.cpp:145
 #, kde-format
 msgid "All lines from first selected"
 msgstr "Sve redke od prvog odabranog"
 
-#: src/dialogs/actionwithtargetdialog.cpp:144
+#: src/dialogs/actionwithtargetdialog.cpp:146
 #, kde-format
 msgid "All lines up to last selected"
 msgstr "Sve redke do posljednjeg odabranog"
 
-#: src/dialogs/actionwithtargetdialog.cpp:232 src/utils/finder.cpp:53
+#: src/dialogs/actionwithtargetdialog.cpp:234 src/utils/finder.cpp:53
 #: src/utils/replacer.cpp:51
 #, kde-format
 msgid "Both subtitles"
 msgstr "Oba podnaslova"
 
-#: src/dialogs/actionwithtargetdialog.cpp:235 src/utils/finder.cpp:55
+#: src/dialogs/actionwithtargetdialog.cpp:237 src/utils/finder.cpp:55
 #: src/utils/replacer.cpp:53
 #, kde-format
 msgid "Primary subtitle"
 msgstr "Glavni podnaslov"
 
-#: src/dialogs/actionwithtargetdialog.cpp:238 src/utils/finder.cpp:57
+#: src/dialogs/actionwithtargetdialog.cpp:240 src/utils/finder.cpp:57
 #: src/utils/replacer.cpp:55
 #, kde-format
 msgid "Translation subtitle"
@@ -2476,12 +2476,12 @@ msgstr "Ukloni odabrane redke"
 msgid "Remove From"
 msgstr "Ukloni iz"
 
-#: src/dialogs/selectablesubtitledialog.cpp:39
+#: src/dialogs/selectablesubtitledialog.cpp:41
 #, kde-format
 msgid "Path:"
 msgstr "Putanja:"
 
-#: src/dialogs/selectablesubtitledialog.cpp:44
+#: src/dialogs/selectablesubtitledialog.cpp:46
 #, kde-format
 msgid "Select subtitle"
 msgstr "Odaberi podnalov"
@@ -2568,12 +2568,12 @@ msgstr "Ulazni jezik:"
 msgid "Output language:"
 msgstr "Izlazni jezik:"
 
-#: src/errors/errorfinder.cpp:171 src/errors/finderrorsdialog.cpp:17
+#: src/errors/errorfinder.cpp:173 src/errors/finderrorsdialog.cpp:17
 #, kde-format
 msgid "Find Error"
 msgstr "Traži grešku"
 
-#: src/errors/errorfinder.cpp:171
+#: src/errors/errorfinder.cpp:173
 #, fuzzy, kde-format
 #| msgid "No errors matching given criteria found!"
 msgid "No errors matching given criteria were found!"
@@ -2803,45 +2803,45 @@ msgstr " ms/znak"
 msgid "chars/sec"
 msgstr " znakova"
 
-#: src/gui/playerwidget.cpp:72
+#: src/gui/playerwidget.cpp:74
 #, kde-format
 msgid "<b>Position</b>"
 msgstr "<b>Položaj</b>"
 
-#: src/gui/playerwidget.cpp:80
+#: src/gui/playerwidget.cpp:82
 #, kde-format
 msgid "<b>Length</b>"
 msgstr "<b>Trajanje</b>"
 
-#: src/gui/playerwidget.cpp:85
+#: src/gui/playerwidget.cpp:87
 #, kde-format
 msgid "<b>FPS</b>"
 msgstr "<b>Sl/Sek</b>"
 
-#: src/gui/playerwidget.cpp:91
+#: src/gui/playerwidget.cpp:93
 #, kde-format
 msgid "<b>Playback Rate</b>"
 msgstr "<b>Brzina reprodukcije</b>"
 
-#: src/gui/playerwidget.cpp:667
+#: src/gui/playerwidget.cpp:669
 #, kde-format
 msgid "<qt>There was an error opening media file %1.</qt>"
 msgstr "<qt>Dogodila se greška pri otvaranju datoteke medija %1.</qt>"
 
-#: src/gui/playerwidget.cpp:683 src/gui/playerwidget.cpp:684
 #: src/gui/playerwidget.cpp:685 src/gui/playerwidget.cpp:686
-#: src/gui/playerwidget.cpp:753 src/gui/playerwidget.cpp:761
-#: src/gui/playerwidget.cpp:767
+#: src/gui/playerwidget.cpp:687 src/gui/playerwidget.cpp:688
+#: src/gui/playerwidget.cpp:755 src/gui/playerwidget.cpp:763
+#: src/gui/playerwidget.cpp:769
 #, kde-format
 msgid "<i>Unknown</i>"
 msgstr "<i>Nepoznat</i>"
 
-#: src/gui/playerwidget.cpp:699 src/gui/playerwidget.cpp:701
+#: src/gui/playerwidget.cpp:701 src/gui/playerwidget.cpp:703
 #, kde-format
 msgid "Unexpected error when playing file."
 msgstr "Neočekivana greška tijekom reprodukcije datoteke."
 
-#: src/gui/playerwidget.cpp:699 src/gui/playerwidget.cpp:701
+#: src/gui/playerwidget.cpp:701 src/gui/playerwidget.cpp:703
 #, kde-format
 msgid "Error Playing File"
 msgstr "Greška reprodukcije datoteke"
@@ -2964,98 +2964,98 @@ msgctxt "@title:column Subtitle line translation text"
 msgid "Translation"
 msgstr "Prijevod"
 
-#: src/gui/treeview/lineswidget.cpp:405
+#: src/gui/treeview/lineswidget.cpp:407
 #, kde-format
 msgid "Styles"
 msgstr "Stilovi"
 
-#: src/gui/treeview/lineswidget.cpp:414
+#: src/gui/treeview/lineswidget.cpp:416
 #, kde-format
 msgid "Times"
 msgstr "Vremena"
 
-#: src/gui/treeview/lineswidget.cpp:425
+#: src/gui/treeview/lineswidget.cpp:427
 #, kde-format
 msgid "Errors"
 msgstr "Greške"
 
-#: src/gui/treeview/richlineedit.cpp:83 src/widgets/simplerichtextedit.cpp:339
+#: src/gui/treeview/richlineedit.cpp:84 src/widgets/simplerichtextedit.cpp:340
 #, kde-format
 msgid "Cut"
 msgstr "Izreži"
 
-#: src/gui/treeview/richlineedit.cpp:90 src/widgets/simplerichtextedit.cpp:345
+#: src/gui/treeview/richlineedit.cpp:91 src/widgets/simplerichtextedit.cpp:346
 #, kde-format
 msgid "Copy"
 msgstr "Kopiraj"
 
-#: src/gui/treeview/richlineedit.cpp:97 src/widgets/simplerichtextedit.cpp:352
+#: src/gui/treeview/richlineedit.cpp:98 src/widgets/simplerichtextedit.cpp:353
 #, kde-format
 msgid "Paste"
 msgstr "Zalijepi"
 
-#: src/gui/treeview/richlineedit.cpp:105 src/widgets/simplerichtextedit.cpp:365
+#: src/gui/treeview/richlineedit.cpp:106 src/widgets/simplerichtextedit.cpp:366
 #, kde-format
 msgctxt "@action:inmenu Clear all text"
 msgid "Clear"
 msgstr "Obriši"
 
-#: src/gui/treeview/richlineedit.cpp:118 src/widgets/simplerichtextedit.cpp:376
+#: src/gui/treeview/richlineedit.cpp:119 src/widgets/simplerichtextedit.cpp:377
 #, kde-format
 msgctxt "@action:inmenu Toggle bold style"
 msgid "Bold"
 msgstr "Podebljano"
 
-#: src/gui/treeview/richlineedit.cpp:126 src/widgets/simplerichtextedit.cpp:383
+#: src/gui/treeview/richlineedit.cpp:127 src/widgets/simplerichtextedit.cpp:384
 #, kde-format
 msgctxt "@action:inmenu Toggle italic style"
 msgid "Italic"
 msgstr "Ukošeno"
 
-#: src/gui/treeview/richlineedit.cpp:134 src/widgets/simplerichtextedit.cpp:390
+#: src/gui/treeview/richlineedit.cpp:135 src/widgets/simplerichtextedit.cpp:391
 #, kde-format
 msgctxt "@action:inmenu Toggle underline style"
 msgid "Underline"
 msgstr "Podcrtano"
 
-#: src/gui/treeview/richlineedit.cpp:142 src/widgets/simplerichtextedit.cpp:397
+#: src/gui/treeview/richlineedit.cpp:143 src/widgets/simplerichtextedit.cpp:398
 #, kde-format
 msgctxt "@action:inmenu Toggle strike through style"
 msgid "Strike Through"
 msgstr "Precrtano"
 
-#: src/gui/treeview/richlineedit.cpp:150 src/widgets/simplerichtextedit.cpp:404
+#: src/gui/treeview/richlineedit.cpp:151 src/widgets/simplerichtextedit.cpp:405
 #, kde-format
 msgctxt "@action:inmenu Change Text Color"
 msgid "Text Color"
 msgstr "Boja teksta"
 
-#: src/gui/waveform/waveformwidget.cpp:115
+#: src/gui/waveform/waveformwidget.cpp:116
 #, kde-format
 msgid "Generating waveform"
 msgstr "Stvaranje valnog prikaza zvuka"
 
-#: src/gui/waveform/waveformwidget.cpp:689
+#: src/gui/waveform/waveformwidget.cpp:690
 #, kde-format
 msgid "Select Line"
 msgstr "Odaberi redak"
 
-#: src/gui/waveform/waveformwidget.cpp:704
+#: src/gui/waveform/waveformwidget.cpp:705
 #, kde-format
 msgid "Remove Line"
 msgstr "Ukloni redak"
 
-#: src/gui/waveform/waveformwidget.cpp:729
+#: src/gui/waveform/waveformwidget.cpp:730
 #, kde-format
 msgid "Split Line"
 msgstr "Razdvoji redak"
 
-#: src/gui/waveform/waveformwidget.cpp:739
+#: src/gui/waveform/waveformwidget.cpp:740
 #, kde-format
 msgid "Set Current Line Show Time"
 msgstr "Postavi vrijeme prikaza trenutnog redka"
 
-#: src/gui/waveform/waveformwidget.cpp:744
+#: src/gui/waveform/waveformwidget.cpp:745
 #, kde-format
 msgid "Set Current Line Hide Time"
 msgstr "Postavi vrijeme nestajanja trenutnog redka"
@@ -3138,17 +3138,17 @@ msgstr "doprinos kôdu, Arch Linux paketi"
 msgid "All people who have contributed and I have forgotten to mention"
 msgstr "Svi ljudi koji su pridonijeli, a zaboravio sam ih spomenuti"
 
-#: src/mainwindow.cpp:36
+#: src/mainwindow.cpp:37
 #, kde-format
 msgid "Waveform"
 msgstr "Valni prikaz zvuka"
 
-#: src/mainwindow.cpp:50
+#: src/mainwindow.cpp:51
 #, kde-format
 msgid "Video Player"
 msgstr "Video reproduktor"
 
-#: src/mainwindow.cpp:64
+#: src/mainwindow.cpp:65
 #, kde-format
 msgid "Styles and Comments"
 msgstr ""
@@ -3436,60 +3436,60 @@ msgstr "Boja obruba"
 msgid "Outline Width"
 msgstr "Širina obruba"
 
-#: src/scripting/scriptsmanager.cpp:75
+#: src/scripting/scriptsmanager.cpp:73
 #, kde-format
 msgid "Non-Script Files"
 msgstr ""
 
-#: src/scripting/scriptsmanager.cpp:157
+#: src/scripting/scriptsmanager.cpp:155
 #, fuzzy, kde-format
 #| msgid "Title Case"
 msgid "Title"
 msgstr "Veličina naslova"
 
-#: src/scripting/scriptsmanager.cpp:158
+#: src/scripting/scriptsmanager.cpp:156
 #, kde-format
 msgid "Version"
 msgstr ""
 
-#: src/scripting/scriptsmanager.cpp:159
+#: src/scripting/scriptsmanager.cpp:157
 #, kde-format
 msgid "Author"
 msgstr ""
 
-#: src/scripting/scriptsmanager.cpp:160
+#: src/scripting/scriptsmanager.cpp:158
 #, fuzzy, kde-format
 #| msgid "Path:"
 msgid "Path"
 msgstr "Putanja:"
 
-#: src/scripting/scriptsmanager.cpp:354
+#: src/scripting/scriptsmanager.cpp:352
 #, kde-format
 msgid "Information"
 msgstr "Informacije"
 
-#: src/scripting/scriptsmanager.cpp:360
+#: src/scripting/scriptsmanager.cpp:358
 #, kde-format
 msgid "Warning"
 msgstr "Upozorenje"
 
-#: src/scripting/scriptsmanager.cpp:366
+#: src/scripting/scriptsmanager.cpp:364
 #, kde-format
 msgid "Error"
 msgstr "Greška"
 
 #. i18n: ectx: property (text), widget (QPushButton, btnEdit)
-#: src/scripting/scriptsmanager.cpp:394 src/scripting/scriptsmanager.ui:74
+#: src/scripting/scriptsmanager.cpp:392 src/scripting/scriptsmanager.ui:74
 #, kde-format
 msgid "Edit"
 msgstr "Uredi"
 
-#: src/scripting/scriptsmanager.cpp:397
+#: src/scripting/scriptsmanager.cpp:395
 #, kde-format
 msgid "View"
 msgstr ""
 
-#: src/scripting/scriptsmanager.cpp:462 src/scripting/scriptsmanager.cpp:527
+#: src/scripting/scriptsmanager.cpp:460 src/scripting/scriptsmanager.cpp:528
 #, kde-format
 msgid ""
 "You must enter an unused name to continue.\n"
@@ -3498,85 +3498,85 @@ msgstr ""
 "Za nastavak morate upisati nekorišteni naziv.\n"
 "Želite li upisati drugi naziv?"
 
-#: src/scripting/scriptsmanager.cpp:463 src/scripting/scriptsmanager.cpp:528
+#: src/scripting/scriptsmanager.cpp:461 src/scripting/scriptsmanager.cpp:529
 #, kde-format
 msgid "Name Already Used"
 msgstr "Naziv je već u upotrebi"
 
-#: src/scripting/scriptsmanager.cpp:467
+#: src/scripting/scriptsmanager.cpp:465
 #, kde-format
 msgid "Create New Script"
 msgstr "Napravi novu skriptu"
 
-#: src/scripting/scriptsmanager.cpp:467 src/scripting/scriptsmanager.cpp:531
+#: src/scripting/scriptsmanager.cpp:465 src/scripting/scriptsmanager.cpp:532
 #, kde-format
 msgid "Script name:"
 msgstr "Naziv skripte:"
 
-#: src/scripting/scriptsmanager.cpp:475
+#: src/scripting/scriptsmanager.cpp:476
 #, kde-format
 msgid "There was an error creating the file <b>%1</b>."
 msgstr "Dogodila se greška pri stvaranju datoteke <b>%1</b>."
 
-#: src/scripting/scriptsmanager.cpp:510
+#: src/scripting/scriptsmanager.cpp:511
 #, kde-format
 msgid "Select Existing Script"
 msgstr "Odaberi postojeću skriptu"
 
-#: src/scripting/scriptsmanager.cpp:531
+#: src/scripting/scriptsmanager.cpp:532
 #, kde-format
 msgid "Rename Script"
 msgstr "Preimenuj skriptu"
 
-#: src/scripting/scriptsmanager.cpp:540
+#: src/scripting/scriptsmanager.cpp:541
 #, kde-format
 msgid "There was an error opening the file <b>%1</b>."
 msgstr "Dogodila se greška pri otvaranju datoteke <b>%1</b>."
 
-#: src/scripting/scriptsmanager.cpp:548
+#: src/scripting/scriptsmanager.cpp:549
 #, kde-format
 msgid "There was an error copying the file to <b>%1</b>."
 msgstr "Dogodila se greška pri kopiranju datoteke u <b>%1</b>."
 
-#: src/scripting/scriptsmanager.cpp:563
+#: src/scripting/scriptsmanager.cpp:564
 #, kde-format
 msgid "Do you really want to send file <b>%1</b> to the trash?"
 msgstr "Stvarno želite poslati datoteku <b>%1</b> u smeće?"
 
-#: src/scripting/scriptsmanager.cpp:563
+#: src/scripting/scriptsmanager.cpp:564
 #, kde-format
 msgid "Move to Trash"
 msgstr "Premjesti u smeće"
 
-#: src/scripting/scriptsmanager.cpp:567
+#: src/scripting/scriptsmanager.cpp:568
 #, kde-format
 msgid "There was an error removing the file <b>%1</b>."
 msgstr "Dogodila se greška pri brisnju datoteke <b>%1</b>."
 
-#: src/scripting/scriptsmanager.cpp:596
+#: src/scripting/scriptsmanager.cpp:597
 #, kde-format
 msgid "Could not launch external editor.\n"
 msgstr "Nemoguće pokretanje vanjskog uređivača.\n"
 
-#: src/scripting/scriptsmanager.cpp:617
+#: src/scripting/scriptsmanager.cpp:618
 #, fuzzy, kde-format
 #| msgid "Error Running Script"
 msgid "Error opening script %1."
 msgstr "Greška pri pokretanju skripte"
 
-#: src/scripting/scriptsmanager.cpp:617 src/scripting/scriptsmanager.cpp:632
-#: src/scripting/scriptsmanager.cpp:634
+#: src/scripting/scriptsmanager.cpp:618 src/scripting/scriptsmanager.cpp:633
+#: src/scripting/scriptsmanager.cpp:635
 #, kde-format
 msgid "Error Running Script"
 msgstr "Greška pri pokretanju skripte"
 
-#: src/scripting/scriptsmanager.cpp:630
+#: src/scripting/scriptsmanager.cpp:631
 #, fuzzy, kde-format
 #| msgid "Path:"
 msgid "Path: %1"
 msgstr "Putanja:"
 
-#: src/scripting/scriptsmanager.cpp:647
+#: src/scripting/scriptsmanager.cpp:648
 #, kde-format
 msgid "Tools"
 msgstr "Alati"
@@ -3784,27 +3784,27 @@ msgstr "Okviri poslije govora"
 msgid "Start Speech Frames"
 msgstr "Okviri početka govora"
 
-#: src/speechprocessor/speechprocessor.cpp:40
+#: src/speechprocessor/speechprocessor.cpp:41
 #, kde-format
 msgid "Recognizing speech"
 msgstr "Prepoznavanje govora"
 
-#: src/speechprocessor/speechprocessor.cpp:48
+#: src/speechprocessor/speechprocessor.cpp:49
 #, kde-format
 msgid "Abort speech recognition"
 msgstr "Prekini prepoznavanje govora"
 
-#: src/speechprocessor/speechprocessor.cpp:97
+#: src/speechprocessor/speechprocessor.cpp:98
 #, kde-format
 msgid "No speech recognition plugins available"
 msgstr "Nema dostupnog priključka prepoznavanja govora"
 
-#: src/speechprocessor/speechprocessor.cpp:102
+#: src/speechprocessor/speechprocessor.cpp:103
 #, kde-format
 msgid "Initialization of speech recognition plugin failed"
 msgstr "Neuspjelo pokretanje priključka prepoznavanja govora"
 
-#: src/speechprocessor/speechprocessor.cpp:172
+#: src/speechprocessor/speechprocessor.cpp:173
 #, kde-format
 msgid ""
 "Speech Recognition failed: %2\n"
@@ -3989,42 +3989,42 @@ msgstr "Zvučni zapis #%1"
 msgid "File does not exist."
 msgstr "Datoteka ne postoji."
 
-#: src/widgets/simplerichtextedit.cpp:254
+#: src/widgets/simplerichtextedit.cpp:255
 #, kde-format
 msgid "Suggestions"
 msgstr "Prijedlozi"
 
-#: src/widgets/simplerichtextedit.cpp:255
+#: src/widgets/simplerichtextedit.cpp:256
 #, kde-format
 msgid "Ignore"
 msgstr "Zanemari"
 
-#: src/widgets/simplerichtextedit.cpp:256
+#: src/widgets/simplerichtextedit.cpp:257
 #, kde-format
 msgid "Add to Dictionary"
 msgstr "Dodaj u rječnik"
 
-#: src/widgets/simplerichtextedit.cpp:260
+#: src/widgets/simplerichtextedit.cpp:261
 #, kde-format
 msgid "No suggestions"
 msgstr "Nema prijedloga"
 
-#: src/widgets/simplerichtextedit.cpp:359
+#: src/widgets/simplerichtextedit.cpp:360
 #, kde-format
 msgid "Delete"
 msgstr "Obriši"
 
-#: src/widgets/simplerichtextedit.cpp:410
+#: src/widgets/simplerichtextedit.cpp:411
 #, kde-format
 msgid "Check Spelling..."
 msgstr "Provjeri pravopis..."
 
-#: src/widgets/simplerichtextedit.cpp:415
+#: src/widgets/simplerichtextedit.cpp:416
 #, kde-format
 msgid "Auto Spell Check"
 msgstr "Automatska provjera pravopisa"
 
-#: src/widgets/simplerichtextedit.cpp:420
+#: src/widgets/simplerichtextedit.cpp:421
 #, kde-format
 msgid "Allow Tabulations"
 msgstr "Dopusti tabele"

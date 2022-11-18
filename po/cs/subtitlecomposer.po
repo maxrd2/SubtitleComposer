@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: subtitlecomposer\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2022-11-13 00:45+0000\n"
+"POT-Creation-Date: 2022-11-18 00:44+0000\n"
 "PO-Revision-Date: 2022-04-06 11:32+0200\n"
 "Last-Translator: Vit Pelcak <vpelcak@suse.cz>\n"
 "Language-Team: Czech <kde-i18n-doc@kde.org>\n"
@@ -43,52 +43,52 @@ msgctxt "Encodings menu"
 msgid "Autodetect"
 msgstr "Automatická detekce"
 
-#: src/application.cpp:493
+#: src/application.cpp:496
 #, kde-format
 msgid "Go to Line"
 msgstr "Přejít na řádek"
 
-#: src/application.cpp:493
+#: src/application.cpp:496
 #, kde-format
 msgid "&Go to line:"
 msgstr "&Přejít na řádek:"
 
-#: src/application.cpp:666 src/core/subtitle.cpp:877
+#: src/application.cpp:669 src/core/subtitle.cpp:878
 #, kde-format
 msgid "Maximize Durations"
 msgstr "Maximalizovat doby"
 
-#: src/application.cpp:694 src/core/subtitle.cpp:1152
+#: src/application.cpp:697 src/core/subtitle.cpp:1153
 #, kde-format
 msgid "Unbreak Lines"
 msgstr "Spojit řádky"
 
-#: src/application.cpp:705 src/core/subtitle.cpp:1161
+#: src/application.cpp:708 src/core/subtitle.cpp:1162
 #, kde-format
 msgid "Simplify Spaces"
 msgstr "Zjednodušit mezery"
 
-#: src/application.cpp:760 src/dialogs/translatedialog.cpp:20
+#: src/application.cpp:763 src/dialogs/translatedialog.cpp:20
 #, kde-format
 msgid "Translate"
 msgstr "Překlad"
 
-#: src/application.cpp:760
+#: src/application.cpp:763
 #, kde-format
 msgid "Translating text (%1 to %2)..."
 msgstr "Překládám text (%1 do %2)..."
 
-#: src/application.cpp:764
+#: src/application.cpp:767
 #, kde-format
 msgid "Translating primary text (%1 to %2)..."
 msgstr "Překládám primární text (%1 do %2)..."
 
-#: src/application.cpp:765
+#: src/application.cpp:768
 #, kde-format
 msgid "Translating secondary text (%1 to %2)..."
 msgstr "Překládám sekundární text (%1 do %2)..."
 
-#: src/application.cpp:793
+#: src/application.cpp:796
 #, kde-format
 msgid ""
 "Unable to perform texts synchronization (sent and received lines count do "
@@ -97,17 +97,17 @@ msgstr ""
 "Není možné provést synchronizaci textu (neshodují se počty poslaných a "
 "přijatých řádků)."
 
-#: src/application.cpp:797
+#: src/application.cpp:800
 #, kde-format
 msgid "Translate Primary Text"
 msgstr "Přeložit primární text"
 
-#: src/application.cpp:797
+#: src/application.cpp:800
 #, kde-format
 msgid "Translate Secondary Text"
 msgstr "Přeložit druhotný text"
 
-#: src/application.cpp:812
+#: src/application.cpp:815
 #, kde-format
 msgid ""
 "There was an error performing the translation:\n"
@@ -117,33 +117,33 @@ msgstr ""
 "Vyskytla se chyba při ukládání překladu:\n"
 "%1"
 
-#: src/application.cpp:852
+#: src/application.cpp:855
 #, kde-format
 msgid "Open Video"
 msgstr "Otevřít video"
 
-#: src/application.cpp:1050 src/application.cpp:1057
-#: src/application_subtitle.cpp:655
+#: src/application.cpp:1053 src/application.cpp:1060
+#: src/application_subtitle.cpp:657
 #, kde-format
 msgid "Untitled"
 msgstr "Nepojmenovaný"
 
-#: src/application.cpp:1052 src/application_subtitle.cpp:655
+#: src/application.cpp:1055 src/application_subtitle.cpp:657
 #, kde-format
 msgid "Untitled Translation"
 msgstr "Nepojmenovaný překlad"
 
-#: src/application.cpp:1153
+#: src/application.cpp:1156
 #, kde-format
 msgid "Pause"
 msgstr "Pauza"
 
-#: src/application.cpp:1161 src/application_actions.cpp:566
+#: src/application.cpp:1164 src/application_actions.cpp:567
 #, kde-format
 msgid "Play"
 msgstr "Přehrát"
 
-#: src/application.cpp:1222
+#: src/application.cpp:1225
 #, kde-format
 msgid "Seek backwards 1 second"
 msgid_plural "Seek backwards %1 seconds"
@@ -151,7 +151,7 @@ msgstr[0] "Posun zpět o 1 vteřinu."
 msgstr[1] "Posun zpět o %1 vteřiny."
 msgstr[2] "Posun zpět o %1 vteřin."
 
-#: src/application.cpp:1223
+#: src/application.cpp:1226
 #, kde-format
 msgid "Seek forwards 1 second"
 msgid_plural "Seek forwards %1 seconds"
@@ -159,7 +159,7 @@ msgstr[0] "Posun vpřed o 1 vteřinu."
 msgstr[1] "Posun vpřed o %1 vteřiny."
 msgstr[2] "Posun vpřed o %1 vteřin."
 
-#: src/application.cpp:1226 src/application.cpp:1230
+#: src/application.cpp:1229 src/application.cpp:1233
 #, kde-format
 msgid "Shift %2%1 millisecond"
 msgid_plural "Shift %2%1 milliseconds"
@@ -168,7 +168,7 @@ msgstr[1] ""
 msgstr[2] ""
 msgstr[3] ""
 
-#: src/application.cpp:1227 src/application.cpp:1231
+#: src/application.cpp:1230 src/application.cpp:1234
 #, kde-format
 msgid "Shift selected lines %2%1 millisecond"
 msgid_plural "Shift selected lines %2%1 milliseconds"
@@ -177,909 +177,909 @@ msgstr[1] ""
 msgstr[2] ""
 msgstr[3] ""
 
-#: src/application_actions.cpp:32
+#: src/application_actions.cpp:33
 #, kde-format
 msgid "Exit the application"
 msgstr "Ukonči program"
 
-#: src/application_actions.cpp:35
+#: src/application_actions.cpp:36
 #, kde-format
 msgid "Configure Subtitle Composer"
 msgstr "Nastavení Subtitle Composeru"
 
-#: src/application_actions.cpp:39
+#: src/application_actions.cpp:40
 #, kde-format
 msgctxt "@action:inmenu Create a new subtitle"
 msgid "New"
 msgstr "Nový"
 
-#: src/application_actions.cpp:40
+#: src/application_actions.cpp:41
 #, kde-format
 msgid "Create an empty subtitle"
 msgstr "Vytvoř prázdné titulky"
 
-#: src/application_actions.cpp:48
+#: src/application_actions.cpp:49
 #, kde-format
 msgctxt "@action:inmenu Open subtitle file"
 msgid "Open Subtitle..."
 msgstr "Otevřít soubor s titulky..."
 
-#: src/application_actions.cpp:49 src/application_actions.cpp:66
+#: src/application_actions.cpp:50 src/application_actions.cpp:67
 #, kde-format
 msgid "Open subtitle file"
 msgstr "Otevři soubor s titulky"
 
-#: src/application_actions.cpp:57
+#: src/application_actions.cpp:58
 #, kde-format
 msgid "Reload As..."
 msgstr "Znovu otevři jako..."
 
-#: src/application_actions.cpp:58
+#: src/application_actions.cpp:59
 #, kde-format
 msgid "Reload opened file with a different encoding"
 msgstr "Znovu otevři s jiným kódováním"
 
-#: src/application_actions.cpp:65
+#: src/application_actions.cpp:66
 #, kde-format
 msgctxt "@action:inmenu Open rencently used subtitle file"
 msgid "Open &Recent Subtitle"
 msgstr ""
 
-#: src/application_actions.cpp:72
+#: src/application_actions.cpp:73
 #, kde-format
 msgid "Save"
 msgstr "Uložit"
 
-#: src/application_actions.cpp:73
+#: src/application_actions.cpp:74
 #, kde-format
 msgid "Save opened subtitle"
 msgstr "Uložit otevřené titulky"
 
-#: src/application_actions.cpp:81
+#: src/application_actions.cpp:82
 #, kde-format
 msgid "Save As..."
 msgstr "Uložit jako..."
 
-#: src/application_actions.cpp:82
+#: src/application_actions.cpp:83
 #, kde-format
 msgid "Save opened subtitle with different settings"
 msgstr "Uložit otevřené titulky s jiným nastavením"
 
-#: src/application_actions.cpp:90
+#: src/application_actions.cpp:91
 #, kde-format
 msgid "Close"
 msgstr "Zavřít"
 
-#: src/application_actions.cpp:91
+#: src/application_actions.cpp:92
 #, kde-format
 msgid "Close opened subtitle"
 msgstr "Zavřít otevřené titulky"
 
-#: src/application_actions.cpp:99
+#: src/application_actions.cpp:100
 #, kde-format
 msgid "New Translation"
 msgstr "Nový překlad"
 
-#: src/application_actions.cpp:100
+#: src/application_actions.cpp:101
 #, kde-format
 msgid "Create an empty translation subtitle"
 msgstr "Vytvořit prázdný překlad"
 
-#: src/application_actions.cpp:108
+#: src/application_actions.cpp:109
 #, kde-format
 msgid "Open Translation..."
 msgstr "Otevřít překlad..."
 
-#: src/application_actions.cpp:109 src/application_actions.cpp:126
+#: src/application_actions.cpp:110 src/application_actions.cpp:127
 #, kde-format
 msgid "Open translation subtitle file"
 msgstr "Otevřít soubor s překladem"
 
-#: src/application_actions.cpp:117
+#: src/application_actions.cpp:118
 #, kde-format
 msgid "Reload Translation As..."
 msgstr "Znovu načíst překlad jako..."
 
-#: src/application_actions.cpp:118
+#: src/application_actions.cpp:119
 #, kde-format
 msgid "Reload opened translation file with a different encoding"
 msgstr "Znovu otevřít překlad s jiným kódováním"
 
-#: src/application_actions.cpp:125
+#: src/application_actions.cpp:126
 #, kde-format
 msgid "Open &Recent Translation"
 msgstr "Otevřít &nedávný překlad"
 
-#: src/application_actions.cpp:133
+#: src/application_actions.cpp:134
 #, kde-format
 msgid "Save Translation"
 msgstr "Uložit překlad"
 
-#: src/application_actions.cpp:134
+#: src/application_actions.cpp:135
 #, kde-format
 msgid "Save opened translation subtitle"
 msgstr "Uložit otevřený překlad"
 
-#: src/application_actions.cpp:144
+#: src/application_actions.cpp:145
 #, kde-format
 msgid "Save Translation As..."
 msgstr "Uložit překlad jako..."
 
-#: src/application_actions.cpp:145
+#: src/application_actions.cpp:146
 #, kde-format
 msgid "Save opened translation subtitle with different settings"
 msgstr "Uložit otevřený překlad s jiným nastavením"
 
-#: src/application_actions.cpp:153
+#: src/application_actions.cpp:154
 #, kde-format
 msgid "Close Translation"
 msgstr "Zavřít překlad"
 
-#: src/application_actions.cpp:154
+#: src/application_actions.cpp:155
 #, kde-format
 msgid "Close opened translation subtitle"
 msgstr "Zavřít otevřený překlad"
 
-#: src/application_actions.cpp:171
+#: src/application_actions.cpp:172
 #, kde-format
 msgid "Split Subtitle..."
 msgstr "Rozdělit titulky..."
 
-#: src/application_actions.cpp:172
+#: src/application_actions.cpp:173
 #, kde-format
 msgid "Split the opened subtitle in two parts"
 msgstr "Rozdělit otevřené titulky na dvě části"
 
-#: src/application_actions.cpp:178
+#: src/application_actions.cpp:179
 #, kde-format
 msgid "Join Subtitles..."
 msgstr "Spojit titulky..."
 
-#: src/application_actions.cpp:179
+#: src/application_actions.cpp:180
 #, kde-format
 msgid "Append to the opened subtitle another one"
 msgstr "Připojit k otevřeným další"
 
-#: src/application_actions.cpp:186
+#: src/application_actions.cpp:187
 #, kde-format
 msgid "Insert Before"
 msgstr "Vložit před"
 
-#: src/application_actions.cpp:187
+#: src/application_actions.cpp:188
 #, kde-format
 msgid "Insert empty line before current one"
 msgstr "Vložit prázdný řádek před současný"
 
-#: src/application_actions.cpp:195
+#: src/application_actions.cpp:196
 #, kde-format
 msgid "Insert After"
 msgstr "Vložit za"
 
-#: src/application_actions.cpp:196
+#: src/application_actions.cpp:197
 #, kde-format
 msgid "Insert empty line after current one"
 msgstr "Vložit prázdný řádek za současný"
 
 #. i18n: ectx: property (text), widget (QPushButton, btnRemove)
-#: src/application_actions.cpp:204 src/scripting/scriptsmanager.ui:60
+#: src/application_actions.cpp:205 src/scripting/scriptsmanager.ui:60
 #, kde-format
 msgid "Remove"
 msgstr "Odstranit"
 
-#: src/application_actions.cpp:205
+#: src/application_actions.cpp:206
 #, kde-format
 msgid "Remove selected lines"
 msgstr "Odstranit označené řádky"
 
-#: src/application_actions.cpp:212 src/core/subtitle.cpp:559
+#: src/application_actions.cpp:213 src/core/subtitle.cpp:560
 #, kde-format
 msgid "Split Lines"
 msgstr "Rozdělit řádky"
 
-#: src/application_actions.cpp:213
+#: src/application_actions.cpp:214
 #, kde-format
 msgid "Split selected lines"
 msgstr "Rozdělit označené řádky"
 
-#: src/application_actions.cpp:219 src/core/subtitle.cpp:641
-#: src/gui/waveform/waveformwidget.cpp:711
+#: src/application_actions.cpp:220 src/core/subtitle.cpp:642
+#: src/gui/waveform/waveformwidget.cpp:712
 #, kde-format
 msgid "Join Lines"
 msgstr "Spojit řádky"
 
-#: src/application_actions.cpp:220
+#: src/application_actions.cpp:221
 #, kde-format
 msgid "Join selected lines"
 msgstr "Spojit označené řádky"
 
-#: src/application_actions.cpp:227 src/errors/finderrorsdialog.cpp:114
-#: src/gui/treeview/richlineedit.cpp:111 src/widgets/simplerichtextedit.cpp:370
+#: src/application_actions.cpp:228 src/errors/finderrorsdialog.cpp:114
+#: src/gui/treeview/richlineedit.cpp:112 src/widgets/simplerichtextedit.cpp:371
 #, kde-format
 msgid "Select All"
 msgstr "Označit všechno"
 
-#: src/application_actions.cpp:228
+#: src/application_actions.cpp:229
 #, kde-format
 msgid "Select all lines"
 msgstr "Označit všechny řádky"
 
-#: src/application_actions.cpp:235
+#: src/application_actions.cpp:236
 #, kde-format
 msgid "Go to Line..."
 msgstr "Jít na řádek..."
 
-#: src/application_actions.cpp:236
+#: src/application_actions.cpp:237
 #, kde-format
 msgid "Go to specified line"
 msgstr "Jít na vybraný řádek"
 
-#: src/application_actions.cpp:244
+#: src/application_actions.cpp:245
 #, kde-format
 msgid "Find..."
 msgstr "Najít..."
 
-#: src/application_actions.cpp:245
+#: src/application_actions.cpp:246
 #, kde-format
 msgid "Find occurrences of strings or regular expressions"
 msgstr "Najít výskyt řetězce nebo regulárního výrazu"
 
-#: src/application_actions.cpp:253
+#: src/application_actions.cpp:254
 #, kde-format
 msgid "Find Next"
 msgstr "Najít další"
 
-#: src/application_actions.cpp:254
+#: src/application_actions.cpp:255
 #, kde-format
 msgid "Find next occurrence of string or regular expression"
 msgstr "Najít další výskyt řetězce nebo reg. výrazu"
 
-#: src/application_actions.cpp:262
+#: src/application_actions.cpp:263
 #, kde-format
 msgid "Find Previous"
 msgstr "Najít předchozí"
 
-#: src/application_actions.cpp:263
+#: src/application_actions.cpp:264
 #, kde-format
 msgid "Find previous occurrence of string or regular expression"
 msgstr "Najít předchozí výskyt řetězce nebo reg. výrazu"
 
-#: src/application_actions.cpp:270
+#: src/application_actions.cpp:271
 #, kde-format
 msgid "Replace..."
 msgstr "Nahradit..."
 
-#: src/application_actions.cpp:271
+#: src/application_actions.cpp:272
 #, kde-format
 msgid "Replace occurrences of strings or regular expressions"
 msgstr "Nahradit výskyty řetězců nebo reg. výrazů"
 
-#: src/application_actions.cpp:279
+#: src/application_actions.cpp:280
 #, kde-format
 msgid "Retrocede current line"
 msgstr "Posunout zpět současný řádek"
 
-#: src/application_actions.cpp:280
+#: src/application_actions.cpp:281
 #, kde-format
 msgid "Makes the line before the current one active"
 msgstr "Označit předchozí řádek jako aktivní"
 
-#: src/application_actions.cpp:288
+#: src/application_actions.cpp:289
 #, kde-format
 msgid "Advance current line"
 msgstr "Posunout vpřed současný řádek"
 
-#: src/application_actions.cpp:289
+#: src/application_actions.cpp:290
 #, kde-format
 msgid "Makes the line after the current one active"
 msgstr "Označit následující řádek jako aktivní"
 
-#: src/application_actions.cpp:297
+#: src/application_actions.cpp:298
 #, kde-format
 msgid "Detect Errors..."
 msgstr "Zjisti chyby..."
 
-#: src/application_actions.cpp:298
+#: src/application_actions.cpp:299
 #, kde-format
 msgid "Detect errors in the current subtitle"
 msgstr "Najít chyby v současných titulcích"
 
-#: src/application_actions.cpp:305
+#: src/application_actions.cpp:306
 #, kde-format
 msgid "Clear Errors/Marks"
 msgstr "Vymazat chyby/značky"
 
-#: src/application_actions.cpp:306
+#: src/application_actions.cpp:307
 #, kde-format
 msgid "Clear detected errors and marks in the current subtitle"
 msgstr ""
 
-#: src/application_actions.cpp:314
+#: src/application_actions.cpp:315
 #, kde-format
 msgid "Select Next Error/Mark"
 msgstr ""
 
-#: src/application_actions.cpp:315
+#: src/application_actions.cpp:316
 #, kde-format
 msgid "Select next line with error or mark"
 msgstr ""
 
-#: src/application_actions.cpp:323
+#: src/application_actions.cpp:324
 #, kde-format
 msgid "Select Previous Error/Mark"
 msgstr ""
 
-#: src/application_actions.cpp:324
+#: src/application_actions.cpp:325
 #, kde-format
 msgid "Select previous line with error or mark"
 msgstr ""
 
-#: src/application_actions.cpp:332
+#: src/application_actions.cpp:333
 #, kde-format
 msgid "Spelling..."
 msgstr "Pravopis..."
 
-#: src/application_actions.cpp:333
+#: src/application_actions.cpp:334
 #, kde-format
 msgid "Check lines spelling"
 msgstr "Zkontrolovat pravopis"
 
-#: src/application_actions.cpp:339
+#: src/application_actions.cpp:340
 #, kde-format
 msgid "Toggle Mark"
 msgstr "Přepnout značku"
 
-#: src/application_actions.cpp:340
+#: src/application_actions.cpp:341
 #, kde-format
 msgid "Toggle mark on selected lines"
 msgstr ""
 
-#: src/application_actions.cpp:348 src/gui/currentlinewidget.cpp:141
+#: src/application_actions.cpp:349 src/gui/currentlinewidget.cpp:141
 #, kde-format
 msgid "Toggle Bold"
 msgstr "Přepnout tučné"
 
-#: src/application_actions.cpp:349
+#: src/application_actions.cpp:350
 #, kde-format
 msgid "Toggle selected lines bold attribute"
 msgstr "Přepnout tučný atribut na označených"
 
-#: src/application_actions.cpp:357 src/gui/currentlinewidget.cpp:145
+#: src/application_actions.cpp:358 src/gui/currentlinewidget.cpp:145
 #, kde-format
 msgid "Toggle Italic"
 msgstr "Přepnout kurzívu"
 
-#: src/application_actions.cpp:358
+#: src/application_actions.cpp:359
 #, kde-format
 msgid "Toggle selected lines italic attribute"
 msgstr "Přepnout kurzívu na označených"
 
-#: src/application_actions.cpp:366 src/gui/currentlinewidget.cpp:149
+#: src/application_actions.cpp:367 src/gui/currentlinewidget.cpp:149
 #, kde-format
 msgid "Toggle Underline"
 msgstr "Přepnout podtržení"
 
-#: src/application_actions.cpp:367
+#: src/application_actions.cpp:368
 #, kde-format
 msgid "Toggle selected lines underline attribute"
 msgstr "Přepnout podtržení na označených"
 
-#: src/application_actions.cpp:375 src/gui/currentlinewidget.cpp:153
+#: src/application_actions.cpp:376 src/gui/currentlinewidget.cpp:153
 #, kde-format
 msgid "Toggle Strike Through"
 msgstr "Přepnout přeškrtnuté"
 
-#: src/application_actions.cpp:376
+#: src/application_actions.cpp:377
 #, kde-format
 msgid "Toggle selected lines strike through attribute"
 msgstr "Přepnout přeškrtnuté na označených"
 
-#: src/application_actions.cpp:384 src/gui/currentlinewidget.cpp:157
+#: src/application_actions.cpp:385 src/gui/currentlinewidget.cpp:157
 #, kde-format
 msgid "Change Text Color"
 msgstr "Změnit barvu textu"
 
-#: src/application_actions.cpp:385
+#: src/application_actions.cpp:386
 #, kde-format
 msgid "Change text color of selected lines"
 msgstr "Změnit barvu textu na označených řádcích"
 
-#: src/application_actions.cpp:392
+#: src/application_actions.cpp:393
 #, kde-format
 msgid "Shift..."
 msgstr "Posunout..."
 
-#: src/application_actions.cpp:393
+#: src/application_actions.cpp:394
 #, kde-format
 msgid "Shift lines an specified amount of time"
 msgstr "Posunout řádky o určitý čas"
 
-#: src/application_actions.cpp:412
+#: src/application_actions.cpp:413
 #, kde-format
 msgid "Adjust..."
 msgstr "Přizpůsobit..."
 
-#: src/application_actions.cpp:413
+#: src/application_actions.cpp:414
 #, kde-format
 msgid "Linearly adjust all lines to a specified interval"
 msgstr "Přizpůsobit všechny řádky lineárně podle zadaného intervalu"
 
-#: src/application_actions.cpp:420
+#: src/application_actions.cpp:421
 #, kde-format
 msgid "Change Frame Rate..."
 msgstr "Změnit počet snímku za sekundu"
 
-#: src/application_actions.cpp:421
+#: src/application_actions.cpp:422
 #, kde-format
 msgid "Retime subtitle lines by reinterpreting its frame rate"
 msgstr "Přečasovat titulky změnou FPS"
 
-#: src/application_actions.cpp:427
+#: src/application_actions.cpp:428
 #, kde-format
 msgid "Enforce Duration Limits..."
 msgstr "Vnutit limity dob..."
 
-#: src/application_actions.cpp:428
+#: src/application_actions.cpp:429
 #, kde-format
 msgid "Enforce lines minimum and/or maximum duration limits"
 msgstr "Vnutit maximální/minimální dob řádků"
 
-#: src/application_actions.cpp:435
+#: src/application_actions.cpp:436
 #, kde-format
 msgid "Set Automatic Durations..."
 msgstr "Nastavit automatické doby..."
 
-#: src/application_actions.cpp:436
+#: src/application_actions.cpp:437
 #, kde-format
 msgid "Set lines durations based on amount of letters, words and line breaks"
 msgstr "Nastavit dobu podle počtu písmen, slov a zalomení řádků"
 
-#: src/application_actions.cpp:442
+#: src/application_actions.cpp:443
 #, kde-format
 msgid "Maximize Durations..."
 msgstr "Maximalizovat dobu..."
 
-#: src/application_actions.cpp:443
+#: src/application_actions.cpp:444
 #, kde-format
 msgid "Extend lines durations up to their next lines show time"
 msgstr "Rozšířit dobu až k zobrazení dalšího"
 
-#: src/application_actions.cpp:449
+#: src/application_actions.cpp:450
 #, kde-format
 msgid "Fix Overlapping Times..."
 msgstr "Opravit překrývající se časy"
 
-#: src/application_actions.cpp:450
+#: src/application_actions.cpp:451
 #, kde-format
 msgid "Fix lines overlapping times"
 msgstr "Opravit překrývající se časování"
 
-#: src/application_actions.cpp:456
+#: src/application_actions.cpp:457
 #, kde-format
 msgid "Synchronize with Subtitle..."
 msgstr "Synchronizovat s titulky..."
 
-#: src/application_actions.cpp:457
+#: src/application_actions.cpp:458
 #, kde-format
 msgid "Copy timing information from another subtitle"
 msgstr "Zkopírovat informaci o časování z jiných titulků"
 
-#: src/application_actions.cpp:463
+#: src/application_actions.cpp:464
 #, kde-format
 msgid "Break Lines..."
 msgstr "Zalomit řádky..."
 
-#: src/application_actions.cpp:464
+#: src/application_actions.cpp:465
 #, kde-format
 msgid "Automatically set line breaks"
 msgstr "Automaticky nastavit zalomení"
 
-#: src/application_actions.cpp:470
+#: src/application_actions.cpp:471
 #, kde-format
 msgid "Unbreak Lines..."
 msgstr "Spojit řádky..."
 
-#: src/application_actions.cpp:471
+#: src/application_actions.cpp:472
 #, kde-format
 msgid "Remove line breaks from lines"
 msgstr "Odstranit zalomení z řádků"
 
-#: src/application_actions.cpp:477
+#: src/application_actions.cpp:478
 #, kde-format
 msgid "Simplify Spaces..."
 msgstr "Zjednodušit mezery..."
 
-#: src/application_actions.cpp:478
+#: src/application_actions.cpp:479
 #, kde-format
 msgid "Remove unneeded spaces from lines"
 msgstr "Odstranit nepotřebné mezery"
 
-#: src/application_actions.cpp:484
+#: src/application_actions.cpp:485
 #, kde-format
 msgid "Change Case..."
 msgstr "Změnit velikost..."
 
-#: src/application_actions.cpp:485
+#: src/application_actions.cpp:486
 #, kde-format
 msgid "Change lines text to upper, lower, title or sentence case"
 msgstr "Změnit znaky na velká, malá, nadpis nebo věty"
 
-#: src/application_actions.cpp:491
+#: src/application_actions.cpp:492
 #, kde-format
 msgid "Fix Punctuation..."
 msgstr "Opravit interpunkci..."
 
-#: src/application_actions.cpp:492
+#: src/application_actions.cpp:493
 #, kde-format
 msgid "Fix punctuation errors in lines"
 msgstr "Opravit interpunkční chyby v řádcích"
 
-#: src/application_actions.cpp:498
+#: src/application_actions.cpp:499
 #, kde-format
 msgid "Translate..."
 msgstr "Otevřít překlad..."
 
-#: src/application_actions.cpp:499
+#: src/application_actions.cpp:500
 #, kde-format
 msgid "Translate lines texts using Google services"
 msgstr "Přeložit řádky textu použitím Google služeb"
 
-#: src/application_actions.cpp:505
+#: src/application_actions.cpp:506
 #, kde-format
 msgid "Edit Line in Place"
 msgstr "Upravit řádek"
 
-#: src/application_actions.cpp:506
+#: src/application_actions.cpp:507
 #, kde-format
 msgid "Edit current line text in place"
 msgstr "Upravit současný řádek"
 
-#: src/application_actions.cpp:514
+#: src/application_actions.cpp:515
 #, kde-format
 msgid "Open Video..."
 msgstr "Otevřít video..."
 
-#: src/application_actions.cpp:515 src/application_actions.cpp:522
+#: src/application_actions.cpp:516 src/application_actions.cpp:523
 #, kde-format
 msgid "Open video file"
 msgstr "Otevřít video soubor"
 
-#: src/application_actions.cpp:521
+#: src/application_actions.cpp:522
 #, kde-format
 msgid "Open &Recent Video"
 msgstr "Otevřít nedávné video"
 
-#: src/application_actions.cpp:528
+#: src/application_actions.cpp:529
 #, kde-format
 msgid "Import Subtitle Stream"
 msgstr "Importovat titulkové stopy"
 
-#: src/application_actions.cpp:529
+#: src/application_actions.cpp:530
 #, kde-format
 msgid "Import subtitle stream into subtitle editor"
 msgstr "Importovat titulkové stopy do titulkového editoru"
 
-#: src/application_actions.cpp:535
+#: src/application_actions.cpp:536
 #, kde-format
 msgid "Recognize Speech"
 msgstr "Rozpoznat řeč"
 
-#: src/application_actions.cpp:536
+#: src/application_actions.cpp:537
 #, kde-format
 msgid "Recognize speech in audio stream"
 msgstr "Rozpoznat řeč v audio stopě"
 
-#: src/application_actions.cpp:542
+#: src/application_actions.cpp:543
 #, kde-format
 msgid "Close Video"
 msgstr "Zavřít video"
 
-#: src/application_actions.cpp:543
+#: src/application_actions.cpp:544
 #, kde-format
 msgid "Close video file"
 msgstr "Zavřít video soubor"
 
-#: src/application_actions.cpp:550
+#: src/application_actions.cpp:551
 #, kde-format
 msgid "Full Screen Mode"
 msgstr "Celá obrazovka"
 
-#: src/application_actions.cpp:551
+#: src/application_actions.cpp:552
 #, kde-format
 msgid "Toggle full screen mode"
 msgstr "Přepnout na celou obrazovku"
 
-#: src/application_actions.cpp:558
+#: src/application_actions.cpp:559
 #, kde-format
 msgid "Stop"
 msgstr "Zastavit"
 
-#: src/application_actions.cpp:559
+#: src/application_actions.cpp:560
 #, kde-format
 msgid "Stop video playback"
 msgstr "Zastavit přehrávání videa"
 
-#: src/application_actions.cpp:567
+#: src/application_actions.cpp:568
 #, kde-format
 msgid "Toggle video playing/paused"
 msgstr "Přehrávání/pauza videa"
 
-#: src/application_actions.cpp:575
+#: src/application_actions.cpp:576
 #, kde-format
 msgid "Seek Backward"
 msgstr "Rychle vzad"
 
-#: src/application_actions.cpp:583
+#: src/application_actions.cpp:584
 #, kde-format
 msgid "Seek Forward"
 msgstr "Rychle vpřed"
 
-#: src/application_actions.cpp:590
+#: src/application_actions.cpp:591
 #, kde-format
 msgid "Frame Step Backward"
 msgstr ""
 
-#: src/application_actions.cpp:597
+#: src/application_actions.cpp:598
 #, kde-format
 msgid "Frame Step Forward"
 msgstr ""
 
-#: src/application_actions.cpp:605
+#: src/application_actions.cpp:606
 #, kde-format
 msgid "Seek to Previous Line"
 msgstr ""
 
-#: src/application_actions.cpp:606
+#: src/application_actions.cpp:607
 #, kde-format
 msgid "Seek to previous subtitle line show time"
 msgstr "Hledat do zobrazení předchozícho titulku"
 
-#: src/application_actions.cpp:614
+#: src/application_actions.cpp:615
 #, kde-format
 msgid "Increase media play rate"
 msgstr ""
 
-#: src/application_actions.cpp:615
+#: src/application_actions.cpp:616
 #, kde-format
 msgid "Increase media playback rate"
 msgstr "Zvýšit rychlost přehrávání média"
 
-#: src/application_actions.cpp:622
+#: src/application_actions.cpp:623
 #, kde-format
 msgid "Decrease media play rate"
 msgstr ""
 
-#: src/application_actions.cpp:623
+#: src/application_actions.cpp:624
 #, kde-format
 msgid "Decrease media playback rate"
 msgstr "Snížit rychlost přehrávání média"
 
-#: src/application_actions.cpp:629
+#: src/application_actions.cpp:630
 #, kde-format
 msgid "Play Current Line and Pause"
 msgstr ""
 
-#: src/application_actions.cpp:630
+#: src/application_actions.cpp:631
 #, kde-format
 msgid "Seek to selected subtitle line show time, play it and then pause"
 msgstr ""
 
-#: src/application_actions.cpp:637
+#: src/application_actions.cpp:638
 #, kde-format
 msgid "Seek to Current Line"
 msgstr ""
 
-#: src/application_actions.cpp:638
+#: src/application_actions.cpp:639
 #, kde-format
 msgid "Seek to selected subtitle line show time"
 msgstr ""
 
-#: src/application_actions.cpp:645
+#: src/application_actions.cpp:646
 #, kde-format
 msgid "Seek to Next Line"
 msgstr ""
 
-#: src/application_actions.cpp:646
+#: src/application_actions.cpp:647
 #, kde-format
 msgid "Seek to next subtitle line show time"
 msgstr "Hledat do zobrazení následujícího titulku"
 
-#: src/application_actions.cpp:654
+#: src/application_actions.cpp:655
 #, kde-format
 msgid "Set Line Show Time to Video Position"
 msgstr ""
 
-#: src/application_actions.cpp:655
+#: src/application_actions.cpp:656
 #, kde-format
 msgid "Set current line show time to video position"
 msgstr "Nastavit na řádek současný čas zobrazení z videa"
 
-#: src/application_actions.cpp:663
+#: src/application_actions.cpp:664
 #, kde-format
 msgid "Set Line Hide Time to Video Position"
 msgstr ""
 
-#: src/application_actions.cpp:664
+#: src/application_actions.cpp:665
 #, kde-format
 msgid "Set current line hide time to video position"
 msgstr "Nastavit na řádek současný čas skrytí z videa"
 
-#: src/application_actions.cpp:671
+#: src/application_actions.cpp:672
 #, kde-format
 msgid "Shift Current Line to Video Position"
 msgstr ""
 
-#: src/application_actions.cpp:672
+#: src/application_actions.cpp:673
 #, kde-format
 msgid ""
 "Set current line show time to video position by equally shifting all lines"
 msgstr ""
 "Nastavit zobrazení řádku na současnou video pozici posunutím všech řádků"
 
-#: src/application_actions.cpp:680
+#: src/application_actions.cpp:681
 #, kde-format
 msgid "Current Line Follows Video"
 msgstr "Současný řádek následuje video"
 
-#: src/application_actions.cpp:681
+#: src/application_actions.cpp:682
 #, kde-format
 msgid "Make current line follow the playing video position"
 msgstr "Současný řádek bude následovat pozici přehrávaného videa"
 
-#: src/application_actions.cpp:687
+#: src/application_actions.cpp:688
 #, kde-format
 msgctxt "@action:inmenu Toggle audio muted"
 msgid "Mute"
 msgstr "Umlčet"
 
-#: src/application_actions.cpp:688
+#: src/application_actions.cpp:689
 #, kde-format
 msgid "Enable/disable playback sound"
 msgstr "Zapnout/vypnout zvuk"
 
-#: src/application_actions.cpp:695
+#: src/application_actions.cpp:696
 #, kde-format
 msgid "Increase Volume"
 msgstr "Zvýšit hlasitost"
 
-#: src/application_actions.cpp:696
+#: src/application_actions.cpp:697
 #, kde-format
 msgid "Increase volume by 5%"
 msgstr "Snížit hlasitost o 5%"
 
-#: src/application_actions.cpp:703
+#: src/application_actions.cpp:704
 #, kde-format
 msgid "Decrease Volume"
 msgstr "Snížit hlasitost"
 
-#: src/application_actions.cpp:704
+#: src/application_actions.cpp:705
 #, kde-format
 msgid "Decrease volume by 5%"
 msgstr "Snížit hlasitost o 5%"
 
-#: src/application_actions.cpp:711
+#: src/application_actions.cpp:712
 #, kde-format
 msgid "Audio Streams"
 msgstr "Zvukové stopy"
 
-#: src/application_actions.cpp:712
+#: src/application_actions.cpp:713
 #, kde-format
 msgid "Select active audio stream"
 msgstr "Vybrat aktivní zvukovou stopu"
 
-#: src/application_actions.cpp:723
+#: src/application_actions.cpp:724
 #, kde-format
 msgid "Increase Font Size"
 msgstr "Zvětšit velikost písma"
 
-#: src/application_actions.cpp:724
+#: src/application_actions.cpp:725
 #, kde-format
 msgid "Increase subtitles font size by 1 point"
 msgstr "Zvětšit velikost písma o 1 bod"
 
-#: src/application_actions.cpp:731
+#: src/application_actions.cpp:732
 #, kde-format
 msgid "Decrease Font Size"
 msgstr "Snížit velikost písma"
 
-#: src/application_actions.cpp:732
+#: src/application_actions.cpp:733
 #, kde-format
 msgid "Decrease subtitles font size by 1 point"
 msgstr "Snížit velikost písma o 1 bod"
 
-#: src/application_actions.cpp:739
+#: src/application_actions.cpp:740
 #, kde-format
 msgid "Displayed Subtitle Text"
 msgstr ""
 
-#: src/application_actions.cpp:740
+#: src/application_actions.cpp:741
 #, kde-format
 msgid "Select visible subtitle text"
 msgstr ""
 
-#: src/application_actions.cpp:751 src/gui/waveform/waveformwidget.cpp:735
+#: src/application_actions.cpp:752 src/gui/waveform/waveformwidget.cpp:736
 #, kde-format
 msgid "Toggle Anchor"
 msgstr "Přepnout značku"
 
-#: src/application_actions.cpp:752
+#: src/application_actions.cpp:753
 #, kde-format
 msgid ""
 "(Un)Anchor current line's show time to timeline (Editing anchored line's "
 "show time will stretch/compact the timeline between adjacent anchors)"
 msgstr ""
 
-#: src/application_actions.cpp:759
+#: src/application_actions.cpp:760
 #, kde-format
 msgid "Remove All Anchors"
 msgstr "Odstranit všechny značky"
 
-#: src/application_actions.cpp:760
+#: src/application_actions.cpp:761
 #, kde-format
 msgid "Unanchor show time from the timeline on all anchored lines"
 msgstr ""
 
-#: src/application_actions.cpp:768
+#: src/application_actions.cpp:769
 #, kde-format
 msgctxt "@action:inmenu Manage user scripts"
 msgid "Scripts Manager..."
 msgstr "Správce skriptů..."
 
-#: src/application_actions.cpp:769
+#: src/application_actions.cpp:770
 #, kde-format
 msgid "Manage user scripts"
 msgstr "Spravuj uživatelské skripty"
 
-#: src/application_actions.cpp:776 src/application_actions.cpp:777
+#: src/application_actions.cpp:777 src/application_actions.cpp:778
 #, kde-format
 msgid "Waveform Zoom In"
 msgstr "Přiblížení křivky"
 
-#: src/application_actions.cpp:783 src/application_actions.cpp:784
+#: src/application_actions.cpp:784 src/application_actions.cpp:785
 #, kde-format
 msgid "Waveform Zoom Out"
 msgstr "Oddálení křivky"
 
-#: src/application_actions.cpp:791
+#: src/application_actions.cpp:792
 #, kde-format
 msgid "Waveform Auto Scroll"
 msgstr "Automatické posouvání křivky"
 
-#: src/application_actions.cpp:792
+#: src/application_actions.cpp:793
 #, kde-format
 msgid "Waveform display will automatically scroll to video position"
 msgstr "Křivka se automaticky posune na pozici videa"
 
-#: src/application_subtitle.cpp:75
+#: src/application_subtitle.cpp:77
 #, kde-format
 msgid "All Text Subtitles"
 msgstr ""
 
-#: src/application_subtitle.cpp:76
+#: src/application_subtitle.cpp:78
 #, kde-format
 msgid "All Image Subtitles"
 msgstr ""
 
-#: src/application_subtitle.cpp:78 src/application_subtitle.cpp:102
+#: src/application_subtitle.cpp:80 src/application_subtitle.cpp:104
 #, kde-format
 msgid "All Files"
 msgstr "Všechny soubory"
 
-#: src/application_subtitle.cpp:99
+#: src/application_subtitle.cpp:101
 #, kde-format
 msgid "Media Files"
 msgstr "Mediální soubory"
 
-#: src/application_subtitle.cpp:100
+#: src/application_subtitle.cpp:102
 #, kde-format
 msgid "Video Files"
 msgstr "Video soubory"
 
-#: src/application_subtitle.cpp:101
+#: src/application_subtitle.cpp:103
 #, kde-format
 msgid "Audio Files"
 msgstr "Zvukové soubory"
 
-#: src/application_subtitle.cpp:130
+#: src/application_subtitle.cpp:132
 #, kde-format
 msgid ""
 "The requested action would make the subtitle and its translation share the "
@@ -1090,18 +1090,18 @@ msgstr ""
 "používaly ten samý soubor. Je možné, že by se ztratila data, pokud budete "
 "trvat na uložení. Opravdu chcete pokračovat?"
 
-#: src/application_subtitle.cpp:133
+#: src/application_subtitle.cpp:135
 #, kde-format
 msgid "Conflicting Subtitle Files"
 msgstr "Konflikt v titulkových souborech"
 
-#: src/application_subtitle.cpp:151 src/dialogs/selectablesubtitledialog.cpp:65
+#: src/application_subtitle.cpp:153 src/dialogs/selectablesubtitledialog.cpp:67
 #, kde-format
 msgid "Open Subtitle"
 msgstr "Otevřít titulky"
 
-#: src/application_subtitle.cpp:207 src/application_subtitle.cpp:227
-#: src/application_subtitle.cpp:473 src/application_subtitle.cpp:498
+#: src/application_subtitle.cpp:209 src/application_subtitle.cpp:229
+#: src/application_subtitle.cpp:475 src/application_subtitle.cpp:500
 #, kde-format
 msgid ""
 "<qt>Could not parse the subtitle file.<br/>This may have been caused by "
@@ -1110,27 +1110,27 @@ msgstr ""
 "<qt>Nebylo možné přečíst titulkový soubor.<br/>Mohlo to být způsobeno "
 "použitím špatného kódování.</qt>"
 
-#: src/application_subtitle.cpp:273 src/application_subtitle.cpp:321
+#: src/application_subtitle.cpp:275 src/application_subtitle.cpp:323
 #, kde-format
 msgid "Format: %1"
 msgstr "Formát: %1"
 
-#: src/application_subtitle.cpp:274 src/application_subtitle.cpp:322
+#: src/application_subtitle.cpp:276 src/application_subtitle.cpp:324
 #, kde-format
 msgid "Encoding: %1"
 msgstr "Kódování: %1"
 
-#: src/application_subtitle.cpp:328
+#: src/application_subtitle.cpp:330
 #, kde-format
 msgid "There was an error saving the subtitle."
 msgstr "Vyskytla se chyba při ukládání titulků."
 
-#: src/application_subtitle.cpp:336
+#: src/application_subtitle.cpp:338
 #, kde-format
 msgid "Save Subtitle"
 msgstr "Uložit titulky"
 
-#: src/application_subtitle.cpp:371 src/application_subtitle.cpp:612
+#: src/application_subtitle.cpp:373 src/application_subtitle.cpp:614
 #, kde-format
 msgid ""
 "Currently opened translation subtitle has unsaved changes.\n"
@@ -1139,12 +1139,12 @@ msgstr ""
 "Současně otevřený překlad má neuložené změny.\n"
 "Chcete jej uložit?"
 
-#: src/application_subtitle.cpp:372 src/application_subtitle.cpp:613
+#: src/application_subtitle.cpp:374 src/application_subtitle.cpp:615
 #, kde-format
 msgid "Close Translation Subtitle"
 msgstr "Zavřít překlad"
 
-#: src/application_subtitle.cpp:382
+#: src/application_subtitle.cpp:384
 #, kde-format
 msgid ""
 "Currently opened subtitle has unsaved changes.\n"
@@ -1153,65 +1153,65 @@ msgstr ""
 "Současně otevřené titulky mají neuložené změny.\n"
 "Chcete je uložit?"
 
-#: src/application_subtitle.cpp:383
+#: src/application_subtitle.cpp:385
 #, kde-format
 msgid "Close Subtitle"
 msgstr "Zavřít titulky"
 
-#: src/application_subtitle.cpp:442
+#: src/application_subtitle.cpp:444
 #, kde-format
 msgid "Open Translation Subtitle"
 msgstr "Otevřít překlad"
 
-#: src/application_subtitle.cpp:527
+#: src/application_subtitle.cpp:529
 #, kde-format
 msgctxt "@item:inmenu Display primary text in video player"
 msgid "Primary"
 msgstr "Primární"
 
-#: src/application_subtitle.cpp:528
+#: src/application_subtitle.cpp:530
 #, kde-format
 msgctxt "@item:inmenu Display translation text in video player"
 msgid "Translation"
 msgstr "Překlad"
 
-#: src/application_subtitle.cpp:568
+#: src/application_subtitle.cpp:570
 #, kde-format
 msgid "There was an error saving the translation subtitle."
 msgstr "Vyskytla se chyba při ukládání překladu."
 
-#: src/application_subtitle.cpp:576
+#: src/application_subtitle.cpp:578
 #, kde-format
 msgid "Save Translation Subtitle"
 msgstr "Ulož překlad"
 
-#: src/application_subtitle.cpp:662
+#: src/application_subtitle.cpp:664
 #, kde-format
 msgctxt "Suffix added to split subtitles"
 msgid "split"
 msgstr "rozdělit"
 
-#: src/application_subtitle.cpp:680
+#: src/application_subtitle.cpp:682
 #, kde-format
 msgid "Could not write the split subtitle file."
 msgstr "Nebylo možné zapsat rozdělené titulky."
 
-#: src/application_subtitle.cpp:680
+#: src/application_subtitle.cpp:682
 #, kde-format
 msgid "Could not write the split subtitle translation file."
 msgstr "Nebylo možné zapsat rozdělený překlad."
 
-#: src/application_subtitle.cpp:705
+#: src/application_subtitle.cpp:707
 #, kde-format
 msgid "Could not read the subtitle file to append."
 msgstr "Nebylo možné načíst titulky k připojení."
 
-#: src/application_subtitle.cpp:721
+#: src/application_subtitle.cpp:723
 #, kde-format
 msgid "The specified time does not split the subtitles."
 msgstr "Požadovaný čas nerozdělil titulky."
 
-#: src/application_subtitle.cpp:756
+#: src/application_subtitle.cpp:758
 #, kde-format
 msgid ""
 "Could not open a new Subtitle Composer window.\n"
@@ -1220,7 +1220,7 @@ msgstr ""
 "Nebylo možné otevřít nové okno Subtitle Composeru.\n"
 "Rozdělená část byla uložena jako %1."
 
-#: src/application_subtitle.cpp:757
+#: src/application_subtitle.cpp:759
 #, kde-format
 msgid ""
 "Could not open a new Subtitle Composer window.\n"
@@ -1229,79 +1229,79 @@ msgstr ""
 "Nebylo možné otevřít nové okno Subtitle Composeru.\n"
 "Rozdělené části byly uloženy jako %1 a %2."
 
-#: src/application_subtitle.cpp:775
+#: src/application_subtitle.cpp:777
 #, kde-format
 msgid "The reference subtitle must have more than one line to proceed."
 msgstr "Odkazované titulky musely mít více než jeden řádek."
 
-#: src/application_subtitle.cpp:784
+#: src/application_subtitle.cpp:786
 #, kde-format
 msgid "Could not parse the reference subtitle file."
 msgstr "Nebylo možné načíst odkazované titulky."
 
-#: src/configs/configdialog.cpp:38
+#: src/configs/configdialog.cpp:35
 #, kde-format
 msgctxt "@title General settings"
 msgid "General"
 msgstr "Obecné"
 
-#: src/configs/configdialog.cpp:39
+#: src/configs/configdialog.cpp:36
 #, kde-format
 msgid "General Settings"
 msgstr "Obecné nastavení"
 
-#: src/configs/configdialog.cpp:43
+#: src/configs/configdialog.cpp:40
 #, kde-format
 msgctxt "@title Error check settings"
 msgid "Error Check"
 msgstr "Kontroly chyb"
 
-#: src/configs/configdialog.cpp:44
+#: src/configs/configdialog.cpp:41
 #, kde-format
 msgid "Error Check Settings"
 msgstr "Nastavení kontroly chyb"
 
-#: src/configs/configdialog.cpp:50
+#: src/configs/configdialog.cpp:47
 #, kde-format
 msgctxt "@title Spelling settings"
 msgid "Spelling"
 msgstr "Pravopis"
 
-#: src/configs/configdialog.cpp:51
+#: src/configs/configdialog.cpp:48
 #, kde-format
 msgid "Spelling Settings"
 msgstr "Nastavení pravopisu"
 
-#: src/configs/configdialog.cpp:55
+#: src/configs/configdialog.cpp:52
 #, kde-format
 msgctxt "@title Waveform settings"
 msgid "Waveform"
 msgstr "Křivka"
 
-#: src/configs/configdialog.cpp:56
+#: src/configs/configdialog.cpp:53
 #, kde-format
 msgid "Waveform settings"
 msgstr "Nastavení křivky"
 
-#: src/configs/configdialog.cpp:60
+#: src/configs/configdialog.cpp:57
 #, kde-format
 msgctxt "@title Video player settings"
 msgid "Video Player"
 msgstr "Video přehrávač"
 
-#: src/configs/configdialog.cpp:61
+#: src/configs/configdialog.cpp:58
 #, kde-format
 msgid "Video Player Settings"
 msgstr "Nastavení video přehrávače"
 
-#: src/configs/configdialog.cpp:70
+#: src/configs/configdialog.cpp:67
 #, kde-format
 msgctxt "@title Speech recognition backend settings"
 msgid "%1 backend settings"
 msgstr "%1 nastavení podpůrné vrstvy"
 
 #. i18n: ectx: property (title), widget (QGroupBox, m_grpGeneral)
-#: src/configs/errorsconfigwidget.ui:17 src/gui/treeview/lineswidget.cpp:394
+#: src/configs/errorsconfigwidget.ui:17 src/gui/treeview/lineswidget.cpp:396
 #, kde-format
 msgid "Texts"
 msgstr "Texty"
@@ -1530,7 +1530,7 @@ msgid "Start playing video when loaded"
 msgstr "Začít přehrávat video při načtení"
 
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_ShowPositionTimeEdit)
-#: src/configs/playerconfigwidget.ui:57 src/gui/playerwidget.cpp:435
+#: src/configs/playerconfigwidget.ui:57 src/gui/playerwidget.cpp:437
 #, kde-format
 msgid "Show editable position control"
 msgstr "Zobraz prvek pro nastavení pozice"
@@ -1725,150 +1725,150 @@ msgstr "Barva pozice přehrávače:"
 msgid "Mouse indicator color:"
 msgstr "Barva ukazatele myši:"
 
-#: src/core/subtitle.cpp:62
+#: src/core/subtitle.cpp:63
 #, kde-format
 msgid "Set Primary Data"
 msgstr "Nastavit primární data"
 
-#: src/core/subtitle.cpp:120
+#: src/core/subtitle.cpp:121
 #, kde-format
 msgid "Clear Primary Text Data"
 msgstr "Vymazat primární data"
 
-#: src/core/subtitle.cpp:133
+#: src/core/subtitle.cpp:134
 #, kde-format
 msgid "Set Secondary Data"
 msgstr "Nastavit sekundární data"
 
-#: src/core/subtitle.cpp:170
+#: src/core/subtitle.cpp:171
 #, kde-format
 msgid "Clear Secondary Text Data"
 msgstr "Vymazat sekundární data"
 
-#: src/core/subtitle.cpp:238 src/dialogs/changeframeratedialog.cpp:22
+#: src/core/subtitle.cpp:239 src/dialogs/changeframeratedialog.cpp:22
 #, kde-format
 msgid "Change Frame Rate"
 msgstr "Změnit snímky za sekundu"
 
-#: src/core/subtitle.cpp:400 src/core/subtitle.cpp:414
-#: src/gui/waveform/waveformwidget.cpp:694
+#: src/core/subtitle.cpp:401 src/core/subtitle.cpp:415
+#: src/gui/waveform/waveformwidget.cpp:695
 #, kde-format
 msgid "Insert Line"
 msgstr "Vložit řádek"
 
-#: src/core/subtitle.cpp:447 src/core/subtitle.cpp:457
-#: src/core/subtitle.cpp:474 src/core/undo/subtitleactions.cpp:122
+#: src/core/subtitle.cpp:448 src/core/subtitle.cpp:458
+#: src/core/subtitle.cpp:475 src/core/undo/subtitleactions.cpp:122
 #, kde-format
 msgid "Remove Lines"
 msgstr "Odstranit řádky"
 
-#: src/core/subtitle.cpp:739
+#: src/core/subtitle.cpp:740
 #, kde-format
 msgid "Shift Lines"
 msgstr "Posunout řádky"
 
-#: src/core/subtitle.cpp:795
+#: src/core/subtitle.cpp:796
 #, kde-format
 msgid "Adjust Lines"
 msgstr "Přizpůsobit řádky"
 
-#: src/core/subtitle.cpp:806
+#: src/core/subtitle.cpp:807
 #, kde-format
 msgid "Sort"
 msgstr "Seřadit"
 
-#: src/core/subtitle.cpp:838 src/dialogs/durationlimitsdialog.cpp:18
+#: src/core/subtitle.cpp:839 src/dialogs/durationlimitsdialog.cpp:18
 #, kde-format
 msgid "Enforce Duration Limits"
 msgstr "Vnutit limity dob"
 
-#: src/core/subtitle.cpp:900 src/dialogs/autodurationsdialog.cpp:21
+#: src/core/subtitle.cpp:901 src/dialogs/autodurationsdialog.cpp:21
 #, kde-format
 msgid "Set Automatic Durations"
 msgstr "Nastavit automatické doby"
 
-#: src/core/subtitle.cpp:933 src/dialogs/fixoverlappingtimesdialog.cpp:18
+#: src/core/subtitle.cpp:934 src/dialogs/fixoverlappingtimesdialog.cpp:18
 #, kde-format
 msgid "Fix Overlapping Times"
 msgstr "Opravit překrývající se časy"
 
-#: src/core/subtitle.cpp:964
+#: src/core/subtitle.cpp:965
 #, kde-format
 msgid "Fix Lines Punctuation"
 msgstr "Opravit interpunkci řádků"
 
-#: src/core/subtitle.cpp:1006
+#: src/core/subtitle.cpp:1007
 #, kde-format
 msgid "Lower Case"
 msgstr "Malá písmena"
 
-#: src/core/subtitle.cpp:1036
+#: src/core/subtitle.cpp:1037
 #, kde-format
 msgid "Upper Case"
 msgstr "Velká písmena"
 
-#: src/core/subtitle.cpp:1066
+#: src/core/subtitle.cpp:1067
 #, kde-format
 msgid "Title Case"
 msgstr "Nadpis"
 
-#: src/core/subtitle.cpp:1099
+#: src/core/subtitle.cpp:1100
 #, kde-format
 msgid "Sentence Case"
 msgstr "Věty"
 
-#: src/core/subtitle.cpp:1143 src/dialogs/smarttextsadjustdialog.cpp:18
+#: src/core/subtitle.cpp:1144 src/dialogs/smarttextsadjustdialog.cpp:18
 #, kde-format
 msgid "Break Lines"
 msgstr "Zalomit řádky"
 
-#: src/core/subtitle.cpp:1170
+#: src/core/subtitle.cpp:1171
 #, kde-format
 msgid "Synchronize Subtitles"
 msgstr "Synchronizovat titulky"
 
-#: src/core/subtitle.cpp:1195 src/dialogs/joinsubtitlesdialog.cpp:24
+#: src/core/subtitle.cpp:1196 src/dialogs/joinsubtitlesdialog.cpp:24
 #, kde-format
 msgid "Join Subtitles"
 msgstr "Spojit titulky"
 
-#: src/core/subtitle.cpp:1240 src/core/subtitle.cpp:1246
+#: src/core/subtitle.cpp:1241 src/core/subtitle.cpp:1247
 #, kde-format
 msgid "Split Subtitles"
 msgstr "Rozdělit titulky"
 
-#: src/core/subtitle.cpp:1265
+#: src/core/subtitle.cpp:1266
 #, kde-format
 msgid "Toggle Lines Style"
 msgstr "Přepnout styl řádků"
 
-#: src/core/subtitle.cpp:1309
+#: src/core/subtitle.cpp:1310
 #, kde-format
 msgid "Change Lines Text Color"
 msgstr "Změnit barvu řádků"
 
-#: src/core/subtitle.cpp:1329
+#: src/core/subtitle.cpp:1330
 #, kde-format
 msgid "Set Lines Mark"
 msgstr "Nastavit značku"
 
-#: src/core/subtitle.cpp:1329
+#: src/core/subtitle.cpp:1330
 #, kde-format
 msgid "Clear Lines Mark"
 msgstr "Smazat značku"
 
-#: src/core/subtitle.cpp:1344
+#: src/core/subtitle.cpp:1345
 #, kde-format
 msgid "Toggle Lines Mark"
 msgstr "Přepnout značku"
 
-#: src/core/subtitle.cpp:1354
+#: src/core/subtitle.cpp:1355
 #, kde-format
 msgid "Clear Line Errors"
 msgstr "Vymazat chyby řádků"
 
-#: src/core/subtitle.cpp:1365 src/core/subtitle.cpp:1376
-#: src/errors/errorfinder.cpp:82
+#: src/core/subtitle.cpp:1366 src/core/subtitle.cpp:1377
+#: src/errors/errorfinder.cpp:84
 #, kde-format
 msgid "Check Lines Errors"
 msgstr "Zkontrolovat chyby na řádcích"
@@ -2144,50 +2144,50 @@ msgstr "Zapsat druhotný text"
 msgid "Set Line Errors"
 msgstr "Nastavit chyby"
 
-#: src/dialogs/actionwithtargetdialog.cpp:111
+#: src/dialogs/actionwithtargetdialog.cpp:113
 #, kde-format
 msgid "Target >>"
 msgstr "Cíl >>"
 
-#: src/dialogs/actionwithtargetdialog.cpp:111
-#: src/dialogs/actionwithtargetdialog.cpp:127
+#: src/dialogs/actionwithtargetdialog.cpp:113
+#: src/dialogs/actionwithtargetdialog.cpp:129
 #, kde-format
 msgid "Target <<"
 msgstr "Cíl <<"
 
-#: src/dialogs/actionwithtargetdialog.cpp:141
+#: src/dialogs/actionwithtargetdialog.cpp:143
 #, kde-format
 msgid "All lines"
 msgstr "Všechny řádky"
 
-#: src/dialogs/actionwithtargetdialog.cpp:142
+#: src/dialogs/actionwithtargetdialog.cpp:144
 #, kde-format
 msgid "Selected lines"
 msgstr "Označené řádky"
 
-#: src/dialogs/actionwithtargetdialog.cpp:143
+#: src/dialogs/actionwithtargetdialog.cpp:145
 #, kde-format
 msgid "All lines from first selected"
 msgstr "Všechny řádky od prvního vybraného"
 
-#: src/dialogs/actionwithtargetdialog.cpp:144
+#: src/dialogs/actionwithtargetdialog.cpp:146
 #, kde-format
 msgid "All lines up to last selected"
 msgstr "Všechny řádky k poslednímu vybranému"
 
-#: src/dialogs/actionwithtargetdialog.cpp:232 src/utils/finder.cpp:53
+#: src/dialogs/actionwithtargetdialog.cpp:234 src/utils/finder.cpp:53
 #: src/utils/replacer.cpp:51
 #, kde-format
 msgid "Both subtitles"
 msgstr "Obojí titulky"
 
-#: src/dialogs/actionwithtargetdialog.cpp:235 src/utils/finder.cpp:55
+#: src/dialogs/actionwithtargetdialog.cpp:237 src/utils/finder.cpp:55
 #: src/utils/replacer.cpp:53
 #, kde-format
 msgid "Primary subtitle"
 msgstr "Primární titulky"
 
-#: src/dialogs/actionwithtargetdialog.cpp:238 src/utils/finder.cpp:57
+#: src/dialogs/actionwithtargetdialog.cpp:240 src/utils/finder.cpp:57
 #: src/utils/replacer.cpp:55
 #, kde-format
 msgid "Translation subtitle"
@@ -2440,12 +2440,12 @@ msgstr "Odstranit označené řádky"
 msgid "Remove From"
 msgstr "Odstranit z"
 
-#: src/dialogs/selectablesubtitledialog.cpp:39
+#: src/dialogs/selectablesubtitledialog.cpp:41
 #, kde-format
 msgid "Path:"
 msgstr "Cesta:"
 
-#: src/dialogs/selectablesubtitledialog.cpp:44
+#: src/dialogs/selectablesubtitledialog.cpp:46
 #, kde-format
 msgid "Select subtitle"
 msgstr "Vyberte titulky"
@@ -2532,12 +2532,12 @@ msgstr "Vstupní jazyk:"
 msgid "Output language:"
 msgstr "Výstupní jazyk:"
 
-#: src/errors/errorfinder.cpp:171 src/errors/finderrorsdialog.cpp:17
+#: src/errors/errorfinder.cpp:173 src/errors/finderrorsdialog.cpp:17
 #, kde-format
 msgid "Find Error"
 msgstr "Najít chybu"
 
-#: src/errors/errorfinder.cpp:171
+#: src/errors/errorfinder.cpp:173
 #, kde-format
 msgid "No errors matching given criteria were found!"
 msgstr "Žádné chyby shodující se s kritérii nebyly nalezeny."
@@ -2760,45 +2760,45 @@ msgstr "ms/znak"
 msgid "chars/sec"
 msgstr "znaků/sek"
 
-#: src/gui/playerwidget.cpp:72
+#: src/gui/playerwidget.cpp:74
 #, kde-format
 msgid "<b>Position</b>"
 msgstr "<b>Pozice</b>"
 
-#: src/gui/playerwidget.cpp:80
+#: src/gui/playerwidget.cpp:82
 #, kde-format
 msgid "<b>Length</b>"
 msgstr "<b>Délka</b>"
 
-#: src/gui/playerwidget.cpp:85
+#: src/gui/playerwidget.cpp:87
 #, kde-format
 msgid "<b>FPS</b>"
 msgstr "<b>FPS</b>"
 
-#: src/gui/playerwidget.cpp:91
+#: src/gui/playerwidget.cpp:93
 #, kde-format
 msgid "<b>Playback Rate</b>"
 msgstr "<b>Rychlost přehrávání</b>"
 
-#: src/gui/playerwidget.cpp:667
+#: src/gui/playerwidget.cpp:669
 #, kde-format
 msgid "<qt>There was an error opening media file %1.</qt>"
 msgstr "<qt>Vyskytla se chyba při otevírání souboru<br/>%1</qt>"
 
-#: src/gui/playerwidget.cpp:683 src/gui/playerwidget.cpp:684
 #: src/gui/playerwidget.cpp:685 src/gui/playerwidget.cpp:686
-#: src/gui/playerwidget.cpp:753 src/gui/playerwidget.cpp:761
-#: src/gui/playerwidget.cpp:767
+#: src/gui/playerwidget.cpp:687 src/gui/playerwidget.cpp:688
+#: src/gui/playerwidget.cpp:755 src/gui/playerwidget.cpp:763
+#: src/gui/playerwidget.cpp:769
 #, kde-format
 msgid "<i>Unknown</i>"
 msgstr "<i>Neznámý</i>"
 
-#: src/gui/playerwidget.cpp:699 src/gui/playerwidget.cpp:701
+#: src/gui/playerwidget.cpp:701 src/gui/playerwidget.cpp:703
 #, kde-format
 msgid "Unexpected error when playing file."
 msgstr "Nečekaná chyba při přehrávání souboru."
 
-#: src/gui/playerwidget.cpp:699 src/gui/playerwidget.cpp:701
+#: src/gui/playerwidget.cpp:701 src/gui/playerwidget.cpp:703
 #, kde-format
 msgid "Error Playing File"
 msgstr "Chyba při přehrávání souboru"
@@ -2919,98 +2919,98 @@ msgctxt "@title:column Subtitle line translation text"
 msgid "Translation"
 msgstr "Překlad"
 
-#: src/gui/treeview/lineswidget.cpp:405
+#: src/gui/treeview/lineswidget.cpp:407
 #, kde-format
 msgid "Styles"
 msgstr "Styly"
 
-#: src/gui/treeview/lineswidget.cpp:414
+#: src/gui/treeview/lineswidget.cpp:416
 #, kde-format
 msgid "Times"
 msgstr "Časy"
 
-#: src/gui/treeview/lineswidget.cpp:425
+#: src/gui/treeview/lineswidget.cpp:427
 #, kde-format
 msgid "Errors"
 msgstr "Chyby"
 
-#: src/gui/treeview/richlineedit.cpp:83 src/widgets/simplerichtextedit.cpp:339
+#: src/gui/treeview/richlineedit.cpp:84 src/widgets/simplerichtextedit.cpp:340
 #, kde-format
 msgid "Cut"
 msgstr "Vyjmout"
 
-#: src/gui/treeview/richlineedit.cpp:90 src/widgets/simplerichtextedit.cpp:345
+#: src/gui/treeview/richlineedit.cpp:91 src/widgets/simplerichtextedit.cpp:346
 #, kde-format
 msgid "Copy"
 msgstr "Kopírovat"
 
-#: src/gui/treeview/richlineedit.cpp:97 src/widgets/simplerichtextedit.cpp:352
+#: src/gui/treeview/richlineedit.cpp:98 src/widgets/simplerichtextedit.cpp:353
 #, kde-format
 msgid "Paste"
 msgstr "Vložit"
 
-#: src/gui/treeview/richlineedit.cpp:105 src/widgets/simplerichtextedit.cpp:365
+#: src/gui/treeview/richlineedit.cpp:106 src/widgets/simplerichtextedit.cpp:366
 #, kde-format
 msgctxt "@action:inmenu Clear all text"
 msgid "Clear"
 msgstr "Vyprázdnit"
 
-#: src/gui/treeview/richlineedit.cpp:118 src/widgets/simplerichtextedit.cpp:376
+#: src/gui/treeview/richlineedit.cpp:119 src/widgets/simplerichtextedit.cpp:377
 #, kde-format
 msgctxt "@action:inmenu Toggle bold style"
 msgid "Bold"
 msgstr "Tučné"
 
-#: src/gui/treeview/richlineedit.cpp:126 src/widgets/simplerichtextedit.cpp:383
+#: src/gui/treeview/richlineedit.cpp:127 src/widgets/simplerichtextedit.cpp:384
 #, kde-format
 msgctxt "@action:inmenu Toggle italic style"
 msgid "Italic"
 msgstr "Kurzíva"
 
-#: src/gui/treeview/richlineedit.cpp:134 src/widgets/simplerichtextedit.cpp:390
+#: src/gui/treeview/richlineedit.cpp:135 src/widgets/simplerichtextedit.cpp:391
 #, kde-format
 msgctxt "@action:inmenu Toggle underline style"
 msgid "Underline"
 msgstr "Podtržené"
 
-#: src/gui/treeview/richlineedit.cpp:142 src/widgets/simplerichtextedit.cpp:397
+#: src/gui/treeview/richlineedit.cpp:143 src/widgets/simplerichtextedit.cpp:398
 #, kde-format
 msgctxt "@action:inmenu Toggle strike through style"
 msgid "Strike Through"
 msgstr "Přeškrtnuté"
 
-#: src/gui/treeview/richlineedit.cpp:150 src/widgets/simplerichtextedit.cpp:404
+#: src/gui/treeview/richlineedit.cpp:151 src/widgets/simplerichtextedit.cpp:405
 #, kde-format
 msgctxt "@action:inmenu Change Text Color"
 msgid "Text Color"
 msgstr "Barva textu"
 
-#: src/gui/waveform/waveformwidget.cpp:115
+#: src/gui/waveform/waveformwidget.cpp:116
 #, kde-format
 msgid "Generating waveform"
 msgstr "Generuji waveform (vlnový diagram)"
 
-#: src/gui/waveform/waveformwidget.cpp:689
+#: src/gui/waveform/waveformwidget.cpp:690
 #, kde-format
 msgid "Select Line"
 msgstr "Vybrat řádek"
 
-#: src/gui/waveform/waveformwidget.cpp:704
+#: src/gui/waveform/waveformwidget.cpp:705
 #, kde-format
 msgid "Remove Line"
 msgstr "Odstranit řádek"
 
-#: src/gui/waveform/waveformwidget.cpp:729
+#: src/gui/waveform/waveformwidget.cpp:730
 #, kde-format
 msgid "Split Line"
 msgstr "Rozdělit řádek"
 
-#: src/gui/waveform/waveformwidget.cpp:739
+#: src/gui/waveform/waveformwidget.cpp:740
 #, kde-format
 msgid "Set Current Line Show Time"
 msgstr "Nastavit na řádek současný čas zobrazení z videa"
 
-#: src/gui/waveform/waveformwidget.cpp:744
+#: src/gui/waveform/waveformwidget.cpp:745
 #, kde-format
 msgid "Set Current Line Hide Time"
 msgstr "Nastavit na řádek současný čas skrytí titulku"
@@ -3090,17 +3090,17 @@ msgstr ""
 msgid "All people who have contributed and I have forgotten to mention"
 msgstr "Všichni, kteří přispěli a zapomněl jsem je zmínit"
 
-#: src/mainwindow.cpp:36
+#: src/mainwindow.cpp:37
 #, kde-format
 msgid "Waveform"
 msgstr "Křivka"
 
-#: src/mainwindow.cpp:50
+#: src/mainwindow.cpp:51
 #, kde-format
 msgid "Video Player"
 msgstr "Video přehrávač"
 
-#: src/mainwindow.cpp:64
+#: src/mainwindow.cpp:65
 #, kde-format
 msgid "Styles and Comments"
 msgstr ""
@@ -3384,58 +3384,58 @@ msgstr "Barva obrysové čáry"
 msgid "Outline Width"
 msgstr "Šířka obrysové čáry"
 
-#: src/scripting/scriptsmanager.cpp:75
+#: src/scripting/scriptsmanager.cpp:73
 #, kde-format
 msgid "Non-Script Files"
 msgstr "Neskriptové soubory"
 
-#: src/scripting/scriptsmanager.cpp:157
+#: src/scripting/scriptsmanager.cpp:155
 #, kde-format
 msgid "Title"
 msgstr "Název"
 
-#: src/scripting/scriptsmanager.cpp:158
+#: src/scripting/scriptsmanager.cpp:156
 #, kde-format
 msgid "Version"
 msgstr "Verze"
 
-#: src/scripting/scriptsmanager.cpp:159
+#: src/scripting/scriptsmanager.cpp:157
 #, kde-format
 msgid "Author"
 msgstr "Autor"
 
-#: src/scripting/scriptsmanager.cpp:160
+#: src/scripting/scriptsmanager.cpp:158
 #, kde-format
 msgid "Path"
 msgstr "Cesta"
 
-#: src/scripting/scriptsmanager.cpp:354
+#: src/scripting/scriptsmanager.cpp:352
 #, kde-format
 msgid "Information"
 msgstr "Informace"
 
-#: src/scripting/scriptsmanager.cpp:360
+#: src/scripting/scriptsmanager.cpp:358
 #, kde-format
 msgid "Warning"
 msgstr "Varování"
 
-#: src/scripting/scriptsmanager.cpp:366
+#: src/scripting/scriptsmanager.cpp:364
 #, kde-format
 msgid "Error"
 msgstr "Chyba"
 
 #. i18n: ectx: property (text), widget (QPushButton, btnEdit)
-#: src/scripting/scriptsmanager.cpp:394 src/scripting/scriptsmanager.ui:74
+#: src/scripting/scriptsmanager.cpp:392 src/scripting/scriptsmanager.ui:74
 #, kde-format
 msgid "Edit"
 msgstr "Upravit"
 
-#: src/scripting/scriptsmanager.cpp:397
+#: src/scripting/scriptsmanager.cpp:395
 #, kde-format
 msgid "View"
 msgstr "Pohled"
 
-#: src/scripting/scriptsmanager.cpp:462 src/scripting/scriptsmanager.cpp:527
+#: src/scripting/scriptsmanager.cpp:460 src/scripting/scriptsmanager.cpp:528
 #, kde-format
 msgid ""
 "You must enter an unused name to continue.\n"
@@ -3444,83 +3444,83 @@ msgstr ""
 "Pro pokračování musíte vložit nepoužitý název.\n"
 "Chtěli byste vložit jiný název?"
 
-#: src/scripting/scriptsmanager.cpp:463 src/scripting/scriptsmanager.cpp:528
+#: src/scripting/scriptsmanager.cpp:461 src/scripting/scriptsmanager.cpp:529
 #, kde-format
 msgid "Name Already Used"
 msgstr "Název je již používán"
 
-#: src/scripting/scriptsmanager.cpp:467
+#: src/scripting/scriptsmanager.cpp:465
 #, kde-format
 msgid "Create New Script"
 msgstr "Vytvořit nový skript"
 
-#: src/scripting/scriptsmanager.cpp:467 src/scripting/scriptsmanager.cpp:531
+#: src/scripting/scriptsmanager.cpp:465 src/scripting/scriptsmanager.cpp:532
 #, kde-format
 msgid "Script name:"
 msgstr "Název skriptu:"
 
-#: src/scripting/scriptsmanager.cpp:475
+#: src/scripting/scriptsmanager.cpp:476
 #, kde-format
 msgid "There was an error creating the file <b>%1</b>."
 msgstr "<qt>Vyskytla se chyba při vytváření souboru<br/>%1</qt>"
 
-#: src/scripting/scriptsmanager.cpp:510
+#: src/scripting/scriptsmanager.cpp:511
 #, kde-format
 msgid "Select Existing Script"
 msgstr "Vybrat existující skript"
 
-#: src/scripting/scriptsmanager.cpp:531
+#: src/scripting/scriptsmanager.cpp:532
 #, kde-format
 msgid "Rename Script"
 msgstr "Přejmenovat skript"
 
-#: src/scripting/scriptsmanager.cpp:540
+#: src/scripting/scriptsmanager.cpp:541
 #, kde-format
 msgid "There was an error opening the file <b>%1</b>."
 msgstr "<qt>Vyskytla se chyba při otevírání souboru<br/>%1</qt>"
 
-#: src/scripting/scriptsmanager.cpp:548
+#: src/scripting/scriptsmanager.cpp:549
 #, kde-format
 msgid "There was an error copying the file to <b>%1</b>."
 msgstr "<qt>Vyskytla se chyba při kopírování souboru<br/>%1</qt>"
 
-#: src/scripting/scriptsmanager.cpp:563
+#: src/scripting/scriptsmanager.cpp:564
 #, kde-format
 msgid "Do you really want to send file <b>%1</b> to the trash?"
 msgstr "Opravdu chcete přesunout soubor <b>%1</b> do koše?"
 
-#: src/scripting/scriptsmanager.cpp:563
+#: src/scripting/scriptsmanager.cpp:564
 #, kde-format
 msgid "Move to Trash"
 msgstr "Přesunout do koše"
 
-#: src/scripting/scriptsmanager.cpp:567
+#: src/scripting/scriptsmanager.cpp:568
 #, kde-format
 msgid "There was an error removing the file <b>%1</b>."
 msgstr "<qt>Vyskytla se chyba při odstranění souboru<br/>%1</qt>"
 
-#: src/scripting/scriptsmanager.cpp:596
+#: src/scripting/scriptsmanager.cpp:597
 #, kde-format
 msgid "Could not launch external editor.\n"
 msgstr "Nebylo možno spustit externí editor.\n"
 
-#: src/scripting/scriptsmanager.cpp:617
+#: src/scripting/scriptsmanager.cpp:618
 #, kde-format
 msgid "Error opening script %1."
 msgstr "Chyba při otevírání skriptu %1."
 
-#: src/scripting/scriptsmanager.cpp:617 src/scripting/scriptsmanager.cpp:632
-#: src/scripting/scriptsmanager.cpp:634
+#: src/scripting/scriptsmanager.cpp:618 src/scripting/scriptsmanager.cpp:633
+#: src/scripting/scriptsmanager.cpp:635
 #, kde-format
 msgid "Error Running Script"
 msgstr "Chyba při běhu skriptu"
 
-#: src/scripting/scriptsmanager.cpp:630
+#: src/scripting/scriptsmanager.cpp:631
 #, kde-format
 msgid "Path: %1"
 msgstr "Cesta: %1"
 
-#: src/scripting/scriptsmanager.cpp:647
+#: src/scripting/scriptsmanager.cpp:648
 #, kde-format
 msgid "Tools"
 msgstr "Nástroje"
@@ -3719,27 +3719,27 @@ msgstr ""
 msgid "Start Speech Frames"
 msgstr ""
 
-#: src/speechprocessor/speechprocessor.cpp:40
+#: src/speechprocessor/speechprocessor.cpp:41
 #, kde-format
 msgid "Recognizing speech"
 msgstr "Rozpoznávání řeči"
 
-#: src/speechprocessor/speechprocessor.cpp:48
+#: src/speechprocessor/speechprocessor.cpp:49
 #, kde-format
 msgid "Abort speech recognition"
 msgstr ""
 
-#: src/speechprocessor/speechprocessor.cpp:97
+#: src/speechprocessor/speechprocessor.cpp:98
 #, kde-format
 msgid "No speech recognition plugins available"
 msgstr "Žádný plugin pro rozpoznávání řeči"
 
-#: src/speechprocessor/speechprocessor.cpp:102
+#: src/speechprocessor/speechprocessor.cpp:103
 #, kde-format
 msgid "Initialization of speech recognition plugin failed"
 msgstr "Načtení pluginu pro rozpozávání řeči selhalo"
 
-#: src/speechprocessor/speechprocessor.cpp:172
+#: src/speechprocessor/speechprocessor.cpp:173
 #, kde-format
 msgid ""
 "Speech Recognition failed: %2\n"
@@ -3919,42 +3919,42 @@ msgstr "Titulková stopa #%1"
 msgid "File does not exist."
 msgstr "Soubor neexistuje."
 
-#: src/widgets/simplerichtextedit.cpp:254
+#: src/widgets/simplerichtextedit.cpp:255
 #, kde-format
 msgid "Suggestions"
 msgstr "Návrhy"
 
-#: src/widgets/simplerichtextedit.cpp:255
+#: src/widgets/simplerichtextedit.cpp:256
 #, kde-format
 msgid "Ignore"
 msgstr "Ignorovat"
 
-#: src/widgets/simplerichtextedit.cpp:256
+#: src/widgets/simplerichtextedit.cpp:257
 #, kde-format
 msgid "Add to Dictionary"
 msgstr "Přidat do slovníku"
 
-#: src/widgets/simplerichtextedit.cpp:260
+#: src/widgets/simplerichtextedit.cpp:261
 #, kde-format
 msgid "No suggestions"
 msgstr "Žádné návrhy"
 
-#: src/widgets/simplerichtextedit.cpp:359
+#: src/widgets/simplerichtextedit.cpp:360
 #, kde-format
 msgid "Delete"
 msgstr "Smazat"
 
-#: src/widgets/simplerichtextedit.cpp:410
+#: src/widgets/simplerichtextedit.cpp:411
 #, kde-format
 msgid "Check Spelling..."
 msgstr "Kontrola pravopisu..."
 
-#: src/widgets/simplerichtextedit.cpp:415
+#: src/widgets/simplerichtextedit.cpp:416
 #, kde-format
 msgid "Auto Spell Check"
 msgstr "Automatická kontrola pravopisu"
 
-#: src/widgets/simplerichtextedit.cpp:420
+#: src/widgets/simplerichtextedit.cpp:421
 #, kde-format
 msgid "Allow Tabulations"
 msgstr "Povolit tabulátory"
