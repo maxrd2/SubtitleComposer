@@ -131,7 +131,7 @@ VideoState::notifyLoaded()
 			continue;
 
 		*streamName += QStringLiteral(": ");
-		AVDictionaryEntry *tag = av_dict_get(stream->metadata, "lang", nullptr, AV_DICT_IGNORE_SUFFIX);
+		const AVDictionaryEntry *tag = av_dict_get(stream->metadata, "lang", nullptr, AV_DICT_IGNORE_SUFFIX);
 		*streamName += tag ? QString("%2 (%3)").arg(LanguageCode::nameFromIso(tag->value)).arg(tag->value) : QStringLiteral("Unknown");
 
 		if((tag = av_dict_get(stream->metadata, "title", nullptr, 0)) != nullptr)

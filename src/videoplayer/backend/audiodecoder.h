@@ -37,8 +37,7 @@ private:
 
 	struct Params {
 		int freq;
-		int channels;
-		uint64_t channelLayout;
+		AVChannelLayout chLayout;
 		AVSampleFormat fmt;
 		int frameSize;
 		int bytesPerSec;
@@ -50,7 +49,7 @@ private:
 	void queueBuffer(uint8_t *data, int len);
 	int syncAudio(int nbSamples);
 
-	bool open(int64_t wanted_channel_layout, int wanted_nb_channels, int wanted_sample_rate);
+	bool open(AVChannelLayout *wantChLayout, int wantSampleRate);
 	void close();
 	void flush();
 	void play();

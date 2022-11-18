@@ -233,9 +233,9 @@ StreamDemuxer::componentOpen(int streamIndex)
 	AVCodecContext *avCtx;
 	const AVCodec *codec;
 	AVDictionary *opts = nullptr;
-	AVDictionaryEntry *t = nullptr;
-	int sampleRate, nbChannels;
-	int64_t channelLayout;
+	const AVDictionaryEntry *t = nullptr;
+	int sampleRate;
+	AVChannelLayout chLayout = {};
 	int ret = 0;
 	int stream_lowres = m_vs->lowres;
 
@@ -301,19 +301,21 @@ StreamDemuxer::componentOpen(int streamIndex)
 	switch(avCtx->codec_type) {
 	case AVMEDIA_TYPE_AUDIO:
 		sampleRate = avCtx->sample_rate;
-		nbChannels = avCtx->channels;
-		channelLayout = avCtx->channel_layout;
+		if((ret = av_channel_layout_copy(&chLayout, &avCtx->ch_layout)) < 0) {
+			av_log(nullptr, AV_LOG_ERROR, "av_channel_layout_copy() failed (errL %d).\n", ret);
+			goto fail;
+		}
 
 		// prepare audio output
-		if(!m_vs->audDec.open(channelLayout, nbChannels, sampleRate))
+		if(!m_vs->audDec.open(&chLayout, sampleRate))
 			goto fail;
 
 		m_vs->audStreamIdx = streamIndex;
 		m_vs->audStream = ic->streams[streamIndex];
 
 		m_vs->audDec.init(avCtx, &m_vs->audPQ, nullptr, m_vs->continueReadThread);
-		if((m_vs->fmtContext->iformat->flags & (AVFMT_NOBINSEARCH | AVFMT_NOGENSEARCH | AVFMT_NO_BYTE_SEEK)) &&
-		   !m_vs->fmtContext->iformat->read_seek) {
+		if((m_vs->fmtContext->iformat->flags & (AVFMT_NOBINSEARCH | AVFMT_NOGENSEARCH | AVFMT_NO_BYTE_SEEK))
+			&& !m_vs->fmtContext->iformat->read_seek) {
 			m_vs->audDec.startPts(m_vs->audStream->start_time, m_vs->audStream->time_base);
 		}
 		m_vs->audDec.start();
@@ -342,6 +344,7 @@ StreamDemuxer::componentOpen(int streamIndex)
 fail:
 	avcodec_free_context(&avCtx);
 out:
+	av_channel_layout_uninit(&chLayout);
 	av_dict_free(&opts);
 
 	return ret;
@@ -397,8 +400,7 @@ StreamDemuxer::cycleStream(int codecType)
 			/* check that parameters are OK */
 			switch(codecType) {
 			case AVMEDIA_TYPE_AUDIO:
-				if(st->codecpar->sample_rate != 0 &&
-				   st->codecpar->channels != 0)
+				if(st->codecpar->sample_rate != 0 && st->codecpar->ch_layout.nb_channels != 0)
 					goto the_end;
 				break;
 			case AVMEDIA_TYPE_VIDEO:

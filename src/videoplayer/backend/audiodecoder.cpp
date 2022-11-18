@@ -37,6 +37,8 @@ using namespace SubtitleComposer;
 AudioDecoder::AudioDecoder(VideoState *state, QObject *parent)
 	: Decoder(parent),
 	  m_vs(state),
+	  m_fmtSrc({}),
+	  m_fmtTgt({}),
 	  m_swrCtx(nullptr),
 	  m_audioBuf(nullptr),
 	  m_bufSize(0),
@@ -147,7 +149,7 @@ AudioDecoder::close()
 }
 
 bool
-AudioDecoder::open(int64_t wantChLayout, int wantNbChan, int wantSampleRate)
+AudioDecoder::open(AVChannelLayout *wantChLayout, int wantSampleRate)
 {
 	const static QMap<int, const char *> bufFmtMap = {
 		{ 4, "AL_FORMAT_QUAD16" },
@@ -158,12 +160,12 @@ AudioDecoder::open(int64_t wantChLayout, int wantNbChan, int wantSampleRate)
 
 	int err;
 
-	if(wantSampleRate <= 0 || wantNbChan <= 0) {
+	if(wantSampleRate <= 0 || !wantChLayout || wantChLayout->nb_channels <= 0) {
 		av_log(nullptr, AV_LOG_ERROR, "openal: invalid sample rate or channel count!\n");
 		return false;
 	}
 
-	int availNbChan = wantNbChan;
+	int availNbChan = wantChLayout->nb_channels;
 	for(;;) {
 		while(availNbChan > 2 && !bufFmtMap.contains(availNbChan))
 			availNbChan--;
@@ -171,15 +173,15 @@ AudioDecoder::open(int64_t wantChLayout, int wantNbChan, int wantSampleRate)
 			m_bufFmt = availNbChan == 2 ? AL_FORMAT_STEREO16 : AL_FORMAT_MONO16;
 			break;
 		}
-		m_bufFmt = alGetEnumValue(bufFmtMap[wantNbChan]);
+		m_bufFmt = alGetEnumValue(bufFmtMap[wantChLayout->nb_channels]);
 		if(m_bufFmt)
 			break;
 		availNbChan--;
 	}
 
-	if(!wantChLayout || wantNbChan != availNbChan || wantNbChan != av_get_channel_layout_nb_channels(wantChLayout)) {
-		wantChLayout = av_get_default_channel_layout(availNbChan);
-		wantChLayout &= ~AV_CH_LAYOUT_STEREO_DOWNMIX;
+	if(wantChLayout->nb_channels != availNbChan || wantChLayout->order != AV_CHANNEL_ORDER_NATIVE) {
+		av_channel_layout_uninit(wantChLayout);
+		av_channel_layout_default(wantChLayout, availNbChan);
 	}
 
 	m_alDev = alcOpenDevice(nullptr);
@@ -212,10 +214,14 @@ AudioDecoder::open(int64_t wantChLayout, int wantNbChan, int wantSampleRate)
 
 	m_fmtTgt.fmt = AV_SAMPLE_FMT_S16;
 	m_fmtTgt.freq = wantSampleRate;
-	m_fmtTgt.channelLayout = wantChLayout;
-	m_fmtTgt.channels = availNbChan;
-	m_fmtTgt.frameSize = av_samples_get_buffer_size(nullptr, m_fmtTgt.channels, 1, m_fmtTgt.fmt, 1);
-	m_fmtTgt.bytesPerSec = av_samples_get_buffer_size(nullptr, m_fmtTgt.channels, m_fmtTgt.freq, m_fmtTgt.fmt, 1);
+	if((err = av_channel_layout_copy(&m_fmtTgt.chLayout, wantChLayout)) < 0) {
+		av_log(nullptr, AV_LOG_ERROR, "av_channel_layout_copy() failed (errL %d).\n", err);
+		close();
+		return false;
+	}
+
+	m_fmtTgt.frameSize = av_samples_get_buffer_size(nullptr, m_fmtTgt.chLayout.nb_channels, 1, m_fmtTgt.fmt, 1);
+	m_fmtTgt.bytesPerSec = av_samples_get_buffer_size(nullptr, m_fmtTgt.chLayout.nb_channels, m_fmtTgt.freq, m_fmtTgt.fmt, 1);
 	if(m_fmtTgt.bytesPerSec <= 0 || m_fmtTgt.frameSize <= 0) {
 		av_log(nullptr, AV_LOG_ERROR, "av_samples_get_buffer_size failed\n");
 		close();
@@ -349,47 +355,44 @@ AudioDecoder::syncAudio(int nbSamples)
 int
 AudioDecoder::decodeFrame(Frame *af)
 {
+	// CONVERTED maxrd2
 	if(af->serial != m_queue->serial())
 		return -1;
 
-	int dataSize = av_samples_get_buffer_size(nullptr, af->frame->channels,
+	int dataSize = av_samples_get_buffer_size(nullptr, af->frame->ch_layout.nb_channels,
 										   af->frame->nb_samples,
 										   (AVSampleFormat)af->frame->format, 1);
 	int resampledDataSize;
 
-	uint64_t decChannelLayout =
-		(af->frame->channel_layout &&
-		 af->frame->channels == av_get_channel_layout_nb_channels(af->frame->channel_layout)) ?
-		af->frame->channel_layout : av_get_default_channel_layout(af->frame->channels);
 	int wantedNbSamples = syncAudio(af->frame->nb_samples);
 
 	if(af->frame->format != m_fmtSrc.fmt
-	|| decChannelLayout != m_fmtSrc.channelLayout
+	|| av_channel_layout_compare(&af->frame->ch_layout, &m_fmtSrc.chLayout)
 	|| af->frame->sample_rate != m_fmtSrc.freq
 	|| (wantedNbSamples != af->frame->nb_samples && !m_swrCtx)) {
 		swr_free(&m_swrCtx);
-		m_swrCtx = swr_alloc_set_opts(nullptr,
-										 m_fmtTgt.channelLayout, m_fmtTgt.fmt, m_fmtTgt.freq,
-										 decChannelLayout, (AVSampleFormat)af->frame->format, af->frame->sample_rate,
-										 0, nullptr);
+		swr_alloc_set_opts2(&m_swrCtx,
+							&m_fmtTgt.chLayout, m_fmtTgt.fmt, m_fmtTgt.freq,
+							&af->frame->ch_layout, AVSampleFormat(af->frame->format), af->frame->sample_rate,
+							0, nullptr);
 		if(!m_swrCtx || swr_init(m_swrCtx) < 0) {
 			av_log(nullptr, AV_LOG_ERROR,
 				   "Cannot create sample rate converter for conversion of %d Hz %s %d channels to %d Hz %s %d channels!\n",
 				   af->frame->sample_rate, av_get_sample_fmt_name((AVSampleFormat)af->frame->format),
-				   af->frame->channels,
-				   m_fmtTgt.freq, av_get_sample_fmt_name(m_fmtTgt.fmt), m_fmtTgt.channels);
+				   af->frame->ch_layout.nb_channels,
+				   m_fmtTgt.freq, av_get_sample_fmt_name(m_fmtTgt.fmt), m_fmtTgt.chLayout.nb_channels);
 			swr_free(&m_swrCtx);
 			return -1;
 		}
-		m_fmtSrc.channelLayout = decChannelLayout;
-		m_fmtSrc.channels = af->frame->channels;
+		if(av_channel_layout_copy(&m_fmtSrc.chLayout, &af->frame->ch_layout) < 0)
+			return -1;
 		m_fmtSrc.freq = af->frame->sample_rate;
 		m_fmtSrc.fmt = (AVSampleFormat)af->frame->format;
 	}
 
 	if(m_swrCtx) {
 		const int outCount = (int64_t)wantedNbSamples * m_fmtTgt.freq / af->frame->sample_rate + 256;
-		const int outSize = av_samples_get_buffer_size(nullptr, m_fmtTgt.channels, outCount, m_fmtTgt.fmt, 0);
+		const int outSize = av_samples_get_buffer_size(nullptr, m_fmtTgt.chLayout.nb_channels, outCount, m_fmtTgt.fmt, 0);
 		if(outSize < 0) {
 			av_log(nullptr, AV_LOG_ERROR, "av_samples_get_buffer_size() failed\n");
 			return -1;
@@ -417,7 +420,7 @@ AudioDecoder::decodeFrame(Frame *af)
 				swr_free(&m_swrCtx);
 		}
 		m_audioBuf = m_audioBuf1;
-		resampledDataSize = outSamplesPerChannel * m_fmtTgt.channels * av_get_bytes_per_sample(m_fmtTgt.fmt);
+		resampledDataSize = outSamplesPerChannel * m_fmtTgt.chLayout.nb_channels * av_get_bytes_per_sample(m_fmtTgt.fmt);
 	} else {
 		m_audioBuf = af->frame->data[0];
 		resampledDataSize = dataSize;

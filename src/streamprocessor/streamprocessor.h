@@ -16,14 +16,11 @@
 
 QT_FORWARD_DECLARE_CLASS(QTimer)
 
-QT_FORWARD_DECLARE_STRUCT(AVFormatContext)
-typedef struct AVFormatContext AVFormatContext;
-QT_FORWARD_DECLARE_STRUCT(AVCodecContext)
-typedef struct AVCodecContext AVCodecContext;
-QT_FORWARD_DECLARE_STRUCT(AVStream)
-typedef struct AVStream AVStream;
-QT_FORWARD_DECLARE_STRUCT(SwrContext)
-typedef struct SwrContext SwrContext;
+struct AVFormatContext;
+struct AVCodecContext;
+struct AVStream;
+struct SwrContext;
+struct AVChannelLayout;
 
 namespace SubtitleComposer {
 
@@ -59,7 +56,7 @@ protected:
 	int findStream(int streamType, int streamIndex, bool imageSub);
 	void processAudio();
 	void processText();
-    virtual void run() override;
+	virtual void run() override;
 
 private:
 	bool m_opened;
@@ -86,7 +83,7 @@ private:
 	AVCodecContext *m_codecCtx;
 	SwrContext *m_swResample;
 	int m_audioSampleFormat;
-	uint64_t m_audioChannelLayout;
+	AVChannelLayout *m_audioChLayout;
 };
 
 }

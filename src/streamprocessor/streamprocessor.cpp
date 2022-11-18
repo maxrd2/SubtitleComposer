@@ -35,13 +35,15 @@ StreamProcessor::StreamProcessor(QObject *parent)
 	  m_avFormat(nullptr),
 	  m_avStream(nullptr),
 	  m_codecCtx(nullptr),
-	  m_swResample(nullptr)
+	  m_swResample(nullptr),
+	  m_audioChLayout(new AVChannelLayout{})
 {
 }
 
 StreamProcessor::~StreamProcessor()
 {
 	close();
+	delete m_audioChLayout;
 }
 
 bool
@@ -81,7 +83,7 @@ StreamProcessor::open(const QString &filename)
 
 	m_opened = true;
 
-    return true;
+	return true;
 }
 
 void
@@ -92,6 +94,7 @@ StreamProcessor::close()
 		wait();
 	}
 
+	av_channel_layout_uninit(m_audioChLayout);
 	if(m_swResample)
 		swr_free(&m_swResample);
 	if(m_codecCtx)
@@ -273,28 +276,40 @@ StreamProcessor::initAudio(int streamIndex, const WaveFormat &waveFormat)
 		return false;
 	}
 
+	av_channel_layout_uninit(m_audioChLayout);
+
 	// figure channel layout or update stream format
-	if(!m_codecCtx->channel_layout)
-		m_codecCtx->channel_layout = av_get_default_channel_layout(m_codecCtx->channels);;
+	if(m_codecCtx->ch_layout.order != AV_CHANNEL_ORDER_NATIVE) {
+		const int cc = m_codecCtx->ch_layout.nb_channels;
+		av_channel_layout_uninit(&m_codecCtx->ch_layout);
+		av_channel_layout_default(&m_codecCtx->ch_layout, cc);
+	}
 
 	if(m_audioStreamFormat.channels() == 0) {
-		m_audioStreamFormat.setChannels(m_codecCtx->channels);
-		m_audioChannelLayout = m_codecCtx->channel_layout;
+		m_audioStreamFormat.setChannels(m_codecCtx->ch_layout.nb_channels);
+		av_channel_layout_copy(m_audioChLayout, &m_codecCtx->ch_layout);
 	} else {
-		m_audioChannelLayout = av_get_default_channel_layout(m_audioStreamFormat.channels());
+		av_channel_layout_default(m_audioChLayout, m_audioStreamFormat.channels());
 	}
 
 	// setup resampler if needed
-	const bool convChannels = m_codecCtx->channel_layout != m_audioChannelLayout;
+	const bool convChannels = av_channel_layout_compare(&m_codecCtx->ch_layout, m_audioChLayout) != 0;
 	const bool convSampleRate = m_codecCtx->sample_rate != m_audioStreamFormat.sampleRate();
 	const bool convSampleFormat = m_codecCtx->sample_fmt != m_audioSampleFormat;
 	if(convChannels || convSampleRate || convSampleFormat) {
-		m_swResample = swr_alloc_set_opts(nullptr,
-			m_audioChannelLayout, static_cast<AVSampleFormat>(m_audioSampleFormat), m_audioStreamFormat.sampleRate(),
-			m_codecCtx->channel_layout, m_codecCtx->sample_fmt, m_codecCtx->sample_rate,
-			0, nullptr);
+		swr_alloc_set_opts2(&m_swResample,
+							m_audioChLayout, AVSampleFormat(m_audioSampleFormat), m_audioStreamFormat.sampleRate(),
+							&m_codecCtx->ch_layout, m_codecCtx->sample_fmt, m_codecCtx->sample_rate,
+							0, nullptr);
 		// NOTE: swr_convert_frame() will call swr_init() and swr_config_frame() which is better as it seems m_codecCtx can
-		// end up with different config that what is actually in the stream
+		// end up with different config than what is actually in the stream
+		if(!m_swResample) {
+				av_log(nullptr, AV_LOG_ERROR,
+					   "Cannot create sample rate converter for conversion of %d Hz %s %d channels to %d Hz %s %d channels!\n",
+					   m_codecCtx->sample_rate, av_get_sample_fmt_name(m_codecCtx->sample_fmt), m_codecCtx->ch_layout.nb_channels,
+					   m_audioStreamFormat.sampleRate(), av_get_sample_fmt_name(AVSampleFormat(m_audioSampleFormat)), m_audioChLayout->nb_channels);
+				return false;
+		}
 	}
 
 	return true;
@@ -363,7 +378,8 @@ StreamProcessor::processAudio()
 	if(m_swResample) {
 		frameResampled = av_frame_alloc();
 		Q_ASSERT(frameResampled != nullptr);
-		frameResampled->channel_layout = m_audioChannelLayout;
+		av_channel_layout_uninit(&frameResampled->ch_layout);
+		av_channel_layout_copy(&frameResampled->ch_layout, m_audioChLayout);
 		frameResampled->sample_rate = m_audioStreamFormat.sampleRate();
 		frameResampled->format = m_audioSampleFormat;
 	}
@@ -448,12 +464,12 @@ StreamProcessor::processAudio()
 
 					if(m_swResample) {
 						Q_ASSERT(frameResampled != nullptr);
-						emit audioDataAvailable(frameResampled->data[0], qint32(frameSize * frameResampled->channels),
+						emit audioDataAvailable(frameResampled->data[0], qint32(frameSize * frameResampled->ch_layout.nb_channels),
 							&m_audioStreamFormat, qint64(timeFrameStart + timeResampleDelay), qint64(timeFrameDuration));
 
 						drainSampleBuffer = swr_get_out_samples(m_swResample, 0) > 1000;
 					} else {
-						emit audioDataAvailable(frame->data[0], qint32(frameSize * frame->channels),
+						emit audioDataAvailable(frame->data[0], qint32(frameSize * frame->ch_layout.nb_channels),
 							&m_audioStreamFormat, qint64(timeFrameStart), qint64(timeFrameDuration));
 					}
 				} while(!conversionComplete && !isInterruptionRequested() && drainSampleBuffer);
