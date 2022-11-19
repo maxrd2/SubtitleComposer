@@ -124,6 +124,9 @@ if(QT_MAJOR_VERSION EQUAL 6)
 	target_link_libraries(subtitlecomposer-lib Qt::OpenGLWidgets Qt::Core5Compat)
 endif()
 target_include_directories(subtitlecomposer-lib PUBLIC
+	${Qt${QT_MAJOR_VERSION}Core_INCLUDE_DIRS}
+	${Qt${QT_MAJOR_VERSION}Widgets_INCLUDE_DIRS} ${Qt${QT_MAJOR_VERSION}Widgets_PRIVATE_INCLUDE_DIRS}
+	${Qt${QT_MAJOR_VERSION}Gui_INCLUDE_DIRS} ${Qt${QT_MAJOR_VERSION}Gui_PRIVATE_INCLUDE_DIRS}
 	${OPENAL_INCLUDE_DIR}
 	${FFMPEG_INCLUDE_DIRS}
 )
