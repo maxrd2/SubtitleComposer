@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: subtitlecomposer\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2022-11-19 00:45+0000\n"
-"PO-Revision-Date: 2022-11-14 15:32+0100\n"
+"PO-Revision-Date: 2022-11-19 11:58+0100\n"
 "Last-Translator: Freek de Kruijf <freekdekruijf@kde.nl>\n"
 "Language-Team: \n"
 "Language: nl\n"
@@ -3434,26 +3434,23 @@ msgid "View"
 msgstr "Beeld"
 
 #: src/scripting/scriptsmanager.cpp:476
-#, fuzzy, kde-format
-#| msgid ""
-#| "You must enter an unused name to continue.\n"
-#| "Would you like to enter another name?"
+#, kde-format
 msgid ""
 "A script already exists with this name.\n"
 "Would you like to enter another name?"
 msgstr ""
-"U moet een niet gebruikte naam invoeren om door te gaan.\n"
+"Een script met deze naam bestaat al.\n"
 "Wilt u een andere naam invoeren?"
 
 #: src/scripting/scriptsmanager.cpp:477
 #, kde-format
 msgid "Duplicate filename"
-msgstr ""
+msgstr "Dubbele bestandsnaam"
 
 #: src/scripting/scriptsmanager.cpp:478
 #, kde-format
 msgid "Yes"
-msgstr ""
+msgstr "Ja"
 
 #: src/scripting/scriptsmanager.cpp:482
 #, kde-format

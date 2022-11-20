@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: subtitlecomposer\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2022-11-19 00:45+0000\n"
-"PO-Revision-Date: 2022-11-13 15:17+0100\n"
+"PO-Revision-Date: 2022-11-19 23:04+0100\n"
 "Last-Translator: Eloy Cuadra <ecuadra@eloihr.net>\n"
 "Language-Team: Spanish <kde-l10n-es@kde.org>\n"
 "Language: es\n"
@@ -3466,26 +3466,23 @@ msgid "View"
 msgstr "Ver"
 
 #: src/scripting/scriptsmanager.cpp:476
-#, fuzzy, kde-format
-#| msgid ""
-#| "You must enter an unused name to continue.\n"
-#| "Would you like to enter another name?"
+#, kde-format
 msgid ""
 "A script already exists with this name.\n"
 "Would you like to enter another name?"
 msgstr ""
-"Debe ingresar un nombre no utilizado para continuar.\n"
-"¿Desea ingresar otro nombre?"
+"Ya existe un guion con este nombre.\n"
+"¿Desea introducir otro nombre?"
 
 #: src/scripting/scriptsmanager.cpp:477
 #, kde-format
 msgid "Duplicate filename"
-msgstr ""
+msgstr "Nombre de archivo duplicado"
 
 #: src/scripting/scriptsmanager.cpp:478
 #, kde-format
 msgid "Yes"
-msgstr ""
+msgstr "Sí"
 
 #: src/scripting/scriptsmanager.cpp:482
 #, kde-format
