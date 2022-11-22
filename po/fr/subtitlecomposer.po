@@ -11,7 +11,7 @@ msgstr ""
 "Project-Id-Version: subtitlecomposer\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2022-11-19 00:45+0000\n"
-"PO-Revision-Date: 2022-11-13 20:09+0100\n"
+"PO-Revision-Date: 2022-11-21 12:26+0100\n"
 "Last-Translator: Xavier Besnard <xavier.besnard@neuf.fr>\n"
 "Language-Team: French <kde-francophone@kde.org>\n"
 "Language: fr\n"
@@ -19,7 +19,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
-"X-Generator: Lokalize 22.08.3\n"
+"X-Generator: Lokalize 22.11.80\n"
 
 #: src/actions/kcodecactionext.cpp:29
 #, kde-format
@@ -3469,27 +3469,23 @@ msgid "View"
 msgstr "Affichage"
 
 #: src/scripting/scriptsmanager.cpp:476
-#, fuzzy, kde-format
-#| msgid ""
-#| "You must enter an unused name to continue.\n"
-#| "Would you like to enter another name?"
+#, kde-format
 msgid ""
 "A script already exists with this name.\n"
 "Would you like to enter another name?"
 msgstr ""
-"Vous devez saisir un nom non utilisé pour continuer.\n"
+"Un script avec ce nom existe déjà.\n"
 "Voulez-vous saisir un autre nom ?"
 
 #: src/scripting/scriptsmanager.cpp:477
 #, kde-format
 msgid "Duplicate filename"
-msgstr ""
+msgstr "Dupliquer un nom de fichier"
 
 #: src/scripting/scriptsmanager.cpp:478
-#, fuzzy, kde-format
-#| msgid "yes"
+#, kde-format
 msgid "Yes"
-msgstr "oui"
+msgstr "Oui"
 
 #: src/scripting/scriptsmanager.cpp:482
 #, kde-format
