@@ -496,7 +496,7 @@ RichDocumentEditor::draw(QPainter *painter, const QPoint &offset, const QRect &c
 				}
 				m_textLayouts[i].draw(painter, offset, selections, clip);
 				const QTextLine &tl = m_textLayouts[i].lineAt(0);
-				docLayout->separatorDraw(painter, QPointF(tl.position().x() + offset.x() - m_layoutSeparatorSize.width(), 0.));
+				docLayout->separatorDraw(painter, QPointF(tl.position().x() + offset.x() - m_layoutSeparatorSize.width(), offset.y() - tl.descent()));
 			}
 			if(flags & DrawCursor && m_blinkStatus && cursor >= off && cursor < end)
 				m_textLayouts[i].drawCursor(painter, offset, cursor - off, m_cursorWidth);

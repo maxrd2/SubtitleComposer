@@ -228,7 +228,7 @@ drawRichText(QPainter *painter, const QStyleOptionViewItem &option, const QRect 
 		for(int i = 0; i < n; i++) {
 			const QTextLine &tl = bl.lineAt(i);
 			tl.draw(painter, QPointF());
-			docLayout->separatorDraw(painter, QPointF(tl.position().x() - sepWidth, 0.));
+			docLayout->separatorDraw(painter, QPointF(tl.position().x() - sepWidth, tl.position().y() - tl.descent()));
 		}
 	}
 }
