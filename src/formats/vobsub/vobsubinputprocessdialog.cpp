@@ -697,9 +697,12 @@ VobSubInputProcessDialog::processNextPiece()
 			piecePrev = piece;
 		}
 
-		SubtitleLine *l = new SubtitleLine((*m_frameCurrent)->subShowTime, (*m_frameCurrent)->subHideTime);
+		SubtitleLine *l = m_subtitle->line((*m_frameCurrent)->index);
+		if(!l) {
+			l = new SubtitleLine((*m_frameCurrent)->subShowTime, (*m_frameCurrent)->subHideTime);
+			m_subtitle->insertLine(l);
+		}
 		l->primaryDoc()->setPlainText(subText);
-		m_subtitle->insertLine(l);
 
 		ui->grpText->setDisabled(true);
 		ui->grpNavButtons->setDisabled(true);
@@ -809,8 +812,6 @@ VobSubInputProcessDialog::onPrevImageClicked()
 		return;
 
 	--m_frameCurrent;
-	if(m_subtitle->lastIndex() >= 0)
-		m_subtitle->removeLines(RangeList(Range(m_subtitle->lastIndex())), Both);
 
 	ui->progressBar->setValue((*m_frameCurrent)->index + 1);
 
