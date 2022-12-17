@@ -34,7 +34,7 @@ find_package(Qt${QT_MAJOR_VERSION} ${QT_MIN_VERSION} CONFIG REQUIRED COMPONENTS
 	Core Widgets Gui Test Qml ${QT_EXTRA_COMPONENTS})
 
 find_package(KF5 ${KF5_MIN_VERSION} REQUIRED COMPONENTS
-	Auth Config ConfigWidgets CoreAddons I18n KIO XmlGui
+	Config ConfigWidgets CoreAddons I18n KIO XmlGui
 	Sonnet Codecs TextWidgets WidgetsAddons)
 
 #PO_SUBDIR
