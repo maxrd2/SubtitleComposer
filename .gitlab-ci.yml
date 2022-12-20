@@ -9,10 +9,9 @@ include:
   - remote: https://invent.kde.org/sysadmin/ci-utilities/raw/master/gitlab-templates/freebsd.yml
     rules:
       - if: $CI_SERVER_HOST =~ /kde\.org$/
-# TODO: Windows builds are breaking on KAuth
-#  - remote: https://invent.kde.org/sysadmin/ci-utilities/raw/master/gitlab-templates/windows.yml
-#    rules:
-#      - if: $CI_SERVER_HOST =~ /kde\.org$/
+  - remote: https://invent.kde.org/sysadmin/ci-utilities/raw/master/gitlab-templates/windows.yml
+    rules:
+      - if: $CI_SERVER_HOST =~ /kde\.org$/
   - remote: https://invent.kde.org/sysadmin/ci-utilities/raw/master/gitlab-templates/linux-qt6.yml
     rules:
       - if: $CI_SERVER_HOST =~ /kde\.org$/
