@@ -439,7 +439,7 @@ const SCScript *
 ScriptsManager::findScript(const QString filename) const
 {
 	const SCScript *s = filename.isEmpty() ? nullptr : static_cast<InstalledScriptsModel *>(scriptsView->model())->findByFilename(filename);
-	return s ?: currentScript();
+	return s ? s : currentScript();
 }
 
 const SCScript *

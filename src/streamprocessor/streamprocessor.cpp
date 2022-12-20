@@ -448,12 +448,12 @@ StreamProcessor::processAudio()
 
 					if(m_swResample) {
 						Q_ASSERT(frameResampled != nullptr);
-						emit audioDataAvailable(frameResampled->data[0], frameSize * frameResampled->channels,
+						emit audioDataAvailable(frameResampled->data[0], qint32(frameSize * frameResampled->channels),
 							&m_audioStreamFormat, qint64(timeFrameStart + timeResampleDelay), qint64(timeFrameDuration));
 
 						drainSampleBuffer = swr_get_out_samples(m_swResample, 0) > 1000;
 					} else {
-						emit audioDataAvailable(frame->data[0], frameSize * frame->channels,
+						emit audioDataAvailable(frame->data[0], qint32(frameSize * frame->channels),
 							&m_audioStreamFormat, qint64(timeFrameStart), qint64(timeFrameDuration));
 					}
 				} while(!conversionComplete && !isInterruptionRequested() && drainSampleBuffer);

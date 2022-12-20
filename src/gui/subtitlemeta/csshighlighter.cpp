@@ -67,7 +67,7 @@ void
 CSSHighlighter::highlightBlock(const QString &text)
 {
 	// init state
-	BlockState state = { .state = qMax(0, previousBlockState()) };
+	BlockState state = { qMax(0, previousBlockState()) };
 	int commentStart = state.commentStart ? 0 : -1;
 	int attributeStart = state.attributeStart ? 0 : -1;
 	int styleStart = state.styleStart ? 0 : -1;

@@ -160,7 +160,7 @@ AudioDecoder::open(int64_t wantChLayout, int wantNbChan, int wantSampleRate)
 
 	if(wantSampleRate <= 0 || wantNbChan <= 0) {
 		av_log(nullptr, AV_LOG_ERROR, "openal: invalid sample rate or channel count!\n");
-		return -1;
+		return false;
 	}
 
 	int availNbChan = wantNbChan;

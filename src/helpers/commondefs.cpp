@@ -20,7 +20,7 @@
 #include <kio_version.h>
 #include <kio/statjob.h>
 
-#ifndef Q_WS_WIN
+#ifndef Q_OS_WIN
 #include <unistd.h>
 #endif
 
@@ -32,9 +32,9 @@ QString
 String::title(const QString &text)
 {
 	QString auxText = text.toLower();
-	for(const QChar sep : QStringLiteral(" -_([:,;./\\\t\n\"")) {
+	for(const QChar sep: QStringLiteral(" -_([:,;./\\\t\n\"")) {
 		QStringList auxWordsList;
-		for(const QString &word : auxText.split(sep)) {
+		for(const QString &word: auxText.split(sep)) {
 			if(!word.isEmpty())
 				auxWordsList << (word.at(0).toUpper() + word.mid(1));
 			else

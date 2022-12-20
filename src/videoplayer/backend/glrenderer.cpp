@@ -12,6 +12,7 @@
 #include <QScreen>
 #include <QWindow>
 
+#include "helpers/common.h"
 #include "videoplayer/backend/ffplayer.h"
 #include "videoplayer/videoplayer.h"
 #include "videoplayer/subtitletextoverlay.h"
@@ -446,27 +447,27 @@ GLRenderer::initShader()
 		csms.append(QString::number(csm[i], 'g', 10));
 	}
 
-	success = m_fragShader->compileSourceCode(QStringLiteral(
+	success = m_fragShader->compileSourceCode(
 #ifdef USE_GLES
-		"#version 100\n"
-		"precision mediump float;\n"
+		$("#version 100\n"
+		"precision mediump float;\n") %
 #else
-		"#version 120\n"
+		$("#version 120\n") %
 #endif
-		"varying vec2 vfVidTex;"
+		$("varying vec2 vfVidTex;"
 		"varying vec2 vfOvrTex;"
 		"uniform sampler2D texY;"
 		"uniform sampler2D texU;"
 		"uniform sampler2D texV;"
 		"uniform sampler2D texOvr;"
-		"float toLinear(float vExp) {") % m_ctfIn % QStringLiteral("}"
-		"float toDisplay(float vLin) {") % m_ctfOut % QStringLiteral("}"
+		"float toLinear(float vExp) {") % m_ctfIn % $("}"
+		"float toDisplay(float vLin) {") % m_ctfOut % $("}"
 		"void main(void) {"
 			"vec3 yuv;"
 			"yuv.x = texture2D(texY, vfVidTex).r;"
 			"yuv.y = texture2D(texU, vfVidTex).r;"
 			"yuv.z = texture2D(texV, vfVidTex).r;"
-			"mat4 texCS = mat4(") % csms % QStringLiteral(");"
+			"mat4 texCS = mat4(") % csms % $(");"
 			"vec3 rgb = (texCS * vec4(yuv, 1)).xyz;"
 			// ideally gamma would be applied to Y, but video signals apply to RGB so we do the same
 			"rgb.r = toLinear(rgb.r);"
