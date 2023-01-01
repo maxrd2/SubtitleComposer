@@ -7,9 +7,9 @@ msgstr ""
 "Project-Id-Version: subtitlecomposer\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2022-11-19 00:45+0000\n"
-"PO-Revision-Date: 2022-04-02 16:38+0100\n"
+"PO-Revision-Date: 2022-12-31 15:59+0000\n"
 "Last-Translator: Steve Allewell <steve.allewell@gmail.com>\n"
-"Language-Team: British English <kde-l10n-en_gb@kde.org>\n"
+"Language-Team: English <kde-i18n-doc@kde.org>\n"
 "Language: en_GB\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -2112,10 +2112,9 @@ msgid "Swap Texts"
 msgstr "Swap Texts"
 
 #: src/core/undo/subtitleactions.cpp:308
-#, fuzzy, kde-format
-#| msgid "Change Case"
+#, kde-format
 msgid "Change stylesheet"
-msgstr "Change Case"
+msgstr "Change stylesheet"
 
 #: src/core/undo/subtitlelineactions.cpp:28
 #, kde-format
@@ -2794,61 +2793,58 @@ msgid "Error Playing File"
 msgstr "Error Playing File"
 
 #: src/gui/subtitlemeta/subtitlemetawidget.cpp:46
-#, fuzzy, kde-format
-#| msgid "Styles"
+#, kde-format
 msgid "&Stylesheet"
-msgstr "Styles"
+msgstr "&Stylesheet"
 
 #: src/gui/subtitlemeta/subtitlemetawidget.cpp:47
 #, kde-format
 msgid "&Comments"
-msgstr ""
+msgstr "&Comments"
 
 #: src/gui/subtitlemeta/subtitlemetawidget.cpp:48
-#, fuzzy, kde-format
-#| msgid "<b>Position</b>"
+#, kde-format
 msgid "&Position"
-msgstr "<b>Position</b>"
+msgstr "&Position"
 
 #: src/gui/subtitlemeta/subtitlemetawidget.cpp:88
 #, kde-format
 msgid "Intro"
-msgstr ""
+msgstr "Intro"
 
 #: src/gui/subtitlemeta/subtitlemetawidget.cpp:90
 #, kde-format
 msgid "Header"
-msgstr ""
+msgstr "Header"
 
 #: src/gui/subtitlemeta/subtitlemetawidget.cpp:92
 #, kde-format
 msgid "Footer"
-msgstr ""
+msgstr "Footer"
 
 #. i18n: ectx: property (windowTitle), widget (QWidget, SubtitlePositionWidget)
 #: src/gui/subtitlemeta/subtitlepositionwidget.ui:14
 #, kde-format
 msgid "Form"
-msgstr ""
+msgstr "Form"
 
 #. i18n: ectx: property (title), widget (QGroupBox, grpHAlign)
 #: src/gui/subtitlemeta/subtitlepositionwidget.ui:20
 #, kde-format
 msgid "Horizontal Alignment"
-msgstr ""
+msgstr "Horizontal Alignment"
 
 #. i18n: ectx: property (title), widget (QGroupBox, grpVAlign)
 #: src/gui/subtitlemeta/subtitlepositionwidget.ui:106
 #, kde-format
 msgid "Vertical Alignment"
-msgstr ""
+msgstr "Vertical Alignment"
 
 #. i18n: ectx: property (title), widget (QGroupBox, grpPosition)
 #: src/gui/subtitlemeta/subtitlepositionwidget.ui:169
-#, fuzzy, kde-format
-#| msgid "<b>Position</b>"
+#, kde-format
 msgid "Position/Size"
-msgstr "<b>Position</b>"
+msgstr "Position/Size"
 
 #. i18n: ectx: property (suffix), widget (QDoubleSpinBox, posBottom)
 #. i18n: ectx: property (suffix), widget (QDoubleSpinBox, posLeft)
@@ -2860,7 +2856,7 @@ msgstr "<b>Position</b>"
 #: src/gui/subtitlemeta/subtitlepositionwidget.ui:205
 #, no-c-format, kde-format
 msgid "%"
-msgstr ""
+msgstr "%"
 
 #: src/gui/treeview/linesmodel.cpp:156
 #, kde-format
@@ -3096,7 +3092,7 @@ msgstr "Video Player"
 #: src/mainwindow.cpp:65
 #, kde-format
 msgid "Styles and Comments"
-msgstr ""
+msgstr "Styles and Comments"
 
 #. i18n: ectx: label, entry (DefaultSubtitlesEncoding), group (General)
 #: src/scconfig.kcfg:10
@@ -3431,26 +3427,23 @@ msgid "View"
 msgstr "View"
 
 #: src/scripting/scriptsmanager.cpp:476
-#, fuzzy, kde-format
-#| msgid ""
-#| "You must enter an unused name to continue.\n"
-#| "Would you like to enter another name?"
+#, kde-format
 msgid ""
 "A script already exists with this name.\n"
 "Would you like to enter another name?"
 msgstr ""
-"You must enter an unused name to continue.\n"
+"A script already exists with this name.\n"
 "Would you like to enter another name?"
 
 #: src/scripting/scriptsmanager.cpp:477
 #, kde-format
 msgid "Duplicate filename"
-msgstr ""
+msgstr "Duplicate filename"
 
 #: src/scripting/scriptsmanager.cpp:478
 #, kde-format
 msgid "Yes"
-msgstr ""
+msgstr "Yes"
 
 #: src/scripting/scriptsmanager.cpp:482
 #, kde-format
