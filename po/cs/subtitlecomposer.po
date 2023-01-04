@@ -13,7 +13,7 @@ msgstr ""
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2022-11-19 00:45+0000\n"
 "PO-Revision-Date: 2022-04-06 11:32+0200\n"
-"Last-Translator: Vit Pelcak <vpelcak@suse.cz>\n"
+"Last-Translator: Vit Pelcak <vit@pelcak.org>\n"
 "Language-Team: Czech <kde-i18n-doc@kde.org>\n"
 "Language: cs\n"
 "MIME-Version: 1.0\n"
@@ -2124,10 +2124,9 @@ msgid "Swap Texts"
 msgstr "Prohodit texty"
 
 #: src/core/undo/subtitleactions.cpp:308
-#, fuzzy, kde-format
-#| msgid "Change Case"
+#, kde-format
 msgid "Change stylesheet"
-msgstr "Změnit velikost písmen"
+msgstr ""
 
 #: src/core/undo/subtitlelineactions.cpp:28
 #, kde-format
@@ -2804,61 +2803,58 @@ msgid "Error Playing File"
 msgstr "Chyba při přehrávání souboru"
 
 #: src/gui/subtitlemeta/subtitlemetawidget.cpp:46
-#, fuzzy, kde-format
-#| msgid "Styles"
+#, kde-format
 msgid "&Stylesheet"
-msgstr "Styly"
+msgstr ""
 
 #: src/gui/subtitlemeta/subtitlemetawidget.cpp:47
 #, kde-format
 msgid "&Comments"
-msgstr ""
+msgstr "&Komentáře"
 
 #: src/gui/subtitlemeta/subtitlemetawidget.cpp:48
-#, fuzzy, kde-format
-#| msgid "<b>Position</b>"
+#, kde-format
 msgid "&Position"
-msgstr "<b>Pozice</b>"
+msgstr "&Umístění"
 
 #: src/gui/subtitlemeta/subtitlemetawidget.cpp:88
 #, kde-format
 msgid "Intro"
-msgstr ""
+msgstr "Úvod"
 
 #: src/gui/subtitlemeta/subtitlemetawidget.cpp:90
 #, kde-format
 msgid "Header"
-msgstr ""
+msgstr "Záhlaví"
 
 #: src/gui/subtitlemeta/subtitlemetawidget.cpp:92
 #, kde-format
 msgid "Footer"
-msgstr ""
+msgstr "Zápatí"
 
 #. i18n: ectx: property (windowTitle), widget (QWidget, SubtitlePositionWidget)
 #: src/gui/subtitlemeta/subtitlepositionwidget.ui:14
 #, kde-format
 msgid "Form"
-msgstr ""
+msgstr "Formulář"
 
 #. i18n: ectx: property (title), widget (QGroupBox, grpHAlign)
 #: src/gui/subtitlemeta/subtitlepositionwidget.ui:20
 #, kde-format
 msgid "Horizontal Alignment"
-msgstr ""
+msgstr "Vodorovné zarovnání"
 
 #. i18n: ectx: property (title), widget (QGroupBox, grpVAlign)
 #: src/gui/subtitlemeta/subtitlepositionwidget.ui:106
 #, kde-format
 msgid "Vertical Alignment"
-msgstr ""
+msgstr "Svislé zarovnání"
 
 #. i18n: ectx: property (title), widget (QGroupBox, grpPosition)
 #: src/gui/subtitlemeta/subtitlepositionwidget.ui:169
-#, fuzzy, kde-format
-#| msgid "<b>Position</b>"
+#, kde-format
 msgid "Position/Size"
-msgstr "<b>Pozice</b>"
+msgstr ""
 
 #. i18n: ectx: property (suffix), widget (QDoubleSpinBox, posBottom)
 #. i18n: ectx: property (suffix), widget (QDoubleSpinBox, posLeft)
@@ -2870,7 +2866,7 @@ msgstr "<b>Pozice</b>"
 #: src/gui/subtitlemeta/subtitlepositionwidget.ui:205
 #, no-c-format, kde-format
 msgid "%"
-msgstr ""
+msgstr "%"
 
 #: src/gui/treeview/linesmodel.cpp:156
 #, kde-format
@@ -3436,16 +3432,11 @@ msgid "View"
 msgstr "Pohled"
 
 #: src/scripting/scriptsmanager.cpp:476
-#, fuzzy, kde-format
-#| msgid ""
-#| "You must enter an unused name to continue.\n"
-#| "Would you like to enter another name?"
+#, kde-format
 msgid ""
 "A script already exists with this name.\n"
 "Would you like to enter another name?"
 msgstr ""
-"Pro pokračování musíte vložit nepoužitý název.\n"
-"Chtěli byste vložit jiný název?"
 
 #: src/scripting/scriptsmanager.cpp:477
 #, kde-format
@@ -3455,7 +3446,7 @@ msgstr ""
 #: src/scripting/scriptsmanager.cpp:478
 #, kde-format
 msgid "Yes"
-msgstr ""
+msgstr "Ano"
 
 #: src/scripting/scriptsmanager.cpp:482
 #, kde-format
