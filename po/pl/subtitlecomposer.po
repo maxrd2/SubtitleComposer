@@ -5,13 +5,13 @@
 # Tomek Argasiński <targasinski@o2.pl>, 2009.
 # Tomek Argasiński <dopelover@o2.pl>, 2009.
 # Sergio Pistone <sergio_pistone@yahoo,com.ar>, 2009.
-# Łukasz Wojniłowicz <lukasz.wojnilowicz@gmail.com>, 2020, 2021, 2022.
+# Łukasz Wojniłowicz <lukasz.wojnilowicz@gmail.com>, 2020, 2021, 2022, 2023.
 msgid ""
 msgstr ""
 "Project-Id-Version: subtitlecomposer\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2022-11-19 00:45+0000\n"
-"PO-Revision-Date: 2022-05-03 07:37+0200\n"
+"PO-Revision-Date: 2023-01-04 20:47+0100\n"
 "Last-Translator: Łukasz Wojniłowicz <lukasz.wojnilowicz@gmail.com>\n"
 "Language-Team: Polish <kde-i18n-doc@kde.org>\n"
 "Language: pl\n"
@@ -20,7 +20,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=(n==1 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 "
 "|| n%100>=20) ? 1 : 2);\n"
-"X-Generator: Lokalize 22.03.70\n"
+"X-Generator: Lokalize 22.12.0\n"
 "X-Crowdin-Project: subtitlecomposer\n"
 "X-Crowdin-Language: pl\n"
 "X-Crowdin-File: subtitlecomposer.pot\n"
@@ -2167,10 +2167,9 @@ msgid "Swap Texts"
 msgstr "Zamień teksty"
 
 #: src/core/undo/subtitleactions.cpp:308
-#, fuzzy, kde-format
-#| msgid "Change Case"
+#, kde-format
 msgid "Change stylesheet"
-msgstr "Zmień wielkość liter"
+msgstr "Zmień arkusz wyglądu"
 
 #: src/core/undo/subtitlelineactions.cpp:28
 #, kde-format
@@ -2849,61 +2848,58 @@ msgid "Error Playing File"
 msgstr "Błąd podczas odtwarzania pliku"
 
 #: src/gui/subtitlemeta/subtitlemetawidget.cpp:46
-#, fuzzy, kde-format
-#| msgid "Styles"
+#, kde-format
 msgid "&Stylesheet"
-msgstr "Wyglądy"
+msgstr "Arku&sz wyglądu"
 
 #: src/gui/subtitlemeta/subtitlemetawidget.cpp:47
 #, kde-format
 msgid "&Comments"
-msgstr ""
+msgstr "&Uwagi"
 
 #: src/gui/subtitlemeta/subtitlemetawidget.cpp:48
-#, fuzzy, kde-format
-#| msgid "<b>Position</b>"
+#, kde-format
 msgid "&Position"
-msgstr "<b>Położenie</b>"
+msgstr "&Położenie"
 
 #: src/gui/subtitlemeta/subtitlemetawidget.cpp:88
 #, kde-format
 msgid "Intro"
-msgstr ""
+msgstr "Wstęp"
 
 #: src/gui/subtitlemeta/subtitlemetawidget.cpp:90
 #, kde-format
 msgid "Header"
-msgstr ""
+msgstr "Nagłówek"
 
 #: src/gui/subtitlemeta/subtitlemetawidget.cpp:92
 #, kde-format
 msgid "Footer"
-msgstr ""
+msgstr "Stopka"
 
 #. i18n: ectx: property (windowTitle), widget (QWidget, SubtitlePositionWidget)
 #: src/gui/subtitlemeta/subtitlepositionwidget.ui:14
 #, kde-format
 msgid "Form"
-msgstr ""
+msgstr "Formularz"
 
 #. i18n: ectx: property (title), widget (QGroupBox, grpHAlign)
 #: src/gui/subtitlemeta/subtitlepositionwidget.ui:20
 #, kde-format
 msgid "Horizontal Alignment"
-msgstr ""
+msgstr "Wyrównanie w poziomie"
 
 #. i18n: ectx: property (title), widget (QGroupBox, grpVAlign)
 #: src/gui/subtitlemeta/subtitlepositionwidget.ui:106
 #, kde-format
 msgid "Vertical Alignment"
-msgstr ""
+msgstr "Wyrównanie w pionie"
 
 #. i18n: ectx: property (title), widget (QGroupBox, grpPosition)
 #: src/gui/subtitlemeta/subtitlepositionwidget.ui:169
-#, fuzzy, kde-format
-#| msgid "<b>Position</b>"
+#, kde-format
 msgid "Position/Size"
-msgstr "<b>Położenie</b>"
+msgstr "Położenie/rozmiar"
 
 #. i18n: ectx: property (suffix), widget (QDoubleSpinBox, posBottom)
 #. i18n: ectx: property (suffix), widget (QDoubleSpinBox, posLeft)
@@ -2915,12 +2911,12 @@ msgstr "<b>Położenie</b>"
 #: src/gui/subtitlemeta/subtitlepositionwidget.ui:205
 #, no-c-format, kde-format
 msgid "%"
-msgstr ""
+msgstr "%"
 
 #: src/gui/treeview/linesmodel.cpp:156
 #, kde-format
 msgid "<b>Observations:</b>"
-msgstr "<b>Komentarze:</b>"
+msgstr "<b>Uwagi:</b>"
 
 #: src/gui/treeview/linesmodel.cpp:183
 #, kde-format
@@ -3151,7 +3147,7 @@ msgstr "Odtwarzacz filmów"
 #: src/mainwindow.cpp:65
 #, kde-format
 msgid "Styles and Comments"
-msgstr ""
+msgstr "Wygląd i uwagi"
 
 #. i18n: ectx: label, entry (DefaultSubtitlesEncoding), group (General)
 #: src/scconfig.kcfg:10
@@ -3486,26 +3482,23 @@ msgid "View"
 msgstr "Widok"
 
 #: src/scripting/scriptsmanager.cpp:476
-#, fuzzy, kde-format
-#| msgid ""
-#| "You must enter an unused name to continue.\n"
-#| "Would you like to enter another name?"
+#, kde-format
 msgid ""
 "A script already exists with this name.\n"
 "Would you like to enter another name?"
 msgstr ""
-"Aby kontynuować należy wprowadzić nieużywaną nazwę.\n"
-"Czy chcesz wprowadzić inną nazwę?"
+"Skrypt o tej nazwie już istnieje.\n"
+"Czy chcesz wpisać inną nazwę?"
 
 #: src/scripting/scriptsmanager.cpp:477
 #, kde-format
 msgid "Duplicate filename"
-msgstr ""
+msgstr "Powielona nazwa pliku"
 
 #: src/scripting/scriptsmanager.cpp:478
 #, kde-format
 msgid "Yes"
-msgstr ""
+msgstr "Tak"
 
 #: src/scripting/scriptsmanager.cpp:482
 #, kde-format
