@@ -30,7 +30,6 @@
 #include <QStringBuilder>
 #include <QTextCodec>
 
-#include <KCharsets>
 #include <KCodecAction>
 #include <KLocalizedString>
 #include <KMessageBox>

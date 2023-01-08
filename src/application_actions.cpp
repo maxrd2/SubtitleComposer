@@ -15,7 +15,6 @@
 #include <QMenu>
 #include <QTextCodec>
 
-#include <KCharsets>
 #include <KLocalizedString>
 #include <kwidgetsaddons_version.h>
 

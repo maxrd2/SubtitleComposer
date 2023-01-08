@@ -44,7 +44,6 @@
 #include <QFileInfo>
 #include <QTextCodec>
 
-#include <KCharsets>
 #include <QUrl>
 
 #ifdef HAVE_ICU
