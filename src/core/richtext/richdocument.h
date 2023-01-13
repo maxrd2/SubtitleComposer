@@ -9,6 +9,7 @@
 
 #include "core/richstring.h"
 #include "core/richtext/richcss.h"
+#include "core/richtext/richdom.h"
 #include "core/richtext/richdocumentlayout.h"
 
 #include <QTextBlock>
@@ -22,6 +23,7 @@ QT_FORWARD_DECLARE_CLASS(QStyle)
 QT_FORWARD_DECLARE_CLASS(QStyleOptionViewItem)
 
 namespace SubtitleComposer {
+class RichDOM;
 
 class RichDocument : public QTextDocument
 {
@@ -75,6 +77,14 @@ public:
 	void setStylesheet(const RichCSS *css);
 	inline const RichCSS *stylesheet() const { return m_stylesheet; }
 
+	RichDOM *dom();
+	QString crumbAt(RichDOM::Node *n);
+	RichDOM::Node *nodeAt(quint32 pos, RichDOM::Node *root=nullptr);
+	inline QString crumbAt(quint32 pos) { return crumbAt(nodeAt(pos ? pos - 1 : 0, dom()->m_root)); }
+
+signals:
+	void domChanged();
+
 public slots:
 	inline void undo() { QTextDocument::undo(&m_undoableCursor); }
 	inline void redo() { QTextDocument::redo(&m_undoableCursor); }
@@ -89,6 +99,8 @@ private:
 private:
 	QTextCursor m_undoableCursor;
 	const RichCSS *m_stylesheet;
+	bool m_domDirty;
+	RichDOM *m_dom;
 
 	void applyChanges(const void *changeList);
 

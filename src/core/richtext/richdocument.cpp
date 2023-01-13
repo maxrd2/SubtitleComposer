@@ -7,6 +7,7 @@
 #include "richdocument.h"
 
 #include "core/richtext/richdocumentlayout.h"
+#include "core/richtext/richdom.h"
 #include "helpers/common.h"
 
 #include <QApplication>
@@ -64,7 +65,9 @@ struct EditChange {
 RichDocument::RichDocument(QObject *parent)
 	: QTextDocument(parent),
 	  m_undoableCursor(this),
-	  m_stylesheet(nullptr)
+	  m_stylesheet(nullptr),
+	  m_domDirty(true),
+	  m_dom(new RichDOM)
 {
 	setUndoRedoEnabled(true);
 
@@ -76,10 +79,16 @@ RichDocument::RichDocument(QObject *parent)
 	setDefaultStyleSheet($("p { display:block; white-space:pre; margin-top:0; margin-bottom:0; }"));
 
 	setDocumentLayout(new RichDocumentLayout(this));
+
+	connect(this, &RichDocument::contentsChanged, this, [&](){
+		m_domDirty = true;
+		emit domChanged();
+	});
 }
 
 RichDocument::~RichDocument()
 {
+	delete m_dom;
 }
 
 void
@@ -837,4 +846,44 @@ RichDocument::replace(int index, int len, const QString &replacement)
 	m_undoableCursor.movePosition(QTextCursor::Right, QTextCursor::KeepAnchor, len);
 	m_undoableCursor.insertText(replacement);
 	m_undoableCursor.endEditBlock();
+}
+
+RichDOM *
+RichDocument::dom()
+{
+	if(m_domDirty) {
+		m_dom->update(this);
+		m_domDirty = false;
+	}
+	return m_dom;
+}
+
+RichDOM::Node *
+RichDocument::nodeAt(quint32 pos, RichDOM::Node *root)
+{
+	RichDOM::Node *n = (root ? root : dom()->m_root)->children;
+	while(n) {
+		if(pos >= n->nodeStart && pos < n->nodeEnd) {
+			RichDOM::Node *s;
+			if(n->children && (s = nodeAt(pos, n)))
+				return s;
+			break;
+		}
+		n = n->next;
+	}
+	return n;
+}
+
+QString
+RichDocument::crumbAt(RichDOM::Node *n)
+{
+	if(!n)
+		return QString();
+
+	QString crumb = n->cssSel();
+	while(n->parent) {
+		n = n->parent;
+		crumb = n->cssSel() + $(" > ") + crumb;
+	}
+	return crumb;
 }
