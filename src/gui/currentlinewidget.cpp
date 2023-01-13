@@ -6,24 +6,29 @@
 */
 
 #include "currentlinewidget.h"
-#include "application.h"
 #include "core/richtext/richdocument.h"
 #include "helpers/common.h"
+#include "scconfig.h"
 #include "widgets/timeedit.h"
 #include "widgets/simplerichtextedit.h"
 
-#include <QTimer>
-#include <QLabel>
-#include <QToolButton>
-#include <QGroupBox>
-#include <QGridLayout>
-#include <QKeyEvent>
+#include <QCursor>
 #include <QDebug>
+#include <QGridLayout>
+#include <QGroupBox>
 #include <QIcon>
+#include <QKeyEvent>
+#include <QLabel>
+#include <QPushButton>
+#include <QStringBuilder>
 #include <QTextDocument>
+#include <QTimer>
+#include <QToolButton>
 
 #include <KConfigGroup>
 #include <KLocalizedString>
+
+#include <forward_list>
 
 #define TOOLBUTTON_SIZE 21
 
@@ -32,6 +37,162 @@ using namespace SubtitleComposer;
 enum { COL_TIME, COL_PRIMARY, COL_SECONDARY };
 
 QTextDocument CurrentLineWidget::m_blankDoc;
+
+
+/// Breadcrumb Widget
+
+namespace SubtitleComposer {
+
+class Breadcrumb : public QWidget {
+	using WidgetList = std::forward_list<QWidget *>;
+
+public:
+	Breadcrumb(SimpleRichTextEdit *textEdit, CurrentLineWidget *parent);
+
+private:
+	void crumbUpdate();
+	void scheduleUpdate() { m_timer->start(100); }
+	QPushButton *addButton();
+	QLabel *addSeparator();
+	void startLayout();
+	void finishLayout();
+	void hideAll();
+
+private:
+	QTimer *m_timer;
+	WidgetList m_elements;
+	WidgetList::const_iterator m_iter;
+	WidgetList::const_iterator m_last;
+	CurrentLineWidget *m_lineWidget;
+	QHBoxLayout *m_layout;
+	SimpleRichTextEdit *m_textEdit;
+};
+
+}
+
+Breadcrumb::Breadcrumb(SimpleRichTextEdit *textEdit, CurrentLineWidget *parent)
+	: QWidget(parent),
+	  m_timer(new QTimer(this)),
+	  m_lineWidget(parent),
+	  m_layout(new QHBoxLayout(this)),
+	  m_textEdit(textEdit)
+{
+	QFont f = font();
+	f.setPointSize(f.pointSize() - 1);
+	setFont(f);
+	setContentsMargins(3, 0, 3, 0);
+
+	m_layout->setContentsMargins(0, 0, 0, 0);
+	m_layout->setSpacing(0);
+
+	connect(m_textEdit, &SimpleRichTextEdit::textChanged, this, &Breadcrumb::scheduleUpdate);
+	connect(m_textEdit, &SimpleRichTextEdit::cursorPositionChanged, this, &Breadcrumb::scheduleUpdate);
+	connect(m_timer, &QTimer::timeout, this, &Breadcrumb::crumbUpdate);
+	m_timer->setSingleShot(true);
+}
+
+void
+Breadcrumb::startLayout()
+{
+	m_iter = m_elements.cbegin();
+	if(m_iter != m_elements.cend()) {
+		++m_iter;
+		return;
+	}
+	m_layout->addStretch(1);
+	m_elements.push_front(nullptr);
+	m_last = m_elements.cbegin();
+}
+
+QPushButton *
+Breadcrumb::addButton()
+{
+	QPushButton *b;
+	if(m_iter != m_elements.cend()) {
+		b = static_cast<QPushButton *>(*m_iter);
+		b->show();
+		++m_iter;
+		return b;
+	}
+
+	b = new QPushButton(this);
+	connect(b, &QPushButton::clicked, this, [&](){
+		m_lineWidget->onBreadcrumbClick(
+					static_cast<QPushButton *>(QObject::sender()),
+					m_textEdit);
+	});
+	b->setFocusPolicy(Qt::NoFocus);
+	m_layout->insertWidget(0, b);
+	m_last = m_elements.insert_after(m_last, b);
+	return b;
+}
+
+QLabel *
+Breadcrumb::addSeparator()
+{
+	QLabel *l;
+	if(m_iter != m_elements.cend()) {
+		l = static_cast<QLabel *>(*m_iter);
+		l->show();
+		++m_iter;
+		return l;
+	}
+
+	l = new QLabel($(" > "), this);
+	m_layout->insertWidget(0, l);
+	m_last = m_elements.insert_after(m_last, l);
+	return l;
+}
+
+void
+Breadcrumb::finishLayout()
+{
+	while(m_iter != m_elements.cend()) {
+		(*m_iter)->hide();
+		++m_iter;
+	}
+}
+
+void
+Breadcrumb::hideAll()
+{
+	m_iter = m_elements.cbegin();
+	while(m_iter != m_elements.cend()) {
+		if(*m_iter)
+			(*m_iter)->hide();
+		++m_iter;
+	}
+}
+
+void
+Breadcrumb::crumbUpdate()
+{
+	RichDocument *doc = qobject_cast<RichDocument *>(m_textEdit->document());
+	if(!doc)
+		return hideAll();
+	QFontMetrics fm(font());
+	const quint32 pos = m_textEdit->textCursor().position();
+	RichDOM::Node *n = doc->nodeAt(pos ? pos - 1 : 0);
+	if(!n)
+		return hideAll();
+
+	startLayout();
+	for(;;) {
+		QPushButton *b = addButton();
+		b->setText(n->cssSel());
+		b->setProperty("start", n->nodeStart);
+		b->setProperty("end", n->nodeEnd);
+		b->setFixedSize(fm.size(0, b->text()) + QSize(fm.height(), 2));
+		n = n->parent;
+		if(!n)
+			break;
+		addSeparator();
+	}
+	finishLayout();
+}
+
+
+/// CurrentLineWidget
 
 CurrentLineWidget::CurrentLineWidget(QWidget *parent)
 	: QWidget(parent),
@@ -146,6 +307,8 @@ CurrentLineWidget::createLineWidgetBox(int index)
 	layout->addWidget(textEdit, 1, 0, 1, COL_TOTAL);
 	m_textEdits[index] = textEdit;
 
+	layout->addWidget(new Breadcrumb(textEdit, this), 2, 0, 1, 7);
+
 	QToolButton *btnBold = createToolButton(i18n("Toggle Bold"), "format-text-bold");
 	connect(btnBold, &QToolButton::clicked, textEdit, &SimpleRichTextEdit::toggleFontBold);
 	layout->addWidget(btnBold, 0, COL_BOLD, Qt::AlignBottom);
@@ -232,10 +395,7 @@ void
 CurrentLineWidget::setCurrentLine(SubtitleLine *line)
 {
 	if(m_currentLine) {
-		disconnect(m_currentLine, &SubtitleLine::showTimeChanged, this, nullptr);
-		disconnect(m_currentLine, &SubtitleLine::hideTimeChanged, this, nullptr);
-		disconnect(m_currentLine, &SubtitleLine::primaryTextChanged, this, nullptr);
-		disconnect(m_currentLine, &SubtitleLine::secondaryTextChanged, this, nullptr);
+		disconnect(m_currentLine, nullptr, this, nullptr);
 	}
 
 	m_currentLine = line;
@@ -407,6 +567,14 @@ CurrentLineWidget::selectTranslationText(int startIndex, int endIndex)
 	m_textEdits[0]->clearSelection();
 	m_textEdits[1]->setSelection(startIndex, endIndex);
 	m_textEdits[1]->setFocus();
+}
+
+void
+CurrentLineWidget::onBreadcrumbClick(QPushButton *btn, SimpleRichTextEdit *textEdit)
+{
+	const int start = btn->property("start").toInt();
+	const int end = btn->property("end").toInt();
+	textEdit->setSelection(start, end - 1);
 }
 
 void

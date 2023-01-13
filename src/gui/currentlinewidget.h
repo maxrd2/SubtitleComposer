@@ -12,10 +12,12 @@
 #include "core/subtitleline.h"
 
 #include <QExplicitlySharedDataPointer>
+#include <QHBoxLayout>
 #include <QWidget>
 
 QT_FORWARD_DECLARE_CLASS(QTimer)
 QT_FORWARD_DECLARE_CLASS(QLabel)
+QT_FORWARD_DECLARE_CLASS(QPushButton)
 QT_FORWARD_DECLARE_CLASS(QToolButton)
 QT_FORWARD_DECLARE_CLASS(QTextDocument)
 class TimeEdit;
@@ -45,7 +47,7 @@ public slots:
 	void selectPrimaryText(int startIndex, int endIndex);
 	void selectTranslationText(int startIndex, int endIndex);
 
-protected slots:
+private:
 	void onShowTimeEditChanged(int showTime);
 	void onHideTimeEditChanged(int hideTime);
 	void onDurationTimeEditChanged(int durationTime);
@@ -58,7 +60,9 @@ protected slots:
 
 	void onConfigChanged();
 
-private:
+	friend class Breadcrumb;
+	void onBreadcrumbClick(QPushButton *btn, SimpleRichTextEdit *textEdit);
+
 	QToolButton * createToolButton(const QString &text, const char *icon, bool checkable=true);
 	QWidget * createLineWidgetBox(int index);
 
@@ -78,8 +82,8 @@ private:
 
 	QWidget *m_boxPrimary = nullptr;
 	QWidget *m_boxTranslation = nullptr;
-	SimpleRichTextEdit *m_textEdits[2] = {0};
-	QLabel *m_textLabels[2] = {0};
+	SimpleRichTextEdit *m_textEdits[2] = {};
+	QLabel *m_textLabels[2] = {};
 };
 }
 #endif
