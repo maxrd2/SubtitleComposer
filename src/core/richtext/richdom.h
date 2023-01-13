@@ -40,6 +40,8 @@ public:
 
 		QString cssSel();
 
+		void debugDump(QString pfx=QString());
+
 		NodeType type;
 		QString id;
 		QString klass;

@@ -230,3 +230,14 @@ RichDOM::update(const RichDocument *doc)
 	}
 	// unreachable
 }
+
+void
+RichDOM::Node::debugDump(QString pfx)
+{
+	QString f = pfx % $(" > ") % cssSel();
+	qDebug() << f;
+	if(children)
+		children->debugDump(f);
+	if(next)
+		next->debugDump(pfx);
+}
