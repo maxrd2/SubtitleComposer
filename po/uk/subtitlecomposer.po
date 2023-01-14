@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: subtitlecomposer\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2022-11-19 00:45+0000\n"
+"POT-Creation-Date: 2023-01-14 00:56+0000\n"
 "PO-Revision-Date: 2022-11-19 06:21+0200\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian <kde-i18n-uk@kde.org>\n"
@@ -119,12 +119,12 @@ msgid "Open Video"
 msgstr "Відкрити відео"
 
 #: src/application.cpp:1055 src/application.cpp:1062
-#: src/application_subtitle.cpp:659
+#: src/application_subtitle.cpp:658
 #, kde-format
 msgid "Untitled"
 msgstr "Без назви"
 
-#: src/application.cpp:1057 src/application_subtitle.cpp:659
+#: src/application.cpp:1057 src/application_subtitle.cpp:658
 #, kde-format
 msgid "Untitled Translation"
 msgstr "Переклад без назви"
@@ -134,7 +134,7 @@ msgstr "Переклад без назви"
 msgid "Pause"
 msgstr "Пауза"
 
-#: src/application.cpp:1166 src/application_actions.cpp:567
+#: src/application.cpp:1166 src/application_actions.cpp:566
 #, kde-format
 msgid "Play"
 msgstr "Пуск"
@@ -175,749 +175,749 @@ msgstr[1] "Посунути позначені рядки на %2%1 мілісе
 msgstr[2] "Посунути позначені рядки на %2%1 мілісекунд"
 msgstr[3] "Посунути позначені рядки на %2%1 мілісекунду"
 
-#: src/application_actions.cpp:33
+#: src/application_actions.cpp:32
 #, kde-format
 msgid "Exit the application"
 msgstr "Завершити роботу програми"
 
-#: src/application_actions.cpp:36
+#: src/application_actions.cpp:35
 #, kde-format
 msgid "Configure Subtitle Composer"
 msgstr "Налаштувати редактор субтитрів"
 
-#: src/application_actions.cpp:40
+#: src/application_actions.cpp:39
 #, kde-format
 msgctxt "@action:inmenu Create a new subtitle"
 msgid "New"
 msgstr "Створити"
 
-#: src/application_actions.cpp:41
+#: src/application_actions.cpp:40
 #, kde-format
 msgid "Create an empty subtitle"
 msgstr "Створити порожній запис субтитрів"
 
-#: src/application_actions.cpp:49
+#: src/application_actions.cpp:48
 #, kde-format
 msgctxt "@action:inmenu Open subtitle file"
 msgid "Open Subtitle..."
 msgstr "Відкрити субтитри…"
 
-#: src/application_actions.cpp:50 src/application_actions.cpp:67
+#: src/application_actions.cpp:49 src/application_actions.cpp:66
 #, kde-format
 msgid "Open subtitle file"
 msgstr "Відкрити файл субтитрів"
 
-#: src/application_actions.cpp:58
+#: src/application_actions.cpp:57
 #, kde-format
 msgid "Reload As..."
 msgstr "Перезавантажити як…"
 
-#: src/application_actions.cpp:59
+#: src/application_actions.cpp:58
 #, kde-format
 msgid "Reload opened file with a different encoding"
 msgstr "Перезавантажити відкритий файл у іншому кодуванні"
 
-#: src/application_actions.cpp:66
+#: src/application_actions.cpp:65
 #, kde-format
 msgctxt "@action:inmenu Open rencently used subtitle file"
 msgid "Open &Recent Subtitle"
 msgstr "Відкрити &нещодавні субтитри"
 
-#: src/application_actions.cpp:73
+#: src/application_actions.cpp:72
 #, kde-format
 msgid "Save"
 msgstr "Зберегти"
 
-#: src/application_actions.cpp:74
+#: src/application_actions.cpp:73
 #, kde-format
 msgid "Save opened subtitle"
 msgstr "Зберегти відкритий файл субтитрів"
 
-#: src/application_actions.cpp:82
+#: src/application_actions.cpp:81
 #, kde-format
 msgid "Save As..."
 msgstr "Зберегти як…"
 
-#: src/application_actions.cpp:83
+#: src/application_actions.cpp:82
 #, kde-format
 msgid "Save opened subtitle with different settings"
 msgstr "Зберегти відкритий файл субтитрів з іншими параметрами"
 
-#: src/application_actions.cpp:91
+#: src/application_actions.cpp:90
 #, kde-format
 msgid "Close"
 msgstr "Закрити"
 
-#: src/application_actions.cpp:92
+#: src/application_actions.cpp:91
 #, kde-format
 msgid "Close opened subtitle"
 msgstr "Закрити відкритий файл субтитрів"
 
-#: src/application_actions.cpp:100
+#: src/application_actions.cpp:99
 #, kde-format
 msgid "New Translation"
 msgstr "Створити переклад"
 
-#: src/application_actions.cpp:101
+#: src/application_actions.cpp:100
 #, kde-format
 msgid "Create an empty translation subtitle"
 msgstr "Створити порожній запис перекладу субтитрів"
 
-#: src/application_actions.cpp:109
+#: src/application_actions.cpp:108
 #, kde-format
 msgid "Open Translation..."
 msgstr "Відкрити переклад…"
 
-#: src/application_actions.cpp:110 src/application_actions.cpp:127
+#: src/application_actions.cpp:109 src/application_actions.cpp:126
 #, kde-format
 msgid "Open translation subtitle file"
 msgstr "Відкрити файл перекладу субтитрів"
 
-#: src/application_actions.cpp:118
+#: src/application_actions.cpp:117
 #, kde-format
 msgid "Reload Translation As..."
 msgstr "Перезавантажити переклад як…"
 
-#: src/application_actions.cpp:119
+#: src/application_actions.cpp:118
 #, kde-format
 msgid "Reload opened translation file with a different encoding"
 msgstr "Перезавантажити відкритий файл перекладу у іншому кодуванні"
 
-#: src/application_actions.cpp:126
+#: src/application_actions.cpp:125
 #, kde-format
 msgid "Open &Recent Translation"
 msgstr "Відкрити &нещодавній переклад"
 
-#: src/application_actions.cpp:134
+#: src/application_actions.cpp:133
 #, kde-format
 msgid "Save Translation"
 msgstr "Зберегти переклад"
 
-#: src/application_actions.cpp:135
+#: src/application_actions.cpp:134
 #, kde-format
 msgid "Save opened translation subtitle"
 msgstr "Зберегти відкритий файл перекладу субтитрів"
 
-#: src/application_actions.cpp:145
+#: src/application_actions.cpp:144
 #, kde-format
 msgid "Save Translation As..."
 msgstr "Зберегти переклад як…"
 
-#: src/application_actions.cpp:146
+#: src/application_actions.cpp:145
 #, kde-format
 msgid "Save opened translation subtitle with different settings"
 msgstr "Зберегти відкритий файл перекладу субтитрів з іншими параметрами"
 
-#: src/application_actions.cpp:154
+#: src/application_actions.cpp:153
 #, kde-format
 msgid "Close Translation"
 msgstr "Закрити файл перекладу"
 
-#: src/application_actions.cpp:155
+#: src/application_actions.cpp:154
 #, kde-format
 msgid "Close opened translation subtitle"
 msgstr "Закрити відкритий файл перекладу субтитрів"
 
-#: src/application_actions.cpp:172
+#: src/application_actions.cpp:171
 #, kde-format
 msgid "Split Subtitle..."
 msgstr "Розділити субтитри…"
 
-#: src/application_actions.cpp:173
+#: src/application_actions.cpp:172
 #, kde-format
 msgid "Split the opened subtitle in two parts"
 msgstr "Розділити відкритий файл субтитрів на дві частини"
 
-#: src/application_actions.cpp:179
+#: src/application_actions.cpp:178
 #, kde-format
 msgid "Join Subtitles..."
 msgstr "Об’єднати субтитри…"
 
-#: src/application_actions.cpp:180
+#: src/application_actions.cpp:179
 #, kde-format
 msgid "Append to the opened subtitle another one"
 msgstr "Додати до відкритого файла субтитрів інший файл субтитрів"
 
-#: src/application_actions.cpp:187
+#: src/application_actions.cpp:186
 #, kde-format
 msgid "Insert Before"
 msgstr "Вставити до"
 
-#: src/application_actions.cpp:188
+#: src/application_actions.cpp:187
 #, kde-format
 msgid "Insert empty line before current one"
 msgstr "Вставити порожній рядок перед поточним"
 
-#: src/application_actions.cpp:196
+#: src/application_actions.cpp:195
 #, kde-format
 msgid "Insert After"
 msgstr "Вставити після"
 
-#: src/application_actions.cpp:197
+#: src/application_actions.cpp:196
 #, kde-format
 msgid "Insert empty line after current one"
 msgstr "Вставити порожній рядок після поточного"
 
 #. i18n: ectx: property (text), widget (QPushButton, btnRemove)
-#: src/application_actions.cpp:205 src/scripting/scriptsmanager.ui:60
+#: src/application_actions.cpp:204 src/scripting/scriptsmanager.ui:60
 #, kde-format
 msgid "Remove"
 msgstr "Вилучити"
 
-#: src/application_actions.cpp:206
+#: src/application_actions.cpp:205
 #, kde-format
 msgid "Remove selected lines"
 msgstr "Вилучити вибрані рядки"
 
-#: src/application_actions.cpp:213 src/core/subtitle.cpp:560
+#: src/application_actions.cpp:212 src/core/subtitle.cpp:560
 #, kde-format
 msgid "Split Lines"
 msgstr "Розділити рядки"
 
-#: src/application_actions.cpp:214
+#: src/application_actions.cpp:213
 #, kde-format
 msgid "Split selected lines"
 msgstr "Розділити позначені рядки"
 
-#: src/application_actions.cpp:220 src/core/subtitle.cpp:642
+#: src/application_actions.cpp:219 src/core/subtitle.cpp:642
 #: src/gui/waveform/waveformwidget.cpp:712
 #, kde-format
 msgid "Join Lines"
 msgstr "Об'єднати рядки"
 
-#: src/application_actions.cpp:221
+#: src/application_actions.cpp:220
 #, kde-format
 msgid "Join selected lines"
 msgstr "Об’єднати позначені рядки"
 
-#: src/application_actions.cpp:228 src/errors/finderrorsdialog.cpp:114
+#: src/application_actions.cpp:227 src/errors/finderrorsdialog.cpp:114
 #: src/gui/treeview/richlineedit.cpp:112 src/widgets/simplerichtextedit.cpp:370
 #, kde-format
 msgid "Select All"
 msgstr "Вибрати все"
 
-#: src/application_actions.cpp:229
+#: src/application_actions.cpp:228
 #, kde-format
 msgid "Select all lines"
 msgstr "Позначити всі рядки"
 
-#: src/application_actions.cpp:236
+#: src/application_actions.cpp:235
 #, kde-format
 msgid "Go to Line..."
 msgstr "Перейти до рядка…"
 
-#: src/application_actions.cpp:237
+#: src/application_actions.cpp:236
 #, kde-format
 msgid "Go to specified line"
 msgstr "Перейти до вказаного рядка"
 
-#: src/application_actions.cpp:245
+#: src/application_actions.cpp:244
 #, kde-format
 msgid "Find..."
 msgstr "Знайти…"
 
-#: src/application_actions.cpp:246
+#: src/application_actions.cpp:245
 #, kde-format
 msgid "Find occurrences of strings or regular expressions"
 msgstr "Знайти фрагмент тексту за вказаним рядком або формальним виразом"
 
-#: src/application_actions.cpp:254
+#: src/application_actions.cpp:253
 #, kde-format
 msgid "Find Next"
 msgstr "Знайти далі"
 
-#: src/application_actions.cpp:255
+#: src/application_actions.cpp:254
 #, kde-format
 msgid "Find next occurrence of string or regular expression"
 msgstr ""
 "Знайти наступний фрагмент тексту за вказаним рядком або формальним виразом"
 
-#: src/application_actions.cpp:263
+#: src/application_actions.cpp:262
 #, kde-format
 msgid "Find Previous"
 msgstr "Знайти попереднє"
 
-#: src/application_actions.cpp:264
+#: src/application_actions.cpp:263
 #, kde-format
 msgid "Find previous occurrence of string or regular expression"
 msgstr ""
 "Знайти попередній фрагмент тексту за вказаним рядком або формальним виразом"
 
-#: src/application_actions.cpp:271
+#: src/application_actions.cpp:270
 #, kde-format
 msgid "Replace..."
 msgstr "Замінити…"
 
-#: src/application_actions.cpp:272
+#: src/application_actions.cpp:271
 #, kde-format
 msgid "Replace occurrences of strings or regular expressions"
 msgstr ""
 "Замінити фрагменти тексту на основі вказаних рядків або формальних виразів"
 
-#: src/application_actions.cpp:280
+#: src/application_actions.cpp:279
 #, kde-format
 msgid "Retrocede current line"
 msgstr "На рядок вище"
 
-#: src/application_actions.cpp:281
+#: src/application_actions.cpp:280
 #, kde-format
 msgid "Makes the line before the current one active"
 msgstr "Зробити активним рядок, розташований вище поточного"
 
-#: src/application_actions.cpp:289
+#: src/application_actions.cpp:288
 #, kde-format
 msgid "Advance current line"
 msgstr "На рядок нижче"
 
-#: src/application_actions.cpp:290
+#: src/application_actions.cpp:289
 #, kde-format
 msgid "Makes the line after the current one active"
 msgstr "Зробити активним рядок, розташований нижче поточного"
 
-#: src/application_actions.cpp:298
+#: src/application_actions.cpp:297
 #, kde-format
 msgid "Detect Errors..."
 msgstr "Виявити помилки…"
 
-#: src/application_actions.cpp:299
+#: src/application_actions.cpp:298
 #, kde-format
 msgid "Detect errors in the current subtitle"
 msgstr "Виявити помилки у поточних субтитрах"
 
-#: src/application_actions.cpp:306
+#: src/application_actions.cpp:305
 #, kde-format
 msgid "Clear Errors/Marks"
 msgstr "Спорожнити список помилок/позначок"
 
-#: src/application_actions.cpp:307
+#: src/application_actions.cpp:306
 #, kde-format
 msgid "Clear detected errors and marks in the current subtitle"
 msgstr "Вилучити виявлені помилки і позначки у поточних субтитрах"
 
-#: src/application_actions.cpp:315
+#: src/application_actions.cpp:314
 #, kde-format
 msgid "Select Next Error/Mark"
 msgstr "Позначити наступну помилку/позначку"
 
-#: src/application_actions.cpp:316
+#: src/application_actions.cpp:315
 #, kde-format
 msgid "Select next line with error or mark"
 msgstr "Позначити наступний рядок із помилкою або позначкою"
 
-#: src/application_actions.cpp:324
+#: src/application_actions.cpp:323
 #, kde-format
 msgid "Select Previous Error/Mark"
 msgstr "Позначити попередню помилку/позначку"
 
-#: src/application_actions.cpp:325
+#: src/application_actions.cpp:324
 #, kde-format
 msgid "Select previous line with error or mark"
 msgstr "Позначити попередній рядок із помилкою або позначкою"
 
-#: src/application_actions.cpp:333
+#: src/application_actions.cpp:332
 #, kde-format
 msgid "Spelling..."
 msgstr "Правопис…"
 
-#: src/application_actions.cpp:334
+#: src/application_actions.cpp:333
 #, kde-format
 msgid "Check lines spelling"
 msgstr "Перевірити правопис рядків"
 
-#: src/application_actions.cpp:340
+#: src/application_actions.cpp:339
 #, kde-format
 msgid "Toggle Mark"
 msgstr "Увімкнути або вимкнути позначення"
 
-#: src/application_actions.cpp:341
+#: src/application_actions.cpp:340
 #, kde-format
 msgid "Toggle mark on selected lines"
 msgstr "Перемкнути позначку для вибраних рядків"
 
-#: src/application_actions.cpp:349 src/gui/currentlinewidget.cpp:141
+#: src/application_actions.cpp:348 src/gui/currentlinewidget.cpp:141
 #, kde-format
 msgid "Toggle Bold"
 msgstr "Перемкнути жирний"
 
-#: src/application_actions.cpp:350
+#: src/application_actions.cpp:349
 #, kde-format
 msgid "Toggle selected lines bold attribute"
 msgstr "Увімкнути або вимкнути атрибут напівжирного"
 
-#: src/application_actions.cpp:358 src/gui/currentlinewidget.cpp:145
+#: src/application_actions.cpp:357 src/gui/currentlinewidget.cpp:145
 #, kde-format
 msgid "Toggle Italic"
 msgstr "Перемкнути курсив"
 
-#: src/application_actions.cpp:359
+#: src/application_actions.cpp:358
 #, kde-format
 msgid "Toggle selected lines italic attribute"
 msgstr "Увімкнути або вимкнути атрибут курсиву"
 
-#: src/application_actions.cpp:367 src/gui/currentlinewidget.cpp:149
+#: src/application_actions.cpp:366 src/gui/currentlinewidget.cpp:149
 #, kde-format
 msgid "Toggle Underline"
 msgstr "Перемкнути підкреслювання"
 
-#: src/application_actions.cpp:368
+#: src/application_actions.cpp:367
 #, kde-format
 msgid "Toggle selected lines underline attribute"
 msgstr "Увімкнути або вимкнути атрибут підкреслювання"
 
-#: src/application_actions.cpp:376 src/gui/currentlinewidget.cpp:153
+#: src/application_actions.cpp:375 src/gui/currentlinewidget.cpp:153
 #, kde-format
 msgid "Toggle Strike Through"
 msgstr "Увімкнути або вимкнути перекреслювання"
 
-#: src/application_actions.cpp:377
+#: src/application_actions.cpp:376
 #, kde-format
 msgid "Toggle selected lines strike through attribute"
 msgstr "Увімкнути або вимкнути атрибут перекреслення вибраних рядків"
 
-#: src/application_actions.cpp:385 src/gui/currentlinewidget.cpp:157
+#: src/application_actions.cpp:384 src/gui/currentlinewidget.cpp:157
 #, kde-format
 msgid "Change Text Color"
 msgstr ""
 "Змінити колір тексту\n"
 "зміну кольору тексту"
 
-#: src/application_actions.cpp:386
+#: src/application_actions.cpp:385
 #, kde-format
 msgid "Change text color of selected lines"
 msgstr "Змінити колір тексту позначених рядків"
 
-#: src/application_actions.cpp:393
+#: src/application_actions.cpp:392
 #, kde-format
 msgid "Shift..."
 msgstr "Зсунути…"
 
-#: src/application_actions.cpp:394
+#: src/application_actions.cpp:393
 #, kde-format
 msgid "Shift lines an specified amount of time"
 msgstr "Пересунути рядки на вказаний часовий проміжок"
 
-#: src/application_actions.cpp:413
+#: src/application_actions.cpp:412
 #, kde-format
 msgid "Adjust..."
 msgstr "Скоригувати…"
 
-#: src/application_actions.cpp:414
+#: src/application_actions.cpp:413
 #, kde-format
 msgid "Linearly adjust all lines to a specified interval"
 msgstr "Лінійно скоригувати всі рядки на вказаний часовий інтервал"
 
-#: src/application_actions.cpp:421
+#: src/application_actions.cpp:420
 #, kde-format
 msgid "Change Frame Rate..."
 msgstr "Змінити частоту кадрів…"
 
-#: src/application_actions.cpp:422
+#: src/application_actions.cpp:421
 #, kde-format
 msgid "Retime subtitle lines by reinterpreting its frame rate"
 msgstr "Змінити прив’язку рядків субтитрів зміною частоти кадрів"
 
-#: src/application_actions.cpp:428
+#: src/application_actions.cpp:427
 #, kde-format
 msgid "Enforce Duration Limits..."
 msgstr "Примусове обмеження тривалості…"
 
-#: src/application_actions.cpp:429
+#: src/application_actions.cpp:428
 #, kde-format
 msgid "Enforce lines minimum and/or maximum duration limits"
 msgstr "Примусово застосувати обмеження мінімального і/або максимального часу"
 
-#: src/application_actions.cpp:436
+#: src/application_actions.cpp:435
 #, kde-format
 msgid "Set Automatic Durations..."
 msgstr "Встановити тривалість автоматично…"
 
-#: src/application_actions.cpp:437
+#: src/application_actions.cpp:436
 #, kde-format
 msgid "Set lines durations based on amount of letters, words and line breaks"
 msgstr ""
 "Встановити тривалість показу рядків на основі кількості літер, слів і поділу "
 "рядків"
 
-#: src/application_actions.cpp:443
+#: src/application_actions.cpp:442
 #, kde-format
 msgid "Maximize Durations..."
 msgstr "Максимізувати тривалість…"
 
-#: src/application_actions.cpp:444
+#: src/application_actions.cpp:443
 #, kde-format
 msgid "Extend lines durations up to their next lines show time"
 msgstr "Продовжити час показу рядків до часу появи наступних рядків"
 
-#: src/application_actions.cpp:450
+#: src/application_actions.cpp:449
 #, kde-format
 msgid "Fix Overlapping Times..."
 msgstr "Виправити перекриття за часом…"
 
-#: src/application_actions.cpp:451
+#: src/application_actions.cpp:450
 #, kde-format
 msgid "Fix lines overlapping times"
 msgstr "Виправити часове перекриття рядків"
 
-#: src/application_actions.cpp:457
+#: src/application_actions.cpp:456
 #, kde-format
 msgid "Synchronize with Subtitle..."
 msgstr "Синхронізувати з субтитрами…"
 
-#: src/application_actions.cpp:458
+#: src/application_actions.cpp:457
 #, kde-format
 msgid "Copy timing information from another subtitle"
 msgstr "Копіювати дані про час з іншого файла субтитрів"
 
-#: src/application_actions.cpp:464
+#: src/application_actions.cpp:463
 #, kde-format
 msgid "Break Lines..."
 msgstr "Розділити рядки…"
 
-#: src/application_actions.cpp:465
+#: src/application_actions.cpp:464
 #, kde-format
 msgid "Automatically set line breaks"
 msgstr "Автоматично встановлювати поділ рядків"
 
-#: src/application_actions.cpp:471
+#: src/application_actions.cpp:470
 #, kde-format
 msgid "Unbreak Lines..."
 msgstr "Склеїти рядки…"
 
-#: src/application_actions.cpp:472
+#: src/application_actions.cpp:471
 #, kde-format
 msgid "Remove line breaks from lines"
 msgstr "Вилучити символи розриву рядків з рядків"
 
-#: src/application_actions.cpp:478
+#: src/application_actions.cpp:477
 #, kde-format
 msgid "Simplify Spaces..."
 msgstr "Спростити пробіли…"
 
-#: src/application_actions.cpp:479
+#: src/application_actions.cpp:478
 #, kde-format
 msgid "Remove unneeded spaces from lines"
 msgstr "Вилучити з рядків непотрібні пробіли"
 
-#: src/application_actions.cpp:485
+#: src/application_actions.cpp:484
 #, kde-format
 msgid "Change Case..."
 msgstr "Змінити регістр…"
 
-#: src/application_actions.cpp:486
+#: src/application_actions.cpp:485
 #, kde-format
 msgid "Change lines text to upper, lower, title or sentence case"
 msgstr ""
 "Змінити регістр тексту рядків на верхній, нижній, заголовковий або такий, як "
 "у реченні"
 
-#: src/application_actions.cpp:492
+#: src/application_actions.cpp:491
 #, kde-format
 msgid "Fix Punctuation..."
 msgstr "Виправити пунктуацію…"
 
-#: src/application_actions.cpp:493
+#: src/application_actions.cpp:492
 #, kde-format
 msgid "Fix punctuation errors in lines"
 msgstr "Виправити помилки пунктуації у рядках"
 
-#: src/application_actions.cpp:499
+#: src/application_actions.cpp:498
 #, kde-format
 msgid "Translate..."
 msgstr "Перекласти…"
 
-#: src/application_actions.cpp:500
+#: src/application_actions.cpp:499
 #, kde-format
 msgid "Translate lines texts using Google services"
 msgstr "Перекласти рядки тексту за допомогою служб Google"
 
-#: src/application_actions.cpp:506
+#: src/application_actions.cpp:505
 #, kde-format
 msgid "Edit Line in Place"
 msgstr "Змінити рядок на місці"
 
-#: src/application_actions.cpp:507
+#: src/application_actions.cpp:506
 #, kde-format
 msgid "Edit current line text in place"
 msgstr "Змінити поточний рядок тексту на місці, де його показано"
 
-#: src/application_actions.cpp:515
+#: src/application_actions.cpp:514
 #, kde-format
 msgid "Open Video..."
 msgstr "Відкрити відео…"
 
-#: src/application_actions.cpp:516 src/application_actions.cpp:523
+#: src/application_actions.cpp:515 src/application_actions.cpp:522
 #, kde-format
 msgid "Open video file"
 msgstr "Відкрити файл відео"
 
-#: src/application_actions.cpp:522
+#: src/application_actions.cpp:521
 #, kde-format
 msgid "Open &Recent Video"
 msgstr "Відкрити &нещодавнє відео"
 
-#: src/application_actions.cpp:529
+#: src/application_actions.cpp:528
 #, kde-format
 msgid "Import Subtitle Stream"
 msgstr "Імпортувати потік субтитрів"
 
-#: src/application_actions.cpp:530
+#: src/application_actions.cpp:529
 #, kde-format
 msgid "Import subtitle stream into subtitle editor"
 msgstr "Імпортувати потік субтитрів до редактора субтитрів"
 
-#: src/application_actions.cpp:536
+#: src/application_actions.cpp:535
 #, kde-format
 msgid "Recognize Speech"
 msgstr "Розпізнати мовлення"
 
-#: src/application_actions.cpp:537
+#: src/application_actions.cpp:536
 #, kde-format
 msgid "Recognize speech in audio stream"
 msgstr "Розпізнати мовлення у потоці звукових даних"
 
-#: src/application_actions.cpp:543
+#: src/application_actions.cpp:542
 #, kde-format
 msgid "Close Video"
 msgstr "Закрити відео"
 
-#: src/application_actions.cpp:544
+#: src/application_actions.cpp:543
 #, kde-format
 msgid "Close video file"
 msgstr "Закрити файл відео"
 
-#: src/application_actions.cpp:551
+#: src/application_actions.cpp:550
 #, kde-format
 msgid "Full Screen Mode"
 msgstr "Повноекранний режим"
 
-#: src/application_actions.cpp:552
+#: src/application_actions.cpp:551
 #, kde-format
 msgid "Toggle full screen mode"
 msgstr "Увімкнути або вимкнути повноекранний режим"
 
-#: src/application_actions.cpp:559
+#: src/application_actions.cpp:558
 #, kde-format
 msgid "Stop"
 msgstr "Зупинити"
 
-#: src/application_actions.cpp:560
+#: src/application_actions.cpp:559
 #, kde-format
 msgid "Stop video playback"
 msgstr "Припинити відтворення відео"
 
-#: src/application_actions.cpp:568
+#: src/application_actions.cpp:567
 #, kde-format
 msgid "Toggle video playing/paused"
 msgstr "Поновити або зупинити відтворення відео"
 
-#: src/application_actions.cpp:576
+#: src/application_actions.cpp:575
 #, kde-format
 msgid "Seek Backward"
 msgstr "Перемотати назад"
 
-#: src/application_actions.cpp:584
+#: src/application_actions.cpp:583
 #, kde-format
 msgid "Seek Forward"
 msgstr "Перемотати вперед"
 
-#: src/application_actions.cpp:591
+#: src/application_actions.cpp:590
 #, kde-format
 msgid "Frame Step Backward"
 msgstr "Крок назад у кадрах"
 
-#: src/application_actions.cpp:598
+#: src/application_actions.cpp:597
 #, kde-format
 msgid "Frame Step Forward"
 msgstr "Крок вперед у кадрах"
 
-#: src/application_actions.cpp:606
+#: src/application_actions.cpp:605
 #, kde-format
 msgid "Seek to Previous Line"
 msgstr "Позиціювання за попереднім рядком"
 
-#: src/application_actions.cpp:607
+#: src/application_actions.cpp:606
 #, kde-format
 msgid "Seek to previous subtitle line show time"
 msgstr "Позиціювання за часом показу попереднього рядка субтитрів"
 
-#: src/application_actions.cpp:615
+#: src/application_actions.cpp:614
 #, kde-format
 msgid "Increase media play rate"
 msgstr "Збільшити частоту відтворення даних"
 
-#: src/application_actions.cpp:616
+#: src/application_actions.cpp:615
 #, kde-format
 msgid "Increase media playback rate"
 msgstr "Збільшити частоту відтворення мультимедійних даних"
 
-#: src/application_actions.cpp:623
+#: src/application_actions.cpp:622
 #, kde-format
 msgid "Decrease media play rate"
 msgstr "Зменшити частоту відтворення даних"
 
-#: src/application_actions.cpp:624
+#: src/application_actions.cpp:623
 #, kde-format
 msgid "Decrease media playback rate"
 msgstr "Зменшити частоту відтворення мультимедійних даних"
 
-#: src/application_actions.cpp:630
+#: src/application_actions.cpp:629
 #, kde-format
 msgid "Play Current Line and Pause"
 msgstr "Відтворити поточний рядок і призупинити"
 
-#: src/application_actions.cpp:631
+#: src/application_actions.cpp:630
 #, kde-format
 msgid "Seek to selected subtitle line show time, play it and then pause"
 msgstr ""
 "Виконати позиціювання до позначеного рядка субтитрів, увімкнути відтворення, "
 "а потім призупинити його"
 
-#: src/application_actions.cpp:638
+#: src/application_actions.cpp:637
 #, kde-format
 msgid "Seek to Current Line"
 msgstr "Позиціювання за поточним рядком"
 
-#: src/application_actions.cpp:639
+#: src/application_actions.cpp:638
 #, kde-format
 msgid "Seek to selected subtitle line show time"
 msgstr "Позиціювання за часом показу позначеного рядка субтитрів"
 
-#: src/application_actions.cpp:646
+#: src/application_actions.cpp:645
 #, kde-format
 msgid "Seek to Next Line"
 msgstr "Позиціювання за наступним рядком"
 
-#: src/application_actions.cpp:647
+#: src/application_actions.cpp:646
 #, kde-format
 msgid "Seek to next subtitle line show time"
 msgstr "Позиціювання за часом показу наступного рядка субтитрів"
 
-#: src/application_actions.cpp:655
+#: src/application_actions.cpp:654
 #, kde-format
 msgid "Set Line Show Time to Video Position"
 msgstr "Встановити час показу рядка за позицією у відео"
 
-#: src/application_actions.cpp:656
+#: src/application_actions.cpp:655
 #, kde-format
 msgid "Set current line show time to video position"
 msgstr "Встановити час показу поточного рядка за позицією у відео"
 
-#: src/application_actions.cpp:664
+#: src/application_actions.cpp:663
 #, kde-format
 msgid "Set Line Hide Time to Video Position"
 msgstr "Встановити час приховування рядка за позицією у відео"
 
-#: src/application_actions.cpp:665
+#: src/application_actions.cpp:664
 #, kde-format
 msgid "Set current line hide time to video position"
 msgstr "Встановити час приховування поточного рядка за позицією у відео"
 
-#: src/application_actions.cpp:672
+#: src/application_actions.cpp:671
 #, kde-format
 msgid "Shift Current Line to Video Position"
 msgstr "Пересунути поточний рядок на позицію у відео"
 
-#: src/application_actions.cpp:673
+#: src/application_actions.cpp:672
 #, kde-format
 msgid ""
 "Set current line show time to video position by equally shifting all lines"
@@ -925,93 +925,93 @@ msgstr ""
 "Встановити час показу поточного рядка за позицією у відео рівномірним "
 "зсуванням всіх рядків"
 
-#: src/application_actions.cpp:681
+#: src/application_actions.cpp:680
 #, kde-format
 msgid "Current Line Follows Video"
 msgstr "Поточний рядок прив’язано до відео"
 
-#: src/application_actions.cpp:682
+#: src/application_actions.cpp:681
 #, kde-format
 msgid "Make current line follow the playing video position"
 msgstr "Прив’язати поточний рядок до позиції у відео"
 
-#: src/application_actions.cpp:688
+#: src/application_actions.cpp:687
 #, kde-format
 msgctxt "@action:inmenu Toggle audio muted"
 msgid "Mute"
 msgstr "Вимкнути звук"
 
-#: src/application_actions.cpp:689
+#: src/application_actions.cpp:688
 #, kde-format
 msgid "Enable/disable playback sound"
 msgstr "Увімкнути/Вимкнути відтворення звуку"
 
-#: src/application_actions.cpp:696
+#: src/application_actions.cpp:695
 #, kde-format
 msgid "Increase Volume"
 msgstr "Збільшити гучність"
 
-#: src/application_actions.cpp:697
+#: src/application_actions.cpp:696
 #, kde-format
 msgid "Increase volume by 5%"
 msgstr "Підвищити гучність на 5%"
 
-#: src/application_actions.cpp:704
+#: src/application_actions.cpp:703
 #, kde-format
 msgid "Decrease Volume"
 msgstr "Зменшити гучність"
 
-#: src/application_actions.cpp:705
+#: src/application_actions.cpp:704
 #, kde-format
 msgid "Decrease volume by 5%"
 msgstr "Знизити гучність на 5%"
 
-#: src/application_actions.cpp:712
+#: src/application_actions.cpp:711
 #, kde-format
 msgid "Audio Streams"
 msgstr "Аудіопотоки"
 
-#: src/application_actions.cpp:713
+#: src/application_actions.cpp:712
 #, kde-format
 msgid "Select active audio stream"
 msgstr "Оберіть активний звуковий потік"
 
-#: src/application_actions.cpp:724
+#: src/application_actions.cpp:723
 #, kde-format
 msgid "Increase Font Size"
 msgstr "Збільшити розмір шрифту"
 
-#: src/application_actions.cpp:725
+#: src/application_actions.cpp:724
 #, kde-format
 msgid "Increase subtitles font size by 1 point"
 msgstr "Збільшити розмір шрифту субтитрів на 1 пункт"
 
-#: src/application_actions.cpp:732
+#: src/application_actions.cpp:731
 #, kde-format
 msgid "Decrease Font Size"
 msgstr "Зменшити розмір шрифту"
 
-#: src/application_actions.cpp:733
+#: src/application_actions.cpp:732
 #, kde-format
 msgid "Decrease subtitles font size by 1 point"
 msgstr "Зменшити розмір шрифту субтитрів на 1 пункт"
 
-#: src/application_actions.cpp:740
+#: src/application_actions.cpp:739
 #, kde-format
 msgid "Displayed Subtitle Text"
 msgstr "Показаний текст субтитрів"
 
-#: src/application_actions.cpp:741
+#: src/application_actions.cpp:740
 #, kde-format
 msgid "Select visible subtitle text"
 msgstr "Виберіть видимий текст субтитрів"
 
-#: src/application_actions.cpp:752 src/gui/waveform/waveformwidget.cpp:736
+#: src/application_actions.cpp:751 src/gui/waveform/waveformwidget.cpp:736
 #, kde-format
 msgid "Toggle Anchor"
 msgstr "Увімкнути або вимкнути прив'язку"
 
-#: src/application_actions.cpp:753
+#: src/application_actions.cpp:752
 #, kde-format
 msgid ""
 "(Un)Anchor current line's show time to timeline (Editing anchored line's "
@@ -1021,80 +1021,80 @@ msgstr ""
 "(Редагування часу показу прив'язаного рядка стискатиме або розтягуватиме "
 "монтажну лінійку між сусідніми прив'язками)"
 
-#: src/application_actions.cpp:760
+#: src/application_actions.cpp:759
 #, kde-format
 msgid "Remove All Anchors"
 msgstr "Вилучити усі прив'язки"
 
-#: src/application_actions.cpp:761
+#: src/application_actions.cpp:760
 #, kde-format
 msgid "Unanchor show time from the timeline on all anchored lines"
 msgstr ""
 "Зняти прив'язку часу показу з монтажного столу для усіх прив'язаних рядків"
 
-#: src/application_actions.cpp:769
+#: src/application_actions.cpp:768
 #, kde-format
 msgctxt "@action:inmenu Manage user scripts"
 msgid "Scripts Manager..."
 msgstr "Керування скриптами…"
 
-#: src/application_actions.cpp:770
+#: src/application_actions.cpp:769
 #, kde-format
 msgid "Manage user scripts"
 msgstr "Керування скриптами користувача"
 
-#: src/application_actions.cpp:777 src/application_actions.cpp:778
+#: src/application_actions.cpp:776 src/application_actions.cpp:777
 #, kde-format
 msgid "Waveform Zoom In"
 msgstr "Збільшити масштаб форми сигналу"
 
-#: src/application_actions.cpp:784 src/application_actions.cpp:785
+#: src/application_actions.cpp:783 src/application_actions.cpp:784
 #, kde-format
 msgid "Waveform Zoom Out"
 msgstr "Зменшити масштаб форми сигналу"
 
-#: src/application_actions.cpp:792
+#: src/application_actions.cpp:791
 #, kde-format
 msgid "Waveform Auto Scroll"
 msgstr "Автогортання форми сигналу"
 
-#: src/application_actions.cpp:793
+#: src/application_actions.cpp:792
 #, kde-format
 msgid "Waveform display will automatically scroll to video position"
 msgstr ""
 "Панель показу форми сигналу автоматично гортатиметься до позиції у відео"
 
-#: src/application_subtitle.cpp:79
+#: src/application_subtitle.cpp:78
 #, kde-format
 msgid "All Text Subtitles"
 msgstr "Усі текстові субтитри"
 
-#: src/application_subtitle.cpp:80
+#: src/application_subtitle.cpp:79
 #, kde-format
 msgid "All Image Subtitles"
 msgstr "Усі субтитри-зображення"
 
-#: src/application_subtitle.cpp:82 src/application_subtitle.cpp:106
+#: src/application_subtitle.cpp:81 src/application_subtitle.cpp:105
 #, kde-format
 msgid "All Files"
 msgstr "Всі файли"
 
-#: src/application_subtitle.cpp:103
+#: src/application_subtitle.cpp:102
 #, kde-format
 msgid "Media Files"
 msgstr "Медіафайли"
 
-#: src/application_subtitle.cpp:104
+#: src/application_subtitle.cpp:103
 #, kde-format
 msgid "Video Files"
 msgstr "Відеофайли"
 
-#: src/application_subtitle.cpp:105
+#: src/application_subtitle.cpp:104
 #, kde-format
 msgid "Audio Files"
 msgstr "Звукові файли"
 
-#: src/application_subtitle.cpp:128
+#: src/application_subtitle.cpp:127
 #, kde-format
 msgid ""
 "The requested action would make the subtitle and its translation share the "
@@ -1105,18 +1105,18 @@ msgstr ""
 "файлі, що може спричинити втрату даних під час збереження.\n"
 "Ви справді бажаєте виконати вказану дію?"
 
-#: src/application_subtitle.cpp:131
+#: src/application_subtitle.cpp:130
 #, kde-format
 msgid "Conflicting Subtitle Files"
 msgstr "Файли субтитрів з конфліктами"
 
-#: src/application_subtitle.cpp:149 src/dialogs/selectablesubtitledialog.cpp:67
+#: src/application_subtitle.cpp:148 src/dialogs/selectablesubtitledialog.cpp:67
 #, kde-format
 msgid "Open Subtitle"
 msgstr "Відкрити файл субтитрів"
 
-#: src/application_subtitle.cpp:205 src/application_subtitle.cpp:225
-#: src/application_subtitle.cpp:477 src/application_subtitle.cpp:502
+#: src/application_subtitle.cpp:204 src/application_subtitle.cpp:224
+#: src/application_subtitle.cpp:476 src/application_subtitle.cpp:501
 #, kde-format
 msgid ""
 "<qt>Could not parse the subtitle file.<br/>This may have been caused by "
@@ -1125,27 +1125,27 @@ msgstr ""
 "<qt>Не вдалося обробити файл субтитрів.<br/>Причиною може бути використання "
 "неправильного кодування.</qt>"
 
-#: src/application_subtitle.cpp:271 src/application_subtitle.cpp:318
+#: src/application_subtitle.cpp:270 src/application_subtitle.cpp:317
 #, kde-format
 msgid "Format: %1"
 msgstr "Формат: %1"
 
-#: src/application_subtitle.cpp:272 src/application_subtitle.cpp:319
+#: src/application_subtitle.cpp:271 src/application_subtitle.cpp:318
 #, kde-format
 msgid "Encoding: %1"
 msgstr "Кодування: %1"
 
-#: src/application_subtitle.cpp:325
+#: src/application_subtitle.cpp:324
 #, kde-format
 msgid "There was an error saving the subtitle."
 msgstr "Під час спроби зберегти файл субтитрів сталася помилка."
 
-#: src/application_subtitle.cpp:333
+#: src/application_subtitle.cpp:332
 #, kde-format
 msgid "Save Subtitle"
 msgstr "Зберегти субтитри"
 
-#: src/application_subtitle.cpp:373 src/application_subtitle.cpp:615
+#: src/application_subtitle.cpp:372 src/application_subtitle.cpp:614
 #, kde-format
 msgid ""
 "Currently opened translation subtitle has unsaved changes.\n"
@@ -1154,12 +1154,12 @@ msgstr ""
 "У поточному файлі перекладу субтитрів є незбережені зміни.\n"
 "Бажаєте їх зберегти?"
 
-#: src/application_subtitle.cpp:374 src/application_subtitle.cpp:616
+#: src/application_subtitle.cpp:373 src/application_subtitle.cpp:615
 #, kde-format
 msgid "Close Translation Subtitle"
 msgstr "Закрити файл перекладу субтитрів"
 
-#: src/application_subtitle.cpp:385
+#: src/application_subtitle.cpp:384
 #, kde-format
 msgid ""
 "Currently opened subtitle has unsaved changes.\n"
@@ -1168,65 +1168,65 @@ msgstr ""
 "Поточний відкритий файл субтитрів містить незбережені зміни.\n"
 "Бажаєте їх зберегти?"
 
-#: src/application_subtitle.cpp:386
+#: src/application_subtitle.cpp:385
 #, kde-format
 msgid "Close Subtitle"
 msgstr "Закрити файл субтитрів"
 
-#: src/application_subtitle.cpp:446
+#: src/application_subtitle.cpp:445
 #, kde-format
 msgid "Open Translation Subtitle"
 msgstr "Відкрити файл перекладу субтитрів"
 
-#: src/application_subtitle.cpp:531
+#: src/application_subtitle.cpp:530
 #, kde-format
 msgctxt "@item:inmenu Display primary text in video player"
 msgid "Primary"
 msgstr "Основний"
 
-#: src/application_subtitle.cpp:532
+#: src/application_subtitle.cpp:531
 #, kde-format
 msgctxt "@item:inmenu Display translation text in video player"
 msgid "Translation"
 msgstr "Переклад"
 
-#: src/application_subtitle.cpp:571
+#: src/application_subtitle.cpp:570
 #, kde-format
 msgid "There was an error saving the translation subtitle."
 msgstr "Під час спроби зберегти переклад субтитрів сталася помилка."
 
-#: src/application_subtitle.cpp:579
+#: src/application_subtitle.cpp:578
 #, kde-format
 msgid "Save Translation Subtitle"
 msgstr "Зберегти переклад субтитрів"
 
-#: src/application_subtitle.cpp:666
+#: src/application_subtitle.cpp:665
 #, kde-format
 msgctxt "Suffix added to split subtitles"
 msgid "split"
 msgstr "split"
 
-#: src/application_subtitle.cpp:683
+#: src/application_subtitle.cpp:682
 #, kde-format
 msgid "Could not write the split subtitle file."
 msgstr "Не вдалося записати файл частини субтитрів."
 
-#: src/application_subtitle.cpp:683
+#: src/application_subtitle.cpp:682
 #, kde-format
 msgid "Could not write the split subtitle translation file."
 msgstr "Не вдалося записати файл частини перекладу субтитрів."
 
-#: src/application_subtitle.cpp:708
+#: src/application_subtitle.cpp:707
 #, kde-format
 msgid "Could not read the subtitle file to append."
 msgstr "Не вдалося прочитати файл субтитрів, який слід долучити."
 
-#: src/application_subtitle.cpp:724
+#: src/application_subtitle.cpp:723
 #, kde-format
 msgid "The specified time does not split the subtitles."
 msgstr "Вказаний час не є часом поділу субтитрів."
 
-#: src/application_subtitle.cpp:759
+#: src/application_subtitle.cpp:758
 #, kde-format
 msgid ""
 "Could not open a new Subtitle Composer window.\n"
@@ -1235,7 +1235,7 @@ msgstr ""
 "Не вдалося відкрити нове вікно редактора субтитрів.\n"
 "Частину субтитрів збережено як %1."
 
-#: src/application_subtitle.cpp:760
+#: src/application_subtitle.cpp:759
 #, kde-format
 msgid ""
 "Could not open a new Subtitle Composer window.\n"
@@ -1244,12 +1244,12 @@ msgstr ""
 "Не вдалося відкрити нове вікно редактора субтитрів.\n"
 "Частини субтитрів збережено як %1 і %2."
 
-#: src/application_subtitle.cpp:778
+#: src/application_subtitle.cpp:777
 #, kde-format
 msgid "The reference subtitle must have more than one line to proceed."
 msgstr "У еталонних субтитрах має бути принаймні один рядок."
 
-#: src/application_subtitle.cpp:787
+#: src/application_subtitle.cpp:786
 #, kde-format
 msgid "Could not parse the reference subtitle file."
 msgstr "Не вдалося обробити еталонний файл субтитрів."

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: subtitlecomposer\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2022-11-19 00:45+0000\n"
+"POT-Creation-Date: 2023-01-14 00:56+0000\n"
 "PO-Revision-Date: 2022-12-04 23:24+0700\n"
 "Last-Translator: OIS <mistresssilvara@hotmail.com>\n"
 "Language-Team: Interlingue <kde-i18n-doc@kde.org>\n"
@@ -112,12 +112,12 @@ msgid "Open Video"
 msgstr "Aperter un video"
 
 #: src/application.cpp:1055 src/application.cpp:1062
-#: src/application_subtitle.cpp:659
+#: src/application_subtitle.cpp:658
 #, kde-format
 msgid "Untitled"
 msgstr "Sin nómine"
 
-#: src/application.cpp:1057 src/application_subtitle.cpp:659
+#: src/application.cpp:1057 src/application_subtitle.cpp:658
 #, kde-format
 msgid "Untitled Translation"
 msgstr "Traduction sin nómine"
@@ -127,7 +127,7 @@ msgstr "Traduction sin nómine"
 msgid "Pause"
 msgstr "Pausar"
 
-#: src/application.cpp:1166 src/application_actions.cpp:567
+#: src/application.cpp:1166 src/application_actions.cpp:566
 #, kde-format
 msgid "Play"
 msgstr "Reproducter"
@@ -160,910 +160,910 @@ msgid_plural "Shift selected lines %2%1 milliseconds"
 msgstr[0] ""
 msgstr[1] ""
 
-#: src/application_actions.cpp:33
+#: src/application_actions.cpp:32
 #, fuzzy, kde-format
 msgid "Exit the application"
 msgstr "  --exit              Salir Openbox\n"
 
-#: src/application_actions.cpp:36
+#: src/application_actions.cpp:35
 #, fuzzy, kde-format
 msgid "Configure Subtitle Composer"
 msgstr "Compositor de subtitules"
 
-#: src/application_actions.cpp:40
+#: src/application_actions.cpp:39
 #, fuzzy, kde-format
 msgctxt "@action:inmenu Create a new subtitle"
 msgid "New"
 msgstr "NOV"
 
-#: src/application_actions.cpp:41
+#: src/application_actions.cpp:40
 #, fuzzy, kde-format
 msgid "Create an empty subtitle"
 msgstr "Crear un vacui file «%s»"
 
-#: src/application_actions.cpp:49
+#: src/application_actions.cpp:48
 #, fuzzy, kde-format
 msgctxt "@action:inmenu Open subtitle file"
 msgid "Open Subtitle..."
 msgstr "Aperter un file de subtitules"
 
-#: src/application_actions.cpp:50 src/application_actions.cpp:67
+#: src/application_actions.cpp:49 src/application_actions.cpp:66
 #, fuzzy, kde-format
 msgid "Open subtitle file"
 msgstr "Aperter un file de subtitules"
 
-#: src/application_actions.cpp:58
+#: src/application_actions.cpp:57
 #, fuzzy, kde-format
 msgid "Reload As..."
 msgstr "&Recargar"
 
-#: src/application_actions.cpp:59
+#: src/application_actions.cpp:58
 #, fuzzy, kde-format
 msgid "Reload opened file with a different encoding"
 msgstr "Ples garda li file in un altri codification."
 
-#: src/application_actions.cpp:66
+#: src/application_actions.cpp:65
 #, fuzzy, kde-format
 msgctxt "@action:inmenu Open rencently used subtitle file"
 msgid "Open &Recent Subtitle"
 msgstr "Aperter un file de subtitules"
 
-#: src/application_actions.cpp:73
+#: src/application_actions.cpp:72
 #, kde-format
 msgid "Save"
 msgstr "Gardar"
 
-#: src/application_actions.cpp:74
+#: src/application_actions.cpp:73
 #, fuzzy, kde-format
 msgid "Save opened subtitle"
 msgstr "Subtitul"
 
-#: src/application_actions.cpp:82
+#: src/application_actions.cpp:81
 #, kde-format
 msgid "Save As..."
 msgstr "Gardar quam..."
 
-#: src/application_actions.cpp:83
+#: src/application_actions.cpp:82
 #, kde-format
 msgid "Save opened subtitle with different settings"
 msgstr ""
 
-#: src/application_actions.cpp:91
+#: src/application_actions.cpp:90
 #, kde-format
 msgid "Close"
 msgstr "Cluder"
 
-#: src/application_actions.cpp:92
+#: src/application_actions.cpp:91
 #, fuzzy, kde-format
 msgid "Close opened subtitle"
 msgstr "Nró."
 
-#: src/application_actions.cpp:100
+#: src/application_actions.cpp:99
 #, fuzzy, kde-format
 msgid "New Translation"
 msgstr "Nov memorie de traductiones"
 
-#: src/application_actions.cpp:101
+#: src/application_actions.cpp:100
 #, fuzzy, kde-format
 msgid "Create an empty translation subtitle"
 msgstr "Crear un vacui file «%s»"
 
-#: src/application_actions.cpp:109
+#: src/application_actions.cpp:108
 #, fuzzy, kde-format
 msgid "Open Translation..."
 msgstr "Aperter un _traduction..."
 
-#: src/application_actions.cpp:110 src/application_actions.cpp:127
+#: src/application_actions.cpp:109 src/application_actions.cpp:126
 #, fuzzy, kde-format
 msgid "Open translation subtitle file"
 msgstr "Aperter un file por traduction"
 
-#: src/application_actions.cpp:118
+#: src/application_actions.cpp:117
 #, fuzzy, kde-format
 msgid "Reload Translation As..."
 msgstr "Traduction"
 
-#: src/application_actions.cpp:119
+#: src/application_actions.cpp:118
 #, kde-format
 msgid "Reload opened translation file with a different encoding"
 msgstr ""
 
-#: src/application_actions.cpp:126
+#: src/application_actions.cpp:125
 #, fuzzy, kde-format
 msgid "Open &Recent Translation"
 msgstr "Aperter un traduction"
 
-#: src/application_actions.cpp:134
+#: src/application_actions.cpp:133
 #, fuzzy, kde-format
 msgid "Save Translation"
 msgstr "Salvar li traduction quam"
 
-#: src/application_actions.cpp:135
+#: src/application_actions.cpp:134
 #, fuzzy, kde-format
 msgid "Save opened translation subtitle"
 msgstr "Salvar li traduction quam"
 
-#: src/application_actions.cpp:145
+#: src/application_actions.cpp:144
 #, fuzzy, kde-format
 msgid "Save Translation As..."
 msgstr "Salvar li traduction quam"
 
-#: src/application_actions.cpp:146
+#: src/application_actions.cpp:145
 #, kde-format
 msgid "Save opened translation subtitle with different settings"
 msgstr ""
 
-#: src/application_actions.cpp:154
+#: src/application_actions.cpp:153
 #, kde-format
 msgid "Close Translation"
 msgstr "Cluder li traduction"
 
-#: src/application_actions.cpp:155
+#: src/application_actions.cpp:154
 #, fuzzy, kde-format
 msgid "Close opened translation subtitle"
 msgstr "Cluder li traduction"
 
-#: src/application_actions.cpp:172
+#: src/application_actions.cpp:171
 #, fuzzy, kde-format
 msgid "Split Subtitle..."
 msgstr "_Separar li subtitul"
 
-#: src/application_actions.cpp:173
+#: src/application_actions.cpp:172
 #, kde-format
 msgid "Split the opened subtitle in two parts"
 msgstr ""
 
-#: src/application_actions.cpp:179
+#: src/application_actions.cpp:178
 #, fuzzy, kde-format
 msgid "Join Subtitles..."
 msgstr "Subtitules"
 
-#: src/application_actions.cpp:180
+#: src/application_actions.cpp:179
 #, kde-format
 msgid "Append to the opened subtitle another one"
 msgstr ""
 
-#: src/application_actions.cpp:187
+#: src/application_actions.cpp:186
 #, fuzzy, kde-format
 msgid "Insert Before"
 msgstr "Ejecter un unité de CD pos que desmontar e cluder it ante que montar."
 
-#: src/application_actions.cpp:188
+#: src/application_actions.cpp:187
 #, kde-format
 msgid "Insert empty line before current one"
 msgstr ""
 
-#: src/application_actions.cpp:196
+#: src/application_actions.cpp:195
 #, fuzzy, kde-format
 msgid "Insert After"
 msgstr "_Pos:"
 
-#: src/application_actions.cpp:197
+#: src/application_actions.cpp:196
 #, kde-format
 msgid "Insert empty line after current one"
 msgstr ""
 
 #. i18n: ectx: property (text), widget (QPushButton, btnRemove)
-#: src/application_actions.cpp:205 src/scripting/scriptsmanager.ui:60
+#: src/application_actions.cpp:204 src/scripting/scriptsmanager.ui:60
 #, kde-format
 msgid "Remove"
 msgstr "Remover"
 
-#: src/application_actions.cpp:206
+#: src/application_actions.cpp:205
 #, fuzzy, kde-format
 msgid "Remove selected lines"
 msgstr "Remover li selectet"
 
-#: src/application_actions.cpp:213 src/core/subtitle.cpp:560
+#: src/application_actions.cpp:212 src/core/subtitle.cpp:560
 #, fuzzy, kde-format
 msgid "Split Lines"
 msgstr "Fender"
 
-#: src/application_actions.cpp:214
+#: src/application_actions.cpp:213
 #, fuzzy, kde-format
 msgid "Split selected lines"
 msgstr "Rupter paroles"
 
-#: src/application_actions.cpp:220 src/core/subtitle.cpp:642
+#: src/application_actions.cpp:219 src/core/subtitle.cpp:642
 #: src/gui/waveform/waveformwidget.cpp:712
 #, kde-format
 msgid "Join Lines"
 msgstr "Unir lineas"
 
-#: src/application_actions.cpp:221
+#: src/application_actions.cpp:220
 #, fuzzy, kde-format
 msgid "Join selected lines"
 msgstr "_Unir lineas"
 
-#: src/application_actions.cpp:228 src/errors/finderrorsdialog.cpp:114
+#: src/application_actions.cpp:227 src/errors/finderrorsdialog.cpp:114
 #: src/gui/treeview/richlineedit.cpp:112 src/widgets/simplerichtextedit.cpp:370
 #, kde-format
 msgid "Select All"
 msgstr "Selecter omni"
 
-#: src/application_actions.cpp:229
+#: src/application_actions.cpp:228
 #, fuzzy, kde-format
 msgid "Select all lines"
 msgstr "Rupter long lineas"
 
-#: src/application_actions.cpp:236
+#: src/application_actions.cpp:235
 #, fuzzy, kde-format
 msgid "Go to Line..."
 msgstr "Ear a _linea..."
 
-#: src/application_actions.cpp:237
+#: src/application_actions.cpp:236
 #, fuzzy, kde-format
 msgid "Go to specified line"
 msgstr "Ear al localisation del marca-págine"
 
-#: src/application_actions.cpp:245
+#: src/application_actions.cpp:244
 #, kde-format
 msgid "Find..."
 msgstr "Trovar..."
 
-#: src/application_actions.cpp:246
+#: src/application_actions.cpp:245
 #, kde-format
 msgid "Find occurrences of strings or regular expressions"
 msgstr ""
 
-#: src/application_actions.cpp:254
+#: src/application_actions.cpp:253
 #, fuzzy, kde-format
 msgid "Find Next"
 msgstr "Trovar sequent"
 
-#: src/application_actions.cpp:255
+#: src/application_actions.cpp:254
 #, fuzzy, kde-format
 msgid "Find next occurrence of string or regular expression"
 msgstr "Trovar un sequent occurrentie de textu"
 
-#: src/application_actions.cpp:263
+#: src/application_actions.cpp:262
 #, fuzzy, kde-format
 msgid "Find Previous"
 msgstr "Trovar precedent"
 
-#: src/application_actions.cpp:264
+#: src/application_actions.cpp:263
 #, fuzzy, kde-format
 msgid "Find previous occurrence of string or regular expression"
 msgstr "Trovar un precedent occurrentie de textu"
 
-#: src/application_actions.cpp:271
+#: src/application_actions.cpp:270
 #, fuzzy, kde-format
 msgid "Replace..."
 msgstr "_Vicear..."
 
-#: src/application_actions.cpp:272
+#: src/application_actions.cpp:271
 #, kde-format
 msgid "Replace occurrences of strings or regular expressions"
 msgstr ""
 
-#: src/application_actions.cpp:280
+#: src/application_actions.cpp:279
 #, fuzzy, kde-format
 msgid "Retrocede current line"
 msgstr "Duplicar li actual linea o selection"
 
-#: src/application_actions.cpp:281
+#: src/application_actions.cpp:280
 #, kde-format
 msgid "Makes the line before the current one active"
 msgstr ""
 
-#: src/application_actions.cpp:289
+#: src/application_actions.cpp:288
 #, fuzzy, kde-format
 msgid "Advance current line"
 msgstr "Linea actual"
 
-#: src/application_actions.cpp:290
+#: src/application_actions.cpp:289
 #, kde-format
 msgid "Makes the line after the current one active"
 msgstr ""
 
-#: src/application_actions.cpp:298
+#: src/application_actions.cpp:297
 #, fuzzy, kde-format
 msgid "Detect Errors..."
 msgstr "Errores"
 
-#: src/application_actions.cpp:299
+#: src/application_actions.cpp:298
 #, fuzzy, kde-format
 msgid "Detect errors in the current subtitle"
 msgstr ""
 "Detecter ca un file bibtex esset\n"
 "referentiat in li actual document"
 
-#: src/application_actions.cpp:306
+#: src/application_actions.cpp:305
 #, fuzzy, kde-format
 msgid "Clear Errors/Marks"
 msgstr "Spacie pos signes de punctuation"
 
-#: src/application_actions.cpp:307
+#: src/application_actions.cpp:306
 #, kde-format
 msgid "Clear detected errors and marks in the current subtitle"
 msgstr ""
 
-#: src/application_actions.cpp:315
+#: src/application_actions.cpp:314
 #, fuzzy, kde-format
 msgid "Select Next Error/Mark"
 msgstr "errore de SELECT"
 
-#: src/application_actions.cpp:316
+#: src/application_actions.cpp:315
 #, kde-format
 msgid "Select next line with error or mark"
 msgstr ""
 
-#: src/application_actions.cpp:324
+#: src/application_actions.cpp:323
 #, fuzzy, kde-format
 msgid "Select Previous Error/Mark"
 msgstr "Selecter li precedent element"
 
-#: src/application_actions.cpp:325
+#: src/application_actions.cpp:324
 #, kde-format
 msgid "Select previous line with error or mark"
 msgstr ""
 
-#: src/application_actions.cpp:333
+#: src/application_actions.cpp:332
 #, kde-format
 msgid "Spelling..."
 msgstr "Ortografie..."
 
-#: src/application_actions.cpp:334
+#: src/application_actions.cpp:333
 #, fuzzy, kde-format
 msgid "Check lines spelling"
 msgstr "Controlar _ortografie..."
 
-#: src/application_actions.cpp:340
+#: src/application_actions.cpp:339
 #, fuzzy, kde-format
 msgid "Toggle Mark"
 msgstr "(De)marcar"
 
-#: src/application_actions.cpp:341
+#: src/application_actions.cpp:340
 #, fuzzy, kde-format
 msgid "Toggle mark on selected lines"
 msgstr "Rupter lineas inter paroles"
 
-#: src/application_actions.cpp:349 src/gui/currentlinewidget.cpp:141
+#: src/application_actions.cpp:348 src/gui/currentlinewidget.cpp:141
 #, fuzzy, kde-format
 msgid "Toggle Bold"
 msgstr "(De)marcar"
 
-#: src/application_actions.cpp:350
+#: src/application_actions.cpp:349
 #, kde-format
 msgid "Toggle selected lines bold attribute"
 msgstr ""
 
-#: src/application_actions.cpp:358 src/gui/currentlinewidget.cpp:145
+#: src/application_actions.cpp:357 src/gui/currentlinewidget.cpp:145
 #, fuzzy, kde-format
 msgid "Toggle Italic"
 msgstr "_Italic"
 
-#: src/application_actions.cpp:359
+#: src/application_actions.cpp:358
 #, kde-format
 msgid "Toggle selected lines italic attribute"
 msgstr ""
 
-#: src/application_actions.cpp:367 src/gui/currentlinewidget.cpp:149
+#: src/application_actions.cpp:366 src/gui/currentlinewidget.cpp:149
 #, fuzzy, kde-format
 msgid "Toggle Underline"
 msgstr "S&ublineat"
 
-#: src/application_actions.cpp:368
+#: src/application_actions.cpp:367
 #, kde-format
 msgid "Toggle selected lines underline attribute"
 msgstr ""
 
-#: src/application_actions.cpp:376 src/gui/currentlinewidget.cpp:153
+#: src/application_actions.cpp:375 src/gui/currentlinewidget.cpp:153
 #, fuzzy, kde-format
 msgid "Toggle Strike Through"
 msgstr "Trastrecat"
 
-#: src/application_actions.cpp:377
+#: src/application_actions.cpp:376
 #, kde-format
 msgid "Toggle selected lines strike through attribute"
 msgstr ""
 
-#: src/application_actions.cpp:385 src/gui/currentlinewidget.cpp:157
+#: src/application_actions.cpp:384 src/gui/currentlinewidget.cpp:157
 #, fuzzy, kde-format
 msgid "Change Text Color"
 msgstr "Cambiar li textu"
 
-#: src/application_actions.cpp:386
+#: src/application_actions.cpp:385
 #, fuzzy, kde-format
 msgid "Change text color of selected lines"
 msgstr "Converter li selectet textu a majuscules"
 
-#: src/application_actions.cpp:393
+#: src/application_actions.cpp:392
 #, fuzzy, kde-format
 msgid "Shift..."
 msgstr "Shift+"
 
-#: src/application_actions.cpp:394
+#: src/application_actions.cpp:393
 #, kde-format
 msgid "Shift lines an specified amount of time"
 msgstr ""
 
-#: src/application_actions.cpp:413
+#: src/application_actions.cpp:412
 #, kde-format
 msgid "Adjust..."
 msgstr "Adjustar..."
 
-#: src/application_actions.cpp:414
+#: src/application_actions.cpp:413
 #, kde-format
 msgid "Linearly adjust all lines to a specified interval"
 msgstr ""
 
-#: src/application_actions.cpp:421
+#: src/application_actions.cpp:420
 #, fuzzy, kde-format
 msgid "Change Frame Rate..."
 msgstr "Rapiditá de cadres"
 
-#: src/application_actions.cpp:422
+#: src/application_actions.cpp:421
 #, kde-format
 msgid "Retime subtitle lines by reinterpreting its frame rate"
 msgstr ""
 
-#: src/application_actions.cpp:428
+#: src/application_actions.cpp:427
 #, fuzzy, kde-format
 msgid "Enforce Duration Limits..."
 msgstr "Duration"
 
-#: src/application_actions.cpp:429
+#: src/application_actions.cpp:428
 #, kde-format
 msgid "Enforce lines minimum and/or maximum duration limits"
 msgstr ""
 
-#: src/application_actions.cpp:436
+#: src/application_actions.cpp:435
 #, fuzzy, kde-format
 msgid "Set Automatic Durations..."
 msgstr "A_djustar durationes..."
 
-#: src/application_actions.cpp:437
+#: src/application_actions.cpp:436
 #, kde-format
 msgid "Set lines durations based on amount of letters, words and line breaks"
 msgstr ""
 
-#: src/application_actions.cpp:443
+#: src/application_actions.cpp:442
 #, fuzzy, kde-format
 msgid "Maximize Durations..."
 msgstr "Maximisar"
 
-#: src/application_actions.cpp:444
+#: src/application_actions.cpp:443
 #, kde-format
 msgid "Extend lines durations up to their next lines show time"
 msgstr ""
 
-#: src/application_actions.cpp:450
+#: src/application_actions.cpp:449
 #, fuzzy, kde-format
 msgid "Fix Overlapping Times..."
 msgstr "Reparar"
 
-#: src/application_actions.cpp:451
+#: src/application_actions.cpp:450
 #, kde-format
 msgid "Fix lines overlapping times"
 msgstr ""
 
-#: src/application_actions.cpp:457
+#: src/application_actions.cpp:456
 #, fuzzy, kde-format
 msgid "Synchronize with Subtitle..."
 msgstr "_Sincronisar"
 
-#: src/application_actions.cpp:458
+#: src/application_actions.cpp:457
 #, kde-format
 msgid "Copy timing information from another subtitle"
 msgstr ""
 
-#: src/application_actions.cpp:464
+#: src/application_actions.cpp:463
 #, kde-format
 msgid "Break Lines..."
 msgstr "Rupter lineas..."
 
-#: src/application_actions.cpp:465
+#: src/application_actions.cpp:464
 #, fuzzy, kde-format
 msgid "Automatically set line breaks"
 msgstr "Automaticmen controlat pauses"
 
-#: src/application_actions.cpp:471
+#: src/application_actions.cpp:470
 #, fuzzy, kde-format
 msgid "Unbreak Lines..."
 msgstr "&Lineas: "
 
-#: src/application_actions.cpp:472
+#: src/application_actions.cpp:471
 #, kde-format
 msgid "Remove line breaks from lines"
 msgstr ""
 
-#: src/application_actions.cpp:478
+#: src/application_actions.cpp:477
 #, fuzzy, kde-format
 msgid "Simplify Spaces..."
 msgstr "_Spacies"
 
-#: src/application_actions.cpp:479
+#: src/application_actions.cpp:478
 #, fuzzy, kde-format
 msgid "Remove unneeded spaces from lines"
 msgstr "Remover final spacies ex lineas ante que gardar."
 
-#: src/application_actions.cpp:485
+#: src/application_actions.cpp:484
 #, fuzzy, kde-format
 msgid "Change Case..."
 msgstr "Majuscules/minuscules"
 
-#: src/application_actions.cpp:486
+#: src/application_actions.cpp:485
 #, kde-format
 msgid "Change lines text to upper, lower, title or sentence case"
 msgstr ""
 
-#: src/application_actions.cpp:492
+#: src/application_actions.cpp:491
 #, fuzzy, kde-format
 msgid "Fix Punctuation..."
 msgstr "Reparar"
 
-#: src/application_actions.cpp:493
+#: src/application_actions.cpp:492
 #, kde-format
 msgid "Fix punctuation errors in lines"
 msgstr ""
 
-#: src/application_actions.cpp:499
+#: src/application_actions.cpp:498
 #, kde-format
 msgid "Translate..."
 msgstr "Traducter…"
 
-#: src/application_actions.cpp:500
+#: src/application_actions.cpp:499
 #, kde-format
 msgid "Translate lines texts using Google services"
 msgstr ""
 
-#: src/application_actions.cpp:506
+#: src/application_actions.cpp:505
 #, fuzzy, kde-format
 msgid "Edit Line in Place"
 msgstr "Redacter li loco"
 
-#: src/application_actions.cpp:507
+#: src/application_actions.cpp:506
 #, kde-format
 msgid "Edit current line text in place"
 msgstr ""
 
-#: src/application_actions.cpp:515
+#: src/application_actions.cpp:514
 #, fuzzy, kde-format
 msgid "Open Video..."
 msgstr "Aperter un video"
 
-#: src/application_actions.cpp:516 src/application_actions.cpp:523
+#: src/application_actions.cpp:515 src/application_actions.cpp:522
 #, fuzzy, kde-format
 msgid "Open video file"
 msgstr "Aperter un video"
 
-#: src/application_actions.cpp:522
+#: src/application_actions.cpp:521
 #, fuzzy, kde-format
 msgid "Open &Recent Video"
 msgstr "Aperter un video"
 
-#: src/application_actions.cpp:529
+#: src/application_actions.cpp:528
 #, fuzzy, kde-format
 msgid "Import Subtitle Stream"
 msgstr "Subtitul"
 
-#: src/application_actions.cpp:530
+#: src/application_actions.cpp:529
 #, fuzzy, kde-format
 msgid "Import subtitle stream into subtitle editor"
 msgstr "Redactor de subtitules de KDE"
 
-#: src/application_actions.cpp:536
+#: src/application_actions.cpp:535
 #, fuzzy, kde-format
 msgid "Recognize Speech"
 msgstr "Parlation"
 
-#: src/application_actions.cpp:537
+#: src/application_actions.cpp:536
 #, kde-format
 msgid "Recognize speech in audio stream"
 msgstr ""
 
-#: src/application_actions.cpp:543
+#: src/application_actions.cpp:542
 #, fuzzy, kde-format
 msgid "Close Video"
 msgstr "cluder"
 
-#: src/application_actions.cpp:544
+#: src/application_actions.cpp:543
 #, fuzzy, kde-format
 msgid "Close video file"
 msgstr "selecter un file de video"
 
-#: src/application_actions.cpp:551
+#: src/application_actions.cpp:550
 #, fuzzy, kde-format
 msgid "Full Screen Mode"
 msgstr "_Plen-ecran"
 
-#: src/application_actions.cpp:552
+#: src/application_actions.cpp:551
 #, fuzzy, kde-format
 msgid "Toggle full screen mode"
 msgstr "(Des)activar li Letor del ecran"
 
-#: src/application_actions.cpp:559
+#: src/application_actions.cpp:558
 #, fuzzy, kde-format
 msgid "Stop"
 msgstr "Stoppar"
 
-#: src/application_actions.cpp:560
+#: src/application_actions.cpp:559
 #, fuzzy, kde-format
 msgid "Stop video playback"
 msgstr "   --stop             Stoppar li reproduction\n"
 
-#: src/application_actions.cpp:568
+#: src/application_actions.cpp:567
 #, fuzzy, kde-format
 msgid "Toggle video playing/paused"
 msgstr "Reproductent un video"
 
-#: src/application_actions.cpp:576
+#: src/application_actions.cpp:575
 #, fuzzy, kde-format
 msgid "Seek Backward"
 msgstr "Saltar retro"
 
-#: src/application_actions.cpp:584
+#: src/application_actions.cpp:583
 #, fuzzy, kde-format
 msgid "Seek Forward"
 msgstr "Saltar avan"
 
-#: src/application_actions.cpp:591
+#: src/application_actions.cpp:590
 #, fuzzy, kde-format
 msgid "Frame Step Backward"
 msgstr "Ear al precedent/sequent cadre"
 
-#: src/application_actions.cpp:598
+#: src/application_actions.cpp:597
 #, fuzzy, kde-format
 msgid "Frame Step Forward"
 msgstr "Ear al precedent/sequent cadre"
 
-#: src/application_actions.cpp:606
+#: src/application_actions.cpp:605
 #, fuzzy, kde-format
 msgid "Seek to Previous Line"
 msgstr "Ear al _precedent"
 
-#: src/application_actions.cpp:607
+#: src/application_actions.cpp:606
 #, kde-format
 msgid "Seek to previous subtitle line show time"
 msgstr ""
 
-#: src/application_actions.cpp:615
+#: src/application_actions.cpp:614
 #, fuzzy, kde-format
 msgid "Increase media play rate"
 msgstr "Automaticmen reproducter media"
 
-#: src/application_actions.cpp:616
+#: src/application_actions.cpp:615
 #, fuzzy, kde-format
 msgid "Increase media playback rate"
 msgstr "media-playback-start-symbolic"
 
-#: src/application_actions.cpp:623
+#: src/application_actions.cpp:622
 #, fuzzy, kde-format
 msgid "Decrease media play rate"
 msgstr "Automaticmen reproducter media"
 
-#: src/application_actions.cpp:624
+#: src/application_actions.cpp:623
 #, fuzzy, kde-format
 msgid "Decrease media playback rate"
 msgstr "media-playback-start-symbolic"
 
-#: src/application_actions.cpp:630
+#: src/application_actions.cpp:629
 #, fuzzy, kde-format
 msgid "Play Current Line and Pause"
 msgstr "Reproducter (e pausar)"
 
-#: src/application_actions.cpp:631
+#: src/application_actions.cpp:630
 #, kde-format
 msgid "Seek to selected subtitle line show time, play it and then pause"
 msgstr ""
 
-#: src/application_actions.cpp:638
+#: src/application_actions.cpp:637
 #, fuzzy, kde-format
 msgid "Seek to Current Line"
 msgstr "Saltar"
 
-#: src/application_actions.cpp:639
+#: src/application_actions.cpp:638
 #, kde-format
 msgid "Seek to selected subtitle line show time"
 msgstr ""
 
-#: src/application_actions.cpp:646
+#: src/application_actions.cpp:645
 #, fuzzy, kde-format
 msgid "Seek to Next Line"
 msgstr "Ear al precedent/sequent subtitul"
 
-#: src/application_actions.cpp:647
+#: src/application_actions.cpp:646
 #, kde-format
 msgid "Seek to next subtitle line show time"
 msgstr ""
 
-#: src/application_actions.cpp:655
+#: src/application_actions.cpp:654
 #, kde-format
 msgid "Set Line Show Time to Video Position"
 msgstr ""
 
-#: src/application_actions.cpp:656
+#: src/application_actions.cpp:655
 #, kde-format
 msgid "Set current line show time to video position"
 msgstr ""
 
-#: src/application_actions.cpp:664
+#: src/application_actions.cpp:663
 #, kde-format
 msgid "Set Line Hide Time to Video Position"
 msgstr ""
 
-#: src/application_actions.cpp:665
+#: src/application_actions.cpp:664
 #, kde-format
 msgid "Set current line hide time to video position"
 msgstr ""
 
-#: src/application_actions.cpp:672
+#: src/application_actions.cpp:671
 #, kde-format
 msgid "Shift Current Line to Video Position"
 msgstr ""
 
-#: src/application_actions.cpp:673
+#: src/application_actions.cpp:672
 #, kde-format
 msgid ""
 "Set current line show time to video position by equally shifting all lines"
 msgstr ""
 
-#: src/application_actions.cpp:681
+#: src/application_actions.cpp:680
 #, fuzzy, kde-format
 msgid "Current Line Follows Video"
 msgstr "Duplicar li actual linea o selection"
 
-#: src/application_actions.cpp:682
+#: src/application_actions.cpp:681
 #, kde-format
 msgid "Make current line follow the playing video position"
 msgstr ""
 
-#: src/application_actions.cpp:688
+#: src/application_actions.cpp:687
 #, kde-format
 msgctxt "@action:inmenu Toggle audio muted"
 msgid "Mute"
 msgstr "Assurdar"
 
-#: src/application_actions.cpp:689
+#: src/application_actions.cpp:688
 #, fuzzy, kde-format
 msgid "Enable/disable playback sound"
 msgstr "Activar tastes de multimedia por controlar reproduction"
 
-#: src/application_actions.cpp:696
+#: src/application_actions.cpp:695
 #, fuzzy, kde-format
 msgid "Increase Volume"
 msgstr "Augmentar li volúmine"
 
-#: src/application_actions.cpp:697
+#: src/application_actions.cpp:696
 #, fuzzy, kde-format
 msgid "Increase volume by 5%"
 msgstr "&Augmentar li volúmine"
 
-#: src/application_actions.cpp:704
+#: src/application_actions.cpp:703
 #, fuzzy, kde-format
 msgid "Decrease Volume"
 msgstr "Diminuer li volúmine"
 
-#: src/application_actions.cpp:705
+#: src/application_actions.cpp:704
 #, fuzzy, kde-format
 msgid "Decrease volume by 5%"
 msgstr "Diminuer li volúmine"
 
-#: src/application_actions.cpp:712
+#: src/application_actions.cpp:711
 #, fuzzy, kde-format
 msgid "Audio Streams"
 msgstr "Fluvies"
 
-#: src/application_actions.cpp:713
+#: src/application_actions.cpp:712
 #, fuzzy, kde-format
 msgid "Select active audio stream"
 msgstr "Selecter un file a adjunter al projecte."
 
-#: src/application_actions.cpp:724
+#: src/application_actions.cpp:723
 #, fuzzy, kde-format
 msgid "Increase Font Size"
 msgstr "Incrementar li grandore de textu"
 
-#: src/application_actions.cpp:725
+#: src/application_actions.cpp:724
 #, kde-format
 msgid "Increase subtitles font size by 1 point"
 msgstr ""
 
-#: src/application_actions.cpp:732
+#: src/application_actions.cpp:731
 #, fuzzy, kde-format
 msgid "Decrease Font Size"
 msgstr "Decrementar li grandore de textu"
 
-#: src/application_actions.cpp:733
+#: src/application_actions.cpp:732
 #, kde-format
 msgid "Decrease subtitles font size by 1 point"
 msgstr ""
 
-#: src/application_actions.cpp:740
+#: src/application_actions.cpp:739
 #, fuzzy, kde-format
 msgid "Displayed Subtitle Text"
 msgstr "Codification de subtitules"
 
-#: src/application_actions.cpp:741
+#: src/application_actions.cpp:740
 #, fuzzy, kde-format
 msgid "Select visible subtitle text"
 msgstr "Codification de subtitules"
 
-#: src/application_actions.cpp:752 src/gui/waveform/waveformwidget.cpp:736
+#: src/application_actions.cpp:751 src/gui/waveform/waveformwidget.cpp:736
 #, fuzzy, kde-format
 msgid "Toggle Anchor"
 msgstr "Ancre:"
 
-#: src/application_actions.cpp:753
+#: src/application_actions.cpp:752
 #, kde-format
 msgid ""
 "(Un)Anchor current line's show time to timeline (Editing anchored line's "
 "show time will stretch/compact the timeline between adjacent anchors)"
 msgstr ""
 
-#: src/application_actions.cpp:760
+#: src/application_actions.cpp:759
 #, fuzzy, kde-format
 msgid "Remove All Anchors"
 msgstr "Ancres"
 
-#: src/application_actions.cpp:761
+#: src/application_actions.cpp:760
 #, kde-format
 msgid "Unanchor show time from the timeline on all anchored lines"
 msgstr ""
 
-#: src/application_actions.cpp:769
+#: src/application_actions.cpp:768
 #, fuzzy, kde-format
 msgctxt "@action:inmenu Manage user scripts"
 msgid "Scripts Manager..."
 msgstr "&Scriptes"
 
-#: src/application_actions.cpp:770
+#: src/application_actions.cpp:769
 #, fuzzy, kde-format
 msgid "Manage user scripts"
 msgstr "Executer o gerer scriptes ex %s"
 
-#: src/application_actions.cpp:777 src/application_actions.cpp:778
+#: src/application_actions.cpp:776 src/application_actions.cpp:777
 #, fuzzy, kde-format
 msgid "Waveform Zoom In"
 msgstr "Und-forma PCM"
 
-#: src/application_actions.cpp:784 src/application_actions.cpp:785
+#: src/application_actions.cpp:783 src/application_actions.cpp:784
 #, fuzzy, kde-format
 msgid "Waveform Zoom Out"
 msgstr "Diminuer li textu"
 
-#: src/application_actions.cpp:792
+#: src/application_actions.cpp:791
 #, fuzzy, kde-format
 msgid "Waveform Auto Scroll"
 msgstr "Autorular"
 
-#: src/application_actions.cpp:793
+#: src/application_actions.cpp:792
 #, kde-format
 msgid "Waveform display will automatically scroll to video position"
 msgstr ""
 
-#: src/application_subtitle.cpp:79
+#: src/application_subtitle.cpp:78
 #, kde-format
 msgid "All Text Subtitles"
 msgstr "Omni textual subtitules"
 
-#: src/application_subtitle.cpp:80
+#: src/application_subtitle.cpp:79
 #, fuzzy, kde-format
 msgid "All Image Subtitles"
 msgstr "_Omni subtitules"
 
-#: src/application_subtitle.cpp:82 src/application_subtitle.cpp:106
+#: src/application_subtitle.cpp:81 src/application_subtitle.cpp:105
 #, kde-format
 msgid "All Files"
 msgstr "Omni files"
 
-#: src/application_subtitle.cpp:103
+#: src/application_subtitle.cpp:102
 #, kde-format
 msgid "Media Files"
 msgstr "Files de medies"
 
-#: src/application_subtitle.cpp:104
+#: src/application_subtitle.cpp:103
 #, kde-format
 msgid "Video Files"
 msgstr "Video-files"
 
-#: src/application_subtitle.cpp:105
+#: src/application_subtitle.cpp:104
 #, kde-format
 msgid "Audio Files"
 msgstr "Audio-files"
 
-#: src/application_subtitle.cpp:128
+#: src/application_subtitle.cpp:127
 #, kde-format
 msgid ""
 "The requested action would make the subtitle and its translation share the "
@@ -1071,141 +1071,141 @@ msgid ""
 "Are you sure you want to continue?"
 msgstr ""
 
-#: src/application_subtitle.cpp:131
+#: src/application_subtitle.cpp:130
 #, fuzzy, kde-format
 msgid "Conflicting Subtitle Files"
 msgstr "Detecter subtitules automaticmen"
 
-#: src/application_subtitle.cpp:149 src/dialogs/selectablesubtitledialog.cpp:67
+#: src/application_subtitle.cpp:148 src/dialogs/selectablesubtitledialog.cpp:67
 #, fuzzy, kde-format
 msgid "Open Subtitle"
 msgstr "Aperter un file de subtitules"
 
-#: src/application_subtitle.cpp:205 src/application_subtitle.cpp:225
-#: src/application_subtitle.cpp:477 src/application_subtitle.cpp:502
+#: src/application_subtitle.cpp:204 src/application_subtitle.cpp:224
+#: src/application_subtitle.cpp:476 src/application_subtitle.cpp:501
 #, kde-format
 msgid ""
 "<qt>Could not parse the subtitle file.<br/>This may have been caused by "
 "usage of the wrong encoding.</qt>"
 msgstr ""
 
-#: src/application_subtitle.cpp:271 src/application_subtitle.cpp:318
+#: src/application_subtitle.cpp:270 src/application_subtitle.cpp:317
 #, kde-format
 msgid "Format: %1"
 msgstr "Formate: %1"
 
-#: src/application_subtitle.cpp:272 src/application_subtitle.cpp:319
+#: src/application_subtitle.cpp:271 src/application_subtitle.cpp:318
 #, kde-format
 msgid "Encoding: %1"
 msgstr "Codification: %1"
 
-#: src/application_subtitle.cpp:325
+#: src/application_subtitle.cpp:324
 #, fuzzy, kde-format
 msgid "There was an error saving the subtitle."
 msgstr "Un error evenit gardante li schema de rapid-tastes."
 
-#: src/application_subtitle.cpp:333
+#: src/application_subtitle.cpp:332
 #, fuzzy, kde-format
 msgid "Save Subtitle"
 msgstr "Ne successat gardar li file de subtutules in li fólder temporari «{}»"
 
-#: src/application_subtitle.cpp:373 src/application_subtitle.cpp:615
+#: src/application_subtitle.cpp:372 src/application_subtitle.cpp:614
 #, kde-format
 msgid ""
 "Currently opened translation subtitle has unsaved changes.\n"
 "Do you want to save them?"
 msgstr ""
 
-#: src/application_subtitle.cpp:374 src/application_subtitle.cpp:616
+#: src/application_subtitle.cpp:373 src/application_subtitle.cpp:615
 #, fuzzy, kde-format
 msgid "Close Translation Subtitle"
 msgstr "Cluder li traduction"
 
-#: src/application_subtitle.cpp:385
+#: src/application_subtitle.cpp:384
 #, kde-format
 msgid ""
 "Currently opened subtitle has unsaved changes.\n"
 "Do you want to save them?"
 msgstr ""
 
-#: src/application_subtitle.cpp:386
+#: src/application_subtitle.cpp:385
 #, fuzzy, kde-format
 msgid "Close Subtitle"
 msgstr "Nró."
 
-#: src/application_subtitle.cpp:446
+#: src/application_subtitle.cpp:445
 #, fuzzy, kde-format
 msgid "Open Translation Subtitle"
 msgstr "Aperter un file de subtitules"
 
-#: src/application_subtitle.cpp:531
+#: src/application_subtitle.cpp:530
 #, kde-format
 msgctxt "@item:inmenu Display primary text in video player"
 msgid "Primary"
 msgstr "Primari"
 
-#: src/application_subtitle.cpp:532
+#: src/application_subtitle.cpp:531
 #, kde-format
 msgctxt "@item:inmenu Display translation text in video player"
 msgid "Translation"
 msgstr "Traduction"
 
-#: src/application_subtitle.cpp:571
+#: src/application_subtitle.cpp:570
 #, fuzzy, kde-format
 msgid "There was an error saving the translation subtitle."
 msgstr "Un error evenit salvante li archive."
 
-#: src/application_subtitle.cpp:579
+#: src/application_subtitle.cpp:578
 #, fuzzy, kde-format
 msgid "Save Translation Subtitle"
 msgstr "Salvar li traduction quam"
 
-#: src/application_subtitle.cpp:666
+#: src/application_subtitle.cpp:665
 #, fuzzy, kde-format
 msgctxt "Suffix added to split subtitles"
 msgid "split"
 msgstr "Fender"
 
-#: src/application_subtitle.cpp:683
+#: src/application_subtitle.cpp:682
 #, fuzzy, kde-format
 msgid "Could not write the split subtitle file."
 msgstr "Ne successat scrir al file %1."
 
-#: src/application_subtitle.cpp:683
+#: src/application_subtitle.cpp:682
 #, kde-format
 msgid "Could not write the split subtitle translation file."
 msgstr ""
 
-#: src/application_subtitle.cpp:708
+#: src/application_subtitle.cpp:707
 #, fuzzy, kde-format
 msgid "Could not read the subtitle file to append."
 msgstr "Ne successat leer li file %1."
 
-#: src/application_subtitle.cpp:724
+#: src/application_subtitle.cpp:723
 #, kde-format
 msgid "The specified time does not split the subtitles."
 msgstr ""
 
-#: src/application_subtitle.cpp:759
+#: src/application_subtitle.cpp:758
 #, kde-format
 msgid ""
 "Could not open a new Subtitle Composer window.\n"
 "The split part was saved as %1."
 msgstr ""
 
-#: src/application_subtitle.cpp:760
+#: src/application_subtitle.cpp:759
 #, kde-format
 msgid ""
 "Could not open a new Subtitle Composer window.\n"
 "The split parts were saved as %1 and %2."
 msgstr ""
 
-#: src/application_subtitle.cpp:778
+#: src/application_subtitle.cpp:777
 #, kde-format
 msgid "The reference subtitle must have more than one line to proceed."
 msgstr ""
 
-#: src/application_subtitle.cpp:787
+#: src/application_subtitle.cpp:786
 #, kde-format
 msgid "Could not parse the reference subtitle file."
 msgstr ""
