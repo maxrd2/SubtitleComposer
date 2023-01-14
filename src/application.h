@@ -44,7 +44,6 @@ class SpeechProcessor;
 
 class PlayerWidget;
 class CurrentLineWidget;
-class StatusBar2;
 
 class ConfigDialog;
 
