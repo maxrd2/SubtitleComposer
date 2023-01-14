@@ -109,7 +109,7 @@
       <li xml:lang="es">Abrir y guardar formatos de subtítulos de texto: SubRip/SRT, MicroDVD, SSA/ASS, MPlayer, TMPlayer y subtítulos de YouTube</li>
       <li xml:lang="et">Subtiitrite tekstivormingute - SubRip/SRT, MicroDVD, SSA/ASS, MPlayer, TMPlayer ja YouTube - avamine ja salvestamine</li>
       <li xml:lang="fi">Avaa ja tallenna eri tekstitystiedostomuotoja: SubRip/SRT, MicroDVD, SSA/ASS, MPlayer, TMPlayer ja YouTube</li>
-      <li xml:lang="fr">Ouverture et enregistrement de formats de sous-titres texte - SubRip / SRT, MicroDVD, SSA / ASS, MPlayer, TMPlayer et YouTube</li>
+      <li xml:lang="fr">Ouverture et enregistrement de formats de sous-titres texte - SubRip / SRT, Micro-DVD, SSA / ASS, MPlayer, TMPlayer et YouTube</li>
       <li xml:lang="id">Buka/Simpan Format Subtitle Teks - SubRip/SRT, MicroDVD, SSA/ASS, MPlayer, TMPlayer dan bab YouTube</li>
       <li xml:lang="it">Apertura/salvataggio di formati di sottotitoli di testo - SubRip/SRT, MicroDVD, SSA/ASS, MPlayer, TMPlayer e sottotitoli YouTube</li>
       <li xml:lang="ko">텍스트 자막 형식 열고 저장 - SubRip/SRT, MicroDVD, SSA/ASS, MPlayer, TMPlayer, YouTube 캡션</li>
@@ -151,7 +151,7 @@
       <li xml:lang="es">Demultiplexar emisiones de subtítulos gráficos y de texto de archivos de vídeo: SRT, SSA/ASS, texto MOV, MicroDVD, DVD/Vob, DVB, XSUB, HDMV-PGS</li>
       <li xml:lang="et">Graafilise või tekstisubtiitri voo demultipleksimine videofailist - SRT, SSA/ASS, MOV text, MicroDVD, DVD/Vob, DVB, XSUB, HDMV-PGS</li>
       <li xml:lang="fi">Graafisten tai tekstimuotoisten tekstitysten demuksaus videotiedostosta: SRT, SSA/ASS, MOV, MicroDVD, DVD/Vob, DVB, XSUB, HDMV-PGS</li>
-      <li xml:lang="fr">Démultiplexage du flux de sous-titres graphiques / texte depuis un fichier vidéo - SRT, SSA / ASS, MOV texte, MicroDVD, DVD / Vob, DVB, XSUB, HDMV-PGS</li>
+      <li xml:lang="fr">Démultiplexage du flux de sous-titres graphiques / texte depuis un fichier vidéo - SRT, SSA / ASS, MOV texte, Micro-DVD, DVD / Vob, DVB, XSUB, HDMV-PGS</li>
       <li xml:lang="id">Stream Subtitle Teks/Demux Graphics dari file video - SRT, SSA/ASS, MOV text, MicroDVD, DVD/Vob, DVB, XSUB, HDMV-PGS</li>
       <li xml:lang="it">Demultiplazione di flussi di sottotitoli grafici/di testo - SRT, SSA/ASS, testo MOV, MicroDVD, DVD/Vob, DVB, XSUB, HDMV-PGS</li>
       <li xml:lang="ko">동영상 파일에서 그래픽/텍스트 자막 스트림 디먹스 - SRT, SSA/ASS, MOV 텍스트, MicroDVD, DVD/Vob, DVB, XSUB, HDMV-PGS</li>
