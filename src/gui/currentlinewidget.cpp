@@ -12,6 +12,7 @@
 #include "widgets/timeedit.h"
 #include "widgets/simplerichtextedit.h"
 
+#include <QComboBox>
 #include <QCursor>
 #include <QDebug>
 #include <QGridLayout>
@@ -19,6 +20,7 @@
 #include <QIcon>
 #include <QKeyEvent>
 #include <QLabel>
+#include <QLineEdit>
 #include <QPushButton>
 #include <QStringBuilder>
 #include <QTextDocument>
@@ -279,7 +281,7 @@ CurrentLineWidget::createLineWidgetBox(int index)
 {
 	enum {
 		COL_DURATION, COL_SPACER,
-		COL_BOLD, COL_ITALIC, COL_UNDERLINE, COL_STRIKE, COL_COLOR,
+		COL_VOICE, COL_CLASS, COL_BOLD, COL_ITALIC, COL_UNDERLINE, COL_STRIKE, COL_COLOR,
 		COL_TOTAL
 	};
 
@@ -308,6 +310,14 @@ CurrentLineWidget::createLineWidgetBox(int index)
 	m_textEdits[index] = textEdit;
 
 	layout->addWidget(new Breadcrumb(textEdit, this), 2, 0, 1, 7);
+
+	QToolButton *btnVoice = createToolButton(i18n("Change Voice Tag"), "actor", false);
+	connect(btnVoice, &QToolButton::clicked, textEdit, &SimpleRichTextEdit::changeTextVoice);
+	layout->addWidget(btnVoice, 0, COL_VOICE, Qt::AlignBottom);
+
+	QToolButton *btnClass = createToolButton(i18n("Change Class Tag"), "format-text-code", false);
+	connect(btnClass, &QToolButton::clicked, textEdit, &SimpleRichTextEdit::changeTextClass);
+	layout->addWidget(btnClass, 0, COL_CLASS, Qt::AlignBottom);
 
 	QToolButton *btnBold = createToolButton(i18n("Toggle Bold"), "format-text-bold");
 	connect(btnBold, &QToolButton::clicked, textEdit, &SimpleRichTextEdit::toggleFontBold);

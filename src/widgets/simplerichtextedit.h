@@ -62,6 +62,8 @@ public slots:
 	inline void toggleFontUnderline() { setFontUnderline(!charFormat().fontUnderline()); }
 	inline void toggleFontStrikeOut() { setFontStrikeOut(!charFormat().fontStrikeOut()); }
 	void changeTextColor();
+	void changeTextClass();
+	void changeTextVoice();
 
 	void deleteText();
 	void undoableClear();

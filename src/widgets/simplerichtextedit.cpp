@@ -12,7 +12,10 @@
 #include "actions/useractionnames.h"
 #include "core/undo/undostack.h"
 #include "core/richtext/richdocument.h"
+#include "helpers/common.h"
+#include "dialogs/subtitleclassdialog.h"
 #include "dialogs/subtitlecolordialog.h"
+#include "dialogs/subtitlevoicedialog.h"
 
 #include <QEvent>
 #include <QMenu>
@@ -76,7 +79,7 @@ SimpleRichTextEdit::charFormat() const
 void
 SimpleRichTextEdit::changeTextColor()
 {
-	QColor color = SubtitleComposer::SubtitleColorDialog::getColor(textColor(), this);
+	QColor color = SubtitleColorDialog::getColor(textColor(), this);
 	if(color.isValid()) {
 		if(color.rgba() == 0) {
 			QTextCursor cursor(textCursor());
@@ -87,6 +90,77 @@ SimpleRichTextEdit::changeTextColor()
 		} else {
 			setTextColor(color);
 		}
+	}
+}
+
+static const QStringList
+allClasses(RichDocument *doc)
+{
+	QSet<QString> vs = doc->stylesheet()->classes();
+	const Subtitle *s = appSubtitle();
+	for(int i = 0, n = s->count(); i < n; i++) {
+		const RichDocument *d = s->line(i)->primaryDoc();
+		const QVector<QTextFormat> vf = d->allFormats();
+		for(const QTextFormat &f: vf) {
+			if(!f.hasProperty(RichDocument::Class))
+				continue;
+			vs.unite(f.property(RichDocument::Class).value<QSet<QString>>());
+		}
+	}
+	return vs.values();
+}
+
+void
+SimpleRichTextEdit::changeTextClass()
+{
+	RichDocument *doc = static_cast<RichDocument *>(document());
+	QTextCursor cursor(textCursor());
+	QSet<QString> cl = cursor.charFormat().property(RichDocument::Class).value<QSet<QString>>();
+	const QString cc = cl.values().join(QChar::Space);
+	const QString klass = SubtitleClassDialog::getClass(allClasses(doc), cc, this);
+	if(!klass.isNull()) {
+		staticRE$(reWords, "\\S+", REu);
+		QRegularExpressionMatchIterator mi = reWords.globalMatch(klass);
+		cl.clear();
+		while(mi.hasNext()) {
+			const QRegularExpressionMatch m = mi.next();
+			cl.insert(m.captured(0));
+		}
+		QTextCharFormat format;
+		format.setProperty(RichDocument::Class, QVariant::fromValue(cl));
+		cursor.mergeCharFormat(format);
+		setTextCursor(cursor);
+	}
+}
+
+static const QStringList
+allVoices()
+{
+	QSet<QString> vs;
+	const Subtitle *s = appSubtitle();
+	for(int i = 0, n = s->count(); i < n; i++) {
+		const RichDocument *d = s->line(i)->primaryDoc();
+		const QVector<QTextFormat> vf = d->allFormats();
+		for(const QTextFormat &f: vf) {
+			if(!f.hasProperty(RichDocument::Voice))
+				continue;
+			vs.insert(f.property(RichDocument::Voice).toString());
+		}
+	}
+	return vs.values();
+}
+
+void
+SimpleRichTextEdit::changeTextVoice()
+{
+	QTextCursor cursor(textCursor());
+	const QString cv = cursor.charFormat().property(RichDocument::Voice).value<QString>();
+	const QString voice = SubtitleVoiceDialog::getVoice(allVoices(), cv, this);
+	if(!voice.isNull()) {
+		QTextCharFormat format;
+		format.setProperty(RichDocument::Voice, QVariant::fromValue(voice));
+		cursor.mergeCharFormat(format);
+		setTextCursor(cursor);
 	}
 }
 

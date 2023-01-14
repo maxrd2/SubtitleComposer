@@ -46,11 +46,12 @@ set(subtitlecomposer_SRCS
 	#[[ core/richtext ]] core/richtext/richdocument.cpp core/richtext/richdocumenteditor.cpp core/richtext/richdocumentlayout.cpp core/richtext/richcss.cpp
 	core/richtext/richdom.cpp
 	#[[ core/undo ]] core/undo/subtitleactions.cpp core/undo/subtitlelineactions.cpp core/undo/undoaction.cpp core/undo/undostack.cpp
-	#[[ dialogs ]] dialogs/actiondialog.cpp #[[dialogs/actionwitherrortargetsdialog.cpp]] dialogs/actionwithtargetdialog.cpp dialogs/adjusttimesdialog.cpp
-	dialogs/autodurationsdialog.cpp dialogs/changeframeratedialog.cpp dialogs/changetextscasedialog.cpp dialogs/durationlimitsdialog.cpp
-	dialogs/encodingdetectdialog.cpp dialogs/fixoverlappingtimesdialog.cpp dialogs/fixpunctuationdialog.cpp dialogs/insertlinedialog.cpp
-	dialogs/intinputdialog.cpp dialogs/joinsubtitlesdialog.cpp dialogs/progressdialog.cpp dialogs/removelinesdialog.cpp dialogs/selectablesubtitledialog.cpp
-	dialogs/shifttimesdialog.cpp dialogs/smarttextsadjustdialog.cpp dialogs/splitsubtitledialog.cpp dialogs/subtitlecolordialog.cpp
+	#[[ dialogs ]] dialogs/actiondialog.cpp #[[dialogs/actionwitherrortargetsdialog.cpp]] dialogs/actionwithtargetdialog.cpp
+	dialogs/adjusttimesdialog.cpp dialogs/autodurationsdialog.cpp dialogs/changeframeratedialog.cpp dialogs/changetextscasedialog.cpp
+	dialogs/durationlimitsdialog.cpp dialogs/encodingdetectdialog.cpp dialogs/fixoverlappingtimesdialog.cpp dialogs/fixpunctuationdialog.cpp
+	dialogs/insertlinedialog.cpp dialogs/intinputdialog.cpp dialogs/joinsubtitlesdialog.cpp dialogs/progressdialog.cpp
+	dialogs/removelinesdialog.cpp dialogs/selectablesubtitledialog.cpp dialogs/shifttimesdialog.cpp dialogs/smarttextsadjustdialog.cpp
+	dialogs/splitsubtitledialog.cpp dialogs/subtitleclassdialog.cpp dialogs/subtitlecolordialog.cpp dialogs/subtitlevoicedialog.cpp
 	dialogs/syncsubtitlesdialog.cpp dialogs/textinputdialog.cpp dialogs/translatedialog.cpp
 	#[[ errors ]] errors/errorfinder.cpp errors/errortracker.cpp errors/finderrorsdialog.cpp
 	#[[ formats ]] formats/format.h formats/formatmanager.h formats/inputformat.h formats/outputformat.h formats/formatmanager.cpp
@@ -95,7 +96,8 @@ kconfig_add_kcfg_files(subtitlecomposer_SRCS GENERATE_MOC scconfig.kcfgc)
 
 ki18n_wrap_ui(subtitlecomposer_SRCS
 	#[[ configs ]] configs/errorsconfigwidget.ui configs/generalconfigwidget.ui configs/playerconfigwidget.ui configs/waveformconfigwidget.ui
-	#[[ dialogs ]] dialogs/encodingdetectdialog.ui dialogs/intinputdialog.ui dialogs/textinputdialog.ui
+	#[[ dialogs ]] dialogs/encodingdetectdialog.ui dialogs/intinputdialog.ui dialogs/subtitleclassdialog.ui dialogs/subtitlevoicedialog.ui
+	dialogs/textinputdialog.ui
 	#[[ formats ]] formats/vobsub/vobsubinputinitdialog.ui formats/vobsub/vobsubinputprocessdialog.ui
 	#[[ gui/subtitlemetawidget ]] gui/subtitlemeta/subtitlepositionwidget.ui
 	#[[ scripting ]] scripting/scriptsmanager.ui
