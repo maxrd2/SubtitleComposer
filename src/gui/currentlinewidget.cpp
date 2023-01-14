@@ -25,6 +25,8 @@
 #include <KConfigGroup>
 #include <KLocalizedString>
 
+#define TOOLBUTTON_SIZE 21
+
 using namespace SubtitleComposer;
 
 enum { COL_TIME, COL_PRIMARY, COL_SECONDARY };
@@ -103,8 +105,8 @@ CurrentLineWidget::createToolButton(const QString &text, const char *icon, bool 
 	QToolButton *btn = new QToolButton(this);
 	btn->setToolTip(text);
 	btn->setIcon(QIcon::fromTheme(icon));
-	btn->setMinimumSize(20, 20);
-	btn->setMaximumSize(20, 20);
+	btn->setMinimumSize(TOOLBUTTON_SIZE, TOOLBUTTON_SIZE);
+	btn->setMaximumSize(TOOLBUTTON_SIZE, TOOLBUTTON_SIZE);
 	btn->setCheckable(checkable);
 	btn->setAutoRaise(true);
 	btn->setFocusPolicy(Qt::NoFocus);
@@ -114,6 +116,12 @@ CurrentLineWidget::createToolButton(const QString &text, const char *icon, bool 
 QWidget *
 CurrentLineWidget::createLineWidgetBox(int index)
 {
+	enum {
+		COL_DURATION, COL_SPACER,
+		COL_BOLD, COL_ITALIC, COL_UNDERLINE, COL_STRIKE, COL_COLOR,
+		COL_TOTAL
+	};
+
 	QGridLayout *layout = new QGridLayout();
 	layout->setContentsMargins(2, 3, 1, 0);
 	layout->setHorizontalSpacing(4);
@@ -128,35 +136,35 @@ CurrentLineWidget::createLineWidgetBox(int index)
 	QFont f = textLabel->font();
 	f.setPointSize(f.pointSize() - 1);
 	textLabel->setFont(f);
-	layout->addWidget(textLabel, 0, 0);
+	layout->addWidget(textLabel, 0, COL_DURATION);
 	m_textLabels[index] = textLabel;
 
 	SimpleRichTextEdit *textEdit = new SimpleRichTextEdit(this);
 	textEdit->setDocument(&m_blankDoc);
 	textEdit->setTabChangesFocus(true);
 	textEdit->setSizePolicy(QSizePolicy::Minimum, QSizePolicy::Expanding);
-	layout->addWidget(textEdit, 1, 0, 1, 7);
+	layout->addWidget(textEdit, 1, 0, 1, COL_TOTAL);
 	m_textEdits[index] = textEdit;
 
 	QToolButton *btnBold = createToolButton(i18n("Toggle Bold"), "format-text-bold");
 	connect(btnBold, &QToolButton::clicked, textEdit, &SimpleRichTextEdit::toggleFontBold);
-	layout->addWidget(btnBold, 0, 2, Qt::AlignBottom);
+	layout->addWidget(btnBold, 0, COL_BOLD, Qt::AlignBottom);
 
 	QToolButton *btnItalic = createToolButton(i18n("Toggle Italic"), "format-text-italic");
 	connect(btnItalic, &QToolButton::clicked, textEdit, &SimpleRichTextEdit::toggleFontItalic);
-	layout->addWidget(btnItalic, 0, 3, Qt::AlignBottom);
+	layout->addWidget(btnItalic, 0, COL_ITALIC, Qt::AlignBottom);
 
 	QToolButton *btnUnderline = createToolButton(i18n("Toggle Underline"), "format-text-underline");
 	connect(btnUnderline, &QToolButton::clicked, textEdit, &SimpleRichTextEdit::toggleFontUnderline);
-	layout->addWidget(btnUnderline, 0, 4, Qt::AlignBottom);
+	layout->addWidget(btnUnderline, 0, COL_UNDERLINE, Qt::AlignBottom);
 
 	QToolButton *btnStrike = createToolButton(i18n("Toggle Strike Through"), "format-text-strikethrough");
 	connect(btnStrike, &QToolButton::clicked, textEdit, &SimpleRichTextEdit::toggleFontStrikeOut);
-	layout->addWidget(btnStrike, 0, 5, Qt::AlignBottom);
+	layout->addWidget(btnStrike, 0, COL_STRIKE, Qt::AlignBottom);
 
 	QToolButton *btnColor = createToolButton(i18n("Change Text Color"), "format-text-color", false);
 	connect(btnColor, &QToolButton::clicked, textEdit, &SimpleRichTextEdit::changeTextColor);
-	layout->addWidget(btnColor, 0, 6, Qt::AlignBottom);
+	layout->addWidget(btnColor, 0, COL_COLOR, Qt::AlignBottom);
 
 	connect(textEdit, &SimpleRichTextEdit::cursorPositionChanged, this, [=](){
 		btnBold->setChecked(textEdit->fontBold());
