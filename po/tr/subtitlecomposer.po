@@ -1,13 +1,13 @@
 # Copyright (C) YEAR This file is copyright:
 # This file is distributed under the same license as the subtitlecomposer package.
 #
-# Emir SARI <emir_sari@icloud.com>, 2022.
+# Emir SARI <emir_sari@icloud.com>, 2022, 2023.
 msgid ""
 msgstr ""
 "Project-Id-Version: subtitlecomposer\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2023-01-14 00:56+0000\n"
-"PO-Revision-Date: 2022-11-22 16:49+0300\n"
+"PO-Revision-Date: 2023-01-14 22:26+0300\n"
 "Last-Translator: Emir SARI <emir_sari@icloud.com>\n"
 "Language-Team: Turkish <kde-l10n-tr@kde.org>\n"
 "Language: tr\n"
@@ -15,7 +15,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
-"X-Generator: Lokalize 22.08.3\n"
+"X-Generator: Lokalize 22.12.1\n"
 
 #: src/actions/kcodecactionext.cpp:29
 #, kde-format
@@ -3735,7 +3735,7 @@ msgstr "Konuşma Başlatma Kareleri"
 #: src/speechprocessor/speechprocessor.cpp:41
 #, kde-format
 msgid "Recognizing speech"
-msgstr "Konuşma tanınıyor"
+msgstr "Konuşma tanımlanıyor"
 
 #: src/speechprocessor/speechprocessor.cpp:49
 #, kde-format
