@@ -1,7 +1,9 @@
+# Ignore the following files
 CMakeCache.txt
 CMakeFiles
+*.user
 Makefile
+/build*/
+/compile_commands.json
 cmake_install.cmake
 install_manifest.txt
-/build
-*.user
