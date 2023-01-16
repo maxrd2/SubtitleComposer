@@ -27,7 +27,7 @@ target_include_directories(pocketsphinxasr SYSTEM PRIVATE
 target_link_libraries(pocketsphinxasr
 	Qt${QT_MAJOR_VERSION}::Core Qt${QT_MAJOR_VERSION}::Widgets Qt${QT_MAJOR_VERSION}::Gui
 	KF5::I18n
-	KF5::KIOCore KF5::KIOFileWidgets KF5::KIOWidgets KF5::KIONTLM
+	KF5::KIOCore KF5::KIOFileWidgets KF5::KIOWidgets
 	${POCKETSPHINX_LIBRARIES})
 
 add_dependencies(pocketsphinxasr subtitlecomposer)
