@@ -15,6 +15,9 @@
 #include <QStringList>
 #include <QVector>
 
+#include <list>
+#include <memory>
+
 namespace SubtitleComposer {
 
 class RichCSS : public QObject

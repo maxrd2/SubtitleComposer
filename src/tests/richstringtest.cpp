@@ -298,7 +298,50 @@ RichStringTest::testReplace()
 	// RichString & Voice/Class
 	sstring.setRichString("<v Person A>Hi <b>Person B</b>! How are you doing?\n<v Person B><c.test>Hi there.</c.test> Doing great!");
 	sstring.replace($("are you"), $("is you"));
-	QVERIFY(sstring.richString() == QLatin1String("<v Person A>Hi <b>Person B</b>! How is you doing?\n<v Person B><c.test>Hi there.</c.test> Doing great!"));
+	QVERIFY(sstring.richString() == QLatin1String("<v Person A>Hi <b>Person B</b>! How is you doing?\n<v Person B><c.test>Hi there.</c> Doing great!"));
+}
+
+void
+RichStringTest::testStyleMerge()
+{
+	RichString sstring;
+
+	// append
+	sstring.setRichString("<v voiceA><c.classA>This is one class</c>");
+	sstring.append(RichString::fromRichString("<v voiceB><c.classB>This is another class</c>"));
+	QVERIFY(sstring.richString() == QLatin1String("<v voiceA><c.classA>This is one class</c><v voiceB><c.classB>This is another class</c>"));
+
+	// insert
+	sstring.setRichString("<v voiceA><c.classA>This is one class</c>");
+	sstring.insert(5, RichString::fromRichString("<v voiceB><c.classB>This is another class</c>"));
+	QVERIFY(sstring.richString() == QLatin1String("<v voiceA><c.classA>This</c> <v voiceB><c.classB>This is another class</c><v voiceA><c.classA>is one class</c>"));
+
+	// prepend
+	sstring.setRichString("<v voiceA><c.classA>This is one class</c>");
+	sstring.prepend(RichString::fromRichString("<v voiceB><c.classB>This is another class</c>"));
+	QVERIFY(sstring.richString() == QLatin1String("<v voiceB><c.classB>This is another class</c><v voiceA><c.classA>This is one class</c>"));
+
+	// remove unused
+	sstring.setRichString("<v voiceA><c.classA>AAAA</c><v voiceB><c.classB>BBBB</c><v voiceC><c.classC>CCCC</c>");
+	sstring.remove(0, 4);
+	QVERIFY(sstring.richString() == QLatin1String("<v voiceB><c.classB>BBBB</c><v voiceC><c.classC>CCCC</c>"));
+	QVERIFY(sstring.cummulativeClasses().size() == 2);
+	QVERIFY(sstring.cummulativeVoices().size() == 2);
+	sstring.remove(0, 4);
+	QVERIFY(sstring.richString() == QLatin1String("<v voiceC><c.classC>CCCC</c>"));
+	QVERIFY(sstring.cummulativeClasses().size() == 1);
+	QVERIFY(sstring.cummulativeVoices().size() == 1);
+
+	// remove unused nested
+	sstring.setRichString("<v voiceA><c.classA>AAAA</c><v voiceB><c.classB>BBBB</c><v voiceC><c.classC>CCCC</c>");
+	sstring.remove(0, 4);
+	QVERIFY(sstring.richString() == QLatin1String("<v voiceB><c.classB>BBBB</c><v voiceC><c.classC>CCCC</c>"));
+	QVERIFY(sstring.cummulativeClasses().size() == 2);
+	QVERIFY(sstring.cummulativeVoices().size() == 2);
+	sstring.remove(0, 4);
+	QVERIFY(sstring.richString() == QLatin1String("<v voiceC><c.classC>CCCC</c>"));
+	QVERIFY(sstring.cummulativeClasses().size() == 1);
+	QVERIFY(sstring.cummulativeVoices().size() == 1);
 }
 
 QTEST_GUILESS_MAIN(RichStringTest);

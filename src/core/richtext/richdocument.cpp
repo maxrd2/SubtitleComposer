@@ -125,15 +125,15 @@ RichDocument::setRichText(const RichString &text, bool resetUndo)
 
 	int currentStyleFlags = -1;
 	QRgb currentStyleColor = 0;
-	quint64 currentStyleClasses = 0;
-	qint32 currentStyleVoice = -1;
+	QSet<QString> currentStyleClasses;
+	QString currentStyleVoice;
 	QTextCharFormat format;
 	int prev = 0;
 	for(int pos = 0, size = text.length(); pos < size; pos++) {
 		const int posFlags = text.styleFlagsAt(pos);
 		const QRgb posColor = text.styleColorAt(pos);
-		const quint64 posClasses = text.styleClassesAt(pos);
-		const qint32 posVoice = text.styleVoiceAt(pos);
+		const QSet<QString> posClasses = text.styleClassesAt(pos);
+		const QString posVoice = text.styleVoiceAt(pos);
 		if(currentStyleFlags != posFlags || ((posFlags & SubtitleComposer::RichString::Color) && currentStyleColor != posColor)) {
 			if(prev != pos) {
 				m_undoableCursor.insertText(text.string().mid(prev, pos - prev), format);
@@ -156,7 +156,7 @@ RichDocument::setRichText(const RichString &text, bool resetUndo)
 				prev = pos;
 			}
 			currentStyleClasses = posClasses;
-			format.setProperty(RichDocument::Class, QVariant::fromValue(text.styleClassNamesAt(pos)));
+			format.setProperty(RichDocument::Class, QVariant::fromValue(text.styleClassesAt(pos)));
 		}
 		if(currentStyleVoice != posVoice) {
 			if(prev != pos) {
@@ -164,7 +164,7 @@ RichDocument::setRichText(const RichString &text, bool resetUndo)
 				prev = pos;
 			}
 			currentStyleVoice = posVoice;
-			format.setProperty(RichDocument::Voice, QVariant::fromValue(text.styleVoiceNameAt(pos)));
+			format.setProperty(RichDocument::Voice, QVariant::fromValue(text.styleVoiceAt(pos)));
 		}
 	}
 	if(prev != text.length())

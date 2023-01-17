@@ -45,9 +45,9 @@ public:
 	RichStringList(const RichString &str);
 	RichStringList(const RichStringList &list);
 	RichStringList(const QList<RichString> &list);
-	RichStringList(const QStringList &list);
+	explicit RichStringList(const QStringList &list);
 #if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
-	RichStringList(const QList<QString> &list);
+	explicit RichStringList(const QList<QString> &list);
 #endif
 
 	RichString join(const RichString &sep) const;
@@ -69,15 +69,17 @@ public:
 
 	using StyleFlags = quint8;
 
-	RichString(const QString &string = QString(), quint8 styleFlags = 0, QRgb styleColor = 0, const QSet<QString> &classList=QSet<QString>(), const QString &voice=QString());
-	RichString(const RichString &richstring);
-	RichString & operator=(const RichString &richstring);
+	explicit RichString(const QString &string = QString(), quint8 styleFlags = 0, QRgb styleColor = 0, const QSet<QString> &classList=QSet<QString>(), const QString &voice=QString());
+	RichString(const RichString &other);
+	RichString & operator=(const QString &string);
+	RichString & operator=(const RichString &other);
 
 	~RichString();
 
 	inline QString string() const { return *this; }
 	void setString(const QString &string, quint8 styleFlags = 0, QRgb styleColor = 0, const QString klass=QString(), const QString voice=QString());
 
+	static RichString fromRichString(const QString &richstring);
 	QString richString() const;
 #if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
 	RichString & setRichString(const QStringRef &string);
@@ -99,17 +101,13 @@ public:
 	QSet<QRgb> cummulativeColors() const;
 	RichString & setStyleColor(int index, int len, QRgb color);
 
-	quint64 styleClassesAt(int index) const;
-	QSet<QString> styleClassNamesAt(int index) const;
+	QSet<QString> styleClassesAt(int index) const;
 	QSet<QString> cummulativeClasses() const;
-	void setStyleClassesAt(int index, quint64 classes) const;
-	void setStyleClassNamesAt(int index, const QSet<QString> &classes) const;
+	void setStyleClassesAt(int index, const QSet<QString> &classes) const;
 
-	qint32 styleVoiceAt(int index) const;
-	QString styleVoiceNameAt(int index) const;
+	QString styleVoiceAt(int index) const;
 	QSet<QString> cummulativeVoices() const;
-	void setStyleVoiceAt(int index, qint32 voice) const;
-	void setStyleVoiceNameAt(int index, const QString &voice) const;
+	void setStyleVoiceAt(int index, const QString &voice) const;
 
 	void clear();
 

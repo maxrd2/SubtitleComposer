@@ -9,13 +9,12 @@
 
 #include "helpers/common.h"
 
-#include <QList>
-#include <QStringList>
-#include <QRegularExpression>
-
-#include <QDebug>
-
 #include <QColor>
+#include <QDebug>
+#include <QList>
+#include <QRegularExpression>
+#include <QStringList>
+#include <QVector>
 
 #include <type_traits>
 
@@ -98,12 +97,27 @@ public:
 	inline RichStyle * operator[](int index) { Q_ASSERT(index >= 0 && index < m_length); return &m_style[index]; }
 	inline const RichStyle & at(int index) const { return index >= 0 && index < m_length ? m_style[index] : RichStyle::s_null; }
 
+	/**
+	 * @brief Insert invalid style for len characters at index
+	 *        Use fill() or copy() to update invalid characters.
+	 * @param index
+	 * @param len
+	 */
 	inline void insert(int index, int len) { replace(index, 0, len); }
+	/**
+	 * @brief Remove style for len characters at index and insert invalid style for newLen characters
+	 *        Use fill() or copy() to update invalid characters.
+	 * @param index
+	 * @param len
+	 */
 	void replace(int index, int len, int newLen);
+
 	inline void fill(int index, int len, const RichStyle &style);
 	void copy(int index, int len, const RichStringStyle &src, int srcOffset=0);
 
 	void swap(RichStringStyle &other, bool swapLists);
+
+	void removeUnused();
 
 	inline void richText(QString &out, int prevIndex, int curIndex, bool opening);
 
@@ -185,8 +199,99 @@ void
 RichStringStyle::copy(int index, int len, const RichStringStyle &src, int srcOffset)
 {
 	Q_ASSERT(index + len <= m_length);
-	if(len)
-		memcpy(m_style + index, src.m_style + srcOffset, len * sizeof(*m_style));
+	if(len <= 0)
+		return;
+
+	if(index == 0 && len == m_length) {
+		// overwrite everything
+		m_voiceList = src.m_voiceList;
+		m_classList = src.m_classList;
+		memcpy(m_style, src.m_style + srcOffset, len * sizeof(*m_style));
+		return;
+	}
+
+	// merge styles
+	const int nc = src.m_classList.size();
+	int *classMap = new int[nc];
+	for(int i = 0; i < nc; i++)
+		classMap[i] = classIndex(src.m_classList[i]);
+	const int nv = src.m_voiceList.size();
+	int *voiceMap = new int[nv];
+	for(int i = 0; i < nv; i++)
+		voiceMap[i] = voiceIndex(src.m_voiceList[i]);
+	for(int i = 0; i < len; i++) {
+		const RichStyle &ss = src.m_style[srcOffset + i];
+		quint64 klass = 0;
+		for(int ci = 0; ci < nc; ci++) {
+			if(classMap[ci] < 0)
+				continue;
+			if(ss.klass() & (1ULL << ci))
+				klass |= 1ULL << quint32(classMap[ci]);
+		}
+		Q_ASSERT(ss.voice() < nv);
+		qint32 voice = ss.voice() < 0 ? -1 : voiceMap[ss.voice()];
+		m_style[index + i] = RichStyle(ss.flags(), ss.color(), klass, voice);
+	}
+	delete[] voiceMap;
+	delete[] classMap;
+}
+
+void
+RichStringStyle::removeUnused()
+{
+	const int nv = m_voiceList.size();
+	int *voiceMap = new int[nv]();
+	int voiceUsed = 0;
+	for(int i = 0; i < m_length; i++) {
+		const qint32 v = m_style[i].voice();
+		if(v >= 0) {
+			if(!voiceMap[v]) {
+#if QT_VERSION < QT_VERSION_CHECK(5, 14, 0)
+				QString *vlp = m_voiceList.data();
+				qSwap(vlp[v], vlp[voiceUsed]);
+#else
+				m_voiceList.swapItemsAt(v, voiceUsed);
+#endif
+				voiceMap[v] = ++voiceUsed;
+			}
+			m_style[i].voice() = voiceMap[v] - 1;
+		}
+	}
+	m_voiceList.resize(voiceUsed);
+
+	const int nc = m_classList.size();
+	int *classMap = new int[nc]();
+	int classUsed = 0;
+	quint64 prevClass = 0;
+	for(int i = 0; i < m_length; i++) {
+		quint64 c = m_style[i].klass();
+		if(!c)
+			continue;
+		if(i && c == prevClass) {
+			m_style[i].klass() = m_style[i - 1].klass();
+			continue;
+		}
+		prevClass = c;
+		m_style[i].klass() = 0;
+		for(int k = 0; c; k++, c >>= 1) {
+			if(!(c & 1))
+				continue;
+			if(!classMap[k]) {
+#if QT_VERSION < QT_VERSION_CHECK(5, 14, 0)
+				QString *clp = m_classList.data();
+				qSwap(clp[k], clp[classUsed]);
+#else
+				m_classList.swapItemsAt(k, classUsed);
+#endif
+				classMap[k] = ++classUsed;
+			}
+			m_style[i].klass() |= 1ULL << (classMap[k] - 1);
+		}
+	}
+	m_classList.resize(classUsed);
+
+	delete[] classMap;
+	delete[] voiceMap;
 }
 
 RichStringStyle::RichStringStyle(int len)
@@ -241,7 +346,7 @@ RichStringStyle::RichStringStyle(const RichStringStyle &other)
 {
 	if(m_length) {
 		updateCapacity();
-		copy(0, m_length, other);
+		memcpy(m_style, other.m_style, m_length * sizeof(*m_style));
 	}
 }
 
@@ -266,7 +371,8 @@ RichStringStyle::operator=(const RichStringStyle &other)
 	m_voiceList = other.m_voiceList;
 	m_length = other.m_length;
 	updateCapacity();
-	copy(0, m_length, other);
+	if(m_length)
+		memcpy(m_style, other.m_style, m_length * sizeof(*m_style));
 	return *this;
 }
 
@@ -338,18 +444,28 @@ RichString::RichString(const QString &string, quint8 styleFlags, QRgb styleColor
 {
 }
 
-RichString::RichString(const RichString &richstring)
-	: QString(richstring),
-	  m_style(new RichStringStyle(*richstring.m_style))
+RichString::RichString(const RichString &other)
+	: QString(other),
+	  m_style(new RichStringStyle(*other.m_style))
 {
 }
 
 RichString &
-RichString::operator=(const RichString &richstring)
+RichString::operator=(const QString &string)
 {
-	if(this != &richstring) {
-		QString::operator=(richstring);
-		*m_style = RichStringStyle(*richstring.m_style);
+	if(this != &string) {
+		QString::operator=(string);
+		*m_style = RichStringStyle(string.size());
+	}
+	return *this;
+}
+
+RichString &
+RichString::operator=(const RichString &other)
+{
+	if(this != &other) {
+		QString::operator=(other);
+		*m_style = RichStringStyle(*other.m_style);
 	}
 	return *this;
 }
@@ -399,23 +515,11 @@ RichString::setStyleColorAt(int index, QRgb rgbColor) const
 	it->color() = rgbColor;
 }
 
-quint64
+QSet<QString>
 RichString::styleClassesAt(int index) const
 {
-	return m_style->at(index).klass();
-}
-
-void
-RichString::setStyleClassesAt(int index, quint64 classes) const
-{
-	(*m_style)[index]->klass() = classes;
-}
-
-QSet<QString>
-RichString::styleClassNamesAt(int index) const
-{
 	QSet<QString> res;
-	quint64 k = styleClassesAt(index);
+	quint64 k = m_style->at(index).klass();
 	for(int i = 0; k; k >>= 1, i++) {
 		if(k & 1)
 			res.insert(m_style->className(i));
@@ -424,7 +528,7 @@ RichString::styleClassNamesAt(int index) const
 }
 
 void
-RichString::setStyleClassNamesAt(int index, const QSet<QString> &classes) const
+RichString::setStyleClassesAt(int index, const QSet<QString> &classes) const
 {
 	quint64 k = 0;
 	for(const QString &cl: classes) {
@@ -432,33 +536,21 @@ RichString::setStyleClassNamesAt(int index, const QSet<QString> &classes) const
 		if(i >= 0)
 			k |= 1ULL << i;
 	}
-	setStyleClassesAt(index, k);
-}
-
-qint32
-RichString::styleVoiceAt(int index) const
-{
-	return m_style->at(index).voice();
-}
-
-void
-RichString::setStyleVoiceAt(int index, qint32 voice) const
-{
-	(*m_style)[index]->voice() = voice;
+	(*m_style)[index]->klass() = k;
 }
 
 QString
-RichString::styleVoiceNameAt(int index) const
+RichString::styleVoiceAt(int index) const
 {
-	const qint32 i = styleVoiceAt(index);
+	const qint32 i = m_style->at(index).voice();
 	return i >= 0 ? m_style->voiceName(i) : QString();
 }
 
 void
-RichString::setStyleVoiceNameAt(int index, const QString &voice) const
+RichString::setStyleVoiceAt(int index, const QString &voice) const
 {
 	const qint32 v = m_style->voiceIndex(voice);
-	setStyleVoiceAt(index, v);
+	(*m_style)[index]->voice() = v;
 }
 
 QDataStream &
@@ -493,8 +585,10 @@ RichStringStyle::richText(QString &out, int prevIndex, int curIndex, bool openin
 			out += "<v " + m_voiceList.at(cur.voice()) + ">";
 		if(prev.klass() != cur.klass()) {
 			quint64 k = ~prev.klass() & cur.klass();
-			for(int i = 0; k; k >>= 1, i++)
-				out += "<c." + m_classList.at(i) + ">";
+			for(int i = 0; k; k >>= 1, i++) {
+				if(k & 1)
+					out += "<c." + m_classList.at(i) + ">";
+			}
 		}
 		const quint8 sf = ~prev.flags() & cur.flags();
 		if(sf & RichString::Italic)
@@ -521,10 +615,20 @@ RichStringStyle::richText(QString &out, int prevIndex, int curIndex, bool openin
 			out += "</font>";
 		if(prev.klass() != cur.klass()) {
 			quint64 k = prev.klass() & ~cur.klass();
-			for(int i = 0; k; k >>= 1, i++)
-				out += "</c." + m_classList.at(i) + ">";
+			for(int i = 0; k; k >>= 1, i++) {
+				if(k & 1)
+					out += "</c>";
+			}
 		}
 	}
+}
+
+RichString
+RichString::fromRichString(const QString &richstring)
+{
+	RichString str;
+	str.setRichString(richstring);
+	return str;
 }
 
 QString
@@ -591,7 +695,7 @@ RichString &
 RichString::setRichString(const QStringView_ &string)
 {
 	staticRE$(tagRegExp, "(<"
-			"(/?(v |c\\.|\\w+))"
+			"(/?(v |c\\.?|\\w+))"
 			"([^>]*\\bcolor=\"?([\\w#]+)\"?|[^>]+)?"
 			"[^>]*?>|&([^;]+);|\\n)", REu | REi);
 	staticRE$(colorRegExp, "style=\"[^\">]*\\bcolor:([\\w#]+)", REu | REi);
@@ -607,6 +711,7 @@ RichString::setRichString(const QStringView_ &string)
 	int offsetPos = 0, matchedPos;
 	quint32 currentClass = 0;
 	qint32 currentVoice = -1;
+	QVector<int> openClass;
 	for(;;) {
 		quint8 newStyle = currentStyle;
 		QColor newColor(currentColor);
@@ -644,10 +749,11 @@ RichString::setRichString(const QStringView_ &string)
 					}
 				} else if(mTag == QLatin1String("v ")) {
 					newVoice = m_style->voiceIndex(m.captured(4));
-				} else if(mTag == QLatin1String("c.")) {
+				} else if(mTag == QLatin1String("c.") || mTag == QLatin1String("c")) {
 					const int i = m_style->classIndex(m.captured(4));
 					if(i >= 0)
 						newClass |= 1UL << i;
+					openClass.push_back(i);
 				} else if(mTag == QLatin1String("/b") || mTag == QLatin1String("/strong")) {
 					newStyle &= ~RichString::Bold;
 				} else if(mTag == QLatin1String("/i") || mTag == QLatin1String("/em")) {
@@ -656,11 +762,23 @@ RichString::setRichString(const QStringView_ &string)
 					newStyle &= ~RichString::Underline;
 				} else if(mTag == QLatin1String("/s")) {
 					newStyle &= ~RichString::StrikeThrough;
+				} else if(mTag == QLatin1String("/c")) {
+					const int i = openClass.back();
+					openClass.pop_back();
+					if(i >= 0)
+						newClass &= ~(1UL << i);
 				} else if(mTag == QLatin1String("/c.")) {
 					const int i = m_style->classIndex(m.captured(4));
 					if(i >= 0)
 						newClass &= ~(1UL << i);
+					for(auto it = openClass.rbegin(); it != openClass.rend(); ++it) {
+						if(*it == i) {
+							openClass.erase((++it).base());
+							break;
+						}
+					}
 				}
+
 				if(!mTag.isEmpty()) {
 					if(mTag.front() != QLatin1Char('/')) {
 						QRegularExpressionMatch mc = colorRegExp.match(m.capturedView(4));
@@ -920,6 +1038,8 @@ RichString::replace(int index, int len, const QString &replacement)
 	else if(len == 1)
 		return *this; // there's no need to change the styles (char substitution)
 	m_style->fill(index, replacement.length(), cs);
+	if(len)
+		m_style->removeUnused();
 
 	return *this;
 }
@@ -940,6 +1060,8 @@ RichString::replace(int index, int len, const RichString &replacement)
 	if(len != replacement.length())
 		m_style->replace(index, len, replacement.length());
 	m_style->copy(index, replacement.length(), *replacement.m_style);
+	if(len)
+		m_style->removeUnused();
 
 	return *this;
 }
@@ -1335,14 +1457,14 @@ RichStringList::RichStringList(const QList<RichString> &list) :
 RichStringList::RichStringList(const QStringList &list)
 {
 	for(QStringList::const_iterator it = list.cbegin(), end = list.cend(); it != end; ++it)
-		append(*it);
+		append(RichString(*it));
 }
 
 #if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
 RichStringList::RichStringList(const QList<QString> &list)
 {
 	for(QList<QString>::const_iterator it = list.cbegin(), end = list.cend(); it != end; ++it)
-		append(*it);
+		append(RichString(*it));
 }
 #endif
 

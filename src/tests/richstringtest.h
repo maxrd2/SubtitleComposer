@@ -19,6 +19,7 @@ private slots:
 	void testLeftMidRight();
 	void testInsert();
 	void testReplace();
+	void testStyleMerge();
 };
 
 #endif
