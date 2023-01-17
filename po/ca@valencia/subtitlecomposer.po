@@ -1278,7 +1278,7 @@ msgstr "Comprovació dels errors"
 #: src/configs/configdialog.cpp:41
 #, kde-format
 msgid "Error Check Settings"
-msgstr "Configuració de la comprovació dels errors"
+msgstr "Configureu la comprovació dels errors"
 
 #: src/configs/configdialog.cpp:47
 #, kde-format
@@ -1289,7 +1289,7 @@ msgstr "Ortografia"
 #: src/configs/configdialog.cpp:48
 #, kde-format
 msgid "Spelling Settings"
-msgstr "Configuració de l'ortografia"
+msgstr "Configureu l'ortografia"
 
 #: src/configs/configdialog.cpp:52
 #, kde-format
@@ -1300,7 +1300,7 @@ msgstr "Forma de l'ona"
 #: src/configs/configdialog.cpp:53
 #, kde-format
 msgid "Waveform settings"
-msgstr "Configuració de la forma de l'ona"
+msgstr "Configureu la forma de l'ona"
 
 #: src/configs/configdialog.cpp:57
 #, kde-format
@@ -1311,13 +1311,13 @@ msgstr "Reproductor de vídeo"
 #: src/configs/configdialog.cpp:58
 #, kde-format
 msgid "Video Player Settings"
-msgstr "Configuració del reproductor de vídeo"
+msgstr "Configureu el reproductor de vídeo"
 
 #: src/configs/configdialog.cpp:67
 #, kde-format
 msgctxt "@title Speech recognition backend settings"
 msgid "%1 backend settings"
-msgstr "Configuració del dorsal %1"
+msgstr "Configureu el dorsal %1"
 
 #. i18n: ectx: property (title), widget (QGroupBox, m_grpGeneral)
 #: src/configs/errorsconfigwidget.ui:17 src/gui/treeview/lineswidget.cpp:400
@@ -3491,7 +3491,7 @@ msgstr "Sí"
 #: src/scripting/scriptsmanager.cpp:482
 #, kde-format
 msgid "Create New Script"
-msgstr "Creació d'un script nou"
+msgstr "Creeu un script nou"
 
 #: src/scripting/scriptsmanager.cpp:482 src/scripting/scriptsmanager.cpp:550
 #, kde-format
