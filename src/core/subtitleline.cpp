@@ -21,15 +21,6 @@
 using namespace SubtitleComposer;
 
 
-/// "magic" code taken from https://tekpool.wordpress.com/category/bit-count/
-int
-SubtitleLine::bitsCount(unsigned int u)
-{
-	unsigned int uCount;
-	uCount = u - ((u >> 1) & 033333333333) - ((u >> 2) & 011111111111);
-	return ((uCount + (uCount >> 3)) & 030707070707) % 63;
-}
-
 SubtitleLine::ErrorFlag
 SubtitleLine::errorFlag(SubtitleLine::ErrorID id)
 {
@@ -584,7 +575,7 @@ SubtitleLine::errorFlags() const
 int
 SubtitleLine::errorCount() const
 {
-	return bitsCount(m_errorFlags);
+	return bitCount(quint32(m_errorFlags));
 }
 
 void

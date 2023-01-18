@@ -120,8 +120,6 @@ public:
 		TextErrors = EmptyPrimaryText | EmptySecondaryText | MaxPrimaryChars | MaxSecondaryChars | MaxPrimaryLines | MaxSecondaryLines | PrimaryUnneededSpaces | SecondaryUnneededSpaces | PrimaryUnneededDash | SecondaryUnneededDash | PrimaryCapitalAfterEllipsis | SecondaryCapitalAfterEllipsis | MinDurationPerPrimaryChar | MinDurationPerSecondaryChar | MaxDurationPerPrimaryChar | MaxDurationPerSecondaryChar | UntranslatedText
 	} ErrorFlag;
 
-	static int bitsCount(unsigned int bitFlags);
-
 	static ErrorFlag errorFlag(ErrorID id);
 	static ErrorID errorID(ErrorFlag flag);
 
