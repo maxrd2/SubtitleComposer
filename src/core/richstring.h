@@ -96,18 +96,20 @@ public:
 
 	QRgb styleColorAt(int index) const;
 	void setStyleColorAt(int index, QRgb rgbColor) const;
+	QSet<QRgb> cummulativeColors() const;
 	RichString & setStyleColor(int index, int len, QRgb color);
 
 	quint64 styleClassesAt(int index) const;
 	QSet<QString> styleClassNamesAt(int index) const;
+	QSet<QString> cummulativeClasses() const;
 	void setStyleClassesAt(int index, quint64 classes) const;
 	void setStyleClassNamesAt(int index, const QSet<QString> &classes) const;
 
 	qint32 styleVoiceAt(int index) const;
 	QString styleVoiceNameAt(int index) const;
+	QSet<QString> cummulativeVoices() const;
 	void setStyleVoiceAt(int index, qint32 voice) const;
 	void setStyleVoiceNameAt(int index, const QString &voice) const;
-
 
 	void clear();
 

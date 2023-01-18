@@ -91,7 +91,9 @@ public:
 	qint32 classIndex(const QString &name);
 
 	inline QString voiceName(int index) const { return m_voiceList.at(index); }
+	inline int voiceCount() const { return m_voiceList.size(); }
 	inline QString className(int index) const { return m_classList.at(index); }
+	inline int classCount() const { return m_classList.size(); }
 
 	inline RichStyle * operator[](int index) { Q_ASSERT(index >= 0 && index < m_length); return &m_style[index]; }
 	inline const RichStyle & at(int index) const { return index >= 0 && index < m_length ? m_style[index] : RichStyle::s_null; }
@@ -797,6 +799,34 @@ RichString::setStyleFlags(int index, int len, StyleFlags styleFlags, bool on)
 
 	return *this;
 }
+
+QSet<QRgb>
+RichString::cummulativeColors() const
+{
+	QSet<QRgb> res;
+	for(int i = 0, n = length(); i < n; i++)
+		res.insert(m_style->at(i).color());
+	return res;
+}
+
+QSet<QString>
+RichString::cummulativeClasses() const
+{
+	QSet<QString> res;
+	for(int i = 0, n = m_style->classCount(); i < n; i++)
+		res.insert(m_style->className(i));
+	return res;
+}
+
+QSet<QString>
+RichString::cummulativeVoices() const
+{
+	QSet<QString> res;
+	for(int i = 0, n = m_style->voiceCount(); i < n; i++)
+		res.insert(m_style->voiceName(i));
+	return res;
+}
+
 
 RichString &
 RichString::setStyleColor(int index, int len, QRgb color)
