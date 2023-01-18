@@ -67,6 +67,8 @@ public:
 		AllStyles = Bold | Italic | Underline | StrikeThrough | Color
 	} StyleFlag;
 
+	using StyleFlags = quint8;
+
 	RichString(const QString &string = QString(), quint8 styleFlags = 0, QRgb styleColor = 0, const QSet<QString> &classList=QSet<QString>(), const QString &voice=QString());
 	RichString(const RichString &richstring);
 	RichString & operator=(const RichString &richstring);
@@ -85,11 +87,16 @@ public:
 	inline RichString & setRichString(const QString &string) { return setRichString(QStringView(string)); }
 #endif
 
-	quint8 styleFlagsAt(int index) const;
-	void setStyleFlagsAt(int index, quint8 styleFlags) const;
+	StyleFlags styleFlagsAt(int index) const;
+	void setStyleFlagsAt(int index, StyleFlags styleFlags) const;
+	StyleFlags cummulativeStyleFlags() const;
+	bool hasStyleFlags(quint8 styleFlags) const;
+	RichString & setStyleFlags(int index, int len, StyleFlags styleFlags);
+	RichString & setStyleFlags(int index, int len, StyleFlags styleFlags, bool on);
 
 	QRgb styleColorAt(int index) const;
 	void setStyleColorAt(int index, QRgb rgbColor) const;
+	RichString & setStyleColor(int index, int len, QRgb color);
 
 	quint64 styleClassesAt(int index) const;
 	QSet<QString> styleClassNamesAt(int index) const;
@@ -101,11 +108,6 @@ public:
 	void setStyleVoiceAt(int index, qint32 voice) const;
 	void setStyleVoiceNameAt(int index, const QString &voice) const;
 
-	int cummulativeStyleFlags() const;
-	bool hasStyleFlags(int styleFlags) const;
-	RichString & setStyleFlags(int index, int len, int styleFlags);
-	RichString & setStyleFlags(int index, int len, int styleFlags, bool on);
-	RichString & setStyleColor(int index, int len, QRgb color);
 
 	void clear();
 

@@ -40,9 +40,9 @@ public:
 	RichStyle(quint8 flags, QRgb color, quint64 klass, qint32 voice)
 		: m_flags(flags), m_color(color), m_class(klass), m_voice(voice) {}
 
-	inline quint8 flags() const { return m_flags; }
-	inline quint8 & flags() { return m_flags; }
-	inline quint8 flags(RichString::StyleFlag mask) const { return m_flags & mask; }
+	inline RichString::StyleFlags flags() const { return m_flags; }
+	inline RichString::StyleFlags & flags() { return m_flags; }
+	inline RichString::StyleFlags flags(RichString::StyleFlag mask) const { return m_flags & mask; }
 
 	inline QRgb color() const { return flags(RichString::Color) ? m_color : s_null.m_color; }
 	inline QRgb & color() { return m_color; }
@@ -64,8 +64,7 @@ public:
 	inline bool operator!=(const RichStyle &other) { return !operator==(other); }
 
 private:
-	friend class Iterator;
-	quint8 m_flags;
+	RichString::StyleFlags m_flags;
 	QRgb m_color;
 	quint64 m_class;
 	qint32 m_voice;
@@ -151,9 +150,7 @@ RichStringStyle::replace(int index, int lenRemove, int lenAdd)
 	RichStyle *oldStyle = m_style;
 
 	detach();
-	//Q_ASSERT(index + lenRemove + tailLength == m_length);
 	m_length += lenAdd - lenRemove;
-	//Q_ASSERT(index + lenAdd + tailLength == m_length);
 	updateCapacity();
 
 	if(index) {
@@ -367,14 +364,14 @@ RichString::setString(const QString &string, quint8 styleFlags, QRgb styleColor,
 	*m_style = RichStringStyle(string.length(), styleFlags, styleColor, klass, voice);
 }
 
-quint8
+RichString::StyleFlags
 RichString::styleFlagsAt(int index) const
 {
 	return m_style->at(index).flags();
 }
 
 void
-RichString::setStyleFlagsAt(int index, quint8 styleFlags) const
+RichString::setStyleFlagsAt(int index, StyleFlags styleFlags) const
 {
 	if(index < 0 || index >= length())
 		return;
@@ -746,10 +743,10 @@ RichString::setRichString(const QStringView_ &string)
 	return *this;
 }
 
-int
+RichString::StyleFlags
 RichString::cummulativeStyleFlags() const
 {
-	int cummulativeStyleFlags = 0;
+	quint8 cummulativeStyleFlags = 0;
 	for(int i = 0, size = length(); i < size; i++) {
 		cummulativeStyleFlags |= m_style->at(i).flags();
 		if(cummulativeStyleFlags == AllStyles)
@@ -759,9 +756,9 @@ RichString::cummulativeStyleFlags() const
 }
 
 bool
-RichString::hasStyleFlags(int styleFlags) const
+RichString::hasStyleFlags(StyleFlags styleFlags) const
 {
-	int cummulativeStyleFlags = 0;
+	StyleFlags cummulativeStyleFlags = 0;
 	for(int i = 0, size = length(); i < size; i++) {
 		cummulativeStyleFlags |= m_style->at(i).flags();
 		if((cummulativeStyleFlags & styleFlags) == styleFlags)
@@ -771,7 +768,7 @@ RichString::hasStyleFlags(int styleFlags) const
 }
 
 RichString &
-RichString::setStyleFlags(int index, int len, int styleFlags)
+RichString::setStyleFlags(int index, int len, StyleFlags styleFlags)
 {
 	if(index < 0 || index >= length())
 		return *this;
@@ -783,7 +780,7 @@ RichString::setStyleFlags(int index, int len, int styleFlags)
 }
 
 RichString &
-RichString::setStyleFlags(int index, int len, int styleFlags, bool on)
+RichString::setStyleFlags(int index, int len, StyleFlags styleFlags, bool on)
 {
 	if(index < 0 || index >= length())
 		return *this;
