@@ -541,7 +541,7 @@ Subtitle::splitLines(const RangeList &ranges)
 				c->insertText(QString(QChar::LineFeed));
 				return true;
 			}
-			if(text.at(j) == QChar::Space) {
+			if(j < len && text.at(j) == QChar::Space) {
 				c->movePosition(QTextCursor::Start);
 				c->movePosition(QTextCursor::NextCharacter, QTextCursor::MoveAnchor, j);
 				c->movePosition(QTextCursor::NextCharacter, QTextCursor::KeepAnchor);
