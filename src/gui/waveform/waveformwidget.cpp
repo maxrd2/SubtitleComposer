@@ -373,7 +373,8 @@ WaveformWidget::updateVisibleLines()
 	while(it != m_visibleLines.end()) {
 		if(*it == m_draggedLine) {
 			it = m_visibleLines.erase(it);
-		} else if(!(*it)->line()->intersectsTimespan(m_timeStart, m_timeEnd)) {
+		} else if((*it)->line()->subtitle() != m_subtitle.data()
+			|| !(*it)->line()->intersectsTimespan(m_timeStart, m_timeEnd)) {
 			delete *it;
 			it = m_visibleLines.erase(it);
 		} else {
