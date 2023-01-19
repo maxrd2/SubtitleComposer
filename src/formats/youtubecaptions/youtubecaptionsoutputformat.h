@@ -8,9 +8,10 @@
 #ifndef YOUTUBECAPTIONSOUTPUTFORMAT_H
 #define YOUTUBECAPTIONSOUTPUTFORMAT_H
 
-#include "formats/outputformat.h"
 #include "core/richtext/richdocument.h"
 #include "core/subtitleiterator.h"
+#include "formats/outputformat.h"
+#include "helpers/common.h"
 
 namespace SubtitleComposer {
 class YouTubeCaptionsOutputFormat : public OutputFormat
@@ -23,38 +24,27 @@ protected:
 		QString ret;
 
 		for(SubtitleIterator it(subtitle); it.current(); ++it) {
-			const SubtitleLine *line = it.current();
+			const SubtitleLine *ln = it.current();
+			const Time ts = ln->showTime();
+			const Time th = ln->hideTime();
+			ret += QString::asprintf("%d:%02d:%02d.%03d,%d:%02d:%02d.%03d\n",
+				ts.hours(), ts.minutes(), ts.seconds(), ts.millis(),
+				th.hours(), th.minutes(), th.seconds(), th.millis());
 
-			Time showTime = line->showTime();
-			Time hideTime = line->hideTime();
-			ret += QString::asprintf("%d\n%02d:%02d:%02d,%03d,%02d:%02d:%02d,%03d\n",
-										 it.index() + 1, showTime.hours(),
-										 showTime.minutes(),
-										 showTime.seconds(),
-										 showTime.millis(),
-										 hideTime.hours(),
-										 hideTime.minutes(),
-										 hideTime.seconds(),
-										 hideTime.millis()
-										 );
-
-			const RichString text = (primary ? line->primaryDoc() : line->secondaryDoc())->toRichText();
+			const RichString text = (primary ? ln->primaryDoc() : ln->secondaryDoc())->toRichText();
 
 			// TODO does the format actually supports styled text?
 			// if so, does it use standard HTML style tags?
 			ret += text.richString();
 
-			ret += QStringLiteral("\n\n");
+			ret += $("\n\n");
 		}
 		return ret;
 	}
 
-	YouTubeCaptionsOutputFormat() :
-		OutputFormat(QStringLiteral("YouTube Captions"), QStringList(QStringLiteral("sbv"))),
-		m_dialogueBuilder(QStringLiteral("%1%2%3%4%5%6%7\n\n"))
+	YouTubeCaptionsOutputFormat()
+		: OutputFormat($("YouTube Captions"), QStringList($("sbv")))
 	{}
-
-	const QString m_dialogueBuilder;
 };
 }
 

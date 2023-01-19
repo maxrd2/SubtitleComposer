@@ -26,18 +26,21 @@ protected:
 
 	bool parseSubtitles(Subtitle &subtitle, const QString &data) const override
 	{
-		staticRE$(reTime, "[\\d]+\n([0-2][0-9]):([0-5][0-9]):([0-5][0-9])[,\\.]([0-9][0-9][0-9]),([0-2][0-9]):([0-5][0-9]):([0-5][0-9])[,\\.]([0-9][0-9][0-9])\n");
-		QRegularExpressionMatchIterator itTime = reTime.globalMatch(data);
-		if(!itTime.hasNext())
+		staticRE$(reTime,
+			"([\\d]+\\n)?"
+			"(\\d+):([0-5][0-9]):([0-5][0-9])[,\\.]([0-9][0-9][0-9]),"
+			"(\\d+):([0-5][0-9]):([0-5][0-9])[,\\.]([0-9][0-9][0-9])\\n");
+		QRegularExpressionMatchIterator it = reTime.globalMatch(data);
+		if(!it.hasNext())
 			return false;
 
 		do {
-			QRegularExpressionMatch mTime = itTime.next();
-			const Time showTime(mTime.captured(1).toInt(), mTime.captured(2).toInt(), mTime.captured(3).toInt(), mTime.captured(4).toInt());
-			const Time hideTime(mTime.captured(5).toInt(), mTime.captured(6).toInt(), mTime.captured(7).toInt(), mTime.captured(8).toInt());
+			QRegularExpressionMatch tm = it.next();
+			const Time showTime(tm.captured(2).toInt(), tm.captured(3).toInt(), tm.captured(4).toInt(), tm.captured(5).toInt());
+			const Time hideTime(tm.captured(6).toInt(), tm.captured(7).toInt(), tm.captured(8).toInt(), tm.captured(9).toInt());
 
-			const int off = mTime.capturedEnd();
-			const QString text = data.mid(off, itTime.hasNext() ? itTime.peekNext().capturedStart() - off : -1).trimmed();
+			const int off = tm.capturedEnd();
+			const QString text = data.mid(off, it.hasNext() ? it.peekNext().capturedStart() - off : -1).trimmed();
 
 			// TODO does the format actually support styled text?
 			// if so, does it use standard HTML style tags?
@@ -45,7 +48,7 @@ protected:
 			SubtitleLine *l = new SubtitleLine(showTime, hideTime);
 			l->primaryDoc()->setHtml(text, true);
 			subtitle.insertLine(l);
-		} while(itTime.hasNext());
+		} while(it.hasNext());
 
 		return subtitle.count() > 0;
 	}
