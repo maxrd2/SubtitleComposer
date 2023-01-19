@@ -26,7 +26,10 @@ protected:
 
 	bool parseSubtitles(Subtitle &subtitle, const QString &data) const override
 	{
-		staticRE$(reLine, "([0-2][0-9]):([0-5][0-9]):([0-5][0-9])\\.([0-9][0-9])," "([0-2][0-9]):([0-5][0-9]):([0-5][0-9])\\.([0-9][0-9])\n" "([^\n]*)\n\n", REu | REi);
+		staticRE$(reLine,
+				"([0-2][0-9]):([0-5][0-9]):([0-5][0-9])\\.([0-9][0-9]),"
+				"([0-2][0-9]):([0-5][0-9]):([0-5][0-9])\\.([0-9][0-9])\\n"
+				"([^\\n]*)\\n\\n", REu | REi);
 		QRegularExpressionMatchIterator itLine = reLine.globalMatch(data);
 		if(!itLine.hasNext())
 			return false;
