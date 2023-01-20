@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: subtitlecomposer\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-01-14 00:56+0000\n"
+"POT-Creation-Date: 2023-01-20 00:56+0000\n"
 "PO-Revision-Date: 2020-02-21 11:52+0200\n"
 "Last-Translator: Marek Laane <qiilaq69@gmail.com>\n"
 "Language-Team: Estonian <kde-et@lists.linux.ee>\n"
@@ -368,7 +368,7 @@ msgid "Split selected lines"
 msgstr "Valitud ridade tükeldamine"
 
 #: src/application_actions.cpp:219 src/core/subtitle.cpp:642
-#: src/gui/waveform/waveformwidget.cpp:712
+#: src/gui/waveform/waveformwidget.cpp:713
 #, kde-format
 msgid "Join Lines"
 msgstr "Ühenda read"
@@ -993,7 +993,7 @@ msgstr "Näidatav subtiitri tekst"
 msgid "Select visible subtitle text"
 msgstr "Nähtava subtiitriteksti valimine"
 
-#: src/application_actions.cpp:751 src/gui/waveform/waveformwidget.cpp:736
+#: src/application_actions.cpp:751 src/gui/waveform/waveformwidget.cpp:737
 #, kde-format
 msgid "Toggle Anchor"
 msgstr "Lülita ankrut"
@@ -1757,7 +1757,7 @@ msgid "Change Frame Rate"
 msgstr "Muuda kaadrisagedust "
 
 #: src/core/subtitle.cpp:401 src/core/subtitle.cpp:415
-#: src/gui/waveform/waveformwidget.cpp:695
+#: src/gui/waveform/waveformwidget.cpp:696
 #, kde-format
 msgid "Insert Line"
 msgstr "Lisa rida"
@@ -2996,27 +2996,27 @@ msgstr "Teksti värv"
 msgid "Generating waveform"
 msgstr "Helilaine genereerimine"
 
-#: src/gui/waveform/waveformwidget.cpp:690
+#: src/gui/waveform/waveformwidget.cpp:691
 #, kde-format
 msgid "Select Line"
 msgstr "Vali rida"
 
-#: src/gui/waveform/waveformwidget.cpp:705
+#: src/gui/waveform/waveformwidget.cpp:706
 #, kde-format
 msgid "Remove Line"
 msgstr "Eemalda rida"
 
-#: src/gui/waveform/waveformwidget.cpp:730
+#: src/gui/waveform/waveformwidget.cpp:731
 #, kde-format
 msgid "Split Line"
 msgstr "Tükelda rida"
 
-#: src/gui/waveform/waveformwidget.cpp:740
+#: src/gui/waveform/waveformwidget.cpp:741
 #, kde-format
 msgid "Set Current Line Show Time"
 msgstr "Määra aktiivse rea näitamisaeg"
 
-#: src/gui/waveform/waveformwidget.cpp:745
+#: src/gui/waveform/waveformwidget.cpp:746
 #, kde-format
 msgid "Set Current Line Hide Time"
 msgstr "Määra aktiivse rea peitmise aeg"

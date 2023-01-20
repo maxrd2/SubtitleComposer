@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: subtitlecomposer\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-01-14 00:56+0000\n"
+"POT-Creation-Date: 2023-01-20 00:56+0000\n"
 "PO-Revision-Date: 2022-04-06 11:32+0200\n"
 "Last-Translator: Vit Pelcak <vit@pelcak.org>\n"
 "Language-Team: Czech <kde-i18n-doc@kde.org>\n"
@@ -382,7 +382,7 @@ msgid "Split selected lines"
 msgstr "Rozdělit označené řádky"
 
 #: src/application_actions.cpp:219 src/core/subtitle.cpp:642
-#: src/gui/waveform/waveformwidget.cpp:712
+#: src/gui/waveform/waveformwidget.cpp:713
 #, kde-format
 msgid "Join Lines"
 msgstr "Spojit řádky"
@@ -996,7 +996,7 @@ msgstr ""
 msgid "Select visible subtitle text"
 msgstr ""
 
-#: src/application_actions.cpp:751 src/gui/waveform/waveformwidget.cpp:736
+#: src/application_actions.cpp:751 src/gui/waveform/waveformwidget.cpp:737
 #, kde-format
 msgid "Toggle Anchor"
 msgstr "Přepnout značku"
@@ -1751,7 +1751,7 @@ msgid "Change Frame Rate"
 msgstr "Změnit snímky za sekundu"
 
 #: src/core/subtitle.cpp:401 src/core/subtitle.cpp:415
-#: src/gui/waveform/waveformwidget.cpp:695
+#: src/gui/waveform/waveformwidget.cpp:696
 #, kde-format
 msgid "Insert Line"
 msgstr "Vložit řádek"
@@ -2986,27 +2986,27 @@ msgstr "Barva textu"
 msgid "Generating waveform"
 msgstr "Generuji waveform (vlnový diagram)"
 
-#: src/gui/waveform/waveformwidget.cpp:690
+#: src/gui/waveform/waveformwidget.cpp:691
 #, kde-format
 msgid "Select Line"
 msgstr "Vybrat řádek"
 
-#: src/gui/waveform/waveformwidget.cpp:705
+#: src/gui/waveform/waveformwidget.cpp:706
 #, kde-format
 msgid "Remove Line"
 msgstr "Odstranit řádek"
 
-#: src/gui/waveform/waveformwidget.cpp:730
+#: src/gui/waveform/waveformwidget.cpp:731
 #, kde-format
 msgid "Split Line"
 msgstr "Rozdělit řádek"
 
-#: src/gui/waveform/waveformwidget.cpp:740
+#: src/gui/waveform/waveformwidget.cpp:741
 #, kde-format
 msgid "Set Current Line Show Time"
 msgstr "Nastavit na řádek současný čas zobrazení z videa"
 
-#: src/gui/waveform/waveformwidget.cpp:745
+#: src/gui/waveform/waveformwidget.cpp:746
 #, kde-format
 msgid "Set Current Line Hide Time"
 msgstr "Nastavit na řádek současný čas skrytí titulku"

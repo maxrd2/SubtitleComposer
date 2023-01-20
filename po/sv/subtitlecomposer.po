@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: subtitlecomposer\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-01-14 00:56+0000\n"
+"POT-Creation-Date: 2023-01-20 00:56+0000\n"
 "PO-Revision-Date: 2022-03-23 18:36+0100\n"
 "Last-Translator: Stefan Asserhäll <stefan.asserhall@bredband.net>\n"
 "Language-Team: Swedish <kde-i18n-doc@kde.org>\n"
@@ -369,7 +369,7 @@ msgid "Split selected lines"
 msgstr "Dela markerade rader"
 
 #: src/application_actions.cpp:219 src/core/subtitle.cpp:642
-#: src/gui/waveform/waveformwidget.cpp:712
+#: src/gui/waveform/waveformwidget.cpp:713
 #, kde-format
 msgid "Join Lines"
 msgstr "Kombinera rader"
@@ -988,7 +988,7 @@ msgstr "Visad textning"
 msgid "Select visible subtitle text"
 msgstr "Välj synlig textning"
 
-#: src/application_actions.cpp:751 src/gui/waveform/waveformwidget.cpp:736
+#: src/application_actions.cpp:751 src/gui/waveform/waveformwidget.cpp:737
 #, kde-format
 msgid "Toggle Anchor"
 msgstr "Växla förankring"
@@ -1750,7 +1750,7 @@ msgid "Change Frame Rate"
 msgstr "Ändra bildfrekvens"
 
 #: src/core/subtitle.cpp:401 src/core/subtitle.cpp:415
-#: src/gui/waveform/waveformwidget.cpp:695
+#: src/gui/waveform/waveformwidget.cpp:696
 #, kde-format
 msgid "Insert Line"
 msgstr "Infoga rad"
@@ -2985,27 +2985,27 @@ msgstr "Textfärg"
 msgid "Generating waveform"
 msgstr "Skapar vågform"
 
-#: src/gui/waveform/waveformwidget.cpp:690
+#: src/gui/waveform/waveformwidget.cpp:691
 #, kde-format
 msgid "Select Line"
 msgstr "Markera rad"
 
-#: src/gui/waveform/waveformwidget.cpp:705
+#: src/gui/waveform/waveformwidget.cpp:706
 #, kde-format
 msgid "Remove Line"
 msgstr "Ta bort rad"
 
-#: src/gui/waveform/waveformwidget.cpp:730
+#: src/gui/waveform/waveformwidget.cpp:731
 #, kde-format
 msgid "Split Line"
 msgstr "Dela rad"
 
-#: src/gui/waveform/waveformwidget.cpp:740
+#: src/gui/waveform/waveformwidget.cpp:741
 #, kde-format
 msgid "Set Current Line Show Time"
 msgstr "Ställ in visningstid för aktuell rad"
 
-#: src/gui/waveform/waveformwidget.cpp:745
+#: src/gui/waveform/waveformwidget.cpp:746
 #, kde-format
 msgid "Set Current Line Hide Time"
 msgstr "Ställ in döljningstid för aktuell rad"
