@@ -7,50 +7,49 @@
 
 #include "subtitlecolordialog.h"
 
+#include <QDebug>
 #include <QDialogButtonBox>
 #include <QPushButton>
 
-#include <QDebug>
+#include <KLocalizedString>
 
 using namespace SubtitleComposer;
 
-SubtitleColorDialog::SubtitleColorDialog(QWidget *parent /* = 0*/) :
-	QColorDialog(parent),
-	defaultColorSelected(false)
+SubtitleColorDialog::SubtitleColorDialog(QWidget *parent)
+	: QColorDialog(parent),
+	  m_defaultColorSelected(false)
 {
 	QDialogButtonBox *buttons = findChild<QDialogButtonBox *>();
 
-	QPushButton *defaultColor = buttons->addButton("Default Color", QDialogButtonBox::AcceptRole);
-	connect(defaultColor, &QAbstractButton::clicked, this, &SubtitleColorDialog::acceptDefaultColor);
+	QPushButton *defaultColor = buttons->addButton(i18n("Default Color"), QDialogButtonBox::AcceptRole);
+	connect(defaultColor, &QAbstractButton::clicked, this, [&](){
+		m_defaultColorSelected = true;
+		accept();
+	});
 
 	setOption(DontUseNativeDialog, true);
 }
 
-SubtitleColorDialog::~SubtitleColorDialog()
-{}
-
-/*static*/ QColor
-SubtitleColorDialog::getColor(const QColor &initial, QWidget *parent, const QString &title, ColorDialogOptions options /* = 0*/)
+SubtitleColorDialog::SubtitleColorDialog(const QColor &initial, QWidget *parent)
+	: SubtitleColorDialog(parent)
 {
-	SubtitleColorDialog dlg(parent);
+	QSignalBlocker sb(this);
+	setCurrentColor(initial);
+}
+
+QColor
+SubtitleColorDialog::selectedColor() const
+{
+	return m_defaultColorSelected ? QColor(0, 0, 0, 0) : QColorDialog::selectedColor();
+}
+
+QColor
+SubtitleColorDialog::getColor(const QColor &initial, QWidget *parent, const QString &title, ColorDialogOptions options)
+{
+	SubtitleColorDialog dlg(initial, parent);
 	if(!title.isEmpty())
 		dlg.setWindowTitle(title);
 	dlg.setOptions(options | DontUseNativeDialog);
-	dlg.setCurrentColor(initial);
-	dlg.exec();
-
-	return dlg.defaultColorSelected ? QColor(0, 0, 0, 0) : dlg.selectedColor();
+	return dlg.exec() == QDialog::Accepted ? dlg.selectedColor() : QColor();
 }
 
-/*static*/ QColor
-SubtitleColorDialog::getColor(const QColor &initial /* = Qt::white*/, QWidget *parent /* = 0*/)
-{
-	return getColor(initial, parent, QString(), ColorDialogOptions());
-}
-
-void
-SubtitleColorDialog::acceptDefaultColor()
-{
-	defaultColorSelected = true;
-	accept();
-}

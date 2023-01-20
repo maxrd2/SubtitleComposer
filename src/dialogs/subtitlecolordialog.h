@@ -13,21 +13,19 @@
 namespace SubtitleComposer {
 class SubtitleColorDialog : public QColorDialog
 {
-	Q_OBJECT
-
 public:
-	explicit SubtitleColorDialog(QWidget *parent = 0);
-	explicit SubtitleColorDialog(const QColor &initial, QWidget *parent = 0);
-	~SubtitleColorDialog();
+	explicit SubtitleColorDialog(QWidget *parent = nullptr);
+	explicit SubtitleColorDialog(const QColor &initial, QWidget *parent = nullptr);
 
-	static QColor getColor(const QColor &initial, QWidget *parent, const QString &title, ColorDialogOptions options = ColorDialogOptions());
-	static QColor getColor(const QColor &initial = Qt::white, QWidget *parent = 0);
+	static QColor getColor(const QColor &initial = Qt::white,
+				QWidget *parent = nullptr,
+				const QString &title = QString(),
+				ColorDialogOptions options = ColorDialogOptions());
 
-protected:
-	bool defaultColorSelected;
+	QColor selectedColor() const;
 
-public slots:
-	void acceptDefaultColor();
+private:
+	bool m_defaultColorSelected;
 };
 }
 
