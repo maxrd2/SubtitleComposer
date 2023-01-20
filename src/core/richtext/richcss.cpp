@@ -420,3 +420,24 @@ RichCSS::match(QSet<QString> selectors) const
 	}
 	return styles;
 }
+
+QSet<QString>
+RichCSS::classes() const
+{
+	QSet<QString> all;
+	for(const Block &b: qAsConst(m_stylesheet)) {
+		const QChar *s = b.selector.constData();
+		const QChar *ss;
+		while(!s->isNull()) {
+			if(*s == QChar('.')) {
+				ss = ++s;
+				while(!s->isNull() && !s->isSpace() && !s->isSymbol())
+					s++;
+				all.insert(QString(ss, s - ss));
+			} else {
+				s++;
+			}
+		}
+	}
+	return all;
+}

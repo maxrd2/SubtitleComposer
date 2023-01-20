@@ -49,6 +49,11 @@ public:
 
 	QMap<QByteArray, QString> match(QSet<QString> selectors) const;
 
+	/**
+	 * @return list of all defined classes
+	 */
+	QSet<QString> classes() const;
+
 signals:
 	void changed();
 
