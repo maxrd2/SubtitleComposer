@@ -5,14 +5,14 @@
 # Goliash <goliash@goliash.net>, 2009.
 # Sergio Pistone <sergio_pistone@yahoo,com.ar>, 2009.
 # Petr Gadula <pgadula@vendavo.com>, 2016.
-# Vit Pelcak <vit@pelcak.org>, 2020, 2021, 2022.
+# Vit Pelcak <vit@pelcak.org>, 2020, 2021, 2022, 2023.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: subtitlecomposer\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2023-01-20 00:56+0000\n"
-"PO-Revision-Date: 2022-04-06 11:32+0200\n"
+"PO-Revision-Date: 2023-01-30 09:10+0100\n"
 "Last-Translator: Vit Pelcak <vit@pelcak.org>\n"
 "Language-Team: Czech <kde-i18n-doc@kde.org>\n"
 "Language: cs\n"
@@ -20,7 +20,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2;\n"
-"X-Generator: Lokalize 21.12.3\n"
+"X-Generator: Lokalize 22.12.1\n"
 "X-Crowdin-Project: subtitlecomposer\n"
 "X-Crowdin-Language: cs\n"
 "X-Crowdin-File: subtitlecomposer.pot\n"
@@ -2126,7 +2126,7 @@ msgstr "Prohodit texty"
 #: src/core/undo/subtitleactions.cpp:308
 #, kde-format
 msgid "Change stylesheet"
-msgstr ""
+msgstr "Změnit styl"
 
 #: src/core/undo/subtitlelineactions.cpp:28
 #, kde-format
@@ -2805,7 +2805,7 @@ msgstr "Chyba při přehrávání souboru"
 #: src/gui/subtitlemeta/subtitlemetawidget.cpp:46
 #, kde-format
 msgid "&Stylesheet"
-msgstr ""
+msgstr "&Styl"
 
 #: src/gui/subtitlemeta/subtitlemetawidget.cpp:47
 #, kde-format
@@ -2854,7 +2854,7 @@ msgstr "Svislé zarovnání"
 #: src/gui/subtitlemeta/subtitlepositionwidget.ui:169
 #, kde-format
 msgid "Position/Size"
-msgstr ""
+msgstr "Pozice/Velikost"
 
 #. i18n: ectx: property (suffix), widget (QDoubleSpinBox, posBottom)
 #. i18n: ectx: property (suffix), widget (QDoubleSpinBox, posLeft)
@@ -3099,7 +3099,7 @@ msgstr "Video přehrávač"
 #: src/mainwindow.cpp:65
 #, kde-format
 msgid "Styles and Comments"
-msgstr ""
+msgstr "Styly a komentáře"
 
 #. i18n: ectx: label, entry (DefaultSubtitlesEncoding), group (General)
 #: src/scconfig.kcfg:10
@@ -3437,11 +3437,13 @@ msgid ""
 "A script already exists with this name.\n"
 "Would you like to enter another name?"
 msgstr ""
+"Skript s tímto názvem už existuje.\n"
+"Chtěli byste vložit jiný název?"
 
 #: src/scripting/scriptsmanager.cpp:477
 #, kde-format
 msgid "Duplicate filename"
-msgstr ""
+msgstr "Duplicitní název souboru"
 
 #: src/scripting/scriptsmanager.cpp:478
 #, kde-format
