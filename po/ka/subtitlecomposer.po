@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: subtitlecomposer\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2023-01-20 00:56+0000\n"
-"PO-Revision-Date: 2022-11-14 07:04+0100\n"
+"PO-Revision-Date: 2023-02-12 08:38+0100\n"
 "Last-Translator: Temuri Doghonadze <temuri.doghonadze@gmail.com>\n"
 "Language-Team: Georgian <kde-i18n-doc@kde.org>\n"
 "Language: ka\n"
@@ -16,7 +16,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 3.2\n"
+"X-Generator: Poedit 3.2.2\n"
 
 #: src/actions/kcodecactionext.cpp:29
 #, kde-format
@@ -951,7 +951,7 @@ msgstr "აუდიო ნაკადები"
 #: src/application_actions.cpp:712
 #, kde-format
 msgid "Select active audio stream"
-msgstr ""
+msgstr "აქტიური აუდიონაკადის არჩევა"
 
 #: src/application_actions.cpp:723
 #, kde-format
@@ -961,7 +961,7 @@ msgstr "ფონტის ზომის გაზრდა"
 #: src/application_actions.cpp:724
 #, kde-format
 msgid "Increase subtitles font size by 1 point"
-msgstr ""
+msgstr "სუბტიტრის ფონტის ზომის 1 ერთეულით გაზრდა"
 
 #: src/application_actions.cpp:731
 #, kde-format
@@ -971,7 +971,7 @@ msgstr "ფონტის ზომის შესრულება"
 #: src/application_actions.cpp:732
 #, kde-format
 msgid "Decrease subtitles font size by 1 point"
-msgstr ""
+msgstr "სუბტიტრის ფონტის ზომის 1 ერთეულით შემცირება"
 
 #: src/application_actions.cpp:739
 #, kde-format
@@ -981,12 +981,12 @@ msgstr "ნაჩვენები სუბტიტრის ტექსტ�
 #: src/application_actions.cpp:740
 #, kde-format
 msgid "Select visible subtitle text"
-msgstr ""
+msgstr "სუბტიტრის ხილული ტექსტის მონშვნა"
 
 #: src/application_actions.cpp:751 src/gui/waveform/waveformwidget.cpp:737
 #, kde-format
 msgid "Toggle Anchor"
-msgstr ""
+msgstr "ნიშნის გადართვა"
 
 #: src/application_actions.cpp:752
 #, kde-format
@@ -998,7 +998,7 @@ msgstr ""
 #: src/application_actions.cpp:759
 #, kde-format
 msgid "Remove All Anchors"
-msgstr ""
+msgstr "ყველა ნიშნის წაშლა"
 
 #: src/application_actions.cpp:760
 #, kde-format
@@ -1039,12 +1039,12 @@ msgstr ""
 #: src/application_subtitle.cpp:78
 #, kde-format
 msgid "All Text Subtitles"
-msgstr ""
+msgstr "ყველა ტექსტური სუბტიტრი"
 
 #: src/application_subtitle.cpp:79
 #, kde-format
 msgid "All Image Subtitles"
-msgstr ""
+msgstr "ყველა გამოსახულების სუბტიტრი"
 
 #: src/application_subtitle.cpp:81 src/application_subtitle.cpp:105
 #, kde-format
@@ -1077,7 +1077,7 @@ msgstr ""
 #: src/application_subtitle.cpp:130
 #, kde-format
 msgid "Conflicting Subtitle Files"
-msgstr ""
+msgstr "სუბტიტრის კონფლიქტური ფაილები"
 
 #: src/application_subtitle.cpp:148 src/dialogs/selectablesubtitledialog.cpp:67
 #, kde-format
@@ -1139,7 +1139,7 @@ msgstr "სუბტიტრების დახურვა"
 #: src/application_subtitle.cpp:445
 #, kde-format
 msgid "Open Translation Subtitle"
-msgstr ""
+msgstr "სუბტიტრის თარგმანის გახსნა"
 
 #: src/application_subtitle.cpp:530
 #, kde-format
@@ -1161,7 +1161,7 @@ msgstr ""
 #: src/application_subtitle.cpp:578
 #, kde-format
 msgid "Save Translation Subtitle"
-msgstr ""
+msgstr "სუბტიტრის თარგმანის შენახვა"
 
 #: src/application_subtitle.cpp:665
 #, kde-format
@@ -1900,7 +1900,7 @@ msgstr "ძალიან მოკლე ხანგრძლივობა"
 #: src/core/subtitleline.cpp:86
 #, kde-format
 msgid "Overlapping times"
-msgstr ""
+msgstr "კვეთადი დრო"
 
 #: src/core/subtitleline.cpp:87
 #, kde-format
@@ -1910,7 +1910,7 @@ msgstr "უთარგმნელი ტექსტი"
 #: src/core/subtitleline.cpp:88
 #, kde-format
 msgid "User mark"
-msgstr ""
+msgstr "მომხმარებლის ნიშანი"
 
 #: src/core/subtitleline.cpp:107
 #, kde-format
@@ -1953,22 +1953,22 @@ msgstr[1] ""
 #: src/core/subtitleline.cpp:113
 #, kde-format
 msgid "Has unnecessary spaces in primary text."
-msgstr ""
+msgstr "ზედმეტი გამოტოვებები საწყის ტექსტში."
 
 #: src/core/subtitleline.cpp:114
 #, kde-format
 msgid "Has unnecessary spaces in translation text."
-msgstr ""
+msgstr "ზედმეტი გამოტოვებები თარგმანში."
 
 #: src/core/subtitleline.cpp:115
 #, kde-format
 msgid "Has unnecessary dash in primary text."
-msgstr ""
+msgstr "ზედმეტი ტირე საწყის ტექსტში."
 
 #: src/core/subtitleline.cpp:116
 #, kde-format
 msgid "Has unnecessary dash in translation text."
-msgstr ""
+msgstr "ზედმეტი ტირე თარგმანში."
 
 #: src/core/subtitleline.cpp:117
 #, kde-format
@@ -2040,7 +2040,7 @@ msgstr "აქვს უთარგმნელი ტექსტი."
 #: src/core/subtitleline.cpp:127
 #, kde-format
 msgid "Has user mark."
-msgstr ""
+msgstr "აქვს მომხმარებლის ნიშანი."
 
 #: src/core/subtitleline.cpp:388 src/core/undo/subtitlelineactions.cpp:105
 #, kde-format
@@ -2131,12 +2131,12 @@ msgstr "მონიშნული ხაზები"
 #: src/dialogs/actionwithtargetdialog.cpp:145
 #, kde-format
 msgid "All lines from first selected"
-msgstr ""
+msgstr "პირველიდან ყველა ხაზი მონიშნულია"
 
 #: src/dialogs/actionwithtargetdialog.cpp:146
 #, kde-format
 msgid "All lines up to last selected"
-msgstr ""
+msgstr "ბოლო ხაზამდე ყველა მონიშნულია"
 
 #: src/dialogs/actionwithtargetdialog.cpp:234 src/utils/finder.cpp:53
 #: src/utils/replacer.cpp:51
@@ -2170,17 +2170,17 @@ msgstr "მორგება"
 #, kde-format
 msgctxt "@title:group"
 msgid "New Times"
-msgstr ""
+msgstr "ახალი დრო"
 
 #: src/dialogs/adjusttimesdialog.cpp:27
 #, kde-format
 msgid "First spoken line:"
-msgstr ""
+msgstr "პირველი ხაზი:"
 
 #: src/dialogs/adjusttimesdialog.cpp:33
 #, kde-format
 msgid "Last spoken line:"
-msgstr ""
+msgstr "ბოლო ხაზი:"
 
 #: src/dialogs/autodurationsdialog.cpp:24
 #: src/dialogs/changeframeratedialog.cpp:24
@@ -2196,44 +2196,44 @@ msgstr "მორგება"
 #: src/dialogs/autodurationsdialog.cpp:32
 #, kde-format
 msgid "Milliseconds per line:"
-msgstr ""
+msgstr "მილიწამი ხაზზე:"
 
 #: src/dialogs/autodurationsdialog.cpp:41
 #, kde-format
 msgid "Milliseconds per word:"
-msgstr ""
+msgstr "მილიწამი სიტყვაზე:"
 
 #: src/dialogs/autodurationsdialog.cpp:50
 #, kde-format
 msgid "Milliseconds per character:"
-msgstr ""
+msgstr "მილიწამი სიმბოლოზე:"
 
 #: src/dialogs/autodurationsdialog.cpp:54
 #: src/dialogs/durationlimitsdialog.cpp:30
 #, kde-format
 msgid "Prevent overlapping"
-msgstr ""
+msgstr "გადაფარვის თავიდან აცილება"
 
 #: src/dialogs/autodurationsdialog.cpp:57
 #, kde-format
 msgctxt "@title:group"
 msgid "Duration Calculation"
-msgstr ""
+msgstr "ხანგრძლივობის გამოთვლა"
 
 #: src/dialogs/autodurationsdialog.cpp:63
 #, kde-format
 msgid "Use primary text"
-msgstr ""
+msgstr "ძირითადი ტექსტის გამოყენება"
 
 #: src/dialogs/autodurationsdialog.cpp:64
 #, kde-format
 msgid "Use translation text"
-msgstr ""
+msgstr "ნათარგმნი ტექსტის გამოყენება"
 
 #: src/dialogs/autodurationsdialog.cpp:65
 #, kde-format
 msgid "Calculate both and use maximum"
-msgstr ""
+msgstr "ორივეს გამოთვლა და მაქსიმუმის გამოყენება"
 
 #: src/dialogs/changeframeratedialog.cpp:33
 #, kde-format
@@ -2296,12 +2296,12 @@ msgstr ""
 #, kde-format
 msgctxt "@title:group"
 msgid "Maximum Duration"
-msgstr ""
+msgstr "მაქსიმალური ხანგრძლივობა"
 
 #: src/dialogs/durationlimitsdialog.cpp:39
 #, kde-format
 msgid "Shrink duration to:"
-msgstr ""
+msgstr "ხანგრძლივობის შემცირება:"
 
 #: src/dialogs/encodingdetectdialog.cpp:81
 #, kde-format
@@ -2318,7 +2318,7 @@ msgstr "გამოვლინდა"
 #: src/dialogs/encodingdetectdialog.ui:14
 #, kde-format
 msgid "Confirm detected subtitle encoding"
-msgstr ""
+msgstr "დაადასტურეთ სუბტიტრის აღმოჩენილი კოდირება"
 
 #. i18n: ectx: property (text), widget (QLabel, encodingLabel)
 #: src/dialogs/encodingdetectdialog.ui:30
@@ -2340,17 +2340,17 @@ msgstr " მწმ"
 #: src/dialogs/fixoverlappingtimesdialog.cpp:29
 #, kde-format
 msgid "Minimum interval between lines:"
-msgstr ""
+msgstr "მაქსიმალური ინტერვალი ხაზებს შორის:"
 
 #: src/dialogs/fixpunctuationdialog.cpp:17
 #, kde-format
 msgid "Fix Punctuation"
-msgstr ""
+msgstr "პუნქტუაციის გასწორება"
 
 #: src/dialogs/fixpunctuationdialog.cpp:22
 #, kde-format
 msgid "Fix and cleanup spaces"
-msgstr ""
+msgstr "გამოტოვებების ჩასწორება და მოსუფთავება"
 
 #: src/dialogs/fixpunctuationdialog.cpp:26
 #, kde-format
@@ -2370,17 +2370,17 @@ msgstr ""
 #: src/dialogs/insertlinedialog.cpp:13
 #, kde-format
 msgid "Insert Line Before Current"
-msgstr ""
+msgstr "მიმდინარე ხაზამდე ცარიელი ხაზის ჩასმა"
 
 #: src/dialogs/insertlinedialog.cpp:13
 #, kde-format
 msgid "Insert Line After Current"
-msgstr ""
+msgstr "მიმდინარე ხაზის შემდეგ ცარიელი ხაზის ჩასმა"
 
 #: src/dialogs/insertlinedialog.cpp:13
 #, kde-format
 msgid "Insert Into"
-msgstr ""
+msgstr "ჩასმა"
 
 #: src/dialogs/joinsubtitlesdialog.cpp:29
 #, kde-format
@@ -2391,12 +2391,12 @@ msgstr ""
 #: src/dialogs/splitsubtitledialog.cpp:35
 #, kde-format
 msgid "Set from video length"
-msgstr ""
+msgstr "ვიდეოს სიგრძეზე დაყენება"
 
 #: src/dialogs/removelinesdialog.cpp:13
 #, kde-format
 msgid "Remove Selected Lines"
-msgstr ""
+msgstr "მონიშნული ხაზების წაშლა"
 
 #: src/dialogs/removelinesdialog.cpp:13
 #, kde-format
@@ -2411,7 +2411,7 @@ msgstr "ბილიკი:"
 #: src/dialogs/selectablesubtitledialog.cpp:46
 #, kde-format
 msgid "Select subtitle"
-msgstr ""
+msgstr "აირჩიეთ სუბტიტრები"
 
 #: src/dialogs/selectablesubtitledialog.h:30
 #, kde-format
@@ -2427,7 +2427,7 @@ msgstr "წანაცვლება"
 #, kde-format
 msgctxt "@title:group"
 msgid "Shifting"
-msgstr ""
+msgstr "გადაადგილება"
 
 #: src/dialogs/shifttimesdialog.cpp:25
 #, kde-format
@@ -2447,12 +2447,12 @@ msgstr ""
 #: src/dialogs/splitsubtitledialog.cpp:27
 #, kde-format
 msgid "Split Subtitle"
-msgstr ""
+msgstr "სუბტიტრების გაყოფა"
 
 #: src/dialogs/splitsubtitledialog.cpp:40
 #, kde-format
 msgid "Split time:"
-msgstr ""
+msgstr "გაყოფის დრო:"
 
 #: src/dialogs/splitsubtitledialog.cpp:44
 #, kde-format
@@ -2473,7 +2473,7 @@ msgstr ""
 #, kde-format
 msgctxt "@title:group"
 msgid "Synchronization Mode"
-msgstr ""
+msgstr "სინქრონიზაციის რეჟიმი"
 
 #: src/dialogs/syncsubtitlesdialog.cpp:24
 #, kde-format
@@ -2540,7 +2540,7 @@ msgstr "მონიშვნის მოხსნა"
 #: src/formats/textdemux/textdemux.cpp:32
 #, kde-format
 msgid "Importing Subtitle Stream"
-msgstr ""
+msgstr "სუბტიტრების ნაკადის შემოტანა"
 
 #: src/formats/textdemux/textdemux.cpp:90
 #, kde-format
@@ -3318,7 +3318,7 @@ msgstr ""
 #: src/scconfig.kcfg:196
 #, kde-format
 msgid "Volume Amplification"
-msgstr ""
+msgstr "ხმის გაძლიერება"
 
 #. i18n: ectx: label, entry (FontSize), group (VideoPlayer)
 #: src/scconfig.kcfg:205
@@ -3347,7 +3347,7 @@ msgstr "კიდის სიგანე"
 #: src/scripting/scriptsmanager.cpp:84
 #, kde-format
 msgid "Non-Script Files"
-msgstr ""
+msgstr "არა სკრიპტის ფაილები"
 
 #: src/scripting/scriptsmanager.cpp:166
 #, kde-format
@@ -3405,12 +3405,12 @@ msgstr ""
 #: src/scripting/scriptsmanager.cpp:477
 #, kde-format
 msgid "Duplicate filename"
-msgstr ""
+msgstr "ფაილის სახელი დუბლირებულია"
 
 #: src/scripting/scriptsmanager.cpp:478
 #, kde-format
 msgid "Yes"
-msgstr ""
+msgstr "კი"
 
 #: src/scripting/scriptsmanager.cpp:482
 #, kde-format
@@ -3642,7 +3642,7 @@ msgstr ""
 #: src/speechplugins/pocketsphinx/pocketsphinxconfigwidget.ui:42
 #, kde-format
 msgid "Trigram Model"
-msgstr ""
+msgstr "ტრიგრამის მოდელი"
 
 #. i18n: ectx: property (text), widget (QLabel, label_acousticModelPath)
 #: src/speechplugins/pocketsphinx/pocketsphinxconfigwidget.ui:68
@@ -3664,13 +3664,13 @@ msgstr ""
 #: src/speechplugins/pocketsphinx/pocketsphinxconfigwidget.ui:100
 #, kde-format
 msgid "Voice Activity Detection"
-msgstr ""
+msgstr "ხმის აქტივობის აღმოჩენა"
 
 #. i18n: ectx: property (text), widget (QLabel, label_vadTreshold)
 #: src/speechplugins/pocketsphinx/pocketsphinxconfigwidget.ui:129
 #, kde-format
 msgid "Noise Threshold"
-msgstr ""
+msgstr "ხმაურის ზღვარი"
 
 #. i18n: ectx: property (text), widget (QLabel, label_vadPreSpeech)
 #: src/speechplugins/pocketsphinx/pocketsphinxconfigwidget.ui:142
@@ -3693,22 +3693,22 @@ msgstr ""
 #: src/speechprocessor/speechprocessor.cpp:41
 #, kde-format
 msgid "Recognizing speech"
-msgstr ""
+msgstr "საუბრის ამოცნობა"
 
 #: src/speechprocessor/speechprocessor.cpp:49
 #, kde-format
 msgid "Abort speech recognition"
-msgstr ""
+msgstr "საუბრის ამოცნობის გაუქმება"
 
 #: src/speechprocessor/speechprocessor.cpp:98
 #, kde-format
 msgid "No speech recognition plugins available"
-msgstr ""
+msgstr "ხმის ამოცნობის დამატებები ხელმიუწვდომელია"
 
 #: src/speechprocessor/speechprocessor.cpp:103
 #, kde-format
 msgid "Initialization of speech recognition plugin failed"
-msgstr ""
+msgstr "ხმის ამოცნობის დამატების ინიციალიზაციის შეცდომა"
 
 #: src/speechprocessor/speechprocessor.cpp:173
 #, kde-format
@@ -3751,7 +3751,7 @@ msgstr "&სტილები"
 #: src/subtitlecomposerui.rc:75
 #, kde-format
 msgid "T&imes"
-msgstr ""
+msgstr "&დრო"
 
 #. i18n: ectx: Menu (errors)
 #: src/subtitlecomposerui.rc:96
@@ -3786,7 +3786,7 @@ msgstr "ხელსაწყოთა ზოლის რედაქტირ�
 #: src/utils/finder.cpp:45
 #, kde-format
 msgid "Find In"
-msgstr ""
+msgstr "პოვნა"
 
 #: src/utils/finder.cpp:246
 #, kde-format
@@ -3840,7 +3840,7 @@ msgstr "ტაგალოგური"
 #: src/utils/replacer.cpp:43
 #, kde-format
 msgid "Find/Replace In"
-msgstr ""
+msgstr "პოვნა და ჩანაცვლება"
 
 #: src/utils/replacer.cpp:253
 #, kde-format
