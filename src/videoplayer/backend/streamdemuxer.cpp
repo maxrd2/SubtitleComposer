@@ -504,7 +504,7 @@ StreamDemuxer::run()
 
 	{ // find_stream_info
 		const int origNbStreams = ic->nb_streams;
-		AVDictionary **opts = (AVDictionary **)av_mallocz_array(origNbStreams, sizeof(*opts));
+		AVDictionary **opts = (AVDictionary **)av_calloc(origNbStreams, sizeof(*opts));
 		if(!opts) {
 			av_log(nullptr, AV_LOG_ERROR, "Could not alloc memory for stream options.\n");
 			goto cleanup;
