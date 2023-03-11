@@ -1111,7 +1111,7 @@ msgid ""
 "usage of the wrong encoding.</qt>"
 msgstr ""
 "<qt>Tekstitystiedostoa ei voi jäsentää.<br/>Tämän voi aiheuttaa väärän "
-"merkistökoodauksen käyttö."
+"merkistökoodauksen käyttö.</qt>"
 
 #: src/application_subtitle.cpp:270 src/application_subtitle.cpp:317
 #, kde-format
