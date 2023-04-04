@@ -1,13 +1,13 @@
 # Copyright (C) YEAR This file is copyright:
 # This file is distributed under the same license as the subtitlecomposer package.
-# Tommi Nieminen <translator@legisign.org>, 2020, 2021.
+# Tommi Nieminen <translator@legisign.org>, 2020, 2021, 2023.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: subtitlecomposer\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2023-01-20 00:56+0000\n"
-"PO-Revision-Date: 2021-11-05 20:31+0200\n"
+"PO-Revision-Date: 2023-03-11 22:45+0200\n"
 "Last-Translator: Tommi Nieminen <translator@legisign.org>\n"
 "Language-Team: Finnish <kde-i18n-doc@kde.org>\n"
 "Language: fi\n"
@@ -15,7 +15,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Lokalize 20.04.2\n"
+"X-Generator: Lokalize 22.12.3\n"
 
 #: src/actions/kcodecactionext.cpp:29
 #, kde-format
@@ -2126,10 +2126,9 @@ msgid "Swap Texts"
 msgstr "Vaihda tekstit keskenään"
 
 #: src/core/undo/subtitleactions.cpp:308
-#, fuzzy, kde-format
-#| msgid "Change Case"
+#, kde-format
 msgid "Change stylesheet"
-msgstr "Vaihda aakkoslajia"
+msgstr "Vaihda tyylipohjaa"
 
 #: src/core/undo/subtitlelineactions.cpp:28
 #, kde-format
@@ -2808,21 +2807,19 @@ msgid "Error Playing File"
 msgstr "Virhe toistettaessa tiedostoa"
 
 #: src/gui/subtitlemeta/subtitlemetawidget.cpp:46
-#, fuzzy, kde-format
-#| msgid "Styles"
+#, kde-format
 msgid "&Stylesheet"
-msgstr "Tyylit"
+msgstr "T&yylipohja"
 
 #: src/gui/subtitlemeta/subtitlemetawidget.cpp:47
 #, kde-format
 msgid "&Comments"
-msgstr ""
+msgstr "&Huomautukset"
 
 #: src/gui/subtitlemeta/subtitlemetawidget.cpp:48
-#, fuzzy, kde-format
-#| msgid "<b>Position</b>"
+#, kde-format
 msgid "&Position"
-msgstr "<b>Sijainti</b>"
+msgstr "&Sijainti"
 
 #: src/gui/subtitlemeta/subtitlemetawidget.cpp:88
 #, kde-format
@@ -2832,37 +2829,36 @@ msgstr ""
 #: src/gui/subtitlemeta/subtitlemetawidget.cpp:90
 #, kde-format
 msgid "Header"
-msgstr ""
+msgstr "Yläotsake"
 
 #: src/gui/subtitlemeta/subtitlemetawidget.cpp:92
 #, kde-format
 msgid "Footer"
-msgstr ""
+msgstr "Alaotsake"
 
 #. i18n: ectx: property (windowTitle), widget (QWidget, SubtitlePositionWidget)
 #: src/gui/subtitlemeta/subtitlepositionwidget.ui:14
 #, kde-format
 msgid "Form"
-msgstr ""
+msgstr "Lomake"
 
 #. i18n: ectx: property (title), widget (QGroupBox, grpHAlign)
 #: src/gui/subtitlemeta/subtitlepositionwidget.ui:20
 #, kde-format
 msgid "Horizontal Alignment"
-msgstr ""
+msgstr "Vaakatasaus"
 
 #. i18n: ectx: property (title), widget (QGroupBox, grpVAlign)
 #: src/gui/subtitlemeta/subtitlepositionwidget.ui:106
 #, kde-format
 msgid "Vertical Alignment"
-msgstr ""
+msgstr "Pystytasaus"
 
 #. i18n: ectx: property (title), widget (QGroupBox, grpPosition)
 #: src/gui/subtitlemeta/subtitlepositionwidget.ui:169
-#, fuzzy, kde-format
-#| msgid "<b>Position</b>"
+#, kde-format
 msgid "Position/Size"
-msgstr "<b>Sijainti</b>"
+msgstr "Sijainti ja koko"
 
 #. i18n: ectx: property (suffix), widget (QDoubleSpinBox, posBottom)
 #. i18n: ectx: property (suffix), widget (QDoubleSpinBox, posLeft)
@@ -2874,7 +2870,7 @@ msgstr "<b>Sijainti</b>"
 #: src/gui/subtitlemeta/subtitlepositionwidget.ui:205
 #, no-c-format, kde-format
 msgid "%"
-msgstr ""
+msgstr "%"
 
 #: src/gui/treeview/linesmodel.cpp:156
 #, kde-format
@@ -3110,7 +3106,7 @@ msgstr "Videosoitin"
 #: src/mainwindow.cpp:65
 #, kde-format
 msgid "Styles and Comments"
-msgstr ""
+msgstr "Tyylit ja huomautukset"
 
 #. i18n: ectx: label, entry (DefaultSubtitlesEncoding), group (General)
 #: src/scconfig.kcfg:10
@@ -3446,26 +3442,23 @@ msgid "View"
 msgstr "Näkymä"
 
 #: src/scripting/scriptsmanager.cpp:476
-#, fuzzy, kde-format
-#| msgid ""
-#| "You must enter an unused name to continue.\n"
-#| "Would you like to enter another name?"
+#, kde-format
 msgid ""
 "A script already exists with this name.\n"
 "Would you like to enter another name?"
 msgstr ""
-"Jotta voisi jatkaa, on annettava nimi, joka ei ole käytössä.\n"
+"Tämän niminen skripti on jo olemassa.\n"
 "Haluatko antaa toisen nimen?"
 
 #: src/scripting/scriptsmanager.cpp:477
 #, kde-format
 msgid "Duplicate filename"
-msgstr ""
+msgstr "Toistuva tiedostonimi"
 
 #: src/scripting/scriptsmanager.cpp:478
 #, kde-format
 msgid "Yes"
-msgstr ""
+msgstr "Kyllä"
 
 #: src/scripting/scriptsmanager.cpp:482
 #, kde-format
@@ -3718,12 +3711,7 @@ msgstr "Akustinen malli"
 
 #. i18n: ectx: property (text), widget (QLabel, label_modelInfoText)
 #: src/speechplugins/pocketsphinx/pocketsphinxconfigwidget.ui:78
-#, fuzzy, kde-format
-#| msgid ""
-#| "<html><head/><body><p align=\"center\">Acoustic and Language Models can "
-#| "be downloaded from <a href=\"https://cmusphinx.github.io/wiki/download/"
-#| "\"><span style=\" text-decoration: underline; color:#007af4;\">CMU Spinx</"
-#| "span></a></p></body></html>"
+#, kde-format
 msgid ""
 "<html><head/><body><p align=\"center\">Acoustic and Language Models can be "
 "downloaded from <a href=\"https://cmusphinx.github.io/wiki/download/\"><span "
