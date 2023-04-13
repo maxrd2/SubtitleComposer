@@ -330,10 +330,10 @@ CurrentLineWidget::createLineWidgetBox(int index)
 	layout->addWidget(btnColor, 0, COL_COLOR, Qt::AlignBottom);
 
 	connect(textEdit, &SimpleRichTextEdit::cursorPositionChanged, this, [=](){
-		btnBold->setChecked(textEdit->fontBold());
-		btnItalic->setChecked(textEdit->fontItalic());
-		btnUnderline->setChecked(textEdit->fontUnderline());
-		btnStrike->setChecked(textEdit->fontStrikeOut());
+		btnBold->setChecked(textEdit->charFormat().fontWeight() == QFont::Bold);
+		btnItalic->setChecked(textEdit->charFormat().fontItalic());
+		btnUnderline->setChecked(textEdit->charFormat().fontUnderline());
+		btnStrike->setChecked(textEdit->charFormat().fontStrikeOut());
 	});
 
 	QWidget *cont = new QWidget(this);

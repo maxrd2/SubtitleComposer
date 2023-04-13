@@ -64,6 +64,15 @@ SimpleRichTextEdit::~SimpleRichTextEdit()
 		delete m_insertUnicodeControlCharMenu->parent();
 }
 
+const QTextCharFormat
+SimpleRichTextEdit::charFormat() const
+{
+	QTextCursor c = textCursor();
+	if(c.hasSelection())
+		c.movePosition(QTextCursor::NextCharacter);
+	return c.charFormat();
+}
+
 void
 SimpleRichTextEdit::changeTextColor()
 {
@@ -224,16 +233,18 @@ SimpleRichTextEdit::createContextMenu(const QPoint &mouseGlobalPos)
 	if(interactionFlags & Qt::TextEditable) {
 		menu->addSeparator();
 
-		m_actions[ToggleBold]->setChecked(fontBold());
+		const QTextCharFormat fmt = charFormat();
+
+		m_actions[ToggleBold]->setChecked(fmt.fontWeight() == QFont::Bold);
 		menu->addAction(m_actions[ToggleBold]);
 
-		m_actions[ToggleItalic]->setChecked(fontItalic());
+		m_actions[ToggleItalic]->setChecked(fmt.fontItalic());
 		menu->addAction(m_actions[ToggleItalic]);
 
-		m_actions[ToggleUnderline]->setChecked(fontUnderline());
+		m_actions[ToggleUnderline]->setChecked(fmt.fontUnderline());
 		menu->addAction(m_actions[ToggleUnderline]);
 
-		m_actions[ToggleStrikeOut]->setChecked(fontStrikeOut());
+		m_actions[ToggleStrikeOut]->setChecked(fmt.fontStrikeOut());
 		menu->addAction(m_actions[ToggleStrikeOut]);
 
 		menu->addAction(m_actions[ChangeTextColor]);

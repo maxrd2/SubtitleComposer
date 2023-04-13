@@ -37,14 +37,13 @@ public:
 		ActionCount
 	} Action;
 
-	explicit SimpleRichTextEdit(QWidget *parent = 0);
+	explicit SimpleRichTextEdit(QWidget *parent = nullptr);
 	virtual ~SimpleRichTextEdit();
 
 	inline bool hasSelection() const { return textCursor().hasSelection(); }
 	inline QString selectedText() const { return textCursor().selectedText(); }
 
-	inline bool fontBold() { return fontWeight() == QFont::Bold; }
-	inline bool fontStrikeOut() { return currentFont().strikeOut(); }
+	const QTextCharFormat charFormat() const;
 
 	inline QAction * action(int action) const { return action >= 0 && action < ActionCount ? m_actions[action] : nullptr; }
 	inline QList<QAction *> actions() const { return m_actions.toList(); }
@@ -58,10 +57,10 @@ public slots:
 	inline void setFontBold(bool enabled) { setFontWeight(enabled ? QFont::Bold : QFont::Normal); }
 	inline void setFontStrikeOut(bool enabled) { QTextCharFormat f; f.setFontStrikeOut(enabled); textCursor().mergeCharFormat(f); }
 
-	inline void toggleFontBold() { setFontBold(!fontBold()); }
-	inline void toggleFontItalic() { setFontItalic(!fontItalic()); }
-	inline void toggleFontUnderline() { setFontUnderline(!fontUnderline()); }
-	inline void toggleFontStrikeOut() { setFontStrikeOut(!fontStrikeOut()); }
+	inline void toggleFontBold() { setFontBold(charFormat().fontWeight() != QFont::Bold); }
+	inline void toggleFontItalic() { setFontItalic(!charFormat().fontItalic()); }
+	inline void toggleFontUnderline() { setFontUnderline(!charFormat().fontUnderline()); }
+	inline void toggleFontStrikeOut() { setFontStrikeOut(!charFormat().fontStrikeOut()); }
 	void changeTextColor();
 
 	void deleteText();
