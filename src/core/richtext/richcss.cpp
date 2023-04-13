@@ -394,6 +394,10 @@ RichCSS::match(QSet<QString> selectors) const
 		const QChar *e = s + b.selector.size();
 		bool matched = true;
 		for(;;) {
+			if(*s == QChar('[')) {
+				while(*s != QChar(']') && s != e)
+					s++;
+			}
 			if(*s == QChar::Space || *s == QChar('>') || *s == QChar(',') || s == e) {
 				if(selectors.contains(QString(ss, s - ss))) {
 					if(*s == QChar(',') || s == e)

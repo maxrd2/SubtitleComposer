@@ -57,11 +57,14 @@ RichDocumentLayout::applyCSS(const QTextCharFormat &format) const
 		selectors << $("s");
 	if(format.hasProperty(RichDocument::Class)) {
 		selectors << $("c");
-		selectors << QChar('.') % format.property(RichDocument::Class).toString();
+		const QSet<QString> cl = format.property(RichDocument::Class).value<QSet<QString>>();
+		for(const QString &c: cl)
+			selectors << QChar('.') % c;
 	}
 	if(format.hasProperty(RichDocument::Voice)) {
 		selectors << $("v");
-		selectors << $("v") % QChar(' ') % format.property(RichDocument::Voice).toString();
+		selectors << $("v[voice=") % format.property(RichDocument::Voice).toString() % $("]");
+		selectors << $("v[voice=\"") % format.property(RichDocument::Voice).toString() % $("\"]");
 	}
 
 	QMap<QByteArray, QString> styles = css->match(selectors);
