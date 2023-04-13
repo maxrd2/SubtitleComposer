@@ -55,6 +55,7 @@ SubtitleMetaWidget::SubtitleMetaWidget(QWidget *parent)
 	m_dockTitleWidget->setLayout(titleLayout);
 	m_dockTitleWidget->setContentsMargins(1, 0, 0, 0);
 
+	m_cssEdit->setAcceptRichText(false);
 #if QT_VERSION < QT_VERSION_CHECK(5, 11, 0)
 	textEdit->setTabStopWidth(4 * QFontMetrics(textEdit->currentFont()).width(QChar::Space));
 #else
