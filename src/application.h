@@ -165,7 +165,6 @@ public slots:
 	void simplifySpaces();
 	void changeCase();
 	void fixPunctuation();
-	void translate();
 
 	void openVideo();
 	void openVideo(const QUrl &url);
@@ -215,8 +214,6 @@ private:
 	void setupActions();
 
 	Time videoPosition(bool compensate = false);
-
-	bool applyTranslation(RangeList ranges, bool primary, int inputLanguage, int outputLanguage, int textTargets);
 
 	void updateActionTexts();
 

@@ -144,6 +144,7 @@ public:
 	inline SubtitleLine * prevLine() const;
 	inline SubtitleLine * nextLine() const;
 
+	inline RichDocument * doc(bool primary) const { return primary ? m_primaryDoc : m_secondaryDoc; }
 	inline RichDocument * primaryDoc() const { return m_primaryDoc; }
 	inline RichDocument * secondaryDoc() const { return m_secondaryDoc; }
 

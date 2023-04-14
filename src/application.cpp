@@ -27,7 +27,6 @@
 #include "dialogs/changetextscasedialog.h"
 #include "dialogs/fixoverlappingtimesdialog.h"
 #include "dialogs/fixpunctuationdialog.h"
-#include "dialogs/translatedialog.h"
 #include "dialogs/smarttextsadjustdialog.h"
 #include "dialogs/changeframeratedialog.h"
 #include "dialogs/insertlinedialog.h"
@@ -50,7 +49,6 @@
 #include "utils/finder.h"
 #include "utils/replacer.h"
 #include "utils/speller.h"
-#include "utils/translator.h"
 #include "videoplayer/videoplayer.h"
 #include "gui/waveform/waveformwidget.h"
 
@@ -750,93 +748,6 @@ Application::fixPunctuation()
 		appSubtitle()->fixPunctuation(m_mainWindow->m_linesWidget->targetRanges(dlg->selectedLinesTarget()),
 								   dlg->spaces(), dlg->quotes(), dlg->englishI(),
 								   dlg->ellipsis(), dlg->selectedTextsTarget());
-	}
-}
-
-bool
-Application::applyTranslation(RangeList ranges, bool primary, int inputLanguage, int outputLanguage, int textTargets)
-{
-	Translator translator;
-
-	QString inputLanguageName = Language::name((Language::Value)inputLanguage);
-	QString outputLanguageName = Language::name((Language::Value)outputLanguage);
-
-	ProgressDialog progressDialog(i18n("Translate"), i18n("Translating text (%1 to %2)...", inputLanguageName, outputLanguageName), true, m_mainWindow);
-
-	if(textTargets == Both) {
-		progressDialog.setDescription(primary
-									  ? i18n("Translating primary text (%1 to %2)...", inputLanguageName, outputLanguageName)
-									  : i18n("Translating secondary text (%1 to %2)...", inputLanguageName, outputLanguageName));
-	}
-
-	QString inputText;
-	staticRE$(dialogCueRegExp2, "-([^-])");
-	for(SubtitleIterator it(*appSubtitle(), ranges); it.current(); ++it) {
-		QString lineText = it.current()->primaryDoc()->toHtml();
-		lineText.replace($("\n"), QString()).replace("--", "---").replace(dialogCueRegExp2, "- \\1");
-		inputText += lineText + "\n()() ";
-	}
-
-	translator.syncTranslate(inputText, (Language::Value)inputLanguage, (Language::Value)outputLanguage, &progressDialog);
-
-	if(translator.isAborted())
-		return false; // ended with error
-
-	QStringList outputLines;
-	QString errorMessage;
-
-	if(translator.isFinishedWithError()) {
-		errorMessage = translator.errorMessage();
-	} else {
-		staticRE$(reSep, "\\s*\n\\(\\) ?\\(\\)\\s*", REu);
-		outputLines = translator.outputText().split(reSep);
-
-//		qDebug() << translator.inputText();
-//		qDebug() << translator.outputText();
-
-		if(outputLines.count() != ranges.indexesCount() + 1)
-			errorMessage = i18n("Unable to perform texts synchronization (sent and received lines count do not match).");
-	}
-
-	if(errorMessage.isEmpty()) {
-		SubtitleCompositeActionExecutor executor(appSubtitle(), primary ? i18n("Translate Primary Text") : i18n("Translate Secondary Text"));
-
-		int index = -1;
-		staticRE$(ellipsisRegExp, "\\s+\\.\\.\\.", REu);
-		staticRE$(dialogCueRegExp, "(^| )- ");
-		for(SubtitleIterator it(*appSubtitle(), ranges); it.current(); ++it) {
-			QString line = outputLines.at(++index);
-			line.replace(" ---", "--");
-			line.replace(ellipsisRegExp, "...");
-			line.replace(dialogCueRegExp, "\n-");
-			RichString text;
-			text.setRichString(line);
-			it.current()->primaryDoc()->setRichText(text.trimmed());
-		}
-	} else {
-		KMessageBox::error(m_mainWindow, i18n("There was an error performing the translation:\n\n%1", errorMessage));
-	}
-
-	return errorMessage.isEmpty();
-}
-
-void
-Application::translate()
-{
-	static TranslateDialog *dlg = new TranslateDialog(m_mainWindow);
-
-	if(dlg->exec() == QDialog::Accepted) {
-		if(dlg->selectedTextsTarget() == Primary || dlg->selectedTextsTarget() == Both) {
-			if(!applyTranslation(m_mainWindow->m_linesWidget->targetRanges(dlg->selectedLinesTarget()),
-								 true, dlg->inputLanguage(), dlg->outputLanguage(), dlg->selectedTextsTarget()))
-				return;
-		}
-
-		if(dlg->selectedTextsTarget() == Secondary || dlg->selectedTextsTarget() == Both) {
-			if(!applyTranslation(m_mainWindow->m_linesWidget->targetRanges(dlg->selectedLinesTarget()),
-								 false, dlg->inputLanguage(), dlg->outputLanguage(), dlg->selectedTextsTarget()))
-				return;
-		}
 	}
 }
 

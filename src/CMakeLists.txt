@@ -52,7 +52,7 @@ set(subtitlecomposer_SRCS
 	dialogs/insertlinedialog.cpp dialogs/intinputdialog.cpp dialogs/joinsubtitlesdialog.cpp dialogs/progressdialog.cpp
 	dialogs/removelinesdialog.cpp dialogs/selectablesubtitledialog.cpp dialogs/shifttimesdialog.cpp dialogs/smarttextsadjustdialog.cpp
 	dialogs/splitsubtitledialog.cpp dialogs/subtitleclassdialog.cpp dialogs/subtitlecolordialog.cpp dialogs/subtitlevoicedialog.cpp
-	dialogs/syncsubtitlesdialog.cpp dialogs/textinputdialog.cpp dialogs/translatedialog.cpp
+	dialogs/syncsubtitlesdialog.cpp dialogs/textinputdialog.cpp
 	#[[ errors ]] errors/errorfinder.cpp errors/errortracker.cpp errors/finderrorsdialog.cpp
 	#[[ formats ]] formats/format.h formats/formatmanager.h formats/inputformat.h formats/outputformat.h formats/formatmanager.cpp
 	formats/microdvd/microdvdinputformat.h formats/microdvd/microdvdoutputformat.h
@@ -82,7 +82,8 @@ set(subtitlecomposer_SRCS
 	scripting/scripting_subtitleline.cpp
 	#[[ speechprocessor ]] speechprocessor/speechprocessor.cpp speechprocessor/speechplugin.cpp
 	#[[ streamprocessor ]] streamprocessor/streamprocessor.cpp
-	#[[ utils ]] utils/finder.cpp utils/replacer.cpp utils/speller.cpp utils/translator.cpp utils/language.cpp
+	#[[ translations ]] translate/translatedialog.cpp translate/translateengine.cpp
+	#[[ utils ]] utils/finder.cpp utils/replacer.cpp utils/speller.cpp
 	#[[ videoplayer ]] videoplayer/videoplayer.cpp videoplayer/videowidget.cpp videoplayer/waveformat.h videoplayer/subtitletextoverlay.cpp
 	videoplayer/backend/glrenderer.cpp videoplayer/backend/ffplayer.cpp videoplayer/backend/framequeue.cpp videoplayer/backend/packetqueue.cpp
 	videoplayer/backend/decoder.cpp videoplayer/backend/audiodecoder.cpp videoplayer/backend/videodecoder.cpp videoplayer/backend/subtitledecoder.cpp

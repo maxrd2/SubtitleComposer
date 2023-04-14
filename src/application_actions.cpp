@@ -9,6 +9,7 @@
 #include "gui/playerwidget.h"
 #include "gui/waveform/waveformwidget.h"
 #include "scripting/scriptsmanager.h"
+#include "translate/translatedialog.h"
 #include "videoplayer/videoplayer.h"
 
 #include <QAction>
@@ -497,7 +498,7 @@ Application::setupActions()
 	QAction *translateAction = new QAction(actionCollection);
 	translateAction->setText(i18n("Translate..."));
 	translateAction->setStatusTip(i18n("Translate lines texts using Google services"));
-	connect(translateAction, &QAction::triggered, this, &Application::translate);
+	QObject::connect(translateAction, &QAction::triggered, this, &TranslateDialog::performTranslation);
 	actionCollection->addAction(ACT_TRANSLATE, translateAction);
 	actionManager->addAction(translateAction, UserAction::SubHasLine | UserAction::FullScreenOff);
 

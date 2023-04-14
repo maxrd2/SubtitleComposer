@@ -218,4 +218,11 @@
 			<default>1</default>
 		</entry>
 	</group>
+
+	<group name="Translation">
+		<entry name="translateEngine" type="String">
+			<label>Last used translate engine</label>
+			<default>DeepL</default>
+		</entry>
+	</group>
 </kcfg>
