@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: subtitlecomposer\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-01-20 00:56+0000\n"
+"POT-Creation-Date: 2023-04-14 00:46+0000\n"
 "PO-Revision-Date: 2023-02-01 13:00+0300\n"
 "Last-Translator: Emir SARI <emir_sari@icloud.com>\n"
 "Language-Team: Turkish <kde-l10n-tr@kde.org>\n"
@@ -380,7 +380,7 @@ msgid "Join selected lines"
 msgstr "Seçili satırları birbirine kat"
 
 #: src/application_actions.cpp:227 src/errors/finderrorsdialog.cpp:114
-#: src/gui/treeview/richlineedit.cpp:112 src/widgets/simplerichtextedit.cpp:370
+#: src/gui/treeview/richlineedit.cpp:112 src/widgets/simplerichtextedit.cpp:455
 #, kde-format
 msgid "Select All"
 msgstr "Tümünü Seç"
@@ -520,7 +520,7 @@ msgstr "İm Aç/Kapat"
 msgid "Toggle mark on selected lines"
 msgstr "Seçili satırlarda im aç/kapat"
 
-#: src/application_actions.cpp:348 src/gui/currentlinewidget.cpp:141
+#: src/application_actions.cpp:348 src/gui/currentlinewidget.cpp:322
 #, kde-format
 msgid "Toggle Bold"
 msgstr "Kalın Aç/Kapat"
@@ -530,7 +530,7 @@ msgstr "Kalın Aç/Kapat"
 msgid "Toggle selected lines bold attribute"
 msgstr "Seçili satırlarda kalın özniteliği aç/kapat"
 
-#: src/application_actions.cpp:357 src/gui/currentlinewidget.cpp:145
+#: src/application_actions.cpp:357 src/gui/currentlinewidget.cpp:326
 #, kde-format
 msgid "Toggle Italic"
 msgstr "Yatık Aç/Kapat"
@@ -540,7 +540,7 @@ msgstr "Yatık Aç/Kapat"
 msgid "Toggle selected lines italic attribute"
 msgstr "Seçili satırlarda yatık özniteliği aç/kapat"
 
-#: src/application_actions.cpp:366 src/gui/currentlinewidget.cpp:149
+#: src/application_actions.cpp:366 src/gui/currentlinewidget.cpp:330
 #, kde-format
 msgid "Toggle Underline"
 msgstr "Altı Çizili Aç/Kapat"
@@ -550,7 +550,7 @@ msgstr "Altı Çizili Aç/Kapat"
 msgid "Toggle selected lines underline attribute"
 msgstr "Seçili satırlarda altı çizili özniteliği aç/kapat"
 
-#: src/application_actions.cpp:375 src/gui/currentlinewidget.cpp:153
+#: src/application_actions.cpp:375 src/gui/currentlinewidget.cpp:334
 #, kde-format
 msgid "Toggle Strike Through"
 msgstr "Üzeri Çizili Aç/Kapat"
@@ -560,7 +560,7 @@ msgstr "Üzeri Çizili Aç/Kapat"
 msgid "Toggle selected lines strike through attribute"
 msgstr "Seçili satırlarda üzeri çizili özniteliği aç/kapat"
 
-#: src/application_actions.cpp:384 src/gui/currentlinewidget.cpp:157
+#: src/application_actions.cpp:384 src/gui/currentlinewidget.cpp:338
 #, kde-format
 msgid "Change Text Color"
 msgstr "Metin Rengini Değiştir"
@@ -1871,141 +1871,141 @@ msgstr "Satır Hatalarını Temizle"
 msgid "Check Lines Errors"
 msgstr "Satır Hatalarını Denetle"
 
-#: src/core/subtitleline.cpp:68
+#: src/core/subtitleline.cpp:59
 #, kde-format
 msgid "Empty text"
 msgstr "Boş metin"
 
-#: src/core/subtitleline.cpp:70
+#: src/core/subtitleline.cpp:61
 #, kde-format
 msgid "Too many characters"
 msgstr "Pek çok karakter"
 
-#: src/core/subtitleline.cpp:72
+#: src/core/subtitleline.cpp:63
 #, kde-format
 msgid "Too many lines"
 msgstr "Pek çok satır"
 
-#: src/core/subtitleline.cpp:74
+#: src/core/subtitleline.cpp:65
 #, kde-format
 msgid "Unnecessary white space"
 msgstr "Gereksiz boşluk"
 
-#: src/core/subtitleline.cpp:76
+#: src/core/subtitleline.cpp:67
 #, kde-format
 msgid "Unnecessary dash"
 msgstr "Gereksiz tire"
 
-#: src/core/subtitleline.cpp:78
+#: src/core/subtitleline.cpp:69
 #, kde-format
 msgid "Capital letter after continuation ellipsis"
 msgstr "Sürdüren üç noktadan sonra büyük harf"
 
-#: src/core/subtitleline.cpp:80
+#: src/core/subtitleline.cpp:71
 #, kde-format
 msgid "Too long duration per character"
 msgstr "Karakter başı pek uzun süre"
 
-#: src/core/subtitleline.cpp:82
+#: src/core/subtitleline.cpp:73
 #, kde-format
 msgid "Too short duration per character"
 msgstr "Karakter başı pek kısa süre"
 
-#: src/core/subtitleline.cpp:84
+#: src/core/subtitleline.cpp:75
 #, kde-format
 msgid "Too long duration"
 msgstr "Pek uzun süre"
 
-#: src/core/subtitleline.cpp:85
+#: src/core/subtitleline.cpp:76
 #, kde-format
 msgid "Too short duration"
 msgstr "Pek kısa süre"
 
-#: src/core/subtitleline.cpp:86
+#: src/core/subtitleline.cpp:77
 #, kde-format
 msgid "Overlapping times"
 msgstr "Üst üste binen zamanlar"
 
-#: src/core/subtitleline.cpp:87
+#: src/core/subtitleline.cpp:78
 #, kde-format
 msgid "Untranslated text"
 msgstr "Çevrilmemiş metin"
 
-#: src/core/subtitleline.cpp:88
+#: src/core/subtitleline.cpp:79
 #, kde-format
 msgid "User mark"
 msgstr "Kullanıcı imi"
 
-#: src/core/subtitleline.cpp:107
+#: src/core/subtitleline.cpp:98
 #, kde-format
 msgid "Has no primary text."
 msgstr "Birincil metin yok."
 
-#: src/core/subtitleline.cpp:108
+#: src/core/subtitleline.cpp:99
 #, kde-format
 msgid "Has no translation text."
 msgstr "Çeviri metni yok."
 
-#: src/core/subtitleline.cpp:109
+#: src/core/subtitleline.cpp:100
 #, kde-format
 msgid "Has too many characters in primary text (1 char)."
 msgid_plural "Has too many characters in primary text (%1 chars)."
 msgstr[0] "Birincil metinde pek çok karakter (1 karakter)."
 msgstr[1] "Birincil metinde pek çok karakter (%1 karakter)."
 
-#: src/core/subtitleline.cpp:110
+#: src/core/subtitleline.cpp:101
 #, kde-format
 msgid "Has too many characters in translation text (1 char)."
 msgid_plural "Has too many characters in translation text (%1 chars)."
 msgstr[0] "Çeviri metninde pek çok karakter (1 karakter)."
 msgstr[1] "Çeviri metninde pek çok karakter (%1 karakter)."
 
-#: src/core/subtitleline.cpp:111
+#: src/core/subtitleline.cpp:102
 #, kde-format
 msgid "Has too many lines in primary text (1 line)."
 msgid_plural "Has too many lines in primary text (%1 lines)."
 msgstr[0] "Birincil metinde pek çok satır (1 satır)."
 msgstr[1] "Birincil metinde pek çok satır (%1 satır)."
 
-#: src/core/subtitleline.cpp:112
+#: src/core/subtitleline.cpp:103
 #, kde-format
 msgid "Has too many lines in translation text (1 line)."
 msgid_plural "Has too many lines in translation text (%1 lines)."
 msgstr[0] "Çeviri metninde pek çok satır (1 satır)."
 msgstr[1] "Çeviri metninde pek çok satır (%1 satır)."
 
-#: src/core/subtitleline.cpp:113
+#: src/core/subtitleline.cpp:104
 #, kde-format
 msgid "Has unnecessary spaces in primary text."
 msgstr "Birincil metinde gereksiz boşluk."
 
-#: src/core/subtitleline.cpp:114
+#: src/core/subtitleline.cpp:105
 #, kde-format
 msgid "Has unnecessary spaces in translation text."
 msgstr "Çeviri metninde gereksiz boşluk."
 
-#: src/core/subtitleline.cpp:115
+#: src/core/subtitleline.cpp:106
 #, kde-format
 msgid "Has unnecessary dash in primary text."
 msgstr "Birincil metinde gereksiz tire."
 
-#: src/core/subtitleline.cpp:116
+#: src/core/subtitleline.cpp:107
 #, kde-format
 msgid "Has unnecessary dash in translation text."
 msgstr "Çeviri metninde gereksiz tire."
 
-#: src/core/subtitleline.cpp:117
+#: src/core/subtitleline.cpp:108
 #, kde-format
 msgid "Has capital letter after line continuation ellipsis in primary text."
 msgstr "Birincil metinde sürdüren üç noktadan sonra büyük harf."
 
-#: src/core/subtitleline.cpp:118
+#: src/core/subtitleline.cpp:109
 #, kde-format
 msgid ""
 "Has capital letter after line continuation ellipsis in translation text."
 msgstr "Çeviri metninde sürdüren üç noktadan sonra büyük harf."
 
-#: src/core/subtitleline.cpp:119
+#: src/core/subtitleline.cpp:110
 #, kde-format
 msgid "Has too long duration per character in primary text (1 msec/char)."
 msgid_plural ""
@@ -2013,7 +2013,7 @@ msgid_plural ""
 msgstr[0] "Birincil metinde karakter başı süre pek uzun (1 milisn/karakter)."
 msgstr[1] "Birincil metinde karakter başı süre pek uzun (%1 milisn/karakter)."
 
-#: src/core/subtitleline.cpp:120
+#: src/core/subtitleline.cpp:111
 #, kde-format
 msgid "Has too long duration per character in translation text (1 msec/char)."
 msgid_plural ""
@@ -2021,7 +2021,7 @@ msgid_plural ""
 msgstr[0] "Çeviri metninde karakter başı süre pek uzun (1 milisn/karakter)."
 msgstr[1] "Çeviri metninde karakter başı süre pek uzun (%1 milisn/karakter)."
 
-#: src/core/subtitleline.cpp:121
+#: src/core/subtitleline.cpp:112
 #, kde-format
 msgid "Has too short duration per character in primary text (1 msec/char)."
 msgid_plural ""
@@ -2029,7 +2029,7 @@ msgid_plural ""
 msgstr[0] "Birincil metinde karakter başı süre pek kısa (1 milisn/karakter)."
 msgstr[1] "Birincil metinde karakter başı süre pek kısa (%1 milisn/karakter)."
 
-#: src/core/subtitleline.cpp:122
+#: src/core/subtitleline.cpp:113
 #, kde-format
 msgid "Has too short duration per character in translation text (1 msec/char)."
 msgid_plural ""
@@ -2037,56 +2037,56 @@ msgid_plural ""
 msgstr[0] "Çeviri metninde karakter başı süre pek kısa (1 milisn/karakter)."
 msgstr[1] "Çeviri metninde karakter başı süre pek kısa (%1 milisn/karakter)."
 
-#: src/core/subtitleline.cpp:123
+#: src/core/subtitleline.cpp:114
 #, kde-format
 msgid "Has too long duration (1 msec)."
 msgid_plural "Has too long duration (%1 msecs)."
 msgstr[0] "Süre pek uzun (1 milisn)."
 msgstr[1] "Süre pek uzun (%1 milisn)."
 
-#: src/core/subtitleline.cpp:124
+#: src/core/subtitleline.cpp:115
 #, kde-format
 msgid "Has too short duration (1 msec)."
 msgid_plural "Has too short duration (%1 msecs)."
 msgstr[0] "Süre pek kısa (1 milisn)."
 msgstr[1] "Süre pek kısa (%1 milisn)."
 
-#: src/core/subtitleline.cpp:125
+#: src/core/subtitleline.cpp:116
 #, kde-format
 msgid "Overlaps with next line."
 msgstr "Sonraki satırın üzerine biniyor."
 
-#: src/core/subtitleline.cpp:126
+#: src/core/subtitleline.cpp:117
 #, kde-format
 msgid "Has untranslated text."
 msgstr "Çevrilmemiş metin var."
 
-#: src/core/subtitleline.cpp:127
+#: src/core/subtitleline.cpp:118
 #, kde-format
 msgid "Has user mark."
 msgstr "Kullanıcı imi var."
 
-#: src/core/subtitleline.cpp:388 src/core/undo/subtitlelineactions.cpp:105
+#: src/core/subtitleline.cpp:379 src/core/undo/subtitlelineactions.cpp:105
 #, kde-format
 msgid "Set Line Show Time"
 msgstr "Satır Gösterim Zamanını Ayarla"
 
-#: src/core/subtitleline.cpp:412 src/core/undo/subtitlelineactions.cpp:132
+#: src/core/subtitleline.cpp:403 src/core/undo/subtitlelineactions.cpp:132
 #, kde-format
 msgid "Set Line Hide Time"
 msgstr "Satır Gizleme Zamanını Ayarla"
 
-#: src/core/subtitleline.cpp:459
+#: src/core/subtitleline.cpp:450
 #, kde-format
 msgid "Set Line Times"
 msgstr "Satır Zamanlarını Ayarla"
 
-#: src/core/subtitleline.cpp:556
+#: src/core/subtitleline.cpp:547
 #, kde-format
 msgid "Shift Line Times"
 msgstr "Satır Zamanlarını Kaydır"
 
-#: src/core/subtitleline.cpp:566
+#: src/core/subtitleline.cpp:557
 #, kde-format
 msgid "Adjust Line Times"
 msgstr "Satır Zamanlarını Uydur"
@@ -2483,6 +2483,39 @@ msgstr "Bölme zamanı:"
 msgid "Shift new part backwards after split"
 msgstr "Yeni kısmı böldükten sonra geri kaydır"
 
+#. i18n: ectx: property (text), widget (QLabel, labClass)
+#: src/dialogs/subtitleclassdialog.ui:30
+#, kde-format
+msgid "Space separated list of CSS classes:"
+msgstr ""
+
+#. i18n: CSS
+#. i18n: ectx: property (placeholderText), widget (QComboBox, classList)
+#: src/dialogs/subtitleclassdialog.ui:52
+#, kde-format
+msgid "Class"
+msgstr ""
+
+#: src/dialogs/subtitlecolordialog.cpp:24
+#, fuzzy, kde-format
+#| msgctxt "@action:inmenu Change Text Color"
+#| msgid "Text Color"
+msgid "Default Color"
+msgstr "Metin Rengi"
+
+#. i18n: ectx: property (text), widget (QLabel, labVoice)
+#: src/dialogs/subtitlevoicedialog.ui:30
+#, kde-format
+msgid "Person name or voice title:"
+msgstr ""
+
+#. i18n: CSS
+#. i18n: ectx: property (placeholderText), widget (QComboBox, voiceList)
+#: src/dialogs/subtitlevoicedialog.ui:52
+#, kde-format
+msgid "Voice"
+msgstr ""
+
 #: src/dialogs/syncsubtitlesdialog.cpp:17
 #, kde-format
 msgid "Synchronize with Subtitle"
@@ -2714,37 +2747,50 @@ msgstr "İptal Et"
 msgid "Subtitle Image"
 msgstr "Altyazı Görsel"
 
-#: src/gui/currentlinewidget.cpp:52
+#: src/gui/currentlinewidget.cpp:217
 #, kde-format
 msgid "<b>Show</b>"
 msgstr "<b>Göster</b>"
 
-#: src/gui/currentlinewidget.cpp:60
+#: src/gui/currentlinewidget.cpp:225
 #, kde-format
 msgid "<b>Hide</b>"
 msgstr "<b>Gizle</b>"
 
-#: src/gui/currentlinewidget.cpp:68
+#: src/gui/currentlinewidget.cpp:233
 #, kde-format
 msgid "<b>Duration</b>"
 msgstr "<b>Süre</b>"
 
-#: src/gui/currentlinewidget.cpp:261 src/gui/currentlinewidget.cpp:264
+#: src/gui/currentlinewidget.cpp:314
+#, fuzzy, kde-format
+#| msgctxt "@title:group"
+#| msgid "Change To"
+msgid "Change Voice Tag"
+msgstr "Şuna Değiştir"
+
+#: src/gui/currentlinewidget.cpp:318
+#, fuzzy, kde-format
+#| msgid "Change Case"
+msgid "Change Class Tag"
+msgstr "Harf Biçimini Değiştir"
+
+#: src/gui/currentlinewidget.cpp:439 src/gui/currentlinewidget.cpp:442
 #, kde-format
 msgid "No current line"
 msgstr "Geçerli satır yok"
 
-#: src/gui/currentlinewidget.cpp:336
+#: src/gui/currentlinewidget.cpp:514
 #, kde-format
 msgid "chars"
 msgstr "karakter"
 
-#: src/gui/currentlinewidget.cpp:344
+#: src/gui/currentlinewidget.cpp:522
 #, kde-format
 msgid "ms/char"
 msgstr "msn/karakter"
 
-#: src/gui/currentlinewidget.cpp:346
+#: src/gui/currentlinewidget.cpp:524
 #, kde-format
 msgid "chars/sec"
 msgstr "karakter/san"
@@ -2807,17 +2853,17 @@ msgstr "&Açıklamalar"
 msgid "&Position"
 msgstr "&Konum"
 
-#: src/gui/subtitlemeta/subtitlemetawidget.cpp:88
+#: src/gui/subtitlemeta/subtitlemetawidget.cpp:89
 #, kde-format
 msgid "Intro"
 msgstr "Giriş"
 
-#: src/gui/subtitlemeta/subtitlemetawidget.cpp:90
+#: src/gui/subtitlemeta/subtitlemetawidget.cpp:91
 #, kde-format
 msgid "Header"
 msgstr "Üstbilgi"
 
-#: src/gui/subtitlemeta/subtitlemetawidget.cpp:92
+#: src/gui/subtitlemeta/subtitlemetawidget.cpp:93
 #, kde-format
 msgid "Footer"
 msgstr "Altbilgi"
@@ -2920,52 +2966,52 @@ msgstr "Zamanlar"
 msgid "Errors"
 msgstr "Hatalar"
 
-#: src/gui/treeview/richlineedit.cpp:84 src/widgets/simplerichtextedit.cpp:339
+#: src/gui/treeview/richlineedit.cpp:84 src/widgets/simplerichtextedit.cpp:424
 #, kde-format
 msgid "Cut"
 msgstr "Kes"
 
-#: src/gui/treeview/richlineedit.cpp:91 src/widgets/simplerichtextedit.cpp:345
+#: src/gui/treeview/richlineedit.cpp:91 src/widgets/simplerichtextedit.cpp:430
 #, kde-format
 msgid "Copy"
 msgstr "Kopyala"
 
-#: src/gui/treeview/richlineedit.cpp:98 src/widgets/simplerichtextedit.cpp:352
+#: src/gui/treeview/richlineedit.cpp:98 src/widgets/simplerichtextedit.cpp:437
 #, kde-format
 msgid "Paste"
 msgstr "Yapıştır"
 
-#: src/gui/treeview/richlineedit.cpp:106 src/widgets/simplerichtextedit.cpp:365
+#: src/gui/treeview/richlineedit.cpp:106 src/widgets/simplerichtextedit.cpp:450
 #, kde-format
 msgctxt "@action:inmenu Clear all text"
 msgid "Clear"
 msgstr "Temizle"
 
-#: src/gui/treeview/richlineedit.cpp:119 src/widgets/simplerichtextedit.cpp:376
+#: src/gui/treeview/richlineedit.cpp:119 src/widgets/simplerichtextedit.cpp:461
 #, kde-format
 msgctxt "@action:inmenu Toggle bold style"
 msgid "Bold"
 msgstr "Kalın"
 
-#: src/gui/treeview/richlineedit.cpp:127 src/widgets/simplerichtextedit.cpp:383
+#: src/gui/treeview/richlineedit.cpp:127 src/widgets/simplerichtextedit.cpp:468
 #, kde-format
 msgctxt "@action:inmenu Toggle italic style"
 msgid "Italic"
 msgstr "Yatık"
 
-#: src/gui/treeview/richlineedit.cpp:135 src/widgets/simplerichtextedit.cpp:390
+#: src/gui/treeview/richlineedit.cpp:135 src/widgets/simplerichtextedit.cpp:475
 #, kde-format
 msgctxt "@action:inmenu Toggle underline style"
 msgid "Underline"
 msgstr "Altı Çizili"
 
-#: src/gui/treeview/richlineedit.cpp:143 src/widgets/simplerichtextedit.cpp:397
+#: src/gui/treeview/richlineedit.cpp:143 src/widgets/simplerichtextedit.cpp:482
 #, kde-format
 msgctxt "@action:inmenu Toggle strike through style"
 msgid "Strike Through"
 msgstr "Üzeri Çizili"
 
-#: src/gui/treeview/richlineedit.cpp:151 src/widgets/simplerichtextedit.cpp:404
+#: src/gui/treeview/richlineedit.cpp:151 src/widgets/simplerichtextedit.cpp:489
 #, kde-format
 msgctxt "@action:inmenu Change Text Color"
 msgid "Text Color"
@@ -3934,42 +3980,42 @@ msgstr "Altyazı Akışı #%1"
 msgid "File does not exist."
 msgstr "Dosya yok."
 
-#: src/widgets/simplerichtextedit.cpp:254
+#: src/widgets/simplerichtextedit.cpp:339
 #, kde-format
 msgid "Suggestions"
 msgstr "Öneriler"
 
-#: src/widgets/simplerichtextedit.cpp:255
+#: src/widgets/simplerichtextedit.cpp:340
 #, kde-format
 msgid "Ignore"
 msgstr "Yok Say"
 
-#: src/widgets/simplerichtextedit.cpp:256
+#: src/widgets/simplerichtextedit.cpp:341
 #, kde-format
 msgid "Add to Dictionary"
 msgstr "Sözlüğe Ekle"
 
-#: src/widgets/simplerichtextedit.cpp:260
+#: src/widgets/simplerichtextedit.cpp:345
 #, kde-format
 msgid "No suggestions"
 msgstr "Öneri yok"
 
-#: src/widgets/simplerichtextedit.cpp:359
+#: src/widgets/simplerichtextedit.cpp:444
 #, kde-format
 msgid "Delete"
 msgstr "Sil"
 
-#: src/widgets/simplerichtextedit.cpp:410
+#: src/widgets/simplerichtextedit.cpp:495
 #, kde-format
 msgid "Check Spelling..."
 msgstr "Yazımı Denetle..."
 
-#: src/widgets/simplerichtextedit.cpp:415
+#: src/widgets/simplerichtextedit.cpp:500
 #, kde-format
 msgid "Auto Spell Check"
 msgstr "Otomatik Yazım Denetimi"
 
-#: src/widgets/simplerichtextedit.cpp:420
+#: src/widgets/simplerichtextedit.cpp:505
 #, kde-format
 msgid "Allow Tabulations"
 msgstr "Sekmelere İzin Ver"

@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: subtitlecomposer\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-01-20 00:56+0000\n"
+"POT-Creation-Date: 2023-04-14 00:46+0000\n"
 "PO-Revision-Date: 2020-02-21 11:52+0200\n"
 "Last-Translator: Marek Laane <qiilaq69@gmail.com>\n"
 "Language-Team: Estonian <kde-et@lists.linux.ee>\n"
@@ -379,7 +379,7 @@ msgid "Join selected lines"
 msgstr "Valitud ridade ühendamine"
 
 #: src/application_actions.cpp:227 src/errors/finderrorsdialog.cpp:114
-#: src/gui/treeview/richlineedit.cpp:112 src/widgets/simplerichtextedit.cpp:370
+#: src/gui/treeview/richlineedit.cpp:112 src/widgets/simplerichtextedit.cpp:455
 #, kde-format
 msgid "Select All"
 msgstr "Vali kõik"
@@ -519,7 +519,7 @@ msgstr "Lülita märgist"
 msgid "Toggle mark on selected lines"
 msgstr "Valitud ridade märgise lülitamine"
 
-#: src/application_actions.cpp:348 src/gui/currentlinewidget.cpp:141
+#: src/application_actions.cpp:348 src/gui/currentlinewidget.cpp:322
 #, kde-format
 msgid "Toggle Bold"
 msgstr "Lülita rasvast kirja"
@@ -529,7 +529,7 @@ msgstr "Lülita rasvast kirja"
 msgid "Toggle selected lines bold attribute"
 msgstr "Valitud ridade rasvase kirja atribuudi lülitamine"
 
-#: src/application_actions.cpp:357 src/gui/currentlinewidget.cpp:145
+#: src/application_actions.cpp:357 src/gui/currentlinewidget.cpp:326
 #, kde-format
 msgid "Toggle Italic"
 msgstr "Lülita kaldkirja"
@@ -539,7 +539,7 @@ msgstr "Lülita kaldkirja"
 msgid "Toggle selected lines italic attribute"
 msgstr "Valitud ridade kaldkirja atribuudi lülitamine"
 
-#: src/application_actions.cpp:366 src/gui/currentlinewidget.cpp:149
+#: src/application_actions.cpp:366 src/gui/currentlinewidget.cpp:330
 #, kde-format
 msgid "Toggle Underline"
 msgstr "Lülita allajoonimist"
@@ -549,7 +549,7 @@ msgstr "Lülita allajoonimist"
 msgid "Toggle selected lines underline attribute"
 msgstr "Valitud ridade allajoonimise atribuudi lülitamine"
 
-#: src/application_actions.cpp:375 src/gui/currentlinewidget.cpp:153
+#: src/application_actions.cpp:375 src/gui/currentlinewidget.cpp:334
 #, kde-format
 msgid "Toggle Strike Through"
 msgstr "Lülita läbikriipsutust"
@@ -559,7 +559,7 @@ msgstr "Lülita läbikriipsutust"
 msgid "Toggle selected lines strike through attribute"
 msgstr "Valitud ridade läbikriipsutamise atribuudi lülitamine"
 
-#: src/application_actions.cpp:384 src/gui/currentlinewidget.cpp:157
+#: src/application_actions.cpp:384 src/gui/currentlinewidget.cpp:338
 #, kde-format
 msgid "Change Text Color"
 msgstr "Muuda teksti värvi"
@@ -1879,141 +1879,141 @@ msgstr "Puhasta ridade vead"
 msgid "Check Lines Errors"
 msgstr "Kontrolli ridade vigu"
 
-#: src/core/subtitleline.cpp:68
+#: src/core/subtitleline.cpp:59
 #, kde-format
 msgid "Empty text"
 msgstr "Tühi tekst"
 
-#: src/core/subtitleline.cpp:70
+#: src/core/subtitleline.cpp:61
 #, kde-format
 msgid "Too many characters"
 msgstr "Liiga palju märke"
 
-#: src/core/subtitleline.cpp:72
+#: src/core/subtitleline.cpp:63
 #, kde-format
 msgid "Too many lines"
 msgstr "Liiga palju ridu"
 
-#: src/core/subtitleline.cpp:74
+#: src/core/subtitleline.cpp:65
 #, kde-format
 msgid "Unnecessary white space"
 msgstr "Tarbetu tühimärk"
 
-#: src/core/subtitleline.cpp:76
+#: src/core/subtitleline.cpp:67
 #, kde-format
 msgid "Unnecessary dash"
 msgstr "Tarbetu kriips"
 
-#: src/core/subtitleline.cpp:78
+#: src/core/subtitleline.cpp:69
 #, kde-format
 msgid "Capital letter after continuation ellipsis"
 msgstr "Suurtäht mõttepunktide järel"
 
-#: src/core/subtitleline.cpp:80
+#: src/core/subtitleline.cpp:71
 #, kde-format
 msgid "Too long duration per character"
 msgstr "Liiga pikk kestus märgi kohta"
 
-#: src/core/subtitleline.cpp:82
+#: src/core/subtitleline.cpp:73
 #, kde-format
 msgid "Too short duration per character"
 msgstr "Liiga lühike kestus märgi kohta"
 
-#: src/core/subtitleline.cpp:84
+#: src/core/subtitleline.cpp:75
 #, kde-format
 msgid "Too long duration"
 msgstr "Liiga pikk kestus"
 
-#: src/core/subtitleline.cpp:85
+#: src/core/subtitleline.cpp:76
 #, kde-format
 msgid "Too short duration"
 msgstr "Liiga lühike kestus"
 
-#: src/core/subtitleline.cpp:86
+#: src/core/subtitleline.cpp:77
 #, kde-format
 msgid "Overlapping times"
 msgstr "Ajaline kattuvus"
 
-#: src/core/subtitleline.cpp:87
+#: src/core/subtitleline.cpp:78
 #, kde-format
 msgid "Untranslated text"
 msgstr "Tõlkimata tekst"
 
-#: src/core/subtitleline.cpp:88
+#: src/core/subtitleline.cpp:79
 #, kde-format
 msgid "User mark"
 msgstr "Kasutaja märgis"
 
-#: src/core/subtitleline.cpp:107
+#: src/core/subtitleline.cpp:98
 #, kde-format
 msgid "Has no primary text."
 msgstr "Esmane tekst puudub."
 
-#: src/core/subtitleline.cpp:108
+#: src/core/subtitleline.cpp:99
 #, kde-format
 msgid "Has no translation text."
 msgstr "Tõlketekst puudub."
 
-#: src/core/subtitleline.cpp:109
+#: src/core/subtitleline.cpp:100
 #, kde-format
 msgid "Has too many characters in primary text (1 char)."
 msgid_plural "Has too many characters in primary text (%1 chars)."
 msgstr[0] "Liiga palju märke esmases tekstis (1 märk)."
 msgstr[1] "Liiga palju märke esmases tekstis (%1 märki)."
 
-#: src/core/subtitleline.cpp:110
+#: src/core/subtitleline.cpp:101
 #, kde-format
 msgid "Has too many characters in translation text (1 char)."
 msgid_plural "Has too many characters in translation text (%1 chars)."
 msgstr[0] "Liiga palju märke tõlketekstis (1 märk)."
 msgstr[1] "Liiga palju märke tõlketekstis (%1 märki)."
 
-#: src/core/subtitleline.cpp:111
+#: src/core/subtitleline.cpp:102
 #, kde-format
 msgid "Has too many lines in primary text (1 line)."
 msgid_plural "Has too many lines in primary text (%1 lines)."
 msgstr[0] "Liiga palju ridu esmases tekstis (1 rida)."
 msgstr[1] "Liiga palju ridu esmases tekstis (%1 rida)."
 
-#: src/core/subtitleline.cpp:112
+#: src/core/subtitleline.cpp:103
 #, kde-format
 msgid "Has too many lines in translation text (1 line)."
 msgid_plural "Has too many lines in translation text (%1 lines)."
 msgstr[0] "Liiga palju ridu tõlketekstis (1 rida)."
 msgstr[1] "Liiga palju ridu tõlketekstis (%1 rida)."
 
-#: src/core/subtitleline.cpp:113
+#: src/core/subtitleline.cpp:104
 #, kde-format
 msgid "Has unnecessary spaces in primary text."
 msgstr "Tarbetud tühikud esmases tekstis."
 
-#: src/core/subtitleline.cpp:114
+#: src/core/subtitleline.cpp:105
 #, kde-format
 msgid "Has unnecessary spaces in translation text."
 msgstr "Tarbetud tühikud tõlketekstis."
 
-#: src/core/subtitleline.cpp:115
+#: src/core/subtitleline.cpp:106
 #, kde-format
 msgid "Has unnecessary dash in primary text."
 msgstr "Tarbetu kriips esmases tekstis."
 
-#: src/core/subtitleline.cpp:116
+#: src/core/subtitleline.cpp:107
 #, kde-format
 msgid "Has unnecessary dash in translation text."
 msgstr "Tarbetu kriips tõlketekstis."
 
-#: src/core/subtitleline.cpp:117
+#: src/core/subtitleline.cpp:108
 #, kde-format
 msgid "Has capital letter after line continuation ellipsis in primary text."
 msgstr "Suurtäht mõttepunktide järel esmases tekstis."
 
-#: src/core/subtitleline.cpp:118
+#: src/core/subtitleline.cpp:109
 #, kde-format
 msgid ""
 "Has capital letter after line continuation ellipsis in translation text."
 msgstr "Suurtäht mõttepunktide järel tõlketekstis."
 
-#: src/core/subtitleline.cpp:119
+#: src/core/subtitleline.cpp:110
 #, kde-format
 msgid "Has too long duration per character in primary text (1 msec/char)."
 msgid_plural ""
@@ -2022,7 +2022,7 @@ msgstr[0] "Liiga pikk kestus märgi kohta esmases tekstis (1 msek märgi kohta).
 msgstr[1] ""
 "Liiga pikk kestus märgi kohta esmases tekstis (%1 msek märgi kohta)."
 
-#: src/core/subtitleline.cpp:120
+#: src/core/subtitleline.cpp:111
 #, kde-format
 msgid "Has too long duration per character in translation text (1 msec/char)."
 msgid_plural ""
@@ -2030,7 +2030,7 @@ msgid_plural ""
 msgstr[0] "Liiga pikk kestus märgi kohta tõlketekstis (1 msek märgi kohta)."
 msgstr[1] "Liiga pikk kestus märgi kohta tõlketekstis (%1 msek märgi kohta)."
 
-#: src/core/subtitleline.cpp:121
+#: src/core/subtitleline.cpp:112
 #, kde-format
 msgid "Has too short duration per character in primary text (1 msec/char)."
 msgid_plural ""
@@ -2040,7 +2040,7 @@ msgstr[0] ""
 msgstr[1] ""
 "Liiga lühike kestus märgi kohta esmases tekstis (%1 msek märgi kohta)."
 
-#: src/core/subtitleline.cpp:122
+#: src/core/subtitleline.cpp:113
 #, kde-format
 msgid "Has too short duration per character in translation text (1 msec/char)."
 msgid_plural ""
@@ -2048,56 +2048,56 @@ msgid_plural ""
 msgstr[0] "Liiga lühike kestus märgi kohta tõlketekstis (1 msek märgi kohta)."
 msgstr[1] "Liiga lühike kestus märgi kohta tõlketekstis (%1 msek märgi kohta)."
 
-#: src/core/subtitleline.cpp:123
+#: src/core/subtitleline.cpp:114
 #, kde-format
 msgid "Has too long duration (1 msec)."
 msgid_plural "Has too long duration (%1 msecs)."
 msgstr[0] "Liiga pikk kestus (1 msek)."
 msgstr[1] "Liiga pikk kestus (%1 msek)."
 
-#: src/core/subtitleline.cpp:124
+#: src/core/subtitleline.cpp:115
 #, kde-format
 msgid "Has too short duration (1 msec)."
 msgid_plural "Has too short duration (%1 msecs)."
 msgstr[0] "Liiga lühike kestus (1 msek)."
 msgstr[1] "Liiga lühike kestus (%1 msek)."
 
-#: src/core/subtitleline.cpp:125
+#: src/core/subtitleline.cpp:116
 #, kde-format
 msgid "Overlaps with next line."
 msgstr "Kattumine järgmise reaga."
 
-#: src/core/subtitleline.cpp:126
+#: src/core/subtitleline.cpp:117
 #, kde-format
 msgid "Has untranslated text."
 msgstr "Tõlkimata tekstiga."
 
-#: src/core/subtitleline.cpp:127
+#: src/core/subtitleline.cpp:118
 #, kde-format
 msgid "Has user mark."
 msgstr "Kasutaja märgisega."
 
-#: src/core/subtitleline.cpp:388 src/core/undo/subtitlelineactions.cpp:105
+#: src/core/subtitleline.cpp:379 src/core/undo/subtitlelineactions.cpp:105
 #, kde-format
 msgid "Set Line Show Time"
 msgstr "Määra rea näitamise aeg"
 
-#: src/core/subtitleline.cpp:412 src/core/undo/subtitlelineactions.cpp:132
+#: src/core/subtitleline.cpp:403 src/core/undo/subtitlelineactions.cpp:132
 #, kde-format
 msgid "Set Line Hide Time"
 msgstr "Määra rea peitmise aeg"
 
-#: src/core/subtitleline.cpp:459
+#: src/core/subtitleline.cpp:450
 #, kde-format
 msgid "Set Line Times"
 msgstr "Määra rea ajad"
 
-#: src/core/subtitleline.cpp:556
+#: src/core/subtitleline.cpp:547
 #, kde-format
 msgid "Shift Line Times"
 msgstr "Nihuta rea aegu"
 
-#: src/core/subtitleline.cpp:566
+#: src/core/subtitleline.cpp:557
 #, kde-format
 msgid "Adjust Line Times"
 msgstr "Kohanda rea aegu"
@@ -2495,6 +2495,39 @@ msgstr "Tükeldamise aeg:"
 msgid "Shift new part backwards after split"
 msgstr "Uue osa nihutamine tagasi pärast tükeldamist"
 
+#. i18n: ectx: property (text), widget (QLabel, labClass)
+#: src/dialogs/subtitleclassdialog.ui:30
+#, kde-format
+msgid "Space separated list of CSS classes:"
+msgstr ""
+
+#. i18n: CSS
+#. i18n: ectx: property (placeholderText), widget (QComboBox, classList)
+#: src/dialogs/subtitleclassdialog.ui:52
+#, kde-format
+msgid "Class"
+msgstr ""
+
+#: src/dialogs/subtitlecolordialog.cpp:24
+#, fuzzy, kde-format
+#| msgctxt "@action:inmenu Change Text Color"
+#| msgid "Text Color"
+msgid "Default Color"
+msgstr "Teksti värv"
+
+#. i18n: ectx: property (text), widget (QLabel, labVoice)
+#: src/dialogs/subtitlevoicedialog.ui:30
+#, kde-format
+msgid "Person name or voice title:"
+msgstr ""
+
+#. i18n: CSS
+#. i18n: ectx: property (placeholderText), widget (QComboBox, voiceList)
+#: src/dialogs/subtitlevoicedialog.ui:52
+#, kde-format
+msgid "Voice"
+msgstr ""
+
 #: src/dialogs/syncsubtitlesdialog.cpp:17
 #, kde-format
 msgid "Synchronize with Subtitle"
@@ -2726,39 +2759,52 @@ msgstr "Katkesta"
 msgid "Subtitle Image"
 msgstr "Subtiitri pilt"
 
-#: src/gui/currentlinewidget.cpp:52
+#: src/gui/currentlinewidget.cpp:217
 #, kde-format
 msgid "<b>Show</b>"
 msgstr "<b>Näita</b>"
 
-#: src/gui/currentlinewidget.cpp:60
+#: src/gui/currentlinewidget.cpp:225
 #, kde-format
 msgid "<b>Hide</b>"
 msgstr "<b>Peida</b>"
 
-#: src/gui/currentlinewidget.cpp:68
+#: src/gui/currentlinewidget.cpp:233
 #, kde-format
 msgid "<b>Duration</b>"
 msgstr "<b>Kestus</b>"
 
-#: src/gui/currentlinewidget.cpp:261 src/gui/currentlinewidget.cpp:264
+#: src/gui/currentlinewidget.cpp:314
+#, fuzzy, kde-format
+#| msgctxt "@title:group"
+#| msgid "Change To"
+msgid "Change Voice Tag"
+msgstr "Muutmise tulemus"
+
+#: src/gui/currentlinewidget.cpp:318
+#, fuzzy, kde-format
+#| msgid "Change Case"
+msgid "Change Class Tag"
+msgstr "Tähsesuuruse muutmine"
+
+#: src/gui/currentlinewidget.cpp:439 src/gui/currentlinewidget.cpp:442
 #, kde-format
 msgid "No current line"
 msgstr "Aktiivne rida puudub"
 
-#: src/gui/currentlinewidget.cpp:336
+#: src/gui/currentlinewidget.cpp:514
 #, fuzzy, kde-format
 #| msgid " characters"
 msgid "chars"
 msgstr " märki"
 
-#: src/gui/currentlinewidget.cpp:344
+#: src/gui/currentlinewidget.cpp:522
 #, fuzzy, kde-format
 #| msgid " msec/char"
 msgid "ms/char"
 msgstr " msek märgi kohta"
 
-#: src/gui/currentlinewidget.cpp:346
+#: src/gui/currentlinewidget.cpp:524
 #, fuzzy, kde-format
 #| msgid " characters"
 msgid "chars/sec"
@@ -2824,17 +2870,17 @@ msgstr ""
 msgid "&Position"
 msgstr "<b>Asukoht</b>"
 
-#: src/gui/subtitlemeta/subtitlemetawidget.cpp:88
+#: src/gui/subtitlemeta/subtitlemetawidget.cpp:89
 #, kde-format
 msgid "Intro"
 msgstr ""
 
-#: src/gui/subtitlemeta/subtitlemetawidget.cpp:90
+#: src/gui/subtitlemeta/subtitlemetawidget.cpp:91
 #, kde-format
 msgid "Header"
 msgstr ""
 
-#: src/gui/subtitlemeta/subtitlemetawidget.cpp:92
+#: src/gui/subtitlemeta/subtitlemetawidget.cpp:93
 #, kde-format
 msgid "Footer"
 msgstr ""
@@ -2940,52 +2986,52 @@ msgstr "Ajad"
 msgid "Errors"
 msgstr "Vead"
 
-#: src/gui/treeview/richlineedit.cpp:84 src/widgets/simplerichtextedit.cpp:339
+#: src/gui/treeview/richlineedit.cpp:84 src/widgets/simplerichtextedit.cpp:424
 #, kde-format
 msgid "Cut"
 msgstr "Lõika"
 
-#: src/gui/treeview/richlineedit.cpp:91 src/widgets/simplerichtextedit.cpp:345
+#: src/gui/treeview/richlineedit.cpp:91 src/widgets/simplerichtextedit.cpp:430
 #, kde-format
 msgid "Copy"
 msgstr "Kopeeri"
 
-#: src/gui/treeview/richlineedit.cpp:98 src/widgets/simplerichtextedit.cpp:352
+#: src/gui/treeview/richlineedit.cpp:98 src/widgets/simplerichtextedit.cpp:437
 #, kde-format
 msgid "Paste"
 msgstr "Aseta"
 
-#: src/gui/treeview/richlineedit.cpp:106 src/widgets/simplerichtextedit.cpp:365
+#: src/gui/treeview/richlineedit.cpp:106 src/widgets/simplerichtextedit.cpp:450
 #, kde-format
 msgctxt "@action:inmenu Clear all text"
 msgid "Clear"
 msgstr "Puhasta"
 
-#: src/gui/treeview/richlineedit.cpp:119 src/widgets/simplerichtextedit.cpp:376
+#: src/gui/treeview/richlineedit.cpp:119 src/widgets/simplerichtextedit.cpp:461
 #, kde-format
 msgctxt "@action:inmenu Toggle bold style"
 msgid "Bold"
 msgstr "Rasvane"
 
-#: src/gui/treeview/richlineedit.cpp:127 src/widgets/simplerichtextedit.cpp:383
+#: src/gui/treeview/richlineedit.cpp:127 src/widgets/simplerichtextedit.cpp:468
 #, kde-format
 msgctxt "@action:inmenu Toggle italic style"
 msgid "Italic"
 msgstr "Kaldkiri"
 
-#: src/gui/treeview/richlineedit.cpp:135 src/widgets/simplerichtextedit.cpp:390
+#: src/gui/treeview/richlineedit.cpp:135 src/widgets/simplerichtextedit.cpp:475
 #, kde-format
 msgctxt "@action:inmenu Toggle underline style"
 msgid "Underline"
 msgstr "Allajoonimine"
 
-#: src/gui/treeview/richlineedit.cpp:143 src/widgets/simplerichtextedit.cpp:397
+#: src/gui/treeview/richlineedit.cpp:143 src/widgets/simplerichtextedit.cpp:482
 #, kde-format
 msgctxt "@action:inmenu Toggle strike through style"
 msgid "Strike Through"
 msgstr "Läbikriipsutus"
 
-#: src/gui/treeview/richlineedit.cpp:151 src/widgets/simplerichtextedit.cpp:404
+#: src/gui/treeview/richlineedit.cpp:151 src/widgets/simplerichtextedit.cpp:489
 #, kde-format
 msgctxt "@action:inmenu Change Text Color"
 msgid "Text Color"
@@ -3968,42 +4014,42 @@ msgstr "Helivoog nr %1"
 msgid "File does not exist."
 msgstr "Faili ei ole olemas."
 
-#: src/widgets/simplerichtextedit.cpp:254
+#: src/widgets/simplerichtextedit.cpp:339
 #, kde-format
 msgid "Suggestions"
 msgstr "Pakkumised"
 
-#: src/widgets/simplerichtextedit.cpp:255
+#: src/widgets/simplerichtextedit.cpp:340
 #, kde-format
 msgid "Ignore"
 msgstr "Eira"
 
-#: src/widgets/simplerichtextedit.cpp:256
+#: src/widgets/simplerichtextedit.cpp:341
 #, kde-format
 msgid "Add to Dictionary"
 msgstr "Lisa sõnastikku"
 
-#: src/widgets/simplerichtextedit.cpp:260
+#: src/widgets/simplerichtextedit.cpp:345
 #, kde-format
 msgid "No suggestions"
 msgstr "Pakkumisi pole"
 
-#: src/widgets/simplerichtextedit.cpp:359
+#: src/widgets/simplerichtextedit.cpp:444
 #, kde-format
 msgid "Delete"
 msgstr "Kustuta"
 
-#: src/widgets/simplerichtextedit.cpp:410
+#: src/widgets/simplerichtextedit.cpp:495
 #, kde-format
 msgid "Check Spelling..."
 msgstr "Õigekirja kontroll ..."
 
-#: src/widgets/simplerichtextedit.cpp:415
+#: src/widgets/simplerichtextedit.cpp:500
 #, kde-format
 msgid "Auto Spell Check"
 msgstr "Automaatne õigekirja kontroll"
 
-#: src/widgets/simplerichtextedit.cpp:420
+#: src/widgets/simplerichtextedit.cpp:505
 #, kde-format
 msgid "Allow Tabulations"
 msgstr ""

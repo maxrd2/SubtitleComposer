@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: subtitlecomposer\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-01-20 00:56+0000\n"
+"POT-Creation-Date: 2023-04-14 00:46+0000\n"
 "PO-Revision-Date: 2023-01-30 09:10+0100\n"
 "Last-Translator: Vit Pelcak <vit@pelcak.org>\n"
 "Language-Team: Czech <kde-i18n-doc@kde.org>\n"
@@ -393,7 +393,7 @@ msgid "Join selected lines"
 msgstr "Spojit označené řádky"
 
 #: src/application_actions.cpp:227 src/errors/finderrorsdialog.cpp:114
-#: src/gui/treeview/richlineedit.cpp:112 src/widgets/simplerichtextedit.cpp:370
+#: src/gui/treeview/richlineedit.cpp:112 src/widgets/simplerichtextedit.cpp:455
 #, kde-format
 msgid "Select All"
 msgstr "Označit všechno"
@@ -533,7 +533,7 @@ msgstr "Přepnout značku"
 msgid "Toggle mark on selected lines"
 msgstr ""
 
-#: src/application_actions.cpp:348 src/gui/currentlinewidget.cpp:141
+#: src/application_actions.cpp:348 src/gui/currentlinewidget.cpp:322
 #, kde-format
 msgid "Toggle Bold"
 msgstr "Přepnout tučné"
@@ -543,7 +543,7 @@ msgstr "Přepnout tučné"
 msgid "Toggle selected lines bold attribute"
 msgstr "Přepnout tučný atribut na označených"
 
-#: src/application_actions.cpp:357 src/gui/currentlinewidget.cpp:145
+#: src/application_actions.cpp:357 src/gui/currentlinewidget.cpp:326
 #, kde-format
 msgid "Toggle Italic"
 msgstr "Přepnout kurzívu"
@@ -553,7 +553,7 @@ msgstr "Přepnout kurzívu"
 msgid "Toggle selected lines italic attribute"
 msgstr "Přepnout kurzívu na označených"
 
-#: src/application_actions.cpp:366 src/gui/currentlinewidget.cpp:149
+#: src/application_actions.cpp:366 src/gui/currentlinewidget.cpp:330
 #, kde-format
 msgid "Toggle Underline"
 msgstr "Přepnout podtržení"
@@ -563,7 +563,7 @@ msgstr "Přepnout podtržení"
 msgid "Toggle selected lines underline attribute"
 msgstr "Přepnout podtržení na označených"
 
-#: src/application_actions.cpp:375 src/gui/currentlinewidget.cpp:153
+#: src/application_actions.cpp:375 src/gui/currentlinewidget.cpp:334
 #, kde-format
 msgid "Toggle Strike Through"
 msgstr "Přepnout přeškrtnuté"
@@ -573,7 +573,7 @@ msgstr "Přepnout přeškrtnuté"
 msgid "Toggle selected lines strike through attribute"
 msgstr "Přepnout přeškrtnuté na označených"
 
-#: src/application_actions.cpp:384 src/gui/currentlinewidget.cpp:157
+#: src/application_actions.cpp:384 src/gui/currentlinewidget.cpp:338
 #, kde-format
 msgid "Change Text Color"
 msgstr "Změnit barvu textu"
@@ -1873,82 +1873,82 @@ msgstr "Vymazat chyby řádků"
 msgid "Check Lines Errors"
 msgstr "Zkontrolovat chyby na řádcích"
 
-#: src/core/subtitleline.cpp:68
+#: src/core/subtitleline.cpp:59
 #, kde-format
 msgid "Empty text"
 msgstr "Prázdný"
 
-#: src/core/subtitleline.cpp:70
+#: src/core/subtitleline.cpp:61
 #, kde-format
 msgid "Too many characters"
 msgstr "Příliš mnoho znaků"
 
-#: src/core/subtitleline.cpp:72
+#: src/core/subtitleline.cpp:63
 #, kde-format
 msgid "Too many lines"
 msgstr "Příliš mnoho řádků"
 
-#: src/core/subtitleline.cpp:74
+#: src/core/subtitleline.cpp:65
 #, kde-format
 msgid "Unnecessary white space"
 msgstr "Mezery navíc"
 
-#: src/core/subtitleline.cpp:76
+#: src/core/subtitleline.cpp:67
 #, kde-format
 msgid "Unnecessary dash"
 msgstr "Nadbytečná pomlčka"
 
-#: src/core/subtitleline.cpp:78
+#: src/core/subtitleline.cpp:69
 #, kde-format
 msgid "Capital letter after continuation ellipsis"
 msgstr "Chybí velké písmeno po konci řádku"
 
-#: src/core/subtitleline.cpp:80
+#: src/core/subtitleline.cpp:71
 #, kde-format
 msgid "Too long duration per character"
 msgstr "Příliš dlouhá doba na počet písmen"
 
-#: src/core/subtitleline.cpp:82
+#: src/core/subtitleline.cpp:73
 #, kde-format
 msgid "Too short duration per character"
 msgstr "Příliš krátká doba na počet písmen"
 
-#: src/core/subtitleline.cpp:84
+#: src/core/subtitleline.cpp:75
 #, kde-format
 msgid "Too long duration"
 msgstr "Příliš dlouhá doba"
 
-#: src/core/subtitleline.cpp:85
+#: src/core/subtitleline.cpp:76
 #, kde-format
 msgid "Too short duration"
 msgstr "Příliš krátká doba"
 
-#: src/core/subtitleline.cpp:86
+#: src/core/subtitleline.cpp:77
 #, kde-format
 msgid "Overlapping times"
 msgstr "Překrývající se časování"
 
-#: src/core/subtitleline.cpp:87
+#: src/core/subtitleline.cpp:78
 #, kde-format
 msgid "Untranslated text"
 msgstr "Nepřeložený text"
 
-#: src/core/subtitleline.cpp:88
+#: src/core/subtitleline.cpp:79
 #, kde-format
 msgid "User mark"
 msgstr "Uživatelské značky"
 
-#: src/core/subtitleline.cpp:107
+#: src/core/subtitleline.cpp:98
 #, kde-format
 msgid "Has no primary text."
 msgstr "Nemá primární text."
 
-#: src/core/subtitleline.cpp:108
+#: src/core/subtitleline.cpp:99
 #, kde-format
 msgid "Has no translation text."
 msgstr "Nemá přeložený text."
 
-#: src/core/subtitleline.cpp:109
+#: src/core/subtitleline.cpp:100
 #, kde-format
 msgid "Has too many characters in primary text (1 char)."
 msgid_plural "Has too many characters in primary text (%1 chars)."
@@ -1956,7 +1956,7 @@ msgstr[0] "Má příliš mnoho znaků v primárním textu (1 znak)."
 msgstr[1] "Má příliš mnoho znaků v primárním textu (%1 znaky)."
 msgstr[2] "Má příliš mnoho znaků v primárním textu (%1 znaků)."
 
-#: src/core/subtitleline.cpp:110
+#: src/core/subtitleline.cpp:101
 #, kde-format
 msgid "Has too many characters in translation text (1 char)."
 msgid_plural "Has too many characters in translation text (%1 chars)."
@@ -1964,7 +1964,7 @@ msgstr[0] "Má příliš mnoho znaků v přeloženém textu (1 znak)."
 msgstr[1] "Má příliš mnoho znaků v přeloženém textu (%1 znaky)."
 msgstr[2] "Má příliš mnoho znaků v přeloženém textu (%1 znaků)."
 
-#: src/core/subtitleline.cpp:111
+#: src/core/subtitleline.cpp:102
 #, kde-format
 msgid "Has too many lines in primary text (1 line)."
 msgid_plural "Has too many lines in primary text (%1 lines)."
@@ -1972,7 +1972,7 @@ msgstr[0] "Má příliš mnoho řádků v primárním textu (1 řádek)."
 msgstr[1] "Má příliš mnoho řádků v primárním textu (%1 řádky)."
 msgstr[2] "Má příliš mnoho řádků v primárním textu (%1 řádků)."
 
-#: src/core/subtitleline.cpp:112
+#: src/core/subtitleline.cpp:103
 #, kde-format
 msgid "Has too many lines in translation text (1 line)."
 msgid_plural "Has too many lines in translation text (%1 lines)."
@@ -1980,38 +1980,38 @@ msgstr[0] "Má příliš mnoho řádků v překladu (1 řádek)."
 msgstr[1] "Má příliš mnoho řádků v překladu (%1 řádky)."
 msgstr[2] "Má příliš mnoho řádků v překladu (%1 řádků)."
 
-#: src/core/subtitleline.cpp:113
+#: src/core/subtitleline.cpp:104
 #, kde-format
 msgid "Has unnecessary spaces in primary text."
 msgstr "Má nadbytečné mezery v primárním textu."
 
-#: src/core/subtitleline.cpp:114
+#: src/core/subtitleline.cpp:105
 #, kde-format
 msgid "Has unnecessary spaces in translation text."
 msgstr "Má nadbytečné mezery v překladu."
 
-#: src/core/subtitleline.cpp:115
+#: src/core/subtitleline.cpp:106
 #, kde-format
 msgid "Has unnecessary dash in primary text."
 msgstr "Obsahuje nadbytečné pomlčky v primárním textu."
 
-#: src/core/subtitleline.cpp:116
+#: src/core/subtitleline.cpp:107
 #, kde-format
 msgid "Has unnecessary dash in translation text."
 msgstr "Obsahuje nadbytečné pomlčky v překladu."
 
-#: src/core/subtitleline.cpp:117
+#: src/core/subtitleline.cpp:108
 #, kde-format
 msgid "Has capital letter after line continuation ellipsis in primary text."
 msgstr ""
 
-#: src/core/subtitleline.cpp:118
+#: src/core/subtitleline.cpp:109
 #, kde-format
 msgid ""
 "Has capital letter after line continuation ellipsis in translation text."
 msgstr ""
 
-#: src/core/subtitleline.cpp:119
+#: src/core/subtitleline.cpp:110
 #, kde-format
 msgid "Has too long duration per character in primary text (1 msec/char)."
 msgid_plural ""
@@ -2020,7 +2020,7 @@ msgstr[0] "Příliš dlouhá doba na počet znaků v primárním textu (1 ms/zna
 msgstr[1] "Příliš dlouhá doba na počet znaků v primárním textu (%1 ms/znak)."
 msgstr[2] "Příliš dlouhá doba na počet znaků v primárním textu (%1 ms/znak)."
 
-#: src/core/subtitleline.cpp:120
+#: src/core/subtitleline.cpp:111
 #, kde-format
 msgid "Has too long duration per character in translation text (1 msec/char)."
 msgid_plural ""
@@ -2029,7 +2029,7 @@ msgstr[0] "Příliš dlouhá doba na počet znaků v překladu (1 ms/znak)."
 msgstr[1] "Příliš dlouhá doba na počet znaků v překladu (%1 ms/znak)."
 msgstr[2] "Příliš dlouhá doba na počet znaků v překladu (%1 ms/znak)."
 
-#: src/core/subtitleline.cpp:121
+#: src/core/subtitleline.cpp:112
 #, kde-format
 msgid "Has too short duration per character in primary text (1 msec/char)."
 msgid_plural ""
@@ -2038,7 +2038,7 @@ msgstr[0] "Příliš krátká doba na počet znaků v primárním textu (1 ms/zn
 msgstr[1] "Příliš krátká doba na počet znaků v primárním textu (%1 ms/znak)."
 msgstr[2] "Příliš krátká doba na počet znaků v primárním textu (%1 ms/znak)."
 
-#: src/core/subtitleline.cpp:122
+#: src/core/subtitleline.cpp:113
 #, kde-format
 msgid "Has too short duration per character in translation text (1 msec/char)."
 msgid_plural ""
@@ -2047,7 +2047,7 @@ msgstr[0] "Příliš krátká doba na počet znaků v překladu (1 ms/znak)."
 msgstr[1] "Příliš krátká doba na počet znaků v překladu (%1 ms/znak)."
 msgstr[2] "Příliš krátká doba na počet znaků v překladu (%1 ms/znak)."
 
-#: src/core/subtitleline.cpp:123
+#: src/core/subtitleline.cpp:114
 #, kde-format
 msgid "Has too long duration (1 msec)."
 msgid_plural "Has too long duration (%1 msecs)."
@@ -2055,7 +2055,7 @@ msgstr[0] "Příliš dlouhá doba (1 ms)."
 msgstr[1] "Příliš dlouhá doba (%1 ms)."
 msgstr[2] "Příliš dlouhá doba (%1 ms)."
 
-#: src/core/subtitleline.cpp:124
+#: src/core/subtitleline.cpp:115
 #, kde-format
 msgid "Has too short duration (1 msec)."
 msgid_plural "Has too short duration (%1 msecs)."
@@ -2063,42 +2063,42 @@ msgstr[0] "Příliš krátká doba (1 ms)."
 msgstr[1] "Příliš krátká doba (%1 ms)."
 msgstr[2] "Příliš krátká doba (%1 ms)."
 
-#: src/core/subtitleline.cpp:125
+#: src/core/subtitleline.cpp:116
 #, kde-format
 msgid "Overlaps with next line."
 msgstr "Překrývá se s dalším řádkem."
 
-#: src/core/subtitleline.cpp:126
+#: src/core/subtitleline.cpp:117
 #, kde-format
 msgid "Has untranslated text."
 msgstr "Nemá přeložený text."
 
-#: src/core/subtitleline.cpp:127
+#: src/core/subtitleline.cpp:118
 #, kde-format
 msgid "Has user mark."
 msgstr "Obsahuje uživatelskou značku."
 
-#: src/core/subtitleline.cpp:388 src/core/undo/subtitlelineactions.cpp:105
+#: src/core/subtitleline.cpp:379 src/core/undo/subtitlelineactions.cpp:105
 #, kde-format
 msgid "Set Line Show Time"
 msgstr "Nastavit čas zobrazení"
 
-#: src/core/subtitleline.cpp:412 src/core/undo/subtitlelineactions.cpp:132
+#: src/core/subtitleline.cpp:403 src/core/undo/subtitlelineactions.cpp:132
 #, kde-format
 msgid "Set Line Hide Time"
 msgstr "Nastavit čas skrytí"
 
-#: src/core/subtitleline.cpp:459
+#: src/core/subtitleline.cpp:450
 #, kde-format
 msgid "Set Line Times"
 msgstr "Nastavit časování řádku"
 
-#: src/core/subtitleline.cpp:556
+#: src/core/subtitleline.cpp:547
 #, kde-format
 msgid "Shift Line Times"
 msgstr "Posunout časování řádku"
 
-#: src/core/subtitleline.cpp:566
+#: src/core/subtitleline.cpp:557
 #, kde-format
 msgid "Adjust Line Times"
 msgstr "Přizpůsobit časování řádku"
@@ -2495,6 +2495,39 @@ msgstr "Čas rozdělení:"
 msgid "Shift new part backwards after split"
 msgstr "Posunout novou část zpět po rozdělení"
 
+#. i18n: ectx: property (text), widget (QLabel, labClass)
+#: src/dialogs/subtitleclassdialog.ui:30
+#, kde-format
+msgid "Space separated list of CSS classes:"
+msgstr ""
+
+#. i18n: CSS
+#. i18n: ectx: property (placeholderText), widget (QComboBox, classList)
+#: src/dialogs/subtitleclassdialog.ui:52
+#, kde-format
+msgid "Class"
+msgstr ""
+
+#: src/dialogs/subtitlecolordialog.cpp:24
+#, fuzzy, kde-format
+#| msgctxt "@action:inmenu Change Text Color"
+#| msgid "Text Color"
+msgid "Default Color"
+msgstr "Barva textu"
+
+#. i18n: ectx: property (text), widget (QLabel, labVoice)
+#: src/dialogs/subtitlevoicedialog.ui:30
+#, kde-format
+msgid "Person name or voice title:"
+msgstr ""
+
+#. i18n: CSS
+#. i18n: ectx: property (placeholderText), widget (QComboBox, voiceList)
+#: src/dialogs/subtitlevoicedialog.ui:52
+#, kde-format
+msgid "Voice"
+msgstr ""
+
 #: src/dialogs/syncsubtitlesdialog.cpp:17
 #, kde-format
 msgid "Synchronize with Subtitle"
@@ -2724,37 +2757,50 @@ msgstr "Přerušit"
 msgid "Subtitle Image"
 msgstr ""
 
-#: src/gui/currentlinewidget.cpp:52
+#: src/gui/currentlinewidget.cpp:217
 #, kde-format
 msgid "<b>Show</b>"
 msgstr "<b>Ukaž</b>"
 
-#: src/gui/currentlinewidget.cpp:60
+#: src/gui/currentlinewidget.cpp:225
 #, kde-format
 msgid "<b>Hide</b>"
 msgstr "<b>Skryj</b>"
 
-#: src/gui/currentlinewidget.cpp:68
+#: src/gui/currentlinewidget.cpp:233
 #, kde-format
 msgid "<b>Duration</b>"
 msgstr "<b>Doba</b>"
 
-#: src/gui/currentlinewidget.cpp:261 src/gui/currentlinewidget.cpp:264
+#: src/gui/currentlinewidget.cpp:314
+#, fuzzy, kde-format
+#| msgctxt "@title:group"
+#| msgid "Change To"
+msgid "Change Voice Tag"
+msgstr "Změnit na"
+
+#: src/gui/currentlinewidget.cpp:318
+#, fuzzy, kde-format
+#| msgid "Change Case"
+msgid "Change Class Tag"
+msgstr "Změnit velikost písmen"
+
+#: src/gui/currentlinewidget.cpp:439 src/gui/currentlinewidget.cpp:442
 #, kde-format
 msgid "No current line"
 msgstr "Žádný současný řádek"
 
-#: src/gui/currentlinewidget.cpp:336
+#: src/gui/currentlinewidget.cpp:514
 #, kde-format
 msgid "chars"
 msgstr "znaky"
 
-#: src/gui/currentlinewidget.cpp:344
+#: src/gui/currentlinewidget.cpp:522
 #, kde-format
 msgid "ms/char"
 msgstr "ms/znak"
 
-#: src/gui/currentlinewidget.cpp:346
+#: src/gui/currentlinewidget.cpp:524
 #, kde-format
 msgid "chars/sec"
 msgstr "znaků/sek"
@@ -2817,17 +2863,17 @@ msgstr "&Komentáře"
 msgid "&Position"
 msgstr "&Umístění"
 
-#: src/gui/subtitlemeta/subtitlemetawidget.cpp:88
+#: src/gui/subtitlemeta/subtitlemetawidget.cpp:89
 #, kde-format
 msgid "Intro"
 msgstr "Úvod"
 
-#: src/gui/subtitlemeta/subtitlemetawidget.cpp:90
+#: src/gui/subtitlemeta/subtitlemetawidget.cpp:91
 #, kde-format
 msgid "Header"
 msgstr "Záhlaví"
 
-#: src/gui/subtitlemeta/subtitlemetawidget.cpp:92
+#: src/gui/subtitlemeta/subtitlemetawidget.cpp:93
 #, kde-format
 msgid "Footer"
 msgstr "Zápatí"
@@ -2930,52 +2976,52 @@ msgstr "Časy"
 msgid "Errors"
 msgstr "Chyby"
 
-#: src/gui/treeview/richlineedit.cpp:84 src/widgets/simplerichtextedit.cpp:339
+#: src/gui/treeview/richlineedit.cpp:84 src/widgets/simplerichtextedit.cpp:424
 #, kde-format
 msgid "Cut"
 msgstr "Vyjmout"
 
-#: src/gui/treeview/richlineedit.cpp:91 src/widgets/simplerichtextedit.cpp:345
+#: src/gui/treeview/richlineedit.cpp:91 src/widgets/simplerichtextedit.cpp:430
 #, kde-format
 msgid "Copy"
 msgstr "Kopírovat"
 
-#: src/gui/treeview/richlineedit.cpp:98 src/widgets/simplerichtextedit.cpp:352
+#: src/gui/treeview/richlineedit.cpp:98 src/widgets/simplerichtextedit.cpp:437
 #, kde-format
 msgid "Paste"
 msgstr "Vložit"
 
-#: src/gui/treeview/richlineedit.cpp:106 src/widgets/simplerichtextedit.cpp:365
+#: src/gui/treeview/richlineedit.cpp:106 src/widgets/simplerichtextedit.cpp:450
 #, kde-format
 msgctxt "@action:inmenu Clear all text"
 msgid "Clear"
 msgstr "Vyprázdnit"
 
-#: src/gui/treeview/richlineedit.cpp:119 src/widgets/simplerichtextedit.cpp:376
+#: src/gui/treeview/richlineedit.cpp:119 src/widgets/simplerichtextedit.cpp:461
 #, kde-format
 msgctxt "@action:inmenu Toggle bold style"
 msgid "Bold"
 msgstr "Tučné"
 
-#: src/gui/treeview/richlineedit.cpp:127 src/widgets/simplerichtextedit.cpp:383
+#: src/gui/treeview/richlineedit.cpp:127 src/widgets/simplerichtextedit.cpp:468
 #, kde-format
 msgctxt "@action:inmenu Toggle italic style"
 msgid "Italic"
 msgstr "Kurzíva"
 
-#: src/gui/treeview/richlineedit.cpp:135 src/widgets/simplerichtextedit.cpp:390
+#: src/gui/treeview/richlineedit.cpp:135 src/widgets/simplerichtextedit.cpp:475
 #, kde-format
 msgctxt "@action:inmenu Toggle underline style"
 msgid "Underline"
 msgstr "Podtržené"
 
-#: src/gui/treeview/richlineedit.cpp:143 src/widgets/simplerichtextedit.cpp:397
+#: src/gui/treeview/richlineedit.cpp:143 src/widgets/simplerichtextedit.cpp:482
 #, kde-format
 msgctxt "@action:inmenu Toggle strike through style"
 msgid "Strike Through"
 msgstr "Přeškrtnuté"
 
-#: src/gui/treeview/richlineedit.cpp:151 src/widgets/simplerichtextedit.cpp:404
+#: src/gui/treeview/richlineedit.cpp:151 src/widgets/simplerichtextedit.cpp:489
 #, kde-format
 msgctxt "@action:inmenu Change Text Color"
 msgid "Text Color"
@@ -3934,42 +3980,42 @@ msgstr "Titulková stopa #%1"
 msgid "File does not exist."
 msgstr "Soubor neexistuje."
 
-#: src/widgets/simplerichtextedit.cpp:254
+#: src/widgets/simplerichtextedit.cpp:339
 #, kde-format
 msgid "Suggestions"
 msgstr "Návrhy"
 
-#: src/widgets/simplerichtextedit.cpp:255
+#: src/widgets/simplerichtextedit.cpp:340
 #, kde-format
 msgid "Ignore"
 msgstr "Ignorovat"
 
-#: src/widgets/simplerichtextedit.cpp:256
+#: src/widgets/simplerichtextedit.cpp:341
 #, kde-format
 msgid "Add to Dictionary"
 msgstr "Přidat do slovníku"
 
-#: src/widgets/simplerichtextedit.cpp:260
+#: src/widgets/simplerichtextedit.cpp:345
 #, kde-format
 msgid "No suggestions"
 msgstr "Žádné návrhy"
 
-#: src/widgets/simplerichtextedit.cpp:359
+#: src/widgets/simplerichtextedit.cpp:444
 #, kde-format
 msgid "Delete"
 msgstr "Smazat"
 
-#: src/widgets/simplerichtextedit.cpp:410
+#: src/widgets/simplerichtextedit.cpp:495
 #, kde-format
 msgid "Check Spelling..."
 msgstr "Kontrola pravopisu..."
 
-#: src/widgets/simplerichtextedit.cpp:415
+#: src/widgets/simplerichtextedit.cpp:500
 #, kde-format
 msgid "Auto Spell Check"
 msgstr "Automatická kontrola pravopisu"
 
-#: src/widgets/simplerichtextedit.cpp:420
+#: src/widgets/simplerichtextedit.cpp:505
 #, kde-format
 msgid "Allow Tabulations"
 msgstr "Povolit tabulátory"
