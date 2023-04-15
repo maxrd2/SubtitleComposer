@@ -11,6 +11,7 @@
 #include "gui/waveform/waverenderer.h"
 
 #include <QPainter>
+#include <QScopedPointer>
 #include <QTextBlock>
 #include <QTextLayout>
 #include <QTextLine>
@@ -143,8 +144,9 @@ WaveSubtitle::image() const
 	const RichDocumentLayout *layout = doc->documentLayout();
 
 	qreal width = 0., height = 0.;
-	QTextLayout *layouts = new QTextLayout[doc->blockCount()];
-	QTextLayout *bl = layouts;
+	QScopedPointer<QTextLayout, QScopedPointerArrayDeleter<QTextLayout>> layouts(new QTextLayout[doc->blockCount()]);
+
+	QTextLayout *bl = layouts.data();
 	for(QTextBlock bi = doc->begin(); bi != doc->end(); bi = bi.next()) {
 		bl->setCacheEnabled(true);
 		bl->setFont(m_rend->fontText());
@@ -169,30 +171,26 @@ WaveSubtitle::image() const
 	}
 
 	m_image = QImage(QSize(width, height), QImage::Format_ARGB32_Premultiplied);
-	m_image.fill(Qt::transparent);
-	QPainter *painter = new QPainter(&m_image);
-	if(!painter->isActive()) {
-		delete[] layouts;
-		delete painter;
+	if(m_image.isNull())
 		return m_image;
-	}
+	m_image.fill(Qt::transparent);
+	QScopedPointer<QPainter> painter(new QPainter(&m_image));
+	if(!painter->isActive())
+		return m_image;
 	painter->setRenderHints(QPainter::Antialiasing | QPainter::TextAntialiasing | QPainter::SmoothPixmapTransform);
 	painter->setFont(m_rend->fontText());
 	painter->setPen(m_rend->subTextColor());
 
-	while(bl-- != layouts) {
+	while(bl-- != layouts.data()) {
 		const int n = bl->lineCount();
 		for(int i = 0; i < n; i++) {
 			const QTextLine &tl = bl->lineAt(i);
 			const QPointF pos((width - tl.naturalTextWidth()) / 2., 0.);
-			tl.draw(painter, pos);
+			tl.draw(painter.data(), pos);
 		}
 	}
 
-	delete[] layouts;
-
 	painter->end();
-	delete painter;
 
 	m_imageDirty = false;
 	return m_image;
