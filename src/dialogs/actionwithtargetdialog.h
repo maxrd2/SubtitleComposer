@@ -55,7 +55,7 @@ protected:
 	bool selectionTargetOnlyMode() const;
 	bool translationMode() const;
 
-	QGroupBox * createTargetsGroupBox(const QString &title = i18n("Apply To"), bool addToLayout = true);
+	QGroupBox * createTargetsGroupBox(const QString &title = i18n("Apply to"), bool addToLayout = true);
 
 	void setTargetsButtonsHiddenState(QButtonGroup *targetButtonGroup, bool hidden);
 	void updateTargetsGroupBoxHiddenState();

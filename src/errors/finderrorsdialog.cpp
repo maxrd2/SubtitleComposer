@@ -39,7 +39,7 @@ FindErrorsDialog::FindErrorsDialog(QWidget *parent)
 	miscLayout->addWidget(m_clearOtherErrorsCheckBox, 0, 0);
 	miscLayout->addWidget(m_clearMarksCheckBox, 1, 0);
 
-	createTargetsGroupBox("Find In");
+	createTargetsGroupBox(i18n("Search in"));
 	createLineTargetsButtonGroup();
 	createTextTargetsButtonGroup();
 }
