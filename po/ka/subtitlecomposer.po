@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: subtitlecomposer\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2023-04-14 00:46+0000\n"
-"PO-Revision-Date: 2023-02-12 08:38+0100\n"
+"PO-Revision-Date: 2023-04-15 05:25+0200\n"
 "Last-Translator: Temuri Doghonadze <temuri.doghonadze@gmail.com>\n"
 "Language-Team: Georgian <kde-i18n-doc@kde.org>\n"
 "Language: ka\n"
@@ -1206,12 +1206,12 @@ msgstr ""
 #: src/application_subtitle.cpp:777
 #, kde-format
 msgid "The reference subtitle must have more than one line to proceed."
-msgstr ""
+msgstr "მიმართულ სუბტიტრს გასაგრძელებლად ერთზე მეტი ხაზი უნდა ჰქონდეს."
 
 #: src/application_subtitle.cpp:786
 #, kde-format
 msgid "Could not parse the reference subtitle file."
-msgstr ""
+msgstr "მიმართული სუბტიტრების ფაილის დამუშავების შეცდომა."
 
 #: src/configs/configdialog.cpp:35
 #, kde-format
@@ -1385,7 +1385,7 @@ msgstr "ქცევა"
 #: src/configs/errorsconfigwidget.ui:223 src/scconfig.kcfg:86
 #, kde-format
 msgid "Automatically clear fixed errors"
-msgstr ""
+msgstr "გასწორებული შეცდომების ავტომატურად გასუფთავება"
 
 #. i18n: ectx: property (title), widget (QGroupBox, m_grpGeneral)
 #: src/configs/generalconfigwidget.ui:17 src/configs/playerconfigwidget.ui:17
@@ -1397,7 +1397,7 @@ msgstr "მთავარი"
 #: src/configs/generalconfigwidget.ui:26
 #, kde-format
 msgid "Automatically load video file when opening a subtitle"
-msgstr ""
+msgstr "სუბტიტრების გახნისას ვიდეოს ავტომატური ჩატვირთვა"
 
 #. i18n: ectx: property (text), widget (QLabel, lab_DefaultSubtitlesEncoding)
 #: src/configs/generalconfigwidget.ui:33
@@ -1452,7 +1452,7 @@ msgstr ""
 #: src/configs/generalconfigwidget.ui:104
 #, kde-format
 msgid "Default pause between subtitle lines:"
-msgstr ""
+msgstr "ნაგულისხმები დრო სუბტიტრების ხაზებს შორის:"
 
 #. i18n: ectx: property (text), widget (QLabel, label_2)
 #: src/configs/generalconfigwidget.ui:144
@@ -1476,7 +1476,7 @@ msgstr ""
 #: src/configs/generalconfigwidget.ui:203
 #, kde-format
 msgid "Ti&me shift for selected lines:"
-msgstr ""
+msgstr "&დროის წანაცვლება მონიშნული ხაზებისთვის:"
 
 #: src/configs/playerconfigwidget.cpp:27
 #, kde-format
@@ -2355,12 +2355,12 @@ msgstr "გამოტოვებების ჩასწორება დ�
 #: src/dialogs/fixpunctuationdialog.cpp:26
 #, kde-format
 msgid "Fix quotes and double quotes"
-msgstr ""
+msgstr "ერთმაგი და ორმაგი ბრჭყალების გასწორება"
 
 #: src/dialogs/fixpunctuationdialog.cpp:30
 #, kde-format
 msgid "Fix English 'I' pronoun"
-msgstr ""
+msgstr "'I' ინგლისური ნაცვალსახელის გასწორება"
 
 #: src/dialogs/fixpunctuationdialog.cpp:34
 #, kde-format
@@ -2463,44 +2463,42 @@ msgstr ""
 #: src/dialogs/subtitleclassdialog.ui:30
 #, kde-format
 msgid "Space separated list of CSS classes:"
-msgstr ""
+msgstr "მძიმით გამოყოფილი CSS-ის კლასების სია:"
 
 #. i18n: CSS
 #. i18n: ectx: property (placeholderText), widget (QComboBox, classList)
 #: src/dialogs/subtitleclassdialog.ui:52
 #, kde-format
 msgid "Class"
-msgstr ""
+msgstr "კლასი"
 
 #: src/dialogs/subtitlecolordialog.cpp:24
-#, fuzzy, kde-format
-#| msgctxt "@action:inmenu Change Text Color"
-#| msgid "Text Color"
+#, kde-format
 msgid "Default Color"
-msgstr "ტექსტის ფერი"
+msgstr "ნაგულისხმები ფერი"
 
 #. i18n: ectx: property (text), widget (QLabel, labVoice)
 #: src/dialogs/subtitlevoicedialog.ui:30
 #, kde-format
 msgid "Person name or voice title:"
-msgstr ""
+msgstr "პიროვნების სახელი ან ხმის სათაური:"
 
 #. i18n: CSS
 #. i18n: ectx: property (placeholderText), widget (QComboBox, voiceList)
 #: src/dialogs/subtitlevoicedialog.ui:52
 #, kde-format
 msgid "Voice"
-msgstr ""
+msgstr "ხმა"
 
 #: src/dialogs/syncsubtitlesdialog.cpp:17
 #, kde-format
 msgid "Synchronize with Subtitle"
-msgstr ""
+msgstr "სუბტიტრებთან სინქრონიზაცია"
 
 #: src/dialogs/syncsubtitlesdialog.cpp:19
 #, kde-format
 msgid "Reference Subtitle"
-msgstr ""
+msgstr "მიმართული სუბტიტრი"
 
 #: src/dialogs/syncsubtitlesdialog.cpp:21
 #, kde-format
@@ -2630,7 +2628,7 @@ msgstr ""
 #: src/formats/vobsub/vobsubinputinitdialog.ui:99
 #, kde-format
 msgid "Fix i <-> l, 0 <-> O mistakes"
-msgstr ""
+msgstr "'i' <-> l, 0 <-> O შეცდომების გასწორება"
 
 #: src/formats/vobsub/vobsubinputprocessdialog.cpp:584
 #, kde-format
@@ -2737,17 +2735,14 @@ msgid "<b>Duration</b>"
 msgstr "<b>ხანგრძლივობა</b>"
 
 #: src/gui/currentlinewidget.cpp:314
-#, fuzzy, kde-format
-#| msgctxt "@title:group"
-#| msgid "Change To"
+#, kde-format
 msgid "Change Voice Tag"
-msgstr "შეცვლა"
+msgstr "ხმის ჭდის შეცვლა"
 
 #: src/gui/currentlinewidget.cpp:318
-#, fuzzy, kde-format
-#| msgid "Change Case"
+#, kde-format
 msgid "Change Class Tag"
-msgstr "რეგისტრის შეცვლა"
+msgstr "კლასის ჭდის შეცვლა"
 
 #: src/gui/currentlinewidget.cpp:439 src/gui/currentlinewidget.cpp:442
 #, kde-format
@@ -3837,7 +3832,7 @@ msgstr "პოვნა"
 #: src/utils/finder.cpp:246
 #, kde-format
 msgid "No instances of '%1' found!"
-msgstr ""
+msgstr "'%1'-ის გაშვებული ასლი აღმოჩენილი არაა!"
 
 #: src/utils/finder.cpp:246 src/utils/finder.cpp:260
 #, kde-format
@@ -3850,6 +3845,8 @@ msgid ""
 "End of subtitle reached.\n"
 "Continue from the beginning?"
 msgstr ""
+"მიღწეულია სუბტიტრის ფაილის ბოლო.\n"
+"გავაგრძელო დასაწყისიდან?"
 
 #: src/utils/finder.cpp:260
 #, kde-format
@@ -3857,6 +3854,8 @@ msgid ""
 "Beginning of selection reached.\n"
 "Continue from the end?"
 msgstr ""
+"მიღწეულია ფაილის დასაწყისი.\n"
+"გავაგრძელო ბოლოდან?"
 
 #: src/utils/finder.cpp:260
 #, kde-format
@@ -3864,6 +3863,8 @@ msgid ""
 "Beginning of subtitle reached.\n"
 "Continue from the end?"
 msgstr ""
+"მიღწეულია სუბტიტრის ფაილის დასაწყისი.\n"
+"გავაგრძელო ბოლოდან?"
 
 #: src/utils/finder.cpp:260
 #, kde-format
@@ -3871,6 +3872,8 @@ msgid ""
 "End of selection reached.\n"
 "Continue from the beginning?"
 msgstr ""
+"მიღწეულია მონიშნულის დასაწყისი.\n"
+"გავაგრძელო ბოლოდან?"
 
 #: src/utils/language.cpp:115
 #, kde-format
@@ -3906,7 +3909,7 @@ msgstr "ოეპრაცია გაუქმებულია მომხ�
 #: src/utils/translator.cpp:265 src/utils/translator.cpp:274
 #, kde-format
 msgid "Unexpected contents received from translation service"
-msgstr ""
+msgstr "თარგმანის სერვისიდან მიღებული შემცველობა მოულოდნელია"
 
 #: src/videoplayer/backend/videostate.cpp:110
 #, kde-format

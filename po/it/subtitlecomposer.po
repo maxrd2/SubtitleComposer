@@ -2,13 +2,13 @@
 # This file is put in the public domain.
 #
 # Alessandro Polverini <dusty@nibbles.it>, 2010.
-# Luigi Toscano <luigi.toscano@tiscali.it>, 2018, 2020, 2021, 2022.
+# Luigi Toscano <luigi.toscano@tiscali.it>, 2018, 2020, 2021, 2022, 2023.
 msgid ""
 msgstr ""
 "Project-Id-Version: subtitlecomposer\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2023-04-14 00:46+0000\n"
-"PO-Revision-Date: 2022-11-22 01:15+0100\n"
+"PO-Revision-Date: 2023-04-14 21:54+0200\n"
 "Last-Translator: Luigi Toscano <luigi.toscano@tiscali.it>\n"
 "Language-Team: Italian <kde-i18n-it@kde.org>\n"
 "Language: it\n"
@@ -16,7 +16,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Lokalize 23.03.70\n"
+"X-Generator: Lokalize 22.12.3\n"
 "X-Crowdin-Project: subtitlecomposer\n"
 "X-Crowdin-Language: it\n"
 "X-Crowdin-File: subtitlecomposer.pot\n"
@@ -2521,34 +2521,32 @@ msgstr "Sposta la nuova parte indietro dopo la divisione"
 #: src/dialogs/subtitleclassdialog.ui:30
 #, kde-format
 msgid "Space separated list of CSS classes:"
-msgstr ""
+msgstr "Elenco, separato da spazi, di classi CSS:"
 
 #. i18n: CSS
 #. i18n: ectx: property (placeholderText), widget (QComboBox, classList)
 #: src/dialogs/subtitleclassdialog.ui:52
 #, kde-format
 msgid "Class"
-msgstr ""
+msgstr "Classe"
 
 #: src/dialogs/subtitlecolordialog.cpp:24
-#, fuzzy, kde-format
-#| msgctxt "@action:inmenu Change Text Color"
-#| msgid "Text Color"
+#, kde-format
 msgid "Default Color"
-msgstr "Colore testo"
+msgstr "Colore predefinito"
 
 #. i18n: ectx: property (text), widget (QLabel, labVoice)
 #: src/dialogs/subtitlevoicedialog.ui:30
 #, kde-format
 msgid "Person name or voice title:"
-msgstr ""
+msgstr "Nome persona o titolo voce:"
 
 #. i18n: CSS
 #. i18n: ectx: property (placeholderText), widget (QComboBox, voiceList)
 #: src/dialogs/subtitlevoicedialog.ui:52
 #, kde-format
 msgid "Voice"
-msgstr ""
+msgstr "Voce"
 
 #: src/dialogs/syncsubtitlesdialog.cpp:17
 #, kde-format
@@ -2797,17 +2795,14 @@ msgid "<b>Duration</b>"
 msgstr "<b>Durata</b>"
 
 #: src/gui/currentlinewidget.cpp:314
-#, fuzzy, kde-format
-#| msgctxt "@title:group"
-#| msgid "Change To"
+#, kde-format
 msgid "Change Voice Tag"
-msgstr "Modifica in"
+msgstr "Modifica etichetta voce"
 
 #: src/gui/currentlinewidget.cpp:318
-#, fuzzy, kde-format
-#| msgid "Change Case"
+#, kde-format
 msgid "Change Class Tag"
-msgstr "Modifica maiuscole/minuscole"
+msgstr "Modifica etichetta classe"
 
 #: src/gui/currentlinewidget.cpp:439 src/gui/currentlinewidget.cpp:442
 #, kde-format

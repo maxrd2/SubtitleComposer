@@ -1,23 +1,23 @@
 # Translation of subtitlecomposer.po to Catalan (Valencian)
-# Copyright (C) 2019-2022 This_file_is_part_of_KDE
+# Copyright (C) 2019-2023 This_file_is_part_of_KDE
 # This file is distributed under the license LGPL version 2.1 or
 # version 3 or later versions approved by the membership of KDE e.V.
 #
 # Antoni Bella Pérez <antonibella5@yahoo.com>, 2019, 2020.
-# Josep M. Ferrer <txemaq@gmail.com>, 2020, 2021, 2022.
+# Josep M. Ferrer <txemaq@gmail.com>, 2020, 2021, 2022, 2023.
 msgid ""
 msgstr ""
 "Project-Id-Version: subtitlecomposer\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2023-04-14 00:46+0000\n"
-"PO-Revision-Date: 2022-11-19 20:32+0100\n"
+"PO-Revision-Date: 2023-04-14 17:22+0200\n"
 "Last-Translator: Josep M. Ferrer <txemaq@gmail.com>\n"
 "Language-Team: Catalan <kde-i18n-ca@kde.org>\n"
 "Language: ca@valencia\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Lokalize 20.12.0\n"
+"X-Generator: Lokalize 22.12.3\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
 "X-Accelerator-Marker: &\n"
 
@@ -2528,34 +2528,32 @@ msgstr "Desplaça cap arrere la part nova després de dividir-la"
 #: src/dialogs/subtitleclassdialog.ui:30
 #, kde-format
 msgid "Space separated list of CSS classes:"
-msgstr ""
+msgstr "Una llista separada per espais de classes CSS:"
 
 #. i18n: CSS
 #. i18n: ectx: property (placeholderText), widget (QComboBox, classList)
 #: src/dialogs/subtitleclassdialog.ui:52
 #, kde-format
 msgid "Class"
-msgstr ""
+msgstr "Classe"
 
 #: src/dialogs/subtitlecolordialog.cpp:24
-#, fuzzy, kde-format
-#| msgctxt "@action:inmenu Change Text Color"
-#| msgid "Text Color"
+#, kde-format
 msgid "Default Color"
-msgstr "Color del text"
+msgstr "Color predeterminat"
 
 #. i18n: ectx: property (text), widget (QLabel, labVoice)
 #: src/dialogs/subtitlevoicedialog.ui:30
 #, kde-format
 msgid "Person name or voice title:"
-msgstr ""
+msgstr "Nom de la persona o títol de la veu:"
 
 #. i18n: CSS
 #. i18n: ectx: property (placeholderText), widget (QComboBox, voiceList)
 #: src/dialogs/subtitlevoicedialog.ui:52
 #, kde-format
 msgid "Voice"
-msgstr ""
+msgstr "Veu"
 
 #: src/dialogs/syncsubtitlesdialog.cpp:17
 #, kde-format
@@ -2805,17 +2803,14 @@ msgid "<b>Duration</b>"
 msgstr "<b>Duració</b>"
 
 #: src/gui/currentlinewidget.cpp:314
-#, fuzzy, kde-format
-#| msgctxt "@title:group"
-#| msgid "Change To"
+#, kde-format
 msgid "Change Voice Tag"
-msgstr "Canvia a"
+msgstr "Canvia l'etiqueta de la veu"
 
 #: src/gui/currentlinewidget.cpp:318
-#, fuzzy, kde-format
-#| msgid "Change Case"
+#, kde-format
 msgid "Change Class Tag"
-msgstr "Canvia les majúscules/minúscules"
+msgstr "Canvia l'etiqueta de la classe"
 
 #: src/gui/currentlinewidget.cpp:439 src/gui/currentlinewidget.cpp:442
 #, kde-format
