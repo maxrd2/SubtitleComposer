@@ -12,7 +12,7 @@ msgstr ""
 "Project-Id-Version: subtitlecomposer\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2023-04-14 00:46+0000\n"
-"PO-Revision-Date: 2023-01-13 21:37+0100\n"
+"PO-Revision-Date: 2023-04-15 20:24+0200\n"
 "Last-Translator: Xavier BESNARD <xavier.besnard]neuf.fr>\n"
 "Language-Team: fr\n"
 "Language: fr\n"
@@ -20,7 +20,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
-"X-Generator: Lokalize 22.12.1\n"
+"X-Generator: Lokalize 22.12.3\n"
 
 #: src/actions/kcodecactionext.cpp:29
 #, kde-format
@@ -2526,34 +2526,32 @@ msgstr "Décaler la nouvelle partie après la césure du sous-titrage"
 #: src/dialogs/subtitleclassdialog.ui:30
 #, kde-format
 msgid "Space separated list of CSS classes:"
-msgstr ""
+msgstr "Liste séparée par des espaces pour les classes « CSS » :"
 
 #. i18n: CSS
 #. i18n: ectx: property (placeholderText), widget (QComboBox, classList)
 #: src/dialogs/subtitleclassdialog.ui:52
 #, kde-format
 msgid "Class"
-msgstr ""
+msgstr "Classe"
 
 #: src/dialogs/subtitlecolordialog.cpp:24
-#, fuzzy, kde-format
-#| msgctxt "@action:inmenu Change Text Color"
-#| msgid "Text Color"
+#, kde-format
 msgid "Default Color"
-msgstr "Couleur du texte"
+msgstr "Couleur par défaut"
 
 #. i18n: ectx: property (text), widget (QLabel, labVoice)
 #: src/dialogs/subtitlevoicedialog.ui:30
 #, kde-format
 msgid "Person name or voice title:"
-msgstr ""
+msgstr "Nom de personne ou titre de voix :"
 
 #. i18n: CSS
 #. i18n: ectx: property (placeholderText), widget (QComboBox, voiceList)
 #: src/dialogs/subtitlevoicedialog.ui:52
 #, kde-format
 msgid "Voice"
-msgstr ""
+msgstr "Voix"
 
 #: src/dialogs/syncsubtitlesdialog.cpp:17
 #, kde-format
@@ -2804,17 +2802,14 @@ msgid "<b>Duration</b>"
 msgstr "<b>Durée</b>"
 
 #: src/gui/currentlinewidget.cpp:314
-#, fuzzy, kde-format
-#| msgctxt "@title:group"
-#| msgid "Change To"
+#, kde-format
 msgid "Change Voice Tag"
-msgstr "Changer en"
+msgstr "Modifier une étiquette de voix"
 
 #: src/gui/currentlinewidget.cpp:318
-#, fuzzy, kde-format
-#| msgid "Change Case"
+#, kde-format
 msgid "Change Class Tag"
-msgstr "Changer la casse"
+msgstr "Modifier une étiquette de classe"
 
 #: src/gui/currentlinewidget.cpp:439 src/gui/currentlinewidget.cpp:442
 #, kde-format
