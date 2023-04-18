@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: subtitlecomposer\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2023-04-14 00:46+0000\n"
-"PO-Revision-Date: 2022-11-20 00:22+0000\n"
+"PO-Revision-Date: 2023-04-17 16:07+0100\n"
 "Last-Translator: Hugo Carvalho <hugokarvalho@hotmail.com>\n"
 "Language-Team: Portuguese\n"
 "Language: pt\n"
@@ -2529,34 +2529,32 @@ msgstr "Recuar a parte nova depois de dividir"
 #: src/dialogs/subtitleclassdialog.ui:30
 #, kde-format
 msgid "Space separated list of CSS classes:"
-msgstr ""
+msgstr "Lista de classes de CSS, separada por espaços:"
 
 #. i18n: CSS
 #. i18n: ectx: property (placeholderText), widget (QComboBox, classList)
 #: src/dialogs/subtitleclassdialog.ui:52
 #, kde-format
 msgid "Class"
-msgstr ""
+msgstr "Classe"
 
 #: src/dialogs/subtitlecolordialog.cpp:24
-#, fuzzy, kde-format
-#| msgctxt "@action:inmenu Change Text Color"
-#| msgid "Text Color"
+#, kde-format
 msgid "Default Color"
-msgstr "Cor do Texto"
+msgstr "Cor Predefinida"
 
 #. i18n: ectx: property (text), widget (QLabel, labVoice)
 #: src/dialogs/subtitlevoicedialog.ui:30
 #, kde-format
 msgid "Person name or voice title:"
-msgstr ""
+msgstr "Nome da pessoa ou título da voz:"
 
 #. i18n: CSS
 #. i18n: ectx: property (placeholderText), widget (QComboBox, voiceList)
 #: src/dialogs/subtitlevoicedialog.ui:52
 #, kde-format
 msgid "Voice"
-msgstr ""
+msgstr "Voz"
 
 #: src/dialogs/syncsubtitlesdialog.cpp:17
 #, kde-format
@@ -2805,17 +2803,14 @@ msgid "<b>Duration</b>"
 msgstr "<b>Duração</b>"
 
 #: src/gui/currentlinewidget.cpp:314
-#, fuzzy, kde-format
-#| msgctxt "@title:group"
-#| msgid "Change To"
+#, kde-format
 msgid "Change Voice Tag"
-msgstr "Mudar para"
+msgstr "Mudar a Marca da Voz"
 
 #: src/gui/currentlinewidget.cpp:318
-#, fuzzy, kde-format
-#| msgid "Change Case"
+#, kde-format
 msgid "Change Class Tag"
-msgstr "Mudar a Capitalização"
+msgstr "Mudar a Marca da Classe"
 
 #: src/gui/currentlinewidget.cpp:439 src/gui/currentlinewidget.cpp:442
 #, kde-format
