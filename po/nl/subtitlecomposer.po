@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: subtitlecomposer\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2023-04-14 00:46+0000\n"
-"PO-Revision-Date: 2023-04-14 10:22+0200\n"
+"PO-Revision-Date: 2023-04-23 14:32+0200\n"
 "Last-Translator: Freek de Kruijf <freekdekruijf@kde.nl>\n"
 "Language-Team: \n"
 "Language: nl\n"
@@ -3248,7 +3248,7 @@ msgstr "Maximale duur per teken"
 #: src/scconfig.kcfg:93
 #, kde-format
 msgid "Default Language"
-msgstr "Standaardtaal"
+msgstr "Standaard taal"
 
 #. i18n: ectx: label, entry (DefaultClient), group (Spelling)
 #: src/scconfig.kcfg:97
