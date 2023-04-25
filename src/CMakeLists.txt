@@ -83,6 +83,7 @@ set(subtitlecomposer_SRCS
 	#[[ speechprocessor ]] speechprocessor/speechprocessor.cpp speechprocessor/speechplugin.cpp
 	#[[ streamprocessor ]] streamprocessor/streamprocessor.cpp
 	#[[ translations ]] translate/translatedialog.cpp translate/translateengine.cpp
+	#[[ translation engines ]] translate/googlecloudengine.cpp
 	#[[ utils ]] utils/finder.cpp utils/replacer.cpp utils/speller.cpp
 	#[[ videoplayer ]] videoplayer/videoplayer.cpp videoplayer/videowidget.cpp videoplayer/waveformat.h videoplayer/subtitletextoverlay.cpp
 	videoplayer/backend/glrenderer.cpp videoplayer/backend/ffplayer.cpp videoplayer/backend/framequeue.cpp videoplayer/backend/packetqueue.cpp
@@ -102,6 +103,7 @@ ki18n_wrap_ui(subtitlecomposer_SRCS
 	#[[ formats ]] formats/vobsub/vobsubinputinitdialog.ui formats/vobsub/vobsubinputprocessdialog.ui
 	#[[ gui/subtitlemetawidget ]] gui/subtitlemeta/subtitlepositionwidget.ui
 	#[[ scripting ]] scripting/scriptsmanager.ui
+	#[[ translation engines ]] translate/googlecloudengine.ui
 	)
 
 add_subdirectory(icons)
@@ -120,6 +122,7 @@ target_link_libraries(subtitlecomposer-lib
 	KF5::SonnetCore KF5::SonnetUi
 	KF5::KIOCore KF5::KIOFileWidgets KF5::KIOWidgets
 	KF5::XmlGui KF5::I18n
+	OpenSSL::SSL
 	${FFMPEG_LIBRARIES}
 	${OPENAL_LIBRARY}
 	${ICU_LIBRARIES}

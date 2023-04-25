@@ -225,4 +225,25 @@
 			<default>DeepL</default>
 		</entry>
 	</group>
+
+	<group name="GoogleCloudTranslate">
+		<entry name="gctServiceJSON" type="Path">
+			<label>Service Account JSON containing private key</label>
+		</entry>
+		<entry name="gctLangSource" type="String">
+			<label>source langauge - cached</label>
+		</entry>
+		<entry name="gctLangTrans" type="String">
+			<label>translation langauge - cached</label>
+		</entry>
+		<entry name="gctAccessToken" type="String">
+			<label>access token - cached</label>
+		</entry>
+		<entry name="gctTokenExpires" type="DateTime">
+			<label>access token expiry - cached</label>
+		</entry>
+		<entry name="gctTokenType" type="String">
+			<label>access token type - cached</label>
+		</entry>
+	</group>
 </kcfg>

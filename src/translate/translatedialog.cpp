@@ -18,13 +18,14 @@
 #include "core/richtext/richdocument.h"
 #include "core/subtitleiterator.h"
 #include "scconfig.h"
+#include "translate/googlecloudengine.h"
 #include "translate/translateengine.h"
 
 using namespace SubtitleComposer;
 
 TranslateDialog::TranslateDialog(QWidget *parent)
 	: ActionWithTargetDialog(i18n("Translate"), parent),
-	  m_engines(),
+	  m_engines({ new GoogleCloudEngine(parent) }),
 	  m_settings(nullptr)
 {
 	QComboBox *engineCombo = new QComboBox(m_mainWidget);

@@ -37,6 +37,8 @@ find_package(KF5 ${KF5_MIN_VERSION} REQUIRED COMPONENTS
 	Config ConfigWidgets CoreAddons I18n KIO XmlGui
 	Sonnet Codecs TextWidgets WidgetsAddons)
 
+find_package(OpenSSL REQUIRED)
+
 #PO_SUBDIR
 add_subdirectory(src)
 
