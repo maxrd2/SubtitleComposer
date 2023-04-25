@@ -83,7 +83,7 @@ set(subtitlecomposer_SRCS
 	#[[ speechprocessor ]] speechprocessor/speechprocessor.cpp speechprocessor/speechplugin.cpp
 	#[[ streamprocessor ]] streamprocessor/streamprocessor.cpp
 	#[[ translations ]] translate/translatedialog.cpp translate/translateengine.cpp
-	#[[ translation engines ]] translate/googlecloudengine.cpp
+	#[[ translation engines ]] translate/deeplengine.cpp translate/googlecloudengine.cpp
 	#[[ utils ]] utils/finder.cpp utils/replacer.cpp utils/speller.cpp
 	#[[ videoplayer ]] videoplayer/videoplayer.cpp videoplayer/videowidget.cpp videoplayer/waveformat.h videoplayer/subtitletextoverlay.cpp
 	videoplayer/backend/glrenderer.cpp videoplayer/backend/ffplayer.cpp videoplayer/backend/framequeue.cpp videoplayer/backend/packetqueue.cpp
@@ -103,7 +103,7 @@ ki18n_wrap_ui(subtitlecomposer_SRCS
 	#[[ formats ]] formats/vobsub/vobsubinputinitdialog.ui formats/vobsub/vobsubinputprocessdialog.ui
 	#[[ gui/subtitlemetawidget ]] gui/subtitlemeta/subtitlepositionwidget.ui
 	#[[ scripting ]] scripting/scriptsmanager.ui
-	#[[ translation engines ]] translate/googlecloudengine.ui
+	#[[ translation engines ]] translate/deeplengine.ui translate/googlecloudengine.ui
 	)
 
 add_subdirectory(icons)
@@ -117,7 +117,7 @@ endif()
 add_library(subtitlecomposer-lib STATIC ${subtitlecomposer_SRCS})
 target_link_libraries(subtitlecomposer-lib
 	Qt${QT_MAJOR_VERSION}::Core Qt${QT_MAJOR_VERSION}::Widgets Qt${QT_MAJOR_VERSION}::WidgetsPrivate
-	Qt${QT_MAJOR_VERSION}::Gui Qt${QT_MAJOR_VERSION}::Qml
+	Qt${QT_MAJOR_VERSION}::Gui Qt${QT_MAJOR_VERSION}::Qml Qt${QT_MAJOR_VERSION}::NetworkAuth
 	KF5::CoreAddons KF5::WidgetsAddons KF5::TextWidgets KF5::Codecs
 	KF5::SonnetCore KF5::SonnetUi
 	KF5::KIOCore KF5::KIOFileWidgets KF5::KIOWidgets

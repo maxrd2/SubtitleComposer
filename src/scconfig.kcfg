@@ -246,4 +246,19 @@
 			<label>access token type - cached</label>
 		</entry>
 	</group>
+
+	<group name="DeepLTranslate">
+		<entry name="dltAuthKey" type="String">
+			<label>DeepL API authentication key</label>
+		</entry>
+		<entry name="dltApiDomain" type="String">
+			<label>DeepL API domain name</label>
+		</entry>
+		<entry name="dltLangSource" type="String">
+			<label>source langauge - cached</label>
+		</entry>
+		<entry name="dltLangTrans" type="String">
+			<label>translation langauge - cached</label>
+		</entry>
+	</group>
 </kcfg>
