@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: subtitlecomposer\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-04-14 00:46+0000\n"
+"POT-Creation-Date: 2023-04-26 00:48+0000\n"
 "PO-Revision-Date: 2022-03-23 18:36+0100\n"
 "Last-Translator: Stefan Asserhäll <stefan.asserhall@bredband.net>\n"
 "Language-Team: Swedish <kde-i18n-doc@kde.org>\n"
@@ -2187,8 +2187,9 @@ msgid "Translation subtitle"
 msgstr "Översättningstextning"
 
 #: src/dialogs/actionwithtargetdialog.h:58
-#, kde-format
-msgid "Apply To"
+#, fuzzy, kde-format
+#| msgid "Apply To"
+msgid "Apply to"
 msgstr "Verkställ för"
 
 #: src/dialogs/adjusttimesdialog.cpp:20
@@ -2589,6 +2590,11 @@ msgstr "Ta bort övriga fel"
 #, kde-format
 msgid "Clear user marks"
 msgstr "Ta bort användarmarkörer"
+
+#: src/errors/finderrorsdialog.cpp:42
+#, kde-format
+msgid "Search in"
+msgstr ""
 
 #: src/errors/finderrorsdialog.cpp:86
 #, kde-format

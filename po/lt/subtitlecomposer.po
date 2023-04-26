@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: subtitlecomposer\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-04-14 00:46+0000\n"
+"POT-Creation-Date: 2023-04-26 00:48+0000\n"
 "PO-Revision-Date: 2020-10-13 02:20+0200\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
@@ -2167,7 +2167,7 @@ msgstr ""
 
 #: src/dialogs/actionwithtargetdialog.h:58
 #, kde-format
-msgid "Apply To"
+msgid "Apply to"
 msgstr ""
 
 #: src/dialogs/adjusttimesdialog.cpp:20
@@ -2565,6 +2565,11 @@ msgstr ""
 #: src/errors/finderrorsdialog.cpp:35
 #, kde-format
 msgid "Clear user marks"
+msgstr ""
+
+#: src/errors/finderrorsdialog.cpp:42
+#, kde-format
+msgid "Search in"
 msgstr ""
 
 #: src/errors/finderrorsdialog.cpp:86

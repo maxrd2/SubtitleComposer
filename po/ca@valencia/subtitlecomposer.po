@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: subtitlecomposer\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-04-14 00:46+0000\n"
+"POT-Creation-Date: 2023-04-26 00:48+0000\n"
 "PO-Revision-Date: 2023-04-14 17:22+0200\n"
 "Last-Translator: Josep M. Ferrer <txemaq@gmail.com>\n"
 "Language-Team: Catalan <kde-i18n-ca@kde.org>\n"
@@ -2222,8 +2222,9 @@ msgid "Translation subtitle"
 msgstr "Traducció dels subtítols"
 
 #: src/dialogs/actionwithtargetdialog.h:58
-#, kde-format
-msgid "Apply To"
+#, fuzzy, kde-format
+#| msgid "Apply To"
+msgid "Apply to"
 msgstr "Aplica a"
 
 #: src/dialogs/adjusttimesdialog.cpp:20
@@ -2622,6 +2623,11 @@ msgstr "Neteja els altres errors"
 #, kde-format
 msgid "Clear user marks"
 msgstr "Neteja les marques d'usuari"
+
+#: src/errors/finderrorsdialog.cpp:42
+#, kde-format
+msgid "Search in"
+msgstr ""
 
 #: src/errors/finderrorsdialog.cpp:86
 #, kde-format
