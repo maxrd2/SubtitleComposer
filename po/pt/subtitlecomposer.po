@@ -2628,7 +2628,7 @@ msgstr "Limpar as marcas do utilizador"
 #: src/errors/finderrorsdialog.cpp:42
 #, kde-format
 msgid "Search in"
-msgstr ""
+msgstr "Pesquisar em"
 
 #: src/errors/finderrorsdialog.cpp:86
 #, kde-format

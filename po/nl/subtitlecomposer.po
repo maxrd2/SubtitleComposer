@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: subtitlecomposer\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2023-04-26 00:48+0000\n"
-"PO-Revision-Date: 2023-04-23 14:32+0200\n"
+"PO-Revision-Date: 2023-04-26 11:21+0200\n"
 "Last-Translator: Freek de Kruijf <freekdekruijf@kde.nl>\n"
 "Language-Team: \n"
 "Language: nl\n"
@@ -15,7 +15,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Lokalize 22.12.3\n"
+"X-Generator: Lokalize 23.04.0\n"
 
 #: src/actions/kcodecactionext.cpp:29
 #, kde-format
@@ -2188,8 +2188,7 @@ msgid "Translation subtitle"
 msgstr "Vertalingsondertitel"
 
 #: src/dialogs/actionwithtargetdialog.h:58
-#, fuzzy, kde-format
-#| msgid "Apply To"
+#, kde-format
 msgid "Apply to"
 msgstr "Toepassen op"
 
@@ -2593,7 +2592,7 @@ msgstr "Gebruikersmarkeringen wissen"
 #: src/errors/finderrorsdialog.cpp:42
 #, kde-format
 msgid "Search in"
-msgstr ""
+msgstr "Zoeken in"
 
 #: src/errors/finderrorsdialog.cpp:86
 #, kde-format

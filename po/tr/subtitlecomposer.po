@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: subtitlecomposer\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2023-04-26 00:48+0000\n"
-"PO-Revision-Date: 2023-04-14 10:28+0300\n"
+"PO-Revision-Date: 2023-04-26 12:48+0300\n"
 "Last-Translator: Emir SARI <emir_sari@icloud.com>\n"
 "Language-Team: Turkish <kde-l10n-tr@kde.org>\n"
 "Language: tr\n"
@@ -2181,10 +2181,9 @@ msgid "Translation subtitle"
 msgstr "Çeviri altyazısı"
 
 #: src/dialogs/actionwithtargetdialog.h:58
-#, fuzzy, kde-format
-#| msgid "Apply To"
+#, kde-format
 msgid "Apply to"
-msgstr "Şuna Uygula"
+msgstr "Şuna uygula"
 
 #: src/dialogs/adjusttimesdialog.cpp:20
 #, kde-format
@@ -2586,7 +2585,7 @@ msgstr "Kullanıcı imlerini temizle"
 #: src/errors/finderrorsdialog.cpp:42
 #, kde-format
 msgid "Search in"
-msgstr ""
+msgstr "Şurada ara"
 
 #: src/errors/finderrorsdialog.cpp:86
 #, kde-format
