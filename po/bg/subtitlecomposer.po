@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: subtitlecomposer\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-04-26 00:48+0000\n"
+"POT-Creation-Date: 2023-04-28 00:47+0000\n"
 "PO-Revision-Date: 2022-09-17 08:49+0200\n"
 "Last-Translator: Mincho Kondarev <mkondarev@yahoo.de>\n"
 "Language-Team: Bulgarian <kde-i18n-doc@kde.org>\n"
@@ -40,883 +40,833 @@ msgctxt "Encodings menu"
 msgid "Autodetect"
 msgstr ""
 
-#: src/application.cpp:497
+#: src/application.cpp:495
 #, kde-format
 msgid "Go to Line"
 msgstr "Отиване на реплика"
 
-#: src/application.cpp:497
+#: src/application.cpp:495
 #, kde-format
 msgid "&Go to line:"
 msgstr "&Отиване на реплика:"
 
-#: src/application.cpp:670 src/core/subtitle.cpp:878
+#: src/application.cpp:668 src/core/subtitle.cpp:878
 #, kde-format
 msgid "Maximize Durations"
 msgstr "Максимизиране на продължителност"
 
-#: src/application.cpp:698 src/core/subtitle.cpp:1153
+#: src/application.cpp:696 src/core/subtitle.cpp:1153
 #, kde-format
 msgid "Unbreak Lines"
 msgstr "Събиране редовете на репликите"
 
-#: src/application.cpp:709 src/core/subtitle.cpp:1162
+#: src/application.cpp:707 src/core/subtitle.cpp:1162
 #, kde-format
 msgid "Simplify Spaces"
 msgstr "Опростяване на интервалите"
 
-#: src/application.cpp:764 src/dialogs/translatedialog.cpp:20
-#, kde-format
-msgid "Translate"
-msgstr "Превод"
-
-#: src/application.cpp:764
-#, kde-format
-msgid "Translating text (%1 to %2)..."
-msgstr "Превод на текст (%1 до %2)..."
-
 #: src/application.cpp:768
-#, kde-format
-msgid "Translating primary text (%1 to %2)..."
-msgstr "Превод на оригинален текст  (%1 до %2)..."
-
-#: src/application.cpp:769
-#, kde-format
-msgid "Translating secondary text (%1 to %2)..."
-msgstr "Превод на преводен текст  (%1 до %2)..."
-
-#: src/application.cpp:798
-#, kde-format
-msgid ""
-"Unable to perform texts synchronization (sent and received lines count do "
-"not match)."
-msgstr ""
-"Неуспех при синхронизацията (броят на получените и изпратените реплики не "
-"съвпада)."
-
-#: src/application.cpp:802
-#, kde-format
-msgid "Translate Primary Text"
-msgstr "Превод на оригинален текст"
-
-#: src/application.cpp:802
-#, kde-format
-msgid "Translate Secondary Text"
-msgstr "Превод на преводен текст"
-
-#: src/application.cpp:817
-#, kde-format
-msgid ""
-"There was an error performing the translation:\n"
-"\n"
-"%1"
-msgstr ""
-"При превода възникна грешка:\n"
-"\n"
-"%1"
-
-#: src/application.cpp:857
 #, kde-format
 msgid "Open Video"
 msgstr "Отваряне на видео"
 
-#: src/application.cpp:1055 src/application.cpp:1062
+#: src/application.cpp:966 src/application.cpp:973
 #: src/application_subtitle.cpp:658
 #, kde-format
 msgid "Untitled"
 msgstr "Неозаглавен"
 
-#: src/application.cpp:1057 src/application_subtitle.cpp:658
+#: src/application.cpp:968 src/application_subtitle.cpp:658
 #, kde-format
 msgid "Untitled Translation"
 msgstr "Неозаглавен превод"
 
-#: src/application.cpp:1158
+#: src/application.cpp:1069
 #, kde-format
 msgid "Pause"
 msgstr "Пауза"
 
-#: src/application.cpp:1166 src/application_actions.cpp:566
+#: src/application.cpp:1077 src/application_actions.cpp:567
 #, kde-format
 msgid "Play"
 msgstr "Изпълнение"
 
-#: src/application.cpp:1227
+#: src/application.cpp:1138
 #, kde-format
 msgid "Seek backwards 1 second"
 msgid_plural "Seek backwards %1 seconds"
 msgstr[0] "Обход назад с 1 секунда"
 msgstr[1] "Обход назад с %1 секунди"
 
-#: src/application.cpp:1228
+#: src/application.cpp:1139
 #, kde-format
 msgid "Seek forwards 1 second"
 msgid_plural "Seek forwards %1 seconds"
 msgstr[0] "Обход напред с 1 секунда"
 msgstr[1] "Обход напред с %1 секунди"
 
-#: src/application.cpp:1231 src/application.cpp:1235
+#: src/application.cpp:1142 src/application.cpp:1146
 #, kde-format
 msgid "Shift %2%1 millisecond"
 msgid_plural "Shift %2%1 milliseconds"
 msgstr[0] ""
 msgstr[1] ""
 
-#: src/application.cpp:1232 src/application.cpp:1236
+#: src/application.cpp:1143 src/application.cpp:1147
 #, kde-format
 msgid "Shift selected lines %2%1 millisecond"
 msgid_plural "Shift selected lines %2%1 milliseconds"
 msgstr[0] ""
 msgstr[1] ""
 
-#: src/application_actions.cpp:32
+#: src/application_actions.cpp:33
 #, kde-format
 msgid "Exit the application"
 msgstr "Изход от програмата"
 
-#: src/application_actions.cpp:35
+#: src/application_actions.cpp:36
 #, kde-format
 msgid "Configure Subtitle Composer"
 msgstr "Настройване на Subtitle Composer"
 
-#: src/application_actions.cpp:39
+#: src/application_actions.cpp:40
 #, kde-format
 msgctxt "@action:inmenu Create a new subtitle"
 msgid "New"
 msgstr "Нов"
 
-#: src/application_actions.cpp:40
+#: src/application_actions.cpp:41
 #, kde-format
 msgid "Create an empty subtitle"
 msgstr "Създаване на празни субтитри"
 
-#: src/application_actions.cpp:48
+#: src/application_actions.cpp:49
 #, kde-format
 msgctxt "@action:inmenu Open subtitle file"
 msgid "Open Subtitle..."
 msgstr ""
 
-#: src/application_actions.cpp:49 src/application_actions.cpp:66
+#: src/application_actions.cpp:50 src/application_actions.cpp:67
 #, kde-format
 msgid "Open subtitle file"
 msgstr "Отваряне на файл със субтитри"
 
-#: src/application_actions.cpp:57
+#: src/application_actions.cpp:58
 #, kde-format
 msgid "Reload As..."
 msgstr "Презареждане като..."
 
-#: src/application_actions.cpp:58
+#: src/application_actions.cpp:59
 #, kde-format
 msgid "Reload opened file with a different encoding"
 msgstr "Презареждане на отворен файл с разбична кодировка"
 
-#: src/application_actions.cpp:65
+#: src/application_actions.cpp:66
 #, kde-format
 msgctxt "@action:inmenu Open rencently used subtitle file"
 msgid "Open &Recent Subtitle"
 msgstr ""
 
-#: src/application_actions.cpp:72
+#: src/application_actions.cpp:73
 #, kde-format
 msgid "Save"
 msgstr "Запазване"
 
-#: src/application_actions.cpp:73
+#: src/application_actions.cpp:74
 #, kde-format
 msgid "Save opened subtitle"
 msgstr "Запазване на отворени субтитри"
 
-#: src/application_actions.cpp:81
+#: src/application_actions.cpp:82
 #, kde-format
 msgid "Save As..."
 msgstr "Запазване като..."
 
-#: src/application_actions.cpp:82
+#: src/application_actions.cpp:83
 #, kde-format
 msgid "Save opened subtitle with different settings"
 msgstr "Запазване на отворени субтитри с различни настройки"
 
-#: src/application_actions.cpp:90
+#: src/application_actions.cpp:91
 #, kde-format
 msgid "Close"
 msgstr "Затваряне"
 
-#: src/application_actions.cpp:91
+#: src/application_actions.cpp:92
 #, kde-format
 msgid "Close opened subtitle"
 msgstr "Затваряне на отворени субтитри"
 
-#: src/application_actions.cpp:99
+#: src/application_actions.cpp:100
 #, kde-format
 msgid "New Translation"
 msgstr "Нов превод"
 
-#: src/application_actions.cpp:100
+#: src/application_actions.cpp:101
 #, kde-format
 msgid "Create an empty translation subtitle"
 msgstr "Създаване на празен преводен файл за субтитри"
 
-#: src/application_actions.cpp:108
+#: src/application_actions.cpp:109
 #, kde-format
 msgid "Open Translation..."
 msgstr "Отваряне на превод..."
 
-#: src/application_actions.cpp:109 src/application_actions.cpp:126
+#: src/application_actions.cpp:110 src/application_actions.cpp:127
 #, kde-format
 msgid "Open translation subtitle file"
 msgstr "Отваряне на преводен файл със субтитри"
 
-#: src/application_actions.cpp:117
+#: src/application_actions.cpp:118
 #, kde-format
 msgid "Reload Translation As..."
 msgstr "Презареждане на превода като..."
 
-#: src/application_actions.cpp:118
+#: src/application_actions.cpp:119
 #, kde-format
 msgid "Reload opened translation file with a different encoding"
 msgstr "Презареждане на отворен файл с различна кодировка"
 
-#: src/application_actions.cpp:125
+#: src/application_actions.cpp:126
 #, kde-format
 msgid "Open &Recent Translation"
 msgstr "Отваряне &скорошен превод"
 
-#: src/application_actions.cpp:133
+#: src/application_actions.cpp:134
 #, kde-format
 msgid "Save Translation"
 msgstr "Запазване на превод"
 
-#: src/application_actions.cpp:134
+#: src/application_actions.cpp:135
 #, kde-format
 msgid "Save opened translation subtitle"
 msgstr "Запазване на отворени преводни субтитри"
 
-#: src/application_actions.cpp:144
+#: src/application_actions.cpp:145
 #, kde-format
 msgid "Save Translation As..."
 msgstr "Запазване на превод като..."
 
-#: src/application_actions.cpp:145
+#: src/application_actions.cpp:146
 #, kde-format
 msgid "Save opened translation subtitle with different settings"
 msgstr "Запазване на отворени преводни субтитри с различни настройки"
 
-#: src/application_actions.cpp:153
+#: src/application_actions.cpp:154
 #, kde-format
 msgid "Close Translation"
 msgstr "Затваряне на превод"
 
-#: src/application_actions.cpp:154
+#: src/application_actions.cpp:155
 #, kde-format
 msgid "Close opened translation subtitle"
 msgstr "Затваряне на отворени преводни субтитри"
 
-#: src/application_actions.cpp:171
+#: src/application_actions.cpp:172
 #, kde-format
 msgid "Split Subtitle..."
 msgstr "Разделяне на субтитри..."
 
-#: src/application_actions.cpp:172
+#: src/application_actions.cpp:173
 #, kde-format
 msgid "Split the opened subtitle in two parts"
 msgstr "Разделяне на отворените субтитри на две части"
 
-#: src/application_actions.cpp:178
+#: src/application_actions.cpp:179
 #, kde-format
 msgid "Join Subtitles..."
 msgstr "Присъединяване на субтитри..."
 
-#: src/application_actions.cpp:179
+#: src/application_actions.cpp:180
 #, kde-format
 msgid "Append to the opened subtitle another one"
 msgstr "Добавяне към отворените субтитри на други"
 
-#: src/application_actions.cpp:186
+#: src/application_actions.cpp:187
 #, kde-format
 msgid "Insert Before"
 msgstr "Вмъкване преди"
 
-#: src/application_actions.cpp:187
+#: src/application_actions.cpp:188
 #, kde-format
 msgid "Insert empty line before current one"
 msgstr "Вмъкване на празна реплика преди текущата"
 
-#: src/application_actions.cpp:195
+#: src/application_actions.cpp:196
 #, kde-format
 msgid "Insert After"
 msgstr "Вмъкване след"
 
-#: src/application_actions.cpp:196
+#: src/application_actions.cpp:197
 #, kde-format
 msgid "Insert empty line after current one"
 msgstr "Вмъкване на празна реплика след текущата"
 
 #. i18n: ectx: property (text), widget (QPushButton, btnRemove)
-#: src/application_actions.cpp:204 src/scripting/scriptsmanager.ui:60
+#: src/application_actions.cpp:205 src/scripting/scriptsmanager.ui:60
 #, kde-format
 msgid "Remove"
 msgstr "Премахване"
 
-#: src/application_actions.cpp:205
+#: src/application_actions.cpp:206
 #, kde-format
 msgid "Remove selected lines"
 msgstr "Премахване на избрани реплики"
 
-#: src/application_actions.cpp:212 src/core/subtitle.cpp:560
+#: src/application_actions.cpp:213 src/core/subtitle.cpp:560
 #, kde-format
 msgid "Split Lines"
 msgstr "Обособяване на реплики"
 
-#: src/application_actions.cpp:213
+#: src/application_actions.cpp:214
 #, kde-format
 msgid "Split selected lines"
 msgstr "Обособяване на избрани реплики"
 
-#: src/application_actions.cpp:219 src/core/subtitle.cpp:642
+#: src/application_actions.cpp:220 src/core/subtitle.cpp:642
 #: src/gui/waveform/waveformwidget.cpp:713
 #, kde-format
 msgid "Join Lines"
 msgstr "Събиране на реплики"
 
-#: src/application_actions.cpp:220
+#: src/application_actions.cpp:221
 #, kde-format
 msgid "Join selected lines"
 msgstr "Присъединяване на избрани реплики"
 
-#: src/application_actions.cpp:227 src/errors/finderrorsdialog.cpp:114
+#: src/application_actions.cpp:228 src/errors/finderrorsdialog.cpp:114
 #: src/gui/treeview/richlineedit.cpp:112 src/widgets/simplerichtextedit.cpp:455
 #, kde-format
 msgid "Select All"
 msgstr "Избиране на всичко"
 
-#: src/application_actions.cpp:228
+#: src/application_actions.cpp:229
 #, kde-format
 msgid "Select all lines"
 msgstr "Избиране на всички реплики"
 
-#: src/application_actions.cpp:235
+#: src/application_actions.cpp:236
 #, kde-format
 msgid "Go to Line..."
 msgstr "Отиване на реплика..."
 
-#: src/application_actions.cpp:236
+#: src/application_actions.cpp:237
 #, kde-format
 msgid "Go to specified line"
 msgstr "Отиване на посочена реплика"
 
-#: src/application_actions.cpp:244
+#: src/application_actions.cpp:245
 #, kde-format
 msgid "Find..."
 msgstr "Търсене..."
 
-#: src/application_actions.cpp:245
+#: src/application_actions.cpp:246
 #, kde-format
 msgid "Find occurrences of strings or regular expressions"
 msgstr "Търсене на съществуващи низове или регулярни изрази"
 
-#: src/application_actions.cpp:253
+#: src/application_actions.cpp:254
 #, kde-format
 msgid "Find Next"
 msgstr "Търсене на следващ"
 
-#: src/application_actions.cpp:254
+#: src/application_actions.cpp:255
 #, kde-format
 msgid "Find next occurrence of string or regular expression"
 msgstr "Търсене на следващ съществуващ низ или регулярен израз"
 
-#: src/application_actions.cpp:262
+#: src/application_actions.cpp:263
 #, kde-format
 msgid "Find Previous"
 msgstr "Търсене на предишен"
 
-#: src/application_actions.cpp:263
+#: src/application_actions.cpp:264
 #, kde-format
 msgid "Find previous occurrence of string or regular expression"
 msgstr "Търсене на предишен съществуващ низ или регулярен израз"
 
-#: src/application_actions.cpp:270
+#: src/application_actions.cpp:271
 #, kde-format
 msgid "Replace..."
 msgstr "Замяна..."
 
-#: src/application_actions.cpp:271
+#: src/application_actions.cpp:272
 #, kde-format
 msgid "Replace occurrences of strings or regular expressions"
 msgstr "Замяна на съществуващи низове или регулярни изрази"
 
-#: src/application_actions.cpp:279
+#: src/application_actions.cpp:280
 #, kde-format
 msgid "Retrocede current line"
 msgstr "Изтегляне на текущата реплика"
 
-#: src/application_actions.cpp:280
+#: src/application_actions.cpp:281
 #, kde-format
 msgid "Makes the line before the current one active"
 msgstr "Прави активна репликата преди текущата"
 
-#: src/application_actions.cpp:288
+#: src/application_actions.cpp:289
 #, kde-format
 msgid "Advance current line"
 msgstr "Изместване напред на текущата реплика"
 
-#: src/application_actions.cpp:289
+#: src/application_actions.cpp:290
 #, kde-format
 msgid "Makes the line after the current one active"
 msgstr "Прави активна репликата след текущата"
 
-#: src/application_actions.cpp:297
+#: src/application_actions.cpp:298
 #, fuzzy, kde-format
 msgid "Detect Errors..."
 msgstr "Проверяване за грешки..."
 
-#: src/application_actions.cpp:298
+#: src/application_actions.cpp:299
 #, fuzzy, kde-format
 msgid "Detect errors in the current subtitle"
 msgstr "Проверка за грешки в текущите субтитри"
 
-#: src/application_actions.cpp:305
+#: src/application_actions.cpp:306
 #, fuzzy, kde-format
 msgid "Clear Errors/Marks"
 msgstr "Изчистване на грешките"
 
-#: src/application_actions.cpp:306
+#: src/application_actions.cpp:307
 #, fuzzy, kde-format
 msgid "Clear detected errors and marks in the current subtitle"
 msgstr "Проверка за грешки в текущите субтитри"
 
-#: src/application_actions.cpp:314
+#: src/application_actions.cpp:315
 #, kde-format
 msgid "Select Next Error/Mark"
 msgstr ""
 
-#: src/application_actions.cpp:315
+#: src/application_actions.cpp:316
 #, kde-format
 msgid "Select next line with error or mark"
 msgstr ""
 
-#: src/application_actions.cpp:323
+#: src/application_actions.cpp:324
 #, fuzzy, kde-format
 msgid "Select Previous Error/Mark"
 msgstr "Търсене предишна грешка"
 
-#: src/application_actions.cpp:324
+#: src/application_actions.cpp:325
 #, fuzzy, kde-format
 msgid "Select previous line with error or mark"
 msgstr "Търсене предишна реплика с определени грешки"
 
-#: src/application_actions.cpp:332
+#: src/application_actions.cpp:333
 #, kde-format
 msgid "Spelling..."
 msgstr "Проверка на правописа..."
 
-#: src/application_actions.cpp:333
+#: src/application_actions.cpp:334
 #, kde-format
 msgid "Check lines spelling"
 msgstr "Проверка на правописа на репликите"
 
-#: src/application_actions.cpp:339
+#: src/application_actions.cpp:340
 #, kde-format
 msgid "Toggle Mark"
 msgstr "Маркиране"
 
-#: src/application_actions.cpp:340
+#: src/application_actions.cpp:341
 #, fuzzy, kde-format
 msgid "Toggle mark on selected lines"
 msgstr "Включване на маркировката за избрани реплики"
 
-#: src/application_actions.cpp:348 src/gui/currentlinewidget.cpp:322
+#: src/application_actions.cpp:349 src/gui/currentlinewidget.cpp:322
 #, kde-format
 msgid "Toggle Bold"
 msgstr "Включване на получер"
 
-#: src/application_actions.cpp:349
+#: src/application_actions.cpp:350
 #, kde-format
 msgid "Toggle selected lines bold attribute"
 msgstr "Включване на получер за избраните реплики"
 
-#: src/application_actions.cpp:357 src/gui/currentlinewidget.cpp:326
+#: src/application_actions.cpp:358 src/gui/currentlinewidget.cpp:326
 #, kde-format
 msgid "Toggle Italic"
 msgstr "Включване на курсив"
 
-#: src/application_actions.cpp:358
+#: src/application_actions.cpp:359
 #, kde-format
 msgid "Toggle selected lines italic attribute"
 msgstr "Включване на курсив за избраните реплики"
 
-#: src/application_actions.cpp:366 src/gui/currentlinewidget.cpp:330
+#: src/application_actions.cpp:367 src/gui/currentlinewidget.cpp:330
 #, kde-format
 msgid "Toggle Underline"
 msgstr "Включване на подчертаване"
 
-#: src/application_actions.cpp:367
+#: src/application_actions.cpp:368
 #, kde-format
 msgid "Toggle selected lines underline attribute"
 msgstr "Включване на подчертаване за избраните реплики"
 
-#: src/application_actions.cpp:375 src/gui/currentlinewidget.cpp:334
+#: src/application_actions.cpp:376 src/gui/currentlinewidget.cpp:334
 #, kde-format
 msgid "Toggle Strike Through"
 msgstr "Включване на зачертаване"
 
-#: src/application_actions.cpp:376
+#: src/application_actions.cpp:377
 #, kde-format
 msgid "Toggle selected lines strike through attribute"
 msgstr "Включване на зачертаване за избраните реплики"
 
-#: src/application_actions.cpp:384 src/gui/currentlinewidget.cpp:338
+#: src/application_actions.cpp:385 src/gui/currentlinewidget.cpp:338
 #, kde-format
 msgid "Change Text Color"
 msgstr "Промяна на цвета на текста"
 
-#: src/application_actions.cpp:385
+#: src/application_actions.cpp:386
 #, kde-format
 msgid "Change text color of selected lines"
 msgstr "Промяна цвета на избраните реплики"
 
-#: src/application_actions.cpp:392
+#: src/application_actions.cpp:393
 #, kde-format
 msgid "Shift..."
 msgstr "Изместване..."
 
-#: src/application_actions.cpp:393
+#: src/application_actions.cpp:394
 #, kde-format
 msgid "Shift lines an specified amount of time"
 msgstr "Изместване на репликите със даден период от време"
 
-#: src/application_actions.cpp:412
+#: src/application_actions.cpp:413
 #, kde-format
 msgid "Adjust..."
 msgstr "Нагаждане..."
 
-#: src/application_actions.cpp:413
+#: src/application_actions.cpp:414
 #, kde-format
 msgid "Linearly adjust all lines to a specified interval"
 msgstr "Линейно нагаждане на всички реплики към зададен интервал"
 
-#: src/application_actions.cpp:420
+#: src/application_actions.cpp:421
 #, kde-format
 msgid "Change Frame Rate..."
 msgstr "Промяна на кадри в секунда..."
 
-#: src/application_actions.cpp:421
+#: src/application_actions.cpp:422
 #, kde-format
 msgid "Retime subtitle lines by reinterpreting its frame rate"
 msgstr ""
 "Преработване на времената на репликите, като се реинтерпретират кадрите в "
 "секунда"
 
-#: src/application_actions.cpp:427
+#: src/application_actions.cpp:428
 #, kde-format
 msgid "Enforce Duration Limits..."
 msgstr "Налагане на ограничения за продължителността..."
 
-#: src/application_actions.cpp:428
+#: src/application_actions.cpp:429
 #, kde-format
 msgid "Enforce lines minimum and/or maximum duration limits"
 msgstr ""
 "Налагане на ограничения за минималната и/или максималната продължителност"
 
-#: src/application_actions.cpp:435
+#: src/application_actions.cpp:436
 #, kde-format
 msgid "Set Automatic Durations..."
 msgstr "Задаване на автоматична продължителност..."
 
-#: src/application_actions.cpp:436
+#: src/application_actions.cpp:437
 #, kde-format
 msgid "Set lines durations based on amount of letters, words and line breaks"
 msgstr ""
 "Задаване на продължителност на репликите на базата на букви, думи и нов ред "
 "в репликите"
 
-#: src/application_actions.cpp:442
+#: src/application_actions.cpp:443
 #, kde-format
 msgid "Maximize Durations..."
 msgstr "Максимизиране на продължителностите"
 
-#: src/application_actions.cpp:443
+#: src/application_actions.cpp:444
 #, kde-format
 msgid "Extend lines durations up to their next lines show time"
 msgstr ""
 "Удължаване на продължителността на репликите до времето за показване на "
 "следваща реплика"
 
-#: src/application_actions.cpp:449
+#: src/application_actions.cpp:450
 #, kde-format
 msgid "Fix Overlapping Times..."
 msgstr "Поправяне на презастъпващи се времена..."
 
-#: src/application_actions.cpp:450
+#: src/application_actions.cpp:451
 #, kde-format
 msgid "Fix lines overlapping times"
 msgstr "Поправка на презастъпващи се времена на репликите"
 
-#: src/application_actions.cpp:456
+#: src/application_actions.cpp:457
 #, kde-format
 msgid "Synchronize with Subtitle..."
 msgstr "Синхронизиране със субтитри..."
 
-#: src/application_actions.cpp:457
+#: src/application_actions.cpp:458
 #, kde-format
 msgid "Copy timing information from another subtitle"
 msgstr "Копиране на информацията за времената на репликите от други субтитри"
 
-#: src/application_actions.cpp:463
+#: src/application_actions.cpp:464
 #, kde-format
 msgid "Break Lines..."
 msgstr "Нов ред в репликите..."
 
-#: src/application_actions.cpp:464
+#: src/application_actions.cpp:465
 #, kde-format
 msgid "Automatically set line breaks"
 msgstr "Задаване на автоматичен нов ред в репликите"
 
-#: src/application_actions.cpp:470
+#: src/application_actions.cpp:471
 #, kde-format
 msgid "Unbreak Lines..."
 msgstr "Събиране редовете на репликите..."
 
-#: src/application_actions.cpp:471
+#: src/application_actions.cpp:472
 #, kde-format
 msgid "Remove line breaks from lines"
 msgstr "Премахване новите редове от репликите"
 
-#: src/application_actions.cpp:477
+#: src/application_actions.cpp:478
 #, kde-format
 msgid "Simplify Spaces..."
 msgstr "Опростяване на интервалите..."
 
-#: src/application_actions.cpp:478
+#: src/application_actions.cpp:479
 #, kde-format
 msgid "Remove unneeded spaces from lines"
 msgstr "Премахване на ненужни интервали (и повтарящи се символи) от репликите"
 
-#: src/application_actions.cpp:484
+#: src/application_actions.cpp:485
 #, kde-format
 msgid "Change Case..."
 msgstr "Промяна на регистъра на буквите..."
 
-#: src/application_actions.cpp:485
+#: src/application_actions.cpp:486
 #, kde-format
 msgid "Change lines text to upper, lower, title or sentence case"
 msgstr ""
 "Промяна на регистъра на репликите до горен, долен, заглавен или \"изречение\""
 
-#: src/application_actions.cpp:491
+#: src/application_actions.cpp:492
 #, kde-format
 msgid "Fix Punctuation..."
 msgstr "Поправяне на пунктуация..."
 
-#: src/application_actions.cpp:492
+#: src/application_actions.cpp:493
 #, kde-format
 msgid "Fix punctuation errors in lines"
 msgstr "Поправяне на пунктуационни грешки в репликите"
 
-#: src/application_actions.cpp:498
+#: src/application_actions.cpp:499
 #, kde-format
 msgid "Translate..."
 msgstr "Превод..."
 
-#: src/application_actions.cpp:499
+#: src/application_actions.cpp:500
 #, kde-format
 msgid "Translate lines texts using Google services"
 msgstr "Превод на текста на репликите с помощта на Google"
 
-#: src/application_actions.cpp:505
+#: src/application_actions.cpp:506
 #, kde-format
 msgid "Edit Line in Place"
 msgstr "Редактиране на репликата на място"
 
-#: src/application_actions.cpp:506
+#: src/application_actions.cpp:507
 #, kde-format
 msgid "Edit current line text in place"
 msgstr "Редактиране на текста на текущата реплика на място"
 
-#: src/application_actions.cpp:514
+#: src/application_actions.cpp:515
 #, kde-format
 msgid "Open Video..."
 msgstr "Отваряне на видео..."
 
-#: src/application_actions.cpp:515 src/application_actions.cpp:522
+#: src/application_actions.cpp:516 src/application_actions.cpp:523
 #, kde-format
 msgid "Open video file"
 msgstr "Отваряне на видео файл"
 
-#: src/application_actions.cpp:521
+#: src/application_actions.cpp:522
 #, kde-format
 msgid "Open &Recent Video"
 msgstr "Отваряне &скорошно видео"
 
-#: src/application_actions.cpp:528
+#: src/application_actions.cpp:529
 #, kde-format
 msgid "Import Subtitle Stream"
 msgstr ""
 
-#: src/application_actions.cpp:529
+#: src/application_actions.cpp:530
 #, kde-format
 msgid "Import subtitle stream into subtitle editor"
 msgstr ""
 
-#: src/application_actions.cpp:535
+#: src/application_actions.cpp:536
 #, kde-format
 msgid "Recognize Speech"
 msgstr ""
 
-#: src/application_actions.cpp:536
+#: src/application_actions.cpp:537
 #, kde-format
 msgid "Recognize speech in audio stream"
 msgstr ""
 
-#: src/application_actions.cpp:542
+#: src/application_actions.cpp:543
 #, kde-format
 msgid "Close Video"
 msgstr "Затваряне на видео"
 
-#: src/application_actions.cpp:543
+#: src/application_actions.cpp:544
 #, kde-format
 msgid "Close video file"
 msgstr "Затваряне на видео файл"
 
-#: src/application_actions.cpp:550
+#: src/application_actions.cpp:551
 #, kde-format
 msgid "Full Screen Mode"
 msgstr "Пълноекранен режим на работа"
 
-#: src/application_actions.cpp:551
+#: src/application_actions.cpp:552
 #, kde-format
 msgid "Toggle full screen mode"
 msgstr "Включване/изключване на пълноекранен режим на работа"
 
-#: src/application_actions.cpp:558
+#: src/application_actions.cpp:559
 #, kde-format
 msgid "Stop"
 msgstr "Стоп"
 
-#: src/application_actions.cpp:559
+#: src/application_actions.cpp:560
 #, kde-format
 msgid "Stop video playback"
 msgstr "Спиране на изпълнение на видео"
 
-#: src/application_actions.cpp:567
+#: src/application_actions.cpp:568
 #, kde-format
 msgid "Toggle video playing/paused"
 msgstr "Включване/изключване на видео изпълнение/пауза"
 
-#: src/application_actions.cpp:575
+#: src/application_actions.cpp:576
 #, kde-format
 msgid "Seek Backward"
 msgstr ""
 
-#: src/application_actions.cpp:583
+#: src/application_actions.cpp:584
 #, kde-format
 msgid "Seek Forward"
 msgstr ""
 
-#: src/application_actions.cpp:590
+#: src/application_actions.cpp:591
 #, kde-format
 msgid "Frame Step Backward"
 msgstr ""
 
-#: src/application_actions.cpp:597
+#: src/application_actions.cpp:598
 #, kde-format
 msgid "Frame Step Forward"
 msgstr ""
 
-#: src/application_actions.cpp:605
+#: src/application_actions.cpp:606
 #, fuzzy, kde-format
 msgid "Seek to Previous Line"
 msgstr "Скачане на предишната реплика"
 
-#: src/application_actions.cpp:606
+#: src/application_actions.cpp:607
 #, kde-format
 msgid "Seek to previous subtitle line show time"
 msgstr "Обход до времето за показване на предишната реплика в субтитрите"
 
-#: src/application_actions.cpp:614
+#: src/application_actions.cpp:615
 #, kde-format
 msgid "Increase media play rate"
 msgstr ""
 
-#: src/application_actions.cpp:615
+#: src/application_actions.cpp:616
 #, kde-format
 msgid "Increase media playback rate"
 msgstr ""
 
-#: src/application_actions.cpp:622
+#: src/application_actions.cpp:623
 #, kde-format
 msgid "Decrease media play rate"
 msgstr ""
 
-#: src/application_actions.cpp:623
+#: src/application_actions.cpp:624
 #, kde-format
 msgid "Decrease media playback rate"
 msgstr ""
 
-#: src/application_actions.cpp:629
+#: src/application_actions.cpp:630
 #, kde-format
 msgid "Play Current Line and Pause"
 msgstr ""
 
-#: src/application_actions.cpp:630
+#: src/application_actions.cpp:631
 #, fuzzy, kde-format
 msgid "Seek to selected subtitle line show time, play it and then pause"
 msgstr "Обход до времето за показване на следващата реплика в субтитрите"
 
-#: src/application_actions.cpp:637
+#: src/application_actions.cpp:638
 #, fuzzy, kde-format
 msgid "Seek to Current Line"
 msgstr "Задаване на времето за показване на текущата реплика"
 
-#: src/application_actions.cpp:638
+#: src/application_actions.cpp:639
 #, fuzzy, kde-format
 msgid "Seek to selected subtitle line show time"
 msgstr "Обход до времето за показване на следващата реплика в субтитрите"
 
-#: src/application_actions.cpp:645
+#: src/application_actions.cpp:646
 #, fuzzy, kde-format
 msgid "Seek to Next Line"
 msgstr "Скачане на следващата реплика"
 
-#: src/application_actions.cpp:646
+#: src/application_actions.cpp:647
 #, kde-format
 msgid "Seek to next subtitle line show time"
 msgstr "Обход до времето за показване на следващата реплика в субтитрите"
 
-#: src/application_actions.cpp:654
+#: src/application_actions.cpp:655
 #, fuzzy, kde-format
 msgid "Set Line Show Time to Video Position"
 msgstr ""
 "Задаване на времето за показване на текущата реплика в момент от "
 "изпълнението на видео файла"
 
-#: src/application_actions.cpp:655
+#: src/application_actions.cpp:656
 #, kde-format
 msgid "Set current line show time to video position"
 msgstr ""
 "Задаване на времето за показване на текущата реплика в момент от "
 "изпълнението на видео файла"
 
-#: src/application_actions.cpp:663
+#: src/application_actions.cpp:664
 #, fuzzy, kde-format
 msgid "Set Line Hide Time to Video Position"
 msgstr ""
 "Задаване на времето за скриване на текущата реплика в момент от изпълнението "
 "на видео файла"
 
-#: src/application_actions.cpp:664
+#: src/application_actions.cpp:665
 #, kde-format
 msgid "Set current line hide time to video position"
 msgstr ""
 "Задаване на времето за скриване на текущата реплика в момент от изпълнението "
 "на видео файла"
 
-#: src/application_actions.cpp:671
+#: src/application_actions.cpp:672
 #, fuzzy, kde-format
 msgid "Shift Current Line to Video Position"
 msgstr "Изместване до позиция във видеото"
 
-#: src/application_actions.cpp:672
+#: src/application_actions.cpp:673
 #, kde-format
 msgid ""
 "Set current line show time to video position by equally shifting all lines"
@@ -924,136 +874,136 @@ msgstr ""
 "Задаване времето за показване на текущата реплика към позицията във видеото "
 "с изместване на всички останали реплики"
 
-#: src/application_actions.cpp:680
+#: src/application_actions.cpp:681
 #, kde-format
 msgid "Current Line Follows Video"
 msgstr "Текущата реплика винаги следва видеото"
 
-#: src/application_actions.cpp:681
+#: src/application_actions.cpp:682
 #, kde-format
 msgid "Make current line follow the playing video position"
 msgstr "Текущата реплика ще се променя заедно с изпълнението на видеото"
 
-#: src/application_actions.cpp:687
+#: src/application_actions.cpp:688
 #, kde-format
 msgctxt "@action:inmenu Toggle audio muted"
 msgid "Mute"
 msgstr "Заглушаване"
 
-#: src/application_actions.cpp:688
+#: src/application_actions.cpp:689
 #, kde-format
 msgid "Enable/disable playback sound"
 msgstr "Включване/изключване на звука"
 
-#: src/application_actions.cpp:695
+#: src/application_actions.cpp:696
 #, kde-format
 msgid "Increase Volume"
 msgstr "Увеличаване на звука"
 
-#: src/application_actions.cpp:696
+#: src/application_actions.cpp:697
 #, kde-format
 msgid "Increase volume by 5%"
 msgstr "Увеличаване на звука с 5%"
 
-#: src/application_actions.cpp:703
+#: src/application_actions.cpp:704
 #, kde-format
 msgid "Decrease Volume"
 msgstr "Намаляване на звука"
 
-#: src/application_actions.cpp:704
+#: src/application_actions.cpp:705
 #, kde-format
 msgid "Decrease volume by 5%"
 msgstr "Намаляване на звука с 5%"
 
-#: src/application_actions.cpp:711
+#: src/application_actions.cpp:712
 #, kde-format
 msgid "Audio Streams"
 msgstr "Аудио канали"
 
-#: src/application_actions.cpp:712
+#: src/application_actions.cpp:713
 #, kde-format
 msgid "Select active audio stream"
 msgstr "Избиране на активен аудио канал"
 
-#: src/application_actions.cpp:723
+#: src/application_actions.cpp:724
 #, kde-format
 msgid "Increase Font Size"
 msgstr "Увеличаване кегела на шрифта"
 
-#: src/application_actions.cpp:724
+#: src/application_actions.cpp:725
 #, kde-format
 msgid "Increase subtitles font size by 1 point"
 msgstr "Увеличаване на размера на шрифта с единица"
 
-#: src/application_actions.cpp:731
+#: src/application_actions.cpp:732
 #, kde-format
 msgid "Decrease Font Size"
 msgstr "Намаляване на кегела на шрифта"
 
-#: src/application_actions.cpp:732
+#: src/application_actions.cpp:733
 #, kde-format
 msgid "Decrease subtitles font size by 1 point"
 msgstr "Намаляване на размера на шрифта с единица"
 
-#: src/application_actions.cpp:739
+#: src/application_actions.cpp:740
 #, kde-format
 msgid "Displayed Subtitle Text"
 msgstr ""
 
-#: src/application_actions.cpp:740
+#: src/application_actions.cpp:741
 #, kde-format
 msgid "Select visible subtitle text"
 msgstr ""
 
-#: src/application_actions.cpp:751 src/gui/waveform/waveformwidget.cpp:737
+#: src/application_actions.cpp:752 src/gui/waveform/waveformwidget.cpp:737
 #, kde-format
 msgid "Toggle Anchor"
 msgstr ""
 
-#: src/application_actions.cpp:752
+#: src/application_actions.cpp:753
 #, kde-format
 msgid ""
 "(Un)Anchor current line's show time to timeline (Editing anchored line's "
 "show time will stretch/compact the timeline between adjacent anchors)"
 msgstr ""
 
-#: src/application_actions.cpp:759
+#: src/application_actions.cpp:760
 #, kde-format
 msgid "Remove All Anchors"
 msgstr ""
 
-#: src/application_actions.cpp:760
+#: src/application_actions.cpp:761
 #, kde-format
 msgid "Unanchor show time from the timeline on all anchored lines"
 msgstr ""
 
-#: src/application_actions.cpp:768
+#: src/application_actions.cpp:769
 #, kde-format
 msgctxt "@action:inmenu Manage user scripts"
 msgid "Scripts Manager..."
 msgstr "Управление на скриптовете..."
 
-#: src/application_actions.cpp:769
+#: src/application_actions.cpp:770
 #, kde-format
 msgid "Manage user scripts"
 msgstr "Управление на потребителски скриптове"
 
-#: src/application_actions.cpp:776 src/application_actions.cpp:777
+#: src/application_actions.cpp:777 src/application_actions.cpp:778
 #, kde-format
 msgid "Waveform Zoom In"
 msgstr ""
 
-#: src/application_actions.cpp:783 src/application_actions.cpp:784
+#: src/application_actions.cpp:784 src/application_actions.cpp:785
 #, kde-format
 msgid "Waveform Zoom Out"
 msgstr ""
 
-#: src/application_actions.cpp:791
+#: src/application_actions.cpp:792
 #, kde-format
 msgid "Waveform Auto Scroll"
 msgstr ""
 
-#: src/application_actions.cpp:792
+#: src/application_actions.cpp:793
 #, kde-format
 msgid "Waveform display will automatically scroll to video position"
 msgstr ""
@@ -2237,7 +2187,7 @@ msgstr "Последна произнесена реплика:"
 #: src/dialogs/fixoverlappingtimesdialog.cpp:20
 #: src/dialogs/fixpunctuationdialog.cpp:19
 #: src/dialogs/smarttextsadjustdialog.cpp:20
-#: src/dialogs/splitsubtitledialog.cpp:29 src/dialogs/translatedialog.cpp:22
+#: src/dialogs/splitsubtitledialog.cpp:29
 #, kde-format
 msgctxt "@title:group"
 msgid "Settings"
@@ -2569,16 +2519,6 @@ msgid "Copy timing information from reference line by line"
 msgstr ""
 "Копиране на информацията за времената от отправните субтитри реплика по "
 "реплика"
-
-#: src/dialogs/translatedialog.cpp:37
-#, kde-format
-msgid "Input language:"
-msgstr "Входящ език:"
-
-#: src/dialogs/translatedialog.cpp:53
-#, kde-format
-msgid "Output language:"
-msgstr "Изходящ език:"
 
 #: src/errors/errorfinder.cpp:173 src/errors/finderrorsdialog.cpp:17
 #, kde-format
@@ -3450,6 +3390,63 @@ msgstr ""
 msgid "Outline Width"
 msgstr ""
 
+#. i18n: ectx: label, entry (translateEngine), group (Translation)
+#: src/scconfig.kcfg:224
+#, fuzzy, kde-format
+#| msgid "Has untranslated text."
+msgid "Last used translate engine"
+msgstr "Има непреведен текст"
+
+#. i18n: ectx: label, entry (gctServiceJSON), group (GoogleCloudTranslate)
+#: src/scconfig.kcfg:231
+#, kde-format
+msgid "Service Account JSON containing private key"
+msgstr ""
+
+#. i18n: ectx: label, entry (gctLangSource), group (GoogleCloudTranslate)
+#. i18n: ectx: label, entry (dltLangSource), group (DeepLTranslate)
+#: src/scconfig.kcfg:234 src/scconfig.kcfg:258
+#, kde-format
+msgid "source langauge - cached"
+msgstr ""
+
+#. i18n: ectx: label, entry (gctLangTrans), group (GoogleCloudTranslate)
+#. i18n: ectx: label, entry (dltLangTrans), group (DeepLTranslate)
+#: src/scconfig.kcfg:237 src/scconfig.kcfg:261
+#, kde-format
+msgid "translation langauge - cached"
+msgstr ""
+
+#. i18n: ectx: label, entry (gctAccessToken), group (GoogleCloudTranslate)
+#: src/scconfig.kcfg:240
+#, kde-format
+msgid "access token - cached"
+msgstr ""
+
+#. i18n: ectx: label, entry (gctTokenExpires), group (GoogleCloudTranslate)
+#: src/scconfig.kcfg:243
+#, kde-format
+msgid "access token expiry - cached"
+msgstr ""
+
+#. i18n: ectx: label, entry (gctTokenType), group (GoogleCloudTranslate)
+#: src/scconfig.kcfg:246
+#, kde-format
+msgid "access token type - cached"
+msgstr ""
+
+#. i18n: ectx: label, entry (dltAuthKey), group (DeepLTranslate)
+#: src/scconfig.kcfg:252
+#, kde-format
+msgid "DeepL API authentication key"
+msgstr ""
+
+#. i18n: ectx: label, entry (dltApiDomain), group (DeepLTranslate)
+#: src/scconfig.kcfg:255
+#, kde-format
+msgid "DeepL API domain name"
+msgstr ""
+
 #: src/scripting/scriptsmanager.cpp:84
 #, kde-format
 msgid "Non-Script Files"
@@ -3896,6 +3893,152 @@ msgstr "Главна лента с инструменти"
 msgid "Edit Toolbar"
 msgstr "Лента с инструменти за редактиране"
 
+#: src/translate/deeplengine.cpp:56 src/translate/googlecloudengine.cpp:136
+#, kde-format
+msgid ""
+"Remote service error %1 %2\n"
+"%3"
+msgstr ""
+
+#: src/translate/deeplengine.cpp:65 src/translate/googlecloudengine.cpp:145
+#, kde-format
+msgid ""
+"HTTP Error %1 - %2\n"
+"%2"
+msgstr ""
+
+#: src/translate/deeplengine.cpp:70 src/translate/googlecloudengine.cpp:150
+#, kde-format
+msgid ""
+"Network Error %1\n"
+"%2"
+msgstr ""
+
+#: src/translate/deeplengine.cpp:76
+#, fuzzy, kde-format
+#| msgid "Set Line Errors"
+msgid "DeepL Engine Error"
+msgstr "Задаване грешки за репликата"
+
+#: src/translate/deeplengine.cpp:128 src/translate/googlecloudengine.cpp:300
+#, fuzzy, kde-format
+#| msgid "Output language:"
+msgid "Autodetect Language"
+msgstr "Изходящ език:"
+
+#. i18n: ectx: property (title), widget (QGroupBox, grpAuth)
+#: src/translate/deeplengine.ui:17 src/translate/googlecloudengine.ui:17
+#, kde-format
+msgid "Authentication"
+msgstr ""
+
+#. i18n: ectx: property (text), widget (QLabel, labAuthKey)
+#: src/translate/deeplengine.ui:23
+#, kde-format
+msgid "Authentication Key:"
+msgstr ""
+
+#. i18n: ectx: property (text), widget (QPushButton, btnConnect)
+#: src/translate/deeplengine.ui:33
+#, kde-format
+msgid "Connect"
+msgstr ""
+
+#. i18n: ectx: property (text), widget (QLabel, labApiDomain)
+#: src/translate/deeplengine.ui:66
+#, kde-format
+msgid "API Domain:"
+msgstr ""
+
+#. i18n: ectx: property (text), widget (QLabel, labHelp)
+#: src/translate/deeplengine.ui:82
+#, kde-format
+msgid ""
+"You need to <a href=\"https://www.deepl.com/pro-api\">create an account</a> "
+"on DeepL website and paste your API authentication key below."
+msgstr ""
+
+#. i18n: ectx: property (title), widget (QGroupBox, grpSettings)
+#: src/translate/deeplengine.ui:104 src/translate/googlecloudengine.ui:91
+#, fuzzy, kde-format
+#| msgctxt "@title:group"
+#| msgid "Settings"
+msgid "Settings"
+msgstr "Настройки"
+
+#. i18n: ectx: property (text), widget (QLabel, labSource)
+#: src/translate/deeplengine.ui:110 src/translate/googlecloudengine.ui:97
+#, fuzzy, kde-format
+#| msgid "Input language:"
+msgid "Source language:"
+msgstr "Входящ език:"
+
+#. i18n: ectx: property (text), widget (QLabel, labTranslation)
+#: src/translate/deeplengine.ui:120 src/translate/googlecloudengine.ui:107
+#, fuzzy, kde-format
+#| msgid "Translate"
+msgid "Translate to:"
+msgstr "Превод"
+
+#: src/translate/googlecloudengine.cpp:156
+#: src/translate/googlecloudengine.cpp:202
+#: src/translate/googlecloudengine.cpp:211
+#, kde-format
+msgid "Google Cloud Engine Error"
+msgstr ""
+
+#: src/translate/googlecloudengine.cpp:201
+#, fuzzy, kde-format
+msgid "Error opening file '%1'"
+msgstr "Грешка в работата на скрипта"
+
+#: src/translate/googlecloudengine.cpp:210
+#, kde-format
+msgid "Error parsing JSON from file '%1'"
+msgstr ""
+
+#. i18n: ectx: property (text), widget (QLabel, labelServiceJSON)
+#: src/translate/googlecloudengine.ui:23
+#, kde-format
+msgid "Service Account's Private Key JSON:"
+msgstr ""
+
+#. i18n: ectx: property (text), widget (QPushButton, btnLogin)
+#: src/translate/googlecloudengine.ui:36
+#, kde-format
+msgid "Login"
+msgstr ""
+
+#. i18n: ectx: property (text), widget (QLabel, labHelp)
+#: src/translate/googlecloudengine.ui:62
+#, kde-format
+msgid ""
+"<p>You need to <a href=\"https://developers.google.com/identity/protocols/"
+"oauth2/service-account#creatinganaccount\">create a Service Account</a> in "
+"Google Cloud Console and provide public/private key JSON file below.</"
+"p><p>The Service Account needs to be assigned <span style=\" text-"
+"decoration: underline;\">Cloud Translation API User</span> role on IAM page "
+"or must be granted access to the Google's Cloud Translation APIs in a "
+"different manner.</p>"
+msgstr ""
+
+#: src/translate/translatedialog.cpp:28
+#, kde-format
+msgid "Translate"
+msgstr "Превод"
+
+#: src/translate/translatedialog.cpp:41
+#, fuzzy, kde-format
+#| msgid "Untranslated text"
+msgid "Translate texts in"
+msgstr "Непреведен текст"
+
+#: src/translate/translatedialog.cpp:72
+#, fuzzy, kde-format
+#| msgid "Untranslated text"
+msgid "Translate texts"
+msgstr "Непреведен текст"
+
 #: src/utils/finder.cpp:45
 #, kde-format
 msgid "Find In"
@@ -3947,17 +4090,6 @@ msgstr ""
 "Краят на на избраната област беше достигнат.\n"
 "Започване отначало?"
 
-#: src/utils/language.cpp:115
-#, kde-format
-msgid "Automatic"
-msgstr "Автоматично"
-
-#: src/utils/language.cpp:122
-#, kde-format
-msgctxt "Official language of the Philippines, aka Filipino"
-msgid "Tagalog"
-msgstr "Тагалог"
-
 #: src/utils/replacer.cpp:43
 #, kde-format
 msgid "Find/Replace In"
@@ -3972,16 +4104,6 @@ msgstr "Замяна"
 #, kde-format
 msgid "Spell Checking"
 msgstr "Проверка на правописа"
-
-#: src/utils/translator.cpp:165
-#, fuzzy, kde-format
-msgid "Operation canceled by user"
-msgstr "Операцията беше отменена от потребителя"
-
-#: src/utils/translator.cpp:265 src/utils/translator.cpp:274
-#, kde-format
-msgid "Unexpected contents received from translation service"
-msgstr "От услугата за превод беше получено непредвидено съдържание"
 
 #: src/videoplayer/backend/videostate.cpp:110
 #, fuzzy, kde-format
@@ -4042,3 +4164,48 @@ msgstr "Автоматична проверка на правописа"
 #, kde-format
 msgid "Allow Tabulations"
 msgstr "Позволяване на табулации"
+
+#~ msgid "Translating text (%1 to %2)..."
+#~ msgstr "Превод на текст (%1 до %2)..."
+
+#~ msgid "Translating primary text (%1 to %2)..."
+#~ msgstr "Превод на оригинален текст  (%1 до %2)..."
+
+#~ msgid "Translating secondary text (%1 to %2)..."
+#~ msgstr "Превод на преводен текст  (%1 до %2)..."
+
+#~ msgid ""
+#~ "Unable to perform texts synchronization (sent and received lines count do "
+#~ "not match)."
+#~ msgstr ""
+#~ "Неуспех при синхронизацията (броят на получените и изпратените реплики не "
+#~ "съвпада)."
+
+#~ msgid "Translate Primary Text"
+#~ msgstr "Превод на оригинален текст"
+
+#~ msgid "Translate Secondary Text"
+#~ msgstr "Превод на преводен текст"
+
+#~ msgid ""
+#~ "There was an error performing the translation:\n"
+#~ "\n"
+#~ "%1"
+#~ msgstr ""
+#~ "При превода възникна грешка:\n"
+#~ "\n"
+#~ "%1"
+
+#~ msgid "Automatic"
+#~ msgstr "Автоматично"
+
+#~ msgctxt "Official language of the Philippines, aka Filipino"
+#~ msgid "Tagalog"
+#~ msgstr "Тагалог"
+
+#, fuzzy
+#~ msgid "Operation canceled by user"
+#~ msgstr "Операцията беше отменена от потребителя"
+
+#~ msgid "Unexpected contents received from translation service"
+#~ msgstr "От услугата за превод беше получено непредвидено съдържание"

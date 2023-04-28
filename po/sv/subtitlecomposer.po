@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: subtitlecomposer\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-04-26 00:48+0000\n"
+"POT-Creation-Date: 2023-04-28 00:47+0000\n"
 "PO-Revision-Date: 2022-03-23 18:36+0100\n"
 "Last-Translator: Stefan Asserhäll <stefan.asserhall@bredband.net>\n"
 "Language-Team: Swedish <kde-i18n-doc@kde.org>\n"
@@ -35,871 +35,821 @@ msgctxt "Encodings menu"
 msgid "Autodetect"
 msgstr "Detektera automatiskt"
 
-#: src/application.cpp:497
+#: src/application.cpp:495
 #, kde-format
 msgid "Go to Line"
 msgstr "Gå till rad"
 
-#: src/application.cpp:497
+#: src/application.cpp:495
 #, kde-format
 msgid "&Go to line:"
 msgstr "&Gå till rad:"
 
-#: src/application.cpp:670 src/core/subtitle.cpp:878
+#: src/application.cpp:668 src/core/subtitle.cpp:878
 #, kde-format
 msgid "Maximize Durations"
 msgstr "Maximera varaktighet"
 
-#: src/application.cpp:698 src/core/subtitle.cpp:1153
+#: src/application.cpp:696 src/core/subtitle.cpp:1153
 #, kde-format
 msgid "Unbreak Lines"
 msgstr "Sätt ihop rader"
 
-#: src/application.cpp:709 src/core/subtitle.cpp:1162
+#: src/application.cpp:707 src/core/subtitle.cpp:1162
 #, kde-format
 msgid "Simplify Spaces"
 msgstr "Förenkla mellanslag"
 
-#: src/application.cpp:764 src/dialogs/translatedialog.cpp:20
-#, kde-format
-msgid "Translate"
-msgstr "Översätt"
-
-#: src/application.cpp:764
-#, kde-format
-msgid "Translating text (%1 to %2)..."
-msgstr "Översätter text (%1 till %2)..."
-
 #: src/application.cpp:768
-#, kde-format
-msgid "Translating primary text (%1 to %2)..."
-msgstr "Översätter primärtext (%1 till %2)..."
-
-#: src/application.cpp:769
-#, kde-format
-msgid "Translating secondary text (%1 to %2)..."
-msgstr "Översätter sekundärtext (%1 till %2)..."
-
-#: src/application.cpp:798
-#, kde-format
-msgid ""
-"Unable to perform texts synchronization (sent and received lines count do "
-"not match)."
-msgstr ""
-"Kan inte utföra textsynkronisering (skickat och mottaget radantal stämmer "
-"inte)"
-
-#: src/application.cpp:802
-#, kde-format
-msgid "Translate Primary Text"
-msgstr "Översätt primärtext"
-
-#: src/application.cpp:802
-#, kde-format
-msgid "Translate Secondary Text"
-msgstr "Översätt sekundärtext"
-
-#: src/application.cpp:817
-#, kde-format
-msgid ""
-"There was an error performing the translation:\n"
-"\n"
-"%1"
-msgstr ""
-"Ett fel uppstod när översättningen utfördes:\n"
-"\n"
-"%1"
-
-#: src/application.cpp:857
 #, kde-format
 msgid "Open Video"
 msgstr "Öppna video"
 
-#: src/application.cpp:1055 src/application.cpp:1062
+#: src/application.cpp:966 src/application.cpp:973
 #: src/application_subtitle.cpp:658
 #, kde-format
 msgid "Untitled"
 msgstr "Namnlös"
 
-#: src/application.cpp:1057 src/application_subtitle.cpp:658
+#: src/application.cpp:968 src/application_subtitle.cpp:658
 #, kde-format
 msgid "Untitled Translation"
 msgstr "Namnlös översättning"
 
-#: src/application.cpp:1158
+#: src/application.cpp:1069
 #, kde-format
 msgid "Pause"
 msgstr "Paus"
 
-#: src/application.cpp:1166 src/application_actions.cpp:566
+#: src/application.cpp:1077 src/application_actions.cpp:567
 #, kde-format
 msgid "Play"
 msgstr "Spela"
 
-#: src/application.cpp:1227
+#: src/application.cpp:1138
 #, kde-format
 msgid "Seek backwards 1 second"
 msgid_plural "Seek backwards %1 seconds"
 msgstr[0] "Sök bakåt 1 sekund"
 msgstr[1] "Sök bakåt %1 sekunder"
 
-#: src/application.cpp:1228
+#: src/application.cpp:1139
 #, kde-format
 msgid "Seek forwards 1 second"
 msgid_plural "Seek forwards %1 seconds"
 msgstr[0] "Sök framåt 1 sekund"
 msgstr[1] "Sök framåt %1 sekunder"
 
-#: src/application.cpp:1231 src/application.cpp:1235
+#: src/application.cpp:1142 src/application.cpp:1146
 #, kde-format
 msgid "Shift %2%1 millisecond"
 msgid_plural "Shift %2%1 milliseconds"
 msgstr[0] "Skifta %2%1 millisekund"
 msgstr[1] "Skifta %2%1 millisekunder"
 
-#: src/application.cpp:1232 src/application.cpp:1236
+#: src/application.cpp:1143 src/application.cpp:1147
 #, kde-format
 msgid "Shift selected lines %2%1 millisecond"
 msgid_plural "Shift selected lines %2%1 milliseconds"
 msgstr[0] "Skifta markerade rader %2%1 millisekund"
 msgstr[1] "Skifta markerade rader %2%1 millisekunder"
 
-#: src/application_actions.cpp:32
+#: src/application_actions.cpp:33
 #, kde-format
 msgid "Exit the application"
 msgstr "Avsluta programmet"
 
-#: src/application_actions.cpp:35
+#: src/application_actions.cpp:36
 #, kde-format
 msgid "Configure Subtitle Composer"
 msgstr "Anpassa Textningsskapare"
 
-#: src/application_actions.cpp:39
+#: src/application_actions.cpp:40
 #, kde-format
 msgctxt "@action:inmenu Create a new subtitle"
 msgid "New"
 msgstr "Ny"
 
-#: src/application_actions.cpp:40
+#: src/application_actions.cpp:41
 #, kde-format
 msgid "Create an empty subtitle"
 msgstr "Skapa en tom textning"
 
-#: src/application_actions.cpp:48
+#: src/application_actions.cpp:49
 #, kde-format
 msgctxt "@action:inmenu Open subtitle file"
 msgid "Open Subtitle..."
 msgstr "Öppna textning..."
 
-#: src/application_actions.cpp:49 src/application_actions.cpp:66
+#: src/application_actions.cpp:50 src/application_actions.cpp:67
 #, kde-format
 msgid "Open subtitle file"
 msgstr "Öppna textningsfil"
 
-#: src/application_actions.cpp:57
+#: src/application_actions.cpp:58
 #, kde-format
 msgid "Reload As..."
 msgstr "Läs in igen som..."
 
-#: src/application_actions.cpp:58
+#: src/application_actions.cpp:59
 #, kde-format
 msgid "Reload opened file with a different encoding"
 msgstr "Läs in öppnad fil igen med en annorlunda kodning"
 
-#: src/application_actions.cpp:65
+#: src/application_actions.cpp:66
 #, kde-format
 msgctxt "@action:inmenu Open rencently used subtitle file"
 msgid "Open &Recent Subtitle"
 msgstr "Öppna s&enaste textning"
 
-#: src/application_actions.cpp:72
+#: src/application_actions.cpp:73
 #, kde-format
 msgid "Save"
 msgstr "Spara"
 
-#: src/application_actions.cpp:73
+#: src/application_actions.cpp:74
 #, kde-format
 msgid "Save opened subtitle"
 msgstr "Spara öppnad textning"
 
-#: src/application_actions.cpp:81
+#: src/application_actions.cpp:82
 #, kde-format
 msgid "Save As..."
 msgstr "Spara som..."
 
-#: src/application_actions.cpp:82
+#: src/application_actions.cpp:83
 #, kde-format
 msgid "Save opened subtitle with different settings"
 msgstr "Spara öppnad textning med andra inställningar"
 
-#: src/application_actions.cpp:90
+#: src/application_actions.cpp:91
 #, kde-format
 msgid "Close"
 msgstr "Stäng"
 
-#: src/application_actions.cpp:91
+#: src/application_actions.cpp:92
 #, kde-format
 msgid "Close opened subtitle"
 msgstr "Stäng öppnad textning"
 
-#: src/application_actions.cpp:99
+#: src/application_actions.cpp:100
 #, kde-format
 msgid "New Translation"
 msgstr "Ny översättning"
 
-#: src/application_actions.cpp:100
+#: src/application_actions.cpp:101
 #, kde-format
 msgid "Create an empty translation subtitle"
 msgstr "Skapa en tom översättningstextning"
 
-#: src/application_actions.cpp:108
+#: src/application_actions.cpp:109
 #, kde-format
 msgid "Open Translation..."
 msgstr "Öppna textning..."
 
-#: src/application_actions.cpp:109 src/application_actions.cpp:126
+#: src/application_actions.cpp:110 src/application_actions.cpp:127
 #, kde-format
 msgid "Open translation subtitle file"
 msgstr "Öppna översättningstextningsfil"
 
-#: src/application_actions.cpp:117
+#: src/application_actions.cpp:118
 #, kde-format
 msgid "Reload Translation As..."
 msgstr "Läs in översättning igen som..."
 
-#: src/application_actions.cpp:118
+#: src/application_actions.cpp:119
 #, kde-format
 msgid "Reload opened translation file with a different encoding"
 msgstr "Läs in öppnad översättningsfil med en annan kodning"
 
-#: src/application_actions.cpp:125
+#: src/application_actions.cpp:126
 #, kde-format
 msgid "Open &Recent Translation"
 msgstr "Öppna s&enaste översättning"
 
-#: src/application_actions.cpp:133
+#: src/application_actions.cpp:134
 #, kde-format
 msgid "Save Translation"
 msgstr "Spara översättning"
 
-#: src/application_actions.cpp:134
+#: src/application_actions.cpp:135
 #, kde-format
 msgid "Save opened translation subtitle"
 msgstr "Spara öppnad översättningstextning"
 
-#: src/application_actions.cpp:144
+#: src/application_actions.cpp:145
 #, kde-format
 msgid "Save Translation As..."
 msgstr "Spara översättning som..."
 
-#: src/application_actions.cpp:145
+#: src/application_actions.cpp:146
 #, kde-format
 msgid "Save opened translation subtitle with different settings"
 msgstr "Spara öppnad översättningstextning med andra inställningar"
 
-#: src/application_actions.cpp:153
+#: src/application_actions.cpp:154
 #, kde-format
 msgid "Close Translation"
 msgstr "Stäng översättning"
 
-#: src/application_actions.cpp:154
+#: src/application_actions.cpp:155
 #, kde-format
 msgid "Close opened translation subtitle"
 msgstr "Stäng öppnad översättningstextning"
 
-#: src/application_actions.cpp:171
+#: src/application_actions.cpp:172
 #, kde-format
 msgid "Split Subtitle..."
 msgstr "Dela textning..."
 
-#: src/application_actions.cpp:172
+#: src/application_actions.cpp:173
 #, kde-format
 msgid "Split the opened subtitle in two parts"
 msgstr "Dela öppnad textning i två delar"
 
-#: src/application_actions.cpp:178
+#: src/application_actions.cpp:179
 #, kde-format
 msgid "Join Subtitles..."
 msgstr "Sammanfoga textning..."
 
-#: src/application_actions.cpp:179
+#: src/application_actions.cpp:180
 #, kde-format
 msgid "Append to the opened subtitle another one"
 msgstr "Lägg till en annan textning till den öppnade"
 
-#: src/application_actions.cpp:186
+#: src/application_actions.cpp:187
 #, kde-format
 msgid "Insert Before"
 msgstr "Infoga före"
 
-#: src/application_actions.cpp:187
+#: src/application_actions.cpp:188
 #, kde-format
 msgid "Insert empty line before current one"
 msgstr "Infoga tom rad före den aktuella"
 
-#: src/application_actions.cpp:195
+#: src/application_actions.cpp:196
 #, kde-format
 msgid "Insert After"
 msgstr "Infoga efter"
 
-#: src/application_actions.cpp:196
+#: src/application_actions.cpp:197
 #, kde-format
 msgid "Insert empty line after current one"
 msgstr "Infoga tom rad efter den aktuella"
 
 #. i18n: ectx: property (text), widget (QPushButton, btnRemove)
-#: src/application_actions.cpp:204 src/scripting/scriptsmanager.ui:60
+#: src/application_actions.cpp:205 src/scripting/scriptsmanager.ui:60
 #, kde-format
 msgid "Remove"
 msgstr "Ta bort"
 
-#: src/application_actions.cpp:205
+#: src/application_actions.cpp:206
 #, kde-format
 msgid "Remove selected lines"
 msgstr "Ta bort markerade rader"
 
-#: src/application_actions.cpp:212 src/core/subtitle.cpp:560
+#: src/application_actions.cpp:213 src/core/subtitle.cpp:560
 #, kde-format
 msgid "Split Lines"
 msgstr "Dela rader"
 
-#: src/application_actions.cpp:213
+#: src/application_actions.cpp:214
 #, kde-format
 msgid "Split selected lines"
 msgstr "Dela markerade rader"
 
-#: src/application_actions.cpp:219 src/core/subtitle.cpp:642
+#: src/application_actions.cpp:220 src/core/subtitle.cpp:642
 #: src/gui/waveform/waveformwidget.cpp:713
 #, kde-format
 msgid "Join Lines"
 msgstr "Kombinera rader"
 
-#: src/application_actions.cpp:220
+#: src/application_actions.cpp:221
 #, kde-format
 msgid "Join selected lines"
 msgstr "Sammanfoga markerade linjer"
 
-#: src/application_actions.cpp:227 src/errors/finderrorsdialog.cpp:114
+#: src/application_actions.cpp:228 src/errors/finderrorsdialog.cpp:114
 #: src/gui/treeview/richlineedit.cpp:112 src/widgets/simplerichtextedit.cpp:455
 #, kde-format
 msgid "Select All"
 msgstr "Markera alla"
 
-#: src/application_actions.cpp:228
+#: src/application_actions.cpp:229
 #, kde-format
 msgid "Select all lines"
 msgstr "Markera alla rader"
 
-#: src/application_actions.cpp:235
+#: src/application_actions.cpp:236
 #, kde-format
 msgid "Go to Line..."
 msgstr "Gå till rad..."
 
-#: src/application_actions.cpp:236
+#: src/application_actions.cpp:237
 #, kde-format
 msgid "Go to specified line"
 msgstr "Gå till angiven rad"
 
-#: src/application_actions.cpp:244
+#: src/application_actions.cpp:245
 #, kde-format
 msgid "Find..."
 msgstr "Sök..."
 
-#: src/application_actions.cpp:245
+#: src/application_actions.cpp:246
 #, kde-format
 msgid "Find occurrences of strings or regular expressions"
 msgstr "Sök efter förekomster av strängar eller reguljära uttryck"
 
-#: src/application_actions.cpp:253
+#: src/application_actions.cpp:254
 #, kde-format
 msgid "Find Next"
 msgstr "Sök igen"
 
-#: src/application_actions.cpp:254
+#: src/application_actions.cpp:255
 #, kde-format
 msgid "Find next occurrence of string or regular expression"
 msgstr "Hitta nästa förekomst av sträng eller reguljärt uttryck"
 
-#: src/application_actions.cpp:262
+#: src/application_actions.cpp:263
 #, kde-format
 msgid "Find Previous"
 msgstr "Sök föregående"
 
-#: src/application_actions.cpp:263
+#: src/application_actions.cpp:264
 #, kde-format
 msgid "Find previous occurrence of string or regular expression"
 msgstr "Hitta föregående förekomst av sträng eller reguljärt uttryck"
 
-#: src/application_actions.cpp:270
+#: src/application_actions.cpp:271
 #, kde-format
 msgid "Replace..."
 msgstr "Ersätt..."
 
-#: src/application_actions.cpp:271
+#: src/application_actions.cpp:272
 #, kde-format
 msgid "Replace occurrences of strings or regular expressions"
 msgstr "Ersätt förekomster av strängar eller reguljära uttryck"
 
-#: src/application_actions.cpp:279
+#: src/application_actions.cpp:280
 #, kde-format
 msgid "Retrocede current line"
 msgstr "Flytta tillbaka aktuell rad"
 
-#: src/application_actions.cpp:280
+#: src/application_actions.cpp:281
 #, kde-format
 msgid "Makes the line before the current one active"
 msgstr "Gör raden före den aktuella aktiv"
 
-#: src/application_actions.cpp:288
+#: src/application_actions.cpp:289
 #, kde-format
 msgid "Advance current line"
 msgstr "Flytta fram aktuell rad"
 
-#: src/application_actions.cpp:289
+#: src/application_actions.cpp:290
 #, kde-format
 msgid "Makes the line after the current one active"
 msgstr "Gör raden efter den aktuella aktiv"
 
-#: src/application_actions.cpp:297
+#: src/application_actions.cpp:298
 #, kde-format
 msgid "Detect Errors..."
 msgstr "Detektera fel..."
 
-#: src/application_actions.cpp:298
+#: src/application_actions.cpp:299
 #, kde-format
 msgid "Detect errors in the current subtitle"
 msgstr "Detektera fel i aktuell textning"
 
-#: src/application_actions.cpp:305
+#: src/application_actions.cpp:306
 #, kde-format
 msgid "Clear Errors/Marks"
 msgstr "Rensa fel och markörer"
 
-#: src/application_actions.cpp:306
+#: src/application_actions.cpp:307
 #, kde-format
 msgid "Clear detected errors and marks in the current subtitle"
 msgstr "Rensa detekterade fel och markörer i aktuell textning"
 
-#: src/application_actions.cpp:314
+#: src/application_actions.cpp:315
 #, kde-format
 msgid "Select Next Error/Mark"
 msgstr "Markera nästa fel eller markör"
 
-#: src/application_actions.cpp:315
+#: src/application_actions.cpp:316
 #, kde-format
 msgid "Select next line with error or mark"
 msgstr "Markera nästa rad med fel eller markör"
 
-#: src/application_actions.cpp:323
+#: src/application_actions.cpp:324
 #, kde-format
 msgid "Select Previous Error/Mark"
 msgstr "Markera föregående fel eller markör"
 
-#: src/application_actions.cpp:324
+#: src/application_actions.cpp:325
 #, kde-format
 msgid "Select previous line with error or mark"
 msgstr "Markera föregående rad med fel eller markör"
 
-#: src/application_actions.cpp:332
+#: src/application_actions.cpp:333
 #, kde-format
 msgid "Spelling..."
 msgstr "Stavning..."
 
-#: src/application_actions.cpp:333
+#: src/application_actions.cpp:334
 #, kde-format
 msgid "Check lines spelling"
 msgstr "Kontrollera radernas stavning"
 
-#: src/application_actions.cpp:339
+#: src/application_actions.cpp:340
 #, kde-format
 msgid "Toggle Mark"
 msgstr "Växla markör"
 
-#: src/application_actions.cpp:340
+#: src/application_actions.cpp:341
 #, kde-format
 msgid "Toggle mark on selected lines"
 msgstr "Växla markör på markerade rader"
 
-#: src/application_actions.cpp:348 src/gui/currentlinewidget.cpp:322
+#: src/application_actions.cpp:349 src/gui/currentlinewidget.cpp:322
 #, kde-format
 msgid "Toggle Bold"
 msgstr "Växla fetstil"
 
-#: src/application_actions.cpp:349
+#: src/application_actions.cpp:350
 #, kde-format
 msgid "Toggle selected lines bold attribute"
 msgstr "Växla fetstilsegenskapen för markerade rader"
 
-#: src/application_actions.cpp:357 src/gui/currentlinewidget.cpp:326
+#: src/application_actions.cpp:358 src/gui/currentlinewidget.cpp:326
 #, kde-format
 msgid "Toggle Italic"
 msgstr "Växla kursiv"
 
-#: src/application_actions.cpp:358
+#: src/application_actions.cpp:359
 #, kde-format
 msgid "Toggle selected lines italic attribute"
 msgstr "Växla kursivegenskapen för markerade rader"
 
-#: src/application_actions.cpp:366 src/gui/currentlinewidget.cpp:330
+#: src/application_actions.cpp:367 src/gui/currentlinewidget.cpp:330
 #, kde-format
 msgid "Toggle Underline"
 msgstr "Växla understreck"
 
-#: src/application_actions.cpp:367
+#: src/application_actions.cpp:368
 #, kde-format
 msgid "Toggle selected lines underline attribute"
 msgstr "Växla understrecksegenskapen för markerade rader"
 
-#: src/application_actions.cpp:375 src/gui/currentlinewidget.cpp:334
+#: src/application_actions.cpp:376 src/gui/currentlinewidget.cpp:334
 #, kde-format
 msgid "Toggle Strike Through"
 msgstr "Växla överstrykning"
 
-#: src/application_actions.cpp:376
+#: src/application_actions.cpp:377
 #, kde-format
 msgid "Toggle selected lines strike through attribute"
 msgstr "Växla överstrykningsegenskapen för markerade rader"
 
-#: src/application_actions.cpp:384 src/gui/currentlinewidget.cpp:338
+#: src/application_actions.cpp:385 src/gui/currentlinewidget.cpp:338
 #, kde-format
 msgid "Change Text Color"
 msgstr "Ändra textfärg"
 
-#: src/application_actions.cpp:385
+#: src/application_actions.cpp:386
 #, kde-format
 msgid "Change text color of selected lines"
 msgstr "Ändra textfärg för markerade rader"
 
-#: src/application_actions.cpp:392
+#: src/application_actions.cpp:393
 #, kde-format
 msgid "Shift..."
 msgstr "Skifta..."
 
-#: src/application_actions.cpp:393
+#: src/application_actions.cpp:394
 #, kde-format
 msgid "Shift lines an specified amount of time"
 msgstr "Skifta rader en angiven tidslängd"
 
-#: src/application_actions.cpp:412
+#: src/application_actions.cpp:413
 #, kde-format
 msgid "Adjust..."
 msgstr "Justera..."
 
-#: src/application_actions.cpp:413
+#: src/application_actions.cpp:414
 #, kde-format
 msgid "Linearly adjust all lines to a specified interval"
 msgstr "Justera alla rader linjärt till ett angivet intervall"
 
-#: src/application_actions.cpp:420
+#: src/application_actions.cpp:421
 #, kde-format
 msgid "Change Frame Rate..."
 msgstr "Ändra bildfrekvens..."
 
-#: src/application_actions.cpp:421
+#: src/application_actions.cpp:422
 #, kde-format
 msgid "Retime subtitle lines by reinterpreting its frame rate"
 msgstr "Ändra tid för textningsrader genom att tolka om bildfrekvensen"
 
-#: src/application_actions.cpp:427
+#: src/application_actions.cpp:428
 #, kde-format
 msgid "Enforce Duration Limits..."
 msgstr "Tvinga varaktighetsgränser..."
 
-#: src/application_actions.cpp:428
+#: src/application_actions.cpp:429
 #, kde-format
 msgid "Enforce lines minimum and/or maximum duration limits"
 msgstr "Tvinga minimala och/eller maximala varaktighetsgränser"
 
-#: src/application_actions.cpp:435
+#: src/application_actions.cpp:436
 #, kde-format
 msgid "Set Automatic Durations..."
 msgstr "Ställ in automatisk varaktighet..."
 
-#: src/application_actions.cpp:436
+#: src/application_actions.cpp:437
 #, kde-format
 msgid "Set lines durations based on amount of letters, words and line breaks"
 msgstr ""
 "Ange radernas varaktighet baserat på antal bokstäver, ord och radbrytningar"
 
-#: src/application_actions.cpp:442
+#: src/application_actions.cpp:443
 #, kde-format
 msgid "Maximize Durations..."
 msgstr "Maximera varaktighet..."
 
-#: src/application_actions.cpp:443
+#: src/application_actions.cpp:444
 #, kde-format
 msgid "Extend lines durations up to their next lines show time"
 msgstr "Utöka radernas varaktighet till visningstid för nästa rader"
 
-#: src/application_actions.cpp:449
+#: src/application_actions.cpp:450
 #, kde-format
 msgid "Fix Overlapping Times..."
 msgstr "Rätta överlappande tider..."
 
-#: src/application_actions.cpp:450
+#: src/application_actions.cpp:451
 #, kde-format
 msgid "Fix lines overlapping times"
 msgstr "Rätta radernas överlappande tider"
 
-#: src/application_actions.cpp:456
+#: src/application_actions.cpp:457
 #, kde-format
 msgid "Synchronize with Subtitle..."
 msgstr "Synkronisera med textning..."
 
-#: src/application_actions.cpp:457
+#: src/application_actions.cpp:458
 #, kde-format
 msgid "Copy timing information from another subtitle"
 msgstr "Kopiera tidsinformation från en annan textning"
 
-#: src/application_actions.cpp:463
+#: src/application_actions.cpp:464
 #, kde-format
 msgid "Break Lines..."
 msgstr "Bryt rader..."
 
-#: src/application_actions.cpp:464
+#: src/application_actions.cpp:465
 #, kde-format
 msgid "Automatically set line breaks"
 msgstr "Ange automatiskt radbrytningar"
 
-#: src/application_actions.cpp:470
+#: src/application_actions.cpp:471
 #, kde-format
 msgid "Unbreak Lines..."
 msgstr "Sätt ihop rader..."
 
-#: src/application_actions.cpp:471
+#: src/application_actions.cpp:472
 #, kde-format
 msgid "Remove line breaks from lines"
 msgstr "Ta bort radbrytningar från rader"
 
-#: src/application_actions.cpp:477
+#: src/application_actions.cpp:478
 #, kde-format
 msgid "Simplify Spaces..."
 msgstr "Förenkla mellanslag..."
 
-#: src/application_actions.cpp:478
+#: src/application_actions.cpp:479
 #, kde-format
 msgid "Remove unneeded spaces from lines"
 msgstr "Ta bort onödiga mellanslag från rader"
 
-#: src/application_actions.cpp:484
+#: src/application_actions.cpp:485
 #, kde-format
 msgid "Change Case..."
 msgstr "Ändra skiftläge..."
 
-#: src/application_actions.cpp:485
+#: src/application_actions.cpp:486
 #, kde-format
 msgid "Change lines text to upper, lower, title or sentence case"
 msgstr ""
 "Ändra radtext till versaler, gemener, titelskiftläge eller meningsskiftläge"
 
-#: src/application_actions.cpp:491
+#: src/application_actions.cpp:492
 #, kde-format
 msgid "Fix Punctuation..."
 msgstr "Rätta skiljetecken..."
 
-#: src/application_actions.cpp:492
+#: src/application_actions.cpp:493
 #, kde-format
 msgid "Fix punctuation errors in lines"
 msgstr "Rätta skiljeteckenfel på rader"
 
-#: src/application_actions.cpp:498
+#: src/application_actions.cpp:499
 #, kde-format
 msgid "Translate..."
 msgstr "Översätt..."
 
-#: src/application_actions.cpp:499
+#: src/application_actions.cpp:500
 #, kde-format
 msgid "Translate lines texts using Google services"
 msgstr "Översätt textrader med Google-tjänster"
 
-#: src/application_actions.cpp:505
+#: src/application_actions.cpp:506
 #, kde-format
 msgid "Edit Line in Place"
 msgstr "Redigera rad på plats"
 
-#: src/application_actions.cpp:506
+#: src/application_actions.cpp:507
 #, kde-format
 msgid "Edit current line text in place"
 msgstr "Redigera aktuell textrad på plats"
 
-#: src/application_actions.cpp:514
+#: src/application_actions.cpp:515
 #, kde-format
 msgid "Open Video..."
 msgstr "Öppna video..."
 
-#: src/application_actions.cpp:515 src/application_actions.cpp:522
+#: src/application_actions.cpp:516 src/application_actions.cpp:523
 #, kde-format
 msgid "Open video file"
 msgstr "Öppna videofil"
 
-#: src/application_actions.cpp:521
+#: src/application_actions.cpp:522
 #, kde-format
 msgid "Open &Recent Video"
 msgstr "Öppna s&enaste video"
 
-#: src/application_actions.cpp:528
+#: src/application_actions.cpp:529
 #, kde-format
 msgid "Import Subtitle Stream"
 msgstr "Importera textningsström"
 
-#: src/application_actions.cpp:529
+#: src/application_actions.cpp:530
 #, kde-format
 msgid "Import subtitle stream into subtitle editor"
 msgstr "Importera textningsström i textningseditor"
 
-#: src/application_actions.cpp:535
+#: src/application_actions.cpp:536
 #, kde-format
 msgid "Recognize Speech"
 msgstr "Känn igen tal"
 
-#: src/application_actions.cpp:536
+#: src/application_actions.cpp:537
 #, kde-format
 msgid "Recognize speech in audio stream"
 msgstr "Känn igen tal i ljudström"
 
-#: src/application_actions.cpp:542
+#: src/application_actions.cpp:543
 #, kde-format
 msgid "Close Video"
 msgstr "Stäng video"
 
-#: src/application_actions.cpp:543
+#: src/application_actions.cpp:544
 #, kde-format
 msgid "Close video file"
 msgstr "Stäng videofil"
 
-#: src/application_actions.cpp:550
+#: src/application_actions.cpp:551
 #, kde-format
 msgid "Full Screen Mode"
 msgstr "Fullskärmsläge"
 
-#: src/application_actions.cpp:551
+#: src/application_actions.cpp:552
 #, kde-format
 msgid "Toggle full screen mode"
 msgstr "Växla fullskärmsläge"
 
-#: src/application_actions.cpp:558
+#: src/application_actions.cpp:559
 #, kde-format
 msgid "Stop"
 msgstr "Stoppa"
 
-#: src/application_actions.cpp:559
+#: src/application_actions.cpp:560
 #, kde-format
 msgid "Stop video playback"
 msgstr "Stoppa videouppspelning"
 
-#: src/application_actions.cpp:567
+#: src/application_actions.cpp:568
 #, kde-format
 msgid "Toggle video playing/paused"
 msgstr "Byt mellan spela och pausa video"
 
-#: src/application_actions.cpp:575
+#: src/application_actions.cpp:576
 #, kde-format
 msgid "Seek Backward"
 msgstr "Sök bakåt"
 
-#: src/application_actions.cpp:583
+#: src/application_actions.cpp:584
 #, kde-format
 msgid "Seek Forward"
 msgstr "Sök framåt"
 
-#: src/application_actions.cpp:590
+#: src/application_actions.cpp:591
 #, kde-format
 msgid "Frame Step Backward"
 msgstr "Stega bildruta bakåt"
 
-#: src/application_actions.cpp:597
+#: src/application_actions.cpp:598
 #, kde-format
 msgid "Frame Step Forward"
 msgstr "Stega bildruta framåt"
 
-#: src/application_actions.cpp:605
+#: src/application_actions.cpp:606
 #, kde-format
 msgid "Seek to Previous Line"
 msgstr "Sök till föregående rad"
 
-#: src/application_actions.cpp:606
+#: src/application_actions.cpp:607
 #, kde-format
 msgid "Seek to previous subtitle line show time"
 msgstr "Sök till visningstid för föregående textningsrad"
 
-#: src/application_actions.cpp:614
+#: src/application_actions.cpp:615
 #, kde-format
 msgid "Increase media play rate"
 msgstr "Öka uppspelningshastighet för media"
 
-#: src/application_actions.cpp:615
+#: src/application_actions.cpp:616
 #, kde-format
 msgid "Increase media playback rate"
 msgstr "Öka uppspelningshastighet för media"
 
-#: src/application_actions.cpp:622
+#: src/application_actions.cpp:623
 #, kde-format
 msgid "Decrease media play rate"
 msgstr "Minska uppspelningshastighet för media"
 
-#: src/application_actions.cpp:623
+#: src/application_actions.cpp:624
 #, kde-format
 msgid "Decrease media playback rate"
 msgstr "Minska uppspelningshastighet för media"
 
-#: src/application_actions.cpp:629
+#: src/application_actions.cpp:630
 #, kde-format
 msgid "Play Current Line and Pause"
 msgstr "Spela aktuell rad och pausa"
 
-#: src/application_actions.cpp:630
+#: src/application_actions.cpp:631
 #, kde-format
 msgid "Seek to selected subtitle line show time, play it and then pause"
 msgstr ""
 "Sök till början av visningstiden för markerad textningsrad, spela den och "
 "pausa sedan"
 
-#: src/application_actions.cpp:637
+#: src/application_actions.cpp:638
 #, kde-format
 msgid "Seek to Current Line"
 msgstr "Sök till aktuell rad"
 
-#: src/application_actions.cpp:638
+#: src/application_actions.cpp:639
 #, kde-format
 msgid "Seek to selected subtitle line show time"
 msgstr "Sök till visningstid för markerad textningsrad"
 
-#: src/application_actions.cpp:645
+#: src/application_actions.cpp:646
 #, kde-format
 msgid "Seek to Next Line"
 msgstr "Sök till nästa rad"
 
-#: src/application_actions.cpp:646
+#: src/application_actions.cpp:647
 #, kde-format
 msgid "Seek to next subtitle line show time"
 msgstr "Sök till visningstid för nästa textningsrad"
 
-#: src/application_actions.cpp:654
+#: src/application_actions.cpp:655
 #, kde-format
 msgid "Set Line Show Time to Video Position"
 msgstr "Ställ in visningstid för rad till videoposition"
 
-#: src/application_actions.cpp:655
+#: src/application_actions.cpp:656
 #, kde-format
 msgid "Set current line show time to video position"
 msgstr "Ställ in visningstid för aktuell rad till videoposition"
 
-#: src/application_actions.cpp:663
+#: src/application_actions.cpp:664
 #, kde-format
 msgid "Set Line Hide Time to Video Position"
 msgstr "Ställ in döljningstid för rad till videoposition"
 
-#: src/application_actions.cpp:664
+#: src/application_actions.cpp:665
 #, kde-format
 msgid "Set current line hide time to video position"
 msgstr "Ställ in döljningstid för aktuell rad till videoposition"
 
-#: src/application_actions.cpp:671
+#: src/application_actions.cpp:672
 #, kde-format
 msgid "Shift Current Line to Video Position"
 msgstr "Skifta aktuell rad till videoposition"
 
-#: src/application_actions.cpp:672
+#: src/application_actions.cpp:673
 #, kde-format
 msgid ""
 "Set current line show time to video position by equally shifting all lines"
@@ -907,93 +857,93 @@ msgstr ""
 "Ställ in visningstid för aktuell rad till videoposition genom att skifta "
 "alla rader lika mycket"
 
-#: src/application_actions.cpp:680
+#: src/application_actions.cpp:681
 #, kde-format
 msgid "Current Line Follows Video"
 msgstr "Aktuell rad följer video"
 
-#: src/application_actions.cpp:681
+#: src/application_actions.cpp:682
 #, kde-format
 msgid "Make current line follow the playing video position"
 msgstr "Låt aktuell rad följa den spelande videons position"
 
-#: src/application_actions.cpp:687
+#: src/application_actions.cpp:688
 #, kde-format
 msgctxt "@action:inmenu Toggle audio muted"
 msgid "Mute"
 msgstr "Tyst"
 
-#: src/application_actions.cpp:688
+#: src/application_actions.cpp:689
 #, kde-format
 msgid "Enable/disable playback sound"
 msgstr "Aktivera eller inaktivera uppspelningsljud"
 
-#: src/application_actions.cpp:695
+#: src/application_actions.cpp:696
 #, kde-format
 msgid "Increase Volume"
 msgstr "Öka volym"
 
-#: src/application_actions.cpp:696
+#: src/application_actions.cpp:697
 #, kde-format
 msgid "Increase volume by 5%"
 msgstr "Öka volym med 5 %"
 
-#: src/application_actions.cpp:703
+#: src/application_actions.cpp:704
 #, kde-format
 msgid "Decrease Volume"
 msgstr "Minska volym"
 
-#: src/application_actions.cpp:704
+#: src/application_actions.cpp:705
 #, kde-format
 msgid "Decrease volume by 5%"
 msgstr "Minska volym med 5 %"
 
-#: src/application_actions.cpp:711
+#: src/application_actions.cpp:712
 #, kde-format
 msgid "Audio Streams"
 msgstr "Ljudströmmar"
 
-#: src/application_actions.cpp:712
+#: src/application_actions.cpp:713
 #, kde-format
 msgid "Select active audio stream"
 msgstr "Välj aktiv ljudström"
 
-#: src/application_actions.cpp:723
+#: src/application_actions.cpp:724
 #, kde-format
 msgid "Increase Font Size"
 msgstr "Öka teckenstorlek"
 
-#: src/application_actions.cpp:724
+#: src/application_actions.cpp:725
 #, kde-format
 msgid "Increase subtitles font size by 1 point"
 msgstr "Öka textningens teckenstorlek med 1 punkt"
 
-#: src/application_actions.cpp:731
+#: src/application_actions.cpp:732
 #, kde-format
 msgid "Decrease Font Size"
 msgstr "Minska teckenstorlek"
 
-#: src/application_actions.cpp:732
+#: src/application_actions.cpp:733
 #, kde-format
 msgid "Decrease subtitles font size by 1 point"
 msgstr "Minska textningens teckenstorlek med 1 punkt"
 
-#: src/application_actions.cpp:739
+#: src/application_actions.cpp:740
 #, kde-format
 msgid "Displayed Subtitle Text"
 msgstr "Visad textning"
 
-#: src/application_actions.cpp:740
+#: src/application_actions.cpp:741
 #, kde-format
 msgid "Select visible subtitle text"
 msgstr "Välj synlig textning"
 
-#: src/application_actions.cpp:751 src/gui/waveform/waveformwidget.cpp:737
+#: src/application_actions.cpp:752 src/gui/waveform/waveformwidget.cpp:737
 #, kde-format
 msgid "Toggle Anchor"
 msgstr "Växla förankring"
 
-#: src/application_actions.cpp:752
+#: src/application_actions.cpp:753
 #, kde-format
 msgid ""
 "(Un)Anchor current line's show time to timeline (Editing anchored line's "
@@ -1003,45 +953,45 @@ msgstr ""
 "tidslinjen (att redigera den förankrade radens visningstid sträcker ut eller "
 "pressar ihop tidslinjen mellan angränsande förankringar)"
 
-#: src/application_actions.cpp:759
+#: src/application_actions.cpp:760
 #, kde-format
 msgid "Remove All Anchors"
 msgstr "Ta bort alla förankringar"
 
-#: src/application_actions.cpp:760
+#: src/application_actions.cpp:761
 #, kde-format
 msgid "Unanchor show time from the timeline on all anchored lines"
 msgstr ""
 "Ta bort förankring för visningstiden från tidslinjen för alla förankrade "
 "rader"
 
-#: src/application_actions.cpp:768
+#: src/application_actions.cpp:769
 #, kde-format
 msgctxt "@action:inmenu Manage user scripts"
 msgid "Scripts Manager..."
 msgstr "Skripthanterare..."
 
-#: src/application_actions.cpp:769
+#: src/application_actions.cpp:770
 #, kde-format
 msgid "Manage user scripts"
 msgstr "Hantera användarskript"
 
-#: src/application_actions.cpp:776 src/application_actions.cpp:777
+#: src/application_actions.cpp:777 src/application_actions.cpp:778
 #, kde-format
 msgid "Waveform Zoom In"
 msgstr "Inzoomning av vågform"
 
-#: src/application_actions.cpp:783 src/application_actions.cpp:784
+#: src/application_actions.cpp:784 src/application_actions.cpp:785
 #, kde-format
 msgid "Waveform Zoom Out"
 msgstr "Utzoomning av vågform"
 
-#: src/application_actions.cpp:791
+#: src/application_actions.cpp:792
 #, kde-format
 msgid "Waveform Auto Scroll"
 msgstr "Automatisk rullning av vågform"
 
-#: src/application_actions.cpp:792
+#: src/application_actions.cpp:793
 #, kde-format
 msgid "Waveform display will automatically scroll to video position"
 msgstr "Vågformsvisning rullar automatiskt till videoposition"
@@ -2218,7 +2168,7 @@ msgstr "Senast uttalade rad:"
 #: src/dialogs/fixoverlappingtimesdialog.cpp:20
 #: src/dialogs/fixpunctuationdialog.cpp:19
 #: src/dialogs/smarttextsadjustdialog.cpp:20
-#: src/dialogs/splitsubtitledialog.cpp:29 src/dialogs/translatedialog.cpp:22
+#: src/dialogs/splitsubtitledialog.cpp:29
 #, kde-format
 msgctxt "@title:group"
 msgid "Settings"
@@ -2548,16 +2498,6 @@ msgstr "Justera till referensens första och sista rader"
 #, kde-format
 msgid "Copy timing information from reference line by line"
 msgstr "Kopiera tidsinformation från referens rad för rad"
-
-#: src/dialogs/translatedialog.cpp:37
-#, kde-format
-msgid "Input language:"
-msgstr "Inmatningsspråk:"
-
-#: src/dialogs/translatedialog.cpp:53
-#, kde-format
-msgid "Output language:"
-msgstr "Utmatningsspråk:"
 
 #: src/errors/errorfinder.cpp:173 src/errors/finderrorsdialog.cpp:17
 #, kde-format
@@ -3436,6 +3376,63 @@ msgstr "Konturfärg"
 msgid "Outline Width"
 msgstr "Konturbredd"
 
+#. i18n: ectx: label, entry (translateEngine), group (Translation)
+#: src/scconfig.kcfg:224
+#, fuzzy, kde-format
+#| msgid "Has untranslated text."
+msgid "Last used translate engine"
+msgstr "Har oöversatt text."
+
+#. i18n: ectx: label, entry (gctServiceJSON), group (GoogleCloudTranslate)
+#: src/scconfig.kcfg:231
+#, kde-format
+msgid "Service Account JSON containing private key"
+msgstr ""
+
+#. i18n: ectx: label, entry (gctLangSource), group (GoogleCloudTranslate)
+#. i18n: ectx: label, entry (dltLangSource), group (DeepLTranslate)
+#: src/scconfig.kcfg:234 src/scconfig.kcfg:258
+#, kde-format
+msgid "source langauge - cached"
+msgstr ""
+
+#. i18n: ectx: label, entry (gctLangTrans), group (GoogleCloudTranslate)
+#. i18n: ectx: label, entry (dltLangTrans), group (DeepLTranslate)
+#: src/scconfig.kcfg:237 src/scconfig.kcfg:261
+#, kde-format
+msgid "translation langauge - cached"
+msgstr ""
+
+#. i18n: ectx: label, entry (gctAccessToken), group (GoogleCloudTranslate)
+#: src/scconfig.kcfg:240
+#, kde-format
+msgid "access token - cached"
+msgstr ""
+
+#. i18n: ectx: label, entry (gctTokenExpires), group (GoogleCloudTranslate)
+#: src/scconfig.kcfg:243
+#, kde-format
+msgid "access token expiry - cached"
+msgstr ""
+
+#. i18n: ectx: label, entry (gctTokenType), group (GoogleCloudTranslate)
+#: src/scconfig.kcfg:246
+#, kde-format
+msgid "access token type - cached"
+msgstr ""
+
+#. i18n: ectx: label, entry (dltAuthKey), group (DeepLTranslate)
+#: src/scconfig.kcfg:252
+#, kde-format
+msgid "DeepL API authentication key"
+msgstr ""
+
+#. i18n: ectx: label, entry (dltApiDomain), group (DeepLTranslate)
+#: src/scconfig.kcfg:255
+#, kde-format
+msgid "DeepL API domain name"
+msgstr ""
+
 #: src/scripting/scriptsmanager.cpp:84
 #, kde-format
 msgid "Non-Script Files"
@@ -3890,6 +3887,154 @@ msgstr "Huvudverktygsrad"
 msgid "Edit Toolbar"
 msgstr "Redigeringsverktygsrad"
 
+#: src/translate/deeplengine.cpp:56 src/translate/googlecloudengine.cpp:136
+#, kde-format
+msgid ""
+"Remote service error %1 %2\n"
+"%3"
+msgstr ""
+
+#: src/translate/deeplengine.cpp:65 src/translate/googlecloudengine.cpp:145
+#, kde-format
+msgid ""
+"HTTP Error %1 - %2\n"
+"%2"
+msgstr ""
+
+#: src/translate/deeplengine.cpp:70 src/translate/googlecloudengine.cpp:150
+#, kde-format
+msgid ""
+"Network Error %1\n"
+"%2"
+msgstr ""
+
+#: src/translate/deeplengine.cpp:76
+#, fuzzy, kde-format
+#| msgid "Set Line Errors"
+msgid "DeepL Engine Error"
+msgstr "Ange radfel"
+
+#: src/translate/deeplengine.cpp:128 src/translate/googlecloudengine.cpp:300
+#, fuzzy, kde-format
+#| msgctxt "Encodings menu"
+#| msgid "Autodetect"
+msgid "Autodetect Language"
+msgstr "Detektera automatiskt"
+
+#. i18n: ectx: property (title), widget (QGroupBox, grpAuth)
+#: src/translate/deeplengine.ui:17 src/translate/googlecloudengine.ui:17
+#, kde-format
+msgid "Authentication"
+msgstr ""
+
+#. i18n: ectx: property (text), widget (QLabel, labAuthKey)
+#: src/translate/deeplengine.ui:23
+#, kde-format
+msgid "Authentication Key:"
+msgstr ""
+
+#. i18n: ectx: property (text), widget (QPushButton, btnConnect)
+#: src/translate/deeplengine.ui:33
+#, kde-format
+msgid "Connect"
+msgstr ""
+
+#. i18n: ectx: property (text), widget (QLabel, labApiDomain)
+#: src/translate/deeplengine.ui:66
+#, kde-format
+msgid "API Domain:"
+msgstr ""
+
+#. i18n: ectx: property (text), widget (QLabel, labHelp)
+#: src/translate/deeplengine.ui:82
+#, kde-format
+msgid ""
+"You need to <a href=\"https://www.deepl.com/pro-api\">create an account</a> "
+"on DeepL website and paste your API authentication key below."
+msgstr ""
+
+#. i18n: ectx: property (title), widget (QGroupBox, grpSettings)
+#: src/translate/deeplengine.ui:104 src/translate/googlecloudengine.ui:91
+#, fuzzy, kde-format
+#| msgctxt "@title:group"
+#| msgid "Settings"
+msgid "Settings"
+msgstr "Inställningar"
+
+#. i18n: ectx: property (text), widget (QLabel, labSource)
+#: src/translate/deeplengine.ui:110 src/translate/googlecloudengine.ui:97
+#, fuzzy, kde-format
+#| msgid "Input language:"
+msgid "Source language:"
+msgstr "Inmatningsspråk:"
+
+#. i18n: ectx: property (text), widget (QLabel, labTranslation)
+#: src/translate/deeplengine.ui:120 src/translate/googlecloudengine.ui:107
+#, fuzzy, kde-format
+#| msgid "Translate"
+msgid "Translate to:"
+msgstr "Översätt"
+
+#: src/translate/googlecloudengine.cpp:156
+#: src/translate/googlecloudengine.cpp:202
+#: src/translate/googlecloudengine.cpp:211
+#, kde-format
+msgid "Google Cloud Engine Error"
+msgstr ""
+
+#: src/translate/googlecloudengine.cpp:201
+#, fuzzy, kde-format
+#| msgid "Error opening script %1."
+msgid "Error opening file '%1'"
+msgstr "Fel när skriptet %1 skulle öppnas."
+
+#: src/translate/googlecloudengine.cpp:210
+#, kde-format
+msgid "Error parsing JSON from file '%1'"
+msgstr ""
+
+#. i18n: ectx: property (text), widget (QLabel, labelServiceJSON)
+#: src/translate/googlecloudengine.ui:23
+#, kde-format
+msgid "Service Account's Private Key JSON:"
+msgstr ""
+
+#. i18n: ectx: property (text), widget (QPushButton, btnLogin)
+#: src/translate/googlecloudengine.ui:36
+#, kde-format
+msgid "Login"
+msgstr ""
+
+#. i18n: ectx: property (text), widget (QLabel, labHelp)
+#: src/translate/googlecloudengine.ui:62
+#, kde-format
+msgid ""
+"<p>You need to <a href=\"https://developers.google.com/identity/protocols/"
+"oauth2/service-account#creatinganaccount\">create a Service Account</a> in "
+"Google Cloud Console and provide public/private key JSON file below.</"
+"p><p>The Service Account needs to be assigned <span style=\" text-"
+"decoration: underline;\">Cloud Translation API User</span> role on IAM page "
+"or must be granted access to the Google's Cloud Translation APIs in a "
+"different manner.</p>"
+msgstr ""
+
+#: src/translate/translatedialog.cpp:28
+#, kde-format
+msgid "Translate"
+msgstr "Översätt"
+
+#: src/translate/translatedialog.cpp:41
+#, fuzzy, kde-format
+#| msgid "Untranslated text"
+msgid "Translate texts in"
+msgstr "Oöversatt text"
+
+#: src/translate/translatedialog.cpp:72
+#, fuzzy, kde-format
+#| msgid "Untranslated text"
+msgid "Translate texts"
+msgstr "Oöversatt text"
+
 #: src/utils/finder.cpp:45
 #, kde-format
 msgid "Find In"
@@ -3941,17 +4086,6 @@ msgstr ""
 "Markeringens slut nådd.\n"
 "Fortsätt från början?"
 
-#: src/utils/language.cpp:115
-#, kde-format
-msgid "Automatic"
-msgstr "Automatisk"
-
-#: src/utils/language.cpp:122
-#, kde-format
-msgctxt "Official language of the Philippines, aka Filipino"
-msgid "Tagalog"
-msgstr "Tagalog"
-
 #: src/utils/replacer.cpp:43
 #, kde-format
 msgid "Find/Replace In"
@@ -3966,16 +4100,6 @@ msgstr "Ersätt"
 #, kde-format
 msgid "Spell Checking"
 msgstr "Stavningskontroll"
-
-#: src/utils/translator.cpp:165
-#, kde-format
-msgid "Operation canceled by user"
-msgstr "Åtgärden avbruten av användaren"
-
-#: src/utils/translator.cpp:265 src/utils/translator.cpp:274
-#, kde-format
-msgid "Unexpected contents received from translation service"
-msgstr "Oväntat innehåll mottaget från översättningstjänst"
 
 #: src/videoplayer/backend/videostate.cpp:110
 #, kde-format
@@ -4036,6 +4160,53 @@ msgstr "Automatisk stavningskontroll"
 #, kde-format
 msgid "Allow Tabulations"
 msgstr "Tillåt tabulatorer"
+
+#~ msgid "Translating text (%1 to %2)..."
+#~ msgstr "Översätter text (%1 till %2)..."
+
+#~ msgid "Translating primary text (%1 to %2)..."
+#~ msgstr "Översätter primärtext (%1 till %2)..."
+
+#~ msgid "Translating secondary text (%1 to %2)..."
+#~ msgstr "Översätter sekundärtext (%1 till %2)..."
+
+#~ msgid ""
+#~ "Unable to perform texts synchronization (sent and received lines count do "
+#~ "not match)."
+#~ msgstr ""
+#~ "Kan inte utföra textsynkronisering (skickat och mottaget radantal stämmer "
+#~ "inte)"
+
+#~ msgid "Translate Primary Text"
+#~ msgstr "Översätt primärtext"
+
+#~ msgid "Translate Secondary Text"
+#~ msgstr "Översätt sekundärtext"
+
+#~ msgid ""
+#~ "There was an error performing the translation:\n"
+#~ "\n"
+#~ "%1"
+#~ msgstr ""
+#~ "Ett fel uppstod när översättningen utfördes:\n"
+#~ "\n"
+#~ "%1"
+
+#~ msgid "Output language:"
+#~ msgstr "Utmatningsspråk:"
+
+#~ msgid "Automatic"
+#~ msgstr "Automatisk"
+
+#~ msgctxt "Official language of the Philippines, aka Filipino"
+#~ msgid "Tagalog"
+#~ msgstr "Tagalog"
+
+#~ msgid "Operation canceled by user"
+#~ msgstr "Åtgärden avbruten av användaren"
+
+#~ msgid "Unexpected contents received from translation service"
+#~ msgstr "Oväntat innehåll mottaget från översättningstjänst"
 
 #~ msgid "Installed Scripts"
 #~ msgstr "Installerade skript"
