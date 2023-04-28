@@ -231,10 +231,10 @@
 			<label>Service Account JSON containing private key</label>
 		</entry>
 		<entry name="gctLangSource" type="String">
-			<label>source langauge - cached</label>
+			<label>source language - cached</label>
 		</entry>
 		<entry name="gctLangTrans" type="String">
-			<label>translation langauge - cached</label>
+			<label>translation language - cached</label>
 		</entry>
 		<entry name="gctAccessToken" type="String">
 			<label>access token - cached</label>
@@ -255,10 +255,10 @@
 			<label>DeepL API domain name</label>
 		</entry>
 		<entry name="dltLangSource" type="String">
-			<label>source langauge - cached</label>
+			<label>source language - cached</label>
 		</entry>
 		<entry name="dltLangTrans" type="String">
-			<label>translation langauge - cached</label>
+			<label>translation language - cached</label>
 		</entry>
 	</group>
 </kcfg>
