@@ -3,21 +3,21 @@
 # This file is distributed under the license LGPL version 2.1 or
 # version 3 or later versions approved by the membership of KDE e.V.
 #
-# Antoni Bella Pérez <antonibella5@yahoo.com>, 2019, 2020.
+# Antoni Bella Pérez <antonibella5@yahoo.com>, 2019, 2020, 2023.
 # Josep M. Ferrer <txemaq@gmail.com>, 2020, 2021, 2022, 2023.
 msgid ""
 msgstr ""
 "Project-Id-Version: subtitlecomposer\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-04-28 00:47+0000\n"
-"PO-Revision-Date: 2023-04-14 17:22+0200\n"
-"Last-Translator: Josep M. Ferrer <txemaq@gmail.com>\n"
+"POT-Creation-Date: 2023-04-29 00:49+0000\n"
+"PO-Revision-Date: 2023-04-28 21:19+0200\n"
+"Last-Translator: Antoni Bella Pérez <antonibella5@yahoo.com>\n"
 "Language-Team: Catalan <kde-i18n-ca@kde.org>\n"
 "Language: ca@valencia\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Lokalize 22.12.3\n"
+"X-Generator: Lokalize 23.07.70\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
 "X-Accelerator-Marker: &\n"
 
@@ -2172,8 +2172,7 @@ msgid "Translation subtitle"
 msgstr "Traducció dels subtítols"
 
 #: src/dialogs/actionwithtargetdialog.h:58
-#, fuzzy, kde-format
-#| msgid "Apply To"
+#, kde-format
 msgid "Apply to"
 msgstr "Aplica a"
 
@@ -2567,7 +2566,7 @@ msgstr "Neteja les marques d'usuari"
 #: src/errors/finderrorsdialog.cpp:42
 #, kde-format
 msgid "Search in"
-msgstr ""
+msgstr "Busca a"
 
 #: src/errors/finderrorsdialog.cpp:86
 #, kde-format
@@ -3407,60 +3406,61 @@ msgstr "Amplària del contorn"
 
 #. i18n: ectx: label, entry (translateEngine), group (Translation)
 #: src/scconfig.kcfg:224
-#, fuzzy, kde-format
-#| msgid "Has untranslated text."
+#, kde-format
 msgid "Last used translate engine"
-msgstr "Hi ha text sense traduir."
+msgstr "Motor de traducció utilitzat per última vegada"
 
 #. i18n: ectx: label, entry (gctServiceJSON), group (GoogleCloudTranslate)
 #: src/scconfig.kcfg:231
 #, kde-format
 msgid "Service Account JSON containing private key"
-msgstr ""
+msgstr "JSON del compte de servei que conté la clau privada"
 
 #. i18n: ectx: label, entry (gctLangSource), group (GoogleCloudTranslate)
 #. i18n: ectx: label, entry (dltLangSource), group (DeepLTranslate)
 #: src/scconfig.kcfg:234 src/scconfig.kcfg:258
-#, kde-format
-msgid "source langauge - cached"
-msgstr ""
+#, fuzzy, kde-format
+#| msgid "source langauge - cached"
+msgid "source language - cached"
+msgstr "idioma original - en memòria cau"
 
 #. i18n: ectx: label, entry (gctLangTrans), group (GoogleCloudTranslate)
 #. i18n: ectx: label, entry (dltLangTrans), group (DeepLTranslate)
 #: src/scconfig.kcfg:237 src/scconfig.kcfg:261
-#, kde-format
-msgid "translation langauge - cached"
-msgstr ""
+#, fuzzy, kde-format
+#| msgid "translation langauge - cached"
+msgid "translation language - cached"
+msgstr "idioma traduït - en memòria cau"
 
 #. i18n: ectx: label, entry (gctAccessToken), group (GoogleCloudTranslate)
 #: src/scconfig.kcfg:240
 #, kde-format
 msgid "access token - cached"
-msgstr ""
+msgstr "testimoni d'accés - en memòria cau"
 
 #. i18n: ectx: label, entry (gctTokenExpires), group (GoogleCloudTranslate)
 #: src/scconfig.kcfg:243
 #, kde-format
 msgid "access token expiry - cached"
-msgstr ""
+msgstr "venciment del testimoni d'accés - en memòria cau"
 
 #. i18n: ectx: label, entry (gctTokenType), group (GoogleCloudTranslate)
 #: src/scconfig.kcfg:246
 #, kde-format
 msgid "access token type - cached"
-msgstr ""
+msgstr "tipus del testimoni d'accés - en memòria cau"
 
 #. i18n: ectx: label, entry (dltAuthKey), group (DeepLTranslate)
 #: src/scconfig.kcfg:252
 #, kde-format
 msgid "DeepL API authentication key"
-msgstr ""
+msgstr "Clau d'autenticació de l'API de DeepL"
 
 #. i18n: ectx: label, entry (dltApiDomain), group (DeepLTranslate)
 #: src/scconfig.kcfg:255
 #, kde-format
 msgid "DeepL API domain name"
-msgstr ""
+msgstr "Nom de domini de l'API de DeepL"
 
 #: src/scripting/scriptsmanager.cpp:84
 #, kde-format
@@ -3924,6 +3924,8 @@ msgid ""
 "Remote service error %1 %2\n"
 "%3"
 msgstr ""
+"S'ha produït un error del servei remot %1 %2\n"
+"%3"
 
 #: src/translate/deeplengine.cpp:65 src/translate/googlecloudengine.cpp:145
 #, kde-format
@@ -3931,6 +3933,8 @@ msgid ""
 "HTTP Error %1 - %2\n"
 "%2"
 msgstr ""
+"S'ha produït un error d'HTTP %1 - %2\n"
+"%2"
 
 #: src/translate/deeplengine.cpp:70 src/translate/googlecloudengine.cpp:150
 #, kde-format
@@ -3938,43 +3942,42 @@ msgid ""
 "Network Error %1\n"
 "%2"
 msgstr ""
+"S'ha produït un error de la xarxa %1\n"
+"%2"
 
 #: src/translate/deeplengine.cpp:76
-#, fuzzy, kde-format
-#| msgid "Set Line Errors"
+#, kde-format
 msgid "DeepL Engine Error"
-msgstr "Establix errors a la línia"
+msgstr "S'ha produït un error del motor DeepL"
 
 #: src/translate/deeplengine.cpp:128 src/translate/googlecloudengine.cpp:300
-#, fuzzy, kde-format
-#| msgctxt "Encodings menu"
-#| msgid "Autodetect"
+#, kde-format
 msgid "Autodetect Language"
-msgstr "Detecta automàticament"
+msgstr "Detecta automàticament l'idioma"
 
 #. i18n: ectx: property (title), widget (QGroupBox, grpAuth)
 #: src/translate/deeplengine.ui:17 src/translate/googlecloudengine.ui:17
 #, kde-format
 msgid "Authentication"
-msgstr ""
+msgstr "Autenticació"
 
 #. i18n: ectx: property (text), widget (QLabel, labAuthKey)
 #: src/translate/deeplengine.ui:23
 #, kde-format
 msgid "Authentication Key:"
-msgstr ""
+msgstr "Clau d'autenticació:"
 
 #. i18n: ectx: property (text), widget (QPushButton, btnConnect)
 #: src/translate/deeplengine.ui:33
 #, kde-format
 msgid "Connect"
-msgstr ""
+msgstr "Connecta"
 
 #. i18n: ectx: property (text), widget (QLabel, labApiDomain)
 #: src/translate/deeplengine.ui:66
 #, kde-format
 msgid "API Domain:"
-msgstr ""
+msgstr "Domini de l'API:"
 
 #. i18n: ectx: property (text), widget (QLabel, labHelp)
 #: src/translate/deeplengine.ui:82
@@ -3983,58 +3986,55 @@ msgid ""
 "You need to <a href=\"https://www.deepl.com/pro-api\">create an account</a> "
 "on DeepL website and paste your API authentication key below."
 msgstr ""
+"Cal <a href=\"https://www.deepl.com/pro-api\">crear un comte</a> en el lloc "
+"web de DeepL i apegar la vostra clau d'autenticació de l'API davall."
 
 #. i18n: ectx: property (title), widget (QGroupBox, grpSettings)
 #: src/translate/deeplengine.ui:104 src/translate/googlecloudengine.ui:91
-#, fuzzy, kde-format
-#| msgctxt "@title:group"
-#| msgid "Settings"
+#, kde-format
 msgid "Settings"
 msgstr "Configuració"
 
 #. i18n: ectx: property (text), widget (QLabel, labSource)
 #: src/translate/deeplengine.ui:110 src/translate/googlecloudengine.ui:97
-#, fuzzy, kde-format
-#| msgid "Input language:"
+#, kde-format
 msgid "Source language:"
-msgstr "Idioma d'entrada:"
+msgstr "Idioma d'origen:"
 
 #. i18n: ectx: property (text), widget (QLabel, labTranslation)
 #: src/translate/deeplengine.ui:120 src/translate/googlecloudengine.ui:107
-#, fuzzy, kde-format
-#| msgid "Translate"
+#, kde-format
 msgid "Translate to:"
-msgstr "Traduïx"
+msgstr "Traduïx a:"
 
 #: src/translate/googlecloudengine.cpp:156
 #: src/translate/googlecloudengine.cpp:202
 #: src/translate/googlecloudengine.cpp:211
 #, kde-format
 msgid "Google Cloud Engine Error"
-msgstr ""
+msgstr "S'ha produït un error del motor Google Cloud"
 
 #: src/translate/googlecloudengine.cpp:201
-#, fuzzy, kde-format
-#| msgid "Error opening script %1."
+#, kde-format
 msgid "Error opening file '%1'"
-msgstr "S'ha produït un error en obrir l'script %1."
+msgstr "S'ha produït un error en obrir el fitxer «%1»"
 
 #: src/translate/googlecloudengine.cpp:210
 #, kde-format
 msgid "Error parsing JSON from file '%1'"
-msgstr ""
+msgstr "S'ha produït un error d'anàlisi JSON del fitxer «%1»"
 
 #. i18n: ectx: property (text), widget (QLabel, labelServiceJSON)
 #: src/translate/googlecloudengine.ui:23
 #, kde-format
 msgid "Service Account's Private Key JSON:"
-msgstr ""
+msgstr "JSON de la clau privada del compte de servei:"
 
 #. i18n: ectx: property (text), widget (QPushButton, btnLogin)
 #: src/translate/googlecloudengine.ui:36
 #, kde-format
 msgid "Login"
-msgstr ""
+msgstr "Inici de sessió"
 
 #. i18n: ectx: property (text), widget (QLabel, labHelp)
 #: src/translate/googlecloudengine.ui:62
@@ -4048,6 +4048,13 @@ msgid ""
 "or must be granted access to the Google's Cloud Translation APIs in a "
 "different manner.</p>"
 msgstr ""
+"<p>Cal que <a href=\"https://developers.google.com/identity/protocols/oauth2/"
+"service-account#creatinganaccount\">creeu un compte de servei</a> a la "
+"consola de Google Cloud i proporcioneu un fitxer JSON de clau pública/"
+"privada a continuació.</p>.<p>El compte de servei ha de ser assignat al rol "
+"<span style=\" text-decoration: underline;\">Cloud Translation API User</"
+"span>  a la pàgina IAM o se li ha de concedir accés a les API de Cloud "
+"Translation de Google de manera diferent.</p>"
 
 #: src/translate/translatedialog.cpp:28
 #, kde-format
@@ -4055,16 +4062,14 @@ msgid "Translate"
 msgstr "Traduïx"
 
 #: src/translate/translatedialog.cpp:41
-#, fuzzy, kde-format
-#| msgid "Untranslated text"
+#, kde-format
 msgid "Translate texts in"
-msgstr "Text sense traduir"
+msgstr "Traduïx els texts en"
 
 #: src/translate/translatedialog.cpp:72
-#, fuzzy, kde-format
-#| msgid "Untranslated text"
+#, kde-format
 msgid "Translate texts"
-msgstr "Text sense traduir"
+msgstr "Traduïx els texts"
 
 #: src/utils/finder.cpp:45
 #, kde-format
@@ -4191,50 +4196,3 @@ msgstr "Comprova automàticament l'ortografia"
 #, kde-format
 msgid "Allow Tabulations"
 msgstr "Permet les tabulacions"
-
-#~ msgid "Translating text (%1 to %2)..."
-#~ msgstr "S'està traduint el text: (de «%1» a «%2»)..."
-
-#~ msgid "Translating primary text (%1 to %2)..."
-#~ msgstr "S'està traduint el text primari (de «%1» a «%2»)..."
-
-#~ msgid "Translating secondary text (%1 to %2)..."
-#~ msgstr "S'està traduint el text secundari (de «%1» a «%2»)..."
-
-#~ msgid ""
-#~ "Unable to perform texts synchronization (sent and received lines count do "
-#~ "not match)."
-#~ msgstr ""
-#~ "No s'ha pogut realitzar l'operació de sincronització del text (el "
-#~ "recompte de les línies enviades i rebudes no coincidix)."
-
-#~ msgid "Translate Primary Text"
-#~ msgstr "Traduïx el text primari"
-
-#~ msgid "Translate Secondary Text"
-#~ msgstr "Traduïx el text secundari"
-
-#~ msgid ""
-#~ "There was an error performing the translation:\n"
-#~ "\n"
-#~ "%1"
-#~ msgstr ""
-#~ "S'ha produït un error en realitzar la traducció:\n"
-#~ "\n"
-#~ "%1"
-
-#~ msgid "Output language:"
-#~ msgstr "Idioma d'eixida:"
-
-#~ msgid "Automatic"
-#~ msgstr "Automàtic"
-
-#~ msgctxt "Official language of the Philippines, aka Filipino"
-#~ msgid "Tagalog"
-#~ msgstr "Tagal"
-
-#~ msgid "Operation canceled by user"
-#~ msgstr "Operació cancel·lada per l'usuari"
-
-#~ msgid "Unexpected contents received from translation service"
-#~ msgstr "S'ha rebut contingut inesperat des del servei de traducció"

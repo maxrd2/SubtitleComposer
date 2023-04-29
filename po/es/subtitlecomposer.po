@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: subtitlecomposer\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-04-28 00:47+0000\n"
-"PO-Revision-Date: 2023-04-26 23:29+0200\n"
+"POT-Creation-Date: 2023-04-29 00:49+0000\n"
+"PO-Revision-Date: 2023-04-29 01:58+0200\n"
 "Last-Translator: Eloy Cuadra <ecuadra@eloihr.net>\n"
 "Language-Team: Spanish <kde-l10n-es@kde.org>\n"
 "Language: es\n"
@@ -3405,10 +3405,9 @@ msgstr "Anchura del contorno"
 
 #. i18n: ectx: label, entry (translateEngine), group (Translation)
 #: src/scconfig.kcfg:224
-#, fuzzy, kde-format
-#| msgid "Has untranslated text."
+#, kde-format
 msgid "Last used translate engine"
-msgstr "No tiene traducción."
+msgstr "Último motor de traducción usado"
 
 #. i18n: ectx: label, entry (gctServiceJSON), group (GoogleCloudTranslate)
 #: src/scconfig.kcfg:231
@@ -3419,15 +3418,16 @@ msgstr ""
 #. i18n: ectx: label, entry (gctLangSource), group (GoogleCloudTranslate)
 #. i18n: ectx: label, entry (dltLangSource), group (DeepLTranslate)
 #: src/scconfig.kcfg:234 src/scconfig.kcfg:258
-#, kde-format
-msgid "source langauge - cached"
-msgstr ""
+#, fuzzy, kde-format
+#| msgid "Input language:"
+msgid "source language - cached"
+msgstr "Lenguage de entrada:"
 
 #. i18n: ectx: label, entry (gctLangTrans), group (GoogleCloudTranslate)
 #. i18n: ectx: label, entry (dltLangTrans), group (DeepLTranslate)
 #: src/scconfig.kcfg:237 src/scconfig.kcfg:261
 #, kde-format
-msgid "translation langauge - cached"
+msgid "translation language - cached"
 msgstr ""
 
 #. i18n: ectx: label, entry (gctAccessToken), group (GoogleCloudTranslate)

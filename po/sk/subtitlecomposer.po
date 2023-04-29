@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: subtitlecomposer\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-04-28 00:47+0000\n"
+"POT-Creation-Date: 2023-04-29 00:49+0000\n"
 "PO-Revision-Date: 2022-04-07 18:21+0200\n"
 "Last-Translator: Roman Paholik <wizzardsk@gmail.com>\n"
 "Language-Team: Slovak <kde-sk@linux.sk>\n"
@@ -3379,14 +3379,14 @@ msgstr ""
 #. i18n: ectx: label, entry (dltLangSource), group (DeepLTranslate)
 #: src/scconfig.kcfg:234 src/scconfig.kcfg:258
 #, kde-format
-msgid "source langauge - cached"
+msgid "source language - cached"
 msgstr ""
 
 #. i18n: ectx: label, entry (gctLangTrans), group (GoogleCloudTranslate)
 #. i18n: ectx: label, entry (dltLangTrans), group (DeepLTranslate)
 #: src/scconfig.kcfg:237 src/scconfig.kcfg:261
 #, kde-format
-msgid "translation langauge - cached"
+msgid "translation language - cached"
 msgstr ""
 
 #. i18n: ectx: label, entry (gctAccessToken), group (GoogleCloudTranslate)

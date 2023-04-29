@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: subtitlecomposer\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-04-28 00:47+0000\n"
-"PO-Revision-Date: 2023-04-26 15:18+0300\n"
+"POT-Creation-Date: 2023-04-29 00:49+0000\n"
+"PO-Revision-Date: 2023-04-28 09:07+0300\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian <kde-i18n-uk@kde.org>\n"
 "Language: uk\n"
@@ -3424,60 +3424,61 @@ msgstr "Ширина контуру"
 
 #. i18n: ectx: label, entry (translateEngine), group (Translation)
 #: src/scconfig.kcfg:224
-#, fuzzy, kde-format
-#| msgid "Has untranslated text."
+#, kde-format
 msgid "Last used translate engine"
-msgstr "Містить неперекладений текст."
+msgstr "Востаннє використаний рушій перекладу"
 
 #. i18n: ectx: label, entry (gctServiceJSON), group (GoogleCloudTranslate)
 #: src/scconfig.kcfg:231
 #, kde-format
 msgid "Service Account JSON containing private key"
-msgstr ""
+msgstr "JSON облікового запису служби, що містить закритий ключ"
 
 #. i18n: ectx: label, entry (gctLangSource), group (GoogleCloudTranslate)
 #. i18n: ectx: label, entry (dltLangSource), group (DeepLTranslate)
 #: src/scconfig.kcfg:234 src/scconfig.kcfg:258
-#, kde-format
-msgid "source langauge - cached"
-msgstr ""
+#, fuzzy, kde-format
+#| msgid "source langauge - cached"
+msgid "source language - cached"
+msgstr "початкова мова – кешовано"
 
 #. i18n: ectx: label, entry (gctLangTrans), group (GoogleCloudTranslate)
 #. i18n: ectx: label, entry (dltLangTrans), group (DeepLTranslate)
 #: src/scconfig.kcfg:237 src/scconfig.kcfg:261
-#, kde-format
-msgid "translation langauge - cached"
-msgstr ""
+#, fuzzy, kde-format
+#| msgid "translation langauge - cached"
+msgid "translation language - cached"
+msgstr "мова перекладу – кешовано"
 
 #. i18n: ectx: label, entry (gctAccessToken), group (GoogleCloudTranslate)
 #: src/scconfig.kcfg:240
 #, kde-format
 msgid "access token - cached"
-msgstr ""
+msgstr "жетон доступу – кешовано"
 
 #. i18n: ectx: label, entry (gctTokenExpires), group (GoogleCloudTranslate)
 #: src/scconfig.kcfg:243
 #, kde-format
 msgid "access token expiry - cached"
-msgstr ""
+msgstr "строк дії жетона доступу – кешовано"
 
 #. i18n: ectx: label, entry (gctTokenType), group (GoogleCloudTranslate)
 #: src/scconfig.kcfg:246
 #, kde-format
 msgid "access token type - cached"
-msgstr ""
+msgstr "тип жетона доступу – кешовано"
 
 #. i18n: ectx: label, entry (dltAuthKey), group (DeepLTranslate)
 #: src/scconfig.kcfg:252
 #, kde-format
 msgid "DeepL API authentication key"
-msgstr ""
+msgstr "Ключ розпізнавання програмного інтерфейсу DeepL"
 
 #. i18n: ectx: label, entry (dltApiDomain), group (DeepLTranslate)
 #: src/scconfig.kcfg:255
 #, kde-format
 msgid "DeepL API domain name"
-msgstr ""
+msgstr "Назва домену програмного інтерфейсу DeepL"
 
 #: src/scripting/scriptsmanager.cpp:84
 #, kde-format
@@ -3936,6 +3937,8 @@ msgid ""
 "Remote service error %1 %2\n"
 "%3"
 msgstr ""
+"Помилка віддаленої служби %1 %2\n"
+"%3"
 
 #: src/translate/deeplengine.cpp:65 src/translate/googlecloudengine.cpp:145
 #, kde-format
@@ -3943,6 +3946,8 @@ msgid ""
 "HTTP Error %1 - %2\n"
 "%2"
 msgstr ""
+"Помилка HTTP %1 - %2\n"
+"%2"
 
 #: src/translate/deeplengine.cpp:70 src/translate/googlecloudengine.cpp:150
 #, kde-format
@@ -3950,42 +3955,42 @@ msgid ""
 "Network Error %1\n"
 "%2"
 msgstr ""
+"Помилка мережі %1\n"
+"%2"
 
 #: src/translate/deeplengine.cpp:76
-#, fuzzy, kde-format
-#| msgid "Set Line Errors"
+#, kde-format
 msgid "DeepL Engine Error"
-msgstr "Вказати помилки у рядках"
+msgstr "Помилка рушія DeepL"
 
 #: src/translate/deeplengine.cpp:128 src/translate/googlecloudengine.cpp:300
-#, fuzzy, kde-format
-#| msgid "Autodetect"
+#, kde-format
 msgid "Autodetect Language"
-msgstr "Автовиявлення"
+msgstr "Автовизначення мови"
 
 #. i18n: ectx: property (title), widget (QGroupBox, grpAuth)
 #: src/translate/deeplengine.ui:17 src/translate/googlecloudengine.ui:17
 #, kde-format
 msgid "Authentication"
-msgstr ""
+msgstr "Розпізнавання"
 
 #. i18n: ectx: property (text), widget (QLabel, labAuthKey)
 #: src/translate/deeplengine.ui:23
 #, kde-format
 msgid "Authentication Key:"
-msgstr ""
+msgstr "Ключ розпізнавання:"
 
 #. i18n: ectx: property (text), widget (QPushButton, btnConnect)
 #: src/translate/deeplengine.ui:33
 #, kde-format
 msgid "Connect"
-msgstr ""
+msgstr "З'єднатися"
 
 #. i18n: ectx: property (text), widget (QLabel, labApiDomain)
 #: src/translate/deeplengine.ui:66
 #, kde-format
 msgid "API Domain:"
-msgstr ""
+msgstr "Домен програмного інтерфейсу:"
 
 #. i18n: ectx: property (text), widget (QLabel, labHelp)
 #: src/translate/deeplengine.ui:82
@@ -3994,58 +3999,56 @@ msgid ""
 "You need to <a href=\"https://www.deepl.com/pro-api\">create an account</a> "
 "on DeepL website and paste your API authentication key below."
 msgstr ""
+"Вам слід <a href=\"https://www.deepl.com/pro-api\">створити обліковий запис</"
+"a> на сайті DeepL і нижче вставити ваш ключ розпізнавання до програмного "
+"інтерфейсу."
 
 #. i18n: ectx: property (title), widget (QGroupBox, grpSettings)
 #: src/translate/deeplengine.ui:104 src/translate/googlecloudengine.ui:91
-#, fuzzy, kde-format
-#| msgctxt "@title:group"
-#| msgid "Settings"
+#, kde-format
 msgid "Settings"
 msgstr "Параметри"
 
 #. i18n: ectx: property (text), widget (QLabel, labSource)
 #: src/translate/deeplengine.ui:110 src/translate/googlecloudengine.ui:97
-#, fuzzy, kde-format
-#| msgid "Input language:"
+#, kde-format
 msgid "Source language:"
-msgstr "Вхідна мова:"
+msgstr "Початкова мова:"
 
 #. i18n: ectx: property (text), widget (QLabel, labTranslation)
 #: src/translate/deeplengine.ui:120 src/translate/googlecloudengine.ui:107
-#, fuzzy, kde-format
-#| msgid "Translate"
+#, kde-format
 msgid "Translate to:"
-msgstr "Перекласти"
+msgstr "Перекласти такою мовою:"
 
 #: src/translate/googlecloudengine.cpp:156
 #: src/translate/googlecloudengine.cpp:202
 #: src/translate/googlecloudengine.cpp:211
 #, kde-format
 msgid "Google Cloud Engine Error"
-msgstr ""
+msgstr "Помилка хмарного рушія Google"
 
 #: src/translate/googlecloudengine.cpp:201
-#, fuzzy, kde-format
-#| msgid "Error opening script %1."
+#, kde-format
 msgid "Error opening file '%1'"
-msgstr "Помилка під час спроби відкрити скрипт %1."
+msgstr "Помилка під час відкриття файла «%1»"
 
 #: src/translate/googlecloudengine.cpp:210
 #, kde-format
 msgid "Error parsing JSON from file '%1'"
-msgstr ""
+msgstr "Помилка під час обробки JSON з файла «%1»"
 
 #. i18n: ectx: property (text), widget (QLabel, labelServiceJSON)
 #: src/translate/googlecloudengine.ui:23
 #, kde-format
 msgid "Service Account's Private Key JSON:"
-msgstr ""
+msgstr "JSON закритого ключа облікового запису служби:"
 
 #. i18n: ectx: property (text), widget (QPushButton, btnLogin)
 #: src/translate/googlecloudengine.ui:36
 #, kde-format
 msgid "Login"
-msgstr ""
+msgstr "Увійти"
 
 #. i18n: ectx: property (text), widget (QLabel, labHelp)
 #: src/translate/googlecloudengine.ui:62
@@ -4059,6 +4062,13 @@ msgid ""
 "or must be granted access to the Google's Cloud Translation APIs in a "
 "different manner.</p>"
 msgstr ""
+"<p>Вам слід <a href=\"https://developers.google.com/identity/protocols/"
+"oauth2/service-account#creatinganaccount\">створити обліковий запис на "
+"службі</a> у консолі «хмари» Google і надати файл JSON закритого/відкритого "
+"ключа нижче.</p><p>Для облікового запису служби слід призначити роль <span "
+"style=\" text-decoration: underline;\">Cloud Translation API User</span> на "
+"сторінці IAM або користувачеві має бути надано доступ до програмних "
+"інтерфейсів перекладу у «хмарі» Google в інший спосіб.</p>"
 
 #: src/translate/translatedialog.cpp:28
 #, kde-format
@@ -4066,16 +4076,14 @@ msgid "Translate"
 msgstr "Перекласти"
 
 #: src/translate/translatedialog.cpp:41
-#, fuzzy, kde-format
-#| msgid "Untranslated text"
+#, kde-format
 msgid "Translate texts in"
-msgstr "Неперекладений текст"
+msgstr "Перекладати текст"
 
 #: src/translate/translatedialog.cpp:72
-#, fuzzy, kde-format
-#| msgid "Untranslated text"
+#, kde-format
 msgid "Translate texts"
-msgstr "Неперекладений текст"
+msgstr "Перекладати тексти"
 
 #: src/utils/finder.cpp:45
 #, kde-format

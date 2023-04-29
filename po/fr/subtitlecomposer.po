@@ -11,8 +11,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: subtitlecomposer\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-04-28 00:47+0000\n"
-"PO-Revision-Date: 2023-04-15 20:24+0200\n"
+"POT-Creation-Date: 2023-04-29 00:49+0000\n"
+"PO-Revision-Date: 2023-04-27 14:23+0200\n"
 "Last-Translator: Xavier BESNARD <xavier.besnard]neuf.fr>\n"
 "Language-Team: fr\n"
 "Language: fr\n"
@@ -2170,8 +2170,7 @@ msgid "Translation subtitle"
 msgstr "Traduction de sous-titrage"
 
 #: src/dialogs/actionwithtargetdialog.h:58
-#, fuzzy, kde-format
-#| msgid "Apply To"
+#, kde-format
 msgid "Apply to"
 msgstr "Appliquer à"
 
@@ -2566,7 +2565,7 @@ msgstr "Effacer les marques d'utilisateur"
 #: src/errors/finderrorsdialog.cpp:42
 #, kde-format
 msgid "Search in"
-msgstr ""
+msgstr "Rechercher dans"
 
 #: src/errors/finderrorsdialog.cpp:86
 #, kde-format
@@ -3421,15 +3420,16 @@ msgstr ""
 #. i18n: ectx: label, entry (gctLangSource), group (GoogleCloudTranslate)
 #. i18n: ectx: label, entry (dltLangSource), group (DeepLTranslate)
 #: src/scconfig.kcfg:234 src/scconfig.kcfg:258
-#, kde-format
-msgid "source langauge - cached"
-msgstr ""
+#, fuzzy, kde-format
+#| msgid "Input language:"
+msgid "source language - cached"
+msgstr "Langue d'entrée"
 
 #. i18n: ectx: label, entry (gctLangTrans), group (GoogleCloudTranslate)
 #. i18n: ectx: label, entry (dltLangTrans), group (DeepLTranslate)
 #: src/scconfig.kcfg:237 src/scconfig.kcfg:261
 #, kde-format
-msgid "translation langauge - cached"
+msgid "translation language - cached"
 msgstr ""
 
 #. i18n: ectx: label, entry (gctAccessToken), group (GoogleCloudTranslate)
