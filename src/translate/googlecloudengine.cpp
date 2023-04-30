@@ -142,7 +142,7 @@ showError(QNetworkReply *res)
 	if(errText.isEmpty()) {
 		const int httpCode = res->attribute(QNetworkRequest::HttpStatusCodeAttribute).toInt();
 		if(httpCode) {
-			errText = i18n("HTTP Error %1 - %2\n%2",
+			errText = i18n("HTTP Error %1 - %2\n%3",
 					httpCode,
 					res->attribute(QNetworkRequest::HttpReasonPhraseAttribute).toString(),
 					QString(res->readAll()));
