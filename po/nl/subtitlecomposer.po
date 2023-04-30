@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: subtitlecomposer\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2023-04-29 00:49+0000\n"
-"PO-Revision-Date: 2023-04-28 10:11+0200\n"
+"PO-Revision-Date: 2023-04-29 21:53+0200\n"
 "Last-Translator: Freek de Kruijf <freekdekruijf@kde.nl>\n"
 "Language-Team: \n"
 "Language: nl\n"
@@ -3383,16 +3383,14 @@ msgstr "Service-account JSON die een private sleutel bevat"
 #. i18n: ectx: label, entry (gctLangSource), group (GoogleCloudTranslate)
 #. i18n: ectx: label, entry (dltLangSource), group (DeepLTranslate)
 #: src/scconfig.kcfg:234 src/scconfig.kcfg:258
-#, fuzzy, kde-format
-#| msgid "source langauge - cached"
+#, kde-format
 msgid "source language - cached"
 msgstr "brontaal - in buffer (cache)"
 
 #. i18n: ectx: label, entry (gctLangTrans), group (GoogleCloudTranslate)
 #. i18n: ectx: label, entry (dltLangTrans), group (DeepLTranslate)
 #: src/scconfig.kcfg:237 src/scconfig.kcfg:261
-#, fuzzy, kde-format
-#| msgid "translation langauge - cached"
+#, kde-format
 msgid "translation language - cached"
 msgstr "vertaaltaal - in buffer (cache)"
 

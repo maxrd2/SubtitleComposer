@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: subtitlecomposer\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2023-04-29 00:49+0000\n"
-"PO-Revision-Date: 2023-04-28 07:49+0200\n"
+"PO-Revision-Date: 2023-04-29 07:28+0200\n"
 "Last-Translator: Matjaž Jeran <matjaz.jeran@amis.net>\n"
 "Language-Team: Slovenian <lugos-slo@lugos.si>\n"
 "Language: sl\n"
@@ -18,7 +18,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=4; plural=(n%100==1 ? 0 : n%100==2 ? 1 : n%100>=3 && n"
 "%100<=4 ? 2 : 3);\n"
-"X-Generator: Lokalize 22.12.3\n"
+"X-Generator: Poedit 3.2.2\n"
 
 #: src/actions/kcodecactionext.cpp:29
 #, kde-format
@@ -3391,7 +3391,7 @@ msgstr "Širina obrobe"
 #: src/scconfig.kcfg:224
 #, kde-format
 msgid "Last used translate engine"
-msgstr "Zadnje uporabljeno zaledje za prevajanje."
+msgstr "Zadnje uporabljeno zaledje za prevajanje"
 
 #. i18n: ectx: label, entry (gctServiceJSON), group (GoogleCloudTranslate)
 #: src/scconfig.kcfg:231
@@ -3402,16 +3402,14 @@ msgstr "JSON računa storitev, ki vsebuje zasebni ključ"
 #. i18n: ectx: label, entry (gctLangSource), group (GoogleCloudTranslate)
 #. i18n: ectx: label, entry (dltLangSource), group (DeepLTranslate)
 #: src/scconfig.kcfg:234 src/scconfig.kcfg:258
-#, fuzzy, kde-format
-#| msgid "source langauge - cached"
+#, kde-format
 msgid "source language - cached"
 msgstr "izvirni jezik - shranjen v medpomnilniku"
 
 #. i18n: ectx: label, entry (gctLangTrans), group (GoogleCloudTranslate)
 #. i18n: ectx: label, entry (dltLangTrans), group (DeepLTranslate)
 #: src/scconfig.kcfg:237 src/scconfig.kcfg:261
-#, fuzzy, kde-format
-#| msgid "translation langauge - cached"
+#, kde-format
 msgid "translation language - cached"
 msgstr "jezik prevoda - shranjen v medpomnilniku"
 
@@ -4009,7 +4007,7 @@ msgstr "Napaka razčlenjevanja JSON iz datoteke '%1'"
 #: src/translate/googlecloudengine.ui:23
 #, kde-format
 msgid "Service Account's Private Key JSON:"
-msgstr "JSON zasebnega ključa računa storitve"
+msgstr "JSON zasebnega ključa računa storitve:"
 
 #. i18n: ectx: property (text), widget (QPushButton, btnLogin)
 #: src/translate/googlecloudengine.ui:36
@@ -4043,16 +4041,14 @@ msgid "Translate"
 msgstr "Prevedi"
 
 #: src/translate/translatedialog.cpp:41
-#, fuzzy, kde-format
-#| msgid "Untranslated text"
+#, kde-format
 msgid "Translate texts in"
-msgstr "Neprevedeno besedilo"
+msgstr "Prevedi besedila v"
 
 #: src/translate/translatedialog.cpp:72
-#, fuzzy, kde-format
-#| msgid "Untranslated text"
+#, kde-format
 msgid "Translate texts"
-msgstr "Neprevedeno besedilo"
+msgstr "Prevedi besedila"
 
 #: src/utils/finder.cpp:45
 #, kde-format
