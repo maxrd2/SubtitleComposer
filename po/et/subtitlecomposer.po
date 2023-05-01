@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: subtitlecomposer\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-04-29 00:49+0000\n"
+"POT-Creation-Date: 2023-05-01 00:51+0000\n"
 "PO-Revision-Date: 2020-02-21 11:52+0200\n"
 "Last-Translator: Marek Laane <qiilaq69@gmail.com>\n"
 "Language-Team: Estonian <kde-et@lists.linux.ee>\n"
@@ -3920,7 +3920,7 @@ msgstr ""
 #, kde-format
 msgid ""
 "HTTP Error %1 - %2\n"
-"%2"
+"%3"
 msgstr ""
 
 #: src/translate/deeplengine.cpp:70 src/translate/googlecloudengine.cpp:150

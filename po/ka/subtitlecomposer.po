@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: subtitlecomposer\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-04-29 00:49+0000\n"
-"PO-Revision-Date: 2023-04-27 06:56+0200\n"
+"POT-Creation-Date: 2023-05-01 00:51+0000\n"
+"PO-Revision-Date: 2023-04-30 04:35+0200\n"
 "Last-Translator: Temuri Doghonadze <temuri.doghonadze@gmail.com>\n"
 "Language-Team: Georgian <kde-i18n-doc@kde.org>\n"
 "Language: ka\n"
@@ -3332,10 +3332,9 @@ msgstr "კიდის სიგანე"
 
 #. i18n: ectx: label, entry (translateEngine), group (Translation)
 #: src/scconfig.kcfg:224
-#, fuzzy, kde-format
-#| msgid "Has untranslated text."
+#, kde-format
 msgid "Last used translate engine"
-msgstr "აქვს უთარგმნელი ტექსტი."
+msgstr "ბოლოს გამოყენებული თარგმნის ძრავა"
 
 #. i18n: ectx: label, entry (gctServiceJSON), group (GoogleCloudTranslate)
 #: src/scconfig.kcfg:231
@@ -3346,10 +3345,9 @@ msgstr ""
 #. i18n: ectx: label, entry (gctLangSource), group (GoogleCloudTranslate)
 #. i18n: ectx: label, entry (dltLangSource), group (DeepLTranslate)
 #: src/scconfig.kcfg:234 src/scconfig.kcfg:258
-#, fuzzy, kde-format
-#| msgid "Input language:"
+#, kde-format
 msgid "source language - cached"
-msgstr "შეყვანის ენა:"
+msgstr "საწყისი ენა - დაკეშილია"
 
 #. i18n: ectx: label, entry (gctLangTrans), group (GoogleCloudTranslate)
 #. i18n: ectx: label, entry (dltLangTrans), group (DeepLTranslate)
@@ -3838,7 +3836,7 @@ msgstr ""
 #, kde-format
 msgid ""
 "HTTP Error %1 - %2\n"
-"%2"
+"%3"
 msgstr ""
 
 #: src/translate/deeplengine.cpp:70 src/translate/googlecloudengine.cpp:150
@@ -3849,23 +3847,20 @@ msgid ""
 msgstr ""
 
 #: src/translate/deeplengine.cpp:76
-#, fuzzy, kde-format
-#| msgid "Set Line Errors"
+#, kde-format
 msgid "DeepL Engine Error"
-msgstr "ხაზის შეცდომების დაყენება"
+msgstr "DeepL ძრავის შეცდომა"
 
 #: src/translate/deeplengine.cpp:128 src/translate/googlecloudengine.cpp:300
-#, fuzzy, kde-format
-#| msgctxt "Encodings menu"
-#| msgid "Autodetect"
+#, kde-format
 msgid "Autodetect Language"
-msgstr "ავტოამოცნობა"
+msgstr "ენის ავტოამოცნობა"
 
 #. i18n: ectx: property (title), widget (QGroupBox, grpAuth)
 #: src/translate/deeplengine.ui:17 src/translate/googlecloudengine.ui:17
 #, kde-format
 msgid "Authentication"
-msgstr ""
+msgstr "ავთენტიკაცია"
 
 #. i18n: ectx: property (text), widget (QLabel, labAuthKey)
 #: src/translate/deeplengine.ui:23
@@ -3895,25 +3890,21 @@ msgstr ""
 
 #. i18n: ectx: property (title), widget (QGroupBox, grpSettings)
 #: src/translate/deeplengine.ui:104 src/translate/googlecloudengine.ui:91
-#, fuzzy, kde-format
-#| msgctxt "@title:group"
-#| msgid "Settings"
+#, kde-format
 msgid "Settings"
 msgstr "მორგება"
 
 #. i18n: ectx: property (text), widget (QLabel, labSource)
 #: src/translate/deeplengine.ui:110 src/translate/googlecloudengine.ui:97
-#, fuzzy, kde-format
-#| msgid "Input language:"
+#, kde-format
 msgid "Source language:"
-msgstr "შეყვანის ენა:"
+msgstr "საწყისი ენა:"
 
 #. i18n: ectx: property (text), widget (QLabel, labTranslation)
 #: src/translate/deeplengine.ui:120 src/translate/googlecloudengine.ui:107
-#, fuzzy, kde-format
-#| msgid "Translate"
+#, kde-format
 msgid "Translate to:"
-msgstr "თარგმნა"
+msgstr "თარგმნა ენაზე:"
 
 #: src/translate/googlecloudengine.cpp:156
 #: src/translate/googlecloudengine.cpp:202
@@ -3923,10 +3914,9 @@ msgid "Google Cloud Engine Error"
 msgstr ""
 
 #: src/translate/googlecloudengine.cpp:201
-#, fuzzy, kde-format
-#| msgid "Error opening script %1."
+#, kde-format
 msgid "Error opening file '%1'"
-msgstr "შეცომა სკრიპტის გახსნისას %1."
+msgstr "ფაილის (%1) გახსნის შეცდომა"
 
 #: src/translate/googlecloudengine.cpp:210
 #, kde-format
@@ -3964,16 +3954,14 @@ msgid "Translate"
 msgstr "თარგმნა"
 
 #: src/translate/translatedialog.cpp:41
-#, fuzzy, kde-format
-#| msgid "Untranslated text"
+#, kde-format
 msgid "Translate texts in"
-msgstr "უთარგმნელი ტექსტი"
+msgstr "ტექსტი თარგმნა ენაზე"
 
 #: src/translate/translatedialog.cpp:72
-#, fuzzy, kde-format
-#| msgid "Untranslated text"
+#, kde-format
 msgid "Translate texts"
-msgstr "უთარგმნელი ტექსტი"
+msgstr "ტექსტების თარგმნა"
 
 #: src/utils/finder.cpp:45
 #, kde-format

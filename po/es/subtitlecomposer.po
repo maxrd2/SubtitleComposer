@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: subtitlecomposer\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-04-29 00:49+0000\n"
-"PO-Revision-Date: 2023-04-29 01:58+0200\n"
+"POT-Creation-Date: 2023-05-01 00:51+0000\n"
+"PO-Revision-Date: 2023-04-30 02:27+0200\n"
 "Last-Translator: Eloy Cuadra <ecuadra@eloihr.net>\n"
 "Language-Team: Spanish <kde-l10n-es@kde.org>\n"
 "Language: es\n"
@@ -3413,52 +3413,51 @@ msgstr "Último motor de traducción usado"
 #: src/scconfig.kcfg:231
 #, kde-format
 msgid "Service Account JSON containing private key"
-msgstr ""
+msgstr "JSON de la cuenta de servicio que contiene la clave privada"
 
 #. i18n: ectx: label, entry (gctLangSource), group (GoogleCloudTranslate)
 #. i18n: ectx: label, entry (dltLangSource), group (DeepLTranslate)
 #: src/scconfig.kcfg:234 src/scconfig.kcfg:258
-#, fuzzy, kde-format
-#| msgid "Input language:"
+#, kde-format
 msgid "source language - cached"
-msgstr "Lenguage de entrada:"
+msgstr "idioma de origen - en caché"
 
 #. i18n: ectx: label, entry (gctLangTrans), group (GoogleCloudTranslate)
 #. i18n: ectx: label, entry (dltLangTrans), group (DeepLTranslate)
 #: src/scconfig.kcfg:237 src/scconfig.kcfg:261
 #, kde-format
 msgid "translation language - cached"
-msgstr ""
+msgstr "idioma de traducción - en caché"
 
 #. i18n: ectx: label, entry (gctAccessToken), group (GoogleCloudTranslate)
 #: src/scconfig.kcfg:240
 #, kde-format
 msgid "access token - cached"
-msgstr ""
+msgstr "token de acceso - en caché"
 
 #. i18n: ectx: label, entry (gctTokenExpires), group (GoogleCloudTranslate)
 #: src/scconfig.kcfg:243
 #, kde-format
 msgid "access token expiry - cached"
-msgstr ""
+msgstr "caducidad del token de acceso - en caché"
 
 #. i18n: ectx: label, entry (gctTokenType), group (GoogleCloudTranslate)
 #: src/scconfig.kcfg:246
 #, kde-format
 msgid "access token type - cached"
-msgstr ""
+msgstr "tipo de token de acceso - en caché"
 
 #. i18n: ectx: label, entry (dltAuthKey), group (DeepLTranslate)
 #: src/scconfig.kcfg:252
 #, kde-format
 msgid "DeepL API authentication key"
-msgstr ""
+msgstr "Clave de autenticación de la API de DeepL"
 
 #. i18n: ectx: label, entry (dltApiDomain), group (DeepLTranslate)
 #: src/scconfig.kcfg:255
 #, kde-format
 msgid "DeepL API domain name"
-msgstr ""
+msgstr "Nombre de dominio de la API de DeepL"
 
 #: src/scripting/scriptsmanager.cpp:84
 #, kde-format
@@ -3923,13 +3922,20 @@ msgid ""
 "Remote service error %1 %2\n"
 "%3"
 msgstr ""
+"Error de servicio remoto %1 %2\n"
+"%3"
 
 #: src/translate/deeplengine.cpp:65 src/translate/googlecloudengine.cpp:145
-#, kde-format
+#, fuzzy, kde-format
+#| msgid ""
+#| "HTTP Error %1 - %2\n"
+#| "%2"
 msgid ""
 "HTTP Error %1 - %2\n"
-"%2"
+"%3"
 msgstr ""
+"Error HTTP %1 - %2\n"
+"%2"
 
 #: src/translate/deeplengine.cpp:70 src/translate/googlecloudengine.cpp:150
 #, kde-format
@@ -3937,42 +3943,42 @@ msgid ""
 "Network Error %1\n"
 "%2"
 msgstr ""
+"Error de red %1\n"
+"%2"
 
 #: src/translate/deeplengine.cpp:76
-#, fuzzy, kde-format
-#| msgid "Set Line Errors"
+#, kde-format
 msgid "DeepL Engine Error"
-msgstr "Asignar errores de línea"
+msgstr "Error del motor DeepL"
 
 #: src/translate/deeplengine.cpp:128 src/translate/googlecloudengine.cpp:300
-#, fuzzy, kde-format
-#| msgid "Autodetect"
+#, kde-format
 msgid "Autodetect Language"
-msgstr "Autodetectar"
+msgstr "Autodetectar idioma"
 
 #. i18n: ectx: property (title), widget (QGroupBox, grpAuth)
 #: src/translate/deeplengine.ui:17 src/translate/googlecloudengine.ui:17
 #, kde-format
 msgid "Authentication"
-msgstr ""
+msgstr "Autenticación"
 
 #. i18n: ectx: property (text), widget (QLabel, labAuthKey)
 #: src/translate/deeplengine.ui:23
 #, kde-format
 msgid "Authentication Key:"
-msgstr ""
+msgstr "Clave de autenticación:"
 
 #. i18n: ectx: property (text), widget (QPushButton, btnConnect)
 #: src/translate/deeplengine.ui:33
 #, kde-format
 msgid "Connect"
-msgstr ""
+msgstr "Conectar"
 
 #. i18n: ectx: property (text), widget (QLabel, labApiDomain)
 #: src/translate/deeplengine.ui:66
 #, kde-format
 msgid "API Domain:"
-msgstr ""
+msgstr "Dominio de la API:"
 
 #. i18n: ectx: property (text), widget (QLabel, labHelp)
 #: src/translate/deeplengine.ui:82
@@ -3981,58 +3987,55 @@ msgid ""
 "You need to <a href=\"https://www.deepl.com/pro-api\">create an account</a> "
 "on DeepL website and paste your API authentication key below."
 msgstr ""
+"Debe <a href=\"https://www.deepl.com/pro-api\">crear una cuenta</a> en el "
+"sitio web DeepL y pegar su clave de autenticación de la API a continuación."
 
 #. i18n: ectx: property (title), widget (QGroupBox, grpSettings)
 #: src/translate/deeplengine.ui:104 src/translate/googlecloudengine.ui:91
-#, fuzzy, kde-format
-#| msgctxt "@title:group"
-#| msgid "Settings"
+#, kde-format
 msgid "Settings"
-msgstr "Configuración"
+msgstr "Preferencias"
 
 #. i18n: ectx: property (text), widget (QLabel, labSource)
 #: src/translate/deeplengine.ui:110 src/translate/googlecloudengine.ui:97
-#, fuzzy, kde-format
-#| msgid "Input language:"
+#, kde-format
 msgid "Source language:"
-msgstr "Lenguage de entrada:"
+msgstr "Idioma de origen:"
 
 #. i18n: ectx: property (text), widget (QLabel, labTranslation)
 #: src/translate/deeplengine.ui:120 src/translate/googlecloudengine.ui:107
-#, fuzzy, kde-format
-#| msgid "Translate"
+#, kde-format
 msgid "Translate to:"
-msgstr "Traducir"
+msgstr "Traducir a:"
 
 #: src/translate/googlecloudengine.cpp:156
 #: src/translate/googlecloudengine.cpp:202
 #: src/translate/googlecloudengine.cpp:211
 #, kde-format
 msgid "Google Cloud Engine Error"
-msgstr ""
+msgstr "Error del motor de Google Cloud"
 
 #: src/translate/googlecloudengine.cpp:201
-#, fuzzy, kde-format
-#| msgid "Error opening script %1."
+#, kde-format
 msgid "Error opening file '%1'"
-msgstr "Ha ocurrido un error al ejecutar el guion %1."
+msgstr "Ha ocurrido un error al abrir el archivo «%1»"
 
 #: src/translate/googlecloudengine.cpp:210
 #, kde-format
 msgid "Error parsing JSON from file '%1'"
-msgstr ""
+msgstr "Ha ocurrido un error al analizar JSON del archivo «%1»"
 
 #. i18n: ectx: property (text), widget (QLabel, labelServiceJSON)
 #: src/translate/googlecloudengine.ui:23
 #, kde-format
 msgid "Service Account's Private Key JSON:"
-msgstr ""
+msgstr "JSON de la clave privada de la cuenta de servicio"
 
 #. i18n: ectx: property (text), widget (QPushButton, btnLogin)
 #: src/translate/googlecloudengine.ui:36
 #, kde-format
 msgid "Login"
-msgstr ""
+msgstr "Iniciar sesión"
 
 #. i18n: ectx: property (text), widget (QLabel, labHelp)
 #: src/translate/googlecloudengine.ui:62
@@ -4046,6 +4049,13 @@ msgid ""
 "or must be granted access to the Google's Cloud Translation APIs in a "
 "different manner.</p>"
 msgstr ""
+"<p>Debe <a href=\"https://developers.google.com/identity/protocols/oauth2/"
+"service-account#creatinganaccount\">crear una cuenta de servicio</a> en la "
+"consola de Google Cloud y proporcionar el siguiente archivo JSON de clave "
+"pública/privada.</p><p>La cuenta de servicio debe tener asignado el rol "
+"<span style=\" text-decoration: underline;\">Usuario de la API de Cloud "
+"Translation</span> en la página de IAM o debe tener acceso a las API de "
+"Cloud Translation de Google de una manera diferente.</p>"
 
 #: src/translate/translatedialog.cpp:28
 #, kde-format
@@ -4053,16 +4063,14 @@ msgid "Translate"
 msgstr "Traducir"
 
 #: src/translate/translatedialog.cpp:41
-#, fuzzy, kde-format
-#| msgid "Untranslated text"
+#, kde-format
 msgid "Translate texts in"
-msgstr "Texto no traducido"
+msgstr "Traducir textos al"
 
 #: src/translate/translatedialog.cpp:72
-#, fuzzy, kde-format
-#| msgid "Untranslated text"
+#, kde-format
 msgid "Translate texts"
-msgstr "Texto no traducido"
+msgstr "Traducir textos"
 
 #: src/utils/finder.cpp:45
 #, kde-format
