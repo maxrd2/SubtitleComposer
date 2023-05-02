@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: subtitlecomposer\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2023-05-01 00:51+0000\n"
-"PO-Revision-Date: 2023-04-29 09:13+0300\n"
+"PO-Revision-Date: 2023-05-01 09:45+0300\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian <kde-i18n-uk@kde.org>\n"
 "Language: uk\n"
@@ -3939,16 +3939,13 @@ msgstr ""
 "%3"
 
 #: src/translate/deeplengine.cpp:65 src/translate/googlecloudengine.cpp:145
-#, fuzzy, kde-format
-#| msgid ""
-#| "HTTP Error %1 - %2\n"
-#| "%2"
+#, kde-format
 msgid ""
 "HTTP Error %1 - %2\n"
 "%3"
 msgstr ""
 "Помилка HTTP %1 - %2\n"
-"%2"
+"%3"
 
 #: src/translate/deeplengine.cpp:70 src/translate/googlecloudengine.cpp:150
 #, kde-format
