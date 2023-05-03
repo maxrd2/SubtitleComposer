@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: subtitlecomposer\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2023-05-01 00:51+0000\n"
-"PO-Revision-Date: 2023-04-28 12:24+0100\n"
+"PO-Revision-Date: 2023-05-02 10:52+0100\n"
 "Last-Translator: Hugo Carvalho <hugokarvalho@hotmail.com>\n"
 "Language-Team: Portuguese\n"
 "Language: pt\n"
@@ -3418,16 +3418,14 @@ msgstr "JSON da Conta do Serviço que contém a chave privada"
 #. i18n: ectx: label, entry (gctLangSource), group (GoogleCloudTranslate)
 #. i18n: ectx: label, entry (dltLangSource), group (DeepLTranslate)
 #: src/scconfig.kcfg:234 src/scconfig.kcfg:258
-#, fuzzy, kde-format
-#| msgid "source langauge - cached"
+#, kde-format
 msgid "source language - cached"
 msgstr "língua de origem - em 'cache'"
 
 #. i18n: ectx: label, entry (gctLangTrans), group (GoogleCloudTranslate)
 #. i18n: ectx: label, entry (dltLangTrans), group (DeepLTranslate)
 #: src/scconfig.kcfg:237 src/scconfig.kcfg:261
-#, fuzzy, kde-format
-#| msgid "translation langauge - cached"
+#, kde-format
 msgid "translation language - cached"
 msgstr "língua da tradução - em 'cache'"
 
@@ -3926,16 +3924,13 @@ msgstr ""
 "%3"
 
 #: src/translate/deeplengine.cpp:65 src/translate/googlecloudengine.cpp:145
-#, fuzzy, kde-format
-#| msgid ""
-#| "HTTP Error %1 - %2\n"
-#| "%2"
+#, kde-format
 msgid ""
 "HTTP Error %1 - %2\n"
 "%3"
 msgstr ""
 "Erro de HTTP %1 - %2\n"
-"%2"
+"%3"
 
 #: src/translate/deeplengine.cpp:70 src/translate/googlecloudengine.cpp:150
 #, kde-format
