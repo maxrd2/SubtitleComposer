@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: subtitlecomposer\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2023-05-01 00:51+0000\n"
-"PO-Revision-Date: 2023-05-01 10:20+0200\n"
+"PO-Revision-Date: 2023-05-03 17:54+0200\n"
 "Last-Translator: Josep M. Ferrer <txemaq@gmail.com>\n"
 "Language-Team: Catalan <kde-i18n-ca@kde.org>\n"
 "Language: ca\n"
@@ -997,23 +997,23 @@ msgstr "Gestiona els scripts d'usuari"
 #: src/application_actions.cpp:777 src/application_actions.cpp:778
 #, kde-format
 msgid "Waveform Zoom In"
-msgstr "Amplia la forma de l'ona"
+msgstr "Amplia la forma d'ona"
 
 #: src/application_actions.cpp:784 src/application_actions.cpp:785
 #, kde-format
 msgid "Waveform Zoom Out"
-msgstr "Redueix la forma de l'ona"
+msgstr "Redueix la forma d'ona"
 
 #: src/application_actions.cpp:792
 #, kde-format
 msgid "Waveform Auto Scroll"
-msgstr "Desplaçament automàtic en la forma de l'ona"
+msgstr "Desplaçament automàtic en la forma d'ona"
 
 #: src/application_actions.cpp:793
 #, kde-format
 msgid "Waveform display will automatically scroll to video position"
 msgstr ""
-"La visualització de la forma de l'ona es desplaçarà automàticament fins a la "
+"La visualització de la forma d'ona es desplaçarà automàticament fins a la "
 "posició en el vídeo"
 
 #: src/application_subtitle.cpp:78
@@ -1246,12 +1246,12 @@ msgstr "Configuració de l'ortografia"
 #, kde-format
 msgctxt "@title Waveform settings"
 msgid "Waveform"
-msgstr "Forma de l'ona"
+msgstr "Forma d'ona"
 
 #: src/configs/configdialog.cpp:53
 #, kde-format
 msgid "Waveform settings"
-msgstr "Configuració de la forma de l'ona"
+msgstr "Configuració de la forma d'ona"
 
 #: src/configs/configdialog.cpp:57
 #, kde-format
@@ -1563,7 +1563,7 @@ msgstr "Vista prèvia dels subtítols"
 #: src/configs/waveformconfigwidget.ui:17
 #, kde-format
 msgid "Waveform Display"
-msgstr "Aparició de la forma de l'ona"
+msgstr "Aparició de la forma d'ona"
 
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_wfSmoothScroll)
 #: src/configs/waveformconfigwidget.ui:23
@@ -3002,7 +3002,7 @@ msgstr "Color del text"
 #: src/gui/waveform/waveformwidget.cpp:116
 #, kde-format
 msgid "Generating waveform"
-msgstr "S'està generant la forma de l'ona"
+msgstr "S'està generant la forma d'ona"
 
 #: src/gui/waveform/waveformwidget.cpp:691
 #, kde-format
@@ -3110,7 +3110,7 @@ msgstr "Tothom qui ha col·laborat i als que m'he descuidat de mencionar"
 #: src/mainwindow.cpp:37
 #, kde-format
 msgid "Waveform"
-msgstr "Forma de l'ona"
+msgstr "Forma d'ona"
 
 #: src/mainwindow.cpp:51
 #, kde-format
@@ -3252,19 +3252,19 @@ msgstr "Omet les paraules enganxades"
 #: src/scconfig.kcfg:112
 #, kde-format
 msgid "Waveform Inner Color"
-msgstr "Color interior en la forma de l'ona"
+msgstr "Color interior en la forma d'ona"
 
 #. i18n: ectx: label, entry (wfOuterColor), group (Waveform Widget)
 #: src/scconfig.kcfg:116
 #, kde-format
 msgid "Waveform Outer Color"
-msgstr "Color exterior en la forma de l'ona"
+msgstr "Color exterior en la forma d'ona"
 
 #. i18n: ectx: label, entry (wfSmoothScroll), group (Waveform Widget)
 #: src/scconfig.kcfg:120
 #, kde-format
 msgid "Waveform Smooth Scrolling"
-msgstr "Desplaçament suau de la forma de l'ona"
+msgstr "Desplaçament suau de la forma d'ona"
 
 #. i18n: ectx: label, entry (wfAutoscrollPadding), group (Waveform Widget)
 #: src/scconfig.kcfg:124
@@ -3287,31 +3287,31 @@ msgstr ""
 #: src/scconfig.kcfg:129
 #, kde-format
 msgid "Waveform Subtitle Background Color"
-msgstr "Color de fons del subtítol en la forma de l'ona"
+msgstr "Color de fons del subtítol en la forma d'ona"
 
 #. i18n: ectx: label, entry (wfSubBorder), group (Waveform Widget)
 #: src/scconfig.kcfg:133
 #, kde-format
 msgid "Waveform Subtitle Border Color"
-msgstr "Color del contorn del subtítol en la forma de l'ona"
+msgstr "Color del contorn del subtítol en la forma d'ona"
 
 #. i18n: ectx: label, entry (wfSubBorderWidth), group (Waveform Widget)
 #: src/scconfig.kcfg:137
 #, kde-format
 msgid "Waveform Subtitle Border Width"
-msgstr "Amplada del contorn en la forma de l'ona"
+msgstr "Amplada del contorn en la forma d'ona"
 
 #. i18n: ectx: label, entry (wfSelBackground), group (Waveform Widget)
 #: src/scconfig.kcfg:141
 #, kde-format
 msgid "Waveform Selected Subtitle Background Color"
-msgstr "Color de fons del subtítol seleccionat en la forma de l'ona"
+msgstr "Color de fons del subtítol seleccionat en la forma d'ona"
 
 #. i18n: ectx: label, entry (wfSelBorder), group (Waveform Widget)
 #: src/scconfig.kcfg:145
 #, kde-format
 msgid "Waveform Selected Subtitle Border Color"
-msgstr "Color del contorn del subtítol seleccionat en la forma de l'ona"
+msgstr "Color del contorn del subtítol seleccionat en la forma d'ona"
 
 #. i18n: ectx: label, entry (wfFontFamily), group (Waveform Widget)
 #. i18n: ectx: label, entry (FontFamily), group (VideoPlayer)
