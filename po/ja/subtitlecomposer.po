@@ -10,7 +10,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
 "X-Accelerator-Marker: &\n"
 "X-Text-Markup: kde4\n"
 
@@ -88,28 +88,24 @@ msgstr ""
 msgid "Seek backwards 1 second"
 msgid_plural "Seek backwards %1 seconds"
 msgstr[0] ""
-msgstr[1] ""
 
 #: src/application.cpp:1139
 #, kde-format
 msgid "Seek forwards 1 second"
 msgid_plural "Seek forwards %1 seconds"
 msgstr[0] ""
-msgstr[1] ""
 
 #: src/application.cpp:1142 src/application.cpp:1146
 #, kde-format
 msgid "Shift %2%1 millisecond"
 msgid_plural "Shift %2%1 milliseconds"
 msgstr[0] ""
-msgstr[1] ""
 
 #: src/application.cpp:1143 src/application.cpp:1147
 #, kde-format
 msgid "Shift selected lines %2%1 millisecond"
 msgid_plural "Shift selected lines %2%1 milliseconds"
 msgstr[0] ""
-msgstr[1] ""
 
 #: src/application_actions.cpp:33
 #, kde-format
@@ -1873,28 +1869,24 @@ msgstr ""
 msgid "Has too many characters in primary text (1 char)."
 msgid_plural "Has too many characters in primary text (%1 chars)."
 msgstr[0] ""
-msgstr[1] ""
 
 #: src/core/subtitleline.cpp:101
 #, kde-format
 msgid "Has too many characters in translation text (1 char)."
 msgid_plural "Has too many characters in translation text (%1 chars)."
 msgstr[0] ""
-msgstr[1] ""
 
 #: src/core/subtitleline.cpp:102
 #, kde-format
 msgid "Has too many lines in primary text (1 line)."
 msgid_plural "Has too many lines in primary text (%1 lines)."
 msgstr[0] ""
-msgstr[1] ""
 
 #: src/core/subtitleline.cpp:103
 #, kde-format
 msgid "Has too many lines in translation text (1 line)."
 msgid_plural "Has too many lines in translation text (%1 lines)."
 msgstr[0] ""
-msgstr[1] ""
 
 #: src/core/subtitleline.cpp:104
 #, kde-format
@@ -1933,7 +1925,6 @@ msgid "Has too long duration per character in primary text (1 msec/char)."
 msgid_plural ""
 "Has too long duration per character in primary text (%1 msecs/char)."
 msgstr[0] ""
-msgstr[1] ""
 
 #: src/core/subtitleline.cpp:111
 #, kde-format
@@ -1941,7 +1932,6 @@ msgid "Has too long duration per character in translation text (1 msec/char)."
 msgid_plural ""
 "Has too long duration per character in translation text (%1 msecs/char)."
 msgstr[0] ""
-msgstr[1] ""
 
 #: src/core/subtitleline.cpp:112
 #, kde-format
@@ -1949,7 +1939,6 @@ msgid "Has too short duration per character in primary text (1 msec/char)."
 msgid_plural ""
 "Has too short duration per character in primary text (%1 msecs/char)."
 msgstr[0] ""
-msgstr[1] ""
 
 #: src/core/subtitleline.cpp:113
 #, kde-format
@@ -1957,21 +1946,18 @@ msgid "Has too short duration per character in translation text (1 msec/char)."
 msgid_plural ""
 "Has too short duration per character in translation text (%1 msecs/char)."
 msgstr[0] ""
-msgstr[1] ""
 
 #: src/core/subtitleline.cpp:114
 #, kde-format
 msgid "Has too long duration (1 msec)."
 msgid_plural "Has too long duration (%1 msecs)."
 msgstr[0] ""
-msgstr[1] ""
 
 #: src/core/subtitleline.cpp:115
 #, kde-format
 msgid "Has too short duration (1 msec)."
 msgid_plural "Has too short duration (%1 msecs)."
 msgstr[0] ""
-msgstr[1] ""
 
 #: src/core/subtitleline.cpp:116
 #, kde-format
