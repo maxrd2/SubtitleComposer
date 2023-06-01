@@ -1478,7 +1478,8 @@ msgstr "Desplaça el te&mps per a les línies seleccionades:"
 msgctxt "Text for previewing the subtitles font settings"
 msgid "<p>The Quick Brown Fox<br/>Jumps Over The Lazy Dog</p>"
 msgstr ""
-"<p>Jove xef:<br/>porte ací per beure whisky amb quinze glaçons d'hidrogen</p>"
+"<p>Jove xef:<br/>porte ací per a beure whisky amb quinze glaçons d'hidrogen</"
+"p>"
 
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_UnpauseOnDoubleClick)
 #: src/configs/playerconfigwidget.ui:23
