@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: subtitlecomposer\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2023-05-01 00:51+0000\n"
-"PO-Revision-Date: 2023-05-01 12:07+0300\n"
+"PO-Revision-Date: 2023-06-04 01:25+0300\n"
 "Last-Translator: Emir SARI <emir_sari@icloud.com>\n"
 "Language-Team: Turkish <kde-l10n-tr@kde.org>\n"
 "Language: tr\n"
@@ -15,7 +15,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
-"X-Generator: Lokalize 23.03.70\n"
+"X-Generator: Lokalize 23.07.70\n"
 
 #: src/actions/kcodecactionext.cpp:29
 #, kde-format
@@ -2634,7 +2634,7 @@ msgstr "Tamam"
 #: src/formats/vobsub/vobsubinputprocessdialog.ui:202
 #, kde-format
 msgid "Ctrl+Shift+Left"
-msgstr "Ctrl+Shift+Sol"
+msgstr "Kontrol+Üst Karakter+Sol"
 
 #. i18n: ectx: property (text), widget (QPushButton, btnPrevImage)
 #: src/formats/vobsub/vobsubinputprocessdialog.ui:205
@@ -2646,7 +2646,7 @@ msgstr "Önceki Görsel"
 #: src/formats/vobsub/vobsubinputprocessdialog.ui:219
 #, kde-format
 msgid "Ctrl+Left"
-msgstr "Ctrl+Sol"
+msgstr "Kontrol+Sol"
 
 #. i18n: ectx: property (text), widget (QPushButton, btnPrevSymbol)
 #: src/formats/vobsub/vobsubinputprocessdialog.ui:222
@@ -2658,7 +2658,7 @@ msgstr "Önceki Sembol"
 #: src/formats/vobsub/vobsubinputprocessdialog.ui:236
 #, kde-format
 msgid "Ctrl+Right"
-msgstr "Ctrl+Sağ"
+msgstr "Kontrol+Sağ"
 
 #. i18n: ectx: property (text), widget (QPushButton, btnNextSymbol)
 #: src/formats/vobsub/vobsubinputprocessdialog.ui:239
@@ -2670,7 +2670,7 @@ msgstr "Sonraki Sembol"
 #: src/formats/vobsub/vobsubinputprocessdialog.ui:250
 #, kde-format
 msgid "Ctrl+Shift+Right"
-msgstr "Ctrl+Shift+Sağ"
+msgstr "Kontrol+Üst Karakter+Sağ"
 
 #. i18n: ectx: property (text), widget (QPushButton, btnNextImage)
 #: src/formats/vobsub/vobsubinputprocessdialog.ui:253
