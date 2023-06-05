@@ -537,11 +537,10 @@ StreamProcessor::processText()
 				case SUBTITLE_ASS: {
 #if 1
 					const char *assText = sub->ass;
-					if(strncmp("Dialogue", assText, 8) != 0)
-						break;
-
+					// FIXME: did ass format change with ffmpeg6? can't find any references
+					const int textLocation = strncmp("Dialogue", assText, 8) ? 8 : 9;
 					// Dialogue: Marked, Start, End, Style, Name, MarginL, MarginR, MarginV, Effect, Text
-					for(int c = 9; c && *assText; assText++) {
+					for(int c = textLocation; c && *assText; assText++) {
 						if(*assText == ',')
 							c--;
 					}
@@ -550,7 +549,7 @@ StreamProcessor::processText()
 										  "{\\c&H0000ff&}red {\\c&H00ff00&}green {\\c&Hff0000&}blue{\\r}\\n"
 										  "Another {\\b100}bold\\h{\\i1}bolditalic{\\b0\\i0} some{\\anidfsd} unsupported tag";
 #endif
-					QString assChunk(assText);
+					QString assChunk = QString::fromUtf8(assText);
 
 					assChunk
 							.replace(QStringLiteral("\\N"), QStringLiteral("\n"))
