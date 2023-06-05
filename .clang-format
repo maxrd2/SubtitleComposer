@@ -80,7 +80,7 @@ AllowAllArgumentsOnNextLine: false
 # These settings derive from the KDE coding style, see README.CodingStyle.md
 IndentWidth: 4
 TabWidth: 4
-UseTab: AlignWithSpaces
+UseTab: Always
 AllowShortFunctionsOnASingleLine: InlineOnly
 AlwaysBreakAfterReturnType: TopLevel
 SpaceBeforeParens: Never
