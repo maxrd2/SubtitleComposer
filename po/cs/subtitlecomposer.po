@@ -12,7 +12,7 @@ msgstr ""
 "Project-Id-Version: subtitlecomposer\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2023-05-01 00:51+0000\n"
-"PO-Revision-Date: 2023-04-14 21:53+0200\n"
+"PO-Revision-Date: 2023-06-05 13:13+0200\n"
 "Last-Translator: Vit Pelcak <vit@pelcak.org>\n"
 "Language-Team: Czech <kde-i18n-doc@kde.org>\n"
 "Language: cs\n"
@@ -20,7 +20,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2;\n"
-"X-Generator: Lokalize 22.12.3\n"
+"X-Generator: Lokalize 23.04.1\n"
 "X-Crowdin-Project: subtitlecomposer\n"
 "X-Crowdin-Language: cs\n"
 "X-Crowdin-File: subtitlecomposer.pot\n"
@@ -2144,8 +2144,7 @@ msgid "Translation subtitle"
 msgstr "Překlad"
 
 #: src/dialogs/actionwithtargetdialog.h:58
-#, fuzzy, kde-format
-#| msgid "Apply To"
+#, kde-format
 msgid "Apply to"
 msgstr "Použít na"
 
@@ -2539,7 +2538,7 @@ msgstr "Vymazat uživatelské značky"
 #: src/errors/finderrorsdialog.cpp:42
 #, kde-format
 msgid "Search in"
-msgstr ""
+msgstr "Hledat v"
 
 #: src/errors/finderrorsdialog.cpp:86
 #, kde-format
@@ -3370,10 +3369,9 @@ msgstr "Šířka obrysové čáry"
 
 #. i18n: ectx: label, entry (translateEngine), group (Translation)
 #: src/scconfig.kcfg:224
-#, fuzzy, kde-format
-#| msgid "Has untranslated text."
+#, kde-format
 msgid "Last used translate engine"
-msgstr "Nemá přeložený text."
+msgstr ""
 
 #. i18n: ectx: label, entry (gctServiceJSON), group (GoogleCloudTranslate)
 #: src/scconfig.kcfg:231
@@ -3384,10 +3382,9 @@ msgstr ""
 #. i18n: ectx: label, entry (gctLangSource), group (GoogleCloudTranslate)
 #. i18n: ectx: label, entry (dltLangSource), group (DeepLTranslate)
 #: src/scconfig.kcfg:234 src/scconfig.kcfg:258
-#, fuzzy, kde-format
-#| msgid "Input language:"
+#, kde-format
 msgid "source language - cached"
-msgstr "Vstupní jazyk:"
+msgstr ""
 
 #. i18n: ectx: label, entry (gctLangTrans), group (GoogleCloudTranslate)
 #. i18n: ectx: label, entry (dltLangTrans), group (DeepLTranslate)
@@ -3895,23 +3892,20 @@ msgid ""
 msgstr ""
 
 #: src/translate/deeplengine.cpp:76
-#, fuzzy, kde-format
-#| msgid "Set Line Errors"
+#, kde-format
 msgid "DeepL Engine Error"
-msgstr "Nastavit chyby"
+msgstr ""
 
 #: src/translate/deeplengine.cpp:128 src/translate/googlecloudengine.cpp:300
-#, fuzzy, kde-format
-#| msgctxt "Encodings menu"
-#| msgid "Autodetect"
+#, kde-format
 msgid "Autodetect Language"
-msgstr "Automatická detekce"
+msgstr ""
 
 #. i18n: ectx: property (title), widget (QGroupBox, grpAuth)
 #: src/translate/deeplengine.ui:17 src/translate/googlecloudengine.ui:17
 #, kde-format
 msgid "Authentication"
-msgstr ""
+msgstr "Ověření"
 
 #. i18n: ectx: property (text), widget (QLabel, labAuthKey)
 #: src/translate/deeplengine.ui:23
@@ -3923,7 +3917,7 @@ msgstr ""
 #: src/translate/deeplengine.ui:33
 #, kde-format
 msgid "Connect"
-msgstr ""
+msgstr "Připojit se"
 
 #. i18n: ectx: property (text), widget (QLabel, labApiDomain)
 #: src/translate/deeplengine.ui:66
@@ -3941,25 +3935,21 @@ msgstr ""
 
 #. i18n: ectx: property (title), widget (QGroupBox, grpSettings)
 #: src/translate/deeplengine.ui:104 src/translate/googlecloudengine.ui:91
-#, fuzzy, kde-format
-#| msgctxt "@title:group"
-#| msgid "Settings"
+#, kde-format
 msgid "Settings"
 msgstr "Nastavení"
 
 #. i18n: ectx: property (text), widget (QLabel, labSource)
 #: src/translate/deeplengine.ui:110 src/translate/googlecloudengine.ui:97
-#, fuzzy, kde-format
-#| msgid "Input language:"
+#, kde-format
 msgid "Source language:"
-msgstr "Vstupní jazyk:"
+msgstr "Původní jazyk:"
 
 #. i18n: ectx: property (text), widget (QLabel, labTranslation)
 #: src/translate/deeplengine.ui:120 src/translate/googlecloudengine.ui:107
-#, fuzzy, kde-format
-#| msgid "Translate"
+#, kde-format
 msgid "Translate to:"
-msgstr "Překlad"
+msgstr "Přeložit do:"
 
 #: src/translate/googlecloudengine.cpp:156
 #: src/translate/googlecloudengine.cpp:202
@@ -3969,10 +3959,9 @@ msgid "Google Cloud Engine Error"
 msgstr ""
 
 #: src/translate/googlecloudengine.cpp:201
-#, fuzzy, kde-format
-#| msgid "Error opening script %1."
+#, kde-format
 msgid "Error opening file '%1'"
-msgstr "Chyba při otevírání skriptu %1."
+msgstr "Chyba při otevírání souboru '%1'"
 
 #: src/translate/googlecloudengine.cpp:210
 #, kde-format
@@ -3989,7 +3978,7 @@ msgstr ""
 #: src/translate/googlecloudengine.ui:36
 #, kde-format
 msgid "Login"
-msgstr ""
+msgstr "Přihlášení"
 
 #. i18n: ectx: property (text), widget (QLabel, labHelp)
 #: src/translate/googlecloudengine.ui:62
@@ -4010,16 +3999,14 @@ msgid "Translate"
 msgstr "Překlad"
 
 #: src/translate/translatedialog.cpp:41
-#, fuzzy, kde-format
-#| msgid "Untranslated text"
+#, kde-format
 msgid "Translate texts in"
-msgstr "Nepřeložený text"
+msgstr ""
 
 #: src/translate/translatedialog.cpp:72
-#, fuzzy, kde-format
-#| msgid "Untranslated text"
+#, kde-format
 msgid "Translate texts"
-msgstr "Nepřeložený text"
+msgstr ""
 
 #: src/utils/finder.cpp:45
 #, kde-format
@@ -4146,49 +4133,3 @@ msgstr "Automatická kontrola pravopisu"
 #, kde-format
 msgid "Allow Tabulations"
 msgstr "Povolit tabulátory"
-
-#~ msgid "Translating text (%1 to %2)..."
-#~ msgstr "Překládám text (%1 do %2)..."
-
-#~ msgid "Translating primary text (%1 to %2)..."
-#~ msgstr "Překládám primární text (%1 do %2)..."
-
-#~ msgid "Translating secondary text (%1 to %2)..."
-#~ msgstr "Překládám sekundární text (%1 do %2)..."
-
-#~ msgid ""
-#~ "Unable to perform texts synchronization (sent and received lines count do "
-#~ "not match)."
-#~ msgstr ""
-#~ "Není možné provést synchronizaci textu (neshodují se počty poslaných a "
-#~ "přijatých řádků)."
-
-#~ msgid "Translate Primary Text"
-#~ msgstr "Přeložit primární text"
-
-#~ msgid "Translate Secondary Text"
-#~ msgstr "Přeložit druhotný text"
-
-#~ msgid ""
-#~ "There was an error performing the translation:\n"
-#~ "\n"
-#~ "%1"
-#~ msgstr ""
-#~ "Vyskytla se chyba při ukládání překladu:\n"
-#~ "%1"
-
-#~ msgid "Output language:"
-#~ msgstr "Výstupní jazyk:"
-
-#~ msgid "Automatic"
-#~ msgstr "Automatický"
-
-#~ msgctxt "Official language of the Philippines, aka Filipino"
-#~ msgid "Tagalog"
-#~ msgstr "Tagalog"
-
-#~ msgid "Operation canceled by user"
-#~ msgstr "Operace přerušena uživatelem"
-
-#~ msgid "Unexpected contents received from translation service"
-#~ msgstr "Nečekaný obsah obdržený překládací službou"
