@@ -12,7 +12,7 @@ msgstr ""
 "Project-Id-Version: subtitlecomposer\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2023-05-01 00:51+0000\n"
-"PO-Revision-Date: 2023-06-05 13:13+0200\n"
+"PO-Revision-Date: 2023-06-22 12:04+0200\n"
 "Last-Translator: Vit Pelcak <vit@pelcak.org>\n"
 "Language-Team: Czech <kde-i18n-doc@kde.org>\n"
 "Language: cs\n"
@@ -20,7 +20,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2;\n"
-"X-Generator: Lokalize 23.04.1\n"
+"X-Generator: Lokalize 23.04.2\n"
 "X-Crowdin-Project: subtitlecomposer\n"
 "X-Crowdin-Language: cs\n"
 "X-Crowdin-File: subtitlecomposer.pot\n"
@@ -782,7 +782,7 @@ msgstr ""
 #: src/application_actions.cpp:607
 #, kde-format
 msgid "Seek to previous subtitle line show time"
-msgstr "Hledat do zobrazení předchozícho titulku"
+msgstr "Hledat do zobrazení předchozího titulku"
 
 #: src/application_actions.cpp:615
 #, kde-format
@@ -2082,7 +2082,7 @@ msgstr "Změnit styl"
 #: src/core/undo/subtitlelineactions.cpp:28
 #, kde-format
 msgid "Set Line Text"
-msgstr "Zapisat text"
+msgstr ""
 
 #: src/core/undo/subtitlelineactions.cpp:66
 #, kde-format
@@ -3795,7 +3795,7 @@ msgstr "Žádný plugin pro rozpoznávání řeči"
 #: src/speechprocessor/speechprocessor.cpp:103
 #, kde-format
 msgid "Initialization of speech recognition plugin failed"
-msgstr "Načtení pluginu pro rozpozávání řeči selhalo"
+msgstr "Načtení pluginu pro rozpoznávání řeči selhalo"
 
 #: src/speechprocessor/speechprocessor.cpp:173
 #, kde-format
