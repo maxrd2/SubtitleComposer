@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: subtitlecomposer\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-05-01 00:51+0000\n"
+"POT-Creation-Date: 2023-06-28 00:47+0000\n"
 "PO-Revision-Date: 2020-10-13 02:20+0200\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
@@ -1001,6 +1001,10 @@ msgid "All Image Subtitles"
 msgstr ""
 
 #: src/application_subtitle.cpp:81 src/application_subtitle.cpp:105
+#: src/speechplugins/pocketsphinx/pocketsphinxconfigwidget.cpp:21
+#: src/speechplugins/pocketsphinx/pocketsphinxconfigwidget.cpp:25
+#: src/speechplugins/pocketsphinx/pocketsphinxconfigwidget.cpp:28
+#: src/speechplugins/pocketsphinx/pocketsphinxconfigwidget.cpp:29
 #, kde-format
 msgid "All Files"
 msgstr ""
@@ -3680,6 +3684,18 @@ msgstr ""
 msgid ""
 "Threshold for decision between noise and silence frames. Log-ratio between "
 "signal level and noise level"
+msgstr ""
+
+#: src/speechplugins/pocketsphinx/pocketsphinxconfigwidget.cpp:20
+#: src/speechplugins/pocketsphinx/pocketsphinxconfigwidget.cpp:28
+#, kde-format
+msgid "Sphinx Dictionaries"
+msgstr ""
+
+#: src/speechplugins/pocketsphinx/pocketsphinxconfigwidget.cpp:24
+#: src/speechplugins/pocketsphinx/pocketsphinxconfigwidget.cpp:29
+#, kde-format
+msgid "Trigram Models"
 msgstr ""
 
 #. i18n: ectx: property (title), widget (QGroupBox, grpModel)

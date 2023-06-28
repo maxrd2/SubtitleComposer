@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: subtitlecomposer\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-05-01 00:51+0000\n"
+"POT-Creation-Date: 2023-06-28 00:47+0000\n"
 "PO-Revision-Date: 2023-04-23 11:57+0200\n"
 "Last-Translator: Łukasz Wojniłowicz <lukasz.wojnilowicz@gmail.com>\n"
 "Language-Team: Polish <kde-i18n-doc@kde.org>\n"
@@ -1022,6 +1022,10 @@ msgid "All Image Subtitles"
 msgstr "Wszystkie podpisy obrazów"
 
 #: src/application_subtitle.cpp:81 src/application_subtitle.cpp:105
+#: src/speechplugins/pocketsphinx/pocketsphinxconfigwidget.cpp:21
+#: src/speechplugins/pocketsphinx/pocketsphinxconfigwidget.cpp:25
+#: src/speechplugins/pocketsphinx/pocketsphinxconfigwidget.cpp:28
+#: src/speechplugins/pocketsphinx/pocketsphinxconfigwidget.cpp:29
 #, kde-format
 msgid "All Files"
 msgstr "Wszystkie pliki"
@@ -3762,6 +3766,19 @@ msgid ""
 msgstr ""
 "Próg do potraktowania klatek jako szum lub ciszę. Stosunek logarytmiczny "
 "pomiędzy poziomami sygnału i szumu"
+
+#: src/speechplugins/pocketsphinx/pocketsphinxconfigwidget.cpp:20
+#: src/speechplugins/pocketsphinx/pocketsphinxconfigwidget.cpp:28
+#, kde-format
+msgid "Sphinx Dictionaries"
+msgstr ""
+
+#: src/speechplugins/pocketsphinx/pocketsphinxconfigwidget.cpp:24
+#: src/speechplugins/pocketsphinx/pocketsphinxconfigwidget.cpp:29
+#, fuzzy, kde-format
+#| msgid "Trigram Model"
+msgid "Trigram Models"
+msgstr "Model Trigram"
 
 #. i18n: ectx: property (title), widget (QGroupBox, grpModel)
 #: src/speechplugins/pocketsphinx/pocketsphinxconfigwidget.ui:20
