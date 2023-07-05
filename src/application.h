@@ -63,6 +63,7 @@ class Application : public QApplication
 
 public:
 	Application(int &argc, char **argv);
+	void createMainWindow();
 	virtual ~Application();
 
 	inline MainWindow * mainWindow() const { return m_mainWindow; }

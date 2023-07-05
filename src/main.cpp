@@ -179,6 +179,9 @@ main(int argc, char **argv)
 	app.setApplicationDisplayName(aboutData.displayName());
 	app.setWindowIcon(QIcon::fromTheme(aboutData.componentName()));
 
+	// do it sooner and different stuff will break in different KF5 versions
+	app.createMainWindow();
+
 	handleCommandLine(app, aboutData);
 
 	return app.exec();
