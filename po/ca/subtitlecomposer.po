@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: subtitlecomposer\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-06-28 00:47+0000\n"
+"POT-Creation-Date: 2023-07-06 00:57+0000\n"
 "PO-Revision-Date: 2023-06-28 10:26+0200\n"
 "Last-Translator: Josep M. Ferrer <txemaq@gmail.com>\n"
 "Language-Team: Catalan <kde-i18n-ca@kde.org>\n"
@@ -39,79 +39,79 @@ msgctxt "Encodings menu"
 msgid "Autodetect"
 msgstr "Detecta automàticament"
 
-#: src/application.cpp:495
+#: src/application.cpp:499
 #, kde-format
 msgid "Go to Line"
 msgstr "Ves a la línia"
 
-#: src/application.cpp:495
+#: src/application.cpp:499
 #, kde-format
 msgid "&Go to line:"
 msgstr "&Ves a la línia:"
 
-#: src/application.cpp:668 src/core/subtitle.cpp:878
+#: src/application.cpp:672 src/core/subtitle.cpp:878
 #, kde-format
 msgid "Maximize Durations"
 msgstr "Maximitza les durades"
 
-#: src/application.cpp:696 src/core/subtitle.cpp:1153
+#: src/application.cpp:700 src/core/subtitle.cpp:1153
 #, kde-format
 msgid "Unbreak Lines"
 msgstr "Elimina els salts de línia"
 
-#: src/application.cpp:707 src/core/subtitle.cpp:1162
+#: src/application.cpp:711 src/core/subtitle.cpp:1162
 #, kde-format
 msgid "Simplify Spaces"
 msgstr "Simplifica els espais"
 
-#: src/application.cpp:768
+#: src/application.cpp:772
 #, kde-format
 msgid "Open Video"
 msgstr "Obre un vídeo"
 
-#: src/application.cpp:966 src/application.cpp:973
+#: src/application.cpp:970 src/application.cpp:977
 #: src/application_subtitle.cpp:658
 #, kde-format
 msgid "Untitled"
 msgstr "Sense títol"
 
-#: src/application.cpp:968 src/application_subtitle.cpp:658
+#: src/application.cpp:972 src/application_subtitle.cpp:658
 #, kde-format
 msgid "Untitled Translation"
 msgstr "Traducció sense títol"
 
-#: src/application.cpp:1069
+#: src/application.cpp:1073
 #, kde-format
 msgid "Pause"
 msgstr "Pausa"
 
-#: src/application.cpp:1077 src/application_actions.cpp:567
+#: src/application.cpp:1081 src/application_actions.cpp:567
 #, kde-format
 msgid "Play"
 msgstr "Reprodueix"
 
-#: src/application.cpp:1138
+#: src/application.cpp:1142
 #, kde-format
 msgid "Seek backwards 1 second"
 msgid_plural "Seek backwards %1 seconds"
 msgstr[0] "Cerca cap enrere 1 segon"
 msgstr[1] "Cerca cap enrere %1 segons"
 
-#: src/application.cpp:1139
+#: src/application.cpp:1143
 #, kde-format
 msgid "Seek forwards 1 second"
 msgid_plural "Seek forwards %1 seconds"
 msgstr[0] "Cerca cap endavant 1 segon"
 msgstr[1] "Cerca cap endavant %1 segons"
 
-#: src/application.cpp:1142 src/application.cpp:1146
+#: src/application.cpp:1146 src/application.cpp:1150
 #, kde-format
 msgid "Shift %2%1 millisecond"
 msgid_plural "Shift %2%1 milliseconds"
 msgstr[0] "Desplaçament d'%2%1 mil·lisegon"
 msgstr[1] "Desplaçament de %2%1 mil·lisegons"
 
-#: src/application.cpp:1143 src/application.cpp:1147
+#: src/application.cpp:1147 src/application.cpp:1151
 #, kde-format
 msgid "Shift selected lines %2%1 millisecond"
 msgid_plural "Shift selected lines %2%1 milliseconds"
