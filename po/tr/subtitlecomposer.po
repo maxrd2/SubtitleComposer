@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: subtitlecomposer\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2023-07-06 00:57+0000\n"
-"PO-Revision-Date: 2023-06-28 11:58+0300\n"
+"PO-Revision-Date: 2023-08-02 01:18+0300\n"
 "Last-Translator: Emir SARI <emir_sari@icloud.com>\n"
 "Language-Team: Turkish <kde-l10n-tr@kde.org>\n"
 "Language: tr\n"
@@ -15,7 +15,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
-"X-Generator: Lokalize 23.07.70\n"
+"X-Generator: Lokalize 23.11.70\n"
 
 #: src/actions/kcodecactionext.cpp:29
 #, kde-format
@@ -122,7 +122,7 @@ msgstr "Uygulamadan Çık"
 #: src/application_actions.cpp:36
 #, kde-format
 msgid "Configure Subtitle Composer"
-msgstr "Altyazı Oluşturucu'yu Yapılandır"
+msgstr "Altyazı Oluşturucusu'yu Yapılandır"
 
 #: src/application_actions.cpp:40
 #, kde-format
@@ -1167,7 +1167,7 @@ msgid ""
 "Could not open a new Subtitle Composer window.\n"
 "The split part was saved as %1."
 msgstr ""
-"Yeni bir Altyazı Oluşturucu penceresi açılamadı.\n"
+"Yeni bir Altyazı Oluşturucusu penceresi açılamadı.\n"
 "Bölünmüş kısım %1 olarak kaydedildi."
 
 #: src/application_subtitle.cpp:759
@@ -1176,7 +1176,7 @@ msgid ""
 "Could not open a new Subtitle Composer window.\n"
 "The split parts were saved as %1 and %2."
 msgstr ""
-"Yeni bir Altyazı Oluşturucu penceresi açılamadı.\n"
+"Yeni bir Altyazı Oluşturucusu penceresi açılamadı.\n"
 "Bölünmüş kısımlar %1 ve %2 olarak kaydedildi."
 
 #: src/application_subtitle.cpp:777
@@ -3020,7 +3020,7 @@ msgstr ""
 #: src/main.cpp:153
 #, kde-format
 msgid "Subtitle Composer"
-msgstr "Altyazı Oluşturucu"
+msgstr "Altyazı Oluşturucusu"
 
 #: src/main.cpp:155
 #, kde-format
