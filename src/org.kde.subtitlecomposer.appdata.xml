@@ -25,7 +25,7 @@
   <name xml:lang="sk">Vytvárač tituliek</name>
   <name xml:lang="sl">Subtitle Composer</name>
   <name xml:lang="sv">Textningsskapare</name>
-  <name xml:lang="tr">Altyazı Oluşturucu</name>
+  <name xml:lang="tr">Altyazı Oluşturucusu</name>
   <name xml:lang="uk">Редактор субтитрів</name>
   <name xml:lang="x-test">xxSubtitle Composerxx</name>
   <name xml:lang="zh-TW">字幕撰寫工具</name>
@@ -74,7 +74,7 @@
     <p xml:lang="pt-BR">O Criador de Legendas é um editor de legendas textuais de código aberto com suporte a operações de edição básicas e avançadas.</p>
     <p xml:lang="sl">Subtitle Composer je odprtokodni urejevalnik podnaslovov, ki podpira besedilo osnovne in napredne operacije urejanja.</p>
     <p xml:lang="sv">Textningsskapare är en textbaserad textningseditor med öppen källkod som stöder grundläggande och avancerade redigeringsåtgärder.</p>
-    <p xml:lang="tr">Altyazı Oluşturucu, temel ve gelişmiş düzenleme işlemlerini destekleyen, açık kaynaklı ve metin tabanlı bir altyazı düzenleyicidir.</p>
+    <p xml:lang="tr">Altyazı Oluşturucusu, temel ve gelişmiş düzenleme işlemlerini destekleyen, açık kaynaklı ve metin tabanlı bir altyazı düzenleyicidir.</p>
     <p xml:lang="uk">«Редактор субтитрів» — текстовий редактор субтитрів із відкритим кодом, у якому передбачено базові і розширені можливості з редагування.</p>
     <p xml:lang="x-test">xxSubtitle Composer is an open source text-based subtitle editor that supports basic and advanced editing operations.xx</p>
     <p xml:lang="zh-TW">《字幕撰寫工具》是個開放原始碼且基於文字的字幕編輯器，支援基本及進階的編輯動作。</p>
