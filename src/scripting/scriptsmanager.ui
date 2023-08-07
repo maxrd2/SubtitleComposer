@@ -32,8 +32,7 @@
         <string>Create...</string>
        </property>
        <property name="icon">
-        <iconset theme="document-new">
-         <normaloff>.</normaloff>.</iconset>
+        <iconset theme="document-new"/>
        </property>
       </widget>
      </item>
@@ -46,8 +45,7 @@
         <string>Add...</string>
        </property>
        <property name="icon">
-        <iconset theme="document-open">
-         <normaloff>.</normaloff>.</iconset>
+        <iconset theme="document-open"/>
        </property>
       </widget>
      </item>
@@ -60,8 +58,7 @@
         <string>Remove</string>
        </property>
        <property name="icon">
-        <iconset theme="user-trash">
-         <normaloff>.</normaloff>.</iconset>
+        <iconset theme="user-trash"/>
        </property>
       </widget>
      </item>
@@ -74,8 +71,7 @@
         <string>Edit</string>
        </property>
        <property name="icon">
-        <iconset theme="document-edit">
-         <normaloff>.</normaloff>.</iconset>
+        <iconset theme="document-edit"/>
        </property>
       </widget>
      </item>
@@ -104,8 +100,7 @@
         <string>Run</string>
        </property>
        <property name="icon">
-        <iconset theme="media-playback-start">
-         <normaloff>.</normaloff>.</iconset>
+        <iconset theme="media-playback-start"/>
        </property>
       </widget>
      </item>
@@ -134,8 +129,7 @@
         <string>Refresh</string>
        </property>
        <property name="icon">
-        <iconset theme="view-refresh">
-         <normaloff>.</normaloff>.</iconset>
+        <iconset theme="view-refresh"/>
        </property>
       </widget>
      </item>

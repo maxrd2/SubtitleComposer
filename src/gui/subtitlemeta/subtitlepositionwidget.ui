@@ -39,8 +39,7 @@
          <string/>
         </property>
         <property name="icon">
-         <iconset theme="align-horizontal-left">
-          <normaloff>.</normaloff>.</iconset>
+         <iconset theme="align-horizontal-left"/>
         </property>
         <property name="checkable">
          <bool>true</bool>
@@ -56,8 +55,7 @@
          <string/>
         </property>
         <property name="icon">
-         <iconset theme="align-horizontal-center">
-          <normaloff>.</normaloff>.</iconset>
+         <iconset theme="align-horizontal-center"/>
         </property>
         <property name="checkable">
          <bool>true</bool>
@@ -73,8 +71,7 @@
          <string/>
         </property>
         <property name="icon">
-         <iconset theme="align-horizontal-right">
-          <normaloff>.</normaloff>.</iconset>
+         <iconset theme="align-horizontal-right"/>
         </property>
         <property name="checkable">
          <bool>true</bool>
@@ -122,8 +119,7 @@
       <item>
        <widget class="QPushButton" name="vaTop">
         <property name="icon">
-         <iconset theme="align-vertical-top">
-          <normaloff>.</normaloff>.</iconset>
+         <iconset theme="align-vertical-top"/>
         </property>
         <property name="checkable">
          <bool>true</bool>
@@ -136,8 +132,7 @@
       <item>
        <widget class="QPushButton" name="vaBottom">
         <property name="icon">
-         <iconset theme="align-vertical-bottom">
-          <normaloff>.</normaloff>.</iconset>
+         <iconset theme="align-vertical-bottom"/>
         </property>
         <property name="checkable">
          <bool>true</bool>

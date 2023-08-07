@@ -71,8 +71,7 @@
             <string notr="true">Ctrl+B</string>
            </property>
            <property name="icon">
-            <iconset theme="format-text-bold">
-             <normaloff>.</normaloff>.</iconset>
+            <iconset theme="format-text-bold"/>
            </property>
            <property name="checkable">
             <bool>true</bool>
@@ -91,8 +90,7 @@
             <string notr="true">Ctrl+I</string>
            </property>
            <property name="icon">
-            <iconset theme="format-text-italic">
-             <normaloff>.</normaloff>.</iconset>
+            <iconset theme="format-text-italic"/>
            </property>
            <property name="checkable">
             <bool>true</bool>
@@ -111,8 +109,7 @@
             <string notr="true">Ctrl+U</string>
            </property>
            <property name="icon">
-            <iconset theme="format-text-underline">
-             <normaloff>.</normaloff>.</iconset>
+            <iconset theme="format-text-underline"/>
            </property>
            <property name="checkable">
             <bool>true</bool>
@@ -146,8 +143,7 @@
             <string>OK</string>
            </property>
            <property name="icon">
-            <iconset theme="dialog-ok-apply">
-             <normaloff>.</normaloff>.</iconset>
+            <iconset theme="dialog-ok-apply"/>
            </property>
            <property name="autoDefault">
             <bool>false</bool>
@@ -205,8 +201,7 @@
             <string>Prev Image</string>
            </property>
            <property name="icon">
-            <iconset theme="go-previous">
-             <normaloff>.</normaloff>.</iconset>
+            <iconset theme="go-previous"/>
            </property>
            <property name="autoDefault">
             <bool>false</bool>
@@ -222,8 +217,7 @@
             <string>Prev Symbol</string>
            </property>
            <property name="icon">
-            <iconset theme="go-previous">
-             <normaloff>.</normaloff>.</iconset>
+            <iconset theme="go-previous"/>
            </property>
            <property name="autoDefault">
             <bool>false</bool>
@@ -239,8 +233,7 @@
             <string>Next Symbol</string>
            </property>
            <property name="icon">
-            <iconset theme="go-next">
-             <normaloff>.</normaloff>.</iconset>
+            <iconset theme="go-next"/>
            </property>
           </widget>
          </item>
@@ -253,8 +246,7 @@
             <string>Next Image</string>
            </property>
            <property name="icon">
-            <iconset theme="go-next">
-             <normaloff>.</normaloff>.</iconset>
+            <iconset theme="go-next"/>
            </property>
           </widget>
          </item>
@@ -280,8 +272,7 @@
          <string>Abort</string>
         </property>
         <property name="icon">
-         <iconset theme="dialog-cancel">
-          <normaloff>.</normaloff>.</iconset>
+         <iconset theme="dialog-cancel"/>
         </property>
         <property name="autoDefault">
          <bool>false</bool>
