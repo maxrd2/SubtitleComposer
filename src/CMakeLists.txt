@@ -118,10 +118,10 @@ add_library(subtitlecomposer-lib STATIC ${subtitlecomposer_SRCS})
 target_link_libraries(subtitlecomposer-lib
 	Qt${QT_MAJOR_VERSION}::Core Qt${QT_MAJOR_VERSION}::Widgets Qt${QT_MAJOR_VERSION}::WidgetsPrivate
 	Qt${QT_MAJOR_VERSION}::Gui Qt${QT_MAJOR_VERSION}::Qml 
-	KF5::CoreAddons KF5::WidgetsAddons KF5::TextWidgets KF5::Codecs
-	KF5::SonnetCore KF5::SonnetUi
-	KF5::KIOCore KF5::KIOFileWidgets KF5::KIOWidgets
-	KF5::XmlGui KF5::I18n
+	KF${KF_MAJOR_VERSION}::CoreAddons KF${KF_MAJOR_VERSION}::WidgetsAddons KF${KF_MAJOR_VERSION}::TextWidgets KF${KF_MAJOR_VERSION}::Codecs
+	KF${KF_MAJOR_VERSION}::SonnetCore KF${KF_MAJOR_VERSION}::SonnetUi
+	KF${KF_MAJOR_VERSION}::KIOCore KF${KF_MAJOR_VERSION}::KIOFileWidgets KF${KF_MAJOR_VERSION}::KIOWidgets
+	KF${KF_MAJOR_VERSION}::XmlGui KF${KF_MAJOR_VERSION}::I18n
 	OpenSSL::SSL
 	${FFMPEG_LIBRARIES}
 	${OPENAL_LIBRARY}

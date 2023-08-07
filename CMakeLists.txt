@@ -5,13 +5,15 @@ cmake_minimum_required(VERSION 3.16 FATAL_ERROR)
 if(QT_MAJOR_VERSION EQUAL 6)
 	set(QT_EXTRA_COMPONENTS OpenGLWidgets Core5Compat)
 	set(QT_MIN_VERSION "6.0.0")
-	set(KF5_MIN_VERSION "5.90.0")
+	set(KF_MAJOR_VERSION "6")
+	set(KF_MIN_VERSION "5.240.0")
 	set(CMAKE_CXX_STANDARD 17)
 else()
 	set(QT_EXTRA_COMPONENTS)
 	set(QT_MAJOR_VERSION 5)
 	set(QT_MIN_VERSION "5.9.0")
-	set(KF5_MIN_VERSION "5.44.0")
+	set(KF_MAJOR_VERSION "5")
+	set(KF_MIN_VERSION "5.44.0")
 	set(CMAKE_CXX_STANDARD 11)
 endif()
 
@@ -33,7 +35,7 @@ include(FeatureSummary)
 find_package(Qt${QT_MAJOR_VERSION} ${QT_MIN_VERSION} CONFIG REQUIRED COMPONENTS
 	Core Widgets Gui Test Qml ${QT_EXTRA_COMPONENTS})
 
-find_package(KF5 ${KF5_MIN_VERSION} REQUIRED COMPONENTS
+find_package(KF${KF_MAJOR_VERSION} ${KF_MIN_VERSION} REQUIRED COMPONENTS
 	Config ConfigWidgets CoreAddons I18n KIO XmlGui
 	Sonnet Codecs TextWidgets WidgetsAddons)
 

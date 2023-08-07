@@ -31,7 +31,11 @@ Q_SIGNALS:
 	void triggered(QTextCodec *codec);
 
 protected Q_SLOTS:
+#if QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
+	void slotActionTriggered(QAction *) override {}
+#else
 	void actionTriggered(QAction *) override {}
+#endif
 
 private:
 	void init();

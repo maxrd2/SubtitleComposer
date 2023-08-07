@@ -31,11 +31,13 @@
 #include <QKeyEvent>
 #include <QStringBuilder>
 
+#include <kio_version.h>
 #include <KMessageBox>
+#if KIO_VERSION < QT_VERSION_CHECK(5, 71, 0)
 #include <KRun>
+#endif
 #include <KActionCollection>
 #include <KLocalizedString>
-#include <kio_version.h>
 #if KIO_VERSION >= QT_VERSION_CHECK(5, 71, 0)
 #include <KIO/OpenUrlJob>
 #include <KIO/JobUiDelegate>

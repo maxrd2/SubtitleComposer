@@ -52,7 +52,11 @@ KCodecActionExt::init()
 		KSelectAction *group = new KSelectAction(encodingsForScript.at(0), this);
 		for(int i = 1; i < encodingsForScript.size(); ++i)
 			group->addAction(encodingsForScript.at(i).toUpper())->setCheckable(m_mode == Open);
+#if QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
+		connect(group, &KSelectAction::actionTriggered, this, [=](QAction *a){
+#else
 		connect(group, QOverload<QAction *>::of(&KSelectAction::triggered), this, [=](QAction *a){
+#endif
 			emit triggered(QTextCodec::codecForName(a->text().toUtf8()));
 		});
 		group->setCheckable(m_mode == Open);
