@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: subtitlecomposer\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-07-06 00:57+0000\n"
+"POT-Creation-Date: 2023-08-09 00:45+0000\n"
 "PO-Revision-Date: 2023-04-23 11:57+0200\n"
 "Last-Translator: Łukasz Wojniłowicz <lukasz.wojnilowicz@gmail.com>\n"
 "Language-Team: Polish <kde-i18n-doc@kde.org>\n"
@@ -31,7 +31,7 @@ msgctxt "Encodings menu"
 msgid "Default: %1"
 msgstr "Domyślne: %1"
 
-#: src/actions/kcodecactionext.cpp:35 src/actions/kcodecactionext.cpp:78
+#: src/actions/kcodecactionext.cpp:35 src/actions/kcodecactionext.cpp:82
 #, kde-format
 msgctxt "Encodings menu"
 msgid "Current: %1"
@@ -310,7 +310,7 @@ msgid "Insert empty line after current one"
 msgstr "Wstawia pusty wiersz po bieżącym"
 
 #. i18n: ectx: property (text), widget (QPushButton, btnRemove)
-#: src/application_actions.cpp:205 src/scripting/scriptsmanager.ui:60
+#: src/application_actions.cpp:205 src/scripting/scriptsmanager.ui:58
 #, kde-format
 msgid "Remove"
 msgstr "Usuń"
@@ -2685,67 +2685,67 @@ msgid "Up/Down: change value"
 msgstr "W górę/dół: zmień wartość"
 
 #. i18n: ectx: property (text), widget (QPushButton, btnOk)
-#: src/formats/vobsub/vobsubinputprocessdialog.ui:146
+#: src/formats/vobsub/vobsubinputprocessdialog.ui:143
 #, kde-format
 msgid "OK"
 msgstr "OK"
 
 #. i18n: ectx: property (toolTip), widget (QPushButton, btnPrevImage)
-#: src/formats/vobsub/vobsubinputprocessdialog.ui:202
+#: src/formats/vobsub/vobsubinputprocessdialog.ui:198
 #, kde-format
 msgid "Ctrl+Shift+Left"
 msgstr "Ctrl+Shift+W lewo"
 
 #. i18n: ectx: property (text), widget (QPushButton, btnPrevImage)
-#: src/formats/vobsub/vobsubinputprocessdialog.ui:205
+#: src/formats/vobsub/vobsubinputprocessdialog.ui:201
 #, kde-format
 msgid "Prev Image"
 msgstr "Poprzedni obraz"
 
 #. i18n: ectx: property (toolTip), widget (QPushButton, btnPrevSymbol)
-#: src/formats/vobsub/vobsubinputprocessdialog.ui:219
+#: src/formats/vobsub/vobsubinputprocessdialog.ui:214
 #, kde-format
 msgid "Ctrl+Left"
 msgstr "Ctrl+W lewo"
 
 #. i18n: ectx: property (text), widget (QPushButton, btnPrevSymbol)
-#: src/formats/vobsub/vobsubinputprocessdialog.ui:222
+#: src/formats/vobsub/vobsubinputprocessdialog.ui:217
 #, kde-format
 msgid "Prev Symbol"
 msgstr "Poprzedni symbol"
 
 #. i18n: ectx: property (toolTip), widget (QPushButton, btnNextSymbol)
-#: src/formats/vobsub/vobsubinputprocessdialog.ui:236
+#: src/formats/vobsub/vobsubinputprocessdialog.ui:230
 #, kde-format
 msgid "Ctrl+Right"
 msgstr "Ctrl+W prawo"
 
 #. i18n: ectx: property (text), widget (QPushButton, btnNextSymbol)
-#: src/formats/vobsub/vobsubinputprocessdialog.ui:239
+#: src/formats/vobsub/vobsubinputprocessdialog.ui:233
 #, kde-format
 msgid "Next Symbol"
 msgstr "Następny symbol"
 
 #. i18n: ectx: property (toolTip), widget (QPushButton, btnNextImage)
-#: src/formats/vobsub/vobsubinputprocessdialog.ui:250
+#: src/formats/vobsub/vobsubinputprocessdialog.ui:243
 #, kde-format
 msgid "Ctrl+Shift+Right"
 msgstr "Ctrl+Shift+W prawo"
 
 #. i18n: ectx: property (text), widget (QPushButton, btnNextImage)
-#: src/formats/vobsub/vobsubinputprocessdialog.ui:253
+#: src/formats/vobsub/vobsubinputprocessdialog.ui:246
 #, kde-format
 msgid "Next Image"
 msgstr "Następny obraz"
 
 #. i18n: ectx: property (text), widget (QPushButton, btnAbort)
-#: src/formats/vobsub/vobsubinputprocessdialog.ui:280
+#: src/formats/vobsub/vobsubinputprocessdialog.ui:272
 #, kde-format
 msgid "Abort"
 msgstr "Przerwij"
 
 #. i18n: ectx: property (title), widget (QGroupBox, grpPreview)
-#: src/formats/vobsub/vobsubinputprocessdialog.ui:303
+#: src/formats/vobsub/vobsubinputprocessdialog.ui:294
 #, kde-format
 msgid "Subtitle Image"
 msgstr "Napis obrazowy"
@@ -2881,13 +2881,13 @@ msgid "Horizontal Alignment"
 msgstr "Wyrównanie w poziomie"
 
 #. i18n: ectx: property (title), widget (QGroupBox, grpVAlign)
-#: src/gui/subtitlemeta/subtitlepositionwidget.ui:106
+#: src/gui/subtitlemeta/subtitlepositionwidget.ui:103
 #, kde-format
 msgid "Vertical Alignment"
 msgstr "Wyrównanie w pionie"
 
 #. i18n: ectx: property (title), widget (QGroupBox, grpPosition)
-#: src/gui/subtitlemeta/subtitlepositionwidget.ui:169
+#: src/gui/subtitlemeta/subtitlepositionwidget.ui:164
 #, kde-format
 msgid "Position/Size"
 msgstr "Położenie/rozmiar"
@@ -2896,10 +2896,10 @@ msgstr "Położenie/rozmiar"
 #. i18n: ectx: property (suffix), widget (QDoubleSpinBox, posLeft)
 #. i18n: ectx: property (suffix), widget (QDoubleSpinBox, posTop)
 #. i18n: ectx: property (suffix), widget (QDoubleSpinBox, posRight)
-#: src/gui/subtitlemeta/subtitlepositionwidget.ui:175
-#: src/gui/subtitlemeta/subtitlepositionwidget.ui:185
-#: src/gui/subtitlemeta/subtitlepositionwidget.ui:195
-#: src/gui/subtitlemeta/subtitlepositionwidget.ui:205
+#: src/gui/subtitlemeta/subtitlepositionwidget.ui:170
+#: src/gui/subtitlemeta/subtitlepositionwidget.ui:180
+#: src/gui/subtitlemeta/subtitlepositionwidget.ui:190
+#: src/gui/subtitlemeta/subtitlepositionwidget.ui:200
 #, no-c-format, kde-format
 msgid "%"
 msgstr "%"
@@ -3479,58 +3479,58 @@ msgstr ""
 msgid "DeepL API domain name"
 msgstr ""
 
-#: src/scripting/scriptsmanager.cpp:84
+#: src/scripting/scriptsmanager.cpp:86
 #, kde-format
 msgid "Non-Script Files"
 msgstr "Pliki nieskryptowe"
 
-#: src/scripting/scriptsmanager.cpp:166
+#: src/scripting/scriptsmanager.cpp:168
 #, kde-format
 msgid "Title"
 msgstr "Tytuł"
 
-#: src/scripting/scriptsmanager.cpp:167
+#: src/scripting/scriptsmanager.cpp:169
 #, kde-format
 msgid "Version"
 msgstr "Wersja"
 
-#: src/scripting/scriptsmanager.cpp:168
+#: src/scripting/scriptsmanager.cpp:170
 #, kde-format
 msgid "Author"
 msgstr "Autor"
 
-#: src/scripting/scriptsmanager.cpp:169
+#: src/scripting/scriptsmanager.cpp:171
 #, kde-format
 msgid "Path"
 msgstr "Ścieżka"
 
-#: src/scripting/scriptsmanager.cpp:363
+#: src/scripting/scriptsmanager.cpp:365
 #, kde-format
 msgid "Information"
 msgstr "Informacje"
 
-#: src/scripting/scriptsmanager.cpp:369
+#: src/scripting/scriptsmanager.cpp:371
 #, kde-format
 msgid "Warning"
 msgstr "Ostrzeżenie"
 
-#: src/scripting/scriptsmanager.cpp:375
+#: src/scripting/scriptsmanager.cpp:377
 #, kde-format
 msgid "Error"
 msgstr "Błąd"
 
 #. i18n: ectx: property (text), widget (QPushButton, btnEdit)
-#: src/scripting/scriptsmanager.cpp:403 src/scripting/scriptsmanager.ui:74
+#: src/scripting/scriptsmanager.cpp:405 src/scripting/scriptsmanager.ui:71
 #, kde-format
 msgid "Edit"
 msgstr "Edytuj"
 
-#: src/scripting/scriptsmanager.cpp:406
+#: src/scripting/scriptsmanager.cpp:408
 #, kde-format
 msgid "View"
 msgstr "Widok"
 
-#: src/scripting/scriptsmanager.cpp:476
+#: src/scripting/scriptsmanager.cpp:478
 #, kde-format
 msgid ""
 "A script already exists with this name.\n"
@@ -3539,37 +3539,37 @@ msgstr ""
 "Skrypt o tej nazwie już istnieje.\n"
 "Czy chcesz wpisać inną nazwę?"
 
-#: src/scripting/scriptsmanager.cpp:477
+#: src/scripting/scriptsmanager.cpp:479
 #, kde-format
 msgid "Duplicate filename"
 msgstr "Powielona nazwa pliku"
 
-#: src/scripting/scriptsmanager.cpp:478
+#: src/scripting/scriptsmanager.cpp:480
 #, kde-format
 msgid "Yes"
 msgstr "Tak"
 
-#: src/scripting/scriptsmanager.cpp:482
+#: src/scripting/scriptsmanager.cpp:484
 #, kde-format
 msgid "Create New Script"
 msgstr "Utwórz nowy skrypt"
 
-#: src/scripting/scriptsmanager.cpp:482 src/scripting/scriptsmanager.cpp:550
+#: src/scripting/scriptsmanager.cpp:484 src/scripting/scriptsmanager.cpp:552
 #, kde-format
 msgid "Script name:"
 msgstr "Nazwa skryptu:"
 
-#: src/scripting/scriptsmanager.cpp:493
+#: src/scripting/scriptsmanager.cpp:495
 #, kde-format
 msgid "There was an error creating the file <b>%1</b>."
 msgstr "Wystąpił błąd podczas tworzenia pliku <b/>%1</b>."
 
-#: src/scripting/scriptsmanager.cpp:528
+#: src/scripting/scriptsmanager.cpp:530
 #, kde-format
 msgid "Select Existing Script"
 msgstr "Wybierz istniejący skrypt"
 
-#: src/scripting/scriptsmanager.cpp:545
+#: src/scripting/scriptsmanager.cpp:547
 #, kde-format
 msgid ""
 "You must enter an unused name to continue.\n"
@@ -3578,63 +3578,63 @@ msgstr ""
 "Aby kontynuować należy wprowadzić nieużywaną nazwę.\n"
 "Czy chcesz wprowadzić inną nazwę?"
 
-#: src/scripting/scriptsmanager.cpp:546
+#: src/scripting/scriptsmanager.cpp:548
 #, kde-format
 msgid "Name Already Used"
 msgstr "Nazwa jest już w użyciu"
 
-#: src/scripting/scriptsmanager.cpp:550
+#: src/scripting/scriptsmanager.cpp:552
 #, kde-format
 msgid "Rename Script"
 msgstr "Zmień nazwę skryptu"
 
-#: src/scripting/scriptsmanager.cpp:559
+#: src/scripting/scriptsmanager.cpp:561
 #, kde-format
 msgid "There was an error opening the file <b>%1</b>."
 msgstr "Wystąpił błąd podczas otwierania pliku <b>%1</b>."
 
-#: src/scripting/scriptsmanager.cpp:567
+#: src/scripting/scriptsmanager.cpp:569
 #, kde-format
 msgid "There was an error copying the file to <b>%1</b>."
 msgstr "Wystąpił błąd podczas kopiowania pliku <b>%1</b>."
 
-#: src/scripting/scriptsmanager.cpp:582
+#: src/scripting/scriptsmanager.cpp:584
 #, kde-format
 msgid "Do you really want to send file <b>%1</b> to the trash?"
 msgstr "Czy chcesz przenieść plik <b>%1</b> do kosza?"
 
-#: src/scripting/scriptsmanager.cpp:582
+#: src/scripting/scriptsmanager.cpp:584
 #, kde-format
 msgid "Move to Trash"
 msgstr "Wyrzuć do kosza"
 
-#: src/scripting/scriptsmanager.cpp:586
+#: src/scripting/scriptsmanager.cpp:588
 #, kde-format
 msgid "There was an error removing the file <b>%1</b>."
 msgstr "Wystąpił błąd podczas usuwania pliku <b>%1</b>."
 
-#: src/scripting/scriptsmanager.cpp:619
+#: src/scripting/scriptsmanager.cpp:621
 #, kde-format
 msgid "Could not launch external editor.\n"
 msgstr "Nie udało się uruchomić zewnętrznego edytora.\n"
 
-#: src/scripting/scriptsmanager.cpp:640
+#: src/scripting/scriptsmanager.cpp:642
 #, kde-format
 msgid "Error opening script %1."
 msgstr "Błąd podczas otwierania skryptu %1."
 
-#: src/scripting/scriptsmanager.cpp:640 src/scripting/scriptsmanager.cpp:655
-#: src/scripting/scriptsmanager.cpp:657
+#: src/scripting/scriptsmanager.cpp:642 src/scripting/scriptsmanager.cpp:657
+#: src/scripting/scriptsmanager.cpp:659
 #, kde-format
 msgid "Error Running Script"
 msgstr "Błąd podczas wykonywania skryptu"
 
-#: src/scripting/scriptsmanager.cpp:653
+#: src/scripting/scriptsmanager.cpp:655
 #, kde-format
 msgid "Path: %1"
 msgstr "Ścieżka: %1"
 
-#: src/scripting/scriptsmanager.cpp:670
+#: src/scripting/scriptsmanager.cpp:672
 #, kde-format
 msgid "Tools"
 msgstr "Narzędzia"
@@ -3658,49 +3658,49 @@ msgid "Create..."
 msgstr "Utwórz..."
 
 #. i18n: ectx: property (whatsThis), widget (QPushButton, btnAdd)
-#: src/scripting/scriptsmanager.ui:43
+#: src/scripting/scriptsmanager.ui:42
 #, kde-format
 msgid "Copies an existing script from a specified location."
 msgstr "Kopiuje istniejący skrypt ze wskazanej lokalizacji."
 
 #. i18n: ectx: property (text), widget (QPushButton, btnAdd)
-#: src/scripting/scriptsmanager.ui:46
+#: src/scripting/scriptsmanager.ui:45
 #, kde-format
 msgid "Add..."
 msgstr "Dodaj..."
 
 #. i18n: ectx: property (whatsThis), widget (QPushButton, btnRemove)
-#: src/scripting/scriptsmanager.ui:57
+#: src/scripting/scriptsmanager.ui:55
 #, kde-format
 msgid "Sends the selected script to the trash."
 msgstr "Przenosi zaznaczony skrypt do kosza."
 
 #. i18n: ectx: property (whatsThis), widget (QPushButton, btnEdit)
-#: src/scripting/scriptsmanager.ui:71
+#: src/scripting/scriptsmanager.ui:68
 #, kde-format
 msgid "Opens the selected script with an external editor."
 msgstr "Otwiera zaznaczony skrypt w zewnętrznym edytorze."
 
 #. i18n: ectx: property (whatsThis), widget (QPushButton, btnRun)
-#: src/scripting/scriptsmanager.ui:101
+#: src/scripting/scriptsmanager.ui:97
 #, kde-format
 msgid "Executes the selected script."
 msgstr "Wykonuje zaznaczony skrypt."
 
 #. i18n: ectx: property (text), widget (QPushButton, btnRun)
-#: src/scripting/scriptsmanager.ui:104
+#: src/scripting/scriptsmanager.ui:100
 #, kde-format
 msgid "Run"
 msgstr "Uruchom"
 
 #. i18n: ectx: property (whatsThis), widget (QPushButton, btnRefresh)
-#: src/scripting/scriptsmanager.ui:131
+#: src/scripting/scriptsmanager.ui:126
 #, kde-format
 msgid "Reloads the installed scripts list."
 msgstr "Wczytuje ponownie spis wgranych skryptów."
 
 #. i18n: ectx: property (text), widget (QPushButton, btnRefresh)
-#: src/scripting/scriptsmanager.ui:134
+#: src/scripting/scriptsmanager.ui:129
 #, kde-format
 msgid "Refresh"
 msgstr "Odśwież"
