@@ -1,7 +1,7 @@
-cmake_policy(SET CMP0048 NEW)
+cmake_minimum_required(VERSION 3.16 FATAL_ERROR)
+
 project(subtitlecomposer VERSION "0.7.1")
 
-cmake_minimum_required(VERSION 3.16 FATAL_ERROR)
 if(QT_MAJOR_VERSION EQUAL 6)
 	set(QT_EXTRA_COMPONENTS OpenGLWidgets Core5Compat)
 	set(QT_MIN_VERSION "6.0.0")
