@@ -4,13 +4,13 @@
 # Daniel M. Lambea <dmlambea@gmail.com>, 2008.
 # Sergio Pistone <sergio_pistone@yahoo.com.ar>, 2009.
 # Sergio Pistone <sergio_pistone@yahoo.com.ar>, 2010.
-# Eloy Cuadra <ecuadra@eloihr.net>, 2020, 2021, 2022, 2023.
+# SPDX-FileCopyrightText: 2020, 2021, 2022, 2023 Eloy Cuadra <ecuadra@eloihr.net>
 msgid ""
 msgstr ""
 "Project-Id-Version: subtitlecomposer\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2023-08-09 00:45+0000\n"
-"PO-Revision-Date: 2023-06-29 01:32+0200\n"
+"PO-Revision-Date: 2023-09-03 22:32+0200\n"
 "Last-Translator: Eloy Cuadra <ecuadra@eloihr.net>\n"
 "Language-Team: Spanish <kde-l10n-es@kde.org>\n"
 "Language: es\n"
@@ -18,7 +18,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Lokalize 23.04.2\n"
+"X-Generator: Lokalize 23.08.0\n"
 "X-Crowdin-Project: subtitlecomposer\n"
 "X-Crowdin-Language: es-ES\n"
 "X-Crowdin-File: subtitlecomposer.pot\n"
@@ -390,12 +390,12 @@ msgstr "Buscar ocurrencia anterior de cadena o expresión regular"
 #: src/application_actions.cpp:271
 #, kde-format
 msgid "Replace..."
-msgstr "Reemplazar..."
+msgstr "Sustituir..."
 
 #: src/application_actions.cpp:272
 #, kde-format
 msgid "Replace occurrences of strings or regular expressions"
-msgstr "Reemplazar ocurrencias de cadenas o expresiones regulares"
+msgstr "Sustituir ocurrencias de cadenas o expresiones regulares"
 
 #: src/application_actions.cpp:280
 #, kde-format
@@ -4139,12 +4139,12 @@ msgstr ""
 #: src/utils/replacer.cpp:43
 #, kde-format
 msgid "Find/Replace In"
-msgstr "Buscar/Reemplazar en"
+msgstr "Buscar o sustituir en"
 
 #: src/utils/replacer.cpp:253
 #, kde-format
 msgid "Replace"
-msgstr "Reemplazar"
+msgstr "Sustituir"
 
 #: src/utils/speller.cpp:135
 #, kde-format
