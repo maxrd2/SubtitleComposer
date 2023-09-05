@@ -105,7 +105,7 @@ Scripting::SubtitleLine::setPlainPrimaryText(const QString &plainText)
 QString
 Scripting::SubtitleLine::richPrimaryText() const
 {
-	return m_backend->primaryDoc()->toRichText();
+	return m_backend->primaryDoc()->toRichText().richString();
 }
 
 void
