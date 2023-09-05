@@ -683,7 +683,7 @@ VobSubInputProcessDialog::processNextPiece()
 	ui->symbolCount->setValue(1);
 
 	if(m_pieceCurrent == m_pieces.end()) {
-		QString subText;
+		RichString subText;
 		PiecePtr piecePrev;
 		foreach(PiecePtr piece, m_pieces) {
 			if(piecePrev) {
@@ -702,7 +702,7 @@ VobSubInputProcessDialog::processNextPiece()
 			l = new SubtitleLine((*m_frameCurrent)->subShowTime, (*m_frameCurrent)->subHideTime);
 			m_subtitle->insertLine(l);
 		}
-		l->primaryDoc()->setPlainText(subText);
+		l->primaryDoc()->setRichText(subText);
 
 		ui->grpText->setDisabled(true);
 		ui->grpNavButtons->setDisabled(true);
