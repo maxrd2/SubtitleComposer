@@ -58,6 +58,8 @@ public:
 
 	inline int length() const { const QTextBlock &b = lastBlock(); return b.position() + b.length(); }
 
+	void joinLines();
+
 	void replace(const QRegularExpression &search, const QString &replacement, bool replacementIsHtml=true);
 	void replace(QChar before, QChar after, Qt::CaseSensitivity cs = Qt::CaseSensitive);
 	void replace(int index, int len, const QString &replacement);

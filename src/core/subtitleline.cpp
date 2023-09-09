@@ -322,14 +322,14 @@ SubtitleLine::unbreakText(SubtitleTarget target)
 {
 	switch(target) {
 	case Primary:
-		m_primaryDoc->replace('\n', ' ');
+		m_primaryDoc->joinLines();
 		break;
 	case Secondary:
-		m_secondaryDoc->replace('\n', ' ');
+		m_secondaryDoc->joinLines();
 		break;
 	case Both:
-		m_primaryDoc->replace('\n', ' ');
-		m_secondaryDoc->replace('\n', ' ');
+		m_primaryDoc->joinLines();
+		m_secondaryDoc->joinLines();
 		break;
 	default:
 		break;

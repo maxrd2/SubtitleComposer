@@ -358,6 +358,20 @@ RichDocument::toRichText() const
 }
 
 void
+RichDocument::joinLines()
+{
+	m_undoableCursor.beginEditBlock();
+	m_undoableCursor.movePosition(QTextCursor::Start);
+	for(;;) {
+		if(!m_undoableCursor.movePosition(QTextCursor::EndOfLine, QTextCursor::MoveAnchor)
+		|| !m_undoableCursor.movePosition(QTextCursor::NextCharacter, QTextCursor::KeepAnchor, 1))
+			break;
+		m_undoableCursor.insertText($(" "));
+	}
+	m_undoableCursor.endEditBlock();
+}
+
+void
 RichDocument::replace(QChar before, QChar after, Qt::CaseSensitivity cs)
 {
 	const QString search(before);
@@ -697,12 +711,7 @@ RichDocument::breakText(int minBreakLength)
 	double brkD = std::numeric_limits<double>::infinity();
 
 	m_undoableCursor.beginEditBlock();
-	while(blockCount() > 1) {
-		m_undoableCursor.movePosition(QTextCursor::Start);
-		m_undoableCursor.movePosition(QTextCursor::EndOfBlock, QTextCursor::MoveAnchor);
-		m_undoableCursor.movePosition(QTextCursor::NextBlock, QTextCursor::KeepAnchor);
-		m_undoableCursor.insertText($(" "));
-	}
+	joinLines();
 	const QString &text = firstBlock().text();
 	for(int i = 0; i < text.length(); i++) {
 		if(!text.at(i).isSpace())
