@@ -1458,7 +1458,7 @@ msgstr "Fes una pausa predeterminada entre les línies dels subtítols:"
 #: src/configs/generalconfigwidget.ui:144
 #, kde-format
 msgid "Ju&mp to prev/next line offset:"
-msgstr "Salta a la co&mpensació de línia anterior/següent:"
+msgstr "Salta fins a la co&mpensació de línia anterior/següent:"
 
 #. i18n: ectx: property (title), widget (QGroupBox, m_grpQuickActions)
 #: src/configs/generalconfigwidget.ui:167
@@ -3151,7 +3151,7 @@ msgstr "Busca la compensació en fer doble clic"
 #: src/scconfig.kcfg:22
 #, kde-format
 msgid "Jump to prev/next line offset"
-msgstr "Salta a la compensació de línia anterior/següent"
+msgstr "Salta fins a la compensació de línia anterior/següent"
 
 #. i18n: ectx: label, entry (UnpauseOnDoubleClick), group (General)
 #: src/scconfig.kcfg:26
