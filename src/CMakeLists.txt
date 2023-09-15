@@ -108,6 +108,8 @@ ki18n_wrap_ui(subtitlecomposer_SRCS
 
 add_subdirectory(icons)
 
+list(APPEND subtitlecomposer_RES ${CMAKE_CURRENT_SOURCE_DIR}/subtitlecomposer.qrc)
+
 if(QT_MAJOR_VERSION EQUAL 6)
 	qt6_add_resources(subtitlecomposer_RES_SRC ${subtitlecomposer_RES})
 else()
@@ -154,7 +156,6 @@ target_link_libraries(subtitlecomposer subtitlecomposer-lib)
 install(TARGETS subtitlecomposer DESTINATION ${KDE_INSTALL_BINDIR})
 
 install(FILES subtitlecomposerrc DESTINATION ${KDE_INSTALL_CONFDIR})
-install(FILES subtitlecomposerui.rc DESTINATION ${KDE_INSTALL_KXMLGUI5DIR}/subtitlecomposer)
 install(FILES org.kde.subtitlecomposer.desktop DESTINATION ${KDE_INSTALL_APPDIR})
 install(FILES org.kde.subtitlecomposer.appdata.xml DESTINATION ${KDE_INSTALL_METAINFODIR})
 install(FILES subtitlecomposer.xml DESTINATION ${KDE_INSTALL_MIMEDIR})
