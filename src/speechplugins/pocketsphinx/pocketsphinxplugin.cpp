@@ -9,8 +9,10 @@
 #include "pocketsphinxplugin.h"
 #include "pocketsphinxconfigwidget.h"
 #include "pocketsphinxconfig.h"
+#include "videoplayer/waveformat.h"
 
 #include <pocketsphinx.h>
+
 
 using namespace SubtitleComposer;
 
@@ -26,6 +28,13 @@ PocketSphinxPlugin::name()
 {
 	static const QString name(QStringLiteral("PocketSphinx"));
 	return name;
+}
+
+const WaveFormat &
+PocketSphinxPlugin::waveFormat() const
+{
+	static const WaveFormat wf(16000, 1, 16, true);
+	return wf;
 }
 
 /*virtual*/ bool
@@ -136,7 +145,7 @@ PocketSphinxPlugin::processUtterance()
 }
 
 /*virtual*/ void
-PocketSphinxPlugin::processSamples(const qint16 *sampleData, qint32 sampleCount)
+PocketSphinxPlugin::processSamples(const void *sampleData, qint32 sampleCount)
 {
 	if(!m_utteranceStarted) {
 		ps_start_utt(m_psDecoder);
@@ -144,7 +153,7 @@ PocketSphinxPlugin::processSamples(const qint16 *sampleData, qint32 sampleCount)
 		m_speechStarted = false;
 	}
 
-	ps_process_raw(m_psDecoder, sampleData, sampleCount, false, false);
+	ps_process_raw(m_psDecoder, reinterpret_cast<const int16 *>(sampleData), sampleCount, false, false);
 
 	if(ps_get_in_speech(m_psDecoder)) {
 		m_speechStarted = true;

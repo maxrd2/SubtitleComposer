@@ -12,6 +12,7 @@
 #define SpeechPlugin_iid "org.kde.SubtitleComposer.SpeechPlugin"
 
 class KCoreConfigSkeleton;
+class WaveFormat;
 
 namespace SubtitleComposer {
 class SpeechPlugin : public QObject
@@ -31,10 +32,12 @@ protected:
 private:
 	virtual const QString & name() = 0;
 
+	virtual const WaveFormat & waveFormat() const = 0;
+
 	virtual bool init() = 0;
 	virtual void cleanup() = 0;
 
-	virtual void processSamples(const qint16 *sampleData, qint32 sampleCount) = 0;
+	virtual void processSamples(const void *sampleData, qint32 sampleCount) = 0;
 	virtual void processComplete() = 0;
 
 signals:

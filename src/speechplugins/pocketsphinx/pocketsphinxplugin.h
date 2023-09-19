@@ -30,10 +30,11 @@ public:
 private:
 	const QString & name() override;
 
+	const WaveFormat & waveFormat() const override;
 	bool init() override;
 	void cleanup() override;
 
-	void processSamples(const qint16 *sampleData, qint32 sampleCount) override;
+	void processSamples(const void *sampleData, qint32 sampleCount) override;
 	void processComplete() override;
 
 	void processUtterance();

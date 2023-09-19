@@ -112,8 +112,7 @@ SpeechProcessor::setAudioStream(const QString &mediaFile, int audioStream)
 
 	m_audioDuration = 0;
 
-	static WaveFormat waveFormat(16000, 1, 16, true);
-	if(m_stream->open(mediaFile) && m_stream->initAudio(audioStream, waveFormat))
+	if(m_stream->open(mediaFile) && m_stream->initAudio(audioStream, m_plugin->waveFormat()))
 		m_stream->start();
 }
 
@@ -155,16 +154,16 @@ SpeechProcessor::onStreamFinished()
 }
 
 void
-SpeechProcessor::onStreamData(const void *buffer, const qint32 size, const WaveFormat */*waveFormat*/, const qint64 /*msecStart*/, const qint64 /*msecDuration*/)
+SpeechProcessor::onStreamData(const void *buffer, const qint32 size, const WaveFormat *waveFormat, const qint64 /*msecStart*/, const qint64 /*msecDuration*/)
 {
 	// make sure SpeechProcessor::onStreamProgress() signal was processed since we're in different thread
 	while(!m_audioDuration)
 		QThread::yieldCurrentThread();
 
-	Q_ASSERT(size % sizeof(qint16) == 0);
+	Q_ASSERT(size % waveFormat->bytesPerSample() == 0);
 
 	if(m_plugin)
-		m_plugin->processSamples(reinterpret_cast<const qint16 *>(buffer), size / sizeof(qint16));
+		m_plugin->processSamples(buffer, size / waveFormat->bytesPerSample());
 }
 
 void
