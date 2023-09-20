@@ -603,7 +603,7 @@ GLRenderer::paintGL()
 		return;
 
 	if(m_texNeedInit) {
-		asGL(glPixelStorei(GL_UNPACK_ALIGNMENT, m_bufWidth % 4 == 0 ? 4 : 1));
+		asGL(glPixelStorei(GL_UNPACK_ALIGNMENT, m_crWidth % 4 == 0 ? 4 : 1));
 	}
 	if(m_csNeedInit)
 		initShader();
