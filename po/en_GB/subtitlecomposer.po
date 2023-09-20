@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: subtitlecomposer\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-08-09 00:45+0000\n"
+"POT-Creation-Date: 2023-09-20 00:45+0000\n"
 "PO-Revision-Date: 2023-05-02 19:20+0100\n"
 "Last-Translator: Steve Allewell <steve.allewell@gmail.com>\n"
 "Language-Team: British English\n"
@@ -3810,7 +3810,7 @@ msgstr "No speech recognition plugins available"
 msgid "Initialization of speech recognition plugin failed"
 msgstr "Initialisation of speech recognition plugin failed"
 
-#: src/speechprocessor/speechprocessor.cpp:173
+#: src/speechprocessor/speechprocessor.cpp:172
 #, kde-format
 msgid ""
 "Speech Recognition failed: %2\n"
