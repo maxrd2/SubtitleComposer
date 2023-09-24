@@ -405,7 +405,7 @@ Subtitle::insertNewLine(int index, bool insertAfter, SubtitleTarget target)
 		SubtitleLine *line = newLine;
 		SubtitleIterator it(*this, Range::full(), false);
 		for(it.toIndex(newLineIndex + 1); it.current(); ++it) {
-			line->setSecondaryDoc(it.current()->secondaryDoc());
+			line->secondaryDoc()->setRichText(it.current()->secondaryDoc()->toRichText());
 			line = it.current();
 		}
 		line->secondaryDoc()->clear();
@@ -419,7 +419,7 @@ Subtitle::insertNewLine(int index, bool insertAfter, SubtitleTarget target)
 		SubtitleIterator it(*this, Range::full(), true);
 		SubtitleLine *line = it.current();
 		for(--it; it.index() >= index; --it) {
-			line->setSecondaryDoc(it.current()->secondaryDoc());
+			line->secondaryDoc()->setRichText(it.current()->secondaryDoc()->toRichText());
 			line = it.current();
 		}
 		line->secondaryDoc()->clear();
@@ -464,7 +464,7 @@ Subtitle::removeLines(const RangeList &r, SubtitleTarget target)
 		SubtitleIterator srcIt(*this, rangesComplement);
 		SubtitleIterator dstIt(*this, Range::upper(ranges.firstIndex()));
 		for(; srcIt.current() && dstIt.current(); ++srcIt, ++dstIt)
-			dstIt.current()->setSecondaryDoc(srcIt.current()->secondaryDoc());
+			dstIt.current()->secondaryDoc()->setRichText(srcIt.current()->secondaryDoc()->toRichText());
 
 		// the remaining lines secondary text must be cleared
 		for(; dstIt.current(); ++dstIt)
@@ -503,7 +503,7 @@ Subtitle::removeLines(const RangeList &r, SubtitleTarget target)
 		SubtitleIterator srcIt(*this, Range(ranges.firstIndex(), m_lines.count() - lines.count() - 1), true);
 		SubtitleIterator dstIt(*this, rangesComplement, true);
 		for(; srcIt.current() && dstIt.current(); --srcIt, --dstIt)
-			dstIt.current()->setSecondaryDoc(srcIt.current()->secondaryDoc());
+			dstIt.current()->secondaryDoc()->setRichText(srcIt.current()->secondaryDoc()->toRichText());
 
 		// finally, we can remove the specified lines
 		RangeList::ConstIterator rangesIt = ranges.end(), begin = ranges.begin();
