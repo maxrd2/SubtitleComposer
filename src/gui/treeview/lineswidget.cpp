@@ -433,8 +433,6 @@ LinesWidget::contextMenuEvent(QContextMenuEvent *e)
 	errorsMenu.addSeparator();
 	addAppAction(&errorsMenu, ACT_DETECT_ERRORS);
 	addAppAction(&errorsMenu, ACT_CLEAR_ERRORS);
-	errorsMenu.addSeparator();
-	addAppAction(&errorsMenu, ACT_SHOW_ERRORS);
 	menu.addMenu(&errorsMenu);
 
 	m_showingContextMenu = true;

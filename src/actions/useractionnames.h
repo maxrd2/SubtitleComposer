@@ -41,7 +41,6 @@
 #define ACT_ADVANCE_CURRENT_LINE "advance_current_line"
 #define ACT_DETECT_ERRORS "detect_errors"
 #define ACT_CLEAR_ERRORS "clear_errors"
-#define ACT_SHOW_ERRORS "show_errors"
 #define ACT_FIND_ERROR "find_error"
 #define ACT_SELECT_NEXT_ERROR "select_next_error"
 #define ACT_SELECT_PREVIOUS_ERROR "select_previous_error"
