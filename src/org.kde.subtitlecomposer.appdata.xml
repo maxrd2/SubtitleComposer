@@ -468,6 +468,7 @@
   <project_group>KDE</project_group>
   <content_rating type="oars-1.1"/>
   <releases>
+    <release version="0.8.0" date="2023-09-30"/>
     <release version="0.7.1" date="2021-07-28">
       <url>https://subtitlecomposer.kde.org/2021/10/05/subtitle-composer-0.7.1-released.html</url>
       <description>
@@ -518,6 +519,47 @@
           <size type="download">636808</size>
         </artifact>
       </artifacts>
+    </release>
+    <release version="0.8.0" date="2023-11-06">
+      <description>
+        <ul>
+          <li>Fixed video player on GLES only hardware</li>
+          <li>Fixed skewed video on video player</li>
+          <li>Fixed closing fullscreen video player</li>
+          <li>Fixed subtitles under fullscreen video toolbar</li>
+          <li>Fixed video player media state notifications</li>
+          <li>Fixed subtitle video overlay font size accuracy</li>
+          <li>Fixed deadlock/crash while changing audio stream on paused/stopped media</li>
+          <li>Improved Waveform widget performance</li>
+          <li>Fixed waveform misalignment due to rounding error</li>
+          <li>Fixed waveform widget drawing on null image and painting of removed lines</li>
+          <li>Fixed waveform default zoom scale</li>
+          <li>Fixed subtitle text line separator draw on LinesWidget</li>
+          <li>Fixed unbreak lines (newline searches in QTextDocument)</li>
+          <li>Fixed crash in split lines</li>
+          <li>Fixed VobSub import ignoring Text styles</li>
+          <li>Fixed VobSub crash when moving to previous image</li>
+          <li>Fixed YouTubeCaptions format parsing/saving</li>
+          <li>Fixed undo/redo actions creation order, incorrect state</li>
+          <li>Fixed some memory and saving issues</li>
+          <li>Fixed embedded ASS decoding</li>
+          <li>Fixed example remove hearing impaired script</li>
+          <li>Fixed broken about dialog</li>
+          <li>Added Qt6 support</li>
+          <li>Added WebVTT format support</li>
+          <li>Added subtitle positioning UI and support</li>
+          <li>Added subtitle class/comments/voice UI and support</li>
+          <li>Improved rich text editing/preview</li>
+          <li>Rich text rendering on waveform/video/editors</li>
+          <li>Added DeepL translate engine</li>
+          <li>Added Google Cloud translate engine</li>
+          <li>Recreated translation interface</li>
+          <li>Added/improved ffmpeg 5 support</li>
+          <li>Subtitle lines are always time sorted; remove sort lines menu action</li>
+          <li>Replaced Kross with QJSEngine, removed ruby and python support</li>
+          <li>Improved script manager and tools menu</li>
+        </ul>
+      </description>
     </release>
     <release version="0.7.0" date="2019-06-27">
       <description>

@@ -1,4 +1,41 @@
-﻿Version 0.7.1
+﻿Version 0.8.0
+- Fixed video player on GLES only hardware
+- Fixed skewed video on video player
+- Fixed closing fullscreen video player
+- Fixed subtitles under fullscreen video toolbar
+- Fixed video player media state notifications
+- Fixed subtitle video overlay font size accuracy
+- Fixed deadlock/crash while changing audio stream on paused/stopped media
+- Improved Waveform widget performance
+- Fixed waveform misalignment due to rounding error
+- Fixed waveform widget drawing on null image and painting of removed lines
+- Fixed waveform default zoom scale
+- Fixed subtitle text line separator draw on LinesWidget
+- Fixed unbreak lines (newline searches in QTextDocument)
+- Fixed crash in split lines
+- Fixed VobSub import ignoring Text styles
+- Fixed VobSub crash when moving to previous image
+- Fixed YouTubeCaptions format parsing/saving
+- Fixed undo/redo actions creation order, incorrect state
+- Fixed some memory and saving issues
+- Fixed embedded ASS decoding
+- Fixed example remove hearing impaired script
+- Fixed broken about dialog
+- Added Qt6 support
+- Added WebVTT format support
+- Added subtitle positioning UI and support
+- Added subtitle class/comments/voice UI and support
+- Improved rich text editing/preview
+- Rich text rendering on waveform/video/editors
+- Added DeepL translate engine
+- Added Google Cloud translate engine
+- Recreated translation interface
+- Added/improved ffmpeg 5 support
+- Subtitle lines are always time sorted; remove sort lines menu action
+- Replaced Kross with QJSEngine, removed ruby and python support
+- Improved script manager and tools menu
+
+Version 0.7.1
 - Fixed script edititing on AppImage
 - Fixed AppImage/Windows builds, themes and look
 - Fixed theme/icons/look outside KDE environment
