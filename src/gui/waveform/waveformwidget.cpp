@@ -192,12 +192,12 @@ WaveformWidget::setZoom(quint32 val)
 
 	m_wfBuffer->zoomBuffer()->setZoomScale(val);
 
-	const quint32 samMS = m_wfBuffer->sampleRateMillis();
-	if(samMS) {
-		const qint32 msSpanOld = m_zoom * span / samMS;
+	const quint32 samRt = m_wfBuffer->sampleRate();
+	if(samRt) {
+		const qint32 msSpanOld = m_zoom * span * 1000 / samRt;
 		m_zoom = val;
 
-		const quint32 msSpanNew = val * span / samMS;
+		const quint32 msSpanNew = val * span * 1000 / samRt;
 		m_timeStart.shift((msSpanOld - qint32(msSpanNew)) / 2);
 		m_timeEnd = m_timeStart.shifted(msSpanNew);
 		handleTimeUpdate(msSpanNew);
@@ -239,9 +239,9 @@ WaveformWidget::handleTimeUpdate(quint32 msSpan)
 void
 WaveformWidget::onWaveformResize(quint32 span)
 {
-	const quint32 samMS = m_wfBuffer->sampleRateMillis();
-	if(samMS) {
-		const double windowSize = m_zoom * span / samMS;
+	const quint32 samRt = m_wfBuffer->sampleRate();
+	if(samRt) {
+		const double windowSize = m_zoom * span * 1000 / samRt;
 		m_timeEnd = m_timeStart.shifted(windowSize);
 		handleTimeUpdate(windowSize);
 		updateActions();
@@ -458,7 +458,7 @@ WaveformWidget::draggableAt(double posTime, WaveSubtitle **result)
 	if(result)
 		*result = nullptr;
 
-	if(!m_wfBuffer->sampleRateMillis())
+	if(!m_wfBuffer->sampleRate())
 		return DRAG_NONE;
 
 	double msTolerance = double(10 * m_wfBuffer->millisPerPixel());

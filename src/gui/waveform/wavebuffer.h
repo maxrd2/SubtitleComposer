@@ -44,14 +44,14 @@ public:
 	 */
 	inline quint32 waveformDuration() const { return m_waveformDuration; }
 
-	inline quint32 lengthMillis() const { return m_waveformChannelSize / m_samplesMsec; }
+	inline quint32 lengthMillis() const { return m_waveformChannelSize / m_samplesSec / 1000; }
 	inline quint32 lengthSamples() const { return m_waveformChannelSize; }
 
 	/**
 	 * @brief sampleRateMillis
-	 * @return number of samples per millisecond
+	 * @return number of samples per second
 	 */
-	inline quint32 sampleRateMillis() const { return m_samplesMsec; }
+	inline quint32 sampleRate() const { return m_samplesSec; }
 
 	quint32 millisPerPixel() const;
 
@@ -91,7 +91,6 @@ private:
 	quint32 m_waveformChannelSize;
 	SAMPLE_TYPE **m_waveform;
 
-	quint32 m_samplesMsec;
 	quint32 m_samplesSec;
 
 	struct WaveformFrame *m_wfFrame;

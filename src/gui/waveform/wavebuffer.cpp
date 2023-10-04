@@ -54,7 +54,7 @@ WaveBuffer::WaveBuffer(WaveformWidget *parent)
 	  m_waveformChannels(0),
 	  m_waveformChannelSize(0),
 	  m_waveform(nullptr),
-	  m_samplesMsec(0),
+	  m_samplesSec(0),
 	  m_wfFrame(nullptr),
 	  m_zoomBuffer(new ZoomBuffer(this))
 {
@@ -67,7 +67,7 @@ WaveBuffer::WaveBuffer(WaveformWidget *parent)
 quint32
 WaveBuffer::millisPerPixel() const
 {
-	return m_zoomBuffer->samplesPerPixel() / m_samplesMsec;
+	return m_zoomBuffer->samplesPerPixel() / m_samplesSec / 1000;
 }
 
 quint32
@@ -109,7 +109,7 @@ WaveBuffer::clearAudioStream()
 		m_waveform = nullptr;
 		m_waveformChannelSize = 0;
 		m_waveformChannels = 0;
-		m_samplesMsec = 0;
+		m_samplesSec = 0;
 	}
 }
 
@@ -160,7 +160,6 @@ WaveBuffer::onStreamData(const void *buffer, qint32 size, const WaveFormat *wave
 			m_samplesSec >>= 1;
 			sampleShift++;
 		}
-		m_samplesMsec = m_samplesSec / 1000;
 		m_waveformChannels = waveFormat->channels();
 		m_waveformChannelSize = m_samplesSec * (m_waveformDuration + 60); // added 60sec as duration might be wrong
 		m_waveform = new SAMPLE_TYPE *[m_waveformChannels];
