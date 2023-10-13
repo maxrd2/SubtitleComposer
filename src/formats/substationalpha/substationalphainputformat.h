@@ -58,7 +58,7 @@ protected:
 				} else if(*it == QLatin1String("u1")) {
 					newStyleFlags |= RichString::Underline;
 				} else if(it->at(0) == 'c') {
-					QString val = ($("000000") + it->mid(3, -2)).right(6);
+					QString val = ($("000000") + it->mid(3).chopped(1)).right(6);
 					if(val == QLatin1String("000000")) {
 						newStyleFlags &= ~RichString::Color;
 						newColor = 0;
