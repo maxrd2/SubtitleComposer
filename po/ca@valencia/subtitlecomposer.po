@@ -42,12 +42,12 @@ msgstr "Detecta automàticament"
 #: src/application.cpp:499
 #, kde-format
 msgid "Go to Line"
-msgstr "Ves a la línia"
+msgstr "Ves fins a la línia"
 
 #: src/application.cpp:499
 #, kde-format
 msgid "&Go to line:"
-msgstr "&Ves a la línia:"
+msgstr "&Ves fins a la línia:"
 
 #: src/application.cpp:672 src/core/subtitle.cpp:878
 #, kde-format
@@ -352,7 +352,7 @@ msgstr "Selecciona totes les línies"
 #: src/application_actions.cpp:236
 #, kde-format
 msgid "Go to Line..."
-msgstr "Ves a la línia..."
+msgstr "Ves fins a la línia..."
 
 #: src/application_actions.cpp:237
 #, kde-format
@@ -3594,7 +3594,7 @@ msgstr "Segur que voleu enviar el fitxer <b>%1</b> a la paperera?"
 #: src/scripting/scriptsmanager.cpp:584
 #, kde-format
 msgid "Move to Trash"
-msgstr "Mou a la paperera"
+msgstr "Mou cap a dins de la paperera"
 
 #: src/scripting/scriptsmanager.cpp:588
 #, kde-format
