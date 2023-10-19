@@ -89,6 +89,12 @@ parts:
             XDG_CONFIG_HOME: $CRAFT_STAGE/etc/xdg:/snap/kf5-5-110-qt-5-15-11-core22-sdk/current/etc/xdg:/etc/xdg${XDG_CONFIG_HOME:+:$XDG_CONFIG_HOME}
         - &id004
             CRAFT_CMAKE_ARGS: -DCMAKE_FIND_ROOT_PATH=/snap/kf5-5-110-qt-5-15-11-core22-sdk/current${CRAFT_CMAKE_ARGS:+:$CRAFT_CMAKE_ARGS}
+    patches:
+        plugin: dump
+        source: .
+        source-type: local
+        prime:
+        - ".*"
     subtitlecomposer:
         after:
         - kde-neon
@@ -96,28 +102,28 @@ parts:
         - usr/share/metainfo/org.kde.subtitlecomposer.appdata.xml
         plugin: cmake
         build-packages:
-        - kross-dev
-        - libglib2.0-dev
-        - libgstreamer-plugins-base1.0-dev
-        - libicu-dev
-        - libmpv-dev
-        - libopenal-dev
-        - libpocketsphinx-dev
-        - libsphinxbase-dev
-        - libswresample-dev
-        - libswscale-dev
+        - cmake
         - qtbase5-private-dev
         - libqt5opengl5-desktop-dev
-        - libegl1-mesa-dev
-        - libglu1-mesa-dev
-        - libgles2-mesa-dev
+        - kross-dev
+        - libswresample-dev
+        - libswscale-dev
+        - pkg-config
+        - libicu-dev
+        - libopenal-dev
+        - libpocketsphinx-dev
+        - gettext
         build-snaps:
         - ffmpeg-2204
         stage-packages:
-        - libgfortran5
+        - libc6
+        - libicu70
+        - libkf5krosscore5
+        - libopenal1
         - libpocketsphinx3
-        - on amd64: [libquadmath0]
         - libsphinxbase3
+        - libstdc++6
+        - libswresample3
         - pocketsphinx-en-us
         stage-snaps:
         - ffmpeg-2204
@@ -147,6 +153,9 @@ parts:
         - *id002
         - *id003
         - *id004
+        override-pull: |
+            craftctl default
+            patch -p1 < ../../patches/src/snap/patches/gles_support.patch
     cleanup:
         after:
         - kde-neon
