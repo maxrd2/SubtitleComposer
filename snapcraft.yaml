@@ -155,7 +155,7 @@ parts:
         - *id004
         override-pull: |
             craftctl default
-            patch -p1 < ../../patches/src/snap/patches/gles_support.patch
+            patch -p1 < ../../patches/src/snap/local/patches/gles_support.patch
     cleanup:
         after:
         - kde-neon
