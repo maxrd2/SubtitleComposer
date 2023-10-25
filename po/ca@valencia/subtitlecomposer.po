@@ -357,7 +357,7 @@ msgstr "Ves fins a la línia..."
 #: src/application_actions.cpp:237
 #, kde-format
 msgid "Go to specified line"
-msgstr "Va a la línia especificada"
+msgstr "Va fins a la línia especificada"
 
 #: src/application_actions.cpp:245
 #, kde-format
@@ -1458,7 +1458,7 @@ msgstr "Fes una pausa predeterminada entre les línies dels subtítols:"
 #: src/configs/generalconfigwidget.ui:144
 #, kde-format
 msgid "Ju&mp to prev/next line offset:"
-msgstr "Salta fins a la co&mpensació de línia anterior/següent:"
+msgstr "Salta fins a la co&mpensació de línia anterior o següent:"
 
 #. i18n: ectx: property (title), widget (QGroupBox, m_grpQuickActions)
 #: src/configs/generalconfigwidget.ui:167
@@ -3151,7 +3151,7 @@ msgstr "Busca la compensació en fer doble clic"
 #: src/scconfig.kcfg:22
 #, kde-format
 msgid "Jump to prev/next line offset"
-msgstr "Salta fins a la compensació de línia anterior/següent"
+msgstr "Salta fins a la compensació de línia anterior o següent"
 
 #. i18n: ectx: label, entry (UnpauseOnDoubleClick), group (General)
 #: src/scconfig.kcfg:26
@@ -3764,7 +3764,7 @@ msgstr ""
 #: src/speechplugins/pocketsphinx/pocketsphinxconfigwidget.cpp:28
 #, kde-format
 msgid "Sphinx Dictionaries"
-msgstr "Diccionaris d'Sphinx"
+msgstr "Diccionaris de Sphinx"
 
 #: src/speechplugins/pocketsphinx/pocketsphinxconfigwidget.cpp:24
 #: src/speechplugins/pocketsphinx/pocketsphinxconfigwidget.cpp:29
