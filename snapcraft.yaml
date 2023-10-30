@@ -103,7 +103,7 @@ parts:
         - kross-dev
         - libswresample-dev
         - libswscale-dev
-        - pkg-config
+        - pkg-config.*
         - libicu-dev
         - libopenal-dev
         - libpocketsphinx-dev
