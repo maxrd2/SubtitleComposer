@@ -148,12 +148,6 @@ parts:
         - *id002
         - *id003
         - *id004
-        override-pull: |
-            craftctl default
-              for file in ${CRAFT_PROJECT_DIR}/snap/local/patches/*
-              do
-                patch -i $file -p 1
-              done
     cleanup:
         after:
         - kde-neon
