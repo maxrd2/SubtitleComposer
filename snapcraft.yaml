@@ -108,6 +108,7 @@ parts:
         - libopenal-dev
         - libpocketsphinx-dev
         - gettext
+        - libssl-dev
         build-snaps:
         - ffmpeg-2204-sdk
         stage-packages:
