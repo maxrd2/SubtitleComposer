@@ -120,6 +120,7 @@ parts:
         - libsphinxbase3
         - libstdc++6
         - libswresample3
+        - libswscale5
         - pocketsphinx-en-us
         stage-snaps:
         - ffmpeg-2204
