@@ -16,7 +16,7 @@ apps:
         command: usr/bin/subtitlecomposer
         plugs:
         - home
-        - removeable-media
+        - removable-media
         - desktop
         - desktop-legacy
         - opengl
