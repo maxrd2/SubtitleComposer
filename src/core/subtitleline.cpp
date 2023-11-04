@@ -62,6 +62,8 @@ SubtitleLine::simpleErrorText(SubtitleLine::ErrorID errorID)
 		texts[MaxSecondaryCharsID] = texts[MaxSecondaryCharsID - 1];
 		texts[MaxPrimaryLinesID] = i18n("Too many lines");
 		texts[MaxSecondaryLinesID] = texts[MaxSecondaryLinesID - 1];
+		texts[MaxPrimaryCharsPerLineID] = i18n("Too many characters per line");
+		texts[MaxSecondaryCharsPerLineID] = texts[MaxSecondaryCharsPerLineID - 1];
 		texts[PrimaryUnneededSpacesID] = i18n("Unnecessary white space");
 		texts[SecondaryUnneededSpacesID] = texts[SecondaryUnneededSpacesID - 1];
 		texts[PrimaryUnneededDashID] = i18n("Unnecessary dash");
@@ -101,6 +103,8 @@ SubtitleLine::fullErrorText(SubtitleLine::ErrorID errorID) const
 	case MaxSecondaryCharsID: return i18np("Has too many characters in translation text (1 char).", "Has too many characters in translation text (%1 chars).", secondaryCharacters());
 	case MaxPrimaryLinesID: return i18np("Has too many lines in primary text (1 line).", "Has too many lines in primary text (%1 lines).", primaryLines());
 	case MaxSecondaryLinesID: return i18np("Has too many lines in translation text (1 line).", "Has too many lines in translation text (%1 lines).", secondaryLines());
+	case MaxPrimaryCharsPerLineID: return i18n("Has too many characters per line in primary text.");
+	case MaxSecondaryCharsPerLineID: return i18n("Has too many characters per line in translation text.");
 	case PrimaryUnneededSpacesID: return i18n("Has unnecessary spaces in primary text.");
 	case SecondaryUnneededSpacesID: return i18n("Has unnecessary spaces in translation text.");
 	case PrimaryUnneededDashID: return i18n("Has unnecessary dash in primary text.");
@@ -771,6 +775,52 @@ SubtitleLine::checkMaxSecondaryLines(int maxLines, bool update)
 }
 
 bool
+SubtitleLine::checkMaxPrimaryCharsPerLine(int maxCharactersPerLine, bool update)
+{
+	Q_ASSERT(maxCharactersPerLine >= 0);
+
+	bool error = false;
+
+	QString text = primaryDoc()->toPlainText();
+	QStringList lines = text.split(u'\n');
+
+	for(auto line = lines.cbegin(); line != lines.cend(); ++line) {
+		if(line->simplified().length() > maxCharactersPerLine) {
+			error = true;
+			break;
+		}
+	}
+
+	if(update)
+		setErrorFlags(MaxPrimaryCharsPerLine, error);
+
+	return error;
+}
+
+bool
+SubtitleLine::checkMaxSecondaryCharsPerLine(int maxCharactersPerLine, bool update)
+{
+	Q_ASSERT(maxCharactersPerLine >= 0);
+
+	bool error = false;
+
+	QString text = secondaryDoc()->toPlainText();
+	QStringList lines = text.split(u'\n');
+
+	for(auto line = lines.cbegin(); line != lines.cend(); ++line) {
+		if(line->simplified().length() > maxCharactersPerLine) {
+			error = true;
+			break;
+		}
+	}
+
+	if(update)
+		setErrorFlags(MaxSecondaryCharsPerLine, error);
+
+	return error;
+}
+
+bool
 SubtitleLine::checkPrimaryUnneededSpaces(bool update)
 {
 	static const QRegularExpression unneededSpaceRegExp("(^\\s|\\s$|¿\\s|¡\\s|\\s\\s|\\s!|\\s\\?|\\s:|\\s;|\\s,|\\s\\.)");
@@ -920,6 +970,14 @@ SubtitleLine::check(int errorFlagsToCheck, bool update)
 	if(errorFlagsToCheck & MaxSecondaryLines)
 		if(checkMaxSecondaryLines(SCConfig::maxLines(), false))
 			lineErrorFlags |= MaxSecondaryLines;
+
+	if(errorFlagsToCheck & MaxPrimaryCharsPerLine)
+		if(checkMaxPrimaryCharsPerLine(SCConfig::maxCharactersPerLine(), false))
+			lineErrorFlags |= MaxPrimaryCharsPerLine;
+
+	if(errorFlagsToCheck & MaxSecondaryCharsPerLine)
+		if(checkMaxSecondaryCharsPerLine(SCConfig::maxCharactersPerLine(), false))
+			lineErrorFlags |= MaxSecondaryCharsPerLine;
 
 	if(errorFlagsToCheck & PrimaryUnneededSpaces)
 		if(checkPrimaryUnneededSpaces(false))

@@ -65,6 +65,8 @@ public:
 		MaxSecondaryCharsID,            // Too many characters in secondary text
 		MaxPrimaryLinesID,              // Too many line breaks in primary text
 		MaxSecondaryLinesID,            // Too many line breaks in secondary text
+		MaxPrimaryCharsPerLineID,       // Too many characters per line in primary text
+		MaxSecondaryCharsPerLineID,     // Too many characters per line in secondary text
 		PrimaryUnneededSpacesID,                // Unnecessary spaces in primary text
 		SecondaryUnneededSpacesID,              // Unnecessary spaces in secondary text
 		PrimaryUnneededDashID,          // Unnecessary dash (-) in primary text
@@ -91,6 +93,8 @@ public:
 		MaxSecondaryChars = 0x1 << MaxSecondaryCharsID,
 		MaxPrimaryLines = 0x1 << MaxPrimaryLinesID,
 		MaxSecondaryLines = 0x1 << MaxSecondaryLinesID,
+		MaxPrimaryCharsPerLine = 0x1 << MaxPrimaryCharsPerLineID,
+		MaxSecondaryCharsPerLine = 0x1 << MaxSecondaryCharsPerLineID,
 		PrimaryUnneededSpaces = 0x1 << PrimaryUnneededSpacesID,
 		SecondaryUnneededSpaces = 0x1 << SecondaryUnneededSpacesID,
 		PrimaryUnneededDash = 0x1 << PrimaryUnneededDashID,
@@ -107,9 +111,9 @@ public:
 		UntranslatedText = 0x1 << UntranslatedTextID,
 		UserMark = 0x1 << UserMarkID,
 
-		PrimaryOnlyErrors = EmptyPrimaryText | MaxPrimaryChars | MaxPrimaryLines | PrimaryUnneededSpaces | PrimaryUnneededDash | PrimaryCapitalAfterEllipsis | MinDurationPerPrimaryChar | MaxDurationPerPrimaryChar,
+		PrimaryOnlyErrors = EmptyPrimaryText | MaxPrimaryChars | MaxPrimaryLines | MaxPrimaryCharsPerLine | PrimaryUnneededSpaces | PrimaryUnneededDash | PrimaryCapitalAfterEllipsis | MinDurationPerPrimaryChar | MaxDurationPerPrimaryChar,
 
-		SecondaryOnlyErrors = EmptySecondaryText | MaxSecondaryChars | MaxSecondaryLines | SecondaryUnneededSpaces | SecondaryUnneededDash | SecondaryCapitalAfterEllipsis | MinDurationPerSecondaryChar | MaxDurationPerSecondaryChar | UntranslatedText,
+		SecondaryOnlyErrors = EmptySecondaryText | MaxSecondaryChars | MaxSecondaryLines | MaxSecondaryCharsPerLine | SecondaryUnneededSpaces | SecondaryUnneededDash | SecondaryCapitalAfterEllipsis | MinDurationPerSecondaryChar | MaxDurationPerSecondaryChar | UntranslatedText,
 
 		SharedErrors = MinDuration | MaxDuration | OverlapsWithNext | UserMark,
 
@@ -117,7 +121,7 @@ public:
 
 		TimesErrors = MinDuration | MaxDuration | MinDurationPerPrimaryChar | MinDurationPerSecondaryChar | MaxDurationPerPrimaryChar | MaxDurationPerSecondaryChar | OverlapsWithNext,
 
-		TextErrors = EmptyPrimaryText | EmptySecondaryText | MaxPrimaryChars | MaxSecondaryChars | MaxPrimaryLines | MaxSecondaryLines | PrimaryUnneededSpaces | SecondaryUnneededSpaces | PrimaryUnneededDash | SecondaryUnneededDash | PrimaryCapitalAfterEllipsis | SecondaryCapitalAfterEllipsis | MinDurationPerPrimaryChar | MinDurationPerSecondaryChar | MaxDurationPerPrimaryChar | MaxDurationPerSecondaryChar | UntranslatedText
+		TextErrors = EmptyPrimaryText | EmptySecondaryText | MaxPrimaryChars | MaxSecondaryChars | MaxPrimaryLines | MaxSecondaryLines | MaxPrimaryCharsPerLine | MaxSecondaryCharsPerLine | PrimaryUnneededSpaces | SecondaryUnneededSpaces | PrimaryUnneededDash | SecondaryUnneededDash | PrimaryCapitalAfterEllipsis | SecondaryCapitalAfterEllipsis | MinDurationPerPrimaryChar | MinDurationPerSecondaryChar | MaxDurationPerPrimaryChar | MaxDurationPerSecondaryChar | UntranslatedText
 	} ErrorFlag;
 
 	static ErrorFlag errorFlag(ErrorID id);
@@ -206,6 +210,8 @@ public:
 	bool checkMaxSecondaryChars(int maxCharacters, bool update = true);
 	bool checkMaxPrimaryLines(int maxLines, bool update = true);
 	bool checkMaxSecondaryLines(int maxLines, bool update = true);
+	bool checkMaxPrimaryCharsPerLine(int maxCharactersPerLine, bool update);
+	bool checkMaxSecondaryCharsPerLine(int maxCharactersPerLine, bool update);
 
 	bool checkPrimaryUnneededSpaces(bool update = true);
 	bool checkSecondaryUnneededSpaces(bool update = true);

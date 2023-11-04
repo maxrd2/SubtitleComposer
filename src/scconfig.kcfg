@@ -59,6 +59,10 @@
 			<label>Maximum number of lines</label>
 			<default>2</default>
 		</entry>
+		<entry name="MaxCharactersPerLine" type="Int">
+			<label>Maximum number of characters per line</label>
+			<default>40</default>
+		</entry>
 
 		<entry name="MinDuration" type="Int">
 			<label>Minimum duration</label>
