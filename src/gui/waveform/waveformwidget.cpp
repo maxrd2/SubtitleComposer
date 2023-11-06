@@ -461,7 +461,7 @@ WaveformWidget::draggableAt(double posTime, WaveSubtitle **result)
 	if(!m_wfBuffer->sampleRate())
 		return DRAG_NONE;
 
-	double msTolerance = double(10 * m_wfBuffer->millisPerPixel());
+	double msTolerance = 10. * m_wfBuffer->zoomBuffer()->samplesPerPixel() * 1000. / m_wfBuffer->sampleRate();
 
 	DragPosition dragMode = DRAG_NONE;
 	for(WaveSubtitle *sub: m_visibleLines) {

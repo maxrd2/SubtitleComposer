@@ -44,7 +44,7 @@ public:
 	 */
 	inline quint32 waveformDuration() const { return m_waveformDuration; }
 
-	inline quint32 lengthMillis() const { return m_waveformChannelSize / m_samplesSec / 1000; }
+	inline quint32 lengthMillis() const { return m_waveformChannelSize * 1000 / m_samplesSec; }
 	inline quint32 lengthSamples() const { return m_waveformChannelSize; }
 
 	/**

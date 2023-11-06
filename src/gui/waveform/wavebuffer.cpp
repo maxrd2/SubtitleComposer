@@ -67,7 +67,7 @@ WaveBuffer::WaveBuffer(WaveformWidget *parent)
 quint32
 WaveBuffer::millisPerPixel() const
 {
-	return m_zoomBuffer->samplesPerPixel() / m_samplesSec / 1000;
+	return m_zoomBuffer->samplesPerPixel() * 1000 / m_samplesSec;
 }
 
 quint32
