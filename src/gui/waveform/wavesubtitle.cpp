@@ -33,9 +33,9 @@ WaveSubtitle::~WaveSubtitle()
 }
 
 DragPosition
-WaveSubtitle::draggableAt(double time, double *msTolerance) const
+WaveSubtitle::draggableAt(double time, double msTolerance) const
 {
-	if(!m_line->intersectsTimespan(time - *msTolerance, time + *msTolerance))
+	if(!m_line->intersectsTimespan(time - msTolerance, time + msTolerance))
 		return DRAG_NONE;
 
 	const bool hasAnchors = m_line->subtitle() && m_line->subtitle()->hasAnchors();
@@ -43,16 +43,12 @@ WaveSubtitle::draggableAt(double time, double *msTolerance) const
 		return DRAG_FORBIDDEN;
 
 	const double showDistance = qAbs(m_line->showTime().toMillis() - time);
-	if(*msTolerance > showDistance) {
-		*msTolerance = showDistance;
+	if(msTolerance > showDistance)
 		return hasAnchors ? DRAG_LINE : DRAG_SHOW;
-	}
 
 	const double hideDistance = qAbs(m_line->hideTime().toMillis() - time);
-	if(*msTolerance > hideDistance) {
-		*msTolerance = hideDistance;
+	if(msTolerance > hideDistance)
 		return hasAnchors ? DRAG_LINE : DRAG_HIDE;
-	}
 
 	return DRAG_LINE;
 }

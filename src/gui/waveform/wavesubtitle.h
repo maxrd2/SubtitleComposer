@@ -38,7 +38,7 @@ public:
 
 	inline SubtitleLine * line() const { return m_line; }
 
-	DragPosition draggableAt(double time, double *msTolerance) const;
+	DragPosition draggableAt(double time, double msTolerance) const;
 
 	void dragStart(DragPosition dragMode, double dragTime);
 	inline void dragUpdate(double dragTime) { m_dragTime = dragTime; }
