@@ -27,6 +27,7 @@
   <name xml:lang="sv">Textningsskapare</name>
   <name xml:lang="tr">Altyazı Oluşturucusu</name>
   <name xml:lang="uk">Редактор субтитрів</name>
+  <name xml:lang="x-test">xxSubtitle Composerxx</name>
   <name xml:lang="zh-TW">字幕撰寫工具</name>
   <summary>Video subtitle editor that supports basic and advanced editing operations</summary>
   <summary xml:lang="ca">Editor de subtítols de vídeo que admet operacions d'edició bàsiques i avançades</summary>
@@ -50,6 +51,7 @@
   <summary xml:lang="sv">Textningseditor för videor som stöder grundläggande och avancerade redigeringsåtgärder</summary>
   <summary xml:lang="tr">Temel ve gelişmiş düzenleme işlemlerini destekleyen video altyazı düzenleyici</summary>
   <summary xml:lang="uk">Текстовий редактор субтитрів до відео, у якому передбачено базові і розширені можливості з редагування</summary>
+  <summary xml:lang="x-test">xxVideo subtitle editor that supports basic and advanced editing operationsxx</summary>
   <summary xml:lang="zh-TW">支援基本及進階編輯動作的影片字幕編輯器</summary>
   <description>
     <p>Subtitle Composer is an open source text-based subtitle editor that supports basic and advanced editing operations.</p>
@@ -74,6 +76,7 @@
     <p xml:lang="sv">Textningsskapare är en textbaserad textningseditor med öppen källkod som stöder grundläggande och avancerade redigeringsåtgärder.</p>
     <p xml:lang="tr">Altyazı Oluşturucusu, temel ve gelişmiş düzenleme işlemlerini destekleyen, açık kaynaklı ve metin tabanlı bir altyazı düzenleyicidir.</p>
     <p xml:lang="uk">«Редактор субтитрів» — текстовий редактор субтитрів із відкритим кодом, у якому передбачено базові і розширені можливості з редагування.</p>
+    <p xml:lang="x-test">xxSubtitle Composer is an open source text-based subtitle editor that supports basic and advanced editing operations.xx</p>
     <p xml:lang="zh-TW">《字幕撰寫工具》是個開放原始碼且基於文字的字幕編輯器，支援基本及進階的編輯動作。</p>
     <p>Features</p>
     <p xml:lang="ca">Característiques</p>
@@ -100,6 +103,7 @@
     <p xml:lang="sv">Funktioner</p>
     <p xml:lang="tr">Özellikler</p>
     <p xml:lang="uk">Можливості</p>
+    <p xml:lang="x-test">xxFeaturesxx</p>
     <p xml:lang="zh-TW">功能</p>
     <ul>
       <li>Open/Save Text Subtitle Formats - SubRip/SRT, MicroDVD, SSA/ASS, MPlayer, TMPlayer and YouTube captions</li>
@@ -122,6 +126,7 @@
       <li xml:lang="sv">Öppna eller spara textningsformat - SubRip/SRT-, MicroDVD-, SSA/ASS-, MPlayer-, TMPlayer- och YouTube-textning</li>
       <li xml:lang="tr">Metin Altyazı Biçimlerini Aç/Kaydet - SubRip/SRT, MicroDVD, SSA/ASS, MPlayer, TMPlayer ve YouTube altyazıları</li>
       <li xml:lang="uk">Відкриття/Збереження даних у текстових форматах субтитрів — SubRip/SRT, MicroDVD, SSA/ASS, MPlayer, TMPlayer та субтитрів YouTube</li>
+      <li xml:lang="x-test">xxOpen/Save Text Subtitle Formats - SubRip/SRT, MicroDVD, SSA/ASS, MPlayer, TMPlayer and YouTube captionsxx</li>
       <li xml:lang="zh-TW">開啟／儲存文字字幕格式 - SubRip/SRT、MicroDVD、SSA/ASS、MPlayer、TMPlayer 及 YouTube 字幕</li>
       <li>Open/OCR Graphics Subtitle Formats - VobSub (.idx/.sub/.rar), BluRay/PGS (*.sup), formats supported by ffmpeg (DVD/Vob, DVB, XSUB, HDMV-PGS)</li>
       <li xml:lang="ca">Obre/Formats de subtítols gràfics OCR: VobSub (.idx/.sub/.rar), Blu-ray/PGS (*.sup), formats admesos per ffmpeg (DVD/Vob, DVB, XSUB, HDMV-PGS)</li>
@@ -143,6 +148,7 @@
       <li xml:lang="sv">Öppna och OCR grafiska textningsformat - VobSub (.idx/.sub/.rar), BluRay/PGS (*.sup), format som stöds av ffmpeg (DVD/Vob, DVB, XSUB, HDMV-PGS)</li>
       <li xml:lang="tr">Açık/OCR Grafik Altyazı Biçimleri - VobSub (.idx/.sub/.rar), BluRay/PGS (*.sup), ffmpeg tarafından desteklenen biçimler (DVD/Vob, DVB, XSUB, HDMV-PGS)</li>
       <li xml:lang="uk">Відкриті/Розпізнані графічні формати субтитрів — VobSub (.idx/.sub/.rar), BluRay/PGS (*.sup), формати, підтримку яких передбачено у ffmpeg (DVD/Vob, DVB, XSUB, HDMV-PGS)</li>
+      <li xml:lang="x-test">xxOpen/OCR Graphics Subtitle Formats - VobSub (.idx/.sub/.rar), BluRay/PGS (*.sup), formats supported by ffmpeg (DVD/Vob, DVB, XSUB, HDMV-PGS)xx</li>
       <li xml:lang="zh-TW">開啟／OCR 圖形字幕格式 - VobSub (.idx/.sub/.rar)、BluRay/PGS (*.sup)、FFmpeg 支援的格式 (DVD/Vob, DVB, XSUB, HDMV-PGS)</li>
       <li>Demux Graphics/Text Subtitle Stream from video file - SRT, SSA/ASS, MOV text, MicroDVD, DVD/Vob, DVB, XSUB, HDMV-PGS</li>
       <li xml:lang="ca">Desmultiplexa el flux de subtítols gràfics/de text des d'un fitxer de vídeo: SRT, SSA/ASS, text MOV, MicroDVD, DVD/Vob, DVB, XSUB, HDMV-PGS</li>
@@ -164,6 +170,7 @@
       <li xml:lang="sv">Avmultiplex av grafik- eller textningsström från videofil - SRT, SSA/ASS, MOV text, MicroDVD, DVD/Vob, DVB, XSUB, HDMV-PGS</li>
       <li xml:lang="tr">Demux Graphics/video dosyasından Metin Altyazı Akışı - SRT, SSA/ASS, MOV metni, MicroDVD, DVD/Vob, DVB, XSUB, HDMV-PGS</li>
       <li xml:lang="uk">Демультиплексовані графічні або текстові потоки субтитрів з відеофайлів — SRT, SSA/ASS, MOV text, MicroDVD, DVD/Vob, DVB, XSUB, HDMV-PGS</li>
+      <li xml:lang="x-test">xxDemux Graphics/Text Subtitle Stream from video file - SRT, SSA/ASS, MOV text, MicroDVD, DVD/Vob, DVB, XSUB, HDMV-PGSxx</li>
       <li>Speech recognition from audio/video file using PocketSphinx</li>
       <li xml:lang="ca">Reconeixement de la veu des de fitxers d'àudio/vídeo emprant PocketSphinx</li>
       <li xml:lang="ca-valencia">Reconeixement de la veu des de fitxers d'àudio/vídeo emprant PocketSphinx</li>
@@ -185,6 +192,7 @@
       <li xml:lang="sv">Taligenkänning från ljud- eller videofil med användning av PocketSphinx</li>
       <li xml:lang="tr">PocketSphinx kullanarak ses/video dosyasından konuşma tanıma</li>
       <li xml:lang="uk">Розпізнавання голосових даних зі звукових і відеофайлів за допомогою PocketSphinx</li>
+      <li xml:lang="x-test">xxSpeech recognition from audio/video file using PocketSphinxxx</li>
       <li>Smart language/text encoding** detection</li>
       <li xml:lang="ca">Detecció** intel·ligent de la codificació d'idioma/text</li>
       <li xml:lang="ca-valencia">Detecció** intel·ligent de la codificació d'idioma/text</li>
@@ -206,6 +214,7 @@
       <li xml:lang="sv">Smart detektering av språk och textkodning**</li>
       <li xml:lang="tr">Akıllı dil/metin kodlama** algılaması</li>
       <li xml:lang="uk">Автоматичне визначення мови і кодування тексту</li>
+      <li xml:lang="x-test">xxSmart language/text encoding** detectionxx</li>
       <li xml:lang="zh-TW">智慧型語言／文字編碼** 偵測</li>
       <li>Live preview of subtitles in integrated video player w/ audio stream selection</li>
       <li xml:lang="ca">Vista prèvia en viu dels subtítols en el reproductor de vídeo integrat amb selecció del flux d'àudio</li>
@@ -228,6 +237,7 @@
       <li xml:lang="sv">Direkt förhandsgranskning av textning i integrerad videospelare med val av ljudspår</li>
       <li xml:lang="tr">Tümleşik video oynatıcısında ses akış seçimi ile altyazıların canlı önizlemesi</li>
       <li xml:lang="uk">Інтерактивний перегляд субтитрів у інтегрованому відеопрогравачі із можливістю вибору потоку звукових даних</li>
+      <li xml:lang="x-test">xxLive preview of subtitles in integrated video player w/ audio stream selectionxx</li>
       <li>Preview/editing of subtitles on graphical audio waveform w/ audio stream selection</li>
       <li xml:lang="ca">Vista prèvia/edició dels subtítols en forma d'ona d'àudio gràfica amb selecció del flux d'àudio</li>
       <li xml:lang="ca-valencia">Vista prèvia/edició dels subtítols en forma d'ona d'àudio gràfica amb selecció del flux d'àudio</li>
@@ -249,6 +259,7 @@
       <li xml:lang="sv">Förhandsgranskning och redigering av textning på grafisk ljudvågform med val av ljudspår</li>
       <li xml:lang="tr">Grafik ses dalga biçiminde ses akış seçimi ile altyazıların önizlemesi/düzenlemesi</li>
       <li xml:lang="uk">Попередній перегляд і редагування субтитрів із показом графічного представлення звукових даних і можливістю вибору потоку звукових даних</li>
+      <li xml:lang="x-test">xxPreview/editing of subtitles on graphical audio waveform w/ audio stream selectionxx</li>
       <li>Sync by dragging several anchors/graftpoints and stretching timeline</li>
       <li xml:lang="ca">Sincronització arrossegant diversos ancoratges/punts d'empelt i estirant la línia de temps</li>
       <li xml:lang="ca-valencia">Sincronització arrossegant diversos ancoratges/punts d'empelt i estirant la línia de temps</li>
@@ -270,6 +281,7 @@
       <li xml:lang="sv">Synkronisering genom att dra flera grepp eller ympningsställen och utsträckning av tidslinjen</li>
       <li xml:lang="tr">Birden çok çapa/aşı noktası sürükleyerek ve zaman akışını çekiştirerek eşzamanlama</li>
       <li xml:lang="uk">Синхронізація за допомогою перетягування точок прив'язки та розтягування монтажного столу</li>
+      <li xml:lang="x-test">xxSync by dragging several anchors/graftpoints and stretching timelinexx</li>
       <li>Time shifting and scaling, lines duration re-calculation, framerate conversion, etc.</li>
       <li xml:lang="ca">Desplaçament i escalat del temps, recàlcul de la durada de les línies, conversió de la velocitat dels fotogrames, etc.</li>
       <li xml:lang="ca-valencia">Desplaçament i escalat del temps, recàlcul de la duració de les línies, conversió de la velocitat dels fotogrames, etc.</li>
@@ -291,6 +303,7 @@
       <li xml:lang="sv">Tidsskift och skalning, omräkning av tidslängd för rader, bildfrekvenskonvertering, etc.</li>
       <li xml:lang="tr">Zaman kaydırma ve ölçekleme, satır süresi yeniden hesaplama, kare hızı dönüşümü vb.</li>
       <li xml:lang="uk">Зсування та масштабування за часом, переобчислення тривалості показу рядків, перетворення за частотою кадрів тощо</li>
+      <li xml:lang="x-test">xxTime shifting and scaling, lines duration re-calculation, framerate conversion, etc.xx</li>
       <li>Joining and splitting of subtitle files</li>
       <li xml:lang="ca">Unir i dividir fitxers de subtítols</li>
       <li xml:lang="ca-valencia">Unir i dividir fitxers de subtítols</li>
@@ -313,6 +326,7 @@
       <li xml:lang="sv">Sammanfoga och dela textningsfiler</li>
       <li xml:lang="tr">Altyazı dosyalarının birbirine katılması ve bölünmesi</li>
       <li xml:lang="uk">Можливість об'єднання та поділу файлів субтитрів</li>
+      <li xml:lang="x-test">xxJoining and splitting of subtitle filesxx</li>
       <li>Side by side subtitle translations</li>
       <li xml:lang="ca">Traducció dels subtítols en paral·lel</li>
       <li xml:lang="ca-valencia">Traducció dels subtítols en paral·lel</li>
@@ -334,6 +348,7 @@
       <li xml:lang="sv">Översättning av textning sida vid sida</li>
       <li xml:lang="tr">Yan yana altyazı çevirisi</li>
       <li xml:lang="uk">Синхронний переклад субтитрів</li>
+      <li xml:lang="x-test">xxSide by side subtitle translationsxx</li>
       <li>Text styles (italic, bold, underline, stroke, color)</li>
       <li xml:lang="ca">Estils de text (cursiva, negreta, subratllat, ratllat, color)</li>
       <li xml:lang="ca-valencia">Estils de text (cursiva, negreta, subratllat, ratllat, color)</li>
@@ -356,6 +371,7 @@
       <li xml:lang="sv">Textstilar (kursiv, fetstil, understreck, överstreck, färg)</li>
       <li xml:lang="tr">Metin biçemleri (yatık, kalın, altı çizili, üstü çizili, renkli)</li>
       <li xml:lang="uk">Можливість визначення стилю тексту (курсив, напівжирний, підкреслення, закреслення, колір)</li>
+      <li xml:lang="x-test">xxText styles (italic, bold, underline, stroke, color)xx</li>
       <li xml:lang="zh-TW">文字樣式（斜體、粗體、底線、刪除線、色彩）</li>
       <li>Spell checking</li>
       <li xml:lang="ca">Verificació ortogràfica</li>
@@ -381,6 +397,7 @@
       <li xml:lang="sv">Stavningskontroll</li>
       <li xml:lang="tr">Yazım denetimi</li>
       <li xml:lang="uk">Перевірка правопису</li>
+      <li xml:lang="x-test">xxSpell checkingxx</li>
       <li xml:lang="zh-TW">拼字檢查</li>
       <li>Detection of timing errors in subtitles</li>
       <li xml:lang="ca">Detecció dels errors de temps en els subtítols</li>
@@ -404,6 +421,7 @@
       <li xml:lang="sv">Detektering av tidsfel i textning</li>
       <li xml:lang="tr">Altyazılarda zamanlama hatalarını algılama</li>
       <li xml:lang="uk">Виявлення часової розсинхронізації у субтитрах</li>
+      <li xml:lang="x-test">xxDetection of timing errors in subtitlesxx</li>
       <li xml:lang="zh-TW">偵測字幕中的時間錯誤</li>
       <li>Scripting (JavaScript, Python, Ruby and other languages supported by Kross).</li>
       <li xml:lang="ca">Creació de scripts (JavaScript, Python, Ruby i altres llenguatges admesos pel Kross).</li>
@@ -427,6 +445,7 @@
       <li xml:lang="sv">Skript (JavaScript, Python, Ruby och andra språk som stöds av Kross).</li>
       <li xml:lang="tr">Betik yazımı (JavaScript, Python, Ruby ve Kross tarafından desteklenen diğer diller).</li>
       <li xml:lang="uk">Керування за допомогою скриптів (передбачено підтримку JavaScript, Python, Ruby та інших мов, підтримку яких передбачено у Kross).</li>
+      <li xml:lang="x-test">xxScripting (JavaScript, Python, Ruby and other languages supported by Kross).xx</li>
       <li xml:lang="zh-TW">撰寫文稿（JavaScript、Python、Ruby 及其他 Kross 支援的語言）。</li>
     </ul>
   </description>
@@ -457,6 +476,7 @@
       <caption xml:lang="sv">Programmets huvudfönster</caption>
       <caption xml:lang="tr">Ana uygulama penceresi</caption>
       <caption xml:lang="uk">Основне вікно програми</caption>
+      <caption xml:lang="x-test">xxMain application windowxx</caption>
       <caption xml:lang="zh-TW">應用程式主視窗</caption>
       <image>https://cdn.kde.org/screenshots/subtitlecomposer/mainwindow.png</image>
     </screenshot>
