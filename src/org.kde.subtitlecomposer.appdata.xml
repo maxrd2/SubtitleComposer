@@ -489,6 +489,7 @@
   <content_rating type="oars-1.1"/>
   <releases>
     <release version="0.8.0" date="2023-11-06">
+      <url>https://subtitlecomposer.kde.org/2023/11/06/subtitle-composer-0.8.0-released.html</url>
       <description>
         <ul>
           <li>Fixed video player on GLES only hardware</li>
@@ -528,6 +529,30 @@
           <li>Improved script manager and tools menu</li>
         </ul>
       </description>
+      <artifacts>
+        <artifact type="binary" platform="x86_64-linux-gnu">
+          <location>https://downloadcontent.opensuse.org/repositories/home:/maxrd2/AppImage/subtitlecomposer-latest-x86_64.AppImage</location>
+          <checksum type="sha256">2c67d5d68e9a765a97b57f6aa623ddce7e2d1c997ee7e28bddad5636c6af98b2</checksum>
+          <size type="download">59033544</size>
+          <bundle type="appimage">subtitlecomposer-latest</bundle>
+        </artifact>
+        <artifact type="binary" platform="i386-linux-gnu">
+          <location>https://downloadcontent.opensuse.org/repositories/home:/maxrd2/AppImage/subtitlecomposer-latest-i686.AppImage</location>
+          <checksum type="sha256">d654d044cb93df5eca8aa9d5cfce895d62b76f997c6a1c644714a8e6e77979ad</checksum>
+          <size type="download">63361456</size>
+          <bundle type="appimage">subtitlecomposer-latest</bundle>
+        </artifact>
+        <artifact type="binary" platform="i386-windows-msvc">
+          <location>https://gitlab.com/subtitlecomposer/subtitlecomposer/-/jobs/artifacts/obs/v0.8.0/download?job=mingw-win32-build</location>
+          <checksum type="sha256">514c669888e349f45993ad6a85983e80ba898b88b2ed08bf726522277c629ce1</checksum>
+          <size type="download">36245872</size>
+        </artifact>
+        <artifact type="source">
+          <location>https://download.kde.org/stable/subtitlecomposer/subtitlecomposer-0.8.0.tar.xz</location>
+          <checksum type="sha256">b1416bdf7223b1979a36620b913c117c1b6c933bf165e28491af476310d7c9f8</checksum>
+          <size type="download">730800</size>
+        </artifact>
+      </artifacts>
     </release>
     <release version="0.7.1" date="2021-07-28">
       <url>https://subtitlecomposer.kde.org/2021/10/05/subtitle-composer-0.7.1-released.html</url>
@@ -570,8 +595,8 @@
         </artifact>
         <artifact type="binary" platform="i386-windows-msvc">
           <location>https://gitlab.com/subtitlecomposer/subtitlecomposer/-/jobs/artifacts/obs/v0.7.1/download?job=mingw-win32-build</location>
-          <checksum type="sha256">e4e200dc3a6687b1593f98355694b74676d65f458180461a3ebc16e505a0f247</checksum>
-          <size type="download">35350375</size>
+          <checksum type="sha256">e3ab604123b3e6f2351396c25e7cb122a93cda3cd048a59e9f5427e5e342d703</checksum>
+          <size type="download">36241944</size>
         </artifact>
         <artifact type="source">
           <location>https://download.kde.org/stable/subtitlecomposer/subtitlecomposer-0.7.1.tar.xz</location>
