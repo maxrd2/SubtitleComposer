@@ -16,11 +16,11 @@ sudo pacman -S --noconfirm --needed \
 	mingw-w64-kinit mingw-w64-pango mingw-w64-libvisual \
 	mingw-w64-aspell mingw-w64-hunspell mingw-w64-icu \
 	mingw-w64-libidn2 mingw-w64-openal \
-	kconfig kcoreaddons breeze-icons icu
-sudo pacman -Sdd --noconfirm --needed kauth kbookmarks kcodecs kcompletion \
-	kconfig kconfigwidgets kcoreaddons kglobalaccel kitemviews kjobwidgets \
-	knotifications kross ktextwidgets kwidgetsaddons kwindowsystem kxmlgui \
-	solid sonnet
+	kconfig5 kcoreaddons5 breeze-icons icu
+sudo pacman -Sdd --noconfirm --needed kauth5 kbookmarks5 kcodecs5 kcompletion5 \
+	kconfig5 kconfigwidgets5 kcoreaddons5 kglobalaccel5 kitemviews5 kjobwidgets5 \
+	knotifications5 ktextwidgets5 kwidgetsaddons5 kwindowsystem5 kxmlgui5 \
+	solid5 sonnet5
 
 i686-w64-mingw32-cmake -B /home/devel/build \
 	-DCMAKE_BUILD_TYPE=Release \
