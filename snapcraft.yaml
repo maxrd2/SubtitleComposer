@@ -26,6 +26,9 @@ apps:
         - unity7
         - network
         - network-bind
+        - udisks2
+        - mount-observe
+        - alsa
         command-chain:
         - snap/command-chain/desktop-launch
 assumes:
@@ -49,6 +52,11 @@ plugs:
         target: $SNAP/kf5
 environment:
     SNAP_DESKTOP_RUNTIME: $SNAP/kf5
+    XDG_DATA_DIRS: $SNAP/usr/share:$SNAP/kf5/usr/share:$XDG_DATA_DIRS
+    XDG_CONFIG_HOME: $SNAP/etc/xdg:$SNAP/kf5/etc/xdg:/etc/xdg:$XDG_CONFIG_HOME
+    GST_PLUGIN_PATH: "$SNAP/usr/lib/$CRAFT_ARCH_TRIPLET/gstreamer-1.0"
+    GST_PLUGIN_SYSTEM_PATH: "$SNAP/usr/lib/$CRAFT_ARCH_TRIPLET/gstreamer-1.0"
+    GST_PLUGIN_SCANNER: "$SNAP/kf5/usr/lib/$CRAFT_ARCH_TRIPLET/gstreamer1.0/gstreamer-1.0/gst-plugin-scanner"
 hooks:
     configure:
         plugs:
@@ -58,6 +66,12 @@ hooks:
 layout:
     /usr/share/X11:
         symlink: $SNAP/kf5/usr/share/X11
+    "/usr/lib/$CRAFT_ARCH_TRIPLET/alsa-lib":
+        bind: "$SNAP/usr/lib/$CRAFT_ARCH_TRIPLET/alsa-lib"
+    "/usr/share/alsa":
+        bind: "$SNAP/usr/share/alsa"
+    "/etc/alsa/conf.d":
+        bind: "$SNAP/etc/alsa/conf.d"
 slots:
     session-dbus-interface:
         interface: dbus
@@ -112,6 +126,16 @@ parts:
         build-snaps:
         - ffmpeg-2204-sdk
         stage-packages:
+        - gstreamer1.0-alsa
+        - gstreamer1.0-plugins-base
+        - gstreamer1.0-plugins-bad
+        - gstreamer1.0-plugins-good
+        - gstreamer1.0-plugins-ugly
+        - gstreamer1.0-libav
+        - libasound2
+        - libasound2-data
+        - libasound2-plugins
+        - libasound2-plugins-extra
         - libc6
         - libicu70
         - libkf5krosscore5
