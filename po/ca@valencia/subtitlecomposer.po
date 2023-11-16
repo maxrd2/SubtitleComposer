@@ -893,7 +893,7 @@ msgstr "Silencia"
 #: src/application_actions.cpp:689
 #, kde-format
 msgid "Enable/disable playback sound"
-msgstr "Activa/Desactiva la reproducció del so"
+msgstr "Activa o desactiva la reproducció del so"
 
 #: src/application_actions.cpp:696
 #, kde-format
@@ -3589,7 +3589,7 @@ msgstr "S'ha produït un error en copiar el fitxer a <b>%1</b>."
 #: src/scripting/scriptsmanager.cpp:584
 #, kde-format
 msgid "Do you really want to send file <b>%1</b> to the trash?"
-msgstr "Segur que voleu enviar el fitxer <b>%1</b> a la paperera?"
+msgstr "Segur que voleu enviar el fitxer <b>%1</b> cap a dins de la paperera?"
 
 #: src/scripting/scriptsmanager.cpp:584
 #, kde-format
