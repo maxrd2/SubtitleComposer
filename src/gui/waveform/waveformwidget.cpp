@@ -116,6 +116,7 @@ WaveformWidget::WaveformWidget(QWidget *parent)
 	QLabel *label = new QLabel(i18n("Generating waveform"), m_progressWidget);
 
 	m_progressBar = new QProgressBar(m_progressWidget);
+	m_progressBar->setFormat(i18nc("%p is the percent value, % is the percent sign", "%p%"));
 	m_progressBar->setMinimumWidth(300);
 	m_progressBar->setTextVisible(true);
 

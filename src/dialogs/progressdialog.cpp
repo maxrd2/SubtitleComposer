@@ -31,6 +31,7 @@ ProgressDialog::ProgressDialog(const QString &caption, const QString &descriptio
 	m_label->setAlignment(Qt::AlignHCenter);
 
 	m_progressBar = new QProgressBar(this);
+	m_progressBar->setFormat(i18nc("%p is the percent value, % is the percent sign", "%p%"));
 	m_progressBar->setMaximum(1);
 	m_progressBar->setValue(0);
 
