@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: subtitlecomposer\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-11-05 12:31+0000\n"
+"POT-Creation-Date: 2023-12-30 00:41+0000\n"
 "PO-Revision-Date: 2023-07-02 02:17+0100\n"
 "Last-Translator: Hugo Carvalho <hugokarvalho@hotmail.com>\n"
 "Language-Team: Portuguese\n"
@@ -328,7 +328,7 @@ msgid "Split selected lines"
 msgstr "Divide as linhas seleccionadas"
 
 #: src/application_actions.cpp:220 src/core/subtitle.cpp:642
-#: src/gui/waveform/waveformwidget.cpp:713
+#: src/gui/waveform/waveformwidget.cpp:714
 #, kde-format
 msgid "Join Lines"
 msgstr "Juntar as Linhas"
@@ -956,7 +956,7 @@ msgstr "Texto da Legenda Visível"
 msgid "Select visible subtitle text"
 msgstr "Seleccione o texto da legenda visível"
 
-#: src/application_actions.cpp:752 src/gui/waveform/waveformwidget.cpp:737
+#: src/application_actions.cpp:752 src/gui/waveform/waveformwidget.cpp:738
 #, kde-format
 msgid "Toggle Anchor"
 msgstr "Comutar a Fixação"
@@ -1725,7 +1725,7 @@ msgid "Change Frame Rate"
 msgstr "Mudar a Taxa de Imagens"
 
 #: src/core/subtitle.cpp:401 src/core/subtitle.cpp:415
-#: src/gui/waveform/waveformwidget.cpp:696
+#: src/gui/waveform/waveformwidget.cpp:697
 #, kde-format
 msgid "Insert Line"
 msgstr "Inserir uma Linha"
@@ -2413,6 +2413,14 @@ msgstr "Avançar as legendas antes de adicionar"
 msgid "Set from video length"
 msgstr "Definir a partir da duração do vídeo"
 
+#: src/dialogs/progressdialog.cpp:34 src/formats/textdemux/textdemux.cpp:35
+#: src/gui/waveform/waveformwidget.cpp:119
+#: src/speechprocessor/speechprocessor.cpp:44
+#, kde-format
+msgctxt "%p is the percent value, % is the percent sign"
+msgid "%p%"
+msgstr ""
+
 #: src/dialogs/removelinesdialog.cpp:13
 #, kde-format
 msgid "Remove Selected Lines"
@@ -2588,7 +2596,7 @@ msgstr "Deseleccionar Tudo"
 msgid "Importing Subtitle Stream"
 msgstr "A Importar a Transmissão de Legendas"
 
-#: src/formats/textdemux/textdemux.cpp:90
+#: src/formats/textdemux/textdemux.cpp:91
 #, kde-format
 msgid ""
 "Subtitle demux failed %1: %2\n"
@@ -3008,27 +3016,27 @@ msgstr "Cor do Texto"
 msgid "Generating waveform"
 msgstr "A gerar a forma de onda"
 
-#: src/gui/waveform/waveformwidget.cpp:691
+#: src/gui/waveform/waveformwidget.cpp:692
 #, kde-format
 msgid "Select Line"
 msgstr "Seleccionar a Linha"
 
-#: src/gui/waveform/waveformwidget.cpp:706
+#: src/gui/waveform/waveformwidget.cpp:707
 #, kde-format
 msgid "Remove Line"
 msgstr "Remover a Linha"
 
-#: src/gui/waveform/waveformwidget.cpp:731
+#: src/gui/waveform/waveformwidget.cpp:732
 #, kde-format
 msgid "Split Line"
 msgstr "Dividir a Linha"
 
-#: src/gui/waveform/waveformwidget.cpp:741
+#: src/gui/waveform/waveformwidget.cpp:742
 #, kde-format
 msgid "Set Current Line Show Time"
 msgstr "Definir o Tempo de Apresentação da Linha Actual"
 
-#: src/gui/waveform/waveformwidget.cpp:746
+#: src/gui/waveform/waveformwidget.cpp:747
 #, kde-format
 msgid "Set Current Line Hide Time"
 msgstr "Definir o Tempo de Desaparecimento da Linha Actual"
@@ -3840,22 +3848,22 @@ msgstr "Iniciar as Imagens de Fala"
 msgid "Recognizing speech"
 msgstr "A reconhecer a fala"
 
-#: src/speechprocessor/speechprocessor.cpp:49
+#: src/speechprocessor/speechprocessor.cpp:50
 #, kde-format
 msgid "Abort speech recognition"
 msgstr "Interromper o reconhecimento de fala"
 
-#: src/speechprocessor/speechprocessor.cpp:98
+#: src/speechprocessor/speechprocessor.cpp:99
 #, kde-format
 msgid "No speech recognition plugins available"
 msgstr "Não está disponível nenhum 'plugin' de reconhecimento de fala"
 
-#: src/speechprocessor/speechprocessor.cpp:103
+#: src/speechprocessor/speechprocessor.cpp:104
 #, kde-format
 msgid "Initialization of speech recognition plugin failed"
 msgstr "Não foi possível inicializar o 'plugin' de reconhecimento de fala"
 
-#: src/speechprocessor/speechprocessor.cpp:172
+#: src/speechprocessor/speechprocessor.cpp:173
 #, kde-format
 msgid ""
 "Speech Recognition failed: %2\n"

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: subtitlecomposer\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-11-05 12:31+0000\n"
+"POT-Creation-Date: 2023-12-30 00:41+0000\n"
 "PO-Revision-Date: 2023-06-28 09:08+0300\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian <kde-i18n-uk@kde.org>\n"
@@ -330,7 +330,7 @@ msgid "Split selected lines"
 msgstr "Розділити позначені рядки"
 
 #: src/application_actions.cpp:220 src/core/subtitle.cpp:642
-#: src/gui/waveform/waveformwidget.cpp:713
+#: src/gui/waveform/waveformwidget.cpp:714
 #, kde-format
 msgid "Join Lines"
 msgstr "Об'єднати рядки"
@@ -956,7 +956,7 @@ msgstr "Показаний текст субтитрів"
 msgid "Select visible subtitle text"
 msgstr "Виберіть видимий текст субтитрів"
 
-#: src/application_actions.cpp:752 src/gui/waveform/waveformwidget.cpp:737
+#: src/application_actions.cpp:752 src/gui/waveform/waveformwidget.cpp:738
 #, kde-format
 msgid "Toggle Anchor"
 msgstr "Увімкнути або вимкнути прив'язку"
@@ -1722,7 +1722,7 @@ msgid "Change Frame Rate"
 msgstr "Змінити частоту кадрів"
 
 #: src/core/subtitle.cpp:401 src/core/subtitle.cpp:415
-#: src/gui/waveform/waveformwidget.cpp:696
+#: src/gui/waveform/waveformwidget.cpp:697
 #, kde-format
 msgid "Insert Line"
 msgstr "Вставити рядок"
@@ -2430,6 +2430,14 @@ msgstr "Зсунути субтитри вперед перед додаванн
 msgid "Set from video length"
 msgstr "Встановити за тривалістю відео"
 
+#: src/dialogs/progressdialog.cpp:34 src/formats/textdemux/textdemux.cpp:35
+#: src/gui/waveform/waveformwidget.cpp:119
+#: src/speechprocessor/speechprocessor.cpp:44
+#, kde-format
+msgctxt "%p is the percent value, % is the percent sign"
+msgid "%p%"
+msgstr ""
+
 #: src/dialogs/removelinesdialog.cpp:13
 #, kde-format
 msgid "Remove Selected Lines"
@@ -2605,7 +2613,7 @@ msgstr "Не обирати жодного"
 msgid "Importing Subtitle Stream"
 msgstr "Імпортування потоку субтитрів"
 
-#: src/formats/textdemux/textdemux.cpp:90
+#: src/formats/textdemux/textdemux.cpp:91
 #, kde-format
 msgid ""
 "Subtitle demux failed %1: %2\n"
@@ -3027,27 +3035,27 @@ msgstr "Колір тексту"
 msgid "Generating waveform"
 msgstr "Створюємо форму сигналу"
 
-#: src/gui/waveform/waveformwidget.cpp:691
+#: src/gui/waveform/waveformwidget.cpp:692
 #, kde-format
 msgid "Select Line"
 msgstr "Позначити лінію"
 
-#: src/gui/waveform/waveformwidget.cpp:706
+#: src/gui/waveform/waveformwidget.cpp:707
 #, kde-format
 msgid "Remove Line"
 msgstr "Вилучити лінію"
 
-#: src/gui/waveform/waveformwidget.cpp:731
+#: src/gui/waveform/waveformwidget.cpp:732
 #, kde-format
 msgid "Split Line"
 msgstr "Поділити лінію"
 
-#: src/gui/waveform/waveformwidget.cpp:741
+#: src/gui/waveform/waveformwidget.cpp:742
 #, kde-format
 msgid "Set Current Line Show Time"
 msgstr "Встановити час показу поточного рядка"
 
-#: src/gui/waveform/waveformwidget.cpp:746
+#: src/gui/waveform/waveformwidget.cpp:747
 #, kde-format
 msgid "Set Current Line Hide Time"
 msgstr "Встановити час приховування поточного рядка"
@@ -3855,22 +3863,22 @@ msgstr "Кадри початку мовлення"
 msgid "Recognizing speech"
 msgstr "Розпізнавання мовлення"
 
-#: src/speechprocessor/speechprocessor.cpp:49
+#: src/speechprocessor/speechprocessor.cpp:50
 #, kde-format
 msgid "Abort speech recognition"
 msgstr "Перервати розпізнавання субтитрів"
 
-#: src/speechprocessor/speechprocessor.cpp:98
+#: src/speechprocessor/speechprocessor.cpp:99
 #, kde-format
 msgid "No speech recognition plugins available"
 msgstr "Немає доступних додатків розпізнавання мовлення"
 
-#: src/speechprocessor/speechprocessor.cpp:103
+#: src/speechprocessor/speechprocessor.cpp:104
 #, kde-format
 msgid "Initialization of speech recognition plugin failed"
 msgstr "Не вдалося ініціалізувати додаток розпізнавання мовлення"
 
-#: src/speechprocessor/speechprocessor.cpp:172
+#: src/speechprocessor/speechprocessor.cpp:173
 #, kde-format
 msgid ""
 "Speech Recognition failed: %2\n"

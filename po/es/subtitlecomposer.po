@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: subtitlecomposer\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-11-05 12:31+0000\n"
+"POT-Creation-Date: 2023-12-30 00:41+0000\n"
 "PO-Revision-Date: 2023-09-03 22:32+0200\n"
 "Last-Translator: Eloy Cuadra <ecuadra@eloihr.net>\n"
 "Language-Team: Spanish <kde-l10n-es@kde.org>\n"
@@ -326,7 +326,7 @@ msgid "Split selected lines"
 msgstr "Dividir las líneas seleccionadas"
 
 #: src/application_actions.cpp:220 src/core/subtitle.cpp:642
-#: src/gui/waveform/waveformwidget.cpp:713
+#: src/gui/waveform/waveformwidget.cpp:714
 #, kde-format
 msgid "Join Lines"
 msgstr "Unir líneas"
@@ -955,7 +955,7 @@ msgstr "Texto de subtítulo mostrado"
 msgid "Select visible subtitle text"
 msgstr "Seleccionar texto de subtítulo visible"
 
-#: src/application_actions.cpp:752 src/gui/waveform/waveformwidget.cpp:737
+#: src/application_actions.cpp:752 src/gui/waveform/waveformwidget.cpp:738
 #, kde-format
 msgid "Toggle Anchor"
 msgstr "Activar/desactivar ancla"
@@ -1723,7 +1723,7 @@ msgid "Change Frame Rate"
 msgstr "Cambiar velocidad de fotogramas"
 
 #: src/core/subtitle.cpp:401 src/core/subtitle.cpp:415
-#: src/gui/waveform/waveformwidget.cpp:696
+#: src/gui/waveform/waveformwidget.cpp:697
 #, kde-format
 msgid "Insert Line"
 msgstr "Insertar línea"
@@ -2411,6 +2411,14 @@ msgstr "Desplazar tiempos de subtítulo hacia adelante antes de añexarlo"
 msgid "Set from video length"
 msgstr "Fijar desde longitud del vídeo"
 
+#: src/dialogs/progressdialog.cpp:34 src/formats/textdemux/textdemux.cpp:35
+#: src/gui/waveform/waveformwidget.cpp:119
+#: src/speechprocessor/speechprocessor.cpp:44
+#, kde-format
+msgctxt "%p is the percent value, % is the percent sign"
+msgid "%p%"
+msgstr ""
+
 #: src/dialogs/removelinesdialog.cpp:13
 #, kde-format
 msgid "Remove Selected Lines"
@@ -2588,7 +2596,7 @@ msgstr "Deseleccionar todos"
 msgid "Importing Subtitle Stream"
 msgstr "Importando flujo de subtítulos"
 
-#: src/formats/textdemux/textdemux.cpp:90
+#: src/formats/textdemux/textdemux.cpp:91
 #, kde-format
 msgid ""
 "Subtitle demux failed %1: %2\n"
@@ -3008,27 +3016,27 @@ msgstr "Color del texto"
 msgid "Generating waveform"
 msgstr "Generando forma de onda"
 
-#: src/gui/waveform/waveformwidget.cpp:691
+#: src/gui/waveform/waveformwidget.cpp:692
 #, kde-format
 msgid "Select Line"
 msgstr "Seleccionar línea"
 
-#: src/gui/waveform/waveformwidget.cpp:706
+#: src/gui/waveform/waveformwidget.cpp:707
 #, kde-format
 msgid "Remove Line"
 msgstr "Eliminar línea"
 
-#: src/gui/waveform/waveformwidget.cpp:731
+#: src/gui/waveform/waveformwidget.cpp:732
 #, kde-format
 msgid "Split Line"
 msgstr "Dividir línea"
 
-#: src/gui/waveform/waveformwidget.cpp:741
+#: src/gui/waveform/waveformwidget.cpp:742
 #, kde-format
 msgid "Set Current Line Show Time"
 msgstr "Asignar tiempo de aparición de línea activa"
 
-#: src/gui/waveform/waveformwidget.cpp:746
+#: src/gui/waveform/waveformwidget.cpp:747
 #, kde-format
 msgid "Set Current Line Hide Time"
 msgstr "Asignar tiempo de ocultamiento de línea activa"
@@ -3842,22 +3850,22 @@ msgstr "Fotogramas de voz iniciales"
 msgid "Recognizing speech"
 msgstr "Reconociendo voz"
 
-#: src/speechprocessor/speechprocessor.cpp:49
+#: src/speechprocessor/speechprocessor.cpp:50
 #, kde-format
 msgid "Abort speech recognition"
 msgstr "Detener reconocimiento de voz"
 
-#: src/speechprocessor/speechprocessor.cpp:98
+#: src/speechprocessor/speechprocessor.cpp:99
 #, kde-format
 msgid "No speech recognition plugins available"
 msgstr "No hay complementos de reconocimiento de voz disponibles"
 
-#: src/speechprocessor/speechprocessor.cpp:103
+#: src/speechprocessor/speechprocessor.cpp:104
 #, kde-format
 msgid "Initialization of speech recognition plugin failed"
 msgstr "Error al inicializar el complemento de reconocimiento de voz"
 
-#: src/speechprocessor/speechprocessor.cpp:172
+#: src/speechprocessor/speechprocessor.cpp:173
 #, kde-format
 msgid ""
 "Speech Recognition failed: %2\n"

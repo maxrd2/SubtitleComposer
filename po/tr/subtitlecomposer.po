@@ -1,13 +1,13 @@
-# Copyright (C) YEAR This file is copyright:
+# Copyright (C) 2023 This file is copyright:
 # This file is distributed under the same license as the subtitlecomposer package.
 #
-# Emir SARI <emir_sari@icloud.com>, 2022, 2023.
+# SPDX-FileCopyrightText: 2022, 2023 Emir SARI <emir_sari@icloud.com>
 msgid ""
 msgstr ""
 "Project-Id-Version: subtitlecomposer\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-11-05 12:31+0000\n"
-"PO-Revision-Date: 2023-12-03 13:10+0300\n"
+"POT-Creation-Date: 2023-12-30 00:41+0000\n"
+"PO-Revision-Date: 2023-12-29 10:25+0300\n"
 "Last-Translator: Emir SARI <emir_sari@icloud.com>\n"
 "Language-Team: Turkish <kde-l10n-tr@kde.org>\n"
 "Language: tr\n"
@@ -15,7 +15,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
-"X-Generator: Lokalize 23.11.70\n"
+"X-Generator: Lokalize 24.01.85\n"
 
 #: src/actions/kcodecactionext.cpp:29
 #, kde-format
@@ -319,7 +319,7 @@ msgid "Split selected lines"
 msgstr "Seçili satırları böl"
 
 #: src/application_actions.cpp:220 src/core/subtitle.cpp:642
-#: src/gui/waveform/waveformwidget.cpp:713
+#: src/gui/waveform/waveformwidget.cpp:714
 #, kde-format
 msgid "Join Lines"
 msgstr "Satırları Birbirine Kat"
@@ -938,7 +938,7 @@ msgstr "Görüntülenen Altyazı Metni"
 msgid "Select visible subtitle text"
 msgstr "Görünür altyazı metnini seç"
 
-#: src/application_actions.cpp:752 src/gui/waveform/waveformwidget.cpp:737
+#: src/application_actions.cpp:752 src/gui/waveform/waveformwidget.cpp:738
 #, kde-format
 msgid "Toggle Anchor"
 msgstr "Çapayı Aç/Kapat"
@@ -1577,7 +1577,7 @@ msgstr ""
 #: src/configs/waveformconfigwidget.ui:107
 #, kde-format
 msgid "Auto Scroll Padding:"
-msgstr "Otomatik Sarma Dolgusu:"
+msgstr "Kendiliğinden sarma dolgusu:"
 
 #. i18n: ectx: property (title), widget (QGroupBox, m_grpGeneral)
 #: src/configs/waveformconfigwidget.ui:120
@@ -1657,7 +1657,7 @@ msgstr "Altyazı metin yazıtipi boyutu:"
 #: src/configs/waveformconfigwidget.ui:340
 #, kde-format
 msgid "Subtitle Text Color:"
-msgstr "Altyazı Metin Rengi:"
+msgstr "Altyazı metin rengi:"
 
 #. i18n: ectx: property (title), widget (QGroupBox, groupBox_2)
 #: src/configs/waveformconfigwidget.ui:372
@@ -1703,7 +1703,7 @@ msgid "Change Frame Rate"
 msgstr "Kare Hızını Değiştir"
 
 #: src/core/subtitle.cpp:401 src/core/subtitle.cpp:415
-#: src/gui/waveform/waveformwidget.cpp:696
+#: src/gui/waveform/waveformwidget.cpp:697
 #, kde-format
 msgid "Insert Line"
 msgstr "Satır Ekle"
@@ -2371,6 +2371,14 @@ msgstr "İliştirmeden önce altyazıyı ileri kaydır"
 msgid "Set from video length"
 msgstr "Video uzunluğundan ayarla"
 
+#: src/dialogs/progressdialog.cpp:34 src/formats/textdemux/textdemux.cpp:35
+#: src/gui/waveform/waveformwidget.cpp:119
+#: src/speechprocessor/speechprocessor.cpp:44
+#, kde-format
+msgctxt "%p is the percent value, % is the percent sign"
+msgid "%p%"
+msgstr ""
+
 #: src/dialogs/removelinesdialog.cpp:13
 #, kde-format
 msgid "Remove Selected Lines"
@@ -2546,7 +2554,7 @@ msgstr "Hiçbirini Seçme"
 msgid "Importing Subtitle Stream"
 msgstr "Altyazı Akışı İçe Aktarılıyor"
 
-#: src/formats/textdemux/textdemux.cpp:90
+#: src/formats/textdemux/textdemux.cpp:91
 #, kde-format
 msgid ""
 "Subtitle demux failed %1: %2\n"
@@ -2966,27 +2974,27 @@ msgstr "Metin Rengi"
 msgid "Generating waveform"
 msgstr "Dalga biçimi oluşturuluyor"
 
-#: src/gui/waveform/waveformwidget.cpp:691
+#: src/gui/waveform/waveformwidget.cpp:692
 #, kde-format
 msgid "Select Line"
 msgstr "Satır Seç"
 
-#: src/gui/waveform/waveformwidget.cpp:706
+#: src/gui/waveform/waveformwidget.cpp:707
 #, kde-format
 msgid "Remove Line"
 msgstr "Satır Kaldır"
 
-#: src/gui/waveform/waveformwidget.cpp:731
+#: src/gui/waveform/waveformwidget.cpp:732
 #, kde-format
 msgid "Split Line"
 msgstr "Satır Böl"
 
-#: src/gui/waveform/waveformwidget.cpp:741
+#: src/gui/waveform/waveformwidget.cpp:742
 #, kde-format
 msgid "Set Current Line Show Time"
 msgstr "Geçerli Satır Gösterim Zamanını Ayarla"
 
-#: src/gui/waveform/waveformwidget.cpp:746
+#: src/gui/waveform/waveformwidget.cpp:747
 #, kde-format
 msgid "Set Current Line Hide Time"
 msgstr "Geçerli Satır Gizleme Zamanını Ayarla"
@@ -3795,22 +3803,22 @@ msgstr "Konuşma Başlatma Kareleri"
 msgid "Recognizing speech"
 msgstr "Konuşma tanımlanıyor"
 
-#: src/speechprocessor/speechprocessor.cpp:49
+#: src/speechprocessor/speechprocessor.cpp:50
 #, kde-format
 msgid "Abort speech recognition"
 msgstr "Konuşma tanıma hakkında"
 
-#: src/speechprocessor/speechprocessor.cpp:98
+#: src/speechprocessor/speechprocessor.cpp:99
 #, kde-format
 msgid "No speech recognition plugins available"
 msgstr "Kullanılabilir konuşma tanıma eklentisi yok"
 
-#: src/speechprocessor/speechprocessor.cpp:103
+#: src/speechprocessor/speechprocessor.cpp:104
 #, kde-format
 msgid "Initialization of speech recognition plugin failed"
 msgstr "Konuşma tanıma eklentisi ilklendirmesi başarısız"
 
-#: src/speechprocessor/speechprocessor.cpp:172
+#: src/speechprocessor/speechprocessor.cpp:173
 #, kde-format
 msgid ""
 "Speech Recognition failed: %2\n"
@@ -3996,7 +4004,7 @@ msgstr "'%1' konumundan JSON ayrıştırılırken hata"
 #: src/translate/googlecloudengine.ui:23
 #, kde-format
 msgid "Service Account's Private Key JSON:"
-msgstr "Hizmet Hesabının Özel Anahtar JSON'u:"
+msgstr "Hizmet hesabının özel anahtar JSON'u:"
 
 #. i18n: ectx: property (text), widget (QPushButton, btnLogin)
 #: src/translate/googlecloudengine.ui:36

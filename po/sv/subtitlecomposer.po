@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: subtitlecomposer\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-11-05 12:31+0000\n"
+"POT-Creation-Date: 2023-12-30 00:41+0000\n"
 "PO-Revision-Date: 2023-07-31 14:09+0200\n"
 "Last-Translator: Stefan Asserhäll <stefan.asserhall@bredband.net>\n"
 "Language-Team: Swedish <kde-i18n-doc@kde.org>\n"
@@ -319,7 +319,7 @@ msgid "Split selected lines"
 msgstr "Dela markerade rader"
 
 #: src/application_actions.cpp:220 src/core/subtitle.cpp:642
-#: src/gui/waveform/waveformwidget.cpp:713
+#: src/gui/waveform/waveformwidget.cpp:714
 #, kde-format
 msgid "Join Lines"
 msgstr "Kombinera rader"
@@ -938,7 +938,7 @@ msgstr "Visad textning"
 msgid "Select visible subtitle text"
 msgstr "Välj synlig textning"
 
-#: src/application_actions.cpp:752 src/gui/waveform/waveformwidget.cpp:737
+#: src/application_actions.cpp:752 src/gui/waveform/waveformwidget.cpp:738
 #, kde-format
 msgid "Toggle Anchor"
 msgstr "Växla förankring"
@@ -1704,7 +1704,7 @@ msgid "Change Frame Rate"
 msgstr "Ändra bildfrekvens"
 
 #: src/core/subtitle.cpp:401 src/core/subtitle.cpp:415
-#: src/gui/waveform/waveformwidget.cpp:696
+#: src/gui/waveform/waveformwidget.cpp:697
 #, kde-format
 msgid "Insert Line"
 msgstr "Infoga rad"
@@ -2376,6 +2376,14 @@ msgstr "Skifta textning framåt innan tillägg"
 msgid "Set from video length"
 msgstr "Ställ in från videolängd"
 
+#: src/dialogs/progressdialog.cpp:34 src/formats/textdemux/textdemux.cpp:35
+#: src/gui/waveform/waveformwidget.cpp:119
+#: src/speechprocessor/speechprocessor.cpp:44
+#, kde-format
+msgctxt "%p is the percent value, % is the percent sign"
+msgid "%p%"
+msgstr ""
+
 #: src/dialogs/removelinesdialog.cpp:13
 #, kde-format
 msgid "Remove Selected Lines"
@@ -2551,7 +2559,7 @@ msgstr "Markera ingen"
 msgid "Importing Subtitle Stream"
 msgstr "Importera textningsström"
 
-#: src/formats/textdemux/textdemux.cpp:90
+#: src/formats/textdemux/textdemux.cpp:91
 #, kde-format
 msgid ""
 "Subtitle demux failed %1: %2\n"
@@ -2971,27 +2979,27 @@ msgstr "Textfärg"
 msgid "Generating waveform"
 msgstr "Skapar vågform"
 
-#: src/gui/waveform/waveformwidget.cpp:691
+#: src/gui/waveform/waveformwidget.cpp:692
 #, kde-format
 msgid "Select Line"
 msgstr "Markera rad"
 
-#: src/gui/waveform/waveformwidget.cpp:706
+#: src/gui/waveform/waveformwidget.cpp:707
 #, kde-format
 msgid "Remove Line"
 msgstr "Ta bort rad"
 
-#: src/gui/waveform/waveformwidget.cpp:731
+#: src/gui/waveform/waveformwidget.cpp:732
 #, kde-format
 msgid "Split Line"
 msgstr "Dela rad"
 
-#: src/gui/waveform/waveformwidget.cpp:741
+#: src/gui/waveform/waveformwidget.cpp:742
 #, kde-format
 msgid "Set Current Line Show Time"
 msgstr "Ställ in visningstid för aktuell rad"
 
-#: src/gui/waveform/waveformwidget.cpp:746
+#: src/gui/waveform/waveformwidget.cpp:747
 #, kde-format
 msgid "Set Current Line Hide Time"
 msgstr "Ställ in döljningstid för aktuell rad"
@@ -3799,22 +3807,22 @@ msgstr "Starta talbildrutor"
 msgid "Recognizing speech"
 msgstr "Känner igen tal"
 
-#: src/speechprocessor/speechprocessor.cpp:49
+#: src/speechprocessor/speechprocessor.cpp:50
 #, kde-format
 msgid "Abort speech recognition"
 msgstr "Avbryt taligenkänning"
 
-#: src/speechprocessor/speechprocessor.cpp:98
+#: src/speechprocessor/speechprocessor.cpp:99
 #, kde-format
 msgid "No speech recognition plugins available"
 msgstr "Inga taligenkänningsinsticksprogram tillgängliga"
 
-#: src/speechprocessor/speechprocessor.cpp:103
+#: src/speechprocessor/speechprocessor.cpp:104
 #, kde-format
 msgid "Initialization of speech recognition plugin failed"
 msgstr "Initiering av taligenkänningsinsticksprogrammet misslyckades"
 
-#: src/speechprocessor/speechprocessor.cpp:172
+#: src/speechprocessor/speechprocessor.cpp:173
 #, kde-format
 msgid ""
 "Speech Recognition failed: %2\n"

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: subtitlecomposer\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-11-05 12:31+0000\n"
+"POT-Creation-Date: 2023-12-30 00:41+0000\n"
 "PO-Revision-Date: 2022-12-04 23:24+0700\n"
 "Last-Translator: OIS <mistresssilvara@hotmail.com>\n"
 "Language-Team: Interlingue <kde-i18n-doc@kde.org>\n"
@@ -320,7 +320,7 @@ msgid "Split selected lines"
 msgstr "Rupter paroles"
 
 #: src/application_actions.cpp:220 src/core/subtitle.cpp:642
-#: src/gui/waveform/waveformwidget.cpp:713
+#: src/gui/waveform/waveformwidget.cpp:714
 #, kde-format
 msgid "Join Lines"
 msgstr "Unir lineas"
@@ -935,7 +935,7 @@ msgstr "Codification de subtitules"
 msgid "Select visible subtitle text"
 msgstr "Codification de subtitules"
 
-#: src/application_actions.cpp:752 src/gui/waveform/waveformwidget.cpp:737
+#: src/application_actions.cpp:752 src/gui/waveform/waveformwidget.cpp:738
 #, fuzzy, kde-format
 msgid "Toggle Anchor"
 msgstr "Ancre:"
@@ -1683,7 +1683,7 @@ msgid "Change Frame Rate"
 msgstr "Rapiditá de cadres"
 
 #: src/core/subtitle.cpp:401 src/core/subtitle.cpp:415
-#: src/gui/waveform/waveformwidget.cpp:696
+#: src/gui/waveform/waveformwidget.cpp:697
 #, fuzzy, kde-format
 msgid "Insert Line"
 msgstr "Inserter un linea-separator"
@@ -2351,6 +2351,14 @@ msgstr ""
 msgid "Set from video length"
 msgstr "Assignar li _fin ex li position"
 
+#: src/dialogs/progressdialog.cpp:34 src/formats/textdemux/textdemux.cpp:35
+#: src/gui/waveform/waveformwidget.cpp:119
+#: src/speechprocessor/speechprocessor.cpp:44
+#, kde-format
+msgctxt "%p is the percent value, % is the percent sign"
+msgid "%p%"
+msgstr ""
+
 #: src/dialogs/removelinesdialog.cpp:13
 #, fuzzy, kde-format
 msgid "Remove Selected Lines"
@@ -2526,7 +2534,7 @@ msgstr "Selecter necos"
 msgid "Importing Subtitle Stream"
 msgstr "Fluvie..."
 
-#: src/formats/textdemux/textdemux.cpp:90
+#: src/formats/textdemux/textdemux.cpp:91
 #, fuzzy, kde-format
 msgid ""
 "Subtitle demux failed %1: %2\n"
@@ -2945,29 +2953,29 @@ msgstr "Color del textu"
 msgid "Generating waveform"
 msgstr "Visualisar li und-forma (experimental)"
 
-#: src/gui/waveform/waveformwidget.cpp:691
+#: src/gui/waveform/waveformwidget.cpp:692
 #, fuzzy, kde-format
 msgid "Select Line"
 msgstr "Selecter li &linea"
 
-#: src/gui/waveform/waveformwidget.cpp:706
+#: src/gui/waveform/waveformwidget.cpp:707
 #, fuzzy, kde-format
 msgid "Remove Line"
 msgstr ""
 "Por revelar li element, vu deve remover li file desktop ex «%s» manualmen, o "
 "aperter it e remover li linea «%s»."
 
-#: src/gui/waveform/waveformwidget.cpp:731
+#: src/gui/waveform/waveformwidget.cpp:732
 #, fuzzy, kde-format
 msgid "Split Line"
 msgstr "_Separar"
 
-#: src/gui/waveform/waveformwidget.cpp:741
+#: src/gui/waveform/waveformwidget.cpp:742
 #, fuzzy, kde-format
 msgid "Set Current Line Show Time"
 msgstr "Ne successat assignar li actual hora"
 
-#: src/gui/waveform/waveformwidget.cpp:746
+#: src/gui/waveform/waveformwidget.cpp:747
 #, fuzzy, kde-format
 msgid "Set Current Line Hide Time"
 msgstr "Ne successat assignar li actual hora"
@@ -3760,22 +3768,22 @@ msgstr "(Des)activar parlation"
 msgid "Recognizing speech"
 msgstr "Reconossente..."
 
-#: src/speechprocessor/speechprocessor.cpp:49
+#: src/speechprocessor/speechprocessor.cpp:50
 #, fuzzy, kde-format
 msgid "Abort speech recognition"
 msgstr "_Reconossentie"
 
-#: src/speechprocessor/speechprocessor.cpp:98
+#: src/speechprocessor/speechprocessor.cpp:99
 #, fuzzy, kde-format
 msgid "No speech recognition plugins available"
 msgstr "Altri plugines es disponibil ci"
 
-#: src/speechprocessor/speechprocessor.cpp:103
+#: src/speechprocessor/speechprocessor.cpp:104
 #, kde-format
 msgid "Initialization of speech recognition plugin failed"
 msgstr ""
 
-#: src/speechprocessor/speechprocessor.cpp:172
+#: src/speechprocessor/speechprocessor.cpp:173
 #, kde-format
 msgid ""
 "Speech Recognition failed: %2\n"
