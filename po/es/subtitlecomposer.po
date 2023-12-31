@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: subtitlecomposer\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2023-12-30 00:41+0000\n"
-"PO-Revision-Date: 2023-09-03 22:32+0200\n"
+"PO-Revision-Date: 2023-12-30 04:17+0100\n"
 "Last-Translator: Eloy Cuadra <ecuadra@eloihr.net>\n"
 "Language-Team: Spanish <kde-l10n-es@kde.org>\n"
 "Language: es\n"
@@ -18,7 +18,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Lokalize 23.08.0\n"
+"X-Generator: Lokalize 23.08.4\n"
 "X-Crowdin-Project: subtitlecomposer\n"
 "X-Crowdin-Language: es-ES\n"
 "X-Crowdin-File: subtitlecomposer.pot\n"
@@ -903,7 +903,7 @@ msgstr "Subir volumen"
 #: src/application_actions.cpp:697
 #, kde-format
 msgid "Increase volume by 5%"
-msgstr "Subir volumen un 5%"
+msgstr "Subir volumen un 5 %"
 
 #: src/application_actions.cpp:704
 #, kde-format
@@ -913,7 +913,7 @@ msgstr "Bajar volumen"
 #: src/application_actions.cpp:705
 #, kde-format
 msgid "Decrease volume by 5%"
-msgstr "Bajar volumen un 5%"
+msgstr "Bajar volumen un 5 %"
 
 #: src/application_actions.cpp:712
 #, kde-format
@@ -1093,7 +1093,7 @@ msgstr "Codificación: %1"
 #: src/application_subtitle.cpp:324
 #, kde-format
 msgid "There was an error saving the subtitle."
-msgstr "Ocurrió un error al guardar el subtítulo."
+msgstr "Ha ocurrido un error al guardar el subtítulo."
 
 #: src/application_subtitle.cpp:332
 #, kde-format
@@ -1148,7 +1148,7 @@ msgstr "Traducción"
 #: src/application_subtitle.cpp:570
 #, kde-format
 msgid "There was an error saving the translation subtitle."
-msgstr "Ocurrió un error al guardar la traducción."
+msgstr "Ha ocurrido un error al guardar la traducción."
 
 #: src/application_subtitle.cpp:578
 #, kde-format
@@ -2417,7 +2417,7 @@ msgstr "Fijar desde longitud del vídeo"
 #, kde-format
 msgctxt "%p is the percent value, % is the percent sign"
 msgid "%p%"
-msgstr ""
+msgstr "%p %"
 
 #: src/dialogs/removelinesdialog.cpp:13
 #, kde-format
@@ -2812,7 +2812,7 @@ msgstr "<b>Velocidad de reproducción</b>"
 #: src/gui/playerwidget.cpp:674
 #, kde-format
 msgid "<qt>There was an error opening media file %1.</qt>"
-msgstr "<qt>Ocurrió un error al abrir el archivo multimedia <br/>%1</qt>"
+msgstr "<qt>Ha ocurrido un error al abrir el archivo multimedia <br/>%1</qt>"
 
 #: src/gui/playerwidget.cpp:690 src/gui/playerwidget.cpp:691
 #: src/gui/playerwidget.cpp:692 src/gui/playerwidget.cpp:693
@@ -2896,7 +2896,7 @@ msgstr "Posición/tamaño"
 #: src/gui/subtitlemeta/subtitlepositionwidget.ui:200
 #, no-c-format, kde-format
 msgid "%"
-msgstr "%"
+msgstr " %"
 
 #: src/gui/treeview/linesmodel.cpp:156
 #, kde-format
@@ -3554,7 +3554,7 @@ msgstr "Nombre de script:"
 #: src/scripting/scriptsmanager.cpp:495
 #, kde-format
 msgid "There was an error creating the file <b>%1</b>."
-msgstr "Ocurrió un error al crear el archivo <b>%1</b>."
+msgstr "Ha ocurrido un error al crear el archivo <b>%1</b>."
 
 #: src/scripting/scriptsmanager.cpp:530
 #, kde-format
@@ -3583,12 +3583,12 @@ msgstr "Renombrar script"
 #: src/scripting/scriptsmanager.cpp:561
 #, kde-format
 msgid "There was an error opening the file <b>%1</b>."
-msgstr "Ocurrió un error al abrir el archivo <b>%1</b>."
+msgstr "Ha ocurrido un error al abrir el archivo <b>%1</b>."
 
 #: src/scripting/scriptsmanager.cpp:569
 #, kde-format
 msgid "There was an error copying the file to <b>%1</b>."
-msgstr "Ocurrió un error al copiar el archivo en <b>%1</b>."
+msgstr "Ha ocurrido un error al copiar el archivo en <b>%1</b>."
 
 #: src/scripting/scriptsmanager.cpp:584
 #, kde-format
@@ -3603,7 +3603,7 @@ msgstr "Envíar a papelera"
 #: src/scripting/scriptsmanager.cpp:588
 #, kde-format
 msgid "There was an error removing the file <b>%1</b>."
-msgstr "Ocurrió un error al eliminar el archivo <b>%1</b>."
+msgstr "Ha ocurrido un error al eliminar el archivo <b>%1</b>."
 
 #: src/scripting/scriptsmanager.cpp:621
 #, kde-format
@@ -3659,7 +3659,7 @@ msgstr "Copia un script existente desde un ubicación dada."
 #: src/scripting/scriptsmanager.ui:45
 #, kde-format
 msgid "Add..."
-msgstr "Agregar..."
+msgstr "Añadir..."
 
 #. i18n: ectx: property (whatsThis), widget (QPushButton, btnRemove)
 #: src/scripting/scriptsmanager.ui:55
@@ -4123,7 +4123,7 @@ msgid ""
 "Beginning of selection reached.\n"
 "Continue from the end?"
 msgstr ""
-"Se alcanzó el comienzo de la selección.\n"
+"Se ha alcanzado el comienzo de la selección.\n"
 "¿Continuar desde el final?"
 
 #: src/utils/finder.cpp:260
@@ -4132,7 +4132,7 @@ msgid ""
 "Beginning of subtitle reached.\n"
 "Continue from the end?"
 msgstr ""
-"Se alcanzó el comienzo del subtítulo.\n"
+"Se ha alcanzado el comienzo del subtítulo.\n"
 "¿Continuar desde el final?"
 
 #: src/utils/finder.cpp:260
@@ -4192,7 +4192,7 @@ msgstr "Ignorar"
 #: src/widgets/simplerichtextedit.cpp:341
 #, kde-format
 msgid "Add to Dictionary"
-msgstr "Agregar a diccionario"
+msgstr "Añadir al diccionario"
 
 #: src/widgets/simplerichtextedit.cpp:345
 #, kde-format
