@@ -3669,7 +3669,7 @@ msgstr "Afig..."
 #: src/scripting/scriptsmanager.ui:55
 #, kde-format
 msgid "Sends the selected script to the trash."
-msgstr "Envia l'script seleccionat a la paperera."
+msgstr "Envia l'script seleccionat cap a dins de la paperera."
 
 #. i18n: ectx: property (whatsThis), widget (QPushButton, btnEdit)
 #: src/scripting/scriptsmanager.ui:68
