@@ -14,6 +14,8 @@
 #include <QDialogButtonBox>
 #include <QPushButton>
 
+#include <KLocalizedString>
+
 using namespace SubtitleComposer;
 
 ProgressDialog::ProgressDialog(const QString &caption, const QString &description, bool allowCancel, QWidget *parent) :
