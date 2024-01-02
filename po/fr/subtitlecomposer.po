@@ -11,8 +11,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: subtitlecomposer\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-12-30 00:41+0000\n"
-"PO-Revision-Date: 2023-12-20 09:29+0100\n"
+"POT-Creation-Date: 2024-01-02 00:41+0000\n"
+"PO-Revision-Date: 2023-12-31 10:48+0100\n"
 "Last-Translator: Xavier Besnard <xavier.besnard@kde.org>\n"
 "Language-Team: \n"
 "Language: fr\n"
@@ -2410,13 +2410,13 @@ msgstr "Décaler le sous-titrage avant concaténation"
 msgid "Set from video length"
 msgstr "Régler à partir de la longueur de la vidéo"
 
-#: src/dialogs/progressdialog.cpp:34 src/formats/textdemux/textdemux.cpp:35
+#: src/dialogs/progressdialog.cpp:36 src/formats/textdemux/textdemux.cpp:35
 #: src/gui/waveform/waveformwidget.cpp:119
 #: src/speechprocessor/speechprocessor.cpp:44
 #, kde-format
 msgctxt "%p is the percent value, % is the percent sign"
 msgid "%p%"
-msgstr ""
+msgstr "%p %"
 
 #: src/dialogs/removelinesdialog.cpp:13
 #, kde-format

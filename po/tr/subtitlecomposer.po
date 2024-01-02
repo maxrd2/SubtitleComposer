@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: subtitlecomposer\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-12-30 00:41+0000\n"
+"POT-Creation-Date: 2024-01-02 00:41+0000\n"
 "PO-Revision-Date: 2023-12-30 16:27+0300\n"
 "Last-Translator: Emir SARI <emir_sari@icloud.com>\n"
 "Language-Team: Turkish <kde-l10n-tr@kde.org>\n"
@@ -2371,7 +2371,7 @@ msgstr "İliştirmeden önce altyazıyı ileri kaydır"
 msgid "Set from video length"
 msgstr "Video uzunluğundan ayarla"
 
-#: src/dialogs/progressdialog.cpp:34 src/formats/textdemux/textdemux.cpp:35
+#: src/dialogs/progressdialog.cpp:36 src/formats/textdemux/textdemux.cpp:35
 #: src/gui/waveform/waveformwidget.cpp:119
 #: src/speechprocessor/speechprocessor.cpp:44
 #, kde-format

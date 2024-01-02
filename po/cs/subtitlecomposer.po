@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: subtitlecomposer\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-12-30 00:41+0000\n"
+"POT-Creation-Date: 2024-01-02 00:41+0000\n"
 "PO-Revision-Date: 2023-06-28 14:12+0200\n"
 "Last-Translator: Vit Pelcak <vit@pelcak.org>\n"
 "Language-Team: Czech <kde-i18n-doc@kde.org>\n"
@@ -2384,7 +2384,7 @@ msgstr "Posunout titulky dopředu před připojením"
 msgid "Set from video length"
 msgstr "Nastavit z délky videa"
 
-#: src/dialogs/progressdialog.cpp:34 src/formats/textdemux/textdemux.cpp:35
+#: src/dialogs/progressdialog.cpp:36 src/formats/textdemux/textdemux.cpp:35
 #: src/gui/waveform/waveformwidget.cpp:119
 #: src/speechprocessor/speechprocessor.cpp:44
 #, kde-format

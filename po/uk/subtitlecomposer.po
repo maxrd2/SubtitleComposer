@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: subtitlecomposer\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-12-30 00:41+0000\n"
+"POT-Creation-Date: 2024-01-02 00:41+0000\n"
 "PO-Revision-Date: 2023-12-30 08:49+0200\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian <kde-i18n-uk@kde.org>\n"
@@ -2430,7 +2430,7 @@ msgstr "Зсунути субтитри вперед перед додаванн
 msgid "Set from video length"
 msgstr "Встановити за тривалістю відео"
 
-#: src/dialogs/progressdialog.cpp:34 src/formats/textdemux/textdemux.cpp:35
+#: src/dialogs/progressdialog.cpp:36 src/formats/textdemux/textdemux.cpp:35
 #: src/gui/waveform/waveformwidget.cpp:119
 #: src/speechprocessor/speechprocessor.cpp:44
 #, kde-format

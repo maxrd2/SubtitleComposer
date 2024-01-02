@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: subtitlecomposer\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-12-30 00:41+0000\n"
+"POT-Creation-Date: 2024-01-02 00:41+0000\n"
 "PO-Revision-Date: 2023-12-30 23:03+0100\n"
 "Last-Translator: Freek de Kruijf <freekdekruijf@kde.nl>\n"
 "Language-Team: \n"
@@ -2378,7 +2378,7 @@ msgstr "Ondertitel voorwaarts schuiven alvorens achter te voegen"
 msgid "Set from video length"
 msgstr "Instellen uit lengte van video"
 
-#: src/dialogs/progressdialog.cpp:34 src/formats/textdemux/textdemux.cpp:35
+#: src/dialogs/progressdialog.cpp:36 src/formats/textdemux/textdemux.cpp:35
 #: src/gui/waveform/waveformwidget.cpp:119
 #: src/speechprocessor/speechprocessor.cpp:44
 #, kde-format

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: subtitlecomposer\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-12-30 00:41+0000\n"
+"POT-Creation-Date: 2024-01-02 00:41+0000\n"
 "PO-Revision-Date: 2019-10-27 09:15\n"
 "Last-Translator: Barcza Károly <kbarcza@blackpanther.hu>\n"
 "Language-Team: blackPanther Europe <info@blackpanther.hu>\n"
@@ -2369,7 +2369,7 @@ msgstr ""
 msgid "Set from video length"
 msgstr "Beállítás a videó hoszzától"
 
-#: src/dialogs/progressdialog.cpp:34 src/formats/textdemux/textdemux.cpp:35
+#: src/dialogs/progressdialog.cpp:36 src/formats/textdemux/textdemux.cpp:35
 #: src/gui/waveform/waveformwidget.cpp:119
 #: src/speechprocessor/speechprocessor.cpp:44
 #, kde-format

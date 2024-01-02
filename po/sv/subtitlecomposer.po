@@ -1,13 +1,13 @@
-# Copyright (C) YEAR This file is copyright:
+# Copyright (C) 2024 This file is copyright:
 # This file is distributed under the same license as the subtitlecomposer package.
 #
-# Stefan Asserhäll <stefan.asserhall@bredband.net>, 2020, 2021, 2022, 2023.
+# SPDX-FileCopyrightText: 2020, 2021, 2022, 2023, 2024 Stefan Asserhäll <stefan.asserhall@bredband.net>
 msgid ""
 msgstr ""
 "Project-Id-Version: subtitlecomposer\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-12-30 00:41+0000\n"
-"PO-Revision-Date: 2023-07-31 14:09+0200\n"
+"POT-Creation-Date: 2024-01-02 00:41+0000\n"
+"PO-Revision-Date: 2024-01-01 11:23+0100\n"
 "Last-Translator: Stefan Asserhäll <stefan.asserhall@bredband.net>\n"
 "Language-Team: Swedish <kde-i18n-doc@kde.org>\n"
 "Language: sv\n"
@@ -15,7 +15,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Lokalize 20.08.1\n"
+"X-Generator: Lokalize 23.08.3\n"
 
 #: src/actions/kcodecactionext.cpp:29
 #, kde-format
@@ -2376,13 +2376,13 @@ msgstr "Skifta textning framåt innan tillägg"
 msgid "Set from video length"
 msgstr "Ställ in från videolängd"
 
-#: src/dialogs/progressdialog.cpp:34 src/formats/textdemux/textdemux.cpp:35
+#: src/dialogs/progressdialog.cpp:36 src/formats/textdemux/textdemux.cpp:35
 #: src/gui/waveform/waveformwidget.cpp:119
 #: src/speechprocessor/speechprocessor.cpp:44
 #, kde-format
 msgctxt "%p is the percent value, % is the percent sign"
 msgid "%p%"
-msgstr ""
+msgstr "%p %"
 
 #: src/dialogs/removelinesdialog.cpp:13
 #, kde-format
