@@ -3,21 +3,15 @@
 
 # KDE jobs
 include:
-  - remote: https://invent.kde.org/sysadmin/ci-utilities/raw/master/gitlab-templates/linux.yml
+  - project: sysadmin/ci-utilities
     rules:
-      - if: $CI_SERVER_HOST =~ /kde\.org$/
-  - remote: https://invent.kde.org/sysadmin/ci-utilities/raw/master/gitlab-templates/freebsd.yml
-    rules:
-      - if: $CI_SERVER_HOST =~ /kde\.org$/
-  - remote: https://invent.kde.org/sysadmin/ci-utilities/raw/master/gitlab-templates/windows.yml
-    rules:
-      - if: $CI_SERVER_HOST =~ /kde\.org$/
-  - remote: https://invent.kde.org/sysadmin/ci-utilities/raw/master/gitlab-templates/linux-qt6.yml
-    rules:
-      - if: $CI_SERVER_HOST =~ /kde\.org$/
-  - remote: https://invent.kde.org/sysadmin/ci-utilities/raw/master/gitlab-templates/freebsd-qt6.yml
-    rules:
-      - if: $CI_SERVER_HOST =~ /kde\.org$/
+    - if: $CI_SERVER_HOST =~ /kde\.org$/
+    file:
+      - /gitlab-templates/linux.yml
+      - /gitlab-templates/freebsd.yml
+      - /gitlab-templates/windows.yml
+      - /gitlab-templates/linux-qt6.yml
+      - /gitlab-templates/freebsd-qt6.yml
 
 # Gitlab jobs
 mingw-win32-build:
