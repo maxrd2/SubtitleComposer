@@ -225,8 +225,8 @@ ZoomBuffer::zoomedBuffer(quint32 timeStart, quint32 timeEnd, WaveZoomData **buff
 
 	QMutexLocker l(&m_reqMutex);
 
-	m_reqStart = qMin(timeStart * m_waveBuffer->sampleRate() / m_samplesPerPixel / 1000, m_waveformZoomedSize);
-	m_reqEnd = qMin(timeEnd * m_waveBuffer->sampleRate() / m_samplesPerPixel / 1000, m_waveformZoomedSize);
+	m_reqStart = qMin(quint64(timeStart) * m_waveBuffer->sampleRate() / m_samplesPerPixel / 1000, quint64(m_waveformZoomedSize));
+	m_reqEnd = qMin(quint64(timeEnd) * m_waveBuffer->sampleRate() / m_samplesPerPixel / 1000, quint64(m_waveformZoomedSize));
 	m_reqLen = bufLen;
 
 	for(quint16 ch = 0; ch < m_waveBuffer->channels(); ch++)
