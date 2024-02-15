@@ -289,7 +289,9 @@ public:
 
 	void removeAll()
 	{
-		beginRemoveRows(QModelIndex(), 0, m_categories.size());
+		if(m_categories.size() == 0)
+			return;
+		beginRemoveRows(QModelIndex(), 0, m_categories.size() - 1);
 		m_categories.clear();
 		m_scripts.clear();
 		endRemoveRows();
@@ -319,17 +321,36 @@ public:
 		const SCScript *script = insertSorted(&m_scripts, SCScript(path, name));
 		const QString catTitle = script->category();
 
-		int catIndex = m_categories.indexOf(catTitle);
-		if(catIndex < 0 && !catTitle.isEmpty()) {
-			catIndex = m_categories.size();
-			beginInsertRows(QModelIndex(), catIndex, catIndex + 1);
-			insertSorted(&m_categories, QString(catTitle));
+		if(catTitle.isEmpty()) {
+			// inserting to root, category list is followed by uncategorized script list
+			int scriptIndex = script - m_scripts.constData();
+			for(int i = scriptIndex - 1; i >= 0; i--) {
+				if(!m_scripts[i].category().isEmpty())
+					scriptIndex--;
+			}
+			scriptIndex += m_categories.size();
+			beginInsertRows(QModelIndex(), scriptIndex, scriptIndex);
+			endInsertRows();
+		} else {
+			// insert category root first if needed
+			int catIndex = m_categories.indexOf(catTitle);
+			if(catIndex < 0) {
+				const QString *cat = insertSorted(&m_categories, QString(catTitle));
+				catIndex = cat - m_categories.constData();
+				beginInsertRows(QModelIndex(), catIndex, catIndex);
+				endInsertRows();
+			}
+
+			// inserting to category sublist, decrease index for all scripts in different categories
+			int scriptIndex = script - m_scripts.constData();
+			for(int i = scriptIndex - 1; i >= 0; i--) {
+				if(m_scripts[i].category() != script->category())
+					scriptIndex--;
+			}
+			beginInsertRows(createIndex(catIndex, 0, quintptr(0ULL)), scriptIndex, scriptIndex + 1);
 			endInsertRows();
 		}
 
-		const int n = m_scripts.size();
-		beginInsertRows(catTitle.isEmpty() ? QModelIndex() : createIndex(catIndex, 0, quintptr(0ULL)), n - 1, n + 1);
-		endInsertRows();
 		return script;
 	}
 
