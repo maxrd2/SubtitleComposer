@@ -141,7 +141,11 @@ const static QMap<int, QString> _ctfi{
 	{ 15, QStringLiteral("if(vExp < 0.08124286) return vExp / 4.5;"
 			"return pow((vExp + 0.09929683) / 1.099297, 2.222222);") },
 	// 16 - SMPTE-ST-2084 (for TV 10, 12, 14, and 16-bit systems)
-	{ 16, QStringLiteral("return pow((pow(vExp, 0.01268331) * (1.0 + 18.6875 * pow(vLin, 0.1594238)) + 1.164063) / 18.85156, 6.272588);") },
+	// glcolorspace.js is broken with multiple variable equations, calculation was done manually
+	// Multiplied by 192 to account for HDR->SDR brightness or something. Make it configurable?
+	// Brightness/contrast seemed better with 256, colors were too saturated tho.
+	{ 16, QStringLiteral("return 192. * pow((pow(vExp, 0.01268331) - 0.8359375) / (18.8515625 - pow(vExp, 0.01268331) * 18.6875), 6.272588);") },
+
 	// 17 - SMPTE-ST-428-1
 	{ 17, QStringLiteral("return pow(vExp, 2.6) * 1.091042;") },
 };
