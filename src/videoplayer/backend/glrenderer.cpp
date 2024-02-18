@@ -622,37 +622,31 @@ template<class T, int D>
 void
 GLRenderer::uploadMM(int texWidth, int texHeight, T *texBuf, const T *texSrc)
 {
-	int level = 0;
 	for(;;) {
-		if(m_texNeedInit) {
-			if(D == 1) {
-				asGL(glTexImage2D(GL_TEXTURE_2D, level, m_glFormat, texWidth, texHeight, 0, GL_RED, m_glType, texSrc));
-			} else { // D == 4
-				asGL(glTexImage2D(GL_TEXTURE_2D, level, GL_RGBA8, texWidth, texHeight, 0, TEXTURE_RGB_FORMAT, GL_UNSIGNED_BYTE, texSrc));
-			}
-		} else {
-			if(D == 1) {
-				asGL(glTexSubImage2D(GL_TEXTURE_2D, level, 0, 0, texWidth, texHeight, GL_RED, m_glType, texSrc));
-			} else { // D == 4
-				asGL(glTexSubImage2D(GL_TEXTURE_2D, level, 0, 0, texWidth, texHeight, TEXTURE_RGB_FORMAT, GL_UNSIGNED_BYTE, texSrc));
-			}
-		}
-
 		const int srcStride = texWidth * D;
 		const int srcStridePD = srcStride + D;
-		const int srcStrideDiff = texWidth & 1;
-		texWidth >>= 1;
-		texHeight >>= 1;
-		if(texWidth < m_vpWidth && texHeight < m_vpHeight) {
+		const int newWidth = texWidth >> 1;
+		const int newHeight = texHeight >> 1;
+		if(newWidth < m_vpWidth && newHeight < m_vpHeight) {
 			if(m_texNeedInit) {
-				asGL(glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR));
+				asGL(glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR));
 				asGL(glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR));
-				asGL(glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_BASE_LEVEL, 0));
-				asGL(glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAX_LEVEL, level));
+				if(D == 1) {
+					asGL(glTexImage2D(GL_TEXTURE_2D, 0, m_glFormat, texWidth, texHeight, 0, GL_RED, m_glType, texSrc));
+				} else { // D == 4
+					asGL(glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA8, texWidth, texHeight, 0, TEXTURE_RGB_FORMAT, GL_UNSIGNED_BYTE, texSrc));
+				}
+			} else {
+				if(D == 1) {
+					asGL(glTexSubImage2D(GL_TEXTURE_2D, 0, 0, 0, texWidth, texHeight, GL_RED, m_glType, texSrc));
+				} else { // D == 4
+					asGL(glTexSubImage2D(GL_TEXTURE_2D, 0, 0, 0, texWidth, texHeight, TEXTURE_RGB_FORMAT, GL_UNSIGNED_BYTE, texSrc));
+				}
 			}
 			break;
 		}
-		level++;
+		texWidth = newWidth;
+		texHeight = newHeight;
 
 		T *dst = texBuf;
 		const int texStride = texWidth * D;
@@ -673,7 +667,7 @@ GLRenderer::uploadMM(int texWidth, int texHeight, T *texBuf, const T *texSrc)
 					texSrc += D + 1;
 				}
 			}
-			texSrc += srcStride + srcStrideDiff;
+			texSrc += srcStride;
 		}
 		texSrc = texBuf;
 	}
