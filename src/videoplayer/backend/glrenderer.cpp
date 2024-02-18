@@ -172,7 +172,7 @@ GLRenderer::setFrameFormat(int width, int height, int compBits, int crWidthShift
 #else
 	const QSize sr = screen()->size();
 #endif
-	const double rr = qMin(sr.width() / width, sr.height() / height);
+	const double rr = qMin(double(sr.width()) / width, double(sr.height()) / height);
 	m_overlay->setImageSize(rr * width, rr * height);
 	delete[] m_mmOvr;
 	m_mmOvr = new quint8[(m_overlay->width() >> 1) * (m_overlay->height() >> 1) * 4];
