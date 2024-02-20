@@ -620,14 +620,14 @@ GLRenderer::paintGL()
 
 template<class T, int D>
 void
-GLRenderer::uploadMM(int texWidth, int texHeight, T *texBuf, const T *texSrc)
+GLRenderer::uploadMM(int texWidth, int texHeight, T *texBuf, const T *texSrc, int vpWidth, int vpHeight)
 {
 	for(;;) {
 		const int srcStride = texWidth * D;
 		const int srcStridePD = srcStride + D;
 		const int newWidth = texWidth >> 1;
 		const int newHeight = texHeight >> 1;
-		if(newWidth < m_vpWidth && newHeight < m_vpHeight) {
+		if(newWidth < vpWidth && newHeight < vpHeight) {
 			if(m_texNeedInit) {
 				asGL(glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR));
 				asGL(glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR));
@@ -685,9 +685,9 @@ GLRenderer::uploadYUV()
 	asGL(glActiveTexture(GL_TEXTURE0 + ID_Y));
 	asGL(glBindTexture(GL_TEXTURE_2D, m_idTex[ID_Y]));
 	if(m_glType == GL_UNSIGNED_BYTE)
-		uploadMM<quint8, 1>(m_bufWidth, m_bufHeight, m_mmYUV, m_pixels[0]);
+		uploadMM<quint8, 1>(m_bufWidth, m_bufHeight, m_mmYUV, m_pixels[0], m_vpWidth, m_vpHeight);
 	else
-		uploadMM<quint16, 1>(m_bufWidth, m_bufHeight, reinterpret_cast<quint16 *>(m_mmYUV), reinterpret_cast<quint16 *>(m_pixels[0]));
+		uploadMM<quint16, 1>(m_bufWidth, m_bufHeight, reinterpret_cast<quint16 *>(m_mmYUV), reinterpret_cast<quint16 *>(m_pixels[0]), m_vpWidth, m_vpHeight);
 	if(m_texNeedInit) {
 		asGL(glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE));
 		asGL(glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE));
@@ -698,9 +698,9 @@ GLRenderer::uploadYUV()
 	asGL(glActiveTexture(GL_TEXTURE0 + ID_U));
 	asGL(glBindTexture(GL_TEXTURE_2D, m_idTex[ID_U]));
 	if(m_glType == GL_UNSIGNED_BYTE)
-		uploadMM<quint8, 1>(m_crWidth, m_crHeight, m_mmYUV, m_pixels[1]);
+		uploadMM<quint8, 1>(m_crWidth, m_crHeight, m_mmYUV, m_pixels[1], m_vpWidth, m_vpHeight);
 	else
-		uploadMM<quint16, 1>(m_crWidth, m_crHeight, reinterpret_cast<quint16 *>(m_mmYUV), reinterpret_cast<quint16 *>(m_pixels[1]));
+		uploadMM<quint16, 1>(m_crWidth, m_crHeight, reinterpret_cast<quint16 *>(m_mmYUV), reinterpret_cast<quint16 *>(m_pixels[1]), m_vpWidth, m_vpHeight);
 	if(m_texNeedInit) {
 		asGL(glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE));
 		asGL(glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE));
@@ -711,9 +711,9 @@ GLRenderer::uploadYUV()
 	asGL(glActiveTexture(GL_TEXTURE0 + ID_V));
 	asGL(glBindTexture(GL_TEXTURE_2D, m_idTex[ID_V]));
 	if(m_glType == GL_UNSIGNED_BYTE)
-		uploadMM<quint8, 1>(m_crWidth, m_crHeight, m_mmYUV, m_pixels[2]);
+		uploadMM<quint8, 1>(m_crWidth, m_crHeight, m_mmYUV, m_pixels[2], m_vpWidth, m_vpHeight);
 	else
-		uploadMM<quint16, 1>(m_crWidth, m_crHeight, reinterpret_cast<quint16 *>(m_mmYUV), reinterpret_cast<quint16 *>(m_pixels[2]));
+		uploadMM<quint16, 1>(m_crWidth, m_crHeight, reinterpret_cast<quint16 *>(m_mmYUV), reinterpret_cast<quint16 *>(m_pixels[2]), m_vpWidth, m_vpHeight);
 	if(m_texNeedInit) {
 		asGL(glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE));
 		asGL(glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE));
@@ -740,7 +740,7 @@ GLRenderer::uploadSubtitle()
 	// overlay
 	asGL(glActiveTexture(GL_TEXTURE0 + ID_OVR));
 	asGL(glBindTexture(GL_TEXTURE_2D, m_idTex[ID_OVR]));
-	uploadMM<quint8, 4>(img.width(), img.height(), m_mmOvr, img.constBits());
+	uploadMM<quint8, 4>(img.width(), img.height(), m_mmOvr, img.constBits(), m_vpWidth / rs, m_vpHeight / rs);
 	if(m_texNeedInit) {
 		asGL(glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_BORDER));
 		asGL(glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_BORDER));

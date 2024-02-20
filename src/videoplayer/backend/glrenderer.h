@@ -61,7 +61,7 @@ protected:
     void paintGL() override;
 
 private:
-	template<class T, int D> void uploadMM(int texWidth, int texHeight, T *texBuf, const T *texSrc);
+	template<class T, int D> void uploadMM(int texWidth, int texHeight, T *texBuf, const T *texSrc, int vpWidth, int vpHeight);
 	void uploadYUV();
 	void uploadSubtitle();
 	bool validTextureFormat(const AVPixFmtDescriptor *fd);
