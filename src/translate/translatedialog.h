@@ -27,6 +27,9 @@ public:
 private:
 	void updateEngineUI(int index);
 
+public Q_SLOTS:
+    void accept() override;
+
 private:
 	QVector<TranslateEngine *> m_engines;
 	QWidget *m_settings;

@@ -13,6 +13,8 @@
 #include <QGridLayout>
 #include <QIcon>
 
+#include <klocalizedstring.h>
+
 #include "appglobal.h"
 #include "application.h"
 #include "core/richtext/richdocument.h"
@@ -26,9 +28,11 @@ using namespace SubtitleComposer;
 
 TranslateDialog::TranslateDialog(QWidget *parent)
 	: ActionWithTargetDialog(i18n("Translate"), parent),
-	  m_engines({ new GoogleCloudEngine(parent), new DeepLEngine(parent) }),
+	  m_engines({ new GoogleCloudEngine(this), new DeepLEngine(this) }),
 	  m_settings(nullptr)
 {
+	setMinimumWidth(500);
+
 	QComboBox *engineCombo = new QComboBox(m_mainWidget);
 	engineCombo->setEditable(false);
 	for(const TranslateEngine *e: qAsConst(m_engines))
@@ -65,26 +69,35 @@ TranslateDialog::updateEngineUI(int index)
 void
 TranslateDialog::performTranslation()
 {
-	static TranslateDialog *dlg = new TranslateDialog(app()->mainWindow());
-	if(dlg->exec() != QDialog::Accepted)
-		return;
+	TranslateDialog *dlg = new TranslateDialog();
+	connect(dlg, &QDialog::finished, dlg, [=](){ dlg->deleteLater(); });
+	dlg->setModal(true);
+	dlg->show();
+}
 
-	RangeList ranges = app()->linesWidget()->targetRanges(dlg->selectedLinesTarget());
-	const bool primary = dlg->selectedTextsTarget() == Primary;
+void
+TranslateDialog::accept()
+{
+	hide();
+
+	RangeList ranges = app()->linesWidget()->targetRanges(selectedLinesTarget());
+	const bool primary = selectedTextsTarget() == Primary;
 
 	QVector<QString> *texts = new QVector<QString>;
 	for(SubtitleIterator it(*appSubtitle(), ranges); it.current(); ++it)
 		texts->push_back(it.current()->doc(primary)->toHtml());
 
-	SCConfig::setTranslateEngine(dlg->m_engine->name());
-	dlg->m_engine->translate(*texts);
-	SCConfig::self()->save();
-
-	connect(dlg->m_engine, &TranslateEngine::translated, dlg, [=](){
+	connect(m_engine, &TranslateEngine::translated, this, [=](){
 		SubtitleCompositeActionExecutor executor(appSubtitle(), i18n("Translate texts"));
 		int i = 0;
 		for(SubtitleIterator it(*appSubtitle(), ranges); it.current(); ++it)
 			it.current()->doc(primary)->setHtml(texts->at(i++));
 		delete texts;
+
+		ActionWithTargetDialog::accept();
 	});
+
+	SCConfig::setTranslateEngine(m_engine->name());
+	m_engine->translate(*texts);
+	SCConfig::self()->save();
 }
