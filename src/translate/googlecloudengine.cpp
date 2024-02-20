@@ -280,21 +280,19 @@ GoogleCloudEngine::authenticated()
 bool
 GoogleCloudEngine::languagesUpdate()
 {
-	QNetworkRequest request($("https://translation.googleapis.com/v3/projects/%1/locations/global/supportedLanguages").arg(m_projectId));
-	request.setRawHeader("Authorization", QByteArray("Bearer ") + SCConfig::gctAccessToken().toUtf8());
+	ProgressLock pl(this, i18n("Updating languages..."));
 
-	QNetworkReply *res = m_netManager->get(request);
-	connect(res, &QNetworkReply::finished, this, &GoogleCloudEngine::languagesUpdated);
+	QNetworkRequest req($("https://translation.googleapis.com/v3/projects/%1/locations/global/supportedLanguages").arg(m_projectId));
+	req.setRawHeader("Authorization", QByteArray("Bearer ") + SCConfig::gctAccessToken().toUtf8());
+
+	sendRequest(m_netManager, req, QByteArray(), [this](QNetworkReply *r){ languagesUpdated(r); });
 
 	return true;
 }
 
 void
-GoogleCloudEngine::languagesUpdated()
+GoogleCloudEngine::languagesUpdated(QNetworkReply *res)
 {
-	QNetworkReply *res = qobject_cast<QNetworkReply *>(sender());
-	res->deleteLater();
-
 	if(res->error() == QNetworkReply::NoError) {
 		m_ui->langSource->clear();
 		m_ui->langSource->addItem(i18n("Autodetect Language"), QString());
@@ -330,6 +328,8 @@ GoogleCloudEngine::translate(QVector<QString> &textLines)
 	SCConfig::setGctLangSource(m_ui->langSource->currentData().toString());
 	SCConfig::setGctLangTrans(m_ui->langTranslation->currentData().toString());
 
+	ProgressLock pl(this, i18n("Translating lines..."));
+
 	QNetworkRequest request($("https://translation.googleapis.com/v3/projects/%1:translateText").arg(m_projectId));
 	request.setRawHeader("Authorization", QByteArray("Bearer ") + SCConfig::gctAccessToken().toUtf8());
 	request.setHeader(QNetworkRequest::ContentTypeHeader, "application/json; charset=utf-8");
@@ -339,16 +339,7 @@ GoogleCloudEngine::translate(QVector<QString> &textLines)
 		reqData.insert($("sourceLanguageCode"), m_ui->langSource->currentData().toString());
 	reqData.insert($("targetLanguageCode"), m_ui->langTranslation->currentData().toString());
 
-	int *reqCount = new int;
-	auto translateDone = [=](){
-		if(--(*reqCount) == 0) {
-			delete reqCount;
-			emit translated();
-		}
-	};
-
 	int line = 0;
-	*reqCount = 1;
 	while(line != textLines.size()) {
 		// NOTE there is 100000 char/minute limit: https://cloud.google.com/translate/quotas
 		// We're doing multiple requests with each sending 100 lines for translations - that should help
@@ -363,10 +354,7 @@ GoogleCloudEngine::translate(QVector<QString> &textLines)
 		}
 		reqData.insert($("contents"), textArray);
 
-		(*reqCount)++;
-		QNetworkReply *res = m_netManager->post(QNetworkRequest(request), QJsonDocument(reqData).toJson(QJsonDocument::Compact));
-		connect(res, &QNetworkReply::finished, this, [=, &textLines](){
-			res->deleteLater();
+		sendRequest(m_netManager, request, QJsonDocument(reqData).toJson(QJsonDocument::Compact), [=, &textLines](QNetworkReply *res){
 			if(res->error() == QNetworkReply::NoError) {
 				const QJsonDocument doc = QJsonDocument::fromJson(res->readAll());
 				const QJsonArray tta = doc[$("translations")].toArray();
@@ -375,8 +363,6 @@ GoogleCloudEngine::translate(QVector<QString> &textLines)
 			} else {
 				showError(res);
 			}
-			translateDone();
 		});
 	}
-	translateDone();
 }
