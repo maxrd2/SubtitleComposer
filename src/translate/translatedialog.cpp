@@ -69,8 +69,6 @@ TranslateDialog::performTranslation()
 	if(dlg->exec() != QDialog::Accepted)
 		return;
 
-	SubtitleCompositeActionExecutor executor(appSubtitle(), i18n("Translate texts"));
-
 	RangeList ranges = app()->linesWidget()->targetRanges(dlg->selectedLinesTarget());
 	const bool primary = dlg->selectedTextsTarget() == Primary;
 
@@ -83,6 +81,7 @@ TranslateDialog::performTranslation()
 	SCConfig::self()->save();
 
 	connect(dlg->m_engine, &TranslateEngine::translated, dlg, [=](){
+		SubtitleCompositeActionExecutor executor(appSubtitle(), i18n("Translate texts"));
 		int i = 0;
 		for(SubtitleIterator it(*appSubtitle(), ranges); it.current(); ++it)
 			it.current()->doc(primary)->setHtml(texts->at(i++));
