@@ -261,4 +261,17 @@
 			<label>translation language - cached</label>
 		</entry>
 	</group>
+
+	<group name="MinTTranslate">
+		<entry name="mintURLPrefix" type="String">
+			<label>MinT API URL prefix</label>
+			<default>https://translate.wmcloud.org/</default>
+		</entry>
+		<entry name="mintLangSource" type="String">
+			<label>source language - cached</label>
+		</entry>
+		<entry name="mintLangTrans" type="String">
+			<label>translation language - cached</label>
+		</entry>
+	</group>
 </kcfg>

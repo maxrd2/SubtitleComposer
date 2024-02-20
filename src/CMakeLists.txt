@@ -83,7 +83,7 @@ set(subtitlecomposer_SRCS
 	#[[ speechprocessor ]] speechprocessor/speechprocessor.cpp speechprocessor/speechplugin.cpp
 	#[[ streamprocessor ]] streamprocessor/streamprocessor.cpp
 	#[[ translations ]] translate/translatedialog.cpp translate/translateengine.cpp
-	#[[ translation engines ]] translate/deeplengine.cpp translate/googlecloudengine.cpp
+	#[[ translation engines ]] translate/deeplengine.cpp translate/mintengine.cpp translate/googlecloudengine.cpp
 	#[[ utils ]] utils/finder.cpp utils/replacer.cpp utils/speller.cpp
 	#[[ videoplayer ]] videoplayer/videoplayer.cpp videoplayer/videowidget.cpp videoplayer/waveformat.h videoplayer/subtitletextoverlay.cpp
 	videoplayer/backend/glrenderer.cpp videoplayer/backend/ffplayer.cpp videoplayer/backend/framequeue.cpp videoplayer/backend/packetqueue.cpp
@@ -103,7 +103,7 @@ ki18n_wrap_ui(subtitlecomposer_SRCS
 	#[[ formats ]] formats/vobsub/vobsubinputinitdialog.ui formats/vobsub/vobsubinputprocessdialog.ui
 	#[[ gui/subtitlemetawidget ]] gui/subtitlemeta/subtitlepositionwidget.ui
 	#[[ scripting ]] scripting/scriptsmanager.ui
-	#[[ translation engines ]] translate/deeplengine.ui translate/googlecloudengine.ui
+	#[[ translation engines ]] translate/deeplengine.ui translate/mintengine.ui translate/googlecloudengine.ui
 	)
 
 add_subdirectory(icons)

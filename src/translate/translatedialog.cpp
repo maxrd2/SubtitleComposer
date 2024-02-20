@@ -21,6 +21,7 @@
 #include "core/subtitleiterator.h"
 #include "scconfig.h"
 #include "translate/deeplengine.h"
+#include "translate/mintengine.h"
 #include "translate/googlecloudengine.h"
 #include "translate/translateengine.h"
 
@@ -28,7 +29,7 @@ using namespace SubtitleComposer;
 
 TranslateDialog::TranslateDialog(QWidget *parent)
 	: ActionWithTargetDialog(i18n("Translate"), parent),
-	  m_engines({ new GoogleCloudEngine(this), new DeepLEngine(this) }),
+	  m_engines({ new GoogleCloudEngine(this), new DeepLEngine(this), new MinTEngine(this) }),
 	  m_settings(nullptr)
 {
 	setMinimumWidth(500);
