@@ -99,29 +99,24 @@ DeepLEngine::settings(QWidget *widget)
 bool
 DeepLEngine::languagesUpdate()
 {
-	QNetworkRequest request;
-	QNetworkReply *res;
+	ProgressLock pl(this, i18n("Updating languages..."));
+	QNetworkRequest req;
 
-	request.setUrl($("https://%1/v2/languages?type=source").arg(SCConfig::dltApiDomain()));
-	request.setRawHeader("Authorization", QByteArray("DeepL-Auth-Key ") + SCConfig::dltAuthKey().toUtf8());
-	res = m_netManager->get(request);
-	connect(res, &QNetworkReply::finished, this, &DeepLEngine::languagesUpdated);
+	req.setUrl($("https://%1/v2/languages?type=source").arg(SCConfig::dltApiDomain()));
+	req.setRawHeader("Authorization", QByteArray("DeepL-Auth-Key ") + SCConfig::dltAuthKey().toUtf8());
+	sendRequest(m_netManager, req, QByteArray(), [this](QNetworkReply *r){ languagesUpdated(r); });
 
-	request.setUrl($("https://%1/v2/languages?type=target").arg(SCConfig::dltApiDomain()));
-	request.setRawHeader("Authorization", QByteArray("DeepL-Auth-Key ") + SCConfig::dltAuthKey().toUtf8());
-	res = m_netManager->get(request);
-	connect(res, &QNetworkReply::finished, this, &DeepLEngine::languagesUpdated);
+	req.setUrl($("https://%1/v2/languages?type=target").arg(SCConfig::dltApiDomain()));
+	req.setRawHeader("Authorization", QByteArray("DeepL-Auth-Key ") + SCConfig::dltAuthKey().toUtf8());
+	sendRequest(m_netManager, req, QByteArray(), [this](QNetworkReply *r){ languagesUpdated(r); });
 
 	return true;
 }
 
 void
-DeepLEngine::languagesUpdated()
+DeepLEngine::languagesUpdated(QNetworkReply *res)
 {
-	QNetworkReply *res = qobject_cast<QNetworkReply *>(sender());
 	const bool isSource = res->request().url().query().endsWith($("=source"));
-	res->deleteLater();
-
 	if(res->error() == QNetworkReply::NoError) {
 		if(isSource) {
 			m_ui->langSource->clear();
@@ -160,6 +155,8 @@ DeepLEngine::translate(QVector<QString> &textLines)
 	SCConfig::setDltLangSource(m_ui->langSource->currentData().toString());
 	SCConfig::setDltLangTrans(m_ui->langTranslation->currentData().toString());
 
+	ProgressLock pl(this, i18n("Translating lines..."));
+
 	QNetworkRequest request($("https://%1/v2/translate").arg(SCConfig::dltApiDomain()));
 	request.setRawHeader("Authorization", QByteArray("DeepL-Auth-Key ") + SCConfig::dltAuthKey().toUtf8());
 	request.setHeader(QNetworkRequest::ContentTypeHeader, "application/x-www-form-urlencoded");
@@ -170,16 +167,7 @@ DeepLEngine::translate(QVector<QString> &textLines)
 	commonPost.addQueryItem($("target_lang"), SCConfig::dltLangTrans());
 	const QByteArray commonPostData = commonPost.query(QUrl::FullyEncoded).toUtf8();
 
-	int *reqCount = new int;
-	auto translateDone = [=](){
-		if(--(*reqCount) == 0) {
-			delete reqCount;
-			emit translated();
-		}
-	};
-
 	int line = 0;
-	*reqCount = 1;
 	while(line != textLines.size()) {
 		// Request body size must not exceed 128 KiB (128 · 1024 bytes)
 		constexpr const int sizeLimit = 128 << 10;
@@ -197,10 +185,7 @@ DeepLEngine::translate(QVector<QString> &textLines)
 				break;
 		}
 
-		(*reqCount)++;
-		QNetworkReply *res = m_netManager->post(QNetworkRequest(request), postData);
-		connect(res, &QNetworkReply::finished, this, [=, &textLines](){
-			res->deleteLater();
+		sendRequest(m_netManager, request, postData, [=, &textLines](QNetworkReply *res){
 			if(res->error() == QNetworkReply::NoError) {
 				const QJsonDocument doc = QJsonDocument::fromJson(res->readAll());
 				const QJsonArray tta = doc[$("translations")].toArray();
@@ -209,8 +194,6 @@ DeepLEngine::translate(QVector<QString> &textLines)
 			} else {
 				showError(res);
 			}
-			translateDone();
 		});
 	}
-	translateDone();
 }

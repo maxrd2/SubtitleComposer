@@ -32,7 +32,7 @@ public:
 
 private:
 	bool languagesUpdate();
-	void languagesUpdated();
+	void languagesUpdated(QNetworkReply *res);
 
 private:
 	QNetworkAccessManager *m_netManager;
