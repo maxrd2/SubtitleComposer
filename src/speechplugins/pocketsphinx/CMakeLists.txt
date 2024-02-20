@@ -4,6 +4,16 @@ if(NOT POCKETSPHINX_FOUND)
 	return()
 endif()
 
+set(CMAKE_REQUIRED_INCLUDES ${POCKETSPHINX_INCLUDE_DIRS})
+set(CMAKE_REQUIRED_LIBRARIES ${POCKETSPHINX_LIBRARIES})
+check_cxx_source_compiles("#include <pocketsphinx.h>\nint main(){ ps_seg_iter(nullptr); return 0; }" PocketSphinx_NEW_ps_seg_iter)
+check_cxx_source_compiles("#include <pocketsphinx.h>\nint main(){ cmd_ln_free_r(nullptr); return 0; }" PocketSphinx_OK_prealpha5)
+
+if(NOT PocketSphinx_OK_prealpha5)
+	message(STATUS "Have found BROKEN PocketSphinx 5 - Speech plugin will not be built")
+	return()
+endif()
+
 set(speech_pocketsphinx_SRCS
 	../../speechprocessor/speechplugin.cpp
 	pocketsphinxplugin.cpp
@@ -34,9 +44,6 @@ add_dependencies(pocketsphinxasr subtitlecomposer)
 
 configure_file(${CMAKE_CURRENT_SOURCE_DIR}/plugin-config.h.cmake ${CMAKE_CURRENT_BINARY_DIR}/plugin-config.h)
 
-set(CMAKE_REQUIRED_INCLUDES ${POCKETSPHINX_INCLUDE_DIRS})
-set(CMAKE_REQUIRED_LIBRARIES ${POCKETSPHINX_LIBRARIES})
-check_cxx_source_compiles("#include <pocketsphinx.h>\nint main(){ ps_seg_iter(nullptr); return 0; }" PocketSphinx_NEW_ps_seg_iter)
 if(PocketSphinx_NEW_ps_seg_iter)
 	target_compile_definitions(pocketsphinxasr PRIVATE HAS_NEW_PS_SEG_ITER=1)
 endif()
