@@ -7,9 +7,18 @@
 #define TRANSLATEENGINE_H
 
 #include <QObject>
+#include <QProgressDialog>
 #include <QString>
 #include <QVector>
 #include <QWidget>
+
+#include <klocalizedstring.h>
+
+#include <functional>
+
+QT_FORWARD_DECLARE_CLASS(QNetworkAccessManager);
+QT_FORWARD_DECLARE_CLASS(QNetworkRequest)
+QT_FORWARD_DECLARE_CLASS(QNetworkReply)
 
 namespace SubtitleComposer {
 
@@ -28,6 +37,24 @@ public:
 signals:
 	void engineReady(bool status);
 	void translated();
+
+protected:
+	void sendRequest(QNetworkAccessManager *nm, const QNetworkRequest &request, const QByteArray &data, std::function<void(QNetworkReply*)> callback);
+
+	struct ProgressLock {
+		ProgressLock(TranslateEngine *e, const QString &progressText);
+		~ProgressLock();
+		TranslateEngine *te;
+	};
+
+private:
+	void translateStart();
+	void translateDone();
+
+	struct ProgressHelper;
+
+	QProgressDialog *m_progress;
+	ProgressHelper *m_ph;
 };
 } // namespace SubtitleComposer
 
