@@ -13,8 +13,6 @@
 #include "actions/useractionnames.h"
 #include "dialogs/textinputdialog.h"
 #include "helpers/common.h"
-#include "helpers/fileloadhelper.h"
-#include "helpers/filetrasher.h"
 #include "scripting/scripting_rangesmodule.h"
 #include "scripting/scripting_stringsmodule.h"
 #include "scripting/scripting_subtitlemodule.h"
@@ -31,20 +29,9 @@
 #include <QKeyEvent>
 #include <QStringBuilder>
 
-#include <kio_version.h>
 #include <KMessageBox>
-#if KIO_VERSION < QT_VERSION_CHECK(5, 71, 0)
-#include <KRun>
-#endif
 #include <KActionCollection>
 #include <KLocalizedString>
-#if KIO_VERSION >= QT_VERSION_CHECK(5, 71, 0)
-#include <KIO/OpenUrlJob>
-#include <KIO/JobUiDelegate>
-#endif
-#if KIO_VERSION >= QT_VERSION_CHECK(5, 98, 0)
-#include <KIO/JobUiDelegateFactory>
-#endif
 #include <kwidgetsaddons_version.h>
 
 inline static const QDir &
@@ -556,16 +543,15 @@ ScriptsManager::addScript(const QUrl &sSU)
 		scriptName = nameDlg.value();
 	}
 
-	FileLoadHelper fileLoadHelper(srcScriptUrl);
-
-	if(!fileLoadHelper.open()) {
+	QFile src(srcScriptUrl.toLocalFile());
+	if(!src.open(QIODevice::ReadOnly)) {
 		KMessageBox::error(app()->mainWindow(), i18n("There was an error opening the file <b>%1</b>.", srcScriptUrl.toString(QUrl::PreferLocalFile)));
 		return;
 	}
 
 	QFile dest(userScriptDir().absoluteFilePath(scriptName));
 	if(!dest.open(QIODevice::WriteOnly | QIODevice::Truncate)
-			|| dest.write(fileLoadHelper.file()->readAll()) == -1
+			|| dest.write(src.readAll()) == -1
 			|| !dest.flush()) {
 		KMessageBox::error(app()->mainWindow(), i18n("There was an error copying the file to <b>%1</b>.", dest.fileName()));
 		return;
@@ -585,7 +571,7 @@ ScriptsManager::removeScript(const QString &sN)
 			i18n("Do you really want to send file <b>%1</b> to the trash?", script->path()), i18n("Move to Trash")) != KMessageBox::Continue)
 		return;
 
-	if(!FileTrasher(script->path()).exec()) {
+	if(!QFile(script->path()).moveToTrash()) {
 		KMessageBox::error(app()->mainWindow(), i18n("There was an error removing the file <b>%1</b>.", script->path()));
 		return;
 	}
@@ -603,24 +589,8 @@ ScriptsManager::editScript(const QString &sN)
 	}
 
 	const QUrl scriptUrl = QUrl::fromLocalFile(script->path());
-#ifdef SC_APPIMAGE
-	{
-#elif KIO_VERSION >= QT_VERSION_CHECK(5, 98, 0)
-	KIO::OpenUrlJob *job = new KIO::OpenUrlJob(scriptUrl);
-	job->setUiDelegate(KIO::createDefaultJobUiDelegate(KJobUiDelegate::AutoHandlingEnabled, app()->mainWindow()));
-	if(!job->exec()) {
-#elif KIO_VERSION >= QT_VERSION_CHECK(5, 71, 0)
-	KIO::OpenUrlJob *job = new KIO::OpenUrlJob(scriptUrl);
-	job->setUiDelegate(new KIO::JobUiDelegate(KJobUiDelegate::AutoHandlingEnabled, app()->mainWindow()));
-	if(!job->exec()) {
-#elif KIO_VERSION >= QT_VERSION_CHECK(5, 31, 0)
-	if(!KRun::runUrl(scriptUrl, "text/plain", app()->mainWindow(), KRun::RunFlags())) {
-#else
-	if(!KRun::runUrl(scriptUrl, "text/plain", app()->mainWindow(), false, false)) {
-#endif
-		if(!QDesktopServices::openUrl(scriptUrl))
-			KMessageBox::error(app()->mainWindow(), i18n("Could not launch external editor.\n"));
-	}
+	if(!QDesktopServices::openUrl(scriptUrl))
+		KMessageBox::error(app()->mainWindow(), i18n("Could not launch external editor.\n"));
 }
 
 void

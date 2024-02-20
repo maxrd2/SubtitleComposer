@@ -12,8 +12,6 @@
 #include "outputformat.h"
 #include "gui/treeview/lineswidget.h"
 #include "application.h"
-#include "helpers/fileloadhelper.h"
-#include "helpers/filesavehelper.h"
 #include "dialogs/encodingdetectdialog.h"
 #include "scconfig.h"
 
@@ -42,6 +40,7 @@
 #include <QFile>
 #include <QFileDevice>
 #include <QFileInfo>
+#include <QSaveFile>
 #include <QTextCodec>
 
 #include <QUrl>
@@ -174,12 +173,12 @@ FormatManager::Status
 FormatManager::readText(Subtitle &subtitle, const QUrl &url, bool primary,
 						QTextCodec **codec, QString *formatName) const
 {
-	FileLoadHelper fileLoadHelper(url);
-	if(!fileLoadHelper.open())
+	QFile file(url.toLocalFile());
+	if(!file.open(QIODevice::ReadOnly))
 		return ERROR;
 	// WARNING: only 1MB of text subtitle is being read here
-	QByteArray byteData = fileLoadHelper.file()->read(1024 * 1024);
-	fileLoadHelper.close();
+	QByteArray byteData = file.read(1024 * 1024);
+	file.close();
 
 	QString stringData;
 	if(!codec) {
@@ -279,25 +278,26 @@ FormatManager::writeSubtitle(const Subtitle &subtitle, bool primary, const QUrl 
 	if(format == nullptr)
 		return false;
 
-	FileSaveHelper fileSaveHelper(url, overwrite);
-	if(!fileSaveHelper.open())
+	if(!overwrite && QFile::exists(url.toLocalFile()))
+		return false;
+	QSaveFile file(url.toLocalFile());
+	if(!file.open(QIODevice::WriteOnly | QIODevice::Truncate))
 		return false;
 
-	QFileDevice *file = fileSaveHelper.file();
 	QString data = format->writeSubtitle(subtitle, primary);
 	if(codec->name().startsWith("UTF-") || codec->name().contains("UCS-"))
 		data.prepend(QChar::ByteOrderMark);
 	switch(SCConfig::textLineBreak()) {
 	case 1: // CRLF
-		file->write(codec->fromUnicode(data.replace(QChar::LineFeed, QLatin1String("\r\n"))));
+		file.write(codec->fromUnicode(data.replace(QChar::LineFeed, QLatin1String("\r\n"))));
 		break;
 	case 2: // CR
-		file->write(codec->fromUnicode(data.replace(QChar::LineFeed, QChar::CarriageReturn)));
+		file.write(codec->fromUnicode(data.replace(QChar::LineFeed, QChar::CarriageReturn)));
 		break;
 	default: // LF
-		file->write(codec->fromUnicode(data));
+		file.write(codec->fromUnicode(data));
 		break;
 	}
 
-	return fileSaveHelper.close();
+	return file.commit();
 }

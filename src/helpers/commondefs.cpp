@@ -17,9 +17,6 @@
 #include <QDebug>
 #include <QStandardPaths>
 
-#include <kio_version.h>
-#include <kio/statjob.h>
-
 #ifndef Q_OS_WIN
 #include <unistd.h>
 #endif
@@ -197,30 +194,13 @@ System::newUrl(const QUrl &baseUrl, const QString &fileName, const QString &exte
 	int i = 2;
 	retries += i;
 
-	if(baseUrl.isLocalFile()) {
-		QFileInfo dirInfo(newFileDir);
-		if(dirInfo.isDir() && dirInfo.isWritable()) {
-			QString newFilePath = newFileDir + newFileName;
-			while(i < retries && QFile::exists(newFilePath))
-				newFilePath = newFileDir + newFileNameBuilder.arg(i++);
-			if(i < retries)
-				return QUrl::fromLocalFile(newFilePath);
-		}
-	} else {
-		QUrl newUrl = baseUrl;
-		newUrl.setPath(newFileDir + newFileName);
-		for(;;) {
-#if KIO_VERSION < QT_VERSION_CHECK(5, 69, 0)
-			KIO::Job *job = KIO::stat(newUrl, KIO::StatJob::DestinationSide, 2);
-#else
-			KIO::Job *job = KIO::statDetails(newUrl, KIO::StatJob::DestinationSide, KIO::StatDefaultDetails, KIO::HideProgressInfo);
-#endif
-			if(!job->exec())
-				return newUrl;
-			if(i >= retries)
-				break;
-			newUrl.setPath(newFileDir + newFileNameBuilder.arg(i++));
-		}
+	QFileInfo dirInfo(newFileDir);
+	if(dirInfo.isDir() && dirInfo.isWritable()) {
+		QString newFilePath = newFileDir + newFileName;
+		while(i < retries && QFile::exists(newFilePath))
+			newFilePath = newFileDir + newFileNameBuilder.arg(i++);
+		if(i < retries)
+			return QUrl::fromLocalFile(newFilePath);
 	}
 
 	// could not return a writable url in baseUrl so we return one in the temp dir
