@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: subtitlecomposer\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-01-02 00:41+0000\n"
+"POT-Creation-Date: 2024-02-21 01:37+0000\n"
 "PO-Revision-Date: 2019-10-27 09:15\n"
 "Last-Translator: Barcza Károly <kbarcza@blackpanther.hu>\n"
 "Language-Team: blackPanther Europe <info@blackpanther.hu>\n"
@@ -39,79 +39,79 @@ msgctxt "Encodings menu"
 msgid "Autodetect"
 msgstr ""
 
-#: src/application.cpp:499
+#: src/application.cpp:497
 #, kde-format
 msgid "Go to Line"
 msgstr "Ugrás egy sorra"
 
-#: src/application.cpp:499
+#: src/application.cpp:497
 #, kde-format
 msgid "&Go to line:"
 msgstr "&Ugrás egy sorra:"
 
-#: src/application.cpp:672 src/core/subtitle.cpp:878
+#: src/application.cpp:670 src/core/subtitle.cpp:878
 #, kde-format
 msgid "Maximize Durations"
 msgstr "Az időtartam maximalizálása"
 
-#: src/application.cpp:700 src/core/subtitle.cpp:1153
+#: src/application.cpp:698 src/core/subtitle.cpp:1153
 #, kde-format
 msgid "Unbreak Lines"
 msgstr "Nem sortödelt"
 
-#: src/application.cpp:711 src/core/subtitle.cpp:1162
+#: src/application.cpp:709 src/core/subtitle.cpp:1162
 #, kde-format
 msgid "Simplify Spaces"
 msgstr "Sima szóközök"
 
-#: src/application.cpp:772
+#: src/application.cpp:770
 #, kde-format
 msgid "Open Video"
 msgstr "Videó megnyitása"
 
-#: src/application.cpp:970 src/application.cpp:977
+#: src/application.cpp:968 src/application.cpp:975
 #: src/application_subtitle.cpp:658
 #, kde-format
 msgid "Untitled"
 msgstr "Névtelen"
 
-#: src/application.cpp:972 src/application_subtitle.cpp:658
+#: src/application.cpp:970 src/application_subtitle.cpp:658
 #, kde-format
 msgid "Untitled Translation"
 msgstr "Névtelen fordítás"
 
-#: src/application.cpp:1073
+#: src/application.cpp:1071
 #, kde-format
 msgid "Pause"
 msgstr "Szünet"
 
-#: src/application.cpp:1081 src/application_actions.cpp:567
+#: src/application.cpp:1079 src/application_actions.cpp:567
 #, kde-format
 msgid "Play"
 msgstr "Lejátszás"
 
-#: src/application.cpp:1142
+#: src/application.cpp:1140
 #, kde-format
 msgid "Seek backwards 1 second"
 msgid_plural "Seek backwards %1 seconds"
 msgstr[0] "Keresés visszafelé 1 másodperccel"
 msgstr[1] "Keresés visszafelé %1 másodperccel"
 
-#: src/application.cpp:1143
+#: src/application.cpp:1141
 #, kde-format
 msgid "Seek forwards 1 second"
 msgid_plural "Seek forwards %1 seconds"
 msgstr[0] "Keresés előre 1 másodperccel"
 msgstr[1] "Keresés előre %1 másodperccel"
 
-#: src/application.cpp:1146 src/application.cpp:1150
+#: src/application.cpp:1144 src/application.cpp:1148
 #, kde-format
 msgid "Shift %2%1 millisecond"
 msgid_plural "Shift %2%1 milliseconds"
 msgstr[0] ""
 msgstr[1] ""
 
-#: src/application.cpp:1147 src/application.cpp:1151
+#: src/application.cpp:1145 src/application.cpp:1149
 #, kde-format
 msgid "Shift selected lines %2%1 millisecond"
 msgid_plural "Shift selected lines %2%1 milliseconds"
@@ -2690,6 +2690,7 @@ msgstr ""
 
 #. i18n: ectx: property (text), widget (QPushButton, btnAbort)
 #: src/formats/vobsub/vobsubinputprocessdialog.ui:272
+#: src/translate/translateengine.cpp:66
 #, kde-format
 msgid "Abort"
 msgstr ""
@@ -3397,7 +3398,8 @@ msgstr ""
 
 #. i18n: ectx: label, entry (gctLangSource), group (GoogleCloudTranslate)
 #. i18n: ectx: label, entry (dltLangSource), group (DeepLTranslate)
-#: src/scconfig.kcfg:234 src/scconfig.kcfg:258
+#. i18n: ectx: label, entry (mintLangSource), group (MinTTranslate)
+#: src/scconfig.kcfg:234 src/scconfig.kcfg:258 src/scconfig.kcfg:271
 #, fuzzy, kde-format
 #| msgid "Input language:"
 msgid "source language - cached"
@@ -3405,7 +3407,8 @@ msgstr "Bemeneti nyelv:"
 
 #. i18n: ectx: label, entry (gctLangTrans), group (GoogleCloudTranslate)
 #. i18n: ectx: label, entry (dltLangTrans), group (DeepLTranslate)
-#: src/scconfig.kcfg:237 src/scconfig.kcfg:261
+#. i18n: ectx: label, entry (mintLangTrans), group (MinTTranslate)
+#: src/scconfig.kcfg:237 src/scconfig.kcfg:261 src/scconfig.kcfg:274
 #, kde-format
 msgid "translation language - cached"
 msgstr ""
@@ -3440,162 +3443,168 @@ msgstr ""
 msgid "DeepL API domain name"
 msgstr ""
 
-#: src/scripting/scriptsmanager.cpp:86
+#. i18n: ectx: label, entry (mintURLPrefix), group (MinTTranslate)
+#: src/scconfig.kcfg:267
+#, kde-format
+msgid "MinT API URL prefix"
+msgstr ""
+
+#: src/scripting/scriptsmanager.cpp:73
 #, kde-format
 msgid "Non-Script Files"
 msgstr ""
 
-#: src/scripting/scriptsmanager.cpp:168
+#: src/scripting/scriptsmanager.cpp:155
 #, fuzzy, kde-format
 #| msgid "Untitled"
 msgid "Title"
 msgstr "Névtelen"
 
-#: src/scripting/scriptsmanager.cpp:169
+#: src/scripting/scriptsmanager.cpp:156
 #, kde-format
 msgid "Version"
 msgstr ""
 
-#: src/scripting/scriptsmanager.cpp:170
+#: src/scripting/scriptsmanager.cpp:157
 #, kde-format
 msgid "Author"
 msgstr ""
 
-#: src/scripting/scriptsmanager.cpp:171
+#: src/scripting/scriptsmanager.cpp:158
 #, fuzzy, kde-format
 #| msgid "Path:"
 msgid "Path"
 msgstr "Elérési út:"
 
-#: src/scripting/scriptsmanager.cpp:365
+#: src/scripting/scriptsmanager.cpp:352
 #, kde-format
 msgid "Information"
 msgstr "Információ"
 
-#: src/scripting/scriptsmanager.cpp:371
+#: src/scripting/scriptsmanager.cpp:358
 #, kde-format
 msgid "Warning"
 msgstr "Figyelem"
 
-#: src/scripting/scriptsmanager.cpp:377
+#: src/scripting/scriptsmanager.cpp:364
 #, kde-format
 msgid "Error"
 msgstr "Hiba"
 
 #. i18n: ectx: property (text), widget (QPushButton, btnEdit)
-#: src/scripting/scriptsmanager.cpp:405 src/scripting/scriptsmanager.ui:71
+#: src/scripting/scriptsmanager.cpp:393 src/scripting/scriptsmanager.ui:71
 #, kde-format
 msgid "Edit"
 msgstr "Szerkesztés"
 
-#: src/scripting/scriptsmanager.cpp:408
+#: src/scripting/scriptsmanager.cpp:396
 #, kde-format
 msgid "View"
 msgstr ""
 
-#: src/scripting/scriptsmanager.cpp:478
+#: src/scripting/scriptsmanager.cpp:466
 #, kde-format
 msgid ""
 "A script already exists with this name.\n"
 "Would you like to enter another name?"
 msgstr ""
 
-#: src/scripting/scriptsmanager.cpp:479
+#: src/scripting/scriptsmanager.cpp:467
 #, kde-format
 msgid "Duplicate filename"
 msgstr ""
 
-#: src/scripting/scriptsmanager.cpp:480
+#: src/scripting/scriptsmanager.cpp:468
 #, kde-format
 msgid "Yes"
 msgstr ""
 
-#: src/scripting/scriptsmanager.cpp:484
+#: src/scripting/scriptsmanager.cpp:472
 #, kde-format
 msgid "Create New Script"
 msgstr "Új szkript létrehozása."
 
-#: src/scripting/scriptsmanager.cpp:484 src/scripting/scriptsmanager.cpp:552
+#: src/scripting/scriptsmanager.cpp:472 src/scripting/scriptsmanager.cpp:540
 #, kde-format
 msgid "Script name:"
 msgstr "A szkript neve:"
 
-#: src/scripting/scriptsmanager.cpp:495
+#: src/scripting/scriptsmanager.cpp:483
 #, kde-format
 msgid "There was an error creating the file <b>%1</b>."
 msgstr "Hiba történt a(z) '%1' fájl létrehozása közben"
 
-#: src/scripting/scriptsmanager.cpp:530
+#: src/scripting/scriptsmanager.cpp:518
 #, kde-format
 msgid "Select Existing Script"
 msgstr "Létező szkript kijelölése"
 
-#: src/scripting/scriptsmanager.cpp:547
+#: src/scripting/scriptsmanager.cpp:535
 #, kde-format
 msgid ""
 "You must enter an unused name to continue.\n"
 "Would you like to enter another name?"
 msgstr ""
 
-#: src/scripting/scriptsmanager.cpp:548
+#: src/scripting/scriptsmanager.cpp:536
 #, kde-format
 msgid "Name Already Used"
 msgstr "A név már foglalt"
 
-#: src/scripting/scriptsmanager.cpp:552
+#: src/scripting/scriptsmanager.cpp:540
 #, kde-format
 msgid "Rename Script"
 msgstr "Szkript átnevezése"
 
-#: src/scripting/scriptsmanager.cpp:561
+#: src/scripting/scriptsmanager.cpp:548
 #, kde-format
 msgid "There was an error opening the file <b>%1</b>."
 msgstr "Hiba történt a(z) '%1' fájl megnyitása közben"
 
-#: src/scripting/scriptsmanager.cpp:569
+#: src/scripting/scriptsmanager.cpp:556
 #, kde-format
 msgid "There was an error copying the file to <b>%1</b>."
 msgstr "Egy hiba történt a fájl ide <b>%1</b> másolásakor"
 
-#: src/scripting/scriptsmanager.cpp:584
+#: src/scripting/scriptsmanager.cpp:571
 #, kde-format
 msgid "Do you really want to send file <b>%1</b> to the trash?"
 msgstr "Valóban elakarja dobni a(z) <b>%1</b> fájlt a szemetesbe?"
 
-#: src/scripting/scriptsmanager.cpp:584
+#: src/scripting/scriptsmanager.cpp:571
 #, kde-format
 msgid "Move to Trash"
 msgstr "Áthelyezés a szemetesbe"
 
-#: src/scripting/scriptsmanager.cpp:588
+#: src/scripting/scriptsmanager.cpp:575
 #, kde-format
 msgid "There was an error removing the file <b>%1</b>."
 msgstr "Hiba történt a(z) '%1' fájl eltávolítása közben"
 
-#: src/scripting/scriptsmanager.cpp:621
+#: src/scripting/scriptsmanager.cpp:593
 #, kde-format
 msgid "Could not launch external editor.\n"
 msgstr "Nem lehetett elindítani a külső szerkesztőt.\n"
 
-#: src/scripting/scriptsmanager.cpp:642
+#: src/scripting/scriptsmanager.cpp:613
 #, fuzzy, kde-format
 #| msgid "Error Running Script"
 msgid "Error opening script %1."
 msgstr "Hiba a parancsfájl futtatásakor"
 
-#: src/scripting/scriptsmanager.cpp:642 src/scripting/scriptsmanager.cpp:657
-#: src/scripting/scriptsmanager.cpp:659
+#: src/scripting/scriptsmanager.cpp:613 src/scripting/scriptsmanager.cpp:628
+#: src/scripting/scriptsmanager.cpp:630
 #, kde-format
 msgid "Error Running Script"
 msgstr "Hiba a parancsfájl futtatásakor"
 
-#: src/scripting/scriptsmanager.cpp:655
+#: src/scripting/scriptsmanager.cpp:626
 #, fuzzy, kde-format
 #| msgid "Path:"
 msgid "Path: %1"
 msgstr "Elérési út:"
 
-#: src/scripting/scriptsmanager.cpp:672
+#: src/scripting/scriptsmanager.cpp:643
 #, kde-format
 msgid "Tools"
 msgstr "Eszközök"
@@ -3896,6 +3905,7 @@ msgid "Edit Toolbar"
 msgstr ""
 
 #: src/translate/deeplengine.cpp:56 src/translate/googlecloudengine.cpp:136
+#: src/translate/mintengine.cpp:60
 #, kde-format
 msgid ""
 "Remote service error %1 %2\n"
@@ -3903,6 +3913,7 @@ msgid ""
 msgstr ""
 
 #: src/translate/deeplengine.cpp:65 src/translate/googlecloudengine.cpp:145
+#: src/translate/mintengine.cpp:69
 #, kde-format
 msgid ""
 "HTTP Error %1 - %2\n"
@@ -3910,6 +3921,7 @@ msgid ""
 msgstr ""
 
 #: src/translate/deeplengine.cpp:70 src/translate/googlecloudengine.cpp:150
+#: src/translate/mintengine.cpp:74
 #, kde-format
 msgid ""
 "Network Error %1\n"
@@ -3922,11 +3934,24 @@ msgstr ""
 msgid "DeepL Engine Error"
 msgstr "A hibák törlése"
 
-#: src/translate/deeplengine.cpp:128 src/translate/googlecloudengine.cpp:300
+#: src/translate/deeplengine.cpp:102 src/translate/googlecloudengine.cpp:283
+#: src/translate/mintengine.cpp:125
+#, kde-format
+msgid "Updating languages..."
+msgstr ""
+
+#: src/translate/deeplengine.cpp:123 src/translate/googlecloudengine.cpp:298
 #, fuzzy, kde-format
 #| msgid "Output language:"
 msgid "Autodetect Language"
 msgstr "Kimeneti nyelv:"
+
+#: src/translate/deeplengine.cpp:158 src/translate/googlecloudengine.cpp:331
+#: src/translate/mintengine.cpp:221
+#, fuzzy, kde-format
+#| msgid "Translate..."
+msgid "Translating lines..."
+msgstr "Fordítás..."
 
 #. i18n: ectx: property (title), widget (QGroupBox, grpAuth)
 #: src/translate/deeplengine.ui:17 src/translate/googlecloudengine.ui:17
@@ -3962,6 +3987,7 @@ msgstr ""
 
 #. i18n: ectx: property (title), widget (QGroupBox, grpSettings)
 #: src/translate/deeplengine.ui:104 src/translate/googlecloudengine.ui:91
+#: src/translate/mintengine.ui:92
 #, fuzzy, kde-format
 #| msgctxt "@title:group"
 #| msgid "Settings"
@@ -3970,6 +3996,7 @@ msgstr "Beállítások"
 
 #. i18n: ectx: property (text), widget (QLabel, labSource)
 #: src/translate/deeplengine.ui:110 src/translate/googlecloudengine.ui:97
+#: src/translate/mintengine.ui:98
 #, fuzzy, kde-format
 #| msgid "Input language:"
 msgid "Source language:"
@@ -3977,6 +4004,7 @@ msgstr "Bemeneti nyelv:"
 
 #. i18n: ectx: property (text), widget (QLabel, labTranslation)
 #: src/translate/deeplengine.ui:120 src/translate/googlecloudengine.ui:107
+#: src/translate/mintengine.ui:108
 #, fuzzy, kde-format
 #| msgid "Translate"
 msgid "Translate to:"
@@ -4025,18 +4053,52 @@ msgid ""
 "different manner.</p>"
 msgstr ""
 
-#: src/translate/translatedialog.cpp:28
+#: src/translate/mintengine.cpp:80
+#, fuzzy, kde-format
+#| msgid "Clear Errors"
+msgid "MinT Engine Error"
+msgstr "A hibák törlése"
+
+#. i18n: ectx: property (title), widget (QGroupBox, grpAuth)
+#: src/translate/mintengine.ui:17
+#, kde-format
+msgid "API Server"
+msgstr ""
+
+#. i18n: ectx: property (text), widget (QLabel, labApiURLPrefix)
+#: src/translate/mintengine.ui:40
+#, kde-format
+msgid "Service URL:"
+msgstr ""
+
+#. i18n: ectx: property (text), widget (QPushButton, btnUpdate)
+#: src/translate/mintengine.ui:50
+#, kde-format
+msgid "Update"
+msgstr ""
+
+#. i18n: ectx: property (text), widget (QLabel, labHelp)
+#: src/translate/mintengine.ui:76
+#, kde-format
+msgid ""
+"You need to provide an URL to a MinT machine translation system API. You can "
+"<a href=\"https://gerrit.wikimedia.org/g/mediawiki/services/"
+"machinetranslation\">setup your own service</a> or use some <a href="
+"\"https://translate.wmcloud.org/\">public API</a>."
+msgstr ""
+
+#: src/translate/translatedialog.cpp:31
 #, kde-format
 msgid "Translate"
 msgstr "Fordítás"
 
-#: src/translate/translatedialog.cpp:41
+#: src/translate/translatedialog.cpp:46
 #, fuzzy, kde-format
 #| msgid "Untranslated text"
 msgid "Translate texts in"
 msgstr "Fordítatlan szövegek"
 
-#: src/translate/translatedialog.cpp:72
+#: src/translate/translatedialog.cpp:92
 #, fuzzy, kde-format
 #| msgid "Untranslated text"
 msgid "Translate texts"

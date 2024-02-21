@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: subtitlecomposer\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-01-02 00:41+0000\n"
+"POT-Creation-Date: 2024-02-21 01:37+0000\n"
 "PO-Revision-Date: 2023-12-30 11:07+0100\n"
 "Last-Translator: Łukasz Wojniłowicz <lukasz.wojnilowicz@gmail.com>\n"
 "Language-Team: Polish <kde-i18n-doc@kde.org>\n"
@@ -43,58 +43,58 @@ msgctxt "Encodings menu"
 msgid "Autodetect"
 msgstr "Wykryj samoczynnie"
 
-#: src/application.cpp:499
+#: src/application.cpp:497
 #, kde-format
 msgid "Go to Line"
 msgstr "Przejdź do wiersza"
 
-#: src/application.cpp:499
+#: src/application.cpp:497
 #, kde-format
 msgid "&Go to line:"
 msgstr "&Przejdź do wiersza:"
 
-#: src/application.cpp:672 src/core/subtitle.cpp:878
+#: src/application.cpp:670 src/core/subtitle.cpp:878
 #, kde-format
 msgid "Maximize Durations"
 msgstr "Maksymalizuj czas trwania"
 
-#: src/application.cpp:700 src/core/subtitle.cpp:1153
+#: src/application.cpp:698 src/core/subtitle.cpp:1153
 #, kde-format
 msgid "Unbreak Lines"
 msgstr "Nie łam wierszy"
 
-#: src/application.cpp:711 src/core/subtitle.cpp:1162
+#: src/application.cpp:709 src/core/subtitle.cpp:1162
 #, kde-format
 msgid "Simplify Spaces"
 msgstr "Uprość spacje"
 
-#: src/application.cpp:772
+#: src/application.cpp:770
 #, kde-format
 msgid "Open Video"
 msgstr "Otwórz film"
 
-#: src/application.cpp:970 src/application.cpp:977
+#: src/application.cpp:968 src/application.cpp:975
 #: src/application_subtitle.cpp:658
 #, kde-format
 msgid "Untitled"
 msgstr "Bez nazwy"
 
-#: src/application.cpp:972 src/application_subtitle.cpp:658
+#: src/application.cpp:970 src/application_subtitle.cpp:658
 #, kde-format
 msgid "Untitled Translation"
 msgstr "Tłumaczenie bez nazwy"
 
-#: src/application.cpp:1073
+#: src/application.cpp:1071
 #, kde-format
 msgid "Pause"
 msgstr "Wstrzymaj"
 
-#: src/application.cpp:1081 src/application_actions.cpp:567
+#: src/application.cpp:1079 src/application_actions.cpp:567
 #, kde-format
 msgid "Play"
 msgstr "Odtwarzaj"
 
-#: src/application.cpp:1142
+#: src/application.cpp:1140
 #, kde-format
 msgid "Seek backwards 1 second"
 msgid_plural "Seek backwards %1 seconds"
@@ -102,7 +102,7 @@ msgstr[0] "Przewija wstecz o 1 sekundę"
 msgstr[1] "Przewija wstecz o %1 sekundy"
 msgstr[2] "Przewija wstecz o %1 sekund"
 
-#: src/application.cpp:1143
+#: src/application.cpp:1141
 #, kde-format
 msgid "Seek forwards 1 second"
 msgid_plural "Seek forwards %1 seconds"
@@ -110,7 +110,7 @@ msgstr[0] "Przewija wprzód o 1 sekundę"
 msgstr[1] "Przewija wprzód o %1 sekundy"
 msgstr[2] "Przewija wprzód o %1 sekund"
 
-#: src/application.cpp:1146 src/application.cpp:1150
+#: src/application.cpp:1144 src/application.cpp:1148
 #, kde-format
 msgid "Shift %2%1 millisecond"
 msgid_plural "Shift %2%1 milliseconds"
@@ -118,7 +118,7 @@ msgstr[0] "Przesuń o %2%1 milisekundę"
 msgstr[1] "Przesuń o %2%1 milisekundy"
 msgstr[2] "Przesuń o %2%1 milisekund"
 
-#: src/application.cpp:1147 src/application.cpp:1151
+#: src/application.cpp:1145 src/application.cpp:1149
 #, kde-format
 msgid "Shift selected lines %2%1 millisecond"
 msgid_plural "Shift selected lines %2%1 milliseconds"
@@ -2747,6 +2747,7 @@ msgstr "Następny obraz"
 
 #. i18n: ectx: property (text), widget (QPushButton, btnAbort)
 #: src/formats/vobsub/vobsubinputprocessdialog.ui:272
+#: src/translate/translateengine.cpp:66
 #, kde-format
 msgid "Abort"
 msgstr "Przerwij"
@@ -3442,14 +3443,16 @@ msgstr "JSON konta usługowego, zawierający klucz prywatny"
 
 #. i18n: ectx: label, entry (gctLangSource), group (GoogleCloudTranslate)
 #. i18n: ectx: label, entry (dltLangSource), group (DeepLTranslate)
-#: src/scconfig.kcfg:234 src/scconfig.kcfg:258
+#. i18n: ectx: label, entry (mintLangSource), group (MinTTranslate)
+#: src/scconfig.kcfg:234 src/scconfig.kcfg:258 src/scconfig.kcfg:271
 #, kde-format
 msgid "source language - cached"
 msgstr "język źródłowy - w pamięci podręcznej"
 
 #. i18n: ectx: label, entry (gctLangTrans), group (GoogleCloudTranslate)
 #. i18n: ectx: label, entry (dltLangTrans), group (DeepLTranslate)
-#: src/scconfig.kcfg:237 src/scconfig.kcfg:261
+#. i18n: ectx: label, entry (mintLangTrans), group (MinTTranslate)
+#: src/scconfig.kcfg:237 src/scconfig.kcfg:261 src/scconfig.kcfg:274
 #, kde-format
 msgid "translation language - cached"
 msgstr "język docelowy - w pamięci podręcznej"
@@ -3484,58 +3487,64 @@ msgstr "Klucz uwierzytelniający API DeepL"
 msgid "DeepL API domain name"
 msgstr "Nazwa domeny API DeepL"
 
-#: src/scripting/scriptsmanager.cpp:86
+#. i18n: ectx: label, entry (mintURLPrefix), group (MinTTranslate)
+#: src/scconfig.kcfg:267
+#, kde-format
+msgid "MinT API URL prefix"
+msgstr ""
+
+#: src/scripting/scriptsmanager.cpp:73
 #, kde-format
 msgid "Non-Script Files"
 msgstr "Pliki nieskryptowe"
 
-#: src/scripting/scriptsmanager.cpp:168
+#: src/scripting/scriptsmanager.cpp:155
 #, kde-format
 msgid "Title"
 msgstr "Tytuł"
 
-#: src/scripting/scriptsmanager.cpp:169
+#: src/scripting/scriptsmanager.cpp:156
 #, kde-format
 msgid "Version"
 msgstr "Wersja"
 
-#: src/scripting/scriptsmanager.cpp:170
+#: src/scripting/scriptsmanager.cpp:157
 #, kde-format
 msgid "Author"
 msgstr "Autor"
 
-#: src/scripting/scriptsmanager.cpp:171
+#: src/scripting/scriptsmanager.cpp:158
 #, kde-format
 msgid "Path"
 msgstr "Ścieżka"
 
-#: src/scripting/scriptsmanager.cpp:365
+#: src/scripting/scriptsmanager.cpp:352
 #, kde-format
 msgid "Information"
 msgstr "Informacje"
 
-#: src/scripting/scriptsmanager.cpp:371
+#: src/scripting/scriptsmanager.cpp:358
 #, kde-format
 msgid "Warning"
 msgstr "Ostrzeżenie"
 
-#: src/scripting/scriptsmanager.cpp:377
+#: src/scripting/scriptsmanager.cpp:364
 #, kde-format
 msgid "Error"
 msgstr "Błąd"
 
 #. i18n: ectx: property (text), widget (QPushButton, btnEdit)
-#: src/scripting/scriptsmanager.cpp:405 src/scripting/scriptsmanager.ui:71
+#: src/scripting/scriptsmanager.cpp:393 src/scripting/scriptsmanager.ui:71
 #, kde-format
 msgid "Edit"
 msgstr "Edytuj"
 
-#: src/scripting/scriptsmanager.cpp:408
+#: src/scripting/scriptsmanager.cpp:396
 #, kde-format
 msgid "View"
 msgstr "Widok"
 
-#: src/scripting/scriptsmanager.cpp:478
+#: src/scripting/scriptsmanager.cpp:466
 #, kde-format
 msgid ""
 "A script already exists with this name.\n"
@@ -3544,37 +3553,37 @@ msgstr ""
 "Skrypt o tej nazwie już istnieje.\n"
 "Czy chcesz wpisać inną nazwę?"
 
-#: src/scripting/scriptsmanager.cpp:479
+#: src/scripting/scriptsmanager.cpp:467
 #, kde-format
 msgid "Duplicate filename"
 msgstr "Powielona nazwa pliku"
 
-#: src/scripting/scriptsmanager.cpp:480
+#: src/scripting/scriptsmanager.cpp:468
 #, kde-format
 msgid "Yes"
 msgstr "Tak"
 
-#: src/scripting/scriptsmanager.cpp:484
+#: src/scripting/scriptsmanager.cpp:472
 #, kde-format
 msgid "Create New Script"
 msgstr "Utwórz nowy skrypt"
 
-#: src/scripting/scriptsmanager.cpp:484 src/scripting/scriptsmanager.cpp:552
+#: src/scripting/scriptsmanager.cpp:472 src/scripting/scriptsmanager.cpp:540
 #, kde-format
 msgid "Script name:"
 msgstr "Nazwa skryptu:"
 
-#: src/scripting/scriptsmanager.cpp:495
+#: src/scripting/scriptsmanager.cpp:483
 #, kde-format
 msgid "There was an error creating the file <b>%1</b>."
 msgstr "Wystąpił błąd podczas tworzenia pliku <b/>%1</b>."
 
-#: src/scripting/scriptsmanager.cpp:530
+#: src/scripting/scriptsmanager.cpp:518
 #, kde-format
 msgid "Select Existing Script"
 msgstr "Wybierz istniejący skrypt"
 
-#: src/scripting/scriptsmanager.cpp:547
+#: src/scripting/scriptsmanager.cpp:535
 #, kde-format
 msgid ""
 "You must enter an unused name to continue.\n"
@@ -3583,63 +3592,63 @@ msgstr ""
 "Aby kontynuować należy wprowadzić nieużywaną nazwę.\n"
 "Czy chcesz wprowadzić inną nazwę?"
 
-#: src/scripting/scriptsmanager.cpp:548
+#: src/scripting/scriptsmanager.cpp:536
 #, kde-format
 msgid "Name Already Used"
 msgstr "Nazwa jest już w użyciu"
 
-#: src/scripting/scriptsmanager.cpp:552
+#: src/scripting/scriptsmanager.cpp:540
 #, kde-format
 msgid "Rename Script"
 msgstr "Zmień nazwę skryptu"
 
-#: src/scripting/scriptsmanager.cpp:561
+#: src/scripting/scriptsmanager.cpp:548
 #, kde-format
 msgid "There was an error opening the file <b>%1</b>."
 msgstr "Wystąpił błąd podczas otwierania pliku <b>%1</b>."
 
-#: src/scripting/scriptsmanager.cpp:569
+#: src/scripting/scriptsmanager.cpp:556
 #, kde-format
 msgid "There was an error copying the file to <b>%1</b>."
 msgstr "Wystąpił błąd podczas kopiowania pliku <b>%1</b>."
 
-#: src/scripting/scriptsmanager.cpp:584
+#: src/scripting/scriptsmanager.cpp:571
 #, kde-format
 msgid "Do you really want to send file <b>%1</b> to the trash?"
 msgstr "Czy chcesz przenieść plik <b>%1</b> do kosza?"
 
-#: src/scripting/scriptsmanager.cpp:584
+#: src/scripting/scriptsmanager.cpp:571
 #, kde-format
 msgid "Move to Trash"
 msgstr "Wyrzuć do kosza"
 
-#: src/scripting/scriptsmanager.cpp:588
+#: src/scripting/scriptsmanager.cpp:575
 #, kde-format
 msgid "There was an error removing the file <b>%1</b>."
 msgstr "Wystąpił błąd podczas usuwania pliku <b>%1</b>."
 
-#: src/scripting/scriptsmanager.cpp:621
+#: src/scripting/scriptsmanager.cpp:593
 #, kde-format
 msgid "Could not launch external editor.\n"
 msgstr "Nie udało się uruchomić zewnętrznego edytora.\n"
 
-#: src/scripting/scriptsmanager.cpp:642
+#: src/scripting/scriptsmanager.cpp:613
 #, kde-format
 msgid "Error opening script %1."
 msgstr "Błąd podczas otwierania skryptu %1."
 
-#: src/scripting/scriptsmanager.cpp:642 src/scripting/scriptsmanager.cpp:657
-#: src/scripting/scriptsmanager.cpp:659
+#: src/scripting/scriptsmanager.cpp:613 src/scripting/scriptsmanager.cpp:628
+#: src/scripting/scriptsmanager.cpp:630
 #, kde-format
 msgid "Error Running Script"
 msgstr "Błąd podczas wykonywania skryptu"
 
-#: src/scripting/scriptsmanager.cpp:655
+#: src/scripting/scriptsmanager.cpp:626
 #, kde-format
 msgid "Path: %1"
 msgstr "Ścieżka: %1"
 
-#: src/scripting/scriptsmanager.cpp:672
+#: src/scripting/scriptsmanager.cpp:643
 #, kde-format
 msgid "Tools"
 msgstr "Narzędzia"
@@ -3948,6 +3957,7 @@ msgid "Edit Toolbar"
 msgstr "Pasek narzędzi edycji"
 
 #: src/translate/deeplengine.cpp:56 src/translate/googlecloudengine.cpp:136
+#: src/translate/mintengine.cpp:60
 #, kde-format
 msgid ""
 "Remote service error %1 %2\n"
@@ -3957,6 +3967,7 @@ msgstr ""
 "%3"
 
 #: src/translate/deeplengine.cpp:65 src/translate/googlecloudengine.cpp:145
+#: src/translate/mintengine.cpp:69
 #, kde-format
 msgid ""
 "HTTP Error %1 - %2\n"
@@ -3966,6 +3977,7 @@ msgstr ""
 "%3"
 
 #: src/translate/deeplengine.cpp:70 src/translate/googlecloudengine.cpp:150
+#: src/translate/mintengine.cpp:74
 #, kde-format
 msgid ""
 "Network Error %1\n"
@@ -3979,10 +3991,23 @@ msgstr ""
 msgid "DeepL Engine Error"
 msgstr "Błąd silnika DeepL"
 
-#: src/translate/deeplengine.cpp:128 src/translate/googlecloudengine.cpp:300
+#: src/translate/deeplengine.cpp:102 src/translate/googlecloudengine.cpp:283
+#: src/translate/mintengine.cpp:125
+#, kde-format
+msgid "Updating languages..."
+msgstr ""
+
+#: src/translate/deeplengine.cpp:123 src/translate/googlecloudengine.cpp:298
 #, kde-format
 msgid "Autodetect Language"
 msgstr "Sam wykryj język"
+
+#: src/translate/deeplengine.cpp:158 src/translate/googlecloudengine.cpp:331
+#: src/translate/mintengine.cpp:221
+#, fuzzy, kde-format
+#| msgid "Translate..."
+msgid "Translating lines..."
+msgstr "Przetłumacz..."
 
 #. i18n: ectx: property (title), widget (QGroupBox, grpAuth)
 #: src/translate/deeplengine.ui:17 src/translate/googlecloudengine.ui:17
@@ -4020,18 +4045,21 @@ msgstr ""
 
 #. i18n: ectx: property (title), widget (QGroupBox, grpSettings)
 #: src/translate/deeplengine.ui:104 src/translate/googlecloudengine.ui:91
+#: src/translate/mintengine.ui:92
 #, kde-format
 msgid "Settings"
 msgstr "Ustawienia"
 
 #. i18n: ectx: property (text), widget (QLabel, labSource)
 #: src/translate/deeplengine.ui:110 src/translate/googlecloudengine.ui:97
+#: src/translate/mintengine.ui:98
 #, kde-format
 msgid "Source language:"
 msgstr "Język źródłowy:"
 
 #. i18n: ectx: property (text), widget (QLabel, labTranslation)
 #: src/translate/deeplengine.ui:120 src/translate/googlecloudengine.ui:107
+#: src/translate/mintengine.ui:108
 #, kde-format
 msgid "Translate to:"
 msgstr "Przetłumacz na:"
@@ -4085,17 +4113,51 @@ msgstr ""
 "lub musi mieć przyznany dostęp do API Tłumaczenia w Chmurze Google w jakiś "
 "inny sposób.</p>"
 
-#: src/translate/translatedialog.cpp:28
+#: src/translate/mintengine.cpp:80
+#, fuzzy, kde-format
+#| msgid "DeepL Engine Error"
+msgid "MinT Engine Error"
+msgstr "Błąd silnika DeepL"
+
+#. i18n: ectx: property (title), widget (QGroupBox, grpAuth)
+#: src/translate/mintengine.ui:17
+#, kde-format
+msgid "API Server"
+msgstr ""
+
+#. i18n: ectx: property (text), widget (QLabel, labApiURLPrefix)
+#: src/translate/mintengine.ui:40
+#, kde-format
+msgid "Service URL:"
+msgstr ""
+
+#. i18n: ectx: property (text), widget (QPushButton, btnUpdate)
+#: src/translate/mintengine.ui:50
+#, kde-format
+msgid "Update"
+msgstr ""
+
+#. i18n: ectx: property (text), widget (QLabel, labHelp)
+#: src/translate/mintengine.ui:76
+#, kde-format
+msgid ""
+"You need to provide an URL to a MinT machine translation system API. You can "
+"<a href=\"https://gerrit.wikimedia.org/g/mediawiki/services/"
+"machinetranslation\">setup your own service</a> or use some <a href="
+"\"https://translate.wmcloud.org/\">public API</a>."
+msgstr ""
+
+#: src/translate/translatedialog.cpp:31
 #, kde-format
 msgid "Translate"
 msgstr "Przetłumacz"
 
-#: src/translate/translatedialog.cpp:41
+#: src/translate/translatedialog.cpp:46
 #, kde-format
 msgid "Translate texts in"
 msgstr "Przetłumacz teksty na"
 
-#: src/translate/translatedialog.cpp:72
+#: src/translate/translatedialog.cpp:92
 #, kde-format
 msgid "Translate texts"
 msgstr "Przetłumacz teksty "
