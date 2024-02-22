@@ -3,13 +3,13 @@
 # This file is distributed under the license LGPL version 2.1 or
 # version 3 or later versions approved by the membership of KDE e.V.
 #
-# Yuri Chornoivan <yurchor@ukr.net>, 2009, 2019, 2020, 2021, 2022, 2023.
+# Yuri Chornoivan <yurchor@ukr.net>, 2009, 2019, 2020, 2021, 2022, 2023, 2024.
 msgid ""
 msgstr ""
 "Project-Id-Version: subtitlecomposer\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-02-21 01:37+0000\n"
-"PO-Revision-Date: 2023-12-30 08:49+0200\n"
+"PO-Revision-Date: 2024-02-21 08:41+0200\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian <kde-i18n-uk@kde.org>\n"
 "Language: uk\n"
@@ -3497,7 +3497,7 @@ msgstr "Назва домену програмного інтерфейсу Deep
 #: src/scconfig.kcfg:267
 #, kde-format
 msgid "MinT API URL prefix"
-msgstr ""
+msgstr "Префікс адреси програмного інтерфейсу MinT"
 
 #: src/scripting/scriptsmanager.cpp:73
 #, kde-format
@@ -4001,7 +4001,7 @@ msgstr "Помилка рушія DeepL"
 #: src/translate/mintengine.cpp:125
 #, kde-format
 msgid "Updating languages..."
-msgstr ""
+msgstr "Оновлюємо мови…"
 
 #: src/translate/deeplengine.cpp:123 src/translate/googlecloudengine.cpp:298
 #, kde-format
@@ -4010,10 +4010,9 @@ msgstr "Автовизначення мови"
 
 #: src/translate/deeplengine.cpp:158 src/translate/googlecloudengine.cpp:331
 #: src/translate/mintengine.cpp:221
-#, fuzzy, kde-format
-#| msgid "Translate..."
+#, kde-format
 msgid "Translating lines..."
-msgstr "Перекласти…"
+msgstr "Перекладаємо рядки…"
 
 #. i18n: ectx: property (title), widget (QGroupBox, grpAuth)
 #: src/translate/deeplengine.ui:17 src/translate/googlecloudengine.ui:17
@@ -4121,28 +4120,27 @@ msgstr ""
 "інтерфейсів перекладу у «хмарі» Google в інший спосіб.</p>"
 
 #: src/translate/mintengine.cpp:80
-#, fuzzy, kde-format
-#| msgid "DeepL Engine Error"
+#, kde-format
 msgid "MinT Engine Error"
-msgstr "Помилка рушія DeepL"
+msgstr "Помилка рушія MinT"
 
 #. i18n: ectx: property (title), widget (QGroupBox, grpAuth)
 #: src/translate/mintengine.ui:17
 #, kde-format
 msgid "API Server"
-msgstr ""
+msgstr "Сервер програмного інтерфейсу"
 
 #. i18n: ectx: property (text), widget (QLabel, labApiURLPrefix)
 #: src/translate/mintengine.ui:40
 #, kde-format
 msgid "Service URL:"
-msgstr ""
+msgstr "Адреса служби:"
 
 #. i18n: ectx: property (text), widget (QPushButton, btnUpdate)
 #: src/translate/mintengine.ui:50
 #, kde-format
 msgid "Update"
-msgstr ""
+msgstr "Оновити"
 
 #. i18n: ectx: property (text), widget (QLabel, labHelp)
 #: src/translate/mintengine.ui:76
@@ -4153,6 +4151,11 @@ msgid ""
 "machinetranslation\">setup your own service</a> or use some <a href="
 "\"https://translate.wmcloud.org/\">public API</a>."
 msgstr ""
+"Вам слід надати адресу програмного інтерфейсу системи комп'ютерного "
+"перекладу MinT. Ви можете <a href=\"https://gerrit.wikimedia.org/g/mediawiki/"
+"services/machinetranslation\">налаштувати вашу власну службу</a> або "
+"скористатися <a href=\"https://translate.wmcloud.org/\">загальнодоступним "
+"програмним інтерфейсом</a>."
 
 #: src/translate/translatedialog.cpp:31
 #, kde-format

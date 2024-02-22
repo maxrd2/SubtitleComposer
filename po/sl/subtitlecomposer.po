@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: subtitlecomposer\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-02-21 01:37+0000\n"
-"PO-Revision-Date: 2023-12-30 08:47+0100\n"
+"PO-Revision-Date: 2024-02-21 06:44+0100\n"
 "Last-Translator: Matjaž Jeran <matjaz.jeran@amis.net>\n"
 "Language-Team: Slovenian <lugos-slo@lugos.si>\n"
 "Language: sl\n"
@@ -18,7 +18,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=4; plural=(n%100==1 ? 1 : n%100==2 ? 2 : n%100==3 || n"
 "%100==4 ? 3 : 0);\n"
-"X-Generator: Poedit 3.4.1\n"
+"X-Generator: Poedit 3.4.2\n"
 
 #: src/actions/kcodecactionext.cpp:29
 #, kde-format
@@ -3462,7 +3462,7 @@ msgstr "Ime domene API DeepL"
 #: src/scconfig.kcfg:267
 #, kde-format
 msgid "MinT API URL prefix"
-msgstr ""
+msgstr "Predpona URL-ja MinT API"
 
 #: src/scripting/scriptsmanager.cpp:73
 #, kde-format
@@ -3969,7 +3969,7 @@ msgstr "Nastavi zaledja DeepL"
 #: src/translate/mintengine.cpp:125
 #, kde-format
 msgid "Updating languages..."
-msgstr ""
+msgstr "Posodabljanje jezikov..."
 
 #: src/translate/deeplengine.cpp:123 src/translate/googlecloudengine.cpp:298
 #, kde-format
@@ -3978,10 +3978,9 @@ msgstr "Samoprepoznava jezika"
 
 #: src/translate/deeplengine.cpp:158 src/translate/googlecloudengine.cpp:331
 #: src/translate/mintengine.cpp:221
-#, fuzzy, kde-format
-#| msgid "Translate..."
+#, kde-format
 msgid "Translating lines..."
-msgstr "Prevedi..."
+msgstr "Prevajanje vrstic..."
 
 #. i18n: ectx: property (title), widget (QGroupBox, grpAuth)
 #: src/translate/deeplengine.ui:17 src/translate/googlecloudengine.ui:17
@@ -4088,28 +4087,27 @@ msgstr ""
 "Translation na drugačen način.</p>"
 
 #: src/translate/mintengine.cpp:80
-#, fuzzy, kde-format
-#| msgid "DeepL Engine Error"
+#, kde-format
 msgid "MinT Engine Error"
-msgstr "Nastavi zaledja DeepL"
+msgstr "Napaka stroja MinT"
 
 #. i18n: ectx: property (title), widget (QGroupBox, grpAuth)
 #: src/translate/mintengine.ui:17
 #, kde-format
 msgid "API Server"
-msgstr ""
+msgstr "Strežnik API"
 
 #. i18n: ectx: property (text), widget (QLabel, labApiURLPrefix)
 #: src/translate/mintengine.ui:40
 #, kde-format
 msgid "Service URL:"
-msgstr ""
+msgstr "URL servisa:"
 
 #. i18n: ectx: property (text), widget (QPushButton, btnUpdate)
 #: src/translate/mintengine.ui:50
 #, kde-format
 msgid "Update"
-msgstr ""
+msgstr "Posodobitev"
 
 #. i18n: ectx: property (text), widget (QLabel, labHelp)
 #: src/translate/mintengine.ui:76
@@ -4120,6 +4118,10 @@ msgid ""
 "machinetranslation\">setup your own service</a> or use some <a href="
 "\"https://translate.wmcloud.org/\">public API</a>."
 msgstr ""
+"Zagotoviti morate URL za API sistema za strojno prevajanje MinT. Lahko <a "
+"href=\"https://gerrit.wikimedia.org/g/mediawiki/services/machinetranslation"
+"\">nastavite svojo storitev</a> ali uporabite nek javni API <a href="
+"\"https://translate.wmcloud. org/\"></a>."
 
 #: src/translate/translatedialog.cpp:31
 #, kde-format

@@ -1,13 +1,13 @@
 # Copyright (C) 2023 This file is copyright:
 # This file is distributed under the same license as the subtitlecomposer package.
 #
-# SPDX-FileCopyrightText: 2022, 2023 Emir SARI <emir_sari@icloud.com>
+# SPDX-FileCopyrightText: 2022, 2023, 2024 Emir SARI <emir_sari@icloud.com>
 msgid ""
 msgstr ""
 "Project-Id-Version: subtitlecomposer\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-02-21 01:37+0000\n"
-"PO-Revision-Date: 2023-12-30 16:27+0300\n"
+"PO-Revision-Date: 2024-02-21 16:51+0300\n"
 "Last-Translator: Emir SARI <emir_sari@icloud.com>\n"
 "Language-Team: Turkish <kde-l10n-tr@kde.org>\n"
 "Language: tr\n"
@@ -15,7 +15,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
-"X-Generator: Lokalize 24.01.85\n"
+"X-Generator: Lokalize 24.02.0\n"
 
 #: src/actions/kcodecactionext.cpp:29
 #, kde-format
@@ -122,7 +122,7 @@ msgstr "Uygulamadan Çık"
 #: src/application_actions.cpp:36
 #, kde-format
 msgid "Configure Subtitle Composer"
-msgstr "Altyazı Oluşturucusu'yu Yapılandır"
+msgstr "Altyazı Oluşturucusu’nu Yapılandır"
 
 #: src/application_actions.cpp:40
 #, kde-format
@@ -139,7 +139,7 @@ msgstr "Boş bir altyazı oluştur"
 #, kde-format
 msgctxt "@action:inmenu Open subtitle file"
 msgid "Open Subtitle..."
-msgstr "Altyazı Aç..."
+msgstr "Altyazı Aç…"
 
 #: src/application_actions.cpp:50 src/application_actions.cpp:67
 #, kde-format
@@ -149,7 +149,7 @@ msgstr "Altyazı dosyası aç"
 #: src/application_actions.cpp:58
 #, kde-format
 msgid "Reload As..."
-msgstr "Farklı Yeniden Yükle..."
+msgstr "Farklı Yeniden Yükle…"
 
 #: src/application_actions.cpp:59
 #, kde-format
@@ -175,7 +175,7 @@ msgstr "Açık altyazıyı kaydet"
 #: src/application_actions.cpp:82
 #, kde-format
 msgid "Save As..."
-msgstr "Farklı Kaydet..."
+msgstr "Farklı Kaydet…"
 
 #: src/application_actions.cpp:83
 #, kde-format
@@ -205,7 +205,7 @@ msgstr "Boş bir altyazı çevirisi oluştur"
 #: src/application_actions.cpp:109
 #, kde-format
 msgid "Open Translation..."
-msgstr "Çeviri Aç..."
+msgstr "Çeviri Aç…"
 
 #: src/application_actions.cpp:110 src/application_actions.cpp:127
 #, kde-format
@@ -215,7 +215,7 @@ msgstr "Altyazı çeviri dosyası aç"
 #: src/application_actions.cpp:118
 #, kde-format
 msgid "Reload Translation As..."
-msgstr "Çeviri Farklı Yeniden Yükle..."
+msgstr "Çeviriyi Farklı Yeniden Yükle…"
 
 #: src/application_actions.cpp:119
 #, kde-format
@@ -240,7 +240,7 @@ msgstr "Açık altyazı çevirisini kaydet"
 #: src/application_actions.cpp:145
 #, kde-format
 msgid "Save Translation As..."
-msgstr "Çeviriyi Farklı Kaydet..."
+msgstr "Çeviriyi Farklı Kaydet…"
 
 #: src/application_actions.cpp:146
 #, kde-format
@@ -260,7 +260,7 @@ msgstr "Açık altyazı çevirisini kapat"
 #: src/application_actions.cpp:172
 #, kde-format
 msgid "Split Subtitle..."
-msgstr "Altyazıyı Böl..."
+msgstr "Altyazıyı Böl…"
 
 #: src/application_actions.cpp:173
 #, kde-format
@@ -270,7 +270,7 @@ msgstr "Açık altyazıyı iki parçaya böl"
 #: src/application_actions.cpp:179
 #, kde-format
 msgid "Join Subtitles..."
-msgstr "Altyazıları Birbirine Kat..."
+msgstr "Altyazıları Birbirine Kat…"
 
 #: src/application_actions.cpp:180
 #, kde-format
@@ -343,7 +343,7 @@ msgstr "Tüm satırları seç"
 #: src/application_actions.cpp:236
 #, kde-format
 msgid "Go to Line..."
-msgstr "Satıra Git..."
+msgstr "Satıra Git…"
 
 #: src/application_actions.cpp:237
 #, kde-format
@@ -353,7 +353,7 @@ msgstr "Belirtilen satıra git"
 #: src/application_actions.cpp:245
 #, kde-format
 msgid "Find..."
-msgstr "Bul..."
+msgstr "Bul…"
 
 #: src/application_actions.cpp:246
 #, kde-format
@@ -383,7 +383,7 @@ msgstr "Dizinin veya düzenli ifadenin önceki oluşunu bul"
 #: src/application_actions.cpp:271
 #, kde-format
 msgid "Replace..."
-msgstr "Değiştir..."
+msgstr "Değiştir…"
 
 #: src/application_actions.cpp:272
 #, kde-format
@@ -413,7 +413,7 @@ msgstr "Geçerli satırdan sonraki satırı etkin yap"
 #: src/application_actions.cpp:298
 #, kde-format
 msgid "Detect Errors..."
-msgstr "Hataları Algıla..."
+msgstr "Hataları Algıla…"
 
 #: src/application_actions.cpp:299
 #, kde-format
@@ -453,7 +453,7 @@ msgstr "Hata veya im içeren sonraki satırı seç"
 #: src/application_actions.cpp:333
 #, kde-format
 msgid "Spelling..."
-msgstr "Yazım Denetimi..."
+msgstr "Yazım Denetimi…"
 
 #: src/application_actions.cpp:334
 #, kde-format
@@ -523,7 +523,7 @@ msgstr "Seçili satırların metin rengini değiştir"
 #: src/application_actions.cpp:393
 #, kde-format
 msgid "Shift..."
-msgstr "Kaydır..."
+msgstr "Kaydır…"
 
 #: src/application_actions.cpp:394
 #, kde-format
@@ -533,7 +533,7 @@ msgstr "Seçili satırları belirtilen zaman kadar kaydır"
 #: src/application_actions.cpp:413
 #, kde-format
 msgid "Adjust..."
-msgstr "Uydur..."
+msgstr "Uydur…"
 
 #: src/application_actions.cpp:414
 #, kde-format
@@ -543,7 +543,7 @@ msgstr "Tüm satırları belirtilen bir aralığa doğrusal olarak uydur"
 #: src/application_actions.cpp:421
 #, kde-format
 msgid "Change Frame Rate..."
-msgstr "Kare Hızını Değiştir..."
+msgstr "Kare Hızını Değiştir…"
 
 #: src/application_actions.cpp:422
 #, kde-format
@@ -553,7 +553,7 @@ msgstr "Kare hızını yeniden yorumlayarak altyazı satırlarını yeniden zama
 #: src/application_actions.cpp:428
 #, kde-format
 msgid "Enforce Duration Limits..."
-msgstr "Süre Limitlerini Zorla..."
+msgstr "Süre Limitlerini Zorla…"
 
 #: src/application_actions.cpp:429
 #, kde-format
@@ -563,7 +563,7 @@ msgstr "Satırların en kısa ve/veya en uzun süre limitlerini zorla"
 #: src/application_actions.cpp:436
 #, kde-format
 msgid "Set Automatic Durations..."
-msgstr "Otomatik Süreler Ayarla..."
+msgstr "Otomatik Süreler Ayarla…"
 
 #: src/application_actions.cpp:437
 #, kde-format
@@ -574,7 +574,7 @@ msgstr ""
 #: src/application_actions.cpp:443
 #, kde-format
 msgid "Maximize Durations..."
-msgstr "Süreleri En Uzun Yap..."
+msgstr "Süreleri En Uzun Yap…"
 
 #: src/application_actions.cpp:444
 #, kde-format
@@ -585,7 +585,7 @@ msgstr ""
 #: src/application_actions.cpp:450
 #, kde-format
 msgid "Fix Overlapping Times..."
-msgstr "Üst Üste Binen Zamanları Düzelt..."
+msgstr "Üst Üste Binen Zamanları Düzelt…"
 
 #: src/application_actions.cpp:451
 #, kde-format
@@ -595,7 +595,7 @@ msgstr "Satırların üst üste binen zamanlarını düzelt"
 #: src/application_actions.cpp:457
 #, kde-format
 msgid "Synchronize with Subtitle..."
-msgstr "Altyazı ile Eşzamanla..."
+msgstr "Altyazı ile Eşzamanla…"
 
 #: src/application_actions.cpp:458
 #, kde-format
@@ -605,7 +605,7 @@ msgstr "Zamanlama bilgisini başka altyazıdan kopyala"
 #: src/application_actions.cpp:464
 #, kde-format
 msgid "Break Lines..."
-msgstr "Satırları Sonlandır..."
+msgstr "Satırları Sonlandır…"
 
 #: src/application_actions.cpp:465
 #, kde-format
@@ -615,7 +615,7 @@ msgstr "Satır sonlarını otomatik olarak ayarla"
 #: src/application_actions.cpp:471
 #, kde-format
 msgid "Unbreak Lines..."
-msgstr "Satırları Sonlandırma..."
+msgstr "Satırları Sonlandırma…"
 
 #: src/application_actions.cpp:472
 #, kde-format
@@ -625,7 +625,7 @@ msgstr "Satırlardan satır sonlarını kaldırır"
 #: src/application_actions.cpp:478
 #, kde-format
 msgid "Simplify Spaces..."
-msgstr "Boşlukları Yalınlaştır..."
+msgstr "Boşlukları Yalınlaştır…"
 
 #: src/application_actions.cpp:479
 #, kde-format
@@ -635,19 +635,19 @@ msgstr "Satırlardan gereksiz boşlukları kaldır"
 #: src/application_actions.cpp:485
 #, kde-format
 msgid "Change Case..."
-msgstr "Harf Biçimini Değiştir..."
+msgstr "Harf Biçimini Değiştir…"
 
 #: src/application_actions.cpp:486
 #, kde-format
 msgid "Change lines text to upper, lower, title or sentence case"
 msgstr ""
-"Satır metinlerini \"BÜYÜK\", \"küçük\", \"Başlık Biçimi\" veya \"Tümce.\" "
-"biçimine değiştir"
+"Satır metinlerini ‘BÜYÜK’, ‘küçük’, ‘Başlık Biçimi’ veya ‘Tümce.’ biçimine "
+"değiştir"
 
 #: src/application_actions.cpp:492
 #, kde-format
 msgid "Fix Punctuation..."
-msgstr "Noktalamayı Düzelt..."
+msgstr "Noktalamayı Düzelt…"
 
 #: src/application_actions.cpp:493
 #, kde-format
@@ -657,7 +657,7 @@ msgstr "Satırlardaki noktalama hatalarını düzelt"
 #: src/application_actions.cpp:499
 #, kde-format
 msgid "Translate..."
-msgstr "Çevir..."
+msgstr "Çevir…"
 
 #: src/application_actions.cpp:500
 #, kde-format
@@ -677,7 +677,7 @@ msgstr "Geçerli satır metnini yerinde düzenle"
 #: src/application_actions.cpp:515
 #, kde-format
 msgid "Open Video..."
-msgstr "Video Aç..."
+msgstr "Video Aç…"
 
 #: src/application_actions.cpp:516 src/application_actions.cpp:523
 #, kde-format
@@ -968,7 +968,7 @@ msgstr ""
 #, kde-format
 msgctxt "@action:inmenu Manage user scripts"
 msgid "Scripts Manager..."
-msgstr "Betik Yöneticisi..."
+msgstr "Betik Yöneticisi…"
 
 #: src/application_actions.cpp:770
 #, kde-format
@@ -2338,7 +2338,7 @@ msgstr "Tek ve çift tırnakları düzelt"
 #: src/dialogs/fixpunctuationdialog.cpp:30
 #, kde-format
 msgid "Fix English 'I' pronoun"
-msgstr "İngilizce \"I\" adılını düzelt"
+msgstr "İngilizce ‘I’ adılını düzelt"
 
 #: src/dialogs/fixpunctuationdialog.cpp:34
 #, kde-format
@@ -2611,7 +2611,7 @@ msgstr "Çift kesme imi ve tırnakları düzelt"
 #: src/formats/vobsub/vobsubinputinitdialog.ui:99
 #, kde-format
 msgid "Fix i <-> l, 0 <-> O mistakes"
-msgstr "i <-> l, 0 <-> O yanlışlarını düzelt"
+msgstr "i ↔ l, 0 ↔ O yanlışlarını düzelt"
 
 #: src/formats/vobsub/vobsubinputprocessdialog.cpp:584
 #, kde-format
@@ -3384,7 +3384,7 @@ msgstr "Son kullanılan çeviri işletkesi"
 #: src/scconfig.kcfg:231
 #, kde-format
 msgid "Service Account JSON containing private key"
-msgstr "Özel anahtar içeren Hizmet Hesap JSON'u"
+msgstr "Özel anahtar içeren Hizmet Hesap JSON’u"
 
 #. i18n: ectx: label, entry (gctLangSource), group (GoogleCloudTranslate)
 #. i18n: ectx: label, entry (dltLangSource), group (DeepLTranslate)
@@ -3392,7 +3392,7 @@ msgstr "Özel anahtar içeren Hizmet Hesap JSON'u"
 #: src/scconfig.kcfg:234 src/scconfig.kcfg:258 src/scconfig.kcfg:271
 #, kde-format
 msgid "source language - cached"
-msgstr "kaynak dil - önbelleklendi"
+msgstr "kaynak dil — önbelleklendi"
 
 #. i18n: ectx: label, entry (gctLangTrans), group (GoogleCloudTranslate)
 #. i18n: ectx: label, entry (dltLangTrans), group (DeepLTranslate)
@@ -3400,25 +3400,25 @@ msgstr "kaynak dil - önbelleklendi"
 #: src/scconfig.kcfg:237 src/scconfig.kcfg:261 src/scconfig.kcfg:274
 #, kde-format
 msgid "translation language - cached"
-msgstr "çeviri dili - önbelleklendi"
+msgstr "çeviri dili — önbelleklendi"
 
 #. i18n: ectx: label, entry (gctAccessToken), group (GoogleCloudTranslate)
 #: src/scconfig.kcfg:240
 #, kde-format
 msgid "access token - cached"
-msgstr "erişim jetonu - önbelleklendi"
+msgstr "erişim jetonu — önbelleklendi"
 
 #. i18n: ectx: label, entry (gctTokenExpires), group (GoogleCloudTranslate)
 #: src/scconfig.kcfg:243
 #, kde-format
 msgid "access token expiry - cached"
-msgstr "erişim jetonu süresi - önbelleklendi"
+msgstr "erişim jetonu süresi — önbelleklendi"
 
 #. i18n: ectx: label, entry (gctTokenType), group (GoogleCloudTranslate)
 #: src/scconfig.kcfg:246
 #, kde-format
 msgid "access token type - cached"
-msgstr "erişim jetonu türü - önbelleklendi"
+msgstr "erişim jetonu türü — önbelleklendi"
 
 #. i18n: ectx: label, entry (dltAuthKey), group (DeepLTranslate)
 #: src/scconfig.kcfg:252
@@ -3436,7 +3436,7 @@ msgstr "DeepL API alan adı"
 #: src/scconfig.kcfg:267
 #, kde-format
 msgid "MinT API URL prefix"
-msgstr ""
+msgstr "MinT API’si URL öneki"
 
 #: src/scripting/scriptsmanager.cpp:73
 #, kde-format
@@ -3614,7 +3614,7 @@ msgstr "Yeni bir betik dosyası oluşturur."
 #: src/scripting/scriptsmanager.ui:32
 #, kde-format
 msgid "Create..."
-msgstr "Oluştur..."
+msgstr "Oluştur…"
 
 #. i18n: ectx: property (whatsThis), widget (QPushButton, btnAdd)
 #: src/scripting/scriptsmanager.ui:42
@@ -3626,7 +3626,7 @@ msgstr "Belirtilen bir konumdan var olan bir betiği kopyalar."
 #: src/scripting/scriptsmanager.ui:45
 #, kde-format
 msgid "Add..."
-msgstr "Ekle..."
+msgstr "Ekle…"
 
 #. i18n: ectx: property (whatsThis), widget (QPushButton, btnRemove)
 #: src/scripting/scriptsmanager.ui:55
@@ -3919,7 +3919,7 @@ msgid ""
 "HTTP Error %1 - %2\n"
 "%3"
 msgstr ""
-"HTTP Hatası %1 - %2\n"
+"HTTP Hatası %1 — %2\n"
 "%3"
 
 #: src/translate/deeplengine.cpp:70 src/translate/googlecloudengine.cpp:150
@@ -3941,7 +3941,7 @@ msgstr "DeepL İşletkesi Hatası"
 #: src/translate/mintengine.cpp:125
 #, kde-format
 msgid "Updating languages..."
-msgstr ""
+msgstr "Diller güncelleniyor…"
 
 #: src/translate/deeplengine.cpp:123 src/translate/googlecloudengine.cpp:298
 #, kde-format
@@ -3950,10 +3950,9 @@ msgstr "Dili Otomatik Algıla"
 
 #: src/translate/deeplengine.cpp:158 src/translate/googlecloudengine.cpp:331
 #: src/translate/mintengine.cpp:221
-#, fuzzy, kde-format
-#| msgid "Translate..."
+#, kde-format
 msgid "Translating lines..."
-msgstr "Çevir..."
+msgstr "Satırlar çevriliyor…"
 
 #. i18n: ectx: property (title), widget (QGroupBox, grpAuth)
 #: src/translate/deeplengine.ui:17 src/translate/googlecloudengine.ui:17
@@ -4021,18 +4020,18 @@ msgstr "Google Bulut İşletkesi Hatası"
 #: src/translate/googlecloudengine.cpp:201
 #, kde-format
 msgid "Error opening file '%1'"
-msgstr "'%1' dosyası açılırken hata"
+msgstr "‘%1’ dosyası açılırken hata"
 
 #: src/translate/googlecloudengine.cpp:210
 #, kde-format
 msgid "Error parsing JSON from file '%1'"
-msgstr "'%1' konumundan JSON ayrıştırılırken hata"
+msgstr "‘%1’ konumundan JSON ayrıştırılırken hata"
 
 #. i18n: ectx: property (text), widget (QLabel, labelServiceJSON)
 #: src/translate/googlecloudengine.ui:23
 #, kde-format
 msgid "Service Account's Private Key JSON:"
-msgstr "Hizmet hesabının özel anahtar JSON'u:"
+msgstr "Hizmet hesabının özel anahtar JSON’u:"
 
 #. i18n: ectx: property (text), widget (QPushButton, btnLogin)
 #: src/translate/googlecloudengine.ui:36
@@ -4052,36 +4051,35 @@ msgid ""
 "or must be granted access to the Google's Cloud Translation APIs in a "
 "different manner.</p>"
 msgstr ""
-"<p>Google Bulut Konsolu'nda <a href=\"https://developers.google.com/identity/"
+"<p>Google Bulut Konsolu’nda <a href=\"https://developers.google.com/identity/"
 "protocols/oauth2/service-account#creatinganaccount\">bir hizmet hesabı "
 "açmanız</a> ve genel/özel anahtar JSON dosyasını aşağıya koymanız gerekiyor."
 "</p><p>Hizmet hesabına IAM sayfasında <span style=\" text-decoration: "
-"underline;\">Cloud Translation API User</span> rolü atanması veya Google'ın "
-"Bulut Çeviri API'lerine başka bir biçimde erişim izni verilmesi gerekir.</p>"
+"underline;\">Cloud Translation API User</span> rolü atanması veya Google’ın "
+"Bulut Çeviri API’lerine başka bir biçimde erişim izni verilmesi gerekir.</p>"
 
 #: src/translate/mintengine.cpp:80
-#, fuzzy, kde-format
-#| msgid "DeepL Engine Error"
+#, kde-format
 msgid "MinT Engine Error"
-msgstr "DeepL İşletkesi Hatası"
+msgstr "MinT İşletkesi Hatası"
 
 #. i18n: ectx: property (title), widget (QGroupBox, grpAuth)
 #: src/translate/mintengine.ui:17
 #, kde-format
 msgid "API Server"
-msgstr ""
+msgstr "API Sunucusu"
 
 #. i18n: ectx: property (text), widget (QLabel, labApiURLPrefix)
 #: src/translate/mintengine.ui:40
 #, kde-format
 msgid "Service URL:"
-msgstr ""
+msgstr "Hizmet URl’si:"
 
 #. i18n: ectx: property (text), widget (QPushButton, btnUpdate)
 #: src/translate/mintengine.ui:50
 #, kde-format
 msgid "Update"
-msgstr ""
+msgstr "Güncelle"
 
 #. i18n: ectx: property (text), widget (QLabel, labHelp)
 #: src/translate/mintengine.ui:76
@@ -4092,6 +4090,11 @@ msgid ""
 "machinetranslation\">setup your own service</a> or use some <a href="
 "\"https://translate.wmcloud.org/\">public API</a>."
 msgstr ""
+"MinT makine çevirisi sistemi API’sine erişmek için bir URL sağlamanız "
+"gerekir translation system API. İster <a href=\"https://gerrit.wikimedia.org/"
+"g/mediawiki/services/machinetranslation\">kendi hizmetinizi kurabilir</a> "
+"veya başka bir <a href=\"https://translate.wmcloud.org/\">genel kullanıma "
+"açık API</a>’den yararlanabilirsiniz."
 
 #: src/translate/translatedialog.cpp:31
 #, kde-format
@@ -4116,7 +4119,7 @@ msgstr "Şurada Bul"
 #: src/utils/finder.cpp:246
 #, kde-format
 msgid "No instances of '%1' found!"
-msgstr "Bir '%1' örneği bulunamadı!"
+msgstr "Bir ‘%1’ örneği bulunamadı!"
 
 #: src/utils/finder.cpp:246 src/utils/finder.cpp:260
 #, kde-format
@@ -4222,7 +4225,7 @@ msgstr "Sil"
 #: src/widgets/simplerichtextedit.cpp:495
 #, kde-format
 msgid "Check Spelling..."
-msgstr "Yazımı Denetle..."
+msgstr "Yazımı Denetle…"
 
 #: src/widgets/simplerichtextedit.cpp:500
 #, kde-format
