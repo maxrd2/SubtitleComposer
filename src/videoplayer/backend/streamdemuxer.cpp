@@ -201,7 +201,8 @@ StreamDemuxer::seek(qint64 time)
 	m_vs->seekFlags &= ~AVSEEK_FLAG_BYTE;
 	if(m_vs->seek_by_bytes) {
 		m_vs->seekFlags |= AVSEEK_FLAG_BYTE;
-		m_vs->seekPos = double(time) * (m_vs->fmtContext->bit_rate ? double(m_vs->fmtContext->bit_rate) / 8. : 180000.);
+		m_vs->seekPos = double(time) / double(AV_TIME_BASE)
+				* (m_vs->fmtContext->bit_rate ? double(m_vs->fmtContext->bit_rate) / 8. : 180000.);
 	} else {
 		m_vs->seekPos = time;
 	}
