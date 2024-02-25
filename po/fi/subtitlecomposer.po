@@ -1,13 +1,13 @@
 # Copyright (C) YEAR This file is copyright:
 # This file is distributed under the same license as the subtitlecomposer package.
-# Tommi Nieminen <translator@legisign.org>, 2020, 2021, 2023.
+# Tommi Nieminen <translator@legisign.org>, 2020, 2021, 2023, 2024.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: subtitlecomposer\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-02-21 01:37+0000\n"
-"PO-Revision-Date: 2023-06-02 19:48+0300\n"
+"PO-Revision-Date: 2024-02-14 19:17+0200\n"
 "Last-Translator: Tommi Nieminen <translator@legisign.org>\n"
 "Language-Team: Finnish <kde-i18n-doc@kde.org>\n"
 "Language: fi\n"
@@ -15,7 +15,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Lokalize 23.04.1\n"
+"X-Generator: Lokalize 22.12.3\n"
 
 #: src/actions/kcodecactionext.cpp:29
 #, kde-format
@@ -2390,7 +2390,7 @@ msgstr "Aseta videon kestosta"
 #, kde-format
 msgctxt "%p is the percent value, % is the percent sign"
 msgid "%p%"
-msgstr ""
+msgstr "%p %"
 
 #: src/dialogs/removelinesdialog.cpp:13
 #, kde-format
@@ -3751,14 +3751,13 @@ msgstr ""
 #: src/speechplugins/pocketsphinx/pocketsphinxconfigwidget.cpp:28
 #, kde-format
 msgid "Sphinx Dictionaries"
-msgstr ""
+msgstr "Sphinx-sanastot"
 
 #: src/speechplugins/pocketsphinx/pocketsphinxconfigwidget.cpp:24
 #: src/speechplugins/pocketsphinx/pocketsphinxconfigwidget.cpp:29
-#, fuzzy, kde-format
-#| msgid "Trigram Model"
+#, kde-format
 msgid "Trigram Models"
-msgstr "Trigrammimalli"
+msgstr "Trigrammimallit"
 
 #. i18n: ectx: property (title), widget (QGroupBox, grpModel)
 #: src/speechplugins/pocketsphinx/pocketsphinxconfigwidget.ui:20
