@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: subtitlecomposer\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-02-21 01:37+0000\n"
+"POT-Creation-Date: 2024-02-26 01:38+0000\n"
 "PO-Revision-Date: 2020-02-21 11:52+0200\n"
 "Last-Translator: Marek Laane <qiilaq69@gmail.com>\n"
 "Language-Team: Estonian <kde-et@lists.linux.ee>\n"
@@ -3496,33 +3496,33 @@ msgstr ""
 msgid "Path"
 msgstr "Asukoht:"
 
-#: src/scripting/scriptsmanager.cpp:352
+#: src/scripting/scriptsmanager.cpp:373
 #, kde-format
 msgid "Information"
 msgstr "Teave"
 
-#: src/scripting/scriptsmanager.cpp:358
+#: src/scripting/scriptsmanager.cpp:379
 #, kde-format
 msgid "Warning"
 msgstr "Hoiatus"
 
-#: src/scripting/scriptsmanager.cpp:364
+#: src/scripting/scriptsmanager.cpp:385
 #, kde-format
 msgid "Error"
 msgstr "Tõrge"
 
 #. i18n: ectx: property (text), widget (QPushButton, btnEdit)
-#: src/scripting/scriptsmanager.cpp:393 src/scripting/scriptsmanager.ui:71
+#: src/scripting/scriptsmanager.cpp:414 src/scripting/scriptsmanager.ui:71
 #, kde-format
 msgid "Edit"
 msgstr "Muuda"
 
-#: src/scripting/scriptsmanager.cpp:396
+#: src/scripting/scriptsmanager.cpp:417
 #, kde-format
 msgid "View"
 msgstr ""
 
-#: src/scripting/scriptsmanager.cpp:466
+#: src/scripting/scriptsmanager.cpp:487
 #, fuzzy, kde-format
 #| msgid ""
 #| "You must enter an unused name to continue.\n"
@@ -3534,37 +3534,37 @@ msgstr ""
 "Jätkamiseks pead sisestama kasutamata nime.\n"
 "Kas sisestada mõni muu nimi?"
 
-#: src/scripting/scriptsmanager.cpp:467
+#: src/scripting/scriptsmanager.cpp:488
 #, kde-format
 msgid "Duplicate filename"
 msgstr ""
 
-#: src/scripting/scriptsmanager.cpp:468
+#: src/scripting/scriptsmanager.cpp:489
 #, kde-format
 msgid "Yes"
 msgstr ""
 
-#: src/scripting/scriptsmanager.cpp:472
+#: src/scripting/scriptsmanager.cpp:493
 #, kde-format
 msgid "Create New Script"
 msgstr "Uue skripti loomine"
 
-#: src/scripting/scriptsmanager.cpp:472 src/scripting/scriptsmanager.cpp:540
+#: src/scripting/scriptsmanager.cpp:493 src/scripting/scriptsmanager.cpp:561
 #, kde-format
 msgid "Script name:"
 msgstr "Skripti nimi:"
 
-#: src/scripting/scriptsmanager.cpp:483
+#: src/scripting/scriptsmanager.cpp:504
 #, kde-format
 msgid "There was an error creating the file <b>%1</b>."
 msgstr "Faili <b>%1</b> loomisel tekkis tõrge."
 
-#: src/scripting/scriptsmanager.cpp:518
+#: src/scripting/scriptsmanager.cpp:539
 #, kde-format
 msgid "Select Existing Script"
 msgstr "Olemasoleva skripti valimine"
 
-#: src/scripting/scriptsmanager.cpp:535
+#: src/scripting/scriptsmanager.cpp:556
 #, kde-format
 msgid ""
 "You must enter an unused name to continue.\n"
@@ -3573,65 +3573,65 @@ msgstr ""
 "Jätkamiseks pead sisestama kasutamata nime.\n"
 "Kas sisestada mõni muu nimi?"
 
-#: src/scripting/scriptsmanager.cpp:536
+#: src/scripting/scriptsmanager.cpp:557
 #, kde-format
 msgid "Name Already Used"
 msgstr "Nimi on juba kasutusel"
 
-#: src/scripting/scriptsmanager.cpp:540
+#: src/scripting/scriptsmanager.cpp:561
 #, kde-format
 msgid "Rename Script"
 msgstr "Skripti nime muutmine"
 
-#: src/scripting/scriptsmanager.cpp:548
+#: src/scripting/scriptsmanager.cpp:569
 #, kde-format
 msgid "There was an error opening the file <b>%1</b>."
 msgstr "Faili <b>%1</b> avamisel tekkis tõrge."
 
-#: src/scripting/scriptsmanager.cpp:556
+#: src/scripting/scriptsmanager.cpp:577
 #, kde-format
 msgid "There was an error copying the file to <b>%1</b>."
 msgstr "Faili <b>%1</b> kopeerimisel tekkis tõrge."
 
-#: src/scripting/scriptsmanager.cpp:571
+#: src/scripting/scriptsmanager.cpp:592
 #, kde-format
 msgid "Do you really want to send file <b>%1</b> to the trash?"
 msgstr "Kas tõesti visata fail <b>%1</b> prügikasti?"
 
-#: src/scripting/scriptsmanager.cpp:571
+#: src/scripting/scriptsmanager.cpp:592
 #, kde-format
 msgid "Move to Trash"
 msgstr "Prügikasti viskamine"
 
-#: src/scripting/scriptsmanager.cpp:575
+#: src/scripting/scriptsmanager.cpp:596
 #, kde-format
 msgid "There was an error removing the file <b>%1</b>."
 msgstr "Faili <b>%1</b> eemaldamisel tekkis tõrge."
 
-#: src/scripting/scriptsmanager.cpp:593
+#: src/scripting/scriptsmanager.cpp:614
 #, kde-format
 msgid "Could not launch external editor.\n"
 msgstr "Välise redaktori käivitamine nurjus.\n"
 
-#: src/scripting/scriptsmanager.cpp:613
+#: src/scripting/scriptsmanager.cpp:634
 #, fuzzy, kde-format
 #| msgid "Error Running Script"
 msgid "Error opening script %1."
 msgstr "Tõrge skripti käitamisel"
 
-#: src/scripting/scriptsmanager.cpp:613 src/scripting/scriptsmanager.cpp:628
-#: src/scripting/scriptsmanager.cpp:630
+#: src/scripting/scriptsmanager.cpp:634 src/scripting/scriptsmanager.cpp:649
+#: src/scripting/scriptsmanager.cpp:651
 #, kde-format
 msgid "Error Running Script"
 msgstr "Tõrge skripti käitamisel"
 
-#: src/scripting/scriptsmanager.cpp:626
+#: src/scripting/scriptsmanager.cpp:647
 #, fuzzy, kde-format
 #| msgid "Path:"
 msgid "Path: %1"
 msgstr "Asukoht:"
 
-#: src/scripting/scriptsmanager.cpp:643
+#: src/scripting/scriptsmanager.cpp:664
 #, kde-format
 msgid "Tools"
 msgstr "Tööriistad"

@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: subtitlecomposer\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-02-21 01:37+0000\n"
+"POT-Creation-Date: 2024-02-26 01:38+0000\n"
 "PO-Revision-Date: 2024-02-22 10:02+0100\n"
 "Last-Translator: Xavier Besnard <xavier.besnard@kde.org>\n"
 "Language-Team: fr\n"
@@ -3506,33 +3506,33 @@ msgstr "Auteur"
 msgid "Path"
 msgstr "Emplacement"
 
-#: src/scripting/scriptsmanager.cpp:352
+#: src/scripting/scriptsmanager.cpp:373
 #, kde-format
 msgid "Information"
 msgstr "Information"
 
-#: src/scripting/scriptsmanager.cpp:358
+#: src/scripting/scriptsmanager.cpp:379
 #, kde-format
 msgid "Warning"
 msgstr "Avertissement"
 
-#: src/scripting/scriptsmanager.cpp:364
+#: src/scripting/scriptsmanager.cpp:385
 #, kde-format
 msgid "Error"
 msgstr "Erreur"
 
 #. i18n: ectx: property (text), widget (QPushButton, btnEdit)
-#: src/scripting/scriptsmanager.cpp:393 src/scripting/scriptsmanager.ui:71
+#: src/scripting/scriptsmanager.cpp:414 src/scripting/scriptsmanager.ui:71
 #, kde-format
 msgid "Edit"
 msgstr "Éditer"
 
-#: src/scripting/scriptsmanager.cpp:396
+#: src/scripting/scriptsmanager.cpp:417
 #, kde-format
 msgid "View"
 msgstr "Affichage"
 
-#: src/scripting/scriptsmanager.cpp:466
+#: src/scripting/scriptsmanager.cpp:487
 #, kde-format
 msgid ""
 "A script already exists with this name.\n"
@@ -3541,37 +3541,37 @@ msgstr ""
 "Un script avec ce nom existe déjà.\n"
 "Voulez-vous saisir un autre nom ?"
 
-#: src/scripting/scriptsmanager.cpp:467
+#: src/scripting/scriptsmanager.cpp:488
 #, kde-format
 msgid "Duplicate filename"
 msgstr "Dupliquer un nom de fichier"
 
-#: src/scripting/scriptsmanager.cpp:468
+#: src/scripting/scriptsmanager.cpp:489
 #, kde-format
 msgid "Yes"
 msgstr "Oui"
 
-#: src/scripting/scriptsmanager.cpp:472
+#: src/scripting/scriptsmanager.cpp:493
 #, kde-format
 msgid "Create New Script"
 msgstr "Créer un nouveau script"
 
-#: src/scripting/scriptsmanager.cpp:472 src/scripting/scriptsmanager.cpp:540
+#: src/scripting/scriptsmanager.cpp:493 src/scripting/scriptsmanager.cpp:561
 #, kde-format
 msgid "Script name:"
 msgstr "Nom du script :"
 
-#: src/scripting/scriptsmanager.cpp:483
+#: src/scripting/scriptsmanager.cpp:504
 #, kde-format
 msgid "There was an error creating the file <b>%1</b>."
 msgstr "Problème lors de la création du fichier <b>%1</b>."
 
-#: src/scripting/scriptsmanager.cpp:518
+#: src/scripting/scriptsmanager.cpp:539
 #, kde-format
 msgid "Select Existing Script"
 msgstr "Sélectionner un script existant"
 
-#: src/scripting/scriptsmanager.cpp:535
+#: src/scripting/scriptsmanager.cpp:556
 #, kde-format
 msgid ""
 "You must enter an unused name to continue.\n"
@@ -3580,63 +3580,63 @@ msgstr ""
 "Vous devez saisir un nom non utilisé pour continuer.\n"
 "Voulez-vous saisir un autre nom ?"
 
-#: src/scripting/scriptsmanager.cpp:536
+#: src/scripting/scriptsmanager.cpp:557
 #, kde-format
 msgid "Name Already Used"
 msgstr "Nom déjà utilisé"
 
-#: src/scripting/scriptsmanager.cpp:540
+#: src/scripting/scriptsmanager.cpp:561
 #, kde-format
 msgid "Rename Script"
 msgstr "Renommer le script"
 
-#: src/scripting/scriptsmanager.cpp:548
+#: src/scripting/scriptsmanager.cpp:569
 #, kde-format
 msgid "There was an error opening the file <b>%1</b>."
 msgstr "Problème lors de l'ouverture du fichier <b>%1</b>."
 
-#: src/scripting/scriptsmanager.cpp:556
+#: src/scripting/scriptsmanager.cpp:577
 #, kde-format
 msgid "There was an error copying the file to <b>%1</b>."
 msgstr "Problème lors de la copie du fichier <b>%1</b>."
 
-#: src/scripting/scriptsmanager.cpp:571
+#: src/scripting/scriptsmanager.cpp:592
 #, kde-format
 msgid "Do you really want to send file <b>%1</b> to the trash?"
 msgstr "Voulez-vous vraiment envoyer le fichier <b>%1</b> à la corbeille ?"
 
-#: src/scripting/scriptsmanager.cpp:571
+#: src/scripting/scriptsmanager.cpp:592
 #, kde-format
 msgid "Move to Trash"
 msgstr "Déplacer vers la corbeille"
 
-#: src/scripting/scriptsmanager.cpp:575
+#: src/scripting/scriptsmanager.cpp:596
 #, kde-format
 msgid "There was an error removing the file <b>%1</b>."
 msgstr "Problème lors de la suppression du fichier <b>%1</b>."
 
-#: src/scripting/scriptsmanager.cpp:593
+#: src/scripting/scriptsmanager.cpp:614
 #, kde-format
 msgid "Could not launch external editor.\n"
 msgstr "Impossible de lancer l'éditeur externe.\n"
 
-#: src/scripting/scriptsmanager.cpp:613
+#: src/scripting/scriptsmanager.cpp:634
 #, kde-format
 msgid "Error opening script %1."
 msgstr "Erreur lors de l'ouverture du script %1."
 
-#: src/scripting/scriptsmanager.cpp:613 src/scripting/scriptsmanager.cpp:628
-#: src/scripting/scriptsmanager.cpp:630
+#: src/scripting/scriptsmanager.cpp:634 src/scripting/scriptsmanager.cpp:649
+#: src/scripting/scriptsmanager.cpp:651
 #, kde-format
 msgid "Error Running Script"
 msgstr "Problème lors de l'exécution du script"
 
-#: src/scripting/scriptsmanager.cpp:626
+#: src/scripting/scriptsmanager.cpp:647
 #, kde-format
 msgid "Path: %1"
 msgstr "Emplacement  : %1"
 
-#: src/scripting/scriptsmanager.cpp:643
+#: src/scripting/scriptsmanager.cpp:664
 #, kde-format
 msgid "Tools"
 msgstr "Outils"
