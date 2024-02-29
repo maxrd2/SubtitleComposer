@@ -2,13 +2,13 @@
 # This file is put in the public domain.
 #
 # Alessandro Polverini <dusty@nibbles.it>, 2010.
-# Luigi Toscano <luigi.toscano@tiscali.it>, 2018, 2020, 2021, 2022, 2023.
+# Luigi Toscano <luigi.toscano@tiscali.it>, 2018, 2020, 2021, 2022, 2023, 2024.
 msgid ""
 msgstr ""
 "Project-Id-Version: subtitlecomposer\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-02-26 01:38+0000\n"
-"PO-Revision-Date: 2023-12-30 14:40+0100\n"
+"PO-Revision-Date: 2024-02-21 22:21+0100\n"
 "Last-Translator: Luigi Toscano <luigi.toscano@tiscali.it>\n"
 "Language-Team: Italian <kde-i18n-it@kde.org>\n"
 "Language: it\n"
@@ -3472,7 +3472,7 @@ msgstr "Nome di dominio API DeepL"
 #: src/scconfig.kcfg:267
 #, kde-format
 msgid "MinT API URL prefix"
-msgstr ""
+msgstr "Prefisso URL dell'API di MinT"
 
 #: src/scripting/scriptsmanager.cpp:73
 #, kde-format
@@ -3982,7 +3982,7 @@ msgstr "Errore del motore DeepL"
 #: src/translate/mintengine.cpp:125
 #, kde-format
 msgid "Updating languages..."
-msgstr ""
+msgstr "Aggiornamento delle lingue..."
 
 #: src/translate/deeplengine.cpp:123 src/translate/googlecloudengine.cpp:298
 #, kde-format
@@ -3991,10 +3991,9 @@ msgstr "Rilevamento automatico della lingua"
 
 #: src/translate/deeplengine.cpp:158 src/translate/googlecloudengine.cpp:331
 #: src/translate/mintengine.cpp:221
-#, fuzzy, kde-format
-#| msgid "Translate..."
+#, kde-format
 msgid "Translating lines..."
-msgstr "Traduci..."
+msgstr "Traduzione delle righe..."
 
 #. i18n: ectx: property (title), widget (QGroupBox, grpAuth)
 #: src/translate/deeplengine.ui:17 src/translate/googlecloudengine.ui:17
@@ -4103,28 +4102,27 @@ msgstr ""
 "(Cloud Translation API) in altro modo.</p>"
 
 #: src/translate/mintengine.cpp:80
-#, fuzzy, kde-format
-#| msgid "DeepL Engine Error"
+#, kde-format
 msgid "MinT Engine Error"
-msgstr "Errore del motore DeepL"
+msgstr "Errore del motore MinT"
 
 #. i18n: ectx: property (title), widget (QGroupBox, grpAuth)
 #: src/translate/mintengine.ui:17
 #, kde-format
 msgid "API Server"
-msgstr ""
+msgstr "Server API"
 
 #. i18n: ectx: property (text), widget (QLabel, labApiURLPrefix)
 #: src/translate/mintengine.ui:40
 #, kde-format
 msgid "Service URL:"
-msgstr ""
+msgstr "URL del servizio:"
 
 #. i18n: ectx: property (text), widget (QPushButton, btnUpdate)
 #: src/translate/mintengine.ui:50
 #, kde-format
 msgid "Update"
-msgstr ""
+msgstr "Aggiorna"
 
 #. i18n: ectx: property (text), widget (QLabel, labHelp)
 #: src/translate/mintengine.ui:76
@@ -4135,6 +4133,10 @@ msgid ""
 "machinetranslation\">setup your own service</a> or use some <a href="
 "\"https://translate.wmcloud.org/\">public API</a>."
 msgstr ""
+"È necessario fornire un URL per l'API di un sistema di traduzione "
+"automatica. Puoi <a href=\"https://gerrit.wikimedia.org/g/mediawiki/services/"
+"machinetranslation\">impostare e configurare un tuo servizio</a> o usare "
+"delle <a href=\"https://translate.wmcloud.org/\">API pubbliche</a>."
 
 #: src/translate/translatedialog.cpp:31
 #, kde-format
