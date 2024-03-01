@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: subtitlecomposer\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-02-26 01:38+0000\n"
-"PO-Revision-Date: 2023-06-29 06:31+0200\n"
+"PO-Revision-Date: 2024-02-29 03:24+0100\n"
 "Last-Translator: Temuri Doghonadze <temuri.doghonadze@gmail.com>\n"
 "Language-Team: Georgian <kde-i18n-doc@kde.org>\n"
 "Language: ka\n"
@@ -3047,7 +3047,7 @@ msgstr "კოდის შემოწირულობები, Arch Linux-�
 #: src/main.cpp:170
 #, kde-format
 msgid "All people who have contributed and I have forgotten to mention"
-msgstr ""
+msgstr "ყველა, ვინც მოხალისე იყო და დამავიწყდა, მომეხსენიენებინა"
 
 #: src/mainwindow.cpp:37
 #, kde-format
@@ -3902,10 +3902,9 @@ msgstr "ენის ავტოამოცნობა"
 
 #: src/translate/deeplengine.cpp:158 src/translate/googlecloudengine.cpp:331
 #: src/translate/mintengine.cpp:221
-#, fuzzy, kde-format
-#| msgid "Translate..."
+#, kde-format
 msgid "Translating lines..."
-msgstr "თარგმნა..."
+msgstr "ხაზების თარგმანი..."
 
 #. i18n: ectx: property (title), widget (QGroupBox, grpAuth)
 #: src/translate/deeplengine.ui:17 src/translate/googlecloudengine.ui:17
@@ -4003,10 +4002,9 @@ msgid ""
 msgstr ""
 
 #: src/translate/mintengine.cpp:80
-#, fuzzy, kde-format
-#| msgid "DeepL Engine Error"
+#, kde-format
 msgid "MinT Engine Error"
-msgstr "DeepL ძრავის შეცდომა"
+msgstr "MinT ძრავის შეცდომა"
 
 #. i18n: ectx: property (title), widget (QGroupBox, grpAuth)
 #: src/translate/mintengine.ui:17
