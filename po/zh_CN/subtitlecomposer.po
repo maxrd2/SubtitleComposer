@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kdeorg\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-02-26 01:38+0000\n"
-"PO-Revision-Date: 2024-03-09 04:49\n"
+"PO-Revision-Date: 2024-03-13 20:08\n"
 "Last-Translator: \n"
 "Language-Team: Chinese Simplified\n"
 "Language: zh_CN\n"
@@ -21,917 +21,917 @@ msgstr ""
 #, kde-format
 msgctxt "Encodings menu"
 msgid "Default: %1"
-msgstr ""
+msgstr "默认：%1"
 
 #: src/actions/kcodecactionext.cpp:35 src/actions/kcodecactionext.cpp:82
 #, kde-format
 msgctxt "Encodings menu"
 msgid "Current: %1"
-msgstr ""
+msgstr "当前：%1"
 
 #: src/actions/kcodecactionext.cpp:41
 #, kde-format
 msgctxt "Encodings menu"
 msgid "Autodetect"
-msgstr ""
+msgstr "自动检测"
 
 #: src/application.cpp:497
 #, kde-format
 msgid "Go to Line"
-msgstr ""
+msgstr "转到行"
 
 #: src/application.cpp:497
 #, kde-format
 msgid "&Go to line:"
-msgstr ""
+msgstr "转到行(&G)："
 
 #: src/application.cpp:670 src/core/subtitle.cpp:878
 #, kde-format
 msgid "Maximize Durations"
-msgstr ""
+msgstr "最大化持续时长"
 
 #: src/application.cpp:698 src/core/subtitle.cpp:1153
 #, kde-format
 msgid "Unbreak Lines"
-msgstr ""
+msgstr "取消断行"
 
 #: src/application.cpp:709 src/core/subtitle.cpp:1162
 #, kde-format
 msgid "Simplify Spaces"
-msgstr ""
+msgstr "简化空格"
 
 #: src/application.cpp:770
 #, kde-format
 msgid "Open Video"
-msgstr ""
+msgstr "打开视频"
 
 #: src/application.cpp:968 src/application.cpp:975
 #: src/application_subtitle.cpp:658
 #, kde-format
 msgid "Untitled"
-msgstr ""
+msgstr "无标题"
 
 #: src/application.cpp:970 src/application_subtitle.cpp:658
 #, kde-format
 msgid "Untitled Translation"
-msgstr ""
+msgstr "无标题译文"
 
 #: src/application.cpp:1071
 #, kde-format
 msgid "Pause"
-msgstr ""
+msgstr "暂停"
 
 #: src/application.cpp:1079 src/application_actions.cpp:567
 #, kde-format
 msgid "Play"
-msgstr ""
+msgstr "播放"
 
 #: src/application.cpp:1140
 #, kde-format
 msgid "Seek backwards 1 second"
 msgid_plural "Seek backwards %1 seconds"
-msgstr[0] ""
+msgstr[0] "快退 %1 秒"
 
 #: src/application.cpp:1141
 #, kde-format
 msgid "Seek forwards 1 second"
 msgid_plural "Seek forwards %1 seconds"
-msgstr[0] ""
+msgstr[0] "快进 %1 秒"
 
 #: src/application.cpp:1144 src/application.cpp:1148
 #, kde-format
 msgid "Shift %2%1 millisecond"
 msgid_plural "Shift %2%1 milliseconds"
-msgstr[0] ""
+msgstr[0] "偏移 %2%1 毫秒"
 
 #: src/application.cpp:1145 src/application.cpp:1149
 #, kde-format
 msgid "Shift selected lines %2%1 millisecond"
 msgid_plural "Shift selected lines %2%1 milliseconds"
-msgstr[0] ""
+msgstr[0] "将选定行偏移 %2%1 毫秒"
 
 #: src/application_actions.cpp:33
 #, kde-format
 msgid "Exit the application"
-msgstr ""
+msgstr "退出程序"
 
 #: src/application_actions.cpp:36
 #, kde-format
 msgid "Configure Subtitle Composer"
-msgstr ""
+msgstr "配置 Subtitle Composer"
 
 #: src/application_actions.cpp:40
 #, kde-format
 msgctxt "@action:inmenu Create a new subtitle"
 msgid "New"
-msgstr ""
+msgstr "新建"
 
 #: src/application_actions.cpp:41
 #, kde-format
 msgid "Create an empty subtitle"
-msgstr ""
+msgstr "创建一份新字幕"
 
 #: src/application_actions.cpp:49
 #, kde-format
 msgctxt "@action:inmenu Open subtitle file"
 msgid "Open Subtitle..."
-msgstr ""
+msgstr "打开字幕…"
 
 #: src/application_actions.cpp:50 src/application_actions.cpp:67
 #, kde-format
 msgid "Open subtitle file"
-msgstr ""
+msgstr "打开字幕文件"
 
 #: src/application_actions.cpp:58
 #, kde-format
 msgid "Reload As..."
-msgstr ""
+msgstr "重载为…"
 
 #: src/application_actions.cpp:59
 #, kde-format
 msgid "Reload opened file with a different encoding"
-msgstr ""
+msgstr "使用不同的编码重新加载已打开的文件"
 
 #: src/application_actions.cpp:66
 #, kde-format
 msgctxt "@action:inmenu Open rencently used subtitle file"
 msgid "Open &Recent Subtitle"
-msgstr ""
+msgstr "打开最近的字幕(&R)"
 
 #: src/application_actions.cpp:73
 #, kde-format
 msgid "Save"
-msgstr ""
+msgstr "保存"
 
 #: src/application_actions.cpp:74
 #, kde-format
 msgid "Save opened subtitle"
-msgstr ""
+msgstr "保存已打开的字幕"
 
 #: src/application_actions.cpp:82
 #, kde-format
 msgid "Save As..."
-msgstr ""
+msgstr "另存为…"
 
 #: src/application_actions.cpp:83
 #, kde-format
 msgid "Save opened subtitle with different settings"
-msgstr ""
+msgstr "使用不同的设置保存已打开的字幕"
 
 #: src/application_actions.cpp:91
 #, kde-format
 msgid "Close"
-msgstr ""
+msgstr "关闭"
 
 #: src/application_actions.cpp:92
 #, kde-format
 msgid "Close opened subtitle"
-msgstr ""
+msgstr "关闭已打开的字幕"
 
 #: src/application_actions.cpp:100
 #, kde-format
 msgid "New Translation"
-msgstr ""
+msgstr "新建译文"
 
 #: src/application_actions.cpp:101
 #, kde-format
 msgid "Create an empty translation subtitle"
-msgstr ""
+msgstr "新建空白的译文字幕"
 
 #: src/application_actions.cpp:109
 #, kde-format
 msgid "Open Translation..."
-msgstr ""
+msgstr "打开译文…"
 
 #: src/application_actions.cpp:110 src/application_actions.cpp:127
 #, kde-format
 msgid "Open translation subtitle file"
-msgstr ""
+msgstr "打开译文字幕文件"
 
 #: src/application_actions.cpp:118
 #, kde-format
 msgid "Reload Translation As..."
-msgstr ""
+msgstr "重载译文为…"
 
 #: src/application_actions.cpp:119
 #, kde-format
 msgid "Reload opened translation file with a different encoding"
-msgstr ""
+msgstr "使用不同的编码重新加载已打开的译文文件"
 
 #: src/application_actions.cpp:126
 #, kde-format
 msgid "Open &Recent Translation"
-msgstr ""
+msgstr "打开最近的译文(&R)"
 
 #: src/application_actions.cpp:134
 #, kde-format
 msgid "Save Translation"
-msgstr ""
+msgstr "保存译文"
 
 #: src/application_actions.cpp:135
 #, kde-format
 msgid "Save opened translation subtitle"
-msgstr ""
+msgstr "保存已打开的译文字幕"
 
 #: src/application_actions.cpp:145
 #, kde-format
 msgid "Save Translation As..."
-msgstr ""
+msgstr "另存译文为…"
 
 #: src/application_actions.cpp:146
 #, kde-format
 msgid "Save opened translation subtitle with different settings"
-msgstr ""
+msgstr "使用不同的设置保存已打开的译文字幕"
 
 #: src/application_actions.cpp:154
 #, kde-format
 msgid "Close Translation"
-msgstr ""
+msgstr "关闭译文"
 
 #: src/application_actions.cpp:155
 #, kde-format
 msgid "Close opened translation subtitle"
-msgstr ""
+msgstr "关闭已打开的译文字幕"
 
 #: src/application_actions.cpp:172
 #, kde-format
 msgid "Split Subtitle..."
-msgstr ""
+msgstr "分割字幕…"
 
 #: src/application_actions.cpp:173
 #, kde-format
 msgid "Split the opened subtitle in two parts"
-msgstr ""
+msgstr "将已打开的字幕分割为两个部分"
 
 #: src/application_actions.cpp:179
 #, kde-format
 msgid "Join Subtitles..."
-msgstr ""
+msgstr "拼接字幕…"
 
 #: src/application_actions.cpp:180
 #, kde-format
 msgid "Append to the opened subtitle another one"
-msgstr ""
+msgstr "将已打开的字幕附加到其他文件"
 
 #: src/application_actions.cpp:187
 #, kde-format
 msgid "Insert Before"
-msgstr ""
+msgstr "在前方插入"
 
 #: src/application_actions.cpp:188
 #, kde-format
 msgid "Insert empty line before current one"
-msgstr ""
+msgstr "在当前行之前插入空行"
 
 #: src/application_actions.cpp:196
 #, kde-format
 msgid "Insert After"
-msgstr ""
+msgstr "在后方插入"
 
 #: src/application_actions.cpp:197
 #, kde-format
 msgid "Insert empty line after current one"
-msgstr ""
+msgstr "在当前行之后插入空行"
 
 #. i18n: ectx: property (text), widget (QPushButton, btnRemove)
 #: src/application_actions.cpp:205 src/scripting/scriptsmanager.ui:58
 #, kde-format
 msgid "Remove"
-msgstr ""
+msgstr "移除"
 
 #: src/application_actions.cpp:206
 #, kde-format
 msgid "Remove selected lines"
-msgstr ""
+msgstr "移除选定的行"
 
 #: src/application_actions.cpp:213 src/core/subtitle.cpp:560
 #, kde-format
 msgid "Split Lines"
-msgstr ""
+msgstr "分割行"
 
 #: src/application_actions.cpp:214
 #, kde-format
 msgid "Split selected lines"
-msgstr ""
+msgstr "分割选中的行"
 
 #: src/application_actions.cpp:220 src/core/subtitle.cpp:642
 #: src/gui/waveform/waveformwidget.cpp:714
 #, kde-format
 msgid "Join Lines"
-msgstr ""
+msgstr "拼接行"
 
 #: src/application_actions.cpp:221
 #, kde-format
 msgid "Join selected lines"
-msgstr ""
+msgstr "拼接选中的行"
 
 #: src/application_actions.cpp:228 src/errors/finderrorsdialog.cpp:114
 #: src/gui/treeview/richlineedit.cpp:112 src/widgets/simplerichtextedit.cpp:455
 #, kde-format
 msgid "Select All"
-msgstr ""
+msgstr "选择全部"
 
 #: src/application_actions.cpp:229
 #, kde-format
 msgid "Select all lines"
-msgstr ""
+msgstr "选择全部的行"
 
 #: src/application_actions.cpp:236
 #, kde-format
 msgid "Go to Line..."
-msgstr ""
+msgstr "跳转到行…"
 
 #: src/application_actions.cpp:237
 #, kde-format
 msgid "Go to specified line"
-msgstr ""
+msgstr "转到指定的行"
 
 #: src/application_actions.cpp:245
 #, kde-format
 msgid "Find..."
-msgstr ""
+msgstr "查找…"
 
 #: src/application_actions.cpp:246
 #, kde-format
 msgid "Find occurrences of strings or regular expressions"
-msgstr ""
+msgstr "查找文本中特定字符串或匹配正则表达式的出现位置"
 
 #: src/application_actions.cpp:254
 #, kde-format
 msgid "Find Next"
-msgstr ""
+msgstr "查找下一个"
 
 #: src/application_actions.cpp:255
 #, kde-format
 msgid "Find next occurrence of string or regular expression"
-msgstr ""
+msgstr "查找下一个特定字符串或匹配正则表达式的出现位置"
 
 #: src/application_actions.cpp:263
 #, kde-format
 msgid "Find Previous"
-msgstr ""
+msgstr "查找上一个"
 
 #: src/application_actions.cpp:264
 #, kde-format
 msgid "Find previous occurrence of string or regular expression"
-msgstr ""
+msgstr "查找上一个特定字符串或匹配正则表达式的出现位置"
 
 #: src/application_actions.cpp:271
 #, kde-format
 msgid "Replace..."
-msgstr ""
+msgstr "替换…"
 
 #: src/application_actions.cpp:272
 #, kde-format
 msgid "Replace occurrences of strings or regular expressions"
-msgstr ""
+msgstr "替换文本中出现的特定字符串或匹配正则表达式"
 
 #: src/application_actions.cpp:280
 #, kde-format
 msgid "Retrocede current line"
-msgstr ""
+msgstr "回退当前行"
 
 #: src/application_actions.cpp:281
 #, kde-format
 msgid "Makes the line before the current one active"
-msgstr ""
+msgstr "将光标移至当前行的前一行"
 
 #: src/application_actions.cpp:289
 #, kde-format
 msgid "Advance current line"
-msgstr ""
+msgstr "推进当前行"
 
 #: src/application_actions.cpp:290
 #, kde-format
 msgid "Makes the line after the current one active"
-msgstr ""
+msgstr "将光标移至当前行的后一行"
 
 #: src/application_actions.cpp:298
 #, kde-format
 msgid "Detect Errors..."
-msgstr ""
+msgstr "检测错误…"
 
 #: src/application_actions.cpp:299
 #, kde-format
 msgid "Detect errors in the current subtitle"
-msgstr ""
+msgstr "检测当前字幕中的错误"
 
 #: src/application_actions.cpp:306
 #, kde-format
 msgid "Clear Errors/Marks"
-msgstr ""
+msgstr "清除错误/标注"
 
 #: src/application_actions.cpp:307
 #, kde-format
 msgid "Clear detected errors and marks in the current subtitle"
-msgstr ""
+msgstr "清除在当前字幕中检测到的错误与标注"
 
 #: src/application_actions.cpp:315
 #, kde-format
 msgid "Select Next Error/Mark"
-msgstr ""
+msgstr "选择下一个错误/标注"
 
 #: src/application_actions.cpp:316
 #, kde-format
 msgid "Select next line with error or mark"
-msgstr ""
+msgstr "选择下一个出现错误或标注的行"
 
 #: src/application_actions.cpp:324
 #, kde-format
 msgid "Select Previous Error/Mark"
-msgstr ""
+msgstr "选择上一个错误/标注"
 
 #: src/application_actions.cpp:325
 #, kde-format
 msgid "Select previous line with error or mark"
-msgstr ""
+msgstr "选择上一个出现错误或标注的行"
 
 #: src/application_actions.cpp:333
 #, kde-format
 msgid "Spelling..."
-msgstr ""
+msgstr "拼写…"
 
 #: src/application_actions.cpp:334
 #, kde-format
 msgid "Check lines spelling"
-msgstr ""
+msgstr "检查字幕行拼写"
 
 #: src/application_actions.cpp:340
 #, kde-format
 msgid "Toggle Mark"
-msgstr ""
+msgstr "切换标注"
 
 #: src/application_actions.cpp:341
 #, kde-format
 msgid "Toggle mark on selected lines"
-msgstr ""
+msgstr "在当前行切换标注"
 
 #: src/application_actions.cpp:349 src/gui/currentlinewidget.cpp:322
 #, kde-format
 msgid "Toggle Bold"
-msgstr ""
+msgstr "切换粗体"
 
 #: src/application_actions.cpp:350
 #, kde-format
 msgid "Toggle selected lines bold attribute"
-msgstr ""
+msgstr "切换选定行的粗体属性"
 
 #: src/application_actions.cpp:358 src/gui/currentlinewidget.cpp:326
 #, kde-format
 msgid "Toggle Italic"
-msgstr ""
+msgstr "切换斜体"
 
 #: src/application_actions.cpp:359
 #, kde-format
 msgid "Toggle selected lines italic attribute"
-msgstr ""
+msgstr "切换选定行的斜体属性"
 
 #: src/application_actions.cpp:367 src/gui/currentlinewidget.cpp:330
 #, kde-format
 msgid "Toggle Underline"
-msgstr ""
+msgstr "切换下划线"
 
 #: src/application_actions.cpp:368
 #, kde-format
 msgid "Toggle selected lines underline attribute"
-msgstr ""
+msgstr "切换选定行的下划线属性"
 
 #: src/application_actions.cpp:376 src/gui/currentlinewidget.cpp:334
 #, kde-format
 msgid "Toggle Strike Through"
-msgstr ""
+msgstr "切换删除线"
 
 #: src/application_actions.cpp:377
 #, kde-format
 msgid "Toggle selected lines strike through attribute"
-msgstr ""
+msgstr "切换选定行的删除线属性"
 
 #: src/application_actions.cpp:385 src/gui/currentlinewidget.cpp:338
 #, kde-format
 msgid "Change Text Color"
-msgstr ""
+msgstr "更改文字颜色"
 
 #: src/application_actions.cpp:386
 #, kde-format
 msgid "Change text color of selected lines"
-msgstr ""
+msgstr "改变选定行的文字颜色"
 
 #: src/application_actions.cpp:393
 #, kde-format
 msgid "Shift..."
-msgstr ""
+msgstr "位移…"
 
 #: src/application_actions.cpp:394
 #, kde-format
 msgid "Shift lines an specified amount of time"
-msgstr ""
+msgstr "将字幕行偏移指定的时间量"
 
 #: src/application_actions.cpp:413
 #, kde-format
 msgid "Adjust..."
-msgstr ""
+msgstr "调适…"
 
 #: src/application_actions.cpp:414
 #, kde-format
 msgid "Linearly adjust all lines to a specified interval"
-msgstr ""
+msgstr "将所有字幕行线性化调整为指定时间间隔"
 
 #: src/application_actions.cpp:421
 #, kde-format
 msgid "Change Frame Rate..."
-msgstr ""
+msgstr "更改帧率…"
 
 #: src/application_actions.cpp:422
 #, kde-format
 msgid "Retime subtitle lines by reinterpreting its frame rate"
-msgstr ""
+msgstr "重新解析帧率以对字幕行重新计时"
 
 #: src/application_actions.cpp:428
 #, kde-format
 msgid "Enforce Duration Limits..."
-msgstr ""
+msgstr "强制执行持续时长限制…"
 
 #: src/application_actions.cpp:429
 #, kde-format
 msgid "Enforce lines minimum and/or maximum duration limits"
-msgstr ""
+msgstr "强制为字幕行执行最小和/或最大持续时长限制"
 
 #: src/application_actions.cpp:436
 #, kde-format
 msgid "Set Automatic Durations..."
-msgstr ""
+msgstr "设置自动持续时长…"
 
 #: src/application_actions.cpp:437
 #, kde-format
 msgid "Set lines durations based on amount of letters, words and line breaks"
-msgstr ""
+msgstr "根据字母、单词和换行符设置每行的持续时长"
 
 #: src/application_actions.cpp:443
 #, kde-format
 msgid "Maximize Durations..."
-msgstr ""
+msgstr "最大化持续时长..."
 
 #: src/application_actions.cpp:444
 #, kde-format
 msgid "Extend lines durations up to their next lines show time"
-msgstr ""
+msgstr "延长各行的持续时间至下一行开始"
 
 #: src/application_actions.cpp:450
 #, kde-format
 msgid "Fix Overlapping Times..."
-msgstr ""
+msgstr "修复时值重叠…"
 
 #: src/application_actions.cpp:451
 #, kde-format
 msgid "Fix lines overlapping times"
-msgstr ""
+msgstr "修复发生时值重叠的行"
 
 #: src/application_actions.cpp:457
 #, kde-format
 msgid "Synchronize with Subtitle..."
-msgstr ""
+msgstr "与字幕同步…"
 
 #: src/application_actions.cpp:458
 #, kde-format
 msgid "Copy timing information from another subtitle"
-msgstr ""
+msgstr "从另一字幕复制时值信息"
 
 #: src/application_actions.cpp:464
 #, kde-format
 msgid "Break Lines..."
-msgstr ""
+msgstr "断开行…"
 
 #: src/application_actions.cpp:465
 #, kde-format
 msgid "Automatically set line breaks"
-msgstr ""
+msgstr "自动设置字幕换行"
 
 #: src/application_actions.cpp:471
 #, kde-format
 msgid "Unbreak Lines..."
-msgstr ""
+msgstr "取消断行…"
 
 #: src/application_actions.cpp:472
 #, kde-format
 msgid "Remove line breaks from lines"
-msgstr ""
+msgstr "从行中移除断行标记"
 
 #: src/application_actions.cpp:478
 #, kde-format
 msgid "Simplify Spaces..."
-msgstr ""
+msgstr "简化空格..."
 
 #: src/application_actions.cpp:479
 #, kde-format
 msgid "Remove unneeded spaces from lines"
-msgstr ""
+msgstr "从行中删除不需要的空格"
 
 #: src/application_actions.cpp:485
 #, kde-format
 msgid "Change Case..."
-msgstr ""
+msgstr "更改大小写…"
 
 #: src/application_actions.cpp:486
 #, kde-format
 msgid "Change lines text to upper, lower, title or sentence case"
-msgstr ""
+msgstr "修改字幕行文本为大写、小写、标题或句子格式"
 
 #: src/application_actions.cpp:492
 #, kde-format
 msgid "Fix Punctuation..."
-msgstr ""
+msgstr "修复标点…"
 
 #: src/application_actions.cpp:493
 #, kde-format
 msgid "Fix punctuation errors in lines"
-msgstr ""
+msgstr "修复字幕行中的标点错误"
 
 #: src/application_actions.cpp:499
 #, kde-format
 msgid "Translate..."
-msgstr ""
+msgstr "翻译…"
 
 #: src/application_actions.cpp:500
 #, kde-format
 msgid "Translate lines texts using Google services"
-msgstr ""
+msgstr "使用 Google 服务翻译字幕行文本"
 
 #: src/application_actions.cpp:506
 #, kde-format
 msgid "Edit Line in Place"
-msgstr ""
+msgstr "就地编辑行"
 
 #: src/application_actions.cpp:507
 #, kde-format
 msgid "Edit current line text in place"
-msgstr ""
+msgstr "就地编辑当前行文本"
 
 #: src/application_actions.cpp:515
 #, kde-format
 msgid "Open Video..."
-msgstr ""
+msgstr "打开视频..."
 
 #: src/application_actions.cpp:516 src/application_actions.cpp:523
 #, kde-format
 msgid "Open video file"
-msgstr ""
+msgstr "打开视频文件"
 
 #: src/application_actions.cpp:522
 #, kde-format
 msgid "Open &Recent Video"
-msgstr ""
+msgstr "打开最近的视频(&R)"
 
 #: src/application_actions.cpp:529
 #, kde-format
 msgid "Import Subtitle Stream"
-msgstr ""
+msgstr "导入字幕流"
 
 #: src/application_actions.cpp:530
 #, kde-format
 msgid "Import subtitle stream into subtitle editor"
-msgstr ""
+msgstr "将字幕流导入编辑器"
 
 #: src/application_actions.cpp:536
 #, kde-format
 msgid "Recognize Speech"
-msgstr ""
+msgstr "语音识别"
 
 #: src/application_actions.cpp:537
 #, kde-format
 msgid "Recognize speech in audio stream"
-msgstr ""
+msgstr "从音频流中识别语音"
 
 #: src/application_actions.cpp:543
 #, kde-format
 msgid "Close Video"
-msgstr ""
+msgstr "关闭视频"
 
 #: src/application_actions.cpp:544
 #, kde-format
 msgid "Close video file"
-msgstr ""
+msgstr "关闭视频文件"
 
 #: src/application_actions.cpp:551
 #, kde-format
 msgid "Full Screen Mode"
-msgstr ""
+msgstr "全屏模式"
 
 #: src/application_actions.cpp:552
 #, kde-format
 msgid "Toggle full screen mode"
-msgstr ""
+msgstr "切换全屏模式"
 
 #: src/application_actions.cpp:559
 #, kde-format
 msgid "Stop"
-msgstr ""
+msgstr "停止"
 
 #: src/application_actions.cpp:560
 #, kde-format
 msgid "Stop video playback"
-msgstr ""
+msgstr "停止视频播放"
 
 #: src/application_actions.cpp:568
 #, kde-format
 msgid "Toggle video playing/paused"
-msgstr ""
+msgstr "切换视频播放/暂停"
 
 #: src/application_actions.cpp:576
 #, kde-format
 msgid "Seek Backward"
-msgstr ""
+msgstr "快退"
 
 #: src/application_actions.cpp:584
 #, kde-format
 msgid "Seek Forward"
-msgstr ""
+msgstr "快进"
 
 #: src/application_actions.cpp:591
 #, kde-format
 msgid "Frame Step Backward"
-msgstr ""
+msgstr "上一帧"
 
 #: src/application_actions.cpp:598
 #, kde-format
 msgid "Frame Step Forward"
-msgstr ""
+msgstr "下一帧"
 
 #: src/application_actions.cpp:606
 #, kde-format
 msgid "Seek to Previous Line"
-msgstr ""
+msgstr "退至前一行"
 
 #: src/application_actions.cpp:607
 #, kde-format
 msgid "Seek to previous subtitle line show time"
-msgstr ""
+msgstr "退至前一行字幕的显示时间"
 
 #: src/application_actions.cpp:615
 #, kde-format
 msgid "Increase media play rate"
-msgstr ""
+msgstr "提高播放速率"
 
 #: src/application_actions.cpp:616
 #, kde-format
 msgid "Increase media playback rate"
-msgstr ""
+msgstr "提高媒体的播放速度"
 
 #: src/application_actions.cpp:623
 #, kde-format
 msgid "Decrease media play rate"
-msgstr ""
+msgstr "降低播放速率"
 
 #: src/application_actions.cpp:624
 #, kde-format
 msgid "Decrease media playback rate"
-msgstr ""
+msgstr "降低媒体的播放速度"
 
 #: src/application_actions.cpp:630
 #, kde-format
 msgid "Play Current Line and Pause"
-msgstr ""
+msgstr "播放当前行并暂停"
 
 #: src/application_actions.cpp:631
 #, kde-format
 msgid "Seek to selected subtitle line show time, play it and then pause"
-msgstr ""
+msgstr "时移到选定的字幕行显示时间，播放字幕行然后暂停"
 
 #: src/application_actions.cpp:638
 #, kde-format
 msgid "Seek to Current Line"
-msgstr ""
+msgstr "时移到当前行"
 
 #: src/application_actions.cpp:639
 #, kde-format
 msgid "Seek to selected subtitle line show time"
-msgstr ""
+msgstr "时移到选定字幕行的显示时间"
 
 #: src/application_actions.cpp:646
 #, kde-format
 msgid "Seek to Next Line"
-msgstr ""
+msgstr "时移到下一行"
 
 #: src/application_actions.cpp:647
 #, kde-format
 msgid "Seek to next subtitle line show time"
-msgstr ""
+msgstr "时移到下一字幕行的显示时间"
 
 #: src/application_actions.cpp:655
 #, kde-format
 msgid "Set Line Show Time to Video Position"
-msgstr ""
+msgstr "将字幕行显示时间设为视频位置"
 
 #: src/application_actions.cpp:656
 #, kde-format
 msgid "Set current line show time to video position"
-msgstr ""
+msgstr "将当前字幕行的显示时间设为视频位置"
 
 #: src/application_actions.cpp:664
 #, kde-format
 msgid "Set Line Hide Time to Video Position"
-msgstr ""
+msgstr "将字幕行消隐时间设为视频位置"
 
 #: src/application_actions.cpp:665
 #, kde-format
 msgid "Set current line hide time to video position"
-msgstr ""
+msgstr "将当前字幕行的消隐时间设为视频位置"
 
 #: src/application_actions.cpp:672
 #, kde-format
 msgid "Shift Current Line to Video Position"
-msgstr ""
+msgstr "将当前字幕行移至视频位置"
 
 #: src/application_actions.cpp:673
 #, kde-format
 msgid ""
 "Set current line show time to video position by equally shifting all lines"
-msgstr ""
+msgstr "通过平移所有字幕行，将当前行的显示时间设为视频位置"
 
 #: src/application_actions.cpp:681
 #, kde-format
 msgid "Current Line Follows Video"
-msgstr ""
+msgstr "当前字幕行跟随视频"
 
 #: src/application_actions.cpp:682
 #, kde-format
 msgid "Make current line follow the playing video position"
-msgstr ""
+msgstr "使当前字幕行跟随正播放的视频位置"
 
 #: src/application_actions.cpp:688
 #, kde-format
 msgctxt "@action:inmenu Toggle audio muted"
 msgid "Mute"
-msgstr ""
+msgstr "静音"
 
 #: src/application_actions.cpp:689
 #, kde-format
 msgid "Enable/disable playback sound"
-msgstr ""
+msgstr "启用/禁用音频播放"
 
 #: src/application_actions.cpp:696
 #, kde-format
 msgid "Increase Volume"
-msgstr ""
+msgstr "增加音量"
 
 #: src/application_actions.cpp:697
 #, kde-format
 msgid "Increase volume by 5%"
-msgstr ""
+msgstr "将音量提高 5%"
 
 #: src/application_actions.cpp:704
 #, kde-format
 msgid "Decrease Volume"
-msgstr ""
+msgstr "降低音量"
 
 #: src/application_actions.cpp:705
 #, kde-format
 msgid "Decrease volume by 5%"
-msgstr ""
+msgstr "音量降低 5%"
 
 #: src/application_actions.cpp:712
 #, kde-format
 msgid "Audio Streams"
-msgstr ""
+msgstr "音频流"
 
 #: src/application_actions.cpp:713
 #, kde-format
 msgid "Select active audio stream"
-msgstr ""
+msgstr "选择活跃的音频流"
 
 #: src/application_actions.cpp:724
 #, kde-format
 msgid "Increase Font Size"
-msgstr ""
+msgstr "增大字体"
 
 #: src/application_actions.cpp:725
 #, kde-format
 msgid "Increase subtitles font size by 1 point"
-msgstr ""
+msgstr "将字幕字体增大 1 个字号"
 
 #: src/application_actions.cpp:732
 #, kde-format
 msgid "Decrease Font Size"
-msgstr ""
+msgstr "缩小字体"
 
 #: src/application_actions.cpp:733
 #, kde-format
 msgid "Decrease subtitles font size by 1 point"
-msgstr ""
+msgstr "将字幕字体减小 1 个字号"
 
 #: src/application_actions.cpp:740
 #, kde-format
 msgid "Displayed Subtitle Text"
-msgstr ""
+msgstr "显示的字幕文本"
 
 #: src/application_actions.cpp:741
 #, kde-format
 msgid "Select visible subtitle text"
-msgstr ""
+msgstr "选择可见的字幕文本"
 
 #: src/application_actions.cpp:752 src/gui/waveform/waveformwidget.cpp:738
 #, kde-format
 msgid "Toggle Anchor"
-msgstr ""
+msgstr "切换锚点"
 
 #: src/application_actions.cpp:753
 #, kde-format
@@ -939,57 +939,59 @@ msgid ""
 "(Un)Anchor current line's show time to timeline (Editing anchored line's "
 "show time will stretch/compact the timeline between adjacent anchors)"
 msgstr ""
+"在时间线上锚定（或取消锚定）当前行的显示时间（编辑已锚定字幕行的显示时间，将"
+"会相应延伸或缩短锚点两边的时间线）"
 
 #: src/application_actions.cpp:760
 #, kde-format
 msgid "Remove All Anchors"
-msgstr ""
+msgstr "移除全部锚点"
 
 #: src/application_actions.cpp:761
 #, kde-format
 msgid "Unanchor show time from the timeline on all anchored lines"
-msgstr ""
+msgstr "取消时间线上所有带锚点的字幕行的显示时间锚定"
 
 #: src/application_actions.cpp:769
 #, kde-format
 msgctxt "@action:inmenu Manage user scripts"
 msgid "Scripts Manager..."
-msgstr ""
+msgstr "脚本管理器…"
 
 #: src/application_actions.cpp:770
 #, kde-format
 msgid "Manage user scripts"
-msgstr ""
+msgstr "管理用户脚本"
 
 #: src/application_actions.cpp:777 src/application_actions.cpp:778
 #, kde-format
 msgid "Waveform Zoom In"
-msgstr ""
+msgstr "波形图放大"
 
 #: src/application_actions.cpp:784 src/application_actions.cpp:785
 #, kde-format
 msgid "Waveform Zoom Out"
-msgstr ""
+msgstr "波形图缩小"
 
 #: src/application_actions.cpp:792
 #, kde-format
 msgid "Waveform Auto Scroll"
-msgstr ""
+msgstr "自动滚动波形图"
 
 #: src/application_actions.cpp:793
 #, kde-format
 msgid "Waveform display will automatically scroll to video position"
-msgstr ""
+msgstr "波形图将自动滚动至视频播放位置"
 
 #: src/application_subtitle.cpp:78
 #, kde-format
 msgid "All Text Subtitles"
-msgstr ""
+msgstr "所有文本字幕"
 
 #: src/application_subtitle.cpp:79
 #, kde-format
 msgid "All Image Subtitles"
-msgstr ""
+msgstr "所有图像字幕"
 
 #: src/application_subtitle.cpp:81 src/application_subtitle.cpp:105
 #: src/speechplugins/pocketsphinx/pocketsphinxconfigwidget.cpp:21
@@ -998,22 +1000,22 @@ msgstr ""
 #: src/speechplugins/pocketsphinx/pocketsphinxconfigwidget.cpp:29
 #, kde-format
 msgid "All Files"
-msgstr ""
+msgstr "所有文件"
 
 #: src/application_subtitle.cpp:102
 #, kde-format
 msgid "Media Files"
-msgstr ""
+msgstr "媒体文件"
 
 #: src/application_subtitle.cpp:103
 #, kde-format
 msgid "Video Files"
-msgstr ""
+msgstr "视频文件"
 
 #: src/application_subtitle.cpp:104
 #, kde-format
 msgid "Audio Files"
-msgstr ""
+msgstr "音频文件"
 
 #: src/application_subtitle.cpp:127
 #, kde-format
@@ -1022,16 +1024,18 @@ msgid ""
 "same file, possibly resulting in loss of information when saving.\n"
 "Are you sure you want to continue?"
 msgstr ""
+"请求的操作将让字幕与译文共用同一文件，可能会导致保存时损失一些信息。\n"
+"您确定要继续吗？"
 
 #: src/application_subtitle.cpp:130
 #, kde-format
 msgid "Conflicting Subtitle Files"
-msgstr ""
+msgstr "字幕文件冲突"
 
 #: src/application_subtitle.cpp:148 src/dialogs/selectablesubtitledialog.cpp:67
 #, kde-format
 msgid "Open Subtitle"
-msgstr ""
+msgstr "打开字幕"
 
 #: src/application_subtitle.cpp:204 src/application_subtitle.cpp:224
 #: src/application_subtitle.cpp:476 src/application_subtitle.cpp:501
@@ -1040,26 +1044,27 @@ msgid ""
 "<qt>Could not parse the subtitle file.<br/>This may have been caused by "
 "usage of the wrong encoding.</qt>"
 msgstr ""
+"<qt>无法解析字幕文件。<br/>这可能是由于文件使用了错误的编码而造成的。</qt>"
 
 #: src/application_subtitle.cpp:270 src/application_subtitle.cpp:317
 #, kde-format
 msgid "Format: %1"
-msgstr ""
+msgstr "格式：%1"
 
 #: src/application_subtitle.cpp:271 src/application_subtitle.cpp:318
 #, kde-format
 msgid "Encoding: %1"
-msgstr ""
+msgstr "编码：%1"
 
 #: src/application_subtitle.cpp:324
 #, kde-format
 msgid "There was an error saving the subtitle."
-msgstr ""
+msgstr "保存字幕时发生错误。"
 
 #: src/application_subtitle.cpp:332
 #, kde-format
 msgid "Save Subtitle"
-msgstr ""
+msgstr "保存字幕"
 
 #: src/application_subtitle.cpp:372 src/application_subtitle.cpp:614
 #, kde-format
@@ -1067,11 +1072,13 @@ msgid ""
 "Currently opened translation subtitle has unsaved changes.\n"
 "Do you want to save them?"
 msgstr ""
+"当前打开的译文字幕有更改尚未保存。\n"
+"您想要保存它们吗？"
 
 #: src/application_subtitle.cpp:373 src/application_subtitle.cpp:615
 #, kde-format
 msgid "Close Translation Subtitle"
-msgstr ""
+msgstr "关闭译文字幕"
 
 #: src/application_subtitle.cpp:384
 #, kde-format
@@ -1079,64 +1086,66 @@ msgid ""
 "Currently opened subtitle has unsaved changes.\n"
 "Do you want to save them?"
 msgstr ""
+"当前打开的字幕有更改尚未保存。\n"
+"您想要保存它们吗？"
 
 #: src/application_subtitle.cpp:385
 #, kde-format
 msgid "Close Subtitle"
-msgstr ""
+msgstr "关闭字幕"
 
 #: src/application_subtitle.cpp:445
 #, kde-format
 msgid "Open Translation Subtitle"
-msgstr ""
+msgstr "打开译文字幕"
 
 #: src/application_subtitle.cpp:530
 #, kde-format
 msgctxt "@item:inmenu Display primary text in video player"
 msgid "Primary"
-msgstr ""
+msgstr "主要"
 
 #: src/application_subtitle.cpp:531
 #, kde-format
 msgctxt "@item:inmenu Display translation text in video player"
 msgid "Translation"
-msgstr ""
+msgstr "翻译"
 
 #: src/application_subtitle.cpp:570
 #, kde-format
 msgid "There was an error saving the translation subtitle."
-msgstr ""
+msgstr "保存译文字幕时发生错误。"
 
 #: src/application_subtitle.cpp:578
 #, kde-format
 msgid "Save Translation Subtitle"
-msgstr ""
+msgstr "保存译文字幕"
 
 #: src/application_subtitle.cpp:665
 #, kde-format
 msgctxt "Suffix added to split subtitles"
 msgid "split"
-msgstr ""
+msgstr "分隔"
 
 #: src/application_subtitle.cpp:682
 #, kde-format
 msgid "Could not write the split subtitle file."
-msgstr ""
+msgstr "无法写入分割的字幕文件。"
 
 #: src/application_subtitle.cpp:682
 #, kde-format
 msgid "Could not write the split subtitle translation file."
-msgstr ""
+msgstr "无法写入分割的字幕译文文件。"
 
 #: src/application_subtitle.cpp:707
 #, kde-format
 msgid "Could not read the subtitle file to append."
-msgstr ""
+msgstr "无法读取用于附加的字幕文件。"
 
 #: src/application_subtitle.cpp:723
 #, kde-format
 msgid "The specified time does not split the subtitles."
-msgstr ""
+msgstr "选定的时间未能分割字幕。"
 
 #: src/application_subtitle.cpp:758
 #, kde-format
@@ -1144,6 +1153,8 @@ msgid ""
 "Could not open a new Subtitle Composer window.\n"
 "The split part was saved as %1."
 msgstr ""
+"无法打开新的 Subtitle Composer 窗口。\n"
+"分割的字幕部分已保存为 %1。"
 
 #: src/application_subtitle.cpp:759
 #, kde-format
@@ -1151,114 +1162,116 @@ msgid ""
 "Could not open a new Subtitle Composer window.\n"
 "The split parts were saved as %1 and %2."
 msgstr ""
+"无法打开新的 Subtitle Composer 窗口。\n"
+"分割的字幕部分已保存为 %1 和 %2。"
 
 #: src/application_subtitle.cpp:777
 #, kde-format
 msgid "The reference subtitle must have more than one line to proceed."
-msgstr ""
+msgstr "要继续操作，引用的字幕必须多于一行。"
 
 #: src/application_subtitle.cpp:786
 #, kde-format
 msgid "Could not parse the reference subtitle file."
-msgstr ""
+msgstr "无法解析引用字幕文件。"
 
 #: src/configs/configdialog.cpp:35
 #, kde-format
 msgctxt "@title General settings"
 msgid "General"
-msgstr ""
+msgstr "通用"
 
 #: src/configs/configdialog.cpp:36
 #, kde-format
 msgid "General Settings"
-msgstr ""
+msgstr "通用设置"
 
 #: src/configs/configdialog.cpp:40
 #, kde-format
 msgctxt "@title Error check settings"
 msgid "Error Check"
-msgstr ""
+msgstr "错误检查"
 
 #: src/configs/configdialog.cpp:41
 #, kde-format
 msgid "Error Check Settings"
-msgstr ""
+msgstr "错误检查设置"
 
 #: src/configs/configdialog.cpp:47
 #, kde-format
 msgctxt "@title Spelling settings"
 msgid "Spelling"
-msgstr ""
+msgstr "拼写"
 
 #: src/configs/configdialog.cpp:48
 #, kde-format
 msgid "Spelling Settings"
-msgstr ""
+msgstr "拼写设置"
 
 #: src/configs/configdialog.cpp:52
 #, kde-format
 msgctxt "@title Waveform settings"
 msgid "Waveform"
-msgstr ""
+msgstr "波形图"
 
 #: src/configs/configdialog.cpp:53
 #, kde-format
 msgid "Waveform settings"
-msgstr ""
+msgstr "波形图设置"
 
 #: src/configs/configdialog.cpp:57
 #, kde-format
 msgctxt "@title Video player settings"
 msgid "Video Player"
-msgstr ""
+msgstr "视频播放器"
 
 #: src/configs/configdialog.cpp:58
 #, kde-format
 msgid "Video Player Settings"
-msgstr ""
+msgstr "视频播放器设置"
 
 #: src/configs/configdialog.cpp:67
 #, kde-format
 msgctxt "@title Speech recognition backend settings"
 msgid "%1 backend settings"
-msgstr ""
+msgstr "%1 后端设置"
 
 #. i18n: ectx: property (title), widget (QGroupBox, m_grpGeneral)
 #: src/configs/errorsconfigwidget.ui:17 src/gui/treeview/lineswidget.cpp:400
 #, kde-format
 msgid "Texts"
-msgstr ""
+msgstr "文本"
 
 #. i18n: ectx: property (suffix), widget (QSpinBox, kcfg_MaxLines)
 #: src/configs/errorsconfigwidget.ui:23
 #, kde-format
 msgid " lines"
-msgstr ""
+msgstr " 行"
 
 #. i18n: ectx: property (suffix), widget (QSpinBox, kcfg_MaxCharacters)
 #: src/configs/errorsconfigwidget.ui:36
 #: src/dialogs/smarttextsadjustdialog.cpp:26
 #, kde-format
 msgid " characters"
-msgstr ""
+msgstr " 字符"
 
 #. i18n: ectx: property (text), widget (QLabel, label)
 #: src/configs/errorsconfigwidget.ui:46
 #, kde-format
 msgid "Maximum number of characters:"
-msgstr ""
+msgstr "最大字符数："
 
 #. i18n: ectx: property (text), widget (QLabel, label_4)
 #: src/configs/errorsconfigwidget.ui:53
 #, kde-format
 msgid "Maximum number of lines:"
-msgstr ""
+msgstr "最大行数："
 
 #. i18n: ectx: property (title), widget (QGroupBox, m_grpQuickActions)
 #: src/configs/errorsconfigwidget.ui:63
 #, kde-format
 msgid "Absolute Durations"
-msgstr ""
+msgstr "绝对持续时长"
 
 #. i18n: ectx: property (suffix), widget (QSpinBox, kcfg_LinePause)
 #. i18n: ectx: property (suffix), widget (QSpinBox, kcfg_LineDuration)
@@ -1277,27 +1290,27 @@ msgstr ""
 #: src/configs/generalconfigwidget.ui:183
 #, kde-format
 msgid " msec"
-msgstr ""
+msgstr " 毫秒"
 
 #. i18n: ectx: property (text), widget (QLabel, label_8)
 #. i18n: ectx: property (text), widget (QLabel, lab_MaxDurationPerCharacter)
 #: src/configs/errorsconfigwidget.ui:92 src/configs/errorsconfigwidget.ui:174
 #, kde-format
 msgid "Maximum duration:"
-msgstr ""
+msgstr "最大持续时长："
 
 #. i18n: ectx: property (text), widget (QLabel, label_5)
 #. i18n: ectx: property (text), widget (QLabel, lab_MinDurationPerCharacter)
 #: src/configs/errorsconfigwidget.ui:99 src/configs/errorsconfigwidget.ui:154
 #, kde-format
 msgid "Minimum duration:"
-msgstr ""
+msgstr "最小持续时长："
 
 #. i18n: ectx: property (title), widget (QGroupBox, groupBox)
 #: src/configs/errorsconfigwidget.ui:109
 #, kde-format
 msgid "Relative Durations"
-msgstr ""
+msgstr "相对持续时长："
 
 #. i18n: ectx: property (suffix), widget (QSpinBox, kcfg_MaxDurationPerCharacter)
 #. i18n: ectx: property (suffix), widget (QSpinBox, kcfg_MinDurationPerCharacter)
@@ -1306,7 +1319,7 @@ msgstr ""
 #: src/configs/errorsconfigwidget.ui:188
 #, kde-format
 msgid " ms/char"
-msgstr ""
+msgstr " 毫秒每字符"
 
 #. i18n: ectx: property (suffix), widget (QSpinBox, alt_MinDurationPerCharacter)
 #. i18n: ectx: property (suffix), widget (QSpinBox, alt_MaxDurationPerCharacter)
@@ -1315,117 +1328,117 @@ msgstr ""
 #: src/configs/errorsconfigwidget.ui:201
 #, kde-format
 msgid " ch/sec"
-msgstr ""
+msgstr " 字符每秒"
 
 #. i18n: ectx: property (text), widget (QLabel, lab_IdealDurationPerCharacter)
 #: src/configs/errorsconfigwidget.ui:181
 #, kde-format
 msgid "Ideal duration:"
-msgstr ""
+msgstr "理想持续时长："
 
 #. i18n: ectx: property (title), widget (QGroupBox, groupBox_2)
 #: src/configs/errorsconfigwidget.ui:217
 #, kde-format
 msgid "Behavior"
-msgstr ""
+msgstr "行为"
 
 #. i18n: ectx: label, entry (AutoClearFixed), group (Error Check)
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_AutoClearFixed)
 #: src/configs/errorsconfigwidget.ui:223 src/scconfig.kcfg:86
 #, kde-format
 msgid "Automatically clear fixed errors"
-msgstr ""
+msgstr "自动清除已修复的错误"
 
 #. i18n: ectx: property (title), widget (QGroupBox, m_grpGeneral)
 #: src/configs/generalconfigwidget.ui:17 src/configs/playerconfigwidget.ui:17
 #, kde-format
 msgid "General"
-msgstr ""
+msgstr "通用"
 
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_AutomaticVideoLoad)
 #: src/configs/generalconfigwidget.ui:26
 #, kde-format
 msgid "Automatically load video file when opening a subtitle"
-msgstr ""
+msgstr "打开字幕时自动载入视频文件"
 
 #. i18n: ectx: property (text), widget (QLabel, lab_DefaultSubtitlesEncoding)
 #: src/configs/generalconfigwidget.ui:33
 #, kde-format
 msgid "Defau&lt subtitles encoding:"
-msgstr ""
+msgstr "默认字幕编码(&I)："
 
 #. i18n: ectx: property (currentText), widget (QComboBox, kcfg_TextLineBreak)
 #. i18n: ectx: property (text), item, widget (QComboBox, kcfg_TextLineBreak)
 #: src/configs/generalconfigwidget.ui:43 src/configs/generalconfigwidget.ui:47
 #, kde-format
 msgid "UNIX (LF)"
-msgstr ""
+msgstr "UNIX (LF)"
 
 #. i18n: ectx: property (text), item, widget (QComboBox, kcfg_TextLineBreak)
 #: src/configs/generalconfigwidget.ui:52
 #, kde-format
 msgid "Windows (CRLF)"
-msgstr ""
+msgstr "Windows (CRLF)"
 
 #. i18n: ectx: property (text), item, widget (QComboBox, kcfg_TextLineBreak)
 #: src/configs/generalconfigwidget.ui:57
 #, kde-format
 msgid "Macintosh (CR)"
-msgstr ""
+msgstr "Macintosh (CR)"
 
 #. i18n: ectx: property (text), widget (QLabel, lab_TextLineBreak)
 #: src/configs/generalconfigwidget.ui:65
 #, kde-format
 msgid "Line break character:"
-msgstr ""
+msgstr "断行字符："
 
 #. i18n: ectx: property (title), widget (QGroupBox, m_grpSubtitleLine)
 #: src/configs/generalconfigwidget.ui:78
 #, kde-format
 msgid "Subtitle Line"
-msgstr ""
+msgstr "字幕行"
 
 #. i18n: ectx: property (text), widget (QLabel, label_LineDuration)
 #: src/configs/generalconfigwidget.ui:84
 #, kde-format
 msgid "Default subtitle line duration:"
-msgstr ""
+msgstr "默认字幕行持续时间："
 
 #. i18n: ectx: property (text), widget (QLabel, label_4)
 #: src/configs/generalconfigwidget.ui:94
 #, kde-format
 msgid "On double click, &jump to show time minus:"
-msgstr ""
+msgstr "双击时，跳转至当前显示时间减去(&J)："
 
 #. i18n: ectx: property (text), widget (QLabel, label_LinePause)
 #: src/configs/generalconfigwidget.ui:104
 #, kde-format
 msgid "Default pause between subtitle lines:"
-msgstr ""
+msgstr "字幕行之间的默认停顿时间："
 
 #. i18n: ectx: property (text), widget (QLabel, label_2)
 #: src/configs/generalconfigwidget.ui:144
 #, kde-format
 msgid "Ju&mp to prev/next line offset:"
-msgstr ""
+msgstr "跳转至前/后一行时的偏移量(&M)："
 
 #. i18n: ectx: property (title), widget (QGroupBox, m_grpQuickActions)
 #: src/configs/generalconfigwidget.ui:167
 #, kde-format
 msgid "Quick Actions"
-msgstr ""
+msgstr "快捷操作"
 
 #. i18n: ectx: property (text), widget (QLabel, label_8)
 #: src/configs/generalconfigwidget.ui:193
 #, kde-format
 msgid "Compensation for captured &video times:"
-msgstr ""
+msgstr "捕获视频的补偿时长(&V)："
 
 #. i18n: ectx: property (text), widget (QLabel, label_5)
 #: src/configs/generalconfigwidget.ui:203
 #, kde-format
 msgid "Ti&me shift for selected lines:"
-msgstr ""
+msgstr "选定行的位移时间(&M)："
 
 #: src/configs/playerconfigwidget.cpp:27
 #, kde-format
@@ -1438,104 +1451,104 @@ msgstr ""
 #: src/configs/playerconfigwidget.ui:23
 #, kde-format
 msgid "Resume playback after line double click"
-msgstr ""
+msgstr "双击字幕行后恢复播放"
 
 #. i18n: ectx: property (text), widget (QLabel, lab_SeekJumpLength)
 #: src/configs/playerconfigwidget.ui:30
 #, kde-format
 msgid "Seconds to &jump on seek:"
-msgstr ""
+msgstr "时移跳转的步长秒数(&J)："
 
 #. i18n: ectx: label, entry (VideoAutoPlay), group (VideoPlayer)
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_VideoAutoPlay)
 #: src/configs/playerconfigwidget.ui:50 src/scconfig.kcfg:180
 #, kde-format
 msgid "Start playing video when loaded"
-msgstr ""
+msgstr "载入后立即开始播放视频"
 
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_ShowPositionTimeEdit)
 #: src/configs/playerconfigwidget.ui:57 src/gui/playerwidget.cpp:438
 #, kde-format
 msgid "Show editable position control"
-msgstr ""
+msgstr "显示可编辑的位置控件"
 
 #. i18n: ectx: property (text), widget (QLabel, lab_StepJumpLength)
 #: src/configs/playerconfigwidget.ui:64
 #, kde-format
 msgid "Fra&me step amount:"
-msgstr ""
+msgstr "帧步进量(&M)："
 
 #. i18n: ectx: property (text), widget (QLabel, lab_VolumeAmplification)
 #: src/configs/playerconfigwidget.ui:74
 #, kde-format
 msgid "Volume amplification:"
-msgstr ""
+msgstr "音量增强："
 
 #. i18n: ectx: property (title), widget (QGroupBox, m_grpSubtitles)
 #: src/configs/playerconfigwidget.ui:122
 #, kde-format
 msgid "Subtitles"
-msgstr ""
+msgstr "字幕"
 
 #. i18n: ectx: property (text), widget (QLabel, lab_OutlineColor)
 #: src/configs/playerconfigwidget.ui:138
 #, kde-format
 msgid "Outline color:"
-msgstr ""
+msgstr "轮廓颜色："
 
 #. i18n: ectx: property (text), widget (QLabel, lab_FontColor)
 #: src/configs/playerconfigwidget.ui:151
 #, kde-format
 msgid "Te&xt color:"
-msgstr ""
+msgstr "文本颜色(&X)："
 
 #. i18n: ectx: property (text), widget (QLabel, lab_FontFamily)
 #: src/configs/playerconfigwidget.ui:164
 #, kde-format
 msgid "Font family:"
-msgstr ""
+msgstr "字体系列："
 
 #. i18n: ectx: property (text), widget (QLabel, lab_OutlineWidth)
 #: src/configs/playerconfigwidget.ui:177
 #, kde-format
 msgid "Outline width:"
-msgstr ""
+msgstr "轮廓宽度："
 
 #. i18n: ectx: property (text), widget (QLabel, lab_FontSize)
 #: src/configs/playerconfigwidget.ui:187
 #, kde-format
 msgid "Font si&ze:"
-msgstr ""
+msgstr "字体大小(&Z)："
 
 #. i18n: ectx: property (title), widget (QGroupBox, m_grpPreview)
 #: src/configs/playerconfigwidget.ui:203
 #, kde-format
 msgid "Subtitles Preview"
-msgstr ""
+msgstr "字幕预览"
 
 #. i18n: ectx: property (title), widget (QGroupBox, groupBox_3)
 #: src/configs/waveformconfigwidget.ui:17
 #, kde-format
 msgid "Waveform Display"
-msgstr ""
+msgstr "波形图显示"
 
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_wfSmoothScroll)
 #: src/configs/waveformconfigwidget.ui:23
 #, kde-format
 msgid "Smooth Scrolling"
-msgstr ""
+msgstr "平滑滚动"
 
 #. i18n: ectx: property (text), widget (QLabel, label_12)
 #: src/configs/waveformconfigwidget.ui:49
 #, kde-format
 msgid "Outer color:"
-msgstr ""
+msgstr "外部颜色："
 
 #. i18n: ectx: property (text), widget (QLabel, label_11)
 #: src/configs/waveformconfigwidget.ui:78
 #, kde-format
 msgid "Inner color:"
-msgstr ""
+msgstr "内部颜色："
 
 #. i18n: ectx: property (toolTip), widget (QLabel, label_wfAutoscrollPadding)
 #: src/configs/waveformconfigwidget.ui:104
@@ -1543,67 +1556,67 @@ msgstr ""
 msgid ""
 "Autoscroll page when play position reaches ScrollPadding distance "
 "(percentage) from page border"
-msgstr ""
+msgstr "当播放位置到达页面滚动填充边距（即此处设定的百分比）时，自动滚动页面"
 
 #. i18n: ectx: property (text), widget (QLabel, label_wfAutoscrollPadding)
 #: src/configs/waveformconfigwidget.ui:107
 #, kde-format
 msgid "Auto Scroll Padding:"
-msgstr ""
+msgstr "自动滚动边距："
 
 #. i18n: ectx: property (title), widget (QGroupBox, m_grpGeneral)
 #: src/configs/waveformconfigwidget.ui:120
 #, kde-format
 msgid "Subtitle Display"
-msgstr ""
+msgstr "字幕显示"
 
 #. i18n: ectx: property (text), widget (QLabel, label_14)
 #: src/configs/waveformconfigwidget.ui:148
 #, kde-format
 msgid "Subtitle border color:"
-msgstr ""
+msgstr "字幕边框颜色："
 
 #. i18n: ectx: property (text), widget (QLabel, label_16)
 #: src/configs/waveformconfigwidget.ui:158
 #, kde-format
 msgid "Selected background color:"
-msgstr ""
+msgstr "选定字幕边框颜色："
 
 #. i18n: ectx: property (text), widget (QLabel, label_15)
 #: src/configs/waveformconfigwidget.ui:168
 #, kde-format
 msgid "Subtitle border width:"
-msgstr ""
+msgstr "字幕边框宽度："
 
 #. i18n: ectx: property (text), widget (QLabel, label_13)
 #: src/configs/waveformconfigwidget.ui:178
 #, kde-format
 msgid "Subtitle background color:"
-msgstr ""
+msgstr "字幕背景颜色："
 
 #. i18n: ectx: property (text), widget (QLabel, label_17)
 #: src/configs/waveformconfigwidget.ui:207
 #, kde-format
 msgid "Selected border color:"
-msgstr ""
+msgstr "选定的边框颜色："
 
 #. i18n: ectx: property (title), widget (QGroupBox, groupBox)
 #: src/configs/waveformconfigwidget.ui:258
 #, kde-format
 msgid "Text Font and Colors"
-msgstr ""
+msgstr "文本字体与颜色"
 
 #. i18n: ectx: property (text), widget (QLabel, label_21)
 #: src/configs/waveformconfigwidget.ui:264
 #, kde-format
 msgid "Subtitle font family:"
-msgstr ""
+msgstr "字幕字体系列："
 
 #. i18n: ectx: property (text), widget (QLabel, label_22)
 #: src/configs/waveformconfigwidget.ui:277
 #, kde-format
 msgid "Subtitle number font size:"
-msgstr ""
+msgstr "字幕数字字体大小："
 
 #. i18n: ectx: property (suffix), widget (QSpinBox, kcfg_wfSubNumberFontSize)
 #. i18n: ectx: property (suffix), widget (QSpinBox, kcfg_wfSubTextFontSize)
@@ -1611,516 +1624,516 @@ msgstr ""
 #: src/configs/waveformconfigwidget.ui:333
 #, kde-format
 msgid " pt"
-msgstr ""
+msgstr "pt"
 
 #. i18n: ectx: property (text), widget (QLabel, label_23)
 #: src/configs/waveformconfigwidget.ui:294
 #, kde-format
 msgid "Subtitle Number Color"
-msgstr ""
+msgstr "字幕数字颜色"
 
 #. i18n: ectx: property (text), widget (QLabel, label_24)
 #: src/configs/waveformconfigwidget.ui:323
 #, kde-format
 msgid "Subtitle text font size:"
-msgstr ""
+msgstr "字幕文本字体大小："
 
 #. i18n: ectx: property (text), widget (QLabel, label_25)
 #: src/configs/waveformconfigwidget.ui:340
 #, kde-format
 msgid "Subtitle Text Color:"
-msgstr ""
+msgstr "字幕文本颜色："
 
 #. i18n: ectx: property (title), widget (QGroupBox, groupBox_2)
 #: src/configs/waveformconfigwidget.ui:372
 #, kde-format
 msgid "Line Indicators"
-msgstr ""
+msgstr "字幕行指示器"
 
 #. i18n: ectx: property (text), widget (QLabel, label_31)
 #: src/configs/waveformconfigwidget.ui:378
 #, kde-format
 msgid "Player position color:"
-msgstr ""
+msgstr "播放位置颜色："
 
 #. i18n: ectx: property (text), widget (QLabel, label_32)
 #: src/configs/waveformconfigwidget.ui:388
 #, kde-format
 msgid "Mouse indicator color:"
-msgstr ""
+msgstr "光标指示器颜色："
 
 #: src/core/subtitle.cpp:63
 #, kde-format
 msgid "Set Primary Data"
-msgstr ""
+msgstr "设置主要数据"
 
 #: src/core/subtitle.cpp:121
 #, kde-format
 msgid "Clear Primary Text Data"
-msgstr ""
+msgstr "清除主要文本数据"
 
 #: src/core/subtitle.cpp:134
 #, kde-format
 msgid "Set Secondary Data"
-msgstr ""
+msgstr "设置次级文本数据"
 
 #: src/core/subtitle.cpp:171
 #, kde-format
 msgid "Clear Secondary Text Data"
-msgstr ""
+msgstr "清理次级文本数据"
 
 #: src/core/subtitle.cpp:239 src/dialogs/changeframeratedialog.cpp:22
 #, kde-format
 msgid "Change Frame Rate"
-msgstr ""
+msgstr "更改帧率"
 
 #: src/core/subtitle.cpp:401 src/core/subtitle.cpp:415
 #: src/gui/waveform/waveformwidget.cpp:697
 #, kde-format
 msgid "Insert Line"
-msgstr ""
+msgstr "插入行"
 
 #: src/core/subtitle.cpp:448 src/core/subtitle.cpp:458
 #: src/core/subtitle.cpp:475 src/core/undo/subtitleactions.cpp:122
 #, kde-format
 msgid "Remove Lines"
-msgstr ""
+msgstr "移除行"
 
 #: src/core/subtitle.cpp:740
 #, kde-format
 msgid "Shift Lines"
-msgstr ""
+msgstr "移动行"
 
 #: src/core/subtitle.cpp:796
 #, kde-format
 msgid "Adjust Lines"
-msgstr ""
+msgstr "调整行"
 
 #: src/core/subtitle.cpp:807
 #, kde-format
 msgid "Sort"
-msgstr ""
+msgstr "排序"
 
 #: src/core/subtitle.cpp:839 src/dialogs/durationlimitsdialog.cpp:18
 #, kde-format
 msgid "Enforce Duration Limits"
-msgstr ""
+msgstr "强制执行持续时长限制"
 
 #: src/core/subtitle.cpp:901 src/dialogs/autodurationsdialog.cpp:21
 #, kde-format
 msgid "Set Automatic Durations"
-msgstr ""
+msgstr "设置自动持续时长"
 
 #: src/core/subtitle.cpp:934 src/dialogs/fixoverlappingtimesdialog.cpp:18
 #, kde-format
 msgid "Fix Overlapping Times"
-msgstr ""
+msgstr "修复时值重叠"
 
 #: src/core/subtitle.cpp:965
 #, kde-format
 msgid "Fix Lines Punctuation"
-msgstr ""
+msgstr "修复字幕行标点"
 
 #: src/core/subtitle.cpp:1007
 #, kde-format
 msgid "Lower Case"
-msgstr ""
+msgstr "小写"
 
 #: src/core/subtitle.cpp:1037
 #, kde-format
 msgid "Upper Case"
-msgstr ""
+msgstr "大写"
 
 #: src/core/subtitle.cpp:1067
 #, kde-format
 msgid "Title Case"
-msgstr ""
+msgstr "标题大小写"
 
 #: src/core/subtitle.cpp:1100
 #, kde-format
 msgid "Sentence Case"
-msgstr ""
+msgstr "句首大写"
 
 #: src/core/subtitle.cpp:1144 src/dialogs/smarttextsadjustdialog.cpp:18
 #, kde-format
 msgid "Break Lines"
-msgstr ""
+msgstr "断开行"
 
 #: src/core/subtitle.cpp:1171
 #, kde-format
 msgid "Synchronize Subtitles"
-msgstr ""
+msgstr "同步字幕"
 
 #: src/core/subtitle.cpp:1196 src/dialogs/joinsubtitlesdialog.cpp:24
 #, kde-format
 msgid "Join Subtitles"
-msgstr ""
+msgstr "拼接字幕"
 
 #: src/core/subtitle.cpp:1241 src/core/subtitle.cpp:1247
 #, kde-format
 msgid "Split Subtitles"
-msgstr ""
+msgstr "分割字幕"
 
 #: src/core/subtitle.cpp:1266
 #, kde-format
 msgid "Toggle Lines Style"
-msgstr ""
+msgstr "切换字幕行样式"
 
 #: src/core/subtitle.cpp:1310
 #, kde-format
 msgid "Change Lines Text Color"
-msgstr ""
+msgstr "更改字幕行文本颜色"
 
 #: src/core/subtitle.cpp:1330
 #, kde-format
 msgid "Set Lines Mark"
-msgstr ""
+msgstr "设置字幕行标注"
 
 #: src/core/subtitle.cpp:1330
 #, kde-format
 msgid "Clear Lines Mark"
-msgstr ""
+msgstr "清除字幕行标注"
 
 #: src/core/subtitle.cpp:1345
 #, kde-format
 msgid "Toggle Lines Mark"
-msgstr ""
+msgstr "切换字幕行标注"
 
 #: src/core/subtitle.cpp:1355
 #, kde-format
 msgid "Clear Line Errors"
-msgstr ""
+msgstr "清除字幕行错误"
 
 #: src/core/subtitle.cpp:1366 src/core/subtitle.cpp:1377
 #: src/errors/errorfinder.cpp:84
 #, kde-format
 msgid "Check Lines Errors"
-msgstr ""
+msgstr "检查字幕行错误"
 
 #: src/core/subtitleline.cpp:59
 #, kde-format
 msgid "Empty text"
-msgstr ""
+msgstr "空白文本"
 
 #: src/core/subtitleline.cpp:61
 #, kde-format
 msgid "Too many characters"
-msgstr ""
+msgstr "字符过多"
 
 #: src/core/subtitleline.cpp:63
 #, kde-format
 msgid "Too many lines"
-msgstr ""
+msgstr "行数过多"
 
 #: src/core/subtitleline.cpp:65
 #, kde-format
 msgid "Unnecessary white space"
-msgstr ""
+msgstr "存在不必要的空白空间"
 
 #: src/core/subtitleline.cpp:67
 #, kde-format
 msgid "Unnecessary dash"
-msgstr ""
+msgstr "存在不必要的破折号"
 
 #: src/core/subtitleline.cpp:69
 #, kde-format
 msgid "Capital letter after continuation ellipsis"
-msgstr ""
+msgstr "省略号后存在大写字母"
 
 #: src/core/subtitleline.cpp:71
 #, kde-format
 msgid "Too long duration per character"
-msgstr ""
+msgstr "每个字符的持续时间过长"
 
 #: src/core/subtitleline.cpp:73
 #, kde-format
 msgid "Too short duration per character"
-msgstr ""
+msgstr "每个字符的持续时间过短"
 
 #: src/core/subtitleline.cpp:75
 #, kde-format
 msgid "Too long duration"
-msgstr ""
+msgstr "持续时间过长"
 
 #: src/core/subtitleline.cpp:76
 #, kde-format
 msgid "Too short duration"
-msgstr ""
+msgstr "持续时间过短"
 
 #: src/core/subtitleline.cpp:77
 #, kde-format
 msgid "Overlapping times"
-msgstr ""
+msgstr "时值重叠"
 
 #: src/core/subtitleline.cpp:78
 #, kde-format
 msgid "Untranslated text"
-msgstr ""
+msgstr "未翻译的文本"
 
 #: src/core/subtitleline.cpp:79
 #, kde-format
 msgid "User mark"
-msgstr ""
+msgstr "用户标注"
 
 #: src/core/subtitleline.cpp:98
 #, kde-format
 msgid "Has no primary text."
-msgstr ""
+msgstr "没有主要文本。"
 
 #: src/core/subtitleline.cpp:99
 #, kde-format
 msgid "Has no translation text."
-msgstr ""
+msgstr "没有译文文本。"
 
 #: src/core/subtitleline.cpp:100
 #, kde-format
 msgid "Has too many characters in primary text (1 char)."
 msgid_plural "Has too many characters in primary text (%1 chars)."
-msgstr[0] ""
+msgstr[0] "主文本中字符过多 (%1 个字符)"
 
 #: src/core/subtitleline.cpp:101
 #, kde-format
 msgid "Has too many characters in translation text (1 char)."
 msgid_plural "Has too many characters in translation text (%1 chars)."
-msgstr[0] ""
+msgstr[0] "译文文本中字符过多 (%1 个字符)"
 
 #: src/core/subtitleline.cpp:102
 #, kde-format
 msgid "Has too many lines in primary text (1 line)."
 msgid_plural "Has too many lines in primary text (%1 lines)."
-msgstr[0] ""
+msgstr[0] "主文本中行数过多 (%1 行)"
 
 #: src/core/subtitleline.cpp:103
 #, kde-format
 msgid "Has too many lines in translation text (1 line)."
 msgid_plural "Has too many lines in translation text (%1 lines)."
-msgstr[0] ""
+msgstr[0] "译文文本中行数过多 (%1 个字符)"
 
 #: src/core/subtitleline.cpp:104
 #, kde-format
 msgid "Has unnecessary spaces in primary text."
-msgstr ""
+msgstr "主文本中有不必要的空格"
 
 #: src/core/subtitleline.cpp:105
 #, kde-format
 msgid "Has unnecessary spaces in translation text."
-msgstr ""
+msgstr "译文文本中有不必要的空格"
 
 #: src/core/subtitleline.cpp:106
 #, kde-format
 msgid "Has unnecessary dash in primary text."
-msgstr ""
+msgstr "主文本中有不必要的破折号"
 
 #: src/core/subtitleline.cpp:107
 #, kde-format
 msgid "Has unnecessary dash in translation text."
-msgstr ""
+msgstr "译文文本中有不必要的破折号"
 
 #: src/core/subtitleline.cpp:108
 #, kde-format
 msgid "Has capital letter after line continuation ellipsis in primary text."
-msgstr ""
+msgstr "主文本中，字幕行的省略号后存在大写字母。"
 
 #: src/core/subtitleline.cpp:109
 #, kde-format
 msgid ""
 "Has capital letter after line continuation ellipsis in translation text."
-msgstr ""
+msgstr "译文文本中，字幕行的省略号后存在大写字母。"
 
 #: src/core/subtitleline.cpp:110
 #, kde-format
 msgid "Has too long duration per character in primary text (1 msec/char)."
 msgid_plural ""
 "Has too long duration per character in primary text (%1 msecs/char)."
-msgstr[0] ""
+msgstr[0] "主文本中每个字符的持续时间过长 (%1 毫秒每字符)"
 
 #: src/core/subtitleline.cpp:111
 #, kde-format
 msgid "Has too long duration per character in translation text (1 msec/char)."
 msgid_plural ""
 "Has too long duration per character in translation text (%1 msecs/char)."
-msgstr[0] ""
+msgstr[0] "译文文本中每个字符的持续时间过长 (%1 毫秒每字符)"
 
 #: src/core/subtitleline.cpp:112
 #, kde-format
 msgid "Has too short duration per character in primary text (1 msec/char)."
 msgid_plural ""
 "Has too short duration per character in primary text (%1 msecs/char)."
-msgstr[0] ""
+msgstr[0] "主文本中每个字符的持续时间过短 (%1 毫秒每字符)"
 
 #: src/core/subtitleline.cpp:113
 #, kde-format
 msgid "Has too short duration per character in translation text (1 msec/char)."
 msgid_plural ""
 "Has too short duration per character in translation text (%1 msecs/char)."
-msgstr[0] ""
+msgstr[0] "译文文本中每个字符的持续时间过短 (%1 毫秒每字符)"
 
 #: src/core/subtitleline.cpp:114
 #, kde-format
 msgid "Has too long duration (1 msec)."
 msgid_plural "Has too long duration (%1 msecs)."
-msgstr[0] ""
+msgstr[0] "持续时间过长 (%1 毫秒)。"
 
 #: src/core/subtitleline.cpp:115
 #, kde-format
 msgid "Has too short duration (1 msec)."
 msgid_plural "Has too short duration (%1 msecs)."
-msgstr[0] ""
+msgstr[0] "持续时间过短 (%1 毫秒)。"
 
 #: src/core/subtitleline.cpp:116
 #, kde-format
 msgid "Overlaps with next line."
-msgstr ""
+msgstr "与下一行重叠。"
 
 #: src/core/subtitleline.cpp:117
 #, kde-format
 msgid "Has untranslated text."
-msgstr ""
+msgstr "存在未翻译的文本。"
 
 #: src/core/subtitleline.cpp:118
 #, kde-format
 msgid "Has user mark."
-msgstr ""
+msgstr "存在用户标注。"
 
 #: src/core/subtitleline.cpp:379 src/core/undo/subtitlelineactions.cpp:105
 #, kde-format
 msgid "Set Line Show Time"
-msgstr ""
+msgstr "设置字幕行显示时间"
 
 #: src/core/subtitleline.cpp:403 src/core/undo/subtitlelineactions.cpp:132
 #, kde-format
 msgid "Set Line Hide Time"
-msgstr ""
+msgstr "设置字幕行消隐时间"
 
 #: src/core/subtitleline.cpp:450
 #, kde-format
 msgid "Set Line Times"
-msgstr ""
+msgstr "设置字幕行时间"
 
 #: src/core/subtitleline.cpp:547
 #, kde-format
 msgid "Shift Line Times"
-msgstr ""
+msgstr "移动字幕行时间"
 
 #: src/core/subtitleline.cpp:557
 #, kde-format
 msgid "Adjust Line Times"
-msgstr ""
+msgstr "调整字幕行时间"
 
 #: src/core/undo/subtitleactions.cpp:32
 #, kde-format
 msgid "Set Frame Rate"
-msgstr ""
+msgstr "设置帧率"
 
 #: src/core/undo/subtitleactions.cpp:52
 #, kde-format
 msgid "Insert Lines"
-msgstr ""
+msgstr "插入字幕行"
 
 #: src/core/undo/subtitleactions.cpp:200
 #, kde-format
 msgid "Move Line"
-msgstr ""
+msgstr "移动字幕行"
 
 #: src/core/undo/subtitleactions.cpp:285
 #, kde-format
 msgid "Swap Texts"
-msgstr ""
+msgstr "交换文本"
 
 #: src/core/undo/subtitleactions.cpp:308
 #, kde-format
 msgid "Change stylesheet"
-msgstr ""
+msgstr "更改样式表"
 
 #: src/core/undo/subtitlelineactions.cpp:28
 #, kde-format
 msgid "Set Line Text"
-msgstr ""
+msgstr "设置字幕行文本"
 
 #: src/core/undo/subtitlelineactions.cpp:66
 #, kde-format
 msgid "Set Line Secondary Text"
-msgstr ""
+msgstr "设置字幕行次要文本"
 
 #: src/core/undo/subtitlelineactions.cpp:196
 #, kde-format
 msgid "Set Line Errors"
-msgstr ""
+msgstr "设置字幕行错误"
 
 #: src/dialogs/actionwithtargetdialog.cpp:113
 #, kde-format
 msgid "Target >>"
-msgstr ""
+msgstr "目标 >>"
 
 #: src/dialogs/actionwithtargetdialog.cpp:113
 #: src/dialogs/actionwithtargetdialog.cpp:129
 #, kde-format
 msgid "Target <<"
-msgstr ""
+msgstr "目标 <<"
 
 #: src/dialogs/actionwithtargetdialog.cpp:143
 #, kde-format
 msgid "All lines"
-msgstr ""
+msgstr "所有字幕行"
 
 #: src/dialogs/actionwithtargetdialog.cpp:144
 #, kde-format
 msgid "Selected lines"
-msgstr ""
+msgstr "已选字幕行"
 
 #: src/dialogs/actionwithtargetdialog.cpp:145
 #, kde-format
 msgid "All lines from first selected"
-msgstr ""
+msgstr "从第一个选定的行开始的所有行"
 
 #: src/dialogs/actionwithtargetdialog.cpp:146
 #, kde-format
 msgid "All lines up to last selected"
-msgstr ""
+msgstr "在最后选定的行之前的所有行"
 
 #: src/dialogs/actionwithtargetdialog.cpp:234 src/utils/finder.cpp:53
 #: src/utils/replacer.cpp:51
 #, kde-format
 msgid "Both subtitles"
-msgstr ""
+msgstr "双边字幕"
 
 #: src/dialogs/actionwithtargetdialog.cpp:237 src/utils/finder.cpp:55
 #: src/utils/replacer.cpp:53
 #, kde-format
 msgid "Primary subtitle"
-msgstr ""
+msgstr "主字幕"
 
 #: src/dialogs/actionwithtargetdialog.cpp:240 src/utils/finder.cpp:57
 #: src/utils/replacer.cpp:55
 #, kde-format
 msgid "Translation subtitle"
-msgstr ""
+msgstr "译文字幕"
 
 #: src/dialogs/actionwithtargetdialog.h:58
 #, kde-format
 msgid "Apply to"
-msgstr ""
+msgstr "应用到"
 
 #: src/dialogs/adjusttimesdialog.cpp:20
 #, kde-format
 msgid "Adjust"
-msgstr ""
+msgstr "调整"
 
 #: src/dialogs/adjusttimesdialog.cpp:22
 #, kde-format
 msgctxt "@title:group"
 msgid "New Times"
-msgstr ""
+msgstr "新时间"
 
 #: src/dialogs/adjusttimesdialog.cpp:27
 #, kde-format
 msgid "First spoken line:"
-msgstr ""
+msgstr "首句："
 
 #: src/dialogs/adjusttimesdialog.cpp:33
 #, kde-format
 msgid "Last spoken line:"
-msgstr ""
+msgstr "末句："
 
 #: src/dialogs/autodurationsdialog.cpp:24
 #: src/dialogs/changeframeratedialog.cpp:24
@@ -2131,207 +2144,207 @@ msgstr ""
 #, kde-format
 msgctxt "@title:group"
 msgid "Settings"
-msgstr ""
+msgstr "设置"
 
 #: src/dialogs/autodurationsdialog.cpp:32
 #, kde-format
 msgid "Milliseconds per line:"
-msgstr ""
+msgstr "毫秒每行："
 
 #: src/dialogs/autodurationsdialog.cpp:41
 #, kde-format
 msgid "Milliseconds per word:"
-msgstr ""
+msgstr "毫秒每词："
 
 #: src/dialogs/autodurationsdialog.cpp:50
 #, kde-format
 msgid "Milliseconds per character:"
-msgstr ""
+msgstr "毫秒每字符："
 
 #: src/dialogs/autodurationsdialog.cpp:54
 #: src/dialogs/durationlimitsdialog.cpp:30
 #, kde-format
 msgid "Prevent overlapping"
-msgstr ""
+msgstr "防止重叠"
 
 #: src/dialogs/autodurationsdialog.cpp:57
 #, kde-format
 msgctxt "@title:group"
 msgid "Duration Calculation"
-msgstr ""
+msgstr "持续时长计算"
 
 #: src/dialogs/autodurationsdialog.cpp:63
 #, kde-format
 msgid "Use primary text"
-msgstr ""
+msgstr "使用主要文本"
 
 #: src/dialogs/autodurationsdialog.cpp:64
 #, kde-format
 msgid "Use translation text"
-msgstr ""
+msgstr "使用译文文本"
 
 #: src/dialogs/autodurationsdialog.cpp:65
 #, kde-format
 msgid "Calculate both and use maximum"
-msgstr ""
+msgstr "计算二者并使用最大值"
 
 #: src/dialogs/changeframeratedialog.cpp:33
 #, kde-format
 msgid "Current frame rate:"
-msgstr ""
+msgstr "当前帧率："
 
 #: src/dialogs/changeframeratedialog.cpp:42
 #, kde-format
 msgid "New frame rate:"
-msgstr ""
+msgstr "新帧率："
 
 #: src/dialogs/changetextscasedialog.cpp:19
 #, kde-format
 msgid "Change Case"
-msgstr ""
+msgstr "更改书写"
 
 #: src/dialogs/changetextscasedialog.cpp:21
 #, kde-format
 msgctxt "@title:group"
 msgid "Change To"
-msgstr ""
+msgstr "更改为"
 
 #: src/dialogs/changetextscasedialog.cpp:25
 #, kde-format
 msgid "Lower case"
-msgstr ""
+msgstr "小写"
 
 #: src/dialogs/changetextscasedialog.cpp:30
 #, kde-format
 msgid "Upper case"
-msgstr ""
+msgstr "大写"
 
 #: src/dialogs/changetextscasedialog.cpp:34
 #, kde-format
 msgid "Title case"
-msgstr ""
+msgstr "标题大小写"
 
 #: src/dialogs/changetextscasedialog.cpp:38
 #, kde-format
 msgid "Sentence case"
-msgstr ""
+msgstr "句首大写"
 
 #: src/dialogs/changetextscasedialog.cpp:42
 #, kde-format
 msgid "Convert to lower case first"
-msgstr ""
+msgstr "首先转换为小写"
 
 #: src/dialogs/durationlimitsdialog.cpp:20
 #, kde-format
 msgctxt "@title:group"
 msgid "Minimum Duration"
-msgstr ""
+msgstr "最小持续时长"
 
 #: src/dialogs/durationlimitsdialog.cpp:26
 #, kde-format
 msgid "Expand duration to:"
-msgstr ""
+msgstr "扩展持续时长至："
 
 #: src/dialogs/durationlimitsdialog.cpp:33
 #, kde-format
 msgctxt "@title:group"
 msgid "Maximum Duration"
-msgstr ""
+msgstr "最大持续时长"
 
 #: src/dialogs/durationlimitsdialog.cpp:39
 #, kde-format
 msgid "Shrink duration to:"
-msgstr ""
+msgstr "缩减持续时长至："
 
 #: src/dialogs/encodingdetectdialog.cpp:81
 #, kde-format
 msgctxt "Text encoding detected with n% confidence."
 msgid "%1 (%2% confidence)"
-msgstr ""
+msgstr "%1 (%2%置信度)"
 
 #: src/dialogs/encodingdetectdialog.cpp:191
 #, kde-format
 msgid "Detected"
-msgstr ""
+msgstr "检测到"
 
 #. i18n: ectx: property (windowTitle), widget (QDialog, EncodingDetectDialog)
 #: src/dialogs/encodingdetectdialog.ui:14
 #, kde-format
 msgid "Confirm detected subtitle encoding"
-msgstr ""
+msgstr "确认检测到的字幕编码"
 
 #. i18n: ectx: property (text), widget (QLabel, encodingLabel)
 #: src/dialogs/encodingdetectdialog.ui:30
 #, kde-format
 msgid "Encoding"
-msgstr ""
+msgstr "编码"
 
 #. i18n: ectx: property (text), widget (QLabel, previewLabel)
 #: src/dialogs/encodingdetectdialog.ui:57
 #, kde-format
 msgid "Preview"
-msgstr ""
+msgstr "预览"
 
 #: src/dialogs/fixoverlappingtimesdialog.cpp:23
 #, kde-format
 msgid " msecs"
-msgstr ""
+msgstr " 毫秒"
 
 #: src/dialogs/fixoverlappingtimesdialog.cpp:29
 #, kde-format
 msgid "Minimum interval between lines:"
-msgstr ""
+msgstr "字幕行之间的最小时间间隔："
 
 #: src/dialogs/fixpunctuationdialog.cpp:17
 #, kde-format
 msgid "Fix Punctuation"
-msgstr ""
+msgstr "修复标点"
 
 #: src/dialogs/fixpunctuationdialog.cpp:22
 #, kde-format
 msgid "Fix and cleanup spaces"
-msgstr ""
+msgstr "修复并清理空格"
 
 #: src/dialogs/fixpunctuationdialog.cpp:26
 #, kde-format
 msgid "Fix quotes and double quotes"
-msgstr ""
+msgstr "修复引号与双引号"
 
 #: src/dialogs/fixpunctuationdialog.cpp:30
 #, kde-format
 msgid "Fix English 'I' pronoun"
-msgstr ""
+msgstr "修复英语“I”拼写"
 
 #: src/dialogs/fixpunctuationdialog.cpp:34
 #, kde-format
 msgid "Add ellipsis indicating non finished lines"
-msgstr ""
+msgstr "加入省略号表示未完成的字幕行"
 
 #: src/dialogs/insertlinedialog.cpp:13
 #, kde-format
 msgid "Insert Line Before Current"
-msgstr ""
+msgstr "在当前行之前插入行"
 
 #: src/dialogs/insertlinedialog.cpp:13
 #, kde-format
 msgid "Insert Line After Current"
-msgstr ""
+msgstr "在当前行之后插入行"
 
 #: src/dialogs/insertlinedialog.cpp:13
 #, kde-format
 msgid "Insert Into"
-msgstr ""
+msgstr "插入"
 
 #: src/dialogs/joinsubtitlesdialog.cpp:29
 #, kde-format
 msgid "Shift subtitle forwards before append"
-msgstr ""
+msgstr "在附加前将字幕前移"
 
 #: src/dialogs/joinsubtitlesdialog.cpp:36
 #: src/dialogs/splitsubtitledialog.cpp:35
 #, kde-format
 msgid "Set from video length"
-msgstr ""
+msgstr "从视频长度设置"
 
 #: src/dialogs/progressdialog.cpp:36 src/formats/textdemux/textdemux.cpp:35
 #: src/gui/waveform/waveformwidget.cpp:119
@@ -2339,182 +2352,182 @@ msgstr ""
 #, kde-format
 msgctxt "%p is the percent value, % is the percent sign"
 msgid "%p%"
-msgstr ""
+msgstr "%p%"
 
 #: src/dialogs/removelinesdialog.cpp:13
 #, kde-format
 msgid "Remove Selected Lines"
-msgstr ""
+msgstr "移除选定的行"
 
 #: src/dialogs/removelinesdialog.cpp:13
 #, kde-format
 msgid "Remove From"
-msgstr ""
+msgstr "移除自"
 
 #: src/dialogs/selectablesubtitledialog.cpp:41
 #, kde-format
 msgid "Path:"
-msgstr ""
+msgstr "路径："
 
 #: src/dialogs/selectablesubtitledialog.cpp:46
 #, kde-format
 msgid "Select subtitle"
-msgstr ""
+msgstr "选择字幕"
 
 #: src/dialogs/selectablesubtitledialog.h:30
 #, kde-format
 msgid "Subtitle"
-msgstr ""
+msgstr "字幕"
 
 #: src/dialogs/shifttimesdialog.cpp:19
 #, kde-format
 msgid "Shift"
-msgstr ""
+msgstr "位移"
 
 #: src/dialogs/shifttimesdialog.cpp:21
 #, kde-format
 msgctxt "@title:group"
 msgid "Shifting"
-msgstr ""
+msgstr "位移中"
 
 #: src/dialogs/shifttimesdialog.cpp:25
 #, kde-format
 msgid "Forwards (+)"
-msgstr ""
+msgstr "前进 (+)"
 
 #: src/dialogs/shifttimesdialog.cpp:26
 #, kde-format
 msgid "Backwards (−)"
-msgstr ""
+msgstr "后退 (−)"
 
 #: src/dialogs/smarttextsadjustdialog.cpp:29
 #, kde-format
 msgid "Minimum length for line break:"
-msgstr ""
+msgstr "断行的最小长度："
 
 #: src/dialogs/splitsubtitledialog.cpp:27
 #, kde-format
 msgid "Split Subtitle"
-msgstr ""
+msgstr "分割字幕"
 
 #: src/dialogs/splitsubtitledialog.cpp:40
 #, kde-format
 msgid "Split time:"
-msgstr ""
+msgstr "分割时间："
 
 #: src/dialogs/splitsubtitledialog.cpp:44
 #, kde-format
 msgid "Shift new part backwards after split"
-msgstr ""
+msgstr "分割后将新增字幕后移"
 
 #. i18n: ectx: property (text), widget (QLabel, labClass)
 #: src/dialogs/subtitleclassdialog.ui:30
 #, kde-format
 msgid "Space separated list of CSS classes:"
-msgstr ""
+msgstr "以空格分隔的 CSS 类列表："
 
 #. i18n: CSS
 #. i18n: ectx: property (placeholderText), widget (QComboBox, classList)
 #: src/dialogs/subtitleclassdialog.ui:52
 #, kde-format
 msgid "Class"
-msgstr ""
+msgstr "类"
 
 #: src/dialogs/subtitlecolordialog.cpp:24
 #, kde-format
 msgid "Default Color"
-msgstr ""
+msgstr "默认颜色"
 
 #. i18n: ectx: property (text), widget (QLabel, labVoice)
 #: src/dialogs/subtitlevoicedialog.ui:30
 #, kde-format
 msgid "Person name or voice title:"
-msgstr ""
+msgstr "人物名称或语音标题："
 
 #. i18n: CSS
 #. i18n: ectx: property (placeholderText), widget (QComboBox, voiceList)
 #: src/dialogs/subtitlevoicedialog.ui:52
 #, kde-format
 msgid "Voice"
-msgstr ""
+msgstr "语音"
 
 #: src/dialogs/syncsubtitlesdialog.cpp:17
 #, kde-format
 msgid "Synchronize with Subtitle"
-msgstr ""
+msgstr "与字幕同步"
 
 #: src/dialogs/syncsubtitlesdialog.cpp:19
 #, kde-format
 msgid "Reference Subtitle"
-msgstr ""
+msgstr "引用字幕"
 
 #: src/dialogs/syncsubtitlesdialog.cpp:21
 #, kde-format
 msgctxt "@title:group"
 msgid "Synchronization Mode"
-msgstr ""
+msgstr "同步模式"
 
 #: src/dialogs/syncsubtitlesdialog.cpp:24
 #, kde-format
 msgid "Adjust to reference's first and last lines"
-msgstr ""
+msgstr "调整至引用的首行与末行"
 
 #: src/dialogs/syncsubtitlesdialog.cpp:28
 #, kde-format
 msgid "Copy timing information from reference line by line"
-msgstr ""
+msgstr "从引用逐行复制时值信息"
 
 #: src/errors/errorfinder.cpp:173 src/errors/finderrorsdialog.cpp:17
 #, kde-format
 msgid "Find Error"
-msgstr ""
+msgstr "查找错误"
 
 #: src/errors/errorfinder.cpp:173
 #, kde-format
 msgid "No errors matching given criteria were found!"
-msgstr ""
+msgstr "未找到匹配给定条件的错误！"
 
 #: src/errors/finderrorsdialog.cpp:22
 #, kde-format
 msgctxt "@title:group"
 msgid "Errors to Find"
-msgstr ""
+msgstr "要寻找的错误"
 
 #: src/errors/finderrorsdialog.cpp:28
 #, kde-format
 msgctxt "@title:group Miscellaneous settings"
 msgid "Miscellaneous"
-msgstr ""
+msgstr "杂项"
 
 #: src/errors/finderrorsdialog.cpp:31
 #, kde-format
 msgid "Clear other errors"
-msgstr ""
+msgstr "清除其他错误"
 
 #: src/errors/finderrorsdialog.cpp:35
 #, kde-format
 msgid "Clear user marks"
-msgstr ""
+msgstr "清除用户标记"
 
 #: src/errors/finderrorsdialog.cpp:42
 #, kde-format
 msgid "Search in"
-msgstr ""
+msgstr "搜索于"
 
 #: src/errors/finderrorsdialog.cpp:86
 #, kde-format
 msgid "Available errors"
-msgstr ""
+msgstr "存在的错误"
 
 #: src/errors/finderrorsdialog.cpp:116
 #, kde-format
 msgid "Select None"
-msgstr ""
+msgstr "全部不选"
 
 #: src/formats/textdemux/textdemux.cpp:32
 #, kde-format
 msgid "Importing Subtitle Stream"
-msgstr ""
+msgstr "正在导入字幕流"
 
 #: src/formats/textdemux/textdemux.cpp:91
 #, kde-format
