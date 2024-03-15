@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kdeorg\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-02-26 01:38+0000\n"
-"PO-Revision-Date: 2024-03-13 20:08\n"
+"PO-Revision-Date: 2024-03-14 19:30\n"
 "Last-Translator: \n"
 "Language-Team: Chinese Simplified\n"
 "Language: zh_CN\n"
@@ -2535,6 +2535,8 @@ msgid ""
 "Subtitle demux failed %1: %2\n"
 "%3"
 msgstr ""
+"字幕解码失败 %1：%2\n"
+"%3"
 
 #. i18n: ectx: property (windowTitle), widget (QDialog, VobSubInputInitDialog)
 #. i18n: ectx: property (windowTitle), widget (QDialog, VobSubInputProcessDialog)
@@ -2542,209 +2544,209 @@ msgstr ""
 #: src/formats/vobsub/vobsubinputprocessdialog.ui:14
 #, kde-format
 msgid "VobSub Import"
-msgstr ""
+msgstr "VobSub 导入"
 
 #. i18n: ectx: property (text), widget (QLabel, labelStream)
 #: src/formats/vobsub/vobsubinputinitdialog.ui:20
 #, kde-format
 msgid "Stream / Language"
-msgstr ""
+msgstr "流 / 语言"
 
 #. i18n: ectx: property (title), widget (QGroupBox, grpPostProc)
 #: src/formats/vobsub/vobsubinputinitdialog.ui:53
 #, kde-format
 msgid "Post Processing"
-msgstr ""
+msgstr "后期处理"
 
 #. i18n: ectx: property (text), widget (QCheckBox, ppSpaceNumber)
 #: src/formats/vobsub/vobsubinputinitdialog.ui:59
 #, kde-format
 msgid "Fix space between numbers"
-msgstr ""
+msgstr "修复数字之间的空格"
 
 #. i18n: ectx: property (text), widget (QCheckBox, ppSpacePunct)
 #: src/formats/vobsub/vobsubinputinitdialog.ui:69
 #, kde-format
 msgid "Fix space around punctuation (.,;:?!)"
-msgstr ""
+msgstr "修复标点之间的空格 (.,;:?!)"
 
 #. i18n: ectx: property (text), widget (QCheckBox, ppSpaceParen)
 #: src/formats/vobsub/vobsubinputinitdialog.ui:79
 #, kde-format
 msgid "Fix space around quotes and parentheses (\"()[]{})"
-msgstr ""
+msgstr "修复引号和括号之前的空格 (\"()[]{})"
 
 #. i18n: ectx: property (text), widget (QCheckBox, ppAposQuote)
 #: src/formats/vobsub/vobsubinputinitdialog.ui:89
 #, kde-format
 msgid "Fix double apostrophes/quotes"
-msgstr ""
+msgstr "修复双层撇号/引号"
 
 #. i18n: ectx: property (text), widget (QCheckBox, ppCharsOCR)
 #: src/formats/vobsub/vobsubinputinitdialog.ui:99
 #, kde-format
 msgid "Fix i <-> l, 0 <-> O mistakes"
-msgstr ""
+msgstr "修复 i <-> l 与 0 <-> O 错误"
 
 #: src/formats/vobsub/vobsubinputprocessdialog.cpp:584
 #, kde-format
 msgid "VobSub Error"
-msgstr ""
+msgstr "VobSub 错误"
 
 #. i18n: ectx: property (title), widget (QGroupBox, grpText)
 #: src/formats/vobsub/vobsubinputprocessdialog.ui:26
 #, kde-format
 msgid "Enter character(s)"
-msgstr ""
+msgstr "输入字符"
 
 #. i18n: ectx: property (text), widget (QLabel, symbolLabel)
 #: src/formats/vobsub/vobsubinputprocessdialog.ui:35
 #, kde-format
 msgid "S&ymbols:"
-msgstr ""
+msgstr "符号(&Y)："
 
 #. i18n: ectx: property (toolTip), widget (QSpinBox, symbolCount)
 #: src/formats/vobsub/vobsubinputprocessdialog.ui:45
 #, kde-format
 msgid "Up/Down: change value"
-msgstr ""
+msgstr "上/下键：修改值"
 
 #. i18n: ectx: property (text), widget (QPushButton, btnOk)
 #: src/formats/vobsub/vobsubinputprocessdialog.ui:143
 #, kde-format
 msgid "OK"
-msgstr ""
+msgstr "确定"
 
 #. i18n: ectx: property (toolTip), widget (QPushButton, btnPrevImage)
 #: src/formats/vobsub/vobsubinputprocessdialog.ui:198
 #, kde-format
 msgid "Ctrl+Shift+Left"
-msgstr ""
+msgstr "Ctrl+Shift+左方向键"
 
 #. i18n: ectx: property (text), widget (QPushButton, btnPrevImage)
 #: src/formats/vobsub/vobsubinputprocessdialog.ui:201
 #, kde-format
 msgid "Prev Image"
-msgstr ""
+msgstr "上一个图像"
 
 #. i18n: ectx: property (toolTip), widget (QPushButton, btnPrevSymbol)
 #: src/formats/vobsub/vobsubinputprocessdialog.ui:214
 #, kde-format
 msgid "Ctrl+Left"
-msgstr ""
+msgstr "Ctrl+左方向键"
 
 #. i18n: ectx: property (text), widget (QPushButton, btnPrevSymbol)
 #: src/formats/vobsub/vobsubinputprocessdialog.ui:217
 #, kde-format
 msgid "Prev Symbol"
-msgstr ""
+msgstr "上一个符号"
 
 #. i18n: ectx: property (toolTip), widget (QPushButton, btnNextSymbol)
 #: src/formats/vobsub/vobsubinputprocessdialog.ui:230
 #, kde-format
 msgid "Ctrl+Right"
-msgstr ""
+msgstr "Ctrl+右方向键"
 
 #. i18n: ectx: property (text), widget (QPushButton, btnNextSymbol)
 #: src/formats/vobsub/vobsubinputprocessdialog.ui:233
 #, kde-format
 msgid "Next Symbol"
-msgstr ""
+msgstr "下一个符号"
 
 #. i18n: ectx: property (toolTip), widget (QPushButton, btnNextImage)
 #: src/formats/vobsub/vobsubinputprocessdialog.ui:243
 #, kde-format
 msgid "Ctrl+Shift+Right"
-msgstr ""
+msgstr "Ctrl+Shift+右方向键"
 
 #. i18n: ectx: property (text), widget (QPushButton, btnNextImage)
 #: src/formats/vobsub/vobsubinputprocessdialog.ui:246
 #, kde-format
 msgid "Next Image"
-msgstr ""
+msgstr "下一个图像"
 
 #. i18n: ectx: property (text), widget (QPushButton, btnAbort)
 #: src/formats/vobsub/vobsubinputprocessdialog.ui:272
 #: src/translate/translateengine.cpp:66
 #, kde-format
 msgid "Abort"
-msgstr ""
+msgstr "中止"
 
 #. i18n: ectx: property (title), widget (QGroupBox, grpPreview)
 #: src/formats/vobsub/vobsubinputprocessdialog.ui:294
 #, kde-format
 msgid "Subtitle Image"
-msgstr ""
+msgstr "字幕图像"
 
 #: src/gui/currentlinewidget.cpp:217
 #, kde-format
 msgid "<b>Show</b>"
-msgstr ""
+msgstr "<b>显示</b>"
 
 #: src/gui/currentlinewidget.cpp:225
 #, kde-format
 msgid "<b>Hide</b>"
-msgstr ""
+msgstr "<b>隐藏</b>"
 
 #: src/gui/currentlinewidget.cpp:233
 #, kde-format
 msgid "<b>Duration</b>"
-msgstr ""
+msgstr "<b>持续时长</b>"
 
 #: src/gui/currentlinewidget.cpp:314
 #, kde-format
 msgid "Change Voice Tag"
-msgstr ""
+msgstr "更改语音标签"
 
 #: src/gui/currentlinewidget.cpp:318
 #, kde-format
 msgid "Change Class Tag"
-msgstr ""
+msgstr "更改类标签"
 
 #: src/gui/currentlinewidget.cpp:439 src/gui/currentlinewidget.cpp:442
 #, kde-format
 msgid "No current line"
-msgstr ""
+msgstr "没有当前行"
 
 #: src/gui/currentlinewidget.cpp:514
 #, kde-format
 msgid "chars"
-msgstr ""
+msgstr "字符"
 
 #: src/gui/currentlinewidget.cpp:522
 #, kde-format
 msgid "ms/char"
-msgstr ""
+msgstr "毫秒每字符"
 
 #: src/gui/currentlinewidget.cpp:524
 #, kde-format
 msgid "chars/sec"
-msgstr ""
+msgstr "字符每秒"
 
 #: src/gui/playerwidget.cpp:70
 #, kde-format
 msgid "<b>Position</b>"
-msgstr ""
+msgstr "<b>位置</b>"
 
 #: src/gui/playerwidget.cpp:78
 #, kde-format
 msgid "<b>Length</b>"
-msgstr ""
+msgstr "<b>长度</b>"
 
 #: src/gui/playerwidget.cpp:83
 #, kde-format
 msgid "<b>FPS</b>"
-msgstr ""
+msgstr "<b>FPS</b>"
 
 #: src/gui/playerwidget.cpp:89
 #, kde-format
 msgid "<b>Playback Rate</b>"
-msgstr ""
+msgstr "<b>播放速率</b>"
 
 #: src/gui/playerwidget.cpp:674
 #, kde-format
 msgid "<qt>There was an error opening media file %1.</qt>"
-msgstr ""
+msgstr "<qt>打开媒体文件 %1 时发生错误。</qt>"
 
 #: src/gui/playerwidget.cpp:690 src/gui/playerwidget.cpp:691
 #: src/gui/playerwidget.cpp:692 src/gui/playerwidget.cpp:693
@@ -2752,65 +2754,65 @@ msgstr ""
 #: src/gui/playerwidget.cpp:774
 #, kde-format
 msgid "<i>Unknown</i>"
-msgstr ""
+msgstr "<i>未知</i>"
 
 #: src/gui/playerwidget.cpp:706 src/gui/playerwidget.cpp:708
 #, kde-format
 msgid "Unexpected error when playing file."
-msgstr ""
+msgstr "播放文件时产生意外错误。"
 
 #: src/gui/playerwidget.cpp:706 src/gui/playerwidget.cpp:708
 #, kde-format
 msgid "Error Playing File"
-msgstr ""
+msgstr "播放文件时错误"
 
 #: src/gui/subtitlemeta/subtitlemetawidget.cpp:46
 #, kde-format
 msgid "&Stylesheet"
-msgstr ""
+msgstr "样式表(&S)"
 
 #: src/gui/subtitlemeta/subtitlemetawidget.cpp:47
 #, kde-format
 msgid "&Comments"
-msgstr ""
+msgstr "注释(&C)"
 
 #: src/gui/subtitlemeta/subtitlemetawidget.cpp:48
 #, kde-format
 msgid "&Position"
-msgstr ""
+msgstr "位置(&P)"
 
 #: src/gui/subtitlemeta/subtitlemetawidget.cpp:89
 #, kde-format
 msgid "Intro"
-msgstr ""
+msgstr "导引"
 
 #: src/gui/subtitlemeta/subtitlemetawidget.cpp:91
 #, kde-format
 msgid "Header"
-msgstr ""
+msgstr "标题"
 
 #: src/gui/subtitlemeta/subtitlemetawidget.cpp:93
 #, kde-format
 msgid "Footer"
-msgstr ""
+msgstr "页尾"
 
 #. i18n: ectx: property (windowTitle), widget (QWidget, SubtitlePositionWidget)
 #: src/gui/subtitlemeta/subtitlepositionwidget.ui:14
 #, kde-format
 msgid "Form"
-msgstr ""
+msgstr "窗体"
 
 #. i18n: ectx: property (title), widget (QGroupBox, grpHAlign)
 #: src/gui/subtitlemeta/subtitlepositionwidget.ui:20
 #, kde-format
 msgid "Horizontal Alignment"
-msgstr ""
+msgstr "水平对齐"
 
 #. i18n: ectx: property (title), widget (QGroupBox, grpVAlign)
 #: src/gui/subtitlemeta/subtitlepositionwidget.ui:103
 #, kde-format
 msgid "Vertical Alignment"
-msgstr ""
+msgstr "垂直对齐"
 
 #. i18n: ectx: property (title), widget (QGroupBox, grpPosition)
 #: src/gui/subtitlemeta/subtitlepositionwidget.ui:164
@@ -3097,31 +3099,31 @@ msgstr ""
 #: src/scconfig.kcfg:30
 #, kde-format
 msgid "Automatic Video Load"
-msgstr ""
+msgstr "自动载入视频"
 
 #. i18n: ectx: label, entry (LinesQuickShiftAmount), group (General)
 #: src/scconfig.kcfg:35
 #, kde-format
 msgid "Lines Quick Shift Amount"
-msgstr ""
+msgstr "字幕行快速移位量"
 
 #. i18n: ectx: label, entry (GrabbedPositionCompensation), group (General)
 #: src/scconfig.kcfg:39
 #, kde-format
 msgid "Grabbed Position Compensation"
-msgstr ""
+msgstr "抓取位置补偿"
 
 #. i18n: ectx: label, entry (LineDuration), group (General)
 #: src/scconfig.kcfg:44
 #, kde-format
 msgid "Default subtitle line duration"
-msgstr ""
+msgstr "默认字幕行持续时间"
 
 #. i18n: ectx: label, entry (LinePause), group (General)
 #: src/scconfig.kcfg:48
 #, kde-format
 msgid "Default duration between subtitle lines"
-msgstr ""
+msgstr "字幕各行间的默认持续时间"
 
 #. i18n: ectx: label, entry (MaxCharacters), group (Error Check)
 #: src/scconfig.kcfg:55
