@@ -171,12 +171,6 @@ main(int argc, char **argv)
 
 	// register about data
 	KAboutData::setApplicationData(aboutData);
-
-	// set app stuff from about data component name
-	app.setApplicationName(aboutData.componentName());
-	app.setOrganizationDomain(aboutData.organizationDomain());
-	app.setApplicationVersion(aboutData.version());
-	app.setApplicationDisplayName(aboutData.displayName());
 	app.setWindowIcon(QIcon::fromTheme(aboutData.componentName()));
 
 	// do it sooner and different stuff will break in different KF5 versions
