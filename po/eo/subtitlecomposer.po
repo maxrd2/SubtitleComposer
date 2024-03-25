@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: subtitlecomposer\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-02-26 01:38+0000\n"
-"PO-Revision-Date: 2024-02-26 21:30+0100\n"
+"PO-Revision-Date: 2024-03-24 10:34+0100\n"
 "Last-Translator: Oliver Kellogg <okellogg@users.sourceforge.net>\n"
 "Language-Team: Esperanto <kde-i18n-eo.org>\n"
 "Language: eo\n"
@@ -44,27 +44,27 @@ msgstr "Iri al Linio"
 #: src/application.cpp:497
 #, kde-format
 msgid "&Go to line:"
-msgstr ""
+msgstr "&Iru al linio:"
 
 #: src/application.cpp:670 src/core/subtitle.cpp:878
 #, kde-format
 msgid "Maximize Durations"
-msgstr ""
+msgstr "Maksimumigu Daŭrojn"
 
 #: src/application.cpp:698 src/core/subtitle.cpp:1153
 #, kde-format
 msgid "Unbreak Lines"
-msgstr ""
+msgstr "Malrompi Liniojn"
 
 #: src/application.cpp:709 src/core/subtitle.cpp:1162
 #, kde-format
 msgid "Simplify Spaces"
-msgstr ""
+msgstr "Simpligu Spacojn"
 
 #: src/application.cpp:770
 #, kde-format
 msgid "Open Video"
-msgstr ""
+msgstr "Malfermi Videon"
 
 #: src/application.cpp:968 src/application.cpp:975
 #: src/application_subtitle.cpp:658
@@ -75,7 +75,7 @@ msgstr "Sentitola"
 #: src/application.cpp:970 src/application_subtitle.cpp:658
 #, kde-format
 msgid "Untitled Translation"
-msgstr ""
+msgstr "Sentitola Traduko"
 
 #: src/application.cpp:1071
 #, kde-format
@@ -123,7 +123,7 @@ msgstr "Eliri la aplikaĵon"
 #: src/application_actions.cpp:36
 #, kde-format
 msgid "Configure Subtitle Composer"
-msgstr ""
+msgstr "Agordi Subtitolan Komponiston"
 
 #: src/application_actions.cpp:40
 #, kde-format
@@ -134,34 +134,34 @@ msgstr "Nova"
 #: src/application_actions.cpp:41
 #, kde-format
 msgid "Create an empty subtitle"
-msgstr ""
+msgstr "Kreu malplenan subtitolon"
 
 #: src/application_actions.cpp:49
 #, kde-format
 msgctxt "@action:inmenu Open subtitle file"
 msgid "Open Subtitle..."
-msgstr ""
+msgstr "Malfermu Subtitolon..."
 
 #: src/application_actions.cpp:50 src/application_actions.cpp:67
 #, kde-format
 msgid "Open subtitle file"
-msgstr ""
+msgstr "Malfermu subtitolan dosieron"
 
 #: src/application_actions.cpp:58
 #, kde-format
 msgid "Reload As..."
-msgstr ""
+msgstr "Reŝargi kiel..."
 
 #: src/application_actions.cpp:59
 #, kde-format
 msgid "Reload opened file with a different encoding"
-msgstr ""
+msgstr "Reŝargi malfermitan dosieron kun malsama kodado"
 
 #: src/application_actions.cpp:66
 #, kde-format
 msgctxt "@action:inmenu Open rencently used subtitle file"
 msgid "Open &Recent Subtitle"
-msgstr ""
+msgstr "Malfermu &Lastatempajn Subtitolojn"
 
 #: src/application_actions.cpp:73
 #, kde-format
@@ -171,7 +171,7 @@ msgstr "Konservi"
 #: src/application_actions.cpp:74
 #, kde-format
 msgid "Save opened subtitle"
-msgstr ""
+msgstr "Konservu malfermitan subtitolon"
 
 #: src/application_actions.cpp:82
 #, kde-format
@@ -181,7 +181,7 @@ msgstr "Konservi kiel..."
 #: src/application_actions.cpp:83
 #, kde-format
 msgid "Save opened subtitle with different settings"
-msgstr ""
+msgstr "Konservu malfermitan subtitolon kun malsamaj agordoj"
 
 #: src/application_actions.cpp:91
 #, kde-format
@@ -191,92 +191,92 @@ msgstr "Fermi"
 #: src/application_actions.cpp:92
 #, kde-format
 msgid "Close opened subtitle"
-msgstr ""
+msgstr "Fermu malfermitan subtitolon"
 
 #: src/application_actions.cpp:100
 #, kde-format
 msgid "New Translation"
-msgstr ""
+msgstr "Nova Traduko"
 
 #: src/application_actions.cpp:101
 #, kde-format
 msgid "Create an empty translation subtitle"
-msgstr ""
+msgstr "Kreu malplenan tradukan subtitolon"
 
 #: src/application_actions.cpp:109
 #, kde-format
 msgid "Open Translation..."
-msgstr ""
+msgstr "Malfermu Tradukado..."
 
 #: src/application_actions.cpp:110 src/application_actions.cpp:127
 #, kde-format
 msgid "Open translation subtitle file"
-msgstr ""
+msgstr "Malfermu tradukan subtitolan dosieron"
 
 #: src/application_actions.cpp:118
 #, kde-format
 msgid "Reload Translation As..."
-msgstr ""
+msgstr "Reŝargi tradukon kiel..."
 
 #: src/application_actions.cpp:119
 #, kde-format
 msgid "Reload opened translation file with a different encoding"
-msgstr ""
+msgstr "Reŝargi la malfermitan tradukdosieron kun malsama kodado"
 
 #: src/application_actions.cpp:126
 #, kde-format
 msgid "Open &Recent Translation"
-msgstr ""
+msgstr "Malfermu &Lastatempan Tradukon"
 
 #: src/application_actions.cpp:134
 #, kde-format
 msgid "Save Translation"
-msgstr ""
+msgstr "Konservu Tradukadon"
 
 #: src/application_actions.cpp:135
 #, kde-format
 msgid "Save opened translation subtitle"
-msgstr ""
+msgstr "Konservu malfermitan traduksubtitolon"
 
 #: src/application_actions.cpp:145
 #, kde-format
 msgid "Save Translation As..."
-msgstr ""
+msgstr "Konservu tradukon kiel..."
 
 #: src/application_actions.cpp:146
 #, kde-format
 msgid "Save opened translation subtitle with different settings"
-msgstr ""
+msgstr "Konservu malfermitan traduksubtitolon kun malsamaj agordoj"
 
 #: src/application_actions.cpp:154
 #, kde-format
 msgid "Close Translation"
-msgstr ""
+msgstr "Fermu Tradukado"
 
 #: src/application_actions.cpp:155
 #, kde-format
 msgid "Close opened translation subtitle"
-msgstr ""
+msgstr "Fermu malfermitan traduksubtitolon"
 
 #: src/application_actions.cpp:172
 #, kde-format
 msgid "Split Subtitle..."
-msgstr ""
+msgstr "Dividi Subtitolon..."
 
 #: src/application_actions.cpp:173
 #, kde-format
 msgid "Split the opened subtitle in two parts"
-msgstr ""
+msgstr "Dividu la malfermitan subtitolon en du partoj"
 
 #: src/application_actions.cpp:179
 #, kde-format
 msgid "Join Subtitles..."
-msgstr ""
+msgstr "Aliĝu al Subtekstoj..."
 
 #: src/application_actions.cpp:180
 #, kde-format
 msgid "Append to the opened subtitle another one"
-msgstr ""
+msgstr "Aldonu al la malfermita subtitolo alian"
 
 #: src/application_actions.cpp:187
 #, kde-format
@@ -286,7 +286,7 @@ msgstr "Enmeti Antaŭe"
 #: src/application_actions.cpp:188
 #, kde-format
 msgid "Insert empty line before current one"
-msgstr ""
+msgstr "Enigu malplenan linion antaŭ la nuna"
 
 #: src/application_actions.cpp:196
 #, kde-format
@@ -296,7 +296,7 @@ msgstr "Enmeti Post"
 #: src/application_actions.cpp:197
 #, kde-format
 msgid "Insert empty line after current one"
-msgstr ""
+msgstr "Enmetu malplenan linion post nuna"
 
 #. i18n: ectx: property (text), widget (QPushButton, btnRemove)
 #: src/application_actions.cpp:205 src/scripting/scriptsmanager.ui:58
@@ -307,17 +307,17 @@ msgstr "Forigi"
 #: src/application_actions.cpp:206
 #, kde-format
 msgid "Remove selected lines"
-msgstr ""
+msgstr "Forigu elektitajn liniojn"
 
 #: src/application_actions.cpp:213 src/core/subtitle.cpp:560
 #, kde-format
 msgid "Split Lines"
-msgstr ""
+msgstr "Split Linioj"
 
 #: src/application_actions.cpp:214
 #, kde-format
 msgid "Split selected lines"
-msgstr ""
+msgstr "Dividu elektitajn liniojn"
 
 #: src/application_actions.cpp:220 src/core/subtitle.cpp:642
 #: src/gui/waveform/waveformwidget.cpp:714
@@ -328,7 +328,7 @@ msgstr "Kunigi liniojn"
 #: src/application_actions.cpp:221
 #, kde-format
 msgid "Join selected lines"
-msgstr ""
+msgstr "Aliĝu elektitajn liniojn"
 
 #: src/application_actions.cpp:228 src/errors/finderrorsdialog.cpp:114
 #: src/gui/treeview/richlineedit.cpp:112 src/widgets/simplerichtextedit.cpp:455
@@ -339,7 +339,7 @@ msgstr "Elekti Ĉion"
 #: src/application_actions.cpp:229
 #, kde-format
 msgid "Select all lines"
-msgstr ""
+msgstr "Elektu ĉiujn liniojn"
 
 #: src/application_actions.cpp:236
 #, kde-format
@@ -349,7 +349,7 @@ msgstr "Iri al Linio..."
 #: src/application_actions.cpp:237
 #, kde-format
 msgid "Go to specified line"
-msgstr ""
+msgstr "Iru al specifita linio"
 
 #: src/application_actions.cpp:245
 #, kde-format
@@ -359,7 +359,7 @@ msgstr "Trovi..."
 #: src/application_actions.cpp:246
 #, kde-format
 msgid "Find occurrences of strings or regular expressions"
-msgstr ""
+msgstr "Trovu aperon de ĉenoj aŭ regulaj esprimoj"
 
 #: src/application_actions.cpp:254
 #, kde-format
@@ -369,17 +369,17 @@ msgstr "Trovi sekvan"
 #: src/application_actions.cpp:255
 #, kde-format
 msgid "Find next occurrence of string or regular expression"
-msgstr ""
+msgstr "Trovu sekvan aperon de ĉeno aŭ regula esprimo"
 
 #: src/application_actions.cpp:263
 #, kde-format
 msgid "Find Previous"
-msgstr ""
+msgstr "Trovi Antaŭan"
 
 #: src/application_actions.cpp:264
 #, kde-format
 msgid "Find previous occurrence of string or regular expression"
-msgstr ""
+msgstr "Trovu antaŭan aperon de ĉeno aŭ regula esprimo"
 
 #: src/application_actions.cpp:271
 #, kde-format
@@ -389,127 +389,127 @@ msgstr "Anstataŭigi..."
 #: src/application_actions.cpp:272
 #, kde-format
 msgid "Replace occurrences of strings or regular expressions"
-msgstr ""
+msgstr "Anstataŭigi aperon de ĉenoj aŭ regulaj esprimoj"
 
 #: src/application_actions.cpp:280
 #, kde-format
 msgid "Retrocede current line"
-msgstr ""
+msgstr "Retrocedu nunan linion"
 
 #: src/application_actions.cpp:281
 #, kde-format
 msgid "Makes the line before the current one active"
-msgstr ""
+msgstr "Aktivigas la linion antaŭ la nuna"
 
 #: src/application_actions.cpp:289
 #, kde-format
 msgid "Advance current line"
-msgstr ""
+msgstr "Antaŭenigi nunan linion"
 
 #: src/application_actions.cpp:290
 #, kde-format
 msgid "Makes the line after the current one active"
-msgstr ""
+msgstr "Aktivigas la linion post la nuna"
 
 #: src/application_actions.cpp:298
 #, kde-format
 msgid "Detect Errors..."
-msgstr ""
+msgstr "Detekti Erarojn..."
 
 #: src/application_actions.cpp:299
 #, kde-format
 msgid "Detect errors in the current subtitle"
-msgstr ""
+msgstr "Detektu erarojn en la nuna subteksto"
 
 #: src/application_actions.cpp:306
 #, kde-format
 msgid "Clear Errors/Marks"
-msgstr ""
+msgstr "Forigi Erarojn/Markojn"
 
 #: src/application_actions.cpp:307
 #, kde-format
 msgid "Clear detected errors and marks in the current subtitle"
-msgstr ""
+msgstr "Forigi detektitajn erarojn kaj markojn en la nuna subteksto"
 
 #: src/application_actions.cpp:315
 #, kde-format
 msgid "Select Next Error/Mark"
-msgstr ""
+msgstr "Elektu Sekva Eraro/Marko"
 
 #: src/application_actions.cpp:316
 #, kde-format
 msgid "Select next line with error or mark"
-msgstr ""
+msgstr "Elektu sekvan linion kun eraro aŭ marko"
 
 #: src/application_actions.cpp:324
 #, kde-format
 msgid "Select Previous Error/Mark"
-msgstr ""
+msgstr "Elektu Antaŭan Eraron/Markon"
 
 #: src/application_actions.cpp:325
 #, kde-format
 msgid "Select previous line with error or mark"
-msgstr ""
+msgstr "Elektu antaŭan linion kun eraro aŭ marko"
 
 #: src/application_actions.cpp:333
 #, kde-format
 msgid "Spelling..."
-msgstr ""
+msgstr "Literumo..."
 
 #: src/application_actions.cpp:334
 #, kde-format
 msgid "Check lines spelling"
-msgstr ""
+msgstr "Kontrolu liniojn literumadon"
 
 #: src/application_actions.cpp:340
 #, kde-format
 msgid "Toggle Mark"
-msgstr ""
+msgstr "Ŝaltigu Markon"
 
 #: src/application_actions.cpp:341
 #, kde-format
 msgid "Toggle mark on selected lines"
-msgstr ""
+msgstr "Ŝaltigu markon sur elektitaj linioj"
 
 #: src/application_actions.cpp:349 src/gui/currentlinewidget.cpp:322
 #, kde-format
 msgid "Toggle Bold"
-msgstr ""
+msgstr "Ŝaltu Grada"
 
 #: src/application_actions.cpp:350
 #, kde-format
 msgid "Toggle selected lines bold attribute"
-msgstr ""
+msgstr "Ŝaltu elektitajn liniojn grasan atributon"
 
 #: src/application_actions.cpp:358 src/gui/currentlinewidget.cpp:326
 #, kde-format
 msgid "Toggle Italic"
-msgstr ""
+msgstr "Ŝaltu kursivan"
 
 #: src/application_actions.cpp:359
 #, kde-format
 msgid "Toggle selected lines italic attribute"
-msgstr ""
+msgstr "Ŝaltigu elektitajn liniojn kursivan atributon"
 
 #: src/application_actions.cpp:367 src/gui/currentlinewidget.cpp:330
 #, kde-format
 msgid "Toggle Underline"
-msgstr ""
+msgstr "Baskuligi Substreki"
 
 #: src/application_actions.cpp:368
 #, kde-format
 msgid "Toggle selected lines underline attribute"
-msgstr ""
+msgstr "Ŝaltu elektitajn liniojn substreki atributon"
 
 #: src/application_actions.cpp:376 src/gui/currentlinewidget.cpp:334
 #, kde-format
 msgid "Toggle Strike Through"
-msgstr ""
+msgstr "Baskuligi Trafrapi"
 
 #: src/application_actions.cpp:377
 #, kde-format
 msgid "Toggle selected lines strike through attribute"
-msgstr ""
+msgstr "Ŝaltu elektitajn liniojn tra la atributo"
 
 #: src/application_actions.cpp:385 src/gui/currentlinewidget.cpp:338
 #, kde-format
@@ -519,117 +519,117 @@ msgstr "Ŝanĝi tekstkoloron"
 #: src/application_actions.cpp:386
 #, kde-format
 msgid "Change text color of selected lines"
-msgstr ""
+msgstr "Ŝanĝu tekstokoloron de elektitaj linioj"
 
 #: src/application_actions.cpp:393
 #, kde-format
 msgid "Shift..."
-msgstr ""
+msgstr "Shift..."
 
 #: src/application_actions.cpp:394
 #, kde-format
 msgid "Shift lines an specified amount of time"
-msgstr ""
+msgstr "Ŝanĝi liniojn specifan kvanton da tempo"
 
 #: src/application_actions.cpp:413
 #, kde-format
 msgid "Adjust..."
-msgstr ""
+msgstr "Alĝustigi..."
 
 #: src/application_actions.cpp:414
 #, kde-format
 msgid "Linearly adjust all lines to a specified interval"
-msgstr ""
+msgstr "Lineare alĝustigu ĉiujn liniojn al specifa intervalo"
 
 #: src/application_actions.cpp:421
 #, kde-format
 msgid "Change Frame Rate..."
-msgstr ""
+msgstr "Ŝanĝi kadrofrekvencon..."
 
 #: src/application_actions.cpp:422
 #, kde-format
 msgid "Retime subtitle lines by reinterpreting its frame rate"
-msgstr ""
+msgstr "Retempigi subtitolliniojn reinterpretante ĝian framfrekvencon"
 
 #: src/application_actions.cpp:428
 #, kde-format
 msgid "Enforce Duration Limits..."
-msgstr ""
+msgstr "Devigi Daŭrolimojn..."
 
 #: src/application_actions.cpp:429
 #, kde-format
 msgid "Enforce lines minimum and/or maximum duration limits"
-msgstr ""
+msgstr "Devigis liniojn minimumajn kaj/aŭ maksimumajn daŭrolimojn"
 
 #: src/application_actions.cpp:436
 #, kde-format
 msgid "Set Automatic Durations..."
-msgstr ""
+msgstr "Agordu Aŭtomatajn Daŭrojn..."
 
 #: src/application_actions.cpp:437
 #, kde-format
 msgid "Set lines durations based on amount of letters, words and line breaks"
-msgstr ""
+msgstr "Fiksu linio-daŭrojn laŭ kvanto de literoj, vortoj kaj linio-rompoj"
 
 #: src/application_actions.cpp:443
 #, kde-format
 msgid "Maximize Durations..."
-msgstr ""
+msgstr "Maksimumigu Daŭrojn..."
 
 #: src/application_actions.cpp:444
 #, kde-format
 msgid "Extend lines durations up to their next lines show time"
-msgstr ""
+msgstr "Plilongigi liniojn daŭroj ĝis iliaj sekvaj linioj montras tempon"
 
 #: src/application_actions.cpp:450
 #, kde-format
 msgid "Fix Overlapping Times..."
-msgstr ""
+msgstr "Ripari Interkovrajn Tempojn..."
 
 #: src/application_actions.cpp:451
 #, kde-format
 msgid "Fix lines overlapping times"
-msgstr ""
+msgstr "Ripari liniojn interkovrantaj tempojn"
 
 #: src/application_actions.cpp:457
 #, kde-format
 msgid "Synchronize with Subtitle..."
-msgstr ""
+msgstr "Sinkronigi kun Subtitolo..."
 
 #: src/application_actions.cpp:458
 #, kde-format
 msgid "Copy timing information from another subtitle"
-msgstr ""
+msgstr "Kopiu tempinformojn de alia subteksto"
 
 #: src/application_actions.cpp:464
 #, kde-format
 msgid "Break Lines..."
-msgstr ""
+msgstr "Romplinioj..."
 
 #: src/application_actions.cpp:465
 #, kde-format
 msgid "Automatically set line breaks"
-msgstr ""
+msgstr "Aŭtomate agordu liniorompojn"
 
 #: src/application_actions.cpp:471
 #, kde-format
 msgid "Unbreak Lines..."
-msgstr ""
+msgstr "Malrompu Liniojn..."
 
 #: src/application_actions.cpp:472
 #, kde-format
 msgid "Remove line breaks from lines"
-msgstr ""
+msgstr "Forigu liniorompojn de linioj"
 
 #: src/application_actions.cpp:478
 #, kde-format
 msgid "Simplify Spaces..."
-msgstr ""
+msgstr "Simpligu Spacojn..."
 
 #: src/application_actions.cpp:479
 #, kde-format
 msgid "Remove unneeded spaces from lines"
-msgstr ""
+msgstr "Forigu nebezonatajn spacojn de linioj"
 
 #: src/application_actions.cpp:485
 #, kde-format
@@ -639,17 +639,17 @@ msgstr "Ŝanĝi Usklecon..."
 #: src/application_actions.cpp:486
 #, kde-format
 msgid "Change lines text to upper, lower, title or sentence case"
-msgstr ""
+msgstr "Ŝanĝu liniojn tekston al supra, malsupra, titolo aŭ frazo"
 
 #: src/application_actions.cpp:492
 #, kde-format
 msgid "Fix Punctuation..."
-msgstr ""
+msgstr "Ripari interpunkcion..."
 
 #: src/application_actions.cpp:493
 #, kde-format
 msgid "Fix punctuation errors in lines"
-msgstr ""
+msgstr "Ripari interpunkciajn erarojn en linioj"
 
 #: src/application_actions.cpp:499
 #, kde-format
@@ -659,62 +659,62 @@ msgstr "Traduki..."
 #: src/application_actions.cpp:500
 #, kde-format
 msgid "Translate lines texts using Google services"
-msgstr ""
+msgstr "Traduku liniojn tekstojn per Google-servoj"
 
 #: src/application_actions.cpp:506
 #, kde-format
 msgid "Edit Line in Place"
-msgstr ""
+msgstr "Redaktu Linion surloke"
 
 #: src/application_actions.cpp:507
 #, kde-format
 msgid "Edit current line text in place"
-msgstr ""
+msgstr "Redaktu nunan liniotekston surloke"
 
 #: src/application_actions.cpp:515
 #, kde-format
 msgid "Open Video..."
-msgstr ""
+msgstr "Malfermu Videon..."
 
 #: src/application_actions.cpp:516 src/application_actions.cpp:523
 #, kde-format
 msgid "Open video file"
-msgstr ""
+msgstr "Malfermu videodosieron"
 
 #: src/application_actions.cpp:522
 #, kde-format
 msgid "Open &Recent Video"
-msgstr ""
+msgstr "Malfermu &Lastatempan Videon"
 
 #: src/application_actions.cpp:529
 #, kde-format
 msgid "Import Subtitle Stream"
-msgstr ""
+msgstr "Importu Subtitolon Rojo"
 
 #: src/application_actions.cpp:530
 #, kde-format
 msgid "Import subtitle stream into subtitle editor"
-msgstr ""
+msgstr "Importu subtitolan fluon en subtitolan redaktilon"
 
 #: src/application_actions.cpp:536
 #, kde-format
 msgid "Recognize Speech"
-msgstr ""
+msgstr "Rekonu Parolon"
 
 #: src/application_actions.cpp:537
 #, kde-format
 msgid "Recognize speech in audio stream"
-msgstr ""
+msgstr "Rekonu paroladon en sona fluo"
 
 #: src/application_actions.cpp:543
 #, kde-format
 msgid "Close Video"
-msgstr ""
+msgstr "Fermu Videon"
 
 #: src/application_actions.cpp:544
 #, kde-format
 msgid "Close video file"
-msgstr ""
+msgstr "Fermu videodosieron"
 
 #: src/application_actions.cpp:551
 #, kde-format
@@ -724,7 +724,7 @@ msgstr "Plenekrana Reĝimo"
 #: src/application_actions.cpp:552
 #, kde-format
 msgid "Toggle full screen mode"
-msgstr ""
+msgstr "Baskuligi plenekranan reĝimon"
 
 #: src/application_actions.cpp:559
 #, kde-format
@@ -734,12 +734,12 @@ msgstr "Halti"
 #: src/application_actions.cpp:560
 #, kde-format
 msgid "Stop video playback"
-msgstr ""
+msgstr "Ĉesu videoludadon"
 
 #: src/application_actions.cpp:568
 #, kde-format
 msgid "Toggle video playing/paused"
-msgstr ""
+msgstr "Ŝaltu videoludado/paŭzita"
 
 #: src/application_actions.cpp:576
 #, kde-format
@@ -764,87 +764,87 @@ msgstr "Kadropaŝi Antaŭen"
 #: src/application_actions.cpp:606
 #, kde-format
 msgid "Seek to Previous Line"
-msgstr ""
+msgstr "Serĉu al Antaŭa Linio"
 
 #: src/application_actions.cpp:607
 #, kde-format
 msgid "Seek to previous subtitle line show time"
-msgstr ""
+msgstr "Serĉu antaŭan subtitollinian spektaklotempon"
 
 #: src/application_actions.cpp:615
 #, kde-format
 msgid "Increase media play rate"
-msgstr ""
+msgstr "Pliigi aŭdvidaĵan ludrapidecon"
 
 #: src/application_actions.cpp:616
 #, kde-format
 msgid "Increase media playback rate"
-msgstr ""
+msgstr "Pliigu la indicon de reprodukto de amaskomunikiloj"
 
 #: src/application_actions.cpp:623
 #, kde-format
 msgid "Decrease media play rate"
-msgstr ""
+msgstr "Malpliigu aŭdvidaĵan ludrapidecon"
 
 #: src/application_actions.cpp:624
 #, kde-format
 msgid "Decrease media playback rate"
-msgstr ""
+msgstr "Malpliigu la indicon de reprodukto de amaskomunikiloj"
 
 #: src/application_actions.cpp:630
 #, kde-format
 msgid "Play Current Line and Pause"
-msgstr ""
+msgstr "Ludu Nunan Linion kaj Paŭzu"
 
 #: src/application_actions.cpp:631
 #, kde-format
 msgid "Seek to selected subtitle line show time, play it and then pause"
-msgstr ""
+msgstr "Serĉu la elektitan subtitolon montri tempon, ludu ĝin kaj poste paŭzu"
 
 #: src/application_actions.cpp:638
 #, kde-format
 msgid "Seek to Current Line"
-msgstr ""
+msgstr "Serĉu al Nuna Linio"
 
 #: src/application_actions.cpp:639
 #, kde-format
 msgid "Seek to selected subtitle line show time"
-msgstr ""
+msgstr "Serĉu la elektitan subtitolan spektaklon"
 
 #: src/application_actions.cpp:646
 #, kde-format
 msgid "Seek to Next Line"
-msgstr ""
+msgstr "Serĉu al Sekva Linio"
 
 #: src/application_actions.cpp:647
 #, kde-format
 msgid "Seek to next subtitle line show time"
-msgstr ""
+msgstr "Serĉu la sekvan subtitollinian spektaklon"
 
 #: src/application_actions.cpp:655
 #, kde-format
 msgid "Set Line Show Time to Video Position"
-msgstr ""
+msgstr "Agordu Linion Montri Tempon al Video Pozicio"
 
 #: src/application_actions.cpp:656
 #, kde-format
 msgid "Set current line show time to video position"
-msgstr ""
+msgstr "Agordu la nunan liniospektaklotempon al videopozicio"
 
 #: src/application_actions.cpp:664
 #, kde-format
 msgid "Set Line Hide Time to Video Position"
-msgstr ""
+msgstr "Agordu Linion Kaŝi Tempon al Video Pozicio"
 
 #: src/application_actions.cpp:665
 #, kde-format
 msgid "Set current line hide time to video position"
-msgstr ""
+msgstr "Agordu la nunan linion kaŝtempon al videopozicio"
 
 #: src/application_actions.cpp:672
 #, kde-format
 msgid "Shift Current Line to Video Position"
-msgstr ""
+msgstr "Ŝanĝi Nunan Linion al Video-Pozicio"
 
 #: src/application_actions.cpp:673
 #, kde-format
@@ -855,12 +855,12 @@ msgstr ""
 #: src/application_actions.cpp:681
 #, kde-format
 msgid "Current Line Follows Video"
-msgstr ""
+msgstr "Nuna Linio Sekvas Videon"
 
 #: src/application_actions.cpp:682
 #, kde-format
 msgid "Make current line follow the playing video position"
-msgstr ""
+msgstr "Faru la nunan linion sekvi la ludantan videopozicion"
 
 #: src/application_actions.cpp:688
 #, kde-format
@@ -871,7 +871,7 @@ msgstr "Silentigi"
 #: src/application_actions.cpp:689
 #, kde-format
 msgid "Enable/disable playback sound"
-msgstr ""
+msgstr "Ebligi/malŝalti reproduktan sonon"
 
 #: src/application_actions.cpp:696
 #, kde-format
@@ -881,7 +881,7 @@ msgstr "Pliigi la laŭtecon"
 #: src/application_actions.cpp:697
 #, kde-format
 msgid "Increase volume by 5%"
-msgstr ""
+msgstr "Pliigi laŭtecon je 5%"
 
 #: src/application_actions.cpp:704
 #, kde-format
@@ -891,7 +891,7 @@ msgstr "Malpliigi la laŭtecon"
 #: src/application_actions.cpp:705
 #, kde-format
 msgid "Decrease volume by 5%"
-msgstr ""
+msgstr "Malpliigu laŭtecon je 5%"
 
 #: src/application_actions.cpp:712
 #, kde-format
@@ -901,7 +901,7 @@ msgstr "Sonfluoj"
 #: src/application_actions.cpp:713
 #, kde-format
 msgid "Select active audio stream"
-msgstr ""
+msgstr "Elektu aktivan sonfluon"
 
 #: src/application_actions.cpp:724
 #, kde-format
@@ -911,7 +911,7 @@ msgstr "Pliigi Tiparo Grandeco"
 #: src/application_actions.cpp:725
 #, kde-format
 msgid "Increase subtitles font size by 1 point"
-msgstr ""
+msgstr "Pliigu la tiparograndon de subtekstoj je 1 poento"
 
 #: src/application_actions.cpp:732
 #, kde-format
@@ -921,22 +921,22 @@ msgstr "Malpliigi Tipargrandon"
 #: src/application_actions.cpp:733
 #, kde-format
 msgid "Decrease subtitles font size by 1 point"
-msgstr ""
+msgstr "Malpliigu la tiparograndon de subtekstoj je 1 poento"
 
 #: src/application_actions.cpp:740
 #, kde-format
 msgid "Displayed Subtitle Text"
-msgstr ""
+msgstr "Montrigita Subtitolo Teksto"
 
 #: src/application_actions.cpp:741
 #, kde-format
 msgid "Select visible subtitle text"
-msgstr ""
+msgstr "Elektu videblan subtitolan tekston"
 
 #: src/application_actions.cpp:752 src/gui/waveform/waveformwidget.cpp:738
 #, kde-format
 msgid "Toggle Anchor"
-msgstr ""
+msgstr "Baskuligi Ankron"
 
 #: src/application_actions.cpp:753
 #, kde-format
@@ -948,53 +948,53 @@ msgstr ""
 #: src/application_actions.cpp:760
 #, kde-format
 msgid "Remove All Anchors"
-msgstr ""
+msgstr "Forigi Ĉiuj Ankroj"
 
 #: src/application_actions.cpp:761
 #, kde-format
 msgid "Unanchor show time from the timeline on all anchored lines"
-msgstr ""
+msgstr "Senankro montri tempon de la templinio sur ĉiuj ankritaj linioj"
 
 #: src/application_actions.cpp:769
 #, kde-format
 msgctxt "@action:inmenu Manage user scripts"
 msgid "Scripts Manager..."
-msgstr ""
+msgstr "Skripto-Manaĝero..."
 
 #: src/application_actions.cpp:770
 #, kde-format
 msgid "Manage user scripts"
-msgstr ""
+msgstr "Administri uzantajn skriptojn"
 
 #: src/application_actions.cpp:777 src/application_actions.cpp:778
 #, kde-format
 msgid "Waveform Zoom In"
-msgstr ""
+msgstr "Ondoformo Zoom En"
 
 #: src/application_actions.cpp:784 src/application_actions.cpp:785
 #, kde-format
 msgid "Waveform Zoom Out"
-msgstr ""
+msgstr "Ondoformo Zoom Out"
 
 #: src/application_actions.cpp:792
 #, kde-format
 msgid "Waveform Auto Scroll"
-msgstr ""
+msgstr "Ondoform Aŭtomata Scroll"
 
 #: src/application_actions.cpp:793
 #, kde-format
 msgid "Waveform display will automatically scroll to video position"
-msgstr ""
+msgstr "Ondoforma ekrano aŭtomate rulumos al videopozicio"
 
 #: src/application_subtitle.cpp:78
 #, kde-format
 msgid "All Text Subtitles"
-msgstr ""
+msgstr "Ĉiuj Tekstaj Subtekstoj"
 
 #: src/application_subtitle.cpp:79
 #, kde-format
 msgid "All Image Subtitles"
-msgstr ""
+msgstr "Ĉiuj Bildaj Subtekstoj"
 
 #: src/application_subtitle.cpp:81 src/application_subtitle.cpp:105
 #: src/speechplugins/pocketsphinx/pocketsphinxconfigwidget.cpp:21
@@ -1008,7 +1008,7 @@ msgstr "Ĉiuj dosieroj"
 #: src/application_subtitle.cpp:102
 #, kde-format
 msgid "Media Files"
-msgstr ""
+msgstr "Media Dosieroj"
 
 #: src/application_subtitle.cpp:103
 #, kde-format
@@ -1031,12 +1031,12 @@ msgstr ""
 #: src/application_subtitle.cpp:130
 #, kde-format
 msgid "Conflicting Subtitle Files"
-msgstr ""
+msgstr "Konfliktantaj Subtitolaj Dosieroj"
 
 #: src/application_subtitle.cpp:148 src/dialogs/selectablesubtitledialog.cpp:67
 #, kde-format
 msgid "Open Subtitle"
-msgstr ""
+msgstr "Malfermu Subtitolon"
 
 #: src/application_subtitle.cpp:204 src/application_subtitle.cpp:224
 #: src/application_subtitle.cpp:476 src/application_subtitle.cpp:501
@@ -1049,7 +1049,7 @@ msgstr ""
 #: src/application_subtitle.cpp:270 src/application_subtitle.cpp:317
 #, kde-format
 msgid "Format: %1"
-msgstr ""
+msgstr "Formato: %1"
 
 #: src/application_subtitle.cpp:271 src/application_subtitle.cpp:318
 #, kde-format
@@ -1059,12 +1059,12 @@ msgstr "Kodigado: %1"
 #: src/application_subtitle.cpp:324
 #, kde-format
 msgid "There was an error saving the subtitle."
-msgstr ""
+msgstr "Okazis eraro dum konservado de la subteksto."
 
 #: src/application_subtitle.cpp:332
 #, kde-format
 msgid "Save Subtitle"
-msgstr ""
+msgstr "Konservu Subtitolon"
 
 #: src/application_subtitle.cpp:372 src/application_subtitle.cpp:614
 #, kde-format
@@ -1076,7 +1076,7 @@ msgstr ""
 #: src/application_subtitle.cpp:373 src/application_subtitle.cpp:615
 #, kde-format
 msgid "Close Translation Subtitle"
-msgstr ""
+msgstr "Fermu Tradukan Subtitolon"
 
 #: src/application_subtitle.cpp:384
 #, kde-format
@@ -1088,12 +1088,12 @@ msgstr ""
 #: src/application_subtitle.cpp:385
 #, kde-format
 msgid "Close Subtitle"
-msgstr ""
+msgstr "Fermu Subtitolon"
 
 #: src/application_subtitle.cpp:445
 #, kde-format
 msgid "Open Translation Subtitle"
-msgstr ""
+msgstr "Malfermu Traduka Subtitolo"
 
 #: src/application_subtitle.cpp:530
 #, kde-format
@@ -1110,12 +1110,12 @@ msgstr "Traduko"
 #: src/application_subtitle.cpp:570
 #, kde-format
 msgid "There was an error saving the translation subtitle."
-msgstr ""
+msgstr "Okazis eraro dum konservado de la traduksubtitolo."
 
 #: src/application_subtitle.cpp:578
 #, kde-format
 msgid "Save Translation Subtitle"
-msgstr ""
+msgstr "Konservu Tradukadon Subtitolon"
 
 #: src/application_subtitle.cpp:665
 #, kde-format
@@ -1126,22 +1126,22 @@ msgstr "dividi"
 #: src/application_subtitle.cpp:682
 #, kde-format
 msgid "Could not write the split subtitle file."
-msgstr ""
+msgstr "Ne eblis skribi la dividitan subtitolan dosieron."
 
 #: src/application_subtitle.cpp:682
 #, kde-format
 msgid "Could not write the split subtitle translation file."
-msgstr ""
+msgstr "Ne eblis skribi la dividitan subtitolan tradukdosieron."
 
 #: src/application_subtitle.cpp:707
 #, kde-format
 msgid "Could not read the subtitle file to append."
-msgstr ""
+msgstr "Ne eblis legi la subtitolan dosieron almeti."
 
 #: src/application_subtitle.cpp:723
 #, kde-format
 msgid "The specified time does not split the subtitles."
-msgstr ""
+msgstr "La specifita tempo ne disigas la subtekstojn."
 
 #: src/application_subtitle.cpp:758
 #, kde-format
@@ -1160,12 +1160,12 @@ msgstr ""
 #: src/application_subtitle.cpp:777
 #, kde-format
 msgid "The reference subtitle must have more than one line to proceed."
-msgstr ""
+msgstr "La referenca subtitolo devas havi pli ol unu linion por daŭrigi."
 
 #: src/application_subtitle.cpp:786
 #, kde-format
 msgid "Could not parse the reference subtitle file."
-msgstr ""
+msgstr "Ne eblis analizi la referencan subtitoldosieron."
 
 #: src/configs/configdialog.cpp:35
 #, kde-format
@@ -1182,12 +1182,12 @@ msgstr "Ĝenerala Agordo"
 #, kde-format
 msgctxt "@title Error check settings"
 msgid "Error Check"
-msgstr ""
+msgstr "Kontrolo de Eraro"
 
 #: src/configs/configdialog.cpp:41
 #, kde-format
 msgid "Error Check Settings"
-msgstr ""
+msgstr "Eraraj Kontrolaj Agordoj"
 
 #: src/configs/configdialog.cpp:47
 #, kde-format
@@ -1198,7 +1198,7 @@ msgstr "Literumo"
 #: src/configs/configdialog.cpp:48
 #, kde-format
 msgid "Spelling Settings"
-msgstr ""
+msgstr "Literumaj Agordoj"
 
 #: src/configs/configdialog.cpp:52
 #, kde-format
@@ -1209,7 +1209,7 @@ msgstr "Ondformo"
 #: src/configs/configdialog.cpp:53
 #, kde-format
 msgid "Waveform settings"
-msgstr ""
+msgstr "Ondoform-agordoj"
 
 #: src/configs/configdialog.cpp:57
 #, kde-format
@@ -1220,13 +1220,13 @@ msgstr "Videoludilo"
 #: src/configs/configdialog.cpp:58
 #, kde-format
 msgid "Video Player Settings"
-msgstr ""
+msgstr "Agordoj de Videoludilo"
 
 #: src/configs/configdialog.cpp:67
 #, kde-format
 msgctxt "@title Speech recognition backend settings"
 msgid "%1 backend settings"
-msgstr ""
+msgstr "%1 backend-agordoj"
 
 #. i18n: ectx: property (title), widget (QGroupBox, m_grpGeneral)
 #: src/configs/errorsconfigwidget.ui:17 src/gui/treeview/lineswidget.cpp:400
@@ -1245,25 +1245,25 @@ msgstr " linioj"
 #: src/dialogs/smarttextsadjustdialog.cpp:26
 #, kde-format
 msgid " characters"
-msgstr ""
+msgstr " signoj"
 
 #. i18n: ectx: property (text), widget (QLabel, label)
 #: src/configs/errorsconfigwidget.ui:46
 #, kde-format
 msgid "Maximum number of characters:"
-msgstr ""
+msgstr "Maksimuma nombro da signoj:"
 
 #. i18n: ectx: property (text), widget (QLabel, label_4)
 #: src/configs/errorsconfigwidget.ui:53
 #, kde-format
 msgid "Maximum number of lines:"
-msgstr ""
+msgstr "Maksimuma nombro da linioj:"
 
 #. i18n: ectx: property (title), widget (QGroupBox, m_grpQuickActions)
 #: src/configs/errorsconfigwidget.ui:63
 #, kde-format
 msgid "Absolute Durations"
-msgstr ""
+msgstr "Absolutaj Daŭroj"
 
 #. i18n: ectx: property (suffix), widget (QSpinBox, kcfg_LinePause)
 #. i18n: ectx: property (suffix), widget (QSpinBox, kcfg_LineDuration)
@@ -1289,20 +1289,20 @@ msgstr " msek"
 #: src/configs/errorsconfigwidget.ui:92 src/configs/errorsconfigwidget.ui:174
 #, kde-format
 msgid "Maximum duration:"
-msgstr ""
+msgstr "Maksimuma daŭro:"
 
 #. i18n: ectx: property (text), widget (QLabel, label_5)
 #. i18n: ectx: property (text), widget (QLabel, lab_MinDurationPerCharacter)
 #: src/configs/errorsconfigwidget.ui:99 src/configs/errorsconfigwidget.ui:154
 #, kde-format
 msgid "Minimum duration:"
-msgstr ""
+msgstr "Minimuma daŭro:"
 
 #. i18n: ectx: property (title), widget (QGroupBox, groupBox)
 #: src/configs/errorsconfigwidget.ui:109
 #, kde-format
 msgid "Relative Durations"
-msgstr ""
+msgstr "Relativaj Daŭroj"
 
 #. i18n: ectx: property (suffix), widget (QSpinBox, kcfg_MaxDurationPerCharacter)
 #. i18n: ectx: property (suffix), widget (QSpinBox, kcfg_MinDurationPerCharacter)
@@ -1311,7 +1311,7 @@ msgstr ""
 #: src/configs/errorsconfigwidget.ui:188
 #, kde-format
 msgid " ms/char"
-msgstr ""
+msgstr " ms/sign"
 
 #. i18n: ectx: property (suffix), widget (QSpinBox, alt_MinDurationPerCharacter)
 #. i18n: ectx: property (suffix), widget (QSpinBox, alt_MaxDurationPerCharacter)
@@ -1320,13 +1320,13 @@ msgstr ""
 #: src/configs/errorsconfigwidget.ui:201
 #, kde-format
 msgid " ch/sec"
-msgstr ""
+msgstr " sign/sek"
 
 #. i18n: ectx: property (text), widget (QLabel, lab_IdealDurationPerCharacter)
 #: src/configs/errorsconfigwidget.ui:181
 #, kde-format
 msgid "Ideal duration:"
-msgstr ""
+msgstr "Ideala daŭro:"
 
 #. i18n: ectx: property (title), widget (QGroupBox, groupBox_2)
 #: src/configs/errorsconfigwidget.ui:217
@@ -1339,7 +1339,7 @@ msgstr "Konduto"
 #: src/configs/errorsconfigwidget.ui:223 src/scconfig.kcfg:86
 #, kde-format
 msgid "Automatically clear fixed errors"
-msgstr ""
+msgstr "Aŭtomate purigi fiksitajn erarojn"
 
 #. i18n: ectx: property (title), widget (QGroupBox, m_grpGeneral)
 #: src/configs/generalconfigwidget.ui:17 src/configs/playerconfigwidget.ui:17
@@ -1351,129 +1351,129 @@ msgstr "Ĝenerala"
 #: src/configs/generalconfigwidget.ui:26
 #, kde-format
 msgid "Automatically load video file when opening a subtitle"
-msgstr ""
+msgstr "Aŭtomate ŝargi videodosieron kiam vi malfermas subtitolon"
 
 #. i18n: ectx: property (text), widget (QLabel, lab_DefaultSubtitlesEncoding)
 #: src/configs/generalconfigwidget.ui:33
 #, kde-format
 msgid "Defau&lt subtitles encoding:"
-msgstr ""
+msgstr "Defaŭlta&lt-kodigo de subtekstoj:"
 
 #. i18n: ectx: property (currentText), widget (QComboBox, kcfg_TextLineBreak)
 #. i18n: ectx: property (text), item, widget (QComboBox, kcfg_TextLineBreak)
 #: src/configs/generalconfigwidget.ui:43 src/configs/generalconfigwidget.ui:47
 #, kde-format
 msgid "UNIX (LF)"
-msgstr ""
+msgstr "UNIKSO (LF)"
 
 #. i18n: ectx: property (text), item, widget (QComboBox, kcfg_TextLineBreak)
 #: src/configs/generalconfigwidget.ui:52
 #, kde-format
 msgid "Windows (CRLF)"
-msgstr ""
+msgstr "Vindozo (CRLF)"
 
 #. i18n: ectx: property (text), item, widget (QComboBox, kcfg_TextLineBreak)
 #: src/configs/generalconfigwidget.ui:57
 #, kde-format
 msgid "Macintosh (CR)"
-msgstr ""
+msgstr "Makintoŝo (CR)"
 
 #. i18n: ectx: property (text), widget (QLabel, lab_TextLineBreak)
 #: src/configs/generalconfigwidget.ui:65
 #, kde-format
 msgid "Line break character:"
-msgstr ""
+msgstr "Linia rompo signo:"
 
 #. i18n: ectx: property (title), widget (QGroupBox, m_grpSubtitleLine)
 #: src/configs/generalconfigwidget.ui:78
 #, kde-format
 msgid "Subtitle Line"
-msgstr ""
+msgstr "Subtitola linio"
 
 #. i18n: ectx: property (text), widget (QLabel, label_LineDuration)
 #: src/configs/generalconfigwidget.ui:84
 #, kde-format
 msgid "Default subtitle line duration:"
-msgstr ""
+msgstr "Defaŭlta subtitola liniodaŭro:"
 
 #. i18n: ectx: property (text), widget (QLabel, label_4)
 #: src/configs/generalconfigwidget.ui:94
 #, kde-format
 msgid "On double click, &jump to show time minus:"
-msgstr ""
+msgstr "Duobla klako, &saltu por montri la tempon minuso:"
 
 #. i18n: ectx: property (text), widget (QLabel, label_LinePause)
 #: src/configs/generalconfigwidget.ui:104
 #, kde-format
 msgid "Default pause between subtitle lines:"
-msgstr ""
+msgstr "Defaŭlta paŭzo inter subtitolaj linioj:"
 
 #. i18n: ectx: property (text), widget (QLabel, label_2)
 #: src/configs/generalconfigwidget.ui:144
 #, kde-format
 msgid "Ju&mp to prev/next line offset:"
-msgstr ""
+msgstr "Saltu al antaŭa/sekva linio-offeto:"
 
 #. i18n: ectx: property (title), widget (QGroupBox, m_grpQuickActions)
 #: src/configs/generalconfigwidget.ui:167
 #, kde-format
 msgid "Quick Actions"
-msgstr ""
+msgstr "Rapidaj Agoj"
 
 #. i18n: ectx: property (text), widget (QLabel, label_8)
 #: src/configs/generalconfigwidget.ui:193
 #, kde-format
 msgid "Compensation for captured &video times:"
-msgstr ""
+msgstr "Kompenso por kaptitaj &videotempoj:"
 
 #. i18n: ectx: property (text), widget (QLabel, label_5)
 #: src/configs/generalconfigwidget.ui:203
 #, kde-format
 msgid "Ti&me shift for selected lines:"
-msgstr ""
+msgstr "Tempoŝanĝo por elektitaj linioj:"
 
 #: src/configs/playerconfigwidget.cpp:27
 #, kde-format
 msgctxt "Text for previewing the subtitles font settings"
 msgid "<p>The Quick Brown Fox<br/>Jumps Over The Lazy Dog</p>"
-msgstr ""
+msgstr "<p>La Rapida Bruna Vulpo<br/>Saltas Super La Maldiligenta Hundo</p>"
 
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_UnpauseOnDoubleClick)
 #: src/configs/playerconfigwidget.ui:23
 #, kde-format
 msgid "Resume playback after line double click"
-msgstr ""
+msgstr "Rekomencu reproduktadon post linio duobla klako"
 
 #. i18n: ectx: property (text), widget (QLabel, lab_SeekJumpLength)
 #: src/configs/playerconfigwidget.ui:30
 #, kde-format
 msgid "Seconds to &jump on seek:"
-msgstr ""
+msgstr "Sekundoj por &salti sur serĉon:"
 
 #. i18n: ectx: label, entry (VideoAutoPlay), group (VideoPlayer)
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_VideoAutoPlay)
 #: src/configs/playerconfigwidget.ui:50 src/scconfig.kcfg:180
 #, kde-format
 msgid "Start playing video when loaded"
-msgstr ""
+msgstr "Komencu ludi videon kiam ŝargite"
 
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_ShowPositionTimeEdit)
 #: src/configs/playerconfigwidget.ui:57 src/gui/playerwidget.cpp:438
 #, kde-format
 msgid "Show editable position control"
-msgstr ""
+msgstr "Montru redakteblan pozicioregilon"
 
 #. i18n: ectx: property (text), widget (QLabel, lab_StepJumpLength)
 #: src/configs/playerconfigwidget.ui:64
 #, kde-format
 msgid "Fra&me step amount:"
-msgstr ""
+msgstr "Kvanto de paŝo de kadro:"
 
 #. i18n: ectx: property (text), widget (QLabel, lab_VolumeAmplification)
 #: src/configs/playerconfigwidget.ui:74
 #, kde-format
 msgid "Volume amplification:"
-msgstr ""
+msgstr "Volumena plifortigo:"
 
 #. i18n: ectx: property (title), widget (QGroupBox, m_grpSubtitles)
 #: src/configs/playerconfigwidget.ui:122
@@ -1485,7 +1485,7 @@ msgstr "Subtekstoj"
 #: src/configs/playerconfigwidget.ui:138
 #, kde-format
 msgid "Outline color:"
-msgstr ""
+msgstr "Skiza koloro:"
 
 #. i18n: ectx: property (text), widget (QLabel, lab_FontColor)
 #: src/configs/playerconfigwidget.ui:151
@@ -1497,13 +1497,13 @@ msgstr "Te&ksta koloro:"
 #: src/configs/playerconfigwidget.ui:164
 #, kde-format
 msgid "Font family:"
-msgstr ""
+msgstr "Tiparfamilio:"
 
 #. i18n: ectx: property (text), widget (QLabel, lab_OutlineWidth)
 #: src/configs/playerconfigwidget.ui:177
 #, kde-format
 msgid "Outline width:"
-msgstr ""
+msgstr "Larĝo de konturo:"
 
 #. i18n: ectx: property (text), widget (QLabel, lab_FontSize)
 #: src/configs/playerconfigwidget.ui:187
@@ -1515,31 +1515,31 @@ msgstr "Tiparo&grandeco:"
 #: src/configs/playerconfigwidget.ui:203
 #, kde-format
 msgid "Subtitles Preview"
-msgstr ""
+msgstr "Antaŭrigardo de Subtekstoj"
 
 #. i18n: ectx: property (title), widget (QGroupBox, groupBox_3)
 #: src/configs/waveformconfigwidget.ui:17
 #, kde-format
 msgid "Waveform Display"
-msgstr ""
+msgstr "Ondoform-ekrano"
 
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_wfSmoothScroll)
 #: src/configs/waveformconfigwidget.ui:23
 #, kde-format
 msgid "Smooth Scrolling"
-msgstr ""
+msgstr "Glata Movado"
 
 #. i18n: ectx: property (text), widget (QLabel, label_12)
 #: src/configs/waveformconfigwidget.ui:49
 #, kde-format
 msgid "Outer color:"
-msgstr ""
+msgstr "Ekstera koloro:"
 
 #. i18n: ectx: property (text), widget (QLabel, label_11)
 #: src/configs/waveformconfigwidget.ui:78
 #, kde-format
 msgid "Inner color:"
-msgstr ""
+msgstr "Interna koloro:"
 
 #. i18n: ectx: property (toolTip), widget (QLabel, label_wfAutoscrollPadding)
 #: src/configs/waveformconfigwidget.ui:104
@@ -1553,61 +1553,61 @@ msgstr ""
 #: src/configs/waveformconfigwidget.ui:107
 #, kde-format
 msgid "Auto Scroll Padding:"
-msgstr ""
+msgstr "Aŭtomata Ruluma Plenigo:"
 
 #. i18n: ectx: property (title), widget (QGroupBox, m_grpGeneral)
 #: src/configs/waveformconfigwidget.ui:120
 #, kde-format
 msgid "Subtitle Display"
-msgstr ""
+msgstr "Subtitolo Montro"
 
 #. i18n: ectx: property (text), widget (QLabel, label_14)
 #: src/configs/waveformconfigwidget.ui:148
 #, kde-format
 msgid "Subtitle border color:"
-msgstr ""
+msgstr "Subtitola randkoloro:"
 
 #. i18n: ectx: property (text), widget (QLabel, label_16)
 #: src/configs/waveformconfigwidget.ui:158
 #, kde-format
 msgid "Selected background color:"
-msgstr ""
+msgstr "Elektita fonkoloro:"
 
 #. i18n: ectx: property (text), widget (QLabel, label_15)
 #: src/configs/waveformconfigwidget.ui:168
 #, kde-format
 msgid "Subtitle border width:"
-msgstr ""
+msgstr "Larĝo de subtitoloj:"
 
 #. i18n: ectx: property (text), widget (QLabel, label_13)
 #: src/configs/waveformconfigwidget.ui:178
 #, kde-format
 msgid "Subtitle background color:"
-msgstr ""
+msgstr "Subtitola fonkoloro:"
 
 #. i18n: ectx: property (text), widget (QLabel, label_17)
 #: src/configs/waveformconfigwidget.ui:207
 #, kde-format
 msgid "Selected border color:"
-msgstr ""
+msgstr "Elektita randkoloro:"
 
 #. i18n: ectx: property (title), widget (QGroupBox, groupBox)
 #: src/configs/waveformconfigwidget.ui:258
 #, kde-format
 msgid "Text Font and Colors"
-msgstr ""
+msgstr "Teksto Tiparo kaj Koloroj"
 
 #. i18n: ectx: property (text), widget (QLabel, label_21)
 #: src/configs/waveformconfigwidget.ui:264
 #, kde-format
 msgid "Subtitle font family:"
-msgstr ""
+msgstr "Subtitola tiparfamilio:"
 
 #. i18n: ectx: property (text), widget (QLabel, label_22)
 #: src/configs/waveformconfigwidget.ui:277
 #, kde-format
 msgid "Subtitle number font size:"
-msgstr ""
+msgstr "Tiparo de subtitoloj:"
 
 #. i18n: ectx: property (suffix), widget (QSpinBox, kcfg_wfSubNumberFontSize)
 #. i18n: ectx: property (suffix), widget (QSpinBox, kcfg_wfSubTextFontSize)
@@ -1621,84 +1621,84 @@ msgstr "pt"
 #: src/configs/waveformconfigwidget.ui:294
 #, kde-format
 msgid "Subtitle Number Color"
-msgstr ""
+msgstr "Subtitolo Numero Koloro"
 
 #. i18n: ectx: property (text), widget (QLabel, label_24)
 #: src/configs/waveformconfigwidget.ui:323
 #, kde-format
 msgid "Subtitle text font size:"
-msgstr ""
+msgstr "Subtitola teksta tiparo:"
 
 #. i18n: ectx: property (text), widget (QLabel, label_25)
 #: src/configs/waveformconfigwidget.ui:340
 #, kde-format
 msgid "Subtitle Text Color:"
-msgstr ""
+msgstr "Subtitola Teksto Koloro:"
 
 #. i18n: ectx: property (title), widget (QGroupBox, groupBox_2)
 #: src/configs/waveformconfigwidget.ui:372
 #, kde-format
 msgid "Line Indicators"
-msgstr ""
+msgstr "Liniaj Indikiloj"
 
 #. i18n: ectx: property (text), widget (QLabel, label_31)
 #: src/configs/waveformconfigwidget.ui:378
 #, kde-format
 msgid "Player position color:"
-msgstr ""
+msgstr "Koloro de la pozicio de la ludantoj:"
 
 #. i18n: ectx: property (text), widget (QLabel, label_32)
 #: src/configs/waveformconfigwidget.ui:388
 #, kde-format
 msgid "Mouse indicator color:"
-msgstr ""
+msgstr "Koloro de la indikilo de muso:"
 
 #: src/core/subtitle.cpp:63
 #, kde-format
 msgid "Set Primary Data"
-msgstr ""
+msgstr "Agordu Primarajn Datumojn"
 
 #: src/core/subtitle.cpp:121
 #, kde-format
 msgid "Clear Primary Text Data"
-msgstr ""
+msgstr "Forigi Ĉefajn Tekstajn Datumojn"
 
 #: src/core/subtitle.cpp:134
 #, kde-format
 msgid "Set Secondary Data"
-msgstr ""
+msgstr "Agordu Malĉefajn Datumojn"
 
 #: src/core/subtitle.cpp:171
 #, kde-format
 msgid "Clear Secondary Text Data"
-msgstr ""
+msgstr "Viŝi Malĉefajn Tekstajn Datumojn"
 
 #: src/core/subtitle.cpp:239 src/dialogs/changeframeratedialog.cpp:22
 #, kde-format
 msgid "Change Frame Rate"
-msgstr ""
+msgstr "Ŝanĝi kadran imposton"
 
 #: src/core/subtitle.cpp:401 src/core/subtitle.cpp:415
 #: src/gui/waveform/waveformwidget.cpp:697
 #, kde-format
 msgid "Insert Line"
-msgstr ""
+msgstr "Enmetu Linio"
 
 #: src/core/subtitle.cpp:448 src/core/subtitle.cpp:458
 #: src/core/subtitle.cpp:475 src/core/undo/subtitleactions.cpp:122
 #, kde-format
 msgid "Remove Lines"
-msgstr ""
+msgstr "Forigi Liniojn"
 
 #: src/core/subtitle.cpp:740
 #, kde-format
 msgid "Shift Lines"
-msgstr ""
+msgstr "Ŝanĝlinioj"
 
 #: src/core/subtitle.cpp:796
 #, kde-format
 msgid "Adjust Lines"
-msgstr ""
+msgstr "Alĝustigu Liniojn"
 
 #: src/core/subtitle.cpp:807
 #, kde-format
@@ -1708,22 +1708,22 @@ msgstr "Ordigi"
 #: src/core/subtitle.cpp:839 src/dialogs/durationlimitsdialog.cpp:18
 #, kde-format
 msgid "Enforce Duration Limits"
-msgstr ""
+msgstr "Pliigi Daŭrolimojn"
 
 #: src/core/subtitle.cpp:901 src/dialogs/autodurationsdialog.cpp:21
 #, kde-format
 msgid "Set Automatic Durations"
-msgstr ""
+msgstr "Agordu Aŭtomatajn Daŭrojn"
 
 #: src/core/subtitle.cpp:934 src/dialogs/fixoverlappingtimesdialog.cpp:18
 #, kde-format
 msgid "Fix Overlapping Times"
-msgstr ""
+msgstr "Ripari Interkovrajn Tempojn"
 
 #: src/core/subtitle.cpp:965
 #, kde-format
 msgid "Fix Lines Punctuation"
-msgstr ""
+msgstr "Ripari Liniojn Interpunkcio"
 
 #: src/core/subtitle.cpp:1007
 #, kde-format
@@ -1738,143 +1738,143 @@ msgstr "Majusklo"
 #: src/core/subtitle.cpp:1067
 #, kde-format
 msgid "Title Case"
-msgstr ""
+msgstr "Titolo Kazo"
 
 #: src/core/subtitle.cpp:1100
 #, kde-format
 msgid "Sentence Case"
-msgstr ""
+msgstr "Frazo Kazo"
 
 #: src/core/subtitle.cpp:1144 src/dialogs/smarttextsadjustdialog.cpp:18
 #, kde-format
 msgid "Break Lines"
-msgstr ""
+msgstr "Romplinioj"
 
 #: src/core/subtitle.cpp:1171
 #, kde-format
 msgid "Synchronize Subtitles"
-msgstr ""
+msgstr "Sinkronigi Subtitolojn"
 
 #: src/core/subtitle.cpp:1196 src/dialogs/joinsubtitlesdialog.cpp:24
 #, kde-format
 msgid "Join Subtitles"
-msgstr ""
+msgstr "Aliĝu al Subtekstoj"
 
 #: src/core/subtitle.cpp:1241 src/core/subtitle.cpp:1247
 #, kde-format
 msgid "Split Subtitles"
-msgstr ""
+msgstr "Dividi Subtitolojn"
 
 #: src/core/subtitle.cpp:1266
 #, kde-format
 msgid "Toggle Lines Style"
-msgstr ""
+msgstr "Baskuligi Linian Stilon"
 
 #: src/core/subtitle.cpp:1310
 #, kde-format
 msgid "Change Lines Text Color"
-msgstr ""
+msgstr "Ŝanĝi Linioj Teksto Koloro"
 
 #: src/core/subtitle.cpp:1330
 #, kde-format
 msgid "Set Lines Mark"
-msgstr ""
+msgstr "Agordu Liniojn Mark"
 
 #: src/core/subtitle.cpp:1330
 #, kde-format
 msgid "Clear Lines Mark"
-msgstr ""
+msgstr "Viŝi Linioj-Markon"
 
 #: src/core/subtitle.cpp:1345
 #, kde-format
 msgid "Toggle Lines Mark"
-msgstr ""
+msgstr "Baskuligi Liniojn Mark"
 
 #: src/core/subtitle.cpp:1355
 #, kde-format
 msgid "Clear Line Errors"
-msgstr ""
+msgstr "Viŝi Liniajn Erarojn"
 
 #: src/core/subtitle.cpp:1366 src/core/subtitle.cpp:1377
 #: src/errors/errorfinder.cpp:84
 #, kde-format
 msgid "Check Lines Errors"
-msgstr ""
+msgstr "Kontrolu Liniajn Erarojn"
 
 #: src/core/subtitleline.cpp:59
 #, kde-format
 msgid "Empty text"
-msgstr ""
+msgstr "Malplena teksto"
 
 #: src/core/subtitleline.cpp:61
 #, kde-format
 msgid "Too many characters"
-msgstr ""
+msgstr "Tro da signoj"
 
 #: src/core/subtitleline.cpp:63
 #, kde-format
 msgid "Too many lines"
-msgstr ""
+msgstr "Tro da linioj"
 
 #: src/core/subtitleline.cpp:65
 #, kde-format
 msgid "Unnecessary white space"
-msgstr ""
+msgstr "Nenecesa blanka spaco"
 
 #: src/core/subtitleline.cpp:67
 #, kde-format
 msgid "Unnecessary dash"
-msgstr ""
+msgstr "Nenecesa streketo"
 
 #: src/core/subtitleline.cpp:69
 #, kde-format
 msgid "Capital letter after continuation ellipsis"
-msgstr ""
+msgstr "Majuskla litero post daŭriga elipso"
 
 #: src/core/subtitleline.cpp:71
 #, kde-format
 msgid "Too long duration per character"
-msgstr ""
+msgstr "Tro longa daŭro por signo"
 
 #: src/core/subtitleline.cpp:73
 #, kde-format
 msgid "Too short duration per character"
-msgstr ""
+msgstr "Tro mallonga daŭro por signo"
 
 #: src/core/subtitleline.cpp:75
 #, kde-format
 msgid "Too long duration"
-msgstr ""
+msgstr "Tro longa daŭro"
 
 #: src/core/subtitleline.cpp:76
 #, kde-format
 msgid "Too short duration"
-msgstr ""
+msgstr "Tro mallonga daŭro"
 
 #: src/core/subtitleline.cpp:77
 #, kde-format
 msgid "Overlapping times"
-msgstr ""
+msgstr "Interkovritaj tempoj"
 
 #: src/core/subtitleline.cpp:78
 #, kde-format
 msgid "Untranslated text"
-msgstr ""
+msgstr "Netradukita teksto"
 
 #: src/core/subtitleline.cpp:79
 #, kde-format
 msgid "User mark"
-msgstr ""
+msgstr "Marko de uzanto"
 
 #: src/core/subtitleline.cpp:98
 #, kde-format
 msgid "Has no primary text."
-msgstr ""
+msgstr "Ne havas ĉefan tekston."
 
 #: src/core/subtitleline.cpp:99
 #, kde-format
 msgid "Has no translation text."
-msgstr ""
+msgstr "Ne havas traduktekston."
 
 #: src/core/subtitleline.cpp:100
 #, kde-format
@@ -1907,27 +1907,27 @@ msgstr[1] ""
 #: src/core/subtitleline.cpp:104
 #, kde-format
 msgid "Has unnecessary spaces in primary text."
-msgstr ""
+msgstr "Havas nenecesajn spacojn en primara teksto."
 
 #: src/core/subtitleline.cpp:105
 #, kde-format
 msgid "Has unnecessary spaces in translation text."
-msgstr ""
+msgstr "Havas nenecesajn spacojn en tradukteksto."
 
 #: src/core/subtitleline.cpp:106
 #, kde-format
 msgid "Has unnecessary dash in primary text."
-msgstr ""
+msgstr "Havas nenecesan streketon en ĉefa teksto."
 
 #: src/core/subtitleline.cpp:107
 #, kde-format
 msgid "Has unnecessary dash in translation text."
-msgstr ""
+msgstr "Havas nenecesan streketon en tradukteksto."
 
 #: src/core/subtitleline.cpp:108
 #, kde-format
 msgid "Has capital letter after line continuation ellipsis in primary text."
-msgstr ""
+msgstr "Havas majusklon post linio-daŭriga elipso en ĉefa teksto."
 
 #: src/core/subtitleline.cpp:109
 #, kde-format
@@ -1984,131 +1984,131 @@ msgstr[1] ""
 #: src/core/subtitleline.cpp:116
 #, kde-format
 msgid "Overlaps with next line."
-msgstr ""
+msgstr "Interkovras kun sekva linio."
 
 #: src/core/subtitleline.cpp:117
 #, kde-format
 msgid "Has untranslated text."
-msgstr ""
+msgstr "Havas netradukitan tekston."
 
 #: src/core/subtitleline.cpp:118
 #, kde-format
 msgid "Has user mark."
-msgstr ""
+msgstr "Havas uzantmarkon."
 
 #: src/core/subtitleline.cpp:379 src/core/undo/subtitlelineactions.cpp:105
 #, kde-format
 msgid "Set Line Show Time"
-msgstr ""
+msgstr "Agordu Linion Montri Tempon"
 
 #: src/core/subtitleline.cpp:403 src/core/undo/subtitlelineactions.cpp:132
 #, kde-format
 msgid "Set Line Hide Time"
-msgstr ""
+msgstr "Agordu Linion Kaŝi Tempon"
 
 #: src/core/subtitleline.cpp:450
 #, kde-format
 msgid "Set Line Times"
-msgstr ""
+msgstr "Agordu Liniajn Tempojn"
 
 #: src/core/subtitleline.cpp:547
 #, kde-format
 msgid "Shift Line Times"
-msgstr ""
+msgstr "Shift Line Times"
 
 #: src/core/subtitleline.cpp:557
 #, kde-format
 msgid "Adjust Line Times"
-msgstr ""
+msgstr "Alĝustigu Liniajn Tempojn"
 
 #: src/core/undo/subtitleactions.cpp:32
 #, kde-format
 msgid "Set Frame Rate"
-msgstr ""
+msgstr "Agordu Frame Rate"
 
 #: src/core/undo/subtitleactions.cpp:52
 #, kde-format
 msgid "Insert Lines"
-msgstr ""
+msgstr "Enmetu Liniojn"
 
 #: src/core/undo/subtitleactions.cpp:200
 #, kde-format
 msgid "Move Line"
-msgstr ""
+msgstr "Movu Linio"
 
 #: src/core/undo/subtitleactions.cpp:285
 #, kde-format
 msgid "Swap Texts"
-msgstr ""
+msgstr "Interŝanĝi Tekstojn"
 
 #: src/core/undo/subtitleactions.cpp:308
 #, kde-format
 msgid "Change stylesheet"
-msgstr ""
+msgstr "Ŝanĝi stilfolion"
 
 #: src/core/undo/subtitlelineactions.cpp:28
 #, kde-format
 msgid "Set Line Text"
-msgstr ""
+msgstr "Agordu Linian Tekston"
 
 #: src/core/undo/subtitlelineactions.cpp:66
 #, kde-format
 msgid "Set Line Secondary Text"
-msgstr ""
+msgstr "Agordu Linio Malĉefa Teksto"
 
 #: src/core/undo/subtitlelineactions.cpp:196
 #, kde-format
 msgid "Set Line Errors"
-msgstr ""
+msgstr "Agordu Liniajn Erarojn"
 
 #: src/dialogs/actionwithtargetdialog.cpp:113
 #, kde-format
 msgid "Target >>"
-msgstr ""
+msgstr "Celo >>"
 
 #: src/dialogs/actionwithtargetdialog.cpp:113
 #: src/dialogs/actionwithtargetdialog.cpp:129
 #, kde-format
 msgid "Target <<"
-msgstr ""
+msgstr "Celo <<"
 
 #: src/dialogs/actionwithtargetdialog.cpp:143
 #, kde-format
 msgid "All lines"
-msgstr ""
+msgstr "Ĉiuj linioj"
 
 #: src/dialogs/actionwithtargetdialog.cpp:144
 #, kde-format
 msgid "Selected lines"
-msgstr ""
+msgstr "Elektitaj linioj"
 
 #: src/dialogs/actionwithtargetdialog.cpp:145
 #, kde-format
 msgid "All lines from first selected"
-msgstr ""
+msgstr "Ĉiuj linioj de la unua elektita"
 
 #: src/dialogs/actionwithtargetdialog.cpp:146
 #, kde-format
 msgid "All lines up to last selected"
-msgstr ""
+msgstr "Ĉiuj linioj ĝis laste elektita"
 
 #: src/dialogs/actionwithtargetdialog.cpp:234 src/utils/finder.cpp:53
 #: src/utils/replacer.cpp:51
 #, kde-format
 msgid "Both subtitles"
-msgstr ""
+msgstr "Ambaŭ subtekstoj"
 
 #: src/dialogs/actionwithtargetdialog.cpp:237 src/utils/finder.cpp:55
 #: src/utils/replacer.cpp:53
 #, kde-format
 msgid "Primary subtitle"
-msgstr ""
+msgstr "Ĉefa subteksto"
 
 #: src/dialogs/actionwithtargetdialog.cpp:240 src/utils/finder.cpp:57
 #: src/utils/replacer.cpp:55
 #, kde-format
 msgid "Translation subtitle"
-msgstr ""
+msgstr "Traduka subtitolo"
 
 #: src/dialogs/actionwithtargetdialog.h:58
 #, kde-format
@@ -2124,17 +2124,17 @@ msgstr "Alĝustigi"
 #, kde-format
 msgctxt "@title:group"
 msgid "New Times"
-msgstr ""
+msgstr "Novaj Tempoj"
 
 #: src/dialogs/adjusttimesdialog.cpp:27
 #, kde-format
 msgid "First spoken line:"
-msgstr ""
+msgstr "Unua parola linio:"
 
 #: src/dialogs/adjusttimesdialog.cpp:33
 #, kde-format
 msgid "Last spoken line:"
-msgstr ""
+msgstr "Lasta parolita linio:"
 
 #: src/dialogs/autodurationsdialog.cpp:24
 #: src/dialogs/changeframeratedialog.cpp:24
@@ -2150,54 +2150,54 @@ msgstr "Agordoj"
 #: src/dialogs/autodurationsdialog.cpp:32
 #, kde-format
 msgid "Milliseconds per line:"
-msgstr ""
+msgstr "Milisekundoj per linio:"
 
 #: src/dialogs/autodurationsdialog.cpp:41
 #, kde-format
 msgid "Milliseconds per word:"
-msgstr ""
+msgstr "Milisekundoj por vorto:"
 
 #: src/dialogs/autodurationsdialog.cpp:50
 #, kde-format
 msgid "Milliseconds per character:"
-msgstr ""
+msgstr "Milisekundoj per signo:"
 
 #: src/dialogs/autodurationsdialog.cpp:54
 #: src/dialogs/durationlimitsdialog.cpp:30
 #, kde-format
 msgid "Prevent overlapping"
-msgstr ""
+msgstr "Malhelpi interkovron"
 
 #: src/dialogs/autodurationsdialog.cpp:57
 #, kde-format
 msgctxt "@title:group"
 msgid "Duration Calculation"
-msgstr ""
+msgstr "Kalkulo de Daŭro"
 
 #: src/dialogs/autodurationsdialog.cpp:63
 #, kde-format
 msgid "Use primary text"
-msgstr ""
+msgstr "Uzu primaran tekston"
 
 #: src/dialogs/autodurationsdialog.cpp:64
 #, kde-format
 msgid "Use translation text"
-msgstr ""
+msgstr "Uzu tradukan tekston"
 
 #: src/dialogs/autodurationsdialog.cpp:65
 #, kde-format
 msgid "Calculate both and use maximum"
-msgstr ""
+msgstr "Kalkulu ambaŭ kaj uzu maksimumon"
 
 #: src/dialogs/changeframeratedialog.cpp:33
 #, kde-format
 msgid "Current frame rate:"
-msgstr ""
+msgstr "Nuna framfrekvenco:"
 
 #: src/dialogs/changeframeratedialog.cpp:42
 #, kde-format
 msgid "New frame rate:"
-msgstr ""
+msgstr "Nova framfrekvenco:"
 
 #: src/dialogs/changetextscasedialog.cpp:19
 #, kde-format
@@ -2208,22 +2208,22 @@ msgstr "Ŝanĝi Kazon"
 #, kde-format
 msgctxt "@title:group"
 msgid "Change To"
-msgstr ""
+msgstr "Ŝanĝi Al"
 
 #: src/dialogs/changetextscasedialog.cpp:25
 #, kde-format
 msgid "Lower case"
-msgstr ""
+msgstr "Minuskla"
 
 #: src/dialogs/changetextscasedialog.cpp:30
 #, kde-format
 msgid "Upper case"
-msgstr ""
+msgstr "Majusklo"
 
 #: src/dialogs/changetextscasedialog.cpp:34
 #, kde-format
 msgid "Title case"
-msgstr ""
+msgstr "Titolokazo"
 
 #: src/dialogs/changetextscasedialog.cpp:38
 #, kde-format
@@ -2233,46 +2233,46 @@ msgstr "Frazkazo"
 #: src/dialogs/changetextscasedialog.cpp:42
 #, kde-format
 msgid "Convert to lower case first"
-msgstr ""
+msgstr "Unue konvertu al minusklo"
 
 #: src/dialogs/durationlimitsdialog.cpp:20
 #, kde-format
 msgctxt "@title:group"
 msgid "Minimum Duration"
-msgstr ""
+msgstr "Minimuma Daŭro"
 
 #: src/dialogs/durationlimitsdialog.cpp:26
 #, kde-format
 msgid "Expand duration to:"
-msgstr ""
+msgstr "Pligrandigu daŭron al:"
 
 #: src/dialogs/durationlimitsdialog.cpp:33
 #, kde-format
 msgctxt "@title:group"
 msgid "Maximum Duration"
-msgstr ""
+msgstr "Maksimuma Daŭro"
 
 #: src/dialogs/durationlimitsdialog.cpp:39
 #, kde-format
 msgid "Shrink duration to:"
-msgstr ""
+msgstr "Malgrandigu daŭron al:"
 
 #: src/dialogs/encodingdetectdialog.cpp:81
 #, kde-format
 msgctxt "Text encoding detected with n% confidence."
 msgid "%1 (%2% confidence)"
-msgstr ""
+msgstr "%1 (%2% fido)"
 
 #: src/dialogs/encodingdetectdialog.cpp:191
 #, kde-format
 msgid "Detected"
-msgstr ""
+msgstr "Detektita"
 
 #. i18n: ectx: property (windowTitle), widget (QDialog, EncodingDetectDialog)
 #: src/dialogs/encodingdetectdialog.ui:14
 #, kde-format
 msgid "Confirm detected subtitle encoding"
-msgstr ""
+msgstr "Konfirmu detektitan subtitolan kodigon"
 
 #. i18n: ectx: property (text), widget (QLabel, encodingLabel)
 #: src/dialogs/encodingdetectdialog.ui:30
@@ -2289,63 +2289,63 @@ msgstr "Antaŭrigardo"
 #: src/dialogs/fixoverlappingtimesdialog.cpp:23
 #, kde-format
 msgid " msecs"
-msgstr ""
+msgstr " msek"
 
 #: src/dialogs/fixoverlappingtimesdialog.cpp:29
 #, kde-format
 msgid "Minimum interval between lines:"
-msgstr ""
+msgstr "Minimuma intervalo inter linioj:"
 
 #: src/dialogs/fixpunctuationdialog.cpp:17
 #, kde-format
 msgid "Fix Punctuation"
-msgstr ""
+msgstr "Ripari interpunkcion"
 
 #: src/dialogs/fixpunctuationdialog.cpp:22
 #, kde-format
 msgid "Fix and cleanup spaces"
-msgstr ""
+msgstr "Ripari kaj purigi spacojn"
 
 #: src/dialogs/fixpunctuationdialog.cpp:26
 #, kde-format
 msgid "Fix quotes and double quotes"
-msgstr ""
+msgstr "Ripari citaĵojn kaj duoblajn citaĵojn"
 
 #: src/dialogs/fixpunctuationdialog.cpp:30
 #, kde-format
 msgid "Fix English 'I' pronoun"
-msgstr ""
+msgstr "Ripari la anglan 'I' pronomon"
 
 #: src/dialogs/fixpunctuationdialog.cpp:34
 #, kde-format
 msgid "Add ellipsis indicating non finished lines"
-msgstr ""
+msgstr "Aldonu elipsojn indikante nefinitajn liniojn"
 
 #: src/dialogs/insertlinedialog.cpp:13
 #, kde-format
 msgid "Insert Line Before Current"
-msgstr ""
+msgstr "Enigu Linion Antaŭ Fluo"
 
 #: src/dialogs/insertlinedialog.cpp:13
 #, kde-format
 msgid "Insert Line After Current"
-msgstr ""
+msgstr "Enigu Linion Post Fluo"
 
 #: src/dialogs/insertlinedialog.cpp:13
 #, kde-format
 msgid "Insert Into"
-msgstr ""
+msgstr "Enigu En"
 
 #: src/dialogs/joinsubtitlesdialog.cpp:29
 #, kde-format
 msgid "Shift subtitle forwards before append"
-msgstr ""
+msgstr "Movu subtekston antaŭen antaŭ almeti"
 
 #: src/dialogs/joinsubtitlesdialog.cpp:36
 #: src/dialogs/splitsubtitledialog.cpp:35
 #, kde-format
 msgid "Set from video length"
-msgstr ""
+msgstr "Agordu de video-longo"
 
 #: src/dialogs/progressdialog.cpp:36 src/formats/textdemux/textdemux.cpp:35
 #: src/gui/waveform/waveformwidget.cpp:119
@@ -2358,12 +2358,12 @@ msgstr "%p%"
 #: src/dialogs/removelinesdialog.cpp:13
 #, kde-format
 msgid "Remove Selected Lines"
-msgstr ""
+msgstr "Forigi Elektitajn Liniojn"
 
 #: src/dialogs/removelinesdialog.cpp:13
 #, kde-format
 msgid "Remove From"
-msgstr ""
+msgstr "Forigi De"
 
 #: src/dialogs/selectablesubtitledialog.cpp:41
 #, kde-format
@@ -2373,7 +2373,7 @@ msgstr "Vojo:"
 #: src/dialogs/selectablesubtitledialog.cpp:46
 #, kde-format
 msgid "Select subtitle"
-msgstr ""
+msgstr "Elektu subtitolon"
 
 #: src/dialogs/selectablesubtitledialog.h:30
 #, kde-format
@@ -2389,43 +2389,43 @@ msgstr "Majuskla (Shift)"
 #, kde-format
 msgctxt "@title:group"
 msgid "Shifting"
-msgstr ""
+msgstr "Ŝoviĝanta"
 
 #: src/dialogs/shifttimesdialog.cpp:25
 #, kde-format
 msgid "Forwards (+)"
-msgstr ""
+msgstr "Antaŭenoj (+)"
 
 #: src/dialogs/shifttimesdialog.cpp:26
 #, kde-format
 msgid "Backwards (−)"
-msgstr ""
+msgstr "Malantaŭen (−)"
 
 #: src/dialogs/smarttextsadjustdialog.cpp:29
 #, kde-format
 msgid "Minimum length for line break:"
-msgstr ""
+msgstr "Minimuma longo por liniorompo:"
 
 #: src/dialogs/splitsubtitledialog.cpp:27
 #, kde-format
 msgid "Split Subtitle"
-msgstr ""
+msgstr "Dividi Subtitolon"
 
 #: src/dialogs/splitsubtitledialog.cpp:40
 #, kde-format
 msgid "Split time:"
-msgstr ""
+msgstr "Divida tempo:"
 
 #: src/dialogs/splitsubtitledialog.cpp:44
 #, kde-format
 msgid "Shift new part backwards after split"
-msgstr ""
+msgstr "Movu novan parton malantaŭen post disigo"
 
 #. i18n: ectx: property (text), widget (QLabel, labClass)
 #: src/dialogs/subtitleclassdialog.ui:30
 #, kde-format
 msgid "Space separated list of CSS classes:"
-msgstr ""
+msgstr "Spac-disigita listo de CSS-klasoj:"
 
 #. i18n: CSS
 #. i18n: ectx: property (placeholderText), widget (QComboBox, classList)
@@ -2437,13 +2437,13 @@ msgstr "Klaso"
 #: src/dialogs/subtitlecolordialog.cpp:24
 #, kde-format
 msgid "Default Color"
-msgstr ""
+msgstr "Defaŭlta Koloro"
 
 #. i18n: ectx: property (text), widget (QLabel, labVoice)
 #: src/dialogs/subtitlevoicedialog.ui:30
 #, kde-format
 msgid "Person name or voice title:"
-msgstr ""
+msgstr "Personnomo aŭ voĉa titolo:"
 
 #. i18n: CSS
 #. i18n: ectx: property (placeholderText), widget (QComboBox, voiceList)
@@ -2455,44 +2455,44 @@ msgstr "Voĉo"
 #: src/dialogs/syncsubtitlesdialog.cpp:17
 #, kde-format
 msgid "Synchronize with Subtitle"
-msgstr ""
+msgstr "Sinkronigi kun Subtitolo"
 
 #: src/dialogs/syncsubtitlesdialog.cpp:19
 #, kde-format
 msgid "Reference Subtitle"
-msgstr ""
+msgstr "Referenca Subtitolo"
 
 #: src/dialogs/syncsubtitlesdialog.cpp:21
 #, kde-format
 msgctxt "@title:group"
 msgid "Synchronization Mode"
-msgstr ""
+msgstr "Sinkroniga Reĝimo"
 
 #: src/dialogs/syncsubtitlesdialog.cpp:24
 #, kde-format
 msgid "Adjust to reference's first and last lines"
-msgstr ""
+msgstr "Alĝustigu al la unua kaj lasta linioj de referenco"
 
 #: src/dialogs/syncsubtitlesdialog.cpp:28
 #, kde-format
 msgid "Copy timing information from reference line by line"
-msgstr ""
+msgstr "Kopiu tempinformon de referenca linio post linio"
 
 #: src/errors/errorfinder.cpp:173 src/errors/finderrorsdialog.cpp:17
 #, kde-format
 msgid "Find Error"
-msgstr ""
+msgstr "Trovu Eraron"
 
 #: src/errors/errorfinder.cpp:173
 #, kde-format
 msgid "No errors matching given criteria were found!"
-msgstr ""
+msgstr "Neniuj eraroj kongruaj kun donitaj kriterioj estis trovitaj!"
 
 #: src/errors/finderrorsdialog.cpp:22
 #, kde-format
 msgctxt "@title:group"
 msgid "Errors to Find"
-msgstr ""
+msgstr "Eraroj por Trovi"
 
 #: src/errors/finderrorsdialog.cpp:28
 #, kde-format
@@ -2503,12 +2503,12 @@ msgstr "Diversaj"
 #: src/errors/finderrorsdialog.cpp:31
 #, kde-format
 msgid "Clear other errors"
-msgstr ""
+msgstr "Forigi aliajn erarojn"
 
 #: src/errors/finderrorsdialog.cpp:35
 #, kde-format
 msgid "Clear user marks"
-msgstr ""
+msgstr "Viŝi uzantmarkojn"
 
 #: src/errors/finderrorsdialog.cpp:42
 #, kde-format
@@ -2518,7 +2518,7 @@ msgstr "Serĉi en"
 #: src/errors/finderrorsdialog.cpp:86
 #, kde-format
 msgid "Available errors"
-msgstr ""
+msgstr "Disponeblaj eraroj"
 
 #: src/errors/finderrorsdialog.cpp:116
 #, kde-format
@@ -2528,7 +2528,7 @@ msgstr "Elekti Neniun"
 #: src/formats/textdemux/textdemux.cpp:32
 #, kde-format
 msgid "Importing Subtitle Stream"
-msgstr ""
+msgstr "Importi Subtitolon Rojo"
 
 #: src/formats/textdemux/textdemux.cpp:91
 #, kde-format
@@ -2543,13 +2543,13 @@ msgstr ""
 #: src/formats/vobsub/vobsubinputprocessdialog.ui:14
 #, kde-format
 msgid "VobSub Import"
-msgstr ""
+msgstr "VobSub Importo"
 
 #. i18n: ectx: property (text), widget (QLabel, labelStream)
 #: src/formats/vobsub/vobsubinputinitdialog.ui:20
 #, kde-format
 msgid "Stream / Language"
-msgstr ""
+msgstr "Rojo / Lingvo"
 
 #. i18n: ectx: property (title), widget (QGroupBox, grpPostProc)
 #: src/formats/vobsub/vobsubinputinitdialog.ui:53
@@ -2561,54 +2561,54 @@ msgstr "Posttraktado"
 #: src/formats/vobsub/vobsubinputinitdialog.ui:59
 #, kde-format
 msgid "Fix space between numbers"
-msgstr ""
+msgstr "Ripari spacon inter nombroj"
 
 #. i18n: ectx: property (text), widget (QCheckBox, ppSpacePunct)
 #: src/formats/vobsub/vobsubinputinitdialog.ui:69
 #, kde-format
 msgid "Fix space around punctuation (.,;:?!)"
-msgstr ""
+msgstr "Ripari spacon ĉirkaŭ interpunkcio (.,;:?!)"
 
 #. i18n: ectx: property (text), widget (QCheckBox, ppSpaceParen)
 #: src/formats/vobsub/vobsubinputinitdialog.ui:79
 #, kde-format
 msgid "Fix space around quotes and parentheses (\"()[]{})"
-msgstr ""
+msgstr "Ripari spacon ĉirkaŭ citaĵoj kaj krampoj (\"()[]{})"
 
 #. i18n: ectx: property (text), widget (QCheckBox, ppAposQuote)
 #: src/formats/vobsub/vobsubinputinitdialog.ui:89
 #, kde-format
 msgid "Fix double apostrophes/quotes"
-msgstr ""
+msgstr "Ripari duoblajn apostrofojn/citaĵojn"
 
 #. i18n: ectx: property (text), widget (QCheckBox, ppCharsOCR)
 #: src/formats/vobsub/vobsubinputinitdialog.ui:99
 #, kde-format
 msgid "Fix i <-> l, 0 <-> O mistakes"
-msgstr ""
+msgstr "Ripari i <-> l, 0 <-> O eraroj"
 
 #: src/formats/vobsub/vobsubinputprocessdialog.cpp:584
 #, kde-format
 msgid "VobSub Error"
-msgstr ""
+msgstr "VobSub Eraro"
 
 #. i18n: ectx: property (title), widget (QGroupBox, grpText)
 #: src/formats/vobsub/vobsubinputprocessdialog.ui:26
 #, kde-format
 msgid "Enter character(s)"
-msgstr ""
+msgstr "Enigu signo(j)n"
 
 #. i18n: ectx: property (text), widget (QLabel, symbolLabel)
 #: src/formats/vobsub/vobsubinputprocessdialog.ui:35
 #, kde-format
 msgid "S&ymbols:"
-msgstr ""
+msgstr "S&simboloj:"
 
 #. i18n: ectx: property (toolTip), widget (QSpinBox, symbolCount)
 #: src/formats/vobsub/vobsubinputprocessdialog.ui:45
 #, kde-format
 msgid "Up/Down: change value"
-msgstr ""
+msgstr "Supren/Malsupren: ŝanĝi valoron"
 
 #. i18n: ectx: property (text), widget (QPushButton, btnOk)
 #: src/formats/vobsub/vobsubinputprocessdialog.ui:143
@@ -2620,43 +2620,43 @@ msgstr "Bone"
 #: src/formats/vobsub/vobsubinputprocessdialog.ui:198
 #, kde-format
 msgid "Ctrl+Shift+Left"
-msgstr ""
+msgstr "Ctrl+Shift+Maldekstre"
 
 #. i18n: ectx: property (text), widget (QPushButton, btnPrevImage)
 #: src/formats/vobsub/vobsubinputprocessdialog.ui:201
 #, kde-format
 msgid "Prev Image"
-msgstr ""
+msgstr "Antaŭa Bildo"
 
 #. i18n: ectx: property (toolTip), widget (QPushButton, btnPrevSymbol)
 #: src/formats/vobsub/vobsubinputprocessdialog.ui:214
 #, kde-format
 msgid "Ctrl+Left"
-msgstr ""
+msgstr "Ctrl+Maldekstre"
 
 #. i18n: ectx: property (text), widget (QPushButton, btnPrevSymbol)
 #: src/formats/vobsub/vobsubinputprocessdialog.ui:217
 #, kde-format
 msgid "Prev Symbol"
-msgstr ""
+msgstr "Antaŭa Simbolo"
 
 #. i18n: ectx: property (toolTip), widget (QPushButton, btnNextSymbol)
 #: src/formats/vobsub/vobsubinputprocessdialog.ui:230
 #, kde-format
 msgid "Ctrl+Right"
-msgstr ""
+msgstr "Ctrl+Dekstre"
 
 #. i18n: ectx: property (text), widget (QPushButton, btnNextSymbol)
 #: src/formats/vobsub/vobsubinputprocessdialog.ui:233
 #, kde-format
 msgid "Next Symbol"
-msgstr ""
+msgstr "Sekva Simbolo"
 
 #. i18n: ectx: property (toolTip), widget (QPushButton, btnNextImage)
 #: src/formats/vobsub/vobsubinputprocessdialog.ui:243
 #, kde-format
 msgid "Ctrl+Shift+Right"
-msgstr ""
+msgstr "Ctrl+Shift+Dekstre"
 
 #. i18n: ectx: property (text), widget (QPushButton, btnNextImage)
 #: src/formats/vobsub/vobsubinputprocessdialog.ui:246
@@ -2675,37 +2675,37 @@ msgstr "Ĉesigi"
 #: src/formats/vobsub/vobsubinputprocessdialog.ui:294
 #, kde-format
 msgid "Subtitle Image"
-msgstr ""
+msgstr "Subtitola Bildo"
 
 #: src/gui/currentlinewidget.cpp:217
 #, kde-format
 msgid "<b>Show</b>"
-msgstr ""
+msgstr "<b>Montri</b>"
 
 #: src/gui/currentlinewidget.cpp:225
 #, kde-format
 msgid "<b>Hide</b>"
-msgstr ""
+msgstr "<b>Kaŝi</b>"
 
 #: src/gui/currentlinewidget.cpp:233
 #, kde-format
 msgid "<b>Duration</b>"
-msgstr ""
+msgstr "<b>Daŭro</b>"
 
 #: src/gui/currentlinewidget.cpp:314
 #, kde-format
 msgid "Change Voice Tag"
-msgstr ""
+msgstr "Ŝanĝi Voĉan Etikedon"
 
 #: src/gui/currentlinewidget.cpp:318
 #, kde-format
 msgid "Change Class Tag"
-msgstr ""
+msgstr "Ŝanĝu Klasetikedon"
 
 #: src/gui/currentlinewidget.cpp:439 src/gui/currentlinewidget.cpp:442
 #, kde-format
 msgid "No current line"
-msgstr ""
+msgstr "Neniu aktuala linio"
 
 #: src/gui/currentlinewidget.cpp:514
 #, kde-format
@@ -2715,37 +2715,37 @@ msgstr "chars"
 #: src/gui/currentlinewidget.cpp:522
 #, kde-format
 msgid "ms/char"
-msgstr ""
+msgstr "ms/char"
 
 #: src/gui/currentlinewidget.cpp:524
 #, kde-format
 msgid "chars/sec"
-msgstr ""
+msgstr "signoj/sek"
 
 #: src/gui/playerwidget.cpp:70
 #, kde-format
 msgid "<b>Position</b>"
-msgstr ""
+msgstr "<b>Pozicio</b>"
 
 #: src/gui/playerwidget.cpp:78
 #, kde-format
 msgid "<b>Length</b>"
-msgstr ""
+msgstr "<b>Longeco</b>"
 
 #: src/gui/playerwidget.cpp:83
 #, kde-format
 msgid "<b>FPS</b>"
-msgstr ""
+msgstr "<b>FPS</b>"
 
 #: src/gui/playerwidget.cpp:89
 #, kde-format
 msgid "<b>Playback Rate</b>"
-msgstr ""
+msgstr "<b>Reprodukta indico</b>"
 
 #: src/gui/playerwidget.cpp:674
 #, kde-format
 msgid "<qt>There was an error opening media file %1.</qt>"
-msgstr ""
+msgstr "<qt>Okazis eraro dum la malfermado de amaskomunikila dosiero %1.</qt>"
 
 #: src/gui/playerwidget.cpp:690 src/gui/playerwidget.cpp:691
 #: src/gui/playerwidget.cpp:692 src/gui/playerwidget.cpp:693
@@ -2758,27 +2758,27 @@ msgstr "<i>Nekonata</i>"
 #: src/gui/playerwidget.cpp:706 src/gui/playerwidget.cpp:708
 #, kde-format
 msgid "Unexpected error when playing file."
-msgstr ""
+msgstr "Neatendita eraro dum ludado de dosiero."
 
 #: src/gui/playerwidget.cpp:706 src/gui/playerwidget.cpp:708
 #, kde-format
 msgid "Error Playing File"
-msgstr ""
+msgstr "Eraro dum Ludado de Dosiero"
 
 #: src/gui/subtitlemeta/subtitlemetawidget.cpp:46
 #, kde-format
 msgid "&Stylesheet"
-msgstr ""
+msgstr "&Stilfolio"
 
 #: src/gui/subtitlemeta/subtitlemetawidget.cpp:47
 #, kde-format
 msgid "&Comments"
-msgstr ""
+msgstr "&Komentoj"
 
 #: src/gui/subtitlemeta/subtitlemetawidget.cpp:48
 #, kde-format
 msgid "&Position"
-msgstr ""
+msgstr "&Pozicio"
 
 #: src/gui/subtitlemeta/subtitlemetawidget.cpp:89
 #, kde-format
@@ -2817,7 +2817,7 @@ msgstr "Vertikala alĝustigo"
 #: src/gui/subtitlemeta/subtitlepositionwidget.ui:164
 #, kde-format
 msgid "Position/Size"
-msgstr ""
+msgstr "Pozicio/Grandeco"
 
 #. i18n: ectx: property (suffix), widget (QDoubleSpinBox, posBottom)
 #. i18n: ectx: property (suffix), widget (QDoubleSpinBox, posLeft)
@@ -2834,7 +2834,7 @@ msgstr "%"
 #: src/gui/treeview/linesmodel.cpp:156
 #, kde-format
 msgid "<b>Observations:</b>"
-msgstr ""
+msgstr "<b>Observoj:</b>"
 
 #: src/gui/treeview/linesmodel.cpp:183
 #, kde-format
@@ -2858,7 +2858,7 @@ msgstr "Montri Horon"
 #, kde-format
 msgctxt "@title:column"
 msgid "Hide Time"
-msgstr ""
+msgstr "Kaŝi Tempon"
 
 #: src/gui/treeview/linesmodel.cpp:187
 #, kde-format
@@ -2886,7 +2886,7 @@ msgstr "Stiloj"
 #: src/gui/treeview/lineswidget.cpp:420
 #, kde-format
 msgid "Times"
-msgstr ""
+msgstr "Tempoj"
 
 #: src/gui/treeview/lineswidget.cpp:431
 #, kde-format
@@ -2947,32 +2947,32 @@ msgstr "Teksta Koloro"
 #: src/gui/waveform/waveformwidget.cpp:116
 #, kde-format
 msgid "Generating waveform"
-msgstr ""
+msgstr "Genera ondoformo"
 
 #: src/gui/waveform/waveformwidget.cpp:692
 #, kde-format
 msgid "Select Line"
-msgstr ""
+msgstr "Elektu Linio"
 
 #: src/gui/waveform/waveformwidget.cpp:707
 #, kde-format
 msgid "Remove Line"
-msgstr ""
+msgstr "Forigi Linion"
 
 #: src/gui/waveform/waveformwidget.cpp:732
 #, kde-format
 msgid "Split Line"
-msgstr ""
+msgstr "Split Linio"
 
 #: src/gui/waveform/waveformwidget.cpp:742
 #, kde-format
 msgid "Set Current Line Show Time"
-msgstr ""
+msgstr "Agordu Nunan Linion Montri Tempon"
 
 #: src/gui/waveform/waveformwidget.cpp:747
 #, kde-format
 msgid "Set Current Line Hide Time"
-msgstr ""
+msgstr "Agordu Nunan Linian Kaŝtempon"
 
 #: src/helpers/languagecode.cpp:407
 #, kde-format
@@ -2982,12 +2982,12 @@ msgstr "Nekonata"
 #: src/main.cpp:71
 #, kde-format
 msgid "The primary subtitle to be edited."
-msgstr ""
+msgstr "La ĉefa subtitolo redaktenda."
 
 #: src/main.cpp:76
 #, kde-format
 msgid "The video to be subtitled."
-msgstr ""
+msgstr "La video subtitolota."
 
 #: src/main.cpp:81
 #, kde-format
@@ -3005,7 +3005,7 @@ msgstr "Subtitolo Komponisto"
 #: src/main.cpp:155
 #, kde-format
 msgid "A KDE subtitle editor."
-msgstr ""
+msgstr "KDE-redaktilo de subtitoloj."
 
 #: src/main.cpp:161
 #, kde-format
@@ -3020,7 +3020,7 @@ msgstr "Iama prizorganto"
 #: src/main.cpp:163
 #, kde-format
 msgid "Patches and Website"
-msgstr ""
+msgstr "Flikiloj kaj Retejo"
 
 #: src/main.cpp:165
 #, kde-format
@@ -3042,7 +3042,7 @@ msgstr "kodo kontribuoj"
 #: src/main.cpp:168
 #, kde-format
 msgid "code contributions, Arch Linux packaging"
-msgstr ""
+msgstr "kodaj kontribuoj, pakado de Arch Linux"
 
 #: src/main.cpp:170
 #, kde-format
@@ -3062,109 +3062,109 @@ msgstr "Videoludilo"
 #: src/mainwindow.cpp:65
 #, kde-format
 msgid "Styles and Comments"
-msgstr ""
+msgstr "Stiloj kaj Komentoj"
 
 #. i18n: ectx: label, entry (DefaultSubtitlesEncoding), group (General)
 #: src/scconfig.kcfg:10
 #, kde-format
 msgid "Default Subtitles Encoding"
-msgstr ""
+msgstr "Defaŭlta Subtitoloj Kodado"
 
 #. i18n: ectx: label, entry (TextLineBreak), group (General)
 #: src/scconfig.kcfg:14
 #, kde-format
 msgid "Line Break Character"
-msgstr ""
+msgstr "Linia Rompi Signo"
 
 #. i18n: ectx: label, entry (SeekOffsetOnDoubleClick), group (General)
 #: src/scconfig.kcfg:18
 #, kde-format
 msgid "Seek Offset On Double Click"
-msgstr ""
+msgstr "Serĉu Offset Sur Duobla Klako"
 
 #. i18n: ectx: label, entry (JumpLineOffset), group (General)
 #: src/scconfig.kcfg:22
 #, kde-format
 msgid "Jump to prev/next line offset"
-msgstr ""
+msgstr "Saltu al antaŭa/sekva linio-offseto"
 
 #. i18n: ectx: label, entry (UnpauseOnDoubleClick), group (General)
 #: src/scconfig.kcfg:26
 #, kde-format
 msgid "Unpause On Double Click"
-msgstr ""
+msgstr "Malŝaltu Dum Duobla Klako"
 
 #. i18n: ectx: label, entry (AutomaticVideoLoad), group (General)
 #: src/scconfig.kcfg:30
 #, kde-format
 msgid "Automatic Video Load"
-msgstr ""
+msgstr "Aŭtomata Video Ŝargo"
 
 #. i18n: ectx: label, entry (LinesQuickShiftAmount), group (General)
 #: src/scconfig.kcfg:35
 #, kde-format
 msgid "Lines Quick Shift Amount"
-msgstr ""
+msgstr "Linioj Rapida Ŝanĝo Kvanto"
 
 #. i18n: ectx: label, entry (GrabbedPositionCompensation), group (General)
 #: src/scconfig.kcfg:39
 #, kde-format
 msgid "Grabbed Position Compensation"
-msgstr ""
+msgstr "Kaptita Pozicio Kompenso"
 
 #. i18n: ectx: label, entry (LineDuration), group (General)
 #: src/scconfig.kcfg:44
 #, kde-format
 msgid "Default subtitle line duration"
-msgstr ""
+msgstr "Defaŭlta subtitola liniodaŭro"
 
 #. i18n: ectx: label, entry (LinePause), group (General)
 #: src/scconfig.kcfg:48
 #, kde-format
 msgid "Default duration between subtitle lines"
-msgstr ""
+msgstr "Defaŭlta daŭro inter subtitolaj linioj"
 
 #. i18n: ectx: label, entry (MaxCharacters), group (Error Check)
 #: src/scconfig.kcfg:55
 #, kde-format
 msgid "Maximum number of characters"
-msgstr ""
+msgstr "Maksimuma nombro da signoj"
 
 #. i18n: ectx: label, entry (MaxLines), group (Error Check)
 #: src/scconfig.kcfg:59
 #, kde-format
 msgid "Maximum number of lines"
-msgstr ""
+msgstr "Maksimuma nombro da linioj"
 
 #. i18n: ectx: label, entry (MinDuration), group (Error Check)
 #: src/scconfig.kcfg:64
 #, kde-format
 msgid "Minimum duration"
-msgstr ""
+msgstr "Minimuma daŭro"
 
 #. i18n: ectx: label, entry (MaxDuration), group (Error Check)
 #: src/scconfig.kcfg:68
 #, kde-format
 msgid "Maximum duration"
-msgstr ""
+msgstr "Maksimuma daŭro"
 
 #. i18n: ectx: label, entry (MinDurationPerCharacter), group (Error Check)
 #: src/scconfig.kcfg:73
 #, kde-format
 msgid "Minimum duration per character"
-msgstr ""
+msgstr "Minimuma daŭro por signo"
 
 #. i18n: ectx: label, entry (IdealDurationPerCharacter), group (Error Check)
 #: src/scconfig.kcfg:77
 #, kde-format
 msgid "Ideal duration per character"
-msgstr ""
+msgstr "Ideala daŭro po signo"
 
 #. i18n: ectx: label, entry (MaxDurationPerCharacter), group (Error Check)
 #: src/scconfig.kcfg:81
 #, kde-format
 msgid "Maximum duration per character"
-msgstr ""
+msgstr "Maksimuma daŭro po signo"
 
 #. i18n: ectx: label, entry (DefaultLanguage), group (Spelling)
 #: src/scconfig.kcfg:93
@@ -3176,43 +3176,43 @@ msgstr "Defaŭlta Lingvo"
 #: src/scconfig.kcfg:97
 #, kde-format
 msgid "Default client"
-msgstr ""
+msgstr "Defaŭlta kliento"
 
 #. i18n: ectx: label, entry (CheckUppercase), group (Spelling)
 #: src/scconfig.kcfg:101
 #, kde-format
 msgid "Check uppercase"
-msgstr ""
+msgstr "Kontrolu majusklojn"
 
 #. i18n: ectx: label, entry (SkipRunTogether), group (Spelling)
 #: src/scconfig.kcfg:105
 #, kde-format
 msgid "Skip Run Together"
-msgstr ""
+msgstr "Saltu Kuru Kune"
 
 #. i18n: ectx: label, entry (wfInnerColor), group (Waveform Widget)
 #: src/scconfig.kcfg:112
 #, kde-format
 msgid "Waveform Inner Color"
-msgstr ""
+msgstr "Ondformo Interna Koloro"
 
 #. i18n: ectx: label, entry (wfOuterColor), group (Waveform Widget)
 #: src/scconfig.kcfg:116
 #, kde-format
 msgid "Waveform Outer Color"
-msgstr ""
+msgstr "Ondoformo Ekstera Koloro"
 
 #. i18n: ectx: label, entry (wfSmoothScroll), group (Waveform Widget)
 #: src/scconfig.kcfg:120
 #, kde-format
 msgid "Waveform Smooth Scrolling"
-msgstr ""
+msgstr "Ondoformo Glata Scrolling"
 
 #. i18n: ectx: label, entry (wfAutoscrollPadding), group (Waveform Widget)
 #: src/scconfig.kcfg:124
 #, kde-format
 msgid "Autoscroll Padding"
-msgstr ""
+msgstr "Aŭtomata rulumilo"
 
 #. i18n: ectx: whatsthis, entry (wfAutoscrollPadding), group (Waveform Widget)
 #: src/scconfig.kcfg:126
@@ -3226,31 +3226,31 @@ msgstr ""
 #: src/scconfig.kcfg:129
 #, kde-format
 msgid "Waveform Subtitle Background Color"
-msgstr ""
+msgstr "Ondoformo Subtitolo Fona Koloro"
 
 #. i18n: ectx: label, entry (wfSubBorder), group (Waveform Widget)
 #: src/scconfig.kcfg:133
 #, kde-format
 msgid "Waveform Subtitle Border Color"
-msgstr ""
+msgstr "Ondoformo Subtitolo Bordo Koloro"
 
 #. i18n: ectx: label, entry (wfSubBorderWidth), group (Waveform Widget)
 #: src/scconfig.kcfg:137
 #, kde-format
 msgid "Waveform Subtitle Border Width"
-msgstr ""
+msgstr "Ondoformo Subtitolo Border Larĝo"
 
 #. i18n: ectx: label, entry (wfSelBackground), group (Waveform Widget)
 #: src/scconfig.kcfg:141
 #, kde-format
 msgid "Waveform Selected Subtitle Background Color"
-msgstr ""
+msgstr "Ondoformo Elektita Subtitolo Fona Koloro"
 
 #. i18n: ectx: label, entry (wfSelBorder), group (Waveform Widget)
 #: src/scconfig.kcfg:145
 #, kde-format
 msgid "Waveform Selected Subtitle Border Color"
-msgstr ""
+msgstr "Ondoformo Elektita Subtitola Bordo Koloro"
 
 #. i18n: ectx: label, entry (wfFontFamily), group (Waveform Widget)
 #. i18n: ectx: label, entry (FontFamily), group (VideoPlayer)
@@ -3263,61 +3263,61 @@ msgstr "Tiparofamilio"
 #: src/scconfig.kcfg:153
 #, kde-format
 msgid "Subtitle Number Font Size"
-msgstr ""
+msgstr "Subtitolo Nombro Tiparo Grandeco"
 
 #. i18n: ectx: label, entry (wfSubNumberColor), group (Waveform Widget)
 #: src/scconfig.kcfg:157
 #, kde-format
 msgid "Subtitle Number Font Color"
-msgstr ""
+msgstr "Subtitolo Nombro Tiparo Koloro"
 
 #. i18n: ectx: label, entry (wfSubTextFontSize), group (Waveform Widget)
 #: src/scconfig.kcfg:161
 #, kde-format
 msgid "Subtitle Text Font Size"
-msgstr ""
+msgstr "Subtitolo Teksto Tiparo Grandeco"
 
 #. i18n: ectx: label, entry (wfSubTextColor), group (Waveform Widget)
 #: src/scconfig.kcfg:165
 #, kde-format
 msgid "Subtitle Text Font Color"
-msgstr ""
+msgstr "Subtitolo Teksto Tiparo Koloro"
 
 #. i18n: ectx: label, entry (wfMouseLocation), group (Waveform Widget)
 #: src/scconfig.kcfg:169
 #, kde-format
 msgid "Mouse Location Line Color"
-msgstr ""
+msgstr "Muso Loka Linio Koloro"
 
 #. i18n: ectx: label, entry (wfPlayLocation), group (Waveform Widget)
 #: src/scconfig.kcfg:173
 #, kde-format
 msgid "Play Location Line Color"
-msgstr ""
+msgstr "Ludu Loka Linia Koloro"
 
 #. i18n: ectx: label, entry (SeekJumpLength), group (VideoPlayer)
 #: src/scconfig.kcfg:184
 #, kde-format
 msgid "Jump length on seek"
-msgstr ""
+msgstr "Saltu longecon sur serĉo"
 
 #. i18n: ectx: label, entry (StepJumpLength), group (VideoPlayer)
 #: src/scconfig.kcfg:188
 #, kde-format
 msgid "Amount of frames to skip when stepping"
-msgstr ""
+msgstr "Kvanto da kadroj por preterpasi dum paŝo"
 
 #. i18n: ectx: label, entry (ShowPositionTimeEdit), group (VideoPlayer)
 #: src/scconfig.kcfg:192
 #, kde-format
 msgid "Show editable time position"
-msgstr ""
+msgstr "Montru redakteblan tempopozicion"
 
 #. i18n: ectx: label, entry (VolumeAmplification), group (VideoPlayer)
 #: src/scconfig.kcfg:196
 #, kde-format
 msgid "Volume Amplification"
-msgstr ""
+msgstr "Laŭteco-Ampligo"
 
 #. i18n: ectx: label, entry (FontSize), group (VideoPlayer)
 #: src/scconfig.kcfg:205
@@ -3347,13 +3347,13 @@ msgstr "Skizo Larĝo"
 #: src/scconfig.kcfg:224
 #, kde-format
 msgid "Last used translate engine"
-msgstr ""
+msgstr "Laste uzata tradukmotoro"
 
 #. i18n: ectx: label, entry (gctServiceJSON), group (GoogleCloudTranslate)
 #: src/scconfig.kcfg:231
 #, kde-format
 msgid "Service Account JSON containing private key"
-msgstr ""
+msgstr "Serva Konto JSON enhavanta privatan ŝlosilon"
 
 #. i18n: ectx: label, entry (gctLangSource), group (GoogleCloudTranslate)
 #. i18n: ectx: label, entry (dltLangSource), group (DeepLTranslate)
@@ -3361,7 +3361,7 @@ msgstr ""
 #: src/scconfig.kcfg:234 src/scconfig.kcfg:258 src/scconfig.kcfg:271
 #, kde-format
 msgid "source language - cached"
-msgstr ""
+msgstr "fontlingvo - kaŝmemorigita"
 
 #. i18n: ectx: label, entry (gctLangTrans), group (GoogleCloudTranslate)
 #. i18n: ectx: label, entry (dltLangTrans), group (DeepLTranslate)
@@ -3369,48 +3369,48 @@ msgstr ""
 #: src/scconfig.kcfg:237 src/scconfig.kcfg:261 src/scconfig.kcfg:274
 #, kde-format
 msgid "translation language - cached"
-msgstr ""
+msgstr "traduklingvo - kaŝmemorigita"
 
 #. i18n: ectx: label, entry (gctAccessToken), group (GoogleCloudTranslate)
 #: src/scconfig.kcfg:240
 #, kde-format
 msgid "access token - cached"
-msgstr ""
+msgstr "alirĵetono - kaŝmemorigita"
 
 #. i18n: ectx: label, entry (gctTokenExpires), group (GoogleCloudTranslate)
 #: src/scconfig.kcfg:243
 #, kde-format
 msgid "access token expiry - cached"
-msgstr ""
+msgstr "alirĵetono eksvalidiĝo - kaŝmemorigita"
 
 #. i18n: ectx: label, entry (gctTokenType), group (GoogleCloudTranslate)
 #: src/scconfig.kcfg:246
 #, kde-format
 msgid "access token type - cached"
-msgstr ""
+msgstr "alirĵetono tipo - kaŝmemorigita"
 
 #. i18n: ectx: label, entry (dltAuthKey), group (DeepLTranslate)
 #: src/scconfig.kcfg:252
 #, kde-format
 msgid "DeepL API authentication key"
-msgstr ""
+msgstr "DeepL API-aŭtentikigŝlosilo"
 
 #. i18n: ectx: label, entry (dltApiDomain), group (DeepLTranslate)
 #: src/scconfig.kcfg:255
 #, kde-format
 msgid "DeepL API domain name"
-msgstr ""
+msgstr "DeepL API domajna nomo"
 
 #. i18n: ectx: label, entry (mintURLPrefix), group (MinTTranslate)
 #: src/scconfig.kcfg:267
 #, kde-format
 msgid "MinT API URL prefix"
-msgstr ""
+msgstr "MinT API URL-prefikso"
 
 #: src/scripting/scriptsmanager.cpp:73
 #, kde-format
 msgid "Non-Script Files"
-msgstr ""
+msgstr "Ne-Skriptoj Dosieroj"
 
 #: src/scripting/scriptsmanager.cpp:155
 #, kde-format
@@ -3468,7 +3468,7 @@ msgstr ""
 #: src/scripting/scriptsmanager.cpp:488
 #, kde-format
 msgid "Duplicate filename"
-msgstr ""
+msgstr "Duobla dosiernomo"
 
 #: src/scripting/scriptsmanager.cpp:489
 #, kde-format
@@ -3488,12 +3488,12 @@ msgstr "Skriptonomo:"
 #: src/scripting/scriptsmanager.cpp:504
 #, kde-format
 msgid "There was an error creating the file <b>%1</b>."
-msgstr ""
+msgstr "Okazis eraro dum kreado de la dosiero <b>%1</b>."
 
 #: src/scripting/scriptsmanager.cpp:539
 #, kde-format
 msgid "Select Existing Script"
-msgstr ""
+msgstr "Elektu Ekzistantan Skripton"
 
 #: src/scripting/scriptsmanager.cpp:556
 #, kde-format
@@ -3515,17 +3515,17 @@ msgstr "Alinomi Skripton"
 #: src/scripting/scriptsmanager.cpp:569
 #, kde-format
 msgid "There was an error opening the file <b>%1</b>."
-msgstr ""
+msgstr "Okazis eraro dum malfermo de la dosiero <b>%1</b>."
 
 #: src/scripting/scriptsmanager.cpp:577
 #, kde-format
 msgid "There was an error copying the file to <b>%1</b>."
-msgstr ""
+msgstr "Okazis eraro kopiante la dosieron al <b>%1</b>."
 
 #: src/scripting/scriptsmanager.cpp:592
 #, kde-format
 msgid "Do you really want to send file <b>%1</b> to the trash?"
-msgstr ""
+msgstr "Ĉu vi vere volas sendi dosieron <b>%1</b> al la rubujo?"
 
 #: src/scripting/scriptsmanager.cpp:592
 #, kde-format
@@ -3535,17 +3535,17 @@ msgstr "Movi al Rubujo"
 #: src/scripting/scriptsmanager.cpp:596
 #, kde-format
 msgid "There was an error removing the file <b>%1</b>."
-msgstr ""
+msgstr "Okazis eraro dum forigo de la dosiero <b>%1</b>."
 
 #: src/scripting/scriptsmanager.cpp:614
 #, kde-format
 msgid "Could not launch external editor.\n"
-msgstr ""
+msgstr "Ne eblis lanĉi eksteran redaktilon.\n"
 
 #: src/scripting/scriptsmanager.cpp:634
 #, kde-format
 msgid "Error opening script %1."
-msgstr ""
+msgstr "Eraro dum malfermo de skripto %1."
 
 #: src/scripting/scriptsmanager.cpp:634 src/scripting/scriptsmanager.cpp:649
 #: src/scripting/scriptsmanager.cpp:651
@@ -3567,13 +3567,13 @@ msgstr "Iloj"
 #: src/scripting/scriptsmanager.ui:14
 #, kde-format
 msgid "Scripts Manager"
-msgstr ""
+msgstr "Skripto-Manaĝero"
 
 #. i18n: ectx: property (whatsThis), widget (QPushButton, btnCreate)
 #: src/scripting/scriptsmanager.ui:29
 #, kde-format
 msgid "Creates a new script file."
-msgstr ""
+msgstr "Kreas novan skriptodosieron."
 
 #. i18n: ectx: property (text), widget (QPushButton, btnCreate)
 #: src/scripting/scriptsmanager.ui:32
@@ -3585,7 +3585,7 @@ msgstr "Krei..."
 #: src/scripting/scriptsmanager.ui:42
 #, kde-format
 msgid "Copies an existing script from a specified location."
-msgstr ""
+msgstr "Kopias ekzistantan skripton de specifa loko."
 
 #. i18n: ectx: property (text), widget (QPushButton, btnAdd)
 #: src/scripting/scriptsmanager.ui:45
@@ -3597,19 +3597,19 @@ msgstr "Aldoni..."
 #: src/scripting/scriptsmanager.ui:55
 #, kde-format
 msgid "Sends the selected script to the trash."
-msgstr ""
+msgstr "Sendas la elektitan skripton al la rubujo."
 
 #. i18n: ectx: property (whatsThis), widget (QPushButton, btnEdit)
 #: src/scripting/scriptsmanager.ui:68
 #, kde-format
 msgid "Opens the selected script with an external editor."
-msgstr ""
+msgstr "Malfermas la elektitan skripton per ekstera redaktilo."
 
 #. i18n: ectx: property (whatsThis), widget (QPushButton, btnRun)
 #: src/scripting/scriptsmanager.ui:97
 #, kde-format
 msgid "Executes the selected script."
-msgstr ""
+msgstr "Efektivigas la elektitan skripton."
 
 #. i18n: ectx: property (text), widget (QPushButton, btnRun)
 #: src/scripting/scriptsmanager.ui:100
@@ -3621,7 +3621,7 @@ msgstr "Ruli"
 #: src/scripting/scriptsmanager.ui:126
 #, kde-format
 msgid "Reloads the installed scripts list."
-msgstr ""
+msgstr "Reŝargi la liston de instalitaj skriptoj."
 
 #. i18n: ectx: property (text), widget (QPushButton, btnRefresh)
 #: src/scripting/scriptsmanager.ui:129
@@ -3635,7 +3635,7 @@ msgstr "Refreŝigi"
 #: src/speechplugins/pocketsphinx/pocketsphinxconfigwidget.ui:65
 #, kde-format
 msgid "Directory containing acoustic model files"
-msgstr ""
+msgstr "Dosierujo enhavante akustikajn modeldosierojn"
 
 #. i18n: ectx: label, entry (trigramModelFile), group (PocketSphinx)
 #. i18n: ectx: property (toolTip), widget (QLabel, label_trigramModelFile)
@@ -3643,7 +3643,7 @@ msgstr ""
 #: src/speechplugins/pocketsphinx/pocketsphinxconfigwidget.ui:39
 #, kde-format
 msgid "Word trigram language model input file"
-msgstr ""
+msgstr "Vorta trigrama lingvomodela enigdosiero"
 
 #. i18n: ectx: label, entry (lexiconFile), group (PocketSphinx)
 #. i18n: ectx: property (toolTip), widget (QLabel, label_lexiconFile)
@@ -3651,7 +3651,7 @@ msgstr ""
 #: src/speechplugins/pocketsphinx/pocketsphinxconfigwidget.ui:26
 #, kde-format
 msgid "Main pronunciation dictionary (lexicon) input file"
-msgstr ""
+msgstr "Ĉefa elparola vortaro (leksikono) eniga dosiero"
 
 #. i18n: ectx: label, entry (vadPostSpeech), group (PocketSphinx)
 #. i18n: ectx: property (toolTip), widget (QLabel, label_vadPostSpeech)
@@ -3659,7 +3659,7 @@ msgstr ""
 #: src/speechplugins/pocketsphinx/pocketsphinxconfigwidget.ui:152
 #, kde-format
 msgid "Num of silence frames to keep after speech to silence transition"
-msgstr ""
+msgstr "Nombro da silentkadroj por konservi post parolado al silenta transiro"
 
 #. i18n: ectx: label, entry (vadPreSpeech), group (PocketSphinx)
 #. i18n: ectx: property (toolTip), widget (QLabel, label_vadPreSpeech)
@@ -3667,7 +3667,7 @@ msgstr ""
 #: src/speechplugins/pocketsphinx/pocketsphinxconfigwidget.ui:139
 #, kde-format
 msgid "Num of speech frames to keep before silence to speech transition"
-msgstr ""
+msgstr "Nombro da parolkadroj por konservi antaŭ silento al paroltransiro"
 
 #. i18n: ectx: label, entry (vadStartSpeech), group (PocketSphinx)
 #. i18n: ectx: property (toolTip), widget (QLabel, label_vadStartSpeech)
@@ -3675,7 +3675,7 @@ msgstr ""
 #: src/speechplugins/pocketsphinx/pocketsphinxconfigwidget.ui:165
 #, kde-format
 msgid "Num of speech frames to trigger VAD from silence to speech"
-msgstr ""
+msgstr "Nombro da parolkadroj por ekigi VAD de silento al parolado"
 
 #. i18n: ectx: label, entry (vadTreshold), group (PocketSphinx)
 #. i18n: ectx: property (toolTip), widget (QDoubleSpinBox, kcfg_vadTreshold)
@@ -3693,37 +3693,37 @@ msgstr ""
 #: src/speechplugins/pocketsphinx/pocketsphinxconfigwidget.cpp:28
 #, kde-format
 msgid "Sphinx Dictionaries"
-msgstr ""
+msgstr "Sfinksaj Vortaroj"
 
 #: src/speechplugins/pocketsphinx/pocketsphinxconfigwidget.cpp:24
 #: src/speechplugins/pocketsphinx/pocketsphinxconfigwidget.cpp:29
 #, kde-format
 msgid "Trigram Models"
-msgstr ""
+msgstr "Trigramaj Modeloj"
 
 #. i18n: ectx: property (title), widget (QGroupBox, grpModel)
 #: src/speechplugins/pocketsphinx/pocketsphinxconfigwidget.ui:20
 #, kde-format
 msgid "Speech Recognition Model"
-msgstr ""
+msgstr "Parolado-Rekono-Modelo"
 
 #. i18n: ectx: property (text), widget (QLabel, label_lexiconFile)
 #: src/speechplugins/pocketsphinx/pocketsphinxconfigwidget.ui:29
 #, kde-format
 msgid "Pronunciation Dictionary (Lexicon)"
-msgstr ""
+msgstr "Prononca Vortaro (Leksikono)"
 
 #. i18n: ectx: property (text), widget (QLabel, label_trigramModelFile)
 #: src/speechplugins/pocketsphinx/pocketsphinxconfigwidget.ui:42
 #, kde-format
 msgid "Trigram Model"
-msgstr ""
+msgstr "Trigrama Modelo"
 
 #. i18n: ectx: property (text), widget (QLabel, label_acousticModelPath)
 #: src/speechplugins/pocketsphinx/pocketsphinxconfigwidget.ui:68
 #, kde-format
 msgid "Acoustic Model"
-msgstr ""
+msgstr "Akustika Modelo"
 
 #. i18n: ectx: property (text), widget (QLabel, label_modelInfoText)
 #: src/speechplugins/pocketsphinx/pocketsphinxconfigwidget.ui:78
@@ -3739,7 +3739,7 @@ msgstr ""
 #: src/speechplugins/pocketsphinx/pocketsphinxconfigwidget.ui:100
 #, kde-format
 msgid "Voice Activity Detection"
-msgstr ""
+msgstr "Detekto de Voĉa Agado"
 
 #. i18n: ectx: property (text), widget (QLabel, label_vadTreshold)
 #: src/speechplugins/pocketsphinx/pocketsphinxconfigwidget.ui:129
@@ -3751,39 +3751,39 @@ msgstr "Brua Sojlo"
 #: src/speechplugins/pocketsphinx/pocketsphinxconfigwidget.ui:142
 #, kde-format
 msgid "Pre Speech Frames"
-msgstr ""
+msgstr "Antaŭ Parolaj Kadroj"
 
 #. i18n: ectx: property (text), widget (QLabel, label_vadPostSpeech)
 #: src/speechplugins/pocketsphinx/pocketsphinxconfigwidget.ui:155
 #, kde-format
 msgid "Post Speech Frames"
-msgstr ""
+msgstr "Post Parolaj Kadroj"
 
 #. i18n: ectx: property (text), widget (QLabel, label_vadStartSpeech)
 #: src/speechplugins/pocketsphinx/pocketsphinxconfigwidget.ui:168
 #, kde-format
 msgid "Start Speech Frames"
-msgstr ""
+msgstr "Komencu Parolkadrojn"
 
 #: src/speechprocessor/speechprocessor.cpp:41
 #, kde-format
 msgid "Recognizing speech"
-msgstr ""
+msgstr "Rekonante parolon"
 
 #: src/speechprocessor/speechprocessor.cpp:50
 #, kde-format
 msgid "Abort speech recognition"
-msgstr ""
+msgstr "Ĉesigi parolrekonon"
 
 #: src/speechprocessor/speechprocessor.cpp:99
 #, kde-format
 msgid "No speech recognition plugins available"
-msgstr ""
+msgstr "Neniuj aldonaĵoj pri parolrekono disponeblaj"
 
 #: src/speechprocessor/speechprocessor.cpp:104
 #, kde-format
 msgid "Initialization of speech recognition plugin failed"
-msgstr ""
+msgstr "Iniciatigo de parolrekona kromaĵo malsukcesis"
 
 #: src/speechprocessor/speechprocessor.cpp:173
 #, kde-format
@@ -3814,19 +3814,19 @@ msgstr "R&edakti"
 #: src/subtitlecomposerui.rc:56
 #, kde-format
 msgid "&Texts"
-msgstr ""
+msgstr "&Tekstoj"
 
 #. i18n: ectx: Menu (styles)
 #: src/subtitlecomposerui.rc:67
 #, kde-format
 msgid "St&yles"
-msgstr ""
+msgstr "St&yles"
 
 #. i18n: ectx: Menu (times)
 #: src/subtitlecomposerui.rc:75
 #, kde-format
 msgid "T&imes"
-msgstr ""
+msgstr "T&imes"
 
 #. i18n: ectx: Menu (errors)
 #: src/subtitlecomposerui.rc:96
@@ -3885,24 +3885,24 @@ msgstr ""
 #: src/translate/deeplengine.cpp:76
 #, kde-format
 msgid "DeepL Engine Error"
-msgstr ""
+msgstr "DeepL Engine Eraro"
 
 #: src/translate/deeplengine.cpp:102 src/translate/googlecloudengine.cpp:283
 #: src/translate/mintengine.cpp:125
 #, kde-format
 msgid "Updating languages..."
-msgstr ""
+msgstr "Ĝisdatigas lingvojn..."
 
 #: src/translate/deeplengine.cpp:123 src/translate/googlecloudengine.cpp:298
 #, kde-format
 msgid "Autodetect Language"
-msgstr ""
+msgstr "Aŭtodetekti Lingvon"
 
 #: src/translate/deeplengine.cpp:158 src/translate/googlecloudengine.cpp:331
 #: src/translate/mintengine.cpp:221
 #, kde-format
 msgid "Translating lines..."
-msgstr ""
+msgstr "Tradukante liniojn..."
 
 #. i18n: ectx: property (title), widget (QGroupBox, grpAuth)
 #: src/translate/deeplengine.ui:17 src/translate/googlecloudengine.ui:17
@@ -3914,7 +3914,7 @@ msgstr "Aŭtentigo"
 #: src/translate/deeplengine.ui:23
 #, kde-format
 msgid "Authentication Key:"
-msgstr ""
+msgstr "Aŭtentikiga Ŝlosilo:"
 
 #. i18n: ectx: property (text), widget (QPushButton, btnConnect)
 #: src/translate/deeplengine.ui:33
@@ -3926,7 +3926,7 @@ msgstr "Konekti"
 #: src/translate/deeplengine.ui:66
 #, kde-format
 msgid "API Domain:"
-msgstr ""
+msgstr "API-Domajno:"
 
 #. i18n: ectx: property (text), widget (QLabel, labHelp)
 #: src/translate/deeplengine.ui:82
@@ -3962,23 +3962,23 @@ msgstr "Traduki al:"
 #: src/translate/googlecloudengine.cpp:211
 #, kde-format
 msgid "Google Cloud Engine Error"
-msgstr ""
+msgstr "Eraro de Google Cloud Engine"
 
 #: src/translate/googlecloudengine.cpp:201
 #, kde-format
 msgid "Error opening file '%1'"
-msgstr ""
+msgstr "Eraro dum malfermo de dosiero '%1'"
 
 #: src/translate/googlecloudengine.cpp:210
 #, kde-format
 msgid "Error parsing JSON from file '%1'"
-msgstr ""
+msgstr "Eraro dum analizo de JSON el dosiero '%1'"
 
 #. i18n: ectx: property (text), widget (QLabel, labelServiceJSON)
 #: src/translate/googlecloudengine.ui:23
 #, kde-format
 msgid "Service Account's Private Key JSON:"
-msgstr ""
+msgstr "Privata Ŝlosilo de Serva Konto JSON:"
 
 #. i18n: ectx: property (text), widget (QPushButton, btnLogin)
 #: src/translate/googlecloudengine.ui:36
@@ -4002,19 +4002,19 @@ msgstr ""
 #: src/translate/mintengine.cpp:80
 #, kde-format
 msgid "MinT Engine Error"
-msgstr ""
+msgstr "MinT Engine Eraro"
 
 #. i18n: ectx: property (title), widget (QGroupBox, grpAuth)
 #: src/translate/mintengine.ui:17
 #, kde-format
 msgid "API Server"
-msgstr ""
+msgstr "API-Servilo"
 
 #. i18n: ectx: property (text), widget (QLabel, labApiURLPrefix)
 #: src/translate/mintengine.ui:40
 #, kde-format
 msgid "Service URL:"
-msgstr ""
+msgstr "Serva URL:"
 
 #. i18n: ectx: property (text), widget (QPushButton, btnUpdate)
 #: src/translate/mintengine.ui:50
@@ -4040,22 +4040,22 @@ msgstr "Traduki"
 #: src/translate/translatedialog.cpp:46
 #, kde-format
 msgid "Translate texts in"
-msgstr ""
+msgstr "Traduki tekstojn en"
 
 #: src/translate/translatedialog.cpp:92
 #, kde-format
 msgid "Translate texts"
-msgstr ""
+msgstr "Traduki tekstojn"
 
 #: src/utils/finder.cpp:45
 #, kde-format
 msgid "Find In"
-msgstr ""
+msgstr "Trovu En"
 
 #: src/utils/finder.cpp:246
 #, kde-format
 msgid "No instances of '%1' found!"
-msgstr ""
+msgstr "Neniuj instancoj de '%1' troviĝis!"
 
 #: src/utils/finder.cpp:246 src/utils/finder.cpp:260
 #, kde-format
@@ -4093,7 +4093,7 @@ msgstr ""
 #: src/utils/replacer.cpp:43
 #, kde-format
 msgid "Find/Replace In"
-msgstr ""
+msgstr "Trovu/Anstataŭigi En"
 
 #: src/utils/replacer.cpp:253
 #, kde-format
@@ -4108,17 +4108,17 @@ msgstr "Ortografio"
 #: src/videoplayer/backend/videostate.cpp:110
 #, kde-format
 msgid "Video Stream #%1"
-msgstr ""
+msgstr "Videofluo #%1"
 
 #: src/videoplayer/backend/videostate.cpp:114
 #, kde-format
 msgid "Audio Stream #%1"
-msgstr ""
+msgstr "Sonfluo #%1"
 
 #: src/videoplayer/backend/videostate.cpp:120
 #, kde-format
 msgid "Subtitle Stream #%1"
-msgstr ""
+msgstr "Subtitola Fluo #%1"
 
 #: src/videoplayer/videoplayer.cpp:115
 #, kde-format
@@ -4128,7 +4128,7 @@ msgstr "Dosiero ne ekzistas."
 #: src/widgets/simplerichtextedit.cpp:339
 #, kde-format
 msgid "Suggestions"
-msgstr ""
+msgstr "Sugestoj"
 
 #: src/widgets/simplerichtextedit.cpp:340
 #, kde-format
