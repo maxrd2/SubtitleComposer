@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kdeorg\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-02-26 01:38+0000\n"
-"PO-Revision-Date: 2024-03-17 20:45\n"
+"PO-Revision-Date: 2024-04-03 19:21\n"
 "Last-Translator: \n"
 "Language-Team: Chinese Simplified\n"
 "Language: zh_CN\n"
@@ -2818,7 +2818,7 @@ msgstr "垂直对齐"
 #: src/gui/subtitlemeta/subtitlepositionwidget.ui:164
 #, kde-format
 msgid "Position/Size"
-msgstr ""
+msgstr "位置/大小"
 
 #. i18n: ectx: property (suffix), widget (QDoubleSpinBox, posBottom)
 #. i18n: ectx: property (suffix), widget (QDoubleSpinBox, posLeft)
@@ -2830,165 +2830,165 @@ msgstr ""
 #: src/gui/subtitlemeta/subtitlepositionwidget.ui:200
 #, no-c-format, kde-format
 msgid "%"
-msgstr ""
+msgstr "%"
 
 #: src/gui/treeview/linesmodel.cpp:156
 #, kde-format
 msgid "<b>Observations:</b>"
-msgstr ""
+msgstr "<b>观测：</b>"
 
 #: src/gui/treeview/linesmodel.cpp:183
 #, kde-format
 msgctxt "@title:column Subtitle line number"
 msgid "Line"
-msgstr ""
+msgstr "行"
 
 #: src/gui/treeview/linesmodel.cpp:184
 #, kde-format
 msgctxt "@title:column"
 msgid "Pause"
-msgstr ""
+msgstr "暂停"
 
 #: src/gui/treeview/linesmodel.cpp:185
 #, kde-format
 msgctxt "@title:column"
 msgid "Show Time"
-msgstr ""
+msgstr "显示时间"
 
 #: src/gui/treeview/linesmodel.cpp:186
 #, kde-format
 msgctxt "@title:column"
 msgid "Hide Time"
-msgstr ""
+msgstr "消隐时间"
 
 #: src/gui/treeview/linesmodel.cpp:187
 #, kde-format
 msgctxt "@title:column"
 msgid "Duration"
-msgstr ""
+msgstr "持续时长"
 
 #: src/gui/treeview/linesmodel.cpp:188
 #, kde-format
 msgctxt "@title:column Subtitle line (primary) text"
 msgid "Text"
-msgstr ""
+msgstr "文本"
 
 #: src/gui/treeview/linesmodel.cpp:189
 #, kde-format
 msgctxt "@title:column Subtitle line translation text"
 msgid "Translation"
-msgstr ""
+msgstr "译文"
 
 #: src/gui/treeview/lineswidget.cpp:411
 #, kde-format
 msgid "Styles"
-msgstr ""
+msgstr "风格"
 
 #: src/gui/treeview/lineswidget.cpp:420
 #, kde-format
 msgid "Times"
-msgstr ""
+msgstr "时间"
 
 #: src/gui/treeview/lineswidget.cpp:431
 #, kde-format
 msgid "Errors"
-msgstr ""
+msgstr "错误"
 
 #: src/gui/treeview/richlineedit.cpp:84 src/widgets/simplerichtextedit.cpp:424
 #, kde-format
 msgid "Cut"
-msgstr ""
+msgstr "剪切"
 
 #: src/gui/treeview/richlineedit.cpp:91 src/widgets/simplerichtextedit.cpp:430
 #, kde-format
 msgid "Copy"
-msgstr ""
+msgstr "复制"
 
 #: src/gui/treeview/richlineedit.cpp:98 src/widgets/simplerichtextedit.cpp:437
 #, kde-format
 msgid "Paste"
-msgstr ""
+msgstr "粘贴"
 
 #: src/gui/treeview/richlineedit.cpp:106 src/widgets/simplerichtextedit.cpp:450
 #, kde-format
 msgctxt "@action:inmenu Clear all text"
 msgid "Clear"
-msgstr ""
+msgstr "清除"
 
 #: src/gui/treeview/richlineedit.cpp:119 src/widgets/simplerichtextedit.cpp:461
 #, kde-format
 msgctxt "@action:inmenu Toggle bold style"
 msgid "Bold"
-msgstr ""
+msgstr "粗体"
 
 #: src/gui/treeview/richlineedit.cpp:127 src/widgets/simplerichtextedit.cpp:468
 #, kde-format
 msgctxt "@action:inmenu Toggle italic style"
 msgid "Italic"
-msgstr ""
+msgstr "斜体"
 
 #: src/gui/treeview/richlineedit.cpp:135 src/widgets/simplerichtextedit.cpp:475
 #, kde-format
 msgctxt "@action:inmenu Toggle underline style"
 msgid "Underline"
-msgstr ""
+msgstr "下划线"
 
 #: src/gui/treeview/richlineedit.cpp:143 src/widgets/simplerichtextedit.cpp:482
 #, kde-format
 msgctxt "@action:inmenu Toggle strike through style"
 msgid "Strike Through"
-msgstr ""
+msgstr "删除线"
 
 #: src/gui/treeview/richlineedit.cpp:151 src/widgets/simplerichtextedit.cpp:489
 #, kde-format
 msgctxt "@action:inmenu Change Text Color"
 msgid "Text Color"
-msgstr ""
+msgstr "文本颜色"
 
 #: src/gui/waveform/waveformwidget.cpp:116
 #, kde-format
 msgid "Generating waveform"
-msgstr ""
+msgstr "正在生成波形图"
 
 #: src/gui/waveform/waveformwidget.cpp:692
 #, kde-format
 msgid "Select Line"
-msgstr ""
+msgstr "选择行"
 
 #: src/gui/waveform/waveformwidget.cpp:707
 #, kde-format
 msgid "Remove Line"
-msgstr ""
+msgstr "移除行"
 
 #: src/gui/waveform/waveformwidget.cpp:732
 #, kde-format
 msgid "Split Line"
-msgstr ""
+msgstr "分割行"
 
 #: src/gui/waveform/waveformwidget.cpp:742
 #, kde-format
 msgid "Set Current Line Show Time"
-msgstr ""
+msgstr "设置当前行显示时间"
 
 #: src/gui/waveform/waveformwidget.cpp:747
 #, kde-format
 msgid "Set Current Line Hide Time"
-msgstr ""
+msgstr "设置当前行消隐时间"
 
 #: src/helpers/languagecode.cpp:407
 #, kde-format
 msgid "Unknown"
-msgstr ""
+msgstr "未知"
 
 #: src/main.cpp:71
 #, kde-format
 msgid "The primary subtitle to be edited."
-msgstr ""
+msgstr "将要编辑的主字幕。"
 
 #: src/main.cpp:76
 #, kde-format
 msgid "The video to be subtitled."
-msgstr ""
+msgstr "将要编辑的视频。"
 
 #: src/main.cpp:81
 #, kde-format
@@ -2997,103 +2997,105 @@ msgid ""
 "If included, a second pane gets added to the right of the primary subtitle "
 "for side-by-side translation."
 msgstr ""
+"将要编辑的译文字幕。\n"
+"如果包含此字幕，程序将在主字幕右侧添加第二个窗格以进行并排翻译。"
 
 #: src/main.cpp:153
 #, kde-format
 msgid "Subtitle Composer"
-msgstr ""
+msgstr "Subtitle Composer"
 
 #: src/main.cpp:155
 #, kde-format
 msgid "A KDE subtitle editor."
-msgstr ""
+msgstr "KDE 字幕编辑器。"
 
 #: src/main.cpp:161
 #, kde-format
 msgid "Maintainer"
-msgstr ""
+msgstr "维护人员"
 
 #: src/main.cpp:162
 #, kde-format
 msgid "Former Maintainer"
-msgstr ""
+msgstr "前任维护人员"
 
 #: src/main.cpp:163
 #, kde-format
 msgid "Patches and Website"
-msgstr ""
+msgstr "补丁与网站"
 
 #: src/main.cpp:165
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
 msgid "Your names"
-msgstr ""
+msgstr "KDE 中国, Monstorix"
 
 #: src/main.cpp:165
 #, kde-format
 msgctxt "EMAIL OF TRANSLATORS"
 msgid "Your emails"
-msgstr ""
+msgstr "kde-china@kde.org, monstorix@outlook.com"
 
 #: src/main.cpp:167
 #, kde-format
 msgid "code contributions"
-msgstr ""
+msgstr "代码贡献者"
 
 #: src/main.cpp:168
 #, kde-format
 msgid "code contributions, Arch Linux packaging"
-msgstr ""
+msgstr "代码贡献者，Arch Linux 打包者"
 
 #: src/main.cpp:170
 #, kde-format
 msgid "All people who have contributed and I have forgotten to mention"
-msgstr ""
+msgstr "所有曾作出贡献而我未能提及的人"
 
 #: src/mainwindow.cpp:37
 #, kde-format
 msgid "Waveform"
-msgstr ""
+msgstr "波形图"
 
 #: src/mainwindow.cpp:51
 #, kde-format
 msgid "Video Player"
-msgstr ""
+msgstr "视频播放器"
 
 #: src/mainwindow.cpp:65
 #, kde-format
 msgid "Styles and Comments"
-msgstr ""
+msgstr "样式和注释"
 
 #. i18n: ectx: label, entry (DefaultSubtitlesEncoding), group (General)
 #: src/scconfig.kcfg:10
 #, kde-format
 msgid "Default Subtitles Encoding"
-msgstr ""
+msgstr "默认字幕编码"
 
 #. i18n: ectx: label, entry (TextLineBreak), group (General)
 #: src/scconfig.kcfg:14
 #, kde-format
 msgid "Line Break Character"
-msgstr ""
+msgstr "断行字符"
 
 #. i18n: ectx: label, entry (SeekOffsetOnDoubleClick), group (General)
 #: src/scconfig.kcfg:18
 #, kde-format
 msgid "Seek Offset On Double Click"
-msgstr ""
+msgstr "双击时的时移偏移量"
 
 #. i18n: ectx: label, entry (JumpLineOffset), group (General)
 #: src/scconfig.kcfg:22
 #, kde-format
 msgid "Jump to prev/next line offset"
-msgstr ""
+msgstr "跳转至前/后一行时的偏移量"
 
 #. i18n: ectx: label, entry (UnpauseOnDoubleClick), group (General)
 #: src/scconfig.kcfg:26
 #, kde-format
 msgid "Unpause On Double Click"
-msgstr ""
+msgstr "双击时取消暂停"
 
 #. i18n: ectx: label, entry (AutomaticVideoLoad), group (General)
 #: src/scconfig.kcfg:30
@@ -3431,33 +3433,33 @@ msgstr ""
 #: src/scripting/scriptsmanager.cpp:158
 #, kde-format
 msgid "Path"
-msgstr ""
+msgstr "路径"
 
 #: src/scripting/scriptsmanager.cpp:373
 #, kde-format
 msgid "Information"
-msgstr ""
+msgstr "信息"
 
 #: src/scripting/scriptsmanager.cpp:379
 #, kde-format
 msgid "Warning"
-msgstr ""
+msgstr "警告"
 
 #: src/scripting/scriptsmanager.cpp:385
 #, kde-format
 msgid "Error"
-msgstr ""
+msgstr "错误"
 
 #. i18n: ectx: property (text), widget (QPushButton, btnEdit)
 #: src/scripting/scriptsmanager.cpp:414 src/scripting/scriptsmanager.ui:71
 #, kde-format
 msgid "Edit"
-msgstr ""
+msgstr "编辑"
 
 #: src/scripting/scriptsmanager.cpp:417
 #, kde-format
 msgid "View"
-msgstr ""
+msgstr "查看"
 
 #: src/scripting/scriptsmanager.cpp:487
 #, kde-format
