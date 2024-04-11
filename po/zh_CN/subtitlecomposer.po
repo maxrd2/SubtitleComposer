@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kdeorg\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-02-26 01:38+0000\n"
-"PO-Revision-Date: 2024-04-09 19:30\n"
+"PO-Revision-Date: 2024-04-10 19:57\n"
 "Last-Translator: \n"
 "Language-Team: Chinese Simplified\n"
 "Language: zh_CN\n"
@@ -3131,91 +3131,91 @@ msgstr "字幕各行间的默认持续时间"
 #: src/scconfig.kcfg:55
 #, kde-format
 msgid "Maximum number of characters"
-msgstr ""
+msgstr "最大字符数"
 
 #. i18n: ectx: label, entry (MaxLines), group (Error Check)
 #: src/scconfig.kcfg:59
 #, kde-format
 msgid "Maximum number of lines"
-msgstr ""
+msgstr "最大行数"
 
 #. i18n: ectx: label, entry (MinDuration), group (Error Check)
 #: src/scconfig.kcfg:64
 #, kde-format
 msgid "Minimum duration"
-msgstr ""
+msgstr "最小持续时长"
 
 #. i18n: ectx: label, entry (MaxDuration), group (Error Check)
 #: src/scconfig.kcfg:68
 #, kde-format
 msgid "Maximum duration"
-msgstr ""
+msgstr "最大持续时长"
 
 #. i18n: ectx: label, entry (MinDurationPerCharacter), group (Error Check)
 #: src/scconfig.kcfg:73
 #, kde-format
 msgid "Minimum duration per character"
-msgstr ""
+msgstr "每个字符的最小持续时长"
 
 #. i18n: ectx: label, entry (IdealDurationPerCharacter), group (Error Check)
 #: src/scconfig.kcfg:77
 #, kde-format
 msgid "Ideal duration per character"
-msgstr ""
+msgstr "每个字符的理想持续时长"
 
 #. i18n: ectx: label, entry (MaxDurationPerCharacter), group (Error Check)
 #: src/scconfig.kcfg:81
 #, kde-format
 msgid "Maximum duration per character"
-msgstr ""
+msgstr "每个字符的最大持续时长"
 
 #. i18n: ectx: label, entry (DefaultLanguage), group (Spelling)
 #: src/scconfig.kcfg:93
 #, kde-format
 msgid "Default Language"
-msgstr ""
+msgstr "默认语言"
 
 #. i18n: ectx: label, entry (DefaultClient), group (Spelling)
 #: src/scconfig.kcfg:97
 #, kde-format
 msgid "Default client"
-msgstr ""
+msgstr "默认客户端"
 
 #. i18n: ectx: label, entry (CheckUppercase), group (Spelling)
 #: src/scconfig.kcfg:101
 #, kde-format
 msgid "Check uppercase"
-msgstr ""
+msgstr "检查大写"
 
 #. i18n: ectx: label, entry (SkipRunTogether), group (Spelling)
 #: src/scconfig.kcfg:105
 #, kde-format
 msgid "Skip Run Together"
-msgstr ""
+msgstr "跳过连词"
 
 #. i18n: ectx: label, entry (wfInnerColor), group (Waveform Widget)
 #: src/scconfig.kcfg:112
 #, kde-format
 msgid "Waveform Inner Color"
-msgstr ""
+msgstr "波形图内侧颜色"
 
 #. i18n: ectx: label, entry (wfOuterColor), group (Waveform Widget)
 #: src/scconfig.kcfg:116
 #, kde-format
 msgid "Waveform Outer Color"
-msgstr ""
+msgstr "波形图外侧颜色"
 
 #. i18n: ectx: label, entry (wfSmoothScroll), group (Waveform Widget)
 #: src/scconfig.kcfg:120
 #, kde-format
 msgid "Waveform Smooth Scrolling"
-msgstr ""
+msgstr "波形图平滑滚动"
 
 #. i18n: ectx: label, entry (wfAutoscrollPadding), group (Waveform Widget)
 #: src/scconfig.kcfg:124
 #, kde-format
 msgid "Autoscroll Padding"
-msgstr ""
+msgstr "自动滚动边距"
 
 #. i18n: ectx: whatsthis, entry (wfAutoscrollPadding), group (Waveform Widget)
 #: src/scconfig.kcfg:126
@@ -3223,7 +3223,7 @@ msgstr ""
 msgid ""
 "Autoscroll page when play position reaches ScrollPadding distance "
 "(percentage) from page border."
-msgstr ""
+msgstr "当播放位置到达页面滚动填充边距（即此处设定的百分比）时，自动滚动页面。"
 
 #. i18n: ectx: label, entry (wfSubBackground), group (Waveform Widget)
 #: src/scconfig.kcfg:129
