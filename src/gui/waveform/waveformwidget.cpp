@@ -689,12 +689,12 @@ WaveformWidget::showContextMenu(QPoint pos)
 		menu = new QMenu(this);
 
 		needCurrentLine.append(
-			menu->addAction(QIcon::fromTheme(QStringLiteral("select")), i18n("Select Line"), [&](){
+			menu->addAction(QIcon::fromTheme(QStringLiteral("select")), i18n("Select Line"), [=](){
 				app->linesWidget()->setCurrentLine(currentLine, true);
 			}));
 		menu->addSeparator();
 		actionManager->addAction(
-			menu->addAction(QIcon::fromTheme(QStringLiteral("list-add")), i18n("Insert Line"), [&](){
+			menu->addAction(QIcon::fromTheme(QStringLiteral("list-add")), i18n("Insert Line"), [=](){
 				const Time timeShow = rightMouseSoonerTime();
 				const Time timeHide = rightMouseLaterTime();
 				SubtitleLine *newLine = new SubtitleLine(timeShow,
@@ -704,14 +704,14 @@ WaveformWidget::showContextMenu(QPoint pos)
 			}),
 			UserAction::SubOpened);
 		needCurrentLine.append(
-			menu->addAction(QIcon::fromTheme(QStringLiteral("list-remove")), i18n("Remove Line"), [&](){
+			menu->addAction(QIcon::fromTheme(QStringLiteral("list-remove")), i18n("Remove Line"), [=](){
 				m_subtitle->removeLines(RangeList(Range(currentLine->index())), SubtitleTarget::Both);
 				if(selectedLine != currentLine)
 					app->linesWidget()->setCurrentLine(selectedLine, true);
 			}));
 		menu->addSeparator();
 		needSubtitle.append(
-			menu->addAction(i18n("Join Lines"), this, [&](){
+			menu->addAction(i18n("Join Lines"), this, [=](){
 				int startIndex = -1, endIndex = -1;
 				const Time startTime = rightMouseSoonerTime();
 				const Time endTime = rightMouseLaterTime();
@@ -729,13 +729,16 @@ WaveformWidget::showContextMenu(QPoint pos)
 			})
 		);
 		needCurrentLine.append(
-			menu->addAction(i18n("Split Line"), this, [&](){
+			menu->addAction(i18n("Split Line"), this, [=](){
 				// TODO: split the line at exact waveform mouse position
 				m_subtitle->splitLines(RangeList(Range(currentLine->index())));
 			}));
 		menu->addSeparator();
 		needCurrentLine.append(
-			menu->addAction(i18n("Toggle Anchor"), this, [&](){ m_subtitle->toggleLineAnchor(currentLine); }));
+			menu->addAction(i18n("Toggle Anchor"), this, [=](){
+				m_subtitle->toggleLineAnchor(currentLine);
+			})
+		);
 		menu->addAction(app->action(ACT_ANCHOR_REMOVE_ALL));
 		menu->addSeparator();
 		actionManager->addAction(
