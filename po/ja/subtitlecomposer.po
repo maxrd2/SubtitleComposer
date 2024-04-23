@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: subtitlecomposer\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-02-26 01:38+0000\n"
+"POT-Creation-Date: 2024-04-23 01:54+0000\n"
 "PO-Revision-Date: 2020-01-05 22:48-0800\n"
 "Last-Translator: Japanese KDE translation team <kde-jp@kde.org>\n"
 "Language-Team: Japanese <kde-jp@kde.org>\n"
@@ -2946,12 +2946,12 @@ msgstr ""
 msgid "Split Line"
 msgstr ""
 
-#: src/gui/waveform/waveformwidget.cpp:742
+#: src/gui/waveform/waveformwidget.cpp:745
 #, kde-format
 msgid "Set Current Line Show Time"
 msgstr ""
 
-#: src/gui/waveform/waveformwidget.cpp:747
+#: src/gui/waveform/waveformwidget.cpp:750
 #, kde-format
 msgid "Set Current Line Hide Time"
 msgstr ""

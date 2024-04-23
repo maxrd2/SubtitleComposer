@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: subtitlecomposer\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-02-26 01:38+0000\n"
+"POT-Creation-Date: 2024-04-23 01:54+0000\n"
 "PO-Revision-Date: 2023-07-02 02:17+0100\n"
 "Last-Translator: Hugo Carvalho <hugokarvalho@hotmail.com>\n"
 "Language-Team: Portuguese\n"
@@ -3032,12 +3032,12 @@ msgstr "Remover a Linha"
 msgid "Split Line"
 msgstr "Dividir a Linha"
 
-#: src/gui/waveform/waveformwidget.cpp:742
+#: src/gui/waveform/waveformwidget.cpp:745
 #, kde-format
 msgid "Set Current Line Show Time"
 msgstr "Definir o Tempo de Apresentação da Linha Actual"
 
-#: src/gui/waveform/waveformwidget.cpp:747
+#: src/gui/waveform/waveformwidget.cpp:750
 #, kde-format
 msgid "Set Current Line Hide Time"
 msgstr "Definir o Tempo de Desaparecimento da Linha Actual"

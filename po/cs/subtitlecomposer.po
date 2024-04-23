@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: subtitlecomposer\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-02-26 01:38+0000\n"
+"POT-Creation-Date: 2024-04-23 01:54+0000\n"
 "PO-Revision-Date: 2024-01-23 10:30+0100\n"
 "Last-Translator: Vit Pelcak <vit@pelcak.org>\n"
 "Language-Team: Czech <kde-i18n-doc@kde.org>\n"
@@ -3007,12 +3007,12 @@ msgstr "Odstranit řádek"
 msgid "Split Line"
 msgstr "Rozdělit řádek"
 
-#: src/gui/waveform/waveformwidget.cpp:742
+#: src/gui/waveform/waveformwidget.cpp:745
 #, kde-format
 msgid "Set Current Line Show Time"
 msgstr "Nastavit řádku čas zobrazení titulku z videa"
 
-#: src/gui/waveform/waveformwidget.cpp:747
+#: src/gui/waveform/waveformwidget.cpp:750
 #, kde-format
 msgid "Set Current Line Hide Time"
 msgstr "Nastavit řádku čas skrytí titulku z videa"
