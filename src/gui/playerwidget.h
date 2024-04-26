@@ -107,7 +107,7 @@ private:
 	QPointer<SubtitleLine> m_prevLine;
 	QPointer<SubtitleLine> m_nextLine;
 
-	const SubtitleLine *m_pauseAfterPlayingLine;
+	QPointer<const SubtitleLine> m_pauseAfterPlayingLine;
 
 	int m_fullScreenTID;
 	bool m_fullScreenMode;

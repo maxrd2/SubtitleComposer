@@ -271,7 +271,11 @@ Subtitle::line(int index) const
 bool
 Subtitle::hasAnchors() const
 {
-	return !m_anchoredLines.empty();
+	for(const SubtitleLine *line: qAsConst(m_anchoredLines)) {
+		if(line && line->index() != -1)
+			return true;
+	}
+	return false;
 }
 
 bool
@@ -320,12 +324,11 @@ Subtitle::toggleLineAnchor(const SubtitleLine *line)
 void
 Subtitle::removeAllAnchors()
 {
-	QList<const SubtitleLine *> anchoredLines;
-
-	m_anchoredLines.swap(anchoredLines);
-
-	foreach(auto line, anchoredLines)
-		emit lineAnchorChanged(line, false);
+	for(const SubtitleLine *line: qAsConst(m_anchoredLines)) {
+		if(line)
+			emit lineAnchorChanged(line, false);
+	}
+	m_anchoredLines.clear();
 }
 
 int

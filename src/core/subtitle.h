@@ -17,11 +17,12 @@
 #include "helpers/objectref.h"
 #include "formatdata.h"
 
-#include <QObject>
-#include <QString>
-#include <QStringList>
 #include <QList>
 #include <QMap>
+#include <QObject>
+#include <QPointer>
+#include <QString>
+#include <QStringList>
 
 QT_FORWARD_DECLARE_CLASS(QUndoCommand)
 QT_FORWARD_DECLARE_CLASS(QTextEdit)
@@ -238,7 +239,7 @@ private:
 
 	double m_framesPerSecond;
 	mutable QVector<ObjectRef<SubtitleLine>> m_lines;
-	QList<const SubtitleLine *> m_anchoredLines;
+	QList<QPointer<const SubtitleLine>> m_anchoredLines;
 
 	QMap<QByteArray, QString> m_metaData;
 
