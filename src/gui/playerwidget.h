@@ -14,6 +14,7 @@
 
 #include <QExplicitlySharedDataPointer>
 #include <QPoint>
+#include <QPointer>
 #include <QWidget>
 
 QT_FORWARD_DECLARE_CLASS(QGridLayout)
@@ -102,9 +103,9 @@ private:
 	QExplicitlySharedDataPointer<Subtitle> m_subtitle;
 	bool m_translationMode;
 	bool m_showTranslation;
-	SubtitleLine *m_playingLine = nullptr;
-	SubtitleLine *m_prevLine = nullptr;
-	SubtitleLine *m_nextLine = nullptr;
+	QPointer<SubtitleLine> m_playingLine;
+	QPointer<SubtitleLine> m_prevLine;
+	QPointer<SubtitleLine> m_nextLine;
 
 	const SubtitleLine *m_pauseAfterPlayingLine;
 
