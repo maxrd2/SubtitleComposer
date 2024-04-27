@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: subtitlecomposer\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-04-23 01:54+0000\n"
+"POT-Creation-Date: 2024-04-27 01:37+0000\n"
 "PO-Revision-Date: 2022-09-17 08:49+0200\n"
 "Last-Translator: Mincho Kondarev <mkondarev@yahoo.de>\n"
 "Language-Team: Bulgarian <kde-i18n-doc@kde.org>\n"
@@ -50,17 +50,17 @@ msgstr "Отиване на реплика"
 msgid "&Go to line:"
 msgstr "&Отиване на реплика:"
 
-#: src/application.cpp:670 src/core/subtitle.cpp:878
+#: src/application.cpp:670 src/core/subtitle.cpp:881
 #, kde-format
 msgid "Maximize Durations"
 msgstr "Максимизиране на продължителност"
 
-#: src/application.cpp:698 src/core/subtitle.cpp:1153
+#: src/application.cpp:698 src/core/subtitle.cpp:1156
 #, kde-format
 msgid "Unbreak Lines"
 msgstr "Събиране редовете на репликите"
 
-#: src/application.cpp:709 src/core/subtitle.cpp:1162
+#: src/application.cpp:709 src/core/subtitle.cpp:1165
 #, kde-format
 msgid "Simplify Spaces"
 msgstr "Опростяване на интервалите"
@@ -313,7 +313,7 @@ msgstr "Премахване"
 msgid "Remove selected lines"
 msgstr "Премахване на избрани реплики"
 
-#: src/application_actions.cpp:213 src/core/subtitle.cpp:560
+#: src/application_actions.cpp:213 src/core/subtitle.cpp:563
 #, kde-format
 msgid "Split Lines"
 msgstr "Обособяване на реплики"
@@ -323,7 +323,7 @@ msgstr "Обособяване на реплики"
 msgid "Split selected lines"
 msgstr "Обособяване на избрани реплики"
 
-#: src/application_actions.cpp:220 src/core/subtitle.cpp:642
+#: src/application_actions.cpp:220 src/core/subtitle.cpp:645
 #: src/gui/waveform/waveformwidget.cpp:714
 #, kde-format
 msgid "Join Lines"
@@ -1713,124 +1713,124 @@ msgstr "Изчистване на вторични текстови данни "
 msgid "Change Frame Rate"
 msgstr "Промяна на кадри в секунда"
 
-#: src/core/subtitle.cpp:401 src/core/subtitle.cpp:415
+#: src/core/subtitle.cpp:404 src/core/subtitle.cpp:418
 #: src/gui/waveform/waveformwidget.cpp:697
 #, kde-format
 msgid "Insert Line"
 msgstr "Вмъкване на реплика"
 
-#: src/core/subtitle.cpp:448 src/core/subtitle.cpp:458
-#: src/core/subtitle.cpp:475 src/core/undo/subtitleactions.cpp:122
+#: src/core/subtitle.cpp:451 src/core/subtitle.cpp:461
+#: src/core/subtitle.cpp:478 src/core/undo/subtitleactions.cpp:122
 #, kde-format
 msgid "Remove Lines"
 msgstr "Премахване на реплики "
 
-#: src/core/subtitle.cpp:740
+#: src/core/subtitle.cpp:743
 #, kde-format
 msgid "Shift Lines"
 msgstr "Преместване на реплики"
 
-#: src/core/subtitle.cpp:796
+#: src/core/subtitle.cpp:799
 #, kde-format
 msgid "Adjust Lines"
 msgstr "Нагаждане на реплики"
 
-#: src/core/subtitle.cpp:807
+#: src/core/subtitle.cpp:810
 #, kde-format
 msgid "Sort"
 msgstr "Сортиране"
 
-#: src/core/subtitle.cpp:839 src/dialogs/durationlimitsdialog.cpp:18
+#: src/core/subtitle.cpp:842 src/dialogs/durationlimitsdialog.cpp:18
 #, kde-format
 msgid "Enforce Duration Limits"
 msgstr "Налагане на лимит за продължителност"
 
-#: src/core/subtitle.cpp:901 src/dialogs/autodurationsdialog.cpp:21
+#: src/core/subtitle.cpp:904 src/dialogs/autodurationsdialog.cpp:21
 #, kde-format
 msgid "Set Automatic Durations"
 msgstr "Задаване на автоматична продължителност"
 
-#: src/core/subtitle.cpp:934 src/dialogs/fixoverlappingtimesdialog.cpp:18
+#: src/core/subtitle.cpp:937 src/dialogs/fixoverlappingtimesdialog.cpp:18
 #, kde-format
 msgid "Fix Overlapping Times"
 msgstr "Поправяне на презастъпващи се времена"
 
-#: src/core/subtitle.cpp:965
+#: src/core/subtitle.cpp:968
 #, kde-format
 msgid "Fix Lines Punctuation"
 msgstr "Поправяне на пунктуация в репликите"
 
-#: src/core/subtitle.cpp:1007
+#: src/core/subtitle.cpp:1010
 #, kde-format
 msgid "Lower Case"
 msgstr "Малки букви"
 
-#: src/core/subtitle.cpp:1037
+#: src/core/subtitle.cpp:1040
 #, kde-format
 msgid "Upper Case"
 msgstr "Големи букви"
 
-#: src/core/subtitle.cpp:1067
+#: src/core/subtitle.cpp:1070
 #, kde-format
 msgid "Title Case"
 msgstr "Заглавни букви"
 
-#: src/core/subtitle.cpp:1100
+#: src/core/subtitle.cpp:1103
 #, kde-format
 msgid "Sentence Case"
 msgstr "Изречение"
 
-#: src/core/subtitle.cpp:1144 src/dialogs/smarttextsadjustdialog.cpp:18
+#: src/core/subtitle.cpp:1147 src/dialogs/smarttextsadjustdialog.cpp:18
 #, kde-format
 msgid "Break Lines"
 msgstr "Нов ред в репликите"
 
-#: src/core/subtitle.cpp:1171
+#: src/core/subtitle.cpp:1174
 #, kde-format
 msgid "Synchronize Subtitles"
 msgstr "Синхронизиране на субтитри"
 
-#: src/core/subtitle.cpp:1196 src/dialogs/joinsubtitlesdialog.cpp:24
+#: src/core/subtitle.cpp:1199 src/dialogs/joinsubtitlesdialog.cpp:24
 #, kde-format
 msgid "Join Subtitles"
 msgstr "Присъединяване на субтитри"
 
-#: src/core/subtitle.cpp:1241 src/core/subtitle.cpp:1247
+#: src/core/subtitle.cpp:1244 src/core/subtitle.cpp:1250
 #, kde-format
 msgid "Split Subtitles"
 msgstr "Разделяне на субтитри"
 
-#: src/core/subtitle.cpp:1266
+#: src/core/subtitle.cpp:1269
 #, kde-format
 msgid "Toggle Lines Style"
 msgstr "Включване стила на репликите"
 
-#: src/core/subtitle.cpp:1310
+#: src/core/subtitle.cpp:1313
 #, kde-format
 msgid "Change Lines Text Color"
 msgstr "Промяна на цвета на репликите"
 
-#: src/core/subtitle.cpp:1330
+#: src/core/subtitle.cpp:1333
 #, kde-format
 msgid "Set Lines Mark"
 msgstr "Задаване маркировка на репликите"
 
-#: src/core/subtitle.cpp:1330
+#: src/core/subtitle.cpp:1333
 #, kde-format
 msgid "Clear Lines Mark"
 msgstr "Изчистване маркировка на репликите"
 
-#: src/core/subtitle.cpp:1345
+#: src/core/subtitle.cpp:1348
 #, kde-format
 msgid "Toggle Lines Mark"
 msgstr "Включване маркировка на репликите"
 
-#: src/core/subtitle.cpp:1355
+#: src/core/subtitle.cpp:1358
 #, fuzzy, kde-format
 msgid "Clear Line Errors"
 msgstr "Изчистване грешки на репликите"
 
-#: src/core/subtitle.cpp:1366 src/core/subtitle.cpp:1377
+#: src/core/subtitle.cpp:1369 src/core/subtitle.cpp:1380
 #: src/errors/errorfinder.cpp:84
 #, kde-format
 msgid "Check Lines Errors"

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: subtitlecomposer\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-04-23 01:54+0000\n"
+"POT-Creation-Date: 2024-04-27 01:37+0000\n"
 "PO-Revision-Date: 2024-02-29 03:24+0100\n"
 "Last-Translator: Temuri Doghonadze <temuri.doghonadze@gmail.com>\n"
 "Language-Team: Georgian <kde-i18n-doc@kde.org>\n"
@@ -46,17 +46,17 @@ msgstr "ხაზზე გადასვლა"
 msgid "&Go to line:"
 msgstr "&ხაზზე გადასვლა:"
 
-#: src/application.cpp:670 src/core/subtitle.cpp:878
+#: src/application.cpp:670 src/core/subtitle.cpp:881
 #, kde-format
 msgid "Maximize Durations"
 msgstr "ხანგრძლივობების მაქსიმიზაცია"
 
-#: src/application.cpp:698 src/core/subtitle.cpp:1153
+#: src/application.cpp:698 src/core/subtitle.cpp:1156
 #, kde-format
 msgid "Unbreak Lines"
 msgstr "გატეხილი ხაზების შეერთება"
 
-#: src/application.cpp:709 src/core/subtitle.cpp:1162
+#: src/application.cpp:709 src/core/subtitle.cpp:1165
 #, kde-format
 msgid "Simplify Spaces"
 msgstr "გამოტოვებების გამარტივება"
@@ -309,7 +309,7 @@ msgstr "წაშლა"
 msgid "Remove selected lines"
 msgstr "მონიშნული ხაზების წაშლა"
 
-#: src/application_actions.cpp:213 src/core/subtitle.cpp:560
+#: src/application_actions.cpp:213 src/core/subtitle.cpp:563
 #, kde-format
 msgid "Split Lines"
 msgstr "ხაზების დაყოფა"
@@ -319,7 +319,7 @@ msgstr "ხაზების დაყოფა"
 msgid "Split selected lines"
 msgstr "მონიშნული ხაზების დაყოფა"
 
-#: src/application_actions.cpp:220 src/core/subtitle.cpp:642
+#: src/application_actions.cpp:220 src/core/subtitle.cpp:645
 #: src/gui/waveform/waveformwidget.cpp:714
 #, kde-format
 msgid "Join Lines"
@@ -1678,124 +1678,124 @@ msgstr "დამხმარე ტექსტის მონაცემე�
 msgid "Change Frame Rate"
 msgstr "კადრების სიხშირის შეცვლა"
 
-#: src/core/subtitle.cpp:401 src/core/subtitle.cpp:415
+#: src/core/subtitle.cpp:404 src/core/subtitle.cpp:418
 #: src/gui/waveform/waveformwidget.cpp:697
 #, kde-format
 msgid "Insert Line"
 msgstr "ხაზის ჩასმა"
 
-#: src/core/subtitle.cpp:448 src/core/subtitle.cpp:458
-#: src/core/subtitle.cpp:475 src/core/undo/subtitleactions.cpp:122
+#: src/core/subtitle.cpp:451 src/core/subtitle.cpp:461
+#: src/core/subtitle.cpp:478 src/core/undo/subtitleactions.cpp:122
 #, kde-format
 msgid "Remove Lines"
 msgstr "ხაზების წაშლა"
 
-#: src/core/subtitle.cpp:740
+#: src/core/subtitle.cpp:743
 #, kde-format
 msgid "Shift Lines"
 msgstr "ხაზების წანაცვლება"
 
-#: src/core/subtitle.cpp:796
+#: src/core/subtitle.cpp:799
 #, kde-format
 msgid "Adjust Lines"
 msgstr "ხაზების მორგება"
 
-#: src/core/subtitle.cpp:807
+#: src/core/subtitle.cpp:810
 #, kde-format
 msgid "Sort"
 msgstr "დალაგება"
 
-#: src/core/subtitle.cpp:839 src/dialogs/durationlimitsdialog.cpp:18
+#: src/core/subtitle.cpp:842 src/dialogs/durationlimitsdialog.cpp:18
 #, kde-format
 msgid "Enforce Duration Limits"
 msgstr "ხანგრძლივობის ლიმიტების შეზღუდვა"
 
-#: src/core/subtitle.cpp:901 src/dialogs/autodurationsdialog.cpp:21
+#: src/core/subtitle.cpp:904 src/dialogs/autodurationsdialog.cpp:21
 #, kde-format
 msgid "Set Automatic Durations"
 msgstr "ავტომატური ხანგრძლივობების დაყენება"
 
-#: src/core/subtitle.cpp:934 src/dialogs/fixoverlappingtimesdialog.cpp:18
+#: src/core/subtitle.cpp:937 src/dialogs/fixoverlappingtimesdialog.cpp:18
 #, kde-format
 msgid "Fix Overlapping Times"
 msgstr "გადაფარვის დროების გასწორება"
 
-#: src/core/subtitle.cpp:965
+#: src/core/subtitle.cpp:968
 #, kde-format
 msgid "Fix Lines Punctuation"
 msgstr "ხაზების პუნქტუაციის გასწორება"
 
-#: src/core/subtitle.cpp:1007
+#: src/core/subtitle.cpp:1010
 #, kde-format
 msgid "Lower Case"
 msgstr "ქვედა რეგისტრი"
 
-#: src/core/subtitle.cpp:1037
+#: src/core/subtitle.cpp:1040
 #, kde-format
 msgid "Upper Case"
 msgstr "მაღალი რეგისტრი"
 
-#: src/core/subtitle.cpp:1067
+#: src/core/subtitle.cpp:1070
 #, kde-format
 msgid "Title Case"
 msgstr "სათაურის რეგისტრი"
 
-#: src/core/subtitle.cpp:1100
+#: src/core/subtitle.cpp:1103
 #, kde-format
 msgid "Sentence Case"
 msgstr "წინადადების რეგისტრი"
 
-#: src/core/subtitle.cpp:1144 src/dialogs/smarttextsadjustdialog.cpp:18
+#: src/core/subtitle.cpp:1147 src/dialogs/smarttextsadjustdialog.cpp:18
 #, kde-format
 msgid "Break Lines"
 msgstr "ხაზების გატეხვა"
 
-#: src/core/subtitle.cpp:1171
+#: src/core/subtitle.cpp:1174
 #, kde-format
 msgid "Synchronize Subtitles"
 msgstr "სუბტიტრების სინქრონიზაცია"
 
-#: src/core/subtitle.cpp:1196 src/dialogs/joinsubtitlesdialog.cpp:24
+#: src/core/subtitle.cpp:1199 src/dialogs/joinsubtitlesdialog.cpp:24
 #, kde-format
 msgid "Join Subtitles"
 msgstr "სუბტიტრების შეერთება"
 
-#: src/core/subtitle.cpp:1241 src/core/subtitle.cpp:1247
+#: src/core/subtitle.cpp:1244 src/core/subtitle.cpp:1250
 #, kde-format
 msgid "Split Subtitles"
 msgstr "სუბტიტრების გაყოფა"
 
-#: src/core/subtitle.cpp:1266
+#: src/core/subtitle.cpp:1269
 #, kde-format
 msgid "Toggle Lines Style"
 msgstr "ხაზების სტილის გადართვა"
 
-#: src/core/subtitle.cpp:1310
+#: src/core/subtitle.cpp:1313
 #, kde-format
 msgid "Change Lines Text Color"
 msgstr "ხაზების ტექსტის ფერის შეცვლა"
 
-#: src/core/subtitle.cpp:1330
+#: src/core/subtitle.cpp:1333
 #, kde-format
 msgid "Set Lines Mark"
 msgstr "ხაზის სანიშნის დაყენება"
 
-#: src/core/subtitle.cpp:1330
+#: src/core/subtitle.cpp:1333
 #, kde-format
 msgid "Clear Lines Mark"
 msgstr "ხაზის სანიშნის გასუფავება"
 
-#: src/core/subtitle.cpp:1345
+#: src/core/subtitle.cpp:1348
 #, kde-format
 msgid "Toggle Lines Mark"
 msgstr "ხაზს სანიშნის გადართვა"
 
-#: src/core/subtitle.cpp:1355
+#: src/core/subtitle.cpp:1358
 #, kde-format
 msgid "Clear Line Errors"
 msgstr "ხაზის შეცდომების გასუფთავება"
 
-#: src/core/subtitle.cpp:1366 src/core/subtitle.cpp:1377
+#: src/core/subtitle.cpp:1369 src/core/subtitle.cpp:1380
 #: src/errors/errorfinder.cpp:84
 #, kde-format
 msgid "Check Lines Errors"

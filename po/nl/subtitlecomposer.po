@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: subtitlecomposer\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-04-23 01:54+0000\n"
+"POT-Creation-Date: 2024-04-27 01:37+0000\n"
 "PO-Revision-Date: 2024-02-21 12:26+0100\n"
 "Last-Translator: Freek de Kruijf <freekdekruijf@kde.nl>\n"
 "Language-Team: \n"
@@ -45,17 +45,17 @@ msgstr "Ga naar regel"
 msgid "&Go to line:"
 msgstr "&Ga naar regel:"
 
-#: src/application.cpp:670 src/core/subtitle.cpp:878
+#: src/application.cpp:670 src/core/subtitle.cpp:881
 #, kde-format
 msgid "Maximize Durations"
 msgstr "Tijdsduren maximaliseren"
 
-#: src/application.cpp:698 src/core/subtitle.cpp:1153
+#: src/application.cpp:698 src/core/subtitle.cpp:1156
 #, kde-format
 msgid "Unbreak Lines"
 msgstr "Afbreken van regels ongedaan maken"
 
-#: src/application.cpp:709 src/core/subtitle.cpp:1162
+#: src/application.cpp:709 src/core/subtitle.cpp:1165
 #, kde-format
 msgid "Simplify Spaces"
 msgstr "Spaties vereenvoudigen"
@@ -308,7 +308,7 @@ msgstr "Verwijderen"
 msgid "Remove selected lines"
 msgstr "Geselecteerde regels verwijderen"
 
-#: src/application_actions.cpp:213 src/core/subtitle.cpp:560
+#: src/application_actions.cpp:213 src/core/subtitle.cpp:563
 #, kde-format
 msgid "Split Lines"
 msgstr "Regels splitsen"
@@ -318,7 +318,7 @@ msgstr "Regels splitsen"
 msgid "Split selected lines"
 msgstr "Geselecteerde regels splitsen"
 
-#: src/application_actions.cpp:220 src/core/subtitle.cpp:642
+#: src/application_actions.cpp:220 src/core/subtitle.cpp:645
 #: src/gui/waveform/waveformwidget.cpp:714
 #, kde-format
 msgid "Join Lines"
@@ -1708,124 +1708,124 @@ msgstr "Secundaire tekstgegevens wissen"
 msgid "Change Frame Rate"
 msgstr "Framesnelheid wijzigen"
 
-#: src/core/subtitle.cpp:401 src/core/subtitle.cpp:415
+#: src/core/subtitle.cpp:404 src/core/subtitle.cpp:418
 #: src/gui/waveform/waveformwidget.cpp:697
 #, kde-format
 msgid "Insert Line"
 msgstr "Regel invoegen"
 
-#: src/core/subtitle.cpp:448 src/core/subtitle.cpp:458
-#: src/core/subtitle.cpp:475 src/core/undo/subtitleactions.cpp:122
+#: src/core/subtitle.cpp:451 src/core/subtitle.cpp:461
+#: src/core/subtitle.cpp:478 src/core/undo/subtitleactions.cpp:122
 #, kde-format
 msgid "Remove Lines"
 msgstr "Regels verwijderen"
 
-#: src/core/subtitle.cpp:740
+#: src/core/subtitle.cpp:743
 #, kde-format
 msgid "Shift Lines"
 msgstr "Regels verschuiven"
 
-#: src/core/subtitle.cpp:796
+#: src/core/subtitle.cpp:799
 #, kde-format
 msgid "Adjust Lines"
 msgstr "Regels bijstellen"
 
-#: src/core/subtitle.cpp:807
+#: src/core/subtitle.cpp:810
 #, kde-format
 msgid "Sort"
 msgstr "Sorteren"
 
-#: src/core/subtitle.cpp:839 src/dialogs/durationlimitsdialog.cpp:18
+#: src/core/subtitle.cpp:842 src/dialogs/durationlimitsdialog.cpp:18
 #, kde-format
 msgid "Enforce Duration Limits"
 msgstr "Tijdsduurlimieten afdwingen"
 
-#: src/core/subtitle.cpp:901 src/dialogs/autodurationsdialog.cpp:21
+#: src/core/subtitle.cpp:904 src/dialogs/autodurationsdialog.cpp:21
 #, kde-format
 msgid "Set Automatic Durations"
 msgstr "Automatische tijdsduren instellen"
 
-#: src/core/subtitle.cpp:934 src/dialogs/fixoverlappingtimesdialog.cpp:18
+#: src/core/subtitle.cpp:937 src/dialogs/fixoverlappingtimesdialog.cpp:18
 #, kde-format
 msgid "Fix Overlapping Times"
 msgstr "Overlappend tijden repareren"
 
-#: src/core/subtitle.cpp:965
+#: src/core/subtitle.cpp:968
 #, kde-format
 msgid "Fix Lines Punctuation"
 msgstr "Regelpunctuatie repareren"
 
-#: src/core/subtitle.cpp:1007
+#: src/core/subtitle.cpp:1010
 #, kde-format
 msgid "Lower Case"
 msgstr "Kleine letters"
 
-#: src/core/subtitle.cpp:1037
+#: src/core/subtitle.cpp:1040
 #, kde-format
 msgid "Upper Case"
 msgstr "Hoofdletters"
 
-#: src/core/subtitle.cpp:1067
+#: src/core/subtitle.cpp:1070
 #, kde-format
 msgid "Title Case"
 msgstr "Hoofd-/kleine letters van titel"
 
-#: src/core/subtitle.cpp:1100
+#: src/core/subtitle.cpp:1103
 #, kde-format
 msgid "Sentence Case"
 msgstr "Hoofd-/kleine letters van zin"
 
-#: src/core/subtitle.cpp:1144 src/dialogs/smarttextsadjustdialog.cpp:18
+#: src/core/subtitle.cpp:1147 src/dialogs/smarttextsadjustdialog.cpp:18
 #, kde-format
 msgid "Break Lines"
 msgstr "Regels afbreken"
 
-#: src/core/subtitle.cpp:1171
+#: src/core/subtitle.cpp:1174
 #, kde-format
 msgid "Synchronize Subtitles"
 msgstr "Ondertitels synchroniseren"
 
-#: src/core/subtitle.cpp:1196 src/dialogs/joinsubtitlesdialog.cpp:24
+#: src/core/subtitle.cpp:1199 src/dialogs/joinsubtitlesdialog.cpp:24
 #, kde-format
 msgid "Join Subtitles"
 msgstr "Ondertitels samenvoegen"
 
-#: src/core/subtitle.cpp:1241 src/core/subtitle.cpp:1247
+#: src/core/subtitle.cpp:1244 src/core/subtitle.cpp:1250
 #, kde-format
 msgid "Split Subtitles"
 msgstr "Ondertitels splitsen"
 
-#: src/core/subtitle.cpp:1266
+#: src/core/subtitle.cpp:1269
 #, kde-format
 msgid "Toggle Lines Style"
 msgstr "Regelstijl omschakelen"
 
-#: src/core/subtitle.cpp:1310
+#: src/core/subtitle.cpp:1313
 #, kde-format
 msgid "Change Lines Text Color"
 msgstr "Tekstkleur van regel wijzigen"
 
-#: src/core/subtitle.cpp:1330
+#: src/core/subtitle.cpp:1333
 #, kde-format
 msgid "Set Lines Mark"
 msgstr "Regelmarkeringen instellen"
 
-#: src/core/subtitle.cpp:1330
+#: src/core/subtitle.cpp:1333
 #, kde-format
 msgid "Clear Lines Mark"
 msgstr "Markering in regels wissen"
 
-#: src/core/subtitle.cpp:1345
+#: src/core/subtitle.cpp:1348
 #, kde-format
 msgid "Toggle Lines Mark"
 msgstr "Markering in regels omschakelen"
 
-#: src/core/subtitle.cpp:1355
+#: src/core/subtitle.cpp:1358
 #, kde-format
 msgid "Clear Line Errors"
 msgstr "Regelfouten wissen"
 
-#: src/core/subtitle.cpp:1366 src/core/subtitle.cpp:1377
+#: src/core/subtitle.cpp:1369 src/core/subtitle.cpp:1380
 #: src/errors/errorfinder.cpp:84
 #, kde-format
 msgid "Check Lines Errors"

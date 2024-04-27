@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kdeorg\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-04-23 01:54+0000\n"
+"POT-Creation-Date: 2024-04-27 01:37+0000\n"
 "PO-Revision-Date: 2024-04-22 16:05\n"
 "Last-Translator: \n"
 "Language-Team: Chinese Simplified\n"
@@ -45,17 +45,17 @@ msgstr "转到行"
 msgid "&Go to line:"
 msgstr "转到行(&G)："
 
-#: src/application.cpp:670 src/core/subtitle.cpp:878
+#: src/application.cpp:670 src/core/subtitle.cpp:881
 #, kde-format
 msgid "Maximize Durations"
 msgstr "最大化持续时长"
 
-#: src/application.cpp:698 src/core/subtitle.cpp:1153
+#: src/application.cpp:698 src/core/subtitle.cpp:1156
 #, kde-format
 msgid "Unbreak Lines"
 msgstr "取消断行"
 
-#: src/application.cpp:709 src/core/subtitle.cpp:1162
+#: src/application.cpp:709 src/core/subtitle.cpp:1165
 #, kde-format
 msgid "Simplify Spaces"
 msgstr "简化空格"
@@ -304,7 +304,7 @@ msgstr "移除"
 msgid "Remove selected lines"
 msgstr "移除选定的行"
 
-#: src/application_actions.cpp:213 src/core/subtitle.cpp:560
+#: src/application_actions.cpp:213 src/core/subtitle.cpp:563
 #, kde-format
 msgid "Split Lines"
 msgstr "分割行"
@@ -314,7 +314,7 @@ msgstr "分割行"
 msgid "Split selected lines"
 msgstr "分割选中的行"
 
-#: src/application_actions.cpp:220 src/core/subtitle.cpp:642
+#: src/application_actions.cpp:220 src/core/subtitle.cpp:645
 #: src/gui/waveform/waveformwidget.cpp:714
 #, kde-format
 msgid "Join Lines"
@@ -1687,124 +1687,124 @@ msgstr "清理次级文本数据"
 msgid "Change Frame Rate"
 msgstr "更改帧率"
 
-#: src/core/subtitle.cpp:401 src/core/subtitle.cpp:415
+#: src/core/subtitle.cpp:404 src/core/subtitle.cpp:418
 #: src/gui/waveform/waveformwidget.cpp:697
 #, kde-format
 msgid "Insert Line"
 msgstr "插入行"
 
-#: src/core/subtitle.cpp:448 src/core/subtitle.cpp:458
-#: src/core/subtitle.cpp:475 src/core/undo/subtitleactions.cpp:122
+#: src/core/subtitle.cpp:451 src/core/subtitle.cpp:461
+#: src/core/subtitle.cpp:478 src/core/undo/subtitleactions.cpp:122
 #, kde-format
 msgid "Remove Lines"
 msgstr "移除行"
 
-#: src/core/subtitle.cpp:740
+#: src/core/subtitle.cpp:743
 #, kde-format
 msgid "Shift Lines"
 msgstr "移动行"
 
-#: src/core/subtitle.cpp:796
+#: src/core/subtitle.cpp:799
 #, kde-format
 msgid "Adjust Lines"
 msgstr "调整行"
 
-#: src/core/subtitle.cpp:807
+#: src/core/subtitle.cpp:810
 #, kde-format
 msgid "Sort"
 msgstr "排序"
 
-#: src/core/subtitle.cpp:839 src/dialogs/durationlimitsdialog.cpp:18
+#: src/core/subtitle.cpp:842 src/dialogs/durationlimitsdialog.cpp:18
 #, kde-format
 msgid "Enforce Duration Limits"
 msgstr "强制执行持续时长限制"
 
-#: src/core/subtitle.cpp:901 src/dialogs/autodurationsdialog.cpp:21
+#: src/core/subtitle.cpp:904 src/dialogs/autodurationsdialog.cpp:21
 #, kde-format
 msgid "Set Automatic Durations"
 msgstr "设置自动持续时长"
 
-#: src/core/subtitle.cpp:934 src/dialogs/fixoverlappingtimesdialog.cpp:18
+#: src/core/subtitle.cpp:937 src/dialogs/fixoverlappingtimesdialog.cpp:18
 #, kde-format
 msgid "Fix Overlapping Times"
 msgstr "修复时值重叠"
 
-#: src/core/subtitle.cpp:965
+#: src/core/subtitle.cpp:968
 #, kde-format
 msgid "Fix Lines Punctuation"
 msgstr "修复字幕行标点"
 
-#: src/core/subtitle.cpp:1007
+#: src/core/subtitle.cpp:1010
 #, kde-format
 msgid "Lower Case"
 msgstr "小写"
 
-#: src/core/subtitle.cpp:1037
+#: src/core/subtitle.cpp:1040
 #, kde-format
 msgid "Upper Case"
 msgstr "大写"
 
-#: src/core/subtitle.cpp:1067
+#: src/core/subtitle.cpp:1070
 #, kde-format
 msgid "Title Case"
 msgstr "标题大小写"
 
-#: src/core/subtitle.cpp:1100
+#: src/core/subtitle.cpp:1103
 #, kde-format
 msgid "Sentence Case"
 msgstr "句首大写"
 
-#: src/core/subtitle.cpp:1144 src/dialogs/smarttextsadjustdialog.cpp:18
+#: src/core/subtitle.cpp:1147 src/dialogs/smarttextsadjustdialog.cpp:18
 #, kde-format
 msgid "Break Lines"
 msgstr "断开行"
 
-#: src/core/subtitle.cpp:1171
+#: src/core/subtitle.cpp:1174
 #, kde-format
 msgid "Synchronize Subtitles"
 msgstr "同步字幕"
 
-#: src/core/subtitle.cpp:1196 src/dialogs/joinsubtitlesdialog.cpp:24
+#: src/core/subtitle.cpp:1199 src/dialogs/joinsubtitlesdialog.cpp:24
 #, kde-format
 msgid "Join Subtitles"
 msgstr "拼接字幕"
 
-#: src/core/subtitle.cpp:1241 src/core/subtitle.cpp:1247
+#: src/core/subtitle.cpp:1244 src/core/subtitle.cpp:1250
 #, kde-format
 msgid "Split Subtitles"
 msgstr "分割字幕"
 
-#: src/core/subtitle.cpp:1266
+#: src/core/subtitle.cpp:1269
 #, kde-format
 msgid "Toggle Lines Style"
 msgstr "切换字幕行样式"
 
-#: src/core/subtitle.cpp:1310
+#: src/core/subtitle.cpp:1313
 #, kde-format
 msgid "Change Lines Text Color"
 msgstr "更改字幕行文本颜色"
 
-#: src/core/subtitle.cpp:1330
+#: src/core/subtitle.cpp:1333
 #, kde-format
 msgid "Set Lines Mark"
 msgstr "设置字幕行标注"
 
-#: src/core/subtitle.cpp:1330
+#: src/core/subtitle.cpp:1333
 #, kde-format
 msgid "Clear Lines Mark"
 msgstr "清除字幕行标注"
 
-#: src/core/subtitle.cpp:1345
+#: src/core/subtitle.cpp:1348
 #, kde-format
 msgid "Toggle Lines Mark"
 msgstr "切换字幕行标注"
 
-#: src/core/subtitle.cpp:1355
+#: src/core/subtitle.cpp:1358
 #, kde-format
 msgid "Clear Line Errors"
 msgstr "清除字幕行错误"
 
-#: src/core/subtitle.cpp:1366 src/core/subtitle.cpp:1377
+#: src/core/subtitle.cpp:1369 src/core/subtitle.cpp:1380
 #: src/errors/errorfinder.cpp:84
 #, kde-format
 msgid "Check Lines Errors"

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: subtitlecomposer\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-04-23 01:54+0000\n"
+"POT-Creation-Date: 2024-04-27 01:37+0000\n"
 "PO-Revision-Date: 2024-02-21 06:44+0100\n"
 "Last-Translator: Matjaž Jeran <matjaz.jeran@amis.net>\n"
 "Language-Team: Slovenian <lugos-slo@lugos.si>\n"
@@ -48,17 +48,17 @@ msgstr "Pojdi na vrstico"
 msgid "&Go to line:"
 msgstr "Pojdi na vrstico:"
 
-#: src/application.cpp:670 src/core/subtitle.cpp:878
+#: src/application.cpp:670 src/core/subtitle.cpp:881
 #, kde-format
 msgid "Maximize Durations"
 msgstr "Maksimiziraj trajanja"
 
-#: src/application.cpp:698 src/core/subtitle.cpp:1153
+#: src/application.cpp:698 src/core/subtitle.cpp:1156
 #, kde-format
 msgid "Unbreak Lines"
 msgstr "Strni vrstice"
 
-#: src/application.cpp:709 src/core/subtitle.cpp:1162
+#: src/application.cpp:709 src/core/subtitle.cpp:1165
 #, kde-format
 msgid "Simplify Spaces"
 msgstr "Poenostavi presledke"
@@ -319,7 +319,7 @@ msgstr "Odstrani"
 msgid "Remove selected lines"
 msgstr "Odstrani izbrane vrstice"
 
-#: src/application_actions.cpp:213 src/core/subtitle.cpp:560
+#: src/application_actions.cpp:213 src/core/subtitle.cpp:563
 #, kde-format
 msgid "Split Lines"
 msgstr "Razcepi vrstice"
@@ -329,7 +329,7 @@ msgstr "Razcepi vrstice"
 msgid "Split selected lines"
 msgstr "Razcepi izbrane vrstice"
 
-#: src/application_actions.cpp:220 src/core/subtitle.cpp:642
+#: src/application_actions.cpp:220 src/core/subtitle.cpp:645
 #: src/gui/waveform/waveformwidget.cpp:714
 #, kde-format
 msgid "Join Lines"
@@ -1708,124 +1708,124 @@ msgstr "Očisti podatke sekundarnega besedila"
 msgid "Change Frame Rate"
 msgstr "Sprememba hitrosti predvajanja"
 
-#: src/core/subtitle.cpp:401 src/core/subtitle.cpp:415
+#: src/core/subtitle.cpp:404 src/core/subtitle.cpp:418
 #: src/gui/waveform/waveformwidget.cpp:697
 #, kde-format
 msgid "Insert Line"
 msgstr "Vstavi vrstico"
 
-#: src/core/subtitle.cpp:448 src/core/subtitle.cpp:458
-#: src/core/subtitle.cpp:475 src/core/undo/subtitleactions.cpp:122
+#: src/core/subtitle.cpp:451 src/core/subtitle.cpp:461
+#: src/core/subtitle.cpp:478 src/core/undo/subtitleactions.cpp:122
 #, kde-format
 msgid "Remove Lines"
 msgstr "Odstrani vrstico"
 
-#: src/core/subtitle.cpp:740
+#: src/core/subtitle.cpp:743
 #, kde-format
 msgid "Shift Lines"
 msgstr "Premakni vrstice"
 
-#: src/core/subtitle.cpp:796
+#: src/core/subtitle.cpp:799
 #, kde-format
 msgid "Adjust Lines"
 msgstr "Prilagodi vrstice"
 
-#: src/core/subtitle.cpp:807
+#: src/core/subtitle.cpp:810
 #, kde-format
 msgid "Sort"
 msgstr "Razvrsti"
 
-#: src/core/subtitle.cpp:839 src/dialogs/durationlimitsdialog.cpp:18
+#: src/core/subtitle.cpp:842 src/dialogs/durationlimitsdialog.cpp:18
 #, kde-format
 msgid "Enforce Duration Limits"
 msgstr "Uveljavi omejitve trajanja"
 
-#: src/core/subtitle.cpp:901 src/dialogs/autodurationsdialog.cpp:21
+#: src/core/subtitle.cpp:904 src/dialogs/autodurationsdialog.cpp:21
 #, kde-format
 msgid "Set Automatic Durations"
 msgstr "Nastavi samodejna trajanja"
 
-#: src/core/subtitle.cpp:934 src/dialogs/fixoverlappingtimesdialog.cpp:18
+#: src/core/subtitle.cpp:937 src/dialogs/fixoverlappingtimesdialog.cpp:18
 #, kde-format
 msgid "Fix Overlapping Times"
 msgstr "Popravi prekrivajoče se čase"
 
-#: src/core/subtitle.cpp:965
+#: src/core/subtitle.cpp:968
 #, kde-format
 msgid "Fix Lines Punctuation"
 msgstr "Popravi ločila vrstic"
 
-#: src/core/subtitle.cpp:1007
+#: src/core/subtitle.cpp:1010
 #, kde-format
 msgid "Lower Case"
 msgstr "Male črke"
 
-#: src/core/subtitle.cpp:1037
+#: src/core/subtitle.cpp:1040
 #, kde-format
 msgid "Upper Case"
 msgstr "Velike črke"
 
-#: src/core/subtitle.cpp:1067
+#: src/core/subtitle.cpp:1070
 #, kde-format
 msgid "Title Case"
 msgstr "Kot naslov"
 
-#: src/core/subtitle.cpp:1100
+#: src/core/subtitle.cpp:1103
 #, kde-format
 msgid "Sentence Case"
 msgstr "Kot stavek"
 
-#: src/core/subtitle.cpp:1144 src/dialogs/smarttextsadjustdialog.cpp:18
+#: src/core/subtitle.cpp:1147 src/dialogs/smarttextsadjustdialog.cpp:18
 #, kde-format
 msgid "Break Lines"
 msgstr "Prelomi vrstice"
 
-#: src/core/subtitle.cpp:1171
+#: src/core/subtitle.cpp:1174
 #, kde-format
 msgid "Synchronize Subtitles"
 msgstr "Sinhroniziraj podnaslove"
 
-#: src/core/subtitle.cpp:1196 src/dialogs/joinsubtitlesdialog.cpp:24
+#: src/core/subtitle.cpp:1199 src/dialogs/joinsubtitlesdialog.cpp:24
 #, kde-format
 msgid "Join Subtitles"
 msgstr "Združi podnaslove"
 
-#: src/core/subtitle.cpp:1241 src/core/subtitle.cpp:1247
+#: src/core/subtitle.cpp:1244 src/core/subtitle.cpp:1250
 #, kde-format
 msgid "Split Subtitles"
 msgstr "Razcepi podnaslove"
 
-#: src/core/subtitle.cpp:1266
+#: src/core/subtitle.cpp:1269
 #, kde-format
 msgid "Toggle Lines Style"
 msgstr "Preklopi sloge vrstic"
 
-#: src/core/subtitle.cpp:1310
+#: src/core/subtitle.cpp:1313
 #, kde-format
 msgid "Change Lines Text Color"
 msgstr "Spremeni barvo vrstic besedila"
 
-#: src/core/subtitle.cpp:1330
+#: src/core/subtitle.cpp:1333
 #, kde-format
 msgid "Set Lines Mark"
 msgstr "Nastavi oznako vrstic"
 
-#: src/core/subtitle.cpp:1330
+#: src/core/subtitle.cpp:1333
 #, kde-format
 msgid "Clear Lines Mark"
 msgstr "Očisti oznako vrstic"
 
-#: src/core/subtitle.cpp:1345
+#: src/core/subtitle.cpp:1348
 #, kde-format
 msgid "Toggle Lines Mark"
 msgstr "Preklopi oznako vrstic"
 
-#: src/core/subtitle.cpp:1355
+#: src/core/subtitle.cpp:1358
 #, kde-format
 msgid "Clear Line Errors"
 msgstr "Očisti napake vrstic"
 
-#: src/core/subtitle.cpp:1366 src/core/subtitle.cpp:1377
+#: src/core/subtitle.cpp:1369 src/core/subtitle.cpp:1380
 #: src/errors/errorfinder.cpp:84
 #, kde-format
 msgid "Check Lines Errors"
