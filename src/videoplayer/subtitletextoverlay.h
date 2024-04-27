@@ -7,10 +7,11 @@
 #ifndef SUBTITLETEXTOVERLAY_H
 #define SUBTITLETEXTOVERLAY_H
 
-#include <QFont>
 #include <QColor>
-#include <QPen>
+#include <QFont>
 #include <QImage>
+#include <QPen>
+#include <QPointer>
 
 #include "core/richtext/richdocument.h"
 
@@ -69,7 +70,7 @@ public slots:
 private:
 	bool m_invertPixels;
 	RichDocument *m_text = nullptr;
-	const RichDocument *m_doc = nullptr;
+	QPointer<const RichDocument> m_doc;
 	const SubtitleRect *m_pos = nullptr;
 	QFont m_font;
 	QColor m_textColor;
