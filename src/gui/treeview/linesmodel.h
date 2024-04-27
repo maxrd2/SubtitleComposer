@@ -12,6 +12,7 @@
 #include <QExplicitlySharedDataPointer>
 #include <QList>
 #include <QTimer>
+#include <QPointer>
 
 namespace SubtitleComposer {
 class Subtitle;
@@ -65,7 +66,7 @@ private:
 
 private:
 	QExplicitlySharedDataPointer<Subtitle> m_subtitle;
-	SubtitleLine *m_playingLine;
+	QPointer<SubtitleLine> m_playingLine;
 	QTimer *m_dataChangedTimer;
 	int m_minChangedLineIndex;
 	int m_maxChangedLineIndex;

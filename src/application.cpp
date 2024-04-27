@@ -139,7 +139,6 @@ Application::Application(int &argc, char **argv) :
 	m_translationMode(false),
 	m_textDemux(nullptr),
 	m_speechProcessor(nullptr),
-	m_lastFoundLine(nullptr),
 	m_lastSubtitleUrl(QDir::homePath()),
 	m_lastVideoUrl(QDir::homePath()),
 	m_linkCurrentLineToPosition(false)

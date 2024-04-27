@@ -6,6 +6,7 @@
 #ifndef SUBTITLEPOSITIONWIDGET_H
 #define SUBTITLEPOSITIONWIDGET_H
 
+#include <QPointer>
 #include <QWidget>
 
 namespace Ui {
@@ -42,7 +43,7 @@ private:
 private:
 	Ui::SubtitlePositionWidget *ui;
 
-	SubtitleLine *m_currentLine;
+	QPointer<SubtitleLine> m_currentLine;
 };
 
 }

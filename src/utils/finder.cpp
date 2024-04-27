@@ -26,12 +26,11 @@ using namespace SubtitleComposer;
 
 Finder::Finder(QWidget *parent) :
 	QObject(parent),
-	m_subtitle(0),
 	m_translationMode(false),
 	m_feedingPrimary(false),
-	m_find(0),
-	m_iterator(0),
-	m_dataLine(0)
+	m_find(nullptr),
+	m_iterator(nullptr),
+	m_dataLine(nullptr)
 {
 	m_dialog = new KFindDialog(parent);
 	m_dialog->setHasSelection(true);
@@ -300,7 +299,7 @@ Finder::onIteratorSynchronized(int firstIndex, int lastIndex, bool inserted)
 		if(m_allSearchedIndex >= firstIndex)
 			m_allSearchedIndex += linesCount;
 	} else {
-		if(m_dataLine->index() < 0) {   // m_dataLine was removed
+		if(!m_dataLine || m_dataLine->index() < 0) {   // m_dataLine was removed
 			// work around missing "invalidateData" method in KFind
 			long options = m_find->options();
 			QString pattern = m_find->pattern();

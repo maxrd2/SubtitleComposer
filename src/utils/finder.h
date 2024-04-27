@@ -13,6 +13,7 @@
 
 #include <QExplicitlySharedDataPointer>
 #include <QObject>
+#include <QPointer>
 
 QT_FORWARD_DECLARE_CLASS(QGroupBox)
 QT_FORWARD_DECLARE_CLASS(QRadioButton)
@@ -66,7 +67,7 @@ private:
 	QGroupBox *m_targetGroupBox;
 	QRadioButton *m_targetRadioButtons[SubtitleTargetSize];
 	SubtitleIterator *m_iterator;
-	SubtitleLine *m_dataLine;
+	QPointer<SubtitleLine> m_dataLine;
 	bool m_instancesFound;
 	int m_allSearchedIndex;
 };

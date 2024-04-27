@@ -31,7 +31,6 @@ using namespace SubtitleComposer;
 LinesModel::LinesModel(QObject *parent)
 	: QAbstractListModel(parent),
 	  m_subtitle(nullptr),
-	  m_playingLine(nullptr),
 	  m_dataChangedTimer(new QTimer(this)),
 	  m_minChangedLineIndex(-1),
 	  m_maxChangedLineIndex(-1),

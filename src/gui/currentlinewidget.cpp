@@ -411,6 +411,7 @@ CurrentLineWidget::setCurrentLine(SubtitleLine *line)
 	m_currentLine = line;
 
 	if(m_currentLine) {
+		connect(m_currentLine, &QObject::destroyed, this, [this](){ setCurrentLine(nullptr); });
 		connect(m_currentLine, &SubtitleLine::showTimeChanged, this, &CurrentLineWidget::onLineShowTimeChanged);
 		connect(m_currentLine, &SubtitleLine::hideTimeChanged, this, &CurrentLineWidget::onLineHideTimeChanged);
 
