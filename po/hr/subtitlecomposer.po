@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: subtitlecomposer\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-04-27 01:37+0000\n"
+"POT-Creation-Date: 2024-04-28 01:38+0000\n"
 "PO-Revision-Date: 2019-10-27 09:12\n"
 "Last-Translator: gogo <trebelnik2@gmail.com>\n"
 "Language-Team: Croatian <hr@hr.org>\n"
@@ -40,58 +40,58 @@ msgctxt "Encodings menu"
 msgid "Autodetect"
 msgstr "Automatsko otkrivanje"
 
-#: src/application.cpp:497
+#: src/application.cpp:496
 #, kde-format
 msgid "Go to Line"
 msgstr "Idi na redak"
 
-#: src/application.cpp:497
+#: src/application.cpp:496
 #, kde-format
 msgid "&Go to line:"
 msgstr "&Idi na redak:"
 
-#: src/application.cpp:670 src/core/subtitle.cpp:881
+#: src/application.cpp:669 src/core/subtitle.cpp:881
 #, kde-format
 msgid "Maximize Durations"
 msgstr "Povećaj trajanja"
 
-#: src/application.cpp:698 src/core/subtitle.cpp:1156
+#: src/application.cpp:697 src/core/subtitle.cpp:1156
 #, kde-format
 msgid "Unbreak Lines"
 msgstr "Spoji redke"
 
-#: src/application.cpp:709 src/core/subtitle.cpp:1165
+#: src/application.cpp:708 src/core/subtitle.cpp:1165
 #, kde-format
 msgid "Simplify Spaces"
 msgstr "Pojednostavi razmake"
 
-#: src/application.cpp:770
+#: src/application.cpp:769
 #, kde-format
 msgid "Open Video"
 msgstr "Otvori video"
 
-#: src/application.cpp:968 src/application.cpp:975
+#: src/application.cpp:967 src/application.cpp:974
 #: src/application_subtitle.cpp:658
 #, kde-format
 msgid "Untitled"
 msgstr "Bezimeni"
 
-#: src/application.cpp:970 src/application_subtitle.cpp:658
+#: src/application.cpp:969 src/application_subtitle.cpp:658
 #, kde-format
 msgid "Untitled Translation"
 msgstr "Bezimeni prijevod"
 
-#: src/application.cpp:1071
+#: src/application.cpp:1070
 #, kde-format
 msgid "Pause"
 msgstr "Pauziraj"
 
-#: src/application.cpp:1079 src/application_actions.cpp:567
+#: src/application.cpp:1078 src/application_actions.cpp:567
 #, kde-format
 msgid "Play"
 msgstr "Reproduciraj"
 
-#: src/application.cpp:1140
+#: src/application.cpp:1139
 #, kde-format
 msgid "Seek backwards 1 second"
 msgid_plural "Seek backwards %1 seconds"
@@ -99,7 +99,7 @@ msgstr[0] "Premotaj unatrag %1 sekundu"
 msgstr[1] "Premotaj unatrag %1 sekunde"
 msgstr[2] "Premotaj unatrag %1 sekundi"
 
-#: src/application.cpp:1141
+#: src/application.cpp:1140
 #, kde-format
 msgid "Seek forwards 1 second"
 msgid_plural "Seek forwards %1 seconds"
@@ -107,7 +107,7 @@ msgstr[0] "Premotaj unaprijed %1 sekundu"
 msgstr[1] "Premotaj unaprijed %1 sekunde"
 msgstr[2] "Premotaj unaprijed %1 sekundi"
 
-#: src/application.cpp:1144 src/application.cpp:1148
+#: src/application.cpp:1143 src/application.cpp:1147
 #, kde-format
 msgid "Shift %2%1 millisecond"
 msgid_plural "Shift %2%1 milliseconds"
@@ -115,7 +115,7 @@ msgstr[0] "Pomakni %2%1 milisekundu"
 msgstr[1] "Pomakni %2%1 milisekunde"
 msgstr[2] "Pomakni %2%1 milisekundi"
 
-#: src/application.cpp:1145 src/application.cpp:1149
+#: src/application.cpp:1144 src/application.cpp:1148
 #, kde-format
 msgid "Shift selected lines %2%1 millisecond"
 msgid_plural "Shift selected lines %2%1 milliseconds"
@@ -2164,19 +2164,19 @@ msgstr "Sve redke od prvog odabranog"
 msgid "All lines up to last selected"
 msgstr "Sve redke do posljednjeg odabranog"
 
-#: src/dialogs/actionwithtargetdialog.cpp:234 src/utils/finder.cpp:53
+#: src/dialogs/actionwithtargetdialog.cpp:234 src/utils/finder.cpp:52
 #: src/utils/replacer.cpp:51
 #, kde-format
 msgid "Both subtitles"
 msgstr "Oba podnaslova"
 
-#: src/dialogs/actionwithtargetdialog.cpp:237 src/utils/finder.cpp:55
+#: src/dialogs/actionwithtargetdialog.cpp:237 src/utils/finder.cpp:54
 #: src/utils/replacer.cpp:53
 #, kde-format
 msgid "Primary subtitle"
 msgstr "Glavni podnaslov"
 
-#: src/dialogs/actionwithtargetdialog.cpp:240 src/utils/finder.cpp:57
+#: src/dialogs/actionwithtargetdialog.cpp:240 src/utils/finder.cpp:56
 #: src/utils/replacer.cpp:55
 #, kde-format
 msgid "Translation subtitle"
@@ -2785,24 +2785,24 @@ msgstr "Promijeni u"
 msgid "Change Class Tag"
 msgstr "Promijeni veličinu slova"
 
-#: src/gui/currentlinewidget.cpp:439 src/gui/currentlinewidget.cpp:442
+#: src/gui/currentlinewidget.cpp:440 src/gui/currentlinewidget.cpp:443
 #, kde-format
 msgid "No current line"
 msgstr "Nema trenutnog redka"
 
-#: src/gui/currentlinewidget.cpp:514
+#: src/gui/currentlinewidget.cpp:515
 #, fuzzy, kde-format
 #| msgid " characters"
 msgid "chars"
 msgstr " znakova"
 
-#: src/gui/currentlinewidget.cpp:522
+#: src/gui/currentlinewidget.cpp:523
 #, fuzzy, kde-format
 #| msgid " msec/char"
 msgid "ms/char"
 msgstr " ms/znak"
 
-#: src/gui/currentlinewidget.cpp:524
+#: src/gui/currentlinewidget.cpp:525
 #, fuzzy, kde-format
 #| msgid " characters"
 msgid "chars/sec"
@@ -2920,50 +2920,50 @@ msgstr "<b>Položaj</b>"
 msgid "%"
 msgstr ""
 
-#: src/gui/treeview/linesmodel.cpp:156
+#: src/gui/treeview/linesmodel.cpp:155
 #, kde-format
 msgid "<b>Observations:</b>"
 msgstr "<b>Opažanja:</b>"
 
-#: src/gui/treeview/linesmodel.cpp:183
+#: src/gui/treeview/linesmodel.cpp:182
 #, kde-format
 msgctxt "@title:column Subtitle line number"
 msgid "Line"
 msgstr "Redak"
 
-#: src/gui/treeview/linesmodel.cpp:184
+#: src/gui/treeview/linesmodel.cpp:183
 #, fuzzy, kde-format
 #| msgid "Pause"
 msgctxt "@title:column"
 msgid "Pause"
 msgstr "Pauziraj"
 
-#: src/gui/treeview/linesmodel.cpp:185
+#: src/gui/treeview/linesmodel.cpp:184
 #, kde-format
 msgctxt "@title:column"
 msgid "Show Time"
 msgstr "Vrijeme pojavljivanja"
 
-#: src/gui/treeview/linesmodel.cpp:186
+#: src/gui/treeview/linesmodel.cpp:185
 #, kde-format
 msgctxt "@title:column"
 msgid "Hide Time"
 msgstr "Vrijeme nestajanja"
 
-#: src/gui/treeview/linesmodel.cpp:187
+#: src/gui/treeview/linesmodel.cpp:186
 #, fuzzy, kde-format
 #| msgid "<b>Duration</b>"
 msgctxt "@title:column"
 msgid "Duration"
 msgstr "<b>Trajanje</b>"
 
-#: src/gui/treeview/linesmodel.cpp:188
+#: src/gui/treeview/linesmodel.cpp:187
 #, kde-format
 msgctxt "@title:column Subtitle line (primary) text"
 msgid "Text"
 msgstr "Tekst"
 
-#: src/gui/treeview/linesmodel.cpp:189
+#: src/gui/treeview/linesmodel.cpp:188
 #, kde-format
 msgctxt "@title:column Subtitle line translation text"
 msgid "Translation"
@@ -4185,22 +4185,22 @@ msgstr "Neprevedeni tekst"
 msgid "Translate texts"
 msgstr "Neprevedeni tekst"
 
-#: src/utils/finder.cpp:45
+#: src/utils/finder.cpp:44
 #, kde-format
 msgid "Find In"
 msgstr "Traži u"
 
-#: src/utils/finder.cpp:246
+#: src/utils/finder.cpp:245
 #, kde-format
 msgid "No instances of '%1' found!"
 msgstr "Nema pronađenih „%1“ primjeraka!"
 
-#: src/utils/finder.cpp:246 src/utils/finder.cpp:260
+#: src/utils/finder.cpp:245 src/utils/finder.cpp:259
 #, kde-format
 msgid "Find"
 msgstr "Traži"
 
-#: src/utils/finder.cpp:260 src/utils/speller.cpp:135
+#: src/utils/finder.cpp:259 src/utils/speller.cpp:135
 #, kde-format
 msgid ""
 "End of subtitle reached.\n"
@@ -4209,7 +4209,7 @@ msgstr ""
 "Dosegnut je kraj podnaslova.\n"
 "Želite li nastaviti od početka?"
 
-#: src/utils/finder.cpp:260
+#: src/utils/finder.cpp:259
 #, kde-format
 msgid ""
 "Beginning of selection reached.\n"
@@ -4218,7 +4218,7 @@ msgstr ""
 "Dosegnut je početak odabira.\n"
 "Želite li nastaviti od kraja?"
 
-#: src/utils/finder.cpp:260
+#: src/utils/finder.cpp:259
 #, kde-format
 msgid ""
 "Beginning of subtitle reached.\n"
@@ -4227,7 +4227,7 @@ msgstr ""
 "Dosegnut je početak podnaslova.\n"
 "Želite li nastaviti od kraja?"
 
-#: src/utils/finder.cpp:260
+#: src/utils/finder.cpp:259
 #, kde-format
 msgid ""
 "End of selection reached.\n"

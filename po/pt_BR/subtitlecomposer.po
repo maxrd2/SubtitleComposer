@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: subtitlecomposer\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-04-27 01:37+0000\n"
+"POT-Creation-Date: 2024-04-28 01:38+0000\n"
 "PO-Revision-Date: 2023-07-04 15:30-0300\n"
 "Last-Translator: Luiz Fernando Ranghetti <elchevive@opensuse.org>\n"
 "Language-Team: Brazilian Portuguese <kde-i18n-pt_BR@kde.org>\n"
@@ -41,79 +41,79 @@ msgctxt "Encodings menu"
 msgid "Autodetect"
 msgstr "Autodetectar"
 
-#: src/application.cpp:497
+#: src/application.cpp:496
 #, kde-format
 msgid "Go to Line"
 msgstr "Ir para a linha"
 
-#: src/application.cpp:497
+#: src/application.cpp:496
 #, kde-format
 msgid "&Go to line:"
 msgstr "&Ir para a linha:"
 
-#: src/application.cpp:670 src/core/subtitle.cpp:881
+#: src/application.cpp:669 src/core/subtitle.cpp:881
 #, kde-format
 msgid "Maximize Durations"
 msgstr "Maximizar durações"
 
-#: src/application.cpp:698 src/core/subtitle.cpp:1156
+#: src/application.cpp:697 src/core/subtitle.cpp:1156
 #, kde-format
 msgid "Unbreak Lines"
 msgstr "Remover quebra de linhas"
 
-#: src/application.cpp:709 src/core/subtitle.cpp:1165
+#: src/application.cpp:708 src/core/subtitle.cpp:1165
 #, kde-format
 msgid "Simplify Spaces"
 msgstr "Simplificar espaços"
 
-#: src/application.cpp:770
+#: src/application.cpp:769
 #, kde-format
 msgid "Open Video"
 msgstr "Abrir vídeo"
 
-#: src/application.cpp:968 src/application.cpp:975
+#: src/application.cpp:967 src/application.cpp:974
 #: src/application_subtitle.cpp:658
 #, kde-format
 msgid "Untitled"
 msgstr "Sem título"
 
-#: src/application.cpp:970 src/application_subtitle.cpp:658
+#: src/application.cpp:969 src/application_subtitle.cpp:658
 #, kde-format
 msgid "Untitled Translation"
 msgstr "Tradução sem título"
 
-#: src/application.cpp:1071
+#: src/application.cpp:1070
 #, kde-format
 msgid "Pause"
 msgstr "Pausar"
 
-#: src/application.cpp:1079 src/application_actions.cpp:567
+#: src/application.cpp:1078 src/application_actions.cpp:567
 #, kde-format
 msgid "Play"
 msgstr "Reproduzir"
 
-#: src/application.cpp:1140
+#: src/application.cpp:1139
 #, kde-format
 msgid "Seek backwards 1 second"
 msgid_plural "Seek backwards %1 seconds"
 msgstr[0] "Voltar 1 segundo"
 msgstr[1] "Voltar %1 segundos"
 
-#: src/application.cpp:1141
+#: src/application.cpp:1140
 #, kde-format
 msgid "Seek forwards 1 second"
 msgid_plural "Seek forwards %1 seconds"
 msgstr[0] "Avançar 1 segundo"
 msgstr[1] "Avançar %1 segundos"
 
-#: src/application.cpp:1144 src/application.cpp:1148
+#: src/application.cpp:1143 src/application.cpp:1147
 #, kde-format
 msgid "Shift %2%1 millisecond"
 msgid_plural "Shift %2%1 milliseconds"
 msgstr[0] "Deslocar em %2%1 milissegundo"
 msgstr[1] "Deslocar em %2%1 milissegundos"
 
-#: src/application.cpp:1145 src/application.cpp:1149
+#: src/application.cpp:1144 src/application.cpp:1148
 #, kde-format
 msgid "Shift selected lines %2%1 millisecond"
 msgid_plural "Shift selected lines %2%1 milliseconds"
@@ -2156,19 +2156,19 @@ msgstr "Todas as linhas desde a primeira selecionada"
 msgid "All lines up to last selected"
 msgstr "Todas as linhas até a última selecionada"
 
-#: src/dialogs/actionwithtargetdialog.cpp:234 src/utils/finder.cpp:53
+#: src/dialogs/actionwithtargetdialog.cpp:234 src/utils/finder.cpp:52
 #: src/utils/replacer.cpp:51
 #, kde-format
 msgid "Both subtitles"
 msgstr "Ambas as legendas"
 
-#: src/dialogs/actionwithtargetdialog.cpp:237 src/utils/finder.cpp:55
+#: src/dialogs/actionwithtargetdialog.cpp:237 src/utils/finder.cpp:54
 #: src/utils/replacer.cpp:53
 #, kde-format
 msgid "Primary subtitle"
 msgstr "Legenda primária"
 
-#: src/dialogs/actionwithtargetdialog.cpp:240 src/utils/finder.cpp:57
+#: src/dialogs/actionwithtargetdialog.cpp:240 src/utils/finder.cpp:56
 #: src/utils/replacer.cpp:55
 #, kde-format
 msgid "Translation subtitle"
@@ -2775,22 +2775,22 @@ msgstr "Mudar para"
 msgid "Change Class Tag"
 msgstr "Mudar maiúsculas/minúsculas"
 
-#: src/gui/currentlinewidget.cpp:439 src/gui/currentlinewidget.cpp:442
+#: src/gui/currentlinewidget.cpp:440 src/gui/currentlinewidget.cpp:443
 #, kde-format
 msgid "No current line"
 msgstr "Nenhuma linha selecionada"
 
-#: src/gui/currentlinewidget.cpp:514
+#: src/gui/currentlinewidget.cpp:515
 #, kde-format
 msgid "chars"
 msgstr "caracteres"
 
-#: src/gui/currentlinewidget.cpp:522
+#: src/gui/currentlinewidget.cpp:523
 #, kde-format
 msgid "ms/char"
 msgstr " ms/caractere"
 
-#: src/gui/currentlinewidget.cpp:524
+#: src/gui/currentlinewidget.cpp:525
 #, kde-format
 msgid "chars/sec"
 msgstr "caracteres/s"
@@ -2904,48 +2904,48 @@ msgstr "Posição/tamanho"
 msgid "%"
 msgstr "%"
 
-#: src/gui/treeview/linesmodel.cpp:156
+#: src/gui/treeview/linesmodel.cpp:155
 #, kde-format
 msgid "<b>Observations:</b>"
 msgstr "<b>Observações:</b>"
 
-#: src/gui/treeview/linesmodel.cpp:183
+#: src/gui/treeview/linesmodel.cpp:182
 #, kde-format
 msgctxt "@title:column Subtitle line number"
 msgid "Line"
 msgstr "Linha"
 
-#: src/gui/treeview/linesmodel.cpp:184
+#: src/gui/treeview/linesmodel.cpp:183
 #, kde-format
 msgctxt "@title:column"
 msgid "Pause"
 msgstr "Pausar"
 
-#: src/gui/treeview/linesmodel.cpp:185
+#: src/gui/treeview/linesmodel.cpp:184
 #, kde-format
 msgctxt "@title:column"
 msgid "Show Time"
 msgstr "Tempo de exibição"
 
-#: src/gui/treeview/linesmodel.cpp:186
+#: src/gui/treeview/linesmodel.cpp:185
 #, kde-format
 msgctxt "@title:column"
 msgid "Hide Time"
 msgstr "Ocultar tempo"
 
-#: src/gui/treeview/linesmodel.cpp:187
+#: src/gui/treeview/linesmodel.cpp:186
 #, kde-format
 msgctxt "@title:column"
 msgid "Duration"
 msgstr "Duração"
 
-#: src/gui/treeview/linesmodel.cpp:188
+#: src/gui/treeview/linesmodel.cpp:187
 #, kde-format
 msgctxt "@title:column Subtitle line (primary) text"
 msgid "Text"
 msgstr "Texto"
 
-#: src/gui/treeview/linesmodel.cpp:189
+#: src/gui/treeview/linesmodel.cpp:188
 #, kde-format
 msgctxt "@title:column Subtitle line translation text"
 msgid "Translation"
@@ -4153,22 +4153,22 @@ msgstr "Texto não traduzido"
 msgid "Translate texts"
 msgstr "Texto não traduzido"
 
-#: src/utils/finder.cpp:45
+#: src/utils/finder.cpp:44
 #, kde-format
 msgid "Find In"
 msgstr "Localizar no"
 
-#: src/utils/finder.cpp:246
+#: src/utils/finder.cpp:245
 #, kde-format
 msgid "No instances of '%1' found!"
 msgstr "Nenhuma ocorrrência de '%1' encontrada!"
 
-#: src/utils/finder.cpp:246 src/utils/finder.cpp:260
+#: src/utils/finder.cpp:245 src/utils/finder.cpp:259
 #, kde-format
 msgid "Find"
 msgstr "Localizar"
 
-#: src/utils/finder.cpp:260 src/utils/speller.cpp:135
+#: src/utils/finder.cpp:259 src/utils/speller.cpp:135
 #, kde-format
 msgid ""
 "End of subtitle reached.\n"
@@ -4177,7 +4177,7 @@ msgstr ""
 "Fim da legenda alcançada.\n"
 "Continuar do início?"
 
-#: src/utils/finder.cpp:260
+#: src/utils/finder.cpp:259
 #, kde-format
 msgid ""
 "Beginning of selection reached.\n"
@@ -4186,7 +4186,7 @@ msgstr ""
 "Início da seleção alcançada.\n"
 "Continuar a partir do fim?"
 
-#: src/utils/finder.cpp:260
+#: src/utils/finder.cpp:259
 #, kde-format
 msgid ""
 "Beginning of subtitle reached.\n"
@@ -4195,7 +4195,7 @@ msgstr ""
 "Início da legenda alcançada.\n"
 "Continuar a partir do fim?"
 
-#: src/utils/finder.cpp:260
+#: src/utils/finder.cpp:259
 #, kde-format
 msgid ""
 "End of selection reached.\n"

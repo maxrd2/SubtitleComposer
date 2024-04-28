@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: subtitlecomposer\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-04-27 01:37+0000\n"
+"POT-Creation-Date: 2024-04-28 01:38+0000\n"
 "PO-Revision-Date: 2024-02-25 01:13+0900\n"
 "Last-Translator: Kisaragi Hiu <mail@kisaragi-hiu.com>\n"
 "Language-Team: Traditional Chinese <zh-l10n@lists.slat.org>\n"
@@ -39,76 +39,76 @@ msgctxt "Encodings menu"
 msgid "Autodetect"
 msgstr "自動偵測"
 
-#: src/application.cpp:497
+#: src/application.cpp:496
 #, kde-format
 msgid "Go to Line"
 msgstr "前往行數"
 
-#: src/application.cpp:497
+#: src/application.cpp:496
 #, kde-format
 msgid "&Go to line:"
 msgstr "前往行數(&G)："
 
-#: src/application.cpp:670 src/core/subtitle.cpp:881
+#: src/application.cpp:669 src/core/subtitle.cpp:881
 #, kde-format
 msgid "Maximize Durations"
 msgstr "最大化時長"
 
-#: src/application.cpp:698 src/core/subtitle.cpp:1156
+#: src/application.cpp:697 src/core/subtitle.cpp:1156
 #, kde-format
 msgid "Unbreak Lines"
 msgstr "取消換行"
 
-#: src/application.cpp:709 src/core/subtitle.cpp:1165
+#: src/application.cpp:708 src/core/subtitle.cpp:1165
 #, kde-format
 msgid "Simplify Spaces"
 msgstr "簡化空格"
 
-#: src/application.cpp:770
+#: src/application.cpp:769
 #, kde-format
 msgid "Open Video"
 msgstr "開啟影片"
 
-#: src/application.cpp:968 src/application.cpp:975
+#: src/application.cpp:967 src/application.cpp:974
 #: src/application_subtitle.cpp:658
 #, kde-format
 msgid "Untitled"
 msgstr "未命名"
 
-#: src/application.cpp:970 src/application_subtitle.cpp:658
+#: src/application.cpp:969 src/application_subtitle.cpp:658
 #, kde-format
 msgid "Untitled Translation"
 msgstr "未命名的翻譯"
 
-#: src/application.cpp:1071
+#: src/application.cpp:1070
 #, kde-format
 msgid "Pause"
 msgstr "暫停"
 
-#: src/application.cpp:1079 src/application_actions.cpp:567
+#: src/application.cpp:1078 src/application_actions.cpp:567
 #, kde-format
 msgid "Play"
 msgstr "播放"
 
-#: src/application.cpp:1140
+#: src/application.cpp:1139
 #, kde-format
 msgid "Seek backwards 1 second"
 msgid_plural "Seek backwards %1 seconds"
 msgstr[0] "後退 %1 秒"
 
-#: src/application.cpp:1141
+#: src/application.cpp:1140
 #, kde-format
 msgid "Seek forwards 1 second"
 msgid_plural "Seek forwards %1 seconds"
 msgstr[0] "快轉 %1 秒"
 
-#: src/application.cpp:1144 src/application.cpp:1148
+#: src/application.cpp:1143 src/application.cpp:1147
 #, kde-format
 msgid "Shift %2%1 millisecond"
 msgid_plural "Shift %2%1 milliseconds"
 msgstr[0] "位移 %2%1 毫秒"
 
-#: src/application.cpp:1145 src/application.cpp:1149
+#: src/application.cpp:1144 src/application.cpp:1148
 #, kde-format
 msgid "Shift selected lines %2%1 millisecond"
 msgid_plural "Shift selected lines %2%1 milliseconds"
@@ -2095,19 +2095,19 @@ msgstr "第一個選取的行數之後的所有行數"
 msgid "All lines up to last selected"
 msgstr "最後一個選取的行數之前的所有行數"
 
-#: src/dialogs/actionwithtargetdialog.cpp:234 src/utils/finder.cpp:53
+#: src/dialogs/actionwithtargetdialog.cpp:234 src/utils/finder.cpp:52
 #: src/utils/replacer.cpp:51
 #, kde-format
 msgid "Both subtitles"
 msgstr "雙方字幕"
 
-#: src/dialogs/actionwithtargetdialog.cpp:237 src/utils/finder.cpp:55
+#: src/dialogs/actionwithtargetdialog.cpp:237 src/utils/finder.cpp:54
 #: src/utils/replacer.cpp:53
 #, kde-format
 msgid "Primary subtitle"
 msgstr "主字幕"
 
-#: src/dialogs/actionwithtargetdialog.cpp:240 src/utils/finder.cpp:57
+#: src/dialogs/actionwithtargetdialog.cpp:240 src/utils/finder.cpp:56
 #: src/utils/replacer.cpp:55
 #, kde-format
 msgid "Translation subtitle"
@@ -2705,22 +2705,22 @@ msgstr "改變語音標籤"
 msgid "Change Class Tag"
 msgstr ""
 
-#: src/gui/currentlinewidget.cpp:439 src/gui/currentlinewidget.cpp:442
+#: src/gui/currentlinewidget.cpp:440 src/gui/currentlinewidget.cpp:443
 #, kde-format
 msgid "No current line"
 msgstr "沒有目前行"
 
-#: src/gui/currentlinewidget.cpp:514
+#: src/gui/currentlinewidget.cpp:515
 #, kde-format
 msgid "chars"
 msgstr "字元"
 
-#: src/gui/currentlinewidget.cpp:522
+#: src/gui/currentlinewidget.cpp:523
 #, kde-format
 msgid "ms/char"
 msgstr "毫秒/字元"
 
-#: src/gui/currentlinewidget.cpp:524
+#: src/gui/currentlinewidget.cpp:525
 #, kde-format
 msgid "chars/sec"
 msgstr "字元/秒"
@@ -2834,48 +2834,48 @@ msgstr "位置/大小"
 msgid "%"
 msgstr "%"
 
-#: src/gui/treeview/linesmodel.cpp:156
+#: src/gui/treeview/linesmodel.cpp:155
 #, kde-format
 msgid "<b>Observations:</b>"
 msgstr "<b>觀察：</b>"
 
-#: src/gui/treeview/linesmodel.cpp:183
+#: src/gui/treeview/linesmodel.cpp:182
 #, kde-format
 msgctxt "@title:column Subtitle line number"
 msgid "Line"
 msgstr "行數"
 
-#: src/gui/treeview/linesmodel.cpp:184
+#: src/gui/treeview/linesmodel.cpp:183
 #, kde-format
 msgctxt "@title:column"
 msgid "Pause"
 msgstr "暫停"
 
-#: src/gui/treeview/linesmodel.cpp:185
+#: src/gui/treeview/linesmodel.cpp:184
 #, kde-format
 msgctxt "@title:column"
 msgid "Show Time"
 msgstr "顯示時間"
 
-#: src/gui/treeview/linesmodel.cpp:186
+#: src/gui/treeview/linesmodel.cpp:185
 #, kde-format
 msgctxt "@title:column"
 msgid "Hide Time"
 msgstr "隱藏時間"
 
-#: src/gui/treeview/linesmodel.cpp:187
+#: src/gui/treeview/linesmodel.cpp:186
 #, kde-format
 msgctxt "@title:column"
 msgid "Duration"
 msgstr "時長"
 
-#: src/gui/treeview/linesmodel.cpp:188
+#: src/gui/treeview/linesmodel.cpp:187
 #, kde-format
 msgctxt "@title:column Subtitle line (primary) text"
 msgid "Text"
 msgstr "文字"
 
-#: src/gui/treeview/linesmodel.cpp:189
+#: src/gui/treeview/linesmodel.cpp:188
 #, kde-format
 msgctxt "@title:column Subtitle line translation text"
 msgid "Translation"
@@ -4077,22 +4077,22 @@ msgstr "翻譯哪些語言"
 msgid "Translate texts"
 msgstr "翻譯文字"
 
-#: src/utils/finder.cpp:45
+#: src/utils/finder.cpp:44
 #, kde-format
 msgid "Find In"
 msgstr ""
 
-#: src/utils/finder.cpp:246
+#: src/utils/finder.cpp:245
 #, kde-format
 msgid "No instances of '%1' found!"
 msgstr ""
 
-#: src/utils/finder.cpp:246 src/utils/finder.cpp:260
+#: src/utils/finder.cpp:245 src/utils/finder.cpp:259
 #, kde-format
 msgid "Find"
 msgstr "尋找"
 
-#: src/utils/finder.cpp:260 src/utils/speller.cpp:135
+#: src/utils/finder.cpp:259 src/utils/speller.cpp:135
 #, kde-format
 msgid ""
 "End of subtitle reached.\n"
@@ -4101,7 +4101,7 @@ msgstr ""
 "已達到字幕底端。\n"
 "要從頂部繼續嗎？"
 
-#: src/utils/finder.cpp:260
+#: src/utils/finder.cpp:259
 #, kde-format
 msgid ""
 "Beginning of selection reached.\n"
@@ -4110,7 +4110,7 @@ msgstr ""
 "已達到選取區域頂端。\n"
 "要從底部繼續嗎？"
 
-#: src/utils/finder.cpp:260
+#: src/utils/finder.cpp:259
 #, kde-format
 msgid ""
 "Beginning of subtitle reached.\n"
@@ -4119,7 +4119,7 @@ msgstr ""
 "已達到字幕頂端。\n"
 "要從底部繼續嗎？"
 
-#: src/utils/finder.cpp:260
+#: src/utils/finder.cpp:259
 #, kde-format
 msgid ""
 "End of selection reached.\n"
