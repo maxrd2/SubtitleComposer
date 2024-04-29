@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: subtitlecomposer\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-04-28 01:38+0000\n"
-"PO-Revision-Date: 2024-03-24 10:34+0100\n"
+"PO-Revision-Date: 2024-04-28 07:38+0100\n"
 "Last-Translator: Oliver Kellogg <okellogg@users.sourceforge.net>\n"
 "Language-Team: Esperanto <kde-i18n-eo.org>\n"
 "Language: eo\n"
@@ -91,29 +91,29 @@ msgstr "Ludi"
 #, kde-format
 msgid "Seek backwards 1 second"
 msgid_plural "Seek backwards %1 seconds"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "Serĉi malantaŭen 1 sekundon"
+msgstr[1] "Serĉi malantaŭen %1 sekundojn"
 
 #: src/application.cpp:1140
 #, kde-format
 msgid "Seek forwards 1 second"
 msgid_plural "Seek forwards %1 seconds"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "Serĉi antaŭen 1 sekundon"
+msgstr[1] "Serĉi antaŭen %1 sekundojn"
 
 #: src/application.cpp:1143 src/application.cpp:1147
 #, kde-format
 msgid "Shift %2%1 millisecond"
 msgid_plural "Shift %2%1 milliseconds"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "Deŝovi %2%1 milisekundon"
+msgstr[1] "Deŝovi %2%1 milisekundojn"
 
 #: src/application.cpp:1144 src/application.cpp:1148
 #, kde-format
 msgid "Shift selected lines %2%1 millisecond"
 msgid_plural "Shift selected lines %2%1 milliseconds"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "Deŝovi elektitajn liniojn %2%1 milisekundon"
+msgstr[1] "Deŝovi elektitajn liniojn %2%1 milisekundojn"
 
 #: src/application_actions.cpp:33
 #, kde-format
@@ -1880,29 +1880,29 @@ msgstr "Ne havas traduktekston."
 #, kde-format
 msgid "Has too many characters in primary text (1 char)."
 msgid_plural "Has too many characters in primary text (%1 chars)."
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "Havas tro multajn signojn en primara teksto (1 signo)."
+msgstr[1] "Havas tro multajn signojn en primara teksto (%1 signoj)."
 
 #: src/core/subtitleline.cpp:101
 #, kde-format
 msgid "Has too many characters in translation text (1 char)."
 msgid_plural "Has too many characters in translation text (%1 chars)."
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "Havas tro multajn signojn en tradukita teksto (1 signo)."
+msgstr[1] "Havas tro multajn signojn en tradukita teksto (%1 signoj)."
 
 #: src/core/subtitleline.cpp:102
 #, kde-format
 msgid "Has too many lines in primary text (1 line)."
 msgid_plural "Has too many lines in primary text (%1 lines)."
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "Havas tro multajn liniojn en primara teksto (1 linio)."
+msgstr[1] "Havas tro multajn liniojn en primara teksto (%1 linioj)."
 
 #: src/core/subtitleline.cpp:103
 #, kde-format
 msgid "Has too many lines in translation text (1 line)."
 msgid_plural "Has too many lines in translation text (%1 lines)."
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "Havas tro multajn liniojn en tradukita teksto (1 linio)."
+msgstr[1] "Havas tro multajn liniojn en tradukita teksto (%1 linioj)."
 
 #: src/core/subtitleline.cpp:104
 #, kde-format
@@ -1971,15 +1971,15 @@ msgstr[1] ""
 #, kde-format
 msgid "Has too long duration (1 msec)."
 msgid_plural "Has too long duration (%1 msecs)."
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "Havas tro longan daŭron (1 msek)."
+msgstr[1] "Havas tro longan daŭron (%1 msek)."
 
 #: src/core/subtitleline.cpp:115
 #, kde-format
 msgid "Has too short duration (1 msec)."
 msgid_plural "Has too short duration (%1 msecs)."
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "Havas tro mallongan daŭron (1 msek)."
+msgstr[1] "Havas tro mallongan daŭron (%1 msek)."
 
 #: src/core/subtitleline.cpp:116
 #, kde-format
