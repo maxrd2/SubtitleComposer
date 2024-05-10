@@ -79,8 +79,10 @@ GLRenderer::GLRenderer(QWidget *parent)
 	  m_idTex(nullptr),
 	  m_vaBuf(nullptr)
 {
-	setAttribute(Qt::WA_NativeWindow, true);
-	winId(); // make sure it gets created? and is native window?
+	// NOTE: Qt6.7 QOpenGLWidget breaks main window rendering after reparenting during fullscreen transition
+	setAttribute(Qt::WA_NativeWindow, true); // making it native window borks only parent widget rendering
+	winId(); // this should create native window immediately? and no rendering gets borked
+
 	setUpdateBehavior(NoPartialUpdate);
 }
 
