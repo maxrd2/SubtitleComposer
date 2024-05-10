@@ -438,7 +438,6 @@ GLRenderer::initShader()
 
 	delete m_fragShader;
 	m_fragShader = new QOpenGLShader(QOpenGLShader::Fragment, this);
-//	asGL(glUniformMatrix4fv(m_texCSLoc, 1, GL_FALSE, m_csCM.constData()));
 
 	const float *csm = m_csCM.constData();
 	QString csms;
@@ -497,7 +496,7 @@ GLRenderer::initShader()
 		qCritical() << "GLRenderer: shader linking failed:" << m_shaderProg->log();
 		return;
 	}
-	m_shaderProg->bind();
+	asGL(m_shaderProg->bind());
 
 	m_texY = m_shaderProg->uniformLocation("texY");
 	m_texU = m_shaderProg->uniformLocation("texU");
@@ -523,8 +522,9 @@ GLRenderer::initializeGL()
 	qDebug() << "OpenGL version:" << reinterpret_cast<const char *>(glGetString(GL_VERSION));
 	qDebug() << "GLSL version:" << reinterpret_cast<const char *>(glGetString(GL_SHADING_LANGUAGE_VERSION));
 
-	if(m_vao.create())
-		m_vao.bind();
+	if(m_vao.create()) {
+		asGL(m_vao.bind());
+	}
 
 	if(m_vaBuf) {
 		asGL(glDeleteBuffers(A_SIZE, m_vaBuf));
@@ -578,6 +578,12 @@ GLRenderer::initializeGL()
 
 	m_texNeedInit = true;
 	m_csNeedInit = true;
+
+	asGL(glBindBuffer(GL_ARRAY_BUFFER, 0));
+
+	if(m_vao.isCreated()) {
+		asGL(m_vao.release());
+	}
 }
 
 void
@@ -606,13 +612,26 @@ GLRenderer::paintGL()
 		asGL(glPixelStorei(GL_UNPACK_ALIGNMENT, 1));
 	}
 
-	if(m_csNeedInit)
+	if(m_csNeedInit) {
 		initShader();
+	} else {
+		asGL(m_shaderProg->bind());
+	}
 
 	uploadYUV();
 	uploadSubtitle();
 
+	if(m_vao.isCreated()) {
+		asGL(m_vao.bind());
+	}
+
 	asGL(glDrawArrays(GL_TRIANGLE_STRIP, 0, 4));
+
+	if(m_vao.isCreated()) {
+		asGL(m_vao.release());
+	}
+
+	asGL(m_shaderProg->release());
 
 	m_texNeedInit = false;
 	m_csNeedInit = false;
