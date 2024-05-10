@@ -79,6 +79,8 @@ GLRenderer::GLRenderer(QWidget *parent)
 	  m_idTex(nullptr),
 	  m_vaBuf(nullptr)
 {
+	setAttribute(Qt::WA_NativeWindow, true);
+	winId(); // make sure it gets created? and is native window?
 	setUpdateBehavior(NoPartialUpdate);
 }
 
