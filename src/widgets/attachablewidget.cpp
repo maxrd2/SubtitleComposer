@@ -22,6 +22,7 @@ AttachableWidget::AttachableWidget(AttachableWidget::Place place, unsigned animS
 	m_targetWidget(0),
 	m_place(place),
 	m_animStepDuration(animStepDuration),
+	m_animTID(0),
 	m_animHiding(true)
 {
 //	m_animStepDuration = 0;
