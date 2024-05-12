@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: subtitlecomposer\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-04-28 01:38+0000\n"
+"POT-Creation-Date: 2024-05-12 01:56+0000\n"
 "PO-Revision-Date: 2024-02-25 01:13+0900\n"
 "Last-Translator: Kisaragi Hiu <mail@kisaragi-hiu.com>\n"
 "Language-Team: Traditional Chinese <zh-l10n@lists.slat.org>\n"
@@ -1252,26 +1252,34 @@ msgid " lines"
 msgstr " 行"
 
 #. i18n: ectx: property (suffix), widget (QSpinBox, kcfg_MaxCharacters)
-#: src/configs/errorsconfigwidget.ui:36
+#. i18n: ectx: property (suffix), widget (QSpinBox, kcfg_MaxCharactersPerLine)
+#: src/configs/errorsconfigwidget.ui:36 src/configs/errorsconfigwidget.ui:46
 #: src/dialogs/smarttextsadjustdialog.cpp:26
 #, kde-format
 msgid " characters"
 msgstr " 個字元"
 
 #. i18n: ectx: property (text), widget (QLabel, label)
-#: src/configs/errorsconfigwidget.ui:46
+#: src/configs/errorsconfigwidget.ui:56
 #, kde-format
 msgid "Maximum number of characters:"
 msgstr "最大字元數量："
 
+#. i18n: ectx: property (text), widget (QLabel, lab_MaxCharactersPerLine)
+#: src/configs/errorsconfigwidget.ui:63
+#, fuzzy, kde-format
+#| msgid "Maximum number of characters:"
+msgid "Maximum number of characters per line:"
+msgstr "最大字元數量："
+
 #. i18n: ectx: property (text), widget (QLabel, label_4)
-#: src/configs/errorsconfigwidget.ui:53
+#: src/configs/errorsconfigwidget.ui:70
 #, kde-format
 msgid "Maximum number of lines:"
 msgstr "最大行數："
 
 #. i18n: ectx: property (title), widget (QGroupBox, m_grpQuickActions)
-#: src/configs/errorsconfigwidget.ui:63
+#: src/configs/errorsconfigwidget.ui:80
 #, kde-format
 msgid "Absolute Durations"
 msgstr "絕對時長"
@@ -1284,7 +1292,7 @@ msgstr "絕對時長"
 #. i18n: ectx: property (suffix), widget (QSpinBox, kcfg_GrabbedPositionCompensation)
 #. i18n: ectx: property (suffix), widget (QSpinBox, kcfg_MinDuration)
 #. i18n: ectx: property (suffix), widget (QSpinBox, kcfg_MaxDuration)
-#: src/configs/errorsconfigwidget.ui:69 src/configs/errorsconfigwidget.ui:79
+#: src/configs/errorsconfigwidget.ui:86 src/configs/errorsconfigwidget.ui:96
 #: src/configs/generalconfigwidget.ui:114
 #: src/configs/generalconfigwidget.ui:124
 #: src/configs/generalconfigwidget.ui:134
@@ -1297,20 +1305,20 @@ msgstr " 毫秒"
 
 #. i18n: ectx: property (text), widget (QLabel, label_8)
 #. i18n: ectx: property (text), widget (QLabel, lab_MaxDurationPerCharacter)
-#: src/configs/errorsconfigwidget.ui:92 src/configs/errorsconfigwidget.ui:174
+#: src/configs/errorsconfigwidget.ui:109 src/configs/errorsconfigwidget.ui:191
 #, kde-format
 msgid "Maximum duration:"
 msgstr "最高時長："
 
 #. i18n: ectx: property (text), widget (QLabel, label_5)
 #. i18n: ectx: property (text), widget (QLabel, lab_MinDurationPerCharacter)
-#: src/configs/errorsconfigwidget.ui:99 src/configs/errorsconfigwidget.ui:154
+#: src/configs/errorsconfigwidget.ui:116 src/configs/errorsconfigwidget.ui:171
 #, kde-format
 msgid "Minimum duration:"
 msgstr "最低時長："
 
 #. i18n: ectx: property (title), widget (QGroupBox, groupBox)
-#: src/configs/errorsconfigwidget.ui:109
+#: src/configs/errorsconfigwidget.ui:126
 #, kde-format
 msgid "Relative Durations"
 msgstr "相對時長"
@@ -1318,8 +1326,8 @@ msgstr "相對時長"
 #. i18n: ectx: property (suffix), widget (QSpinBox, kcfg_MaxDurationPerCharacter)
 #. i18n: ectx: property (suffix), widget (QSpinBox, kcfg_MinDurationPerCharacter)
 #. i18n: ectx: property (suffix), widget (QSpinBox, kcfg_IdealDurationPerCharacter)
-#: src/configs/errorsconfigwidget.ui:115 src/configs/errorsconfigwidget.ui:141
-#: src/configs/errorsconfigwidget.ui:188
+#: src/configs/errorsconfigwidget.ui:132 src/configs/errorsconfigwidget.ui:158
+#: src/configs/errorsconfigwidget.ui:205
 #, kde-format
 msgid " ms/char"
 msgstr " 毫秒/字元"
@@ -1327,27 +1335,27 @@ msgstr " 毫秒/字元"
 #. i18n: ectx: property (suffix), widget (QSpinBox, alt_MinDurationPerCharacter)
 #. i18n: ectx: property (suffix), widget (QSpinBox, alt_MaxDurationPerCharacter)
 #. i18n: ectx: property (suffix), widget (QSpinBox, alt_IdealDurationPerCharacter)
-#: src/configs/errorsconfigwidget.ui:128 src/configs/errorsconfigwidget.ui:161
-#: src/configs/errorsconfigwidget.ui:201
+#: src/configs/errorsconfigwidget.ui:145 src/configs/errorsconfigwidget.ui:178
+#: src/configs/errorsconfigwidget.ui:218
 #, kde-format
 msgid " ch/sec"
 msgstr " 字元/毫秒"
 
 #. i18n: ectx: property (text), widget (QLabel, lab_IdealDurationPerCharacter)
-#: src/configs/errorsconfigwidget.ui:181
+#: src/configs/errorsconfigwidget.ui:198
 #, kde-format
 msgid "Ideal duration:"
 msgstr "理想時長："
 
 #. i18n: ectx: property (title), widget (QGroupBox, groupBox_2)
-#: src/configs/errorsconfigwidget.ui:217
+#: src/configs/errorsconfigwidget.ui:234
 #, kde-format
 msgid "Behavior"
 msgstr "行為"
 
 #. i18n: ectx: label, entry (AutoClearFixed), group (Error Check)
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_AutoClearFixed)
-#: src/configs/errorsconfigwidget.ui:223 src/scconfig.kcfg:86
+#: src/configs/errorsconfigwidget.ui:240 src/scconfig.kcfg:90
 #, kde-format
 msgid "Automatically clear fixed errors"
 msgstr "自動清除已修正的錯誤"
@@ -1465,7 +1473,7 @@ msgstr "跳動時要移動幾秒(&J)："
 
 #. i18n: ectx: label, entry (VideoAutoPlay), group (VideoPlayer)
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_VideoAutoPlay)
-#: src/configs/playerconfigwidget.ui:50 src/scconfig.kcfg:180
+#: src/configs/playerconfigwidget.ui:50 src/scconfig.kcfg:184
 #, kde-format
 msgid "Start playing video when loaded"
 msgstr "載入時開始播放影片"
@@ -1830,196 +1838,214 @@ msgid "Too many lines"
 msgstr "太多行了"
 
 #: src/core/subtitleline.cpp:65
+#, fuzzy, kde-format
+#| msgid "Too many characters"
+msgid "Too many characters per line"
+msgstr "太多字元了"
+
+#: src/core/subtitleline.cpp:67
 #, kde-format
 msgid "Unnecessary white space"
 msgstr "多餘的空格"
 
-#: src/core/subtitleline.cpp:67
+#: src/core/subtitleline.cpp:69
 #, kde-format
 msgid "Unnecessary dash"
 msgstr "多餘的 dash"
 
-#: src/core/subtitleline.cpp:69
+#: src/core/subtitleline.cpp:71
 #, kde-format
 msgid "Capital letter after continuation ellipsis"
 msgstr "接續刪節號之後有大寫字母"
 
-#: src/core/subtitleline.cpp:71
+#: src/core/subtitleline.cpp:73
 #, kde-format
 msgid "Too long duration per character"
 msgstr "每字元時長太長"
 
-#: src/core/subtitleline.cpp:73
+#: src/core/subtitleline.cpp:75
 #, kde-format
 msgid "Too short duration per character"
 msgstr "每字元時長太短"
 
-#: src/core/subtitleline.cpp:75
+#: src/core/subtitleline.cpp:77
 #, kde-format
 msgid "Too long duration"
 msgstr "時長太長"
 
-#: src/core/subtitleline.cpp:76
+#: src/core/subtitleline.cpp:78
 #, kde-format
 msgid "Too short duration"
 msgstr "時長太短"
 
-#: src/core/subtitleline.cpp:77
+#: src/core/subtitleline.cpp:79
 #, kde-format
 msgid "Overlapping times"
 msgstr "重疊時間"
 
-#: src/core/subtitleline.cpp:78
+#: src/core/subtitleline.cpp:80
 #, kde-format
 msgid "Untranslated text"
 msgstr "未翻譯的文字"
 
-#: src/core/subtitleline.cpp:79
+#: src/core/subtitleline.cpp:81
 #, kde-format
 msgid "User mark"
 msgstr "使用者標記"
 
-#: src/core/subtitleline.cpp:98
+#: src/core/subtitleline.cpp:100
 #, kde-format
 msgid "Has no primary text."
 msgstr "沒有主要文字。"
 
-#: src/core/subtitleline.cpp:99
+#: src/core/subtitleline.cpp:101
 #, kde-format
 msgid "Has no translation text."
 msgstr "沒有翻譯文字。"
 
-#: src/core/subtitleline.cpp:100
+#: src/core/subtitleline.cpp:102
 #, kde-format
 msgid "Has too many characters in primary text (1 char)."
 msgid_plural "Has too many characters in primary text (%1 chars)."
 msgstr[0] ""
 
-#: src/core/subtitleline.cpp:101
+#: src/core/subtitleline.cpp:103
 #, kde-format
 msgid "Has too many characters in translation text (1 char)."
 msgid_plural "Has too many characters in translation text (%1 chars)."
 msgstr[0] ""
 
-#: src/core/subtitleline.cpp:102
+#: src/core/subtitleline.cpp:104
 #, kde-format
 msgid "Has too many lines in primary text (1 line)."
 msgid_plural "Has too many lines in primary text (%1 lines)."
 msgstr[0] ""
 
-#: src/core/subtitleline.cpp:103
+#: src/core/subtitleline.cpp:105
 #, kde-format
 msgid "Has too many lines in translation text (1 line)."
 msgid_plural "Has too many lines in translation text (%1 lines)."
 msgstr[0] ""
 
-#: src/core/subtitleline.cpp:104
+#: src/core/subtitleline.cpp:106
+#, kde-format
+msgid "Has too many characters per line in primary text."
+msgstr ""
+
+#: src/core/subtitleline.cpp:107
+#, fuzzy, kde-format
+#| msgid ""
+#| "Has capital letter after line continuation ellipsis in translation text."
+msgid "Has too many characters per line in translation text."
+msgstr "翻譯文字中有在接續刪節號之後的大寫字母。"
+
+#: src/core/subtitleline.cpp:108
 #, kde-format
 msgid "Has unnecessary spaces in primary text."
 msgstr ""
 
-#: src/core/subtitleline.cpp:105
+#: src/core/subtitleline.cpp:109
 #, kde-format
 msgid "Has unnecessary spaces in translation text."
 msgstr ""
 
-#: src/core/subtitleline.cpp:106
+#: src/core/subtitleline.cpp:110
 #, kde-format
 msgid "Has unnecessary dash in primary text."
 msgstr ""
 
-#: src/core/subtitleline.cpp:107
+#: src/core/subtitleline.cpp:111
 #, kde-format
 msgid "Has unnecessary dash in translation text."
 msgstr ""
 
-#: src/core/subtitleline.cpp:108
+#: src/core/subtitleline.cpp:112
 #, kde-format
 msgid "Has capital letter after line continuation ellipsis in primary text."
 msgstr "主要文字中有在接續刪節號之後的大寫字母。"
 
-#: src/core/subtitleline.cpp:109
+#: src/core/subtitleline.cpp:113
 #, kde-format
 msgid ""
 "Has capital letter after line continuation ellipsis in translation text."
 msgstr "翻譯文字中有在接續刪節號之後的大寫字母。"
 
-#: src/core/subtitleline.cpp:110
+#: src/core/subtitleline.cpp:114
 #, kde-format
 msgid "Has too long duration per character in primary text (1 msec/char)."
 msgid_plural ""
 "Has too long duration per character in primary text (%1 msecs/char)."
 msgstr[0] ""
 
-#: src/core/subtitleline.cpp:111
+#: src/core/subtitleline.cpp:115
 #, kde-format
 msgid "Has too long duration per character in translation text (1 msec/char)."
 msgid_plural ""
 "Has too long duration per character in translation text (%1 msecs/char)."
 msgstr[0] ""
 
-#: src/core/subtitleline.cpp:112
+#: src/core/subtitleline.cpp:116
 #, kde-format
 msgid "Has too short duration per character in primary text (1 msec/char)."
 msgid_plural ""
 "Has too short duration per character in primary text (%1 msecs/char)."
 msgstr[0] ""
 
-#: src/core/subtitleline.cpp:113
+#: src/core/subtitleline.cpp:117
 #, kde-format
 msgid "Has too short duration per character in translation text (1 msec/char)."
 msgid_plural ""
 "Has too short duration per character in translation text (%1 msecs/char)."
 msgstr[0] ""
 
-#: src/core/subtitleline.cpp:114
+#: src/core/subtitleline.cpp:118
 #, kde-format
 msgid "Has too long duration (1 msec)."
 msgid_plural "Has too long duration (%1 msecs)."
 msgstr[0] ""
 
-#: src/core/subtitleline.cpp:115
+#: src/core/subtitleline.cpp:119
 #, kde-format
 msgid "Has too short duration (1 msec)."
 msgid_plural "Has too short duration (%1 msecs)."
 msgstr[0] ""
 
-#: src/core/subtitleline.cpp:116
+#: src/core/subtitleline.cpp:120
 #, kde-format
 msgid "Overlaps with next line."
 msgstr "與下一行重疊。"
 
-#: src/core/subtitleline.cpp:117
+#: src/core/subtitleline.cpp:121
 #, kde-format
 msgid "Has untranslated text."
 msgstr "有未翻譯的文字。"
 
-#: src/core/subtitleline.cpp:118
+#: src/core/subtitleline.cpp:122
 #, kde-format
 msgid "Has user mark."
 msgstr "有使用者標記。"
 
-#: src/core/subtitleline.cpp:379 src/core/undo/subtitlelineactions.cpp:105
+#: src/core/subtitleline.cpp:383 src/core/undo/subtitlelineactions.cpp:105
 #, kde-format
 msgid "Set Line Show Time"
 msgstr "設定行數顯示時間"
 
-#: src/core/subtitleline.cpp:403 src/core/undo/subtitlelineactions.cpp:132
+#: src/core/subtitleline.cpp:407 src/core/undo/subtitlelineactions.cpp:132
 #, kde-format
 msgid "Set Line Hide Time"
 msgstr "設定行數隱藏時間"
 
-#: src/core/subtitleline.cpp:450
+#: src/core/subtitleline.cpp:454
 #, kde-format
 msgid "Set Line Times"
 msgstr "設定行數時間"
 
-#: src/core/subtitleline.cpp:547
+#: src/core/subtitleline.cpp:551
 #, kde-format
 msgid "Shift Line Times"
 msgstr ""
 
-#: src/core/subtitleline.cpp:557
+#: src/core/subtitleline.cpp:561
 #, kde-format
 msgid "Adjust Line Times"
 msgstr "調整行數時間"
@@ -3141,86 +3167,93 @@ msgstr "最大字元數量"
 msgid "Maximum number of lines"
 msgstr "最大行數"
 
+#. i18n: ectx: label, entry (MaxCharactersPerLine), group (Error Check)
+#: src/scconfig.kcfg:63
+#, fuzzy, kde-format
+#| msgid "Maximum number of characters"
+msgid "Maximum number of characters per line"
+msgstr "最大字元數量"
+
 #. i18n: ectx: label, entry (MinDuration), group (Error Check)
-#: src/scconfig.kcfg:64
+#: src/scconfig.kcfg:68
 #, kde-format
 msgid "Minimum duration"
 msgstr "最低時長"
 
 #. i18n: ectx: label, entry (MaxDuration), group (Error Check)
-#: src/scconfig.kcfg:68
+#: src/scconfig.kcfg:72
 #, kde-format
 msgid "Maximum duration"
 msgstr "最高時長"
 
 #. i18n: ectx: label, entry (MinDurationPerCharacter), group (Error Check)
-#: src/scconfig.kcfg:73
+#: src/scconfig.kcfg:77
 #, kde-format
 msgid "Minimum duration per character"
 msgstr "每字元最低時長"
 
 #. i18n: ectx: label, entry (IdealDurationPerCharacter), group (Error Check)
-#: src/scconfig.kcfg:77
+#: src/scconfig.kcfg:81
 #, kde-format
 msgid "Ideal duration per character"
 msgstr ""
 
 #. i18n: ectx: label, entry (MaxDurationPerCharacter), group (Error Check)
-#: src/scconfig.kcfg:81
+#: src/scconfig.kcfg:85
 #, kde-format
 msgid "Maximum duration per character"
 msgstr "每字元最高時長"
 
 #. i18n: ectx: label, entry (DefaultLanguage), group (Spelling)
-#: src/scconfig.kcfg:93
+#: src/scconfig.kcfg:97
 #, kde-format
 msgid "Default Language"
 msgstr "預設語言"
 
 #. i18n: ectx: label, entry (DefaultClient), group (Spelling)
-#: src/scconfig.kcfg:97
+#: src/scconfig.kcfg:101
 #, kde-format
 msgid "Default client"
 msgstr "預設用戶端"
 
 #. i18n: ectx: label, entry (CheckUppercase), group (Spelling)
-#: src/scconfig.kcfg:101
+#: src/scconfig.kcfg:105
 #, kde-format
 msgid "Check uppercase"
 msgstr "檢查大寫"
 
 #. i18n: ectx: label, entry (SkipRunTogether), group (Spelling)
-#: src/scconfig.kcfg:105
+#: src/scconfig.kcfg:109
 #, kde-format
 msgid "Skip Run Together"
 msgstr ""
 
 #. i18n: ectx: label, entry (wfInnerColor), group (Waveform Widget)
-#: src/scconfig.kcfg:112
+#: src/scconfig.kcfg:116
 #, kde-format
 msgid "Waveform Inner Color"
 msgstr "波形內部色彩"
 
 #. i18n: ectx: label, entry (wfOuterColor), group (Waveform Widget)
-#: src/scconfig.kcfg:116
+#: src/scconfig.kcfg:120
 #, kde-format
 msgid "Waveform Outer Color"
 msgstr "波形外側色彩"
 
 #. i18n: ectx: label, entry (wfSmoothScroll), group (Waveform Widget)
-#: src/scconfig.kcfg:120
+#: src/scconfig.kcfg:124
 #, kde-format
 msgid "Waveform Smooth Scrolling"
 msgstr "波形平滑捲動"
 
 #. i18n: ectx: label, entry (wfAutoscrollPadding), group (Waveform Widget)
-#: src/scconfig.kcfg:124
+#: src/scconfig.kcfg:128
 #, kde-format
 msgid "Autoscroll Padding"
 msgstr "自動捲動間隙"
 
 #. i18n: ectx: whatsthis, entry (wfAutoscrollPadding), group (Waveform Widget)
-#: src/scconfig.kcfg:126
+#: src/scconfig.kcfg:130
 #, kde-format
 msgid ""
 "Autoscroll page when play position reaches ScrollPadding distance "
@@ -3228,134 +3261,134 @@ msgid ""
 msgstr "播放位置與頁面邊界距離小於 ScrollPadding（百分比）時自動捲動頁面。"
 
 #. i18n: ectx: label, entry (wfSubBackground), group (Waveform Widget)
-#: src/scconfig.kcfg:129
+#: src/scconfig.kcfg:133
 #, kde-format
 msgid "Waveform Subtitle Background Color"
 msgstr "波形字幕背景色彩"
 
 #. i18n: ectx: label, entry (wfSubBorder), group (Waveform Widget)
-#: src/scconfig.kcfg:133
+#: src/scconfig.kcfg:137
 #, kde-format
 msgid "Waveform Subtitle Border Color"
 msgstr "波形字幕邊框色彩"
 
 #. i18n: ectx: label, entry (wfSubBorderWidth), group (Waveform Widget)
-#: src/scconfig.kcfg:137
+#: src/scconfig.kcfg:141
 #, kde-format
 msgid "Waveform Subtitle Border Width"
 msgstr "波形字幕邊框寬度"
 
 #. i18n: ectx: label, entry (wfSelBackground), group (Waveform Widget)
-#: src/scconfig.kcfg:141
+#: src/scconfig.kcfg:145
 #, kde-format
 msgid "Waveform Selected Subtitle Background Color"
 msgstr "波形已選字幕背景色彩"
 
 #. i18n: ectx: label, entry (wfSelBorder), group (Waveform Widget)
-#: src/scconfig.kcfg:145
+#: src/scconfig.kcfg:149
 #, kde-format
 msgid "Waveform Selected Subtitle Border Color"
 msgstr "波形已選字幕邊框色彩"
 
 #. i18n: ectx: label, entry (wfFontFamily), group (Waveform Widget)
 #. i18n: ectx: label, entry (FontFamily), group (VideoPlayer)
-#: src/scconfig.kcfg:149 src/scconfig.kcfg:201
+#: src/scconfig.kcfg:153 src/scconfig.kcfg:205
 #, kde-format
 msgid "Font Family"
 msgstr "字型家族"
 
 #. i18n: ectx: label, entry (wfSubNumberFontSize), group (Waveform Widget)
-#: src/scconfig.kcfg:153
+#: src/scconfig.kcfg:157
 #, kde-format
 msgid "Subtitle Number Font Size"
 msgstr "字幕編號字型大小"
 
 #. i18n: ectx: label, entry (wfSubNumberColor), group (Waveform Widget)
-#: src/scconfig.kcfg:157
+#: src/scconfig.kcfg:161
 #, kde-format
 msgid "Subtitle Number Font Color"
 msgstr "字幕編號字型色彩"
 
 #. i18n: ectx: label, entry (wfSubTextFontSize), group (Waveform Widget)
-#: src/scconfig.kcfg:161
+#: src/scconfig.kcfg:165
 #, kde-format
 msgid "Subtitle Text Font Size"
 msgstr "字幕文字字型大小"
 
 #. i18n: ectx: label, entry (wfSubTextColor), group (Waveform Widget)
-#: src/scconfig.kcfg:165
+#: src/scconfig.kcfg:169
 #, kde-format
 msgid "Subtitle Text Font Color"
 msgstr "字幕文字字型色彩"
 
 #. i18n: ectx: label, entry (wfMouseLocation), group (Waveform Widget)
-#: src/scconfig.kcfg:169
+#: src/scconfig.kcfg:173
 #, kde-format
 msgid "Mouse Location Line Color"
 msgstr "滑鼠位置行的色彩"
 
 #. i18n: ectx: label, entry (wfPlayLocation), group (Waveform Widget)
-#: src/scconfig.kcfg:173
+#: src/scconfig.kcfg:177
 #, kde-format
 msgid "Play Location Line Color"
 msgstr "播放位置行的色彩"
 
 #. i18n: ectx: label, entry (SeekJumpLength), group (VideoPlayer)
-#: src/scconfig.kcfg:184
+#: src/scconfig.kcfg:188
 #, kde-format
 msgid "Jump length on seek"
 msgstr "跳動時的距離"
 
 #. i18n: ectx: label, entry (StepJumpLength), group (VideoPlayer)
-#: src/scconfig.kcfg:188
+#: src/scconfig.kcfg:192
 #, kde-format
 msgid "Amount of frames to skip when stepping"
 msgstr ""
 
 #. i18n: ectx: label, entry (ShowPositionTimeEdit), group (VideoPlayer)
-#: src/scconfig.kcfg:192
+#: src/scconfig.kcfg:196
 #, kde-format
 msgid "Show editable time position"
 msgstr "顯示可編輯的時間位置"
 
 #. i18n: ectx: label, entry (VolumeAmplification), group (VideoPlayer)
-#: src/scconfig.kcfg:196
+#: src/scconfig.kcfg:200
 #, kde-format
 msgid "Volume Amplification"
 msgstr "音量放大"
 
 #. i18n: ectx: label, entry (FontSize), group (VideoPlayer)
-#: src/scconfig.kcfg:205
+#: src/scconfig.kcfg:209
 #, kde-format
 msgid "Font Size"
 msgstr "字型大小"
 
 #. i18n: ectx: label, entry (FontColor), group (VideoPlayer)
-#: src/scconfig.kcfg:209
+#: src/scconfig.kcfg:213
 #, kde-format
 msgid "Font Color"
 msgstr "字型顏色"
 
 #. i18n: ectx: label, entry (OutlineColor), group (VideoPlayer)
-#: src/scconfig.kcfg:213
+#: src/scconfig.kcfg:217
 #, kde-format
 msgid "Outline Color"
 msgstr "輪廓色彩"
 
 #. i18n: ectx: label, entry (OutlineWidth), group (VideoPlayer)
-#: src/scconfig.kcfg:217
+#: src/scconfig.kcfg:221
 #, kde-format
 msgid "Outline Width"
 msgstr "輪廓寬度"
 
 #. i18n: ectx: label, entry (translateEngine), group (Translation)
-#: src/scconfig.kcfg:224
+#: src/scconfig.kcfg:228
 #, kde-format
 msgid "Last used translate engine"
 msgstr "上次使用的翻譯引擎"
 
 #. i18n: ectx: label, entry (gctServiceJSON), group (GoogleCloudTranslate)
-#: src/scconfig.kcfg:231
+#: src/scconfig.kcfg:235
 #, kde-format
 msgid "Service Account JSON containing private key"
 msgstr "包含私鑰的服務帳戶 JSON"
@@ -3363,7 +3396,7 @@ msgstr "包含私鑰的服務帳戶 JSON"
 #. i18n: ectx: label, entry (gctLangSource), group (GoogleCloudTranslate)
 #. i18n: ectx: label, entry (dltLangSource), group (DeepLTranslate)
 #. i18n: ectx: label, entry (mintLangSource), group (MinTTranslate)
-#: src/scconfig.kcfg:234 src/scconfig.kcfg:258 src/scconfig.kcfg:271
+#: src/scconfig.kcfg:238 src/scconfig.kcfg:262 src/scconfig.kcfg:275
 #, kde-format
 msgid "source language - cached"
 msgstr "原文語言 - 已快取"
@@ -3371,43 +3404,43 @@ msgstr "原文語言 - 已快取"
 #. i18n: ectx: label, entry (gctLangTrans), group (GoogleCloudTranslate)
 #. i18n: ectx: label, entry (dltLangTrans), group (DeepLTranslate)
 #. i18n: ectx: label, entry (mintLangTrans), group (MinTTranslate)
-#: src/scconfig.kcfg:237 src/scconfig.kcfg:261 src/scconfig.kcfg:274
+#: src/scconfig.kcfg:241 src/scconfig.kcfg:265 src/scconfig.kcfg:278
 #, kde-format
 msgid "translation language - cached"
 msgstr "翻譯語言 - 已快取"
 
 #. i18n: ectx: label, entry (gctAccessToken), group (GoogleCloudTranslate)
-#: src/scconfig.kcfg:240
+#: src/scconfig.kcfg:244
 #, kde-format
 msgid "access token - cached"
 msgstr "存取權杖 - 已快取"
 
 #. i18n: ectx: label, entry (gctTokenExpires), group (GoogleCloudTranslate)
-#: src/scconfig.kcfg:243
+#: src/scconfig.kcfg:247
 #, kde-format
 msgid "access token expiry - cached"
 msgstr "存取權杖過期資訊 - 已快取"
 
 #. i18n: ectx: label, entry (gctTokenType), group (GoogleCloudTranslate)
-#: src/scconfig.kcfg:246
+#: src/scconfig.kcfg:250
 #, kde-format
 msgid "access token type - cached"
 msgstr "存取權杖類型 - 已快取"
 
 #. i18n: ectx: label, entry (dltAuthKey), group (DeepLTranslate)
-#: src/scconfig.kcfg:252
+#: src/scconfig.kcfg:256
 #, kde-format
 msgid "DeepL API authentication key"
 msgstr "DeepL API 認證金鑰"
 
 #. i18n: ectx: label, entry (dltApiDomain), group (DeepLTranslate)
-#: src/scconfig.kcfg:255
+#: src/scconfig.kcfg:259
 #, kde-format
 msgid "DeepL API domain name"
 msgstr "DeepL API 網域名稱"
 
 #. i18n: ectx: label, entry (mintURLPrefix), group (MinTTranslate)
-#: src/scconfig.kcfg:267
+#: src/scconfig.kcfg:271
 #, kde-format
 msgid "MinT API URL prefix"
 msgstr "MinT API URL 前綴"
