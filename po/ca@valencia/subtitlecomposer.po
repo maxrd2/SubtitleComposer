@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: subtitlecomposer\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-05-12 01:56+0000\n"
-"PO-Revision-Date: 2024-02-21 20:49+0100\n"
+"PO-Revision-Date: 2024-05-12 09:28+0200\n"
 "Last-Translator: Josep M. Ferrer <txemaq@gmail.com>\n"
 "Language-Team: Catalan <kde-i18n-ca@kde.org>\n"
 "Language: ca@valencia\n"
@@ -1301,10 +1301,9 @@ msgstr "Nombre màxim de caràcters:"
 
 #. i18n: ectx: property (text), widget (QLabel, lab_MaxCharactersPerLine)
 #: src/configs/errorsconfigwidget.ui:63
-#, fuzzy, kde-format
-#| msgid "Maximum number of characters:"
+#, kde-format
 msgid "Maximum number of characters per line:"
-msgstr "Nombre màxim de caràcters:"
+msgstr "Nombre màxim de caràcters per línia:"
 
 #. i18n: ectx: property (text), widget (QLabel, label_4)
 #: src/configs/errorsconfigwidget.ui:70
@@ -1876,10 +1875,9 @@ msgid "Too many lines"
 msgstr "Hi ha massa línies"
 
 #: src/core/subtitleline.cpp:65
-#, fuzzy, kde-format
-#| msgid "Too many characters"
+#, kde-format
 msgid "Too many characters per line"
-msgstr "Hi ha massa caràcters"
+msgstr "Hi ha massa caràcters per línia"
 
 #: src/core/subtitleline.cpp:67
 #, kde-format
@@ -1945,43 +1943,39 @@ msgstr "No hi ha cap text de traducció."
 #, kde-format
 msgid "Has too many characters in primary text (1 char)."
 msgid_plural "Has too many characters in primary text (%1 chars)."
-msgstr[0] "Hi ha massa caràcters al text primari (1 caràcter)."
-msgstr[1] "Hi ha massa caràcters al text primari (%1 caràcters)."
+msgstr[0] "Hi ha massa caràcters en el text primari (1 caràcter)."
+msgstr[1] "Hi ha massa caràcters en el text primari (%1 caràcters)."
 
 #: src/core/subtitleline.cpp:103
 #, kde-format
 msgid "Has too many characters in translation text (1 char)."
 msgid_plural "Has too many characters in translation text (%1 chars)."
-msgstr[0] "Hi ha massa caràcters al text de la traducció (1 caràcter)."
-msgstr[1] "Hi ha massa caràcters al text de la traducció (%1 caràcters)."
+msgstr[0] "Hi ha massa caràcters en el text de la traducció (1 caràcter)."
+msgstr[1] "Hi ha massa caràcters en el text de la traducció (%1 caràcters)."
 
 #: src/core/subtitleline.cpp:104
 #, kde-format
 msgid "Has too many lines in primary text (1 line)."
 msgid_plural "Has too many lines in primary text (%1 lines)."
-msgstr[0] "Hi ha massa línies al text primari (1 caràcter)."
-msgstr[1] "Hi ha massa línies al text primari (%1 caràcters)."
+msgstr[0] "Hi ha massa línies en el text primari (1 caràcter)."
+msgstr[1] "Hi ha massa línies en el text primari (%1 caràcters)."
 
 #: src/core/subtitleline.cpp:105
 #, kde-format
 msgid "Has too many lines in translation text (1 line)."
 msgid_plural "Has too many lines in translation text (%1 lines)."
-msgstr[0] "Hi ha massa línies al text de la traducció (1 caràcter)."
-msgstr[1] "Hi ha massa línies al text de la traducció (%1 caràcters)."
+msgstr[0] "Hi ha massa línies en el text de la traducció (1 caràcter)."
+msgstr[1] "Hi ha massa línies en el text de la traducció (%1 caràcters)."
 
 #: src/core/subtitleline.cpp:106
-#, fuzzy, kde-format
-#| msgid "Has too many characters in primary text (1 char)."
-#| msgid_plural "Has too many characters in primary text (%1 chars)."
+#, kde-format
 msgid "Has too many characters per line in primary text."
-msgstr "Hi ha massa caràcters al text primari (1 caràcter)."
+msgstr "Hi ha massa caràcters per línia en el text primari."
 
 #: src/core/subtitleline.cpp:107
-#, fuzzy, kde-format
-#| msgid "Has too many characters in translation text (1 char)."
-#| msgid_plural "Has too many characters in translation text (%1 chars)."
+#, kde-format
 msgid "Has too many characters per line in translation text."
-msgstr "Hi ha massa caràcters al text de la traducció (1 caràcter)."
+msgstr "Hi ha massa caràcters per línia en el text de la traducció."
 
 #: src/core/subtitleline.cpp:108
 #, kde-format
@@ -3240,10 +3234,9 @@ msgstr "Nombre màxim de línies"
 
 #. i18n: ectx: label, entry (MaxCharactersPerLine), group (Error Check)
 #: src/scconfig.kcfg:63
-#, fuzzy, kde-format
-#| msgid "Maximum number of characters"
+#, kde-format
 msgid "Maximum number of characters per line"
-msgstr "Nombre màxim de caràcters"
+msgstr "Nombre màxim de caràcters per línia"
 
 #. i18n: ectx: label, entry (MinDuration), group (Error Check)
 #: src/scconfig.kcfg:68

@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: subtitlecomposer\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-05-12 01:56+0000\n"
-"PO-Revision-Date: 2024-02-21 04:33+0100\n"
+"PO-Revision-Date: 2024-05-12 15:15+0200\n"
 "Last-Translator: Eloy Cuadra <ecuadra@eloihr.net>\n"
 "Language-Team: Spanish <kde-l10n-es@kde.org>\n"
 "Language: es\n"
@@ -18,7 +18,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Lokalize 23.08.4\n"
+"X-Generator: Lokalize 24.02.2\n"
 "X-Crowdin-Project: subtitlecomposer\n"
 "X-Crowdin-Language: es-ES\n"
 "X-Crowdin-File: subtitlecomposer.pot\n"
@@ -1288,20 +1288,19 @@ msgstr " líneas"
 #: src/dialogs/smarttextsadjustdialog.cpp:26
 #, kde-format
 msgid " characters"
-msgstr " letras"
+msgstr " caracteres"
 
 #. i18n: ectx: property (text), widget (QLabel, label)
 #: src/configs/errorsconfigwidget.ui:56
 #, kde-format
 msgid "Maximum number of characters:"
-msgstr "Número máximo de letras:"
+msgstr "Número máximo de caracteres:"
 
 #. i18n: ectx: property (text), widget (QLabel, lab_MaxCharactersPerLine)
 #: src/configs/errorsconfigwidget.ui:63
-#, fuzzy, kde-format
-#| msgid "Maximum number of characters:"
+#, kde-format
 msgid "Maximum number of characters per line:"
-msgstr "Número máximo de letras:"
+msgstr "Número máximo de caracteres por línea:"
 
 #. i18n: ectx: property (text), widget (QLabel, label_4)
 #: src/configs/errorsconfigwidget.ui:70
@@ -1861,7 +1860,7 @@ msgstr "Texto vacío"
 #: src/core/subtitleline.cpp:61
 #, kde-format
 msgid "Too many characters"
-msgstr "Demasiadas letras"
+msgstr "Demasiados caracteres"
 
 #: src/core/subtitleline.cpp:63
 #, kde-format
@@ -1869,10 +1868,9 @@ msgid "Too many lines"
 msgstr "Demasiadas líneas"
 
 #: src/core/subtitleline.cpp:65
-#, fuzzy, kde-format
-#| msgid "Too many characters"
+#, kde-format
 msgid "Too many characters per line"
-msgstr "Demasiadas letras"
+msgstr "Demasiados caracteres por línea"
 
 #: src/core/subtitleline.cpp:67
 #, kde-format
@@ -1892,12 +1890,12 @@ msgstr "Mayúscula después de elipsis de continuación de línea"
 #: src/core/subtitleline.cpp:73
 #, kde-format
 msgid "Too long duration per character"
-msgstr "Duración demasiado larga por cada letra"
+msgstr "Duración demasiado larga por carácter"
 
 #: src/core/subtitleline.cpp:75
 #, kde-format
 msgid "Too short duration per character"
-msgstr "Duración demasiado corta por cada letra"
+msgstr "Duración demasiado corta por carácter"
 
 #: src/core/subtitleline.cpp:77
 #, kde-format
@@ -1938,15 +1936,15 @@ msgstr "No tiene traducción."
 #, kde-format
 msgid "Has too many characters in primary text (1 char)."
 msgid_plural "Has too many characters in primary text (%1 chars)."
-msgstr[0] "Tiene demasiadas letras en el texto primario (1 letra)."
-msgstr[1] "Tiene demasiadas letras en el texto primario (%1 letras)."
+msgstr[0] "Tiene demasiados caracteres en el texto primario (1 carácter)."
+msgstr[1] "Tiene demasiados caracteres en el texto primario (%1 caracteres)."
 
 #: src/core/subtitleline.cpp:103
 #, kde-format
 msgid "Has too many characters in translation text (1 char)."
 msgid_plural "Has too many characters in translation text (%1 chars)."
-msgstr[0] "Tiene demasiadas letras en el texto traducido (1 letra)."
-msgstr[1] "Tiene demasiadas letras en el texto traducido (%1 letras)."
+msgstr[0] "Tiene demasiados caracteres en el texto traducido (1 carácter)."
+msgstr[1] "Tiene demasiados caracteres en el texto traducido (%1 caracteres)."
 
 #: src/core/subtitleline.cpp:104
 #, kde-format
@@ -1963,18 +1961,14 @@ msgstr[0] "Tiene demasiadas líneas en el texto traducido (1 línea)."
 msgstr[1] "Tiene demasiadas líneas en el texto traducido (%1 líneas)."
 
 #: src/core/subtitleline.cpp:106
-#, fuzzy, kde-format
-#| msgid "Has too many characters in primary text (1 char)."
-#| msgid_plural "Has too many characters in primary text (%1 chars)."
+#, kde-format
 msgid "Has too many characters per line in primary text."
-msgstr "Tiene demasiadas letras en el texto primario (1 letra)."
+msgstr "Tiene demasiados caracteres por línea en el texto primario."
 
 #: src/core/subtitleline.cpp:107
-#, fuzzy, kde-format
-#| msgid "Has too many characters in translation text (1 char)."
-#| msgid_plural "Has too many characters in translation text (%1 chars)."
+#, kde-format
 msgid "Has too many characters per line in translation text."
-msgstr "Tiene demasiadas letras en el texto traducido (1 letra)."
+msgstr "Tiene demasiados caracteres por línea en el texto traducido."
 
 #: src/core/subtitleline.cpp:108
 #, kde-format
@@ -2000,7 +1994,7 @@ msgstr "Tiene un guión innecesario en el texto traducido."
 #, kde-format
 msgid "Has capital letter after line continuation ellipsis in primary text."
 msgstr ""
-"Tiene una letra mayúscula luego de puntos suspensivos de continuación de "
+"Tiene una letra mayúscula después de puntos suspensivos de continuación de "
 "línea en el texto primario."
 
 #: src/core/subtitleline.cpp:113
@@ -2008,7 +2002,7 @@ msgstr ""
 msgid ""
 "Has capital letter after line continuation ellipsis in translation text."
 msgstr ""
-"Tiene una letra mayúscula luego de puntos suspensivos de continuación de "
+"Tiene una letra mayúscula después de puntos suspensivos de continuación de "
 "línea en el texto traducido."
 
 #: src/core/subtitleline.cpp:114
@@ -2017,11 +2011,11 @@ msgid "Has too long duration per character in primary text (1 msec/char)."
 msgid_plural ""
 "Has too long duration per character in primary text (%1 msecs/char)."
 msgstr[0] ""
-"Tiene duración demasiado larga por cada letra en el texto primario (1 mseg/"
-"letra)."
+"Tiene duración demasiado larga por carácter en el texto primario (1 ms/"
+"carácter)."
 msgstr[1] ""
-"Tiene duración demasiado larga por cada letra en el texto primario (%1 msegs/"
-"letra)."
+"Tiene duración demasiado larga por carácter en el texto primario (%1 ms/"
+"carácter)."
 
 #: src/core/subtitleline.cpp:115
 #, kde-format
@@ -2029,11 +2023,11 @@ msgid "Has too long duration per character in translation text (1 msec/char)."
 msgid_plural ""
 "Has too long duration per character in translation text (%1 msecs/char)."
 msgstr[0] ""
-"Tienen duración demasiado larga por cada letra en el texto traducido (1 mseg/"
-"letra)."
+"Tiene duración demasiado larga por carácter en el texto traducido (1 ms/"
+"carácter)."
 msgstr[1] ""
-"Tienen duración demasiado larga por cada letra en el texto traducido (%1 "
-"msegs/letra)."
+"Tiene duración demasiado larga por carácter en el texto traducido (%1 ms/"
+"carácter)."
 
 #: src/core/subtitleline.cpp:116
 #, kde-format
@@ -2041,11 +2035,11 @@ msgid "Has too short duration per character in primary text (1 msec/char)."
 msgid_plural ""
 "Has too short duration per character in primary text (%1 msecs/char)."
 msgstr[0] ""
-"Tiene duración demasiado corta por cada letra en el texto primario (1 mseg/"
-"letra)."
+"Tiene duración demasiado corta por carácter en el texto primario (1 ms/"
+"carácter)."
 msgstr[1] ""
-"Tiene duración demasiado corta por cada letra en el texto primario (%1 msegs/"
-"letra)."
+"Tiene duración demasiado corta por carácter en el texto primario (%1 ms/"
+"carácter)."
 
 #: src/core/subtitleline.cpp:117
 #, kde-format
@@ -2053,11 +2047,11 @@ msgid "Has too short duration per character in translation text (1 msec/char)."
 msgid_plural ""
 "Has too short duration per character in translation text (%1 msecs/char)."
 msgstr[0] ""
-"Tiene duración demasiado corta por cada letra en el texto traducido (1 mseg/"
-"letra)."
+"Tiene duración demasiado corta por carácter en el texto traducido (1 ms/"
+"carácter)."
 msgstr[1] ""
-"Tiene duración demasiado corta por cada letra en el texto traducido (%1 "
-"msegs/letra)."
+"Tiene duración demasiado corta por carácter en el texto traducido (%1 ms/"
+"carácter)."
 
 #: src/core/subtitleline.cpp:118
 #, kde-format
@@ -2252,7 +2246,7 @@ msgstr "Milisegundos por palabra:"
 #: src/dialogs/autodurationsdialog.cpp:50
 #, kde-format
 msgid "Milliseconds per character:"
-msgstr "Milisegundos por letra:"
+msgstr "Milisegundos por carácter:"
 
 #: src/dialogs/autodurationsdialog.cpp:54
 #: src/dialogs/durationlimitsdialog.cpp:30
@@ -3237,10 +3231,9 @@ msgstr "Número máximo de líneas"
 
 #. i18n: ectx: label, entry (MaxCharactersPerLine), group (Error Check)
 #: src/scconfig.kcfg:63
-#, fuzzy, kde-format
-#| msgid "Maximum number of characters"
+#, kde-format
 msgid "Maximum number of characters per line"
-msgstr "Número máximo de caracteres"
+msgstr "Número máximo de caracteres por línea"
 
 #. i18n: ectx: label, entry (MinDuration), group (Error Check)
 #: src/scconfig.kcfg:68

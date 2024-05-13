@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: subtitlecomposer\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-05-12 01:56+0000\n"
-"PO-Revision-Date: 2024-03-22 16:18+0300\n"
+"PO-Revision-Date: 2024-05-12 15:15+0300\n"
 "Last-Translator: Emir SARI <emir_sari@icloud.com>\n"
 "Language-Team: Turkish <kde-l10n-tr@kde.org>\n"
 "Language: tr\n"
@@ -15,7 +15,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
-"X-Generator: Lokalize 24.02.1\n"
+"X-Generator: Lokalize 24.07.70\n"
 
 #: src/actions/kcodecactionext.cpp:29
 #, kde-format
@@ -1278,10 +1278,9 @@ msgstr "En çok karakter sayısı:"
 
 #. i18n: ectx: property (text), widget (QLabel, lab_MaxCharactersPerLine)
 #: src/configs/errorsconfigwidget.ui:63
-#, fuzzy, kde-format
-#| msgid "Maximum number of characters:"
+#, kde-format
 msgid "Maximum number of characters per line:"
-msgstr "En çok karakter sayısı:"
+msgstr "Satır başına en çok karakter sayısı:"
 
 #. i18n: ectx: property (text), widget (QLabel, label_4)
 #: src/configs/errorsconfigwidget.ui:70
@@ -1849,10 +1848,9 @@ msgid "Too many lines"
 msgstr "Pek çok satır"
 
 #: src/core/subtitleline.cpp:65
-#, fuzzy, kde-format
-#| msgid "Too many characters"
+#, kde-format
 msgid "Too many characters per line"
-msgstr "Pek çok karakter"
+msgstr "Satır başına pek çok karakter"
 
 #: src/core/subtitleline.cpp:67
 #, kde-format
@@ -1943,18 +1941,14 @@ msgstr[0] "Çeviri metninde pek çok satır (1 satır)."
 msgstr[1] "Çeviri metninde pek çok satır (%1 satır)."
 
 #: src/core/subtitleline.cpp:106
-#, fuzzy, kde-format
-#| msgid "Has too many characters in primary text (1 char)."
-#| msgid_plural "Has too many characters in primary text (%1 chars)."
+#, kde-format
 msgid "Has too many characters per line in primary text."
-msgstr "Birincil metinde pek çok karakter (1 karakter)."
+msgstr "Birincil metinde satır başına pek az karakter."
 
 #: src/core/subtitleline.cpp:107
-#, fuzzy, kde-format
-#| msgid "Has too many characters in translation text (1 char)."
-#| msgid_plural "Has too many characters in translation text (%1 chars)."
+#, kde-format
 msgid "Has too many characters per line in translation text."
-msgstr "Çeviri metninde pek çok karakter (1 karakter)."
+msgstr "Çeviri metninde satır başına pek az karakter."
 
 #: src/core/subtitleline.cpp:108
 #, kde-format
@@ -3195,10 +3189,9 @@ msgstr "En çok satır sayısı"
 
 #. i18n: ectx: label, entry (MaxCharactersPerLine), group (Error Check)
 #: src/scconfig.kcfg:63
-#, fuzzy, kde-format
-#| msgid "Maximum number of characters"
+#, kde-format
 msgid "Maximum number of characters per line"
-msgstr "En çok karakter sayısı"
+msgstr "Satır başına en çok karakter sayısı"
 
 #. i18n: ectx: label, entry (MinDuration), group (Error Check)
 #: src/scconfig.kcfg:68

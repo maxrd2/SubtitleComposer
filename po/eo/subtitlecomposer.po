@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: subtitlecomposer\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-05-12 01:56+0000\n"
-"PO-Revision-Date: 2024-04-28 07:38+0100\n"
+"PO-Revision-Date: 2024-05-12 23:22+0100\n"
 "Last-Translator: Oliver Kellogg <okellogg@users.sourceforge.net>\n"
 "Language-Team: Esperanto <kde-i18n-eo.org>\n"
 "Language: eo\n"
@@ -271,12 +271,12 @@ msgstr "Dividu la malfermitan subtitolon en du partoj"
 #: src/application_actions.cpp:179
 #, kde-format
 msgid "Join Subtitles..."
-msgstr "Aliĝu al Subtekstoj..."
+msgstr "Kunigi Subtekstojn..."
 
 #: src/application_actions.cpp:180
 #, kde-format
 msgid "Append to the opened subtitle another one"
-msgstr "Aldonu al la malfermita subtitolo alian"
+msgstr "Aldoni al la malfermita subtitolo alian"
 
 #: src/application_actions.cpp:187
 #, kde-format
@@ -328,7 +328,7 @@ msgstr "Kunigi liniojn"
 #: src/application_actions.cpp:221
 #, kde-format
 msgid "Join selected lines"
-msgstr "Aliĝu elektitajn liniojn"
+msgstr "Kunigi elektitajn liniojn"
 
 #: src/application_actions.cpp:228 src/errors/finderrorsdialog.cpp:114
 #: src/gui/treeview/richlineedit.cpp:112 src/widgets/simplerichtextedit.cpp:455
@@ -459,37 +459,37 @@ msgstr "Literumo..."
 #: src/application_actions.cpp:334
 #, kde-format
 msgid "Check lines spelling"
-msgstr "Kontrolu liniojn literumadon"
+msgstr "Kontroli literumadon de linioj"
 
 #: src/application_actions.cpp:340
 #, kde-format
 msgid "Toggle Mark"
-msgstr "Ŝaltigu Markon"
+msgstr "Baskuligi Markon"
 
 #: src/application_actions.cpp:341
 #, kde-format
 msgid "Toggle mark on selected lines"
-msgstr "Ŝaltigu markon sur elektitaj linioj"
+msgstr "Baskuligi markon sur elektitaj linioj"
 
 #: src/application_actions.cpp:349 src/gui/currentlinewidget.cpp:322
 #, kde-format
 msgid "Toggle Bold"
-msgstr "Ŝaltu Grada"
+msgstr "Baskuligi Grasan"
 
 #: src/application_actions.cpp:350
 #, kde-format
 msgid "Toggle selected lines bold attribute"
-msgstr "Ŝaltu elektitajn liniojn grasan atributon"
+msgstr "Baskuligi elektitajn liniojn grasan atributon"
 
 #: src/application_actions.cpp:358 src/gui/currentlinewidget.cpp:326
 #, kde-format
 msgid "Toggle Italic"
-msgstr "Ŝaltu kursivan"
+msgstr "Baskuligi Kursivan"
 
 #: src/application_actions.cpp:359
 #, kde-format
 msgid "Toggle selected lines italic attribute"
-msgstr "Ŝaltigu elektitajn liniojn kursivan atributon"
+msgstr "Baskuligi elektitajn liniojn kursivan atributon"
 
 #: src/application_actions.cpp:367 src/gui/currentlinewidget.cpp:330
 #, kde-format
@@ -499,7 +499,7 @@ msgstr "Baskuligi Substreki"
 #: src/application_actions.cpp:368
 #, kde-format
 msgid "Toggle selected lines underline attribute"
-msgstr "Ŝaltu elektitajn liniojn substreki atributon"
+msgstr "Baskuligi elektitajn liniojn substreki atributon"
 
 #: src/application_actions.cpp:376 src/gui/currentlinewidget.cpp:334
 #, kde-format
@@ -509,7 +509,7 @@ msgstr "Baskuligi Trafrapi"
 #: src/application_actions.cpp:377
 #, kde-format
 msgid "Toggle selected lines strike through attribute"
-msgstr "Ŝaltu elektitajn liniojn tra la atributo"
+msgstr "Baskuligi elektitajn liniojn tra la atributo"
 
 #: src/application_actions.cpp:385 src/gui/currentlinewidget.cpp:338
 #, kde-format
@@ -1187,7 +1187,7 @@ msgstr "Kontrolo de Eraro"
 #: src/configs/configdialog.cpp:41
 #, kde-format
 msgid "Error Check Settings"
-msgstr "Eraraj Kontrolaj Agordoj"
+msgstr "Erar-Kontrolaj Agordoj"
 
 #: src/configs/configdialog.cpp:47
 #, kde-format
@@ -1256,10 +1256,9 @@ msgstr "Maksimuma nombro da signoj:"
 
 #. i18n: ectx: property (text), widget (QLabel, lab_MaxCharactersPerLine)
 #: src/configs/errorsconfigwidget.ui:63
-#, fuzzy, kde-format
-#| msgid "Maximum number of characters:"
+#, kde-format
 msgid "Maximum number of characters per line:"
-msgstr "Maksimuma nombro da signoj:"
+msgstr "Maksimuma nombro da signoj po linio:"
 
 #. i18n: ectx: property (text), widget (QLabel, label_4)
 #: src/configs/errorsconfigwidget.ui:70
@@ -1766,7 +1765,7 @@ msgstr "Sinkronigi Subtitolojn"
 #: src/core/subtitle.cpp:1199 src/dialogs/joinsubtitlesdialog.cpp:24
 #, kde-format
 msgid "Join Subtitles"
-msgstr "Aliĝu al Subtekstoj"
+msgstr "Kunigi Subtekstojn"
 
 #: src/core/subtitle.cpp:1244 src/core/subtitle.cpp:1250
 #, kde-format
@@ -1807,7 +1806,7 @@ msgstr "Viŝi Liniajn Erarojn"
 #: src/errors/errorfinder.cpp:84
 #, kde-format
 msgid "Check Lines Errors"
-msgstr "Kontrolu Liniajn Erarojn"
+msgstr "Kontroli Liniajn Erarojn"
 
 #: src/core/subtitleline.cpp:59
 #, kde-format
@@ -1825,10 +1824,9 @@ msgid "Too many lines"
 msgstr "Tro da linioj"
 
 #: src/core/subtitleline.cpp:65
-#, fuzzy, kde-format
-#| msgid "Too many characters"
+#, kde-format
 msgid "Too many characters per line"
-msgstr "Tro da signoj"
+msgstr "Tro da signoj po linio"
 
 #: src/core/subtitleline.cpp:67
 #, kde-format
@@ -1919,18 +1917,14 @@ msgstr[0] "Havas tro multajn liniojn en tradukita teksto (1 linio)."
 msgstr[1] "Havas tro multajn liniojn en tradukita teksto (%1 linioj)."
 
 #: src/core/subtitleline.cpp:106
-#, fuzzy, kde-format
-#| msgid "Has too many characters in primary text (1 char)."
-#| msgid_plural "Has too many characters in primary text (%1 chars)."
+#, kde-format
 msgid "Has too many characters per line in primary text."
-msgstr "Havas tro multajn signojn en primara teksto (1 signo)."
+msgstr "Havas tro multajn signojn en primara teksto."
 
 #: src/core/subtitleline.cpp:107
-#, fuzzy, kde-format
-#| msgid "Has too many characters in translation text (1 char)."
-#| msgid_plural "Has too many characters in translation text (%1 chars)."
+#, kde-format
 msgid "Has too many characters per line in translation text."
-msgstr "Havas tro multajn signojn en tradukita teksto (1 signo)."
+msgstr "Havas tro multajn signojn en tradukita teksto."
 
 #: src/core/subtitleline.cpp:108
 #, kde-format
@@ -3166,10 +3160,9 @@ msgstr "Maksimuma nombro da linioj"
 
 #. i18n: ectx: label, entry (MaxCharactersPerLine), group (Error Check)
 #: src/scconfig.kcfg:63
-#, fuzzy, kde-format
-#| msgid "Maximum number of characters"
+#, kde-format
 msgid "Maximum number of characters per line"
-msgstr "Maksimuma nombro da signoj"
+msgstr "Maksimuma nombro da signoj po linio"
 
 #. i18n: ectx: label, entry (MinDuration), group (Error Check)
 #: src/scconfig.kcfg:68
@@ -3217,13 +3210,13 @@ msgstr "Defaŭlta kliento"
 #: src/scconfig.kcfg:105
 #, kde-format
 msgid "Check uppercase"
-msgstr "Kontrolu majusklojn"
+msgstr "Kontroli majusklojn"
 
 #. i18n: ectx: label, entry (SkipRunTogether), group (Spelling)
 #: src/scconfig.kcfg:109
 #, kde-format
 msgid "Skip Run Together"
-msgstr "Saltu Kuru Kune"
+msgstr "Salti Kunkuron"
 
 #. i18n: ectx: label, entry (wfInnerColor), group (Waveform Widget)
 #: src/scconfig.kcfg:116
@@ -4188,12 +4181,12 @@ msgstr "Forigi"
 #: src/widgets/simplerichtextedit.cpp:495
 #, kde-format
 msgid "Check Spelling..."
-msgstr "Kontroli ortografion..."
+msgstr "Kontroli Ortografion..."
 
 #: src/widgets/simplerichtextedit.cpp:500
 #, kde-format
 msgid "Auto Spell Check"
-msgstr "Aŭtomata literumkontrolo"
+msgstr "Aŭtomata Literumkontrolo"
 
 #: src/widgets/simplerichtextedit.cpp:505
 #, kde-format

@@ -7,15 +7,15 @@ msgstr ""
 "Project-Id-Version: subtitlecomposer\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-05-12 01:56+0000\n"
-"PO-Revision-Date: 2024-05-03 08:57+0200\n"
-"Last-Translator: Stefan Asserhäll <stefan.asserhall@gmail.com>\n"
+"PO-Revision-Date: 2024-05-12 06:29+0200\n"
+"Last-Translator: Stefan Asserhäll <stefan.asserhall@bredband.net>\n"
 "Language-Team: Swedish <kde-i18n-doc@kde.org>\n"
 "Language: sv\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Lokalize 23.08.3\n"
+"X-Generator: Lokalize 23.08.5\n"
 
 #: src/actions/kcodecactionext.cpp:29
 #, kde-format
@@ -1279,10 +1279,9 @@ msgstr "Maximalt antal tecken:"
 
 #. i18n: ectx: property (text), widget (QLabel, lab_MaxCharactersPerLine)
 #: src/configs/errorsconfigwidget.ui:63
-#, fuzzy, kde-format
-#| msgid "Maximum number of characters:"
+#, kde-format
 msgid "Maximum number of characters per line:"
-msgstr "Maximalt antal tecken:"
+msgstr "Maximalt antal tecken per rad:"
 
 #. i18n: ectx: property (text), widget (QLabel, label_4)
 #: src/configs/errorsconfigwidget.ui:70
@@ -1850,10 +1849,9 @@ msgid "Too many lines"
 msgstr "För många rader"
 
 #: src/core/subtitleline.cpp:65
-#, fuzzy, kde-format
-#| msgid "Too many characters"
+#, kde-format
 msgid "Too many characters per line"
-msgstr "För många tecken"
+msgstr "För många tecken per rad"
 
 #: src/core/subtitleline.cpp:67
 #, kde-format
@@ -1944,18 +1942,14 @@ msgstr[0] "Har för många rader i översättningstext (1 rad)."
 msgstr[1] "Har för många rader i översättningstext (%1 rader)."
 
 #: src/core/subtitleline.cpp:106
-#, fuzzy, kde-format
-#| msgid "Has too many characters in primary text (1 char)."
-#| msgid_plural "Has too many characters in primary text (%1 chars)."
+#, kde-format
 msgid "Has too many characters per line in primary text."
-msgstr "Har för många tecken i primärtext (1 tecken)."
+msgstr "Har för många tecken per rad i primärtext."
 
 #: src/core/subtitleline.cpp:107
-#, fuzzy, kde-format
-#| msgid "Has too many characters in translation text (1 char)."
-#| msgid_plural "Has too many characters in translation text (%1 chars)."
+#, kde-format
 msgid "Has too many characters per line in translation text."
-msgstr "Har för många tecken i översatt text (1 tecken)."
+msgstr "Har för många tecken per rad i översatt text."
 
 #: src/core/subtitleline.cpp:108
 #, kde-format
@@ -3200,10 +3194,9 @@ msgstr "Maximalt antal rader"
 
 #. i18n: ectx: label, entry (MaxCharactersPerLine), group (Error Check)
 #: src/scconfig.kcfg:63
-#, fuzzy, kde-format
-#| msgid "Maximum number of characters"
+#, kde-format
 msgid "Maximum number of characters per line"
-msgstr "Maximalt antal tecken"
+msgstr "Maximalt antal tecken per rad"
 
 #. i18n: ectx: label, entry (MinDuration), group (Error Check)
 #: src/scconfig.kcfg:68

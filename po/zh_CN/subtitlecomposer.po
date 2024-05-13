@@ -1264,10 +1264,9 @@ msgstr "最大字符数："
 
 #. i18n: ectx: property (text), widget (QLabel, lab_MaxCharactersPerLine)
 #: src/configs/errorsconfigwidget.ui:63
-#, fuzzy, kde-format
-#| msgid "Maximum number of characters:"
+#, kde-format
 msgid "Maximum number of characters per line:"
-msgstr "最大字符数："
+msgstr ""
 
 #. i18n: ectx: property (text), widget (QLabel, label_4)
 #: src/configs/errorsconfigwidget.ui:70
@@ -1834,10 +1833,9 @@ msgid "Too many lines"
 msgstr "行数过多"
 
 #: src/core/subtitleline.cpp:65
-#, fuzzy, kde-format
-#| msgid "Too many characters"
+#, kde-format
 msgid "Too many characters per line"
-msgstr "字符过多"
+msgstr ""
 
 #: src/core/subtitleline.cpp:67
 #, kde-format
@@ -1924,18 +1922,14 @@ msgid_plural "Has too many lines in translation text (%1 lines)."
 msgstr[0] "译文文本中行数过多 (%1 个字符)"
 
 #: src/core/subtitleline.cpp:106
-#, fuzzy, kde-format
-#| msgid "Has too many characters in primary text (1 char)."
-#| msgid_plural "Has too many characters in primary text (%1 chars)."
+#, kde-format
 msgid "Has too many characters per line in primary text."
-msgstr "主文本中字符过多 (%1 个字符)"
+msgstr ""
 
 #: src/core/subtitleline.cpp:107
-#, fuzzy, kde-format
-#| msgid "Has too many characters in translation text (1 char)."
-#| msgid_plural "Has too many characters in translation text (%1 chars)."
+#, kde-format
 msgid "Has too many characters per line in translation text."
-msgstr "译文文本中字符过多 (%1 个字符)"
+msgstr ""
 
 #: src/core/subtitleline.cpp:108
 #, kde-format
@@ -3169,10 +3163,9 @@ msgstr "最大行数"
 
 #. i18n: ectx: label, entry (MaxCharactersPerLine), group (Error Check)
 #: src/scconfig.kcfg:63
-#, fuzzy, kde-format
-#| msgid "Maximum number of characters"
+#, kde-format
 msgid "Maximum number of characters per line"
-msgstr "最大字符数"
+msgstr ""
 
 #. i18n: ectx: label, entry (MinDuration), group (Error Check)
 #: src/scconfig.kcfg:68
