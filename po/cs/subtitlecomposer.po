@@ -1283,10 +1283,9 @@ msgstr "Maximální počet znaků:"
 
 #. i18n: ectx: property (text), widget (QLabel, lab_MaxCharactersPerLine)
 #: src/configs/errorsconfigwidget.ui:63
-#, fuzzy, kde-format
-#| msgid "Maximum number of characters:"
+#, kde-format
 msgid "Maximum number of characters per line:"
-msgstr "Maximální počet znaků:"
+msgstr ""
 
 #. i18n: ectx: property (text), widget (QLabel, label_4)
 #: src/configs/errorsconfigwidget.ui:70
@@ -1854,10 +1853,9 @@ msgid "Too many lines"
 msgstr "Příliš mnoho řádků"
 
 #: src/core/subtitleline.cpp:65
-#, fuzzy, kde-format
-#| msgid "Too many characters"
+#, kde-format
 msgid "Too many characters per line"
-msgstr "Příliš mnoho znaků"
+msgstr ""
 
 #: src/core/subtitleline.cpp:67
 #, kde-format
@@ -1952,18 +1950,14 @@ msgstr[1] "Má příliš mnoho řádků v překladu (%1 řádky)."
 msgstr[2] "Má příliš mnoho řádků v překladu (%1 řádků)."
 
 #: src/core/subtitleline.cpp:106
-#, fuzzy, kde-format
-#| msgid "Has too many characters in primary text (1 char)."
-#| msgid_plural "Has too many characters in primary text (%1 chars)."
+#, kde-format
 msgid "Has too many characters per line in primary text."
-msgstr "Má příliš mnoho znaků v primárním textu (1 znak)."
+msgstr ""
 
 #: src/core/subtitleline.cpp:107
-#, fuzzy, kde-format
-#| msgid "Has too many characters in translation text (1 char)."
-#| msgid_plural "Has too many characters in translation text (%1 chars)."
+#, kde-format
 msgid "Has too many characters per line in translation text."
-msgstr "Má příliš mnoho znaků v přeloženém textu (1 znak)."
+msgstr ""
 
 #: src/core/subtitleline.cpp:108
 #, kde-format
@@ -3212,10 +3206,9 @@ msgstr "Maximální počet řádků"
 
 #. i18n: ectx: label, entry (MaxCharactersPerLine), group (Error Check)
 #: src/scconfig.kcfg:63
-#, fuzzy, kde-format
-#| msgid "Maximum number of characters"
+#, kde-format
 msgid "Maximum number of characters per line"
-msgstr "Maximální počet znaků"
+msgstr ""
 
 #. i18n: ectx: label, entry (MinDuration), group (Error Check)
 #: src/scconfig.kcfg:68
