@@ -499,20 +499,31 @@ CurrentLineWidget::buildTextDescription(bool primary)
 	QString res;
 
 	// character count
+	bool tagStarted = false;
 	QStringList lines = text.split(QLatin1Char('\n'));
-	res += text.length() > SCConfig::maxCharacters() ? colorTagRed : colorTagBlank;
+	if(text.length() > SCConfig::maxCharacters()) {
+		tagStarted = true;
+		res += colorTagRed;
+	} else {
+		res += colorTagBlank;
+	}
 	for(int i = 0; i < lines.length(); i++) {
-		if(i >= SCConfig::maxLines())
+		if(!tagStarted && i >= SCConfig::maxLines())
 			res += colorTagRed;
 		if(i)
 			res += $(" + ");
+		const bool wrap = !tagStarted && lines[i].length() > SCConfig::maxCharactersPerLine();
+		if(wrap)
+			res += colorTagRed;
 		res += QString::number(lines.at(i).length());
+		if(wrap)
+			res += colorTagEnd;
 	}
-	if(lines.length() > SCConfig::maxLines())
-		res += colorTagEnd;
 	if(lines.length() > 1)
 		res += $(" = ") % QString::number(text.length() - lines.length() + 1);
-	res += colorTagEnd % QLatin1Char(' ') % i18n("chars");
+	if(tagStarted)
+		res += colorTagEnd;
+	res += QLatin1Char(' ') % i18n("chars");
 
 	res += blkSep;
 
