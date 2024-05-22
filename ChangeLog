@@ -1,4 +1,20 @@
-﻿Version 0.8.0
+﻿Version 0.8.1
+- Fixed (rare) memory issues and crashes
+- Fixed crashes on waveform widget
+- Fixed video player rendering in Qt 6.7
+- Fixed scripts manager assert failures
+- Fixed inability to view non-script files in scripts manager
+- Fixed seeking in some media formats
+- Fixed video player subtitle rendering
+- Fixed broken rendering on hi-res videos
+- Fixed HDR video rendering (SMPTE-ST-2084 gamma transfer)
+- Added check for maximum number of characters per line
+- Added MinT translate engine
+- Improved translation support and UI
+- Improved video player scaling
+- Dropped KIO file operations
+
+Version 0.8.0
 - Fixed video player on GLES only hardware
 - Fixed skewed video on video player
 - Fixed closing fullscreen video player

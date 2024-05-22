@@ -514,6 +514,26 @@
   <project_group>KDE</project_group>
   <content_rating type="oars-1.1"/>
   <releases>
+    <release version="0.8.1" date="2024-06-07">
+      <description>
+        <ul>
+          <li>Fixed (rare) memory issues and crashes</li>
+          <li>Fixed crashes on waveform widget</li>
+          <li>Fixed video player rendering in Qt 6.7</li>
+          <li>Fixed scripts manager assert failures</li>
+          <li>Fixed inability to view non-script files in scripts manager</li>
+          <li>Fixed seeking in some media formats</li>
+          <li>Fixed video player subtitle rendering</li>
+          <li>Fixed broken rendering on hi-res videos</li>
+          <li>Fixed HDR video rendering (SMPTE-ST-2084 gamma transfer)</li>
+          <li>Added check for maximum number of characters per line</li>
+          <li>Added MinT translate engine</li>
+          <li>Improved translation support and UI</li>
+          <li>Improved video player scaling</li>
+          <li>Dropped KIO file operations</li>
+        </ul>
+      </description>
+    </release>
     <release version="0.8.0" date="2023-11-06">
       <url>https://subtitlecomposer.kde.org/2023/11/06/subtitle-composer-0.8.0-released.html</url>
       <description>
