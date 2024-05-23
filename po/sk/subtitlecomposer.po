@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: subtitlecomposer\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-05-12 01:56+0000\n"
+"POT-Creation-Date: 2024-05-23 01:45+0000\n"
 "PO-Revision-Date: 2022-04-07 18:21+0200\n"
 "Last-Translator: Roman Paholik <wizzardsk@gmail.com>\n"
 "Language-Team: Slovak <kde-sk@linux.sk>\n"
@@ -2754,19 +2754,19 @@ msgstr "Zmeniť veľkosť písmen"
 msgid "No current line"
 msgstr ""
 
-#: src/gui/currentlinewidget.cpp:515
+#: src/gui/currentlinewidget.cpp:526
 #, fuzzy, kde-format
 #| msgid " characters"
 msgid "chars"
 msgstr "Znaky"
 
-#: src/gui/currentlinewidget.cpp:523
+#: src/gui/currentlinewidget.cpp:534
 #, fuzzy, kde-format
 #| msgid " characters"
 msgid "ms/char"
 msgstr " znaky"
 
-#: src/gui/currentlinewidget.cpp:525
+#: src/gui/currentlinewidget.cpp:536
 #, fuzzy, kde-format
 #| msgid " characters"
 msgid "chars/sec"

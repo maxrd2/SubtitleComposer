@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kdeorg\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-05-12 01:56+0000\n"
+"POT-Creation-Date: 2024-05-23 01:45+0000\n"
 "PO-Revision-Date: 2024-04-22 16:05\n"
 "Last-Translator: \n"
 "Language-Team: Chinese Simplified\n"
@@ -2730,17 +2730,17 @@ msgstr "更改类标签"
 msgid "No current line"
 msgstr "没有当前行"
 
-#: src/gui/currentlinewidget.cpp:515
+#: src/gui/currentlinewidget.cpp:526
 #, kde-format
 msgid "chars"
 msgstr "字符"
 
-#: src/gui/currentlinewidget.cpp:523
+#: src/gui/currentlinewidget.cpp:534
 #, kde-format
 msgid "ms/char"
 msgstr "毫秒每字符"
 
-#: src/gui/currentlinewidget.cpp:525
+#: src/gui/currentlinewidget.cpp:536
 #, kde-format
 msgid "chars/sec"
 msgstr "字符每秒"

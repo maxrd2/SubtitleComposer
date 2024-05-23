@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: subtitlecomposer\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-05-12 01:56+0000\n"
+"POT-Creation-Date: 2024-05-23 01:45+0000\n"
 "PO-Revision-Date: 2024-05-12 06:36+0200\n"
 "Last-Translator: Matjaž Jeran <matjaz.jeran@amis.net>\n"
 "Language-Team: Slovenian <lugos-slo@lugos.si>\n"
@@ -2781,17 +2781,17 @@ msgstr "Spremeni oznako razreda"
 msgid "No current line"
 msgstr "Ni trenutne vrstice"
 
-#: src/gui/currentlinewidget.cpp:515
+#: src/gui/currentlinewidget.cpp:526
 #, kde-format
 msgid "chars"
 msgstr "znakov"
 
-#: src/gui/currentlinewidget.cpp:523
+#: src/gui/currentlinewidget.cpp:534
 #, kde-format
 msgid "ms/char"
 msgstr "ms/znak"
 
-#: src/gui/currentlinewidget.cpp:525
+#: src/gui/currentlinewidget.cpp:536
 #, kde-format
 msgid "chars/sec"
 msgstr "znakov/sek"

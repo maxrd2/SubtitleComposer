@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: subtitlecomposer\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-05-12 01:56+0000\n"
+"POT-Creation-Date: 2024-05-23 01:45+0000\n"
 "PO-Revision-Date: 2019-10-27 09:15\n"
 "Last-Translator: Barcza Károly <kbarcza@blackpanther.hu>\n"
 "Language-Team: blackPanther Europe <info@blackpanther.hu>\n"
@@ -2763,19 +2763,19 @@ msgstr "Váltás erre"
 msgid "No current line"
 msgstr ""
 
-#: src/gui/currentlinewidget.cpp:515
+#: src/gui/currentlinewidget.cpp:526
 #, fuzzy, kde-format
 #| msgid " characters"
 msgid "chars"
 msgstr "karakterek"
 
-#: src/gui/currentlinewidget.cpp:523
+#: src/gui/currentlinewidget.cpp:534
 #, fuzzy, kde-format
 #| msgid " characters"
 msgid "ms/char"
 msgstr "karakterek"
 
-#: src/gui/currentlinewidget.cpp:525
+#: src/gui/currentlinewidget.cpp:536
 #, fuzzy, kde-format
 #| msgid " characters"
 msgid "chars/sec"

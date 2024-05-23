@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: subtitlecomposer\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-05-12 01:56+0000\n"
+"POT-Creation-Date: 2024-05-23 01:45+0000\n"
 "PO-Revision-Date: 2022-09-17 08:49+0200\n"
 "Last-Translator: Mincho Kondarev <mkondarev@yahoo.de>\n"
 "Language-Team: Bulgarian <kde-i18n-doc@kde.org>\n"
@@ -2792,17 +2792,17 @@ msgstr "Промяна на регистъра на буквите"
 msgid "No current line"
 msgstr "Няма текуща реплика"
 
-#: src/gui/currentlinewidget.cpp:515
+#: src/gui/currentlinewidget.cpp:526
 #, fuzzy, kde-format
 msgid "chars"
 msgstr " знака"
 
-#: src/gui/currentlinewidget.cpp:523
+#: src/gui/currentlinewidget.cpp:534
 #, fuzzy, kde-format
 msgid "ms/char"
 msgstr " знака"
 
-#: src/gui/currentlinewidget.cpp:525
+#: src/gui/currentlinewidget.cpp:536
 #, fuzzy, kde-format
 msgid "chars/sec"
 msgstr " знака"

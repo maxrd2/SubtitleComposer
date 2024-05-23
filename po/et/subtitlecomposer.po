@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: subtitlecomposer\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-05-12 01:56+0000\n"
+"POT-Creation-Date: 2024-05-23 01:45+0000\n"
 "PO-Revision-Date: 2020-02-21 11:52+0200\n"
 "Last-Translator: Marek Laane <qiilaq69@gmail.com>\n"
 "Language-Team: Estonian <kde-et@lists.linux.ee>\n"
@@ -2780,19 +2780,19 @@ msgstr "Tähsesuuruse muutmine"
 msgid "No current line"
 msgstr "Aktiivne rida puudub"
 
-#: src/gui/currentlinewidget.cpp:515
+#: src/gui/currentlinewidget.cpp:526
 #, fuzzy, kde-format
 #| msgid " characters"
 msgid "chars"
 msgstr " märki"
 
-#: src/gui/currentlinewidget.cpp:523
+#: src/gui/currentlinewidget.cpp:534
 #, fuzzy, kde-format
 #| msgid " msec/char"
 msgid "ms/char"
 msgstr " msek märgi kohta"
 
-#: src/gui/currentlinewidget.cpp:525
+#: src/gui/currentlinewidget.cpp:536
 #, fuzzy, kde-format
 #| msgid " characters"
 msgid "chars/sec"
