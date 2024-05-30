@@ -12,7 +12,7 @@ msgstr ""
 "Project-Id-Version: subtitlecomposer\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-05-23 01:45+0000\n"
-"PO-Revision-Date: 2024-04-26 10:28+0200\n"
+"PO-Revision-Date: 2024-05-29 11:33+0200\n"
 "Last-Translator: Vit Pelcak <vpelcak@suse.cz>\n"
 "Language-Team: Czech <kde-i18n-doc@kde.org>\n"
 "Language: cs\n"
@@ -1285,7 +1285,7 @@ msgstr "Maximální počet znaků:"
 #: src/configs/errorsconfigwidget.ui:63
 #, kde-format
 msgid "Maximum number of characters per line:"
-msgstr ""
+msgstr "Maximální počet znaků na řádek:"
 
 #. i18n: ectx: property (text), widget (QLabel, label_4)
 #: src/configs/errorsconfigwidget.ui:70
@@ -1855,7 +1855,7 @@ msgstr "Příliš mnoho řádků"
 #: src/core/subtitleline.cpp:65
 #, kde-format
 msgid "Too many characters per line"
-msgstr ""
+msgstr "Příliš mnoho znaků na řádek"
 
 #: src/core/subtitleline.cpp:67
 #, kde-format
@@ -3208,7 +3208,7 @@ msgstr "Maximální počet řádků"
 #: src/scconfig.kcfg:63
 #, kde-format
 msgid "Maximum number of characters per line"
-msgstr ""
+msgstr "Maximální počet znaků na řádek"
 
 #. i18n: ectx: label, entry (MinDuration), group (Error Check)
 #: src/scconfig.kcfg:68
