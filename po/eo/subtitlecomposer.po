@@ -1,15 +1,15 @@
 # translation of subtitlecomposer.pot to Esperanto
 # Copyright (C) 2024 Free Software Foundation, Inc.
 # This file is distributed under the same license as the subtitlecomposer package.
-# Oliver Kellogg <okellogg@users.sourceforge.net>, 2024.
+# Oliver Kellogg <olivermkellogg@gmail.com>, 2024.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: subtitlecomposer\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-05-23 01:45+0000\n"
-"PO-Revision-Date: 2024-05-12 23:22+0100\n"
-"Last-Translator: Oliver Kellogg <okellogg@users.sourceforge.net>\n"
+"PO-Revision-Date: 2024-05-30 22:41+0200\n"
+"Last-Translator: Oliver Kellogg <olivermkellogg@gmail.com>\n"
 "Language-Team: Esperanto <kde-i18n-eo.org>\n"
 "Language: eo\n"
 "MIME-Version: 1.0\n"
@@ -779,17 +779,17 @@ msgstr "Pliigi aŭdvidaĵan ludrapidecon"
 #: src/application_actions.cpp:616
 #, kde-format
 msgid "Increase media playback rate"
-msgstr "Pliigu la indicon de reprodukto de amaskomunikiloj"
+msgstr "Pliigi la reproduktan rapidecon de aŭdvidaĵoj"
 
 #: src/application_actions.cpp:623
 #, kde-format
 msgid "Decrease media play rate"
-msgstr "Malpliigu aŭdvidaĵan ludrapidecon"
+msgstr "Malpliigi aŭdvidaĵan ludrapidecon"
 
 #: src/application_actions.cpp:624
 #, kde-format
 msgid "Decrease media playback rate"
-msgstr "Malpliigu la indicon de reprodukto de amaskomunikiloj"
+msgstr "Malpliigi la reproduktan rapidecon de aŭdvidaĵoj"
 
 #: src/application_actions.cpp:630
 #, kde-format
@@ -1419,7 +1419,7 @@ msgstr "Defaŭlta paŭzo inter subtitolaj linioj:"
 #: src/configs/generalconfigwidget.ui:144
 #, kde-format
 msgid "Ju&mp to prev/next line offset:"
-msgstr "Saltu al antaŭa/sekva linio-offeto:"
+msgstr "Salti al a&ntaŭa/sekva liniodeŝovo:"
 
 #. i18n: ectx: property (title), widget (QGroupBox, m_grpQuickActions)
 #: src/configs/generalconfigwidget.ui:167
@@ -1437,7 +1437,7 @@ msgstr "Kompenso por kaptitaj &videotempoj:"
 #: src/configs/generalconfigwidget.ui:203
 #, kde-format
 msgid "Ti&me shift for selected lines:"
-msgstr "Tempoŝanĝo por elektitaj linioj:"
+msgstr "Te&mpodeŝovo por elektitaj linioj:"
 
 #: src/configs/playerconfigwidget.cpp:27
 #, kde-format
@@ -1474,7 +1474,7 @@ msgstr "Montru redakteblan pozicioregilon"
 #: src/configs/playerconfigwidget.ui:64
 #, kde-format
 msgid "Fra&me step amount:"
-msgstr "Kvanto de paŝo de kadro:"
+msgstr "Kva&nto de paŝo de kadro:"
 
 #. i18n: ectx: property (text), widget (QLabel, lab_VolumeAmplification)
 #: src/configs/playerconfigwidget.ui:74
@@ -2767,7 +2767,7 @@ msgstr "<b>Reprodukta indico</b>"
 #: src/gui/playerwidget.cpp:674
 #, kde-format
 msgid "<qt>There was an error opening media file %1.</qt>"
-msgstr "<qt>Okazis eraro dum la malfermado de amaskomunikila dosiero %1.</qt>"
+msgstr "<qt>Okazis eraro dum la malfermado de aŭdvidaĵa dosiero %1.</qt>"
 
 #: src/gui/playerwidget.cpp:690 src/gui/playerwidget.cpp:691
 #: src/gui/playerwidget.cpp:692 src/gui/playerwidget.cpp:693
@@ -3048,13 +3048,13 @@ msgstr "Flikiloj kaj Retejo"
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
 msgid "Your names"
-msgstr ""
+msgstr "Oliver Kellogg"
 
 #: src/main.cpp:165
 #, kde-format
 msgctxt "EMAIL OF TRANSLATORS"
 msgid "Your emails"
-msgstr ""
+msgstr "olivermkellogg@gmail.com"
 
 #: src/main.cpp:167
 #, kde-format
@@ -3108,13 +3108,13 @@ msgstr "Serĉu Offset Sur Duobla Klako"
 #: src/scconfig.kcfg:22
 #, kde-format
 msgid "Jump to prev/next line offset"
-msgstr "Saltu al antaŭa/sekva linio-offseto"
+msgstr "Salti al antaŭa/sekva linio-offseto"
 
 #. i18n: ectx: label, entry (UnpauseOnDoubleClick), group (General)
 #: src/scconfig.kcfg:26
 #, kde-format
 msgid "Unpause On Double Click"
-msgstr "Malŝaltu Dum Duobla Klako"
+msgstr "Malpaŭzigi Je Duobla Klako"
 
 #. i18n: ectx: label, entry (AutomaticVideoLoad), group (General)
 #: src/scconfig.kcfg:30
