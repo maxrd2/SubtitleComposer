@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: subtitlecomposer\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-05-23 01:45+0000\n"
-"PO-Revision-Date: 2024-02-14 19:17+0200\n"
+"PO-Revision-Date: 2024-03-20 18:10+0200\n"
 "Last-Translator: Tommi Nieminen <translator@legisign.org>\n"
 "Language-Team: Finnish <kde-i18n-doc@kde.org>\n"
 "Language: fi\n"
@@ -3485,7 +3485,7 @@ msgstr "DeepL-APIN toimialuenimi"
 #: src/scconfig.kcfg:271
 #, kde-format
 msgid "MinT API URL prefix"
-msgstr ""
+msgstr "MinT APIn verkko-osoitteen etuliite"
 
 #: src/scripting/scriptsmanager.cpp:73
 #, kde-format
@@ -3990,13 +3990,13 @@ msgstr ""
 #: src/translate/deeplengine.cpp:76
 #, kde-format
 msgid "DeepL Engine Error"
-msgstr "DeepL-koneen virhe"
+msgstr "DeepL-moottorin virhe"
 
 #: src/translate/deeplengine.cpp:102 src/translate/googlecloudengine.cpp:283
 #: src/translate/mintengine.cpp:125
 #, kde-format
 msgid "Updating languages..."
-msgstr ""
+msgstr "Päivitetään kieliä…"
 
 #: src/translate/deeplengine.cpp:123 src/translate/googlecloudengine.cpp:298
 #, kde-format
@@ -4005,10 +4005,9 @@ msgstr "Tunnista kieli automaattisesti"
 
 #: src/translate/deeplengine.cpp:158 src/translate/googlecloudengine.cpp:331
 #: src/translate/mintengine.cpp:221
-#, fuzzy, kde-format
-#| msgid "Translate..."
+#, kde-format
 msgid "Translating lines..."
-msgstr "Käännä…"
+msgstr "Käännetään…"
 
 #. i18n: ectx: property (title), widget (QGroupBox, grpAuth)
 #: src/translate/deeplengine.ui:17 src/translate/googlecloudengine.ui:17
@@ -4115,28 +4114,27 @@ msgstr ""
 "</p>"
 
 #: src/translate/mintengine.cpp:80
-#, fuzzy, kde-format
-#| msgid "DeepL Engine Error"
+#, kde-format
 msgid "MinT Engine Error"
-msgstr "DeepL-koneen virhe"
+msgstr "MinT-moottorin virhe"
 
 #. i18n: ectx: property (title), widget (QGroupBox, grpAuth)
 #: src/translate/mintengine.ui:17
 #, kde-format
 msgid "API Server"
-msgstr ""
+msgstr "API-palvelin"
 
 #. i18n: ectx: property (text), widget (QLabel, labApiURLPrefix)
 #: src/translate/mintengine.ui:40
 #, kde-format
 msgid "Service URL:"
-msgstr ""
+msgstr "Palvelun verkko-osoite:"
 
 #. i18n: ectx: property (text), widget (QPushButton, btnUpdate)
 #: src/translate/mintengine.ui:50
 #, kde-format
 msgid "Update"
-msgstr ""
+msgstr "Päivitä"
 
 #. i18n: ectx: property (text), widget (QLabel, labHelp)
 #: src/translate/mintengine.ui:76
@@ -4147,6 +4145,10 @@ msgid ""
 "machinetranslation\">setup your own service</a> or use some <a href="
 "\"https://translate.wmcloud.org/\">public API</a>."
 msgstr ""
+"MinT-konekäännösjärjestelmän APIn verkko-osoite vaaditaan. Voit <a href="
+"\"https://gerrit.wikimedia.org/g/mediawiki/services/machinetranslation"
+"\">asettaa oman palvelun</a> tai käyttää jotakin <a href=\"https://translate."
+"wmcloud.org/\">julkista APIa</a>."
 
 #: src/translate/translatedialog.cpp:31
 #, kde-format
