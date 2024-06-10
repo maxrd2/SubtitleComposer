@@ -533,6 +533,25 @@
           <li>Dropped KIO file operations</li>
         </ul>
       </description>
+      <artifacts>
+        <artifact type="binary" platform="x86_64-linux-gnu">
+          <location>https://downloadcontent.opensuse.org/repositories/home:/maxrd2/AppImage/subtitlecomposer-latest-x86_64.AppImage</location>
+          <checksum type="sha256">1222fd30bbcaf3586dfb78db27376e5e4852cb3f5d98878e2bff0744536bfcb7</checksum>
+          <size type="download">59066312</size>
+          <bundle type="appimage">subtitlecomposer-latest</bundle>
+        </artifact>
+        <artifact type="binary" platform="i386-linux-gnu">
+          <location>https://downloadcontent.opensuse.org/repositories/home:/maxrd2/AppImage/subtitlecomposer-latest-i686.AppImage</location>
+          <checksum type="sha256">2fea6c3e0a9d20a2d296ff8ab078a1fafbd2dbbafb0e315d312f9ab9c2759507</checksum>
+          <size type="download">63463856</size>
+          <bundle type="appimage">subtitlecomposer-latest</bundle>
+        </artifact>
+        <artifact type="source">
+          <location>https://download.kde.org/stable/subtitlecomposer/subtitlecomposer-0.8.1.tar.xz</location>
+          <checksum type="sha256">23c022768d7422c092149f41d51ebea80f54b27655573cf43f736efb88c30027</checksum>
+          <size type="download">763276</size>
+        </artifact>
+      </artifacts>
     </release>
     <release version="0.8.0" date="2023-11-06">
       <url>https://subtitlecomposer.kde.org/2023/11/06/subtitle-composer-0.8.0-released.html</url>
