@@ -113,6 +113,8 @@ SubtitleTextOverlay::drawDocPrepare(QPainter *painter)
 void
 SubtitleTextOverlay::drawDoc()
 {
+	if(m_image.isNull())
+		return;
 	QPainter painter(&m_image);
 	painter.setRenderHints(QPainter::Antialiasing | QPainter::TextAntialiasing | QPainter::SmoothPixmapTransform, true);
 	painter.setFont(m_font);
