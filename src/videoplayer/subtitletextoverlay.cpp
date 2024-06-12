@@ -207,6 +207,7 @@ SubtitleTextOverlay::setText(const QString &text)
 {
 	if(!m_text) {
 		m_text = new RichDocument(this);
+		m_text->setStylesheet(new RichCSS(this));
 	} else if(m_text->toHtml() == text) {
 		return;
 	}
