@@ -27,7 +27,6 @@ WaveRenderer::WaveRenderer(WaveformWidget *parent)
 	: QWidget(parent),
 	  m_wfw(parent)
 {
-	setAttribute(Qt::WA_OpaquePaintEvent, true);
 	setAttribute(Qt::WA_NoSystemBackground, true);
 	setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
 	setMouseTracking(true);
