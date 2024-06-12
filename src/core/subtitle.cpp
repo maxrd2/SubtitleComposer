@@ -45,15 +45,13 @@ Subtitle::Subtitle(double framesPerSecond)
 	  m_secondaryDirtyState(false),
 	  m_secondaryCleanIndex(0),
 	  m_framesPerSecond(framesPerSecond),
-	  m_stylesheet(new RichCSS()),
+	  m_stylesheet(new RichCSS(this)),
 	  m_formatData(nullptr)
 {}
 
 Subtitle::~Subtitle()
 {
 	qDeleteAll(m_lines);
-
-	delete m_stylesheet;
 	delete m_formatData;
 }
 
