@@ -97,15 +97,27 @@
 			<label>Default Language</label>
 			<default>en_US</default>
 		</entry>
+		<entry name="autodetectLanguage" type="Bool">
+			<label>Auto detect language</label>
+			<default>true</default>
+		</entry>
 		<entry name="DefaultClient" type="String">
 			<label>Default client</label>
 			<default></default>
 		</entry>
-		<entry name="CheckUppercase" type="Bool">
-			<label>Check uppercase</label>
+		<entry name="backgroundCheckerEnabled" type="Bool">
+			<label>Background checker enabled</label>
 			<default>true</default>
 		</entry>
-		<entry name="SkipRunTogether" type="Bool">
+		<entry name="checkerEnabledByDefault" type="Bool">
+			<label>Checker enabled by default</label>
+			<default>true</default>
+		</entry>
+		<entry name="skipUppercase" type="Bool">
+			<label>Skip uppercase</label>
+			<default>false</default>
+		</entry>
+		<entry name="skipRunTogether" type="Bool">
 			<label>Skip Run Together</label>
 			<default>true</default>
 		</entry>
