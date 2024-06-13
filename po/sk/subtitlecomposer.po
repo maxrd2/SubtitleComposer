@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: subtitlecomposer\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-05-23 01:45+0000\n"
+"POT-Creation-Date: 2024-06-13 01:41+0000\n"
 "PO-Revision-Date: 2022-04-07 18:21+0200\n"
 "Last-Translator: Roman Paholik <wizzardsk@gmail.com>\n"
 "Language-Team: Slovak <kde-sk@linux.sk>\n"
@@ -43,17 +43,17 @@ msgstr "Prejsť na riadok"
 msgid "&Go to line:"
 msgstr "Prejsť na riadok:"
 
-#: src/application.cpp:669 src/core/subtitle.cpp:881
+#: src/application.cpp:669 src/core/subtitle.cpp:879
 #, kde-format
 msgid "Maximize Durations"
 msgstr ""
 
-#: src/application.cpp:697 src/core/subtitle.cpp:1156
+#: src/application.cpp:697 src/core/subtitle.cpp:1154
 #, kde-format
 msgid "Unbreak Lines"
 msgstr ""
 
-#: src/application.cpp:708 src/core/subtitle.cpp:1165
+#: src/application.cpp:708 src/core/subtitle.cpp:1163
 #, kde-format
 msgid "Simplify Spaces"
 msgstr ""
@@ -310,7 +310,7 @@ msgstr "Odstrániť"
 msgid "Remove selected lines"
 msgstr ""
 
-#: src/application_actions.cpp:213 src/core/subtitle.cpp:563
+#: src/application_actions.cpp:213 src/core/subtitle.cpp:561
 #, kde-format
 msgid "Split Lines"
 msgstr ""
@@ -320,7 +320,7 @@ msgstr ""
 msgid "Split selected lines"
 msgstr ""
 
-#: src/application_actions.cpp:220 src/core/subtitle.cpp:645
+#: src/application_actions.cpp:220 src/core/subtitle.cpp:643
 #: src/gui/waveform/waveformwidget.cpp:714
 #, kde-format
 msgid "Join Lines"
@@ -1468,7 +1468,7 @@ msgstr ""
 
 #. i18n: ectx: label, entry (VideoAutoPlay), group (VideoPlayer)
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_VideoAutoPlay)
-#: src/configs/playerconfigwidget.ui:50 src/scconfig.kcfg:184
+#: src/configs/playerconfigwidget.ui:50 src/scconfig.kcfg:196
 #, kde-format
 msgid "Start playing video when loaded"
 msgstr ""
@@ -1669,149 +1669,149 @@ msgstr ""
 msgid "Mouse indicator color:"
 msgstr ""
 
-#: src/core/subtitle.cpp:63
+#: src/core/subtitle.cpp:61
 #, kde-format
 msgid "Set Primary Data"
 msgstr ""
 
-#: src/core/subtitle.cpp:121
+#: src/core/subtitle.cpp:119
 #, kde-format
 msgid "Clear Primary Text Data"
 msgstr ""
 
-#: src/core/subtitle.cpp:134
+#: src/core/subtitle.cpp:132
 #, kde-format
 msgid "Set Secondary Data"
 msgstr ""
 
-#: src/core/subtitle.cpp:171
+#: src/core/subtitle.cpp:169
 #, kde-format
 msgid "Clear Secondary Text Data"
 msgstr ""
 
-#: src/core/subtitle.cpp:239 src/dialogs/changeframeratedialog.cpp:22
+#: src/core/subtitle.cpp:237 src/dialogs/changeframeratedialog.cpp:22
 #, kde-format
 msgid "Change Frame Rate"
 msgstr ""
 
-#: src/core/subtitle.cpp:404 src/core/subtitle.cpp:418
+#: src/core/subtitle.cpp:402 src/core/subtitle.cpp:416
 #: src/gui/waveform/waveformwidget.cpp:697
 #, kde-format
 msgid "Insert Line"
 msgstr ""
 
-#: src/core/subtitle.cpp:451 src/core/subtitle.cpp:461
-#: src/core/subtitle.cpp:478 src/core/undo/subtitleactions.cpp:122
+#: src/core/subtitle.cpp:449 src/core/subtitle.cpp:459
+#: src/core/subtitle.cpp:476 src/core/undo/subtitleactions.cpp:122
 #, kde-format
 msgid "Remove Lines"
 msgstr ""
 
-#: src/core/subtitle.cpp:743
+#: src/core/subtitle.cpp:741
 #, kde-format
 msgid "Shift Lines"
 msgstr ""
 
-#: src/core/subtitle.cpp:799
+#: src/core/subtitle.cpp:797
 #, kde-format
 msgid "Adjust Lines"
 msgstr ""
 
-#: src/core/subtitle.cpp:810
+#: src/core/subtitle.cpp:808
 #, kde-format
 msgid "Sort"
 msgstr "Triediť"
 
-#: src/core/subtitle.cpp:842 src/dialogs/durationlimitsdialog.cpp:18
+#: src/core/subtitle.cpp:840 src/dialogs/durationlimitsdialog.cpp:18
 #, kde-format
 msgid "Enforce Duration Limits"
 msgstr ""
 
-#: src/core/subtitle.cpp:904 src/dialogs/autodurationsdialog.cpp:21
+#: src/core/subtitle.cpp:902 src/dialogs/autodurationsdialog.cpp:21
 #, kde-format
 msgid "Set Automatic Durations"
 msgstr ""
 
-#: src/core/subtitle.cpp:937 src/dialogs/fixoverlappingtimesdialog.cpp:18
+#: src/core/subtitle.cpp:935 src/dialogs/fixoverlappingtimesdialog.cpp:18
 #, kde-format
 msgid "Fix Overlapping Times"
 msgstr ""
 
-#: src/core/subtitle.cpp:968
+#: src/core/subtitle.cpp:966
 #, kde-format
 msgid "Fix Lines Punctuation"
 msgstr ""
 
-#: src/core/subtitle.cpp:1010
+#: src/core/subtitle.cpp:1008
 #, kde-format
 msgid "Lower Case"
 msgstr "Malé písmená"
 
-#: src/core/subtitle.cpp:1040
+#: src/core/subtitle.cpp:1038
 #, kde-format
 msgid "Upper Case"
 msgstr "Veľké písmená"
 
-#: src/core/subtitle.cpp:1070
+#: src/core/subtitle.cpp:1068
 #, kde-format
 msgid "Title Case"
 msgstr "Názov indexu"
 
-#: src/core/subtitle.cpp:1103
+#: src/core/subtitle.cpp:1101
 #, kde-format
 msgid "Sentence Case"
 msgstr "Veľkosť písmen vo vete"
 
-#: src/core/subtitle.cpp:1147 src/dialogs/smarttextsadjustdialog.cpp:18
+#: src/core/subtitle.cpp:1145 src/dialogs/smarttextsadjustdialog.cpp:18
 #, kde-format
 msgid "Break Lines"
 msgstr "Zalomiť riadky"
 
-#: src/core/subtitle.cpp:1174
+#: src/core/subtitle.cpp:1172
 #, kde-format
 msgid "Synchronize Subtitles"
 msgstr ""
 
-#: src/core/subtitle.cpp:1199 src/dialogs/joinsubtitlesdialog.cpp:24
+#: src/core/subtitle.cpp:1197 src/dialogs/joinsubtitlesdialog.cpp:24
 #, kde-format
 msgid "Join Subtitles"
 msgstr ""
 
-#: src/core/subtitle.cpp:1244 src/core/subtitle.cpp:1250
+#: src/core/subtitle.cpp:1242 src/core/subtitle.cpp:1248
 #, kde-format
 msgid "Split Subtitles"
 msgstr ""
 
-#: src/core/subtitle.cpp:1269
+#: src/core/subtitle.cpp:1267
 #, kde-format
 msgid "Toggle Lines Style"
 msgstr ""
 
-#: src/core/subtitle.cpp:1313
+#: src/core/subtitle.cpp:1311
 #, kde-format
 msgid "Change Lines Text Color"
 msgstr ""
 
-#: src/core/subtitle.cpp:1333
+#: src/core/subtitle.cpp:1331
 #, kde-format
 msgid "Set Lines Mark"
 msgstr ""
 
-#: src/core/subtitle.cpp:1333
+#: src/core/subtitle.cpp:1331
 #, kde-format
 msgid "Clear Lines Mark"
 msgstr ""
 
-#: src/core/subtitle.cpp:1348
+#: src/core/subtitle.cpp:1346
 #, kde-format
 msgid "Toggle Lines Mark"
 msgstr ""
 
-#: src/core/subtitle.cpp:1358
+#: src/core/subtitle.cpp:1356
 #, kde-format
 msgid "Clear Line Errors"
 msgstr ""
 
-#: src/core/subtitle.cpp:1369 src/core/subtitle.cpp:1380
+#: src/core/subtitle.cpp:1367 src/core/subtitle.cpp:1378
 #: src/errors/errorfinder.cpp:84
 #, kde-format
 msgid "Check Lines Errors"
@@ -3233,50 +3233,71 @@ msgstr ""
 msgid "Default Language"
 msgstr "Štandardný jazyk"
 
-#. i18n: ectx: label, entry (DefaultClient), group (Spelling)
+#. i18n: ectx: label, entry (autodetectLanguage), group (Spelling)
 #: src/scconfig.kcfg:101
+#, fuzzy, kde-format
+#| msgctxt "Encodings menu"
+#| msgid "Autodetect"
+msgid "Auto detect language"
+msgstr "Automatická detekcia"
+
+#. i18n: ectx: label, entry (DefaultClient), group (Spelling)
+#: src/scconfig.kcfg:105
 #, kde-format
 msgid "Default client"
 msgstr ""
 
-#. i18n: ectx: label, entry (CheckUppercase), group (Spelling)
-#: src/scconfig.kcfg:105
+#. i18n: ectx: label, entry (backgroundCheckerEnabled), group (Spelling)
+#: src/scconfig.kcfg:109
 #, kde-format
-msgid "Check uppercase"
+msgid "Background checker enabled"
 msgstr ""
 
-#. i18n: ectx: label, entry (SkipRunTogether), group (Spelling)
-#: src/scconfig.kcfg:109
+#. i18n: ectx: label, entry (checkerEnabledByDefault), group (Spelling)
+#: src/scconfig.kcfg:113
+#, kde-format
+msgid "Checker enabled by default"
+msgstr ""
+
+#. i18n: ectx: label, entry (skipUppercase), group (Spelling)
+#: src/scconfig.kcfg:117
+#, fuzzy, kde-format
+#| msgid "Upper case"
+msgid "Skip uppercase"
+msgstr "Veľké písmená"
+
+#. i18n: ectx: label, entry (skipRunTogether), group (Spelling)
+#: src/scconfig.kcfg:121
 #, kde-format
 msgid "Skip Run Together"
 msgstr ""
 
 #. i18n: ectx: label, entry (wfInnerColor), group (Waveform Widget)
-#: src/scconfig.kcfg:116
+#: src/scconfig.kcfg:128
 #, kde-format
 msgid "Waveform Inner Color"
 msgstr ""
 
 #. i18n: ectx: label, entry (wfOuterColor), group (Waveform Widget)
-#: src/scconfig.kcfg:120
+#: src/scconfig.kcfg:132
 #, kde-format
 msgid "Waveform Outer Color"
 msgstr ""
 
 #. i18n: ectx: label, entry (wfSmoothScroll), group (Waveform Widget)
-#: src/scconfig.kcfg:124
+#: src/scconfig.kcfg:136
 #, kde-format
 msgid "Waveform Smooth Scrolling"
 msgstr ""
 
 #. i18n: ectx: label, entry (wfAutoscrollPadding), group (Waveform Widget)
-#: src/scconfig.kcfg:128
+#: src/scconfig.kcfg:140
 #, kde-format
 msgid "Autoscroll Padding"
 msgstr ""
 
 #. i18n: ectx: whatsthis, entry (wfAutoscrollPadding), group (Waveform Widget)
-#: src/scconfig.kcfg:130
+#: src/scconfig.kcfg:142
 #, kde-format
 msgid ""
 "Autoscroll page when play position reaches ScrollPadding distance "
@@ -3284,134 +3305,134 @@ msgid ""
 msgstr ""
 
 #. i18n: ectx: label, entry (wfSubBackground), group (Waveform Widget)
-#: src/scconfig.kcfg:133
+#: src/scconfig.kcfg:145
 #, kde-format
 msgid "Waveform Subtitle Background Color"
 msgstr ""
 
 #. i18n: ectx: label, entry (wfSubBorder), group (Waveform Widget)
-#: src/scconfig.kcfg:137
+#: src/scconfig.kcfg:149
 #, kde-format
 msgid "Waveform Subtitle Border Color"
 msgstr ""
 
 #. i18n: ectx: label, entry (wfSubBorderWidth), group (Waveform Widget)
-#: src/scconfig.kcfg:141
+#: src/scconfig.kcfg:153
 #, kde-format
 msgid "Waveform Subtitle Border Width"
 msgstr ""
 
 #. i18n: ectx: label, entry (wfSelBackground), group (Waveform Widget)
-#: src/scconfig.kcfg:145
+#: src/scconfig.kcfg:157
 #, kde-format
 msgid "Waveform Selected Subtitle Background Color"
 msgstr ""
 
 #. i18n: ectx: label, entry (wfSelBorder), group (Waveform Widget)
-#: src/scconfig.kcfg:149
+#: src/scconfig.kcfg:161
 #, kde-format
 msgid "Waveform Selected Subtitle Border Color"
 msgstr ""
 
 #. i18n: ectx: label, entry (wfFontFamily), group (Waveform Widget)
 #. i18n: ectx: label, entry (FontFamily), group (VideoPlayer)
-#: src/scconfig.kcfg:153 src/scconfig.kcfg:205
+#: src/scconfig.kcfg:165 src/scconfig.kcfg:217
 #, kde-format
 msgid "Font Family"
 msgstr "Rodina písma"
 
 #. i18n: ectx: label, entry (wfSubNumberFontSize), group (Waveform Widget)
-#: src/scconfig.kcfg:157
+#: src/scconfig.kcfg:169
 #, kde-format
 msgid "Subtitle Number Font Size"
 msgstr ""
 
 #. i18n: ectx: label, entry (wfSubNumberColor), group (Waveform Widget)
-#: src/scconfig.kcfg:161
+#: src/scconfig.kcfg:173
 #, kde-format
 msgid "Subtitle Number Font Color"
 msgstr ""
 
 #. i18n: ectx: label, entry (wfSubTextFontSize), group (Waveform Widget)
-#: src/scconfig.kcfg:165
+#: src/scconfig.kcfg:177
 #, kde-format
 msgid "Subtitle Text Font Size"
 msgstr ""
 
 #. i18n: ectx: label, entry (wfSubTextColor), group (Waveform Widget)
-#: src/scconfig.kcfg:169
+#: src/scconfig.kcfg:181
 #, kde-format
 msgid "Subtitle Text Font Color"
 msgstr ""
 
 #. i18n: ectx: label, entry (wfMouseLocation), group (Waveform Widget)
-#: src/scconfig.kcfg:173
+#: src/scconfig.kcfg:185
 #, kde-format
 msgid "Mouse Location Line Color"
 msgstr ""
 
 #. i18n: ectx: label, entry (wfPlayLocation), group (Waveform Widget)
-#: src/scconfig.kcfg:177
+#: src/scconfig.kcfg:189
 #, kde-format
 msgid "Play Location Line Color"
 msgstr ""
 
 #. i18n: ectx: label, entry (SeekJumpLength), group (VideoPlayer)
-#: src/scconfig.kcfg:188
+#: src/scconfig.kcfg:200
 #, kde-format
 msgid "Jump length on seek"
 msgstr ""
 
 #. i18n: ectx: label, entry (StepJumpLength), group (VideoPlayer)
-#: src/scconfig.kcfg:192
+#: src/scconfig.kcfg:204
 #, kde-format
 msgid "Amount of frames to skip when stepping"
 msgstr ""
 
 #. i18n: ectx: label, entry (ShowPositionTimeEdit), group (VideoPlayer)
-#: src/scconfig.kcfg:196
+#: src/scconfig.kcfg:208
 #, kde-format
 msgid "Show editable time position"
 msgstr ""
 
 #. i18n: ectx: label, entry (VolumeAmplification), group (VideoPlayer)
-#: src/scconfig.kcfg:200
+#: src/scconfig.kcfg:212
 #, kde-format
 msgid "Volume Amplification"
 msgstr ""
 
 #. i18n: ectx: label, entry (FontSize), group (VideoPlayer)
-#: src/scconfig.kcfg:209
+#: src/scconfig.kcfg:221
 #, kde-format
 msgid "Font Size"
 msgstr "Veľkosť písma"
 
 #. i18n: ectx: label, entry (FontColor), group (VideoPlayer)
-#: src/scconfig.kcfg:213
+#: src/scconfig.kcfg:225
 #, kde-format
 msgid "Font Color"
 msgstr "Farba písma"
 
 #. i18n: ectx: label, entry (OutlineColor), group (VideoPlayer)
-#: src/scconfig.kcfg:217
+#: src/scconfig.kcfg:229
 #, kde-format
 msgid "Outline Color"
 msgstr "Farba obrysu"
 
 #. i18n: ectx: label, entry (OutlineWidth), group (VideoPlayer)
-#: src/scconfig.kcfg:221
+#: src/scconfig.kcfg:233
 #, kde-format
 msgid "Outline Width"
 msgstr "Šírka obrysu"
 
 #. i18n: ectx: label, entry (translateEngine), group (Translation)
-#: src/scconfig.kcfg:228
+#: src/scconfig.kcfg:240
 #, kde-format
 msgid "Last used translate engine"
 msgstr ""
 
 #. i18n: ectx: label, entry (gctServiceJSON), group (GoogleCloudTranslate)
-#: src/scconfig.kcfg:235
+#: src/scconfig.kcfg:247
 #, kde-format
 msgid "Service Account JSON containing private key"
 msgstr ""
@@ -3419,7 +3440,7 @@ msgstr ""
 #. i18n: ectx: label, entry (gctLangSource), group (GoogleCloudTranslate)
 #. i18n: ectx: label, entry (dltLangSource), group (DeepLTranslate)
 #. i18n: ectx: label, entry (mintLangSource), group (MinTTranslate)
-#: src/scconfig.kcfg:238 src/scconfig.kcfg:262 src/scconfig.kcfg:275
+#: src/scconfig.kcfg:250 src/scconfig.kcfg:274 src/scconfig.kcfg:287
 #, kde-format
 msgid "source language - cached"
 msgstr ""
@@ -3427,43 +3448,43 @@ msgstr ""
 #. i18n: ectx: label, entry (gctLangTrans), group (GoogleCloudTranslate)
 #. i18n: ectx: label, entry (dltLangTrans), group (DeepLTranslate)
 #. i18n: ectx: label, entry (mintLangTrans), group (MinTTranslate)
-#: src/scconfig.kcfg:241 src/scconfig.kcfg:265 src/scconfig.kcfg:278
+#: src/scconfig.kcfg:253 src/scconfig.kcfg:277 src/scconfig.kcfg:290
 #, kde-format
 msgid "translation language - cached"
 msgstr ""
 
 #. i18n: ectx: label, entry (gctAccessToken), group (GoogleCloudTranslate)
-#: src/scconfig.kcfg:244
+#: src/scconfig.kcfg:256
 #, kde-format
 msgid "access token - cached"
 msgstr ""
 
 #. i18n: ectx: label, entry (gctTokenExpires), group (GoogleCloudTranslate)
-#: src/scconfig.kcfg:247
+#: src/scconfig.kcfg:259
 #, kde-format
 msgid "access token expiry - cached"
 msgstr ""
 
 #. i18n: ectx: label, entry (gctTokenType), group (GoogleCloudTranslate)
-#: src/scconfig.kcfg:250
+#: src/scconfig.kcfg:262
 #, kde-format
 msgid "access token type - cached"
 msgstr ""
 
 #. i18n: ectx: label, entry (dltAuthKey), group (DeepLTranslate)
-#: src/scconfig.kcfg:256
+#: src/scconfig.kcfg:268
 #, kde-format
 msgid "DeepL API authentication key"
 msgstr ""
 
 #. i18n: ectx: label, entry (dltApiDomain), group (DeepLTranslate)
-#: src/scconfig.kcfg:259
+#: src/scconfig.kcfg:271
 #, kde-format
 msgid "DeepL API domain name"
 msgstr ""
 
 #. i18n: ectx: label, entry (mintURLPrefix), group (MinTTranslate)
-#: src/scconfig.kcfg:271
+#: src/scconfig.kcfg:283
 #, kde-format
 msgid "MinT API URL prefix"
 msgstr ""
