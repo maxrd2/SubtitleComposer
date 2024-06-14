@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: subtitlecomposer\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-06-13 01:41+0000\n"
-"PO-Revision-Date: 2024-05-12 06:29+0200\n"
+"PO-Revision-Date: 2024-06-13 21:10+0200\n"
 "Last-Translator: Stefan Asserhäll <stefan.asserhall@bredband.net>\n"
 "Language-Team: Swedish <kde-i18n-doc@kde.org>\n"
 "Language: sv\n"
@@ -3236,8 +3236,7 @@ msgstr "Standardspråk"
 
 #. i18n: ectx: label, entry (autodetectLanguage), group (Spelling)
 #: src/scconfig.kcfg:101
-#, fuzzy, kde-format
-#| msgid "Autodetect Language"
+#, kde-format
 msgid "Auto detect language"
 msgstr "Detektera språk automatiskt"
 
@@ -3251,20 +3250,19 @@ msgstr "Standardklient"
 #: src/scconfig.kcfg:109
 #, kde-format
 msgid "Background checker enabled"
-msgstr ""
+msgstr "Bakgrundskontroll aktiverad"
 
 #. i18n: ectx: label, entry (checkerEnabledByDefault), group (Spelling)
 #: src/scconfig.kcfg:113
 #, kde-format
 msgid "Checker enabled by default"
-msgstr ""
+msgstr "Förvald kontroll aktiverad"
 
 #. i18n: ectx: label, entry (skipUppercase), group (Spelling)
 #: src/scconfig.kcfg:117
-#, fuzzy, kde-format
-#| msgid "Check uppercase"
+#, kde-format
 msgid "Skip uppercase"
-msgstr "Kontrollera stora bokstäver"
+msgstr "Hoppa över stora bokstäver"
 
 #. i18n: ectx: label, entry (skipRunTogether), group (Spelling)
 #: src/scconfig.kcfg:121

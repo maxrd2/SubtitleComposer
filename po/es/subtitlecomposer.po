@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: subtitlecomposer\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-06-13 01:41+0000\n"
-"PO-Revision-Date: 2024-05-12 15:15+0200\n"
+"PO-Revision-Date: 2024-06-14 01:48+0200\n"
 "Last-Translator: Eloy Cuadra <ecuadra@eloihr.net>\n"
 "Language-Team: Spanish <kde-l10n-es@kde.org>\n"
 "Language: es\n"
@@ -18,7 +18,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Lokalize 24.02.2\n"
+"X-Generator: Lokalize 24.05.0\n"
 "X-Crowdin-Project: subtitlecomposer\n"
 "X-Crowdin-Language: es-ES\n"
 "X-Crowdin-File: subtitlecomposer.pot\n"
@@ -3273,10 +3273,9 @@ msgstr "Idioma predeterminado"
 
 #. i18n: ectx: label, entry (autodetectLanguage), group (Spelling)
 #: src/scconfig.kcfg:101
-#, fuzzy, kde-format
-#| msgid "Autodetect Language"
+#, kde-format
 msgid "Auto detect language"
-msgstr "Autodetectar idioma"
+msgstr "Detectar idioma automáticamente"
 
 #. i18n: ectx: label, entry (DefaultClient), group (Spelling)
 #: src/scconfig.kcfg:105
@@ -3288,20 +3287,19 @@ msgstr "Cliente predeterminado"
 #: src/scconfig.kcfg:109
 #, kde-format
 msgid "Background checker enabled"
-msgstr ""
+msgstr "Comprobador en segundo plano activado"
 
 #. i18n: ectx: label, entry (checkerEnabledByDefault), group (Spelling)
 #: src/scconfig.kcfg:113
 #, kde-format
 msgid "Checker enabled by default"
-msgstr ""
+msgstr "Comprobador activado de forma predeterminada"
 
 #. i18n: ectx: label, entry (skipUppercase), group (Spelling)
 #: src/scconfig.kcfg:117
-#, fuzzy, kde-format
-#| msgid "Check uppercase"
+#, kde-format
 msgid "Skip uppercase"
-msgstr "Comprobar mayúsculas"
+msgstr "Omitir mayúsculas"
 
 #. i18n: ectx: label, entry (skipRunTogether), group (Spelling)
 #: src/scconfig.kcfg:121

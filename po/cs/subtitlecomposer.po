@@ -3248,10 +3248,9 @@ msgstr "Výchozí jazyk"
 
 #. i18n: ectx: label, entry (autodetectLanguage), group (Spelling)
 #: src/scconfig.kcfg:101
-#, fuzzy, kde-format
-#| msgid "Autodetect Language"
+#, kde-format
 msgid "Auto detect language"
-msgstr "Automaticky rozpoznat jazyk"
+msgstr ""
 
 #. i18n: ectx: label, entry (DefaultClient), group (Spelling)
 #: src/scconfig.kcfg:105
@@ -3273,10 +3272,9 @@ msgstr ""
 
 #. i18n: ectx: label, entry (skipUppercase), group (Spelling)
 #: src/scconfig.kcfg:117
-#, fuzzy, kde-format
-#| msgid "Check uppercase"
+#, kde-format
 msgid "Skip uppercase"
-msgstr "Zkontrolovat velká písmena"
+msgstr ""
 
 #. i18n: ectx: label, entry (skipRunTogether), group (Spelling)
 #: src/scconfig.kcfg:121

@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: subtitlecomposer\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-06-13 01:41+0000\n"
-"PO-Revision-Date: 2024-05-12 06:36+0200\n"
+"PO-Revision-Date: 2024-06-13 10:09+0200\n"
 "Last-Translator: Matjaž Jeran <matjaz.jeran@amis.net>\n"
 "Language-Team: Slovenian <lugos-slo@lugos.si>\n"
 "Language: sl\n"
@@ -18,7 +18,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=4; plural=(n%100==1 ? 1 : n%100==2 ? 2 : n%100==3 || n"
 "%100==4 ? 3 : 0);\n"
-"X-Generator: Poedit 3.4.2\n"
+"X-Generator: Poedit 3.4.4\n"
 
 #: src/actions/kcodecactionext.cpp:29
 #, kde-format
@@ -3257,10 +3257,9 @@ msgstr "Privzeti jezik"
 
 #. i18n: ectx: label, entry (autodetectLanguage), group (Spelling)
 #: src/scconfig.kcfg:101
-#, fuzzy, kde-format
-#| msgid "Autodetect Language"
+#, kde-format
 msgid "Auto detect language"
-msgstr "Samoprepoznava jezika"
+msgstr "Samodejno prepoznaj jezik"
 
 #. i18n: ectx: label, entry (DefaultClient), group (Spelling)
 #: src/scconfig.kcfg:105
@@ -3272,20 +3271,19 @@ msgstr "Privzeti odjemalec"
 #: src/scconfig.kcfg:109
 #, kde-format
 msgid "Background checker enabled"
-msgstr ""
+msgstr "Zaledni preverjalnik omogočen"
 
 #. i18n: ectx: label, entry (checkerEnabledByDefault), group (Spelling)
 #: src/scconfig.kcfg:113
 #, kde-format
 msgid "Checker enabled by default"
-msgstr ""
+msgstr "Preverjalnik privzeto omogočen"
 
 #. i18n: ectx: label, entry (skipUppercase), group (Spelling)
 #: src/scconfig.kcfg:117
-#, fuzzy, kde-format
-#| msgid "Check uppercase"
+#, kde-format
 msgid "Skip uppercase"
-msgstr "Preveri velike črke"
+msgstr "Preskoči velike črke"
 
 #. i18n: ectx: label, entry (skipRunTogether), group (Spelling)
 #: src/scconfig.kcfg:121

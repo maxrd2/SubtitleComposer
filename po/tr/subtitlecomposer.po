@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: subtitlecomposer\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-06-13 01:41+0000\n"
-"PO-Revision-Date: 2024-05-12 15:15+0300\n"
+"PO-Revision-Date: 2024-06-13 22:21+0300\n"
 "Last-Translator: Emir SARI <emir_sari@icloud.com>\n"
 "Language-Team: Turkish <kde-l10n-tr@kde.org>\n"
 "Language: tr\n"
@@ -1764,7 +1764,7 @@ msgstr "Küçük Harf"
 #: src/core/subtitle.cpp:1038
 #, kde-format
 msgid "Upper Case"
-msgstr "Büyük Harf"
+msgstr "BÜYÜK Harf"
 
 #: src/core/subtitle.cpp:1068
 #, kde-format
@@ -2264,7 +2264,7 @@ msgstr "Küçük harf"
 #: src/dialogs/changetextscasedialog.cpp:30
 #, kde-format
 msgid "Upper case"
-msgstr "Büyük harf"
+msgstr "BÜYÜK harf"
 
 #: src/dialogs/changetextscasedialog.cpp:34
 #, kde-format
@@ -3231,10 +3231,9 @@ msgstr "Öntanımlı Dil"
 
 #. i18n: ectx: label, entry (autodetectLanguage), group (Spelling)
 #: src/scconfig.kcfg:101
-#, fuzzy, kde-format
-#| msgid "Autodetect Language"
+#, kde-format
 msgid "Auto detect language"
-msgstr "Dili Otomatik Algıla"
+msgstr "Dili kendiliğinden algıla"
 
 #. i18n: ectx: label, entry (DefaultClient), group (Spelling)
 #: src/scconfig.kcfg:105
@@ -3246,20 +3245,19 @@ msgstr "Öntanımlı İstemci"
 #: src/scconfig.kcfg:109
 #, kde-format
 msgid "Background checker enabled"
-msgstr ""
+msgstr "Arka plan denetleyicisi etkin"
 
 #. i18n: ectx: label, entry (checkerEnabledByDefault), group (Spelling)
 #: src/scconfig.kcfg:113
 #, kde-format
 msgid "Checker enabled by default"
-msgstr ""
+msgstr "Denetleyici öntanımlı olarak etkin"
 
 #. i18n: ectx: label, entry (skipUppercase), group (Spelling)
 #: src/scconfig.kcfg:117
-#, fuzzy, kde-format
-#| msgid "Check uppercase"
+#, kde-format
 msgid "Skip uppercase"
-msgstr "Büyük harf denetle"
+msgstr "BÜYÜK harfi atla"
 
 #. i18n: ectx: label, entry (skipRunTogether), group (Spelling)
 #: src/scconfig.kcfg:121

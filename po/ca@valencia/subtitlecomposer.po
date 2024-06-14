@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: subtitlecomposer\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-06-13 01:41+0000\n"
-"PO-Revision-Date: 2024-05-12 09:28+0200\n"
+"PO-Revision-Date: 2024-06-13 16:32+0200\n"
 "Last-Translator: Josep M. Ferrer <txemaq@gmail.com>\n"
 "Language-Team: Catalan <kde-i18n-ca@kde.org>\n"
 "Language: ca@valencia\n"
@@ -3276,8 +3276,7 @@ msgstr "Idioma predeterminat"
 
 #. i18n: ectx: label, entry (autodetectLanguage), group (Spelling)
 #: src/scconfig.kcfg:101
-#, fuzzy, kde-format
-#| msgid "Autodetect Language"
+#, kde-format
 msgid "Auto detect language"
 msgstr "Detecta automàticament l'idioma"
 
@@ -3291,20 +3290,19 @@ msgstr "Client predeterminat"
 #: src/scconfig.kcfg:109
 #, kde-format
 msgid "Background checker enabled"
-msgstr ""
+msgstr "Comprovador activat en segon pla"
 
 #. i18n: ectx: label, entry (checkerEnabledByDefault), group (Spelling)
 #: src/scconfig.kcfg:113
 #, kde-format
 msgid "Checker enabled by default"
-msgstr ""
+msgstr "Comprovador activat de manera predeterminada"
 
 #. i18n: ectx: label, entry (skipUppercase), group (Spelling)
 #: src/scconfig.kcfg:117
-#, fuzzy, kde-format
-#| msgid "Check uppercase"
+#, kde-format
 msgid "Skip uppercase"
-msgstr "Comprova les majúscules"
+msgstr "Omet les majúscules"
 
 #. i18n: ectx: label, entry (skipRunTogether), group (Spelling)
 #: src/scconfig.kcfg:121
