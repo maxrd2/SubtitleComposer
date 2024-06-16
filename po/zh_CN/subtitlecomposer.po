@@ -3206,7 +3206,6 @@ msgstr "默认语言"
 #. i18n: ectx: label, entry (autodetectLanguage), group (Spelling)
 #: src/scconfig.kcfg:101
 #, fuzzy, kde-format
-#| msgid "Autodetect Language"
 msgid "Auto detect language"
 msgstr "自动检测语言"
 
@@ -3231,7 +3230,6 @@ msgstr ""
 #. i18n: ectx: label, entry (skipUppercase), group (Spelling)
 #: src/scconfig.kcfg:117
 #, fuzzy, kde-format
-#| msgid "Check uppercase"
 msgid "Skip uppercase"
 msgstr "检查大写"
 
