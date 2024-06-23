@@ -541,13 +541,11 @@
           <location>https://downloadcontent.opensuse.org/repositories/home:/maxrd2/AppImage/subtitlecomposer-latest-x86_64.AppImage</location>
           <checksum type="sha256">1222fd30bbcaf3586dfb78db27376e5e4852cb3f5d98878e2bff0744536bfcb7</checksum>
           <size type="download">59066312</size>
-          <bundle type="appimage">subtitlecomposer-latest</bundle>
         </artifact>
         <artifact type="binary" platform="i386-linux-gnu">
           <location>https://downloadcontent.opensuse.org/repositories/home:/maxrd2/AppImage/subtitlecomposer-latest-i686.AppImage</location>
           <checksum type="sha256">2fea6c3e0a9d20a2d296ff8ab078a1fafbd2dbbafb0e315d312f9ab9c2759507</checksum>
           <size type="download">63463856</size>
-          <bundle type="appimage">subtitlecomposer-latest</bundle>
         </artifact>
         <artifact type="source">
           <location>https://download.kde.org/stable/subtitlecomposer/subtitlecomposer-0.8.1.tar.xz</location>
@@ -602,13 +600,11 @@
           <location>https://downloadcontent.opensuse.org/repositories/home:/maxrd2/AppImage/subtitlecomposer-latest-x86_64.AppImage</location>
           <checksum type="sha256">2c67d5d68e9a765a97b57f6aa623ddce7e2d1c997ee7e28bddad5636c6af98b2</checksum>
           <size type="download">59033544</size>
-          <bundle type="appimage">subtitlecomposer-latest</bundle>
         </artifact>
         <artifact type="binary" platform="i386-linux-gnu">
           <location>https://downloadcontent.opensuse.org/repositories/home:/maxrd2/AppImage/subtitlecomposer-latest-i686.AppImage</location>
           <checksum type="sha256">d654d044cb93df5eca8aa9d5cfce895d62b76f997c6a1c644714a8e6e77979ad</checksum>
           <size type="download">63361456</size>
-          <bundle type="appimage">subtitlecomposer-latest</bundle>
         </artifact>
         <artifact type="binary" platform="i386-windows-msvc">
           <location>https://gitlab.com/subtitlecomposer/subtitlecomposer/-/jobs/artifacts/obs/v0.8.0/download?job=mingw-win32-build</location>
@@ -653,13 +649,11 @@
           <location>https://downloadcontent.opensuse.org/repositories/home:/maxrd2/AppImage/subtitlecomposer-latest-x86_64.AppImage</location>
           <checksum type="sha256">ac124b356a008ff8358b0540d8aa7be068cd9df60b55a8bcdfed8a6c48d28dae</checksum>
           <size type="download">60078024</size>
-          <bundle type="appimage">subtitlecomposer-latest</bundle>
         </artifact>
         <artifact type="binary" platform="i386-linux-gnu">
           <location>https://downloadcontent.opensuse.org/repositories/home:/maxrd2/AppImage/subtitlecomposer-latest-i686.AppImage</location>
           <checksum type="sha256">2c2415cd69cd6074056446d8ac3f433faf3c6bed0e02a536d65df98e01ae4201</checksum>
           <size type="download">64520624</size>
-          <bundle type="appimage">subtitlecomposer-latest</bundle>
         </artifact>
         <artifact type="binary" platform="i386-windows-msvc">
           <location>https://gitlab.com/subtitlecomposer/subtitlecomposer/-/jobs/artifacts/obs/v0.7.1/download?job=mingw-win32-build</location>
