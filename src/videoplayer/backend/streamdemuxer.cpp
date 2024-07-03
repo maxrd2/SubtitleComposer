@@ -314,10 +314,8 @@ StreamDemuxer::componentOpen(int streamIndex)
 		m_vs->audStream = ic->streams[streamIndex];
 
 		m_vs->audDec.init(avCtx, &m_vs->audPQ, nullptr, m_vs->continueReadThread);
-		if((m_vs->fmtContext->iformat->flags & (AVFMT_NOBINSEARCH | AVFMT_NOGENSEARCH | AVFMT_NO_BYTE_SEEK))
-			&& !m_vs->fmtContext->iformat->read_seek) {
+		if(m_vs->fmtContext->iformat->flags & AVFMT_NOTIMESTAMPS)
 			m_vs->audDec.startPts(m_vs->audStream->start_time, m_vs->audStream->time_base);
-		}
 		m_vs->audDec.start();
 		m_vs->audDec.pause();
 		break;
