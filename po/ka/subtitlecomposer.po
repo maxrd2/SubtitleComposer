@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: subtitlecomposer\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-06-13 01:41+0000\n"
-"PO-Revision-Date: 2024-02-29 03:24+0100\n"
+"PO-Revision-Date: 2024-07-07 10:34+0200\n"
 "Last-Translator: Temuri Doghonadze <temuri.doghonadze@gmail.com>\n"
 "Language-Team: Georgian <kde-i18n-doc@kde.org>\n"
 "Language: ka\n"
@@ -1256,10 +1256,9 @@ msgstr "სიმბოლოების მაქსიმალური რ�
 
 #. i18n: ectx: property (text), widget (QLabel, lab_MaxCharactersPerLine)
 #: src/configs/errorsconfigwidget.ui:63
-#, fuzzy, kde-format
-#| msgid "Maximum number of characters:"
+#, kde-format
 msgid "Maximum number of characters per line:"
-msgstr "სიმბოლოების მაქსიმალური რაოდენობა:"
+msgstr "სიმბოლოების მაქსიმალური რაოდენობა თითოეულ ხაზზე:"
 
 #. i18n: ectx: property (text), widget (QLabel, label_4)
 #: src/configs/errorsconfigwidget.ui:70
@@ -1825,10 +1824,9 @@ msgid "Too many lines"
 msgstr "მეტისმეტად ბევრი ხაზი"
 
 #: src/core/subtitleline.cpp:65
-#, fuzzy, kde-format
-#| msgid "Too many characters"
+#, kde-format
 msgid "Too many characters per line"
-msgstr "მეტისმეტად ბევრი სიმბოლო"
+msgstr "მეტისმეტად ბევრი სიმბოლო თითოეულ ხაზზე"
 
 #: src/core/subtitleline.cpp:67
 #, kde-format
@@ -1919,16 +1917,14 @@ msgstr[0] ""
 msgstr[1] ""
 
 #: src/core/subtitleline.cpp:106
-#, fuzzy, kde-format
-#| msgid "Has unnecessary spaces in primary text."
+#, kde-format
 msgid "Has too many characters per line in primary text."
-msgstr "ზედმეტი გამოტოვებები საწყის ტექსტში."
+msgstr "მეტისმეტად ბევრი სიმბლო ხაზზე ძირითად ტექსტში."
 
 #: src/core/subtitleline.cpp:107
-#, fuzzy, kde-format
-#| msgid "Has unnecessary spaces in translation text."
+#, kde-format
 msgid "Has too many characters per line in translation text."
-msgstr "ზედმეტი გამოტოვებები თარგმანში."
+msgstr "მეტისმეტად ბევრი სიმბოლო ხაზზე სათარგმნ ტექსტში."
 
 #: src/core/subtitleline.cpp:108
 #, kde-format
@@ -3164,10 +3160,9 @@ msgstr "ხაზების მაქსიმალური რაოდე�
 
 #. i18n: ectx: label, entry (MaxCharactersPerLine), group (Error Check)
 #: src/scconfig.kcfg:63
-#, fuzzy, kde-format
-#| msgid "Maximum number of characters"
+#, kde-format
 msgid "Maximum number of characters per line"
-msgstr "სიმბოლოების მაქსიმალური რაოდენობა"
+msgstr "სიმბოლოების მაქსიმალური რაოდენობა თითოეულ ხაზზე"
 
 #. i18n: ectx: label, entry (MinDuration), group (Error Check)
 #: src/scconfig.kcfg:68
@@ -3207,8 +3202,7 @@ msgstr "ნაგულისხმები ენა"
 
 #. i18n: ectx: label, entry (autodetectLanguage), group (Spelling)
 #: src/scconfig.kcfg:101
-#, fuzzy, kde-format
-#| msgid "Autodetect Language"
+#, kde-format
 msgid "Auto detect language"
 msgstr "ენის ავტოამოცნობა"
 
@@ -3232,10 +3226,9 @@ msgstr ""
 
 #. i18n: ectx: label, entry (skipUppercase), group (Spelling)
 #: src/scconfig.kcfg:117
-#, fuzzy, kde-format
-#| msgid "Check uppercase"
+#, kde-format
 msgid "Skip uppercase"
-msgstr "ზედა რეგისტრის შემოწმება"
+msgstr "დიდი სიმბოლოების გამოტოვება"
 
 #. i18n: ectx: label, entry (skipRunTogether), group (Spelling)
 #: src/scconfig.kcfg:121
