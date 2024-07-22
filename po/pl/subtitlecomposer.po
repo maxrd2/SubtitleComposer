@@ -1,17 +1,17 @@
 # translation of subtitlecomposer.po to Polish
 # This file is put in the public domain.
 #
+# SPDX-FileCopyrightText: 2020, 2021, 2022, 2023, 2024 Łukasz Wojniłowicz <lukasz.wojnilowicz@gmail.com>
 # Tomasz Argasiński <targasinski@o2.pl>, 2008, 2009.
 # Tomek Argasiński <targasinski@o2.pl>, 2009.
 # Tomek Argasiński <dopelover@o2.pl>, 2009.
 # Sergio Pistone <sergio_pistone@yahoo,com.ar>, 2009.
-# SPDX-FileCopyrightText: 2020, 2021, 2022, 2023 Łukasz Wojniłowicz <lukasz.wojnilowicz@gmail.com>
 msgid ""
 msgstr ""
 "Project-Id-Version: subtitlecomposer\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-06-13 01:41+0000\n"
-"PO-Revision-Date: 2023-12-30 11:07+0100\n"
+"PO-Revision-Date: 2024-07-21 13:22+0200\n"
 "Last-Translator: Łukasz Wojniłowicz <lukasz.wojnilowicz@gmail.com>\n"
 "Language-Team: Polish <kde-i18n-doc@kde.org>\n"
 "Language: pl\n"
@@ -20,6 +20,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=(n==1 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 "
 "|| n%100>=20) ? 1 : 2);\n"
+"X-Generator: Lokalize 23.08.5\n"
 
 #: src/actions/kcodecactionext.cpp:29
 #, kde-format
@@ -1291,10 +1292,9 @@ msgstr "Największa liczba znaków:"
 
 #. i18n: ectx: property (text), widget (QLabel, lab_MaxCharactersPerLine)
 #: src/configs/errorsconfigwidget.ui:63
-#, fuzzy, kde-format
-#| msgid "Maximum number of characters:"
+#, kde-format
 msgid "Maximum number of characters per line:"
-msgstr "Największa liczba znaków:"
+msgstr "Największa liczba znaków na wiersz:"
 
 #. i18n: ectx: property (text), widget (QLabel, label_4)
 #: src/configs/errorsconfigwidget.ui:70
@@ -1862,10 +1862,9 @@ msgid "Too many lines"
 msgstr "Zbyt wiele wiersza"
 
 #: src/core/subtitleline.cpp:65
-#, fuzzy, kde-format
-#| msgid "Too many characters"
+#, kde-format
 msgid "Too many characters per line"
-msgstr "Zbyt wiele znaków"
+msgstr "Zbyt wiele znaków na wiersz"
 
 #: src/core/subtitleline.cpp:67
 #, kde-format
@@ -1960,18 +1959,14 @@ msgstr[1] "Ma zbyt wiele wierszy w tekście tłumaczenia (%1 znaki)."
 msgstr[2] "Ma zbyt wiele wierszy w tekście tłumaczenia (%1 znaków)."
 
 #: src/core/subtitleline.cpp:106
-#, fuzzy, kde-format
-#| msgid "Has too many characters in primary text (1 char)."
-#| msgid_plural "Has too many characters in primary text (%1 chars)."
+#, kde-format
 msgid "Has too many characters per line in primary text."
-msgstr "Ma zbyt wiele znaków w tekście źródłowym (1 znak)."
+msgstr "Ma zbyt wiele znaków na wiersz w tekście źródłowym."
 
 #: src/core/subtitleline.cpp:107
-#, fuzzy, kde-format
-#| msgid "Has too many characters in translation text (1 char)."
-#| msgid_plural "Has too many characters in translation text (%1 chars)."
+#, kde-format
 msgid "Has too many characters per line in translation text."
-msgstr "Ma zbyt wiele znaków w tekście tłumaczenia (1 znak)."
+msgstr "Ma zbyt wiele znaków na wiersz w tekście tłumaczenia."
 
 #: src/core/subtitleline.cpp:108
 #, kde-format
@@ -3246,10 +3241,9 @@ msgstr "Graniczna liczba wierszy"
 
 #. i18n: ectx: label, entry (MaxCharactersPerLine), group (Error Check)
 #: src/scconfig.kcfg:63
-#, fuzzy, kde-format
-#| msgid "Maximum number of characters"
+#, kde-format
 msgid "Maximum number of characters per line"
-msgstr "Graniczna liczba znaków"
+msgstr "Graniczna liczba znaków na wiersz"
 
 #. i18n: ectx: label, entry (MinDuration), group (Error Check)
 #: src/scconfig.kcfg:68
@@ -3289,8 +3283,7 @@ msgstr "Domyślny język"
 
 #. i18n: ectx: label, entry (autodetectLanguage), group (Spelling)
 #: src/scconfig.kcfg:101
-#, fuzzy, kde-format
-#| msgid "Autodetect Language"
+#, kde-format
 msgid "Auto detect language"
 msgstr "Sam wykryj język"
 
@@ -3304,20 +3297,19 @@ msgstr "Domyślny klient"
 #: src/scconfig.kcfg:109
 #, kde-format
 msgid "Background checker enabled"
-msgstr ""
+msgstr "Sprawdzanie w tle włączone"
 
 #. i18n: ectx: label, entry (checkerEnabledByDefault), group (Spelling)
 #: src/scconfig.kcfg:113
 #, kde-format
 msgid "Checker enabled by default"
-msgstr ""
+msgstr "Sprawdzanie włączone domyślnie"
 
 #. i18n: ectx: label, entry (skipUppercase), group (Spelling)
 #: src/scconfig.kcfg:117
-#, fuzzy, kde-format
-#| msgid "Check uppercase"
+#, kde-format
 msgid "Skip uppercase"
-msgstr "Sprawdź wielkość liter"
+msgstr "Pomiń wielkie litery"
 
 #. i18n: ectx: label, entry (skipRunTogether), group (Spelling)
 #: src/scconfig.kcfg:121
@@ -3542,7 +3534,7 @@ msgstr "Nazwa domeny API DeepL"
 #: src/scconfig.kcfg:283
 #, kde-format
 msgid "MinT API URL prefix"
-msgstr ""
+msgstr "Przedrostek adresu URL API MinT"
 
 #: src/scripting/scriptsmanager.cpp:73
 #, kde-format
@@ -4046,7 +4038,7 @@ msgstr "Błąd silnika DeepL"
 #: src/translate/mintengine.cpp:125
 #, kde-format
 msgid "Updating languages..."
-msgstr ""
+msgstr "Uaktualnianie języków..."
 
 #: src/translate/deeplengine.cpp:123 src/translate/googlecloudengine.cpp:298
 #, kde-format
@@ -4055,10 +4047,9 @@ msgstr "Sam wykryj język"
 
 #: src/translate/deeplengine.cpp:158 src/translate/googlecloudengine.cpp:331
 #: src/translate/mintengine.cpp:221
-#, fuzzy, kde-format
-#| msgid "Translate..."
+#, kde-format
 msgid "Translating lines..."
-msgstr "Przetłumacz..."
+msgstr "Tłumaczenie wierszy..."
 
 #. i18n: ectx: property (title), widget (QGroupBox, grpAuth)
 #: src/translate/deeplengine.ui:17 src/translate/googlecloudengine.ui:17
@@ -4165,28 +4156,27 @@ msgstr ""
 "inny sposób.</p>"
 
 #: src/translate/mintengine.cpp:80
-#, fuzzy, kde-format
-#| msgid "DeepL Engine Error"
+#, kde-format
 msgid "MinT Engine Error"
-msgstr "Błąd silnika DeepL"
+msgstr "Błąd silnika MinT"
 
 #. i18n: ectx: property (title), widget (QGroupBox, grpAuth)
 #: src/translate/mintengine.ui:17
 #, kde-format
 msgid "API Server"
-msgstr ""
+msgstr "Serwer API"
 
 #. i18n: ectx: property (text), widget (QLabel, labApiURLPrefix)
 #: src/translate/mintengine.ui:40
 #, kde-format
 msgid "Service URL:"
-msgstr ""
+msgstr "Adres URL usługi:"
 
 #. i18n: ectx: property (text), widget (QPushButton, btnUpdate)
 #: src/translate/mintengine.ui:50
 #, kde-format
 msgid "Update"
-msgstr ""
+msgstr "Uaktualnij"
 
 #. i18n: ectx: property (text), widget (QLabel, labHelp)
 #: src/translate/mintengine.ui:76
@@ -4197,6 +4187,10 @@ msgid ""
 "machinetranslation\">setup your own service</a> or use some <a href="
 "\"https://translate.wmcloud.org/\">public API</a>."
 msgstr ""
+"Musisz wpisać adres URL do API systemu tłumaczeń maszynowych MinT. Możesz <a "
+"href=\"https://gerrit.wikimedia.org/g/mediawiki/services/machinetranslation"
+"\">ustawić swoją własną usługę</a> lub użyć jednego z <a href=\"https://"
+"translate.wmcloud.org/\">publicznych API</a>."
 
 #: src/translate/translatedialog.cpp:31
 #, kde-format
