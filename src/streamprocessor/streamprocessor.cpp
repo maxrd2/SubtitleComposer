@@ -447,8 +447,7 @@ StreamProcessor::processAudio()
 						timeFrameDuration = frameResampled->nb_samples * 1000 / frameResampled->sample_rate;
 					} else {
 						frameSize = frame->nb_samples * av_get_bytes_per_sample(static_cast<AVSampleFormat>(frame->format));
-						if(frame->duration)
-							timeFrameDuration = frame->duration * 1000 * m_avStream->time_base.num / m_avStream->time_base.den;
+						timeFrameDuration = int64_t(frame->nb_samples) * 1000 / frame->sample_rate;
 					}
 					timeFrameEnd = timeFrameStart + timeFrameDuration;
 
