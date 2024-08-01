@@ -501,8 +501,6 @@ StreamDemuxer::run()
 	if(m_vs->genpts)
 		ic->flags |= AVFMT_FLAG_GENPTS;
 
-	av_format_inject_global_side_data(ic);
-
 	{ // find_stream_info
 		const int origNbStreams = ic->nb_streams;
 		AVDictionary **opts = (AVDictionary **)av_calloc(origNbStreams, sizeof(*opts));
