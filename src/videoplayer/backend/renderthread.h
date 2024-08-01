@@ -33,7 +33,7 @@ private:
 	void videoRefresh(double *remainingTime);
 	void videoDisplay();
 	double vpDuration(Frame *vp, Frame *nextvp);
-	void updateVideoPts(double pts, int64_t pos, int serial);
+	void updateVideoPts(double pts, int serial);
 	double computeTargetDelay(double delay);
 	void updateSampleDisplay(short *samples, int samplesSize);
 	void toggleAudioDisplay();

@@ -103,7 +103,7 @@ retry:
 
 			m_vs->vidFQ.m_mutex->lock();
 			if(!std::isnan(vp->pts))
-				updateVideoPts(vp->pts, vp->pos, vp->serial);
+				updateVideoPts(vp->pts, vp->serial);
 			m_vs->vidFQ.m_mutex->unlock();
 
 			if(m_vs->vidFQ.nbRemaining() > 1) {
@@ -187,7 +187,7 @@ RenderThread::vpDuration(Frame *vp, Frame *nextvp)
 }
 
 void
-RenderThread::updateVideoPts(double pts, int64_t /*pos*/, int serial)
+RenderThread::updateVideoPts(double pts, int serial)
 {
 	// update current video pts
 	m_vs->vidClk.set(pts, serial);
