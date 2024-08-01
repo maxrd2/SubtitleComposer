@@ -101,8 +101,10 @@ VideoDecoder::run()
 		if(!ret)
 			continue;
 
+		Decoder::FrameData *fd = reinterpret_cast<Decoder::FrameData*>(frame->opaque_ref ? frame->opaque_ref->data : nullptr);
+
 		double pts = (frame->pts == AV_NOPTS_VALUE) ? NAN : frame->pts * m_timeBase;
-		ret = queuePicture(frame, pts, frameDuration, frame->pkt_pos, pktSerial());
+		ret = queuePicture(frame, pts, frameDuration, fd ? fd->pkt_pos : -1, pktSerial());
 		av_frame_unref(frame);
 
 		if(ret < 0)

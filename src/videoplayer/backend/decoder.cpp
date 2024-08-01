@@ -133,10 +133,19 @@ Decoder::decodeFrame(AVFrame *frame, AVSubtitle *sub)
 			} else {
 				ret = pkt->data ? AVERROR(EAGAIN) : AVERROR_EOF;
 			}
-		} else if(avcodec_send_packet(m_avCtx, pkt) == AVERROR(EAGAIN)) {
-			av_log(m_avCtx, AV_LOG_ERROR, "Receive_frame and send_packet both returned EAGAIN, which is an API violation.\n");
-			m_pkt = pkt;
-			pkt = nullptr;
+		} else {
+			if(pkt->buf && !pkt->opaque_ref) {
+				pkt->opaque_ref = av_buffer_allocz(sizeof(Decoder::FrameData));
+				if(!pkt->opaque_ref)
+					return AVERROR(ENOMEM);
+				Decoder::FrameData *fd = reinterpret_cast<Decoder::FrameData*>(pkt->opaque_ref->data);
+				fd->pkt_pos = pkt->pos;
+			}
+			if(avcodec_send_packet(m_avCtx, pkt) == AVERROR(EAGAIN)) {
+				av_log(m_avCtx, AV_LOG_ERROR, "Receive_frame and send_packet both returned EAGAIN, which is an API violation.\n");
+				m_pkt = pkt;
+				pkt = nullptr;
+			}
 		}
 		av_packet_free(&pkt);
 	}

@@ -490,8 +490,10 @@ AudioDecoder::run()
 			if(!(af->frame = av_frame_alloc()))
 				break;
 
+			Decoder::FrameData *fd = reinterpret_cast<Decoder::FrameData*>(frame->opaque_ref ? frame->opaque_ref->data : nullptr);
+
 			af->pts = frame->pts == AV_NOPTS_VALUE ? NAN : double(frame->pts) / frame->sample_rate;
-			af->pos = frame->pkt_pos;
+			af->pos = fd ? fd->pkt_pos : -1;
 			af->serial = m_pktSerial;
 			af->duration = double(frame->nb_samples) / frame->sample_rate;
 

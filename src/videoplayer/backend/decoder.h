@@ -55,6 +55,10 @@ protected:
 	AVRational m_startPtsTb;
 	int64_t m_nextPts;
 	AVRational m_nextPtsTb;
+
+	struct FrameData {
+		int64_t pkt_pos;
+	};
 };
 }
 
