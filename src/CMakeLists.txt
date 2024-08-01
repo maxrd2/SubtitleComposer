@@ -33,7 +33,7 @@ if(APPIMAGE)
 	set(SC_APPIMAGE 1 CACHE INTERNAL EXPORTEDVARIABLE)
 endif()
 
-find_package(FFmpeg 57.83.100 REQUIRED)
+find_package(FFmpeg 59.27.100 REQUIRED)
 find_package(OpenAL REQUIRED)
 find_package(ICU)
 
