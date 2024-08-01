@@ -371,11 +371,11 @@ AudioDecoder::decodeFrame(Frame *af)
 	|| af->frame->sample_rate != m_fmtSrc.freq
 	|| (wantedNbSamples != af->frame->nb_samples && !m_swrCtx)) {
 		swr_free(&m_swrCtx);
-		swr_alloc_set_opts2(&m_swrCtx,
+		int ret = swr_alloc_set_opts2(&m_swrCtx,
 							&m_fmtTgt.chLayout, m_fmtTgt.fmt, m_fmtTgt.freq,
 							&af->frame->ch_layout, AVSampleFormat(af->frame->format), af->frame->sample_rate,
 							0, nullptr);
-		if(!m_swrCtx || swr_init(m_swrCtx) < 0) {
+		if(ret < 0 || !m_swrCtx || swr_init(m_swrCtx) < 0) {
 			av_log(nullptr, AV_LOG_ERROR,
 				   "Cannot create sample rate converter for conversion of %d Hz %s %d channels to %d Hz %s %d channels!\n",
 				   af->frame->sample_rate, av_get_sample_fmt_name((AVSampleFormat)af->frame->format),
