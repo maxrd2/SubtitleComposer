@@ -17,6 +17,7 @@
   <name xml:lang="et">Subtiitriredaktor</name>
   <name xml:lang="fi">Subtitle Composer</name>
   <name xml:lang="fr">Subtitle Composer</name>
+  <name xml:lang="gl">Subtitle Composer</name>
   <name xml:lang="id">Subtitle Composer</name>
   <name xml:lang="it">Subtitle Composer</name>
   <name xml:lang="ka">სუბტიტრების შედგენა</name>
@@ -43,6 +44,7 @@
   <summary xml:lang="et">Videosubtiitrite redaktor, mis toetab nii põhilisi ja kui ka spetsiifilisemaid muutmistoiminguid</summary>
   <summary xml:lang="fi">Videotekstitysmuokkain, joka tukee tavallisia ja edistyneitä muokkaustoimenpiteitä</summary>
   <summary xml:lang="fr">Éditeur de sous-titres vidéo prenant en charge des opérations d'édition basiques et avancées</summary>
+  <summary xml:lang="gl">Editor de subtítulos de vídeo que permite operacións de edición básicas e avanzadas.</summary>
   <summary xml:lang="id">Editor subtitle video yang mendukung operasi pengeditan dasar dan tingkat lanjut</summary>
   <summary xml:lang="it">Editor di sottotitoli video che supporta operazioni di modifica di base ed avanzate</summary>
   <summary xml:lang="ka">ვიდეოს სუბტიტრების რედაქტორი, რომელსაც ჩასწორების ოპერაციების ორივე, მარტივი და რთული შემთხვევების ჩატარება შეუძლია</summary>
@@ -69,6 +71,7 @@
     <p xml:lang="et">Subtiitriredaktor on avatud lähtekoodiga tekstipõhine subtiitrite redaktor, mis toetab nii põhilisi kui ka spetsiifilisemaid muutmistoiminguid.</p>
     <p xml:lang="fi">Subtitle Composer on avoimen lähdekoodin tekstipohjainen tekstitysmuokkain, joka tukee tavallisia ja edistyneitä muokkaustoimenpiteitä</p>
     <p xml:lang="fr">Subtitle Composer est un éditeur de sous-titres textes libre prenant en charge des opérations d'édition basiques et avancées.</p>
+    <p xml:lang="gl">Subtitle Composer é un editor de subtítulos de vídeo libre baseado en texto que permite operacións de edición básicas e avanzadas.</p>
     <p xml:lang="id">Subtitle Composer adalah editor subtitle berbasis teks open source yang mendukung operasi pengeditan dasar dan tingkat lanjut.</p>
     <p xml:lang="it">Subtitle Composer è un editor di sottotitoli open source basato sul testo che supporta operazioni di modifica di base ed avanzate.</p>
     <p xml:lang="ka">Subtitle Composer-ი ღია კოდის მქონე სუბტიტრების რედაქტორია, რომელსაც ორივე, ძირითადი და დამატებითი ოპერაციების ჩატარების საშუალება გააჩნია.</p>
@@ -95,6 +98,7 @@
     <p xml:lang="et">Omadused</p>
     <p xml:lang="fi">Ominaisuuksia</p>
     <p xml:lang="fr">Fonctionnalités</p>
+    <p xml:lang="gl">Funcionalidades:</p>
     <p xml:lang="id">Fitur</p>
     <p xml:lang="it">Caratteristiche</p>
     <p xml:lang="ka">თვისებები</p>
@@ -122,6 +126,7 @@
       <li xml:lang="et">Subtiitrite tekstivormingute - SubRip/SRT, MicroDVD, SSA/ASS, MPlayer, TMPlayer ja YouTube - avamine ja salvestamine</li>
       <li xml:lang="fi">Avaa ja tallenna eri tekstitystiedostomuotoja: SubRip/SRT, MicroDVD, SSA/ASS, MPlayer, TMPlayer ja YouTube</li>
       <li xml:lang="fr">Ouverture et enregistrement de formats de sous-titres texte - SubRip / SRT, Micro-DVD, SSA / ASS, MPlayer, TMPlayer et YouTube</li>
+      <li xml:lang="gl">Abrir e gardar formatos de subtítulos de texto: SubRip/SRT, MicroDVD, SSA/ASS, MPlayer, TMPlayer e lendas de YouTube.</li>
       <li xml:lang="id">Buka/Simpan Format Subtitle Teks - SubRip/SRT, MicroDVD, SSA/ASS, MPlayer, TMPlayer dan bab YouTube</li>
       <li xml:lang="it">Apertura/salvataggio di formati di sottotitoli di testo - SubRip/SRT, MicroDVD, SSA/ASS, MPlayer, TMPlayer e sottotitoli YouTube</li>
       <li xml:lang="ko">텍스트 자막 형식 열고 저장 - SubRip/SRT, MicroDVD, SSA/ASS, MPlayer, TMPlayer, YouTube 캡션</li>
@@ -145,6 +150,7 @@
       <li xml:lang="et">Subtiitrite graafikavormingute - VobSub (.idx/.sub/.rar), BluRay/PGS (*.sup), ffmpeg toetatud vormingud (DVD/Vob, DVB, XSUB, HDMV-PGS) - avamine ja optiline märgituvastus</li>
       <li xml:lang="fi">Avaa ja lue graafisia tekstitystiedostomuotoja: VobSub (.idx/.sub/.rar), BluRay/PGS (*.sup) sekä ffmpegin tukemat muodot (DVD/Vob, DVB, XSUB, HDMV-PGS)</li>
       <li xml:lang="fr">Ouverture et reconnaissance de caractères de formats de sous-titres graphiques - VobSub (.idx/.sub/.rar), BluRay/PGS (*.sup), formats pris en charge par ffmpeg (DVD/Vob, DVB, XSUB, HDMV-PGS)</li>
+      <li xml:lang="gl">Formatos de subtítulos gráficos abertos ou de OCR: VobSub (.idx/.sub/.rar), BluRay/PGS (*.sup) e formatos permitidos por ffmpeg (DVD/Vob, DVB, XSUB, HDMV-PGS).</li>
       <li xml:lang="id">Buka/OCR Format Subtitle Grafik - VobSub (.idx/.sub/.rar), BluRay/PGS (*.sup), format-format yang didukung oleh ffmpeg (DVD/Vob, DVB, XSUB, HDMV-PGS)</li>
       <li xml:lang="it">Apertura di formati di sottotitoli grafici aperti/OCR - VobSub (.idx/.sub/.rar), BluRay/PGS (*.sup), formati supportati da ffmpeg (DVD/Vob, DVB, XSUB, HDMV-PGS)</li>
       <li xml:lang="ko">그래픽 자막을 열고 OCR 처리 - VobSub(.idx/.sub/.rar), 블루레이/PGS(*.sup), ffmpeg에서 지원하는 형식(DVD/Vob, DVB, XSUB, HDMV-PGS)</li>
@@ -168,6 +174,7 @@
       <li xml:lang="et">Graafilise või tekstisubtiitri voo demultipleksimine videofailist - SRT, SSA/ASS, MOV text, MicroDVD, DVD/Vob, DVB, XSUB, HDMV-PGS</li>
       <li xml:lang="fi">Graafisten tai tekstimuotoisten tekstitysten demuksaus videotiedostosta: SRT, SSA/ASS, MOV, MicroDVD, DVD/Vob, DVB, XSUB, HDMV-PGS</li>
       <li xml:lang="fr">Démultiplexage du flux de sous-titres graphiques / texte depuis un fichier vidéo - SRT, SSA / ASS, MOV texte, Micro-DVD, DVD / Vob, DVB, XSUB, HDMV-PGS</li>
+      <li xml:lang="gl">Gráficos de demultiplexión ou fluxo de subtítulos de texto dun ficheiro de vídeo: SRT, SSA/ASS, texto de MOV, MicroDVD, DVD/Vob, DVB, XSUB e HDMV-PGS.</li>
       <li xml:lang="id">Stream Subtitle Teks/Demux Graphics dari file video - SRT, SSA/ASS, MOV text, MicroDVD, DVD/Vob, DVB, XSUB, HDMV-PGS</li>
       <li xml:lang="it">Demultiplazione di flussi di sottotitoli grafici/di testo - SRT, SSA/ASS, testo MOV, MicroDVD, DVD/Vob, DVB, XSUB, HDMV-PGS</li>
       <li xml:lang="ko">동영상 파일에서 그래픽/텍스트 자막 스트림 디먹스 - SRT, SSA/ASS, MOV 텍스트, MicroDVD, DVD/Vob, DVB, XSUB, HDMV-PGS</li>
@@ -191,6 +198,7 @@
       <li xml:lang="et">Kõne tuvastamine heli/videofailist PocketSphinxi abil</li>
       <li xml:lang="fi">Puheentunnistus ääni- tai videotiedostosta PocketSphinxillä</li>
       <li xml:lang="fr">Reconnaissance vocale des fichiers audio / vidéo grâce à PocketSphinx</li>
+      <li xml:lang="gl">Recoñecemento de fala a partir de ficheiros de son ou de vídeo mediante PocketSphinx.</li>
       <li xml:lang="id">Pengenalan lisan dari file audio/video menggunakan PocketSphinx</li>
       <li xml:lang="it">Riconoscimento della voce da file audio/video tramite PocketSphinx</li>
       <li xml:lang="ko">PocketSphinx를 사용하여 오디오/동영상 파일의 음성 인식</li>
@@ -215,6 +223,7 @@
       <li xml:lang="et">Nutikas keele/tekstikodeeringu** tuvastamine</li>
       <li xml:lang="fi">Älykäs kielen ja merkistökoodauksen** tunnistaminen</li>
       <li xml:lang="fr">Détection intelligente de la langue et de l'encodage du texte**</li>
+      <li xml:lang="gl">Detección intelixente de idioma e codificación de texto**.</li>
       <li xml:lang="id">Deteksi encoding** teks/bahasa yang cerdas</li>
       <li xml:lang="it">Riconoscimento intelligente di linguaggio/codifica del testo**</li>
       <li xml:lang="ko">똑똑한 언어/텍스트 인코딩** 감지</li>
@@ -239,6 +248,7 @@
       <li xml:lang="et">Subtiitrite reaalajas eelvaatlus lõimitud videomängijas võimalusega valida helivoog</li>
       <li xml:lang="fi">Tekstitysten elävä esikatselu integroidussa videosoittimessa ja äänikanavan valinta</li>
       <li xml:lang="fr">Aperçu en direct des sous-titres dans le lecteur vidéo intégré avec sélection du flux audio</li>
+      <li xml:lang="gl">Previsualizar en vivo de subtítulos nun reprodutor de vídeo integrado con selección de fluxo de son.</li>
       <li xml:lang="id">Pratinjau langsung subtitle dalam pemutar video yang terintegrasi w/ seleksi stream audio</li>
       <li xml:lang="it">Anteprima dal vivo dei sottotitoli nel riproduttore multimediale integrato con selezione del flusso audio</li>
       <li xml:lang="ko">오디오 스트림 선택 기능이 있는 통합된 동영상 재생기로 자막 즉시 미리 보기</li>
@@ -263,6 +273,7 @@
       <li xml:lang="et">Subtiitrite eelvaatlus/muutmine graafilist helilainet töödeldes võimalusega valida helivoog</li>
       <li xml:lang="fi">Tekstitysten esikatselu ja muokkaus graafisena ääniaaltona sekä äänikanavan valinta</li>
       <li xml:lang="fr">Aperçu et édition des sous-titres sur un graphique de forme d'onde avec sélection du flux audio</li>
+      <li xml:lang="gl">Vista previa ou edición de subtítulos en forma de onda de son gráfica con selección de fluxo de son.</li>
       <li xml:lang="id">Pratinjau/pengeditan subtitle di bidang gelombang audio grafis w/ seleksi stream audio</li>
       <li xml:lang="it">Anteprima/modifica di sottotitoli su forme d'onda audio grafiche con selezione del flusso audio</li>
       <li xml:lang="ko">오디오 스트림 선택 기능이 있는 그래픽 오디오 파형과 함께 자막 미리 보기/편집</li>
@@ -286,6 +297,7 @@
       <li xml:lang="et">Sünkroonimine ankruid/kinnispunkte lohistades ja ajatelge venitades</li>
       <li xml:lang="fi">Synkronointi ankkureita tai tarttumapisteitä vetämällä ja aikajanaa venyttämällä</li>
       <li xml:lang="fr">Synchronisation en faisant glisser des ancres ou des points de greffe et en étirant la chronologie</li>
+      <li xml:lang="gl">Sincronizar arrastrando varias áncoras e puntos de conexión e estiramento de cronoloxía.</li>
       <li xml:lang="id">Sinkron berdasarkan menyeret beberapa jangkar/graftpoints dan timeline peregangan</li>
       <li xml:lang="it">Sincronizza trascinando varie ancore/punti di aggancio e allungando la linea temporale</li>
       <li xml:lang="ko">조절점을 드래그하여 동기화 조정 및 타임라인 펼치기</li>
@@ -310,6 +322,7 @@
       <li xml:lang="et">Aja nihutamine ja skaleerimine, ridade kestuse ümberarvutamine, kaadrisageduse teisendused jms.</li>
       <li xml:lang="fi">Ajansiirto ja -skaalaus, rivien keston laskenta, kuvanopeusmuunnokset ym.</li>
       <li xml:lang="fr">Décalage et mise à l'échelle temporelle, re-calcul de la durée des lignes, conversion du nombre d'images par seconde, etc.</li>
+      <li xml:lang="gl">Desprazamento de tempo e escala, actualización do cálculo da duración das liñas, conversión de taxa de fotogramas, etc.</li>
       <li xml:lang="id">Pergeseran waktu dan penskalaan, penghitungan ulang durasi baris, konversi framerate, dll.</li>
       <li xml:lang="it">Differita e scalatura, ricalcolo della durata delle linee, conversione della frequenza dei fotogrammi, ecc.</li>
       <li xml:lang="ko">타임시프트 및 속도 조절, 각각 대사 시간 재계산, 프레임 레이트 변환 등.</li>
@@ -334,6 +347,7 @@
       <li xml:lang="et">Subtiitrifailide ühendamine ja tükeldamine</li>
       <li xml:lang="fi">Tekstitystiedostojen yhdistäminen ja jakaminen</li>
       <li xml:lang="fr">Fusion et fractionnement de fichiers de sous-titres</li>
+      <li xml:lang="gl">Unión e división de ficheiros de subtítulo.</li>
       <li xml:lang="id">Penyatuan dan pembelahan file subtitle</li>
       <li xml:lang="it">Unione e divisione di file di sottotitoli</li>
       <li xml:lang="ka">სუბტიტრის ფაილების დაყოფა და შერწყმა</li>
@@ -359,6 +373,7 @@
       <li xml:lang="et">Subtiitrite kahes veerus tõlkimine</li>
       <li xml:lang="fi">Tekstitys ja sen käännös esittäminen rinnakkain</li>
       <li xml:lang="fr">Traductions de sous-titres côte à côte</li>
+      <li xml:lang="gl">Tradución de subtítulos lado a lado.</li>
       <li xml:lang="id">Sisi demi sisi terjemahan subtitle</li>
       <li xml:lang="it">Traduzione sottotitoli fianco a fianco</li>
       <li xml:lang="ko">양쪽으로 자막 번역</li>
@@ -383,6 +398,7 @@
       <li xml:lang="et">Tekstistiilid (kaldkiri, rasvane kiri, allajoonimine, läbikriipsutamine, värv)</li>
       <li xml:lang="fi">Tekstityylit (kursiivi, lihavointi, alle- ja yliviivaus, värit)</li>
       <li xml:lang="fr">Styles de texte (italique, gras, souligné, barré, couleur)</li>
+      <li xml:lang="gl">Estilos de texto (cursiva, grosa, subliñado, trazo, cor).</li>
       <li xml:lang="id">gaya teks (miring, tebal, garis bawah, rusuk, warna)</li>
       <li xml:lang="it">Stili di testo (corsivo, grassetto, sottolineato, barrato, colorato)</li>
       <li xml:lang="ka">ტექსტის სტილები (კურსივი, სქელი, ხაზგასმული, ხაზგადასმული, ფერადი)</li>
@@ -409,6 +425,7 @@
       <li xml:lang="et">Õigekirja kontroll</li>
       <li xml:lang="fi">Oikeinkirjoituksen tarkistus</li>
       <li xml:lang="fr">Vérification orthographique</li>
+      <li xml:lang="gl">Corrección ortográfica.</li>
       <li xml:lang="id">Pengecekan ejaan</li>
       <li xml:lang="it">Controllo ortografico</li>
       <li xml:lang="ka">მართლწერის შემოწმება</li>
@@ -435,6 +452,7 @@
       <li xml:lang="et">Ajastamisvigade tuvastamine subtiitrites</li>
       <li xml:lang="fi">Tekstityksen ajoitusvirheiden tunnistus</li>
       <li xml:lang="fr">Détection des erreurs de minutage des sous-titres</li>
+      <li xml:lang="gl">Detección de erros de tempos nos subtítulos.</li>
       <li xml:lang="id">Pendeteksian timing error pada subtitle</li>
       <li xml:lang="it">Rilevamento di errori temporali nei sottotitoli</li>
       <li xml:lang="ka">სუბტიტრებში დროის შეცდომების გადამოწმება</li>
@@ -460,6 +478,7 @@
       <li xml:lang="et">Skriptide kasutamise võimalus (JavaScript, Python, Ruby ja teised Krossi toetatud keeled).</li>
       <li xml:lang="fi">Skriptaus (JavaScript, Python, Ruby ja muut Krossin tukemat kielet)</li>
       <li xml:lang="fr">Scripts (JavaScript, Python, Ruby et autres langages pris en charge par Kross).</li>
+      <li xml:lang="gl">Guionización (JavaScript, Python, Ruby e outras linguaxes permitidas por Kross).</li>
       <li xml:lang="id">Penyekripan (JavaScript, Python, Ruby dan bahasa lainnya yang didukung oleh Kross).</li>
       <li xml:lang="it">Scripting (JavaScript, Python, Ruby ed altri linguaggi supportati da Kross).</li>
       <li xml:lang="ka">სკრიპტები (JavaScript, Python, Ruby და Kross-ის მიერ მხარდაჭერილი სხვა ენები).</li>
@@ -492,6 +511,7 @@
       <caption xml:lang="et">Rakenduse peaaken</caption>
       <caption xml:lang="fi">Sovelluksen pääikkuna</caption>
       <caption xml:lang="fr">Fenêtre principale de l'application</caption>
+      <caption xml:lang="gl">Xanela principal da aplicación.</caption>
       <caption xml:lang="id">Jendela utama aplikasi</caption>
       <caption xml:lang="it">Finestra principale dell'applicazione</caption>
       <caption xml:lang="ka">აპლიკაციის მთავარი ფანჯარა</caption>
