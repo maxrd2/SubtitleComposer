@@ -12,7 +12,7 @@ msgstr ""
 "Project-Id-Version: subtitlecomposer\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-06-13 01:41+0000\n"
-"PO-Revision-Date: 2024-06-14 09:47+0200\n"
+"PO-Revision-Date: 2024-08-13 15:59+0200\n"
 "Last-Translator: Xavier Besnard <xavier.besnard@kde.org>\n"
 "Language-Team: French <French <kde-francophone@kde.org>>\n"
 "Language: fr\n"
@@ -127,7 +127,7 @@ msgstr "Quitter l'application"
 #: src/application_actions.cpp:36
 #, kde-format
 msgid "Configure Subtitle Composer"
-msgstr "Configurer Subtitle Composer"
+msgstr "Configurer SubtitleComposer"
 
 #: src/application_actions.cpp:40
 #, kde-format
@@ -945,7 +945,7 @@ msgstr "Diminuer la taille de la police des sous-titres de 1 point "
 #: src/application_actions.cpp:740
 #, kde-format
 msgid "Displayed Subtitle Text"
-msgstr "Texte du sous-titre affiché"
+msgstr "Texte du sous-titrage affiché"
 
 #: src/application_actions.cpp:741
 #, kde-format
@@ -1185,7 +1185,7 @@ msgid ""
 "Could not open a new Subtitle Composer window.\n"
 "The split part was saved as %1."
 msgstr ""
-"Impossible d'ouvrir une nouvelle fenêtre de Subtitle Composer.\n"
+"Impossible d'ouvrir une nouvelle fenêtre de SubtitleComposer.\n"
 "La partie découpée a été enregistrée sous %1."
 
 #: src/application_subtitle.cpp:759
@@ -1194,7 +1194,7 @@ msgid ""
 "Could not open a new Subtitle Composer window.\n"
 "The split parts were saved as %1 and %2."
 msgstr ""
-"Impossible d'ouvrir une nouvelle fenêtre de Subtitle Composer.\n"
+"Impossible d'ouvrir une nouvelle fenêtre de SubtitleComposer.\n"
 "Les parties découpées ont été enregistrées sous %1 et %2."
 
 #: src/application_subtitle.cpp:777
@@ -2394,7 +2394,7 @@ msgstr "Corriger et nettoyer les espaces"
 #: src/dialogs/fixpunctuationdialog.cpp:26
 #, kde-format
 msgid "Fix quotes and double quotes"
-msgstr "Corriger les quotes et double-quotes"
+msgstr "Corriger les guillemets simples et doubles"
 
 #: src/dialogs/fixpunctuationdialog.cpp:30
 #, kde-format
@@ -3092,7 +3092,7 @@ msgstr ""
 #: src/main.cpp:153
 #, kde-format
 msgid "Subtitle Composer"
-msgstr "Subtitle Composer"
+msgstr "SubtitleComposer"
 
 #: src/main.cpp:155
 #, kde-format
