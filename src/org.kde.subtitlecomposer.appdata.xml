@@ -16,7 +16,7 @@
   <name xml:lang="es">Subtitle Composer</name>
   <name xml:lang="et">Subtiitriredaktor</name>
   <name xml:lang="fi">Subtitle Composer</name>
-  <name xml:lang="fr">Subtitle Composer</name>
+  <name xml:lang="fr">SubtitleComposer</name>
   <name xml:lang="gl">Subtitle Composer</name>
   <name xml:lang="id">Subtitle Composer</name>
   <name xml:lang="it">Subtitle Composer</name>
@@ -70,7 +70,7 @@
     <p xml:lang="es">Subtitle Composer es un editor de subtítulos de código abierto basado en texto que permite operaciones de edición básicas y avanzadas.</p>
     <p xml:lang="et">Subtiitriredaktor on avatud lähtekoodiga tekstipõhine subtiitrite redaktor, mis toetab nii põhilisi kui ka spetsiifilisemaid muutmistoiminguid.</p>
     <p xml:lang="fi">Subtitle Composer on avoimen lähdekoodin tekstipohjainen tekstitysmuokkain, joka tukee tavallisia ja edistyneitä muokkaustoimenpiteitä</p>
-    <p xml:lang="fr">Subtitle Composer est un éditeur de sous-titres textes libre prenant en charge des opérations d'édition basiques et avancées.</p>
+    <p xml:lang="fr">SubtitleComposer est un éditeur de sous-titres textes libre prenant en charge des opérations d'édition basiques et avancées.</p>
     <p xml:lang="gl">Subtitle Composer é un editor de subtítulos de vídeo libre baseado en texto que permite operacións de edición básicas e avanzadas.</p>
     <p xml:lang="id">Subtitle Composer adalah editor subtitle berbasis teks open source yang mendukung operasi pengeditan dasar dan tingkat lanjut.</p>
     <p xml:lang="it">Subtitle Composer è un editor di sottotitoli open source basato sul testo che supporta operazioni di modifica di base ed avanzate.</p>
@@ -149,7 +149,7 @@
       <li xml:lang="es">Abrir y OCR de formatos de subtítulos gráficos: VobSub (.idx/.sub/.rar), BluRay/PGS (*.sup), formatos permitidos por ffmpeg (DVD/Vob, DVB, XSUB, HDMV-PGS)</li>
       <li xml:lang="et">Subtiitrite graafikavormingute - VobSub (.idx/.sub/.rar), BluRay/PGS (*.sup), ffmpeg toetatud vormingud (DVD/Vob, DVB, XSUB, HDMV-PGS) - avamine ja optiline märgituvastus</li>
       <li xml:lang="fi">Avaa ja lue graafisia tekstitystiedostomuotoja: VobSub (.idx/.sub/.rar), BluRay/PGS (*.sup) sekä ffmpegin tukemat muodot (DVD/Vob, DVB, XSUB, HDMV-PGS)</li>
-      <li xml:lang="fr">Ouverture et reconnaissance de caractères de formats de sous-titres graphiques - VobSub (.idx/.sub/.rar), BluRay/PGS (*.sup), formats pris en charge par ffmpeg (DVD/Vob, DVB, XSUB, HDMV-PGS)</li>
+      <li xml:lang="fr">Ouverture et reconnaissance de caractères de formats de sous-titres graphiques - VobSub (.idx/.sub/.rar), BluRay/PGS (*.sup), formats pris en charge par ffmpeg (DVD / vob, DVB, XSUB, HDMV-PGS)</li>
       <li xml:lang="gl">Formatos de subtítulos gráficos abertos ou de OCR: VobSub (.idx/.sub/.rar), BluRay/PGS (*.sup) e formatos permitidos por ffmpeg (DVD/Vob, DVB, XSUB, HDMV-PGS).</li>
       <li xml:lang="id">Buka/OCR Format Subtitle Grafik - VobSub (.idx/.sub/.rar), BluRay/PGS (*.sup), format-format yang didukung oleh ffmpeg (DVD/Vob, DVB, XSUB, HDMV-PGS)</li>
       <li xml:lang="it">Apertura di formati di sottotitoli grafici aperti/OCR - VobSub (.idx/.sub/.rar), BluRay/PGS (*.sup), formati supportati da ffmpeg (DVD/Vob, DVB, XSUB, HDMV-PGS)</li>
@@ -173,7 +173,7 @@
       <li xml:lang="es">Demultiplexar emisiones de subtítulos gráficos y de texto de archivos de vídeo: SRT, SSA/ASS, texto MOV, MicroDVD, DVD/Vob, DVB, XSUB, HDMV-PGS</li>
       <li xml:lang="et">Graafilise või tekstisubtiitri voo demultipleksimine videofailist - SRT, SSA/ASS, MOV text, MicroDVD, DVD/Vob, DVB, XSUB, HDMV-PGS</li>
       <li xml:lang="fi">Graafisten tai tekstimuotoisten tekstitysten demuksaus videotiedostosta: SRT, SSA/ASS, MOV, MicroDVD, DVD/Vob, DVB, XSUB, HDMV-PGS</li>
-      <li xml:lang="fr">Démultiplexage du flux de sous-titres graphiques / texte depuis un fichier vidéo - SRT, SSA / ASS, MOV texte, Micro-DVD, DVD / Vob, DVB, XSUB, HDMV-PGS</li>
+      <li xml:lang="fr">Démultiplexage du flux de sous-titres graphiques / texte depuis un fichier vidéo - SRT, SSA / ASS, MOV texte, Micro-DVD, DVD / vob, DVB, XSUB, HDMV-PGS</li>
       <li xml:lang="gl">Gráficos de demultiplexión ou fluxo de subtítulos de texto dun ficheiro de vídeo: SRT, SSA/ASS, texto de MOV, MicroDVD, DVD/Vob, DVB, XSUB e HDMV-PGS.</li>
       <li xml:lang="id">Stream Subtitle Teks/Demux Graphics dari file video - SRT, SSA/ASS, MOV text, MicroDVD, DVD/Vob, DVB, XSUB, HDMV-PGS</li>
       <li xml:lang="it">Demultiplazione di flussi di sottotitoli grafici/di testo - SRT, SSA/ASS, testo MOV, MicroDVD, DVD/Vob, DVB, XSUB, HDMV-PGS</li>
