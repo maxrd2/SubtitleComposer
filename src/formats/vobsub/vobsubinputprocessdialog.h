@@ -32,7 +32,7 @@ public:
 	class Line;
 	typedef QExplicitlySharedDataPointer<Line> LinePtr;
 
-	VobSubInputProcessDialog(Subtitle *subtitle, QWidget *parent = 0);
+	VobSubInputProcessDialog(Subtitle *subtitle, qint32 spaceThreshold = 0, QWidget *parent = 0);
 	~VobSubInputProcessDialog();
 
 	bool symFileOpen(const QString &filename);
@@ -75,6 +75,7 @@ private:
 	QExplicitlySharedDataPointer<Subtitle> m_subtitle;
 
 	qint32 m_spaceWidth;
+	qint32 m_spaceThreshold;
 
 	QList<PiecePtr> m_pieces;
 	QList<PiecePtr>::iterator m_pieceCurrent;

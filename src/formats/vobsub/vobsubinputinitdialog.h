@@ -33,6 +33,8 @@ public:
 	void streamListSet(const QStringList streams);
 	int streamIndex() const;
 
+	qint32 whitespaceThreshold() const;
+
 	quint32 postProcessingFlags() const;
 
 private:

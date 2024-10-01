@@ -351,11 +351,12 @@ qHash(const VobSubInputProcessDialog::Piece &piece)
 
 
 // VobSubInputProcessDialog
-VobSubInputProcessDialog::VobSubInputProcessDialog(Subtitle *subtitle, QWidget *parent) :
-	QDialog(parent),
-	ui(new Ui::VobSubInputProcessDialog),
-	m_subtitle(subtitle),
-	m_recognizedPiecesMaxSymbolLength(0)
+VobSubInputProcessDialog::VobSubInputProcessDialog(Subtitle *subtitle, qint32 spaceThreshold, QWidget *parent)
+	: QDialog(parent)
+	, ui(new Ui::VobSubInputProcessDialog)
+	, m_subtitle(subtitle)
+	, m_spaceThreshold(spaceThreshold)
+	, m_recognizedPiecesMaxSymbolLength(0)
 {
 	ui->setupUi(this);
 
@@ -689,7 +690,7 @@ VobSubInputProcessDialog::processNextPiece()
 			if(piecePrev) {
 				if(!piecePrev->line->intersects(piece->line))
 					subText.append(QChar(QChar::LineFeed));
-				else if(piece->left - piecePrev->right > m_spaceWidth)
+				else if(piece->left - piecePrev->right > m_spaceWidth + m_spaceThreshold)
 					subText.append(QChar(QChar::Space));
 			}
 

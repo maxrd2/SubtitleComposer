@@ -63,7 +63,7 @@ public:
 		linesWidget->setSubtitle(&subtitle);
 
 		// show process dialog
-		VobSubInputProcessDialog dlgProc(&subtitle, app()->mainWindow());
+		VobSubInputProcessDialog dlgProc(&subtitle, dlgInit.whitespaceThreshold(), app()->mainWindow());
 
 		dlgProc.processFrames(&proc);
 

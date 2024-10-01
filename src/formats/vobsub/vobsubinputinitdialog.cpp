@@ -33,6 +33,12 @@ VobSubInputInitDialog::streamIndex() const
 	return ui->comboStream->currentIndex();
 }
 
+qint32
+VobSubInputInitDialog::whitespaceThreshold() const
+{
+	return ui->hsWhitespace->value() - ui->hsWhitespace->maximum() / 2;
+}
+
 quint32
 VobSubInputInitDialog::postProcessingFlags() const
 {
