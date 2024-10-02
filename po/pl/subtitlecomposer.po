@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: subtitlecomposer\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-06-13 01:41+0000\n"
+"POT-Creation-Date: 2024-10-02 01:49+0000\n"
 "PO-Revision-Date: 2024-07-21 13:22+0200\n"
 "Last-Translator: Łukasz Wojniłowicz <lukasz.wojnilowicz@gmail.com>\n"
 "Language-Team: Polish <kde-i18n-doc@kde.org>\n"
@@ -2652,42 +2652,56 @@ msgid "Stream / Language"
 msgstr "Strumień / język"
 
 #. i18n: ectx: property (title), widget (QGroupBox, grpPostProc)
-#: src/formats/vobsub/vobsubinputinitdialog.ui:53
+#: src/formats/vobsub/vobsubinputinitdialog.ui:30
 #, kde-format
 msgid "Post Processing"
 msgstr "Przetwarzanie końcowe"
 
 #. i18n: ectx: property (text), widget (QCheckBox, ppSpaceNumber)
-#: src/formats/vobsub/vobsubinputinitdialog.ui:59
+#: src/formats/vobsub/vobsubinputinitdialog.ui:36
 #, kde-format
 msgid "Fix space between numbers"
 msgstr "Popraw odstępy pomiędzy liczbami"
 
 #. i18n: ectx: property (text), widget (QCheckBox, ppSpacePunct)
-#: src/formats/vobsub/vobsubinputinitdialog.ui:69
+#: src/formats/vobsub/vobsubinputinitdialog.ui:46
 #, kde-format
 msgid "Fix space around punctuation (.,;:?!)"
 msgstr "Popraw odstępy wokół znaków interpunkcyjnych (.,;:?!)"
 
 #. i18n: ectx: property (text), widget (QCheckBox, ppSpaceParen)
-#: src/formats/vobsub/vobsubinputinitdialog.ui:79
+#: src/formats/vobsub/vobsubinputinitdialog.ui:56
 #, kde-format
 msgid "Fix space around quotes and parentheses (\"()[]{})"
 msgstr "Popraw odstępy wokół cudzysłowów oraz nawiasów (\"()[]{})"
 
 #. i18n: ectx: property (text), widget (QCheckBox, ppAposQuote)
-#: src/formats/vobsub/vobsubinputinitdialog.ui:89
+#: src/formats/vobsub/vobsubinputinitdialog.ui:66
 #, kde-format
 msgid "Fix double apostrophes/quotes"
 msgstr "Popraw podwójne apostrofy/cudzysłowy"
 
 #. i18n: ectx: property (text), widget (QCheckBox, ppCharsOCR)
-#: src/formats/vobsub/vobsubinputinitdialog.ui:99
+#: src/formats/vobsub/vobsubinputinitdialog.ui:76
 #, kde-format
 msgid "Fix i <-> l, 0 <-> O mistakes"
 msgstr "Popraw błędy i <-> l, 0 <-> O"
 
-#: src/formats/vobsub/vobsubinputprocessdialog.cpp:584
+#. i18n: ectx: property (title), widget (QGroupBox, grpSettings)
+#: src/formats/vobsub/vobsubinputinitdialog.ui:112
+#: src/translate/deeplengine.ui:104 src/translate/googlecloudengine.ui:91
+#: src/translate/mintengine.ui:92
+#, kde-format
+msgid "Settings"
+msgstr "Ustawienia"
+
+#. i18n: ectx: property (text), widget (QLabel, labWhitespace)
+#: src/formats/vobsub/vobsubinputinitdialog.ui:118
+#, kde-format
+msgid "Whitespace detection threshold (pixels)"
+msgstr ""
+
+#: src/formats/vobsub/vobsubinputprocessdialog.cpp:585
 #, kde-format
 msgid "VobSub Error"
 msgstr "Błąd VobSub"
@@ -4084,13 +4098,6 @@ msgid ""
 msgstr ""
 "Musisz <a href=\"https://www.deepl.com/pro-api\">utworzyć konto</a> na "
 "stronie DeepL i wkleić poniżej swój klucz uwierzytelniający API."
-
-#. i18n: ectx: property (title), widget (QGroupBox, grpSettings)
-#: src/translate/deeplengine.ui:104 src/translate/googlecloudengine.ui:91
-#: src/translate/mintengine.ui:92
-#, kde-format
-msgid "Settings"
-msgstr "Ustawienia"
 
 #. i18n: ectx: property (text), widget (QLabel, labSource)
 #: src/translate/deeplengine.ui:110 src/translate/googlecloudengine.ui:97

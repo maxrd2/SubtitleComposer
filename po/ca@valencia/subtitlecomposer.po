@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: subtitlecomposer\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-06-13 01:41+0000\n"
+"POT-Creation-Date: 2024-10-02 01:49+0000\n"
 "PO-Revision-Date: 2024-06-13 16:32+0200\n"
 "Last-Translator: Josep M. Ferrer <txemaq@gmail.com>\n"
 "Language-Team: Catalan <kde-i18n-ca@kde.org>\n"
@@ -2643,43 +2643,57 @@ msgid "Stream / Language"
 msgstr "Flux / Idioma"
 
 #. i18n: ectx: property (title), widget (QGroupBox, grpPostProc)
-#: src/formats/vobsub/vobsubinputinitdialog.ui:53
+#: src/formats/vobsub/vobsubinputinitdialog.ui:30
 #, kde-format
 msgid "Post Processing"
 msgstr "Postprocessat"
 
 #. i18n: ectx: property (text), widget (QCheckBox, ppSpaceNumber)
-#: src/formats/vobsub/vobsubinputinitdialog.ui:59
+#: src/formats/vobsub/vobsubinputinitdialog.ui:36
 #, kde-format
 msgid "Fix space between numbers"
 msgstr "Esmena l'espai entre els números"
 
 # skip-rule: t-2p_sp,t-pc_sp,t-sp_in
 #. i18n: ectx: property (text), widget (QCheckBox, ppSpacePunct)
-#: src/formats/vobsub/vobsubinputinitdialog.ui:69
+#: src/formats/vobsub/vobsubinputinitdialog.ui:46
 #, kde-format
 msgid "Fix space around punctuation (.,;:?!)"
 msgstr "Esmena l'espai al voltant de la puntuació (.,;:?!)"
 
 #. i18n: ectx: property (text), widget (QCheckBox, ppSpaceParen)
-#: src/formats/vobsub/vobsubinputinitdialog.ui:79
+#: src/formats/vobsub/vobsubinputinitdialog.ui:56
 #, kde-format
 msgid "Fix space around quotes and parentheses (\"()[]{})"
 msgstr "Esmena l'espai al voltant de les cometes i parèntesis (\"()[]{})"
 
 #. i18n: ectx: property (text), widget (QCheckBox, ppAposQuote)
-#: src/formats/vobsub/vobsubinputinitdialog.ui:89
+#: src/formats/vobsub/vobsubinputinitdialog.ui:66
 #, kde-format
 msgid "Fix double apostrophes/quotes"
 msgstr "Esmena la parella dels apòstrofs/cometes"
 
 #. i18n: ectx: property (text), widget (QCheckBox, ppCharsOCR)
-#: src/formats/vobsub/vobsubinputinitdialog.ui:99
+#: src/formats/vobsub/vobsubinputinitdialog.ui:76
 #, kde-format
 msgid "Fix i <-> l, 0 <-> O mistakes"
 msgstr "Esmena els errors i <-> l, 0 <-> O"
 
-#: src/formats/vobsub/vobsubinputprocessdialog.cpp:584
+#. i18n: ectx: property (title), widget (QGroupBox, grpSettings)
+#: src/formats/vobsub/vobsubinputinitdialog.ui:112
+#: src/translate/deeplengine.ui:104 src/translate/googlecloudengine.ui:91
+#: src/translate/mintengine.ui:92
+#, kde-format
+msgid "Settings"
+msgstr "Configuració"
+
+#. i18n: ectx: property (text), widget (QLabel, labWhitespace)
+#: src/formats/vobsub/vobsubinputinitdialog.ui:118
+#, kde-format
+msgid "Whitespace detection threshold (pixels)"
+msgstr ""
+
+#: src/formats/vobsub/vobsubinputprocessdialog.cpp:585
 #, kde-format
 msgid "VobSub Error"
 msgstr "Error en VobSub"
@@ -4083,13 +4097,6 @@ msgid ""
 msgstr ""
 "Cal <a href=\"https://www.deepl.com/pro-api\">crear un comte</a> en el lloc "
 "web de DeepL i apegar la vostra clau d'autenticació de l'API davall."
-
-#. i18n: ectx: property (title), widget (QGroupBox, grpSettings)
-#: src/translate/deeplengine.ui:104 src/translate/googlecloudengine.ui:91
-#: src/translate/mintengine.ui:92
-#, kde-format
-msgid "Settings"
-msgstr "Configuració"
 
 #. i18n: ectx: property (text), widget (QLabel, labSource)
 #: src/translate/deeplengine.ui:110 src/translate/googlecloudengine.ui:97

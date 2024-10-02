@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: subtitlecomposer\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-06-13 01:41+0000\n"
+"POT-Creation-Date: 2024-10-02 01:49+0000\n"
 "PO-Revision-Date: 2024-02-25 01:13+0900\n"
 "Last-Translator: Kisaragi Hiu <mail@kisaragi-hiu.com>\n"
 "Language-Team: Traditional Chinese <zh-l10n@lists.slat.org>\n"
@@ -2581,42 +2581,56 @@ msgid "Stream / Language"
 msgstr "軌道 / 語言"
 
 #. i18n: ectx: property (title), widget (QGroupBox, grpPostProc)
-#: src/formats/vobsub/vobsubinputinitdialog.ui:53
+#: src/formats/vobsub/vobsubinputinitdialog.ui:30
 #, kde-format
 msgid "Post Processing"
 msgstr "後期處理"
 
 #. i18n: ectx: property (text), widget (QCheckBox, ppSpaceNumber)
-#: src/formats/vobsub/vobsubinputinitdialog.ui:59
+#: src/formats/vobsub/vobsubinputinitdialog.ui:36
 #, kde-format
 msgid "Fix space between numbers"
 msgstr "修正數字之間的空格"
 
 #. i18n: ectx: property (text), widget (QCheckBox, ppSpacePunct)
-#: src/formats/vobsub/vobsubinputinitdialog.ui:69
+#: src/formats/vobsub/vobsubinputinitdialog.ui:46
 #, kde-format
 msgid "Fix space around punctuation (.,;:?!)"
 msgstr "修正標點符號 (.,;:?!) 兩側的空格"
 
 #. i18n: ectx: property (text), widget (QCheckBox, ppSpaceParen)
-#: src/formats/vobsub/vobsubinputinitdialog.ui:79
+#: src/formats/vobsub/vobsubinputinitdialog.ui:56
 #, kde-format
 msgid "Fix space around quotes and parentheses (\"()[]{})"
 msgstr "修正引號和括號 (\"()[]{}) 兩側的空格"
 
 #. i18n: ectx: property (text), widget (QCheckBox, ppAposQuote)
-#: src/formats/vobsub/vobsubinputinitdialog.ui:89
+#: src/formats/vobsub/vobsubinputinitdialog.ui:66
 #, kde-format
 msgid "Fix double apostrophes/quotes"
 msgstr "修正重複的引號"
 
 #. i18n: ectx: property (text), widget (QCheckBox, ppCharsOCR)
-#: src/formats/vobsub/vobsubinputinitdialog.ui:99
+#: src/formats/vobsub/vobsubinputinitdialog.ui:76
 #, kde-format
 msgid "Fix i <-> l, 0 <-> O mistakes"
 msgstr "修正 i ↔ l 及 0 ↔ O 的錯誤"
 
-#: src/formats/vobsub/vobsubinputprocessdialog.cpp:584
+#. i18n: ectx: property (title), widget (QGroupBox, grpSettings)
+#: src/formats/vobsub/vobsubinputinitdialog.ui:112
+#: src/translate/deeplengine.ui:104 src/translate/googlecloudengine.ui:91
+#: src/translate/mintengine.ui:92
+#, kde-format
+msgid "Settings"
+msgstr "設定"
+
+#. i18n: ectx: property (text), widget (QLabel, labWhitespace)
+#: src/formats/vobsub/vobsubinputinitdialog.ui:118
+#, kde-format
+msgid "Whitespace detection threshold (pixels)"
+msgstr ""
+
+#: src/formats/vobsub/vobsubinputprocessdialog.cpp:585
 #, kde-format
 msgid "VobSub Error"
 msgstr "VobSub 錯誤"
@@ -4009,13 +4023,6 @@ msgid ""
 msgstr ""
 "您必須在 DeepL 的網站上先<a href=\"https://www.deepl.com/pro-api\">建立帳戶</"
 "a>之後再於下方貼上您的 API 認證金鑰。"
-
-#. i18n: ectx: property (title), widget (QGroupBox, grpSettings)
-#: src/translate/deeplengine.ui:104 src/translate/googlecloudengine.ui:91
-#: src/translate/mintengine.ui:92
-#, kde-format
-msgid "Settings"
-msgstr "設定"
 
 #. i18n: ectx: property (text), widget (QLabel, labSource)
 #: src/translate/deeplengine.ui:110 src/translate/googlecloudengine.ui:97
