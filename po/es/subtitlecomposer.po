@@ -1,16 +1,15 @@
-# translation of subtitlecomposer.po to Spanish
+# Translation of subtitlecomposer to Spanish
 # This file is put in the public domain.
 #
-# Daniel M. Lambea <dmlambea@gmail.com>, 2008.
-# Sergio Pistone <sergio_pistone@yahoo.com.ar>, 2009.
-# Sergio Pistone <sergio_pistone@yahoo.com.ar>, 2010.
+# SPDX-FileCopyrightText: 2008 Daniel M. Lambea <dmlambea@gmail.com>
+# SPDX-FileCopyrightText: 2009, 2010 Sergio Pistone <sergio_pistone@yahoo.com.ar>
 # SPDX-FileCopyrightText: 2020, 2021, 2022, 2023, 2024 Eloy Cuadra <ecuadra@eloihr.net>
 msgid ""
 msgstr ""
 "Project-Id-Version: subtitlecomposer\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-10-02 01:49+0000\n"
-"PO-Revision-Date: 2024-06-14 01:48+0200\n"
+"PO-Revision-Date: 2024-10-02 16:08+0200\n"
 "Last-Translator: Eloy Cuadra <ecuadra@eloihr.net>\n"
 "Language-Team: Spanish <kde-l10n-es@kde.org>\n"
 "Language: es\n"
@@ -18,7 +17,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Lokalize 24.05.0\n"
+"X-Generator: Lokalize 24.08.1\n"
 "X-Crowdin-Project: subtitlecomposer\n"
 "X-Crowdin-Language: es-ES\n"
 "X-Crowdin-File: subtitlecomposer.pot\n"
@@ -2689,7 +2688,7 @@ msgstr "Preferencias"
 #: src/formats/vobsub/vobsubinputinitdialog.ui:118
 #, kde-format
 msgid "Whitespace detection threshold (pixels)"
-msgstr ""
+msgstr "Umbral de detección de espacios en blanco (píxeles)"
 
 #: src/formats/vobsub/vobsubinputprocessdialog.cpp:585
 #, kde-format
