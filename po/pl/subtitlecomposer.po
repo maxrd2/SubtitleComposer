@@ -11,7 +11,7 @@ msgstr ""
 "Project-Id-Version: subtitlecomposer\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-10-02 01:49+0000\n"
-"PO-Revision-Date: 2024-07-21 13:22+0200\n"
+"PO-Revision-Date: 2024-10-05 13:16+0200\n"
 "Last-Translator: Łukasz Wojniłowicz <lukasz.wojnilowicz@gmail.com>\n"
 "Language-Team: Polish <kde-i18n-doc@kde.org>\n"
 "Language: pl\n"
@@ -2699,7 +2699,7 @@ msgstr "Ustawienia"
 #: src/formats/vobsub/vobsubinputinitdialog.ui:118
 #, kde-format
 msgid "Whitespace detection threshold (pixels)"
-msgstr ""
+msgstr "Próg wykrywania białej przestrzeni (piksele)"
 
 #: src/formats/vobsub/vobsubinputprocessdialog.cpp:585
 #, kde-format
