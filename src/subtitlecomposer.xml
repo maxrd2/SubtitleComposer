@@ -120,7 +120,7 @@
 		<glob pattern="*.sym"/>
 	</mime-type>
 	
-	<mime-type type="subpicture/x-pgs">
+	<mime-type type="application/x-pgs">
 		<comment>PGS subtitles</comment>
 		<sub-class-of type="application/octet-stream"/>
 		<generic-icon name="text-x-generic"/>
