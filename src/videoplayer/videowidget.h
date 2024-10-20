@@ -26,9 +26,6 @@ public:
 	explicit VideoWidget(QWidget *parent);
 	virtual ~VideoWidget();
 
-	QWidget * videoLayer() const;
-	void setVideoLayer(QWidget *videoLayer);
-
 	int videoWidth() const;
 	int videoHeight() const;
 	double videoDAR() const;
@@ -69,8 +66,6 @@ protected:
 	void wheelEvent(QWheelEvent *e) override;
 
 protected:
-	QWidget *m_videoLayer;
-
 	int m_videoWidth;
 	int m_videoHeight;
 	double m_videoDAR;

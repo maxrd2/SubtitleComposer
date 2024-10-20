@@ -38,7 +38,6 @@ class KRecentFilesActionExt;
 class KCodecActionExt;
 
 namespace SubtitleComposer {
-class VideoPlayer;
 class TextDemux;
 class SpeechProcessor;
 

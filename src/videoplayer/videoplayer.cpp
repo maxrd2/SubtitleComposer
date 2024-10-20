@@ -6,8 +6,10 @@
 */
 
 #include "videoplayer.h"
-#include "scconfig.h"
 
+#include "appglobal.h"
+#include "application.h"
+#include "scconfig.h"
 #include "videoplayer/backend/glrenderer.h"
 
 #include <math.h>
@@ -26,20 +28,27 @@
 using namespace SubtitleComposer;
 
 
-VideoPlayer::VideoPlayer()
-	: m_player(new FFPlayer(this)),
-	  m_videoWidget(nullptr),
-	  m_filePath(),
-	  m_state(Initialized),
-	  m_duration(-1.0),
-	  m_fps(-1.0),
-	  m_playSpeed(.0),
-	  m_textStreams(),
-	  m_activeAudioStream(-2),
-	  m_audioStreams(),
-	  m_muted(false),
-	  m_volume(100.0)
+VideoPlayer::VideoPlayer(QWidget *videoContainer)
+	: QObject(videoContainer)
+	, m_videoWidget(new VideoWidget(videoContainer))
+	, m_player(new FFPlayer(m_videoWidget, this))
+	, m_filePath()
+	, m_state(Initialized)
+	, m_duration(-1.0)
+	, m_fps(-1.0)
+	, m_playSpeed(.0)
+	, m_textStreams()
+	, m_activeAudioStream(-2)
+	, m_audioStreams()
+	, m_muted(false)
+	, m_volume(100.0)
 {
+	connect(m_videoWidget, &VideoWidget::doubleClicked, this, &VideoPlayer::doubleClicked);
+	connect(m_videoWidget, &VideoWidget::rightClicked, this, &VideoPlayer::rightClicked);
+	connect(m_videoWidget, &VideoWidget::leftClicked, this, &VideoPlayer::leftClicked);
+	connect(m_videoWidget, &VideoWidget::wheelUp, this, &VideoPlayer::wheelUp);
+	connect(m_videoWidget, &VideoWidget::wheelDown, this, &VideoPlayer::wheelDown);
+
 	m_player->renderer()->setOverlay(&m_subOverlay);
 
 	setupNotifications();
@@ -49,30 +58,9 @@ VideoPlayer::~VideoPlayer()
 {
 }
 
-VideoPlayer *
-VideoPlayer::instance()
-{
-	static VideoPlayer *player = nullptr;
-	if(!player)
-		player = new VideoPlayer();
-	return player;
-}
-
 bool
-VideoPlayer::init(QWidget *videoContainer)
+VideoPlayer::init()
 {
-	if(!m_videoWidget) {
-		m_videoWidget = new VideoWidget(videoContainer);
-		m_videoWidget->setVideoLayer(m_player->renderer());
-
-		connect(m_videoWidget, &VideoWidget::doubleClicked, this, &VideoPlayer::doubleClicked);
-		connect(m_videoWidget, &VideoWidget::rightClicked, this, &VideoPlayer::rightClicked);
-		connect(m_videoWidget, &VideoWidget::leftClicked, this, &VideoPlayer::leftClicked);
-		connect(m_videoWidget, &VideoWidget::wheelUp, this, &VideoPlayer::wheelUp);
-		connect(m_videoWidget, &VideoWidget::wheelDown, this, &VideoPlayer::wheelDown);
-	} else {
-		m_videoWidget->setParent(videoContainer);
-	}
 	reset();
 
 	return true;
@@ -91,9 +79,6 @@ VideoPlayer::reset()
 	m_audioStreams.clear();
 
 	m_state = Initialized;
-
-	if(m_videoWidget)
-		m_videoWidget->videoLayer()->hide();
 }
 
 bool
@@ -260,7 +245,6 @@ VideoPlayer::setupNotifications()
 		emit fileOpened(m_filePath);
 		m_fps = m_player->videoFPS();
 		emit fpsChanged(m_fps);
-		m_videoWidget->videoLayer()->show();
 	});
 	connect(m_player, &FFPlayer::stateChanged, this, [this](FFPlayer::State ffs){
 		if(m_state == Initialized) // video file is closed don't notify play/pause/stop
@@ -277,7 +261,6 @@ VideoPlayer::setupNotifications()
 	});
 	connect(m_player->renderer(), &GLRenderer::resolutionChanged, this, [this](){
 		m_videoWidget->setVideoResolution(m_player->videoWidth(), m_player->videoHeight(), m_player->videoSAR());
-		m_videoWidget->videoLayer()->show();
 	});
 
 	connect(m_player, &FFPlayer::positionChanged, this, &VideoPlayer::positionChanged);

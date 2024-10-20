@@ -7,6 +7,7 @@
 
 #include "config.h"
 
+#include "appglobal.h"
 #include "splitsubtitledialog.h"
 #include "helpers/commondefs.h"
 #include "videoplayer/videoplayer.h"
@@ -59,7 +60,7 @@ SplitSubtitleDialog::SplitSubtitleDialog(QWidget *parent) :
 void
 SplitSubtitleDialog::setSplitTimeFromVideo()
 {
-	m_splitTimeEdit->setValue(static_cast<int>(VideoPlayer::instance()->duration() * 1000 + 0.5));
+	m_splitTimeEdit->setValue(static_cast<int>(videoPlayer()->duration() * 1000 + 0.5));
 }
 
 Time
@@ -77,7 +78,7 @@ SplitSubtitleDialog::shiftNewSubtitle() const
 void
 SplitSubtitleDialog::show()
 {
-	m_splitTimeFromVideoButton->setEnabled(VideoPlayer::instance()->state() > VideoPlayer::Opening);
+	m_splitTimeFromVideoButton->setEnabled(videoPlayer()->state() > VideoPlayer::Opening);
 	if(m_splitTimeFromVideoButton->isEnabled())
 		setSplitTimeFromVideo();
 

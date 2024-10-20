@@ -86,8 +86,9 @@ public slots:
 	void setTranslationMode(bool enabled);
 	void setShowTranslation(bool showTranslation);
 
-private slots:
+public slots:
 	void onPlayerPositionChanged(double seconds);
+private slots:
 	void onScrollBarValueChanged(int value);
 	void onHoverScrollTimeout();
 

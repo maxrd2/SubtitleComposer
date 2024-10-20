@@ -7,6 +7,10 @@
 
 #include "videowidget.h"
 
+#include "appglobal.h"
+#include "videoplayer/backend/glrenderer.h"
+#include "videoplayer/videoplayer.h"
+
 #include <QApplication>
 #include <QPainter>
 #include <QPaintEvent>
@@ -26,7 +30,6 @@ using namespace SubtitleComposer;
 
 VideoWidget::VideoWidget(QWidget *parent)
 	: QWidget(parent),
-	  m_videoLayer(nullptr),
 	  m_videoWidth(0),
 	  m_videoHeight(0),
 	  m_videoDAR(0)
@@ -40,20 +43,6 @@ VideoWidget::VideoWidget(QWidget *parent)
 
 VideoWidget::~VideoWidget()
 {}
-
-void
-VideoWidget::setVideoLayer(QWidget *videoLayer)
-{
-	m_videoLayer = videoLayer;
-	m_videoLayer->setParent(this);
-	m_videoLayer->hide();
-}
-
-QWidget *
-VideoWidget::videoLayer() const
-{
-	return m_videoLayer;
-}
 
 int
 VideoWidget::videoWidth() const
@@ -92,7 +81,7 @@ void
 VideoWidget::setMouseTracking(bool enable)
 {
 	QWidget::setMouseTracking(enable);
-	m_videoLayer->setMouseTracking(enable);
+	videoPlayer()->renderer()->setMouseTracking(enable);
 }
 
 void
@@ -156,6 +145,10 @@ VideoWidget::desktopAspectRatio()
 	return (double)size.width() / size.height();
 }
 
+#include "appglobal.h"
+#include "videoplayer/videoplayer.h"
+#include "videoplayer/backend/glrenderer.h"
+
 void
 VideoWidget::updateVideoLayerGeometry()
 {
@@ -176,9 +169,10 @@ VideoWidget::updateVideoLayerGeometry()
 		}
 	}
 
-	m_videoLayer->setGeometry(videoLayerX, videoLayerY, videoLayerWidth, videoLayerHeight);
+	videoPlayer()->renderer()->setGeometry(videoLayerX, videoLayerY, videoLayerWidth, videoLayerHeight);
 
-	m_videoLayer->update();
+	videoPlayer()->renderer()->update();
+
 	update();
 }
 

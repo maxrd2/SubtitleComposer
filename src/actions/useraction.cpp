@@ -6,6 +6,8 @@
 */
 
 #include "useraction.h"
+
+#include "appglobal.h"
 #include "application.h"
 #include "core/subtitle.h"
 #include "videoplayer/videoplayer.h"
@@ -105,7 +107,7 @@ UserActionManager::UserActionManager()
 	  m_translationMode(false),
 	  m_contextFlags(UserAction::SubClosed | UserAction::SubTrClosed | UserAction::VideoClosed | UserAction::FullScreenOff | UserAction::AnchorsNone)
 {
-	VideoPlayer *videoPlayer = VideoPlayer::instance();
+	VideoPlayer *videoPlayer = SubtitleComposer::videoPlayer();
 	connect(videoPlayer, &VideoPlayer::fileOpened, this, &UserActionManager::onPlayerStateChanged);
 	connect(videoPlayer, &VideoPlayer::fileClosed, this, &UserActionManager::onPlayerStateChanged);
 	connect(videoPlayer, &VideoPlayer::playing, this, &UserActionManager::onPlayerStateChanged);
@@ -291,7 +293,7 @@ UserActionManager::onPlayerStateChanged()
 {
 	int newContextFlags = m_contextFlags & ~UserAction::VideoMask;
 
-	const int state = VideoPlayer::instance()->state();
+	const int state = videoPlayer()->state();
 	if(state > VideoPlayer::Opening) {
 		newContextFlags |= UserAction::VideoOpened;
 		if(state < VideoPlayer::Playing)

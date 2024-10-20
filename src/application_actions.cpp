@@ -27,7 +27,7 @@ Application::setupActions()
 {
 	KActionCollection *actionCollection = m_mainWindow->actionCollection();
 	UserActionManager *actionManager = UserActionManager::instance();
-	VideoPlayer *videoPlayer = VideoPlayer::instance();
+	VideoPlayer *videoPlayer = SubtitleComposer::videoPlayer();
 
 	QAction *quitAction = KStandardAction::quit(m_mainWindow, &MainWindow::close, actionCollection);
 	quitAction->setStatusTip(i18n("Exit the application"));

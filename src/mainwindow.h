@@ -8,6 +8,7 @@
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
 
+#include "appglobal.h"
 #include "core/subtitle.h"
 
 #include <kxmlguiwindow.h>
@@ -17,6 +18,7 @@ class PlayerWidget;
 class SubtitleMetaWidget;
 class LinesWidget;
 class CurrentLineWidget;
+class VideoPlayer;
 class WaveformWidget;
 
 class MainWindow : public KXmlGuiWindow
@@ -38,6 +40,7 @@ protected:
 	bool queryClose() override;
 
 protected:
+	friend VideoPlayer * videoPlayer();
 	PlayerWidget *m_playerWidget;
 	SubtitleMetaWidget *m_metaWidget;
 	LinesWidget *m_linesWidget;

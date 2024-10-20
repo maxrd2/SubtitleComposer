@@ -13,6 +13,7 @@ namespace SubtitleComposer {
 class Application;
 class Subtitle;
 class UndoStack;
+class VideoPlayer;
 
 class AppGlobal
 {
@@ -29,6 +30,7 @@ class AppGlobal
 inline Application * app() { return AppGlobal::app; }
 inline Subtitle * appSubtitle() { return AppGlobal::subtitle.data(); }
 inline UndoStack * appUndoStack() { return AppGlobal::undoStack; }
+VideoPlayer * videoPlayer();
 
 }
 

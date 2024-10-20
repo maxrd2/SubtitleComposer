@@ -11,7 +11,6 @@
 #include "gui/playerwidget.h"
 #include "gui/treeview/lineswidget.h"
 #include "gui/currentlinewidget.h"
-#include "videoplayer/videoplayer.h"
 #include "gui/waveform/waveformwidget.h"
 #include "gui/subtitlemeta/subtitlemetawidget.h"
 
@@ -32,7 +31,19 @@ using namespace SubtitleComposer;
 MainWindow::MainWindow()
 	: KXmlGuiWindow(nullptr)
 {
-	VideoPlayer::instance()->setParent(this);
+	QDockWidget *playerDock = new QDockWidget(i18n("Video Player"), this);
+	playerDock->setObjectName(QStringLiteral("player_dock"));
+	playerDock->setAllowedAreas(Qt::AllDockWidgetAreas);
+	playerDock->setFeatures(QDockWidget::DockWidgetMovable | QDockWidget::DockWidgetClosable | QDockWidget::DockWidgetVerticalTitleBar);
+	playerDock->setFloating(false);
+
+	m_playerWidget = new PlayerWidget(playerDock);
+	m_playerWidget->setContentsMargins(0, 0, 0, 0);
+
+	playerDock->setWidget(m_playerWidget);
+	playerDock->setTitleBarWidget(m_playerWidget->infoSidebarWidget());
+	addDockWidget(Qt::TopDockWidgetArea, playerDock);
+
 
 	QDockWidget *waveformDock = new QDockWidget(i18n("Waveform"), this);
 	waveformDock->setObjectName(QStringLiteral("waveform_dock"));
@@ -46,20 +57,6 @@ MainWindow::MainWindow()
 	waveformDock->setWidget(m_waveformWidget);
 	waveformDock->setTitleBarWidget(m_waveformWidget->toolbarWidget());
 	addDockWidget(Qt::RightDockWidgetArea, waveformDock);
-
-
-	QDockWidget *playerDock = new QDockWidget(i18n("Video Player"), this);
-	playerDock->setObjectName(QStringLiteral("player_dock"));
-	playerDock->setAllowedAreas(Qt::AllDockWidgetAreas);
-	playerDock->setFeatures(QDockWidget::DockWidgetMovable | QDockWidget::DockWidgetClosable | QDockWidget::DockWidgetVerticalTitleBar);
-	playerDock->setFloating(false);
-
-	m_playerWidget = new PlayerWidget(playerDock);
-	m_playerWidget->setContentsMargins(0, 0, 0, 0);
-
-	playerDock->setWidget(m_playerWidget);
-	playerDock->setTitleBarWidget(m_playerWidget->infoSidebarWidget());
-	addDockWidget(Qt::TopDockWidgetArea, playerDock);
 
 
 	QDockWidget *cssDock = new QDockWidget(i18n("Styles and Comments"), this);

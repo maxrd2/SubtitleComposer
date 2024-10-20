@@ -38,7 +38,7 @@ class FFPlayer : public QObject {
 	Q_OBJECT
 
 public:
-	FFPlayer(QObject *parent=nullptr);
+	FFPlayer(QWidget *parentWidget, QObject *parent=nullptr);
 	virtual ~FFPlayer();
 
 	static uint8_t *flushPkt();

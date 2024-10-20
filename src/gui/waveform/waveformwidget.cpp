@@ -128,8 +128,6 @@ WaveformWidget::WaveformWidget(QWidget *parent)
 
 	connect(m_scrollBar, &QScrollBar::valueChanged, this, &WaveformWidget::onScrollBarValueChanged);
 
-	connect(VideoPlayer::instance(), &VideoPlayer::positionChanged, this, &WaveformWidget::onPlayerPositionChanged);
-
 	m_hoverScrollTimer.setInterval(50);
 	m_hoverScrollTimer.setSingleShot(false);
 	connect(&m_hoverScrollTimer, &QTimer::timeout, this, &WaveformWidget::onHoverScrollTimeout);

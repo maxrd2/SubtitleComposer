@@ -28,6 +28,7 @@ class TimeEdit;
 
 namespace SubtitleComposer {
 class TextOverlayWidget;
+class VideoPlayer;
 
 class PlayerWidget : public QWidget
 {
@@ -115,6 +116,8 @@ private:
 	QGridLayout *m_mainLayout;
 
 	LayeredWidget *m_layeredWidget;
+	friend VideoPlayer * videoPlayer();
+	VideoPlayer *m_videoPlayer;
 	AttachableWidget *m_fullScreenControls;
 
 	QSlider *m_seekSlider;

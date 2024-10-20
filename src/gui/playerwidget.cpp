@@ -210,26 +210,26 @@ PlayerWidget::PlayerWidget(QWidget *parent) :
 
 	connect(SCConfig::self(), &KCoreConfigSkeleton::configChanged, this, &PlayerWidget::onConfigChanged);
 
-	VideoPlayer *videoPlayer = VideoPlayer::instance();
-	videoPlayer->init(m_layeredWidget);
+	m_videoPlayer = new VideoPlayer(m_layeredWidget);
+	m_videoPlayer->init();
 
-	connect(videoPlayer, &VideoPlayer::fileOpened, this, &PlayerWidget::onPlayerFileOpened);
-	connect(videoPlayer, &VideoPlayer::fileOpenError, this, &PlayerWidget::onPlayerFileOpenError);
-	connect(videoPlayer, &VideoPlayer::fileClosed, this, &PlayerWidget::onPlayerFileClosed);
-	connect(videoPlayer, &VideoPlayer::playbackError, this, &PlayerWidget::onPlayerPlaybackError);
-	connect(videoPlayer, &VideoPlayer::playing, this, &PlayerWidget::onPlayerPlaying);
-	connect(videoPlayer, &VideoPlayer::stopped, this, &PlayerWidget::onPlayerStopped);
-	connect(videoPlayer, &VideoPlayer::positionChanged, this, &PlayerWidget::onPlayerPositionChanged);
-	connect(videoPlayer, &VideoPlayer::durationChanged, this, &PlayerWidget::onPlayerLengthChanged);
-	connect(videoPlayer, &VideoPlayer::fpsChanged, this, &PlayerWidget::onPlayerFramesPerSecondChanged);
-	connect(videoPlayer, &VideoPlayer::playSpeedChanged, this, &PlayerWidget::onPlayerPlaybackRateChanged);
-	connect(videoPlayer, &VideoPlayer::volumeChanged, this, &PlayerWidget::onPlayerVolumeChanged);
-	connect(videoPlayer, &VideoPlayer::muteChanged, m_fsVolumeSlider, &QWidget::setDisabled);
-	connect(videoPlayer, &VideoPlayer::muteChanged, m_volumeSlider, &QWidget::setDisabled);
+	connect(m_videoPlayer, &VideoPlayer::fileOpened, this, &PlayerWidget::onPlayerFileOpened);
+	connect(m_videoPlayer, &VideoPlayer::fileOpenError, this, &PlayerWidget::onPlayerFileOpenError);
+	connect(m_videoPlayer, &VideoPlayer::fileClosed, this, &PlayerWidget::onPlayerFileClosed);
+	connect(m_videoPlayer, &VideoPlayer::playbackError, this, &PlayerWidget::onPlayerPlaybackError);
+	connect(m_videoPlayer, &VideoPlayer::playing, this, &PlayerWidget::onPlayerPlaying);
+	connect(m_videoPlayer, &VideoPlayer::stopped, this, &PlayerWidget::onPlayerStopped);
+	connect(m_videoPlayer, &VideoPlayer::positionChanged, this, &PlayerWidget::onPlayerPositionChanged);
+	connect(m_videoPlayer, &VideoPlayer::durationChanged, this, &PlayerWidget::onPlayerLengthChanged);
+	connect(m_videoPlayer, &VideoPlayer::fpsChanged, this, &PlayerWidget::onPlayerFramesPerSecondChanged);
+	connect(m_videoPlayer, &VideoPlayer::playSpeedChanged, this, &PlayerWidget::onPlayerPlaybackRateChanged);
+	connect(m_videoPlayer, &VideoPlayer::volumeChanged, this, &PlayerWidget::onPlayerVolumeChanged);
+	connect(m_videoPlayer, &VideoPlayer::muteChanged, m_fsVolumeSlider, &QWidget::setDisabled);
+	connect(m_videoPlayer, &VideoPlayer::muteChanged, m_volumeSlider, &QWidget::setDisabled);
 
-	connect(videoPlayer, &VideoPlayer::leftClicked, this, &PlayerWidget::onPlayerLeftClicked);
-	connect(videoPlayer, &VideoPlayer::rightClicked, this, &PlayerWidget::onPlayerRightClicked);
-	connect(videoPlayer, &VideoPlayer::doubleClicked, this, &PlayerWidget::onPlayerDoubleClicked);
+	connect(m_videoPlayer, &VideoPlayer::leftClicked, this, &PlayerWidget::onPlayerLeftClicked);
+	connect(m_videoPlayer, &VideoPlayer::rightClicked, this, &PlayerWidget::onPlayerRightClicked);
+	connect(m_videoPlayer, &VideoPlayer::doubleClicked, this, &PlayerWidget::onPlayerDoubleClicked);
 
 	onPlayerFileClosed();
 	onConfigChanged();    // initializes the font
@@ -296,7 +296,7 @@ PlayerWidget::createToolButton(QWidget *parent, const char *name, int size)
 void
 PlayerWidget::loadConfig()
 {
-	onPlayerVolumeChanged(VideoPlayer::instance()->volume());
+	onPlayerVolumeChanged(m_videoPlayer->volume());
 }
 
 void
@@ -335,7 +335,7 @@ PlayerWidget::setFullScreenMode(bool fullScreenMode)
 
 		m_fullScreenTID = startTimer(HIDE_MOUSE_MSECS);
 
-		VideoPlayer::instance()->subtitleOverlay().setBottomPadding(m_fullScreenControls->height());
+		m_videoPlayer->subtitleOverlay().setBottomPadding(m_fullScreenControls->height());
 	} else {
 		if(m_fullScreenTID) {
 			killTimer(m_fullScreenTID);
@@ -352,7 +352,7 @@ PlayerWidget::setFullScreenMode(bool fullScreenMode)
 
 		m_mainLayout->addWidget(m_layeredWidget, 0, 1);
 
-		VideoPlayer::instance()->subtitleOverlay().setBottomPadding(0);
+		m_videoPlayer->subtitleOverlay().setBottomPadding(0);
 
 		window()->show();
 	}
@@ -501,14 +501,14 @@ void
 PlayerWidget::increaseFontSize(int size)
 {
 	SCConfig::setFontSize(SCConfig::fontSize() + size);
-	VideoPlayer::instance()->subtitleOverlay().setFontSize(SCConfig::fontSize());
+	m_videoPlayer->subtitleOverlay().setFontSize(SCConfig::fontSize());
 }
 
 void
 PlayerWidget::decreaseFontSize(int size)
 {
 	SCConfig::setFontSize(SCConfig::fontSize() - size);
-	VideoPlayer::instance()->subtitleOverlay().setFontSize(SCConfig::fontSize());
+	m_videoPlayer->subtitleOverlay().setFontSize(SCConfig::fontSize());
 }
 
 void
@@ -571,7 +571,7 @@ PlayerWidget::pauseAfterPlayingLine(const SubtitleLine *line)
 void
 PlayerWidget::setPlayingLineFromVideo()
 {
-	updatePlayingLine(VideoPlayer::instance()->position() * 1000.);
+	updatePlayingLine(m_videoPlayer->position() * 1000.);
 }
 
 void
@@ -583,7 +583,7 @@ PlayerWidget::setPlayingLine(SubtitleLine *line)
 	if(m_playingLine == line)
 		return;
 
-	SubtitleTextOverlay &ovr = VideoPlayer::instance()->subtitleOverlay();
+	SubtitleTextOverlay &ovr = m_videoPlayer->subtitleOverlay();
 	if(m_playingLine) {
 		disconnect(m_playingLine, &SubtitleLine::showTimeChanged, this, &PlayerWidget::setPlayingLineFromVideo);
 		disconnect(m_playingLine, &SubtitleLine::hideTimeChanged, this, &PlayerWidget::setPlayingLineFromVideo);
@@ -607,7 +607,7 @@ PlayerWidget::setPlayingLine(SubtitleLine *line)
 void
 PlayerWidget::updatePositionEditVisibility()
 {
-	if(m_showPositionTimeEdit && VideoPlayer::instance()->state() >= VideoPlayer::Playing)
+	if(m_showPositionTimeEdit && m_videoPlayer->state() >= VideoPlayer::Playing)
 		m_positionEdit->show();
 	else
 		m_positionEdit->hide();
@@ -616,17 +616,16 @@ PlayerWidget::updatePositionEditVisibility()
 void
 PlayerWidget::onVolumeSliderMoved(int value)
 {
-	VideoPlayer::instance()->setVolume(value);
+	m_videoPlayer->setVolume(value);
 }
 
 void
 PlayerWidget::onSeekSliderMoved(int value)
 {
-	VideoPlayer *videoPlayer = VideoPlayer::instance();
 	pauseAfterPlayingLine(nullptr);
-	videoPlayer->seek(videoPlayer->duration() * value / 1000.0);
+	m_videoPlayer->seek(m_videoPlayer->duration() * value / 1000.0);
 
-	Time time((long)(videoPlayer->duration() * value));
+	Time time((long)(m_videoPlayer->duration() * value));
 
 	m_positionLabel->setText(time.toString());
 	m_fsPositionLabel->setText(time.toString(false) + m_lengthString);
@@ -640,7 +639,7 @@ PlayerWidget::onPositionEditValueChanged(int position)
 {
 	if(m_positionEdit->hasFocus()) {
 		pauseAfterPlayingLine(nullptr);
-		VideoPlayer::instance()->seek(position / 1000.0);
+		m_videoPlayer->seek(position / 1000.0);
 	}
 }
 
@@ -652,7 +651,7 @@ PlayerWidget::onConfigChanged()
 		updatePositionEditVisibility();
 	}
 
-	SubtitleTextOverlay &subtitleOverlay = VideoPlayer::instance()->subtitleOverlay();
+	SubtitleTextOverlay &subtitleOverlay = m_videoPlayer->subtitleOverlay();
 	subtitleOverlay.setTextColor(SCConfig::fontColor());
 	subtitleOverlay.setFontFamily(SCConfig::fontFamily());
 	subtitleOverlay.setFontSize(SCConfig::fontSize());
@@ -726,10 +725,9 @@ PlayerWidget::onPlayerPositionChanged(double seconds)
 	if(m_pauseAfterPlayingLine) {
 		const Time &pauseTime = m_pauseAfterPlayingLine->hideTime();
 		if(videoPosition >= pauseTime) {
-			VideoPlayer *videoPlayer = VideoPlayer::instance();
 			m_pauseAfterPlayingLine = nullptr;
-			videoPlayer->pause();
-			videoPlayer->seek(pauseTime.toSeconds());
+			m_videoPlayer->pause();
+			m_videoPlayer->seek(pauseTime.toSeconds());
 			return;
 		}
 	}
@@ -745,7 +743,7 @@ PlayerWidget::onPlayerPositionChanged(double seconds)
 	updatePlayingLine(videoPosition);
 
 	QSignalBlocker s1(m_seekSlider), s2(m_fsSeekSlider);
-	const int sliderValue = int((seconds / VideoPlayer::instance()->duration()) * 1000.0);
+	const int sliderValue = int((seconds / m_videoPlayer->duration()) * 1000.0);
 	m_seekSlider->setValue(sliderValue);
 	m_fsSeekSlider->setValue(sliderValue);
 }
@@ -799,7 +797,7 @@ void
 PlayerWidget::onPlayerLeftClicked(const QPointF &point)
 {
 	Q_UNUSED(point);
-	VideoPlayer::instance()->togglePlayPaused();
+	m_videoPlayer->togglePlayPaused();
 }
 
 void

@@ -35,12 +35,12 @@ extern "C" {
 
 using namespace SubtitleComposer;
 
-FFPlayer::FFPlayer(QObject *parent)
+FFPlayer::FFPlayer(QWidget *parentWidget, QObject *parent)
 	: QObject(parent),
 	  m_muted(false),
 	  m_volume(1.0),
 	  m_vs(nullptr),
-	  m_renderer(new GLRenderer(nullptr))
+	  m_renderer(new GLRenderer(parentWidget))
 {
 	connect(m_renderer, &QObject::destroyed, this, [&](){
 		close();

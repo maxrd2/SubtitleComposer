@@ -26,6 +26,9 @@ class VideoPlayer : public QObject
 	Q_OBJECT
 
 public:
+	VideoPlayer(QWidget *videoContainer);
+	virtual ~VideoPlayer();
+
 	enum State {
 		Initialized,
 		Opening,
@@ -34,9 +37,7 @@ public:
 		Paused
 	};
 
-	static VideoPlayer * instance();
-
-	bool init(QWidget *videoContainer);
+	bool init();
 
 	inline State state() const { return m_state; }
 	inline VideoWidget * videoWidget() { return m_videoWidget; }
@@ -59,6 +60,8 @@ public:
 	inline const QStringList & audioStreams() const { return m_audioStreams; }
 
 	inline SubtitleTextOverlay & subtitleOverlay() { return m_subOverlay; }
+
+	inline GLRenderer * renderer() const { return m_player->renderer(); }
 
 	bool playOnLoad();
 
@@ -106,15 +109,12 @@ signals:
 	void wheelDown();
 
 private:
-	VideoPlayer();
-	virtual ~VideoPlayer();
-
 	void reset();
 	void setupNotifications();
 
 private:
-	FFPlayer *m_player;
 	VideoWidget *m_videoWidget;
+	FFPlayer *m_player;
 	SubtitleTextOverlay m_subOverlay;
 	QString m_filePath;
 

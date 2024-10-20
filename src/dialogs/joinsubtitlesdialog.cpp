@@ -7,6 +7,7 @@
 
 #include "config.h"
 
+#include "appglobal.h"
 #include "joinsubtitlesdialog.h"
 #include "helpers/commondefs.h"
 #include "videoplayer/videoplayer.h"
@@ -56,7 +57,7 @@ JoinSubtitlesDialog::JoinSubtitlesDialog(QWidget *parent) :
 void
 JoinSubtitlesDialog::setShiftTimeFromVideo()
 {
-	m_shiftTimeEdit->setValue((int)(VideoPlayer::instance()->duration() * 1000 + 0.5));
+	m_shiftTimeEdit->setValue((int)(videoPlayer()->duration() * 1000 + 0.5));
 }
 
 Time
@@ -68,7 +69,7 @@ JoinSubtitlesDialog::shiftTime() const
 void
 JoinSubtitlesDialog::show()
 {
-	m_shiftTimeFromVideoButton->setEnabled(VideoPlayer::instance()->state() > VideoPlayer::Opening);
+	m_shiftTimeFromVideoButton->setEnabled(videoPlayer()->state() > VideoPlayer::Opening);
 	if(m_shiftTimeFromVideoButton->isEnabled())
 		setShiftTimeFromVideo();
 

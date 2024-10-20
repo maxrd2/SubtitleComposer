@@ -7,6 +7,7 @@
 
 #include "playerconfigwidget.h"
 
+#include "appglobal.h"
 #include "videoplayer/videoplayer.h"
 #include "widgets/layeredwidget.h"
 #include "widgets/textoverlaywidget.h"
@@ -44,7 +45,7 @@ PlayerConfigWidget::PlayerConfigWidget(QWidget *parent)
 	connect(kcfg_OutlineWidth, QOverload<int>::of(&QSpinBox::valueChanged), this, &PlayerConfigWidget::onOutlineWidthChanged);
 
 	connect(static_cast<KConfigDialog *>(parent), &KConfigDialog::settingsChanged, this, [](const QString &){
-		VideoPlayer::instance()->setVolume(VideoPlayer::instance()->volume());
+		videoPlayer()->setVolume(videoPlayer()->volume());
 	});
 }
 
