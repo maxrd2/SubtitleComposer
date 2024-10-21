@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: subtitlecomposer\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-10-02 01:49+0000\n"
+"POT-Creation-Date: 2024-10-21 01:50+0000\n"
 "PO-Revision-Date: 2024-10-07 01:35+0200\n"
 "Last-Translator: Adrián Chaves (Gallaecio) <adrian@chaves.io>\n"
 "Language-Team: Proxecto Trasno (proxecto@trasno.gal)\n"
@@ -319,7 +319,7 @@ msgid "Split selected lines"
 msgstr "Dividir as liñas seleccionadas"
 
 #: src/application_actions.cpp:220 src/core/subtitle.cpp:643
-#: src/gui/waveform/waveformwidget.cpp:714
+#: src/gui/waveform/waveformwidget.cpp:712
 #, kde-format
 msgid "Join Lines"
 msgstr "Unir as liñas"
@@ -943,7 +943,7 @@ msgstr "Texto amosado dos subtítulos"
 msgid "Select visible subtitle text"
 msgstr "Seleccionar o texto visíbel dos subtítulos."
 
-#: src/application_actions.cpp:752 src/gui/waveform/waveformwidget.cpp:738
+#: src/application_actions.cpp:752 src/gui/waveform/waveformwidget.cpp:736
 #, kde-format
 msgid "Toggle Anchor"
 msgstr "Conmutar a áncora"
@@ -1470,7 +1470,7 @@ msgstr "Compensación dos tempos do &vídeo capturado:"
 msgid "Ti&me shift for selected lines:"
 msgstr "Desprazamento de te&mpo para as liñas seleccionadas:"
 
-#: src/configs/playerconfigwidget.cpp:27
+#: src/configs/playerconfigwidget.cpp:28
 #, kde-format
 msgctxt "Text for previewing the subtitles font settings"
 msgid "<p>The Quick Brown Fox<br/>Jumps Over The Lazy Dog</p>"
@@ -1719,7 +1719,7 @@ msgid "Change Frame Rate"
 msgstr "Cambiar a taxa de fotogramas"
 
 #: src/core/subtitle.cpp:402 src/core/subtitle.cpp:416
-#: src/gui/waveform/waveformwidget.cpp:697
+#: src/gui/waveform/waveformwidget.cpp:695
 #, kde-format
 msgid "Insert Line"
 msgstr "Inserir unha liña"
@@ -1795,7 +1795,7 @@ msgstr "Dividir as liñas"
 msgid "Synchronize Subtitles"
 msgstr "Sincronizar os subtítulos"
 
-#: src/core/subtitle.cpp:1197 src/dialogs/joinsubtitlesdialog.cpp:24
+#: src/core/subtitle.cpp:1197 src/dialogs/joinsubtitlesdialog.cpp:25
 #, kde-format
 msgid "Join Subtitles"
 msgstr "Unir subtítulos"
@@ -2210,7 +2210,7 @@ msgstr "Última liña pronunciada:"
 #: src/dialogs/fixoverlappingtimesdialog.cpp:20
 #: src/dialogs/fixpunctuationdialog.cpp:19
 #: src/dialogs/smarttextsadjustdialog.cpp:20
-#: src/dialogs/splitsubtitledialog.cpp:29
+#: src/dialogs/splitsubtitledialog.cpp:30
 #, kde-format
 msgctxt "@title:group"
 msgid "Settings"
@@ -2405,13 +2405,13 @@ msgstr "Inserir unha liña despois da actual"
 msgid "Insert Into"
 msgstr "Inserir en"
 
-#: src/dialogs/joinsubtitlesdialog.cpp:29
+#: src/dialogs/joinsubtitlesdialog.cpp:30
 #, kde-format
 msgid "Shift subtitle forwards before append"
 msgstr "Avanzar os subtítulos antes de engadir"
 
-#: src/dialogs/joinsubtitlesdialog.cpp:36
-#: src/dialogs/splitsubtitledialog.cpp:35
+#: src/dialogs/joinsubtitlesdialog.cpp:37
+#: src/dialogs/splitsubtitledialog.cpp:36
 #, kde-format
 msgid "Set from video length"
 msgstr "Definir a partir da duración do vídeo"
@@ -2475,17 +2475,17 @@ msgstr "Atrasar (-)"
 msgid "Minimum length for line break:"
 msgstr "Lonxitude mínima para un salto de liña:"
 
-#: src/dialogs/splitsubtitledialog.cpp:27
+#: src/dialogs/splitsubtitledialog.cpp:28
 #, kde-format
 msgid "Split Subtitle"
 msgstr "Dividir os subtítulos"
 
-#: src/dialogs/splitsubtitledialog.cpp:40
+#: src/dialogs/splitsubtitledialog.cpp:41
 #, kde-format
 msgid "Split time:"
 msgstr "Dividir o tempo:"
 
-#: src/dialogs/splitsubtitledialog.cpp:44
+#: src/dialogs/splitsubtitledialog.cpp:45
 #, kde-format
 msgid "Shift new part backwards after split"
 msgstr "Atrasar a nova parte tras a división"
@@ -2827,25 +2827,25 @@ msgstr "<b>FPS</b>"
 msgid "<b>Playback Rate</b>"
 msgstr "<b>Velocidade de reprodución</b>"
 
-#: src/gui/playerwidget.cpp:674
+#: src/gui/playerwidget.cpp:673
 #, kde-format
 msgid "<qt>There was an error opening media file %1.</qt>"
 msgstr "<qt>Produciuse un erro ao abrir o ficheiro multimedia %1.</qt>"
 
-#: src/gui/playerwidget.cpp:690 src/gui/playerwidget.cpp:691
-#: src/gui/playerwidget.cpp:692 src/gui/playerwidget.cpp:693
-#: src/gui/playerwidget.cpp:760 src/gui/playerwidget.cpp:768
-#: src/gui/playerwidget.cpp:774
+#: src/gui/playerwidget.cpp:689 src/gui/playerwidget.cpp:690
+#: src/gui/playerwidget.cpp:691 src/gui/playerwidget.cpp:692
+#: src/gui/playerwidget.cpp:758 src/gui/playerwidget.cpp:766
+#: src/gui/playerwidget.cpp:772
 #, kde-format
 msgid "<i>Unknown</i>"
 msgstr "<i>Descoñecido</i>"
 
-#: src/gui/playerwidget.cpp:706 src/gui/playerwidget.cpp:708
+#: src/gui/playerwidget.cpp:705 src/gui/playerwidget.cpp:707
 #, kde-format
 msgid "Unexpected error when playing file."
 msgstr "Produciuse un erro inesperado ao reproducir o ficheiro."
 
-#: src/gui/playerwidget.cpp:706 src/gui/playerwidget.cpp:708
+#: src/gui/playerwidget.cpp:705 src/gui/playerwidget.cpp:707
 #, kde-format
 msgid "Error Playing File"
 msgstr "Produciuse un erro ao reproducir o ficheiro"
@@ -3034,27 +3034,27 @@ msgstr "Cor do texto"
 msgid "Generating waveform"
 msgstr "Xerando a forma de onda"
 
-#: src/gui/waveform/waveformwidget.cpp:692
+#: src/gui/waveform/waveformwidget.cpp:690
 #, kde-format
 msgid "Select Line"
 msgstr "Seleccionar a liña"
 
-#: src/gui/waveform/waveformwidget.cpp:707
+#: src/gui/waveform/waveformwidget.cpp:705
 #, kde-format
 msgid "Remove Line"
 msgstr "Eliminar a liña"
 
-#: src/gui/waveform/waveformwidget.cpp:732
+#: src/gui/waveform/waveformwidget.cpp:730
 #, kde-format
 msgid "Split Line"
 msgstr "Dividir a liña"
 
-#: src/gui/waveform/waveformwidget.cpp:745
+#: src/gui/waveform/waveformwidget.cpp:743
 #, kde-format
 msgid "Set Current Line Show Time"
 msgstr "Definir o tempo de visualización da liña actual"
 
-#: src/gui/waveform/waveformwidget.cpp:750
+#: src/gui/waveform/waveformwidget.cpp:748
 #, kde-format
 msgid "Set Current Line Hide Time"
 msgstr "Definir o tempo de ocultación da liña actual"
@@ -3137,17 +3137,17 @@ msgstr "Contribucións de código, paquete para Arch Linux."
 msgid "All people who have contributed and I have forgotten to mention"
 msgstr "Toda a xente que contribuíu e esquecín nomear"
 
-#: src/mainwindow.cpp:37
-#, kde-format
-msgid "Waveform"
-msgstr "Forma da onda"
-
-#: src/mainwindow.cpp:51
+#: src/mainwindow.cpp:34
 #, kde-format
 msgid "Video Player"
 msgstr "Reprodutor de vídeo"
 
-#: src/mainwindow.cpp:65
+#: src/mainwindow.cpp:48
+#, kde-format
+msgid "Waveform"
+msgstr "Forma da onda"
+
+#: src/mainwindow.cpp:62
 #, kde-format
 msgid "Styles and Comments"
 msgstr "Estilos e comentarios"
@@ -4272,7 +4272,7 @@ msgstr "Fluxo de son %1"
 msgid "Subtitle Stream #%1"
 msgstr "Fluxo de subtítulos %1"
 
-#: src/videoplayer/videoplayer.cpp:115
+#: src/videoplayer/videoplayer.cpp:100
 #, kde-format
 msgid "File does not exist."
 msgstr "O ficheiro non existe."

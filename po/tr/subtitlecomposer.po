@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: subtitlecomposer\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-10-02 01:49+0000\n"
+"POT-Creation-Date: 2024-10-21 01:50+0000\n"
 "PO-Revision-Date: 2024-10-02 06:53+0300\n"
 "Last-Translator: Emir SARI <emir_sari@icloud.com>\n"
 "Language-Team: Turkish <kde-l10n-tr@kde.org>\n"
@@ -319,7 +319,7 @@ msgid "Split selected lines"
 msgstr "Seçili satırları böl"
 
 #: src/application_actions.cpp:220 src/core/subtitle.cpp:643
-#: src/gui/waveform/waveformwidget.cpp:714
+#: src/gui/waveform/waveformwidget.cpp:712
 #, kde-format
 msgid "Join Lines"
 msgstr "Satırları Birbirine Kat"
@@ -938,7 +938,7 @@ msgstr "Görüntülenen Altyazı Metni"
 msgid "Select visible subtitle text"
 msgstr "Görünür altyazı metnini seç"
 
-#: src/application_actions.cpp:752 src/gui/waveform/waveformwidget.cpp:738
+#: src/application_actions.cpp:752 src/gui/waveform/waveformwidget.cpp:736
 #, kde-format
 msgid "Toggle Anchor"
 msgstr "Çapayı Aç/Kapat"
@@ -1461,7 +1461,7 @@ msgstr "Yakalanan vid&eo zamanları için tazmin:"
 msgid "Ti&me shift for selected lines:"
 msgstr "Seçili &satırlar için zaman kaydırması:"
 
-#: src/configs/playerconfigwidget.cpp:27
+#: src/configs/playerconfigwidget.cpp:28
 #, kde-format
 msgctxt "Text for previewing the subtitles font settings"
 msgid "<p>The Quick Brown Fox<br/>Jumps Over The Lazy Dog</p>"
@@ -1710,7 +1710,7 @@ msgid "Change Frame Rate"
 msgstr "Kare Hızını Değiştir"
 
 #: src/core/subtitle.cpp:402 src/core/subtitle.cpp:416
-#: src/gui/waveform/waveformwidget.cpp:697
+#: src/gui/waveform/waveformwidget.cpp:695
 #, kde-format
 msgid "Insert Line"
 msgstr "Satır Ekle"
@@ -1786,7 +1786,7 @@ msgstr "Satırları Sonlandır"
 msgid "Synchronize Subtitles"
 msgstr "Altyazıları Eşzamanla"
 
-#: src/core/subtitle.cpp:1197 src/dialogs/joinsubtitlesdialog.cpp:24
+#: src/core/subtitle.cpp:1197 src/dialogs/joinsubtitlesdialog.cpp:25
 #, kde-format
 msgid "Join Subtitles"
 msgstr "Altyazıları Birbirine Kat"
@@ -2187,7 +2187,7 @@ msgstr "Son konuşma satırı:"
 #: src/dialogs/fixoverlappingtimesdialog.cpp:20
 #: src/dialogs/fixpunctuationdialog.cpp:19
 #: src/dialogs/smarttextsadjustdialog.cpp:20
-#: src/dialogs/splitsubtitledialog.cpp:29
+#: src/dialogs/splitsubtitledialog.cpp:30
 #, kde-format
 msgctxt "@title:group"
 msgid "Settings"
@@ -2382,13 +2382,13 @@ msgstr "Geçerli Satır Sonrası Ekle"
 msgid "Insert Into"
 msgstr "Şuraya Ekle"
 
-#: src/dialogs/joinsubtitlesdialog.cpp:29
+#: src/dialogs/joinsubtitlesdialog.cpp:30
 #, kde-format
 msgid "Shift subtitle forwards before append"
 msgstr "İliştirmeden önce altyazıyı ileri kaydır"
 
-#: src/dialogs/joinsubtitlesdialog.cpp:36
-#: src/dialogs/splitsubtitledialog.cpp:35
+#: src/dialogs/joinsubtitlesdialog.cpp:37
+#: src/dialogs/splitsubtitledialog.cpp:36
 #, kde-format
 msgid "Set from video length"
 msgstr "Video uzunluğundan ayarla"
@@ -2452,17 +2452,17 @@ msgstr "Geri (−)"
 msgid "Minimum length for line break:"
 msgstr "Satır sonu için en kısa uzunluk:"
 
-#: src/dialogs/splitsubtitledialog.cpp:27
+#: src/dialogs/splitsubtitledialog.cpp:28
 #, kde-format
 msgid "Split Subtitle"
 msgstr "Altyazıyı Böl"
 
-#: src/dialogs/splitsubtitledialog.cpp:40
+#: src/dialogs/splitsubtitledialog.cpp:41
 #, kde-format
 msgid "Split time:"
 msgstr "Bölme zamanı:"
 
-#: src/dialogs/splitsubtitledialog.cpp:44
+#: src/dialogs/splitsubtitledialog.cpp:45
 #, kde-format
 msgid "Shift new part backwards after split"
 msgstr "Yeni kısmı böldükten sonra geri kaydır"
@@ -2804,25 +2804,25 @@ msgstr "<b>FPS</b>"
 msgid "<b>Playback Rate</b>"
 msgstr "<b>Oynatma Hızı</b>"
 
-#: src/gui/playerwidget.cpp:674
+#: src/gui/playerwidget.cpp:673
 #, kde-format
 msgid "<qt>There was an error opening media file %1.</qt>"
 msgstr "<qt>%1 ortam dosyası açılırken bir hata oluştu.</qt>"
 
-#: src/gui/playerwidget.cpp:690 src/gui/playerwidget.cpp:691
-#: src/gui/playerwidget.cpp:692 src/gui/playerwidget.cpp:693
-#: src/gui/playerwidget.cpp:760 src/gui/playerwidget.cpp:768
-#: src/gui/playerwidget.cpp:774
+#: src/gui/playerwidget.cpp:689 src/gui/playerwidget.cpp:690
+#: src/gui/playerwidget.cpp:691 src/gui/playerwidget.cpp:692
+#: src/gui/playerwidget.cpp:758 src/gui/playerwidget.cpp:766
+#: src/gui/playerwidget.cpp:772
 #, kde-format
 msgid "<i>Unknown</i>"
 msgstr "<i>Bilinmiyor</i>"
 
-#: src/gui/playerwidget.cpp:706 src/gui/playerwidget.cpp:708
+#: src/gui/playerwidget.cpp:705 src/gui/playerwidget.cpp:707
 #, kde-format
 msgid "Unexpected error when playing file."
 msgstr "Dosya oynatılırken beklenmedik bir hata oluştu."
 
-#: src/gui/playerwidget.cpp:706 src/gui/playerwidget.cpp:708
+#: src/gui/playerwidget.cpp:705 src/gui/playerwidget.cpp:707
 #, kde-format
 msgid "Error Playing File"
 msgstr "Dosya Oynatma Hatası"
@@ -3011,27 +3011,27 @@ msgstr "Metin Rengi"
 msgid "Generating waveform"
 msgstr "Dalga biçimi oluşturuluyor"
 
-#: src/gui/waveform/waveformwidget.cpp:692
+#: src/gui/waveform/waveformwidget.cpp:690
 #, kde-format
 msgid "Select Line"
 msgstr "Satır Seç"
 
-#: src/gui/waveform/waveformwidget.cpp:707
+#: src/gui/waveform/waveformwidget.cpp:705
 #, kde-format
 msgid "Remove Line"
 msgstr "Satır Kaldır"
 
-#: src/gui/waveform/waveformwidget.cpp:732
+#: src/gui/waveform/waveformwidget.cpp:730
 #, kde-format
 msgid "Split Line"
 msgstr "Satır Böl"
 
-#: src/gui/waveform/waveformwidget.cpp:745
+#: src/gui/waveform/waveformwidget.cpp:743
 #, kde-format
 msgid "Set Current Line Show Time"
 msgstr "Geçerli Satır Gösterim Zamanını Ayarla"
 
-#: src/gui/waveform/waveformwidget.cpp:750
+#: src/gui/waveform/waveformwidget.cpp:748
 #, kde-format
 msgid "Set Current Line Hide Time"
 msgstr "Geçerli Satır Gizleme Zamanını Ayarla"
@@ -3114,17 +3114,17 @@ msgstr "kod katkıları, Arch Linux paketlemesi"
 msgid "All people who have contributed and I have forgotten to mention"
 msgstr "Katkıda bulunan ve değinmeyi unuttuğum diğer herkes"
 
-#: src/mainwindow.cpp:37
-#, kde-format
-msgid "Waveform"
-msgstr "Dalga Biçimi"
-
-#: src/mainwindow.cpp:51
+#: src/mainwindow.cpp:34
 #, kde-format
 msgid "Video Player"
 msgstr "Video Oynatıcısı"
 
-#: src/mainwindow.cpp:65
+#: src/mainwindow.cpp:48
+#, kde-format
+msgid "Waveform"
+msgstr "Dalga Biçimi"
+
+#: src/mainwindow.cpp:62
 #, kde-format
 msgid "Styles and Comments"
 msgstr "Biçemler ve Yorumlar"
@@ -4245,7 +4245,7 @@ msgstr "Ses Akışı #%1"
 msgid "Subtitle Stream #%1"
 msgstr "Altyazı Akışı #%1"
 
-#: src/videoplayer/videoplayer.cpp:115
+#: src/videoplayer/videoplayer.cpp:100
 #, kde-format
 msgid "File does not exist."
 msgstr "Dosya yok."

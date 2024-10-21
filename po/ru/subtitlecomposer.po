@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: subtitlecomposer\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-10-02 01:49+0000\n"
+"POT-Creation-Date: 2024-10-21 01:50+0000\n"
 "PO-Revision-Date: 2019-10-27 09:15\n"
 "Last-Translator: Nick Shaforostoff <shafff@ukr.net>\n"
 "Language-Team: Russian <kde-russian@lists.kde.ru>\n"
@@ -336,7 +336,7 @@ msgid "Split selected lines"
 msgstr "Разделить выделенные субтитры"
 
 #: src/application_actions.cpp:220 src/core/subtitle.cpp:643
-#: src/gui/waveform/waveformwidget.cpp:714
+#: src/gui/waveform/waveformwidget.cpp:712
 #, kde-format
 msgid "Join Lines"
 msgstr "Объединить субтитры"
@@ -971,7 +971,7 @@ msgstr ""
 msgid "Select visible subtitle text"
 msgstr ""
 
-#: src/application_actions.cpp:752 src/gui/waveform/waveformwidget.cpp:738
+#: src/application_actions.cpp:752 src/gui/waveform/waveformwidget.cpp:736
 #, kde-format
 msgid "Toggle Anchor"
 msgstr "Поставить/убрать метку"
@@ -1497,7 +1497,7 @@ msgstr "Компенсация времени, полученного из ви�
 msgid "Ti&me shift for selected lines:"
 msgstr "Время сдвига для выделенных субтитров:"
 
-#: src/configs/playerconfigwidget.cpp:27
+#: src/configs/playerconfigwidget.cpp:28
 #, kde-format
 msgctxt "Text for previewing the subtitles font settings"
 msgid "<p>The Quick Brown Fox<br/>Jumps Over The Lazy Dog</p>"
@@ -1744,7 +1744,7 @@ msgid "Change Frame Rate"
 msgstr "Изменить частоту кадров"
 
 #: src/core/subtitle.cpp:402 src/core/subtitle.cpp:416
-#: src/gui/waveform/waveformwidget.cpp:697
+#: src/gui/waveform/waveformwidget.cpp:695
 #, kde-format
 msgid "Insert Line"
 msgstr "Вставить строку"
@@ -1820,7 +1820,7 @@ msgstr "Разбить строки"
 msgid "Synchronize Subtitles"
 msgstr "Синхронизировать субтитры"
 
-#: src/core/subtitle.cpp:1197 src/dialogs/joinsubtitlesdialog.cpp:24
+#: src/core/subtitle.cpp:1197 src/dialogs/joinsubtitlesdialog.cpp:25
 #, kde-format
 msgid "Join Subtitles"
 msgstr "Объединить файлы субтитров"
@@ -2277,7 +2277,7 @@ msgstr "Последняя строка:"
 #: src/dialogs/fixoverlappingtimesdialog.cpp:20
 #: src/dialogs/fixpunctuationdialog.cpp:19
 #: src/dialogs/smarttextsadjustdialog.cpp:20
-#: src/dialogs/splitsubtitledialog.cpp:29
+#: src/dialogs/splitsubtitledialog.cpp:30
 #, kde-format
 msgctxt "@title:group"
 msgid "Settings"
@@ -2473,13 +2473,13 @@ msgstr "Вставить субтитр после текущего"
 msgid "Insert Into"
 msgstr "Вставить в"
 
-#: src/dialogs/joinsubtitlesdialog.cpp:29
+#: src/dialogs/joinsubtitlesdialog.cpp:30
 #, kde-format
 msgid "Shift subtitle forwards before append"
 msgstr "Сдвинуть субтитры перед добавлением"
 
-#: src/dialogs/joinsubtitlesdialog.cpp:36
-#: src/dialogs/splitsubtitledialog.cpp:35
+#: src/dialogs/joinsubtitlesdialog.cpp:37
+#: src/dialogs/splitsubtitledialog.cpp:36
 #, kde-format
 msgid "Set from video length"
 msgstr "Установить равным длине видео"
@@ -2543,17 +2543,17 @@ msgstr "Назад (–)"
 msgid "Minimum length for line break:"
 msgstr "Минимальная длина строки для разбития"
 
-#: src/dialogs/splitsubtitledialog.cpp:27
+#: src/dialogs/splitsubtitledialog.cpp:28
 #, kde-format
 msgid "Split Subtitle"
 msgstr "Разделить субтитры"
 
-#: src/dialogs/splitsubtitledialog.cpp:40
+#: src/dialogs/splitsubtitledialog.cpp:41
 #, kde-format
 msgid "Split time:"
 msgstr "Время разделения"
 
-#: src/dialogs/splitsubtitledialog.cpp:44
+#: src/dialogs/splitsubtitledialog.cpp:45
 #, kde-format
 msgid "Shift new part backwards after split"
 msgstr "Сдвинуть новую часть назад после разделения"
@@ -2905,25 +2905,25 @@ msgstr ""
 msgid "<b>Playback Rate</b>"
 msgstr "<b>Скорость</b>"
 
-#: src/gui/playerwidget.cpp:674
+#: src/gui/playerwidget.cpp:673
 #, kde-format
 msgid "<qt>There was an error opening media file %1.</qt>"
 msgstr "<qt>Произошла ошибка при открытии файла %1.</qt>"
 
-#: src/gui/playerwidget.cpp:690 src/gui/playerwidget.cpp:691
-#: src/gui/playerwidget.cpp:692 src/gui/playerwidget.cpp:693
-#: src/gui/playerwidget.cpp:760 src/gui/playerwidget.cpp:768
-#: src/gui/playerwidget.cpp:774
+#: src/gui/playerwidget.cpp:689 src/gui/playerwidget.cpp:690
+#: src/gui/playerwidget.cpp:691 src/gui/playerwidget.cpp:692
+#: src/gui/playerwidget.cpp:758 src/gui/playerwidget.cpp:766
+#: src/gui/playerwidget.cpp:772
 #, kde-format
 msgid "<i>Unknown</i>"
 msgstr "<i>Неизвестно</i>"
 
-#: src/gui/playerwidget.cpp:706 src/gui/playerwidget.cpp:708
+#: src/gui/playerwidget.cpp:705 src/gui/playerwidget.cpp:707
 #, kde-format
 msgid "Unexpected error when playing file."
 msgstr "Неожиданная ошибка при воспроизведении файла."
 
-#: src/gui/playerwidget.cpp:706 src/gui/playerwidget.cpp:708
+#: src/gui/playerwidget.cpp:705 src/gui/playerwidget.cpp:707
 #, kde-format
 msgid "Error Playing File"
 msgstr "Ошибка при воспроизведении файла"
@@ -3117,27 +3117,27 @@ msgstr "Цвет текста"
 msgid "Generating waveform"
 msgstr ""
 
-#: src/gui/waveform/waveformwidget.cpp:692
+#: src/gui/waveform/waveformwidget.cpp:690
 #, kde-format
 msgid "Select Line"
 msgstr "Выделить этот субтитр"
 
-#: src/gui/waveform/waveformwidget.cpp:707
+#: src/gui/waveform/waveformwidget.cpp:705
 #, kde-format
 msgid "Remove Line"
 msgstr "Удалить субтитр"
 
-#: src/gui/waveform/waveformwidget.cpp:732
+#: src/gui/waveform/waveformwidget.cpp:730
 #, kde-format
 msgid "Split Line"
 msgstr "Разделить субтитр"
 
-#: src/gui/waveform/waveformwidget.cpp:745
+#: src/gui/waveform/waveformwidget.cpp:743
 #, kde-format
 msgid "Set Current Line Show Time"
 msgstr "Установить время демонстрации текущего субтитра"
 
-#: src/gui/waveform/waveformwidget.cpp:750
+#: src/gui/waveform/waveformwidget.cpp:748
 #, kde-format
 msgid "Set Current Line Hide Time"
 msgstr "Установить время скрытия текущего субтитра"
@@ -3220,17 +3220,17 @@ msgstr ""
 msgid "All people who have contributed and I have forgotten to mention"
 msgstr ""
 
-#: src/mainwindow.cpp:37
-#, kde-format
-msgid "Waveform"
-msgstr ""
-
-#: src/mainwindow.cpp:51
+#: src/mainwindow.cpp:34
 #, kde-format
 msgid "Video Player"
 msgstr "Проигрыватель"
 
-#: src/mainwindow.cpp:65
+#: src/mainwindow.cpp:48
+#, kde-format
+msgid "Waveform"
+msgstr ""
+
+#: src/mainwindow.cpp:62
 #, kde-format
 msgid "Styles and Comments"
 msgstr ""
@@ -4345,7 +4345,7 @@ msgstr "Аудио дорожка #%1"
 msgid "Subtitle Stream #%1"
 msgstr "Аудио дорожка #%1"
 
-#: src/videoplayer/videoplayer.cpp:115
+#: src/videoplayer/videoplayer.cpp:100
 #, kde-format
 msgid "File does not exist."
 msgstr ""

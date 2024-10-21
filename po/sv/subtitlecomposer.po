@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: subtitlecomposer\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-10-02 01:49+0000\n"
+"POT-Creation-Date: 2024-10-21 01:50+0000\n"
 "PO-Revision-Date: 2024-10-02 22:07+0200\n"
 "Last-Translator: Stefan Asserhäll <stefan.asserhall@gmail.com>\n"
 "Language-Team: Swedish <kde-i18n-doc@kde.org>\n"
@@ -319,7 +319,7 @@ msgid "Split selected lines"
 msgstr "Dela markerade rader"
 
 #: src/application_actions.cpp:220 src/core/subtitle.cpp:643
-#: src/gui/waveform/waveformwidget.cpp:714
+#: src/gui/waveform/waveformwidget.cpp:712
 #, kde-format
 msgid "Join Lines"
 msgstr "Kombinera rader"
@@ -938,7 +938,7 @@ msgstr "Visad textning"
 msgid "Select visible subtitle text"
 msgstr "Välj synlig textning"
 
-#: src/application_actions.cpp:752 src/gui/waveform/waveformwidget.cpp:738
+#: src/application_actions.cpp:752 src/gui/waveform/waveformwidget.cpp:736
 #, kde-format
 msgid "Toggle Anchor"
 msgstr "Växla förankring"
@@ -1462,7 +1462,7 @@ msgstr "Kompensation för tagna &videotider:"
 msgid "Ti&me shift for selected lines:"
 msgstr "Tidsskift för &markerade rader:"
 
-#: src/configs/playerconfigwidget.cpp:27
+#: src/configs/playerconfigwidget.cpp:28
 #, kde-format
 msgctxt "Text for previewing the subtitles font settings"
 msgid "<p>The Quick Brown Fox<br/>Jumps Over The Lazy Dog</p>"
@@ -1711,7 +1711,7 @@ msgid "Change Frame Rate"
 msgstr "Ändra bildfrekvens"
 
 #: src/core/subtitle.cpp:402 src/core/subtitle.cpp:416
-#: src/gui/waveform/waveformwidget.cpp:697
+#: src/gui/waveform/waveformwidget.cpp:695
 #, kde-format
 msgid "Insert Line"
 msgstr "Infoga rad"
@@ -1787,7 +1787,7 @@ msgstr "Bryt rader"
 msgid "Synchronize Subtitles"
 msgstr "Synkronisera textning"
 
-#: src/core/subtitle.cpp:1197 src/dialogs/joinsubtitlesdialog.cpp:24
+#: src/core/subtitle.cpp:1197 src/dialogs/joinsubtitlesdialog.cpp:25
 #, kde-format
 msgid "Join Subtitles"
 msgstr "Dela textning"
@@ -2192,7 +2192,7 @@ msgstr "Senast uttalade rad:"
 #: src/dialogs/fixoverlappingtimesdialog.cpp:20
 #: src/dialogs/fixpunctuationdialog.cpp:19
 #: src/dialogs/smarttextsadjustdialog.cpp:20
-#: src/dialogs/splitsubtitledialog.cpp:29
+#: src/dialogs/splitsubtitledialog.cpp:30
 #, kde-format
 msgctxt "@title:group"
 msgid "Settings"
@@ -2387,13 +2387,13 @@ msgstr "Infoga rad efter aktuell"
 msgid "Insert Into"
 msgstr "Infoga i"
 
-#: src/dialogs/joinsubtitlesdialog.cpp:29
+#: src/dialogs/joinsubtitlesdialog.cpp:30
 #, kde-format
 msgid "Shift subtitle forwards before append"
 msgstr "Skifta textning framåt innan tillägg"
 
-#: src/dialogs/joinsubtitlesdialog.cpp:36
-#: src/dialogs/splitsubtitledialog.cpp:35
+#: src/dialogs/joinsubtitlesdialog.cpp:37
+#: src/dialogs/splitsubtitledialog.cpp:36
 #, kde-format
 msgid "Set from video length"
 msgstr "Ställ in från videolängd"
@@ -2457,17 +2457,17 @@ msgstr "Bakåt (−)"
 msgid "Minimum length for line break:"
 msgstr "Minimal längd för radbrytning:"
 
-#: src/dialogs/splitsubtitledialog.cpp:27
+#: src/dialogs/splitsubtitledialog.cpp:28
 #, kde-format
 msgid "Split Subtitle"
 msgstr "Dela textning"
 
-#: src/dialogs/splitsubtitledialog.cpp:40
+#: src/dialogs/splitsubtitledialog.cpp:41
 #, kde-format
 msgid "Split time:"
 msgstr "Delningstid:"
 
-#: src/dialogs/splitsubtitledialog.cpp:44
+#: src/dialogs/splitsubtitledialog.cpp:45
 #, kde-format
 msgid "Shift new part backwards after split"
 msgstr "Skifta ny del bakåt efter delning"
@@ -2809,25 +2809,25 @@ msgstr "<b>bilder/s</b>"
 msgid "<b>Playback Rate</b>"
 msgstr "<b>Uppspelningshastighet</b>"
 
-#: src/gui/playerwidget.cpp:674
+#: src/gui/playerwidget.cpp:673
 #, kde-format
 msgid "<qt>There was an error opening media file %1.</qt>"
 msgstr "<qt>Ett fel uppstod när mediefilen %1 skulle öppnas.</qt>"
 
-#: src/gui/playerwidget.cpp:690 src/gui/playerwidget.cpp:691
-#: src/gui/playerwidget.cpp:692 src/gui/playerwidget.cpp:693
-#: src/gui/playerwidget.cpp:760 src/gui/playerwidget.cpp:768
-#: src/gui/playerwidget.cpp:774
+#: src/gui/playerwidget.cpp:689 src/gui/playerwidget.cpp:690
+#: src/gui/playerwidget.cpp:691 src/gui/playerwidget.cpp:692
+#: src/gui/playerwidget.cpp:758 src/gui/playerwidget.cpp:766
+#: src/gui/playerwidget.cpp:772
 #, kde-format
 msgid "<i>Unknown</i>"
 msgstr "<i>Okänd</i>"
 
-#: src/gui/playerwidget.cpp:706 src/gui/playerwidget.cpp:708
+#: src/gui/playerwidget.cpp:705 src/gui/playerwidget.cpp:707
 #, kde-format
 msgid "Unexpected error when playing file."
 msgstr "Oväntat fel vid uppspelning av fil."
 
-#: src/gui/playerwidget.cpp:706 src/gui/playerwidget.cpp:708
+#: src/gui/playerwidget.cpp:705 src/gui/playerwidget.cpp:707
 #, kde-format
 msgid "Error Playing File"
 msgstr "Fel vid uppspelning av fil"
@@ -3016,27 +3016,27 @@ msgstr "Textfärg"
 msgid "Generating waveform"
 msgstr "Skapar vågform"
 
-#: src/gui/waveform/waveformwidget.cpp:692
+#: src/gui/waveform/waveformwidget.cpp:690
 #, kde-format
 msgid "Select Line"
 msgstr "Markera rad"
 
-#: src/gui/waveform/waveformwidget.cpp:707
+#: src/gui/waveform/waveformwidget.cpp:705
 #, kde-format
 msgid "Remove Line"
 msgstr "Ta bort rad"
 
-#: src/gui/waveform/waveformwidget.cpp:732
+#: src/gui/waveform/waveformwidget.cpp:730
 #, kde-format
 msgid "Split Line"
 msgstr "Dela rad"
 
-#: src/gui/waveform/waveformwidget.cpp:745
+#: src/gui/waveform/waveformwidget.cpp:743
 #, kde-format
 msgid "Set Current Line Show Time"
 msgstr "Ställ in visningstid för aktuell rad"
 
-#: src/gui/waveform/waveformwidget.cpp:750
+#: src/gui/waveform/waveformwidget.cpp:748
 #, kde-format
 msgid "Set Current Line Hide Time"
 msgstr "Ställ in döljningstid för aktuell rad"
@@ -3119,17 +3119,17 @@ msgstr "Bidrag till kod, Arch Linux-paketering"
 msgid "All people who have contributed and I have forgotten to mention"
 msgstr "Alla personer som har bidragit och som jag har glömt att nämna"
 
-#: src/mainwindow.cpp:37
-#, kde-format
-msgid "Waveform"
-msgstr "Vågform"
-
-#: src/mainwindow.cpp:51
+#: src/mainwindow.cpp:34
 #, kde-format
 msgid "Video Player"
 msgstr "Videospelare"
 
-#: src/mainwindow.cpp:65
+#: src/mainwindow.cpp:48
+#, kde-format
+msgid "Waveform"
+msgstr "Vågform"
+
+#: src/mainwindow.cpp:62
 #, kde-format
 msgid "Styles and Comments"
 msgstr "Stilar och kommentarer"
@@ -4250,7 +4250,7 @@ msgstr "Ljudström nr. %1"
 msgid "Subtitle Stream #%1"
 msgstr "Textningsström nr. %1"
 
-#: src/videoplayer/videoplayer.cpp:115
+#: src/videoplayer/videoplayer.cpp:100
 #, kde-format
 msgid "File does not exist."
 msgstr "Filen finns inte."

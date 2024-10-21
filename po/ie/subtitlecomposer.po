@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: subtitlecomposer\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-10-02 01:49+0000\n"
+"POT-Creation-Date: 2024-10-21 01:50+0000\n"
 "PO-Revision-Date: 2022-12-04 23:24+0700\n"
 "Last-Translator: OIS <mistresssilvara@hotmail.com>\n"
 "Language-Team: Interlingue <kde-i18n-doc@kde.org>\n"
@@ -320,7 +320,7 @@ msgid "Split selected lines"
 msgstr "Rupter paroles"
 
 #: src/application_actions.cpp:220 src/core/subtitle.cpp:643
-#: src/gui/waveform/waveformwidget.cpp:714
+#: src/gui/waveform/waveformwidget.cpp:712
 #, kde-format
 msgid "Join Lines"
 msgstr "Unir lineas"
@@ -935,7 +935,7 @@ msgstr "Codification de subtitules"
 msgid "Select visible subtitle text"
 msgstr "Codification de subtitules"
 
-#: src/application_actions.cpp:752 src/gui/waveform/waveformwidget.cpp:738
+#: src/application_actions.cpp:752 src/gui/waveform/waveformwidget.cpp:736
 #, fuzzy, kde-format
 msgid "Toggle Anchor"
 msgstr "Ancre:"
@@ -1443,7 +1443,7 @@ msgstr ""
 msgid "Ti&me shift for selected lines:"
 msgstr ""
 
-#: src/configs/playerconfigwidget.cpp:27
+#: src/configs/playerconfigwidget.cpp:28
 #, kde-format
 msgctxt "Text for previewing the subtitles font settings"
 msgid "<p>The Quick Brown Fox<br/>Jumps Over The Lazy Dog</p>"
@@ -1690,7 +1690,7 @@ msgid "Change Frame Rate"
 msgstr "Rapiditá de cadres"
 
 #: src/core/subtitle.cpp:402 src/core/subtitle.cpp:416
-#: src/gui/waveform/waveformwidget.cpp:697
+#: src/gui/waveform/waveformwidget.cpp:695
 #, fuzzy, kde-format
 msgid "Insert Line"
 msgstr "Inserter un linea-separator"
@@ -1766,7 +1766,7 @@ msgstr "Rupter lineas"
 msgid "Synchronize Subtitles"
 msgstr "_Sincronisar"
 
-#: src/core/subtitle.cpp:1197 src/dialogs/joinsubtitlesdialog.cpp:24
+#: src/core/subtitle.cpp:1197 src/dialogs/joinsubtitlesdialog.cpp:25
 #, fuzzy, kde-format
 msgid "Join Subtitles"
 msgstr "Subtitules"
@@ -2167,7 +2167,7 @@ msgstr "Ultim linea"
 #: src/dialogs/fixoverlappingtimesdialog.cpp:20
 #: src/dialogs/fixpunctuationdialog.cpp:19
 #: src/dialogs/smarttextsadjustdialog.cpp:20
-#: src/dialogs/splitsubtitledialog.cpp:29
+#: src/dialogs/splitsubtitledialog.cpp:30
 #, fuzzy, kde-format
 msgctxt "@title:group"
 msgid "Settings"
@@ -2362,13 +2362,13 @@ msgstr "Inserter un linea-separator"
 msgid "Insert Into"
 msgstr "_Inserter..."
 
-#: src/dialogs/joinsubtitlesdialog.cpp:29
+#: src/dialogs/joinsubtitlesdialog.cpp:30
 #, kde-format
 msgid "Shift subtitle forwards before append"
 msgstr ""
 
-#: src/dialogs/joinsubtitlesdialog.cpp:36
-#: src/dialogs/splitsubtitledialog.cpp:35
+#: src/dialogs/joinsubtitlesdialog.cpp:37
+#: src/dialogs/splitsubtitledialog.cpp:36
 #, fuzzy, kde-format
 msgid "Set from video length"
 msgstr "Assignar li _fin ex li position"
@@ -2432,17 +2432,17 @@ msgstr " [A retro]"
 msgid "Minimum length for line break:"
 msgstr "Fin del linea"
 
-#: src/dialogs/splitsubtitledialog.cpp:27
+#: src/dialogs/splitsubtitledialog.cpp:28
 #, fuzzy, kde-format
 msgid "Split Subtitle"
 msgstr "_Separar li subtitul"
 
-#: src/dialogs/splitsubtitledialog.cpp:40
+#: src/dialogs/splitsubtitledialog.cpp:41
 #, fuzzy, kde-format
 msgid "Split time:"
 msgstr "_Separar"
 
-#: src/dialogs/splitsubtitledialog.cpp:44
+#: src/dialogs/splitsubtitledialog.cpp:45
 #, kde-format
 msgid "Shift new part backwards after split"
 msgstr ""
@@ -2783,25 +2783,25 @@ msgstr "<b>A:</b>"
 msgid "<b>Playback Rate</b>"
 msgstr "<b>Reproduction</b>"
 
-#: src/gui/playerwidget.cpp:674
+#: src/gui/playerwidget.cpp:673
 #, kde-format
 msgid "<qt>There was an error opening media file %1.</qt>"
 msgstr ""
 
-#: src/gui/playerwidget.cpp:690 src/gui/playerwidget.cpp:691
-#: src/gui/playerwidget.cpp:692 src/gui/playerwidget.cpp:693
-#: src/gui/playerwidget.cpp:760 src/gui/playerwidget.cpp:768
-#: src/gui/playerwidget.cpp:774
+#: src/gui/playerwidget.cpp:689 src/gui/playerwidget.cpp:690
+#: src/gui/playerwidget.cpp:691 src/gui/playerwidget.cpp:692
+#: src/gui/playerwidget.cpp:758 src/gui/playerwidget.cpp:766
+#: src/gui/playerwidget.cpp:772
 #, kde-format
 msgid "<i>Unknown</i>"
 msgstr "<i>Ínconosset</i>"
 
-#: src/gui/playerwidget.cpp:706 src/gui/playerwidget.cpp:708
+#: src/gui/playerwidget.cpp:705 src/gui/playerwidget.cpp:707
 #, fuzzy, kde-format
 msgid "Unexpected error when playing file."
 msgstr "Automaticmen monstrar subtitules reproductente un file de medie"
 
-#: src/gui/playerwidget.cpp:706 src/gui/playerwidget.cpp:708
+#: src/gui/playerwidget.cpp:705 src/gui/playerwidget.cpp:707
 #, fuzzy, kde-format
 msgid "Error Playing File"
 msgstr "Errore de reproduction: {error}"
@@ -2990,29 +2990,29 @@ msgstr "Color del textu"
 msgid "Generating waveform"
 msgstr "Visualisar li und-forma (experimental)"
 
-#: src/gui/waveform/waveformwidget.cpp:692
+#: src/gui/waveform/waveformwidget.cpp:690
 #, fuzzy, kde-format
 msgid "Select Line"
 msgstr "Selecter li &linea"
 
-#: src/gui/waveform/waveformwidget.cpp:707
+#: src/gui/waveform/waveformwidget.cpp:705
 #, fuzzy, kde-format
 msgid "Remove Line"
 msgstr ""
 "Por revelar li element, vu deve remover li file desktop ex «%s» manualmen, o "
 "aperter it e remover li linea «%s»."
 
-#: src/gui/waveform/waveformwidget.cpp:732
+#: src/gui/waveform/waveformwidget.cpp:730
 #, fuzzy, kde-format
 msgid "Split Line"
 msgstr "_Separar"
 
-#: src/gui/waveform/waveformwidget.cpp:745
+#: src/gui/waveform/waveformwidget.cpp:743
 #, fuzzy, kde-format
 msgid "Set Current Line Show Time"
 msgstr "Ne successat assignar li actual hora"
 
-#: src/gui/waveform/waveformwidget.cpp:750
+#: src/gui/waveform/waveformwidget.cpp:748
 #, fuzzy, kde-format
 msgid "Set Current Line Hide Time"
 msgstr "Ne successat assignar li actual hora"
@@ -3092,17 +3092,17 @@ msgstr ""
 msgid "All people who have contributed and I have forgotten to mention"
 msgstr ""
 
-#: src/mainwindow.cpp:37
-#, fuzzy, kde-format
-msgid "Waveform"
-msgstr "Und-forma PCM"
-
-#: src/mainwindow.cpp:51
+#: src/mainwindow.cpp:34
 #, fuzzy, kde-format
 msgid "Video Player"
 msgstr "Reproductor de video"
 
-#: src/mainwindow.cpp:65
+#: src/mainwindow.cpp:48
+#, fuzzy, kde-format
+msgid "Waveform"
+msgstr "Und-forma PCM"
+
+#: src/mainwindow.cpp:62
 #, fuzzy, kde-format
 msgid "Styles and Comments"
 msgstr "Notas"
@@ -4188,7 +4188,7 @@ msgstr "%@ fluvie a %@:%@"
 msgid "Subtitle Stream #%1"
 msgstr "Subtitul"
 
-#: src/videoplayer/videoplayer.cpp:115
+#: src/videoplayer/videoplayer.cpp:100
 #, fuzzy, kde-format
 msgid "File does not exist."
 msgstr "Li file ne existe"
