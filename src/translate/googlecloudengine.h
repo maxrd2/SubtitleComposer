@@ -31,7 +31,7 @@ public:
 	void translate(QVector<QString> &textLines) override;
 
 private:
-	bool parseJSON();
+	bool parseJSON(const QString &serviceJSONFile);
 	void login();
 	bool authenticate();
 	void authenticated();

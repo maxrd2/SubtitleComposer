@@ -180,12 +180,12 @@ GoogleCloudEngine::settings(QWidget *widget)
 void
 GoogleCloudEngine::login()
 {
-	QUrl url = m_ui->serviceJSON->url();
+	const QString serviceJSON = m_ui->serviceJSON->url().toLocalFile();
 
-	if(!parseJSON())
+	if(!parseJSON(serviceJSON))
 		return;
 
-	const bool authenticated = url.toLocalFile() == SCConfig::gctServiceJSON()
+	const bool authenticated = serviceJSON == SCConfig::gctServiceJSON()
 			&& !SCConfig::gctAccessToken().isEmpty()
 			&& SCConfig::gctTokenExpires() > QDateTime::currentDateTime();
 	// NOTE there is this backend to retrieve token details
@@ -193,18 +193,18 @@ GoogleCloudEngine::login()
 	if(authenticated) {
 		languagesUpdate();
 	} else {
-		SCConfig::setGctServiceJSON(url.toLocalFile());
+		SCConfig::setGctServiceJSON(serviceJSON);
 		authenticate();
 	}
 }
 
 bool
-GoogleCloudEngine::parseJSON()
+GoogleCloudEngine::parseJSON(const QString &serviceJSONFile)
 {
-	QFile file(SCConfig::gctServiceJSON());
+	QFile file(serviceJSONFile);
 	if(!file.open(QIODevice::ReadOnly | QIODevice::Text)) {
 		KMessageBox::error(app()->mainWindow(),
-			i18n("Error opening file '%1'", SCConfig::gctServiceJSON()),
+			i18n("Error opening file '%1'", serviceJSONFile),
 			i18n("Google Cloud Engine Error"));
 		return false;
 	}
@@ -213,7 +213,7 @@ GoogleCloudEngine::parseJSON()
 
 	if(doc.isNull()) {
 		KMessageBox::error(app()->mainWindow(),
-			i18n("Error parsing JSON from file '%1'", SCConfig::gctServiceJSON()),
+			i18n("Error parsing JSON from file '%1'", serviceJSONFile),
 			i18n("Google Cloud Engine Error"));
 		return false;
 	}
