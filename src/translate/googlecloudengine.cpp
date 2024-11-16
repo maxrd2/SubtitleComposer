@@ -131,12 +131,18 @@ showError(QNetworkReply *res)
 	QString errText;
 	const QJsonDocument doc = QJsonDocument::fromJson(res->readAll());
 	if(doc.isObject()) {
-		const QJsonObject err = doc[$("error")].toObject();
-		if(!err.empty()) {
+		const QJsonObject errObject = doc[$("error")].toObject();
+		if(!errObject.empty()) {
 			errText = i18n("Remote service error %1 %2\n%3",
-							err[$("code")].toInt(),
-							err[$("status")].toString(),
-							err[$("message")].toString());
+							errObject[$("code")].toInt(),
+							errObject[$("status")].toString(),
+							errObject[$("message")].toString());
+		}
+		const QString errCode = doc[$("error")].toString();
+		if(!errCode.isEmpty()) {
+			errText = i18n("Remote service error (%1):\n%2",
+							errCode,
+							doc[$("error_description")].toString());
 		}
 	}
 	if(errText.isEmpty()) {
