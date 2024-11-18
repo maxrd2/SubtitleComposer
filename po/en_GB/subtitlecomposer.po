@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: subtitlecomposer\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-10-21 01:50+0000\n"
+"POT-Creation-Date: 2024-11-18 01:56+0000\n"
 "PO-Revision-Date: 2024-10-18 18:54+0100\n"
 "Last-Translator: Steve Allewell <steve.allewell@gmail.com>\n"
 "Language-Team: British English\n"
@@ -3971,7 +3971,7 @@ msgstr ""
 "Remote service error %1 %2\n"
 "%3"
 
-#: src/translate/deeplengine.cpp:65 src/translate/googlecloudengine.cpp:145
+#: src/translate/deeplengine.cpp:65 src/translate/googlecloudengine.cpp:151
 #: src/translate/mintengine.cpp:69
 #, kde-format
 msgid ""
@@ -3981,7 +3981,7 @@ msgstr ""
 "HTTP Error %1 - %2\n"
 "%3"
 
-#: src/translate/deeplengine.cpp:70 src/translate/googlecloudengine.cpp:150
+#: src/translate/deeplengine.cpp:70 src/translate/googlecloudengine.cpp:156
 #: src/translate/mintengine.cpp:74
 #, kde-format
 msgid ""
@@ -3996,18 +3996,18 @@ msgstr ""
 msgid "DeepL Engine Error"
 msgstr "DeepL Engine Error"
 
-#: src/translate/deeplengine.cpp:102 src/translate/googlecloudengine.cpp:283
+#: src/translate/deeplengine.cpp:102 src/translate/googlecloudengine.cpp:289
 #: src/translate/mintengine.cpp:125
 #, kde-format
 msgid "Updating languages..."
 msgstr "Updating languages..."
 
-#: src/translate/deeplengine.cpp:123 src/translate/googlecloudengine.cpp:298
+#: src/translate/deeplengine.cpp:123 src/translate/googlecloudengine.cpp:304
 #, kde-format
 msgid "Autodetect Language"
 msgstr "Autodetect Language"
 
-#: src/translate/deeplengine.cpp:158 src/translate/googlecloudengine.cpp:331
+#: src/translate/deeplengine.cpp:158 src/translate/googlecloudengine.cpp:337
 #: src/translate/mintengine.cpp:221
 #, kde-format
 msgid "Translating lines..."
@@ -4061,19 +4061,31 @@ msgstr "Source language:"
 msgid "Translate to:"
 msgstr "Translate to:"
 
-#: src/translate/googlecloudengine.cpp:156
-#: src/translate/googlecloudengine.cpp:202
-#: src/translate/googlecloudengine.cpp:211
+#: src/translate/googlecloudengine.cpp:143
+#, fuzzy, kde-format
+#| msgid ""
+#| "Remote service error %1 %2\n"
+#| "%3"
+msgid ""
+"Remote service error (%1):\n"
+"%2"
+msgstr ""
+"Remote service error %1 %2\n"
+"%3"
+
+#: src/translate/googlecloudengine.cpp:162
+#: src/translate/googlecloudengine.cpp:208
+#: src/translate/googlecloudengine.cpp:217
 #, kde-format
 msgid "Google Cloud Engine Error"
 msgstr "Google Cloud Engine Error"
 
-#: src/translate/googlecloudengine.cpp:201
+#: src/translate/googlecloudengine.cpp:207
 #, kde-format
 msgid "Error opening file '%1'"
 msgstr "Error opening file '%1'"
 
-#: src/translate/googlecloudengine.cpp:210
+#: src/translate/googlecloudengine.cpp:216
 #, kde-format
 msgid "Error parsing JSON from file '%1'"
 msgstr "Error parsing JSON from file '%1'"
