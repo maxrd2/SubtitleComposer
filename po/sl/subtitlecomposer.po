@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: subtitlecomposer\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-11-18 01:56+0000\n"
-"PO-Revision-Date: 2024-10-02 06:22+0200\n"
+"PO-Revision-Date: 2024-11-18 06:55+0100\n"
 "Last-Translator: Matjaž Jeran <matjaz.jeran@amis.net>\n"
 "Language-Team: Slovenian <lugos-slo@lugos.si>\n"
 "Language: sl\n"
@@ -4091,16 +4091,13 @@ msgid "Translate to:"
 msgstr "Prevedi v:"
 
 #: src/translate/googlecloudengine.cpp:143
-#, fuzzy, kde-format
-#| msgid ""
-#| "Remote service error %1 %2\n"
-#| "%3"
+#, kde-format
 msgid ""
 "Remote service error (%1):\n"
 "%2"
 msgstr ""
-"Napaka oddaljene storitve %1 %2\n"
-"%3"
+"Napaka oddaljene storitve (%1):\n"
+"%2"
 
 #: src/translate/googlecloudengine.cpp:162
 #: src/translate/googlecloudengine.cpp:208

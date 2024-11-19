@@ -4031,16 +4031,11 @@ msgid "Translate to:"
 msgstr "翻译至："
 
 #: src/translate/googlecloudengine.cpp:143
-#, fuzzy, kde-format
-#| msgid ""
-#| "Remote service error %1 %2\n"
-#| "%3"
+#, kde-format
 msgid ""
 "Remote service error (%1):\n"
 "%2"
 msgstr ""
-"远程服务错误 %1 %2\n"
-"%3"
 
 #: src/translate/googlecloudengine.cpp:162
 #: src/translate/googlecloudengine.cpp:208
