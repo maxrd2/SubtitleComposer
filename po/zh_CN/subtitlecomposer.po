@@ -1266,7 +1266,7 @@ msgstr "最大字符数："
 #: src/configs/errorsconfigwidget.ui:63
 #, kde-format
 msgid "Maximum number of characters per line:"
-msgstr ""
+msgstr "每行最大字符数："
 
 #. i18n: ectx: property (text), widget (QLabel, label_4)
 #: src/configs/errorsconfigwidget.ui:70
@@ -1835,7 +1835,7 @@ msgstr "行数过多"
 #: src/core/subtitleline.cpp:65
 #, kde-format
 msgid "Too many characters per line"
-msgstr ""
+msgstr "每行字符数过多"
 
 #: src/core/subtitleline.cpp:67
 #, kde-format
@@ -1924,12 +1924,12 @@ msgstr[0] "译文文本中行数过多 (%1 个字符)"
 #: src/core/subtitleline.cpp:106
 #, kde-format
 msgid "Has too many characters per line in primary text."
-msgstr ""
+msgstr "主文本的每行字符太多。"
 
 #: src/core/subtitleline.cpp:107
 #, kde-format
 msgid "Has too many characters per line in translation text."
-msgstr ""
+msgstr "翻译文本的每行字符太多。"
 
 #: src/core/subtitleline.cpp:108
 #, kde-format
@@ -2622,7 +2622,7 @@ msgstr "设置"
 #: src/formats/vobsub/vobsubinputinitdialog.ui:118
 #, kde-format
 msgid "Whitespace detection threshold (pixels)"
-msgstr ""
+msgstr "空格检测阈值 (像素)"
 
 #: src/formats/vobsub/vobsubinputprocessdialog.cpp:585
 #, kde-format
@@ -3179,7 +3179,7 @@ msgstr "最大行数"
 #: src/scconfig.kcfg:63
 #, kde-format
 msgid "Maximum number of characters per line"
-msgstr ""
+msgstr "每行最大字符数"
 
 #. i18n: ectx: label, entry (MinDuration), group (Error Check)
 #: src/scconfig.kcfg:68
@@ -3221,7 +3221,7 @@ msgstr "默认语言"
 #: src/scconfig.kcfg:101
 #, kde-format
 msgid "Auto detect language"
-msgstr ""
+msgstr "自动检测语言"
 
 #. i18n: ectx: label, entry (DefaultClient), group (Spelling)
 #: src/scconfig.kcfg:105
@@ -3233,19 +3233,19 @@ msgstr "默认客户端"
 #: src/scconfig.kcfg:109
 #, kde-format
 msgid "Background checker enabled"
-msgstr ""
+msgstr "启用后台检查器"
 
 #. i18n: ectx: label, entry (checkerEnabledByDefault), group (Spelling)
 #: src/scconfig.kcfg:113
 #, kde-format
 msgid "Checker enabled by default"
-msgstr ""
+msgstr "默认启用检查器"
 
 #. i18n: ectx: label, entry (skipUppercase), group (Spelling)
 #: src/scconfig.kcfg:117
 #, kde-format
 msgid "Skip uppercase"
-msgstr ""
+msgstr "跳过大写"
 
 #. i18n: ectx: label, entry (skipRunTogether), group (Spelling)
 #: src/scconfig.kcfg:121
@@ -4036,6 +4036,8 @@ msgid ""
 "Remote service error (%1):\n"
 "%2"
 msgstr ""
+"远程服务错误 (%1)：\n"
+"%2"
 
 #: src/translate/googlecloudengine.cpp:162
 #: src/translate/googlecloudengine.cpp:208

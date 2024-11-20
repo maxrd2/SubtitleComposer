@@ -1,14 +1,14 @@
 # translation of subtitlecomposer.po to Italian
 # This file is put in the public domain.
 #
+# SPDX-FileCopyrightText: 2018, 2020, 2021, 2022, 2023, 2024 Luigi Toscano <luigi.toscano@tiscali.it>
 # Alessandro Polverini <dusty@nibbles.it>, 2010.
-# Luigi Toscano <luigi.toscano@tiscali.it>, 2018, 2020, 2021, 2022, 2023, 2024.
 msgid ""
 msgstr ""
 "Project-Id-Version: subtitlecomposer\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-11-18 01:56+0000\n"
-"PO-Revision-Date: 2024-10-02 13:19+0200\n"
+"PO-Revision-Date: 2024-11-18 19:10+0100\n"
 "Last-Translator: Luigi Toscano <luigi.toscano@tiscali.it>\n"
 "Language-Team: Italian <kde-i18n-it@kde.org>\n"
 "Language: it\n"
@@ -16,7 +16,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Lokalize 22.12.3\n"
+"X-Generator: Lokalize 25.03.70\n"
 "X-Crowdin-Project: subtitlecomposer\n"
 "X-Crowdin-Language: it\n"
 "X-Crowdin-File: subtitlecomposer.pot\n"
@@ -4105,16 +4105,13 @@ msgid "Translate to:"
 msgstr "Traduci in:"
 
 #: src/translate/googlecloudengine.cpp:143
-#, fuzzy, kde-format
-#| msgid ""
-#| "Remote service error %1 %2\n"
-#| "%3"
+#, kde-format
 msgid ""
 "Remote service error (%1):\n"
 "%2"
 msgstr ""
-"Errore del servizio remoto %1 %2\n"
-"%3"
+"Errore del servizio remoto (%1):\n"
+"%2"
 
 #: src/translate/googlecloudengine.cpp:162
 #: src/translate/googlecloudengine.cpp:208
