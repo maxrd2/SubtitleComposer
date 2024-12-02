@@ -1,13 +1,13 @@
-# Copyright (C) YEAR This file is copyright:
+# Copyright (C) 2024 This file is copyright:
 # This file is distributed under the same license as the subtitlecomposer package.
-# Tommi Nieminen <translator@legisign.org>, 2020, 2021, 2023, 2024.
+# SPDX-FileCopyrightText: 2020, 2021, 2023, 2024 Tommi Nieminen <translator@legisign.org>
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: subtitlecomposer\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-11-18 01:56+0000\n"
-"PO-Revision-Date: 2024-03-20 18:10+0200\n"
+"PO-Revision-Date: 2024-10-22 13:49+0300\n"
 "Last-Translator: Tommi Nieminen <translator@legisign.org>\n"
 "Language-Team: Finnish <kde-i18n-doc@kde.org>\n"
 "Language: fi\n"
@@ -15,7 +15,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Lokalize 22.12.3\n"
+"X-Generator: Lokalize 23.08.5\n"
 
 #: src/actions/kcodecactionext.cpp:29
 #, kde-format
@@ -1284,10 +1284,9 @@ msgstr "Merkkejä enintään:"
 
 #. i18n: ectx: property (text), widget (QLabel, lab_MaxCharactersPerLine)
 #: src/configs/errorsconfigwidget.ui:63
-#, fuzzy, kde-format
-#| msgid "Maximum number of characters:"
+#, kde-format
 msgid "Maximum number of characters per line:"
-msgstr "Merkkejä enintään:"
+msgstr "Merkkejä rivillä enintään:"
 
 #. i18n: ectx: property (text), widget (QLabel, label_4)
 #: src/configs/errorsconfigwidget.ui:70
@@ -1858,10 +1857,9 @@ msgid "Too many lines"
 msgstr "Liikaa rivejä"
 
 #: src/core/subtitleline.cpp:65
-#, fuzzy, kde-format
-#| msgid "Too many characters"
+#, kde-format
 msgid "Too many characters per line"
-msgstr "Liikaa merkkejä"
+msgstr "Liikaa merkkejä rivillä"
 
 #: src/core/subtitleline.cpp:67
 #, kde-format
@@ -1952,18 +1950,14 @@ msgstr[0] "Käännöstekstissä on liikaa rivejä (1 rivi)."
 msgstr[1] "Käännöstekstissä on liikaa rivejä (%1 riviä)."
 
 #: src/core/subtitleline.cpp:106
-#, fuzzy, kde-format
-#| msgid "Has too many characters in primary text (1 char)."
-#| msgid_plural "Has too many characters in primary text (%1 chars)."
+#, kde-format
 msgid "Has too many characters per line in primary text."
-msgstr "Lähtötekstissä on liikaa merkkejä (1 merkki)."
+msgstr "Lähtötekstissä on liikaa merkkejä rivillä."
 
 #: src/core/subtitleline.cpp:107
-#, fuzzy, kde-format
-#| msgid "Has too many characters in translation text (1 char)."
-#| msgid_plural "Has too many characters in translation text (%1 chars)."
+#, kde-format
 msgid "Has too many characters per line in translation text."
-msgstr "Käännöstekstissä on liikaa merkkejä (1 merkki)."
+msgstr "Käännöstekstissä on liikaa merkkejä rivillä."
 
 #: src/core/subtitleline.cpp:108
 #, kde-format
@@ -2666,7 +2660,7 @@ msgstr "Asetukset"
 #: src/formats/vobsub/vobsubinputinitdialog.ui:118
 #, kde-format
 msgid "Whitespace detection threshold (pixels)"
-msgstr ""
+msgstr "Tyhjän tilan tunnistuksen kynnys (kuvapisteinä)"
 
 #: src/formats/vobsub/vobsubinputprocessdialog.cpp:585
 #, kde-format
@@ -3222,10 +3216,9 @@ msgstr "Repliikkien enimmäismäärä"
 
 #. i18n: ectx: label, entry (MaxCharactersPerLine), group (Error Check)
 #: src/scconfig.kcfg:63
-#, fuzzy, kde-format
-#| msgid "Maximum number of characters"
+#, kde-format
 msgid "Maximum number of characters per line"
-msgstr "Merkkien enimmäismäärä"
+msgstr "Merkkien enimmäismäärä rivillä"
 
 #. i18n: ectx: label, entry (MinDuration), group (Error Check)
 #: src/scconfig.kcfg:68
@@ -3265,8 +3258,7 @@ msgstr "Oletuskieli"
 
 #. i18n: ectx: label, entry (autodetectLanguage), group (Spelling)
 #: src/scconfig.kcfg:101
-#, fuzzy, kde-format
-#| msgid "Autodetect Language"
+#, kde-format
 msgid "Auto detect language"
 msgstr "Tunnista kieli automaattisesti"
 
@@ -3280,20 +3272,19 @@ msgstr "Oletusasiakas"
 #: src/scconfig.kcfg:109
 #, kde-format
 msgid "Background checker enabled"
-msgstr ""
+msgstr "Taustatarkistus käytössä"
 
 #. i18n: ectx: label, entry (checkerEnabledByDefault), group (Spelling)
 #: src/scconfig.kcfg:113
 #, kde-format
 msgid "Checker enabled by default"
-msgstr ""
+msgstr "Tarkistus oletuksena käytössä"
 
 #. i18n: ectx: label, entry (skipUppercase), group (Spelling)
 #: src/scconfig.kcfg:117
-#, fuzzy, kde-format
-#| msgid "Check uppercase"
+#, kde-format
 msgid "Skip uppercase"
-msgstr "Tarkista suuraakkostus"
+msgstr "Sivuuta suuraakkostus"
 
 #. i18n: ectx: label, entry (skipRunTogether), group (Spelling)
 #: src/scconfig.kcfg:121
