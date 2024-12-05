@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: subtitlecomposer\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-11-18 01:56+0000\n"
-"PO-Revision-Date: 2024-10-07 01:35+0200\n"
+"PO-Revision-Date: 2024-12-04 09:40+0100\n"
 "Last-Translator: Adrián Chaves (Gallaecio) <adrian@chaves.io>\n"
 "Language-Team: Proxecto Trasno (proxecto@trasno.gal)\n"
 "Language: gl\n"
@@ -15,7 +15,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Lokalize 24.08.1\n"
+"X-Generator: Lokalize 24.08.3\n"
 
 #: src/actions/kcodecactionext.cpp:29
 #, kde-format
@@ -4091,16 +4091,13 @@ msgid "Translate to:"
 msgstr "Traducir ao:"
 
 #: src/translate/googlecloudengine.cpp:143
-#, fuzzy, kde-format
-#| msgid ""
-#| "Remote service error %1 %2\n"
-#| "%3"
+#, kde-format
 msgid ""
 "Remote service error (%1):\n"
 "%2"
 msgstr ""
-"Erro de servizo remoto %1 %2\n"
-"%3"
+"Erro de servizo remoto (%1)\n"
+"%2"
 
 #: src/translate/googlecloudengine.cpp:162
 #: src/translate/googlecloudengine.cpp:208
