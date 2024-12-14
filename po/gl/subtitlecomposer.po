@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: subtitlecomposer\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-11-18 01:56+0000\n"
-"PO-Revision-Date: 2024-12-12 20:15+0100\n"
+"PO-Revision-Date: 2024-12-13 22:58+0100\n"
 "Last-Translator: Adrián Chaves (Gallaecio) <adrian@chaves.io>\n"
 "Language-Team: Proxecto Trasno (proxecto@trasno.gal)\n"
 "Language: gl\n"
@@ -545,6 +545,7 @@ msgstr "Axustar de maneira linear todas as liñas a un intervalo indicado."
 msgid "Change Frame Rate..."
 msgstr "Cambiar a taxa de fotogramas…"
 
+# skip-rule: trasno-change_reverse
 #: src/application_actions.cpp:422
 #, kde-format
 msgid "Retime subtitle lines by reinterpreting its frame rate"
