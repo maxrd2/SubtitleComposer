@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: subtitlecomposer\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-11-18 01:56+0000\n"
-"PO-Revision-Date: 2024-12-13 22:58+0100\n"
+"PO-Revision-Date: 2024-12-15 10:21+0100\n"
 "Last-Translator: Adrián Chaves (Gallaecio) <adrian@chaves.io>\n"
 "Language-Team: Proxecto Trasno (proxecto@trasno.gal)\n"
 "Language: gl\n"
@@ -15,7 +15,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Lokalize 24.08.3\n"
+"X-Generator: Lokalize 24.12.0\n"
 
 #: src/actions/kcodecactionext.cpp:29
 #, kde-format
@@ -3073,7 +3073,7 @@ msgstr "Os subtítulos principais para editar."
 #: src/main.cpp:76
 #, kde-format
 msgid "The video to be subtitled."
-msgstr "O vídeo para editar."
+msgstr "O vídeo que subtitular."
 
 #: src/main.cpp:81
 #, kde-format
