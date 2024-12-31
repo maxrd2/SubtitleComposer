@@ -105,8 +105,10 @@ void
 GLRenderer::setupProfile()
 {
 	QSurfaceFormat format(QSurfaceFormat::defaultFormat());
-#if FORCE_GLES
+#if FORCE_GLES || defined(USE_GLES)
 	format.setRenderableType(QSurfaceFormat::OpenGLES);
+#else
+	format.setRenderableType(QSurfaceFormat::OpenGL);
 #endif
 	format.setVersion(OPENGL_VER);
 #if DEBUG_GL
