@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: subtitlecomposer\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-11-18 01:56+0000\n"
-"PO-Revision-Date: 2024-06-30 17:15+0200\n"
+"PO-Revision-Date: 2025-01-03 21:16+0100\n"
 "Last-Translator: Oliver Kellogg <olivermkellogg@gmail.com>\n"
 "Language-Team: Esperanto <kde-i18n-doc@kde.org>\n"
 "Language: eo\n"
@@ -2648,7 +2648,7 @@ msgstr "Agordoj"
 #: src/formats/vobsub/vobsubinputinitdialog.ui:118
 #, kde-format
 msgid "Whitespace detection threshold (pixels)"
-msgstr ""
+msgstr "Blankspac-detekta sojlo (rastrumeroj)"
 
 #: src/formats/vobsub/vobsubinputprocessdialog.cpp:585
 #, kde-format
@@ -4063,16 +4063,13 @@ msgid "Translate to:"
 msgstr "Traduki al:"
 
 #: src/translate/googlecloudengine.cpp:143
-#, fuzzy, kde-format
-#| msgid ""
-#| "Remote service error %1 %2\n"
-#| "%3"
+#, kde-format
 msgid ""
 "Remote service error (%1):\n"
 "%2"
 msgstr ""
-"Eraro de fora servo %1 %2\n"
-"%3"
+"Eraro de fora servo (%1):\n"
+"%2"
 
 #: src/translate/googlecloudengine.cpp:162
 #: src/translate/googlecloudengine.cpp:208
