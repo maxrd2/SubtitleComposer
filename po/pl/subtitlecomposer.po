@@ -1,7 +1,7 @@
 # translation of subtitlecomposer.po to Polish
 # This file is put in the public domain.
 #
-# SPDX-FileCopyrightText: 2020, 2021, 2022, 2023, 2024 Łukasz Wojniłowicz <lukasz.wojnilowicz@gmail.com>
+# SPDX-FileCopyrightText: 2020, 2021, 2022, 2023, 2024, 2025 Łukasz Wojniłowicz <lukasz.wojnilowicz@gmail.com>
 # Tomasz Argasiński <targasinski@o2.pl>, 2008, 2009.
 # Tomek Argasiński <targasinski@o2.pl>, 2009.
 # Tomek Argasiński <dopelover@o2.pl>, 2009.
@@ -11,7 +11,7 @@ msgstr ""
 "Project-Id-Version: subtitlecomposer\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-11-18 01:56+0000\n"
-"PO-Revision-Date: 2024-10-05 13:16+0200\n"
+"PO-Revision-Date: 2025-01-18 12:08+0100\n"
 "Last-Translator: Łukasz Wojniłowicz <lukasz.wojnilowicz@gmail.com>\n"
 "Language-Team: Polish <kde-i18n-doc@kde.org>\n"
 "Language: pl\n"
@@ -20,7 +20,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=(n==1 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 "
 "|| n%100>=20) ? 1 : 2);\n"
-"X-Generator: Lokalize 23.08.5\n"
+"X-Generator: Lokalize 24.12.0\n"
 
 #: src/actions/kcodecactionext.cpp:29
 #, kde-format
@@ -4114,16 +4114,13 @@ msgid "Translate to:"
 msgstr "Przetłumacz na:"
 
 #: src/translate/googlecloudengine.cpp:143
-#, fuzzy, kde-format
-#| msgid ""
-#| "Remote service error %1 %2\n"
-#| "%3"
+#, kde-format
 msgid ""
 "Remote service error (%1):\n"
 "%2"
 msgstr ""
-"Błąd usługi zdalnej %1 %2\n"
-"%3"
+"Błąd usługi zdalnej (%1):\n"
+"%2"
 
 #: src/translate/googlecloudengine.cpp:162
 #: src/translate/googlecloudengine.cpp:208
