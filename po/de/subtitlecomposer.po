@@ -3111,13 +3111,13 @@ msgstr "Fehlerbehebung und Webseite"
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
 msgid "Your names"
-msgstr "Panagiotis Papadopoulos"
+msgstr "Deutsches KDE-Übersetzungsteam"
 
 #: src/main.cpp:165
 #, kde-format
 msgctxt "EMAIL OF TRANSLATORS"
 msgid "Your emails"
-msgstr "pano_90@gmx.net"
+msgstr "kde-i18n-de@kde.org"
 
 #: src/main.cpp:167
 #, kde-format
