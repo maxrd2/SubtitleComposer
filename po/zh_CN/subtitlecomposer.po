@@ -1366,7 +1366,7 @@ msgstr "通用"
 #: src/configs/generalconfigwidget.ui:26
 #, kde-format
 msgid "Automatically load video file when opening a subtitle"
-msgstr "打开字幕时自动载入视频文件"
+msgstr "打开字幕时自动加载视频文件"
 
 #. i18n: ectx: property (text), widget (QLabel, lab_DefaultSubtitlesEncoding)
 #: src/configs/generalconfigwidget.ui:33
@@ -1471,7 +1471,7 @@ msgstr "时移跳转的步长秒数(&J)："
 #: src/configs/playerconfigwidget.ui:50 src/scconfig.kcfg:196
 #, kde-format
 msgid "Start playing video when loaded"
-msgstr "载入后立即开始播放视频"
+msgstr "加载后立即开始播放视频"
 
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_ShowPositionTimeEdit)
 #: src/configs/playerconfigwidget.ui:57 src/gui/playerwidget.cpp:438
@@ -3137,7 +3137,7 @@ msgstr "双击时取消暂停"
 #: src/scconfig.kcfg:30
 #, kde-format
 msgid "Automatic Video Load"
-msgstr "自动载入视频"
+msgstr "自动视频加载"
 
 #. i18n: ectx: label, entry (LinesQuickShiftAmount), group (General)
 #: src/scconfig.kcfg:35
