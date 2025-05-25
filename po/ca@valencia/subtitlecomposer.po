@@ -1497,7 +1497,7 @@ msgstr ""
 #: src/configs/playerconfigwidget.ui:23
 #, kde-format
 msgid "Resume playback after line double click"
-msgstr "Reprén la reproducció després de fer doble clic en la línia"
+msgstr "Reprén la reproducció després de fer doble clic damunt de la línia"
 
 #. i18n: ectx: property (text), widget (QLabel, lab_SeekJumpLength)
 #: src/configs/playerconfigwidget.ui:30
@@ -2726,7 +2726,7 @@ msgstr "D'acord"
 #: src/formats/vobsub/vobsubinputprocessdialog.ui:198
 #, kde-format
 msgid "Ctrl+Shift+Left"
-msgstr "Ctrl+Maj+Fletxa esquerra"
+msgstr "«Ctrl+Majús+Fletxa esquerra»"
 
 #. i18n: ectx: property (text), widget (QPushButton, btnPrevImage)
 #: src/formats/vobsub/vobsubinputprocessdialog.ui:201
@@ -2762,7 +2762,7 @@ msgstr "Símbol següent"
 #: src/formats/vobsub/vobsubinputprocessdialog.ui:243
 #, kde-format
 msgid "Ctrl+Shift+Right"
-msgstr "Ctrl+Maj+Fletxa dreta"
+msgstr "«Ctrl+Majús+Fletxa dreta»"
 
 #. i18n: ectx: property (text), widget (QPushButton, btnNextImage)
 #: src/formats/vobsub/vobsubinputprocessdialog.ui:246
