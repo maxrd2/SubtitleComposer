@@ -17,6 +17,8 @@
 #include "helpers/objectref.h"
 #include "formatdata.h"
 
+#include <vector>
+
 #include <QList>
 #include <QMap>
 #include <QObject>
@@ -92,17 +94,17 @@ public:
 	void changeFramesPerSecond(double toFramesPerSecond, double fromFramesPerSecond = -1.0);
 
 	bool isEmpty() const { return m_lines.empty(); }
-	int linesCount() const { return m_lines.count(); }
-	int lastIndex() const { return m_lines.count() - 1; }
+	int linesCount() const { return m_lines.size(); }
+	int lastIndex() const { return m_lines.size() - 1; }
 
 	SubtitleLine * line(int index);
 	const SubtitleLine * line(int index) const;
 
-	inline SubtitleLine * firstLine() { return m_lines.isEmpty() ? nullptr : m_lines.first().obj(); }
-	inline const SubtitleLine * firstLine() const { return m_lines.isEmpty() ? nullptr : m_lines.first().obj(); }
+	inline SubtitleLine * firstLine() { return m_lines.empty() ? nullptr : m_lines.front().obj(); }
+	inline const SubtitleLine * firstLine() const { return m_lines.empty() ? nullptr : m_lines.front().obj(); }
 
-	inline SubtitleLine * lastLine() { return m_lines.isEmpty() ? nullptr : m_lines.last().obj(); }
-	inline const SubtitleLine * lastLine() const { return m_lines.isEmpty() ? nullptr : m_lines.last().obj(); }
+	inline SubtitleLine * lastLine() { return m_lines.empty() ? nullptr : m_lines.back().obj(); }
+	inline const SubtitleLine * lastLine() const { return m_lines.empty() ? nullptr : m_lines.back().obj(); }
 
 	inline int count() const { return m_lines.size(); }
 	inline const SubtitleLine * at(const int i) const { return m_lines.at(i).obj(); }
@@ -204,7 +206,7 @@ signals:
 	void lineMarkChanged(SubtitleLine *line);
 
 private:
-	inline int insertIndex(const Time &showTime) const { return insertIndex(showTime, 0, m_lines.isEmpty() ? 0 : m_lines.count() - 1); }
+	inline int insertIndex(const Time &showTime) const { return insertIndex(showTime, 0, m_lines.empty() ? 0 : m_lines.size() - 1); }
 	int insertIndex(const Time &showTime, int start, int end) const;
 	void insertLine(SubtitleLine *line, int index);
 
@@ -219,9 +221,9 @@ private:
 	bool isSecondaryDirty(int index) const;
 	void updateState();
 
-	inline int normalizeRangeIndex(int index) const { return index >= m_lines.count() ? m_lines.count() - 1 : index; }
+	inline int normalizeRangeIndex(int index) const { return size_t(index) >= m_lines.size() ? m_lines.size() - 1 : index; }
 
-	inline SubtitleLine * takeAt(const int i) { SubtitleLine *s = m_lines.at(i).obj(); m_lines.remove(i); return s; }
+	inline SubtitleLine * takeAt(const int i) { SubtitleLine *s = m_lines.at(i).obj(); m_lines.erase(m_lines.cbegin() + i); return s; }
 
 	inline bool ignoreDocChanges(bool ignore) {
 		bool r = m_ignoreDocChanges;
@@ -238,7 +240,7 @@ private:
 	bool m_ignoreDocChanges = false;
 
 	double m_framesPerSecond;
-	mutable QVector<ObjectRef<SubtitleLine>> m_lines;
+	mutable std::vector<ObjectRef<SubtitleLine>> m_lines;
 	QList<QPointer<const SubtitleLine>> m_anchoredLines;
 
 	QMap<QByteArray, QString> m_metaData;

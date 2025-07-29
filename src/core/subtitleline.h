@@ -275,7 +275,7 @@ private:
 	FormatData *m_formatData;
 
 	mutable ObjectRef<SubtitleLine> *m_ref = nullptr;
-	const QVector<ObjectRef<SubtitleLine>> * refContainer();
+	const std::vector<ObjectRef<SubtitleLine>> * refContainer();
 };
 }
 
