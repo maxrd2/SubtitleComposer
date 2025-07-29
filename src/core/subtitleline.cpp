@@ -230,12 +230,11 @@ SubtitleLine::index() const
 	Q_ASSERT(m_ref != nullptr);
 	Q_ASSERT(m_ref->m_obj == this);
 
-	const int index = m_ref - m_subtitle->m_lines.constData();
+	const int index = m_ref - m_subtitle->m_lines.data();
 
-	if(index < 0 || index >= m_subtitle->count()) {
-		// this should never happen... unless ObjectRef is declared as Q_MOVABLE_TYPE or QVector
-		// decides to stop calling constructors
-		qWarning() << "SubtitleLine::index() WARNING: m_ref doesn't not belong to cotainer.";
+	if(Q_UNLIKELY(index < 0 || index >= m_subtitle->count())) {
+		// this should be impossible
+		qWarning() << "SubtitleLine::index() WARNING: m_ref doesn't belong to cotainer.";
 		for(int i = 0, n = m_subtitle->count(); i < n; i++) {
 			if(this == m_subtitle->at(i)) {
 				m_ref = &m_subtitle->m_lines[i];
@@ -1020,7 +1019,7 @@ SubtitleLine::processAction(UndoAction *action)
 	}
 }
 
-const QVector<ObjectRef<SubtitleLine>> *
+const ObjectRefArray<SubtitleLine> *
 SubtitleLine::refContainer()
 {
 	return m_subtitle ? &m_subtitle->m_lines : nullptr;

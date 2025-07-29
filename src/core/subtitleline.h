@@ -55,7 +55,6 @@ class SubtitleLine : public QObject
 	friend class SetLineErrorsAction;
 	friend class ToggleLineMarkedAction;
 	friend class Format;
-	friend class ObjectRef<SubtitleLine>;
 
 public:
 	typedef enum {
@@ -274,8 +273,9 @@ private:
 
 	FormatData *m_formatData;
 
+	friend class ObjectRef<SubtitleLine>;
 	mutable ObjectRef<SubtitleLine> *m_ref = nullptr;
-	const QVector<ObjectRef<SubtitleLine>> * refContainer();
+	const ObjectRefArray<SubtitleLine> * refContainer();
 };
 }
 
