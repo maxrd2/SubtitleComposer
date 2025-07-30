@@ -258,13 +258,13 @@ Subtitle::changeFramesPerSecond(double toFramesPerSecond, double fromFramesPerSe
 SubtitleLine *
 Subtitle::line(int index)
 {
-	return index < 0 || size_t(index) >= m_lines.size() ? nullptr : m_lines.at(index).obj();
+	return index < 0 || index >= m_lines.count() ? nullptr : m_lines.at(index).obj();
 }
 
 const SubtitleLine *
 Subtitle::line(int index) const
 {
-	return index < 0 || size_t(index) >= m_lines.size() ? nullptr : m_lines.at(index).obj();
+	return index < 0 || index >= m_lines.count() ? nullptr : m_lines.at(index).obj();
 }
 bool
 Subtitle::hasAnchors() const
@@ -279,7 +279,7 @@ Subtitle::hasAnchors() const
 bool
 Subtitle::isLineAnchored(int index) const
 {
-	if(index < 0 || size_t(index) >= m_lines.size())
+	if(index < 0 || index >= m_lines.count())
 		return false;
 
 	return isLineAnchored(m_lines[index]);
@@ -297,7 +297,7 @@ Subtitle::isLineAnchored(const SubtitleLine *line) const
 void
 Subtitle::toggleLineAnchor(int index)
 {
-	if(index < 0 || size_t(index) >= m_lines.size())
+	if(index < 0 || index >= m_lines.count())
 		return;
 
 	toggleLineAnchor(m_lines[index]);
@@ -355,7 +355,7 @@ Subtitle::insertLine(SubtitleLine *line)
 void
 Subtitle::insertLine(SubtitleLine *line, int index)
 {
-	Q_ASSERT(index >= 0 && size_t(index) <= m_lines.size());
+	Q_ASSERT(index >= 0 && index <= m_lines.count());
 	QList<SubtitleLine *> lines;
 	lines.append(line);
 	processAction(new InsertLinesAction(this, lines, index));
@@ -370,7 +370,7 @@ Subtitle::insertNewLine(int index, bool insertAfter, SubtitleTarget target)
 		index = count();
 
 	SubtitleLine *newLine = new SubtitleLine();
-	const int newLineIndex = (target == Secondary) ? m_lines.size() : index;
+	const int newLineIndex = (target == Secondary) ? m_lines.count() : index;
 
 	const double linePause = (double)SCConfig::linePause();
 	const double lineDuration = (double)SCConfig::lineDuration();
@@ -436,11 +436,11 @@ Subtitle::insertNewLine(int index, bool insertAfter, SubtitleTarget target)
 void
 Subtitle::removeLines(const RangeList &r, SubtitleTarget target)
 {
-	if(m_lines.empty())
+	if(m_lines.isEmpty())
 		return;
 
 	RangeList ranges = r;
-	ranges.trimToIndex(m_lines.size() - 1);
+	ranges.trimToIndex(m_lines.count() - 1);
 
 	if(ranges.isEmpty())
 		return;
@@ -459,7 +459,7 @@ Subtitle::removeLines(const RangeList &r, SubtitleTarget target)
 		beginCompositeAction(i18n("Remove Lines"));
 
 		RangeList rangesComplement = ranges.complement();
-		rangesComplement.trimToRange(Range(ranges.firstIndex(), m_lines.size() - 1));
+		rangesComplement.trimToRange(Range(ranges.firstIndex(), m_lines.count() - 1));
 
 		// we have to move the secondary texts up (we do it in chunks)
 		SubtitleIterator srcIt(*this, rangesComplement);
@@ -476,12 +476,12 @@ Subtitle::removeLines(const RangeList &r, SubtitleTarget target)
 		beginCompositeAction(i18n("Remove Lines"));
 
 		RangeList mutableRanges(ranges);
-		mutableRanges.trimToIndex(m_lines.size() - 1);
+		mutableRanges.trimToIndex(m_lines.count() - 1);
 
 		// first, we need to append as many empty lines as we're to remove
 		// we insert them with a greater time than the one of the last (non deleted) line
 
-		int linesCount = m_lines.size();
+		int linesCount = m_lines.count();
 
 		Range lastRange = mutableRanges.last();
 		int lastIndex = lastRange.end() == linesCount - 1 ? lastRange.start() - 1 : linesCount - 1;
@@ -501,7 +501,7 @@ Subtitle::removeLines(const RangeList &r, SubtitleTarget target)
 		// then, we move the secondary texts down (we need to iterate from bottom to top for that)
 		RangeList rangesComplement = mutableRanges.complement();
 
-		SubtitleIterator srcIt(*this, Range(ranges.firstIndex(), m_lines.size() - lines.count() - 1), true);
+		SubtitleIterator srcIt(*this, Range(ranges.firstIndex(), m_lines.count() - lines.count() - 1), true);
 		SubtitleIterator dstIt(*this, rangesComplement, true);
 		for(; srcIt.current() && dstIt.current(); --srcIt, --dstIt)
 			dstIt.current()->secondaryDoc()->setRichText(srcIt.current()->secondaryDoc()->toRichText());
@@ -680,7 +680,7 @@ Subtitle::joinLines(const RangeList &ranges)
 void
 Subtitle::shiftAnchoredLine(SubtitleLine *anchoredLine, const Time &newShowTime)
 {
-	if(m_anchoredLines.indexOf(anchoredLine) == -1 || m_lines.empty())
+	if(m_anchoredLines.indexOf(anchoredLine) == -1 || m_lines.isEmpty())
 		return;
 
 	const SubtitleLine *prevAnchor = nullptr;
@@ -759,7 +759,7 @@ Subtitle::shiftLines(const RangeList &ranges, long msecs)
 void
 Subtitle::adjustLines(const Range &range, long newFirstTime, long newLastTime)
 {
-	if(m_lines.empty() || newFirstTime >= newLastTime)
+	if(m_lines.isEmpty() || newFirstTime >= newLastTime)
 		return;
 
 	int firstIndex = range.start();
@@ -834,7 +834,7 @@ Subtitle::sortLines(const Range &range)
 void
 Subtitle::applyDurationLimits(const RangeList &ranges, const Time &minDuration, const Time &maxDuration, bool canOverlap)
 {
-	if(m_lines.empty() || minDuration > maxDuration)
+	if(m_lines.isEmpty() || minDuration > maxDuration)
 		return;
 
 	beginCompositeAction(i18n("Enforce Duration Limits"));
@@ -873,7 +873,7 @@ Subtitle::applyDurationLimits(const RangeList &ranges, const Time &minDuration, 
 void
 Subtitle::setMaximumDurations(const RangeList &ranges)
 {
-	if(m_lines.empty())
+	if(m_lines.isEmpty())
 		return;
 
 	beginCompositeAction(i18n("Maximize Durations"));
@@ -896,7 +896,7 @@ Subtitle::setMaximumDurations(const RangeList &ranges)
 void
 Subtitle::setAutoDurations(const RangeList &ranges, int msecsPerChar, int msecsPerWord, int msecsPerLine, bool canOverlap, SubtitleTarget calculationTarget)
 {
-	if(m_lines.empty())
+	if(m_lines.isEmpty())
 		return;
 
 	beginCompositeAction(i18n("Set Automatic Durations"));
@@ -929,7 +929,7 @@ Subtitle::setAutoDurations(const RangeList &ranges, int msecsPerChar, int msecsP
 void
 Subtitle::fixOverlappingLines(const RangeList &ranges, const Time &minInterval)
 {
-	if(m_lines.empty())
+	if(m_lines.isEmpty())
 		return;
 
 	beginCompositeAction(i18n("Fix Overlapping Times"));
@@ -960,7 +960,7 @@ Subtitle::fixOverlappingLines(const RangeList &ranges, const Time &minInterval)
 void
 Subtitle::fixPunctuation(const RangeList &ranges, bool spaces, bool quotes, bool engI, bool ellipsis, SubtitleTarget target)
 {
-	if(m_lines.empty() || (!spaces && !quotes && !engI && !ellipsis) || target >= SubtitleTargetSize)
+	if(m_lines.isEmpty() || (!spaces && !quotes && !engI && !ellipsis) || target >= SubtitleTargetSize)
 		return;
 
 	beginCompositeAction(i18n("Fix Lines Punctuation"));
@@ -1002,7 +1002,7 @@ Subtitle::fixPunctuation(const RangeList &ranges, bool spaces, bool quotes, bool
 void
 Subtitle::lowerCase(const RangeList &ranges, SubtitleTarget target)
 {
-	if(m_lines.empty() || target >= SubtitleTargetSize)
+	if(m_lines.isEmpty() || target >= SubtitleTargetSize)
 		return;
 
 	beginCompositeAction(i18n("Lower Case"));
@@ -1032,7 +1032,7 @@ Subtitle::lowerCase(const RangeList &ranges, SubtitleTarget target)
 void
 Subtitle::upperCase(const RangeList &ranges, SubtitleTarget target)
 {
-	if(m_lines.empty() || target >= SubtitleTargetSize)
+	if(m_lines.isEmpty() || target >= SubtitleTargetSize)
 		return;
 
 	beginCompositeAction(i18n("Upper Case"));
@@ -1062,7 +1062,7 @@ Subtitle::upperCase(const RangeList &ranges, SubtitleTarget target)
 void
 Subtitle::titleCase(const RangeList &ranges, bool lowerFirst, SubtitleTarget target)
 {
-	if(m_lines.empty() || target >= SubtitleTargetSize)
+	if(m_lines.isEmpty() || target >= SubtitleTargetSize)
 		return;
 
 	beginCompositeAction(i18n("Title Case"));
@@ -1095,7 +1095,7 @@ Subtitle::titleCase(const RangeList &ranges, bool lowerFirst, SubtitleTarget tar
 void
 Subtitle::sentenceCase(const RangeList &ranges, bool lowerFirst, SubtitleTarget target)
 {
-	if(m_lines.empty() || target >= SubtitleTargetSize)
+	if(m_lines.isEmpty() || target >= SubtitleTargetSize)
 		return;
 
 	beginCompositeAction(i18n("Sentence Case"));
@@ -1204,7 +1204,7 @@ Subtitle::appendSubtitle(const Subtitle &srcSubtitle, double shiftMsecsBeforeApp
 void
 Subtitle::splitSubtitle(Subtitle &dstSubtitle, const Time &splitTime, bool shiftSplitLines)
 {
-	if(m_lines.empty())
+	if(!m_lines.count())
 		return;
 
 	int splitIndex = -1; // the index of the first line to move (or copy) to dstSub

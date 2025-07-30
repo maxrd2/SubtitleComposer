@@ -90,12 +90,13 @@ InsertLinesAction::redo()
 
 	SubtitleLine *line;
 	int insertOffset = 0;
+	int lineIndex = -1;
 
 	while(!m_lines.isEmpty()) {
 		line = m_lines.takeFirst();
-		auto pos = m_subtitle->m_lines.cbegin() + m_insertIndex + insertOffset++;
+		lineIndex = m_insertIndex + insertOffset++;
 		setLineSubtitle(line);
-		m_subtitle->m_lines.insert(pos, line);
+		m_subtitle->m_lines.insert(lineIndex, line);
 	}
 
 	emit m_subtitle->linesInserted(m_insertIndex, m_lastIndex);
@@ -181,12 +182,13 @@ RemoveLinesAction::undo()
 	emit m_subtitle->linesAboutToBeInserted(m_firstIndex, m_lastIndex);
 
 	int insertOffset = 0;
+	int lineIndex = -1;
 
 	while(!m_lines.isEmpty()) {
 		SubtitleLine *line = m_lines.takeFirst();
-		auto pos = m_subtitle->m_lines.cbegin() + m_firstIndex + insertOffset++;
+		lineIndex = m_firstIndex + insertOffset++;
 		setLineSubtitle(line);
-		m_subtitle->m_lines.insert(pos, line);
+		m_subtitle->m_lines.insert(lineIndex, line);
 	}
 
 	emit m_subtitle->linesInserted(m_firstIndex, m_lastIndex);
@@ -259,7 +261,7 @@ MoveLineAction::redo()
 
 	emit m_subtitle->linesAboutToBeInserted(m_toIndex, m_toIndex);
 	setLineSubtitle(line);
-	m_subtitle->m_lines.insert(m_subtitle->m_lines.cbegin() + m_toIndex, line);
+	m_subtitle->m_lines.insert(m_toIndex, line);
 	emit m_subtitle->linesInserted(m_toIndex, m_toIndex);
 }
 
@@ -273,7 +275,7 @@ MoveLineAction::undo()
 
 	emit m_subtitle->linesAboutToBeInserted(m_fromIndex, m_fromIndex);
 	setLineSubtitle(line);
-	m_subtitle->m_lines.insert(m_subtitle->m_lines.cbegin() + m_fromIndex, line);
+	m_subtitle->m_lines.insert(m_fromIndex, line);
 	emit m_subtitle->linesInserted(m_fromIndex, m_fromIndex);
 }
 

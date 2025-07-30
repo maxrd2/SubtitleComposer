@@ -230,7 +230,7 @@ SubtitleLine::index() const
 	Q_ASSERT(m_ref != nullptr);
 	Q_ASSERT(m_ref->m_obj == this);
 
-	const int index = m_ref - m_subtitle->m_lines.data();
+	const int index = m_ref - m_subtitle->m_lines.constData();
 
 	if(index < 0 || index >= m_subtitle->count()) {
 		// this should never happen... unless ObjectRef is declared as Q_MOVABLE_TYPE or QVector
@@ -1020,7 +1020,7 @@ SubtitleLine::processAction(UndoAction *action)
 	}
 }
 
-const std::vector<ObjectRef<SubtitleLine>> *
+const QVector<ObjectRef<SubtitleLine>> *
 SubtitleLine::refContainer()
 {
 	return m_subtitle ? &m_subtitle->m_lines : nullptr;

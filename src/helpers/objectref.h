@@ -59,18 +59,18 @@ private:
 			m_obj->m_ref = this;
 	}
 
-	inline const std::vector<SubtitleComposer::ObjectRef<T>> *container()
+	inline const QVector<SubtitleComposer::ObjectRef<T>> *container()
 	{
 		Q_ASSERT(m_obj != nullptr);
-		const std::vector<SubtitleComposer::ObjectRef<T>> *container = m_obj->refContainer();
+		const QVector<SubtitleComposer::ObjectRef<T>> *container = m_obj->refContainer();
 		Q_ASSERT(container != nullptr);
 		return container;
 	}
 
 	inline bool inContainer()
 	{
-		const std::vector<SubtitleComposer::ObjectRef<T>> *vec = container();
-		const SubtitleComposer::ObjectRef<T> *data = vec->data();
+		const QVector<SubtitleComposer::ObjectRef<T>> *vec = container();
+		const SubtitleComposer::ObjectRef<T> *data = vec->constData();
 		return this >= data && this < data + vec->capacity();
 	}
 
