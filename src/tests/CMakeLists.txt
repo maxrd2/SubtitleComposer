@@ -45,3 +45,8 @@ add_executable(test-core-subtitle subtitletest.cpp)
 add_test(core-subtitle test-core-subtitle)
 ecm_mark_as_test(test-core-subtitle)
 target_link_libraries(test-core-subtitle Qt${QT_MAJOR_VERSION}::Test subtitlecomposer-lib)
+
+add_executable(test-helper-objectref objectreftest.cpp)
+add_test(helper-objectref test-helper-objectref)
+ecm_mark_as_test(test-helper-objectref)
+target_link_libraries(test-helper-objectref Qt${QT_MAJOR_VERSION}::Test subtitlecomposer-lib)
