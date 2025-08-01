@@ -127,7 +127,7 @@ private:
 }
 
 template<class T, class U>
-bool operator==(const SubtitleComposer::ObjectRefAllocator<T> &a, const SubtitleComposer::ObjectRefAllocator<U> &b) { return &a == &b; }
+bool operator==(const SubtitleComposer::ObjectRefAllocator<T> &a, const SubtitleComposer::ObjectRefAllocator<U> &b) { return a == b; }
 
 template<class T, class U>
 bool operator!=(const SubtitleComposer::ObjectRefAllocator<T> &a, const SubtitleComposer::ObjectRefAllocator<U> &b) { return !operator==(a, b); }
