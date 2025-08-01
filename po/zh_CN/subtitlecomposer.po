@@ -1452,7 +1452,7 @@ msgstr "选定行的位移时间(&M)："
 msgctxt "Text for previewing the subtitles font settings"
 msgid "<p>The Quick Brown Fox<br/>Jumps Over The Lazy Dog</p>"
 msgstr ""
-"<p>The Quick Brown Fox Jumps Over The Lazy Dog<br/>龙跳天门，虎卧凰阁</p>"
+"<p>The Quick Brown Fox Jumps Over The Lazy Dog<br/>龙跳天门 虎卧凰阁</p>"
 
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_UnpauseOnDoubleClick)
 #: src/configs/playerconfigwidget.ui:23
