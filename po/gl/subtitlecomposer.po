@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: subtitlecomposer\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-11-18 01:56+0000\n"
+"POT-Creation-Date: 2025-08-02 01:58+0000\n"
 "PO-Revision-Date: 2024-12-19 22:28+0100\n"
 "Last-Translator: Adrián Chaves (Gallaecio) <adrian@chaves.io>\n"
 "Language-Team: Proxecto Trasno (proxecto@trasno.gal)\n"
@@ -1728,7 +1728,7 @@ msgid "Insert Line"
 msgstr "Inserir unha liña"
 
 #: src/core/subtitle.cpp:449 src/core/subtitle.cpp:459
-#: src/core/subtitle.cpp:476 src/core/undo/subtitleactions.cpp:122
+#: src/core/subtitle.cpp:476 src/core/undo/subtitleactions.cpp:121
 #, kde-format
 msgid "Remove Lines"
 msgstr "Eliminar as liñas"
@@ -2068,27 +2068,27 @@ msgstr "Ten texto sen traducir."
 msgid "Has user mark."
 msgstr "Ten unha marca de persoa usuaria."
 
-#: src/core/subtitleline.cpp:383 src/core/undo/subtitlelineactions.cpp:105
+#: src/core/subtitleline.cpp:382 src/core/undo/subtitlelineactions.cpp:105
 #, kde-format
 msgid "Set Line Show Time"
 msgstr "Definir o tempo de visualización da liña"
 
-#: src/core/subtitleline.cpp:407 src/core/undo/subtitlelineactions.cpp:132
+#: src/core/subtitleline.cpp:406 src/core/undo/subtitlelineactions.cpp:132
 #, kde-format
 msgid "Set Line Hide Time"
 msgstr "Definir o tempo de ocultación da liña"
 
-#: src/core/subtitleline.cpp:454
+#: src/core/subtitleline.cpp:453
 #, kde-format
 msgid "Set Line Times"
 msgstr "Definir os tempos das liñas"
 
-#: src/core/subtitleline.cpp:551
+#: src/core/subtitleline.cpp:550
 #, kde-format
 msgid "Shift Line Times"
 msgstr "Desprazar os tempos das liñas"
 
-#: src/core/subtitleline.cpp:561
+#: src/core/subtitleline.cpp:560
 #, kde-format
 msgid "Adjust Line Times"
 msgstr "Axustar os tempos das liñas"
@@ -2103,17 +2103,17 @@ msgstr "Definir a taxa de fotogramas"
 msgid "Insert Lines"
 msgstr "Inserir liñas"
 
-#: src/core/undo/subtitleactions.cpp:200
+#: src/core/undo/subtitleactions.cpp:198
 #, kde-format
 msgid "Move Line"
 msgstr "Mover a liña"
 
-#: src/core/undo/subtitleactions.cpp:285
+#: src/core/undo/subtitleactions.cpp:283
 #, kde-format
 msgid "Swap Texts"
 msgstr "Intercambiar os textos"
 
-#: src/core/undo/subtitleactions.cpp:308
+#: src/core/undo/subtitleactions.cpp:306
 #, kde-format
 msgid "Change stylesheet"
 msgstr "Cambiar a folla de estilo"

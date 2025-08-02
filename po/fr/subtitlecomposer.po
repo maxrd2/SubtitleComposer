@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: subtitlecomposer\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-11-18 01:56+0000\n"
+"POT-Creation-Date: 2025-08-02 01:58+0000\n"
 "PO-Revision-Date: 2024-11-19 09:20+0100\n"
 "Last-Translator: Xavier Besnard <xavier.besnard@kde.org>\n"
 "Language-Team: French <French <kde-francophone@kde.org>>\n"
@@ -1737,7 +1737,7 @@ msgid "Insert Line"
 msgstr "Insérer une ligne"
 
 #: src/core/subtitle.cpp:449 src/core/subtitle.cpp:459
-#: src/core/subtitle.cpp:476 src/core/undo/subtitleactions.cpp:122
+#: src/core/subtitle.cpp:476 src/core/undo/subtitleactions.cpp:121
 #, kde-format
 msgid "Remove Lines"
 msgstr "Supprimer les lignes"
@@ -2081,27 +2081,27 @@ msgstr "Il y a du texte non-traduit."
 msgid "Has user mark."
 msgstr "Il y a une marque d'utilisateur."
 
-#: src/core/subtitleline.cpp:383 src/core/undo/subtitlelineactions.cpp:105
+#: src/core/subtitleline.cpp:382 src/core/undo/subtitlelineactions.cpp:105
 #, kde-format
 msgid "Set Line Show Time"
 msgstr "Régler l'instant d'affichage de la ligne"
 
-#: src/core/subtitleline.cpp:407 src/core/undo/subtitlelineactions.cpp:132
+#: src/core/subtitleline.cpp:406 src/core/undo/subtitlelineactions.cpp:132
 #, kde-format
 msgid "Set Line Hide Time"
 msgstr "Régler l'instant de masquage de la ligne"
 
-#: src/core/subtitleline.cpp:454
+#: src/core/subtitleline.cpp:453
 #, kde-format
 msgid "Set Line Times"
 msgstr "Régler les temps de la lignes"
 
-#: src/core/subtitleline.cpp:551
+#: src/core/subtitleline.cpp:550
 #, kde-format
 msgid "Shift Line Times"
 msgstr "Décaler les temps de la ligne"
 
-#: src/core/subtitleline.cpp:561
+#: src/core/subtitleline.cpp:560
 #, kde-format
 msgid "Adjust Line Times"
 msgstr "Ajuster les temps de la ligne"
@@ -2116,17 +2116,17 @@ msgstr "Régler la fréquence d'affichage"
 msgid "Insert Lines"
 msgstr "Insérer des lignes"
 
-#: src/core/undo/subtitleactions.cpp:200
+#: src/core/undo/subtitleactions.cpp:198
 #, kde-format
 msgid "Move Line"
 msgstr "Déplacer une ligne"
 
-#: src/core/undo/subtitleactions.cpp:285
+#: src/core/undo/subtitleactions.cpp:283
 #, kde-format
 msgid "Swap Texts"
 msgstr "Inverser des textes"
 
-#: src/core/undo/subtitleactions.cpp:308
+#: src/core/undo/subtitleactions.cpp:306
 #, kde-format
 msgid "Change stylesheet"
 msgstr "Modifier la feuille de style"

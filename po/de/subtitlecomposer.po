@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: subtitlecomposer\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-11-18 01:56+0000\n"
+"POT-Creation-Date: 2025-08-02 01:58+0000\n"
 "PO-Revision-Date: 2023-04-26 20:08+0200\n"
 "Last-Translator: Frederik Schwarzer <schwarzer@kde.org>\n"
 "Language-Team: German <kde-i18n-de@kde.org>\n"
@@ -1721,7 +1721,7 @@ msgid "Insert Line"
 msgstr "Zeile einfügen"
 
 #: src/core/subtitle.cpp:449 src/core/subtitle.cpp:459
-#: src/core/subtitle.cpp:476 src/core/undo/subtitleactions.cpp:122
+#: src/core/subtitle.cpp:476 src/core/undo/subtitleactions.cpp:121
 #, kde-format
 msgid "Remove Lines"
 msgstr "Zeilen entfernen"
@@ -2052,27 +2052,27 @@ msgstr "Unübersetzter Text"
 msgid "Has user mark."
 msgstr "Benutzermarkierung"
 
-#: src/core/subtitleline.cpp:383 src/core/undo/subtitlelineactions.cpp:105
+#: src/core/subtitleline.cpp:382 src/core/undo/subtitlelineactions.cpp:105
 #, kde-format
 msgid "Set Line Show Time"
 msgstr "Einblendezeit der Zeile eingeben"
 
-#: src/core/subtitleline.cpp:407 src/core/undo/subtitlelineactions.cpp:132
+#: src/core/subtitleline.cpp:406 src/core/undo/subtitlelineactions.cpp:132
 #, kde-format
 msgid "Set Line Hide Time"
 msgstr "Ausblendezeit der Zeilen einstellen"
 
-#: src/core/subtitleline.cpp:454
+#: src/core/subtitleline.cpp:453
 #, kde-format
 msgid "Set Line Times"
 msgstr "Zeilenzeiten angeben"
 
-#: src/core/subtitleline.cpp:551
+#: src/core/subtitleline.cpp:550
 #, kde-format
 msgid "Shift Line Times"
 msgstr "Zeilenzeiten verschieben"
 
-#: src/core/subtitleline.cpp:561
+#: src/core/subtitleline.cpp:560
 #, kde-format
 msgid "Adjust Line Times"
 msgstr "Zeilenzeiten anpassen"
@@ -2087,17 +2087,17 @@ msgstr "Bildwiederholrate einstellen"
 msgid "Insert Lines"
 msgstr "Zeilen einfügen"
 
-#: src/core/undo/subtitleactions.cpp:200
+#: src/core/undo/subtitleactions.cpp:198
 #, kde-format
 msgid "Move Line"
 msgstr "Zeile verschieben"
 
-#: src/core/undo/subtitleactions.cpp:285
+#: src/core/undo/subtitleactions.cpp:283
 #, kde-format
 msgid "Swap Texts"
 msgstr "Texte tauschen"
 
-#: src/core/undo/subtitleactions.cpp:308
+#: src/core/undo/subtitleactions.cpp:306
 #, fuzzy, kde-format
 #| msgid "Change Case"
 msgid "Change stylesheet"

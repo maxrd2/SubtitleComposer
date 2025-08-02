@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: subtitlecomposer\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-11-18 01:56+0000\n"
+"POT-Creation-Date: 2025-08-02 01:58+0000\n"
 "PO-Revision-Date: 2022-12-04 23:24+0700\n"
 "Last-Translator: OIS <mistresssilvara@hotmail.com>\n"
 "Language-Team: Interlingue <kde-i18n-doc@kde.org>\n"
@@ -1696,7 +1696,7 @@ msgid "Insert Line"
 msgstr "Inserter un linea-separator"
 
 #: src/core/subtitle.cpp:449 src/core/subtitle.cpp:459
-#: src/core/subtitle.cpp:476 src/core/undo/subtitleactions.cpp:122
+#: src/core/subtitle.cpp:476 src/core/undo/subtitleactions.cpp:121
 #, kde-format
 msgid "Remove Lines"
 msgstr "Remover lineas"
@@ -2022,27 +2022,27 @@ msgstr "Íntraductet textu"
 msgid "Has user mark."
 msgstr "Usator"
 
-#: src/core/subtitleline.cpp:383 src/core/undo/subtitlelineactions.cpp:105
+#: src/core/subtitleline.cpp:382 src/core/undo/subtitlelineactions.cpp:105
 #, fuzzy, kde-format
 msgid "Set Line Show Time"
 msgstr "Linea de comandes me es providet."
 
-#: src/core/subtitleline.cpp:407 src/core/undo/subtitlelineactions.cpp:132
+#: src/core/subtitleline.cpp:406 src/core/undo/subtitlelineactions.cpp:132
 #, fuzzy, kde-format
 msgid "Set Line Hide Time"
 msgstr "Celar li horloge"
 
-#: src/core/subtitleline.cpp:454
+#: src/core/subtitleline.cpp:453
 #, fuzzy, kde-format
 msgid "Set Line Times"
 msgstr "Linea de comandes me es providet."
 
-#: src/core/subtitleline.cpp:551
+#: src/core/subtitleline.cpp:550
 #, fuzzy, kde-format
 msgid "Shift Line Times"
 msgstr "vezes"
 
-#: src/core/subtitleline.cpp:561
+#: src/core/subtitleline.cpp:560
 #, fuzzy, kde-format
 msgid "Adjust Line Times"
 msgstr "Adjustar..."
@@ -2057,17 +2057,17 @@ msgstr "Rapiditá de cadres"
 msgid "Insert Lines"
 msgstr "Insert"
 
-#: src/core/undo/subtitleactions.cpp:200
+#: src/core/undo/subtitleactions.cpp:198
 #, fuzzy, kde-format
 msgid "Move Line"
 msgstr "Mover li linea(s) ad-up"
 
-#: src/core/undo/subtitleactions.cpp:285
+#: src/core/undo/subtitleactions.cpp:283
 #, fuzzy, kde-format
 msgid "Swap Texts"
 msgstr "Li swap ne existe"
 
-#: src/core/undo/subtitleactions.cpp:308
+#: src/core/undo/subtitleactions.cpp:306
 #, fuzzy, kde-format
 msgid "Change stylesheet"
 msgstr "Folie de &stiles"

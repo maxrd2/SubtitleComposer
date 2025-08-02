@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: subtitlecomposer\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-11-18 01:56+0000\n"
+"POT-Creation-Date: 2025-08-02 01:58+0000\n"
 "PO-Revision-Date: 2019-10-27 09:15\n"
 "Last-Translator: Alexandros Perdikomatis <atanasia.kalampaka@ontelecoms.gr>\n"
 "Language-Team: ΕΛΛΗΝΙΚΑ <el@li.org>\n"
@@ -1722,7 +1722,7 @@ msgid "Insert Line"
 msgstr "Εισαγωγή Γραμμής"
 
 #: src/core/subtitle.cpp:449 src/core/subtitle.cpp:459
-#: src/core/subtitle.cpp:476 src/core/undo/subtitleactions.cpp:122
+#: src/core/subtitle.cpp:476 src/core/undo/subtitleactions.cpp:121
 #, kde-format
 msgid "Remove Lines"
 msgstr "Αφαίρεση Γραμμών"
@@ -2071,27 +2071,27 @@ msgstr ""
 msgid "Has user mark."
 msgstr "Έχει σημάδι χρήστη"
 
-#: src/core/subtitleline.cpp:383 src/core/undo/subtitlelineactions.cpp:105
+#: src/core/subtitleline.cpp:382 src/core/undo/subtitlelineactions.cpp:105
 #, kde-format
 msgid "Set Line Show Time"
 msgstr "Ορισμός Χρόνου Παρουσίας Γραμμής"
 
-#: src/core/subtitleline.cpp:407 src/core/undo/subtitlelineactions.cpp:132
+#: src/core/subtitleline.cpp:406 src/core/undo/subtitlelineactions.cpp:132
 #, kde-format
 msgid "Set Line Hide Time"
 msgstr "Ορισμός Χρόνου Απόκρυψης Γραμμής"
 
-#: src/core/subtitleline.cpp:454
+#: src/core/subtitleline.cpp:453
 #, kde-format
 msgid "Set Line Times"
 msgstr "Ορισμός Χρόνων Γραμμής"
 
-#: src/core/subtitleline.cpp:551
+#: src/core/subtitleline.cpp:550
 #, kde-format
 msgid "Shift Line Times"
 msgstr "Ολίσθηση Χρόνων Γραμμής"
 
-#: src/core/subtitleline.cpp:561
+#: src/core/subtitleline.cpp:560
 #, kde-format
 msgid "Adjust Line Times"
 msgstr "Ρύθμιση Χρόνων Γραμμής"
@@ -2106,17 +2106,17 @@ msgstr "Ορισμός Λόγου Καρέ"
 msgid "Insert Lines"
 msgstr ""
 
-#: src/core/undo/subtitleactions.cpp:200
+#: src/core/undo/subtitleactions.cpp:198
 #, kde-format
 msgid "Move Line"
 msgstr "Μετακίνηση Γραμμής"
 
-#: src/core/undo/subtitleactions.cpp:285
+#: src/core/undo/subtitleactions.cpp:283
 #, kde-format
 msgid "Swap Texts"
 msgstr "Αντιμετάθεση Κειμένων"
 
-#: src/core/undo/subtitleactions.cpp:308
+#: src/core/undo/subtitleactions.cpp:306
 #, fuzzy, kde-format
 #| msgid "Change Case"
 msgid "Change stylesheet"
