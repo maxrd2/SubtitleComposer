@@ -42,6 +42,7 @@ struct ObjectRefAllocator {
 		throw std::bad_alloc();
 #else
 		Q_ASSERT(false);
+		return nullptr;
 #endif
 	}
 
