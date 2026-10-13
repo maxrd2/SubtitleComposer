@@ -2850,12 +2850,12 @@ msgstr "Giriş"
 #: src/gui/subtitlemeta/subtitlemetawidget.cpp:91
 #, kde-format
 msgid "Header"
-msgstr "Üstbilgi"
+msgstr "Üst Bilgi"
 
 #: src/gui/subtitlemeta/subtitlemetawidget.cpp:93
 #, kde-format
 msgid "Footer"
-msgstr "Altbilgi"
+msgstr "Alt Bilgi"
 
 #. i18n: ectx: property (windowTitle), widget (QWidget, SubtitlePositionWidget)
 #: src/gui/subtitlemeta/subtitlepositionwidget.ui:14
