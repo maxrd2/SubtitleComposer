@@ -1,13 +1,13 @@
 # Copyright (C) 2023 This file is copyright:
 # This file is distributed under the same license as the subtitlecomposer package.
 #
-# SPDX-FileCopyrightText: 2022, 2023, 2024, 2025, 2026 Emir SARI <emir_sari@icloud.com>
+# SPDX-FileCopyrightText: 2022-2026 Emir SARI <emir_sari@icloud.com>
 msgid ""
 msgstr ""
 "Project-Id-Version: subtitlecomposer\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2025-11-17 09:00+0000\n"
-"PO-Revision-Date: 2026-05-02 18:46+0300\n"
+"PO-Revision-Date: 2026-10-24 22:24+0300\n"
 "Last-Translator: Emir SARI <emir_sari@icloud.com>\n"
 "Language-Team: Turkish <kde-l10n-tr@kde.org>\n"
 "Language: tr\n"
@@ -15,7 +15,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
-"X-Generator: Lokalize 25.12.3\n"
+"X-Generator: Lokalize 26.08.0\n"
 
 #: src/actions/kcodecactionext.cpp:29
 #, kde-format
@@ -122,7 +122,7 @@ msgstr "Uygulamadan Çık"
 #: src/application_actions.cpp:36
 #, kde-format
 msgid "Configure Subtitle Composer"
-msgstr "Altyazı Oluşturucusu’nu Yapılandır"
+msgstr "Subtitle Composer’ı Yapılandır"
 
 #: src/application_actions.cpp:40
 #, kde-format
@@ -133,18 +133,18 @@ msgstr "Yeni"
 #: src/application_actions.cpp:41
 #, kde-format
 msgid "Create an empty subtitle"
-msgstr "Boş bir altyazı oluştur"
+msgstr "Boş bir alt yazı oluştur"
 
 #: src/application_actions.cpp:49
 #, kde-format
 msgctxt "@action:inmenu Open subtitle file"
 msgid "Open Subtitle..."
-msgstr "Altyazı Aç…"
+msgstr "Alt Yazı Aç…"
 
 #: src/application_actions.cpp:50 src/application_actions.cpp:67
 #, kde-format
 msgid "Open subtitle file"
-msgstr "Altyazı dosyası aç"
+msgstr "Alt Yazı Dosyası Aç"
 
 #: src/application_actions.cpp:58
 #, kde-format
@@ -160,7 +160,7 @@ msgstr "Açık dosyayı farklı bir kodlama ile yeniden yükle"
 #, kde-format
 msgctxt "@action:inmenu Open rencently used subtitle file"
 msgid "Open &Recent Subtitle"
-msgstr "S&on Kullanılan Altyazıyı Aç"
+msgstr "S&on Kullanılan Alt Yazıyı Aç"
 
 #: src/application_actions.cpp:73
 #, kde-format
@@ -170,7 +170,7 @@ msgstr "Kaydet"
 #: src/application_actions.cpp:74
 #, kde-format
 msgid "Save opened subtitle"
-msgstr "Açık altyazıyı kaydet"
+msgstr "Açık alt yazıyı kaydet"
 
 #: src/application_actions.cpp:82
 #, kde-format
@@ -180,7 +180,7 @@ msgstr "Farklı Kaydet…"
 #: src/application_actions.cpp:83
 #, kde-format
 msgid "Save opened subtitle with different settings"
-msgstr "Açık altyazıyı farklı ayarlarla kaydet"
+msgstr "Açık alt yazıyı farklı ayarlarla kaydet"
 
 #: src/application_actions.cpp:91
 #, kde-format
@@ -190,7 +190,7 @@ msgstr "Kapat"
 #: src/application_actions.cpp:92
 #, kde-format
 msgid "Close opened subtitle"
-msgstr "Açık altyazıyı kapat"
+msgstr "Açık alt yazıyı kapat"
 
 #: src/application_actions.cpp:100
 #, kde-format
@@ -200,7 +200,7 @@ msgstr "Yeni Çeviri"
 #: src/application_actions.cpp:101
 #, kde-format
 msgid "Create an empty translation subtitle"
-msgstr "Boş bir altyazı çevirisi oluştur"
+msgstr "Boş bir alt yazı çevirisi oluştur"
 
 #: src/application_actions.cpp:109
 #, kde-format
@@ -210,7 +210,7 @@ msgstr "Çeviri Aç…"
 #: src/application_actions.cpp:110 src/application_actions.cpp:127
 #, kde-format
 msgid "Open translation subtitle file"
-msgstr "Altyazı çeviri dosyası aç"
+msgstr "Alt Yazı Çeviri Dosyası Aç"
 
 #: src/application_actions.cpp:118
 #, kde-format
@@ -235,7 +235,7 @@ msgstr "Çeviriyi Kaydet"
 #: src/application_actions.cpp:135
 #, kde-format
 msgid "Save opened translation subtitle"
-msgstr "Açık altyazı çevirisini kaydet"
+msgstr "Açık alt yazı çevirisini kaydet"
 
 #: src/application_actions.cpp:145
 #, kde-format
@@ -245,7 +245,7 @@ msgstr "Çeviriyi Farklı Kaydet…"
 #: src/application_actions.cpp:146
 #, kde-format
 msgid "Save opened translation subtitle with different settings"
-msgstr "Açık altyazı çeviri dosyasını farklı ayarlarla kaydet"
+msgstr "Açık alt yazı çeviri dosyasını farklı ayarlarla kaydet"
 
 #: src/application_actions.cpp:154
 #, kde-format
@@ -255,27 +255,27 @@ msgstr "Çeviriyi Kapat"
 #: src/application_actions.cpp:155
 #, kde-format
 msgid "Close opened translation subtitle"
-msgstr "Açık altyazı çevirisini kapat"
+msgstr "Açık alt yazı çevirisini kapat"
 
 #: src/application_actions.cpp:172
 #, kde-format
 msgid "Split Subtitle..."
-msgstr "Altyazıyı Böl…"
+msgstr "Alt Yazıyı Böl…"
 
 #: src/application_actions.cpp:173
 #, kde-format
 msgid "Split the opened subtitle in two parts"
-msgstr "Açık altyazıyı iki parçaya böl"
+msgstr "Açık alt yazıyı iki parçaya böl"
 
 #: src/application_actions.cpp:179
 #, kde-format
 msgid "Join Subtitles..."
-msgstr "Altyazıları Birbirine Kat…"
+msgstr "Alt Yazıları Birbirine Kat…"
 
 #: src/application_actions.cpp:180
 #, kde-format
 msgid "Append to the opened subtitle another one"
-msgstr "Açık altyazıya bir başkasını iliştir"
+msgstr "Açık alt yazıya bir başkasını iliştir"
 
 #: src/application_actions.cpp:187
 #, kde-format
@@ -418,7 +418,7 @@ msgstr "Hataları Algıla…"
 #: src/application_actions.cpp:299
 #, kde-format
 msgid "Detect errors in the current subtitle"
-msgstr "Geçerli altyazıdaki hataları algıla"
+msgstr "Geçerli alt yazıdaki hataları algıla"
 
 #: src/application_actions.cpp:306
 #, kde-format
@@ -428,7 +428,7 @@ msgstr "Hataları/İmleri Temizle"
 #: src/application_actions.cpp:307
 #, kde-format
 msgid "Clear detected errors and marks in the current subtitle"
-msgstr "Geçerli altyazıda algılanan hataları ve imleri temizle"
+msgstr "Geçerli alt yazıda algılanan hataları ve imleri temizle"
 
 #: src/application_actions.cpp:315
 #, kde-format
@@ -548,7 +548,7 @@ msgstr "Kare Hızını Değiştir…"
 #: src/application_actions.cpp:422
 #, kde-format
 msgid "Retime subtitle lines by reinterpreting its frame rate"
-msgstr "Kare hızını yeniden yorumlayarak altyazı satırlarını yeniden zamanla"
+msgstr "Kare hızını yeniden yorumlayarak alt yazı satırlarını yeniden zamanla"
 
 #: src/application_actions.cpp:428
 #, kde-format
@@ -595,12 +595,12 @@ msgstr "Satırların üst üste binen zamanlarını düzelt"
 #: src/application_actions.cpp:457
 #, kde-format
 msgid "Synchronize with Subtitle..."
-msgstr "Altyazı ile Eşzamanla…"
+msgstr "Alt Yazı ile Eşzamanla…"
 
 #: src/application_actions.cpp:458
 #, kde-format
 msgid "Copy timing information from another subtitle"
-msgstr "Zamanlama bilgisini başka altyazıdan kopyala"
+msgstr "Zamanlama bilgisini başka alt yazıdan kopyala"
 
 #: src/application_actions.cpp:464
 #, kde-format
@@ -692,12 +692,12 @@ msgstr "Son Kullanılan &Videoyu Aç"
 #: src/application_actions.cpp:529
 #, kde-format
 msgid "Import Subtitle Stream"
-msgstr "Altyazı Akışı İçe Aktar"
+msgstr "Alt Yazı Akışı İçe Aktar"
 
 #: src/application_actions.cpp:530
 #, kde-format
 msgid "Import subtitle stream into subtitle editor"
-msgstr "Altyazı akışını altyazı düzenleyiciye içe aktar"
+msgstr "Alt yazı akışını alt yazı düzenleyicisine içe aktar"
 
 #: src/application_actions.cpp:536
 #, kde-format
@@ -772,7 +772,7 @@ msgstr "Önceki Satıra Git"
 #: src/application_actions.cpp:607
 #, kde-format
 msgid "Seek to previous subtitle line show time"
-msgstr "Bir önceki altyazı satırı gösterim zamanına git"
+msgstr "Bir önceki alt yazı satırı gösterim zamanına git"
 
 #: src/application_actions.cpp:615
 #, kde-format
@@ -802,7 +802,7 @@ msgstr "Geçerli Satırı Oynat ve Duraklat"
 #: src/application_actions.cpp:631
 #, kde-format
 msgid "Seek to selected subtitle line show time, play it and then pause"
-msgstr "Seçili altyazı satırı gösterim zamanına git, oynat ve duraklat"
+msgstr "Seçili alt yazı satırı gösterim zamanına git, oynat ve duraklat"
 
 #: src/application_actions.cpp:638
 #, kde-format
@@ -812,7 +812,7 @@ msgstr "Geçerli Satıra Git"
 #: src/application_actions.cpp:639
 #, kde-format
 msgid "Seek to selected subtitle line show time"
-msgstr "Seçili altyazı satırı gösterim zamanına git"
+msgstr "Seçili alt yazı satırı gösterim zamanına git"
 
 #: src/application_actions.cpp:646
 #, kde-format
@@ -822,7 +822,7 @@ msgstr "Sonraki Satıra Git"
 #: src/application_actions.cpp:647
 #, kde-format
 msgid "Seek to next subtitle line show time"
-msgstr "Sonraki altyazı satırı gösterim zamanına git"
+msgstr "Sonraki alt yazı satırı gösterim zamanına git"
 
 #: src/application_actions.cpp:655
 #, kde-format
@@ -916,7 +916,7 @@ msgstr "Yazıtipi Boyutunu Artır"
 #: src/application_actions.cpp:725
 #, kde-format
 msgid "Increase subtitles font size by 1 point"
-msgstr "Altyazı yazıtipi boyutunu 1 punto artır"
+msgstr "Alt yazı yazıtipi puntosunu 1 artır"
 
 #: src/application_actions.cpp:732
 #, kde-format
@@ -926,17 +926,17 @@ msgstr "Yazıtipi Boyutunu Azalt"
 #: src/application_actions.cpp:733
 #, kde-format
 msgid "Decrease subtitles font size by 1 point"
-msgstr "Altyazı yazıtipi boyutunu 1 punto azalt"
+msgstr "Alt yazı yazıtipi puntosunu 1 azalt"
 
 #: src/application_actions.cpp:740
 #, kde-format
 msgid "Displayed Subtitle Text"
-msgstr "Görüntülenen Altyazı Metni"
+msgstr "Görüntülenen Alt Yazı Metni"
 
 #: src/application_actions.cpp:741
 #, kde-format
 msgid "Select visible subtitle text"
-msgstr "Görünür altyazı metnini seç"
+msgstr "Görünür alt yazı metnini seç"
 
 #: src/application_actions.cpp:752 src/gui/waveform/waveformwidget.cpp:736
 #, kde-format
@@ -998,12 +998,12 @@ msgstr "Dalga boyutu görüntüsü, otomatik olarak video konumuna sarılacaktı
 #: src/application_subtitle.cpp:78
 #, kde-format
 msgid "All Text Subtitles"
-msgstr "Tüm Metin Altyazılar"
+msgstr "Tüm Metin Alt Yazılar"
 
 #: src/application_subtitle.cpp:79
 #, kde-format
 msgid "All Image Subtitles"
-msgstr "Tüm Görsel Altyazılar"
+msgstr "Tüm Görsel Alt Yazılar"
 
 #: src/application_subtitle.cpp:81 src/application_subtitle.cpp:105
 #: src/speechplugins/pocketsphinx/pocketsphinxconfigwidget.cpp:21
@@ -1036,19 +1036,19 @@ msgid ""
 "same file, possibly resulting in loss of information when saving.\n"
 "Are you sure you want to continue?"
 msgstr ""
-"İstenen eylem, altyazıyı ve onun çevirisini aynı dosyayı paylaşır biçimde "
+"İstenen eylem, alt yazıyı ve onun çevirisini aynı dosyayı paylaşır biçimde "
 "yapacaktır; bu kayıt sırasında bilgi kaybına neden olabilir.\n"
 "Sürdürmek istediğinizden emin misiniz?"
 
 #: src/application_subtitle.cpp:130
 #, kde-format
 msgid "Conflicting Subtitle Files"
-msgstr "Çakışan Altyazı Dosyaları"
+msgstr "Çakışan Alt Yazı Dosyaları"
 
 #: src/application_subtitle.cpp:148 src/dialogs/selectablesubtitledialog.cpp:67
 #, kde-format
 msgid "Open Subtitle"
-msgstr "Açık Altyazı"
+msgstr "Açık Alt Yazı"
 
 #: src/application_subtitle.cpp:204 src/application_subtitle.cpp:224
 #: src/application_subtitle.cpp:476 src/application_subtitle.cpp:501
@@ -1057,8 +1057,8 @@ msgid ""
 "<qt>Could not parse the subtitle file.<br/>This may have been caused by "
 "usage of the wrong encoding.</qt>"
 msgstr ""
-"<qt>Altyazı dosyası ayrıştırılamadı.<br/>Bu, hatalı kodlama kullanımı sonucu "
-"meydana gelmiş olabilir.</qt>"
+"<qt>Alt yazı dosyası ayrıştırılamadı.<br/>Bu, hatalı kodlama kullanımı "
+"sonucu meydana gelmiş olabilir.</qt>"
 
 #: src/application_subtitle.cpp:270 src/application_subtitle.cpp:317
 #, kde-format
@@ -1073,12 +1073,12 @@ msgstr "Kodlama: %1"
 #: src/application_subtitle.cpp:324
 #, kde-format
 msgid "There was an error saving the subtitle."
-msgstr "Altyazıyı kaydederken bir hata oluştu."
+msgstr "Alt yazıyı kaydederken bir hata oluştu."
 
 #: src/application_subtitle.cpp:332
 #, kde-format
 msgid "Save Subtitle"
-msgstr "Altyazıyı Kaydet"
+msgstr "Alt Yazıyı Kaydet"
 
 #: src/application_subtitle.cpp:372 src/application_subtitle.cpp:614
 #, kde-format
@@ -1086,13 +1086,13 @@ msgid ""
 "Currently opened translation subtitle has unsaved changes.\n"
 "Do you want to save them?"
 msgstr ""
-"Şu anda açık olan altyazı çevirisinde kaydedilmemiş değişiklikler var.\n"
+"Şu anda açık olan alt yazı çevirisinde kaydedilmemiş değişiklikler var.\n"
 "Kaydetmek istiyor musunuz?"
 
 #: src/application_subtitle.cpp:373 src/application_subtitle.cpp:615
 #, kde-format
 msgid "Close Translation Subtitle"
-msgstr "Altyazı Çevirisini Kapat"
+msgstr "Alt Yazı Çevirisini Kapat"
 
 #: src/application_subtitle.cpp:384
 #, kde-format
@@ -1100,18 +1100,18 @@ msgid ""
 "Currently opened subtitle has unsaved changes.\n"
 "Do you want to save them?"
 msgstr ""
-"Şu anda açık olan altyazıda kaydedilmemiş değişiklikler var.\n"
+"Şu anda açık olan alt yazıda kaydedilmemiş değişiklikler var.\n"
 "Kaydetmek istiyor musunuz?"
 
 #: src/application_subtitle.cpp:385
 #, kde-format
 msgid "Close Subtitle"
-msgstr "Altyazıyı Kapat"
+msgstr "Alt Yazıyı Kapat"
 
 #: src/application_subtitle.cpp:445
 #, kde-format
 msgid "Open Translation Subtitle"
-msgstr "Altyazı Çevirisi Aç"
+msgstr "Alt Yazı Çevirisi Aç"
 
 #: src/application_subtitle.cpp:530
 #, kde-format
@@ -1128,12 +1128,12 @@ msgstr "Çeviri"
 #: src/application_subtitle.cpp:570
 #, kde-format
 msgid "There was an error saving the translation subtitle."
-msgstr "Altyazı çevirisini kaydederken bir hata oluştu."
+msgstr "Alt yazı çevirisini kaydederken bir hata oluştu."
 
 #: src/application_subtitle.cpp:578
 #, kde-format
 msgid "Save Translation Subtitle"
-msgstr "Altyazı Çevirisini Kaydet"
+msgstr "Alt Yazı Çevirisini Kaydet"
 
 #: src/application_subtitle.cpp:665
 #, kde-format
@@ -1144,22 +1144,22 @@ msgstr "bölünmüş"
 #: src/application_subtitle.cpp:682
 #, kde-format
 msgid "Could not write the split subtitle file."
-msgstr "Bölünmüş altyazı dosyası yazılamadı."
+msgstr "Bölünmüş alt yazı dosyası yazılamadı."
 
 #: src/application_subtitle.cpp:682
 #, kde-format
 msgid "Could not write the split subtitle translation file."
-msgstr "Bölünmüş altyazı çeviri dosyası yazılamadı."
+msgstr "Bölünmüş alt yazı çeviri dosyası yazılamadı."
 
 #: src/application_subtitle.cpp:707
 #, kde-format
 msgid "Could not read the subtitle file to append."
-msgstr "İliştirmek üzere altyazı dosyası okunamadı."
+msgstr "İliştirmek üzere alt yazı dosyası okunamadı."
 
 #: src/application_subtitle.cpp:723
 #, kde-format
 msgid "The specified time does not split the subtitles."
-msgstr "Belirtilen zaman, altyazıları bölmüyor."
+msgstr "Belirtilen zaman, alt yazıları bölmüyor."
 
 #: src/application_subtitle.cpp:758
 #, kde-format
@@ -1167,7 +1167,7 @@ msgid ""
 "Could not open a new Subtitle Composer window.\n"
 "The split part was saved as %1."
 msgstr ""
-"Yeni bir Altyazı Oluşturucusu penceresi açılamadı.\n"
+"Yeni bir Subtitle Composer penceresi açılamadı.\n"
 "Bölünmüş kısım %1 olarak kaydedildi."
 
 #: src/application_subtitle.cpp:759
@@ -1176,18 +1176,18 @@ msgid ""
 "Could not open a new Subtitle Composer window.\n"
 "The split parts were saved as %1 and %2."
 msgstr ""
-"Yeni bir Altyazı Oluşturucusu penceresi açılamadı.\n"
-"Bölünmüş kısımlar %1 ve %2 olarak kaydedildi."
+"Yeni bir Subtitle Composer penceresi açılamadı.\n"
+"Bölünmüş kısımlar, %1 ve %2 olarak kaydedildi."
 
 #: src/application_subtitle.cpp:777
 #, kde-format
 msgid "The reference subtitle must have more than one line to proceed."
-msgstr "Sürdürmek için başvuru altyazısında birden çok satır olmalı."
+msgstr "Sürdürmek için başvuru alt yazısında birden çok satır olmalı."
 
 #: src/application_subtitle.cpp:786
 #, kde-format
 msgid "Could not parse the reference subtitle file."
-msgstr "Başvuru altyazı dosyası ayrıştırılamadı."
+msgstr "Başvuru alt yazı dosyası ayrıştırılamadı."
 
 #: src/configs/configdialog.cpp:35
 #, kde-format
@@ -1380,13 +1380,13 @@ msgstr "Genel"
 #: src/configs/generalconfigwidget.ui:26
 #, kde-format
 msgid "Automatically load video file when opening a subtitle"
-msgstr "Bir altyazı açarken video dosyasını kendiliğinden yükle"
+msgstr "Bir alt yazı açarken video dosyasını kendiliğinden yükle"
 
 #. i18n: ectx: property (text), widget (QLabel, lab_DefaultSubtitlesEncoding)
 #: src/configs/generalconfigwidget.ui:33
 #, kde-format
 msgid "Defau&lt subtitles encoding:"
-msgstr "Ön&tanımlı altyazı kodlaması:"
+msgstr "Ön&tanımlı alt yazı kodlaması:"
 
 #. i18n: ectx: property (currentText), widget (QComboBox, kcfg_TextLineBreak)
 #. i18n: ectx: property (text), item, widget (QComboBox, kcfg_TextLineBreak)
@@ -1417,13 +1417,13 @@ msgstr "Satır sonu karakteri:"
 #: src/configs/generalconfigwidget.ui:78
 #, kde-format
 msgid "Subtitle Line"
-msgstr "Altyazı Satırı"
+msgstr "Alt Yazı Satırı"
 
 #. i18n: ectx: property (text), widget (QLabel, label_LineDuration)
 #: src/configs/generalconfigwidget.ui:84
 #, kde-format
 msgid "Default subtitle line duration:"
-msgstr "Öntanımlı altyazı satır süresi:"
+msgstr "Öntanımlı alt yazı satırı süresi:"
 
 #. i18n: ectx: property (text), widget (QLabel, label_4)
 #: src/configs/generalconfigwidget.ui:94
@@ -1435,7 +1435,7 @@ msgstr "Çift tıklamada gö&sterim zamanı eksi şu zamana atla:"
 #: src/configs/generalconfigwidget.ui:104
 #, kde-format
 msgid "Default pause between subtitle lines:"
-msgstr "Altyazı satırları arasındaki öntanımlı duraklama:"
+msgstr "Alt yazı satırları arasındaki öntanımlı duraklama:"
 
 #. i18n: ectx: property (text), widget (QLabel, label_2)
 #: src/configs/generalconfigwidget.ui:144
@@ -1508,7 +1508,7 @@ msgstr "Ses düzeyi yükseltmesi:"
 #: src/configs/playerconfigwidget.ui:122
 #, kde-format
 msgid "Subtitles"
-msgstr "Altyazılar"
+msgstr "Alt Yazılar"
 
 #. i18n: ectx: property (text), widget (QLabel, lab_OutlineColor)
 #: src/configs/playerconfigwidget.ui:138
@@ -1544,7 +1544,7 @@ msgstr "Yazıti&pi boyutu:"
 #: src/configs/playerconfigwidget.ui:203
 #, kde-format
 msgid "Subtitles Preview"
-msgstr "Altyazı Önizlemesi"
+msgstr "Alt Yazı Önizlemesi"
 
 #. i18n: ectx: property (title), widget (QGroupBox, groupBox_3)
 #: src/configs/waveformconfigwidget.ui:17
@@ -1590,13 +1590,13 @@ msgstr "Kendiliğinden sarma dolgusu:"
 #: src/configs/waveformconfigwidget.ui:120
 #, kde-format
 msgid "Subtitle Display"
-msgstr "Altyazı Görüntüsü"
+msgstr "Alt Yazı Görüntüsü"
 
 #. i18n: ectx: property (text), widget (QLabel, label_14)
 #: src/configs/waveformconfigwidget.ui:148
 #, kde-format
 msgid "Subtitle border color:"
-msgstr "Altyazı kenarlık rengi:"
+msgstr "Alt yazı kenarlık rengi:"
 
 #. i18n: ectx: property (text), widget (QLabel, label_16)
 #: src/configs/waveformconfigwidget.ui:158
@@ -1608,13 +1608,13 @@ msgstr "Seçili arka plan rengi:"
 #: src/configs/waveformconfigwidget.ui:168
 #, kde-format
 msgid "Subtitle border width:"
-msgstr "Altyazı kenarlık genişliği:"
+msgstr "Alt yazı kenarlık genişliği:"
 
 #. i18n: ectx: property (text), widget (QLabel, label_13)
 #: src/configs/waveformconfigwidget.ui:178
 #, kde-format
 msgid "Subtitle background color:"
-msgstr "Altyazı arka plan rengi:"
+msgstr "Alt yazı arka plan rengi:"
 
 #. i18n: ectx: property (text), widget (QLabel, label_17)
 #: src/configs/waveformconfigwidget.ui:207
@@ -1632,13 +1632,13 @@ msgstr "Metin Yazıtipi ve Renkleri"
 #: src/configs/waveformconfigwidget.ui:264
 #, kde-format
 msgid "Subtitle font family:"
-msgstr "Altyazı yazıtipi ailesi:"
+msgstr "Alt yazı yazıtipi ailesi:"
 
 #. i18n: ectx: property (text), widget (QLabel, label_22)
 #: src/configs/waveformconfigwidget.ui:277
 #, kde-format
 msgid "Subtitle number font size:"
-msgstr "Altyazı sayı yazıtipi boyutu:"
+msgstr "Alt yazı sayı yazıtipi boyutu:"
 
 #. i18n: ectx: property (suffix), widget (QSpinBox, kcfg_wfSubNumberFontSize)
 #. i18n: ectx: property (suffix), widget (QSpinBox, kcfg_wfSubTextFontSize)
@@ -1652,19 +1652,19 @@ msgstr " pt"
 #: src/configs/waveformconfigwidget.ui:294
 #, kde-format
 msgid "Subtitle Number Color"
-msgstr "Altyazı Sayı Rengi"
+msgstr "Alt yazı sayı rengi"
 
 #. i18n: ectx: property (text), widget (QLabel, label_24)
 #: src/configs/waveformconfigwidget.ui:323
 #, kde-format
 msgid "Subtitle text font size:"
-msgstr "Altyazı metin yazıtipi boyutu:"
+msgstr "Alt yazı metin yazıtipi puntosu:"
 
 #. i18n: ectx: property (text), widget (QLabel, label_25)
 #: src/configs/waveformconfigwidget.ui:340
 #, kde-format
 msgid "Subtitle Text Color:"
-msgstr "Altyazı metin rengi:"
+msgstr "Alt yazı metin rengi:"
 
 #. i18n: ectx: property (title), widget (QGroupBox, groupBox_2)
 #: src/configs/waveformconfigwidget.ui:372
@@ -1784,17 +1784,17 @@ msgstr "Satırları Sonlandır"
 #: src/core/subtitle.cpp:1172
 #, kde-format
 msgid "Synchronize Subtitles"
-msgstr "Altyazıları Eşzamanla"
+msgstr "Alt Yazıları Eşzamanla"
 
 #: src/core/subtitle.cpp:1197 src/dialogs/joinsubtitlesdialog.cpp:25
 #, kde-format
 msgid "Join Subtitles"
-msgstr "Altyazıları Birbirine Kat"
+msgstr "Alt Yazıları Birbirine Kat"
 
 #: src/core/subtitle.cpp:1242 src/core/subtitle.cpp:1248
 #, kde-format
 msgid "Split Subtitles"
-msgstr "Altyazıları Böl"
+msgstr "Alt Yazıları Böl"
 
 #: src/core/subtitle.cpp:1267
 #, kde-format
@@ -2142,19 +2142,19 @@ msgstr "Son seçime kadar tüm satırlar"
 #: src/utils/replacer.cpp:51
 #, kde-format
 msgid "Both subtitles"
-msgstr "Her iki altyazı"
+msgstr "Her iki alt yazı da"
 
 #: src/dialogs/actionwithtargetdialog.cpp:237 src/utils/finder.cpp:54
 #: src/utils/replacer.cpp:53
 #, kde-format
 msgid "Primary subtitle"
-msgstr "Birincil altyazı"
+msgstr "Birincil alt yazı"
 
 #: src/dialogs/actionwithtargetdialog.cpp:240 src/utils/finder.cpp:56
 #: src/utils/replacer.cpp:55
 #, kde-format
 msgid "Translation subtitle"
-msgstr "Çeviri altyazısı"
+msgstr "Çeviri alt yazısı"
 
 #: src/dialogs/actionwithtargetdialog.h:58
 #, kde-format
@@ -2318,7 +2318,7 @@ msgstr "Algılandı"
 #: src/dialogs/encodingdetectdialog.ui:14
 #, kde-format
 msgid "Confirm detected subtitle encoding"
-msgstr "Algılanan altyazı kodlamasını onayla"
+msgstr "Algılanan alt yazı kodlamasını onayla"
 
 #. i18n: ectx: property (text), widget (QLabel, encodingLabel)
 #: src/dialogs/encodingdetectdialog.ui:30
@@ -2385,7 +2385,7 @@ msgstr "Şuraya Ekle"
 #: src/dialogs/joinsubtitlesdialog.cpp:30
 #, kde-format
 msgid "Shift subtitle forwards before append"
-msgstr "İliştirmeden önce altyazıyı ileri kaydır"
+msgstr "İliştirmeden önce alt yazıyı ileri kaydır"
 
 #: src/dialogs/joinsubtitlesdialog.cpp:37
 #: src/dialogs/splitsubtitledialog.cpp:36
@@ -2419,12 +2419,12 @@ msgstr "Yol:"
 #: src/dialogs/selectablesubtitledialog.cpp:46
 #, kde-format
 msgid "Select subtitle"
-msgstr "Altyazı seç"
+msgstr "Alt Yazı Seç"
 
 #: src/dialogs/selectablesubtitledialog.h:30
 #, kde-format
 msgid "Subtitle"
-msgstr "Altyazı"
+msgstr "Alt yazı"
 
 #: src/dialogs/shifttimesdialog.cpp:19
 #, kde-format
@@ -2455,7 +2455,7 @@ msgstr "Satır sonu için en kısa uzunluk:"
 #: src/dialogs/splitsubtitledialog.cpp:28
 #, kde-format
 msgid "Split Subtitle"
-msgstr "Altyazıyı Böl"
+msgstr "Alt Yazıyı Böl"
 
 #: src/dialogs/splitsubtitledialog.cpp:41
 #, kde-format
@@ -2501,12 +2501,12 @@ msgstr "Ses"
 #: src/dialogs/syncsubtitlesdialog.cpp:17
 #, kde-format
 msgid "Synchronize with Subtitle"
-msgstr "Altyazı ile Eşzamanla"
+msgstr "Alt Yazı ile Eşzamanla"
 
 #: src/dialogs/syncsubtitlesdialog.cpp:19
 #, kde-format
 msgid "Reference Subtitle"
-msgstr "Başvuru Altyazısı"
+msgstr "Başvuru Alt Yazısı"
 
 #: src/dialogs/syncsubtitlesdialog.cpp:21
 #, kde-format
@@ -2574,7 +2574,7 @@ msgstr "Hiçbirini Seçme"
 #: src/formats/textdemux/textdemux.cpp:32
 #, kde-format
 msgid "Importing Subtitle Stream"
-msgstr "Altyazı Akışı İçe Aktarılıyor"
+msgstr "Alt Yazı Akışı İçe Aktarılıyor"
 
 #: src/formats/textdemux/textdemux.cpp:91
 #, kde-format
@@ -2582,7 +2582,7 @@ msgid ""
 "Subtitle demux failed %1: %2\n"
 "%3"
 msgstr ""
-"Altyazı çoklamama %1 başarısız: %2\n"
+"Alt yazı çoklamama %1 başarısız: %2\n"
 "%3"
 
 #. i18n: ectx: property (windowTitle), widget (QDialog, VobSubInputInitDialog)
@@ -2737,7 +2737,7 @@ msgstr "İptal Et"
 #: src/formats/vobsub/vobsubinputprocessdialog.ui:294
 #, kde-format
 msgid "Subtitle Image"
-msgstr "Altyazı Görsel"
+msgstr "Alt Yazı Görseli"
 
 #: src/gui/currentlinewidget.cpp:217
 #, kde-format
@@ -3044,12 +3044,12 @@ msgstr "Bilinmeyen"
 #: src/main.cpp:71
 #, kde-format
 msgid "The primary subtitle to be edited."
-msgstr "Düzenlenecek birincil altyazı."
+msgstr "Düzenlenecek birincil alt yazı."
 
 #: src/main.cpp:76
 #, kde-format
 msgid "The video to be subtitled."
-msgstr "Altyazılanacak video."
+msgstr "Alt yazı eklenecek video."
 
 #: src/main.cpp:81
 #, kde-format
@@ -3058,19 +3058,19 @@ msgid ""
 "If included, a second pane gets added to the right of the primary subtitle "
 "for side-by-side translation."
 msgstr ""
-"Düzenlenecek altyazı çevirisi.\n"
-"İçerilirse yan yana çeviri için birincil altyazının sağına ikinci bir pano "
+"Düzenlenecek alt yazı çevirisi.\n"
+"İçerilirse yan yana çeviri için birincil alt yazının sağına ikinci bir pano "
 "eklenir."
 
 #: src/main.cpp:153
 #, kde-format
 msgid "Subtitle Composer"
-msgstr "Altyazı Oluşturucusu"
+msgstr "Subtitle Composer"
 
 #: src/main.cpp:155
 #, kde-format
 msgid "A KDE subtitle editor."
-msgstr "KDE altyazı düzenleyicisi."
+msgstr "KDE alt yazı düzenleyicisi"
 
 #: src/main.cpp:161
 #, kde-format
@@ -3133,7 +3133,7 @@ msgstr "Biçemler ve Yorumlar"
 #: src/scconfig.kcfg:10
 #, kde-format
 msgid "Default Subtitles Encoding"
-msgstr "Öntanımlı Altyazı Kodlaması"
+msgstr "Öntanımlı alt yazı kodlaması"
 
 #. i18n: ectx: label, entry (TextLineBreak), group (General)
 #: src/scconfig.kcfg:14
@@ -3181,13 +3181,13 @@ msgstr "Yakalanan Konum Tazmini"
 #: src/scconfig.kcfg:44
 #, kde-format
 msgid "Default subtitle line duration"
-msgstr "Öntanımlı altyazı satır süresi"
+msgstr "Öntanımlı alt yazı satır süresi"
 
 #. i18n: ectx: label, entry (LinePause), group (General)
 #: src/scconfig.kcfg:48
 #, kde-format
 msgid "Default duration between subtitle lines"
-msgstr "Altyazı satırları arasındaki öntanımlı süre"
+msgstr "Alt yazı satırları arasındaki öntanımlı süre"
 
 #. i18n: ectx: label, entry (MaxCharacters), group (Error Check)
 #: src/scconfig.kcfg:55
@@ -3317,31 +3317,31 @@ msgstr ""
 #: src/scconfig.kcfg:145
 #, kde-format
 msgid "Waveform Subtitle Background Color"
-msgstr "Dalga Biçimi Altyazı Arka Plan Rengi"
+msgstr "Dalga biçimi alt yazı arka plan rengi"
 
 #. i18n: ectx: label, entry (wfSubBorder), group (Waveform Widget)
 #: src/scconfig.kcfg:149
 #, kde-format
 msgid "Waveform Subtitle Border Color"
-msgstr "Dalga Biçimi Altyazı Kenarlık Rengi"
+msgstr "Dalga biçimi alt yazı kenarlık rengi"
 
 #. i18n: ectx: label, entry (wfSubBorderWidth), group (Waveform Widget)
 #: src/scconfig.kcfg:153
 #, kde-format
 msgid "Waveform Subtitle Border Width"
-msgstr "Dalga Biçimi Altyazı Kenarlık Genişliği"
+msgstr "Dalga biçimi alt yazı kenarlık genişliği"
 
 #. i18n: ectx: label, entry (wfSelBackground), group (Waveform Widget)
 #: src/scconfig.kcfg:157
 #, kde-format
 msgid "Waveform Selected Subtitle Background Color"
-msgstr "Dalga Biçimi Seçili Altyazı Arka Plan Rengi"
+msgstr "Dalga biçimi seçili alt yazı arka plan rengi"
 
 #. i18n: ectx: label, entry (wfSelBorder), group (Waveform Widget)
 #: src/scconfig.kcfg:161
 #, kde-format
 msgid "Waveform Selected Subtitle Border Color"
-msgstr "Dalga Biçimi Seçili Altyazı Kenarlık Rengi"
+msgstr "Dalga biçimi seçili alt yazı kenarlık rengi"
 
 #. i18n: ectx: label, entry (wfFontFamily), group (Waveform Widget)
 #. i18n: ectx: label, entry (FontFamily), group (VideoPlayer)
@@ -3354,25 +3354,25 @@ msgstr "Yazıtipi Ailesi"
 #: src/scconfig.kcfg:169
 #, kde-format
 msgid "Subtitle Number Font Size"
-msgstr "Altyazı Sayı Yazıtipi Boyutu"
+msgstr "Alt yazı sayı yazıtipi puntosu"
 
 #. i18n: ectx: label, entry (wfSubNumberColor), group (Waveform Widget)
 #: src/scconfig.kcfg:173
 #, kde-format
 msgid "Subtitle Number Font Color"
-msgstr "Altyazı Sayı Yazıtipi Rengi"
+msgstr "Alt yazı sayı yazıtipi rengi"
 
 #. i18n: ectx: label, entry (wfSubTextFontSize), group (Waveform Widget)
 #: src/scconfig.kcfg:177
 #, kde-format
 msgid "Subtitle Text Font Size"
-msgstr "Altyazı Metin Yazıtipi Boyutu"
+msgstr "Alt yazı metin yazıtipi puntosu"
 
 #. i18n: ectx: label, entry (wfSubTextColor), group (Waveform Widget)
 #: src/scconfig.kcfg:181
 #, kde-format
 msgid "Subtitle Text Font Color"
-msgstr "Altyazı Metin Yazıtipi Rengi"
+msgstr "Alt yazı metin yazıtipi rengi"
 
 #. i18n: ectx: label, entry (wfMouseLocation), group (Waveform Widget)
 #: src/scconfig.kcfg:185
@@ -4194,7 +4194,7 @@ msgid ""
 "End of subtitle reached.\n"
 "Continue from the beginning?"
 msgstr ""
-"Altyazının sonuna erişildi.\n"
+"Alt yazının sonuna erişildi.\n"
 "Baştan sürdürülsün mü?"
 
 #: src/utils/finder.cpp:259
@@ -4212,7 +4212,7 @@ msgid ""
 "Beginning of subtitle reached.\n"
 "Continue from the end?"
 msgstr ""
-"Altyazının başına erişildi.\n"
+"Alt yazının başına erişildi.\n"
 "Sondan sürdürülsün mü?"
 
 #: src/utils/finder.cpp:259
@@ -4252,7 +4252,7 @@ msgstr "Ses Akışı #%1"
 #: src/videoplayer/backend/videostate.cpp:120
 #, kde-format
 msgid "Subtitle Stream #%1"
-msgstr "Altyazı Akışı #%1"
+msgstr "Alt Yazı Akışı #%1"
 
 #: src/videoplayer/videoplayer.cpp:100
 #, kde-format
