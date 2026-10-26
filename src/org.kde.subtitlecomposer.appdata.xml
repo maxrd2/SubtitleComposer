@@ -32,7 +32,7 @@
   <name xml:lang="sk">Vytvárač tituliek</name>
   <name xml:lang="sl">Subtitle Composer</name>
   <name xml:lang="sv">Textningsskapare</name>
-  <name xml:lang="tr">Altyazı Oluşturucusu</name>
+  <name xml:lang="tr">Subtitle Composer</name>
   <name xml:lang="uk">Редактор субтитрів</name>
   <name xml:lang="zh-CN">Subtitle Composer</name>
   <name xml:lang="zh-TW">字幕撰寫工具</name>
@@ -62,7 +62,7 @@
   <summary xml:lang="sk">Editor video titulkov, ktorý podporuje základné a pokročilé operácie úprav</summary>
   <summary xml:lang="sl">Urejevalnik podnaslovov za videoposnetke, ki podpira osnovne in napredne postopke urejanja</summary>
   <summary xml:lang="sv">Textningseditor för videor som stöder grundläggande och avancerade redigeringsåtgärder</summary>
-  <summary xml:lang="tr">Temel ve gelişmiş düzenleme işlemlerini destekleyen video altyazı düzenleyici</summary>
+  <summary xml:lang="tr">Temel ve gelişmiş düzenleme işlemlerini destekleyen video alt yazı düzenleyici</summary>
   <summary xml:lang="uk">Текстовий редактор субтитрів до відео, у якому передбачено базові і розширені можливості з редагування</summary>
   <summary xml:lang="zh-CN">支持基础和高级编辑操作的视频字幕编辑器</summary>
   <summary xml:lang="zh-TW">支援基本及進階編輯動作的影片字幕編輯器</summary>
@@ -93,7 +93,7 @@
     <p xml:lang="sk">Subtitle Composer je textový editor titulkov s otvoreným zdrojovým kódom, ktorý podporuje základné a pokročilé operácie úprav.</p>
     <p xml:lang="sl">Subtitle Composer je odprtokodni urejevalnik podnaslovov, ki podpira besedilo osnovne in napredne operacije urejanja.</p>
     <p xml:lang="sv">Textningsskapare är en textbaserad textningseditor med öppen källkod som stöder grundläggande och avancerade redigeringsåtgärder.</p>
-    <p xml:lang="tr">Altyazı Oluşturucusu, temel ve gelişmiş düzenleme işlemlerini destekleyen, açık kaynaklı ve metin tabanlı bir altyazı düzenleyicidir.</p>
+    <p xml:lang="tr">Subtitle Composer, temel ve gelişmiş düzenleme işlemlerini destekleyen, açık kaynaklı ve metin tabanlı bir alt yazı düzenleyicisidir.</p>
     <p xml:lang="uk">«Редактор субтитрів» — текстовий редактор субтитрів із відкритим кодом, у якому передбачено базові і розширені можливості з редагування.</p>
     <p xml:lang="zh-CN">Subtitle Composer 是一款基于文本的开源字幕编辑器，支持基本和高级编辑操作。</p>
     <p xml:lang="zh-TW">《字幕撰寫工具》是個開放原始碼且基於文字的字幕編輯器，支援基本及進階的編輯動作。</p>
@@ -152,7 +152,7 @@
       <li xml:lang="sk">Otvoriť/uložiť textové formáty titulkov - SubRip/SRT, MicroDVD, SSA/ASS, MPlayer, TMPlayer a titulky YouTube</li>
       <li xml:lang="sl">Odpiranje/shranjevanje različnih besedilnih zapisov podnapisov - SubRip/SRT, MicroDVD, SSA/ASS, MPlayer, TMPlayer in YouTube</li>
       <li xml:lang="sv">Öppna eller spara textningsformat - SubRip/SRT-, MicroDVD-, SSA/ASS-, MPlayer-, TMPlayer- och YouTube-textning</li>
-      <li xml:lang="tr">Metin Altyazı Biçimlerini Aç/Kaydet - SubRip/SRT, MicroDVD, SSA/ASS, MPlayer, TMPlayer ve YouTube altyazıları</li>
+      <li xml:lang="tr">Metin Alt Yazı Biçimlerini Aç/Kaydet — SubRip/SRT, MicroDVD, SSA/ASS, MPlayer, TMPlayer ve YouTube alt yazıları</li>
       <li xml:lang="uk">Відкриття/Збереження даних у текстових форматах субтитрів — SubRip/SRT, MicroDVD, SSA/ASS, MPlayer, TMPlayer та субтитрів YouTube</li>
       <li xml:lang="zh-CN">支持开启或保存为以下文本字幕格式 - SubRip/SRT、MicroDVD、 SSA/ASS、MPlayer、TMPlayer 以及 YouTube 字幕</li>
       <li xml:lang="zh-TW">開啟／儲存文字字幕格式 - SubRip/SRT、MicroDVD、SSA/ASS、MPlayer、TMPlayer 及 YouTube 字幕</li>
@@ -180,7 +180,7 @@
       <li xml:lang="sk">Otvoriť/OCR grafické formáty titulkov - VobSub (.idx/.sub/.rar), BluRay/PGS (*.sup), formáty podporované ffmpeg (DVD/Vob, DVB, XSUB, HDMV-PGS)</li>
       <li xml:lang="sl">Grafični zapisi podnapisov Open/OCR - VobSub (.idx/.sub/.rar), BluRay/PGS (*.sup), zapisi, ki jih podpira ffmpeg (DVD/Vob, DVB, XSUB, HDMV-PGS)</li>
       <li xml:lang="sv">Öppna och OCR grafiska textningsformat - VobSub (.idx/.sub/.rar), BluRay/PGS (*.sup), format som stöds av ffmpeg (DVD/Vob, DVB, XSUB, HDMV-PGS)</li>
-      <li xml:lang="tr">Açık/OCR Grafik Altyazı Biçimleri - VobSub (.idx/.sub/.rar), BluRay/PGS (*.sup), ffmpeg tarafından desteklenen biçimler (DVD/Vob, DVB, XSUB, HDMV-PGS)</li>
+      <li xml:lang="tr">Açık/OCR Grafik Alt Yazı Biçimleri — VobSub (.idx/.sub/.rar), BluRay/PGS (*.sup), ffmpeg tarafından desteklenen biçimler (DVD/Vob, DVB, XSUB, HDMV-PGS)</li>
       <li xml:lang="uk">Відкриті/Розпізнані графічні формати субтитрів — VobSub (.idx/.sub/.rar), BluRay/PGS (*.sup), формати, підтримку яких передбачено у ffmpeg (DVD/Vob, DVB, XSUB, HDMV-PGS)</li>
       <li xml:lang="zh-CN">支持开启或光学识别以下图形字幕格式  - VobSub (.idx/.sub/.rar)、BluRay/PGS (*.sup)、ffmpeg 支持的格式 (DVD/Vob, DVB, XSUB, HDMV-PGS)</li>
       <li xml:lang="zh-TW">開啟／OCR 圖形字幕格式 - VobSub (.idx/.sub/.rar)、BluRay/PGS (*.sup)、FFmpeg 支援的格式 (DVD/Vob, DVB, XSUB, HDMV-PGS)</li>
@@ -208,7 +208,7 @@
       <li xml:lang="sk">Demuxovanie grafických/textových prúdov titulkov z video súboru - SRT, SSA/ASS, MOV text, MicroDVD, DVD/Vob, DVB, XSUB, HDMV-PGS</li>
       <li xml:lang="sl">Tokovi podnapisi iz datoteke videa Demux Graphics/Text - SRT, SSA/ASS, MOV text, MicroDVD, DVD/Vob, DVB, XSUB, HDMV-PGS</li>
       <li xml:lang="sv">Avmultiplex av grafik- eller textningsström från videofil - SRT, SSA/ASS, MOV text, MicroDVD, DVD/Vob, DVB, XSUB, HDMV-PGS</li>
-      <li xml:lang="tr">Demux Graphics/video dosyasından Metin Altyazı Akışı - SRT, SSA/ASS, MOV metni, MicroDVD, DVD/Vob, DVB, XSUB, HDMV-PGS</li>
+      <li xml:lang="tr">Demux Graphics/video dosyasından Metin Alt Yazı Akışı — SRT, SSA/ASS, MOV metni, MicroDVD, DVD/Vob, DVB, XSUB, HDMV-PGS</li>
       <li xml:lang="uk">Демультиплексовані графічні або текстові потоки субтитрів з відеофайлів — SRT, SSA/ASS, MOV text, MicroDVD, DVD/Vob, DVB, XSUB, HDMV-PGS</li>
       <li xml:lang="zh-CN">可从视频中解码复用以下格式的图形/文本字幕流 - SRT、SSA/ASS、MOV 文本、MicroDVD、 DVD/Vob、DVB、XSUB、HDMV-PGS</li>
       <li>Speech recognition from audio/video file using PocketSphinx</li>
@@ -294,7 +294,7 @@
       <li xml:lang="sk">Živý náhľad titulkov v integrovanom prehrávači videa s výberom zvukového prúdu</li>
       <li xml:lang="sl">Predogled podnapisov v živo v integriranem video predvajalniku z izborom zvokovnega toka</li>
       <li xml:lang="sv">Direkt förhandsgranskning av textning i integrerad videospelare med val av ljudspår</li>
-      <li xml:lang="tr">Tümleşik video oynatıcısında ses akış seçimi ile altyazıların canlı önizlemesi</li>
+      <li xml:lang="tr">Tümleşik video oynatıcısında ses akış seçimi ile alt yazıların canlı önizlemesi</li>
       <li xml:lang="uk">Інтерактивний перегляд субтитрів у інтегрованому відеопрогравачі із можливістю вибору потоку звукових даних</li>
       <li xml:lang="zh-CN">在集成视频播放器中实时预览字幕，并可选择音频流</li>
       <li xml:lang="zh-TW">在可選取音訊軌道內嵌影片播放器內即時預覽字幕</li>
@@ -323,7 +323,7 @@
       <li xml:lang="sk">Náhľad/úprava titulkov na grafickom vlnovom priebehu zvuku s výberom zvukového prúdu</li>
       <li xml:lang="sl">Predogled/urejanje podnapisov v grafični valovni obliki zvoka z izborom zvočnega toka</li>
       <li xml:lang="sv">Förhandsgranskning och redigering av textning på grafisk ljudvågform med val av ljudspår</li>
-      <li xml:lang="tr">Grafik ses dalga biçiminde ses akış seçimi ile altyazıların önizlemesi/düzenlemesi</li>
+      <li xml:lang="tr">Grafik ses dalga biçiminde ses akış seçimi ile alt yazıların önizlemesi/düzenlemesi</li>
       <li xml:lang="uk">Попередній перегляд і редагування субтитрів із показом графічного представлення звукових даних і можливістю вибору потоку звукових даних</li>
       <li xml:lang="zh-CN">在图形化音频波形上预览/编辑字幕，并可选择音频流</li>
       <li>Sync by dragging several anchors/graftpoints and stretching timeline</li>
@@ -410,7 +410,7 @@
       <li xml:lang="sk">Spájanie a rozdeľovanie súborov titulkov</li>
       <li xml:lang="sl">Zlivanje in razcepljanje datotek s podnapisi</li>
       <li xml:lang="sv">Sammanfoga och dela textningsfiler</li>
-      <li xml:lang="tr">Altyazı dosyalarının birbirine katılması ve bölünmesi</li>
+      <li xml:lang="tr">Alt yazı dosyalarının birbirine katılması ve bölünmesi</li>
       <li xml:lang="uk">Можливість об'єднання та поділу файлів субтитрів</li>
       <li xml:lang="zh-CN">合并与拆分字幕文件</li>
       <li xml:lang="zh-TW">合併或分割字母檔</li>
@@ -439,7 +439,7 @@
       <li xml:lang="sk">Preklady titulkov vedľa seba</li>
       <li xml:lang="sl">Prevodi podnapisov enega poleg drugega</li>
       <li xml:lang="sv">Översättning av textning sida vid sida</li>
-      <li xml:lang="tr">Yan yana altyazı çevirisi</li>
+      <li xml:lang="tr">Yan yana alt yazı çevirisi</li>
       <li xml:lang="uk">Синхронний переклад субтитрів</li>
       <li xml:lang="zh-CN">并排进行字幕翻译</li>
       <li xml:lang="zh-TW">並排字母翻譯</li>
@@ -529,7 +529,7 @@
       <li xml:lang="sk">Detekcia chýb časovania v titulkoch</li>
       <li xml:lang="sl">Zaznavanje časovnih napak v podnapisih</li>
       <li xml:lang="sv">Detektering av tidsfel i textning</li>
-      <li xml:lang="tr">Altyazılarda zamanlama hatalarını algılama</li>
+      <li xml:lang="tr">Alt yazılarda zamanlama hatalarını algılama</li>
       <li xml:lang="uk">Виявлення часової розсинхронізації у субтитрах</li>
       <li xml:lang="zh-CN">检测字幕中的时值错误</li>
       <li xml:lang="zh-TW">偵測字幕中的時間錯誤</li>
