@@ -19,15 +19,18 @@ SubtitleColorDialog::SubtitleColorDialog(QWidget *parent)
 	: QColorDialog(parent),
 	  m_defaultColorSelected(false)
 {
+	setOption(DontUseNativeDialog, true); // make sure findChild<QDialogButtonBox *>(); doesn't return null
+
 	QDialogButtonBox *buttons = findChild<QDialogButtonBox *>();
-
-	QPushButton *defaultColor = buttons->addButton(i18n("Default Color"), QDialogButtonBox::AcceptRole);
-	connect(defaultColor, &QAbstractButton::clicked, this, [&](){
-		m_defaultColorSelected = true;
-		accept();
-	});
-
-	setOption(DontUseNativeDialog, true);
+	if(buttons) {
+		QPushButton *defaultColor = buttons->addButton(i18n("Default Color"), QDialogButtonBox::AcceptRole);
+		connect(defaultColor, &QAbstractButton::clicked, this, [&](){
+			m_defaultColorSelected = true;
+			accept();
+		});
+	} else {
+		qWarning() << "Failed to customize SubtitleColorDialog";
+	}
 }
 
 SubtitleColorDialog::SubtitleColorDialog(const QColor &initial, QWidget *parent)
